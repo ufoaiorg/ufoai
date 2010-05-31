@@ -90,9 +90,22 @@ window abstract_multiplayer_join extends abstract_multiplayer {
 	// ==================
 
 	tab join_navigation {
-		pos		"462 73"
-		size	"486 40"
-		cvar	*cvar:mn_multiplayer_tab
+		{
+			pos		"462 73"
+			size	"486 40"
+			cvar	*cvar:mn_multiplayer_tab
+			onChange {
+				if ( *cvar:mn_multiplayer_tab == 1 ) {
+					cmd "mn_pop;mn_push mp_serverbrowser;"
+				} elif ( *cvar:mn_multiplayer_tab == 2 ) {
+		
+				} elif ( *cvar:mn_multiplayer_tab == 3 ) {
+					cmd "mn_pop;mn_push mp_bookmarks;"
+				} elif ( *cvar:mn_multiplayer_tab == 4 ) {
+					cmd "irc_connect; mn_push irc;"
+				}
+			}
+		}
 		option internet {
 			label	"_Internet/Lan"
 			value	"1"
@@ -112,17 +125,6 @@ window abstract_multiplayer_join extends abstract_multiplayer {
 			value	"4"
 		}
 */
-		onChange {
-			if ( *cvar:mn_multiplayer_tab == 1 ) {
-				cmd "mn_pop;mn_push mp_serverbrowser;"
-			} elif ( *cvar:mn_multiplayer_tab == 2 ) {
-	
-			} elif ( *cvar:mn_multiplayer_tab == 3 ) {
-				cmd "mn_pop;mn_push mp_bookmarks;"
-			} elif ( *cvar:mn_multiplayer_tab == 4 ) {
-				cmd "irc_connect; mn_push irc;"
-			}
-		}
 	}
 }
 
@@ -503,10 +505,14 @@ window mp_create_server extends abstract_multiplayer
 {
 
 	tab create_natigation {
-		pos	"462 200"
-		size	"500 40"
-
-		cvar	*cvar:mn_server_config_tab
+		{
+			pos	"462 200"
+			size	"500 40"
+			cvar	*cvar:mn_server_config_tab
+			onChange {
+				cmd "mp_update_config_navigation;"
+			}
+		}
 		option map {
 			label	"_Map"
 			value	"1"
@@ -518,9 +524,6 @@ window mp_create_server extends abstract_multiplayer
 		option security {
 			label	"_Security/registration"
 			value	"3"
-		}
-		onChange {
-			cmd "mp_update_config_navigation;"
 		}
 	}
 
@@ -1451,17 +1454,19 @@ window multiplayer_wait extends levelbuttons
 		}
 
 		tab selectchat {
-			align	LAYOUTALIGN_TOP
-			height	40
-			cvar	*cvar:mn_chatselect
-			onChange {
-				if ( *cvar:mn_chatselect eq "irc" ) {
-					*node:parent.ircscreen@invis = false
-					*node:parent.chatscreen@invis = true
-				}
-				if ( *cvar:mn_chatselect eq "chat" ) {
-					*node:parent.ircscreen@invis = true
-					*node:parent.chatscreen@invis = false
+			{
+				align	LAYOUTALIGN_TOP
+				height	40
+				cvar	*cvar:mn_chatselect
+				onChange {
+					if ( *cvar:mn_chatselect eq "irc" ) {
+						*node:parent.ircscreen@invis = false
+						*node:parent.chatscreen@invis = true
+					}
+					if ( *cvar:mn_chatselect eq "chat" ) {
+						*node:parent.ircscreen@invis = true
+						*node:parent.chatscreen@invis = false
+					}
 				}
 			}
 

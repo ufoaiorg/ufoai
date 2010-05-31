@@ -4,11 +4,13 @@
  * @code
  * selectbox texres_box
  * {
- * 	image	"ui/selectbox_green"
- * 	pos	"774 232"
- * 	size	"100 20"
- * 	color	"0.6 0.6 0.6 0.3"
- * 	cvar	"*cvar:gl_maxtexres"
+ * 	{
+ *	 	image	"ui/selectbox_green"
+ *	 	pos	"774 232"
+ * 		size	"100 20"
+ * 		color	"0.6 0.6 0.6 0.3"
+ * 		cvar	"*cvar:gl_maxtexres"
+ *  }
  * 	option low_value {
  * 		label	"_Low"
  * 		value	"256"
@@ -51,10 +53,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_selectbox.h"
 #include "m_node_abstractoption.h"
 #include "m_node_abstractnode.h"
+#include "m_node_option.h"
 
 #include "../../client.h" /* gettext _() */
 
-#define EXTRADATA(node) MN_EXTRADATA(node, optionExtraData_t)
+#define EXTRADATA(node) MN_EXTRADATA(node, abstractOptionExtraData_t)
 
 #define SELECTBOX_DEFAULT_HEIGHT 20.0f
 
@@ -65,38 +68,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SELECTBOX_BOTTOM_HEIGHT 4.0f
 
 /**
- * @brief Return the first option of the node
- * @todo check versionId and update cached data, and fire events
- */
-static menuOption_t*  MN_SelectBoxNodeGetFirstOption (menuNode_t * node)
-{
-	if (EXTRADATA(node).first) {
-		return EXTRADATA(node).first;
-	} else {
-		const int v = MN_GetDataVersion(EXTRADATA(node).dataId);
-		if (v != EXTRADATA(node).dataId) {
-			int count = 0;
-			menuOption_t *option = MN_GetOption(EXTRADATA(node).dataId);
-			while (option) {
-				if (option->invis == qfalse)
-					count++;
-				option = option->next;
-			}
-			EXTRADATA(node).count = count;
-
-			EXTRADATA(node).versionId = v;
-		}
-		return MN_GetOption(EXTRADATA(node).dataId);
-	}
-}
-
-/**
  * @brief call when the mouse move is the node is captured
  * @todo we can remove the loop if we save the current element in the node
  */
 static void MN_SelectBoxNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 {
-	menuOption_t* option;
+	menuNode_t* option;
 	int posy;
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
@@ -107,17 +84,17 @@ static void MN_SelectBoxNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	}
 
 	posy = node->size[1];
-	for (option = MN_SelectBoxNodeGetFirstOption(node); option; option = option->next) {
+	for (option = MN_AbstractOptionGetFirstOption(node); option; option = option->next) {
 		if (option->invis)
 			continue;
-		option->hovered = (posy <= y && y < posy + node->size[1]);
+		OPTIONEXTRADATA(option).hovered = (posy <= y && y < posy + node->size[1]);
 		posy += node->size[1];
 	}
 }
 
 static void MN_SelectBoxNodeDraw (menuNode_t *node)
 {
-	menuOption_t* option;
+	menuNode_t* option;
 	int selBoxX, selBoxY;
 	const char *ref;
 	const char *font;
@@ -152,9 +129,9 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 		12.0f + SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 12.0f, 0.0f, image);
 
 	/* draw the label for the current selected option */
-	for (option = MN_SelectBoxNodeGetFirstOption(node); option; option = option->next) {
+	for (option = MN_AbstractOptionGetFirstOption(node); option; option = option->next) {
 
-		if (strcmp(option->value, ref) != 0)
+		if (strcmp(OPTIONEXTRADATA(option).value, ref) != 0)
 			continue;
 
 		if (option->invis)
@@ -162,7 +139,7 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 
 		MN_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, selBoxY, node->size[0] - 4, 0,
-			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, _(OPTIONEXTRADATA(option).label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
 		R_Color(NULL);
 		break;
@@ -176,7 +153,7 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 
 static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 {
-	menuOption_t* option;
+	menuNode_t* option;
 	int selBoxX, selBoxY;
 	const char *ref;
 	const char *font;
@@ -215,17 +192,17 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 		23.0f, 28.0f, 16.0f, 21.0f, image);
 
 	/* now draw all available options for this selectbox */
-	for (option = MN_SelectBoxNodeGetFirstOption(node); option; option = option->next) {
+	for (option = MN_AbstractOptionGetFirstOption(node); option; option = option->next) {
 		if (option->invis)
 			continue;
 		/* draw the hover effect */
-		if (option->hovered)
+		if (OPTIONEXTRADATA(option).hovered)
 			MN_DrawFill(selBoxX, selBoxY, node->size[0] -SELECTBOX_SIDE_WIDTH - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
 					SELECTBOX_DEFAULT_HEIGHT, node->color);
 		/* print the option label */
 		MN_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, nodepos[1] + node->size[1], node->size[0] - 4, 0,
-			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, _(OPTIONEXTRADATA(option).label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		/* next entries' position */
 		selBoxY += node->size[1];
 	}
@@ -249,7 +226,7 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
  */
 static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 {
-	menuOption_t* option;
+	menuNode_t* option;
 	int clickedAtOption;
 	vec2_t pos;
 
@@ -290,7 +267,7 @@ static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 		return;
 
 	/* select the right option */
-	option = MN_SelectBoxNodeGetFirstOption(node);
+	option = MN_AbstractOptionGetFirstOption(node);
 	for (; option; option = option->next) {
 		if (option->invis)
 			continue;
@@ -302,7 +279,7 @@ static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 	/* update the status */
 	if (option) {
 		const char *cvarName = &((const char *)node->cvar)[6];
-		MN_SetCvar(cvarName, option->value, 0);
+		MN_SetCvar(cvarName, OPTIONEXTRADATA(option).value, 0);
 		if (node->onChange)
 			MN_ExecuteEventActions(node, node->onChange);
 	}
@@ -335,4 +312,5 @@ void MN_RegisterSelectBoxNode (nodeBehaviour_t *behaviour)
 	behaviour->loading = MN_SelectBoxNodeLoading;
 	behaviour->loaded = MN_SelectBoxNodeLoaded;
 	behaviour->capturedMouseMove = MN_SelectBoxNodeCapturedMouseMove;
+	behaviour->drawItselfChild = qtrue;
 }

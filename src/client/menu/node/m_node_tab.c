@@ -38,8 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h" /* gettext _() */
 #include "../../input/cl_input.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, optionExtraData_t)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, optionExtraData_t)
+#define EXTRADATA_TYPE abstractOptionExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 typedef enum {
 	MN_TAB_NOTHING = 0,
@@ -58,15 +59,15 @@ static const int TILE_SIZE = 40;
  * @param[in] node A tab node
  * @param[in] x The x position of the screen to test
  * @param[in] y The x position of the screen to test
- * @return A menuOption_t, or NULL if nothing.
+ * @return A menuNode_t, or NULL if nothing.
  * @todo improve test when we are on a junction
  * @todo improve test when we are on a chopped tab
  */
-static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int y)
+static menuNode_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int y)
 {
 	const char *font;
-	menuOption_t* option;
-	menuOption_t* prev = NULL;
+	menuNode_t* option;
+	menuNode_t* prev = NULL;
 	int allowedWidth;
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
@@ -81,8 +82,9 @@ static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int
 	font = MN_GetFontFromNode(node);
 
 	/* Text box test */
-	for (option = EXTRADATACONST(node).first; option; option = option->next) {
+	for (option = node->firstChild; option; option = option->next) {
 		int tabWidth;
+		assert(option->behaviour == optionBehaviour);
 
 		/* skip hidden options */
 		if (option->invis)
@@ -91,7 +93,7 @@ static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int
 		if (x < TILE_WIDTH / 2)
 			return prev;
 
-		R_FontTextSize(font, _(option->label), 0, LONGLINES_PRETTYCHOP, &tabWidth, NULL, NULL, NULL);
+		R_FontTextSize(font, _(OPTIONEXTRADATA(option).label), 0, LONGLINES_PRETTYCHOP, &tabWidth, NULL, NULL, NULL);
 		if (option->icon && option->icon->size[0] < allowedWidth) {
 			tabWidth += option->icon->size[0];
 		}
@@ -119,7 +121,7 @@ static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int
  */
 static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 {
-	menuOption_t* option;
+	menuNode_t* option;
 	const char *ref;
 
 	option = MN_TabNodeTabAtPosition(node, x, y);
@@ -131,7 +133,7 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 
 	ref = MN_GetReferenceString(node, node->cvar);
 	/* Is we click on the already active tab? */
-	if (!strcmp(option->value, ref))
+	if (!strcmp(OPTIONEXTRADATA(option).value, ref))
 		return;
 
 	/* no cvar given? */
@@ -141,7 +143,7 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 	/* only execute the click stuff if the selectbox is active */
 	if (node->state) {
 		const char *cvarName = &((const char *)node->cvar)[6];
-		MN_SetCvar(cvarName, option->value, 0);
+		MN_SetCvar(cvarName, OPTIONEXTRADATA(option).value, 0);
 		if (node->onChange)
 			MN_ExecuteEventActions(node, node->onChange);
 	}
@@ -179,8 +181,8 @@ static inline void MN_TabNodeDrawJunction (const char *image, int x, int y, mn_t
 static void MN_TabNodeDraw (menuNode_t *node)
 {
 	mn_tab_type_t lastStatus = MN_TAB_NOTHING;
-	menuOption_t* option;
-	menuOption_t* overMouseOption = NULL;
+	menuNode_t* option;
+	menuNode_t* overMouseOption = NULL;
 	const char *ref;
 	const char *font;
 	int currentX;
@@ -200,7 +202,8 @@ static void MN_TabNodeDraw (menuNode_t *node)
 
 	MN_GetNodeAbsPos(node, pos);
 	currentX = pos[0];
-	option = EXTRADATA(node).first;
+	option = node->firstChild;
+	assert(option->behaviour == optionBehaviour);
 	/** @todo this dont work when an option is hidden */
 	allowedWidth = node->size[0] - TILE_WIDTH * (EXTRADATA(node).count + 1);
 
@@ -211,6 +214,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		int textPos;
 		qboolean drawIcon = qfalse;
 		mn_tab_type_t status = MN_TAB_NORMAL;
+		assert(option->behaviour == optionBehaviour);
 
 		/* skip hidden options */
 		if (option->invis) {
@@ -219,7 +223,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		}
 
 		/* Check the status of the current tab */
-		if (!strcmp(option->value, ref)) {
+		if (!strcmp(OPTIONEXTRADATA(option).value, ref)) {
 			status = MN_TAB_SELECTED;
 		} else if (option->disabled || node->disabled) {
 			status = MN_TAB_DISABLED;
@@ -231,7 +235,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		MN_TabNodeDrawJunction(image, currentX, pos[1], lastStatus, status);
 		currentX += TILE_WIDTH;
 
-		R_FontTextSize(font, _(option->label), 0, LONGLINES_PRETTYCHOP, &fontWidth, &fontHeight, NULL, NULL);
+		R_FontTextSize(font, _(OPTIONEXTRADATA(option).label), 0, LONGLINES_PRETTYCHOP, &fontWidth, &fontHeight, NULL, NULL);
 		tabWidth = fontWidth;
 		if (option->icon && option->icon->size[0] < allowedWidth) {
 			tabWidth += option->icon->size[0];
@@ -258,10 +262,10 @@ static void MN_TabNodeDraw (menuNode_t *node)
 			textPos += option->icon->size[0];
 		}
 		/** @todo fontWidth can be =0, maybe a bug from the font cache */
-		option->truncated = tabWidth < fontWidth || tabWidth == 0;
+		OPTIONEXTRADATA(option).truncated = tabWidth < fontWidth || tabWidth == 0;
 		MN_DrawString(font, ALIGN_UL, textPos, pos[1] + ((node->size[1] - fontHeight) / 2),
 			textPos, pos[1], tabWidth + 1, TILE_HEIGHT,
-			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, _(OPTIONEXTRADATA(option).label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		currentX += tabWidth;
 		allowedWidth -= tabWidth;
 
@@ -285,17 +289,17 @@ static void MN_TabNodeDraw (menuNode_t *node)
  */
 static void MN_TabNodeDrawTooltip (menuNode_t *node, int x, int y)
 {
-	menuOption_t *option;
+	menuNode_t *option;
 	const int tooltipWidth = 250;
 
 	option = MN_TabNodeTabAtPosition(node, x, y);
 	if (option == NULL)
 		return;
 
-	if (!option->truncated)
+	if (!OPTIONEXTRADATA(option).truncated)
 		return;
 
-	MN_DrawTooltip(_(option->label), x, y, tooltipWidth, 0);
+	MN_DrawTooltip(_(OPTIONEXTRADATA(option).label), x, y, tooltipWidth, 0);
 }
 
 /** called when the window is pushed
@@ -321,9 +325,10 @@ static void MN_TabNodeInit (menuNode_t *node)
 	cvarName = &((const char *)node->cvar)[6];
 	if (Cvar_FindVar(cvarName) == NULL) {
 		/* search default value, if possible */
-		menuOption_t* option = EXTRADATA(node).first;
+		menuNode_t* option = node->firstChild;
+		assert(option->behaviour == optionBehaviour);
 		if (option)
-			Cvar_ForceSet(cvarName, option->value);
+			Cvar_ForceSet(cvarName, OPTIONEXTRADATA(option).value);
 	}
 }
 
@@ -335,4 +340,5 @@ void MN_RegisterTabNode (nodeBehaviour_t *behaviour)
 	behaviour->drawTooltip = MN_TabNodeDrawTooltip;
 	behaviour->leftClick = MN_TabNodeClick;
 	behaviour->init = MN_TabNodeInit;
+	behaviour->drawItselfChild = qtrue;
 }

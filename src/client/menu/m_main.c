@@ -201,7 +201,6 @@ static void MN_Memory_f (void)
 	const size_t nodeSize = sizeof(menuNode_t);
 	size_t size;
 	Com_Printf("Allocation:\n");
-	Com_Printf("\t-Option allocation: %i/%i\n", mn.numOptions, MAX_MENUOPTIONS);
 	Com_Printf("\t-Window allocation: %i/%i\n", mn.numWindows, MAX_WINDOWS);
 	Com_Printf("\t-Rendering menu stack slot: %i\n", MAX_MENUSTACK);
 	Com_Printf("\t-Action allocation: %i/%i\n", mn.numActions, MAX_MENUACTIONS);
@@ -210,7 +209,6 @@ static void MN_Memory_f (void)
 	Com_Printf("\t -Node allocation: %i\n", mn.numNodes);
 
 	Com_Printf("Memory:\n");
-	Com_Printf("\t-Option structure size: "UFO_SIZE_T" B\n", sizeof(menuOption_t));
 	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(menuAction_t));
 	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(menuModel_t));
 	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B x%d\n", sizeof(menuNode_t), mn.numNodes);

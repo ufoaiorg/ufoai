@@ -211,7 +211,7 @@ static void MN_DrawNode (menuNode_t *node)
 	vec2_t pos;
 
 	/* update the layout */
-	node->behaviour->doLayout(node);
+	MN_Validate(node);
 
 	/* skip invisible, virtual, and undrawable nodes */
 	if (node->invis || node->behaviour->isVirtual)

@@ -46,6 +46,22 @@ qboolean MN_NodeInstanceOf (const menuNode_t *node, const char* behaviourName)
 }
 
 /**
+ * @brief Check the node inheritance
+ * @param[in] node Requested node
+ * @param[in] behaviour Behaviour we check
+ * @return True if the node inherits from the behaviour
+ */
+qboolean MN_NodeInstanceOfPointer (const menuNode_t *node, const nodeBehaviour_t* behaviour)
+{
+	const nodeBehaviour_t *b;
+	for (b = node->behaviour; b; b = b->super) {
+		if (b == behaviour)
+			return qtrue;
+	}
+	return qfalse;
+}
+
+/**
  * @brief return a relative position of a point into a node.
  * @param [in] node Requested node
  * @param [out] pos Result position
@@ -343,9 +359,6 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 
 	switch (specialType) {
 	case V_NOT_UI:	/* common type */
-		/* not possible to set a string */
-		if (property->type == V_STRING || property->type == V_LONGSTRING)
-			break;
 		result = Com_ParseValue(node, value, property->type, property->ofs, property->size, &bytes);
 		if (result != RESULT_OK) {
 			Com_Printf("MN_NodeSetProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
@@ -555,6 +568,15 @@ void MN_Invalidate (menuNode_t *node)
 		node->invalidated = qtrue;
 		node = node->parent;
 	}
+}
+
+/**
+ * @brief Validate a node tree
+ */
+void MN_Validate (menuNode_t *node)
+{
+	if (node->invalidated)
+		node->behaviour->doLayout(node);
 }
 
 static qboolean MN_AbstractNodeDNDEnter (menuNode_t *node)

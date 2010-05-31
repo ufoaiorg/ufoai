@@ -26,19 +26,21 @@ window transfer
 	}
 
 	tab trans_navigation {
-		pos		"47 106"
-		size	"938 39"
-		cvar	*cvar:mn_itemtype
-		onChange	{
-			cmd "trans_type <cvar:mn_itemtype>;"
-			if ( *cvar:mn_itemtype eq "item" ) {
-				*cvar:mn_itemtype_name = "_Equipment"
-			} elif ( *cvar:mn_itemtype eq "employee" ) {
-				*cvar:mn_itemtype_name = "_Employees"
-			} elif ( *cvar:mn_itemtype eq "alien" ) {
-				*cvar:mn_itemtype_name = "_Aliens"
-			} elif ( *cvar:mn_itemtype eq "aircraft" ) {
-				*cvar:mn_itemtype_name = "_Aircraft"
+		{
+			pos		"47 106"
+			size	"938 39"
+			cvar	*cvar:mn_itemtype
+			onChange	{
+				cmd "trans_type <cvar:mn_itemtype>;"
+				if ( *cvar:mn_itemtype eq "item" ) {
+					*cvar:mn_itemtype_name = "_Equipment"
+				} elif ( *cvar:mn_itemtype eq "employee" ) {
+					*cvar:mn_itemtype_name = "_Employees"
+				} elif ( *cvar:mn_itemtype eq "alien" ) {
+					*cvar:mn_itemtype_name = "_Aliens"
+				} elif ( *cvar:mn_itemtype eq "aircraft" ) {
+					*cvar:mn_itemtype_name = "_Aircraft"
+				}
 			}
 		}
 		option description {

@@ -39,12 +39,14 @@ window production
 	}
 
 	tab market_navigation {
-		pos		"47 106"
-		size	"938 39"
-		cvar	*cvar:mn_itemtype
-		onChange {
-			cmd "prod_type <cvar:mn_itemtype>;"
-			call *node:root.prod_stores
+		{
+			pos		"47 106"
+			size	"938 39"
+			cvar	*cvar:mn_itemtype
+			onChange {
+				cmd "prod_type <cvar:mn_itemtype>;"
+				call *node:root.prod_stores
+			}
 		}
 
 		option description {

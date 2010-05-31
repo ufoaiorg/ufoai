@@ -191,11 +191,13 @@ window skirmish
 
 	selectbox team_box
 	{
-		image	"ui/selectbox_green"
-		pos		"730 300"
-		size	"200 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	*cvar:cl_team
+		{
+			image	"ui/selectbox_green"
+			pos		"730 300"
+			size	"200 20"
+			color	"0.6 0.6 0.6 0.3"
+			cvar	*cvar:cl_team
+		}
 		option low_value {
 			label	"_Human"
 			value	"1"

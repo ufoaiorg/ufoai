@@ -33,11 +33,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractoption.h"
 #include "m_node_abstractnode.h"
 #include "m_node_optiontree.h"
+#include "m_node_option.h"
 #include "m_node_panel.h"
 
 #include "../../client.h" /* gettext _() */
 
-#define EXTRADATA(node) MN_EXTRADATA(node, optionExtraData_t)
+#define EXTRADATA(node) MN_EXTRADATA(node, abstractOptionExtraData_t)
 
 #define CORNER_SIZE 25
 #define MID_SIZE 1
@@ -72,11 +73,11 @@ static void MN_OptionTreeNodeUpdateScroll (menuNode_t *node)
 }
 
 /** @todo we should remove this call loop */
-static menuOption_t* MN_OptionTreeNodeGetFirstOption(menuNode_t * node);
+static menuNode_t* MN_OptionTreeNodeGetFirstOption(menuNode_t * node);
 
 static void MN_OptionTreeNodeUpdateCache (menuNode_t * node)
 {
-	menuOption_t* option = MN_OptionTreeNodeGetFirstOption(node);
+	menuNode_t* option = MN_OptionTreeNodeGetFirstOption(node);
 	if (option)
 		EXTRADATA(node).count = MN_OptionUpdateCache(option);
 }
@@ -85,13 +86,15 @@ static void MN_OptionTreeNodeUpdateCache (menuNode_t * node)
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
  */
-static menuOption_t* MN_OptionTreeNodeGetFirstOption (menuNode_t * node)
+static menuNode_t* MN_OptionTreeNodeGetFirstOption (menuNode_t * node)
 {
-	if (EXTRADATA(node).first) {
-		return EXTRADATA(node).first;
+	if (node->firstChild) {
+		/** FIXME it MUST be an option behaviour */
+		assert(node->firstChild->behaviour == optionBehaviour);
+		return node->firstChild;
 	} else {
 		const int v = MN_GetDataVersion(EXTRADATA(node).dataId);
-		menuOption_t *option = MN_GetOption(EXTRADATA(node).dataId);
+		menuNode_t *option = MN_GetOption(EXTRADATA(node).dataId);
 		if (v != EXTRADATA(node).versionId) {
 			EXTRADATA(node).versionId = v;
 			MN_OptionTreeNodeUpdateCache(node);
@@ -107,7 +110,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
 		MARGE
 	};
-	menuOption_t* option;
+	menuNode_t* option;
 	const char *ref;
 	const char *font;
 	vec2_t pos;
@@ -161,11 +164,11 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 		}
 
 		/* draw the hover effect */
-		if (option->hovered)
+		if (OPTIONEXTRADATA(option).hovered)
 			MN_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, fontHeight, node->color);
 
 		/* text color */
-		if (!strcmp(option->value, ref)) {
+		if (!strcmp(OPTIONEXTRADATA(option).value, ref)) {
 			textColor = node->selectedColor;
 		} else if (node->disabled) {
 			textColor = disabledColor;
@@ -178,7 +181,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 
 		R_Color(NULL);
 		if (option->firstChild) {
-			menuIcon_t *icon = option->collapsed ? systemExpand : systemCollapse;
+			menuIcon_t *icon = OPTIONEXTRADATA(option).collapsed ? systemExpand : systemCollapse;
 			MN_DrawIconInBox(icon, ICON_STATUS_NORMAL, decX, currentY, icon->size[0], fontHeight);
 		}
 
@@ -195,7 +198,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 		R_Color(textColor);
 		MN_DrawString(font, ALIGN_UL, decX, currentY + currentDecY,
 			pos[0], currentY + currentDecY, node->size[0] - node->padding - node->padding, node->size[1],
-			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, _(OPTIONEXTRADATA(option).label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
 		currentY += fontHeight;
@@ -204,9 +207,9 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	R_Color(NULL);
 }
 
-static menuOption_t* MN_OptionTreeNodeGetOptionAtPosition (menuNode_t * node, int x, int y, int *depth)
+static menuNode_t* MN_OptionTreeNodeGetOptionAtPosition (menuNode_t * node, int x, int y, int *depth)
 {
-	menuOption_t* option;
+	menuNode_t* option;
 	const char *font;
 	int fontHeight;
 	int count;
@@ -231,7 +234,7 @@ static menuOption_t* MN_OptionTreeNodeGetOptionAtPosition (menuNode_t * node, in
  */
 static void MN_OptionTreeNodeClick (menuNode_t * node, int x, int y)
 {
-	menuOption_t* option;
+	menuNode_t* option;
 	int depth;
 
 	/* the cvar string is stored in dataModelSkinOrCVar */
@@ -254,7 +257,7 @@ static void MN_OptionTreeNodeClick (menuNode_t * node, int x, int y)
 	x -= depth * DEPTH_WIDTH;
 	if (x >= 0 && x < COLLAPSEBUTTON_WIDTH) {
 		if (option && option->firstChild) {
-			option->collapsed = !option->collapsed;
+			OPTIONEXTRADATA(option).collapsed = !OPTIONEXTRADATA(option).collapsed;
 			MN_OptionTreeNodeUpdateCache(node);
 		}
 		return;
@@ -263,7 +266,7 @@ static void MN_OptionTreeNodeClick (menuNode_t * node, int x, int y)
 	/* update the status */
 	if (option) {
 		const char *cvarName = &((const char *)node->cvar)[6];
-		MN_SetCvar(cvarName, option->value, 0);
+		MN_SetCvar(cvarName, OPTIONEXTRADATA(option).value, 0);
 		if (node->onChange)
 			MN_ExecuteEventActions(node, node->onChange);
 	}
@@ -304,8 +307,8 @@ static void MN_OptionTreeNodeLoaded (menuNode_t *node)
 static void MN_OptionTreeSetSelectedValue (menuNode_t *node, const menuCallContext_t *context)
 {
 	menuOptionIterator_t iterator;
-	menuOption_t *option;
-	menuOption_t *firstOption;
+	menuNode_t *option;
+	menuNode_t *firstOption;
 	const char* value;
 	int pos, i;
 
@@ -336,7 +339,7 @@ static void MN_OptionTreeSetSelectedValue (menuNode_t *node, const menuCallConte
 
 	/* expend parents */
 	for (i = 0; i < iterator.depthPos; i++)
-		iterator.depthCache[i]->collapsed = qfalse;
+		OPTIONEXTRADATA(iterator.depthCache[i]).collapsed = qfalse;
 	MN_OptionTreeNodeUpdateCache(node);
 	MN_OptionTreeNodeUpdateScroll(node);
 
@@ -371,4 +374,5 @@ void MN_RegisterOptionTreeNode (nodeBehaviour_t *behaviour)
 	behaviour->loading = MN_OptionTreeNodeLoading;
 	behaviour->loaded = MN_OptionTreeNodeLoaded;
 	behaviour->properties = properties;
+	behaviour->drawItselfChild = qtrue;
 }

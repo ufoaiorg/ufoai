@@ -60,11 +60,13 @@ window market extends objectinfo
 	}
 
 	tab market_navigation {
-		pos		"47 106"
-		size	"938 39"
-		cvar	*cvar:mn_itemtype
-		onChange {
-			cmd "buy_type <cvar:mn_itemtype>;"
+		{
+			pos		"47 106"
+			size	"938 39"
+			cvar	*cvar:mn_itemtype
+			onChange {
+				cmd "buy_type <cvar:mn_itemtype>;"
+			}
 		}
 
 		option description {

@@ -775,10 +775,10 @@ static void UP_FindEntry_f (void)
  * @param[in] parentChapter requested chapter
  * @return The first option of the list, else NULL if no articles
  */
-static menuOption_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter)
+static menuNode_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter)
 {
 	technology_t *tech = parentChapter->first;
-	menuOption_t* first = NULL;
+	menuNode_t* first = NULL;
 
 	while (tech) {
 		if (UP_TechGetsDisplayed(tech)) {
@@ -800,14 +800,14 @@ static menuOption_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter)
 static void UP_GenerateSummary (void)
 {
 	int i;
-	menuOption_t *chapters = NULL;
+	menuNode_t *chapters = NULL;
 	int num = 0;
 
 	numChaptersDisplayList = 0;
 
 	for (i = 0; i < ccs.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
-		menuOption_t *chapter;
+		menuNode_t *chapter;
 		qboolean researchedEntries = qfalse;
 		upCurrentTech = ccs.upChapters[i].first;
 		do {

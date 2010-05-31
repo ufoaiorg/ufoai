@@ -49,6 +49,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_material_editor.h"
 #include "node/m_node_messagelist.h"
 #include "node/m_node_model.h"
+#include "node/m_node_option.h"
 #include "node/m_node_optionlist.h"
 #include "node/m_node_optiontree.h"
 #include "node/m_node_panel.h"
@@ -104,6 +105,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterMaterialEditorNode,
 	MN_RegisterMessageListNode,
 	MN_RegisterModelNode,
+	MN_RegisterOptionNode,
 	MN_RegisterOptionListNode,
 	MN_RegisterOptionTreeNode,
 	MN_RegisterPanelNode,
@@ -470,7 +472,7 @@ menuNode_t *MN_GetNodeAtPosition (int x, int y)
 		menuNode_t *find;
 
 		/* update the layout */
-		menu->behaviour->doLayout(menu);
+		MN_Validate(menu);
 
 		find = MN_GetNodeInTreeAtPosition(menu, x, y);
 		if (find)

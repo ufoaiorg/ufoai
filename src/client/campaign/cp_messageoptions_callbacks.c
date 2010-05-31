@@ -43,8 +43,8 @@ messageSettings_t backupMessageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding b
  */
 static void MSO_InitList (void)
 {
-	menuOption_t *messageSetting = NULL;
-	menuOption_t *lastCategory = NULL;
+	menuNode_t *messageSetting = NULL;
+	menuNode_t *lastCategory = NULL;
 	int idx;
 
 	/* option already allocated, nothing to do */
@@ -76,19 +76,19 @@ static void MSO_UpdateVisibleButtons (void)
 {
 	int visible;/* current line */
 	menuOptionIterator_t iterator;
-	menuOption_t *messageSetting = MN_GetOption(TEXT_MESSAGEOPTIONS);
+	menuNode_t *messageSetting = MN_GetOption(TEXT_MESSAGEOPTIONS);
 
 	MN_InitOptionIteratorAtIndex(messageList_scroll, messageSetting, &iterator);
 
 	/* update visible button lines based on current displayed values */
 	for (visible = 0; visible < messageList_size; visible++) {
-		const menuOption_t *option = iterator.option;
+		const menuNode_t *option = iterator.option;
 		int idx;
 		msgCategoryEntry_t *entry;
 
 		if (!option)
 			break;
-		idx = atoi(option->value);
+		idx = atoi(OPTIONEXTRADATACONST(option).value);
 
 		entry = &ccs.msgCategoryEntries[idx];
 		if (!entry)
@@ -160,13 +160,13 @@ static void MSO_Toggle_f (void)
 		int optionType;
 		qboolean activate;
 		notify_t type;
-		menuOption_t *messageSetting = MN_GetOption(TEXT_MESSAGEOPTIONS);
+		menuNode_t *messageSetting = MN_GetOption(TEXT_MESSAGEOPTIONS);
 
 		MN_InitOptionIteratorAtIndex(messageList_scroll + listIndex, messageSetting, &iterator);
 		if (!iterator.option)
 			return;
 
-		idx = atoi(iterator.option->value);
+		idx = atoi(OPTIONEXTRADATA(iterator.option).value);
 		selectedEntry = &ccs.msgCategoryEntries[idx];
 		if (!selectedEntry)
 			return;

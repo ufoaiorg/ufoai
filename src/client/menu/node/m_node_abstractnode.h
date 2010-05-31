@@ -32,15 +32,17 @@ void MN_RegisterAbstractNode(nodeBehaviour_t *);
 struct menuNode_s;
 
 qboolean MN_NodeInstanceOf(const menuNode_t *node, const char* behaviourName);
+qboolean MN_NodeInstanceOfPointer(const menuNode_t *node, const nodeBehaviour_t* behaviour);
 qboolean MN_NodeSetProperty(menuNode_t* node, const value_t *property, const char* value);
 void MN_NodeSetPropertyFromRAW(menuNode_t* node, const value_t *property, void* rawValue, const value_t *rawType);
 float MN_GetFloatFromNodeProperty(const struct menuNode_s* node, const value_t* property);
 const char* MN_GetStringFromNodeProperty(const menuNode_t* node, const value_t* property);
 
 /* visibility */
-void MN_UnHideNode(struct menuNode_s* node);
-void MN_HideNode(struct menuNode_s* node);
-void MN_Invalidate(struct menuNode_s* node);
+void MN_UnHideNode(struct menuNode_s *node);
+void MN_HideNode(struct menuNode_s *node);
+void MN_Invalidate(struct menuNode_s *node);
+void MN_Validate(struct menuNode_s *node);
 void MN_NodeSetSize(menuNode_t* node, vec2_t size);
 
 /* position */

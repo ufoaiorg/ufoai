@@ -56,9 +56,6 @@ typedef struct menuGlobal_s {
 	 */
 	menuSharedData_t sharedData[MAX_MENUTEXTS];
 
-	menuOption_t options[MAX_MENUOPTIONS];
-	int numOptions;
-
 	int numNodes;
 
 	menuNode_t* windows[MAX_WINDOWS];

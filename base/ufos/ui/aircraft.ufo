@@ -76,11 +76,13 @@ window iaircraft
 	}
 
 	tab aircraft_navigation {
-		pos		"47 396"
-		size	"938 39"
-		cvar	*cvar:mn_aircrafttab
-		onChange {
-			cmd "mn_pop; mn_push <cvar:mn_aircrafttab>;"
+		{
+			pos		"47 396"
+			size	"938 39"
+			cvar	*cvar:mn_aircrafttab
+			onChange {
+				cmd "mn_pop; mn_push <cvar:mn_aircrafttab>;"
+			}
 		}
 
 		option description {

@@ -29,13 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../shared/ufotypes.h"
 #include "../../shared/shared.h"
+#include "m_nodes.h"
+#include "node/m_node_option.h"
 
 /* prototype */
 struct linkedList_s;
 struct menuIcon_s;
-
-#define MAX_MENUOPTIONS 256
-#define OPTION_MAX_VALUE_LENGTH 32
 
 /** @brief linked into mn.menuText - defined in menu scripts via num */
 typedef enum {
@@ -127,27 +126,6 @@ typedef enum {
 	MN_SHARED_LINESTRIP
 } menuSharedType_t;
 
-/** @brief Option definition */
-typedef struct menuOption_s {
-	char id[MAX_VAR];	/**< text for the select box */
-	char label[OPTION_MAX_VALUE_LENGTH];	/**< text for the select box - V_TRANSLATION_STRING */
-	char value[MAX_VAR];	/**< the value the cvar should get */
-	struct menuIcon_s *icon;	/**< Facultative icon */
-	struct menuOption_s	*firstChild;	/** first child of an option tree */
-	struct menuOption_s *next;	/**< Next element into a linked list of option */
-
-	/* status */
-	qboolean disabled;		/**< If true, the option is not selectable */
-	qboolean invis;			/**< If true, the option is not displayed */
-	qboolean collapsed;		/**< If true, child are not displayed */
-
-	/* cache */
-	qboolean truncated;		/**< If true, the label is not fully displayed */
-	int childCount;			/**< Number of visible recursive child */
-	qboolean hovered;		/**< true if the element is hovered. Deprecated */
-
-} menuOption_t;
-
 typedef struct menuSharedData_s {
 	menuSharedType_t type;		/**< Type of the shared data */
 	union {
@@ -156,7 +134,7 @@ typedef struct menuSharedData_s {
 		/** @brief Holds a linked list for displaying in the menu */
 		struct linkedList_s *linkedListText;
 		/** @brief Holds a linked list for option (label, action, icon...) */
-		struct menuOption_s *option;
+		struct menuNode_s *option;
 		/** @brief Holds a line strip, a list of point */
 		struct lineStrip_s	*lineStrip;
 	} data;						/**< The data */
@@ -166,8 +144,8 @@ typedef struct menuSharedData_s {
 #define MAX_DEPTH_OPTIONITERATORCACHE 8
 
 typedef struct {
-	menuOption_t* option;		/**< current option */
-	menuOption_t* depthCache[MAX_DEPTH_OPTIONITERATORCACHE];	/**< parent link */
+	menuNode_t* option;		/**< current option */
+	menuNode_t* depthCache[MAX_DEPTH_OPTIONITERATORCACHE];	/**< parent link */
 	int depthPos;				/**< current cache position */
 	qboolean skipInvisible;		/**< skip invisible options when we iterate */
 	qboolean skipCollapsed;		/**< skip collapsed options when we iterate */
@@ -187,20 +165,15 @@ const char *MN_GetText(int textId) __attribute__ ((warn_unused_result));
 void MN_RegisterLinkedListText(int textId, struct linkedList_s *text);
 
 /* option */
-struct menuOption_s* MN_AllocStaticOption(int count) __attribute__ ((warn_unused_result));
-void MN_RegisterOption(int dataId, struct menuOption_s *option);
-struct menuOption_s *MN_GetOption(int dataId) __attribute__ ((warn_unused_result));
-void MN_SortOptions(struct menuOption_s **option);
-int MN_OptionUpdateCache (menuOption_t* option);
-menuOption_t* MN_InitOptionIteratorAtIndex(int index, menuOption_t* option, menuOptionIterator_t* iterator);
-menuOption_t* MN_OptionIteratorNextOption(menuOptionIterator_t* iterator);
-void MN_UpdateInvisOptions(menuOption_t *option, const struct linkedList_s *stringList);
-menuOption_t* MN_FindOptionByValue(menuOptionIterator_t* iterator, const char* value);
-int MN_FindOptionPosition(menuOptionIterator_t* iterator, const menuOption_t* option);
-
-/* option tree */
-struct menuOption_s* MN_AddOption(struct menuOption_s**tree, const char* name, const char* label, const char* value);
-void MN_DeleteOption(struct menuOption_s* tree);
+void MN_RegisterOption(int dataId, struct menuNode_s *option);
+struct menuNode_s *MN_GetOption(int dataId) __attribute__ ((warn_unused_result));
+void MN_SortOptions(struct menuNode_s **option);
+struct menuNode_s* MN_InitOptionIteratorAtIndex(int index, struct menuNode_s* option, menuOptionIterator_t* iterator);
+struct menuNode_s* MN_OptionIteratorNextOption(menuOptionIterator_t* iterator);
+void MN_UpdateInvisOptions(struct menuNode_s *option, const struct linkedList_s *stringList);
+struct menuNode_s* MN_FindOptionByValue(menuOptionIterator_t* iterator, const char* value);
+int MN_FindOptionPosition(menuOptionIterator_t* iterator, const struct menuNode_s* option);
+struct menuNode_s* MN_AddOption(struct menuNode_s**tree, const char* name, const char* label, const char* value);
 
 /* line strip */
 void MN_RegisterLineStrip(int dataId, struct lineStrip_s *text);

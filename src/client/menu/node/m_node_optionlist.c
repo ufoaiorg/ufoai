@@ -33,32 +33,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 #include "m_node_optionlist.h"
 #include "m_node_panel.h"
+#include "m_node_option.h"
 
 #include "../../client.h" /* gettext _() */
 
-#define EXTRADATA(node) MN_EXTRADATA(node, optionExtraData_t)
+#define EXTRADATA(node) MN_EXTRADATA(node, abstractOptionExtraData_t)
 
 #define CORNER_SIZE 25
 #define MID_SIZE 1
 #define MARGE 3
-
-/**
- * @brief Return the first option of the node
- * @todo check versionId and update cached data, and fire events
- */
-static menuOption_t* MN_OptionListNodeGetFirstOption (menuNode_t * node)
-{
-	if (EXTRADATA(node).first) {
-		return EXTRADATA(node).first;
-	} else {
-		const int v = MN_GetDataVersion(EXTRADATA(node).dataId);
-		if (v != EXTRADATA(node).versionId) {
-			/* we should update and fire event here */
-			EXTRADATA(node).versionId = v;
-		}
-		return MN_GetOption(EXTRADATA(node).dataId);
-	}
-}
 
 /**
  * @brief Update the scroll according to the number
@@ -87,7 +70,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
 		MARGE
 	};
-	menuOption_t* option;
+	menuNode_t* option;
 	const char *ref;
 	const char *font;
 	int fontHeight;
@@ -113,7 +96,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 	currentY = pos[1] + node->padding;
 
 	/* skip option over current position */
-	option = MN_OptionListNodeGetFirstOption(node);
+	option = MN_AbstractOptionGetFirstOption(node);
 	while (option && count < EXTRADATA(node).scrollY.viewPos) {
 		option = option->next;
 		count++;
@@ -129,11 +112,11 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 		}
 
 		/* draw the hover effect */
-		if (option->hovered)
+		if (OPTIONEXTRADATA(option).hovered)
 			MN_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, fontHeight, node->color);
 
 		/* text color */
-		if (!strcmp(option->value, ref)) {
+		if (!strcmp(OPTIONEXTRADATA(option).value, ref)) {
 			textColor = node->selectedColor;
 		} else if (node->disabled || option->disabled) {
 			textColor = disabledColor;
@@ -154,7 +137,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 		R_Color(textColor);
 		MN_DrawString(font, ALIGN_UL, decX, currentY,
 			pos[0], currentY, node->size[0] - node->padding - node->padding, node->size[1],
-			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, _(OPTIONEXTRADATA(option).label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
 		currentY += fontHeight;
@@ -174,9 +157,9 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 	MN_OptionListNodeUpdateScroll(node);
 }
 
-static menuOption_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, int x, int y)
+static menuNode_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, int x, int y)
 {
-	menuOption_t* option;
+	menuNode_t* option;
 	vec2_t pos;
 	int fontHeight;
 	int currentY;
@@ -189,7 +172,7 @@ static menuOption_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, in
 	font = MN_GetFontFromNode(node);
 	fontHeight = MN_FontGetHeight(font);
 
-	option = MN_OptionListNodeGetFirstOption(node);
+	option = MN_AbstractOptionGetFirstOption(node);
 	while (option && count < EXTRADATA(node).scrollY.viewPos) {
 		option = option->next;
 		count++;
@@ -211,7 +194,7 @@ static menuOption_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, in
  */
 static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
 {
-	menuOption_t* option;
+	menuNode_t* option;
 
 	/* the cvar string is stored in dataModelSkinOrCVar */
 	/* no cvar given? */
@@ -230,7 +213,7 @@ static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
 	/* update the status */
 	if (option) {
 		const char *cvarName = &((const char *)node->cvar)[6];
-		MN_SetCvar(cvarName, option->value, 0);
+		MN_SetCvar(cvarName, OPTIONEXTRADATA(option).value, 0);
 		if (node->onChange)
 			MN_ExecuteEventActions(node, node->onChange);
 	}
@@ -277,4 +260,5 @@ void MN_RegisterOptionListNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseWheel = MN_OptionListNodeMouseWheel;
 	behaviour->loading = MN_OptionListNodeLoading;
 	behaviour->loaded = MN_OptionListNodeLoaded;
+	behaviour->drawItselfChild = qtrue;
 }

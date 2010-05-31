@@ -284,9 +284,14 @@ window mp_team_edit extends objectinfo
 
 	tab equip_type
 	{
-		pos		"400 365"
-		size	"505 40"
-		cvar	*cvar:mn_equiptype
+		{
+			pos		"400 365"
+			size	"505 40"
+			cvar	*cvar:mn_equiptype
+			onChange {
+				cmd "mp_update_item_list;"
+			}
+		}
 		option primary {
 			label	"_Primary"
 			value	"0"
@@ -306,9 +311,6 @@ window mp_team_edit extends objectinfo
 		option armour {
 			label	"_Armour"
 			value	"4"
-		}
-		onChange {
-			cmd "mp_update_item_list;"
 		}
 	}
 
@@ -561,9 +563,18 @@ window mp_team_edit extends objectinfo
 	}
 
 	tab info {
-		pos		"20 365"
-		size	"355 40"
-		cvar	*cvar:mn_infotype
+		{
+			pos		"20 365"
+			size	"355 40"
+			cvar	*cvar:mn_infotype
+			onChange {
+				if ( *cvar:mn_infotype == 0 ) {
+					call *node:root.mp_actor_stats
+				} elif ( *cvar:mn_infotype == 1 ) {
+					call *node:root.mp_weapon_stats
+				}
+			}
+		}
 		option abilities {
 			label	"_Actor Abilities"
 			value	"0"
@@ -571,13 +582,6 @@ window mp_team_edit extends objectinfo
 		option weaponinfo {
 			label	"_Object Info"
 			value	"1"
-		}
-		onChange {
-			if ( *cvar:mn_infotype == 0 ) {
-				call *node:root.mp_actor_stats
-			} elif ( *cvar:mn_infotype == 1 ) {
-				call *node:root.mp_weapon_stats
-			}
 		}
 	}
 
@@ -903,11 +907,13 @@ window mp_team extends abstract_multiplayer
 
 		selectbox team_box
 		{
-			image	"ui/selectbox_green"
-			pos		"200 570"
-			size	"125 20"
-			color	"0.6 0.6 0.6 0.3"
-			cvar	*cvar:cl_team
+			{
+				image	"ui/selectbox_green"
+				pos		"200 570"
+				size	"125 20"
+				color	"0.6 0.6 0.6 0.3"
+				cvar	*cvar:cl_team
+			}
 			option low_value {
 				label	"_Human"
 				value	"1"

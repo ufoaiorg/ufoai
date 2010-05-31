@@ -1568,9 +1568,14 @@ window popup_intercept
 	}
 
 	tab defence_navigation {
-		pos		"18 55"
-		size	"515 40"
-		cvar	*cvar:mn_defencetab
+		{
+			pos		"18 55"
+			size	"515 40"
+			cvar	*cvar:mn_defencetab
+			onChange {
+				cmd "popup_intercept_update;"
+			}
+		}
 		option aircraft {
 			label	"_Aircraft interception"
 			value	"0"
@@ -1578,9 +1583,6 @@ window popup_intercept
 		option sam {
 			label	"_SAM defence"
 			value	"1"
-		}
-		onChange {
-			cmd "popup_intercept_update;"
 		}
 	}
 
@@ -1945,16 +1947,18 @@ window geoscape_options {
 		}
 
 		selectbox value {
-			pos			"250 0"
-			size		"55 20"
-			cvar		*cvar:cl_3dmap
-			image		"ui/selectbox_green"
-			color		"0.6 0.6 0.6 0.3"
-			option 2d {
+			{
+				pos			"250 0"
+				size		"55 20"
+				cvar		*cvar:cl_3dmap
+				image		"ui/selectbox_green"
+				color		"0.6 0.6 0.6 0.3"
+			}
+			option mode2d {
 				label	"_2D"
 				value	"0"
 			}
-			option 3d {
+			option mode3d {
 				label	"_3D"
 				value	"1"
 			}

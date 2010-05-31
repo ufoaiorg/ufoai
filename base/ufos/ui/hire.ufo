@@ -475,16 +475,17 @@ window employees
 	}
 
 	tab empl_switch {
-		cvar		*cvar:mn_hiretype
-		pos			"47 106"
-		size		"938 39"
-		onChange {
-			cmd "employee_init <cvar:mn_hiretype>;"
-			*node:root.employee_list@lineselected = 0
-			*node:root.employee_list@viewpos = 0
-			*node:root.scroll@current = 0
+		{
+			cvar		*cvar:mn_hiretype
+			pos			"47 106"
+			size		"938 39"
+			onChange {
+				cmd "employee_init <cvar:mn_hiretype>;"
+				*node:root.employee_list@lineselected = 0
+				*node:root.employee_list@viewpos = 0
+				*node:root.scroll@current = 0
+			}
 		}
-
 		option soldier {
 			label	"_Soldiers"
 			value	"0"

@@ -43,17 +43,6 @@ static qboolean MN_ParseProperty(void* object, const value_t *property, const ch
 static menuAction_t *MN_ParseActionList(menuNode_t *menuNode, const char **text, const const char **token);
 static menuNode_t *MN_ParseNode(menuNode_t * parent, const char **text, const char **token, const char *errhead);
 
-/** @brief valid properties for options (selectbox, tab...) */
-static const value_t optionProperties[] = {
-	{"label", V_TRANSLATION_STRING, offsetof(menuOption_t, label), sizeof(char) * OPTION_MAX_VALUE_LENGTH},
-	{"value", V_STRING, offsetof(menuOption_t, value), 0},
-	{"icon", V_UI_ICONREF, offsetof(menuOption_t, icon), 0},
-	{"disabled", V_BOOL, offsetof(menuOption_t, disabled), MEMBER_SIZEOF(menuOption_t, disabled)},
-	{"invis", V_BOOL, offsetof(menuOption_t, invis), MEMBER_SIZEOF(menuOption_t, invis)},
-
-	{NULL, V_NULL, 0, 0},
-};
-
 /** @brief valid properties for a menu model definition */
 static const value_t menuModelProperties[] = {
 	{"model", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, model), 0},
@@ -506,84 +495,6 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 	return firstAction;
 }
 
-/**
- * @brief Parse an option into a node
- * the options data can be defined like this
- * @code
- * option string {
- *  value "value"
- *  action "command string"
- * }
- * @endcode
- * The strings will appear in the drop down list of the select box
- * if you select the 'string', the 'cvarname' will be set to 'value'
- * and if action is defined (which is a console/script command string)
- * this one is executed on each selection
- */
-static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char **token, const char *errhead)
-{
-	menuOption_t *option;
-
-	/* get parameters */
-	*token = Com_EParse(text, errhead, node->name);
-	if (!*text)
-		return qfalse;
-
-	option = MN_AllocStaticOption(1);
-	if (option == NULL) {
-		Com_Printf("MN_ParseOption: Too many option entries for node %s\n", MN_GetPath(node));
-
-		*token = Com_EParse(text, errhead, node->name);
-		if (!*text)
-			return qfalse;
-		if (*token[0] != '{') {
-			Com_Printf("MN_ParseOption: node with bad option definition ignored (node \"%s\")\n", MN_GetPath(node));
-			return qfalse;
-		}
-		FS_SkipBlock(text);
-		return qfalse;
-	}
-
-	Q_strncpyz(option->id, *token, sizeof(option->id));
-	Com_DPrintf(DEBUG_CLIENT, "...found selectbox: '%s'\n", *token);
-
-	*token = Com_EParse(text, errhead, node->name);
-	if (!*text)
-		return qfalse;
-	if (*token[0] != '{') {
-		Com_Printf("MN_ParseOption: node with bad option definition ignored (node \"%s\")\n", MN_GetPath(node));
-		return qfalse;
-	}
-
-	do {
-		const value_t *property;
-		int result;
-
-		*token = Com_EParse(text, errhead, node->name);
-		if (!*text)
-			return qfalse;
-
-		if (*token[0] == '}')
-			break;
-
-		property = MN_FindPropertyByName(optionProperties, *token);
-		if (!property) {
-			Com_Printf("MN_ParseOption: unknown options property: '%s'\n", *token);
-			return qfalse;
-		}
-
-		/* get parameter values */
-		result = MN_ParseProperty(option, property, option->id, text, token);
-		if (!result) {
-			Com_Printf("MN_ParseOption: Parsing for option '%s'. See upper\n", option->id);
-			return qfalse;
-		}
-
-	} while (*token[0] != '}');
-	MN_NodeAppendOption(node, option);
-	return qtrue;
-}
-
 static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const char **token, const char *errhead)
 {
 	excludeRect_t rect;
@@ -784,12 +695,6 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 		case V_UI_EXCLUDERECT:
 			result = MN_ParseExcludeRect(object, text, token, errhead);
-			if (!result)
-				return qfalse;
-			break;
-
-		case V_UI_OPTIONNODE:
-			result = MN_ParseOption(object, text, token, errhead);
 			if (!result)
 				return qfalse;
 			break;

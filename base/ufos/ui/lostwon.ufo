@@ -166,11 +166,13 @@ window uforecovery
 	}
 
 	tab uforecovery_navigation {
-		pos		"17 125"
-		size	"667 38"
-		cvar	*cvar:mn_uforecovery_tab
-		onChange {
-			cmd "uforecovery_tabselect <cvar:mn_uforecovery_tab> ;"
+		{
+			pos		"17 125"
+			size	"667 38"
+			cvar	*cvar:mn_uforecovery_tab
+			onChange {
+				cmd "uforecovery_tabselect <cvar:mn_uforecovery_tab> ;"
+			}
 		}
 		option store {
 			label	"_Store UFO"

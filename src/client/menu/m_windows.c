@@ -587,8 +587,7 @@ void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
 		menuNode_t* node = WINDOWEXTRADATA(window).renderNode;
 		vec2_t pos;
 
-		/* update the layout */
-		window->behaviour->doLayout(window);
+		MN_Validate(window);
 
 		MN_GetNodeAbsPos(node, pos);
 		*x = pos[0] * viddef.rx;

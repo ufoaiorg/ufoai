@@ -25,7 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "m_main.h"
 #include "m_internal.h"
+#include "m_nodes.h"
 #include "node/m_node_linechart.h"
+#include "node/m_node_option.h"
 
 /**
  * @brief
@@ -176,13 +178,12 @@ int MN_GetDataVersion (int textId)
  * @param[in] label label displayed
  * @param[in] value value used when this option is selected
  */
-static void MN_InitOption (menuOption_t* option, const char* nameID, const char* label, const char* value)
+static void MN_InitOption (menuNode_t* option, const char* label, const char* value)
 {
 	assert(option);
-	memset(option, 0, sizeof(*option));
-	Q_strncpyz(option->id, nameID, sizeof(option->id));
-	Q_strncpyz(option->label, label, sizeof(option->label));
-	Q_strncpyz(option->value, value, sizeof(option->value));
+	assert(option->behaviour == optionBehaviour);
+	Q_strncpyz(OPTIONEXTRADATA(option).label, label, sizeof(OPTIONEXTRADATA(option).label));
+	Q_strncpyz(OPTIONEXTRADATA(option).value, value, sizeof(OPTIONEXTRADATA(option).value));
 }
 
 /**
@@ -193,14 +194,14 @@ static void MN_InitOption (menuOption_t* option, const char* nameID, const char*
  * @param[in] value value used when this option is selected
  * @return The new option
  */
-menuOption_t* MN_AddOption (menuOption_t**tree, const char* name, const char* label, const char* value)
+menuNode_t* MN_AddOption (menuNode_t**tree, const char* name, const char* label, const char* value)
 {
-	menuOption_t *last;
-	menuOption_t *option;
+	menuNode_t *last;
+	menuNode_t *option;
 	assert(tree != NULL);
 
-	option = (menuOption_t*)Mem_PoolAlloc(sizeof(*option), mn_dynPool, 0);
-	MN_InitOption(option, name, label, value);
+	option = MN_AllocNode(name, "option", qtrue);
+	MN_InitOption(option, label, value);
 
 	/* append the option */
 	last = *tree;
@@ -217,14 +218,17 @@ menuOption_t* MN_AddOption (menuOption_t**tree, const char* name, const char* la
 	return option;
 }
 
-void MN_DeleteOption (menuOption_t* tree)
+/**
+ * @warning If we use it with real option node, i will crash the code cause
+ * relation with parent node are not updated
+ * @param tree
+ */
+static void MN_DeleteOption (menuNode_t* tree)
 {
 	while (tree) {
-		menuOption_t* del = tree;
+		menuNode_t* del = tree;
 		tree = tree->next;
-		if (del->firstChild)
-			MN_DeleteOption(del->firstChild);
-		Mem_Free(del);
+		MN_DeleteNode(del);
 	}
 }
 
@@ -257,13 +261,14 @@ void MN_ResetData (int dataId)
 /**
  * @brief Remove the higher element (in alphabet) from a list
  * @todo option should start with '_' if we need to translate it
+ * @warning update parent
  */
-static menuOption_t *MN_OptionNodeRemoveHigherOption (menuOption_t **option)
+static menuNode_t *MN_OptionNodeRemoveHigherOption (menuNode_t **option)
 {
-	menuOption_t *prev = *option;
-	menuOption_t *prevfind = NULL;
-	menuOption_t *search = (*option)->next;
-	const char *label = (*option)->label;
+	menuNode_t *prev = *option;
+	menuNode_t *prevfind = NULL;
+	menuNode_t *search = (*option)->next;
+	const char *label = OPTIONEXTRADATA(*option).label;
 #if 0
 	if (label[0] == '_')
 #endif
@@ -271,7 +276,7 @@ static menuOption_t *MN_OptionNodeRemoveHigherOption (menuOption_t **option)
 
 	/* search the smaller element */
 	while (search) {
-		const char *searchlabel = search->label;
+		const char *searchlabel = OPTIONEXTRADATA(search).label;
 #if 0
 		if (searchlabel[0] == '_')
 #endif
@@ -286,11 +291,11 @@ static menuOption_t *MN_OptionNodeRemoveHigherOption (menuOption_t **option)
 
 	/* remove the first element */
 	if (prevfind == NULL) {
-		menuOption_t *tmp = *option;
+		menuNode_t *tmp = *option;
 		*option = (*option)->next;
 		return tmp;
 	} else {
-		menuOption_t *tmp = prevfind->next;
+		menuNode_t *tmp = prevfind->next;
 		prevfind->next = tmp->next;
 		return tmp;
 	}
@@ -299,9 +304,9 @@ static menuOption_t *MN_OptionNodeRemoveHigherOption (menuOption_t **option)
 /**
  * @brief Sort options by alphabet
  */
-void MN_SortOptions (menuOption_t **first)
+void MN_SortOptions (menuNode_t **first)
 {
-	menuOption_t *option;
+	menuNode_t *option;
 
 	/* unlink the unsorted list */
 	option = *first;
@@ -311,7 +316,7 @@ void MN_SortOptions (menuOption_t **first)
 
 	/* construct a sorted list */
 	while (option) {
-		menuOption_t *element;
+		menuNode_t *element;
 		element = MN_OptionNodeRemoveHigherOption(&option);
 		element->next = *first;
 		*first = element;
@@ -323,13 +328,13 @@ void MN_SortOptions (menuOption_t **first)
  * @param[in,out] option Option list we want to update
  * @param[in] stringList List of option name (ID) we want to display
  */
-void MN_UpdateInvisOptions (menuOption_t *option, const linkedList_t *stringList)
+void MN_UpdateInvisOptions (menuNode_t *option, const linkedList_t *stringList)
 {
 	if (option == NULL || stringList == NULL)
 		return;
 
 	while (option) {
-		if (LIST_ContainsString(stringList, option->id))
+		if (LIST_ContainsString(stringList, option->name))
 			option->invis = qfalse;
 		else
 			option->invis = qtrue;
@@ -337,7 +342,7 @@ void MN_UpdateInvisOptions (menuOption_t *option, const linkedList_t *stringList
 	}
 }
 
-void MN_RegisterOption (int dataId, menuOption_t *option)
+void MN_RegisterOption (int dataId, menuNode_t *option)
 {
 	/** Hack to disable release option memory, if we only want to update the same option */
 	if (mn.sharedData[dataId].type == MN_SHARED_OPTION && mn.sharedData[dataId].data.option == option) {
@@ -358,7 +363,7 @@ void MN_RegisterLineStrip (int dataId, lineStrip_t *lineStrip)
 	mn.sharedData[dataId].versionId++;
 }
 
-menuOption_t *MN_GetOption (int dataId)
+menuNode_t *MN_GetOption (int dataId)
 {
 	if (mn.sharedData[dataId].type == MN_SHARED_OPTION) {
 		return mn.sharedData[dataId].data.option;
@@ -367,59 +372,15 @@ menuOption_t *MN_GetOption (int dataId)
 }
 
 /**
- * @brief Allocates an array of option
- */
-menuOption_t* MN_AllocStaticOption (int count)
-{
-	menuOption_t* newOptions;
-	assert(count > 0);
-
-	if (mn.numOptions + count >= MAX_MENUOPTIONS)
-		Com_Error(ERR_FATAL, "MN_AllocStaticOption: numOptions exceeded - increase MAX_MENUOPTIONS");
-
-	newOptions = &mn.options[mn.numOptions];
-	mn.numOptions += count;
-	return newOptions;
-}
-
-/**
- * @brief update option cache about child, according to collapse and visible status
- * @note can be a common function for all option node
- * @return number of visible elements
- */
-int MN_OptionUpdateCache (menuOption_t* option)
-{
-	int count = 0;
-	while (option) {
-		int localCount = 0;
-		if (option->invis) {
-			option = option->next;
-			continue;
-		}
-		if (option->collapsed) {
-			option->childCount = 0;
-			option = option->next;
-			count++;
-			continue;
-		}
-		if (option->firstChild)
-			localCount = MN_OptionUpdateCache(option->firstChild);
-		option->childCount = localCount;
-		count += 1 + localCount;
-		option = option->next;
-	}
-	return count;
-}
-
-/**
  * @brief find an option why index (0 is the first option)
  * @param[in] index Requested index (0 is the first option)
  * @param[in] option First element of options (it can be a tree)
  * @param[in,out] iterator need an initialised iterator, and update it into the write index
  */
-static menuOption_t* MN_FindOptionAtIndex (int index, menuOption_t* option, menuOptionIterator_t* iterator)
+static menuNode_t* MN_FindOptionAtIndex (int index, menuNode_t* option, menuOptionIterator_t* iterator)
 {
 	while (option) {
+		assert(option->behaviour == optionBehaviour);
 		if (option->invis) {
 			option = option->next;
 			continue;
@@ -434,20 +395,20 @@ static menuOption_t* MN_FindOptionAtIndex (int index, menuOption_t* option, menu
 		/* not the parent */
 		index--;
 
-		if (option->collapsed) {
+		if (OPTIONEXTRADATA(option).collapsed) {
 			option = option->next;
 			continue;
 		}
 
 		/* its a child */
-		if (index < option->childCount) {
+		if (index < OPTIONEXTRADATA(option).childCount) {
 			if (iterator->depthPos >= MAX_DEPTH_OPTIONITERATORCACHE)
 				assert(qfalse);
 			iterator->depthCache[iterator->depthPos] = option;
 			iterator->depthPos++;
 			return MN_FindOptionAtIndex(index, option->firstChild, iterator);
 		}
-		index -= option->childCount;
+		index -= OPTIONEXTRADATA(option).childCount;
 		option = option->next;
 	}
 
@@ -472,8 +433,9 @@ static menuOption_t* MN_FindOptionAtIndex (int index, menuOption_t* option, menu
  * @endcode
  * @todo Rework that code, we should split "Init" and "AtIndex"
  */
-menuOption_t* MN_InitOptionIteratorAtIndex (int index, menuOption_t* option, menuOptionIterator_t* iterator)
+menuNode_t* MN_InitOptionIteratorAtIndex (int index, menuNode_t* option, menuOptionIterator_t* iterator)
 {
+	assert(option->behaviour == optionBehaviour);
 	memset(iterator, 0, sizeof(*iterator));
 	iterator->skipCollapsed = qtrue;
 	iterator->skipInvisible = qtrue;
@@ -484,16 +446,16 @@ menuOption_t* MN_InitOptionIteratorAtIndex (int index, menuOption_t* option, men
  * @brief Find the next element from the iterator
  * Iterator skipCollapsed and skipInvisible attribute can control the option flow
  */
-menuOption_t* MN_OptionIteratorNextOption (menuOptionIterator_t* iterator)
+menuNode_t* MN_OptionIteratorNextOption (menuOptionIterator_t* iterator)
 {
-	menuOption_t* option;
+	menuNode_t* option;
 
 	option = iterator->option;
 	assert(iterator->depthPos < MAX_DEPTH_OPTIONITERATORCACHE);
 	iterator->depthCache[iterator->depthPos] = option;
 	iterator->depthPos++;
 
-	if (option->collapsed && iterator->skipCollapsed)
+	if (OPTIONEXTRADATA(option).collapsed && iterator->skipCollapsed)
 		option = NULL;
 	else
 		option = option->firstChild;
@@ -522,10 +484,11 @@ menuOption_t* MN_OptionIteratorNextOption (menuOptionIterator_t* iterator)
  * @param[in] value The value we search
  * @return The right option, else NULL
  */
-menuOption_t* MN_FindOptionByValue (menuOptionIterator_t* iterator, const char* value)
+menuNode_t* MN_FindOptionByValue (menuOptionIterator_t* iterator, const char* value)
 {
 	while (iterator->option) {
-		if (!strcmp(iterator->option->value, value))
+		assert(iterator->option->behaviour == optionBehaviour);
+		if (!strcmp(OPTIONEXTRADATA(iterator->option).value, value))
 			return iterator->option;
 		MN_OptionIteratorNextOption(iterator);
 	}
@@ -538,7 +501,7 @@ menuOption_t* MN_FindOptionByValue (menuOptionIterator_t* iterator, const char* 
  * @param[in] option The value we search
  * @return The option index, else -1
  */
-int MN_FindOptionPosition (menuOptionIterator_t* iterator, const menuOption_t* option)
+int MN_FindOptionPosition (menuOptionIterator_t* iterator, const menuNode_t* option)
 {
 	int i = 0;
 	while (iterator->option) {

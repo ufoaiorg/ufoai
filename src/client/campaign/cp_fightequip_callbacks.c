@@ -223,7 +223,7 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 	technology_t **currentTech;
 	const base_t *base = slot->aircraft->homebase;
 	int count = 0;
-	menuOption_t *AIM_items = NULL;
+	menuNode_t *AIM_items = NULL;
 
 	assert(slot);
 
@@ -243,7 +243,7 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 	while (*currentTech) {
 		if (AIM_CrafttypeFilter(base, slot, airequipID, *currentTech)) {
 			int amount;
-			menuOption_t *option;
+			menuNode_t *option;
 			objDef_t *item = INVSH_GetItemByID((*currentTech)->provides);
 			assert(item);
 			amount = base->storage.numItems[item->idx];

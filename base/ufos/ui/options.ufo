@@ -541,12 +541,14 @@ window options
 		// ==============================
 		selectbox lightmapres_box
 		{
-			tooltip		"_Low means a maximum lightmap resolution of 512 x 512 pixel. High means up to 2048 x 2048 pixel."
-			cvar		*cvar:r_maxlightmap
-			image		"ui/selectbox_green"
-			pos			"359 192"
-			size		"125 20"
-			color		"0.6 0.6 0.6 0.3"
+			{
+				tooltip		"_Low means a maximum lightmap resolution of 512 x 512 pixel. High means up to 2048 x 2048 pixel."
+				cvar		*cvar:r_maxlightmap
+				image		"ui/selectbox_green"
+				pos			"359 192"
+				size		"125 20"
+				color		"0.6 0.6 0.6 0.3"
+			}
 			option low_value {
 				label	"_Low"
 				value	"256"
@@ -569,12 +571,14 @@ window options
 		// =============================
 		selectbox texres_box
 		{
-			tooltip		"_Low means a maximum of 256x256 pixel texture resolution. Extreme means up to 8192x8192 pixel."
-			cvar		*cvar:r_maxtexres
-			image		"ui/selectbox_green"
-			pos			"359 167"
-			size		"125 20"
-			color		"0.6 0.6 0.6 0.3"
+			{
+				tooltip		"_Low means a maximum of 256x256 pixel texture resolution. Extreme means up to 8192x8192 pixel."
+				cvar		*cvar:r_maxtexres
+				image		"ui/selectbox_green"
+				pos			"359 167"
+				size		"125 20"
+				color		"0.6 0.6 0.6 0.3"
+			}
 			option low_value {
 				label	"_Low"
 				value	"256"
@@ -617,12 +621,17 @@ window options
 		// ===============================
 		selectbox select_ratio
 		{
-			tooltip		"_Display only resolutions using this screen ratio."
-			cvar		*cvar:mn_vidratio
-			pos			"255 142"
-			size		"100 20"
-			image		"ui/selectbox_green"
-			color		"0.6 0.6 0.6 0.3"
+			{
+				tooltip		"_Display only resolutions using this screen ratio."
+				cvar		*cvar:mn_vidratio
+				pos			"255 142"
+				size		"100 20"
+				image		"ui/selectbox_green"
+				color		"0.6 0.6 0.6 0.3"
+				onChange {
+					cmd "cl_setratiofilter <cvar:mn_vidratio>"
+				}
+			}
 			option all {
 				label	"_All ratios"
 				value	"all"
@@ -650,9 +659,6 @@ window options
 			option custom {
 				label	"_Others"
 				value	"custom"
-			}
-			onChange {
-				cmd "cl_setratiofilter <cvar:mn_vidratio>"
 			}
 		}
 		// =========================
@@ -784,12 +790,14 @@ window options
 		}
 		selectbox rate_box
 		{
-			tooltip		"_The current sample rate in kHz."
-			cvar		*cvar:snd_rate
-			image		"ui/selectbox_green"
-			pos			"359 305"
-			size		"125 20"
-			color		"0.6 0.6 0.6 0.3"
+			{
+				tooltip		"_The current sample rate in kHz."
+				cvar		*cvar:snd_rate
+				image		"ui/selectbox_green"
+				pos			"359 305"
+				size		"125 20"
+				color		"0.6 0.6 0.6 0.3"
+			}
 			option low_value {
 				label	"11025"
 				value	"11025"
@@ -1366,12 +1374,14 @@ window options
 		}
 		selectbox select_confirmactions
 		{
-			tooltip		"_'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
-			cvar		*cvar:confirm_actions
-			image		"ui/selectbox_green"
-			pos			"343 360"
-			size		"155 20"
-			color		"0.6 0.6 0.6 0.3"
+			{
+				tooltip		"_'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
+				cvar		*cvar:confirm_actions
+				image		"ui/selectbox_green"
+				pos			"343 360"
+				size		"155 20"
+				color		"0.6 0.6 0.6 0.3"
+			}
 			option confirm_value {
 				label	"_Yes"
 				value	"1"
@@ -1397,12 +1407,14 @@ window options
 		}
 		selectbox select_autostand
 		{
-			tooltip		"_Select 'Yes' if you want more intelligent soldiers."
-			cvar		*cvar:cl_autostand
-			image		"ui/selectbox_green"
-			pos			"343 385"
-			size		"155 20"
-			color		"0.6 0.6 0.6 0.3"
+			{
+				tooltip		"_Select 'Yes' if you want more intelligent soldiers."
+				cvar		*cvar:cl_autostand
+				image		"ui/selectbox_green"
+				pos			"343 385"
+				size		"155 20"
+				color		"0.6 0.6 0.6 0.3"
+			}
 			option confirm_value {
 				label	"_Yes"
 				value	"1"
@@ -1442,12 +1454,14 @@ window options
 		}
 		selectbox select_hud
 		{
-			tooltip		"_Don't be shy and try the Alternative HUD."
-			cvar		*cvar:mn_hud
-			image		"ui/selectbox_green"
-			pos			"343 410"
-			size		"155 20"
-			color		"0.6 0.6 0.6 0.3"
+			{
+				tooltip		"_Don't be shy and try the Alternative HUD."
+				cvar		*cvar:mn_hud
+				image		"ui/selectbox_green"
+				pos			"343 410"
+				size		"155 20"
+				color		"0.6 0.6 0.6 0.3"
+			}
 			option hud_value {
 				label	"_Original HUD"
 				value	"hud"

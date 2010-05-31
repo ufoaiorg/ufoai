@@ -36,9 +36,6 @@ typedef struct {
 	int dataId;							/**< Shared data id where we can find option */
 	int versionId;						/**< Cached version of the shared data, to check update */
 
-	/* link to internal data */
-	struct menuOption_s *first;			/**< first option */
-
 	/* information */
 	struct menuOption_s *selected;		/**< current selected option */
 	struct menuOption_s *hovered;		/**< current hovered option */
@@ -48,13 +45,13 @@ typedef struct {
 	menuScroll_t scrollY;				/**< Scroll position, if need */
 
 	struct menuAction_s *onViewChange;	/**< called when view change (number of elements...) */
-} optionExtraData_t;
+} abstractOptionExtraData_t;
 
 struct menuNode_s;
 struct nodeBehaviour_s;
 
-struct menuOption_s* MN_NodeAppendOption(struct menuNode_s *node, struct menuOption_s* option);
-void MN_OptionNodeSortOptions(struct menuNode_s *node);
 void MN_RegisterAbstractOptionNode(struct nodeBehaviour_s *behaviour);
+void MN_OptionNodeSortOptions(struct menuNode_s *node);
+struct menuNode_s* MN_AbstractOptionGetFirstOption(menuNode_t * node);
 
 #endif

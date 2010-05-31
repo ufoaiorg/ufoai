@@ -71,9 +71,14 @@ window ufopedia extends objectinfo
 		}
 
 		tab navigation {
-			cvar	*cvar:ufopedia_content
-			pos		"1 0"
-			size	"622 43"
+			{
+				cvar	*cvar:ufopedia_content
+				pos		"1 0"
+				size	"622 43"
+				onChange {
+					cmd "update_ufopedia_layout"
+				}
+			}
 			
 			option description {
 				label	"_Description"
@@ -86,9 +91,6 @@ window ufopedia extends objectinfo
 			option stats {
 				label	"_Statistics"
 				value	"stats"
-			}
-			onChange {
-				cmd "update_ufopedia_layout"
 			}
 		}
 

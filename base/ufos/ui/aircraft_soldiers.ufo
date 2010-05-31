@@ -355,11 +355,13 @@ window team extends iaircraft
 	}
 
 	tab actor_stat {
-		pos		"212 12"
-		size	"432 39"
-		cvar	*cvar:mn_actor_stat
-		onChange {
-			cmd "select_actor_stat <cvar:mn_actor_stat>;"
+		{
+			pos		"212 12"
+			size	"432 39"
+			cvar	*cvar:mn_actor_stat
+			onChange {
+				cmd "select_actor_stat <cvar:mn_actor_stat>;"
+			}
 		}
 		option phys {
 			label	"_Physical stats"
@@ -370,7 +372,6 @@ window team extends iaircraft
 			value	"stats_missions"
 		}
 	}
-
 
 	panel stats_phys {
 	{

@@ -219,7 +219,7 @@ void CL_LanguageInit (void)
 {
 	int i;
 	language_t* language;
-	menuOption_t *languageOption = NULL;
+	menuNode_t *languageOption = NULL;
 	char systemLanguage[MAX_VAR];
 
 	if (s_language->string[0] != '\0') {

@@ -31,54 +31,32 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractoption.h"
 #include "m_node_abstractnode.h"
 
-#define SELECTBOX_SIDE_WIDTH 7.0f
-#define SELECTBOX_RIGHT_WIDTH 20.0f
-
-#define SELECTBOX_SPACER 2.0f
-#define SELECTBOX_BOTTOM_HEIGHT 4.0f
-
-#define EXTRADATA_TYPE optionExtraData_t
+#define EXTRADATA_TYPE abstractOptionExtraData_t
 #define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+
+const nodeBehaviour_t *abstractOptionBehaviour;
 
 /**
  * @brief Sort options by alphabet
  */
 void MN_OptionNodeSortOptions (menuNode_t *node)
 {
+	menuNode_t *option;
 	assert(MN_NodeInstanceOf(node, "abstractoption"));
-	MN_SortOptions(&EXTRADATA(node).first);
-}
+	MN_SortOptions(&node->firstChild);
 
-/**
- * @brief Adds a new selectbox option to a selectbox node
- * @return NULL if menuSelectBoxes is 'full' - otherwise pointer to the selectBoxOption
- * @param[in] node Context node
- * @param[in] newOption The option to add
- * @note You have to add the values manually to the option pointer
- */
-menuOption_t* MN_NodeAppendOption (menuNode_t *node, menuOption_t *newOption)
-{
-	assert(node);
-	assert(newOption);
-	assert(MN_NodeInstanceOf(node, "abstractoption"));
-
-	if (!EXTRADATA(node).first)
-		EXTRADATA(node).first = newOption;
-	else {
-		/* link it in */
-		menuOption_t *option = EXTRADATA(node).first;
-		while (option->next)
-			option = option->next;
-		option->next = newOption;
-	}
-	EXTRADATA(node).count++;
-	return newOption;
+	/** update lastChild */
+	/** TODO the sort option should do it itself */
+	option = node->firstChild;
+	while (option->next)
+		option = option->next;
+	node->lastChild = option;
 }
 
 static void MN_UpdateOption_f (void)
 {
 	menuNode_t *node;
-	menuOption_t *option;
+	menuNode_t *option;
 
 	if (Cmd_Argc() != 4) {
 		Com_Printf("Usage: %s <nodepath> <optionname> <hide|display|enable|disable>\n", Cmd_Argv(0));
@@ -96,9 +74,9 @@ static void MN_UpdateOption_f (void)
 		return;
 	}
 
-	option = EXTRADATA(node).first;
+	option = node->firstChild;
 	while (option) {
-		if (!strcmp(option->id, Cmd_Argv(2)))
+		if (!strcmp(option->name, Cmd_Argv(2)))
 			break;
 		option = option->next;
 	}
@@ -123,30 +101,71 @@ static void MN_UpdateOption_f (void)
 
 static const value_t properties[] = {
 	/** Optional. Data ID we want to use. It must be an option list. It substitute to the inline options */
-	{"dataid", V_UI_DATAID, MN_EXTRADATA_OFFSETOF(optionExtraData_t, dataId), MEMBER_SIZEOF(optionExtraData_t, dataId)},
-	/** Special property only use into node description. Used for each element of the inline option list */
-	{"option", V_UI_OPTIONNODE, MN_EXTRADATA_OFFSETOF(optionExtraData_t, first), 0},
+	{"dataid", V_UI_DATAID, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, dataId), MEMBER_SIZEOF(EXTRADATA_TYPE, dataId)},
 	/** Optional. We can define the height of the block containing an option. */
-	{"lineheight", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, lineHeight),  MEMBER_SIZEOF(optionExtraData_t, lineHeight)},
+	{"lineheight", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, lineHeight),  MEMBER_SIZEOF(EXTRADATA_TYPE, lineHeight)},
 
 	/* position of the vertical view (into the full number of elements the node contain) */
-	{"viewpos", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, scrollY.viewPos),  MEMBER_SIZEOF(optionExtraData_t, scrollY.viewPos)},
+	{"viewpos", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.viewPos),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.viewPos)},
 	/* size of the vertical view (proportional to the number of elements the node can display without moving) */
-	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, scrollY.viewSize),  MEMBER_SIZEOF(optionExtraData_t, scrollY.viewSize)},
+	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.viewSize),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.viewSize)},
 	/* full vertical size (proportional to the number of elements the node contain) */
-	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, scrollY.fullSize),  MEMBER_SIZEOF(optionExtraData_t, scrollY.fullSize)},
+	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.fullSize),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.fullSize)},
 
 	/* number of elements contain the node */
-	{"count", V_INT, MN_EXTRADATA_OFFSETOF(optionExtraData_t, count),  MEMBER_SIZEOF(optionExtraData_t, count)},
+	{"count", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, count),  MEMBER_SIZEOF(EXTRADATA_TYPE, count)},
 
 	/* Define the cvar containing the value of the current selected option */
 	{"cvar", V_UI_CVAR, offsetof(menuNode_t, cvar), 0},
 
 	/* Called when one of the properties viewpos/viewsize/fullsize change */
-	{"onviewchange", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(optionExtraData_t, onViewChange), MEMBER_SIZEOF(optionExtraData_t, onViewChange)},
+	{"onviewchange", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onViewChange), MEMBER_SIZEOF(EXTRADATA_TYPE, onViewChange)},
 
 	{NULL, V_NULL, 0, 0}
 };
+
+static void MN_AbstractOptionDoLayout (menuNode_t *node) {
+	menuNode_t *option = node->firstChild;
+	int count = 0;
+
+	if (EXTRADATA(node).dataId == 0) {
+		while(option && option->behaviour == optionBehaviour) {
+			MN_Validate(option);
+			if (!option->invis)
+				count++;
+			option = option->next;
+		}
+
+		EXTRADATA(node).count = count;
+	}
+
+	node->invalidated = qfalse;
+}
+
+/**
+ * @brief Return the first option of the node
+ * @todo check versionId and update cached data, and fire events
+ */
+menuNode_t*  MN_AbstractOptionGetFirstOption (menuNode_t * node)
+{
+	if (node->firstChild && node->firstChild->behaviour == optionBehaviour) {
+		return node->firstChild;
+	} else {
+		const int v = MN_GetDataVersion(EXTRADATA(node).dataId);
+		if (v != EXTRADATA(node).dataId) {
+			int count = 0;
+			menuNode_t *option = MN_GetOption(EXTRADATA(node).dataId);
+			while (option) {
+				if (option->invis == qfalse)
+					count++;
+				option = option->next;
+			}
+			EXTRADATA(node).count = count;
+			EXTRADATA(node).versionId = v;
+		}
+		return MN_GetOption(EXTRADATA(node).dataId);
+	}
+}
 
 void MN_RegisterAbstractOptionNode (nodeBehaviour_t *behaviour)
 {
@@ -154,5 +173,8 @@ void MN_RegisterAbstractOptionNode (nodeBehaviour_t *behaviour)
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->drawItselfChild = qtrue;
+	behaviour->doLayout = MN_AbstractOptionDoLayout;
 	Cmd_AddCommand("mn_updateoption", MN_UpdateOption_f, "Update some option status");
+	abstractOptionBehaviour = behaviour;
 }

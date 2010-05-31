@@ -300,11 +300,13 @@ window equipment extends objectinfo
 
 	tab equip_type
 	{
-		pos		"400 365"
-		size	"505 40"
-		cvar	*cvar:mn_equiptype
-		onChange {
-			cmd	"update_item_list;"
+		{
+			pos		"400 365"
+			size	"505 40"
+			cvar	*cvar:mn_equiptype
+			onChange {
+				cmd	"update_item_list;"
+			}
 		}
 
 		option primary {
@@ -577,9 +579,18 @@ window equipment extends objectinfo
 	}
 
 	tab info {
-		pos		"20 365"
-		size	"355 40"
-		cvar	*cvar:mn_infotype
+		{
+			pos		"20 365"
+			size	"355 40"
+			cvar	*cvar:mn_infotype
+			onChange {
+				if ( *cvar:mn_infotype eq 0 ) {
+					call *node:root.actor_stats
+				} elif ( *cvar:mn_infotype eq 1 ) {
+					call *node:root.weapon_stats
+				}
+			}
+		}
 		option abilities {
 			label	"_Actor Abilities"
 			value	"0"
@@ -587,13 +598,6 @@ window equipment extends objectinfo
 		option weaponinfo {
 			label	"_Object Info"
 			value	"1"
-		}
-		onChange {
-			if ( *cvar:mn_infotype eq 0 ) {
-				call *node:root.actor_stats
-			} elif ( *cvar:mn_infotype eq 1 ) {
-				call *node:root.weapon_stats
-			}
 		}
 	}
 

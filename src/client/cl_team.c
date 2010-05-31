@@ -418,7 +418,7 @@ static void CL_InitSkin_f (void)
 {
 	/* create singleplayer skins */
 	if (MN_GetOption(OPTION_SINGLEPLAYER_SKINS) == NULL) {
-		menuOption_t *skins = NULL;
+		menuNode_t *skins = NULL;
 		assert(NUM_TEAMSKINS_SINGLEPLAYER >= 4);	/*< the current code create 4 skins */
 		MN_AddOption(&skins, "urban", N_("Urban"), "0");
 		MN_AddOption(&skins, "jungle", N_("Jungle"), "1");
@@ -429,7 +429,7 @@ static void CL_InitSkin_f (void)
 
 	/* create multiplayer skins */
 	if (MN_GetOption(OPTION_MULTIPLAYER_SKINS) == NULL) {
-		menuOption_t *skins = NULL;
+		menuNode_t *skins = NULL;
 		assert(NUM_TEAMSKINS >= 6);		/*< the current code create 6 skins */
 		MN_AddOption(&skins, "urban", N_("Urban"), "0");
 		MN_AddOption(&skins, "jungle", N_("Jungle"), "1");

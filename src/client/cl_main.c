@@ -640,11 +640,9 @@ static void CL_PrecacheModels (void)
 	}
 }
 
-static menuOption_t* vidModesOptions = NULL;
-
 static void CL_SetRatioFilter_f (void)
 {
-	menuOption_t* option = vidModesOptions;
+	menuNode_t* option = MN_GetOption(OPTION_VIDEO_RESOLUTIONS);
 	float requestedRation = atof(Cmd_Argv(1));
 	qboolean all = qfalse;
 	qboolean custom = qfalse;
@@ -667,7 +665,7 @@ static void CL_SetRatioFilter_f (void)
 		int height;
 		float ratio;
 		qboolean visible = qfalse;
-		int result = sscanf(option->label, "%i x %i", &width, &height);
+		int result = sscanf(OPTIONEXTRADATA(option).label, "%i x %i", &width, &height);
 		if (result != 2)
 			Com_Error(ERR_FATAL, "CL_SetRatioFilter_f: Impossible to decode resolution label.\n");
 		ratio = (float)width / (float)height;
@@ -685,7 +683,7 @@ static void CL_SetRatioFilter_f (void)
 	}
 
 	/* the content change */
-	MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, vidModesOptions);
+	MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, option);
 }
 
 /**
@@ -695,6 +693,7 @@ static void CL_SetRatioFilter_f (void)
 void CL_InitAfter (void)
 {
 	int i;
+	menuNode_t* option = MN_GetOption(OPTION_VIDEO_RESOLUTIONS);
 
 	/* start the music track already while precaching data */
 	S_Frame();
@@ -717,13 +716,13 @@ void CL_InitAfter (void)
 	cls.loadingPercent = 100.0f;
 	SCR_DrawPrecacheScreen(qtrue);
 
-	if (vidModesOptions == NULL) {
+	if (option == NULL) {
 		for (i = 0; i < VID_GetModeNums(); i++) {
 			vidmode_t vidmode;
 			if (VID_GetModeInfo(i, &vidmode))
-				MN_AddOption(&vidModesOptions, "", va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
+				MN_AddOption(&option, "", va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
 		}
-		MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, vidModesOptions);
+		MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, option);
 	}
 
 	IN_JoystickInitMenu();

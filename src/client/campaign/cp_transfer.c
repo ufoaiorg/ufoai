@@ -1377,7 +1377,7 @@ static void TR_InitBaseList (void)
 {
 	int baseIdx;
 	const base_t const *currentBase = B_GetCurrentSelectedBase();
-	menuOption_t *baseList = NULL;
+	menuNode_t *baseList = NULL;
 
 	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);

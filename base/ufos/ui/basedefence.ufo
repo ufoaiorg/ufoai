@@ -38,18 +38,20 @@ window basedefence extends objectinfo
 	}
 
 	tab defencetype {
-		pos		"17 75"
-		size	"791 38"
-		cvar	*cvar:mn_bdef_type
-		onChange {
-			if ( *cvar:mn_bdef_type ne "info" ) {
-				*infopanel@invis = true
-				*equippanel@invis = false
-			} else {
-				*infopanel@invis = false
-				*equippanel@invis = true
+		{
+			pos		"17 75"
+			size	"791 38"
+			cvar	*cvar:mn_bdef_type
+			onChange {
+				if ( *cvar:mn_bdef_type ne "info" ) {
+					*infopanel@invis = true
+					*equippanel@invis = false
+				} else {
+					*infopanel@invis = false
+					*equippanel@invis = true
+				}
+				cmd "basedef_updatemenu <cvar:mn_bdef_type>;"
 			}
-			cmd "basedef_updatemenu <cvar:mn_bdef_type>;"
 		}
 		option info {
 			label	"_Information"
