@@ -946,6 +946,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/menu/node/m_node_model.h" />
+		<Unit filename="../../src/client/menu/node/m_node_option.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/menu/node/m_node_option.h" />
 		<Unit filename="../../src/client/menu/node/m_node_optionlist.c">
 			<Option compilerVar="CC" />
 		</Unit>
