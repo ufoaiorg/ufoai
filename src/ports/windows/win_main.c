@@ -96,8 +96,10 @@ static HINSTANCE game_library;
 
 void Sys_UnloadGame (void)
 {
+#ifndef HARD_LINKED_GAME
 	if (!FreeLibrary(game_library))
 		Com_Error(ERR_FATAL, "FreeLibrary failed for game library");
+#endif
 	game_library = NULL;
 }
 
