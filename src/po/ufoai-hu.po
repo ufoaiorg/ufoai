@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-05-19 11:31+0700\n"
-"PO-Revision-Date: 2010-05-26 14:51+0600\n"
-"Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
+"PO-Revision-Date: 2010-05-31 22:54+0100\n"
+"Last-Translator: Tamás Fehérvári <ft107@freemail.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -117,14 +117,12 @@ msgid "Japan"
 msgstr "Japán"
 
 #: ../base/maps/japan.ump:307
-#, fuzzy
 msgid "Small eastern park."
-msgstr "Kis hangár"
+msgstr "Kis keleti park"
 
 #: ../base/maps/japan.ump:336
-#, fuzzy
 msgid "Harvester"
-msgstr "Begyűjtő U"
+msgstr "Begyűjtő"
 
 #: ../base/maps/laboratory.ump:84
 #: ../base/ufos/basemanagement.ufo:224
@@ -447,9 +445,8 @@ msgstr "AA51 Rakétavető"
 
 #: ../base/ufos/aircraftmanagement.ufo:1019
 #: ../base/ufos/research.ufo:160
-#, fuzzy
 msgid "Base-Defence Laser Turret"
-msgstr "Lézer torony"
+msgstr "Bázis-védelmi Lézer torony"
 
 #: ../base/ufos/armour.ufo:26
 msgid "normal"
@@ -694,9 +691,8 @@ msgid "Abuja"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:87
-#, fuzzy
 msgid "Accra"
-msgstr "Pontosság"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:93
 msgid "Adana"
@@ -723,9 +719,8 @@ msgid "Almaty"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:129
-#, fuzzy
 msgid "Amman"
-msgstr "Töltény"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:135
 msgid "Amritsar"
@@ -736,9 +731,8 @@ msgid "Anadyr"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:147
-#, fuzzy
 msgid "Anchorage"
-msgstr "Raktár"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:153
 msgid "Andorra la Vella"
@@ -753,36 +747,32 @@ msgid "Antananarivo"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:171
-#, fuzzy
 msgid "Antwerp"
-msgstr "Belépés"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:177
 msgid "Arbil"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:183
-#, fuzzy
 msgid "Arequipa"
-msgstr "Felszerelés"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:189
 msgid "Asmara"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:195
-#, fuzzy
 msgid "Assis"
-msgstr "Küldetések"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:201
 msgid "Astana"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:207
-#, fuzzy
 msgid "Asuncion"
-msgstr "Akció"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:213
 msgid "Athens"
@@ -793,9 +783,8 @@ msgid "Atlanta"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:225
-#, fuzzy
 msgid "Austin"
-msgstr "Akció"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:231
 msgid "Baghdad"
@@ -810,36 +799,32 @@ msgid "Baltimore"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:249
-#, fuzzy
 msgid "Bamako"
-msgstr "Bangkok"
+msgstr "Bamakó"
 
 #: ../base/ufos/cities.ufo:255
 msgid "Bandung"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:261
-#, fuzzy
 msgid "Bangalore"
-msgstr "Bangkok"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:267
 msgid "Bangkok"
 msgstr "Bangkok"
 
 #: ../base/ufos/cities.ufo:273
-#, fuzzy
 msgid "Bangui"
-msgstr "Bangkok"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:279
 msgid "Barcelona"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:285
-#, fuzzy
 msgid "Basra"
-msgstr "Bázis"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:291
 msgid "Batticaloa"
@@ -850,13 +835,12 @@ msgid "Beijing"
 msgstr "Beijing"
 
 #: ../base/ufos/cities.ufo:303
-#, fuzzy
 msgid "Belfast"
-msgstr "Öv"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:309
 msgid "Belgrade"
-msgstr ""
+msgstr "Belgrád"
 
 #: ../base/ufos/cities.ufo:315
 msgid "Belmopan"
@@ -867,9 +851,8 @@ msgid "Berlin"
 msgstr "Berlin"
 
 #: ../base/ufos/cities.ufo:327
-#, fuzzy
 msgid "Berne"
-msgstr "Berlin"
+msgstr "Bern"
 
 #: ../base/ufos/cities.ufo:333
 msgid "Birmingham"
@@ -888,18 +871,16 @@ msgid "Bloemfontein"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:357
-#, fuzzy
 msgid "Bogor"
-msgstr "Gyenge"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:363
 msgid "Bogota"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:369
-#, fuzzy
 msgid "Boston"
-msgstr "Ár"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:375
 msgid "Brasilia"
@@ -910,32 +891,28 @@ msgid "Bratislava"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:387
-#, fuzzy
 msgid "Bratsk"
-msgstr "Vissza"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:393
 msgid "Brazzaville"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:399
-#, fuzzy
 msgid "Brisbane"
-msgstr "Városi"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:405
-#, fuzzy
 msgid "Brussels"
-msgstr "Bázisok"
+msgstr "Brüsszel"
 
 #: ../base/ufos/cities.ufo:411
 msgid "Bucharest"
-msgstr ""
+msgstr "Bukarest"
 
 #: ../base/ufos/cities.ufo:417
-#, fuzzy
 msgid "Budapest"
-msgstr "Bázisok"
+msgstr "Budapest"
 
 #: ../base/ufos/cities.ufo:423
 msgid "Buenos Aires"
@@ -946,42 +923,36 @@ msgid "Bujumbura"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:435
-#, fuzzy
 msgid "Busan"
-msgstr "Orosz"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:441
-#, fuzzy
 msgid "Cairns"
-msgstr "Kairó"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:447
 msgid "Cairo"
 msgstr "Kairó"
 
 #: ../base/ufos/cities.ufo:453
-#, fuzzy
 msgid "Calama"
-msgstr "plazma"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:459
 msgid "Calgary"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:465
-#, fuzzy
 msgid "Campinas"
-msgstr "Hadjáratok"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:471
-#, fuzzy
 msgid "Canberra"
-msgstr "Kamera"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:477
-#, fuzzy
 msgid "Cannes"
-msgstr "Cayenne"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:483
 msgid "Cardiff"
@@ -992,14 +963,12 @@ msgid "Changchun"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:495
-#, fuzzy
 msgid "Charlotte Amalie"
-msgstr "Levél bezárása"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:501
-#, fuzzy
 msgid "Charlotte"
-msgstr "Cset"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:507
 msgid "Chengdu"
@@ -1030,14 +999,12 @@ msgid "Chittagong"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:549
-#, fuzzy
 msgid "Chongjin"
-msgstr "Érme"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:555
-#, fuzzy
 msgid "Chongqing"
-msgstr "Érme"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:561
 msgid "Christchurch"
@@ -1056,66 +1023,56 @@ msgid "Ciudad del Este"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:585
-#, fuzzy
 msgid "Cologne"
-msgstr "Ezredes"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:591
 msgid "Columbus"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:597
-#, fuzzy
 msgid "Conakry"
-msgstr "Másodlagos"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:603
 msgid "Copenhagen"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:609
-#, fuzzy
 msgid "Cordoba"
-msgstr "Tizedes"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:615
-#, fuzzy
 msgid "Cork"
-msgstr "Munkás"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:621
-#, fuzzy
 msgid "Cotonou"
-msgstr "Folytatás"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:627
-#, fuzzy
 msgid "Cusco"
-msgstr "Zene"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:633
-#, fuzzy
 msgid "Daegu"
-msgstr "Fok:"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:639
-#, fuzzy
 msgid "Dalian"
-msgstr "idegen"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:645
-#, fuzzy
 msgid "Dallas"
-msgstr "mind"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:651
 msgid "Damascus"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:657
-#, fuzzy
 msgid "Dammam"
-msgstr "Gamma:"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:663
 msgid "Da Nang"
@@ -1130,24 +1087,20 @@ msgid "Davao City"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:681
-#, fuzzy
 msgid "Denpasar"
-msgstr "Dakar"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:687
-#, fuzzy
 msgid "Denver"
-msgstr "Sivatagi"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:693
-#, fuzzy
 msgid "Detroit"
-msgstr "Lebontás"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:699
-#, fuzzy
 msgid "Dhaka"
-msgstr "Dakar"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:705
 msgid "Dibrugarh"
@@ -1178,14 +1131,12 @@ msgid "Dublin"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:747
-#, fuzzy
 msgid "Durango"
-msgstr "Dragon"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:753
-#, fuzzy
 msgid "Durban"
-msgstr "Városi"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:759
 msgid "Dushanbe"
@@ -1232,9 +1183,8 @@ msgid "Fredericton"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:825
-#, fuzzy
 msgid "Gangtok"
-msgstr "Bangkok"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:831
 msgid "Gaziantep"
@@ -1265,14 +1215,12 @@ msgid "Gothenburg"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:873
-#, fuzzy
 msgid "Graz"
-msgstr "Német"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:879
-#, fuzzy
 msgid "Greenwich"
-msgstr "Francia"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:885
 msgid "Guadalajara"
@@ -1303,9 +1251,8 @@ msgid "Hamburg"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:927
-#, fuzzy
 msgid "Handan"
-msgstr "Nehéz"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:933
 msgid "Hanga Roa"
@@ -1316,24 +1263,20 @@ msgid "Hangzhou"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:945
-#, fuzzy
 msgid "Hanoi"
-msgstr "Ember"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:951
-#, fuzzy
 msgid "Hanover"
-msgstr "Begyűjtő U"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:957
-#, fuzzy
 msgid "Harare"
-msgstr "Nehéz"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:963
-#, fuzzy
 msgid "Harbin"
-msgstr "Magyar"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:969
 msgid "Hat Yai"
@@ -1344,9 +1287,8 @@ msgid "Helsinki"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:981
-#, fuzzy
 msgid "Hobart"
-msgstr "Nehéz"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:987
 msgid "Ho Chi Minh City"
@@ -1357,9 +1299,8 @@ msgid "Hong Kong"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:999
-#, fuzzy
 msgid "Houston"
-msgstr "Gépnév:"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1005
 #: ../base/ufos/cities.ufo:1011
@@ -1375,14 +1316,12 @@ msgid "Ilheus"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1029
-#, fuzzy
 msgid "Iloilo City"
-msgstr "Mexikóváros"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1035
-#, fuzzy
 msgid "Incheon"
-msgstr "Elfogás"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1041
 msgid "Indianapolis"
@@ -1413,9 +1352,8 @@ msgid "Islamabad"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1083
-#, fuzzy
 msgid "Istanbul"
-msgstr "Olaszország"
+msgstr "Isztambul"
 
 #: ../base/ufos/cities.ufo:1089
 msgid "Izmir"
@@ -1438,9 +1376,8 @@ msgid "Jerusalem"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1119
-#, fuzzy
 msgid "Jinan"
-msgstr "Jan"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1125
 msgid "Johannesburg"
@@ -1451,9 +1388,8 @@ msgid "Johor Bahru"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1137
-#, fuzzy
 msgid "Juneau"
-msgstr "Jún"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1143
 msgid "Kabul"
@@ -1468,19 +1404,16 @@ msgid "Kaliningrad"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1161
-#, fuzzy
 msgid "Kandahar"
-msgstr "Radar"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1167
-#, fuzzy
 msgid "Kandy"
-msgstr "Kész"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1173
-#, fuzzy
 msgid "Kano"
-msgstr "Koreai"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1179
 msgid "Kanpur"
@@ -1523,18 +1456,16 @@ msgid "Kigali"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1239
-#, fuzzy
 msgid "Kingston"
-msgstr "Wellington"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1245
 msgid "Kinshasa"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1251
-#, fuzzy
 msgid "Kobe"
-msgstr "Koreai"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1257
 msgid "Kolkata"
@@ -1549,18 +1480,16 @@ msgid "Koulikoro"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1275
-#, fuzzy
 msgid "Krakow"
-msgstr "Kracken"
+msgstr "Krakkó"
 
 #: ../base/ufos/cities.ufo:1281
 msgid "Kuala Lumpur"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1287
-#, fuzzy
 msgid "Kunming"
-msgstr "Támogatás"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1293
 msgid "Kuwait City"
@@ -1571,19 +1500,16 @@ msgid "Kyoto"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1305
-#, fuzzy
 msgid "Lagos"
-msgstr "Nagy"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1311
-#, fuzzy
 msgid "Lahore"
-msgstr "Nagy"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1317
-#, fuzzy
 msgid "Lanzhou"
-msgstr "Lan"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1323
 msgid "La Paz"
@@ -1594,18 +1520,16 @@ msgid "Las Vegas"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1335
-#, fuzzy
 msgid "Leeds"
-msgstr "Sebesség"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1341
 msgid "Leipzig"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1347
-#, fuzzy
 msgid "Lhasa"
-msgstr "Lézer"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1353
 msgid "Lilongwe"
@@ -1616,28 +1540,24 @@ msgid "Linz"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1365
-#, fuzzy
 msgid "Livingstone"
-msgstr "Lakó negyed"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1371
 msgid "Ljubljana"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1377
-#, fuzzy
 msgid "Lobamba"
-msgstr "Lobbi"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1383
-#, fuzzy
 msgid "Lome"
-msgstr "Otthon"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1389
-#, fuzzy
 msgid "London"
-msgstr "1-1-1"
+msgstr "London"
 
 #: ../base/ufos/cities.ufo:1395
 msgid "Longyearbyen"
@@ -1652,14 +1572,12 @@ msgid "Louisville"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1413
-#, fuzzy
 msgid "Lubumbashi"
-msgstr "Mumbai"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1419
-#, fuzzy
 msgid "Lucknow"
-msgstr "Alacsony"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1425
 msgid "Ludhiana"
@@ -1686,9 +1604,8 @@ msgid "Lyon"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1461
-#, fuzzy
 msgid "Macapa"
-msgstr "Térkép"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1467
 msgid "Macau"
@@ -1699,66 +1616,56 @@ msgid "Maceio"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1479
-#, fuzzy
 msgid "Madrid"
-msgstr "Elégedettlen"
+msgstr "Madrid"
 
 #: ../base/ufos/cities.ufo:1485
-#, fuzzy
 msgid "Magadan"
-msgstr "Elégedettlen"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1491
-#, fuzzy
 msgid "Makati City"
-msgstr "Mexikóváros"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1497
 msgid "Malacca Town"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1503
-#, fuzzy
 msgid "Malaga"
-msgstr "Ügyintézés"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1509
-#, fuzzy
 msgid "Malang"
-msgstr "Ügyintézés"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1515
 msgid "Malmo"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1521
-#, fuzzy
 msgid "Managua"
-msgstr "Ügyintézés"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1527
-#, fuzzy
 msgid "Manaus"
-msgstr "Ügyintézés"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1533
-#, fuzzy
 msgid "Manchester"
-msgstr "Begyűjtő U"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1539
-#, fuzzy
 msgid "Manila"
-msgstr "Ügyintézés"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1545
 msgid "Manzini"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1551
-#, fuzzy
 msgid "Maputo"
-msgstr "Raptor"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1557
 msgid "Maracaibo"
@@ -1769,39 +1676,32 @@ msgid "Marrakech"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1569
-#, fuzzy
 msgid "Marseille"
-msgstr "Levelező program"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1575
-#, fuzzy
 msgid "Maseru"
-msgstr "lézer"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1581
-#, fuzzy
 msgid "Mashhad"
-msgstr "Elégedettlen"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1587
-#, fuzzy
 msgid "Mbabane"
-msgstr "Ügyintézés"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1593
-#, fuzzy
 msgid "Medan"
-msgstr "Mattn"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1599
-#, fuzzy
 msgid "Medina"
-msgstr "Orvos"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1605
-#, fuzzy
 msgid "Memphis"
-msgstr "Orvosok"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1611
 msgid "Mendoza"
@@ -1812,9 +1712,8 @@ msgid "Merida"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1623
-#, fuzzy
 msgid "Mexicali"
-msgstr "Mexikóváros"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1629
 msgid "Mexico City"
@@ -1825,18 +1724,16 @@ msgid "Miami"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1641
-#, fuzzy
 msgid "Milan"
-msgstr "Mattn"
+msgstr "Milánó"
 
 #: ../base/ufos/cities.ufo:1647
 msgid "Minneapolis"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1653
-#, fuzzy
 msgid "Minsk"
-msgstr "Vegyes"
+msgstr "Minszk"
 
 #: ../base/ufos/cities.ufo:1659
 msgid "Monaco"
@@ -1851,28 +1748,24 @@ msgid "Montevideo"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1677
-#, fuzzy
 msgid "Montreal"
-msgstr "Morál %i"
+msgstr "Montreál"
 
 #: ../base/ufos/cities.ufo:1683
-#, fuzzy
 msgid "Moscow"
-msgstr "Vegyes"
+msgstr "Moszkva"
 
 #: ../base/ufos/cities.ufo:1689
 msgid "Multan"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1695
-#, fuzzy
 msgid "Munich"
-msgstr "Zene"
+msgstr "München"
 
 #: ../base/ufos/cities.ufo:1701
-#, fuzzy
 msgid "Murmansk"
-msgstr "Ember"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1707
 msgid "Nagoya"
@@ -1883,38 +1776,32 @@ msgid "Nagpur"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1719
-#, fuzzy
 msgid "Nairobi"
-msgstr "Kairó"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1725
 msgid "Nakhon Ratchasima"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1731
-#, fuzzy
 msgid "Namangan"
-msgstr "Hadjárat"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1737
-#, fuzzy
 msgid "Nanjing"
-msgstr "Nemzet"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1743
-#, fuzzy
 msgid "Nanning"
-msgstr "Nemzet"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1749
-#, fuzzy
 msgid "Nantes"
-msgstr "Nemzetek"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1755
-#, fuzzy
 msgid "Naples"
-msgstr "Név"
+msgstr "Nápoly"
 
 #: ../base/ufos/cities.ufo:1761
 msgid "Nashville"
@@ -1925,46 +1812,40 @@ msgid "Naypyidaw"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1773
-#, fuzzy
 msgid "N'Djamena"
-msgstr "Név"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1779
 msgid "Ndola"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1785
-#, fuzzy
 msgid "Newcastle"
-msgstr "Új bázis"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1791
 msgid "New Delhi"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1797
-#, fuzzy
 msgid "Niamey"
-msgstr "Név"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1803
-#, fuzzy
 msgid "Nice"
-msgstr "Figyelmeztetés"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1809
 msgid "Nizhny Novgorod"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1815
-#, fuzzy
 msgid "Norilsk"
-msgstr "Oktatás"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1821
-#, fuzzy
 msgid "Noumea"
-msgstr "Normál"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1827
 msgid "Novosibirsk"
@@ -1979,19 +1860,16 @@ msgid "Oklahoma City"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1845
-#, fuzzy
 msgid "Omdurman"
-msgstr "Ember"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1851
-#, fuzzy
 msgid "Omsk"
-msgstr "Oké"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1857
-#, fuzzy
 msgid "Osaka"
-msgstr "Dakar"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1863
 msgid "Oslo"
@@ -2006,9 +1884,8 @@ msgid "Ouagadougou"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1881
-#, fuzzy
 msgid "Palembang"
-msgstr "Phalanx"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1887
 msgid "Panama City"
@@ -2019,23 +1896,20 @@ msgid "Paris"
 msgstr "Párizs"
 
 #: ../base/ufos/cities.ufo:1899
-#, fuzzy
 msgid "Patna"
-msgstr "Mattn"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1905
 msgid "Pekanbaru"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1911
-#, fuzzy
 msgid "Pelotas"
-msgstr "Pilóták"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1917
-#, fuzzy
 msgid "Perm"
-msgstr "Német"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1923
 msgid "Peshawar"
@@ -2063,37 +1937,32 @@ msgid "Pittsburgh"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1959
-#, fuzzy
 msgid "Podgorica"
-msgstr "Gyenge"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1965
-#, fuzzy
 msgid "Portland"
-msgstr "Erőmű"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1971
 msgid "Port Moresby"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1977
-#, fuzzy
 msgid "Prague"
-msgstr "idő állj"
+msgstr "Prága"
 
 #: ../base/ufos/cities.ufo:1983
 msgid "Pretoria"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:1989
-#, fuzzy
 msgid "Pristina"
-msgstr "Párizs"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:1995
-#, fuzzy
 msgid "Providence"
-msgstr "Ár:"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2001
 msgid "Puebla"
@@ -2104,9 +1973,8 @@ msgid "Puerto Williams"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2013
-#, fuzzy
 msgid "Pune"
-msgstr "idő állj"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2019
 msgid "Punta Arenas"
@@ -2121,23 +1989,20 @@ msgid "Qingdao"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2037
-#, fuzzy
 msgid "Quebec City"
-msgstr "Mexikóváros"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2043
 msgid "Quetzaltenango"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2049
-#, fuzzy
 msgid "Quezon City"
-msgstr "Mexikóváros"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2055
-#, fuzzy
 msgid "Quito"
-msgstr "Automata"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2061
 msgid "Raleigh"
@@ -2148,9 +2013,8 @@ msgid "Rawalpindi"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2073
-#, fuzzy
 msgid "Recife"
-msgstr "Frissítés"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2079
 msgid "Regina"
@@ -2169,18 +2033,16 @@ msgid "Rockhampton"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2103
-#, fuzzy
 msgid "Rome"
-msgstr "Otthon"
+msgstr "Róma"
 
 #: ../base/ufos/cities.ufo:2109
 msgid "Rosario"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2115
-#, fuzzy
 msgid "Sabha"
-msgstr "Szúrás"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2121
 msgid "Sacramento"
@@ -2191,27 +2053,24 @@ msgid "Saint John"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2133
-#, fuzzy
 msgid "Saint Petersburg"
-msgstr "Sitters"
+msgstr "Szentpétervár"
 
 #: ../base/ufos/cities.ufo:2139
 msgid "Salzburg"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2145
-#, fuzzy
 msgid "Samara"
-msgstr "Kamera"
+msgstr "Kamer"
 
 #: ../base/ufos/cities.ufo:2151
 msgid "Sana'a"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2157
-#, fuzzy
 msgid "San Antonio"
-msgstr "Santiago"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2163
 msgid "San Carlos de Bariloche"
@@ -2242,14 +2101,12 @@ msgid "Santiago"
 msgstr "Santiago"
 
 #: ../base/ufos/cities.ufo:2205
-#, fuzzy
 msgid "Santiago de Cuba"
-msgstr "Santiago"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2211
-#, fuzzy
 msgid "Santo Domingo"
-msgstr "Santiago"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2217
 msgid "Sao Jose dos Campos"
@@ -2260,29 +2117,24 @@ msgid "Sao Paulo"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2229
-#, fuzzy
 msgid "Sarajevo"
-msgstr "Sacramento"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2235
-#, fuzzy
 msgid "Saskatoon"
-msgstr "Benzinkút"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2241
-#, fuzzy
 msgid "Seattle"
-msgstr "Új játék"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2247
-#, fuzzy
 msgid "Seoul"
-msgstr "Elad"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2253
-#, fuzzy
 msgid "Seville"
-msgstr "Elad"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2259
 msgid "Shanghai"
@@ -2317,9 +2169,8 @@ msgid "Singapore"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2307
-#, fuzzy
 msgid "Sitka"
-msgstr "Szúrás"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2313
 msgid "Skopje"
@@ -2334,14 +2185,12 @@ msgid "Split"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2331
-#, fuzzy
 msgid "Srinagar"
-msgstr "Stingray"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2337
-#, fuzzy
 msgid "Stanley"
-msgstr "Olaszország"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2343
 msgid "Stepanakert"
@@ -2356,9 +2205,8 @@ msgid "Stockholm"
 msgstr "Stockholm"
 
 #: ../base/ufos/cities.ufo:2361
-#, fuzzy
 msgid "Strasbourg"
-msgstr "Starchaser"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2367
 msgid "Stuttgart"
@@ -2381,9 +2229,8 @@ msgid "Surabaya"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2397
-#, fuzzy
 msgid "Surat"
-msgstr "Hang minőség:"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2403
 msgid "Surat Thani"
@@ -2398,29 +2245,24 @@ msgid "Sydney"
 msgstr "Sydney"
 
 #: ../base/ufos/cities.ufo:2421
-#, fuzzy
 msgid "Tabriz"
-msgstr "Thai"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2427
-#, fuzzy
 msgid "Taiyuan"
-msgstr "Taman"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2433
-#, fuzzy
 msgid "Tamale"
-msgstr "Taman"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2439
-#, fuzzy
 msgid "Tampa"
-msgstr "Taman"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2445
-#, fuzzy
 msgid "Tampere"
-msgstr "Kamera"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2451
 msgid "Tartu"
@@ -2439,7 +2281,6 @@ msgid "Tegucigalpa"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2475
-#, fuzzy
 msgid "Tehran"
 msgstr "Teherán"
 
@@ -2460,47 +2301,40 @@ msgid "Tijuana"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2505
-#, fuzzy
 msgid "Tirana"
-msgstr "Teherán"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2511
-#, fuzzy
 msgid "Tiraspol"
-msgstr "Csapatszállító"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2517
 msgid "Tokyo"
 msgstr "Tokió"
 
 #: ../base/ufos/cities.ufo:2523
-#, fuzzy
 msgid "Toronto"
-msgstr "Tron"
+msgstr "Torontó"
 
 #: ../base/ufos/cities.ufo:2529
-#, fuzzy
 msgid "Toulouse"
-msgstr "Bezárás"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2535
 msgid "Tskhinvali"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2541
-#, fuzzy
 msgid "Tucson"
-msgstr "Tron"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2547
-#, fuzzy
 msgid "Tunis"
-msgstr "Tankok"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2553
-#, fuzzy
 msgid "Turin"
-msgstr "Tron"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2559
 msgid "Udon Thani"
@@ -2515,9 +2349,8 @@ msgid "Vaduz"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2577
-#, fuzzy
 msgid "Valencia"
-msgstr "idegen"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2583
 msgid "Vancouver"
@@ -2525,30 +2358,27 @@ msgstr ""
 
 #: ../base/ufos/cities.ufo:2589
 msgid "Vienna"
-msgstr ""
+msgstr "Bécs"
 
 #: ../base/ufos/cities.ufo:2595
-#, fuzzy
 msgid "Vientiane"
-msgstr "Vanethian"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2601
 msgid "Vilnius"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2607
-#, fuzzy
 msgid "Vitoria"
-msgstr "Oktatás"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2613
 msgid "Warsaw"
-msgstr ""
+msgstr "Warsó"
 
 #: ../base/ufos/cities.ufo:2619
-#, fuzzy
 msgid "Washington"
-msgstr "Washington D.C."
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2625
 msgid "Whitehorse"
@@ -2559,28 +2389,24 @@ msgid "Winnipeg"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2643
-#, fuzzy
 msgid "Wollongong"
-msgstr "Wellington"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2649
-#, fuzzy
 msgid "Wonsan"
-msgstr "Fegyverek"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2655
-#, fuzzy
 msgid "Wuhan"
-msgstr "Ember"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2661
 msgid "Xi'an"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2667
-#, fuzzy
 msgid "Xining"
-msgstr "Beijing"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2673
 msgid "Yakutsk"
@@ -2591,28 +2417,24 @@ msgid "Yamoussoukro"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2685
-#, fuzzy
 msgid "Yangon"
-msgstr "Dragon"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2691
-#, fuzzy
 msgid "Yaounde"
-msgstr "Hang"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2697
 msgid "Yekaterinburg"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2703
-#, fuzzy
 msgid "Yellowknife"
-msgstr "Sárga"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2709
-#, fuzzy
 msgid "Yerevan"
-msgstr "Őrmester"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2715
 msgid "Yogyakarta"
@@ -2631,9 +2453,8 @@ msgid "Zamboanga City"
 msgstr ""
 
 #: ../base/ufos/cities.ufo:2739
-#, fuzzy
 msgid "Zapopan"
-msgstr "Japán"
+msgstr ""
 
 #: ../base/ufos/cities.ufo:2745
 msgid "Zhengzhou"
@@ -3315,9 +3136,8 @@ msgid "Dutch"
 msgstr "Holland"
 
 #: ../base/ufos/language.ufo:224
-#, fuzzy
 msgid "Brazilian Portuguese"
-msgstr "Portugál"
+msgstr "Brazil-portugál"
 
 #: ../base/ufos/language.ufo:232
 msgid "Portuguese"
@@ -3340,9 +3160,8 @@ msgid "Thai"
 msgstr "Thai"
 
 #: ../base/ufos/language.ufo:286
-#, fuzzy
 msgid "Ukrainian"
-msgstr "Töltények"
+msgstr "Ukrán"
 
 #: ../base/ufos/language.ufo:296
 msgid "Japanese"
@@ -3357,9 +3176,8 @@ msgid "Bulgarian"
 msgstr "Bolgár"
 
 #: ../base/ufos/language.ufo:320
-#, fuzzy
 msgid "Norwegian"
-msgstr "Koreai"
+msgstr "Norvég"
 
 #: ../base/ufos/language.ufo:328
 msgid "No language"
@@ -3377,9 +3195,8 @@ msgid "A suburban district of an oriental area."
 msgstr "Egy keleties terület külvárosa"
 
 #: ../base/ufos/maps.ufo:217
-#, fuzzy
 msgid "Crashed UFO in oriental suburban district."
-msgstr "Egy kissé régimódi külvárosi rész."
+msgstr ""
 
 #: ../base/ufos/maps.ufo:299
 #: ../base/ufos/maps.ufo:341
@@ -3430,9 +3247,8 @@ msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr "Az idegenek valami rosszban sántikálnak ezen a ritkásan lakott erdős területen."
 
 #: ../base/ufos/maps.ufo:1107
-#, fuzzy
 msgid "UFO crashed in this sparsely populated forest region."
-msgstr "Az idegenek valami rosszban sántikálnak ezen a ritkásan lakott erdős területen."
+msgstr ""
 
 #: ../base/ufos/maps.ufo:1228
 #: ../base/ufos/maps.ufo:1270
@@ -3772,7 +3588,7 @@ msgstr "gyártás"
 
 #: ../base/ufos/msgcategories.ufo:37
 msgid "nations_happiness"
-msgstr ""
+msgstr "Nemzetek elégedettsége"
 
 #: ../base/ufos/msgcategories.ufo:44
 msgid "transfer"
@@ -3780,7 +3596,7 @@ msgstr "Szállítás"
 
 #: ../base/ufos/msgcategories.ufo:53
 msgid "ufo_activity"
-msgstr ""
+msgstr "UFÓ aktivitás"
 
 #: ../base/ufos/nations.ufo:27
 msgid "The Revolutionary Countries"
@@ -5700,7 +5516,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1685
 #: ../base/ufos/research.ufo:1731
 msgid "Alien Artifact - Plasma Blaster"
-msgstr ""
+msgstr "Idegen szerkezet - Plazmavető"
 
 #: ../base/ufos/research.ufo:1690
 msgid "plasblaster_txt"
@@ -9106,38 +8922,16 @@ msgid "enemy_on_earth_rev_pre_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:5190
-#, fuzzy
 msgid "The Alien Strategy"
 msgstr "Az idegen fenyegetés"
 
 #: ../base/ufos/research.ufo:5195
-#, fuzzy
 msgid "alien_strategy_txt"
 msgstr ""
-"Commander, my team and I have finished our analysis of the UFO we captured. It's a real miracle of engineering, and we're all looking forward to getting a chance to sink our own hooks into all this lovely technology.\n"
-"\n"
-"The craft's strange construction has raised a lot of questions for us to answer. Much of the design seems to make little sense when viewed from the ground. However, now that we've managed to look at it up close and personal -- and test the alien hull materials under laboratory conditions -- we have gained a far clearer picture of UFO capabilities. I've made a list of our most important discoveries.\n"
-"\n"
-"-- The alien propulsion system is a type of rocket engine unlike any ever built on Earth. It uses direct matter-antimatter annihilation to generate thrust by injecting protons and antiprotons into the reaction chamber, then channeling this explosive force out the back of the engine. This gives a UFO extreme power and needs no air or other gases to fuel the reaction, allowing it to burn in hard vacuum. There is a highly-advanced cooling system continuously pumping liquid nitrogen through the engine housing in order to keep it cool and to reduce the infrared signature. Engine heat is also used to supply the craft's electrical needs.\n"
-"\n"
-"-- The fuel tank is very, very small, measured in fractions of a gramme, but even so I nearly had a heart attack when we found out what was in there. If a containment loss occurred on one of these tanks, even three tenths of a gramme of this antimatter would outstrip the explosive force of the Hiroshima atomic bomb. Naturally the tank is armoured and buried as deep as possible within the fuselage, and there are mechanical systems present to jettison the tank in an emergency, but they aren't perfect. A direct hit on the tank or the containment system could still cause an explosion. Much of the blast would be contained by the UFO's tough structure, but any explosion represents an extreme hazard to our interceptors. The only saving grace is that proton-antiproton explosions create little radioactive fallout.\n"
-"\n"
-"-- The craft is extremely difficult to see with human detection equipment, regardless of any electronic warfare capability on the aliens' part. This is largely due to the hull materials which very effectively absorb all kinds of radiation. We've had the most luck with passive infrared and gamma radiation detection, as the antimatter-based engines produce quite a lot of both.\n"
-"\n"
-"-- The slim design, generating poor lift and being difficult to handle in air, is partly due to the heavy weight of the hull materials. It would be impossible to create effective wings from the alien hull materials. Instead, every gramme of excess matter has been stripped off, and the craft moves at high speeds so as to need very little lift surface. The material itself is quite astonishing, part metal and part plastic polymer. It functions as a memory alloy, 'remembering' at least two assigned shapes, shrinking into a more compact form when cold but automatically stretching out and assuming a more comfortable flying shape once it heats up. It's stronger and tougher than any known material on Earth (barring pure carbon nanotubes) and far more versatile in aircraft design. More research is definitely required.\n"
-"\n"
-"Armed with these facts, we can now begin to analyse the different components and roles of the UFO. I recommend that our engineers begin dismantling this craft for parts right away. Who knows what we'll discover with the individual bits and pieces in front of us?\n"
-"\n"
-"More research on the UFO itself is also warranted. I think we can delve deeper into its intended function and perhaps gain some insight in how to counter its activities. I'll send you another proposal about it as soon as I can.\n"
-"\n"
-"Whatever we end up learning from these craft, Commander, it can only help us in the fight for Earth.\n"
-"\n"
-"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:5219
-#, fuzzy
 msgid "Orbital UFO Activity"
-msgstr "UFÓ, Keleti"
+msgstr ""
 
 #: ../base/ufos/research.ufo:5224
 msgid "orbital_ufo_activity_txt"
@@ -9438,9 +9232,8 @@ msgid "Select soldiers via click"
 msgstr "Katona választás kattintással"
 
 #: ../base/ufos/seq_tutorials.ufo:453
-#, fuzzy
 msgid "Or via the keys 1-8 or Tab"
-msgstr "Vagy az 1-8 billentyűkkel"
+msgstr "Vagy az 1-8 illetve Tab billentyűkkel"
 
 #: ../base/ufos/seq_tutorials.ufo:474
 #: ../base/ufos/ui/aircraft_soldiers.ufo:370
@@ -9448,9 +9241,8 @@ msgid "Physical stats"
 msgstr "Fizikai adatok"
 
 #: ../base/ufos/seq_tutorials.ufo:496
-#, fuzzy
 msgid "Stats bars: movement, health and morale"
-msgstr "Mozgás és életerő csíkok"
+msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:518
 #: ../base/ufos/ui/hud.ufo:686
@@ -9494,23 +9286,20 @@ msgid "End round"
 msgstr "Kör vége"
 
 #: ../base/ufos/seq_tutorials.ufo:771
-#, fuzzy
 msgid "How to play skirmish"
-msgstr "Hogy kell többjátékos módban játszani"
+msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:785
-#, fuzzy
 msgid "Skirmish tutorial"
-msgstr "Gyakorlás"
+msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:796
 msgid "Skirmish is type of fast game."
 msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:835
-#, fuzzy
 msgid "Equipment selection"
-msgstr "Csapat összeállítás"
+msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:856
 msgid "Day or night version of map to play"
@@ -9521,9 +9310,8 @@ msgid "How many aliens will fight versus you"
 msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:898
-#, fuzzy
 msgid "Select your team"
-msgstr "Csapat mentése"
+msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:919
 msgid ""
@@ -9542,23 +9330,20 @@ msgid "Select map to play"
 msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:974
-#, fuzzy
 msgid "And..."
-msgstr "..."
+msgstr "És..."
 
 #: ../base/ufos/seq_tutorials.ufo:991
-#, fuzzy
 msgid "Start the game!"
-msgstr "Start"
+msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:1003
-#, fuzzy
 msgid "Or..."
-msgstr "..."
+msgstr "Vagy..."
 
 #: ../base/ufos/seq_tutorials.ufo:1022
 msgid "Exit to main menu"
-msgstr ""
+msgstr "Kilépés a főmenübe"
 
 #: ../base/ufos/seq_tutorials.ufo:1042
 msgid "How to play multiplayer"
@@ -10001,9 +9786,8 @@ msgid "Call back"
 msgstr "Visszahívás"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:11
-#, fuzzy
 msgid "Add/remove this pilot"
-msgstr "Katona hozzáadása/eltávolítása"
+msgstr "Pilóta hozzáadása/eltávolítása"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:144
 msgid "Pilot is assigned to another craft"
@@ -10052,9 +9836,8 @@ msgid "Soldier carries no equipment"
 msgstr "Felszerelést nem cipelő katonák"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:374
-#, fuzzy
 msgid "Missions info"
-msgstr "Küldetések"
+msgstr ""
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:392
 #: ../base/ufos/ui/equipment.ufo:483
@@ -10145,24 +9928,20 @@ msgid "Health:"
 msgstr "Égészség:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:503
-#, fuzzy
 msgid "Missions performed:"
-msgstr "Küldetések:"
+msgstr ""
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:506
-#, fuzzy
 msgid "Enemies killed:"
-msgstr "Megölt ellenségek:"
+msgstr ""
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:509
-#, fuzzy
 msgid "Civilians killed:"
-msgstr "Egy civil meghalt.\n"
+msgstr ""
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:512
-#, fuzzy
 msgid "Our team killed:"
-msgstr "%s meghalt\n"
+msgstr ""
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:525
 msgid "Assign tanks"
@@ -10224,9 +10003,8 @@ msgid "TUs"
 msgstr ""
 
 #: ../base/ufos/ui/althud.ufo:604
-#, fuzzy
 msgid "TUs remaining"
-msgstr "Töltények"
+msgstr ""
 
 #: ../base/ufos/ui/althud.ufo:615
 msgid "TUs reserved"
@@ -10234,14 +10012,12 @@ msgstr ""
 
 #: ../base/ufos/ui/althud.ufo:626
 #: ../base/ufos/ui/althud.ufo:662
-#, fuzzy
 msgid "Morale"
-msgstr "Morál %i"
+msgstr "Morál"
 
 #: ../base/ufos/ui/althud.ufo:646
-#, fuzzy
 msgid "Health"
-msgstr "Égészség:"
+msgstr "Égészség"
 
 #: ../base/ufos/ui/althud.ufo:703
 #: ../base/ufos/ui/hud.ufo:406
@@ -10436,20 +10212,17 @@ msgstr "Új létesítmények építése"
 
 #: ../base/ufos/ui/bases.ufo:141
 #: client/campaign/cp_base_callbacks.c:293
-#, fuzzy
 msgid "Aircraft management and crew equipment"
-msgstr "Repülőgép felszerelés"
+msgstr ""
 
 #: ../base/ufos/ui/bases.ufo:147
-#, fuzzy
 msgid "Buy/Sell"
-msgstr "Elad"
+msgstr "Vásárlás/Eladás"
 
 #: ../base/ufos/ui/bases.ufo:148
 #: client/campaign/cp_base_callbacks.c:301
-#, fuzzy
 msgid "Buy/Sell equipment, aircraft and UGV"
-msgstr "Vásárlás/Eladás"
+msgstr ""
 
 #: ../base/ufos/ui/bases.ufo:154
 #: ../base/ufos/ui/transfer.ufo:581
@@ -10479,9 +10252,8 @@ msgstr "Gyártás"
 
 #: ../base/ufos/ui/bases.ufo:169
 #: client/campaign/cp_base_callbacks.c:316
-#, fuzzy
 msgid "Produce equipment, aircraft and UGV"
-msgstr "Repülő gyártása"
+msgstr ""
 
 #: ../base/ufos/ui/bases.ufo:175
 #: ../base/ufos/ui/stats.ufo:94
@@ -10492,9 +10264,8 @@ msgstr "Alkalmazottak"
 
 #: ../base/ufos/ui/bases.ufo:176
 #: client/campaign/cp_base_callbacks.c:321
-#, fuzzy
 msgid "Hire or dismiss employees"
-msgstr "Személyzet felvétel"
+msgstr ""
 
 #: ../base/ufos/ui/bases.ufo:182
 #: client/campaign/cp_base_callbacks.c:328
@@ -10752,9 +10523,8 @@ msgstr "Tárgy infó"
 
 #: ../base/ufos/ui/equipment.ufo:611
 #: ../base/ufos/ui/equipment.ufo:621
-#, fuzzy
 msgid "Rename your unit"
-msgstr "Bázis átnevezése"
+msgstr ""
 
 #: ../base/ufos/ui/equipment.ufo:738
 #: ../base/ufos/ui/multiplayer_team.ufo:708
@@ -11265,9 +11035,8 @@ msgid "Users"
 msgstr "Felhasználók"
 
 #: ../base/ufos/ui/irc.ufo:184
-#, fuzzy
 msgid "Name is already in use"
-msgstr "Egy új %s repülőd van a(z) %s bázison,"
+msgstr ""
 
 #: ../base/ufos/ui/irc.ufo:189
 msgid "Your name is already in use or is invalid."
@@ -11338,9 +11107,8 @@ msgid "Nation:"
 msgstr "Nemzet:"
 
 #: ../base/ufos/ui/lostwon.ufo:302
-#, fuzzy
 msgid "Sort nations by name"
-msgstr "Cél bázis"
+msgstr ""
 
 #: ../base/ufos/ui/lostwon.ufo:312
 msgid "Price:"
@@ -11639,9 +11407,8 @@ msgid ""
 msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:9
-#, fuzzy
 msgid "Connect to this server"
-msgstr "Kapcsolódás IP-hez"
+msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:13
 msgid "Delete this bookmark"
@@ -11687,9 +11454,8 @@ msgid "Leave Serverbrowser"
 msgstr "Szerverböngésző elhagyása"
 
 #: ../base/ufos/ui/multiplayer.ufo:230
-#, fuzzy
 msgid "Add server to bookmarks"
-msgstr "Könyvjelző törlése"
+msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:267
 msgid "Serverfilter:"
@@ -11806,9 +11572,8 @@ msgid "Start server"
 msgstr "Szerver indítása"
 
 #: ../base/ufos/ui/multiplayer.ufo:1156
-#, fuzzy
 msgid "Party info"
-msgstr "Bázis infó"
+msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1166
 msgid "Display/hide the panel"
@@ -11823,9 +11588,8 @@ msgid "Max. teams for this map"
 msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1248
-#, fuzzy
 msgid "Players connected"
-msgstr "Nincs kapcsolódva"
+msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1302
 msgid "Team selection"
@@ -11862,9 +11626,8 @@ msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1390
 #: ../base/ufos/ui/multiplayer.ufo:1400
-#, fuzzy
 msgid "Activate IRC"
-msgstr "Csevegés aktiválása"
+msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1406
 msgid "Deactivate IRC"
@@ -11880,18 +11643,16 @@ msgid "Hide IRC users"
 msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1433
-#, fuzzy
 msgid "Invite others"
-msgstr "Sitters"
+msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1435
 msgid "Invite players that are online in the lobby"
 msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1471
-#, fuzzy
 msgid "Party chat"
-msgstr "Csevegés aktiválása"
+msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1475
 msgid "Global lobby (IRC)"
@@ -11920,19 +11681,16 @@ msgid "Go into the lobby"
 msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1831
-#, fuzzy
 msgid "Game invitation"
-msgstr "Állomás átnevezése"
+msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1850
-#, fuzzy
 msgid "Server info"
-msgstr "Bázis infó"
+msgstr "Szerver infó"
 
 #: ../base/ufos/ui/multiplayer.ufo:1851
-#, fuzzy
 msgid "Show server information"
-msgstr "Felhasználó információ"
+msgstr ""
 
 #: ../base/ufos/ui/multiplayer.ufo:1879
 msgid "You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
@@ -11979,28 +11737,24 @@ msgid "Overall game settings like your name and language or menu settings."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:33
-#, fuzzy
 msgid "Overall"
-msgstr "mind"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:43
-#, fuzzy
 msgid "Video settings."
-msgstr "Grafikai beállítások"
+msgstr "Grafikai beállítások."
 
 #: ../base/ufos/ui/options.ufo:44
 msgid "Video"
 msgstr "Grafika"
 
 #: ../base/ufos/ui/options.ufo:55
-#, fuzzy
 msgid "Sound settings."
-msgstr "Hang beállítások"
+msgstr "Hang beállítások."
 
 #: ../base/ufos/ui/options.ufo:56
-#, fuzzy
 msgid "Audio"
-msgstr "Akció"
+msgstr "Hang"
 
 #: ../base/ufos/ui/options.ufo:66
 msgid "Input, battlescape camera and battlescape gameplay settings."
@@ -12011,12 +11765,10 @@ msgid "Leave the options menu."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:94
-#, fuzzy
 msgid "Graphic settings."
-msgstr "Játék beállítások"
+msgstr "Grafikai beállítások"
 
 #: ../base/ufos/ui/options.ufo:95
-#, fuzzy
 msgid "Video Settings"
 msgstr "Grafikai beállítások"
 
@@ -12033,9 +11785,8 @@ msgid "Sets the maximum size for textures & caps resolutions higher than that va
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:118
-#, fuzzy
 msgid "Texture Resolution Cap:"
-msgstr "Textúra tömörítés:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:128
 msgid "The lightmap block size defines the resolution of the lightmap. Higher block size means using more detailed lightmaps."
@@ -12054,9 +11805,8 @@ msgid "Texture Ansitropy Level:"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:145
-#, fuzzy
 msgid "The current value."
-msgstr "Jelenlegi csapat mentése"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:154
 msgid "Very high values are only recommended when playing in high resolutions."
@@ -12079,14 +11829,12 @@ msgid "Enable texture compression for better memory performance, disable for bet
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:186
-#, fuzzy
 msgid "Texture Compression:"
 msgstr "Textúra tömörítés:"
 
 #: ../base/ufos/ui/options.ufo:192
-#, fuzzy
 msgid "Enable texture compression."
-msgstr "Textúra tömörítés:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:203
 msgid "See how many frames per second are rendered."
@@ -12141,9 +11889,8 @@ msgid "Realtime lightning of the 3D world in UFO:AI."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:276
-#, fuzzy
 msgid "Realtime Lighting:"
-msgstr "Vakósidejű fényhatások:"
+msgstr "Valósidejű fényhatások:"
 
 #: ../base/ufos/ui/options.ufo:282
 msgid "Enable real-time lightning. ATTENTION: May require restart to take effect."
@@ -12154,14 +11901,12 @@ msgid "Weather effects like rain (not enabled yet) or snow."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:294
-#, fuzzy
 msgid "Weather Effects:"
 msgstr "Időjárási hatások:"
 
 #: ../base/ufos/ui/options.ufo:300
-#, fuzzy
 msgid "Enable weather effects."
-msgstr "Időjárási hatások:"
+msgstr "Időjárási hatások engedélyezése."
 
 #: ../base/ufos/ui/options.ufo:311
 msgid "Vertex Buffers are submitting extensible arrays of vertex attributes to be mapped into the GPU for fast drawing."
@@ -12188,9 +11933,8 @@ msgid "Choose between 0-4 Multisample Buffers. Higher values will provide better
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:344
-#, fuzzy
 msgid "Change the amount of multisample buffers."
-msgstr "katona kiválasztása"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:357
 msgid "Multisample Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
@@ -12205,9 +11949,8 @@ msgid "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sy
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:372
-#, fuzzy
 msgid "Change the swap interval."
-msgstr "Felbontás változtatása"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:385
 msgid "The gamma value manipulates the colors. Increased gamma means basically more intense colors."
@@ -12290,9 +12033,8 @@ msgid "Max Dynamic Lights:"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:528
-#, fuzzy
 msgid "Current value."
-msgstr "Jelenlegi bázis:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:536
 msgid "Change the number of allowed hardware accelerated lights. ATTENTION: May require restart to take effect."
@@ -12345,14 +12087,12 @@ msgid "Display only resolutions using this screen ratio."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:633
-#, fuzzy
 msgid "All ratios"
-msgstr "Állomások"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:657
-#, fuzzy
 msgid "Others"
-msgstr "Egyéb"
+msgstr "Egyebek"
 
 #: ../base/ufos/ui/options.ufo:669
 msgid "Select your desired screen resolution. ATTENTION: Windows users might have to restart to make this work correctly."
@@ -12363,21 +12103,18 @@ msgid "Sound is the thing that comes out of your speakers or earphones."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:693
-#, fuzzy
 msgid "Audio Settings"
-msgstr "Grafikai beállítások"
+msgstr "Hang beállítások"
 
 #: ../base/ufos/ui/options.ufo:705
 msgid "The more of this the louder it gets."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:716
-#, fuzzy
 msgid "Do you want to hear the screams?"
-msgstr "Biztos, hogy le akarod rombolni ezt az állomást?"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:717
-#, fuzzy
 msgid "Sound Effects:"
 msgstr "Hangok:"
 
@@ -12406,26 +12143,22 @@ msgid "The sample rate in kHz. Use higher values for better sound quality."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:778
-#, fuzzy
 msgid "Audio Rate:"
 msgstr "Hang minőség:"
 
 #: ../base/ufos/ui/options.ufo:784
-#, fuzzy
 msgid "Restart the sound-engine and apply your settings."
-msgstr "Hangrendszer újraindítása a változtatásokhoz"
+msgstr "Hangrendszer újraindítása a változtatásokhoz."
 
 #: ../base/ufos/ui/options.ufo:794
 msgid "The current sample rate in kHz."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:822
-#, fuzzy
 msgid "Enable or disable sound."
-msgstr "A játékhangok be- vagy kikapcsolása"
+msgstr "A játékhangok be- vagy kikapcsolása."
 
 #: ../base/ufos/ui/options.ufo:823
-#, fuzzy
 msgid "Enable Audio:"
 msgstr "Hang engedélyezése:"
 
@@ -12438,43 +12171,36 @@ msgid "Shows all the function keys of UFO:AI."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:849
-#, fuzzy
 msgid "Show Key Bindings"
-msgstr "Billenytű kiosztás"
+msgstr "Billentyű kiosztás"
 
 #: ../base/ufos/ui/options.ufo:860
-#, fuzzy
 msgid "See the key bindings."
-msgstr "Billenytű kiosztás"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:899
 msgid "Look below."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:900
-#, fuzzy
 msgid "Overall Game Settings"
-msgstr "Játék beállítások"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:912
-#, fuzzy
 msgid "Your name."
-msgstr "Játék megszakítása"
+msgstr "neved"
 
 #: ../base/ufos/ui/options.ufo:920
-#, fuzzy
 msgid "Change your name."
-msgstr "Csapat mentése"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:936
-#, fuzzy
 msgid "Choose your language."
-msgstr "Nincs nyelv"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:937
-#, fuzzy
 msgid "Language Settings"
-msgstr "Üzenet beállítások"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:944
 msgid "A list of available languages. ATTENTION: Choose English for the most 'complete' language, other translations might be incomplete."
@@ -12485,17 +12211,14 @@ msgid "Stuff happening 'on the global scale'."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:977
-#, fuzzy
 msgid "Geoscape Options"
-msgstr "Hadjárat beállítások"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:987
-#, fuzzy
 msgid "3d or 2d geoscape."
-msgstr "Vissza a Földgömbhöz"
+msgstr "2 vagy 3 dimenziós Földgömb nézet"
 
 #: ../base/ufos/ui/options.ufo:988
-#, fuzzy
 msgid "3d Geoscape:"
 msgstr "3D Földgömb:"
 
@@ -12508,9 +12231,8 @@ msgid "Amount of light emitting from the sun & shining on the earth."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1007
-#, fuzzy
 msgid "Ambient Lighting:"
-msgstr "Vakósidejű fényhatások:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1018
 msgid "Current amount of ambient light reaching the earth."
@@ -12521,9 +12243,8 @@ msgid "Just here to help."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1033
-#, fuzzy
 msgid "Several Tips"
-msgstr "Bázis infó"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1043
 msgid "This message is a mouseover tooltip."
@@ -12538,9 +12259,8 @@ msgid "Make me disappear."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1062
-#, fuzzy
 msgid "Enable or disable tooltips for the cursor."
-msgstr "A játékhangok be- vagy kikapcsolása"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1063
 msgid "Cursor Tooltips:"
@@ -12555,37 +12275,32 @@ msgid "Enable this if you are new to UFO:AI & want to see interesting tips writt
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1081
-#, fuzzy
 msgid "Show 'Tip of the Day':"
 msgstr "Mutasd a nap tippjét:"
 
 #: ../base/ufos/ui/options.ufo:1088
-#, fuzzy
 msgid "Enable the 'Tip of the Day'."
-msgstr "A nap tippje"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1099
 msgid "Everything that you can find nowhere else."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1100
-#, fuzzy
 msgid "Menu Option(s)"
-msgstr "Beállítások"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1110
-#, fuzzy
 msgid "Precaching of models means having faster menus."
-msgstr "Modelek gyorstárazása (gyorsabb menük)"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1111
 msgid "Precache models:"
 msgstr "Modelek gyorstárazása:"
 
 #: ../base/ufos/ui/options.ufo:1117
-#, fuzzy
 msgid "Enable precaching of models to have faster menus."
-msgstr "Modelek gyorstárazása (gyorsabb menük)"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1136
 msgid "Configure input devices, battlescape camera and battlescape gameplay settings."
@@ -12600,14 +12315,12 @@ msgid "The camera is the thing you move around all the time and that makes you s
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1151
-#, fuzzy
 msgid "Battlescape Camera Settings"
-msgstr "Kamera mozgatása balra"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1158
-#, fuzzy
 msgid "The scroll speed of the battlescape camera."
-msgstr "Kamera felfelé billentése"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1159
 msgid "Scroll Speed:"
@@ -12618,9 +12331,8 @@ msgid "The actual camera scroll speed."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1185
-#, fuzzy
 msgid "The rotation speed of the battlescape camera."
-msgstr "Kamera felfelé billentése"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1186
 msgid "Rotation Speed:"
@@ -12647,18 +12359,16 @@ msgid "The battlescape is where the ground forces meet."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1239
-#, fuzzy
 msgid "Battlescape Gameplay Settings"
-msgstr "Kamera mozgatása balra"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1249
 msgid "Actor speed changes the speed of aliens & humans."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1250
-#, fuzzy
 msgid "Actor Speed:"
-msgstr "Lapozzás sebesség:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1261
 msgid "Choose between 0-9, higher values mean higher actor speed."
@@ -12669,19 +12379,16 @@ msgid "The joystick is a old-school input device for computers."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1275
-#, fuzzy
 msgid "Joystick Settings"
-msgstr "Joystick beállítások:"
+msgstr "Joystick beállítások"
 
 #: ../base/ufos/ui/options.ufo:1282
-#, fuzzy
 msgid "Enable or disable your Joystick."
-msgstr "A játék megállításának engedélyezése vagy tiltása"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1283
-#, fuzzy
 msgid "Enable:"
-msgstr "Mindet be"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1289
 msgid "Enable your joystick or joypad."
@@ -12700,9 +12407,8 @@ msgid "The current value of the joystick threshold."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1326
-#, fuzzy
 msgid "Joystick speed."
-msgstr "Joystick beállítások:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1338
 msgid "The current value of the joystick speed."
@@ -12713,9 +12419,8 @@ msgid "Keys are the things on your keyboard."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1353
-#, fuzzy
 msgid "Show Keys"
-msgstr "Billenytű kiosztás"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1369
 msgid "Enabling this will give you a preview of your actions on the battlescape which you then have to confirm. This is a must-try-feature."
@@ -12750,9 +12455,8 @@ msgid "Autostand regulates if your soldier should automatically stand up when he
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1401
-#, fuzzy
 msgid "Autostand:"
-msgstr "Akció"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1407
 msgid "Select 'Yes' if you want more intelligent soldiers."
@@ -12763,7 +12467,6 @@ msgid "Select whether the game should automatically center the camera view at th
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1428
-#, fuzzy
 msgid "Center View:"
 msgstr "Középre zár:"
 
@@ -12796,37 +12499,32 @@ msgid "Select which of your joysticks or joypads you want to use."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1473
-#, fuzzy
 msgid "Joystick or Joypad:"
-msgstr "Joystick:"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1479
 msgid "This list shows the joysticks and joypads available."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1504
-#, fuzzy
 msgid "Maintain Resolution"
-msgstr "Felbontás állítása"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1514
-#, fuzzy
 msgid "Maintain the selected resolution."
-msgstr "Felbontás állítása"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1521
-#, fuzzy
 msgid "Accept the new resolution."
-msgstr "Felbontás változtatása"
+msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1522
 msgid "Accept"
 msgstr "Elfogad"
 
 #: ../base/ufos/ui/options.ufo:1528
-#, fuzzy
 msgid "Use the previous resolution."
-msgstr "Felbontás változtatása"
+msgstr ""
 
 #: ../base/ufos/ui/production.ufo:87
 #: client/campaign/cp_produce_callbacks.c:389
@@ -12916,23 +12614,20 @@ msgid "Skirmish game settings"
 msgstr "Gyakorló játék beállításai"
 
 #: ../base/ufos/ui/skirmish.ufo:49
-#, fuzzy
 msgid "Equipment AI"
-msgstr "Felszerelés"
+msgstr ""
 
 #: ../base/ufos/ui/skirmish.ufo:137
 msgid "Max AI actors for this game"
 msgstr ""
 
 #: ../base/ufos/ui/skirmish.ufo:161
-#, fuzzy
 msgid "Max. soldiers:"
-msgstr "Max katona csapatonként:"
+msgstr ""
 
 #: ../base/ufos/ui/skirmish.ufo:162
-#, fuzzy
 msgid "Sets the amount of soldiers"
-msgstr "katona kiválasztása"
+msgstr ""
 
 #: ../base/ufos/ui/skirmish.ufo:192
 msgid "Select which side you want to play with"
@@ -13007,24 +12702,20 @@ msgid "Node editor"
 msgstr ""
 
 #: ../base/ufos/ui/sys_editor.ufo:30
-#, fuzzy
 msgid "Capture a node"
-msgstr "Aktuáis elem:"
+msgstr ""
 
 #: ../base/ufos/ui/sys_editor.ufo:42
-#, fuzzy
 msgid "Select parent node"
-msgstr "Zóna kiválasztása"
+msgstr ""
 
 #: ../base/ufos/ui/sys_editor.ufo:54
-#, fuzzy
 msgid "Select first child node"
-msgstr "Zóna kiválasztása"
+msgstr ""
 
 #: ../base/ufos/ui/sys_editor.ufo:66
-#, fuzzy
 msgid "Select next node"
-msgstr "Zóna kiválasztása"
+msgstr ""
 
 #: ../base/ufos/ui/sys_editor.ufo:79
 msgid "Extract window"
@@ -13593,11 +13284,11 @@ msgstr "Plazma puska töltő"
 
 #: ../base/ufos/weapons_plasma.ufo:229
 msgid "Plasma Blaster"
-msgstr ""
+msgstr "Plazmavető"
 
 #: ../base/ufos/weapons_plasma.ufo:250
 msgid "Plasma Blaster Charge"
-msgstr ""
+msgstr "Plazmavető töltő"
 
 #: ../base/ufos/weapons_plasma.ufo:288
 msgid "Ball"
@@ -13664,14 +13355,12 @@ msgid "Unknown alien race"
 msgstr "Ismeretlen idegen faj"
 
 #: client/battlescape/cl_actor.c:2491
-#, fuzzy
 msgid "Toggle to next actor"
 msgstr "Következő katona"
 
 #: client/battlescape/cl_actor.c:2492
-#, fuzzy
 msgid "Select an actor from list"
-msgstr "Katona kiválasztása"
+msgstr ""
 
 #: client/battlescape/cl_actor.c:2493
 msgid "Update an actor"
@@ -13759,25 +13448,20 @@ msgid "Shots: %i"
 msgstr "Lövések: %i"
 
 #: client/battlescape/cl_hud.c:658
-#, fuzzy
 msgid "No weapon."
-msgstr "Fegyverrel:"
+msgstr ""
 
 #: client/battlescape/cl_hud.c:667
-#, fuzzy
 msgid "Weapon cannot be reloaded."
 msgstr ""
-"A fegyver elsütéséhez\n"
-"mind két kéz kell!\n"
 
 #: client/battlescape/cl_hud.c:673
 msgid "No reload possible, already fully loaded."
 msgstr ""
 
 #: client/battlescape/cl_hud.c:683
-#, fuzzy
 msgid "Not enough TUs for reloading weapon."
-msgstr "Nincs elég időegység a felálláshoz."
+msgstr ""
 
 #: client/battlescape/cl_hud.c:686
 msgid "No reload possible, you don't have backup ammo."
@@ -14513,9 +14197,8 @@ msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr ""
 
 #: client/campaign/cp_base.c:2322
-#, fuzzy
 msgid "Antimatter (current/max):"
-msgstr "Antianyag tároló"
+msgstr "Antianyag (jelenleg/max):"
 
 #: client/campaign/cp_base.c:2469
 #, c-format
@@ -14592,9 +14275,8 @@ msgid "Buy or produce at least one aircraft first."
 msgstr "Előbb vásárolj vagy gyárts egy repülőt."
 
 #: client/campaign/cp_base_callbacks.c:297
-#, fuzzy
 msgid "No Hangar functional in base."
-msgstr "Nincs Hangár ezen a bázison\n"
+msgstr "Nincs működő hangár a bázison."
 
 #: client/campaign/cp_base_callbacks.c:303
 #: client/campaign/cp_base_callbacks.c:313
@@ -14602,9 +14284,9 @@ msgstr "Nincs Hangár ezen a bázison\n"
 #: client/campaign/cp_base_callbacks.c:323
 #: client/campaign/cp_base_callbacks.c:328
 #: client/campaign/cp_base_callbacks.c:333
-#, fuzzy, c-format
+#, c-format
 msgid "No %s functional in base."
-msgstr "Nincs raktár ezen a bázison."
+msgstr "Nincs %s a bázison."
 
 #: client/campaign/cp_base_callbacks.c:308
 msgid "Build at least a second base to transfer equipment or personnel"
@@ -14714,11 +14396,9 @@ msgstr "Nincs ilyen védelmi rendszer ezen az állomáson."
 #: client/campaign/cp_basedefence_callbacks.c:251
 #: client/campaign/cp_basedefence_callbacks.c:279
 #: client/campaign/cp_basedefence_callbacks.c:307
-#, fuzzy, c-format
+#, c-format
 msgid "%i: empty"
-msgstr ""
-"%s\n"
-"(üres)\n"
+msgstr "%i: üres"
 
 #: client/campaign/cp_basedefence_callbacks.c:257
 #: client/campaign/cp_basedefence_callbacks.c:285
@@ -15163,11 +14843,13 @@ msgstr ""
 "Cél: %s"
 
 #: client/campaign/cp_map.c:1621
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s (%s)\n"
 "%s"
-msgstr "%s (%s)"
+msgstr ""
+"%s (%s)\n"
+"%s"
 
 #: client/campaign/cp_map.c:1641
 #: client/campaign/cp_map.c:1649
@@ -15193,9 +14875,9 @@ msgid "ETA:\t%sh\n"
 msgstr ""
 
 #: client/campaign/cp_map.c:1675
-#, fuzzy, c-format
+#, c-format
 msgid "Speed: %i km/h\n"
-msgstr "Sebesség:\t%i km/h\n"
+msgstr "Sebesség: %i km/h\n"
 
 #: client/campaign/cp_map.c:1875
 #, c-format
@@ -15796,14 +15478,14 @@ msgid "Item size\t%i\n"
 msgstr ""
 
 #: client/campaign/cp_produce_callbacks.c:390
-#, fuzzy, c-format
+#, c-format
 msgid "Stored at: %s\n"
-msgstr "Állapot:\t%s\n"
+msgstr ""
 
 #: client/campaign/cp_produce_callbacks.c:391
-#, fuzzy, c-format
+#, c-format
 msgid "Disassembly time: %ih\n"
-msgstr "Szétszerelési idő\t%ih\n"
+msgstr "Szétszerelési idő: %ih\n"
 
 #: client/campaign/cp_produce_callbacks.c:392
 msgid "Components:\n"
@@ -15940,40 +15622,33 @@ msgid "Progress: %.1f%%"
 msgstr ""
 
 #: client/campaign/cp_research_callbacks.c:128
-#, fuzzy
 msgid "Progress: not available."
-msgstr "Nincs kutatási javaslat leírás."
+msgstr ""
 
 #: client/campaign/cp_research_callbacks.c:133
-#, fuzzy
 msgid "Status: under research"
 msgstr "Állapot: Kutatás alatt"
 
 #: client/campaign/cp_research_callbacks.c:134
-#, fuzzy
 msgid "Status: this research topic is currently being processed in laboratories"
-msgstr "Állapot: Kutatás szünetel"
+msgstr "Állapot: Ezt a tervezetet épp vizsgálják tudósaink"
 
 #: client/campaign/cp_research_callbacks.c:137
-#, fuzzy
 msgid "Status: research paused"
 msgstr "Állapot: Kutatás szünetel"
 
 #: client/campaign/cp_research_callbacks.c:138
-#, fuzzy
 msgid "Status: research topic currently paused."
-msgstr "Állapot: Kutatás szünetel"
+msgstr "Állapot: A kutatás jelenleg szünetel"
 
 #: client/campaign/cp_research_callbacks.c:141
 #: client/campaign/cp_research_callbacks.c:142
-#, fuzzy
 msgid "Status: research finished"
 msgstr "Állapot: Kutatás befejezve"
 
 #: client/campaign/cp_research_callbacks.c:147
-#, fuzzy
 msgid "Status: not possible to research"
-msgstr "Állapot: Kutatás alatt"
+msgstr "Állapot: Nem kutatható"
 
 #: client/campaign/cp_research_callbacks.c:148
 msgid "Status: We don't currently have all the materials or background knowledge needed to research this topic."
@@ -15981,7 +15656,6 @@ msgstr "Állapot: Nincs meg minden szükséges nyersanyagunk vagy háttértudás
 
 #: client/campaign/cp_research_callbacks.c:150
 #: client/campaign/cp_research_callbacks.c:151
-#, fuzzy
 msgid "Status: unknown technology"
 msgstr "Állapot: Ismeretlen technológia"
 
@@ -16069,7 +15743,6 @@ msgid "Error"
 msgstr "Hiba"
 
 #: client/campaign/cp_save.c:581
-#, fuzzy
 msgid "QuickSave"
 msgstr "Gyorsmentés"
 
@@ -16873,14 +16546,13 @@ msgid "Size:\t%i\n"
 msgstr ""
 
 #: client/cl_inventory_callbacks.c:132
-#, fuzzy
 msgid "^BDamage type:\tProtection:\n"
-msgstr "Típus:\tVédelem:\n"
+msgstr "^BTípus:\tVédelem:\n"
 
 #: client/cl_inventory_callbacks.c:144
-#, fuzzy, c-format
+#, c-format
 msgid "%s weapon\n"
-msgstr "Fegyverrel:"
+msgstr "%s fegyver\n"
 
 #: client/cl_inventory_callbacks.c:144
 #: client/cl_inventory_callbacks.c:183
@@ -16922,19 +16594,17 @@ msgid "Spreads:\t%g\n"
 msgstr "Szórás:\t%g\n"
 
 #: client/cl_inventory_callbacks.c:180
-#, fuzzy, c-format
+#, c-format
 msgid "%s. No detailed info available.\n"
-msgstr "Nincs leírás."
+msgstr "%s Nincs leírás.\n"
 
 #: client/cl_inventory_callbacks.c:180
-#, fuzzy
 msgid "Ammunition"
-msgstr "Idegen kommunikáció"
+msgstr "Muníció"
 
 #: client/cl_inventory_callbacks.c:180
-#, fuzzy
 msgid "Weapon"
-msgstr "Fegyverek"
+msgstr "Fegyver"
 
 #: client/cl_inventory_callbacks.c:183
 #, c-format
@@ -16942,9 +16612,9 @@ msgid "%s ammo-less weapon\n"
 msgstr ""
 
 #: client/cl_inventory_callbacks.c:186
-#, fuzzy, c-format
+#, c-format
 msgid "%s auxiliary equipment\n"
-msgstr "Elérhető felszerelés:"
+msgstr ""
 
 #: client/cl_inventory_callbacks.c:188
 #, c-format
@@ -17201,14 +16871,13 @@ msgid "Invalid or full team"
 msgstr ""
 
 #: client/multiplayer/mp_serverlist.c:234
-#, fuzzy, c-format
+#, c-format
 msgid "Team %d"
-msgstr "Csapat"
+msgstr "Csapat %d"
 
 #: client/multiplayer/mp_serverlist.c:236
-#, fuzzy
 msgid "No team"
-msgstr "Figyelmeztetés"
+msgstr ""
 
 #: client/multiplayer/mp_serverlist.c:300
 #, c-format
@@ -17376,9 +17045,8 @@ msgid "Can't perform action - impossible throw!\n"
 msgstr "Képtelenség oda dobni!\n"
 
 #: game/g_combat.c:1089
-#, fuzzy
 msgid "Can't perform action - object not activatable!\n"
-msgstr "A tárgy nem aktiválható!\n"
+msgstr ""
 
 #: game/g_combat.c:1107
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
@@ -17429,19 +17097,16 @@ msgid "%s is currently shaken.\n"
 msgstr ""
 
 #: game/g_reaction.c:184
-#, fuzzy
 msgid "No reaction fire enabled weapon.\n"
-msgstr "Nincs reakció"
+msgstr ""
 
 #: game/g_reaction.c:189
-#, fuzzy
 msgid "No fire mode selected for reaction fire.\n"
-msgstr "Ellenőrizd, hogy ezt a tűzelési módot használjad visszalövésnél"
+msgstr ""
 
 #: game/g_reaction.c:194
-#, fuzzy
 msgid "Not enough TUs left for activating reaction fire.\n"
-msgstr "Nincs elég időegység a felálláshoz."
+msgstr ""
 
 #: game/g_round.c:45
 msgid "4 minutes left until forced round end\n"
