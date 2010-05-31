@@ -98,17 +98,15 @@ static void MN_OptionPropertyChanged (menuNode_t *node, const value_t *property)
 	optionBehaviour->super->propertyChanged(node, property);
 }
 
-/** @brief valid properties for options (selectbox, tab...) */
+/** @brief valid properties for options (used by selectbox, tab, optonlist and optiontree) */
 static const value_t properties[] = {
 	/**
 	 * Displayed text
-	 * @todo use string
 	 */
 	{"label", V_STRING, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, label), 0},
 
 	/**
 	 * Value of the option
-	 * FIXME fix the size, HERE something is very strange, it should crash somewhere
 	 */
 	{"value", V_STRING, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, value), 0},
 
