@@ -194,7 +194,7 @@ static void MN_InitOption (menuNode_t* option, const char* label, const char* va
  * @param[in] value value used when this option is selected
  * @return The new option
  */
-menuNode_t* MN_AddOption (menuNode_t**tree, const char* name, const char* label, const char* value)
+menuNode_t* MN_AddOption (menuNode_t** tree, const char* name, const char* label, const char* value)
 {
 	menuNode_t *last;
 	menuNode_t *option;
