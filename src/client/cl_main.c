@@ -642,7 +642,8 @@ static void CL_PrecacheModels (void)
 
 static void CL_SetRatioFilter_f (void)
 {
-	menuNode_t* option = MN_GetOption(OPTION_VIDEO_RESOLUTIONS);
+	menuNode_t* firstOption = MN_GetOption(OPTION_VIDEO_RESOLUTIONS);
+	menuNode_t* option = firstOption;
 	float requestedRation = atof(Cmd_Argv(1));
 	qboolean all = qfalse;
 	qboolean custom = qfalse;
@@ -683,7 +684,7 @@ static void CL_SetRatioFilter_f (void)
 	}
 
 	/* the content change */
-	MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, option);
+	MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, firstOption);
 }
 
 /**
@@ -720,7 +721,7 @@ void CL_InitAfter (void)
 		for (i = 0; i < VID_GetModeNums(); i++) {
 			vidmode_t vidmode;
 			if (VID_GetModeInfo(i, &vidmode))
-				MN_AddOption(&option, "", va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
+				MN_AddOption(&option, va("r%ix%i", vidmode.width, vidmode.height), va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
 		}
 		MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, option);
 	}
