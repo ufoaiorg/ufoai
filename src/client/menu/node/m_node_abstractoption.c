@@ -53,52 +53,6 @@ void MN_OptionNodeSortOptions (menuNode_t *node)
 	node->lastChild = option;
 }
 
-static void MN_UpdateOption_f (void)
-{
-	menuNode_t *node;
-	menuNode_t *option;
-
-	if (Cmd_Argc() != 4) {
-		Com_Printf("Usage: %s <nodepath> <optionname> <hide|display|enable|disable>\n", Cmd_Argv(0));
-		return;
-	}
-
-	node = MN_GetNodeByPath(Cmd_Argv(1));
-	if (node == NULL) {
-		Com_Printf("MN_UpdateOption_f: '%s' node not found.\n", Cmd_Argv(1));
-		return;
-	}
-
-	if (!MN_NodeInstanceOf(node, "abstractoption")) {
-		Com_Printf("MN_UpdateOption_f: '%s' node is not an 'abstractoption'.\n", Cmd_Argv(1));
-		return;
-	}
-
-	option = node->firstChild;
-	while (option) {
-		if (!strcmp(option->name, Cmd_Argv(2)))
-			break;
-		option = option->next;
-	}
-	if (option == NULL) {
-		Com_Printf("MN_UpdateOption_f: option '%s' from '%s' node not found.\n", Cmd_Argv(2), Cmd_Argv(1));
-		return;
-	}
-
-	if (!strcmp("disable", Cmd_Argv(3))) {
-		option->disabled = qtrue;
-	} else if (!strcmp("enable", Cmd_Argv(3))) {
-		option->disabled = qfalse;
-	} else if (!strcmp("hide", Cmd_Argv(3))) {
-		option->invis = qtrue;
-	} else if (!strcmp("display", Cmd_Argv(3))) {
-		option->invis = qfalse;
-	} else {
-		Com_Printf("MN_AddListener_f: '%s' command do not exists.\n", Cmd_Argv(3));
-		return;
-	}
-}
-
 static const value_t properties[] = {
 	/** Optional. Data ID we want to use. It must be an option list. It substitute to the inline options */
 	{"dataid", V_UI_DATAID, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, dataId), MEMBER_SIZEOF(EXTRADATA_TYPE, dataId)},
@@ -175,6 +129,5 @@ void MN_RegisterAbstractOptionNode (nodeBehaviour_t *behaviour)
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->drawItselfChild = qtrue;
 	behaviour->doLayout = MN_AbstractOptionDoLayout;
-	Cmd_AddCommand("mn_updateoption", MN_UpdateOption_f, "Update some option status");
 	abstractOptionBehaviour = behaviour;
 }

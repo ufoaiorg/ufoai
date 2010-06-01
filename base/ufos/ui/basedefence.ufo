@@ -10,33 +10,6 @@ window basedefence extends objectinfo
 		string		"_Equip Defence Weapons"
 	}
 
-	/**
-	 * @brief sets available defencetypes
-	 */
-	confunc set_defencetypes {
-		*cvar:mn_cvartmp = "<1>"
-		if ( *cvar:mn_cvartmp eq "enable" ) {
-			cmd "mn_updateoption <path:root>.defencetype missile enable;"
-			cmd "mn_updateoption <path:root>.defencetype missile display;"
-		} elif ( *cvar:mn_cvartmp eq "disable" ) {
-			cmd "mn_updateoption <path:root>.defencetype missile disable;"
-			cmd "mn_updateoption <path:root>.defencetype missile display;"
-		} elif ( *cvar:mn_cvartmp eq "na" ) {
-			cmd "mn_updateoption <path:root>.defencetype missile hide;"
-		}
-		*cvar:mn_cvartmp = "<2>"
-		if ( *cvar:mn_cvartmp eq "enable" ) {
-			cmd "mn_updateoption <path:root>.defencetype laser enable;"
-			cmd "mn_updateoption <path:root>.defencetype laser display;"
-		} elif ( *cvar:mn_cvartmp eq "disable" ) {
-			cmd "mn_updateoption <path:root>.defencetype laser disable;"
-			cmd "mn_updateoption <path:root>.defencetype laser display;"
-		} elif ( *cvar:mn_cvartmp eq "na" ) {
-			cmd "mn_updateoption <path:root>.defencetype laser hide;"
-		}
-		cmd "del mn_cvartmp;"
-	}
-
 	tab defencetype {
 		{
 			pos		"17 75"
@@ -66,6 +39,33 @@ window basedefence extends objectinfo
 			value	"laser"
 			invis	true
 		}
+	}
+
+	/**
+	 * @brief sets available defencetypes
+	 */
+	confunc set_defencetypes {
+		*cvar:mn_cvartmp = "<1>"
+		if ( *cvar:mn_cvartmp eq "enable" ) {
+			*node:root.defencetype.missile@disabled = false
+			*node:root.defencetype.missile@invis = false
+		} elif ( *cvar:mn_cvartmp eq "disable" ) {
+			*node:root.defencetype.missile@disabled = true
+			*node:root.defencetype.missile@invis = false
+		} elif ( *cvar:mn_cvartmp eq "na" ) {
+			*node:root.defencetype.missile@invis = true
+		}
+		*cvar:mn_cvartmp = "<2>"
+		if ( *cvar:mn_cvartmp eq "enable" ) {
+			*node:root.defencetype.laser@disabled = false
+			*node:root.defencetype.laser@invis = false
+		} elif ( *cvar:mn_cvartmp eq "disable" ) {
+			*node:root.defencetype.laser@disabled = true
+			*node:root.defencetype.laser@invis = false
+		} elif ( *cvar:mn_cvartmp eq "na" ) {
+			*node:root.defencetype.laser@invis = true
+		}
+		cmd "del mn_cvartmp;"
 	}
 
 	panel equippanel {

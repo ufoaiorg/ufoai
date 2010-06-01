@@ -325,18 +325,18 @@ window ufopedia extends objectinfo
 
 		// update tab
 		if ( *cvar:mn_uppreavailable == 1 ) {
-			cmd "mn_updateoption <path:root>.content.navigation preresearch display" 
+			*node:root.content.navigation.preresearch@invis = false
 		} else {
-			cmd "mn_updateoption <path:root>.content.navigation preresearch hide"
+			*node:root.content.navigation.preresearch@invis = true
 			// update the tab if the hidden one is selected
 			if ( *cvar:ufopedia_content eq "preresearch" ) {
 				*cvar:ufopedia_content = "description"
 			} 
 		}
 		if ( *cvar:mn_upmetadata == 1 ) {
-			cmd "mn_updateoption <path:root>.content.navigation stats display" 
+			*node:root.content.navigation.stats@invis = false
 		} else {
-			cmd "mn_updateoption <path:root>.content.navigation stats hide"
+			*node:root.content.navigation.stats@invis = true
 			// update the tab if the hidden one is selected
 			if ( *cvar:ufopedia_content eq "stats" ) {
 				*cvar:ufopedia_content = "description"
