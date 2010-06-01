@@ -37,7 +37,7 @@ extern const struct nodeBehaviour_s *optionBehaviour;
 
 /** @brief Option definition */
 typedef struct optionExtraData_s {
-	char label[MAX_VAR];	/**< text for the select box - V_TRANSLATION_STRING */
+	char label[MAX_VAR];	/**< text for the select box */
 	char value[MAX_VAR];	/**< the value the cvar should get */
 
 	/* status */
