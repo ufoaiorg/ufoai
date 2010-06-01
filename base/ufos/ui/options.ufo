@@ -983,14 +983,14 @@ window options
 		// ===============
 		// GEOSCAPE 3DMAP
 		// ===============
-		string 3dmap_str
+		string m3dmap_str
 		{
 			tooltip		"_3d or 2d geoscape."
 			string		"_3d Geoscape:"
 			pos			"85 440"
 			size		"250 20"
 		}
-		checkbox 3dmap
+		checkbox m3dmap
 		{
 			tooltip		"_Use the 3D geoscape. To enable this option you have to start a new campaign first."
 			current		*cvar:cl_3dmap
@@ -1002,19 +1002,19 @@ window options
 		// =========================
 		// GEOSCAPE 3DMAP LIGHTNING
 		// =========================
-		string 3dmapambient_str
+		string m3dmapambient_str
 		{
 			tooltip		"_Amount of light emitting from the sun & shining on the earth."
 			string		"_Ambient Lighting:"
 			pos			"85 465"
 			size		"150 20"
 		}
-		pic 3dmapambient_rahmen
+		pic m3dmapambient_rahmen
 		{
 			image		"ui/bar_rahmen"
 			pos			"240 467"
 		}
-		bar 3dmapambient_bar
+		bar m3dmapambient_bar
 		{
 			tooltip		"_Current amount of ambient light reaching the earth."
 			current		*cvar:cl_3dmapAmbient

@@ -496,7 +496,7 @@ window hospital_employee
 		string val { string *cvar:mn_tcls }
 	}
 
-	cmpHospitalNamedTbar  {
+	cmpHospitalNamedTbar hvy {
 		{
 			pos "690 342"
 		}

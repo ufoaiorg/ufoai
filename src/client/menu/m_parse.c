@@ -64,13 +64,71 @@ static const char *reserved_tokens[] = {
 	NULL
 };
 
-static qboolean MN_IsReservedToken (const char *name)
+static qboolean MN_TokenIsReserved (const char *name)
 {
 	const char **token = reserved_tokens;
 	while (*token) {
 		if (!strcmp(*token, name))
 			return qtrue;
 		token++;
+	}
+	return qfalse;
+}
+
+static qboolean MN_TokenIsValue (const char *name, qboolean isQuoted)
+{
+	return qtrue;
+#if 0
+	assert(name);
+	if (isQuoted)
+		return qtrue;
+	// is it a number
+	if ((name[0] >= '0' && name[0] <= '9') || name[0] == '-' || name[0] == '.')
+		return qtrue;
+	// is it a var (*cvar:...)
+	if (name[0] == '*')
+		return qtrue;
+	if (!strcmp(name, "true"))
+		return qtrue;
+	if (!strcmp(name, "false"))
+		return qtrue;
+
+	// uppercase const name
+	if ((name[0] >= 'A' && name[0] <= 'Z') || name[0] == '_') {
+		qboolean onlyUpperCase = qtrue;
+		while (*name != '\0') {
+			if ((name[0] >= 'A' && name[0] <= 'Z') || name[0] == '_' || (name[0] >= '0' && name[0] <= '9')) {
+				// available chars
+			} else {
+				return qfalse;
+			}
+			name++;
+		}
+		return onlyUpperCase;
+	}
+
+	return qfalse;
+#endif
+}
+
+static qboolean MN_TokenIsName (const char *name, qboolean isQuoted)
+{
+	assert(name);
+	if (isQuoted)
+		return qfalse;
+	if ((name[0] >= 'a' && name[0] <= 'z') || (name[0] >= 'A' && name[0] <= 'Z') || name[0] == '_') {
+		qboolean onlyUpperCase = qtrue;
+		while (*name != '\0') {
+			if (name[0] >= 'a' && name[0] <= 'z') {
+				onlyUpperCase = qfalse;
+			} else if ((name[0] >= '0' && name[0] <= '9') || (name[0] >= 'A' && name[0] <= 'Z') || name[0] == '_') {
+				// available chars
+			} else {
+				return qfalse;
+			}
+			name++;
+		}
+		return !onlyUpperCase;
 	}
 	return qfalse;
 }
@@ -346,7 +404,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 	firstAction = NULL;
 
 	/* prevent bad position */
-	if (*token[0] != '{') {
+	if (strcmp(*token, "{") != 0) {
 		Com_Printf("MN_ParseActionList: token \"{\" expected, but \"%s\" found (in event) (node: %s)\n", *token, MN_GetPath(menuNode));
 		return NULL;
 	}
@@ -359,9 +417,8 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 		if (!*token)
 			return NULL;
 
-		if (*token[0] == '}')
+		if (!strcmp(*token, "}"))
 			break;
-
 
 		type = MN_GetActionTokenType(*token, EA_ACTION);
 		/* setter form */
@@ -485,7 +542,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 		lastAction = action;
 	}
 
-	assert(*token[0] == '}');
+	assert(!strcmp(*token, "}"));
 
 	/* return non NULL value */
 	if (firstAction == NULL) {
@@ -503,7 +560,7 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 	*token = Com_EParse(text, errhead, node->name);
 	if (!*text)
 		return qfalse;
-	if (*token[0] != '{') {
+	if (strcmp(*token, "{") != 0) {
 		Com_Printf("MN_ParseExcludeRect: node with bad excluderect ignored (node \"%s\")\n", MN_GetPath(node));
 		return qtrue;
 	}
@@ -524,7 +581,7 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 				return qfalse;
 			Com_EParseValue(&rect, *token, V_POS, offsetof(excludeRect_t, size), sizeof(vec2_t));
 		}
-	} while (*token[0] != '}');
+	} while (strcmp(*token, "}") != 0);
 
 
 	if (mn.numExcludeRect >= MAX_EXLUDERECTS) {
@@ -559,7 +616,7 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 	if (!*text)
 		return qfalse;
 
-	if (*token[0] != '{') {
+	if (strcmp(*token, "{") != 0) {
 		Com_Printf("MN_ParseEventProperty: Event '%s' without body (%s)\n", event->string, MN_GetPath(node));
 		return qfalse;
 	}
@@ -569,7 +626,7 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 		return qfalse;
 
 	/* block terminal already read */
-	assert(*token[0] == '}');
+	assert(!strcmp(*token, "}"));
 
 	return qtrue;
 }
@@ -581,6 +638,7 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 static qboolean MN_ParseProperty (void* object, const value_t *property, const char* objectName, const char **text, const char **token)
 {
 	const char *errhead = "MN_ParseProperty: unexpected end of file (object";
+	static const char *notWellFormedValue = "MN_ParseProperty: \"%s\" is not a well formed node name (it must be quoted, uppercase const, a number, or prefixed with '*')\n";
 	size_t bytes;
 	void *valuePtr = (void*) ((uintptr_t)object + property->ofs);
 	int result;
@@ -596,6 +654,10 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		*token = Com_EParse(text, errhead, objectName);
 		if (!*text)
 			return qfalse;
+		if (!MN_TokenIsValue(*token, Com_ParsedTokenIsQuoted())) {
+			Com_Printf(notWellFormedValue, *token);
+			return qfalse;
+		}
 
 		if (property->type == V_TRANSLATION_STRING) {
 			/* selectbox values are static arrays */
@@ -618,6 +680,10 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		*token = Com_EParse(text, errhead, objectName);
 		if (!*text)
 			return qfalse;
+		if (!MN_TokenIsValue(*token, Com_ParsedTokenIsQuoted())) {
+			Com_Printf(notWellFormedValue, *token);
+			return qfalse;
+		}
 
 		/* a reference to data is handled like this */
 		mn.curadata = Com_AlignPtr(mn.curadata, property->type & V_BASETYPEMASK);
@@ -645,6 +711,10 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		*token = Com_EParse(text, errhead, objectName);
 		if (!*text)
 			return qfalse;
+		if (!MN_TokenIsValue(*token, Com_ParsedTokenIsQuoted())) {
+			Com_Printf(notWellFormedValue, *token);
+			return qfalse;
+		}
 
 		/* references are parsed as string */
 		if (*token[0] == '*') {
@@ -705,6 +775,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 				*token = Com_EParse(text, errhead, objectName);
 				if (!*text)
 					return qfalse;
+
 				*icon = MN_GetIconByName(*token);
 				if (*icon == NULL) {
 					Com_Printf("MN_ParseProperty: icon '%s' not found (object %s)\n", *token, objectName);
@@ -768,7 +839,7 @@ static qboolean MN_ParseFunction (menuNode_t * node, const char **text, const ch
 	if (*action == NULL)
 		return qfalse;
 
-	return *token[0] == '}';
+	return strcmp(*token, "}") == 0;
 }
 
 /**
@@ -793,9 +864,8 @@ static qboolean MN_ParseNodeProperties (menuNode_t * node, const char **text, co
 	const char *errhead = "MN_ParseNodeProperties: unexpected end of file (node";
 	qboolean nextTokenAlreadyRead = qfalse;
 
-	if (*token[0] != '{') {
+	if (strcmp(*token, "{") != 0)
 		nextTokenAlreadyRead = qtrue;
-	}
 
 	do {
 		const value_t *val;
@@ -811,9 +881,8 @@ static qboolean MN_ParseNodeProperties (menuNode_t * node, const char **text, co
 		}
 
 		/* is finished */
-		if (*token[0] == '}') {
+		if (!strcmp(*token, "}"))
 			break;
-		}
 
 		/* find the property */
 		val = MN_GetPropertyFromBehaviour(node->behaviour, *token);
@@ -853,12 +922,12 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 {
 	qboolean result = qtrue;
 
-	if (*token[0] != '{') {
+	if (strcmp(*token, "{") != 0) {
 		/* read the body block start */
 		*token = Com_EParse(text, errhead, node->name);
 		if (!*text)
 			return qfalse;
-		if (*token[0] != '{') {
+		if (strcmp(*token, "{") != 0) {
 			Com_Printf("MN_ParseNodeBody: node doesn't have body, token '%s' read (node \"%s\")\n", *token, MN_GetPath(node));
 			mn.numNodes--;
 			return qfalse;
@@ -875,7 +944,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		if (!*text)
 			return qfalse;
 
-		if (*token[0] == '{') {
+		if (strcmp(*token, "{") == 0) {
 			/* we have a special block for properties */
 			result = MN_ParseNodeProperties(node, text, token);
 			if (!result)
@@ -887,7 +956,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 				return qfalse;
 
 			/* and then read all nodes */
-			while (*token[0] != '}') {
+			while (strcmp(*token, "}") != 0) {
 				menuNode_t *new = MN_ParseNode(node, text, token, errhead);
 				if (!new)
 					return qfalse;
@@ -901,7 +970,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			result = MN_ParseNodeProperties(node, text, token);
 		} else {
 			/* we should have a block with nodes only */
-			while (*token[0] != '}') {
+			while (strcmp(*token, "}") != 0) {
 				menuNode_t *new = MN_ParseNode(node, text, token, errhead);
 				if (!new)
 					return qfalse;
@@ -919,7 +988,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 	}
 
 	/* already check on MN_ParseNodeProperties */
-	assert(*token[0] == '}');
+	assert(strcmp(*token, "}") == 0);
 	return qtrue;
 }
 
@@ -958,7 +1027,11 @@ static menuNode_t *MN_ParseNode (menuNode_t * parent, const char **text, const c
 	*token = Com_EParse(text, errhead, "");
 	if (!*text)
 		return NULL;
-	if (MN_IsReservedToken(*token)) {
+	if (!MN_TokenIsName(*token, Com_ParsedTokenIsQuoted())) {
+		Com_Printf("MN_ParseNode: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", *token);
+		return NULL;
+	}
+	if (MN_TokenIsReserved(*token)) {
 		Com_Printf("MN_ParseNode: \"%s\" is a reserved token, we can't call a node with it\n", *token);
 		return NULL;
 	}
@@ -1044,7 +1117,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 	/* get it's body */
 	token = Com_Parse(text);
 
-	if (!*text || *token != '{') {
+	if (!*text || strcmp(token, "{") != 0) {
 		Com_Printf("MN_ParseMenuModel: menu \"%s\" without body ignored\n", menuModel->id);
 		return;
 	}
@@ -1056,7 +1129,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
-		if (*token == '}')
+		if (!strcmp(token, "}"))
 			break;
 
 		v = MN_FindPropertyByName(menuModelProperties, token);
@@ -1109,7 +1182,7 @@ void MN_ParseIcon (const char *name, const char **text)
 		if (*text == NULL)
 			return;
 
-		if (token[0] == '}')
+		if (!strcmp(token, "}"))
 			break;
 
 		property = MN_FindPropertyByName(mn_iconProperties, token);
@@ -1179,7 +1252,11 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
 		return;	/* never reached */
 	}
 
-	if (MN_IsReservedToken(name)) {
+	if (!MN_TokenIsName(name, Com_ParsedTokenIsQuoted())) {
+		Com_Printf("MN_ParseWindow: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
+		return;
+	}
+	if (MN_TokenIsReserved(name)) {
 		Com_Printf("MN_ParseWindow: \"%s\" is a reserved token, we can't call a node with it (node \"%s\")\n", name, name);
 		return;
 	}
