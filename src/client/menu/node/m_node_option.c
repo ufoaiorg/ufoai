@@ -103,12 +103,12 @@ static const value_t properties[] = {
 	/**
 	 * Displayed text
 	 */
-	{"label", V_STRING, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, label), 0},
+	{"label", V_TRANSLATION_STRING, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, label), 0},
 
 	/**
 	 * Value of the option
 	 */
-	{"value", V_STRING, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, value), 0},
+	{"value", V_TRANSLATION_STRING, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, value), 0},
 
 	/**
 	 * If true, child are not displayed
