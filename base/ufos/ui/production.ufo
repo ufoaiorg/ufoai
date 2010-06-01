@@ -49,11 +49,11 @@ window production
 			}
 		}
 
-		option description {
+		option primary {
 			label	"_Primary"
 			value	"primary"
 		}
-		option description {
+		option secondary {
 			label	"_Secondary"
 			value	"secondary"
 		}
@@ -61,31 +61,31 @@ window production
 			label	"_Heavy"
 			value	"heavy"
 		}
-		option description {
+		option misc {
 			label	"_Misc"
 			value	"misc"
 		}
-		option description {
+		option armour {
 			label	"_Armour"
 			value	"armour"
 		}
-		option description {
+		option craftitem {
 			label	"_Craft items"
 			value	"craftitem"
 		}
-		option description {
+		option aircraft {
 			label	"_Aircraft"
 			value	"aircraft"
 		}
-		option description {
+		option ugvitem {
 			label	"_UGV items"
 			value	"ugvitem"
 		}
-		option description {
+		option dummy {
 			label	"_Other"
 			value	"dummy"
 		}
-		option description {
+		option disassembly {
 			label	"_Disassembly"
 			value	"disassembly"
 		}

@@ -43,19 +43,19 @@ window transfer
 				}
 			}
 		}
-		option description {
+		option item {
 			label	"_Equipment"
 			value	"item"
 		}
-		option description {
+		option employee {
 			label	"_Employees"
 			value	"employee"
 		}
-		option description {
+		option alien {
 			label	"_Aliens"
 			value	"alien"
 		}
-		option description {
+		option aircraft {
 			label	"_Aircraft"
 			value	"aircraft"
 		}
