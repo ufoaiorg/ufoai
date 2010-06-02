@@ -984,6 +984,11 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	/* Redirect selectedAircraft */
 	MAP_SelectAircraft(aircraft);
 
+	if (aircraft->status == AIR_RETURNING) {
+		/* redirect to the new base */
+		AIR_AircraftReturnToBase(aircraft);
+	}
+
 	return qtrue;
 }
 

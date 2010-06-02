@@ -775,19 +775,20 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (base_t *base)
 {
 	int i;
 
-	for (i = 0; i < base->numAircraftInBase; i++) {
+	for (i = base->numAircraftInBase - 1; i >= 0; --i) {
 		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
 		if (AIR_IsAircraftOnGeoscape(aircraft)) {
 			int j;
 			for (j = 0; j < ccs.numBases; j++) {
-				base_t *base = B_GetBaseByIDX(j);
+				base_t *newbase = B_GetBaseByIDX(j);
 				/* found a new homebase? */
-				if (AIR_MoveAircraftIntoNewHomebase(aircraft, base))
+				if (base != newbase && AIR_MoveAircraftIntoNewHomebase(aircraft, newbase))
 					break;
 			}
 			if (j == ccs.numBases) {
 				/** @todo What should happen with it if no other base has enough free
 				 * storage for it? Spawn a dropship crash mission if no more fuel? */
+				AIR_DestroyAircraft(aircraft);
 			}
 		}
 	}
