@@ -67,7 +67,7 @@ qboolean Com_ParsedTokenIsQuoted (void)
  */
 const char *Com_Parse (const char *data_p[])
 {
-	int c;
+	char c;
 	size_t len;
 	const char *data;
 
@@ -136,26 +136,41 @@ skipwhite:
 				len++;
 			}
 		}
+		com_token[len] = '\0';
+		*data_p = data;
+		return com_token;
+	}
+
+	if (c == '{' || c == '}') {
+		data++;
+		com_token[len] = c;
+		len++;
+		*data_p = data;
+		return com_token;
 	}
 
 	/* parse a regular word */
 	do {
+#if 0	/* useless, use quotes to do that */
 		if (c == '\\' && data[1] == 'n') {
 			c = '\n';
 			data++;
 		}
+#endif
 		if (len < sizeof(com_token)) {
 			com_token[len] = c;
 			len++;
 		}
 		data++;
 		c = *data;
+		if (c == '{' || c == '}')
+			break;
 	} while (c > 32);
 
 	if (len == sizeof(com_token)) {
 		len = 0;
 	}
-	com_token[len] = 0;
+	com_token[len] = '\0';
 
 	*data_p = data;
 	return com_token;
