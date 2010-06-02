@@ -113,10 +113,6 @@ typedef struct menuNode_s {
 
 	/* temporary, and/or for testing */
 	float extraData1;			/**< allow behaviour to use it, how it need (before creating a real extradata structure) */
-
-	/* text */
-	/** @todo remove it  from 'string node', need to full implement MN_DrawStringInBox */
-	byte longlines;				/**< what to do with long lines */
 } menuNode_t;
 
 

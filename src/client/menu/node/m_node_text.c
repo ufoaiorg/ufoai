@@ -507,8 +507,10 @@ static const value_t properties[] = {
 	{"lineheight", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, lineHeight), MEMBER_SIZEOF(textExtraData_t, lineHeight)},
 	/* Bigger size of the width replacing a tab character. */
 	{"tabwidth", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, tabWidth), MEMBER_SIZEOF(textExtraData_t, tabWidth)},
-	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines. */
-	{"longlines", V_LONGLINES, MN_EXTRADATA_OFFSETOF(textExtraData_t, longlines), MEMBER_SIZEOF(textExtraData_t, longlines)},
+	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines.
+	 * It can be LONGLINES_WRAP, LONGLINES_CHOP, LONGLINES_PRETTYCHOP
+	 */
+	{"longlines", V_INT, MN_EXTRADATA_OFFSETOF(textExtraData_t, longlines), MEMBER_SIZEOF(textExtraData_t, longlines)},
 
 	/* Number of visible line we can display into the node height.
 	 * Currently, it translate the scrollable property <code>viewSize</code>
@@ -541,4 +543,8 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 	behaviour->loaded = MN_TextNodeLoaded;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+
+	Com_RegisterConstInt("LONGLINES_WRAP", LONGLINES_WRAP);
+	Com_RegisterConstInt("LONGLINES_CHOP", LONGLINES_CHOP);
+	Com_RegisterConstInt("LONGLINES_PRETTYCHOP", LONGLINES_PRETTYCHOP);
 }

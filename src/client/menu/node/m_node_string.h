@@ -27,4 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void MN_RegisterStringNode(nodeBehaviour_t *behaviour);
 
+typedef struct {
+	int longlines;				/**< what to do with long lines */
+} stringExtraData_t;
+
 #endif

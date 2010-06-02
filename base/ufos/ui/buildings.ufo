@@ -44,7 +44,7 @@ window buildings
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		rows		"19"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 		onClick		{ cmd "buildings_click <lineselected>" }
 		onViewChange {
 			*(abstractscrollbar)buildings_scroll@fullsize = <fullsize>

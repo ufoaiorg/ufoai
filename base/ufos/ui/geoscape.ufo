@@ -689,7 +689,7 @@ window popup_intercept_ready
 		string		"_Aircraft reached desired location - what to do?"
 		pos			"26 58"
 		size		"450 40"
-		longlines	wrap
+		longlines	LONGLINES_WRAP
 	}
 
 	cmpCancelButton bt_cancel
@@ -1624,7 +1624,7 @@ window popup_intercept
 			tabwidth	150
 			mousefx		true
 			rows		"13"
-			longlines	prettychop
+			longlines	LONGLINES_PRETTYCHOP
 			onViewChange {
 				*(abstractscrollbar)aircraft.ships_scroll@fullsize = <fullsize>
 				*(abstractscrollbar)aircraft.ships_scroll@current = <viewpos>

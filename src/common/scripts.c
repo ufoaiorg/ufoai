@@ -333,7 +333,6 @@ const char *const vt_names[] = {
 	"relabs",
 	"client_hunk",
 	"client_hunk_string",
-	"longlines",	/* 25 */
 	"team",
 	"race",
 	"ufo",
@@ -362,11 +361,6 @@ const char *const fade_names[] = {
 };
 CASSERT(lengthof(fade_names) == FADE_LAST);
 
-const char *const longlines_names[] = {
-	"wrap", "chop", "prettychop"
-};
-CASSERT(lengthof(longlines_names) == LONGLINES_LAST);
-
 /** @brief target sizes for buffer */
 static const size_t vt_sizes[] = {
 	0,	/* V_NULL */
@@ -394,7 +388,6 @@ static const size_t vt_sizes[] = {
 	sizeof(float),	/* V_RELABS */
 	0,	/* V_CLIENT_HUNK */
 	0,	/* V_CLIENT_HUNK_STRING */
-	sizeof(byte), 	/* V_LONGLINES */
 	sizeof(int),		/* V_TEAM */
 	sizeof(int),		/* V_RACE */
 	sizeof(int),		/* V_UFO */
@@ -430,7 +423,6 @@ static const size_t vt_aligns[] = {
 	sizeof(float),	/* V_RELABS */
 	0,	/* V_CLIENT_HUNK */
 	sizeof(char),	/* V_CLIENT_HUNK_STRING */
-	sizeof(byte), 	/* V_LONGLINES */
 	sizeof(int),		/* V_TEAM */
 	sizeof(int),		/* V_RACE */
 	sizeof(int),		/* V_UFO */
@@ -849,17 +841,6 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(float *) b = atof(token);
 		}
 		*writtenBytes = sizeof(float);
-		break;
-
-	case V_LONGLINES:
-		for (num = 0; num < LONGLINES_LAST; num++)
-			if (!strcmp(token, longlines_names[num]))
-				break;
-		if (num == LONGLINES_LAST)
-			*b = 0;
-		else
-			*b = num;
-		*writtenBytes = sizeof(byte);
 		break;
 
 	default:

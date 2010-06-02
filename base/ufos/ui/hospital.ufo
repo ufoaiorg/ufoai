@@ -449,7 +449,7 @@ window hospital_employee
 	}
 
 	pic	rank_img { pos "475 470" image *cvar:mn_chrrank_img }
-	string	rank_lbl { pos "475 175" size "200 20" string *cvar:mn_chrrank longlines prettychop }
+	string	rank_lbl { pos "475 175" size "200 20" string *cvar:mn_chrrank longlines LONGLINES_PRETTYCHOP }
 
 	cmpHospitalNamedTbar pwr {
 		{
@@ -537,8 +537,8 @@ window hospital_employee
 			pos "690 476"
 		}
 		tbar bar   { current *cvar:mn_hp max *cvar:mn_hpmax image "ui/bar_health" }
-		string lbl { string "_Health:" font "f_normal" longlines prettychop }
-		string val { string *cvar:mn_hp  font "f_normal" longlines prettychop }
+		string lbl { string "_Health:" font "f_normal" longlines LONGLINES_PRETTYCHOP }
+		string val { string *cvar:mn_hp  font "f_normal" longlines LONGLINES_PRETTYCHOP }
 	}
 
 	// ==================

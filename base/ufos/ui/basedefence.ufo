@@ -127,7 +127,7 @@ window basedefence extends objectinfo
 				selectcolor	"1 1 1 1"
 				rows		"4"
 				mousefx		true
-				longlines	prettychop
+				longlines	LONGLINES_PRETTYCHOP
 				onClick		{
 					call *node:root.equippanel.update_buttons
 					cmd "basedef_selectitem <cvar:mn_bdef_type> <lineselected> -1;"

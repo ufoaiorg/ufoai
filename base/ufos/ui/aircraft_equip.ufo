@@ -141,7 +141,7 @@ window aircraft_equip extends iaircraft
 			font		"f_small"
 			color		"1 0 0 1"
 			onClick		{ cmd "mn_close popup;" }
-			longlines	wrap
+			longlines	LONGLINES_WRAP
 		}
 	
 		button button_add

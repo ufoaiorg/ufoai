@@ -199,7 +199,7 @@ window quickload
 		string		"_Are you sure that you really want to reload the last automatically saved campaign state?"
 		pos			"26 58"
 		size		"440 104"
-		longlines	wrap
+		longlines	LONGLINES_WRAP
 	}
 
 	cmpPopupButton button_go

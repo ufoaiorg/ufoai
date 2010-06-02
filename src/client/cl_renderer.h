@@ -224,6 +224,14 @@ typedef enum {
 	THREAD_RENDERER
 } threadstate_t;
 
+typedef enum {
+	LONGLINES_WRAP,
+	LONGLINES_CHOP,
+	LONGLINES_PRETTYCHOP,
+
+	LONGLINES_LAST
+} longlines_t;
+
 typedef struct renderer_threadstate_s {
 	SDL_Thread *thread;
 	threadstate_t state;

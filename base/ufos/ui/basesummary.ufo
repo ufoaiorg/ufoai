@@ -125,7 +125,7 @@ window basesummary
 		tabwidth	42
 		font		"f_small"
 		rows		"38"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 		onViewChange	{
 			*(abstractscrollbar)base_summary_scroll@fullsize = <fullsize>
 			*(abstractscrollbar)base_summary_scroll@current = <viewpos>

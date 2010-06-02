@@ -189,7 +189,7 @@ window irc_changename
 		string		"_Your name is already in use or is invalid."
 		pos			"26 58"
 		size		"446 64"
-		longlines	wrap
+		longlines	LONGLINES_WRAP
 	}
 
 	// ===================
@@ -248,7 +248,7 @@ window irc_popup
 		string		"_You are not connected to the lobby. Do you want to connect?"
 		pos			"26 58"
 		size		"446 128"
-		longlines	wrap
+		longlines	LONGLINES_WRAP
 	}
 
 	cmpPopupButton bt_ok

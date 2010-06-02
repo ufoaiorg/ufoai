@@ -229,7 +229,7 @@ window production
 		lineheight	"25"
 		pos			"55 180"
 		size		"265 550"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 		onClick		{
 			*node:(text)root.prodlist_amount@lineselected = <node:this@lineselected>
 			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>

@@ -681,7 +681,7 @@ window mp_create_server extends abstract_multiplayer
 			pos			"245 200"
 			size		"256 32"
 			font		"f_verysmall"
-			longlines	wrap
+			longlines	LONGLINES_WRAP
 		}
 
 		// ===================
@@ -973,7 +973,7 @@ window mp_create_server extends abstract_multiplayer
 		string		"_Make sure that you've opened the TCP port 27910 in your firewall settings"
 		pos			"500 530"
 		size		"400 100"
-		longlines	wrap
+		longlines	LONGLINES_WRAP
 		textalign	ALIGN_UC
 		font		"f_small"
 		dataid		TEXT_STANDARD
@@ -1881,7 +1881,7 @@ window multiplayer_invite
 	{
 		string		"_You received a invitation to take part of a multiplayer game. Hit the connect button to connect to the server"
 		pos			"30 50"
-		longlines	wrap
+		longlines	LONGLINES_WRAP
 		size		"440 60"
 	}
 }

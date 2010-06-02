@@ -72,7 +72,6 @@ typedef enum {
 	V_RELABS,				/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
 	V_CLIENT_HUNK,			/**< only for client side data - not handled in Com_EParseValue */
 	V_CLIENT_HUNK_STRING,	/**< same as for V_CLIENT_HUNK */
-	V_LONGLINES = 25,
 	V_TEAM,					/**< team string to int mapper */
 	V_RACE,
 	V_UFO,					/**< @brief Valid ufo types
@@ -147,15 +146,6 @@ typedef enum {
 
 	FADE_LAST
 } fade_t;
-
-typedef enum {
-	LONGLINES_WRAP,
-	LONGLINES_CHOP,
-	LONGLINES_PRETTYCHOP,
-
-	LONGLINES_LAST
-} longlines_t;
-
 
 /**
  * @brief All different types of UFOs.

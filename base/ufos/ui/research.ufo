@@ -20,7 +20,7 @@ component panel cmpResearchItem {
 		pos			"20 0"
 		size		"365 25"
 		color		"0 .78 0 1"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 		onClick		{ cmd "research_select <node:parent@num>;" }
 	}
 
@@ -368,7 +368,7 @@ window research
 		string		"_Base Info"
 		pos			"675 115"
 		size		"290 18"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 	}
 
 	// Free labs in the selected base
@@ -377,7 +377,7 @@ window research
 		string		*cvar:mn_research_labs
 		pos			"685 135"
 		size		"290 18"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 		color		"0 .78 0 1"
 	}
 
@@ -387,7 +387,7 @@ window research
 		string		*cvar:mn_research_scis
 		pos			"685 155"
 		size		"290 18"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 		color		"0 .78 0 1"
 	}
 
@@ -400,7 +400,7 @@ window research
 		string		*cvar:mn_research_selname
 		pos			"675 190"
 		size		"300 18"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 	}
 
 //	pic image_top
@@ -417,7 +417,7 @@ window research
 		tooltip		*cvar:mn_research_selstatus_long
 		pos			"685 210"
 		color		"0 .78 0 1"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 		size		"290 24"
 	}
 

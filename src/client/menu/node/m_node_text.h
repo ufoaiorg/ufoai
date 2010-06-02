@@ -49,7 +49,7 @@ typedef struct {
 	int lineUnderMouse;			/**< MN_TEXT: The line under the mouse, when the mouse is over the node */
 	int lineHeight;				/**< size between two lines */
 	int tabWidth;				/**< max size of a tabulation */
-	byte longlines;				/**< what to do with long lines */
+	int longlines;				/**< what to do with long lines */
 	qboolean mousefx;
 
 } textExtraData_t;

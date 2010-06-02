@@ -46,6 +46,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_string.h"
 #include "m_node_abstractnode.h"
 
+#define EXTRADATA_TYPE stringExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+
 static void MN_StringNodeDraw (menuNode_t *node)
 {
 	vec2_t nodepos;
@@ -67,7 +71,7 @@ static void MN_StringNodeDraw (menuNode_t *node)
 	if (node->size[0] == 0)
 		MN_DrawString(font, node->textalign, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, 0, ref, 0, 0, NULL, qfalse, 0);
 	else
-		MN_DrawStringInBox(font, node->textalign, nodepos[0] + node->padding, nodepos[1] + node->padding, node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding, ref, node->longlines);
+		MN_DrawStringInBox(font, node->textalign, nodepos[0] + node->padding, nodepos[1] + node->padding, node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding, ref, EXTRADATA(node).longlines);
 	R_Color(NULL);
 }
 
@@ -88,7 +92,7 @@ static void MN_StringNodeDrawTooltip (menuNode_t *node, int x, int y)
 		if (!text)
 			return;
 
-		R_FontTextSize(font, text, node->size[0] - node->padding - node->padding, node->longlines, NULL, NULL, NULL, &isTruncated);
+		R_FontTextSize(font, text, node->size[0] - node->padding - node->padding, EXTRADATA(node).longlines, NULL, NULL, NULL, &isTruncated);
 		if (isTruncated) {
 			const int tooltipWidth = 250;
 			static char tooltiptext[MAX_VAR * 4];
@@ -103,20 +107,24 @@ static void MN_StringNodeLoading (menuNode_t *node)
 {
 	node->padding = 3;
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
-	node->longlines = LONGLINES_PRETTYCHOP;
+	EXTRADATA(node).longlines = LONGLINES_PRETTYCHOP;
 }
 
 static const value_t properties[] = {
-	/* Define how to display a long line. Chop/wrap/ellipsis */
-	{"longlines", V_LONGLINES, offsetof(menuNode_t, longlines), MEMBER_SIZEOF(menuNode_t, longlines)},
+	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines.
+	 * It can be LONGLINES_WRAP, LONGLINES_CHOP, LONGLINES_PRETTYCHOP
+	 */
+	{"longlines", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, longlines), MEMBER_SIZEOF(EXTRADATA_TYPE, longlines)},
+
 	{NULL, V_NULL, 0, 0}
 };
 
 void MN_RegisterStringNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
+	behaviour->properties = properties;
 	behaviour->draw = MN_StringNodeDraw;
 	behaviour->drawTooltip = MN_StringNodeDrawTooltip;
 	behaviour->loading = MN_StringNodeLoading;
-	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }
