@@ -360,6 +360,7 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 		R_ProgramParameter1i("SHADOWMAP", 1);
 		R_BindTextureForTexUnit(r_state.shadowmapBuffer->textures[0], &texunit_shadowmap);
 		//R_BindTextureForTexUnit(r_state.shadowmapBuffer->depth, &texunit_shadowmap);
+		R_ProgramParameterMat4fv("SHADOW_MATRIX", 1, r_locals.shadow_matrix);
 	}
 
 	glEnable(GL_LIGHTING);
@@ -383,13 +384,7 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 	}
 
 	/* if there aren't enough active lights, turn off the rest */
-	while (i < maxLights) {
-		glDisable(GL_LIGHT0 + i);
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
-		glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, 0.0);
-		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 0.0);
-		i++;
-	}
+	R_ProgramParameter1i("NUM_ACTIVE_LIGHTS", i);
 }
 
 /** 
@@ -452,7 +447,6 @@ void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
 
 	if (enable) {  /* toggle state */
 		assert(normalmap);
-		R_EnableAttribute("TANGENTS");
 		R_ProgramParameter1i("BUMPMAP", 1);
 		/* default parameters to use if no material gets loaded */
 		R_ProgramParameter1f("HARDNESS", 0.1);
@@ -460,7 +454,6 @@ void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
 		R_ProgramParameter1f("BUMP", 1.0);
 		R_ProgramParameter1f("PARALLAX", 0.5);
 	} else {
-		R_DisableAttribute("TANGENTS");
 		R_ProgramParameter1i("BUMPMAP", 0);
 	}
 }
@@ -729,7 +722,7 @@ static void MYgluLookAt (const vec3_t eye, const vec3_t center, const vec3_t up)
 
 void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 	static vec3_t viewOriginCamera;
-	int i, j, k;
+	int i, j;
 
 	if (!r_shadowmapping->integer)
 		return;
@@ -748,14 +741,34 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 		float modelView[16];
 		float projection[16];
 		float M1[16] = MAT_I4;
-		float M2[16] = MAT_I4;
-		float M3[16] = MAT_I4;
+		//float M2[16] = MAT_I4;
+		//float M3[16] = MAT_I4;
 		const GLfloat bias[16] = {	0.5, 0.0, 0.0, 0.0, 
 									0.0, 0.5, 0.0, 0.0,
 									0.0, 0.0, 0.5, 0.0,
 									0.5, 0.5, 0.5, 1.0 };
 		vec3_t up = {0.0, 0.0, 1.0};
 		vec3_t target, lightDir, lightPos;
+
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glLoadIdentity();
+		/* set up the camera view matrix for the current frame... */
+
+		glRotatef(-90.0, 1.0, 0.0, 0.0);	/* put Z going up */
+		glRotatef(90.0, 0.0, 0.0, 1.0);	/* put Z going up */
+		glRotatef(-refdef.viewAngles[2], 1.0, 0.0, 0.0);
+		glRotatef(-refdef.viewAngles[0], 0.0, 1.0, 0.0);
+		glRotatef(-refdef.viewAngles[1], 0.0, 0.0, 1.0);
+		glTranslatef(-refdef.viewOrigin[0], -refdef.viewOrigin[1], -refdef.viewOrigin[2]);
+
+		/* ...and save the resulting matrix for shadow-space transform */
+		glGetFloatv(GL_MODELVIEW_MATRIX, r_locals.world_matrix);
+		glPopMatrix();
+
+
+#if 0
+		int k;
 		vec3_t left, right, midpoint, v;
 		float scale, dist;
 		vec3_t R1[3];
@@ -765,21 +778,7 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 		vec3_t mins[SHADOW_SPLITS];
 		float clip;
 
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		glLoadIdentity();
-
-		glRotatef(-90.0, 1.0, 0.0, 0.0);	/* put Z going up */
-		glRotatef(90.0, 0.0, 0.0, 1.0);	/* put Z going up */
-		glRotatef(-refdef.viewAngles[2], 1.0, 0.0, 0.0);
-		glRotatef(-refdef.viewAngles[0], 0.0, 1.0, 0.0);
-		glRotatef(-refdef.viewAngles[1], 0.0, 0.0, 1.0);
-		glTranslatef(-refdef.viewOrigin[0], -refdef.viewOrigin[1], -refdef.viewOrigin[2]);
-
-		/* retrieve the resulting matrix for other manipulations  */
-		glGetFloatv(GL_MODELVIEW_MATRIX, r_locals.world_matrix);
-		glPopMatrix();
-
+	
 
 		if (r_isometric->integer) {
 			//glOrtho(-10 * refdef.fieldOfViewX, 10 * refdef.fieldOfViewX, -10 * refdef.fieldOfViewX * yaspect, 10 * refdef.fieldOfViewX * yaspect, -zFar, zFar);
@@ -799,7 +798,7 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 
 				VectorSet(maxs[i], -HUGE_VAL, -HUGE_VAL, -HUGE_VAL);
 				VectorSet(mins[i], HUGE_VAL, HUGE_VAL, HUGE_VAL);
-				VectorMul(zNear, r_locals.frustum[j].normal, point);
+				VectorMul(zNear, r_locals.frustum[i].normal, point);
 				for (k = 0; k < 3; k++) {
 					maxs[i][k] = (maxs[i][k] > point[k]) ? maxs[i][k] : point[k];
 					mins[i][k] = (mins[i][k] < point[k]) ? mins[i][k] : point[k];
@@ -828,18 +827,13 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 		}
 
 
-		R_UseProgram(r_state.world_program);
-		R_ProgramParameter3fvs("SHADOW_SPLIT_MINS", SHADOW_SPLITS, mins);
-		R_ProgramParameter2fvs("SHADOW_SPLIT_MAXS", SHADOW_SPLITS, maxs);
+
+		//R_UseProgram(r_state.world_program);
+		//R_ProgramParameter3fvs("SHADOW_SPLIT_MINS", SHADOW_SPLITS, mins);
+		//R_ProgramParameter2fvs("SHADOW_SPLIT_MAXS", SHADOW_SPLITS, maxs);
 
 
-		R_EnableShadowbuffer(qtrue);
-		//R_UseProgram(r_state.build_shadowmap_program);
-		glEnable(GL_DEPTH_TEST);
-		/* don't render front faces to reduce aliasing artifacts */
-		//glEnable(GL_CULL_FACE);
-		//glCullFace(GL_FRONT);
-
+		
 		scale = - refdef.viewOrigin[2] / r_locals.frustum[0].normal[2];
 		for (i = 0; i < 3; i++) 
 			right[i] = refdef.viewOrigin[i] + scale * r_locals.frustum[0].normal[i];
@@ -865,18 +859,44 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 		VectorNormalize(v);
 		VectorMul(dist, v, target);
 		VectorAdd(midpoint, target, target);
+
+#endif
+
+		R_EnableShadowbuffer(qtrue);
+		//R_UseProgram(r_state.build_shadowmap_program);
+		glEnable(GL_DEPTH_TEST);
+		/* don't render front faces to reduce aliasing artifacts */
+		//glEnable(GL_CULL_FACE);
+		//glCullFace(GL_FRONT);
+
 		
 		/* set up matrixes for the light source as viewpoint */
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
 		glLoadIdentity();
 		if (light->loc[3] == 0) {
+			vec3_t v;
 			//glOrtho(-1000, 1000, -0000, 2000,  -1000, 1000);
 			//glOrtho(-MAX_WORLD_WIDTH, MAX_WORLD_WIDTH, -MAX_WORLD_WIDTH, MAX_WORLD_WIDTH,  -MAX_WORLD_WIDTH, MAX_WORLD_WIDTH);
 			//glOrtho(-dist, dist, -dist, dist,  -dist/4.0, dist/4.0);
-			glOrtho(-dist, dist, -dist, dist,  -200.0, 10.0);
 			//glOrtho(mins[4][0], maxs[4][0], mins[4][1], maxs[4][1], mins[4][2], maxs[4][2]);
-			glRotatef(90.0 - refdef.viewAngles[1], 0.0, 0.0, 1.0);
+			
+			//glOrtho(-dist, dist, -dist, dist,  -200.0, 10.0);
+			//glRotatef(90.0 - refdef.viewAngles[1], 0.0, 0.0, 1.0);
+
+			//glOrtho(r_locals.mins[0], r_locals.maxs[0], r_locals.mins[1], r_locals.maxs[1], r_locals.mins[2], r_locals.maxs[2]);
+			glOrtho(r_locals.mins[0], r_locals.maxs[0], r_locals.mins[1], r_locals.maxs[1], -r_locals.maxs[2], -r_locals.mins[2]);
+			//glOrtho(r_locals.mins[0]+100, r_locals.maxs[0]-100, r_locals.mins[1]+100, r_locals.maxs[1]-100, -200, 10);
+			//glOrtho(r_locals.mins[0]/2.0, r_locals.maxs[0]/2.0, r_locals.mins[1]/2.0, r_locals.maxs[1]/2.0, -200, 10);
+			//glOrtho(-100, 100, -100, 100, -200, 10);
+			VectorSubtract(r_locals.maxs, r_locals.mins, v);
+			VectorMul(0.5, v, v);
+			VectorAdd(r_locals.mins, v, v);
+
+			//VectorSet(target, v[0], v[1], 0);
+			VectorSet(target, 0, 0, 0);
+			//VectorSet(target, r_locals.mins[0]+200, r_locals.mins[1]+200, 0);
+
 			R_UseViewport(r_state.shadowmapBuffer);
 		} else {
 			MYgluPerspective(4.0, MAX_WORLD_WIDTH);
@@ -901,6 +921,7 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 
 		/* save the camera origin, and then use the light position as the effective view origin */
 		VectorCopy(refdef.viewOrigin, viewOriginCamera);
+#if 0
 		VectorCopy(lightPos, refdef.viewOrigin);
 
 		//VectorCopy(lightDir, r_locals.forward);
@@ -930,9 +951,9 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 			//r_locals.frustum[i].dist = -dist;
 			//r_locals.frustum[i].dist = -MAX_WORLD_WIDTH;
 		}
-		
-		/* @todo make modelView be the mat. to take camera coords to light coords */
 
+#endif
+		
 		glGetFloatv(GL_MODELVIEW_MATRIX, modelView);
 		glGetFloatv(GL_PROJECTION_MATRIX, projection);
 
@@ -978,6 +999,8 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 		glMultMatrixf(modelView);
 		glMultMatrixf(M1);
 
+		glGetFloatv(GL_TEXTURE_MATRIX, r_locals.shadow_matrix);
+
 		//glMultMatrixf(M2);
 		//glMultMatrixf(M3);
 		//glPopMatrix();
@@ -1019,6 +1042,7 @@ void R_EnableUseShadowmap (qboolean enable)
 			R_ProgramParameter1i("SHADOWMAP", 1);
 			R_BindTextureForTexUnit(r_state.shadowmapBuffer->textures[0], &texunit_shadowmap);
 			//R_BindTextureForTexUnit(r_state.shadowmapBuffer->depth, &texunit_shadowmap);
+			R_ProgramParameterMat4fv("SHADOW_MATRIX", 1, r_locals.shadow_matrix);
 		} else {
 			R_ProgramParameter1i("SHADOWMAP", 0);
 		}

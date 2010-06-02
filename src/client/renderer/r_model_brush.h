@@ -37,6 +37,7 @@ BRUSH MODELS
 typedef struct mBspVertex_s {
 	vec3_t position;
 	vec3_t normal;
+	vec4_t tangent;
 } mBspVertex_t;
 
 typedef struct mBspHeader_s {

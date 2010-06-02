@@ -5,8 +5,10 @@ uniform int BUMPMAP;
 uniform int ROUGHMAP;
 uniform int SPECULARMAP;
 uniform int LIGHTMAP;
+uniform int SHADOWMAP;
 uniform int BUILD_SHADOWMAP;
 uniform int WARP;
+uniform int NUM_ACTIVE_LIGHTS;
 
 uniform float GLOWSCALE;
 uniform float BUMP;
@@ -23,11 +25,12 @@ uniform sampler2D SAMPLER_GLOWMAP;
 uniform sampler2D SAMPLER_SPECMAP;
 uniform sampler2D SAMPLER_ROUGHMAP;
 
-uniform gl_FogParameters gl_Fog;
 
 in vec4 Vertex;
+in vec4 Normal;
 in vec4 Tangent;
 in vec4 vPosScreen;
+in vec4 vPos;
 in vec4 vPosCamera;
 in vec3 vNormal;
 in vec3 eyedir;
@@ -48,6 +51,7 @@ out vec4 gl_FragColor;
  * main
  */
 void main(void){
+	
 	vec4 outColor = vec4(0.0);
 	vec4 glowColor = vec4(0.0);
 
@@ -66,10 +70,14 @@ void main(void){
 		float dy = dFdy(depth);
 		moment2 += 0.25*(dx*dx+dy*dy) ;
 
-		outColor = vec4(moment1, moment2, 0.0, 1.0 );
+		outColor = vec4(moment1, moment2, 0.0, texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a);
 
 	/* final rendering pass */
 	} else {
+		/* don't bother to render surfaces that face away from the camera */
+		if (dot(vNormal, -vPos.xyz) < 0.0){
+			discard;
+		}
 
 		/* calculate dynamic lighting, including 
 		 * the Cook-Torrance specularity model with the Phong
@@ -123,13 +131,14 @@ void main(void){
 
 /* debuging tools */
 #if r_debug_normals
-		outColor = (1.0 + dot(vec3(0.0, 0.0, 1.0), normalize(-lightDirs[0]))) * 0.5 * vec4(1.0);
+		//outColor = (1.0 + dot(vec3(0.0, 0.0, 1.0), normalize(-lightDirs[0]))) * 0.5 * vec4(1.0);
+		outColor = vec4(dot(normalize(vNormal), normalize(-vPos.rgb)));
 #endif
 
 #if r_debug_tangents
-		outColor.r = (1.0 + dot(vec3(1.0, 0.0, 0.0), normalize(-lightDirs[0]))) * 0.5;
-		outColor.g = (1.0 + dot(vec3(0.0, 1.0, 0.0), normalize(-lightDirs[0]))) * 0.5;
-		outColor.b = (1.0 + dot(vec3(0.0, 0.0, 1.0), normalize(-lightDirs[0]))) * 0.5;
+		outColor.r = (1.0 + dot(vec3(1.0, 0.0, 0.0), normalize(-eyedir))) * 0.5;
+		outColor.g = (1.0 + dot(vec3(0.0, 1.0, 0.0), normalize(-eyedir))) * 0.5;
+		outColor.b = (1.0 + dot(vec3(0.0, 0.0, 1.0), normalize(-eyedir))) * 0.5;
 		outColor.a = 1.0;
 #endif
 

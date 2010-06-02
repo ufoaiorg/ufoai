@@ -1,150 +1,170 @@
-#version 120
-// default battlescape fragment shader
+#version 130
+/* battlescape fragment shader */
 
 uniform int BUMPMAP;
 uniform int ROUGHMAP;
 uniform int SPECULARMAP;
 uniform int LIGHTMAP;
+uniform int SHADOWMAP;
 uniform int BUILD_SHADOWMAP;
+uniform int WARP;
+uniform int NUM_ACTIVE_LIGHTS;
+
 uniform float GLOWSCALE;
+uniform float BUMP;
+uniform float PARALLAX;
+uniform float HARDNESS;
+uniform float SPECULAR;
 
-/* @todo - use a Cvar here */
-uniform vec3 SHADOW_SPLIT_MINS[5]; 
-uniform vec3 SHADOW_SPLIT_MAXS[5]; 
 
-/* diffuse texture */
 uniform sampler2D SAMPLER_DIFFUSE;
-/* lightmap */
 uniform sampler2D SAMPLER_LIGHTMAP;
-/* deluxemap */
 uniform sampler2D SAMPLER_DELUXEMAP;
-/* normalmap */
 uniform sampler2D SAMPLER_NORMALMAP;
-/* glowmap */
 uniform sampler2D SAMPLER_GLOWMAP;
-/* specularity map */
 uniform sampler2D SAMPLER_SPECMAP;
-/* roughness map */
 uniform sampler2D SAMPLER_ROUGHMAP;
 
-const vec3 two = vec3(2.0);
-const vec3 negHalf = vec3(-0.5);
 
-varying vec4 vertPos;
-varying vec3 lightDirs[#replace r_dynamic_lights ];
+in vec4 Vertex;
+in vec4 Normal;
+in vec4 Tangent;
+in vec4 vPosScreen;
+in vec4 vPos;
+in vec4 vPosCamera;
+in vec3 vNormal;
+in vec3 eyedir;
+in vec3 lightDirs[];
+in vec4 shadowCoord;
+in float fog;
+in vec4 gl_TexCoord[];
 
-#include "light_fs.glsl"
-#include "bump_fs.glsl"
-#include "fog_fs.glsl"
-#include "cook-torrance_fs.glsl"
+#if r_postprocess
+out vec4 gl_FragData[];
+#else
+out vec4 gl_FragColor;
+#endif
+
+#include "illuminate_fs.glsl"
 
 /**
  * main
  */
 void main(void){
+	
+	vec4 outColor = vec4(0.0);
+	vec4 glowColor = vec4(0.0);
 
+	/* shadowmap generation */
 	if (BUILD_SHADOWMAP > 0) {
-		/* scale depth to [0,1] */
-		float depth = (vertPos.z / vertPos.w) * 0.5 + 0.5;
+		float depth = vPosScreen.z / vPosScreen.w ;
+
+		/* move away from unit cube ([-1,1]) to [0,1] coordinate system used by textures */
+		depth = depth * 0.5 + 0.5;			
+
 		float moment1 = depth;
 		float moment2 = depth * depth;
+
+		/* bias moments using derivative */
 		float dx = dFdx(depth);
 		float dy = dFdy(depth);
-		/* bias second moment using gradient */
-		moment2 += 0.25*(dx*dx+dy*dy);
+		moment2 += 0.25*(dx*dx+dy*dy) ;
 
-#if r_postprocess
-		gl_FragData[0] = vec4(moment1, moment2, 0.0 * texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a, 1.0 );
-#else 
-		gl_FragColor = vec4(moment1, moment2, texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a, 1.0 );
-#endif
-		return;
-	}
+		outColor = vec4(moment1, moment2, 0.0, texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a);
 
-	/* calculate dynamic lighting, including 
-	 * the Cook-Torrance specularity model with the Phong
-	 * model as a default if the roughness map isn't enabled */
-	vec4 finalColor = IlluminateFragment();
+	/* final rendering pass */
+	} else {
+		/* don't bother to render surfaces that face away from the camera */
+		if (dot(vNormal, -vPos.xyz) < 0.0){
+			discard;
+		}
 
-	/* for models with pre-computed lightmaps (ie. BSP models), use them */
-	if (LIGHTMAP > 0) {
-		/* use static lighting (ie. legacy rendering code) */
-		vec2 offset = vec2(0.0);
-		vec3 bump = vec3(1.0);
+		/* calculate dynamic lighting, including 
+		 * the Cook-Torrance specularity model with the Phong
+		 * model as a default if the roughness map isn't enabled */
+		outColor = IlluminateFragment();
 
-		/* lightmap contains pre-computed incoming light color */
-		vec3 lightmap = texture2D(SAMPLER_LIGHTMAP, gl_TexCoord[1].st).rgb;
+		/* for models with pre-computed lightmaps (ie. BSP models), use them */
+		if (LIGHTMAP > 0) {
+			vec2 offset = vec2(0.0);
+			float NdotL = 1.0;
+			float specular = 0.0;
 
 #if r_bumpmap
-		if(BUMPMAP > 0){  // sample deluxemap and normalmap
-			vec4 normalmap = texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st);
-			normalmap.rgb = normalize(two * (normalmap.rgb + negHalf));
+			if(BUMPMAP > 0){
+				vec4 normalmap = texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st);
+				normalmap.rgb = normalize(2.0 * (normalmap.rgb - vec3(0.5)));
+				/* pre-computed incoming light vectors in object tangent space */
+				vec3 deluxemap = texture2D(SAMPLER_DELUXEMAP, gl_TexCoord[1].st).rgb;
+				deluxemap = normalize(2.0 * (deluxemap - vec3(0.5)));
 
-			/* deluxemap contains pre-computed incoming light vectors in object tangent space */
-			vec3 deluxemap = texture2D(SAMPLER_DELUXEMAP, gl_TexCoord[1].st).rgb;
-			deluxemap = normalize(two * (deluxemap + negHalf));
+				/* compute parallax offset and bump mapping reflection */
+				vec3 V = normalize(eyedir);
+				vec3 L = vec3(normalize(deluxemap).rgb);
+				vec3 N = vec3(normalize(normalmap.rgb).rgb);
+				N.xy *= BUMP;
 
-			// resolve parallax offset and bump mapping
-			offset = BumpTexcoord(normalmap.a);
-			bump = BumpFragment(deluxemap, normalmap.rgb);
-		}
+				offset = vec2(normalmap.a * PARALLAX * 0.04 - 0.02) * V.xy;
+				NdotL = dot(N, L);
+				specular = HARDNESS * pow(max(-dot(V, reflect(L, N)), 0.0), 8.0 * SPECULAR);
+			}
 #endif
+			/* sample the diffuse texture, using any parallax offset */
+			vec4 diffuse = texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st + offset);
+			/* lightmap contains pre-computed incoming light color */
+			vec3 lightmap = texture2D(SAMPLER_LIGHTMAP, gl_TexCoord[1].st).rgb;
 
-		// sample the diffuse texture, honoring the parallax offset
-		vec4 diffuse = texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st + offset);
-		// add light from lightmap
-		finalColor += 0.0 * vec4(diffuse.rgb * lightmap * bump, diffuse.a * gl_Color.a);
-	}
+			/* add light from lightmap */
+			//outColor += diffuse * vec4(lightmap, 1.0) * (NdotL + specular);
+		}
 
 #if r_fog
-	finalColor = FogFragment(finalColor);  // add fog
+		/* add fog */
+		//outColor += vec4(mix(outColor.rgb, gl_Fog.color.rgb, fog), outColor.a);
 #endif
 
-#if r_postprocess
-	gl_FragData[0] = finalColor;
-	if(GLOWSCALE > 0.0){
-		 vec4 glowcolor = texture2D(SAMPLER_GLOWMAP, gl_TexCoord[0].st);
-		 gl_FragData[1].rgb = glowcolor.rgb * glowcolor.a * GLOWSCALE;
-		 gl_FragData[1].a = 1.0;
-	} 
-#else 
-	gl_FragColor = finalColor;
-#endif
+		/* use glow-map */
+		if(GLOWSCALE > 0.0){
+			vec4 glow = texture2D(SAMPLER_GLOWMAP, gl_TexCoord[0].st);
+			glowColor = vec4(glow.rgb * glow.a * GLOWSCALE, 1.0);
+		} 
 
-// developer tools
-
+/* debuging tools */
 #if r_debug_normals
-	gl_FragData[0] = (1.0 + dot(vec3(0.0, 0.0, 1.0), normalize(-lightDirs[0]))) * 0.5 * vec4(1.0);
-	gl_FragData[1] = vec4(0.0);
+		//outColor = (1.0 + dot(vec3(0.0, 0.0, 1.0), normalize(-lightDirs[0]))) * 0.5 * vec4(1.0);
+		outColor = vec4(dot(normalize(vNormal), normalize(-vPos.rgb)));
 #endif
 
 #if r_debug_tangents
-	gl_FragData[0].r = (1.0 + dot(vec3(1.0, 0.0, 0.0), normalize(-lightDirs[0]))) * 0.5;
-	gl_FragData[0].g = (1.0 + dot(vec3(0.0, 1.0, 0.0), normalize(-lightDirs[0]))) * 0.5;
-	gl_FragData[0].b = (1.0 + dot(vec3(0.0, 0.0, 1.0), normalize(-lightDirs[0]))) * 0.5;
-	gl_FragData[0].a = 1.0;
-	gl_FragData[1] = vec4(0.0);
+		outColor.r = (1.0 + dot(vec3(1.0, 0.0, 0.0), normalize(-eyedir))) * 0.5;
+		outColor.g = (1.0 + dot(vec3(0.0, 1.0, 0.0), normalize(-eyedir))) * 0.5;
+		outColor.b = (1.0 + dot(vec3(0.0, 0.0, 1.0), normalize(-eyedir))) * 0.5;
+		outColor.a = 1.0;
 #endif
 
 
 #if r_debug_normalmaps
-	vec3 n = normalize(2.0 * (texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st).rgb - 0.5));
-	gl_FragData[0] = (1.0 + dot(n, normalize(-lightDirs[0]))) * 0.5 * vec4(1.0);
-	gl_FragData[1] = vec4(0.0);
+		vec3 n = normalize(2.0 * (texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st).rgb - 0.5));
+		outColor = (1.0 + dot(n, normalize(-lightDirs[0]))) * 0.5 * vec4(1.0);
 #endif
 
 #if r_debug_lightmaps
-	gl_FragData[0].rgb = lightmap;
-	gl_FragData[0].a = 1.0;
-	gl_FragData[1] = vec4(0.0);
+		if(LIGHTMAP > 0)
+			outColor = vec4(lightmap, 1.0);
 #endif
 
 #if r_debug_deluxemaps
-	if(BUMPMAP > 0){
-		gl_FragData[0].rgb = deluxemap;
-		gl_FragData[0].a = 1.0;
-		gl_FragData[1] = vec4(0.0);
+		if(BUMPMAP > 0 && LIGHTMAP > 0)
+			outColor = vec4(deluxemap, 1.0);
+#endif
 	}
+
+/* return final fragment color */
+#if r_postprocess
+	gl_FragData[0] = outColor;
+	gl_FragData[1] = glowColor;
+#else
+	gl_FragColor = outColor;
 #endif
 
 }

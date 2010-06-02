@@ -144,6 +144,7 @@ typedef struct {
 	qboolean animation_enabled;
 	qboolean build_shadowmap_enabled;
 	qboolean use_shadowmap_enabled;
+	qboolean tangents_enabled;
 } rstate_t;
 
 extern rstate_t r_state;

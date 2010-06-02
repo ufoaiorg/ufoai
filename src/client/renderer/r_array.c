@@ -79,6 +79,7 @@ static int R_ArraysMask (void)
  */
 static inline void R_SetVertexArrayState (const model_t* mod, int mask)
 {
+
 	/* vertex array */
 	if (mask & R_ARRAY_VERTEX)
 		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mod->bsp.verts);
@@ -90,8 +91,13 @@ static inline void R_SetVertexArrayState (const model_t* mod, int mask)
 
 		/* tangent vectors for bump mapping */
 		if (r_bumpmap->value && r_state.active_program == r_state.world_program)
-			if (mask & R_ARRAY_TANGENT)
+			if (mask & R_ARRAY_TANGENT) {
 				R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangents);
+				if (!r_state.tangents_enabled) {
+					R_EnableAttribute("TANGENTS");
+					r_state.tangents_enabled = qtrue;
+				}
+			}
 	}
 
 	/* diffuse texcoords */
@@ -125,8 +131,13 @@ static inline void R_SetVertexBufferState (const model_t* mod, int mask)
 			R_BindBuffer(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normal_buffer);
 
 		/* tangent vectors for bump mapping */
-		if (r_bumpmap->value && (mask & R_ARRAY_TANGENT))
+		if (r_bumpmap->value && (mask & R_ARRAY_TANGENT)) {
 			R_BindBuffer(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangent_buffer);
+			if (!r_state.tangents_enabled) {
+				R_EnableAttribute("TANGENTS");
+				r_state.tangents_enabled = qtrue;
+			}
+		}
 	}
 
 	/* diffuse texcoords */
@@ -159,6 +170,7 @@ void R_SetArrayState (const model_t *mod)
 	mask = 0xFFFF, arrays = R_ArraysMask();
 
 	/* try to save some binds */
+#if 0
 	if (r_array_state.model == mod) {
 		const int xor = r_array_state.arrays ^ arrays;
 		if (!xor)  /* no changes, we're done */
@@ -167,6 +179,7 @@ void R_SetArrayState (const model_t *mod)
 		/* resolve what's left to turn on */
 		mask = arrays & xor;
 	}
+#endif
 
 	if (r_vertexbuffers->integer && qglGenBuffers)  /* use vbo */
 		R_SetVertexBufferState(mod, mask);

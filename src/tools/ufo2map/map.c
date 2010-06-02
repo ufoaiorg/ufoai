@@ -119,7 +119,7 @@ static inline int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 {
 	plane_t *p;
 
-	if (VectorLength(normal) < 0.5)
+	if (VectorLength(normal) < 0.99)
 		Sys_Error("FloatPlane: bad normal (%.3f:%.3f:%.3f)", normal[0], normal[1], normal[2]);
 	/* create a new plane */
 	if (nummapplanes + 2 > MAX_MAP_PLANES)
@@ -235,8 +235,8 @@ static int PlaneFromPoints (const mapbrush_t *b, const vec3_t p0, const vec3_t p
 
 	dist = DotProduct(p0, normal);
 
-	if (!VectorNotEmpty(normal))
-		Sys_Error("PlaneFromPoints: Bad normal (null) for brush %i", b->brushnum);
+	if (VectorLength(normal) <= 0.99)
+		Sys_Error("PlaneFromPoints: Bad normal (%f, %f, %f) for brush %i", normal[0], normal[1], normal[2], b->brushnum);
 
 	return FindOrCreateFloatPlane(normal, dist);
 }

@@ -289,54 +289,42 @@ void R_RenderFrame (void)
 {
 	int tile;
 
+
 	/* build shadowmaps */
 	if (r_shadowmapping->integer) {
-		int curLevel;
-		R_EnableBuildShadowmap(qtrue, &r_state.dynamicLights[0]);
-
-		Cvar_SetValue("r_nocull", 1);
+		int i, curLevel;
 
 		/* draw brushes on all worldlevels for shadows */
 		r_locals.framecheck = qfalse;
+		for (i = 0; i < 3; i++) {
+			r_locals.mins[i] = HUGE_VAL;
+			r_locals.maxs[i] = -HUGE_VAL;
+		}
 		R_GetAllSurfaceLists();
 
 		R_EnableBlend(qfalse);
+		R_EnableBuildShadowmap(qtrue, &r_state.dynamicLights[0]);
+
 		for (tile = 0; tile < r_numMapTiles; tile++) {
 			R_UpdateLightList(&r_state.world_entity);
 			R_EnableDynamicLights(&r_state.world_entity, qtrue);
 			R_DrawOpaqueSurfaces(r_mapTiles[tile]->bsp.opaque_surfaces);
 		}
-		r_locals.framecheck = qtrue;
-
 
 		R_DrawEntities();
 
+		/* @todo - should particles cast shadows? */
 		R_EnableBlend(qtrue);
-
 		R_DrawParticles();
-
 		R_EnableBlend(qfalse);
 
 		R_EnableBuildShadowmap(qfalse, NULL);
+		r_locals.framecheck = qtrue;
 
-		Cvar_SetValue("r_nocull", 0);
 
+		/* blur the shadowmap to get smooth, soft shadow edges */
 		R_Blur(r_state.shadowmapBuffer, r_state.shadowmapBlur1, 0, 0);
 		R_Blur(r_state.shadowmapBlur1, r_state.shadowmapBuffer, 0, 1);
-#if 0
-		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->textures[0]);
-		qglGenerateMipmapEXT(GL_TEXTURE_2D);
-		R_Blur(r_state.shadowmapBuffer, r_state.shadowmapBlur1, 0, 0);
-		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBlur1->textures[0]);
-		qglGenerateMipmapEXT(GL_TEXTURE_2D);
-		R_Blur(r_state.shadowmapBlur1, r_state.shadowmapBuffer, 0, 1);
-		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->textures[0]);
-		qglGenerateMipmapEXT(GL_TEXTURE_2D);
-		R_Blur(r_state.shadowmapBuffer, r_state.shadowmapBlur1, 0, 0);
-		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBlur1->textures[0]);
-		qglGenerateMipmapEXT(GL_TEXTURE_2D);
-		R_Blur(r_state.shadowmapBlur1, r_state.shadowmapBuffer, 0, 1);
-#endif
 
 		R_ResetArrayState();
 	}

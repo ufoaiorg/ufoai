@@ -103,7 +103,8 @@ typedef struct mapbrush_s {
 
 /** @sa mapplanes */
 typedef struct plane_s {
-	vec3_t	normal;			/**< unit (magnitude == 1) normal defining the direction of the plane */
+	vec3_t	normal;			/**< unit (magnitude == 1) vector normal to the plane */
+	vec4_t	tangent;		/**< unit (magnitude == 1) vector tangent to the plane */
 	vec_t	dist;			/**< distance from the origin to the plane. unit normal and distance
 							 * description is http://mathworld.wolfram.com/HessianNormalForm.html
 							 * though the sign of the distance seems to differ from the standard definition.

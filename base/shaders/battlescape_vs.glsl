@@ -32,6 +32,7 @@ uniform int BUMPMAP;
 uniform int ANIMATE;
 uniform float TIME;
 uniform mat4 SHADOW_TRANSFORM;
+uniform int NUM_ACTIVE_LIGHTS;
 
 in vec3 NEXT_FRAME_VERTS;
 in vec3 NEXT_FRAME_NORMALS;
@@ -43,16 +44,16 @@ in vec3 gl_Normal;
 uniform mat4 gl_ModelViewMatrix;
 uniform mat4 gl_ProjectionMatrix;
 uniform mat3 gl_NormalMatrix;
-uniform mat4 gl_TextureMatrix[];
+
+uniform mat4 SHADOW_MATRIX;
+
 
 in vec4 gl_MultiTexCoord0;
 in vec4 gl_MultiTexCoord1;
-//uniform gl_LightSourceParameters gl_LightSource[];
-//uniform gl_FogParameters gl_Fog;
 
-//out vec4 Vertex;
-//out vec4 Normal;
-//out vec4 Tangent;
+out vec4 Vertex;
+out vec4 Normal;
+out vec4 Tangent;
 out vec4 vPosScreen;
 out vec4 vPos;
 out vec3 vNormal;
@@ -67,30 +68,10 @@ out vec4 gl_TexCoord[8];
  * main
  */
 void main (void) {
-
-	/* lerp vertex info for animated models */
-	/*
-	if (ANIMATE > 0) {
-		Vertex = mix(vec4(NEXT_FRAME_VERTS, 1.0), gl_Vertex, TIME);
-		Normal = mix(NEXT_FRAME_NORMALS, gl_Normal, TIME);
-		Tangent = mix(NEXT_FRAME_TANGENTS, TANGENTS, TIME);
-	} else {
-		Vertex = gl_Vertex;
-		Normal = gl_Normal;
-		Tangent = TANGENTS;
-	}
-	*/
-
-	//float lerp = TIME;
-	//vec4 Vertex = mix(vec4(NEXT_FRAME_VERTS, 1.0), gl_Vertex, lerp);
-	//vec3 Normal = mix(NEXT_FRAME_NORMALS, gl_Normal, lerp);
-	//vec4 Tangent = mix(NEXT_FRAME_TANGENTS, TANGENTS, lerp);
-
 	float lerp = (1.0 - TIME) * float(ANIMATE);
 	vec4 Vertex = mix(gl_Vertex, vec4(NEXT_FRAME_VERTS, 1.0), lerp);
 	vec3 Normal = mix(gl_Normal, NEXT_FRAME_NORMALS, lerp);
 	vec4 Tangent = mix(TANGENTS, NEXT_FRAME_TANGENTS, lerp);
-
 
 	/* transform vertex info to screen and camera coordinates */
 	gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * Vertex;
@@ -107,18 +88,19 @@ void main (void) {
 
 #if r_shadowmapping
 	/* calculate vertex projection onto the shadowmap */ 
-	shadowCoord = gl_TextureMatrix[7] * gl_ModelViewMatrix * Vertex;
+	//shadowCoord = gl_TextureMatrix[7] * gl_ModelViewMatrix * Vertex;
+	shadowCoord = SHADOW_MATRIX * gl_ModelViewMatrix * Vertex;
+	//shadowCoord = SHADOW_MATRIX * vPos;
 #endif
 
 #if r_fog
 	/* calculate interpolated fog depth */
-	//fog = (gl_Position.z - gl_Fog.start) / (gl_Fog.end - gl_Fog.start);
-	//fog = clamp(fog, 0.0, 1.0) * gl_Fog.density;
+	fog = (gl_Position.z - gl_Fog.start) / (gl_Fog.end - gl_Fog.start);
+	fog = clamp(fog, 0.0, 1.0) * gl_Fog.density;
 #endif
 
 
 #if r_bumpmap
-	//if (BUMPMAP > 0) 
 	{
 		/* setup tangent space */
 		vec3 tangent = normalize(gl_NormalMatrix * Tangent.xyz);
@@ -133,7 +115,7 @@ void main (void) {
 
 		/* transform relative light positions into tangent space */
 #unroll r_dynamic_lights
-		{
+		if ($ < NUM_ACTIVE_LIGHTS) {
 			vec3 lpos;
 			if(gl_LightSource[$].position.a != 0.0) 
 				lpos = normalize(gl_LightSource[$].position.xyz - vPos.xyz);

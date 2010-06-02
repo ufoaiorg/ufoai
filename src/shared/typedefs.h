@@ -216,6 +216,10 @@ typedef struct {
 	vec3_t normal;
 } dBspNormal_t;
 
+typedef struct {
+	vec4_t tangent;
+} dBspTangent_t;
+
 /**
  * @note 0-2 are axial planes
  */

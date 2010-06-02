@@ -341,7 +341,7 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 			const float *n = &r_mapTiles[surf->tile]->bsp.normals[surf->index * 3 + i * 3];
 			memcpy(&r_state.normal_array[i * 3], n, sizeof(vec3_t));
 
-			if (r_state.bumpmap_enabled) {
+			if (r_state.bumpmap_enabled || r_state.dynamic_lighting_enabled) {
 				const float *t = &r_mapTiles[surf->tile]->bsp.tangents[surf->index * 4 + i * 4];
 				memcpy(&r_state.tangent_array[i * 4], t, sizeof(vec3_t));
 			}
@@ -380,6 +380,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableColorArray(qtrue);
 
+#if 0
 	R_ResetArrayState();
 
 	R_EnableColorArray(qfalse);
@@ -387,6 +388,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 	R_EnableLighting(NULL, qfalse);
 
 	R_EnableTexture(&texunit_lightmap, qfalse);
+#endif
 
 	glEnable(GL_POLYGON_OFFSET_LINE);
 	glPolygonOffset(-1.f, -1.f);

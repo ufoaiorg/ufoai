@@ -118,13 +118,16 @@ typedef struct rlocals_s {
 	/* for box culling */
 	cBspPlane_t frustum[4];
 
+	vec3_t mins;
+	vec3_t maxs;
+
 	int frame;
 	int tracenum;
 	qboolean framecheck;
 
 	float world_matrix[16];
 	float proj_matrix[16];
-	GLfloat shadow_matrix[16];
+	float shadow_matrix[16];
 
 	/**
 	 * @brief this is the currently handled bsp model

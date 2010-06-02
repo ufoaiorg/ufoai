@@ -202,7 +202,7 @@ void R_ProgramParameterMat4fv (const char *name, GLint size, GLfloat *value)
 	if (!(v = R_ProgramVariable(GL_UNIFORM, name)))
 		return;
 
-	qglUniformMatrix4fv(v->location, size, value);
+	qglUniformMatrix4fv(v->location, size, GL_FALSE, value);
 }
 
 #ifdef DEBUG
@@ -686,6 +686,7 @@ static void R_InitWorldProgram (r_program_t *prog)
 	R_ProgramParameter1f("SPECULAR", 1.0);
 	if (r_postprocess->integer)
 		R_ProgramParameter1f("GLOWSCALE", 1.0);
+
 }
 
 static void R_InitBattlescapeProgram (r_program_t *prog)
@@ -876,7 +877,7 @@ void R_InitPrograms (void)
 	r_state.convolve_program = R_LoadProgram("convolve" DOUBLEQUOTE(FILTER_SIZE), R_InitConvolveProgram, R_UseConvolveProgram);
 	r_state.atmosphere_program = R_LoadProgram("atmosphere", R_InitAtmosphereProgram, NULL);
 	r_state.simple_glow_program = R_LoadProgram("simple_glow", R_InitSimpleGlowProgram, NULL);
-	r_state.battlescape_program = R_LoadProgram("battlescape", R_InitBattlescapeProgram, NULL);
+	//r_state.battlescape_program = R_LoadProgram("battlescape", R_InitBattlescapeProgram, NULL);
 }
 
 /**

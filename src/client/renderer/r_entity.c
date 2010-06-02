@@ -576,10 +576,13 @@ void R_DrawEntities (void)
 	R_DrawBspEntities(r_bsp_entities);
 	R_DrawOpaqueMeshEntities(r_opaque_mesh_entities);
 	R_DrawBlendMeshEntities(r_blend_mesh_entities);
-	R_Color(NULL);
-	R_DrawSpecialEntities(r_special_entities);
-	R_DrawNullEntities(r_null_entities);
-	R_DrawEntityEffects();
+
+	if (!r_state.build_shadowmap_enabled) {
+		R_Color(NULL);
+		R_DrawSpecialEntities(r_special_entities);
+		R_DrawNullEntities(r_null_entities);
+		R_DrawEntityEffects();
+	}
 }
 
 /**

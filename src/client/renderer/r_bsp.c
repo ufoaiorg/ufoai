@@ -296,6 +296,14 @@ static void R_RecursiveWorldNode (const mBspNode_t * node, int tile)
 	mBspSurface_t *surf;
 	float dot;
 
+	for (i = 0; i < 3; i++) {
+		r_locals.mins[i] = min(r_locals.mins[i], node->minmaxs[i]);
+		r_locals.maxs[i] = max(r_locals.maxs[i], node->minmaxs[i]);
+		r_locals.mins[i] = min(r_locals.mins[i], node->minmaxs[i+3]);
+		r_locals.maxs[i] = max(r_locals.maxs[i], node->minmaxs[i+3]);
+	}
+	
+
 	if (node->contents == CONTENTS_SOLID)
 		return;					/* solid */
 

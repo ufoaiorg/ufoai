@@ -71,7 +71,7 @@ void (APIENTRY *qglUniform1fv)(GLint location, int count, GLfloat *f);
 void (APIENTRY *qglUniform2fv)(GLint location, int count, GLfloat *f);
 void (APIENTRY *qglUniform3fv)(GLint location, int count, GLfloat *f);
 void (APIENTRY *qglUniform4fv)(GLint location, int count, GLfloat *f);
-void (APIENTRY *qglUniformMatrix4fv)(GLint location, int count, GLfloat *f);
+void (APIENTRY *qglUniformMatrix4fv)(GLint location, int count, GLboolean transpose, GLfloat *f);
 GLint(APIENTRY *qglGetAttribLocation)(GLuint id, const GLchar *name);
 
 /* frame buffer objects (fbo) */

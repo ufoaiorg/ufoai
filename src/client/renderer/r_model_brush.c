@@ -108,6 +108,27 @@ static void R_ModLoadNormals (const lump_t *l)
 	}
 }
 
+static void R_ModLoadTangents (const lump_t *l)
+{
+	const dBspNormal_t *in;
+	mBspVertex_t *out;
+	int i, count;
+
+	in = (const void *)(mod_base + l->fileofs);
+	if (l->filelen % sizeof(*in)) {
+		Com_Error(ERR_DROP, "R_LoadTangents: Funny lump size in %s.", r_worldmodel->name);
+	}
+	count = l->filelen / sizeof(*in);
+
+	if (count != r_worldmodel->bsp.numvertexes) {  /* ensure sane normals count */
+		Com_Error(ERR_DROP, "R_LoadTangents: unexpected vector count in %s: (%d != %d).",
+				r_worldmodel->name, count, r_worldmodel->bsp.numvertexes);
+	}
+
+	out = r_worldmodel->bsp.vertexes;
+
+}
+
 static inline float R_RadiusFromBounds (const vec3_t mins, const vec3_t maxs)
 {
 	int i;

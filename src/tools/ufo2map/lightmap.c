@@ -393,6 +393,7 @@ void BuildLights (void)
 	}
 
 	/* handle worldspawn light settings */
+#if 0
 	{
 		const entity_t *e = &entities[0];
 		const char *ambient, *light, *angles, *color;
@@ -453,6 +454,7 @@ void BuildLights (void)
 		else
 			Verb_Printf(VERB_EXTRA, "Invalid quant setting (%i) in worldspawn found\n", i);
 	}
+#endif
 
 	Verb_Printf(VERB_EXTRA, "light settings:\n * intensity: %i\n * sun_angles: pitch %f yaw %f\n * sun_color: %f:%f:%f\n * sun_ambient_color: %f:%f:%f\n",
 		sun_intensity, sun_angles[0], sun_angles[1], sun_color[0], sun_color[1], sun_color[2], sun_ambient_color[0], sun_ambient_color[1], sun_ambient_color[2]);
