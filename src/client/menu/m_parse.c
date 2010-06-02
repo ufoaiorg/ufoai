@@ -229,7 +229,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 	const value_t *property;
 	int type;
 
-	assert(*token[0] == '*');
+	assert((*token)[0] == '*');
 
 	Com_UnParseLastToken();
 	action->d.nonTerminal.left = MN_ParseExpression(text, errhead, menuNode);
@@ -344,7 +344,7 @@ static qboolean MN_ParseCallAction (menuNode_t *menuNode, menuAction_t *action, 
 
 	/* check parameters */
 	*token = Com_EParse(text, errhead, NULL);
-	if (!*token)
+	if ((*token)[0] == '\0')
 		return qfalse;
 
 	/* there is no parameters */
@@ -404,7 +404,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 	firstAction = NULL;
 
 	/* prevent bad position */
-	if (*token[0] != '{') {
+	if ((*token)[0] != '{') {
 		Com_Printf("MN_ParseActionList: token \"{\" expected, but \"%s\" found (in event) (node: %s)\n", *token, MN_GetPath(menuNode));
 		return NULL;
 	}
@@ -417,12 +417,12 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 		if (!*token)
 			return NULL;
 
-		if (*token[0] == '}')
+		if ((*token)[0] == '}')
 			break;
 
 		type = MN_GetActionTokenType(*token, EA_ACTION);
 		/* setter form */
-		if (type == EA_NULL && *token[0] == '*')
+		if (type == EA_NULL && (*token)[0] == '*')
 			type = EA_ASSIGN;
 
 		/* unknown, we break the parsing */
@@ -542,7 +542,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 		lastAction = action;
 	}
 
-	assert(*token[0] == '}');
+	assert((*token)[0] == '}');
 
 	/* return non NULL value */
 	if (firstAction == NULL) {
@@ -560,7 +560,7 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 	*token = Com_EParse(text, errhead, node->name);
 	if (!*text)
 		return qfalse;
-	if (*token[0] != '{') {
+	if ((*token)[0] != '{') {
 		Com_Printf("MN_ParseExcludeRect: node with bad excluderect ignored (node \"%s\")\n", MN_GetPath(node));
 		return qtrue;
 	}
@@ -581,8 +581,7 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 				return qfalse;
 			Com_EParseValue(&rect, *token, V_POS, offsetof(excludeRect_t, size), sizeof(vec2_t));
 		}
-	} while (*token[0] != '}');
-
+	} while ((*token)[0] != '}');
 
 	if (mn.numExcludeRect >= MAX_EXLUDERECTS) {
 		Com_Printf("MN_ParseExcludeRect: exluderect limit exceeded (max: %i)\n", MAX_EXLUDERECTS);
@@ -616,7 +615,7 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 	if (!*text)
 		return qfalse;
 
-	if (*token[0] != '{') {
+	if ((*token)[0] != '{') {
 		Com_Printf("MN_ParseEventProperty: Event '%s' without body (%s)\n", event->string, MN_GetPath(node));
 		return qfalse;
 	}
@@ -626,7 +625,7 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 		return qfalse;
 
 	/* block terminal already read */
-	assert(*token[0] == '}');
+	assert((*token)[0] == '}');
 
 	return qtrue;
 }
@@ -690,7 +689,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		*(byte **) ((byte *) object + property->ofs) = mn.curadata;
 
 		/** @todo check for the moment its not a cvar */
-		assert (*token[0] != '*');
+		assert((*token)[0] != '*');
 
 		/* sanity check */
 		if ((property->type & V_BASETYPEMASK) == V_STRING && strlen(*token) > MAX_VAR - 1) {
@@ -717,7 +716,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		}
 
 		/* references are parsed as string */
-		if (*token[0] == '*') {
+		if ((*token)[0] == '*') {
 			/* a reference to data */
 			mn.curadata = Com_AlignPtr(mn.curadata, V_STRING);
 			*(byte **) valuePtr = mn.curadata;
@@ -839,7 +838,7 @@ static qboolean MN_ParseFunction (menuNode_t * node, const char **text, const ch
 	if (*action == NULL)
 		return qfalse;
 
-	return *token[0] == '}';
+	return (*token)[0] == '}';
 }
 
 /**
@@ -864,7 +863,7 @@ static qboolean MN_ParseNodeProperties (menuNode_t * node, const char **text, co
 	const char *errhead = "MN_ParseNodeProperties: unexpected end of file (node";
 	qboolean nextTokenAlreadyRead = qfalse;
 
-	if (*token[0] != '{')
+	if ((*token)[0] != '{')
 		nextTokenAlreadyRead = qtrue;
 
 	do {
@@ -881,7 +880,7 @@ static qboolean MN_ParseNodeProperties (menuNode_t * node, const char **text, co
 		}
 
 		/* is finished */
-		if (*token[0] == '}')
+		if ((*token)[0] == '}')
 			break;
 
 		/* find the property */
@@ -922,12 +921,12 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 {
 	qboolean result = qtrue;
 
-	if (*token[0] != '{') {
+	if ((*token)[0] != '{') {
 		/* read the body block start */
 		*token = Com_EParse(text, errhead, node->name);
 		if (!*text)
 			return qfalse;
-		if (*token[0] != '{') {
+		if ((*token)[0] != '{') {
 			Com_Printf("MN_ParseNodeBody: node doesn't have body, token '%s' read (node \"%s\")\n", *token, MN_GetPath(node));
 			mn.numNodes--;
 			return qfalse;
@@ -944,7 +943,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		if (!*text)
 			return qfalse;
 
-		if (*token[0] == '{') {
+		if ((*token)[0] == '{') {
 			/* we have a special block for properties */
 			result = MN_ParseNodeProperties(node, text, token);
 			if (!result)
@@ -956,7 +955,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 				return qfalse;
 
 			/* and then read all nodes */
-			while (*token[0] != '}') {
+			while ((*token)[0] != '}') {
 				menuNode_t *new = MN_ParseNode(node, text, token, errhead);
 				if (!new)
 					return qfalse;
@@ -970,7 +969,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			result = MN_ParseNodeProperties(node, text, token);
 		} else {
 			/* we should have a block with nodes only */
-			while (*token[0] != '}') {
+			while ((*token)[0] != '}') {
 				menuNode_t *new = MN_ParseNode(node, text, token, errhead);
 				if (!new)
 					return qfalse;
@@ -988,7 +987,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 	}
 
 	/* already check on MN_ParseNodeProperties */
-	assert(*token[0] == '}');
+	assert((*token)[0] == '}');
 	return qtrue;
 }
 
