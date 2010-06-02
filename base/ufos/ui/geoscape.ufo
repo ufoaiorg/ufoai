@@ -513,7 +513,7 @@ window geoscape
 		pic bt_show_overlay
 		{
 			tooltip		"_Highlight nation borders"
-			image		icons/geo_nations_highlight
+			image		"icons/geo_nations_highlight"
 			pos			"40 515"
 			texl		"0 0"
 			texh		"32 32"
@@ -525,7 +525,7 @@ window geoscape
 		pic bt_show_radar
 		{
 			tooltip		"_Show radar range"
-			image		icons/geo_radar
+			image		"icons/geo_radar"
 			pos			"70 515"
 			texl		"0 0"
 			texh		"32 32"
@@ -538,7 +538,7 @@ window geoscape
 		{
 			visiblewhen "*cvar:mn_xvimap == 1"
 			tooltip		"_Show XVI map"
-			image		icons/geo_xvi
+			image		"icons/geo_xvi"
 			pos			"100 515"
 			texl		"0 0"
 			texh		"32 32"
@@ -551,7 +551,7 @@ window geoscape
 		{
 			tooltip		"_Center objects on the map"
 			image		"ui/button_background"
-			icon		geo_center
+			icon		"geo_center"
 			pos			"145 520"
 			size		"28 25"
 			texl		"193 38"
@@ -562,7 +562,7 @@ window geoscape
 		{
 			tooltip		"_Go to Options"
 			image		"ui/button_background"
-			icon		geo_option
+			icon		"geo_option"
 			pos			"190 520"
 			size		"28 25"
 			texl		"193 38"

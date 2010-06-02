@@ -77,8 +77,6 @@ static qboolean MN_TokenIsReserved (const char *name)
 
 static qboolean MN_TokenIsValue (const char *name, qboolean isQuoted)
 {
-	return qtrue;
-#if 0
 	assert(name);
 	if (isQuoted)
 		return qtrue;
@@ -108,7 +106,6 @@ static qboolean MN_TokenIsValue (const char *name, qboolean isQuoted)
 	}
 
 	return qfalse;
-#endif
 }
 
 static qboolean MN_TokenIsName (const char *name, qboolean isQuoted)
