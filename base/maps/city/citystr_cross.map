@@ -75,3 +75,8 @@
 ( 0 192 64 ) ( 0 256 64 ) ( 0 192 96 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
 }
 }
+// entity 1
+{
+"classname" "info_civilian_start"
+"origin" "80 144 92"
+}
