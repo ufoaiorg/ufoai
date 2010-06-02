@@ -1032,7 +1032,7 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 			if (SV_ParseAssembly(map, filename, &text, &map->mAssembly[map->numAssemblies]))
 				map->numAssemblies++;
 		}
-		else if (!strcmp(token, "{")) {
+		else if (token[0] == '{') {
 			Com_Printf("SV_AssembleMap: Skipping unknown block\n");
 			/* ignore unknown block */
 			text = strchr(text, '}') + 1;

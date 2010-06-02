@@ -404,7 +404,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 	firstAction = NULL;
 
 	/* prevent bad position */
-	if (strcmp(*token, "{") != 0) {
+	if (*token[0] != '{') {
 		Com_Printf("MN_ParseActionList: token \"{\" expected, but \"%s\" found (in event) (node: %s)\n", *token, MN_GetPath(menuNode));
 		return NULL;
 	}
@@ -417,7 +417,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 		if (!*token)
 			return NULL;
 
-		if (!strcmp(*token, "}"))
+		if (*token[0] == '}')
 			break;
 
 		type = MN_GetActionTokenType(*token, EA_ACTION);
@@ -542,7 +542,7 @@ static menuAction_t *MN_ParseActionList (menuNode_t *menuNode, const char **text
 		lastAction = action;
 	}
 
-	assert(!strcmp(*token, "}"));
+	assert(*token[0] == '}');
 
 	/* return non NULL value */
 	if (firstAction == NULL) {
@@ -560,7 +560,7 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 	*token = Com_EParse(text, errhead, node->name);
 	if (!*text)
 		return qfalse;
-	if (strcmp(*token, "{") != 0) {
+	if (*token[0] != '{') {
 		Com_Printf("MN_ParseExcludeRect: node with bad excluderect ignored (node \"%s\")\n", MN_GetPath(node));
 		return qtrue;
 	}
@@ -581,7 +581,7 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 				return qfalse;
 			Com_EParseValue(&rect, *token, V_POS, offsetof(excludeRect_t, size), sizeof(vec2_t));
 		}
-	} while (strcmp(*token, "}") != 0);
+	} while (*token[0] != '}');
 
 
 	if (mn.numExcludeRect >= MAX_EXLUDERECTS) {
@@ -616,7 +616,7 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 	if (!*text)
 		return qfalse;
 
-	if (strcmp(*token, "{") != 0) {
+	if (*token[0] != '{') {
 		Com_Printf("MN_ParseEventProperty: Event '%s' without body (%s)\n", event->string, MN_GetPath(node));
 		return qfalse;
 	}
@@ -626,7 +626,7 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 		return qfalse;
 
 	/* block terminal already read */
-	assert(!strcmp(*token, "}"));
+	assert(*token[0] == '}');
 
 	return qtrue;
 }
@@ -839,7 +839,7 @@ static qboolean MN_ParseFunction (menuNode_t * node, const char **text, const ch
 	if (*action == NULL)
 		return qfalse;
 
-	return strcmp(*token, "}") == 0;
+	return *token[0] == '}';
 }
 
 /**
@@ -864,7 +864,7 @@ static qboolean MN_ParseNodeProperties (menuNode_t * node, const char **text, co
 	const char *errhead = "MN_ParseNodeProperties: unexpected end of file (node";
 	qboolean nextTokenAlreadyRead = qfalse;
 
-	if (strcmp(*token, "{") != 0)
+	if (*token[0] != '{')
 		nextTokenAlreadyRead = qtrue;
 
 	do {
@@ -881,7 +881,7 @@ static qboolean MN_ParseNodeProperties (menuNode_t * node, const char **text, co
 		}
 
 		/* is finished */
-		if (!strcmp(*token, "}"))
+		if (*token[0] == '}')
 			break;
 
 		/* find the property */
@@ -922,12 +922,12 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 {
 	qboolean result = qtrue;
 
-	if (strcmp(*token, "{") != 0) {
+	if (*token[0] != '{') {
 		/* read the body block start */
 		*token = Com_EParse(text, errhead, node->name);
 		if (!*text)
 			return qfalse;
-		if (strcmp(*token, "{") != 0) {
+		if (*token[0] != '{') {
 			Com_Printf("MN_ParseNodeBody: node doesn't have body, token '%s' read (node \"%s\")\n", *token, MN_GetPath(node));
 			mn.numNodes--;
 			return qfalse;
@@ -944,7 +944,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		if (!*text)
 			return qfalse;
 
-		if (strcmp(*token, "{") == 0) {
+		if (*token[0] == '{') {
 			/* we have a special block for properties */
 			result = MN_ParseNodeProperties(node, text, token);
 			if (!result)
@@ -956,7 +956,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 				return qfalse;
 
 			/* and then read all nodes */
-			while (strcmp(*token, "}") != 0) {
+			while (*token[0] != '}') {
 				menuNode_t *new = MN_ParseNode(node, text, token, errhead);
 				if (!new)
 					return qfalse;
@@ -970,7 +970,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			result = MN_ParseNodeProperties(node, text, token);
 		} else {
 			/* we should have a block with nodes only */
-			while (strcmp(*token, "}") != 0) {
+			while (*token[0] != '}') {
 				menuNode_t *new = MN_ParseNode(node, text, token, errhead);
 				if (!new)
 					return qfalse;
@@ -988,7 +988,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 	}
 
 	/* already check on MN_ParseNodeProperties */
-	assert(strcmp(*token, "}") == 0);
+	assert(*token[0] == '}');
 	return qtrue;
 }
 
@@ -1117,7 +1117,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 	/* get it's body */
 	token = Com_Parse(text);
 
-	if (!*text || strcmp(token, "{") != 0) {
+	if (!*text || token[0] != '{') {
 		Com_Printf("MN_ParseMenuModel: menu \"%s\" without body ignored\n", menuModel->id);
 		return;
 	}
@@ -1129,7 +1129,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 		token = Com_EParse(text, errhead, name);
 		if (!*text)
 			break;
-		if (!strcmp(token, "}"))
+		if (token[0] == '}')
 			break;
 
 		v = MN_FindPropertyByName(menuModelProperties, token);
@@ -1171,7 +1171,7 @@ void MN_ParseIcon (const char *name, const char **text)
 
 	/* get it's body */
 	token = Com_Parse(text);
-	assert(strcmp(token, "{") == 0);
+	assert(token[0] == '{');
 
 	/* read properties */
 	while (qtrue) {
@@ -1182,7 +1182,7 @@ void MN_ParseIcon (const char *name, const char **text)
 		if (*text == NULL)
 			return;
 
-		if (!strcmp(token, "}"))
+		if (token[0] == '}')
 			break;
 
 		property = MN_FindPropertyByName(mn_iconProperties, token);
