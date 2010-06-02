@@ -1759,7 +1759,7 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 			break;
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
-			if (mission->stage >= STAGE_BUILD_BASE) {
+			{
 				/* save IDX of alien base if required */
 				const alienBase_t *base = (alienBase_t*)mission->data;
 				/* there may be no base is the mission is a subverting government */
@@ -1876,14 +1876,14 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 			break;
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
-			if (mission.stage >= STAGE_BUILD_BASE) {
+			{
 				int baseIDX = mxml_GetInt(node, SAVE_MISSIONS_ALIENBASEINDEX, BYTES_NONE);
 				/* don't check baseidx value here: alien bases are not loaded yet */
 				if (baseIDX != BYTES_NONE) {
 					alienBase_t *alienBase = AB_GetBase(baseIDX, qfalse);
 					mission.data = (void *) alienBase;
 				}
-				if (!mission.data && !CP_BasemissionIsSubvertingGovernmentMission(&mission)) {
+				if (!mission.data && !CP_BasemissionIsSubvertingGovernmentMission(&mission) && (mission.stage >= STAGE_BUILD_BASE)) {
 					Com_Printf("Error while loading Alien Base mission (missionidx %i, baseidx: %i, category: %i, stage: %i)\n",
 							mission.idx, baseIDX, mission.category, mission.stage);
 					success = qfalse;
