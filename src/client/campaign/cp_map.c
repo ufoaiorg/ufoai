@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_nodes.h"
 #include "../menu/m_render.h"
 #include "../menu/node/m_node_abstractnode.h"
+#include "../menu/node/m_node_map.h"
 #include "cp_campaign.h"
 #include "cp_popup.h"
 #include "cp_mapfightequip.h"
@@ -1897,7 +1898,7 @@ void MAP_DrawMap (const menuNode_t* node)
 	Vector2Copy(node->size, ccs.mapSize);
 	if (cl_3dmap->integer) {
 		/* remove the left padding */
-		ccs.mapSize[0] -= node->extraData1;
+		ccs.mapSize[0] -= MN_MAPEXTRADATACONST(node).paddingRight;
 	}
 
 	/* Draw the map and markers */

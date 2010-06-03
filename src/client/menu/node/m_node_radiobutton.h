@@ -27,6 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_nodes.h"
 
+typedef struct radioButtonExtraData_s {
+	float value;
+} radioButtonExtraData_t;
+
 void MN_RegisterRadioButtonNode(nodeBehaviour_t *behaviour);
 
 #endif

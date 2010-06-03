@@ -43,6 +43,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_radiobutton.h"
 #include "m_node_abstractnode.h"
 
+#define EXTRADATA_TYPE radioButtonExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+
 #define EPSILON 0.001f
 
 /** Height of a status in a 4 status 256*256 texture */
@@ -64,7 +68,7 @@ static void MN_RadioButtonNodeDraw (menuNode_t *node)
 	if (disabled) {
 		iconStatus = ICON_STATUS_DISABLED;
 		texY = MN_4STATUS_TEX_HEIGHT * 2;
-	} else if (current > node->extraData1 - EPSILON && current < node->extraData1 + EPSILON) {
+	} else if (current > EXTRADATA(node).value - EPSILON && current < EXTRADATA(node).value + EPSILON) {
 		iconStatus = ICON_STATUS_CLICKED;
 		texY = MN_4STATUS_TEX_HEIGHT * 3;
 	} else if (node->state) {
@@ -109,12 +113,12 @@ static void MN_RadioButtonNodeActivate (menuNode_t * node)
 
 	current = MN_GetReferenceFloat(node, node->cvar);
 	/* Is we click on the action button, we can continue */
-	if (current > node->extraData1 - EPSILON && current < node->extraData1 + EPSILON)
+	if (current > EXTRADATA(node).value - EPSILON && current < EXTRADATA(node).value + EPSILON)
 		return;
 
 	{
 		const char *cvarName = &((const char *)node->cvar)[6];
-		MN_SetCvar(cvarName, NULL, node->extraData1);
+		MN_SetCvar(cvarName, NULL, EXTRADATA(node).value);
 		if (node->onChange)
 			MN_ExecuteEventActions(node, node->onChange);
 	}
@@ -133,7 +137,7 @@ static void MN_RadioButtonNodeClick (menuNode_t * node, int x, int y)
 
 static const value_t properties[] = {
 	/* Value defining the radiobutton. Cvar is updated with this value when the radio button is selected. */
-	{"value", V_FLOAT, offsetof(menuNode_t, extraData1), MEMBER_SIZEOF(menuNode_t, extraData1)},
+	{"value", V_FLOAT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, value), MEMBER_SIZEOF(EXTRADATA_TYPE, value)},
 	/* Cvar name shared with the radio button group to identify when a radio button is selected. */
 	{"cvar", V_UI_CVAR, offsetof(menuNode_t, cvar), 0},
 
@@ -147,4 +151,5 @@ void MN_RegisterRadioButtonNode (nodeBehaviour_t *behaviour)
 	behaviour->leftClick = MN_RadioButtonNodeClick;
 	behaviour->activate = MN_RadioButtonNodeActivate;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

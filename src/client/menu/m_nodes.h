@@ -68,35 +68,33 @@ typedef struct menuNode_s {
 	vec2_t size;
 
 	/* common attributes */
-	int padding;				/**< padding for this node - default 3 - see bgcolor */
-	int align;					/**< used to identify node position into a parent using a layout manager. Else it do nothing. */
-	int num;					/**< used to identify child into a parent; not sure it is need @todo delete it */
-	int textalign;
+	const char* tooltip;		/**< holds the tooltip */
+	struct menuKeyBinding_s *key;	/**< key bindings - used as tooltip */
 	qboolean invis;				/**< true if the node is invisible */
 	qboolean disabled;			/**< true if the node is inactive */
 	qboolean invalidated;		/**< true if we need to update the layout */
 	qboolean ghost;				/**< true if the node is not tangible */
-	char* text;
-	const char* font;			/**< Font to draw text */
-	const char* tooltip;		/**< holds the tooltip */
-	struct menuKeyBinding_s *key;	/**< key bindings - used as tooltip */
-	struct menuIcon_s *icon;	/**< Link to an icon */
+	qboolean state;				/**< is node hovered */
+	int padding;				/**< padding for this node - default 3 - see bgcolor */
+	int align;					/**< used to identify node position into a parent using a layout manager. Else it do nothing. */
+	int num;					/**< used to identify child into a parent; not sure it is need @todo delete it */
+	struct menuAction_s* visibilityCondition;	/**< cvar condition to display/hide the node */
 
 	/** @todo use a linked list of excluderect? */
 	excludeRect_t *excludeRect;	/**< exclude this for hover or click functions */
 	int excludeRectNum;			/**< how many consecutive exclude rects defined? */
 
-	struct menuAction_s* visibilityCondition;	/**< cvar condition to display/hide the node */
-
+	/* other attributes */
 	/** @todo needs cleanup */
+	int textalign;				/**< Alignment to draw text */
+	char* text;					/**< Text we want to display */
+	const char* font;			/**< Font to draw text */
+	struct menuIcon_s *icon;	/**< Link to an icon */
 	void* image;
 	void* cvar;
-	qboolean state;				/**< is node hovered */
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	vec4_t bgcolor;				/**< rgba */
 	vec4_t bordercolor;			/**< rgba - see border and padding */
-
-	/* common color */
 	vec4_t color;				/**< rgba */
 	vec4_t selectedColor;		/**< rgba The color to draw the line specified by textLineSelected in. */
 
@@ -110,9 +108,6 @@ typedef struct menuNode_s {
 	struct menuAction_s *onWheelUp;
 	struct menuAction_s *onWheelDown;
 	struct menuAction_s *onChange;	/**< called when the widget change from an user action */
-
-	/* temporary, and/or for testing */
-	float extraData1;			/**< allow behaviour to use it, how it need (before creating a real extradata structure) */
 } menuNode_t;
 
 

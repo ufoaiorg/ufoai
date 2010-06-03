@@ -35,6 +35,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../campaign/cp_map.h"
 #include "../../renderer/r_draw.h"
 
+#define EXTRADATA_TYPE mapExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+
 static void MN_MapNodeDraw (menuNode_t *node)
 {
 	if (GAME_CP_IsRunning()) {
@@ -220,7 +224,7 @@ static void MN_MapNodeLoading (menuNode_t *node)
 
 static const value_t properties[] = {
 	/* Use a right padding. */
-	{"padding-right", V_FLOAT, offsetof(menuNode_t, extraData1), MEMBER_SIZEOF(menuNode_t, extraData1)},
+	{"padding-right", V_FLOAT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, paddingRight), MEMBER_SIZEOF(EXTRADATA_TYPE, paddingRight)},
 	/* Call it to zoom out of the map */
 	{"zoomin", V_UI_NODEMETHOD, ((size_t) MN_MapNodeZoomIn), 0},
 	/* Call it to zoom into the map */
@@ -240,4 +244,5 @@ void MN_RegisterMapNode (nodeBehaviour_t *behaviour)
 	behaviour->capturedMouseLost = MN_MapNodeCapturedMouseLost;
 	behaviour->mouseWheel = MN_MapNodeMouseWheel;
 	behaviour->loading = MN_MapNodeLoading;
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }
