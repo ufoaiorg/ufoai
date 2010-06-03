@@ -262,7 +262,7 @@ void R_SphereShadeGLSL (const sphere_t *sphere)
 
 	if (sphere->blendScale >= 0)
 		R_ProgramParameter1f("BLENDSCALE", sphere->blendScale);
-	if (sphere->glowScale >= 0 && r_postprocess->integer)
+	if (sphere->glowScale >= 0 && r_framebuffers->integer)
 		R_ProgramParameter1f("GLOWSCALE", sphere->glowScale);
 
 	/* set up pointers */

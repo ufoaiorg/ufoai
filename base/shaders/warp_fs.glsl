@@ -30,7 +30,7 @@ void main(void){
 	finalColor = FogFragment(finalColor);  // add fog
 #endif
 
-#if r_postprocess
+#if r_framebuffers
 	gl_FragData[0] = finalColor;
 	if (GLOWSCALE > 0.01) {
 		gl_FragData[1] = gl_Color * texture2D(SAMPLER4, coord) * GLOWSCALE;

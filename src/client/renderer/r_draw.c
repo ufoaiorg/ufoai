@@ -1105,7 +1105,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	r_globeEarthAtmosphere.texture = R_FindImage(va("pics/geoscape/%s_atmosphere", map), it_wrappic);
 
 	/* Draw earth atmosphere */
-	if (r_programs->integer && r_postprocess->integer) {
+	if (r_framebuffers->integer) {
 		r_globeEarthAtmosphere.normalMap = r_globeEarth.normalMap;
 		r_globeEarthAtmosphere.glowScale = 1.0;
 		r_globeEarthAtmosphere.blendScale = -1.0;
@@ -1416,7 +1416,7 @@ void R_DrawBloom (void)
 	int i;
 	qboolean rb_enable;
 
-	if (!r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
+	if (!r_framebuffers->integer)
 		return;
 
 	/* save state, then set up for blit-style rendering to quads */
@@ -1436,46 +1436,52 @@ void R_DrawBloom (void)
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
 
-	/* downsample into image pyramid */
-	R_BindTexture(fbo_render->textures[1]);
-	//qglGenerateMipmapEXT(GL_TEXTURE_2D);
+	if (r_postprocess->integer) {
 
-	R_Blur(fbo_render, fbo_bloom0, 1, 0);
-	R_Blur(fbo_bloom0, fbo_bloom1, 0, 1);
-
-	R_UseFramebuffer(r_state.buffers0[0]);
-	R_BindTexture(fbo_bloom1->textures[0]);
-	//qglGenerateMipmapEXT(GL_TEXTURE_2D);
-	R_UseViewport(r_state.buffers0[0]);
-	R_DrawQuad();
-
-	for (i = 1; i < DOWNSAMPLE_PASSES; i++) {
-		R_Blur(r_state.buffers0[i - 1], r_state.buffers1[i - 1], 0, 0);
-		R_Blur(r_state.buffers1[i - 1], r_state.buffers2[i - 1], 0, 1);
-		R_UseFramebuffer(r_state.buffers0[i]);
-		R_BindTexture(r_state.buffers2[i - 1]->textures[0]);
+		/* downsample into image pyramid */
+		R_BindTexture(fbo_render->textures[1]);
 		//qglGenerateMipmapEXT(GL_TEXTURE_2D);
-		R_UseViewport(r_state.buffers0[i]);
+
+		R_Blur(fbo_render, fbo_bloom0, 1, 0);
+		R_Blur(fbo_bloom0, fbo_bloom1, 0, 1);
+
+		R_UseFramebuffer(r_state.buffers0[0]);
+		R_BindTexture(fbo_bloom1->textures[0]);
+		//qglGenerateMipmapEXT(GL_TEXTURE_2D);
+		R_UseViewport(r_state.buffers0[0]);
 		R_DrawQuad();
+
+		for (i = 1; i < DOWNSAMPLE_PASSES; i++) {
+			R_Blur(r_state.buffers0[i - 1], r_state.buffers1[i - 1], 0, 0);
+			R_Blur(r_state.buffers1[i - 1], r_state.buffers2[i - 1], 0, 1);
+			R_UseFramebuffer(r_state.buffers0[i]);
+			R_BindTexture(r_state.buffers2[i - 1]->textures[0]);
+			//qglGenerateMipmapEXT(GL_TEXTURE_2D);
+			R_UseViewport(r_state.buffers0[i]);
+			R_DrawQuad();
+		}
+
+		/* blur and combine downsampled images */
+		R_BlurStack(DOWNSAMPLE_PASSES, r_state.buffers0, r_state.buffers1);
+
+		/* re-combine the blurred version with the original "glow" image */
+		R_UseProgram(r_state.combine2_program);
+		R_UseFramebuffer(fbo_bloom0);
+		R_BindTextureForTexUnit(fbo_render->textures[1], &texunit(0));
+		R_BindTextureForTexUnit(r_state.buffers1[0]->textures[0], &texunit(1));
+
+		R_UseViewport(fbo_screen);
+		R_DrawQuad();
+
+		R_BindTextureForTexUnit(fbo_bloom0->textures[0], &texunit(1));
+	} else {
+		R_BindTextureForTexUnit(fbo_render->textures[1], &texunit(1));
 	}
-
-	/* blur and combine downsampled images */
-	R_BlurStack(DOWNSAMPLE_PASSES, r_state.buffers0, r_state.buffers1);
-
-	/* re-combine the blurred version with the original "glow" image */
-	R_UseProgram(r_state.combine2_program);
-	R_UseFramebuffer(fbo_bloom0);
-	R_BindTextureForTexUnit(fbo_render->textures[1], &texunit(0));
-	R_BindTextureForTexUnit(r_state.buffers1[0]->textures[0], &texunit(1));
-
-	R_UseViewport(fbo_screen);
-	R_DrawQuad();
+	R_BindTextureForTexUnit(fbo_render->textures[0], &texunit(0));
 
 	/* draw final result to the screenbuffer */
 	R_UseFramebuffer(fbo_screen);
 	R_UseProgram(r_state.combine2_program);
-	R_BindTextureForTexUnit(fbo_render->textures[0], &texunit(0));
-	R_BindTextureForTexUnit(fbo_bloom0->textures[0], &texunit(1));
 
 	R_DrawQuad();
 

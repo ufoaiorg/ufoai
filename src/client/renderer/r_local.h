@@ -87,6 +87,7 @@ extern cvar_t *r_maxlightmap;
 extern cvar_t *r_warp;
 extern cvar_t *r_lights;
 extern cvar_t *r_programs;
+extern cvar_t *r_framebuffers;
 extern cvar_t *r_postprocess;
 extern cvar_t *r_shownormals;
 extern cvar_t *r_bumpmap;
@@ -98,7 +99,15 @@ extern cvar_t *r_flares;
 extern cvar_t *r_coronas;
 extern cvar_t *r_dynamic_lights;
 extern cvar_t *r_shadowmapping;
+extern cvar_t *r_softshadows;
 extern cvar_t *r_shadowmap_width;
+
+/** @todo - the following Cvars need to be added to the graphics options menu:
+ **			r_framebuffers : 0 or 1
+ **			r_shadowmapping : 0 or 1
+ **			r_softshadows : 0 or 1
+ **			r_shadowmap_width : texture width (eg. the "lightmap width" dropdown for maxlightmap)
+ **/
 
 /* cvars used in GLSL shaders to enable/disable debugging views */
 extern cvar_t *r_debug_normals;

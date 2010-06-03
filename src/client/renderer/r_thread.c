@@ -52,6 +52,7 @@ int R_RunThread (void *p)
 		R_GetLevelSurfaceLists();
 
 		/** @todo - update per-model dynamic light list sorting here */
+		/** @todo - current dynamic shadow code doesn't use threads */
 
 		r_threadstate.state = THREAD_RENDERER;
 	}

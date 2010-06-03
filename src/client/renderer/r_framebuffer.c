@@ -28,7 +28,7 @@
 
 #define MAX_FRAMEBUFFER_OBJECTS	    64
 
-static qboolean frameBufferObjectsInitialized;
+static qboolean frameBufferObjectsInitialized = qfalse;
 static int frameBufferObjectCount;
 static r_framebuffer_t frameBufferObjects[MAX_FRAMEBUFFER_OBJECTS];
 static GLuint frameBufferTextures[TEXNUM_FRAMEBUFFER_TEXTURES];
@@ -43,6 +43,9 @@ static qboolean shadowbuffer_enabled; /*< shadowmap-buffer vs screen as render t
 static GLuint R_GetFreeFBOTexture (void)
 {
 	int i;
+
+	if (!frameBufferObjectsInitialized)
+		Com_Error(ERR_FATAL, "Can't allocate framebuffer texture; framebuffers not initialized!\n");
 
 	for (i = 0; i < TEXNUM_FRAMEBUFFER_TEXTURES; i++) {
 		if (frameBufferTextures[i] == 0) {
@@ -60,6 +63,10 @@ static GLuint R_GetFreeFBOTexture (void)
 static void R_FreeFBOTexture (int texnum)
 {
 	int i;
+
+	if (!frameBufferObjectsInitialized)
+		return;
+
 	for (i = 0; i < TEXNUM_FRAMEBUFFER_TEXTURES; i++) {
 		if (frameBufferTextures[i] == texnum)
 			break;
@@ -207,7 +214,7 @@ void R_InitFBObjects (void)
 	float scales[DOWNSAMPLE_PASSES];
 	int i;
 
-	if (!r_config.frameBufferObject)
+	if (!r_framebuffers || !r_framebuffers->integer)
 		return;
 
 	frameBufferObjectCount = 0;
@@ -242,13 +249,13 @@ void R_InitFBObjects (void)
 	/* setup main 3D render target */
 	r_state.renderBuffer = R_CreateFramebuffer(viddef.width, viddef.height, 2, qtrue, qfalse, qfalse, qfalse, filters);
 
-	/* setup bloom render targets */
+	/* setup buffer render targets */
 	fbo_bloom0 = R_CreateFramebuffer(viddef.width, viddef.height, 1, qfalse, qfalse, qfalse, qfalse, filters);
 	fbo_bloom1 = R_CreateFramebuffer(viddef.width, viddef.height, 1, qfalse, qfalse, qfalse, qfalse, filters);
 
 	//filters[0] = GL_LINEAR;
 	filters[0] = GL_NEAREST;
-	/* setup extra framebuffers */
+	/* setup extra framebuffers for postprocessing */
 	for (i = 0; i < DOWNSAMPLE_PASSES; i++) {
 		const int h = (int)((float)viddef.height / scales[i]);
 		const int w = (int)((float)viddef.width / scales[i]);
@@ -259,7 +266,7 @@ void R_InitFBObjects (void)
 		R_CheckError();
 	}
 
-	/* setup shadowbuffer */
+	/* setup buffers for shadowmapping */
 	filters[0] = GL_LINEAR;
 	r_state.shadowmapBuffer = R_CreateFramebuffer(r_maxlightmap->integer, r_maxlightmap->integer, 1, qtrue, qtrue, qtrue, qfalse, filters);
 	r_state.shadowmapBlur1 = R_CreateFramebuffer(r_maxlightmap->integer, r_maxlightmap->integer, 1, qtrue, qtrue, qtrue, qfalse, filters);
@@ -328,7 +335,7 @@ void R_RestartFBObjects_f (void)
  */
 void R_UseFramebuffer (const r_framebuffer_t *buf)
 {
-	if (!r_config.frameBufferObject || !r_programs->integer || !r_postprocess->integer)
+	if (!r_framebuffers->integer)
 		return;
 
 	if (!frameBufferObjectsInitialized) {
@@ -388,7 +395,7 @@ void R_SetupViewport (r_framebuffer_t *buf, int x, int y, int width, int height)
  */
 void R_UseViewport (const r_framebuffer_t *buf)
 {
-	if (!frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
+	if (!frameBufferObjectsInitialized)
 		return;
 
 	if (!buf)
@@ -404,7 +411,7 @@ void R_DrawBuffers (int n)
 
 void R_BindColorAttachments (int n, GLenum *attachments)
 {
-	if (!frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
+	if (!frameBufferObjectsInitialized)
 		return;
 
 	if (n >= r_config.maxDrawBuffers) {
@@ -420,7 +427,7 @@ void R_BindColorAttachments (int n, GLenum *attachments)
 
 qboolean R_EnableRenderbuffer (qboolean enable)
 {
-	if (!frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
+	if (!frameBufferObjectsInitialized)
 		return qfalse;
 
 	if (enable != renderbuffer_enabled) {
@@ -442,7 +449,7 @@ qboolean R_EnableRenderbuffer (qboolean enable)
 
 qboolean R_EnableShadowbuffer (qboolean enable)
 {
-	if (!frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_shadowmapping->integer || !r_programs->integer)
+	if (!frameBufferObjectsInitialized || !r_shadowmapping->integer)
 		return qfalse;
 
 	if (enable != shadowbuffer_enabled) {

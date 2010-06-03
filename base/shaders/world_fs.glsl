@@ -39,7 +39,7 @@ in vec4 shadowCoord;
 in float fog;
 in vec4 gl_TexCoord[];
 
-#if r_postprocess
+#if r_framebuffers
 out vec4 gl_FragData[];
 #else
 out vec4 gl_FragColor;
@@ -161,7 +161,7 @@ void main(void){
 	}
 
 /* return final fragment color */
-#if r_postprocess
+#if r_framebuffers
 	gl_FragData[0] = outColor;
 	gl_FragData[1] = glowColor;
 #else

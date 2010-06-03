@@ -85,6 +85,7 @@ cvar_t *r_warp;
 cvar_t *r_lights;
 cvar_t *r_dynamic_lights;
 cvar_t *r_programs;
+cvar_t *r_framebuffers;
 cvar_t *r_postprocess;
 cvar_t *r_maxlightmap;
 cvar_t *r_geoscape_overlay;
@@ -97,6 +98,7 @@ cvar_t *r_fog;
 cvar_t *r_flares;
 cvar_t *r_coronas;
 cvar_t *r_shadowmapping;
+cvar_t *r_softshadows;
 cvar_t *r_shadowmap_width;
 cvar_t *r_map_maxlevel;
 cvar_t *cl_worldlevel;
@@ -295,16 +297,16 @@ void R_RenderFrame (void)
 	if (r_shadowmapping->integer) {
 		int i, curLevel;
 
-		/* draw brushes on all worldlevels for shadows */
 		for (i = 0; i < 3; i++) {
 			r_locals.mins[i] = HUGE_VAL;
 			r_locals.maxs[i] = -HUGE_VAL;
 		}
+		/* fix entity list so we draw all worldlevels for the shadowmap*/
 		r_locals.framecheck = qfalse;
-		R_GetAllSurfaceLists();
 		refdef.numEntities = 0;
 		LM_AddToScene();
 		LE_AddToScene();
+		R_GetAllSurfaceLists();
 
 		R_EnableBlend(qfalse);
 		R_EnableBuildShadowmap(qtrue, &r_state.dynamicLights[0]);
@@ -323,6 +325,7 @@ void R_RenderFrame (void)
 		R_EnableBlend(qfalse);
 
 		R_EnableBuildShadowmap(qfalse, NULL);
+		/* fix entity list so we don't draw all worldlevels in the actual scene */
 		r_locals.framecheck = qtrue;
 		refdef.numEntities = 0;
 		LM_AddToScene();
@@ -330,8 +333,10 @@ void R_RenderFrame (void)
 
 
 		/* blur the shadowmap to get smooth, soft shadow edges */
-		R_Blur(r_state.shadowmapBuffer, r_state.shadowmapBlur1, 0, 0);
-		R_Blur(r_state.shadowmapBlur1, r_state.shadowmapBuffer, 0, 1);
+		if (r_softshadows->integer) {
+			R_Blur(r_state.shadowmapBuffer, r_state.shadowmapBlur1, 0, 0);
+			R_Blur(r_state.shadowmapBlur1, r_state.shadowmapBuffer, 0, 1);
+		}
 
 		R_ResetArrayState();
 	}
@@ -339,6 +344,7 @@ void R_RenderFrame (void)
 	R_CheckError();
 	R_Setup3D();
 	R_EnableUseShadowmap(qtrue);
+	r_locals.framecheck = qtrue;
 
 	/* render scene */
 
@@ -542,7 +548,7 @@ static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
 
 static qboolean R_CvarCheckShadowmapping (cvar_t *cvar)
 {
-	if (!r_dynamic_lights->integer){
+	if (!r_dynamic_lights->integer || !r_framebuffers->integer){
 		Cvar_SetValue(cvar->name, 0);
 		return qfalse;
 	}
@@ -553,6 +559,7 @@ static qboolean R_CvarCheckPrograms (cvar_t *cvar)
 {
 	if (qglUseProgram) {
 		if (!cvar->integer || !r_config.drawBuffers) {
+			Cvar_SetValue("r_framebuffers", 0);
 			Cvar_SetValue("r_postprocess", 0);
 			Cvar_SetValue("r_shadowmapping", 0);
 		}
@@ -563,9 +570,20 @@ static qboolean R_CvarCheckPrograms (cvar_t *cvar)
 	return qtrue;
 }
 
-static qboolean R_CvarCheckPostProcess (cvar_t *cvar)
+static qboolean R_CvarCheckFramebuffers (cvar_t *cvar)
 {
 	if (r_config.frameBufferObject && r_programs->integer && r_config.drawBuffers)
+		return Cvar_AssertValue(cvar, 0, 1, qtrue);
+
+	Cvar_SetValue("r_postprocess", 0);
+	Cvar_SetValue("r_shadowmapping", 0);
+	Cvar_SetValue(cvar->name, 0);
+	return qtrue;
+}
+
+static qboolean R_CvarCheckPostProcess (cvar_t *cvar)
+{
+	if (r_framebuffers->integer)
 		return Cvar_AssertValue(cvar, 0, 1, qtrue);
 
 	Cvar_SetValue(cvar->name, 0);
@@ -961,6 +979,11 @@ static qboolean R_InitExtensions (void)
 	r_programs->modified = qfalse;
 	Cvar_SetCheckFunction("r_programs", R_CvarCheckPrograms);
 
+	r_framebuffers = Cvar_Get("r_framebuffers", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate framebuffer rendering");
+	r_framebuffers->modified = qfalse;
+	Cvar_SetCheckFunction("r_framebuffers", R_CvarCheckFramebuffers);
+	Com_Printf("foo\n");
+
 	r_postprocess = Cvar_Get("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
 	r_postprocess->modified = qfalse;
 	Cvar_SetCheckFunction("r_postprocess", R_CvarCheckPostProcess);
@@ -978,6 +1001,9 @@ static qboolean R_InitExtensions (void)
 	r_shadowmapping = Cvar_Get("r_shadowmapping", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate shadowmapping");
 	r_shadowmapping->modified = qfalse;
 	Cvar_SetCheckFunction("r_shadowmapping", R_CvarCheckShadowmapping);
+
+	r_softshadows = Cvar_Get("r_softshadows", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate soft shadow boundaries");
+	Cvar_SetCheckFunction("r_softshadows", R_CvarCheckShadowmapping);
 
 
 	glGetIntegerv(GL_MAX_TEXTURE_UNITS, &r_config.maxTextureUnits);

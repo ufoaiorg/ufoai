@@ -487,7 +487,7 @@ void R_EnableWarp (r_program_t *program, qboolean enable)
 
 void R_EnableBlur (r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir)
 {
-	if (!r_programs->integer || !r_postprocess->integer)
+	if (!r_framebuffers->integer)
 		return;
 
 	if (enable && (!program || !program->id))
@@ -1108,6 +1108,10 @@ extern const float SKYBOX_DEPTH;
  */
 void R_Setup2D (void)
 {
+
+	/* disable render-to-framebuffer */
+	R_EnableRenderbuffer(qfalse);
+
 	/* set 2D virtual screen size */
 	glViewport(0, 0, viddef.width, viddef.height);
 
@@ -1129,9 +1133,6 @@ void R_Setup2D (void)
 	glEnable(GL_BLEND);
 
 	glDisable(GL_DEPTH_TEST);
-
-	/* disable render-to-framebuffer */
-	R_EnableRenderbuffer(qfalse);
 
 	R_CheckError();
 }
