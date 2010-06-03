@@ -70,7 +70,8 @@ void main(void){
 		float dy = dFdy(depth);
 		moment2 += 0.25*(dx*dx+dy*dy) ;
 
-		outColor = vec4(moment1, moment2, 0.0, texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a);
+		//outColor = vec4(moment1, moment2, 0.0, texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a);
+		outColor = vec4(moment1, 0.0, 0.0, 1.0);
 
 	/* final rendering pass */
 	} else {

@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_parse.h"
 #include "cl_hud.h"
 #include "../renderer/r_mesh_anim.h"
+#include "../renderer/r_local.h"
 #include "../../common/tracing.h"
 
 cvar_t *cl_le_debug;
@@ -98,7 +99,7 @@ static void LM_AddToSceneOrder (qboolean parents)
 			continue;
 
 		/* check for visibility */
-		if (!((1 << cl_worldlevel->integer) & lm->levelflags))
+		if (!((1 << cl_worldlevel->integer) & lm->levelflags) && r_locals.framecheck)
 			continue;
 
 		/* if we want to render the parents an this is a child (has a parent assigned)
@@ -1288,7 +1289,7 @@ void LE_AddToScene (void)
 		}
 		if (le->inuse && !le->invis) {
 			if (le->contents & CONTENTS_SOLID) {
-				if (!((1 << cl_worldlevel->integer) & le->levelflags))
+				if (!((1 << cl_worldlevel->integer) & le->levelflags) && r_locals.framecheck)
 					continue;
 			} else if (le->contents & CONTENTS_DETAIL) {
 				/* show them always */

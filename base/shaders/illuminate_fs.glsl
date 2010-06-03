@@ -43,14 +43,12 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 	 * settings for spot-light sources. */
 	float attenuate = lightSource.constantAttenuation;
 
-#ifdef ATI
 	/* HACK - for some reason, ATI cards return 0.0 for attenuation for directional sources */
 	/* @todo - this could break things if lights are de-activated by setting 
 	attenuation to 0 as is common*/
 	if (lightSource.position.w == 0.0) {
 		attenuate = 1.0;
 	}
-#endif
 
 	if (attenuate > 0.0 && lightSource.position.w != 0.0){ /* directional sources don't get attenuated */
 		float dist = length((lightSource.position).xyz - vPosCamera.xyz);
@@ -75,10 +73,10 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 
 #if r_debug_shadows
 	//return vec3(textureProj(SAMPLER_SHADOW0, shadowCoord).r * NdotL);
-	//return textureProj(SAMPLER_SHADOW0, shadowCoord).rgb;
-	return vec3(1.0 - ((1.0 - chebyshevUpperBound(shadowCoord)) * NdotL));
+	return textureProj(SAMPLER_SHADOW0, shadowCoord).rgb;
+	//return vec3(1.0 - ((1.0 - chebyshevUpperBound(shadowCoord)) * NdotL));
 	//return vec3(1.0);
-	//return vec3(shadowCoord.r /);
+	//return vec3(shadowCoord.a );
 #endif
 
 	float shadow = 1.0;

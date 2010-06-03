@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "../../common/tracing.h"
 #include "../menu/m_windows.h"
+#include "../battlescape/cl_localentity.h"
 
 rendererData_t refdef;
 
@@ -295,12 +296,15 @@ void R_RenderFrame (void)
 		int i, curLevel;
 
 		/* draw brushes on all worldlevels for shadows */
-		r_locals.framecheck = qfalse;
 		for (i = 0; i < 3; i++) {
 			r_locals.mins[i] = HUGE_VAL;
 			r_locals.maxs[i] = -HUGE_VAL;
 		}
+		r_locals.framecheck = qfalse;
 		R_GetAllSurfaceLists();
+		refdef.numEntities = 0;
+		LM_AddToScene();
+		LE_AddToScene();
 
 		R_EnableBlend(qfalse);
 		R_EnableBuildShadowmap(qtrue, &r_state.dynamicLights[0]);
@@ -320,6 +324,9 @@ void R_RenderFrame (void)
 
 		R_EnableBuildShadowmap(qfalse, NULL);
 		r_locals.framecheck = qtrue;
+		refdef.numEntities = 0;
+		LM_AddToScene();
+		LE_AddToScene();
 
 
 		/* blur the shadowmap to get smooth, soft shadow edges */

@@ -68,7 +68,8 @@ void main(void){
 		/* bias moments using derivative */
 		float dx = dFdx(depth);
 		float dy = dFdy(depth);
-		moment2 += 0.25*(dx*dx+dy*dy) ;
+		/* @note - this causes artifacts; possibly each model being drawn separately leads to issues */
+		//moment2 += 0.25*(dx*dx+dy*dy) ;
 
 		outColor = vec4(moment1, moment2, 0.0, texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a);
 
