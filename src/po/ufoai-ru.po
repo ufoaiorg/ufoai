@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-05-19 11:31+0700\n"
-"PO-Revision-Date: 2010-05-26 14:42+0600\n"
-"Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
+"PO-Revision-Date: 2010-06-03 11:08+0600\n"
+"Last-Translator: Vadimuzzz <vadimuzzz@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3624,7 +3624,7 @@ msgstr "Производство"
 
 #: ../base/ufos/msgcategories.ufo:37
 msgid "nations_happiness"
-msgstr "Неудовольствие правительств"
+msgstr "Отношение правительств"
 
 #: ../base/ufos/msgcategories.ufo:44
 msgid "transfer"
@@ -9762,7 +9762,7 @@ msgstr "Ответный огонь может истощить ваши еди�
 
 #: ../base/ufos/tips.ufo:36
 msgid "Air Burst from the Grenade Launcher lets you explode those grenades in a specific place. Very useful when targetting something near the edge of the map, or on a ledge."
-msgstr "Импульс сжатого воздуха из гранатомета позволит вам подрывать гранаты в заданном месте. Очень полезно, когда целитесь куда-то вблизи края карты или выступа."
+msgstr "Стрельба из гранатомета в режиме «детонация» позволит вам подрывать гранаты в заданном месте. Очень полезно, когда целитесь куда-то вблизи края карты или выступа."
 
 #: ../base/ufos/tips.ufo:37
 msgid "When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
@@ -15375,11 +15375,11 @@ msgstr "Очередь на производство пуста"
 
 #: client/campaign/cp_messageoptions.c:52
 msgid "nation_happiness_changed"
-msgstr "Удовольствие изменилось"
+msgstr "Отношение государства изменилось"
 
 #: client/campaign/cp_messageoptions.c:53
 msgid "nation_unhappy"
-msgstr "Удовольствие ниже порога"
+msgstr "Государство недовольно"
 
 #: client/campaign/cp_messageoptions.c:54
 msgid "nation_pleased"
@@ -15529,7 +15529,7 @@ msgstr "У государства %s изменилось отношение, в
 #: client/campaign/cp_nation.c:179
 #, c-format
 msgid "Nation %s changed happiness to %s"
-msgstr "Правительство %s изменило удовольствие до %s"
+msgstr "У государства %s изменилось отношение до %s"
 
 #: client/campaign/cp_nation.c:183
 #, c-format
@@ -16814,7 +16814,7 @@ msgstr ""
 "Рекруты: %i %s, %i %s, %i %s\n"
 "Кредиты: %ic\n"
 "Сложность: %s\n"
-"Мин. удовольствие государств: %i %%\n"
+"Мин. удовлетворённость государств: %i %%\n"
 "Макс. сумма долга: %ic\n"
 "%s\n"
 
