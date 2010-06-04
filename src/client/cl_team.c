@@ -202,8 +202,9 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 	/* Team-definition */
 	s = mxml_GetString(p, SAVE_CHARACTER_TEAMDEF);
 
-	/* @todo remove this after time. this is a fallback code to keep savegame compatibility (teamDefIDX ~> teamDefID). */
 	if (s[0] == '\0') {
+		/** @todo remove compatibility code after time (teamDefIDX ~> teamDefID change). */
+		/* Fallback code to keep savegame compatibility (teamDefIDX ~> teamDefID change) : */
 		const int td = mxml_GetInt(p, SAVE_CHARACTER_TEAMDEFIDX, -1);
 
 		Com_Printf("No TeamDefID for %s (ucn: %i) found. Try teamDefIDX (oldsave method)\n", chr->name, chr->ucn);		
@@ -219,7 +220,6 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 		chr->teamDef = Com_GetTeamDefinitionByID(s);
 	}
 	if (!chr->teamDef) {
-		Com_Printf("No valid TeamDef found for %s (ucn: %i)\n", chr->name, chr->ucn);
 		return qfalse;
 	}
 	Com_RegisterConstList(saveCharacterConstants);
