@@ -124,7 +124,7 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t* chr)
 	mxml_AddString(p, SAVE_CHARACTER_PATH, chr->path);
 	mxml_AddString(p, SAVE_CHARACTER_HEAD, chr->head);
 	mxml_AddInt(p, SAVE_CHARACTER_SKIN, chr->skin);
-	mxml_AddInt(p, SAVE_CHARACTER_TEAMDEFIDX, chr->teamDef->idx);
+	mxml_AddString(p, SAVE_CHARACTER_TEAMDEF, chr->teamDef->id);
 	mxml_AddInt(p, SAVE_CHARACTER_GENDER, chr->gender);
 	mxml_AddInt(p, SAVE_CHARACTER_UCN, chr->ucn);
 	mxml_AddInt(p, SAVE_CHARACTER_MAXHP, chr->maxHP);
@@ -176,7 +176,7 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t* chr)
  */
 qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 {
-	int td;
+	const char *s;
 	mxml_node_t *sScore;
 	mxml_node_t *sSkill;
 	mxml_node_t *sKill;
@@ -199,19 +199,29 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 	chr->fieldSize = mxml_GetInt(p, SAVE_CHARACTER_FIELDSIZE, 1);
 	chr->state = mxml_GetInt(p, SAVE_CHARACTER_STATE, 0);
 
-	chr->teamDef = NULL;
-	/* Team-definition index */
-	td = mxml_GetInt(p, SAVE_CHARACTER_TEAMDEFIDX, -1);
+	/* Team-definition */
+	s = mxml_GetString(p, SAVE_CHARACTER_TEAMDEF);
 
-	if (td != -1) {
-		assert(csi.numTeamDefs);
-		if (td >= csi.numTeamDefs) {
-			Com_Printf("Invalid TeamDefIDX %i for %s (ucn: %i)\n", td, chr->name, chr->ucn);
-			return qfalse;
+	/* @todo remove this after time. this is a fallback code to keep savegame compatibility (teamDefIDX ~> teamDefID). */
+	if (s[0] == '\0') {
+		const int td = mxml_GetInt(p, SAVE_CHARACTER_TEAMDEFIDX, -1);
+
+		Com_Printf("No TeamDefID for %s (ucn: %i) found. Try teamDefIDX (oldsave method)\n", chr->name, chr->ucn);		
+		if (td != -1) {
+			assert(csi.numTeamDefs);
+			if (td >= csi.numTeamDefs) {
+				Com_Printf("Invalid TeamDefIDX %i for %s (ucn: %i)\n", td, chr->name, chr->ucn);
+				return qfalse;
+			}
+			chr->teamDef = &csi.teamDef[td];
 		}
-		chr->teamDef = &csi.teamDef[td];
+	} else {
+		chr->teamDef = Com_GetTeamDefinitionByID(s);
 	}
-
+	if (!chr->teamDef) {
+		Com_Printf("No valid TeamDef found for %s (ucn: %i)\n", chr->name, chr->ucn);
+		return qfalse;
+	}
 	Com_RegisterConstList(saveCharacterConstants);
 
 	sScore = mxml_GetNode(p, SAVE_CHARACTER_SCORES);

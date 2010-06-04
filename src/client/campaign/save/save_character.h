@@ -30,7 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CHARACTER_PATH "path"
 #define SAVE_CHARACTER_HEAD "head"
 #define SAVE_CHARACTER_SKIN "skin"
-#define SAVE_CHARACTER_TEAMDEFIDX "teamdefIDX"
+#define SAVE_CHARACTER_TEAMDEF "teamdef"
+#define SAVE_CHARACTER_TEAMDEFIDX "teamdefIDX"		/*< depreciated, to be removed */
 #define SAVE_CHARACTER_GENDER "gender"
 #define SAVE_CHARACTER_UCN "ucn"
 #define SAVE_CHARACTER_MAXHP "maxHp"
@@ -89,7 +90,7 @@ DTD:
 	path			CDATA		#IMPLIED
 	head			CDATA		#IMPLIED
 	skin			CDATA		'0'
-	teamdefIDX		CDATA		#REQUIRED
+	teamdef			CDATA		#REQUIRED
 	gender			CDATA		'0'
 	ucn				CDATA		'0'
 	maxHp			CDATA		'0'
