@@ -249,6 +249,7 @@ static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t c
 	} else {  /* simply use white */
 		Vector4Set(color, 1.0, 1.0, 1.0, 1.0);
 	}
+
 }
 
 /**
@@ -333,8 +334,29 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 			texunit_lightmap.texcoord_array[i * 2 + 1] = st[1];
 		}
 
-		if (r_state.color_array_enabled)
-			R_StageColor(stage, v, &r_state.color_array[i * 4]);
+
+		if (r_state.dynamic_lighting_enabled) {
+			if (stage->flags & STAGE_DIRTMAP)
+				R_ProgramParameter1f("DIRT", stage->dirt.intensity);
+
+			if (stage->flags & STAGE_TERRAIN) {
+				R_ProgramParameter1f("TERRAIN", 1.0);
+				R_ProgramParameter1f("STAGE_MIN", stage->terrain.floor);
+				R_ProgramParameter1f("STAGE_MAX", stage->terrain.height);
+			}
+
+			if (stage->flags & STAGE_TAPE) {
+				R_ProgramParameter1f("TAPE", stage->tape.center);
+				R_ProgramParameter1f("STAGE_MIN", stage->tape.min);
+				R_ProgramParameter1f("STAGE_MAX", stage->tape.max);
+			}
+
+		} else {
+			if (r_state.color_array_enabled)
+				R_StageColor(stage, v, &r_state.color_array[i * 4]);
+		}
+
+
 
 		/* normals and tangents */
 		if (r_state.lighting_enabled) {
@@ -380,16 +402,6 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableColorArray(qtrue);
 
-#if 0
-	R_ResetArrayState();
-
-	R_EnableColorArray(qfalse);
-
-	R_EnableLighting(NULL, qfalse);
-
-	R_EnableTexture(&texunit_lightmap, qfalse);
-#endif
-
 	glEnable(GL_POLYGON_OFFSET_LINE);
 	glPolygonOffset(-1.f, -1.f);
 
@@ -426,6 +438,12 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 	glMatrixMode(GL_MODELVIEW);
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	if (r_state.dynamic_lighting_enabled){
+		R_ProgramParameter1f("DIRT", -1.0);
+		R_ProgramParameter1f("TAPE", -1.0);
+		R_ProgramParameter1f("TERRAIN", -1.0);
+	}
 
 	R_EnableFog(qtrue);
 

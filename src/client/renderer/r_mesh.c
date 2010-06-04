@@ -443,48 +443,52 @@ void R_DrawAliasModel (entity_t *e)
 	if (VectorNotEmpty(e->scale))
 		glScalef(e->scale[0], e->scale[1], e->scale[2]);
 
-	/** @todo: building the shadowmap doesn't require all these textures, lights, etc. */
 
+	if (!r_state.build_shadowmap_enabled) {
+		/* IR goggles override color for entities that are affected */
+		if (refdef.rendererFlags & RDF_IRGOGGLES && e->flags & RF_IRGOGGLES)
+			Vector4Set(e->shell, 1.0, 0.3, 0.3, 1.0);
 
-	/* IR goggles override color for entities that are affected */
-	if (refdef.rendererFlags & RDF_IRGOGGLES && e->flags & RF_IRGOGGLES)
-		Vector4Set(e->shell, 1.0, 0.3, 0.3, 1.0);
+		if (e->flags & RF_PULSE) {  /* and then adding in a pulse */
+			const float f = 1.0 + sin((refdef.time + (e->model->alias.meshes[0].num_tris)) * 6.0) * 0.33;
+			VectorScale(color, 1.0 + f, color);
+		}
 
-	if (e->flags & RF_PULSE) {  /* and then adding in a pulse */
-		const float f = 1.0 + sin((refdef.time + (e->model->alias.meshes[0].num_tris)) * 6.0) * 0.33;
-		VectorScale(color, 1.0 + f, color);
+		g = 0.0;
+		/* find brightest component */
+		for (i = 0; i < 3; i++) {
+			if (color[i] > g)  /* keep it */
+				g = color[i];
+		}
+
+		/* scale it back to 1.0 */
+		if (g > 1.0)
+			VectorScale(color, 1.0 / g, color);
+
+		R_Color(color);
+
 	}
-
-	g = 0.0;
-	/* find brightest component */
-	for (i = 0; i < 3; i++) {
-		if (color[i] > g)  /* keep it */
-			g = color[i];
-	}
-
-	/* scale it back to 1.0 */
-	if (g > 1.0)
-		VectorScale(color, 1.0 / g, color);
-
-	R_Color(color);
 
 	assert(skin->texnum > 0);
 	R_BindTexture(skin->texnum);
 
-	R_EnableGlowMap(skin->glowmap, qtrue);
-
 	R_EnableDynamicLights(e, qtrue);
 
-	if (skin->normalmap)
-		R_EnableBumpmap(skin->normalmap, qtrue);
+	if (!r_state.build_shadowmap_enabled) {
+		R_EnableGlowMap(skin->glowmap, qtrue);
 
-	if (skin->specularmap)
-		R_EnableSpecularMap(skin->specularmap, qtrue);
+		if (skin->normalmap)
+			R_EnableBumpmap(skin->normalmap, qtrue);
 
-	if (skin->roughnessmap)
-		R_EnableRoughnessMap(skin->roughnessmap, qtrue);
+		if (skin->specularmap)
+			R_EnableSpecularMap(skin->specularmap, qtrue);
 
-	R_ResetArrayState();
+		if (skin->roughnessmap)
+			R_EnableRoughnessMap(skin->roughnessmap, qtrue);
+	}
+
+	if (!r_state.lighting_enabled)
+		R_ResetArrayState();
 
 	lodMesh = R_GetLevelOfDetailForModel(e->origin, mod);
 	refdef.aliasCount += lodMesh->num_tris;

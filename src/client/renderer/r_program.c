@@ -770,7 +770,7 @@ static int R_PascalTriangle (int row, int col)
 }
 
 /** @brief width of convolution filter (for blur/bloom effects) */
-#define FILTER_SIZE 5
+#define FILTER_SIZE 3
 
 static void R_InitConvolveProgram (r_program_t *prog)
 {

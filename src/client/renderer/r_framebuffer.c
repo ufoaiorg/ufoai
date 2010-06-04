@@ -321,8 +321,11 @@ void R_ShutdownFBObjects (void)
 
 /**
  * @brief Delete any existing framebuffers, then re-initialize them using up-to-date information */
-void R_RestartFBObjects_f (void)
+void R_RestartFBObjects (void)
 {
+	if (!frameBufferObjectsInitialized)
+		return;
+
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
 }

@@ -228,6 +228,8 @@ void R_BeginFrame (void)
 		else if (Cvar_PendingCvars(CVAR_R_PROGRAMS))
 			R_RestartPrograms_f();
 
+		R_RestartFBObjects();
+
 		Com_SetRenderModified(qfalse);
 	}
 
@@ -269,6 +271,13 @@ void R_BeginFrame (void)
 		r_texturesolidmode->modified = qfalse;
 	}
 
+
+	if (r_framebuffers->modified || r_maxlightmap->modified) {
+		R_RestartFBObjects();
+		r_framebuffers->modified = qfalse;
+		r_maxlightmap->modified = qfalse;
+	}
+
 	/* threads */
 	if (r_threads->modified) {
 		if (r_threads->integer)
@@ -308,18 +317,16 @@ void R_RenderFrame (void)
 		LE_AddToScene();
 		R_GetAllSurfaceLists();
 
-		R_EnableBlend(qfalse);
 		R_EnableBuildShadowmap(qtrue, &r_state.dynamicLights[0]);
 
 		for (tile = 0; tile < r_numMapTiles; tile++) {
-			R_UpdateLightList(&r_state.world_entity);
+			//R_UpdateLightList(&r_state.world_entity);
 			R_EnableDynamicLights(&r_state.world_entity, qtrue);
 			R_DrawOpaqueSurfaces(r_mapTiles[tile]->bsp.opaque_surfaces);
 		}
 
 		R_DrawEntities();
 
-		/* @todo - should particles cast shadows? */
 		R_EnableBlend(qtrue);
 		R_DrawParticles();
 		R_EnableBlend(qfalse);
@@ -337,8 +344,6 @@ void R_RenderFrame (void)
 			R_Blur(r_state.shadowmapBuffer, r_state.shadowmapBlur1, 0, 0);
 			R_Blur(r_state.shadowmapBlur1, r_state.shadowmapBuffer, 0, 1);
 		}
-
-		R_ResetArrayState();
 	}
 
 	R_CheckError();
@@ -982,7 +987,6 @@ static qboolean R_InitExtensions (void)
 	r_framebuffers = Cvar_Get("r_framebuffers", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate framebuffer rendering");
 	r_framebuffers->modified = qfalse;
 	Cvar_SetCheckFunction("r_framebuffers", R_CvarCheckFramebuffers);
-	Com_Printf("foo\n");
 
 	r_postprocess = Cvar_Get("r_postprocess", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Activate postprocessing shader effects");
 	r_postprocess->modified = qfalse;
@@ -1021,6 +1025,10 @@ static qboolean R_InitExtensions (void)
 
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &r_config.maxVertexAttribs);
 	Com_Printf("max vertex attributes: %i\n", r_config.maxVertexAttribs);
+
+	glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS, &r_config.maxUniforms);
+	Com_Printf("max shader uniforms: %i\n", r_config.maxUniforms);
+
 
 	/* reset gl error state */
 	R_CheckError();

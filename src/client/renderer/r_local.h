@@ -181,6 +181,7 @@ typedef struct {
 	int maxTextureImageUnits;
 	int maxTextureCoords;
 	int maxVertexAttribs;
+	int maxUniforms;
 	int maxLights;
 	int maxDrawBuffers;
 	int maxRenderbufferSize;

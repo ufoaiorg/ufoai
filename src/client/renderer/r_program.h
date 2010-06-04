@@ -41,8 +41,9 @@ typedef struct r_progvar_s {
 } r_progvar_t;
 
 /* NOTE: OpenGL spec says we must be able to have at 
- * least 64 uniforms; may be more.  glGet(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS) */
-#define MAX_PROGRAM_VARS 32
+ * least 64 uniforms; usually a lot more. 
+ * see r_config.maxUniforms = glGet(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS) */
+#define MAX_PROGRAM_VARS 64
 
 /* and glsl programs */
 typedef struct r_program_s {

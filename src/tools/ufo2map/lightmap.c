@@ -562,7 +562,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 	}
 
 	/* Com_Printf("Looking with last hint.\n"); */
-	GatherSampleSunlight(pos, normal, sample, direction, scale, headhint);
+	//GatherSampleSunlight(pos, normal, sample, direction, scale, headhint);
 }
 
 #define SAMPLE_NUDGE 0.25

@@ -1,6 +1,48 @@
-/* NOTE: portions loosly based on D3D9 source from Jack Hoxley */
-
 #define ATTENUATE_THRESH 0.05 
+
+/* @todo - this on-the-fly dirtmap transparency generation
+		   looks nice, but it's probably more expensive than
+		   it needs to be...still cheaper than doing it
+		   on the CPU, though */
+float dirtNoise(in vec3 v) {
+	float a = 0.0;
+	float b = 0.0;
+	float c = 0.0;
+	float l;
+
+	l = v.x;
+	a += sin(l * 0.01);
+	a += cos(l * 0.005);
+	a += sin(l * 0.007);
+	a += cos(l * 0.0212);
+
+	l = v.y;
+	a += sin(l * 0.01);
+	a += cos(l * 0.005);
+	a += sin(l * 0.007);
+	a += cos(l * 0.0237);
+
+	a *= 0.125;
+	clamp(a, -0.3, 0.3);
+
+	l = (v.x * v.x + v.y * v.x) * 0.0001;
+	b += sin(l * 0.01);
+	b += cos(l * 0.00513);
+	b += sin(l * 0.00729);
+	b += cos(l * 0.0527);
+	b += cos(l * 0.1527);
+	b += cos(l * 0.2367);
+	b *= 0.166666666;
+	clamp(b, -0.3, 0.3);
+
+	l = (v.x * v.y) * 0.0007;
+	c += sin(l * 0.01);
+	clamp(c, -0.3, 0.3);
+
+	float r = (((0.3 * a) + (0.4 * b) + (0.3 * c)) * 0.5) + 0.4;
+	return clamp (r, 0.2, 0.7);
+}
+
 
 /**
  * The Cook-Torrance model for light reflection is a physics
@@ -10,6 +52,7 @@
 
 uniform sampler2D SAMPLER_SHADOW0;
 
+/* Chebyshev's Upper Bound for the likelyhood a fragment is in shadow */
 float chebyshevUpperBound(vec4 shadow)
 {
 	vec3 moments = textureProj(SAMPLER_SHADOW0, shadow).rgb;
@@ -29,32 +72,34 @@ float chebyshevUpperBound(vec4 shadow)
 	float p_max = variance / (variance + d * d);
 
 	return p_max;
-	/* moments.z stores the alpha value from the texture so translucent
-	 * objects cast translucent shadows (note: this could lead to light-bleed) */
-	//return p_max * (1.0 - moments.z);
 }
 
 
 /** @todo does not compile on my ati x600 yet */
-vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir, in vec3 N, in vec3 V, float NdotV, float R_2, in vec4 roughness, in vec4 specular, in vec4 diffuse){
+vec3 LightContribution(in vec4 location, 
+					   in vec4 ambientLight, 
+					   in vec4 diffuseLight, 
+					   in vec4 specularLight, 
+					   in vec3 attenuation, 
+					   in vec3 lightDir, 
+					   in vec3 N, 
+					   in vec3 V, 
+					   in float NdotV, 
+					   in float R_2, 
+					   in vec4 roughness, 
+					   in vec4 specular, 
+					   in vec4 diffuse){
 
 	/* calculate light attenuation due to distance (do this first so we can return early if possible) */
-	/* @todo this assumes all lights are point sources; it should respect the gl_LightSource 
+	/* @todo this assumes all lights are point sources; it should respect 
 	 * settings for spot-light sources. */
-	float attenuate = lightSource.constantAttenuation;
+	float attenuate = attenuation[0];
 
-	/* HACK - for some reason, ATI cards return 0.0 for attenuation for directional sources */
-	/* @todo - this could break things if lights are de-activated by setting 
-	attenuation to 0 as is common*/
-	if (lightSource.position.w == 0.0) {
-		attenuate = 1.0;
-	}
-
-	if (attenuate > 0.0 && lightSource.position.w != 0.0){ /* directional sources don't get attenuated */
-		float dist = length((lightSource.position).xyz - vPosCamera.xyz);
-		attenuate = 1.0 / (lightSource.constantAttenuation + 
-				lightSource.linearAttenuation * dist +
-				lightSource.quadraticAttenuation * dist * dist); 
+	if (attenuate > 0.0 && location.w != 0.0){ /* directional sources don't get attenuated */
+		float dist = length((gl_NormalMatrix * location.xyz) - vPosCamera.xyz);
+		attenuate = 1.0 / (attenuation[0] + 
+				attenuation[1] * dist +
+				attenuation[2] * dist * dist); 
 	}
 
 	/* if we're out of range, ignore the light; else calculate its contribution */
@@ -62,7 +107,7 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 		return vec3(0.0);
 	}
 
-	vec3 ambientColor = diffuse.rgb * diffuse.a * lightSource.ambient.rgb;
+	vec3 ambientColor = diffuse.rgb * diffuse.a * ambientLight.rgb;
 	/* Normalize vectors and cache dot products */
 	vec3 L = normalize(lightDir);
 	//float NdotL = clamp(dot(N, -L), 0.0, 1.0);
@@ -94,7 +139,7 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 
 
 	/* Compute the final color contribution of the light */
-	vec3 diffuseColor = diffuse.rgb * diffuse.a * lightSource.diffuse.rgb * NdotL;
+	vec3 diffuseColor = diffuse.rgb * diffuse.a * diffuseLight.rgb * NdotL;
 	vec3 specularColor;
 
 	/* Cook-Torrance shading */
@@ -117,9 +162,9 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 		/* Compute the fresnel term for specularity using Schlick's approximation*/
 		float F = roughness.g + (1.0 - roughness.g) * pow(1.0 - VdotH, 5.0);
 
-		specularColor = lightSource.specular.rgb * specular.rgb * roughness.b * NdotL * (F * R * G) / (NdotV * NdotL);
+		specularColor = specular.rgb * specularLight.rgb * roughness.b * NdotL * (F * R * G) / (NdotV * NdotL);
 	} else { /* Phong shading */
-		specularColor = lightSource.specular.rgb * specular.rgb * pow(max(dot(V, reflect(-L, N)), 0.0), specular.a);
+		specularColor = specular.rgb * specularLight.rgb * pow(max(dot(V, reflect(-L, N)), 0.0), specular.a);
 	}
 
 	/* @note We attenuate light here, but attenuation doesn't affect "directional" sources like the sun */
@@ -173,10 +218,42 @@ vec4 IlluminateFragment(void){
 	/* do per-light calculations */
 #unroll r_dynamic_lights
 	if ($ < NUM_ACTIVE_LIGHTS) {
-		totalColor += LightContribution(gl_LightSource[$], lightDirs[$], N, V, NdotV, R_2, roughness, specular, diffuse);
+		//totalColor += LightContribution(gl_LightSource[$], lightDirs[$], N, V, NdotV, R_2, roughness, specular, diffuse);
+		totalColor += LightContribution(LightLocation[$],
+										LightAmbient[$],
+										LightDiffuse[$],
+										LightSpecular[$],
+										LightAttenuation[$],
+										lightDirs[$], 
+										N, V, NdotV, R_2, roughness, specular, diffuse);
 	}
 #endunroll
 
-	return vec4(totalColor, diffuse.a);
+	float alpha = 1.0;
+	/* set alpha for material stages that use it */
+	if (DIRT > 0.0) {
+		alpha = dirtNoise(Vertex.xyz) * DIRT;
+	}
+
+	if (TERRAIN > 0.0) {
+		alpha = clamp( (Vertex.z - STAGE_MIN) / STAGE_MAX, 0.0, 1.0);
+	}
+
+	if (TAPE > 0.0) {
+		if (Vertex.z < STAGE_MAX && Vertex.z > STAGE_MIN) {
+			if (Vertex.z > TAPE) {
+				float delta = Vertex.z - TAPE;
+				alpha = clamp( 1.0 - (delta / STAGE_MAX), 0.0, 1.0);
+			} else {
+				float delta = TAPE - Vertex.z;
+				alpha = clamp( 1.0 - (delta / STAGE_MIN), 0.0, 1.0);
+			}
+		} else {
+			alpha = 0.0;
+		}
+	}
+
+	return vec4(totalColor, diffuse.a * alpha);
 }
+
 

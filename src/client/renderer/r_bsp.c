@@ -154,22 +154,24 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 	R_DrawOpaqueWarpSurfaces(e->model->bsp.opaque_warp_surfaces);
 
 	R_DrawAlphaTestSurfaces(e->model->bsp.alpha_test_surfaces);
+	
+	if (!r_state.build_shadowmap_enabled) {
+		R_EnableBlend(qtrue);
 
-	R_EnableBlend(qtrue);
+		R_DrawMaterialSurfaces(e->model->bsp.material_surfaces);
 
-	R_DrawMaterialSurfaces(e->model->bsp.material_surfaces);
+		R_DrawFlareSurfaces(e->model->bsp.flare_surfaces);
 
-	R_DrawFlareSurfaces(e->model->bsp.flare_surfaces);
+		R_EnableFog(qfalse);
 
-	R_EnableFog(qfalse);
+		R_DrawBlendSurfaces(e->model->bsp.blend_surfaces);
 
-	R_DrawBlendSurfaces(e->model->bsp.blend_surfaces);
+		R_DrawBlendWarpSurfaces(e->model->bsp.blend_warp_surfaces);
 
-	R_DrawBlendWarpSurfaces(e->model->bsp.blend_warp_surfaces);
+		R_EnableFog(qtrue);
 
-	R_EnableFog(qtrue);
-
-	R_EnableBlend(qfalse);
+		R_EnableBlend(qfalse);
+	}
 
 	/* undo the swap */
 	r_locals.frame = f;

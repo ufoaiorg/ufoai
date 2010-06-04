@@ -47,7 +47,7 @@ typedef struct {
 
 void R_InitFBObjects(void);
 void R_ShutdownFBObjects(void);
-void R_RestartFBObjects_f(void);
+void R_RestartFBObjects(void);
 
 void R_DeleteFBObject(r_framebuffer_t *buf);
 

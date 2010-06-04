@@ -1,22 +1,29 @@
 #version 130
 /* battlescape fragment shader */
 
+/* flags to enable/disable rendering pathways */
 uniform int BUMPMAP;
 uniform int ROUGHMAP;
 uniform int SPECULARMAP;
 uniform int LIGHTMAP;
 uniform int SHADOWMAP;
 uniform int BUILD_SHADOWMAP;
-uniform int WARP;
-uniform int NUM_ACTIVE_LIGHTS;
 
-uniform float GLOWSCALE;
+/* scaling factors */
 uniform float BUMP;
 uniform float PARALLAX;
 uniform float HARDNESS;
 uniform float SPECULAR;
+uniform float GLOWSCALE;
 
+/* material stage blending */
+uniform float DIRT;
+uniform float TAPE;
+uniform float TERRAIN;
+uniform float STAGE_MIN;
+uniform float STAGE_MAX;
 
+/* texture samplers */
 uniform sampler2D SAMPLER_DIFFUSE;
 uniform sampler2D SAMPLER_LIGHTMAP;
 uniform sampler2D SAMPLER_DELUXEMAP;
@@ -25,7 +32,18 @@ uniform sampler2D SAMPLER_GLOWMAP;
 uniform sampler2D SAMPLER_SPECMAP;
 uniform sampler2D SAMPLER_ROUGHMAP;
 
+/* light source parameters */
+uniform int NUM_ACTIVE_LIGHTS;
+uniform vec4 LightLocation[#replace r_dynamic_lights ];
+uniform vec4 LightAmbient[#replace r_dynamic_lights ];
+uniform vec4 LightDiffuse[#replace r_dynamic_lights ];
+uniform vec4 LightSpecular[#replace r_dynamic_lights ];
+uniform vec3 LightAttenuation[#replace r_dynamic_lights ];
 
+uniform vec4 FogColor;
+
+
+/* per-fragment inputs from vertex shader */
 in vec4 Vertex;
 in vec4 Normal;
 in vec4 Tangent;
@@ -37,8 +55,10 @@ in vec3 eyedir;
 in vec3 lightDirs[];
 in vec4 shadowCoord;
 in float fog;
+in float alpha;
 in vec4 gl_TexCoord[];
 
+/* per-fragment output colors */
 #if r_framebuffers
 out vec4 gl_FragData[];
 #else
@@ -57,12 +77,7 @@ void main(void){
 
 	/* shadowmap generation */
 	if (BUILD_SHADOWMAP > 0) {
-		float depth = vPosScreen.z / vPosScreen.w ;
-
-		/* move away from unit cube ([-1,1]) to [0,1] coordinate system used by textures */
-		depth = depth * 0.5 + 0.5;			
-
-		float moment1 = depth;
+		float depth = 0.5 * (vPosScreen.z / vPosScreen.w) + 0.5;
 		float moment2 = depth * depth;
 
 		/* bias moments using derivative */
@@ -71,9 +86,10 @@ void main(void){
 		/* @note - this causes artifacts; possibly each model being drawn separately leads to issues */
 		//moment2 += 0.25*(dx*dx+dy*dy) ;
 
-		outColor = vec4(moment1, moment2, 0.0, texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a);
+		/* we use the diffuse texture alpha so transparent objects don't cast shadows */
+		outColor = vec4(depth, moment2, 0.0, texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a);
 
-	/* final rendering pass */
+	/* standard rendering pass */
 	} else {
 		/* don't bother to render surfaces that face away from the camera */
 		if (dot(vNormal, -vPos.xyz) < 0.0){
@@ -86,6 +102,9 @@ void main(void){
 		outColor = IlluminateFragment();
 
 		/* for models with pre-computed lightmaps (ie. BSP models), use them */
+		/* @todo - decide whether we actually want this or not, and then either
+				   make new lightmaps to use with it or just remove the feature
+				   entirely and use dynamic lights instead */
 		if (LIGHTMAP > 0) {
 			vec2 offset = vec2(0.0);
 			float NdotL = 1.0;
@@ -116,12 +135,12 @@ void main(void){
 			vec3 lightmap = texture2D(SAMPLER_LIGHTMAP, gl_TexCoord[1].st).rgb;
 
 			/* add light from lightmap */
-			//outColor += diffuse * vec4(lightmap, 1.0) * (NdotL + specular);
+			//outColor.rgb += diffuse.rgb * lightmap * (NdotL + specular);
 		}
 
 #if r_fog
 		/* add fog */
-		//outColor += vec4(mix(outColor.rgb, gl_Fog.color.rgb, fog), outColor.a);
+		outColor = vec4(mix(outColor.rgb, FogColor.rgb, fog), outColor.a);
 #endif
 
 		/* use glow-map */

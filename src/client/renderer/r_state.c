@@ -325,6 +325,11 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 {
 	int i, j;
 	r_light_t *l;
+	vec4_t location[MAX_DYNAMIC_LIGHTS];
+	vec4_t ambient[MAX_DYNAMIC_LIGHTS];
+	vec4_t diffuse[MAX_DYNAMIC_LIGHTS];
+	vec4_t specular[MAX_DYNAMIC_LIGHTS];
+	vec3_t attenuation[MAX_DYNAMIC_LIGHTS];
 	int maxLights = r_dynamic_lights->integer;
 
 	if (enable)
@@ -334,14 +339,6 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 		if (r_state.lighting_enabled && r_shadowmapping->integer) {
 			R_ProgramParameter1i("SHADOWMAP", 0);
 		}
-		if (!r_state.bumpmap_enabled && r_state.lighting_enabled)
-			R_DisableAttribute("TANGENTS");
-		glDisable(GL_LIGHTING);
-		for (i = 0; i < maxLights; i++) {
-			glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
-			glDisable(GL_LIGHT0 + i);
-		}
-
 		r_state.dynamic_lighting_enabled = qfalse;
 		return;
 	}
@@ -353,8 +350,8 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 
 	R_EnableAttribute("TANGENTS");
 
-	R_ProgramParameter1f("HARDNESS", 0.1);
-	R_ProgramParameter1f("SPECULAR", 0.25);
+	R_ProgramParameter1f("HARDNESS", DEFAULT_HARDNESS);
+	R_ProgramParameter1f("SPECULAR", DEFAULT_SPECULAR);
 
 	if (r_state.use_shadowmap_enabled) {
 		R_ProgramParameter1i("SHADOWMAP", 1);
@@ -363,28 +360,36 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 		R_ProgramParameterMat4fv("SHADOW_MATRIX", 1, r_locals.shadow_matrix);
 	}
 
-	glEnable(GL_LIGHTING);
+
+	if (r_state.fog_enabled) {
+		R_ProgramParameter1f("FogDensity", 1.0);
+		R_ProgramParameter4fv("FogColor", refdef.fogColor);
+	} else {
+		R_ProgramParameter1f("FogDensity", 0.0);
+	}
 
 	for (i = 0, j = 0; i < maxLights && (i + j) < ent->numLights; i++) {
 		l = ent->lights[i + j];
-		if (!l->enabled) {
+		while (!l->enabled && (i+j) < ent->numLights - 1) {
 			j++;
-			continue;
+			l = ent->lights[i + j];
 		}
 
-		glEnable(GL_LIGHT0 + i);
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, l->constantAttenuation);
-		glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, l->linearAttenuation);
-		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, l->quadraticAttenuation);
-
-		glLightfv(GL_LIGHT0 + i, GL_POSITION, l->loc);
-		glLightfv(GL_LIGHT0 + i, GL_AMBIENT, l->ambientColor);
-		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, l->diffuseColor);
-		glLightfv(GL_LIGHT0 + i, GL_SPECULAR, l->specularColor);
+		Vector4Copy(l->loc, location[i]);
+		Vector4Copy(l->ambientColor, ambient[i]);
+		Vector4Copy(l->diffuseColor, diffuse[i]);
+		Vector4Copy(l->specularColor, specular[i]);
+		VectorSet(attenuation[i], l->constantAttenuation, l->linearAttenuation, l->quadraticAttenuation);
 	}
 
-	/* if there aren't enough active lights, turn off the rest */
+	/* pass light info to the shader program */
 	R_ProgramParameter1i("NUM_ACTIVE_LIGHTS", i);
+
+	R_ProgramParameter4fvs("LightLocation", i, (GLfloat*)&location[0]);
+	R_ProgramParameter4fvs("LightAmbient", i, (GLfloat*)&ambient[0]);
+	R_ProgramParameter4fvs("LightDiffuse", i, (GLfloat*)&diffuse[0]);
+	R_ProgramParameter4fvs("LightSpecular", i, (GLfloat*)&specular[0]);
+	R_ProgramParameter3fvs("LightAttenuation", i, (GLfloat*)&attenuation[0]);
 }
 
 /** 
@@ -554,11 +559,19 @@ void R_EnableFog (qboolean enable)
 		if ((refdef.weather & WEATHER_FOG) || r_fog->integer == 2) {
 			r_state.fog_enabled = qtrue;
 
-			glFogfv(GL_FOG_COLOR, refdef.fogColor);
-			glFogf(GL_FOG_DENSITY, 1.0);
-			glEnable(GL_FOG);
+			if (r_state.dynamic_lighting_enabled){
+				R_ProgramParameter1f("FogDensity", 1.0);
+				R_ProgramParameter4fv("FogColor", refdef.fogColor);
+			} else {
+				glFogfv(GL_FOG_COLOR, refdef.fogColor);
+				glFogf(GL_FOG_DENSITY, 1.0);
+				glEnable(GL_FOG);
+			}
 		}
 	} else {
+		if (r_state.dynamic_lighting_enabled){
+			R_ProgramParameter1f("FogDensity", 0.0);
+		}
 		glFogf(GL_FOG_DENSITY, 0.0);
 		glDisable(GL_FOG);
 	}
@@ -1136,11 +1149,6 @@ void R_Setup2D (void)
 
 	R_CheckError();
 }
-
-/* global ambient lighting */
-static const vec4_t ambient = {
-	0.0, 0.0, 0.0, 1.0
-};
 
 /* material reflection */
 static const vec4_t material = {

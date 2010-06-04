@@ -113,17 +113,20 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 	image = surf->texinfo->image;
 	R_BindTexture(image->texnum);  /* texture */
 
-	if (texunit_lightmap.enabled) {  /* lightmap */
-		if (surf->flags & MSURF_LIGHTMAP)
-			R_BindLightmapTexture(surf->lightmap_texnum);
+	if (!r_state.build_shadowmap_enabled) {
+		if (texunit_lightmap.enabled) {  /* lightmap */
+			if (surf->flags & MSURF_LIGHTMAP)
+				R_BindLightmapTexture(surf->lightmap_texnum);
+		}
+
+		R_SetSurfaceBumpMappingParameters(surf, image->normalmap);
+
+		if (image->glowmap)
+			R_EnableGlowMap(image->glowmap, qtrue);
+		else
+			R_EnableGlowMap(NULL, qfalse);
+
 	}
-
-	R_SetSurfaceBumpMappingParameters(surf, image->normalmap);
-
-	if (image->glowmap)
-		R_EnableGlowMap(image->glowmap, qtrue);
-	else
-		R_EnableGlowMap(NULL, qfalse);
 
 	R_CheckError();
 }
