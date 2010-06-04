@@ -340,7 +340,7 @@ int G_TouchTriggers(edict_t *ent);
 void G_TouchSolids(edict_t *ent);
 void G_TouchEdicts(edict_t *ent, float extend);
 edict_t *G_Spawn(void);
-edict_t *G_ParticleSpawn(const vec3_t origin, int spawnflags, const char *particle);
+edict_t *G_SpawnParticle(const vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent, edict_t* activator);
 edict_t *G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);

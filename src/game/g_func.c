@@ -64,7 +64,7 @@ static qboolean Destroy_Breakable (edict_t *self)
 		gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
 	gi.WriteShort(self->number);
 	if (self->particle)
-		G_ParticleSpawn(origin, self->spawnflags, self->particle);
+		G_SpawnParticle(origin, self->spawnflags, self->particle);
 
 	switch (self->material) {
 	case MAT_GLASS:

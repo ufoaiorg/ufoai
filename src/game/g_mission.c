@@ -143,7 +143,7 @@ void G_MissionThink (edict_t *self)
 	/* when every player has joined the match - spawn the mission target
 	 * particle (if given) to mark the trigger */
 	if (self->particle) {
-		G_ParticleSpawn(self->origin, self->spawnflags, self->particle);
+		G_SpawnParticle(self->origin, self->spawnflags, self->particle);
 
 		/* This is automatically freed on map shutdown */
 		self->particle = NULL;

@@ -540,7 +540,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 	if (tr && G_FireAffectedSurface(tr->surface, fd)) {
 		/* move a little away from the impact vector */
 		VectorMA(impact, 1, tr->plane.normal, impact);
-		G_ParticleSpawn(impact, tr->contentFlags >> 8, "burning");
+		G_SpawnParticle(impact, tr->contentFlags >> 8, "burning");
 	}
 }
 
@@ -915,7 +915,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 				vec3_t origin;
 				/* sent particle to all players */
 				VectorMA(impact, 1, tr.plane.normal, origin);
-				G_ParticleSpawn(origin, tr.contentFlags >> 8, "fire");
+				G_SpawnParticle(origin, tr.contentFlags >> 8, "fire");
 			}
 		}
 

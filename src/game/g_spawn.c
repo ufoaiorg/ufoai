@@ -427,7 +427,7 @@ edict_t *G_SpawnFloor (const pos3_t pos)
  * This is only for particles that are spawned during a match - not for map particles.
  * @return A particle edict
  */
-edict_t *G_ParticleSpawn (const vec3_t origin, int spawnflags, const char *particle)
+edict_t *G_SpawnParticle (const vec3_t origin, int spawnflags, const char *particle)
 {
 	edict_t *ent = G_Spawn();
 	ent->classname = "particle";
