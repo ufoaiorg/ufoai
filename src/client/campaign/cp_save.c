@@ -38,11 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define SAVEGAME_EXTENSION "savx"
 
-#ifdef DEBUG
-/* raw XML dump */
-#define SAVEDUMP_EXTENSION "sdmp"
-#endif
-
 typedef struct saveFileHeader_s {
 	uint32_t version;			/**< which savegame version */
 	uint32_t compressed;		/**< is this file compressed via zlib */
@@ -261,9 +256,6 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	dateLong_t date;
 	char message[30];
 	char timeStampBuffer[32];
-#ifdef DEBUG
-	char savegame_debug[MAX_OSPATH];
-#endif
 
 	if (!GAME_CP_IsRunning()) {
 		*error = _("No campaign active.");
@@ -279,9 +271,6 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 
 	Com_MakeTimestamp(timeStampBuffer, sizeof(timeStampBuffer));
 	Com_sprintf(savegame, sizeof(savegame), "save/%s.%s", filename, SAVEGAME_EXTENSION);
-#ifdef DEBUG
-	Com_sprintf(savegame_debug, sizeof(savegame_debug), "save/%s.%s", filename, SAVEDUMP_EXTENSION);
-#endif
 	topNode = mxmlNewXML("1.0");
 	node = mxml_AddNode(topNode, SAVE_ROOTNODE);
 	/* writing  Header */
@@ -331,10 +320,6 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, 0);
 	memcpy(fbuf, &header, sizeof(header));
 
-#ifdef DEBUG
-	/* In debugmode we will also write a uncompressed {filename}.{SAVEDUMP_EXTENSION} file without header information */
-	res = FS_WriteFile(buf, requiredBufferLength, savegame_debug);
-#endif
 	if (header.compressed) {
 		res = compress(fbuf + sizeof(header), &bufLen, buf, requiredBufferLength + 1);
 		Mem_Free(buf);
