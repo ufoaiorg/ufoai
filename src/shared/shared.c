@@ -374,12 +374,12 @@ int Q_strncasecmp (const char *s1, const char *s2, size_t n)
 		int c2 = *s2++;
 
 		if (c1 != c2) {
-			if (c1 >= 'a' && c1 <= 'z')
-				c1 -= ('a' - 'A');
-			if (c2 >= 'a' && c2 <= 'z')
-				c2 -= ('a' - 'A');
+			if ('a' <= c1 && c1 <= 'z')
+				c1 += 'a' - 'A';
+			if ('a' <= c2 && c2 <= 'z')
+				c2 += 'a' - 'A';
 			if (c1 != c2)
-				return -1;		/* strings not equal */
+				return (unsigned char)c1 - (unsigned char)c2; /* strings not equal */
 		}
 
 		if (c1 == '\0')
