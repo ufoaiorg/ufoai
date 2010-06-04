@@ -128,7 +128,8 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	if (!systemCollapse)
 		systemCollapse = MN_GetIconByName("system_collapse");
 
-	if (!node->cvar)
+	ref = MN_AbstractOptionGetCurrentValue(node);
+	if (ref == NULL)
 		return;
 
 	MN_GetNodeAbsPos(node, pos);
@@ -137,7 +138,6 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	if (image)
 		MN_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
 
-	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFontFromNode(node);
 	fontHeight = EXTRADATA(node).lineHeight;
 	currentY = pos[1] + node->padding;
@@ -237,15 +237,7 @@ static void MN_OptionTreeNodeClick (menuNode_t * node, int x, int y)
 	menuNode_t* option;
 	int depth;
 
-	/* the cvar string is stored in dataModelSkinOrCVar */
-	/* no cvar given? */
-	if (!node->cvar || !*(char*)node->cvar) {
-		Com_Printf("MN_OptionTreeNodeClick: node '%s' doesn't have a valid cvar assigned\n", MN_GetPath(node));
-		return;
-	}
-
-	/* no cvar? */
-	if (strncmp((const char *)node->cvar, "*cvar:", 6))
+	if (MN_AbstractOptionGetCurrentValue(node) == NULL)
 		return;
 
 	/* select the right option */
@@ -264,12 +256,8 @@ static void MN_OptionTreeNodeClick (menuNode_t * node, int x, int y)
 	}
 
 	/* update the status */
-	if (option) {
-		const char *cvarName = &((const char *)node->cvar)[6];
-		MN_SetCvar(cvarName, OPTIONEXTRADATA(option).value, 0);
-		if (node->onChange)
-			MN_ExecuteEventActions(node, node->onChange);
-	}
+	if (option)
+		MN_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
 }
 
 /**
@@ -328,10 +316,7 @@ static void MN_OptionTreeSetSelectedValue (menuNode_t *node, const menuCallConte
 
 	/* update the selection */
 	if (option) {
-		const char *cvarName = &((const char *)node->cvar)[6];
-		MN_SetCvar(cvarName, value, 0);
-		if (node->onChange)
-			MN_ExecuteEventActions(node, node->onChange);
+		MN_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
 	} else {
 		Com_Printf("MN_OptionTreeSetSelectedValue: Option value \"%s\" not found\n", value);
 		return;

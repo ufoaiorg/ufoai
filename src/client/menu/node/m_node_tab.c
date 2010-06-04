@@ -122,7 +122,9 @@ static menuNode_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int y
 static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 {
 	menuNode_t* option;
-	const char *ref;
+
+	if (MN_AbstractOptionGetCurrentValue(node) == NULL)
+		return;
 
 	option = MN_TabNodeTabAtPosition(node, x, y);
 	if (option == NULL)
@@ -131,22 +133,9 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 	if (option->disabled)
 		return;
 
-	ref = MN_GetReferenceString(node, node->cvar);
-	/* Is we click on the already active tab? */
-	if (!strcmp(OPTIONEXTRADATA(option).value, ref))
-		return;
-
-	/* no cvar given? */
-	if (!node->cvar)
-		return;
-
 	/* only execute the click stuff if the selectbox is active */
-	if (node->state) {
-		const char *cvarName = &((const char *)node->cvar)[6];
-		MN_SetCvar(cvarName, OPTIONEXTRADATA(option).value, 0);
-		if (node->onChange)
-			MN_ExecuteEventActions(node, node->onChange);
-	}
+	if (node->state)
+		MN_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
 }
 
 /**
@@ -193,7 +182,10 @@ static void MN_TabNodeDraw (menuNode_t *node)
 	if (!image)
 		image = "ui/tab";
 
-	ref = MN_GetReferenceString(node, node->cvar);
+	ref = MN_AbstractOptionGetCurrentValue(node);
+	if (ref == NULL)
+		return;
+
 	font = MN_GetFontFromNode(node);
 
 	if (node->state) {
@@ -304,25 +296,26 @@ static void MN_TabNodeDrawTooltip (menuNode_t *node, int x, int y)
 
 /** called when the window is pushed
  * check cvar then, reduce runtime check
+ * @TODO move cvar check to AbstractOption
  */
 static void MN_TabNodeInit (menuNode_t *node)
 {
 	const char *cvarName;
 
 	/* no cvar given? */
-	if (!node->cvar)
+	if (!(EXTRADATA(node).cvar))
 		return;
 
 	/* not a cvar? */
-	if (strncmp((char *)node->cvar, "*cvar:", 6) != 0) {
+	if (strncmp((char *)(EXTRADATA(node).cvar), "*cvar:", 6) != 0) {
 		/* normalize */
-		Com_Printf("MN_TabNodeInit: node '%s' doesn't have a valid cvar assigned (\"%s\" read)\n", MN_GetPath(node), (char*) node->cvar);
-		node->cvar = NULL;
+		Com_Printf("MN_TabNodeInit: node '%s' doesn't have a valid cvar assigned (\"%s\" read)\n", MN_GetPath(node), (char*) (EXTRADATA(node).cvar));
+		EXTRADATA(node).cvar = NULL;
 		return;
 	}
 
 	/* cvar do not exists? */
-	cvarName = &((const char *)node->cvar)[6];
+	cvarName = &((const char *)(EXTRADATA(node).cvar))[6];
 	if (Cvar_FindVar(cvarName) == NULL) {
 		/* search default value, if possible */
 		menuNode_t* option = node->firstChild;

@@ -81,7 +81,8 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int count = 0;
 
-	if (!node->cvar)
+	ref = MN_AbstractOptionGetCurrentValue(node);
+	if (ref == NULL)
 		return;
 
 	MN_GetNodeAbsPos(node, pos);
@@ -90,7 +91,6 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 	if (image)
 		MN_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
 
-	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFontFromNode(node);
 	fontHeight = MN_FontGetHeight(font);
 	currentY = pos[1] + node->padding;
@@ -196,27 +196,15 @@ static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
 {
 	menuNode_t* option;
 
-	/* the cvar string is stored in dataModelSkinOrCVar */
-	/* no cvar given? */
-	if (!node->cvar || !*(char*)node->cvar) {
-		Com_Printf("MN_OptionListNodeClick: node '%s' doesn't have a valid cvar assigned\n", MN_GetPath(node));
-		return;
-	}
-
-	/* no cvar? */
-	if (strncmp((const char *)node->cvar, "*cvar:", 6))
+	if (MN_AbstractOptionGetCurrentValue(node) == NULL)
 		return;
 
 	/* select the right option */
 	option = MN_OptionListNodeGetOptionAtPosition(node, x, y);
 
 	/* update the status */
-	if (option) {
-		const char *cvarName = &((const char *)node->cvar)[6];
-		MN_SetCvar(cvarName, OPTIONEXTRADATA(option).value, 0);
-		if (node->onChange)
-			MN_ExecuteEventActions(node, node->onChange);
-	}
+	if (option)
+		MN_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
 }
 
 /**

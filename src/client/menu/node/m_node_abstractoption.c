@@ -53,6 +53,29 @@ void MN_OptionNodeSortOptions (menuNode_t *node)
 	node->lastChild = option;
 }
 
+const char *MN_AbstractOptionGetCurrentValue (menuNode_t * node)
+{
+	/* no cvar given? */
+	if (!(EXTRADATA(node).cvar) || !*(char*)(EXTRADATA(node).cvar)) {
+		Com_Printf("MN_AbstractOptionGetCurrentValue: node '%s' doesn't have a valid cvar assigned\n", MN_GetPath(node));
+		return NULL;
+	}
+
+	/* not a cvar? */
+	if (strncmp((const char *)(EXTRADATA(node).cvar), "*cvar", 5))
+		return NULL;
+
+	return MN_GetReferenceString(node, (EXTRADATA(node).cvar));
+}
+
+void MN_AbstractOptionSetCurrentValue(menuNode_t * node, const char *value)
+{
+	const char *cvarName = &((const char *)(EXTRADATA(node).cvar))[6];
+	MN_SetCvar(cvarName, value, 0);
+	if (node->onChange)
+		MN_ExecuteEventActions(node, node->onChange);
+}
+
 static const value_t properties[] = {
 	/** Optional. Data ID we want to use. It must be an option list. It substitute to the inline options */
 	{"dataid", V_UI_DATAID, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, dataId), MEMBER_SIZEOF(EXTRADATA_TYPE, dataId)},
@@ -70,7 +93,7 @@ static const value_t properties[] = {
 	{"count", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, count),  MEMBER_SIZEOF(EXTRADATA_TYPE, count)},
 
 	/* Define the cvar containing the value of the current selected option */
-	{"cvar", V_UI_CVAR, offsetof(menuNode_t, cvar), 0},
+	{"cvar", V_UI_CVAR, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, cvar), 0},
 
 	/* Called when one of the properties viewpos/viewsize/fullsize change */
 	{"onviewchange", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onViewChange), MEMBER_SIZEOF(EXTRADATA_TYPE, onViewChange)},

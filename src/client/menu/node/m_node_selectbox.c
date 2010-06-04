@@ -103,7 +103,8 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 	const image_t *image;
 	static vec4_t invisColor = {1.0, 1.0, 1.0, 0.7};
 
-	if (!node->cvar)
+	ref = MN_AbstractOptionGetCurrentValue(node);
+	if (ref == NULL)
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);
@@ -113,7 +114,6 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 
 	image = MN_LoadImage(imageName);
 
-	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFontFromNode(node);
 	selBoxX = nodepos[0] + SELECTBOX_SIDE_WIDTH;
 	selBoxY = nodepos[1] + SELECTBOX_SPACER;
@@ -161,7 +161,8 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 	const char* imageName;
 	const image_t *image;
 
-	if (!node->cvar)
+	ref = MN_AbstractOptionGetCurrentValue(node);
+	if (ref == NULL)
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);
@@ -171,7 +172,6 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 
 	image = MN_LoadImage(imageName);
 
-	ref = MN_GetReferenceString(node, node->cvar);
 	font = MN_GetFontFromNode(node);
 	selBoxX = nodepos[0] + SELECTBOX_SIDE_WIDTH;
 	selBoxY = nodepos[1] + SELECTBOX_SPACER;
@@ -255,15 +255,7 @@ static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 	if (clickedAtOption < 0 || clickedAtOption >= EXTRADATA(node).count)
 		return;
 
-	/* the cvar string is stored in dataModelSkinOrCVar */
-	/* no cvar given? */
-	if (!node->cvar || !*(char*)node->cvar) {
-		Com_Printf("MN_SelectboxClick: node '%s' doesn't have a valid cvar assigned\n", MN_GetPath(node));
-		return;
-	}
-
-	/* no cvar? */
-	if (strncmp((const char *)node->cvar, "*cvar", 5))
+	if (MN_AbstractOptionGetCurrentValue(node) == NULL)
 		return;
 
 	/* select the right option */
@@ -277,12 +269,8 @@ static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 	}
 
 	/* update the status */
-	if (option) {
-		const char *cvarName = &((const char *)node->cvar)[6];
-		MN_SetCvar(cvarName, OPTIONEXTRADATA(option).value, 0);
-		if (node->onChange)
-			MN_ExecuteEventActions(node, node->onChange);
-	}
+	if (option)
+		MN_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
 
 	/* close the dropdown */
 	MN_MouseRelease();

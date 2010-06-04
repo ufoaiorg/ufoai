@@ -91,7 +91,6 @@ typedef struct menuNode_s {
 	const char* font;			/**< Font to draw text */
 	struct menuIcon_s *icon;	/**< Link to an icon */
 	void* image;
-	void* cvar;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	vec4_t bgcolor;				/**< rgba */
 	vec4_t bordercolor;			/**< rgba - see border and padding */

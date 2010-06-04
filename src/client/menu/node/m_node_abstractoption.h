@@ -35,6 +35,7 @@ typedef struct {
 	/* link to shared data (can be used if internal data is null) */
 	int dataId;							/**< Shared data id where we can find option */
 	int versionId;						/**< Cached version of the shared data, to check update */
+	void* cvar;							/**< Cvar containing current value */
 
 	/* information */
 	struct menuOption_s *selected;		/**< current selected option */
@@ -53,5 +54,7 @@ struct nodeBehaviour_s;
 void MN_RegisterAbstractOptionNode(struct nodeBehaviour_s *behaviour);
 void MN_OptionNodeSortOptions(struct menuNode_s *node);
 struct menuNode_s* MN_AbstractOptionGetFirstOption(menuNode_t * node);
+const char *MN_AbstractOptionGetCurrentValue(menuNode_t * node);
+void MN_AbstractOptionSetCurrentValue(menuNode_t * node, const char *value);
 
 #endif

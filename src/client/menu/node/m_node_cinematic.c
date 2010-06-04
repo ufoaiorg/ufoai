@@ -34,10 +34,10 @@ static void MN_CinematicNodeDraw (menuNode_t *node)
 {
 	vec2_t pos;
 	MN_GetNodeAbsPos(node, pos);
-	if (node->cvar) {
+	if (node->image) {
 		assert(cls.playingCinematic != CIN_STATUS_FULLSCREEN);
 		if (cls.playingCinematic == CIN_STATUS_NONE)
-			CIN_PlayCinematic(va("videos/%s", (const char *)node->cvar));
+			CIN_PlayCinematic(va("videos/%s", (const char *)node->image));
 		if (cls.playingCinematic) {
 			/* only set replay to true if video was found and is running */
 			CIN_SetParameters(pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
@@ -48,7 +48,7 @@ static void MN_CinematicNodeDraw (menuNode_t *node)
 
 static const value_t properties[] = {
 	/** @todo Please document it */
-	{"video", V_CVAR_OR_STRING, offsetof(menuNode_t, cvar), 0},
+	{"video", V_CVAR_OR_STRING, offsetof(menuNode_t, image), 0},
 	{NULL, V_NULL, 0, 0}
 };
 

@@ -60,7 +60,7 @@ static void MN_RadioButtonNodeDraw (menuNode_t *node)
 {
 	vec2_t pos;
 	iconStatus_t iconStatus;
-	const float current = MN_GetReferenceFloat(node, node->cvar);
+	const float current = MN_GetReferenceFloat(node, EXTRADATA(node).cvar);
 	const qboolean disabled = node->disabled || node->parent->disabled;
 	int texY;
 	const char *image;
@@ -101,23 +101,23 @@ static void MN_RadioButtonNodeActivate (menuNode_t * node)
 	float current;
 
 	/* no cvar given? */
-	if (!node->cvar || !*(char*)node->cvar) {
+	if (!EXTRADATA(node).cvar || !*(char*)(EXTRADATA(node).cvar)) {
 		Com_Printf("MN_RadioButtonNodeClick: node '%s' doesn't have a valid cvar assigned\n", MN_GetPath(node));
 		return;
 	}
 
 	/* its not a cvar! */
 	/** @todo the parser should already check that the property value is a right cvar */
-	if (strncmp((const char *)node->cvar, "*cvar", 5))
+	if (strncmp((const char *)(EXTRADATA(node).cvar), "*cvar", 5))
 		return;
 
-	current = MN_GetReferenceFloat(node, node->cvar);
+	current = MN_GetReferenceFloat(node, EXTRADATA(node).cvar);
 	/* Is we click on the action button, we can continue */
 	if (current > EXTRADATA(node).value - EPSILON && current < EXTRADATA(node).value + EPSILON)
 		return;
 
 	{
-		const char *cvarName = &((const char *)node->cvar)[6];
+		const char *cvarName = &((const char *)(EXTRADATA(node).cvar))[6];
 		MN_SetCvar(cvarName, NULL, EXTRADATA(node).value);
 		if (node->onChange)
 			MN_ExecuteEventActions(node, node->onChange);
@@ -139,7 +139,7 @@ static const value_t properties[] = {
 	/* Value defining the radiobutton. Cvar is updated with this value when the radio button is selected. */
 	{"value", V_FLOAT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, value), MEMBER_SIZEOF(EXTRADATA_TYPE, value)},
 	/* Cvar name shared with the radio button group to identify when a radio button is selected. */
-	{"cvar", V_UI_CVAR, offsetof(menuNode_t, cvar), 0},
+	{"cvar", V_UI_CVAR, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, cvar), 0},
 
 	{NULL, V_NULL, 0, 0}
 };
