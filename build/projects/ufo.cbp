@@ -1405,6 +1405,7 @@
 		<Unit filename="../../src/shared/utf8.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/shared/utf8.h" />
 		<Unit filename="../../src/shared/images.c">
 			<Option compilerVar="CC" />
 		</Unit>
