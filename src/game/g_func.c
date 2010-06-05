@@ -230,6 +230,16 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 }
 
 /**
+ * @brief Left the door trigger zone - reset the client action
+ * @param self The trigger
+ * @param activator The edict that left the trigger zone
+ */
+static void Reset_DoorTrigger (edict_t *self, edict_t *activator)
+{
+	G_ActorSetClientAction(activator, NULL);
+}
+
+/**
  * @brief func_door (0 .5 .8) ?
  * "health" if set, door is destroyable
  * @sa SV_SetModel
@@ -257,6 +267,7 @@ void SP_func_door (edict_t *ent)
 	/* spawn the trigger entity */
 	other = G_TriggerSpawn(ent);
 	other->touch = Touch_DoorTrigger;
+	other->reset = Reset_DoorTrigger;
 
 	G_ActorSetTU(ent, TU_DOOR_ACTION);
 	ent->use = Door_Use;

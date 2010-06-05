@@ -40,7 +40,6 @@ qboolean G_IsLivingActor (const edict_t *ent)
  * changed due to the rotation) after the usage
  * @param actor The actor that is using the door
  * @param door The door that should be opened/closed
- * @todo Check other actors that might be close to the door, too
  */
 void G_ActorUseDoor (edict_t *actor, edict_t *door)
 {
@@ -51,8 +50,7 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
 	while ((closeActor = G_FindRadius(closeActor, door->origin, UNIT_SIZE * 3, ET_ACTOR))) {
 		/* check whether the door is still reachable (this might have
 		 * changed due to the rotation) or whether an actor can reach it now */
-		if (!G_TouchTriggers(closeActor))
-			G_ActorSetClientAction(closeActor, NULL);
+		G_TouchTriggers(closeActor);
 	}
 }
 

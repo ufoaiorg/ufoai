@@ -132,7 +132,7 @@ static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 
 	self->owner->use(self->owner, activator);
 
-	return qtrue;
+	return qfalse;
 }
 
 /**
@@ -155,6 +155,46 @@ void SP_trigger_touch (edict_t *ent)
 	gi.SetModel(ent, ent->model);
 
 	ent->touch = Touch_TouchTrigger;
+	ent->child = NULL;
+
+	gi.LinkEdict(ent);
+}
+
+/**
+ * @brief Rescue trigger
+ * @sa SP_trigger_resuce
+ */
+static qboolean Touch_RescueTrigger (edict_t *self, edict_t *activator)
+{
+	/* these actors should really not be able to trigger this - they don't move anymore */
+	assert(!G_IsDead(activator));
+	assert(!G_IsDead(activator));
+
+	G_ClientPrintf(G_PLAYER_FROM_ENT(activator), PRINT_HUD, _("Soldier entered the rescue zone\n"));
+
+	return qfalse;
+}
+
+static void Reset_RescueTrigger (edict_t *self, edict_t *activator)
+{
+	G_ClientPrintf(G_PLAYER_FROM_ENT(activator), PRINT_HUD, _("Soldier left the rescue zone\n"));
+}
+
+/**
+ * @brief Rescue trigger to count how many units are in the touch zone
+ * @note Called once for every step
+ * @sa Touch_RescueTrigger
+ */
+void SP_trigger_rescue (edict_t *ent)
+{
+	ent->classname = "trigger_touch";
+	ent->type = ET_TRIGGER_RESCUE;
+
+	ent->solid = SOLID_TRIGGER;
+	gi.SetModel(ent, ent->model);
+
+	ent->touch = Touch_RescueTrigger;
+	ent->reset = Reset_RescueTrigger;
 	ent->child = NULL;
 
 	gi.LinkEdict(ent);

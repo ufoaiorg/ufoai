@@ -552,6 +552,14 @@ entity trigger_touch {
 	}
 }
 
+entity trigger_rescue {
+	description	"Any entity that touches this will get rescued when the mission is aborted."
+
+	optional {
+		particle	"Display a particle"
+	}
+}
+
 entity misc_message {
 	description	"A message that is send to the client when the edict get executed (e.g. by trigger_touch)."
 	color		".3 .3 1"

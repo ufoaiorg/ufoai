@@ -401,8 +401,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 					triggers = qtrue;
 					if (!clientAction)
 						status |= VIS_STOP;
-				} else if (clientAction) {
-					G_ActorSetClientAction(ent, NULL);
 				}
 				/* state has changed - maybe we walked on a trigger_hurt */
 				if (oldState != ent->state)
@@ -451,13 +449,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			G_ActorSetTU(ent, max(0, initTU - usedTUs));
 
 		G_SendStats(ent);
-
-		/* only if triggers are touched - there was a client
-		 * action set and there were steps made */
-		if (!triggers && ent->clientAction) {
-			/* no triggers, no client action */
-			G_ActorSetClientAction(ent, NULL);
-		}
 
 		/* end the move */
 		G_GetFloorItems(ent);

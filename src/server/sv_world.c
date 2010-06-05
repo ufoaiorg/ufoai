@@ -317,6 +317,9 @@ static void SV_AreaEdicts_r (areanode_t * node, int areaType)
 		if (check->solid == SOLID_NOT)
 			continue;
 
+		if (!check->inuse)
+			continue;
+
 		if (!SV_BoundingBoxesIntersect(areaMins, areaMaxs, check))
 			continue;			/* not touching */
 

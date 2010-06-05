@@ -450,6 +450,30 @@ void G_CompleteRecalcRouting (void)
 }
 
 /**
+ * @brief Call the reset function for those triggers that are no longer touched (left the trigger zone)
+ * @param ent
+ * @param touched
+ * @param num
+ */
+static void G_ResetTriggers (edict_t *ent, edict_t **touched, int num)
+{
+	edict_t *trigger = NULL;
+	while ((trigger = G_EdictsGetNextInUse(trigger))) {
+		if (trigger->solid == SOLID_TRIGGER) {
+			if (trigger->reset != NULL) {
+				int i;
+				for (i = 0; i < num; i++) {
+					if (touched[i] == ent)
+						break;
+				}
+				if (i == num)
+					trigger->reset(trigger, ent);
+			}
+		}
+	}
+}
+
+/**
  * @brief Check the world against triggers for the current entity
  * @param[in,out] ent The entity that maybe touches others
  */
@@ -463,12 +487,12 @@ int G_TouchTriggers (edict_t *ent)
 
 	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, AREA_TRIGGERS);
 
+	G_ResetTriggers(ent, touch, num);
+
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
 		edict_t *hit = touch[i];
-		if (!hit->inuse)
-			continue;
 		if (!hit->touch)
 			continue;
 		if (hit->touch(hit, ent))

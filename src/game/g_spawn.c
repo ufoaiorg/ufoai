@@ -73,6 +73,7 @@ static const spawn_t spawns[] = {
 	{"func_rotating", SP_func_rotating},
 	{"trigger_hurt", SP_trigger_hurt},
 	{"trigger_touch", SP_trigger_touch},
+	{"trigger_rescue", SP_trigger_rescue},
 	{"misc_message", SP_misc_message},
 
 	{NULL, NULL}

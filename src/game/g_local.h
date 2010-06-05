@@ -508,6 +508,7 @@ qboolean G_MatchDoEnd(void);
 edict_t* G_TriggerSpawn(edict_t *owner);
 void SP_trigger_hurt(edict_t *ent);
 void SP_trigger_touch(edict_t *ent);
+void SP_trigger_rescue(edict_t *ent);
 
 /* g_func.c */
 void SP_func_rotating(edict_t *ent);
@@ -719,6 +720,8 @@ struct edict_s {
 	/** function to call when triggered - this function should only return true when there is
 	 * a client action associated with it */
 	qboolean (*touch)(edict_t * self, edict_t * activator);
+	/** reset function that is called before the touch triggers are called */
+	void (*reset)(edict_t * self, edict_t * activator);
 	float nextthink;
 	void (*think)(edict_t *self);
 	/** general use function that is called when the triggered client action is executed
