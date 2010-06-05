@@ -110,16 +110,30 @@ tile +craft_ufo_supply
 	0		fg		f		f		fh		0
 }
 
-// UFO Fighter (an open park tile including street on its left side)
+// UFO Harvester (an open park tile including street on its left side)
 tile +craft_ufo_harvester
 {
 	7 6
 	0	il		fg		f		f		fh		0
-	jkb	a		+j		+j		+j		+j		a
-	jkb	a		+j		+j		+j		+j		a
-	jkb	a		+j		+j		+j		+j		a
-	jkb	a		+j		+j		+j		+j		a
+	jkb	+a		+j		+j		+j		+j		a
+	jkb	+a		+j		+j		+j		+j		a
+	jkb	+a		+j		+j		+j		+j		a
+	jkb	+a		+j		+j		+j		+j		a
 	0	il		fg		f		f		fh		0
+}
+
+// UFO Corrupter (an open park tile including street on its left side and street with rail on its right side)
+tile +craft_ufo_harvester
+{
+	10 8
+	0	a	j	j	j	j	ea	e	ea	0
+	fh	+il	+fg	+f	+f	+fh	+i	+i	+i	fg
+	jkb	+a	+j	+j	+j	+j	+da	+d	+da	k
+	jkb	+a	+j	+j	+j	+j	+ca	+c	+ca	k
+	jkb	+a	+j	+j	+j	+j	+ca	+c	+ca	k
+	jkb	+a	+j	+j	+j	+j	+ea	+e	+ea	k
+	fh	+il	+fg	+f	+f	+fh	+i	+i	+i	fg
+	0	a	j	j	j	j	ea	e	ea	0
 }
 
 // --------------------
