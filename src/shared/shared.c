@@ -410,41 +410,7 @@ void Q_strncpyz (char *dest, const char *src, size_t destsize)
 	if (destsize < 1)
 		Sys_Error("Q_strncpyz: destsize < 1 (%s, %i)", file, line);
 #endif
-
-	/* space for \0 terminating */
-	while (*src && destsize - 1) {
-		*dest = *src++;
-		/* check for UTF8 multibyte sequences */
-		if (*dest >= 0x80) {
-			if (*dest < 0xc0) {
-				if (destsize <= 2)
-					break;
-			} else if (*dest < 0xe0) {
-				if (destsize <= 3)
-					break;
-			} else if (*dest < 0xf0) {
-				if (destsize <= 4)
-					break;
-			} else if (*dest < 0xf8) {
-				if (destsize <= 5)
-					break;
-			} else {
-				/* invalid character */
-				break;
-			}
-		}
-		destsize--;
-		dest++;
-	}
-#ifdef PARANOID
-	if (*src)
-		Com_Printf("Buffer too small: %s: %i (%s)\n", file, line, src);
-	/* the rest is filled with null */
-	memset(dest, 0, destsize);
-#else
-	/* terminate the string */
-	*dest = '\0';
-#endif
+	UTF8_strncpyz(dest, src, destsize);
 }
 
 /**
