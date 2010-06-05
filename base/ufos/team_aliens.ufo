@@ -291,6 +291,7 @@ team bloodspider
 		neutral {
 			hurtsound aliens/hiss
 			deathsound aliens/hiss
+			deathsound aliens/spiderdeath01
 		}
 	}
 }
