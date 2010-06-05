@@ -61,7 +61,7 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
  */
 qboolean G_ActorIsInRescueZone (const edict_t* actor)
 {
-	return qtrue;
+	return qfalse;
 }
 
 /**
