@@ -36,6 +36,7 @@ UFO2MAP_SRCS = \
 	shared/parse.c \
 	shared/shared.c \
 	shared/entitiesdef.c \
+	shared/utf8.c \
 	\
 	common/files.c \
 	common/list.c \
@@ -53,6 +54,7 @@ UFOMODEL_SRC = \
 	shared/images.c \
 	shared/parse.c \
 	shared/shared.c \
+	shared/utf8.c \
 	\
 	common/files.c \
 	common/list.c \

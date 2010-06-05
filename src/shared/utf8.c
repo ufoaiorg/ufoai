@@ -168,8 +168,8 @@ char *UTF8_strncpyz (char *dest, const char *src, size_t limit)
 	if (length > limit - 1)
 		length = limit - 1;
 	i = length;
-	if (src[i] > 0x80)
-		while ((i > 0) && src[i] <= 0xc0)
+	if ((unsigned char) src[i] > 0x80)
+		while ((i > 0) && (unsigned char) src[i] <= 0xc0)
 			i--;
 	if (UTF8_char_len(src[i]) + i - 1 > length)
 		length = i;
