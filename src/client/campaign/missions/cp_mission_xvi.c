@@ -108,7 +108,7 @@ void CP_XVIMissionNextStage (mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create XVI Spreading mission */
-		CP_MissionCreate(mission);
+		CP_MissionBegin(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* Go to mission */

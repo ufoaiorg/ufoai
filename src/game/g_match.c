@@ -234,7 +234,7 @@ static void G_MatchSendResults (int team)
 	if (team == TEAM_ALIEN) {
 		ent = NULL;
 		while ((ent = G_EdictsGetNextLivingActor(ent)))
-			if (ent->team != team) {
+			if (ent->team != team && !G_ActorIsInRescueZone(ent)) {
 				ent->HP = 0;
 				G_ActorDieOrStun(ent, attacker);
 			}

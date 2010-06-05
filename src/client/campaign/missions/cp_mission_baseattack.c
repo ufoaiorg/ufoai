@@ -354,7 +354,7 @@ void CP_BaseAttackMissionNextStage (mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create mission */
-		CP_MissionCreate(mission);
+		CP_MissionBegin(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* Choose a base to attack and go to this base */

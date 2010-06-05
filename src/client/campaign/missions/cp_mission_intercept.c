@@ -239,7 +239,7 @@ void CP_InterceptNextStage (mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create Intercept mission */
-		CP_MissionCreate(mission);
+		CP_MissionBegin(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* UFO start looking for target */

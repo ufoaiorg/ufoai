@@ -1294,7 +1294,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
  * @sa CP_MissionChooseUFO
  * @return true if mission was created, false else.
  */
-qboolean CP_MissionCreate (mission_t *mission)
+qboolean CP_MissionBegin (mission_t *mission)
 {
 	int ufoType;
 
@@ -1308,7 +1308,8 @@ qboolean CP_MissionCreate (mission_t *mission)
 	} else {
 		mission->ufo = UFO_AddToGeoscape(ufoType, NULL, mission);
 		if (!mission->ufo) {
-			Com_Printf("CP_MissionCreate: Could not add UFO '%s', remove mission\n", Com_UFOTypeToShortName(ufoType));
+			Com_Printf("CP_MissionBegin: Could not add UFO '%s', remove mission\n",
+					Com_UFOTypeToShortName(ufoType));
 			CP_MissionRemove(mission);
 			return qfalse;
 		}
@@ -1512,7 +1513,7 @@ void CP_SpawnNewMissions (void)
 	if (ccs.lastMissionSpawnedDelay > DELAY_BETWEEN_MISSION_SPAWNING) {
 		/* How many missions will be spawned until next cycle ? */
 		const int newMissionNum = (int) (pow(ccs.overallInterest / 10.0f, 0.6));
-#if 0		
+#if 0
 		/* select new number randomly, weighted by interest and difficulty level */
 		const int newMissionNum = (int) (pow(ccs.overallInterest / 10.0f, 0.6) * frand() * 0.05 * (ccs.curCampaign->difficulty + 16));
 		Com_Printf("interest = %d, val=%f, new missions = %d\n", ccs.overallInterest, (pow(ccs.overallInterest / 10.0f, 0.6)), newMissionNum);
@@ -1602,7 +1603,7 @@ static void CP_SpawnNewMissions_f (void)
 		switch (category) {
 		case INTERESTCATEGORY_RECON:
 			/* Start mission */
-			if (!CP_MissionCreate(mission))
+			if (!CP_MissionBegin(mission))
 				return;
 			if (type == 1)
 				/* Aerial mission */
@@ -1617,7 +1618,7 @@ static void CP_SpawnNewMissions_f (void)
 			break;
 		case INTERESTCATEGORY_INTERCEPT:
 			/* Start mission */
-			if (!CP_MissionCreate(mission))
+			if (!CP_MissionBegin(mission))
 				return;
 			if (type == 1) {
 				mission->ufo->ufotype = UFO_HARVESTER;

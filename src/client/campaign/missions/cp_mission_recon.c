@@ -250,7 +250,7 @@ void CP_ReconMissionNextStage (mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create Recon mission */
-		CP_MissionCreate(mission);
+		CP_MissionBegin(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 	case STAGE_RECON_GROUND:

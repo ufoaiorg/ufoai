@@ -48,7 +48,7 @@ const char *CP_MissionToTypeString(const mission_t *mission);
 int MAP_GetIDXByMission(const mission_t *mis);
 mission_t* MAP_GetMissionByIDX(int id);
 void CP_MissionRemove(mission_t *mission);
-qboolean CP_MissionCreate(mission_t *mission);
+qboolean CP_MissionBegin(mission_t *mission);
 qboolean CP_CheckNewMissionDetectedOnGeoscape(void);
 qboolean CP_CheckMissionLimitedInTime(const mission_t *mission);
 void CP_MissionDisableTimeLimit(mission_t *mission);

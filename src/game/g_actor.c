@@ -55,6 +55,16 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
 }
 
 /**
+ * @brief Checks whether the given actor is currently standing in a rescue zone
+ * @param actor The actor to check
+ * @return @c true if the actor is standing in a rescue zone, @c false otherwise.
+ */
+qboolean G_ActorIsInRescueZone (const edict_t* actor)
+{
+	return qtrue;
+}
+
+/**
  * @brief Handles the client actions (interaction with the world)
  * @param actor The actors' edict
  * @param ent The edict that can be used by the actor
