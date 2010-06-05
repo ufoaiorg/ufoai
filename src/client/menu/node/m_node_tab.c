@@ -94,8 +94,8 @@ static menuNode_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int y
 			return prev;
 
 		R_FontTextSize(font, _(OPTIONEXTRADATA(option).label), 0, LONGLINES_PRETTYCHOP, &tabWidth, NULL, NULL, NULL);
-		if (option->icon && option->icon->size[0] < allowedWidth) {
-			tabWidth += option->icon->size[0];
+		if (OPTIONEXTRADATA(option).icon && OPTIONEXTRADATA(option).icon->size[0] < allowedWidth) {
+			tabWidth += OPTIONEXTRADATA(option).icon->size[0];
 		}
 		if (tabWidth > allowedWidth) {
 			if (allowedWidth > 0)
@@ -229,8 +229,8 @@ static void MN_TabNodeDraw (menuNode_t *node)
 
 		R_FontTextSize(font, _(OPTIONEXTRADATA(option).label), 0, LONGLINES_PRETTYCHOP, &fontWidth, &fontHeight, NULL, NULL);
 		tabWidth = fontWidth;
-		if (option->icon && option->icon->size[0] < allowedWidth) {
-			tabWidth += option->icon->size[0];
+		if (OPTIONEXTRADATA(option).icon && OPTIONEXTRADATA(option).icon->size[0] < allowedWidth) {
+			tabWidth += OPTIONEXTRADATA(option).icon->size[0];
 			drawIcon = qtrue;
 		}
 		if (tabWidth > allowedWidth) {
@@ -250,8 +250,8 @@ static void MN_TabNodeDraw (menuNode_t *node)
 			if (status == MN_TAB_DISABLED) {
 				iconStatus = ICON_STATUS_DISABLED;
 			}
-			MN_DrawIconInBox(option->icon, iconStatus, currentX, pos[1], option->icon->size[0], TILE_HEIGHT);
-			textPos += option->icon->size[0];
+			MN_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, currentX, pos[1], OPTIONEXTRADATA(option).icon->size[0], TILE_HEIGHT);
+			textPos += OPTIONEXTRADATA(option).icon->size[0];
 		}
 		/** @todo fontWidth can be =0, maybe a bug from the font cache */
 		OPTIONEXTRADATA(option).truncated = tabWidth < fontWidth || tabWidth == 0;

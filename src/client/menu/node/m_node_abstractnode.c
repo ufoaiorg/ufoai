@@ -824,11 +824,6 @@ static const value_t properties[] = {
 	 */
 	{"onchange", V_UI_ACTION, offsetof(menuNode_t, onChange), MEMBER_SIZEOF(menuNode_t, onChange)},
 
-	/* Identify an icon the node will use.
-	 * @todo Move it where it is need.
-	 */
-	{"icon", V_UI_ICONREF, offsetof(menuNode_t, icon), MEMBER_SIZEOF(menuNode_t, icon)},
-
 	/* Special attribute only use into the node description to exclude part of the node (see also <code>ghost</code>). Rectangle position is relative to the node. */
 	{"excluderect", V_UI_EXCLUDERECT, 0, 0},
 

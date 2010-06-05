@@ -826,7 +826,7 @@ static void UP_GenerateSummary (void)
 
 			/* chapter section*/
 			chapter = MN_AddOption(&chapters, ccs.upChapters[i].id, ccs.upChapters[i].name, va("%i", num));
-			chapter->icon = MN_GetIconByName(va("ufopedia_%s", ccs.upChapters[i].id));
+			OPTIONEXTRADATA(chapter).icon = MN_GetIconByName(va("ufopedia_%s", ccs.upChapters[i].id));
 			chapter->firstChild = UP_GenerateArticlesSummary(&ccs.upChapters[i]);
 
 			num++;

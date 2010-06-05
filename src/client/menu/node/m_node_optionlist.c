@@ -124,13 +124,13 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 			textColor = node->color;
 		}
 
-		if (option->icon) {
+		if (OPTIONEXTRADATA(option).icon) {
 			iconStatus_t iconStatus = ICON_STATUS_NORMAL;
 			if (option->disabled)
 				iconStatus = ICON_STATUS_DISABLED;
 			R_Color(NULL);
-			MN_DrawIconInBox(option->icon, iconStatus, decX, currentY, option->icon->size[0], fontHeight);
-			decX += option->icon->size[0] + fontHeight / 4;
+			MN_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], fontHeight);
+			decX += OPTIONEXTRADATA(option).icon->size[0] + fontHeight / 4;
 		}
 
 		/* print the option label */

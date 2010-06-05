@@ -26,10 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MENU_M_NODE_CUSTOMBUTTON_H
 
 #include "../m_nodes.h"
+#include "m_node_button.h"
 
 void MN_RegisterCustomButtonNode(nodeBehaviour_t *behaviour);
 
 typedef struct customButtonExtraData_s {
+	buttonExtraData_t super;
 	vec2_t texl;				/**< upper left texture coordinates */
 } customButtonExtraData_t;
 

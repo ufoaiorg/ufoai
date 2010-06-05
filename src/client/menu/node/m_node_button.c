@@ -38,6 +38,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 #include "m_node_panel.h"
 
+#define EXTRADATA_TYPE buttonExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+
 #include "../../client.h"
 
 #define TILE_SIZE 64
@@ -100,12 +104,12 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 
 	/* display the icon at the left */
 	/** @todo should we move it according to the text align? */
-	if (node->icon) {
+	if (EXTRADATA(node).icon) {
 		/* use at least a box size equals to button height */
 		int size = node->size[1] - node->padding - node->padding;
-		if (size < node->icon->size[0])
-			size = node->icon->size[0];
-		MN_DrawIconInBox(node->icon, iconStatus, pos[0] + node->padding, pos[1] + node->padding, size, node->size[1] - node->padding - node->padding);
+		if (size < EXTRADATA(node).icon->size[0])
+			size = EXTRADATA(node).icon->size[0];
+		MN_DrawIconInBox(EXTRADATA(node).icon, iconStatus, pos[0] + node->padding, pos[1] + node->padding, size, node->size[1] - node->padding - node->padding);
 		iconPadding = size + node->padding;
 	}
 
@@ -157,6 +161,10 @@ static const value_t properties[] = {
 	 * @image html http://ufoai.ninex.info/wiki/images/Button_blue.png
 	 */
 
+	/* Icon used to display the node
+	 */
+	{"icon", V_UI_ICONREF, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
+
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -169,4 +177,5 @@ void MN_RegisterButtonNode (nodeBehaviour_t *behaviour)
 	behaviour->leftClick = MN_ButtonNodeClick;
 	behaviour->loading = MN_ButtonNodeLoading;
 	behaviour->properties = properties;
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

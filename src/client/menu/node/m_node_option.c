@@ -115,6 +115,10 @@ static const value_t properties[] = {
 	 */
 	{"collapsed", V_BOOL, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, collapsed), MEMBER_SIZEOF(EXTRADATA_TYPE, collapsed)},
 
+	/* Icon used to display the node
+	 */
+	{"icon", V_UI_ICONREF, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
+
 	{NULL, V_NULL, 0, 0},
 };
 

@@ -169,7 +169,7 @@ window team extends iaircraft
 		*actor_select<1>.check_actor@disabled = true
 		*actor_select<1>.check_actor@invis = false
 		*actor_select<1>.txt_actor@invis = false
-		*(pic)actor_select<1>.bt_equip@invis = false
+		*(button)actor_select<1>.bt_equip@invis = false
 	}
 
 	/**
@@ -200,30 +200,30 @@ window team extends iaircraft
 		*(checkbox)actor_select<1>.check_actor@tooltip = "_Remove soldier from this craft"
 		*actor_select<1>.check_actor@invis = false
 		*actor_select<1>.txt_actor@invis = false
-		*(pic)actor_select<1>.bt_equip@invis = false
+		*(button)actor_select<1>.bt_equip@invis = false
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_holdsequip {
-		*(pic)actor_select<1>.bt_equip@tooltip = "_Soldier carries equipment"
-		*(pic)actor_select<1>.bt_equip@icon = "soldier_holdequipment"
+		*(button)actor_select<1>.bt_equip@tooltip = "_Soldier carries equipment"
+		*(button)actor_select<1>.bt_equip@icon = "soldier_holdequipment"
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_holdsnoequip {
-		*(pic)actor_select<1>.bt_equip@tooltip = "_Soldier carries no equipment"
-		*(pic)actor_select<1>.bt_equip@icon = "soldier_noequipment"
+		*(button)actor_select<1>.bt_equip@tooltip = "_Soldier carries no equipment"
+		*(button)actor_select<1>.bt_equip@icon = "soldier_noequipment"
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_unusedslot {
-		*(pic)actor_select<1>.bt_equip@invis = true
+		*(button)actor_select<1>.bt_equip@invis = true
 		*actor_select<1>.check_actor@invis = true
 		*actor_select<1>.txt_actor@invis = true
 	}
@@ -518,12 +518,12 @@ window team extends iaircraft
 	// additional stuff
 	// ==================
 	confunc toggle_show_heavybutton {
-		*bt_switch_list@tooltip	= "_Assign tanks"
-		*bt_switch_list@icon	= uvc
+		//*bt_switch_list@tooltip	= "_Assign tanks"
+		//*bt_switch_list@icon	= uvc
 	}
 	confunc toggle_show_soldiersbutton {
-		*bt_switch_list@tooltip	= "_Assign soldiers"
-		*bt_switch_list@icon	= soldier
+		//*bt_switch_list@tooltip	= "_Assign soldiers"
+		//*bt_switch_list@icon	= soldier
 	}
 
 	/**

@@ -88,8 +88,8 @@ static void MN_RadioButtonNodeDraw (menuNode_t *node)
 			texX + node->size[0], texY + node->size[1], texX, texY, image);
 	}
 
-	if (node->icon) {
-		MN_DrawIconInBox(node->icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+	if (EXTRADATA(node).icon) {
+		MN_DrawIconInBox(EXTRADATA(node).icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 }
 
@@ -140,6 +140,8 @@ static const value_t properties[] = {
 	{"value", V_FLOAT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, value), MEMBER_SIZEOF(EXTRADATA_TYPE, value)},
 	/* Cvar name shared with the radio button group to identify when a radio button is selected. */
 	{"cvar", V_UI_CVAR, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, cvar), 0},
+	/* Icon used to display the node */
+	{"icon", V_UI_ICONREF, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
 
 	{NULL, V_NULL, 0, 0}
 };

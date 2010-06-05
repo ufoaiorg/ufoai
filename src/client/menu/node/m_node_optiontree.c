@@ -187,12 +187,12 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 
 		decX += COLLAPSEBUTTON_WIDTH;
 
-		if (option->icon) {
+		if (OPTIONEXTRADATA(option).icon) {
 			iconStatus_t iconStatus = ICON_STATUS_NORMAL;
 			if (option->disabled)
 				iconStatus = ICON_STATUS_DISABLED;
-			MN_DrawIconInBox(option->icon, iconStatus, decX, currentY, option->icon->size[0], fontHeight);
-			decX += option->icon->size[0] + fontHeight / 4;
+			MN_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], fontHeight);
+			decX += OPTIONEXTRADATA(option).icon->size[0] + fontHeight / 4;
 		}
 
 		R_Color(textColor);

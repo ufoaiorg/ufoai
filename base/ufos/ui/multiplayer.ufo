@@ -1344,7 +1344,7 @@ window multiplayer_wait extends levelbuttons
 			padding		0
 			onClick		{ cmd "teamnum_inc;" }
 		}
-		pic teamnum_dec
+		button teamnum_dec
 		{
 			visiblewhen	"*cvar:cl_ready != 1"
 			tooltip		"_Previous free team"

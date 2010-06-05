@@ -95,8 +95,8 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 			texX + node->size[0], texY + node->size[1], texX, texY, image);
 	}
 
-	if (node->icon) {
-		MN_DrawIconInBox(node->icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+	if (EXTRADATA(node).super.icon) {
+		MN_DrawIconInBox(EXTRADATA(node).super.icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 
 	text = MN_GetReferenceString(node, node->text);

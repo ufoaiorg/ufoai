@@ -89,7 +89,6 @@ typedef struct menuNode_s {
 	int textalign;				/**< Alignment to draw text */
 	char* text;					/**< Text we want to display */
 	const char* font;			/**< Font to draw text */
-	struct menuIcon_s *icon;	/**< Link to an icon */
 	void* image;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	vec4_t bgcolor;				/**< rgba */
