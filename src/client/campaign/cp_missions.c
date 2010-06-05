@@ -1557,7 +1557,7 @@ static void CP_SpawnNewMissions_f (void)
 	mission_t *mission;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <category> [<type>] [<mapdef>]\n", Cmd_Argv(0));
 		for (category = INTERESTCATEGORY_RECON; category < INTERESTCATEGORY_MAX; category++) {
 			Com_Printf("...%i: %s", category, CP_MissionCategoryToName(category));
 			if (category == INTERESTCATEGORY_RECON)
@@ -1571,7 +1571,7 @@ static void CP_SpawnNewMissions_f (void)
 		return;
 	}
 
-	if (Cmd_Argc() == 3)
+	if (Cmd_Argc() >= 3)
 		type = atoi(Cmd_Argv(2));
 
 	category = atoi(Cmd_Argv(1));
@@ -1611,6 +1611,13 @@ static void CP_SpawnNewMissions_f (void)
 			else
 				/* This is a ground mission */
 				CP_ReconMissionGroundGo(mission);
+
+			if (Cmd_Argc() == 4) {
+				mapDef_t *mapDef = Com_GetMapDefinitionByID(Cmd_Argv(3));
+				if (mapDef == NULL)
+					Com_Printf("Could not find mapdef for %s\n", Cmd_Argv(3));
+				mission->mapDef = mapDef;
+			}
 			break;
 		case INTERESTCATEGORY_BUILDING:
 			if (type == 1)
