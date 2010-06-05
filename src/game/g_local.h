@@ -689,6 +689,8 @@ struct edict_s {
 	edict_t *reactionTarget;	/**< the current moving actor - only set when this actor has reaction fire enabled */
 	float reactionTUs;	/**< time that an opponent has left until the attacker can react */
 	qboolean reactionNoDraw;
+	qboolean inRescueZone;	/**< the actor is standing in a rescue zone if this is true - this means that
+							 * when the mission is aborted the actor will not die */
 
 	/** client actions - interact with the world */
 	edict_t *clientAction;

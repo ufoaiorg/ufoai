@@ -171,6 +171,7 @@ static qboolean Touch_RescueTrigger (edict_t *self, edict_t *activator)
 	assert(!G_IsDead(activator));
 
 	G_ClientPrintf(G_PLAYER_FROM_ENT(activator), PRINT_HUD, _("Soldier entered the rescue zone\n"));
+	activator->inRescueZone = qtrue;
 
 	return qfalse;
 }
@@ -178,6 +179,7 @@ static qboolean Touch_RescueTrigger (edict_t *self, edict_t *activator)
 static void Reset_RescueTrigger (edict_t *self, edict_t *activator)
 {
 	G_ClientPrintf(G_PLAYER_FROM_ENT(activator), PRINT_HUD, _("Soldier left the rescue zone\n"));
+	activator->inRescueZone = qfalse;
 }
 
 /**
