@@ -70,6 +70,7 @@ void main(void){
 	vec4 nightColor = diffuseLight2 * CITYLIGHTCOLOR * diffuseNightColor * NdotL2;
 
 	vec4 color = DEFAULTCOLOR + (ambientLight * diffuseColor) + reflectColor + (0.0 * specularColor) + nightColor;
+  color.a = 1.0;
 	vec4 hdrColor = GLOWSCALE *
 					( clamp((reflectColor - vec4(0.9, 0.9, 0.9, 0)), 0.0, GLOWSCALE) +
 					  1.0 * specularColor + nightColor);
