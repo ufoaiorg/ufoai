@@ -422,6 +422,7 @@ void G_SetTeamForPlayer(player_t* player, const int team);
 void G_CenterView(const edict_t *ent);
 
 qboolean G_ActorIsInRescueZone(const edict_t* actor);
+void G_ActorSetInRescueZone(edict_t* actor, qboolean inRescueZone);
 void G_ActorUseDoor(edict_t *actor, edict_t *door);
 qboolean G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
 void G_ActorSetClientAction(edict_t *actor, edict_t *ent);

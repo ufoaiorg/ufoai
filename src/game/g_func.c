@@ -236,7 +236,8 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
  */
 static void Reset_DoorTrigger (edict_t *self, edict_t *activator)
 {
-	G_ActorSetClientAction(activator, NULL);
+	if (activator->clientAction == self)
+		G_ActorSetClientAction(activator, NULL);
 }
 
 /**

@@ -56,12 +56,30 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
 
 /**
  * @brief Checks whether the given actor is currently standing in a rescue zone
- * @param actor The actor to check
+ * @param[in] actor The actor to check
  * @return @c true if the actor is standing in a rescue zone, @c false otherwise.
  */
 qboolean G_ActorIsInRescueZone (const edict_t* actor)
 {
 	return actor->inRescueZone;
+}
+
+/**
+ * @brief Set the rescue zone data
+ * @param[out] actor The actor to set the rescue zone flag for
+ * @param[in] inRescueZone @c true if the actor is in the rescue zone, @c false otherwise
+ */
+void G_ActorSetInRescueZone (edict_t* actor, qboolean inRescueZone)
+{
+	if (inRescueZone == G_ActorIsInRescueZone(actor))
+		return;
+
+	if (inRescueZone)
+		G_ClientPrintf(G_PLAYER_FROM_ENT(actor), PRINT_HUD, _("Soldier entered the rescue zone\n"));
+	else
+		G_ClientPrintf(G_PLAYER_FROM_ENT(actor), PRINT_HUD, _("Soldier left the rescue zone\n"));
+
+	actor->inRescueZone = inRescueZone;
 }
 
 /**
