@@ -1160,9 +1160,11 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
  * @param[in] buildings Add buildings to the initial base
  * @sa B_SetUpBase
  */
-static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
+static void B_SetUpFirstBase (base_t* base)
 {
 	campaign_t *campaign = ccs.curCampaign;
+	int i;
+	const equipDef_t *ed;
 
 	if (campaign->firstBaseTemplate[0] == '\0')
 		Com_Error(ERR_DROP, "No base template for setting up the first base given");
@@ -1171,70 +1173,54 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 	BS_InitMarket(qfalse);
 	E_InitialEmployees();
 
-	if (buildings) {
-		int i;
-		const equipDef_t *ed;
+	B_BuildFromTemplate(base, ccs.curCampaign->firstBaseTemplate, qtrue);
+	/* Add aircraft to the first base */
+	/** @todo move aircraft to .ufo */
+	/* buy two first aircraft and hire pilots for them. */
+	if (B_GetBuildingStatus(base, B_HANGAR)) {
+		const char *firebird = Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
+		aircraft_t *aircraft = AIR_GetAircraft(firebird);
+		if (!aircraft)
+			Com_Error(ERR_DROP, "Could not find %s definition", firebird);
+		AIR_NewAircraft(base, firebird);
+		CL_UpdateCredits(ccs.credits - aircraft->price);
+	}
+	if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
+		const char *stiletto = Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
+		aircraft_t *aircraft = AIR_GetAircraft(stiletto);
+		if (!aircraft)
+			Com_Error(ERR_DROP, "Could not find %s definition", stiletto);
+		AIR_NewAircraft(base, stiletto);
+		CL_UpdateCredits(ccs.credits - aircraft->price);
+	}
 
-		B_BuildFromTemplate(base, ccs.curCampaign->firstBaseTemplate, hire);
-		/* Add aircraft to the first base */
-		/** @todo move aircraft to .ufo */
-		/* buy two first aircraft and hire pilots for them. */
-		if (B_GetBuildingStatus(base, B_HANGAR)) {
-			const char *firebird = Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
-			aircraft_t *aircraft = AIR_GetAircraft(firebird);
-			if (!aircraft)
-				Com_Error(ERR_DROP, "Could not find %s definition", firebird);
-			AIR_NewAircraft(base, firebird);
-			CL_UpdateCredits(ccs.credits - aircraft->price);
+	/* Find the initial equipment definition for current campaign. */
+	ed = INV_GetEquipmentDefinitionByID(ccs.curCampaign->equipment);
+	/* Copy it to base storage. */
+	base->storage = *ed;
+
+	for (i = 0; i < base->numAircraftInBase; i++) {
+		aircraft_t *aircraft = &base->aircraft[i];
+		assert(aircraft);
+
+		if (!E_HireEmployeeByType(base, EMPL_PILOT)) {
+			Com_DPrintf(DEBUG_CLIENT, "B_SetUpFirstBase: Hiring pilot failed.\n");
 		}
-		if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-			const char *stiletto = Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
-			aircraft_t *aircraft = AIR_GetAircraft(stiletto);
-			if (!aircraft)
-				Com_Error(ERR_DROP, "Could not find %s definition", stiletto);
-			AIR_NewAircraft(base, stiletto);
-			CL_UpdateCredits(ccs.credits - aircraft->price);
+
+		switch (aircraft->type) {
+		case AIRCRAFT_INTERCEPTOR:
+			/* Auto equip interceptors with weapons and ammos */
+			AIM_AutoEquipAircraft(aircraft);
+			break;
+		case AIRCRAFT_TRANSPORTER:
+			/* Assign and equip soldiers on Dropships */
+			AIR_AssignInitial(aircraft);
+			/** @todo cleanup this mess: */
+			B_InitialEquipment(base, aircraft, cp_initial_equipment->string, &base->storage);
+			break;
+		default:
+			Com_Error(ERR_DROP, "B_SetUpFirstBase: Invalid aircraft type.");
 		}
-
-		/* Find the initial equipment definition for current campaign. */
-		ed = INV_GetEquipmentDefinitionByID(ccs.curCampaign->equipment);
-		/* Copy it to base storage. */
-		base->storage = *ed;
-
-		for (i = 0; i < base->numAircraftInBase; i++) {
-			aircraft_t *aircraft = &base->aircraft[i];
-			assert(aircraft);
-
-			/* Hire and assign a pilot for each */
-			if (hire) {
-				if (!E_HireEmployeeByType(base, EMPL_PILOT)) {
-					Com_DPrintf(DEBUG_CLIENT, "B_SetUpFirstBase: Hiring pilot failed.\n");
-				}
-			}
-
-			switch (aircraft->type) {
-			case AIRCRAFT_INTERCEPTOR:
-				/* Auto equip interceptors with weapons and ammos */
-				AIM_AutoEquipAircraft(aircraft);
-				break;
-			case AIRCRAFT_TRANSPORTER:
-				/* Assign and equip soldiers on Dropships */
-				if (hire) {
-					AIR_AssignInitial(aircraft);
-					/** @todo cleanup this mess: */
-					B_InitialEquipment(base, aircraft, cp_initial_equipment->string, &base->storage);
-				} else {
-					B_InitialEquipment(base, NULL, cp_initial_equipment->string, &base->storage);
-				}
-				break;
-			default:
-				Com_Error(ERR_DROP, "B_SetUpFirstBase: Invalid aircraft type.");
-			}
-		}
-	} else {
-		B_BuildFromTemplate(base, NULL, hire);
-		/* set up zero build time for the first base */
-		ccs.instant_build = 1;
 	}
 }
 
@@ -1276,7 +1262,7 @@ void B_UpdateBaseCount (void)
  * @sa B_NewBase
  * @sa B_SetUpFirstBase
  */
-void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings, vec2_t pos)
+void B_SetUpBase (base_t* base, vec2_t pos)
 {
 	const int newBaseAlienInterest = 1.0f;
 
@@ -1287,13 +1273,11 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings, vec2_t pos)
 	base->baseStatus = BASE_WORKING;
 	base->numAircraftInBase = 0;
 
-	if (!buildings)
-		hire = qfalse;
 	/* setup for first base */
 	if (ccs.campaignStats.basesBuilt == 0)
-		B_SetUpFirstBase(base, hire, buildings);
+		B_SetUpFirstBase(base);
 	else
-		B_BuildFromTemplate(base, NULL, hire);
+		B_BuildFromTemplate(base, NULL, qtrue);
 
 	/* a new base is not discovered (yet) */
 	base->alienInterest = newBaseAlienInterest;
@@ -1386,15 +1370,8 @@ static qboolean B_ConstructBuilding (base_t* base, building_t *building)
 
 	Com_DPrintf(DEBUG_CLIENT, "Construction of %s is starting\n", building->id);
 
-	if (!ccs.instant_build) {
-		building->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
-		building->timeStart = ccs.date.day;
-	} else {
-		/* call the onconstruct trigger */
-		if (building->onConstruct[0] != '\0')
-			Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
-		B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
-	}
+	building->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
+	building->timeStart = ccs.date.day;
 
 	CL_UpdateCredits(ccs.credits - building->fixCosts);
 	Cmd_ExecuteString("base_init");

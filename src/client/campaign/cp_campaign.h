@@ -394,9 +394,6 @@ typedef struct ccs_s {
 	vec2_t center;			/**< latitude and longitude of the point we're looking at on earth */
 	float zoom;				/**< zoom used when looking at earth */
 
-	/** governs zero build time for first base if empty base option chosen */
-	int instant_build;
-
 	aircraft_t *interceptAircraft;		/**< selected aircraft for interceptions */
 	/** @todo make this a union? */
 	mission_t *selectedMission;			/**< Currently selected mission on geoscape */

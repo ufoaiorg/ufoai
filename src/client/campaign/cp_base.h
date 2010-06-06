@@ -278,7 +278,7 @@ buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
 extern vec2_t newBasePos;
 
 int B_GetFoundedBaseCount(void);
-void B_SetUpBase(base_t* base, qboolean hire, qboolean buildings, vec2_t pos);
+void B_SetUpBase(base_t* base, vec2_t pos);
 base_t* B_GetBaseByIDX(int baseIdx);
 base_t* B_GetFoundedBaseByIDX(int baseIdx);
 buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
