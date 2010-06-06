@@ -319,7 +319,6 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 
 	R_EnableAttribute("TANGENTS");
 
-
 	R_ProgramParameter1f("HARDNESS", 0.1);
 	R_ProgramParameter1f("SPECULAR", 0.25);
 
@@ -344,7 +343,7 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 	}
 
 	/* tell the program how many lights to try to use */
-    R_ProgramParameter1i("DYNAMICLIGHTS", i);
+	R_ProgramParameter1i("DYNAMICLIGHTS", i);
 
 	/* if there aren't enough active lights, turn off the rest */
 	while (i < maxLights) {
