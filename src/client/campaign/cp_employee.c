@@ -869,7 +869,8 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
 }
 
 /**
- * @brief Recreates all the employees for a particular employee type in the global list.  But it does not overwrite any employees already hired.
+ * @brief Recreates all the employees for a particular employee type in the global list.
+ * But it does not overwrite any employees already hired.
  * @param[in] type The type of the employee list to process.
  * @param[in] excludeUnhappyNations True if a nation is unhappy then they wont
  * send any pilots, false if happiness of nations in not considered.
@@ -890,6 +891,9 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 			numHappyNations++;
 		}
 	}
+
+	if (!numHappyNations)
+		return;
 
 	nationIdx = 0;
 	/* Fill the global data employee list with employees, evenly distributed
