@@ -1557,7 +1557,7 @@ static void CP_SpawnNewMissions_f (void)
 	mission_t *mission;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <category> [<type>] [<mapdef>]\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <category> [<type>]\n", Cmd_Argv(0));
 		for (category = INTERESTCATEGORY_RECON; category < INTERESTCATEGORY_MAX; category++) {
 			Com_Printf("...%i: %s", category, CP_MissionCategoryToName(category));
 			if (category == INTERESTCATEGORY_RECON)
@@ -1611,13 +1611,6 @@ static void CP_SpawnNewMissions_f (void)
 			else
 				/* This is a ground mission */
 				CP_ReconMissionGroundGo(mission);
-
-			if (Cmd_Argc() == 4) {
-				mapDef_t *mapDef = Com_GetMapDefinitionByID(Cmd_Argv(3));
-				if (mapDef == NULL)
-					Com_Printf("Could not find mapdef for %s\n", Cmd_Argv(3));
-				mission->mapDef = mapDef;
-			}
 			break;
 		case INTERESTCATEGORY_BUILDING:
 			if (type == 1)
@@ -1638,6 +1631,27 @@ static void CP_SpawnNewMissions_f (void)
 			Com_Printf("Type is not implemented for this category.\n");
 		}
 	}
+	Com_Printf("Spawned mission with id '%s'\n", mission->id);
+}
+
+/**
+ * @brief Changes the map for an already spawned mission
+ */
+static void CP_MissionSetMap_f (void)
+{
+	mapDef_t *mapDef;
+	mission_t *mission;
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <missionid> <mapdef>\n", Cmd_Argv(0));
+		return;
+	}
+	mission = CP_GetMissionByID(Cmd_Argv(1));
+	mapDef = Com_GetMapDefinitionByID(Cmd_Argv(2));
+	if (mapDef == NULL) {
+		Com_Printf("Could not find mapdef for %s\n", Cmd_Argv(2));
+		return;
+	}
+	mission->mapDef = mapDef;
 }
 
 /**
@@ -1933,10 +1947,11 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 void CP_MissionsInit (void)
 {
 #ifdef DEBUG
-	Cmd_AddCommand("debug_addmission", CP_SpawnNewMissions_f, "Add a new mission");
-	Cmd_AddCommand("debug_delmissions", CP_DeleteMissions_f, "Remove all missions from global array");
-	Cmd_AddCommand("debug_listmission", CP_MissionList_f, "Debug function to show all missions");
-	Cmd_AddCommand("debug_listinterest", CP_AlienInterestList_f, "Debug function to show alien interest values");
-	Cmd_AddCommand("debug_setinterest", CP_SetAlienInterest_f, "Set overall interest level.");
+	Cmd_AddCommand("debug_missionsetmap", CP_MissionSetMap_f, "Changes the map for a spawned mission");
+	Cmd_AddCommand("debug_missionadd", CP_SpawnNewMissions_f, "Add a new mission");
+	Cmd_AddCommand("debug_missiondeleteall", CP_DeleteMissions_f, "Remove all missions from global array");
+	Cmd_AddCommand("debug_missionlist", CP_MissionList_f, "Debug function to show all missions");
+	Cmd_AddCommand("debug_interestlist", CP_AlienInterestList_f, "Debug function to show alien interest values");
+	Cmd_AddCommand("debug_interestset", CP_SetAlienInterest_f, "Set overall interest level.");
 #endif
 }

@@ -201,7 +201,8 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed
 	int minMissionAppearance = 9999;
 	int randomNum;
 
-	mission->mapDef = NULL;
+	if (mission->mapDef)
+		return qtrue;
 
 	/* Set maxHits and hits. */
 	while (maxHits) {
