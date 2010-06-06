@@ -975,6 +975,8 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 		ent->nextthink = 1;
 	}
 
+	G_TouchTriggers(ent);
+
 	return ent;
 }
 

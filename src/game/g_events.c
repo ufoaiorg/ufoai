@@ -268,7 +268,7 @@ void G_EventActorFall (const edict_t* ent)
 /**
  * @brief Informs the client that an interaction with the world is possible
  * @note It's assumed that the clientAction is already set
- * @param ent The edict that can execute the action (an actor)
+ * @param[in] ent The edict that can execute the action (an actor)
  */
 void G_EventSetClientAction (const edict_t *ent)
 {
