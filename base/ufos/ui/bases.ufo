@@ -128,6 +128,7 @@ window bases
 			layoutMargin	6
 		}
 
+	/* DO NOT add tooltips here for buttons that have it set in B_BaseInit_f */
 	cmpBaseButton buildings
 	{
 		string		"_Buildings"
@@ -138,56 +139,48 @@ window bases
 	cmpBaseButton aircraft
 	{
 		string		"_Aircraft"
-		tooltip		"_Aircraft management and crew equipment"
 		onClick		{ cmd "mn_push aircraft;" }
 	}
 
 	cmpBaseButton buysell
 	{
 		string		"_Buy/Sell"
-		tooltip		"_Buy/Sell equipment, aircraft and UGV"
 		onClick		{ cmd "mn_push market;" }
 	}
 
 	cmpBaseButton transfer
 	{
 		string		"_Transfer"
-		tooltip		"_Transfer equipment, aircraft, UGV, aliens and employees to other bases"
 		onClick		{ cmd "mn_push transfer;" }
 	}
 
 	cmpBaseButton research
 	{
 		string		"_Research"
-		tooltip		"_Research new technology"
 		onClick		{ cmd "mn_push research;" }
 	}
 
 	cmpBaseButton production
 	{
 		string		"_Production"
-		tooltip		"_Produce equipment, aircraft and UGV"
 		onClick		{ cmd "mn_push production;" }
 	}
 
 	cmpBaseButton hire
 	{
 		string		"_Employees"
-		tooltip		"_Hire or dismiss employees"
 		onClick		{ cmd "mn_push employees;" }
 	}
 
 	cmpBaseButton containment
 	{
 		string		"_Containment"
-		tooltip		"_Manage captured aliens"
 		onClick		{ cmd "mn_push aliencont;" }
 	}
 
 	cmpBaseButton hospital
 	{
 		string		"_Hospital"
-		tooltip		"_Treat wounded soldiers and perform implant surgery"
 		onClick		{ cmd "mn_push hospital;" }
 	}
 

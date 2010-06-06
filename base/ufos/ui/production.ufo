@@ -76,10 +76,6 @@ window production
 			value	"aircraft"
 		}
 		option description {
-			label	"_UGV items"
-			value	"ugvitem"
-		}
-		option description {
 			label	"_Other"
 			value	"dummy"
 		}

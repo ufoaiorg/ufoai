@@ -298,12 +298,12 @@ static void B_BaseInit_f (void)
 	}
 
 	if (BS_BuySellAllowed(base))
-		MN_ExecuteConfunc("update_basebutton buysell false \"%s\"", _("Buy/Sell equipment, aircraft and UGV"));
+		MN_ExecuteConfunc("update_basebutton buysell false \"%s\"", _("Buy/Sell equipment and vehicle"));
 	else
 		MN_ExecuteConfunc("update_basebutton buysell true \"%s\"", va(_("No %s functional in base."), _("Storage")));
 
 	if (ccs.numBases > 1)
-		MN_ExecuteConfunc("update_basebutton transfer false \"%s\"", _("Transfer equipment, aircraft, UGV, aliens and employees to other bases"));
+		MN_ExecuteConfunc("update_basebutton transfer false \"%s\"", _("Transfer equipment, vehicles, aliens and employees to other bases"));
 	else
 		MN_ExecuteConfunc("update_basebutton transfer true \"%s\"", _("Build at least a second base to transfer equipment or personnel"));
 
@@ -313,7 +313,7 @@ static void B_BaseInit_f (void)
 		MN_ExecuteConfunc("update_basebutton research true \"%s\"", va(_("No %s functional in base."), _("Laboratory")));
 
 	if (PR_ProductionAllowed(base))
-		MN_ExecuteConfunc("update_basebutton production false \"%s\"", _("Produce equipment, aircraft and UGV"));
+		MN_ExecuteConfunc("update_basebutton production false \"%s\"", _("Produce equipment and vehicles"));
 	else
 		MN_ExecuteConfunc("update_basebutton production true \"%s\"", va(_("No %s functional in base."), _("Workshop")));
 
@@ -328,7 +328,7 @@ static void B_BaseInit_f (void)
 		MN_ExecuteConfunc("update_basebutton containment true \"%s\"", va(_("No %s functional in base."), _("Containment")));
 
 	if (HOS_HospitalAllowed(base))
-		MN_ExecuteConfunc("update_basebutton hospital false \"%s\"", _("Treat wounded soldiers and perform implant surgery"));
+		MN_ExecuteConfunc("update_basebutton hospital false \"%s\"", _("Treat wounded soldiers"));
 	else
 		MN_ExecuteConfunc("update_basebutton hospital true \"%s\"", va(_("No %s functional in base."), _("Hospital")));
 }
