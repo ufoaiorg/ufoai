@@ -978,52 +978,6 @@ window popup_newbase
 		font		"f_big"
 	}
 
-	func chk_checkboxes {
-		if ( *node:(checkbox)root.start_building@current > 0 ) {
-			*start_employees@disabled = false
-		} else {
-			*(abstractvalue)start_employees@current = 0
-			*start_employees@disabled = true
-		}
-	}
-
-	// START WITH BUILDINGS
-	checkbox start_building
-	{
-		tooltip		"_Buildings already built in the initial base"
-		current		*cvar:cl_start_buildings
-		pos			"246 98"
-		image		"ui/checkbox_blue"
-		size		"20 18"
-		onChange 	{ call *node:root.chk_checkboxes }
-	}
-	string start_buildings_str
-	{
-		string		"_Start with buildings"
-		pos			"270 98"
-		size		"180 20"
-		textalign	ALIGN_UL
-		onClick		{ call *node:root.start_building@toggle }
-	}
-
-	// START WITH EMPLOYEES
-	checkbox start_employees
-	{
-		tooltip		"_Employees already hired at campaign start"
-		current		*cvar:cp_start_employees
-		pos			"246 123"
-		size		"20 18"
-		image		"ui/checkbox_blue"
-	}
-	string start_employees_str
-	{
-		string		"_Start with employees"
-		pos			"270 123"
-		size		"180 20"
-		textalign	ALIGN_UL
-		onClick		{ call *node:root.start_employees@toggle }
-	}
-
 	cmpCancelButton bt_cancel
 	{
 		pos			"298 188"
@@ -1038,22 +992,6 @@ window popup_newbase
 		pos			"111 188"
 		onClick	{
 			cmd "mn_pop;mn_base_build;"
-		}
-	}
-
-	func onInit
-	{
-		if ( *cvar:mn_base_count <= 0 ) {
-			*start_employees_str@invis = false
-			*start_employees@invis = false
-			*start_buildings_str@invis = false
-			*start_building@invis = false
-			call *node:root.chk_checkboxes
-		} else {
-			*start_employees_str@invis = true
-			*start_employees@invis = true
-			*start_buildings_str@invis = true
-			*start_building@invis = true
 		}
 	}
 }

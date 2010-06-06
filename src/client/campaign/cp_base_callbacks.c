@@ -209,7 +209,7 @@ static void B_BuildBase_f (void)
 
 		Q_strncpyz(base->name, baseName, sizeof(base->name));
 		/* set up the base with buildings from template */
-		B_SetUpBase(base, cp_start_employees->integer, cl_start_buildings->integer, newBasePos);
+		B_SetUpBase(base, newBasePos);
 
 		ccs.numBases++;
 		ccs.campaignStats.basesBuilt++;
@@ -262,9 +262,6 @@ static void B_ChangeBaseName_f (void)
 static void B_ResetBuildingCurrent_f (void)
 {
 	base_t *base = B_GetCurrentSelectedBase();
-
-	if (Cmd_Argc() == 2)
-		ccs.instant_build = atoi(Cmd_Argv(1));
 
 	B_ResetBuildingCurrent(base);
 }
