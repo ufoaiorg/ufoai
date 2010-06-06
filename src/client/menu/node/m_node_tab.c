@@ -84,6 +84,7 @@ static menuNode_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int y
 	/* Text box test */
 	for (option = node->firstChild; option; option = option->next) {
 		int tabWidth;
+		const char *label;
 		assert(option->behaviour == optionBehaviour);
 
 		/* skip hidden options */
@@ -93,7 +94,11 @@ static menuNode_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int y
 		if (x < TILE_WIDTH / 2)
 			return prev;
 
-		R_FontTextSize(font, _(OPTIONEXTRADATA(option).label), 0, LONGLINES_PRETTYCHOP, &tabWidth, NULL, NULL, NULL);
+		label = OPTIONEXTRADATA(option).label;
+		if (label[0] == '_')
+			label = _(label + 1);
+
+		R_FontTextSize(font, label, 0, LONGLINES_PRETTYCHOP, &tabWidth, NULL, NULL, NULL);
 		if (OPTIONEXTRADATA(option).icon && OPTIONEXTRADATA(option).icon->size[0] < allowedWidth) {
 			tabWidth += OPTIONEXTRADATA(option).icon->size[0];
 		}
@@ -204,6 +209,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		int fontWidth;
 		int tabWidth;
 		int textPos;
+		const char *label;
 		qboolean drawIcon = qfalse;
 		mn_tab_type_t status = MN_TAB_NORMAL;
 		assert(option->behaviour == optionBehaviour);
@@ -227,7 +233,11 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		MN_TabNodeDrawJunction(image, currentX, pos[1], lastStatus, status);
 		currentX += TILE_WIDTH;
 
-		R_FontTextSize(font, _(OPTIONEXTRADATA(option).label), 0, LONGLINES_PRETTYCHOP, &fontWidth, &fontHeight, NULL, NULL);
+		label = OPTIONEXTRADATA(option).label;
+		if (label[0] == '_')
+			label = _(label + 1);
+
+		R_FontTextSize(font, label, 0, LONGLINES_PRETTYCHOP, &fontWidth, &fontHeight, NULL, NULL);
 		tabWidth = fontWidth;
 		if (OPTIONEXTRADATA(option).icon && OPTIONEXTRADATA(option).icon->size[0] < allowedWidth) {
 			tabWidth += OPTIONEXTRADATA(option).icon->size[0];
@@ -253,11 +263,12 @@ static void MN_TabNodeDraw (menuNode_t *node)
 			MN_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, currentX, pos[1], OPTIONEXTRADATA(option).icon->size[0], TILE_HEIGHT);
 			textPos += OPTIONEXTRADATA(option).icon->size[0];
 		}
+
 		/** @todo fontWidth can be =0, maybe a bug from the font cache */
 		OPTIONEXTRADATA(option).truncated = tabWidth < fontWidth || tabWidth == 0;
 		MN_DrawString(font, ALIGN_UL, textPos, pos[1] + ((node->size[1] - fontHeight) / 2),
 			textPos, pos[1], tabWidth + 1, TILE_HEIGHT,
-			0, _(OPTIONEXTRADATA(option).label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		currentX += tabWidth;
 		allowedWidth -= tabWidth;
 
@@ -283,6 +294,7 @@ static void MN_TabNodeDrawTooltip (menuNode_t *node, int x, int y)
 {
 	menuNode_t *option;
 	const int tooltipWidth = 250;
+	const char *label;
 
 	option = MN_TabNodeTabAtPosition(node, x, y);
 	if (option == NULL)
@@ -291,7 +303,11 @@ static void MN_TabNodeDrawTooltip (menuNode_t *node, int x, int y)
 	if (!OPTIONEXTRADATA(option).truncated)
 		return;
 
-	MN_DrawTooltip(_(OPTIONEXTRADATA(option).label), x, y, tooltipWidth, 0);
+	label = OPTIONEXTRADATA(option).label;
+	if (label[0] == '_')
+		label = _(label + 1);
+
+	MN_DrawTooltip(label, x, y, tooltipWidth, 0);
 }
 
 /** called when the window is pushed

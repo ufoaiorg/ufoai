@@ -130,6 +130,7 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 
 	/* draw the label for the current selected option */
 	for (option = MN_AbstractOptionGetFirstOption(node); option; option = option->next) {
+		const char *label;
 
 		if (strcmp(OPTIONEXTRADATA(option).value, ref) != 0)
 			continue;
@@ -137,9 +138,13 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 		if (option->invis)
 			R_Color(invisColor);
 
+		label = OPTIONEXTRADATA(option).label;
+		if (label[0] == '_')
+			label = _(label + 1);
+
 		MN_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, selBoxY, node->size[0] - 4, 0,
-			0, _(OPTIONEXTRADATA(option).label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
 		R_Color(NULL);
 		break;
@@ -193,6 +198,7 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 
 	/* now draw all available options for this selectbox */
 	for (option = MN_AbstractOptionGetFirstOption(node); option; option = option->next) {
+		const char *label;
 		if (option->invis)
 			continue;
 		/* draw the hover effect */
@@ -200,9 +206,12 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 			MN_DrawFill(selBoxX, selBoxY, node->size[0] -SELECTBOX_SIDE_WIDTH - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
 					SELECTBOX_DEFAULT_HEIGHT, node->color);
 		/* print the option label */
+		label = OPTIONEXTRADATA(option).label;
+		if (label[0] == '_')
+			label = _(label + 1);
 		MN_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, nodepos[1] + node->size[1], node->size[0] - 4, 0,
-			0, _(OPTIONEXTRADATA(option).label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		/* next entries' position */
 		selBoxY += node->size[1];
 	}

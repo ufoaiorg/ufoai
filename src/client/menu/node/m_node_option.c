@@ -103,7 +103,7 @@ static const value_t properties[] = {
 	/**
 	 * Displayed text
 	 */
-	{"label", V_TRANSLATION_STRING, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, label), MEMBER_SIZEOF(EXTRADATA_TYPE, label)},
+	{"label", V_STRING, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, label), 0},
 
 	/**
 	 * Value of the option

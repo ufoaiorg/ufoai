@@ -156,6 +156,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	/* draw all available options for this selectbox */
 	for (; option; option = MN_OptionIteratorNextOption(&iterator)) {
 		int decX;
+		const char *label;
 
 		/* outside the node */
 		if (currentY + fontHeight > pos[1] + node->size[1] - node->padding) {
@@ -195,10 +196,14 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 			decX += OPTIONEXTRADATA(option).icon->size[0] + fontHeight / 4;
 		}
 
+		label = OPTIONEXTRADATA(option).label;
+		if (label[0] == '_')
+			label = _(label + 1);
+
 		R_Color(textColor);
 		MN_DrawString(font, ALIGN_UL, decX, currentY + currentDecY,
 			pos[0], currentY + currentDecY, node->size[0] - node->padding - node->padding, node->size[1],
-			0, _(OPTIONEXTRADATA(option).label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
 		currentY += fontHeight;

@@ -269,18 +269,17 @@ static menuNode_t *MN_OptionNodeRemoveHigherOption (menuNode_t **option)
 	menuNode_t *prevfind = NULL;
 	menuNode_t *search = (*option)->next;
 	const char *label = OPTIONEXTRADATA(*option).label;
-#if 0
+
 	if (label[0] == '_')
-#endif
-		label = _(label);
+		label = _(label + 1);
 
 	/* search the smaller element */
 	while (search) {
 		const char *searchlabel = OPTIONEXTRADATA(search).label;
-#if 0
+
 		if (searchlabel[0] == '_')
-#endif
-			searchlabel = _(searchlabel);
+			searchlabel = _(searchlabel + 1);
+
 		if (strcmp(label, searchlabel) < 0) {
 			prevfind = prev;
 			label = searchlabel;
