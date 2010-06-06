@@ -14,6 +14,7 @@
 // <time>
 //	The time until the disassembly is finished. The values are given in "hours", buuut....
 //	Consider that this value doesn't reflect _real_ time, but it will depend on the number of workers working on it.
+//	The time is also increased by the distance between the UFO Yard and the base.
 //	[Default] 0
 // <type>
 //	Only "item" supported right now.
@@ -36,7 +37,7 @@
 
 // UFO -- Scout
 components craft_ufo_scout {
-	time	2400
+	time	2000
 	item	alienmaterials			300	%
 	item	antimatter				200	0
 	item	craft_alien_propulsion	2	%
@@ -46,7 +47,7 @@ components craft_ufo_scout {
 
 // UFO -- Fighter
 components craft_ufo_fighter {
-	time	2600
+	time	2200
 	item	alienmaterials				400	%
 	item	antimatter					250	0
 	item	craft_alien_propulsion		2	%
@@ -70,7 +71,7 @@ components craft_ufo_harvester {
 
 // UFO -- Supply Transport
 components craft_ufo_supply {
-	time	3800
+	time	3000
 	item	alienmaterials				600	%
 	item	antimatter					600	0
 	item	craft_alien_propulsion		2	%
