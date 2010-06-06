@@ -692,7 +692,8 @@ static void BaseSummary_Init (const base_t *base)
 	Q_strcat(textInfoBuffer, "\n", sizeof(textInfoBuffer));
 
 	Q_strcat(textInfoBuffer, _("^BEmployees\n"), sizeof(textInfoBuffer));
-	for (i = 0; i < MAX_EMPL; i++) {
+	/* do not print UGV info */
+	for (i = 0; i < EMPL_ROBOT; i++) {
 		tmp = E_CountHired(base, i);
 		totalEmployees += tmp;
 		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", E_GetEmployeeString(i), tmp), sizeof(textInfoBuffer));
