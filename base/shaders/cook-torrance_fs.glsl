@@ -19,11 +19,11 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 	float attenuate = lightSource.constantAttenuation;
   
   /* HACK - for some reason, ATI cards return 0.0 for attenuation for directional sources */
-  if (lightSource.position.w == 0.0) {
+  if (attenuate == 0.0) {
     attenuate = 1.0;
   }
 
-	if (attenuate > 0.0 && lightSource.position.w != 0.0){ /* directional sources don't get attenuated */
+	if (lightSource.position.w != 0.0){ /* directional sources don't get attenuated */
 		float dist = length((lightSource.position).xyz - point);
 		attenuate = 1.0 / (lightSource.constantAttenuation + 
 				lightSource.linearAttenuation * dist +
@@ -125,7 +125,9 @@ vec4 IlluminateFragment(void){
 
 	/* do per-light calculations */
 #unroll r_dynamic_lights
-	totalColor += LightContribution(gl_LightSource[$], lightDirs[$], N, V, NdotV, R_2, roughness, specular, diffuse);
+  if ($ < DYNAMICLIGHTS) {
+    totalColor += LightContribution(gl_LightSource[$], lightDirs[$], N, V, NdotV, R_2, roughness, specular, diffuse);
+  }
 #endunroll
 
 	return vec4(totalColor, diffuse.a);
