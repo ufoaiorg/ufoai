@@ -1579,7 +1579,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				return;
 			if (token[0] == '_')
 				token++;
-			Q_strncpyz(aircraftTemplate->name, _(token), sizeof(aircraftTemplate->name));
+			Q_strncpyz(aircraftTemplate->name, token, sizeof(aircraftTemplate->name));
 			continue;
 		}
 		if (assignAircraftItems) {
