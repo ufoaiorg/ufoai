@@ -35,7 +35,6 @@ struct linkedList_s;
 struct menuIcon_s;
 
 #define MAX_MENUOPTIONS 256
-#define OPTION_MAX_VALUE_LENGTH 32
 
 /** @brief linked into mn.menuText - defined in menu scripts via num */
 typedef enum {
@@ -130,7 +129,7 @@ typedef enum {
 /** @brief Option definition */
 typedef struct menuOption_s {
 	char id[MAX_VAR];	/**< text for the select box */
-	char label[OPTION_MAX_VALUE_LENGTH];	/**< text for the select box - V_TRANSLATION_STRING */
+	char label[MAX_VAR];	/**< text for the select box - V_TRANSLATION_STRING */
 	char value[MAX_VAR];	/**< the value the cvar should get */
 	struct menuIcon_s *icon;	/**< Facultative icon */
 	struct menuOption_s	*firstChild;	/** first child of an option tree */

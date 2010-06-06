@@ -44,7 +44,7 @@ static menuNode_t *MN_ParseNode(menuNode_t * parent, const char **text, const ch
 
 /** @brief valid properties for options (selectbox, tab...) */
 static const value_t optionProperties[] = {
-	{"label", V_TRANSLATION_STRING, offsetof(menuOption_t, label), sizeof(char) * OPTION_MAX_VALUE_LENGTH},
+	{"label", V_TRANSLATION_STRING, offsetof(menuOption_t, label), sizeof(char) * MAX_VAR},
 	{"value", V_STRING, offsetof(menuOption_t, value), 0},
 	{"icon", V_UI_ICONREF, offsetof(menuOption_t, icon), 0},
 	{"disabled", V_BOOL, offsetof(menuOption_t, disabled), MEMBER_SIZEOF(menuOption_t, disabled)},
