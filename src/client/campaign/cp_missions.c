@@ -1382,7 +1382,7 @@ ufoType_t CP_MissionChooseUFO (const mission_t *mission)
 	if (canBeSpawnedFromGround) {
 		const int XVI_PARAM = 10;		/**< Typical XVI average value for spreading mission from earth */
 		/* The higher the XVI rate, the higher the probability to have a mission spawned from ground */
-		groundProbability = 1.0f - exp(-CP_GetAverageXVIRate() / XVI_PARAM);
+		groundProbability = max(0.1f, 1.0f - exp(-CP_GetAverageXVIRate() / XVI_PARAM));
 
 		/* Mission spawned from ground */
 		if (randNumber < groundProbability)
