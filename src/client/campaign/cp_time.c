@@ -85,7 +85,7 @@ void CL_UpdateTime (void)
 void CL_GameTimeStop (void)
 {
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (!CL_OnBattlescape())
+	if (!cp_missiontest->integer && !CL_OnBattlescape())
 		gameLapse = 0;
 
 	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */

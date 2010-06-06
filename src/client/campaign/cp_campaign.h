@@ -577,6 +577,7 @@ typedef struct dateLong_s {
 extern ccs_t ccs;
 extern const int DETECTION_INTERVAL;
 extern cvar_t *cp_campaign;
+extern cvar_t *cp_missiontest;
 extern cvar_t *cp_start_employees;
 
 void CP_ParseCharacterData(struct dbuffer *msg);

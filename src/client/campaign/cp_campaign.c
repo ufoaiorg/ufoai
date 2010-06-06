@@ -64,6 +64,7 @@ struct memPool_s *cp_campaignPool;		/**< reset on every game restart */
 ccs_t ccs;
 cvar_t *cp_campaign;
 cvar_t *cp_start_employees;
+cvar_t *cp_missiontest;
 
 typedef struct {
 	int ucn;
@@ -286,7 +287,10 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed
 	assert(i < csi.numMDs);
 
 	mission->mapDef = &csi.mds[i];
-	Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
+	if (cp_missiontest->integer)
+		Com_Printf("Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
+	else
+		Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
 
 	return qtrue;
 }
@@ -314,6 +318,9 @@ void CP_CheckLostCondition (void)
 	qboolean endCampaign = qfalse;
 	/* fraction of nation that can be below min happiness before the game is lost */
 	const float nationBelowLimitPercentage = 0.5f;
+
+	if (cp_missiontest->integer)
+		return;
 
 	if (!endCampaign && ccs.credits < -ccs.curCampaign->negativeCreditsUntilLost) {
 		MN_RegisterText(TEXT_STANDARD, _("You've gone too far into debt."));
@@ -2053,6 +2060,8 @@ void CP_InitStartup (void)
 	Cmd_AddCommand("debug_listcampaign", CP_CampaignStats_f, "Print campaign stats to game console");
 #endif
 	Cmd_AddCommand("check_baseattacks", CP_CheckBaseAttacks_f, "Check if baseattack mission available and start it.");
+
+	cp_missiontest = Cvar_Get("cp_missiontest", "0", 0, "This will never stop the time on geoscape and print information about spawned missions");
 
 	CP_MissionsInit();
 	MS_MessageInit();
