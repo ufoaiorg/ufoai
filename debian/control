@@ -73,7 +73,7 @@ Section: games
 Priority: optional
 Architecture: all
 Depends: ufoai-server-data (= ${source:Version}), ttf-freefont, ttf-dejavu, ttf-thai-tlwg,
- ttf-wqy-zenhei, ttf-unfonts
+ ttf-wqy-zenhei, ttf-unfonts-core, ttf-unfonts-extra
 Recommends: ufoai
 Description: Data for UFO: Alien Invasion
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
