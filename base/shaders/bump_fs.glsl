@@ -17,7 +17,9 @@ vec2 BumpTexcoord(in float height){
 
 	V = normalize(eyedir);
 
-	return vec2(height * PARALLAX * 0.04 - 0.02) * V.xy;
+  /* parallax is currently somewhat broken; it will be re-enabled for future releases */
+	//return vec2(height * PARALLAX * 0.04 - 0.02) * V.xy;
+  return vec2(0.0);
 }
 
 
