@@ -1103,19 +1103,6 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 	for (i = 0; i < MAX_CAP; i++)
 		base->capacities[i].cur = 0;
 
-	/* Create random blocked fields in the base.
-	 * The first base never has blocked fields so we skip it. */
-	if (ccs.campaignStats.basesBuilt) {
-		const int j = round((frand() * (MAX_BLOCKEDFIELDS - MIN_BLOCKEDFIELDS)) + MIN_BLOCKEDFIELDS);
-		for (i = 0; i < j; i++) {
-			baseBuildingTile_t *mapPtr = &base->map[rand() % BASE_SIZE][rand() % (BASE_SIZE)];
-
-			if (!mapPtr->blocked)
-				freeSpace--;
-			mapPtr->blocked = qtrue;
-		}
-	}
-
 	if (baseTemplate) {
 		/* find each building in the template */
 		for (i = 0; i < baseTemplate->numBuildings; i++) {
@@ -1123,7 +1110,7 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 
 			Vector2Set(pos, baseTemplate->buildings[i].posX, baseTemplate->buildings[i].posY);
 
-			if (!(base->map[(int)pos[0]][(int)pos[1]].blocked || base->map[(int)pos[0]][(int)pos[1]].building)) {
+			if (!base->map[(int)pos[0]][(int)pos[1]].building) {
 				B_AddBuildingToBasePos(base, baseTemplate->buildings[i].building, hire, pos);
 				freeSpace--;
 			}
@@ -1140,7 +1127,7 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 
 		while ((freeSpace > 0) && !B_GetBuildingStatus(base, building->buildingType)) {
 			Vector2Set(pos, rand() % BASE_SIZE, rand() % BASE_SIZE);
-			if (!(base->map[(int)pos[0]][(int)pos[1]].blocked || base->map[(int)pos[0]][(int)pos[1]].building)) {
+			if (!base->map[(int)pos[0]][(int)pos[1]].building) {
 				B_AddBuildingToBasePos(base, building, hire, pos);
 				freeSpace--;
 			}
@@ -1150,6 +1137,23 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 		if (!B_GetBuildingStatus(base, building->buildingType))
 			Com_Error(ERR_DROP, "B_BuildFromTemplate: Cannot build base. No space for it's buildings!");
 	}
+
+	/* Create random blocked fields in the base.
+	 * The first base never has blocked fields so we skip it. */
+	if (ccs.campaignStats.basesBuilt) {
+		const int j = round((frand() * (MAX_BLOCKEDFIELDS - MIN_BLOCKEDFIELDS)) + MIN_BLOCKEDFIELDS);
+
+		for (i = 0; i < j; i++) {
+			baseBuildingTile_t *mapPtr = &base->map[rand() % BASE_SIZE][rand() % (BASE_SIZE)];
+
+			if (mapPtr->building || mapPtr->blocked)
+				continue;
+
+			mapPtr->blocked = qtrue;
+			freeSpace--;
+		}
+	}
+
 }
 
 /**
