@@ -130,6 +130,6 @@ vec4 IlluminateFragment(void){
   }
 #endunroll
 
-	return vec4(totalColor, diffuse.a);
+	return vec4(totalColor, diffuse.a * gl_Color.a);
 }
 
