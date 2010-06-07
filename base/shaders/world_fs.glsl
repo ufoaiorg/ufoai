@@ -1,4 +1,4 @@
-#version 130
+//#version 130
 /* battlescape fragment shader */
 
 /* flags to enable/disable rendering pathways */
@@ -49,7 +49,6 @@ in vec4 Normal;
 in vec4 Tangent;
 in vec4 vPosScreen;
 in vec4 vPos;
-in vec4 vPosCamera;
 in vec3 vNormal;
 in vec3 eyedir;
 in vec3 lightDirs[];
@@ -60,9 +59,9 @@ in vec4 gl_TexCoord[];
 
 /* per-fragment output colors */
 #if r_framebuffers
-out vec4 gl_FragData[];
+//out vec4 gl_FragData[];
 #else
-out vec4 gl_FragColor;
+//out vec4 gl_FragColor;
 #endif
 
 #include "illuminate_fs.glsl"

@@ -1,4 +1,4 @@
-#version 130
+//#version 130
 /* battlescape vertex shader */
 
 uniform vec4 LightLocation[#replace r_dynamic_lights ];
@@ -19,15 +19,18 @@ in vec3 NEXT_FRAME_NORMALS;
 in vec4 TANGENTS;
 in vec4 NEXT_FRAME_TANGENTS;
 
+#ifndef ATI
 in vec4 gl_Vertex;
 in vec3 gl_Normal;
 uniform mat4 gl_ModelViewMatrix;
 uniform mat4 gl_ProjectionMatrix;
 uniform mat3 gl_NormalMatrix;
-uniform mat4 SHADOW_MATRIX;
 
 in vec4 gl_MultiTexCoord0;
 in vec4 gl_MultiTexCoord1;
+#endif
+
+uniform mat4 SHADOW_MATRIX;
 
 out vec4 Vertex;
 out vec3 Normal;

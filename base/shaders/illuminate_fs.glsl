@@ -96,7 +96,7 @@ vec3 LightContribution(in vec4 location,
 	float attenuate = attenuation[0];
 
 	if (attenuate > 0.0 && location.w != 0.0){ /* directional sources don't get attenuated */
-		float dist = length((gl_NormalMatrix * location.xyz) - vPosCamera.xyz);
+		float dist = length((gl_NormalMatrix * location.xyz) - vPos.xyz);
 		attenuate = 1.0 / (attenuation[0] + 
 				attenuation[1] * dist +
 				attenuation[2] * dist * dist); 

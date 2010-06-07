@@ -304,6 +304,11 @@ void R_RenderFrame (void)
 
 	/* build shadowmaps */
 	if (r_shadowmapping->integer) {
+	    /** @todo - make this thread-safe!  right now, if threads are
+	     *  enabled, upper levels of the map (eg. roofs, tree tops)
+	     *  flicker in and out of existance when looking at lower levels.
+	     *  Turning off r_threads fixes this, but eventually this should
+	     *  be properly handled with threads enabled. */
 		int i, curLevel;
 
 		for (i = 0; i < 3; i++) {

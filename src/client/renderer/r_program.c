@@ -338,8 +338,8 @@ static size_t R_InitializeShader (const char *name, char *out, size_t len)
 
 	i = 0;
 
-	//defines = "#version 110\n";
-	//i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
+	defines = "#version 130\n";
+	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 	defines = va("#ifndef r_width\n#define r_width %f\n#endif\n", (float)viddef.width);
 	i += R_PreprocessShaderAddToShaderBuf(name, defines, &out, &len);
 	defines = va("#ifndef r_height\n#define r_height %f\n#endif\n", (float)viddef.height);
