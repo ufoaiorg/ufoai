@@ -783,7 +783,7 @@ static menuNode_t* UP_GenerateArticlesSummary (pediaChapter_t *parentChapter)
 	while (tech) {
 		if (UP_TechGetsDisplayed(tech)) {
 			const char* id = va("@%i", tech->idx);
-			MN_AddOption(&first, id, tech->name, id);
+			MN_AddOption(&first, id, va("_%s", tech->name), id);
 		}
 		tech = tech->upNext;
 	}
@@ -825,7 +825,7 @@ static void UP_GenerateSummary (void)
 			upChaptersDisplayList[numChaptersDisplayList++] = &ccs.upChapters[i];
 
 			/* chapter section*/
-			chapter = MN_AddOption(&chapters, ccs.upChapters[i].id, ccs.upChapters[i].name, va("%i", num));
+			chapter = MN_AddOption(&chapters, ccs.upChapters[i].id, va("_%s", ccs.upChapters[i].name), va("%i", num));
 			OPTIONEXTRADATA(chapter).icon = MN_GetIconByName(va("ufopedia_%s", ccs.upChapters[i].id));
 			chapter->firstChild = UP_GenerateArticlesSummary(&ccs.upChapters[i]);
 

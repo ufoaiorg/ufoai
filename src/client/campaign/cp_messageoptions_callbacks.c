@@ -57,11 +57,11 @@ static void MSO_InitList (void)
 		const char *id = va("%d", idx);
 
 		if (entry->isCategory) {
-			lastCategory = MN_AddOption(&messageSetting, id, entry->notifyType, id);
+			lastCategory = MN_AddOption(&messageSetting, id, va("_%s", entry->notifyType), id);
 		} else {
 			if (!lastCategory)
 				Sys_Error("MSO_InitList: The first entry must be a category");
-			MN_AddOption(&lastCategory->firstChild, id, entry->notifyType, id);
+			MN_AddOption(&lastCategory->firstChild, id, va("_%s", entry->notifyType), id);
 		}
 	}
 	MN_RegisterOption(TEXT_MESSAGEOPTIONS, messageSetting);
