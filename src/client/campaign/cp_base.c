@@ -1144,7 +1144,8 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 		const int j = round((frand() * (MAX_BLOCKEDFIELDS - MIN_BLOCKEDFIELDS)) + MIN_BLOCKEDFIELDS);
 
 		for (i = 0; i < j; i++) {
-			baseBuildingTile_t *mapPtr = &base->map[rand() % BASE_SIZE][rand() % (BASE_SIZE)];
+			/** HACK force blocked tiles to inner base */
+			baseBuildingTile_t *mapPtr = &base->map[1 + rand() % (BASE_SIZE - 2)][1 + rand() % (BASE_SIZE - 2)];
 
 			if (mapPtr->building || mapPtr->blocked)
 				continue;
