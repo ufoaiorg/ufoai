@@ -42,7 +42,11 @@ void main(void){
 	 * the Cook-Torrance specularity model with the Phong
 	 * model as a default if the roughness map isn't enabled */
 	if (DYNAMICLIGHTS > 0) {
+#if r_dynamic_lights
 		finalColor = IlluminateFragment();
+#else
+    finalColor = vec4(1.0);
+#endif
 	} else {
 		/* use static lighting (ie. legacy rendering code) */
 		vec2 offset = vec2(0.0);

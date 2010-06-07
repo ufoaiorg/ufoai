@@ -18,7 +18,10 @@ uniform float TIME;
 varying vec4 Tangent;
 
 varying vec3 eyedir;
+
+#if r_dynamic_lights
 varying vec3 lightDirs[];
+#endif
 varying vec3 staticLightDir;
 
 varying float fog; 
