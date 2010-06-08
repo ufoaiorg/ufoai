@@ -131,7 +131,7 @@ static void MN_CheckBoxNodeLoading (menuNode_t *node)
 
 static const value_t properties[] = {
 	/* @override image
-	 * Texture used for the widget. Its a 128�128 template image with all
+	 * Texture used for the widget. Its a 128x128 template image with all
 	 * three status according to the value, and four status according to the
 	 * interaction. From left to right: unchecked, checked, and invalidate.
 	 * From top to bottom: normal, hovered by the mouse, clicked, disabled.
