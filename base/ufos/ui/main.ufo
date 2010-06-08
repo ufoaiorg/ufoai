@@ -311,7 +311,7 @@ window popup_tipoftheday
 	{
 		cmd "tipoftheday random; check_nexttip;"
 		if ( *cvar:cl_introshown != 1 ) {
-			cmd "mn_push intro"
+			cmd "mn_push intro;"
 			*cvar:cl_introshown = 1
 		}
 	}
