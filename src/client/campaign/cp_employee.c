@@ -753,8 +753,9 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 				continue;
 			for (k = 0; k < base->numAircraftInBase; k++) {
 				aircraft_t *aircraft = &base->aircraft[k];
+				const size_t size = lengthof(aircraft->acTeam);
 				int l;
-				for (l = 0; l < MAX_ACTIVETEAM; l++) {
+				for (l = 0; l < size; l++) {
 					/* no need to check for == here, the employee should
 					 * no longer be in this list, due to the E_UnhireEmployee
 					 * call which will also remove any assignments for the

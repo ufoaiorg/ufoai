@@ -190,7 +190,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	baseAttackFakeAircraft.homebase = base;
 	VectorCopy(base->pos, baseAttackFakeAircraft.pos);				/* needed for transfer of alien corpses */
 	/** @todo EMPL_ROBOT */
-	baseAttackFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;			/* needed to spawn soldiers on map */
+	baseAttackFakeAircraft.maxTeamSize = lengthof(baseAttackFakeAircraft.acTeam);			/* needed to spawn soldiers on map */
 	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiersInBase);
 
 	if (!hiredSoldiersInBase) {
@@ -199,7 +199,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 		return;
 	}
 
-	for (i = 0, pos = hiredSoldiersInBase; i < MAX_ACTIVETEAM && pos; i++, pos = pos->next)
+	for (i = 0, pos = hiredSoldiersInBase; i < baseAttackFakeAircraft.maxTeamSize && pos; i++, pos = pos->next)
 		AIR_AddToAircraftTeam(&baseAttackFakeAircraft, (employee_t *)pos->data);
 
 	LIST_Delete(&hiredSoldiersInBase);
