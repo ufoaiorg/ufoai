@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_window.h"
 
 #include "../client.h"
-#include "../cinematic/cl_cinematic.h"
 
 #define WINDOWEXTRADATA(node) MN_EXTRADATA(node, windowExtraData_t)
 #define WINDOWEXTRADATACONST(node)  MN_EXTRADATACONST(node, windowExtraData_t)
@@ -512,10 +511,6 @@ void MN_PopWindow (qboolean all)
 
 	/* change from e.g. console mode to game input mode (fetch input) */
 	Key_SetDest(key_game);
-
-	/* when we leave a window and a window cinematic is running... we should stop it */
-	if (cls.playingCinematic == CIN_STATUS_MENU)
-		CIN_StopCinematic();
 }
 
 /**

@@ -89,7 +89,6 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterBaseMapNode,
 	MN_RegisterButtonNode,
 	MN_RegisterCheckBoxNode,
-	MN_RegisterCinematicNode,
 	MN_RegisterConFuncNode,
 	MN_RegisterContainerNode,
 	MN_RegisterControlsNode,
@@ -123,6 +122,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterTextEntryNode,
 	MN_RegisterTextListNode,
 	MN_RegisterTodoNode,
+	MN_RegisterCinematicNode,	/* video */
 	MN_RegisterVScrollbarNode,
 	MN_RegisterWindowNode,
 	MN_RegisterZoneNode

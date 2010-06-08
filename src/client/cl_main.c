@@ -49,7 +49,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_http.h"
 #include "cl_ugv.h"
 #include "input/cl_joystick.h"
-#include "cinematic/cl_cinematic.h"
 #include "sound/s_music.h"
 #include "sound/s_sample.h"
 #include "renderer/r_main.h"
@@ -249,9 +248,6 @@ static void CL_ClearState (void)
 void CL_Disconnect (void)
 {
 	struct dbuffer *msg;
-
-	/* If playing a cinematic, stop it */
-	CIN_StopCinematic();
 
 	if (cls.state == ca_disconnected)
 		return;
@@ -733,11 +729,6 @@ void CL_InitAfter (void)
 	/* now make sure that all the precached models are stored until we quit the game
 	 * otherwise they would be freed with every map change */
 	R_SwitchModelMemPoolTag();
-
-	if (!cl_introshown->integer) {
-		Cbuf_AddText("cinematic intro;");
-		Cvar_Set("cl_introshown", "1");
-	}
 }
 
 /**

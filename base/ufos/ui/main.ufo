@@ -310,5 +310,9 @@ window popup_tipoftheday
 	func onInit
 	{
 		cmd "tipoftheday random; check_nexttip;"
+		if ( *cvar:cl_introshown != 1 ) {
+			cmd "mn_push intro"
+			*cvar:cl_introshown = 1
+		}
 	}
 }

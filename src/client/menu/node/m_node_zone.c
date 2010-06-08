@@ -4,9 +4,8 @@
  * Currently we only use it to support repeat mouse actions without merging
  * the code which managing this feature.
  * @brief The very special zone called "render" is used to identify a rendering rectangle
- * for cinematics and map (battlescape). This part of the code should be removed.
- * @todo Find a way to remove the zone called "render". Create a node for the cinematics
- * and for the battlescape?
+ * for battlescape. This part of the code should be removed.
+ * @todo Find a way to remove the zone called "render". Create a node for the battlescape?
  */
 
 /*

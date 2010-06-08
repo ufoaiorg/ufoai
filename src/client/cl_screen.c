@@ -36,7 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_screen.h"
 #include "cl_console.h"
-#include "cinematic/cl_cinematic.h"
 #include "battlescape/cl_localentity.h"
 #include "battlescape/cl_actor.h"
 #include "battlescape/cl_view.h"
@@ -251,7 +250,7 @@ static void SCR_DrawCursor (void)
 	if (scr_showcursor->integer == 0)
 		return;
 
-	if (!scr_cursor->integer || cls.playingCinematic == CIN_STATUS_FULLSCREEN)
+	if (!scr_cursor->integer)
 		return;
 
 	if (scr_cursor->modified) {
@@ -434,16 +433,10 @@ void SCR_UpdateScreen (void)
 		SCR_DrawLoading();
 	else {
 		MN_GetActiveRenderRect(&viddef.x, &viddef.y, &viddef.viewWidth, &viddef.viewHeight);
-
-		if (cls.playingCinematic == CIN_STATUS_FULLSCREEN) {
-			CIN_RunCinematic();
-		} else {
-			/* draw scene */
-			CL_ViewRender();
-
-			/* draw the menus on top of the render view (for hud and so on) */
-			MN_Draw();
-		}
+		/* draw scene */
+		CL_ViewRender();
+		/* draw the menus on top of the render view (for hud and so on) */
+		MN_Draw();
 
 		SCR_DrawConsole();
 

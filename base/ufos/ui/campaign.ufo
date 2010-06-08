@@ -710,7 +710,6 @@ window endgame
 	}
 
 	func onInit {
-		cmd "cinematic end;"
 	}
 }
 

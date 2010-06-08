@@ -34,27 +34,54 @@ static void MN_CinematicNodeDraw (menuNode_t *node)
 {
 	vec2_t pos;
 	MN_GetNodeAbsPos(node, pos);
-	if (node->image) {
-		assert(cls.playingCinematic != CIN_STATUS_FULLSCREEN);
-		if (cls.playingCinematic == CIN_STATUS_NONE)
-			CIN_PlayCinematic(va("videos/%s", (const char *)node->image));
-		if (cls.playingCinematic) {
-			/* only set replay to true if video was found and is running */
-			CIN_SetParameters(pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
-			CIN_RunCinematic();
-		}
+
+	if (!node->image)
+		return;
+
+	if (cls.playingCinematic == CIN_STATUS_FULLSCREEN) {
+		MN_CaptureDrawOver(node);
+		return;
+	}
+
+	if (cls.playingCinematic == CIN_STATUS_NONE)
+		CIN_PlayCinematic(va("videos/%s", (const char *)node->image));
+	if (cls.playingCinematic) {
+		/* only set replay to true if video was found and is running */
+		CIN_SetParameters(pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
+		CIN_RunCinematic();
 	}
 }
 
+static void MN_CinematicNodeDrawOverMenu (menuNode_t *node)
+{
+	CIN_RunCinematic();
+}
+
+static void MN_CinematicNodeInit (menuNode_t *node)
+{
+	if (!node->image)
+		return;
+	CIN_PlayCinematic(va("videos/%s", (const char *)node->image));
+}
+
+static void MN_CinematicNodeClose (menuNode_t *node)
+{
+	/* If playing a cinematic, stop it */
+	CIN_StopCinematic();
+}
+
 static const value_t properties[] = {
-	/** @todo Please document it */
-	{"video", V_CVAR_OR_STRING, offsetof(menuNode_t, image), 0},
+	/** Source of the video. File name without prefix ./base/videos and without extension */
+	{"src", V_CVAR_OR_STRING, offsetof(menuNode_t, image), 0},
 	{NULL, V_NULL, 0, 0}
 };
 
 void MN_RegisterCinematicNode (nodeBehaviour_t* behaviour)
 {
-	behaviour->name = "cinematic";
+	behaviour->name = "video";
 	behaviour->draw = MN_CinematicNodeDraw;
 	behaviour->properties = properties;
+	behaviour->init = MN_CinematicNodeInit;
+	behaviour->close = MN_CinematicNodeClose;
+	behaviour->drawOverMenu = MN_CinematicNodeDrawOverMenu;
 }

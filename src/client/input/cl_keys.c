@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_screen.h"
-#include "../cinematic/cl_cinematic.h"
 #include "../cl_console.h"
 #include "../menu/m_input.h"
 #include "../menu/m_nodes.h"
@@ -928,9 +927,6 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		return;
 
 	/* any key (except F1-F12) during the sequence mode will bring up the menu */
-	if (key == K_ESCAPE)
-		if (down && cls.playingCinematic == CIN_STATUS_FULLSCREEN)
-			CIN_StopCinematic();
 
 	if (cls.keyDest == key_game && down) {
 		if (MN_KeyPressed(key, unicode))
