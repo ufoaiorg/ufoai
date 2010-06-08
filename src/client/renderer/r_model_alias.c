@@ -373,8 +373,8 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 			if (j == i)
 				continue;
 
-			/* only average normals if verticies have the same position
-			 * and the normals aren't too far appart to start with */
+			/* only average normals if vertices have the same position
+			 * and the normals aren't too far apart to start with */
 			if (VectorEqual(vertexes[indexArray[i]].point, vertexes[indexArray[j]].point)
 					&& DotProduct(triangleNormals[idx], triangleNormals[idx2]) > smoothness) {
 				/* average the normals */
@@ -382,7 +382,7 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 
 				/* if the tangents match as well, average them too.
 				 * Note that having matching normals without matching tangents happens
-				 * when the order of verticies in two triangles sharing the vertex
+				 * when the order of vertices in two triangles sharing the vertex
 				 * in question is different.  This happens quite frequently if the
 				 * modeler does not go out of their way to avoid it. */
 
@@ -401,11 +401,11 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 		VectorNormalize(tmpBitangents[i]);
 	}
 
-	/* assume all verticies are unique until proven otherwise */
+	/* assume all vertices are unique until proven otherwise */
 	for (i = 0; i < numIndexes; i++)
 		indRemap[i] = -1;
 
-	/* merge verticies that have become identical */
+	/* merge vertices that have become identical */
 	for (i = 0; i < numIndexes; i++) {
 		vec3_t n, b, t, v;
 		if (indRemap[i] != -1)
