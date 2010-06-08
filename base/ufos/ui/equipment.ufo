@@ -2,6 +2,21 @@
 // EQUIPMENT MENU
 // ==================
 
+component radiobutton buttonActorEquip
+{
+	size	"27 35"
+	image	"ui/button_background2"
+	cvar	*cvar:selected_actor
+	onChange { cmd "actor_select_equip <value>;" }
+	tooltip	"_Equip this soldier"
+}
+
+component string txtActorEquip
+{
+	size	"270 40"
+	textalign ALIGN_CL
+}
+
 window equipment extends objectinfo
 {
 	// ==================
@@ -108,164 +123,108 @@ window equipment extends objectinfo
 		*cvar:mn_name<1> = ""
 	}
 
-	radiobutton bt_actor0
+	buttonActorEquip bt_actor0
 	{
 		pos		"10 14"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	0
-		cvar	*cvar:selected_actor
 		icon	number_1
-		onChange { cmd "actor_select_equip 0;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	radiobutton bt_actor1
+	buttonActorEquip bt_actor1
 	{
 		pos		"10 55"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	1
-		cvar	*cvar:selected_actor
 		icon	number_2
-		onChange { cmd "actor_select_equip 1;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	radiobutton bt_actor2
+	buttonActorEquip bt_actor2
 	{
 		pos		"10 96"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	2
-		cvar	*cvar:selected_actor
 		icon	number_3
-		onChange { cmd "actor_select_equip 2;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	radiobutton bt_actor3
+	buttonActorEquip bt_actor3
 	{
 		pos		"10 137"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	3
-		cvar	*cvar:selected_actor
 		icon	number_4
-		onChange { cmd "actor_select_equip 3;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	radiobutton bt_actor4
+	buttonActorEquip bt_actor4
 	{
 		pos		"10 178"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	4
-		cvar	*cvar:selected_actor
 		icon	number_5
-		onChange { cmd "actor_select_equip 4;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	radiobutton bt_actor5
+	buttonActorEquip bt_actor5
 	{
 		pos		"10 219"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	5
-		cvar	*cvar:selected_actor
 		icon	number_6
-		onChange { cmd "actor_select_equip 5;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	radiobutton bt_actor6
+	buttonActorEquip bt_actor6
 	{
 		pos		"10 260"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	6
-		cvar	*cvar:selected_actor
 		icon	number_7
-		onChange { cmd "actor_select_equip 6;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	radiobutton bt_actor7
+	buttonActorEquip bt_actor7
 	{
 		pos		"10 301"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	7
-		cvar	*cvar:selected_actor
 		icon	number_8
-		onChange { cmd "actor_select_equip 7;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	string txt_actor0
+	txtActorEquip txt_actor0
 	{
 		string	*cvar:mn_name0
 		pos		"60 13"
-		size	"270 40"
-		textalign ALIGN_CL
 		onClick { cmd "actor_select_equip 0;" }
 	}
-	string txt_actor1
+	txtActorEquip txt_actor1
 	{
 		string	*cvar:mn_name1
 		pos		"60 54"
-		size	"270 40"
-		textalign ALIGN_CL
 		onClick { cmd "actor_select_equip 1;" }
 	}
-	string txt_actor2
+	txtActorEquip txt_actor2
 	{
 		string	*cvar:mn_name2
 		pos		"60 95"
-		size	"270 40"
-		textalign ALIGN_CL
 		onClick { cmd "actor_select_equip 2;" }
 	}
-	string txt_actor3
+	txtActorEquip txt_actor3
 	{
 		string	*cvar:mn_name3
 		pos		"60 136"
-		size	"270 40"
-		textalign ALIGN_CL
 		onClick { cmd "actor_select_equip 3;" }
 	}
-	string txt_actor4
+	txtActorEquip txt_actor4
 	{
 		string	*cvar:mn_name4
 		pos		"60 177"
-		size	"270 40"
-		textalign ALIGN_CL
 		onClick { cmd "actor_select_equip 4;" }
 	}
-	string txt_actor5
+	txtActorEquip txt_actor5
 	{
 		string	*cvar:mn_name5
 		pos		"60 218"
-		size	"270 40"
-		textalign ALIGN_CL
 		onClick { cmd "actor_select_equip 5;" }
 	}
-	string txt_actor6
+	txtActorEquip txt_actor6
 	{
 		string	*cvar:mn_name6
 		pos		"60 259"
-		size	"270 40"
-		textalign ALIGN_CL
 		onClick { cmd "actor_select_equip 6;" }
 	}
-	string txt_actor7
+	txtActorEquip txt_actor7
 	{
 		string	*cvar:mn_name7
 		pos		"60 300"
-		size	"270 40"
-		textalign ALIGN_CL
 		onClick { cmd "actor_select_equip 7;" }
 	}
 
