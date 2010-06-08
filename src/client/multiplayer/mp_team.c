@@ -163,20 +163,19 @@ static void MP_SaveTeamMultiplayerInfo (mxml_node_t *p)
  */
 static void MP_LoadTeamMultiplayerInfo (mxml_node_t *p)
 {
-	/** @todo merge this with the character array from cl_game.c */
-	static character_t multiplayerCharacters[MAX_ACTIVETEAM];
 	int i;
 	mxml_node_t *n;
-	const size_t size = lengthof(multiplayerCharacters);
+	const size_t size = GAME_GetCharacterArraySize();
 
-	memset(multiplayerCharacters, 0, sizeof(multiplayerCharacters));
+	GAME_ResetCharacters();
 	memset(characterActive, 0, sizeof(characterActive));
 
 	/* header */
 	for (i = 0, n = mxml_GetNode(p, SAVE_MULTIPLAYER_CHARACTER); n && i < size; i++, n = mxml_GetNextNode(n, p, SAVE_MULTIPLAYER_CHARACTER)) {
-		CL_LoadCharacterXML(n, &multiplayerCharacters[i]);
+		character_t *chr = GAME_GetCharacter(i);
+		CL_LoadCharacterXML(n, chr);
 		assert(i < lengthof(chrDisplayList.chr));
-		chrDisplayList.chr[i] = &multiplayerCharacters[i];
+		chrDisplayList.chr[i] = chr;
 	}
 	chrDisplayList.num = i;
 

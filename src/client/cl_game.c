@@ -76,7 +76,47 @@ static const gameTypeList_t gameTypeList[] = {
 	{NULL, NULL, 0, NULL, NULL}
 };
 
+/**
+ * @brief static character array that can be used by a game mode to store the needed character values.
+ */
 static character_t characters[MAX_ACTIVETEAM];
+
+/**
+ * @brief Returns a character that can be used to store the game type specific character values
+ * @note The returned pointer is a reference to static memory
+ * @param index The index of the character array. This value must be greater than 0 and not bigger than the
+ * value @c GAME_GetCharacterArraySize returned
+ * @sa GAME_GetCharacterArraySize
+ * @sa GAME_ResetCharacters
+ * @return A character slot
+ */
+character_t* GAME_GetCharacter (int index)
+{
+	if (index < 0 || index >= lengthof(characters))
+		Com_Error(ERR_DROP, "Out of bounds character access");
+
+	return &characters[index];
+}
+
+/**
+ * @return The size of the static character array
+ * @sa GAME_GetCharacter
+ * @sa GAME_ResetCharacters
+ */
+size_t GAME_GetCharacterArraySize (void)
+{
+	return lengthof(characters);
+}
+
+/**
+ * @brief Will reset (memset) all characters in the static character array
+ * @sa GAME_GetCharacterArraySize
+ * @sa GAME_GetCharacter
+ */
+void GAME_ResetCharacters (void)
+{
+	memset(&characters, 0, sizeof(characters));
+}
 
 void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed, int teamMembers)
 {
@@ -88,14 +128,15 @@ void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed, int teamMem
 	if (ed == NULL)
 		Com_Error(ERR_DROP, "No equipment definition given");
 
-	memset(&characters, 0, sizeof(characters));
+	GAME_ResetCharacters();
 
 	for (i = 0; i < teamMembers; i++) {
-		CL_GenerateCharacter(&characters[i], teamDefID);
+		character_t *chr = GAME_GetCharacter(i);
+		CL_GenerateCharacter(chr, teamDefID);
 		/* pack equipment */
-		cls.i.EquipActor(&cls.i, &characters[i].i, ed, &characters[i]);
+		cls.i.EquipActor(&cls.i, &chr->i, ed, chr);
 
-		chrDisplayList.chr[i] = &characters[i];
+		chrDisplayList.chr[i] = chr;
 	}
 	chrDisplayList.num = i;
 }
