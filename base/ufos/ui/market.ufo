@@ -327,7 +327,7 @@ window market extends objectinfo
 
 	confunc listen_openpedia {
 		cmd "market_click <node:root.market@lineselected>;"
-		cmd "mn_removelistener ufopedia@onClose <path:this>"
+		cmd "mn_removelistener ufopedia@onClose <path:this>;"
 	}
 
 	panel itemdescription {
@@ -365,7 +365,7 @@ window market extends objectinfo
 			pos			"370 37"
 			size		"16 16"
 			onClick		{
-				cmd "mn_addlistener ufopedia@onClose <path:root>.listen_openpedia"
+				cmd "mn_addlistener ufopedia@onClose <path:root>.listen_openpedia;"
 				cmd "market_openpedia;"
 			}
 		}
@@ -565,6 +565,6 @@ window market extends objectinfo
 			*item<cvar:i>@num = <cvar:i>
 			*cvar:i = ( *cvar:i + 1 )
 		}
-	delete *cvar:i
+		delete *cvar:i
 	}
 }
