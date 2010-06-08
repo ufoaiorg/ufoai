@@ -303,7 +303,7 @@ window basedefence extends objectinfo
 
 		string name_title
 		{
-			string		"Name:"
+			string		"_Name:"
 			pos			"50 95"
 			size		"250 25"
 			font		"f_small_bold"
