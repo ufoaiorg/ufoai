@@ -49,7 +49,7 @@ void CIN_SetParameters (int x, int y, int w, int h, int cinStatus, qboolean noSo
 	cin.w = w * viddef.rx;
 	cin.h = h * viddef.ry;
 	if (cinStatus > CIN_STATUS_NONE)
-		cls.playingCinematic = cinStatus;
+		cin.status = cinStatus;
 	cin.noSound = noSound;
 }
 
@@ -58,7 +58,7 @@ void CIN_SetParameters (int x, int y, int w, int h, int cinStatus, qboolean noSo
  */
 void CIN_RunCinematic (void)
 {
-	assert(cls.playingCinematic != CIN_STATUS_NONE);
+	assert(cin.status != CIN_STATUS_NONE);
 
 	/* Decode chunks until the desired frame is reached */
 	if (cin.cinematicType == CINEMATIC_TYPE_ROQ && CIN_ROQ_RunCinematic())
@@ -86,7 +86,7 @@ void CIN_PlayCinematic (const char *fileName)
 
 	Com_StripExtension(fileName, name, sizeof(name));
 
-	if (cls.playingCinematic <= CIN_STATUS_FULLSCREEN) {
+	if (cin.status <= CIN_STATUS_FULLSCREEN) {
 		/* Make sure sounds aren't playing */
 		S_Stop();
 		/* also stop the background music */
@@ -111,10 +111,10 @@ void CIN_PlayCinematic (const char *fileName)
  */
 void CIN_StopCinematic (void)
 {
-	if (cls.playingCinematic == CIN_STATUS_NONE)
+	if (cin.status == CIN_STATUS_NONE)
 		return;			/* Not playing */
 
-	cls.playingCinematic = CIN_STATUS_NONE;
+	cin.status = CIN_STATUS_NONE;
 
 	if (cin.cinematicType == CINEMATIC_TYPE_ROQ)
 		CIN_ROQ_StopCinematic();
@@ -145,7 +145,7 @@ static void CIN_Cinematic_f (void)
  */
 static void CIN_CinematicStop_f (void)
 {
-	if (cls.playingCinematic == CIN_STATUS_NONE) {
+	if (cin.status == CIN_STATUS_NONE) {
 		Com_Printf("No cinematic active\n");
 		return;
 	}

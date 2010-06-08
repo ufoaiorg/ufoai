@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_button.h"
 #include "node/m_node_checkbox.h"
 #include "node/m_node_controls.h"
-#include "node/m_node_cinematic.h"
+#include "node/m_node_video.h"
 #include "node/m_node_container.h"
 #include "node/m_node_custombutton.h"
 #include "node/m_node_editor.h"
@@ -122,7 +122,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterTextEntryNode,
 	MN_RegisterTextListNode,
 	MN_RegisterTodoNode,
-	MN_RegisterCinematicNode,	/* video */
+	MN_RegisterVideoNode,
 	MN_RegisterVScrollbarNode,
 	MN_RegisterWindowNode,
 	MN_RegisterZoneNode

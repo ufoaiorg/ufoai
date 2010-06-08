@@ -509,7 +509,7 @@ static qboolean CIN_ROQ_DecodeChunk (void)
 			break;
 		}
 	/* loop until we finally got a new frame */
-	} while (frame == roqCin.currentFrame && cls.playingCinematic);
+	} while (frame == roqCin.currentFrame && cin.status);
 
 	return qtrue;
 }
@@ -521,7 +521,7 @@ static void CIN_ROQ_DrawCinematic (void)
 {
 	int texnum;
 
-	assert(cls.playingCinematic != CIN_STATUS_NONE);
+	assert(cin.status != CIN_STATUS_NONE);
 
 	if (!roqCin.frameBuffer[1])
 		return;

@@ -1,5 +1,5 @@
 /**
- * @file m_node_cinematic.h
+ * @file m_node_video.h
  */
 
 /*
@@ -22,11 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_CINEMATIC_H
-#define CLIENT_MENU_M_NODE_CINEMATIC_H
+#ifndef CLIENT_MENU_M_NODE_VIDEO_H
+#define CLIENT_MENU_M_NODE_VIDEO_H
 
 #include "../m_nodes.h"
 
-void MN_RegisterCinematicNode(nodeBehaviour_t *behaviour);
+void MN_RegisterVideoNode(nodeBehaviour_t *behaviour);
 
 #endif

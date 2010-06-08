@@ -1,5 +1,5 @@
 /**
- * @file m_node_cinematic.c
+ * @file m_node_video.c
  */
 
 /*
@@ -25,13 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "../m_parse.h"
 #include "../m_draw.h"
-#include "m_node_cinematic.h"
+#include "m_node_video.h"
 #include "m_node_abstractnode.h"
 
 #include "../../client.h"
 #include "../../cinematic/cl_cinematic.h"
 
-static void MN_CinematicNodeDraw (menuNode_t *node)
+static void MN_VideoNodeDraw (menuNode_t *node)
 {
 	vec2_t pos;
 	MN_GetNodeAbsPos(node, pos);
@@ -39,33 +39,33 @@ static void MN_CinematicNodeDraw (menuNode_t *node)
 	if (!node->image)
 		return;
 
-	if (cls.playingCinematic == CIN_STATUS_FULLSCREEN) {
+	if (cin.status == CIN_STATUS_FULLSCREEN) {
 		MN_CaptureDrawOver(node);
 		return;
 	}
 
-	if (cls.playingCinematic == CIN_STATUS_NONE)
+	if (cin.status == CIN_STATUS_NONE)
 		CIN_PlayCinematic(va("videos/%s", (const char *)node->image));
-	if (cls.playingCinematic) {
+	if (cin.status) {
 		/* only set replay to true if video was found and is running */
 		CIN_SetParameters(pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
 		CIN_RunCinematic();
 	}
 }
 
-static void MN_CinematicNodeDrawOverMenu (menuNode_t *node)
+static void MN_VideoNodeDrawOverMenu (menuNode_t *node)
 {
 	CIN_RunCinematic();
 }
 
-static void MN_CinematicNodeInit (menuNode_t *node)
+static void MN_VideoNodeInit (menuNode_t *node)
 {
 	if (!node->image)
 		return;
 	CIN_PlayCinematic(va("videos/%s", (const char *)node->image));
 }
 
-static void MN_CinematicNodeClose (menuNode_t *node)
+static void MN_VideoNodeClose (menuNode_t *node)
 {
 	/* If playing a cinematic, stop it */
 	CIN_StopCinematic();
@@ -77,12 +77,12 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterCinematicNode (nodeBehaviour_t* behaviour)
+void MN_RegisterVideoNode (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "video";
-	behaviour->draw = MN_CinematicNodeDraw;
+	behaviour->draw = MN_VideoNodeDraw;
 	behaviour->properties = properties;
-	behaviour->init = MN_CinematicNodeInit;
-	behaviour->close = MN_CinematicNodeClose;
-	behaviour->drawOverMenu = MN_CinematicNodeDrawOverMenu;
+	behaviour->init = MN_VideoNodeInit;
+	behaviour->close = MN_VideoNodeClose;
+	behaviour->drawOverMenu = MN_VideoNodeDrawOverMenu;
 }

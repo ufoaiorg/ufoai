@@ -730,7 +730,7 @@ static void CIN_OGM_DrawCinematic (void)
 {
 	int texnum;
 
-	assert(cls.playingCinematic != CIN_STATUS_NONE);
+	assert(cin.status != CIN_STATUS_NONE);
 
 	if (!ogmCin.outputBuffer)
 		return;

@@ -894,10 +894,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/menu/node/m_node_checkbox.h" />
-		<Unit filename="../../src/client/menu/node/m_node_cinematic.c">
+		<Unit filename="../../src/client/menu/node/m_node_video.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/client/menu/node/m_node_cinematic.h" />
+		<Unit filename="../../src/client/menu/node/m_node_video.h" />
 		<Unit filename="../../src/client/menu/node/m_node_container.c">
 			<Option compilerVar="CC" />
 		</Unit>

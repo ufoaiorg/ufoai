@@ -176,7 +176,7 @@ CLIENT_SRCS = \
 	client/menu/node/m_node_base.c \
 	client/menu/node/m_node_button.c \
 	client/menu/node/m_node_checkbox.c \
-	client/menu/node/m_node_cinematic.c \
+	client/menu/node/m_node_video.c \
 	client/menu/node/m_node_container.c \
 	client/menu/node/m_node_controls.c \
 	client/menu/node/m_node_custombutton.c \

@@ -42,6 +42,8 @@ typedef struct {
 	qboolean		noSound;	/**< no sound while playing the cinematic */
 
 	int cinematicType;
+
+	int status;					/**< Status of the playing */
 } cinematic_t;
 
 extern cinematic_t cin;

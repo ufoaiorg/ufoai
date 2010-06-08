@@ -96,8 +96,6 @@ typedef struct client_static_s {
 	float loadingPercent;
 	char loadingMessages[96];
 
-	int playingCinematic;	/**< Set to cinematic playing flags or 0 when not playing */
-
 	int currentSelectedMap;	/**< current selected multiplayer or skirmish map */
 
 	char downloadName[MAX_OSPATH];
