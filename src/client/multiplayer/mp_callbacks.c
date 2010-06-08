@@ -271,6 +271,9 @@ void MP_CallbacksInit (void)
 	Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
 	Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
 	Cmd_AddParamCompleteFunction("rcon", CL_CompleteNetworkAddress);
+	Cmd_AddCommand("mp_toggleactor", MP_ToggleActorForTeam_f, NULL);
+	Cmd_AddCommand("mp_saveteamstate", MP_SaveTeamState_f, NULL);
+	Cmd_AddCommand("mp_autoteam", MP_AutoTeam_f, "Assign initial multiplayer equipment to soldiers");
 }
 
 void MP_CallbacksShutdown (void)
@@ -288,4 +291,7 @@ void MP_CallbacksShutdown (void)
 	Cmd_RemoveCommand("disconnect");
 	Cmd_RemoveCommand("connect");
 	Cmd_RemoveCommand("reconnect");
+	Cmd_RemoveCommand("mp_toggleactor");
+	Cmd_RemoveCommand("mp_saveteamstate");
+	Cmd_RemoveCommand("mp_autoteam");
 }

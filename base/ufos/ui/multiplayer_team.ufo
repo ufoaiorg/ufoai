@@ -2,6 +2,13 @@
 // MULTIPLAYER TEAM CREATION MENU
 // ==============================
 
+component checkbox mpTeamCheckbox
+{
+	image		"ui/checkbox_green"
+	size		"20 20"
+	onChange	{ cmd "mp_toggleactor <num> <current>;" }
+}
+
 window mp_team_edit extends objectinfo
 {
 	// ==================
@@ -80,82 +87,52 @@ window mp_team_edit extends objectinfo
 	// checkbox list
 	// ==================
 
-	todo checkboxes_todo
+	mpTeamCheckbox bt_actor0
 	{
-		pos			"40 23"
-		string		"These checkboxes should mark the soldiers you want in your team - this is not yet working"
-	}
-
-	checkbox bt_actor0
-	{
-		current 0
-		image "ui/checkbox_green"
+		num 0
 		pos	"60 23"
-		size "20 20"
-		onChange { }
 	}
 
-	checkbox bt_actor1
+	mpTeamCheckbox bt_actor1
 	{
-		current 0
-		image "ui/checkbox_green"
+		num 1
 		pos	"60 64"
-		size "20 20"
-		onChange { }
 	}
 
-	checkbox bt_actor2
+	mpTeamCheckbox bt_actor2
 	{
-		current 0
-		image "ui/checkbox_green"
+		num 2
 		pos	"60 105"
-		size "20 20"
-		onChange { }
 	}
 
-	checkbox bt_actor3
+	mpTeamCheckbox bt_actor3
 	{
-		current 0
-		image "ui/checkbox_green"
+		num 3
 		pos	"60 146"
-		size "20 20"
-		onChange { }
 	}
 
-	checkbox bt_actor4
+	mpTeamCheckbox bt_actor4
 	{
-		current 0
-		image "ui/checkbox_green"
+		num 4
 		pos	"60 187"
-		size "20 20"
-		onChange { }
 	}
 
-	checkbox bt_actor5
+	mpTeamCheckbox bt_actor5
 	{
-		current 0
-		image "ui/checkbox_green"
+		num 5
 		pos	"60 228"
-		size "20 20"
-		onChange { }
 	}
 
-	checkbox bt_actor6
+	mpTeamCheckbox bt_actor6
 	{
-		current 0
-		image "ui/checkbox_green"
+		num 6
 		pos	"60 269"
-		size "20 20"
-		onChange { }
 	}
 
-	checkbox bt_actor7
+	mpTeamCheckbox bt_actor7
 	{
-		current 0
-		image "ui/checkbox_green"
+		num 7
 		pos	"60 310"
-		size "20 20"
-		onChange { }
 	}
 
 	// ==================
@@ -174,6 +151,37 @@ window mp_team_edit extends objectinfo
 	 */
 	confunc mp_soldier_select {
 		*txt_actor<1>@color = "1 1 1 1"
+	}
+
+	/**
+	 * @param[in] <1> amount of soldiers in the list
+	 */
+	confunc mp_checkboxes_update {
+		*cvar:tmp = <1>
+		*cvar:i = 0
+		while ( *cvar:i < 8 ) {
+			if ( *cvar:i >= *cvar:tmp ) {
+				*(checkbox)bt_actor<cvar:i>@invis = true
+			} else {
+				*(checkbox)bt_actor<cvar:i>@invis = false
+			}
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
+		delete *cvar:tmp
+	}
+
+	func mp_checkboxes_set
+	{
+		*cvar:i = 0
+		while ( *cvar:i < 8 ) {
+			if ( *(checkbox)bt_actor<cvar:i>@current != 1 ) {
+				call *(checkbox)bt_actor<cvar:i>@toggle
+			}
+			cmd "mp_toggleactor <cvar:i> 1;"
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
 	}
 
 	func mp_names_clear
@@ -717,8 +725,14 @@ window mp_team_edit extends objectinfo
 	{
 		call *node:root.mp_names_clear
 		call *node:root.mp_actor_stats
+		call *node:root.mp_checkboxes_set
 		cmd "set mn_infotype 0;set mn_equiptype 0;"
 		cmd "team_initskin;mp_update_item_list;mp_team_select 0;mp_team_update;"
+	}
+	
+	func onClose
+	{
+		cmd "mp_saveteamstate;"
 	}
 }
 

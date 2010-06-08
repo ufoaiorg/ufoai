@@ -36,7 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MPTEAM_SAVE_FILE_VERSION 4
 
 static inventory_t mp_inventory;
-character_t multiplayerCharacters[MAX_MULTIPLAYER_CHARACTERS];
+
+static qboolean characterActive[MAX_ACTIVETEAM];
 
 typedef struct mpSaveFileHeader_s {
 	uint32_t version; /**< which savegame version */
@@ -44,6 +45,65 @@ typedef struct mpSaveFileHeader_s {
 	char name[32]; /**< savefile name */
 	uint32_t xmlSize; /** needed, if we store compressed */
 } mpSaveFileHeader_t;
+
+static void MP_UpdateActiveTeamList (void)
+{
+	int i;
+
+	memset(characterActive, 0, sizeof(characterActive));
+	for (i = 0; i < chrDisplayList.num; i++)
+		characterActive[i] = qtrue;
+
+	MN_ExecuteConfunc("mp_checkboxes_update %i", chrDisplayList.num);
+}
+
+void MP_AutoTeam_f (void)
+{
+	GAME_MP_AutoTeam();
+
+	MP_UpdateActiveTeamList();
+}
+
+/**
+ * @brief This will activate/deactivate the actor for the team
+ * @sa GAME_MP_SaveTeamState_f
+ */
+void MP_ToggleActorForTeam_f (void)
+{
+	int num;
+	int value;
+
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <num> <value>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+	value = atoi(Cmd_Argv(2));
+	if (num < 0 || num >= chrDisplayList.num)
+		value = 0;
+
+	characterActive[num] = (value != 0);
+}
+
+/**
+ * @brief Will remove those actors that should not be used in the team
+ * @sa GAME_MP_ToggleActorForTeam_f
+ */
+void MP_SaveTeamState_f (void)
+{
+	int i, num;
+
+	num = 0;
+	for (i = 0; i < chrDisplayList.num; i++) {
+		chrDisplayList.chr[num]->ucn -= (i -num);
+		if (characterActive[i]) {
+			assert(chrDisplayList.chr[i] != NULL);
+			chrDisplayList.chr[num++] = chrDisplayList.chr[i];
+		}
+	}
+	chrDisplayList.num = num;
+}
 
 /**
  * @brief Reads tha comments from team files
@@ -103,15 +163,25 @@ static void MP_SaveTeamMultiplayerInfo (mxml_node_t *p)
  */
 static void MP_LoadTeamMultiplayerInfo (mxml_node_t *p)
 {
+	/** @todo merge this with the character array from cl_game.c */
+	static character_t multiplayerCharacters[MAX_ACTIVETEAM];
 	int i;
 	mxml_node_t *n;
+	const size_t size = lengthof(multiplayerCharacters);
+
+	memset(multiplayerCharacters, 0, sizeof(multiplayerCharacters));
+	memset(characterActive, 0, sizeof(characterActive));
 
 	/* header */
-	for (i = 0, n = mxml_GetNode(p, SAVE_MULTIPLAYER_CHARACTER); n && i < MAX_MULTIPLAYER_CHARACTERS; i++, n = mxml_GetNextNode(n, p, SAVE_MULTIPLAYER_CHARACTER)) {
+	for (i = 0, n = mxml_GetNode(p, SAVE_MULTIPLAYER_CHARACTER); n && i < size; i++, n = mxml_GetNextNode(n, p, SAVE_MULTIPLAYER_CHARACTER)) {
 		CL_LoadCharacterXML(n, &multiplayerCharacters[i]);
+		assert(i < lengthof(chrDisplayList.chr));
 		chrDisplayList.chr[i] = &multiplayerCharacters[i];
 	}
 	chrDisplayList.num = i;
+
+	MP_UpdateActiveTeamList();
+
 	Com_DPrintf(DEBUG_CLIENT, "Loaded %i teammembers\n", chrDisplayList.num);
 }
 
@@ -323,10 +393,7 @@ void MP_LoadTeamMultiplayer_f (void)
 
 	/* first try to load the xml file, if this does not succeed, try the old file */
 	Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", index);
-	if (!MP_LoadTeamMultiplayer(filename))
-		Com_Printf("Could not load team '%s'.\n", filename);
-	else
-		Com_Printf("Team '%s' loaded.\n", filename);
+	MP_LoadTeamMultiplayer(filename);
 }
 
 /**
@@ -371,13 +438,14 @@ static void MP_GetEquipment (void)
 void MP_UpdateMenuParameters_f (void)
 {
 	int i;
+	const size_t size = lengthof(chrDisplayList.chr);
 
 	/* reset description */
 	Cvar_Set("mn_itemname", "");
 	Cvar_Set("mn_item", "");
 	MN_ResetData(TEXT_STANDARD);
 
-	for (i = 0; i < MAX_MULTIPLAYER_CHARACTERS; i++) {
+	for (i = 0; i < size; i++) {
 		const char *name;
 		if (i < chrDisplayList.num)
 			name = chrDisplayList.chr[i]->name;
