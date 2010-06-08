@@ -130,9 +130,9 @@ window team extends iaircraft
 
 	func listen_close_equipment
 	{
-		cmd "team_select <cvar:cl_selected2>"
-		cmd "del cl_selected2"
-		cmd "mn_removelistener equipment@onClose <path:this>"
+		cmd "team_select <cvar:cl_selected2>;"
+		cmd "del cl_selected2;"
+		cmd "mn_removelistener equipment@onClose <path:this>;"
 	}
 
 	button bt_equipsoldiers
@@ -287,7 +287,7 @@ window team extends iaircraft
 		viewsize 8
 		fullsize 50
 		onChange {
-			cmd "update_soldier_list 8 <current>"
+			cmd "update_soldier_list 8 <current>;"
 			*cvar:mn_relative_id = <current>
 		}
 	}
