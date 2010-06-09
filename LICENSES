@@ -485,8 +485,6 @@ base/models/aircraft/craft_item_astro/astrogation.md2 | GNU General Public Licen
 base/models/aircraft/craft_item_astro/astrogation.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_item_det/detection.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_item_det/detection.png | GNU General Public License 2.0 or later | Willem "Sitters" | High res version in data_source/models/sittes/craft_item_detection
-base/models/aircraft/craft_item_fuel/fuel.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
-base/models/aircraft/craft_item_fuel/fuel.png | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/craft_item_prop/propulsion.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/craft_item_prop/propulsion.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/craft_item_raven_ecm/ecm.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -495,14 +493,6 @@ base/models/aircraft/craft_item_target/craft_item_target.md2 | GNU General Publi
 base/models/aircraft/craft_item_target/craft_item_target.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_weapon_alc/alc.md2 | GNU General Public License 2.0 | Alexander "zorlen" Kusakin | http://sourceforge.net/tracker/index.php?func=detail&aid=1928619&group_id=157793&atid=805244
 base/models/aircraft/craft_weapon_alc/alc.png | GNU General Public License 2.0 | Alexander "zorlen" Kusakin | http://sourceforge.net/tracker/index.php?func=detail&aid=1928619&group_id=157793&atid=805244
-base/models/aircraft/craft_weapon_antim/antimatter.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_weapon_antim/antimatter.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_weapon_antim/launcher_a.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_weapon_antim/launcher_a.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_weapon_antim/launcher_h.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_weapon_antim/launcher_h.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_weapon_launcher/alien_launcher.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/craft_weapon_launcher/alien_launcher2.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/craft_weapon_particle/pbw.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/aircraft/craft_weapon_particle/pbw.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/aircraft/craft_weapon_shiva/ammo.png | GNU General Public License 2.0 or later | Willem Sitters
