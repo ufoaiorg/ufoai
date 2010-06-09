@@ -917,6 +917,7 @@ mapdef vil_lille
 	ufos
 	{
 		craft_ufo_scout
+		craft_ufo_fighter
 	}
 
 	terrains
@@ -955,6 +956,8 @@ mapdef vil_commercial
 
 	ufos
 	{
+		craft_ufo_scout
+		craft_ufo_fighter
 		craft_ufo_harvester
 	}
 
@@ -997,6 +1000,8 @@ mapdef vil_residential
 	ufos
 	{
 		craft_ufo_scout
+		craft_ufo_fighter
+		craft_ufo_harvester
 	}
 
 	terrains
@@ -1034,9 +1039,12 @@ mapdef vil_big
 		craft_drop_herakles
 	}
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		craft_ufo_scout
+		craft_ufo_fighter
+		craft_ufo_harvester
+	}
 
 	terrains
 	{
