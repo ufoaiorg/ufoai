@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-05-19 11:31+0700\n"
-"PO-Revision-Date: 2010-05-26 15:01+0600\n"
-"Last-Translator: Kostia (Kildor) Romanov <kostia@ngs.ru>\n"
+"PO-Revision-Date: 2010-06-09 21:17+0100\n"
+"Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -119,7 +119,7 @@ msgstr "Japonia"
 
 #: ../base/maps/japan.ump:307
 msgid "Small eastern park."
-msgstr ""
+msgstr "Mały park w stylu wschodnim."
 
 #: ../base/maps/japan.ump:336
 msgid "Harvester"
@@ -422,7 +422,7 @@ msgstr "Pancerz polimerowy"
 #: ../base/ufos/aircraftmanagement.ufo:944
 #: ../base/ufos/research.ufo:4521
 msgid "Alien Aircraft Plating"
-msgstr ""
+msgstr "Pancerz kształtkowy"
 
 #: ../base/ufos/aircraftmanagement.ufo:958
 #: ../base/ufos/research.ufo:4555
@@ -8784,7 +8784,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:5111
 msgid "XVI Census"
-msgstr ""
+msgstr "Spis XVI"
 
 #: ../base/ufos/research.ufo:5116
 msgid "xvi_census_txt"
@@ -8832,7 +8832,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:5152
 msgid "The Enemy On Earth - Revisited"
-msgstr ""
+msgstr "Wróg na Ziemi - uaktualnienie"
 
 #: ../base/ufos/research.ufo:5157
 msgid "enemy_on_earth_rev_txt"
@@ -9303,12 +9303,16 @@ msgid ""
 "Select UFO to secure \n"
 "(if possible for current map)"
 msgstr ""
+"Wybierz UFO \n"
+"(o ile to możliwe przy aktualnej mapie)"
 
 #: ../base/ufos/seq_tutorials.ufo:940
 msgid ""
 "Select dropship\n"
 "(if possible for current map)"
 msgstr ""
+"Wybierz transportowiec \n"
+"(o ile to możliwe przy aktualnej mapie)"
 
 #: ../base/ufos/seq_tutorials.ufo:961
 msgid "Select map to play"
@@ -11766,7 +11770,7 @@ msgstr "Ustawienia wideo"
 
 #: ../base/ufos/ui/options.ufo:107
 msgid "The resolution (x*y) in pixel which UFO:AI should use."
-msgstr ""
+msgstr "Rozdzielczość w pikselach (x*y), którą chcesz użyć."
 
 #: ../base/ufos/ui/options.ufo:108
 msgid "Resolution:"
@@ -11806,7 +11810,7 @@ msgstr ""
 
 #: ../base/ufos/ui/options.ufo:167
 msgid "Play UFO:AI in fullscreen- or window-mode."
-msgstr ""
+msgstr "Tryb pełnoekranowy lub tryb w oknie."
 
 #: ../base/ufos/ui/options.ufo:168
 msgid "Fullscreen:"
@@ -11814,7 +11818,7 @@ msgstr "Tryb pełnoekranowy:"
 
 #: ../base/ufos/ui/options.ufo:174
 msgid "Play UFO:AI in fullscreen."
-msgstr ""
+msgstr "Tryb pełnoekranowy."
 
 #: ../base/ufos/ui/options.ufo:185
 msgid "Enable texture compression for better memory performance, disable for better rendering quality."
@@ -12769,7 +12773,7 @@ msgstr "Rozpocznij przesyłanie"
 
 #: ../base/ufos/ui/transfer.ufo:595
 msgid "Empty the aircraft storage"
-msgstr ""
+msgstr "Opróżnij magazyn statku"
 
 #: ../base/ufos/ui/ufopedia.ufo:83
 msgid "Pre research text"
@@ -12858,7 +12862,7 @@ msgstr "Bomba"
 
 #: ../base/ufos/weapons_aliens.ufo:46
 msgid "Needler Gun Magazine"
-msgstr ""
+msgstr "Magazynek Igłowca"
 
 #: ../base/ufos/weapons_aliens.ufo:62
 #: ../base/ufos/weapons_aliens.ufo:125
@@ -12968,7 +12972,7 @@ msgstr "Celowany"
 
 #: ../base/ufos/weapons_human.ufo:410
 msgid "Coilgun Clip"
-msgstr ""
+msgstr "Magazynek karabinu Gaussa"
 
 #: ../base/ufos/weapons_human.ufo:473
 msgid "7.62mm Pistol"
@@ -13146,7 +13150,7 @@ msgstr "Ogień impulsowy"
 
 #: ../base/ufos/weapons_laser.ufo:241
 msgid "Stun Shot"
-msgstr ""
+msgstr "Strzał ogłuszający"
 
 #: ../base/ufos/weapons_melee.ufo:6
 msgid "Combat Knife"
@@ -14172,12 +14176,12 @@ msgid "Costs:\t%i c\n"
 msgstr "Koszta:\t%i c\n"
 
 #: client/campaign/cp_base.c:1526
-#, fuzzy, c-format
+#, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i dzień do ukończenia\n"
 msgstr[1] "%i dni do ukończenia\n"
-msgstr[2] ""
+msgstr[2] "%i dni do ukończenia\n"
 
 #: client/campaign/cp_base.c:1529
 #: client/campaign/cp_ufopedia.c:233
@@ -14230,12 +14234,12 @@ msgid "By selling %s you gathered %i credits."
 msgstr "Ze sprzedaży %s uzyskano %i kredytów."
 
 #: client/campaign/cp_base.c:2573
-#, fuzzy, c-format
+#, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "%i zebranej rzeczy"
 msgstr[1] "%i zebranych rzeczy"
-msgstr[2] ""
+msgstr[2] "%i zebranych rzeczy"
 
 #: client/campaign/cp_base.c:2577
 #, c-format
@@ -14243,12 +14247,12 @@ msgid "Not enough storage space in %s. %s"
 msgstr "Zabrakło miejsca do przechowywania w %s. %s"
 
 #: client/campaign/cp_base.c:2578
-#, fuzzy, c-format
+#, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
 msgstr[0] "Sprzedano %i obiekt za %i kredytów."
 msgstr[1] "Sprzedano %i obiektów za %i kredytów."
-msgstr[2] ""
+msgstr[2] "Sprzedano %i obiektów za %i kredytów."
 
 #: client/campaign/cp_base.c:3239
 #, c-format
@@ -14318,7 +14322,7 @@ msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "Do korzystania ze statku powietrznego potrzebny jest sprawny Hangar."
 
 #: client/campaign/cp_base_callbacks.c:615
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
 "Please wait to enter."
@@ -14327,7 +14331,7 @@ msgid_plural ""
 "Please wait to enter."
 msgstr[0] "Konstrukcja modułu zajmie jeszcze %i dzień."
 msgstr[1] "Konstrukcja modułu zajmie jeszcze %i dni."
-msgstr[2] ""
+msgstr[2] "Konstrukcja modułu zajmie jeszcze %i dni."
 
 #: client/campaign/cp_base_callbacks.c:626
 #, c-format
@@ -14372,12 +14376,11 @@ msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr "^BModuły\t\t\t\t\t\tWykorzystane\t\t\t\tSztuk w bazie\n"
 
 #: client/campaign/cp_base_callbacks.c:742
-#, fuzzy
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dzień"
 msgstr[1] "dni"
-msgstr[2] ""
+msgstr[2] "dni"
 
 #: client/campaign/cp_base_callbacks.c:752
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
@@ -14761,7 +14764,7 @@ msgstr "Nie można wyposażyć w Obcą technologie."
 
 #: client/campaign/cp_fightequip_callbacks.c:575
 msgid "Technology requested is not yet completed."
-msgstr ""
+msgstr "Wybrana technologia jest jeszcze nieukończona."
 
 #: client/campaign/cp_fightequip_callbacks.c:578
 msgid "This item is too heavy for the selected slot."
@@ -14808,12 +14811,12 @@ msgstr "%d c"
 
 #: client/campaign/cp_installation.c:531
 #: client/campaign/cp_installation_callbacks.c:92
-#, fuzzy, c-format
+#, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d dzień"
 msgstr[1] "%d dni"
-msgstr[2] ""
+msgstr[2] "%d dni"
 
 #: client/campaign/cp_installation_callbacks.c:49
 #: client/campaign/cp_map.c:358
@@ -15258,39 +15261,35 @@ msgid "Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Uzyskano %i %s, %i %s, %i %s, oraz %i %s od kraju %s (%s)"
 
 #: client/campaign/cp_nations.c:83
-#, fuzzy
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "kredyt"
 msgstr[1] "kredytów"
-msgstr[2] ""
+msgstr[2] "kredyty"
 
 #: client/campaign/cp_nations.c:84
 #: client/cl_game_campaign.c:208
-#, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "naukowca"
 msgstr[1] "naukowców"
-msgstr[2] ""
+msgstr[2] "naukowców"
 
 #: client/campaign/cp_nations.c:85
 #: client/cl_game_campaign.c:207
-#, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "żołnierza"
 msgstr[1] "żołnierzy"
-msgstr[2] ""
+msgstr[2] "żołnierzy"
 
 #: client/campaign/cp_nations.c:86
 #: client/cl_game_campaign.c:209
-#, fuzzy
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "technika"
 msgstr[1] "techników"
-msgstr[2] ""
+msgstr[2] "techników"
 
 #: client/campaign/cp_nations.c:98
 #, c-format
@@ -16118,12 +16117,12 @@ msgid "Transport mission started, cargo is being transported to %s"
 msgstr "Misja transportowa rozpoczęta, ładunek zostanie przetransportowany do %s"
 
 #: client/campaign/cp_transfer.c:952
-#, fuzzy, c-format
+#, c-format
 msgid "(can host %i live alien)"
 msgid_plural "(can host %i live aliens)"
 msgstr[0] "(może przechować %i żywego Obcego)"
 msgstr[1] "(może przechować %i żywych Obcych)"
-msgstr[2] ""
+msgstr[2] "(może przechować %i żywych Obcych)"
 
 #: client/campaign/cp_transfer.c:971
 msgid "The destination base no longer exists! Transfer carge was lost, personnel has been discharged."
@@ -16275,12 +16274,12 @@ msgid "Error - could not find building"
 msgstr "Błąd - nie można znaleźć modułu"
 
 #: client/campaign/cp_ufopedia.c:231
-#, fuzzy, c-format
+#, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
 msgstr[0] "Czas budowy:\t%i dzień\n"
-msgstr[1] "Czas produkcji:\t%i dni\n"
-msgstr[2] ""
+msgstr[1] "Czas budowy:\t%i dni\n"
+msgstr[2] "Czas budowy:\t%i dni\n"
 
 #: client/campaign/cp_ufopedia.c:232
 #, c-format
@@ -16893,12 +16892,12 @@ msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Ukryj HUD (ESC by przywrócić HUD)"
 
 #: client/menu/node/m_node_base.c:201
-#, fuzzy, c-format
+#, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
 msgstr[0] "pozostał %i dzień"
 msgstr[1] "pozostało %i dni"
-msgstr[2] ""
+msgstr[2] "pozostały %i dni"
 
 #: client/menu/node/m_node_base.c:274
 msgid "not operational, depends on"
@@ -17194,15 +17193,15 @@ msgstr "%s jest w szoku.\n"
 
 #: game/g_reaction.c:184
 msgid "No reaction fire enabled weapon.\n"
-msgstr ""
+msgstr "Broń nie może być wykorzystana do RF.\n"
 
 #: game/g_reaction.c:189
 msgid "No fire mode selected for reaction fire.\n"
-msgstr ""
+msgstr "Typ strzału niewybrany. Nie można włączyć RF.\n"
 
 #: game/g_reaction.c:194
 msgid "Not enough TUs left for activating reaction fire.\n"
-msgstr ""
+msgstr "Brak TU uniemożliwa włączenie RF.\n"
 
 #: game/g_round.c:45
 msgid "4 minutes left until forced round end\n"
