@@ -184,7 +184,17 @@ tile +str_cross
 	}
 	
 	// Vertical street with rail line (borders intersection at top)
+	// Includes the big billboard machine
 	tile +strv_rail_top2a
+	{
+		5 3
+		0		i		i		i		0
+		j		+da		+d		+da		k
+		0		c		c		c		0
+	}
+	
+	// Vertical street with rail line (borders intersection at top)
+	tile +strv_rail_top2b
 	{
 		5 3
 		0		i		i		i		0
@@ -310,7 +320,114 @@ tile +str_cross
 // Assembly definitions
 // --------------------
 
+// The small assembly will handle the scout, fighter and supply ufos
+assembly small
+{
+	size "8 11"
+	
+	// Far left street going all the way up
+	fix +str_cross "0 0"
+	fix +strv_1a "0 1"
+	fix +strv_1a "0 2"
+	fix +strv_1a "0 3"
+	fix +strv_1a "0 4"
+	fix +str_cross "0 5"
+	fix +strv_1a "0 6"
+	fix +strv_1a "0 7"
+	fix +strv_1a "0 8"
+	fix +strv_1a "0 9"
+	fix +str_cross "0 10"
 
+	// Bottom street
+	fix +strh_cwl_1a "1 0"
+	fix +strh_1a "2 0"
+	fix +strh_1a "3 0"
+	fix +strh_cwr_1a "4 0"
+
+	// Parking garage
+	fix +bldl_4x4_2a "1 1"
+
+	// Street between building tiles
+	fix +strh_cwl_1a "1 5"
+	fix +strh_1a "2 5"
+	fix +strh_1a "3 5"
+	fix +strh_cwr_1a "4 5"
+
+	// Right streets with rail/dropship going all the way up
+	fix +str_rail_cross "5 0"
+	fix +strv_rail_btm2a "5 1"
+	fix *rm_drop +craft_drop_firebird "5 2"
+	fix +str_rail_cross "5 5"
+	fix +strv_rail_btm2a "5 6"
+	fix +strv_rail_2a "5 7"
+	fix +strv_rail_2a "5 8"
+	fix +strv_rail_top2b "5 9"
+	fix +str_rail_cross "5 10"
+
+	// Park with ufo crafts
+	fix *rm_ufo +craft_ufo_scout "1 6"
+
+	// Top street
+	fix +strh_cwl_1a "1 10"
+	fix +strh_1a "2 10"
+	fix +strh_1a "3 10"
+	fix +strh_cwr_1a "4 10"
+}
+
+// The medium assembly will handle the harvester ufo
+assembly medium
+{
+	size "8 11"
+	
+	// Far left street with the top vertical streets cut out
+	// because the harvester uses them
+	fix +str_cross "0 0"
+	fix +strv_1a "0 1"
+	fix +strv_1a "0 2"
+	fix +strv_1a "0 3"
+	fix +strv_1a "0 4"
+	fix +str_cross "0 5"
+	fix +str_cross "0 10"
+
+	// Bottom street
+	fix +strh_cwl_1a "1 0"
+	fix +strh_1a "2 0"
+	fix +strh_1a "3 0"
+	fix +strh_cwr_1a "4 0"
+
+	// Parking garage
+	fix +bldl_4x4_2a "1 1"
+
+	// Street between building tiles
+	fix +strh_cwl_1a "1 5"
+	fix +strh_1a "2 5"
+	fix +strh_1a "3 5"
+	fix +strh_cwr_1a "4 5"
+
+	// Right streets with rail/dropship going all the way up
+	fix +str_rail_cross "5 0"
+	fix +strv_rail_btm2a "5 1"
+	fix *rm_drop +craft_drop_firebird "5 2"
+	fix +str_rail_cross "5 5"
+	fix +strv_rail_btm2a "5 6"
+	fix +strv_rail_2a "5 7"
+	fix +strv_rail_2a "5 8"
+	fix +strv_rail_top2b "5 9"
+	fix +str_rail_cross "5 10"
+
+	// Park with harvester (takes up vertical street on left)
+	fix *rm_ufo +craft_ufo_harvester "0 6"
+
+	// Top street
+	fix +strh_cwl_1a "1 10"
+	fix +strh_1a "2 10"
+	fix +strh_1a "3 10"
+	fix +strh_cwr_1a "4 10"
+}
+
+
+/*
+	
 assembly garage
 {
 	size "8 6"
@@ -338,7 +455,7 @@ assembly garage
 	fix +craft_drop_firebird "5 2"
 	fix +str_rail_cross "5 5"
 }
-
+*/
 
 /*
 assembly test
