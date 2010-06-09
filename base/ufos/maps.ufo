@@ -3434,24 +3434,18 @@ mapdef laboratory
 	}
 }
 
-mapdef wip_city_rma_sml
+mapdef city_rma_small
 {
 	map		+city
 	param		small
 	description	"_Big city"
-	teams		4
-	multiplayer	false
+	teams		2
+	multiplayer	true
 	maxaliens	8
 	gametypes {
 		1on1
 		1on1on1
 		2on2
-		2on2on2
-		3on3
-		3on3on3
-		coop2
-		coop3
-		coop4
 	}
 
 	aircraft 
@@ -3484,24 +3478,18 @@ mapdef wip_city_rma_sml
 	}
 }
 
-mapdef wip_city_rma_med
+mapdef city_rma_medium
 {
 	map		+city
 	param		medium
 	description	"_Big city"
-	teams		4
-	multiplayer	false
+	teams		2
+	multiplayer	true
 	maxaliens	8
 	gametypes {
 		1on1
 		1on1on1
 		2on2
-		2on2on2
-		3on3
-		3on3on3
-		coop2
-		coop3
-		coop4
 	}
 
 	aircraft 
@@ -3513,7 +3501,9 @@ mapdef wip_city_rma_med
 
 	ufos
 	{
-		craft_ufo_harvester
+		craft_ufo_scout
+		craft_ufo_fighter
+		craft_ufo_supply
 	}
 
 	terrains

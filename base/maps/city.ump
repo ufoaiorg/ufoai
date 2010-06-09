@@ -182,7 +182,7 @@ tile +str_cross
 		s		+tba	+b		+tba	s
 		0		i		i		i		0
 	}
-	
+
 	// Vertical street with rail line (borders intersection at top)
 	// Includes the big billboard machine
 	tile +strv_rail_top2a
@@ -192,7 +192,7 @@ tile +str_cross
 		j		+da		+d		+da		k
 		0		c		c		c		0
 	}
-	
+
 	// Vertical street with rail line (borders intersection at top)
 	tile +strv_rail_top2b
 	{
@@ -201,7 +201,7 @@ tile +str_cross
 		j		+da		+d		+da		k
 		0		c		c		c		0
 	}
-	
+
 	// Vertical street with rail line (borders intersection at bottom)
 	tile +strv_rail_btm2a
 	{
@@ -210,7 +210,7 @@ tile +str_cross
 		j		+ea		+e		+ea		k
 		0		i		i		i		0
 	}
-		
+
 	// Vertical street with rail line (doesn't border intersection)
 	tile +strv_rail_2a
 	{
@@ -222,7 +222,7 @@ tile +str_cross
 
 // ---------------------
 // Horizontal Street Tiles
-		
+
 	// Horizontal street base tile (straight lines painted)
 	tile +strh_1a
 	{
@@ -231,7 +231,7 @@ tile +str_cross
 		ilfg		+f		ilfh
 		0		jk		0
 	}
-	
+
 	// Horizontal street with crosswalk on left side
 	tile +strh_cwl_1a
 	{
@@ -240,7 +240,7 @@ tile +str_cross
 		il		+g		fl
 		0		jk		0
 	}
-		
+
 	// Horizontal street with crosswalk on right side
 	tile +strh_cwr_1a
 	{
@@ -249,7 +249,7 @@ tile +str_cross
 		fl		+h		il
 		0		jk		0
 	}
-	
+
 
 // -------------------
 // Corner Street Tiles
@@ -315,8 +315,8 @@ tile +str_cross
 		a		+k		+k		+k		+k		a
 		0		fg		f		f		fh		0
 	}
-	
-	
+
+
 // Assembly definitions
 // --------------------
 
@@ -324,7 +324,7 @@ tile +str_cross
 assembly small
 {
 	size "8 11"
-	
+
 	// Far left street going all the way up
 	fix +str_cross "0 0"
 	fix +strv_1a "0 1"
@@ -378,7 +378,7 @@ assembly small
 assembly medium
 {
 	size "8 11"
-	
+
 	// Far left street with the top vertical streets cut out
 	// because the harvester uses them
 	fix +str_cross "0 0"
@@ -427,7 +427,7 @@ assembly medium
 
 
 /*
-	
+
 assembly garage
 {
 	size "8 6"
