@@ -557,7 +557,6 @@ base/models/aircraft/inter_dragon/inter_dragon_gear.jpg | GNU General Public Lic
 base/models/aircraft/inter_dragon/inter_dragon_gear.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/inter_saracen/saracen.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy) - minor modifications by David Townsend (Psawhn)
 base/models/aircraft/inter_saracen/saracen.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
-base/models/aircraft/inter_saracen/saracen_interceptor_flying.md2 | GNU General Public License 2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_starchaser/starchaser.md2 | GNU General Public License 2.0 | Willem Sitters
 base/models/aircraft/inter_starchaser/starchaser.png | GNU General Public License 2.0 | Willem Sitters
 base/models/aircraft/inter_starchaser/starchaser_folded.md2 | GNU General Public License 2.0 | Willem Sitters
@@ -567,13 +566,11 @@ base/models/aircraft/inter_stiletto/stiletto.md2 | GNU General Public License 2.
 base/models/aircraft/inter_stiletto/stiletto_engines.jpg | GNU General Public License 2.0 or later | Lukas "Rastaman" Beyeler
 base/models/aircraft/inter_stiletto/stiletto_engines.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/inter_stingray/stingray.jpg | GNU General Public License 2.0 | David Townsend (Psawhn)
-base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/ufo_carrier/ufo_carrier.jpg | GNU General Public License 2.0 | Ryan A. Span ("Winter")
 base/models/aircraft/ufo_carrier/ufo_carrier.md2 | GNU General Public License 2.0 | Ryan A. Span ("Winter")
 base/models/aircraft/ufo_corrupter/ufo_corrupter.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_corrupter/ufo_corrupter.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
-base/models/aircraft/ufo_fighter/ufo_fighter_closed.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_fighter/ufo_fighter_engines.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -709,18 +706,9 @@ base/models/aliens/tamanmedium/head03.md2 | GNU General Public License 2.0 | Luk
 base/models/aliens/tamanmedium/head04.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/animals/cow/cow.jpg |  | hullbr3ach
 base/models/animals/cow/cow.md2 |  | hullbr3ach
-base/models/animals/crocodile/croc.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/animals/crocodile/croc.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/animals/dog/dog.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/animals/dog/dog.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/animals/dog/dog_death.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/animals/fish2/fish.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/animals/fish2/fish.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/animals/fish2/fish.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/animals/penguin/penguin.jpg |  | hullbr3ach
-base/models/animals/penguin/penguin.md2 |  | hullbr3ach
-base/models/animals/rat/rat.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/animals/rat/rat.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/characters/al_kuhar.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/characters/al_kuhar.md2 | GNU General Public License 2.0 or later
 base/models/characters/connor.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
