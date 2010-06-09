@@ -527,10 +527,6 @@ base/models/aircraft/drop_firebird/firebird.md2 | GNU General Public License 2.0
 base/models/aircraft/drop_firebird/firebird_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/drop_firebird/firebird_top.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/drop_firebird/firebird_top.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aircraft/drop_herakles/ammobox.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/drop_herakles/ammobox.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/drop_herakles/extinguiser.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/drop_herakles/extinguiser.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/herakles.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/herakles_carryall.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/herakles_int.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -544,8 +540,6 @@ base/models/aircraft/drop_herakles/herakles_pod_back.md2 | GNU General Public Li
 base/models/aircraft/drop_herakles/seats.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/seats.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_herakles/seats_2.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/drop_herakles/wallbox.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/aircraft/drop_herakles/wallbox.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_raptor/drop_raptor.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_raptor/drop_raptor.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/aircraft/drop_raptor/drop_raptor_landed.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -614,8 +608,6 @@ base/models/aliens/bloodspider/bloodspider.jpg | Creative Commons Attribution-Sh
 base/models/aliens/bloodspider/bloodspider.md2 | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
 base/models/aliens/bloodspider/bloodspider.tag | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
 base/models/aliens/bloodspider/head.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/aliens/hovernet/body01.jpg | GNU General Public License 2.0 | Protoarmor
-base/models/aliens/hovernet/body01.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/models/aliens/ortnok/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -711,12 +703,8 @@ base/models/animals/fish2/fish.md2 | GNU General Public License 2.0 or later | W
 base/models/animals/fish2/fish.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/characters/al_kuhar.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/characters/al_kuhar.md2 | GNU General Public License 2.0 or later
-base/models/characters/connor.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/characters/connor.md2 | GNU General Public License 2.0 or later
 base/models/characters/falkland.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/characters/falkland.md2 | GNU General Public License 2.0 or later
-base/models/characters/floydd.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/characters/floydd.md2 | GNU General Public License 2.0 or later
 base/models/characters/howard.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/characters/howard.md2 | GNU General Public License 2.0 or later
 base/models/characters/navarre.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1605,10 +1593,6 @@ base/models/weapons/assault/assault.md2 | GNU General Public License 2.0 | Lukas
 base/models/weapons/assault/assault_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/assault/assault_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/assault/assault_gm.png | GNU General Public License 2.0 or later | MCR
-base/models/weapons/autocannon/ugv_autocannon.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/autocannon/ugv_autocannon.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/binocs/binocs.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/weapons/binocs/binocs.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
 base/models/weapons/bolterrifle/bolterrifle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/bolterrifle/bolterrifle.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/bolterrifle/bolterrifle_clip.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
@@ -1633,8 +1617,6 @@ base/models/weapons/flamer/flamer.md2 | GNU General Public License 2.0 | Lukas "
 base/models/weapons/flamer/flamer_ammo.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/flamer/flamer_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/flamer/flamer_gm.png | GNU General Public License 2.0 or later | MCR
-base/models/weapons/flare/flare.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/flare/flare.png | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flashbang/flashbang.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/flashbang/flashbang.png | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/fraggren/fraggren.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1647,8 +1629,6 @@ base/models/weapons/grenl/grenl_clip2.md2 | GNU General Public License 2.0 | Luk
 base/models/weapons/grenl/grenl_flechette_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_flechette_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_gm.png | GNU General Public License 2.0 or later | MCR
-base/models/weapons/grenl/grenl_ic_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/grenl/grenl_ic_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_plasma_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/grenl/grenl_plasma_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/incgren/incgren.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
@@ -1667,9 +1647,6 @@ base/models/weapons/laserheavy/laserheavy.md2 | GNU General Public License 2.0 |
 base/models/weapons/laserheavy/laserheavy_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/weapons/laserpistol/laserpistol.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/laserpistol/laserpistol.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/laserpistol/laserpistol_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/laserpistol/laserpistol_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/laserpistol/laserpistol_clip_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/weapons/laserpistol/laserpistol_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/weapons/laserrifle/laserrifle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/laserrifle/laserrifle.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1745,13 +1722,10 @@ base/models/weapons/rpg/rpg.jpg | GNU General Public License 2.0 | Lukas "Rastam
 base/models/weapons/rpg/rpg.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/rpg/rpg_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/rpg/rpg_inc_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/rpg/rpg_particle_ammo.md2 | GNU General Public License 2.0 | A M D G
 base/models/weapons/shotgun/shotgun.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/shotgun/shotgun.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/shotgun/shotgun_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/shotgun/shotgun_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/shotgun/shotgun_clip_green.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on shotgun_clip by Lukas Beyeler (Rasta)
-base/models/weapons/shotgun/shotgun_clip_green.md2 | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on shotgun_clip by Lukas Beyeler (Rasta)
 base/models/weapons/shotgun/shotgun_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/weapons/shotgun2/shotgun.jpg | Creative Commons Attribution-Share Alike 3.0 | Nathan : INC (Kaeau)
 base/models/weapons/shotgun2/shotgun.md2 | Creative Commons Attribution-Share Alike 3.0 | Nathan : INC (Kaeau)
