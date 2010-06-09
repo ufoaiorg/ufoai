@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO: Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-05-19 11:31+0700\n"
-"PO-Revision-Date: 2010-05-31 22:54+0100\n"
-"Last-Translator: Tamás Fehérvári <ft107@freemail.hu>\n"
+"PO-Revision-Date: 2010-06-09 13:35+0100\n"
+"Last-Translator: Tamás Fehérvári <geever@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3419,7 +3419,7 @@ msgstr "Egy laboratórium ahol vizsgálják az UFO roncsokat."
 
 #: ../base/ufos/maps.ufo:3440
 msgid "Big city"
-msgstr ""
+msgstr "Nagyváros"
 
 #: ../base/ufos/maps.ufo:3487
 msgid "A fuel depot the aliens try to destroy."
@@ -3572,11 +3572,11 @@ msgstr "Ezr."
 
 #: ../base/ufos/msgcategories.ufo:7
 msgid "install_equipment"
-msgstr "Felfegyverzés"
+msgstr "felfegyverzés"
 
 #: ../base/ufos/msgcategories.ufo:16
 msgid "installation_construction"
-msgstr "Állomás építés"
+msgstr "állomás építés"
 
 #: ../base/ufos/msgcategories.ufo:23
 msgid "research"
@@ -3588,11 +3588,11 @@ msgstr "gyártás"
 
 #: ../base/ufos/msgcategories.ufo:37
 msgid "nations_happiness"
-msgstr "Nemzetek elégedettsége"
+msgstr "nemzetek elégedettsége"
 
 #: ../base/ufos/msgcategories.ufo:44
 msgid "transfer"
-msgstr "Szállítás"
+msgstr "szállítmányozás"
 
 #: ../base/ufos/msgcategories.ufo:53
 msgid "ufo_activity"
@@ -3701,7 +3701,7 @@ msgstr "Az idegen fenyegetés"
 
 #: ../base/ufos/research.ufo:127
 msgid "Continuous Wave Laser Operation"
-msgstr "Folytonos Hullámlézer"
+msgstr "Folytonos Üzemű Lézer"
 
 #: ../base/ufos/research.ufo:132
 msgid "laser_txt"
@@ -9428,7 +9428,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:14
 msgid "In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
-msgstr "Több játékos módban, csetelhetsz a következő billenytűkkel: [k] (mindenkivel), [l] (csak csapattagokkal)\", vagy a HUD cset gombjaival."
+msgstr "Több játékos módban, csetelhetsz a következő billentyűkkel: [k] (mindenkivel), [l] (csak csapattagokkal), vagy a HUD cset gombjaival."
 
 #: ../base/ufos/tips.ufo:15
 msgid "To make a soldier face a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
@@ -9436,7 +9436,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:16
 msgid "Use [Backspace] key to open doors."
-msgstr ""
+msgstr "A [Backspace] gombbal kinyithatod a csukott ajtókat."
 
 #: ../base/ufos/tips.ufo:17
 msgid "Be sure to hire as many scientists as you can. The better you know your enemy, the easier he is to defeat."
@@ -10146,7 +10146,7 @@ msgstr "Kiválasztott elem"
 
 #: ../base/ufos/ui/basedefence.ufo:296
 msgid "Surface to Air defences"
-msgstr ""
+msgstr "Légvédelem"
 
 #: ../base/ufos/ui/basedefence.ufo:326
 msgid "Targetted UFO:"
@@ -14027,7 +14027,7 @@ msgstr ""
 
 #: client/campaign/cp_aliencont_callbacks.c:230
 msgid "Free slot"
-msgstr ""
+msgstr "Üres hely"
 
 #: client/campaign/cp_aliencont_callbacks.c:231
 #: client/campaign/cp_basedefence_callbacks.c:180
@@ -14351,7 +14351,7 @@ msgstr "^BIdegenek\n"
 
 #: client/campaign/cp_base_callbacks.c:718
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
-msgstr "Épület\t\t\t\t\t\tKapacitás\t\t\t\tMennyiség\n"
+msgstr "^BÉpület\t\t\t\t\t\tKapacitás\t\t\t\tDarab\n"
 
 #: client/campaign/cp_base_callbacks.c:742
 msgid "day"
@@ -14361,7 +14361,7 @@ msgstr[1] "nap"
 
 #: client/campaign/cp_base_callbacks.c:752
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
-msgstr "^BGyártás\t\t\t\t\t\tMennyiség\t\t\t\tSzázalék\n"
+msgstr "^BGyártás\t\t\t\t\t\tMennyiség\t\t\t\t%\n"
 
 #: client/campaign/cp_base_callbacks.c:772
 #, c-format
@@ -14375,7 +14375,7 @@ msgstr "Semmi\n"
 
 #: client/campaign/cp_base_callbacks.c:781
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
-msgstr "^BTervezet\t\t\t\t\t\tTudósok\t\t\t\tSzázalék\n"
+msgstr "^BTervezet\t\t\t\t\t\tTudósok\t\t\t\t%\n"
 
 #: client/campaign/cp_base_callbacks.c:786
 #, c-format
@@ -15000,95 +15000,95 @@ msgstr ""
 
 #: client/campaign/cp_messageoptions.c:37
 msgid "installation_installed"
-msgstr "Fegyver telepítve"
+msgstr "fegyver telepítve"
 
 #: client/campaign/cp_messageoptions.c:38
 msgid "installation_removed"
-msgstr "Fegyver leszerelve"
+msgstr "fegyver leszerelve"
 
 #: client/campaign/cp_messageoptions.c:39
 msgid "installation_replaced"
-msgstr "Fegyver lecserélve"
+msgstr "fegyver lecserélve"
 
 #: client/campaign/cp_messageoptions.c:40
 msgid "aircraft_refueled"
-msgstr "Repülő feltankolva."
+msgstr "repülő feltankolva."
 
 #: client/campaign/cp_messageoptions.c:41
 msgid "aircraft_cannotrefuel"
-msgstr ""
+msgstr "repülő nem tankolható újra"
 
 #: client/campaign/cp_messageoptions.c:42
 msgid "installation_build_started"
-msgstr "Állomás építés megkezdődött"
+msgstr "állomás építés megkezdődött"
 
 #: client/campaign/cp_messageoptions.c:43
 msgid "installation_build_finished"
-msgstr "Állomás felépült"
+msgstr "állomás felépült"
 
 #: client/campaign/cp_messageoptions.c:44
 msgid "installation_destroyed"
-msgstr "Állomás megsemmisült"
+msgstr "állomás megsemmisült"
 
 #: client/campaign/cp_messageoptions.c:45
 msgid "research_new_proposed"
-msgstr "Új kutatási javaslat"
+msgstr "új kutatási javaslat"
 
 #: client/campaign/cp_messageoptions.c:46
 msgid "research_halted"
-msgstr "Kutatás leállt"
+msgstr "kutatás leállt"
 
 #: client/campaign/cp_messageoptions.c:47
 msgid "research_completed"
-msgstr "Kutatás befejeződött"
+msgstr "kutatás befejeződött"
 
 #: client/campaign/cp_messageoptions.c:48
 msgid "production_started"
-msgstr "Gyártás elkezdődött"
+msgstr "gyártás elkezdődött"
 
 #: client/campaign/cp_messageoptions.c:49
 msgid "production_finished"
-msgstr "Gyártás befejeződött"
+msgstr "gyártás befejeződött"
 
 #: client/campaign/cp_messageoptions.c:50
 msgid "production_failed"
-msgstr "Gyártás leállt"
+msgstr "gyártás leállt"
 
 #: client/campaign/cp_messageoptions.c:51
 msgid "production_queue_empty"
-msgstr "Gyártósor üres"
+msgstr "gyártósor üres"
 
 #: client/campaign/cp_messageoptions.c:52
 msgid "nation_happiness_changed"
-msgstr "Nemzet elégedettség változott"
+msgstr "nemzet elégedettség változott"
 
 #: client/campaign/cp_messageoptions.c:53
 msgid "nation_unhappy"
-msgstr "Nemzet elégedetlen"
+msgstr "nemzet elégedetlen"
 
 #: client/campaign/cp_messageoptions.c:54
 msgid "nation_pleased"
-msgstr "Nemzet elégedett"
+msgstr "nemzet elégedett"
 
 #: client/campaign/cp_messageoptions.c:55
 msgid "transfer_started"
-msgstr "Szállítmány elindult"
+msgstr "szállítmány elindult"
 
 #: client/campaign/cp_messageoptions.c:56
 msgid "transfer_completed_success"
-msgstr "Szállítmány megérkezett"
+msgstr "szállítmány megérkezett"
 
 #: client/campaign/cp_messageoptions.c:57
 msgid "transfer_lost"
-msgstr "Szállítmány elveszett"
+msgstr "szállítmány elveszett"
 
 #: client/campaign/cp_messageoptions.c:58
 msgid "transfer_aliens_defered"
-msgstr ""
+msgstr "idegenek leszállítva"
 
 #: client/campaign/cp_messageoptions.c:59
 msgid "transfer_uforecovery_finished"
-msgstr ""
+msgstr "UFÓ leszállítva"
 
 #: client/campaign/cp_messageoptions.c:60
 msgid "ufo_spotted"
@@ -15579,7 +15579,7 @@ msgstr "Nincs elég labor"
 #: client/campaign/cp_research.c:846
 #, c-format
 msgid "Research prerequisites of %s do not met at %s. Research halted!"
-msgstr ""
+msgstr "A(z) %s kutatás előfeltételei nem teljesülnek (%s). Kutatás leállt!"
 
 #: client/campaign/cp_research.c:847
 msgid "Research halted"
@@ -15605,25 +15605,25 @@ msgstr "Tudósok (szabad/összes): %i/%i"
 
 #: client/campaign/cp_research_callbacks.c:105
 msgid "Not researched in any base."
-msgstr ""
+msgstr "Nem kutatják sehol."
 
 #: client/campaign/cp_research_callbacks.c:111
 #, c-format
 msgid "Researched in %s"
-msgstr ""
+msgstr "Kutatja: %s"
 
 #: client/campaign/cp_research_callbacks.c:113
 msgid "Researched in this base."
-msgstr ""
+msgstr "Kutatjuk itt."
 
 #: client/campaign/cp_research_callbacks.c:125
 #, c-format
 msgid "Progress: %.1f%%"
-msgstr ""
+msgstr "Haladás: %.1f%%"
 
 #: client/campaign/cp_research_callbacks.c:128
 msgid "Progress: not available."
-msgstr ""
+msgstr "Haladás: ismeretlen"
 
 #: client/campaign/cp_research_callbacks.c:133
 msgid "Status: under research"
