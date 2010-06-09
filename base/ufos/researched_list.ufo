@@ -31,26 +31,17 @@ researched rslist_phalanx
 	rs_weapon_shotgun_micro_ammo
 	rs_weapon_flamer
 	rs_weapon_flamer_ammo
-	rs_weapon_incgren
 	rs_weapon_pistol
 	rs_weapon_pistol_ammo
 	rs_weapon_rpg
 	rs_weapon_rpg_ammo
 	rs_weapon_fraggren
-	rs_weapon_smokegren
 	rs_weapon_combatknife
 	rs_weapon_grenl
 	rs_weapon_grenl_ammo
 	rs_weapon_grenl_fle_ammo
-	rs_weapon_grenl_incendiary_ammo
 	rs_medikit
 	rs_irgoggles
-
-	// HEAVY EQUIPMENT
-	rs_ugv_phoenix
-	rs_ugv_ares_w
-	rs_ugv_chaingun
-	rs_ugv_chaingun_belt
 
 	// DAMAGE TYPES & SKILLS
 	rs_combat_armour
@@ -77,7 +68,6 @@ researched rslist_phalanx
 	// CRAFT EQUIPMENT
 	rs_craft_el_raven
 	rs_craft_el_targeting
-	rs_craft_el_fuelpod
 	rs_craft_shield_polymer
 	rs_craft_weapon_shiva
 	rs_craft_weapon_sparrowhawk

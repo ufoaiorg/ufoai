@@ -36,7 +36,8 @@ item alienmaterials
 
 item bloodspider_weapon
 {
-	name			"Bloodspider weapon" // TODO Will this ever be displayed? If se we would need gettext support.
+	/* this item is virtual shouldn't be shown anywhere */
+	name			"Bloodspider weapon"
 	model			weapons/knife/knife //FIXME
 	weapon			true
 	type			melee

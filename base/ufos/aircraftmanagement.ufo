@@ -911,20 +911,6 @@ craftitem craft_el_targeting
 	accuracy	1.25
 }
 
-craftitem craft_el_fuelpod
-{
-	name				"_Fuel Pod"
-	crafttype			electronics
-	installationTime	2
-	price				3000
-	size				20 // light
-	model				"aircraft/craft_item_fuel/fuel"
-
-	fuelsize	+7000
-	speed		0.9
-	maxspeed	0.9
-}
-
 craftitem craft_shield_polymer
 {
 	name				"_Polymer Aircraft Armour"

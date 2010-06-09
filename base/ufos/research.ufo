@@ -1152,25 +1152,6 @@ tech rs_weapon_flamer_ammo
 	producetime	24
 }
 
-tech rs_weapon_flashbang
-{
-	type	weapon
-	up_chapter	equipment
-	description {
-		default "_flashbang_txt"
-	}
-	// pre_description	"_flashbang_pre_txt"
-
-	require_AND
-	{
-		tech rs_skill_explosive
-		tech rs_damage_shock
-	}
-	provides	flashbang
-	time	0
-	producetime	12
-}
-
 tech rs_weapon_fraggren
 {
 	type	weapon
@@ -1188,25 +1169,6 @@ tech rs_weapon_fraggren
 	provides	fraggrenade
 	time	0
 	producetime	12
-}
-
-tech rs_weapon_incgren
-{
-	type	weapon
-	up_chapter	equipment
-	description {
-		default "_incgren_txt"
-	}
-	// pre_description	"_incgren_pre_txt"
-
-	require_AND
-	{
-		tech rs_skill_explosive
-		tech rs_damage_fire
-	}
-	provides	incgrenade
-	time	0
-	producetime	20
 }
 
 tech rs_weapon_grenl
@@ -1263,25 +1225,6 @@ tech rs_weapon_grenl_fle_ammo
 	provides	grenl_fle_ammo
 	time	0
 	producetime	14
-}
-
-tech rs_weapon_grenl_incendiary_ammo
-{
-	type	weapon
-	up_chapter	equipment
-	description {
-		default "_grenl_incendiary_ammo_txt"
-	}
-	// pre_description	"_grenl_incendiary_ammo_pre_txt"
-
-	require_AND
-	{
-		tech rs_damage_fire
-		tech rs_weapon_grenl
-	}
-	provides	grenl_incendiary_ammo
-	time	0
-	producetime	30
 }
 
 tech rs_weapon_grenl_plasma_ammo
@@ -2137,25 +2080,6 @@ tech rs_weapon_smg_ammo
 	provides	smg_ammo
 	time		0
 	producetime	12
-}
-
-tech rs_weapon_smokegren
-{
-	type		weapon
-	up_chapter	equipment
-	description {
-		default "_smokegren_txt"
-	}
-	// pre_description	"_smokegren_pre_txt"
-
-	require_AND
-	{
-		tech rs_skill_explosive
-	}
-
-	provides	smokegrenade
-	time		0
-	producetime	20
 }
 
 tech rs_weapon_sniper
@@ -4147,156 +4071,6 @@ tech rs_alien_shevaar_autopsy
 	image	techs/shevaar_autopsy
 }
 
-// HOVERNET
-// I am commenting this since this tech seems to have three
-// different names everywhere: HOVERNET, FLYER and STINGER
-// and nothing about it is ready anyway
-// -Zenerka 20.01.2007
-//tech rs_alien_stinger_notes
-//{
-//	type	alien
-//name	"_Live Specimen - Stinger"
-//	description	"_hovernet_notes_txt"
-//	pre_description	"_hovernet_notes_pre_txt"
-//	up_chapter	aliens
-//require_AND { tech TODO }
-//	time	2000
-//// menuModel - see models.ufo
-//	mdl	alien_hovernet
-//}
-//tech rs_alien_stinger_autopsy
-//{
-//	type	alien
-//	name	"_Alien Autopsy - Stinger"
-//	description	"_hovernet_autopsy_txt"
-//	pre_description	"_hovernet_autopsy_pre_txt"
-//	up_chapter	aliens
-//
-//	require_AND { tech TODO }
-//	time	1500
-//
-//	// menuModel - see models.ufo
-//	mdl	alien_hovernet
-//}
-
-// CYBORG ORTNOK
-
-//tech rs_alien_cyborg_ortnok_autopsy
-//{
-//	type	alien
-//	name	"_Alien Autopsy - Ortnok Cyborg"
-//	description	"_cyborg_ortnok_autopsy_txt"
-//	pre_description	"_cyborg_ortnok_autopsy_pre_txt"
-//	up_chapter	aliens
-//
-//	require_AND
-//	{
-//		tech TODO
-//	}
-//	time	1500
-//
-//	mdl	alien_cyborg_ortnok
-//}
-
-//========================
-// UGVs
-//========================
-
-tech rs_ugv_phoenix
-{
-	type	ugv
-	mdl	ugv_phoenix
-
-	up_chapter	equipment
-	name	"_Phoenix UGV"
-	description {
-		default "_ugv_phoenix_txt"
-	}
-	pre_description {
-		default "_ugv_phoenix_pre_txt"
-	}
-
-	provides	ugv_phoenix
-	time	0
-	producetime	400
-}
-
-// area with wheels
-tech rs_ugv_ares_w
-{
-	type	ugv
-	mdl	ugv_ares_w
-
-	up_chapter	equipment
-	name	"_Ares W (UGV)"
-	description {
-		default "_ugv_ares_w_txt"
-	}
-	pre_description {
-		default "_ugv_ares_w_pre_txt"
-	}
-
-	provides	ugv_ares_w
-	time	0
-	producetime	200
-}
-
-tech rs_ugv_chaingun
-{
-	type	weapon
-	mdl	ugv_phoenix	// @todo fixme
-
-	up_chapter	equipment
-/* @todo use-me
-	description {
-		default "_ugv_chaingun_txt"
-	}
-	pre_description {
-		default "_ugv_chaingun_pre_txt"
-	}
-*/
-	provides	ugv_chaingun
-	time	0
-	producetime	50	// Not really needed since this should (at least in the beginning) be produced with the tank itself.
-}
-
-tech rs_ugv_chaingun_belt
-{
-	type	weapon
-	mdl	ugv_phoenix	// @todo fixme
-
-	up_chapter	equipment
-/* @todo use-me
-	description {
-		default "_ugv_chaingun_belt_txt"
-	}
-	pre_description {
-		default "_ugv_chaingun_belt_pre_txt"
-	}
-*/
-	provides	ugv_chaingun_belt
-	time	0
-	producetime	10	// @todo fixme
-}
-
-tech rs_ugv_weapon_autocannon
-{
-	type	weapon
-	mdl	ugv_phoenix	// @todo fixme
-
-	up_chapter	equipment
-	description {
-		default "_ugv_weapon_autocannon_txt"
-	}
-	pre_description {
-		default "_ugv_weapon_autocannon_pre_txt"
-	}
-
-	provides	ugv_weapon_autocannon
-	time	0
-	producetime	50
-}
-
 //========================
 // Base Weapons
 //========================
@@ -4769,24 +4543,6 @@ tech rs_craft_el_targeting
 	producetime	180
 
 	mdl		"aircraft/craft_item_target/craft_item_target"
-}
-
-tech rs_craft_el_fuelpod
-{
-	type		craftitem
-	up_chapter	crafts
-	name		"_Fuel Pod"
-	// pre_description	"_craft_electronics_fuelpod_pre_txt"
-	description {
-		default "_craft_electronics_fuelpod_txt"
-	}
-
-	provides	craft_el_fuelpod
-	time		0
-	producetime	80
-
-	mdl		"aircraft/craft_item_fuel/fuel"
-	//image	"techs/craft_electronics_fuelpod"
 }
 
 //========================

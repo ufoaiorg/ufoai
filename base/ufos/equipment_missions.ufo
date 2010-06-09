@@ -515,7 +515,6 @@ equipment phalanx_initial
 	item knife					30
 	item medikit					40
 	item irgoggles				15
-	item smokegrenade			40
 
 	// Armour
 	item armour_light			43
@@ -554,7 +553,6 @@ equipment civilian_gang
 	item rpg					1
 	item rpg_ammo			1
 	item fraggrenade			1
-	item smokegrenade		1
 	item stungrenade			1
 	item knife				20
 }
@@ -571,7 +569,6 @@ equipment civilian_police // some may be weaponless
 	item sniper				1
 	item sniper_ammo			1
 	item fraggrenade			2
-	item smokegrenade		2
 	item stungrenade			2
 	item armour_light		7
 }
@@ -594,7 +591,6 @@ equipment civilian_antiterrorist
 	item shotgun				5
 	item shotgun_ammo		12
 	item fraggrenade			25
-	item smokegrenade		20
 	item knife				40
 	item armour_light		35
 }
@@ -615,7 +611,6 @@ equipment civilian_army
 	item rpg  				3
 	item rpg_ammo			7
 	item fraggrenade			55
-	item smokegrenade		20
 	item knife				40
 	item armour_light		15
 }

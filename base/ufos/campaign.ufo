@@ -6,6 +6,7 @@ campaign veryhard
 	soldiers			8
 	scientists			6
 	workers				6
+	ugvs				0
 	difficulty			4
 	minhappiness		0.42
 	maxdebts			50000
@@ -32,6 +33,7 @@ campaign hard
 	soldiers		8
 	scientists		6
 	workers			6
+	ugvs			0
 	difficulty		2
 	minhappiness	0.35
 	maxdebts		100000
@@ -61,6 +63,7 @@ campaign main
 	soldiers		9
 	scientists		10
 	workers			10
+	ugvs			0
 	difficulty		0
 	minhappiness	0.30
 	maxdebts		200000
@@ -89,7 +92,6 @@ campaign main
 	}
 	firstbase			balanced
 	researched			rslist_phalanx
-	ugvs				2
 	equipment			campaign_player
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
@@ -110,6 +112,7 @@ campaign easy
 	soldiers		25
 	scientists		16
 	workers			10
+	ugvs			0
 	difficulty		-2
 	minhappiness	0.2
 	maxdebts		350000
@@ -139,6 +142,7 @@ campaign veryeasy
 	soldiers		35
 	scientists		26
 	workers			20
+	ugvs			0
 	difficulty		-4
 	minhappiness	0.1
 	maxdebts		500000
@@ -179,27 +183,3 @@ campaign veryeasy
 	basecost	100000
 }
 
-/*
-campaign aliencampaign
-{
-	name				"_Play the aliens"
-	text				"_alien_campaign_txt"
-	team				alien
-	soldiers			15
-	scientists			12
-	workers				9
-	difficulty			-4
-	researched			rslist_alien
-	equipment			campaign_player_aliens
-	market				campaign_market_aliens
-	asymptotic_market	campaign_market_aliens
-	credits				1300000
-	map					map_earth
-	visible				true
-	events				main
-
-	date		"2084 79 6"
-	basecost	100000
-}
-
-*/

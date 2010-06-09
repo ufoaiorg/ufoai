@@ -36,12 +36,10 @@ equipment campaign_player
 	item grenl						1
 	item grenl_ammo					10
 	item fraggrenade					12
-	item smokegrenade				2
 	item knife						2
 	item armour_light				0
 	item medikit						2
 	item irgoggles					1
-	item flashbang					5
 	item craft_weapon_shiva			2
 	item craft_ammo_shiva_API		30
 	item craft_ammo_shiva_HEI		30
@@ -49,7 +47,6 @@ equipment campaign_player
 	item craft_ammo_sparrowhawk		16
 	item craft_weapon_tr20			1
 	item craft_ammo_tr20				6
-	item craft_el_fuelpod			1
 	item craft_shield_polymer		1
 }
 
@@ -78,15 +75,11 @@ equipment campaign_initial_market
 	item rpg_incendiary_ammo			20
 	item grenl						2
 	item grenl_ammo					20
-	item grenl_incendiary_ammo		10
 	item grenl_fle_ammo				10
 	item fraggrenade					40
-	item incgrenade					10
-	item smokegrenade				10
 	item knife						20
 	item irgoggles					2
 	item medikit						4
-	item flashbang					10
 	item armour_light				20
 	item craft_weapon_shiva			6
 	item craft_ammo_shiva_API		100
@@ -95,13 +88,10 @@ equipment campaign_initial_market
 	item craft_ammo_sparrowhawk		56
 	item craft_weapon_tr20			3
 	item craft_ammo_tr20				30
-	item craft_el_fuelpod			10
 	item craft_el_raven				4
 	item craft_el_targeting			2
 	item craft_shield_polymer		4
 	item base_AA51_launcher			3
-	item ugv_chaingun				20 // This has to be at least the number of ugvs (with default weapon "ugv_chaingun")
-	item ugv_chaingun_belt			40
 	aircraft craft_drop_firebird	5
 	aircraft craft_inter_stiletto	8
 	aircraft craft_inter_saracen	6
@@ -253,14 +243,11 @@ equipment multiplayer_alien
 	item pbeamrifle			1
 	item pbeamrifle_ammo		3
 	item fraggrenade			3
-	item smokegrenade		2
-	item flashbang			8
 	item knife				2
 	item knifemono			3
 	item stunrod				3
 	item irgoggles			2
 	item medikit				3
-	item incgrenade			3
 	item plasmagrenade		3
 	item kerrblade			2
 	item plasblade			2
@@ -331,14 +318,11 @@ equipment multiplayer_phalanx
 	item pbeamrifle			1
 	item pbeamrifle_ammo		3
 	item fraggrenade			3
-	item smokegrenade		2
-	item flashbang			8
 	item knife				2
 	item knifemono			3
 	item stunrod				3
 	item irgoggles			2
 	item medikit				3
-	item incgrenade			3
 	item plasmagrenade		3
 	item kerrblade			2
 	item plasblade			2
@@ -411,5 +395,4 @@ equipment multiplayer_initial
 	item armour_medium		10
 //	item armour_heavy		5
 //	item armour_power		2
-	item smokegrenade		3
 }
