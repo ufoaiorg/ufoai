@@ -62,7 +62,6 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
 	signed int allWorkers = 0;
 	signed int maxWorkers = 0;
 	signed int timeDefault = 0;
-	float distanceFactor = 0.0f;
 
 	assert(base);
 	assert(tech);
@@ -79,22 +78,16 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
 		assert(storedUFO->comp);
 		/* This is the default disassembly time for 10 workers. */
 		timeDefault = storedUFO->comp->time;
-		/* Production is 4 times longer when installation is on Antipodes */
-		distanceFactor = GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0f;
-		assert(distanceFactor >= 0.0f);
-		/* Penalty starts when distance is greater than 45 degrees */
-		distanceFactor = max(1.0f, distanceFactor);
-		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: distanceFactor is %f\n", distanceFactor);
 	}
 	if (maxWorkers == PRODUCE_WORKERS) {
 		/* No need to calculate: timeDefault is for PRODUCE_WORKERS workers. */
-		const float fraction =  1.0f / ((NULL != storedUFO) ? (distanceFactor * timeDefault) : timeDefault);
+		const float fraction =  1.0f / timeDefault;
 		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: workers: %i, tech: %s, percent: %f\n",
 			maxWorkers, tech->id, fraction);
 		return fraction;
 	} else {
 		/* Calculate the fraction of item produced for our amount of workers. */
-		const float fraction = ((float)maxWorkers / (PRODUCE_WORKERS * ((NULL != storedUFO) ? (distanceFactor * timeDefault) : timeDefault)));
+		const float fraction = ((float)maxWorkers / (PRODUCE_WORKERS * timeDefault));
 		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: workers: %i, tech: %s, percent: %f\n",
 			maxWorkers, tech->id, fraction);
 		/* Don't allow to return fraction greater than 1 (you still need at least 1 hour to produce an item). */
