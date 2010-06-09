@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../mxml/mxml_ufoai.h"
 #include "cp_campaign.h"
 #include "cp_ufo.h"
+#include "cp_produce.h"
 #include "cp_produce_callbacks.h"
 #include "save/save_produce.h"
 
@@ -138,6 +139,96 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements
 			}
 		}
 	}
+}
+
+/**
+ * @brief Add a new item to the bottom of the production queue.
+ * @param[in] base Pointer to base, where the queue is.
+ * @param[in] queue Pointer to the queue.
+ * @param[in] item Item to add.
+ * @param[in] aircraftTemplate aircraft to add.
+ * @param[in] ufo The UFO in case of a disassemly.
+ * @param[in] amount Desired amount to produce.
+ */
+production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, storedUFO_t *ufo, signed int amount)
+{
+	int numWorkshops = 0;
+	production_t *prod;
+	const technology_t *tech;
+
+	assert((item && !aircraftTemplate && !ufo) || (!item && aircraftTemplate && !ufo) || (!item && !aircraftTemplate && ufo));
+	assert(base);
+
+	if (queue->numItems >= MAX_PRODUCTIONS)
+		return NULL;
+
+	if (E_CountHired(base, EMPL_WORKER) <= 0) {
+		MN_Popup(_("Not enough workers"), _("You cannot queue productions without workers hired in this base.\n\nHire workers."));
+		return NULL;
+	}
+
+	numWorkshops = max(B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP), 0);
+
+	if (queue->numItems >= numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP) {
+		MN_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
+		return NULL;
+	}
+
+	/* Initialize */
+	prod = &queue->items[queue->numItems];
+	memset(prod, 0, sizeof(*prod));
+
+	/* self-reference. */
+	prod->idx = queue->numItems;
+
+	if (item)
+		tech = item->tech;
+	else if (aircraftTemplate)
+		tech = aircraftTemplate->tech;
+	else
+		tech = ufo->ufoTemplate->tech;
+
+	/* We cannot queue new aircraft if no free hangar space. */
+	if (aircraftTemplate) {
+		if (!B_GetBuildingStatus(base, B_COMMAND)) {
+			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
+			return NULL;
+		} else if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
+			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
+			return NULL;
+		}
+		/** @todo we should also count aircraft that are already in the queue list */
+		if (AIR_CalculateHangarStorage(aircraftTemplate, base, 0) <= 0) {
+			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
+			return NULL;
+		}
+	}
+
+	prod->item = item;
+	prod->aircraft = aircraftTemplate;
+	prod->ufo = ufo;
+
+	if (ufo) {
+		/* Disassembling. */
+		prod->production = qfalse;
+		prod->amount = 1;
+
+		ufo->disassembly = prod;
+		prod->percentDone = 0.0f;
+	} else {
+		/* Production. */
+		prod->production = qtrue;
+		prod->amount = amount;
+
+		/* Don't try to add to queue an item which is not producible. */
+		if (tech->produceTime < 0)
+			return NULL;
+		else
+			prod->percentDone = 0.0f;
+	}
+
+	queue->numItems++;
+	return prod;
 }
 
 /**
