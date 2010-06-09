@@ -851,8 +851,6 @@ base/models/geoscape/drop_raptor.md2 | GNU General Public License 2.0 or later |
 base/models/geoscape/drop_raptor.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/inter_dragon.jpg | GNU General Public License 2.0
 base/models/geoscape/inter_dragon.md2 | GNU General Public License 2.0
-base/models/geoscape/inter_raptor.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/geoscape/inter_raptor.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/inter_saracen.md2 | GNU General Public License 2.0 |  | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
 base/models/geoscape/inter_saracen.png | GNU General Public License 2.0 |  | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
 base/models/geoscape/inter_starchaser.md2 | GNU General Public License 2.0 or later | Willem Sitters
