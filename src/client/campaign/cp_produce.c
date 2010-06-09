@@ -103,44 +103,6 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
 }
 
 /**
- * @brief Remove or add the required items from/to the a base.
- * @param[in] base Pointer to base.
- * @param[in] amount How many items are planned to be added (positive number) or removed (negative number).
- * @param[in] reqs The production requirements of the item that is to be produced. These included numbers are multiplied with 'amount')
- * @todo This doesn't check yet if there are more items removed than are in the base-storage (might be fixed if we used a storage-function with checks, otherwise we can make it a 'condition' in order to run this function.
- */
-void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements_t *reqs)
-{
-	int i;
-	equipDef_t *ed;
-
-	if (!base)
-		return;
-
-	ed = &base->storage;
-	if (!ed)
-		return;
-
-	if (amount == 0)
-		return;
-
-	for (i = 0; i < reqs->numLinks; i++) {
-		requirement_t *req = &reqs->links[i];
-		if (req->type == RS_LINK_ITEM) {
-			const objDef_t *item = (const objDef_t *)req->link;
-			assert(item);
-			if (amount > 0) {
-				/* Add items to the base-storage. */
-				ed->numItems[item->idx] += (req->amount * amount);
-			} else { /* amount < 0 */
-				/* Remove items from the base-storage. */
-				ed->numItems[item->idx] -= (req->amount * -amount);
-			}
-		}
-	}
-}
-
-/**
  * @brief Delete the selected entry from the queue.
  * @param[in] base Pointer to base, where the queue is.
  * @param[in] queue Pointer to the queue.
@@ -153,17 +115,6 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 
 	if (prod->ufo) {
 		prod->ufo->disassembly = NULL;
-	} else if (prod->itemsCached && !prod->aircraft) {
-		/* Get technology of the item in the selected queue-entry. */
-		const objDef_t *od = prod->item;
-		if (od->tech) {
-			assert(base);
-			/* Add all items listed in the prod.-requirements /multiplied by amount) to the storage again. */
-			PR_UpdateRequiredItemsInBasestorage(base, prod->amount, &od->tech->requireForProduction);
-		} else {
-			Com_DPrintf(DEBUG_CLIENT, "PR_QueueDelete: Problem getting technology entry for %i\n", index);
-		}
-		prod->itemsCached = qfalse;
 	}
 
 	REMOVE_ELEM_ADJUST_IDX(queue->items, index, queue->numItems);
@@ -586,7 +537,6 @@ qboolean PR_SaveXML (mxml_node_t *p)
 				mxml_AddInt(ssnode, SAVE_PRODUCE_UFOIDX, ufo->idx);
 			mxml_AddInt(ssnode, SAVE_PRODUCE_AMOUNT, pq->items[j].amount);
 			mxml_AddFloatValue(ssnode, SAVE_PRODUCE_PERCENTDONE, pq->items[j].percentDone);
-			mxml_AddBoolValue(ssnode, SAVE_PRODUCE_ITEMS_CACHED, pq->items[j].itemsCached);
 		}
 	}
 	return qtrue;
@@ -660,9 +610,6 @@ qboolean PR_LoadXML (mxml_node_t *p)
 				Com_Printf("PR_Load: Production is not an item an aircraft nor a disassembly\n");
 				continue;
 			}
-
-			/* itemsCached */
-			pq->items[pq->numItems].itemsCached = mxml_GetBool(ssnode, SAVE_PRODUCE_ITEMS_CACHED, qfalse);
 
 			pq->numItems++;
 		}

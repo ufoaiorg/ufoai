@@ -59,9 +59,6 @@ typedef struct production_s
 	qboolean spaceMessage;	/**< Used in No Free Space message adding. */
 	qboolean creditMessage;	/**< Used in No Credits message adding. */
 	qboolean production;	/**< True if this is real production, false when disassembling. */
-	qboolean itemsCached;	/**< If true the items required for production (of _one_ objID item) have been removed from production.
-				 * They need to be added to the storage again if this queue is stopped or removed.
-				 * The item-numbers from the requirement need to be multiplied with 'amount' in order to get the overall number of cached items. */
 } production_t;
 
 /**
@@ -81,7 +78,6 @@ qboolean PR_ItemIsProduceable(const objDef_t const *item);
 void PR_QueueMove(production_queue_t *queue, int index, int dir);
 void PR_QueueDelete(base_t *base, production_queue_t *queue, int index);
 void PR_QueueNext(base_t *base);
-void PR_UpdateRequiredItemsInBasestorage(base_t *base, int amount, requirements_t *reqs);
 float PR_CalculateProductionPercentDone(const base_t *base, const technology_t *tech, const struct storedUFO_s *const storedUFO);
 base_t *PR_ProductionBase(production_t *production);
 

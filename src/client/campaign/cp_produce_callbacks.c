@@ -68,44 +68,6 @@ static void PR_ClearSelected (void)
 }
 
 /**
- * @brief Checks if the production requirements are met for a defined amount.
- * @param[in] amount How many items are planned to be produced.
- * @param[in] reqs The production requirements of the item that is to be produced.
- * @param[in] base Pointer to base.
- * @return 0: If nothing can be produced. 1+: If anything can be produced. 'amount': Maximum.
- */
-static int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
-{
-	int a, i;
-	int producibleAmount = 0;
-
-	for (a = 0; a < amount; a++) {
-		qboolean producible = qtrue;
-		for (i = 0; i < reqs->numLinks; i++) {
-			const requirement_t *req = &reqs->links[i];
-			if (req->type == RS_LINK_ITEM) {
-				/* The same code is used in "RS_RequirementsMet" */
-				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s\n", req->id);
-				if (B_ItemInBase(req->link, base) < req->amount) {
-					producible = qfalse;
-				}
-			}
-			if (req->type == RS_LINK_UFO) {
-				/* The same code is used in "RS_RequirementsMet" */
-				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s\n", req->id);
-				if (US_UFOsInStorage(req->link, NULL) < req->amount)
-					producible = qfalse;
-			}
-		}
-		if (producible)
-			producibleAmount++;
-		else
-			break;
-	}
-	return producibleAmount;
-}
-
-/**
  * @brief Add a new item to the bottom of the production queue.
  * @param[in] base Pointer to base, where the queue is.
  * @param[in] queue Pointer to the queue.
@@ -796,16 +758,8 @@ static void PR_ProductionIncrease_f (void)
 			/* Get technology of the item in the selected queue-entry. */
 			const objDef_t *od = prod->item;
 			int producibleAmount = amount;
-			if (od->tech)
-				producibleAmount = PR_RequirementsMet(amount, &od->tech->requireForProduction, base);
 
 			if (producibleAmount > 0) {	/* Check if production requirements have been (even partially) met. */
-				if (od->tech) {
-					/* Remove the additionally required items (multiplied by 'producibleAmount') from base-storage.*/
-					PR_UpdateRequiredItemsInBasestorage(base, -amount, &od->tech->requireForProduction);
-					prod->itemsCached = qtrue;
-				}
-
 				if (producibleAmount < amount) {
 					/** @todo make the numbers work here. */
 					MN_Popup(_("Not enough material!"), va(_("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."),
@@ -1010,3 +964,4 @@ void PR_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("prodlist_rclick");
 	Cmd_RemoveCommand("prodlist_click");
 }
+
