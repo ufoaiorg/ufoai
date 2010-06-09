@@ -3468,8 +3468,6 @@ mapdef city_rma_small
 		craft_ufo_scout
 		craft_ufo_fighter
 		craft_ufo_supply
-		craft_ufo_harvester
-		craft_ufo_corrupter
 	}
 
 	terrains
@@ -3511,11 +3509,7 @@ mapdef city_rma_medium
 
 	ufos
 	{
-		craft_ufo_scout
-		craft_ufo_fighter
-		craft_ufo_supply
 		craft_ufo_harvester
-		craft_ufo_corrupter
 	}
 
 	terrains
