@@ -114,32 +114,6 @@ menu_model civ_female
 	model	"civilians/female/body03"
 	need	"civ_female_head"
 }
-// ================== Tanks ======================
-// ARES
-menu_model ugv_ares_w_turret
-{
-	model	"soldiers/ugv_ares/ares_w_turret"
-	tag		"tag_head"
-	parent	"ugv_ares_w"
-}
-menu_model ugv_ares_w
-{
-	model	"soldiers/ugv_ares/ares_w"
-	need	"ugv_ares_w_turret"
-}
-
-// PHOENIX
-menu_model ugv_phoenix_turret
-{
-	model	"soldiers/ugv_phoenix/phoenix_turret"
-	tag		"tag_head"
-	parent	"ugv_phoenix"
-}
-menu_model ugv_phoenix
-{
-	model	"soldiers/ugv_phoenix/phoenix"
-	need	"ugv_phoenix_turret"
-}
 
 // ============== Dropship Firebird =========================
 menu_model drop_firebird_top
