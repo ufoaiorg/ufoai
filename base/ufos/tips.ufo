@@ -10,7 +10,6 @@ tips tiplist {
 	"_Remember to give your soldiers a varying array of weapons; you never know when a certain weapon may come in handy."
 	"_Don't forget to equip your soldiers with enough ammo."
 	"_Don't forget to equip your soldiers with armour."
-	"_You can use a flashbang to deactivate your opponents' Reaction Fire mode or to take all of his remaining Time Units (TUs) from his next round."
 	"_In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
 	"_To make a soldier face a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
 	"_Use [Backspace] key to open doors."
@@ -25,7 +24,7 @@ tips tiplist {
 	"_Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
 	"_Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
 	"_If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
-	"_Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits as a medic."
+	"_Use a fast soldier with pistols, one handed melee weapons, grenades and medikits as a medic."
 	"_Building a hospital allows you to heal your soldiers faster for their next mission."
 	"_Plasma grenades do the most damage, while frag grenades have a slightly longer throwing range."
 	"_Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
@@ -60,3 +59,4 @@ tips tiplist {
 	"_Watch the health of your soldiers; do not let them die. Experienced soldiers are more efficient in missions than new recruits."
 	"_You can prepare the actions for the next round while you are waiting. Hitting the [Enter] button twice will perform all those pending actions once it's your round again."
 }
+
