@@ -174,6 +174,41 @@ static int SV_ParseMapTile (const char *filename, const char **text, mTile_t *ta
 	return 1;
 }
 
+/**
+ * @brief Tries to extract a tile name from a cvar - the cvar value must start with a '+'
+ * @param a the assembly
+ * @param token The cvar name
+ * @param filename The ump filename
+ * @param text The text buffer
+ * @param errhead Error header
+ * @return @c NULL if file has invalid format, @c the tilename of the cvar otherwise.
+ */
+static const char *SV_GetCvarToken (const mAssembly_t *a, const char* token, const char *filename, const char **text, const char *errhead)
+{
+	const cvar_t *cvar;
+
+	Com_DPrintf(DEBUG_SERVER, "SV_GetCvarToken: cvar replacement: %s\n", token);
+
+	cvar = Cvar_FindVar(token);
+	if (cvar == NULL)
+		return token;
+
+	token = Com_EParse(text, errhead, filename);
+	if (!text || token[0] == '}')
+		return NULL;
+
+	Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement value: %s\n", cvar->string);
+	if (cvar->string[0] != '+') {
+		Com_Printf("SV_ParseAssembly: warning - cvar '%s' value doesn't seam to be a valid tile id '%s' - set to default '%s'\n",
+				cvar->name, cvar->string, token);
+		Cvar_Set(cvar->name, token);
+		if (token[0] != '+')
+			Com_Error(ERR_DROP, "SV_ParseAssembly: wrong tile id in assembly '%s'", a->id);
+
+		return token;
+	}
+	return cvar->string;
+}
 
 /**
  * @brief Parses an assembly block
@@ -191,8 +226,7 @@ static int SV_ParseMapTile (const char *filename, const char **text, mTile_t *ta
 static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **text, mAssembly_t *a)
 {
 	const char *errhead = "SV_ParseAssembly: Unexpected end of file (";
-	const char *token, *cvarValue;
-	char cvarName[MAX_VAR];
+	const char *token;
 	int i, x, y;
 
 	/* get assembly name */
@@ -269,6 +303,12 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 			if (!text)
 				break;
 
+			if (token[0] == '*') {
+				token = SV_GetCvarToken(a, token + 1, filename, text, errhead);
+				if (token == NULL)
+					break;
+			}
+
 			for (i = 0; i < map->numTiles; i++)
 				if (!strcmp(token, map->mTile[i].id)) {
 					if (a->numFixed >= MAX_FIXEDTILES)
@@ -297,23 +337,10 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 				Com_Error(ERR_DROP, "Could not find fixed tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
 			continue;
 		/* <format>*cvarname <defaultvalue> "min max"</format> */
-		} else if (*token == '*') {
-			/* '*' is: replace by cvar value */
-			token++; /* strip '*' */
-			Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement: %s\n", token);
-			Q_strncpyz(cvarName, token, sizeof(cvarName));
-			token = Com_EParse(text, errhead, filename);
-			if (!text || *token == '}')
+		} else if (token[0] == '*') {
+			token = SV_GetCvarToken(a, token + 1, filename, text, errhead);
+			if (token == NULL)
 				break;
-			cvarValue = Cvar_GetString(cvarName);
-			Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement value: %s\n", cvarValue);
-			if (*cvarValue != '+') {
-				Com_Printf("SV_ParseAssembly: warning - cvar '%s' value doesn't seam to be a valid tile id '%s' - set to default '%s'\n", cvarName, cvarValue, token);
-				Cvar_Set(cvarName, token);
-				if (*token != '+')
-					Com_Error(ERR_DROP, "SV_ParseAssembly: wrong tile id in assembly '%s'", a->id);
-			} else
-				token = cvarValue;
 		}
 
 		for (i = 0; i < map->numTiles; i++)

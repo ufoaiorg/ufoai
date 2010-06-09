@@ -523,7 +523,7 @@ void R_DrawEntities (void)
 	for (i = 0; i < refdef.numEntities; i++) {
 		entity_t *e = &r_entities[i];
 
-		/* frustum cull check - but not while we are in e.g. sequence mode */
+		/* frustum cull check */
 		if (R_CullEntity(e))
 			continue;
 
