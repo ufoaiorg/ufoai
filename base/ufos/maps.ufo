@@ -3448,13 +3448,8 @@ mapdef city_rma_small
 	param		"small"
 	description	"_Big city"
 	teams		2
-	multiplayer	true
+	multiplayer	false
 	maxaliens	8
-	gametypes {
-		1on1
-		1on1on1
-		2on2
-	}
 
 	aircraft 
 	{
@@ -3496,8 +3491,6 @@ mapdef city_rma_medium
 	maxaliens	8
 	gametypes {
 		1on1
-		1on1on1
-		2on2
 	}
 
 	aircraft 
