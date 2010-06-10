@@ -405,7 +405,6 @@ static qboolean R_CvarCheckMaxLightmap (cvar_t *cvar)
 static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
 {
 	if (!r_lights->integer){
-		Cvar_SetValue(cvar->name, 0);
 		return qfalse;
 	}
 	return Cvar_AssertValue(cvar, 1, r_config.maxLights, qtrue);
@@ -413,11 +412,6 @@ static qboolean R_CvarCheckDynamicLights (cvar_t *cvar)
 
 static qboolean R_CvarCheckLights (cvar_t *cvar)
 {
-	if (!cvar->integer)
-		Cvar_SetValue("r_dynamic_lights", 0);
-    else
-        Cvar_SetValue("r_dynamic_lights", 1);
-
 	return Cvar_AssertValue(cvar, 0, 1, qtrue);
 }
 

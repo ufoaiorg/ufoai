@@ -300,17 +300,15 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 	r_light_t *l;
 	int maxLights = r_dynamic_lights->integer;
 
-	if (!enable || !r_state.lighting_enabled || r_state.numActiveLights == 0 || !ent) {
+	if (!enable || !r_state.lighting_enabled || r_state.numActiveLights < 1 || !ent) {
 		if (r_state.lighting_enabled)
 			R_ProgramParameter1i("DYNAMICLIGHTS", 0);
 		if (!r_state.bumpmap_enabled && r_state.dynamic_lighting_enabled)
 			R_DisableAttribute("TANGENTS");
-		glDisable(GL_LIGHTING);
-		for (i = 0; i < maxLights; i++) {
-			glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
-			glDisable(GL_LIGHT0 + i);
-		}
 
+		glDisable(GL_LIGHTING);
+		/* use old-style lights */
+        R_EnableLights();
 		r_state.dynamic_lighting_enabled = qfalse;
 		return;
 	}
@@ -546,8 +544,8 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 	if (enable && image != NULL)
 		R_BindTextureForTexUnit(image->texnum, &texunit_glowmap);
 
-	if (r_state.glowmap_enabled == enable)
-		return;
+	//if (r_state.glowmap_enabled == enable)
+	//	return;
 
 	r_state.glowmap_enabled = enable;
 
@@ -564,7 +562,7 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 	} else {
 		if (r_state.active_program == r_state.simple_glow_program)
 			R_UseProgram(NULL);
-		else
+		else if (r_state.active_program == r_state.world_program)
 			R_ProgramParameter1f("GLOWSCALE", 0.0);
 
 		if (r_state.draw_glow_enabled)
