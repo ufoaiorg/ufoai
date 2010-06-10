@@ -248,11 +248,14 @@ void R_SphereShade (const sphere_t *sphere)
  */
 void R_SphereShadeGLSL (const sphere_t *sphere)
 {
+	assert(r_programs->integer != 0);
+
 	if (Vector4NotEmpty(sphere->nightLightPos))
 		glLightfv(GL_LIGHT1, GL_POSITION, sphere->nightLightPos);
 
 	/* configure openGL to use our shader program */
-	R_EnableLighting(sphere->glslProgram, qtrue);
+	R_UseProgram(sphere->glslProgram);
+	glEnableClientState(GL_NORMAL_ARRAY);
 
 	R_BindTexture(sphere->texture->texnum);
 	if (sphere->blendTexture)
@@ -260,12 +263,10 @@ void R_SphereShadeGLSL (const sphere_t *sphere)
 	if (sphere->normalMap)
 		R_BindTextureForTexUnit(sphere->normalMap->texnum, &texunit_2);
 
-	if (r_lights->integer) {
-		if (sphere->blendScale >= 0)
-			R_ProgramParameter1f("BLENDSCALE", sphere->blendScale);
-		if (r_postprocess->integer && sphere->glowScale >= 0)
-			R_ProgramParameter1f("GLOWSCALE", sphere->glowScale);
-	}
+	if (sphere->blendScale >= 0)
+		R_ProgramParameter1f("BLENDSCALE", sphere->blendScale);
+	if (r_postprocess->integer && sphere->glowScale >= 0)
+		R_ProgramParameter1f("GLOWSCALE", sphere->glowScale);
 
 	/* set up pointers */
 	R_SphereActivateTextureUnit(&texunit_1, sphere->texes);
@@ -282,7 +283,8 @@ void R_SphereShadeGLSL (const sphere_t *sphere)
 	R_SphereDeactivateTextureUnit(&texunit_2);
 
 	/* deactivate the shader program */
-	R_EnableLighting(NULL, qfalse);
+	glDisableClientState(GL_NORMAL_ARRAY);
+	R_UseProgram(NULL);
 	R_SelectTexture(&texunit_diffuse);
 }
 
