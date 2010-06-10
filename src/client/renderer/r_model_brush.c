@@ -54,6 +54,10 @@ static model_t *r_worldmodel;
  */
 static void R_ModLoadLighting (const lump_t *l, qboolean day)
 {
+	/* map has no lightmap */
+	if (l->filelen == 0)
+		return;
+
 	r_worldmodel->bsp.lightdata = Mem_PoolAlloc(l->filelen, vid_lightPool, 0);
 	r_worldmodel->bsp.lightquant = *(const byte *) (mod_base + l->fileofs);
 	memcpy(r_worldmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
