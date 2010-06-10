@@ -281,6 +281,7 @@ tech rs_alien_live
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -289,6 +290,7 @@ tech rs_alien_live
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -319,6 +321,7 @@ tech rs_alien_breathing
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -327,6 +330,7 @@ tech rs_alien_breathing
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -382,6 +386,7 @@ tech rs_alien_mind
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -390,6 +395,7 @@ tech rs_alien_mind
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -420,6 +426,7 @@ tech rs_alien_oddbehaviour
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -428,6 +435,7 @@ tech rs_alien_oddbehaviour
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -458,6 +466,7 @@ tech rs_alien_communication
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -466,6 +475,7 @@ tech rs_alien_communication
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -521,6 +531,7 @@ tech rs_universal_serum
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -529,6 +540,7 @@ tech rs_universal_serum
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -1001,6 +1013,7 @@ tech rs_weapon_bolterrifle
 	name	"_Electromagnetic Rifle"
 	type	weapon
 	up_chapter	equipment
+	delay 1 // 1 day == 24 hour
 
 	description {
 		default "_bolterrifle_txt"
@@ -2380,6 +2393,7 @@ tech rs_weapon_stunrod
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name" (which in turn is parsed from weapon*.ufo files)
+		model	"characters/connor"
 		icon	icons/mail_tech
 	}
 
@@ -2388,6 +2402,7 @@ tech rs_weapon_stunrod
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_tech
 	}
 
@@ -4132,6 +4147,7 @@ tech rs_alien_bloodspider_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -4140,6 +4156,7 @@ tech rs_alien_bloodspider_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -4191,6 +4208,7 @@ tech rs_alien_ortnok_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -4199,6 +4217,7 @@ tech rs_alien_ortnok_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -4233,6 +4252,7 @@ tech rs_alien_taman_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -4241,6 +4261,7 @@ tech rs_alien_taman_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -4275,6 +4296,7 @@ tech rs_alien_shevaar_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -4283,6 +4305,7 @@ tech rs_alien_shevaar_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_alien
 	}
 
@@ -5056,6 +5079,8 @@ tech news_new_twist
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
+		icon	icons/mail_intelligence
 	}
 
 	require_AND
@@ -5087,6 +5112,7 @@ tech rs_enemy_on_earth
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_intelligence
 	}
 	mail_pre
@@ -5094,6 +5120,7 @@ tech rs_enemy_on_earth
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_intelligence
 	}
 	require_AND
@@ -5165,6 +5192,7 @@ tech rs_enemy_on_earth_revisited
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_intelligence
 	}
 	mail_pre
@@ -5172,6 +5200,7 @@ tech rs_enemy_on_earth_revisited
 		from	"_mail_from_dr_connor"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/connor"
 		icon	icons/mail_intelligence
 	}
 	require_AND
