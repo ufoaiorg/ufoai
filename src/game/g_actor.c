@@ -170,7 +170,7 @@ void G_ActorReserveTUs (edict_t *ent, int resReaction, int resShot, int resCrouc
  * @param[in] team The team to get the actor with the ucn from
  * @return The actor edict if found, otherwise @c NULL
  */
-edict_t *G_GetActorByUCN (const int ucn, const int team)
+edict_t *G_ActorGetByUCN (const int ucn, const int team)
 {
 	edict_t *ent = NULL;
 

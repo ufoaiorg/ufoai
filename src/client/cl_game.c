@@ -432,8 +432,8 @@ static void CL_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
 
 /**
  * @brief Send the character information to the server that is needed to spawn the soldiers of the player.
- * @param buf The net channel buffer to write the character data into.
- * @param chr The character to get the data from.
+ * @param[out] buf The net channel buffer to write the character data into.
+ * @param[in] chr The character to get the data from.
  */
 static void GAME_NetSendCharacter (struct dbuffer * buf, const character_t *chr)
 {

@@ -1096,7 +1096,7 @@ void G_ClientInitActorStates (const player_t * player)
 	for (i = 0; i < length; i++) {
 		const int ucn = gi.ReadShort();
 		int saveTU;
-		edict_t *ent = G_GetActorByUCN(ucn, player->pers.team);
+		edict_t *ent = G_ActorGetByUCN(ucn, player->pers.team);
 		if (!ent)
 			gi.error("Could not find character on team %i with unique character number %i", player->pers.team, ucn);
 
