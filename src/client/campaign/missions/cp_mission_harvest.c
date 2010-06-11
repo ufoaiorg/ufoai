@@ -133,7 +133,7 @@ void CP_HarvestMissionGo (mission_t *mission)
 	mission->stage = STAGE_MISSION_GOTO;
 
 	/* Choose a map */
-	if (CP_ChooseMap(mission, NULL, qfalse)) {
+	if (CP_ChooseMap(mission, NULL)) {
 		int counter;
 		linkedList_t *nationList = NULL;
 		const qboolean nationTest = CP_ChooseNation(mission, &nationList);

@@ -617,7 +617,7 @@ void CP_UFOProceedMission(aircraft_t *ufocraft);
 base_t *CP_GetMissionBase(void);
 
 mission_t *CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
-qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos, qboolean ufoCrashed);
+qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos);
 void CP_StartSelectedMission(void);
 void CL_HandleNationData(qboolean won, mission_t * mis);
 void CP_CheckLostCondition(void);

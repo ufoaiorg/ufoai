@@ -1256,7 +1256,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 
 	mission->crashed = qtrue;
 
-	if (!CP_ChooseMap(mission, ufo->pos, qtrue)) {
+	if (!CP_ChooseMap(mission, ufo->pos)) {
 		Com_Printf("CP_SpawnCrashSiteMission: No map found, remove mission.\n");
 		CP_MissionRemove(mission);
 		return;

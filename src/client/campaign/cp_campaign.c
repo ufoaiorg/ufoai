@@ -197,13 +197,14 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t
  * @param[in] ufoCrashed true if the ufo is crashed
  * @return qfalse if could not set mission
  */
-qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed)
+qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 {
 	int i;
 	int maxHits = 1;	/**< Total number of maps fulfilling mission conditions. */
 	int hits = 0;		/**< Number of maps fulfilling mission conditions and that appeared less often during game. */
 	int minMissionAppearance = 9999;
 	int randomNum;
+	const qboolean ufoCrashed = mission->crashed;
 
 	if (mission->mapDef)
 		return qtrue;
