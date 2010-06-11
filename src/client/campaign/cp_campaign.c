@@ -170,18 +170,21 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t
 		/* a mission without UFO should not use a map with UFO */
 		if (md->ufos)
 			return qfalse;
-	} else {
+	} else if (md->ufos) {
 		/* A mission with UFO should use a map with UFO
 		 * first check that list is not empty */
-		if (!md->ufos)
+		const ufoType_t type = mission->ufo->ufotype;
+		const char *ufoID;
+
+		if (ufoCrashed)
+			ufoID = Com_UFOCrashedTypeToShortName(type);
+		else
+			ufoID = Com_UFOTypeToShortName(type);
+
+		if (!LIST_ContainsString(md->ufos, ufoID))
 			return qfalse;
-		if (ufoCrashed) {
-			if (!LIST_ContainsString(md->ufos, Com_UFOCrashedTypeToShortName(mission->ufo->ufotype)))
-				return qfalse;
-		} else {
-			if (!LIST_ContainsString(md->ufos, Com_UFOTypeToShortName(mission->ufo->ufotype)))
-				return qfalse;
-		}
+	} else {
+		return qfalse;
 	}
 
 	return qtrue;
