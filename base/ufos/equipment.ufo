@@ -72,7 +72,6 @@ equipment campaign_initial_market
 	item flamer_ammo					40
 	item rpg							3
 	item rpg_ammo					50
-	item rpg_incendiary_ammo			20
 	item grenl						2
 	item grenl_ammo					20
 	item grenl_fle_ammo				10
@@ -99,12 +98,10 @@ equipment campaign_initial_market
 
 equipment campaign_asymptotic_market
 {
-//	item armour_lightadv			3
 	item armour_medium			3
 	item armour_power			3
 	item coilgun					2
 	item coilgun_ammo			20
-	item rpg_incendiary_ammo		10
 	item bolterrifle				3
 	item bolterrifle_ammo		30
 	item laserpistol				4
@@ -157,8 +154,6 @@ equipment campaign_market_aliens
 	item flamer_ammo			30
 	item rpg					3
 	item rpg_ammo			40
-	item rpg_incendiary_ammo	20
-//	item rpg_particle_ammo	10
 	item grenl				2
 	item grenl_ammo			20
 	item grenl_plasma_ammo	10
@@ -176,7 +171,6 @@ equipment campaign_market_aliens
 	item stungrenade			10
 	item armour_light_alien	20
 	item armour_medium_alien	5
-//	item heavy_alien			1
 }
 
 //=============================
@@ -217,8 +211,6 @@ equipment multiplayer_alien
 	item flamer_ammo			3
 	item rpg					2
 	item rpg_ammo			3
-	item rpg_incendiary_ammo	3
-//	item rpg_particle_ammo	3
 	item grenl				2
 	item grenl_ammo			5
 	item grenl_fle_ammo		4
@@ -255,7 +247,6 @@ equipment multiplayer_alien
 	item armour_medium		2
 	item armour_light_alien	2
 	item armour_medium_alien	2
-//	item armour_heavy		1
 }
 
 equipment multiplayer_phalanx
@@ -285,8 +276,6 @@ equipment multiplayer_phalanx
 	item flamer_ammo			3
 	item rpg					2
 	item rpg_ammo			3
-	item rpg_incendiary_ammo	3
-//	item rpg_particle_ammo	3
 	item grenl				2
 	item grenl_ammo			5
 	item grenl_fle_ammo		4
@@ -331,7 +320,6 @@ equipment multiplayer_phalanx
 	item armour_medium		2
 	item armour_light_alien	2
 	item armour_medium_alien	2
-//	item armour_heavy		1
 	item armour_power		2
 }
 
@@ -359,7 +347,6 @@ equipment multiplayer_initial
 	item medikit						3
 	item rpg				    9
 	item rpg_ammo			13
-//	rpg_incendiary_ammo	13
 	item grenl				10
 	item grenl_ammo			23
 	item grenl_plasma_ammo	13
@@ -368,13 +355,6 @@ equipment multiplayer_initial
 	item laserpistol			10
 	item laserrifle			7
 	item laser_ammo		38
-//	item heavylaser			6
-//	item xaw95				2
-//	item xaw95_ammo			5
-//	item coilgun				2
-//	item coilgun_ammo		5
-//	item needlergun			2
-//	item needlergun_ammo		5
 	item plaspistol			10
 	item plaspistol_ammo		25
 	item plasrifle			6
@@ -393,6 +373,4 @@ equipment multiplayer_initial
 	item plasblade			3
 	item armour_light		10
 	item armour_medium		10
-//	item armour_heavy		5
-//	item armour_power		2
 }

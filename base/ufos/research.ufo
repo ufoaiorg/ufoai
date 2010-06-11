@@ -835,26 +835,6 @@ tech rs_weapon_rpg_ammo
 	producetime	24
 }
 
-tech rs_weapon_rpg_incendiary_ammo
-{
-	type	weapon
-	up_chapter	equipment
-	description {
-		default "_rpg_incendiary_ammo_txt"
-	}
-	// pre_description	"_rpg_incendiary_ammo_pre_txt"
-
-	require_AND
-	{
-		tech rs_damage_fire
-		tech rs_weapon_rpg
-	}
-
-	provides	rpg_incendiary_ammo
-	time	0
-	producetime	30
-}
-
 tech rs_weapon_xaw95
 {
 	// Note: Multiplayer only

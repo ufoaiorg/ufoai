@@ -1196,48 +1196,6 @@ item rpg_ammo
 	}
 }
 
-item rpg_incendiary_ammo
-{
-	name			"_IC Rocket"
-	model			weapons/rpg/rpg_inc_ammo
-	type			ammo
-	animationindex	0
-	shape			"0 0 1 2"
-	center			"0 0 -0.5"
-	scale			1.1
-	price			630
-	size			6
-	is_primary		true
-	is_heavy		true
-	dmgtype			fire
-
-	weapon_mod rpg
-	{
-		firedef
-		{
-			name		"_Aimed Shot"
-			skill		explosive
-			projtl		rocket_inc
-			impact		fire_explosion
-			hitbody		fire_explosion
-			firesnd		weapons/rpg
-			impsnd		weapons/incendiary_rocket
-			bodysnd		weapons/incendiary_rocket
-			speed		450
-			spread		"0.2 0.6"
-			crouch		0.6
-			range		250
-			shots		1
-			ammo		1
-			time		14
-			damage		"0 0"
-			spldmg		"90 30"
-			splrad		7
-			dmgweight	fire_medium
-		}
-	}
-}
-
 // =======================
 // GRENADE LAUNCHER
 // =======================
