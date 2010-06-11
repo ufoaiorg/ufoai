@@ -152,7 +152,7 @@ void CP_ParseCharacterData (struct dbuffer *msg)
  * @param[in] ufoCrashed Search the mission definition for crash ufo id if true
  * @return qfalse if map is not selectable
  */
-static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t pos, qboolean ufoCrashed)
+static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t pos)
 {
 	mapDef_t *md;
 
@@ -176,7 +176,7 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t
 		const ufoType_t type = mission->ufo->ufotype;
 		const char *ufoID;
 
-		if (ufoCrashed)
+		if (mission->crashed)
 			ufoID = Com_UFOCrashedTypeToShortName(type);
 		else
 			ufoID = Com_UFOTypeToShortName(type);
@@ -204,7 +204,6 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 	int hits = 0;		/**< Number of maps fulfilling mission conditions and that appeared less often during game. */
 	int minMissionAppearance = 9999;
 	int randomNum;
-	const qboolean ufoCrashed = mission->crashed;
 
 	if (mission->mapDef)
 		return qtrue;
@@ -216,7 +215,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 			mapDef_t *md;
 
 			/* Check if mission fulfill conditions */
-			if (!CP_MapIsSelectable(mission, i, pos, ufoCrashed))
+			if (!CP_MapIsSelectable(mission, i, pos))
 				continue;
 
 			maxHits++;
@@ -240,7 +239,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 
 	if (!maxHits) {
 		/* no map fulfill the conditions */
-		if (ufoCrashed) {
+		if (mission->crashed) {
 			/* default map for crashsite mission is the crashsite random map assembly */
 			mission->mapDef = Com_GetMapDefinitionByID("ufocrash");
 			if (!mission->mapDef)
@@ -271,7 +270,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 		mapDef_t *md;
 
 		/* Check if mission fulfill conditions */
-		if (!CP_MapIsSelectable(mission, i, pos, ufoCrashed))
+		if (!CP_MapIsSelectable(mission, i, pos))
 			continue;
 
 		md = &csi.mds[i];
