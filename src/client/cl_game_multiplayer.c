@@ -70,6 +70,10 @@ static void GAME_MP_StartServer_f (void)
 	/* let the (local) server know which map we are running right now */
 	csi.currentMD = md;
 
+	/** @todo implement different ufo and dropship support for multiplayer, too (see skirmish) */
+	Cvar_Set("rm_drop", "");
+	Cvar_Set("rm_ufo", "");
+
 	Cmd_ExecuteString(map);
 
 	MN_InitStack("multiplayer_wait", "multiplayerInGame", qfalse, qtrue);

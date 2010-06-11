@@ -190,12 +190,13 @@ static const char *SV_GetCvarToken (const mAssembly_t *a, const char* token, con
 	Com_DPrintf(DEBUG_SERVER, "SV_GetCvarToken: cvar replacement: %s\n", token);
 
 	cvar = Cvar_FindVar(token);
-	if (cvar == NULL)
-		return token;
 
 	token = Com_EParse(text, errhead, filename);
 	if (!text || token[0] == '}')
 		return NULL;
+
+	if (cvar == NULL)
+		return token;
 
 	Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement value: %s\n", cvar->string);
 	if (cvar->string[0] != '+') {
