@@ -63,7 +63,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768
 
-#define MAX_PTL_ART		512
+#define MAX_PTL_ART		1024
 #define MAX_PTLS		2048
 
 /** @brief coronas are soft, alpha-blended, rounded polys */
