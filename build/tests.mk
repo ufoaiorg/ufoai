@@ -42,6 +42,7 @@ TESTS_SRCS = \
 	shared/mathlib.c \
 	shared/parse.c \
 	shared/shared.c \
+	shared/utf8.c \
 	\
 	game/q_shared.c \
 	game/inv_shared.c \

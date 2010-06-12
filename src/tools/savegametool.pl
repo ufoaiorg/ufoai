@@ -91,6 +91,8 @@ if (!$args{'extract'}) {
 	}
 	# set compressed to qfalse
 	$header =~ s/^(....)..../$1\x00\x00\x00\x00/;
+	# remove trailing zero
+	$e =~ s/\x00$//;
 }
 # write header
 if (!$args{'strip'}) {

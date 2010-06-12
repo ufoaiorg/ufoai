@@ -157,6 +157,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/shared/shared.h" />
+		<Unit filename="../../src/shared/utf8.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/shared/utf8.h" />
 		<Unit filename="../../src/shared/typedefs.h" />
 		<Unit filename="../../src/tools/ufo2map/brushbsp.c">
 			<Option compilerVar="CC" />
