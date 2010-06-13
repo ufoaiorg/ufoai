@@ -209,6 +209,7 @@ void G_MissionThink (edict_t *self)
 		G_FreeEdict(chain);
 		chain = ent;
 	}
+	self = NULL;
 
 	/* still active mission edicts left */
 	ent = NULL;
