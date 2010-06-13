@@ -537,7 +537,7 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 	length[0] = strlen(source);
 
 #ifdef DEBUG_SHADERS
-		Com_Printf("R_LoadShader: %s: Pre-Processed Source:\n\n%s\n\n", name, source);
+	Com_Printf("R_LoadShader: %s: Pre-Processed Source:\n\n%s\n\n", name, source);
 #endif
 
 	for (i = 0; i < MAX_SHADERS; i++) {

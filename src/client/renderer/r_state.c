@@ -309,7 +309,7 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 	r_state.dynamic_lighting_enabled = qtrue;
 
 	R_EnableAttribute("TANGENTS");
-    R_ProgramParameter1i("DYNAMICLIGHTS", 1.0);
+	R_ProgramParameter1i("DYNAMICLIGHTS", 1.0);
 }
 
 /**
@@ -516,7 +516,7 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 		R_DrawBuffers(2);
 	} else {
 		if (r_state.active_program == r_state.simple_glow_program){
-            R_ProgramParameter1f("GLOWSCALE", 0.0);
+			R_ProgramParameter1f("GLOWSCALE", 0.0);
 			R_UseProgram(NULL);
 		} else if (r_state.active_program == r_state.world_program) {
 			R_ProgramParameter1f("GLOWSCALE", 0.0);
