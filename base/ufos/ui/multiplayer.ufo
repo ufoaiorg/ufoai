@@ -555,10 +555,6 @@ window mp_create_server extends abstract_multiplayer
 		// ===================
 		// GAME TYPE
 		// ===================
-		todo todo1 {
-			string	"use a selectbox for the game type"
-			pos		"500 40"
-		}
 
 		string gametype_str
 		{
@@ -684,10 +680,6 @@ window mp_create_server extends abstract_multiplayer
 		// ===================
 		// DAY + NIGHT
 		// ===================
-		todo todo3 {
-			pos "500 245"
-			string "It should be better to have a selectbox with day/night"
-		}
 		string daynight_str
 		{
 			string		"_Day version:"
@@ -1032,8 +1024,6 @@ window multiplayer_wait extends levelbuttons
 		size		"1024 768"
 		align		LAYOUTALIGN_FILL
 	}
-
-	todo widescreen { pos "80 370" string "Center panels"}
 
 	panel floor {
 		{

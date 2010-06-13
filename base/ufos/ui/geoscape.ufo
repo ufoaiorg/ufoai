@@ -1919,11 +1919,6 @@ window geoscape_options {
 		}
 	}
 
-	todo clickonlabel {
-			pos			"300 130"
-			string		"Checkbox don't work, click on the label"
-	}
-
 	panel option3 {
 		{
 			pos			"30 160"

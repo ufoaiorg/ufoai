@@ -559,11 +559,6 @@ window transfer
 		}
 	}
 
-	todo splitwarns {
-		pos			"70 150"
-		string		"split warning message outside of the textlist"
-	}
-
 	confunc trans_resetscroll {
 		*itemlist.trans_list_scroll@current = 0 
 		*itemlist.trans_list@viewpos = 0

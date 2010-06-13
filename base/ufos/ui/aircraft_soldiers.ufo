@@ -152,10 +152,6 @@ window team extends iaircraft
 		color	"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 	}
-	todo equip_soldiers_subtab {
-		pos "463 135"
-		string "It would be nice to create a mockup and prototype to equip soldiers with another aircraft tab - should be a very nice short cut"
-	}
 
 	// ==================
 	// names list
