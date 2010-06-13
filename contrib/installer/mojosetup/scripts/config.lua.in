@@ -5,7 +5,7 @@ Setup.Package
 {
 	id = "ufoai",
 	description = "UFO: Alien Invasion",
-	version = "2.4",
+	version = "@VERSION@",
 
 	recommended_destinations =
 	{
@@ -27,7 +27,7 @@ Setup.Package
 		value = true,
 		required = true,
 		disabled = false,
-		bytes = TOTAL_INSTALL_SIZE,
+		bytes = @TOTAL_INSTALL_SIZE@,
 		description = _("UFO: Alien Invasion"),
 		Setup.File {},  -- Just copies the whole thing.
 	},
