@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=UFO: Alien Invasion (Safe mode)
+GenericName=UFO: Alien Invasion (Safe mode)
+Comment=Turn-based tactical combat against hostile alien forces (Safe mode)
+Comment[de_DE]=Rundenbasiertes Taktikspiel
+Exec=/usr/games/ufo +exec safemode.cfg
+Icon=ufoai.xpm
+Terminal=false
+Type=Application
+Categories=Application;Game;StrategyGame;
+StartupNotify=true
