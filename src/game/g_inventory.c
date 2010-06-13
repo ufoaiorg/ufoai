@@ -55,6 +55,32 @@ edict_t *G_GetFloorItems (edict_t * ent)
 }
 
 /**
+ * @brief Removes one particular item from a given container
+ * @param itemID The id of the item to remove
+ * @param ent The edict that holds the inventory to remove the item from
+ * @param container The container in the inventory of the edict to remove the searched item from.
+ * @return @c true if the removal was successful, @c false otherwise.
+ */
+qboolean G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerIndex_t container)
+{
+	invList_t *ic = CONTAINER(ent, container);
+	while (ic) {
+		objDef_t *item = ic->item.t;
+		if (item != NULL && !strcmp(item->id, itemID)) {
+			/* remove the virtual item to update the inventory lists */
+			if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
+				gi.error("Could not remove item '%s' from inventory %i",
+						ic->item.t->id, container);
+			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), INVDEF(container), ic->x, ic->y);
+			return qtrue;
+		}
+		ic = ic->next;
+	}
+
+	return qfalse;
+}
+
+/**
  * @brief Checks whether the given container contains items that should be
  * dropped to the floor
  * @param[in,out] ent The entity to check the inventory containers for

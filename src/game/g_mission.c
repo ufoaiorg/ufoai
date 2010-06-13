@@ -199,8 +199,26 @@ void G_MissionThink (edict_t *self)
 	if (!chain)
 		chain = self;
 	while (chain) {
-		/** @todo also remove the item on the floor - if any */
-		/*const invList_t *ic = FLOOR(chain);*/
+		if (chain->item != NULL) {
+			edict_t *item = G_GetEdictFromPos(chain->pos, ET_ITEM);
+			if (item != NULL) {
+				if (!G_InventoryRemoveItemByID(chain->item, item, gi.csi->idFloor)) {
+					Com_Printf("Could not remove item '%s' from floor edict %i\n",
+							chain->item, item->number);
+				} else {
+					G_AppearPerishEvent(G_VisToPM(item->visflags), qfalse, item, NULL);
+				}
+			}
+		}
+		if (chain->particle != NULL) {
+			/** @todo not yet working - particle stays active */
+			edict_t *particle = G_GetEdictFromPos(chain->pos, ET_PARTICLE);
+			if (particle != NULL) {
+				G_AppearPerishEvent(PM_ALL, qfalse, particle, NULL);
+				G_FreeEdict(particle);
+			}
+		}
+
 		ent = chain->groupChain;
 		/* free the trigger */
 		if (chain->child)

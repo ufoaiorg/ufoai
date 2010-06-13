@@ -417,6 +417,7 @@ edict_t *G_SpawnFloor(const pos3_t pos);
 int G_CheckVisTeam(const int team, edict_t *check, qboolean perish, edict_t *ent);
 int G_CheckVisTeamAll(const int team, qboolean perish, edict_t *ent);
 edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
+qboolean G_InventoryRemoveItemByID(const char *itemID, edict_t *ent, containerIndex_t index);
 void G_SendState(unsigned int playerMask, const edict_t *ent);
 void G_SetTeamForPlayer(player_t* player, const int team);
 void G_CenterView(const edict_t *ent);
