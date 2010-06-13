@@ -42,9 +42,9 @@ cp ${ROOTDIR}/base/game_x86_64.so ${DESTDIR}/data/base/game_x86_64.so
 
 cp ${ROOTDIR}/COPYING ${DESTDIR}/data
 
-# this is a little nasty, but it works!
 TOTAL_INSTALL_SIZE=`du -sb ${DESTDIR}/data | tail -1 | cut -f1`
 sed s/@TOTAL_INSTALL_SIZE@/${TOTAL_INSTALL_SIZE}/g scripts/config.lua.in > scripts/config.lua
+sed s/@VERSION@/${VERSION_LC}/g scripts/config.lua.in > scripts/config.lua
 
 for lib in guis/*.so; do
 	cp $lib ${DESTDIR}/guis

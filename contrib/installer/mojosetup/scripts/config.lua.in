@@ -5,7 +5,7 @@ Setup.Package
 {
 	id = "ufoai",
 	description = "UFO: Alien Invasion",
-	version = "2.3",
+	version = "@VERSION@",
 
 	recommended_destinations =
 	{
@@ -27,23 +27,10 @@ Setup.Package
 		value = true,
 		required = true,
 		disabled = false,
-		bytes = TOTAL_INSTALL_SIZE,
+		bytes = @TOTAL_INSTALL_SIZE@,
 		description = _("UFO: Alien Invasion"),
 		Setup.File {},  -- Just copies the whole thing.
 	},
-	Setup.Option
-	{
-		value = true,
-		required = false,
-		disabled = true,
-		bytes = 2202009,
-		description = _("Install GtkRadiant"),
-
-		Setup.File
-		{
-			source = "http://mattn.ninex.info/download/gtkradiant.tar.bz2"
-		}
-	}
 }
 
 -- end of config.lua ...
