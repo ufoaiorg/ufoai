@@ -1,9 +1,8 @@
 // bumpmap fragment shader
 
 varying vec3 eyedir;
-
-uniform float BUMP;
 uniform float PARALLAX;
+uniform float BUMP;
 uniform float HARDNESS;
 uniform float SPECULAR;
 
@@ -17,8 +16,9 @@ vec2 BumpTexcoord(in float height){
 
 	V = normalize(eyedir);
 
-  /* parallax is currently somewhat broken; it will be re-enabled for future releases */
-	//return vec2(height * PARALLAX * 0.04 - 0.02) * V.xy;
+  /* parallax is currently somewhat broken; it will be re-enabled for future releases
+	 *return vec2(height * PARALLAX * 0.04 - 0.02) * V.xy;
+   */
   return vec2(0.0);
 }
 
@@ -35,7 +35,7 @@ vec3 BumpFragment(in vec3 lightVec, in vec3 normalVec){
 
 	float diffuse = dot(N, L);
 
-	float specular = HARDNESS * pow(max(-dot(V, reflect(L, N)), 0.0), 
+	float specular = HARDNESS * pow(max(-dot(V, reflect(L, N)), 0.0),
 									8.0 * SPECULAR);
 
 	return vec3(diffuse + specular);

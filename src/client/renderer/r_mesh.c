@@ -470,17 +470,10 @@ void R_DrawAliasModel (entity_t *e)
 
 	R_EnableGlowMap(skin->glowmap, qtrue);
 
-	R_UpdateLightList(e);
 	R_EnableDynamicLights(e, qtrue);
 
 	if (skin->normalmap)
 		R_EnableBumpmap(skin->normalmap, qtrue);
-
-	if (skin->specularmap)
-		R_EnableSpecularMap(skin->specularmap, qtrue);
-
-	if (skin->roughnessmap)
-		R_EnableRoughnessMap(skin->roughnessmap, qtrue);
 
 	R_ResetArrayState();
 
@@ -490,12 +483,6 @@ void R_DrawAliasModel (entity_t *e)
 		R_DrawAliasStatic(lodMesh, e->shell);
 	else
 		R_DrawAliasFrameLerp(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe, e->shell);
-
-	if (r_state.specularmap_enabled)
-		R_EnableSpecularMap(NULL, qfalse);
-
-	if (r_state.roughnessmap_enabled)
-		R_EnableRoughnessMap(NULL, qfalse);
 
 	R_EnableDynamicLights(NULL, qfalse);
 

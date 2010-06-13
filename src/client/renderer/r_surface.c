@@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static inline void R_UseMaterial (const material_t *material)
 {
-	static float last_b, last_p, last_s, last_h;
-	float b, p, s, h;
+	static float last_b, last_s, last_h;
+	float b, s, h;
 
 	if (r_state.active_material == material)
 		return;
@@ -47,10 +47,12 @@ static inline void R_UseMaterial (const material_t *material)
 		R_ProgramParameter1f("BUMP", b);
 	last_b = b;
 
+#if 0
 	p = r_state.active_material->parallax * r_parallax->value;
 	if (p != last_p)
 		R_ProgramParameter1f("PARALLAX", p);
 	last_p = p;
+#endif
 
 	h = r_state.active_material->hardness * r_hardness->value;
 	if (h != last_h)
@@ -119,7 +121,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 
 	R_SetSurfaceBumpMappingParameters(surf, image->normalmap);
 
-	if (image->glowmap)
+	if (image->glowmap && r_state.blend_enabled)
 		R_EnableGlowMap(image->glowmap, qtrue);
 	else
 		R_EnableGlowMap(NULL, qfalse);

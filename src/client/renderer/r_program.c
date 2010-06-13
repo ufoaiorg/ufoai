@@ -29,6 +29,9 @@
 #include "../../shared/parse.h"
 #include "../../shared/shared.h"
 
+/* DEBUG_SHADERS causes the GLSL shader code to be printed to the console after preprocessing
+#define DEBUG_SHADERS
+*/
 
 #define SHADER_BUF_SIZE 16384
 
@@ -533,6 +536,10 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 	src[0] = source;
 	length[0] = strlen(source);
 
+#ifdef DEBUG_SHADERS
+		Com_Printf("R_LoadShader: %s: Pre-Processed Source:\n\n%s\n\n", name, source);
+#endif
+
 	for (i = 0; i < MAX_SHADERS; i++) {
 		sh = &r_state.shaders[i];
 
@@ -572,6 +579,13 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 		memset(sh, 0, sizeof(*sh));
 
 		return NULL;
+#ifdef DEBUG
+	} else {
+		char log[MAX_STRING_CHARS];
+		qglGetShaderInfoLog(sh->id, sizeof(log) - 1, NULL, log);
+		Com_Printf("R_LoadShader: %s: Compiler Log:\n%s", sh->name, log);
+		Com_Printf("------------------------------\n");
+#endif
 	}
 
 	return sh;
@@ -655,12 +669,9 @@ static void R_InitWorldProgram (r_program_t *prog)
 		R_ProgramParameter1i("SAMPLER4", 4);
 
 	R_ProgramParameter1i("BUMPMAP", 0);
-	R_ProgramParameter1i("ROUGHMAP", 0);
-	R_ProgramParameter1i("SPECULARMAP", 0);
 	R_ProgramParameter1i("ANIMATE", 0);
 
 	R_ProgramParameter1f("BUMP", 1.0);
-	R_ProgramParameter1f("PARALLAX", 1.0);
 	R_ProgramParameter1f("HARDNESS", 0.2);
 	R_ProgramParameter1f("SPECULAR", 1.0);
 	if (r_postprocess->integer)

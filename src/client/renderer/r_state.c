@@ -296,19 +296,12 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
  */
 void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 {
-	int i, j;
-	r_light_t *l;
-	int maxLights = r_dynamic_lights->integer;
-
-	if (!enable || !r_state.lighting_enabled || r_state.numActiveLights < 1 || !ent) {
+	if (!enable || !r_state.lighting_enabled) {
 		if (r_state.lighting_enabled)
 			R_ProgramParameter1i("DYNAMICLIGHTS", 0);
 		if (!r_state.bumpmap_enabled && r_state.dynamic_lighting_enabled)
 			R_DisableAttribute("TANGENTS");
 
-		glDisable(GL_LIGHTING);
-		/* use old-style lights */
-        R_EnableLights();
 		r_state.dynamic_lighting_enabled = qfalse;
 		return;
 	}
@@ -316,41 +309,7 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 	r_state.dynamic_lighting_enabled = qtrue;
 
 	R_EnableAttribute("TANGENTS");
-
-	R_ProgramParameter1f("HARDNESS", 0.1);
-	R_ProgramParameter1f("SPECULAR", 0.25);
-
-	glEnable(GL_LIGHTING);
-
-	for (i = 0, j = 0; i < maxLights && (i + j) < ent->numLights; i++) {
-		l = ent->lights[i + j];
-		if (!l->enabled) {
-			j++;
-			continue;
-		}
-
-		glEnable(GL_LIGHT0 + i);
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, l->constantAttenuation);
-		glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, l->linearAttenuation);
-		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, l->quadraticAttenuation);
-
-		glLightfv(GL_LIGHT0 + i, GL_POSITION, l->loc);
-		glLightfv(GL_LIGHT0 + i, GL_AMBIENT, l->ambientColor);
-		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, l->diffuseColor);
-		glLightfv(GL_LIGHT0 + i, GL_SPECULAR, l->specularColor);
-	}
-
-	/* tell the program how many lights to try to use */
-	R_ProgramParameter1i("DYNAMICLIGHTS", i);
-
-	/* if there aren't enough active lights, turn off the rest */
-	while (i < maxLights) {
-		glDisable(GL_LIGHT0 + i);
-		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
-		glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, 0.0);
-		glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 0.0);
-		i++;
-	}
+    R_ProgramParameter1i("DYNAMICLIGHTS", 1.0);
 }
 
 /**
@@ -418,7 +377,6 @@ void R_EnableBumpmap (const image_t *normalmap, qboolean enable)
 		R_ProgramParameter1f("HARDNESS", 0.1);
 		R_ProgramParameter1f("SPECULAR", 0.25);
 		R_ProgramParameter1f("BUMP", 1.0);
-		R_ProgramParameter1f("PARALLAX", 0.5);
 	} else {
 		R_DisableAttribute("TANGENTS");
 		R_ProgramParameter1i("BUMPMAP", 0);
@@ -538,19 +496,16 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 {
 	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
 
-	if (!r_postprocess->integer)
+	if (!r_programs->integer)
 		return;
 
 	if (enable && image != NULL)
 		R_BindTextureForTexUnit(image->texnum, &texunit_glowmap);
 
-	//if (r_state.glowmap_enabled == enable)
-	//	return;
-
 	r_state.glowmap_enabled = enable;
 
 	if (enable) {
-		if (!r_state.active_program)
+		if (!r_state.active_program && r_postprocess->integer)
 			R_UseProgram(r_state.simple_glow_program);
 
 		if (image == NULL)
@@ -560,10 +515,12 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 
 		R_DrawBuffers(2);
 	} else {
-		if (r_state.active_program == r_state.simple_glow_program)
+		if (r_state.active_program == r_state.simple_glow_program){
+            R_ProgramParameter1f("GLOWSCALE", 0.0);
 			R_UseProgram(NULL);
-		else if (r_state.active_program == r_state.world_program)
+		} else if (r_state.active_program == r_state.world_program) {
 			R_ProgramParameter1f("GLOWSCALE", 0.0);
+		}
 
 		if (r_state.draw_glow_enabled)
 			R_BindColorAttachments(1, &glowRenderTarget);
@@ -576,7 +533,7 @@ void R_EnableDrawAsGlow (qboolean enable)
 {
 	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
 
-	if (!r_postprocess->integer || r_state.draw_glow_enabled == enable)
+	if (!r_postprocess->integer)
 		return;
 
 	r_state.draw_glow_enabled = enable;

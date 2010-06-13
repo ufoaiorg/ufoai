@@ -28,7 +28,7 @@ varying vec3 lightDirs[R_DYNAMIC_LIGHTS];
 #include "light_fs.glsl"
 #include "bump_fs.glsl"
 #include "fog_fs.glsl"
-#include "cook-torrance_fs.glsl"
+//#include "cook-torrance_fs.glsl"
 
 /**
  * main
@@ -36,20 +36,19 @@ varying vec3 lightDirs[R_DYNAMIC_LIGHTS];
 void main(void){
 
 	vec4 finalColor = vec4(0.0);
-
+  // sample the diffuse texture, honoring the parallax offset
+  vec4 diffuse = texture2D(SAMPLER0, gl_TexCoord[0].st);
 
 	/* use new dynamic lighing system, including 
 	 * the Cook-Torrance specularity model with the Phong
 	 * model as a default if the roughness map isn't enabled */
 	if (DYNAMICLIGHTS > 0) {
-#if r_dynamic_lights
-		finalColor = IlluminateFragment();
-#else
-    finalColor = vec4(1.0);
-#endif
+		/* turned off for 2.3 release 
+     * finalColor = IlluminateFragment();
+     */
+		finalColor = 0.5 * diffuse;
 	} else {
 		/* use static lighting (ie. legacy rendering code) */
-		vec2 offset = vec2(0.0);
 		vec3 bump = vec3(1.0);
 
 		/* lightmap contains pre-computed incoming light color */
@@ -65,13 +64,9 @@ void main(void){
 			deluxemap = normalize(two * (deluxemap + negHalf));
 
 			// resolve parallax offset and bump mapping
-			offset = BumpTexcoord(normalmap.a);
 			bump = BumpFragment(deluxemap, normalmap.rgb);
 		}
 #endif
-
-		// sample the diffuse texture, honoring the parallax offset
-		vec4 diffuse = texture2D(SAMPLER0, gl_TexCoord[0].st + offset);
 
 		// factor in bump mapping
 		diffuse.rgb *= bump;
@@ -84,14 +79,15 @@ void main(void){
 	finalColor = FogFragment(finalColor);  // add fog
 #endif
 
+  vec4 glowcolor = texture2D(SAMPLER4, gl_TexCoord[0].st);
 #if r_postprocess
 	gl_FragData[0] = finalColor;
-	if(GLOWSCALE > 0.0){
-		vec4 glowcolor = texture2D(SAMPLER4, gl_TexCoord[0].st);
-		gl_FragData[1].rgb = glowcolor.rgb * glowcolor.a * GLOWSCALE;
-		gl_FragData[1].a = 1.0;
-	} 
+  gl_FragData[1].rgb = glowcolor.rgb * GLOWSCALE;
+  gl_FragData[1].a = GLOWSCALE;
 #else 
+  if(GLOWSCALE > 0.0){
+    finalColor.rgb += glowcolor.rgb * glowcolor.a * gl_Color.a * GLOWSCALE;
+  }
 	gl_FragColor = finalColor;
 #endif
 
