@@ -35,11 +35,6 @@ cp ${ROOTDIR}/ufoded ${DESTDIR}/data/ufoded
 cp ${ROOTDIR}/ufo2map ${DESTDIR}/data/ufo2map
 cp ${ROOTDIR}/base/game.so ${DESTDIR}/data/base/game.so
 
-cp ${ROOTDIR}/ufo.x86_64 ${DESTDIR}/data/ufo.x86_64
-cp ${ROOTDIR}/ufoded.x86_64 ${DESTDIR}/data/ufoded.x86_64
-cp ${ROOTDIR}/ufo2map.x86_64 ${DESTDIR}/data/ufo2map.x86_64
-cp ${ROOTDIR}/base/game_x86_64.so ${DESTDIR}/data/base/game_x86_64.so
-
 cp ${ROOTDIR}/COPYING ${DESTDIR}/data
 
 TOTAL_INSTALL_SIZE=`du -sb ${DESTDIR}/data | tail -1 | cut -f1`
@@ -61,7 +56,7 @@ cd ..
 rm -rf image
 
 # Append the .zip archive to the mojosetup binary, so it's "self-extracting."
-cat mojosetup pdata.zip >> ufoai-${VERSION_LC}-linux.run
+cat mojosetup pdata.zip >> ufoai-${VERSION_LC}-linux32.run
 chmod +x ufoai-${VERSION_LC}-linux.run
 rm -f pdata.zip
 
