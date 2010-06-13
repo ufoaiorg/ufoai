@@ -859,7 +859,7 @@ void SV_Init (void)
 
 	sv_dumpmapassembly = Cvar_Get("sv_dumpmapassembly", "0", CVAR_ARCHIVE, "Dump map assembly information to game console");
 
-	sv_threads = Cvar_Get("sv_threads", "0", CVAR_LATCH | CVAR_ARCHIVE, "Run the server threaded");
+	sv_threads = Cvar_Get("sv_threads", "1", CVAR_LATCH | CVAR_ARCHIVE, "Run the server threaded");
 	sv_public = Cvar_Get("sv_public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
 
