@@ -655,7 +655,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 		if (r_numParticles < MAX_PTLS)
 			r_numParticles++;
 		else {
-			Com_Printf("Too many particles (don't add %s) - exceeded %i\n", name, MAX_PTLS);
+			Com_DPrintf(DEBUG_CLIENT, "Too many particles (don't add %s) - exceeded %i\n", name, MAX_PTLS);
 			return NULL;
 		}
 	}
