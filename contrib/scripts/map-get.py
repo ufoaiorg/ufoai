@@ -22,7 +22,7 @@ if os.name == 'nt':
 
 UFO2MAPFLAGS = ' -v 2 -nice 19 -extra'
 URI = 'http://static.ufo.ludwigf.org/maps'
-__version__ = '0.0.4.1'
+__version__ = '0.0.4.2'
 
 displayDownloadStatus = False
 displayAlreadyUpToDate = True
@@ -31,9 +31,9 @@ displayAlreadyUpToDate = True
 written by Florian Ludwig <dino@phidev.org>
 
 Changelog
-0.0.4.1
- * be verbose about executing commands
- * respect new ufo2map argument syntax
+0.0.4.2
+ * compile ufo2map as release
+ * add .map file hash into Maps
 
 0.0.4 serverside work
  * execute ./configure
@@ -209,7 +209,7 @@ def gen(args):
 
     # run make maps etc.
     # call separately otherwise linking happens last -> building maps fails
-    run('sh configure  --disable-client --disable-uforadiant --disable-dedicated')
+    run('sh configure --enable-release --disable-client --disable-uforadiant --disable-dedicated')
     run('make clean')
     run('make ufo2map')
 
@@ -257,7 +257,8 @@ def gen(args):
                 print "Warning: Cant find .bsp for %s" % mfile
                 continue
 
-            mmd5 = md5sum(mfile)
+            pmd5 = md5sum(mfile)
+            mmd5 = md5sum(mfile, True)
             bmd5 = md5sum(bfile, True)
 
             if not bfile in old or bmd5 != old[bfile]:
@@ -276,7 +277,7 @@ def gen(args):
             else:
                 print '%s - already up to date' % bfile
 
-            maps.write(' '.join((bfile, bmd5, mmd5)) + '\n')
+            maps.write(' '.join((bfile, bmd5, pmd5, mmd5)) + '\n')
     print ' %s maps compiled' % maps_compiled
     return maps_compiled
 
