@@ -1184,7 +1184,7 @@ qboolean E_SaveXML (mxml_node_t *p)
 	employeeType_t j;
 
 	Com_RegisterConstList(saveEmployeeConstants);
-	for (j = 0; j < MAX_EMPL; j++) {
+	for (j = 0; j < EMPL_ROBOT; j++) {
 		int i;
 		mxml_node_t *snode = mxml_AddNode(p, SAVE_EMPLOYEE_EMPLOYEES);
 
@@ -1238,6 +1238,10 @@ qboolean E_LoadXML (mxml_node_t *p)
 			success = qfalse;
 			break;
 		}
+
+		/* robots are removed, skipping them */
+		if (emplType == EMPL_ROBOT)
+			continue;
 
 		for (ssnode = mxml_GetNode(snode, SAVE_EMPLOYEE_EMPLOYEE), i = 0; i < MAX_EMPLOYEES && ssnode;
 				ssnode = mxml_GetNextNode(ssnode, snode, SAVE_EMPLOYEE_EMPLOYEE), i++) {
