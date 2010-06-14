@@ -108,6 +108,7 @@ cvar_t *g_aidebug;
 cvar_t *g_drawtraces;
 cvar_t *g_nodamage;
 cvar_t *g_notu;
+cvar_t *g_nospawn;
 cvar_t *g_actorspeed;
 cvar_t *flood_msgs;
 cvar_t *flood_persecond;
@@ -207,6 +208,7 @@ static void G_Init (void)
 	g_nodamage = gi.Cvar_Get("g_nodamage", "0", CVAR_DEVELOPER|CVAR_CHEAT, "No damage in developer mode");
 	g_notu = gi.Cvar_Get("g_notu", "0", CVAR_DEVELOPER|CVAR_CHEAT, "No TU costs while moving around (e.g. for map testing)");
 	g_actorspeed = gi.Cvar_Get("g_actorspeed", "1.0", CVAR_ARCHIVE|CVAR_SERVERINFO, "Moving speed of the actor");
+	g_nospawn = gi.Cvar_Get("g_nospawn", "0", CVAR_DEVELOPER|CVAR_CHEAT, "Do not spawn a soldier");
 
 	/* flood control */
 	flood_msgs = gi.Cvar_Get("flood_msgs", "4", 0, NULL);

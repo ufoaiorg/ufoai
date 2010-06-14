@@ -159,8 +159,16 @@ static void SV_Map_f (void)
 	if (!strcmp(Cmd_Argv(0), "devmap")) {
 		Com_Printf("deactivate ai - make sure to reset sv_ai after maptesting\n");
 		Cvar_SetValue("sv_ai", 0);
+		Cvar_SetValue("sv_cheats", 1);
 		Cvar_SetValue("sv_send_edicts", 1);
 		Cvar_SetValue("g_notus", 1);
+		Cvar_SetValue("g_nospawn", 1);
+	} else {
+		Cvar_SetValue("sv_ai", 1);
+		Cvar_SetValue("sv_cheats", 0);
+		Cvar_SetValue("sv_send_edicts", 0);
+		Cvar_SetValue("g_notus", 0);
+		Cvar_SetValue("g_nospawn", 0);
 	}
 
 	if (!strcmp(Cmd_Argv(1), "day")) {

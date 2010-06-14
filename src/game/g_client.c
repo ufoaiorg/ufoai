@@ -776,9 +776,13 @@ void G_SetTeamForPlayer (player_t* player, const int team)
 	assert(team >= TEAM_NO_ACTIVE && team < MAX_TEAMS);
 	player->pers.team = team;
 
-	if (team >= 0 && team < MAX_TEAMS) {
-		if (!level.num_spawnpoints[team])
-			gi.error("No spawnpoints for team %i", team);
+	/* if we started in dev mode, we maybe don't have a
+	 * starting position in this map */
+	if (!g_nospawn->integer) {
+		if (team >= 0 && team < MAX_TEAMS) {
+			if (!level.num_spawnpoints[team])
+				gi.error("No spawnpoints for team %i", team);
+		}
 	}
 
 	if (!G_IsAIPlayer(player))
