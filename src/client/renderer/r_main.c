@@ -576,6 +576,9 @@ qboolean R_SetMode (void)
 	R_UpdateVidDef(&vidmode);
 	MN_InvalidateStack();
 
+	Cvar_SetValue("vid_width", viddef.width);
+	Cvar_SetValue("vid_height", viddef.height);
+
 	Com_Printf("I: %dx%d (fullscreen: %s)\n", viddef.width, viddef.height, viddef.fullscreen ? "yes" : "no");
 	if (result)
 		return qtrue;

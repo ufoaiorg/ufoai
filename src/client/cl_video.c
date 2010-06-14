@@ -97,8 +97,6 @@ qboolean VID_GetModeInfo (int modeIndex, vidmode_t *modeInfo)
 		}
 		modeInfo->width = width;
 		modeInfo->height = height;
-		Cvar_SetValue("vid_width", modeInfo->width);
-		Cvar_SetValue("vid_height", modeInfo->height);
 	} else {
 		return qfalse;
 	}
