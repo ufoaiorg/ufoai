@@ -828,8 +828,7 @@ static void B_MakeBaseMapShot_f (void)
 		return;
 	}
 
-	cl.cam.angles[0] = 60.0f;
-	cl.cam.angles[1] = 90.0f;
+	Cmd_ExecuteString(va("camsetangles %i %i", 60, 90));
 	Cvar_SetValue("r_isometric", 1);
 	/* we are interested in the second level only */
 	Cvar_SetValue("cl_worldlevel", 1);
