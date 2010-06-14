@@ -771,6 +771,21 @@ static void Cvar_SetOld_f (void)
 		Cvar_Set(Cmd_Argv(1), v->oldString);
 }
 
+static void Cvar_Define_f (void)
+{
+	const char *name;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <cvarname> <value>\n", Cmd_Argv(0));
+		return;
+	}
+
+	name = Cmd_Argv(1);
+
+	if (Cvar_FindVar(name) == NULL)
+		Cvar_Set(name, Cmd_Argc() == 3 ? Cmd_Argv(2) : "");
+}
+
 /**
  * @brief Allows setting and defining of arbitrary cvars from console
  */
@@ -1095,6 +1110,7 @@ void Cvar_Init (void)
 	Cmd_AddCommand("del", Cvar_Del_f, "Delete a cvar");
 	Cmd_AddCommand("set", Cvar_Set_f, "Set a cvar value");
 	Cmd_AddCommand("add", Cvar_Add_f, "Add a value to a cvar");
+	Cmd_AddCommand("define", Cvar_Define_f, "Defines a cvar if it does not exist");
 	Cmd_AddCommand("mod", Cvar_Mod_f, "Apply a modulo on a cvar");
 	Cmd_AddCommand("copy", Cvar_Copy_f, "Copy cvar target to source");
 	Cmd_AddCommand("cvarlist", Cvar_List_f, "Show all cvars");
