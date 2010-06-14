@@ -261,7 +261,13 @@ void MN_ExecuteConfunc (const char *fmt, ...)
 void MN_Shutdown (void)
 {
 	int i;
-	nodeBehaviour_t *confunc = MN_GetNodeBehaviour("confunc");
+	const nodeBehaviour_t *confunc;
+
+	/* MN is not yet initialized */
+	if (mn.adata == NULL)
+		return;
+
+	confunc = MN_GetNodeBehaviour("confunc");
 
 	/* remove all confunc commands */
 	for (i = 0; i < mn.numWindows; i++) {
