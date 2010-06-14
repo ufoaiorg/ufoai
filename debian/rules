@@ -19,7 +19,7 @@ endif
 
 MAINVER := $(shell dpkg-parsechangelog | sed -ne 's/^Version: *\([^~-]*\).*/\1/p' )
 SVNREV := $(shell dpkg-parsechangelog | sed -ne 's/^Version: .*~svn\([^-]*\).*/\1/p' )
-SVNBRANCH = trunk
+SVNBRANCH = branches/ufoai_2.3
 TMPDIR = /tmp/
 ORIGDIR = ufoai_$(MAINVER)~svn$(SVNREV).orig
 ORIGTGZ = ufoai_$(MAINVER)~svn$(SVNREV).orig.tar.gz
