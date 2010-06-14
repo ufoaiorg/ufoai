@@ -58,7 +58,7 @@ window genradarhud extends ahud
 			string		"_Reinit"
 			onClick {
 				*mapborder@invis = true
-				cmd "r_isometric 1;r_screenshot png;centercamera;camsetangles 90 90;camsetzoom 0.5;"
+				cmd "r_isometric 1;r_screenshot_format png;centercamera;camsetangles 90 90;camsetzoom 0.5;"
 			}
 		}
 
