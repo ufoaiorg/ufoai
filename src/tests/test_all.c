@@ -55,17 +55,6 @@ void Sys_Init (void)
 {
 }
 
-#ifdef _WIN32
-void Sys_UnloadGame (void)
-{
-}
-
-void *Sys_GetGameAPI (void *parms)
-{
-    return NULL;
-}
-#endif
-
 typedef struct config_s {
 	int console;
 } config_t;
