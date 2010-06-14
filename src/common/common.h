@@ -309,10 +309,6 @@ void Sys_ConsoleShutdown(void);
 void Sys_ConsoleInit(void);
 void Sys_ShowConsole(qboolean show);
 
-void *Sys_LoadLibrary(const char *name, int flags);
-void Sys_FreeLibrary(void *libHandle);
-void *Sys_GetProcAddress(void *libHandle, const char *procName);
-
 /*
 ==============================================================
 CLIENT / SERVER SYSTEMS

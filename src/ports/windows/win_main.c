@@ -249,59 +249,6 @@ const char *Sys_GetLocale (void)
 		return "en";
 }
 
-/**
- * @sa Sys_FreeLibrary
- * @sa Sys_GetProcAddress
- */
-void *Sys_LoadLibrary (const char *name, int flags)
-{
-	char path[MAX_OSPATH];
-	HMODULE lib;
-
-	/* first try cpu string */
-	Com_sprintf(path, sizeof(path), "%s_"CPUSTRING"."SHARED_EXT, name);
-	lib = LoadLibrary(path);
-	if (lib)
-		return lib;
-
-	/* now the general lib */
-	Com_sprintf(path, sizeof(path), "%s."SHARED_EXT, name);
-	lib = LoadLibrary(path);
-	if (lib)
-		return lib;
-
-#ifdef PKGLIBDIR
-	Com_sprintf(path, sizeof(path), PKGLIBDIR"%s."SHARED_EXT, name);
-	lib = LoadLibrary(path);
-	if (lib)
-		return lib;
-#endif
-
-	Com_Printf("Could not load %s\n", name);
-	return NULL;
-}
-
-/**
- * @sa Sys_LoadLibrary
- */
-void Sys_FreeLibrary (void *libHandle)
-{
-	if (!libHandle)
-		Com_Error(ERR_DROP, "Sys_FreeLibrary: No valid handle given");
-	if (!FreeLibrary((HMODULE)libHandle))
-		Com_Error(ERR_DROP, "Sys_FreeLibrary: dlclose() failed");
-}
-
-/**
- * @sa Sys_LoadLibrary
- */
-void *Sys_GetProcAddress (void *libHandle, const char *procName)
-{
-	if (!libHandle)
-		Com_Error(ERR_DROP, "Sys_GetProcAddress: No valid libHandle given");
-	return GetProcAddress((HMODULE)libHandle, procName);
-}
-
 static void ParseCommandLine (LPSTR lpCmdLine)
 {
 	argc = 1;
