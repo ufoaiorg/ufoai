@@ -388,7 +388,7 @@ static game_export_t *SV_GetGameAPI (game_import_t *parms)
 #endif
 
 	if (gameLibrary)
-		Com_Error(ERR_FATAL, "SV_GetGameAPI without Com_UnloadGame");
+		Com_Error(ERR_FATAL, "SV_GetGameAPI without SV_UnloadGame");
 
 #ifndef HARD_LINKED_GAME
 	Com_Printf("------- Loading game.%s -------\n", SHARED_EXT);
