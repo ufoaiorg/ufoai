@@ -775,15 +775,15 @@ static void Cvar_Define_f (void)
 {
 	const char *name;
 
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <cvarname>\n", Cmd_Argv(0));
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <cvarname> <value>\n", Cmd_Argv(0));
 		return;
 	}
 
 	name = Cmd_Argv(1);
 
 	if (Cvar_FindVar(name) == NULL)
-		Cvar_Set(name, "");
+		Cvar_Set(name, Cmd_Argc() == 3 ? Cmd_Argv(2) : "");
 }
 
 /**
