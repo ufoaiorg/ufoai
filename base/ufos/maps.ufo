@@ -601,7 +601,7 @@ mapdef alienlandingindustrial_fix
 		coop3
 		coop4
 	}
-	maxaliens   10
+	maxaliens	10
 
 	aircraft 
 	{
