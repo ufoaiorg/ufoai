@@ -2,53 +2,102 @@
 
 LANG=C
 
-if [ $# -ne 1 ]
-then
-	echo "No binary given"
+usage() {
+	echo "Usage: $0 [--help|-h] [-suppression|-s <file>] [-gensup|-g] [--nolog] [-binary|-b <binary>]"
+	echo " --help -h         - Shows this help message"
+	echo " --suppression -s  - Use the given suppression file - otherwise the standard"
+	echo "                     file will be used (if found)"
+	echo " --gensup -g       - Generate suppression statements"
+	echo " --binary -b       - Execute valgrind for the given binary"
+	echo " --nolog           - Don't log into a file but to stdout"
 	exit 1
-fi
+}
 
-APP_PATH=$1
+error() {
+	echo "Error: $@"
+	exit 1
+}
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+		--binary|-b)
+			APP_PATH=$2
+			shift
+			shift
+			;;				
+		--suppresion|-s)
+			SUP=$2
+			shift
+			shift
+			;;				
+		--gensup|-g)
+			GENERATE_SUPPRESSION=X
+			shift
+			;;
+		--nolog)
+			NO_LOG=X
+			shift
+			;;
+ 	 	--help|-h|*)
+			usage
+			;;
+ 		-*)
+			error "invalid option $1"
+			;;
+			
+ 	esac
+done
+
+[ -z "$APP_PATH" ] && error "No binary given"
 
 APP=$(readlink -f "${APP_PATH}")
 
-if [ ! -x "${APP}" ]
-then
-	echo "${APP} is no executable"
-	exit 1
-fi
+[ ! -x "${APP}" ] && error "${APP} is no executable"
 
 PATH_ONLY=$(dirname "${APP}")
 BIN_ONLY=$(basename "${APP}")
 
-# path to the valgrind suppression file
-SUP=$(readlink -f "${0}")
-SUP=$(dirname "${SUP}")
-SUP="${SUP}/valgrind.sup"
-
-cd ${PATH_ONLY}
-LOG=${PATH_ONLY}/valgrind.log
-
-if [ -f "${SUP}" ]
-then
-	echo "Using valgrind suppression file from '${SUP}'"
-	VALGRIND_OPTIONS="${VALGRIND_OPTIONS} --suppressions=${SUP}"
-else
-	echo "No valgrind suppression file at '${SUP}'"
-fi
-
 echo "Debugging ${APP_PATH}"
-echo "Log file will be created at ${LOG}"
 
-#--gen-suppressions=yes \
-#--verbose \
-#--demangle=yes \
+if [ ${GENERATE_SUPPRESSION} ]
+then
+	valgrind \
+		--gen-suppressions=yes \
+		--verbose \
+		--demangle=yes \
+		$VALGRIND_OPTIONS \
+		$APP
+else
+	if [ -z "$SUP" ]
+	then
+		# path to the valgrind suppression file
+		SUP=$(readlink -f "${0}")
+		SUP=$(dirname "${SUP}")
+		SUP="${SUP}/valgrind.sup"
+	fi
 
-valgrind \
-	--show-reachable=yes \
-	--leak-check=full \
-	--track-fds=yes \
-	--run-libc-freeres=no \
-	--log-file=$LOG \
-	$VALGRIND_OPTIONS \
-	$APP
+	cd ${PATH_ONLY}
+
+	if [ -f "${SUP}" ]
+	then
+		echo "Using valgrind suppression file from '${SUP}'"
+		VALGRIND_OPTIONS="${VALGRIND_OPTIONS} --suppressions=${SUP}"
+	else
+		echo "No valgrind suppression file at '${SUP}'"
+	fi
+
+	if [ -z "$NO_LOG" ]
+	then
+		LOG=${PATH_ONLY}/valgrind.log
+		VALGRIND_OPTIONS="--log-file=$LOG $VALGRIND_OPTIONS"
+		echo "Log file will be created at ${LOG}"
+	fi
+
+	valgrind \
+		--show-reachable=yes \
+		--leak-check=full \
+		--track-fds=yes \
+		--run-libc-freeres=no \
+		$VALGRIND_OPTIONS \
+		$APP
+fi
