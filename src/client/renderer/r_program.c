@@ -314,6 +314,7 @@ static size_t R_InitializeShader (const char *name, char *out, size_t len)
 		hwHack = "#ifndef NVIDIA\n#define NVIDIA\n#endif\n";
 		break;
 	case GLHW_GENERIC:
+	case GLHW_MESA:
 		hwHack = NULL;
 		break;
 	default:
