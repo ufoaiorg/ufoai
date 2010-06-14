@@ -1,4 +1,4 @@
-// world vertex shader
+/* world vertex shader */
 
 uniform float OFFSET;
 uniform int BUMPMAP;
@@ -36,8 +36,8 @@ varying float fog;
 /**
  * main
  */
-void main(void){
-
+void main (void)
+{
 	if (ANIMATE > 0) {
 		lerpVertex();
 	} else {
@@ -46,19 +46,17 @@ void main(void){
 		Tangent = TANGENTS;
 	}
 
-	// mvp transform into clip space
-	//gl_Position = ftransform();
+	/* mvp transform into clip space */
 	gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * vec4(Vertex);
 
-
-	// pass texcoords through
+	/* pass texcoords through */
 	gl_TexCoord[0] = gl_MultiTexCoord0 + OFFSET;
 	gl_TexCoord[1] = gl_MultiTexCoord1 + OFFSET;
 
 	LightVertex();
 
 #if r_bumpmap
-	if(BUMPMAP > 0 || DYNAMICLIGHTS > 0)
+	if (BUMPMAP > 0 || DYNAMICLIGHTS > 0)
 		BumpVertex();
 #endif
 

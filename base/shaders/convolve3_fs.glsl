@@ -6,8 +6,8 @@ uniform vec2 OFFSETS[3];
  * the specified texture.  
  * Orientation of the filter is controlled by "OFFSETS".
  * The filter itself is specified by "COEFFICIENTS". */
-void main(void){
-
+void main (void)
+{
 	vec2 inColor = gl_TexCoord[0].st;
 	vec4 outColor = vec4(0, 0, 0, 1);
 

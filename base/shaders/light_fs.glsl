@@ -1,26 +1,26 @@
-// dynamic lighting fragment shader
+/* dynamic lighting fragment shader */
 
 varying vec3 point;
 varying vec3 normal;
 
 
-
-vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec4 diffuse, in vec3 lightmap){
+vec3 LightContribution (in gl_LightSourceParameters lightSource, in vec4 diffuse, in vec3 lightmap)
+{
 
 	vec3 light = vec3(0.0);
 
-	if(lightSource.constantAttenuation > 0.0){
+	if (lightSource.constantAttenuation > 0.0) {
 		vec3 delta = lightSource.position.xyz - point;
 		float dist = length(delta);
-		if (lightSource.position.w == 0.0){
+		if (lightSource.position.w == 0.0) {
 			vec3 dir = normalize(delta);
 			float d = max(0.0, dot(normal, dir));
 			light += lightSource.diffuse.rgb * d;
 			light += lightSource.ambient.rgb;
-		} else if(dist < lightSource.constantAttenuation){
+		} else if (dist < lightSource.constantAttenuation) {
 			vec3 dir = normalize(delta);
 			float d = max(0.0, dot(normal, dir));
-			if(d > 0.0){
+			if (d > 0.0) {
 				float distAttenuation = 1.0 - dist / lightSource.constantAttenuation;
 				float linearAttenuation = 1.8 * distAttenuation;
 				float quadraticAttenuation = 3.5 * distAttenuation * distAttenuation;
@@ -38,7 +38,8 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec4 diffuse,
 /*
  * LightFragment
  */
-vec4 LightFragment(in vec4 diffuse, in vec3 lightmap){
+vec4 LightFragment (in vec4 diffuse, in vec3 lightmap)
+{
 
 	vec3 light = vec3(0.0);
 
@@ -48,10 +49,10 @@ vec4 LightFragment(in vec4 diffuse, in vec3 lightmap){
 
 	light = clamp(light, 0.0, 1.8);
 
-	// now modulate the diffuse sample with the modified lightmap
+	/* now modulate the diffuse sample with the modified lightmap */
 	vec4 lightColor;
 	lightColor.rgb = diffuse.rgb * (lightmap + light);
-	// lastly modulate the alpha channel by the color
+	/* lastly modulate the alpha channel by the color */
 	lightColor.a = diffuse.a * gl_Color.a;
 
 	return lightColor;
