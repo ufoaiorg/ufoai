@@ -2892,7 +2892,8 @@ msgstr "mejl_från_fn"
 #: ../base/ufos/research.ufo:5201
 #: ../base/ufos/research.ufo:5230
 msgid "mail_to_base_commander"
-msgstr "Baskommendör, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Baskommendör, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -3020,7 +3021,8 @@ msgstr "mejl_prolog"
 #: ../base/ufos/research.ufo:4959
 #: ../base/ufos/research.ufo:4967
 msgid "mail_from_paul_navarre"
-msgstr "Kommendör Paul Navarre, Forskning och utveckling: Utvecklingsavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Kommendör Paul Navarre, Forskning och utveckling: Utvecklingsavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:45
 #, fuzzy
@@ -3081,7 +3083,8 @@ msgstr "mejl_produktion_klar"
 #: ../base/ufos/events.ufo:209
 #: ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Befälhavare Abel S. Howard, Kommandocentralen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Befälhavare Abel S. Howard, Kommandocentralen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -3181,7 +3184,8 @@ msgstr "mejl_ny_radarkontakt"
 #: ../base/ufos/research.ufo:5200
 #: ../base/ufos/research.ufo:5229
 msgid "mail_from_col_falkland"
-msgstr "Överste Ingrid Falkland, Underrättelseavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Överste Ingrid Falkland, Underrättelseavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -3213,7 +3217,8 @@ msgstr "mejl_utomjordisk_aktivitet_rapporterad"
 #: ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Kommendör Subakh al-Kuhar, Flygvapnet, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Kommendör Subakh al-Kuhar, Flygvapnet, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -4166,7 +4171,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:5165
 #: ../base/ufos/research.ufo:5172
 msgid "mail_from_dr_connor"
-msgstr "Doktor Connor, Forskning och utveckling: Smittskyddsavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Doktor Connor, Forskning och utveckling: Smittskyddsavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:311
 #: ../base/ufos/research.ufo:352
@@ -5543,7 +5549,7 @@ msgstr ""
 "\n"
 "Overview\n"
 "\n"
-"This is a box of 9 25mm HIT (High Impulse Thermobaric) grenades. They are fired electronically by a spark igniter inside the launcher's barrel. These grenades are 'fuel-air munitions' that use atmospheric oxygen to generate an explosion instead of carrying along an oxidising agent. Thermobaric weapons produce a far more powerful explosive force than would be possible with conventional explosives of the same size.\n"
+"This is a box of 6 25mm HIT (High Impulse Thermobaric) grenades. They are fired electronically by a spark igniter inside the launcher's barrel. These grenades are 'fuel-air munitions' that use atmospheric oxygen to generate an explosion instead of carrying along an oxidising agent. Thermobaric weapons produce a far more powerful explosive force than would be possible with conventional explosives of the same size.\n"
 "\n"
 "These grenades are meant to be loaded into an HPGL Grenade Launcher.\n"
 "\n"
@@ -5576,7 +5582,7 @@ msgstr ""
 "\n"
 "Overview\n"
 "\n"
-"This is a box of 9 25mm flechette grenades. They are fired electronically by a spark igniter inside the launcher's barrel. While still classified as grenades due to their calibre and delivery system, they have more in common with shotgun shells. Each grenade contains 24 solid steel needles packed into a sabot shell that breaks away immediately after leaving the muzzle. This creates a buckshot-like effect that can shred unarmoured or lightly-armoured enemies, but their lower muzzle velocity compared to shotgun shells makes them significantly less effective against heavy armour.\n"
+"This is a box of 6 25mm flechette grenades. They are fired electronically by a spark igniter inside the launcher's barrel. While still classified as grenades due to their calibre and delivery system, they have more in common with shotgun shells. Each grenade contains 24 solid steel needles packed into a sabot shell that breaks away immediately after leaving the muzzle. This creates a buckshot-like effect that can shred unarmoured or lightly-armoured enemies, but their lower muzzle velocity compared to shotgun shells makes them significantly less effective against heavy armour.\n"
 "\n"
 "These grenades are meant to be loaded into an HPGL Grenade Launcher.\n"
 "\n"
@@ -5609,7 +5615,7 @@ msgstr ""
 "\n"
 "Overview\n"
 "\n"
-"This is a box of 9 25mm incendiary grenades. They are fired electronically by a spark igniter inside the launcher's barrel. These grenades are area-denial weapons, covering a large stretch of ground with very hot flames that are almost impossible to extinguish. The compound itself is a modification of a mixture that has been in use since World War II; thermite, barium nitrate, sulphur and binding agent. And thanks to modern miniaturisation technology, it will all fit into a handy, lightweight 25mm shell.\n"
+"This is a box of 6 25mm incendiary grenades. They are fired electronically by a spark igniter inside the launcher's barrel. These grenades are area-denial weapons, covering a large stretch of ground with very hot flames that are almost impossible to extinguish. The compound itself is a modification of a mixture that has been in use since World War II; thermite, barium nitrate, sulphur and binding agent. And thanks to modern miniaturisation technology, it will all fit into a handy, lightweight 25mm shell.\n"
 "\n"
 "These grenades are meant to be loaded into an HPGL Grenade Launcher.\n"
 "\n"
@@ -7537,52 +7543,25 @@ msgstr ""
 "Vi borde inte överväga Radarn som en slutgiltig lösning för att upptäcka UFO: n. Även med supplementära system så är våran täckning inte helt pålitlig och vi borde forska vägar att förbättra vår detektions teknologi om vi ska ha någon chans att stoppa skitstövlarna."
 
 #: ../base/ufos/research.ufo:3310
-#, fuzzy
 msgid "b_radar_adv_txt"
 msgstr ""
-"Blueprints -- Radar\n"
+"Proposal\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
 "\n"
-"PHALANX Extraterrestrial Response Unit\n"
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"DATE: %02i %s %i\n"
 "\n"
-"Filed: 18 March 2084\n"
+"SUB: Proposal: Advanced Radar Facility\n"
 "\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"Commander, thanks to our recent capture and research into alien sensor equipment, I am now confident that we can drastically upgrade our radar capabilities using these new technologies. I'd like to submit a research proposal for a new detection facility, incorporating all the advances we've made so far.\n"
 "\n"
+"The Advanced Radar Facility will use exclusively PHALANX-manufactured equipment rather than off-the-shelf components. Much of the technology is already in place. We just need additional time and funding to complete some of the designs and adapt our software into a coherent package.\n"
 "\n"
+"We'll be waiting for your go-ahead, Commander.\n"
 "\n"
-"Overview\n"
-"\n"
-"Commander, we've had to make extensive changes to our old Radar facility designs to bring them up to date. The old report is no longer applicable, so I've decided to replace it with this one.\n"
-"\n"
-"Our Radar facility is not a large radar array in itself. It's actually a control centre for a series of camouflaged dishes placed on high ground around the base. There are between 8 and 12 dishes set up for each installation, depending on the available space and the dishes' individual coverage. Each dish is equipped with several means of detection rather than simply radar, as radar has trouble maintaining a lock on alien contacts. Supplemental systems include, but are not limited to, infrared and laser rangefinding.\n"
-"\n"
-"Building more than one Radar installation at a base will suitably increase the extent of our radar coverage.\n"
-"\n"
-"The facility is manned round-the-clock in 6-hour shifts, reviewing the processed data after our computers have gathered all discernible information from a contact. Human operators are absolutely necessary and should be present to supervise at all times; what the computers might dismiss as a radar ghost can turn out to be a stealthed alien harvester ready to hit a mass off civilians. Instinct and experience count just as much as software intelligence.\n"
-"\n"
-"Our radar is patched directly into the UN aircraft registry and can cross-reference the transponder data of any civilian aircraft with its flight plan and cargo manifest. Non-PHALANX military aircraft are also required to log their routes into our database, but we can't know for certain if the various militaries will be very conscientious in following that directive.\n"
-"\n"
-"The Radar facility cannot function without a working Power Plant or a Command Centre to coordinate our radar into our tactical efforts.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"Since our radar-emitting dishes are not located at the base site, there is no direct threat of discovery to a base from using active radar. Considering the number of other military radar sources around, it's unlikely that alien craft will be able to learn anything from a dedicated backtrace. At most they'll be able to find the general area of a base.\n"
-"\n"
-"However, any UFOs spotted patrolling the area may be trying to zero in on our installation, and should not be allowed to complete their mission under any circumstances.\n"
-"\n"
-"During an attack, the Radar facility will be at high risk. It is our eyes and ears. Without working radar coverage, we wouldn't be able to see the UFOs we're supposed to respond to. If any attacking aliens approach the facility they will almost certainly attempt to damage or destroy it with explosives. We must not let that happen.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"Addendum, Executive Officer Abel S. Howard, 18 March 2084:\n"
-"\n"
-"We should not consider the Radar facility to be an end-all solution to UFO detection. Even with supplemental systems our coverage is not fully reliable, and we should research ways to improve our detection technology if we're to have any chance of stopping the bastards."
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3329
 msgid "b_storage_txt"
@@ -8112,7 +8091,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3617
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3667
 msgid "ufo_scout_txt"
@@ -8882,7 +8862,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:4440
 msgid "ugv_weapon_autocannon_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:4487
 msgid "'Raven' ECM Unit"
@@ -9046,7 +9027,7 @@ msgstr ""
 "\n"
 "(UFO Theory) \"The alien propulsion system is a type of rocket engine unlike any ever built on Earth. It uses direct matter-antimatter annihilation to generate thrust by injecting protons and antiprotons into the reaction chamber, and then channeling this explosive force out the back of the engine. This gives a UFO extreme power and needs no air or other gases to fuel the reaction, allowing it to burn in hard vacuum. There is a highly-advanced cooling system continuously pumping liquid nitrogen through the engine housing in order to keep it cool and reduce the infrared signature. Engine heat is also used to supply the craft's electricity.\"\n"
 "\n"
-"With this project we've learned a lot about how these engines are constructed, how to control them, and how we might retrofit them to our current airfleet. We should now be able to replicate these engines and use them for any applications we might come up. I have to warn you, though; they will be extremely expensive to produce. Between the complex use of alien materials, the sensitive electromagnetics and the liquid nitrogen cooling system, this really stretches the limits of our production capacity.\n"
+"With this project we've learned a lot about how these engines are constructed, how to control them, and how we might retrofit them to our current airfleet. We should now be able to replicate these engines and use them for any applications we might come up with. I have to warn you, though; they will be extremely expensive to produce. Between the complex use of alien materials, the sensitive electromagnetics and the liquid nitrogen cooling system, this really stretches the limits of our production capacity.\n"
 "\n"
 "Some more research may be required to figure out antimatter storage and control, but the engine upgrades are self-contained units -- basically just an alien engine with adapters on it for human tech. We should be able to start retrofitting as soon as we acquire enough fuel to keep our airfleet in the sky.\n"
 "\n"
@@ -9519,8 +9500,6 @@ msgstr ""
 "\n"
 "Overview\n"
 "\n"
-"Under the continuing efforts of the Excalibur Program, we have scoured the globe for the best components on Earth in order to fit our aircraft with the equipment they need to survive against the alien threat. As always, only the very best equipment has been selected for the defence of our planet.\n"
-"\n"
 "We've determined that the modular equipment bays on our aircraft can be used to accept extra fuel reserves. By installing these special but very simple fuel pods, we can greatly increase the range of an aircraft by loading more fuel on board, and improve the craft's speed by allowing the engines enough juice to run on maximum all the way. It also lets pilots make far more liberal use of the afterburner, further upping the speed, allowing us to better compete with hostile UFOs.\n"
 "\n"
 "Take note, however, that installing a fuel pod will add a significant amount of weight to the craft. Care must be taken not to overload our airframes. If an aircraft is too heavy to safely launch, our Command Centre computers will automatically deny it launch clearance.\n"
@@ -9754,15 +9733,13 @@ msgstr ""
 "\n"
 "Den enklaste förklaringen är detta: Det är två typer av DNA i våra blodprover. Det främmande DNA: ts förekommst är total; denna sekvens kan hittas i alla medlemmar av Tamanrasen, och en närmare studie har bekräftat att en liknande sekvens finns i blodet på andra raser vi hittat. Källan verkar vara en sorts encellig organism som finns i stor mängd i det utomjordiska blodomloppet. Det finns flera olika versioner av den, en för varje utomjordisk ras, och alla delar otroliga DNA likheter. Intressant nog så även om alla dessa organismer har lika många kromosomer, så kan ingen av dom överleva i en kropp som inte är medlem av den ursprungliga rasen. Underligt nog så är det helt klart att det är absolut ingen som helst variation på DNA: t mellan organismer från samma version. Detta leder till att vi tror att olika versioner kan ha tillverkats -- helt eller delvis -- för att passa den individuella rasen.\n"
 "\n"
-"Vi antar att alla utomjordingar bär en version av denna micro organisms infektion. Organismens funktion är inte helt klar. Vi har gjort tester på olika experimentella vävnads prover, både infekterade och kontrollprover. Den infekterade vävnaden verkar inte lida av några negativa effekter -- eller positiva heller för den delen -- av organismens närvaro. De är i stort sätt oskiljbara från oinfekterad vävnad. Då organismen kräver en levande värd för sin egna överlevnad, så verkar det inte vara en parasit eller en symbiot, med för närvarande obemärkta fördelar.\n"
-"\n"
+"Vi antar att alla utomjordingar bär en version av denna micro organisms infektion. Organismens funktion är inte helt klar. Vi har gjort tester på olika experimentella vävnads prover, både infekterade och kontrollprover. Den infekterade vävnaden verkar inte lida av några negativa effekter -- eller positiva heller för den delen -- av organismens närvaro. De är i stort sätt oskiljbara från oinfekterad vävnad. Då organismen kräver en levande värd för sin egna överlevnad, så verkar det inte vara en parasit eller en symbiot, med för närvarande obemärkta fördelar.\n\n"
 "\n"
 "Vi har namngett denna organism XVI (EXtraterrestrial Virus Infektion). Detta kan vara en felbeteckning i microbiologiska termer; XVI är långt mer komplicerad än något virus på jorden, men den beter och kopierar sig precis som ett vanligt virus. Därför känner vi att termen är försvarbar. När varje utomjordisk ras bär en unik sträng av infektionen, så har vi gett dem ett alfabetiskt designering efter den ursprungliga ras som strängen hittas i. Tamanerna har XVI-T, Shevaar har XVI-S, osv.\n"
 "\n"
 "Infektionens syfte kvarstår suddig just nu, men det är det enda vi har hittat än så länge som binder ihop dessa olika raser fysiskt. Vi kan bara gissa att olika strängar av infektionen skapades för att passa varje ras.\n"
 "\n"
-"Det finns ingen indikation att denna organism är smittsam för oss människor. När vi injicerar odlingar av männsklig vävnad med färskt utomjordiskt blod så har vi observerat att det utomjordiska blodet har blivit totalt utstött, som väntat. Oväntat nog, så har allt spår av infektionen därefter förintats av vanliga männskliga T celler. Organismen kunde inte slå av vårat immunförsvar för att kunna slå rot.\n"
-"\n"
+"Det finns ingen indikation att denna organism är smittsam för oss människor. När vi injicerar odlingar av männsklig vävnad med färskt utomjordiskt blod så har vi observerat att det utomjordiska blodet har blivit totalt utstött, som väntat. Oväntat nog, så har allt spår av infektionen därefter förintats av vanliga männskliga T celler. Organismen kunde inte slå av vårat immunförsvar för att kunna slå rot.\n\n"
 "\n"
 "Vi tror för närvarande inta att XVI organismen utgör något hot för våra soldater på slagfältet. Men vi kommer forsätta att forska och hålla dig underrättad om något utvecklas. En grundlig blodtestning utförs nu på all vår personal, som en säkerhetsåtgärd, och vanliga karantän procedurer kommer upprätthållas alltigenom laboratoriumet.\n"
 "\n"
@@ -9974,28 +9951,31 @@ msgid "The Alien Strategy"
 msgstr "Det utomjordiska hotet"
 
 #: ../base/ufos/research.ufo:5195
-#, fuzzy
 msgid "alien_strategy_txt"
 msgstr ""
-"Kommendörkapten, jag och mitt forskarlag har avslutat våran analys av det UFO vi infångade. Det är ett verkligt mirakel ur ingenjörssynpunkt och vi ser alla fram emot chansen att ta del av all denna underbara teknologi.\n"
+"Proposal\n"
 "\n"
-"Farkostens underliga konstruktion skapar en hel del frågor för oss att besvara. Mycket av designen verkar inte vettig när man ser den från marken. När vi nu har lyckats ta en nogrann titt på det -- och testat de utomjordiska materialen från skrovet under laboratorium-förhållanden -- så har vi fått en mycket klarare bild av UFOts förmåga. Jag har sammanställt en lista på de viktigaste upptäckterna.\n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
 "\n"
-"-- Det utomjordiska framdrivningssystemet är en typ av raketmotor olik alla som byggts på jorden. Den använder direkt materia-antimateria-tillintetgörelse för att generera framåtkraft genom att injicera protoner och antiprotoner in i en reaktionskammare, för att sedan kanalisera denna explosiva kraft bak ut genom motorn. Detta ger UFOt extrem kraft och det behöver ingen luft eller andra gaser för att göra reaktionen fullständig. Detta tillåter reaktionen att brinna i hårt vakum. Samtidigt är det ett mycket avancerat kylsystem som kontinuerligt pumpar flytande kväve genom motorn för att hålla den sval och minska den infraröda signaturen. Motorns värme används också för att fylla farkostens elektriska behov.\n"
+"FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command\n"
 "\n"
-"-- Bränsletanken är mycket, mycket liten och kan mätas i knappa gram. Men trots det fick vi nästan en hjärtattack när vi fick reda på vad som fanns inuti. Ifall en förvaringsbrist skulle drabba en av dessa tankar skulle skulle enbart en tredjedels gram övergå sprängkraften från atombomben släppt över Hiroshima. Naturligtvis är tanken bepansrad och sitter så långt in i drivdelen som möjligt, och det finns ett mekaniskt system för att skjuta ut tanken i nödfall, men dessa är inte perfekta. En direkt träff på förvaringssystemet kan fortfarande skapa en explosion. Mycket av kraften skulle hållas inne av UFOts kraftiga skrov men en explosion skulle vara mycket farlig för våra ingreppsplan [interceptors]. Det enda som räddar dagen är att proton- och antiproton-explosionen inte genererar mycket radioktivt nedfall.\n"
+"DATE: %02i %s %i\n"
 "\n"
-"-- Skeppet är fruktansvärt svårt att se med några mänskliga spaningsutrustning, oavsett utomjordisk elektronisk krigsföringsteknik. Detta är mestadels tack vare skrovet om effektivt absorberar all form av strålning. Vi har lyckats bäst med passiv infraröd- och gammastrålningsmetoder för att de antimateria-baserade motorerna producerar en hel del av båda två.\n"
+"SUB: Proposal: The Alien Strategy\n"
 "\n"
-"-- Den slimmade designen som genererar dåligt lyft och är svår att hantera i luften är dels tack vare de tunga skrovmaterialen. Det skulle vara omöjligt att skapa effektiva vingar från det utomjordiska skrovmaterialet. Istället så har varje gram av överflödig vikt tagits bort och skeppet flyger väldigt fort så det behövs inte så mycket lyftyta. Materialet självt är ganska imponerande och består delvis av metall och delvis av plastpolymer. Det fungerar som en minneslegering som 'kommer ihåg' åtminstone två olika former. Det krymper till en mer kompakt form när det är kallt men expanderar automatiskt och antar en mer effektiv flygform när det blir varmt. Det är starkare och tåligare än något känt material på jorden (undentaget nanotuber av kol) och mycket mer mångsidigt i flygplansdesign. Mer forskning behövs defentivt.\n"
+"Good morning, Sir.\n"
 "\n"
-"Med dessa fakta till hand, kan vi nu börja analysera de olika komponterna och roller som UFOt har. I rekomenderar att våra ingengörer börjar ta isär det här skeppet genast. Vem vet vad vi kommer upptäcka när vi pussla ihop det här mysteriet?\n"
+"I'm afraid this isn't a social message; I'm writing you because of our pressing need for more information. We at DivIntel have been doing our part with tracking, logging and double-checking all reported alien activity on Earth, but we're increasingly being faced with our lack of data about the overarching goals of the alien invasion. We have no means of anticipating the aliens' next move because we have no clue as to what game plan they're following. That's why I am submitting a new project for your authorisation.\n"
 "\n"
-"Mer forskning på UFOt själv är också nödvändigt. Jag tror vi kan gräva djupare i dess funktion och kanske få insikt i hur vi kan motverka dess aktiviteter. Jag skickar ett förslag om detta så fort som möjligt.\n"
+"I intend to analyse more closely the patterns of alien activity on Earth, the intended missions and targets of UFO incursions into our airspace, and some of the finer details of our own research documents regarding the alien creatures and their technology. The bits and pieces of intelligence we've gathered so far are just pieces of a puzzle, but right now we have no clue how they fit together. The continual low-key incursions, the mysteries of the alien hive mind, the harvesting of human material . . . Somewhere in there lie the answers we need to unravel the aliens' overall goals and strategy for Earth and for humanity. If we can just put all the pieces together, we'll finally be able to see the bigger picture, as frightening as it may be.\n"
 "\n"
-"Vad vi än kommer att lära oss från dessa skepp, Kommendör, så kan vi hoppas på att det hjälper oss i slaget om jorden.\n"
+"Naturally this project will require a certain amount of lab time and funding to build up a complete picture. It shouldn't set back our other research too much, and it will be an important part of formatulating new, more effective counterstrategies to the alien invasion.\n"
 "\n"
-"--Kommendörkapten Navarre"
+"The proposal is in your queue, Sir. Please write back when you'd like us to start work.\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/research.ufo:5219
 #, fuzzy
@@ -10003,9 +9983,49 @@ msgid "Orbital UFO Activity"
 msgstr "Orientalisk stor"
 
 #: ../base/ufos/research.ufo:5224
-#, fuzzy
 msgid "orbital_ufo_activity_txt"
-msgstr "Utomjordisk aktivitet"
+msgstr ""
+"Proposal\n"
+"\n"
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: Orbital UFO Activity\n"
+"\n"
+"Good morning, Sir.\n"
+"\n"
+"Let me begin by stating a few ugly realities.\n"
+"\n"
+"1) All of humanity's space-based assets have been evacuated after the initial attack on Earth. Only a few stations and outposts are still running, and they have been remanded to military control, with only skeleton crews of volunteer military and civilian personnel.\n"
+"\n"
+"2) We have just a handful of space-based weapons platforms, none of which are equipped to harm alien craft. The aliens have the ability to instantly exterminate any human endeavours in the solar system.\n"
+"\n"
+"3) Our satellite grid is wide open and could be wiped off the map in an instant. Emergency landlines exist, but only for military use. If the grid does come under attack, comms between PHALANX command centres and assets in the field -- aircraft and ground teams -- will be hamstrung.\n"
+"\n"
+"4) There is no doubt that there are alien craft moving in orbit, ferrying items and UFOs between Earth and the alien homeworld, and right now there is nothing we can do to stop them.\n"
+"\n"
+"This leads us to only one conclusion: The space around Earth is no longer under our control. The only reason humanity retains any space capability at all is because the aliens have chosen not to destroy it yet.\n"
+"\n"
+"Our shocking vulnerability from space is demonstrated in the fact that we've fought this war exclusively on the ground and in the air. We have no space-planes that can be adapted for combat, and designs for building them are years from completion. Not even PHALANX could create a workable combat plane in time to affect the outcome of the war with the technologies currently at our disposal.\n"
+"\n"
+"What little orbital weaponry we have is severely inadequate. There are nuclear missiles which the UN won't let us use, and which would be far too destructive to help our research efforts if one of the colossal things ever managed to score a hit. There are experimental laser and maser platforms which are too underpowered to put a dent in heavy UFO armour. If the aliens decide they want to bomb us into extinction, they can just walk right up and knock. This is a situation that has to be remedied.\n"
+"\n"
+"The only question we can ask about this orbital UFO activity is how we're going to counter it. Until now we've not been able to affect the situation, but with budget increases and our growing reputation in the UN, pieces are starting to fall into place for a new step to our strategy.\n"
+"\n"
+"By far the most promising idea for a short-term orbital response weapon is to adapt one of the 'space guns' used by NASA and the European Space Agency to launch satellites and -- before the invasion forced us to evacuate our extraplanetary installations -- fire resupply packages at Tranquility Base colony on the moon. These space guns are essentially giant railguns with enough power to send a satellite-sized payload into orbit. With our library of UN research on electromagnetic weaponry, we can upgrade one of these guns into an anti-orbital weapon capable of knocking alien ships out of the sky. We're confident we can convince at least one of Earth's space agencies to lend us a suitable gun for the job.\n"
+"\n"
+"There are problems, however. Obviously these guns can't move, being built into the side of a mountain, so the target would have to pass directly in front of the gun for us to have a chance to hit it. Since we can't count on the aliens to give us a point-blank shot, this has been a big stumbling block, but we believe there may be a solution: If the gun can't move in order to hit something, the bullets will have to move instead.\n"
+"\n"
+"The plan calls for development of a special shell that is able to adjust its own trajectory with a suite of onboard rockets. We're currently pushing the UN to let us use a miniature nuclear warhead -- no more than 3 kilotons -- to make sure that any hit will kill. This orbital shell will be large, heavy, and a hell of a challenge to load into the gun, but it's absolutely necessary to give the project a realistic chance of success.\n"
+"\n"
+"As you see, Sir, these problems can all be overcome, but we need to do some serious R&D and commit a good deal of funding to get it all working. Please lend your authorisation as soon as is feasible.\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/seq_credits.ufo:132
 #: ../base/ufos/seq_credits.ufo:165
@@ -10205,35 +10225,43 @@ msgstr "Copyright 2004-2007 UFO: AI-teamet"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Året är 2084. Jorden, aldrig den mest stabila av platser, njuter av en fredlig tid. Den våldsamma början av 2000-talet är sedan länge över, gamla minnen men inte så länge sedan att den har glömts. För de flesta av jordens befolkning är det andra kalla kriget en mörk skugga från det förflutna, precis som världskrigen var för deras barn."
+msgstr ""
+"Året är 2084. Jorden, aldrig den mest stabila av platser, njuter av en fredlig tid. Den våldsamma början av 2000-talet är sedan länge över, gamla minnen men inte så länge sedan att den har glömts. För de flesta av jordens befolkning är det andra kalla kriget en mörk skugga från det förflutna, precis som världskrigen var för deras barn."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Konflikter har blivit mindre vanliga nära slutet av århundradet sedan ny teknologi och hälsovård har blivit tillgänglig för den tredje världen. Även om terrorismen har lugnat ner sig efter det andra kalla kriget, med all dess fruktan och inhumana aktiviteter, finns den fortfarande i tankarna hos folket, från det gamla Amerika till den sargade indiska kontinenten. Klasskamper stiger nu upp mot politiska slagfältet när alla nationer har garanterats en lika representation i FN, och den globala levnadsstandarden stiger sakta även för de mest sargade hörnen av planeten. Länderna har stärkts och stabiliserats runt en omorganiserat Förenade Nationerna som lyckats ena världens regeringar. Fragment av mindre nationer, först skrämda av de kraftfulla nationerna Kina och Europeiska gemenskapen, har själva gått samman till politiskt kraftfulla gemenskaper -- och sedan upptäckt att de inte har några grannar som de kan strida mot. För första gången i människans historia råder lag och ordning över mer än tre fjärdedelar av världen."
+msgstr ""
+"Konflikter har blivit mindre vanliga nära slutet av århundradet sedan ny teknologi och hälsovård har blivit tillgänglig för den tredje världen. Även om terrorismen har lugnat ner sig efter det andra kalla kriget, med all dess fruktan och inhumana aktiviteter, finns den fortfarande i tankarna hos folket, från det gamla Amerika till den sargade indiska kontinenten. Klasskamper stiger nu upp mot politiska slagfältet när alla nationer har garanterats en lika representation i FN, och den globala levnadsstandarden stiger sakta även för de mest sargade hörnen av planeten. Länderna har stärkts och stabiliserats runt en omorganiserat Förenade Nationerna som lyckats ena världens regeringar. Fragment av mindre nationer, först skrämda av de kraftfulla nationerna Kina och Europeiska gemenskapen, har själva gått samman till politiskt kraftfulla gemenskaper -- och sedan upptäckt att de inte har några grannar som de kan strida mot. För första gången i människans historia råder lag och ordning över mer än tre fjärdedelar av världen."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "För många människor på jorden verkar det äntligen som allt är bra."
+msgstr ""
+"För många människor på jorden verkar det äntligen som allt är bra."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Den första attacken sker mot staden Mumbai den 3: e mars 2084. Sex små UFO dyker upp från ingenstans och flyger skrikande ner mot Jorden utan att upptäckas av de stora radarinstallationerna som täcker skyarna över Mumbai och landar i den mest befolkade staden på Jorden. De lämnar inga varningar, ingen förklaring. Tjugotusen oskyldiga civila och tre bataljoner från elittrupperna blir totalt massakerade under tolv brutala timmar innan en stor styrka från samfälligheten får stopp på utomjordingarnas härjningar. Lika snabbt som de kom, retirerar de tillbaka till sina farkoster och försvinner tillbaka ut i rymden och lämnar endast de sargade gatorna i Mumbai som bevis för vad som hänt."
+msgstr ""
+"Den första attacken sker mot staden Mumbai den 3: e mars 2084. Sex små UFO dyker upp från ingenstans och flyger skrikande ner mot Jorden utan att upptäckas av de stora radarinstallationerna som täcker skyarna över Mumbai och landar i den mest befolkade staden på Jorden. De lämnar inga varningar, ingen förklaring. Tjugotusen oskyldiga civila och tre bataljoner från elittrupperna blir totalt massakerade under tolv brutala timmar innan en stor styrka från samfälligheten får stopp på utomjordingarnas härjningar. Lika snabbt som de kom, retirerar de tillbaka till sina farkoster och försvinner tillbaka ut i rymden och lämnar endast de sargade gatorna i Mumbai som bevis för vad som hänt."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Ett extrainkallat möte i FN leder inte någonstans. Attackerna fortsätter med kortare mellanrum, större och kraftfullare än tidigare, denna gång i Bonn, Johannesburg och Bangkok. Några nationer försöker med diplomati och skickar meddelanden på tusentals olika språk till utomjordingarna som härjar runt i länderna. Deras ord ignoreras. Inom ett par timmar är alla tre städerna tömda på mänskligt liv. Attacken är över precis när de olika militära styrkorna har fått bekräftelse på att slå tillbaka. Utomjordingarna lämnar ingenting kvar förutom betong och blod. Alla UFO försvinner utan ett spår -- men ingen tvivlar på att de kommer tillbaka."
+msgstr ""
+"Ett extrainkallat möte i FN leder inte någonstans. Attackerna fortsätter med kortare mellanrum, större och kraftfullare än tidigare, denna gång i Bonn, Johannesburg och Bangkok. Några nationer försöker med diplomati och skickar meddelanden på tusentals olika språk till utomjordingarna som härjar runt i länderna. Deras ord ignoreras. Inom ett par timmar är alla tre städerna tömda på mänskligt liv. Attacken är över precis när de olika militära styrkorna har fått bekräftelse på att slå tillbaka. Utomjordingarna lämnar ingenting kvar förutom betong och blod. Alla UFO försvinner utan ett spår -- men ingen tvivlar på att de kommer tillbaka."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "87 timmar efter den första attacken på Mumbai förklarar Jorden krig mot utomjordingarna. I över två veckor kämpar de mänskliga styrkorna så gott de kan för att avvärja attackerna från de mystiska utomjordingarna. De förlorar oftare än de vinner."
+msgstr ""
+"87 timmar efter den första attacken på Mumbai förklarar Jorden krig mot utomjordingarna. I över två veckor kämpar de mänskliga styrkorna så gott de kan för att avvärja attackerna från de mystiska utomjordingarna. De förlorar oftare än de vinner."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "När endast ett alternativ kvarstår tar sig FN ton. Föråldrad utrustning dammas av, några av dem är äldre än ett decennium, och den länge sovande anti-utomjordiska byrån för tidigare Amerika -- PHALANX -- återuppstår under FN: s beskydd. Dess uppdrag är att kämpa mot det utomjordiska hotet och försäkra sig om att den mänskliga rasen överlever, till vilket pris som helst."
+msgstr ""
+"När endast ett alternativ kvarstår tar sig FN ton. Föråldrad utrustning dammas av, några av dem är äldre än ett decennium, och den länge sovande anti-utomjordiska byrån för tidigare Amerika -- PHALANX -- återuppstår under FN: s beskydd. Dess uppdrag är att kämpa mot det utomjordiska hotet och försäkra sig om att den mänskliga rasen överlever, till vilket pris som helst."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Finansierade av alla åtta politiska krafter, och sammanslagningen av dess elitsoldater, är PHALANX det bästa av de bästa. Det är jordens första och enda försvarslinje. De kan inte misslyckas, för att om de gör det, kommer mänskligheten inte att ha en chans att överleva."
+msgstr ""
+"Finansierade av alla åtta politiska krafter, och sammanslagningen av dess elitsoldater, är PHALANX det bästa av de bästa. Det är jordens första och enda försvarslinje. De kan inte misslyckas, för att om de gör det, kommer mänskligheten inte att ha en chans att överleva."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 #: ../base/ufos/ui/options.ufo:67
