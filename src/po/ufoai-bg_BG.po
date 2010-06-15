@@ -2524,7 +2524,8 @@ msgstr "Цюрих"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Ген. секретар Mahouf Serra, Обединени Нации, Ню Йорк"
+msgstr ""
+"Ген. секретар Mahouf Serra, Обединени Нации, Ню Йорк"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -2610,7 +2611,8 @@ msgstr "Ген. секретар Mahouf Serra, Обединени Нации, Н
 #: ../base/ufos/research.ufo:4761 ../base/ufos/research.ufo:4789
 #: ../base/ufos/research.ufo:4818
 msgid "mail_to_base_commander"
-msgstr "Командир на базата, PHALANX, Отдел Операции в Атлантическия океан"
+msgstr ""
+"Командир на базата, PHALANX, Отдел Операции в Атлантическия океан"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -2694,7 +2696,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4481 ../base/ufos/research.ufo:4547
 #: ../base/ufos/research.ufo:4555
 msgid "mail_from_paul_navarre"
-msgstr "Ком. Paul Navarre, П&Р: Инженерен отдел, PHALANX, Отдел Операции в Атлантическия океан"
+msgstr ""
+"Ком. Paul Navarre, П&Р: Инженерен отдел, PHALANX, Отдел Операции в Атлантическия океан"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -2758,7 +2761,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "ИД Abel S. Howard, Управление и Контрол, PHALANX, Отдел Операции в Атлантическия океан"
+msgstr ""
+"ИД Abel S. Howard, Управление и Контрол, PHALANX, Отдел Операции в Атлантическия океан"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -2854,7 +2858,8 @@ msgstr "<TODO: mail_new_radar_contact>"
 #: ../base/ufos/research.ufo:4721 ../base/ufos/research.ufo:4788
 #: ../base/ufos/research.ufo:4817
 msgid "mail_from_col_falkland"
-msgstr "Полк. Ingrid Falkland, Отдел Разузнаване, PHALANX, Отдел Операции в Атлантическия океан"
+msgstr ""
+"Полк. Ingrid Falkland, Отдел Разузнаване, PHALANX, Отдел Операции в Атлантическия океан"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -2891,7 +2896,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Ком. (Air) Subakh al-Kuhar, Въздушни сили, PHALANX, Отдел Операции в Атлантическия океан"
+msgstr ""
+"Ком. (Air) Subakh al-Kuhar, Въздушни сили, PHALANX, Отдел Операции в Атлантическия океан"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -3788,7 +3794,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4682 ../base/ufos/research.ufo:4753
 #: ../base/ufos/research.ufo:4760
 msgid "mail_from_dr_connor"
-msgstr "Др. Connor, П&Р: Отдел Биология & Ограничение, PHALANX, Отдел Операции в Атлантическия океан"
+msgstr ""
+"Др. Connor, П&Р: Отдел Биология & Ограничение, PHALANX, Отдел Операции в Атлантическия океан"
 
 #: ../base/ufos/research.ufo:311 ../base/ufos/research.ufo:352
 msgid "alien_breathing_txt"
@@ -7438,7 +7445,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3382
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3423
 msgid "ufo_scout_txt"

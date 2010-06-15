@@ -2626,7 +2626,8 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "GenSek. Mahouf Serra, Forende Nationer, New York"
+msgstr ""
+"GenSek. Mahouf Serra, Forende Nationer, New York"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -2712,7 +2713,8 @@ msgstr "GenSek. Mahouf Serra, Forende Nationer, New York"
 #: ../base/ufos/research.ufo:4761 ../base/ufos/research.ufo:4789
 #: ../base/ufos/research.ufo:4818
 msgid "mail_to_base_commander"
-msgstr "Øverstbefalende, FALANKS, Hovedkvarteret"
+msgstr ""
+"Øverstbefalende, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -2799,7 +2801,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4481 ../base/ufos/research.ufo:4547
 #: ../base/ufos/research.ufo:4555
 msgid "mail_from_paul_navarre"
-msgstr "Kommandør Paul Navarre, F&U; Ingeniørdivisionen, FALANKS, Hovedkvarteret"
+msgstr ""
+"Kommandør Paul Navarre, F&U; Ingeniørdivisionen, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -2863,7 +2866,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "NK Abel S. Howard, Stabsafdelingen, FALANKS, Hovedkvarteret"
+msgstr ""
+"NK Abel S. Howard, Stabsafdelingen, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -2935,7 +2939,8 @@ msgstr "Rumvæsenbase opdaget -- %s"
 
 #: ../base/ufos/events.ufo:201
 msgid "mail_alien_base_discovered"
-msgstr "Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
+msgstr ""
+"Sir, our operatives have discovered the location of a large alien installation on Earth in territory belonging to %s. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
 
 #: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
@@ -2959,7 +2964,8 @@ msgstr "e-post_ny_radarkontakt"
 #: ../base/ufos/research.ufo:4721 ../base/ufos/research.ufo:4788
 #: ../base/ufos/research.ufo:4817
 msgid "mail_from_col_falkland"
-msgstr "Oberst Ingrid Falkland, Efterretningstjenesten, FALANKS, Hovedkvarteret"
+msgstr ""
+"Oberst Ingrid Falkland, Efterretningstjenesten, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -2996,7 +3002,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Kommandør Subakh al-Kuhar, Luftstyrkerne, FALANKS, Hovedkvarteret"
+msgstr ""
+"Kommandør Subakh al-Kuhar, Luftstyrkerne, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -3900,7 +3907,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4682 ../base/ufos/research.ufo:4753
 #: ../base/ufos/research.ufo:4760
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, Bio- & opbevaringsafdelingen, FALANKS, Hovedkvarteret"
+msgstr ""
+"Dr. Connor, Bio- & opbevaringsafdelingen, FALANKS, Hovedkvarteret"
 
 #: ../base/ufos/research.ufo:311 ../base/ufos/research.ufo:352
 msgid "alien_breathing_txt"
@@ -7162,7 +7170,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3382
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3423
 msgid "ufo_scout_txt"
@@ -9017,35 +9026,43 @@ msgstr "Ophavsret 2004-2009 UFO: AI-holdet"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Året er 2084. Jorden, aldrig det mest stabile sted, oplever en fredelig tid. Den voldsomme start på 2000-tallet er for længst forbi, gamle minder, men ikke så langt væk, at 2000-tallet er blevet glemt. For de fleste af jordens befolkning er den 2. kolde krig en mørk skygge i det forgangne, præcis som verdenskrigen var for deres børn."
+msgstr ""
+"Året er 2084. Jorden, aldrig det mest stabile sted, oplever en fredelig tid. Den voldsomme start på 2000-tallet er for længst forbi, gamle minder, men ikke så langt væk, at 2000-tallet er blevet glemt. For de fleste af jordens befolkning er den 2. kolde krig en mørk skygge i det forgangne, præcis som verdenskrigen var for deres børn."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Konflikter er blevet mindre udbredte nær slutningen af århundredet da ny teknologi og medicin er blevet tilgængelig for den tredje verden. Selv om terrorismen er blevet mindre efter den 2. kolde krig, med al dens smerte og umenneskelige gerninger, findes den stadig i tankerne hos folket, fra det gamle Amerika til det indiske kontinent. Klassekampen sker nu igennem den politiske magtkamp da alle nationer er garanteret en lige repræsentation i FN, og den globale levestandard stiger langsomt selv for de mest udsatte hjørner af planeten. Landene er styrket og har stabiliseret sig omkring et omorganiseret Forenede Nationer som det er lykkedes at få verdens lande til at enes om. Mindre nationer, først skræmte af de magtfulde nationer Kina og Den Europæiske Union, er selv gået sammen til magtfulde politiske fællesskaber - og har siden opdaget at de ikke har nogle naboer som de kan slås imod. For første gang i menneskenes historie er der lov og orden i mere end 3/4 af verdenen."
+msgstr ""
+"Konflikter er blevet mindre udbredte nær slutningen af århundredet da ny teknologi og medicin er blevet tilgængelig for den tredje verden. Selv om terrorismen er blevet mindre efter den 2. kolde krig, med al dens smerte og umenneskelige gerninger, findes den stadig i tankerne hos folket, fra det gamle Amerika til det indiske kontinent. Klassekampen sker nu igennem den politiske magtkamp da alle nationer er garanteret en lige repræsentation i FN, og den globale levestandard stiger langsomt selv for de mest udsatte hjørner af planeten. Landene er styrket og har stabiliseret sig omkring et omorganiseret Forenede Nationer som det er lykkedes at få verdens lande til at enes om. Mindre nationer, først skræmte af de magtfulde nationer Kina og Den Europæiske Union, er selv gået sammen til magtfulde politiske fællesskaber - og har siden opdaget at de ikke har nogle naboer som de kan slås imod. For første gang i menneskenes historie er der lov og orden i mere end 3/4 af verdenen."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "For mange mennesker ser verden lys ud."
+msgstr ""
+"For mange mennesker ser verden lys ud."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Det første angreb sker mod byen Mumbai den 3. marts 2084. Seks små ufoer dukker op ud af ingenting og flyver skrigende mod jorden, uden at de bliver opdaget af de store radarinstallationer som dækker skyerne over Mumbai og lander i den højest befolket by på jorden. De giver ingen advarsler, ingen forklaring. 20.000 uskyldige civile og tre bataljoner fra elitetropperne bliver massakreret igennem tolv brutale timer inden en stor fælles styrke får stoppet de udenjordiske raseringer. Lige så hurtigt som de kom, lige så hurtigt trækker de deres fartøjer tilbage og forsvinder ud i rummet igen og efterlader kun de stille gader i Mumbai som bevis for hvad der er sket."
+msgstr ""
+"Det første angreb sker mod byen Mumbai den 3. marts 2084. Seks små ufoer dukker op ud af ingenting og flyver skrigende mod jorden, uden at de bliver opdaget af de store radarinstallationer som dækker skyerne over Mumbai og lander i den højest befolket by på jorden. De giver ingen advarsler, ingen forklaring. 20.000 uskyldige civile og tre bataljoner fra elitetropperne bliver massakreret igennem tolv brutale timer inden en stor fælles styrke får stoppet de udenjordiske raseringer. Lige så hurtigt som de kom, lige så hurtigt trækker de deres fartøjer tilbage og forsvinder ud i rummet igen og efterlader kun de stille gader i Mumbai som bevis for hvad der er sket."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Et ekstraordinært møde i FN fører ikke til noget. Angrebene fortsætter med kortere og kortere mellemrum, større og kraftigere end tidligere, denne gang i Bonn, Johannesburg og Bangkok. Nogen nationer forsøger med diplomati og sender beskeder på tusindtals forskellig sprog til de fremmede som hærger i de forskellige lande. Deres beskeder ignoreres. Inden for et par timer er alle tre byer tømt for menneskeligt liv. Angrebene er ovre præcis når de forskellige militære styrker har fået bekræftelse på at slå igen. Rumvæsenerne efterlader intet uden beton og blod. Alle ufoer forsvinder uden spor - men ingen tvivler på, at de kommer tilbage."
+msgstr ""
+"Et ekstraordinært møde i FN fører ikke til noget. Angrebene fortsætter med kortere og kortere mellemrum, større og kraftigere end tidligere, denne gang i Bonn, Johannesburg og Bangkok. Nogen nationer forsøger med diplomati og sender beskeder på tusindtals forskellig sprog til de fremmede som hærger i de forskellige lande. Deres beskeder ignoreres. Inden for et par timer er alle tre byer tømt for menneskeligt liv. Angrebene er ovre præcis når de forskellige militære styrker har fået bekræftelse på at slå igen. Rumvæsenerne efterlader intet uden beton og blod. Alle ufoer forsvinder uden spor - men ingen tvivler på, at de kommer tilbage."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "87 timer efter det første angreb på Mumbai erklærer jorden krig mod rumvæsenerne. I over to uger kæmper menneskenes styrker så godt de kan for at afværge de angribende rumvæsener. De taber oftere end de vinder."
+msgstr ""
+"87 timer efter det første angreb på Mumbai erklærer jorden krig mod rumvæsenerne. I over to uger kæmper menneskenes styrker så godt de kan for at afværge de angribende rumvæsener. De taber oftere end de vinder."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Da kun et alternativ står tilbage tager FN aktion. Forældet udstyr hentes frem, noget af det ældre end et århundrede, og det tidligere sovende antirumvæsenbureau fra det tidligere Amerika - FALANKS - genopstår under FN's auspicier. Dets opgave er at kæmpe mod truslen fra rumvæsenerne og sikre, at den menneskelige race kan overleve, uanset prisen."
+msgstr ""
+"Da kun et alternativ står tilbage tager FN aktion. Forældet udstyr hentes frem, noget af det ældre end et århundrede, og det tidligere sovende antirumvæsenbureau fra det tidligere Amerika - FALANKS - genopstår under FN's auspicier. Dets opgave er at kæmpe mod truslen fra rumvæsenerne og sikre, at den menneskelige race kan overleve, uanset prisen."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Finansieret af alle otte politiske kræfter, og sammenlægningen af disses elitesoldater, er FALANKS det bedste af de bedste. Det er jordens første og eneste forsvarslinje. De må ikke fejle, for hvis de gør, vil menneskeheden ikke overleve."
+msgstr ""
+"Finansieret af alle otte politiske kræfter, og sammenlægningen af disses elitesoldater, er FALANKS det bedste af de bedste. Det er jordens første og eneste forsvarslinje. De må ikke fejle, for hvis de gør, vil menneskeheden ikke overleve."
 
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:64
 msgid "Gameplay"

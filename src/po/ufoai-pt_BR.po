@@ -2609,7 +2609,8 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "2ºGen. Mahouf Serra, Nações Unidas, Cidade de Nova York"
+msgstr ""
+"2ºGen. Mahouf Serra, Nações Unidas, Cidade de Nova York"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -2695,7 +2696,8 @@ msgstr "2ºGen. Mahouf Serra, Nações Unidas, Cidade de Nova York"
 #: ../base/ufos/research.ufo:4761 ../base/ufos/research.ufo:4789
 #: ../base/ufos/research.ufo:4818
 msgid "mail_to_base_commander"
-msgstr "Comandante da Base, FALANGE, Comando de Operações do Atlântico"
+msgstr ""
+"Comandante da Base, FALANGE, Comando de Operações do Atlântico"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -2767,7 +2769,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4481 ../base/ufos/research.ufo:4547
 #: ../base/ufos/research.ufo:4555
 msgid "mail_from_paul_navarre"
-msgstr "Cmd. Paul Navarre, P&D: Divisão de Engenharia, FALANGE, Comando de Operações Atlânticas"
+msgstr ""
+"Cmd. Paul Navarre, P&D: Divisão de Engenharia, FALANGE, Comando de Operações Atlânticas"
 
 #: ../base/ufos/events.ufo:45
 #, fuzzy
@@ -2820,7 +2823,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Maj. Abel S. Howard, Comando & Controle, FALANGE, Comando de Operações Atlânticas"
+msgstr ""
+"Maj. Abel S. Howard, Comando & Controle, FALANGE, Comando de Operações Atlânticas"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -2916,7 +2920,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4721 ../base/ufos/research.ufo:4788
 #: ../base/ufos/research.ufo:4817
 msgid "mail_from_col_falkland"
-msgstr "Cel. Ingrid Falkland, Divisão de Inteligência, FALANGE,Comando de Operações Atlânticas"
+msgstr ""
+"Cel. Ingrid Falkland, Divisão de Inteligência, FALANGE,Comando de Operações Atlânticas"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -2946,7 +2951,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Cmd. Subakh al-Kuhar, Asa Aérea, FALANGE, Comando de Operações Atlânticas"
+msgstr ""
+"Cmd. Subakh al-Kuhar, Asa Aérea, FALANGE, Comando de Operações Atlânticas"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -3850,7 +3856,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4682 ../base/ufos/research.ufo:4753
 #: ../base/ufos/research.ufo:4760
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, P&D: Divisão Biológica e de Contenção, FALANGE, Comando de Operações Atlânticas"
+msgstr ""
+"Dr. Connor, P&D: Divisão Biológica e de Contenção, FALANGE, Comando de Operações Atlânticas"
 
 #: ../base/ufos/research.ufo:311 ../base/ufos/research.ufo:352
 msgid "alien_breathing_txt"
@@ -7292,7 +7299,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3382
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3423
 msgid "ufo_scout_txt"
@@ -8548,7 +8556,6 @@ msgstr ""
 "A guerra civil que veio a seguir foi algo que a Terra nunca havia visto. Oficiais geralmente se referem a ela como a filha bastarda do Vietnam com a Primeira Guerra Mundial. Foi visto bombardeamento de populações inteiras, execuções em massa de prisioneiros de guerra, em operações táticas nucleares em várias cidades -- incluindo Xangai, Seul e Nova Deli -- em 7 de Junho de 2034. Os leais ao governo jogaram um total de 6 peças de 50 quilotons em posições rebeldes altamente protegidas, incluindo as populações civis que os rebeldes protegiam.\n"
 "\n"
 "O exército leal sofreu massivas deserções nos dias que se seguiram; foi o único evento que eventualmente causou a ruína do governo. Mais de seis milhões de vidas foram perdidas antes da rendição das forças leais em 15 de Agosto de 2036, que lutaram com unhas e dentes em largas táticas terrestres enquanto os rebeldes, devagar, os empurravam para dentro do Oceano Índico. Este foi, oficialmente, o fim da Segunda Guerra Fria."
-
 # possivelmente pós-guerra
 #: ../base/ufos/research.ufo:4608
 msgid "After The War"
@@ -8701,7 +8708,6 @@ msgstr ""
 "Por unanimidade, foi decidido manter o projeto o mais secreto possível, sendo conhecido apenas pelos mais altos políticos e comandantes militares do mundo. O público foi confortado com ações e palavras de efeito enquanto uma equipe altamente qualificada, vinda de toda parte do mundo, operacionalizava a ressurreição da FALANGE para colocá-la de volta à ativa. Velhos equipamentos foram reativados e recuperados do estoque, a poeira retirada dos manuais e pilhas de armas foram preparadas para o uso. Com o suporte secreto de todas as oito potências mundiais, o projeto obteve recursos, suporte e os homens necessários para a guerra.\n"
 "\n"
 "Tudo o que faltava era um líder."
-
 # revisar...
 #: ../base/ufos/research.ufo:4633
 msgid "A New Twist"
@@ -9145,35 +9151,43 @@ msgstr "Direitos autorais reservados 2004-2007 Equipe de UFO: AI"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "O ano é 2084. A Terra, um lugar estável como jamais se viu, desfruta de um período de relativa paz. O início violento do século 21 está longe agora; memórias distantes, mas não tão distantes ao ponto de serem esquecidas. Para a maioria das pessoas da Terra, a Segunda Guerra Fria é uma sombra negra do passado, assim como foram as Guerras Mundiais no início do século 20."
+msgstr ""
+"O ano é 2084. A Terra, um lugar estável como jamais se viu, desfruta de um período de relativa paz. O início violento do século 21 está longe agora; memórias distantes, mas não tão distantes ao ponto de serem esquecidas. Para a maioria das pessoas da Terra, a Segunda Guerra Fria é uma sombra negra do passado, assim como foram as Guerras Mundiais no início do século 20."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Conflitos se tornaram raros ao final do século, à medida que novas tecnologias e cuidados universais de saúde finalmente tornaram-se disponíveis para o terceiro mundo. Mesmo os eventos terroristas pararam assim que a Segunda Guerra Fria começou, com seus horrores e atrocidades ainda vivas nas mentes das pessoas, dos antigos Estados Unidos ao roubado subcontinente Indiano. Lutas de classes elevam-se ao campo de batalha político, já que agora cada nação tem representação garantida e justa nas Nações Unidas, e o padrão de vida global cresce lentamente em razão do empobrecimento dos vários cantos do planeta. Países solidificaram-se, mantendo-se em volta de uma Nações Unidas reestruturada que, com sucesso, policia os governos mundiais. Blocos fragmentados de países menores, assustados a princípio pelo vasto poder acumulado em volta da China e da União Européia, formaram poderosas ligas políticas -- e então se viram sem vizinhos com os quais pudessem lutar pela segurança. Pela primeira vez na história da humanidade, há lei e ordem por mais de três quartos do mundo."
+msgstr ""
+"Conflitos se tornaram raros ao final do século, à medida que novas tecnologias e cuidados universais de saúde finalmente tornaram-se disponíveis para o terceiro mundo. Mesmo os eventos terroristas pararam assim que a Segunda Guerra Fria começou, com seus horrores e atrocidades ainda vivas nas mentes das pessoas, dos antigos Estados Unidos ao roubado subcontinente Indiano. Lutas de classes elevam-se ao campo de batalha político, já que agora cada nação tem representação garantida e justa nas Nações Unidas, e o padrão de vida global cresce lentamente em razão do empobrecimento dos vários cantos do planeta. Países solidificaram-se, mantendo-se em volta de uma Nações Unidas reestruturada que, com sucesso, policia os governos mundiais. Blocos fragmentados de países menores, assustados a princípio pelo vasto poder acumulado em volta da China e da União Européia, formaram poderosas ligas políticas -- e então se viram sem vizinhos com os quais pudessem lutar pela segurança. Pela primeira vez na história da humanidade, há lei e ordem por mais de três quartos do mundo."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "Para muitas pessoas na Terra, tudo está indo muito bem."
+msgstr ""
+"Para muitas pessoas na Terra, tudo está indo muito bem."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "O primeiro ataque ocorre na cidade de Mumbai em 3 de março de 2084. Seis pequenos OVNIs aparecem do nada, descem da órbita, indetectáveis pelas vastas instalações de radares que cobrem os céus de Mumbai, e eliminam a cidade com maior densidade populacional da Terra. Eles não dão nenhum aviso, nenhuma explicação. Vinte mil civis inocentes e três batalhões de tropas de elite são massacrados por brutais vinte horas antes que os soldados das Confederações conseguissem interromper o avanço dos alienígenas. Então, assim como apareceram, eles entram em sua espaçonave e sobem para órbita desaparecendo, deixando apenas as ruas arruinadas de Mumbai como evidência."
+msgstr ""
+"O primeiro ataque ocorre na cidade de Mumbai em 3 de março de 2084. Seis pequenos OVNIs aparecem do nada, descem da órbita, indetectáveis pelas vastas instalações de radares que cobrem os céus de Mumbai, e eliminam a cidade com maior densidade populacional da Terra. Eles não dão nenhum aviso, nenhuma explicação. Vinte mil civis inocentes e três batalhões de tropas de elite são massacrados por brutais vinte horas antes que os soldados das Confederações conseguissem interromper o avanço dos alienígenas. Então, assim como apareceram, eles entram em sua espaçonave e sobem para órbita desaparecendo, deixando apenas as ruas arruinadas de Mumbai como evidência."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Um encontro de emergência das Nações unidades não obtém nenhuma direção conclusiva. As invasões continuam mais rápidas, maiores e mais selvagens que antes. Desta vez em Bonn, Johannesburg e Bongkok. Algumas nações tentam diplomacia, enviando mensagens em centenas de idiomas aos alienígenas através dos países. Suas palavras são ignoradas. Dentro de horas, todas as três cidades são esvaziadas de vida humana. O ataque pára quando os vários militares recebem permissão para atacá-los. Os alienígenas deixam para trás apenas concreto e sangue. Todos os OVNIs desaparecem sem rastros -- mas ninguém duvida que eles voltem."
+msgstr ""
+"Um encontro de emergência das Nações unidades não obtém nenhuma direção conclusiva. As invasões continuam mais rápidas, maiores e mais selvagens que antes. Desta vez em Bonn, Johannesburg e Bongkok. Algumas nações tentam diplomacia, enviando mensagens em centenas de idiomas aos alienígenas através dos países. Suas palavras são ignoradas. Dentro de horas, todas as três cidades são esvaziadas de vida humana. O ataque pára quando os vários militares recebem permissão para atacá-los. Os alienígenas deixam para trás apenas concreto e sangue. Todos os OVNIs desaparecem sem rastros -- mas ninguém duvida que eles voltem."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Oitenta e sete horas após o ataque inicial em Mumbai, a Terra declara guerra. Por duas semanas, cada um dos exércitos da humanidade usa suas melhores habilidades, tentando se defender dos misteriosos atacantes alienígenas. Eles alcançam alguns preciosos sucessos."
+msgstr ""
+"Oitenta e sete horas após o ataque inicial em Mumbai, a Terra declara guerra. Por duas semanas, cada um dos exércitos da humanidade usa suas melhores habilidades, tentando se defender dos misteriosos atacantes alienígenas. Eles alcançam alguns preciosos sucessos."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Com apenas uma alternativa, as Nações Unidas reage. Equipamentos antigos são reavaliados, alguns com mais de um século de idade, e uma agência antiextraterrestre há muito desativada -- FALANGE --, dos antigos Estados Unidos, é ressuscitada sob uma nova bandeira das Nações Unidas. Seu trabalho é combater a ameaça alienígena, e garantir a sobrevivência da raça humana a qualquer custo."
+msgstr ""
+"Com apenas uma alternativa, as Nações Unidas reage. Equipamentos antigos são reavaliados, alguns com mais de um século de idade, e uma agência antiextraterrestre há muito desativada -- FALANGE --, dos antigos Estados Unidos, é ressuscitada sob uma nova bandeira das Nações Unidas. Seu trabalho é combater a ameaça alienígena, e garantir a sobrevivência da raça humana a qualquer custo."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Mantida por todos os oito blocos políticos da Terra e composta pelos soldados de elite de seus exércitos, a FALANGE é a melhor das melhores. É a primeira e única linha de defesa da Terra. Ela não pode falhar; porque se falhar, a humanidade não terá nenhuma chance."
+msgstr ""
+"Mantida por todos os oito blocos políticos da Terra e composta pelos soldados de elite de seus exércitos, a FALANGE é a melhor das melhores. É a primeira e única linha de defesa da Terra. Ela não pode falhar; porque se falhar, a humanidade não terá nenhuma chance."
 
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:64
 msgid "Gameplay"

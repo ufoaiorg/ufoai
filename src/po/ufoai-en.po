@@ -2404,7 +2404,8 @@ msgstr "Zurich"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "SecGen. Mahouf Serra, United Nations, New York City"
+msgstr ""
+"SecGen. Mahouf Serra, United Nations, New York City"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -2490,7 +2491,8 @@ msgstr "SecGen. Mahouf Serra, United Nations, New York City"
 #: ../base/ufos/research.ufo:4761 ../base/ufos/research.ufo:4789
 #: ../base/ufos/research.ufo:4818
 msgid "mail_to_base_commander"
-msgstr "Base Commander, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Base Commander, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -2573,7 +2575,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4481 ../base/ufos/research.ufo:4547
 #: ../base/ufos/research.ufo:4555
 msgid "mail_from_paul_navarre"
-msgstr "Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -2645,7 +2648,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "XO Abel S. Howard, Command & Control, PHALANX, Atlantic Operations Command"
+msgstr ""
+"XO Abel S. Howard, Command & Control, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -2717,7 +2721,8 @@ msgstr "Alien Base Discovered -- %s"
 
 #: ../base/ufos/events.ufo:201
 msgid "mail_alien_base_discovered"
-msgstr "Sir, our operatives have discovered the location of a large alien installation on Earth. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
+msgstr ""
+"Sir, our operatives have discovered the location of a large alien installation on Earth. This installation represents a serious threat to PHALANX and to humanity at large, we must take it out ASAP."
 
 #: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
@@ -2741,7 +2746,8 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:4721 ../base/ufos/research.ufo:4788
 #: ../base/ufos/research.ufo:4817
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -2778,7 +2784,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Cdr. (Air) Subakh al-Kuhar, Air Wing, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Cdr. (Air) Subakh al-Kuhar, Air Wing, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -3673,7 +3680,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4682 ../base/ufos/research.ufo:4753
 #: ../base/ufos/research.ufo:4760
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:311 ../base/ufos/research.ufo:352
 msgid "alien_breathing_txt"
@@ -7160,7 +7168,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3382
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3423
 msgid "ufo_scout_txt"
@@ -9042,35 +9051,43 @@ msgstr "Copyright 2004-2009 by UFO: AI Team"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th."
+msgstr ""
+"It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world."
+msgstr ""
+"Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "To many people on Earth, it seems like things are going all right."
+msgstr ""
+"To many people on Earth, it seems like things are going all right."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence."
+msgstr ""
+"The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back."
+msgstr ""
+"An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes."
+msgstr ""
+"Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs."
+msgstr ""
+"Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
+msgstr ""
+"Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
 
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:64
 msgid "Gameplay"

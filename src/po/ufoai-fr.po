@@ -2406,7 +2406,8 @@ msgstr "Zurich"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Secrétaire Général Mahouf Serra, Nations Unies, New York"
+msgstr ""
+"Secrétaire Général Mahouf Serra, Nations Unies, New York"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -2492,8 +2493,8 @@ msgstr "Secrétaire Général Mahouf Serra, Nations Unies, New York"
 #: ../base/ufos/research.ufo:4761 ../base/ufos/research.ufo:4789
 #: ../base/ufos/research.ufo:4818
 msgid "mail_to_base_commander"
-msgstr "Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
-
+msgstr ""
+"Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
 # l'année doit être en premier pour correspondre aux formats de date des autres emails
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -2576,7 +2577,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4481 ../base/ufos/research.ufo:4547
 #: ../base/ufos/research.ufo:4555
 msgid "mail_from_paul_navarre"
-msgstr "Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -2647,7 +2649,8 @@ msgstr "mail_production_finished"
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "C2 Abel S. Howard, Contrôle et Commandement, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"C2 Abel S. Howard, Contrôle et Commandement, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -2719,7 +2722,8 @@ msgstr "Base alienne découverte -- %s"
 
 #: ../base/ufos/events.ufo:201
 msgid "mail_alien_base_discovered"
-msgstr "Monsieur, nos hommes ont découvert l'emplacement d'une grande construction alien sur Terre, dans un territoire appartenant à %s. Elle représente une menace sérieuse pour PHALANX et plus généralement pour l'humanité : nous devons l'éliminer le plus rapidement possible."
+msgstr ""
+"Monsieur, nos hommes ont découvert l'emplacement d'une grande construction alien sur Terre, dans un territoire appartenant à %s. Elle représente une menace sérieuse pour PHALANX et plus généralement pour l'humanité : nous devons l'éliminer le plus rapidement possible."
 
 #: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
@@ -2743,7 +2747,8 @@ msgstr "mail_new_radar_contact"
 #: ../base/ufos/research.ufo:4721 ../base/ufos/research.ufo:4788
 #: ../base/ufos/research.ufo:4817
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -2773,7 +2778,8 @@ msgstr "mail_alien_activity_reported"
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Cdt (Aérien) Subakh al-Kuhar, Aéronavale, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Cdt (Aérien) Subakh al-Kuhar, Aéronavale, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -3661,7 +3667,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4682 ../base/ufos/research.ufo:4753
 #: ../base/ufos/research.ufo:4760
 msgid "mail_from_dr_connor"
-msgstr "Dr Connor, R&D: Division Biologie et Confinement, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Dr Connor, R&D: Division Biologie et Confinement, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:311 ../base/ufos/research.ufo:352
 msgid "alien_breathing_txt"
@@ -5310,7 +5317,6 @@ msgstr ""
 "Commandant, faites mois savoir quand vous serez prêt à poursuivre dans cette voie.\n"
 "\n"
 "--Cdt Navarre"
-
 # Pour les médailles
 #: ../base/ufos/research.ufo:1904 ../base/ufos/research.ufo:1912
 #: ../base/ufos/weapons_human.ufo:390
@@ -6922,7 +6928,8 @@ msgstr "inter_stingray_txt"
 
 #: ../base/ufos/research.ufo:3382
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3423
 msgid "ufo_scout_txt"
@@ -8832,35 +8839,43 @@ msgstr "Copyright 2004-2009 à l'équipe de UFO: AI "
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
+msgstr ""
+"Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au cœur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
+msgstr ""
+"La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au cœur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "Pour la plupart des gens, la vie semble avoir repris son cours."
+msgstr ""
+"Pour la plupart des gens, la vie semble avoir repris son cours."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNI sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
+msgstr ""
+"La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNI sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaques s'enchaînent rapidement, encore plus importantes et mortelles, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
+msgstr ""
+"Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaques s'enchaînent rapidement, encore plus importantes et mortelles, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens, en faisant de leur mieux à chaque fois. Les succès sont peu nombreux."
+msgstr ""
+"Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens, en faisant de leur mieux à chaque fois. Les succès sont peu nombreux."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
+msgstr ""
+"Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
+msgstr ""
+"Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
 
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:64
 msgid "Gameplay"

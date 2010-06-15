@@ -2423,7 +2423,8 @@ msgstr "Цюрих"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Ген.Сек. Махоуф Серра, OOH, Нью-Йорк"
+msgstr ""
+"Ген.Сек. Махоуф Серра, OOH, Нью-Йорк"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -2509,7 +2510,8 @@ msgstr "Ген.Сек. Махоуф Серра, OOH, Нью-Йорк"
 #: ../base/ufos/research.ufo:4761 ../base/ufos/research.ufo:4789
 #: ../base/ufos/research.ufo:4818
 msgid "mail_to_base_commander"
-msgstr "Командувачу Атлантичної оперативної групи, PHALANX"
+msgstr ""
+"Командувачу Атлантичної оперативної групи, PHALANX"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -2533,7 +2535,6 @@ msgstr ""
 "Дбайте про них, Командоре. Ми всі дуже розраховуємо на вас і молимося за вас.\n"
 "\n"
 "Це все. Щасти вам та успіхів у полюванні."
-
 # ДВБ - Дослідно-винахідницьке бюро
 #: ../base/ufos/events.ufo:43 ../base/ufos/events.ufo:55
 #: ../base/ufos/events.ufo:66 ../base/ufos/events.ufo:77
@@ -2593,7 +2594,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4481 ../base/ufos/research.ufo:4547
 #: ../base/ufos/research.ufo:4555
 msgid "mail_from_paul_navarre"
-msgstr "кмд. Пауль Наварре, ДВБ: Інженерно-технічний відділ, PHALANX, Атлантична оперативна група"
+msgstr ""
+"кмд. Пауль Наварре, ДВБ: Інженерно-технічний відділ, PHALANX, Атлантична оперативна група"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -2649,7 +2651,6 @@ msgstr ""
 "Технічна команда, розташована на {location}, завершила виробництво {item}. Усе протестовано та готово до використання.\n"
 "\n"
 "--Кмд. Наварре П."
-
 # ЦПО - центр проведення операцій, або ЦКК - центр командування та контролю
 #: ../base/ufos/events.ufo:110 ../base/ufos/events.ufo:132
 #: ../base/ufos/events.ufo:143 ../base/ufos/events.ufo:154
@@ -2657,7 +2658,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Абель С. Говард, Голова ЦПО, PHALANX, Атлантична оперативна група"
+msgstr ""
+"Абель С. Говард, Голова ЦПО, PHALANX, Атлантична оперативна група"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -2729,7 +2731,8 @@ msgstr "Виявлено базу прибульців -- %s"
 
 #: ../base/ufos/events.ufo:201
 msgid "mail_alien_base_discovered"
-msgstr "Командоре, наші оперативники викрили місцезнаходження значної споруди прибульців на Землі. Вона знаходяться на території %s. Це становить серйозну загрозу для PHALANX і для людства вцілому, ми повинні захопити її якомога швидше."
+msgstr ""
+"Командоре, наші оперативники викрили місцезнаходження значної споруди прибульців на Землі. Вона знаходяться на території %s. Це становить серйозну загрозу для PHALANX і для людства вцілому, ми повинні захопити її якомога швидше."
 
 #: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
@@ -2753,7 +2756,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4721 ../base/ufos/research.ufo:4788
 #: ../base/ufos/research.ufo:4817
 msgid "mail_from_col_falkland"
-msgstr "Плк. Інгрід Фолкленд, Управління Розвідкою, PHALANX, Атлантична оперативна група"
+msgstr ""
+"Плк. Інгрід Фолкленд, Управління Розвідкою, PHALANX, Атлантична оперативна група"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -2783,7 +2787,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Кмд. Субак аль Кугар, Управління ВПС, PHALANX, Атлантична оперативна група"
+msgstr ""
+"Кмд. Субак аль Кугар, Управління ВПС, PHALANX, Атлантична оперативна група"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -3665,7 +3670,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4682 ../base/ufos/research.ufo:4753
 #: ../base/ufos/research.ufo:4760
 msgid "mail_from_dr_connor"
-msgstr "док. Д. Коннор, ДВБ: Відділ біобезпеки, PHALANX, Атлантична оперативна група"
+msgstr ""
+"док. Д. Коннор, ДВБ: Відділ біобезпеки, PHALANX, Атлантична оперативна група"
 
 #: ../base/ufos/research.ufo:311 ../base/ufos/research.ufo:352
 msgid "alien_breathing_txt"
@@ -6893,7 +6899,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3382
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3423
 msgid "ufo_scout_txt"

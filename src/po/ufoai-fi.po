@@ -2411,7 +2411,8 @@ msgstr "Zurich"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Pääsihteeri Mahouf Serra, Yhdistyneet Kansakunnat, New Yorkin kaupunki"
+msgstr ""
+"Pääsihteeri Mahouf Serra, Yhdistyneet Kansakunnat, New Yorkin kaupunki"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -2497,7 +2498,8 @@ msgstr "Pääsihteeri Mahouf Serra, Yhdistyneet Kansakunnat, New Yorkin kaupunki
 #: ../base/ufos/research.ufo:4761 ../base/ufos/research.ufo:4789
 #: ../base/ufos/research.ufo:4818
 msgid "mail_to_base_commander"
-msgstr "Tukikohdan Komentaja, PHALANX, Atlannin Operaatiokomento"
+msgstr ""
+"Tukikohdan Komentaja, PHALANX, Atlannin Operaatiokomento"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -2569,7 +2571,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4481 ../base/ufos/research.ufo:4547
 #: ../base/ufos/research.ufo:4555
 msgid "mail_from_paul_navarre"
-msgstr "Kom. Paul Navarre, Tutkimusyksikkö: Tekniikan osasto, PHALANX, Atlannin Operaatiokomento"
+msgstr ""
+"Kom. Paul Navarre, Tutkimusyksikkö: Tekniikan osasto, PHALANX, Atlannin Operaatiokomento"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -2621,7 +2624,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Johtava Upseeri Abel S. Howard, Komento & Kontrolli, PHALANX, Atlannin Operaatiokomento"
+msgstr ""
+"Johtava Upseeri Abel S. Howard, Komento & Kontrolli, PHALANX, Atlannin Operaatiokomento"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -2717,7 +2721,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4721 ../base/ufos/research.ufo:4788
 #: ../base/ufos/research.ufo:4817
 msgid "mail_from_col_falkland"
-msgstr "Evr. Ingrid Falkland, Tiedusteluosasto, PHALANX, Atlannin Operaatiokomento"
+msgstr ""
+"Evr. Ingrid Falkland, Tiedusteluosasto, PHALANX, Atlannin Operaatiokomento"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -2747,7 +2752,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Kom. Subakh al-Kuhar, Lennosto, PHALANX, Atlannin Operaatiokomento"
+msgstr ""
+"Kom. Subakh al-Kuhar, Lennosto, PHALANX, Atlannin Operaatiokomento"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -3628,7 +3634,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4682 ../base/ufos/research.ufo:4753
 #: ../base/ufos/research.ufo:4760
 msgid "mail_from_dr_connor"
-msgstr "Tri. Connor, Tutkimusyksikkö: Biologian & Säilönnän osasto, PHALANX, Atlannin Operaatiokomento"
+msgstr ""
+"Tri. Connor, Tutkimusyksikkö: Biologian & Säilönnän osasto, PHALANX, Atlannin Operaatiokomento"
 
 #: ../base/ufos/research.ufo:311 ../base/ufos/research.ufo:352
 msgid "alien_breathing_txt"
@@ -6801,7 +6808,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3382
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3423
 msgid "ufo_scout_txt"
@@ -8492,35 +8500,43 @@ msgstr "© 2004–2010 UFO: Alien Invasionin kehittäjät"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "On vuosi 2084. Maapallo on nauttinut suhteellisen rauhallisesta ajasta. 2000-luvun väkivaltainen alku on jo kaukana; kaukaisia muistoja, mutta ei niin kaukaisia, että ne olisi jo unohdettu. Useimmille Maan asukkaille toinen kylmä sota on pimeä varjo menneisyydestä, kuten maailmansodat olivat 1900-luvun lopulla syntyneille lapsille."
+msgstr ""
+"On vuosi 2084. Maapallo on nauttinut suhteellisen rauhallisesta ajasta. 2000-luvun väkivaltainen alku on jo kaukana; kaukaisia muistoja, mutta ei niin kaukaisia, että ne olisi jo unohdettu. Useimmille Maan asukkaille toinen kylmä sota on pimeä varjo menneisyydestä, kuten maailmansodat olivat 1900-luvun lopulla syntyneille lapsille."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Aseelliset konfliktit ovat yhä harvinaisempia uuden tekniikan ja yleisen terveydenhuollon ansiosta. Jopa terrorismin liekit ovat jäähtyneet, kun toisen kylmän sodan kauhut ja julmuudet elävät tuoreena ihmisten mielissä, vanhoista Yhdysvalloista aina Intian tuhoutuneelle niemimaalle. Luokkasodat ovat siirtymässä poliittiselle taistelukentälle nyt kun kaikki maat saavat tasapuolisen kohtelun YK: ssa ja maailmanlaajuinen elintasostandardi on nousemassa jopa pahinta köyhyyttä potevissa maailmankolkissa. Valtiot ovat vakiintuneet ja vakaantuneet uudelleen luodun YK: n ympärille, joka onnistuneesti valvoo maailmanhallintoja. Hajonneet kasat pienempiä valtioita, jotka pelkäsivät EU: n ja Kiinan ympärille muodostuvia valtakasautumia, liittyivät yhteen tehden omia poliittisia liittoja -- ja huomasivat, ettei heillä ollut enää ketään kenen kanssa sotia turvallisesti. Ensimmäistä kertaa maailman historiassa yli kolmella neljästä osasta maailmaa vallitsi laki ja järjestys."
+msgstr ""
+"Aseelliset konfliktit ovat yhä harvinaisempia uuden tekniikan ja yleisen terveydenhuollon ansiosta. Jopa terrorismin liekit ovat jäähtyneet, kun toisen kylmän sodan kauhut ja julmuudet elävät tuoreena ihmisten mielissä, vanhoista Yhdysvalloista aina Intian tuhoutuneelle niemimaalle. Luokkasodat ovat siirtymässä poliittiselle taistelukentälle nyt kun kaikki maat saavat tasapuolisen kohtelun YK: ssa ja maailmanlaajuinen elintasostandardi on nousemassa jopa pahinta köyhyyttä potevissa maailmankolkissa. Valtiot ovat vakiintuneet ja vakaantuneet uudelleen luodun YK: n ympärille, joka onnistuneesti valvoo maailmanhallintoja. Hajonneet kasat pienempiä valtioita, jotka pelkäsivät EU: n ja Kiinan ympärille muodostuvia valtakasautumia, liittyivät yhteen tehden omia poliittisia liittoja -- ja huomasivat, ettei heillä ollut enää ketään kenen kanssa sotia turvallisesti. Ensimmäistä kertaa maailman historiassa yli kolmella neljästä osasta maailmaa vallitsi laki ja järjestys."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "Suurelle osalle ihmisistä Maan asiat näyttivät menevän ihan hyvin."
+msgstr ""
+"Suurelle osalle ihmisistä Maan asiat näyttivät menevän ihan hyvin."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Ensimmäinen hyökkäys osuu Mumbain kaupunkiin kolmas maaliskuuta 2084. Kuusi pientä ufo-alusta ilmestyvät kuin tyhjästä ilman, että yksikään suuri tutkakeskus huomaa niitä, ja laskeutuvat tiheimmin asutetulle alueelle Maapallolla. Ne eivät anna varoitusta, eivät selitystä. Kaksikymmentä tuhatta siviiliä ja kolme pataljoonaa eliittijoukkoja murhataan kahdessatoista tunnissa ennen kuin kasatut Kansainliiton joukot onnistuvat pysäyttämään alieneiden etenemisen. Sitten, yhtä nopeasti kuin ne tulivatkin, ne vetäytyvät takaisin aluksiinsa ja palaavat takaisin kiertoradalle, jättäen ainoastaan Mumbain veriset kadut todisteena taistelusta."
+msgstr ""
+"Ensimmäinen hyökkäys osuu Mumbain kaupunkiin kolmas maaliskuuta 2084. Kuusi pientä ufo-alusta ilmestyvät kuin tyhjästä ilman, että yksikään suuri tutkakeskus huomaa niitä, ja laskeutuvat tiheimmin asutetulle alueelle Maapallolla. Ne eivät anna varoitusta, eivät selitystä. Kaksikymmentä tuhatta siviiliä ja kolme pataljoonaa eliittijoukkoja murhataan kahdessatoista tunnissa ennen kuin kasatut Kansainliiton joukot onnistuvat pysäyttämään alieneiden etenemisen. Sitten, yhtä nopeasti kuin ne tulivatkin, ne vetäytyvät takaisin aluksiinsa ja palaavat takaisin kiertoradalle, jättäen ainoastaan Mumbain veriset kadut todisteena taistelusta."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "YK: n hätäkokouksessa ei osata antaa mitään yhteistä linjaa. Hyökkäykset jatkuvat nopeampina, suurempina ja julmempina kuin ennen, tällä kertaa Bonnissa, Johannesburgissa ja Bangkokissa. Jotkin valtiot kokeilevat diplomatiaa, lähettäen aluetta hävittäville alieneille viestejä tuhannella eri kielellä. Heidän viestejä ei huomioida. Muutamassa tunnissa, kaikki kolme kaupunkia on tyhjennetty ihmis-elämästä. Hyökkäys on jo ohi, kun eri joukoille annetaan lupa iskeä takaisin. Alienit eivät jätä muuta jälkeensä kuin betonia ja verta. Kaikki ufo-alukset katoavat jäljettömiin - mutta kukaan ei epäile, etteivätkö ne tulisi takaisin."
+msgstr ""
+"YK: n hätäkokouksessa ei osata antaa mitään yhteistä linjaa. Hyökkäykset jatkuvat nopeampina, suurempina ja julmempina kuin ennen, tällä kertaa Bonnissa, Johannesburgissa ja Bangkokissa. Jotkin valtiot kokeilevat diplomatiaa, lähettäen aluetta hävittäville alieneille viestejä tuhannella eri kielellä. Heidän viestejä ei huomioida. Muutamassa tunnissa, kaikki kolme kaupunkia on tyhjennetty ihmis-elämästä. Hyökkäys on jo ohi, kun eri joukoille annetaan lupa iskeä takaisin. Alienit eivät jätä muuta jälkeensä kuin betonia ja verta. Kaikki ufo-alukset katoavat jäljettömiin - mutta kukaan ei epäile, etteivätkö ne tulisi takaisin."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "87 tuntia alkuperäisen Mumbain hyökkäyksen jälkeen, Maa julistaa sodan. Kaksi viikkoa kaikki ihmisten armeijat yrittävät pysäyttää oudot muukalaishyökkääjät niin hyvin kuin voivat, saavuttaen muutaman kallisarvoisen voiton."
+msgstr ""
+"87 tuntia alkuperäisen Mumbain hyökkäyksen jälkeen, Maa julistaa sodan. Kaksi viikkoa kaikki ihmisten armeijat yrittävät pysäyttää oudot muukalaishyökkääjät niin hyvin kuin voivat, saavuttaen muutaman kallisarvoisen voiton."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Kun jäljelle jäi vain yksi vaihtoehto, YK alkaa toimia. Antiikkinen välineistö puhdistetaan pölystä, osa siitä ollen yli vuosisadan vanhaa, ja pitkään lakkautettu vanhojen Yhdysvaltojen alienien vastainen järjestö -- PHALANX -- herätetään henkiin uuden YK: n lipun alla. Se on vannonut taistelevansa alieneiden uhkaa vastaan ja takaavansa ihmiskunnan selviytymisen, hinnalla millä hyvänsä."
+msgstr ""
+"Kun jäljelle jäi vain yksi vaihtoehto, YK alkaa toimia. Antiikkinen välineistö puhdistetaan pölystä, osa siitä ollen yli vuosisadan vanhaa, ja pitkään lakkautettu vanhojen Yhdysvaltojen alienien vastainen järjestö -- PHALANX -- herätetään henkiin uuden YK: n lipun alla. Se on vannonut taistelevansa alieneiden uhkaa vastaan ja takaavansa ihmiskunnan selviytymisen, hinnalla millä hyvänsä."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Kaikki kahdeksan poliittista keskusta rahoittajana ja niiden parhaat sotilaat taistelijoina, PHALANX on parhaista paras. Se on Maapallon ensimmäinen ja ainoa puolustuslinja. Sen ei voi antaa hävitä, sillä jos se epäonnistuu, ihmiskunnalla ei ole toivoakaan."
+msgstr ""
+"Kaikki kahdeksan poliittista keskusta rahoittajana ja niiden parhaat sotilaat taistelijoina, PHALANX on parhaista paras. Se on Maapallon ensimmäinen ja ainoa puolustuslinja. Sen ei voi antaa hävitä, sillä jos se epäonnistuu, ihmiskunnalla ei ole toivoakaan."
 
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:64
 msgid "Gameplay"

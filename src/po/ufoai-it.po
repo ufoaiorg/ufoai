@@ -2410,7 +2410,8 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Segretario Generale Mahouf Serra, Nazioni Unite, New York"
+msgstr ""
+"Segretario Generale Mahouf Serra, Nazioni Unite, New York"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -2496,7 +2497,8 @@ msgstr "Segretario Generale Mahouf Serra, Nazioni Unite, New York"
 #: ../base/ufos/research.ufo:4761 ../base/ufos/research.ufo:4789
 #: ../base/ufos/research.ufo:4818
 msgid "mail_to_base_commander"
-msgstr "Comandante della Base, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Comandante della Base, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -2568,7 +2570,8 @@ msgstr "mail_prolog"
 #: ../base/ufos/research.ufo:4481 ../base/ufos/research.ufo:4547
 #: ../base/ufos/research.ufo:4555
 msgid "mail_from_paul_navarre"
-msgstr "Com. Paul Navarre, R&S: Divisione Ingegneria, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Com. Paul Navarre, R&S: Divisione Ingegneria, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -2621,7 +2624,8 @@ msgstr "mail_production_finished"
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Ufficiale Esecutivo Abel S. Howard, Comando e Controllo, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Ufficiale Esecutivo Abel S. Howard, Comando e Controllo, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -2755,7 +2759,8 @@ msgstr "mail_new_radar_contact"
 #: ../base/ufos/research.ufo:4721 ../base/ufos/research.ufo:4788
 #: ../base/ufos/research.ufo:4817
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Divisione Servizi Segreti, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Col. Ingrid Falkland, Divisione Servizi Segreti, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -2785,7 +2790,8 @@ msgstr "mail_alien_activity_reported"
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Com. (Aria) Subakh al-Kuhar, Aviazione, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Com. (Aria) Subakh al-Kuhar, Aviazione, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -3663,7 +3669,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4682 ../base/ufos/research.ufo:4753
 #: ../base/ufos/research.ufo:4760
 msgid "mail_from_dr_connor"
-msgstr "Dott. Connor, R&S: Divisione Biologia & Contenimento, PHALANX, Comando delle Operazioni Atlantiche"
+msgstr ""
+"Dott. Connor, R&S: Divisione Biologia & Contenimento, PHALANX, Comando delle Operazioni Atlantiche"
 
 #: ../base/ufos/research.ufo:311 ../base/ufos/research.ufo:352
 msgid "alien_breathing_txt"
@@ -3726,7 +3733,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:377
 msgid "alien_mind_pre_txt"
-msgstr "Comandante,pur avendo raggiunto limitati risultati fino ad ora, la ricerca deve continuare sui nostri alieni prigionieri. C'è un gran numero di esperimenti che vorremmo fare che ha bisogno della sua autorizzazione per tempo in laboratorio e fondi. Le assicuro che non è una ricerca campata per aria; con abbastanza esperimenti e dati comportamentali, potremmo essere in grado di trovare un modo per comunicare con questi alieni, forse addirittura risvegliare la loro intelligenza in qualche modo. Non sappiamo quali saranno i risultati del programma di ricerca-- semplicemente sappiamo troppo poco riguardo questi alieni, il nostro set di dati è troppo piccolo per fare una qualsiasi previsione a questo punto. Ciò che sappiamo è che ogni infinitesima nozione che sugli alieni è un prezioso pezzo del puzzle."
+msgstr ""
+"Comandante,pur avendo raggiunto limitati risultati fino ad ora, la ricerca deve continuare sui nostri alieni prigionieri. C'è un gran numero di esperimenti che vorremmo fare che ha bisogno della sua autorizzazione per tempo in laboratorio e fondi. Le assicuro che non è una ricerca campata per aria; con abbastanza esperimenti e dati comportamentali, potremmo essere in grado di trovare un modo per comunicare con questi alieni, forse addirittura risvegliare la loro intelligenza in qualche modo. Non sappiamo quali saranno i risultati del programma di ricerca-- semplicemente sappiamo troppo poco riguardo questi alieni, il nostro set di dati è troppo piccolo per fare una qualsiasi previsione a questo punto. Ciò che sappiamo è che ogni infinitesima nozione che sugli alieni è un prezioso pezzo del puzzle."
 
 #: ../base/ufos/research.ufo:407
 msgid "Odd Behaviour"
@@ -7319,7 +7327,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3382
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3423
 msgid "ufo_scout_txt"
@@ -9266,35 +9275,43 @@ msgstr "Copyright 2004-2009 by UFO: AI Team"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "È l'anno 2084. La Terra, un posto raramente pacifico, gode un periodo di relativa calma. I violenti inizi del 21esimo secolo sono molto lontani adesso; ricordi lontani, ma non così lontani da essere dimenticati. Per la maggior parte degli abitanti della Terra, la Seconda Guerra Fredda è un'ombra oscura del passato, come le Guerre Mondiali lo furono per i bambini del tardo 20esimo."
+msgstr ""
+"È l'anno 2084. La Terra, un posto raramente pacifico, gode un periodo di relativa calma. I violenti inizi del 21esimo secolo sono molto lontani adesso; ricordi lontani, ma non così lontani da essere dimenticati. Per la maggior parte degli abitanti della Terra, la Seconda Guerra Fredda è un'ombra oscura del passato, come le Guerre Mondiali lo furono per i bambini del tardo 20esimo."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "I conflitti sono diventati sempre più rari verso la fine del secolo man mano che le nuove tecnologie e la cure mediche diventarono disponibili al terzo mondo. Anche i focolai del terrorismo si erano raffreddati al sorgere della Seconda Guerra Fredda, con i suoi orrori e le sue atrocità ancora fresche nelle menti della gente, dai vecchi Stati Uniti al devastato subcontinente Indiano. Lotte di classe stanno entrando nel campo di battaglia politico adesso che ogni nazione ha un'equa rappresentanza nelle UN, e lo standard di vita globale è in lenta crescita anche nei più impoveriti angoli del pianeta. Le nazioni si sono solidificate, stabilizzandosi attorno alle ristrutturate Nazioni Unite che garantisce con successo per i governi planetari. Gruppi frammentari di nazioni più piccole, spaventate all'inizio dai vasti blocchi di potere che si accumulavano attorno alla Cina e all'Unione Europea, si sono uniti indipendentemente in potenti leghe politiche -- e poi fuse insieme per tenere lontano vicini che non potrebbero combattere. Per la prima volta nella storia del genere umano, c'è legge e ordine in più di tre quarti del mondo."
+msgstr ""
+"I conflitti sono diventati sempre più rari verso la fine del secolo man mano che le nuove tecnologie e la cure mediche diventarono disponibili al terzo mondo. Anche i focolai del terrorismo si erano raffreddati al sorgere della Seconda Guerra Fredda, con i suoi orrori e le sue atrocità ancora fresche nelle menti della gente, dai vecchi Stati Uniti al devastato subcontinente Indiano. Lotte di classe stanno entrando nel campo di battaglia politico adesso che ogni nazione ha un'equa rappresentanza nelle UN, e lo standard di vita globale è in lenta crescita anche nei più impoveriti angoli del pianeta. Le nazioni si sono solidificate, stabilizzandosi attorno alle ristrutturate Nazioni Unite che garantisce con successo per i governi planetari. Gruppi frammentari di nazioni più piccole, spaventate all'inizio dai vasti blocchi di potere che si accumulavano attorno alla Cina e all'Unione Europea, si sono uniti indipendentemente in potenti leghe politiche -- e poi fuse insieme per tenere lontano vicini che non potrebbero combattere. Per la prima volta nella storia del genere umano, c'è legge e ordine in più di tre quarti del mondo."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "A molta gente sulla Terra, sembrava che le cose stessero andando molto bene."
+msgstr ""
+"A molta gente sulla Terra, sembrava che le cose stessero andando molto bene."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Il primo attacco colpisce la città di Mumbai il 3 Maggio 2084. Sei piccoli UFO spuntano fuori dal nulla e scendono giù dall'orbita, silenziosamente, invisibili alle vaste installazioni radar che coprono i cieli di Mumbai, e appostati sulla singola città più densamente popolata della Terra. Non danno avvisi o spiegazioni. Ventimila civili innocenti e tre battaglioni di truppe d'élite vengono massacrati in dodici brutali ore prima che le truppe ammassate del Commonwealth riescano a portare l'avanzata aliena ad uno stallo. Allora, improvvisamente come erano apparsi, gli alieni si ritirarono nel loro velivolo e svanirono di nuovo in orbita, lasciando solo le devastate vie di Mumbai come prova del misfatto."
+msgstr ""
+"Il primo attacco colpisce la città di Mumbai il 3 Maggio 2084. Sei piccoli UFO spuntano fuori dal nulla e scendono giù dall'orbita, silenziosamente, invisibili alle vaste installazioni radar che coprono i cieli di Mumbai, e appostati sulla singola città più densamente popolata della Terra. Non danno avvisi o spiegazioni. Ventimila civili innocenti e tre battaglioni di truppe d'élite vengono massacrati in dodici brutali ore prima che le truppe ammassate del Commonwealth riescano a portare l'avanzata aliena ad uno stallo. Allora, improvvisamente come erano apparsi, gli alieni si ritirarono nel loro velivolo e svanirono di nuovo in orbita, lasciando solo le devastate vie di Mumbai come prova del misfatto."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Una riunione di emergenza delle Nazioni Unite non è arrivata a nessuna decisione conclusiva. Le incursioni continuano più veloci, grandi e selvagge di prima, questa volta a Bonn, Johannesburg e Bangkok. Alcune nazioni hanno provato un contatto diplomatico, inviando messaggi in un migliaio di linguaggi diversi agli alieni mentre devastavano il territorio nazionale. Le loro parole sono ignorate. Nel giro di poche ore, tutte e tre le città sono svuotate da segni di vita umana. L'attacco è finito prima che i militari possano unire abbastanza forze per contrattaccare. Gli alieni non lasciano niente dietro di sè oltre al sangue e al cemento. Tutti gli UFO scompaiono senza lasciare tracce -- ma nessuno dubita che torneranno."
+msgstr ""
+"Una riunione di emergenza delle Nazioni Unite non è arrivata a nessuna decisione conclusiva. Le incursioni continuano più veloci, grandi e selvagge di prima, questa volta a Bonn, Johannesburg e Bangkok. Alcune nazioni hanno provato un contatto diplomatico, inviando messaggi in un migliaio di linguaggi diversi agli alieni mentre devastavano il territorio nazionale. Le loro parole sono ignorate. Nel giro di poche ore, tutte e tre le città sono svuotate da segni di vita umana. L'attacco è finito prima che i militari possano unire abbastanza forze per contrattaccare. Gli alieni non lasciano niente dietro di sè oltre al sangue e al cemento. Tutti gli UFO scompaiono senza lasciare tracce -- ma nessuno dubita che torneranno."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Ottantasette ore dopo l'attacco iniziale su Mumbai, la Terra dichiara guerra. Per due settimane, ogni esercito dell'umanità prova a difendersi dai misteriosi nemici alieni al meglio delle proprie capacità. Ottengono pochi ma preziosi successi."
+msgstr ""
+"Ottantasette ore dopo l'attacco iniziale su Mumbai, la Terra dichiara guerra. Per due settimane, ogni esercito dell'umanità prova a difendersi dai misteriosi nemici alieni al meglio delle proprie capacità. Ottengono pochi ma preziosi successi."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "Lasciate con una sola alternativa, le Nazioni unite intervengono. L'antico equipaggiamento è impolverato, una parte di esso vecchio più di un secolo, e la vecchia agenzia anti-extraterrestri dei primi Stati Uniti -- PHALANX -- viene fatta risorgere sotto il nuovo vessillo delle Nazioni Unite. È un dovere innegabile combattere la minaccia aliena, e assicurare la sopravvivenza della razza umana a tutti i costi."
+msgstr ""
+"Lasciate con una sola alternativa, le Nazioni unite intervengono. L'antico equipaggiamento è impolverato, una parte di esso vecchio più di un secolo, e la vecchia agenzia anti-extraterrestri dei primi Stati Uniti -- PHALANX -- viene fatta risorgere sotto il nuovo vessillo delle Nazioni Unite. È un dovere innegabile combattere la minaccia aliena, e assicurare la sopravvivenza della razza umana a tutti i costi."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Fondata da tutti e sette i poteri politici, e richiamando i suoi soldati dalle elite degli eserciti nazionali, PHALANX è il meglio del meglio. È la prima e ultima linea di difesa della Terra. Non può permettersi di fallire; perché se fallisce, l'umanità non ha speranze."
+msgstr ""
+"Fondata da tutti e sette i poteri politici, e richiamando i suoi soldati dalle elite degli eserciti nazionali, PHALANX è il meglio del meglio. È la prima e ultima linea di difesa della Terra. Non può permettersi di fallire; perché se fallisce, l'umanità non ha speranze."
 
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:64
 msgid "Gameplay"

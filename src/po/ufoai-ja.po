@@ -562,7 +562,8 @@ msgstr "Standard Campaign"
 
 #: ../base/ufos/campaign.ufo:61
 msgid "standard_campaign_txt"
-msgstr "1人用の、侵略に対抗するシナリオです。プレイヤーはPHALANX計画の司令官となり、エイリアンの脅威に対応していく事になります。ランダムな要素とストーリー的な要素の混ざったダイナミックキャンペーンをプレイする事ができます。また、このキャンペーンは複数の難易度でプレイ可能です。この難易度は、挑戦を望む初心者向けの標準的なモードです。"
+msgstr ""
+"1人用の、侵略に対抗するシナリオです。プレイヤーはPHALANX計画の司令官となり、エイリアンの脅威に対応していく事になります。ランダムな要素とストーリー的な要素の混ざったダイナミックキャンペーンをプレイする事ができます。また、このキャンペーンは複数の難易度でプレイ可能です。この難易度は、挑戦を望む初心者向けの標準的なモードです。"
 
 #: ../base/ufos/campaign.ufo:109
 msgid "Easy Campaign"
@@ -2567,7 +2568,8 @@ msgstr ""
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Mahouf Serra 国連事務総長, アメリカ合衆国 ニューヨーク"
+msgstr ""
+"Mahouf Serra 国連事務総長, アメリカ合衆国 ニューヨーク"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -2653,7 +2655,8 @@ msgstr "Mahouf Serra 国連事務総長, アメリカ合衆国 ニューヨー�
 #: ../base/ufos/research.ufo:4761 ../base/ufos/research.ufo:4789
 #: ../base/ufos/research.ufo:4818
 msgid "mail_to_base_commander"
-msgstr "基地指令, PHALANX 大西洋作戦司令部"
+msgstr ""
+"基地指令, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -2725,7 +2728,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4481 ../base/ufos/research.ufo:4547
 #: ../base/ufos/research.ufo:4555
 msgid "mail_from_paul_navarre"
-msgstr "Paul Navarre 中佐, R&D: 技術セクション, PHALANX 大西洋作戦司令部"
+msgstr ""
+"Paul Navarre 中佐, R&D: 技術セクション, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -2777,7 +2781,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Abel S 副司令. Howard, 指令部, PHALANX 大西洋作戦司令部"
+msgstr ""
+"Abel S 副司令. Howard, 指令部, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -2873,7 +2878,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4721 ../base/ufos/research.ufo:4788
 #: ../base/ufos/research.ufo:4817
 msgid "mail_from_col_falkland"
-msgstr "Ingrid Falkland 大佐, 諜報セクション, PHALANX 大西洋作戦司令部"
+msgstr ""
+"Ingrid Falkland 大佐, 諜報セクション, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -2903,7 +2909,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "Subakh al-Kuhar 中佐, 航空機隊, PHALANX 大西洋作戦司令部"
+msgstr ""
+"Subakh al-Kuhar 中佐, 航空機隊, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -3789,7 +3796,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4682 ../base/ufos/research.ufo:4753
 #: ../base/ufos/research.ufo:4760
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, R&D: 生物 & 収容セクション, PHALANX 大西洋作戦司令部"
+msgstr ""
+"Dr. Connor, R&D: 生物 & 収容セクション, PHALANX 大西洋作戦司令部"
 
 #: ../base/ufos/research.ufo:311 ../base/ufos/research.ufo:352
 msgid "alien_breathing_txt"
@@ -7045,7 +7053,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3382
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3423
 msgid "ufo_scout_txt"

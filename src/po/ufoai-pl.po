@@ -2405,7 +2405,8 @@ msgstr "Zurych"
 
 #: ../base/ufos/events.ufo:33
 msgid "mail_from_un"
-msgstr "Sekretarz generalny Mahouf Serra, Organizacja Narodów Zjednoczonych, Nowy Jork"
+msgstr ""
+"Sekretarz generalny Mahouf Serra, Organizacja Narodów Zjednoczonych, Nowy Jork"
 
 #: ../base/ufos/events.ufo:34 ../base/ufos/events.ufo:44
 #: ../base/ufos/events.ufo:54 ../base/ufos/events.ufo:65
@@ -2491,7 +2492,8 @@ msgstr "Sekretarz generalny Mahouf Serra, Organizacja Narodów Zjednoczonych, No
 #: ../base/ufos/research.ufo:4761 ../base/ufos/research.ufo:4789
 #: ../base/ufos/research.ufo:4818
 msgid "mail_to_base_commander"
-msgstr "Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:35
 msgid "2084 Mar 21"
@@ -2563,7 +2565,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4481 ../base/ufos/research.ufo:4547
 #: ../base/ufos/research.ufo:4555
 msgid "mail_from_paul_navarre"
-msgstr "mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:45
 msgid "Alien died"
@@ -2615,7 +2618,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
 #: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
 msgid "mail_from_xo"
-msgstr "Szef sztabu Abel S. Howard, JBR: Centrum Operacyjne, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"Szef sztabu Abel S. Howard, JBR: Centrum Operacyjne, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:112
 msgid "Monthly Report -- %s"
@@ -2711,7 +2715,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4721 ../base/ufos/research.ufo:4788
 #: ../base/ufos/research.ufo:4817
 msgid "mail_from_col_falkland"
-msgstr "płk Ingrid Falkland, Wywiad Wojskowy, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"płk Ingrid Falkland, Wywiad Wojskowy, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:233
 msgid "Response Too Late -- %s"
@@ -2741,7 +2746,8 @@ msgstr ""
 #: ../base/ufos/events.ufo:286 ../base/ufos/events.ufo:297
 #: ../base/ufos/events.ufo:308
 msgid "mail_from_air_cdr"
-msgstr "mjr (pow) Subakh al-Kuhar, Skrzydło Powietrzne, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"mjr (pow) Subakh al-Kuhar, Skrzydło Powietrzne, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/events.ufo:266
 msgid "New Aircraft Arrived -- %s"
@@ -3624,7 +3630,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4682 ../base/ufos/research.ufo:4753
 #: ../base/ufos/research.ufo:4760
 msgid "mail_from_dr_connor"
-msgstr "Dr Connor, JBR: Dział Biotechnologii, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr ""
+"Dr Connor, JBR: Dział Biotechnologii, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/research.ufo:311 ../base/ufos/research.ufo:352
 msgid "alien_breathing_txt"
@@ -6836,7 +6843,8 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3382
 msgid "inter_stingray_pre_txt"
-msgstr "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:3423
 msgid "ufo_scout_txt"
@@ -8694,35 +8702,43 @@ msgstr "Copyright 2004-2009 by UFO: AI Team"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
-msgstr "Jest rok 2084. Na Ziemi, która nigdy nie była najspokojniejszym miejscem, od pewnego czasu trwa w miarę stabilny pokój. Krwawe początki XXI wieku są już historią, choć nie aż tak odległą, by uległa zapomnieniu. Dla większości ludzi Druga Zimna Wojna jest tylko mrocznym wspomnieniem, traktowanym podobnie jak Wojny Światowe przez tych, którzy urodzili się w końcu XX wieku."
+msgstr ""
+"Jest rok 2084. Na Ziemi, która nigdy nie była najspokojniejszym miejscem, od pewnego czasu trwa w miarę stabilny pokój. Krwawe początki XXI wieku są już historią, choć nie aż tak odległą, by uległa zapomnieniu. Dla większości ludzi Druga Zimna Wojna jest tylko mrocznym wspomnieniem, traktowanym podobnie jak Wojny Światowe przez tych, którzy urodzili się w końcu XX wieku."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence2"
-msgstr "Konflikty stawały się coraz rzadsze wraz ze zbliżającym się końcem wieku. Nowoczesne technologie i powszechna opieka medyczna stały się w końcu dostępne dla krajów trzeciego świata. Nawet pożoga terroru przygasła w obliczu okrucieństw Drugiej Zimnej Wojny, której nieludzkie obrazy pozostają wciąż żywe w pamięci ludzi, od starych Stanów Zjednoczonych aż po zniszczony subkontynent indyjski. Wraz z zagwarantowaniem każdej nacji uczciwej reprezentacji w ONZ, lokalne konflikty zostały przeniesione na szczebel polityki światowej. Standard życia powoli wzrastał, nawet w miejscach, które poprzednio były najbiedniejszymi na Ziemi. Granice państw okrzepły i zostały ustabilizowane przez zreformowaną Organizację Narodów Zjednoczonych, która z powodzeniem prowadzi międzynarodowy arbitraż. Najmniejsze państwa, w opozycji do rosnących w polityczną siłę Unii Europejskiej i Chin, uformowały własne unie międzypaństwowe - jednocześnie okazało się, że nie ma już słabych państw, z którymi można by zaryzykować otwarty konflikt zbrojny. Po raz pierwszy w historii ludzkości został zaprowadzony ład i pokój w ponad trzech czwartych świata."
+msgstr ""
+"Konflikty stawały się coraz rzadsze wraz ze zbliżającym się końcem wieku. Nowoczesne technologie i powszechna opieka medyczna stały się w końcu dostępne dla krajów trzeciego świata. Nawet pożoga terroru przygasła w obliczu okrucieństw Drugiej Zimnej Wojny, której nieludzkie obrazy pozostają wciąż żywe w pamięci ludzi, od starych Stanów Zjednoczonych aż po zniszczony subkontynent indyjski. Wraz z zagwarantowaniem każdej nacji uczciwej reprezentacji w ONZ, lokalne konflikty zostały przeniesione na szczebel polityki światowej. Standard życia powoli wzrastał, nawet w miejscach, które poprzednio były najbiedniejszymi na Ziemi. Granice państw okrzepły i zostały ustabilizowane przez zreformowaną Organizację Narodów Zjednoczonych, która z powodzeniem prowadzi międzynarodowy arbitraż. Najmniejsze państwa, w opozycji do rosnących w polityczną siłę Unii Europejskiej i Chin, uformowały własne unie międzypaństwowe - jednocześnie okazało się, że nie ma już słabych państw, z którymi można by zaryzykować otwarty konflikt zbrojny. Po raz pierwszy w historii ludzkości został zaprowadzony ład i pokój w ponad trzech czwartych świata."
 
 #: ../base/ufos/seq_intro.ufo:60
 msgid "intro_sentence3"
-msgstr "Dla wielu ludzi na Ziemi oznaczało to, że w końcu nastały spokojne czasy."
+msgstr ""
+"Dla wielu ludzi na Ziemi oznaczało to, że w końcu nastały spokojne czasy."
 
 #: ../base/ufos/seq_intro.ufo:105
 msgid "intro_sentence4"
-msgstr "Celem pierwszego ataku staje się Bombaj. W dniu 3 marca 2084 roku sześć niewielkich, niezidentyfikowanych obiektów latających, niewykrytych przez większość systemów wczesnego ostrzegania, pojawia się na orbicie, aby w błyskawicznym tempie wylądować w najgęściej zaludnionym miejscu na Ziemi. Nie było żadnych ostrzeżeń, wyjaśnień, komunikatów. W ciągu dwunastu krwawych godzin zostaje zmasakrowanych dwadzieścia tysięcy ludzi wraz z trzema elitarnymi batalionami wojska, zanim zmasowany kontratak jednostek sił zjednoczonych nie powstrzymał ofensywy Obcych. Wówczas, tak szybko jak przybyli, wycofują się oni do swych statków i znikają na orbicie, pozostawiając za sobą zasłane ciałami ulice Bombaju."
+msgstr ""
+"Celem pierwszego ataku staje się Bombaj. W dniu 3 marca 2084 roku sześć niewielkich, niezidentyfikowanych obiektów latających, niewykrytych przez większość systemów wczesnego ostrzegania, pojawia się na orbicie, aby w błyskawicznym tempie wylądować w najgęściej zaludnionym miejscu na Ziemi. Nie było żadnych ostrzeżeń, wyjaśnień, komunikatów. W ciągu dwunastu krwawych godzin zostaje zmasakrowanych dwadzieścia tysięcy ludzi wraz z trzema elitarnymi batalionami wojska, zanim zmasowany kontratak jednostek sił zjednoczonych nie powstrzymał ofensywy Obcych. Wówczas, tak szybko jak przybyli, wycofują się oni do swych statków i znikają na orbicie, pozostawiając za sobą zasłane ciałami ulice Bombaju."
 
 #: ../base/ufos/seq_intro.ufo:123
 msgid "intro_sentence5"
-msgstr "Nadzwyczajne spotkanie Rady Bezpieczeństwa ONZ nie przynosi żadnych konkretnych postanowień. Ataki nasilają się, są przeprowadzane większymi siłami i jeszcze brutalniej niż poprzednio - tym razem celami są Bonn, Johannesburg i Bangkok. Niektóre państwa próbują negocjować, wysyłając wiadomości w tysiącach różnych języków do Obcych plądrujących ich tereny. Ich próby pozostają bez odpowiedzi. Po kilku godzinach w żadnym z trzech miast nie pozostaje przy życiu ani jeden człowiek. Ataki kończą się, zanim siły wojskowe mają szansę wykonać kontruderzenie. Obcy nie pozostawiają za sobą niczego poza krwią i betonową pustynią. Wszystkie statki Obcych znikają bez śladu - choć nikt już nie wątpi, że pojawią się ponownie."
+msgstr ""
+"Nadzwyczajne spotkanie Rady Bezpieczeństwa ONZ nie przynosi żadnych konkretnych postanowień. Ataki nasilają się, są przeprowadzane większymi siłami i jeszcze brutalniej niż poprzednio - tym razem celami są Bonn, Johannesburg i Bangkok. Niektóre państwa próbują negocjować, wysyłając wiadomości w tysiącach różnych języków do Obcych plądrujących ich tereny. Ich próby pozostają bez odpowiedzi. Po kilku godzinach w żadnym z trzech miast nie pozostaje przy życiu ani jeden człowiek. Ataki kończą się, zanim siły wojskowe mają szansę wykonać kontruderzenie. Obcy nie pozostawiają za sobą niczego poza krwią i betonową pustynią. Wszystkie statki Obcych znikają bez śladu - choć nikt już nie wątpi, że pojawią się ponownie."
 
 #: ../base/ufos/seq_intro.ufo:186
 msgid "intro_sentence6"
-msgstr "Osiemdziesiąt siedem godzin po pierwszym ataku na Bombaj Ziemia wypowiada wojnę. Przez dwa tygodnie armie ludzkości starają się jak mogą najlepiej odeprzeć ataki Obcych. Udaje się osiągnąć kilka jakże cennych zwycięstw."
+msgstr ""
+"Osiemdziesiąt siedem godzin po pierwszym ataku na Bombaj Ziemia wypowiada wojnę. Przez dwa tygodnie armie ludzkości starają się jak mogą najlepiej odeprzeć ataki Obcych. Udaje się osiągnąć kilka jakże cennych zwycięstw."
 
 #: ../base/ufos/seq_intro.ufo:197
 msgid "intro_sentence7"
-msgstr "W sytuacji bez wyboru, ONZ w końcu wykonuje ruch. Z zakurzonych magazynów wydobyty zostaje ekwipunek bojowy, którego niektóre elementy pamiętają jeszcze poprzedni wiek. Pod flagą ONZ do życia przywrócona zostaje długo nieaktywna agencja byłych Stanów Zjednoczonych założona do walki z istotami pozaziemskimi - PHALANX. Jej celem jest likwidacja zagrożenia pozaziemskiego oraz ochrona ludzkiej rasy bez względu na poniesione koszty."
+msgstr ""
+"W sytuacji bez wyboru, ONZ w końcu wykonuje ruch. Z zakurzonych magazynów wydobyty zostaje ekwipunek bojowy, którego niektóre elementy pamiętają jeszcze poprzedni wiek. Pod flagą ONZ do życia przywrócona zostaje długo nieaktywna agencja byłych Stanów Zjednoczonych założona do walki z istotami pozaziemskimi - PHALANX. Jej celem jest likwidacja zagrożenia pozaziemskiego oraz ochrona ludzkiej rasy bez względu na poniesione koszty."
 
 #: ../base/ufos/seq_intro.ufo:208
 msgid "intro_sentence8"
-msgstr "Fundowana przez wszystkie osiem potęg politycznych, rekrutująca swoich żołnierzy z ich elitarnych jednostek - PHALANX to najlepsi z najlepszych. Jest pierwszą i jedyną linią ziemskiej obrony przed najeźdźcami. Nie może zawieść, bo inaczej reszta ludzkości nie będzie miała żadnych szans."
+msgstr ""
+"Fundowana przez wszystkie osiem potęg politycznych, rekrutująca swoich żołnierzy z ich elitarnych jednostek - PHALANX to najlepsi z najlepszych. Jest pierwszą i jedyną linią ziemskiej obrony przed najeźdźcami. Nie może zawieść, bo inaczej reszta ludzkości nie będzie miała żadnych szans."
 
 #: ../base/ufos/seq_tutorials.ufo:3 ../base/ufos/ui/options.ufo:64
 msgid "Gameplay"
