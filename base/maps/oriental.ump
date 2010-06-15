@@ -218,6 +218,17 @@ a      +a     +a     +a     a
 0      a      a      a      0
 }
 
+// crashed ufo scout
+
+tile +craft_crash_scout
+{
+4 4
+
+0      a      a      0
+a      +a     +a     a
+a      +a     +a     a
+0      a      a      0
+}
 
 // landed UFO harvester
 tile +craft_ufo_harvester
