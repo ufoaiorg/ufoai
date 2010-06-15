@@ -200,12 +200,47 @@ SectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC03}  "C-Source code for UFO:Alien Invasion."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
+; taken from gaim installer
+; GetParent
+; input, top of stack  (e.g. C:\Program Files\Poop)
+; output, top of stack (replaces, with e.g. C:\Program Files)
+; modifies no other variables.
+;
+; Usage:
+;   Push "C:\Program Files\Directory\Whatever"
+;   Call GetParent
+;   Pop $R0
+;   ; at this point $R0 will equal "C:\Program Files\Directory"
+;Function GetParent
+;   Exch $0 ; old $0 is on top of stack
+;   Push $1
+;   Push $2
+;   StrCpy $1 -1
+;   loop:
+;     StrCpy $2 $0 1 $1
+;     StrCmp $2 "" exit
+;     StrCmp $2 "\" exit
+;     IntOp $1 $1 - 1
+;   Goto loop
+;   exit:
+;     StrCpy $0 $0 $1
+;     Pop $2
+;     Pop $1
+;     Exch $0 ; put $0 on top of stack, restore $0 to original value
+;FunctionEnd
+
+; TODO http://nsis.sourceforge.net/Validating_$INSTDIR_before_uninstall
 Function .onVerifyInstDir
   IfFileExists $INSTDIR\*.* Invalid Valid
   Invalid:
   StrCmp $INSTDIR "C:" Break ; Ugly hard-coded constraint, but it should help in most cases.
   StrCmp $INSTDIR "C:\" Break ; "
 ;  StrCmp $INSTDIR $PROGRAMFILES Break ; Doesn't work.
+  ; Push $INSTDIR
+  ; for $INSTDIR of e.g. c: or d: GetParent will return ""
+  ; Call GetParent
+  ; Pop $DIR
+  ; StrCmp $DIR "" Break
   Goto Valid
   Break:
   Abort
