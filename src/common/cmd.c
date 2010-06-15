@@ -63,7 +63,7 @@ static int alias_count;				/* for detecting runaway loops */
  */
 static void Cmd_Open_f (void)
 {
-	Com_DPrintf(DEBUG_ENGINE, "Cmd_Close_f: command buffer opened again\n");
+	Com_DPrintf(DEBUG_COMMANDS, "Cmd_Close_f: command buffer opened again\n");
 	cmdClosed = qfalse;
 }
 
