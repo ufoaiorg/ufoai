@@ -702,7 +702,6 @@ window options
 	// ===============
 		string volume_str
 		{
-			tooltip		"_The more of this the louder it gets."
 			string		"_Volume Control"
 			pos			"70 140"
 			size		"240 20"
@@ -763,7 +762,6 @@ window options
 	// ====================
 		string other_sound_opt
 		{
-			tooltip		"_Find more detailed settings here."
 			string		"_Advanced Audio Options"
 			pos			"70 275"
 			size		"240 20"
@@ -897,7 +895,6 @@ window options
 
 		string gamesettings
 		{
-			tooltip		"_Look below."
 			string		"_Overall Game Settings"
 			pos			"55 75"
 			size		"465 35"
@@ -934,7 +931,6 @@ window options
 	// =========
 		string language_str
 		{
-			tooltip		"_Choose your language."
 			string		"_Language Settings"
 			pos			"70 140"
 			size		"312 20"
@@ -974,7 +970,6 @@ window options
 	// =================
 		string geoscape_options
 		{
-			tooltip		"_Stuff happening 'on the global scale'."
 			string 		"_Geoscape Options"
 			pos			"70 410"
 			size		"256 20"
@@ -1030,7 +1025,6 @@ window options
 	// =============
 		string several_tips
 		{
-			tooltip		"_Just here to help."
 			string 		"_Several Tips"
 			pos			"70 545"
 			size		"256 20"
@@ -1041,14 +1035,14 @@ window options
 		// ===================
 		string tooltip_str
 		{
-			tooltip		"_This message is a mouseover tooltip."
+			tooltip		"_Enable tooltip."
 			string		"_Tooltips:"
 			pos			"85 570"
 			size		"250 20"
 		}
 		checkbox tooltip
 		{
-			tooltip		"_Make me disappear."
+			tooltip		"_Enable tooltip."
 			current		*cvar:mn_show_tooltips
 			pos			"485 570"
 			size		"20 18"
@@ -1097,7 +1091,6 @@ window options
 	// =============
 		string menu_options
 		{
-			tooltip		"_Everything that you can find nowhere else."
 			string 		"_Menu Option(s)"
 			pos			"70 650"
 			size		"256 20"
@@ -1148,7 +1141,6 @@ window options
 	// ============================
 		string camera_str
 		{
-			tooltip		"_The camera is the thing you move around all the time and that makes you see."
 			string		"_Battlescape Camera Settings"
 			pos			"70 140"
 			size		"240 20"
@@ -1236,7 +1228,6 @@ window options
 	// ==============================		
 		string gameplaysettings
 		{
-			tooltip		"_The battlescape is where the ground forces meet."
 			string		"_Battlescape Gameplay Settings"
 			pos			"70 305"
 			size		"240 20"
@@ -1272,7 +1263,6 @@ window options
 	// ========================
 		string joystick_settings_str
 		{
-			tooltip		"_The joystick is a old-school input device for computers."
 			string		"_Joystick Settings"
 			pos			"70 470"
 			size		"240 20"
