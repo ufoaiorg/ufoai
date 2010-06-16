@@ -389,7 +389,6 @@ window options
 		}
 		bar gamma_bar
 		{
-			tooltip		"_This bar represents the current gamma value."
 			current		*cvar:vid_gamma
 			pos			"253 522"
 			size		"238 6"
@@ -414,7 +413,6 @@ window options
 		}
 		bar contrast_bar
 		{
-			tooltip		"_This bar represents the current contrast value."
 			current		*cvar:r_contrast
 			pos			"253 547"
 			size		"238 6"
@@ -439,7 +437,6 @@ window options
 		}
 		bar brightness_bar
 		{
-			tooltip		"_This bar represents the current brightness value."
 			current		*cvar:r_brightness
 			pos			"253 572"
 			size		"238 6"
@@ -1300,7 +1297,6 @@ window options
 		}
 		bar joystick_threshold_bar
 		{
-			tooltip		"_The current value of the joystick threshold."
 			current		*cvar:in_joystickThreshold
 			pos			"253 557"
 			size		"238 6"
@@ -1326,7 +1322,6 @@ window options
 		}
 		bar joystick_speed_bar
 		{
-			tooltip		"_The current value of the joystick speed."
 			current		*cvar:in_joystickSpeed
 			pos			"253 582"
 			size		"238 6"
@@ -1473,7 +1468,7 @@ window options
 		}
 		selectbox select_joystick
 		{
-			tooltip		"_This list shows the joysticks and joypads available."
+			tooltip		"_Available game controllers."
 			cvar		*cvar:in_joystickNo
 			dataid		OPTION_JOYSTICKS
 			image		"ui/selectbox_green"
