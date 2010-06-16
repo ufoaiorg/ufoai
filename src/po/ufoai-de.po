@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-06-15 17:33+0200\n"
-"PO-Revision-Date: 2010-06-15 20:03+0100\n"
+"PO-Revision-Date: 2010-06-16 21:06+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3221,9 +3221,8 @@ msgid "Bulgarian"
 msgstr "Bulgarisch"
 
 #: ../base/ufos/language.ufo:320
-#, fuzzy
 msgid "Norwegian"
-msgstr "Koreanisch"
+msgstr "Norwegisch"
 
 #: ../base/ufos/language.ufo:328
 msgid "No language"
@@ -3294,7 +3293,6 @@ msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr "Aliens haben nichts gutes mit dieser spärlich besiedelten Waldgegend vor."
 
 #: ../base/ufos/maps.ufo:1115
-#, fuzzy
 msgid "UFO crashed in this sparsely populated forest region."
 msgstr "Aliens haben nichts gutes mit dieser spärlich besiedelten Waldgegend vor."
 
@@ -3392,7 +3390,6 @@ msgid "An urban district in an oriental region."
 msgstr "Ein Stadtbezirk einer orientalischen Region."
 
 #: ../base/ufos/maps.ufo:2501
-#, fuzzy
 msgid "Underground pipe construction site."
 msgstr "Unterirdische Rohr-Konstruktions-Stätte."
 
@@ -9350,9 +9347,8 @@ msgid "Kracken"
 msgstr "Kracken"
 
 #: ../base/ufos/seq_credits.ufo:376
-#, fuzzy
 msgid "Tamas Fehervari (geever)"
-msgstr "Fehervari Tamas (geever)"
+msgstr "Tamas Fehervari (geever)"
 
 #: ../base/ufos/seq_credits.ufo:387
 msgid "Edgar Simo (bobbens)"
@@ -9475,9 +9471,8 @@ msgid "http://ufoai.sf.net"
 msgstr "http://ufoai.sf.net"
 
 #: ../base/ufos/seq_credits.ufo:733
-#, fuzzy
 msgid "Copyright 2004-2010 by UFO: AI Team"
-msgstr "Copyright 2004-2009 by UFO: AI Team"
+msgstr "Copyright 2004-2010 by UFO: AI Team"
 
 #: ../base/ufos/seq_intro.ufo:36
 msgid "intro_sentence1"
@@ -9832,9 +9827,8 @@ msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a 
 msgstr "Wenn Sie knappe Zeiteinheiten und gefährliche Gegner haben, könnte es die beste Option sein diese mit einer Blendgranate bis zum Anfang Ihrer nächsten Runde außer Gefecht setzen. 2 ZE (aus dem Holster nehmen) + 12 ZE (werfen) = 14 ZE."
 
 #: ../base/ufos/tips.ufo:27
-#, fuzzy
 msgid "Use a fast soldier with pistols, one handed melee weapons, grenades and medikits as a medic."
-msgstr "Setzen Sie einen schnellen Soldaten mit Pistolen, einhändigen Nahkampfwaffen, (Blend-)Granaten und Medikits als Mediziner ein. "
+msgstr "Setzen Sie einen schnellen Soldaten mit Pistolen, einhändigen Nahkampfwaffen Granaten und Medikits als Mediziner ein. "
 
 #: ../base/ufos/tips.ufo:28
 msgid "Building a hospital allows you to heal your soldiers faster for their next mission."
@@ -10136,9 +10130,8 @@ msgid "Call back"
 msgstr "Zurückrufen"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:11
-#, fuzzy
 msgid "Add/remove this pilot"
-msgstr "Soldat hinzufügen/entfernen"
+msgstr "Pilot hinzufügen/entfernen"
 
 #: ../base/ufos/ui/aircraft_pilots.ufo:144
 msgid "Pilot is assigned to another craft"
@@ -10187,9 +10180,8 @@ msgid "Soldier carries no equipment"
 msgstr "Soldat trägt keine Ausrüstung"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:370
-#, fuzzy
 msgid "Missions info"
-msgstr "Missionen"
+msgstr "Missionsinformationen"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:388
 #: ../base/ufos/ui/equipment.ufo:483
@@ -10280,24 +10272,20 @@ msgid "Health:"
 msgstr "Vitalität:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:499
-#, fuzzy
 msgid "Missions performed:"
 msgstr "Einsätze absolviert:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:502
-#, fuzzy
 msgid "Enemies killed:"
 msgstr "Gegner getötet:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:505
-#, fuzzy
 msgid "Civilians killed:"
-msgstr "Ein Zivilist wurde getötet.\n"
+msgstr "Zivilisten getötet:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:508
-#, fuzzy
 msgid "Our team killed:"
-msgstr "%s wurde getötet\n"
+msgstr "Unser Team tötete:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:521
 msgid "Assign tanks"
@@ -11752,9 +11740,8 @@ msgid "Leave Serverbrowser"
 msgstr "Verlasse Serverbrowser"
 
 #: ../base/ufos/ui/multiplayer.ufo:230
-#, fuzzy
 msgid "Add server to bookmarks"
-msgstr "Entferne aus den Favoriten"
+msgstr "Server zu den Favoriten hinzufügen"
 
 #: ../base/ufos/ui/multiplayer.ufo:267
 msgid "Serverfilter:"
@@ -12042,18 +12029,16 @@ msgid "Overall"
 msgstr "alle"
 
 #: ../base/ufos/ui/options.ufo:42
-#, fuzzy
 msgid "Video settings."
-msgstr "Grafikeinstellungen"
+msgstr "Grafikeinstellungen."
 
 #: ../base/ufos/ui/options.ufo:43
 msgid "Video"
 msgstr "Video"
 
 #: ../base/ufos/ui/options.ufo:53
-#, fuzzy
 msgid "Sound settings."
-msgstr "Soundeinstellungen"
+msgstr "Soundeinstellungen."
 
 #: ../base/ufos/ui/options.ufo:54
 msgid "Audio"
@@ -12068,12 +12053,10 @@ msgid "Leave the options menu."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:89
-#, fuzzy
 msgid "Graphic settings."
-msgstr "Spieleinstellungen"
+msgstr "Spieleinstellungen."
 
 #: ../base/ufos/ui/options.ufo:90
-#, fuzzy
 msgid "Video Settings"
 msgstr "Grafikeinstellungen"
 
@@ -12090,7 +12073,6 @@ msgid "Sets the maximum size for textures & caps resolutions higher than that va
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:113
-#, fuzzy
 msgid "Texture Resolution Cap:"
 msgstr "Texturauflösung:"
 
@@ -12099,7 +12081,6 @@ msgid "The lightmap block size defines the resolution of the lightmap. Higher bl
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:124
-#, fuzzy
 msgid "Lightmap Block Size:"
 msgstr "Lightmap Blockgröße"
 
@@ -12108,14 +12089,12 @@ msgid "The degree or ratio of ansitropic filtering. High ratios will make distan
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:134
-#, fuzzy
 msgid "Texture Ansitropy Level:"
 msgstr "Anisotropes Filtern:"
 
 #: ../base/ufos/ui/options.ufo:140
-#, fuzzy
 msgid "The current value."
-msgstr "Aktuelles Team speichern"
+msgstr "Aktueller Wert"
 
 #: ../base/ufos/ui/options.ufo:149
 msgid "Very high values are only recommended when playing in high resolutions."
@@ -12138,14 +12117,12 @@ msgid "Enable texture compression for better memory performance, disable for bet
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:181
-#, fuzzy
 msgid "Texture Compression:"
 msgstr "Texturkompression:"
 
 #: ../base/ufos/ui/options.ufo:187
-#, fuzzy
 msgid "Enable texture compression."
-msgstr "Texturkompression:"
+msgstr "Texturkompression aktivieren"
 
 #: ../base/ufos/ui/options.ufo:198
 msgid "See how many frames per second are rendered."
@@ -12164,7 +12141,6 @@ msgid "Texture Level-Of-Detail. Enable this if you want more detailed textures a
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:217
-#, fuzzy
 msgid "Texture LOD:"
 msgstr "Texturdetaillierungsgrad:"
 
@@ -12189,7 +12165,6 @@ msgid "OpenGL GLSL Shaders are available only if your graphics-card driver fully
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:253
-#, fuzzy
 msgid "GLSL Shaders:"
 msgstr "GLSL shaders:"
 
@@ -12202,7 +12177,6 @@ msgid "Realtime lightning of the 3D world in UFO:AI."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:271
-#, fuzzy
 msgid "Realtime Lighting:"
 msgstr "Echtzeitbeleuchtung:"
 
@@ -12215,21 +12189,18 @@ msgid "Weather effects like rain (not enabled yet) or snow."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:289
-#, fuzzy
 msgid "Weather Effects:"
 msgstr "Wettereffekte:"
 
 #: ../base/ufos/ui/options.ufo:295
-#, fuzzy
 msgid "Enable weather effects."
-msgstr "Wettereffekte:"
+msgstr "Wettereffekte aktivieren"
 
 #: ../base/ufos/ui/options.ufo:306
 msgid "Vertex Buffers are submitting extensible arrays of vertex attributes to be mapped into the GPU for fast drawing."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:307
-#, fuzzy
 msgid "Vertex Buffers:"
 msgstr "Vertex buffer:"
 
@@ -12242,7 +12213,6 @@ msgid "OpenGL multisample buffers provide a mechanism to antialias all GL primit
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:325
-#, fuzzy
 msgid "Multisample Buffers:"
 msgstr "Multisampling Buffer:"
 
@@ -12260,7 +12230,6 @@ msgid "Multisample Swap Interval selects when a buffer swap will occur. The valu
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:353
-#, fuzzy
 msgid "Swap Interval:"
 msgstr "Swap Intervall:"
 
@@ -12269,9 +12238,8 @@ msgid "Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sy
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:367
-#, fuzzy
 msgid "Change the swap interval."
-msgstr "Swap Intervall:"
+msgstr "Swap Intervall ändern"
 
 #: ../base/ufos/ui/options.ufo:380
 msgid "The gamma value manipulates the colors. Increased gamma means basically more intense colors."
@@ -12314,7 +12282,6 @@ msgid "Lightmaps are scaled using lumels (lumination elements). The smaller the 
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:456
-#, fuzzy
 msgid "Lightmap Scale:"
 msgstr "Lightmap Größe:"
 
@@ -12323,19 +12290,16 @@ msgid "Increase the number of lumels here to improve the lightmap rendering qual
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:480
-#, fuzzy
 msgid "Stretches the screen with a 4:3 ratio."
-msgstr "Bild auf 4:3 ratio strecken:"
+msgstr "Bild auf 4:3 ratio strecken"
 
 #: ../base/ufos/ui/options.ufo:481
-#, fuzzy
 msgid "Stretch the Screen with a 4:3 Ratio:"
 msgstr "Bild auf 4:3 ratio strecken:"
 
 #: ../base/ufos/ui/options.ufo:487
-#, fuzzy
 msgid "Stretch the screen to a ratio of 4:3."
-msgstr "Bild auf 4:3 ratio strecken:"
+msgstr "Bild auf 4:3 ratio strecken"
 
 #: ../base/ufos/ui/options.ufo:498
 msgid "Post-processing shader effects like glowing textures (only available if GLSL Shaders are turned on)."
@@ -12358,9 +12322,8 @@ msgid "Max Dynamic Lights:"
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:523
-#, fuzzy
 msgid "Current value."
-msgstr "Aktive Node:"
+msgstr "Aktueller Wert"
 
 #: ../base/ufos/ui/options.ufo:531
 msgid "Change the number of allowed hardware accelerated lights. ATTENTION: May require restart to take effect."
@@ -12418,7 +12381,6 @@ msgid "All ratios"
 msgstr "Externe Einrichtungen"
 
 #: ../base/ufos/ui/options.ufo:652
-#, fuzzy
 msgid "Others"
 msgstr "Andere"
 
@@ -12431,9 +12393,8 @@ msgid "Sound is the thing that comes out of your speakers or earphones."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:688
-#, fuzzy
 msgid "Audio Settings"
-msgstr "Grafikeinstellungen"
+msgstr "Audioeinstellungen"
 
 #: ../base/ufos/ui/options.ufo:700
 msgid "The more of this the louder it gets."
@@ -12445,7 +12406,6 @@ msgid "Do you want to hear the screams?"
 msgstr "Sicher, dass die externe Einrichtung abgerissen werden soll?"
 
 #: ../base/ufos/ui/options.ufo:712
-#, fuzzy
 msgid "Sound Effects:"
 msgstr "Effekte:"
 
@@ -12474,26 +12434,22 @@ msgid "The sample rate in kHz. Use higher values for better sound quality."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:773
-#, fuzzy
 msgid "Audio Rate:"
 msgstr "Soundfrequenz:"
 
 #: ../base/ufos/ui/options.ufo:779
-#, fuzzy
 msgid "Restart the sound-engine and apply your settings."
-msgstr "Sound neu starten um Änderungen wirksam zu machen"
+msgstr "Sound neu starten um Änderungen wirksam zu machen."
 
 #: ../base/ufos/ui/options.ufo:789
 msgid "The current sample rate in kHz."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:817
-#, fuzzy
 msgid "Enable or disable sound."
 msgstr "Sound An/aus"
 
 #: ../base/ufos/ui/options.ufo:818
-#, fuzzy
 msgid "Enable Audio:"
 msgstr "Sound aktivieren:"
 
@@ -12506,12 +12462,10 @@ msgid "Shows all the function keys of UFO:AI."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:844
-#, fuzzy
 msgid "Show Key Bindings"
 msgstr "Zeige Tastenbelegung"
 
 #: ../base/ufos/ui/options.ufo:855
-#, fuzzy
 msgid "See the key bindings."
 msgstr "Zeige Tastenbelegung"
 
@@ -12520,29 +12474,24 @@ msgid "Look below."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:895
-#, fuzzy
 msgid "Overall Game Settings"
 msgstr "Spieleinstellungen"
 
 #: ../base/ufos/ui/options.ufo:907
-#, fuzzy
 msgid "Your name."
-msgstr "Spiel abbrechen"
+msgstr "Name"
 
 #: ../base/ufos/ui/options.ufo:915
-#, fuzzy
 msgid "Change your name."
-msgstr "Team speichern"
+msgstr "Namen ändern"
 
 #: ../base/ufos/ui/options.ufo:931
-#, fuzzy
 msgid "Choose your language."
-msgstr "Keine Sprache"
+msgstr "Sprache wählen"
 
 #: ../base/ufos/ui/options.ufo:932
-#, fuzzy
 msgid "Language Settings"
-msgstr "Nachrichteneinstellungen"
+msgstr "Spracheinstellungen"
 
 #: ../base/ufos/ui/options.ufo:939
 msgid "A list of available languages. ATTENTION: Choose English for the most 'complete' language, other translations might be incomplete."
@@ -12553,7 +12502,6 @@ msgid "Stuff happening 'on the global scale'."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:972
-#, fuzzy
 msgid "Geoscape Options"
 msgstr "Geoscape Optionen"
 
@@ -12563,7 +12511,6 @@ msgid "3d or 2d geoscape."
 msgstr "Zurück zum Geoscape"
 
 #: ../base/ufos/ui/options.ufo:983
-#, fuzzy
 msgid "3d Geoscape:"
 msgstr "3D Geoscape:"
 
@@ -12576,7 +12523,6 @@ msgid "Amount of light emitting from the sun & shining on the earth."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1002
-#, fuzzy
 msgid "Ambient Lighting:"
 msgstr "3D Geoscape Hintergrundleuchten:"
 
@@ -12611,12 +12557,10 @@ msgid "Enable or disable tooltips for the cursor."
 msgstr "Sound An/aus"
 
 #: ../base/ufos/ui/options.ufo:1058
-#, fuzzy
 msgid "Cursor Tooltips:"
 msgstr "Cursor Tooltips:"
 
 #: ../base/ufos/ui/options.ufo:1064
-#, fuzzy
 msgid "Activate cursor tooltips."
 msgstr "Cursor-Tooltips einschalten"
 
@@ -12625,12 +12569,10 @@ msgid "Enable this if you are new to UFO:AI & want to see interesting tips writt
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1076
-#, fuzzy
 msgid "Show 'Tip of the Day':"
 msgstr "Zeige Tipp des Tages:"
 
 #: ../base/ufos/ui/options.ufo:1083
-#, fuzzy
 msgid "Enable the 'Tip of the Day'."
 msgstr "Tipp des Tages"
 
@@ -12644,7 +12586,6 @@ msgid "Menu Option(s)"
 msgstr "Optionen"
 
 #: ../base/ufos/ui/options.ufo:1105
-#, fuzzy
 msgid "Precaching of models means having faster menus."
 msgstr "Modelle vorhalten (schnellere Menüs)"
 
@@ -12653,7 +12594,6 @@ msgid "Precache models:"
 msgstr "Modelle vorhalten:"
 
 #: ../base/ufos/ui/options.ufo:1112
-#, fuzzy
 msgid "Enable precaching of models to have faster menus."
 msgstr "Modelle vorhalten (schnellere Menüs)"
 
@@ -12670,9 +12610,8 @@ msgid "The camera is the thing you move around all the time and that makes you s
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1146
-#, fuzzy
 msgid "Battlescape Camera Settings"
-msgstr "Bewegen der Einsatzkamera nach links"
+msgstr "Kameraeinstellungen"
 
 #: ../base/ufos/ui/options.ufo:1153
 #, fuzzy
@@ -12726,7 +12665,6 @@ msgid "Actor speed changes the speed of aliens & humans."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1245
-#, fuzzy
 msgid "Actor Speed:"
 msgstr "Akteurgeschwindigkeit:"
 
@@ -12739,12 +12677,10 @@ msgid "The joystick is a old-school input device for computers."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1270
-#, fuzzy
 msgid "Joystick Settings"
 msgstr "Joystick Einstellungen:"
 
 #: ../base/ufos/ui/options.ufo:1277
-#, fuzzy
 msgid "Enable or disable your Joystick."
 msgstr "Joystick ein-/ausschalten"
 
@@ -12782,7 +12718,6 @@ msgid "Keys are the things on your keyboard."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1348
-#, fuzzy
 msgid "Show Keys"
 msgstr "Zeige Tastenbelegung"
 
@@ -12819,7 +12754,6 @@ msgid "Autostand regulates if your soldier should automatically stand up when he
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1396
-#, fuzzy
 msgid "Autostand:"
 msgstr "Automatisches Aufstehen"
 
@@ -12832,7 +12766,6 @@ msgid "Select whether the game should automatically center the camera view at th
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1423
-#, fuzzy
 msgid "Center View:"
 msgstr "Sicht zentrieren:"
 
@@ -12865,7 +12798,6 @@ msgid "Select which of your joysticks or joypads you want to use."
 msgstr ""
 
 #: ../base/ufos/ui/options.ufo:1468
-#, fuzzy
 msgid "Joystick or Joypad:"
 msgstr "Joystick:"
 
@@ -12884,18 +12816,16 @@ msgid "Maintain the selected resolution."
 msgstr "Auflösung"
 
 #: ../base/ufos/ui/options.ufo:1516
-#, fuzzy
 msgid "Accept the new resolution."
-msgstr "Auflösung ändern"
+msgstr "Neue Auflösung akzeptieren"
 
 #: ../base/ufos/ui/options.ufo:1517
 msgid "Accept"
 msgstr "Anwenden"
 
 #: ../base/ufos/ui/options.ufo:1523
-#, fuzzy
 msgid "Use the previous resolution."
-msgstr "Auflösung ändern"
+msgstr "Alte Auflösung wiederherstellen"
 
 #: ../base/ufos/ui/production.ufo:83
 #: client/campaign/cp_produce_callbacks.c:351
@@ -12993,9 +12923,8 @@ msgid "Max AI actors for this game"
 msgstr "Max. KI-Spieler für dieses Spiel"
 
 #: ../base/ufos/ui/skirmish.ufo:158
-#, fuzzy
 msgid "Max. soldiers:"
-msgstr "Max. Soldaten:\t%i\n"
+msgstr "Max. Soldaten:"
 
 #: ../base/ufos/ui/skirmish.ufo:159
 #, fuzzy
@@ -14544,9 +14473,8 @@ msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Kein Flugzeug in dieser Basis - Sie müssen erst eines kaufen\n"
 
 #: client/campaign/cp_base.c:2305
-#, fuzzy
 msgid "Antimatter (current/max):"
-msgstr "Antimaterie-Lager"
+msgstr "Antimaterie (aktuell/max):"
 
 #: client/campaign/cp_base.c:2452
 #, c-format
@@ -15497,9 +15425,8 @@ msgid "transfer_aliens_defered"
 msgstr "Transfer des Ausseridischen verschoben"
 
 #: client/campaign/cp_messageoptions.c:59
-#, fuzzy
 msgid "transfer_uforecovery_finished"
-msgstr "<TODO>"
+msgstr "Transfer UFO Bergung abgeschlossen"
 
 #: client/campaign/cp_messageoptions.c:60
 msgid "ufo_spotted"
@@ -16173,7 +16100,6 @@ msgid "Error"
 msgstr "Fehler"
 
 #: client/campaign/cp_save.c:566
-#, fuzzy
 msgid "QuickSave"
 msgstr "Schnellspeichern"
 
