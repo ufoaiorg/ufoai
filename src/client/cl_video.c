@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_view.h"
 #include "renderer/r_main.h"
 #include "renderer/r_sdl.h"
-#include "menu/m_font.h"
+#include "menu/m_main.h"
 #include "cl_game.h"
 
 viddef_t viddef;	/* global video state; used by other modules */
@@ -113,7 +113,7 @@ void VID_Restart_f (void)
 
 	R_Shutdown();
 	R_Init();
-	MN_InitFonts();
+	MN_Reinit();
 
 	CL_ViewLoadMedia();
 	GAME_ReloadMode();
