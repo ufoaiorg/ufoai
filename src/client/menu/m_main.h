@@ -36,6 +36,7 @@ extern struct cvar_s *mn_hud;
 /* initialization */
 void MN_Init(void);
 void MN_Shutdown(void);
+void MN_Reinit(void);
 
 /* misc */
 void MN_SetCvar(const char *name, const char *str, float value);

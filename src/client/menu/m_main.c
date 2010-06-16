@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_internal.h"
 #include "m_draw.h"
 #include "m_timer.h"
+#include "m_font.h"
 
 #include "../client.h"
 
@@ -249,6 +250,16 @@ void MN_ExecuteConfunc (const char *fmt, ...)
 	Q_vsnprintf(confunc, sizeof(confunc), fmt, ap);
 	Cmd_ExecuteString(confunc);
 	va_end(ap);
+}
+
+/**
+ * Reinit input and font
+ */
+void MN_Reinit (void)
+{
+	MN_InitFonts();
+	MN_ReleaseInput();
+	MN_InvalidateMouse();
 }
 
 /**
