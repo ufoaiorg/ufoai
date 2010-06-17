@@ -1,6 +1,8 @@
 linuxinstaller: installer-pre packdata update_installer_data makeself
 
-LINUX_INST_DIR=contrib/installer/linux
+ROOTDIR=$(shell pwd)
+
+LINUX_INST_DIR=$(ROOTDIR)/contrib/installer/linux
 #everything inside this dir will be compressed to the self extracting archive
 LINUX_INST_DATADIR=$(LINUX_INST_DIR)/data
 #this is only for arranging the path names and tar the zip files
@@ -14,21 +16,16 @@ BINARIES = \
 	ufo \
 	ufoded \
 	ufo2map \
+	ufomodel \
 	base/game.$(SHARED_EXT)
 
-BINARIES_64 = \
-	ufo.x86_64 \
-	ufoded.x86_64 \
-	ufo2map.x86_64 \
-	base/game_x86_64.$(SHARED_EXT)
 
 packdata:
 	@mkdir -p $(LINUX_INST_TMPDIR)/base
 	@tar -cvjp -f $(LINUX_INST_DATADIR)/ufo-x86.tar.bz2 $(BINARIES)
-	@tar -cvjp -f $(LINUX_INST_DATADIR)/ufo-x86_64.tar.bz2 $(BINARIES_64)
-	@cd $(ROOTDIR); tar -cvjp -f $(LINUX_INST_DIR)$(LINUX_INST_DATADIR)/i18n.tar.bz2 base/i18n/ --exclude .svn --exclude updated*
-	@cp $(PAK_FILES) $(LINUX_INST_TMPDIR)/base
-	@cd $(LINUX_INST_TMPDIR); tar -cvp -f ../$(LINUX_INST_DATADIR)/data.tar base
+	@tar -cvjp -f $(LINUX_INST_DATADIR)/i18n.tar.bz2 base/i18n/ --exclude .svn --exclude updated*
+	@cp base/*.pk3 $(LINUX_INST_TMPDIR)/base
+	@cd $(LINUX_INST_TMPDIR) && tar -cvp -f ../data/data.tar base && cd $(ROOTDIR) && pwd
 
 update_installer_data:
 	@sed 's/@VERSION@/$(UFOAI_VERSION)/g' $(LINUX_INST_DIR)/setup.xml.in | sed 's/@LINUX_INST_SIZE@/$(LINUX_INST_SIZE)/g' > $(LINUX_INST_DATADIR)/setup.data/setup.xml
