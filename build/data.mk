@@ -49,7 +49,7 @@ $(BASE_DIR)/0music.pk3 : $(filter %.ogg %.txt, $(shell $(call FIND, music)))
 
 $(BASE_DIR)/0maps.pk3 : $(filter %.bsp %.ump, $(shell $(call FIND, maps)))
 
-$(BASE_DIR)/0videos.pk3 : $(filter %.roq %.ogm, $(shell $(call FIND, videos)))
+#$(BASE_DIR)/0videos.pk3 : $(filter %.roq %.ogm, $(shell $(call FIND, videos)))
 
 $(BASE_DIR)/0media.pk3 : $(filter %.ttf, $(shell $(call FIND, media)))
 
