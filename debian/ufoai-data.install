@@ -3,7 +3,6 @@ base/0materials.pk3 /usr/share/games/ufoai/base
 base/0models.pk3 /usr/share/games/ufoai/base
 base/0pics.pk3 /usr/share/games/ufoai/base
 base/0snd.pk3 /usr/share/games/ufoai/base
-base/0videos.pk3 /usr/share/games/ufoai/base
 base/0shaders.pk3 /usr/share/games/ufoai/base
 base/i18n/* /usr/share/games/ufoai/base/i18n
 src/docs/tex/ufo-manual_EN.pdf /usr/share/doc/ufoai-data/
