@@ -15,15 +15,18 @@ mappack: maps-sync
 dataarchive: pk3
 	tar -cvp -f ufoai-$(UFOAI_VERSION)-data.tar base/*.pk3
 
-USER?=tlh2000
+USER?=tlh2000,ufoai
+PATH?=/home/frs/project/u/uf/ufoai/"UFO_AI\ 2.x"/$(VERSION)/
+UPLOADHOST?=frs.sourceforge.net
+URL=$(USER)@$(UPLOADHOST):$(PATH)
 upload-sf:
-	rsync -avP -e ssh uforadiant-$(UFORADIANT_VERSION)-macosx-$(TARGET_CPU).dmg $(USER)@frs.sourceforge.net:uploads/
-	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-macosx-$(TARGET_CPU).dmg $(USER)@frs.sourceforge.net:uploads/
-	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-source.tar.bz2 $(USER)@frs.sourceforge.net:uploads/
-	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-linux.run $(USER)@frs.sourceforge.net:uploads/
-	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-data.tar $(USER)@frs.sourceforge.net:uploads/
-	rsync -avP -e ssh uforadiant-$(UFORADIANT_VERSION)-win32.exe $(USER)@frs.sourceforge.net:uploads/
-	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-win32.exe $(USER)@frs.sourceforge.net:uploads/
+	rsync -avP -e ssh uforadiant-$(UFORADIANT_VERSION)-macosx-$(TARGET_CPU).dmg $(URL)
+	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-macosx-$(TARGET_CPU).dmg $(URL)
+	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-source.tar.bz2 $(URL)
+	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-linux.run $(URL)
+	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-data.tar $(URL)
+	rsync -avP -e ssh uforadiant-$(UFORADIANT_VERSION)-win32.exe $(URL)
+	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-win32.exe $(URL)
 
 create-release: dataarchive wininstaller linuxinstaller macinstaller sourcearchive upload-sf
 create-dev: dataarchive wininstaller linuxinstaller macinstaller sourcearchive
