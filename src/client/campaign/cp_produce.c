@@ -107,7 +107,7 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
  * @param[in] amount How many items are planned to be added (positive number) or removed (negative number).
  * @param[in] reqs The production requirements of the item that is to be produced. These included numbers are multiplied with 'amount')
  */
-void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements_t *reqs)
+void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, const requirements_t const *reqs)
 {
 	int i;
 
@@ -118,7 +118,7 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements
 		return;
 
 	for (i = 0; i < reqs->numLinks; i++) {
-		requirement_t *req = &reqs->links[i];
+		const requirement_t const *req = &reqs->links[i];
 		if (req->type == RS_LINK_ITEM) {
 			const objDef_t *item = (const objDef_t *)req->link;
 			assert(item);
@@ -134,13 +134,13 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements
  * @param[in] base Pointer to base.
  * @return how much item/aircraft/etc can be produced
  */
-int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
+int PR_RequirementsMet (int amount, const requirements_t const *reqs, base_t *base)
 {
 	int i;
 	int producibleAmount = amount;
 
 	for (i = 0; i < reqs->numLinks; i++) {
-		const requirement_t *req = &reqs->links[i];
+		const requirement_t const *req = &reqs->links[i];
 
 		if (req->amount == 0)
 			continue;
@@ -168,6 +168,7 @@ int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
 production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, storedUFO_t *ufo, signed int amount)
 {
 	int numWorkshops = 0;
+	int newAmount;
 	production_t *prod;
 	const technology_t *tech;
 
@@ -198,12 +199,32 @@ production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *it
 	/* self-reference. */
 	prod->idx = queue->numItems;
 
-	if (item)
+	if (item) {
 		tech = item->tech;
-	else if (aircraftTemplate)
+	} else if (aircraftTemplate) {
 		tech = aircraftTemplate->tech;
-	else
+	} else {
 		tech = ufo->ufoTemplate->tech;
+		amount = 1;
+	}
+
+	if (!tech)
+		return NULL;
+
+	newAmount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
+	/** @todo move popups into menucode */
+	if (newAmount == 0)
+		MN_Popup(_("Not enough materials"), _("You cannot produce this, don't have the materials needed for it.\n"));
+	else if (amount != newAmount)
+		MN_Popup(_("Not enough materials"), va(_("You don't have enough materials for %i pieces. Only %i will be produced.\n"), amount, newAmount));
+	amount = newAmount;
+
+	if (amount == 0)
+		return NULL;
+
+	PR_UpdateRequiredItemsInBasestorage(base, -amount, &tech->requireForProduction);
+	if (tech->requireForProduction.numLinks)
+		prod->itemsCached = qtrue;
 
 	/* We cannot queue new aircraft if no free hangar space. */
 	/** @todo move this check out into a new function */
@@ -227,24 +248,20 @@ production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *it
 	prod->item = item;
 	prod->aircraft = aircraftTemplate;
 	prod->ufo = ufo;
+	prod->amount = amount;
+	prod->percentDone = 0.0f;
 
 	if (ufo) {
 		/* Disassembling. */
 		prod->production = qfalse;
-		prod->amount = 1;
-
 		ufo->disassembly = prod;
-		prod->percentDone = 0.0f;
 	} else {
 		/* Production. */
 		prod->production = qtrue;
-		prod->amount = amount;
 
 		/* Don't try to add to queue an item which is not producible. */
 		if (tech->produceTime < 0)
 			return NULL;
-		else
-			prod->percentDone = 0.0f;
 	}
 
 	queue->numItems++;

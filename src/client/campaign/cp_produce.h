@@ -82,8 +82,8 @@ qboolean PR_ItemIsProduceable(const objDef_t const *item);
 base_t *PR_ProductionBase(production_t *production);
 void PR_UpdateProductionCap(struct base_s *base);
 
-void PR_UpdateRequiredItemsInBasestorage(base_t *base, int amount, requirements_t *reqs);
-int PR_RequirementsMet(int amount, requirements_t *reqs, base_t *base);
+void PR_UpdateRequiredItemsInBasestorage(base_t *base, int amount, const requirements_t const *reqs);
+int PR_RequirementsMet(int amount, const requirements_t const *reqs, base_t *base);
 
 float PR_CalculateProductionPercentDone(const base_t *base, const technology_t *tech, const struct storedUFO_s *const storedUFO);
 
