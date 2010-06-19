@@ -117,6 +117,27 @@ static void R_DrawAliasStatic (const mAliasMesh_t *mesh, const vec4_t shellColor
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 }
 
+
+static void R_DrawAliasMesh (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, const vec4_t shellColor, unsigned int indexOffset) 
+{
+	if (mod->num_frames == 1) {
+		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mesh->verts);
+		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mesh->normals);
+		R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, mesh->tangents);
+		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mesh->texcoords);
+	} else {
+		R_FillArrayData(mod, mesh, backlerp, framenum, oldframenum, qfalse);
+		R_EnableAnimation(mesh, backlerp, qtrue);
+
+	}
+
+	glDrawArrays(GL_TRIANGLES, indexOffset, mesh->num_tris * 3);
+	R_DrawMeshModelShell(mesh, shellColor);
+
+	R_EnableAnimation(NULL, 0.0, qfalse);
+}
+
+
 /**
  * @brief Searches the tag data for the given name
  * @param[in] mod The model to search the tag data. Can be @c NULL
@@ -430,7 +451,9 @@ void R_DrawAliasModel (entity_t *e)
 {
 	mAliasModel_t *mod = (mAliasModel_t *)&e->model->alias;
 	/* the values are sane here already - see R_DrawEntities */
-	const image_t *skin = mod->meshes[e->as.mesh].skins[e->skinnum].skin;
+	image_t *skin = mod->meshes[e->as.mesh].skins[e->skinnum].skin;
+	const int numSurfs = mod->meshes[e->as.mesh].skins[e->skinnum].numSurfs;
+	mAliasSurface_t **surfs = mod->meshes[e->as.mesh].skins[e->skinnum].surfs;
 	int i;
 	float g;
 	vec4_t color = {0.8, 0.8, 0.8, 1.0};
@@ -444,6 +467,7 @@ void R_DrawAliasModel (entity_t *e)
 		glScalef(e->scale[0], e->scale[1], e->scale[2]);
 
 
+	/* @todo implement "shell" as a surface layer? */
 	if (!r_state.build_shadowmap_enabled) {
 		/* IR goggles override color for entities that are affected */
 		if (refdef.rendererFlags & RDF_IRGOGGLES && e->flags & RF_IRGOGGLES)
@@ -468,6 +492,43 @@ void R_DrawAliasModel (entity_t *e)
 		R_Color(color);
 
 	}
+
+	/* @todo - make sure all the stuff we touch here exists */
+#if 0
+
+
+	lodMesh = R_GetLevelOfDetailForModel(e->origin, mod);
+	refdef.aliasCount += lodMesh->num_tris;
+
+	R_EnableDynamicLights(e, qtrue);
+
+	for (i = 0; i < numSurfs; i++) {
+		if (surfs[i]->hidden)
+			continue;
+
+		skin = surfs[i]->image;
+
+		assert(skin->texnum > 0);
+		R_BindTexture(skin->texnum);
+
+		/* @todo - check surface flags, set up alpha blend, etc. if requested */
+		if (!r_state.build_shadowmap_enabled) {
+			R_EnableGlowMap(skin->glowmap, qtrue);
+
+			if (skin->normalmap)
+				R_EnableBumpmap(skin->normalmap, qtrue);
+
+			if (skin->specularmap)
+				R_EnableSpecularMap(skin->specularmap, qtrue);
+
+			if (skin->roughnessmap)
+				R_EnableRoughnessMap(skin->roughnessmap, qtrue);
+		}
+
+		R_DrawAliasMesh(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe, e->shell, surfs[i]->indexOffset);
+
+	}
+#else
 
 	assert(skin->texnum > 0);
 	R_BindTexture(skin->texnum);
@@ -509,6 +570,8 @@ void R_DrawAliasModel (entity_t *e)
 	if (r_state.bumpmap_enabled)
 		R_EnableBumpmap(NULL, qfalse);
 
+#endif
+
 	/* show model bounding box */
 	if (r_showbox->integer)
 		R_DrawBoundingBox(mod->frames[e->as.frame].mins, mod->frames[e->as.frame].maxs);
@@ -516,4 +579,5 @@ void R_DrawAliasModel (entity_t *e)
 	glPopMatrix();
 
 	R_Color(NULL);
+
 }

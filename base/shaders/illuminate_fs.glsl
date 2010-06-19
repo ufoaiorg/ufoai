@@ -57,7 +57,7 @@ float chebyshevUpperBound(vec4 shadow)
 {
 	vec3 moments = textureProj(SAMPLER_SHADOW0, shadow).rgb;
 
-	float shadowZ = (shadow.z / shadow.w) - 0.05;
+	float shadowZ = (shadow.z / shadow.w) - 0.00;
 
 	/* early return if fragment is fully lit */
 	if (shadowZ <= moments.x)
@@ -110,14 +110,14 @@ vec3 LightContribution(in vec4 location,
 	vec3 ambientColor = diffuse.rgb * diffuse.a * ambientLight.rgb;
 	/* Normalize vectors and cache dot products */
 	vec3 L = normalize(lightDir);
-	//float NdotL = clamp(dot(N, -L), 0.0, 1.0);
 	float NdotL = dot(N, -L);
 	if (NdotL < 0.0) {
-		//return attenuate * ambientColor;
+		return attenuate * ambientColor;
 	}
 
 #if r_debug_shadows
 	//return vec3(textureProj(SAMPLER_SHADOW0, shadowCoord).r * NdotL);
+	//return vec3(textureProj(SAMPLER_SHADOW0, shadowCoord).r );
 	return textureProj(SAMPLER_SHADOW0, shadowCoord).rgb;
 	//return vec3(1.0 - ((1.0 - chebyshevUpperBound(shadowCoord)) * NdotL));
 	//return vec3(1.0);
@@ -218,7 +218,6 @@ vec4 IlluminateFragment(void){
 	/* do per-light calculations */
 #unroll r_dynamic_lights
 	if ($ < NUM_ACTIVE_LIGHTS) {
-		//totalColor += LightContribution(gl_LightSource[$], lightDirs[$], N, V, NdotV, R_2, roughness, specular, diffuse);
 		totalColor += LightContribution(LightLocation[$],
 										LightAmbient[$],
 										LightDiffuse[$],

@@ -257,7 +257,10 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 		VectorScale(sun.ambientColor, 1.25, sun.ambientColor);
 
 	/* set up "global" (ie. directional) light sources */
-	Vector4Set(sun.loc, 0, 0, -1, 0.0);
+	//Vector4Set(sun.loc, 0, 0, -1, 0.0);
+	//Vector4Set(sun.loc, 0, 0, -1, 1.0);
+	Vector4Set(sun.loc, 0.455, 0.755, -1, 0.0);
+	VectorNormalize(sun.loc);
 	sun.constantAttenuation = 1.0;
 	sun.linearAttenuation = 0.0;
 	sun.quadraticAttenuation = 0.0;

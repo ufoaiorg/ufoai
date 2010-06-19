@@ -72,10 +72,19 @@ typedef struct mAliasTag_s {
 	mAliasTagOrientation_t	orient;
 } mAliasTag_t;
 
+typedef struct mAliasSurface_s {
+	unsigned int indexOffset;
+	qboolean hidden;
+	image_t *image;
+} mAliasSurface_t;
+
 typedef	struct mAliasSkin_s {
 	char	name[MODEL_MAX_PATH];
 	int	shader;
 	image_t *skin;
+	uint32_t flags; /**< @todo - surface flags; do we need this here? */
+	unsigned int numSurfs;
+	mAliasSurface_t **surfs;
 } mAliasSkin_t;
 
 typedef struct mIndexList_s {
@@ -89,7 +98,7 @@ typedef	struct mAliasMesh_s {
 	mAliasVertex_t	*vertexes;
 	mAliasCoord_t	*stcoords;
 
-	/* static meshes have vertex arrays */
+	/* all meshes use vertex arrays */
 	vec_t *verts;
 	vec_t *texcoords;
 	vec_t *normals;

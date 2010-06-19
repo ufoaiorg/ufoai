@@ -297,3 +297,65 @@ void R_ShutdownModels (qboolean complete)
 		r_numModels = r_numModelsStatic;
 	}
 }
+
+static void R_ModelBsp2Alias (model_t *mod)
+{
+	int i;
+	mBspModel_t *bsp = &(mod->bsp);
+	mAliasModel_t *alias = &(mod->alias);
+	mAliasMesh_t *mesh = mod->alias.meshes;
+
+	alias->num_frames = 1;
+	alias->curFrame = -1;
+	alias->num_bones = 0;
+	alias->num_anims = 0;
+	alias->curAnim = 0;
+	alias->num_meshes = 1;
+
+	mesh = (mAliasMesh_t *) Mem_PoolAlloc(sizeof(mAliasMesh_t), vid_modelPool, 0);
+	strncpy(mesh->name, "BSP Mesh", MODEL_MAX_PATH);
+	mesh->num_bones=0;
+
+	mesh->verts = bsp->verts;
+	mesh->normals = bsp->normals;
+	mesh->tangents = bsp->tangents;
+	mesh->texcoords = bsp->texcoords;
+
+	/* @todo - add vertex buffers to alias models? */
+
+	mesh->num_verts = bsp->numvertexes;
+	mesh->vertexes = (mAliasVertex_t *) Mem_PoolAlloc(sizeof(mAliasVertex_t) * bsp->numvertexes, vid_modelPool, 0);
+	mesh->stcoords = (mAliasCoord_t *) Mem_PoolAlloc(sizeof(mAliasCoord_t) * bsp->numvertexes, vid_modelPool, 0);
+	for (i=0; i < bsp->numvertexes; i++) {
+		/* @todo - BSPs are drawn as polygons; need to do triangle tesselation*/
+		VectorCopy(bsp->vertexes[i].position, mesh->vertexes[i].point);
+		VectorCopy(bsp->vertexes[i].normal, mesh->vertexes[i].normal);
+		/* @todo - convert texcoods with:
+		 * float u = v[0] * uv[0] + v[1] * uv[1] + v[2] * uv[2] + u_offset
+		 * float v = v[0] * vv[0] + v[1] * vv[1] + v[2] * vv[2] + v_offset
+		 */
+		//Vector2Copy(bsp->vertexes[i].normal, mesh->texcoords[i]);
+	}
+
+}
+
+
+void R_MakeDrawable (model_t *mod)
+{
+	switch (mod->type) {
+		case mod_drawable: /* already done */
+			break;
+		case mod_bsp: /* translate BSP model into alias model */
+			R_ModelBsp2Alias(mod);
+			break;
+		case mod_alias_md2: /* we already have an alias model */
+		case mod_alias_md3:
+		case mod_alias_dpm:
+			mod->type = mod_drawable;
+			break;
+		case mod_obj:
+		default:
+			Com_Error(ERR_DROP, "R_MakeDrawable: bad or unhandled model format for %s", mod->name);
+			break;
+	}
+}

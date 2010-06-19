@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_program.h"
 #include "r_error.h"
-#include <GL/glext.h>
 
 /* useful for particles, pics, etc.. */
 const float default_texcoords[] = {
@@ -331,6 +330,7 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 	vec4_t diffuse[MAX_DYNAMIC_LIGHTS];
 	vec4_t specular[MAX_DYNAMIC_LIGHTS];
 	vec3_t attenuation[MAX_DYNAMIC_LIGHTS];
+	float mat[16];
 	int maxLights = r_dynamic_lights->integer;
 
 	if (enable)
@@ -376,7 +376,13 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 			l = ent->lights[i + j];
 		}
 
-		Vector4Copy(l->loc, location[i]);
+		if (ent->transform.done) {
+			GLMatrixInvertTR(ent->transform.matrix, mat);
+			GLVectorTransform(mat, l->loc, location[i]);
+		} else {
+			Vector4Copy(l->loc, location[i]);
+		}
+
 		Vector4Copy(l->ambientColor, ambient[i]);
 		Vector4Copy(l->diffuseColor, diffuse[i]);
 		Vector4Copy(l->specularColor, specular[i]);
@@ -730,12 +736,24 @@ static void MYgluLookAt (const vec3_t eye, const vec3_t center, const vec3_t up)
 	glTranslatef(-eye[0], -eye[1], -eye[2]);
 }
 
+static void R_SetupCameraMatrix (void) 
+{
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glRotatef(-90.0, 1.0, 0.0, 0.0);	/* put Z going up */
+	glRotatef(90.0, 0.0, 0.0, 1.0);	/* put Z going up */
+	glRotatef(-refdef.viewAngles[2], 1.0, 0.0, 0.0);
+	glRotatef(-refdef.viewAngles[0], 0.0, 1.0, 0.0);
+	glRotatef(-refdef.viewAngles[1], 0.0, 0.0, 1.0);
+	glTranslatef(-refdef.viewOrigin[0], -refdef.viewOrigin[1], -refdef.viewOrigin[2]);
+}
+
 #define MAX_SHADOW_SIZE 1600
 #define SHADOW_SPLITS 5
 #define MAT_I4  { 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 }
 
 void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
-	static vec3_t viewOriginCamera;
 	int i, j;
 
 	if (!r_shadowmapping->integer)
@@ -755,171 +773,32 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 		float modelView[16];
 		float projection[16];
 		float M1[16] = MAT_I4;
-		//float M2[16] = MAT_I4;
-		//float M3[16] = MAT_I4;
 		const GLfloat bias[16] = {	0.5, 0.0, 0.0, 0.0,
 									0.0, 0.5, 0.0, 0.0,
 									0.0, 0.0, 0.5, 0.0,
 									0.5, 0.5, 0.5, 1.0 };
 		vec3_t up = {0.0, 0.0, 1.0};
 		vec3_t target, lightDir, lightPos;
+		vec3_t R[3];
 
+		/* get the camera matrix for shadow-space transform */
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
 		glLoadIdentity();
-		/* set up the camera view matrix for the current frame... */
-
-		glRotatef(-90.0, 1.0, 0.0, 0.0);	/* put Z going up */
-		glRotatef(90.0, 0.0, 0.0, 1.0);	/* put Z going up */
-		glRotatef(-refdef.viewAngles[2], 1.0, 0.0, 0.0);
-		glRotatef(-refdef.viewAngles[0], 0.0, 1.0, 0.0);
-		glRotatef(-refdef.viewAngles[1], 0.0, 0.0, 1.0);
-		glTranslatef(-refdef.viewOrigin[0], -refdef.viewOrigin[1], -refdef.viewOrigin[2]);
-
-		/* ...and save the resulting matrix for shadow-space transform */
+		R_SetupCameraMatrix();
 		glGetFloatv(GL_MODELVIEW_MATRIX, r_locals.world_matrix);
 		glPopMatrix();
 
 
-#if 0
-		int k;
-		vec3_t left, right, midpoint, v;
-		float scale, dist;
-		vec3_t R1[3];
-		vec3_t R2[3];
-		GLdouble zNear, zFar;
-		vec3_t maxs[SHADOW_SPLITS];
-		vec3_t mins[SHADOW_SPLITS];
-		float clip;
-
-
-
-		if (r_isometric->integer) {
-			//glOrtho(-10 * refdef.fieldOfViewX, 10 * refdef.fieldOfViewX, -10 * refdef.fieldOfViewX * yaspect, 10 * refdef.fieldOfViewX * yaspect, -zFar, zFar);
-			/* @todo - handle this case */
-			Com_Printf("TODO: handle isometric case for shadowmaps\n");
-		} else {
-			zNear = 4.0;
-			zFar = MAX_WORLD_WIDTH; /*< @todo - try to make this tighter if possible */
-
-			for (i = 0; i < SHADOW_SPLITS; i++) {
-				float Clin = zNear + (zFar - zNear) * ((float)i / (SHADOW_SPLITS - 1.0));
-				float Clog = zNear * pow((zFar / zNear), (float)i / (SHADOW_SPLITS - 1.0));
-				float weight = 0.9;
-				vec3_t point;
-
-				clip = weight * Clin + (1.0 - weight) * Clog;
-
-				VectorSet(maxs[i], -HUGE_VAL, -HUGE_VAL, -HUGE_VAL);
-				VectorSet(mins[i], HUGE_VAL, HUGE_VAL, HUGE_VAL);
-				VectorMul(zNear, r_locals.frustum[i].normal, point);
-				for (k = 0; k < 3; k++) {
-					maxs[i][k] = (maxs[i][k] > point[k]) ? maxs[i][k] : point[k];
-					mins[i][k] = (mins[i][k] < point[k]) ? mins[i][k] : point[k];
-					maxs[i][k] = (maxs[i][k] > point[k]) ? maxs[i][k] : point[k];
-					mins[i][k] = (mins[i][k] < point[k]) ? mins[i][k] : point[k];
-				}
-
-				for (j = 0; j < 4; j++) {
-					VectorMul(clip, r_locals.frustum[j].normal, point);
-					for (k = 0; k < 3; k++) {
-						maxs[i][k] = (maxs[i][k] > point[k]) ? maxs[i][k] : point[k];
-						mins[i][k] = (mins[i][k] < point[k]) ? mins[i][k] : point[k];
-						maxs[i][k] = (maxs[i][k] > point[k]) ? maxs[i][k] : point[k];
-						mins[i][k] = (mins[i][k] < point[k]) ? mins[i][k] : point[k];
-					}
-
-				}
-
-
-				//Com_Printf("clip=%f\n", clip);
-				//Print3Vector(mins[i]);
-				//Print3Vector(maxs[i]);
-				//glFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
-
-			}
-		}
-
-
-
-		//R_UseProgram(r_state.world_program);
-		//R_ProgramParameter3fvs("SHADOW_SPLIT_MINS", SHADOW_SPLITS, mins);
-		//R_ProgramParameter2fvs("SHADOW_SPLIT_MAXS", SHADOW_SPLITS, maxs);
-
-
-
-		scale = - refdef.viewOrigin[2] / r_locals.frustum[0].normal[2];
-		for (i = 0; i < 3; i++)
-			right[i] = refdef.viewOrigin[i] + scale * r_locals.frustum[0].normal[i];
-
-		scale = - refdef.viewOrigin[2] / r_locals.frustum[1].normal[2];
-		for (i = 0; i < 3; i++)
-			left[i] = refdef.viewOrigin[i] + scale * r_locals.frustum[1].normal[i];
-
-		scale = - refdef.viewOrigin[2] / r_locals.frustum[3].normal[2];
-		for (i = 0; i < 3; i++)
-			midpoint[i] = refdef.viewOrigin[i] + scale * r_locals.frustum[3].normal[i];
-
-		scale = - refdef.viewOrigin[2] / r_locals.forward[2];
-		for (i = 0; i < 3; i++)
-			target[i] = refdef.viewOrigin[i] + scale * r_locals.forward[i];
-
-		VectorSubtract(right, left, v);
-		dist = VectorLength(v) / 3.0;
-
-		dist = (dist > MAX_SHADOW_SIZE) ? MAX_SHADOW_SIZE : dist;
-
-		VectorSubtract(target, midpoint, v);
-		VectorNormalize(v);
-		VectorMul(dist, v, target);
-		VectorAdd(midpoint, target, target);
-
-#endif
-
 		R_EnableShadowbuffer(qtrue);
 		//R_UseProgram(r_state.build_shadowmap_program);
 		glEnable(GL_DEPTH_TEST);
-		/* don't render front faces to reduce aliasing artifacts */
-		//glEnable(GL_CULL_FACE);
-		//glCullFace(GL_FRONT);
-
-
-		/* set up matrixes for the light source as viewpoint */
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
-		glLoadIdentity();
-		if (light->loc[3] == 0) {
-			vec3_t v;
-			//glOrtho(-1000, 1000, -0000, 2000,  -1000, 1000);
-			//glOrtho(-MAX_WORLD_WIDTH, MAX_WORLD_WIDTH, -MAX_WORLD_WIDTH, MAX_WORLD_WIDTH,  -MAX_WORLD_WIDTH, MAX_WORLD_WIDTH);
-			//glOrtho(-dist, dist, -dist, dist,  -dist/4.0, dist/4.0);
-			//glOrtho(mins[4][0], maxs[4][0], mins[4][1], maxs[4][1], mins[4][2], maxs[4][2]);
-
-			//glOrtho(-dist, dist, -dist, dist,  -200.0, 10.0);
-			//glRotatef(90.0 - refdef.viewAngles[1], 0.0, 0.0, 1.0);
-
-			//glOrtho(r_locals.mins[0], r_locals.maxs[0], r_locals.mins[1], r_locals.maxs[1], r_locals.mins[2], r_locals.maxs[2]);
-			glOrtho(r_locals.mins[0], r_locals.maxs[0], r_locals.mins[1], r_locals.maxs[1], -r_locals.maxs[2], -r_locals.mins[2]);
-			//glOrtho(r_locals.mins[0]+100, r_locals.maxs[0]-100, r_locals.mins[1]+100, r_locals.maxs[1]-100, -200, 10);
-			//glOrtho(r_locals.mins[0]/2.0, r_locals.maxs[0]/2.0, r_locals.mins[1]/2.0, r_locals.maxs[1]/2.0, -200, 10);
-			//glOrtho(-100, 100, -100, 100, -200, 10);
-			VectorSubtract(r_locals.maxs, r_locals.mins, v);
-			VectorMul(0.5, v, v);
-			VectorAdd(r_locals.mins, v, v);
-
-			//VectorSet(target, v[0], v[1], 0);
-			VectorSet(target, 0, 0, 0);
-			//VectorSet(target, r_locals.mins[0]+200, r_locals.mins[1]+200, 0);
-
-			R_UseViewport(r_state.shadowmapBuffer);
-		} else {
-			MYgluPerspective(4.0, MAX_WORLD_WIDTH);
-		}
 
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
 		glLoadIdentity();
 		VectorCopy(light->loc, lightPos);
+		VectorSet(target, 0, 0, 0);
 		if (light->loc[3] == 0) {
 			VectorMul(-1.0, lightPos, lightPos);
 			VectorNormalize2(lightPos, lightDir);
@@ -933,78 +812,62 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 			VectorSet(up, 0.0, 1.0, 0.0);
 		MYgluLookAt(lightPos, target, up);
 
-		/* save the camera origin, and then use the light position as the effective view origin */
-		VectorCopy(refdef.viewOrigin, viewOriginCamera);
-#if 0
-		VectorCopy(lightPos, refdef.viewOrigin);
-
-		//VectorCopy(lightDir, r_locals.forward);
-
-
-		/* @todo fix frustum stuff */
-		VectorSet(r_locals.frustum[0].normal, 1.0, 0.0, 0.0);
-		r_locals.frustum[0].type = PLANE_ANYZ;
-		VectorSet(r_locals.frustum[1].normal, -1.0, 0.0, 0.0);
-		r_locals.frustum[1].type = PLANE_ANYZ;
-		VectorSet(r_locals.frustum[2].normal, 0.0, 1.0, 0.0);
-		r_locals.frustum[2].type = PLANE_ANYZ;
-		VectorSet(r_locals.frustum[3].normal, 0.0, -1.0, 0.0);
-		r_locals.frustum[3].type = PLANE_ANYZ;
-
-		//VectorScale(r_locals.right, +1, r_locals.frustum[0].normal);
-		//VectorScale(r_locals.right, -1, r_locals.frustum[1].normal);
-		//VectorScale(r_locals.up, +1, r_locals.frustum[2].normal);
-		//VectorScale(r_locals.up, -1, r_locals.frustum[3].normal);
-
-		VectorSet(up, 0.0, 0.0, 1.0);
-		for (i = 0; i < 4; i++) {
-			RotatePointAroundVector(r_locals.frustum[i].normal, lightDir, r_locals.frustum[i].normal, -(90 - refdef.viewAngles[1]));
-			//r_locals.frustum[i].dist = -DotProduct(target, r_locals.frustum[i].normal);
-			r_locals.frustum[i].dist = -DotProduct(target, r_locals.frustum[i].normal);
-			//r_locals.frustum[i].dist = 0.0001;
-			//r_locals.frustum[i].dist = -dist;
-			//r_locals.frustum[i].dist = -MAX_WORLD_WIDTH;
-		}
-
-#endif
-
 		glGetFloatv(GL_MODELVIEW_MATRIX, modelView);
-		glGetFloatv(GL_PROJECTION_MATRIX, projection);
 
-		//Com_Printf("M1=:\n");
 		for (i = 0; i < 3; i++) {
 			for (j = 0; j < 3; j++) {
 				M1[i*4+j] = r_locals.world_matrix[j*4+i];
-				//M2[i*4+j] = modelView[i*4+j];
-				//R1[i][j] = r_locals.world_matrix[j*4+i];
-				//R2[i][j] = modelView[i*4+j];
-				//Com_Printf("%f, ", M1[i*4+j]);
+				R[i][j] = modelView[i*4+j];
 			}
-			//Com_Printf("\n");
 		}
-
-		//GLMatrixMultiply(M1, M2, M3);
-
-		//VectorSubtract(lightPos, viewOriginCamera, v);
 		for (i = 0; i < 3; i++) {
-			//M1[(i*4)-1] = v[i];
-			//M1[12+i] = v[i];
-			M1[12+i] = viewOriginCamera[i];
+			M1[12+i] = refdef.viewOrigin[i];
 		}
 
-		/*
-		for (i = 0; i < 4; i++) {
-			for (j = 0; j < 4; j++) {
-				M3[4*i+j] = r_locals.world_matrix[j*4+i];
+		/* set up matrixes for the light source as viewpoint */
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		glLoadIdentity();
+		if (light->loc[3] == 0) {
+			vec3_t corners[8];
+			vec3_t cornersRot[8];
+			vec3_t a = {HUGE_VAL, HUGE_VAL, HUGE_VAL};
+			vec3_t b = {-HUGE_VAL, -HUGE_VAL, -HUGE_VAL};
+
+			for (i = 0; i < 4; i++) {
+				VectorCopy(r_locals.mins, corners[i]);
+				VectorCopy(r_locals.maxs, corners[i+4]);
 			}
+
+			for (i = 0; i < 3; i++) {
+				corners[i][i] = r_locals.maxs[i];
+				corners[i+4][i] = r_locals.mins[i];
+			}
+			
+			for (i = 0; i < 8; i++) {
+				VectorRotate(R, corners[i], cornersRot[i]);
+			}
+
+			for (i = 0; i < 8; i++) {
+				for (j = 0; j < 3; j++) {
+					a[j] = min(a[j], cornersRot[i][j]);
+					b[j] = max(b[j], cornersRot[i][j]);
+				}
+				
+			}
+
+			glOrtho(a[0], b[0], a[1], b[1], a[2], b[2]);
+
+			R_UseViewport(r_state.shadowmapBuffer);
+		} else {
+			/* @todo - handle this case */
+			MYgluPerspective(4.0, MAX_WORLD_WIDTH);
 		}
-		*/
 
-		//Matrix4x4_Invert_Full(r_locals.world_matrix, M2);
-		//Matrix4x4_Invert_Full(r_locals.proj_matrix, M3);
 
-		/* @todo we don't really need to use GL_TEXTURE7 here */
-		//glActiveTexture(GL_TEXTURE7);
+		glGetFloatv(GL_PROJECTION_MATRIX, projection);
+
+
 		glMatrixMode(GL_TEXTURE);
 		glPushMatrix();
 		glLoadIdentity();
@@ -1015,24 +878,17 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 
 		glGetFloatv(GL_TEXTURE_MATRIX, r_locals.shadow_matrix);
 
-		//glMultMatrixf(M2);
-		//glMultMatrixf(M3);
 		glPopMatrix();
 
-		//glActiveTexture(GL_TEXTURE0);
 		glMatrixMode(GL_MODELVIEW);
 
 	} else {
 		/* Re-enable standard rendering */
-		//glCullFace(GL_BACK);
-		//glDisable(GL_CULL_FACE);
 		glMatrixMode(GL_PROJECTION);
 		glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
 
-		/* restore camera as the view origin */
-		VectorCopy(viewOriginCamera, refdef.viewOrigin);
 		R_UseProgram(default_program);
 		R_EnableShadowbuffer(qfalse);
 	}
@@ -1089,19 +945,11 @@ void R_Setup3D (void)
 	MYgluPerspective(4.0, MAX_WORLD_WIDTH);
 	glGetFloatv(GL_PROJECTION_MATRIX, r_locals.proj_matrix);
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 
-	glRotatef(-90.0, 1.0, 0.0, 0.0);	/* put Z going up */
-	glRotatef(90.0, 0.0, 0.0, 1.0);	/* put Z going up */
-	glRotatef(-refdef.viewAngles[2], 1.0, 0.0, 0.0);
-	glRotatef(-refdef.viewAngles[0], 0.0, 1.0, 0.0);
-	glRotatef(-refdef.viewAngles[1], 0.0, 0.0, 1.0);
-	glTranslatef(-refdef.viewOrigin[0], -refdef.viewOrigin[1], -refdef.viewOrigin[2]);
-
+	R_SetupCameraMatrix();
 	/* retrieve the resulting matrix for other manipulations  */
 	glGetFloatv(GL_MODELVIEW_MATRIX, r_locals.world_matrix);
-
+	
 	/* set vertex array pointer */
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 

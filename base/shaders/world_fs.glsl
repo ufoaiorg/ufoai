@@ -90,10 +90,6 @@ void main(void){
 
 	/* standard rendering pass */
 	} else {
-		/* don't bother to render surfaces that face away from the camera */
-		if (dot(vNormal, -vPos.xyz) < 0.0){
-			discard;
-		}
 
 		/* calculate dynamic lighting, including 
 		 * the Cook-Torrance specularity model with the Phong
@@ -150,8 +146,8 @@ void main(void){
 
 /* debuging tools */
 #if r_debug_normals
-		//outColor = (1.0 + dot(vec3(0.0, 0.0, 1.0), normalize(-lightDirs[0]))) * 0.5 * vec4(1.0);
-		outColor = vec4(dot(normalize(vNormal), normalize(-vPos.rgb)));
+		outColor = (1.0 + dot(vec3(0.0, 0.0, 1.0), normalize(-lightDirs[0]))) * 0.5 * vec4(1.0);
+		//outColor = vec4(dot(normalize(vNormal), normalize(-vPos.rgb)));
 #endif
 
 #if r_debug_tangents

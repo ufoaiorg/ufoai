@@ -1020,3 +1020,46 @@ void MatrixTranspose (const vec3_t m[3], vec3_t t[3])
 		}
 	}
 }
+
+/**
+ * @brief Assuming the input is a rotation and translation, returns the inverse (else behavior undefined)
+ */
+void GLMatrixInvertTR (const float* in, float* out)
+{
+	int i, j;
+
+	/* set up identity matrix */
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
+			if (i == j) 
+				out[i*4+j] = 1.0;
+			else 
+				out[i*4+j] = 0.0;
+		}
+	}
+
+#if DEBUG
+	for (i = 0; i < 3; i++) {
+		float l = 0.0;
+		for (j = 0; j < 3; j++) {
+			l += in[j*4+i] * in[j*4+i];
+		}
+		if (sqrt(l) < 0.99 || sqrt(l) > 1.01) {
+			Com_Printf("trying to invert a non-orthogonal matrix using transpose won't work!\n");
+		}
+	}
+
+#endif
+
+	/* transpose upper 3x3 to invert rotation part */
+	for (i = 0; i < 3; i++) {
+		for (j = 0; j < 3; j++) {
+			out[i*4+j] = in[j*4+i];
+		}
+	}
+
+	/* negate translation part */
+	for (i = 0; i < 3; i++) {
+		out[12+i] = -in[12+i];
+	}
+}

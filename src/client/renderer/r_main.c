@@ -228,7 +228,7 @@ void R_BeginFrame (void)
 		else if (Cvar_PendingCvars(CVAR_R_PROGRAMS))
 			R_RestartPrograms_f();
 
-		R_RestartFBObjects();
+		//R_RestartFBObjects();
 
 		Com_SetRenderModified(qfalse);
 	}

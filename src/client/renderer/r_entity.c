@@ -624,3 +624,4 @@ int R_AddEntity (const entity_t *ent)
 	r_entities[refdef.numEntities++] = *ent;
 	return refdef.numEntities - 1;
 }
+
