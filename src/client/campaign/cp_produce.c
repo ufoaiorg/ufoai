@@ -157,6 +157,23 @@ int PR_RequirementsMet (int amount, const requirements_t const *reqs, base_t *ba
 }
 
 /**
+ * @brief returns the number of free production slots of a queue
+ * @param[in] queue Pointer to the queue to check
+ */
+int PR_QueueFreeSpace (const production_queue_t const *queue)
+{
+	base_t *base = PR_ProductionQueueBase(queue);
+	int numWorkshops;
+
+	assert(queue);
+	assert(base);
+
+	numWorkshops = max(B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP), 0);
+
+	return numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP - queue->numItems;
+}
+
+/**
  * @brief Add a new item to the bottom of the production queue.
  * @param[in] base Pointer to base, where the queue is.
  * @param[in] queue Pointer to the queue.
@@ -679,6 +696,19 @@ base_t *PR_ProductionBase (production_t *production) {
 			return base;
 	}
 	return NULL;
+}
+
+/**
+ * @brief Returns the base pointer the production queue belongs to
+ * @param[in] queue pointer to the production queue
+ * @returns base_t pointer to the base
+ */
+base_t *PR_ProductionQueueBase (const production_queue_t const *queue)
+{
+	const ptrdiff_t baseIDX = (ptrdiff_t)(queue - ccs.productions);
+	base_t *base = B_GetFoundedBaseByIDX(baseIDX);
+
+	return base;
 }
 
 /**

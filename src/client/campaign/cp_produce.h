@@ -80,6 +80,8 @@ void PR_ProductionRun(void);
 qboolean PR_ItemIsProduceable(const objDef_t const *item);
 
 base_t *PR_ProductionBase(production_t *production);
+base_t *PR_ProductionQueueBase (const production_queue_t const *queue);
+
 void PR_UpdateProductionCap(struct base_s *base);
 
 void PR_UpdateRequiredItemsInBasestorage(base_t *base, int amount, const requirements_t const *reqs);
@@ -91,7 +93,7 @@ production_t *PR_QueueNew(base_t *base, production_queue_t *queue, objDef_t *ite
 void PR_QueueMove(production_queue_t *queue, int index, int dir);
 void PR_QueueDelete(base_t *base, production_queue_t *queue, int index);
 void PR_QueueNext(base_t *base);
-
+int PR_QueueFreeSpace(const production_queue_t const *queue);
 
 #endif /* CLIENT_CP_PRODUCE */
 
