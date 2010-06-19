@@ -106,18 +106,12 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
  * @param[in] base Pointer to base.
  * @param[in] amount How many items are planned to be added (positive number) or removed (negative number).
  * @param[in] reqs The production requirements of the item that is to be produced. These included numbers are multiplied with 'amount')
- * @todo This doesn't check yet if there are more items removed than are in the base-storage (might be fixed if we used a storage-function with checks, otherwise we can make it a 'condition' in order to run this function.
  */
 void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements_t *reqs)
 {
 	int i;
-	equipDef_t *ed;
 
 	if (!base)
-		return;
-
-	ed = &base->storage;
-	if (!ed)
 		return;
 
 	if (amount == 0)
@@ -128,13 +122,7 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements
 		if (req->type == RS_LINK_ITEM) {
 			const objDef_t *item = (const objDef_t *)req->link;
 			assert(item);
-			if (amount > 0) {
-				/* Add items to the base-storage. */
-				ed->numItems[item->idx] += (req->amount * amount);
-			} else { /* amount < 0 */
-				/* Remove items from the base-storage. */
-				ed->numItems[item->idx] -= (req->amount * -amount);
-			}
+			B_AddToStorage(base, item, req->amount * amount);
 		}
 	}
 }

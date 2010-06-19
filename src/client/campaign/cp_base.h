@@ -320,6 +320,7 @@ qboolean B_ItemIsStoredInBaseStorage(const objDef_t *obj);
 qboolean B_BaseHasItem(const base_t *base, const objDef_t *item);
 int B_ItemInBase(const objDef_t *item, const base_t *base);
 
+int B_AddToStorage(base_t* base, const objDef_t *obj, int amount);
 
 /* aircraft functions */
 void B_AircraftReturnedToHomeBase(aircraft_t* aircraft);

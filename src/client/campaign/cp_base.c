@@ -3028,6 +3028,45 @@ qboolean B_ItemIsStoredInBaseStorage (const objDef_t *obj)
 }
 
 /**
+ * @brief Add/remove items to/from the storage.
+ * @param[in] base The base which storage and capacity should be updated
+ * @param[in] obj The item.
+ * @param[in] amount Amount to be added to removed
+ * @return the added/removed amount
+ * @note The main difference between B_AddToStorage and B_UpdateStorageAndCapacity is that
+ * B_AddToStorage adds/removes as many items as possible if adding/removing all not possible
+ * also B_AddToStorage don't have a reset method
+ */
+int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
+{
+	assert(base);
+	assert(obj);
+
+	if (obj->isVirtual)
+		return 0;
+	if (!B_ItemIsStoredInBaseStorage(obj))
+		return 0;
+
+	if (amount > 0) {
+		if (obj->size > 0) {
+			const int freeSpace = base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur;
+			/* correct amount and update capacity */
+			amount = min(amount, freeSpace / obj->size);
+			base->capacities[CAP_ITEMS].cur += (amount * obj->size);
+		}
+		base->storage.numItems[obj->idx] += amount;
+	} else if (amount < 0) {
+		/* correct amount */
+		amount = max(amount, -base->storage.numItems[obj->idx]);
+		if (obj->size > 0)
+			base->capacities[CAP_ITEMS].cur += (amount * obj->size);
+		base->storage.numItems[obj->idx] += amount;
+	}
+	
+	return amount;
+}
+
+/**
  * @brief Update the storage amount and the capacities for the storages in the base
  * @param[in] base The base which storage and capacity should be updated
  * @param[in] obj The item.
