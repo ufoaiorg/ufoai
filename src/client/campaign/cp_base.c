@@ -71,7 +71,7 @@ base_t* B_GetFoundedBaseByIDX (int baseIdx)
 {
 	base_t *base = B_GetBaseByIDX(baseIdx);
 
-	if (base->founded)
+	if (base && base->founded)
 		return base;
 
 	return NULL;
