@@ -3047,7 +3047,7 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 
 	if (reset) {
 		base->storage.numItems[obj->idx] = 0;
-		base->storage.numItemsLoose[obj->idx] = 0; /** @todo needed? */
+		base->storage.numItemsLoose[obj->idx] = 0;
 		base->capacities[CAP_ITEMS].cur = 0;
 	} else {
 		if (!B_ItemIsStoredInBaseStorage(obj)) {

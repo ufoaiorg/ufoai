@@ -265,7 +265,6 @@ typedef struct baseTemplate_s {
 void B_UpdateBaseData(void);
 int B_CheckBuildingConstruction(building_t *b, base_t* base);
 float B_GetMaxBuildingLevel(const base_t* base, const buildingType_t type);
-int B_GetNumOnTeam(const aircraft_t *aircraft);
 void B_ParseBuildings(const char *name, const char **text, qboolean link);
 void B_ParseBaseTemplate(const char *name, const char **text);
 void B_BaseResetStatus(base_t* const base);
@@ -277,41 +276,17 @@ buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
 /** Coordinates to place the new base at (long, lat) */
 extern vec2_t newBasePos;
 
-int B_GetFoundedBaseCount(void);
+void B_InitStartup(void);
+
+/* base functions */
+void B_NewBases(void);
 void B_SetUpBase(base_t* base, vec2_t pos);
 base_t* B_GetBaseByIDX(int baseIdx);
 base_t* B_GetFoundedBaseByIDX(int baseIdx);
-buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
-
-building_t* B_SetBuildingByClick(base_t *base, const building_t const *buildingTemplate, int row, int col);
-void B_InitStartup(void);
-void B_NewBases(void);
-void B_BuildingStatus(const base_t* base, const building_t* building);
 void B_SelectBase(const base_t *base);
 void B_UpdateBaseCount(void);
-
-building_t *B_GetFreeBuildingType(buildingType_t type);
-int B_GetNumberOfBuildingsInBaseByTemplate(const base_t *base, const building_t *type);
-int B_GetNumberOfBuildingsInBaseByBuildingType(const base_t *base, const buildingType_t type);
-void B_BuildingOpenAfterClick(const base_t *base, const building_t *building);
-qboolean B_BaseHasItem(const base_t *base, const objDef_t *item);
-int B_ItemInBase(const objDef_t *item, const base_t *base);
-qboolean B_ItemIsStoredInBaseStorage(const objDef_t *obj);
-
-qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);
-qboolean B_GetBuildingStatus(const base_t* const base, const buildingType_t type);
-void B_SetBuildingStatus(base_t* const base, const buildingType_t type, qboolean newStatus);
-qboolean B_CheckBuildingDependencesStatus(const base_t* const base, const building_t* building);
-
-void B_MarkBuildingDestroy(base_t* base, building_t* building);
-qboolean B_BuildingDestroy(base_t* base, building_t* building);
+int B_GetFoundedBaseCount(void);
 void B_Destroy(base_t *base);
-void B_AircraftReturnedToHomeBase(aircraft_t* aircraft);
-
-void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
-qboolean B_UpdateStorageAndCapacity(base_t* base, const objDef_t *obj, int amount, qboolean reset, qboolean ignorecap);
-baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
-void B_ResetAllStatusAndCapacities(base_t *base, qboolean firstEnable);
 
 base_t *B_GetFirstUnfoundedBase(void);
 base_t *B_GetCurrentSelectedBase(void);
@@ -320,25 +295,65 @@ void B_SetCurrentSelectedBase(const base_t *base);
 base_t* B_GetRandomBase(void);
 qboolean B_AssembleMap(base_t *base);
 
+/* building functions */
+buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
+
+void B_BuildingStatus(const base_t* base, const building_t* building);
+qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);
+qboolean B_GetBuildingStatus(const base_t* const base, const buildingType_t type);
+void B_SetBuildingStatus(base_t* const base, const buildingType_t type, qboolean newStatus);
+qboolean B_CheckBuildingDependencesStatus(const base_t* const base, const building_t* building);
+
+building_t* B_SetBuildingByClick(base_t *base, const building_t const *buildingTemplate, int row, int col);
+void B_MarkBuildingDestroy(base_t* base, building_t* building);
+qboolean B_BuildingDestroy(base_t* base, building_t* building);
+
+building_t *B_GetFreeBuildingType(buildingType_t type);
+int B_GetNumberOfBuildingsInBaseByTemplate(const base_t *base, const building_t *type);
+int B_GetNumberOfBuildingsInBaseByBuildingType(const base_t *base, const buildingType_t type);
+
+void B_BuildingOpenAfterClick(const base_t *base, const building_t *building);
 void B_ResetBuildingCurrent(base_t* base);
-void B_BaseMenuInit(const base_t *base);
-void B_RemoveAircraftExceedingCapacity(base_t* base, buildingType_t buildingType);
-void B_DrawBuilding(base_t* base, building_t* building);
-void B_RemoveItemsExceedingCapacity(base_t *base);
-void B_RemoveAntimatterExceedingCapacity(base_t *base);
-void B_ManageAntimatter(base_t *base, int amount, qboolean add);
+
+/* storage functions */
+qboolean B_ItemIsStoredInBaseStorage(const objDef_t *obj);
+qboolean B_BaseHasItem(const base_t *base, const objDef_t *item);
+int B_ItemInBase(const objDef_t *item, const base_t *base);
+
+
+/* aircraft functions */
+void B_AircraftReturnedToHomeBase(aircraft_t* aircraft);
+int B_GetNumOnTeam(const aircraft_t *aircraft);
+
+/* capacity functions */
+void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
+qboolean B_UpdateStorageAndCapacity(base_t* base, const objDef_t *obj, int amount, qboolean reset, qboolean ignorecap);
+baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
+void B_ResetAllStatusAndCapacities(base_t *base, qboolean firstEnable);
 void B_UpdateStorageCap(base_t *base);
 
+void B_RemoveAircraftExceedingCapacity(base_t* base, buildingType_t buildingType);
+void B_RemoveItemsExceedingCapacity(base_t *base);
+void B_RemoveAntimatterExceedingCapacity(base_t *base);
+
+/* menu functions */
+void B_BaseMenuInit(const base_t *base);
+void B_DrawBuilding(base_t* base, building_t* building);
+
+/* antimatter */
+void B_ManageAntimatter(base_t *base, int amount, qboolean add);
+
+/* savesystem */
 void B_SaveBaseSlotsXML(const baseWeapon_t *weapons, const int numWeapons, mxml_node_t *p);
 int B_LoadBaseSlotsXML(baseWeapon_t* weapons, int numWeapons, mxml_node_t *p);
 qboolean B_SaveStorageXML(mxml_node_t *parent, const equipDef_t equip);
 qboolean B_LoadStorageXML(mxml_node_t *parent, equipDef_t *equip);
 
+/* other */
 qboolean B_ScriptSanityCheck(void);
-
 int B_GetInstallationLimit(void);
 
-/* menu functions that checks whether the buttons in the base menu are useable */
+/* functions that checks whether the buttons in the base menu are useable */
 qboolean BS_BuySellAllowed(const base_t* base);
 qboolean AIR_AircraftAllowed(const base_t* base);
 qboolean RS_ResearchAllowed(const base_t* base);
@@ -347,4 +362,4 @@ qboolean E_HireAllowed(const base_t* base);
 qboolean AC_ContainmentAllowed(const base_t* base);
 qboolean HOS_HospitalAllowed(const base_t* base);
 
-#endif /* CLIENT_CL_BASEMANGEMENT_H */
+#endif /* CLIENT_CP_BASE_H */
