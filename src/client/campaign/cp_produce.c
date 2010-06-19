@@ -142,6 +142,8 @@ int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
 	for (i = 0; i < reqs->numLinks; i++) {
 		const requirement_t *req = &reqs->links[i];
 
+		if (req->amount == 0)
+			continue;
 		if (req->type == RS_LINK_ITEM) {
 			const int items = min(amount, B_ItemInBase(req->link, base) / req->amount);
 			producibleAmount = min(producibleAmount, items);
