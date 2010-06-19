@@ -74,17 +74,24 @@ typedef struct production_queue_s
 	production_t	items[MAX_PRODUCTIONS];	/**< Actual production items (in order). */
 } production_queue_t;
 
-void PR_ProductionRun(void);
 void PR_ProductionInit(void);
-void PR_UpdateProductionCap(struct base_s *base);
+void PR_ProductionRun(void);
+
 qboolean PR_ItemIsProduceable(const objDef_t const *item);
+
+base_t *PR_ProductionBase(production_t *production);
+void PR_UpdateProductionCap(struct base_s *base);
+
+void PR_UpdateRequiredItemsInBasestorage(base_t *base, int amount, requirements_t *reqs);
+int PR_RequirementsMet(int amount, requirements_t *reqs, base_t *base);
+
+float PR_CalculateProductionPercentDone(const base_t *base, const technology_t *tech, const struct storedUFO_s *const storedUFO);
+
 production_t *PR_QueueNew(base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, struct storedUFO_s *ufo, signed int amount);
 void PR_QueueMove(production_queue_t *queue, int index, int dir);
 void PR_QueueDelete(base_t *base, production_queue_t *queue, int index);
 void PR_QueueNext(base_t *base);
-void PR_UpdateRequiredItemsInBasestorage(base_t *base, int amount, requirements_t *reqs);
-float PR_CalculateProductionPercentDone(const base_t *base, const technology_t *tech, const struct storedUFO_s *const storedUFO);
-base_t *PR_ProductionBase(production_t *production);
+
 
 #endif /* CLIENT_CP_PRODUCE */
 

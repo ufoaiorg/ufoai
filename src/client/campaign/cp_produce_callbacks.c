@@ -68,44 +68,6 @@ static void PR_ClearSelected (void)
 }
 
 /**
- * @brief Checks if the production requirements are met for a defined amount.
- * @param[in] amount How many items are planned to be produced.
- * @param[in] reqs The production requirements of the item that is to be produced.
- * @param[in] base Pointer to base.
- * @return 0: If nothing can be produced. 1+: If anything can be produced. 'amount': Maximum.
- */
-static int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
-{
-	int a, i;
-	int producibleAmount = 0;
-
-	for (a = 0; a < amount; a++) {
-		qboolean producible = qtrue;
-		for (i = 0; i < reqs->numLinks; i++) {
-			const requirement_t *req = &reqs->links[i];
-			if (req->type == RS_LINK_ITEM) {
-				/* The same code is used in "RS_RequirementsMet" */
-				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s\n", req->id);
-				if (B_ItemInBase(req->link, base) < req->amount) {
-					producible = qfalse;
-				}
-			}
-			if (req->type == RS_LINK_UFO) {
-				/* The same code is used in "RS_RequirementsMet" */
-				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s\n", req->id);
-				if (US_UFOsInStorage(req->link, NULL) < req->amount)
-					producible = qfalse;
-			}
-		}
-		if (producible)
-			producibleAmount++;
-		else
-			break;
-	}
-	return producibleAmount;
-}
-
-/**
  * @brief update the list of queued and available items
  * @param[in] base Pointer to the base.
  */

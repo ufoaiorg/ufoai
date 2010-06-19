@@ -128,6 +128,33 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements
 }
 
 /**
+ * @brief Checks if the production requirements are met for a defined amount.
+ * @param[in] amount How many items are planned to be produced.
+ * @param[in] reqs The production requirements of the item that is to be produced.
+ * @param[in] base Pointer to base.
+ * @return how much item/aircraft/etc can be produced
+ */
+int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
+{
+	int i;
+	int producibleAmount = amount;
+
+	for (i = 0; i < reqs->numLinks; i++) {
+		const requirement_t *req = &reqs->links[i];
+
+		if (req->type == RS_LINK_ITEM) {
+			const int items = min(amount, B_ItemInBase(req->link, base) / req->amount);
+			producibleAmount = min(producibleAmount, items);
+		} else if (req->type == RS_LINK_UFO) {
+			const int ufos = min(amount, US_UFOsInStorage(req->link, NULL) / req->amount);
+			producibleAmount = min(producibleAmount, ufos);
+		}
+	}
+
+	return producibleAmount;
+}
+
+/**
  * @brief Add a new item to the bottom of the production queue.
  * @param[in] base Pointer to base, where the queue is.
  * @param[in] queue Pointer to the queue.
@@ -149,6 +176,7 @@ production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *it
 		return NULL;
 
 	if (E_CountHired(base, EMPL_WORKER) <= 0) {
+		/** @todo move popup into menucode */
 		MN_Popup(_("Not enough workers"), _("You cannot queue productions without workers hired in this base.\n\nHire workers."));
 		return NULL;
 	}
@@ -156,6 +184,7 @@ production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *it
 	numWorkshops = max(B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP), 0);
 
 	if (queue->numItems >= numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP) {
+		/** @todo move popup into menucode */
 		MN_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
 		return NULL;
 	}
@@ -175,11 +204,14 @@ production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *it
 		tech = ufo->ufoTemplate->tech;
 
 	/* We cannot queue new aircraft if no free hangar space. */
+	/** @todo move this check out into a new function */
 	if (aircraftTemplate) {
 		if (!B_GetBuildingStatus(base, B_COMMAND)) {
+			/** @todo move popup into menucode */
 			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
 			return NULL;
 		} else if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
+			/** @todo move popup into menucode */
 			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
 			return NULL;
 		}
