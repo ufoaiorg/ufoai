@@ -354,6 +354,7 @@ then
 fi
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 SERVER_LIBS="$SERVER_LIBS $LIBS"
+RADIANT_LIBS="$RADIANT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check how to do maths
