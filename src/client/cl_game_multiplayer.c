@@ -114,7 +114,7 @@ static void GAME_MP_ChangeGametype_f (void)
 	}
 
 	/* previous? */
-	if (!strcmp(Cmd_Argv(0), "mn_prevgametype")) {
+	if (!strcmp(Cmd_Argv(0), "mp_prevgametype")) {
 		next = qfalse;
 	}
 
