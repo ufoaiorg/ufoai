@@ -184,7 +184,6 @@ int PR_QueueFreeSpace (const production_queue_t const *queue)
  */
 production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, storedUFO_t *ufo, signed int amount)
 {
-	int newAmount;
 	production_t *prod;
 	const technology_t *tech;
 
@@ -193,12 +192,8 @@ production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *it
 
 	if (PR_QueueFreeSpace(queue) <= 0)
 		return NULL;
-
-	if (E_CountHired(base, EMPL_WORKER) <= 0) {
-		/** @todo move popup into menucode */
-		MN_Popup(_("Not enough workers"), _("You cannot queue productions without workers hired in this base.\n\nHire workers."));
+	if (E_CountHired(base, EMPL_WORKER) <= 0)
 		return NULL;
-	}
 
 	/* Initialize */
 	prod = &queue->items[queue->numItems];
@@ -219,14 +214,7 @@ production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *it
 	if (!tech)
 		return NULL;
 
-	newAmount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
-	/** @todo move popups into menucode */
-	if (newAmount == 0)
-		MN_Popup(_("Not enough materials"), _("You cannot produce this, don't have the materials needed for it.\n"));
-	else if (amount != newAmount)
-		MN_Popup(_("Not enough materials"), va(_("You don't have enough materials for %i pieces. Only %i will be produced.\n"), amount, newAmount));
-	amount = newAmount;
-
+	amount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
 	if (amount == 0)
 		return NULL;
 
