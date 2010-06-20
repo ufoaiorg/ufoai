@@ -305,10 +305,10 @@ static qboolean G_ReactionFireShoot (const player_t *player, edict_t *shooter, c
 {
 	const int minhit = 30;
 	shot_mock_t mock;
-	int ff, i, maxff;
+	int ff, i;
+	/* this is the max amount of friendly units that were hit during the mock calculation */
+	int maxff;
 
-	/** @todo maxff is the number of edicts that is hit by the reaction fire shot - we will never hit 100
-	 * who ever wrote this, please explain this to me. */
 	if (G_IsInsane(shooter))
 		maxff = 100;
 	else if (G_IsRaged(shooter))
@@ -320,6 +320,8 @@ static qboolean G_ReactionFireShoot (const player_t *player, edict_t *shooter, c
 	else
 		maxff = 5;
 
+	/* calculate the mock values - e.g. how many friendly units we would hit
+	 * when opening the reaction fire */
 	memset(&mock, 0, sizeof(mock));
 	for (i = 0; i < 100; i++)
 		if (!G_ClientShoot(player, shooter, at, type, firemode, &mock, qfalse, 0))
