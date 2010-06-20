@@ -13,6 +13,7 @@ BINARIES_RADIANT = \
 
 include build/install_linux.mk
 include build/install_mac.mk
+include build/install_mojo.mk
 include build/install_windows.mk
 
 installer-pre: lang maps-sync models pk3

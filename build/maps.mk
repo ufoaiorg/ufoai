@@ -48,6 +48,7 @@ maps-fast:
 maps-ents:
 	$(MAKE) maps UFO2MAPFLAGS="$(ENTS_UFO2MAPFLAGS)"
 
+# TODO only sync if there were updates on the map files
 maps-sync:
 	contrib/scripts/map-get.py upgrade
 
