@@ -43,14 +43,15 @@ entity info_player_start {
 	}
 
 	type {
+		team	"UNSIGNED V_INT"
 		origin	"V_FLOAT 3"
 		angle	"V_INT"
 	}
 
 	range {
 		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
+		team	"1 2 3 4 5 6 7"
 	}
-
 }
 
 entity info_human_start {
@@ -75,7 +76,6 @@ entity info_human_start {
 	range {
 		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
 	}
-
 }
 
 entity info_alien_start {
@@ -100,7 +100,6 @@ entity info_alien_start {
 	range {
 		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
 	}
-
 }
 
 entity info_2x2_start {
@@ -111,7 +110,7 @@ entity info_2x2_start {
 
 	optional {
 		team	"The number of the team for this player starting point. Only for multiplayer teams."
-		angle	"The direction that the actor faces at the start 0, 90, 180 or 270"
+		angle	"The direction that the actor faces at the start"
 	}
 
 	mandatory {
@@ -119,14 +118,15 @@ entity info_2x2_start {
 	}
 
 	type {
+		team	"UNSIGNED V_INT"
 		origin	"V_FLOAT 3"
 		angle	"V_INT"
 	}
 
 	range {
 		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
+		team	"0 1 2 3 4 5 6 7"
 	}
-
 }
 
 entity info_civilian_start {
@@ -140,7 +140,7 @@ entity info_civilian_start {
 	}
 
 	optional {
-		angle	"The direction that the actor faces at the start 0, 90, 180 or 270"
+		angle	"The direction that the actor faces at the start"
 	}
 
 	type {
@@ -376,6 +376,7 @@ entity worldspawn {
 		angles_day	"-90 - 90"
 		angles_day	"0 - 360"
 		ambient_day	"0.0 - 1.0"
+		maxlevel	"1 2 3 4 5 6 7 8"
 	}
 }
 
@@ -402,7 +403,6 @@ entity misc_sound {
 	default {
 		spawnflags	"255"
 	}
-
 }
 
 entity misc_mission {
@@ -483,7 +483,6 @@ entity func_door {
 	}
 }
 
-
 entity func_group {
 	description	"Only for editor and terrain convenience."
 
@@ -557,6 +556,18 @@ entity trigger_rescue {
 
 	optional {
 		particle	"Display a particle"
+	}
+
+	mandatory {
+		team	"The team number that this trigger serves as a rescue zone"
+	}
+	
+	type {
+		team	"UNSIGNED V_INT"
+	}
+	
+	range {
+		team	"0 1 2 3 4 5 6 7"
 	}
 }
 

@@ -86,10 +86,13 @@ static float FloatNoSwap (float f)
 
 void Swap_Init (void)
 {
+	Com_Printf("---- endianness initialization -----\n");
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
+	Com_Printf("found little endian system\n");
 	_BigFloat = FloatSwap;
 	_LittleFloat = FloatNoSwap;
 #else
+	Com_Printf("found big endian system\n");
 	_BigFloat = FloatNoSwap;
 	_LittleFloat = FloatSwap;
 #endif

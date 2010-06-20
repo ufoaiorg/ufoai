@@ -170,14 +170,16 @@ static qboolean Touch_RescueTrigger (edict_t *self, edict_t *activator)
 	assert(!G_IsDead(activator));
 	assert(!G_IsDead(activator));
 
-	G_ActorSetInRescueZone(activator, qtrue);
+	if (self->team == activator->team)
+		G_ActorSetInRescueZone(activator, qtrue);
 
 	return qfalse;
 }
 
 static void Reset_RescueTrigger (edict_t *self, edict_t *activator)
 {
-	G_ActorSetInRescueZone(activator, qfalse);
+	if (self->team == activator->team)
+		G_ActorSetInRescueZone(activator, qfalse);
 }
 
 /**
