@@ -652,7 +652,7 @@ static void PR_ProductionIncrease_f (void)
 			Cvar_SetValue("mn_production_amount", prod->amount);
 			return;
 		} else if (amount != producibleAmount) {
-			Com_sprintf(productionPopup, lengthof(productionPopup), _("You don't have enough material to produce all (%i) additional items. Only %i added."), amount, producibleAmount);
+			Com_sprintf(productionPopup, lengthof(productionPopup), _("You don't have enough material to produce all (%i) additional items. Only %i could be added."), amount, producibleAmount);
 			MN_Popup(_("Not enough material!"), productionPopup);
 		}
 
@@ -754,29 +754,25 @@ static void PR_ProductionStop_f (void)
  */
 static void PR_ProductionDecrease_f (void)
 {
-	int amount = 1, amountTemp = 0;
-	production_queue_t *queue;
-	production_t *prod;
+	int amount = 1;
 	base_t *base = B_GetCurrentSelectedBase();
+	production_t *prod = selectedProduction;
 
 	if (Cmd_Argc() == 2)
 		amount = atoi(Cmd_Argv(1));
 
-	if (!base || !selectedProduction)
+	if (!prod)
 		return;
 
-	queue = &ccs.productions[base->idx];
-	prod = selectedProduction;
-	if (prod->amount >= amount)
-		amountTemp = amount;
-	else
-		amountTemp = prod->amount;
-
-	prod->amount -= amountTemp;
-
-	if (prod->amount <= 0) {
+	if (prod->amount <= amount) {
 		PR_ProductionStop_f();
-	} else {
+		return;
+	}
+
+	/** @todo add (confirmaton) popup in case storage cannot take all the items we add back to it */
+	PR_DecreaseProduction(prod, amount);
+
+	if (base) {
 		PR_ProductionInfo(base);
 		PR_UpdateProductionList(base);
 	}

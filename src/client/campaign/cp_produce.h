@@ -60,7 +60,9 @@ typedef struct production_s
 							 * 0 if production is not started, 1 if production is over */
 	qboolean spaceMessage;	/**< Used in No Free Space message adding. */
 	qboolean creditMessage;	/**< Used in No Credits message adding. */
+	/** @todo remove production flag */
 	qboolean production;	/**< True if this is real production, false when disassembling. */
+	/** @todo remove itemCached flag */
 	qboolean itemsCached;	/**< If true the items required for production (of _one_ objID item) have been removed from production.
 				 * They need to be added to the storage again if this queue is stopped or removed.
 				 * The item-numbers from the requirement need to be multiplied with 'amount' in order to get the overall number of cached items. */
@@ -85,6 +87,7 @@ base_t *PR_ProductionBase(production_t *production);
 base_t *PR_ProductionQueueBase (const production_queue_t const *queue);
 
 int PR_IncreaseProduction(production_t *prod, int amount);
+int PR_DecreaseProduction(production_t *prod, int amount);
 
 void PR_UpdateProductionCap(struct base_s *base);
 
