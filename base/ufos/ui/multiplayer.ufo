@@ -27,7 +27,7 @@ window multiplayer
 	/** @brief prevent pushing this menu */
 	func onInit
 	{
-		cmd "mn_pop"
+		cmd "mn_pop;"
 		call *node:root.mn_push_multiplayer
 	}
 }

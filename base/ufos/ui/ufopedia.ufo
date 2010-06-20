@@ -36,10 +36,10 @@ window ufopedia extends objectinfo
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			onChange	{
-				cmd "ufopedia_click <cvar:up_summary_selection>"
+				cmd "ufopedia_click <cvar:up_summary_selection>;"
 				*node:(abstractscrollbar)root.content.ufopedia_scroll@current = 0
 				*node:(text)root.content.ufopedia@viewpos = 0
-				cmd "update_ufopedia_layout"
+				cmd "update_ufopedia_layout;"
 			}
 			onViewChange	{
 				*node:(abstractscrollbar)parent.list_scroll@current = <viewpos>
@@ -76,7 +76,7 @@ window ufopedia extends objectinfo
 				pos		"1 0"
 				size	"622 43"
 				onChange {
-					cmd "update_ufopedia_layout"
+					cmd "update_ufopedia_layout;"
 				}
 			}
 			

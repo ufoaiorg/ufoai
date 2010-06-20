@@ -46,14 +46,14 @@ window aircraft_equip extends iaircraft
 			} else {
 				*cvar:tmp = "zone2"
 			}
-			cmd "airequip_slot_select <2> <cvar:tmp>"
+			cmd "airequip_slot_select <2> <cvar:tmp>;"
 			delete *cvar:tmp
 		} elif ( <1> eq "item" ) {
 			*airequip_zone_select1@image  = ""
 			*airequip_zone_select2@image  = ""
 			*itemlist@image = "ui/panel_grey_white"
 			*cvar:mn_aircraft_item_selected = <2>
-			cmd "airequip_list_click <2>" 
+			cmd "airequip_list_click <2>;" 
 		}
 	}
 
@@ -169,7 +169,7 @@ window aircraft_equip extends iaircraft
 			size		"200 25"
 			onClick		{
 				cmd "airequip_remove_item 1;"
-				cmd "airequip_select item -1"
+				cmd "airequip_select item -1;"
 			}
 			color		"0 0.5 0 1"
 		}
@@ -203,8 +203,8 @@ window aircraft_equip extends iaircraft
 				size		"235 20"
 				color		"0.6 0.6 0.6 0.3"
 				onChange {
-					cmd "airequip_selectcategory <cvar:mn_equip_itemtype>"
-					cmd "airequip_select item -1" 
+					cmd "airequip_selectcategory <cvar:mn_equip_itemtype>;"
+					cmd "airequip_select item -1;" 
 				}
 			}
 
@@ -236,7 +236,7 @@ window aircraft_equip extends iaircraft
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			onChange		{
-				cmd "airequip_select item <cvar:mn_aircraft_item_selected>"
+				cmd "airequip_select item <cvar:mn_aircraft_item_selected>;"
 			}
 			onViewChange {
 				*node:(abstractscrollbar)parent.airequip_list_scroll@fullsize = <fullsize>
@@ -292,7 +292,7 @@ window aircraft_equip extends iaircraft
 		image		"ui/airequip_selected_element"
 		texl		"0 83"
 		texh		"458 190"
-		onClick		{ cmd "airequip_select zone1" }
+		onClick		{ cmd "airequip_select zone1;" }
 	}
 
 	text airequip_text_zone1
@@ -312,7 +312,7 @@ window aircraft_equip extends iaircraft
 		pos			"654 648"
 		texl		"0 0"
 		texh		"458 82"
-		onClick	{ cmd "airequip_select zone2" }
+		onClick	{ cmd "airequip_select zone2;" }
 	}
 
 	text airequip_text_zone2
@@ -585,7 +585,7 @@ window aircraft_equip extends iaircraft
 	{
 		*aircraft_list@lineselected = <1>
 		cmd "airequip_updatemenu;"
-		cmd "airequip_select zone1"
+		cmd "airequip_select zone1;"
 		// absent from base, go back to the main GUI
 		if ( *cvar:mn_equipsoldierstate == 1 ) {
 			cmd "mn_pop; mn_push aircraft;"
@@ -597,7 +597,7 @@ window aircraft_equip extends iaircraft
 		// default is weapons @sa aircraftItemType_t (inv_shared.h)
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		cmd "airequip_updatemenu 2;"
-		cmd "airequip_select zone1"
+		cmd "airequip_select zone1;"
 		*cvar:mn_itemname = ""
 		*cvar:mn_upmodel_top = ""
 		*cvar:mn_aircraft_item_selected = -1

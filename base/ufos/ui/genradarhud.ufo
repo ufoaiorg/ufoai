@@ -130,7 +130,7 @@ window genradarhud extends ahud
 
 	func onInit {
 		cmd "mn_radarhud_reinit;"
-		cmd "echo Run the game in 1024x1024:"
+		cmd "echo Run the game in 1024x1024:;"
 		cmd "echo ufo +set vid_mode -1 +set vid_width 1024 +set vid_height 1024;"
 		cmd "r_isometric 1;centercamera;camsetangles 90 90;camsetzoom 0.5;"
 		*cvar:cl_showactors = 0

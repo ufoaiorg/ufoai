@@ -526,7 +526,7 @@ window employees
 		*node:root.scroll@current = 0
 		cmd "employee_init 0;"
 		*cvar:mn_hiretype = 0
-		cmd "employee_update_count"
+		cmd "employee_update_count;"
 	}
 
 	func onClose
