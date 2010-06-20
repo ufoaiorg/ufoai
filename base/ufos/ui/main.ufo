@@ -73,6 +73,10 @@ window main
 	{
 		cmd "music_change main;"
 		cmd "mn_push_child popup_tipoftheday main;check_cvars;"
+		if ( *cvar:cl_introshown != 1 ) {
+			cmd "mn_push intro;"
+			*cvar:cl_introshown = 1
+		}
 	}
 }
 
@@ -310,9 +314,5 @@ window popup_tipoftheday
 	func onInit
 	{
 		cmd "tipoftheday random; check_nexttip;"
-		if ( *cvar:cl_introshown != 1 ) {
-			cmd "mn_push intro;"
-			*cvar:cl_introshown = 1
-		}
 	}
 }
