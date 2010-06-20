@@ -183,13 +183,15 @@ static void Reset_RescueTrigger (edict_t *self, edict_t *activator)
 }
 
 /**
- * @brief Rescue trigger to count how many units are in the touch zone
+ * @brief Rescue trigger to mark an actor to be in the rescue
+ * zone. Aborting a game would not kill the actors inside this
+ * trigger area.
  * @note Called once for every step
  * @sa Touch_RescueTrigger
  */
 void SP_trigger_rescue (edict_t *ent)
 {
-	ent->classname = "trigger_touch";
+	ent->classname = "trigger_rescue";
 	ent->type = ET_TRIGGER_RESCUE;
 
 	ent->solid = SOLID_TRIGGER;
