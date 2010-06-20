@@ -32,10 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_produce.h"
 #include "cp_produce_callbacks.h"
 
-
-/** Maximum number of produced/disassembled items. */
-#define MAX_PRODUCTION_AMOUNT 500
-
 /**
  * Holds the current active production category/filter type.
  * @sa itemFilterTypes_t
@@ -605,6 +601,7 @@ static void PR_ProductionIncrease_f (void)
 	technology_t *tech = NULL;
 	int amount = 1;
 	int producibleAmount;
+	static char productionPopup[MAX_SMALLMENUTEXTLEN];
 
 	if (!base)
 		return;
@@ -619,32 +616,51 @@ static void PR_ProductionIncrease_f (void)
 
 	if (selectedProduction) {
 		prod = selectedProduction;
-		if (prod->production) {		/* Production. */
-			if (prod->aircraft) {
-				/* Don't allow to queue more aircraft if there is no free space. */
-				if (AIR_CalculateHangarStorage(prod->aircraft, base, 0) <= 0) {
-					MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
-					return;
-				}
-			}
 
-			/* Check if we can add more items. */
-			if (prod->amount + amount > MAX_PRODUCTION_AMOUNT) {
-				if (MAX_PRODUCTION_AMOUNT - prod->amount >= 0) {
-					/* Add as many items as allowed. */
-					prod->amount = MAX_PRODUCTION_AMOUNT;
-				} else {
-					return;
-				}
-			} else {
-				prod->amount += amount;
+		/* We can disassembly UFOs only one-by-one. */
+		if (prod->ufo)
+			return;
+
+		if (prod->aircraft) {
+			/* Don't allow to queue more aircraft if there is no free space. */
+			if (AIR_CalculateHangarStorage(prod->aircraft, base, 0) <= 0) {
+				MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
+				Cvar_SetValue("mn_production_amount", prod->amount);
+				return;
 			}
-		} else {	/* Disassembling. */
-			/* We can disassembly UFOs only one-by-one. */
+		}
+
+		/* amount limit per one production */
+		if (prod->amount + amount > MAX_PRODUCTION_AMOUNT) {
+			amount = max(0, MAX_PRODUCTION_AMOUNT - prod->amount);
+		}
+		if (amount == 0) {
+			Cvar_SetValue("mn_production_amount", prod->amount);
 			return;
 		}
+
+		if (prod->item) {
+			tech = prod->item->tech;
+		} else if (prod->aircraft) {
+			tech = prod->aircraft->tech;
+		}
+		assert(tech);
+
+		producibleAmount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
+		if (producibleAmount == 0) {
+			MN_Popup(_("Not enough materials"), _("You don't have the materials needed for producing more of this item.\n"));
+			Cvar_SetValue("mn_production_amount", prod->amount);
+			return;
+		} else if (amount != producibleAmount) {
+			Com_sprintf(productionPopup, lengthof(productionPopup), _("You don't have enough material to produce all (%i) additional items. Only %i added."), amount, producibleAmount);
+			MN_Popup(_("Not enough material!"), productionPopup);
+		}
+
+		PR_IncreaseProduction(prod, producibleAmount);
+		Cvar_SetValue("mn_production_amount", prod->amount);
 	} else {
 		const char *name;
+
 		/* no free production slot */
 		if (PR_QueueFreeSpace(queue) <= 0) {
 			MN_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
@@ -670,7 +686,8 @@ static void PR_ProductionIncrease_f (void)
 			MN_Popup(_("Not enough materials"), _("You don't have the materials needed for producing this item.\n"));
 			return;
 		} else if (amount != producibleAmount) {
-			MN_Popup(_("Not enough material!"), va(_("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."), amount, producibleAmount));
+			Com_sprintf(productionPopup, lengthof(productionPopup), _("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."), amount, producibleAmount);
+			MN_Popup(_("Not enough material!"), productionPopup);
 		}
 		/** @todo
 		 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."

@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief Maximum number of productions queued in any one base. */
 #define MAX_PRODUCTIONS		256
 #define MAX_PRODUCTIONS_PER_WORKSHOP 5
+/** Maximum number of produced items. */
+#define MAX_PRODUCTION_AMOUNT 500
 
 extern const int PRODUCE_FACTOR;
 extern const int PRODUCE_DIVISOR;
@@ -81,6 +83,8 @@ qboolean PR_ItemIsProduceable(const objDef_t const *item);
 
 base_t *PR_ProductionBase(production_t *production);
 base_t *PR_ProductionQueueBase (const production_queue_t const *queue);
+
+int PR_IncreaseProduction(production_t *prod, int amount);
 
 void PR_UpdateProductionCap(struct base_s *base);
 

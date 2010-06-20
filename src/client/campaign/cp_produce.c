@@ -573,6 +573,46 @@ static void PR_DisassemblingFrame (base_t* base, production_t* prod)
 }
 
 /**
+ * @brief increases production amount if possible
+ * @param[in,out] prod Pointer to the production
+ * @param[in] amount Additional amount to add
+ * @returns the amount added
+ */
+int PR_IncreaseProduction (production_t *prod, int amount)
+{
+	base_t *base;
+	technology_t *tech = NULL;
+
+	assert(prod);
+	base = PR_ProductionBase(prod);
+	assert(base);
+
+	if (prod->ufo)
+		return 0;
+
+	/* amount limit per one production */
+	if (prod->amount + amount > MAX_PRODUCTION_AMOUNT) {
+		amount = max(0, MAX_PRODUCTION_AMOUNT - prod->amount);
+	}
+
+	if (prod->item) {
+		tech = prod->item->tech;
+	} else if (prod->aircraft) {
+		tech = prod->aircraft->tech;
+	}
+	assert(tech);
+
+	amount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
+	if (amount == 0)
+		return 0;
+
+	prod->amount += amount;
+	PR_UpdateRequiredItemsInBasestorage(base, -amount, &tech->requireForProduction);
+	
+	return amount;
+}
+
+/**
  * @brief Checks whether an item is finished.
  * @sa CL_CampaignRun
  * @sa PR_DisassemblingFrame
