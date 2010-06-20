@@ -320,7 +320,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			bgcolor		"0.3 0.3 0.3 0.4"
 			rows		"22"
 			dataid		TEXT_LIST
-			onClick		{ cmd "servers_click <lineselected>" }
+			onClick		{ cmd "servers_click <lineselected>;" }
 			onRClick	{ cmd "pingservers;" }
 			onViewChange {
 				*(abstractscrollbar)content.servers_scroll@fullsize = <fullsize>
@@ -1505,8 +1505,8 @@ window multiplayer_wait extends levelbuttons
 					lineheight	22
 					dataid		TEXT_IRCUSERS
 					rows		"27"
-					onClick		{ cmd "irc_userlist_click <lineselected>" }
-					onRClick	{ cmd "irc_userlist_rclick <lineselected>" }
+					onClick		{ cmd "irc_userlist_click <lineselected>;" }
+					onRClick	{ cmd "irc_userlist_rclick <lineselected>;" }
 					onViewChange {
 						*node:(abstractscrollbar)parent.scroll@fullsize = <fullsize>
 						*node:(abstractscrollbar)parent.scroll@current = <viewpos>

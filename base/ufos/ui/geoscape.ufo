@@ -14,7 +14,7 @@ component panel cmpGeoscapeDocklet {
 		size			"280 60"
 		onMouseEnter	{ *node:this@image = "geoscape/docklet_bg_hovered" }
 		onMouseLeave	{ *node:this@image = "geoscape/docklet_bg" }
-		onClick			{ cmd "map_selectobject <node:parent.type@string> <node:parent.id@string>" }
+		onClick			{ cmd "map_selectobject <node:parent.type@string> <node:parent.id@string>;" }
 	}
 
 	model siteModel {
@@ -915,7 +915,7 @@ window popup_transferbaselist
 		lineheight	16
 		tabwidth	100
 		rows		7
-		onClick		{ cmd "trans_baselist_click <lineselected>" }
+		onClick		{ cmd "trans_baselist_click <lineselected>;" }
 		onRClick	{ cmd "mn_pop; aircraft_return;" }
 	}
 
@@ -1568,8 +1568,8 @@ window popup_intercept
 				*(abstractscrollbar)aircraft.ships_scroll@current = <viewpos>
 				*(abstractscrollbar)aircraft.ships_scroll@viewsize = <viewsize>
 			}
-			onClick		{ cmd "ships_click <lineselected>" }
-			onRClick	{ cmd "ships_rclick <lineselected>" }
+			onClick		{ cmd "ships_click <lineselected>;" }
+			onRClick	{ cmd "ships_rclick <lineselected>;" }
 		}
 
 		vscrollbar ships_scroll {
@@ -1614,7 +1614,7 @@ window popup_intercept
 				*(abstractscrollbar)sam.bases_scroll@current = <viewpos>
 				*(abstractscrollbar)sam.bases_scroll@viewsize = <viewsize>
 			}
-			onClick	{ cmd "bases_click <lineselected>" }
+			onClick	{ cmd "bases_click <lineselected>;" }
 		}
 
 		vscrollbar bases_scroll {
@@ -1650,11 +1650,11 @@ window popup_intercept
 
 	func onInit {
 		*cvar:mn_defencetab = 0
-		cmd "popup_intercept_update"
+		cmd "popup_intercept_update;"
 	}
 
 	func onClose {
-		cmd "del mn_defencetab"
+		cmd "del mn_defencetab;"
 	}
 }
 
@@ -1711,8 +1711,8 @@ window popup_mission
 		tabwidth	190
 		mousefx		true
 		rows	"13"
-		onClick		{ cmd "ships_click <lineselected>" }
-		onRClick	{ cmd "ships_rclick <lineselected>" }
+		onClick		{ cmd "ships_click <lineselected>;" }
+		onRClick	{ cmd "ships_rclick <lineselected>;" }
 	}
 
 	cmpCancelButton bt_cancel
@@ -1762,7 +1762,7 @@ window popup_multi_selection
 		tabwidth	150
 		rows		5
 		mousefx		true
-		onClick		{ cmd "multi_select_click <lineselected>" }
+		onClick		{ cmd "multi_select_click <lineselected>;" }
 		onViewChange	{
 			*(abstractscrollbar)multi_select_scroll@fullsize = <fullsize>
 			*(abstractscrollbar)multi_select_scroll@current = <viewpos>
@@ -1829,7 +1829,7 @@ window popup_aircraft
 		tabwidth	150
 		rows		5
 		mousefx		true
-		onClick		{ cmd "popup_aircraft_action_click <lineselected>" }
+		onClick		{ cmd "popup_aircraft_action_click <lineselected>;" }
 		onViewChange	{
 			*(abstractscrollbar)popup_aircraft_action_scroll@fullsize = <fullsize>
 			*(abstractscrollbar)popup_aircraft_action_scroll@current = <viewpos>

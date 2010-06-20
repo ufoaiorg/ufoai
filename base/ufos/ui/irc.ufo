@@ -62,8 +62,8 @@ window irc
 		lineheight	22
 		dataid		TEXT_IRCUSERS
 		rows		"27"
-		onClick		{ cmd "irc_userlist_click <lineselected>" }
-		onRClick	{ cmd "irc_userlist_rclick <lineselected>" }
+		onClick		{ cmd "irc_userlist_click <lineselected>;" }
+		onRClick	{ cmd "irc_userlist_rclick <lineselected>;" }
 		onViewChange {
 			*(abstractscrollbar)irc_userlist_scroll@fullsize = <fullsize>
 			*(abstractscrollbar)irc_userlist_scroll@current = <viewpos>

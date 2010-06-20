@@ -352,7 +352,7 @@ window uforecovery
 			rows		"8"
 			mousefx		true
 			longlines	LONGLINES_PRETTYCHOP
-			onClick		{ cmd "cp_uforecovery_nationlist_click <lineselected>" }
+			onClick		{ cmd "cp_uforecovery_nationlist_click <lineselected>;" }
 			onViewChange	{
 				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@fullsize = <fullsize>
 				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@current = <viewpos>

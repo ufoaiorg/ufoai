@@ -66,7 +66,7 @@ window campaigns
 		size	"400 120"
 		lineheight	"20"
 		dataid		TEXT_CAMPAIGN_LIST
-		onClick	{ cmd "campaignlist_click <lineselected>" }
+		onClick	{ cmd "campaignlist_click <lineselected>;" }
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
 		rows	"6"

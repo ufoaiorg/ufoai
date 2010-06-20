@@ -204,7 +204,7 @@ window ufopedia extends objectinfo
 				font		"f_verysmall"
 				color		"0 .78 0 1"
 				selectcolor	"0 .78 0 1"
-				onChange		{ cmd "techtree_click <lineselected>" }
+				onChange		{ cmd "techtree_click <lineselected>;" }
 				onViewChange	{
 					*node:(abstractscrollbar)parent.techtree_scroll@fullsize = <fullsize>
 					*node:(abstractscrollbar)parent.techtree_scroll@current = <viewpos>
@@ -383,7 +383,7 @@ window ufopedia extends objectinfo
 			*content.requirement@invis = true
 		}
 
-		cmd "del mn_rightpanel"
+		cmd "del mn_rightpanel;"
 	}
 
 	confunc mn_up_empty

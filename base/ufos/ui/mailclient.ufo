@@ -532,7 +532,7 @@ window mailclient
 		lineheight	38
 		tabwidth	700
 		mousefx		true
-		onClick		{ cmd "mailclient_click <lineselected>" }
+		onClick		{ cmd "mailclient_click <lineselected>;" }
 		onViewChange	{
 			*(abstractscrollbar)mailclient_scroll@fullsize = <fullsize>
 			*(abstractscrollbar)mailclient_scroll@current = <viewpos>

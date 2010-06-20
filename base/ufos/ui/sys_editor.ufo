@@ -84,7 +84,7 @@ window editor {
 		font		"f_verysmall"
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		onClick	{ cmd "mn_extract <cvar:mn_sys_editor_window>" }
+		onClick	{ cmd "mn_extract <cvar:mn_sys_editor_window>;" }
 	}
 
 	string current_window_title {
@@ -122,8 +122,8 @@ window editor {
 	}
 
 	func onClose {
-		cmd "del mn_sys_editor_node"
-		cmd "del mn_sys_editor_window"
+		cmd "del mn_sys_editor_node;"
+		cmd "del mn_sys_editor_window;"
 		call *node:root.editor@stop
 	}
 }
