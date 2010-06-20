@@ -33,18 +33,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_main.h"
 #include "menu/m_popup.h"
 
-static void GAME_MP_AutoTeam (void)
+void GAME_MP_AutoTeam (void)
 {
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
 	/** @todo support more teamdefs */
 	const char *teamDefID = cl_team->integer == TEAM_PHALANX ? "phalanx" : "taman";
 
 	GAME_GenerateTeam(teamDefID, ed, MAX_ACTIVETEAM);
-}
-
-static void GAME_MP_AutoTeam_f (void)
-{
-	GAME_MP_AutoTeam();
 }
 
 /**
@@ -264,7 +259,6 @@ void GAME_MP_InitStartup (void)
 	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
 	const char *max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
 
-	memset(multiplayerCharacters, 0, sizeof(multiplayerCharacters));
 	chrDisplayList.num = 0;
 
 	Cvar_ForceSet("sv_maxclients", "2");
@@ -273,7 +267,6 @@ void GAME_MP_InitStartup (void)
 	Cmd_AddCommand("mp_updategametype", GAME_MP_UpdateGametype_f, "Update the menu values with current gametype values");
 	Cmd_AddCommand("mp_nextgametype", GAME_MP_ChangeGametype_f, "Switch to the next multiplayer game type");
 	Cmd_AddCommand("mp_prevgametype", GAME_MP_ChangeGametype_f, "Switch to the previous multiplayer game type");
-	Cmd_AddCommand("mp_autoteam", GAME_MP_AutoTeam_f, "Assign initial multiplayer equipment to soldiers");
 	MP_CallbacksInit();
 	MP_ServerListInit();
 
@@ -291,7 +284,6 @@ void GAME_MP_Shutdown (void)
 	Cmd_RemoveCommand("mp_updategametype");
 	Cmd_RemoveCommand("mp_nextgametype");
 	Cmd_RemoveCommand("mp_prevgametype");
-	Cmd_RemoveCommand("mp_autoteam");
 	MP_CallbacksShutdown();
 	MP_ServerListShutdown();
 
