@@ -220,7 +220,6 @@ production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *it
 
 	PR_UpdateRequiredItemsInBasestorage(base, -amount, &tech->requireForProduction);
 	if (tech->requireForProduction.numLinks)
-		prod->itemsCached = qtrue;
 
 	/* We cannot queue new aircraft if no free hangar space. */
 	/** @todo move this check out into a new function */
@@ -291,10 +290,7 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 	}
 	assert(tech);
 
-	if (prod->itemsCached) {
-		PR_UpdateRequiredItemsInBasestorage(base, prod->amount, &tech->requireForProduction);
-		prod->itemsCached = qfalse;
-	}
+	PR_UpdateRequiredItemsInBasestorage(base, prod->amount, &tech->requireForProduction);
 
 	REMOVE_ELEM_ADJUST_IDX(queue->items, index, queue->numItems);
 
@@ -813,7 +809,6 @@ qboolean PR_SaveXML (mxml_node_t *p)
 				mxml_AddInt(ssnode, SAVE_PRODUCE_UFOIDX, ufo->idx);
 			mxml_AddInt(ssnode, SAVE_PRODUCE_AMOUNT, pq->items[j].amount);
 			mxml_AddFloatValue(ssnode, SAVE_PRODUCE_PERCENTDONE, pq->items[j].percentDone);
-			mxml_AddBoolValue(ssnode, SAVE_PRODUCE_ITEMS_CACHED, pq->items[j].itemsCached);
 		}
 	}
 	return qtrue;
@@ -887,9 +882,6 @@ qboolean PR_LoadXML (mxml_node_t *p)
 				Com_Printf("PR_Load: Production is not an item an aircraft nor a disassembly\n");
 				continue;
 			}
-
-			/* itemsCached */
-			pq->items[pq->numItems].itemsCached = mxml_GetBool(ssnode, SAVE_PRODUCE_ITEMS_CACHED, qfalse);
 
 			pq->numItems++;
 		}

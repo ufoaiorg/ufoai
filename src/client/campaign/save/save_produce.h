@@ -36,7 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_PRODUCE_UFOIDX "UFOIDX"
 #define SAVE_PRODUCE_AMOUNT "amount"
 #define SAVE_PRODUCE_PERCENTDONE "percentDone"
-#define SAVE_PRODUCE_ITEMS_CACHED "itemsCached"
 
 #endif
 
