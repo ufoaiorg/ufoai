@@ -100,6 +100,7 @@ static yuvTable_t	roqCin_yuvTable;
 static int			roqCin_quadOffsets2[2][4];
 static int			roqCin_quadOffsets4[2][4];
 
+/** TODO dyn allocate it and link it inside cin */
 static roqCinematic_t roqCin;
 
 /**
@@ -456,7 +457,7 @@ static void CIN_ROQ_DecodeSoundStereo (const byte *data)
  * @sa CIN_ROQ_RunCinematic
  * @return true if the cinematic is still running, false otherwise
  */
-static qboolean CIN_ROQ_DecodeChunk (void)
+static qboolean CIN_ROQ_DecodeChunk (cinematic_t *cin)
 {
 	int frame;
 
@@ -476,7 +477,7 @@ static qboolean CIN_ROQ_DecodeChunk (void)
 
 		if (roqCin.chunk.id == ROQ_IDENT || roqCin.chunk.size > ROQ_MAX_CHUNK_SIZE) {
 			Com_Printf("Invalid chunk id during decode: %i\n", roqCin.chunk.id);
-			cin.replay = qfalse;
+			cin->replay = qfalse;
 			return qfalse;	/* Invalid chunk */
 		}
 
@@ -498,10 +499,10 @@ static qboolean CIN_ROQ_DecodeChunk (void)
 			CIN_ROQ_DecodeVideo(roqCin.data);
 			break;
 		case ROQ_SOUND_MONO:
-			if (!cin.noSound)
+			if (!cin->noSound)
 				CIN_ROQ_DecodeSoundMono(roqCin.data);
 		case ROQ_SOUND_STEREO:
-			if (!cin.noSound)
+			if (!cin->noSound)
 				CIN_ROQ_DecodeSoundStereo(roqCin.data);
 			break;
 		default:
@@ -509,7 +510,7 @@ static qboolean CIN_ROQ_DecodeChunk (void)
 			break;
 		}
 	/* loop until we finally got a new frame */
-	} while (frame == roqCin.currentFrame && cin.status);
+	} while (frame == roqCin.currentFrame && cin->status);
 
 	return qtrue;
 }
@@ -517,30 +518,30 @@ static qboolean CIN_ROQ_DecodeChunk (void)
 /**
  * @sa R_UploadData
  */
-static void CIN_ROQ_DrawCinematic (void)
+static void CIN_ROQ_DrawCinematic (cinematic_t *cin)
 {
 	int texnum;
 
-	assert(cin.status != CIN_STATUS_NONE);
+	assert(cin->status != CIN_STATUS_NONE);
 
 	if (!roqCin.frameBuffer[1])
 		return;
 	texnum = R_UploadData("***cinematic***", roqCin.frameBuffer[1], roqCin.frameWidth, roqCin.frameHeight);
-	R_DrawTexture(texnum, cin.x, cin.y, cin.w, cin.h);
+	R_DrawTexture(texnum, cin->x, cin->y, cin->w, cin->h);
 }
 
 /**
  * @return true if the cinematic is still running, false otherwise
  */
-qboolean CIN_ROQ_RunCinematic (void)
+qboolean CIN_ROQ_RunCinematic (cinematic_t *cin)
 {
-	qboolean runState = CIN_ROQ_DecodeChunk();
+	qboolean runState = CIN_ROQ_DecodeChunk(cin);
 	if (runState)
-		CIN_ROQ_DrawCinematic();
+		CIN_ROQ_DrawCinematic(cin);
 	return runState;
 }
 
-void CIN_ROQ_StopCinematic (void)
+void CIN_ROQ_StopCinematic (cinematic_t *cin)
 {
 	if (roqCin.file.f || roqCin.file.z)
 		FS_CloseFile(&roqCin.file);
@@ -557,7 +558,7 @@ void CIN_ROQ_StopCinematic (void)
 	memset(&roqCin, 0, sizeof(roqCin));
 }
 
-void CIN_ROQ_PlayCinematic (const char *fileName)
+void CIN_ROQ_PlayCinematic (cinematic_t *cin, const char *fileName)
 {
 	roqChunk_t chunk;
 	int size;
@@ -585,13 +586,14 @@ void CIN_ROQ_PlayCinematic (const char *fileName)
 		Com_Error(ERR_DROP, "CIN_PlayCinematic: invalid RoQ header");
 	}
 
-	cin.cinematicType = CINEMATIC_TYPE_ROQ;
+	cin->cinematicType = CINEMATIC_TYPE_ROQ;
 
 	/* Fill it in */
-	Q_strncpyz(cin.name, fileName, sizeof(cin.name));
+	Q_strncpyz(cin->name, fileName, sizeof(cin->name));
 
 	/* Set to play the cinematic in fullscreen mode */
-	CIN_SetParameters(0, 0, viddef.virtualWidth, viddef.virtualHeight, CIN_STATUS_FULLSCREEN, qfalse);
+	/** TODO why? the node ask what it want, fullscreen or not */
+	CIN_SetParameters(cin, 0, 0, viddef.virtualWidth, viddef.virtualHeight, CIN_STATUS_FULLSCREEN, qfalse);
 
 	M_PlayMusicStream(&roqCin.musicStream);
 

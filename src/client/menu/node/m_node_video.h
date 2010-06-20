@@ -26,7 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MENU_M_NODE_VIDEO_H
 
 #include "../m_nodes.h"
+#include "../../cinematic/cl_cinematic.h"
 
 void MN_RegisterVideoNode(nodeBehaviour_t *behaviour);
+
+typedef struct {
+	cinematic_t cin;
+} videoExtraData_t;
 
 #endif

@@ -78,9 +78,10 @@ typedef struct
 	musicStream_t musicStream;
 } ogmCinematic_t;
 
-static ogmCinematic_t ogmCin;
-
 static yuvTable_t ogmCin_yuvTable;
+
+/** TODO dyn allocate it and link it inside cin */
+static ogmCinematic_t ogmCin;
 
 #define OGM_CINEMATIC_BPP 4
 
@@ -223,7 +224,7 @@ static byte rawBuffer[SIZEOF_RAWBUFF];
 /**
  * @return true if audio wants more packets
  */
-static qboolean CIN_OGM_LoadAudioFrame (void)
+static qboolean CIN_OGM_LoadAudioFrame (cinematic_t *cin)
 {
 	ogg_packet op;
 	vorbis_block vb;
@@ -257,7 +258,7 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
 			/* tell libvorbis how many samples we actually consumed */
 			vorbis_synthesis_read(&ogmCin.vd, i);
 
-			if (!cin.noSound)
+			if (!cin->noSound)
 				M_AddToSampleBuffer(&ogmCin.musicStream, ogmCin.vi.rate, i, rawBuffer);
 		} else {
 			/* op -> vorbis */
@@ -484,7 +485,7 @@ static int CIN_OGM_LoadVideoFrame (void)
 /**
  * @return true => noDataTransfered
  */
-static qboolean CIN_OGM_LoadFrame (void)
+static qboolean CIN_OGM_LoadFrame (cinematic_t *cin)
 {
 	qboolean anyDataTransferred = qtrue;
 	qboolean needVOutputData = qtrue;
@@ -515,7 +516,7 @@ static qboolean CIN_OGM_LoadFrame (void)
 		/* load all audio after loading new pages ... */
 		if (ogmCin.videoFrameCount > 1)
 			/* wait some videoframes (it's better to have some delay, than a laggy sound) */
-			audioWantsMoreData = CIN_OGM_LoadAudioFrame();
+			audioWantsMoreData = CIN_OGM_LoadAudioFrame(cin);
 	}
 
 	return !anyDataTransferred;
@@ -559,7 +560,7 @@ typedef struct
  * @todo vorbis/theora-header & init in sub-functions
  * @todo "clean" error-returns ...
  */
-int CIN_OGM_PlayCinematic (const char* filename)
+int CIN_OGM_PlayCinematic (cinematic_t *cin, const char* filename)
 {
 	int status;
 	ogg_page og;
@@ -568,7 +569,7 @@ int CIN_OGM_PlayCinematic (const char* filename)
 
 	if (ogmCin.ogmFile.f || ogmCin.ogmFile.z) {
 		Com_Printf("WARNING: it seams there was already a ogm running, it will be killed to start %s\n", filename);
-		CIN_OGM_StopCinematic();
+		CIN_OGM_StopCinematic(cin);
 	}
 
 	memset(&ogmCin, 0, sizeof(ogmCin));
@@ -578,7 +579,7 @@ int CIN_OGM_PlayCinematic (const char* filename)
 		return -1;
 	}
 
-	cin.cinematicType = CINEMATIC_TYPE_OGM;
+	cin->cinematicType = CINEMATIC_TYPE_OGM;
 	ogmCin.startTime = cls.realtime;
 
 	ogg_sync_init(&ogmCin.oy); /* Now we can read pages */
@@ -716,7 +717,8 @@ int CIN_OGM_PlayCinematic (const char* filename)
 #endif
 
 	/* Set to play the cinematic in fullscreen mode */
-	CIN_SetParameters(0, 0, viddef.virtualWidth, viddef.virtualHeight, CIN_STATUS_FULLSCREEN, qfalse);
+	/** TODO why? the node ask what it want, fullscreen or not */
+	CIN_SetParameters(cin, 0, 0, viddef.virtualWidth, viddef.virtualHeight, CIN_STATUS_FULLSCREEN, qfalse);
 
 	M_PlayMusicStream(&ogmCin.musicStream);
 
@@ -726,38 +728,39 @@ int CIN_OGM_PlayCinematic (const char* filename)
 /**
  * @sa R_UploadData
  */
-static void CIN_OGM_DrawCinematic (void)
+static void CIN_OGM_DrawCinematic (cinematic_t *cin)
 {
 	int texnum;
 
-	assert(cin.status != CIN_STATUS_NONE);
+	assert(cin->status != CIN_STATUS_NONE);
 
 	if (!ogmCin.outputBuffer)
 		return;
 	texnum = R_UploadData("***cinematic***", ogmCin.outputBuffer, ogmCin.outputWidth, ogmCin.outputHeight);
-	R_DrawTexture(texnum, cin.x, cin.y, cin.w, cin.h);
+	R_DrawTexture(texnum, cin->x, cin->y, cin->w, cin->h);
 }
 
 /**
  * @return true if the cinematic is still running, false otherwise
  */
-qboolean CIN_OGM_RunCinematic (void)
+qboolean CIN_OGM_RunCinematic (cinematic_t *cin)
 {
 	ogmCin.currentTime = cls.realtime - ogmCin.startTime;
 
 	while (!ogmCin.videoFrameCount || ogmCin.currentTime + 20 >= (int) (ogmCin.videoFrameCount * ogmCin.Vtime_unit / 10000)) {
-		if (CIN_OGM_LoadFrame())
+		if (CIN_OGM_LoadFrame(cin))
 			return qfalse;
 	}
 
-	CIN_OGM_DrawCinematic();
+	CIN_OGM_DrawCinematic(cin);
 
 	return qtrue;
 }
 
-void CIN_OGM_StopCinematic (void)
+void CIN_OGM_StopCinematic (cinematic_t *cin)
 {
 #ifdef HAVE_XVID_H
+	/** TODO is it at the right place? StopCinematic mean we only stop 1 cinematic */
 	CIN_XVID_Shutdown();
 #endif
 

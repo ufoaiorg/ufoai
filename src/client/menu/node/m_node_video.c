@@ -31,6 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../cinematic/cl_cinematic.h"
 
+#define EXTRADATA_TYPE videoExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+
 static void MN_VideoNodeDraw (menuNode_t *node)
 {
 	vec2_t pos;
@@ -39,36 +43,38 @@ static void MN_VideoNodeDraw (menuNode_t *node)
 	if (!node->image)
 		return;
 
-	if (cin.status == CIN_STATUS_FULLSCREEN) {
+	if (EXTRADATA(node).cin.status == CIN_STATUS_FULLSCREEN) {
 		MN_CaptureDrawOver(node);
 		return;
 	}
 
-	if (cin.status == CIN_STATUS_NONE)
-		CIN_PlayCinematic(va("videos/%s", (const char *)node->image));
-	if (cin.status) {
+	if (EXTRADATA(node).cin.status == CIN_STATUS_NONE)
+		CIN_PlayCinematic(&(EXTRADATA(node).cin), va("videos/%s", (const char *)node->image));
+	if (EXTRADATA(node).cin.status) {
 		/* only set replay to true if video was found and is running */
-		CIN_SetParameters(pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
-		CIN_RunCinematic();
+		CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
+		CIN_RunCinematic(&(EXTRADATA(node).cin));
 	}
 }
 
 static void MN_VideoNodeDrawOverMenu (menuNode_t *node)
 {
-	CIN_RunCinematic();
+	CIN_RunCinematic(&(EXTRADATA(node).cin));
 }
 
 static void MN_VideoNodeInit (menuNode_t *node)
 {
+	CIN_InitCinematic(&(EXTRADATA(node).cin));
+
 	if (!node->image)
 		return;
-	CIN_PlayCinematic(va("videos/%s", (const char *)node->image));
+	CIN_PlayCinematic(&(EXTRADATA(node).cin), va("videos/%s", (const char *)node->image));
 }
 
 static void MN_VideoNodeClose (menuNode_t *node)
 {
 	/* If playing a cinematic, stop it */
-	CIN_StopCinematic();
+	CIN_StopCinematic(&(EXTRADATA(node).cin));
 }
 
 static const value_t properties[] = {
@@ -85,4 +91,5 @@ void MN_RegisterVideoNode (nodeBehaviour_t* behaviour)
 	behaviour->init = MN_VideoNodeInit;
 	behaviour->close = MN_VideoNodeClose;
 	behaviour->drawOverMenu = MN_VideoNodeDrawOverMenu;
+	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }
