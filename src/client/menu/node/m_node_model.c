@@ -528,6 +528,8 @@ static const value_t properties[] = {
 	{"clipoverflow", V_BOOL, MN_EXTRADATA_OFFSETOF(modelExtraData_t, clipOverflow), MEMBER_SIZEOF(modelExtraData_t, clipOverflow)},
 	/* Both. Name of the model. The path to the model, relative to <code>base/models</code> */
 	{"model", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, model), 0},
+	/* Source of the model */
+	{"src", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, model), 0},
 	/* Both. Name of the skin for the model. */
 	{"skin", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, skin), 0},
 

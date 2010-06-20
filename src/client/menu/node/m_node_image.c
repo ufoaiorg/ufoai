@@ -153,6 +153,9 @@ static const value_t properties[] = {
 	/* Texture low. Optional. Define the lower corner of the texture we want to display. Used with texh to crop the image. */
 	{"texl", V_POS, MN_EXTRADATA_OFFSETOF(imageExtraData_t, texl), MEMBER_SIZEOF(imageExtraData_t, texl)},
 
+	/* Source of the image */
+	{"src", V_CVAR_OR_STRING, offsetof(menuNode_t, image), 0},
+
 	{NULL, V_NULL, 0, 0}
 };
 
