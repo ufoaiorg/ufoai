@@ -1,6 +1,16 @@
 UFOAI_VERSION=$(shell grep UFO_VERSION $(SRCDIR)/common/common.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
 UFORADIANT_VERSION=$(shell grep RADIANT_VERSION $(SRCDIR)/tools/radiant/include/version.h | sed -e 's/.*RADIANT_VERSION \"\(.*\)\"/\1/')
 
+BINARIES = \
+	ufo$(EXE_EXT) \
+	ufoded$(EXE_EXT) \
+	ufo2map$(EXE_EXT) \
+	ufomodel$(EXE_EXT)
+BINARIES_BASE = \
+	base/game.$(SHARED_EXT)
+BINARIES_RADIANT = \
+	radiant/uforadiant$(EXE_EXT)
+
 include build/install_linux.mk
 include build/install_mac.mk
 include build/install_windows.mk

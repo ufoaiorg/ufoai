@@ -4,15 +4,6 @@ MAC_INST_DIR=contrib/installer/mac
 UFOAI_MAC_PACKAGE_NAME=ufoai-$(UFOAI_VERSION)-macosx-$(TARGET_CPU)
 UFORADIANT_MAC_PACKAGE_NAME=uforadiant-$(UFORADIANT_VERSION)-macosx-$(TARGET_CPU)
 
-BINARIES = \
-	ufo \
-	ufoded \
-	ufo2map
-BINARIES_BASE = \
-	base/game.$(SHARED_EXT)
-BINARIES_RADIANT = \
-	radiant/uforadiant
-
 BUNDLE_PK3 = $(addprefix $(MAC_INST_DIR)/UFOAI.app/base/, $(PAK_FILES))
 
 macinstaller: installer-pre create-dmg-ufoai create-dmg-uforadiant
