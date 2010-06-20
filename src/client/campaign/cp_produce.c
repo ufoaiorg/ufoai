@@ -170,7 +170,7 @@ int PR_QueueFreeSpace (const production_queue_t const *queue)
 
 	numWorkshops = max(B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP), 0);
 
-	return numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP - queue->numItems;
+	return min(MAX_PRODUCTIONS, numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP - queue->numItems);
 }
 
 /**
@@ -184,7 +184,6 @@ int PR_QueueFreeSpace (const production_queue_t const *queue)
  */
 production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, storedUFO_t *ufo, signed int amount)
 {
-	int numWorkshops = 0;
 	int newAmount;
 	production_t *prod;
 	const technology_t *tech;
@@ -192,20 +191,12 @@ production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *it
 	assert((item && !aircraftTemplate && !ufo) || (!item && aircraftTemplate && !ufo) || (!item && !aircraftTemplate && ufo));
 	assert(base);
 
-	if (queue->numItems >= MAX_PRODUCTIONS)
+	if (PR_QueueFreeSpace(queue) <= 0)
 		return NULL;
 
 	if (E_CountHired(base, EMPL_WORKER) <= 0) {
 		/** @todo move popup into menucode */
 		MN_Popup(_("Not enough workers"), _("You cannot queue productions without workers hired in this base.\n\nHire workers."));
-		return NULL;
-	}
-
-	numWorkshops = max(B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP), 0);
-
-	if (queue->numItems >= numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP) {
-		/** @todo move popup into menucode */
-		MN_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
 		return NULL;
 	}
 

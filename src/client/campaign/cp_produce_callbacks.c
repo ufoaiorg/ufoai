@@ -642,6 +642,12 @@ static void PR_ProductionIncrease_f (void)
 			return;
 		}
 	} else {
+		/* no free production slot */
+		if (PR_QueueFreeSpace(queue) <= 0) {
+			MN_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
+			return;
+		}
+
 		if (!selectedDisassembly) {
 			if (selectedAircraft && AIR_CalculateHangarStorage(selectedAircraft, base, 0) <= 0) {
 				MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
@@ -657,8 +663,6 @@ static void PR_ProductionIncrease_f (void)
 		/** prod is NULL when queue limit is reached
 		 * @todo this popup hides any previous popup, like popup created in PR_QueueNew */
 		if (!prod) {
-			/* Oops! Too many items! */
-			MN_Popup(_("Queue full!"), _("You cannot queue any more items!"));
 			return;
 		} else
 			MN_ExecuteConfunc("prod_selectline %i", prod->idx);
