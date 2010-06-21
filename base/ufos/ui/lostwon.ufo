@@ -31,19 +31,6 @@ window won
 	// buttons
 	// ==================
 
-//	button bt_tryagain
-//	{
-//		string		"_Try again"
-//		tooltip		"_Retry this mission"
-//		image		"ui/button_blue"
-//		pos			"480 700"
-//		size		"128 53"
-//		color		"1 1 1 0.8"
-//		selectcolor "1 1 1 1"
-//		font		"f_big"
-//		onClick		{ cmd "set cp_mission_tryagain 1;mn_pop;" }
-//	}
-
 	button bt_continue
 	{
 		string		"_Continue"
@@ -66,11 +53,6 @@ window won
 
 	func onInit
 	{
-		if ( *cvar:mn_autogo == 1 ) {
-			*node:root.bt_tryagain@invis = true
-		} else {
-			*node:root.bt_tryagain@invis = false
-		}
 		cmd "snd_music ufo2;"
 	}
 
