@@ -659,7 +659,7 @@ static void PR_ProductionIncrease_f (void)
 		PR_IncreaseProduction(prod, producibleAmount);
 		Cvar_SetValue("mn_production_amount", prod->amount);
 	} else {
-		const char *name;
+		const char *name = NULL;
 
 		/* no free production slot */
 		if (PR_QueueFreeSpace(queue) <= 0) {
@@ -680,6 +680,7 @@ static void PR_ProductionIncrease_f (void)
 			amount = 1;
 		}
 		assert(tech);
+		assert(name);
 
 		producibleAmount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
 		if (producibleAmount == 0) {
