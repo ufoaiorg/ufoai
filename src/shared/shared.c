@@ -431,6 +431,10 @@ void Q_strcat (char *dest, const char *src, size_t destsize)
 }
 
 /**
+ * @brief copies formatted string with buffer-size checking
+ * @param[out] dest Destination buffer
+ * @param[in] size Size of the destination buffer
+ * @param[in] fmt Stringformat (like printf)
  * @return false if overflowed - true otherwise
  */
 qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
@@ -446,9 +450,9 @@ qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 	va_end(ap);
 
 	/* check for UTF8 multibyte sequences */
-	if (dest[len - 1] > 0x80) {
+	if ((unsigned char) dest[len - 1] > 0x80) {
 		int i = len - 1;
-		while ((i > 0) && dest[i] <= 0xc0)
+		while ((i > 0) && (unsigned char) dest[i] <= 0xc0)
 			i--;
 		if (UTF8_char_len(dest[i]) + i - 1 > len)
 			len = i + 1;

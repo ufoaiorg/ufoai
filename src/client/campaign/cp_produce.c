@@ -504,8 +504,8 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 	}
 
 	if (prod->percentDone >= 1.0f) {
-		const char *name;
-		technology_t *tech;
+		const char *name = NULL;
+		technology_t *tech = NULL;
 
 		prod->percentDone = 0.0f;
 		prod->amount--;
