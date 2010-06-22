@@ -64,7 +64,10 @@ void CL_InvReload (const eventRegister_t *self, struct dbuffer *msg)
 	if (!ic)
 		return;
 
-	S_PlaySample(le->origin, S_LoadSample("weapons/reload"), SOUND_ATTN_IDLE, SND_VOLUME_WEAPONS);
+	/**
+	 * @todo reload sound should depend on the weapon we reload
+	 */
+	S_PlaySample(le->origin, S_LoadSample("weapons/reload-pistol"), SOUND_ATTN_IDLE, SND_VOLUME_WEAPONS);
 
 	/* if the displaced clip had any remaining bullets
 	 * store them as loose, unless the removed clip was full */
