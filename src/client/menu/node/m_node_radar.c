@@ -414,10 +414,17 @@ static void MN_RadarNodeGetActorColor (const le_t *le, vec4_t color)
 	}
 }
 
+static void MN_RadarNodeDrawArrays (const vec4_t color, vec2_t coords[4], vec2_t vertices[4], const image_t *image)
+{
+	R_Color(color);
+	R_DrawImageArray((const vec2_t *)coords, (const vec2_t *)vertices, image);
+	R_Color(NULL);
+}
+
 static void MN_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 {
-	float coords[4 * 2];
-	short vertices[4 * 2];
+	vec2_t coords[4];
+	vec2_t vertices[4];
 	int i;
 	const float size = 10;
 	const int tileSize = 28;
@@ -432,36 +439,34 @@ static void MN_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 
 	/* draw FOV */
 	if (le->selected) {
-		vertices[0] = - size * 4;
-		vertices[1] = + 0;
-		vertices[2] = + size * 4;
-		vertices[3] = + 0;
-		vertices[4] = + size * 4;
-		vertices[5] = - size * 4;
-		vertices[6] = - size * 4;
-		vertices[7] = - size * 4;
-		coords[0] = (7) / 128.0f;
-		coords[1] = (37 + 63) / 128.0f;
-		coords[2] = (7 + 114) / 128.0f;
-		coords[3] = (37 + 63) / 128.0f;
-		coords[4] = (7 + 114) / 128.0f;
-		coords[5] = (37) / 128.0f;
-		coords[6] = (7) / 128.0f;
-		coords[7] = (37) / 128.0f;
+		vertices[0][0] = - size * 4;
+		vertices[0][1] = + 0;
+		vertices[1][0] = + size * 4;
+		vertices[1][1] = + 0;
+		vertices[2][0] = + size * 4;
+		vertices[2][1] = - size * 4;
+		vertices[3][0] = - size * 4;
+		vertices[3][1] = - size * 4;
+		coords[0][0] = (7) / 128.0f;
+		coords[0][1] = (37 + 63) / 128.0f;
+		coords[1][0] = (7 + 114) / 128.0f;
+		coords[1][1] = (37 + 63) / 128.0f;
+		coords[2][0] = (7 + 114) / 128.0f;
+		coords[2][1] = (37) / 128.0f;
+		coords[3][0] = (7) / 128.0f;
+		coords[3][1] = (37) / 128.0f;
 
 		/* affine transformation */
-		for (i = 0; i < 8; i += 2) {
-			float dx = vertices[i + 0];
-			float dy = vertices[i + 1];
-			vertices[i + 0] = pos[0] + dx * sin(pov) + dy * cos(pov);
-			vertices[i + 1] = pos[1] + dx * cos(pov) - dy * sin(pov);
+		for (i = 0; i < 4; i++) {
+			const float dx = vertices[i][0];
+			const float dy = vertices[i][1];
+			vertices[i][0] = pos[0] + dx * sin(pov) + dy * cos(pov);
+			vertices[i][1] = pos[1] + dx * cos(pov) - dy * sin(pov);
 		}
 
 		MN_RadarNodeGetActorColor(le, color);
 		Vector4Set(color, 1, 1, 1, color[3] * 0.75);
-		R_Color(color);
-		R_DrawImageArray(coords, vertices, image);
-		R_Color(NULL);
+		MN_RadarNodeDrawArrays(color, coords, vertices, image);
 	}
 
 	if (LE_IsDead(le))
@@ -472,35 +477,33 @@ static void MN_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 		tilePos = 36;
 
 	/* a 0,0 centered square */
-	vertices[0] = - size;
-	vertices[1] = + size;
-	vertices[2] = + size;
-	vertices[3] = + size;
-	vertices[4] = + size;
-	vertices[5] = - size;
-	vertices[6] = - size;
-	vertices[7] = - size;
-	coords[0] = (tilePos) / 128.0f;
-	coords[1] = (5 + tileSize) / 128.0f;
-	coords[2] = (tilePos + tileSize) / 128.0f;
-	coords[3] = (5 + tileSize) / 128.0f;
-	coords[4] = (tilePos + tileSize) / 128.0f;
-	coords[5] = (5) / 128.0f;
-	coords[6] = (tilePos) / 128.0f;
-	coords[7] = (5) / 128.0f;
+	vertices[0][0] = - size;
+	vertices[0][1] = + size;
+	vertices[1][0] = + size;
+	vertices[1][1] = + size;
+	vertices[2][0] = + size;
+	vertices[2][1] = - size;
+	vertices[3][0] = - size;
+	vertices[3][1] = - size;
+	coords[0][0] = (tilePos) / 128.0f;
+	coords[0][1] = (5 + tileSize) / 128.0f;
+	coords[1][0] = (tilePos + tileSize) / 128.0f;
+	coords[1][1] = (5 + tileSize) / 128.0f;
+	coords[2][0] = (tilePos + tileSize) / 128.0f;
+	coords[2][1] = (5) / 128.0f;
+	coords[3][0] = (tilePos) / 128.0f;
+	coords[3][1] = (5) / 128.0f;
 
 	/* affine transformation */
-	for (i = 0; i < 8; i += 2) {
-		float dx = vertices[i + 0];
-		float dy = vertices[i + 1];
-		vertices[i + 0] = pos[0] + dx * sin(pov) + dy * cos(pov);
-		vertices[i + 1] = pos[1] + dx * cos(pov) - dy * sin(pov);
+	for (i = 0; i < 4; i++) {
+		const float dx = vertices[i][0];
+		const float dy = vertices[i][1];
+		vertices[i][0] = pos[0] + dx * sin(pov) + dy * cos(pov);
+		vertices[i][1] = pos[1] + dx * cos(pov) - dy * sin(pov);
 	}
 
 	MN_RadarNodeGetActorColor(le, color);
-	R_Color(color);
-	R_DrawImageArray(coords, vertices, image);
-	R_Color(NULL);
+	MN_RadarNodeDrawArrays(color, coords, vertices, image);
 }
 
 /**
@@ -547,9 +550,6 @@ static void MN_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
 
 	MN_RadarNodeGetActorColor(le, color);
 	Vector4Set(color, 0, 1, 0, color[3]);
-	R_Color(color);
-	R_DrawImageArray(coords, vertices, image);
-	R_Color(NULL);
 }
 
 /*#define RADARSIZE_DEBUG*/

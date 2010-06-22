@@ -205,17 +205,10 @@ const image_t *R_RegisterImage (const char *name)
  */
 void R_DrawTexture (int texnum, int x, int y, int w, int h)
 {
+	const vec2_t vertexes[4] = {{x, y}, {x + w, y}, {x + w, y + h}, {x, y + h}};
+
 	R_BindTexture(texnum);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex2f(x, y);
-	glTexCoord2f(1, 0);
-	glVertex2f(x + w, y);
-	glTexCoord2f(1, 1);
-	glVertex2f(x + w, y + h);
-	glTexCoord2f(0, 1);
-	glVertex2f(x, y + h);
-	glEnd();
+	R_DrawImageArray(default_texcoords, vertexes, NULL);
 }
 
 /**
@@ -225,71 +218,28 @@ void R_DrawTexture (int texnum, int x, int y, int w, int h)
  */
 void R_DrawImage (float x, float y, const image_t *image)
 {
-	float x1, x2, x3, x4, y1, y2, y3, y4;
-	short image_verts[8];
-
 	if (!image)
 		return;
 
-	/* normalize to the screen resolution */
-	x1 = x * viddef.rx;
-	y1 = y * viddef.ry;
-
-	/* fill the rest of the coordinates to make a rectangle */
-	x4 = x1;
-	x3 = x2 = x1 + image->width * viddef.rx;
-	y2 = y1;
-	y4 = y3 = y1 + image->height * viddef.ry;
-
-	image_verts[0] = x1;
-	image_verts[1] = y1;
-	image_verts[2] = x2;
-	image_verts[3] = y2;
-	image_verts[4] = x3;
-	image_verts[5] = y3;
-	image_verts[6] = x4;
-	image_verts[7] = y4;
-
-	R_DrawImageArray(default_texcoords, image_verts, image);
+	R_DrawTexture(image->texnum, x * viddef.rx, y * viddef.ry, image->width * viddef.rx, image->height * viddef.ry);
 }
 
 void R_DrawStretchImage (float x, float y, int w, int h, const image_t *image)
 {
-	float x1, x2, x3, x4, y1, y2, y3, y4;
-	short image_verts[8];
-
 	if (!image)
 		return;
 
-	/* normalize to the screen resolution */
-	x1 = x * viddef.rx;
-	y1 = y * viddef.ry;
-
-	/* fill the rest of the coordinates to make a rectangle */
-	x4 = x1;
-	x3 = x2 = x1 + w * viddef.rx;
-	y2 = y1;
-	y4 = y3 = y1 + h * viddef.ry;
-
-	image_verts[0] = x1;
-	image_verts[1] = y1;
-	image_verts[2] = x2;
-	image_verts[3] = y2;
-	image_verts[4] = x3;
-	image_verts[5] = y3;
-	image_verts[6] = x4;
-	image_verts[7] = y4;
-
-	R_DrawImageArray(default_texcoords, image_verts, image);
+	R_DrawTexture(image->texnum, x * viddef.rx, y * viddef.ry, w * viddef.rx, h * viddef.ry);
 }
 
-const image_t *R_DrawImageArray (const float texcoords[8], const short verts[8], const image_t *image)
+const image_t *R_DrawImageArray (const vec2_t texcoords[4], const vec2_t verts[4], const image_t *image)
 {
 	/* alter the array pointers */
-	glVertexPointer(2, GL_SHORT, 0, verts);
+	glVertexPointer(2, GL_FLOAT, 0, verts);
 	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, texcoords);
 
-	R_BindTexture(image->texnum);
+	if (image != NULL)
+		R_BindTexture(image->texnum);
 
 	glDrawArrays(GL_QUADS, 0, 4);
 

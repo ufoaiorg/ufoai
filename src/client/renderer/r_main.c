@@ -823,6 +823,9 @@ static qboolean R_InitExtensions (void)
 	/* reset gl error state */
 	R_CheckError();
 
+	glGetIntegerv(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB, &r_config.maxVertexTextureImageUnits);
+	Com_Printf("max supported vertex texture units: %i\n", r_config.maxVertexTextureImageUnits);
+
 	glGetIntegerv(GL_MAX_LIGHTS, &r_config.maxLights);
 	Com_Printf("max supported lights: %i\n", r_config.maxLights);
 

@@ -1,11 +1,14 @@
+-- http://hg.icculus.org/icculus/mojosetup/raw-file/tip/docs.txt
+
 local TOTAL_INSTALL_SIZE = @TOTAL_INSTALL_SIZE@;
 local _ = MojoSetup.translate
 
 Setup.Package
 {
-	id = "ufoai",
+	id = "ufoai-@VERSION@",
 	description = "UFO: Alien Invasion",
 	version = "@VERSION@",
+	splash = "ufoai.bmp",
 
 	recommended_destinations =
 	{
@@ -16,10 +19,16 @@ Setup.Package
 		"/usr/local"
 	},
 
+	Setup.Readme
+	{
+		description = _("README"),
+		source = "README"
+	},
+
 	Setup.Eula
 	{
 		description = _("End User License Agreement"),
-		source = _("COPYING")
+		source = "COPYING"
 	},
 
 	Setup.Option
@@ -30,6 +39,15 @@ Setup.Package
 		bytes = @TOTAL_INSTALL_SIZE@,
 		description = _("UFO: Alien Invasion"),
 		Setup.File {},  -- Just copies the whole thing.
+		Setup.DesktopMenuItem 
+		{
+			name = "UFO: Alien Invasion @VERSION@",
+			genericname = "UFO: AI",
+			icon = "ufoai.xpm",
+			commandline = "%0/ufoai",
+			category = "Game",
+		
+		},
 	},
 }
 

@@ -82,8 +82,6 @@ const struct image_s *MN_LoadImage (const char *name)
 void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, float sl, float tl, const image_t *image)
 {
 	float nw, nh, x1, x2, x3, x4, y1, y2, y3, y4;
-	float imageTexcoords[8];
-	short imageVerts[8];
 
 	if (!image)
 		return;
@@ -133,24 +131,11 @@ void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, f
 	y2 = y1;
 	y4 = y3 = y1 + nh;
 
-	imageTexcoords[0] = sl;
-	imageTexcoords[1] = tl;
-	imageTexcoords[2] = sh;
-	imageTexcoords[3] = tl;
-	imageTexcoords[4] = sh;
-	imageTexcoords[5] = th;
-	imageTexcoords[6] = sl;
-	imageTexcoords[7] = th;
-	imageVerts[0] = x1;
-	imageVerts[1] = y1;
-	imageVerts[2] = x2;
-	imageVerts[3] = y2;
-	imageVerts[4] = x3;
-	imageVerts[5] = y3;
-	imageVerts[6] = x4;
-	imageVerts[7] = y4;
-
-	R_DrawImageArray(imageTexcoords, imageVerts, image);
+	{
+		const vec2_t imageTexcoords[4] = {{sl, tl}, {sh, tl}, {sh, th}, {sl, th}};
+		const vec2_t imageVerts[4] = {{x1, y1}, {x2, y2}, {x3, y3}, {x4, y4}};
+		R_DrawImageArray(imageTexcoords, imageVerts, image);
+	}
 }
 
 /**

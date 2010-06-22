@@ -161,6 +161,7 @@ typedef struct {
 	int maxDrawBuffers;
 	int maxRenderbufferSize;
 	int maxColorAttachments;
+	int maxVertexTextureImageUnits;
 
 	char lodDir[8];
 

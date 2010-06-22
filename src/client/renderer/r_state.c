@@ -27,8 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 
 /* useful for particles, pics, etc.. */
-const float default_texcoords[] = {
-	0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0
+const vec2_t default_texcoords[4] = {
+	{0.0, 0.0}, {1.0, 0.0}, {1.0, 1.0}, {0.0, 1.0}
 };
 
 /**
@@ -289,7 +289,7 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 	return r_state.lighting_enabled;
 }
 
-/**  
+/**
  * @brief Enable or disable realtime dynamic lighting
  * @param ent The entity to enable/disable lighting for
  * @param enable Whether to turn realtime lighting on or off
@@ -353,7 +353,7 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 	}
 }
 
-/** 
+/**
  * @brief Enables animation using keyframe interpolation on the GPU
  * @param mesh The mesh to animate
  * @param backlerp The temporal proximity to the previous keyframe (in the range 0.0 to 1.0)
@@ -365,7 +365,7 @@ void R_EnableAnimation (const mAliasMesh_t *mesh, float backlerp, qboolean enabl
 		return;
 
 	r_state.animation_enabled = enable;
-	
+
 	if (enable) {
 		R_EnableAttribute("NEXT_FRAME_VERTS");
 		R_EnableAttribute("NEXT_FRAME_NORMALS");

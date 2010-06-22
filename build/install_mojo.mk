@@ -1,8 +1,6 @@
 mojoinstaller: installer-pre mojo_packdata mojo_update_installer_data mojo_compile_lua mojo_makeself
 
-ROOTDIR=$(shell pwd)
-
-MOJOSETUP_INST_DIR=$(ROOTDIR)/contrib/installer/mojosetup
+MOJOSETUP_INST_DIR=$(INSTALLER_DIR)/mojosetup
 MOJOSETUP_INST_TMP=$(MOJOSETUP_INST_DIR)/image
 MOJOSETUP_INST_DATADIR=$(MOJOSETUP_INST_TMP)/data
 MOJOSETUP_INSTALLER=$(MOJOSETUP_INST_DIR)/ufoai-$(UFOAI_VERSION)-linux32.run
@@ -16,14 +14,19 @@ LUAC_OPTS=-s
 mojo_packdata:
 	@mkdir -p $(MOJOSETUP_INST_TMP)
 	@mkdir -p $(MOJOSETUP_INST_TMP)/guis
+	@mkdir -p $(MOJOSETUP_INST_TMP)/meta
 	@mkdir -p $(MOJOSETUP_INST_TMP)/scripts
 	@mkdir -p $(MOJOSETUP_INST_DATADIR)
 	@mkdir -p $(MOJOSETUP_INST_DATADIR)/base
 	@mkdir -p $(MOJOSETUP_INST_DATADIR)/base/i18n
 	@cp -f $(MOJOSETUP_INST_DIR)/guis/*.so $(MOJOSETUP_INST_TMP)/guis
+	@cp -f $(INSTALLER_DIR)/ufoai.bmp $(MOJOSETUP_INST_TMP)/meta
 	@cp base/*.pk3 $(MOJOSETUP_INST_DATADIR)/base
 	@cp COPYING $(MOJOSETUP_INST_DATADIR)
-	@cp $(BINARIES) $(BINARIES_BASE) $(MOJOSETUP_INST_DATADIR)
+	@cp README $(MOJOSETUP_INST_DATADIR)
+	@cp -f $(INSTALLER_DIR)/ufoai.xpm $(MOJOSETUP_INST_DATADIR)
+	@cp -f $(BINARIES) $(MOJOSETUP_INST_DATADIR)
+	@cp -f $(BINARIES_BASE) $(MOJOSETUP_INST_DATADIR)/base
 	@tar -cvpf $(MOJOSETUP_INST_TMP)/i18n.tar base/i18n/ --exclude .svn --exclude updated*
 	@tar -xf $(MOJOSETUP_INST_TMP)/i18n.tar -C $(MOJOSETUP_INST_DATADIR)
 
@@ -34,7 +37,7 @@ mojo_makeself:
 	@cat $(MOJOSETUP_INST_DIR)/mojosetup $(MOJOSETUP_INST_DIR)/pdata.zip >> $(MOJOSETUP_INSTALLER)
 	@chmod +x $(MOJOSETUP_INSTALLER)
 	@rm -f $(MOJOSETUP_INST_DIR)/pdata.zip
-	#@rm -f $(MOJOSETUP_INST_DIR)/scripts/config.lua
+	@rm -f $(MOJOSETUP_INST_DIR)/scripts/config.lua
 
 mojo_update_installer_data:
 	@sed 's/@VERSION@/$(UFOAI_VERSION)/g' $(MOJOSETUP_INST_DIR)/scripts/config.lua.in | sed 's/@TOTAL_INSTALL_SIZE@/$(TOTAL_INSTALL_SIZE)/g' > $(MOJOSETUP_INST_DIR)/scripts/config.lua
