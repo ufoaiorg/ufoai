@@ -5899,6 +5899,7 @@
 // entity 154
 {
 "classname" "trigger_rescue"
+"team" "1"
 // brush 0
 {
 ( 768 524 66 ) ( 768 12 66 ) ( 0 524 66 ) tex_common/trigger 0 0 0 1 1 65280 0 0
