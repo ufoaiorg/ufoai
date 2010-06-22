@@ -288,6 +288,7 @@ item smokegrenade
 			impsnd	weapons/smokeexplosion
 			bodysnd	weapons/smokeexplosion
 			bncsnd	misc/klonk03
+			firesnd	weapons/grenade-pin
 			impactattenuation 0.07
 			gravity	true
 			delay	1
@@ -312,6 +313,7 @@ item smokegrenade
 			hitbody smoke_explosion
 			impsnd	weapons/smokeexplosion
 			bodysnd	weapons/smokeexplosion
+			firesnd	weapons/grenade-pin
 			bncsnd	misc/klonk03
 			impactattenuation 0.07
 			gravity	true
@@ -363,6 +365,7 @@ item stungrenade
 			impsnd	weapons/smokeexplosion
 			bodysnd	weapons/smokeexplosion
 			bncsnd	misc/klonk03
+			firesnd	weapons/grenade-pin
 			impactattenuation 0.07
 			gravity	true
 			delay	1
@@ -388,6 +391,7 @@ item stungrenade
 			impsnd	weapons/smokeexplosion
 			bodysnd	weapons/smokeexplosion
 			bncsnd	misc/klonk03
+			firesnd	weapons/grenade-pin
 			impactattenuation 0.07
 			gravity	true
 			rolled true
@@ -437,6 +441,7 @@ item stungrenade_alien
 			impact	coronaImpact
 			hitbody	coronaImpact
 			impsnd	weapons/smokeexplosion
+			firesnd	weapons/grenade-pin
 			bodysnd	weapons/smokeexplosion
 			bncsnd	misc/klonk03
 			impactattenuation 0.07
@@ -462,6 +467,7 @@ item stungrenade_alien
 			impact	coronaImpact
 			hitbody	coronaImpact
 			impsnd	weapons/smokeexplosion
+			firesnd	weapons/grenade-pin
 			bodysnd	weapons/smokeexplosion
 			bncsnd	misc/klonk03
 			impactattenuation 0.07
@@ -513,6 +519,7 @@ item incgrenade
 			impact	fire_explosion
 			hitbody fire_explosion
 			impsnd	weapons/fireexplosion
+			firesnd	weapons/grenade-pin
 			bodysnd	weapons/fireexplosion
 			bncsnd	misc/klonk03
 			impactattenuation 0.07
@@ -538,6 +545,7 @@ item incgrenade
 			impact	fire_explosion
 			hitbody fire_explosion
 			impsnd	weapons/fireexplosion
+			firesnd	weapons/grenade-pin
 			bodysnd	weapons/fireexplosion
 			bncsnd	misc/klonk03
 			impactattenuation 0.07
@@ -587,6 +595,7 @@ item plasmagrenade
 			projtl	plasmagren
 			impact	plasmaBigExplosion
 			hitbody	plasmaBigExplosion
+			firesnd	weapons/grenade-pin
 			impsnd	weapons/plasma_grenade
 			bodysnd	weapons/plasma_grenade
 			bncsnd	misc/klonk03
@@ -612,6 +621,7 @@ item plasmagrenade
 			impact	plasmaBigExplosion
 			hitbody	plasmaBigExplosion
 			impsnd	weapons/plasma_grenade
+			firesnd	weapons/grenade-pin
 			bodysnd	weapons/plasma_grenade
 			bncsnd	misc/klonk03
 			gravity	true
