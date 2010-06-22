@@ -1,5 +1,11 @@
 /**
  * @file m_node_video.c
+ * TODO add function to play/stop/pause
+ * TODO fix fullscreen, looped video
+ * TODO event when video end
+ * TODO function to move the video by position
+ * TODO function or cvar to know the video position
+ * TODO cvar or property to know the size of the video
  */
 
 /*
@@ -38,27 +44,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void MN_VideoNodeDraw (menuNode_t *node)
 {
 	vec2_t pos;
-	MN_GetNodeAbsPos(node, pos);
 
 	if (!node->image)
 		return;
 
-	if (EXTRADATA(node).cin.status == CIN_STATUS_FULLSCREEN) {
+	if (EXTRADATA(node).cin.fullScreen) {
 		MN_CaptureDrawOver(node);
 		return;
 	}
+
+	MN_GetNodeAbsPos(node, pos);
 
 	if (EXTRADATA(node).cin.status == CIN_STATUS_NONE)
 		CIN_PlayCinematic(&(EXTRADATA(node).cin), va("videos/%s", (const char *)node->image));
 	if (EXTRADATA(node).cin.status) {
 		/* only set replay to true if video was found and is running */
-		CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
+		CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_PLAYING, qtrue);
 		CIN_RunCinematic(&(EXTRADATA(node).cin));
 	}
 }
 
 static void MN_VideoNodeDrawOverMenu (menuNode_t *node)
 {
+	vec2_t pos;
+	MN_GetNodeAbsPos(node, pos);
+	CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_PLAYING, qtrue);
 	CIN_RunCinematic(&(EXTRADATA(node).cin));
 }
 

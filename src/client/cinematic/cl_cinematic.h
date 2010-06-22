@@ -41,10 +41,13 @@ typedef struct cinematic_s {
 	int				x, y, w, h; /**< for drawing in the menu maybe */
 
 	qboolean		noSound;	/**< no sound while playing the cinematic */
+	qboolean		fullScreen;	/**< if true, video is displayed in fullscreen */
 
 	int cinematicType;
 
 	int status;					/**< Status of the playing */
+
+	void *codecData;
 } cinematic_t;
 
 void CIN_StopCinematic(cinematic_t *cin);
@@ -58,10 +61,8 @@ void CIN_Shutdown(void);
 
 typedef enum {
 	CIN_STATUS_NONE,	/**< not playing */
-	CIN_STATUS_FULLSCREEN,	/**< fullscreen cinematic */
-
-	/* don't stop running sounds for these - but the above */
-	CIN_STATUS_MENU		/**< cinematic inside a menu node */
+	CIN_STATUS_PLAYING,
+	CIN_STATUS_PAUSE,
 } cinStatus_t;
 
 #endif /* CLIENT_CL_CINEMATIC_H */
