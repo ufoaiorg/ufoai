@@ -317,11 +317,18 @@ static qboolean MN_KeyPressedInWindow (unsigned int key, const menuNode_t *windo
  * @param[in] key key code, either K_ value or lowercase ascii
  * @param[in] unicode translated meaning of keypress in unicode
  * @return qtrue, if we used the event
+ * TODO think about what we should do when the mouse is captured
  */
 qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 {
 	int windowId;
 	int lastWindowId;
+
+	if (MN_DNDIsDragging()) {
+		if (key == K_ESCAPE)
+			MN_DNDAbort();
+		return qtrue;
+	}
 
 	/* translate event into the node with focus */
 	if (focusNode && focusNode->behaviour->keyPressed) {
