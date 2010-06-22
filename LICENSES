@@ -3138,13 +3138,16 @@ base/sound/footsteps/water_in.ogg | Creative Commons Attribution 2.5 | (c) 2006 
 base/sound/footsteps/water_out.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_under.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/wood1.ogg | Creative Commons Sampling Plus 1.0 | swuing | http://freesound.iua.upf.edu/samplesViewSingle.php?id=38876
+base/sound/geoscape/alien-activity.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/geoscape/attack.ogg | GNU General Public License 2.0 | BlakeD
 base/sound/geoscape/info.ogg | GNU General Public License 2.0 | BlakeD
-base/sound/geoscape/mail.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/geoscape/mail.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/geoscape/newmission.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/geoscape/promotion.ogg |  |  | ambience/jingle.ogg
 base/sound/geoscape/standard.ogg | GNU General Public License 2.0 | BlakeD
-base/sound/geoscape/ufospotted.ogg | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/ufospotted.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/impact/laser-impact.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/impact/plasma-impact.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/misc/breakelectric01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
 base/sound/misc/breakelectric02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
 base/sound/misc/breakelectric03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
@@ -3188,6 +3191,7 @@ base/sound/weapons/electrolaser.ogg | Public Domain | Vermind
 base/sound/weapons/expire.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/weapons/explode.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/weapons/fireexplosion.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/grenade-smoke.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/grenade.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/grenade_launcher.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/weapons/grenl_fle_3shot.ogg |  |  | shotgun.wav file
@@ -3198,6 +3202,10 @@ base/sound/weapons/irgoggles.ogg | Creative Commons Sampling Plus 1.0 | Thomas "
 base/sound/weapons/kerrblade.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/weapons/kerrblade_swip.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/knife.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/laser-huge.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/weapons/laser-large.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/weapons/laser-medium.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/weapons/laser-small.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/machinegun.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/machinepistol.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/medikit.ogg | GNU General Public License 2.0 | Alex Parker
@@ -3206,10 +3214,18 @@ base/sound/weapons/pbeam_rocket.ogg | GNU General Public License 2.0 | Karen Rei
 base/sound/weapons/pbeamcannon_explosive.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/weapons/pbeamrifle.ogg |  | Mikolaj Konarski (bandobraz)
 base/sound/weapons/pistol2.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/plasma-blade.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/weapons/plasma-huge.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/weapons/plasma-large.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/weapons/plasma-medium.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/weapons/plasma-small.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/plasma_big.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/weapons/plasma_blade.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/weapons/plasma_grenade.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/weapons/plasmablade.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/reload-pistol.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/weapons/reload-rifle.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/weapons/reload-smg.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/riotshotgun.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/smg2.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/smokeexplosion.ogg | GNU General Public License 2.0 | Alex Parker
