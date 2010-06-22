@@ -3161,6 +3161,7 @@ base/sound/footsteps/wood1.ogg | Creative Commons Attribution-Share Alike 2.0 | 
 base/sound/footsteps/wood2.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/footsteps/wood3.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/footsteps/wood4.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/geoscape/alarm.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/geoscape/alien-activity.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/geoscape/attack.ogg | GNU General Public License 2.0 | BlakeD
 base/sound/geoscape/info.ogg | GNU General Public License 2.0 | BlakeD
@@ -3169,6 +3170,13 @@ base/sound/geoscape/newmission.ogg | GNU General Public License 2.0 | Karen Rei 
 base/sound/geoscape/promotion.ogg |  |  | ambience/jingle.ogg
 base/sound/geoscape/standard.ogg | GNU General Public License 2.0 | BlakeD
 base/sound/geoscape/ufospotted.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/geoscape/unknown.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/gui/beep1.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/gui/beep2.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/gui/click1.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/gui/click2.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/gui/item-drag.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/gui/item-drop.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/impact/impact-dirt1.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/impact/impact-dirt2.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/impact/impact-dirt3.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
