@@ -719,7 +719,7 @@ int CIN_OGM_PlayCinematic (cinematic_t *cin, const char* filename)
 #endif
 
 	/* Set to play the cinematic in fullscreen mode */
-	/** TODO why? the node ask what it want, fullscreen or not */
+	/** @todo why? the node ask what it want, fullscreen or not */
 	CIN_SetParameters(cin, 0, 0, viddef.virtualWidth, viddef.virtualHeight, CIN_STATUS_PLAYING, qfalse);
 
 	M_PlayMusicStream(&OGMCIN.musicStream);
@@ -762,7 +762,7 @@ qboolean CIN_OGM_RunCinematic (cinematic_t *cin)
 void CIN_OGM_StopCinematic (cinematic_t *cin)
 {
 #ifdef HAVE_XVID_H
-	/** TODO is it at the right place? StopCinematic mean we only stop 1 cinematic */
+	/** @todo is it at the right place? StopCinematic mean we only stop 1 cinematic */
 	CIN_XVID_Shutdown();
 #endif
 

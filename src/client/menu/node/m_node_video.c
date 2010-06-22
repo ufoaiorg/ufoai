@@ -1,11 +1,11 @@
 /**
  * @file m_node_video.c
- * TODO add function to play/stop/pause
- * TODO fix fullscreen, looped video
- * TODO event when video end
- * TODO function to move the video by position
- * TODO function or cvar to know the video position
- * TODO cvar or property to know the size of the video
+ * @todo add function to play/stop/pause
+ * @todo fix fullscreen, looped video
+ * @todo event when video end
+ * @todo function to move the video by position
+ * @todo function or cvar to know the video position
+ * @todo cvar or property to know the size of the video
  */
 
 /*

@@ -310,7 +310,7 @@ static qboolean MN_KeyPressedInWindow (unsigned int key, const menuNode_t *windo
  * @param[in] key key code, either K_ value or lowercase ascii
  * @param[in] unicode translated meaning of keypress in unicode
  * @return qtrue, if we used the event
- * TODO think about what we should do when the mouse is captured
+ * @todo think about what we should do when the mouse is captured
  */
 qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 {
@@ -497,7 +497,7 @@ void MN_MouseMove (int x, int y)
 
 		/* send 'enter' event from common node to new node */
 		while (commonNode != hoveredNode) {
-			/** TODO we can remove that loop with an array allocation */
+			/** @todo we can remove that loop with an array allocation */
 			node = hoveredNode;
 			while (node->parent != commonNode)
 				node = node->parent;

@@ -46,7 +46,7 @@ void MN_OptionNodeSortOptions (menuNode_t *node)
 	MN_SortOptions(&node->firstChild);
 
 	/** update lastChild */
-	/** TODO the sort option should do it itself */
+	/** @todo the sort option should do it itself */
 	option = node->firstChild;
 	while (option->next)
 		option = option->next;

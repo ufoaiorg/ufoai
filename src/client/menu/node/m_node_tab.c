@@ -312,7 +312,7 @@ static void MN_TabNodeDrawTooltip (menuNode_t *node, int x, int y)
 
 /** called when the window is pushed
  * check cvar then, reduce runtime check
- * @TODO move cvar check to AbstractOption
+ * @todo move cvar check to AbstractOption
  */
 static void MN_TabNodeInit (menuNode_t *node)
 {

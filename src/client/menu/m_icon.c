@@ -133,7 +133,7 @@ menuIcon_t* MN_GetIconByName (const char* name)
 menuIcon_t* MN_AllocStaticIcon (const char* name)
 {
 	menuIcon_t* result;
-	/** TODO understand why we must hide this assert in release build with mingw */
+	/** @todo understand why we must hide this assert in release build with mingw */
 #ifdef DEBUG
 	assert(!MN_IconExists(name));
 #endif

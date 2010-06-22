@@ -864,7 +864,7 @@ void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 	behaviour->init = MN_AbstractNodeInit;
 	behaviour->close = MN_AbstractNodeClose;
 
-	/** TODO move it into common? */
+	/** @todo move it into common? */
 	Com_RegisterConstInt("ALIGN_UL", ALIGN_UL);
 	Com_RegisterConstInt("ALIGN_UC", ALIGN_UC);
 	Com_RegisterConstInt("ALIGN_UR", ALIGN_UR);

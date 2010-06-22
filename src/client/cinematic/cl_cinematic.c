@@ -84,7 +84,7 @@ void CIN_PlayCinematic (cinematic_t *cin, const char *fileName)
 
 	Com_StripExtension(fileName, name, sizeof(name));
 
-/** TODO what does it mean? */
+/** @todo what does it mean? */
 #if 0
 	if (cin->status <= CIN_STATUS_FULLSCREEN) {
 		/* Make sure sounds aren't playing */
