@@ -472,8 +472,8 @@ base/media/DejaVuSans.ttf | Public Domain | http://dejavu-fonts.org | http://dej
 base/media/FreeMono.ttf | GNU General Public License v3 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
 base/media/FreeSans.ttf | GNU General Public License v3 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
 base/media/FreeSerif.ttf | GNU General Public License v3 or later | http://savannah.nongnu.org/projects/freefont/ | http://savannah.nongnu.org/projects/freefont/
-base/media/Loma.ttf | GNU General Public License 2.0 or later | NECTEC, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
-base/media/Norasi.ttf | GNU General Public License 2.0 or later | NECTEC National Font Project, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
+base/media/Loma.ttf | Public Domain | NECTEC, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
+base/media/Norasi.ttf | Public Domain | NECTEC National Font Project, Thai Linux Working Group (TLWG) | ftp://linux.thai.net/pub/ThaiLinux/software/thai-ttf/
 base/media/UnDinaruBold.ttf | GNU General Public License |  | http://kldp.net/projects/unfonts
 base/media/UnGraphicBold.ttf | GNU General Public License |  | http://kldp.net/projects/unfonts
 base/media/ume-pgo4.ttf | see umefont-readme_lisence.html | http://ume-font.sourceforge.jp
