@@ -279,7 +279,7 @@ static qboolean CIN_OGM_LoadAudioFrame (cinematic_t *cin)
  * <0 -> error
  */
 #ifdef HAVE_XVID_H
-static int CIN_XVID_LoadVideoFrame (void)
+static int CIN_XVID_LoadVideoFrame (cinematic_t *cin)
 {
 	int r = 0;
 	ogg_packet op;
@@ -287,7 +287,7 @@ static int CIN_XVID_LoadVideoFrame (void)
 	memset(&op, 0, sizeof(op));
 
 	while (!r && (ogg_stream_packetout(&OGMCIN.os_video, &op))) {
-		int usedBytes = CIN_XVID_Decode(op.packet, op.bytes);
+		int usedBytes = CIN_XVID_Decode(cin, op.packet, op.bytes);
 		if (OGMCIN.xvidDecodeStats.type == XVID_TYPE_VOL) {
 			if (OGMCIN.outputWidth != OGMCIN.xvidDecodeStats.data.vol.width || OGMCIN.outputHeight
 					!= OGMCIN.xvidDecodeStats.data.vol.height) {
@@ -313,7 +313,7 @@ static int CIN_XVID_LoadVideoFrame (void)
 			}
 
 			/* use the rest of this packet */
-			usedBytes += CIN_XVID_Decode(op.packet + usedBytes, op.bytes - usedBytes);
+			usedBytes += CIN_XVID_Decode(cin, op.packet + usedBytes, op.bytes - usedBytes);
 		}
 
 		/* we got a real output frame ... */
@@ -763,7 +763,7 @@ void CIN_OGM_StopCinematic (cinematic_t *cin)
 {
 #ifdef HAVE_XVID_H
 	/** @todo is it at the right place? StopCinematic mean we only stop 1 cinematic */
-	CIN_XVID_Shutdown();
+	CIN_XVID_Shutdown(cin);
 #endif
 
 #ifdef HAVE_THEORA_THEORA_H
