@@ -1391,7 +1391,7 @@ ufoType_t CP_MissionChooseUFO (const mission_t *mission)
 
 	/* If we reached this point, then mission will be spawned from space: choose UFO */
 	assert(numTypes);
-	idx = (int) (numTypes * (randNumber - groundProbability) / (1.0f - groundProbability));
+	idx = (int) ((numTypes - 1) * randNumber);
 	if (idx >= numTypes)
 		Sys_Error("CP_MissionChooseUFO: idx exceeded: %i (randNumber: %f, groundProbability: %f, numTypes: %i)",
 				idx, randNumber, groundProbability, numTypes);
