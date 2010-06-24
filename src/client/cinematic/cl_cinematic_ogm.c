@@ -573,7 +573,7 @@ int CIN_OGM_PlayCinematic (cinematic_t *cin, const char* filename)
 
 	/* alloc memory for decoding of this video */
 	assert(cin->codecData == NULL);
-	cin->codecData = malloc(sizeof(ogmCinematic_t));
+	cin->codecData = Mem_PoolAlloc(sizeof(OGMCIN), vid_genericPool, 0);
 	memset(cin->codecData, 0, sizeof(ogmCinematic_t));
 
 	if (FS_OpenFile(filename, &OGMCIN.ogmFile, FILE_READ) == -1) {
@@ -790,7 +790,7 @@ void CIN_OGM_StopCinematic (cinematic_t *cin)
 	FS_CloseFile(&OGMCIN.ogmFile);
 
 	/* free data allocated for decodage */
-	free(cin->codecData);
+	Mem_Free(cin->codecData);
 	cin->codecData = NULL;
 }
 

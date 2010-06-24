@@ -554,7 +554,7 @@ void CIN_ROQ_StopCinematic (cinematic_t *cin)
 
 	M_StopMusicStream(&ROQCIN.musicStream);
 
-	free(cin->codecData);
+	Mem_Free(cin->codecData);
 	cin->codecData = NULL;
 }
 
@@ -565,7 +565,7 @@ void CIN_ROQ_PlayCinematic (cinematic_t *cin, const char *fileName)
 	byte header[ROQ_CHUNK_HEADER_SIZE];
 
 	assert(cin->codecData);
-	cin->codecData = malloc(sizeof(ROQCIN));
+	cin->codecData = Mem_PoolAlloc(sizeof(ROQCIN), vid_genericPool, 0);
 	memset(&ROQCIN, 0, sizeof(ROQCIN));
 
 	/* Open the file */
