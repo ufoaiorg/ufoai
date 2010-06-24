@@ -93,7 +93,6 @@ void CP_SetMissionVars (const mission_t *mission)
  */
 void CP_StartMissionMap (mission_t* mission)
 {
-	base_t *bAttack;
 	const char *param = NULL;
 
 	/* prepare */
@@ -109,18 +108,15 @@ void CP_StartMissionMap (mission_t* mission)
 
 	/* base attack maps starts with a dot */
 	if (mission->mapDef->map[0] == '.') {
-		bAttack = (base_t*)mission->data;
-		/* assemble a random base and set the base status to BASE_UNDER_ATTACK */
-		if (!bAttack) {
-			bAttack = B_GetRandomBase();
-			bAttack->baseStatus = BASE_UNDER_ATTACK;
-			B_AssembleMap(bAttack);
-		}
+		base_t *base = (base_t*)mission->data;
+		
+		if (mission->category != INTERESTCATEGORY_BASE_ATTACK)
+			Com_Printf("Baseattack map on non-baseattack mission! (id=%s, category=%d)\n", mission->id, mission->category);
+		/* assemble a random base */
+		if (!base)
+			Com_Error(ERR_DROP, "Baseattack map without base!\n");
 		/* base must be under attack and might not have been destroyed in the meantime. */
-		else if (bAttack->baseStatus == BASE_UNDER_ATTACK && B_GetFoundedBaseCount() > 0)
-			B_AssembleMap(bAttack);
-		else
-			Com_DPrintf(DEBUG_CLIENT, "Base is not under attack or no founded bases are left\n");
+		B_AssembleMap(base);
 
 		return;
 	}
