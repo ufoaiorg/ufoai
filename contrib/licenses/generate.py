@@ -29,6 +29,13 @@ from xml.dom.minidom import parseString
 CACHING = True
 ABS_URL = None
 
+NON_FREE_LICENSES = [
+"UNKNOWN", # ambiguous
+"Creative Commons", # ambiguous
+"Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported",
+"Creative Commons Sampling Plus 1.0"
+]
+
 HTML = u"""<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -52,6 +59,12 @@ State as in revision %i.
 %s
 
 </body></html>"""
+
+HTML_IMAGE = u"""<br/><table><tr>
+<td><img src="plot.png" caption="Timeline of all game content by revision and licenses" /></td>
+<td><img src="nonfree.png" caption="Timeline of non free content by revision and licenses" /></td>
+</table><br/>
+"""
 
 def get(cmd, cacheable=True):
     if cacheable and CACHING:
@@ -176,7 +189,8 @@ def generate(d, data, texture_map, map_texture):
         else:
             return '.' in x
 
-    content = '<br/><img src="plot.png" /><br/>'
+    content = HTML_IMAGE
+
     l_count = []
     for i in licenses:
         l_count.append((i, len([x for x in licenses[i] if test(x)])))
@@ -187,12 +201,14 @@ def generate(d, data, texture_map, map_texture):
     l_count.sort(key=key, reverse=True)
 
     # per license files are namend: MD5(license_name).html
+    content += '<ul>'
     for i in l_count:
         h = hashlib.md5(i[0]).hexdigest()
-        content+= u'<li>%i - <a href="%s.html">%s</a></li>' % (i[1], h, i[0])
+        content += u'<li>%i - <a href="%s.html">%s</a></li>' % (i[1], h, i[0])
+    content += '</ul>'
 
     if d != '':
-        content = u'<a href="../index.html">Back</a><br/><ul>%s</ul>' %  content
+        content = u'<a href="../index.html">Back</a><br/>%s' %  content
     else:
         # print index
         index = u'<b>See also:</b><br />'
@@ -200,7 +216,7 @@ def generate(d, data, texture_map, map_texture):
             if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
                 index+= u' - <a href="%s/index.html">%s</a><br/>' % (i,i)
 
-        content = index + u'<ul>%s</ul>' %  content
+        content = index + u'%s' %  content
         content+= '<hr/>You grab the source code from ufo:ai\'s svn. USE AT OWN RISK.'
 
     html = HTML % (d, rev, content)
@@ -297,13 +313,18 @@ def generate(d, data, texture_map, map_texture):
     for i in data:
         data[i].sort(key=key)
 
-    plot(d, data, times)
+    plot(d, data, times, "plot.png")
+    nonfree = {}
+    for l in NON_FREE_LICENSES:
+        if data.has_key(l):
+            nonfree[l] = data[l]
+    plot(d, nonfree, times, "nonfree.png")
 
 
-def plot(d, data, times):
+def plot(d, data, times, imagename):
     cmds = 'set terminal png;\n'
     cmds+= 'set data style linespoints;\n'
-    cmds+= 'set output "licenses/html/%s/plot.png";\n' % d
+    cmds+= 'set output "licenses/html/%s/%s";\n' % (d, imagename)
     cmds+= 'set xrange [%i to %i];\n' % (min(times), max(times) + 1 + (max(times)-min(times))*0.15)
 
     cmds+= 'plot '
