@@ -613,12 +613,12 @@ base/models/aircraft/ufo_supply/ufo_supply_wing.jpg | GNU General Public License
 base/models/aircraft/ufo_supply/ufo_supply_wing_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/ufo_supply/ufo_supply_wing_left.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_supply/ufo_supply_wing_right.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/alientank/alientank.anm | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
-base/models/aliens/alientank/alientank.md2 | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
-base/models/aliens/alientank/alientank.png | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
-base/models/aliens/alientank/alientank_gm.png | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
-base/models/aliens/alientank/alientank_nm.png | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
-base/models/aliens/alientank/weapon.md2 | Creative Commons Attribution-ShareAlike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/alientank.anm | Creative Commons Attribution-Share Alike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/alientank.md2 | Creative Commons Attribution-Share Alike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/alientank.png | Creative Commons Attribution-Share Alike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/alientank_gm.png | Creative Commons Attribution-Share Alike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/alientank_nm.png | Creative Commons Attribution-Share Alike 3.0 Unported | Achim "Arthur" Menzel
+base/models/aliens/alientank/weapon.md2 | Creative Commons Attribution-Share Alike 3.0 Unported | Achim "Arthur" Menzel
 base/models/aliens/bloodspider/bloodspider.anm | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
 base/models/aliens/bloodspider/bloodspider.jpg | Creative Commons Attribution-Share Alike 3.0 | Jake Gustafson (ProtoArmor)
 base/models/aliens/bloodspider/bloodspider.md2 | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
@@ -2073,14 +2073,14 @@ base/music/David02.ogg | Creative Commons Attribution 3.0 Unported | David Reeve
 base/music/David03.ogg | Creative Commons Attribution 3.0 Unported | David Reeves (Destructavator)
 base/music/David04.ogg | Creative Commons Attribution 3.0 Unported | David Reeves (Destructavator)
 base/music/David05.ogg | Creative Commons Attribution 3.0 Unported | David Reeves (Destructavator)
-base/music/Marine01.ogg | Creative Commons Attribution Share-Alike 3.0 | "Marine" Baklung
-base/music/Marine02.ogg | Creative Commons Attribution Share-Alike 3.0 | "Marine" Baklung
-base/music/MarineAlienRaid.ogg | Creative Commons Attribution Share-Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
-base/music/MarineBacktheAttack.ogg | Creative Commons Attribution Share-Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
-base/music/MarineFireFight.ogg | Creative Commons Attribution Share-Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
-base/music/MarineIndustrial.ogg | Creative Commons Attribution Share-Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
-base/music/MarineStrikingIntoTheUnknown.ogg | Creative Commons Attribution Share-Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
-base/music/MarineUrbanWarfare.ogg | Creative Commons Attribution Share-Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
+base/music/Marine01.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklung
+base/music/Marine02.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklung
+base/music/MarineAlienRaid.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
+base/music/MarineBacktheAttack.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
+base/music/MarineFireFight.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
+base/music/MarineIndustrial.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
+base/music/MarineStrikingIntoTheUnknown.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
+base/music/MarineUrbanWarfare.ogg | Creative Commons Attribution-Share Alike 3.0 | "Marine" Baklund | http://ufoai.ninex.info/forum/index.php?topic=4168.0
 base/music/PsymongN1.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
 base/music/PsymongN2.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
 base/music/PsymongN3.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
@@ -3186,9 +3186,9 @@ base/sound/impact/impact-wood2.ogg | Creative Commons Attribution-Share Alike 2.
 base/sound/impact/impact-wood3.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/impact/laser-impact.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/impact/plasma-impact.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
-base/sound/misc/breakelectric01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
-base/sound/misc/breakelectric02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
-base/sound/misc/breakelectric03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
+base/sound/misc/breakelectric01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
+base/sound/misc/breakelectric02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
+base/sound/misc/breakelectric03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
 base/sound/misc/breakglass02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
 base/sound/misc/breakglass03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
 base/sound/misc/breakglass04.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
@@ -3202,9 +3202,9 @@ base/sound/misc/breakwood01.ogg | Creative Commons Sampling Plus 1.0 | kevinkace
 base/sound/misc/breakwood02.ogg | Public Domain | Independent.nu | http://opengameart.org/content/35-wooden-crackshitsdestructions
 base/sound/misc/breakwood03.ogg | Public Domain | Independent.nu | http://opengameart.org/content/35-wooden-crackshitsdestructions
 base/sound/misc/breakwood04.ogg | Public Domain | Independent.nu | http://opengameart.org/content/35-wooden-crackshitsdestructions
-base/sound/misc/breakwood05.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
-base/sound/misc/breakwood06.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
-base/sound/misc/breakwood07.ogg | Creative Commons Attribution-Share Alike 3.0 Unported License | Gren | Created on NN-19 sampler
+base/sound/misc/breakwood05.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
+base/sound/misc/breakwood06.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
+base/sound/misc/breakwood07.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
 base/sound/misc/lobbyprivmsg.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/misc/popup.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/misc/roundstart.ogg | GNU General Public License 2.0 | Karen Rei Pease
