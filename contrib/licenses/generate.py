@@ -95,7 +95,6 @@ def get_data(d, files):
     data = [i.split(' - ', 1) for i in get('svn propget svn:license base/%s -R' % d, False).split('\n') if i != '']
     remove = d != '' and len(d) + 1 or 0
     data = [(i[0][5 + remove:], i[1]) for i in data] # remove "base/.../"
-
     # get current revision
     rev = get_rev(d)
 
@@ -123,6 +122,7 @@ FFILTERS = (re.compile('.txt$'),
             re.compile('.mat$'),
             re.compile('.pl$'),
             re.compile('.py$'),
+            re.compile('.glsl$'),
             re.compile('^Makefile'),
             re.compile('.html$'),
             re.compile('.cfg$'),
@@ -152,7 +152,9 @@ def get_all_data():
             for path, dirnames, fnames in os.walk('base/' + i):
                 for fname in fnames:
                     if not '/.' in path and ffilter(fname):
-                        f = path[len(i)+ 6:] + '/' + fname
+                        f = path[len(i)+ 6:]
+                        if f != '': f += '/'
+                        f += fname
                         files.append(f)
             re[i] = get_data(i, files)
 
@@ -209,12 +211,12 @@ def generate(d, data, texture_map, map_texture):
     print 'Generating stats per license'
     print ' collecting svn:copyright',
     copyright =  {}
-    for tmp in get('svn propget svn:copyright base/%s' % d, False).split('\n'):
+    for tmp in get('svn propget svn:copyright base/%s -R' % d, False).split('\n'):
         if ' - ' in tmp:
             fname, author = tmp.split(' - ', 1)
             copyright[fname] = author
     print 'done.'
-            
+
     for i in licenses:
         h = hashlib.md5(i).hexdigest()
         content = u'<a href="index.html">Back</a><br /><h2>%s</h2><ol>' % i
@@ -232,7 +234,11 @@ def generate(d, data, texture_map, map_texture):
 
             content+= u'<li>%s<a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/base/%s/%s" title="Download">%s</a> - <a href="http://ufoai.svn.sourceforge.net/viewvc/ufoai/ufoai/trunk/base/%s/%s?view=log" title="History">%s</a>' % (img, d, j, j, d, j, j)
 
-            copy =  copyright.get('base/%s/%s' % (d,j), 'UNKNOWN')
+            if d == '':
+            	filename = 'base/%s' % j
+            else:
+            	filename = 'base/%s/%s' % (d,j)
+            copy = copyright.get(filename, 'UNKNOWN')
             content+= u' <span>by %s</span>' % unicode(copy.decode('utf-8'))
 
             if j in sources:
@@ -377,7 +383,6 @@ def main():
     # do it for the hole thing
     data = get_all_data()
 
-
     # get map data / texture usage
     texture_map = {}
     map_texture = {}
@@ -395,7 +400,6 @@ def main():
                 if not tex in texture_map:
                     texture_map[tex] = []
                 texture_map[tex].append(kill_suffix(path))
-
 
     for i in os.listdir('base'):
         if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
