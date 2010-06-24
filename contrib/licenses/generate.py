@@ -19,10 +19,11 @@
 
 
 import subprocess
-import md5, os
+import hashlib, os
 import cPickle
 import sys
 import re
+from xml.dom.minidom import parseString
 
 # config
 CACHING = True
@@ -54,7 +55,7 @@ State as in revision %i.
 
 def get(cmd, cacheable=True):
     if cacheable and CACHING:
-        h = md5.md5(cmd).hexdigest()
+        h = hashlib.md5(cmd).hexdigest()
         if h in os.listdir('licenses/cache'):
             print ' getting from cache: ', cmd
             print ' ', h
@@ -82,9 +83,11 @@ def get_used_tex(m):
 
 
 def get_rev(d):
-    rev = [i for i in get('svn info base/%s' % d, False).split('\n') if i.startswith('Revision')]
-    return int(rev[0][10:])
-
+    # xml is language independant
+    xml = get('svn info base/%s --xml' % d, False)
+    dom = parseString(xml)
+    entry = dom.firstChild.getElementsByTagName('entry')[0]
+    return int(entry.getAttribute("revision"))
 
 def get_data(d, files):
     print ' getting data for "%s"' % d
@@ -183,7 +186,7 @@ def generate(d, data, texture_map, map_texture):
 
     # per license files are namend: MD5(license_name).html
     for i in l_count:
-        h = md5.md5(i[0]).hexdigest()
+        h = hashlib.md5(i[0]).hexdigest()
         content+= u'<li>%i - <a href="%s.html">%s</a></li>' % (i[1], h, i[0])
 
     if d != '':
@@ -204,7 +207,7 @@ def generate(d, data, texture_map, map_texture):
     sources = [i.split(' - ', 1) for i in get('svn propget svn:source base/%s -R' % d, False).split('\n') if i != '']
 
     print 'Generating stats per license'
-    print ' collecting svn:copytight',
+    print ' collecting svn:copyright',
     copyright =  {}
     for tmp in get('svn propget svn:copyright base/%s' % d, False).split('\n'):
         if ' - ' in tmp:
@@ -213,7 +216,7 @@ def generate(d, data, texture_map, map_texture):
     print 'done.'
             
     for i in licenses:
-        h = md5.md5(i).hexdigest()
+        h = hashlib.md5(i).hexdigest()
         content = u'<a href="index.html">Back</a><br /><h2>%s</h2><ol>' % i
         for j in licenses[i]:
             if os.path.isdir('base/%s/%s' % (d, j)):
@@ -301,8 +304,8 @@ def plot(d, data, times):
     p = []
     for i in data:
         plot_data = '\n'.join('%i %i' % (x[0], x[1]) for x in data[i])
-        p.append("'%s' title \"%s\" " % ('/tmp/' + md5.md5(i).hexdigest(), i))
-        open('/tmp/' + md5.md5(i).hexdigest(), 'w').write(plot_data)
+        p.append("'%s' title \"%s\" " % ('/tmp/' + hashlib.md5(i).hexdigest(), i))
+        open('/tmp/' + hashlib.md5(i).hexdigest(), 'w').write(plot_data)
 
     cmds+= ', '.join(p) + ';\n'
     open('/tmp/cmds', 'w').write(cmds)
