@@ -74,10 +74,13 @@ metadata = None
 
 class Metadata:
     def __init__(self, filename):
+        self.filename = filename
         self.license = None
         self.copyright = None
         self.source = None
         self.revision = None
+        self.usedByMaps = set([])
+        self.useTextures = set([])
 
     def __repr__(self):
         return str((self.license, self.copyright, self.source, self.revision))
@@ -142,6 +145,29 @@ def getMetadata(filename):
         metadata[filename] = meta
 
     return meta
+
+def getMetadataByShortImageName(filename):
+    if os.path.exists(filename + ".png"):
+        return getMetadata(filename + ".png")
+    if os.path.exists(filename + ".jpg"):
+        return getMetadata(filename + ".jpg")
+    if os.path.exists(filename + ".tga"):
+        return getMetadata(filename + ".tga")
+    return None
+
+def computeTextureUsageInMaps():
+    print 'Parse texture usage in maps...'
+    for i in os.walk('base/maps'):
+        for mapname in i[2]:
+            if not mapname.endswith('.map'):
+                continue
+            mapname = i[0] + '/' + mapname
+            mapmeta = getMetadata(mapname)
+
+            for tex in get_used_tex(mapname):
+                texmeta = getMetadataByShortImageName("base/textures/" + tex)
+                texmeta.usedByMaps.add(mapmeta)
+                mapmeta.useTextures.add(texmeta)
 
 ###################################
 # Job
@@ -247,7 +273,7 @@ def get_all_data():
     result[''] = get_data('', allfiles) # mae
     return result
 
-def generate(d, data, texture_map, map_texture):
+def generate(d, data):
     licenses = data[d]
     if d == '':
         meta = getMetadata("base")
@@ -359,14 +385,20 @@ def generate(d, data, texture_map, map_texture):
                 content+= '<br/>Source: ' + source
 
             if d == 'maps' and j.endswith('.map'):
-                if kill_suffix(j) in map_texture:
-                    content+= '<br/><div>Uses: %s </div>' % ', '.join(map_texture[kill_suffix(j)])
+                if len(meta.useTextures) > 0:
+                    list = []
+                    for m in meta.useTextures:
+                        list.append(m.filename)
+                    content += '<br/><div>Uses: %s </div>' % ', '.join(list)
                 else:
-                    content+= 'wtf?'
+                    content += 'Map without textures!'
             elif d == 'textures':
-                if kill_suffix(j) in texture_map:
-                    content+= '<br/><div>Used in: %s </div>' % ', '.join(texture_map[kill_suffix(j)])
-                elif j.find('_nm.') or j.find('_gm.') or j.find('_sm.') or j.find('_rm.'):
+                if len(meta.usedByMaps) > 0:
+                    list = []
+                    for m in meta.usedByMaps:
+                        list.append(m.filename)
+                    content+= '<br/><div>Used in: %s </div>' % ', '.join(list)
+                elif '_nm.' in j or '_gm.' in j or '_sm.' in j or '_rm.' in j:
                     content+= '<br/><div>Special map - only indirectly used</div>'
                 else:
                     content+= '<br/><b>UNUSED</b> (at least no map uses it)'
@@ -518,28 +550,13 @@ def main():
     data = get_all_data()
 
     # get map data / texture usage
-    texture_map = {}
-    map_texture = {}
-
-    print 'get texture usage'
-    for i in os.walk('base/maps'):
-        for f in i[2]:
-            if not f.endswith('.map'):
-                continue
-
-            path = (i[0] +'/' + f)[10:]
-            map_texture[kill_suffix(path)] = []
-            for tex in get_used_tex(i[0] +'/' + f):
-                map_texture[kill_suffix(path)].append(tex)
-                if not tex in texture_map:
-                    texture_map[tex] = []
-                texture_map[tex].append(kill_suffix(path))
+    computeTextureUsageInMaps()
 
     for i in os.listdir('base'):
         if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
-            generate(i, data, texture_map, map_texture)
+            generate(i, data)
             print '\n'
-    generate('', data, texture_map, map_texture)
+    generate('', data)
 
     # copy('licenses.py', 'licenses/html')
     print 'bye'
