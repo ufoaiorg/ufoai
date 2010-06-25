@@ -66,6 +66,87 @@ HTML_IMAGE = u"""<br/><table><tr>
 </table><br/>
 """
 
+###################################
+# Metadata cache
+###################################
+
+metadata = None
+
+class Metadata:
+    def __init__(self, filename):
+        self.license = None
+        self.copyright = None
+        self.source = None
+        self.revision = None
+
+    def __repr__(self):
+        return str((self.license, self.copyright, self.source, self.revision))
+
+## compute metadata for all versionned ./base file
+# @todo can we "propget" more than 1 property? faster
+def computeMetadata():
+    global metadata
+    metadata = {}
+
+    print "Parse revisions..."
+    xml = get('svn info base --xml -R', False)
+    dom = parseString(xml)
+    entries = dom.firstChild.getElementsByTagName('entry')
+    for e in entries:
+        path = e.getAttribute("path")
+        meta = getMetadata(path)
+        meta.revision = int(e.getAttribute("revision"))
+    print "Parse licenses..."
+    xml = get('svn pg svn:license base --xml -R', False)
+    dom = parseString(xml)
+    entries = dom.firstChild.getElementsByTagName('target')
+    for e in entries:
+        path = e.getAttribute("path")
+        property = e.getElementsByTagName('property')[0]
+        assert(property.getAttribute("name") == 'svn:license')
+        meta = getMetadata(path)
+        meta.license = property.firstChild.nodeValue
+    print "Parse copyright..."
+    xml = get('svn pg svn:copyright base --xml -R', False)
+    dom = parseString(xml)
+    entries = dom.firstChild.getElementsByTagName('target')
+    for e in entries:
+        path = e.getAttribute("path")
+        property = e.getElementsByTagName('property')[0]
+        assert(property.getAttribute("name") == 'svn:copyright')
+        meta = getMetadata(path)
+        meta.copyright = property.firstChild.nodeValue
+    print "Parse sources..."
+    xml = get('svn pg svn:source base --xml -R', False)
+    dom = parseString(xml)
+    entries = dom.firstChild.getElementsByTagName('target')
+    for e in entries:
+        path = e.getAttribute("path")
+        property = e.getElementsByTagName('property')[0]
+        assert(property.getAttribute("name") == 'svn:source')
+        meta = getMetadata(path)
+        meta.source = property.firstChild.nodeValue
+
+def getMetadata(filename):
+    global metadata
+
+    if metadata == None:
+        computeMetadata()
+
+    ## get metadata from cache
+    if filename in metadata:
+        meta = metadata[filename]
+    ## gen new structure
+    else:
+        meta = Metadata(filename)
+        metadata[filename] = meta
+
+    return meta
+
+###################################
+# Job
+###################################
+
 def get(cmd, cacheable=True):
     if cacheable and CACHING:
         h = hashlib.md5(cmd).hexdigest()
@@ -94,39 +175,32 @@ def get_used_tex(m):
             used.append(tex)
     return used
 
-
-def get_rev(d):
-    # xml is language independant
-    xml = get('svn info base/%s --xml' % d, False)
-    dom = parseString(xml)
-    entry = dom.firstChild.getElementsByTagName('entry')[0]
-    return int(entry.getAttribute("revision"))
-
 def get_data(d, files):
     print ' getting data for "%s"' % d
 
-    data = [i.split(' - ', 1) for i in get('svn propget svn:license base/%s -R' % d, False).split('\n') if i != '']
-    remove = d != '' and len(d) + 1 or 0
-    data = [(i[0][5 + remove:], i[1]) for i in data] # remove "base/.../"
     # get current revision
-    rev = get_rev(d)
+    filename = "base"
+    if d != "":
+        filename = "base/" + d
+    meta = getMetadata(filename)
+    rev = meta.revision
 
     print '  Current Revision r' + str(rev)
 
     licenses = {}
-    for i in data:
-        if not i[1] in licenses:
-            licenses[i[1]] = []
-        licenses[i[1]].append(i[0])
-
-    # get unknown licenses
-    for i in data:
-        if i[0] in files:
-            files.remove(i[0])
-    licenses['UNKNOWN'] = files
+    for f in files:
+        filename = "base/" + d + "/" + f
+        if d == "":
+            filename = "base/" + f
+        meta = getMetadata(filename)
+        l = meta.license
+        if l == None:
+            l = "UNKNOWN"
+        if not (l in licenses):
+            licenses[l] = []
+        licenses[l].append(f)
 
     return licenses
-
 
 # filters for files to ignore
 FFILTERS = (re.compile('.txt$'),
@@ -137,6 +211,7 @@ FFILTERS = (re.compile('.txt$'),
             re.compile('.py$'),
             re.compile('.glsl$'),
             re.compile('^Makefile'),
+            re.compile('^COPYING'),
             re.compile('.html$'),
             re.compile('.cfg$'),
             re.compile('.lua$'),
@@ -152,11 +227,8 @@ def ffilter(fname):
 
 def get_all_data():
     print 'get all data'
-    re = {}
-#    print ' svn list'
-#    files = filter(ffilter, get('svn list -r %i -R base/' % get_rev('.')).split('\n'))
-
-#    print '  done'
+    result = {}
+    allfiles = []
 
     for i in os.listdir('base'):
         if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
@@ -169,15 +241,19 @@ def get_all_data():
                         if f != '': f += '/'
                         f += fname
                         files.append(f)
-            re[i] = get_data(i, files)
+                        allfiles.append(i + '/' + f)
+            result[i] = get_data(i, files)
 
-    re[''] = get_data('', files) # mae
-    return re
-
+    result[''] = get_data('', allfiles) # mae
+    return result
 
 def generate(d, data, texture_map, map_texture):
     licenses = data[d]
-    rev = get_rev(d)
+    if d == '':
+        meta = getMetadata("base")
+    else:
+        meta = getMetadata("base/" + d)
+    rev = meta.revision
 
     # --------------------------
     print 'Generating html for "%s"' % d
@@ -211,28 +287,17 @@ def generate(d, data, texture_map, map_texture):
         content = u'<a href="../index.html">Back</a><br/>%s' %  content
     else:
         # print index
-        index = u'<b>See also:</b><br />'
+        index = u'<b>See also:</b><ul>'
         for i in os.listdir('base'):
             if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
-                index+= u' - <a href="%s/index.html">%s</a><br/>' % (i,i)
+                index+= u'<li><a href="%s/index.html">%s</a></li>' % (i,i)
+        index += '</ul>'
 
         content = index + u'%s' %  content
         content+= '<hr/>You grab the source code from ufo:ai\'s svn. USE AT OWN RISK.'
 
     html = HTML % (d, rev, content)
     open('licenses/html/%s/index.html' % d, 'w').write(html)
-
-    sources = [i.split(' - ', 1) for i in get('svn propget svn:source base/%s -R' % d, False).split('\n') if i != '']
-
-    print 'Generating stats per license'
-    print ' collecting svn:copyright',
-    copyright =  {}
-    for tmp in get('svn propget svn:copyright base/%s -R' % d, False).split('\n'):
-        if ' - ' in tmp:
-            fname, author = tmp.split(' - ', 1)
-            copyright[fname] = author
-    print 'done.'
-
     for i in licenses:
         h = hashlib.md5(i).hexdigest()
         content = u'<a href="index.html">Back</a><br /><h2>%s</h2><ol>' % i
@@ -244,25 +309,27 @@ def generate(d, data, texture_map, map_texture):
             img = ''
             if j.endswith('.jpg') or j.endswith('.tga') or j.endswith('.png'):
                 thumb = '.thumbnails/%s/%s.png' % (d,j)
-                if not os.path.exists('licenses/html/%s' % thumb):
+                if d != '' and not os.path.exists('licenses/html/%s' % thumb):
                     os.system('convert base/%s/%s -thumbnail 128x128 licenses/html/%s' % (d, j, thumb))
                 img = '<img src="%s%s"/>' % (ABS_URL, thumb)
 
             content+= u'<li>%s<a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/base/%s/%s" title="Download">%s</a> - <a href="http://ufoai.svn.sourceforge.net/viewvc/ufoai/ufoai/trunk/base/%s/%s?view=log" title="History">%s</a>' % (img, d, j, j, d, j, j)
 
+            filename = "base/" + d + "/" + j
             if d == '':
-            	filename = 'base/%s' % j
-            else:
-            	filename = 'base/%s/%s' % (d,j)
-            copy = copyright.get(filename, 'UNKNOWN')
-            content+= u' <span>by %s</span>' % unicode(copy.decode('utf-8'))
+                filename = "base" + "/" + j
+            meta = getMetadata(filename)
 
-            if j in sources:
-                source = sources[j]
-            else:
+            copy = meta.copyright
+            if copy == None:
+                copy = "UNKNOWN"
+            content+= u' <span>by %s</span>' % unicode(copy)
+
+            source = meta.source
+            if source == None:
                 source = ''
             if source != '':
-                if source.startswith('http://'):
+                if source.startswith('http://') or source.startswith('ftp://'):
                     source = '<a href="%s">%s</a>' % (source, source[7:])
                 content+= '<br/>Source: ' + source
 
