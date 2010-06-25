@@ -28,7 +28,7 @@ ShowUninstDetails "nevershow"
 !define MUI_LANGDLL_REGISTRY_KEY "${PRODUCT_UNINST_KEY}"
 !define MUI_LANGDLL_REGISTRY_VALUENAME "NSIS:Language"
 
-!define MUI_WELCOMEFINISHPAGE_BITMAP "../ufoai.bmp"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "..\ufoai.bmp"
 
 Var GAMEFLAGS
 Var MAPFLAGS
