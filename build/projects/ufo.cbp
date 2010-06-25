@@ -886,6 +886,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/menu/node/m_node_base.h" />
+		<Unit filename="../../src/client/menu/node/m_node_baseinventory.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/menu/node/m_node_baseinventory.h" />
 		<Unit filename="../../src/client/menu/node/m_node_button.c">
 			<Option compilerVar="CC" />
 		</Unit>

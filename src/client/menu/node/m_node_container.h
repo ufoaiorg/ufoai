@@ -30,13 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief One unit in the containers is 25x25. */
 #define C_UNIT				25
 
-/**
- * @brief Offset between two rows (and the top of the container to
- * the first row) of items in a scrollable container.
- * Right now only used for vertical containers.
- */
-#define	C_ROW_OFFSET		15
-
 /* prototypes */
 struct base_s;
 struct nodeBehaviour_s;
@@ -45,9 +38,7 @@ struct menuNode_s;
 extern struct inventory_s *menuInventory;
 
 void MN_RegisterContainerNode(struct nodeBehaviour_s *behaviour);
-invList_t *MN_GetItemFromScrollableContainer (const struct menuNode_s* const node, int mouseX, int mouseY, int* contX, int* contY);
 void MN_DrawItem(struct menuNode_s *node, const vec3_t org, const struct item_s *item, int x, int y, const vec3_t scale, const vec4_t color);
-void MN_ContainerNodeSetFilter(struct menuNode_s* node, int num);
 void MN_ContainerNodeUpdateEquipment(inventory_t *inv, equipDef_t *ed);
 
 /**

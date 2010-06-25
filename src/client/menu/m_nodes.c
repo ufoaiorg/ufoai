@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_abstractvalue.h"
 #include "node/m_node_bar.h"
 #include "node/m_node_base.h"
+#include "node/m_node_baseinventory.h"
 #include "node/m_node_button.h"
 #include "node/m_node_checkbox.h"
 #include "node/m_node_controls.h"
@@ -85,6 +86,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterAbstractScrollbarNode,
 	MN_RegisterAbstractValueNode,
 	MN_RegisterBarNode,
+	MN_RegisterBaseInventoryNode,
 	MN_RegisterBaseLayoutNode,
 	MN_RegisterBaseMapNode,
 	MN_RegisterButtonNode,

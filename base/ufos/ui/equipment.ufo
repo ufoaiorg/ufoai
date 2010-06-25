@@ -641,7 +641,7 @@ window equipment extends objectinfo
 		onSelect { cmd "object_update <lastselectedid>;" }
 	}
 
-	container equip		{
+	baseinventory equip		{
 		pos						"422 415"
 		size					"207 317"
 		displayweapon			true
@@ -656,7 +656,7 @@ window equipment extends objectinfo
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}
 
-	container equip_ammo	{
+	baseinventory equip_ammo	{
 		pos				"702 418"
 		size			"207 317"
 		displayammo		true

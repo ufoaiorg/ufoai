@@ -1,0 +1,962 @@
+/**
+ * @file m_node_baseinventory.c
+ * @brief The container node refer to 3 different nodes merged into a singler one. Both
+ * can drag and drop solider items from a container to another one. The first container
+ * is a soldier slot. For example, the left arm, the bag pack... The second is the base
+ * item list. And the last it a floor container used into the battlescape. The node name
+ * itself is used to know the container role.
+ * @todo Move base container list outside
+ * @todo Move container role outside of the node name
+ * @todo Link soldier container with a soldier
+ * @todo Link base container with a base
+ * @todo Link floor container with a map/cell...
+ */
+
+/*
+Copyright (C) 2002-2010 UFO: Alien Invasion.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
+#include "../m_main.h"
+#include "../m_parse.h"
+#include "../m_actions.h"
+#include "../m_dragndrop.h"
+#include "../m_tooltip.h"
+#include "../m_nodes.h"
+#include "../m_input.h"
+#include "../m_render.h"
+#include "m_node_baseinventory.h"
+#include "m_node_model.h"
+#include "m_node_container.h"
+#include "m_node_abstractnode.h"
+
+#include "../../client.h"
+#include "../../renderer/r_draw.h"
+#include "../../renderer/r_mesh.h"
+#include "../../cl_game.h"
+#include "../../cl_team.h"
+#include "../../battlescape/cl_actor.h"
+#include "../../cl_inventory.h"
+
+#define EXTRADATA_TYPE containerExtraData_t
+#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+
+/**
+ * self cache for drag item
+ * @note we can use a global variable because we only can have 1 source node at a time
+ */
+static int dragInfoFromX = -1;
+static int dragInfoFromY = -1;
+
+/**
+ * The current invList pointer (only used for ignoring the dragged item
+ * for finding free space right now)
+ */
+static const invList_t *dragInfoIC;
+
+/**
+ * @brief Searches if there is an item at location (x/y) in a scrollable container. You can also provide an item to search for directly (x/y is ignored in that case).
+ * @note x = x-th item in a row, y = row. i.e. x/y does not equal the "grid" coordinates as used in those containers.
+ * @param[in] node Context node
+ * @param[in] item Item requested
+ * @param[in] filterType Filter used.
+ * @todo Remove filter it is not a generic concept, and here it mean nothing
+ * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
+ * @sa INVSH_SearchInInventory
+ */
+static invList_t *MN_ContainerNodeGetExistingItem (const menuNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
+{
+	return INVSH_SearchInInventoryWithFilter(menuInventory, EXTRADATACONST(node).container, NONE, NONE, item, filterType);
+}
+
+/**
+ *  @brief Flag for containerItemIterator_t (CII) groupSteps
+ */
+#define CII_AMMOONLY 0x01
+#define CII_WEAPONONLY 0x02		/**< it mean any soldier equipment, else ammo */
+#define CII_AVAILABLEONLY 0x04
+#define CII_NOTAVAILABLEONLY 0x08
+#define CII_END 0x80
+
+typedef struct {
+	const menuNode_t* node;
+	byte groupSteps[6];
+	int groupID;
+	itemFilterTypes_t filterEquipType;
+
+	int itemID;				/**< ID into csi.ods array */
+	invList_t *itemFound;	/**< If item foundID into csi.ods array */
+} containerItemIterator_t;
+
+/**
+ * @brief Compute the next itemID
+ * @note If something found, item type can be find with iterator->itemID
+ * @note If item is available into the container iterator->itemFound point to this element
+ * @note If nothing found (no next element) then iterator->itemID >= csi.numODs
+ */
+static void MN_ContainerItemIteratorNext (containerItemIterator_t *iterator)
+{
+	assert(iterator->groupSteps[iterator->groupID] != CII_END);
+
+	/* iterate each groups */
+	for (; iterator->groupSteps[iterator->groupID] != CII_END; iterator->groupID++) {
+		int filter = iterator->groupSteps[iterator->groupID];
+		/* next */
+		iterator->itemID++;
+
+		/* iterate all item type*/
+		for (;iterator->itemID < csi.numODs; iterator->itemID++) {
+			qboolean isAmmo;
+			qboolean isWeapon;
+			qboolean isArmour;
+			objDef_t *obj = &csi.ods[iterator->itemID];
+
+			/* gameplay filter */
+			if (!GAME_ItemIsUseable(obj))
+				continue;
+			if (!INVSH_UseableForTeam(obj, GAME_GetCurrentTeam()))
+				continue;
+
+			/* type filter */
+			/** @todo not sure its the right check */
+			isArmour = INV_IsArmour(obj);
+			isAmmo = obj->numWeapons != 0 && INV_IsAmmo(obj);
+			isWeapon = obj->weapon || obj->isMisc || isArmour;
+
+			if ((filter & CII_WEAPONONLY) && !isWeapon)
+				continue;
+			if ((filter & CII_AMMOONLY) && !isAmmo)
+				continue;
+			if (!INV_ItemMatchesFilter(obj, iterator->filterEquipType))
+				continue;
+
+			/* exists in inventory filter */
+			iterator->itemFound = MN_ContainerNodeGetExistingItem(iterator->node, obj, iterator->filterEquipType);
+			if ((filter & CII_AVAILABLEONLY) && iterator->itemFound == NULL)
+				continue;
+			if ((filter & CII_NOTAVAILABLEONLY) && iterator->itemFound != NULL)
+				continue;
+
+			/* we found something */
+			return;
+		}
+
+		/* can we search into another group? */
+		if (iterator->groupSteps[iterator->groupID + 1] != CII_END)
+			iterator->itemID = -1;
+	}
+
+	/* clean up */
+	iterator->itemFound = NULL;
+}
+
+/**
+ * @brief Use a container node to init an item iterator
+ */
+static void MN_ContainerItemIteratorInit (containerItemIterator_t *iterator, const menuNode_t* const node)
+{
+	int groupID = 0;
+	iterator->itemID = -1;
+	iterator->groupID = 0;
+	iterator->node = node;
+	iterator->filterEquipType = EXTRADATACONST(node).filterEquipType;
+
+	if (EXTRADATACONST(node).displayAvailableOnTop) {
+		/* available items */
+		if (EXTRADATACONST(node).displayWeapon)
+			iterator->groupSteps[groupID++] = CII_WEAPONONLY | CII_AVAILABLEONLY;
+		if (EXTRADATACONST(node).displayAmmo)
+			iterator->groupSteps[groupID++] = CII_AMMOONLY | CII_AVAILABLEONLY;
+		/* unavailable items */
+		if (EXTRADATACONST(node).displayUnavailableItem) {
+			if (EXTRADATACONST(node).displayWeapon)
+				iterator->groupSteps[groupID++] = CII_WEAPONONLY | CII_NOTAVAILABLEONLY;
+			if (EXTRADATACONST(node).displayAmmo)
+				iterator->groupSteps[groupID++] = CII_AMMOONLY | CII_NOTAVAILABLEONLY;
+		}
+	} else {
+		const int filter = (EXTRADATACONST(node).displayUnavailableItem) ? 0 : CII_AVAILABLEONLY;
+		if (EXTRADATACONST(node).displayWeapon)
+			iterator->groupSteps[groupID++] = CII_WEAPONONLY | filter;
+		if (EXTRADATACONST(node).displayAmmo)
+			iterator->groupSteps[groupID++] = CII_AMMOONLY | filter;
+	}
+	iterator->groupSteps[groupID++] = CII_END;
+
+	/* find the first item */
+	MN_ContainerItemIteratorNext(iterator);
+}
+
+/**
+ * @brief Update display of scroll buttons.
+ * @note The cvars "mn_cont_scroll_prev_hover" and "mn_cont_scroll_next_hover" are
+ * set by the "in" and "out" functions of the scroll buttons.
+ * @param[in] node Context node
+ */
+static void MN_BaseInventoryNodeUpdateScroll (menuNode_t* node)
+{
+	if (EXTRADATA(node).onViewChange) {
+		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+	}
+}
+
+/**
+ * @brief Generate tooltip text for an item.
+ * @param[in] item The item we want to generate the tooltip text for.
+ * @param[in,out] tooltipText Pointer to a string the information should be written into.
+ * @param[in] stringMaxLength Max. string size of @c tooltipText.
+ * @return Number of lines
+ */
+static void MN_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
+{
+	int i;
+	objDef_t *weapon;
+
+	assert(item.t);
+
+	if (item.amount > 1)
+		Com_sprintf(tooltipText, stringMaxLength, "%i x %s\n", item.amount, _(item.t->name));
+	else
+		Com_sprintf(tooltipText, stringMaxLength, "%s\n", _(item.t->name));
+
+	/* Only display further info if item.t is researched */
+	if (GAME_ItemIsUseable(item.t)) {
+		if (item.t->weapon) {
+			/* Get info about used ammo (if there is any) */
+			if (item.t == item.m) {
+				/* Item has no ammo but might have shot-count */
+				if (item.a) {
+					Q_strcat(tooltipText, va(_("Ammo: %i\n"), item.a), stringMaxLength);
+				}
+			} else if (item.m) {
+				/* Search for used ammo and display name + ammo count */
+				Q_strcat(tooltipText, va(_("%s loaded\n"), _(item.m->name)), stringMaxLength);
+				Q_strcat(tooltipText, va(_("Ammo: %i\n"),  item.a), stringMaxLength);
+			}
+		} else if (item.t->numWeapons) {
+			/* Check if this is a non-weapon and non-ammo item */
+			if (!(item.t->numWeapons == 1 && item.t->weapons[0] == item.t)) {
+				/* If it's ammo get the weapon names it can be used in */
+				Q_strcat(tooltipText, _("Usable in:\n"), stringMaxLength);
+				for (i = 0; i < item.t->numWeapons; i++) {
+					weapon = item.t->weapons[i];
+					if (GAME_ItemIsUseable(weapon)) {
+						Q_strcat(tooltipText, va("* %s\n", _(weapon->name)), stringMaxLength);
+					}
+				}
+			}
+		}
+	}
+}
+
+/**
+ * @brief Calculates the size of a container node and links the container
+ * into the node (uses the @c invDef_t shape bitmask to determine the size)
+ * @param[in,out] node The node to get the size for
+ */
+static void MN_BaseInventoryNodeLoaded (menuNode_t* const node)
+{
+	EXTRADATA(node).container = INVSH_GetInventoryDefinitionByID("equip");
+}
+
+static const vec3_t scale = {3.5, 3.5, 3.5};
+/** @todo it may be nice to vectorise that */
+static const vec4_t colorDefault = {1, 1, 1, 1};
+static const vec4_t colorLoadable = {0.5, 1, 0.5, 1};
+static const vec4_t colorDisabled = {0.5, 0.5, 0.5, 1};
+static const vec4_t colorDisabledHiden = {0.5, 0.5, 0.5, 0.5};
+static const vec4_t colorDisabledLoadable = {0.5, 0.25, 0.25, 1.0};
+static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview item look bluish */
+
+/**
+ * @brief Draw the base inventory
+ * @return The full height requested by the current view (not the node height)
+ */
+static int MN_BaseInventoryNodeDrawItems (menuNode_t *node, objDef_t *highlightType)
+{
+	qboolean outOfNode = qfalse;
+	vec2_t nodepos;
+	int items = 0;
+	int rowHeight = 0;
+	const int cellWidth = node->size[0] / EXTRADATA(node).columns;
+	containerItemIterator_t iterator;
+	int currentHeight = 0;
+	MN_GetNodeAbsPos(node, nodepos);
+
+	MN_ContainerItemIteratorInit(&iterator, node);
+	for (; iterator.itemID < csi.numODs; MN_ContainerItemIteratorNext(&iterator)) {
+		const int id = iterator.itemID;
+		objDef_t *obj = &csi.ods[id];
+		item_t tempItem = {1, NULL, obj, 0, 0};
+		vec3_t pos;
+		vec3_t ammopos;
+		const float *color;
+		qboolean isHighlight = qfalse;
+		int amount;
+		const int col = items % EXTRADATA(node).columns;
+		int cellHeight = 0;
+		invList_t *icItem = iterator.itemFound;
+
+		/* skip items over and bellow the node view */
+		if (outOfNode || currentHeight < EXTRADATA(node).scrollCur) {
+			int height;
+			R_FontTextSize("f_verysmall", _(obj->name),
+				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
+			height += obj->sy * C_UNIT + 10;
+			if (height > rowHeight)
+				rowHeight = height;
+
+			if (outOfNode || currentHeight + rowHeight < EXTRADATA(node).scrollCur) {
+				if (col == EXTRADATA(node).columns - 1) {
+					currentHeight += rowHeight;
+					rowHeight = 0;
+				}
+				items++;
+				continue;
+			}
+		}
+
+		Vector2Copy(nodepos, pos);
+		pos[0] += cellWidth * col;
+		pos[1] += currentHeight - EXTRADATA(node).scrollCur;
+		pos[2] = 0;
+
+		if (highlightType) {
+			if (INV_IsAmmo(obj))
+				isHighlight = INVSH_LoadableInWeapon(obj, highlightType);
+			else
+				isHighlight = INVSH_LoadableInWeapon(highlightType, obj);
+		}
+
+		if (icItem != NULL) {
+			if (isHighlight)
+				color = colorLoadable;
+			else
+				color = colorDefault;
+		} else {
+			if (isHighlight)
+				color = colorDisabledLoadable;
+			else
+				color = colorDisabledHiden;
+		}
+
+		if (icItem)
+			amount = icItem->item.amount;
+		else
+			amount = 0;
+
+		/* draw item */
+		pos[0] += obj->sx * C_UNIT / 2.0;
+		pos[1] += obj->sy * C_UNIT / 2.0;
+		MN_DrawItem(node, pos, &tempItem, -1, -1, scale, color);
+		MN_DrawString("f_verysmall", ALIGN_LC,
+			pos[0] + obj->sx * C_UNIT / 2.0, pos[1] + obj->sy * C_UNIT / 2.0,
+			pos[0] + obj->sx * C_UNIT / 2.0, pos[1] + obj->sy * C_UNIT / 2.0,
+			cellWidth - 5,	0,	/* maxWidth/maxHeight */
+			0, va("x%i", amount), 0, 0, NULL, qfalse, 0);
+		pos[0] -= obj->sx * C_UNIT / 2.0;
+		pos[1] += obj->sy * C_UNIT / 2.0;
+		cellHeight += obj->sy * C_UNIT;
+
+		/* save position for ammo */
+		Vector2Copy(pos, ammopos);
+		ammopos[2] = 0;
+		ammopos[0] += obj->sx * C_UNIT + 10;
+
+		/* draw the item name. */
+		cellHeight += MN_DrawString("f_verysmall", ALIGN_UL,
+			pos[0], pos[1],
+			pos[0], nodepos[1],
+			cellWidth - 5, 200,	/* max width/height */
+			0, _(obj->name), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+
+		/* draw ammos of weapon */
+		if (obj->weapon && EXTRADATA(node).displayAmmoOfWeapon) {
+			int ammoIdx;
+			for (ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
+				tempItem.t = obj->ammos[ammoIdx];
+
+				/* skip unusable ammo */
+				if (!GAME_ItemIsUseable(tempItem.t))
+					continue;
+
+				/* find and skip none existing ammo */
+				icItem = MN_ContainerNodeGetExistingItem(node, tempItem.t, EXTRADATA(node).filterEquipType);
+				if (!icItem)
+					continue;
+
+				/* Calculate the center of the item model/image. */
+				ammopos[0] += icItem->item.t->sx * C_UNIT / 2.0;
+				ammopos[1] -= icItem->item.t->sy * C_UNIT / 2.0;
+				MN_DrawItem(node, ammopos, &tempItem, -1, -1, scale, colorDefault);
+				MN_DrawString("f_verysmall", ALIGN_LC,
+					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.t->sy * C_UNIT / 2.0,
+					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.t->sy * C_UNIT / 2.0,
+					cellWidth - 5 - ammopos[0],	/* maxWidth */
+					0,	/* maxHeight */
+					0, va("x%i", icItem->item.amount), 0, 0, NULL, qfalse, 0);
+				ammopos[0] += icItem->item.t->sx * C_UNIT / 2.0;
+				ammopos[1] += icItem->item.t->sy * C_UNIT / 2.0;
+			}
+		}
+		cellHeight += 10;
+
+		if (cellHeight > rowHeight) {
+			rowHeight = cellHeight;
+		}
+
+		/* add a marge between rows */
+		if (col == EXTRADATA(node).columns - 1) {
+			currentHeight += rowHeight;
+			rowHeight = 0;
+			if (currentHeight - EXTRADATA(node).scrollCur >= node->size[1])
+				outOfNode = qtrue;
+		}
+
+		/* count items */
+		items++;
+	}
+
+	if (rowHeight != 0) {
+		currentHeight += rowHeight;
+	}
+	return currentHeight;
+}
+
+/**
+ * @brief Draw the inventory of the base
+ */
+static void MN_BaseInventoryNodeDraw2 (menuNode_t *node, objDef_t *highlightType)
+{
+	qboolean updateScroll = qfalse;
+	int visibleHeight = 0;
+	int needHeight = 0;
+	vec2_t pos;
+
+	MN_GetNodeAbsPos(node, pos);
+	R_PushClipRect(pos[0], pos[1], node->size[0], node->size[1]);
+
+	needHeight = MN_BaseInventoryNodeDrawItems(node, highlightType);
+
+	R_PopClipRect();
+	visibleHeight = node->size[1];
+
+#if 0
+	R_FontDrawString("f_verysmall", ALIGN_UL,
+		node->pos[0], node->pos[1], node->pos[0], node->pos[1],
+		0,	0,	/* maxWidth/maxHeight */
+		0, va("%i %i/%i", EXTRADATA(node).scrollCur, visibleRows, totalRows), 0, 0, NULL, qfalse, 0);
+#endif
+
+	/* Update display of scroll buttons if something changed. */
+	if (visibleHeight != EXTRADATA(node).scrollNum || needHeight != EXTRADATA(node).scrollTotalNum) {
+		EXTRADATA(node).scrollTotalNum = needHeight;
+		EXTRADATA(node).scrollNum = visibleHeight;
+		updateScroll = qtrue;
+	}
+	if (EXTRADATA(node).scrollCur > needHeight - visibleHeight) {
+		EXTRADATA(node).scrollCur = needHeight - visibleHeight;
+		updateScroll = qtrue;
+	}
+	if (EXTRADATA(node).scrollCur < 0) {
+		EXTRADATA(node).scrollCur = 0;
+		updateScroll = qtrue;
+	}
+
+	if (updateScroll)
+		MN_BaseInventoryNodeUpdateScroll(node);
+}
+
+/**
+ * @brief Main function to draw a container node
+ */
+static void MN_BaseInventoryNodeDraw (menuNode_t *node)
+{
+	objDef_t *highlightType = NULL;
+
+	if (!EXTRADATA(node).container)
+		return;
+	if (!menuInventory)
+		return;
+	/* is container invisible */
+	if (node->color[3] < 0.001)
+		return;
+
+	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
+	if (MN_DNDIsDragging() && MN_DNDGetType() == DND_ITEM) {
+		highlightType = MN_DNDGetItem()->t;
+	}
+
+	MN_BaseInventoryNodeDraw2(node, highlightType);
+}
+
+/**
+ * @note this function is a copy-paste of MN_ContainerNodeDrawItems (with remove of unneed code)
+ */
+static invList_t *MN_BaseInventoryNodeGetItem (const menuNode_t* const node,
+	int mouseX, int mouseY, int* contX, int* contY)
+{
+	qboolean outOfNode = qfalse;
+	vec2_t nodepos;
+	int items = 0;
+	int rowHeight = 0;
+	const int cellWidth = node->size[0] / EXTRADATACONST(node).columns;
+	int tempX, tempY;
+	containerItemIterator_t iterator;
+	int currentHeight = 0;
+
+	if (!contX)
+		contX = &tempX;
+	if (!contY)
+		contY = &tempY;
+
+	MN_GetNodeAbsPos(node, nodepos);
+
+	MN_ContainerItemIteratorInit(&iterator, node);
+	for (; iterator.itemID < csi.numODs; MN_ContainerItemIteratorNext(&iterator)) {
+		const int id = iterator.itemID;
+		objDef_t *obj = &csi.ods[id];
+		vec2_t pos;
+		vec2_t ammopos;
+		const int col = items % EXTRADATACONST(node).columns;
+		int cellHeight = 0;
+		invList_t *icItem = iterator.itemFound;
+		int height;
+
+		/* skip items over and bellow the node view */
+		if (outOfNode || currentHeight < EXTRADATACONST(node).scrollCur) {
+			int height;
+			R_FontTextSize("f_verysmall", _(obj->name),
+				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
+			height += obj->sy * C_UNIT + 10;
+			if (height > rowHeight)
+				rowHeight = height;
+
+			if (outOfNode || currentHeight + rowHeight < EXTRADATACONST(node).scrollCur) {
+				if (col == EXTRADATACONST(node).columns - 1) {
+					currentHeight += rowHeight;
+					rowHeight = 0;
+				}
+				items++;
+				continue;
+			}
+		}
+
+		Vector2Copy(nodepos, pos);
+		pos[0] += cellWidth * col;
+		pos[1] += currentHeight - EXTRADATACONST(node).scrollCur;
+
+		/* check item */
+		if (mouseY < pos[1])
+			break;
+		if (mouseX >= pos[0] && mouseX < pos[0] + obj->sx * C_UNIT
+		 && mouseY >= pos[1] && mouseY < pos[1] + obj->sy * C_UNIT) {
+			if (icItem) {
+				*contX = icItem->x;
+				*contY = icItem->y;
+				return icItem;
+			} else {
+				return NULL;
+			}
+		}
+		pos[1] += obj->sy * C_UNIT;
+		cellHeight += obj->sy * C_UNIT;
+
+		/* save position for ammo */
+		Vector2Copy(pos, ammopos);
+		ammopos[0] += obj->sx * C_UNIT + 10;
+
+		/* draw the item name. */
+		R_FontTextSize("f_verysmall", _(obj->name),
+			cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
+		cellHeight += height;
+
+		/* draw ammos of weapon */
+		if (obj->weapon && EXTRADATACONST(node).displayAmmoOfWeapon) {
+			int ammoIdx;
+			for (ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
+				objDef_t *objammo = obj->ammos[ammoIdx];
+
+				/* skip unusable ammo */
+				if (!GAME_ItemIsUseable(objammo))
+					continue;
+
+				/* find and skip none existing ammo */
+				icItem = MN_ContainerNodeGetExistingItem(node, objammo, EXTRADATACONST(node).filterEquipType);
+				if (!icItem)
+					continue;
+
+				/* check ammo (ammopos in on the left-lower corner) */
+				if (mouseX < ammopos[0] || mouseY >= ammopos[1])
+					break;
+				if (mouseX >= ammopos[0] && mouseX < ammopos[0] + objammo->sx * C_UNIT
+				 && mouseY >= ammopos[1] - objammo->sy * C_UNIT && mouseY < ammopos[1]) {
+					*contX = icItem->x;
+					*contY = icItem->y;
+					return icItem;
+				}
+				ammopos[0] += objammo->sx * C_UNIT;
+			}
+		}
+		cellHeight += 10;
+
+		if (cellHeight > rowHeight) {
+			rowHeight = cellHeight;
+		}
+
+		/* add a margin between rows */
+		if (col == EXTRADATACONST(node).columns - 1) {
+			currentHeight += rowHeight;
+			rowHeight = 0;
+			if (currentHeight - EXTRADATACONST(node).scrollCur >= node->size[1])
+				return NULL;
+		}
+
+		/* count items */
+		items++;
+	}
+
+	*contX = NONE;
+	*contY = NONE;
+	return NULL;
+}
+
+/**
+ * @brief Custom tooltip for container node
+ * @param[in] node Node we request to draw tooltip
+ * @param[in] x Position x of the mouse
+ * @param[in] y Position y of the mouse
+ */
+static void MN_BaseInventoryNodeDrawTooltip (menuNode_t *node, int x, int y)
+{
+	static char tooltiptext[MAX_VAR * 2];
+	const invList_t *itemHover;
+	vec2_t nodepos;
+
+	MN_GetNodeAbsPos(node, nodepos);
+
+	/* Find out where the mouse is. */
+	itemHover = MN_BaseInventoryNodeGetItem(node, x, y, NULL, NULL);
+
+	if (itemHover) {
+		const int itemToolTipWidth = 250;
+
+		/* Get name and info about item */
+		MN_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
+#ifdef DEBUG
+		/* Display stored container-coordinates of the item. */
+		Q_strcat(tooltiptext, va("\n%i/%i", itemHover->x, itemHover->y), sizeof(tooltiptext));
+#endif
+		MN_DrawTooltip(tooltiptext, x, y, itemToolTipWidth, 0);
+	}
+}
+
+/**
+ * @brief Try to autoplace an item at a position
+ * when right-click was used in the inventory.
+ * @param[in] node The context node
+ * @param[in] mouseX X mouse coordinates.
+ * @param[in] mouseY Y mouse coordinates.
+ * @todo None generic function. Not sure we can do it in a generic way
+ */
+static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
+{
+	int sel;
+#if 0	/* see bellow #1 */
+	int id;
+#endif
+	invList_t *ic;
+	int fromX, fromY;
+
+	if (!menuInventory)
+		return;
+
+	/* don't allow this in tactical missions */
+	if (CL_BattlescapeRunning())
+		return;
+
+	sel = cl_selected->integer;
+	if (sel < 0)
+		return;
+
+	assert(EXTRADATA(node).container);
+
+	ic = MN_BaseInventoryNodeGetItem(node, mouseX, mouseY, &fromX, &fromY);
+	Com_DPrintf(DEBUG_CLIENT, "MN_ContainerNodeAutoPlace: item %i/%i selected from scrollable container.\n", fromX, fromY);
+	if (!ic)
+		return;
+#if 0	/* see bellow #1 */
+	id = ic->item.t->idx;
+#endif
+
+	/* Right click: automatic item assignment/removal. */
+	if (EXTRADATA(node).container->id != csi.idEquip) {
+		if (ic->item.m && ic->item.m != ic->item.t && ic->item.a) {
+			/* Remove ammo on removing weapon from a soldier */
+			INV_UnloadWeapon(ic, menuInventory, INVDEF(csi.idEquip));
+		} else {
+			/* Move back to idEquip (ground, floor) container. */
+			INV_MoveItem(menuInventory, INVDEF(csi.idEquip), NONE, NONE, EXTRADATA(node).container, ic);
+		}
+	} else {
+		qboolean packed = qfalse;
+		int px, py;
+		assert(ic->item.t);
+		/* armour can only have one target */
+		if (INV_IsArmour(ic->item.t)) {
+			packed = INV_MoveItem(menuInventory, INVDEF(csi.idArmour), 0, 0, EXTRADATA(node).container, ic);
+		/* ammo or item */
+		} else if (INV_IsAmmo(ic->item.t)) {
+			INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idBelt), &px, &py, NULL);
+			packed = INV_MoveItem(menuInventory, INVDEF(csi.idBelt), px, py, EXTRADATA(node).container, ic);
+			if (!packed) {
+				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idHolster), &px, &py, NULL);
+				packed = INV_MoveItem(menuInventory, INVDEF(csi.idHolster), px, py, EXTRADATA(node).container, ic);
+			}
+			if (!packed) {
+				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idBackpack), &px, &py, NULL);
+				packed = INV_MoveItem( menuInventory, INVDEF(csi.idBackpack), px, py, EXTRADATA(node).container, ic);
+			}
+			/* Finally try left and right hand. There is no other place to put it now. */
+			if (!packed) {
+				const invList_t *rightHand = INVSH_SearchInInventory(menuInventory, INVDEF(csi.idRight), 0, 0);
+
+				/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
+				if (!rightHand || !rightHand->item.t->fireTwoHanded) {
+					INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idLeft), &px, &py, NULL);
+					packed = INV_MoveItem(menuInventory, INVDEF(csi.idLeft), px, py, EXTRADATA(node).container, ic);
+				}
+			}
+			if (!packed) {
+				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idRight), &px, &py, NULL);
+				packed = INV_MoveItem(menuInventory, INVDEF(csi.idRight), px, py, EXTRADATA(node).container, ic);
+			}
+		} else {
+			if (ic->item.t->headgear) {
+				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idHeadgear), &px, &py, NULL);
+				packed = INV_MoveItem(menuInventory, INVDEF(csi.idHeadgear), px, py, EXTRADATA(node).container, ic);
+			} else {
+				/* left and right are single containers, but this might change - it's cleaner to check
+				 * for available space here, too */
+				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idRight), &px, &py, NULL);
+				packed = INV_MoveItem(menuInventory, INVDEF(csi.idRight), px, py, EXTRADATA(node).container, ic);
+				if (ic->item.t->weapon && !ic->item.a && packed)
+					INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idRight));
+				if (!packed) {
+					const invList_t *rightHand = INVSH_SearchInInventory(menuInventory, INVDEF(csi.idRight), 0, 0);
+
+					/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
+					if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
+						INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idLeft), &px, &py, NULL);
+						packed = INV_MoveItem(menuInventory, INVDEF(csi.idLeft), px, py, EXTRADATA(node).container, ic);
+						if (ic->item.t->weapon && !ic->item.a && packed)
+							INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idLeft));
+					}
+				}
+				if (!packed) {
+					INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idBelt), &px, &py, NULL);
+					packed = INV_MoveItem(menuInventory, INVDEF(csi.idBelt), px, py, EXTRADATA(node).container, ic);
+					if (ic->item.t->weapon && !ic->item.a && packed)
+						INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idBelt));
+				}
+				if (!packed) {
+					INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idHolster), &px, &py, NULL);
+					packed = INV_MoveItem(menuInventory, INVDEF(csi.idHolster), px, py, EXTRADATA(node).container, ic);
+					if (ic->item.t->weapon && !ic->item.a && packed)
+						INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idHolster));
+				}
+				if (!packed) {
+					INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idBackpack), &px, &py, NULL);
+					packed = INV_MoveItem(menuInventory, INVDEF(csi.idBackpack), px, py, EXTRADATA(node).container, ic);
+					if (ic->item.t->weapon && !ic->item.a && packed)
+						INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idBackpack));
+				}
+			}
+		}
+		/* no need to continue here - placement wasn't successful at all */
+		if (!packed)
+			return;
+	}
+
+	/** HACK: Hard to know where the item is located now, but if its an armor
+	 * we fire the change event of the armour container. At least to
+	 * update the actor skin.
+	 * The right way is to compute the source and the target container
+	 * and fire the change event for both */
+	if (INV_IsArmour(ic->item.t)) {
+		const menuNode_t *armour = MN_GetNode(node->root, "armour");
+		if (armour && armour->onChange)
+			MN_ExecuteEventActions(armour, armour->onChange);
+	}
+
+	/* Update display of scroll buttons. */
+	MN_BaseInventoryNodeUpdateScroll(node);
+}
+
+static int oldMouseX = 0;
+static int oldMouseY = 0;
+
+static void MN_BaseInventoryNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+{
+	const int delta = abs(oldMouseX - x) + abs(oldMouseY - y);
+	if (delta > 15) {
+		MN_DNDDragItem(node, &(dragInfoIC->item));
+		MN_MouseRelease();
+	}
+}
+
+static void MN_BaseInventoryNodeMouseDown (menuNode_t *node, int x, int y, int button)
+{
+	switch (button) {
+	case K_MOUSE1:
+	{
+		/* start drag and drop */
+		int fromX, fromY;
+		dragInfoIC = MN_BaseInventoryNodeGetItem(node, x, y, &fromX, &fromY);
+		if (dragInfoIC) {
+			dragInfoFromX = fromX;
+			dragInfoFromY = fromY;
+			oldMouseX = x;
+			oldMouseY = y;
+			MN_SetMouseCapture(node);
+			EXTRADATA(node).lastSelectedId = dragInfoIC->item.t->idx;
+			if (EXTRADATA(node).onSelect) {
+				MN_ExecuteEventActions(node, EXTRADATA(node).onSelect);
+			}
+		}
+		break;
+	}
+	case K_MOUSE2:
+		if (MN_DNDIsDragging()) {
+			MN_DNDAbort();
+		} else {
+			/* auto place */
+			MN_ContainerNodeAutoPlace(node, x, y);
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+static void MN_BaseInventoryNodeMouseUp (menuNode_t *node, int x, int y, int button)
+{
+	if (button != K_MOUSE1)
+		return;
+	if (MN_GetMouseCapture() == node) {
+		MN_MouseRelease();
+	}
+	if (MN_DNDIsDragging()) {
+		MN_DNDDrop();
+	}
+}
+static void MN_BaseInventoryNodeWheel (menuNode_t *node, qboolean down, int x, int y)
+{
+	const int delta = 20;
+	if (down) {
+		const int lenght = EXTRADATA(node).scrollTotalNum - EXTRADATA(node).scrollNum;
+		if (EXTRADATA(node).scrollCur < lenght) {
+			EXTRADATA(node).scrollCur += delta;
+			if (EXTRADATA(node).scrollCur > lenght)
+				EXTRADATA(node).scrollCur = lenght;
+			MN_BaseInventoryNodeUpdateScroll(node);
+		}
+	} else {
+		if (EXTRADATA(node).scrollCur > 0) {
+			EXTRADATA(node).scrollCur -= delta;
+			if (EXTRADATA(node).scrollCur < 0)
+				EXTRADATA(node).scrollCur = 0;
+			MN_BaseInventoryNodeUpdateScroll(node);
+		}
+	}
+}
+
+static void MN_BaseInventoryNodeLoading (menuNode_t *node)
+{
+	EXTRADATA(node).container = NULL;
+	EXTRADATA(node).columns = 1;
+	node->color[3] = 1.0;
+}
+
+/**
+ * @brief Call when a DND enter into the node
+ */
+static qboolean MN_BaseInventoryNodeDNDEnter (menuNode_t *target)
+{
+	/* The node is invalide */
+	if (EXTRADATA(target).container == NULL)
+		return qfalse;
+	/* accept items only, if we have a container */
+	return MN_DNDGetType() == DND_ITEM && MN_DNDGetSourceNode() != target;
+}
+
+/**
+ * @brief Call into the target when the DND hover it
+ * @return True if the DND is accepted
+ */
+static qboolean MN_BaseInventoryNodeDNDMove (menuNode_t *target, int x, int y)
+{
+	return qtrue;
+}
+
+/**
+ * @brief Call when a DND enter into the node
+ */
+static void MN_BaseInventoryNodeDNDLeave (menuNode_t *node)
+{
+}
+
+/**
+ * @brief Call when we open the window containing the node
+ */
+static void MN_BaseInventoryNodeInit (menuNode_t *node)
+{
+	/** ATM it should not work with the battlescape cause TU is not computed */
+	assert(!CL_BattlescapeRunning());
+}
+
+void MN_RegisterBaseInventoryNode (nodeBehaviour_t* behaviour)
+{
+	behaviour->name = "baseinventory";
+	behaviour->extends = "container";
+	behaviour->draw = MN_BaseInventoryNodeDraw;
+	behaviour->drawTooltip = MN_BaseInventoryNodeDrawTooltip;
+	behaviour->mouseDown = MN_BaseInventoryNodeMouseDown;
+	behaviour->mouseUp = MN_BaseInventoryNodeMouseUp;
+	behaviour->mouseWheel = MN_BaseInventoryNodeWheel;
+	behaviour->capturedMouseMove = MN_BaseInventoryNodeCapturedMouseMove;
+	behaviour->init = MN_BaseInventoryNodeInit;
+	behaviour->loading = MN_BaseInventoryNodeLoading;
+	behaviour->loaded = MN_BaseInventoryNodeLoaded;
+
+	behaviour->dndEnter = MN_BaseInventoryNodeDNDEnter;
+	behaviour->dndMove = MN_BaseInventoryNodeDNDMove;
+	behaviour->dndLeave = MN_BaseInventoryNodeDNDLeave;
+
+	Com_RegisterConstInt("FILTER_S_PRIMARY", FILTER_S_PRIMARY);
+	Com_RegisterConstInt("FILTER_S_SECONDARY", FILTER_S_SECONDARY);
+	Com_RegisterConstInt("FILTER_S_HEAVY", FILTER_S_HEAVY);
+	Com_RegisterConstInt("FILTER_S_MISC", FILTER_S_MISC);
+	Com_RegisterConstInt("FILTER_S_ARMOUR", FILTER_S_ARMOUR);
+	Com_RegisterConstInt("FILTER_CRAFTITEM", FILTER_CRAFTITEM);
+	Com_RegisterConstInt("FILTER_UGVITEM", FILTER_UGVITEM);
+	Com_RegisterConstInt("FILTER_AIRCRAFT", FILTER_AIRCRAFT);
+	Com_RegisterConstInt("FILTER_DUMMY", FILTER_DUMMY);
+	Com_RegisterConstInt("FILTER_DISASSEMBLY", FILTER_DISASSEMBLY);
+}
