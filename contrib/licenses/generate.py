@@ -305,19 +305,25 @@ def generate(d, data, texture_map, map_texture):
             if os.path.isdir('base/%s/%s' % (d, j)):
                 continue
 
-            # preview file
-            img = ''
-            if j.endswith('.jpg') or j.endswith('.tga') or j.endswith('.png'):
-                thumb = '.thumbnails/%s/%s.png' % (d,j)
-                if d != '' and not os.path.exists('licenses/html/%s' % thumb):
-                    os.system('convert base/%s/%s -thumbnail 128x128 licenses/html/%s' % (d, j, thumb))
-                img = '<img src="%s%s"/>' % (ABS_URL, thumb)
-
-            content+= u'<li>%s<a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/base/%s/%s" title="Download">%s</a> - <a href="http://ufoai.svn.sourceforge.net/viewvc/ufoai/ufoai/trunk/base/%s/%s?view=log" title="History">%s</a>' % (img, d, j, j, d, j, j)
-
             filename = "base/" + d + "/" + j
             if d == '':
                 filename = "base" + "/" + j
+
+            # preview file
+            img = ''
+            if j.endswith('.jpg') or j.endswith('.tga') or j.endswith('.png'):
+                thumb = 'thumbnails/%s.png' % (filename.replace("base/", "", 1))
+                thumbname = 'licenses/html/' + thumb
+                if d != '' and not os.path.exists(thumbname):
+                    thumbdir = thumbname.split('/')
+                    thumbdir.pop()
+                    thumbdir = "/".join(thumbdir)
+                    if not os.path.exists(thumbdir):
+                        os.makedirs(thumbdir)
+                    os.system('convert %s -thumbnail 128x128 %s' % (filename, thumbname))
+                img = '<img src="%s/%s"/>' % (ABS_URL, thumb)
+            content+= u'<li>%s<a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/base/%s/%s" title="Download">%s</a> - <a href="http://ufoai.svn.sourceforge.net/viewvc/ufoai/ufoai/trunk/base/%s/%s?view=log" title="History">%s</a>' % (img, d, j, j, d, j, j)
+
             meta = getMetadata(filename)
 
             copy = meta.copyright
