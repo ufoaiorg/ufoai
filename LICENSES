@@ -875,8 +875,8 @@ base/models/geoscape/ufo_bomber.png | GNU General Public License 2.0 or later | 
 base/models/geoscape/ufo_bomber_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/ufo_carrier.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/ufo_carrier.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/geoscape/ufo_corrupter.md2 | GNU General Public License 2.0 or later | GNU General Public License 2.0 or later | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
-base/models/geoscape/ufo_corrupter.png | GNU General Public License 2.0 or later | GNU General Public License 2.0 or later | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
+base/models/geoscape/ufo_corrupter.md2 | GNU General Public License 2.0 or later |  | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
+base/models/geoscape/ufo_corrupter.png | GNU General Public License 2.0 or later |  | Based on original model created by Werner Hoehrer (hoehrer), which was based on SparX Beyeler's map, see base/models/aircrafts/
 base/models/geoscape/ufo_fighter.md2 | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_fighter.png | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_harvester.md2 | GNU General Public License 2.0 or later | Willem "Sitters" | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
@@ -3324,7 +3324,7 @@ base/textures/tex_base/lasertable.jpg | GNU General Public License 2.0 | gthf ht
 base/textures/tex_base/lasertable_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/map002.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/panel1.png | GNU General Public License 2.0 or later | Willem Sitter
-base/textures/tex_base/panel1_nm.png | GNU General Public License 2.0 or later | GNU General Public License 2.0 or later
+base/textures/tex_base/panel1_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_base/pharmacy.jpg | GNU General Public License 2.0 | XaverXN
 base/textures/tex_base/screen_base.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/screenp001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3506,7 +3506,7 @@ base/textures/tex_buildings/e8crete_pillarc_nm.png | GNU General Public License 
 base/textures/tex_buildings/floor001.png | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor001_nm.png | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor003.png | GNU General Public License 2.0 or later
-base/textures/tex_buildings/floor003_nm.png | GNU General Public License 2.0 or later | GNU General Public License 2.0 or later
+base/textures/tex_buildings/floor003_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/floor003_sm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/floor004.png | GNU General Public License 2.0 or later | Matthias "voller" Volmer | http://ufoai.ninex.info/forum/index.php?topic=3181.msg22120#msg22120
 base/textures/tex_buildings/floor004_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
