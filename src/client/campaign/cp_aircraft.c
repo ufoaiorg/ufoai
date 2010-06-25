@@ -1728,9 +1728,9 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				}
 
 			if (vp->string && !strcmp(vp->string, "size")) {
-				if (aircraftTemplate->maxTeamSize > MAX_ACTIVETEAM) {
-					Com_DPrintf(DEBUG_CLIENT, "AIR_ParseAircraft: Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM);
-					aircraftTemplate->maxTeamSize = MAX_ACTIVETEAM;
+				if (aircraftTemplate->maxTeamSize > lengthof(aircraftTemplate->acTeam)) {
+					Com_Printf("AIR_ParseAircraft: size for aircraft exceeded max allowed size\n");
+					aircraftTemplate->maxTeamSize = lengthof(aircraftTemplate->acTeam);
 				}
 			}
 
@@ -2455,6 +2455,7 @@ static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const air
 	mxml_node_t *node;
 	mxml_node_t *subnode;
 	int l;
+	size_t size;
 
 	Com_RegisterConstList(saveAircraftConstants);
 
@@ -2537,7 +2538,8 @@ static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const air
 	mxml_AddInt(node, SAVE_AIRCRAFT_HANGAR, aircraft->hangar);
 
 	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_AIRCRAFTTEAM);
-	for (l = 0; l < MAX_ACTIVETEAM; l++) {
+	size = lengthof(aircraft->acTeam);
+	for (l = 0; l < size; l++) {
 		if (aircraft->acTeam[l]) {
 			mxml_node_t *ssnode = mxml_AddNode(subnode, SAVE_AIRCRAFT_MEMBER);
 			mxml_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, aircraft->acTeam[l]->chr.ucn);
@@ -3177,7 +3179,7 @@ static qboolean AIR_AddEmployee (employee_t *employee, aircraft_t *aircraft)
 	if (!employee || !aircraft)
 		return qfalse;
 
-	if (aircraft->teamSize < MAX_ACTIVETEAM) {
+	if (aircraft->teamSize < lengthof(aircraft->acTeam)) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AddEmployee: attempting to find idx '%d'\n", employee->idx);
 
 		/* Check whether the soldier is already on another aircraft */
