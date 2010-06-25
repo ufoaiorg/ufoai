@@ -3655,6 +3655,7 @@ mapdef baseattack
 {
 	map			".baseattack"
 	multiplayer	false
+	storyrelated	true
 	description	"_Base is under attack."
 	maxaliens	16
 }
