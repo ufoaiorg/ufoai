@@ -287,7 +287,7 @@ window aliencont
 		string txt_alc_alive
 		{
 			string		"_Alive:"
-			pos			"45 445"
+			pos			"25 445"
 			size		"100 20"
 			font		f_small
 		}
@@ -295,8 +295,9 @@ window aliencont
 		string txt_alc_alive_v
 		{
 			string		*cvar:mn_al_alive
-			pos			"165 445"
-			size		"50 20"
+			tooltip		"_amount on this base (all)"
+			pos			"130 445"
+			size		"125 20"
 			font		f_small
 			textalign	ur
 		}
@@ -308,7 +309,7 @@ window aliencont
 		string txt_alc_dead
 		{
 			string		"_Dead:"
-			pos			"45 470"
+			pos			"25 470"
 			size		"100 20"
 			font		f_small
 		}
@@ -316,8 +317,9 @@ window aliencont
 		string txt_alc_dead_v
 		{
 			string		*cvar:mn_al_dead
-			pos			"165 470"
-			size		"50 20"
+			tooltip		"_amount on this base (all)"
+			pos			"130 470"
+			size		"125 20"
 			font		f_small
 			textalign	ur
 		}
