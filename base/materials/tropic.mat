@@ -73,12 +73,12 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		lightmap
 	}
-	/* Big button animation #1 TODO: Make animation frames */
+	/* Big button animation #1 */
 	{
 		texture pt/b/b2_04_1a0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Big button animation #2 TODO: Make animation frames*/
+	/* Big button animation #2 */
 	{
 		texture pt/b/b2_04_2a0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
@@ -125,7 +125,6 @@
 	{
 		texture pt/sk/usk2_06_1_2a0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		envmap 1
 		lightmap
 	}
 	/* Skin around 3 small buttons (position top left) */
@@ -345,7 +344,7 @@
 	specular 1.5
 	/* fx Animation (green/yellow) */	
 	{
-		texture tex_ua/fx2_10_1a0
+		texture pt/fx/fx2_10_1a0
 		anim 14 19.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
@@ -360,7 +359,7 @@
 	specular 1.5
 	/* fx Animation (green/yellow animation #2) */
 	{
-		texture tex_ua/fx2_12_1a0
+		texture pt/fx/fx2_12_1a0
 		anim 16 18.5
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
@@ -386,7 +385,6 @@
 	{
 		texture pt/sk/usk2_13_1_2a0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		envmap 1
 		lightmap
 	}
 	/* Big button skin */
@@ -419,7 +417,7 @@
 		anim 16 4.2
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Small button altering animation (KITT)*/
+	/* Small button aternating animation (KITT)*/
 	{
 		texture pt/b/b2_13-16_1c0
 		anima 9 8
@@ -454,7 +452,6 @@
 	{
 		texture pt/sk/usk2_13_1_2a0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		envmap 1
 		lightmap
 	}
 	/* Big button skin */
@@ -509,7 +506,6 @@
 	{
 		texture pt/sk/usk2_13_1_2a0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		envmap 1
 		lightmap
 	}
 	/* Big button skin */
@@ -530,7 +526,7 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		lightmap
 	}
-	/* Big button long altering animation (green to red)*/
+	/* Big button long aternating animation (green to red)*/
 	{
 		texture pt/b/b2_13-16_0c0
 		anima 16 5.5
@@ -543,7 +539,7 @@
 		anim 16 8
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Small button altering animation  (KITT) */
+	/* Small button aternating animation  (KITT) */
 	{
 		texture pt/b/b2_13-16_1c0
 		anima 9 8
@@ -577,7 +573,6 @@
 	{
 		texture pt/sk/usk2_13_1_2a0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		envmap 1
 		lightmap
 	}
 	/* Big button skin */
@@ -610,7 +605,7 @@
 		anim 16 7
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Small button altering animation  (KITT) */
+	/* Small button aternating animation  (KITT) */
 	{
 		texture pt/b/b2_13-16_1c0
 		anima 9 9
@@ -660,7 +655,7 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		pulse 1.0
 	}
-	/* 7 small buttons altering animation (bottom right) */
+	/* 7 small buttons aternating animation (bottom right) */
 	{
 		texture pt/b/b2_17_2a0
 		anima 9 4.3
@@ -673,7 +668,6 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	{
-		envmap 0
 		lightmap
 	}
 }
@@ -695,7 +689,7 @@
 		scale.s 1.3
 	}
 }
-
+/*
 /* Screens & Panels (Harvester only) */
 
 /* comptex001: Combipanel with Displays & Monitors (Harvester only) */
@@ -711,28 +705,29 @@
 		anima 9 6.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Buttons altering animation (top right, switching green) */
+	/* Buttons aternating animation (top right, switching green) */
 	{
 		texture pt/b/bctex001_0a0
 		anima 9 4.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Buttons altering animation (middle right, strong color-switch) */
+	/* Buttons aternating animation (middle right, strong color-switch) */
 	{
 		texture pt/b/bctex001_1b0
 		anima 9 5.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Big button altering animation (middle, yellow-blue) */
+	/* Big button aternating animation (middle, yellow-blue) */
 	{
 		texture pt/b/bctex001_2a0
 		anima 9 8.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Buttons altering animation (top middle, switching grey) */
+	/* Buttons aternating animation (top middle, switching grey) */
 	{
 		texture pt/b/bctex001_3a0
 		anima 9 3.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
+*/

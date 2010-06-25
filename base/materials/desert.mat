@@ -260,7 +260,7 @@
 	specular 1.5
 	/* fx Animation (green/yellow) */	
 	{
-		texture tex_ua/fx2_10_1a0
+		texture pt/fx/fx2_10_1a0
 		anim 14 4.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
@@ -282,14 +282,14 @@
 		pulse 2
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Buttons altering animation (top right, switching black) */
+	/* Buttons aternating animation (top right, switching black) */
 	{
 		texture pt/b/bctex001_0d0
 		anima 9 6
 		pulse 5
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Buttons altering animation (middle right, fade to grey) */
+	/* Buttons aternating animation (middle right, fade to grey) */
 	{
 		texture pt/b/bctex001_1d0
 		anima 9 13.1
@@ -301,7 +301,7 @@
 		anima 9 7
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Buttons altering animation (top middle, switching green) */
+	/* Buttons aternating animation (top middle, switching green) */
 	{
 		texture pt/b/bctex001_3c0
 		anima 9 6
@@ -322,7 +322,7 @@
 		texture pt/cs/sscrp004_sk0a0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Border screen overlay altering animation (green-blue glow) */
+	/* Border screen overlay aternating animation (green-blue glow) */
 	{
 		texture pt/so/soscrp004_1b0
 		anima 9 8

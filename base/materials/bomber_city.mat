@@ -347,7 +347,7 @@
 	specular 1.5
 	/* fx Animation (green/yellow) */	
 	{
-		texture tex_ua/fx2_10_1a0
+		texture pt/fx/fx2_10_1a0
 		anim 14 19.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
@@ -386,7 +386,7 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		pulse 2.0
 	}
-	/* 7 small buttons altering animation (bottom right) */
+	/* 7 small buttons aternating animation (bottom right) */
 	{
 		texture pt/b/b2_17_2b0
 		anima 9 6.3
