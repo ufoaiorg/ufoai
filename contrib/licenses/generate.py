@@ -537,7 +537,7 @@ def main():
 
     for i in os.listdir('base'):
         if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
-            #generate(i, data, texture_map, map_texture)
+            generate(i, data, texture_map, map_texture)
             print '\n'
     generate('', data, texture_map, map_texture)
 
