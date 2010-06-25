@@ -296,6 +296,10 @@ def generate(d, data, texture_map, map_texture):
         content = index + u'%s' %  content
         content+= '<hr/>You grab the source code from ufo:ai\'s svn. USE AT OWN RISK.'
 
+    extraLicenses = {}
+    extraCopyrights = {}
+    extraSources = {}
+
     html = HTML % (d, rev, content)
     open('licenses/html/%s/index.html' % d, 'w').write(html)
     for i in licenses:
@@ -326,6 +330,21 @@ def generate(d, data, texture_map, map_texture):
 
             meta = getMetadata(filename)
 
+            # compute extra data for analysis
+            if d == '':
+                if meta.license != None:
+                    if not (meta.license in extraLicenses):
+                        extraLicenses[meta.license] = []
+                    extraLicenses[meta.license].append(filename)
+                if meta.copyright != None:
+                    if not (meta.copyright in extraCopyrights):
+                        extraCopyrights[meta.copyright] = []
+                    extraCopyrights[meta.copyright].append(filename)
+                if meta.source != None:
+                    if not (meta.source in extraSources):
+                        extraSources[meta.source] = []
+                    extraSources[meta.source].append(filename)
+
             copy = meta.copyright
             if copy == None:
                 copy = "UNKNOWN"
@@ -355,10 +374,31 @@ def generate(d, data, texture_map, map_texture):
             content+= '</li>'
         content+= '</ol>'
         html = HTML % (d, rev, content)
-        html = html.encode('UTF-8')
+        html = html.encode('utf-8')
         open('licenses/html/%s/%s.html' % (d, h), 'w').write(html)
 
     cPickle.dump(licenses, open('licenses/history/%s/%i' % (d, rev), 'w'))
+
+    #generate extra
+    if d == '':
+        html = "<html><body><ul>\n"
+        for k in extraLicenses:
+            html += "<li>%s<br /><small>%s</small></li>\n" % (k, "; ".join(extraLicenses[k]))
+        html += "</ul></body></html>"
+        open('licenses/html/licenses.html', 'w').write(html.encode('utf-8'))
+
+        html = "<html><body><ul>\n"
+        for k in extraCopyrights:
+            html += "<li>%s<br /><small>%s</small></li>\n" % (k, "; ".join(extraCopyrights[k]))
+        html += "</ul></body></html>"
+        open('licenses/html/copyrights.html', 'w').write(html.encode('utf-8'))
+
+        html = "<html><body><ul>\n"
+        for k in extraSources:
+            html += "<li>%s<br /><small>%s</small></li>\n" % (k, "; ".join(extraSources[k]))
+        html += "</ul></body></html>"
+        open('licenses/html/sources.html', 'w').write(html.encode('utf-8'))
+
 
     # generate graph!
     data = {}
@@ -497,7 +537,7 @@ def main():
 
     for i in os.listdir('base'):
         if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
-            generate(i, data, texture_map, map_texture)
+            #generate(i, data, texture_map, map_texture)
             print '\n'
     generate('', data, texture_map, map_texture)
 
