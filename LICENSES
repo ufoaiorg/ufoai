@@ -3505,9 +3505,9 @@ base/textures/tex_buildings/e8crete_pillarc.jpg | GNU General Public License 2.0
 base/textures/tex_buildings/e8crete_pillarc_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/floor001.png | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/floor001_nm.png | GNU General Public License 2.0 or later | shedeki
-base/textures/tex_buildings/floor003.png |  | GNU General Public License 2.0 or later
+base/textures/tex_buildings/floor003.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/floor003_nm.png | GNU General Public License 2.0 or later | GNU General Public License 2.0 or later
-base/textures/tex_buildings/floor003_sm.png |  | GNU General Public License 2.0 or later
+base/textures/tex_buildings/floor003_sm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/floor004.png | GNU General Public License 2.0 or later | Matthias "voller" Volmer | http://ufoai.ninex.info/forum/index.php?topic=3181.msg22120#msg22120
 base/textures/tex_buildings/floor004_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/floor006.png | GNU General Public License 2.0 or later | shedeki
@@ -3595,32 +3595,32 @@ base/textures/tex_buildings/sp_stairs.jpg | GNU General Public License 2.0 | Ope
 base/textures/tex_buildings/sp_stairs_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/step.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_buildings/streetbricks14.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
-base/textures/tex_buildings/stripebl.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripebl_nm.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripebl_sm.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripebr.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripebr_nm.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripebr_sm.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripedown.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripedown_nm.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripedown_sm.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/striperight.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/striperight_nm.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/striperight_sm.png |  | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripebl.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripebl_nm.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripebl_sm.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripebr.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripebr_nm.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripebr_sm.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripedown.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripedown_nm.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripedown_sm.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/striperight.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/striperight_nm.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/striperight_sm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/stripes.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/stripes_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/stripetd.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripetd_nm.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripetd_sm.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripetl.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripetl_nm.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripetl_sm.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripetr.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripetr_nm.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripetr_sm.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripett.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripett_nm.png |  | GNU General Public License 2.0 or later
-base/textures/tex_buildings/stripett_sm.png |  | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripetd.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripetd_nm.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripetd_sm.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripetl.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripetl_nm.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripetl_sm.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripetr.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripetr_nm.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripetr_sm.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripett.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripett_nm.png | GNU General Public License 2.0 or later
+base/textures/tex_buildings/stripett_sm.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/surface2.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/t_wll_fnctrm.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/t_wll_fnctrm2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -3858,7 +3858,7 @@ base/textures/tex_furniture/clothes.jpg | GNU General Public License 2.0 or late
 base/textures/tex_furniture/couch_d.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couch_d_nm.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couch_e.png | GNU General Public License 2.0 or later | Voller
-base/textures/tex_furniture/couche_sm.png |  | GNU General Public License 2.0 or later
+base/textures/tex_furniture/couche_sm.png | GNU General Public License 2.0 or later
 base/textures/tex_furniture/kitchen001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/table001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/table002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
