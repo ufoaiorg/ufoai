@@ -1854,6 +1854,9 @@ void CL_ResetSinglePlayerData (void)
 		if (CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
 			ccs.alienTeams[ccs.numAliensTD++] = &csi.teamDef[i];
 	}
+	/* Clear mapDef usage staistics */
+	for (i = 0; i < csi.numMDs; i++)
+		csi.mds[i].timesAlreadyUsed = 0;
 }
 
 #ifdef DEBUG
