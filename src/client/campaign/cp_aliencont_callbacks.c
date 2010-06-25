@@ -143,8 +143,8 @@ static void AC_AlienClick (const base_t *base, int num)
 		Cvar_Set("mn_al_alienimage", aliencontCurrent->tech->image);
 		assert(aliencontCurrent->teamDef);
 		Cvar_Set("mn_al_alientype", _(aliencontCurrent->teamDef->name));
-		Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->teamDef->idx, qtrue));
-		Cvar_SetValue("mn_al_dead", AL_CountForMenu(aliencontCurrent->teamDef->idx, qfalse));
+		Cvar_Set("mn_al_alive", va("%i (%i)", aliencontCurrent->amountAlive, AL_CountForMenu(aliencontCurrent->teamDef->idx, qtrue)));
+		Cvar_Set("mn_al_dead",  va("%i (%i)", aliencontCurrent->amountDead, AL_CountForMenu(aliencontCurrent->teamDef->idx, qfalse)));
 	}
 }
 
