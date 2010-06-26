@@ -618,8 +618,8 @@ window mp_create_server extends abstract_multiplayer
 
 	cmpMapPanel panel_map {
 		{
-			pos			"415 250"
-			size		"608 768"
+			pos		"495 270"
+			size	"475 370"
 		}
 
 		// ===================
@@ -629,14 +629,14 @@ window mp_create_server extends abstract_multiplayer
 		string allowedtype_label
 		{
 			string		"_Allowed gametype:"
-			pos			"85 200"
+			pos			"10 245"
 			size		"256 20"
 		}
 
 		string string_gametypes
 		{
 			string		*cvar:mn_mapgametypes
-			pos			"245 200"
+			pos			"170 245"
 			size		"256 32"
 			font		"f_verysmall"
 			longlines	LONGLINES_WRAP

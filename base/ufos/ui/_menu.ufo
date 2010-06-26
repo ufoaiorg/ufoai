@@ -190,24 +190,24 @@ component panel cmpMapPanel
 	string preview_label
 	{
 		string		"_Preview:"
-		pos			"85 0"
+		pos			"10 0"
 		size		"256 20"
 	}
 
 	cmpMapPic mappic
 	{
 		image		*cvar:mn_mappic
-		pos			"85 30"
+		pos			"20 30"
 	}
 	cmpMapPic mappic2
 	{
 		image		*cvar:mn_mappic2
-		pos			"225 30"
+		pos			"150 30"
 	}
 	cmpMapPic mappic3
 	{
 		image		*cvar:mn_mappic3
-		pos			"365 30"
+		pos			"290 30"
 	}
 
 	// ===================
@@ -216,32 +216,33 @@ component panel cmpMapPanel
 	string map_label
 	{
 		string		"_Map name:"
-		pos			"85 155"
+		pos			"10 155"
 		size		"256 20"
 	}
 	cmpMapSlot mapSlot {
 		{
-			pos "213 150"
+			pos "140 150"
 		}
 	}
 
 	// ===================
 	// DAY + NIGHT
 	// ===================
-	todo todo3 {
-		pos "500 245"
+	todo todo3 
+	{
+		pos "425 200"
 		string "It should be better to have a selectbox with day/night"
 	}
 	string daynight_str
 	{
 		string		"_Day version:"
-		pos			"85 245"
+		pos			"10 200"
 		size		"280 20"
 	}
 	checkbox daynight_value
 	{
 		current		*cvar:mn_serverday
-		pos			"410 245"
+		pos			"335 200"
 		size		"20 18"
 		image		"ui/checkbox_blue"
 	}
