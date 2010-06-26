@@ -443,3 +443,15 @@
 "origin" "48 144 48"
 "team" "1"
 }
+// entity 36
+{
+"classname" "info_2x2_start"
+"origin" "32 64 28"
+"team" "1"
+}
+// entity 37
+{
+"classname" "info_2x2_start"
+"origin" "448 640 28"
+"team" "1"
+}

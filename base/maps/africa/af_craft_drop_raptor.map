@@ -991,3 +991,15 @@
 "origin" "144 208 48"
 "team" "1"
 }
+// entity 36
+{
+"classname" "info_2x2_start"
+"origin" "384 224 28"
+"team" "1"
+}
+// entity 37
+{
+"classname" "info_2x2_start"
+"origin" "64 224 28"
+"team" "1"
+}

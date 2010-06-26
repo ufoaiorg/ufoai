@@ -1367,3 +1367,15 @@
 "spawnflags" "255"
 "angles" "0 90 0"
 }
+// entity 34
+{
+"classname" "info_2x2_start"
+"origin" "448 640 28"
+"team" "1"
+}
+// entity 35
+{
+"classname" "info_2x2_start"
+"origin" "224 96 28"
+"team" "1"
+}
