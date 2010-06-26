@@ -512,6 +512,14 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 	}
 }
 
+const char* GAME_GetTeamDef (void)
+{
+	const char *teamDefID = Cvar_GetString("cl_teamdef");
+	if (teamDefID[0] == '\0')
+		teamDefID = "phalanx";
+	return teamDefID;
+}
+
 static qboolean GAME_Spawn (void)
 {
 	int i;
@@ -519,9 +527,11 @@ static qboolean GAME_Spawn (void)
 	/* If there is no active gametype we create a team with default values.
 	 * This is e.g. the case when someone starts a map with the map command */
 	if (GAME_GetCurrentType() == NULL || chrDisplayList.num == 0) {
-		const char *teamDefID = cl_team->integer == TEAM_PHALANX ? "phalanx" : "taman";
+		const char *teamDefID = GAME_GetTeamDef();
 		const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
+
 		memset(&invList, 0, sizeof(invList));
+
 		/* inventory structure switched/initialized */
 		INV_InitInventory(&cls.i, &csi, invList, lengthof(invList));
 		GAME_GenerateTeam(teamDefID, ed, MAX_ACTIVETEAM);

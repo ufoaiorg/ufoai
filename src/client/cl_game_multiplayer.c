@@ -36,10 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void GAME_MP_AutoTeam (void)
 {
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
-	const char *teamDefID = Cvar_GetString("cl_teamdef");
-
-	if (teamDefID[0] == '\0')
-		teamDefID = "phalanx";
+	const char *teamDefID = GAME_GetTeamDef();
 
 	GAME_GenerateTeam(teamDefID, ed, MAX_ACTIVETEAM);
 }

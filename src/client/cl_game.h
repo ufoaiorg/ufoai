@@ -60,6 +60,7 @@ void GAME_ResetCharacters(void);
 void GAME_GenerateTeam(const char *teamDefID, const equipDef_t *ed, int teamMembers);
 void GAME_AppendTeamMember(int memberIndex, const char *teamDefID, const equipDef_t *ed);
 qboolean GAME_TeamIsKnown(const teamDef_t *teamDef);
+const char* GAME_GetTeamDef(void);
 void GAME_Drop(void);
 void GAME_Frame(void);
 const char* GAME_GetModelForItem(const objDef_t *od, struct menuModel_s** menuModel);

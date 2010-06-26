@@ -413,6 +413,10 @@ invList_t *INVSH_SearchInInventory (const inventory_t* const i, const invDef_t *
 	return NULL;
 }
 
+/**
+ * @todo this does not say anything about the teamdef the player is
+ * using - and that is what counts here.
+ */
 qboolean INVSH_UseableForTeam (const objDef_t *od, const int team)
 {
 	const qboolean isArmour = INV_IsArmour(od);

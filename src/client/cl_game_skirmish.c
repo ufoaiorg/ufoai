@@ -64,12 +64,9 @@ static void GAME_SK_Start_f (void)
 	mapDef_t *md;
 	const char *name = Cvar_GetString("cl_equip");
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
-	const char *teamDefID = Cvar_GetString("cl_teamdef");
+	const char *teamDefID = GAME_GetTeamDef();
 	int maxSoldiers = Cvar_GetInteger("sv_maxsoldiersperplayer");
 	const int ugvs = Cvar_GetInteger("cl_ugvs");
-
-	if (teamDefID[0] == '\0')
-		teamDefID = "phalanx";
 
 	if (maxSoldiers <= 0)
 		maxSoldiers = MAX_ACTIVETEAM;
