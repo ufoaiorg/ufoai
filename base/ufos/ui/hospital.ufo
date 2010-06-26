@@ -3,7 +3,7 @@
 // ==================
 
 component cmpDefNamedTbar cmpHospitalNamedTbar {
-	pic			bdr { 
+	pic			bdr {
 		pos "17 18"
 	}
 	tbar		bar {
@@ -144,10 +144,10 @@ window hospital
 		}
 		bar health  {
 			current *cvar:mn_hos_hp0
-			max *cvar:mn_hos_hpmax0 
+			max *cvar:mn_hos_hpmax0
 		}
 	}
-	
+
 	cmpHospitalPanel hos1 {
 		{
 			pos "345 95"
@@ -157,7 +157,7 @@ window hospital
 			max *cvar:mn_hos_hpmax1
 		}
 	}
-	
+
 	cmpHospitalPanel hos2 {
 		{
 			pos "665 95"
@@ -167,7 +167,7 @@ window hospital
 			max *cvar:mn_hos_hpmax2
 		}
 	}
-	
+
 	cmpHospitalPanel hos3 {
 		{
 			pos "25 190"
@@ -177,7 +177,7 @@ window hospital
 			max *cvar:mn_hos_hpmax3
 		}
 	}
-	
+
 	cmpHospitalPanel hos4 {
 		{
 			pos "345 190"
@@ -187,7 +187,7 @@ window hospital
 			max *cvar:mn_hos_hpmax4
 		}
 	}
-	
+
 	cmpHospitalPanel hos5 {
 		{
 			pos "665 190"
@@ -197,7 +197,7 @@ window hospital
 			max *cvar:mn_hos_hpmax5
 		}
 	}
-	
+
 	cmpHospitalPanel hos6 {
 		{
 			pos "25 285"
@@ -207,7 +207,7 @@ window hospital
 			max *cvar:mn_hos_hpmax6
 		}
 	}
-	
+
 	cmpHospitalPanel hos7 {
 		{
 			pos "345 285"
@@ -439,7 +439,7 @@ window hospital_employee
 			size	"200 350"
 			origin	"0 -35 0"
 		}
-		
+
 		model head
 		{
 			model	*cvar:mn_head

@@ -198,7 +198,7 @@ window bases
 		onClick		{ cmd "mn_push basesummary;" }
 	}
 }
-	confunc update_basebutton 
+	confunc update_basebutton
 	{
 		*base_buttons.<1>@disabled = <2>
 		*base_buttons.<1>@tooltip = <3>

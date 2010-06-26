@@ -25,7 +25,7 @@ window editor {
 			layout			LAYOUT_PACK
 			layoutMargin	3
 		}
-	
+
 		button start_capture_mode {
 			tooltip		"_Capture a node"
 			icon		"system_capture"
@@ -37,7 +37,7 @@ window editor {
 			selectcolor	"1 1 1 1"
 			onClick	{ call *node:root.editor@start }
 		}
-	
+
 		button select_parent {
 			tooltip		"_Select parent node"
 			icon		"system_parent"
@@ -49,7 +49,7 @@ window editor {
 			selectcolor	"1 1 1 1"
 			onClick	{ call *node:root.editor@selectparent }
 		}
-	
+
 		button select_firstchild {
 			tooltip		"_Select first child node"
 			icon		"system_child"
@@ -90,28 +90,28 @@ window editor {
 	string current_window_title {
 		pos	"25 140"
 		size "150 20"
-		string "_Current window:"		
+		string "_Current window:"
 		font		"f_verysmall"
 	}
 
 	string current_window {
 		pos	"30 160"
 		size "150 20"
-		string *cvar:mn_sys_editor_window		
+		string *cvar:mn_sys_editor_window
 		font		"f_verysmall"
 	}
 
 	string current_node_title {
 		pos	"25 180"
 		size "150 20"
-		string "_Current node:"		
+		string "_Current node:"
 		font		"f_verysmall"
 	}
 
 	string current_node {
 		pos	"30 200"
 		size "150 20"
-		string *cvar:mn_sys_editor_node		
+		string *cvar:mn_sys_editor_node
 		font		"f_verysmall"
 	}
 

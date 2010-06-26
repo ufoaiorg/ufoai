@@ -567,7 +567,7 @@ window transfer
 	}
 
 	confunc trans_resetscroll {
-		*itemlist.trans_list_scroll@current = 0 
+		*itemlist.trans_list_scroll@current = 0
 		*itemlist.trans_list@viewpos = 0
 		*itemlist.trans_list_amount@viewpos = 0
 		*itemlist.trans_list_transfered@viewpos = 0

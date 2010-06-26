@@ -11,7 +11,7 @@ window hud extends ahud
 		timeout		10000
 	}
 
-	func showinventory 
+	func showinventory
 	{
 		cmd "mn_push hudinv;"
 	}
@@ -192,7 +192,7 @@ window hud extends ahud
 	/**
 	 * TODO remove bt_actor7 tooltip from script and C code
 	 * TODO update hovered actor content
-	 * 
+	 *
 	 */
 	panel popup_soldier_hovered {
 		{
@@ -211,7 +211,7 @@ window hud extends ahud
 		}
 
 		/**
-		 * @param <1> number of the soldier from 0..7 
+		 * @param <1> number of the soldier from 0..7
 		 */
 		func select
 		{
@@ -243,7 +243,7 @@ window hud extends ahud
 				model			*cvar:mn_hovered_rweapon_item
 				containerLike	true
 			}
-	
+
 			pic left_bg
 			{
 				image			"hud/weapon_box"
@@ -260,7 +260,7 @@ window hud extends ahud
 				model			*cvar:mn_hovered_lweapon_item
 				containerLike	true
 			}
-	
+
 			pic head_bg
 			{
 				image		"hud/head_box"
@@ -323,7 +323,7 @@ window hud extends ahud
 				max			*cvar:mn_hovered_tumax
 				readonly	true
 			}
-	
+
 			string hp
 			{
 				string		*cvar:mn_hovered_hp
@@ -351,7 +351,7 @@ window hud extends ahud
 				max			*cvar:mn_hovered_hpmax
 				readonly	true
 			}
-	
+
 			string moral_text
 			{
 				string		*cvar:mn_hovered_morale
@@ -359,7 +359,7 @@ window hud extends ahud
 				size		"40 20"
 				textalign	ALIGN_UR
 			}
-	
+
 			bar morale
 			{
 				pos			"150 70"
@@ -411,7 +411,7 @@ window hud extends ahud
 				onClick		{ cmd "actor_select 0;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 0 ) }
 			}
-	
+
 			radiobutton bt_actor1
 			{
 				pos			"29 0"
@@ -423,7 +423,7 @@ window hud extends ahud
 				onClick		{ cmd "actor_select 1;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 1 ) }
 			}
-	
+
 			radiobutton bt_actor2
 			{
 				pos			"59 0"
@@ -435,7 +435,7 @@ window hud extends ahud
 				onClick		{ cmd "actor_select 2;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 2 ) }
 			}
-	
+
 			radiobutton bt_actor3
 			{
 				pos			"89 0"
@@ -447,7 +447,7 @@ window hud extends ahud
 				onClick		{ cmd "actor_select 3;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 3 ) }
 			}
-	
+
 			radiobutton bt_actor4
 			{
 				pos			"119 0"
@@ -459,7 +459,7 @@ window hud extends ahud
 				onClick		{ cmd "actor_select 4;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 4 ) }
 			}
-	
+
 			radiobutton bt_actor5
 			{
 				pos			"149 0"
@@ -471,7 +471,7 @@ window hud extends ahud
 				onClick		{ cmd "actor_select 5;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 5 ) }
 			}
-	
+
 			radiobutton bt_actor6
 			{
 				pos			"179 0"
@@ -483,7 +483,7 @@ window hud extends ahud
 				onClick		{ cmd "actor_select 6;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 6 ) }
 			}
-	
+
 			radiobutton bt_actor7
 			{
 				pos			"209 0"
@@ -495,7 +495,7 @@ window hud extends ahud
 				onClick		{ cmd "actor_select 7;" }
 				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 7 ) }
 			}
-		
+
 		}
 	}
 
@@ -1001,7 +1001,7 @@ window hud extends ahud
 	{
 		*chatscreen@invis = true
 	}
-	
+
 	// ==================
 	// override ahud confunc
 	// ==================
@@ -1110,12 +1110,12 @@ window hud extends ahud
 		*info.bt_reaction_s@texh	= "31 63"
 		*info.bt_reaction_s@tooltip = "_No reaction fire"
 	}
-	confunc disable_reaction 
+	confunc disable_reaction
 	{
 		*info.bt_reaction_s@texl	= "0 0"
 		*info.bt_reaction_s@texh	= "31 31"
 	}
-	
+
 	// ==================
 	// init function
 	// ==================

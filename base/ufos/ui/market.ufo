@@ -420,7 +420,7 @@ window market extends objectinfo
 			size	"100 16"
 			font	"f_small"
 		}
-	
+
 		custombutton action_dec
 		{
 			pos		"142 390"
@@ -428,7 +428,7 @@ window market extends objectinfo
 			size	"16 16"
 			onClick	{ cmd "mn_decreaseitem;" }
 		}
-	
+
 		string item_name
 		{
 			string	*cvar:mn_linkname
@@ -449,7 +449,7 @@ window market extends objectinfo
 		// ==================
 		// firemode
 		// ==================
-	
+
 		string header_firemode
 		{
 			string	"_Firemode:"
@@ -457,7 +457,7 @@ window market extends objectinfo
 			size	"100 16"
 			font	"f_small"
 		}
-		
+
 		custombutton firemode_dec
 		{
 			tooltip "_Previous firemode"
@@ -466,7 +466,7 @@ window market extends objectinfo
 			size	"16 16"
 			onClick	{ cmd "mn_decreasefiremode;" }
 		}
-		
+
 		string firemode_name
 		{
 			string	*cvar:mn_firemodename
@@ -475,7 +475,7 @@ window market extends objectinfo
 			textalign	ALIGN_CC
 			font	"f_small"
 		}
-			
+
 		custombutton firemode_inc
 		{
 			tooltip "_Next firemode"

@@ -339,7 +339,7 @@ window mp_team_edit extends objectinfo
 			size	"330 20"
 			textalign	ALIGN_UC
 		}
-	
+
 		item itemmodel
 		{
 			pos 		"0 30"
@@ -348,7 +348,7 @@ window mp_team_edit extends objectinfo
 			angles		"-10 160 70"
 			autoscale	true
 		}
-	
+
 		text description
 		{
 			pos			"10 140"
@@ -389,7 +389,7 @@ window mp_team_edit extends objectinfo
 			size	"100 16"
 			font	"f_small"
 		}
-	
+
 		custombutton action_dec
 		{
 			pos		"120 290"
@@ -397,7 +397,7 @@ window mp_team_edit extends objectinfo
 			size	"16 16"
 			onClick	{ cmd "mn_decreaseitem;" }
 		}
-	
+
 		string item_name
 		{
 			string	*cvar:mn_linkname
@@ -418,7 +418,7 @@ window mp_team_edit extends objectinfo
 		// ==================
 		// firemode
 		// ==================
-	
+
 		string header_firemode
 		{
 			string	"_Firemode:"
@@ -426,7 +426,7 @@ window mp_team_edit extends objectinfo
 			size	"100 16"
 			font	"f_small"
 		}
-		
+
 		custombutton firemode_dec
 		{
 			tooltip "_Previous firemode"
@@ -435,7 +435,7 @@ window mp_team_edit extends objectinfo
 			size	"16 16"
 			onClick	{ cmd "mn_decreasefiremode;" }
 		}
-		
+
 		string firemode_name
 		{
 			string	*cvar:mn_firemodename
@@ -444,7 +444,7 @@ window mp_team_edit extends objectinfo
 			textalign	ALIGN_CC
 			font	"f_small"
 		}
-			
+
 		custombutton firemode_inc
 		{
 			tooltip "_Next firemode"
@@ -612,7 +612,7 @@ window mp_team_edit extends objectinfo
 			anim	"stand_menu"
 			angles	"0 70 90"
 			scale	"5 5 5"
-	
+
 			pos		"676 69"
 			size	"197 258"
 			origin	"0 -30 0"
@@ -729,7 +729,7 @@ window mp_team_edit extends objectinfo
 		cmd "set mn_infotype 0;set mn_equiptype 0;"
 		cmd "team_initskin;mp_update_item_list;mp_team_select 0;mp_team_update;"
 	}
-	
+
 	func onClose
 	{
 		cmd "mp_saveteamstate;"

@@ -7,7 +7,7 @@ component panel cmpAdr {
 	size "350 25"
 }
 	string adr { pos "30 1" size "300 20" tooltip "_Connect to this server"
-		onClick { cmd "server_info *cvar:adr<node:parent@num>;" } 
+		onClick { cmd "server_info *cvar:adr<node:parent@num>;" }
 		onRClick { cmd "del adr<node:parent@num>; check_bookmarks;" }
 	}
 	custombutton resetadr { pos "0 1" size "22 22" icon garbage tooltip "_Delete this bookmark"
@@ -98,7 +98,7 @@ window abstract_multiplayer_join extends abstract_multiplayer {
 				if ( *cvar:mn_multiplayer_tab == 1 ) {
 					cmd "mn_pop;mn_push mp_serverbrowser;"
 				} elif ( *cvar:mn_multiplayer_tab == 2 ) {
-		
+
 				} elif ( *cvar:mn_multiplayer_tab == 3 ) {
 					cmd "mn_pop;mn_push mp_bookmarks;"
 				} elif ( *cvar:mn_multiplayer_tab == 4 ) {
@@ -1482,7 +1482,7 @@ window multiplayer_wait extends levelbuttons
 					*node:parent.irc@viewpos = <current>
 				}
 			}
-	
+
 			panel input {
 				{
 					layout			LAYOUT_PACK
@@ -1490,14 +1490,14 @@ window multiplayer_wait extends levelbuttons
 					align			LAYOUTALIGN_BOTTOM
 					height			25
 				}
-				
+
 				string say_label {
 					align		LAYOUTALIGN_LEFT
 					width		"50"
 					textalign	ALIGN_CL
 					string		"_Say:"
 				}
-				
+
 				textentry say {
 					align		LAYOUTALIGN_FILL
 					image		"ui/button_green_verysmall"
@@ -1513,7 +1513,7 @@ window multiplayer_wait extends levelbuttons
 						cmd "multiplayer_ircsay_edit;"
 					}
 				}
-				
+
 				/** @todo move it into say@onChange
 				 * But at the moment this call into that callback dont work
 				 * without an intermediat command
@@ -1532,7 +1532,7 @@ window multiplayer_wait extends levelbuttons
 				padding			5
 				bgcolor			"0 0.1 0 0.7"
 			}
-		
+
 			text chat
 			{
 				dataid		TEXT_CHAT_WINDOW
@@ -1547,7 +1547,7 @@ window multiplayer_wait extends levelbuttons
 					*node:(abstractscrollbar)parent.chat_scroll@current = <viewpos>
 				}
 			}
-	
+
 			vscrollbar chat_scroll {
 				image		"ui/scrollbar_v_green"
 				align		LAYOUTALIGN_RIGHT
@@ -1555,7 +1555,7 @@ window multiplayer_wait extends levelbuttons
 					*node:parent.chat@viewpos = <current>
 				}
 			}
-	
+
 			panel input {
 				{
 					layout			LAYOUT_PACK
@@ -1563,14 +1563,14 @@ window multiplayer_wait extends levelbuttons
 					align			LAYOUTALIGN_BOTTOM
 					height			25
 				}
-				
+
 				string say_label {
 					align		LAYOUTALIGN_LEFT
 					width		"50"
 					textalign	ALIGN_CL
 					string		"_Say:"
 				}
-				
+
 				textentry say {
 					align		LAYOUTALIGN_FILL
 					image		"ui/button_green_verysmall"
@@ -1587,7 +1587,7 @@ window multiplayer_wait extends levelbuttons
 						cmd "multiplayer_chatsay_edit;"
 					}
 				}
-				
+
 				/** @todo move it into say@onChange
 				 * But at the moment this call into that callback dont work
 				 * without an intermediat command
@@ -1663,10 +1663,10 @@ window multiplayer_wait extends levelbuttons
 		*cvar:mn_chatselect = "chat"
 		*cvar:cl_ready = 0
 	}
-	
+
 	func onClose
 	{
-		delete *cvar:mn_entry	
+		delete *cvar:mn_entry
 		delete *cvar:mn_chatselect
 		delete *cvar:mn_displaypartyinfo
 	}

@@ -9,7 +9,7 @@ component panel cmpFiremodeEntry {
 		align	LAYOUTALIGN_TOP
 	}
 
-	pic bg 
+	pic bg
 	{
 		image	"hud/firemode"
 		pos		"0 576"
@@ -30,7 +30,7 @@ component panel cmpFiremodeEntry {
 		texh	"31 31"
 		onClick	{ cmd "hud_selectreactionfiremode <node:parent.hand@string> <node:parent.id@string>;" }
 	}
-	
+
 	/** store the hand */
 	string hand {
 		size	"0 0"
@@ -42,28 +42,28 @@ component panel cmpFiremodeEntry {
 		size	"0 0"
 		invis	true
 	}
-	
-	string name	
-	{ 
-		pos "27 4"	
-		size "183 25"	
-		textalign ALIGN_CL	
+
+	string name
+	{
+		pos "27 4"
+		size "183 25"
+		textalign ALIGN_CL
 		ghost true
 	}
-	string tu	
-	{ 
-		pos "27 32"	
-		size "69 28"	
-		textalign ALIGN_CC	
-		ghost true 
+	string tu
+	{
+		pos "27 32"
+		size "69 28"
+		textalign ALIGN_CC
+		ghost true
 		font		"f_verysmall"
 	}
 	string shot
 	{
-		pos "99 32"	
-		size "111 28"	
-		textalign ALIGN_CC	
-		ghost true 
+		pos "99 32"
+		size "111 28"
+		textalign ALIGN_CC
+		ghost true
 		font		"f_verysmall"
 	}
 }
@@ -107,9 +107,9 @@ window ahud extends levelbuttons {
 	confunc crouch_checkbox_check { }
 
 	confunc reserve_shot_clear { }
-	
+
 	confunc reserve_shot_check { }
-	
+
 	confunc reserve_shot_disable { }
 
 	confunc startreactionmany { }
@@ -119,22 +119,22 @@ window ahud extends levelbuttons {
 
 	confunc startround { }
 	confunc endround { }
-	
+
 	confunc openradar { cmd "mn_push radarwindow;" }
 
 	confunc unhide_chatscreen { *chatscreen@invis = false }
-	
+
 	/**
 	 * @param <1> the id of the soldier (starting at 0)
 	 * @param <2> the model path of the head model
-	 * @param <3> the hp of the actor 
+	 * @param <3> the hp of the actor
 	 * @param <4> the max hp of the actor
 	 * @param <5> the tus of the actor
 	 * @param <6> the max tus of the actor
 	 * @param <7> the morale of the actor
 	 * @param <8> the max morale of the actor
 	 * @param <9> the stun value of the actor
-	 * @param <10> the tooltip 
+	 * @param <10> the tooltip
 	 */
 	confunc updateactorvalues {
 		*cvar:mn_head<1> = "<2>"
@@ -499,7 +499,7 @@ window firemode_left {
 		} else {
 			*(pic)bt_left_fm<1>@texl = "0 64"
 			*(pic)bt_left_fm<1>@texh = "214 128"
-		}		
+		}
 		delete *cvar:tmp
 	}
 
@@ -818,7 +818,7 @@ window firemode_right {
 	confunc set_right_cb_invis {
 		*(pic)bt_right_fm<1>.cb@invis = true
 	}
-	
+
 	/**
 	 * @param<1> hand (char) (l or r for left or right)
 	 * @param<2> firedef index (int)
@@ -847,7 +847,7 @@ window firemode_right {
 			}
 		}
 	}
-	
+
 	/**
 	 * @param<1> hand (char) (l or r for left or right)
 	 * @param<2> firedef index (int)
@@ -868,14 +868,14 @@ window firemode_right {
 			}
 		}
 	}
-	
+
 	confunc hide_firemodes {
 		*cvar:i = 0
 		while ( *cvar:i < 8 ) {
 			cmd "set_left_inv <cvar:i>;"
 			cmd "set_right_inv <cvar:i>;"
 			*cvar:i = ( *cvar:i + 1 )
-		} 
+		}
 		delete *cvar:i
 	}
 }

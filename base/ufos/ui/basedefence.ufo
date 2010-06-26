@@ -74,7 +74,7 @@ window basedefence extends objectinfo
 			size		"794 305"
 			invis		true
 		}
-	
+
 		/* @todo: We should check if the slot is empty but can't do from here */
 		confunc update_buttons {
 			if ( *node:(text)parent.slots.slotlist@lineselected < 0 ) {
@@ -100,7 +100,7 @@ window basedefence extends objectinfo
 				pos		"5 5"
 				size	"435 115"
 			}
-			
+
 			string slotlist_title
 			{
 				string		"_Weapon slots"
@@ -234,7 +234,7 @@ window basedefence extends objectinfo
 				size	"334 285"
 				image	"ui/panel_green"
 			}
-	
+
 			string description_title
 			{
 				string		"_Selected Item"
@@ -250,7 +250,7 @@ window basedefence extends objectinfo
 				size		"314 25"
 				textalign	ALIGN_UC
 			}
-	
+
 			model item_model
 			{
 				model		*cvar:mn_upmodel_top
@@ -348,7 +348,7 @@ window basedefence extends objectinfo
 			pos			"310 175"
 			size		"100 20"
 		}
-		
+
 		string autofire_title
 		{
 			string		"_Autofire"
@@ -386,7 +386,7 @@ window basedefence extends objectinfo
 			size		"200 32"
 			onClick		{ cmd "mn_pop;" }
 		}
-		
+
 	}
 
 	confunc setautofire	{
@@ -398,7 +398,7 @@ window basedefence extends objectinfo
 			*node:root.infopanel.autofire@current = <cvar:tmp>
 			*node:root.infopanel.autofire@disabled = false
 		}
-		delete *cvar:tmp	
+		delete *cvar:tmp
 	}
 
 	func onInit {

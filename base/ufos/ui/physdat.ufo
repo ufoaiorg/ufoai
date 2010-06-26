@@ -3,7 +3,7 @@
 // ==================
 
 component cmpDefNamedTbar cmpPhysNamedTbar {
-	pic			bdr { 
+	pic			bdr {
 		pos "3 18"
 	}
 	tbar		bar {

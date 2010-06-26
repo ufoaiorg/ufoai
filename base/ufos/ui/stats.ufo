@@ -135,7 +135,7 @@ window stats
 		textalign	ALIGN_UC
 		font		"f_small"
 	}
-	
+
 	/* textlist using tabbed text */
 	text nation_stats
 	{

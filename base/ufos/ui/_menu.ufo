@@ -16,7 +16,7 @@ component button cmpMenuButton {
 
 /**
  * Bar with border, label and value.
- * Used to show stats of the actor. 
+ * Used to show stats of the actor.
  * This version is used in menu "employees" and "mp_team"
  */
 
@@ -24,9 +24,9 @@ component panel cmpDefNamedTbar {
 	{
 		size	"450 32"
 	}
-	pic			bdr { 
+	pic			bdr {
 		pos "25 18"
-		image "ui/bar_border" 
+		image "ui/bar_border"
 	}
 	tbar		bar {
 		pos "27 18"
@@ -178,11 +178,11 @@ component cmpPopupButton cmpCancelButton
 	tooltip		"_Close this dialogue"
 }
 
-component panel cmpMapPanel 
+component panel cmpMapPanel
 {
 	{
 	}
-	
+
 	// ===================
 	// PREVIEW
 	// ===================
@@ -228,7 +228,7 @@ component panel cmpMapPanel
 	// ===================
 	// DAY + NIGHT
 	// ===================
-	todo todo3 
+	todo todo3
 	{
 		pos "425 200"
 		string "It should be better to have a selectbox with day/night"

@@ -167,7 +167,7 @@ window research
 		*item<1>.bt_rs_change@invis = false
 		*item<1>.txt_assigned@invis = false
 		*item<1>.txt_rsstatus@invis = false
-	}  
+	}
 
 	confunc research_outterresearch {
 		*item<1>.txt_item@invis = false
@@ -272,7 +272,7 @@ window research
 		cmd "mn_pop;mn_pop;mn_base_select <1>;mn_push research;"
 		cmd "research_select <2>;"
 	}
-	
+
 	cmpResearchItem item0 {
 		pos "50 113"
 	}

@@ -582,7 +582,7 @@ window geoscape
 			ghost	true
 			size	"1024 768"
 		}
-			
+
 		panel rightMargin {
 			align	LAYOUTALIGN_RIGHT
 			size	"256 30"
@@ -647,7 +647,7 @@ window geoscape
 				padding			10
 				layoutmargin	10
 			}
-	
+
 			panel bottomMargin {
 				align		LAYOUTALIGN_BOTTOM
 				size		"280 30"
@@ -1398,7 +1398,7 @@ window popup_newinstallation
 		} elif ( *cvar:mn_installation_type eq "ufoyard" ) {
 			*node:root.title@string = "_New UFO yard"
 			*node:root.cost@string = *cvar:mn_installation_ufoyard_cost
-		}		
+		}
 	}
 }
 
@@ -1485,7 +1485,7 @@ window popup_installationstatus
 			*node:root.buildtime@invis = false
 			/** @todo Radar and UFO Yard has no manage menu yet */
 			/* *node:root.bt_enter@invis = false */
-			 
+
 		}
 	}
 }

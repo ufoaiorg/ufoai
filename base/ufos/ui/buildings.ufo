@@ -109,7 +109,7 @@ window buildings
 		if ( *node:root.building_preview@current == 1 ) {
 			cmd "mn_push_child popup_buildingpreview buildings;"
 		}
-		
+
 	}
 
 	func onClose

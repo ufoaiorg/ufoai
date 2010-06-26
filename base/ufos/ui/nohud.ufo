@@ -10,7 +10,7 @@ window nohud extends ahud
 		starlayout	true
 	}
 
-	func showinventory 
+	func showinventory
 	{
 		cmd "mn_push hudinv;"
 	}

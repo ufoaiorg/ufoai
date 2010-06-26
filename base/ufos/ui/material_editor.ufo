@@ -644,7 +644,7 @@ window material_editor {
 				size	"280 40"
 				cvar	*cvar:me_stagetype
 				font	"f_verysmall"
-	
+
 				onChange {
 					call *node:root.hidestageattributestabs
 					*stage_attributes.stage_attributes_<cvar:me_stagetype>@invis = false

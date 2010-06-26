@@ -36,25 +36,25 @@ window main
 			onClick	{ cmd "mn_push singleplayer;" }
 			string	"_Single-player"
 		}
-	
+
 		cmpMenuButton button_multiplayer
 		{
 			onClick	{ cmd "mn_push_multiplayer;" }
 			string	"_Multiplayer"
 		}
-	
+
 		cmpMenuButton button_options
 		{
 			onClick	{ cmd "mn_push options;" }
 			string	"_Options"
 		}
-	
+
 		cmpMenuButton button_tut
 		{
 			onClick	{ cmd "mn_push tutorials;" }
 			string	"_Tutorials"
 		}
-	
+
 		cmpMenuButton button_credits
 		{
 			onClick	{ cmd "seq_start credits;" }

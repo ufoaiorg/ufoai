@@ -79,7 +79,7 @@ window ufopedia extends objectinfo
 					cmd "update_ufopedia_layout;"
 				}
 			}
-			
+
 			option description {
 				label	"_Description"
 				value	"description"
@@ -245,7 +245,7 @@ window ufopedia extends objectinfo
 			size	"100 16"
 			font	"f_small"
 		}
-	
+
 		custombutton action_dec
 		{
 			pos		"120 0"
@@ -253,7 +253,7 @@ window ufopedia extends objectinfo
 			size	"16 16"
 			onClick	{ cmd "mn_decreaseitem;" }
 		}
-	
+
 		string item_name
 		{
 			string	*cvar:mn_linkname
@@ -274,7 +274,7 @@ window ufopedia extends objectinfo
 		// ==================
 		// firemode
 		// ==================
-	
+
 		string header_firemode
 		{
 			string	"_Firemode:"
@@ -282,7 +282,7 @@ window ufopedia extends objectinfo
 			size	"100 16"
 			font	"f_small"
 		}
-		
+
 		custombutton firemode_dec
 		{
 			tooltip "_Previous firemode"
@@ -291,7 +291,7 @@ window ufopedia extends objectinfo
 			size	"16 16"
 			onClick	{ cmd "mn_decreasefiremode;" }
 		}
-		
+
 		string firemode_name
 		{
 			string	*cvar:mn_firemodename
@@ -300,7 +300,7 @@ window ufopedia extends objectinfo
 			textalign	ALIGN_CC
 			font	"f_small"
 		}
-			
+
 		custombutton firemode_inc
 		{
 			tooltip "_Next firemode"
@@ -315,10 +315,10 @@ window ufopedia extends objectinfo
 
 		// is right column not empty?
 		*cvar:mn_rightpanel = 0
-		if ( *cvar:mn_upimage_top ne "" ) { *cvar:mn_rightpanel = 1 } 
-		if ( *cvar:mn_upmodel_top ne "" ) { *cvar:mn_rightpanel = 1 } 
-		if ( *cvar:mn_upmodel_bottom ne "" ) { *cvar:mn_rightpanel = 1 } 
-		if ( *cvar:mn_uprequirement ne "" ) { *cvar:mn_rightpanel = 1 } 
+		if ( *cvar:mn_upimage_top ne "" ) { *cvar:mn_rightpanel = 1 }
+		if ( *cvar:mn_upmodel_top ne "" ) { *cvar:mn_rightpanel = 1 }
+		if ( *cvar:mn_upmodel_bottom ne "" ) { *cvar:mn_rightpanel = 1 }
+		if ( *cvar:mn_uprequirement ne "" ) { *cvar:mn_rightpanel = 1 }
 
 		// invalidate techtree selection
 		*content.requirement.techtree@lineselected = -1
@@ -331,7 +331,7 @@ window ufopedia extends objectinfo
 			// update the tab if the hidden one is selected
 			if ( *cvar:ufopedia_content eq "preresearch" ) {
 				*cvar:ufopedia_content = "description"
-			} 
+			}
 		}
 		if ( *cvar:mn_upmetadata == 1 ) {
 			*node:root.content.navigation.stats@invis = false

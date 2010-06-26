@@ -11,11 +11,11 @@ window althud extends ahud
 		fill		true
 	}
 
-	func showinventory 
+	func showinventory
 	{
 		cmd "mn_push ahudinv;"
 	}
-	
+
 	// ==================
 	// render rectangle
 	// ==================
@@ -43,7 +43,7 @@ window althud extends ahud
 			pos			"0 0"
 			size		"32 128"
 		}
-		
+
 		pic bar_teambox0
 		{
 			image		"althud/bar_teambox"
@@ -51,7 +51,7 @@ window althud extends ahud
 			size		"64 128"
 			onClick		{ cmd "actor_select 0;" }
 		}
-	
+
 		pic bar_teamsep1
 		{
 			image		"althud/bar_teamsep"
@@ -65,7 +65,7 @@ window althud extends ahud
 			size		"64 128"
 			onClick		{ cmd "actor_select 1;" }
 		}
-	
+
 		pic bar_teamsep2
 		{
 			image		"althud/bar_teamsep"
@@ -79,7 +79,7 @@ window althud extends ahud
 			size		"64 128"
 			onClick		{ cmd "actor_select 2;" }
 		}
-	
+
 		pic bar_teamsep3
 		{
 			image		"althud/bar_teamsep"
@@ -93,7 +93,7 @@ window althud extends ahud
 			size		"64 128"
 			onClick		{ cmd "actor_select 3;" }
 		}
-	
+
 		pic bar_teamsep4
 		{
 			image		"althud/bar_teamsep"
@@ -107,7 +107,7 @@ window althud extends ahud
 			size		"64 128"
 			onClick		{ cmd "actor_select 4;" }
 		}
-	
+
 		pic bar_teamsep5
 		{
 			image		"althud/bar_teamsep"
@@ -121,7 +121,7 @@ window althud extends ahud
 			size		"64 128"
 			onClick		{ cmd "actor_select 5;" }
 		}
-	
+
 		pic bar_teamsep6
 		{
 			image		"althud/bar_teamsep"
@@ -135,7 +135,7 @@ window althud extends ahud
 			size		"64 128"
 			onClick		{ cmd "actor_select 6;" }
 		}
-	
+
 		pic bar_teamsep7
 		{
 			image		"althud/bar_teamsep"
@@ -149,14 +149,14 @@ window althud extends ahud
 			size		"64 128"
 			onClick		{ cmd "actor_select 7;" }
 		}
-	
+
 		pic bar_teamright
 		{
 			image		"althud/bar_teamright"
 			pos			"656 0"
 			size		"32 128"
 		}
-		
+
 		func hudenable_floor
 		{
 			*cvar:tmp = ( <1> + 1 )
@@ -164,19 +164,19 @@ window althud extends ahud
 			while ( *cvar:i < *cvar:tmp ) {
 				*floor.bar_teambox<cvar:i>@invis = false  *floor.bar_teamsep<cvar:i>@invis = false  *floor.head<cvar:i>@invis = false
 				*cvar:i = ( *cvar:i + 1 )
-			} 
+			}
 
 			while ( *cvar:tmp < 8 ) {
 				*floor.bar_teambox<cvar:tmp>@invis = true  *floor.bar_teamsep<cvar:tmp>@invis = true  *floor.head<cvar:tmp>@invis = true
 				*cvar:tmp = ( *cvar:tmp + 1 )
 			}
-			
+
 			delete *cvar:tmp
 			delete *cvar:i
-			
+
 			*floor.bar_teamright@left = ( *node:root.floor.bar_teambox<1>@left + *node:root.floor.bar_teambox<1>@width )
 		}
-			
+
 		pic bar_selbox
 		{
 			image		"althud/bar_selbox"
@@ -184,11 +184,11 @@ window althud extends ahud
 			size		"79 90"
 			texh		"79 90"
 		}
-	
+
 		// ==================
 		// models
 		// ==================
-	
+
 		model head0
 		{
 			model		*cvar:mn_head0
@@ -492,7 +492,7 @@ window althud extends ahud
 			align	LAYOUTALIGN_RIGHT
 			ghost	true
 		}
-		
+
 		pic bar_right
 		{
 			image		"althud/bar_right"
@@ -505,7 +505,7 @@ window althud extends ahud
 		{
 			{
 				tooltip		"_Inventory and physical stats"
-		
+
 				model		*cvar:mn_body
 				skin		*cvar:mn_skin
 				anim		*cvar:mn_anim
@@ -513,31 +513,31 @@ window althud extends ahud
 				pos			"116 0"
 				size		"120 260"
 				scale		"4 4 4"
-		
+
 				onClick		{ call *node:root.showinventory }
 				onRClick		{ cmd "mn_push ahudphysdat;" }
 			}
-	
+
 			model right_head
 			{
 				model		*cvar:mn_head
 				skin		*cvar:mn_skin
 				tag			"tag_head"
 			}
-		
+
 			model right_rweapon
 			{
 				model		*cvar:mn_rweapon
 				tag			"tag_rweapon"
 			}
-		
+
 			model right_lweapon
 			{
 				model		*cvar:mn_lweapon
 				tag			"tag_lweapon"
 			}
 		}
-		
+
 		pic bt_primaryright
 		{
 			tooltip		"_Use Item"
@@ -562,7 +562,7 @@ window althud extends ahud
 		// ==================
 		// status bars
 		// ==================
-	
+
 		bar health
 		{
 			pos			"118 260"
@@ -572,7 +572,7 @@ window althud extends ahud
 			max			*cvar:mn_hpmax
 			disabled	true
 		}
-	
+
 		//todo: make this into a "zone" node (which currently doesn't seem to support tooltips) See also menu_hud.
 		string tu_tooltips
 		{
@@ -581,7 +581,7 @@ window althud extends ahud
 			pos			"118 268"
 			size		"120 4"
 		}
-	
+
 		bar timeall
 		{
 			pos			"118 268"
@@ -602,7 +602,7 @@ window althud extends ahud
 			disabled	true
 			tooltip		"_TUs remaining"
 		}
-	
+
 		bar timereserved
 		{
 			pos			"118 268"
@@ -613,7 +613,7 @@ window althud extends ahud
 			disabled	true
 			tooltip		"_TUs reserved"
 		}
-	
+
 		bar morale
 		{
 			pos			"118 276"
@@ -624,18 +624,18 @@ window althud extends ahud
 			disabled	true
 			tooltip		"_Morale"
 		}
-		
+
 		// ==================
 		// strings
 		// ==================
-	
+
 		string str_name
 		{
 			string		*cvar:mn_name
 			pos			"115 20"
 			size		"125 20"
 		}
-	
+
 		string str_hp
 		{
 			string		*cvar:mn_hp
@@ -660,7 +660,7 @@ window althud extends ahud
 			textalign	ALIGN_UC
 			tooltip		"_Morale"
 		}
-	
+
 		pic bt_reaction_a
 		{
 			image		"althud/buttons_althud1g"
@@ -670,7 +670,7 @@ window althud extends ahud
 			mousefx		true
 			onClick		{ cmd "hud_togglereaction;" }
 		}
-	
+
 		pic bt_reloadright
 		{
 			tooltip		*cvar:mn_reloadright_tt
@@ -683,7 +683,7 @@ window althud extends ahud
 			onMouseEnter			{ cmd "hud_remainingtus reload_r 1;" }
 			onMouseLeave			{ cmd "hud_remainingtus reload_r 0;" }
 		}
-	
+
 		pic bt_reloadleft
 		{
 			tooltip		*cvar:mn_reloadleft_tt
@@ -696,7 +696,7 @@ window althud extends ahud
 			onMouseEnter			{ cmd "hud_remainingtus reload_l 1;" }
 			onMouseLeave			{ cmd "hud_remainingtus reload_l 0;" }
 		}
-	
+
 		pic althud_bt_use_headgear
 		{
 			tooltip		"_Use headgear"
@@ -707,7 +707,7 @@ window althud extends ahud
 			texh		"134 70"
 			onClick		{ cmd "actor_useheadgear;" }
 		}
-		
+
 		pic bt_duck
 		{
 			tooltip		*cvar:mn_crouchstand_tt
@@ -720,7 +720,7 @@ window althud extends ahud
 			onMouseEnter			{ cmd "hud_remainingtus crouch 1;" }
 			onMouseLeave			{ cmd "hud_remainingtus crouch 0;" }
 		}
-	
+
 		checkbox bt_crouch_reservation
 		{
 			tooltip		*cvar:mn_crouch_reservation_tt
@@ -730,7 +730,7 @@ window althud extends ahud
 			current		0
 			onChange	{ cmd "hud_togglecrouchreserve;" }
 		}
-	
+
 		pic bt_shot_reservation
 		{
 			tooltip		*cvar:mn_shot_reservation_tt
@@ -742,7 +742,7 @@ window althud extends ahud
 			onClick		{ cmd "hud_shotreservationpopup;" }
 			onRClick	{ cmd "hud_shotreservationpopup 0;" }
 		}
-		
+
 		container right
 		{
 			pos			"114 340"
@@ -763,7 +763,7 @@ window althud extends ahud
 			pos			"117 401"
 			size		"40 20"
 		}
-	
+
 		func show_rightweapon
 		{
 			*right.right@invis = false
@@ -786,7 +786,7 @@ window althud extends ahud
 			*right.bt_reloadright@invis = true
 			*right.bt_reloadleft@invis = false
 		}
-	
+
 		button switch_to_right_hand
 		{
 			tooltip		"_Switch to right hand weapon"
@@ -925,7 +925,7 @@ window althud extends ahud
 	{
 		*chatscreen@invis = true
 	}
-	
+
 	panel lowerright {
 		{
 			pos		"984 651"
@@ -933,7 +933,7 @@ window althud extends ahud
 			align	LAYOUTALIGN_BOTTOMRIGHT
 			ghost	true
 		}
-		
+
 		pic bar_floor
 		{
 			image		"althud/bar_floor"
@@ -962,7 +962,7 @@ window althud extends ahud
 			texh		"106 107"
 			onClick		{ cmd "mn_modify cl_worldlevel -1 0 7;" }
 		}
-	
+
 		string str_floor
 		{
 			string		*cvar:cl_worldlevel
@@ -971,7 +971,7 @@ window althud extends ahud
 			textalign	ALIGN_CC
 		}
 	}
-	
+
 	panel lowerleft {
 		{
 			pos		"0 700"
@@ -991,7 +991,7 @@ window althud extends ahud
 			ghost		true
 		}
 	}
-	
+
 	panel upperright {
 		{
 			pos		"768 0"
@@ -1042,11 +1042,11 @@ window althud extends ahud
 			onClick		{ cmd "mn_pop;" }
 		}
 	}
-	
+
 	// ==================
 	// override ahud confunc
 	// ==================
-	
+
 	confunc crouch_checkbox_disable {
 		*right.bt_crouch_reservation@disabled = true
 	}
@@ -1139,12 +1139,12 @@ window althud extends ahud
 	{
 		*right.bt_shot_reservation@image = "althud/buttons_althud1g"
 	}
-	
+
 	confunc hudenable
 	{
 		call *floor.hudenable_floor ( <1> )
 	}
-	
+
 	// ==================
 	// init function
 	// ==================

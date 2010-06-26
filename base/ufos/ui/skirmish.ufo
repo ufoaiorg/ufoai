@@ -72,7 +72,7 @@ window skirmish
 			pos			"10 0"
 			size		"450 20"
 		}
-	
+
 		textentry slot_alien_equipment
 		{
 			string		*cvar:ai_equipment
@@ -116,7 +116,7 @@ window skirmish
 			pos			"10 75"
 			size		"450 20"
 		}
-	
+
 		textentry slot_equipment
 		{
 			string		*cvar:cl_equip
@@ -150,7 +150,7 @@ window skirmish
 			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
 			onClick		{ cmd "sk_nextequip cl_equip;" }
 		}
-	
+
 		// ===================
 		// AI_NUMACTORS
 		// ===================
@@ -177,7 +177,7 @@ window skirmish
 			max			30
 			delta		1
 		}
-	
+
 		// =====================
 		// MAXSOLDIER PER PLAYER
 		// =====================
@@ -204,10 +204,10 @@ window skirmish
 			max			8
 			delta		1
 		}
-	
+
 		// ===================
 		// TEAM
-		// ===================	
+		// ===================
 		string team_str
 		{
 			string		"_Team:"
@@ -215,7 +215,7 @@ window skirmish
 			size		"200 20"
 			tooltip		"_Select which side you want to play with"
 		}
-	
+
 		selectbox team_box
 		{
 			image	"ui/selectbox_green"
@@ -235,8 +235,8 @@ window skirmish
 
 		// ===================
 		// UFOS
-		// ===================	
-	
+		// ===================
+
 		string ufos_str
 		{
 			string		"_UFO:"
@@ -244,7 +244,7 @@ window skirmish
 			size		"200 20"
 			tooltip		"_Select the ufo that should be used"
 		}
-	
+
 		selectbox ufos_box
 		{
 			image	"ui/selectbox_green"
@@ -254,11 +254,11 @@ window skirmish
 			cvar	*cvar:rm_ufo
 			dataid	OPTION_UFOS
 		}
-		
+
 		// ===================
 		// DROPSHIPS
-		// ===================	
-	
+		// ===================
+
 		string dropships_str
 		{
 			string		"_Dropship:"
@@ -266,7 +266,7 @@ window skirmish
 			size		"200 20"
 			tooltip		"_Select the dropship that should be used"
 		}
-	
+
 		selectbox dropships_box
 		{
 			image	"ui/selectbox_green"
@@ -289,7 +289,7 @@ window skirmish
 		*node:root.panel_map.dropships_str@invis = <1>
 		*node:root.panel_map.dropships_box@invis = <1>
 	}
-		
+
 	/**
 	 * @param<1> boolean to hide or show
 	 */

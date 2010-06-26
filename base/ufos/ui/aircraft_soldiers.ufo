@@ -6,7 +6,7 @@ component cmpDefNamedTbar cmpNamedTbar {
 	{
 		size	"450 20"
 	}
-	pic			bdr { 
+	pic			bdr {
 		pos "165 2"
 	}
 	tbar		bar {
@@ -22,9 +22,9 @@ component panel cmpNamedBar {
 	{
 		size	"450 20"
 	}
-	pic			bdr { 
+	pic			bdr {
 		pos "165 2"
-		image "ui/bar_border" 
+		image "ui/bar_border"
 	}
 	bar		currbar {
 		pos "167 7"
@@ -336,13 +336,13 @@ window team extends iaircraft
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"
 		}
-	
+
 		model right_rweapon
 		{
 			model	*cvar:mn_rweapon
 			tag		"tag_rweapon"
 		}
-	
+
 		model right_lweapon
 		{
 			model	*cvar:mn_lweapon
@@ -508,7 +508,7 @@ window team extends iaircraft
 	string	team_lbl { pos "12 210" size "200 20" string "_Our team killed:" }
 	string	team_val { pos "212 210" size "150 20" string *cvar:mn_chrkillteam textalign ALIGN_UR }
 
-	}  
+	}
 
 	}
 
@@ -539,7 +539,7 @@ window team extends iaircraft
 			*actor_background.stats_missions@invis = false
 		}
 
-	
+
 	}
 
 	/**

@@ -29,7 +29,7 @@ window options
 	// ========
 	cmpMenuButton button_game
 	{
-		tooltip		"_Overall game settings like your name and language or menu settings." 
+		tooltip		"_Overall game settings like your name and language or menu settings."
 		string		"_Overall"
 		pos			"80 170"
 		onClick		{
@@ -39,7 +39,7 @@ window options
 	}
 	cmpMenuButton button_video
 	{
-		tooltip		"_Video settings." 
+		tooltip		"_Video settings."
 		string		"_Video"
 		pos			"80 240"
 		onClick		{
@@ -50,7 +50,7 @@ window options
 	}
 	cmpMenuButton button_sound
 	{
-		tooltip		"_Sound settings." 
+		tooltip		"_Sound settings."
 		string		"_Audio"
 		pos			"80 310"
 		onClick		{
@@ -60,7 +60,7 @@ window options
 	}
 	cmpMenuButton button_input
 	{
-		tooltip		"_Input, battlescape camera and battlescape gameplay settings." 
+		tooltip		"_Input, battlescape camera and battlescape gameplay settings."
 		string		"_Gameplay"
 		pos			"80 380"
 		onClick		{
@@ -70,7 +70,7 @@ window options
 	}
 	cmpMenuButton button_back
 	{
-		tooltip		"_Leave the options menu." 
+		tooltip		"_Leave the options menu."
 		string		"_Back"
 		pos			"80 470"
 		onClick		{ cmd "mn_pop;" }
@@ -92,7 +92,7 @@ window options
 			size		"465 35"
 			font		"f_menubig"
 			textalign	ALIGN_CC
-			color		"0 0.93 0 1"			
+			color		"0 0.93 0 1"
 		}
 		// ==================
 		// RESOLUTION STRING
@@ -130,14 +130,14 @@ window options
 		// =====================
 		string aniso_str
 		{
-			tooltip		"_The degree or ratio of ansitropic filtering. High ratios will make distant textures appear more sharp. Very high ratios are only recommended when playing in high resolutions."		
+			tooltip		"_The degree or ratio of ansitropic filtering. High ratios will make distant textures appear more sharp. Very high ratios are only recommended when playing in high resolutions."
 			string		"_Texture Ansitropy Level:"
 			pos			"85 215"
 			size		"240 20"
 		}
 		string aniso_value
 		{
-			tooltip		"_The current value."		
+			tooltip		"_The current value."
 			string		*cvar:r_anisotropic
 			pos			"360 215"
 			size		"100 20"
@@ -146,7 +146,7 @@ window options
 		/* @todo update max with GL max anisotropic */
 		spinner aniso_change
 		{
-			tooltip		"_Very high values are only recommended when playing in high resolutions."		
+			tooltip		"_Very high values are only recommended when playing in high resolutions."
 			current		*cvar:r_anisotropic
 			image		"ui/spinner_blue"
 			pos			"466 214"
@@ -159,7 +159,7 @@ window options
 		// ===========
 		string fullscreen_str
 		{
-			tooltip		"_Play UFO:AI in fullscreen- or window-mode."		
+			tooltip		"_Play UFO:AI in fullscreen- or window-mode."
 			string		"_Fullscreen:"
 			pos			"85 240"
 			size		"240 20"
@@ -285,7 +285,7 @@ window options
 		// ===========================
 		string ptlweather_str
 		{
-			tooltip		"_Weather effects like rain (not enabled yet) or snow."		
+			tooltip		"_Weather effects like rain (not enabled yet) or snow."
 			string		"_Weather Effects:"
 			pos			"85 415"
 			size		"240 20"
@@ -321,14 +321,14 @@ window options
 		// ====================
 		string samplebuf_str
 		{
-			tooltip		"_OpenGL multisample buffers provide a mechanism to antialias all GL primitives. (OpenGL core since v1.3)." 
+			tooltip		"_OpenGL multisample buffers provide a mechanism to antialias all GL primitives. (OpenGL core since v1.3)."
 			string		"_Multisample Buffers:"
 			pos			"85 465"
 			size		"240 20"
 		}
 		string samplebuf_value
 		{
-			tooltip		"_Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing & will enhance picture quality." 
+			tooltip		"_Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing & will enhance picture quality."
 			string		*cvar:r_multisample
 			pos			"360 465"
 			size		"100 20"
@@ -377,7 +377,7 @@ window options
 		// ======
 		string gamma_str
 		{
-			tooltip		"_The gamma value manipulates the colors. Increased gamma means basically more intense colors." 
+			tooltip		"_The gamma value manipulates the colors. Increased gamma means basically more intense colors."
 			string		"_Gamma:"
 			pos			"85 515"
 			size		"150 20"
@@ -425,7 +425,7 @@ window options
 		// ===========
 		string brightness_str
 		{
-			tooltip		"_Brightness sets the intensity of light emitting from your screen."		
+			tooltip		"_Brightness sets the intensity of light emitting from your screen."
 			string		"_Brightness:"
 			pos			"85 565"
 			size		"150 20"
@@ -525,7 +525,7 @@ window options
 		}
 		spinner dynamiclights_change
 		{
-			tooltip		"_Change the number of allowed hardware accelerated lights. ATTENTION: May require restart to take effect."		
+			tooltip		"_Change the number of allowed hardware accelerated lights. ATTENTION: May require restart to take effect."
 			current		*cvar:r_dynamic_lights
 			image		"ui/spinner_blue"
 			pos			"466 665"
@@ -702,7 +702,7 @@ window options
 			string		"_Volume Control"
 			pos			"70 140"
 			size		"240 20"
-			color		"1.0 0.75 0 1"			
+			color		"1.0 0.75 0 1"
 		}
 		// =====================
 		// SOUND EFFECTS VOLUME
@@ -762,7 +762,7 @@ window options
 			string		"_Advanced Audio Options"
 			pos			"70 275"
 			size		"240 20"
-			color		"1.0 0.75 0 1"			
+			color		"1.0 0.75 0 1"
 		}
 		// ============
 		// SAMPLE RATE
@@ -822,7 +822,7 @@ window options
 		}
 		checkbox sound_init
 		{
-			tooltip		"_Do not turn me off."		
+			tooltip		"_Do not turn me off."
 			current		*cvar:snd_init
 			pos			"485 170"
 			size		"20 18"
@@ -847,13 +847,13 @@ window options
 			size		"465 35"
 			font		"f_menubig"
 			textalign	ALIGN_CC
-			color		"0 0.79 0 1"			
+			color		"0 0.79 0 1"
 		}
 
 		// only show the current binding - no support for changing them atm
 		text keylist
 		{
-			tooltip		"_See the key bindings."		
+			tooltip		"_See the key bindings."
 			dataid		TEXT_LIST
 			pos			"65 110"
 			size		"430 560"
@@ -878,7 +878,7 @@ window options
 			onChange	{ *options_keys.keylist@viewpos = <current> }
 		}
 	}
-	
+
 	// ==================
 	// GAME OPTIONS MENU
 	// ==================
@@ -897,7 +897,7 @@ window options
 			size		"465 35"
 			font		"f_menubig"
 			textalign	ALIGN_CC
-			color		"0 1 0 1"						
+			color		"0 1 0 1"
 		}
 	// =====
 	// NAME
@@ -908,7 +908,7 @@ window options
 			string 		"_Name"
 			pos			"70 330"
 			size		"256 20"
-			color		"1.0 0.75 0 1"				
+			color		"1.0 0.75 0 1"
 		}
 		textentry slot_name
 		{
@@ -931,7 +931,7 @@ window options
 			string		"_Language Settings"
 			pos			"70 140"
 			size		"312 20"
-			color		"1.0 0.75 0 1"			
+			color		"1.0 0.75 0 1"
 		}
 		optionlist select_language
 		{
@@ -970,7 +970,7 @@ window options
 			string 		"_Geoscape Options"
 			pos			"70 410"
 			size		"256 20"
-			color		"1.0 0.75 0 1"			
+			color		"1.0 0.75 0 1"
 		}
 		// ===============
 		// GEOSCAPE 3DMAP
@@ -1025,7 +1025,7 @@ window options
 			string 		"_Several Tips"
 			pos			"70 545"
 			size		"256 20"
-			color		"1.0 0.75 0 1"			
+			color		"1.0 0.75 0 1"
 		}
 		// ===================
 		// MOUSEOVER TOOLTIPS
@@ -1091,7 +1091,7 @@ window options
 			string 		"_Menu Option(s)"
 			pos			"70 650"
 			size		"256 20"
-			color		"1.0 0.75 0 1"			
+			color		"1.0 0.75 0 1"
 		}
 		// =========
 		// PRECACHE
@@ -1141,7 +1141,7 @@ window options
 			string		"_Battlescape Camera Settings"
 			pos			"70 140"
 			size		"240 20"
-			color		"1.0 0.75 0 1"			
+			color		"1.0 0.75 0 1"
 		}
 		string camspeed_str
 		{
@@ -1198,7 +1198,7 @@ window options
 		// CAMERA MOVE ACCELERATION
 		// =========================
 		string cammoveaccel_str
-		{		
+		{
 			tooltip		"_The move acceleration of the battlescape camera."
 			string		"_Move Acceleration:"
 			pos			"95 220"
@@ -1219,16 +1219,16 @@ window options
 			min			150
 			max			3000
 			onClick		{ }
-		}	
+		}
 	// ==============================
 	// BATTLESCAPE GAMEPLAY SETTINGS
-	// ==============================		
+	// ==============================
 		string gameplaysettings
 		{
 			string		"_Battlescape Gameplay Settings"
 			pos			"70 305"
 			size		"240 20"
-			color		"1.0 0.75 0 1"			
+			color		"1.0 0.75 0 1"
 		}
 		// ============
 		// ACTOR SPEED
@@ -1263,7 +1263,7 @@ window options
 			string		"_Joystick Settings"
 			pos			"70 470"
 			size		"240 20"
-			color		"1.0 0.75 0 1"			
+			color		"1.0 0.75 0 1"
 		}
 		string joystick_enable_str
 		{
@@ -1335,10 +1335,10 @@ window options
 	// =============
 		cmpMenuButton button_keys
 		{
-			tooltip		"_Keys are the things on your keyboard."		
+			tooltip		"_Keys are the things on your keyboard."
 			string		"_Show Keys"
 			pos			"85 620"
-			color		"0 0.79 0 1"						
+			color		"0 0.79 0 1"
 			onClick		{
 				*(panel)options_input@invis = true
 				*(panel)options_keys@invis = false
@@ -1431,7 +1431,7 @@ window options
 		// BATTLESCAPE HUD
 		// ================
 		string hud_str
-		{		
+		{
 			tooltip		"_Select the Head-Up-Display for the battlescape."
 			string		"_HUD Design:"
 			pos			"95 410"

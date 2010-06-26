@@ -64,7 +64,7 @@ window mail
 			size	"62 62"
 			origin	"5 125 0"
 		}
-		
+
 		model sender_head
 		{
 			model	*cvar:mn_mail_sender_head

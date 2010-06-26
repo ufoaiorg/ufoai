@@ -12,7 +12,7 @@ window intro
 			cmd "mn_pop;"
 		}
 	}
-	
+
 	func onInit {
 		*cvar:intro_old_scr_showcursor = *cvar:scr_showcursor
 		*cvar:scr_showcursor = 0
