@@ -106,6 +106,7 @@ static const char *const menutextid_names[] = {
 	"OPTION_UFOS",
 	"OPTION_DROPSHIPS",
 	"OPTION_BASELIST",
+	"OPTION_TEAMDEFS",
 
 	"LINESTRIP_FUNDING",
 	"LINESTRIP_COLOR"

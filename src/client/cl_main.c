@@ -684,15 +684,40 @@ static void CL_SetRatioFilter_f (void)
 	MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, firstOption);
 }
 
+static void CL_VideoInitMenu (void)
+{
+	menuNode_t* option = MN_GetOption(OPTION_VIDEO_RESOLUTIONS);
+	if (option == NULL) {
+		int i;
+		for (i = 0; i < VID_GetModeNums(); i++) {
+			vidmode_t vidmode;
+			if (VID_GetModeInfo(i, &vidmode))
+				MN_AddOption(&option, va("r%ix%i", vidmode.width, vidmode.height), va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
+		}
+		MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, option);
+	}
+}
+
+static void CL_TeamDefInitMenu (void)
+{
+	menuNode_t* option = MN_GetOption(OPTION_TEAMDEFS);
+	if (option == NULL) {
+		int i;
+		for (i = 0; i < csi.numTeamDefs; i++) {
+			teamDef_t *td = &csi.teamDef[i];
+			if (td->race != RACE_CIVILIAN)
+				MN_AddOption(&option, td->id, _(td->name), td->id);
+		}
+		MN_RegisterOption(OPTION_TEAMDEFS, option);
+	}
+}
+
 /**
  * @brief Init function for clients - called after menu was initialized and ufo-scripts were parsed
  * @sa Qcommon_Init
  */
 void CL_InitAfter (void)
 {
-	int i;
-	menuNode_t* option = MN_GetOption(OPTION_VIDEO_RESOLUTIONS);
-
 	/* start the music track already while precaching data */
 	S_Frame();
 	S_LoadSamples();
@@ -714,15 +739,8 @@ void CL_InitAfter (void)
 	cls.loadingPercent = 100.0f;
 	SCR_DrawPrecacheScreen(qtrue);
 
-	if (option == NULL) {
-		for (i = 0; i < VID_GetModeNums(); i++) {
-			vidmode_t vidmode;
-			if (VID_GetModeInfo(i, &vidmode))
-				MN_AddOption(&option, va("r%ix%i", vidmode.width, vidmode.height), va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
-		}
-		MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, option);
-	}
-
+	CL_TeamDefInitMenu();
+	CL_VideoInitMenu();
 	IN_JoystickInitMenu();
 
 	CL_LanguageInit();

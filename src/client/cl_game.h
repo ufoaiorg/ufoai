@@ -58,6 +58,7 @@ character_t* GAME_GetCharacter(int index);
 size_t GAME_GetCharacterArraySize(void);
 void GAME_ResetCharacters(void);
 void GAME_GenerateTeam(const char *teamDefID, const equipDef_t *ed, int teamMembers);
+void GAME_AppendTeamMember(int memberIndex, const char *teamDefID, const equipDef_t *ed);
 qboolean GAME_TeamIsKnown(const teamDef_t *teamDef);
 void GAME_Drop(void);
 void GAME_Frame(void);

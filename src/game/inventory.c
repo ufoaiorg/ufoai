@@ -816,7 +816,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		/* Armour; especially for those without primary weapons. */
 		repeat = (float) missedPrimary > frand() * 100.0;
 	} else {
-		Sys_Error("INVSH_EquipActor: character '%s' may not carry weapons\n", chr->name);
+		return;
 	}
 
 	if (chr->teamDef->armour) {

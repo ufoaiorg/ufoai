@@ -64,9 +64,12 @@ static void GAME_SK_Start_f (void)
 	mapDef_t *md;
 	const char *name = Cvar_GetString("cl_equip");
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
-	/** @todo support more teamdefs */
-	const char *teamDefID = cl_team->integer == TEAM_PHALANX ? "phalanx" : "taman";
+	const char *teamDefID = Cvar_GetString("cl_teamdef");
 	int maxSoldiers = Cvar_GetInteger("sv_maxsoldiersperplayer");
+	const int ugvs = Cvar_GetInteger("cl_ugvs");
+
+	if (teamDefID[0] == '\0')
+		teamDefID = "phalanx";
 
 	if (maxSoldiers <= 0)
 		maxSoldiers = MAX_ACTIVETEAM;
@@ -81,6 +84,9 @@ static void GAME_SK_Start_f (void)
 	GAME_SK_SetMissionParameters();
 
 	GAME_GenerateTeam(teamDefID, ed, maxSoldiers);
+	/** @todo add to scripts and make the teamdef configurable */
+	if (ugvs > 0 && maxSoldiers < MAX_ACTIVETEAM)
+		GAME_AppendTeamMember(maxSoldiers, "phalanx_ugv_phoenix", ed);
 
 	assert(md->map);
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");

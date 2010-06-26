@@ -116,13 +116,31 @@ size_t GAME_GetCharacterArraySize (void)
 void GAME_ResetCharacters (void)
 {
 	memset(&characters, 0, sizeof(characters));
+	chrDisplayList.num = 0;
+}
+
+void GAME_AppendTeamMember (int memberIndex, const char *teamDefID, const equipDef_t *ed)
+{
+	character_t *chr;
+
+	if (ed == NULL)
+		Com_Error(ERR_DROP, "No equipment definition given");
+
+	chr = GAME_GetCharacter(memberIndex);
+
+	CL_GenerateCharacter(chr, teamDefID);
+	/* pack equipment */
+	cls.i.EquipActor(&cls.i, &chr->i, ed, chr);
+
+	chrDisplayList.chr[memberIndex] = chr;
+	chrDisplayList.num++;
 }
 
 void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed, int teamMembers)
 {
 	int i;
 
-	if (teamMembers > lengthof(characters))
+	if (teamMembers > GAME_GetCharacterArraySize())
 		Com_Error(ERR_DROP, "More than the allowed amount of team members");
 
 	if (ed == NULL)
@@ -130,15 +148,8 @@ void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed, int teamMem
 
 	GAME_ResetCharacters();
 
-	for (i = 0; i < teamMembers; i++) {
-		character_t *chr = GAME_GetCharacter(i);
-		CL_GenerateCharacter(chr, teamDefID);
-		/* pack equipment */
-		cls.i.EquipActor(&cls.i, &chr->i, ed, chr);
-
-		chrDisplayList.chr[i] = chr;
-	}
-	chrDisplayList.num = i;
+	for (i = 0; i < teamMembers; i++)
+		GAME_AppendTeamMember(i, teamDefID, ed);
 }
 
 static const gameTypeList_t *GAME_GetCurrentType (void)
