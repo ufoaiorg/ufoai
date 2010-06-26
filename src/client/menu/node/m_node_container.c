@@ -133,10 +133,6 @@ void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 	assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
 
 	for (i = 0; i < csi.numODs; i++) {
-		/* Don't allow to show armour for other teams in the menu */
-		if (!INVSH_UseableForTeam(&csi.ods[i], GAME_GetCurrentTeam()))
-			continue;
-
 		/* Don't allow to show unuseable items. */
 		if (!GAME_ItemIsUseable(&csi.ods[i]))
 			continue;

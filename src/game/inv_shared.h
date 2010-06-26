@@ -684,7 +684,7 @@ objDef_t *INVSH_GetItemByID(const char *id);
 objDef_t *INVSH_GetItemByIDX(int index);
 objDef_t *INVSH_GetItemByIDSilent(const char *id);
 qboolean INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
-qboolean INVSH_UseableForTeam(const objDef_t *od, const int team);
+qboolean INVSH_IsArmourUseableForTeam(const objDef_t *od, const teamDef_t *teamDef);
 
 invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
 

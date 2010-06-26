@@ -130,8 +130,6 @@ static void MN_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 			/* gameplay filter */
 			if (!GAME_ItemIsUseable(obj))
 				continue;
-			if (!INVSH_UseableForTeam(obj, GAME_GetCurrentTeam()))
-				continue;
 
 			/* type filter */
 			/** @todo not sure its the right check */

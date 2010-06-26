@@ -413,15 +413,18 @@ invList_t *INVSH_SearchInInventory (const inventory_t* const i, const invDef_t *
 	return NULL;
 }
 
-/**
- * @todo this does not say anything about the teamdef the player is
- * using - and that is what counts here.
- */
-qboolean INVSH_UseableForTeam (const objDef_t *od, const int team)
+qboolean INVSH_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t *teamDef)
 {
-	const qboolean isArmour = INV_IsArmour(od);
-	if (isArmour && od->useable != team)
-		return qfalse;
+	if (teamDef != NULL && teamDef->armour && INV_IsArmour(od)) {
+		if (CHRSH_IsTeamDefAlien(teamDef))
+			return od->useable == TEAM_ALIEN;
+		else if (teamDef->race == RACE_PHALANX_HUMAN)
+			return od->useable == TEAM_PHALANX;
+		else if (teamDef->race == RACE_CIVILIAN)
+			return od->useable == TEAM_CIVILIAN;
+		else
+			return qfalse;
+	}
 
 	return qtrue;
 }

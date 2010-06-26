@@ -377,6 +377,12 @@ static void GAME_SetMode_f (void)
 qboolean GAME_ItemIsUseable (const objDef_t *od)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
+	const char *teamDefID = GAME_GetTeamDef();
+	const teamDef_t *teamDef = Com_GetTeamDefinitionByID((teamDefID));
+
+	/* Don't allow armour for other teams */
+	if (!INVSH_IsArmourUseableForTeam(od, teamDef))
+		return qfalse;
 
 	if (list && list->itemIsUseable)
 		return list->itemIsUseable(od);
