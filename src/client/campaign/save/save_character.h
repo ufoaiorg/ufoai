@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CHARACTER_HEAD "head"
 #define SAVE_CHARACTER_SKIN "skin"
 #define SAVE_CHARACTER_TEAMDEF "teamdef"
-#define SAVE_CHARACTER_TEAMDEFIDX "teamdefIDX"		/*< depreciated, to be removed */
 #define SAVE_CHARACTER_GENDER "gender"
 #define SAVE_CHARACTER_UCN "ucn"
 #define SAVE_CHARACTER_MAXHP "maxHp"
