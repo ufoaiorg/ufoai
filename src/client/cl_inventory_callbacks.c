@@ -292,10 +292,52 @@ static void INV_DecreaseItem_f (void)
 	INV_ItemDescription(od);
 }
 
+/**
+ * @brief Update the GUI with the selected item
+ */
+static void INV_UpdateObject_f (void)
+{
+	int num;
+	const objDef_t *obj;
+	qboolean changeTab;
+
+	/* check syntax */
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <objectid> <mustwechangetab>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (Cmd_Argc() == 3)
+		changeTab = atoi(Cmd_Argv(2)) >= 1;
+	else
+		changeTab = qtrue;
+
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= csi.numODs) {
+		Com_Printf("Id %i out of range 0..%i\n", num, csi.numODs);
+		return;
+	}
+	obj = &csi.ods[num];
+
+	/* update item description */
+	INV_ItemDescription(obj);
+
+	/* update tab */
+	if (changeTab) {
+		const cvar_t *var = Cvar_FindVar("mn_equiptype");
+		const int filter = INV_GetFilterFromItem(obj);
+		if (var && var->integer != filter) {
+			Cvar_SetValue("mn_equiptype", filter);
+			MN_ExecuteConfunc("update_item_list");
+		}
+	}
+}
+
 void INV_InitCallbacks (void)
 {
 	Cmd_AddCommand("mn_increasefiremode", INV_IncreaseFiremode_f, "Increases the number of the firemode to display");
 	Cmd_AddCommand("mn_decreasefiremode", INV_DecreaseFiremode_f, "Decreases the number of the firemode to display");
 	Cmd_AddCommand("mn_increaseitem", INV_IncreaseItem_f, "Increases the number of the weapon or the ammo to display");
 	Cmd_AddCommand("mn_decreaseitem", INV_DecreaseItem_f, "Decreases the number of the weapon or the ammo to display");
+	Cmd_AddCommand("object_update", INV_UpdateObject_f, _("Update the GUI with the selected item"));
 }

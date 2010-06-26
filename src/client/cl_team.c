@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_inventory.h"
 #include "cl_ugv.h"
 #include "battlescape/events/e_parse.h"
-#include "menu/m_main.h"
+#include "menu/m_data.h"
 #include "menu/m_nodes.h"
 #include "battlescape/events/e_main.h"
 #include "campaign/save/save_character.h"
@@ -401,7 +401,6 @@ void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
  * @param[in] chr The employee to create character data for.
  * @param[in] teamDefName Which team to use for creation.
  * @todo fix the assignment of ucn??
- * @todo fix the WholeTeam stuff
  */
 void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 {
@@ -500,54 +499,9 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 	}
 }
 
-/**
- * @brief Update the GUI with the selected item
- * @todo Doesn't belong into cl_team.c
- * @todo function is used for multiplayer, too - should be splitted
- * @todo function does not belong into the team code
- */
-static void CL_UpdateObject_f (void)
-{
-	int num;
-	const objDef_t *obj;
-	qboolean changeTab;
-
-	/* check syntax */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <objectid> <mustwechangetab>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (Cmd_Argc() == 3)
-		changeTab = atoi(Cmd_Argv(2)) >= 1;
-	else
-		changeTab = qtrue;
-
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= csi.numODs) {
-		Com_Printf("Id %i out of range 0..%i\n", num, csi.numODs);
-		return;
-	}
-	obj = &csi.ods[num];
-
-	/* update item description */
-	INV_ItemDescription(obj);
-
-	/* update tab */
-	if (changeTab) {
-		const cvar_t *var = Cvar_FindVar("mn_equiptype");
-		const int filter = INV_GetFilterFromItem(obj);
-		if (var && var->integer != filter) {
-			Cvar_SetValue("mn_equiptype", filter);
-			MN_ExecuteConfunc("update_item_list");
-		}
-	}
-}
-
 void TEAM_InitStartup (void)
 {
 	Cmd_AddCommand("team_initskin", CL_InitSkin_f, "Init skin according to the game mode");
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, "Change the skin of the soldier");
 	Cmd_AddCommand("team_changeskinteam", CL_ChangeSkinForWholeTeam_f, "Change the skin for the whole current team");
-	Cmd_AddCommand("object_update", CL_UpdateObject_f, _("Update the GUI with the selected item"));
 }
