@@ -191,21 +191,12 @@ window skirmish
 
 	selectbox team_box
 	{
-		{
-			image	"ui/selectbox_green"
-			pos		"730 300"
-			size	"200 20"
-			color	"0.6 0.6 0.6 0.3"
-			cvar	*cvar:cl_team
-		}
-		option low_value {
-			label	"_Human"
-			value	"1"
-		}
-		option medium_value {
-			label	"_Alien"
-			value	"7"
-		}
+		image	"ui/selectbox_green"
+		pos		"730 300"
+		size	"200 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	*cvar:cl_teamdef
+		dataid	OPTION_TEAMDEFS
 	}
 
 	// ===================
@@ -319,6 +310,6 @@ window skirmish
 	{
 		// TODO: Allow changing the difficulty via menu
 		cmd	"game_setmode;set ai_numaliens 8;set ai_equipment multiplayer_alien;set difficulty 0;"
-		cmd "set mn_serverday 1;mn_getmaps;"
+		cmd "set mn_serverday 1;mn_getmaps;define cl_teamdef phalanx;"
 	}
 }

@@ -916,32 +916,23 @@ window mp_team extends abstract_multiplayer
 		string team_str
 		{
 			string	"_Team:"
-			pos	"85 570"
+			pos	"85 540"
 		}
 
 		selectbox team_box
 		{
-			{
-				image	"ui/selectbox_green"
-				pos		"200 570"
-				size	"125 20"
-				color	"0.6 0.6 0.6 0.3"
-				cvar	*cvar:cl_team
-			}
-			option low_value {
-				label	"_Human"
-				value	"1"
-			}
-			option medium_value {
-				label	"_Alien"
-				value	"7"
-			}
+			image	"ui/selectbox_green"
+			pos		"200 540"
+			size	"200 20"
+			color	"0.6 0.6 0.6 0.3"
+			cvar	*cvar:cl_teamdef
+			dataid	OPTION_TEAMDEFS
 		}
 	}
 
 	func onInit
 	{
-		cmd	"team_comments;"
+		cmd	"team_comments;define cl_teamdef phalanx;"
 	}
 }
 
