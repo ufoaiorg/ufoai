@@ -190,7 +190,7 @@ tech rs_baselaser
 	}
 	time	3000
 	provides baselaser
-	mdl		"objects/laserturret/laserturret"	
+	mdl		"objects/laserturret/laserturret"
 	producetime	150
 }
 
@@ -1121,12 +1121,12 @@ tech rs_weapon_monoknife
 		tech rs_skill_close
 		tech rs_damage_normal
 	}
-	
+
 	require_for_production
 	{
 	    item alienmaterials 50
 	}
-	
+
 	provides	knifemono
 	time	800
 	producetime	100
@@ -1401,7 +1401,7 @@ tech rs_weapon_kerrblade
 	{
 	    item alienmaterials 70
 	}
-	
+
 	provides	kerrblade
 	time	1000
 	producetime	-1
@@ -1663,7 +1663,7 @@ tech rs_weapon_plasatomizer
 	{
 	    item alienmaterials 90
 	}
-	
+
 	provides	plaspistol
 	time	3000
 	producetime	160
@@ -1687,7 +1687,7 @@ tech rs_weapon_plasatomizer_ammo
 	{
 	    item alienmaterials 10
 	}
-	
+
 	provides	plaspistol_ammo
 	time	0
 	producetime	24
@@ -1733,7 +1733,7 @@ tech rs_weapon_plasblaster
 	{
 	    item alienmaterials 120
 	}
-	
+
 	provides	plasblaster
 	time	6500
 	producetime	240
@@ -1757,7 +1757,7 @@ tech rs_weapon_plasblaster_ammo
 	{
 	    item alienmaterials 15
 	}
-	
+
 	provides	plasblaster_ammo
 	time	0
 	producetime	30
@@ -1803,7 +1803,7 @@ tech rs_weapon_plasblade
 	{
 	    item alienmaterials 50
 	}
-	
+
 	provides	plasblade
 	time	2000
 	producetime	150
@@ -1848,7 +1848,7 @@ tech rs_weapon_plasmagren
 	{
 	    item alienmaterials 30
 	}
-	
+
 	provides	plasmagrenade
 	time	2000
 	producetime	72
@@ -1894,7 +1894,7 @@ tech rs_weapon_plasrifle
 	{
 	    item alienmaterials 110
 	}
-	
+
 	provides	plasrifle
 	time	4250
 	producetime	200
@@ -1918,7 +1918,7 @@ tech rs_weapon_plasrifle_ammo
 	{
 	    item alienmaterials 13
 	}
-	
+
 	provides	plasrifle_ammo
 	time	0
 	producetime	40
@@ -1964,7 +1964,7 @@ tech rs_weapon_needlergun
 	{
 	    item alienmaterials 140
 	}
-	
+
 	provides	needlergun
 	time		5000
 	producetime	120
@@ -2010,7 +2010,7 @@ tech rs_weapon_needlerheavy
 	{
 	    item alienmaterials 160
 	}
-	
+
 	provides	needlerheavy
 	time	6000
 	producetime	150
@@ -2035,7 +2035,7 @@ tech rs_weapon_needlergun_ammo
 	{
 	    item alienmaterials 20
 	}
-	
+
 	provides	needlergun_ammo
 	time		0
 	producetime	24
@@ -2079,7 +2079,7 @@ tech rs_weapon_coilgun
 	{
 	    item alienmaterials 80
 	}
-	
+
 	provides	coilgun
 	time		6000
 	producetime	120
@@ -2102,7 +2102,7 @@ tech rs_weapon_coilgun_ammo
 	{
 	    item alienmaterials 10
 	}
-	
+
 	provides	coilgun_ammo
 	time		0
 	producetime	24
@@ -2457,7 +2457,7 @@ tech rs_weapon_pbeampistol
 	{
 	    item alienmaterials 110
 	}
-	
+
 	provides	pbeampistol
 	time		4750
 	producetime	160
@@ -2481,7 +2481,7 @@ tech rs_weapon_pbeampistol_ammo
 	{
 	    item alienmaterials 20
 	}
-	
+
 	provides	pbeampistol_ammo
 	time		0
 	producetime	-1
@@ -2527,7 +2527,7 @@ tech rs_weapon_pbeamcannon
 	{
 	    item alienmaterials 200
 	}
-	
+
 	provides	pbeamcannon
 	time		8000
 	producetime	220
@@ -2551,7 +2551,7 @@ tech rs_weapon_pbeamcannon_ammo
 	{
 	    item alienmaterials 30
 	}
-	
+
 	provides	pbeamcannon_ammo
 	time		0
 	producetime	-1
@@ -2596,7 +2596,7 @@ tech rs_weapon_pbeamrifle
 	{
 	    item alienmaterials 180
 	}
-	
+
 	provides	pbeamrifle
 	time		7750
 	producetime	200
@@ -2620,7 +2620,7 @@ tech rs_weapon_pbeamrifle_ammo
 	{
 	    item alienmaterials 20
 	}
-	
+
 	provides	pbeamrifle_ammo
 	time		0
 	producetime	-1
@@ -2667,7 +2667,7 @@ tech rs_weapon_pbeam_ammo
 	{
 	    item alienmaterials 30
 	}
-	
+
 	time		8000
 	producetime	-1
 }
@@ -2741,7 +2741,7 @@ tech rs_nano_armour
 	{
 	    item alienmaterials 350
 	}
-	
+
 	provides	armour_medium
 	time		8000
 	producetime	168
@@ -3493,7 +3493,7 @@ tech rs_craft_drop_raptor
 		item	craft_alien_astrogation	1
 		item	craft_alien_detection	1
 	}
-	
+
 	provides	craft_drop_raptor
 	time	13000
 	producetime	336
@@ -3574,7 +3574,7 @@ tech rs_craft_inter_dragon
 		item	craft_alien_astrogation	1
 		item	craft_alien_detection	1
 	}
-	
+
 	mdl		inter_dragon
 }
 
@@ -3618,7 +3618,7 @@ tech rs_craft_inter_starchaser
 		item	craft_alien_astrogation	1
 		item	craft_alien_detection	2
 	}
-	
+
 	mdl		inter_starchaser
 }
 
@@ -3660,7 +3660,7 @@ tech rs_craft_inter_stingray
 		item	craft_alien_astrogation	1
 		item	craft_alien_detection	2
 	}
-	
+
 
 	time	20000
 	producetime	800
@@ -5214,7 +5214,7 @@ tech rs_enemy_on_earth_revisited
 }
 
 // http://ufoai.ninex.info/wiki/index.php/Research/The_Alien_Strategy
-tech rs_alien_strategy 
+tech rs_alien_strategy
 {
 	name		"_The Alien Strategy"
 	type		tech

@@ -850,7 +850,7 @@ sequence tut_skirmish
 		align	ul
 		bgcolor	"1 0 0 0.6"
 	}
- 
+
 	2dobj day_text
 	{
 		text	"_Day or night version of map to play"
@@ -871,7 +871,7 @@ sequence tut_skirmish
 		align	ul
 		bgcolor	"1 0 0 0.6"
 	}
- 
+
 	2dobj aliens_text
 	{
 		text	"_How many aliens will fight versus you"
@@ -892,7 +892,7 @@ sequence tut_skirmish
 		align	ul
 		bgcolor	"1 0 0 0.6"
 	}
- 
+
 	2dobj team_text
 	{
 		text	"_Select your team"
@@ -913,7 +913,7 @@ sequence tut_skirmish
 		align	ul
 		bgcolor	"1 0 0 0.6"
 	}
- 
+
 	2dobj _text
 	{
 		text	"_Select UFO to secure \n(if possible for current map)"
@@ -934,7 +934,7 @@ sequence tut_skirmish
 		align	ul
 		bgcolor	"1 0 0 0.6"
 	}
- 
+
 	2dobj _text
 	{
 		text	"_Select dropship\n(if possible for current map)"
@@ -955,7 +955,7 @@ sequence tut_skirmish
 		align	ul
 		bgcolor	"1 0 0 0.6"
 	}
- 
+
 	2dobj _text
 	{
 		text	"_Select map to play"
@@ -1060,7 +1060,7 @@ sequence tut_multiplayer
 		color	"1 1 1 1"
 		font	"f_normal"
 	}
-	
+
 	2dobj lobby_text
 	{
 		text	"_You should connect to the lobby and wait for invitations or start your own server"
@@ -1089,7 +1089,7 @@ sequence tut_multiplayer
 	}
 
 	wait 20
-	
+
 	rem timeout_text
 	rem lobby_text
 	rem lobby2_text

@@ -20,7 +20,7 @@
  * is parsed.
  *
  * note that 255 for spawnflags means levelflags 1-8 are all set.
- * 
+ *
  * range block entries can be a list of discrete options, "0 45 90 135" or continuous "0.0 - 1.0"
  * a key may have different numbers of range entries: zero, one or a number equal to the number of elements in the vector.
  * only numeric types may have a range defined.
@@ -561,11 +561,11 @@ entity trigger_rescue {
 	mandatory {
 		team	"The team number that this trigger serves as a rescue zone"
 	}
-	
+
 	type {
 		team	"UNSIGNED V_INT"
 	}
-	
+
 	range {
 		team	"0 1 2 3 4 5 6 7"
 	}

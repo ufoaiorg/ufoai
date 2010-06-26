@@ -8,7 +8,7 @@
 // * urban, suburban, village, rural, nopopulation
 // See also http://ufoai.ninex.info/wiki/index.php/Mapping/Terrain_Types
 //
-// Empty block means 'any' value 
+// Empty block means 'any' value
 //
 //
 // Triggers:
@@ -49,7 +49,7 @@ mapdef oilpipes_small
 	multiplayer	false
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -91,7 +91,7 @@ mapdef oilpipes_large
 	multiplayer	false
 	maxaliens	12
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -137,7 +137,7 @@ mapdef or_small
 	size		"small"
 	maxaliens	8
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -177,7 +177,7 @@ mapdef or_medium
 	size		"small"
 	maxaliens	8
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -218,7 +218,7 @@ mapdef or_medium_crash
 	size		"small"
 	maxaliens	8
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -258,7 +258,7 @@ mapdef or_big
 	size		"small"
 	maxaliens	14
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -302,7 +302,7 @@ mapdef farm_small
 	multiplayer	false
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -344,7 +344,7 @@ mapdef farm_medium
 	multiplayer	false
 	maxaliens	14
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -383,7 +383,7 @@ mapdef farm_large
 	multiplayer	false
 	maxaliens	25
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -429,7 +429,7 @@ mapdef frozen_alienlandingindustrial
 	description	"_An industrial area in a cold region."
 	maxaliens	14
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -472,7 +472,7 @@ mapdef frozen_small
 	description	"_An underpopulated area in a cold region."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -511,7 +511,7 @@ mapdef frozen_alienlandingnature
 	description	"_An industrial area in a cold region."
 	maxaliens	8
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -553,7 +553,7 @@ mapdef frozen_industrial
 	description	"_An industrial area in a cold region."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -603,7 +603,7 @@ mapdef alienlandingindustrial_fix
 	}
 	maxaliens	10
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -658,7 +658,7 @@ mapdef cemetery_main
 	}
 	maxaliens		6 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -700,7 +700,7 @@ mapdef tropic_river
 	multiplayer	false
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -741,7 +741,7 @@ mapdef tropic_river_crash
 	multiplayer	false
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -781,7 +781,7 @@ mapdef tropic_drug
 	multiplayer	false
 	maxaliens	14
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -823,7 +823,7 @@ mapdef tropic_drug_crash
 	maxaliens	14
 	hurtaliens true
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -863,7 +863,7 @@ mapdef tropic_bigufo
 	multiplayer	false
 	maxaliens	25
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -907,7 +907,7 @@ mapdef vil_lille
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -947,7 +947,7 @@ mapdef vil_commercial
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	16
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -990,7 +990,7 @@ mapdef vil_residential
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -1032,7 +1032,7 @@ mapdef vil_big
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -1075,7 +1075,7 @@ mapdef forest_small
 	size		"small"
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -1116,7 +1116,7 @@ mapdef forest_small_crash
 	size		"small"
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -1156,7 +1156,7 @@ mapdef forest_large
 	size		"large"
 	maxaliens	15
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -1197,7 +1197,7 @@ mapdef forest_large_crash
 	maxaliens	15
 	hurtaliens true
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -1237,7 +1237,7 @@ mapdef country_large
 	size		"large"
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -1279,7 +1279,7 @@ mapdef country_street
 	size		"large"
 	maxaliens	15
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -1332,7 +1332,7 @@ mapdef excavation
 	}
 
 
-	aircraft 
+	aircraft
 	{
 	// any
 	}
@@ -1378,7 +1378,7 @@ mapdef estate
 
 	maxaliens		12 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -1422,7 +1422,7 @@ mapdef england
 
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -1468,7 +1468,7 @@ mapdef italy
 
 	maxaliens		22 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1516,7 +1516,7 @@ mapdef mart
 
 	maxaliens		16 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1567,7 +1567,7 @@ mapdef mine
 	}
 	maxaliens	15 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -1613,7 +1613,7 @@ mapdef transport
 	}
 	maxaliens	19 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1659,7 +1659,7 @@ mapdef bunker
 	}
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -1705,7 +1705,7 @@ mapdef dam
 	}
 	maxaliens	10 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -1751,7 +1751,7 @@ mapdef japan
 	}
 	maxaliens	16 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1800,7 +1800,7 @@ mapdef japan_small
 	}
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1850,7 +1850,7 @@ mapdef japan_big
 	}
 	maxaliens	16
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1898,7 +1898,7 @@ mapdef spedition
 	}
 	maxaliens	7 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1945,7 +1945,7 @@ mapdef stadium
 
 	maxaliens		5 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1993,7 +1993,7 @@ mapdef druglord
 	}
 	maxaliens		11 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -2039,7 +2039,7 @@ mapdef eaglenest
 	maxaliens		9 //TODO: This is an arbitrary value right now.
 	description		"_A small estate in the mountains"
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -2089,7 +2089,7 @@ mapdef scout_crash
 	maxaliens		4
 	description		"_A crashed Scout UFO"
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2137,7 +2137,7 @@ mapdef farm
 	}
 	maxaliens		6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2184,7 +2184,7 @@ mapdef ferry
 	}
 	maxaliens		12 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2201,7 +2201,7 @@ mapdef ferry
 	cultures
 	{
 		eastern
-		western 
+		western
 		oriental
 	}
 
@@ -2235,7 +2235,7 @@ mapdef rivertown
 	}
 	maxaliens		16 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2280,7 +2280,7 @@ mapdef city_disco
 	}
 	maxaliens		6 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -2327,7 +2327,7 @@ mapdef city_train
 	}
 	maxaliens		6 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -2375,7 +2375,7 @@ mapdef gasstation
 	}
 	maxaliens		4 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -2424,7 +2424,7 @@ mapdef oriental
 	}
 	maxaliens		16 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2468,7 +2468,7 @@ mapdef oriental_mosque
 	}
 	maxaliens		16 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2559,7 +2559,7 @@ mapdef subway
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2607,7 +2607,7 @@ mapdef tower
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2653,7 +2653,7 @@ mapdef village
 	}
 	maxaliens		11 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2698,7 +2698,7 @@ mapdef military_convoy
 	}
 	maxaliens		11 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -2747,7 +2747,7 @@ mapdef fighter_crash
 		coop4
 	}
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2796,7 +2796,7 @@ mapdef bridge
 	maxaliens		6
 	hurtaliens	true
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -2843,7 +2843,7 @@ mapdef construction
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -2890,7 +2890,7 @@ mapdef harbour
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2935,7 +2935,7 @@ mapdef office
 	}
 	maxaliens		18 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2980,7 +2980,7 @@ mapdef resort
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -3026,7 +3026,7 @@ mapdef africa_small
 	description		"_A suburb that has been visited by UFO."
 	maxaliens		6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3078,7 +3078,7 @@ mapdef africa_large
 	description		"_A suburb that has received a visit from a Harvester."
 	maxaliens		16
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3130,7 +3130,7 @@ mapdef harvester_crash
 	description		"_An alien Harvester has crashed in the wastelands."
 	maxaliens		14
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3176,7 +3176,7 @@ mapdef lake_ice
 	description		"_A small settlement in winter."
 	maxaliens		16 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -3219,8 +3219,8 @@ mapdef lake_ice_big
 		coop3
 		coop4
 	}
-	
-	aircraft 
+
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -3265,7 +3265,7 @@ mapdef shelter
 	}
 	maxaliens		21 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -3312,7 +3312,7 @@ mapdef bomber_city
 	}
 	maxaliens		30
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3361,7 +3361,7 @@ mapdef community_centre
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3409,7 +3409,7 @@ mapdef laboratory
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3454,7 +3454,7 @@ mapdef city_rma_small
 		1on1
 	}
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3493,7 +3493,7 @@ mapdef city_rma_medium
 	multiplayer	false
 	maxaliens	8
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3535,7 +3535,7 @@ mapdef fueldump
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -3575,7 +3575,7 @@ mapdef wilderness
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -3622,8 +3622,8 @@ mapdef ufocrash
 		craft_crash_supply
 		craft_crash_bomber
 	}
-	
-	aircraft 
+
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles

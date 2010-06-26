@@ -233,7 +233,7 @@ item laser_ammo
 			reaction			true
 		}
 	}
-	
+
 	weapon_mod electrolaser
 	{
 		firedef

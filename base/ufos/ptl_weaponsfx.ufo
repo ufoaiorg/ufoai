@@ -341,7 +341,7 @@ particle laserFrizzledImpact
 	init { kill }
 }
 
-particle laserFrizzledBeam 
+particle laserFrizzledBeam
 {
 	init
 	{

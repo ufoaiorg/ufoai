@@ -37,7 +37,7 @@ particle circle
 		color	"0 1 0 .5"
 		tps		1000
 	}
-	
+
 	think { kill }
 }
 
