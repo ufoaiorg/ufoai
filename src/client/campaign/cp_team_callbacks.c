@@ -356,7 +356,6 @@ static void CL_ActorPilotSelect_f (void)
 	num = atoi(Cmd_Argv(1)) + relativeId;
 	if (num >= E_CountHired(base, employeeType)) {
 		MN_ExecuteConfunc("reset_character_cvars");
-		//CL_ResertCharacterCvars();
 		return;
 	}
 
@@ -401,7 +400,6 @@ static void CL_ActorTeamSelect_f (void)
 	num = atoi(Cmd_Argv(1)) + relativeId;
 	if (num >= E_CountHired(base, employeeType)) {
 		MN_ExecuteConfunc("reset_character_cvars");
-//		CL_ResertCharacterCvars();
 		return;
 	}
 

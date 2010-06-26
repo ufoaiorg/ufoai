@@ -216,7 +216,7 @@ static void MN_PackLayout (menuNode_t *node, int margin)
 	int minY = node->padding;
 	int maxY = node->size[1] - node->padding;
 
-	// top
+	/* top */
 	for (child = node->firstChild; child; child = child->next) {
 		if (child->invis)
 			continue;

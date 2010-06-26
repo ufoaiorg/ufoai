@@ -80,10 +80,10 @@ static qboolean MN_TokenIsValue (const char *name, qboolean isQuoted)
 	assert(name);
 	if (isQuoted)
 		return qtrue;
-	// is it a number
+	/* is it a number */
 	if ((name[0] >= '0' && name[0] <= '9') || name[0] == '-' || name[0] == '.')
 		return qtrue;
-	// is it a var (*cvar:...)
+	/* is it a var (*cvar:...) */
 	if (name[0] == '*')
 		return qtrue;
 	if (!strcmp(name, "true"))
@@ -91,12 +91,12 @@ static qboolean MN_TokenIsValue (const char *name, qboolean isQuoted)
 	if (!strcmp(name, "false"))
 		return qtrue;
 
-	// uppercase const name
+	/* uppercase const name */
 	if ((name[0] >= 'A' && name[0] <= 'Z') || name[0] == '_') {
 		qboolean onlyUpperCase = qtrue;
 		while (*name != '\0') {
 			if ((name[0] >= 'A' && name[0] <= 'Z') || name[0] == '_' || (name[0] >= '0' && name[0] <= '9')) {
-				// available chars
+				/* available chars */
 			} else {
 				return qfalse;
 			}
@@ -119,7 +119,7 @@ static qboolean MN_TokenIsName (const char *name, qboolean isQuoted)
 			if (name[0] >= 'a' && name[0] <= 'z') {
 				onlyUpperCase = qfalse;
 			} else if ((name[0] >= '0' && name[0] <= '9') || (name[0] >= 'A' && name[0] <= 'Z') || name[0] == '_') {
-				// available chars
+				/* available chars */
 			} else {
 				return qfalse;
 			}
