@@ -162,18 +162,87 @@ component cmpDefBaseHeader cmpBaseHeader
  */
 component button cmpPopupButton
 {
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-		font		"f_menu"
-		image		"ui/button_green_small"
-		size		"176 32"
+	color		"0 0.5 0 1"
+	selectcolor	"1 1 1 1"
+	font		"f_menu"
+	image		"ui/button_green_small"
+	size		"176 32"
 }
 
 /**
  * Cancel button on popups
-*/
+ */
 component cmpPopupButton cmpCancelButton
 {
 	string		"_Cancel"
 	tooltip		"_Close this dialogue"
+}
+
+component panel cmpMapPanel 
+{
+	{
+	}
+	
+	// ===================
+	// PREVIEW
+	// ===================
+
+	string preview_label
+	{
+		string		"_Preview:"
+		pos			"85 0"
+		size		"256 20"
+	}
+
+	cmpMapPic mappic
+	{
+		image		*cvar:mn_mappic
+		pos			"85 30"
+	}
+	cmpMapPic mappic2
+	{
+		image		*cvar:mn_mappic2
+		pos			"225 30"
+	}
+	cmpMapPic mappic3
+	{
+		image		*cvar:mn_mappic3
+		pos			"365 30"
+	}
+
+	// ===================
+	// MAP
+	// ===================
+	string map_label
+	{
+		string		"_Map name:"
+		pos			"85 155"
+		size		"256 20"
+	}
+	cmpMapSlot mapSlot {
+		{
+			pos "213 150"
+		}
+	}
+
+	// ===================
+	// DAY + NIGHT
+	// ===================
+	todo todo3 {
+		pos "500 245"
+		string "It should be better to have a selectbox with day/night"
+	}
+	string daynight_str
+	{
+		string		"_Day version:"
+		pos			"85 245"
+		size		"280 20"
+	}
+	checkbox daynight_value
+	{
+		current		*cvar:mn_serverday
+		pos			"410 245"
+		size		"20 18"
+		image		"ui/checkbox_blue"
+	}
 }

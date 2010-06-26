@@ -510,7 +510,7 @@ window mp_create_server extends abstract_multiplayer
 			size	"500 40"
 			cvar	*cvar:mn_server_config_tab
 			onChange {
-				cmd "mp_update_config_navigation;"
+				call *node:root.mp_update_config_navigation
 			}
 		}
 		option map {
@@ -616,52 +616,10 @@ window mp_create_server extends abstract_multiplayer
 
 	}
 
-	panel panel_map {
+	cmpMapPanel panel_map {
 		{
 			pos			"415 250"
 			size		"608 768"
-		}
-
-		// ===================
-		// PREVIEW
-		// ===================
-
-		string preview_label
-		{
-			string		"_Preview:"
-			pos			"85 0"
-			size		"256 20"
-		}
-
-		cmpMapPic mappic
-		{
-			image		*cvar:mn_mappic
-			pos			"85 30"
-		}
-		cmpMapPic mappic2
-		{
-			image		*cvar:mn_mappic2
-			pos			"225 30"
-		}
-		cmpMapPic mappic3
-		{
-			image		*cvar:mn_mappic3
-			pos			"365 30"
-		}
-
-		// ===================
-		// MAP
-		// ===================
-		string map_label
-		{
-			string		"_Map name:"
-			pos			"85 155"
-			size		"256 20"
-		}
-		cmpMapSlot mapSlot {
-			{
-				pos "213 150"
-			}
 		}
 
 		// ===================
@@ -682,27 +640,6 @@ window mp_create_server extends abstract_multiplayer
 			size		"256 32"
 			font		"f_verysmall"
 			longlines	LONGLINES_WRAP
-		}
-
-		// ===================
-		// DAY + NIGHT
-		// ===================
-		todo todo3 {
-			pos "500 245"
-			string "It should be better to have a selectbox with day/night"
-		}
-		string daynight_str
-		{
-			string		"_Day version:"
-			pos			"85 245"
-			size		"280 20"
-		}
-		checkbox daynight_value
-		{
-			current		*cvar:mn_serverday
-			pos			"410 245"
-			size		"20 18"
-			image		"ui/checkbox_blue"
 		}
 	}
 
@@ -994,7 +931,7 @@ window mp_create_server extends abstract_multiplayer
 	// Interaction
 	// ===================
 
-	confunc mp_update_config_navigation {
+	func mp_update_config_navigation {
 		*panel_map@invis = true
 		*panel_option@invis = true
 		*panel_security@invis = true
@@ -1014,7 +951,7 @@ window mp_create_server extends abstract_multiplayer
 		cmd "killserver;set sv_maxplayersperteam 8;set sv_roundtimelimit 0;set mn_serverday 1;"
 		cmd "mp_updategametype;mn_getmaps;"
 		*cvar:mn_server_config_tab = 1
-		cmd "mp_update_config_navigation;"
+		call *node:root.mp_update_config_navigation
 		cmd "mn_datareset TEXT_STANDARD;"
 	}
 }
