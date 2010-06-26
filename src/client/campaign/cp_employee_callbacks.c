@@ -236,13 +236,8 @@ static void E_ChangeName_f (void)
  */
 int E_GenerateHiredEmployeesList (const base_t *base)
 {
-	const employeeType_t employeeType =
-		ccs.displayHeavyEquipmentList
-			? EMPL_ROBOT
-			: EMPL_SOLDIER;
-
 	assert(base);
-	employeesInCurrentList = E_GetHiredEmployees(base, employeeType, &employeeList);
+	employeesInCurrentList = E_GetHiredEmployees(base, EMPL_SOLDIER, &employeeList);
 	return employeesInCurrentList;
 }
 

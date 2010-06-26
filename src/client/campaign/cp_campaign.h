@@ -550,10 +550,6 @@ typedef struct ccs_s {
 
 	aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
 	int numAircraftTemplates;		/**< Number of aircraft templates. */
-
-	/** Used in team assignment screen to tell if we are assigning soldiers or heavy equipment (ugvs/tanks) */
-	/** @todo remove this. it has nothing with ccs, it should be handled by menuscripts/cvars */
-	qboolean displayHeavyEquipmentList;
 } ccs_t;
 
 /**

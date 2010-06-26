@@ -299,10 +299,7 @@ static void CL_AssignSoldier_f (void)
 	aircraft_t *aircraft;
 	int relativeId = 0;
 	int num;
-	const employeeType_t employeeType =
-		ccs.displayHeavyEquipmentList
-			? EMPL_ROBOT
-			: EMPL_SOLDIER;
+	const employeeType_t employeeType = EMPL_SOLDIER;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2 || Cmd_Argc() > 3) {
@@ -381,8 +378,6 @@ static void CL_ActorTeamSelect_f (void)
 	character_t *chr;
 	int num;
 	int relativeId = 0;
-	const employeeType_t employeeType = ccs.displayHeavyEquipmentList
-			? EMPL_ROBOT : EMPL_SOLDIER;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -398,7 +393,7 @@ static void CL_ActorTeamSelect_f (void)
 		relativeId = atoi(Cmd_Argv(2));
 
 	num = atoi(Cmd_Argv(1)) + relativeId;
-	if (num >= E_CountHired(base, employeeType)) {
+	if (num >= E_CountHired(base, EMPL_SOLDIER)) {
 		MN_ExecuteConfunc("reset_character_cvars");
 		return;
 	}
