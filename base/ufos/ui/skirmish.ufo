@@ -157,14 +157,14 @@ window skirmish
 		string ai_numactors_str
 		{
 			string		"_Max. AI actors:"
-			pos			"10 275"
+			pos			"10 150"
 			size		"200 20"
 			tooltip		"_Max AI actors for this game"
 		}
 		string ai_numactors_value
 		{
 			string		*cvar:ai_numaliens
-			pos			"310 275"
+			pos			"310 150"
 			size		"50 20"
 			textalign	ALIGN_CC
 		}
@@ -172,7 +172,7 @@ window skirmish
 		{
 			current		*cvar:ai_numaliens
 			image		"ui/spinner_blue"
-			pos			"368 274"
+			pos			"368 149"
 			min			1
 			max			30
 			delta		1
@@ -185,13 +185,13 @@ window skirmish
 		{
 			string		"_Max. soldiers:"
 			tooltip		"_Sets the amount of soldiers"
-			pos			"10 250"
+			pos			"10 175"
 			size		"300 20"
 		}
 		string maxsoldierperplayer_value
 		{
 			string		*cvar:sv_maxsoldiersperplayer
-			pos			"310 250"
+			pos			"310 175"
 			size		"50 20"
 			textalign	ALIGN_UC
 		}
@@ -199,9 +199,36 @@ window skirmish
 		{
 			current		*cvar:sv_maxsoldiersperplayer
 			image		"ui/spinner_blue"
-			pos			"368 249"
+			pos			"368 174"
 			min			1
 			max			8
+			delta		1
+		}
+
+		// ===================
+		// UGVS
+		// ===================
+		string numugvs_str
+		{
+			string		"_UGVs:"
+			pos			"10 200"
+			size		"200 20"
+			tooltip		"_UGVs for this game - only if enough free soldier slot"
+		}
+		string numugvs_value
+		{
+			string		*cvar:cl_ugvs
+			pos			"310 200"
+			size		"50 20"
+			textalign	ALIGN_CC
+		}
+		spinner numugvs_change
+		{
+			current		*cvar:cl_ugvs
+			image		"ui/spinner_blue"
+			pos			"368 199"
+			min			0
+			max			2
 			delta		1
 		}
 
@@ -211,7 +238,7 @@ window skirmish
 		string team_str
 		{
 			string		"_Team:"
-			pos			"10 300"
+			pos			"10 245"
 			size		"200 20"
 			tooltip		"_Select which side you want to play with"
 		}
@@ -219,7 +246,7 @@ window skirmish
 		selectbox team_box
 		{
 			image	"ui/selectbox_green"
-			pos		"230 300"
+			pos		"230 245"
 			size	"200 20"
 			color	"0.6 0.6 0.6 0.3"
 			cvar	*cvar:cl_teamdef
@@ -316,7 +343,7 @@ window skirmish
 	{
 		// TODO: Allow changing the difficulty via menu
 		cmd	"game_setmode;set ai_numaliens 8;set ai_equipment multiplayer_alien;set difficulty 0;"
-		cmd "set mn_serverday 1;mn_getmaps;define cl_teamdef phalanx;"
+		cmd "set mn_serverday 1;mn_getmaps;define cl_ugvs 0;define cl_teamdef phalanx;"
 		*cvar:mn_skirmish_config_tab = 1
 		call *node:root.sk_update_config_navigation
 	}
