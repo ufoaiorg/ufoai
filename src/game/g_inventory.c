@@ -117,6 +117,31 @@ static qboolean G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t cont
 	return qfalse;
 }
 
+/**
+ * @brief Adds a new item to an existing or new floor container edict at the given grid location
+ * @param pos The grid location to spawn the item on the floor
+ * @param itemID The item to spawn
+ */
+qboolean G_AddItemToFloor (const pos3_t pos, const char *itemID)
+{
+	edict_t *floor;
+	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
+	objDef_t *od = INVSH_GetItemByIDSilent(itemID);
+	if (!od) {
+		gi.dprintf("Could not find item '%s'\n", itemID);
+		return qfalse;
+	}
+
+	/* Also sets FLOOR(ent) to correct value. */
+	floor = G_GetFloorItemsFromPos(pos);
+	/* nothing on the ground yet? */
+	if (!floor)
+		floor = G_SpawnFloor(pos);
+
+	item.t = od;
+	return game.i.TryAddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor));
+}
+
 /** @brief Move items to adjacent locations if the containers on the current
  * floor edict are full */
 /* #define ADJACENT */

@@ -281,6 +281,24 @@ static void SVCmd_ShowAll_f (void)
 	gi.dprintf("All items and creatures revealed to all sides\n");
 }
 
+static void SVCmd_AddItem_f (void)
+{
+	const int team = TEAM_DEFAULT;
+	edict_t *ent = G_EdictsGetNextLivingActorOfTeam(NULL, team);
+
+	if (gi.Cmd_Argc() < 3) {
+		gi.dprintf("Usage: %s <item-id>\n", gi.Cmd_Argv(1));
+		return;
+	}
+
+	if (!ent) {
+		gi.dprintf("Could not add item, no living members of team %i left\n", team);
+		return;
+	}
+
+	G_AddItemToFloor(ent->pos, gi.Cmd_Argv(2));
+}
+
 /**
  * @brief Debug function to show the hole inventory of all connected clients on the server
  */
@@ -324,6 +342,8 @@ void ServerCommand (void)
 #ifdef DEBUG
 	else if (Q_strcasecmp(cmd, "debug_showall") == 0)
 		SVCmd_ShowAll_f();
+	else if (Q_strcasecmp(cmd, "debug_additem") == 0)
+		SVCmd_AddItem_f();
 	else if (Q_strcasecmp(cmd, "debug_actorinvlist") == 0)
 		SVCmd_ActorInvList_f();
 #endif

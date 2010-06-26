@@ -807,31 +807,13 @@ static void SP_misc_model (edict_t *ent)
  */
 static void SP_misc_item (edict_t *ent)
 {
-	edict_t *floor;
-	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
-	objDef_t *od;
-
 	if (!ent->item) {
 		gi.dprintf("No item defined in misc_item\n");
 		G_FreeEdict(ent);
 		return;
 	}
 
-	od = INVSH_GetItemByIDSilent(ent->item);
-	if (!od) {
-		gi.dprintf("Could not find item '%s' for misc_item\n", ent->item);
-		G_FreeEdict(ent);
-		return;
-	}
-
-	/* Also sets FLOOR(ent) to correct value. */
-	floor = G_GetFloorItems(ent);
-	/* nothing on the ground yet? */
-	if (!floor)
-		floor = G_SpawnFloor(ent->pos);
-
-	item.t = od;
-	game.i.TryAddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor));
+	G_AddItemToFloor(ent->pos, ent->item);
 
 	/* now we can free the original edict */
 	G_FreeEdict(ent);

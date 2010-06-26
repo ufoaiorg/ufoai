@@ -450,7 +450,7 @@ char *_Mem_PoolStrDup (const char *in, struct memPool_s *pool, const int tagNum,
 {
 	char *out;
 
-	out = _Mem_Alloc((size_t)(strlen (in) + 1), qtrue, pool, tagNum, fileName, fileLine);
+	out = _Mem_Alloc((size_t)(strlen(in) + 1), qtrue, pool, tagNum, fileName, fileLine);
 	strcpy(out, in);
 
 	return out;
