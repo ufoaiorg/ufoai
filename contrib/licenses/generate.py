@@ -28,6 +28,7 @@ from xml.dom.minidom import parseString
 # config
 CACHING = True
 ABS_URL = None
+EOL = "\n"
 
 NON_FREE_LICENSES = [
 "UNKNOWN", # ambiguous
@@ -36,27 +37,32 @@ NON_FREE_LICENSES = [
 "Creative Commons Sampling Plus 1.0"
 ]
 
-HTML = u"""<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<style>
+CSS = u"""
 body { color: #ffffff; background-color: #262626; font-family: verdana, helvetica, arial, sans-serif; margin: 0; padding: 0; }
 html > body { font-size: 8.5pt; }
 a { color: #ffd800; background-color: transparent; text-decoration: none; }
 a:hover { color: #ffffff; background-color: transparent; text-decoration: none; }
 li { margin-bottom: 8px; }
 .author { }
-</style></head>
+"""
+
+HTML = u"""<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- STYLELINK -->
+</head>
 
 <body>
-<h1>Licenses in UFO:ai (base/%s)</h1>
+<h1>Licenses in UFO:ai (<!-- TITLE -->)</h1>
 Please note that the information are extracted from the svn tags.<br />
 Warning: the statics/graphs might be wrong since it would be to expensive to get information if a enrty was a directory in the past or not.
 <br />
-State as in revision %i.
+State as in revision <!-- REVISION -->.
 <hr />
 
-%s
+<!-- NAVIGATION -->
+
+<!-- CONTENT -->
 
 </body></html>"""
 
@@ -73,8 +79,8 @@ HTML_IMAGE = u"""<br/><table><tr>
 metadata = None
 
 class Metadata:
-    def __init__(self, filename):
-        self.filename = filename
+    def __init__(self, fileName):
+        self.fileName = fileName
         self.license = None
         self.copyright = None
         self.source = None
@@ -130,29 +136,29 @@ def computeMetadata():
         meta = getMetadata(path)
         meta.source = property.firstChild.nodeValue
 
-def getMetadata(filename):
+def getMetadata(fileName):
     global metadata
 
     if metadata == None:
         computeMetadata()
 
     ## get metadata from cache
-    if filename in metadata:
-        meta = metadata[filename]
+    if fileName in metadata:
+        meta = metadata[fileName]
     ## gen new structure
     else:
-        meta = Metadata(filename)
-        metadata[filename] = meta
+        meta = Metadata(fileName)
+        metadata[fileName] = meta
 
     return meta
 
-def getMetadataByShortImageName(filename):
-    if os.path.exists(filename + ".png"):
-        return getMetadata(filename + ".png")
-    if os.path.exists(filename + ".jpg"):
-        return getMetadata(filename + ".jpg")
-    if os.path.exists(filename + ".tga"):
-        return getMetadata(filename + ".tga")
+def getMetadataByShortImageName(fileName):
+    if os.path.exists(fileName + ".png"):
+        return getMetadata(fileName + ".png")
+    if os.path.exists(fileName + ".jpg"):
+        return getMetadata(fileName + ".jpg")
+    if os.path.exists(fileName + ".tga"):
+        return getMetadata(fileName + ".tga")
     return None
 
 def computeTextureUsageInMaps():
@@ -170,7 +176,7 @@ def computeTextureUsageInMaps():
                 mapmeta.useTextures.add(texmeta)
 
 ###################################
-# Job
+# Util
 ###################################
 
 def get(cmd, cacheable=True):
@@ -188,7 +194,6 @@ def get(cmd, cacheable=True):
         print ' written to cache: ', cmd
     return data
 
-
 def get_used_tex(m):
     used = []
     for i in open(m):
@@ -200,33 +205,6 @@ def get_used_tex(m):
         if tex not in used:
             used.append(tex)
     return used
-
-def get_data(d, files):
-    print ' getting data for "%s"' % d
-
-    # get current revision
-    filename = "base"
-    if d != "":
-        filename = "base/" + d
-    meta = getMetadata(filename)
-    rev = meta.revision
-
-    print '  Current Revision r' + str(rev)
-
-    licenses = {}
-    for f in files:
-        filename = "base/" + d + "/" + f
-        if d == "":
-            filename = "base/" + f
-        meta = getMetadata(filename)
-        l = meta.license
-        if l == None:
-            l = "UNKNOWN"
-        if not (l in licenses):
-            licenses[l] = []
-        licenses[l].append(f)
-
-    return licenses
 
 # filters for files to ignore
 FFILTERS = (re.compile('.txt$'),
@@ -243,174 +221,18 @@ FFILTERS = (re.compile('.txt$'),
             re.compile('.lua$'),
             re.compile('.bsp$'))
 
-def ffilter(fname):
+def fileNameFilter(fname):
     for i in FFILTERS:
         if i.search(fname.lower()):
             print 'Ignoriere: ', fname
             return False
     return True
 
-
-def get_all_data():
-    print 'get all data'
-    result = {}
-    allfiles = []
-
-    for i in os.listdir('base'):
-        if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
-            files = []
-            # get list of files
-            for path, dirnames, fnames in os.walk('base/' + i):
-                for fname in fnames:
-                    if not '/.' in path and ffilter(fname):
-                        f = path[len(i)+ 6:]
-                        if f != '': f += '/'
-                        f += fname
-                        files.append(f)
-                        allfiles.append(i + '/' + f)
-            result[i] = get_data(i, files)
-
-    result[''] = get_data('', allfiles) # mae
-    return result
+###################################
+# Job
+###################################
 
 def generate(d, data):
-    licenses = data[d]
-    if d == '':
-        meta = getMetadata("base")
-    else:
-        meta = getMetadata("base/" + d)
-    rev = meta.revision
-
-    # --------------------------
-    print 'Generating html for "%s"' % d
-    print ' index.html'
-
-    def test(x):
-        if os.path.exists(x):
-            return not os.path.isdir(x)
-        else:
-            return '.' in x
-
-    content = HTML_IMAGE
-
-    l_count = []
-    for i in licenses:
-        l_count.append((i, len([x for x in licenses[i] if test(x)])))
-
-    def key(a):
-        return a[1]
-
-    l_count.sort(key=key, reverse=True)
-
-    # per license files are namend: MD5(license_name).html
-    content += '<ul>'
-    for i in l_count:
-        h = hashlib.md5(i[0]).hexdigest()
-        content += u'<li>%i - <a href="%s.html">%s</a></li>' % (i[1], h, i[0])
-    content += '</ul>'
-
-    if d != '':
-        content = u'<a href="../index.html">Back</a><br/>%s' %  content
-    else:
-        # print index
-        index = u'<b>See also:</b><ul>'
-        for i in os.listdir('base'):
-            if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
-                index+= u'<li><a href="%s/index.html">%s</a></li>' % (i,i)
-        index += '</ul>'
-
-        content = index + u'%s' %  content
-        content+= '<hr/>You grab the source code from ufo:ai\'s svn. USE AT OWN RISK.'
-
-    extraLicenses = {}
-    extraCopyrights = {}
-    extraSources = {}
-
-    html = HTML % (d, rev, content)
-    open('licenses/html/%s/index.html' % d, 'w').write(html)
-    for i in licenses:
-        h = hashlib.md5(i).hexdigest()
-        content = u'<a href="index.html">Back</a><br /><h2>%s</h2><ol>' % i
-        for j in licenses[i]:
-            if os.path.isdir('base/%s/%s' % (d, j)):
-                continue
-
-            filename = "base/" + d + "/" + j
-            if d == '':
-                filename = "base" + "/" + j
-
-            # preview file
-            img = ''
-            if j.endswith('.jpg') or j.endswith('.tga') or j.endswith('.png'):
-                thumb = 'thumbnails/%s.png' % (filename.replace("base/", "", 1))
-                thumbname = 'licenses/html/' + thumb
-                if d != '' and not os.path.exists(thumbname):
-                    thumbdir = thumbname.split('/')
-                    thumbdir.pop()
-                    thumbdir = "/".join(thumbdir)
-                    if not os.path.exists(thumbdir):
-                        os.makedirs(thumbdir)
-                    os.system('convert %s -thumbnail 128x128 %s' % (filename, thumbname))
-                img = '<img src="%s/%s"/>' % (ABS_URL, thumb)
-            content+= u'<li>%s<a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/base/%s/%s" title="Download">%s</a> - <a href="http://ufoai.svn.sourceforge.net/viewvc/ufoai/ufoai/trunk/base/%s/%s?view=log" title="History">%s</a>' % (img, d, j, j, d, j, j)
-
-            meta = getMetadata(filename)
-
-            # compute extra data for analysis
-            if d == '':
-                if meta.license != None:
-                    if not (meta.license in extraLicenses):
-                        extraLicenses[meta.license] = []
-                    extraLicenses[meta.license].append(filename)
-                if meta.copyright != None:
-                    if not (meta.copyright in extraCopyrights):
-                        extraCopyrights[meta.copyright] = []
-                    extraCopyrights[meta.copyright].append(filename)
-                if meta.source != None:
-                    if not (meta.source in extraSources):
-                        extraSources[meta.source] = []
-                    extraSources[meta.source].append(filename)
-
-            copy = meta.copyright
-            if copy == None:
-                copy = "UNKNOWN"
-            content+= u' <span>by %s</span>' % unicode(copy)
-
-            source = meta.source
-            if source == None:
-                source = ''
-            if source != '':
-                if source.startswith('http://') or source.startswith('ftp://'):
-                    source = '<a href="%s">%s</a>' % (source, source[7:])
-                content+= '<br/>Source: ' + source
-
-            if d == 'maps' and j.endswith('.map'):
-                if len(meta.useTextures) > 0:
-                    list = []
-                    for m in meta.useTextures:
-                        list.append(m.filename)
-                    content += '<br/><div>Uses: %s </div>' % ', '.join(list)
-                else:
-                    content += 'Map without textures!'
-            elif d == 'textures':
-                if len(meta.usedByMaps) > 0:
-                    list = []
-                    for m in meta.usedByMaps:
-                        list.append(m.filename)
-                    content+= '<br/><div>Used in: %s </div>' % ', '.join(list)
-                elif '_nm.' in j or '_gm.' in j or '_sm.' in j or '_rm.' in j:
-                    content+= '<br/><div>Special map - only indirectly used</div>'
-                else:
-                    content+= '<br/><b>UNUSED</b> (at least no map uses it)'
-
-            content+= '</li>'
-        content+= '</ol>'
-        html = HTML % (d, rev, content)
-        html = html.encode('utf-8')
-        open('licenses/html/%s/%s.html' % (d, h), 'w').write(html)
-
-    cPickle.dump(licenses, open('licenses/history/%s/%i' % (d, rev), 'w'))
-
     #generate extra
     if d == '':
         html = "<html><body><ul>\n"
@@ -431,17 +253,25 @@ def generate(d, data):
         html += "</ul></body></html>"
         open('licenses/html/sources.html', 'w').write(html.encode('utf-8'))
 
-
-    # generate graph!
+def generateGraph(d):
     data = {}
     print 'Ploting'
     times = []
 
-    for time in sorted(os.listdir('licenses/history/%s' % d)):
-        if os.path.isdir('licenses/history/%s/%s' % (d, time)):
+    if not os.path.exists('licenses/history%s' % d):
+        return False
+
+    def test(x):
+        if os.path.exists(x):
+            return not os.path.isdir(x)
+        else:
+            return '.' in x
+
+    for time in sorted(os.listdir('licenses/history%s' % d)):
+        if os.path.isdir('licenses/history%s/%s' % (d, time)):
             continue
 
-        this = cPickle.load(open('licenses/history/%s/%s' % (d, time)))
+        this = cPickle.load(open('licenses/history%s/%s' % (d, time)))
         times.append(int(time))
         for i in this:
             if i not in data:
@@ -458,18 +288,25 @@ def generate(d, data):
     for i in data:
         data[i].sort(key=key)
 
+    basedir = 'licenses/html' + d
+    if not os.path.exists(basedir):
+        os.makedirs(basedir)
+
     plot(d, data, times, "plot.png")
     nonfree = {}
     for l in NON_FREE_LICENSES:
         if data.has_key(l):
             nonfree[l] = data[l]
     plot(d, nonfree, times, "nonfree.png")
-
+    return True
 
 def plot(d, data, times, imagename):
     cmds = 'set terminal png;\n'
+    cmds+= 'set object 1 rect from graph 0, graph 0 to graph 1, graph 1 back;\n'
+    cmds+= 'set object 1 rect fc rgb "grey" fillstyle solid 1.0;\n'
+
     cmds+= 'set data style linespoints;\n'
-    cmds+= 'set output "licenses/html/%s/%s";\n' % (d, imagename)
+    cmds+= 'set output "licenses/html%s/%s";\n' % (d, imagename)
     cmds+= 'set xrange [%i to %i];\n' % (min(times), max(times) + 1 + (max(times)-min(times))*0.15)
 
     cmds+= 'plot '
@@ -478,6 +315,9 @@ def plot(d, data, times, imagename):
         plot_data = '\n'.join('%i %i' % (x[0], x[1]) for x in data[i])
         p.append("'%s' title \"%s\" " % ('/tmp/' + hashlib.md5(i).hexdigest(), i))
         open('/tmp/' + hashlib.md5(i).hexdigest(), 'w').write(plot_data)
+
+    if len(p) == 0:
+        return
 
     cmds+= ', '.join(p) + ';\n'
     open('/tmp/cmds', 'w').write(cmds)
@@ -488,7 +328,7 @@ def plot(d, data, times, imagename):
 def setup(output_path):
     """Check if output folders etc. are in place"""
     if not os.path.exists(output_path + '/licenses'):
-        print 'creating bas directory'
+        print 'creating base directory'
         os.mkdir(output_path + '/licenses')
     
     for p in ['cache', 'history', 'html']:
@@ -515,10 +355,229 @@ def clean_up(output_path):
             continue
         os.mkdir(output_path + '/licenses/html/.thumbnails/'+path[5:])
 
+def group(dictionary, key, value):
+    if not (key in dictionary):
+        dictionary[key] = set([])
+    dictionary[key].add(value)
 
-def kill_suffix(i):
-    return '.'.join(i.split('.')[:-1])
+def mergeGroup(groupDest, groupSrc):
+    for k in groupSrc:
+        for v in groupSrc[k]:
+            group(groupDest, k, v)
 
+class Analysis:
+    def __init__(self, inputDir, deep = 0, base = None):
+        self.inputDir = inputDir
+        if base == None:
+            base = self.inputDir
+        self.base = base
+        self.deep = deep
+        self.subAnalysis = set([])
+        self.contentByLicense = {}
+        self.contentByCopyright = {}
+        self.contentBySource = {}
+        meta = getMetadata(self.inputDir)
+        self.revision = meta.revision
+        self.count = 0
+        self.compute()
+
+    def getLocalDir(self):
+        return self.inputDir.replace(self.base, "", 1)
+
+    def getName(self):
+        n = self.inputDir.replace(self.base, "", 1)
+        if n != "" and n[0] == '/':
+            n = n[1:]
+        return n
+
+    def add(self, fileName):
+        if fileName.startswith('.'):
+            return
+        if not fileNameFilter(fileName):
+            return
+        if os.path.isdir(fileName):
+            self.addSubDir(fileName)
+        else:
+            self.addFile(fileName)
+
+    def addSubDir(self, dirName):
+        if not os.path.exists(dirName + '/.svn'):
+            return
+        a = Analysis(dirName, deep = self.deep + 1, base = self.base)
+        self.subAnalysis.add(a)
+
+        mergeGroup(self.contentByLicense, a.contentByLicense)
+        mergeGroup(self.contentByCopyright, a.contentByCopyright)
+        mergeGroup(self.contentBySource, a.contentBySource)
+        self.count += a.count
+
+    def addFile(self, fileName):
+        meta = getMetadata(fileName)
+        if meta.revision == None:
+            return
+        license = meta.license
+        if license == None: license = "UNKNOWN"
+        group(self.contentByLicense, license, meta)
+        group(self.contentByCopyright, meta.copyright, meta)
+        group(self.contentBySource, meta.source, meta)
+        self.count += 1
+
+    def compute(self):
+        for file in os.listdir(self.inputDir):
+            self.add(self.inputDir + '/' + file)
+
+    def getContentEntry(self, meta):
+        file = meta.fileName.replace(self.base + '/', "", 1)
+
+        content = "<li>"
+
+        # preview
+        img = ''
+        #if file.endswith('.jpg') or file.endswith('.tga') or file.endswith('.png'):
+        #        thumb = 'thumbnails/%s.png' % (fileName.replace("base/", "", 1))
+        #        thumbname = 'licenses/html/' + thumb
+        #        if d != '' and not os.path.exists(thumbname):
+        #            thumbdir = thumbname.split('/')
+        #            thumbdir.pop()
+        #            thumbdir = "/".join(thumbdir)
+        #            if not os.path.exists(thumbdir):
+        #                os.makedirs(thumbdir)
+        #            os.system('convert %s -thumbnail 128x128 %s' % (fileName, thumbname))
+        #        img = '<img src="%s/%s"/>' % (ABS_URL, thumb)
+        #        content += img
+
+        content += meta.fileName
+        content += ' ('
+        content += '<a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/%s" title="Download">download</a>' % meta.fileName
+        content += ', '
+        content += '<a href="http://ufoai.svn.sourceforge.net/viewvc/ufoai/ufoai/trunk/%s?view=log" title="History">history</a>' % meta.fileName
+        content += ')'
+
+        # author
+        copyright = meta.copyright
+        if copyright == None:
+            copyright = "UNKNOWN"
+        content+= u'<br /><span>by %s</span>' % copyright
+
+        # source
+        source = meta.source
+        if source != None:
+            if source.startswith('http://') or source.startswith('ftp://'):
+                source = '<a href="%s">%s</a>' % (source, source)
+            content+= '<br />Source: ' + source
+
+        if file.endswith('.map'):
+            if len(meta.useTextures) > 0:
+                list = []
+                for m in meta.useTextures:
+                    list.append(m.fileName)
+                content += '<br /><div>Uses: %s </div>' % ', '.join(list)
+            else:
+                content += '<br />Note: Map without textures!'
+        #elif d == 'textures':
+        #        if len(meta.usedByMaps) > 0:
+        #            list = []
+        #            for m in meta.usedByMaps:
+        #                 list.append(m.fileName)
+        #            content+= '<br/><div>Used in: %s </div>' % ', '.join(list)
+        #        elif '_nm.' in j or '_gm.' in j or '_sm.' in j or '_rm.' in j:
+        #            content+= '<br/><div>Special map - only indirectly used</div>'
+        #        else:
+        #            content+= '<br/><b>UNUSED</b> (at least no map uses it)'
+
+        content+= '</li>'
+
+        return content
+
+    def writeLicensePage(self, output, license, contents):
+        style = '<link rel="stylesheet" type="text/css" href="' + ('../' * self.deep) + 'style.css" />'
+        navigation = '<a href="index.html">back</a><br />' + EOL
+        title = license
+        content = '<h2>%s</h2>' % license
+
+        content += '<ol>' + EOL
+        for meta in contents:
+            content += self.getContentEntry(meta) + EOL
+        content += '</ol>'
+
+        html = HTML
+        html = html.replace("<!-- NAVIGATION -->", navigation)
+        html = html.replace("<!-- STYLELINK -->", style)
+        html = html.replace("<!-- TITLE -->", title)
+        html = html.replace("<!-- CONTENT -->", content)
+        html = html.replace("<!-- REVISION -->", str(self.revision))
+        html = html.encode('utf-8')
+        fileName = hashlib.md5(license).hexdigest() + '.html'
+        basedir = output + '/licenses/html' + self.getLocalDir()
+        if not os.path.exists(basedir):
+            os.makedirs(basedir)
+        open(basedir + '/' + fileName, 'w').write(html)
+
+    def write(self, output):
+        name = self.getName()
+        html = HTML
+
+        style = '<link rel="stylesheet" type="text/css" href="' + ('../' * self.deep) + 'style.css" />'
+        html = html.replace("<!-- STYLELINK -->", style)
+        html = html.replace("<!-- TITLE -->", self.getName())
+
+        # navigation
+        navigation = "<ul>" + EOL
+        if name != "":
+            navigation += '<li><a href="../index.html">back</a></li>' + EOL
+        for a in self.subAnalysis:
+            a.write(output)
+            subname = a.getName()
+            dir = a.getLocalDir().replace(self.getLocalDir(), "", 1)
+            navigation += ('<li><a href=".%s/index.html">%s</a></li>' % (dir, subname)) + EOL
+        navigation += "</ul>" + EOL
+        html = html.replace("<!-- NAVIGATION -->", navigation)
+
+        content = "<h2>Content by license</h2>" + EOL
+
+        # save license in history
+        licenses = {}
+        for l in self.contentByLicense:
+            licenses[l] = []
+            for m in self.contentByLicense[l]:
+                n = m.fileName.replace(self.base, "")
+                licenses[l].append(n)
+        basedir = output + '/licenses/history' + self.getLocalDir()
+        if not os.path.exists(basedir):
+            os.makedirs(basedir)
+        cPickle.dump(licenses, open(basedir + '/' + str(self.revision), 'wt'))
+        # generate graph
+        if self.count > 20:
+            if generateGraph(self.getLocalDir()):
+                content += HTML_IMAGE
+
+        licenseSorting = []
+        for l in self.contentByLicense:
+            licenseSorting.append((len(self.contentByLicense[l]), l))
+        licenseSorting.sort(reverse=True)
+
+        content += "<ul>" + EOL
+        for l in licenseSorting:
+            l = l[1]
+            count = len(self.contentByLicense[l])
+            self.writeLicensePage(output, l, self.contentByLicense[l])
+            url = hashlib.md5(l).hexdigest() + ".html"
+            content += ('<li>%i - <a href="%s">%s</a></li>' % (count, url, l)) + EOL
+        content += "</ul>" + EOL
+        html = html.replace("<!-- CONTENT -->", content)
+        html = html.replace("<!-- REVISION -->", str(self.revision))
+
+        basedir = output + '/licenses/html' + self.getLocalDir()
+        if not os.path.exists(basedir):
+            os.makedirs(basedir)
+        file = open(basedir + '/index.html', 'wt')
+        file.write(html)
+        file.close()
+
+        if name == "":
+            file = open(basedir + '/style.css', 'wt')
+            file.write(CSS)
+            file.close()
 
 def main():
     global texture_map, map_texture # debugging
@@ -546,21 +605,13 @@ def main():
     setup(output_path)
     clean_up(output_path)
 
-    # do it for the hole thing
-    data = get_all_data()
-
-    # get map data / texture usage
+    # map-texture relations
     computeTextureUsageInMaps()
 
-    for i in os.listdir('base'):
-        if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
-            generate(i, data)
-            print '\n'
-    generate('', data)
+    analyse = Analysis('base')
+    analyse.write(output_path)
 
-    # copy('licenses.py', 'licenses/html')
     print 'bye'
-
 
 if __name__ == '__main__':
     main()
