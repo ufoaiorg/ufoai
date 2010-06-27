@@ -29,6 +29,7 @@ from xml.dom.minidom import parseString
 CACHING = True
 ABS_URL = None
 EOL = "\n"
+THUMBNAIL = True
 
 NON_FREE_LICENSES = [
 "UNKNOWN", # ambiguous
@@ -44,6 +45,7 @@ a { color: #ffd800; background-color: transparent; text-decoration: none; }
 a:hover { color: #ffffff; background-color: transparent; text-decoration: none; }
 li { margin-bottom: 8px; }
 .author { }
+.thumb { vertical-align:top; margin-right: 1em; border: 1em solid #101010; }
 """
 
 HTML = u"""<html>
@@ -87,6 +89,9 @@ class Metadata:
         self.revision = None
         self.usedByMaps = set([])
         self.useTextures = set([])
+
+    def isImage(self):
+        return self.fileName.endswith('.jpg') or self.fileName.endswith('.tga') or self.fileName.endswith('.png')
 
     def __repr__(self):
         return str((self.license, self.copyright, self.source, self.revision))
@@ -231,27 +236,6 @@ def fileNameFilter(fname):
 ###################################
 # Job
 ###################################
-
-def generate(d, data):
-    #generate extra
-    if d == '':
-        html = "<html><body><ul>\n"
-        for k in extraLicenses:
-            html += "<li>%s<br /><small>%s</small></li>\n" % (k, "; ".join(extraLicenses[k]))
-        html += "</ul></body></html>"
-        open('licenses/html/licenses.html', 'w').write(html.encode('utf-8'))
-
-        html = "<html><body><ul>\n"
-        for k in extraCopyrights:
-            html += "<li>%s<br /><small>%s</small></li>\n" % (k, "; ".join(extraCopyrights[k]))
-        html += "</ul></body></html>"
-        open('licenses/html/copyrights.html', 'w').write(html.encode('utf-8'))
-
-        html = "<html><body><ul>\n"
-        for k in extraSources:
-            html += "<li>%s<br /><small>%s</small></li>\n" % (k, "; ".join(extraSources[k]))
-        html += "</ul></body></html>"
-        open('licenses/html/sources.html', 'w').write(html.encode('utf-8'))
 
 def generateGraph(d):
     data = {}
@@ -426,26 +410,26 @@ class Analysis:
         for file in os.listdir(self.inputDir):
             self.add(self.inputDir + '/' + file)
 
-    def getContentEntry(self, meta):
+    def getContentEntry(self, output, meta):
         file = meta.fileName.replace(self.base + '/', "", 1)
 
         content = "<li>"
 
         # preview
-        img = ''
-        #if file.endswith('.jpg') or file.endswith('.tga') or file.endswith('.png'):
-        #        thumb = 'thumbnails/%s.png' % (fileName.replace("base/", "", 1))
-        #        thumbname = 'licenses/html/' + thumb
-        #        if d != '' and not os.path.exists(thumbname):
-        #            thumbdir = thumbname.split('/')
-        #            thumbdir.pop()
-        #            thumbdir = "/".join(thumbdir)
-        #            if not os.path.exists(thumbdir):
-        #                os.makedirs(thumbdir)
-        #            os.system('convert %s -thumbnail 128x128 %s' % (fileName, thumbname))
-        #        img = '<img src="%s/%s"/>' % (ABS_URL, thumb)
-        #        content += img
+        if THUMBNAIL and meta.isImage():
+            base = '.thumbnails/%s.png' % meta.fileName.replace(self.base + "/", "", 1)
+            thumbFileName = output + '/licenses/html/' + base
+            thumbURL = ('../' * self.deep) + base
+            if not os.path.exists(thumbFileName):
+                thumbdir = thumbFileName.split('/')
+                thumbdir.pop()
+                thumbdir = "/".join(thumbdir)
+                if not os.path.exists(thumbdir):
+                     os.makedirs(thumbdir)
+                os.system('convert %s -thumbnail 128x128 %s' % (meta.fileName, thumbFileName))
+            content += '<img class="thumb" src="%s" />' % thumbURL
 
+        # name and links
         content += meta.fileName
         content += ' ('
         content += '<a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/%s" title="Download">download</a>' % meta.fileName
@@ -474,16 +458,17 @@ class Analysis:
                 content += '<br /><div>Uses: %s </div>' % ', '.join(list)
             else:
                 content += '<br />Note: Map without textures!'
-        #elif d == 'textures':
-        #        if len(meta.usedByMaps) > 0:
-        #            list = []
-        #            for m in meta.usedByMaps:
-        #                 list.append(m.fileName)
-        #            content+= '<br/><div>Used in: %s </div>' % ', '.join(list)
-        #        elif '_nm.' in j or '_gm.' in j or '_sm.' in j or '_rm.' in j:
-        #            content+= '<br/><div>Special map - only indirectly used</div>'
-        #        else:
-        #            content+= '<br/><b>UNUSED</b> (at least no map uses it)'
+        
+        if 'textures/' in meta.fileName and meta.isImage():
+            if len(meta.usedByMaps) > 0:
+                list = []
+                for m in meta.usedByMaps:
+                    list.append(m.fileName)
+                content+= '<br/><div>Used in: %s </div>' % ', '.join(list)
+            elif '_nm.' in meta.fileName or '_gm.' in meta.fileName or '_sm.' in meta.fileName or '_rm.' in meta.fileName:
+                content+= '<br/><div>Special map - only indirectly used</div>'
+            else:
+                content+= '<br/><b>UNUSED</b> (at least no map uses it)'
 
         content+= '</li>'
 
@@ -497,7 +482,7 @@ class Analysis:
 
         content += '<ol>' + EOL
         for meta in contents:
-            content += self.getContentEntry(meta) + EOL
+            content += self.getContentEntry(output, meta) + EOL
         content += '</ol>'
 
         html = HTML
@@ -512,6 +497,22 @@ class Analysis:
         if not os.path.exists(basedir):
             os.makedirs(basedir)
         open(basedir + '/' + fileName, 'w').write(html)
+
+    def writeGroups(self, output, name, group):
+        basedir = output + '/licenses/html' + self.getLocalDir()
+        if not os.path.exists(basedir):
+            os.makedirs(basedir)
+
+        html = "<html><body><ul>\n"
+        for k in group:
+            if k == None:
+                continue
+            html += "<li>" + k + "<br /><small>"
+            for m in group[k]:
+                html += m.fileName + ' '
+            html += "</small></li>\n"
+        html += "</ul></body></html>"
+        open(basedir + '/' + name + '.html', 'w').write(html.encode('utf-8'))
 
     def write(self, output):
         name = self.getName()
@@ -578,6 +579,10 @@ class Analysis:
             file = open(basedir + '/style.css', 'wt')
             file.write(CSS)
             file.close()
+
+        self.writeGroups(output, "copyrights", self.contentByCopyright)
+        self.writeGroups(output, "licenses", self.contentByLicense)
+        self.writeGroups(output, "sources", self.contentBySource)
 
 def main():
     global texture_map, map_texture # debugging
