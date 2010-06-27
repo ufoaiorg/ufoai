@@ -2108,24 +2108,22 @@ static void CL_SwapSkills (chrList_t *team)
  */
 static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 {
-	int i;
 	base_t *base = aircraft->homebase;
 	chrList_t chrListTemp;
+	linkedList_t* l;
 
 	if (!aircraft)
 		return;
 
 	chrListTemp.num = 0;
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		employee_t *employee = aircraft->acTeam[i];
-		if (employee != NULL) {
-			character_t *chr = &employee->chr;
-			/* pack equipment */
-			Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
-			cls.i.EquipActor(&cls.i, &chr->i, ed, chr);
-			chrListTemp.chr[chrListTemp.num] = chr;
-			chrListTemp.num++;
-		}
+	for (l = aircraft->acTeam; l != NULL; l = l->next) {
+		employee_t *employee = (employee_t *)l->data;
+		character_t *chr = &employee->chr;
+		/* pack equipment */
+		Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
+		cls.i.EquipActor(&cls.i, &chr->i, ed, chr);
+		chrListTemp.chr[chrListTemp.num] = chr;
+		chrListTemp.num++;
 	}
 
 	if (base) {
@@ -2216,7 +2214,7 @@ static void B_BaseList_f (void)
 			Com_Printf("  %i  ", B_GetBuildingStatus(base, j));
 		Com_Printf("\nBase aircraft %i\n", base->numAircraftInBase);
 		for (j = 0; j < base->numAircraftInBase; j++) {
-			Com_Printf("Base aircraft-team %i\n", base->aircraft[j].teamSize);
+			Com_Printf("Base aircraft-team %i\n", B_GetNumOnTeam(&base->aircraft[j]));
 		}
 		Com_Printf("Base pos %.02f:%.02f\n", base->pos[0], base->pos[1]);
 		Com_Printf("Base map:\n");
@@ -2492,7 +2490,7 @@ int B_CheckBuildingConstruction (building_t *building, base_t *base)
 int B_GetNumOnTeam (const aircraft_t *aircraft)
 {
 	assert(aircraft);
-	return aircraft->teamSize;
+	return LIST_Count(aircraft->acTeam);
 }
 
 /**

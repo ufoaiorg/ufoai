@@ -68,6 +68,25 @@ const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* s
 	return NULL;
 }
 
+
+/**
+ * @brief Searches for the first occurrence of a given string
+ * @return the linkedList_t pointer if the string is found, otherwise @c NULL
+ * @note if data is @c NULL, the function returns @c NULL
+ */
+const linkedList_t* LIST_Contains (const linkedList_t* list, const void* data)
+{
+	assert(list);
+
+	while ((data != NULL) && (list != NULL)) {
+		if (list->data == data)
+			return list;
+		list = list->next;
+	}
+
+	return NULL;
+}
+
 /**
  * @brief Adds an string to a new or to an already existing linked list. The string is copied here.
  * @sa LIST_Add

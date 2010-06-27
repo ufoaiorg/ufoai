@@ -332,14 +332,14 @@ qboolean GAME_CP_Spawn (void)
 {
 	aircraft_t *aircraft = ccs.missionAircraft;
 	base_t *base;
-	int i;
+	linkedList_t* l;
 
 	if (!aircraft)
 		return qfalse;
 
 	/* convert aircraft team to chr_list */
-	for (i = 0, cl.chrList.num = 0; i < aircraft->maxTeamSize; i++) {
-		employee_t *employee = aircraft->acTeam[i];
+	for (l = aircraft->acTeam; l != NULL; l = l->next) {
+		employee_t *employee = (employee_t *)l->data;
 		if (employee != NULL) {
 			cl.chrList.chr[cl.chrList.num] = &employee->chr;
 			cl.chrList.num++;

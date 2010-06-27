@@ -1639,7 +1639,7 @@ static const char *MAP_GetAircraftText (char *buffer, size_t size, const aircraf
 {
 	if (aircraft->status == AIR_UFO) {
 		const float distance = GetDistanceOnGlobe(aircraft->pos, aircraft->aircraftTarget->pos);
-		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, aircraft->teamSize, aircraft->maxTeamSize);
+		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, B_GetNumOnTeam(aircraft), aircraft->maxTeamSize);
 		Q_strcat(buffer, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), size);
 		Q_strcat(buffer, va(_("Distance to target:\t\t%.0f\n"), distance), size);
 		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
@@ -1647,7 +1647,7 @@ static const char *MAP_GetAircraftText (char *buffer, size_t size, const aircraf
 			CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), size);
 		Q_strcat(buffer, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), size);
 	} else {
-		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, aircraft->teamSize, aircraft->maxTeamSize);
+		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, B_GetNumOnTeam(aircraft), aircraft->maxTeamSize);
 		Q_strcat(buffer, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), size);
 		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
 		Q_strcat(buffer, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),

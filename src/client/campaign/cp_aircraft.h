@@ -195,8 +195,7 @@ typedef struct aircraft_s {
 						 * is being parked in (CAP_AIRCRAFT_SMALL/CAP_AIRCRAFT_BIG). */
 
 	int maxTeamSize;	/**< Max amount of soldiers onboard. */
-	int teamSize;				/**< How many soldiers/units are on board (i.e. in the craft-team). */
-	struct employee_s *acTeam[MAX_ACTIVETEAM];			/**< List of employees. i.e. current team for this aircraft. @todo Make this a linked list? */
+	linkedList_t *acTeam;			/**< List of employees. i.e. current team for this aircraft */
 
 	struct employee_s *pilot;			/**< Current Pilot assigned to the aircraft. */
 

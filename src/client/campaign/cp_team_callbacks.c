@@ -210,7 +210,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 		return;
 
 	/* no soldiers are assigned to the current aircraft. */
-	if (!aircraft->teamSize) {
+	if (B_GetNumOnTeam(aircraft) == 0) {
 		MN_PopWindow(qfalse);
 		return;
 	}
@@ -224,7 +224,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	else
 		menuInventory = NULL;
 
-	size = lengthof(aircraft->acTeam);
+	size = MAX_ACTIVETEAM;
 	for (; p < size; p++)
 		MN_ExecuteConfunc("equipdisable %i", p);
 
@@ -422,9 +422,9 @@ static void CL_ActorTeamSelect_f (void)
 #ifdef DEBUG
 static void CL_TeamListDebug_f (void)
 {
-	int i;
 	base_t *base;
 	aircraft_t *aircraft;
+	linkedList_t *l;
 
 	base = CP_GetMissionBase();
 	aircraft = ccs.missionAircraft;
@@ -439,12 +439,11 @@ static void CL_TeamListDebug_f (void)
 		return;
 	}
 
-	Com_Printf("%i members in the current team", aircraft->teamSize);
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[i]) {
-			const character_t *chr = &aircraft->acTeam[i]->chr;
-			Com_Printf("ucn %i - employee->idx: %i\n", chr->ucn, aircraft->acTeam[i]->idx);
-		}
+	Com_Printf("%i members in the current team", B_GetNumOnTeam(aircraft));
+	for (l = aircraft->acTeam; l != NULL; l = l->next) {
+		const employee_t *employee = (const employee_t *)l->data;
+		const character_t *chr = &employee->chr;
+		Com_Printf("ucn %i - employee->idx: %i\n", chr->ucn, employee->idx);
 	}
 }
 #endif

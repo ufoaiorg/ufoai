@@ -235,7 +235,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 	Q_strcat(popupAircraft.textPopup, _("Change homebase\n"), POPUP_AIRCRAFT_MAX_TEXT);
 
 	/* Set missions in popup_aircraft */
-	if (aircraft->teamSize > 0) {
+	if (B_GetNumOnTeam(aircraft) > 0) {
 		const linkedList_t *list = ccs.missions;
 		for (; list; list = list->next) {
 			mission_t *tempMission = (mission_t *)list->data;
@@ -335,14 +335,15 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 		/* Check aircraft in base */
 		for (i = 0; i < base->numAircraftInBase; i++) {
 			aircraft_t *aircraft = &base->aircraft[i];
+			const int teamSize = B_GetNumOnTeam(aircraft);
 			/* if aircraft is empty we can't send it on a ground mission */
-			if (aircraft->teamSize > 0 && AIR_CanIntercept(aircraft)) {
+			if (teamSize > 0 && AIR_CanIntercept(aircraft)) {
 				char aircraftListText[256] = "";
 				const float distance = GetDistanceOnGlobe(aircraft->pos, mission->pos);
 				const char *statusName = AIR_AircraftStatusToName(aircraft);
 				const char *time = CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]);
 				Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s (%i/%i)\t%s\t%s\t%s"), aircraft->name,
-					aircraft->teamSize, aircraft->maxTeamSize, statusName, base->name, time);
+						teamSize, aircraft->maxTeamSize, statusName, base->name, time);
 				LIST_AddString(&aircraftList, aircraftListText);
 				assert(aircraft->homebase == base);
 				popupIntercept.aircraft[popupIntercept.numAircraft] = aircraft;
@@ -421,7 +422,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 				}
 
 				Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s%s (%i/%i)\t%s\t%s"), enoughFuelMarker, aircraft->name,
-					aircraft->teamSize,	aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name);
+						B_GetNumOnTeam(aircraft), aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name);
 				LIST_AddString(&aircraftList, aircraftListText);
 				assert(aircraft->homebase == base);
 				popupIntercept.aircraft[popupIntercept.numAircraft] = aircraft;

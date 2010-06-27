@@ -752,18 +752,19 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 			if (!base)
 				continue;
 			for (k = 0; k < base->numAircraftInBase; k++) {
+				linkedList_t* l;
 				aircraft_t *aircraft = &base->aircraft[k];
-				const size_t size = lengthof(aircraft->acTeam);
-				int l;
-				for (l = 0; l < size; l++) {
+
+				for (l = aircraft->acTeam; l != NULL; l = l->next) {
 					/* no need to check for == here, the employee should
 					 * no longer be in this list, due to the E_UnhireEmployee
 					 * call which will also remove any assignments for the
 					 * aircraft - checking >= because the employee after the
 					 * removed on in ccs.employees is now on the same position
 					 * where the removed employee was before */
-					if (aircraft->acTeam[l] >= employee)
-						aircraft->acTeam[l]--;
+					/** @todo remove this once the employees are a linked list, too */
+					if ((employee_t *)l->data >= employee)
+						l->data--;
 				}
 				if (employee->type == EMPL_PILOT && aircraft->pilot >= employee)
 					aircraft->pilot--;

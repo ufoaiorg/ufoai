@@ -151,6 +151,7 @@ void AIR_ListAircraft_f (void)
 
 		Com_Printf("Aircraft in %s: %i\n", base->name, base->numAircraftInBase);
 		for (i = 0; i < base->numAircraftInBase; i++) {
+			linkedList_t *l;
 			const aircraft_t *aircraft = &base->aircraft[i];
 			Com_Printf("Aircraft %s\n", aircraft->name);
 			Com_Printf("...idx cur/global %i/%i\n", i, aircraft->idx);
@@ -218,17 +219,16 @@ void AIR_ListAircraft_f (void)
 			Com_Printf("...fuel %i\n", aircraft->fuel);
 			Com_Printf("...status %s\n", AIR_AircraftStatusToName(aircraft));
 			Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
-			Com_Printf("...team: (%i/%i)\n", aircraft->teamSize, aircraft->maxTeamSize);
-			for (k = 0; k < aircraft->maxTeamSize; k++)
-				if (aircraft->acTeam[k]) {
-					const employee_t *employee = aircraft->acTeam[k];
-					const character_t *chr = &employee->chr;
-					Com_Printf("......idx (in global array): %i\n", employee->idx);
-					if (chr)
-						Com_Printf(".........name: %s\n", chr->name);
-					else
-						Com_Printf(".........ERROR: Could not get character for employee %i\n", employee->idx);
-				}
+			Com_Printf("...team: (%i/%i)\n", LIST_Count(aircraft->acTeam), aircraft->maxTeamSize);
+			for (l = aircraft->acTeam; l != NULL; l = l->next) {
+				const employee_t const *employee = (const employee_t *)l->data;
+				const character_t *chr = &employee->chr;
+				Com_Printf("......idx (in global array): %i\n", employee->idx);
+				if (chr)
+					Com_Printf(".........name: %s\n", chr->name);
+				else
+					Com_Printf(".........ERROR: Could not get character for employee %i\n", employee->idx);
+			}
 		}
 	}
 }
@@ -823,28 +823,26 @@ int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
  */
 static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 {
-	int i;
 	int size = 0;
+	linkedList_t* l;
 
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		const employee_t const *employee = aircraft->acTeam[i];
-		if (employee != NULL) {
-			containerIndex_t container;
-			for (container = 0; container < csi.numIDs; container++) {
-				invList_t *ic;
+	for (l = aircraft->acTeam; l != NULL; l = l->next) {
+		const employee_t const *employee = (const employee_t *)l->data;
+		containerIndex_t container;
+		for (container = 0; container < csi.numIDs; container++) {
+			invList_t *ic;
 #if 0
-				/* ignore items linked from any temp container */
-				if (INVDEF(container)->temp)
-					continue;
+			/* ignore items linked from any temp container */
+			if (INVDEF(container)->temp)
+				continue;
 #endif
-				for (ic = CONTAINER(&employee->chr, container); ic; ic = ic->next) {
-					const objDef_t *obj = ic->item.t;
-					size += obj->size;
+			for (ic = CONTAINER(&employee->chr, container); ic; ic = ic->next) {
+				const objDef_t *obj = ic->item.t;
+				size += obj->size;
 
-					obj = ic->item.m;
-					if (obj)
-						size += obj->size;
-				}
+				obj = ic->item.m;
+				if (obj)
+					size += obj->size;
 			}
 		}
 	}
@@ -916,6 +914,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	base_t *oldBase;
 	baseCapacities_t capacity;
 	aircraft_t *aircraftDest;
+	linkedList_t* l;
 	int i;
 
 	assert(aircraft);
@@ -940,13 +939,12 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 
 	/* Transfer employees */
 	E_MoveIntoNewBase(aircraft->pilot, base);
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		employee_t *employee = aircraft->acTeam[i];
-		if (employee != NULL) {
-			E_MoveIntoNewBase(employee, base);
-			/* Transfer items carried by soldiers from oldBase to base */
-			AIR_TransferItemsCarriedByCharacterToBase(&employee->chr, oldBase, base);
-		}
+
+	for (l = aircraft->acTeam; l != NULL; l = l->next) {
+		employee_t *employee = (employee_t *)l->data;
+		E_MoveIntoNewBase(employee, base);
+		/* Transfer items carried by soldiers from oldBase to base */
+		AIR_TransferItemsCarriedByCharacterToBase(&employee->chr, oldBase, base);
 	}
 
 	/* Move aircraft to new base */
@@ -1104,29 +1102,25 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
  */
 void AIR_DestroyAircraft (aircraft_t *aircraft)
 {
-	int i;
+	linkedList_t* l;
 
 	assert(aircraft);
 
 	/* this must be a reverse loop because the employee array is changed for
 	 * removing employees, thus the acTeam will point to another employee after
 	 * E_DeleteEmployee (sideeffect) was called */
-	for (i = aircraft->maxTeamSize - 1; i >= 0; i--) {
-		employee_t *employee = aircraft->acTeam[i];
-		if (employee != NULL) {
-			E_RemoveInventoryFromStorage(employee);
-			E_DeleteEmployee(employee, employee->type);
-			assert(aircraft->acTeam[i] == NULL);
-		}
+	for (l = aircraft->acTeam; l != NULL; l = l->next) {
+		employee_t *employee = (employee_t *)l->data;
+		E_RemoveInventoryFromStorage(employee);
+		E_DeleteEmployee(employee, employee->type);
 	}
 	/* the craft may no longer have any employees assigned */
-	assert(aircraft->teamSize == 0);
 	/* remove the pilot */
 	if (aircraft->pilot && E_DeleteEmployee(aircraft->pilot, aircraft->pilot->type)) {
 		aircraft->pilot = NULL;
 	} else {
 		/* This shouldn't ever happen. */
-		Com_DPrintf(DEBUG_CLIENT, "AIR_DestroyAircraft: aircraft id %s had no pilot\n", aircraft->id);
+		Com_Error(ERR_DROP, "AIR_DestroyAircraft: aircraft id %s had no pilot\n", aircraft->id);
 	}
 
 	AIR_DeleteAircraft(aircraft);
@@ -1392,7 +1386,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	if (!aircraft || !mission)
 		return qfalse;
 
-	if (!aircraft->teamSize) {
+	if (B_GetNumOnTeam(aircraft) == 0) {
 		MN_Popup(_("Notice"), _("Assign one or more soldiers to this aircraft first."));
 		return qfalse;
 	}
@@ -1726,13 +1720,6 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 
 					break;
 				}
-
-			if (vp->string && !strcmp(vp->string, "size")) {
-				if (aircraftTemplate->maxTeamSize > lengthof(aircraftTemplate->acTeam)) {
-					Com_Printf("AIR_ParseAircraft: size for aircraft exceeded max allowed size\n");
-					aircraftTemplate->maxTeamSize = lengthof(aircraftTemplate->acTeam);
-				}
-			}
 
 			if (!strcmp(token, "type")) {
 				token = Com_EParse(text, errhead, name);
@@ -2217,7 +2204,7 @@ Aircraft functions related to team handling.
  */
 void AIR_ResetAircraftTeam (aircraft_t *aircraft)
 {
-	memset(aircraft->acTeam, 0, sizeof(aircraft->acTeam));
+	LIST_Delete(&aircraft->acTeam);
 }
 
 /**
@@ -2228,8 +2215,6 @@ void AIR_ResetAircraftTeam (aircraft_t *aircraft)
  */
 qboolean AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
 {
-	int i;
-
 	if (!employee) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: No employee given!\n");
 		return qfalse;
@@ -2239,18 +2224,11 @@ qboolean AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: No aircraft given!\n");
 		return qfalse;
 	}
-	if (aircraft->teamSize < aircraft->maxTeamSize) {
-		/* Search for unused place in aircraft and fill it with employee-data */
-		for (i = 0; i < aircraft->maxTeamSize; i++) {
-			if (aircraft->acTeam[i] == NULL) {
-				aircraft->acTeam[i] = employee;
-				Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: added idx '%d'\n",
-					employee->idx);
-				aircraft->teamSize++;
-				return qtrue;
-			}
-		}
-		Com_Error(ERR_DROP, "AIR_AddToAircraftTeam: Couldn't find space");
+	if (B_GetNumOnTeam(aircraft) < aircraft->maxTeamSize) {
+		LIST_AddPointer(&aircraft->acTeam, employee);
+		Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: added idx '%d'\n",
+			employee->idx);
+		return qtrue;
 	}
 
 	Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: No space in aircraft\n");
@@ -2265,24 +2243,21 @@ qboolean AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
  */
 qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *employee)
 {
-	int i;
+	linkedList_t* l;
 
 	assert(aircraft);
 	assert(employee);
 
-	if (aircraft->teamSize <= 0) {
-		Com_Printf("AIR_RemoveFromAircraftTeam: teamSize is %i, we should not be here!\n",
-			aircraft->teamSize);
+	if (B_GetNumOnTeam(aircraft) == 0)
 		return qfalse;
-	}
 
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
+	for (l = aircraft->acTeam; l != NULL; l = l->next) {
+		const employee_t const *employeeInCraft = (const employee_t *)l->data;
 		/* Search for this exact employee in the aircraft and remove him from the team. */
-		if (aircraft->acTeam[i] == employee) {
-			aircraft->acTeam[i] = NULL;
+		if (employeeInCraft == employee) {
+			LIST_Remove(&aircraft->acTeam, l);
 			Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveFromAircraftTeam: removed idx '%d' \n",
 				employee->idx);
-			aircraft->teamSize--;
 			return qtrue;
 		}
 	}
@@ -2296,15 +2271,13 @@ qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *emp
 }
 
 /**
- * @brief Checks whether given employee is in given aircraft (i.e. he/she is onboard).
- * @param[in] aircraft The team-list in theis aircraft is check if it contains the employee.
+ * @brief Checks whether given employee is in given aircraft
+ * @param[in] aircraft The aircraft to check
  * @param[in] employee Employee to check.
- * @return qtrue if an employee with given index is assigned to given aircraft.
+ * @return @c true if the given employee is assigned to the given aircraft.
  */
 qboolean AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *employee)
 {
-	int i;
-
 	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: No aircraft given\n");
 		return qfalse;
@@ -2315,15 +2288,10 @@ qboolean AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *emp
 		return qfalse;
 	}
 
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[i] == employee) {
-			/** @note This also skips the NULL entries in acTeam[]. */
-			return qtrue;
-		}
-	}
+	if (B_GetNumOnTeam(aircraft) == 0)
+		return qfalse;
 
-	Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: not found idx '%d' \n", employee->idx);
-	return qfalse;
+	return LIST_Contains(aircraft->acTeam, employee) != NULL;
 }
 
 /**
@@ -2342,7 +2310,6 @@ void AIR_AutoAddPilotToAircraft (base_t* base, employee_t* pilot)
 			break;
 		}
 	}
-
 }
 
 /**
@@ -2457,7 +2424,7 @@ static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const air
 	mxml_node_t *node;
 	mxml_node_t *subnode;
 	int l;
-	size_t size;
+	linkedList_t *k;
 
 	Com_RegisterConstList(saveAircraftConstants);
 
@@ -2540,13 +2507,11 @@ static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const air
 	mxml_AddInt(node, SAVE_AIRCRAFT_HANGAR, aircraft->hangar);
 
 	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_AIRCRAFTTEAM);
-	size = lengthof(aircraft->acTeam);
-	for (l = 0; l < size; l++) {
-		const employee_t const *employee = aircraft->acTeam[l];
-		if (employee != NULL) {
-			mxml_node_t *ssnode = mxml_AddNode(subnode, SAVE_AIRCRAFT_MEMBER);
-			mxml_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, employee->chr.ucn);
-		}
+
+	for (k = aircraft->acTeam; k != NULL; k = k->next) {
+		const employee_t const *employee = (const employee_t *)k->data;
+		mxml_node_t *ssnode = mxml_AddNode(subnode, SAVE_AIRCRAFT_MEMBER);
+		mxml_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, employee->chr.ucn);
 	}
 
 	if (aircraft->pilot)
@@ -2684,7 +2649,7 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 	mxml_node_t *ssnode;
 	const char *statusId;
 	/* vars, if aircraft wasn't found */
-	int tmp_int;
+	int tmpInt;
 	int l;
 	const char *s = mxml_GetString(p, SAVE_AIRCRAFT_ID);
 	aircraft_t *crafttype = AIR_GetAircraft(s);
@@ -2697,8 +2662,8 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 	/* Copy all datas that don't need to be saved (tpl, hangar,...) */
 	*craft = *crafttype;
 
-	tmp_int = mxml_GetInt(p, SAVE_AIRCRAFT_HOMEBASE, MAX_BASES);
-	craft->homebase = (tmp_int != MAX_BASES) ? B_GetBaseByIDX(tmp_int) : NULL;
+	tmpInt = mxml_GetInt(p, SAVE_AIRCRAFT_HOMEBASE, MAX_BASES);
+	craft->homebase = (tmpInt != MAX_BASES) ? B_GetBaseByIDX(tmpInt) : NULL;
 
 	Com_RegisterConstList(saveAircraftConstants);
 
@@ -2766,13 +2731,13 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 	craft->detected = mxml_GetBool(p, SAVE_AIRCRAFT_DETECTED, qfalse);
 	craft->landed = mxml_GetBool(p, SAVE_AIRCRAFT_LANDED, qfalse);
 
-	tmp_int = mxml_GetInt(p, SAVE_AIRCRAFT_AIRCRAFTTARGET, -1);
-	if (tmp_int == -1)
+	tmpInt = mxml_GetInt(p, SAVE_AIRCRAFT_AIRCRAFTTARGET, -1);
+	if (tmpInt == -1)
 		craft->aircraftTarget = NULL;
 	else if (!craft->homebase)
-		craft->aircraftTarget = AIR_AircraftGetFromIDX(tmp_int);
+		craft->aircraftTarget = AIR_AircraftGetFromIDX(tmpInt);
 	else
-		craft->aircraftTarget = ccs.ufos + tmp_int;
+		craft->aircraftTarget = ccs.ufos + tmpInt;
 
 	/* read equipment slots */
 	snode = mxml_GetNode(p, SAVE_AIRCRAFT_WEAPONS);
@@ -2793,21 +2758,20 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 		return qfalse;
 	craft->hangar = mxml_GetInt(p, SAVE_AIRCRAFT_HANGAR, 0);
 
-	craft->teamSize = 0;
 	snode = mxml_GetNode(p, SAVE_AIRCRAFT_AIRCRAFTTEAM);
-	for (ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_MEMBER); craft->teamSize < lengthof(craft->acTeam) && ssnode;
+	for (ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_MEMBER); B_GetNumOnTeam(craft) < craft->maxTeamSize && ssnode;
 			ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_MEMBER)) {
 		const int ucn = mxml_GetInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, -1);
 		if (ucn != -1)
-			craft->acTeam[craft->teamSize++] = E_GetEmployeeFromChrUCN(ucn);
+			LIST_AddPointer(&craft->acTeam, E_GetEmployeeFromChrUCN(ucn));
 	}
 
-	tmp_int = mxml_GetInt(p, SAVE_AIRCRAFT_PILOTUCN, -1);
+	tmpInt = mxml_GetInt(p, SAVE_AIRCRAFT_PILOTUCN, -1);
 	/* the employee subsystem is loaded after the base subsystem
 	 * this means, that the pilot pointer is not (really) valid until
 	 * E_Load was called, too */
-	if (tmp_int != -1)
-		craft->pilot = E_GetEmployeeFromChrUCN(tmp_int);
+	if (tmpInt != -1)
+		craft->pilot = E_GetEmployeeFromChrUCN(tmpInt);
 	else
 		craft->pilot = NULL;
 
@@ -3088,14 +3052,14 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const ai
  */
 void AIR_RemoveEmployees (aircraft_t *aircraft)
 {
-	int i;
+	linkedList_t* l;
 
 	if (!aircraft)
 		return;
 
-	/* Counting backwards because aircraft->acTeam[] is changed in AIR_RemoveEmployee */
-	for (i = aircraft->maxTeamSize - 1; i >= 0; i--) {
-		employee_t *employee = aircraft->acTeam[i];
+	for (l = aircraft->acTeam; l != NULL;) {
+		employee_t *employee = (employee_t *)l->data;
+		l = l->next;
 		/* use global aircraft index here */
 		AIR_RemoveEmployee(employee, aircraft);
 	}
@@ -3103,7 +3067,7 @@ void AIR_RemoveEmployees (aircraft_t *aircraft)
 	/* Remove pilot */
 	aircraft->pilot = NULL;
 
-	if (aircraft->teamSize > 0)
+	if (B_GetNumOnTeam(aircraft) > 0)
 		Com_Error(ERR_DROP, "AIR_RemoveEmployees: Error, there went something wrong with soldier-removing from aircraft.");
 }
 
@@ -3116,6 +3080,7 @@ void AIR_RemoveEmployees (aircraft_t *aircraft)
 void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_t *ed)
 {
 	containerIndex_t container;
+	linkedList_t *l;
 
 	if (!aircraft) {
 		Com_Printf("AIR_MoveEmployeeInventoryIntoStorage: Warning: Called with no aircraft (and thus no carried equipment to add).\n");
@@ -3126,15 +3091,14 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_
 		return;
 	}
 
-	if (aircraft->teamSize <= 0) {
+	if (B_GetNumOnTeam(aircraft) == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_MoveEmployeeInventoryIntoStorage: No team to remove equipment from.\n");
 		return;
 	}
 
 	for (container = 0; container < csi.numIDs; container++) {
-		int p;
-		for (p = 0; p < aircraft->maxTeamSize; p++) {
-			employee_t *employee = aircraft->acTeam[p];
+		for (l = aircraft->acTeam; l != NULL; l = l->next) {
+			employee_t *employee = (employee_t *)l->data;
 			if (employee != NULL) {
 				character_t *chr = &employee->chr;
 				invList_t *ic = CONTAINER(chr, container);
@@ -3178,24 +3142,13 @@ static qboolean AIR_AddEmployee (employee_t *employee, aircraft_t *aircraft)
 	if (!employee || !aircraft)
 		return qfalse;
 
-	if (aircraft->teamSize < lengthof(aircraft->acTeam)) {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_AddEmployee: attempting to find idx '%d'\n", employee->idx);
-
+	if (B_GetNumOnTeam(aircraft) < aircraft->maxTeamSize) {
 		/* Check whether the soldier is already on another aircraft */
-		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
-			Com_DPrintf(DEBUG_CLIENT, "AIR_AddEmployee: found idx '%d' \n", employee->idx);
+		if (AIR_IsEmployeeInAircraft(employee, NULL))
 			return qfalse;
-		}
 
 		/* Assign the soldier to the aircraft. */
-		if (aircraft->teamSize < aircraft->maxTeamSize) {
-			Com_DPrintf(DEBUG_CLIENT, "AIR_AddEmployee: attempting to add idx '%d' \n", employee->idx);
-			return AIR_AddToAircraftTeam(aircraft, employee);
-		}
-#ifdef DEBUG
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_AddEmployee: aircraft full - not added\n");
-#endif
+		return AIR_AddToAircraftTeam(aircraft, employee);
 	}
 	return qfalse;
 }
@@ -3247,7 +3200,7 @@ void AIR_AssignInitial (aircraft_t *aircraft)
 	base = aircraft->homebase;
 	assert(base);
 
-	num = min(E_GenerateHiredEmployeesList(base), lengthof(aircraft->acTeam));
+	num = min(E_GenerateHiredEmployeesList(base), aircraft->maxTeamSize);
 	for (i = 0; i < num; i++)
 		AIM_AddEmployeeFromMenu(aircraft, i);
 }
