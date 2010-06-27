@@ -205,6 +205,10 @@ static void UFO_TestStringCopiers (void)
 
 	/* Com_sprintf */
 
+	/* empty string */
+	Com_sprintf(dest, 1, "aab%c%c", 0xd0, 0x80);
+	CU_ASSERT_EQUAL(dest[0], '\0');
+
 	/* trimmed non utf8 */
 	Com_sprintf(dest, 4, "aab%c%c", 0xd0, 0x80);
 	CU_ASSERT_EQUAL(dest[2], 'b');
@@ -222,6 +226,10 @@ static void UFO_TestStringCopiers (void)
 	CU_ASSERT_EQUAL(dest[5], '\0');
 
 	/* UTF8_strncpyz */
+
+	/* empty string */
+	UTF8_strncpyz(dest, "aab\xD0\x80", 1);
+	CU_ASSERT_EQUAL(dest[0], '\0');
 
 	/* trimmed non utf8 */
 	UTF8_strncpyz(dest, "aab\xD0\x80", 4);
