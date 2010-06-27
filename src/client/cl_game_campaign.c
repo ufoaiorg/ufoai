@@ -337,13 +337,11 @@ qboolean GAME_CP_Spawn (void)
 	if (!aircraft)
 		return qfalse;
 
-	/* convert aircraft team to chr_list */
+	/* convert aircraft team to character list */
 	for (l = aircraft->acTeam; l != NULL; l = l->next) {
 		employee_t *employee = (employee_t *)l->data;
-		if (employee != NULL) {
-			cl.chrList.chr[cl.chrList.num] = &employee->chr;
-			cl.chrList.num++;
-		}
+		cl.chrList.chr[cl.chrList.num] = &employee->chr;
+		cl.chrList.num++;
 	}
 
 	base = CP_GetMissionBase();
