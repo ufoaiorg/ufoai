@@ -2448,7 +2448,7 @@ void B_UpdateBaseData (void)
 			if (!b)
 				continue;
 			if (B_CheckBuildingConstruction(b, base)) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Construction of %s building finished in %s."), _(b->name), ccs.bases[baseIdx].name);
+				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Construction of %s building finished in %s."), _(b->name), ccs.bases[baseIdx].name);
 				MS_AddNewMessage(_("Building finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			}
 		}
@@ -2506,7 +2506,6 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	int gained = 0;
 	int forcedsold = 0;
 	int forcedgained = 0;
-	char str[128];
 	itemsTmp_t *cargo;
 	base_t *base;
 
@@ -2551,14 +2550,14 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	}
 
 	if (numitems > 0) {
-		Com_sprintf(str, sizeof(str), _("By selling %s you gathered %i credits."),
+		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("By selling %s you gathered %i credits."),
 			va(ngettext("%i collected item", "%i collected items", numitems), numitems), gained);
-		MS_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 	}
 	if (forcedsold > 0) {
-		Com_sprintf(str, sizeof(str), _("Not enough storage space in %s. %s"),
+		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Not enough storage space in %s. %s"),
 			base->name, va(ngettext("%i item was sold for %i credits.", "%i items were sold for %i credits.", forcedsold), forcedsold, forcedgained));
-		MS_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 	}
 	CL_UpdateCredits(ccs.credits + gained + forcedgained);
 
