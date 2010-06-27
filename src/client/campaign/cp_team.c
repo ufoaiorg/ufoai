@@ -161,24 +161,26 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 
 	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
 	for (p = 0; p < aircraft->maxTeamSize; p++) {
-		if (aircraft->acTeam[p]) {
-			character_t *chr = &aircraft->acTeam[p]->chr;
+		employee_t *employee = aircraft->acTeam[p];
+		if (employee != NULL) {
+			character_t *chr = &employee->chr;
 			assert(chr);
 
 			/* This is an UGV */
-			if (aircraft->acTeam[p]->ugv) {
+			if (employee->ugv) {
 				/* Check if there is a weapon and add it if there isn't. */
 				if (!RIGHT(chr) || !RIGHT(chr)->item.t)
-					cls.i.EquipActorRobot(&cls.i, &chr->i, chr, INVSH_GetItemByID(aircraft->acTeam[p]->ugv->weapon));
+					cls.i.EquipActorRobot(&cls.i, &chr->i, chr, INVSH_GetItemByID(employee->ugv->weapon));
 			}
 		}
 	}
 
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0; p < aircraft->maxTeamSize; p++) {
-			if (aircraft->acTeam[p]) {
+			employee_t *employee = aircraft->acTeam[p];
+			if (employee != NULL) {
 				invList_t *ic, *next;
-				character_t *chr = &aircraft->acTeam[p]->chr;
+				character_t *chr = &employee->chr;
 				assert(chr);
 #if 0
 				/* ignore items linked from any temp container */

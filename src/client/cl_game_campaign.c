@@ -339,8 +339,9 @@ qboolean GAME_CP_Spawn (void)
 
 	/* convert aircraft team to chr_list */
 	for (i = 0, cl.chrList.num = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[i]) {
-			cl.chrList.chr[cl.chrList.num] = &aircraft->acTeam[i]->chr;
+		employee_t *employee = aircraft->acTeam[i];
+		if (employee != NULL) {
+			cl.chrList.chr[cl.chrList.num] = &employee->chr;
 			cl.chrList.num++;
 		}
 	}

@@ -182,7 +182,6 @@ typedef struct aircraft_s {
 	int price;			/**< Price of this aircraft type at game start, it's evolving on the market. */
 	int fuel;			/**< Current fuel amount. */
 	int damage;			/**< Current Hit Point of the aircraft */
-	int maxTeamSize;	/**< Max amount of soldiers onboard. @todo How do we handle 2x2 units here? @note Limited to MAX_ACTIVETEAM */
 	int size;			/**< Size of the aircraft used in capacity calculations. */
 	vec3_t pos;			/**< Current position on the geoscape. */
 	vec3_t direction;	/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */
@@ -195,6 +194,7 @@ typedef struct aircraft_s {
 	int hangar;			/**< This is the baseCapacities_t enum value which says in which hangar this aircraft
 						 * is being parked in (CAP_AIRCRAFT_SMALL/CAP_AIRCRAFT_BIG). */
 
+	int maxTeamSize;	/**< Max amount of soldiers onboard. */
 	int teamSize;				/**< How many soldiers/units are on board (i.e. in the craft-team). */
 	struct employee_s *acTeam[MAX_ACTIVETEAM];			/**< List of employees. i.e. current team for this aircraft. @todo Make this a linked list? */
 

@@ -2117,8 +2117,9 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 
 	chrListTemp.num = 0;
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[i]) {
-			character_t *chr = &aircraft->acTeam[i]->chr;
+		employee_t *employee = aircraft->acTeam[i];
+		if (employee != NULL) {
+			character_t *chr = &employee->chr;
 			/* pack equipment */
 			Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
 			cls.i.EquipActor(&cls.i, &chr->i, ed, chr);

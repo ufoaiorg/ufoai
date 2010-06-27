@@ -827,9 +827,9 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 	int size = 0;
 
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[i]) {
+		const employee_t const *employee = aircraft->acTeam[i];
+		if (employee != NULL) {
 			containerIndex_t container;
-			const employee_t const *employee = aircraft->acTeam[i];
 			for (container = 0; container < csi.numIDs; container++) {
 				invList_t *ic;
 #if 0
@@ -941,8 +941,8 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	/* Transfer employees */
 	E_MoveIntoNewBase(aircraft->pilot, base);
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[i]) {
-			employee_t *employee = aircraft->acTeam[i];
+		employee_t *employee = aircraft->acTeam[i];
+		if (employee != NULL) {
 			E_MoveIntoNewBase(employee, base);
 			/* Transfer items carried by soldiers from oldBase to base */
 			AIR_TransferItemsCarriedByCharacterToBase(&employee->chr, oldBase, base);
@@ -1112,8 +1112,8 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 	 * removing employees, thus the acTeam will point to another employee after
 	 * E_DeleteEmployee (sideeffect) was called */
 	for (i = aircraft->maxTeamSize - 1; i >= 0; i--) {
-		if (aircraft->acTeam[i]) {
-			employee_t *employee = aircraft->acTeam[i];
+		employee_t *employee = aircraft->acTeam[i];
+		if (employee != NULL) {
 			E_RemoveInventoryFromStorage(employee);
 			E_DeleteEmployee(employee, employee->type);
 			assert(aircraft->acTeam[i] == NULL);
@@ -2241,14 +2241,15 @@ qboolean AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
 	}
 	if (aircraft->teamSize < aircraft->maxTeamSize) {
 		/* Search for unused place in aircraft and fill it with employee-data */
-		for (i = 0; i < aircraft->maxTeamSize; i++)
-			if (!aircraft->acTeam[i]) {
+		for (i = 0; i < aircraft->maxTeamSize; i++) {
+			if (aircraft->acTeam[i] == NULL) {
 				aircraft->acTeam[i] = employee;
 				Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: added idx '%d'\n",
 					employee->idx);
 				aircraft->teamSize++;
 				return qtrue;
 			}
+		}
 		Com_Error(ERR_DROP, "AIR_AddToAircraftTeam: Couldn't find space");
 	}
 
@@ -2267,6 +2268,7 @@ qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *emp
 	int i;
 
 	assert(aircraft);
+	assert(employee);
 
 	if (aircraft->teamSize <= 0) {
 		Com_Printf("AIR_RemoveFromAircraftTeam: teamSize is %i, we should not be here!\n",
@@ -2276,7 +2278,7 @@ qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *emp
 
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		/* Search for this exact employee in the aircraft and remove him from the team. */
-		if (aircraft->acTeam[i] && aircraft->acTeam[i] == employee)	{
+		if (aircraft->acTeam[i] == employee) {
 			aircraft->acTeam[i] = NULL;
 			Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveFromAircraftTeam: removed idx '%d' \n",
 				employee->idx);
@@ -2540,9 +2542,10 @@ static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const air
 	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_AIRCRAFTTEAM);
 	size = lengthof(aircraft->acTeam);
 	for (l = 0; l < size; l++) {
-		if (aircraft->acTeam[l]) {
+		const employee_t const *employee = aircraft->acTeam[l];
+		if (employee != NULL) {
 			mxml_node_t *ssnode = mxml_AddNode(subnode, SAVE_AIRCRAFT_MEMBER);
-			mxml_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, aircraft->acTeam[l]->chr.ucn);
+			mxml_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, employee->chr.ucn);
 		}
 	}
 
@@ -3092,14 +3095,9 @@ void AIR_RemoveEmployees (aircraft_t *aircraft)
 
 	/* Counting backwards because aircraft->acTeam[] is changed in AIR_RemoveEmployee */
 	for (i = aircraft->maxTeamSize - 1; i >= 0; i--) {
+		employee_t *employee = aircraft->acTeam[i];
 		/* use global aircraft index here */
-		if (AIR_RemoveEmployee(aircraft->acTeam[i], aircraft)) {
-			/* if the acTeam is not NULL the acTeam list and AIR_IsEmployeeInAircraft
-			 * is out of sync */
-			assert(aircraft->acTeam[i] == NULL);
-		} else if (aircraft->acTeam[i]) {
-			Com_Printf("AIR_RemoveEmployees: Error, could not remove soldier from aircraft team at pos: %i\n", i);
-		}
+		AIR_RemoveEmployee(employee, aircraft);
 	}
 
 	/* Remove pilot */
@@ -3136,8 +3134,9 @@ void AIR_MoveEmployeeInventoryIntoStorage (const aircraft_t *aircraft, equipDef_
 	for (container = 0; container < csi.numIDs; container++) {
 		int p;
 		for (p = 0; p < aircraft->maxTeamSize; p++) {
-			if (aircraft->acTeam[p]) {
-				character_t *chr = &aircraft->acTeam[p]->chr;
+			employee_t *employee = aircraft->acTeam[p];
+			if (employee != NULL) {
+				character_t *chr = &employee->chr;
 				invList_t *ic = CONTAINER(chr, container);
 #if 0
 				if (INVDEF(container)->temp)
@@ -3227,8 +3226,7 @@ void AIM_AddEmployeeFromMenu (aircraft_t *aircraft, const int num)
 		AIR_RemoveEmployee(employee, aircraft);
 	} else {
 		/* Assign soldier to aircraft/team if aircraft is not full */
-		if (AIR_AddEmployee(employee, aircraft)) {
-		}
+		AIR_AddEmployee(employee, aircraft);
 	}
 }
 

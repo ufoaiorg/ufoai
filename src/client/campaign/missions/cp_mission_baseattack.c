@@ -189,8 +189,8 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	memset(&baseAttackFakeAircraft, 0, sizeof(baseAttackFakeAircraft));
 	baseAttackFakeAircraft.homebase = base;
 	VectorCopy(base->pos, baseAttackFakeAircraft.pos);				/* needed for transfer of alien corpses */
-	/** @todo EMPL_ROBOT */
 	baseAttackFakeAircraft.maxTeamSize = lengthof(baseAttackFakeAircraft.acTeam);			/* needed to spawn soldiers on map */
+	/** @todo EMPL_ROBOT */
 	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiersInBase);
 
 	if (!hiredSoldiersInBase) {
