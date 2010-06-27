@@ -1106,9 +1106,6 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 
 	assert(aircraft);
 
-	/* this must be a reverse loop because the employee array is changed for
-	 * removing employees, thus the acTeam will point to another employee after
-	 * E_DeleteEmployee (sideeffect) was called */
 	for (l = aircraft->acTeam; l != NULL;) {
 		employee_t *employee = (employee_t *)l->data;
 		l = l->next;
