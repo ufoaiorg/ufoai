@@ -74,9 +74,10 @@ const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* s
  * @return the linkedList_t pointer if the string is found, otherwise @c NULL
  * @note if data is @c NULL, the function returns @c NULL
  */
-const linkedList_t* LIST_Contains (const linkedList_t* list, const void* data)
+const linkedList_t* LIST_ContainsPointer (const linkedList_t* list, const void* data)
 {
 	assert(list);
+	assert(list->ptr);
 
 	while ((data != NULL) && (list != NULL)) {
 		if (list->data == data)

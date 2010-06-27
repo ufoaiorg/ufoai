@@ -261,6 +261,7 @@ void AIR_ResetAircraftTeam(aircraft_t *aircraft);
 qboolean AIR_AddToAircraftTeam(aircraft_t *aircraft, struct employee_s* employee);
 qboolean AIR_RemoveFromAircraftTeam(aircraft_t *aircraft, const struct employee_s* employee);
 qboolean AIR_IsInAircraftTeam(const aircraft_t *aircraft, const struct employee_s* employee);
+int AIR_GetTeamSize(const aircraft_t *aircraft);
 
 void CL_CampaignRunAircraft(int dt, qboolean updateRadarOverlay);
 aircraft_t *AIR_GetAircraftSilent(const char *name);

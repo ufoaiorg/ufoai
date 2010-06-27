@@ -661,7 +661,7 @@ static void BS_SellAircraft_f (void)
 
 		for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
 			if (!strcmp(aircraft->id, aircraftTemplate->id)) {
-				if (B_GetNumOnTeam(aircraft) > 0) {
+				if (AIR_GetTeamSize(aircraft) > 0) {
 					teamNote = qtrue;
 					continue;
 				}

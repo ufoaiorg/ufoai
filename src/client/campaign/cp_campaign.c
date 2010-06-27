@@ -1195,7 +1195,7 @@ void CP_StartSelectedMission (void)
 		Com_DPrintf(DEBUG_CLIENT, "CP_StartSelectedMission: Dropship not near landing zone: mis->active: %i\n", mis->active);
 		return;
 	}
-	if (B_GetNumOnTeam(aircraft) == 0) {
+	if (AIR_GetTeamSize(aircraft) == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "CP_StartSelectedMission: No team in dropship.\n");
 		return;
 	}
@@ -1249,19 +1249,19 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 		case INTERESTCATEGORY_TERROR_ATTACK:
 			/* very hard to win this */
 			/** @todo change the formular here to reflect the above comment */
-			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * B_GetNumOnTeam(aircraft) - ccs.battleParameters.aliens);
+			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * AIR_GetTeamSize(aircraft) - ccs.battleParameters.aliens);
 			break;
 		case INTERESTCATEGORY_XVI:
 			/* not that hard to win this, they want to spread xvi - no real terror mission */
 			/** @todo change the formular here to reflect the above comment */
-			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * B_GetNumOnTeam(aircraft) - ccs.battleParameters.aliens);
+			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * AIR_GetTeamSize(aircraft) - ccs.battleParameters.aliens);
 			break;
 		default:
 			/** @todo change the formular here to reflect the above comments */
-			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * B_GetNumOnTeam(aircraft) - ccs.battleParameters.aliens);
+			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * AIR_GetTeamSize(aircraft) - ccs.battleParameters.aliens);
 			break;
 		}
-		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i -- probability to win: %.02f\n", ccs.battleParameters.aliens, B_GetNumOnTeam(aircraft), winProbability);
+		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i -- probability to win: %.02f\n", ccs.battleParameters.aliens, AIR_GetTeamSize(aircraft), winProbability);
 
 		return winProbability;
 	} else {
@@ -1427,7 +1427,7 @@ void CL_GameAutoGo (mission_t *mis)
 		ccs.missionResults.ownKilled = 0;
 		ccs.missionResults.ownKilledFriendlyFire = 0;
 		ccs.missionResults.ownStunned = 0;
-		ccs.missionResults.ownSurvived = B_GetNumOnTeam(aircraft);
+		ccs.missionResults.ownSurvived = AIR_GetTeamSize(aircraft);
 		CP_InitMissionResults(won);
 		Cvar_SetValue("mn_autogo", 1);
 		MN_PushWindow("won", NULL);

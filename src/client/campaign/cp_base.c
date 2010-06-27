@@ -2214,7 +2214,7 @@ static void B_BaseList_f (void)
 			Com_Printf("  %i  ", B_GetBuildingStatus(base, j));
 		Com_Printf("\nBase aircraft %i\n", base->numAircraftInBase);
 		for (j = 0; j < base->numAircraftInBase; j++) {
-			Com_Printf("Base aircraft-team %i\n", B_GetNumOnTeam(&base->aircraft[j]));
+			Com_Printf("Base aircraft-team %i\n", AIR_GetTeamSize(&base->aircraft[j]));
 		}
 		Com_Printf("Base pos %.02f:%.02f\n", base->pos[0], base->pos[1]);
 		Com_Printf("Base map:\n");
@@ -2480,17 +2480,6 @@ int B_CheckBuildingConstruction (building_t *building, base_t *base)
 		Cmd_ExecuteString("building_init");
 
 	return newBuilding;
-}
-
-/**
- * @brief Counts the number of soldiers in given aircraft.
- * @param[in] aircraft Pointer to the aircraft, for which we return the amount of soldiers.
- * @return Amount of soldiers.
- */
-int B_GetNumOnTeam (const aircraft_t *aircraft)
-{
-	assert(aircraft);
-	return LIST_Count(aircraft->acTeam);
 }
 
 /**

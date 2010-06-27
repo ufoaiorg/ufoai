@@ -157,7 +157,7 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 	assert(aircraft);
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_CleanupAircraftCrew:aircraft idx: %i, team size: %i\n",
-		aircraft->idx, B_GetNumOnTeam(aircraft));
+		aircraft->idx, AIR_GetTeamSize(aircraft));
 
 	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
 	for (l = aircraft->acTeam; l != NULL; l = l->next) {
@@ -238,7 +238,7 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 
 	assert(aircraft);
 
-	numOnAircraft = B_GetNumOnTeam(aircraft);
+	numOnAircraft = AIR_GetTeamSize(aircraft);
 	Cvar_Set("mn_hired", va(_("%i of %i"), numOnAircraft, aircraft->maxTeamSize));
 	Cvar_Set("mn_hirable_count", va("%i", aircraft->maxTeamSize - numOnAircraft));
 	Cvar_Set("mn_hired_count", va("%i", numOnAircraft));

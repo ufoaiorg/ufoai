@@ -210,7 +210,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 		return;
 
 	/* no soldiers are assigned to the current aircraft. */
-	if (B_GetNumOnTeam(aircraft) == 0) {
+	if (AIR_GetTeamSize(aircraft) == 0) {
 		MN_PopWindow(qfalse);
 		return;
 	}
@@ -439,7 +439,7 @@ static void CL_TeamListDebug_f (void)
 		return;
 	}
 
-	Com_Printf("%i members in the current team", B_GetNumOnTeam(aircraft));
+	Com_Printf("%i members in the current team", AIR_GetTeamSize(aircraft));
 	for (l = aircraft->acTeam; l != NULL; l = l->next) {
 		const employee_t *employee = (const employee_t *)l->data;
 		const character_t *chr = &employee->chr;

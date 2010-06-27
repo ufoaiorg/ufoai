@@ -235,7 +235,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 	Q_strcat(popupAircraft.textPopup, _("Change homebase\n"), POPUP_AIRCRAFT_MAX_TEXT);
 
 	/* Set missions in popup_aircraft */
-	if (B_GetNumOnTeam(aircraft) > 0) {
+	if (AIR_GetTeamSize(aircraft) > 0) {
 		const linkedList_t *list = ccs.missions;
 		for (; list; list = list->next) {
 			mission_t *tempMission = (mission_t *)list->data;
@@ -335,7 +335,7 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 		/* Check aircraft in base */
 		for (i = 0; i < base->numAircraftInBase; i++) {
 			aircraft_t *aircraft = &base->aircraft[i];
-			const int teamSize = B_GetNumOnTeam(aircraft);
+			const int teamSize = AIR_GetTeamSize(aircraft);
 			/* if aircraft is empty we can't send it on a ground mission */
 			if (teamSize > 0 && AIR_CanIntercept(aircraft)) {
 				char aircraftListText[256] = "";
@@ -422,7 +422,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 				}
 
 				Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s%s (%i/%i)\t%s\t%s"), enoughFuelMarker, aircraft->name,
-						B_GetNumOnTeam(aircraft), aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name);
+						AIR_GetTeamSize(aircraft), aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name);
 				LIST_AddString(&aircraftList, aircraftListText);
 				assert(aircraft->homebase == base);
 				popupIntercept.aircraft[popupIntercept.numAircraft] = aircraft;
