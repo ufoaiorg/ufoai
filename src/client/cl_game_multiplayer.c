@@ -38,7 +38,7 @@ void GAME_MP_AutoTeam (void)
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
 	const char *teamDefID = GAME_GetTeamDef();
 
-	GAME_GenerateTeam(teamDefID, ed, MAX_ACTIVETEAM);
+	GAME_GenerateTeam(teamDefID, ed, GAME_GetCharacterArraySize());
 }
 
 /**

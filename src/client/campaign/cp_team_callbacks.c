@@ -200,6 +200,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	int p;
 	aircraft_t *aircraft;
 	base_t *base = B_GetCurrentSelectedBase();
+	size_t size;
 
 	if (!base)
 		return;
@@ -223,7 +224,8 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	else
 		menuInventory = NULL;
 
-	for (; p < MAX_ACTIVETEAM; p++)
+	size = lengthof(aircraft->acTeam);
+	for (; p < size; p++)
 		MN_ExecuteConfunc("equipdisable %i", p);
 
 	/* manage inventory */

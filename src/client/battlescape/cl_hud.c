@@ -132,9 +132,10 @@ void HUD_DisplayMessage (const char *text)
 static void HUD_UpdateAllActors (void)
 {
 	int i;
+	const size_t size = lengthof(cl.teamList);
 
 	Cvar_SetValue("mn_numaliensspotted", cl.numAliensSpotted);
-	for (i = 0; i < MAX_TEAMLIST; i++) {
+	for (i = 0; i < size; i++) {
 		const le_t *le = cl.teamList[i];
 		if (le && !LE_IsDead(le)) {
 			const invList_t *invList;
@@ -1412,7 +1413,8 @@ static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *
 
 	if (newValue[0] != '\0') {
 		const int actorIdx = atoi(newValue);
-		if (actorIdx >= 0 && actorIdx < MAX_TEAMLIST)
+		const size_t size = lengthof(cl.teamList);
+		if (actorIdx >= 0 && actorIdx < size)
 			MN_ExecuteConfunc("hudselect %s", newValue);
 	}
 }

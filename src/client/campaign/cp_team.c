@@ -234,6 +234,7 @@ void CL_CleanTempInventory (base_t* base)
 int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType)
 {
 	int i;
+	size_t size;
 
 	assert(aircraft);
 
@@ -254,17 +255,19 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 		Cvar_ForceSet("mn_pilot_skin", "");
 	}
 
+	size = lengthof(aircraft->acTeam);
+
 	/* update chrDisplayList list (this is the one that is currently displayed) */
 	chrDisplayList.num = 0;
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		employee_t *empl = aircraft->acTeam[i];
-		assert(chrDisplayList.num < MAX_ACTIVETEAM);
 		if (!empl)
 			continue; /* Skip unused team-slot. */
 
 		if (empl->type != employeeType)
 			continue;
 
+		assert(chrDisplayList.num < size);
 		chrDisplayList.chr[chrDisplayList.num] = &empl->chr;
 
 		/* Sanity check(s) */
@@ -277,7 +280,7 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 		chrDisplayList.num++;
 	}
 
-	for (i = chrDisplayList.num; i < MAX_ACTIVETEAM; i++)
+	for (i = chrDisplayList.num; i < size; i++)
 		chrDisplayList.chr[i] = NULL;	/* Just in case */
 
 	return chrDisplayList.num;

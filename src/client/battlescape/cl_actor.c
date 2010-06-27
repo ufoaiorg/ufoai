@@ -363,13 +363,14 @@ ACTOR SELECTION AND TEAM LIST
 void CL_ActorAddToTeamList (le_t * le)
 {
 	int actorIdx;
+	const size_t size = lengthof(cl.teamList);
 
 	/* test team */
 	if (!le || le->team != cls.team || le->pnum != cl.pnum || LE_IsDead(le))
 		return;
 
 	/* check list length */
-	if (cl.numTeamList >= MAX_TEAMLIST)
+	if (cl.numTeamList >= size)
 		return;
 
 	/* check list for that actor */

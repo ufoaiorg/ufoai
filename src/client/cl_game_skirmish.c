@@ -65,11 +65,17 @@ static void GAME_SK_Start_f (void)
 	const char *name = Cvar_GetString("cl_equip");
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
 	const char *teamDefID = GAME_GetTeamDef();
+	const size_t size = GAME_GetCharacterArraySize();
 	int maxSoldiers = Cvar_GetInteger("sv_maxsoldiersperplayer");
-	const int ugvs = Cvar_GetInteger("cl_ugvs");
+	int ugvs = Cvar_GetInteger("cl_ugvs");
+	/** @todo make the teamdef configurable */
+	const char *ugvTeamDefID = "phalanx_ugv_phoenix";
+	int i;
 
 	if (maxSoldiers <= 0)
-		maxSoldiers = MAX_ACTIVETEAM;
+		maxSoldiers = size;
+
+	ugvs = min(Cvar_GetInteger("cl_ugvs"), size - maxSoldiers);
 
 	assert(cls.currentSelectedMap >= 0);
 	assert(cls.currentSelectedMap < MAX_MAPDEFS);
@@ -81,9 +87,8 @@ static void GAME_SK_Start_f (void)
 	GAME_SK_SetMissionParameters();
 
 	GAME_GenerateTeam(teamDefID, ed, maxSoldiers);
-	/** @todo add to scripts and make the teamdef configurable */
-	if (ugvs > 0 && maxSoldiers < MAX_ACTIVETEAM)
-		GAME_AppendTeamMember(maxSoldiers, "phalanx_ugv_phoenix", ed);
+	for (i = 0; i < ugvs; i++)
+		GAME_AppendTeamMember(i + maxSoldiers, ugvTeamDefID, ed);
 
 	assert(md->map);
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");

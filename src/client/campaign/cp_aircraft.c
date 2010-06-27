@@ -2792,7 +2792,7 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 
 	craft->teamSize = 0;
 	snode = mxml_GetNode(p, SAVE_AIRCRAFT_AIRCRAFTTEAM);
-	for (ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_MEMBER); craft->teamSize < MAX_ACTIVETEAM && ssnode;
+	for (ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_MEMBER); craft->teamSize < lengthof(craft->acTeam) && ssnode;
 			ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_MEMBER)) {
 		const int ucn = mxml_GetInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, -1);
 		if (ucn != -1)
@@ -3249,8 +3249,7 @@ void AIR_AssignInitial (aircraft_t *aircraft)
 	base = aircraft->homebase;
 	assert(base);
 
-	num = E_GenerateHiredEmployeesList(base);
-	num = min(num, MAX_TEAMLIST);
+	num = min(E_GenerateHiredEmployeesList(base), lengthof(aircraft->acTeam));
 	for (i = 0; i < num; i++)
 		AIM_AddEmployeeFromMenu(aircraft, i);
 }

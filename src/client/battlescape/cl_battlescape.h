@@ -25,11 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_BATTLESCAPE_H_
 #define CL_BATTLESCAPE_H_
 
-/** @todo There should be better places for these two macros */
-/* if you increase this, you also have to change the aircraft buy/sell menu scripts */
-#define MAX_ACTIVETEAM	8
-#define MAX_TEAMLIST	8
-
 typedef struct {
 	char name[MAX_VAR];
 	char cinfo[MAX_VAR];
@@ -50,7 +45,7 @@ typedef struct client_state_s {
 								 * is rendering at.  always <= cls.realtime */
 	camera_t cam;
 
-	le_t *teamList[MAX_TEAMLIST];
+	le_t *teamList[MAX_ACTIVETEAM];
 	int numTeamList;
 	int numAliensSpotted;
 

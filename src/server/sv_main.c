@@ -832,6 +832,12 @@ void SV_UserinfoChanged (client_t * cl)
 	Com_DPrintf(DEBUG_SERVER, "SV_UserinfoChanged: Changed userinfo for player %s\n", cl->name);
 }
 
+static qboolean SV_CheckMaxSoldiersPerPlayer (cvar_t* cvar)
+{
+	const int max = MAX_ACTIVETEAM;
+	return Cvar_AssertValue(cvar, 1, max, qtrue);
+}
+
 /**
  * @brief Only called once at startup, not for each game
  */
@@ -856,6 +862,7 @@ void SV_Init (void)
 	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
 	sv_maxsoldiersperteam = Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see sv_maxsoldiersperplayer and sv_teamplay)");
 	sv_maxsoldiersperplayer = Cvar_Get("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can controll (see maxsoldiers and sv_teamplay)");
+	Cvar_SetCheckFunction("sv_maxsoldiersperplayer", SV_CheckMaxSoldiersPerPlayer);
 
 	sv_dumpmapassembly = Cvar_Get("sv_dumpmapassembly", "0", CVAR_ARCHIVE, "Dump map assembly information to game console");
 

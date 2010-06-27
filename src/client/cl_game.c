@@ -528,6 +528,7 @@ const char* GAME_GetTeamDef (void)
 
 static qboolean GAME_Spawn (void)
 {
+	const size_t size = GAME_GetCharacterArraySize();
 	int i;
 
 	/* If there is no active gametype we create a team with default values.
@@ -540,10 +541,10 @@ static qboolean GAME_Spawn (void)
 
 		/* inventory structure switched/initialized */
 		INV_InitInventory(&cls.i, &csi, invList, lengthof(invList));
-		GAME_GenerateTeam(teamDefID, ed, MAX_ACTIVETEAM);
+		GAME_GenerateTeam(teamDefID, ed, size);
 	}
 
-	for (i = 0; i < MAX_ACTIVETEAM; i++)
+	for (i = 0; i < size; i++)
 		cl.chrList.chr[i] = chrDisplayList.chr[i];
 	cl.chrList.num = chrDisplayList.num;
 
