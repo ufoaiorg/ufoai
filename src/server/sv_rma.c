@@ -659,7 +659,7 @@ static void SV_RemoveTile (mapInfo_t *map, int* idx, int* pos)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static qboolean SV_AddRandomTile (mapInfo_t *map, int* idx, int* pos)
+static qboolean SV_PickRandomTile (mapInfo_t *map, int* idx, int* pos)
 {
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 	const int numToPlace = map->numToPlace;
@@ -677,9 +677,7 @@ static qboolean SV_AddRandomTile (mapInfo_t *map, int* idx, int* pos)
 
 				if ((x % mAsm->dx == 0)
 					&& (y % mAsm->dy == 0)
-					&& SV_FitTile(map, mToPlace[*idx].tile, x, y))
-				{
-					SV_AddTile(map, mToPlace[*idx].tile, x, y, *idx, *pos);
+					&& SV_FitTile(map, mToPlace[*idx].tile, x, y)) {
 					return qtrue;
 				}
 
@@ -715,7 +713,6 @@ static qboolean SV_AddMissingTiles (mapInfo_t *map)
 	int idx[CHECK_ALTERNATIVES_COUNT];
 	int pos[CHECK_ALTERNATIVES_COUNT];
 	int rating[CHECK_ALTERNATIVES_COUNT];
-	const int startPlaced = map->numPlaced;
 	mapInfo_t backup;
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 	const int mapW = mAsm->width;
@@ -732,14 +729,16 @@ static qboolean SV_AddMissingTiles (mapInfo_t *map)
 
 		/* try some random tiles at random positions */
 		for (i = 0; i < CHECK_ALTERNATIVES_COUNT; i++) {
-			if (!SV_AddRandomTile(map, &idx[i], &pos[i])) {
+			int x, y;
+			if (!SV_PickRandomTile(map, &idx[i], &pos[i])) {
 				/* remove all tiles placed by this function */
-				while (map->numPlaced > startPlaced)
-					memcpy(map, &backup, sizeof(*map));
-					/* SV_RemoveTile(map, NULL, NULL); */
-
+				memcpy(map, &backup, sizeof(*map));
 				return qfalse;
 			}
+
+			x = pos[i] % mapW;
+			y = pos[i] / mapW;
+			SV_AddTile(map, mToPlace[idx[i]].tile, x, y, idx[i], pos[i]);
 
 			if (SV_TestFilled(map))
 				return qtrue;
