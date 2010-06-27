@@ -503,7 +503,11 @@ class Analysis:
         if not os.path.exists(basedir):
             os.makedirs(basedir)
 
-        html = "<html><body><ul>\n"
+        html = "<html>\n"
+        html += "<head>\n"
+        html += '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n'
+        html += "</head>\n"
+        html += "<body><ul>\n"
         for k in group:
             if k == None:
                 continue
