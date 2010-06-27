@@ -504,8 +504,8 @@ base/models/aircraft/craft_weapon_antim/launcher_h.jpg | GNU General Public Lice
 base/models/aircraft/craft_weapon_antim/launcher_h.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_launcher/alien_launcher.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_launcher/alien_launcher2.jpg | GNU General Public License 2.0 or later | Willem Sitters
-base/models/aircraft/craft_weapon_particle/pbw.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/aircraft/craft_weapon_particle/pbw.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/aircraft/craft_weapon_particle/pbw.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/aircraft/craft_weapon_particle/pbw.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/aircraft/craft_weapon_shiva/ammo.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_shiva/ammo_api.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_shiva/ammo_blue.png | GNU General Public License 2.0 or later | Willem Sitters
@@ -514,12 +514,12 @@ base/models/aircraft/craft_weapon_shiva/ammo_lblue.png | GNU General Public Lice
 base/models/aircraft/craft_weapon_shiva/ammo_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_shiva/ammo_red.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_shiva/ammo_yellow.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/aircraft/craft_weapon_shiva/shiva.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
-base/models/aircraft/craft_weapon_shiva/shiva.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
-base/models/aircraft/craft_weapon_sparrow/sparrowhawk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/aircraft/craft_weapon_sparrow/sparrowhawk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/aircraft/craft_weapon_shiva/shiva.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
+base/models/aircraft/craft_weapon_shiva/shiva.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
+base/models/aircraft/craft_weapon_sparrow/sparrowhawk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/aircraft/craft_weapon_sparrow/sparrowhawk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/aircraft/craft_weapon_tr20/tr20.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_tr20/tr20.md2 | GNU General Public License 2.0 | Ryan A. Span ("Winter")
 base/models/aircraft/craft_weapon_tr20/tr20_rocket.md2 | GNU General Public License 2.0 | Ryan A. Span ("Winter")
@@ -572,8 +572,8 @@ base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public Lic
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/ufo_carrier/ufo_carrier.jpg | GNU General Public License 2.0 | Ryan A. Span ("Winter")
 base/models/aircraft/ufo_carrier/ufo_carrier.md2 | GNU General Public License 2.0 | Ryan A. Span ("Winter")
-base/models/aircraft/ufo_corrupter/ufo_corrupter.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
-base/models/aircraft/ufo_corrupter/ufo_corrupter.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
+base/models/aircraft/ufo_corrupter/ufo_corrupter.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
+base/models/aircraft/ufo_corrupter/ufo_corrupter.md2 | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_fighter/ufo_fighter_closed.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_fighter/ufo_fighter_engines.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -588,8 +588,8 @@ base/models/aircraft/ufo_fighter/ufo_fighter_upper_gm.png | GNU General Public L
 base/models/aircraft/ufo_fighter/ufo_fighter_wings.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_fighter/ufo_fighter_wings.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_fighter/ufo_fighter_wings_gm.png | GNU General Public License 2.0 or later | MCR
-base/models/aircraft/ufo_harvester/ufo_harvester.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
-base/models/aircraft/ufo_harvester/ufo_harvester.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
+base/models/aircraft/ufo_harvester/ufo_harvester.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
+base/models/aircraft/ufo_harvester/ufo_harvester.md2 | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
 base/models/aircraft/ufo_scout/ufo_scout_engines.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_scout/ufo_scout_engines_1.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/ufo_scout/ufo_scout_engines_gm.png | GNU General Public License 2.0 or later | MCR
@@ -623,9 +623,9 @@ base/models/aliens/bloodspider/bloodspider.anm | Creative Commons Attribution-Sh
 base/models/aliens/bloodspider/bloodspider.jpg | Creative Commons Attribution-Share Alike 3.0 | Jake Gustafson (ProtoArmor)
 base/models/aliens/bloodspider/bloodspider.md2 | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
 base/models/aliens/bloodspider/bloodspider.tag | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
-base/models/aliens/bloodspider/head.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/aliens/bloodspider/head.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/aliens/hovernet/body01.jpg | GNU General Public License 2.0 | Protoarmor
-base/models/aliens/hovernet/body01.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/models/aliens/hovernet/body01.md2 | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/models/aliens/ortnok/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -855,7 +855,7 @@ base/models/geoscape/missile_aa51.md2 |  | Manuel "ghosta" Gschrey
 base/models/geoscape/missile_aa51.png |  | Manuel "ghosta" Gschrey
 base/models/geoscape/missile_sparrow.jpg | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | base/models/aircraft/craft_weapon_sparrow/
 base/models/geoscape/missile_sparrow.md2 | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | base/models/aircraft/craft_weapon_sparrow/
-base/models/geoscape/missile_tr20.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/models/geoscape/missile_tr20.md2 | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/models/geoscape/mission.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/mission.png | GNU General Public License 2.0 or later | TimberDragon
 base/models/geoscape/radar.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -893,7 +893,7 @@ base/models/objects/aircraft/fighter/fighter.png | GNU General Public License 2.
 base/models/objects/aircraft/heli/heli.jpg | GNU General Public License 2.0 | Cem Cimrin | heli_uvw.tga
 base/models/objects/aircraft/heli/heli.md2 | GNU General Public License 2.0 | Ingo Ruhnke <grumbel@gmx.de> with modifications by Werner Höhrer | 'heli_parented.blend' by Ingo Ruhnke <grumbel@gmx.de> released under the GPL and CC-by-sa
 base/models/objects/aircraft/heli/heli_military.jpg | GNU General Public License 2.0 | Cem Cimrin | heli_uvw.tga
-base/models/objects/aircraft/heli/heli_uvw.png | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/models/objects/aircraft/heli/heli_uvw.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/models/objects/aircraft/heli2/heli2.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/models/objects/aircraft/heli2/heli2.md2 | GNU General Public License 2.0 and Creative Commons Attribution-Share Alike | Ingo Ruhnke <grumbel@gmx.de>
 base/models/objects/aircraft/heli_military/helicopter.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -974,8 +974,8 @@ base/models/objects/barrel/barrel2_1.png | GNU General Public License 2.0 or lat
 base/models/objects/barrel/barrel2_2.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/barrel/barrel3.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/barrel/barrel3.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/base/minicrane/minicrane.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/base/minicrane/minicrane.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/objects/base/minicrane/minicrane.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/base/minicrane/minicrane.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/radar/radar_a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/base/radar/radar_a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/base/radar/radar_b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1048,8 +1048,8 @@ base/models/objects/cars/van2/roof2.md2 | GNU General Public License 2.0 or late
 base/models/objects/cars/van2/van2.md2 | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/objects/cars/van3/van.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/cars/van3/van.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/city/arch/arch.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/city/arch/arch.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/objects/city/arch/arch.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/city/arch/arch.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/bench/bench.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/city/bench/bench_l.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/city/bench/bench_s.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
@@ -1066,10 +1066,10 @@ base/models/objects/city/mailbox/mailbox.md2 | GNU General Public License 2.0 or
 base/models/objects/city/mailbox/mailbox.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/oriental.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/city/oriental.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/objects/city/parkbench/parkbench.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/city/parkbench/parkbench.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/city/parktable/parktable.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/city/parktable/parktable.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/objects/city/parkbench/parkbench.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/city/parkbench/parkbench.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/city/parktable/parktable.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/city/parktable/parktable.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/powerline/line.png | GNU General Public License 2.0 or later
 base/models/objects/city/powerline/line1.md2 | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/objects/city/powerline/line2.md2 | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -1110,10 +1110,10 @@ base/models/objects/city/waste/container2.jpg | GNU General Public License 2.0 o
 base/models/objects/city/waste/container3.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/waste/container_closed.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/waste/container_opened.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/city/watertower/watertower.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/city/watertower/watertower.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/city/watertower/watertower1.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/city/watertower/watertower2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/objects/city/watertower/watertower.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/city/watertower/watertower.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/city/watertower/watertower1.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/city/watertower/watertower2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/construct/container/container.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/construct/container/container.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/construct/crane/crane.png | GNU General Public License 2.0 or later | Willem Sitters
@@ -1150,43 +1150,43 @@ base/models/objects/furniture/bookshelf/bookshelf_nm.png | GNU General Public Li
 base/models/objects/furniture/campbed/campbed.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/campbed/campbed.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/chair/chair.jpg | GNU General Public License 2.0 or later | Nate Wright
-base/models/objects/furniture/coffeemaker/coffeemaker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/coffeemaker/coffeemaker.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/objects/furniture/coffeemaker/coffeemaker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/coffeemaker/coffeemaker.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/comptable/comptable.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/comptable/comptable.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/furniture/curtains/curtain.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/curtains/curtain_long.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/curtains/curtains.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/curtains/curtains.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/deerhead/deerhead.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | http://species.wikimedia.org/wiki/Image:Rothirsch.jpg
-base/models/objects/furniture/deerhead/deerhead.md2 | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62   This file comes from the Worldforge Media Repository, for details check out: http://www.worldforge.org/media/
-base/models/objects/furniture/desk/desk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/desk/desk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/desklamp/desklamp.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/desklamp/desklamp.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/dishes/cup.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/dishes/dishes.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/dishes/fork.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/dishes/knive.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/dishes/plate.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/emergencyexit/emergencyexit.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/emergencyexit/emergencyexit.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/fireext/fireext.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/fireext/fireext.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/fireext2/fireext2.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/fireext2/fireext2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/objects/furniture/curtains/curtain.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/curtains/curtain_long.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/curtains/curtains.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/curtains/curtains.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/deerhead/deerhead.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | http://species.wikimedia.org/wiki/Image:Rothirsch.jpg
+base/models/objects/furniture/deerhead/deerhead.md2 | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62   This file comes from the Worldforge Media Repository, for details check out: http://www.worldforge.org/media/
+base/models/objects/furniture/desk/desk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/desk/desk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/desklamp/desklamp.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/desklamp/desklamp.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/dishes/cup.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/dishes/dishes.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/dishes/fork.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/dishes/knive.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/dishes/plate.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/emergencyexit/emergencyexit.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/emergencyexit/emergencyexit.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/fireext/fireext.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/fireext/fireext.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/fireext2/fireext2.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/fireext2/fireext2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext3/fireext3.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/fireext3/fireext3.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/furniture/fireplace/fireplace.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/fireplace/fireplace.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/flowerpot2/flowerpot2.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/flowerpot2/flowerpot2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/objects/furniture/fireplace/fireplace.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/fireplace/fireplace.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/flowerpot2/flowerpot2.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/flowerpot2/flowerpot2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/locker/locker2.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/locker/locker2.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/furniture/pitchfork/pitchfork.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/pitchfork/pitchfork.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/radiator/radiator.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/objects/furniture/radiator/radiator.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/objects/furniture/pitchfork/pitchfork.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/pitchfork/pitchfork.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/radiator/radiator.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/radiator/radiator.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/sunprot/sun_prot.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/models/objects/furniture/sunprot/sun_prot.md2 | GNU General Public License 2.0 | "SparX" Beyeler
 base/models/objects/furniture/water_dispenser/waterf.jpg | GNU General Public License 2.0 or later | Willem Sitters
@@ -1360,11 +1360,11 @@ base/models/objects/vegi/tree03/tree03.md2 | GNU General Public License 2.0 or l
 base/models/objects/vegi/tree03/tree03.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/tree_dead/tree_dead.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/tree_dead/tree_dead1.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/vegi/water_lily/lily_bloom.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/models/objects/vegi/water_lily/lily_bloom.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
-base/models/objects/vegi/water_lily/lily_leaf.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
+base/models/objects/vegi/water_lily/lily_bloom.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/models/objects/vegi/water_lily/lily_bloom.md2 | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/models/objects/vegi/water_lily/lily_leaf.md2 | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/models/objects/vegi/water_lily/lily_leaf.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/models/objects/vegi/water_lily/lily_stem.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
+base/models/objects/vegi/water_lily/lily_stem.md2 | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/models/objects/vegi/water_lily2/lily.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/water_lily2/lily.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vehicles/bicycle/bicycle.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -1871,8 +1871,8 @@ base/models/weapons/assault/assault_clip.md2 | GNU General Public License 2.0 | 
 base/models/weapons/assault/assault_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/weapons/autocannon/ugv_autocannon.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/autocannon/ugv_autocannon.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/binocs/binocs.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/weapons/binocs/binocs.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/weapons/binocs/binocs.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/binocs/binocs.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/bolterrifle/bolterrifle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/bolterrifle/bolterrifle.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/bolterrifle/bolterrifle_clip.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
@@ -1890,8 +1890,8 @@ base/models/weapons/chaingun/chaingun_ammo.md2 | Creative Commons Attribution-Sh
 base/models/weapons/coilgun/coilgun.jpg | Creative Commons Attribution-Share Alike 3.0 | Toni "TrashMan" Stani
 base/models/weapons/coilgun/coilgun.md2 | Creative Commons Attribution-Share Alike 3.0 | Toni "TrashMan" Stani
 base/models/weapons/coilgun/coilgun_gm.png | GNU General Public License 2.0 or later | MCR
-base/models/weapons/electrolaser/electrolaser.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/weapons/electrolaser/electrolaser.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/weapons/electrolaser/electrolaser.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/electrolaser/electrolaser.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/electrolaser/electrolaser_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/weapons/flamer/flamer.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/flamer/flamer.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1918,8 +1918,8 @@ base/models/weapons/grenl/grenl_plasma_clip.jpg | GNU General Public License 2.0
 base/models/weapons/grenl/grenl_plasma_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/incgren/incgren.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/incgren/incgren.png | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/irgoggles/irgoggles.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/models/weapons/irgoggles/irgoggles.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/models/weapons/irgoggles/irgoggles.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/irgoggles/irgoggles.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/irgoggles/irgoggles_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/weapons/kerrblade/kerrblade.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/kerrblade/kerrblade.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -2020,8 +2020,8 @@ base/models/weapons/shotgun/shotgun_clip_green.md2 | GNU General Public License 
 base/models/weapons/shotgun/shotgun_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/weapons/shotgun2/shotgun.jpg | Creative Commons Attribution-Share Alike 3.0 | Nathan : INC (Kaeau)
 base/models/weapons/shotgun2/shotgun.md2 | Creative Commons Attribution-Share Alike 3.0 | Nathan : INC (Kaeau)
-base/models/weapons/shotgun2/shotgun_clip.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
-base/models/weapons/shotgun2/shotgun_clip.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
+base/models/weapons/shotgun2/shotgun_clip.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
+base/models/weapons/shotgun2/shotgun_clip.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
 base/models/weapons/shotgun2/shotgun_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/weapons/shotgunmicro/shotgunmicro.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
@@ -2162,8 +2162,8 @@ base/pics/conback.jpg | GNU General Public License 2.0
 base/pics/conchars.png | GNU General Public License 2.0 or later
 base/pics/cursors/cursor1.png | GNU General Public License 2.0 or later
 base/pics/cursors/ducked.png | GNU General Public License 2.0 or later
-base/pics/cursors/reactionfire.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/cursors/reactionfiremany.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/cursors/reactionfire.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/cursors/reactionfiremany.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/cursors/wait.png | GNU General Public License 2.0 or later
 base/pics/envmaps/envmap_0.png | GNU General Public License 2.0 | Jay Dolan (Quake2World)
 base/pics/envmaps/envmap_1.png | GNU General Public License 2.0 | Jay Dolan (Quake2World)
@@ -2174,11 +2174,11 @@ base/pics/flares/flare_6.png | GNU General Public License 2.0 or later | MCR
 base/pics/flares/flare_7.png | GNU General Public License 2.0 or later | MCR
 base/pics/flares/flare_8.png | GNU General Public License 2.0 or later | MCR
 base/pics/flares/flare_9.png | GNU General Public License 2.0 or later | MCR
-base/pics/geoscape/air_dropship.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/geoscape/air_interceptor.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/geoscape/air_ufo.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/geoscape/base.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/geoscape/baseattack.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/geoscape/air_dropship.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/geoscape/air_interceptor.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/geoscape/air_ufo.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/geoscape/base.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/geoscape/baseattack.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/geoscape/circle.png | GNU General Public License 2.0
 base/pics/geoscape/circleactive.png | GNU General Public License 2.0
 base/pics/geoscape/defence.png | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold
@@ -2232,10 +2232,10 @@ base/pics/hud/buttons1a.png | GNU General Public License 2.0 |  | Based on the o
 base/pics/hud/buttons1g.png | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
 base/pics/hud/buttons2.png | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
 base/pics/hud/buttons2g.png | GNU General Public License 2.0 |  | Based on the original menu artwork by Sparx and Rasta
-base/pics/hud/checkbox.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/hud/checkbox.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/hud/close.png | GNU General Public License 2.0
-base/pics/hud/event_log.png | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/pics/hud/firemode.png | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/pics/hud/event_log.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/pics/hud/firemode.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/pics/hud/firemode_hover.png | GNU General Public License 2.0 or later
 base/pics/hud/phys_ekg.png | GNU General Public License 2.0
 base/pics/hud/phys_mor.png | GNU General Public License 2.0
@@ -2251,7 +2251,7 @@ base/pics/icons/bighead_pilot.png | GNU General Public License 2.0 or later
 base/pics/icons/bighead_scientist.png | GNU General Public License 2.0 or later
 base/pics/icons/bighead_soldier.png | GNU General Public License 2.0 or later
 base/pics/icons/bighead_worker.png | GNU General Public License 2.0 or later
-base/pics/icons/geo_nations_highlight.png | GNU General Public License 2.0 or later | Werner "hoehrer" Höhrer | Based on the original menu artwork by Sparx and Rasta
+base/pics/icons/geo_nations_highlight.png | GNU General Public License 2.0 or later | Werner Höhrer (hoehrer) | Based on the original menu artwork by Sparx and Rasta
 base/pics/icons/geo_radar.png | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/pics/icons/geo_xvi.png | GNU General Public License 2.0 or later
 base/pics/icons/healing.png | GNU General Public License 2.0 | Gerd Heisse
@@ -2541,8 +2541,8 @@ base/pics/nations/russia.png | GNU General Public License 2.0 | John W. Bjerk (e
 base/pics/nations/russia2.png | GNU General Public License 2.0 | UlteriorMotives
 base/pics/nations/states.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/pics/nations/states2.png | GNU General Public License 2.0 | UlteriorMotives
-base/pics/phalanx_badge.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/phalanx_badge_big.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/phalanx_badge.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/phalanx_badge_big.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/radars/bunker_1.jpg | GNU General Public License 2.0 or later
 base/pics/radars/bunker_2.jpg | GNU General Public License 2.0 or later
 base/pics/radars/bunker_3.jpg | GNU General Public License 2.0 or later
@@ -2749,22 +2749,22 @@ base/pics/radars/wilderness_5.jpg | GNU General Public License 2.0 or later
 base/pics/radars/wilderness_6.jpg | GNU General Public License 2.0 or later
 base/pics/radars/wilderness_7.jpg | GNU General Public License 2.0 or later
 base/pics/radars/wilderness_8.jpg | GNU General Public License 2.0 or later
-base/pics/ranks/rank_01.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_02.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_03.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_04.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_05.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_06.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_07.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_08.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_09.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_10.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_11.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_12.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_medic.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_pc.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_scientist.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
-base/pics/ranks/rank_worker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/ranks/rank_01.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_02.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_03.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_04.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_05.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_06.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_07.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_08.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_09.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_10.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_11.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_12.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_medic.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_pc.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_scientist.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_worker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/sfx/b_flame1.png | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/b_flame2.png | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/b_flame3.png | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -2797,7 +2797,7 @@ base/pics/sfx/cross.png | GNU General Public License 2.0 or later
 base/pics/sfx/cross_no.png | GNU General Public License 2.0 or later
 base/pics/sfx/electricgrade3.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/pics/sfx/electricslime.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
-base/pics/sfx/exhaust.png | Creative Commons Attribution-Share Alike 3.0 | Werner "hoehrer" Höhrer
+base/pics/sfx/exhaust.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/sfx/explosions1.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/explosions2.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/explosions3.jpg | Public Domain |  | Public Domain Golgotha
@@ -4209,16 +4209,16 @@ base/textures/tex_base/fence.png | GNU General Public License 2.0 | OpenArena GP
 base/textures/tex_base/fence2.png | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_base/grid2_alpha.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/grid_alpha.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_base/helipad.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_base/helipad.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lab_floor001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_base/lab_floor002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
+base/textures/tex_base/lab_floor002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
 base/textures/tex_base/lab_floor003.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/lab_floor003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_base/lab_wall001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_base/lab_wall001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lab_wall001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_base/lab_wall002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_base/lab_wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lab_wall002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_base/lab_wall003.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_base/lab_wall003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lab_wall003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/lasertable.jpg | GNU General Public License 2.0 | gthf http://sourceforge.net/users/gthf/ | data-soource/images/lasertable/
 base/textures/tex_base/lasertable_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -4231,12 +4231,12 @@ base/textures/tex_base/screenp001.jpg | GNU General Public License 2.0 or later 
 base/textures/tex_base/screenp002.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/screenp004.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/sign01.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/textures/tex_base/sign03.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/sign04.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/sign05.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/sign07.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/sign08.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/sign09.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_base/sign03.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/sign04.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/sign05.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/sign07.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/sign08.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/sign09.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/steptop_mtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/steptop_mtl2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/tank001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
@@ -4245,16 +4245,16 @@ base/textures/tex_base/trim001.jpg | GNU General Public License 2.0 | Nexuiz GPL
 base/textures/tex_base/trim003.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | trim_cementwall2.jpg
 base/textures/tex_base/trim_drkmtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/vent001.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | d_drkmtl_mpanelgrt.jpg
-base/textures/tex_base/vent002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/vent003.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/vent004.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/vent005.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/vent006.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/vent007.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/vent_round.png | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_base/wall001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_base/vent002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent006.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent007.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent_round.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/wall001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/wall001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_base/wall002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_base/wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/wall002_black.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/wall002_black_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/wall002_blue.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -4266,7 +4266,7 @@ base/textures/tex_base/wall002_gold_nm.png | GNU General Public License 2.0 or l
 base/textures/tex_base/wall002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/wall002_red.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/wall002_red_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_base/wall003.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_base/wall003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/wall003_black.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/wall003_black_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/wall003_blue.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -4278,7 +4278,7 @@ base/textures/tex_base/wall003_gold_nm.png | GNU General Public License 2.0 or l
 base/textures/tex_base/wall003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/wall003_red.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/wall003_red_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_base/wall004.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_base/wall004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/wall004_black.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/wall004_black_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_base/wall004_blue.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -4338,31 +4338,31 @@ base/textures/tex_buildings/concrete001.jpg | GNU General Public License 2.0 | N
 base/textures/tex_buildings/concrete001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete002.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/concrete003.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/concrete003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/concrete004.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/concrete004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete004_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/concrete005.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/concrete005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete005_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete006.jpg | GNU General Public License 2.0 |  | concrete004 and concrete005
 base/textures/tex_buildings/concrete006_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/concrete012.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/concrete012.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete012_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/concrete013.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/concrete013.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete013_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/concrete014.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/concrete015.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/concrete016.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/concrete017.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/concrete018.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/concrete019.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/concrete014.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete015.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete016.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete017.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete018.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete019.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete019_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete01dark.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
-base/textures/tex_buildings/concrete020.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/concrete021.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/concrete022.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/concrete020.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete021.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete022.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete022_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/concrete023.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/concrete023.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/crate_drtyow.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/crate_drtyow_sign.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/d_tech_dw2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -4441,10 +4441,10 @@ base/textures/tex_buildings/met_panel01.png | GNU General Public License 2.0 or 
 base/textures/tex_buildings/met_panel01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/met_panel02.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/met_panel02_nm.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_buildings/metal_cover.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/metal_duct.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/metal_cover.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/metal_duct.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/metal_duct_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/metal_duct_rust.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/metal_duct_rust.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/metal_duct_rust_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/metalbridge6.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/metalbridge6broke.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -4476,9 +4476,9 @@ base/textures/tex_buildings/q1metal7_99.jpg | GNU General Public License 2.0 | O
 base/textures/tex_buildings/q1metal7_99_broke.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/roof002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/roof004.jpg | Public Domain |  | Public Domain Golgotha
-base/textures/tex_buildings/roof006.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/roof006.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/roof006_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/roof007.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/roof007.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/roof007_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/roof008.png | GNU General Public License 2.0 or later | shedeki
 base/textures/tex_buildings/roof008_nm.png | GNU General Public License 2.0 or later | shedeki
@@ -4493,7 +4493,7 @@ base/textures/tex_buildings/sidewalk01.png | GNU General Public License 2.0 or l
 base/textures/tex_buildings/sidewalk01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/sp_stairs.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/sp_stairs_nm.png | GNU General Public License 2.0 or later
-base/textures/tex_buildings/step.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/step.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/streetbricks14.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/stripebl.png | GNU General Public License 2.0 or later
 base/textures/tex_buildings/stripebl_nm.png | GNU General Public License 2.0 or later
@@ -4554,12 +4554,12 @@ base/textures/tex_buildings/wall027_nm.png | GNU General Public License 2.0 or l
 base/textures/tex_buildings/wall030_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/wall033_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/wall034_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/wall035.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/wall036.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/wall037.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/wall038.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/wall039.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/wall040.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/wall035.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/wall036.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/wall037.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/wall038.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/wall039.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/wall040.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/wall5_4.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/wall_ind01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_ind01_cons.png | GNU General Public License 2.0 or later | Nate Wright
@@ -4581,13 +4581,13 @@ base/textures/tex_buildings/wall_ind04_cons_nm.png | GNU General Public License 
 base/textures/tex_buildings/wall_ind04_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_ind05.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_ind05_nm.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_buildings/wall_wood_001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/wall_wood_001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/window001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/window012_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/window013_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/window014_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_buildings/window020.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_buildings/window021.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_buildings/window020.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/window021.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/wizwood1_2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/woodceiling1a.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/woodceiling1b.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -4741,15 +4741,15 @@ base/textures/tex_dirt/dirt002.png | GNU General Public License 2.0 or later | M
 base/textures/tex_doors/door001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_doors/door003.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_doors/door005.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/textures/tex_doors/door006.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_doors/door007.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_doors/door008.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_doors/door013.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_doors/door006.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_doors/door007.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_doors/door008.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_doors/door013.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_doors/door013_2.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_doors/door014.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_doors/door015.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_doors/door016.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_doors/door017.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_doors/door014.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_doors/door015.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_doors/door016.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_doors/door017.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_doors/elevator_button.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_doors/metaldoor.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_furniture/basket.jpg | GNU General Public License 2.0 or later | zark127
@@ -4789,36 +4789,36 @@ base/textures/tex_lights/stoplights01.png | GNU General Public License 2.0 or la
 base/textures/tex_lights/stoplights01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_lights/wsupprt1_12.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_material/blend_grunge01.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_material/c_black.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_material/c_blue.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_material/c_brown.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_material/c_gray050.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_material/c_gray230.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_material/c_gray255.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_material/c_black.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_material/c_blue.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_material/c_brown.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_material/c_gray050.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_material/c_gray230.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_material/c_gray255.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_material/c_green1.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_material/c_lgreen.jpg | GNU General Public License 2.0 or later | zark127
-base/textures/tex_material/c_orange.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_material/c_orange2.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_material/c_orange3.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_material/c_red.png | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_material/c_orange.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_material/c_orange2.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_material/c_orange3.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_material/c_red.png | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_material/c_white.jpg | GNU General Public License 2.0 or later | zark127
-base/textures/tex_material/c_yellow.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_material/c_yellow2.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_material/c_yellow3.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_material/c_yellow.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_material/c_yellow2.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_material/c_yellow3.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_material/circle_gray.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_material/conc01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/conc01_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/conc02.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/conc02_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/concholes01_g.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_material/metal002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
+base/textures/tex_material/metal002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metal012.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal012_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal013.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal013_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domain Data
-base/textures/tex_material/metall007.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
-base/textures/tex_material/metall009.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
+base/textures/tex_material/metall007.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
+base/textures/tex_material/metall009.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall011.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001.jpg
 base/textures/tex_material/metall011_nm.png | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall001_nm.tga
 base/textures/tex_material/shell001.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/wall058
@@ -5248,46 +5248,46 @@ base/textures/tex_misc/bask_board.png | GNU General Public License 2.0 or later 
 base/textures/tex_misc/bask_board_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/billiard001.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/billiard001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_misc/box001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box003.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box004.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box004a.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box004b.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box005.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box005a.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box008.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box008a.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box009.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box010.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box011.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box012.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box013.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box014.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box015.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box015a.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box015b.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box016.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box016a.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box016b.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box017.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box017a.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box017b.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/box018.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_misc/box001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box004a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box004b.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box005a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box008.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box008a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box009.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box010.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box011.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box012.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box013.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box014.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box015.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box015a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box015b.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box016.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box016a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box016b.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box017.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box017a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box017b.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box018.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/cable.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_misc/container001_nm.png | GNU General Public License 2.0 or later | Zark127
 base/textures/tex_misc/container002_nm.png | GNU General Public License 2.0 or later | Zark127
 base/textures/tex_misc/container003_nm.png | GNU General Public License 2.0 or later | Zark127
 base/textures/tex_misc/container004.jpg | Creative Commons Attribution-Share Alike 2.5 | Remi Jouan | http://commons.wikimedia.org/wiki/Image:Contenneur_%281%29.jpg
 base/textures/tex_misc/container004_nm.png | GNU General Public License 2.0 or later | Zark127
-base/textures/tex_misc/container006.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_misc/container006.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/container006_nm.png | GNU General Public License 2.0 or later | Zark127
 base/textures/tex_misc/container007.jpg | Creative Commons Attribution-Share Alike 2.5 | Remi Jouan | http://commons.wikimedia.org/wiki/Image:Contenneur_%283%29.jpg
 base/textures/tex_misc/container007_nm.png | GNU General Public License 2.0 or later | Zark127
-base/textures/tex_misc/container008.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_misc/container008.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/container008_nm.png | GNU General Public License 2.0 or later | Zark127
-base/textures/tex_misc/crate001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_misc/crate001a.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_misc/crate001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/crate001a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/d_tech_dw2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/d_tech_dw2gb.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/drawer001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
@@ -5345,8 +5345,8 @@ base/textures/tex_misc/silo_a_nm.png | GNU General Public License 2.0 or later |
 base/textures/tex_misc/soft_drinks1_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_misc/soft_drinks2_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_misc/stainless001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
-base/textures/tex_misc/straw.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2'ed photo by Martin Gerhardy (mattn)
-base/textures/tex_misc/straw_zyl.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2'ed photo by Martin Gerhardy (mattn)
+base/textures/tex_misc/straw.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2'ed photo by Martin Gerhardy (mattn)
+base/textures/tex_misc/straw_zyl.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2'ed photo by Martin Gerhardy (mattn)
 base/textures/tex_misc/trashbin001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/trashbin001_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/vehentpan.png | GNU General Public License 2.0 or later | Nate Wright
@@ -5379,17 +5379,17 @@ base/textures/tex_nature/drymud_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_nature/flower.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/textures/tex_nature/grass.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/grass001.jpg | GNU General Public License 2.0 |  | grass_lash.tga
-base/textures/tex_nature/grass003.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_nature/grass003_way_d2r.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_nature/grass003_way_hor.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_nature/grass003_way_l2d.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_nature/grass003_way_l2u.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_nature/grass003_way_start_h.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_nature/grass003_way_start_v.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_nature/grass003_way_t_fork.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_nature/grass003_way_u2r.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_nature/grass003_way_vert.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_nature/grass003_way_x_fork.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_nature/grass003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_d2r.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_hor.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_l2d.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_l2u.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_start_h.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_start_v.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_t_fork.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_u2r.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_vert.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_x_fork.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/grass004.jpg | GNU General Public License 2.0 | wotwot
 base/textures/tex_nature/grass_lush.png | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/grass_mowed_dry_a.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | http://dplogin.com/forums/index.php?topic=7836.0 - further modifed by eleazar
@@ -5430,18 +5430,18 @@ base/textures/tex_nature/snow003.png | GNU General Public License 2.0 | Nexuiz G
 base/textures/tex_nature/snow003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/snowey.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/snowey_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_nature/soil001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_nature/soil002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_nature/soil001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/soil002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/sp_ground.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/tile_teracota.png | GNU General Public License 2.0 | OpenArena GPLed Content
-base/textures/tex_nature/tree_bark_001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_nature/tree_bark_002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_nature/tree_bark_001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/tree_bark_002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/water2.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/water_dark_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/water_green.jpg | GNU General Public License 2.0 | OpenArena GPLed Content | greenliqu1.jpg
 base/textures/tex_nature/water_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_nature/wood_chips01.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_nature/wood_chips02.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_nature/wood_chips01.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/wood_chips02.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_pics/art001.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art002.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_pics/art003.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
@@ -5583,14 +5583,14 @@ base/textures/tex_streets/park1h_nm.png | GNU General Public License 2.0 or late
 base/textures/tex_streets/park1v.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/park1v_g.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_streets/park1v_nm.png | GNU General Public License 2.0 or later | Nate Wright
-base/textures/tex_streets/pavement001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_streets/street001.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_streets/street002.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_streets/street003.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_streets/street004.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_streets/street005.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_streets/street010.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-base/textures/tex_streets/street11.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
+base/textures/tex_streets/pavement001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street010.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street11.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_tech/comptable.jpg | GNU General Public License 2.0 or later | zark127
 base/textures/tex_tech/laptop_screen.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_tech/radio001.png | GNU General Public License 2.0 or later
