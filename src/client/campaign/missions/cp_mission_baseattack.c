@@ -144,7 +144,6 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
  */
 void CP_BaseAttackStartMission (mission_t *mission)
 {
-	int i;
 	base_t *base = (base_t *)mission->data;
 	linkedList_t *hiredSoldiersInBase = NULL, *pos;
 
@@ -185,13 +184,20 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	ccs.mapAction = MA_BASEATTACK;
 	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", ccs.selectedMission->id, ccs.selectedMission->pos[0], ccs.selectedMission->pos[1]);
 
+	/** @todo EMPL_ROBOT */
+	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiersInBase);
+
 	/* Fill the fake aircraft */
 	memset(&baseAttackFakeAircraft, 0, sizeof(baseAttackFakeAircraft));
 	baseAttackFakeAircraft.homebase = base;
-	VectorCopy(base->pos, baseAttackFakeAircraft.pos);				/* needed for transfer of alien corpses */
-	baseAttackFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;			/* needed to spawn soldiers on map */
-	/** @todo EMPL_ROBOT */
-	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiersInBase);
+	/* needed for transfer of alien corpses */
+	VectorCopy(base->pos, baseAttackFakeAircraft.pos);
+#if 0
+	/* needed to spawn soldiers on map */
+	baseAttackFakeAircraft.maxTeamSize = LIST_Count(hiredSoldiersInBase);
+#else
+	baseAttackFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;
+#endif
 
 	if (!hiredSoldiersInBase) {
 		Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no soldiers: it can't defend itself. Destroy base.\n", base->name);
@@ -199,17 +205,20 @@ void CP_BaseAttackStartMission (mission_t *mission)
 		return;
 	}
 
-	for (i = 0, pos = hiredSoldiersInBase; i < baseAttackFakeAircraft.maxTeamSize && pos; pos = pos->next) {
+	for (pos = hiredSoldiersInBase; pos != NULL; pos = pos->next) {
 		if (E_IsAwayFromBase((employee_t *)pos->data))
 			continue;
 		AIR_AddToAircraftTeam(&baseAttackFakeAircraft, (employee_t *)pos->data);
-		i++;
 	}
-	if (i == 0) {
+	if (AIR_GetTeamSize(&baseAttackFakeAircraft) == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no soldiers at home: it can't defend itself. Destroy base.\n", base->name);
 		CP_BaseAttackMissionDestroyBase(mission);
 		return;
 	}
+#if 0
+	/* all soldiers in the base should get used */
+	baseAttackFakeAircraft.maxTeamSize = AIR_GetTeamSize(&baseAttackFakeAircraft);
+#endif
 
 	LIST_Delete(&hiredSoldiersInBase);
 	base->aircraftCurrent = &baseAttackFakeAircraft;
