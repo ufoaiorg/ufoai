@@ -203,6 +203,41 @@ static void UFO_TestStringCopiers (void)
 	time = Sys_Milliseconds() - time;
 	printf("%d copies with Com_sprintf: %ld ms\n", copies, time);
 
+	/* Com_sprintf */
+
+	/* trimmed non utf8 */
+	Com_sprintf(dest, 4, "aab%c%c", 0xd0, 0x80);
+	CU_ASSERT_EQUAL(dest[2], 'b');
+	CU_ASSERT_EQUAL(dest[3], '\0');
+
+	/* trimmed utf8 char */
+	Com_sprintf(dest, 5, "aab%c%c", 0xd0, 0x80);
+	CU_ASSERT_EQUAL(dest[2], 'b');
+	CU_ASSERT_EQUAL(dest[3], '\0');
+
+	/* untrimmed utf8 char */
+	Com_sprintf(dest, 6, "aab%c%c", 0xd0, 0x80);
+	CU_ASSERT_EQUAL((unsigned char) dest[3], 0xd0);
+	CU_ASSERT_EQUAL((unsigned char) dest[4], 0x80);
+	CU_ASSERT_EQUAL(dest[5], '\0');
+
+	/* UTF8_strncpyz */
+
+	/* trimmed non utf8 */
+	UTF8_strncpyz(dest, "aab\xD0\x80", 4);
+	CU_ASSERT_EQUAL(dest[2], 'b');
+	CU_ASSERT_EQUAL(dest[3], '\0');
+
+	/* trimmed utf8 char */
+	UTF8_strncpyz(dest, "aab\xD0\x80", 5);
+	CU_ASSERT_EQUAL(dest[2], 'b');
+	CU_ASSERT_EQUAL(dest[3], '\0');
+
+	/* untrimmed utf8 char */
+	UTF8_strncpyz(dest, "aab\xD0\x80", 6);
+	CU_ASSERT_EQUAL((unsigned char) dest[3], 0xd0);
+	CU_ASSERT_EQUAL((unsigned char) dest[4], 0x80);
+	CU_ASSERT_EQUAL(dest[5], '\0');
 }
 
 int UFO_AddGenericTests (void)
