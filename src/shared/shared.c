@@ -451,17 +451,29 @@ qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 	len = Q_vsnprintf(dest, size, fmt, ap);
 	va_end(ap);
 
+	if (len <= size - 1)
+		return qtrue;
+
+	len = size - 1;
+
 	/* check for UTF8 multibyte sequences */
 	if ((unsigned char) dest[len - 1] > 0x80) {
 		int i = len - 1;
-		while ((i > 0) && (unsigned char) dest[i] <= 0xc0)
+		while ((i > 0) && ((unsigned char) dest[i] & 0xc0) == 0x80)
 			i--;
-		if (UTF8_char_len(dest[i]) + i - 1 > len)
-			len = i + 1;
-		dest[len] = '\0';
+		if (UTF8_char_len(dest[i]) + i > len) {
+			dest[i] = '\0';
+		}
+#ifdef DEBUG
+		else {
+			/* the '\0' is already at the right place */
+			len = i + UTF8_char_len(dest[i]);
+			assert(dest[len] == '\0');
+		}
+#endif
 	}
 
-	return 0 <= len && (size_t)len < size;
+	return qfalse;
 }
 
 /**
