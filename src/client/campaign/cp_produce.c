@@ -119,10 +119,18 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, const requir
 
 	for (i = 0; i < reqs->numLinks; i++) {
 		const requirement_t const *req = &reqs->links[i];
-		if (req->type == RS_LINK_ITEM) {
+		switch (req->type) {
+		case RS_LINK_ITEM: {
 			const objDef_t *item = (const objDef_t *)req->link;
 			assert(item);
 			B_AddToStorage(base, item, req->amount * amount);
+			break;
+		}
+		case RS_LINK_TECH:
+		case RS_LINK_TECH_NOT:
+			break;
+		default:
+			Com_Error(ERR_DROP, "Invalid requirement for production!\n");
 		}
 	}
 }
@@ -142,14 +150,20 @@ int PR_RequirementsMet (int amount, const requirements_t const *reqs, base_t *ba
 	for (i = 0; i < reqs->numLinks; i++) {
 		const requirement_t const *req = &reqs->links[i];
 
-		if (req->amount == 0)
-			continue;
-		if (req->type == RS_LINK_ITEM) {
-			const int items = min(amount, B_ItemInBase(req->link, base) / req->amount);
-			producibleAmount = min(producibleAmount, items);
-		} else if (req->type == RS_LINK_UFO) {
-			const int ufos = min(amount, US_UFOsInStorage(req->link, NULL) / req->amount);
-			producibleAmount = min(producibleAmount, ufos);
+		switch (req->type) {
+		case RS_LINK_ITEM: {
+				const int items = min(amount, B_ItemInBase(req->link, base) / (req->amount) ? req->amount : 1);
+				producibleAmount = min(producibleAmount, items);
+				break;
+			}
+		case RS_LINK_TECH:
+			producibleAmount = (RS_IsResearched_ptr(req->link)) ? producibleAmount : 0;
+			break;
+		case RS_LINK_TECH_NOT:
+			producibleAmount = (RS_IsResearched_ptr(req->link)) ? 0 : producibleAmount;
+			break;
+		default:
+			break;
 		}
 	}
 
