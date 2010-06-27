@@ -988,12 +988,12 @@ base/models/objects/base/turret2/turret.md2 | GNU General Public License 2.0 or 
 base/models/objects/base/turret2/turret.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/bed/bed.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/bed/bed.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/boat/boat.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/boat/boat.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/boat/boat.md2 | GNU General Public License 2.0
-base/models/objects/boat/boat2.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/boat/boat2.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/boat/canoe.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/boat/canoe.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/boat/engine.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/boat/engine.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/boat/engine.md2 | GNU General Public License 2.0
 base/models/objects/cars/4x4/4x4.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4.md2 | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
@@ -1042,7 +1042,7 @@ base/models/objects/cars/van/van1_blue.jpg | GNU General Public License 2.0
 base/models/objects/cars/van/van1_brown.jpg | GNU General Public License 2.0
 base/models/objects/cars/van/van1_green.jpg | GNU General Public License 2.0
 base/models/objects/cars/van/van1t.md2 | GNU General Public License 2.0
-base/models/objects/cars/van2/pickup.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/cars/van2/pickup.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/cars/van2/roof1.md2 | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/objects/cars/van2/roof2.md2 | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/objects/cars/van2/van2.md2 | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -1233,40 +1233,40 @@ base/models/objects/rail/rail.md2 | GNU General Public License 2.0 or later | Wi
 base/models/objects/rail/rail.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/railcar/railcar.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/railcar/railcar.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/rubbish/barrel.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/barrel.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/rubbish/barrel2.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/rubbish/barrel2.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/rubbish/blue_car.jpg | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/bottle1.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/bottle2.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/box1.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/box2.md2 | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/blue_car.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/bottle1.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/bottle2.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/box1.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/box2.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/rubbish/buffalo_scull.md2 | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/models/objects/rubbish/buffalo_scull.png | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
-base/models/objects/rubbish/car1.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/car2.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/container.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/container_green.jpg | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/container_grey.jpg | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/container_red.jpg | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/fence.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/fence.png | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/car1.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/car2.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/container.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/container_green.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/container_grey.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/container_red.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/fence.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/fence.png | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/rubbish/gravel/gravel.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/rubbish/gravel/gravel.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
-base/models/objects/rubbish/green_barrel.jpg | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/grey_barrel.jpg | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/grey_car.jpg | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/oil_can.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/rusty_bar.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/scrap.jpg | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/scrap1.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/scrap2.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/scrap3.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/scrap4.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/tire.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/woodern_plank1.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/woodern_plank2.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/rubbish/yellow_barrel.jpg | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/rubbish/green_barrel.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/grey_barrel.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/grey_car.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/oil_can.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/rusty_bar.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/scrap.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/scrap1.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/scrap2.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/scrap3.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/scrap4.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/tire.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/woodern_plank1.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/woodern_plank2.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/rubbish/yellow_barrel.jpg | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/samlauncher/rocket.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/samlauncher/rocket.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/samlauncher/samlauncher.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -1350,12 +1350,12 @@ base/models/objects/vegi/plant_v1/plant_v1.png | Creative Commons Attribution-Sh
 base/models/objects/vegi/plants/plant.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/plants/plant.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/plants/plant1.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/vegi/plants/plant_a.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/vegi/plants/plantb.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/vegi/plants/plantc.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/vegi/plants/plantd.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/vegi/plants/plante.md2 | GNU General Public License 2.0 | Yoshiboy
-base/models/objects/vegi/plants/plants.png | GNU General Public License 2.0 | Yoshiboy
+base/models/objects/vegi/plants/plant_a.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/vegi/plants/plantb.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/vegi/plants/plantc.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/vegi/plants/plantd.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/vegi/plants/plante.md2 | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
+base/models/objects/vegi/plants/plants.png | GNU General Public License 2.0 | Daniel Holden (Yoshiboy)
 base/models/objects/vegi/tree03/tree03.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/tree03/tree03.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/tree_dead/tree_dead.png | GNU General Public License 2.0 or later | Willem Sitters
