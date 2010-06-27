@@ -878,6 +878,34 @@ static void CL_StatsUpdate_f (void)
 }
 
 /**
+ * @brief Load mapDef statistics
+ * @param[in] parent XML Node structure, where we get the information from
+ */
+static qboolean CP_LoadMapDefStatXML (mxml_node_t *parent)
+{
+	mxml_node_t *node;
+	
+	for (node = mxml_GetNode(parent, SAVE_CAMPAIGN_MAPDEF); node; node = mxml_GetNextNode(node, parent, SAVE_CAMPAIGN_MAPDEF)) {
+		const char *s = mxml_GetString(node, SAVE_CAMPAIGN_MAPDEF_ID);
+		mapDef_t *map;
+
+		if (s[0] == '\0') {
+			Com_Printf("Warning: MapDef with no id in xml!\n");
+			continue;
+		}
+		map = Com_GetMapDefinitionByID(s);
+		if (!map) {
+			Com_Printf("Warning: No MapDef with id '%s'!\n", s);
+			continue;
+		}
+		map->timesAlreadyUsed = mxml_GetInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, 0);
+	}
+
+	return qtrue;
+}
+
+
+/**
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
@@ -889,6 +917,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	mxml_node_t *interests;
 	const char *name;
 	campaign_t *campaign;
+	mxml_node_t *mapDefStat;
 	int i;
 
 	campaignNode = mxml_GetNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
@@ -988,7 +1017,31 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		}
 	}
 
+	mapDefStat = mxml_GetNode(campaignNode, SAVE_CAMPAIGN_MAPDEFSTAT);
+	if (mapDefStat && !CP_LoadMapDefStatXML(mapDefStat))
+		return qfalse;
+
 	mxmlDelete(campaignNode);
+	return qtrue;
+}
+
+/**
+ * @brief Save mapDef statistics
+ * @param[out] parent XML Node structure, where we write the information to
+ */
+static qboolean CP_SaveMapDefStatXML (mxml_node_t *parent)
+{
+	int i;
+
+	for (i = 0; i < csi.numMDs; i++) {
+		const mapDef_t const* map = &csi.mds[i];
+		if (map->timesAlreadyUsed > 0) {
+			mxml_node_t *node = mxml_AddNode(parent, SAVE_CAMPAIGN_MAPDEF);
+			mxml_AddString(node, SAVE_CAMPAIGN_MAPDEF_ID, map->id);
+			mxml_AddInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, map->timesAlreadyUsed);
+		}
+	}
+
 	return qtrue;
 }
 
@@ -1002,6 +1055,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	mxml_node_t *missions;
 	mxml_node_t *interests;
 	mxml_node_t *map;
+	mxml_node_t *mapDefStat;
 
 	campaign = mxml_AddNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 
@@ -1033,6 +1087,10 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	/* store missions */
 	missions = mxml_AddNode(parent, SAVE_CAMPAIGN_MISSIONS);
 	if (!CP_SaveMissionsXML(missions))
+		return qfalse;
+
+	mapDefStat = mxml_AddNode(parent, SAVE_CAMPAIGN_MAPDEFSTAT);
+	if (!CP_SaveMapDefStatXML(mapDefStat))
 		return qfalse;
 
 	return qtrue;
