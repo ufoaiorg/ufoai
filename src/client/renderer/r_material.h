@@ -113,7 +113,8 @@ typedef struct tape_s {
 typedef enum {
 	ANIM_NORMAL,	/**< loops the animation from frame [0, n-1] */
 	ANIM_ALTERNATE,	/**< amount of frames should be uneven [0, n-1, 1] */
-	ANIM_BACKWARDS	/**< plays the animation in reverse order. Loops from [n-1, 0] */
+	ANIM_BACKWARDS,	/**< plays the animation in reverse order. Loops from [n-1, 0] */
+	ANIM_RANDOM		/**< plays the animation in random order. */
 } animLoop_t;
 
 typedef struct anim_s {

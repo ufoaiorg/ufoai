@@ -193,6 +193,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	/* needed for transfer of alien corpses */
 	VectorCopy(base->pos, baseAttackFakeAircraft.pos);
 #if 0
+	/** @todo active this once more than 8 soldiers are working */
 	/* needed to spawn soldiers on map */
 	baseAttackFakeAircraft.maxTeamSize = LIST_Count(hiredSoldiersInBase);
 #else
@@ -216,6 +217,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 		return;
 	}
 #if 0
+	/** @todo active this once more than 8 soldiers are working */
 	/* all soldiers in the base should get used */
 	baseAttackFakeAircraft.maxTeamSize = AIR_GetTeamSize(&baseAttackFakeAircraft);
 #endif
