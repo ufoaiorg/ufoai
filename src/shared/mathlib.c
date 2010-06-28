@@ -156,6 +156,7 @@ float GetDistanceOnGlobe (const vec2_t pos1, const vec2_t pos2)
 	float distance;
 
 	distance = cos(latitude1) * cos(latitude2) * cos(deltaLongitude) + sin(latitude1) * sin(latitude2);
+	distance = min(max(-1, distance), 1);
 	distance = acos(distance) * todeg;
 
 	return distance;
