@@ -264,7 +264,6 @@ team bloodspider
 	name		"_Bloodspider"
 	tech		"rs_alien_bloodspider_autopsy"
 	race		bloodspider
-	robot		true
 	armour		false
 	weapons		false
 	onlyWeapon	bloodspider_weapon

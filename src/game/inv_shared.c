@@ -499,7 +499,7 @@ qboolean CHRSH_IsTeamDefAlien (const teamDef_t* const td)
  */
 qboolean CHRSH_IsTeamDefRobot (const teamDef_t* const td)
 {
-	return td->race == RACE_ROBOT;
+	return td->race == RACE_ROBOT || td->race == RACE_BLOODSPIDER;
 }
 
 /**
