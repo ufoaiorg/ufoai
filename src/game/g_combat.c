@@ -346,7 +346,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 
 	/* only actors after this point - and they must have a teamdef */
 	assert(target->chr.teamDef);
-	isRobot = target->chr.teamDef->robot;
+	isRobot = CHRSH_IsTeamDefRobot(target->chr.teamDef);
 
 	/* Apply armour effects. */
 	if (damage > 0) {

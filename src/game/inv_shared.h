@@ -665,6 +665,7 @@ void CHRSH_CharGenAbilitySkills(character_t * chr, qboolean multiplayer) __attri
 const char *CHRSH_CharGetBody(const character_t* const chr) __attribute__((nonnull));
 const char *CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnull));
 qboolean CHRSH_IsTeamDefAlien(const teamDef_t* const td) __attribute__((nonnull));
+qboolean CHRSH_IsTeamDefRobot(const teamDef_t* const td) __attribute__((nonnull));
 
 /* ================================ */
 /*  INVENTORY MANAGEMENT FUNCTIONS  */

@@ -494,6 +494,15 @@ qboolean CHRSH_IsTeamDefAlien (const teamDef_t* const td)
 }
 
 /**
+ * @brief Check if a team definition is a robot.
+ * @param[in] td Pointer to the team definition to check.
+ */
+qboolean CHRSH_IsTeamDefRobot (const teamDef_t* const td)
+{
+	return td->race == RACE_ROBOT;
+}
+
+/**
  * @brief Templates for the different unit types. Each element of the array is a tuple that
  * indicates the minimum and the maximum value for the relevant ability or skill.
  */

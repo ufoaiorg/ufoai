@@ -2485,7 +2485,6 @@ static const value_t teamDefValues[] = {
 	{"hit_particle", V_STRING, offsetof(teamDef_t, hitParticle), 0}, /**< What particle effect should be spawned if a unit of this type is hit? */
 	{"death_texture", V_STRING, offsetof(teamDef_t, deathTextureName), 0},
 	{"race", V_RACE, offsetof(teamDef_t, race), MEMBER_SIZEOF(teamDef_t, race)},
-	{"robot", V_BOOL, offsetof(teamDef_t, robot), MEMBER_SIZEOF(teamDef_t, robot)}, /**< Is this a robotic unit? */
 
 	{NULL, 0, 0, 0}
 };

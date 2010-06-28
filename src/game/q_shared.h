@@ -458,7 +458,6 @@ typedef struct teamDef_s {
 	int numSounds[SND_MAX][NAME_LAST];	/**< Amount of sounds in this list for all different genders and soundtypes. */
 
 	racetypes_t race;	/**< What is the race of this team?*/
-	qboolean robot;         /**< Is this a robotic team? */
 
 	qboolean armour;	/**< Does this team use armour. */
 	qboolean weapons;	/**< Does this team use weapons. */

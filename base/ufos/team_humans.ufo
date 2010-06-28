@@ -13,8 +13,6 @@
 //		The name of the team (translatable)
 //	race
 //
-//	robot
-//		Boolean - team is for robots
 //	armour
 //		Boolean - team can carry armour
 //	weapons
@@ -574,6 +572,9 @@ team phalanx_scientist
 	size 1
 	hit_particle blood
 	name	"_Scientist"
+	weapons	false
+	armour	false
+	race	civilian
 
 	names {
 		male {
@@ -930,6 +931,7 @@ team phalanx_pilot
 	size 1
 	hit_particle blood
 	name	"_Pilot"
+	armour	false
 
 	names {
 		male {
@@ -1288,6 +1290,9 @@ team phalanx_worker
 	size 1
 	hit_particle blood
 	name	"_Worker"
+	weapons	false
+	armour	false
+	race	civilian
 
 	names {
 		male {
@@ -1641,7 +1646,6 @@ team phalanx_ugv_phoenix
 {
 	size	2
 	race	robot
-	robot	true
 	//hit_particle none
 	name	"_Phoenix UGV"
 
@@ -1666,7 +1670,6 @@ team phalanx_ugv_ares_w
 {
 	size	2
 	race	robot
-	robot	true
 	//hit_particle none
 	name	"_Ares W (UGV)"
 
