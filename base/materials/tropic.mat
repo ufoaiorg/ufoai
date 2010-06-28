@@ -593,10 +593,9 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		lightmap
 	}
-	/* Big button animation (green to red)*/
+	/* Big button animation (static turned on red)*/
 	{
-		texture pt/b/b2_13-16_0c0
-		anim 16 9
+		texture pt/b/b2_13-16_0z_1
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* Display animation */
@@ -689,45 +688,3 @@
 		scale.s 1.3
 	}
 }
-/*
-/* Screens & Panels (Harvester only) */
-
-/* comptex001: Combipanel with Displays & Monitors (Harvester only) */
-{
-	material tex_tech/comptex001
-	bump 1.0
-	hardness 1.0
-	parallax 1.0
-	specular 1.0
-	/* Screen overlay alternating animation (top left, red-blue) */
-	{
-		texture pt/so/soctex001_0a0
-		anima 9 6.0
-		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-	}
-	/* Buttons aternating animation (top right, switching green) */
-	{
-		texture pt/b/bctex001_0a0
-		anima 9 4.0
-		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-	}
-	/* Buttons aternating animation (middle right, strong color-switch) */
-	{
-		texture pt/b/bctex001_1b0
-		anima 9 5.0
-		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-	}
-	/* Big button aternating animation (middle, yellow-blue) */
-	{
-		texture pt/b/bctex001_2a0
-		anima 9 8.0
-		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-	}
-	/* Buttons aternating animation (top middle, switching grey) */
-	{
-		texture pt/b/bctex001_3a0
-		anima 9 3.0
-		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-	}
-}
-*/
