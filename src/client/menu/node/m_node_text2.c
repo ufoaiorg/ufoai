@@ -1,6 +1,6 @@
 /**
- * @file m_node_text.c
- * @todo add getter/setter to cleanup access to extradata from cl_*.c files (check "u.text.")
+ * @file m_node_text2.c
+ * @todo add getter/setter to cleanup access to extradata from cl_*.c files (check "u.text2.")
  */
 
 /*
@@ -41,7 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void MN_TextUpdateCache(menuNode_t *node);
 
-static void MN_TextNodeGenerateLineSplit(menuNode_t *node) {
+static void MN_TextNodeGenerateLineSplit (menuNode_t *node)
+{
 	const char *data;
 	int bufferSize = 1024;
 	char *buffer = Mem_Alloc(bufferSize);
@@ -346,8 +347,6 @@ static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 		MN_ExecuteEventActions(node, node->onRightClick);
 }
 
-/**
- */
 static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 {
 	MN_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
