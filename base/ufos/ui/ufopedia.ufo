@@ -130,7 +130,7 @@ window ufopedia extends objectinfo
 		// text and info
 		// ==================
 
-		text ufopedia
+		text2 ufopedia
 		{
 			dataid		TEXT_UFOPEDIA
 			pos			"14 55"

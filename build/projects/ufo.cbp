@@ -1006,6 +1006,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/menu/node/m_node_text.h" />
+		<Unit filename="../../src/client/menu/node/m_node_text2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/menu/node/m_node_text2.h" />
 		<Unit filename="../../src/client/menu/node/m_node_textentry.c">
 			<Option compilerVar="CC" />
 		</Unit>

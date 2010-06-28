@@ -64,6 +64,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_tab.h"
 #include "node/m_node_tbar.h"
 #include "node/m_node_text.h"
+#include "node/m_node_text2.h"
 #include "node/m_node_textlist.h"
 #include "node/m_node_textentry.h"
 #include "node/m_node_keybinding.h"
@@ -121,6 +122,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterTabNode,
 	MN_RegisterTBarNode,
 	MN_RegisterTextNode,
+	MN_RegisterText2Node,
 	MN_RegisterTextEntryNode,
 	MN_RegisterTextListNode,
 	MN_RegisterTodoNode,

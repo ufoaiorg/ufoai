@@ -205,6 +205,7 @@ CLIENT_SRCS = \
 	client/menu/node/m_node_tab.c \
 	client/menu/node/m_node_tbar.c \
 	client/menu/node/m_node_text.c \
+	client/menu/node/m_node_text2.c \
 	client/menu/node/m_node_textlist.c \
 	client/menu/node/m_node_textentry.c \
 	client/menu/node/m_node_todo.c \
