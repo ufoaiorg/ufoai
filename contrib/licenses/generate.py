@@ -411,6 +411,7 @@ class Analysis:
             self.add(self.inputDir + '/' + file)
 
     def getContentEntry(self, output, meta):
+        global THUMBNAIL
         file = meta.fileName.replace(self.base + '/', "", 1)
 
         content = "<li>"
@@ -590,7 +591,7 @@ class Analysis:
 
 def main():
     global texture_map, map_texture # debugging
-    global ABS_URL # config
+    global ABS_URL, THUMBNAIL # config
     from optparse import OptionParser
 
     parser = OptionParser()
@@ -598,6 +599,8 @@ def main():
                       help="Path to output/working directory ", metavar="DIR")
     parser.add_option("-u", "--url", dest="abs_url",
                       help="base URL where the files will be served", metavar="DIR")
+    parser.add_option("-t", "--disable-thumbnails", action="store_false", dest="thumbnail",
+                      help="disable thumbnails computation and display")
 
     (options, args) = parser.parse_args()
 
@@ -606,11 +609,20 @@ def main():
         # default path: relative to working directory
         output_path = '.'
 
-    ABS_URL = options.abs_url
-    if not ABS_URL:
-        print "-u is required."
-        sys.exit(1)
+    THUMBNAIL = options.thumbnail
 
+    # @note we use it nowhere, cause everything is relative
+    #ABS_URL = options.abs_url
+    #if not ABS_URL:
+    #    print "-u is required."
+    #    sys.exit(1)
+
+    print "-------------------------"
+    print "Absolute URL:\t\t", ABS_URL
+    print "Output:\t\t\t", output_path
+    print "Generate thumbnails:\t", THUMBNAIL
+    print "-------------------------"
+    
     setup(output_path)
     clean_up(output_path)
 
