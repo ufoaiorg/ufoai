@@ -229,9 +229,10 @@ void Com_Printf (const char* const fmt, ...)
 void Com_DPrintf (int level, const char *fmt, ...)
 {
 	/* don't confuse non-developers with techie stuff... */
-	if (!developer || !(developer->integer & level))
+	if (!developer)
 		return;
-	else {
+
+	if (developer->integer == 1 || (developer->integer & level)) {
 		va_list ap;
 
 		va_start(ap, fmt);

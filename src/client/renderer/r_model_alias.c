@@ -209,7 +209,7 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 }
 
 /**
- * @brief Tries to load a mdx file that contains the normals and the tangets for a model.
+ * @brief Tries to load a mdx file that contains the normals and the tangents for a model.
  * @sa R_ModCalcNormalsAndTangents
  * @sa R_ModCalcUniqueNormalsAndTangents
  * @param mod The model to load the mdx file for
