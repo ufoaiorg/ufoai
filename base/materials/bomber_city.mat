@@ -203,10 +203,10 @@
 		anima 6 12
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Sixpack of buttons (top) animation (red-green) */
+	/* Sixpack of buttons (top) randomized animation (red-green) */
 	{
 		texture pt/b/b2_06_3c0
-		anim 16 3.5
+		animr 14 3.5
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* Doublepack of buttons (bottom) alternating animation (orange) */
@@ -386,7 +386,7 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		pulse 2.0
 	}
-	/* 7 small buttons aternating animation (bottom right) */
+	/* 7 small buttons alternating animation (bottom right) */
 	{
 		texture pt/b/b2_17_2b0
 		anima 9 6.3

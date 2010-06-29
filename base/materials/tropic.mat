@@ -200,13 +200,13 @@
 		anima 6 14.5
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* sixpack of buttons (top) animation */
+	/* Sixpack of buttons (top) randomized animation (red-blue) */
 	{
 		texture pt/b/b2_06_3a0
-		anim 16 1.0
+		animr 14 1.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* doublepack of buttons (bottom) alternating animation (green) */
+	/* Doublepack of buttons (bottom) alternating animation (green) */
 	{
 		texture pt/b/b2_06_4a0
 		anima 6 7.9
@@ -417,7 +417,7 @@
 		anim 16 4.2
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Small button aternating animation (KITT)*/
+	/* Small button alternating animation (KITT)*/
 	{
 		texture pt/b/b2_13-16_1c0
 		anima 9 8
@@ -526,7 +526,7 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		lightmap
 	}
-	/* Big button long aternating animation (green to red)*/
+	/* Big button long alternating animation (green to red)*/
 	{
 		texture pt/b/b2_13-16_0c0
 		anima 16 5.5
@@ -539,7 +539,7 @@
 		anim 16 8
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Small button aternating animation  (KITT) */
+	/* Small button alternating animation  (KITT) */
 	{
 		texture pt/b/b2_13-16_1c0
 		anima 9 8
@@ -604,7 +604,7 @@
 		anim 16 7
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Small button aternating animation  (KITT) */
+	/* Small button alternating animation  (KITT) */
 	{
 		texture pt/b/b2_13-16_1c0
 		anima 9 9
@@ -654,7 +654,7 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		pulse 1.0
 	}
-	/* 7 small buttons aternating animation (bottom right) */
+	/* 7 small buttons alternating animation (bottom right) */
 	{
 		texture pt/b/b2_17_2a0
 		anima 9 4.3

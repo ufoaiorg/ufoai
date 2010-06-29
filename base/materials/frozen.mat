@@ -270,13 +270,13 @@
 		anima 6 13.5
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* sixpack of buttons (top) animation (blue-red) */
+	/* Sixpack of buttons (top) randomized animation (blue-red) */
 	{
 		texture pt/b/b2_06_3a0
-		anim 16 0.3
+		animr 14 0.3
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* doublepack of buttons (bottom) alternating animation (cyan) */
+	/* Doublepack of buttons (bottom) alternating animation (cyan) */
 	{
 		texture pt/b/b2_06_4d0
 		anima 6 15
@@ -435,32 +435,32 @@
 		anim 16 5
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Screen overlay aternating animation (bottom left, frequency display, colormorph green) */
+	/* Screen overlay alternating animation (bottom left, frequency display, colormorph green) */
 	{
 		texture pt/so/soctex001_1a0
 		anima 9 6.5
 		color 0.1 1.0 0.1
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Buttons aternating animation (top right, switching grey) */
+	/* Buttons randomized animation (top right, switching black) */
 	{
-		texture pt/b/bctex001_0e0
-		anima 9 2.0
+		texture pt/b/bctex001_0a0
+		animr 9 2.7
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Buttons aternating animation (middle right, color-switch) */
+	/* Buttons alternating animation (middle right, color-switch) */
 	{
 		texture pt/b/bctex001_1a0
 		anima 9 20
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Big button aternating animation (middle, orange-blue) */
+	/* Big button alternating animation (middle, orange-blue) */
 	{
 		texture pt/b/bctex001_2c0
 		anima 9 8.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Buttons aternating animation (top middle, switching yellow) */
+	/* Buttons alternating animation (top middle, switching yellow) */
 	{
 		texture pt/b/bctex001_3b0
 		anima 9 11
@@ -487,7 +487,7 @@
 		pulse 0.25
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Border screen overlay aternating animation (green-blue glow) */
+	/* Border screen overlay alternating animation (green-blue glow) */
 	{
 		texture pt/so/soscrp004_1c0
 		anima 9 10

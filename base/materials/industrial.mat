@@ -276,13 +276,13 @@
 		anima 6 9
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* sixpack of buttons (top) animation (cyan-yellow) */
+	/* Sixpack of buttons (top) randomized animation (cyan-yellow) */
 	{
 		texture pt/b/b2_06_3d0
-		anim 16 2
+		animr 14 2
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* doublepack of buttons (bottom) alternating animation (blue) */
+	/* Doublepack of buttons (bottom) alternating animation (blue) */
 	{
 		texture pt/b/b2_06_4e0
 		anima 6 5
@@ -441,32 +441,32 @@
 		anima 9 4
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Screen overlay aternating animation (bottom left, frequency display, colormorph red) */
+	/* Screen overlay alternating animation (bottom left, frequency display, colormorph red) */
 	{
 		texture pt/so/soctex001_1a0
 		anima 9 5
 		color 1.0 0.1 0.1
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Buttons aternating animation (top right, switching black) */
+	/* Buttons randomized animation (top right, switching black) */
 	{
 		texture pt/b/bctex001_0a0
-		anima 9 12
+		animr 9 12
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Buttons aternating animation (middle right, color-switch) */
+	/* Buttons alternating animation (middle right, color-switch) */
 	{
 		texture pt/b/bctex001_1c0
 		anima 9 15
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Big button aternating animation (middle, red-cyan) */
+	/* Big button alternating animation (middle, red-cyan) */
 	{
 		texture pt/b/bctex001_2b0
 		anima 9 19
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Buttons aternating animation (top middle, switching green) */
+	/* Buttons alternating animation (top middle, switching green) */
 	{
 		texture pt/b/bctex001_3c0
 		anima 9 4
@@ -492,7 +492,7 @@
 		anim 12 8.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
-	/* Border screen overlay aternating animation (green border) */
+	/* Border screen overlay alternating animation (green border) */
 	{
 		texture pt/so/soscrp004_1a0
 		anima 4 5
