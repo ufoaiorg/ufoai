@@ -313,8 +313,8 @@ def setup(output_path):
     """Check if output folders etc. are in place"""
     if not os.path.exists(output_path + '/licenses'):
         print 'creating base directory'
-        os.mkdir(output_path + '/licenses')
-    
+        os.makedirs(output_path + '/licenses')
+
     for p in ['cache', 'history', 'html']:
         test_path = '%s/licenses/%s' % (output_path, p)
         if not os.path.exists(test_path):
@@ -333,11 +333,6 @@ def clean_up(output_path):
             os.mkdir(output_path + '/licenses/html/'+i)
             if not os.path.exists(output_path + '/licenses/history/'+i):
                 os.mkdir(output_path + '/licenses/history/'+i)
-
-    for path, dnames, fnames in os.walk('base'):
-        if '/.' in path:
-            continue
-        os.mkdir(output_path + '/licenses/html/.thumbnails/'+path[5:])
 
 def group(dictionary, key, value):
     if not (key in dictionary):
@@ -590,7 +585,6 @@ class Analysis:
         self.writeGroups(output, "sources", self.contentBySource)
 
 def main():
-    global texture_map, map_texture # debugging
     global ABS_URL, THUMBNAIL # config
     from optparse import OptionParser
 
@@ -608,6 +602,7 @@ def main():
     if not output_path:
         # default path: relative to working directory
         output_path = '.'
+    output_path = os.path.abspath(output_path)
 
     THUMBNAIL = options.thumbnail
 
@@ -619,7 +614,7 @@ def main():
 
     print "-------------------------"
     print "Absolute URL:\t\t", ABS_URL
-    print "Output:\t\t\t", output_path
+    print "Absolute output:\t", output_path
     print "Generate thumbnails:\t", THUMBNAIL
     print "-------------------------"
     
