@@ -33,6 +33,16 @@ struct menuAction_s;
 struct nodeBehaviour_s;
 struct menuKeyBinding_s;
 
+extern const struct nodeBehaviour_s const *windowBehaviour;
+
+#define INDEXEDCHILD_HASH_SIZE 32
+
+typedef struct node_index_s {
+	struct menuNode_s *node;
+	struct node_index_s *hash_next;
+	struct node_index_s *next;
+} node_index_t;
+
 /**
  * @brief extradata for the window node
  */
@@ -63,6 +73,9 @@ typedef struct {
 	struct menuAction_s *onClose;	/**< Call when the menu is pop */
 	struct menuAction_s *onTimeOut;	/**< Call when the own timer of the window out */
 
+	node_index_t *index;
+	node_index_t *index_hash[INDEXEDCHILD_HASH_SIZE];
+
 } windowExtraData_t;
 
 void MN_RegisterWindowNode(struct nodeBehaviour_s *behaviour);
@@ -74,5 +87,9 @@ void MN_WindowNodeRegisterKeyBinding(struct menuNode_s* menu, struct menuKeyBind
 struct menuKeyBinding_s *MN_WindowNodeGetKeyBinding(const struct menuNode_s* const node, unsigned int key);
 void MN_WindowNodeSetRenderNode(struct menuNode_s *node, struct menuNode_s *renderNode);
 vec_t *MN_WindowNodeGetNoticePosition(struct menuNode_s *node);
+/* child index */
+struct menuNode_s* MN_WindowNodeGetIndexedChild(struct menuNode_s* const node, const char* childName);
+qboolean MN_WindowNodeAddIndexedNode(struct menuNode_s* const node, struct menuNode_s* const child);
+qboolean MN_WindowNodeRemoveIndexedNode(struct menuNode_s* const node, struct menuNode_s* const child);
 
 #endif

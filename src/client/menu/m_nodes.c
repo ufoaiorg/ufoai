@@ -215,6 +215,7 @@ const char* MN_GetPath (const menuNode_t* node)
  * @param[in] relativeNode relative node where the path start. It allow to use facultative command to start the path (this, parent, menu).
  * @param[out] resultNode Node found. Else NULL.
  * @param[out] resultProperty Property found. Else NULL.
+ * TODO Speed up, evilly used function, use strncmp instead of using buffer copy (name[MAX_VAR])
  */
 void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, menuNode_t **resultNode, const value_t **resultProperty)
 {
@@ -231,7 +232,7 @@ void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, menuNode
 	while (nextName && nextName[0] != '\0') {
 		const char* begin = nextName;
 		char command = nextCommand;
-		nextName = strpbrk(begin, ".@");
+		nextName = strpbrk(begin, ".@#");
 		if (!nextName) {
 			Q_strncpyz(name, begin, sizeof(name));
 			nextCommand = '\0';
@@ -268,6 +269,11 @@ void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, menuNode
 			else
 				node = MN_GetNode(node, name);
 			break;
+		case '#':	/* window index */
+			/** FIXME use a warning instead of an assert */
+			assert(node->behaviour == windowBehaviour);
+			node = MN_WindowNodeGetIndexedChild(node, name);
+			break;
 		case '@':	/* property */
 			assert(nextCommand == '\0');
 			*resultProperty = MN_GetPropertyFromBehaviour(node->behaviour, name);
@@ -285,39 +291,20 @@ void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, menuNode
 
 /**
  * @brief Return a node by a path name (names with dot separation)
+ * It is a simplification facade over MN_ReadNodePath
  * @return The requested node, else NULL if not found
  * @code
  * // get keylist node from options_keys node from options menu
  * node = MN_GetNodeByPath("options.options_keys.keylist");
+ * @sa MN_ReadNodePath
  * @endcode
  */
 menuNode_t* MN_GetNodeByPath (const char* path)
 {
-	char name[MAX_VAR];
 	menuNode_t* node = NULL;
-	const char* nextName;
-
-	nextName = path;
-	while (nextName && nextName[0] != '\0') {
-		const char* begin = nextName;
-		nextName = strstr(begin, ".");
-		if (!nextName) {
-			Q_strncpyz(name, begin, sizeof(name));
-		} else {
-			assert(nextName - begin + 1 <= sizeof(name));
-			Q_strncpyz(name, begin, nextName - begin + 1);
-			nextName++;
-		}
-
-		if (node == NULL)
-			node = MN_GetWindow(name);
-		else
-			node = MN_GetNode(node, name);
-
-		if (!node)
-			return NULL;
-	}
-
+	const value_t *property;
+	MN_ReadNodePath(path, NULL, &node, &property);
+	/** FIXME warning if it return a peroperty */
 	return node;
 }
 

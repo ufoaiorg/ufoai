@@ -54,7 +54,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MARGE 3
 
-static const nodeBehaviour_t const *localBehaviour;
+const nodeBehaviour_t const *windowBehaviour;
 
 static const int CONTROLS_IMAGE_DIMENSIONS = 17;
 static const int CONTROLS_PADDING = 22;
@@ -68,6 +68,57 @@ static const int windowTemplate[] = {
 
 static const vec4_t modalBackground = {0, 0, 0, 0.6};
 static const vec4_t anamorphicBorder = {0, 0, 0, 1};
+
+/**
+ * @brief Get a node from child index
+ * @return A child node by his name, else NULL
+ */
+menuNode_t* MN_WindowNodeGetIndexedChild (menuNode_t* const node, const char* childName)
+{
+	node_index_t *a;
+	unsigned int hash;
+
+	hash = Com_HashKey(childName, INDEXEDCHILD_HASH_SIZE);
+	for (a = EXTRADATA(node).index_hash[hash]; a; a = a->hash_next) {
+		if (!strcmp(childName, a->node->name)) {
+			return a->node;
+		}
+	}
+	return NULL;
+}
+
+/**
+ * @brief Add a node to the child index
+ */
+qboolean MN_WindowNodeAddIndexedNode (menuNode_t* const node, menuNode_t* const child)
+{
+	node_index_t *a;
+	unsigned int hash;
+
+	hash = Com_HashKey(child->name, INDEXEDCHILD_HASH_SIZE);
+	for (a = EXTRADATA(node).index_hash[hash]; a; a = a->hash_next) {
+		if (!strcmp(child->name, a->node->name)) {
+			/** FIXME display a warning, we must not override a node name here */
+			break;
+		}
+	}
+
+	if (!a) {
+		a = Mem_PoolAlloc(sizeof(*a), mn_sysPool, 0);
+		a->next = EXTRADATA(node).index;
+		a->hash_next = EXTRADATA(node).index_hash[hash];
+		EXTRADATA(node).index_hash[hash] = a;
+		EXTRADATA(node).index = a;
+	}
+}
+
+/**
+ * @brief Remove a node from the child index
+ */
+qboolean MN_WindowNodeRemoveIndexedNode (menuNode_t* const node, menuNode_t* const child)
+{
+	/** FIXME implement it anyway we use it or not */
+}
 
 /**
  * @brief Check if a window is fullscreen or not
@@ -162,7 +213,7 @@ static void MN_WindowNodeDoLayout (menuNode_t *node)
 	}
 
 	/* super */
-	localBehaviour->super->doLayout(node);
+	windowBehaviour->super->doLayout(node);
 }
 
 /**
@@ -408,7 +459,7 @@ menuKeyBinding_t *MN_WindowNodeGetKeyBinding (const struct menuNode_s* const nod
 
 void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 {
-	localBehaviour = behaviour;
+	windowBehaviour = behaviour;
 	behaviour->name = "window";
 	behaviour->loading = MN_WindowNodeLoading;
 	behaviour->loaded = MN_WindowNodeLoaded;

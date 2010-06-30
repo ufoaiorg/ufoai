@@ -54,7 +54,8 @@ typedef struct menuNode_s {
 	char name[MAX_VAR];			/**< name from the script files */
 	struct nodeBehaviour_s *behaviour;
 	struct menuNode_s *super;	/**< Node inherited, else NULL */
-	qboolean dynamic;			/** True if it use dynamic memory */
+	qboolean dynamic;			/** If true, it use dynamic memory */
+	qboolean indexed;			/** If true, the node name indexed into his window */
 
 	/* common navigation */
 	struct menuNode_s *firstChild;	/**< first element of linked list of child */

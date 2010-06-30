@@ -747,6 +747,10 @@ static const value_t properties[] = {
 	/* Top position of the node (see also <code>pos</code>) */
 	{"top", V_FLOAT, offsetof(menuNode_t, pos[1]), MEMBER_SIZEOF(menuNode_t, pos[1])},
 
+	/* If true, the node name is indexed into the window. We can access to the node with
+	 * the path "windowName#nodeName"
+	 */
+	{"indexed", V_BOOL, offsetof(menuNode_t, indexed), MEMBER_SIZEOF(menuNode_t, indexed)},
 	/* If true, the node is not displayed nor or activatable. */
 	{"invis", V_BOOL, offsetof(menuNode_t, invis), MEMBER_SIZEOF(menuNode_t, invis)},
 	/* If true, the node is disabled. Few nodes support it, fell free to request an update. */
