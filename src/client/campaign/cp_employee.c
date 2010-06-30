@@ -764,7 +764,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 					 * where the removed employee was before */
 					/** @todo remove this once the employees are a linked list, too */
 					if ((employee_t *)l->data >= employee)
-						l->data--;
+						l->data -= sizeof(employee_t);
 				}
 				if (employee->type == EMPL_PILOT && aircraft->pilot >= employee)
 					aircraft->pilot--;
