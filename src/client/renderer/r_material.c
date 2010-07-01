@@ -77,6 +77,9 @@ static void R_UpdateMaterial (material_t *m)
 					frame = s->anim.num_frames - 1;
 					frame -= s->anim.dframe % s->anim.num_frames;
 					break;
+				default:
+					Com_Printf("Unknown anim stage\n");
+					continue;
 				}
 				s->image = s->anim.images[frame];
 			}
