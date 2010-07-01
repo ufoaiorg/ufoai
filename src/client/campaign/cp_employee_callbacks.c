@@ -142,7 +142,6 @@ static void E_EmployeeListScroll_f (void)
  */
 static void E_EmployeeList_f (void)
 {
-	int j;
 	employee_t* employee;
 	int hiredEmployeeIdx;
 	linkedList_t *employeeListName;
@@ -173,8 +172,8 @@ static void E_EmployeeList_f (void)
 	MN_ResetData(TEXT_LIST);
 	employeeListName = NULL;
 
-	/** @todo Use CL_GetTeamList and reduce code duplication */
-	for (j = 0, employee = ccs.employees[employeeCategory]; j < ccs.numEmployees[employeeCategory]; j++, employee++) {
+	employee = NULL;
+	while ((employee = E_GetNext(employeeCategory, employee))) {
 		/* don't show employees of other bases */
 		if (E_IsHired(employee) && !E_IsInBase(employee, base))
 			continue;

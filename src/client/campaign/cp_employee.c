@@ -1194,14 +1194,16 @@ void E_InitStartup (void)
  */
 employee_t* E_GetEmployeeFromChrUCN (int uniqueCharacterNumber)
 {
-	int i;
 	int j;
 
 	/* MAX_EMPLOYEES and not numWholeTeam - maybe some other soldier died */
-	for (j = 0; j < MAX_EMPL; j++)
-		for (i = 0; i < MAX_EMPLOYEES; i++)
-			if (ccs.employees[j][i].chr.ucn == uniqueCharacterNumber)
-				return &(ccs.employees[j][i]);
+	for (j = 0; j < MAX_EMPL; j++) {
+		employee_t *employee = NULL;
+		while ((employee = E_GetNext(j, employee))) {
+			if (employee->chr.ucn == uniqueCharacterNumber)
+				return employee;
+		}
+	}
 
 	return NULL;
 }
