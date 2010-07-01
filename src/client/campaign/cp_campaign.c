@@ -781,39 +781,29 @@ static void CL_StatsUpdate_f (void)
 
 	/* costs */
 	employee = NULL;
-	while ((employee = E_GetNext(EMPL_SCIENTIST, employee))) {
-		if (E_IsHired(employee)) {
-			costs += SALARY_SCIENTIST_BASE + employee->chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
-			hired[employee->type]++;
-		}
+	while ((employee = E_GetNextHired(EMPL_SCIENTIST, employee))) {
+		costs += SALARY_SCIENTIST_BASE + employee->chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
+		hired[employee->type]++;
 	}
 	employee = NULL;
-	while ((employee = E_GetNext(EMPL_SOLDIER, employee))) {
-		if (E_IsHired(employee)) {
-			costs += SALARY_SOLDIER_BASE + employee->chr.score.rank * SALARY_SOLDIER_RANKBONUS;
-			hired[employee->type]++;
-		}
+	while ((employee = E_GetNextHired(EMPL_SOLDIER, employee))) {
+		costs += SALARY_SOLDIER_BASE + employee->chr.score.rank * SALARY_SOLDIER_RANKBONUS;
+		hired[employee->type]++;
 	}
 	employee = NULL;
-	while ((employee = E_GetNext(EMPL_WORKER, employee))) {
-		if (E_IsHired(employee)) {
-			costs += SALARY_WORKER_BASE + employee->chr.score.rank * SALARY_WORKER_RANKBONUS;
-			hired[employee->type]++;
-		}
+	while ((employee = E_GetNextHired(EMPL_WORKER, employee))) {
+		costs += SALARY_WORKER_BASE + employee->chr.score.rank * SALARY_WORKER_RANKBONUS;
+		hired[employee->type]++;
 	}
 	employee = NULL;
-	while ((employee = E_GetNext(EMPL_PILOT, employee))) {
-		if (E_IsHired(employee)) {
-			costs += SALARY_PILOT_BASE + employee->chr.score.rank * SALARY_PILOT_RANKBONUS;
-			hired[employee->type]++;
-		}
+	while ((employee = E_GetNextHired(EMPL_PILOT, employee))) {
+		costs += SALARY_PILOT_BASE + employee->chr.score.rank * SALARY_PILOT_RANKBONUS;
+		hired[employee->type]++;
 	}
 	employee = NULL;
-	while ((employee = E_GetNext(EMPL_ROBOT, employee))) {
-		if (E_IsHired(employee)) {
-			costs += SALARY_ROBOT_BASE + employee->chr.score.rank * SALARY_ROBOT_RANKBONUS;
-			hired[employee->type]++;
-		}
+	while ((employee = E_GetNextHired(EMPL_ROBOT, employee))) {
+		costs += SALARY_ROBOT_BASE + employee->chr.score.rank * SALARY_ROBOT_RANKBONUS;
+		hired[employee->type]++;
 	}
 
 	/* employees - this is between the two costs parts to count the hired employees */
@@ -1545,15 +1535,10 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 	assert(aircraft);
 
 	/* only soldiers have stats and ranks, ugvs not */
-	while ((employee = E_GetNext(EMPL_SOLDIER, employee))) {
+	while ((employee = E_GetNextFromBase(EMPL_SOLDIER, employee, aircraft->homebase))) {
 		if (AIR_IsEmployeeInAircraft(employee, aircraft)) {
 			character_t *chr = &employee->chr;
 			assert(chr);
-			if (!E_IsHired(employee)) {
-				Com_Error(ERR_DROP, "Employee %s is reported as being on the aircraft (%s), but he is not hired",
-					chr->name, aircraft->id);
-			}
-			assert(E_IsInBase(employee, aircraft->homebase));
 
 			/* Remember the number of assigned mission for this character. */
 			chr->score.assignedMissions++;

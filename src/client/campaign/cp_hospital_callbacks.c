@@ -54,7 +54,7 @@ static void HOS_UpdateMenu (void)
 {
 	char name[128];
 	char rank[128];
-	int i, j, type;
+	int j, type;
 	int entry;
 	base_t *base = B_GetCurrentSelectedBase();
 
@@ -66,10 +66,7 @@ static void HOS_UpdateMenu (void)
 
 	for (type = 0, j = 0, entry = 0; type < MAX_EMPL; type++) {
 		employee_t *employee = NULL;
-		while ((employee = E_GetNext(type, employee))) {
-			/* Only show those employees, that are in the current base. */
-			if (!E_IsInBase(employee, base))
-				continue;
+		while ((employee = E_GetNextFromBase(type, employee, base))) {
 			/* Don't show soldiers who are gone in mission */
 			if (E_IsAwayFromBase(employee))
 				continue;
@@ -188,11 +185,11 @@ static void HOS_ListClick_f (void)
 
 	for (type = 0; type < MAX_EMPL; type++) {
 		employee_t *employee = NULL;
-		while ((employee = E_GetNext(type, employee))) {
-			/* only those employees, that are in the current base */
-			if (!E_IsInBase(employee, base) || employee->chr.HP >= employee->chr.maxHP)
+		while ((employee = E_GetNextFromBase(type, employee, base))) {
+			/* only those that need healing */
+			if (employee->chr.HP >= employee->chr.maxHP)
 				continue;
-			/* Don't select soldiers who are gone in mission */
+			/* Don't select soldiers that are gone to a mission */
 			if (E_IsAwayFromBase(employee))
 				continue;
 			if (!num) {

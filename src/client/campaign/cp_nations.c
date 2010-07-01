@@ -91,9 +91,8 @@ void CP_NationHandleBudget (void)
 
 	cost = 0;
 	employee = NULL;
-	while ((employee = E_GetNext(EMPL_SOLDIER, employee))) {
-		if (E_IsHired(employee))
-			cost += SALARY_SOLDIER_BASE + employee->chr.score.rank * SALARY_SOLDIER_RANKBONUS;
+	while ((employee = E_GetNextHired(EMPL_SOLDIER, employee))) {
+		cost += SALARY_SOLDIER_BASE + employee->chr.score.rank * SALARY_SOLDIER_RANKBONUS;
 	}
 	totalExpenditure += cost;
 
@@ -103,9 +102,8 @@ void CP_NationHandleBudget (void)
 
 	cost = 0;
 	employee = NULL;
-	while ((employee = E_GetNext(EMPL_WORKER, employee))) {
-		if (E_IsHired(employee))
-			cost += SALARY_WORKER_BASE + employee->chr.score.rank * SALARY_WORKER_RANKBONUS;
+	while ((employee = E_GetNextHired(EMPL_WORKER, employee))) {
+		cost += SALARY_WORKER_BASE + employee->chr.score.rank * SALARY_WORKER_RANKBONUS;
 	}
 	totalExpenditure += cost;
 
@@ -114,9 +112,8 @@ void CP_NationHandleBudget (void)
 
 	cost = 0;
 	employee = NULL;
-	while ((employee = E_GetNext(EMPL_SCIENTIST, employee))) {
-		if (E_IsHired(employee))
-			cost += SALARY_SCIENTIST_BASE + employee->chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
+	while ((employee = E_GetNextHired(EMPL_SCIENTIST, employee))) {
+		cost += SALARY_SCIENTIST_BASE + employee->chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
 	}
 	totalExpenditure += cost;
 
@@ -125,9 +122,8 @@ void CP_NationHandleBudget (void)
 
 	cost = 0;
 	employee = NULL;
-	while ((employee = E_GetNext(EMPL_PILOT, employee))) {
-		if (E_IsHired(employee))
-			cost += SALARY_PILOT_BASE + employee->chr.score.rank * SALARY_PILOT_RANKBONUS;
+	while ((employee = E_GetNextHired(EMPL_PILOT, employee))) {
+		cost += SALARY_PILOT_BASE + employee->chr.score.rank * SALARY_PILOT_RANKBONUS;
 	}
 	totalExpenditure += cost;
 
@@ -136,9 +132,8 @@ void CP_NationHandleBudget (void)
 
 	cost = 0;
 	employee = NULL;
-	while ((employee = E_GetNext(EMPL_ROBOT, employee))) {
-		if (E_IsHired(employee))
-			cost += SALARY_ROBOT_BASE + employee->chr.score.rank * SALARY_ROBOT_RANKBONUS;
+	while ((employee = E_GetNextHired(EMPL_ROBOT, employee))) {
+		cost += SALARY_ROBOT_BASE + employee->chr.score.rank * SALARY_ROBOT_RANKBONUS;
 	}
 	totalExpenditure += cost;
 

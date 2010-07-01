@@ -59,6 +59,28 @@ employee_t* E_GetNext (employeeType_t type, employee_t *lastEmployee)
 		return employee;
 }
 
+employee_t* E_GetNextFromBase (employeeType_t type, employee_t *lastEmployee, const base_t *base)
+{
+	employee_t* employee = lastEmployee;
+
+	while ((employee = E_GetNext(type, employee))) {
+		if (E_IsInBase(employee, base))
+			break;
+	}
+	return employee;
+}
+
+employee_t* E_GetNextHired (employeeType_t type, employee_t *lastEmployee)
+{
+	employee_t* employee = lastEmployee;
+
+	while ((employee = E_GetNext(type, employee))) {
+		if (E_IsHired(employee))
+			break;
+	}
+	return employee;
+}
+
 /**
  * @brief Tells you if a employee is away from his home base (gone in mission).
  * @param[in] employee Pointer to the employee.

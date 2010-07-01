@@ -71,14 +71,11 @@ qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
  */
 void HOS_HospitalRun (void)
 {
-	int type, i;
+	int type;
 
 	for (type = 0; type < MAX_EMPL; type++) {
 		employee_t *employee = NULL;
-		while ((employee = E_GetNext(type, employee))) {
-			if (!E_IsHired(employee))
-				continue;
-
+		while ((employee = E_GetNextHired(type, employee))) {
 			if (B_GetBuildingStatus(employee->baseHired, B_HOSPITAL))
 				HOS_HealCharacter(&(employee->chr), qtrue);
 			else
@@ -106,15 +103,14 @@ qboolean HOS_HealEmployee (employee_t* employee)
  */
 void HOS_HealAll (const base_t* const base)
 {
-	int i, type;
+	int type;
 
 	assert(base);
 
 	for (type = 0; type < MAX_EMPL; type++) {
 		employee_t *employee = NULL;
-		while ((employee = E_GetNext(type, employee))) {
-			if (E_IsInBase(employee, base))
-				HOS_HealEmployee(employee);
+		while ((employee = E_GetNextFromBase(type, employee, base))) {
+			HOS_HealEmployee(employee);
 		}
 	}
 }
@@ -127,7 +123,6 @@ void HOS_HealAll (const base_t* const base)
 static void HOS_HealAll_f (void)
 {
 	int type;
-	employee_t* employee;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -135,10 +130,7 @@ static void HOS_HealAll_f (void)
 
 	for (type = 0; type < MAX_EMPL; type++) {
 		employee_t *employee = NULL;
-		while ((employee = E_GetNext(type, employee))) {
-			/* only those employees, that are in the current base */
-			if (!E_IsInBase(employee, base))
-				continue;
+		while ((employee = E_GetNextFromBase(type, employee, base))) {
 			employee->chr.HP = employee->chr.maxHP;
 		}
 	}
@@ -150,7 +142,6 @@ static void HOS_HealAll_f (void)
 static void HOS_HurtAll_f (void)
 {
 	int type, amount;
-	employee_t* employee;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
