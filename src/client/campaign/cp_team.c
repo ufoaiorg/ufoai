@@ -163,7 +163,6 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 	for (l = aircraft->acTeam; l != NULL; l = l->next) {
 		employee_t *employee = (employee_t *)l->data;
 		character_t *chr = &employee->chr;
-		assert(chr);
 
 		/* This is an UGV */
 		if (employee->ugv) {
@@ -178,7 +177,6 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 			employee_t *employee = (employee_t *)l->data;
 			invList_t *ic, *next;
 			character_t *chr = &employee->chr;
-			assert(chr);
 #if 0
 			/* ignore items linked from any temp container */
 			if (INVDEF(container)->temp)

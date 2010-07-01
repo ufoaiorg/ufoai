@@ -363,8 +363,6 @@ static void CL_ActorPilotSelect_f (void)
 		Com_Error(ERR_DROP, "CL_ActorPilotSelect_f: No employee at list-pos %i (base: %i)", num, base->idx);
 
 	chr = &employee->chr;
-	if (!chr)
-		Com_Error(ERR_DROP, "CL_ActorPilotSelect_f: No hired character at list-pos %i (base: %i)", num, base->idx);
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
@@ -405,8 +403,6 @@ static void CL_ActorTeamSelect_f (void)
 		Com_Error(ERR_DROP, "CL_ActorTeamSelect_f: No employee at list-pos %i (base: %i)", num, base->idx);
 
 	chr = &employee->chr;
-	if (!chr)
-		Com_Error(ERR_DROP, "CL_ActorTeamSelect_f: No hired character at list-pos %i (base: %i)", num, base->idx);
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));

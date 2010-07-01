@@ -1352,7 +1352,6 @@ void E_RemoveInventoryFromStorage (employee_t *employee)
 	containerIndex_t container;
 	const character_t *chr = &employee->chr;
 
-	assert(employee);
 	assert(employee->baseHired);
 
 	for (container = 0; container < csi.numIDs; container++) {

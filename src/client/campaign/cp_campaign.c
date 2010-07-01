@@ -88,12 +88,12 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 {
 	static updateCharacter_t updateCharacterArray[MAX_WHOLETEAM];
 	static int num = 0;
-	int i, j;
-	character_t* chr;
+	int i;
 
 	if (!msg) {
 		for (i = 0; i < num; i++) {
 			employee_t *employee = E_GetEmployeeFromChrUCN(updateCharacterArray[i].ucn);
+			character_t* chr;
 			if (!employee) {
 				Com_Printf("Warning: Could not get character with ucn: %i.\n", updateCharacterArray[i].ucn);
 				continue;
@@ -112,6 +112,7 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 		}
 		num = 0;
 	} else {
+		int j;
 		/* invalidate ucn in the array first */
 		for (i = 0; i < MAX_WHOLETEAM; i++) {
 			updateCharacterArray[i].ucn = -1;
@@ -1302,7 +1303,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 					const character_t *chr = &employee->chr;
 					const chrScoreGlobal_t *score = &chr->score;
 					const rank_t *rank = CL_GetRankByIdx(score->rank);
-					/* @sa G_CharacterGetMaxExperiencePerMission */
+					/** @sa G_CharacterGetMaxExperiencePerMission */
 					if (score->experience[SKILL_CLOSE] > 70) { /** @todo fix this value */
 						increaseWinProbability *= rank->factor;
 					}
@@ -1538,7 +1539,6 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 	while ((employee = E_GetNextFromBase(EMPL_SOLDIER, employee, aircraft->homebase))) {
 		if (AIR_IsEmployeeInAircraft(employee, aircraft)) {
 			character_t *chr = &employee->chr;
-			assert(chr);
 
 			/* Remember the number of assigned mission for this character. */
 			chr->score.assignedMissions++;

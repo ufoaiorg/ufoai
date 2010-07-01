@@ -1,7 +1,6 @@
 /**
  * @file cp_employee_callbacks.c
  * @brief Header file for menu callback functions used for hire/employee menu
- * @todo Remove direct access to nodes
  */
 
 /*
@@ -77,12 +76,13 @@ static void E_EmployeeSelect (employee_t *employee)
 
 	selectedEmployee = employee;
 	if (selectedEmployee) {
+		const character_t *chr = &selectedEmployee->chr;
 		/* mn_employee_hired is needed to allow renaming */
 		Cvar_SetValue("mn_employee_hired", E_IsHired(selectedEmployee) ? 1 : 0);
-		Cvar_SetValue("mn_ucn", selectedEmployee->chr.ucn);
+		Cvar_SetValue("mn_ucn", chr->ucn);
 
 		/* set info cvars */
-		CL_ActorCvars(&(selectedEmployee->chr), "mn_");
+		CL_ActorCvars(chr, "mn_");
 	}
 }
 
@@ -92,7 +92,7 @@ static void E_EmployeeSelect (employee_t *employee)
  */
 static void E_EmployeeListScroll_f (void)
 {
-	int i, j, cnt = 0;
+	int j, cnt = 0;
 	employee_t* employee;
 	base_t *base = B_GetCurrentSelectedBase();
 
@@ -105,7 +105,8 @@ static void E_EmployeeListScroll_f (void)
 	employeeScrollPos = atoi(Cmd_Argv(1));
 	j = employeeScrollPos;
 
-	for (i = 0, employee = &(ccs.employees[employeeCategory][0]); i < ccs.numEmployees[employeeCategory]; i++, employee++) {
+	employee = NULL;
+	while ((employee = E_GetNext(employeeCategory, employee))) {
 		/* don't show employees of other bases */
 		if (E_IsHired(employee) && !E_IsInBase(employee, base))
 			continue;
@@ -220,7 +221,6 @@ static void E_EmployeeList_f (void)
 static void E_ChangeName_f (void)
 {
 	employee_t *employee = E_GetEmployeeFromChrUCN(Cvar_GetInteger("mn_ucn"));
-
 	if (employee)
 		Q_strncpyz(employee->chr.name, Cvar_GetString("mn_name"), sizeof(employee->chr.name));
 }
