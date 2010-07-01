@@ -116,15 +116,9 @@ static void E_EmployeeListScroll_f (void)
 			continue;
 		}
 		/* change the buttons */
-		if (E_IsHired(employee)) {
-			/** @todo This is always true - we don't show employees of
-			 * other bases - do we still need employeedisable? */
-			if (E_IsInBase(employee, base)) {
-				MN_ExecuteConfunc("employeeadd %i", cnt);
-			} else {
-				MN_ExecuteConfunc("employeedisable %i", cnt);
-			}
-		} else
+		if (E_IsHired(employee))
+			MN_ExecuteConfunc("employeeadd %i", cnt);
+		else
 			MN_ExecuteConfunc("employeedel %i", cnt);
 
 		cnt++;
