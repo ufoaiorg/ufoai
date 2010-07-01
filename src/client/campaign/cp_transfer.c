@@ -1108,6 +1108,28 @@ static int TR_GetTransferFactor (void)
 	return 1;
 }
 
+static qboolean TR_GetTransferEmployee (employeeType_t emplType, int *cnt, const base_t *base, int num)
+{
+	employee_t *employee = NULL;
+	while ((employee = E_GetNextFromBase(emplType, employee, base))) {
+		if (td.trEmployeesTmp[employee->type][employee->idx])
+			continue;
+		if (*cnt == num) {
+			if (TR_CheckEmployee(employee, td.transferBase)) {
+				td.trEmployeesTmp[employee->type][employee->idx] = employee;
+				return qtrue;
+			}
+			/**
+			 * @todo we have to decide what to do if the check fails - there
+			 * are hard failures, and soft ones - soft ones should continue to add the next employee type
+			 */
+			return qfalse;
+		}
+		(*cnt)++;
+	}
+	return qfalse;
+}
+
 /**
  * @brief Adds a thing to transfercargo by left mouseclick.
  * @sa TR_TransferSelect_f
@@ -1117,10 +1139,8 @@ static void TR_TransferListSelect_f (void)
 {
 	int num, cnt = 0, i;
 	employeeType_t emplType;
-	qboolean added = qfalse;
-	int numempl[MAX_EMPL];
+	int numEmployees[MAX_EMPL];
 	base_t *base = B_GetCurrentSelectedBase();
-	employee_t *employee;
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -1178,49 +1198,18 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case TRANS_TYPE_EMPLOYEE:
-		employee = NULL;
-		while ((employee = E_GetNextFromBase(EMPL_SOLDIER, employee, base))) {
-			if (td.trEmployeesTmp[employee->type][employee->idx])
-				continue;
-			if (cnt == num) {
-				if (TR_CheckEmployee(employee, td.transferBase)) {
-					td.trEmployeesTmp[employee->type][employee->idx] = employee;
-					added = qtrue;
-					break;
-				} else
-					return;
-			}
-			cnt++;
-		}
-
-		if (added) /* We already added a soldier, so break. */
+		if (TR_GetTransferEmployee(EMPL_SOLDIER, &cnt, base, num))
 			break;
 
-		/** @todo reduce code duplication */
-		employee = NULL;
-		while ((employee = E_GetNextFromBase(EMPL_PILOT, employee, base))) {
-			if (td.trEmployeesTmp[employee->type][employee->idx])
-				continue;
-			if (cnt == num) {
-				if (TR_CheckEmployee(employee, td.transferBase)) {
-					td.trEmployeesTmp[employee->type][employee->idx] = employee;
-					added = qtrue;
-					break;
-				} else
-					return;
-			}
-			cnt++;
-		}
-
-		if (added) /* We already added a pilot, so break. */
+		if (TR_GetTransferEmployee(EMPL_PILOT, &cnt, base, num))
 			break;
 
 		/* Reset and fill temp employees arrays. */
 		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-			numempl[emplType] = E_CountHired(base, emplType);
+			numEmployees[emplType] = E_CountHired(base, emplType);
 			for (i = 0; i < MAX_EMPLOYEES; i++) {
 				if (td.trEmployeesTmp[emplType][i])
-					numempl[emplType]--;
+					numEmployees[emplType]--;
 			}
 		}
 
@@ -1228,7 +1217,7 @@ static void TR_TransferListSelect_f (void)
 			if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT)
 				continue;
 			/* no employee in base or all employees already in the transfer list */
-			if (numempl[emplType] < 1)
+			if (numEmployees[emplType] < 1)
 				continue;
 			if (cnt == num) {
 				int amount = min(E_CountHired(base, emplType), TR_GetTransferFactor());
