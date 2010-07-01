@@ -375,6 +375,29 @@ static void SV_UnloadGame (void)
 	gameLibrary = NULL;
 }
 
+#ifndef HARD_LINKED_GAME
+static qboolean SV_LoadGame (const char *path)
+{
+	char name[MAX_OSPATH];
+
+	Com_sprintf(name, sizeof(name), "%s/game_"CPUSTRING".%s", path, SHARED_EXT);
+	gameLibrary = SDL_LoadObject(name);
+	if (!gameLibrary) {
+		Com_sprintf(name, sizeof(name), "%s/game.%s", path, SHARED_EXT);
+		gameLibrary = SDL_LoadObject(name);
+	}
+
+	if (gameLibrary) {
+		Com_Printf("found at '%s'\n", path);
+		return qtrue;
+	} else {
+		Com_Printf("not found at '%s'\n", path);
+		Com_DPrintf(DEBUG_SYSTEM, "%s\n", SDL_GetError());
+		return qfalse;
+	}
+}
+#endif
+
 /**
  * @brief Loads the game shared library and calls the api init function
  */
@@ -383,7 +406,6 @@ static game_export_t *SV_GetGameAPI (game_import_t *parms)
 #ifndef HARD_LINKED_GAME
 	void *(*GetGameAPI) (void *);
 
-	char name[MAX_OSPATH];
 	const char *path;
 #endif
 
@@ -393,29 +415,19 @@ static game_export_t *SV_GetGameAPI (game_import_t *parms)
 #ifndef HARD_LINKED_GAME
 	Com_Printf("------- Loading game.%s -------\n", SHARED_EXT);
 
+#ifdef PKGLIBDIR
+	SV_LoadGame(PKGLIBDIR);
+#endif
+
 	/* now run through the search paths */
 	path = NULL;
 	while (!gameLibrary) {
 		path = FS_NextPath(path);
-		if (!path) {
-			Com_Printf("SV_GetGameAPI failed (game."SHARED_EXT")\n");
-			Com_DPrintf(DEBUG_SYSTEM, "%s\n", SDL_GetError());
-			return NULL;		/* couldn't find one anywhere */
-		}
-		Com_sprintf(name, sizeof(name), "%s/game_"CPUSTRING".%s", path, SHARED_EXT);
-		gameLibrary = SDL_LoadObject(name);
-		if (gameLibrary) {
-			Com_Printf("SV_GetGameAPI (%s)\n", name);
+		if (!path)
+			/* couldn't find one anywhere */
+			return NULL;
+		else if (SV_LoadGame(path))
 			break;
-		} else {
-			Com_sprintf(name, sizeof(name), "%s/game.%s", path, SHARED_EXT);
-			gameLibrary = SDL_LoadObject(name);
-			if (gameLibrary) {
-				Com_Printf("SV_GetGameAPI (%s)\n", name);
-				break;
-			}
-			Com_DPrintf(DEBUG_SYSTEM, "%s\n", SDL_GetError());
-		}
 	}
 
 	GetGameAPI = (void *)SDL_LoadFunction(gameLibrary, "GetGameAPI");
