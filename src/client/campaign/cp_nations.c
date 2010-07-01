@@ -90,7 +90,8 @@ void CP_NationHandleBudget (void)
 
 	cost = 0;
 	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
-		if (ccs.employees[EMPL_SOLDIER][i].hired)
+		const employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
+		if (E_IsHired(employee))
 			cost += SALARY_SOLDIER_BASE + ccs.employees[EMPL_SOLDIER][i].chr.score.rank * SALARY_SOLDIER_RANKBONUS;
 	}
 	totalExpenditure += cost;
@@ -101,7 +102,8 @@ void CP_NationHandleBudget (void)
 
 	cost = 0;
 	for (i = 0; i < ccs.numEmployees[EMPL_WORKER]; i++) {
-		if (ccs.employees[EMPL_WORKER][i].hired)
+		const employee_t *employee = &ccs.employees[EMPL_WORKER][i];
+		if (E_IsHired(employee))
 			cost += SALARY_WORKER_BASE + ccs.employees[EMPL_WORKER][i].chr.score.rank * SALARY_WORKER_RANKBONUS;
 	}
 	totalExpenditure += cost;
@@ -111,7 +113,8 @@ void CP_NationHandleBudget (void)
 
 	cost = 0;
 	for (i = 0; i < ccs.numEmployees[EMPL_SCIENTIST]; i++) {
-		if (ccs.employees[EMPL_SCIENTIST][i].hired)
+		const employee_t *employee = &ccs.employees[EMPL_SCIENTIST][i];
+		if (E_IsHired(employee))
 			cost += SALARY_SCIENTIST_BASE + ccs.employees[EMPL_SCIENTIST][i].chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
 	}
 	totalExpenditure += cost;
@@ -121,7 +124,8 @@ void CP_NationHandleBudget (void)
 
 	cost = 0;
 	for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
-		if (ccs.employees[EMPL_PILOT][i].hired)
+		const employee_t *employee = &ccs.employees[EMPL_PILOT][i];
+		if (E_IsHired(employee))
 			cost += SALARY_PILOT_BASE + ccs.employees[EMPL_PILOT][i].chr.score.rank * SALARY_PILOT_RANKBONUS;
 	}
 	totalExpenditure += cost;
@@ -131,7 +135,8 @@ void CP_NationHandleBudget (void)
 
 	cost = 0;
 	for (i = 0; i < ccs.numEmployees[EMPL_ROBOT]; i++) {
-		if (ccs.employees[EMPL_ROBOT][i].hired)
+		const employee_t *employee = &ccs.employees[EMPL_ROBOT][i];
+		if (E_IsHired(employee))
 			cost += SALARY_ROBOT_BASE + ccs.employees[EMPL_ROBOT][i].chr.score.rank * SALARY_ROBOT_RANKBONUS;
 	}
 	totalExpenditure += cost;

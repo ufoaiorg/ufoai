@@ -1142,7 +1142,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 
 		Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - try to get player %i \n", i);
 
-		if (employee->hired && employee->baseHired == base) {
+		if (E_IsInBase(employee, base)) {
 			const character_t *chr = &(employee->chr);
 			Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - ucn %d hp %d\n", chr->ucn, chr->HP);
 			/* if employee is marked as dead */

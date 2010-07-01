@@ -78,7 +78,7 @@ static void E_EmployeeSelect (employee_t *employee)
 	selectedEmployee = employee;
 	if (selectedEmployee) {
 		/* mn_employee_hired is needed to allow renaming */
-		Cvar_SetValue("mn_employee_hired", selectedEmployee->hired ? 1 : 0);
+		Cvar_SetValue("mn_employee_hired", E_IsHired(selectedEmployee) ? 1 : 0);
 		Cvar_SetValue("mn_ucn", selectedEmployee->chr.ucn);
 
 		/* set info cvars */
@@ -107,7 +107,7 @@ static void E_EmployeeListScroll_f (void)
 
 	for (i = 0, employee = &(ccs.employees[employeeCategory][0]); i < ccs.numEmployees[employeeCategory]; i++, employee++) {
 		/* don't show employees of other bases */
-		if (employee->baseHired != base && employee->hired)
+		if (E_IsHired(employee) && !E_IsInBase(employee, base))
 			continue;
 
 		/* drop the first j entries */
@@ -116,11 +116,14 @@ static void E_EmployeeListScroll_f (void)
 			continue;
 		}
 		/* change the buttons */
-		if (employee->hired) {
-			if (employee->baseHired == base)
+		if (E_IsHired(employee)) {
+			/** @todo This is always true - we don't show employees of
+			 * other bases - do we still need employeedisable? */
+			if (E_IsInBase(employee, base)) {
 				MN_ExecuteConfunc("employeeadd %i", cnt);
-			else
+			} else {
 				MN_ExecuteConfunc("employeedisable %i", cnt);
+			}
 		} else
 			MN_ExecuteConfunc("employeedel %i", cnt);
 
@@ -179,7 +182,7 @@ static void E_EmployeeList_f (void)
 	/** @todo Use CL_GetTeamList and reduce code duplication */
 	for (j = 0, employee = ccs.employees[employeeCategory]; j < ccs.numEmployees[employeeCategory]; j++, employee++) {
 		/* don't show employees of other bases */
-		if (employee->baseHired != base && employee->hired)
+		if (E_IsHired(employee) && !E_IsInBase(employee, base))
 			continue;
 		LIST_AddPointer(&employeeListName, employee->chr.name);
 		LIST_AddPointer(&employeeList, employee);
@@ -275,7 +278,7 @@ static void E_EmployeeDelete_f (void)
 	if (!employee)
 		return;
 
-	if (employee->hired) {
+	if (E_IsHired(employee)) {
 		if (!E_UnhireEmployee(employee)) {
 			MN_DisplayNotice(_("Could not fire employee"), 2000, "employees");
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
@@ -328,7 +331,7 @@ static void E_EmployeeHire_f (void)
 	if (!employee)
 		return;
 
-	if (employee->hired) {
+	if (E_IsHired(employee)) {
 		if (!E_UnhireEmployee(employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			MN_DisplayNotice(_("Could not fire employee"), 2000, "employees");

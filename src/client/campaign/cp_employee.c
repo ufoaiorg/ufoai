@@ -50,7 +50,7 @@ qboolean E_IsAwayFromBase (const employee_t *employee)
 	assert(employee);
 
 	/* Check that employee is hired */
-	if (!employee->hired)
+	if (!E_IsHired(employee))
 		return qfalse;
 
 	/* Check if employee is currently transferred. */
@@ -126,6 +126,11 @@ void E_HireForBuilding (base_t* base, building_t * building, int num)
  */
 qboolean E_IsInBase (const employee_t* empl, const base_t* const base)
 {
+	assert(empl != NULL);
+	assert(base != NULL);
+
+	if (!E_IsHired(empl))
+		return qfalse;
 	if (empl->baseHired == base)
 		return qtrue;
 	return qfalse;
@@ -218,7 +223,8 @@ void E_ResetEmployees (void)
 }
 
 /**
- * @brief Return a given employee pointer in the given base of a given type.
+ * @brief Return a given employee pointer in the given base of a given type. Also
+ * returns those employees, that are not yet hired.
  * @param[in] base Which base the employee should be hired in.
  * @param[in] type Which employee type do we search.
  * @param[in] idx Which employee id (in global employee array)
@@ -232,8 +238,9 @@ employee_t* E_GetEmployee (const base_t* const base, employeeType_t type, int id
 		return NULL;
 
 	for (i = 0; i < ccs.numEmployees[type]; i++) {
-		if (i == idx && (!ccs.employees[type][i].hired || ccs.employees[type][i].baseHired == base))
-			return &ccs.employees[type][i];
+		employee_t *employee = &ccs.employees[type][i];
+		if (i == idx && (!E_IsHired(employee) || E_IsInBase(employee, base)))
+			return employee;
 	}
 
 	return NULL;
@@ -262,12 +269,12 @@ static employee_t* E_GetUnhiredEmployee (employeeType_t type, int idx)
 		employee_t *employee = &ccs.employees[type][i];
 
 		if (i == idx) {
-			if (employee->hired) {
+			if (E_IsHired(employee)) {
 				Com_Printf("E_GetUnhiredEmployee: Warning: employee is already hired!\n");
 				return NULL;
 			}
 			return employee;
-		} else if (idx < 0 && !employee->hired) {
+		} else if (idx < 0 && !E_IsHired(employee)) {
 			if (idx == j)
 				return employee;
 			j--;
@@ -294,7 +301,7 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
 		if (!ugvType)
 			return employee;
 
-		if (employee->ugv == ugvType && !employee->hired)
+		if (employee->ugv == ugvType && !E_IsHired(employee))
 			return employee;
 	}
 	Com_Printf("Could not get unhired ugv/robot.\n");
@@ -323,7 +330,7 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
 
 	for (i = 0, j = 0; i < ccs.numEmployees[type]; i++) {
 		employee_t *employee = &ccs.employees[type][i];
-		if (employee->hired && (employee->baseHired == base || !base) && !employee->transfer) {
+		if (E_IsHired(employee) && (!base || E_IsInBase(employee, base)) && !employee->transfer) {
 			LIST_AddPointer(hiredEmployees, employee);
 			j++;
 		}
@@ -356,8 +363,8 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 		employee = (employee_t*)hiredEmployeesTemp->data;
 
 		if ((employee->ugv == ugvType || !ugvType)	/* If no type was given we return the first ugv we find. */
-		&& employee->baseHired == base) {		/* It has to be in the defined base. */
-			assert(employee->hired);
+		 && E_IsInBase(employee, base)) {		/* It has to be in the defined base. */
+			assert(E_IsHired(employee));
 			break;
 		}
 
@@ -400,7 +407,7 @@ employee_t* E_GetAssignedEmployee (const base_t* const base, const employeeType_
 
 	for (i = 0; i < ccs.numEmployees[type]; i++) {
 		employee_t *employee = &ccs.employees[type][i];
-		if (employee->baseHired == base && !E_EmployeeIsUnassigned(employee))
+		if (E_IsInBase(employee, base) && !E_EmployeeIsUnassigned(employee))
 			return employee;
 	}
 	return NULL;
@@ -420,7 +427,7 @@ employee_t* E_GetUnassignedEmployee (const base_t* const base, const employeeTyp
 
 	for (i = 0; i < ccs.numEmployees[type]; i++) {
 		employee_t *employee = &ccs.employees[type][i];
-		if (employee->baseHired == base && E_EmployeeIsUnassigned(employee))
+		if (E_IsInBase(employee, base) && E_EmployeeIsUnassigned(employee))
 			return employee;
 	}
 	return NULL;
@@ -443,7 +450,6 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
 
 	if (employee) {
 		/* Now uses quarter space. */
-		employee->hired = qtrue;
 		employee->baseHired = base;
 		/* Update other capacities */
 		switch (employee->type) {
@@ -503,7 +509,7 @@ qboolean E_HireRobot (base_t* base, const ugv_t *ugvType)
 void E_ResetEmployee (employee_t *employee)
 {
 	assert(employee);
-	assert(employee->hired);
+	assert(E_IsHired(employee));
 
 	/* Remove employee from building (and tech/production). */
 	E_RemoveEmployeeFromBuildingOrAircraft(employee);
@@ -524,14 +530,13 @@ void E_ResetEmployee (employee_t *employee)
  */
 qboolean E_UnhireEmployee (employee_t* employee)
 {
-	if (employee && employee->hired && !employee->transfer) {
+	if (employee && E_IsHired(employee) && !employee->transfer) {
 		base_t *base = employee->baseHired;
 
 		/* Any effect of removing an employee (e.g. removing a scientist from a research project)
 		 * should take place in E_RemoveEmployeeFromBuildingOrAircraft */
 		E_ResetEmployee(employee);
 		/* Set all employee-tags to 'unhired'. */
-		employee->hired = qfalse;
 		employee->baseHired = NULL;
 
 		/* Remove employee from corresponding capacity */
@@ -572,7 +577,7 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 
 	for (i = 0; i < ccs.numEmployees[type]; i++) {
 		employee_t *employee = &ccs.employees[type][i];
-		if (employee->hired && employee->baseHired == base)
+		if (E_IsInBase(employee, base))
 			E_UnhireEmployee(employee);
 	}
 }
@@ -612,7 +617,6 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	memset(employee, 0, sizeof(*employee));
 
 	employee->idx = curEmployeeIdx;
-	employee->hired = qfalse;
 	employee->baseHired = NULL;
 	employee->building = NULL;
 	employee->type = type;
@@ -817,7 +821,7 @@ void E_DeleteAllEmployees (base_t* base)
 		for (i = ccs.numEmployees[type] - 1; i >= 0; i--) {
 			employee_t *employee = &ccs.employees[type][i];
 			Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees: %i\n", i);
-			if (employee->baseHired == base) {
+			if (E_IsInBase(employee, base)) {
 				E_DeleteEmployee(employee, type);
 				Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees:	 Removing empl.\n");
 			} else if (employee->baseHired) {
@@ -858,7 +862,7 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
 			employee_t *employee = &ccs.employees[type][i];
 
 			/* check if the employee is hired on this base */
-			if (employee->baseHired != base)
+			if (!E_IsInBase(employee, base))
 				continue;
 
 			E_DeleteEmployee(employee, type);
@@ -904,7 +908,7 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 		const employee_t *employee = &ccs.employees[type][idx];
 
 		/* we dont want to overwrite employees that have already been hired */
-		if (!employee->hired) {
+		if (!E_IsHired(employee)) {
 			E_CreateEmployeeAtIndex(type, happyNations[nationIdx], NULL, idx);
 			nationIdx = (nationIdx + 1) % numHappyNations;
 		}
@@ -980,7 +984,7 @@ int E_CountHired (const base_t* const base, employeeType_t type)
 
 	for (i = 0; i < ccs.numEmployees[type]; i++) {
 		const employee_t *employee = &ccs.employees[type][i];
-		if (employee->hired && (!base || employee->baseHired == base))
+		if (E_IsHired(employee) && (!base || E_IsInBase(employee, base)))
 			count++;
 	}
 	return count;
@@ -998,7 +1002,7 @@ int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
 
 	for (i = 0; i < ccs.numEmployees[EMPL_ROBOT]; i++) {
 		const employee_t *employee = &ccs.employees[EMPL_ROBOT][i];
-		if (employee->hired && employee->baseHired == base && employee->ugv == ugvType)
+		if (E_IsHired(employee) && employee->ugv == ugvType && (!base || E_IsInBase(employee, base)))
 			count++;
 	}
 	return count;
@@ -1038,7 +1042,7 @@ int E_CountUnhired (employeeType_t type)
 
 	for (i = 0; i < ccs.numEmployees[type]; i++) {
 		const employee_t *employee = &ccs.employees[type][i];
-		if (!employee->hired)
+		if (!E_IsHired(employee))
 			count++;
 	}
 	return count;
@@ -1054,7 +1058,7 @@ int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
 
 	for (i = 0; i < ccs.numEmployees[EMPL_ROBOT]; i++) {
 		const employee_t *employee = &ccs.employees[EMPL_ROBOT][i];
-		if (!employee->hired && employee->ugv == ugvType)
+		if (!E_IsHired(employee) && employee->ugv == ugvType)
 			count++;
 	}
 	return count;
@@ -1075,7 +1079,7 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 	count = 0;
 	for (i = 0; i < ccs.numEmployees[type]; i++) {
 		const employee_t *employee = &ccs.employees[type][i];
-		if (!employee->building && employee->baseHired == base)
+		if (!employee->building && E_IsInBase(employee, base))
 			count++;
 	}
 	return count;
@@ -1129,17 +1133,15 @@ static void E_ListHired_f (void)
 
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 		for (emplIdx = 0; emplIdx < ccs.numEmployees[emplType]; emplIdx++) {
-			const employee_t employee = ccs.employees[emplType][emplIdx];
+			const employee_t *employee = &ccs.employees[emplType][emplIdx];
 
-			if (!employee.hired) {
-				if (employee.baseHired)
-					Com_Printf("Warning: empolyee: %s (idx: %i) %s not hired but has baseHired: %s\n", E_GetEmployeeString(employee.type), employee.idx, employee.chr.name, employee.baseHired->name);
+			if (!E_IsHired(employee))
 				continue;
-			}
 
-			Com_Printf("Empolyee: %s (idx: %i) %s at %s\n", E_GetEmployeeString(employee.type), employee.idx, employee.chr.name, ((employee.baseHired) ? employee.baseHired->name : "NULL"));
-			if (employee.type != emplType)
-				Com_Printf("Warning: EmployeeType mismatch: %i != %i\n", emplType, employee.type);
+			Com_Printf("Employee: %s (idx: %i) %s at %s\n", E_GetEmployeeString(employee->type), employee->idx,
+					employee->chr.name, employee->baseHired->name);
+			if (employee->type != emplType)
+				Com_Printf("Warning: EmployeeType mismatch: %i != %i\n", emplType, employee->type);
 		}
 	}
 }
@@ -1264,8 +1266,6 @@ qboolean E_LoadXML (mxml_node_t *p)
 			assert(ccs.numBases);	/* Just in case the order is ever changed. */
 			baseIDX = mxml_GetInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, -1);
 			e->baseHired = (baseIDX >= 0) ? B_GetBaseByIDX(baseIDX) : NULL;
-			if (e->baseHired)
-				e->hired = qtrue;
 			/* building */
 			/** @todo: if research was removed we should free the scientists */
 			buildingIDX = mxml_GetInt(ssnode, SAVE_EMPLOYEE_BUILDING, -1);

@@ -76,7 +76,7 @@ void HOS_HospitalRun (void)
 	for (type = 0; type < MAX_EMPL; type++) {
 		for (i = 0; i < ccs.numEmployees[type]; i++) {
 			employee_t *employee = &ccs.employees[type][i];
-			if (!employee->baseHired || !employee->hired)
+			if (!E_IsHired(employee))
 				continue;
 
 			if (B_GetBuildingStatus(employee->baseHired, B_HOSPITAL))
@@ -112,8 +112,9 @@ void HOS_HealAll (const base_t* const base)
 
 	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < ccs.numEmployees[type]; i++) {
-			if (E_IsInBase(&ccs.employees[type][i], base))
-				HOS_HealEmployee(&ccs.employees[type][i]);
+			employee_t *employee = &ccs.employees[type][i];
+			if (E_IsInBase(employee, base))
+				HOS_HealEmployee(employee);
 		}
 }
 

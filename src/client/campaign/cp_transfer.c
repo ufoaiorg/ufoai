@@ -1048,7 +1048,7 @@ static void TR_TransferStart_f (void)
 				employee_t *employee = td.trEmployeesTmp[i][j];
 				transfer->hasEmployees = qtrue;
 
-				assert(employee->baseHired == base);
+				assert(E_IsInBase(employee, base));
 
 				E_ResetEmployee(employee);
 				transfer->employeeArray[i][j] = employee;
@@ -1771,7 +1771,7 @@ static void TR_ListTransfers_f (void)
 							E_GetEmployeeString(employee->type),
 							(employee->nation) ? employee->nation->id : "(nonation)",
 							employee->idx, employee->chr.ucn);
-						if (!employee->hired)
+						if (!E_IsHired(employee))
 							Com_Printf("Warning: employee^ not hired!\n");
 						if (!employee->transfer)
 							Com_Printf("Warning: employee^ not marked as being transfered!\n");

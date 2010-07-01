@@ -780,32 +780,37 @@ static void CL_StatsUpdate_f (void)
 
 	/* costs */
 	for (i = 0; i < ccs.numEmployees[EMPL_SCIENTIST]; i++) {
-		if (ccs.employees[EMPL_SCIENTIST][i].hired) {
-			costs += SALARY_SCIENTIST_BASE + ccs.employees[EMPL_SCIENTIST][i].chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
+		const employee_t *employee = &ccs.employees[EMPL_SCIENTIST][i];
+		if (E_IsHired(employee)) {
+			costs += SALARY_SCIENTIST_BASE + employee->chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
 			hired[EMPL_SCIENTIST]++;
 		}
 	}
 	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
-		if (ccs.employees[EMPL_SOLDIER][i].hired) {
-			costs += SALARY_SOLDIER_BASE + ccs.employees[EMPL_SOLDIER][i].chr.score.rank * SALARY_SOLDIER_RANKBONUS;
+		const employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
+		if (E_IsHired(employee)) {
+			costs += SALARY_SOLDIER_BASE + employee->chr.score.rank * SALARY_SOLDIER_RANKBONUS;
 			hired[EMPL_SOLDIER]++;
 		}
 	}
 	for (i = 0; i < ccs.numEmployees[EMPL_WORKER]; i++) {
-		if (ccs.employees[EMPL_WORKER][i].hired) {
-			costs += SALARY_WORKER_BASE + ccs.employees[EMPL_WORKER][i].chr.score.rank * SALARY_WORKER_RANKBONUS;
+		const employee_t *employee = &ccs.employees[EMPL_WORKER][i];
+		if (E_IsHired(employee)) {
+			costs += SALARY_WORKER_BASE + employee->chr.score.rank * SALARY_WORKER_RANKBONUS;
 			hired[EMPL_WORKER]++;
 		}
 	}
 	for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
-		if (ccs.employees[EMPL_PILOT][i].hired) {
-			costs += SALARY_PILOT_BASE + ccs.employees[EMPL_PILOT][i].chr.score.rank * SALARY_PILOT_RANKBONUS;
+		const employee_t *employee = &ccs.employees[EMPL_PILOT][i];
+		if (E_IsHired(employee)) {
+			costs += SALARY_PILOT_BASE + employee->chr.score.rank * SALARY_PILOT_RANKBONUS;
 			hired[EMPL_PILOT]++;
 		}
 	}
 	for (i = 0; i < ccs.numEmployees[EMPL_ROBOT]; i++) {
-		if (ccs.employees[EMPL_ROBOT][i].hired) {
-			costs += SALARY_ROBOT_BASE + ccs.employees[EMPL_ROBOT][i].chr.score.rank * SALARY_ROBOT_RANKBONUS;
+		const employee_t *employee = &ccs.employees[EMPL_ROBOT][i];
+		if (E_IsHired(employee)) {
+			costs += SALARY_ROBOT_BASE + employee->chr.score.rank * SALARY_ROBOT_RANKBONUS;
 			hired[EMPL_ROBOT]++;
 		}
 	}
@@ -1537,15 +1542,16 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 	assert(aircraft);
 
 	/* only soldiers have stats and ranks, ugvs not */
-	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++)
-		if (AIR_IsEmployeeInAircraft(&ccs.employees[EMPL_SOLDIER][i], aircraft)) {
-			character_t *chr = &ccs.employees[EMPL_SOLDIER][i].chr;
+	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
+		employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
+		if (AIR_IsEmployeeInAircraft(employee, aircraft)) {
+			character_t *chr = &employee->chr;
 			assert(chr);
-			if (!ccs.employees[EMPL_SOLDIER][i].hired) {
+			if (!E_IsHired(employee)) {
 				Com_Error(ERR_DROP, "Employee %s is reported as being on the aircraft (%s), but he is not hired (%i/%i)",
 					chr->name, aircraft->id, i, ccs.numEmployees[EMPL_SOLDIER]);
 			}
-			assert(ccs.employees[EMPL_SOLDIER][i].baseHired == aircraft->homebase);
+			assert(E_IsInBase(employee, aircraft->homebase));
 
 			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: searching for soldier: %i\n", i);
 
@@ -1573,6 +1579,7 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 				}
 			}
 		}
+	}
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: Done\n");
 }
 
@@ -1933,7 +1940,7 @@ static void CL_DebugChangeCharacterStats_f (void)
 		employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
 		character_t *chr;
 
-		if (!employee->hired && employee->baseHired != base)
+		if (!E_IsInBase(employee, base))
 			continue;
 
 		chr = &(employee->chr);

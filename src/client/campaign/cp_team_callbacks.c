@@ -82,7 +82,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 		const int guiId = id - beginIndex;
 		containerIndex_t container;
 
-		assert(employee->hired);
+		assert(E_IsHired(employee));
 		assert(!employee->transfer);
 
 		/* id lower than viewable item */

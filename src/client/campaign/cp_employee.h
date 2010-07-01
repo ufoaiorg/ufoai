@@ -62,7 +62,6 @@ typedef struct employee_s {
 	int idx;					/**< self link in global employee-list - this should be references only with the variable name emplIdx
 								 * to let us find references all over the code easier @sa E_DeleteEmployee */
 
-	qboolean hired;				/**< this is true if the employee was already hired - default is false */
 	base_t *baseHired;			/**< Base where the soldier is hired it atm. */
 
 	char speed;					/**< Speed of this Worker/Scientist at research/construction. */
@@ -120,5 +119,7 @@ void E_InitialEmployees(void);
 void E_Init(void);
 
 void E_RemoveInventoryFromStorage(employee_t *employee);
+
+#define E_IsHired(employee)	((employee)->baseHired != NULL)
 
 #endif /* CLIENT_CL_EMPLOYEE */
