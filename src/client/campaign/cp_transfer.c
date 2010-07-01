@@ -1180,11 +1180,11 @@ static void TR_TransferListSelect_f (void)
 	case TRANS_TYPE_EMPLOYEE:
 		employee = NULL;
 		while ((employee = E_GetNextFromBase(EMPL_SOLDIER, employee, base))) {
-			if (td.trEmployeesTmp[EMPL_SOLDIER][employee->idx])
+			if (td.trEmployeesTmp[employee->type][employee->idx])
 				continue;
 			if (cnt == num) {
 				if (TR_CheckEmployee(employee, td.transferBase)) {
-					td.trEmployeesTmp[EMPL_SOLDIER][employee->idx] = employee;
+					td.trEmployeesTmp[employee->type][employee->idx] = employee;
 					added = qtrue;
 					break;
 				} else
@@ -1196,15 +1196,14 @@ static void TR_TransferListSelect_f (void)
 		if (added) /* We already added a soldier, so break. */
 			break;
 
-		for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
-			employee_t *employee = &ccs.employees[EMPL_PILOT][i];
-			if (!E_IsInBase(employee, base))
-				continue;
-			if (td.trEmployeesTmp[EMPL_PILOT][i])
+		/** @todo reduce code duplication */
+		employee = NULL;
+		while ((employee = E_GetNextFromBase(EMPL_PILOT, employee, base))) {
+			if (td.trEmployeesTmp[employee->type][employee->idx])
 				continue;
 			if (cnt == num) {
 				if (TR_CheckEmployee(employee, td.transferBase)) {
-					td.trEmployeesTmp[EMPL_PILOT][employee->idx] = employee;
+					td.trEmployeesTmp[employee->type][employee->idx] = employee;
 					added = qtrue;
 					break;
 				} else
@@ -1234,7 +1233,7 @@ static void TR_TransferListSelect_f (void)
 			if (cnt == num) {
 				int amount = min(E_CountHired(base, emplType), TR_GetTransferFactor());
 				employee_t *employee = NULL;
-				while ((employee = E_GetNextFromBase(EMPL_SOLDIER, employee, base))) {
+				while ((employee = E_GetNextFromBase(emplType, employee, base))) {
 					if (td.trEmployeesTmp[emplType][employee->idx])	/* Already on transfer list. */
 						continue;
 					if (TR_CheckEmployee(employee, td.transferBase)) {
