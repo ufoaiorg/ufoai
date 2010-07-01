@@ -506,11 +506,9 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 		if (B_GetBuildingStatus(destbase, B_QUARTERS)) {
 			employeeType_t emplType;
 			for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-				for (i = 0; i < ccs.numEmployees[emplType]; i++) {
-					const employee_t *employee = &ccs.employees[emplType][i];
-					if (!E_IsInBase(employee, srcbase))
-						continue;
-					if (td.trEmployeesTmp[emplType][i])	/* Already on transfer list. */
+				employee_t *employee = NULL;
+				while ((employee = E_GetNextFromBase(emplType, employee, srcbase))) {
+					if (td.trEmployeesTmp[emplType][employee->idx])	/* Already on transfer list. */
 						continue;
 					if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
 						if (emplType == EMPL_SOLDIER) {
