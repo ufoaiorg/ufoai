@@ -441,11 +441,10 @@ static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
  */
 employee_t* E_GetAssignedEmployee (const base_t* const base, const employeeType_t type)
 {
-	int i;
+	employee_t *employee = NULL;
 
-	for (i = 0; i < ccs.numEmployees[type]; i++) {
-		employee_t *employee = &ccs.employees[type][i];
-		if (E_IsInBase(employee, base) && !E_EmployeeIsUnassigned(employee))
+	while ((employee = E_GetNextFromBase(type, employee, base))) {
+		if (!E_EmployeeIsUnassigned(employee))
 			return employee;
 	}
 	return NULL;
@@ -605,7 +604,7 @@ qboolean E_UnhireEmployee (employee_t* employee)
  */
 void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 {
-	int i;
+	employee_t *employee;
 
 	if (!base)
 		return;
@@ -613,10 +612,9 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 	assert(type >= 0);
 	assert(type < MAX_EMPL);
 
-	for (i = 0; i < ccs.numEmployees[type]; i++) {
-		employee_t *employee = &ccs.employees[type][i];
-		if (E_IsInBase(employee, base))
-			E_UnhireEmployee(employee);
+	employee = NULL;
+	while ((employee = E_GetNextFromBase(type, employee, base))) {
+		E_UnhireEmployee(employee);
 	}
 }
 
