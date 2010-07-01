@@ -74,8 +74,8 @@ void HOS_HospitalRun (void)
 	int type, i;
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		for (i = 0; i < ccs.numEmployees[type]; i++) {
-			employee_t *employee = &ccs.employees[type][i];
+		employee_t *employee = NULL;
+		while ((employee = E_GetNext(type, employee))) {
 			if (!E_IsHired(employee))
 				continue;
 
@@ -110,12 +110,13 @@ void HOS_HealAll (const base_t* const base)
 
 	assert(base);
 
-	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < ccs.numEmployees[type]; i++) {
-			employee_t *employee = &ccs.employees[type][i];
+	for (type = 0; type < MAX_EMPL; type++) {
+		employee_t *employee = NULL;
+		while ((employee = E_GetNext(type, employee))) {
 			if (E_IsInBase(employee, base))
 				HOS_HealEmployee(employee);
 		}
+	}
 }
 
 
@@ -125,21 +126,22 @@ void HOS_HealAll (const base_t* const base)
  */
 static void HOS_HealAll_f (void)
 {
-	int i, type;
+	int type;
 	employee_t* employee;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
 
-	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < ccs.numEmployees[type]; i++) {
-			employee = &ccs.employees[type][i];
+	for (type = 0; type < MAX_EMPL; type++) {
+		employee_t *employee = NULL;
+		while ((employee = E_GetNext(type, employee))) {
 			/* only those employees, that are in the current base */
 			if (!E_IsInBase(employee, base))
 				continue;
 			employee->chr.HP = employee->chr.maxHP;
 		}
+	}
 }
 
 /**
@@ -147,7 +149,7 @@ static void HOS_HealAll_f (void)
  */
 static void HOS_HurtAll_f (void)
 {
-	int i, type, amount;
+	int type, amount;
 	employee_t* employee;
 	base_t *base = B_GetCurrentSelectedBase();
 
@@ -159,14 +161,15 @@ static void HOS_HurtAll_f (void)
 	else
 		amount = 1;
 
-	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < ccs.numEmployees[type]; i++) {
-			employee = &ccs.employees[type][i];
+	for (type = 0; type < MAX_EMPL; type++) {
+		employee_t *employee = NULL;
+		while ((employee = E_GetNext(type, employee))) {
 			/* only those employees, that are in the current base */
 			if (!E_IsInBase(employee, base))
 				continue;
 			employee->chr.HP = max(0, employee->chr.HP - amount);
 		}
+	}
 }
 #endif
 

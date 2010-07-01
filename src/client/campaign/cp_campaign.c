@@ -744,6 +744,7 @@ static void CL_StatsUpdate_f (void)
 	static char statsBuffer[MAX_STATS_BUFFER];
 	int hired[MAX_EMPL];
 	int i, j, costs = 0, sum = 0, totalfunds = 0;
+	employee_t *employee;
 
 	/* delete buffer */
 	memset(statsBuffer, 0, sizeof(statsBuffer));
@@ -779,39 +780,39 @@ static void CL_StatsUpdate_f (void)
 	Q_strcat(pos, va(_("\nFunding this month:\t%d"), totalfunds), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 
 	/* costs */
-	for (i = 0; i < ccs.numEmployees[EMPL_SCIENTIST]; i++) {
-		const employee_t *employee = &ccs.employees[EMPL_SCIENTIST][i];
+	employee = NULL;
+	while ((employee = E_GetNext(EMPL_SCIENTIST, employee))) {
 		if (E_IsHired(employee)) {
 			costs += SALARY_SCIENTIST_BASE + employee->chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
-			hired[EMPL_SCIENTIST]++;
+			hired[employee->type]++;
 		}
 	}
-	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
-		const employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
+	employee = NULL;
+	while ((employee = E_GetNext(EMPL_SOLDIER, employee))) {
 		if (E_IsHired(employee)) {
 			costs += SALARY_SOLDIER_BASE + employee->chr.score.rank * SALARY_SOLDIER_RANKBONUS;
-			hired[EMPL_SOLDIER]++;
+			hired[employee->type]++;
 		}
 	}
-	for (i = 0; i < ccs.numEmployees[EMPL_WORKER]; i++) {
-		const employee_t *employee = &ccs.employees[EMPL_WORKER][i];
+	employee = NULL;
+	while ((employee = E_GetNext(EMPL_WORKER, employee))) {
 		if (E_IsHired(employee)) {
 			costs += SALARY_WORKER_BASE + employee->chr.score.rank * SALARY_WORKER_RANKBONUS;
-			hired[EMPL_WORKER]++;
+			hired[employee->type]++;
 		}
 	}
-	for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
-		const employee_t *employee = &ccs.employees[EMPL_PILOT][i];
+	employee = NULL;
+	while ((employee = E_GetNext(EMPL_PILOT, employee))) {
 		if (E_IsHired(employee)) {
 			costs += SALARY_PILOT_BASE + employee->chr.score.rank * SALARY_PILOT_RANKBONUS;
-			hired[EMPL_PILOT]++;
+			hired[employee->type]++;
 		}
 	}
-	for (i = 0; i < ccs.numEmployees[EMPL_ROBOT]; i++) {
-		const employee_t *employee = &ccs.employees[EMPL_ROBOT][i];
+	employee = NULL;
+	while ((employee = E_GetNext(EMPL_ROBOT, employee))) {
 		if (E_IsHired(employee)) {
 			costs += SALARY_ROBOT_BASE + employee->chr.score.rank * SALARY_ROBOT_RANKBONUS;
-			hired[EMPL_ROBOT]++;
+			hired[employee->type]++;
 		}
 	}
 
@@ -853,7 +854,9 @@ static void CL_StatsUpdate_f (void)
 		sum += costs;
 	}
 
-	costs = SALARY_ADMIN_INITIAL + ccs.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + ccs.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + ccs.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + ccs.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + ccs.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
+	costs = SALARY_ADMIN_INITIAL + ccs.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER
+			+ ccs.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + ccs.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST
+			+ ccs.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + ccs.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
 	Q_strcat(pos, va(_("Administrative costs:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
@@ -1534,7 +1537,7 @@ static qboolean CL_ShouldUpdateSoldierRank (const rank_t *rank, const character_
  */
 void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *aircraft)
 {
-	int i, j;
+	employee_t *employee = NULL;
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: base: '%s' numTeamList: %i\n",
 		base->name, cl.numTeamList);
@@ -1542,18 +1545,15 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 	assert(aircraft);
 
 	/* only soldiers have stats and ranks, ugvs not */
-	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
-		employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
+	while ((employee = E_GetNext(EMPL_SOLDIER, employee))) {
 		if (AIR_IsEmployeeInAircraft(employee, aircraft)) {
 			character_t *chr = &employee->chr;
 			assert(chr);
 			if (!E_IsHired(employee)) {
-				Com_Error(ERR_DROP, "Employee %s is reported as being on the aircraft (%s), but he is not hired (%i/%i)",
-					chr->name, aircraft->id, i, ccs.numEmployees[EMPL_SOLDIER]);
+				Com_Error(ERR_DROP, "Employee %s is reported as being on the aircraft (%s), but he is not hired",
+					chr->name, aircraft->id);
 			}
 			assert(E_IsInBase(employee, aircraft->homebase));
-
-			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: searching for soldier: %i\n", i);
 
 			/* Remember the number of assigned mission for this character. */
 			chr->score.assignedMissions++;
@@ -1565,6 +1565,7 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 			/* Check if the soldier meets the requirements for a higher rank
 			 * and do a promotion. */
 			if (ccs.numRanks >= 2) {
+				int j;
 				for (j = ccs.numRanks - 1; j > chr->score.rank; j--) {
 					const rank_t *rank = CL_GetRankByIdx(j);
 					if (CL_ShouldUpdateSoldierRank(rank, chr)) {
@@ -1930,14 +1931,14 @@ void CL_ResetSinglePlayerData (void)
  */
 static void CL_DebugChangeCharacterStats_f (void)
 {
-	int i, j;
+	int j;
 	base_t *base = B_GetCurrentSelectedBase();
+	employee_t *employee = NULL;
 
 	if (!base)
 		return;
 
-	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
-		employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
+	while ((employee = E_GetNext(EMPL_SOLDIER, employee))) {
 		character_t *chr;
 
 		if (!E_IsInBase(employee, base))

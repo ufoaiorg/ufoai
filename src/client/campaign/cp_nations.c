@@ -46,6 +46,7 @@ void CP_NationHandleBudget (void)
 	int totalIncome = 0;
 	int totalExpenditure = 0;
 	int initialCredits = ccs.credits;
+	employee_t *employee;
 
 	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
 	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
@@ -89,10 +90,10 @@ void CP_NationHandleBudget (void)
 	}
 
 	cost = 0;
-	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
-		const employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
+	employee = NULL;
+	while ((employee = E_GetNext(EMPL_SOLDIER, employee))) {
 		if (E_IsHired(employee))
-			cost += SALARY_SOLDIER_BASE + ccs.employees[EMPL_SOLDIER][i].chr.score.rank * SALARY_SOLDIER_RANKBONUS;
+			cost += SALARY_SOLDIER_BASE + employee->chr.score.rank * SALARY_SOLDIER_RANKBONUS;
 	}
 	totalExpenditure += cost;
 
@@ -101,10 +102,10 @@ void CP_NationHandleBudget (void)
 	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qtrue);
 
 	cost = 0;
-	for (i = 0; i < ccs.numEmployees[EMPL_WORKER]; i++) {
-		const employee_t *employee = &ccs.employees[EMPL_WORKER][i];
+	employee = NULL;
+	while ((employee = E_GetNext(EMPL_WORKER, employee))) {
 		if (E_IsHired(employee))
-			cost += SALARY_WORKER_BASE + ccs.employees[EMPL_WORKER][i].chr.score.rank * SALARY_WORKER_RANKBONUS;
+			cost += SALARY_WORKER_BASE + employee->chr.score.rank * SALARY_WORKER_RANKBONUS;
 	}
 	totalExpenditure += cost;
 
@@ -112,10 +113,10 @@ void CP_NationHandleBudget (void)
 	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 
 	cost = 0;
-	for (i = 0; i < ccs.numEmployees[EMPL_SCIENTIST]; i++) {
-		const employee_t *employee = &ccs.employees[EMPL_SCIENTIST][i];
+	employee = NULL;
+	while ((employee = E_GetNext(EMPL_SCIENTIST, employee))) {
 		if (E_IsHired(employee))
-			cost += SALARY_SCIENTIST_BASE + ccs.employees[EMPL_SCIENTIST][i].chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
+			cost += SALARY_SCIENTIST_BASE + employee->chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
 	}
 	totalExpenditure += cost;
 
@@ -123,10 +124,10 @@ void CP_NationHandleBudget (void)
 	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 
 	cost = 0;
-	for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
-		const employee_t *employee = &ccs.employees[EMPL_PILOT][i];
+	employee = NULL;
+	while ((employee = E_GetNext(EMPL_PILOT, employee))) {
 		if (E_IsHired(employee))
-			cost += SALARY_PILOT_BASE + ccs.employees[EMPL_PILOT][i].chr.score.rank * SALARY_PILOT_RANKBONUS;
+			cost += SALARY_PILOT_BASE + employee->chr.score.rank * SALARY_PILOT_RANKBONUS;
 	}
 	totalExpenditure += cost;
 
@@ -134,10 +135,10 @@ void CP_NationHandleBudget (void)
 	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 
 	cost = 0;
-	for (i = 0; i < ccs.numEmployees[EMPL_ROBOT]; i++) {
-		const employee_t *employee = &ccs.employees[EMPL_ROBOT][i];
+	employee = NULL;
+	while ((employee = E_GetNext(EMPL_ROBOT, employee))) {
 		if (E_IsHired(employee))
-			cost += SALARY_ROBOT_BASE + ccs.employees[EMPL_ROBOT][i].chr.score.rank * SALARY_ROBOT_RANKBONUS;
+			cost += SALARY_ROBOT_BASE + employee->chr.score.rank * SALARY_ROBOT_RANKBONUS;
 	}
 	totalExpenditure += cost;
 
@@ -178,7 +179,9 @@ void CP_NationHandleBudget (void)
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 
-	cost = SALARY_ADMIN_INITIAL + ccs.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + ccs.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + ccs.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + ccs.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + ccs.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
+	cost = SALARY_ADMIN_INITIAL + ccs.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER
+			+ ccs.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + ccs.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST
+			+ ccs.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + ccs.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
 	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
 	totalExpenditure += cost;
 	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);

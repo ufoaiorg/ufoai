@@ -37,6 +37,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_rank.h"
 #include "save/save_employee.h"
 
+employee_t* E_GetNext (employeeType_t type, employee_t *lastEmployee)
+{
+	employee_t* endOfEmployees = &ccs.employees[type][ccs.numEmployees[type]];
+	employee_t* employee;
+
+	if (!ccs.numEmployees[type])
+		return NULL;
+
+	if (!lastEmployee)
+		return ccs.employees[type];
+	assert(lastEmployee >= ccs.employees[type]);
+	assert(lastEmployee < endOfEmployees);
+
+	employee = lastEmployee;
+
+	employee++;
+	if (employee >= endOfEmployees)
+		return NULL;
+	else
+		return employee;
+}
+
 /**
  * @brief Tells you if a employee is away from his home base (gone in mission).
  * @param[in] employee Pointer to the employee.

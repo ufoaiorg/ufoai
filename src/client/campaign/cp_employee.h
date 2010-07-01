@@ -78,6 +78,7 @@ typedef struct employee_s {
 } employee_t;
 
 void E_ResetEmployees(void);
+employee_t* E_GetNext(employeeType_t type, employee_t *lastEmployee);
 employee_t* E_CreateEmployee(employeeType_t type, struct nation_s *nation, ugv_t *ugvType);
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);
 qboolean E_HireEmployee(base_t* base, employee_t* employee);

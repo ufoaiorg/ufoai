@@ -65,8 +65,8 @@ static void HOS_UpdateMenu (void)
 	MN_ExecuteConfunc("hospital_clear");
 
 	for (type = 0, j = 0, entry = 0; type < MAX_EMPL; type++) {
-		for (i = 0; i < ccs.numEmployees[type]; i++) {
-			employee_t *employee = &ccs.employees[type][i];
+		employee_t *employee = NULL;
+		while ((employee = E_GetNext(type, employee))) {
 			/* Only show those employees, that are in the current base. */
 			if (!E_IsInBase(employee, base))
 				continue;
@@ -170,7 +170,7 @@ static void HOS_ListDown_f (void)
  */
 static void HOS_ListClick_f (void)
 {
-	int num, type, i;
+	int num, type;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base) {
@@ -186,9 +186,9 @@ static void HOS_ListClick_f (void)
 	/* which employee? */
 	num = atoi(Cmd_Argv(1)) + hospitalFirstEntry;
 
-	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < ccs.numEmployees[type]; i++) {
-			employee_t *employee = &ccs.employees[type][i];
+	for (type = 0; type < MAX_EMPL; type++) {
+		employee_t *employee = NULL;
+		while ((employee = E_GetNext(type, employee))) {
 			/* only those employees, that are in the current base */
 			if (!E_IsInBase(employee, base) || employee->chr.HP >= employee->chr.maxHP)
 				continue;
@@ -204,6 +204,7 @@ static void HOS_ListClick_f (void)
 			}
 			num--;
 		}
+	}
 
 	/* open the hospital menu for this employee */
 	if (type != MAX_EMPL)
