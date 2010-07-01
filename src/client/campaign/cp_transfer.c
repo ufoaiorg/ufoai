@@ -1120,6 +1120,7 @@ static void TR_TransferListSelect_f (void)
 	qboolean added = qfalse;
 	int numempl[MAX_EMPL];
 	base_t *base = B_GetCurrentSelectedBase();
+	employee_t *employee;
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -1177,11 +1178,9 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case TRANS_TYPE_EMPLOYEE:
-		for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
-			employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
-			if (!E_IsInBase(employee, base))
-				continue;
-			if (td.trEmployeesTmp[EMPL_SOLDIER][i])
+		employee = NULL;
+		while ((employee = E_GetNextFromBase(EMPL_SOLDIER, employee, base))) {
+			if (td.trEmployeesTmp[EMPL_SOLDIER][employee->idx])
 				continue;
 			if (cnt == num) {
 				if (TR_CheckEmployee(employee, td.transferBase)) {
@@ -1234,10 +1233,8 @@ static void TR_TransferListSelect_f (void)
 				continue;
 			if (cnt == num) {
 				int amount = min(E_CountHired(base, emplType), TR_GetTransferFactor());
-				for (i = 0; i < ccs.numEmployees[emplType]; i++) {
-					employee_t *employee = &ccs.employees[emplType][i];
-					if (!E_IsInBase(employee, base))
-						continue;
+				employee_t *employee = NULL;
+				while ((employee = E_GetNextFromBase(EMPL_SOLDIER, employee, base))) {
 					if (td.trEmployeesTmp[emplType][employee->idx])	/* Already on transfer list. */
 						continue;
 					if (TR_CheckEmployee(employee, td.transferBase)) {

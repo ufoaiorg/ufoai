@@ -276,14 +276,13 @@ void E_ResetEmployees (void)
  */
 employee_t* E_GetEmployee (const base_t* const base, employeeType_t type, int idx)
 {
-	int i;
+	employee_t *employee = NULL;
 
 	if (!base || type >= MAX_EMPL || idx < 0)
 		return NULL;
 
-	for (i = 0; i < ccs.numEmployees[type]; i++) {
-		employee_t *employee = &ccs.employees[type][i];
-		if (i == idx && (!E_IsHired(employee) || E_IsInBase(employee, base)))
+	while ((employee = E_GetNext(type, employee))) {
+		if (employee->idx == idx && (!E_IsHired(employee) || E_IsInBase(employee, base)))
 			return employee;
 	}
 
@@ -301,18 +300,16 @@ employee_t* E_GetEmployee (const base_t* const base, employeeType_t type, int id
  */
 static employee_t* E_GetUnhiredEmployee (employeeType_t type, int idx)
 {
-	int i;
 	int j = -1;	/* The number of found unhired employees. Ignore the minus. */
+	employee_t *employee = NULL;
 
 	if (type >= MAX_EMPL) {
 		Com_Printf("E_GetUnhiredEmployee: Unknown EmployeeType: %i\n", type);
 		return NULL;
 	}
 
-	for (i = 0; i < ccs.numEmployees[type]; i++) {
-		employee_t *employee = &ccs.employees[type][i];
-
-		if (i == idx) {
+	while ((employee = E_GetNext(type, employee))) {
+		if (employee->idx == idx) {
 			if (E_IsHired(employee)) {
 				Com_Printf("E_GetUnhiredEmployee: Warning: employee is already hired!\n");
 				return NULL;
@@ -336,17 +333,14 @@ static employee_t* E_GetUnhiredEmployee (employeeType_t type, int idx)
  */
 employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
 {
-	int i;
+	employee_t *employee = NULL;
 
-	for (i = 0; i < ccs.numEmployees[EMPL_ROBOT]; i++) {
-		employee_t *employee = &ccs.employees[EMPL_ROBOT][i];
-
-		/* If no type was given we return the first ugv we find. */
-		if (!ugvType)
-			return employee;
-
-		if (employee->ugv == ugvType && !E_IsHired(employee))
-			return employee;
+	while ((employee = E_GetNext(EMPL_ROBOT, employee))) {
+		if (!E_IsHired(employee)) {
+			/* If no type was given we return the first ugv we find. */
+			if (!ugvType || employee->ugv == ugvType)
+				return employee;
+		}
 	}
 	Com_Printf("Could not get unhired ugv/robot.\n");
 	return NULL;
@@ -1098,10 +1092,10 @@ int E_CountUnhired (employeeType_t type)
  */
 int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
 {
-	int count = 0, i;
+	int count = 0;
+	employee_t *employee = NULL;
 
-	for (i = 0; i < ccs.numEmployees[EMPL_ROBOT]; i++) {
-		const employee_t *employee = &ccs.employees[EMPL_ROBOT][i];
+	while ((employee = E_GetNext(EMPL_ROBOT, employee))) {
 		if (!E_IsHired(employee) && employee->ugv == ugvType)
 			count++;
 	}
@@ -1115,15 +1109,16 @@ int E_CountUnhiredRobotsByType (const ugv_t *ugvType)
  */
 int E_CountUnassigned (const base_t* const base, employeeType_t type)
 {
-	int count, i;
+	int count;
+	employee_t *employee;
 
 	if (!base)
 		return 0;
 
 	count = 0;
-	for (i = 0; i < ccs.numEmployees[type]; i++) {
-		const employee_t *employee = &ccs.employees[type][i];
-		if (!employee->building && E_IsInBase(employee, base))
+	employee = NULL;
+	while ((employee = E_GetNextFromBase(type, employee, base))) {
+		if (!employee->building)
 			count++;
 	}
 	return count;
@@ -1173,15 +1168,10 @@ void E_InitialEmployees (void)
 static void E_ListHired_f (void)
 {
 	int emplType;
-	int emplIdx;
 
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-		for (emplIdx = 0; emplIdx < ccs.numEmployees[emplType]; emplIdx++) {
-			const employee_t *employee = &ccs.employees[emplType][emplIdx];
-
-			if (!E_IsHired(employee))
-				continue;
-
+		employee_t *employee = NULL;
+		while ((employee = E_GetNextHired(emplType, employee))) {
 			Com_Printf("Employee: %s (idx: %i) %s at %s\n", E_GetEmployeeString(employee->type), employee->idx,
 					employee->chr.name, employee->baseHired->name);
 			if (employee->type != emplType)
@@ -1237,12 +1227,11 @@ qboolean E_SaveXML (mxml_node_t *p)
 
 	Com_RegisterConstList(saveEmployeeConstants);
 	for (j = 0; j < MAX_EMPL; j++) {
-		int i;
 		mxml_node_t *snode = mxml_AddNode(p, SAVE_EMPLOYEE_EMPLOYEES);
+		employee_t *e = NULL;
 
 		mxml_AddString(snode, SAVE_EMPLOYEE_TYPE, Com_GetConstVariable(SAVE_EMPLOYEETYPE_NAMESPACE, j));
-		for (i = 0; i < ccs.numEmployees[j]; i++) {
-			const employee_t *e = &ccs.employees[j][i];
+		while ((e = E_GetNext(j, e))) {
 			mxml_node_t * chrNode;
 			mxml_node_t *ssnode = mxml_AddNode(snode, SAVE_EMPLOYEE_EMPLOYEE);
 
