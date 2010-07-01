@@ -355,8 +355,8 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
  */
 int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedList_t **hiredEmployees)
 {
-	int i;	/* Index in the ccs.employee[type][i] array. */
 	int j;	/* The number/index of found hired employees. */
+	employee_t *employee;
 
 	if (type >= MAX_EMPL) {
 		Com_Printf("E_GetHiredEmployees: Unknown EmployeeType: %i\n", type);
@@ -366,9 +366,9 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
 
 	LIST_Delete(hiredEmployees);
 
-	for (i = 0, j = 0; i < ccs.numEmployees[type]; i++) {
-		employee_t *employee = &ccs.employees[type][i];
-		if (E_IsHired(employee) && (!base || E_IsInBase(employee, base)) && !employee->transfer) {
+	employee = NULL;
+	while ((employee = E_GetNextHired(type, employee))) {
+		if (!employee->transfer && (!base || E_IsInBase(employee, base))) {
 			LIST_AddPointer(hiredEmployees, employee);
 			j++;
 		}
@@ -442,7 +442,6 @@ static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
 employee_t* E_GetAssignedEmployee (const base_t* const base, const employeeType_t type)
 {
 	employee_t *employee = NULL;
-
 	while ((employee = E_GetNextFromBase(type, employee, base))) {
 		if (!E_EmployeeIsUnassigned(employee))
 			return employee;
@@ -460,11 +459,9 @@ employee_t* E_GetAssignedEmployee (const base_t* const base, const employeeType_
  */
 employee_t* E_GetUnassignedEmployee (const base_t* const base, const employeeType_t type)
 {
-	int i;
-
-	for (i = 0; i < ccs.numEmployees[type]; i++) {
-		employee_t *employee = &ccs.employees[type][i];
-		if (E_IsInBase(employee, base) && E_EmployeeIsUnassigned(employee))
+	employee_t *employee = NULL;
+	while ((employee = E_GetNextFromBase(type, employee, base))) {
+		if (E_EmployeeIsUnassigned(employee))
 			return employee;
 	}
 	return NULL;
@@ -661,8 +658,8 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	if (ccs.curCampaign->team != TEAM_ALIEN)
 		teamID = Com_ValueToStr(&ccs.curCampaign->team, V_TEAM, 0);
 	else {
-		/** @todo should not be hardcoded */
-		teamID = "taman";
+		/** @todo use Cvar_GetString("cl_teamdef"); for campaign games */
+		teamID = GAME_GetTeamDef();
 	}
 
 	/* Generate character stats, models & names. */
@@ -1016,11 +1013,11 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
  */
 int E_CountHired (const base_t* const base, employeeType_t type)
 {
-	int count = 0, i;
+	int count = 0;
+	employee_t *employee = NULL;
 
-	for (i = 0; i < ccs.numEmployees[type]; i++) {
-		const employee_t *employee = &ccs.employees[type][i];
-		if (E_IsHired(employee) && (!base || E_IsInBase(employee, base)))
+	while ((employee = E_GetNextHired(type, employee))) {
+		if (!base || E_IsInBase(employee, base))
 			count++;
 	}
 	return count;
@@ -1028,17 +1025,17 @@ int E_CountHired (const base_t* const base, employeeType_t type)
 
 /**
  * @brief Counts 'hired' (i.e. bought or produced UGVs and other robots of a given ugv-type in a given base.
- * @param[in] base The base where we count.
+ * @param[in] base The base where we count (@c NULL to count all).
  * @param[in] ugvType What type of robot/ugv we are looking for.
  * @return Count of Robots/UGVs.
  */
 int E_CountHiredRobotByType (const base_t* const base, const ugv_t *ugvType)
 {
-	int count = 0, i;
+	int count = 0;
+	employee_t *employee = NULL;
 
-	for (i = 0; i < ccs.numEmployees[EMPL_ROBOT]; i++) {
-		const employee_t *employee = &ccs.employees[EMPL_ROBOT][i];
-		if (E_IsHired(employee) && employee->ugv == ugvType && (!base || E_IsInBase(employee, base)))
+	while ((employee = E_GetNextHired(EMPL_ROBOT, employee))) {
+		if (employee->ugv == ugvType && (!base || E_IsInBase(employee, base)))
 			count++;
 	}
 	return count;
@@ -1074,15 +1071,15 @@ int E_CountAllHired (const base_t* const base)
  */
 int E_CountUnhired (employeeType_t type)
 {
-	int count = 0, i;
-
-	for (i = 0; i < ccs.numEmployees[type]; i++) {
-		const employee_t *employee = &ccs.employees[type][i];
+	int count = 0;
+	employee_t *employee = NULL;
+	while ((employee = E_GetNext(type, employee))) {
 		if (!E_IsHired(employee))
 			count++;
 	}
 	return count;
 }
+
 /**
  * @brief Counts all available Robots/UGVs that are for sale.
  * @param[in] ugvType What type of robot/ugv we are looking for.
