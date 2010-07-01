@@ -98,7 +98,7 @@ qboolean MN_WindowNodeAddIndexedNode (menuNode_t* const node, menuNode_t* const 
 	hash = Com_HashKey(child->name, INDEXEDCHILD_HASH_SIZE);
 	for (a = EXTRADATA(node).index_hash[hash]; a; a = a->hash_next) {
 		if (!strcmp(child->name, a->node->name)) {
-			/** FIXME display a warning, we must not override a node name here */
+			/** @todo display a warning, we must not override a node name here */
 			break;
 		}
 	}
@@ -110,6 +110,8 @@ qboolean MN_WindowNodeAddIndexedNode (menuNode_t* const node, menuNode_t* const 
 		EXTRADATA(node).index_hash[hash] = a;
 		EXTRADATA(node).index = a;
 	}
+
+	return qfalse;
 }
 
 /**
@@ -117,7 +119,8 @@ qboolean MN_WindowNodeAddIndexedNode (menuNode_t* const node, menuNode_t* const 
  */
 qboolean MN_WindowNodeRemoveIndexedNode (menuNode_t* const node, menuNode_t* const child)
 {
-	/** FIXME implement it anyway we use it or not */
+	/** @todo implement it anyway we use it or not */
+	return qfalse;
 }
 
 /**
