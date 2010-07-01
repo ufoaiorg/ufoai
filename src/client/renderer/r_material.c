@@ -81,6 +81,8 @@ static void R_UpdateMaterial (material_t *m)
 					frame = rand() % s->anim.num_frames;
 					Com_Printf("frame: %i\n", frame);
 					break;
+				default:
+					continue;
 				}
 				assert(frame >= 0);
 				assert(frame < s->anim.num_frames);
