@@ -89,8 +89,8 @@ static void AIM_NextAircraft_f (void)
 	if (!base || base->numAircraftInBase <= 0)
 		return;
 
-	if (!base->aircraftCurrent || base->aircraftCurrent == &base->aircraft[base->numAircraftInBase - 1])
-		base->aircraftCurrent = &base->aircraft[0];
+	if (!base->aircraftCurrent || base->aircraftCurrent == AIR_GetAircraftFromBaseByIDX(base, base->numAircraftInBase - 1))
+		base->aircraftCurrent = AIR_GetAircraftFromBaseByIDX(base, 0);
 	else
 		base->aircraftCurrent++;
 
@@ -109,8 +109,8 @@ static void AIM_PrevAircraft_f (void)
 	if (!base || base->numAircraftInBase <= 0)
 		return;
 
-	if (!base->aircraftCurrent || base->aircraftCurrent == &base->aircraft[0])
-		base->aircraftCurrent = &base->aircraft[base->numAircraftInBase - 1];
+	if (!base->aircraftCurrent || base->aircraftCurrent == AIR_GetAircraftFromBaseByIDX(base, 0))
+		base->aircraftCurrent = AIR_GetAircraftFromBaseByIDX(base, base->numAircraftInBase - 1);
 	else
 		base->aircraftCurrent--;
 
@@ -267,7 +267,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 
 	/* compute the ID and... */
 	for (id = 0; id < base->numAircraftInBase; id++) {
-		if (aircraft == &base->aircraft[id])
+		if (aircraft == AIR_GetAircraftFromBaseByIDX(base, id))
 			break;
 	}
 
@@ -294,7 +294,7 @@ static void AIR_AircraftUpdateList_f (void)
 		return;
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
-		const aircraft_t * aircraft = &base->aircraft[i];
+		const aircraft_t * aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
 		LIST_AddString(&list, aircraft->name);
 	}
 

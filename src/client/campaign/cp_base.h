@@ -225,7 +225,7 @@ typedef struct base_s {
 
 	/** All aircraft in this base
 	  @todo make me a linked list (see cl_market.c aircraft selling) */
-	/* @todo move aircraft out from base structure */
+	/** @todo move aircraft out from base structure */
 	aircraft_t aircraft[MAX_AIRCRAFT];
 	int numAircraftInBase;	/**< How many aircraft are in this base. */
 	aircraft_t *aircraftCurrent;		/**< Currently selected aircraft in _this base_. (i.e. an entry in base_t->aircraft). */

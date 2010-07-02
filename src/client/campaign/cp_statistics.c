@@ -105,7 +105,8 @@ void CL_StatsUpdate_f (void)
 			continue;
 
 		for (j = 0; j < base->numAircraftInBase; j++) {
-			costs += base->aircraft[j].price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
+			const aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, j);
+			costs += aircraft->price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
 		}
 	}
 	Q_strcat(pos, va(_("Aircraft:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));

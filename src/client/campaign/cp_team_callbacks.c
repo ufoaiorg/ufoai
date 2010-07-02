@@ -234,7 +234,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	/* clean up aircraft crew for upcoming mission */
 	CL_CleanTempInventory(aircraft->homebase);
 	for (p = 0; p < aircraft->homebase->numAircraftInBase; p++) {
-		CL_CleanupAircraftCrew(&aircraft->homebase->aircraft[p], &unused);
+		CL_CleanupAircraftCrew(AIR_GetAircraftFromBaseByIDX(aircraft->homebase, p), &unused);
 	}
 
 	MN_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);

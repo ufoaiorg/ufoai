@@ -124,7 +124,7 @@ void AIR_UpdateHangarCapForAll (base_t *base)
 	base->capacities[CAP_AIRCRAFT_SMALL].cur = 0;
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
-		const aircraft_t *aircraft = &base->aircraft[i];
+		const aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
 		Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll: base: %s, aircraft: %s\n", base->name, aircraft->id);
 		AIR_UpdateHangarCapForOne(aircraft->tpl, base);
 	}
@@ -665,7 +665,7 @@ int AIR_GetAircraftIDXInBase (const aircraft_t* aircraft)
  * the given index, or the first aircraft in the base if the index is bigger as the amount of aircraft
  * in the base.
  */
-aircraft_t *AIR_GetAircraftFromBaseByIDX (base_t* base, int index)
+aircraft_t *AIR_GetAircraftFromBaseByIDX (const base_t* base, int index)
 {
 	if (base->numAircraftInBase <= 0)
 		return NULL;
@@ -673,7 +673,7 @@ aircraft_t *AIR_GetAircraftFromBaseByIDX (base_t* base, int index)
 	if (index < 0 || index >= base->numAircraftInBase)
 		return NULL;
 
-	return &base->aircraft[index];
+	return &(B_GetBaseByIDX(base->idx)->aircraft[index]);
 }
 
 /**
@@ -2313,7 +2313,7 @@ void AIR_AutoAddPilotToAircraft (base_t* base, employee_t* pilot)
 	int i;
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
-		aircraft_t *aircraft = &base->aircraft[i];
+		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
 		if (!aircraft->pilot) {
 			aircraft->pilot = pilot;
 			break;
@@ -2332,7 +2332,7 @@ void AIR_RemovePilotFromAssignedAircraft (base_t* base, const employee_t* pilot)
 	int i;
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
-		aircraft_t *aircraft = &base->aircraft[i];
+		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
 		if (aircraft->pilot == pilot) {
 			aircraft->pilot = NULL;
 			break;
@@ -2574,7 +2574,7 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 			continue;
 
 		for (j = 0; j < base->numAircraftInBase; j++) {
-			aircraft_t *aircraft = &base->aircraft[j];
+			aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, j);
 			AIR_SaveAircraftXML(snode, aircraft, qfalse);
 		}
 	}

@@ -110,9 +110,7 @@ qboolean E_IsAwayFromBase (const employee_t *employee)
 	assert(base);
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
-		const aircraft_t *aircraft = &base->aircraft[i];
-		assert(aircraft);
-
+		const aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
 		if (!AIR_IsAircraftInBase(aircraft) && AIR_IsInAircraftTeam(aircraft, employee))
 			return qtrue;
 	}
@@ -787,7 +785,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 				continue;
 			for (k = 0; k < base->numAircraftInBase; k++) {
 				linkedList_t* l;
-				aircraft_t *aircraft = &base->aircraft[k];
+				aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, k);
 
 				for (l = aircraft->acTeam; l != NULL; l = l->next) {
 					/* no need to check for == here, the employee should

@@ -108,8 +108,9 @@ void RADAR_UpdateWholeRadarOverlay (void)
 			continue;
 
 		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-			if (AIR_IsAircraftOnGeoscape(&base->aircraft[aircraftIdx]))
-				RADAR_DrawCoverage(&base->aircraft[aircraftIdx].radar, base->aircraft[aircraftIdx].pos);
+			const aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, aircraftIdx);
+			if (AIR_IsAircraftOnGeoscape(aircraft))
+				RADAR_DrawCoverage(&aircraft->radar, aircraft->pos);
 		}
 	}
 
@@ -200,7 +201,7 @@ void RADAR_DeactivateRadarOverlay (void)
 			return;
 
 		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-			const aircraft_t const *aircraft = &base->aircraft[aircraftIdx];
+			const aircraft_t const *aircraft = AIR_GetAircraftFromBaseByIDX(base, aircraftIdx);
 			if (aircraft->radar.numUFOs)
 				return;
 		}
@@ -447,7 +448,7 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 		}
 
 		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-			aircraft_t *aircraft = &base->aircraft[aircraftIdx];
+			aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, aircraftIdx);
 
 			if (!AIR_IsAircraftOnGeoscape(aircraft))
 				continue;

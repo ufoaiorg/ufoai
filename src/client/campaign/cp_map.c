@@ -340,11 +340,11 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		const base_t *base = B_GetFoundedBaseByIDX(i);
 		if (!base)
 			continue;
-		if (MAP_IsMapPositionSelected(node, ccs.bases[i].pos, x, y))
+		if (MAP_IsMapPositionSelected(node, base->pos, x, y))
 			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_BASE, i, _("Base"), base->name);
 
-		/* Get selected aircraft wich belong to the base */
-		aircraft = ccs.bases[i].aircraft + base->numAircraftInBase - 1;
+		/* Get selected aircraft which belong to the base */
+		aircraft = AIR_GetAircraftFromBaseByIDX(base, base->numAircraftInBase - 1);
 		for (; aircraft >= base->aircraft; aircraft--)
 			if (AIR_IsAircraftOnGeoscape(aircraft) && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), aircraft->name);
@@ -355,7 +355,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		const installation_t *installation = INS_GetFoundedInstallationByIDX(i);
 		if (!installation)
 			continue;
-		if (MAP_IsMapPositionSelected(node, ccs.installations[i].pos, x, y))
+		if (MAP_IsMapPositionSelected(node, installation->pos, x, y))
 			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_INSTALLATION, i, _("Installation"), installation->name);
 	}
 
@@ -1775,7 +1775,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 		/* draw all aircraft of base */
 		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-			aircraft_t *aircraft = &base->aircraft[aircraftIdx];
+			aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, aircraftIdx);
 			if (AIR_IsAircraftOnGeoscape(aircraft))
 				MAP_DrawMapOnePhalanxAircraft(node, aircraft, oneUFOVisible);
 		}

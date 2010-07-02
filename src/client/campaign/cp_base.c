@@ -649,7 +649,8 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 
 	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
 	for (aircraftIdx = 0, numAwayAircraft = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-		const int aircraftSize = base->aircraft[aircraftIdx].size;
+		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, aircraftIdx);
+		const int aircraftSize = aircraft->size;
 		switch (aircraftSize) {
 		case AIRCRAFT_SMALL:
 			if (buildingType != B_SMALL_HANGAR)
@@ -666,14 +667,14 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 		/** @todo move aircraft being transfered to the destBase */
 
 		/* Only aircraft in hangar will be destroyed by hangar destruction */
-		if (!AIR_IsAircraftInBase(&base->aircraft[aircraftIdx])) {
-			if (AIR_IsAircraftOnGeoscape(&base->aircraft[aircraftIdx]))
-				awayAircraft[numAwayAircraft++] = &base->aircraft[aircraftIdx];
+		if (!AIR_IsAircraftInBase(aircraft)) {
+			if (AIR_IsAircraftOnGeoscape(aircraft))
+				awayAircraft[numAwayAircraft++] = aircraft;
 			continue;
 		}
 
 		/* Remove aircraft and aircraft items, but do not fire employees */
-		AIR_DeleteAircraft(&base->aircraft[aircraftIdx]);
+		AIR_DeleteAircraft(aircraft);
 		awayAircraft[numAwayAircraft++] = NULL;
 		return;
 	}
@@ -1221,8 +1222,7 @@ static void B_SetUpFirstBase (base_t* base)
 	base->storage = *ed;
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
-		aircraft_t *aircraft = &base->aircraft[i];
-		assert(aircraft);
+		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
 
 		if (!E_HireEmployeeByType(base, EMPL_PILOT)) {
 			Com_DPrintf(DEBUG_CLIENT, "B_SetUpFirstBase: Hiring pilot failed.\n");
@@ -2919,7 +2919,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 
 		aircraftIdxInBase = mxml_GetInt(base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIRCRAFT_INBASE_INVALID);
 		if (aircraftIdxInBase != AIRCRAFT_INBASE_INVALID)
-			b->aircraftCurrent = &b->aircraft[aircraftIdxInBase];
+			b->aircraftCurrent = AIR_GetAircraftFromBaseByIDX(b, aircraftIdxInBase);
 		else 
 			b->aircraftCurrent = NULL;
 

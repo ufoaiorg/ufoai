@@ -173,7 +173,7 @@ qboolean AIM_PilotAssignedAircraft (const base_t* base, const employee_t* pilot)
 	qboolean found = qfalse;
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
-		const aircraft_t *aircraft = &base->aircraft[i];
+		const aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
 		if (aircraft->pilot == pilot) {
 			found = qtrue;
 			break;
@@ -431,7 +431,7 @@ void AII_UpdateInstallationDelay (void)
 			AII_UpdateOneInstallationDelay(base, NULL, NULL, &base->lasers[k].slot);
 
 		/* Update each aircraft */
-		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
+		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
 			if (aircraft->homebase) {
 				assert(aircraft->homebase == base);
 				if (AIR_IsAircraftInBase(aircraft)) {
@@ -1092,8 +1092,7 @@ void AII_RepairAircraft (void)
 			continue;
 
 		for (aircraftIDX = 0; aircraftIDX < base->numAircraftInBase; aircraftIDX++) {
-			aircraft_t *aircraft = &base->aircraft[aircraftIDX];
-
+			aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, aircraftIDX);
 			if (!AIR_IsAircraftInBase(aircraft))
 				continue;
 			aircraft->damage = min(aircraft->damage + REPAIR_PER_HOUR, aircraft->stats[AIR_STATS_DAMAGE]);

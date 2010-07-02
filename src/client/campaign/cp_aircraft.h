@@ -247,7 +247,7 @@ void AIR_ListCraftIndexes_f(void);
 #endif
 
 int AIR_GetAircraftIDXInBase(const aircraft_t* aircraft);
-aircraft_t *AIR_GetAircraftFromBaseByIDX(struct base_s *base, int index);
+aircraft_t *AIR_GetAircraftFromBaseByIDX(const struct base_s *base, int index);
 aircraft_t *AIR_GetAircraftFromBaseByIDXSafe(struct base_s *base, int index);
 const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);
 qboolean AIR_IsAircraftInBase(const aircraft_t *aircraft);

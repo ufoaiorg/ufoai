@@ -831,19 +831,20 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 			continue;
 
 		for (j = 0; j < base->numAircraftInBase; j++) {
-			if (base->aircraft[j].status == AIR_MISSION) {
-				assert(base->aircraft[j].missionID);
-				base->aircraft[j].mission = CP_GetMissionByID(base->aircraft[j].missionID);
+			aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, j);
+			if (aircraft->status == AIR_MISSION) {
+				assert(aircraft->missionID);
+				aircraft->mission = CP_GetMissionByID(aircraft->missionID);
 
 				/* not found */
 				if (!base->aircraft[j].mission) {
-					Com_Printf("Could not link mission '%s' in aircraft\n", base->aircraft[j].missionID);
-					Mem_Free(base->aircraft[j].missionID);
-					base->aircraft[j].missionID = NULL;
+					Com_Printf("Could not link mission '%s' in aircraft\n", aircraft->missionID);
+					Mem_Free(aircraft->missionID);
+					aircraft->missionID = NULL;
 					return qfalse;
 				}
-				Mem_Free(base->aircraft[j].missionID);
-				base->aircraft[j].missionID = NULL;
+				Mem_Free(aircraft->missionID);
+				aircraft->missionID = NULL;
 			}
 		}
 	}

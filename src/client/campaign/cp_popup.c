@@ -334,7 +334,7 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 
 		/* Check aircraft in base */
 		for (i = 0; i < base->numAircraftInBase; i++) {
-			aircraft_t *aircraft = &base->aircraft[i];
+			aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
 			const int teamSize = AIR_GetTeamSize(aircraft);
 			/* if aircraft is empty we can't send it on a ground mission */
 			if (teamSize > 0 && AIR_CanIntercept(aircraft)) {
@@ -403,7 +403,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 
 		/* Check aircraft in base */
 		for (i = 0; i < base->numAircraftInBase; i++) {
-			aircraft_t *aircraft = &base->aircraft[i];
+			aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
 			if (AIR_CanIntercept(aircraft)) {
 				char aircraftListText[256] = "";
 				/* don't show aircraft with no weapons or no ammo, or crafts that

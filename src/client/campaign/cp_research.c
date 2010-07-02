@@ -640,7 +640,7 @@ void RS_InitTree (qboolean load)
 			if (!b)
 				continue;
 			for (k = 0; k < b->numAircraftInBase; k++) {
-				aircraft_t *aircraft = &b->aircraft[k];
+				aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(b, k);
 				/* if you already played before loading the game, tech are already defined for templates */
 				if (!aircraft->tech)
 					aircraft->tech = RS_GetTechByProvided(aircraft->id);

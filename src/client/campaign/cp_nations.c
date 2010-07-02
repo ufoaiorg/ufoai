@@ -107,7 +107,8 @@ void CP_NationHandleBudget (void)
 		if (!base)
 			continue;
 		for (j = 0; j < base->numAircraftInBase; j++) {
-			cost += base->aircraft[j].price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
+			const aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, j);
+			cost += aircraft->price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
 		}
 	}
 	totalExpenditure += cost;
