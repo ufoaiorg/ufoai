@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_BASES 8
 
-#define MAX_BUILDINGS		256
+#define MAX_BUILDINGS		32
 #define MAX_BASETEMPLATES	5
 
 #define MAX_BATTERY_DAMAGE	50
