@@ -355,7 +355,6 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
  */
 int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedList_t **hiredEmployees)
 {
-	int j;	/* The number/index of found hired employees. */
 	employee_t *employee;
 
 	if (type >= MAX_EMPL) {
@@ -370,14 +369,12 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
 	while ((employee = E_GetNextHired(type, employee))) {
 		if (!employee->transfer && (!base || E_IsInBase(employee, base))) {
 			LIST_AddPointer(hiredEmployees, employee);
-			j++;
 		}
 	}
 
-	if (!j)
-		*hiredEmployees = NULL;
-
-	return j;
+	if (hiredEmployees == NULL)
+		return 0;
+	return LIST_Count(*hiredEmployees);
 }
 
 /**

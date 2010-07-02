@@ -736,16 +736,16 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		base->buildingCurrent = NULL;
 
 	{
-		int const base_idx = base->idx;
-		building_t* const buildings = ccs.buildings[base_idx];
+		int const baseIDX = base->idx;
+		building_t* const buildings = ccs.buildings[baseIDX];
 		int const idx = building->idx;
 		int cntBldgs;
 		int i;
 
-		REMOVE_ELEM(buildings, idx, ccs.numBuildings[base_idx]);
+		REMOVE_ELEM(buildings, idx, ccs.numBuildings[baseIDX]);
 
 		/* Update the link of other buildings */
-		cntBldgs = ccs.numBuildings[base_idx];
+		cntBldgs = ccs.numBuildings[baseIDX];
 		for (i = 0; i < cntBldgs; i++)
 			if (buildings[i].idx >= idx) {
 				buildings[i].idx--;
