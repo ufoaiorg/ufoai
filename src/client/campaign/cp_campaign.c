@@ -1901,26 +1901,38 @@ int CP_GetSalaryAdministrative (void)
 {
 	int i, costs = SALARY_ADMIN_INITIAL;
 	for (i = 0; i < MAX_EMPL; i++)
-		costs += ccs.numEmployees[i] * CP_GetSalaryAdmin(i);
+		costs += ccs.numEmployees[i] * CP_GetSalaryAdminEmployee(i);
 	return costs;
 }
 
-int CP_GetSalaryBase (employeeType_t type)
+int CP_GetSalaryBaseEmployee (employeeType_t type)
 {
 	const salary_t *salary = &ccs.salaries[ccs.curCampaign->idx];
 	return salary->base[type];
 }
 
-int CP_GetSalaryAdmin (employeeType_t type)
+int CP_GetSalaryAdminEmployee (employeeType_t type)
 {
 	const salary_t *salary = &ccs.salaries[ccs.curCampaign->idx];
 	return salary->admin[type];
 }
 
-int CP_GetSalaryRankBonus (employeeType_t type)
+int CP_GetSalaryRankBonusEmployee (employeeType_t type)
 {
 	const salary_t *salary = &ccs.salaries[ccs.curCampaign->idx];
 	return salary->rankBonus[type];
+}
+
+int CP_GetSalaryUpKeepBase (const base_t *base)
+{
+	int cost = SALARY_BASE_UPKEEP;	/* base cost */
+	building_t *building = NULL;
+	while ((building = B_GetNextBuilding(base, building))) {
+		if (building->buildingStatus == B_STATUS_WORKING
+		 || building->buildingStatus == B_STATUS_CONSTRUCTION_FINISHED)
+			cost += building->varCosts;
+	}
+	return cost;
 }
 
 /** @todo remove me and move all the included stuff to proper places */

@@ -148,8 +148,7 @@ typedef struct cap_maxcur_s {
 
 /** @brief A building with all it's data. */
 typedef struct building_s {
-	int idx;				/**< Index in in "buildings" list.
-							 * @todo What value is this supposed to be for building_t entries in buildingTemplates? */
+	int idx;				/**< Index in in the base buildings list. */
 	struct building_s *tpl;	/**< Self link in "buildingTemplates" list. */
 	struct base_s *base;	/**< The base this building is located in. */
 
@@ -298,6 +297,7 @@ qboolean B_AssembleMap(base_t *base);
 /* building functions */
 buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
 
+building_t* B_GetNextBuilding(const base_t *base, building_t *lastBuilding);
 void B_BuildingStatus(const base_t* base, const building_t* building);
 qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);
 qboolean B_GetBuildingStatus(const base_t* const base, const buildingType_t type);

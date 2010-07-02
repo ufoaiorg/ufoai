@@ -534,8 +534,9 @@ static void BDEF_RemoveBattery_f (void)
 		}
 	} else {
 		/* Check if the removed building was under construction */
-		int i, type, max;
-		int workingNum = 0;
+		int type, max;
+		int workingNum;
+		building_t *building;
 
 		switch (basedefType) {
 		case BASEDEF_MISSILE:
@@ -551,8 +552,9 @@ static void BDEF_RemoveBattery_f (void)
 			return;
 		}
 
-		for (i = 0; i < ccs.numBuildings[baseIdx]; i++) {
-			const building_t *building = &ccs.buildings[baseIdx][i];
+		building = NULL;
+		workingNum = 0;
+		while ((building = B_GetNextBuilding(base, building))) {
 			if (building->buildingType == type && building->buildingStatus == B_STATUS_WORKING)
 				workingNum++;
 		}

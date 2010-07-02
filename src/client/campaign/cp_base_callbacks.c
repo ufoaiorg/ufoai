@@ -405,9 +405,6 @@ static void B_BuildingInit (base_t* base)
 	if (!base)
 		return;
 
-	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Updating b-list for '%s' (%i)\n", base->name, base->idx);
-	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Buildings in base: %i\n", ccs.numBuildings[base->idx]);
-
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
 		building_t *tpl = &ccs.buildingTemplates[i];
 		/* make an entry in list for this building */
@@ -422,12 +419,8 @@ static void B_BuildingInit (base_t* base)
 				continue;
 
 			/* if the building is researched add it to the list */
-			if (RS_IsResearched_ptr(tpl->tech)) {
+			if (RS_IsResearched_ptr(tpl->tech))
 				B_BuildingAddToList(&buildingList, tpl);
-			} else {
-				Com_DPrintf(DEBUG_CLIENT, "Building not researched yet %s (tech idx: %i)\n",
-					tpl->id, tpl->tech ? tpl->tech->idx : 0);
-			}
 		}
 	}
 	if (base->buildingCurrent)
@@ -485,8 +478,6 @@ static void B_BuildingClick_f (void)
 
 	/* which building? */
 	num = atoi(Cmd_Argv(1));
-
-	Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: listnumber %i base %i\n", num, base->idx);
 
 	if (num > buildingNumber || num < 0) {
 		Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: max exceeded %i/%i\n", num, buildingNumber);
@@ -562,14 +553,13 @@ static void B_AssembleMap_f (void)
  */
 static void B_CheckBuildingStatusForMenu_f (void)
 {
-	int i, num;
-	int baseIdx;
+	int num;
 	const char *buildingID;
 	building_t *building;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s buildingID\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <buildingID>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -586,8 +576,6 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		return;
 	}
 
-	baseIdx = base->idx;
-
 	if (building->buildingType == B_HANGAR) {
 		/* this is an exception because you must have a small or large hangar to enter aircraft menu */
 		Com_sprintf(popupText, sizeof(popupText), _("You need at least one Hangar (and its dependencies) to use aircraft."));
@@ -602,9 +590,9 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		B_CheckBuildingTypeStatus(base, building->buildingType, B_STATUS_UNDER_CONSTRUCTION, &numUnderConstruction);
 		if (numUnderConstruction == num) {
 			int minDay = 99999;
-			/* Find the building whose construction will finish first */
-			for (i = 0; i < ccs.numBuildings[baseIdx]; i++) {
-				const building_t *b = &ccs.buildings[baseIdx][i];
+			building_t *b = NULL;
+
+			while ((b = B_GetNextBuilding(base, b))) {
 				if (b->buildingType == building->buildingType
 					&& b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION
 					&& minDay > b->buildTime - (ccs.date.day - b->timeStart))
@@ -628,8 +616,9 @@ static void B_CheckBuildingStatusForMenu_f (void)
 				/* maybe the dependence of the building is under construction
 				 * note that we can't use B_STATUS_UNDER_CONSTRUCTION here, because this value
 				 * is not use for every building (for exemple Command Centre) */
-				for (i = 0; i < ccs.numBuildings[baseIdx]; i++) {
-					const building_t *b = &ccs.buildings[baseIdx][i];
+				building_t *b = NULL;
+
+				while ((b = B_GetNextBuilding(base, b))) {
 					if (b->buildingType == dependenceBuilding->buildingType
 					 && b->buildTime > (ccs.date.day - b->timeStart)) {
 						Com_sprintf(popupText, sizeof(popupText), _("Building %s is not finished yet, and is needed to use building %s."),

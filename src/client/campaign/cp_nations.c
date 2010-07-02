@@ -92,7 +92,7 @@ void CP_NationHandleBudget (void)
 	cost = 0;
 	employee = NULL;
 	while ((employee = E_GetNextHired(EMPL_SOLDIER, employee))) {
-		cost += CP_GetSalaryBase(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonus(employee->type);
+		cost += CP_GetSalaryBaseEmployee(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(employee->type);
 	}
 	totalExpenditure += cost;
 
@@ -103,7 +103,7 @@ void CP_NationHandleBudget (void)
 	cost = 0;
 	employee = NULL;
 	while ((employee = E_GetNextHired(EMPL_WORKER, employee))) {
-		cost += CP_GetSalaryBase(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonus(employee->type);
+		cost += CP_GetSalaryBaseEmployee(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(employee->type);
 	}
 	totalExpenditure += cost;
 
@@ -113,7 +113,7 @@ void CP_NationHandleBudget (void)
 	cost = 0;
 	employee = NULL;
 	while ((employee = E_GetNextHired(EMPL_SCIENTIST, employee))) {
-		cost += CP_GetSalaryBase(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonus(employee->type);
+		cost += CP_GetSalaryBaseEmployee(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(employee->type);
 	}
 	totalExpenditure += cost;
 
@@ -123,7 +123,7 @@ void CP_NationHandleBudget (void)
 	cost = 0;
 	employee = NULL;
 	while ((employee = E_GetNextHired(EMPL_PILOT, employee))) {
-		cost += CP_GetSalaryBase(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonus(employee->type);
+		cost += CP_GetSalaryBaseEmployee(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(employee->type);
 	}
 	totalExpenditure += cost;
 
@@ -133,7 +133,7 @@ void CP_NationHandleBudget (void)
 	cost = 0;
 	employee = NULL;
 	while ((employee = E_GetNextHired(EMPL_ROBOT, employee))) {
-		cost += CP_GetSalaryBase(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonus(employee->type);
+		cost += CP_GetSalaryBaseEmployee(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(employee->type);
 	}
 	totalExpenditure += cost;
 
@@ -162,13 +162,7 @@ void CP_NationHandleBudget (void)
 		const base_t const *base = B_GetFoundedBaseByIDX(i);
 		if (!base)
 			continue;
-		cost = SALARY_BASE_UPKEEP;	/* base cost */
-		for (j = 0; j < ccs.numBuildings[i]; j++) {
-			const building_t *building = &ccs.buildings[i][j];
-			if (building->buildingStatus == B_STATUS_WORKING
-			 || building->buildingStatus == B_STATUS_CONSTRUCTION_FINISHED)
-				cost += building->varCosts;
-		}
+		cost = CP_GetSalaryUpKeepBase(base);
 		totalExpenditure += cost;
 
 		Com_sprintf(message, sizeof(message), _("Paid %i credits for upkeep of %s"), cost, base->name);

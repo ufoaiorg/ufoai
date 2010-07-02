@@ -77,6 +77,28 @@ base_t* B_GetFoundedBaseByIDX (int baseIdx)
 	return NULL;
 }
 
+building_t* B_GetNextBuilding (const base_t *base, building_t *lastBuilding)
+{
+	building_t* endOfBuildings = &ccs.buildings[base->idx][ccs.numBuildings[base->idx]];
+	building_t* building;
+
+	if (!ccs.numBuildings[base->idx])
+		return NULL;
+
+	if (!lastBuilding)
+		return ccs.buildings[base->idx];
+	assert(lastBuilding >= ccs.buildings[base->idx]);
+	assert(lastBuilding < endOfBuildings);
+
+	building = lastBuilding;
+
+	building++;
+	if (building >= endOfBuildings)
+		return NULL;
+	else
+		return building;
+}
+
 /**
  * @brief Searches the base for a given building type with the given status
  * @param[in] base Base to search
@@ -91,10 +113,10 @@ base_t* B_GetFoundedBaseByIDX (int baseIdx)
  */
 qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt)
 {
-	int cntlocal = 0, i;
+	int cntlocal = 0;
+	building_t *building = NULL;
 
-	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-		const building_t *building = &ccs.buildings[base->idx][i];
+	while ((building = B_GetNextBuilding(base, building))) {
 		if (building->buildingType == type && building->buildingStatus == status) {
 			cntlocal++;
 			/* don't count any further - the caller doesn't want to know the value */
@@ -286,12 +308,11 @@ static const value_t valid_building_vars[] = {
  */
 float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
 {
-	int i;
 	float max = 0.0f;
 
 	if (B_GetBuildingStatus(base, type)) {
-		for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-			const building_t *building = &ccs.buildings[base->idx][i];
+		building_t *building = NULL;
+		while ((building = B_GetNextBuilding(base, building))) {
 			if (building->buildingType == type
 			 && building->buildingStatus == B_STATUS_WORKING) {
 				max = max(building->level, max);
@@ -475,25 +496,25 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 {
 	qboolean test = qfalse;
 	qboolean returnValue = qfalse;
-	int i;
+	building_t *building = NULL;
 
 	/* Construction / destruction may have changed the status of other building
 	 * We check that, but only for buildings which needed building */
-	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-		building_t *dependsBuilding = ccs.buildings[base->idx][i].dependsBuilding;
+	while ((building = B_GetNextBuilding(base, building))) {
+		building_t *dependsBuilding = building->dependsBuilding;
 		if (dependsBuilding && buildingType == dependsBuilding->buildingType) {
 			/* ccs.buildings[base->idx][i] needs built/removed building */
-			if (onBuilt && !B_GetBuildingStatus(base, ccs.buildings[base->idx][i].buildingType)) {
+			if (onBuilt && !B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only activate a non operationnal building */
-				if (B_CheckUpdateBuilding(&ccs.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnEnable(ccs.buildings[base->idx][i].buildingType, base);
+				if (B_CheckUpdateBuilding(building, base)) {
+					B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
 					test = qtrue;
 					returnValue = qtrue;
 				}
-			} else if (!onBuilt && B_GetBuildingStatus(base, ccs.buildings[base->idx][i].buildingType)) {
+			} else if (!onBuilt && B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only deactivate an operationnal building */
-				if (B_CheckUpdateBuilding(&ccs.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnDisable(ccs.buildings[base->idx][i].buildingType, base);
+				if (B_CheckUpdateBuilding(building, base)) {
+					B_UpdateOneBaseBuildingStatusOnDisable(building->buildingType, base);
 					test = qtrue;
 					returnValue = qtrue;
 				}
@@ -504,8 +525,8 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 	 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
 	while (test) {
 		test = qfalse;
-		for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-			building_t *building = &ccs.buildings[base->idx][i];
+		building = NULL;
+		while ((building = B_GetNextBuilding(base, building))) {
 			if (onBuilt && !B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only activate a non operationnal building */
 				if (B_CheckUpdateBuilding(building, base)) {
@@ -550,7 +571,7 @@ static void B_UpdateAntimatterCap (base_t *base)
  */
 void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 {
-	int buildingIdx, i;
+	int i;
 	qboolean test = qtrue;
 
 	assert(base);
@@ -564,9 +585,9 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 	}
 	/* activate all buildings that needs to be activated */
 	while (test) {
+		building_t *building = NULL;
 		test = qfalse;
-		for (buildingIdx = 0; buildingIdx < ccs.numBuildings[base->idx]; buildingIdx++) {
-			building_t *building = &ccs.buildings[base->idx][buildingIdx];
+		while ((building = B_GetNextBuilding(base, building))) {
 			if (!B_GetBuildingStatus(base, building->buildingType)
 			 && B_CheckUpdateBuilding(building, base)) {
 				if (firstEnable)
@@ -1538,8 +1559,8 @@ void B_DrawBuilding (base_t* base, building_t* building)
  */
 int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t *tpl)
 {
-	int i;
 	int numberOfBuildings = 0;
+	building_t *building = NULL;
 
 	if (!base) {
 		Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: No base given!\n");
@@ -1557,8 +1578,7 @@ int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t
 		return -1;
 	}
 
-	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-		const building_t *building = &ccs.buildings[base->idx][i];
+	while ((building = B_GetNextBuilding(base, building))) {
 		if (building->tpl == tpl && building->buildingStatus != B_STATUS_NOT_SET)
 			numberOfBuildings++;
 	}
@@ -1575,8 +1595,8 @@ int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t
  */
 int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildingType_t buildingType)
 {
-	int i;
 	int numberOfBuildings = 0;
+	building_t *building = NULL;
 
 	if (!base) {
 		Com_Printf("B_GetNumberOfBuildingsInBaseByBuildingType: No base given!\n");
@@ -1588,8 +1608,7 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
 		return -1;
 	}
 
-	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-		const building_t *building = &ccs.buildings[base->idx][i];
+	while ((building = B_GetNextBuilding(base, building))) {
 		if (building->buildingType == buildingType
 		 && building->buildingStatus != B_STATUS_NOT_SET)
 			numberOfBuildings++;
@@ -1788,7 +1807,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
  */
 building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildingType, qboolean onlyWorking)
 {
-	int i;
+	building_t *building = NULL;
 
 	/* we maybe only want to get the working building (e.g. it might the
 	 * case that we don't have a powerplant and thus the searched building
@@ -1796,8 +1815,7 @@ building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildi
 	if (onlyWorking && !B_GetBuildingStatus(base, buildingType))
 		return NULL;
 
-	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-		building_t *building = &ccs.buildings[base->idx][i];
+	while ((building = B_GetNextBuilding(base, building))) {
 		if (building->buildingType == buildingType)
 			return building;
 	}
@@ -2439,17 +2457,16 @@ int B_GetFoundedBaseCount (void)
  */
 void B_UpdateBaseData (void)
 {
-	int baseIdx, j;
+	int baseIdx;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		building_t *b;
 		if (!base)
 			continue;
 
-		for (j = 0; j < ccs.numBuildings[baseIdx]; j++) {
-			building_t *b = &ccs.buildings[baseIdx][j];
-			if (!b)
-				continue;
+		b = NULL;
+		while ((b = B_GetNextBuilding(base, b))) {
 			if (B_CheckBuildingConstruction(b, base)) {
 				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Construction of %s building finished in %s."), _(b->name), ccs.bases[baseIdx].name);
 				MS_AddNewMessage(_("Building finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
@@ -2636,8 +2653,9 @@ int B_ItemInBase (const objDef_t *item, const base_t *base)
  */
 void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 {
-	int i, j, capacity = 0, b_idx = -1;
+	int i, capacity = 0, buildingTemplateIDX = -1;
 	buildingType_t buildingType;
+	building_t *building;
 
 	/* Get building type. */
 	buildingType = B_GetBuildingTypeByCapacity(cap);
@@ -2658,21 +2676,21 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 			if (ccs.buildingTemplates[i].buildingType == buildingType) {
 				capacity = ccs.buildingTemplates[i].capacity;
 				Com_DPrintf(DEBUG_CLIENT, "Building: %s capacity: %i\n", ccs.buildingTemplates[i].id, capacity);
-				b_idx = i;
+				buildingTemplateIDX = i;
 				break;
 			}
 		}
 		/* Finally update capacity. */
-		for (j = 0; j < ccs.numBuildings[base->idx]; j++) {
-			const building_t *building = &ccs.buildings[base->idx][j];
+		building = NULL;
+		while ((building = B_GetNextBuilding(base, building))) {
 			if (building->buildingType == buildingType
 			 && building->buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED) {
 				base->capacities[cap].max += capacity;
 			}
 		}
-		if (b_idx != -1)
+		if (buildingTemplateIDX != -1)
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: updated capacity of %s: %i\n",
-				ccs.buildingTemplates[b_idx].id, base->capacities[cap].max);
+				ccs.buildingTemplates[buildingTemplateIDX].id, base->capacities[cap].max);
 		break;
 	case MAX_CAP:			/**< Update all capacities in base. */
 		Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: going to update ALL capacities.\n");
@@ -2683,7 +2701,6 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		break;
 	default:
 		Com_Error(ERR_DROP, "Unknown capacity limit for this base: %i \n", cap);
-		break;
 	}
 }
 
@@ -2741,6 +2758,7 @@ qboolean B_SaveXML (mxml_node_t *parent)
 		int k;
 		mxml_node_t * act_base, *node;
 		const base_t *b = B_GetBaseByIDX(i);
+		building_t *building;
 
 		if (!b->founded) {
 			Com_Printf("B_SaveXML: Base (idx: %i) not founded!\n", b->idx);
@@ -2772,16 +2790,16 @@ qboolean B_SaveXML (mxml_node_t *parent)
 		}
 		/* buildings */
 		node = mxml_AddNode(act_base, SAVE_BASES_BUILDINGS);
-		for (k = 0; k < ccs.numBuildings[i]; k++) {
+		building = NULL;
+		while ((building = B_GetNextBuilding(b, building))) {
 			mxml_node_t * snode;
-			const building_t *building = &ccs.buildings[i][k];
 
 			if (!building->tpl)
 				continue;
 
 			snode = mxml_AddNode(node, SAVE_BASES_BUILDING);
 			mxml_AddString(snode, SAVE_BASES_BUILDINGTYPE, building->tpl->id);
-			mxml_AddInt(snode, SAVE_BASES_BUILDING_PLACE, k);
+			mxml_AddInt(snode, SAVE_BASES_BUILDING_PLACE, building->idx);
 			mxml_AddString(snode, SAVE_BASES_BUILDINGSTATUS, Com_GetConstVariable(SAVE_BUILDINGSTATUS_NAMESPACE, building->buildingStatus));
 			mxml_AddInt(snode, SAVE_BASES_BUILDINGTIMESTART, building->timeStart);
 			mxml_AddInt(snode, SAVE_BASES_BUILDINGBUILDTIME, building->buildTime);

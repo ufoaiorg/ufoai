@@ -325,10 +325,11 @@ typedef struct salary_s {
 #define SALARY_ADMIN_INITIAL ccs.salaries[ccs.curCampaign->idx].adminInitial
 #define SALARY_DEBT_INTEREST ccs.salaries[ccs.curCampaign->idx].debtInterest
 
-int CP_GetSalaryBase(employeeType_t type);
-int CP_GetSalaryAdmin(employeeType_t type);
-int CP_GetSalaryRankBonus(employeeType_t type);
+int CP_GetSalaryBaseEmployee(employeeType_t type);
+int CP_GetSalaryAdminEmployee(employeeType_t type);
+int CP_GetSalaryRankBonusEmployee(employeeType_t type);
 int CP_GetSalaryAdministrative(void);
+int CP_GetSalaryUpKeepBase(const base_t *base);
 
 /** possible geoscape actions */
 typedef enum mapAction_s {

@@ -80,7 +80,7 @@ void CL_StatsUpdate_f (void)
 	for (i = 0; i < MAX_EMPL; i++) {
 		employee = NULL;
 		while ((employee = E_GetNextHired(i, employee))) {
-			costs += CP_GetSalaryBase(i) + employee->chr.score.rank * CP_GetSalaryRankBonus(i);
+			costs += CP_GetSalaryBaseEmployee(i) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(i);
 			hired[employee->type]++;
 		}
 	}
@@ -115,11 +115,7 @@ void CL_StatsUpdate_f (void)
 		const base_t const *base = B_GetFoundedBaseByIDX(i);
 		if (!base)
 			continue;
-		costs = SALARY_BASE_UPKEEP;	/* base cost */
-		for (j = 0; j < ccs.numBuildings[i]; j++) {
-			const building_t *building = &ccs.buildings[i][j];
-			costs += building->varCosts;
-		}
+		costs = CP_GetSalaryUpKeepBase(base);
 		Q_strcat(pos, va(_("Base (%s):\t%i c\n"), base->name, costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 		sum += costs;
 	}
@@ -199,25 +195,25 @@ static void CP_CampaignStats_f (void)
 	Com_Printf("..team: %i\n", campaign->team);
 
 	Com_Printf("..salaries:\n");
-	Com_Printf("...soldier_base: %i\n", CP_GetSalaryBase(EMPL_SOLDIER));
-	Com_Printf("...soldier_rankbonus: %i\n", CP_GetSalaryRankBonus(EMPL_SOLDIER));
-	Com_Printf("...worker_base: %i\n", CP_GetSalaryBase(EMPL_WORKER));
-	Com_Printf("...worker_rankbonus: %i\n", CP_GetSalaryRankBonus(EMPL_WORKER));
-	Com_Printf("...scientist_base: %i\n", CP_GetSalaryBase(EMPL_SCIENTIST));
-	Com_Printf("...scientist_rankbonus: %i\n", CP_GetSalaryRankBonus(EMPL_SCIENTIST));
-	Com_Printf("...pilot_base: %i\n", CP_GetSalaryBase(EMPL_PILOT));
-	Com_Printf("...pilot_rankbonus: %i\n", CP_GetSalaryRankBonus(EMPL_PILOT));
-	Com_Printf("...robot_base: %i\n", CP_GetSalaryBase(EMPL_ROBOT));
-	Com_Printf("...robot_rankbonus: %i\n", CP_GetSalaryRankBonus(EMPL_ROBOT));
+	Com_Printf("...soldier_base: %i\n", CP_GetSalaryBaseEmployee(EMPL_SOLDIER));
+	Com_Printf("...soldier_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(EMPL_SOLDIER));
+	Com_Printf("...worker_base: %i\n", CP_GetSalaryBaseEmployee(EMPL_WORKER));
+	Com_Printf("...worker_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(EMPL_WORKER));
+	Com_Printf("...scientist_base: %i\n", CP_GetSalaryBaseEmployee(EMPL_SCIENTIST));
+	Com_Printf("...scientist_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(EMPL_SCIENTIST));
+	Com_Printf("...pilot_base: %i\n", CP_GetSalaryBaseEmployee(EMPL_PILOT));
+	Com_Printf("...pilot_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(EMPL_PILOT));
+	Com_Printf("...robot_base: %i\n", CP_GetSalaryBaseEmployee(EMPL_ROBOT));
+	Com_Printf("...robot_rankbonus: %i\n", CP_GetSalaryRankBonusEmployee(EMPL_ROBOT));
 	Com_Printf("...aircraft_factor: %i\n", SALARY_AIRCRAFT_FACTOR);
 	Com_Printf("...aircraft_divisor: %i\n", SALARY_AIRCRAFT_DIVISOR);
 	Com_Printf("...base_upkeep: %i\n", SALARY_BASE_UPKEEP);
 	Com_Printf("...admin_initial: %i\n", SALARY_ADMIN_INITIAL);
-	Com_Printf("...admin_soldier: %i\n", CP_GetSalaryAdmin(EMPL_SOLDIER));
-	Com_Printf("...admin_worker: %i\n", CP_GetSalaryAdmin(EMPL_WORKER));
-	Com_Printf("...admin_scientist: %i\n", CP_GetSalaryAdmin(EMPL_SCIENTIST));
-	Com_Printf("...admin_pilot: %i\n", CP_GetSalaryAdmin(EMPL_PILOT));
-	Com_Printf("...admin_robot: %i\n", CP_GetSalaryAdmin(EMPL_ROBOT));
+	Com_Printf("...admin_soldier: %i\n", CP_GetSalaryAdminEmployee(EMPL_SOLDIER));
+	Com_Printf("...admin_worker: %i\n", CP_GetSalaryAdminEmployee(EMPL_WORKER));
+	Com_Printf("...admin_scientist: %i\n", CP_GetSalaryAdminEmployee(EMPL_SCIENTIST));
+	Com_Printf("...admin_pilot: %i\n", CP_GetSalaryAdminEmployee(EMPL_PILOT));
+	Com_Printf("...admin_robot: %i\n", CP_GetSalaryAdminEmployee(EMPL_ROBOT));
 	Com_Printf("...debt_interest: %.5f\n", SALARY_DEBT_INTEREST);
 }
 #endif /* DEBUG */
