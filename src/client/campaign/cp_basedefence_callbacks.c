@@ -552,8 +552,8 @@ static void BDEF_RemoveBattery_f (void)
 		}
 
 		for (i = 0; i < ccs.numBuildings[baseIdx]; i++) {
-			if (ccs.buildings[baseIdx][i].buildingType == type
-			 && ccs.buildings[baseIdx][i].buildingStatus == B_STATUS_WORKING)
+			const building_t *building = &ccs.buildings[baseIdx][i];
+			if (building->buildingType == type && building->buildingStatus == B_STATUS_WORKING)
 				workingNum++;
 		}
 

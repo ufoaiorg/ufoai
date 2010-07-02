@@ -94,8 +94,8 @@ qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t typ
 	int cntlocal = 0, i;
 
 	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-		if (ccs.buildings[base->idx][i].buildingType == type
-		 && ccs.buildings[base->idx][i].buildingStatus == status) {
+		const building_t *building = &ccs.buildings[base->idx][i];
+		if (building->buildingType == type && building->buildingStatus == status) {
 			cntlocal++;
 			/* don't count any further - the caller doesn't want to know the value */
 			if (!cnt)
@@ -291,9 +291,10 @@ float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
 
 	if (B_GetBuildingStatus(base, type)) {
 		for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-			if (ccs.buildings[base->idx][i].buildingType == type
-			 && ccs.buildings[base->idx][i].buildingStatus == B_STATUS_WORKING) {
-				max = max(ccs.buildings[base->idx][i].level, max);
+			const building_t *building = &ccs.buildings[base->idx][i];
+			if (building->buildingType == type
+			 && building->buildingStatus == B_STATUS_WORKING) {
+				max = max(building->level, max);
 			}
 		}
 	}
@@ -504,16 +505,17 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 	while (test) {
 		test = qfalse;
 		for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-			if (onBuilt && !B_GetBuildingStatus(base, ccs.buildings[base->idx][i].buildingType)) {
+			building_t *building = &ccs.buildings[base->idx][i];
+			if (onBuilt && !B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only activate a non operationnal building */
-				if (B_CheckUpdateBuilding(&ccs.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnEnable(ccs.buildings[base->idx][i].buildingType, base);
+				if (B_CheckUpdateBuilding(building, base)) {
+					B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
 					test = qtrue;
 				}
-			} else if (!onBuilt && B_GetBuildingStatus(base, ccs.buildings[base->idx][i].buildingType)) {
+			} else if (!onBuilt && B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only deactivate an operationnal building */
-				if (B_CheckUpdateBuilding(&ccs.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnDisable(ccs.buildings[base->idx][i].buildingType, base);
+				if (B_CheckUpdateBuilding(building, base)) {
+					B_UpdateOneBaseBuildingStatusOnDisable(building->buildingType, base);
 					test = qtrue;
 				}
 			}
@@ -812,7 +814,8 @@ void B_Destroy (base_t *base)
 
 	/* do a reverse loop as buildings are going to be destroyed */
 	for (buildingIdx = ccs.numBuildings[base->idx] - 1; buildingIdx >= 0; buildingIdx--) {
-		B_BuildingDestroy(base, &ccs.buildings[base->idx][buildingIdx]);
+		building_t *building = &ccs.buildings[base->idx][buildingIdx];
+		B_BuildingDestroy(base, building);
 	}
 
 	/** @todo Destroy the base if we solved aircraft transfer issue
@@ -1555,8 +1558,8 @@ int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t
 	}
 
 	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-		if (ccs.buildings[base->idx][i].tpl == tpl
-		 && ccs.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
+		const building_t *building = &ccs.buildings[base->idx][i];
+		if (building->tpl == tpl && building->buildingStatus != B_STATUS_NOT_SET)
 			numberOfBuildings++;
 	}
 	return numberOfBuildings;
@@ -1586,8 +1589,9 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
 	}
 
 	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-		if (ccs.buildings[base->idx][i].buildingType == buildingType
-		 && ccs.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
+		const building_t *building = &ccs.buildings[base->idx][i];
+		if (building->buildingType == buildingType
+		 && building->buildingStatus != B_STATUS_NOT_SET)
 			numberOfBuildings++;
 	}
 	return numberOfBuildings;
@@ -2660,8 +2664,9 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		}
 		/* Finally update capacity. */
 		for (j = 0; j < ccs.numBuildings[base->idx]; j++) {
-			if ((ccs.buildings[base->idx][j].buildingType == buildingType)
-			&& (ccs.buildings[base->idx][j].buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED)) {
+			const building_t *building = &ccs.buildings[base->idx][j];
+			if (building->buildingType == buildingType
+			 && building->buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED) {
 				base->capacities[cap].max += capacity;
 			}
 		}

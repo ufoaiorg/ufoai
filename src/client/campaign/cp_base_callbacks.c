@@ -604,10 +604,11 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			int minDay = 99999;
 			/* Find the building whose construction will finish first */
 			for (i = 0; i < ccs.numBuildings[baseIdx]; i++) {
-				if (ccs.buildings[baseIdx][i].buildingType == building->buildingType
-					&& ccs.buildings[baseIdx][i].buildingStatus == B_STATUS_UNDER_CONSTRUCTION
-					&& minDay > ccs.buildings[baseIdx][i].buildTime - (ccs.date.day - ccs.buildings[baseIdx][i].timeStart))
-					minDay = ccs.buildings[baseIdx][i].buildTime - (ccs.date.day - ccs.buildings[baseIdx][i].timeStart);
+				const building_t *b = &ccs.buildings[baseIdx][i];
+				if (b->buildingType == building->buildingType
+					&& b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION
+					&& minDay > b->buildTime - (ccs.date.day - b->timeStart))
+					minDay = b->buildTime - (ccs.date.day - b->timeStart);
 			}
 			Com_sprintf(popupText, sizeof(popupText), ngettext("Construction of building will be over in %i day.\nPlease wait to enter.", "Construction of building will be over in %i days.\nPlease wait to enter.",
 				minDay), minDay);
@@ -628,8 +629,9 @@ static void B_CheckBuildingStatusForMenu_f (void)
 				 * note that we can't use B_STATUS_UNDER_CONSTRUCTION here, because this value
 				 * is not use for every building (for exemple Command Centre) */
 				for (i = 0; i < ccs.numBuildings[baseIdx]; i++) {
-					if (ccs.buildings[baseIdx][i].buildingType == dependenceBuilding->buildingType
-					 && ccs.buildings[baseIdx][i].buildTime > (ccs.date.day - ccs.buildings[baseIdx][i].timeStart)) {
+					const building_t *b = &ccs.buildings[baseIdx][i];
+					if (b->buildingType == dependenceBuilding->buildingType
+					 && b->buildTime > (ccs.date.day - b->timeStart)) {
 						Com_sprintf(popupText, sizeof(popupText), _("Building %s is not finished yet, and is needed to use building %s."),
 							_(dependenceBuilding->name), _(building->name));
 						MN_Popup(_("Notice"), popupText);

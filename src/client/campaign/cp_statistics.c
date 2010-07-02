@@ -117,7 +117,8 @@ void CL_StatsUpdate_f (void)
 			continue;
 		costs = SALARY_BASE_UPKEEP;	/* base cost */
 		for (j = 0; j < ccs.numBuildings[i]; j++) {
-			costs += ccs.buildings[i][j].varCosts;
+			const building_t *building = &ccs.buildings[i][j];
+			costs += building->varCosts;
 		}
 		Q_strcat(pos, va(_("Base (%s):\t%i c\n"), base->name, costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 		sum += costs;
