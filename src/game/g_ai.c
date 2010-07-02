@@ -181,10 +181,10 @@ static qboolean AI_CheckCrouch (const edict_t *ent)
 /**
  * @brief Checks whether the given alien should try to hide because there are enemies close
  * enough to shoot the alien.
- * @param ent The alien edict that should (maybe) hide
+ * @param[in] ent The alien edict that should (maybe) hide
  * @return @c true if hide is needed or @c false if the alien thinks that it is not needed
  */
-static qboolean AI_HideNeeded (edict_t *ent)
+static qboolean AI_HideNeeded (const edict_t *ent)
 {
 	/* only brave aliens are trying to stay on the field if no dangerous actor is visible */
 	if (ent->morale > mor_brave->integer) {
@@ -219,8 +219,9 @@ static qboolean AI_HideNeeded (edict_t *ent)
 				}
 			}
 		}
+		return qfalse;
 	}
-	return qfalse;
+	return qtrue;
 }
 
 const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edict_t *ent)
@@ -549,7 +550,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	if (!G_IsRaged(ent)) {
 		const int hidingTeam = AI_GetHidingTeam(ent);
 		/* hide */
-		if (AI_HideNeeded(ent) || !(G_TestVis(hidingTeam, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
+		if (!AI_HideNeeded(ent) || !(G_TestVis(hidingTeam, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
 			/* is a hiding spot */
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
