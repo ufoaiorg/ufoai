@@ -412,7 +412,7 @@ typedef enum {
 
 /* team definitions */
 
-#define MAX_TEAMDEFS	128
+#define MAX_TEAMDEFS	64
 
 typedef enum {
 	NAME_NEUTRAL,
