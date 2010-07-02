@@ -33,28 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_missions.h"
 #include "save/save_airfight.h"
 
-#if 0
-/**
- * @brief Run bullets on geoscape.
- * @param[in] projectile Pointer to the projectile corresponding to this bullet.
- * @param[in] ortogonalVector vector perpendicular to the movement of the projectile.
- * @param[in] movement how much each bullet should move toward its target.
- */
-static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogonalVector, float movement)
-{
-	int i;
-	vec3_t startPoint, finalPoint;
-
-	assert(projectile->bullets);
-
-	for (i = 0; i < BULLETS_PER_SHOT; i++) {
-		PolarToVec(projectile->bulletPos[i], startPoint);
-		RotatePointAroundVector(finalPoint, ortogonalVector, startPoint, movement);
-		VecToPolar(finalPoint, projectile->bulletPos[i]);
-	}
-}
-#endif
-
 /**
  * @brief Remove a projectile from ccs.projectiles
  * @param[in] projectile The projectile to remove
