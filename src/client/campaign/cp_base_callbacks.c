@@ -592,12 +592,13 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			int minDay = 99999;
 			building_t *b = NULL;
 
-			while ((b = B_GetNextBuilding(base, b))) {
-				if (b->buildingType == building->buildingType
-					&& b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION
-					&& minDay > b->buildTime - (ccs.date.day - b->timeStart))
-					minDay = b->buildTime - (ccs.date.day - b->timeStart);
+			while ((b = B_GetNextBuildingByType(base, b, building->buildingType))) {
+				if (b->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
+					const int delta = b->buildTime - (ccs.date.day - b->timeStart);
+					minDay = min(minDay, delta);
+				}
 			}
+
 			Com_sprintf(popupText, sizeof(popupText), ngettext("Construction of building will be over in %i day.\nPlease wait to enter.", "Construction of building will be over in %i days.\nPlease wait to enter.",
 				minDay), minDay);
 			MN_Popup(_("Notice"), popupText);
@@ -618,9 +619,8 @@ static void B_CheckBuildingStatusForMenu_f (void)
 				 * is not use for every building (for exemple Command Centre) */
 				building_t *b = NULL;
 
-				while ((b = B_GetNextBuilding(base, b))) {
-					if (b->buildingType == dependenceBuilding->buildingType
-					 && b->buildTime > (ccs.date.day - b->timeStart)) {
+				while ((b = B_GetNextBuildingByType(base, b, dependenceBuilding->buildingType))) {
+					if (b->buildTime > (ccs.date.day - b->timeStart)) {
 						Com_sprintf(popupText, sizeof(popupText), _("Building %s is not finished yet, and is needed to use building %s."),
 							_(dependenceBuilding->name), _(building->name));
 						MN_Popup(_("Notice"), popupText);

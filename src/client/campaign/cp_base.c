@@ -99,6 +99,17 @@ building_t* B_GetNextBuilding (const base_t *base, building_t *lastBuilding)
 		return building;
 }
 
+building_t* B_GetNextBuildingByType (const base_t *base, building_t *lastBuilding, buildingType_t buildingType)
+{
+	building_t* building = lastBuilding;
+
+	while ((building = B_GetNextBuilding(base, building))) {
+		if (building->buildingType == buildingType)
+			break;
+	}
+	return building;
+}
+
 /**
  * @brief Searches the base for a given building type with the given status
  * @param[in] base Base to search
@@ -116,8 +127,8 @@ qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t typ
 	int cntlocal = 0;
 	building_t *building = NULL;
 
-	while ((building = B_GetNextBuilding(base, building))) {
-		if (building->buildingType == type && building->buildingStatus == status) {
+	while ((building = B_GetNextBuildingByType(base, building, type))) {
+		if (building->buildingStatus == status) {
 			cntlocal++;
 			/* don't count any further - the caller doesn't want to know the value */
 			if (!cnt)
@@ -312,30 +323,12 @@ float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
 
 	if (B_GetBuildingStatus(base, type)) {
 		building_t *building = NULL;
-		while ((building = B_GetNextBuilding(base, building))) {
-			if (building->buildingType == type
-			 && building->buildingStatus == B_STATUS_WORKING) {
+		while ((building = B_GetNextBuildingByType(base, building, type)))
+			if (building->buildingStatus == B_STATUS_WORKING)
 				max = max(building->level, max);
-			}
-		}
 	}
 
 	return max;
-}
-
-/**
- * @brief Returns a random founded base
- */
-base_t* B_GetRandomBase (void)
-{
-	int randomBase = rand() % ccs.numBases;
-
-	if (!ccs.bases[randomBase].founded) {
-		Com_Printf("Base with id %i was not founded or already destroyed\n", randomBase);
-		return NULL;
-	}
-
-	return &ccs.bases[randomBase];
 }
 
 /**
@@ -1608,11 +1601,10 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
 		return -1;
 	}
 
-	while ((building = B_GetNextBuilding(base, building))) {
-		if (building->buildingType == buildingType
-		 && building->buildingStatus != B_STATUS_NOT_SET)
+	while ((building = B_GetNextBuildingByType(base, building, buildingType)))
+		if (building->buildingStatus != B_STATUS_NOT_SET)
 			numberOfBuildings++;
-	}
+
 	return numberOfBuildings;
 }
 
@@ -1815,10 +1807,9 @@ building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildi
 	if (onlyWorking && !B_GetBuildingStatus(base, buildingType))
 		return NULL;
 
-	while ((building = B_GetNextBuilding(base, building))) {
-		if (building->buildingType == buildingType)
-			return building;
-	}
+	while ((building = B_GetNextBuildingByType(base, building, buildingType)))
+		return building;
+
 	return NULL;
 }
 
@@ -2682,12 +2673,10 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		}
 		/* Finally update capacity. */
 		building = NULL;
-		while ((building = B_GetNextBuilding(base, building))) {
-			if (building->buildingType == buildingType
-			 && building->buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED) {
+		while ((building = B_GetNextBuildingByType(base, building, buildingType)))
+			if (building->buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED)
 				base->capacities[cap].max += capacity;
-			}
-		}
+
 		if (buildingTemplateIDX != -1)
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: updated capacity of %s: %i\n",
 				ccs.buildingTemplates[buildingTemplateIDX].id, base->capacities[cap].max);

@@ -554,10 +554,9 @@ static void BDEF_RemoveBattery_f (void)
 
 		building = NULL;
 		workingNum = 0;
-		while ((building = B_GetNextBuilding(base, building))) {
-			if (building->buildingType == type && building->buildingStatus == B_STATUS_WORKING)
+		while ((building = B_GetNextBuildingByType(base, building, type)))
+			if (building->buildingStatus == B_STATUS_WORKING)
 				workingNum++;
-		}
 
 		if (workingNum == max) {
 			/* Removed building was under construction, do nothing */

@@ -291,13 +291,13 @@ base_t *B_GetFirstUnfoundedBase(void);
 base_t *B_GetCurrentSelectedBase(void);
 void B_SetCurrentSelectedBase(const base_t *base);
 
-base_t* B_GetRandomBase(void);
 qboolean B_AssembleMap(base_t *base);
 
 /* building functions */
 buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
 
 building_t* B_GetNextBuilding(const base_t *base, building_t *lastBuilding);
+building_t* B_GetNextBuildingByType(const base_t *base, building_t *lastBuilding, buildingType_t buildingType);
 void B_BuildingStatus(const base_t* base, const building_t* building);
 qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);
 qboolean B_GetBuildingStatus(const base_t* const base, const buildingType_t type);
