@@ -247,7 +247,7 @@
 	/* Sixpack of buttons (top) randomized animation (red-green) */
 	{
 		texture pt/b/b2_06_3c0
-		animr 14 1.5
+		animr 12 1.5
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* Doublepack of buttons (bottom) alternating animation (blue) */
