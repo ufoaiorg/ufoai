@@ -224,6 +224,13 @@ static qboolean AI_HideNeeded (const edict_t *ent)
 	return qtrue;
 }
 
+/**
+ * Returns the item of the currently chosen shoot type of the ai actor.
+ * @param shootType The current selected shoot type
+ * @param ent The ai actor
+ * @return The item that was selected for the given shoot type. This might be @c NULL if
+ * no item was found.
+ */
 const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edict_t *ent)
 {
 	/* optimization: reaction fire is automatic */
