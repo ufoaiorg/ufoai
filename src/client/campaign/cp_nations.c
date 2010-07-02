@@ -89,56 +89,15 @@ void CP_NationHandleBudget (void)
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 
-	cost = 0;
-	employee = NULL;
-	while ((employee = E_GetNextHired(EMPL_SOLDIER, employee))) {
-		cost += CP_GetSalaryBaseEmployee(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(employee->type);
-	}
-	totalExpenditure += cost;
-
-	Com_sprintf(message, sizeof(message), _("Paid %i credits to soldiers"), cost);
-	/* only this message is played with sound as previous are added for every nation */
-	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qtrue);
-
-	cost = 0;
-	employee = NULL;
-	while ((employee = E_GetNextHired(EMPL_WORKER, employee))) {
-		cost += CP_GetSalaryBaseEmployee(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(employee->type);
-	}
-	totalExpenditure += cost;
-
-	Com_sprintf(message, sizeof(message), _("Paid %i credits to workers"), cost);
-	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
-
-	cost = 0;
-	employee = NULL;
-	while ((employee = E_GetNextHired(EMPL_SCIENTIST, employee))) {
-		cost += CP_GetSalaryBaseEmployee(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(employee->type);
-	}
-	totalExpenditure += cost;
-
-	Com_sprintf(message, sizeof(message), _("Paid %i credits to scientists"), cost);
-	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
-
-	cost = 0;
-	employee = NULL;
-	while ((employee = E_GetNextHired(EMPL_PILOT, employee))) {
-		cost += CP_GetSalaryBaseEmployee(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(employee->type);
-	}
-	totalExpenditure += cost;
-
-	Com_sprintf(message, sizeof(message), _("Paid %i credits to pilots"), cost);
-	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
-
-	cost = 0;
-	employee = NULL;
-	while ((employee = E_GetNextHired(EMPL_ROBOT, employee))) {
-		cost += CP_GetSalaryBaseEmployee(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(employee->type);
-	}
-	totalExpenditure += cost;
-
-	if (cost != 0) {
-		Com_sprintf(message, sizeof(message), _("Paid %i credits for robots"), cost);
+	for (i = 0; i < MAX_EMPL; i++) {
+		employee = NULL;
+		cost = 0;
+		while ((employee = E_GetNextHired(i, employee))) {
+			cost += CP_GetSalaryBaseEmployee(employee->type)
+					+ employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(employee->type);
+		}
+		totalExpenditure += cost;
+		Com_sprintf(message, sizeof(message), _("Paid %i credits to: %s"), cost, E_GetEmployeeString(i));
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 
