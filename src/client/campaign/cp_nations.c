@@ -55,14 +55,14 @@ void CP_NationHandleBudget (void)
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nation = &ccs.nations[i];
 		const int funding = NAT_GetFunding(nation, 0);
-		int new_scientists = 0, new_soldiers = 0, new_workers = 0;
+		int newScientists = 0, newSoldiers = 0, newWorkers = 0;
 
 		totalIncome += funding;
 
 		for (j = 0; 0.25 + j < (float) nation->maxScientists * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 			/* Create a scientist, but don't auto-hire her. */
 			E_CreateEmployee(EMPL_SCIENTIST, nation, NULL);
-			new_scientists++;
+			newScientists++;
 		}
 
 
@@ -70,21 +70,21 @@ void CP_NationHandleBudget (void)
 			for (j = 0; 0.25 + j < (float) nation->maxSoldiers * nation->stats[0].happiness * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 				/* Create a soldier. */
 				E_CreateEmployee(EMPL_SOLDIER, nation, NULL);
-				new_soldiers++;
+				newSoldiers++;
 			}
 		}
 
 		for (j = 0; 0.25 + j * 2 < (float) nation->maxSoldiers * nation->stats[0].happiness; j++) {
 			/* Create a worker. */
 			E_CreateEmployee(EMPL_WORKER, nation, NULL);
-			new_workers++;
+			newWorkers++;
 		}
 
 		Com_sprintf(message, sizeof(message), _("Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"),
 					funding, ngettext("credit", "credits", funding),
-					new_scientists, ngettext("scientist", "scientists", new_scientists),
-					new_soldiers, ngettext("soldier", "soldiers", new_soldiers),
-					new_workers, ngettext("worker", "workers", new_workers),
+					newScientists, ngettext("scientist", "scientists", newScientists),
+					newSoldiers, ngettext("soldier", "soldiers", newSoldiers),
+					newWorkers, ngettext("worker", "workers", newWorkers),
 					_(nation->name), NAT_GetHappinessString(nation));
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
@@ -92,7 +92,7 @@ void CP_NationHandleBudget (void)
 	cost = 0;
 	employee = NULL;
 	while ((employee = E_GetNextHired(EMPL_SOLDIER, employee))) {
-		cost += SALARY_SOLDIER_BASE + employee->chr.score.rank * SALARY_SOLDIER_RANKBONUS;
+		cost += CP_GetSalaryBase(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonus(employee->type);
 	}
 	totalExpenditure += cost;
 
@@ -103,7 +103,7 @@ void CP_NationHandleBudget (void)
 	cost = 0;
 	employee = NULL;
 	while ((employee = E_GetNextHired(EMPL_WORKER, employee))) {
-		cost += SALARY_WORKER_BASE + employee->chr.score.rank * SALARY_WORKER_RANKBONUS;
+		cost += CP_GetSalaryBase(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonus(employee->type);
 	}
 	totalExpenditure += cost;
 
@@ -113,7 +113,7 @@ void CP_NationHandleBudget (void)
 	cost = 0;
 	employee = NULL;
 	while ((employee = E_GetNextHired(EMPL_SCIENTIST, employee))) {
-		cost += SALARY_SCIENTIST_BASE + employee->chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
+		cost += CP_GetSalaryBase(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonus(employee->type);
 	}
 	totalExpenditure += cost;
 
@@ -123,7 +123,7 @@ void CP_NationHandleBudget (void)
 	cost = 0;
 	employee = NULL;
 	while ((employee = E_GetNextHired(EMPL_PILOT, employee))) {
-		cost += SALARY_PILOT_BASE + employee->chr.score.rank * SALARY_PILOT_RANKBONUS;
+		cost += CP_GetSalaryBase(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonus(employee->type);
 	}
 	totalExpenditure += cost;
 
@@ -133,7 +133,7 @@ void CP_NationHandleBudget (void)
 	cost = 0;
 	employee = NULL;
 	while ((employee = E_GetNextHired(EMPL_ROBOT, employee))) {
-		cost += SALARY_ROBOT_BASE + employee->chr.score.rank * SALARY_ROBOT_RANKBONUS;
+		cost += CP_GetSalaryBase(employee->type) + employee->chr.score.rank * CP_GetSalaryRankBonus(employee->type);
 	}
 	totalExpenditure += cost;
 
@@ -174,9 +174,7 @@ void CP_NationHandleBudget (void)
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 
-	cost = SALARY_ADMIN_INITIAL + ccs.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER
-			+ ccs.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + ccs.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST
-			+ ccs.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + ccs.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
+	cost = CP_GetSalaryAdministrative();
 	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
 	totalExpenditure += cost;
 	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);

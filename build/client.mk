@@ -125,6 +125,7 @@ CLIENT_SRCS = \
 	client/campaign/cp_research.c \
 	client/campaign/cp_research_callbacks.c \
 	client/campaign/cp_save.c \
+	client/campaign/cp_statistics.c \
 	client/campaign/cp_transfer.c \
 	client/campaign/cp_transfer_callbacks.c \
 	client/campaign/cp_ufo.c \

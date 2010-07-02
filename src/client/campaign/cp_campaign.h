@@ -32,7 +32,6 @@ struct aircraft_s;
 struct installation_s;
 struct employee_s;
 struct menuNode_s; /**< @todo remove this once the menuNode_t usage is cleaned up */
-struct storedUFO_s;
 
 #define MAX_ASSEMBLIES	16
 
@@ -56,6 +55,7 @@ struct storedUFO_s;
 #include "cp_messageoptions.h"
 #include "cp_alienbase.h"
 #include "cp_market.h"
+#include "cp_statistics.h"
 
 /* check for water */
 /* blue value is 64 */
@@ -309,48 +309,26 @@ typedef struct campaign_s {
 
 /** salary values for a campaign */
 typedef struct salary_s {
-	int soldier_base;
-	int soldier_rankbonus;
-	int worker_base;
-	int worker_rankbonus;
-	int scientist_base;
-	int scientist_rankbonus;
-	int pilot_base;
-	int pilot_rankbonus;
-	int robot_base;
-	int robot_rankbonus;
-	int aircraft_factor;
-	int aircraft_divisor;
-	int base_upkeep;
-	int admin_initial;
-	int admin_soldier;
-	int admin_worker;
-	int admin_scientist;
-	int admin_pilot;
-	int admin_robot;
-	float debt_interest;
+	int base[MAX_EMPL];
+	int rankBonus[MAX_EMPL];
+	int admin[MAX_EMPL];
+	int aircraftFactor;
+	int aircraftDivisor;
+	int baseUpkeep;
+	int adminInitial;
+	float debtInterest;
 } salary_t;
 
-#define SALARY_SOLDIER_BASE ccs.salaries[ccs.curCampaign->idx].soldier_base
-#define SALARY_SOLDIER_RANKBONUS ccs.salaries[ccs.curCampaign->idx].soldier_rankbonus
-#define SALARY_WORKER_BASE ccs.salaries[ccs.curCampaign->idx].worker_base
-#define SALARY_WORKER_RANKBONUS ccs.salaries[ccs.curCampaign->idx].worker_rankbonus
-#define SALARY_SCIENTIST_BASE ccs.salaries[ccs.curCampaign->idx].scientist_base
-#define SALARY_SCIENTIST_RANKBONUS ccs.salaries[ccs.curCampaign->idx].scientist_rankbonus
-#define SALARY_PILOT_BASE ccs.salaries[ccs.curCampaign->idx].pilot_base
-#define SALARY_PILOT_RANKBONUS ccs.salaries[ccs.curCampaign->idx].pilot_rankbonus
-#define SALARY_ROBOT_BASE ccs.salaries[ccs.curCampaign->idx].robot_base
-#define SALARY_ROBOT_RANKBONUS ccs.salaries[ccs.curCampaign->idx].robot_rankbonus
-#define SALARY_AIRCRAFT_FACTOR ccs.salaries[ccs.curCampaign->idx].aircraft_factor
-#define SALARY_AIRCRAFT_DIVISOR ccs.salaries[ccs.curCampaign->idx].aircraft_divisor
-#define SALARY_BASE_UPKEEP ccs.salaries[ccs.curCampaign->idx].base_upkeep
-#define SALARY_ADMIN_INITIAL ccs.salaries[ccs.curCampaign->idx].admin_initial
-#define SALARY_ADMIN_SOLDIER ccs.salaries[ccs.curCampaign->idx].admin_soldier
-#define SALARY_ADMIN_WORKER ccs.salaries[ccs.curCampaign->idx].admin_worker
-#define SALARY_ADMIN_SCIENTIST ccs.salaries[ccs.curCampaign->idx].admin_scientist
-#define SALARY_ADMIN_PILOT ccs.salaries[ccs.curCampaign->idx].admin_pilot
-#define SALARY_ADMIN_ROBOT ccs.salaries[ccs.curCampaign->idx].admin_robot
-#define SALARY_DEBT_INTEREST ccs.salaries[ccs.curCampaign->idx].debt_interest
+#define SALARY_AIRCRAFT_FACTOR ccs.salaries[ccs.curCampaign->idx].aircraftFactor
+#define SALARY_AIRCRAFT_DIVISOR ccs.salaries[ccs.curCampaign->idx].aircraftDivisor
+#define SALARY_BASE_UPKEEP ccs.salaries[ccs.curCampaign->idx].baseUpkeep
+#define SALARY_ADMIN_INITIAL ccs.salaries[ccs.curCampaign->idx].adminInitial
+#define SALARY_DEBT_INTEREST ccs.salaries[ccs.curCampaign->idx].debtInterest
+
+int CP_GetSalaryBase(employeeType_t type);
+int CP_GetSalaryAdmin(employeeType_t type);
+int CP_GetSalaryRankBonus(employeeType_t type);
+int CP_GetSalaryAdministrative(void);
 
 /** possible geoscape actions */
 typedef enum mapAction_s {

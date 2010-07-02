@@ -48,6 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_missions.h"
 #include "cp_mission_triggers.h"
 #include "cp_nations.h"
+#include "cp_statistics.h"
 #include "cp_time.h"
 #include "cp_xvi.h"
 #include "cp_aircraft_callbacks.h"
@@ -734,175 +735,6 @@ void CL_UpdateCredits (int credits)
 	ccs.credits = credits;
 	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
 }
-
-#define MAX_STATS_BUFFER 2048
-/**
- * @brief Shows the current stats from stats_t stats
- */
-static void CL_StatsUpdate_f (void)
-{
-	char *pos;
-	static char statsBuffer[MAX_STATS_BUFFER];
-	int hired[MAX_EMPL];
-	int i, j, costs = 0, sum = 0, totalfunds = 0;
-	employee_t *employee;
-
-	/* delete buffer */
-	memset(statsBuffer, 0, sizeof(statsBuffer));
-	memset(hired, 0, sizeof(hired));
-
-	pos = statsBuffer;
-
-	/* missions */
-	MN_RegisterText(TEXT_STATS_MISSION, pos);
-	Com_sprintf(pos, MAX_STATS_BUFFER, _("Won:\t%i\nLost:\t%i\n\n"), ccs.campaignStats.missionsWon, ccs.campaignStats.missionsLost);
-
-	/* bases */
-	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_BASES, pos);
-	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
-			ccs.campaignStats.basesBuilt, ccs.numBases, ccs.campaignStats.basesAttacked),
-
-	/* installations */
-	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_INSTALLATIONS, pos);
-	for (i = 0; i < ccs.numInstallations; i++) {
-		const installation_t *inst = &ccs.installations[i];
-		Q_strcat(pos, va("%s\n", inst->name), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-	}
-
-	/* nations */
-	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_NATIONS, pos);
-	for (i = 0; i < ccs.numNations; i++) {
-		Q_strcat(pos, va(_("%s\t%s\n"), _(ccs.nations[i].name), NAT_GetHappinessString(&ccs.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-		totalfunds += NAT_GetFunding(&ccs.nations[i], 0);
-	}
-	Q_strcat(pos, va(_("\nFunding this month:\t%d"), totalfunds), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-
-	/* costs */
-	employee = NULL;
-	while ((employee = E_GetNextHired(EMPL_SCIENTIST, employee))) {
-		costs += SALARY_SCIENTIST_BASE + employee->chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
-		hired[employee->type]++;
-	}
-	employee = NULL;
-	while ((employee = E_GetNextHired(EMPL_SOLDIER, employee))) {
-		costs += SALARY_SOLDIER_BASE + employee->chr.score.rank * SALARY_SOLDIER_RANKBONUS;
-		hired[employee->type]++;
-	}
-	employee = NULL;
-	while ((employee = E_GetNextHired(EMPL_WORKER, employee))) {
-		costs += SALARY_WORKER_BASE + employee->chr.score.rank * SALARY_WORKER_RANKBONUS;
-		hired[employee->type]++;
-	}
-	employee = NULL;
-	while ((employee = E_GetNextHired(EMPL_PILOT, employee))) {
-		costs += SALARY_PILOT_BASE + employee->chr.score.rank * SALARY_PILOT_RANKBONUS;
-		hired[employee->type]++;
-	}
-	employee = NULL;
-	while ((employee = E_GetNextHired(EMPL_ROBOT, employee))) {
-		costs += SALARY_ROBOT_BASE + employee->chr.score.rank * SALARY_ROBOT_RANKBONUS;
-		hired[employee->type]++;
-	}
-
-	/* employees - this is between the two costs parts to count the hired employees */
-	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_EMPLOYEES, pos);
-	for (i = 0; i < MAX_EMPL; i++) {
-		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-	}
-
-	/* costs - second part */
-	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_COSTS, pos);
-	Q_strcat(pos, va(_("Employees:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-	sum += costs;
-
-	costs = 0;
-	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
-
-		for (j = 0; j < base->numAircraftInBase; j++) {
-			costs += base->aircraft[j].price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
-		}
-	}
-	Q_strcat(pos, va(_("Aircraft:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-	sum += costs;
-
-	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
-		costs = SALARY_BASE_UPKEEP;	/* base cost */
-		for (j = 0; j < ccs.numBuildings[i]; j++) {
-			costs += ccs.buildings[i][j].varCosts;
-		}
-		Q_strcat(pos, va(_("Base (%s):\t%i c\n"), base->name, costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-		sum += costs;
-	}
-
-	costs = SALARY_ADMIN_INITIAL + ccs.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER
-			+ ccs.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + ccs.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST
-			+ ccs.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + ccs.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
-	Q_strcat(pos, va(_("Administrative costs:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-	sum += costs;
-
-	if (ccs.credits < 0) {
-		const float interest = ccs.credits * SALARY_DEBT_INTEREST;
-
-		costs = (int)ceil(interest);
-		Q_strcat(pos, va(_("Debt:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-		sum += costs;
-	}
-	Q_strcat(pos, va(_("\n\t-------\nSum:\t%i c\n"), sum), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-
-	/* campaign */
-	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_GENERIC, pos);
-	Q_strcat(pos, va(_("Max. allowed debts: %ic\n"), ccs.curCampaign->negativeCreditsUntilLost),
-		(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-
-	/* only show the xvi spread data when it's available */
-	if (CP_IsXVIResearched()) {
-		Q_strcat(pos, va(_("Max. allowed eXtraterrestial Viral Infection: %i%%\n"
-			"Current eXtraterrestial Viral Infection: %i%%"),
-			ccs.curCampaign->maxAllowedXVIRateUntilLost,
-			CP_GetAverageXVIRate()),
-			(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-	}
-}
-
-/**
- * @brief Load mapDef statistics
- * @param[in] parent XML Node structure, where we get the information from
- */
-static qboolean CP_LoadMapDefStatXML (mxml_node_t *parent)
-{
-	mxml_node_t *node;
-	
-	for (node = mxml_GetNode(parent, SAVE_CAMPAIGN_MAPDEF); node; node = mxml_GetNextNode(node, parent, SAVE_CAMPAIGN_MAPDEF)) {
-		const char *s = mxml_GetString(node, SAVE_CAMPAIGN_MAPDEF_ID);
-		mapDef_t *map;
-
-		if (s[0] == '\0') {
-			Com_Printf("Warning: MapDef with no id in xml!\n");
-			continue;
-		}
-		map = Com_GetMapDefinitionByID(s);
-		if (!map) {
-			Com_Printf("Warning: No MapDef with id '%s'!\n", s);
-			continue;
-		}
-		map->timesAlreadyUsed = mxml_GetInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, 0);
-	}
-
-	return qtrue;
-}
-
 
 /**
  * @brief Load callback for savegames in XML Format
@@ -1939,45 +1771,6 @@ static void CL_DebugChangeCharacterStats_f (void)
 		CL_UpdateCharacterStats(base, 1, base->aircraftCurrent);
 }
 
-/**
- * @brief Show campaign stats in console
- */
-static void CP_CampaignStats_f (void)
-{
-	campaign_t *campaign = ccs.curCampaign;
-
-	if (!GAME_CP_IsRunning()) {
-		Com_Printf("No campaign active\n");
-		return;
-	}
-
-	Com_Printf("Campaign id: %s\n", campaign->id);
-	Com_Printf("..research list: %s\n", campaign->researched);
-	Com_Printf("..equipment: %s\n", campaign->equipment);
-	Com_Printf("..team: %i\n", campaign->team);
-
-	Com_Printf("..salaries:\n");
-	Com_Printf("...soldier_base: %i\n", SALARY_SOLDIER_BASE);
-	Com_Printf("...soldier_rankbonus: %i\n", SALARY_SOLDIER_RANKBONUS);
-	Com_Printf("...worker_base: %i\n", SALARY_WORKER_BASE);
-	Com_Printf("...worker_rankbonus: %i\n", SALARY_WORKER_RANKBONUS);
-	Com_Printf("...scientist_base: %i\n", SALARY_SCIENTIST_BASE);
-	Com_Printf("...scientist_rankbonus: %i\n", SALARY_SCIENTIST_RANKBONUS);
-	Com_Printf("...pilot_base: %i\n", SALARY_PILOT_BASE);
-	Com_Printf("...pilot_rankbonus: %i\n", SALARY_PILOT_RANKBONUS);
-	Com_Printf("...robot_base: %i\n", SALARY_ROBOT_BASE);
-	Com_Printf("...robot_rankbonus: %i\n", SALARY_ROBOT_RANKBONUS);
-	Com_Printf("...aircraft_factor: %i\n", SALARY_AIRCRAFT_FACTOR);
-	Com_Printf("...aircraft_divisor: %i\n", SALARY_AIRCRAFT_DIVISOR);
-	Com_Printf("...base_upkeep: %i\n", SALARY_BASE_UPKEEP);
-	Com_Printf("...admin_initial: %i\n", SALARY_ADMIN_INITIAL);
-	Com_Printf("...admin_soldier: %i\n", SALARY_ADMIN_SOLDIER);
-	Com_Printf("...admin_worker: %i\n", SALARY_ADMIN_WORKER);
-	Com_Printf("...admin_scientist: %i\n", SALARY_ADMIN_SCIENTIST);
-	Com_Printf("...admin_pilot: %i\n", SALARY_ADMIN_PILOT);
-	Com_Printf("...admin_robot: %i\n", SALARY_ADMIN_ROBOT);
-	Com_Printf("...debt_interest: %.5f\n", SALARY_DEBT_INTEREST);
-}
 #endif /* DEBUG */
 
 /**
@@ -2104,6 +1897,32 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 	return qtrue;
 }
 
+int CP_GetSalaryAdministrative (void)
+{
+	int i, costs = SALARY_ADMIN_INITIAL;
+	for (i = 0; i < MAX_EMPL; i++)
+		costs += ccs.numEmployees[i] * CP_GetSalaryAdmin(i);
+	return costs;
+}
+
+int CP_GetSalaryBase (employeeType_t type)
+{
+	const salary_t *salary = &ccs.salaries[ccs.curCampaign->idx];
+	return salary->base[type];
+}
+
+int CP_GetSalaryAdmin (employeeType_t type)
+{
+	const salary_t *salary = &ccs.salaries[ccs.curCampaign->idx];
+	return salary->admin[type];
+}
+
+int CP_GetSalaryRankBonus (employeeType_t type)
+{
+	const salary_t *salary = &ccs.salaries[ccs.curCampaign->idx];
+	return salary->rankBonus[type];
+}
+
 /** @todo remove me and move all the included stuff to proper places */
 void CP_InitStartup (void)
 {
@@ -2114,7 +1933,6 @@ void CP_InitStartup (void)
 	/* commands */
 #ifdef DEBUG
 	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
-	Cmd_AddCommand("debug_listcampaign", CP_CampaignStats_f, "Print campaign stats to game console");
 #endif
 	Cmd_AddCommand("check_baseattacks", CP_CheckBaseAttacks_f, "Check if baseattack mission available and start it.");
 
@@ -2137,5 +1955,6 @@ void CP_InitStartup (void)
 	AB_InitStartup();
 	AIRFIGHT_InitStartup();
 	NAT_InitStartup();
+	STATS_InitStartup();
 }
 

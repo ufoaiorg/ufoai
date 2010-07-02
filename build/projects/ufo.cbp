@@ -656,6 +656,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/campaign/cp_xvi.h" />
+		<Unit filename="../../src/client/campaign/cp_statistics.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/campaign/cp_statistics.h" />
 		<Unit filename="../../src/client/campaign/missions/cp_mission_baseattack.c">
 			<Option compilerVar="CC" />
 		</Unit>
