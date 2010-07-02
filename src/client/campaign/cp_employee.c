@@ -37,6 +37,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_rank.h"
 #include "save/save_employee.h"
 
+/**
+ * @brief Iterates through employees
+ * @param[in] type Employee type to look for
+ * @param[in] lastEmployee Pointer of the employee to iterate from. call with NULL to get the first one.
+ * @sa employeeType_t
+ */
 employee_t* E_GetNext (employeeType_t type, employee_t *lastEmployee)
 {
 	employee_t* endOfEmployees = &ccs.employees[type][ccs.numEmployees[type]];
@@ -59,6 +65,14 @@ employee_t* E_GetNext (employeeType_t type, employee_t *lastEmployee)
 		return employee;
 }
 
+
+/**
+ * @brief Iterates through employees on a base
+ * @param[in] type Employee type to look for
+ * @param[in] lastEmployee Pointer of the employee to iterate from. call with NULL to get the first one.
+ * @param[in] base Pointer to the base where employee hired at
+ * @sa employeeType_t
+ */
 employee_t* E_GetNextFromBase (employeeType_t type, employee_t *lastEmployee, const base_t *base)
 {
 	employee_t* employee = lastEmployee;
@@ -70,6 +84,13 @@ employee_t* E_GetNextFromBase (employeeType_t type, employee_t *lastEmployee, co
 	return employee;
 }
 
+
+/**
+ * @brief Iterates through hired employees
+ * @param[in] type Employee type to look for
+ * @param[in] lastEmployee Pointer of the employee to iterate from. call with NULL to get the first one.
+ * @sa employeeType_t
+ */
 employee_t* E_GetNextHired (employeeType_t type, employee_t *lastEmployee)
 {
 	employee_t* employee = lastEmployee;

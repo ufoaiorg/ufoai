@@ -108,7 +108,7 @@ building_t* B_GetNextBuilding (const base_t *base, building_t *lastBuilding)
  * @brief Iterates throught buildings of a type in a base
  * @param[in] base Pointer to the base which buildings asked
  * @param[in] lastBuilding Pointer to the building iterate from. Call with NULL to get the first one.
- * @param[in] buildigType Type of the buildings to search
+ * @param[in] buildingType Type of the buildings to search
  * @sa buildingType_t
  */
 building_t* B_GetNextBuildingByType (const base_t *base, building_t *lastBuilding, buildingType_t buildingType)
