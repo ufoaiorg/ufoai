@@ -2728,7 +2728,7 @@ void B_SaveBaseSlotsXML (const baseWeapon_t *weapons, const int numWeapons, mxml
 qboolean B_SaveStorageXML (mxml_node_t *parent, const equipDef_t equip)
 {
 	int k;
-	for (k = 0; k < MAX_OBJDEFS; k++) {
+	for (k = 0; k < csi.numODs; k++) {
 		const objDef_t *od = INVSH_GetItemByIDX(k);
 		/** @todo where do we have an item without id? */
 		if (od->id[0] == '\0')
