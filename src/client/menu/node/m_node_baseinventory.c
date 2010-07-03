@@ -125,7 +125,7 @@ static void MN_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 			qboolean isAmmo;
 			qboolean isWeapon;
 			qboolean isArmour;
-			objDef_t *obj = &csi.ods[iterator->itemID];
+			objDef_t *obj = INVSH_GetItemByIDX(iterator->itemID);
 
 			/* gameplay filter */
 			if (!GAME_ItemIsUseable(obj))
@@ -300,7 +300,7 @@ static int MN_BaseInventoryNodeDrawItems (menuNode_t *node, objDef_t *highlightT
 	MN_ContainerItemIteratorInit(&iterator, node);
 	for (; iterator.itemID < csi.numODs; MN_ContainerItemIteratorNext(&iterator)) {
 		const int id = iterator.itemID;
-		objDef_t *obj = &csi.ods[id];
+		objDef_t *obj = INVSH_GetItemByIDX(id);
 		item_t tempItem = {1, NULL, obj, 0, 0};
 		vec3_t pos;
 		vec3_t ammopos;
@@ -529,7 +529,7 @@ static invList_t *MN_BaseInventoryNodeGetItem (const menuNode_t* const node,
 	MN_ContainerItemIteratorInit(&iterator, node);
 	for (; iterator.itemID < csi.numODs; MN_ContainerItemIteratorNext(&iterator)) {
 		const int id = iterator.itemID;
-		objDef_t *obj = &csi.ods[id];
+		objDef_t *obj = INVSH_GetItemByIDX(id);
 		vec2_t pos;
 		vec2_t ammopos;
 		const int col = items % EXTRADATACONST(node).columns;

@@ -180,7 +180,7 @@ qboolean INV_EquipmentDefSanityCheck (void)
 		/* Check primary */
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
-			const objDef_t const *obj = &csi.ods[j];
+			const objDef_t const *obj = INVSH_GetItemByIDX(j);
 			if (obj->weapon && obj->fireTwoHanded
 			 && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY)))
 				sum += ed->numItems[j];
@@ -193,7 +193,7 @@ qboolean INV_EquipmentDefSanityCheck (void)
 		/* Check secondary */
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
-			const objDef_t const *obj = &csi.ods[j];
+			const objDef_t const *obj = INVSH_GetItemByIDX(j);
 			if (obj->weapon && obj->reload && !obj->deplete && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY))
 				sum += ed->numItems[j];
 		}
@@ -205,7 +205,7 @@ qboolean INV_EquipmentDefSanityCheck (void)
 		/* Check armour */
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
-			const objDef_t const *obj = &csi.ods[j];
+			const objDef_t const *obj = INVSH_GetItemByIDX(j);
 			if (INV_ItemMatchesFilter(obj, FILTER_S_ARMOUR))
 				sum += ed->numItems[j];
 		}

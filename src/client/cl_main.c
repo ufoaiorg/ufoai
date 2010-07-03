@@ -624,13 +624,14 @@ static void CL_PrecacheModels (void)
 		percent = 95.0f;
 
 	for (i = 0; i < csi.numODs; i++) {
-		if (csi.ods[i].type[0] == '\0' || csi.ods[i].isDummy)
+		const objDef_t *od = INVSH_GetItemByIDX(i);
+		if (od->type[0] == '\0' || od->isDummy)
 			continue;
 
-		if (csi.ods[i].model[0] != '\0') {
-			cls.modelPool[i] = R_RegisterModelShort(csi.ods[i].model);
+		if (od->model[0] != '\0') {
+			cls.modelPool[i] = R_RegisterModelShort(od->model);
 			if (cls.modelPool[i])
-				Com_DPrintf(DEBUG_CLIENT, "CL_PrecacheModels: Registered object model: '%s' (%i)\n", csi.ods[i].model, i);
+				Com_DPrintf(DEBUG_CLIENT, "CL_PrecacheModels: Registered object model: '%s' (%i)\n", od->model, i);
 		}
 		cls.loadingPercent += percent / csi.numODs;
 		SCR_DrawPrecacheScreen(qtrue);

@@ -543,7 +543,7 @@ void RS_InitTree (qboolean load)
 		case RS_ARMOUR:
 			found = qfalse;
 			for (j = 0; j < csi.numODs; j++) {	/* j = item index */
-				objDef_t *item = &csi.ods[j];
+				objDef_t *item = INVSH_GetItemByIDX(j);
 
 				/* This item has been 'provided' -> get the correct data. */
 				if (!strcmp(tech->provides, item->id)) {

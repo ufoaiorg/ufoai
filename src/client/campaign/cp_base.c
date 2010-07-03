@@ -1101,8 +1101,9 @@ static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft,
 
 	/* Pay for the initial equipment as well as update storage capacity. */
 	for (i = 0; i < csi.numODs; i++) {
-		price += edTarget->numItems[i] * csi.ods[i].price;
-		base->capacities[CAP_ITEMS].cur += edTarget->numItems[i] * csi.ods[i].size;
+		const objDef_t *od = INVSH_GetItemByIDX(i);
+		price += edTarget->numItems[i] * od->price;
+		base->capacities[CAP_ITEMS].cur += edTarget->numItems[i] * od->size;
 	}
 
 	/* Finally update credits. */
@@ -2728,12 +2729,14 @@ qboolean B_SaveStorageXML (mxml_node_t *parent, const equipDef_t equip)
 {
 	int k;
 	for (k = 0; k < MAX_OBJDEFS; k++) {
-		if (csi.ods[k].id[0] == '\0')
+		const objDef_t *od = INVSH_GetItemByIDX(k);
+		/** @todo where do we have an item without id? */
+		if (od->id[0] == '\0')
 			continue;
 		if (equip.numItems[k] || equip.numItemsLoose[k]) {
 			mxml_node_t *node = mxml_AddNode(parent, SAVE_BASES_ITEM);
 
-			mxml_AddString(node, SAVE_BASES_ODS_ID, csi.ods[k].id);
+			mxml_AddString(node, SAVE_BASES_ODS_ID, od->id);
 			mxml_AddIntValue(node, SAVE_BASES_NUM, equip.numItems[k]);
 			mxml_AddByteValue(node, SAVE_BASES_NUMLOOSE, equip.numItemsLoose[k]);
 		}
@@ -3177,7 +3180,7 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 		return;
 
 	for (i = 0, num = 0; i < csi.numODs; i++) {
-		const objDef_t *obj = &csi.ods[i];
+		const objDef_t *obj = INVSH_GetItemByIDX(i);
 
 		if (!B_ItemIsStoredInBaseStorage(obj))
 			continue;
@@ -3208,9 +3211,8 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 			/* items are destroyed. We guess that all items of a given type are stored in the same location
 			 *	=> destroy all items of this type */
 			const int idx = objIdx[randNumber];
-			assert(idx >= 0);
-			assert(idx < MAX_OBJDEFS);
-			B_UpdateStorageAndCapacity(base, &csi.ods[idx], -base->storage.numItems[idx], qfalse, qfalse);
+			objDef_t *od = INVSH_GetItemByIDX(idx);
+			B_UpdateStorageAndCapacity(base, od, -base->storage.numItems[idx], qfalse, qfalse);
 		}
 		REMOVE_ELEM(objIdx, randNumber, num);
 
@@ -3234,7 +3236,7 @@ void B_UpdateStorageCap (base_t *base)
 	base->capacities[CAP_ITEMS].cur = 0;
 
 	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *obj = &csi.ods[i];
+		const objDef_t *obj = INVSH_GetItemByIDX(i);
 
 		if (!B_ItemIsStoredInBaseStorage(obj))
 			continue;

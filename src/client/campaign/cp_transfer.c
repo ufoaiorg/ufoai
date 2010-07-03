@@ -130,7 +130,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 
 	/* Count size of all items already on the transfer list. */
 	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *object = &csi.ods[i];
+		const objDef_t *object = INVSH_GetItemByIDX(i);
 		if (td.trItemsTmp[i] > 0) {
 			if (!strcmp(object->id, ANTIMATTER_TECH_ID))
 				amtransfer = td.trItemsTmp[i];
@@ -318,8 +318,9 @@ static void TR_CargoList (void)
 
 	/* Show items. */
 	for (i = 0; i < csi.numODs; i++) {
+		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (td.trItemsTmp[i] > 0) {
-			LIST_AddString(&cargoList, _(csi.ods[i].name));
+			LIST_AddString(&cargoList, _(od->name));
 			LIST_AddString(&cargoListAmount, va("%i", td.trItemsTmp[i]));
 			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_ITEM;
 			td.cargo[td.trCargoCountTmp].itemidx = i;
@@ -476,17 +477,19 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	switch (transferType) {
 	case TRANS_TYPE_ITEM:
 		if (B_GetBuildingStatus(destbase, B_STORAGE)) {
-			for (i = 0; i < csi.numODs; i++)
-				if ((srcbase->storage.numItems[i] || td.trItemsTmp[i]) && !csi.ods[i].isVirtual) {
-					if (td.trItemsTmp[i] > 0)
-						LIST_AddString(&transferListTransfered, va("%i", td.trItemsTmp[i]));
+			for (i = 0; i < csi.numODs; i++) {
+				const objDef_t *od = INVSH_GetItemByIDX(i);
+				if ((srcbase->storage.numItems[od->idx] || td.trItemsTmp[od->idx]) && !od->isVirtual) {
+					if (td.trItemsTmp[od->idx] > 0)
+						LIST_AddString(&transferListTransfered, va("%i", td.trItemsTmp[od->idx]));
 					else
 						LIST_AddString(&transferListTransfered, "");
-					Com_sprintf(str, sizeof(str), "%s", _(csi.ods[i].name));
+					Com_sprintf(str, sizeof(str), "%s", _(od->name));
 					LIST_AddString(&transferList, str);
-					LIST_AddString(&transferListAmount, va("%i", srcbase->storage.numItems[i]));
+					LIST_AddString(&transferListAmount, va("%i", srcbase->storage.numItems[od->idx]));
 					cnt++;
 				}
+			}
 			if (!cnt) {
 				LIST_AddString(&transferList, _("Storage is empty."));
 				LIST_AddString(&transferListAmount, "");
@@ -670,11 +673,12 @@ static void TR_TransferListClear_f (void)
 		return;
 
 	for (i = 0; i < csi.numODs; i++) {	/* Return items. */
-		if (td.trItemsTmp[i] > 0) {
-			if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
-				B_ManageAntimatter(base, td.trItemsTmp[i], qtrue);
+		const objDef_t *od = INVSH_GetItemByIDX(i);
+		if (td.trItemsTmp[od->idx] > 0) {
+			if (!strcmp(od->id, ANTIMATTER_TECH_ID))
+				B_ManageAntimatter(base, td.trItemsTmp[od->idx], qtrue);
 			else
-				B_UpdateStorageAndCapacity(base, &csi.ods[i], td.trItemsTmp[i], qfalse, qfalse);
+				B_UpdateStorageAndCapacity(base, od, td.trItemsTmp[od->idx], qfalse, qfalse);
 		}
 	}
 	for (i = 0; i < ccs.numAliensTD; i++) {	/* Return aliens. */
@@ -716,11 +720,12 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 			/* Items cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
 		} else {
 			for (i = 0; i < csi.numODs; i++) {
-				if (transfer->itemAmount[i] > 0) {
-					if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
-						B_ManageAntimatter(destination, transfer->itemAmount[i], qtrue);
+				const objDef_t *od = INVSH_GetItemByIDX(i);
+				if (transfer->itemAmount[od->idx] > 0) {
+					if (!strcmp(od->id, ANTIMATTER_TECH_ID))
+						B_ManageAntimatter(destination, transfer->itemAmount[od->idx], qtrue);
 					else
-						B_UpdateStorageAndCapacity(destination, &csi.ods[i], transfer->itemAmount[i], qfalse, qtrue);
+						B_UpdateStorageAndCapacity(destination, od, transfer->itemAmount[od->idx], qfalse, qtrue);
 				}
 			}
 		}
@@ -1161,10 +1166,10 @@ static void TR_TransferListSelect_f (void)
 		return;
 	case TRANS_TYPE_ITEM:
 		for (i = 0; i < csi.numODs; i++) {
-			if ((base->storage.numItems[i] || td.trItemsTmp[i]) && !csi.ods[i].isVirtual) {
+			const objDef_t *od = INVSH_GetItemByIDX(i);
+			if ((base->storage.numItems[od->idx] || td.trItemsTmp[od->idx]) && !od->isVirtual) {
 				if (cnt == num) {
 					int amount;
-					const objDef_t *od = &csi.ods[i];
 
 					if (Cmd_Argc() == 3)
 						amount = atoi(Cmd_Argv(2));
@@ -1173,17 +1178,17 @@ static void TR_TransferListSelect_f (void)
 
 					/* you can't transfer more item than you have */
 					if (amount > 0) {
-						amount = min(amount, base->storage.numItems[i]);
+						amount = min(amount, base->storage.numItems[od->idx]);
 						if (amount == 0)
 							return;
 						/* you can only transfer items that destination base can accept */
 						amount = TR_CheckItem(od, td.transferBase, amount);
 					} else if (amount < 0) {
-						amount = max(amount, - td.trItemsTmp[i]);
+						amount = max(amount, - td.trItemsTmp[od->idx]);
 					}
 
 					if (amount) {
-						td.trItemsTmp[i] += amount;
+						td.trItemsTmp[od->idx] += amount;
 						if (!strcmp(od->id, ANTIMATTER_TECH_ID))
 							B_ManageAntimatter(base, amount, qfalse);
 						else
@@ -1420,15 +1425,16 @@ static void TR_CargoListSelect_f (void)
 	switch (td.cargo[num].type) {
 	case CARGO_TYPE_ITEM:
 		for (i = 0; i < csi.numODs; i++) {
-			if (td.trItemsTmp[i] > 0) {
+			const objDef_t *od = INVSH_GetItemByIDX(i);
+			if (td.trItemsTmp[od->idx] > 0) {
 				if (cnt == num) {
-					const int amount = min(TR_GetTransferFactor(), td.trItemsTmp[i]);
+					const int amount = min(TR_GetTransferFactor(), td.trItemsTmp[od->idx]);
 					/* you can't transfer more item than there are in current transfer */
 					td.trItemsTmp[i] -= amount;
-					if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
+					if (!strcmp(od->id, ANTIMATTER_TECH_ID))
 						B_ManageAntimatter(base, amount, qfalse);
 					else
-						B_UpdateStorageAndCapacity(base, &csi.ods[i], amount, qfalse, qfalse);
+						B_UpdateStorageAndCapacity(base, od, amount, qfalse, qfalse);
 					break;
 				}
 				cnt++;
@@ -1733,8 +1739,9 @@ static void TR_ListTransfers_f (void)
 			int j;
 			Com_Printf("...ItemCargo:\n");
 			for (j = 0; j < csi.numODs; j++) {
-				if (transfer->itemAmount[j])
-					Com_Printf("......%s: %i\n", csi.ods[j].id, transfer->itemAmount[j]);
+				const objDef_t *od = INVSH_GetItemByIDX(j);
+				if (transfer->itemAmount[od->idx])
+					Com_Printf("......%s: %i\n", od->id, transfer->itemAmount[od->idx]);
 			}
 		}
 		/* Carried Employees */
@@ -2013,12 +2020,13 @@ static void TR_TransferList_Scroll_f (void)
 		return;
 
 	for (i = 0; i < csi.numODs; i++) {
-		if ((srcBase->storage.numItems[i] || td.trItemsTmp[i]) && !csi.ods[i].isVirtual) {
-			if (cnt >= (viewPos + MAX_TRANSLIST_MENU_ENTRIES))
+		const objDef_t *od = INVSH_GetItemByIDX(i);
+		if ((srcBase->storage.numItems[od->idx] || td.trItemsTmp[od->idx]) && !od->isVirtual) {
+			if (cnt >= viewPos + MAX_TRANSLIST_MENU_ENTRIES)
 				break;
 			if (cnt >= viewPos)
 				MN_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos,
-						td.trItemsTmp[i], 0, srcBase->storage.numItems[i] + td.trItemsTmp[i]);
+						td.trItemsTmp[od->idx], 0, srcBase->storage.numItems[od->idx] + td.trItemsTmp[od->idx]);
 			cnt++;
 		}
 	}

@@ -133,12 +133,13 @@ void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 	assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
 
 	for (i = 0; i < csi.numODs; i++) {
+		objDef_t *od = INVSH_GetItemByIDX(i);
 		/* Don't allow to show unuseable items. */
-		if (!GAME_ItemIsUseable(&csi.ods[i]))
+		if (!GAME_ItemIsUseable(od))
 			continue;
 
 		while (ed->numItems[i]) {
-			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
+			const item_t item = {NONE_AMMO, NULL, od, 0, 0};
 			if (!cls.i.AddToInventory(&cls.i, inv, item, INVDEF(csi.idEquip), NONE, NONE, 1))
 				break; /* no space left in menu */
 			ed->numItems[item.t->idx]--;

@@ -187,9 +187,11 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 	/* store market */
 	node = mxml_AddNode(parent, SAVE_MARKET_MARKET);
 	for (i = 0; i < MAX_OBJDEFS; i++) {
-		if (csi.ods[i].id[0] != '\0' && BS_IsOnMarket(&csi.ods[i])) {
+		const objDef_t *od = INVSH_GetItemByIDX(i);
+		/** @todo where do we have an item with empty id? */
+		if (od->id[0] != '\0' && BS_IsOnMarket(od)) {
 			mxml_node_t * snode = mxml_AddNode(node, SAVE_MARKET_ITEM);
-			mxml_AddString(snode, SAVE_MARKET_ID, csi.ods[i].id);
+			mxml_AddString(snode, SAVE_MARKET_ID, od->id);
 			mxml_AddIntValue(snode, SAVE_MARKET_NUM, ccs.eMarket.numItems[i]);
 			mxml_AddIntValue(snode, SAVE_MARKET_BID, ccs.eMarket.bidItems[i]);
 			mxml_AddIntValue(snode, SAVE_MARKET_ASK, ccs.eMarket.askItems[i]);
@@ -198,13 +200,14 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 		}
 	}
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
-		if ((ccs.eMarket.bidAircraft[i] > 0) || (ccs.eMarket.askAircraft > 0)) {
+		market_t *market = &ccs.eMarket;
+		if (market->bidAircraft[i] > 0 || market->askAircraft > 0) {
 			mxml_node_t * snode = mxml_AddNode(node, SAVE_MARKET_AIRCRAFT);
 			mxml_AddString(snode, SAVE_MARKET_ID, Com_DropShipTypeToShortName(i));
-			mxml_AddIntValue(snode, SAVE_MARKET_NUM, ccs.eMarket.numAircraft[i]);
-			mxml_AddIntValue(snode, SAVE_MARKET_BID, ccs.eMarket.bidAircraft[i]);
-			mxml_AddIntValue(snode, SAVE_MARKET_ASK, ccs.eMarket.askAircraft[i]);
-			mxml_AddDoubleValue(snode, SAVE_MARKET_EVO, ccs.eMarket.currentEvolutionAircraft[i]);
+			mxml_AddIntValue(snode, SAVE_MARKET_NUM, market->numAircraft[i]);
+			mxml_AddIntValue(snode, SAVE_MARKET_BID, market->bidAircraft[i]);
+			mxml_AddIntValue(snode, SAVE_MARKET_ASK, market->askAircraft[i]);
+			mxml_AddDoubleValue(snode, SAVE_MARKET_EVO, market->currentEvolutionAircraft[i]);
 		}
 	}
 	return qtrue;
@@ -275,16 +278,18 @@ void BS_InitMarket (qboolean load)
 				campaign->asymptoticMarket, campaign->id);
 
 	for (i = 0; i < csi.numODs; i++) {
+		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (ccs.eMarket.askItems[i] == 0) {
-			ccs.eMarket.askItems[i] = csi.ods[i].price;
+			ccs.eMarket.askItems[i] = od->price;
 			ccs.eMarket.bidItems[i] = floor(ccs.eMarket.askItems[i] * BID_FACTOR);
 		}
 
 		if (!ccs.curCampaign->marketDef->numItems[i])
 			continue;
 
-		if (!RS_IsResearched_ptr(csi.ods[i].tech) && campaign->marketDef->numItems[i] > 0)
-			Com_Error(ERR_DROP, "BS_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s", csi.ods[i].id, campaign->id);
+		if (!RS_IsResearched_ptr(od->tech) && campaign->marketDef->numItems[i] > 0)
+			Com_Error(ERR_DROP, "BS_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s",
+					od->id, campaign->id);
 		else
 			/* the other relevant values were already set above */
 			ccs.eMarket.numItems[i] = campaign->marketDef->numItems[i];
@@ -302,7 +307,8 @@ void BS_InitMarket (qboolean load)
 			continue;
 
 		if (!RS_IsResearched_ptr(aircraft->tech) && campaign->marketDef->numAircraft[i] > 0)
-			Com_Error(ERR_DROP, "BS_InitMarket: Could not add aircraft %s to the market - not marked as researched in campaign %s", aircraft->id, campaign->id);
+			Com_Error(ERR_DROP, "BS_InitMarket: Could not add aircraft %s to the market - not marked as researched in campaign %s",
+					aircraft->id, campaign->id);
 		else
 			/* the other relevant values were already set above */
 			ccs.eMarket.numAircraft[i] = campaign->marketDef->numAircraft[i];
@@ -328,11 +334,12 @@ void CL_CampaignRunMarket (void)
 	assert(campaign->asymptoticMarketDef);
 
 	for (i = 0; i < csi.numODs; i++) {
-		const technology_t *tech = csi.ods[i].tech;
+		const objDef_t *od = INVSH_GetItemByIDX(i);
+		const technology_t *tech = od->tech;
 		int asymptoticNumber;
 
 		if (!tech)
-			Com_Error(ERR_DROP, "No tech that provides '%s'\n", csi.ods[i].id);
+			Com_Error(ERR_DROP, "No tech that provides '%s'\n", od->id);
 
 		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->numItems[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
 			/* if items are researched for more than RESEARCH_LIMIT_DELAY or was on the initial market,
@@ -351,9 +358,9 @@ void CL_CampaignRunMarket (void)
 		if (fabs(ccs.eMarket.currentEvolutionItems[i]) >= 1.0f) {
 			const int num = (int)(ccs.eMarket.currentEvolutionItems[i]);
 			if (num >= 0)
-				BS_AddItemToMarket(&csi.ods[i], num);
+				BS_AddItemToMarket(od, num);
 			else
-				BS_RemoveItemFromMarket(&csi.ods[i], -num);
+				BS_RemoveItemFromMarket(od, -num);
 			ccs.eMarket.currentEvolutionItems[i] -= num;
 		}
 	}

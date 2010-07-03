@@ -87,11 +87,12 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	/* Search for any complete clips. */
 	/** @todo We may want to change this to use the type->ammo[] info. */
 	for (i = 0; i < csi.numODs; i++) {
-		if (INVSH_LoadableInWeapon(&csi.ods[i], type)) {
+		objDef_t *od = INVSH_GetItemByIDX(i);
+		if (INVSH_LoadableInWeapon(od, type)) {
 			if (ed->numItems[i] > 0) {
 				ed->numItems[i]--;
 				item.a = type->ammo;
-				item.m = &csi.ods[i];
+				item.m = od;
 				return item;
 			}
 		}
@@ -115,7 +116,8 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	/** @todo We may want to change this to use the type->ammo[] info. */
 	item.a = NONE_AMMO;
 	for (i = 0; i < csi.numODs; i++) {
-		if (INVSH_LoadableInWeapon(&csi.ods[i], type) && ed->numItemsLoose[i] > item.a) {
+		objDef_t *od = INVSH_GetItemByIDX(i);
+		if (INVSH_LoadableInWeapon(od, type) && ed->numItemsLoose[i] > item.a) {
 			if (item.a > 0) {
 				/* We previously found some ammo, but we've now found other
 				 * loose ammo of a different (but appropriate) type with
@@ -129,7 +131,7 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 			/* Found some loose ammo to load the weapon with */
 			item.a = ed->numItemsLoose[i];
 			ed->numItemsLoose[i] = 0;
-			item.m = &csi.ods[i];
+			item.m = od;
 		}
 	}
 	return item;

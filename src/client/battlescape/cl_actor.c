@@ -175,16 +175,14 @@ void CL_ActorCvars (const character_t * chr, const char* cvarPrefix)
 
 	/* visible equipment */
 	weapon = RIGHT(chr);
-	if (weapon) {
-		assert(weapon->item.t >= &csi.ods[0] && weapon->item.t < &csi.ods[MAX_OBJDEFS]);
+	if (weapon)
 		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), weapon->item.t->model);
-	} else
+	else
 		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), "");
 	weapon = LEFT(chr);
-	if (weapon) {
-		assert(weapon->item.t >= &csi.ods[0] && weapon->item.t < &csi.ods[MAX_OBJDEFS]);
+	if (weapon)
 		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), weapon->item.t->model);
-	} else
+	else
 		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), "");
 
 	GAME_CharacterCvars(chr);

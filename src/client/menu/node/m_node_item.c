@@ -57,7 +57,7 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 		item_t item = {1, NULL, NULL, 0, 0}; /* 1 so it's not reddish; fake item anyway */
 		const vec4_t color = {1, 1, 1, 1};
 		vec3_t pos;
-		item.t = &csi.ods[od->idx];
+		item.t = INVSH_GetItemByIDX(od->idx);
 
 		if (EXTRADATA(node).containerLike || INV_IsArmour(item.t)) {
 			/* We position the model of the item ourself (in the middle of the item

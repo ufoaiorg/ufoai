@@ -716,7 +716,7 @@ static qboolean CP_ItemsSanityCheck (void)
 	qboolean result = qtrue;
 
 	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *item = &csi.ods[i];
+		const objDef_t *item = INVSH_GetItemByIDX(i);
 
 		/* Warn if item has no size set. */
 		if (item->size <= 0 && B_ItemIsStoredInBaseStorage(item)) {

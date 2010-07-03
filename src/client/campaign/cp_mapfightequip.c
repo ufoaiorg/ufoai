@@ -51,7 +51,7 @@ technology_t **AII_GetCraftitemTechsByType (int type)
 	int i, j = 0;
 
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *aircraftitem = &csi.ods[i];
+		objDef_t *aircraftitem = INVSH_GetItemByIDX(i);
 		if (aircraftitem->craftitem.type == type) {
 			assert(j < MAX_TECHNOLOGIES);
 			techList[j] = aircraftitem->tech;

@@ -1635,11 +1635,8 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	weaponFireDefIndex_t weapFdsIdx;
 
 	/* search for items with same name */
-	for (i = 0; i < csi.numODs; i++)
-		if (!strncmp(name, csi.ods[i].name, sizeof(csi.ods[i].name)))
-			break;
-
-	if (i < csi.numODs) {
+	od = INVSH_GetItemByIDSilent(name);
+	if (od != NULL) {
 		Com_Printf("Com_ParseItem: weapon def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
@@ -2979,10 +2976,11 @@ static void Com_AddObjectLinks (void)
 		if (od->numWeapons == 0 && (od->weapon || od->craftitem.type <= AC_ITEM_WEAPON)) {
 			/* this is a weapon, an aircraft weapon, or a base defence system */
 			for (n = 0; n < csi.numODs; n++) {
-				for (m = 0; m < csi.ods[n].numWeapons; m++) {
-					if (csi.ods[n].weapons[m] == &csi.ods[i]) {
+				objDef_t *weapon = INVSH_GetItemByIDX(n);
+				for (m = 0; m < weapon->numWeapons; m++) {
+					if (weapon->weapons[m] == od) {
 						assert(od->numAmmos <= MAX_AMMOS_PER_OBJDEF);
-						od->ammos[od->numAmmos++] = &csi.ods[n];
+						od->ammos[od->numAmmos++] = weapon;
 					}
 				}
 			}

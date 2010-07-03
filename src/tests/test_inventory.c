@@ -220,7 +220,7 @@ static void testItemMassActions (void)
 	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
 
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *od = &csi.ods[i];
+		objDef_t *od = INVSH_GetItemByIDX(i);
 		int j;
 		/* every item should be placable on the ground container and there should really be enough space */
 		addedItem = testAddSingle(&inv, od, container);

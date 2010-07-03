@@ -212,11 +212,12 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 
 	snode = mxml_AddNode(node, SAVE_MULTIPLAYER_EQUIPMENT);
 	for (i = 0; i < csi.numODs; i++) {
-		if (ed->numItems[i] || ed->numItemsLoose[i]) {
+		const objDef_t *od = INVSH_GetItemByIDX(i);
+		if (ed->numItems[od->idx] || ed->numItemsLoose[od->idx]) {
 			mxml_node_t *ssnode = mxml_AddNode(snode, SAVE_MULTIPLAYER_ITEM);
-			mxml_AddString(ssnode, SAVE_MULTIPLAYER_ID, csi.ods[i].id);
-			mxml_AddIntValue(ssnode, SAVE_MULTIPLAYER_NUM, ed->numItems[i]);
-			mxml_AddIntValue(ssnode, SAVE_MULTIPLAYER_NUMLOOSE, ed->numItemsLoose[i]);
+			mxml_AddString(ssnode, SAVE_MULTIPLAYER_ID, od->id);
+			mxml_AddIntValue(ssnode, SAVE_MULTIPLAYER_NUM, ed->numItems[od->idx]);
+			mxml_AddIntValue(ssnode, SAVE_MULTIPLAYER_NUMLOOSE, ed->numItemsLoose[od->idx]);
 		}
 	}
 	requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);

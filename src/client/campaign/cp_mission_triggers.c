@@ -72,7 +72,7 @@ static void CP_AddItemAsCollected_f (void)
 
 	/* i = item index */
 	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *item = &csi.ods[i];
+		const objDef_t *item = INVSH_GetItemByIDX(i);
 		if (!strcmp(id, item->id)) {
 			ccs.bases[baseID].storage.numItems[i]++;
 			Com_DPrintf(DEBUG_CLIENT, "add item: '%s'\n", item->id);

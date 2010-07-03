@@ -1204,7 +1204,6 @@ static void HUD_UpdateActorCvar (le_t *actor, const char *cvarPrefix)
 		Cvar_Set(va("%s%s", cvarPrefix, "anim"), animName);
 	if (RIGHT(actor)) {
 		const invList_t *i = RIGHT(actor);
-		assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
 		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), i->item.t->model);
 		Cvar_Set(va("%s%s", cvarPrefix, "rweapon_item"), i->item.t->id);
 	} else {
@@ -1213,7 +1212,6 @@ static void HUD_UpdateActorCvar (le_t *actor, const char *cvarPrefix)
 	}
 	if (LEFT(actor)) {
 		const invList_t *i = LEFT(actor);
-		assert(i->item.t >= &csi.ods[0] && i->item.t < &csi.ods[MAX_OBJDEFS]);
 		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), i->item.t->model);
 		Cvar_Set(va("%s%s", cvarPrefix, "lweapon_item"), i->item.t->id);
 	} else {

@@ -1425,7 +1425,7 @@ static void CL_DebugAllItems_f (void)
 	base = B_GetBaseByIDX(i);
 
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *obj = &csi.ods[i];
+		objDef_t *obj = INVSH_GetItemByIDX(i);
 		if (!obj->weapon && !obj->numWeapons)
 			continue;
 		B_UpdateStorageAndCapacity(base, obj, 1, qfalse, qtrue);
@@ -1460,7 +1460,7 @@ static void CL_DebugShowItems_f (void)
 	base = B_GetBaseByIDX(i);
 
 	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *obj = &csi.ods[i];
+		const objDef_t *obj = INVSH_GetItemByIDX(i);
 		if (!obj->tech)
 			Sys_Error("CL_DebugAllItems_f: No tech for %s\n", obj->id);
 		Com_Printf("%i. %s: %i\n", i, obj->id, base->storage.numItems[i]);

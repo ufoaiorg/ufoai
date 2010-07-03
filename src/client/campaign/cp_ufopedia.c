@@ -636,8 +636,9 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 			case RS_ARMOUR:
 			case RS_WEAPON:
 				for (i = 0; i < csi.numODs; i++) {
-					if (!strcmp(tech->provides, csi.ods[i].id)) {
-						INV_ItemDescription(&csi.ods[i]);
+					const objDef_t *od = INVSH_GetItemByIDX(i);
+					if (!strcmp(tech->provides, od->id)) {
+						INV_ItemDescription(od);
 						UP_DisplayTechTree(tech);
 						Cvar_Set("mn_upmetadata", "1");
 						break;

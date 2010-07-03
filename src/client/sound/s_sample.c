@@ -167,7 +167,7 @@ void S_LoadSamples (void)
 
 	/* load weapon sounds */
 	for (i = 0; i < csi.numODs; i++) { /* i = obj */
-		const objDef_t *od = &csi.ods[i];
+		const objDef_t *od = INVSH_GetItemByIDX(i);
 		for (j = 0; j < od->numWeapons; j++) {	/* j = weapon-entry per obj */
 			for (k = 0; k < od->numFiredefs[j]; k++) { /* k = firedef per weapon */
 				const fireDef_t *fd = &od->fd[j][k];

@@ -317,7 +317,7 @@ static void INV_UpdateObject_f (void)
 		Com_Printf("Id %i out of range 0..%i\n", num, csi.numODs);
 		return;
 	}
-	obj = &csi.ods[num];
+	obj = INVSH_GetItemByIDX(num);
 
 	/* update item description */
 	INV_ItemDescription(obj);

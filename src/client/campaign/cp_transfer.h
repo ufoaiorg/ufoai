@@ -49,9 +49,9 @@ enum {
 
 /** @brief Transfer informations (they are being stored in ccs.transfers[MAX_TRANSFERS]. */
 typedef struct transfer_s {
-	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item [csi.ods[idx]]. */
+	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item. */
 	int alienAmount[MAX_TEAMDEFS][TRANS_ALIEN_MAX];		/**< Alien cargo, [0] alive, [1] dead. */
-	struct employee_s *employeeArray[MAX_EMPL][MAX_EMPLOYEES];	/**< List of personel transfering. */
+	struct employee_s *employeeArray[MAX_EMPL][MAX_EMPLOYEES];	/**< List of personal transferring. */
 
 	int aircraftArray[MAX_AIRCRAFT];		/**< Aircraft being transferred. aircraftIdx */
 	base_t *destBase;				/**< Pointer to destination base. May not be NULL if active is true. */
