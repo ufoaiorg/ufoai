@@ -1043,7 +1043,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 /**
  * @brief Build starting building in the first base, and hire employees.
  * @param[in,out] base The base to put the new building into
- * @param[in] template The building template to create a new building with
+ * @param[in] buildingTemplate The building template to create a new building with
  * @param[in] hire Hire employees for the building we create from the template
  * @param[in] pos The position on the base grid
  */
@@ -1186,8 +1186,6 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
  * @brief Setup buildings and equipment for first base. Uses the campaign
  * scriptable first base template to place the buildings in the base.
  * @param[in,out] base The base to set up
- * @param[in] hire Hire employees for the building we create from the template
- * @param[in] buildings Add buildings to the initial base
  * @sa B_SetUpBase
  */
 static void B_SetUpFirstBase (base_t* base)
@@ -1285,8 +1283,6 @@ void B_UpdateBaseCount (void)
 /**
  * @brief Setup new base, uses template for the first base
  * @param[in,out] base The base to set up
- * @param[in] hire Hire employees for the building we create from the template
- * @param[in] buildings Add buildings to the initial base
  * @param[in] pos Position (on Geoscape) the base built at
  * @sa B_NewBase
  * @sa B_SetUpFirstBase
@@ -1431,7 +1427,7 @@ static void B_NewBuilding (base_t* base, building_t *building)
 /**
  * @brief Set the currently selected building.
  * @param[in,out] base The base to place the building in
- * @param[in] template The template of the building to place at the given location
+ * @param[in] buildingTemplate The template of the building to place at the given location
  * @param[in] row Set building to row
  * @param[in] col Set building to col
  * @return building created in base (this is not a building template)
@@ -2705,7 +2701,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
  * @brief Saves the missile and laser slots of a base or sam site.
  * @param[in] weapons Defence weapons array
  * @param[in] numWeapons Number of entries in weapons array
- * @param[out] parent XML Node structure, where we write the information to
+ * @param[out] node XML Node structure, where we write the information to
  */
 void B_SaveBaseSlotsXML (const baseWeapon_t *weapons, const int numWeapons, mxml_node_t *node)
 {
@@ -2825,8 +2821,8 @@ qboolean B_SaveXML (mxml_node_t *parent)
 /**
  * @brief Loads the missile and laser slots of a base or sam site.
  * @param[out] weapons Defence weapons array
- * @param[out] numWeapons Number of entries in weapons array
- * @param[in] parent XML Node structure, where we load the information from
+ * @param[out] max Number of entries in weapons array
+ * @param[in] p XML Node structure, where we load the information from
  * @sa B_Load
  * @sa B_SaveBaseSlots
  */
@@ -2871,7 +2867,7 @@ void B_PostLoadInit (void)
 
 /**
  * @brief Loads base storage
- * @param[in] p XML Node structure, where we get the information from
+ * @param[in] parent XML Node structure, where we get the information from
  * @param[out] equip Storage to load
  */
 qboolean B_LoadStorageXML (mxml_node_t *parent, equipDef_t *equip)
@@ -2893,7 +2889,7 @@ qboolean B_LoadStorageXML (mxml_node_t *parent, equipDef_t *equip)
 
 /**
  * @brief Loads base data
- * @param[in] p XML Node structure, where we get the information from
+ * @param[in] parent XML Node structure, where we get the information from
  */
 qboolean B_LoadXML (mxml_node_t *parent)
 {

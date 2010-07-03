@@ -2386,7 +2386,7 @@ int AIR_GetAircraftWeaponRanges (const aircraftSlot_t *slot, int maxSlot, float 
 
 /**
  * @brief Saves an route plan of an aircraft
- * @param[out] p XML Node structure, where we write the information to
+ * @param[out] node XML Node structure, where we write the information to
  * @param[in] route Aircraft route plan
  */
 static void AIR_SaveRouteXML (mxml_node_t *node, const mapline_t *route)
@@ -2648,9 +2648,8 @@ static qboolean AIR_LoadRouteXML (mxml_node_t *p, mapline_t *route)
 
 /**
  * @brief Loads an Aircraft from the savegame
- * @param[out] craft Pointer to the aircraft
- * @param[in] base Pointer to the homebase of the aircraft. NULL means it's a UFO.
  * @param[in] p XML Node structure, where we get the information from
+ * @param[out] craft Pointer to the aircraft
  */
 static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 {
