@@ -149,8 +149,6 @@ static void CP_TerrorMissionGo (mission_t *mission)
 		return;
 	}
 
-	mission->mapDef->timesAlreadyUsed++;
-
 	nation = MAP_GetNation(mission->pos);
 
 	if (mission->ufo) {

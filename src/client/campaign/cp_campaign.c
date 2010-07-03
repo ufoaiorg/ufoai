@@ -244,6 +244,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 		if (mission->crashed) {
 			/* default map for crashsite mission is the crashsite random map assembly */
 			mission->mapDef = Com_GetMapDefinitionByID("ufocrash");
+			mission->mapDef->timesAlreadyUsed++;
 			if (!mission->mapDef)
 				Com_Error(ERR_DROP, "Could not find mapdef ufocrash");
 			return qtrue;
@@ -292,6 +293,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 	assert(i < csi.numMDs);
 
 	mission->mapDef = &csi.mds[i];
+	mission->mapDef->timesAlreadyUsed++;
 	if (cp_missiontest->integer)
 		Com_Printf("Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
 	else

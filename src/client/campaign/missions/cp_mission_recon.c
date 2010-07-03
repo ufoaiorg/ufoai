@@ -152,8 +152,6 @@ void CP_ReconMissionGroundGo (mission_t *mission)
 		return;
 	}
 
-	mission->mapDef->timesAlreadyUsed++;
-
 	nation = MAP_GetNation(mission->pos);
 	if (nation) {
 		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
