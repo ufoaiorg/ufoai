@@ -3252,6 +3252,31 @@ void B_UpdateStorageCap (base_t *base)
 }
 
 /**
+ * @brief returns the amount of antimatter stored in a base
+ * @param[in] base Pointer to the base to check
+ */
+int B_AntimatterInBase (const base_t *base)
+{
+#ifdef DEBUG
+	int i;
+	objDef_t *od;
+
+	assert(base);
+
+	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		if (!strcmp(od->id, ANTIMATTER_TECH_ID))
+			break;
+	}
+	if (i == csi.numODs)
+		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
+
+	assert(base->storage.numItems[i] == base->capacities[CAP_ANTIMATTER].cur);
+#endif
+
+	return base->capacities[CAP_ANTIMATTER].cur;
+}
+
+/**
  * @brief Manages antimatter (adding, removing) through Antimatter Storage Facility.
  * @param[in] base Pointer to the base.
  * @param[in] amount quantity of antimatter to add/remove (> 0 even if antimatter is removed)
@@ -3261,7 +3286,7 @@ void B_UpdateStorageCap (base_t *base)
  */
 void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 {
-	int i, j;
+	int i;
 	objDef_t *od;
 
 	assert(base);
@@ -3283,26 +3308,15 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
 
 	if (add) {	/* Adding. */
-		/** @todo: recheck callers and optimize */
-		if (base->capacities[CAP_ANTIMATTER].cur + amount <= base->capacities[CAP_ANTIMATTER].max) {
-			base->storage.numItems[i] += amount;
-			base->capacities[CAP_ANTIMATTER].cur += amount;
-		} else {
-			for (j = 0; j < amount; j++) {
-				if (base->capacities[CAP_ANTIMATTER].cur < base->capacities[CAP_ANTIMATTER].max) {
-					base->storage.numItems[i]++;
-					base->capacities[CAP_ANTIMATTER].cur++;
-				} else
-					break;
-			}
-		}
+		base->storage.numItems[i] += min(amount, base->capacities[CAP_ANTIMATTER].max - base->capacities[CAP_ANTIMATTER].cur);
+		base->capacities[CAP_ANTIMATTER].cur += min(amount, base->capacities[CAP_ANTIMATTER].max - base->capacities[CAP_ANTIMATTER].cur);
 	} else {	/* Removing. */
 		if (amount == 0) {
 			base->capacities[CAP_ANTIMATTER].cur = 0;
 			base->storage.numItems[i] = 0;
 		} else {
-			base->capacities[CAP_ANTIMATTER].cur -= amount;
-			base->storage.numItems[i] -= amount;
+			base->capacities[CAP_ANTIMATTER].cur -= min(amount, base->capacities[CAP_ANTIMATTER].cur);
+			base->storage.numItems[i] -= min(amount, base->capacities[CAP_ANTIMATTER].cur);
 		}
 	}
 }

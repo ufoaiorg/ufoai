@@ -72,6 +72,7 @@ typedef enum requirementType_s {
 	RS_LINK_ALIEN_DEAD,
 	RS_LINK_ALIEN_GLOBAL,
 	RS_LINK_UFO,
+	RS_LINK_ANTIMATTER,
 	MAX_RS_LINKTYPES
 } requirementType_t;
 

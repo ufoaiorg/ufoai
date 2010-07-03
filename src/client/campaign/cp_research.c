@@ -218,6 +218,10 @@ qboolean RS_RequirementsMet (const requirements_t *required_AND, const requireme
 				if (US_UFOsInStorage(req->link, NULL) < req->amount)
 					met_AND = qfalse;
 				break;
+			case RS_LINK_ANTIMATTER:
+				if (B_AntimatterInBase(base) < req->amount)
+					met_AND = qfalse;
+				break;
 			default:
 				break;
 			}
@@ -267,6 +271,9 @@ qboolean RS_RequirementsMet (const requirements_t *required_AND, const requireme
 				if (US_UFOsInStorage(req->link, NULL) >= req->amount)
 					met_OR = qtrue;
 				break;
+			case RS_LINK_ANTIMATTER:
+				if (B_AntimatterInBase(base) >= req->amount)
+					met_OR = qtrue;
 			default:
 				break;
 			}
@@ -931,6 +938,8 @@ static const char *RS_TechReqToName (requirement_t *req)
 		return "global alien count";
 	case RS_LINK_UFO:
 		return ((aircraft_t*)req->link)->id;
+	case RS_LINK_ANTIMATTER:
+		return "antimatter";
 	default:
 		return "unknown";
 	}
@@ -954,6 +963,8 @@ static const char *RS_TechLinkTypeToName (requirementType_t type)
 		return "alienglobal";
 	case RS_LINK_UFO:
 		return "ufo";
+	case RS_LINK_ANTIMATTER:
+		return "antimatter";
 	default:
 		return "unknown";
 	}
@@ -1423,6 +1434,17 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							token = Com_Parse(text);
 							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
 							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-ufo - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
+							requiredTemp->numLinks++;
+						}
+					} else if (!strcmp(token, "antimatter")) {
+						/* Defines what ufos need to be collected for this item to be researchable. */
+						if (requiredTemp->numLinks < MAX_TECHLINKS) {
+							/* Set requirement-type. */
+							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ANTIMATTER;
+							/* Set requirement-amount of item. */
+							token = Com_Parse(text);
+							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
+							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-antimatter - %i\n", requiredTemp->links[requiredTemp->numLinks].amount);
 							requiredTemp->numLinks++;
 						}
 					} else {

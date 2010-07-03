@@ -341,6 +341,7 @@ void B_BaseMenuInit(const base_t *base);
 void B_DrawBuilding(base_t* base, building_t* building);
 
 /* antimatter */
+int B_AntimatterInBase(const base_t *base);
 void B_ManageAntimatter(base_t *base, int amount, qboolean add);
 
 /* savesystem */

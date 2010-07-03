@@ -126,6 +126,12 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, const requir
 			B_AddToStorage(base, item, req->amount * amount);
 			break;
 		}
+		case RS_LINK_ANTIMATTER:
+			if (req->amount > 0)
+				B_ManageAntimatter(base, req->amount * amount, qtrue);
+			else if (req->amount < 0)
+				B_ManageAntimatter(base, req->amount * -amount, qfalse);
+			break;
 		case RS_LINK_TECH:
 		case RS_LINK_TECH_NOT:
 			break;
@@ -152,8 +158,13 @@ int PR_RequirementsMet (int amount, const requirements_t const *reqs, base_t *ba
 
 		switch (req->type) {
 		case RS_LINK_ITEM: {
-				const int items = min(amount, B_ItemInBase(req->link, base) / (req->amount) ? req->amount : 1);
+				const int items = min(amount, B_ItemInBase(req->link, base) / ((req->amount) ? req->amount : 1));
 				producibleAmount = min(producibleAmount, items);
+				break;
+			}
+		case RS_LINK_ANTIMATTER: {
+				const int am = min(amount, B_AntimatterInBase(base) / ((req->amount) ? req->amount : 1));
+				producibleAmount = min(producibleAmount, am);
 				break;
 			}
 		case RS_LINK_TECH:
