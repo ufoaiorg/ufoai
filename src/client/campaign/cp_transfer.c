@@ -130,11 +130,12 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 
 	/* Count size of all items already on the transfer list. */
 	for (i = 0; i < csi.numODs; i++) {
+		const objDef_t *object = &csi.ods[i];
 		if (td.trItemsTmp[i] > 0) {
-			if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
+			if (!strcmp(object->id, ANTIMATTER_TECH_ID))
 				amtransfer = td.trItemsTmp[i];
 			else
-				intransfer += csi.ods[i].size * td.trItemsTmp[i];
+				intransfer += object->size * td.trItemsTmp[i];
 		}
 	}
 

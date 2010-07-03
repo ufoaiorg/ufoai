@@ -558,14 +558,9 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
  */
 static void B_UpdateAntimatterCap (base_t *base)
 {
-	int i;
-
-	for (i = 0; i < csi.numODs; i++) {
-		if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID)) {
-			base->capacities[CAP_ANTIMATTER].cur = base->storage.numItems[i];
-			return;
-		}
-	}
+	objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
+	if (od != NULL)
+		base->capacities[CAP_ANTIMATTER].cur = base->storage.numItems[od->idx];
 }
 
 /**
@@ -3258,19 +3253,14 @@ void B_UpdateStorageCap (base_t *base)
 int B_AntimatterInBase (const base_t *base)
 {
 #ifdef DEBUG
-	int i;
 	objDef_t *od;
 
-	assert(base);
-
-	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		if (!strcmp(od->id, ANTIMATTER_TECH_ID))
-			break;
-	}
-	if (i == csi.numODs)
+	od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
+	if (od == NULL)
 		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
 
-	assert(base->storage.numItems[i] == base->capacities[CAP_ANTIMATTER].cur);
+	assert(base);
+	assert(base->storage.numItems[od->idx] == base->capacities[CAP_ANTIMATTER].cur);
 #endif
 
 	return base->capacities[CAP_ANTIMATTER].cur;
@@ -3286,7 +3276,6 @@ int B_AntimatterInBase (const base_t *base)
  */
 void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 {
-	int i;
 	objDef_t *od;
 
 	assert(base);
@@ -3299,24 +3288,22 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 		return;
 	}
 
-	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		if (!strcmp(od->id, ANTIMATTER_TECH_ID))
-			break;
-	}
-
-	if (i == csi.numODs)
+	od = INVSH_GetItemByIDSilent(ANTIMATTER_TECH_ID);
+	if (od == NULL)
 		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
 
 	if (add) {	/* Adding. */
-		base->storage.numItems[i] += min(amount, base->capacities[CAP_ANTIMATTER].max - base->capacities[CAP_ANTIMATTER].cur);
-		base->capacities[CAP_ANTIMATTER].cur += min(amount, base->capacities[CAP_ANTIMATTER].max - base->capacities[CAP_ANTIMATTER].cur);
+		const int amount = min(amount, base->capacities[CAP_ANTIMATTER].max - base->capacities[CAP_ANTIMATTER].cur);
+		base->storage.numItems[od->idx] += amount;
+		base->capacities[CAP_ANTIMATTER].cur += amount;
 	} else {	/* Removing. */
 		if (amount == 0) {
 			base->capacities[CAP_ANTIMATTER].cur = 0;
-			base->storage.numItems[i] = 0;
+			base->storage.numItems[od->idx] = 0;
 		} else {
-			base->capacities[CAP_ANTIMATTER].cur -= min(amount, base->capacities[CAP_ANTIMATTER].cur);
-			base->storage.numItems[i] -= min(amount, base->capacities[CAP_ANTIMATTER].cur);
+			const int amount = min(amount, base->capacities[CAP_ANTIMATTER].cur);
+			base->capacities[CAP_ANTIMATTER].cur -= amount;
+			base->storage.numItems[od->idx] -= amount;
 		}
 	}
 }
