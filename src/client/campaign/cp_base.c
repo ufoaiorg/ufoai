@@ -2928,10 +2928,12 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		b->alienInterest = mxml_GetFloat(base, SAVE_BASES_ALIENINTEREST, 0.0);
 
 		aircraftIdxInBase = mxml_GetInt(base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIRCRAFT_INBASE_INVALID);
-		if (aircraftIdxInBase != AIRCRAFT_INBASE_INVALID)
-			b->aircraftCurrent = AIR_GetAircraftFromBaseByIDX(b, aircraftIdxInBase);
-		else 
+		if (aircraftIdxInBase != AIRCRAFT_INBASE_INVALID) {
+			/* aircraft are not yet loaded! */
+			b->aircraftCurrent = &b->aircraft[aircraftIdxInBase];
+		} else {
 			b->aircraftCurrent = NULL;
+		}
 
 		/* building space*/
 		node = mxml_GetNode(base, SAVE_BASES_BUILDINGSPACE);
