@@ -225,6 +225,22 @@ static qboolean AI_HideNeeded (const edict_t *ent)
 }
 
 /**
+ * @brief Returns useable item from the given inventory list. That means that
+ * the 'weapon' has ammunition left or must not be reloaded.
+ * @param ic The inventory to search a useable weapon in.
+ * @return Ready to fire weapon.
+ */
+static inline const item_t* AI_GetItemFromInventory (const invList_t *ic)
+{
+	if (ic != NULL) {
+		const item_t *item = &ic->item;
+		if (item->m && item->t->weapon && (!item->t->reload || item->a > 0))
+			return item;
+	}
+	return NULL;
+}
+
+/**
  * Returns the item of the currently chosen shoot type of the ai actor.
  * @param shootType The current selected shoot type
  * @param ent The ai actor
@@ -241,20 +257,10 @@ const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edict_t *en
 	 * corresponding hand slot of the inventory. */
 	if (IS_SHOT_RIGHT(shootType)) {
 		const invList_t *ic = RIGHT(ent);
-		if (ic != NULL) {
-			const item_t *item = &ic->item;
-			if (item->m && item->t->weapon && (!item->t->reload || item->a > 0))
-				return item;
-		}
-		return NULL;
+		return AI_GetItemFromInventory(ic);
 	} else if (IS_SHOT_LEFT(shootType)) {
 		const invList_t *ic = LEFT(ent);
-		if (ic != NULL) {
-			const item_t *item = &ic->item;
-			if (item->m && item->t->weapon && (!item->t->reload || item->a > 0))
-				return item;
-		}
-		return NULL;
+		return AI_GetItemFromInventory(ic);
 	} else if (IS_SHOT_HEADGEAR(shootType)) {
 		return NULL;
 	}
