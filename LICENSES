@@ -3020,6 +3020,7 @@ base/sound/aliens/tamancall03.ogg | Creative Commons Attribution-Share Alike 3.0
 base/sound/aliens/tamancall04.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/aliens/tamancall05.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/ambience/alien_engine.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/ambience/alienatmo.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/ambience/bloodspiderwalk.ogg | Creative Commons Attribution 3.0 | Gren | http://wiki.creativecommons.org/File:BloodSpiderWalk.ogg
 base/sound/ambience/city.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/ambience/creak.ogg | GNU General Public License 2.0 | Karen Rei Pease
@@ -3110,7 +3111,7 @@ base/sound/footsteps/metal3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/metal4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/sand.ogg | GNU General Public License 2.0 | Al Riddoch | Worldforge media repository
 base/sound/footsteps/sand2.ogg | GNU General Public License 2.0 |  | sand.wav by Al Riddoch (Worldforge media repository)
-base/sound/footsteps/snow1.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann | http://freesound.iua.upf.edu/samplesViewSingle.php?id=30833
+base/sound/footsteps/snow1.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/footsteps/snow2.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann | http://svn.wildfiregames.com/public/ps/trunk/binaries/data/mods/public/audio/actor/singlesteps/fs_snow_15.ogg
 base/sound/footsteps/snow3.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/footsteps/snow4.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
@@ -3157,6 +3158,7 @@ base/sound/footsteps/wood4.ogg | Creative Commons Attribution-Share Alike 2.0 | 
 base/sound/geoscape/alarm.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/geoscape/alien-activity.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/geoscape/attack.ogg | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/build-place.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/geoscape/info.ogg | GNU General Public License 2.0 | BlakeD
 base/sound/geoscape/mail.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/geoscape/newmission.ogg | GNU General Public License 2.0 | Karen Rei Pease
@@ -3168,6 +3170,8 @@ base/sound/gui/beep1.ogg | Creative Commons Attribution-Share Alike 2.0 | Christ
 base/sound/gui/beep2.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/gui/click1.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/gui/click2.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/gui/click3.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
+base/sound/gui/click4.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/gui/item-drag.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/gui/item-drop.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/impact/impact-dirt1.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
@@ -3198,6 +3202,7 @@ base/sound/misc/breakwood04.ogg | Public Domain | Independent.nu | http://openga
 base/sound/misc/breakwood05.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
 base/sound/misc/breakwood06.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
 base/sound/misc/breakwood07.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
+base/sound/misc/electro.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/misc/lobbyprivmsg.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/misc/popup.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/misc/roundstart.ogg | GNU General Public License 2.0 | Karen Rei Pease
@@ -3215,6 +3220,9 @@ base/sound/weapons/bloodspider.ogg | GNU General Public License 2.0 or later | P
 base/sound/weapons/bolter2.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/boltercannonade.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/brass1.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
+base/sound/weapons/bullet-bolter.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
+base/sound/weapons/bullet-chaingun.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
+base/sound/weapons/bullet-heavybolter.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/bullet-hmg-1.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/bullet-hmg-2.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/bullet-hmg-3.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
@@ -3224,6 +3232,7 @@ base/sound/weapons/bullet-pistol.ogg | Creative Commons Attribution-Share Alike 
 base/sound/weapons/bullet-pistol2.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/bullet-rifle.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/bullet-shotgun.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/weapons/bullet-shotgunmini.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/bullet-smg.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/bullet-sniper.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/bullet-sniperbig.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
@@ -3235,9 +3244,11 @@ base/sound/weapons/expire.ogg | GNU General Public License 2.0 or later | Nexuiz
 base/sound/weapons/explode.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/weapons/explosion-flashbang.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/explosion-grenade.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/weapons/explosion-rocket.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/explosion-smoke.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/explosion.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/fireexplosion.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/grenade-launcher.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/grenade-pin.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/grenade-smoke.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/grenade-throw.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
@@ -3255,6 +3266,7 @@ base/sound/weapons/laser-huge.ogg | Creative Commons Attribution-Share Alike 2.0
 base/sound/weapons/laser-large.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/laser-medium.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/laser-small.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/weapons/laser-sniper.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/machinegun.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/machinepistol.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/medikit.ogg | GNU General Public License 2.0 | Alex Parker
@@ -3279,6 +3291,7 @@ base/sound/weapons/reload-shotgun.ogg | Creative Commons Attribution-Share Alike
 base/sound/weapons/reload-smg.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/reload-sniper.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/riotshotgun.ogg | GNU General Public License 2.0 | Alex Parker
+base/sound/weapons/rocket-human.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/smg2.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/smokeexplosion.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/sniperrifle.ogg | GNU General Public License 2.0 | Alex Parker
