@@ -141,8 +141,6 @@ void SV_DropClient(client_t *drop, const char *message);
 
 int SV_CountPlayers(void);
 
-int SV_ModelIndex(const char *name);
-
 void SV_InitOperatorCommands(void);
 
 void SV_UserinfoChanged(client_t *cl);

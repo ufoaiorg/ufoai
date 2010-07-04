@@ -34,39 +34,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 server_static_t svs;			/* persistant server info */
 server_t sv;					/* local server */
 
-static int SV_FindIndex (const char *name, int start, int max, qboolean create)
+/**
+ * @brief Get the map title for a given map
+ * @note the title string must be translated client side
+ * @return Never NULL - mapname or maptitle (if defined in assembly)
+ */
+static const char* SV_GetMapTitle (const mapInfo_t *map, const char* const mapname)
 {
-	int i;
+	assert(mapname);
 
-	if (!name || !name[0])
-		return 0;
-
-	for (i = 1; i < max && sv.configstrings[start + i][0]; i++)
-		if (!strcmp(sv.configstrings[start + i], name))
-			return i;
-
-	if (!create)
-		return 0;
-
-	if (i == max)
-		Com_Error(ERR_DROP, "*Index: overflow '%s' start: %i, max: %i", name, start, max);
-
-	Q_strncpyz(sv.configstrings[start + i], name, sizeof(sv.configstrings[i]));
-
-	if (Com_ServerState() != ss_loading) {	/* send the update to everyone */
-		struct dbuffer *msg = new_dbuffer();
-		NET_WriteByte(msg, svc_configstring);
-		NET_WriteShort(msg, start + i);
-		NET_WriteString(msg, name);
-		SV_Multicast(~0, msg);
+	if (mapname[0] == '+') {
+		const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
+		if (mAsm && mAsm->title[0]) {
+			/* return the assembly title itself - must be translated client side */
+			if (mAsm->title[0] == '_')
+				return mAsm->title + 1;
+			else {
+				Com_Printf("The assembly title '%s' is not marked as translatable\n", mAsm->title);
+				return mAsm->title;
+			}
+		}
 	}
-
-	return i;
-}
-
-int SV_ModelIndex (const char *name)
-{
-	return SV_FindIndex(name, CS_MODELS, MAX_MODELS, qtrue);
+	return mapname;
 }
 
 /**

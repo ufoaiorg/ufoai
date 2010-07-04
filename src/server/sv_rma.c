@@ -1163,27 +1163,3 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	assert(map);
 	return map;
 }
-
-/**
- * @brief Get the map title for a given map
- * @note the title string must be translated client side
- * @return Never NULL - mapname or maptitle (if defined in assembly)
- */
-const char* SV_GetMapTitle (const mapInfo_t *map, const char* const mapname)
-{
-	assert(mapname);
-
-	if (mapname[0] == '+') {
-		const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
-		if (mAsm && mAsm->title[0]) {
-			/* return the assembly title itself - must be translated client side */
-			if (mAsm->title[0] == '_')
-				return mAsm->title + 1;
-			else {
-				Com_Printf("The assembly title '%s' is not marked as translatable\n", mAsm->title);
-				return mAsm->title;
-			}
-		}
-	}
-	return mapname;
-}

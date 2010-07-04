@@ -195,7 +195,7 @@ static int numPtlCmds;
 
 /** @todo check pcmdData overflow */
 static byte pcmdData[MAX_PCMD_DATA];
-static byte *pcmdPos;
+static byte *pcmdPos = pcmdData;
 
 static const int RSTACK = -(MAX_PCMD_DATA);
 
@@ -325,7 +325,6 @@ void PTL_InitStartup (void)
 	numPtlDefs = 0;
 
 	r_numParticlesArt = 0;
-	pcmdPos = pcmdData;
 }
 
 /**

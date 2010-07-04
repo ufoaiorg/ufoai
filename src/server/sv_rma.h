@@ -114,7 +114,6 @@ typedef struct mapInfo_s {
 	int mAsm;	/**< the index of the selected assembly */
 } mapInfo_t;
 
-const char* SV_GetMapTitle(const mapInfo_t *map, const char* const mapname);
 mapInfo_t* SV_AssembleMap(const char *name, const char *assembly, char *asmMap, char *asmPos);
 
 #endif /* SV_RMA_H_ */

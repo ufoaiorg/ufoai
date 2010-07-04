@@ -1102,6 +1102,13 @@ void CL_SlowFrame (int now, void *data)
 	HUD_Update();
 }
 
+static void CL_InitMemPools (void)
+{
+	cl_genericPool = Mem_CreatePool("Client: Generic");
+	cl_soundSysPool = Mem_CreatePool("Client: Sound system");
+	cl_ircSysPool = Mem_CreatePool("Client: IRC system");
+}
+
 /**
  * @sa CL_Shutdown
  * @sa CL_InitAfter
@@ -1132,9 +1139,7 @@ void CL_Init (void)
 	/* load language file */
 	textdomain(TEXT_DOMAIN);
 
-	cl_genericPool = Mem_CreatePool("Client: Generic");
-	cl_soundSysPool = Mem_CreatePool("Client: Sound system");
-	cl_ircSysPool = Mem_CreatePool("Client: IRC system");
+	CL_InitMemPools();
 
 	/* all archived variables will now be loaded */
 	Con_Init();
