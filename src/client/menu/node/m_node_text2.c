@@ -232,14 +232,6 @@ static void MN_TextNodeDrawText (menuNode_t* node, const linkedList_t* list, qbo
 			}
 		}
 
-		/* highlighting */
-		if (fullSizeY == EXTRADATA(node).super.textLineSelected && EXTRADATA(node).super.textLineSelected >= 0) {
-			/* Draw current line in "selected" color (if the linenumber is stored). */
-			R_Color(node->selectedColor);
-		} else {
-			R_Color(node->color);
-		}
-
 		/* is it a white line? */
 		if (!cur) {
 			fullSizeY++;
