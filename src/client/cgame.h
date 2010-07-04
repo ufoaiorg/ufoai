@@ -84,4 +84,6 @@ typedef struct {
 	const char *(IMPORT *Cmd_Args) (void);		/**< concatenation of all argv >= 1 */
 } cgame_import_t;
 
+cgame_export_t *GetCGameAPI(cgame_import_t *import);
+
 #endif

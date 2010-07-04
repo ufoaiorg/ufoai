@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_team.h"
 #include "../menu/m_main.h"
-#include "../renderer/r_draw.h"
+#include "../renderer/r_geoscape.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
 #include "cp_ufo.h"
@@ -782,7 +782,7 @@ qboolean CP_CheckNewMissionDetectedOnGeoscape (void)
 			CP_MissionAddToGeoscape(mission, qtrue);
 
 			/* maybe radar is not activated yet (as ufo wasn't detected before) */
-			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
+			if (!(cl_geoscape_overlay->integer & OVERLAY_RADAR))
 				MAP_SetOverlay("radar");
 
 			/* if mission has a UFO, detect the UFO when it takes off */

@@ -263,6 +263,7 @@ CLIENT_SRCS = \
 	client/renderer/r_font.c \
 	client/renderer/r_flare.c \
 	client/renderer/r_framebuffer.c \
+	client/renderer/r_geoscape.c \
 	client/renderer/r_image.c \
 	client/renderer/r_light.c \
 	client/renderer/r_lightmap.c \

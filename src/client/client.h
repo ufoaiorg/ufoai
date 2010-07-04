@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CLIENT_H
 #define CLIENT_CLIENT_H
 
+#include "cl_shared.h"
 #include "cl_renderer.h"
 #include "cl_video.h"
 #include "sound/s_main.h"
@@ -37,18 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_camera.h"
 #include "battlescape/cl_localentity.h"
 #include "battlescape/cl_battlescape.h"
-
-/* Macros for faster access to the inventory-container. */
-#define CONTAINER(e, containerID) ((e)->i.c[(containerID)])
-#define ARMOUR(e) (CONTAINER(e, csi.idArmour))
-#define RIGHT(e) (CONTAINER(e, csi.idRight))
-#define LEFT(e)  (CONTAINER(e, csi.idLeft))
-#define FLOOR(e) (CONTAINER(e, csi.idFloor))
-#define HEADGEAR(e) (CONTAINER(e, csi.idHeadgear))
-#define EXTENSION(e) (CONTAINER(e, csi.idExtension))
-#define HOLSTER(e) (CONTAINER(e, csi.idHolster))
-
-#define INVDEF(containerID) (&csi.ids[(containerID)])
 
 typedef enum {
 	ca_uninitialized,
@@ -127,16 +116,6 @@ extern struct memPool_s *cl_ircSysPool;
 extern struct memPool_s *cl_soundSysPool;
 
 /*============================================================================= */
-
-/* i18n support via gettext */
-#include <libintl.h>
-
-/* the used textdomain for gettext */
-#define TEXT_DOMAIN "ufoai"
-#include <locale.h>
-#define _(String) gettext(String)
-#define gettext_noop(String) String
-#define N_(String) gettext_noop (String)
 
 /* cvars */
 extern cvar_t *cl_fps;

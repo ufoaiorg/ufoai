@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_lightmap.h"
 #include "r_main.h"
 #include "r_overlay.h"
+#include "r_geoscape.h"
 #include "r_misc.h"
 #include "r_error.h"
 #include "../../common/tracing.h"
@@ -90,7 +91,6 @@ cvar_t *r_dynamic_lights;
 cvar_t *r_programs;
 cvar_t *r_postprocess;
 cvar_t *r_maxlightmap;
-cvar_t *r_geoscape_overlay;
 cvar_t *r_shownormals;
 cvar_t *r_bumpmap;
 cvar_t *r_specular;
@@ -453,7 +453,6 @@ static void R_RegisterSystemVars (void)
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 	r_threads = Cvar_Get("r_threads", "0", CVAR_ARCHIVE, "Activate threads for the renderer");
 
-	r_geoscape_overlay = Cvar_Get("r_geoscape_overlay", "0", 0, "Geoscape overlays - Bitmask");
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");

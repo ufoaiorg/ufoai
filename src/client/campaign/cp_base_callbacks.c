@@ -23,11 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../cl_game.h"
+#include "../cl_shared.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
-#include "../renderer/r_draw.h"
+#include "../renderer/r_geoscape.h"
 #include "cp_campaign.h"
 #include "cp_base_callbacks.h"
 #include "cp_base.h"
@@ -228,7 +227,7 @@ static void B_BuildBase_f (void)
 		B_UpdateBaseCount();
 		B_SelectBase(base);
 	} else {
-		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+		if (cl_geoscape_overlay->integer & OVERLAY_RADAR)
 			MAP_SetOverlay("radar");
 		if (ccs.mapAction == MA_NEWBASE)
 			ccs.mapAction = MA_NONE;
@@ -814,7 +813,7 @@ static void BaseSummary_SelectBase_f (void)
  */
 static void B_MakeBaseMapShot_f (void)
 {
-	if (cls.state != ca_active) {
+	if (!Com_ServerState()) {
 		Com_Printf("Load the base map before you try to use this function\n");
 		return;
 	}
@@ -825,7 +824,7 @@ static void B_MakeBaseMapShot_f (void)
 	Cvar_SetValue("cl_worldlevel", 1);
 	MN_PushWindow("nohud", NULL);
 	/* hide any active console */
-	Key_SetDest(key_game);
+	Cmd_ExecuteString("toggleconsole");
 	Cmd_ExecuteString("r_screenshot tga");
 }
 

@@ -25,8 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_screen.h"
-#include "../renderer/r_draw.h"
 #include "../renderer/r_overlay.h"
+#include "../renderer/r_draw.h"
+#include "../renderer/r_geoscape.h"
 #include "../menu/m_nodes.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
@@ -216,7 +217,7 @@ void RADAR_DeactivateRadarOverlay (void)
 			return;
 	}
 
-	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+	if (cl_geoscape_overlay->integer & OVERLAY_RADAR)
 		MAP_SetOverlay("radar");
 }
 

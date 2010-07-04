@@ -25,8 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_screen.h"
-#include "../renderer/r_draw.h"
 #include "../renderer/r_framebuffer.h"
+#include "../renderer/r_draw.h"
+#include "../renderer/r_geoscape.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
 #include "../menu/m_font.h"
@@ -47,6 +48,8 @@ cvar_t *cl_3dmap;				/**< 3D geoscape or flat geoscape */
 static cvar_t *cl_3dmapAmbient;
 cvar_t *cl_mapzoommax;
 cvar_t *cl_mapzoommin;
+cvar_t *cl_geoscape_overlay;
+
 #ifdef DEBUG
 static cvar_t *debug_showInterest;
 #endif
@@ -1455,7 +1458,7 @@ static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installati
 	}
 
 	/* Draw installation radar (only the "wire" style part) */
-	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+	if (cl_geoscape_overlay->integer & OVERLAY_RADAR)
 		RADAR_DrawInMap(node, &installation->radar, installation->pos);
 
 	/* Draw installation */
@@ -1503,7 +1506,7 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
 	}
 
 	/* Draw base radar (only the "wire" style part) */
-	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+	if (cl_geoscape_overlay->integer & OVERLAY_RADAR)
 		RADAR_DrawInMap(node, &base->radar, base->pos);
 
 	/* Draw base */
@@ -1540,7 +1543,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 	float angle;
 
 	/* Draw aircraft radar (only the "wire" style part) */
-	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+	if (cl_geoscape_overlay->integer & OVERLAY_RADAR)
 		RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);
 
 	/* Draw only the bigger weapon range on geoscape: more detail will be given on airfight map */
@@ -1918,7 +1921,7 @@ void MAP_DrawMap (const menuNode_t* node)
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
 		R_Draw3DGlobe(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1],
-				ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, ccs.curCampaign->map, disableSolarRender, cl_3dmapAmbient->value);
+				ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, ccs.curCampaign->map, disableSolarRender, cl_3dmapAmbient->value, cl_geoscape_overlay->integer);
 
 		MAP_DrawMapMarkers(node);
 
@@ -1930,7 +1933,7 @@ void MAP_DrawMap (const menuNode_t* node)
 		if (smoothRotation)
 			MAP_SmoothTranslate();
 		R_DrawFlatGeoscape(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], (float) ccs.date.sec / SECONDS_PER_DAY, q,
-			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, ccs.curCampaign->map);
+			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, ccs.curCampaign->map, cl_geoscape_overlay->integer);
 		MAP_DrawMapMarkers(node);
 	}
 
@@ -2613,10 +2616,10 @@ void MAP_Scroll_f (void)
 void MAP_SetOverlay (const char *overlayID)
 {
 	if (!strcmp(overlayID, "nations")) {
-		if (r_geoscape_overlay->integer & OVERLAY_NATION)
-			r_geoscape_overlay->integer ^= OVERLAY_NATION;
+		if (cl_geoscape_overlay->integer & OVERLAY_NATION)
+			cl_geoscape_overlay->integer ^= OVERLAY_NATION;
 		else
-			r_geoscape_overlay->integer |= OVERLAY_NATION;
+			cl_geoscape_overlay->integer |= OVERLAY_NATION;
 	}
 
 	/* do nothing while the first base/installation is not build */
@@ -2624,15 +2627,15 @@ void MAP_SetOverlay (const char *overlayID)
 		return;
 
 	if (!strcmp(overlayID, "xvi")) {
-		if (r_geoscape_overlay->integer & OVERLAY_XVI)
-			r_geoscape_overlay->integer ^= OVERLAY_XVI;
+		if (cl_geoscape_overlay->integer & OVERLAY_XVI)
+			cl_geoscape_overlay->integer ^= OVERLAY_XVI;
 		else
-			r_geoscape_overlay->integer |= OVERLAY_XVI;
+			cl_geoscape_overlay->integer |= OVERLAY_XVI;
 	} else if (!strcmp(overlayID, "radar")) {
-		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
-			r_geoscape_overlay->integer ^= OVERLAY_RADAR;
+		if (cl_geoscape_overlay->integer & OVERLAY_RADAR)
+			cl_geoscape_overlay->integer ^= OVERLAY_RADAR;
 		else {
-			r_geoscape_overlay->integer |= OVERLAY_RADAR;
+			cl_geoscape_overlay->integer |= OVERLAY_RADAR;
 			RADAR_UpdateWholeRadarOverlay();
 		}
 	}
@@ -2655,7 +2658,7 @@ static void MAP_SetOverlay_f (void)
 
 	/* save last decision player took on radar display, in order to be able to restore it later */
 	if (!strcmp(arg, "radar"))
-		radarOverlayWasSet = (r_geoscape_overlay->integer & OVERLAY_RADAR);
+		radarOverlayWasSet = (cl_geoscape_overlay->integer & OVERLAY_RADAR);
 }
 
 /**
@@ -2665,19 +2668,19 @@ static void MAP_SetOverlay_f (void)
 void MAP_DeactivateOverlay (const char *overlayID)
 {
 	if (!strcmp(overlayID, "nations")) {
-		if (r_geoscape_overlay->integer & OVERLAY_NATION)
+		if (cl_geoscape_overlay->integer & OVERLAY_NATION)
 			MAP_SetOverlay("nations");
 		else
 			return;
 	}
 
 	if (!strcmp(overlayID, "xvi")) {
-		if (r_geoscape_overlay->integer & OVERLAY_XVI)
+		if (cl_geoscape_overlay->integer & OVERLAY_XVI)
 			MAP_SetOverlay("xvi");
 		else
 			return;
 	} else if (!strcmp(overlayID, "radar")) {
-		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+		if (cl_geoscape_overlay->integer & OVERLAY_RADAR)
 			MAP_SetOverlay("radar");
 		else
 			return;
@@ -2713,6 +2716,7 @@ void MAP_InitStartup (void)
 	Cmd_AddCommand("map_selectobject", MAP_SelectObject_f, "Select an object an center on it");
 	Cmd_AddCommand("mn_mapaction_reset", MAP_ResetAction, NULL);
 
+	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, "Geoscape overlays - Bitmask");
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
 	cl_3dmapAmbient = Cvar_Get("cl_3dmapAmbient", "0", CVAR_ARCHIVE, "3D geoscape ambient lighting factor");
 	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");

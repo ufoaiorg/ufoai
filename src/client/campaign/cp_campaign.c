@@ -799,9 +799,9 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	ccs.zoom = mxml_GetFloat(mapNode, SAVE_CAMPAIGN_ZOOM, 0.0);
 	/* restore the overlay.
 	* do not use Cvar_SetValue, because this function check if value->string are equal to skip calculation
-	* and we never set r_geoscape_overlay->string in game: r_geoscape_overlay won't be updated if the loaded
-	* value is 0 (and that's a problem if you're loading a game when r_geoscape_overlay is set to another value */
-	r_geoscape_overlay->integer = mxml_GetInt(mapNode, SAVE_CAMPAIGN_R_GEOSCAPE_OVERLAY, 0);
+	* and we never set r_geoscape_overlay->string in game: cl_geoscape_overlay won't be updated if the loaded
+	* value is 0 (and that's a problem if you're loading a game when cl_geoscape_overlay is set to another value */
+	cl_geoscape_overlay->integer = mxml_GetInt(mapNode, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, 0);
 	radarOverlayWasSet = mxml_GetBool(mapNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, qfalse);
  	ccs.XVIShowMap = mxml_GetBool(mapNode, SAVE_CAMPAIGN_XVISHOWMAP, qfalse);
 
@@ -912,7 +912,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	mxml_AddFloat(map, SAVE_CAMPAIGN_ANGLES0, ccs.angles[0]);
 	mxml_AddFloat(map, SAVE_CAMPAIGN_ANGLES1, ccs.angles[1]);
 	mxml_AddFloat(map, SAVE_CAMPAIGN_ZOOM, ccs.zoom);
-	mxml_AddShort(map, SAVE_CAMPAIGN_R_GEOSCAPE_OVERLAY, r_geoscape_overlay->integer);
+	mxml_AddShort(map, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, cl_geoscape_overlay->integer);
 	mxml_AddBool(map, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
 	mxml_AddBool(map, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
 
@@ -1686,7 +1686,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 void CP_CampaignExit (void)
 {
 	if (GAME_CP_IsRunning()) {
-		r_geoscape_overlay->integer = 0;
+		cl_geoscape_overlay->integer = 0;
 		/* singleplayer commands are no longer available */
 		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
 		CP_RemoveCampaignCommands();

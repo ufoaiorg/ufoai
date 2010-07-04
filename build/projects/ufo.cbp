@@ -1192,6 +1192,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/renderer/r_overlay.h" />
+		<Unit filename="../../src/client/renderer/r_geoscape.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/renderer/r_geoscape.h" />
 		<Unit filename="../../src/client/renderer/r_particle.c">
 			<Option compilerVar="CC" />
 		</Unit>

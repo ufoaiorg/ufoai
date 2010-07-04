@@ -24,14 +24,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "../client.h"
+#include "../cl_shared.h"
 #include "../cl_inventory.h"
 #include "../cl_game.h"
 #include "../cl_team.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
 #include "../mxml/mxml_ufoai.h"
-#include "../renderer/r_draw.h"
+#include "../renderer/r_geoscape.h"
 #include "../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
@@ -1984,7 +1984,7 @@ void B_SelectBase (const base_t *base)
 
 		if (ccs.numBases < MAX_BASES) {
 			/* show radar overlay (if not already displayed) */
-			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
+			if (!(cl_geoscape_overlay->integer & OVERLAY_RADAR))
 				MAP_SetOverlay("radar");
 			ccs.mapAction = MA_NEWBASE;
 		} else {

@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../renderer/r_draw.h"
+#include "../renderer/r_geoscape.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
 #include "cp_ufo.h"
@@ -682,7 +682,7 @@ void UFO_DetectNewUFO (aircraft_t *ufocraft)
 	ufocraft->lastSpotted = ccs.date;
 
 	/* If this is the first UFO on geoscape, activate radar */
-	if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
+	if (!(cl_geoscape_overlay->integer & OVERLAY_RADAR))
 		MAP_SetOverlay("radar");
 
 	MAP_UpdateGeoscapeDock();

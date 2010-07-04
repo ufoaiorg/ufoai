@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CAMPAIGN_ANGLES0 "angles0"
 #define SAVE_CAMPAIGN_ANGLES1 "angles1"
 #define SAVE_CAMPAIGN_ZOOM "zoom"
-#define SAVE_CAMPAIGN_R_GEOSCAPE_OVERLAY "r_geoscape_overlay"
+#define SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY "r_geoscape_overlay"
 #define SAVE_CAMPAIGN_RADAROVERLAYWASSET "radarOverlayWasSet"
 #define SAVE_CAMPAIGN_XVISHOWMAP "XVIShowmap"
 
