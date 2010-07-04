@@ -26,6 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
+#ifdef DEBUG
+#include "../cl_ugv.h"
+#endif
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
 #include "../menu/m_data.h"
@@ -1750,7 +1753,7 @@ static void TR_ListTransfers_f (void)
 					if (!employee)
 						continue;
 					if (employee->ugv) {
-						/* @todo: improve ugv listing when they're implemented */
+						/** @todo: improve ugv listing when they're implemented */
 						Com_Printf("......ugv: %s [idx: %i]\n", employee->ugv->id, employee->idx);
 					} else {
 						Com_Printf("......%s (%s) / %s [idx: %i ucn: %i]\n", employee->chr.name,
