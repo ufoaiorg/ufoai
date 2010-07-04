@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../menu/m_main.h"
 #include "cp_campaign.h"
 #include "cp_ufo.h"
 #include "cp_map.h"

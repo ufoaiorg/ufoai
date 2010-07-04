@@ -3293,17 +3293,17 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
 
 	if (add) {	/* Adding. */
-		const int amount = min(amount, base->capacities[CAP_ANTIMATTER].max - base->capacities[CAP_ANTIMATTER].cur);
-		base->storage.numItems[od->idx] += amount;
-		base->capacities[CAP_ANTIMATTER].cur += amount;
+		const int a = min(amount, base->capacities[CAP_ANTIMATTER].max - base->capacities[CAP_ANTIMATTER].cur);
+		base->storage.numItems[od->idx] += a;
+		base->capacities[CAP_ANTIMATTER].cur += a;
 	} else {	/* Removing. */
 		if (amount == 0) {
 			base->capacities[CAP_ANTIMATTER].cur = 0;
 			base->storage.numItems[od->idx] = 0;
 		} else {
-			const int amount = min(amount, base->capacities[CAP_ANTIMATTER].cur);
-			base->capacities[CAP_ANTIMATTER].cur -= amount;
-			base->storage.numItems[od->idx] -= amount;
+			const int a = min(amount, base->capacities[CAP_ANTIMATTER].cur);
+			base->capacities[CAP_ANTIMATTER].cur -= a;
+			base->storage.numItems[od->idx] -= a;
 		}
 	}
 }
