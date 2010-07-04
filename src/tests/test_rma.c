@@ -25,9 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "CUnit/Basic.h"
 #include "test_rma.h"
 #include "test_shared.h"
+#include "../server/sv_rma.h"
 
-#include "../server/sv_rma.c"
-#include "../server/sv_init.c"
+cvar_t *sv_dumpmapassembly;
+cvar_t *sv_threads;
 
 /**
  * The suite initialization function.

@@ -265,6 +265,12 @@
 		<Unit filename="..\..\src\server\sv_user.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\server\sv_rma.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_init.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\server\sv_world.c">
 			<Option compilerVar="CC" />
 		</Unit>
