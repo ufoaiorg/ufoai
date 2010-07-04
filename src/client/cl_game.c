@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "cl_game.h"
+#include "cgame.h"
 #include "battlescape/cl_localentity.h"
 #include "menu/m_main.h"
 #include "menu/m_nodes.h"
@@ -35,62 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_parse.h"
 
 static invList_t invList[MAX_INVLIST];
-
-typedef struct {
-	const char *name;
-	const char *menu;
-	int gametype;
-	void (EXPORT *Init) (void);
-	void (EXPORT *Shutdown) (void);
-	/** soldier spawn functions may differ between the different gametypes */
-	qboolean (EXPORT *Spawn) (void);
-	/** each gametype can handle the current team in a different way */
-	int (EXPORT *GetTeam) (void);
-	/** some gametypes only support special maps */
-	const mapDef_t* (EXPORT *MapInfo) (int step);
-	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */
-	void (EXPORT *Results) (struct dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
-	/** check whether the given item is usable in the current game mode */
-	qboolean (EXPORT *IsItemUseable) (const objDef_t *od);
-	/** shows item info if not resolvable via objDef_t */
-	void (EXPORT *DisplayItemInfo) (menuNode_t *node, const char *string);
-	/** returns the equipment definition the game mode is using */
-	equipDef_t* (EXPORT *GetEquipmentDefinition) (void);
-	/** update character display values for game type dependent stuff */
-	void (EXPORT *UpdateCharacterValues) (const character_t *chr);
-	/** checks whether the given team is known in the particular gamemode */
-	qboolean (EXPORT *IsTeamKnown) (const teamDef_t *teamDef);
-	/** called on errors */
-	void (EXPORT *Drop) (void);
-	/** called after the team spawn messages where send, can e.g. be used to set initial actor states */
-	void (EXPORT *InitializeBattlescape) (const chrList_t *team);
-	/** callback that is executed every frame */
-	void (EXPORT *RunFrame) (void);
-	/** if you want to display a different model for the given object in your game mode, implement this function */
-	const char* (EXPORT *GetModelForItem) (const objDef_t*od, menuModel_t** menuModel);
-} cgame_export_t;
-
-/** @todo define the import interface */
-typedef struct {
-	csi_t *csi;
-
-	void (IMPORT *MN_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
-
-	/* filesystem functions */
-	const char *(IMPORT *FS_Gamedir) (void);
-	int (IMPORT *FS_LoadFile) (const char *path, byte **buffer);
-	void (IMPORT *FS_FreeFile) (void *buffer);
-
-	/* console variable interaction */
-	cvar_t *(IMPORT *Cvar_Get) (const char *varName, const char *value, int flags, const char* desc);
-	cvar_t *(IMPORT *Cvar_Set) (const char *varName, const char *value);
-	const char *(IMPORT *Cvar_String) (const char *varName);
-
-	/* ClientCommand and ServerCommand parameter access */
-	int (IMPORT *Cmd_Argc) (void);
-	const char *(IMPORT *Cmd_Argv) (int n);
-	const char *(IMPORT *Cmd_Args) (void);		/**< concatenation of all argv >= 1 */
-} cgame_import_t;
 
 static const cgame_export_t gameTypeList[] = {
 	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL, NULL},
@@ -750,9 +695,12 @@ const char* GAME_GetModelForItem (const objDef_t *od, menuModel_t** menuModel)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list && list->GetModelForItem != NULL) {
-		const char *model = list->GetModelForItem(od, menuModel);
-		if (model != NULL)
+		const char *model = list->GetModelForItem(od);
+		if (model != NULL) {
+			if (menuModel != NULL)
+				*menuModel = MN_GetMenuModel(model);
 			return model;
+		}
 	}
 
 	if (menuModel != NULL)
