@@ -25,30 +25,30 @@
 #define R_FRAMEBUFFER_H_
 
 typedef struct {
-	GLint x;
-	GLint y;
-	GLsizei width;
-	GLsizei height;
+	int x;
+	int y;
+	int width;
+	int height;
 } r_viewport_t;
 
 typedef struct {
-	GLsizei width;
-	GLsizei height;
-	GLfloat clearColor[4];
+	int width;
+	int height;
+	vec4_t clearColor;
 	r_viewport_t viewport;
-	GLenum pixelFormat;
-	GLenum byteFormat;
-	GLuint depth;
-	GLuint fbo;
-	GLsizei nTextures;
-	GLuint *textures;
+	int pixelFormat;
+	int byteFormat;
+	unsigned int depth;
+	unsigned int fbo;
+	int nTextures;
+	unsigned int *textures;
 } r_framebuffer_t;
 
 
 void R_InitFBObjects(void);
 void R_ShutdownFBObjects(void);
 
-r_framebuffer_t* R_CreateFramebuffer(int width, int height, int ntextures, qboolean depth, qboolean halfFloat, GLenum *filters);
+r_framebuffer_t* R_CreateFramebuffer(int width, int height, int ntextures, qboolean depth, qboolean halfFloat, unsigned int *filters);
 void R_DeleteFBObject(r_framebuffer_t *buf);
 
 void R_SetupViewport(r_framebuffer_t *buf, int x, int y, int width, int height);
@@ -56,7 +56,7 @@ void R_UseViewport(const r_framebuffer_t *buf);
 
 void R_UseFramebuffer(const r_framebuffer_t *buf);
 void R_DrawBuffers(int n);
-void R_BindColorAttachments(int n, GLenum *Attachments);
+void R_BindColorAttachments(int n, unsigned int *attachments);
 qboolean R_EnableRenderbuffer(qboolean enable);
 qboolean R_RenderbufferEnabled(void);
 

@@ -30,11 +30,6 @@ typedef struct {
 	char cinfo[MAX_VAR];
 } clientinfo_t;
 
-typedef struct chr_list_s {
-	character_t* chr[MAX_ACTIVETEAM];
-	int num;	/* Number of entries */
-} chrList_t;
-
 /**
  * @brief This is the structure that should be used for data that is needed for tactical missions only.
  * @note the client_state_t structure is wiped completely at every server map change

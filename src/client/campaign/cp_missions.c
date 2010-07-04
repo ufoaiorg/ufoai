@@ -23,7 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../cl_shared.h"
+#include "../cl_renderer.h" /* refdef */
 #include "../cl_team.h"
 #include "../menu/m_main.h"
 #include "../renderer/r_geoscape.h"

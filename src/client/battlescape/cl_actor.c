@@ -167,6 +167,7 @@ int CL_ActorMoveMode (const le_t *le, int length)
  * @param chr Pointer to character_t (may not be null)
  * @sa CL_UGVCvars
  * @sa CL_ActorSelect
+ * @todo This does not really belong into the battlescape code
  */
 void CL_ActorCvars (const character_t * chr, const char* cvarPrefix)
 {

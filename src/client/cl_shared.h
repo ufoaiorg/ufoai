@@ -50,4 +50,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define INVDEF(containerID) (&csi.ids[(containerID)])
 
+typedef struct chr_list_s {
+	character_t* chr[MAX_ACTIVETEAM];
+	int num;	/* Number of entries */
+} chrList_t;
+
 #endif

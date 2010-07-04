@@ -64,7 +64,7 @@ static void R_FreeFBOTexture (int texnum)
 
 void R_InitFBObjects (void)
 {
-	GLenum filters[2];
+	unsigned int filters[2];
 	float scales[DOWNSAMPLE_PASSES];
 	int i;
 
@@ -175,7 +175,7 @@ void R_ShutdownFBObjects (void)
  * @param[in] halfFloat Use half float pixel format
  * @param[in] filters Filters for the textures. Must have @c ntextures entries
  */
-r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qboolean depth, qboolean halfFloat, GLenum *filters)
+r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qboolean depth, qboolean halfFloat, unsigned int *filters)
 {
 	r_framebuffer_t *buf;
 	int i;
@@ -326,7 +326,7 @@ void R_DrawBuffers (int n)
 	R_BindColorAttachments(n, colorAttachments);
 }
 
-void R_BindColorAttachments (int n, GLenum *attachments)
+void R_BindColorAttachments (int n, unsigned int *attachments)
 {
 	if (!frameBufferObjectsInitialized || !r_config.frameBufferObject || !r_postprocess->integer || !r_programs->integer)
 		return;
