@@ -101,7 +101,7 @@ static void GAME_SK_Start_f (void)
 
 static void GAME_SK_Restart_f (void)
 {
-	GAME_RestartMode(GAME_SKIRMISH);
+	GAME_ReloadMode();
 	GAME_SK_Start_f();
 }
 

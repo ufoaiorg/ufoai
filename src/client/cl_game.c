@@ -182,14 +182,11 @@ static const cgame_export_t *GAME_GetCurrentType (void)
 void GAME_ReloadMode (void)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	if (list != NULL)
-		GAME_RestartMode(list->gametype);
-}
-
-void GAME_RestartMode (int gametype)
-{
-	GAME_SetMode(GAME_NONE);
-	GAME_SetMode(gametype);
+	if (list != NULL) {
+		const int gametype = list->gametype;
+		GAME_SetMode(GAME_NONE);
+		GAME_SetMode(gametype);
+	}
 }
 
 /**
@@ -206,7 +203,7 @@ void GAME_DisplayItemInfo (menuNode_t *node, const char *string)
 
 void GAME_SetMode (int gametype)
 {
-	const cgame_export_t *list = gameTypeList;
+	const cgame_export_t *list;
 
 	if (gametype < 0 || gametype > GAME_MAX) {
 		Com_Printf("Invalid gametype %i given\n", gametype);
@@ -266,22 +263,17 @@ static void MN_MapInfo (int step)
 {
 	const char *mapname;
 	const mapDef_t *md;
-	const cgame_export_t *list = gameTypeList;
+	const cgame_export_t *list = GAME_GetCurrentType();
+
+	if (!list)
+		return;
 
 	if (!csi.numMDs)
 		return;
 
 	MN_MapInfoGetNext(step);
 
-	md = NULL;
-	while (list->name) {
-		if (list->gametype == cls.gametype) {
-			md = list->MapInfo(step);
-			break;
-		}
-		list++;
-	}
-
+	md = list->MapInfo(step);
 	if (!md)
 		return;
 

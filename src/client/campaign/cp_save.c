@@ -200,7 +200,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	}
 
 	/* doing a subsystem run ;) */
-	GAME_RestartMode(GAME_CAMPAIGN);
+	GAME_ReloadMode();
 	node = mxml_GetNode(topNode, SAVE_ROOTNODE);
 	if (!node) {
 		Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");
