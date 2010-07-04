@@ -208,6 +208,9 @@
 		<Unit filename="..\..\src\common\unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\menu\m_timer.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\game\inv_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
