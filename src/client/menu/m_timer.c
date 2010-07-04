@@ -98,7 +98,7 @@ static void MN_InsertTimerInActiveList (menuTimer_t* first, menuTimer_t* newTime
 void MN_HandleTimers (void)
 {
 	/* is first element is out of date? */
-	while (mn_firstTimer && mn_firstTimer->nextTime <= Sys_Milliseconds()) {
+	while (mn_firstTimer && mn_firstTimer->nextTime <= CL_Milliseconds()) {
 		menuTimer_t *timer = mn_firstTimer;
 
 		/* throw event */
@@ -153,7 +153,7 @@ void MN_TimerStart (menuTimer_t *timer)
 	if (timer->isRunning)
 		return;
 	assert(mn_firstTimer != timer && timer->prev == NULL && timer->next == NULL);
-	timer->nextTime = Sys_Milliseconds() + timer->delay;
+	timer->nextTime = CL_Milliseconds() + timer->delay;
 	timer->isRunning = qtrue;
 	MN_InsertTimerInActiveList(mn_firstTimer, timer);
 }

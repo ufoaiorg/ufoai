@@ -313,6 +313,7 @@ CLIENT / SERVER SYSTEMS
 void CL_Init(void);
 void CL_Drop(void);
 void CL_Shutdown(void);
+int CL_Milliseconds(void);
 void CL_Frame(int now, void *data);
 void CL_SlowFrame(int now, void *data);
 void CL_ParseClientData(const char *type, const char *name, const char **text);

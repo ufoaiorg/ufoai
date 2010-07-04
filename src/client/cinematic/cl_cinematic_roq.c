@@ -460,7 +460,7 @@ static qboolean CIN_ROQ_DecodeChunk (cinematic_t *cin)
 {
 	int frame;
 
-	if (ROQCIN.startTime + ((1000 / ROQCIN.frameRate) * ROQCIN.currentFrame) > cls.realtime)
+	if (ROQCIN.startTime + ((1000 / ROQCIN.frameRate) * ROQCIN.currentFrame) > CL_Milliseconds())
 		return qtrue;
 
 	frame = ROQCIN.currentFrame;
@@ -604,7 +604,7 @@ void CIN_ROQ_PlayCinematic (cinematic_t *cin, const char *fileName)
 
 	ROQCIN.frameWidth = 0;
 	ROQCIN.frameHeight = 0;
-	ROQCIN.startTime = cls.realtime;
+	ROQCIN.startTime = CL_Milliseconds();
 	ROQCIN.frameRate = (chunk.flags != 0) ? chunk.flags : 30;
 	if (ROQCIN.frameBuffer[0]) {
 		Mem_Free(ROQCIN.frameBuffer[0]);

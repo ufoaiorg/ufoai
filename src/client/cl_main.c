@@ -206,7 +206,7 @@ static void CL_Connect (void)
 
 	if (cls.netStream) {
 		NET_OOB_Printf(cls.netStream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
-		cls.connectTime = cls.realtime;
+		cls.connectTime = CL_Milliseconds();
 	} else {
 		if (cls.servername[0]) {
 			assert(cls.serverport[0]);
@@ -539,7 +539,7 @@ void CL_RequestNextDownload (void)
 		NET_WriteMsg(cls.netStream, msg);
 	}
 
-	cls.waitingForStart = cls.realtime;
+	cls.waitingForStart = CL_Milliseconds();
 }
 
 
@@ -971,19 +971,19 @@ static void CL_SendCommand (void)
 		}
 		break;
 	case ca_connecting:
-		if (cls.realtime - cls.connectTime > cl_connecttimeout->integer) {
+		if (CL_Milliseconds() - cls.connectTime > cl_connecttimeout->integer) {
 			if (GAME_IsMultiplayer())
 				Com_Error(ERR_DROP, "Server is not reachable");
 		}
 		break;
 	case ca_connected:
 		if (cls.waitingForStart) {
-			if (cls.realtime - cls.waitingForStart > cl_connecttimeout->integer) {
+			if (CL_Milliseconds() - cls.waitingForStart > cl_connecttimeout->integer) {
 				Com_Error(ERR_DROP, "Server aborted connection - the server didn't response in %is. You can try to increase the cvar cl_connecttimeout",
 						cl_connecttimeout->integer / 1000);
 			} else {
 				Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
-					"%s (%i)", _("Awaiting game start"), (cls.realtime - cls.waitingForStart) / 1000);
+					"%s (%i)", _("Awaiting game start"), (CL_Milliseconds() - cls.waitingForStart) / 1000);
 				SCR_UpdateScreen();
 			}
 		}
@@ -1163,6 +1163,10 @@ void CL_Init (void)
 	Mem_TouchGlobal();
 }
 
+int CL_Milliseconds (void)
+{
+	return cls.realtime;
+}
 
 /**
  * @brief Saves configuration file and shuts the client systems down

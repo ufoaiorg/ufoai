@@ -264,7 +264,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 	if (text != NULL) {
 		/** @todo we don't need to edit the text to draw the cursor */
 		if (MN_HasFocus(node)) {
-			if (cls.realtime % 1000 < 500) {
+			if (CL_Milliseconds() % 1000 < 500) {
 				text = va("%s%c", text, CURSOR);
 			}
 		}
@@ -281,7 +281,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 			}
 			/* readd the cursor */
 			if (MN_HasFocus(node)) {
-				if (cls.realtime % 1000 < 500) {
+				if (CL_Milliseconds() % 1000 < 500) {
 					c--;
 					*c++ = CURSOR;
 				}

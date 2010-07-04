@@ -242,7 +242,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 		CL_Disconnect();
 		CL_SetClientState(ca_connecting);
 		/* otherwise we would time out */
-		cls.connectTime = cls.realtime - 1500;
+		cls.connectTime = CL_Milliseconds() - 1500;
 		break;
 
 	case svc_print:

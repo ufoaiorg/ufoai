@@ -367,7 +367,7 @@ void MN_Draw (void)
 		MN_DrawNode(menu);
 
 		/* draw a special notice */
-		if (menu == noticeMenu && cls.realtime < noticeTime)
+		if (menu == noticeMenu && CL_Milliseconds() < noticeTime)
 			MN_DrawNotice();
 
 		/* draw a node over the menu */
@@ -377,7 +377,7 @@ void MN_Draw (void)
 	}
 
 	/* unactive notice */
-	if (cls.realtime >= noticeTime && noticeMenu != NULL)
+	if (noticeMenu != NULL && CL_Milliseconds() >= noticeTime)
 		noticeMenu = NULL;
 
 	/* draw tooltip */
@@ -411,7 +411,7 @@ void MN_DrawCursor (void)
  */
 void MN_DisplayNotice (const char *text, int time, const char* windowName)
 {
-	noticeTime = cls.realtime + time;
+	noticeTime = CL_Milliseconds() + time;
 	Q_strncpyz(noticeText, text, sizeof(noticeText));
 
 	if (windowName == NULL) {

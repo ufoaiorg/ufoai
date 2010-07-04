@@ -133,7 +133,7 @@ void CL_Reconnect_f (void)
 			CL_Disconnect();
 		}
 
-		cls.connectTime = cls.realtime - 1500;
+		cls.connectTime = CL_Milliseconds() - 1500;
 
 		CL_SetClientState(ca_connecting);
 		Com_Printf("reconnecting...\n");

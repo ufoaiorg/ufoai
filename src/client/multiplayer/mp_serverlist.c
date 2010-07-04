@@ -577,12 +577,12 @@ void CL_PingServers_f (void)
 
 	/* don't query the masterservers with every call */
 	if (serversAlreadyQueried) {
-		if (lastServerQuery + SERVERQUERYTIMEOUT > cls.realtime)
+		if (lastServerQuery + SERVERQUERYTIMEOUT > CL_Milliseconds())
 			return;
 	} else
 		serversAlreadyQueried = qtrue;
 
-	lastServerQuery = cls.realtime;
+	lastServerQuery = CL_Milliseconds();
 
 	/* query master server? */
 	if (Cmd_Argc() == 2 && strcmp(Cmd_Argv(1), "local")) {

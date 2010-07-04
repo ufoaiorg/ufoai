@@ -130,7 +130,7 @@ static void IN_KeyDown (kbutton_t * b)
 	c = Cmd_Argv(2);
 	b->downtime = atoi(c);
 	if (!b->downtime)
-		b->downtime = cls.realtime - 100;
+		b->downtime = CL_Milliseconds() - 100;
 
 	/* down */
 	b->state = 1;
@@ -965,7 +965,7 @@ void IN_Init (void)
 void IN_SendKeyEvents (void)
 {
 	while (keyq_head != keyq_tail) {
-		Key_Event(keyq[keyq_tail].key, keyq[keyq_tail].unicode, keyq[keyq_tail].down, cls.realtime);
+		Key_Event(keyq[keyq_tail].key, keyq[keyq_tail].unicode, keyq[keyq_tail].down, CL_Milliseconds());
 		keyq_tail = (keyq_tail + 1) & (MAX_KEYQ - 1);
 	}
 }

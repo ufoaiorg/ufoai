@@ -582,7 +582,7 @@ int CIN_OGM_PlayCinematic (cinematic_t *cin, const char* filename)
 	}
 
 	cin->cinematicType = CINEMATIC_TYPE_OGM;
-	OGMCIN.startTime = cls.realtime;
+	OGMCIN.startTime = CL_Milliseconds();
 
 	ogg_sync_init(&OGMCIN.oy); /* Now we can read pages */
 
@@ -747,7 +747,7 @@ static void CIN_OGM_DrawCinematic (cinematic_t *cin)
  */
 qboolean CIN_OGM_RunCinematic (cinematic_t *cin)
 {
-	OGMCIN.currentTime = cls.realtime - OGMCIN.startTime;
+	OGMCIN.currentTime = CL_Milliseconds() - OGMCIN.startTime;
 
 	while (!OGMCIN.videoFrameCount || OGMCIN.currentTime + 20 >= (int) (OGMCIN.videoFrameCount * OGMCIN.Vtime_unit / 10000)) {
 		if (CIN_OGM_LoadFrame(cin))

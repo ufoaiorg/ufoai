@@ -351,7 +351,7 @@ void SCR_BeginLoadingPlaque (void)
 	screenDrawLoading = 1;
 
 	SCR_UpdateScreen();
-	cls.disableScreen = cls.realtime;
+	cls.disableScreen = CL_Milliseconds();
 }
 
 /**
@@ -413,7 +413,7 @@ void SCR_UpdateScreen (void)
 	/* if the screen is disabled (loading plaque is up, or vid mode changing)
 	 * do nothing at all */
 	if (cls.disableScreen) {
-		if (cls.realtime - cls.disableScreen > 120000 && refdef.ready) {
+		if (CL_Milliseconds() - cls.disableScreen > 120000 && refdef.ready) {
 			cls.disableScreen = 0;
 			Com_Printf("Loading plaque timed out.\n");
 			return;

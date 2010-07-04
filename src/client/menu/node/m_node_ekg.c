@@ -72,7 +72,7 @@ static void MN_EKGNodeDraw (menuNode_t *node)
 
 		EXTRADATA(node).super.texl[1] = (ekgMaxIndex - (int)(ekgValue / ekgDivide)) * ekgHeight;
 		EXTRADATA(node).super.texh[1] = EXTRADATA(node).super.texl[1] + ekgHeight;
-		EXTRADATA(node).super.texl[0] = -(int) (EXTRADATA(node).scrollSpeed * cls.realtime) % ekgWidth;
+		EXTRADATA(node).super.texl[0] = -(int) (EXTRADATA(node).scrollSpeed * CL_Milliseconds()) % ekgWidth;
 		EXTRADATA(node).super.texh[0] = EXTRADATA(node).super.texl[0] + node->size[0];
 		/** @todo code is duplicated in the image node code */
 		if (node->size[0] && !node->size[1]) {

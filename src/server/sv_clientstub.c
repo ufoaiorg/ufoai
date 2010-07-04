@@ -79,6 +79,11 @@ void SCR_EndLoadingPlaque (void)
 {
 }
 
+int CL_Milliseconds (void)
+{
+	return Sys_Milliseconds();
+}
+
 void Key_Init (void)
 {
 	Cmd_AddCommand("bind", Key_Bind_Null_f, NULL);

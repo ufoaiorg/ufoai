@@ -179,8 +179,8 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 	/* embedded timer */
 	if (EXTRADATA(node).onTimeOut && EXTRADATA(node).timeOut) {
 		if (EXTRADATA(node).lastTime == 0)
-			EXTRADATA(node).lastTime = cls.realtime;
-		if (EXTRADATA(node).lastTime + EXTRADATA(node).timeOut < cls.realtime) {
+			EXTRADATA(node).lastTime = CL_Milliseconds();
+		if (EXTRADATA(node).lastTime + EXTRADATA(node).timeOut < CL_Milliseconds()) {
 			EXTRADATA(node).lastTime = 0;	/**< allow to reset timeOut on the event, and restart it, with an uptodate lastTime */
 			Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", node->name);
 			MN_ExecuteEventActions(node, EXTRADATA(node).onTimeOut);
@@ -228,7 +228,7 @@ static void MN_WindowNodeInit (menuNode_t *node)
 	menuNode_t *child;
 
 	/* init the embeded timer */
-	EXTRADATA(node).lastTime = cls.realtime;
+	EXTRADATA(node).lastTime = CL_Milliseconds();
 
 	/* init child */
 	for (child = node->firstChild; child; child = child->next) {
