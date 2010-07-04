@@ -312,10 +312,13 @@ typedef int32_t shoot_types_t;
  */
 #define ST_NUM_SHOOT_TYPES 5
 
+/** @brief Determine whether the selected shoot type is for reaction fire */
 #define IS_SHOT_REACTION(x) ((x) == ST_RIGHT_REACTION || (x) == ST_LEFT_REACTION)
-#define IS_SHOT(x)          (IS_SHOT_RIGHT(x) || IS_SHOT_LEFT(x) || IS_SHOT_HEADGEAR(x) || IS_SHOT_REACTION(x))
+/** @brief Determine whether the selected shoot type is for the item in the left hand, either shooting or reaction fire */
 #define IS_SHOT_LEFT(x)     ((x) == ST_LEFT || (x) == ST_LEFT_REACTION)
+/** @brief Determine whether the selected shoot type is for the item in the right hand, either shooting or reaction fire */
 #define IS_SHOT_RIGHT(x)    ((x) == ST_RIGHT || (x) == ST_RIGHT_REACTION)
+/** @brief Determine whether the selected shoot type is for the item in the headgear slot */
 #define IS_SHOT_HEADGEAR(x)    ((x) == ST_HEADGEAR)
 
 /* shoot flags */
