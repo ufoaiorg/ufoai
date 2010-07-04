@@ -162,7 +162,7 @@ static void INV_InventoryList_f (void)
 
 /**
  * @brief Make sure equipment definitions used to generate teams are proper.
- * @note Check that the sum of all proabilities is smaller or equal to 100 for a weapon type.
+ * @note Check that the sum of all probabilities is smaller or equal to 100 for a weapon type.
  * @sa INVSH_EquipActor
  */
 qboolean INV_EquipmentDefSanityCheck (void)

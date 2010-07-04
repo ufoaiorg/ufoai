@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
+#include "../cl_inventory.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
 #include "cp_campaign.h"

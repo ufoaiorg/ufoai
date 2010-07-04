@@ -31,7 +31,10 @@ extern struct memPool_s *cp_campaignPool;
 struct aircraft_s;
 struct installation_s;
 struct employee_s;
+struct ugv_s;
 struct menuNode_s; /**< @todo remove this once the menuNode_t usage is cleaned up */
+
+#define MAX_CAMPAIGNS	16
 
 #define MAX_ASSEMBLIES	16
 
@@ -42,6 +45,7 @@ struct menuNode_s; /**< @todo remove this once the menuNode_t usage is cleaned u
 #include "cp_save.h"
 #include "cp_parse.h"
 #include "cp_event.h"
+#include "cp_ufopedia.h"
 #include "cp_research.h"
 #include "cp_aircraft.h"
 #include "cp_base.h"

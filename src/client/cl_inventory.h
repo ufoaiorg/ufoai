@@ -26,9 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_INVENTORY_H
 #define CLIENT_CL_INVENTORY_H
 
-/** Size of a UGV in hangar capacity */
-#define UGV_SIZE 300
-
 /**
  * @brief A list of filter types in the market and production view.
  * @note Run-time only, please do not use this in savegame/structures and the like.

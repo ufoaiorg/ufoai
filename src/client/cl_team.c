@@ -137,14 +137,14 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t* chr)
 	sScore = mxml_AddNode(p, SAVE_CHARACTER_SCORES);
 	/* Store skills */
 	for (k = 0; k < SKILL_NUM_TYPES + 1; k++) {
-		if ((k < SKILL_NUM_TYPES && chr->score.skills[k])
-		 || chr->score.experience[k] || chr->score.initialSkills[k]) {
+		if (chr->score.experience[k] || chr->score.initialSkills[k]
+		 || (k < lengthof(chr->score.skills) && chr->score.skills[k])) {
 			mxml_node_t *sSkill = mxml_AddNode(sScore, SAVE_CHARACTER_SKILLS);;
 
 			mxml_AddString(sSkill, SAVE_CHARACTER_SKILLTYPE, Com_GetConstVariable(SAVE_CHARACTER_SKILLTYPE_NAMESPACE, k));
 			mxml_AddIntValue(sSkill, SAVE_CHARACTER_INITSKILL, chr->score.initialSkills[k]);
 			mxml_AddIntValue(sSkill, SAVE_CHARACTER_EXPERIENCE, chr->score.experience[k]);
-			if (k < SKILL_NUM_TYPES)
+			if (k < lengthof(chr->score.skills))
 				mxml_AddIntValue(sSkill, SAVE_CHARACTER_SKILLIMPROVE, chr->score.skills[k] - chr->score.initialSkills[k]);
 		}
 	}

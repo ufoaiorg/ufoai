@@ -150,40 +150,40 @@ void RS_MarkOneResearchable (technology_t* tech)
 /**
  * @brief Checks if all requirements of a tech have been met so that it becomes researchable.
  * @note If there are NO requirements defined at all it will always return true.
- * @param[in] required_AND Pointer to a list of AND-related requirements.
- * @param[in] required_OR Pointer to a list of OR-related requirements.
+ * @param[in] requiredAND Pointer to a list of AND-related requirements.
+ * @param[in] requiredOR Pointer to a list of OR-related requirements.
  * @param[in] base In what base to check the "collected" items etc..
- * @return Returns qtrue if all requirements are satisfied otherwise qfalse.
+ * @return @c true if all requirements are satisfied otherwise @cfalse.
  * @todo Add support for the "delay" value.
  */
-qboolean RS_RequirementsMet (const requirements_t *required_AND, const requirements_t *required_OR, const struct base_s *base)
+qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requirements_t *requiredOR, const base_t *base)
 {
 	int i;
-	qboolean met_AND = qfalse;
-	qboolean met_OR = qfalse;
+	qboolean metAND = qfalse;
+	qboolean metOR = qfalse;
 
-	if (!required_AND && !required_OR) {
+	if (!requiredAND && !requiredOR) {
 		Com_Printf("RS_RequirementsMet: No requirement list(s) given as parameter.\n");
 		return qfalse;
 	}
 
 	/* If there are no requirements defined at all we have 'met' them by default. */
-	if (required_AND->numLinks == 0 && required_OR->numLinks == 0) {
+	if (requiredAND->numLinks == 0 && requiredOR->numLinks == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: No requirements set for this tech. They are 'met'.\n");
 		return qtrue;
 	}
 
-	if (required_AND->numLinks) {
-		met_AND = qtrue;
-		for (i = 0; i < required_AND->numLinks; i++) {
-			const requirement_t *req = &required_AND->links[i];
+	if (requiredAND->numLinks) {
+		metAND = qtrue;
+		for (i = 0; i < requiredAND->numLinks; i++) {
+			const requirement_t *req = &requiredAND->links[i];
 			switch (req->type) {
 			case RS_LINK_TECH:
 				assert(req->link);
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDtech: %s / %i\n", req->id, ((technology_t*)req->link)->idx);
 				if (!RS_IsResearched_ptr(req->link)) {
 					Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: this tech not researched ----> %s \n", req->id);
-					met_AND = qfalse;
+					metAND = qfalse;
 				}
 				break;
 			case RS_LINK_TECH_NOT:
@@ -191,7 +191,7 @@ qboolean RS_RequirementsMet (const requirements_t *required_AND, const requireme
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDtech NOT: %s / %i\n", req->id, ((technology_t*)req->link)->idx);
 				if (RS_IsResearched_ptr(req->link)) {
 					Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: this tech researched but it  must not be ----> %s \n", req->id);
-					met_AND = qfalse;
+					metAND = qfalse;
 				}
 				break;
 			case RS_LINK_ITEM:
@@ -200,52 +200,52 @@ qboolean RS_RequirementsMet (const requirements_t *required_AND, const requireme
 				/* The same code is used in "PR_RequirementsMet" */
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDitem: %s / %i\n", req->id, ((objDef_t*)req->link)->idx);
 				if (B_ItemInBase(req->link, base) < req->amount)
-					met_AND = qfalse;
+					metAND = qfalse;
 				break;
 			case RS_LINK_ALIEN_DEAD:
 			case RS_LINK_ALIEN:
 				assert(req->link);
 				assert(base);
 				if (AL_GetAlienAmount(req->link, req->type, base) < req->amount)
-					met_AND = qfalse;
+					metAND = qfalse;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
 				if (AL_CountAll() < req->amount)
-					met_AND = qfalse;
+					metAND = qfalse;
 				break;
 			case RS_LINK_UFO:
 				assert(req->link);
 				if (US_UFOsInStorage(req->link, NULL) < req->amount)
-					met_AND = qfalse;
+					metAND = qfalse;
 				break;
 			case RS_LINK_ANTIMATTER:
 				if (B_AntimatterInBase(base) < req->amount)
-					met_AND = qfalse;
+					metAND = qfalse;
 				break;
 			default:
 				break;
 			}
 
-			if (!met_AND)
+			if (!metAND)
 				break;
 		}
 	}
 
-	if (required_OR->numLinks)
-		for (i = 0; i < required_OR->numLinks; i++) {
-			const requirement_t *req = &required_OR->links[i];
+	if (requiredOR->numLinks)
+		for (i = 0; i < requiredOR->numLinks; i++) {
+			const requirement_t *req = &requiredOR->links[i];
 			switch (req->type) {
 			case RS_LINK_TECH:
 				assert(req->link);
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORtech: %s / %i\n", req->id, ((technology_t*)req->link)->idx);
 				if (RS_IsResearched_ptr(req->link))
-					met_OR = qtrue;
+					metOR = qtrue;
 				break;
 			case RS_LINK_TECH_NOT:
 				assert(req->link);
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORtech: NOT %s / %i\n", req->id, ((technology_t*)req->link)->idx);
 				if (!RS_IsResearched_ptr(req->link))
-					met_OR = qtrue;
+					metOR = qtrue;
 				break;
 			case RS_LINK_ITEM:
 				assert(req->link);
@@ -253,37 +253,37 @@ qboolean RS_RequirementsMet (const requirements_t *required_AND, const requireme
 				/* The same code is used in "PR_RequirementsMet" */
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORitem: %s / %i\n", req->id, ((objDef_t*)req->link)->idx);
 				if (B_ItemInBase(req->link, base) >= req->amount)
-					met_OR = qtrue;
+					metOR = qtrue;
 				break;
 			case RS_LINK_ALIEN:
 			case RS_LINK_ALIEN_DEAD:
 				assert(req->link);
 				assert(base);
 				if (AL_GetAlienAmount(req->link, req->type, base) >= req->amount)
-					met_OR = qtrue;
+					metOR = qtrue;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
 				if (AL_CountAll() >= req->amount)
-					met_OR = qtrue;
+					metOR = qtrue;
 				break;
 			case RS_LINK_UFO:
 				assert(req->link);
 				if (US_UFOsInStorage(req->link, NULL) >= req->amount)
-					met_OR = qtrue;
+					metOR = qtrue;
 				break;
 			case RS_LINK_ANTIMATTER:
 				if (B_AntimatterInBase(base) >= req->amount)
-					met_OR = qtrue;
+					metOR = qtrue;
 			default:
 				break;
 			}
 
-			if (met_OR)
+			if (metOR)
 				break;
 		}
-	Com_DPrintf(DEBUG_CLIENT, "met_AND is %i, met_OR is %i\n", met_AND, met_OR);
+	Com_DPrintf(DEBUG_CLIENT, "met_AND is %i, met_OR is %i\n", metAND, metOR);
 
-	return (met_AND || met_OR);
+	return (metAND || metOR);
 }
 
 /**
@@ -1235,7 +1235,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	tech->hashNext = techHash[hash];
 	/* set the techHash pointer to the current tech */
 	/* if there were already others in techHash at position hash, they are now
-	 * accessable via tech->next - loop until tech->next is null (the first tech
+	 * accessible via tech->next - loop until tech->next is null (the first tech
 	 * at that position)
 	 */
 	techHash[hash] = tech;

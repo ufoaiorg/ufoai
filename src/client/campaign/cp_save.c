@@ -30,9 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../mxml/mxml_ufoai.h"
 #include "cp_campaign.h"
 #include "cp_save.h"
-#include "cp_hospital.h"
-#include "cp_ufo.h"
-#include "cp_alienbase.h"
 #include "cp_time.h"
 #include "save/save.h"
 

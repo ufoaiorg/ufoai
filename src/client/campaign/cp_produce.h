@@ -26,13 +26,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CP_PRODUCE
 #define CLIENT_CP_PRODUCE
 
-#include "../cl_inventory.h"
-
 /** @brief Maximum number of productions queued in any one base. */
 #define MAX_PRODUCTIONS		256
 #define MAX_PRODUCTIONS_PER_WORKSHOP 5
 /** Maximum number of produced items. */
 #define MAX_PRODUCTION_AMOUNT 500
+
+/** Size of a UGV in hangar capacity */
+#define UGV_SIZE 300
 
 extern const int PRODUCE_FACTOR;
 extern const int PRODUCE_DIVISOR;

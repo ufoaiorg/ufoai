@@ -26,11 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_game.h"
+#include "../cl_inventory.h"
 #include "../menu/m_main.h"
-#include "../menu/m_data.h"
 #include "../menu/m_icon.h"
-#include "../menu/node/m_node_text.h"
 #include "../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
@@ -248,7 +246,7 @@ static void UP_BuildingDescription (const technology_t* t)
  */
 void UP_AircraftItemDescription (const objDef_t *item)
 {
-	static char itemText[MAX_SMALLMENUTEXTLEN];
+	static char itemText[1024];
 	int i;
 
 	/* Set menu text node content to null. */
@@ -383,7 +381,7 @@ void UP_AircraftDescription (const technology_t* tech)
  */
 void UP_UGVDescription (const ugv_t *ugvType)
 {
-	static char itemText[MAX_SMALLMENUTEXTLEN];
+	static char itemText[512];
 	const technology_t *tech;
 
 	assert(ugvType);
