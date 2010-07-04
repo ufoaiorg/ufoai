@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "CUnit/Basic.h"
 #include "test_rma.h"
+#include "test_shared.h"
 
 #include "../server/sv_rma.c"
 #include "../server/sv_init.c"
@@ -93,7 +94,7 @@ static void testMassAssemblyTimeout (void)
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
-		printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
+		TEST_Printf("%i: %i %li\n", i, randomMap->numPlaced, time);
 		if (randomMap)
 			Mem_Free(randomMap);
 	}
@@ -113,7 +114,7 @@ static void testMassAssemblyParallel (void)
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
-		printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
+		TEST_Printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
 		if (randomMap)
 			Mem_Free(randomMap);
 	}
@@ -135,7 +136,7 @@ static void testMassAssemblySequential (void)
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
-		printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
+		TEST_Printf("%i: %i %li\n", i, randomMap->numPlaced, time);
 		if (randomMap)
 			Mem_Free(randomMap);
 	}

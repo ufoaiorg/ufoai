@@ -7,6 +7,7 @@ TESTS_SRCS = \
 	tests/test_generic.c \
 	tests/test_inventory.c \
 	tests/test_rma.c \
+	tests/test_shared.c \
 	\
 	common/cmd.c \
 	common/http.c \
