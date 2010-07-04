@@ -56,6 +56,7 @@ void MN_HandleTimers(void);
 
 #ifdef COMPILE_UNITTESTS
 menuTimer_t *MN_GetFirstTimer(void);
+void MN_PrivateInsertTimerInActiveList(menuTimer_t* first, menuTimer_t* newTimer);
 #endif
 
 #endif
