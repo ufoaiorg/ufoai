@@ -326,10 +326,6 @@ void MN_Shutdown (void)
 void MN_Init (void)
 {
 #ifdef DEBUG
-	MN_UnittestTimer();
-#endif
-
-#ifdef DEBUG
 	mn_debug = Cvar_Get("debug_menu", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");
 #endif
 

@@ -43,6 +43,10 @@ void CL_Drop (void)
 {
 }
 
+void Con_Print (const char *txt)
+{
+}
+
 void CL_Shutdown (void)
 {
 }

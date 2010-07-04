@@ -8,6 +8,7 @@ TESTS_SRCS = \
 	tests/test_inventory.c \
 	tests/test_rma.c \
 	tests/test_shared.c \
+	tests/test_ui.c \
 	\
 	common/cmd.c \
 	common/http.c \
@@ -49,7 +50,9 @@ TESTS_SRCS = \
 	\
 	game/q_shared.c \
 	game/inv_shared.c \
-	game/inventory.c
+	game/inventory.c \
+	\
+	client/menu/m_timer.c
 
 ifeq ($(HARD_LINKED_GAME),1)
 	TESTS_SRCS+=$(GAME_SRCS)
@@ -96,8 +99,8 @@ endif
 
 # Say how to link the exe
 $(TESTS_TARGET): $(TESTS_OBJS)
-	@echo " * [TEST] ... linking $(LNKFLAGS) ($(TESTS_LIBS) $(SERVER_LIBS) $(SDL_LIBS))"; \
-		$(CC) $(LDFLAGS) -o $@ $(TESTS_OBJS) $(LNKFLAGS) $(TESTS_LIBS) $(SDL_LIBS) $(SERVER_LIBS)
+	@echo " * [TEST] ... linking $(LNKFLAGS) ($(TESTS_LIBS) $(SERVER_LIBS) $(CLIENT_LIBS) $(SDL_LIBS))"; \
+		$(CC) $(LDFLAGS) -o $@ $(TESTS_OBJS) $(LNKFLAGS) $(TESTS_LIBS) $(SDL_LIBS) $(CLIENT_LIBS) $(SERVER_LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/tests/%.o: $(SRCDIR)/%.c

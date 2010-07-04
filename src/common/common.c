@@ -174,9 +174,7 @@ void Com_vPrintf (const char *fmt, va_list ap)
 		return;
 	}
 
-#ifndef DEDICATED_ONLY
 	Con_Print(msg);
-#endif
 
 	/* also echo to debugging console */
 	Sys_ConsoleOutput(msg);
@@ -932,9 +930,7 @@ void Qcommon_Init (int argc, const char **argv)
 		SCR_EndLoadingPlaque();
 	}
 
-#ifndef DEDICATED_ONLY
 	CL_InitAfter();
-#endif
 
 	/* Check memory integrity */
 	Mem_CheckGlobalIntegrity();

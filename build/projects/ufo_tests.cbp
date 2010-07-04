@@ -309,6 +309,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_rma.h" />
+		<Unit filename="..\..\src\tests\test_ui.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_ui.h" />
 		<Unit filename="..\..\src\tests\test_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>

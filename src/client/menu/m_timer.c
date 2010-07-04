@@ -3,29 +3,28 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+ Copyright (C) 2002-2010 UFO: Alien Invasion.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-See the GNU General Public License for more details.
+ See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-*/
+ */
 
+#include "../cl_shared.h"
 #include "m_nodes.h"
 #include "m_timer.h"
-
-#include "../client.h"
 
 /**
  * @brief Number max of timer slot.
@@ -99,7 +98,7 @@ static void MN_InsertTimerInActiveList (menuTimer_t* first, menuTimer_t* newTime
 void MN_HandleTimers (void)
 {
 	/* is first element is out of date? */
-	while (mn_firstTimer && mn_firstTimer->nextTime <= cls.realtime) {
+	while (mn_firstTimer && mn_firstTimer->nextTime <= Sys_Milliseconds()) {
 		menuTimer_t *timer = mn_firstTimer;
 
 		/* throw event */
@@ -154,7 +153,7 @@ void MN_TimerStart (menuTimer_t *timer)
 	if (timer->isRunning)
 		return;
 	assert(mn_firstTimer != timer && timer->prev == NULL && timer->next == NULL);
-	timer->nextTime = cls.realtime + timer->delay;
+	timer->nextTime = Sys_Milliseconds() + timer->delay;
 	timer->isRunning = qtrue;
 	MN_InsertTimerInActiveList(mn_firstTimer, timer);
 }
@@ -184,57 +183,14 @@ void MN_TimerRelease (menuTimer_t *timer)
 	timer->callback = NULL;
 }
 
-#ifdef DEBUG
-
-static menuNode_t *dummyNode = (menuNode_t *) 0x1;
-
-static timerCallback_t dummyCallback = (timerCallback_t) 0x1;
+#ifdef COMPILE_UNITTESTS
 
 /**
- * @brief unittest to trust a little the linked list
+ * @brief Return the first timer.
+ * Only used for white box unittests
  */
-void MN_UnittestTimer (void)
-{
-	menuTimer_t *a, *b, *c;
-	a = MN_AllocTimer(dummyNode, 10, dummyCallback);
-	b = MN_AllocTimer(dummyNode, 20, dummyCallback);
-	c = MN_AllocTimer(dummyNode, 30, dummyCallback);
-	assert(mn_firstTimer == NULL);
-
-	MN_TimerStart(b);
-	assert(mn_firstTimer == b);
-
-	MN_TimerStart(a);
-	assert(mn_firstTimer == a);
-
-	MN_TimerStart(c);
-	assert(mn_firstTimer->next->next == c);
-
-	MN_TimerStop(a);
-	MN_TimerStop(b);
-	assert(a->owner != NULL);
-	assert(mn_firstTimer == c);
-	assert(mn_firstTimer->next == NULL);
-
-	MN_TimerStart(a);
-	assert(mn_firstTimer == a);
-	assert(mn_firstTimer->next == c);
-
-	MN_InsertTimerInActiveList(a->next, b);
-	assert(mn_firstTimer == a);
-	assert(mn_firstTimer->next == b);
-	assert(mn_firstTimer->next->next == c);
-
-	MN_TimerRelease(b);
-	assert(mn_firstTimer == a);
-	assert(mn_firstTimer->next == c);
-
-	MN_TimerRelease(a);
-	assert(mn_firstTimer == c);
-
-	MN_TimerRelease(c);
-	assert(mn_firstTimer == NULL);
-	assert(c->owner == NULL);
+menuTimer_t *MN_GetFirstTimer (void) {
+	return mn_firstTimer;
 }
 
 #endif

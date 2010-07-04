@@ -54,8 +54,8 @@ void MN_TimerRelease(menuTimer_t *timer);
 
 void MN_HandleTimers(void);
 
-#ifdef DEBUG
-void MN_UnittestTimer(void);
+#ifdef COMPILE_UNITTESTS
+menuTimer_t *MN_GetFirstTimer(void);
 #endif
 
 #endif

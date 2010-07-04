@@ -266,7 +266,6 @@ void Com_SetGameType(void);
 #define NUMVERTEXNORMALS	162
 extern const vec3_t bytedirs[NUMVERTEXNORMALS];
 
-/** this is in the client code, but can be used for debugging from server */
 void Con_Print(const char *txt);
 
 /* Event timing */
