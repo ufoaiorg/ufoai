@@ -303,16 +303,13 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tag
 	memBlock_t *mem;
 
 	/* Check pool */
-	if (!pool) {
-		Com_Printf("Mem_Alloc: Error - no pool given\n" "alloc: %s:#%i\n", fileName, fileLine);
-		return NULL;
-	}
+	if (!pool)
+		Sys_Error("Mem_Alloc: Error - no pool given\n" "alloc: %s:#%i\n", fileName, fileLine);
 
 	/* Check size */
-	if (size <= 0) {
-		Com_Printf("Mem_Alloc: Attempted allocation of '"UFO_SIZE_T"' memory ignored\n" "alloc: %s:#%i\n", size, fileName, fileLine);
-		return NULL;
-	}
+	if (size <= 0)
+		Sys_Error("Mem_Alloc: Attempted allocation of '"UFO_SIZE_T"' memory ignored\n" "alloc: %s:#%i\n", size, fileName, fileLine);
+
 	if (size > 0x40000000)
 		Sys_Error("Mem_Alloc: Attempted allocation of '"UFO_SIZE_T"' bytes!\n" "alloc: %s:#%i\n", size, fileName, fileLine);
 
