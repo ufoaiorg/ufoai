@@ -661,7 +661,7 @@ int main (int argc, char **argv)
 	vid_modelPool = Mem_CreatePool("ufomodel model");
 	vid_imagePool = Mem_CreatePool("ufomodel image");
 
-	FS_InitFilesystem(qfalse);
+	FS_InitFilesystem(qfalse, BASEDIRNAME);
 
 	r_noTexture = Mem_PoolAlloc(sizeof(*r_noTexture), vid_imagePool, 0);
 	Q_strncpyz(r_noTexture->name, "noTexture", sizeof(r_noTexture->name));

@@ -279,17 +279,38 @@ typedef enum {
 
 extern const char *pa_format[PA_NUM_EVENTS];
 
-/** @brief Available shoot types */
+/** @brief Available shoot types - also see the @c ST_ constants */
 typedef int32_t shoot_types_t;
+/**
+ * @brief The right hand should be used for shooting
+ * @note shoot_types_t value
+ */
 #define ST_RIGHT 0
+/**
+ * @brief The right hand reaction fire should be used for shooting
+ * @note shoot_types_t value
+ */
 #define ST_RIGHT_REACTION 1
+/**
+ * @brief The left hand should be used for shooting
+ * @note shoot_types_t value
+ */
 #define ST_LEFT 2
+/**
+ * @brief The left hand reaction fire should be used for shooting
+ * @note shoot_types_t value
+ */
 #define ST_LEFT_REACTION 3
+/**
+ * @brief The headgear slot item should be used when shooting/using the item in the slot
+ * @note shoot_types_t value
+ */
 #define ST_HEADGEAR 4
+/**
+ * @brief Amount of shoottypes available
+ * @note shoot_types_t value
+ */
 #define ST_NUM_SHOOT_TYPES 5
-/* 20060905 LordHavoc: added reload types */
-#define ST_RIGHT_RELOAD 6
-#define ST_LEFT_RELOAD 7
 
 #define IS_SHOT_REACTION(x) ((x) == ST_RIGHT_REACTION || (x) == ST_LEFT_REACTION)
 #define IS_SHOT(x)          (IS_SHOT_RIGHT(x) || IS_SHOT_LEFT(x) || IS_SHOT_HEADGEAR(x) || IS_SHOT_REACTION(x))
