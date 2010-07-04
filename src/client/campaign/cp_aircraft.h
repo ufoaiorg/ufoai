@@ -25,9 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_AIRCRAFT_H
 #define CLIENT_CL_AIRCRAFT_H
 
-#include "../client.h"
-#include "cp_radar.h"
-
 #define MAX_CARGO		32
 #define MAX_AIRCRAFT	64
 #define LINE_MAXSEG 64
@@ -218,7 +215,7 @@ typedef struct aircraft_s {
 								 * this is needed because we won't find the ufocrash mission
 								 * in the parsed missions in @c ccs.missions until we loaded the campaign */
 	struct aircraft_s *aircraftTarget;		/**< Target of the aircraft (ufo or phalanx) */
-	radar_t	radar;				/**< Radar to track ufos */
+	struct radar_s radar;				/**< Radar to track ufos */
 	int stats[AIR_STATS_MAX];	/**< aircraft parameters for speed, damage and so on
 								 * @note As this is an int, wrange is multiplied by 1000 */
 

@@ -52,7 +52,7 @@ typedef struct aircraftProjectile_s {
 	int numInterpolationPoints;	/**< Number of points drawn so far during interpolation. */
 	vec3_t idleTarget;		/**< target of the projectile
 							 ** used only if the projectile will miss its target (that is if aimedAircraft is NULL) */
-	aircraft_t *attackingAircraft;	/**< Aircraft which shooted the projectile. NULL if aircraft is destroyed or base is shooting */
+	aircraft_t *attackingAircraft;	/**< Aircraft which shot the projectile. NULL if aircraft is destroyed or base is shooting */
 	vec3_t attackerPos;		/**< position of the attacker.
 							 ** used only if base or samsite is shooting (attackingAircraft == NULL) */
 	aircraft_t *aimedAircraft;	/**< target of the projectile/

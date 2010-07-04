@@ -84,7 +84,7 @@ typedef struct installation_s {
 
 	float alienInterest;	/**< How much aliens know this installation (and may attack it) */
 
-	radar_t	radar;			/**< Radar of the installation (for radar towers) */
+	struct radar_s radar;			/**< Radar of the installation (for radar towers) */
 
 	baseWeapon_t batteries[MAX_INSTALLATION_BATTERIES];	/**< Missile/Laser batteries assigned to this installation. For Sam Sites only. */
 	int numBatteries;		/**< how many batteries are installed? */

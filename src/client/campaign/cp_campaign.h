@@ -47,6 +47,7 @@ struct menuNode_s; /**< @todo remove this once the menuNode_t usage is cleaned u
 #include "cp_event.h"
 #include "cp_ufopedia.h"
 #include "cp_research.h"
+#include "cp_radar.h"
 #include "cp_aircraft.h"
 #include "cp_base.h"
 #include "cp_employee.h"
