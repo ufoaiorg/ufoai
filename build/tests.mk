@@ -1,4 +1,4 @@
-TESTS_CFLAGS+=-DCOMPILE_UFO -DDEDICATED_ONLY -DCOMPILE_UNITTESTS -ggdb -O0
+TESTS_CFLAGS+=-DCOMPILE_UFO -DCOMPILE_UNITTESTS -ggdb -O0
 TESTS_LIBS+=-lcunit
 
 TESTS_SRCS = \
@@ -102,12 +102,12 @@ $(TESTS_TARGET): $(TESTS_OBJS)
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/tests/%.o: $(SRCDIR)/%.c
 	@echo " * [TEST] $<"; \
-		$(CC) $(CFLAGS) $(TESTS_CFLAGS) $(SERVER_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		$(CC) $(CFLAGS) $(TESTS_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 
 # Say how to build .o files from .m files for this module
 $(BUILDDIR)/tests/%.o: $(SRCDIR)/%.m
 	@echo " * [TEST] $<"; \
-		$(CC) $(CFLAGS) $(TESTS_CFLAGS) $(SERVER_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		$(CC) $(CFLAGS) $(TESTS_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 
 ifeq ($(TARGET_OS),mingw32)
 # Say how to build .o files from .rc files for this module

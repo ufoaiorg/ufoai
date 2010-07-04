@@ -141,7 +141,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-DCOMPILE_UFO" />
-			<Add option="-DDEDICATED_ONLY" />
 			<Add option="-DCOMPILE_UNITTESTS" />
 			<Add option="-ggdb" />
 			<Add option="-O0" />
