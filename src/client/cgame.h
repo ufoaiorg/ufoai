@@ -58,6 +58,8 @@ typedef struct {
 	void (EXPORT *RunFrame) (void);
 	/** if you want to display a different model for the given object in your game mode, implement this function */
 	const char* (EXPORT *GetModelForItem) (const objDef_t*od);
+	void (EXPORT *EndRoundAnnounce) (int playerNum, int team);
+	void (EXPORT *StartBattlescape) (qboolean isTeamPlay);
 } cgame_export_t;
 
 /** @todo define the import interface */

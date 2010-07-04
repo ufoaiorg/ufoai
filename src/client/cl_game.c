@@ -32,15 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/events/e_main.h"
 #include "cl_inventory.h"
 #include "menu/node/m_node_model.h"
-#include "battlescape/cl_hud.h"
-#include "battlescape/cl_parse.h"
 
 static invList_t invList[MAX_INVLIST];
 
 static const cgame_export_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL, NULL},
-	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_DisplayItemInfo, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape, GAME_CP_Frame, GAME_CP_GetModelForItem},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL, NULL, GAME_MP_EndRoundAnnounce, GAME_MP_StartBattlescape},
+	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_DisplayItemInfo, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape, GAME_CP_Frame, GAME_CP_GetModelForItem, NULL, NULL},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
@@ -105,48 +103,6 @@ void GAME_AppendTeamMember (int memberIndex, const char *teamDefID, const equipD
 	chrDisplayList.num++;
 }
 
-/**
- * @brief Called when the server sends the @c EV_START event.
- * @param isTeamPlay @c true if the game is a teamplay round. This can be interesting for
- * multiplayer based game types
- */
-void GAME_StartBattlescape (qboolean isTeamPlay)
-{
-	/** @todo extend the interface */
-	if (GAME_IsMultiplayer()) {
-		MN_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
-		MN_InitStack("multiplayer_wait", NULL, qtrue, qtrue);
-	} else {
-		MN_InitStack(mn_hud->string, NULL, qtrue, qtrue);
-	}
-}
-
-/**
- * @brief Send end round announcements
- * @param playerNum The server player number of the player that has ended the round
- * @param team The team the player is in
- */
-void GAME_EndRoundAnnounce (int playerNum, int team)
-{
-	/** @todo do we need the team number here? isn't the playernum enough to get the team? */
-	/** @todo extend the interface */
-	/* not needed to announce this for singleplayer games */
-	if (GAME_IsMultiplayer()) {
-		char buf[128];
-
-		/* it was our own round */
-		if (cl.pnum == playerNum) {
-			/* add translated message to chat buffer */
-			Com_sprintf(buf, sizeof(buf), _("You've ended your round\n"));
-		} else {
-			const char *playerName = CL_PlayerGetName(playerNum);
-			/* add translated message to chat buffer */
-			Com_sprintf(buf, sizeof(buf), _("%s ended his round (team %i)\n"), playerName, team);
-		}
-		HUD_DisplayMessage(buf);
-	}
-}
-
 void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed, int teamMembers)
 {
 	int i;
@@ -187,6 +143,34 @@ void GAME_ReloadMode (void)
 		GAME_SetMode(GAME_NONE);
 		GAME_SetMode(gametype);
 	}
+}
+
+/**
+ * @brief Called when the server sends the @c EV_START event.
+ * @param isTeamPlay @c true if the game is a teamplay round. This can be interesting for
+ * multiplayer based game types
+ */
+void GAME_StartBattlescape (qboolean isTeamPlay)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list != NULL && list->StartBattlescape) {
+		list->StartBattlescape(isTeamPlay);
+	} else {
+		MN_InitStack(mn_hud->string, NULL, qtrue, qtrue);
+	}
+}
+
+/**
+ * @brief Send end round announcements
+ * @param playerNum The server player number of the player that has ended the round
+ * @param team The team the player is in
+ */
+void GAME_EndRoundAnnounce (int playerNum, int team)
+{
+	/** @todo do we need the team number here? isn't the playernum enough to get the team? */
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list != NULL && list->EndRoundAnnounce)
+		list->EndRoundAnnounce(playerNum, team);
 }
 
 /**

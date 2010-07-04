@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "multiplayer/mp_team.h"
 #include "menu/m_main.h"
 #include "menu/m_popup.h"
+#include "battlescape/cl_hud.h"
+#include "battlescape/cl_parse.h"
 
 void GAME_MP_AutoTeam (void)
 {
@@ -39,6 +41,28 @@ void GAME_MP_AutoTeam (void)
 	const char *teamDefID = GAME_GetTeamDef();
 
 	GAME_GenerateTeam(teamDefID, ed, GAME_GetCharacterArraySize());
+}
+
+void GAME_MP_StartBattlescape (qboolean isTeamPlay)
+{
+	MN_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
+	MN_InitStack("multiplayer_wait", NULL, qtrue, qtrue);
+}
+
+void GAME_MP_EndRoundAnnounce (int playerNum, int team)
+{
+	char buf[128];
+
+	/* it was our own round */
+	if (cl.pnum == playerNum) {
+		/* add translated message to chat buffer */
+		Com_sprintf(buf, sizeof(buf), _("You've ended your round\n"));
+	} else {
+		const char *playerName = CL_PlayerGetName(playerNum);
+		/* add translated message to chat buffer */
+		Com_sprintf(buf, sizeof(buf), _("%s ended his round (team %i)\n"), playerName, team);
+	}
+	HUD_DisplayMessage(buf);
 }
 
 /**
