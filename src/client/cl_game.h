@@ -39,8 +39,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define GAME_IsSingleplayer()	(cls.gametype & GAME_SINGLEPLAYER)
 #define GAME_IsMultiplayer()	(cls.gametype == GAME_MULTIPLAYER)
-#define GAME_IsSkirmish()		(cls.gametype == GAME_SKIRMISH)
-#define GAME_IsCampaign()		(cls.gametype == GAME_CAMPAIGN)
 
 void GAME_InitStartup(void);
 void GAME_SetMode(int gametype);
@@ -59,6 +57,8 @@ size_t GAME_GetCharacterArraySize(void);
 void GAME_ResetCharacters(void);
 void GAME_GenerateTeam(const char *teamDefID, const equipDef_t *ed, int teamMembers);
 void GAME_AppendTeamMember(int memberIndex, const char *teamDefID, const equipDef_t *ed);
+void GAME_StartBattlescape(qboolean isTeamPlay);
+void GAME_EndRoundAnnounce(int playerNum, int team);
 qboolean GAME_TeamIsKnown(const teamDef_t *teamDef);
 const char* GAME_GetTeamDef(void);
 void GAME_Drop(void);

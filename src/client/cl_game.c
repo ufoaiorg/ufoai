@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/events/e_main.h"
 #include "cl_inventory.h"
 #include "menu/node/m_node_model.h"
+#include "battlescape/cl_hud.h"
+#include "battlescape/cl_parse.h"
 
 static invList_t invList[MAX_INVLIST];
 
@@ -134,6 +136,48 @@ void GAME_AppendTeamMember (int memberIndex, const char *teamDefID, const equipD
 
 	chrDisplayList.chr[memberIndex] = chr;
 	chrDisplayList.num++;
+}
+
+/**
+ * @brief Called when the server sends the @c EV_START event.
+ * @param isTeamPlay @c true if the game is a teamplay round. This can be interesting for
+ * multiplayer based game types
+ */
+void GAME_StartBattlescape (qboolean isTeamPlay)
+{
+	/** @todo extend the interface */
+	if (GAME_IsMultiplayer()) {
+		MN_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
+		MN_InitStack("multiplayer_wait", NULL, qtrue, qtrue);
+	} else {
+		MN_InitStack(mn_hud->string, NULL, qtrue, qtrue);
+	}
+}
+
+/**
+ * @brief Send end round announcements
+ * @param playerNum The server player number of the player that has ended the round
+ * @param team The team the player is in
+ */
+void GAME_EndRoundAnnounce (int playerNum, int team)
+{
+	/** @todo do we need the team number here? isn't the playernum enough to get the team? */
+	/** @todo extend the interface */
+	/* not needed to announce this for singleplayer games */
+	if (GAME_IsMultiplayer()) {
+		char buf[128];
+
+		/* it was our own round */
+		if (cl.pnum == playerNum) {
+			/* add translated message to chat buffer */
+			Com_sprintf(buf, sizeof(buf), _("You've ended your round\n"));
+		} else {
+			const char *playerName = CL_PlayerGetName(playerNum);
+			/* add translated message to chat buffer */
+			Com_sprintf(buf, sizeof(buf), _("%s ended his round (team %i)\n"), playerName, team);
+		}
+		HUD_DisplayMessage(buf);
+	}
 }
 
 void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed, int teamMembers)

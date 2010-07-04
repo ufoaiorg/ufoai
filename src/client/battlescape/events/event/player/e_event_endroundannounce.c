@@ -24,9 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../../client.h"
 #include "../../../../cl_game.h"
-#include "../../../cl_parse.h"
-#include "../../../cl_localentity.h"
-#include "../../../cl_hud.h"
 #include "e_event_endroundannounce.h"
 
 /**
@@ -39,23 +36,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_EndRoundAnnounce (const eventRegister_t *self, struct dbuffer * msg)
 {
-	char buf[128];
 	/* get the needed values */
 	const int playerNum = NET_ReadByte(msg);
 	const int team = NET_ReadByte(msg);
-	const char *playerName = CL_PlayerGetName(playerNum);
 
-	/* not needed to announce this for singleplayer games */
-	if (!GAME_IsMultiplayer())
-		return;
-
-	/* it was our own round */
-	if (cl.pnum == playerNum) {
-		/* add translated message to chat buffer */
-		Com_sprintf(buf, sizeof(buf), _("You've ended your round\n"));
-	} else {
-		/* add translated message to chat buffer */
-		Com_sprintf(buf, sizeof(buf), _("%s ended his round (team %i)\n"), playerName, team);
-	}
-	HUD_DisplayMessage(buf);
+	GAME_EndRoundAnnounce(playerNum, team);
 }
