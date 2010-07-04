@@ -189,7 +189,8 @@ void MN_TimerRelease (menuTimer_t *timer)
  * @brief Return the first timer.
  * Only used for white box unittests
  */
-menuTimer_t *MN_GetFirstTimer (void) {
+menuTimer_t *MN_GetFirstTimer (void)
+{
 	return mn_firstTimer;
 }
 
