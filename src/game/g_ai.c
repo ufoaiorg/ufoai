@@ -241,18 +241,20 @@ const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edict_t *en
 	 * corresponding hand slot of the inventory. */
 	if (IS_SHOT_RIGHT(shootType)) {
 		const invList_t *ic = RIGHT(ent);
-		const item_t *item = &ic->item;
-		if (item->m && item->t->weapon && (!item->t->reload || item->a > 0))
-			return item;
-		else
-			return NULL;
+		if (ic != NULL) {
+			const item_t *item = &ic->item;
+			if (item->m && item->t->weapon && (!item->t->reload || item->a > 0))
+				return item;
+		}
+		return NULL;
 	} else if (IS_SHOT_LEFT(shootType)) {
 		const invList_t *ic = LEFT(ent);
-		const item_t *item = &ic->item;
-		if (item->m && item->t->weapon && (!item->t->reload || item->a > 0))
-			return item;
-		else
-			return NULL;
+		if (ic != NULL) {
+			const item_t *item = &ic->item;
+			if (item->m && item->t->weapon && (!item->t->reload || item->a > 0))
+				return item;
+		}
+		return NULL;
 	} else if (IS_SHOT_HEADGEAR(shootType)) {
 		return NULL;
 	}
