@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "CUnit/Basic.h"
 #include "test_inventory.h"
+#include "test_shared.h"
 #include "../common/common.h"
 #include "../game/inventory.h"
 

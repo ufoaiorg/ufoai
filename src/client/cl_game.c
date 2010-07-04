@@ -43,7 +43,7 @@ typedef struct gameTypeList_s {
 	/** soldier spawn functions may differ between the different gametypes */
 	qboolean (*spawn)(void);
 	/** each gametype can handle the current team in a different way */
-	int (*getteam)(void);
+	int (*getTeam)(void);
 	/** some gametypes only support special maps */
 	const mapDef_t* (*mapinfo)(int step);
 	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */
@@ -51,21 +51,21 @@ typedef struct gameTypeList_s {
 	/** check whether the given item is usable in the current game mode */
 	qboolean (*itemIsUseable)(const objDef_t *od);
 	/** shows item info if not resolvable via objDef_t */
-	void (*displayiteminfo)(menuNode_t *node, const char *string);
+	void (*displayItemInfo)(menuNode_t *node, const char *string);
 	/** returns the equipment definition the game mode is using */
-	equipDef_t * (*getequipdef)(void);
+	equipDef_t * (*getEquipmentDefinition)(void);
 	/** update character display values for game type dependent stuff */
-	void (*charactercvars)(const character_t *chr);
+	void (*updateCharacterValues)(const character_t *chr);
 	/** checks whether the given team is known in the particular gamemode */
-	qboolean (*teamisknown)(const teamDef_t *teamDef);
+	qboolean (*isTeamKnown)(const teamDef_t *teamDef);
 	/** called on errors */
 	void (*drop)(void);
 	/** called after the team spawn messages where send, can e.g. be used to set initial actor states */
-	void (*initializebattlescape)(const chrList_t *team);
+	void (*initializeBattlescape)(const chrList_t *team);
 	/** callback that is executed every frame */
 	void (*frame)(void);
 	/** if you want to display a different model for the given object in your game mode, implement this function */
-	const char* (*getmodelforitem)(const objDef_t*od, menuModel_t** menuModel);
+	const char* (*getModelForItem)(const objDef_t*od, menuModel_t** menuModel);
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
@@ -189,8 +189,8 @@ void GAME_RestartMode (int gametype)
 void GAME_DisplayItemInfo (menuNode_t *node, const char *string)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
-	if (list != NULL && list->displayiteminfo)
-		list->displayiteminfo(node, string);
+	if (list != NULL && list->displayItemInfo)
+		list->displayItemInfo(node, string);
 }
 
 void GAME_SetMode (int gametype)
@@ -559,8 +559,8 @@ static qboolean GAME_Spawn (void)
 static void GAME_InitializeBattlescape (chrList_t *team)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
-	if (list && list->initializebattlescape)
-		list->initializebattlescape(team);
+	if (list && list->initializeBattlescape)
+		list->initializeBattlescape(team);
 }
 
 /**
@@ -598,8 +598,8 @@ int GAME_GetCurrentTeam (void)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
 
-	if (list && list->getteam != NULL)
-		return list->getteam();
+	if (list && list->getTeam != NULL)
+		return list->getTeam();
 
 	return TEAM_DEFAULT;
 }
@@ -608,8 +608,8 @@ equipDef_t *GAME_GetEquipmentDefinition (void)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
 
-	if (list && list->getequipdef != NULL)
-		return list->getequipdef();
+	if (list && list->getEquipmentDefinition != NULL)
+		return list->getEquipmentDefinition();
 	return NULL;
 }
 
@@ -620,16 +620,16 @@ qboolean GAME_TeamIsKnown (const teamDef_t *teamDef)
 	if (!teamDef)
 		return qfalse;
 
-	if (list && list->teamisknown != NULL)
-		return list->teamisknown(teamDef);
+	if (list && list->isTeamKnown != NULL)
+		return list->isTeamKnown(teamDef);
 	return qtrue;
 }
 
 void GAME_CharacterCvars (const character_t *chr)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
-	if (list && list->charactercvars != NULL)
-		list->charactercvars(chr);
+	if (list && list->updateCharacterValues != NULL)
+		list->updateCharacterValues(chr);
 }
 
 /**
@@ -683,8 +683,8 @@ void GAME_Frame (void)
 const char* GAME_GetModelForItem (const objDef_t *od, menuModel_t** menuModel)
 {
 	const gameTypeList_t *list = GAME_GetCurrentType();
-	if (list && list->getmodelforitem != NULL) {
-		const char *model = list->getmodelforitem(od, menuModel);
+	if (list && list->getModelForItem != NULL) {
+		const char *model = list->getModelForItem(od, menuModel);
 		if (model != NULL)
 			return model;
 	}
