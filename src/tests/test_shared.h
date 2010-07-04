@@ -30,5 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/shared.h"
 
 void TEST_Printf(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+void TEST_Init(void);
+void TEST_Shutdown(void);
 
 #endif

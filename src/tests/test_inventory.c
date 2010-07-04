@@ -43,17 +43,8 @@ static inline void ResetInventoryList (void)
  */
 static int UFO_InitSuiteInventory (void)
 {
-	com_aliasSysPool = Mem_CreatePool("Common: Alias system");
-	com_cmdSysPool = Mem_CreatePool("Common: Command system");
-	com_cmodelSysPool = Mem_CreatePool("Common: Collision model");
-	com_cvarSysPool = Mem_CreatePool("Common: Cvar system");
-	com_fileSysPool = Mem_CreatePool("Common: File system");
-	com_genericPool = Mem_CreatePool("Generic");
+	TEST_Init();
 
-	Mem_Init();
-	Cmd_Init();
-	Cvar_Init();
-	FS_InitFilesystem(qtrue);
 	Com_ParseScripts(qfalse);
 
 	return 0;
@@ -65,10 +56,7 @@ static int UFO_InitSuiteInventory (void)
  */
 static int UFO_CleanSuiteInventory (void)
 {
-	FS_Shutdown();
-	Cmd_Shutdown();
-	Cvar_Shutdown();
-	Mem_Shutdown();
+	TEST_Shutdown();
 	return 0;
 }
 
