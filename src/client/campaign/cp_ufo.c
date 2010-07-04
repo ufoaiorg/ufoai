@@ -472,16 +472,16 @@ void UFO_CheckShootBack (aircraft_t *ufo, aircraft_t* phalanxAircraft)
 
 /**
  * @brief Make the UFOs run
- * @param[in] dt time delta
+ * @param[in] deltaTime The time passed since last call
  */
-void UFO_CampaignRunUFOs (int dt)
+void UFO_CampaignRunUFOs (int deltaTime)
 {
 	int ufoIdx, k;
 
-	assert(dt >= 0);
+	assert(deltaTime >= 0);
 
-	/* dt may be 0 if a UFO has been detection occured (see CL_CampaignRun) */
-	if (!dt)
+	/* deltaTime may be 0 if a UFO has been detection occurred */
+	if (!deltaTime)
 		return;
 
 	/* now the ufos are flying around, too - cycle backward - ufo might be destroyed */
@@ -495,7 +495,7 @@ void UFO_CampaignRunUFOs (int dt)
 		assert(ufo->mission);
 
 		/* reached target and not following a phalanx aircraft? then we need a new destination */
-		if (AIR_AircraftMakeMove(dt, ufo) && ufo->status != AIR_UFO) {
+		if (AIR_AircraftMakeMove(deltaTime, ufo) && ufo->status != AIR_UFO) {
 			float *end;
 			end = ufo->route.point[ufo->route.numPoints - 1];
 			Vector2Copy(end, ufo->pos);
@@ -522,8 +522,9 @@ void UFO_CampaignRunUFOs (int dt)
 
 		/* Update delay to launch next projectile */
 		for (k = 0; k < ufo->maxWeapons; k++) {
-			if (ufo->weapons[k].delayNextShot > 0)
-				ufo->weapons[k].delayNextShot -= dt;
+			aircraftSlot_t *slot = &ufo->weapons[k];
+			if (slot->delayNextShot > 0)
+				slot->delayNextShot -= deltaTime;
 		}
 	}
 }
@@ -597,11 +598,11 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 		return NULL;
 	}
 
-	for (newUFONum = 0; newUFONum < ccs.numAircraftTemplates; newUFONum++)
-		if (ccs.aircraftTemplates[newUFONum].type == AIRCRAFT_UFO
-		 && ufoType == ccs.aircraftTemplates[newUFONum].ufotype
-		 && !ccs.aircraftTemplates[newUFONum].notOnGeoscape)
+	for (newUFONum = 0; newUFONum < ccs.numAircraftTemplates; newUFONum++) {
+		const aircraft_t *tpl = &ccs.aircraftTemplates[newUFONum];
+		if (tpl->type == AIRCRAFT_UFO && ufoType == tpl->ufotype && !tpl->notOnGeoscape)
 			break;
+	}
 
 	if (newUFONum == ccs.numAircraftTemplates) {
 		Com_DPrintf(DEBUG_CLIENT, "Could not add ufo type %i to geoscape\n", ufoType);
