@@ -237,24 +237,27 @@ const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edict_t *en
 	if (IS_SHOT_REACTION(shootType))
 		return NULL;
 
-	if (IS_SHOT_RIGHT(shootType) && RIGHT(ent)
-		&& RIGHT(ent)->item.m
-		&& RIGHT(ent)->item.t->weapon
-		&& (!RIGHT(ent)->item.t->reload
-			|| RIGHT(ent)->item.a > 0)) {
-		return &RIGHT(ent)->item;
-	} else if (IS_SHOT_LEFT(shootType) && LEFT(ent)
-		&& LEFT(ent)->item.m
-		&& LEFT(ent)->item.t->weapon
-		&& (!LEFT(ent)->item.t->reload
-			|| LEFT(ent)->item.a > 0)) {
-		return &LEFT(ent)->item;
-	} else {
-		Com_DPrintf(DEBUG_GAME, "AI_FighterCalcBestAction: todo - grenade/knife toss from inventory using empty hand\n");
-		/** @todo grenade/knife toss from inventory using empty hand */
-		/** @todo evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
+	/* check that the current selected shoot type also has a valid item in its
+	 * corresponding hand slot of the inventory. */
+	if (IS_SHOT_RIGHT(shootType)) {
+		const invList_t *ic = RIGHT(ent);
+		const item_t *item = &ic->item;
+		if (item->m && item->t->weapon && (!item->t->reload || item->a > 0))
+			return item;
+		else
+			return NULL;
+	} else if (IS_SHOT_LEFT(shootType)) {
+		const invList_t *ic = LEFT(ent);
+		const item_t *item = &ic->item;
+		if (item->m && item->t->weapon && (!item->t->reload || item->a > 0))
+			return item;
+		else
+			return NULL;
+	} else if (IS_SHOT_HEADGEAR(shootType)) {
 		return NULL;
 	}
+
+	return NULL;
 }
 
 /**
