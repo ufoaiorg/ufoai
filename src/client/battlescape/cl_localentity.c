@@ -959,7 +959,7 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 
 void LET_BrushModel (le_t *le)
 {
-	/** @todo what is le->speed for a brush model? */
+	/* the speed is e.g. used to determine how fast a rotation will be */
 	if (cl.time - le->thinkDelay < le->speed[0]) {
 		le->thinkDelay = cl.time;
 		return;
