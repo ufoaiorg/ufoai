@@ -65,7 +65,7 @@ typedef struct {
 	/** called after the team spawn messages where send, can e.g. be used to set initial actor states */
 	void (EXPORT *InitializeBattlescape) (const chrList_t *team);
 	/** callback that is executed every frame */
-	void (EXPORT *Frame) (void);
+	void (EXPORT *RunFrame) (void);
 	/** if you want to display a different model for the given object in your game mode, implement this function */
 	const char* (EXPORT *GetModelForItem) (const objDef_t*od, menuModel_t** menuModel);
 } cgame_export_t;
@@ -736,8 +736,8 @@ void GAME_Frame (void)
 	const cgame_export_t *list;
 
 	list = GAME_GetCurrentType();
-	if (list && list->Frame != NULL)
-		list->Frame();
+	if (list && list->RunFrame != NULL)
+		list->RunFrame();
 }
 
 /**
