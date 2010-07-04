@@ -226,9 +226,9 @@ typedef struct {
 	void (IMPORT *FreeTags) (int tag);
 
 	/* console variable interaction */
-	cvar_t *(IMPORT *Cvar_Get) (const char *var_name, const char *value, int flags, const char* desc);
-	cvar_t *(IMPORT *Cvar_Set) (const char *var_name, const char *value);
-	const char *(IMPORT *Cvar_String) (const char *var_name);
+	cvar_t *(IMPORT *Cvar_Get) (const char *varName, const char *value, int flags, const char* desc);
+	cvar_t *(IMPORT *Cvar_Set) (const char *varName, const char *value);
+	const char *(IMPORT *Cvar_String) (const char *varName);
 
 	/* ClientCommand and ServerCommand parameter access */
 	int (IMPORT *Cmd_Argc) (void);

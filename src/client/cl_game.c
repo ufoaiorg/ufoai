@@ -36,41 +36,63 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static invList_t invList[MAX_INVLIST];
 
-typedef struct gameTypeList_s {
+typedef struct {
 	const char *name;
 	const char *menu;
 	int gametype;
-	void (*init)(void);
-	void (*shutdown)(void);
+	void (EXPORT *Init) (void);
+	void (EXPORT *Shutdown) (void);
 	/** soldier spawn functions may differ between the different gametypes */
-	qboolean (*spawn)(void);
+	qboolean (EXPORT *Spawn) (void);
 	/** each gametype can handle the current team in a different way */
-	int (*getTeam)(void);
+	int (EXPORT *GetTeam) (void);
 	/** some gametypes only support special maps */
-	const mapDef_t* (*mapinfo)(int step);
+	const mapDef_t* (EXPORT *MapInfo) (int step);
 	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */
-	void (*results)(struct dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
+	void (EXPORT *Results) (struct dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
 	/** check whether the given item is usable in the current game mode */
-	qboolean (*itemIsUseable)(const objDef_t *od);
+	qboolean (EXPORT *IsItemUseable) (const objDef_t *od);
 	/** shows item info if not resolvable via objDef_t */
-	void (*displayItemInfo)(menuNode_t *node, const char *string);
+	void (EXPORT *DisplayItemInfo) (menuNode_t *node, const char *string);
 	/** returns the equipment definition the game mode is using */
-	equipDef_t * (*getEquipmentDefinition)(void);
+	equipDef_t* (EXPORT *GetEquipmentDefinition) (void);
 	/** update character display values for game type dependent stuff */
-	void (*updateCharacterValues)(const character_t *chr);
+	void (EXPORT *UpdateCharacterValues) (const character_t *chr);
 	/** checks whether the given team is known in the particular gamemode */
-	qboolean (*isTeamKnown)(const teamDef_t *teamDef);
+	qboolean (EXPORT *IsTeamKnown) (const teamDef_t *teamDef);
 	/** called on errors */
-	void (*drop)(void);
+	void (EXPORT *Drop) (void);
 	/** called after the team spawn messages where send, can e.g. be used to set initial actor states */
-	void (*initializeBattlescape)(const chrList_t *team);
+	void (EXPORT *InitializeBattlescape) (const chrList_t *team);
 	/** callback that is executed every frame */
-	void (*frame)(void);
+	void (EXPORT *Frame) (void);
 	/** if you want to display a different model for the given object in your game mode, implement this function */
-	const char* (*getModelForItem)(const objDef_t*od, menuModel_t** menuModel);
-} gameTypeList_t;
+	const char* (EXPORT *GetModelForItem) (const objDef_t*od, menuModel_t** menuModel);
+} cgame_export_t;
 
-static const gameTypeList_t gameTypeList[] = {
+/** @todo define the import interface */
+typedef struct {
+	csi_t *csi;
+
+	void (IMPORT *MN_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+
+	/* filesystem functions */
+	const char *(IMPORT *FS_Gamedir) (void);
+	int (IMPORT *FS_LoadFile) (const char *path, byte **buffer);
+	void (IMPORT *FS_FreeFile) (void *buffer);
+
+	/* console variable interaction */
+	cvar_t *(IMPORT *Cvar_Get) (const char *varName, const char *value, int flags, const char* desc);
+	cvar_t *(IMPORT *Cvar_Set) (const char *varName, const char *value);
+	const char *(IMPORT *Cvar_String) (const char *varName);
+
+	/* ClientCommand and ServerCommand parameter access */
+	int (IMPORT *Cmd_Argc) (void);
+	const char *(IMPORT *Cmd_Argv) (int n);
+	const char *(IMPORT *Cmd_Args) (void);		/**< concatenation of all argv >= 1 */
+} cgame_import_t;
+
+static const cgame_export_t gameTypeList[] = {
 	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL, NULL},
 	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_DisplayItemInfo, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape, GAME_CP_Frame, GAME_CP_GetModelForItem},
 	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
@@ -196,9 +218,9 @@ void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed, int teamMem
 		GAME_AppendTeamMember(i, teamDefID, ed);
 }
 
-static const gameTypeList_t *GAME_GetCurrentType (void)
+static const cgame_export_t *GAME_GetCurrentType (void)
 {
-	const gameTypeList_t *list = gameTypeList;
+	const cgame_export_t *list = gameTypeList;
 
 	if (cls.gametype == GAME_NONE)
 		return NULL;
@@ -214,7 +236,7 @@ static const gameTypeList_t *GAME_GetCurrentType (void)
 
 void GAME_ReloadMode (void)
 {
-	const gameTypeList_t *list = GAME_GetCurrentType();
+	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list != NULL)
 		GAME_RestartMode(list->gametype);
 }
@@ -232,14 +254,14 @@ void GAME_RestartMode (int gametype)
  */
 void GAME_DisplayItemInfo (menuNode_t *node, const char *string)
 {
-	const gameTypeList_t *list = GAME_GetCurrentType();
-	if (list != NULL && list->displayItemInfo)
-		list->displayItemInfo(node, string);
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list != NULL && list->DisplayItemInfo)
+		list->DisplayItemInfo(node, string);
 }
 
 void GAME_SetMode (int gametype)
 {
-	const gameTypeList_t *list = gameTypeList;
+	const cgame_export_t *list = gameTypeList;
 
 	if (gametype < 0 || gametype > GAME_MAX) {
 		Com_Printf("Invalid gametype %i given\n", gametype);
@@ -252,7 +274,7 @@ void GAME_SetMode (int gametype)
 	list = GAME_GetCurrentType();
 	if (list) {
 		Com_Printf("Shutdown gametype '%s'\n", list->name);
-		list->shutdown();
+		list->Shutdown();
 
 		/* we dont need to go back to "main" stack if we are already on this stack */
 		if (!MN_IsWindowOnStack("main"))
@@ -269,7 +291,7 @@ void GAME_SetMode (int gametype)
 		memset(&invList, 0, sizeof(invList));
 		/* inventory structure switched/initialized */
 		INV_InitInventory(&cls.i, &csi, invList, lengthof(invList));
-		list->init();
+		list->Init();
 	}
 }
 
@@ -299,7 +321,7 @@ static void MN_MapInfo (int step)
 {
 	const char *mapname;
 	const mapDef_t *md;
-	const gameTypeList_t *list = gameTypeList;
+	const cgame_export_t *list = gameTypeList;
 
 	if (!csi.numMDs)
 		return;
@@ -309,7 +331,7 @@ static void MN_MapInfo (int step)
 	md = NULL;
 	while (list->name) {
 		if (list->gametype == cls.gametype) {
-			md = list->mapinfo(step);
+			md = list->MapInfo(step);
 			break;
 		}
 		list++;
@@ -398,7 +420,7 @@ static void MN_SelectMap_f (void)
 static void GAME_SetMode_f (void)
 {
 	const char *modeName;
-	const gameTypeList_t *list = gameTypeList;
+	const cgame_export_t *list = gameTypeList;
 
 	if (Cmd_Argc() == 2)
 		modeName = Cmd_Argv(1);
@@ -420,7 +442,7 @@ static void GAME_SetMode_f (void)
 
 qboolean GAME_ItemIsUseable (const objDef_t *od)
 {
-	const gameTypeList_t *list = GAME_GetCurrentType();
+	const cgame_export_t *list = GAME_GetCurrentType();
 	const char *teamDefID = GAME_GetTeamDef();
 	const teamDef_t *teamDef = Com_GetTeamDefinitionByID((teamDefID));
 
@@ -428,8 +450,8 @@ qboolean GAME_ItemIsUseable (const objDef_t *od)
 	if (!INVSH_IsArmourUseableForTeam(od, teamDef))
 		return qfalse;
 
-	if (list && list->itemIsUseable)
-		return list->itemIsUseable(od);
+	if (list && list->IsItemUseable)
+		return list->IsItemUseable(od);
 
 	return qtrue;
 }
@@ -447,9 +469,9 @@ qboolean GAME_ItemIsUseable (const objDef_t *od)
  */
 void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
-	const gameTypeList_t *list = GAME_GetCurrentType();
+	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list)
-		list->results(msg, winner, numSpawned, numAlive, numKilled, numStunned);
+		list->Results(msg, winner, numSpawned, numAlive, numKilled, numStunned);
 	else
 		CL_Drop();
 }
@@ -602,9 +624,9 @@ static qboolean GAME_Spawn (void)
  */
 static void GAME_InitializeBattlescape (chrList_t *team)
 {
-	const gameTypeList_t *list = GAME_GetCurrentType();
-	if (list && list->initializeBattlescape)
-		list->initializeBattlescape(team);
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list && list->InitializeBattlescape)
+		list->InitializeBattlescape(team);
 }
 
 /**
@@ -612,12 +634,12 @@ static void GAME_InitializeBattlescape (chrList_t *team)
  */
 void GAME_SpawnSoldiers (void)
 {
-	const gameTypeList_t *list = GAME_GetCurrentType();
+	const cgame_export_t *list = GAME_GetCurrentType();
 	qboolean spawnStatus;
 
 	/* this callback is responsible to set up the cl.chrList */
-	if (list && list->spawn)
-		spawnStatus = list->spawn();
+	if (list && list->Spawn)
+		spawnStatus = list->Spawn();
 	else
 		spawnStatus = GAME_Spawn();
 
@@ -640,40 +662,40 @@ void GAME_SpawnSoldiers (void)
 
 int GAME_GetCurrentTeam (void)
 {
-	const gameTypeList_t *list = GAME_GetCurrentType();
+	const cgame_export_t *list = GAME_GetCurrentType();
 
-	if (list && list->getTeam != NULL)
-		return list->getTeam();
+	if (list && list->GetTeam != NULL)
+		return list->GetTeam();
 
 	return TEAM_DEFAULT;
 }
 
 equipDef_t *GAME_GetEquipmentDefinition (void)
 {
-	const gameTypeList_t *list = GAME_GetCurrentType();
+	const cgame_export_t *list = GAME_GetCurrentType();
 
-	if (list && list->getEquipmentDefinition != NULL)
-		return list->getEquipmentDefinition();
+	if (list && list->GetEquipmentDefinition != NULL)
+		return list->GetEquipmentDefinition();
 	return NULL;
 }
 
 qboolean GAME_TeamIsKnown (const teamDef_t *teamDef)
 {
-	const gameTypeList_t *list = GAME_GetCurrentType();
+	const cgame_export_t *list = GAME_GetCurrentType();
 
 	if (!teamDef)
 		return qfalse;
 
-	if (list && list->isTeamKnown != NULL)
-		return list->isTeamKnown(teamDef);
+	if (list && list->IsTeamKnown != NULL)
+		return list->IsTeamKnown(teamDef);
 	return qtrue;
 }
 
 void GAME_CharacterCvars (const character_t *chr)
 {
-	const gameTypeList_t *list = GAME_GetCurrentType();
-	if (list && list->updateCharacterValues != NULL)
-		list->updateCharacterValues(chr);
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list && list->UpdateCharacterValues != NULL)
+		list->UpdateCharacterValues(chr);
 }
 
 /**
@@ -687,10 +709,10 @@ static void GAME_Abort_f (void)
 
 void GAME_Drop (void)
 {
-	const gameTypeList_t *list = GAME_GetCurrentType();
+	const cgame_export_t *list = GAME_GetCurrentType();
 
-	if (list && list->drop) {
-		list->drop();
+	if (list && list->Drop) {
+		list->Drop();
 	} else {
 		SV_Shutdown("Drop", qfalse);
 		GAME_SetMode(GAME_NONE);
@@ -711,11 +733,11 @@ static void GAME_Exit_f (void)
  */
 void GAME_Frame (void)
 {
-	const gameTypeList_t *list;
+	const cgame_export_t *list;
 
 	list = GAME_GetCurrentType();
-	if (list && list->frame != NULL)
-		list->frame();
+	if (list && list->Frame != NULL)
+		list->Frame();
 }
 
 /**
@@ -726,9 +748,9 @@ void GAME_Frame (void)
  */
 const char* GAME_GetModelForItem (const objDef_t *od, menuModel_t** menuModel)
 {
-	const gameTypeList_t *list = GAME_GetCurrentType();
-	if (list && list->getModelForItem != NULL) {
-		const char *model = list->getModelForItem(od, menuModel);
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list && list->GetModelForItem != NULL) {
+		const char *model = list->GetModelForItem(od, menuModel);
 		if (model != NULL)
 			return model;
 	}
