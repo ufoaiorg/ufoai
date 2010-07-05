@@ -238,7 +238,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	/* Autostand: check if the actor is crouched and player wants autostanding...*/
 	if (crouchingState && player->autostand) {
 		/* ...and if this is a long walk... */
-		if ((float) (2 * TU_CROUCH) < (float) length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
+		if ((float) (2.0f * TU_CROUCH) * TU_CROUCH_MOVING_FACTOR / (TU_CROUCH_MOVING_FACTOR - 1.0f) < (float) length) {
 			/* ...make them stand first. If the player really wants them to walk a long
 			 * way crouched, he can move the actor in several stages.
 			 * Uses the threshold at which standing, moving and crouching again takes
