@@ -36,5 +36,3 @@ void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, 
 void R_UploadRadarCoverage(void);
 void R_ShutdownOverlay(void);
 
-extern image_t *r_xviTexture;
-extern image_t *r_radarTexture;

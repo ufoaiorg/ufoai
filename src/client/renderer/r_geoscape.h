@@ -30,6 +30,7 @@ void R_Draw2DMapMarkers(const vec2_t screenPos, float direction, const char *mod
 void R_Draw3DMapMarkers(int x, int y, int w, int h, const vec3_t rotate, const vec2_t pos, float direction, float earthRadius, const char *model, int skin);
 void R_DrawFlatGeoscape(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map, int overlay);
 void R_DrawBloom(void);
+void R_InitGeoscape(void);
 
 #define OVERLAY_NATION		(1<<0)
 #define OVERLAY_XVI			(1<<1)

@@ -57,18 +57,6 @@ void R_GetXVIMapDimensions (int *width, int *height)
 	*height = XVI_HEIGHT;
 }
 
-static void R_UploadAlpha (const image_t *image, const byte *alphaData)
-{
-	R_BindTexture(image->texnum);
-
-	/* upload alpha map into the r_dayandnighttexture */
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, image->width, image->height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, alphaData);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-}
-
 void R_SetXVILevel (int x, int y, int value)
 {
 	assert(x >= 0);
@@ -450,6 +438,6 @@ void R_ShutdownOverlay (void)
 
 void R_InitOverlay (void)
 {
-	r_radarTexture = R_LoadImageData("***r_radarTexture***", NULL, RADAR_WIDTH, RADAR_HEIGHT, it_wrappic);
+	r_radarTexture = R_LoadImageData("***r_radarTexture***", NULL, RADAR_WIDTH, RADAR_HEIGHT, it_effect);
 	r_xviTexture = R_LoadImageData("***r_xvitexture***", NULL, XVI_WIDTH, XVI_HEIGHT, it_effect);
 }

@@ -95,7 +95,7 @@ void R_InitImages(void);
 void R_ShutdownImages(void);
 void R_FreeWorldImages(void);
 void R_ImageClearMaterials(void);
-void R_CalcAndUploadDayAndNightTexture(float q);
+void R_UploadAlpha(const image_t *image, const byte *alphaData);
 void R_FilterTexture(byte *in, int width, int height, imagetype_t type, int bpp);
 void R_TextureMode(const char *string);
 void R_TextureAlphaMode(const char *string);
@@ -122,6 +122,5 @@ extern image_t *r_flaretextures[NUM_FLARETEXTURES];
 extern image_t *shadow;	/**< draw this when actor is alive */
 extern image_t *r_noTexture;
 extern image_t *r_warpTexture;
-extern image_t *r_dayandnightTexture;
 
 #endif

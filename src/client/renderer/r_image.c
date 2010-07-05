@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_error.h"
 #include "r_overlay.h"
+#include "r_geoscape.h"
 #include "../../shared/images.h"
 
 #define MAX_IMAGEHASH 256
@@ -460,59 +461,17 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 	Mem_Free(out);
 }
 
-#define DAN_WIDTH	512
-#define DAN_HEIGHT	256
-
-#define DAWN		0.03
-
-/** this is the data that is used with r_dayandnightTexture */
-static byte r_dayandnightAlpha[DAN_WIDTH * DAN_HEIGHT];
-/** this is the mask that is used to display day/night on (2d-)geoscape */
-image_t *r_dayandnightTexture;
-
-/**
- * @brief Applies alpha values to the night overlay image for 2d geoscape
- * @param[in] q The angle the sun is standing against the equator on earth
- */
-void R_CalcAndUploadDayAndNightTexture (float q)
+void R_UploadAlpha (const image_t *image, const byte *alphaData)
 {
-	int x, y;
-	const float dphi = (float) 2 * M_PI / DAN_WIDTH;
-	const float da = M_PI / 2 * (HIGH_LAT - LOW_LAT) / DAN_HEIGHT;
-	const float sin_q = sin(q);
-	const float cos_q = cos(q);
-	float sin_phi[DAN_WIDTH], cos_phi[DAN_WIDTH];
-	byte *px;
-
-	for (x = 0; x < DAN_WIDTH; x++) {
-		const float phi = x * dphi - q;
-		sin_phi[x] = sin(phi);
-		cos_phi[x] = cos(phi);
-	}
-
-	/* calculate */
-	px = r_dayandnightAlpha;
-	for (y = 0; y < DAN_HEIGHT; y++) {
-		const float a = sin(M_PI / 2 * HIGH_LAT - y * da);
-		const float root = sqrt(1 - a * a);
-		for (x = 0; x < DAN_WIDTH; x++) {
-			const float pos = sin_phi[x] * root * sin_q - (a * SIN_ALPHA + cos_phi[x] * root * COS_ALPHA) * cos_q;
-
-			if (pos >= DAWN)
-				*px++ = 255;
-			else if (pos <= -DAWN)
-				*px++ = 0;
-			else
-				*px++ = (byte) (128.0 * (pos / DAWN + 1));
-		}
-	}
+	R_BindTexture(image->texnum);
 
 	/* upload alpha map into the r_dayandnighttexture */
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, DAN_WIDTH, DAN_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, r_dayandnightAlpha);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, image->width, image->height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, alphaData);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_max);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	R_CheckError();
+	if (image->type == it_wrappic)
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 }
 
 static inline void R_DeleteImage (image_t *image)
@@ -751,10 +710,6 @@ void R_InitImages (void)
 
 	r_numImages = 0;
 
-	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
-	if (r_dayandnightTexture == r_noTexture)
-		Com_Error(ERR_FATAL, "Could not create daynight image for the geoscape");
-
 	for (i = 0; i < MAX_ENVMAPTEXTURES; i++) {
 		r_envmaptextures[i] = R_FindImage(va("pics/envmaps/envmap_%i", i), it_effect);
 		if (r_envmaptextures[i] == r_noTexture)
@@ -767,6 +722,7 @@ void R_InitImages (void)
 			Com_Error(ERR_FATAL, "Could not load lens flare %i", i);
 	}
 
+	R_InitGeoscape();
 	R_InitOverlay();
 }
 
