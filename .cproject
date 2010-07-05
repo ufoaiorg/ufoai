@@ -17,8 +17,8 @@
 </tool>
 <tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.308147572" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
 <option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1116494500" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufo/src/tools/radiant/include}&quot;"/>
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufo/src/tools/radiant/libs}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai-trunk/src/tools/radiant/include}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai-trunk/src/tools/radiant/libs}&quot;"/>
 <listOptionValue builtIn="false" value="/usr/include/gtk-2.0"/>
 <listOptionValue builtIn="false" value="/usr/include/glib-2.0"/>
 <listOptionValue builtIn="false" value="/usr/include/gtkglext-1.0"/>
