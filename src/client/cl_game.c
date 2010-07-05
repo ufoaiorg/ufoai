@@ -185,6 +185,81 @@ void GAME_DisplayItemInfo (menuNode_t *node, const char *string)
 		list->DisplayItemInfo(node, string);
 }
 
+#if 0
+/**
+ * @todo Implement the usage of this function and update the game modes to use the callbacks
+ */
+static cgame_import_t* GAME_GetImportData (void)
+{
+	static cgame_import_t gameImport;
+	static cgame_import_t *cgi = NULL;
+
+	if (cgi == NULL) {
+		memset(&gameImport, 0, sizeof(gameImport));
+		cgi = &gameImport;
+
+		cgi->csi = &csi;
+		cgi->cls = &cls;
+		cgi->cl = &cl;
+
+		cgi->Cmd_AddCommand = Cmd_AddCommand;
+		cgi->Cmd_Argc = Cmd_Argc;
+		cgi->Cmd_Args = Cmd_Args;
+		cgi->Cmd_Argv = Cmd_Argv;
+		cgi->Cmd_ExecuteString = Cmd_ExecuteString;
+		cgi->Cmd_RemoveCommand = Cmd_RemoveCommand;
+		cgi->Cvar_Delete = Cvar_Delete;
+		cgi->Cvar_Get = Cvar_Get;
+		cgi->Cvar_Integer = Cvar_GetInteger;
+		cgi->Cvar_Set = Cvar_Set;
+		cgi->Cvar_SetValue = Cvar_SetValue;
+		cgi->Cvar_String = Cvar_GetString;
+		cgi->FS_FreeFile = FS_FreeFile;
+		cgi->FS_LoadFile = FS_LoadFile;
+		cgi->MN_AddOption = MN_AddOption;
+		cgi->MN_ExecuteConfunc = MN_ExecuteConfunc;
+		cgi->MN_InitStack = MN_InitStack;
+		cgi->MN_Popup = MN_Popup;
+		cgi->MN_PopupList = MN_PopupList;
+		cgi->MN_PopWindow = MN_PopWindow;
+		cgi->MN_PushWindow = MN_PushWindow;
+		cgi->MN_RegisterLinkedListText = MN_RegisterLinkedListText;
+		cgi->MN_RegisterOption = MN_RegisterOption;
+		cgi->MN_RegisterText = MN_RegisterText;
+		cgi->MN_ResetData = MN_ResetData;
+		cgi->MN_TextNodeSelectLine = MN_TextNodeSelectLine;
+		cgi->mxml_AddBool = mxml_AddBool;
+		cgi->mxml_AddBoolValue = mxml_AddBoolValue;
+		cgi->mxml_AddByte = mxml_AddByte;
+		cgi->mxml_AddByteValue = mxml_AddByteValue;
+		cgi->mxml_AddDate = mxml_AddDate;
+		cgi->mxml_AddDouble = mxml_AddDouble;
+		cgi->mxml_AddDoubleValue = mxml_AddDoubleValue;
+		cgi->mxml_AddFloat = mxml_AddFloat;
+		cgi->mxml_AddFloatValue = mxml_AddFloatValue;
+		cgi->mxml_AddInt = mxml_AddInt;
+		cgi->mxml_AddIntValue = mxml_AddIntValue;
+		cgi->mxml_AddLong = mxml_AddLong;
+		cgi->mxml_AddLongValue = mxml_AddLongValue;
+		cgi->mxml_AddNode = mxml_AddNode;
+		cgi->mxml_AddPos2 = mxml_AddPos2;
+		cgi->mxml_AddPos3 = mxml_AddPos3;
+		cgi->mxml_AddShort = mxml_AddShort;
+		cgi->mxml_AddShortValue = mxml_AddShortValue;
+		cgi->mxml_AddString = mxml_AddString;
+		cgi->mxml_AddStringValue = mxml_AddStringValue;
+		cgi->R_LoadImage = R_LoadImage;
+		cgi->R_LoadImageData = R_LoadImageData;
+		cgi->R_SoftenTexture = R_SoftenTexture;
+		cgi->R_UploadAlpha = R_UploadAlpha;
+		cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;
+		cgi->S_StartLocalSample = S_StartLocalSample;
+	}
+
+	return cgi;
+}
+#endif
+
 void GAME_SetMode (int gametype)
 {
 	const cgame_export_t *list;
