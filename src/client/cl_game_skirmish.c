@@ -156,8 +156,7 @@ void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	CL_Drop();
 
 	if (winner == 0) {
-		Q_strncpyz(popupText, _("The game was a draw!\n\nNo survivors left on any side."), sizeof(popupText));
-		MN_Popup(_("Game Drawn!"), popupText);
+		MN_Popup(_("Game Drawn!"), _("The game was a draw!\n\nNo survivors left on any side."));
 		return;
 	}
 

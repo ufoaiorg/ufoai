@@ -150,8 +150,7 @@ static void INS_BuildInstallation_f (void)
 		if (ccs.mapAction == MA_NEWINSTALLATION)
 			ccs.mapAction = MA_NONE;
 
-		Q_strncpyz(popupText, _("Not enough credits to set up a new installation."), sizeof(popupText));
-		MN_Popup(_("Notice"), popupText);
+		MN_Popup(_("Notice"), _("Not enough credits to set up a new installation."));
 	}
 }
 
