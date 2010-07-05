@@ -3994,6 +3994,19 @@ base/textures/pt/b/bctex001_3c5.png | GNU General Public License 2.0 or later | 
 base/textures/pt/b/bctex001_3c6.png | GNU General Public License 2.0 or later | Marcin "MCR"
 base/textures/pt/b/bctex001_3c7.png | GNU General Public License 2.0 or later | Marcin "MCR"
 base/textures/pt/b/bctex001_3c8.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/cs/s1_02_0_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/cs/s1_03_0_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/cs/s1_03_1_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/cs/s2_13-16_0_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/cs/s2_17_0_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/cs/s2_med01_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/cs/s2_med01_sk0b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/cs/s2_med01_sk1a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/cs/s2_med02_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/cs/s2_med02_sk0b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/cs/s2_med02_sk1a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/cs/sscrp004_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/cs/sscrp004_sk1a0.png | GNU General Public License 2.0 | MCR
 base/textures/pt/d/d2_13-16_0_sk0a0.png | GNU General Public License 2.0 | MCR
 base/textures/pt/d/d2_13-16_0a0.png | GNU General Public License 2.0 | MCR
 base/textures/pt/d/d2_13-16_0a1.png | GNU General Public License 2.0 | MCR
