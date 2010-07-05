@@ -179,50 +179,40 @@ static void G_UpdateShotMock (shot_mock_t *mock, const edict_t *shooter, const e
  */
 static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, const edict_t *target)
 {
+	chrScoreMission_t *scoreMission;
+	chrScoreGlobal_t *scoreGlobal;
+	killtypes_t type;
+
 	if (!attacker || !fd || !target)
 		return;
 
+	scoreGlobal = &attacker->chr.score;
+	scoreMission = attacker->chr.scoreMission;
 	/* only phalanx soldiers have this */
-	if (attacker->chr.scoreMission == NULL)
+	if (!scoreMission)
 		return;
 
 	switch (target->team) {
 	case TEAM_ALIEN:
-		if (target->HP <= 0) {
-			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->kills[KILLED_ENEMIES]++;
-			attacker->chr.score.kills[KILLED_ENEMIES]++;
-		} else {
-			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->stuns[KILLED_ENEMIES]++;
-			attacker->chr.score.stuns[KILLED_ENEMIES]++;
-		}
-
+		type = KILLED_ENEMIES;
 		/** @todo Add check for valid values of fd->weaponSkill */
-		if (attacker->chr.scoreMission)
-			attacker->chr.scoreMission->skillKills[fd->weaponSkill]++;
+		scoreMission->skillKills[fd->weaponSkill]++;
 		break;
 	case TEAM_CIVILIAN:
-		if (target->HP <= 0) {
-			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->kills[KILLED_CIVILIANS]++;
-			attacker->chr.score.kills[KILLED_CIVILIANS]++;
-		} else {
-			attacker->chr.scoreMission->stuns[KILLED_CIVILIANS]++;
-			attacker->chr.score.stuns[KILLED_CIVILIANS]++;
-		}
+		type = KILLED_CIVILIANS;
 		break;
 	case TEAM_PHALANX:
-		if (target->HP <= 0) {
-			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->kills[KILLED_TEAM]++;
-			attacker->chr.score.kills[KILLED_TEAM]++;
-		} else {
-			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->stuns[KILLED_TEAM]++;
-			attacker->chr.score.stuns[KILLED_TEAM]++;
-		}
+		type = KILLED_TEAM;
 		break;
+	default:
+		return;
+	}
+	if (target->HP <= 0) {
+		scoreMission->kills[type]++;
+		scoreGlobal->kills[type]++;
+	} else {
+		scoreMission->stuns[type]++;
+		scoreGlobal->stuns[type]++;
 	}
 }
 
@@ -236,6 +226,7 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
 static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const fireDef_t * fd, const int splashDamage)
 {
 	chrScoreMission_t *score;
+	killtypes_t type;
 
 	if (!attacker || !target || !fd)
 		return;
@@ -245,6 +236,17 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
 	if (!score)
 		return;
 
+	switch (target->team) {
+		case TEAM_CIVILIAN:
+			type = KILLED_CIVILIANS;
+			break;
+		case TEAM_ALIEN:
+			type = KILLED_ENEMIES;
+			break;
+		default:
+			return;
+	}
+
 	if (!splashDamage) {
 		if (attacker->team == target->team && !score->firedHit[KILLED_TEAM]) {
 			/* Increase friendly fire counter. */
@@ -252,21 +254,9 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
 			score->firedHit[KILLED_TEAM] = qtrue;
 		}
 
-		switch (target->team) {
-			case TEAM_CIVILIAN:
-				if (!score->firedHit[KILLED_CIVILIANS]) {
-					score->hits[fd->weaponSkill][KILLED_CIVILIANS]++;
-					score->firedHit[KILLED_CIVILIANS] = qtrue;
-				}
-				break;
-			case TEAM_ALIEN:
-				if (!score->firedHit[KILLED_ENEMIES]) {
-					score->hits[fd->weaponSkill][KILLED_ENEMIES]++;
-					score->firedHit[KILLED_ENEMIES] = qtrue;
-				}
-				break;
-			default:
-				return;
+		if (!score->firedHit[type]) {
+			score->hits[fd->weaponSkill][type]++;
+			score->firedHit[type] = qtrue;
 		}
 	} else {
 		if (attacker->team == target->team) {
@@ -278,23 +268,10 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
 			}
 		}
 
-		switch (target->team) {
-			case TEAM_CIVILIAN:
-				score->hitsSplashDamage[fd->weaponSkill][KILLED_CIVILIANS] += splashDamage;
-				if (!score->firedSplashHit[KILLED_CIVILIANS]) {
-					score->hitsSplash[fd->weaponSkill][KILLED_CIVILIANS]++;
-					score->firedSplashHit[KILLED_CIVILIANS] = qtrue;
-				}
-				break;
-			case TEAM_ALIEN:
-				score->hitsSplashDamage[fd->weaponSkill][KILLED_ENEMIES] += splashDamage;
-				if (!score->firedSplashHit[KILLED_ENEMIES]) {
-					score->hitsSplash[fd->weaponSkill][KILLED_ENEMIES]++;
-					score->firedSplashHit[KILLED_ENEMIES] = qtrue;
-				}
-				break;
-			default:
-				return;
+		score->hitsSplashDamage[fd->weaponSkill][type] += splashDamage;
+		if (!score->firedSplashHit[type]) {
+			score->hitsSplash[fd->weaponSkill][type]++;
+			score->firedSplashHit[type] = qtrue;
 		}
 	}
 }
