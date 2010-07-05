@@ -321,6 +321,8 @@ typedef int32_t shoot_types_t;
 /** @brief Determine whether the selected shoot type is for the item in the headgear slot */
 #define IS_SHOT_HEADGEAR(x)    ((x) == ST_HEADGEAR)
 
+#define SHOULD_USE_AUTOSTAND(length) ((float) (2.0f * TU_CROUCH) * TU_CROUCH_MOVING_FACTOR / (TU_CROUCH_MOVING_FACTOR - 1.0f) < (float) (length))
+
 /* shoot flags */
 #define SF_IMPACT	1	/**< impact on none actor objects */
 #define SF_BODY		2	/**< impact on actors */

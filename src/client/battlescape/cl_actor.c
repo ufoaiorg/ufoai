@@ -146,7 +146,7 @@ int CL_ActorMoveMode (const le_t *le, int length)
 	assert(le);
 	if (LE_IsCrouched(le)) {
 		if (cl_autostand->integer) { /* Is the player using autostand? */
-			if ((float) (2.0f * TU_CROUCH) * TU_CROUCH_MOVING_FACTOR / (TU_CROUCH_MOVING_FACTOR - 1.0f) < (float) length) {
+			if (SHOULD_USE_AUTOSTAND(length)) {
 				return WALKTYPE_AUTOSTAND_BEING_USED;
 			} else {
 				return WALKTYPE_AUTOSTAND_BUT_NOT_FAR_ENOUGH;
