@@ -1910,7 +1910,7 @@ window geoscape_options {
 		}
 		checkbox value
 		{
-			current		*cvar:r_geoscape_overlay_fooooo
+			current		*cvar:cl_geoscape_overlay_fooooo
 			pos			"0 0"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -1935,7 +1935,7 @@ window geoscape_options {
 		}
 		checkbox value
 		{
-			current		*cvar:r_geoscape_overlay_fooooo
+			current		*cvar:cl_geoscape_overlay_fooooo
 			pos			"0 0"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -1956,7 +1956,7 @@ window geoscape_options {
 		}
 		checkbox value
 		{
-			current		*cvar:r_geoscape_overlay_fooooo
+			current		*cvar:cl_geoscape_overlay_fooooo
 			pos			"0 0"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -1970,6 +1970,6 @@ window geoscape_options {
 	}
 
 	func onInit {
-		*cvar:r_geoscape_overlay_fooooo = 0
+		*cvar:cl_geoscape_overlay_fooooo = 0
 	}
 }
