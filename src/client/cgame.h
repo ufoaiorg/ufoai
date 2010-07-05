@@ -71,7 +71,6 @@ typedef struct {
 	void (IMPORT *MN_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 
 	/* filesystem functions */
-	const char *(IMPORT *FS_Gamedir) (void);
 	int (IMPORT *FS_LoadFile) (const char *path, byte **buffer);
 	void (IMPORT *FS_FreeFile) (void *buffer);
 
@@ -79,6 +78,8 @@ typedef struct {
 	cvar_t *(IMPORT *Cvar_Get) (const char *varName, const char *value, int flags, const char* desc);
 	cvar_t *(IMPORT *Cvar_Set) (const char *varName, const char *value);
 	const char *(IMPORT *Cvar_String) (const char *varName);
+	int (IMPORT *Cvar_Integer) (const char *varName);
+	qboolean (IMPORT *Cvar_Delete) (const char *varName);
 
 	/* ClientCommand and ServerCommand parameter access */
 	int (IMPORT *Cmd_Argc) (void);

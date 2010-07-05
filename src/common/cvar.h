@@ -37,44 +37,44 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * if it exists, the value will not be changed, but flags will be ORed in
  * that allows variables to be unarchived without needing bitflags
  */
-cvar_t *Cvar_Get(const char *var_name, const char *value, int flags, const char* desc);
+cvar_t *Cvar_Get(const char *varName, const char *value, int flags, const char* desc);
 
 /**
  * @brief will create the variable if it doesn't exist
  */
-cvar_t *Cvar_Set(const char *var_name, const char *value);
+cvar_t *Cvar_Set(const char *varName, const char *value);
 
 /**
  * @brief will set the variable even if NOSET or LATCH
  */
-cvar_t *Cvar_ForceSet(const char *var_name, const char *value);
+cvar_t *Cvar_ForceSet(const char *varName, const char *value);
 
-cvar_t *Cvar_FullSet(const char *var_name, const char *value, int flags);
+cvar_t *Cvar_FullSet(const char *varName, const char *value, int flags);
 
 /**
  * @brief expands value to a string and calls Cvar_Set
  */
-void Cvar_SetValue(const char *var_name, float value);
+void Cvar_SetValue(const char *varName, float value);
 
 /**
  * @brief returns 0 if not defined or non numeric
  */
-int Cvar_GetInteger(const char *var_name);
+int Cvar_GetInteger(const char *varName);
 
 /**
  * @brief returns 0.0 if not defined or non numeric
  */
-float Cvar_GetValue(const char *var_name);
+float Cvar_GetValue(const char *varName);
 
 /**
  * @brief returns an empty string if not defined
  */
-const char *Cvar_GetString(const char *var_name);
+const char *Cvar_GetString(const char *varName);
 
 /**
  * @brief returns an empty string if not defined
  */
-const char *Cvar_VariableStringOld(const char *var_name);
+const char *Cvar_VariableStringOld(const char *varName);
 
 /**
  * @brief attempts to match a partial variable name for command line completion
@@ -120,7 +120,7 @@ qboolean Cvar_AssertString(cvar_t * cvar, char **array, int arraySize);
 /**
  * @brief Sets the check functions for a cvar (e.g. Cvar_Assert)
  */
-qboolean Cvar_SetCheckFunction(const char *var_name, qboolean (*check) (cvar_t* cvar));
+qboolean Cvar_SetCheckFunction(const char *varName, qboolean (*check) (cvar_t* cvar));
 
 /**
  * @brief Registers a listener that is executed each time a cvar changed its value.
@@ -144,12 +144,12 @@ void Cvar_FixCheatVars(void);
 /**
  * @brief Function to remove the cvar and free the space
  */
-qboolean Cvar_Delete(const char *var_name);
+qboolean Cvar_Delete(const char *varName);
 
 /**
  * @brief Searches for a cvar given by parameter
  */
-cvar_t *Cvar_FindVar(const char *var_name);
+cvar_t *Cvar_FindVar(const char *varName);
 
 /**
  * @brief Checks whether there are pending cvars for the given flags

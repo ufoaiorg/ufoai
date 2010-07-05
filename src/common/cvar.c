@@ -304,17 +304,17 @@ int Cvar_CompleteVariable (const char *partial, const char **match)
 /**
  * @brief Function to remove the cvar and free the space
  */
-qboolean Cvar_Delete (const char *var_name)
+qboolean Cvar_Delete (const char *varName)
 {
 	unsigned hash;
 	cvar_t *var, *previousVar = NULL;
 
-	hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
+	hash = Com_HashKey(varName, CVAR_HASH_SIZE);
 	for (var = cvarVarsHash[hash]; var; var = var->hash_next) {
-		if (!Q_strcasecmp(var_name, var->name)) {
+		if (!Q_strcasecmp(varName, var->name)) {
 			cvarChangeListener_t *changeListener;
 			if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO | CVAR_NOSET | CVAR_LATCH)) {
-				Com_Printf("Can't delete the cvar '%s' - it's a special cvar\n", var_name);
+				Com_Printf("Can't delete the cvar '%s' - it's a special cvar\n", varName);
 				return qfalse;
 			}
 			if (var->prev) {
@@ -352,7 +352,7 @@ qboolean Cvar_Delete (const char *var_name)
 		}
 		previousVar = var;
 	}
-	Com_Printf("Cvar '%s' wasn't found\n", var_name);
+	Com_Printf("Cvar '%s' wasn't found\n", varName);
 	return qfalse;
 }
 

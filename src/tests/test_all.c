@@ -34,11 +34,13 @@ typedef int (*testSuite_t) (void);
 #include "test_ui.h"
 #include "test_routing.h"
 #include "test_inventory.h"
+#include "test_campaign.h"
 #include "test_rma.h"
 
 static const testSuite_t testSuites[] = {
 	UFO_AddGenericTests,
 	UFO_AddUITests,
+	UFO_AddCampaignTests,
 	UFO_AddRoutingTests,
 	UFO_AddInventoryTests,
 	UFO_AddRandomMapAssemblyTests,
