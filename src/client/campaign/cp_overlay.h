@@ -35,6 +35,7 @@ void CP_InitializeRadarOverlay(qboolean source);
 void CP_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
 void CP_UploadRadarCoverage(void);
 void CP_ShutdownOverlay(void);
+void CP_CalcAndUploadDayAndNightTexture(float q);
 
 #define OVERLAY_NATION		(1<<0)
 #define OVERLAY_XVI			(1<<1)

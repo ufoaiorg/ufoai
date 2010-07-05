@@ -31,63 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_draw.h"
 
 #define MARKER_SIZE 60.0
-#define DAN_WIDTH	512
-#define DAN_HEIGHT	256
-#define DAWN		0.03
 
 extern const float STANDARD_3D_ZOOM;
-
-/** the last q value for the 2d geoscape night overlay */
-static float lastQ = 0.0f;
-
-/** this is the mask that is used to display day/night on (2d-)geoscape */
-static image_t *r_dayandnightTexture;
-static image_t *r_radarTexture;				/**< radar texture */
-static image_t *r_xviTexture;					/**< XVI alpha mask texture */
-
-/** this is the data that is used with r_dayandnightTexture */
-static byte r_dayandnightAlpha[DAN_WIDTH * DAN_HEIGHT];
-
-/**
- * @brief Applies alpha values to the night overlay image for 2d geoscape
- * @param[in] q The angle the sun is standing against the equator on earth
- */
-static void R_CalcAndUploadDayAndNightTexture (float q)
-{
-	int x, y;
-	const float dphi = (float) 2 * M_PI / DAN_WIDTH;
-	const float da = M_PI / 2 * (HIGH_LAT - LOW_LAT) / DAN_HEIGHT;
-	const float sin_q = sin(q);
-	const float cos_q = cos(q);
-	float sin_phi[DAN_WIDTH], cos_phi[DAN_WIDTH];
-	byte *px;
-
-	for (x = 0; x < DAN_WIDTH; x++) {
-		const float phi = x * dphi - q;
-		sin_phi[x] = sin(phi);
-		cos_phi[x] = cos(phi);
-	}
-
-	/* calculate */
-	px = r_dayandnightAlpha;
-	for (y = 0; y < DAN_HEIGHT; y++) {
-		const float a = sin(M_PI / 2 * HIGH_LAT - y * da);
-		const float root = sqrt(1 - a * a);
-		for (x = 0; x < DAN_WIDTH; x++) {
-			const float pos = sin_phi[x] * root * sin_q - (a * SIN_ALPHA + cos_phi[x] * root * COS_ALPHA) * cos_q;
-
-			if (pos >= DAWN)
-				*px++ = 255;
-			else if (pos <= -DAWN)
-				*px++ = 0;
-			else
-				*px++ = (byte) (128.0 * (pos / DAWN + 1));
-		}
-	}
-
-	/* upload alpha map into the r_dayandnighttexture */
-	R_UploadAlpha(r_dayandnightTexture, r_dayandnightAlpha);
-}
 
 /**
  * @brief Draw the day and night images of a flat geoscape
@@ -104,7 +49,7 @@ static void R_CalcAndUploadDayAndNightTexture (float q)
  * @param[in] w The width of the geoscape node
  * @param[in] h The height of the geoscape node
  */
-void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar)
+void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar, image_t *r_dayandnightTexture, image_t *r_xviTexture, image_t *r_radarTexture)
 {
 	image_t *gl;
 	float geoscape_texcoords[4 * 2];
@@ -169,10 +114,6 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, geoscape_nighttexcoords);
 
 		R_BindTexture(r_dayandnightTexture->texnum);
-		if (lastQ != q) {
-			R_CalcAndUploadDayAndNightTexture(q);
-			lastQ = q;
-		}
 
 		R_SelectTexture(&texunit_diffuse);
 		glDrawArrays(GL_QUADS, 0, 4);
@@ -484,7 +425,7 @@ static inline void RotateCelestialBody (const vec4_t v, vec4_t * r, const vec3_t
  * @sa R_DrawFlatGeoscape
  * @sa R_SphereGenerate
  */
-void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender, float ambient, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar)
+void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender, float ambient, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar, image_t *r_xviTexture, image_t *r_radarTexture)
 {
 	/* globe scaling */
 	const float fullscale = zoom / STANDARD_3D_ZOOM;
@@ -865,11 +806,4 @@ void R_DrawBloom (void)
 
 	/* reset renderbuffer state to what it was before */
 	R_EnableRenderbuffer(rb_enable);
-}
-
-void R_InitGeoscape (void)
-{
-	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
-	if (r_dayandnightTexture == r_noTexture)
-		Com_Error(ERR_FATAL, "Could not create daynight image for the geoscape");
 }

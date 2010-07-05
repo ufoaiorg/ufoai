@@ -48,6 +48,10 @@ cvar_t *cl_mapzoommax;
 cvar_t *cl_mapzoommin;
 cvar_t *cl_geoscape_overlay;
 
+extern image_t *r_dayandnightTexture;
+extern image_t *r_radarTexture;
+extern image_t *r_xviTexture;
+
 #ifdef DEBUG
 static cvar_t *debug_showInterest;
 #endif
@@ -1921,20 +1925,27 @@ void MAP_DrawMap (const menuNode_t* node)
 		R_Draw3DGlobe(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1],
 				ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, ccs.curCampaign->map, disableSolarRender,
 				cl_3dmapAmbient->value, MAP_IsNationOverlayActivated(), MAP_IsXVIOverlayActivated(),
-				MAP_IsRadarOverlayActivated());
+				MAP_IsRadarOverlayActivated(), r_xviTexture, r_radarTexture);
 
 		MAP_DrawMapMarkers(node);
 
 		R_DrawBloom();
 		R_EnableRenderbuffer(qfalse);
 	} else {
+		/* the last q value for the 2d geoscape night overlay */
+		static float lastQ = 0.0f;
+
 		/* the sun is not always in the plane of the equator on earth - calculate the angle the sun is at */
 		const float q = (ccs.date.day % DAYS_PER_YEAR + (float)(ccs.date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
 		if (smoothRotation)
 			MAP_SmoothTranslate();
+		if (lastQ != q) {
+			CP_CalcAndUploadDayAndNightTexture(q);
+			lastQ = q;
+		}
 		R_DrawFlatGeoscape(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], (float) ccs.date.sec / SECONDS_PER_DAY, q,
 			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, ccs.curCampaign->map, MAP_IsNationOverlayActivated(),
-			MAP_IsXVIOverlayActivated(), MAP_IsRadarOverlayActivated());
+			MAP_IsXVIOverlayActivated(), MAP_IsRadarOverlayActivated(), r_dayandnightTexture, r_xviTexture, r_radarTexture);
 		MAP_DrawMapMarkers(node);
 	}
 

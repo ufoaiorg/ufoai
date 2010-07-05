@@ -720,8 +720,6 @@ void R_InitImages (void)
 		if (r_flaretextures[i] == r_noTexture)
 			Com_Error(ERR_FATAL, "Could not load lens flare %i", i);
 	}
-
-	R_InitGeoscape();
 }
 
 /**

@@ -36,9 +36,15 @@ static const int INITIAL_ALPHA_VALUE = 60;
 #define XVI_HEIGHT		256
 #define RADAR_WIDTH		512
 #define RADAR_HEIGHT	256
+#define DAN_WIDTH	512
+#define DAN_HEIGHT	256
 
-/** @todo FIXME */
-static void *r_radarTexture, *r_xviTexture;
+#define DAWN		0.03
+
+/** this is the mask that is used to display day/night on (2d-)geoscape */
+image_t *r_dayandnightTexture;
+image_t *r_radarTexture;				/**< radar texture */
+image_t *r_xviTexture;					/**< XVI alpha mask texture */
 
 /** this is the data that is used with r_xviTexture */
 static byte r_xviAlpha[XVI_WIDTH * XVI_HEIGHT];
@@ -48,6 +54,50 @@ static byte r_radarPic[RADAR_WIDTH * RADAR_HEIGHT];
 
 /** this is the data that is used with r_radarTexture */
 static byte r_radarSourcePic[RADAR_WIDTH * RADAR_HEIGHT];
+
+/** this is the data that is used with r_dayandnightTexture */
+static byte r_dayandnightAlpha[DAN_WIDTH * DAN_HEIGHT];
+
+/**
+ * @brief Applies alpha values to the night overlay image for 2d geoscape
+ * @param[in] q The angle the sun is standing against the equator on earth
+ */
+void CP_CalcAndUploadDayAndNightTexture (float q)
+{
+	int x, y;
+	const float dphi = (float) 2 * M_PI / DAN_WIDTH;
+	const float da = M_PI / 2 * (HIGH_LAT - LOW_LAT) / DAN_HEIGHT;
+	const float sin_q = sin(q);
+	const float cos_q = cos(q);
+	float sin_phi[DAN_WIDTH], cos_phi[DAN_WIDTH];
+	byte *px;
+
+	for (x = 0; x < DAN_WIDTH; x++) {
+		const float phi = x * dphi - q;
+		sin_phi[x] = sin(phi);
+		cos_phi[x] = cos(phi);
+	}
+
+	/* calculate */
+	px = r_dayandnightAlpha;
+	for (y = 0; y < DAN_HEIGHT; y++) {
+		const float a = sin(M_PI / 2 * HIGH_LAT - y * da);
+		const float root = sqrt(1 - a * a);
+		for (x = 0; x < DAN_WIDTH; x++) {
+			const float pos = sin_phi[x] * root * sin_q - (a * SIN_ALPHA + cos_phi[x] * root * COS_ALPHA) * cos_q;
+
+			if (pos >= DAWN)
+				*px++ = 255;
+			else if (pos <= -DAWN)
+				*px++ = 0;
+			else
+				*px++ = (byte) (128.0 * (pos / DAWN + 1));
+		}
+	}
+
+	/* upload alpha map into the r_dayandnighttexture */
+	R_UploadAlpha(r_dayandnightTexture, r_dayandnightAlpha);
+}
 
 void CP_GetXVIMapDimensions (int *width, int *height)
 {
@@ -438,4 +488,5 @@ void CP_InitOverlay (void)
 {
 	r_radarTexture = R_LoadImageData("***r_radarTexture***", NULL, RADAR_WIDTH, RADAR_HEIGHT, it_effect);
 	r_xviTexture = R_LoadImageData("***r_xvitexture***", NULL, XVI_WIDTH, XVI_HEIGHT, it_effect);
+	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
 }
