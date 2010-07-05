@@ -259,7 +259,7 @@ window employees
 	{
 		{
 			visiblewhen "*cvar:mn_show_employee >= 1"
-			model		*cvar:mn_body
+			src			*cvar:mn_body
 			skin		*cvar:mn_skin
 			anim		"stand2"
 			angles		"0 70 90"
@@ -272,7 +272,7 @@ window employees
 		model head
 		{
 			visiblewhen "*cvar:mn_show_employee >= 1"
-			model		*cvar:mn_head
+			src			*cvar:mn_head
 			skin		*cvar:mn_skin
 			tag			"tag_head"
 			scale		"1.0 1.0 1.0"

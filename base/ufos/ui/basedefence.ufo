@@ -253,7 +253,7 @@ window basedefence extends objectinfo
 
 			model item_model
 			{
-				model		*cvar:mn_upmodel_top
+				src			*cvar:mn_upmodel_top
 				angles		"-10 160 70"
 				pos			"10 50"
 				size		"314 140"

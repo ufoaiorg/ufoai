@@ -56,7 +56,7 @@ window mail
 	{
 		{
 			visiblewhen "*cvar:mn_mail_sender_head ne \"\""
-			model	"civilians/male/body01"
+			src	"civilians/male/body01"
 			anim	"stand_still"
 			angles	"0 85 90"
 			scale	"7.5 7.5 7.5"
@@ -67,7 +67,7 @@ window mail
 
 		model sender_head
 		{
-			model	*cvar:mn_mail_sender_head
+			src		*cvar:mn_mail_sender_head
 			tag		"tag_head"
 		}
 	}

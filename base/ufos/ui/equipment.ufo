@@ -312,7 +312,7 @@ window equipment extends objectinfo
 		{
 			pos 		"0 30"
 			size 		"350 100"
-			model		*cvar:mn_item
+			src			*cvar:mn_item
 			angles		"-10 160 70"
 			autoscale	true
 		}
@@ -588,7 +588,7 @@ window equipment extends objectinfo
 	model body
 	{
 		{
-			model	*cvar:mn_body
+			src		*cvar:mn_body
 			skin	*cvar:mn_skin
 			anim	"stand_menu"
 			angles	"0 70 90"
@@ -601,7 +601,7 @@ window equipment extends objectinfo
 
 		model head
 		{
-			model	*cvar:mn_head
+			src		*cvar:mn_head
 			skin	*cvar:mn_skin
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"

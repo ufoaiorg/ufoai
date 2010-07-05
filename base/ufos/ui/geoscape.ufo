@@ -79,7 +79,7 @@ window geoscape
 		call *node:root.messages.dock@createChild ( "<1><2>" , "cmpGeoscapeDocklet" )
 		*node:root.messages.dock.<1><2>.type@string = <1>
 		*node:root.messages.dock.<1><2>.id@string = <2>
-		*node:(model)root.messages.dock.<1><2>.siteModel@model = <4>
+		*node:(model)root.messages.dock.<1><2>.siteModel@src = <4>
 		*node:root.messages.dock.<1><2>.message@string = <5>
 	}
 

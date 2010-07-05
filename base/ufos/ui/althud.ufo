@@ -191,7 +191,7 @@ window althud extends ahud
 
 		model head0
 		{
-			model		*cvar:mn_head0
+			src			*cvar:mn_head0
 			angles		"15 60 100"
 			autoscale	true
 			pos			"40 20"
@@ -200,7 +200,7 @@ window althud extends ahud
 		}
 		model head1
 		{
-			model		*cvar:mn_head1
+			src			*cvar:mn_head1
 			angles		"15 60 100"
 			autoscale	true
 			pos			"120 20"
@@ -209,7 +209,7 @@ window althud extends ahud
 		}
 		model head2
 		{
-			model		*cvar:mn_head2
+			src			*cvar:mn_head2
 			angles		"15 60 100"
 			autoscale	true
 			pos			"200 20"
@@ -218,7 +218,7 @@ window althud extends ahud
 		}
 		model head3
 		{
-			model		*cvar:mn_head3
+			src			*cvar:mn_head3
 			angles		"15 60 100"
 			autoscale	true
 			pos			"280 20"
@@ -227,7 +227,7 @@ window althud extends ahud
 		}
 		model head4
 		{
-			model		*cvar:mn_head4
+			src			*cvar:mn_head4
 			angles		"15 60 100"
 			autoscale	true
 			pos			"360 20"
@@ -236,7 +236,7 @@ window althud extends ahud
 		}
 		model head5
 		{
-			model		*cvar:mn_head5
+			src			*cvar:mn_head5
 			angles		"15 60 100"
 			autoscale	true
 			pos			"440 20"
@@ -245,7 +245,7 @@ window althud extends ahud
 		}
 		model head6
 		{
-			model		*cvar:mn_head6
+			src			*cvar:mn_head6
 			angles		"15 60 100"
 			autoscale	true
 			pos			"520 20"
@@ -254,7 +254,7 @@ window althud extends ahud
 		}
 		model head7
 		{
-			model		*cvar:mn_head7
+			src			*cvar:mn_head7
 			angles		"15 60 100"
 			autoscale	true
 			pos			"592 20"
@@ -506,7 +506,7 @@ window althud extends ahud
 			{
 				tooltip		"_Inventory and physical stats"
 
-				model		*cvar:mn_body
+				src			*cvar:mn_body
 				skin		*cvar:mn_skin
 				anim		*cvar:mn_anim
 				angles		"0 80 90"
@@ -520,20 +520,20 @@ window althud extends ahud
 
 			model right_head
 			{
-				model		*cvar:mn_head
+				src			*cvar:mn_head
 				skin		*cvar:mn_skin
 				tag			"tag_head"
 			}
 
 			model right_rweapon
 			{
-				model		*cvar:mn_rweapon
+				src			*cvar:mn_rweapon
 				tag			"tag_rweapon"
 			}
 
 			model right_lweapon
 			{
-				model		*cvar:mn_lweapon
+				src			*cvar:mn_lweapon
 				tag			"tag_lweapon"
 			}
 		}

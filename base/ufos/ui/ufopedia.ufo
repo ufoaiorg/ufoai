@@ -108,7 +108,7 @@ window ufopedia extends objectinfo
 
 		model mdl_top
 		{
-			model		*cvar:mn_upmodel_top
+			src			*cvar:mn_upmodel_top
 			angles		"0 0 120"
 			pos			"433 64"
 			size		"151 151"
@@ -118,7 +118,7 @@ window ufopedia extends objectinfo
 
 		model mdl_bottom
 		{
-			model		*cvar:mn_upmodel_bottom
+			src			*cvar:mn_upmodel_bottom
 			angles		"0 0 120"
 			pos			"451 246"
 			size		"120 120"

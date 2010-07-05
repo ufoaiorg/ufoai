@@ -336,7 +336,7 @@ window production
 
 		item itemmodel
 		{
-			model		*cvar:mn_item
+			src			*cvar:mn_item
 			pos			"56 23"
 			size		"336 140"
 			angles		"-10 160 70"

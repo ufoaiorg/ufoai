@@ -172,7 +172,7 @@ window hud extends ahud
 
 		model head
 		{
-			model	*cvar:mn_head
+			src		*cvar:mn_head
 			skin	*cvar:mn_skin
 			angles	"0 60 90"
 			autoscale	true
@@ -240,7 +240,7 @@ window hud extends ahud
 				pos				"106 103"
 				size 			"150 80"
 				scale			"3.5 3.5 3.5"
-				model			*cvar:mn_hovered_rweapon_item
+				src				*cvar:mn_hovered_rweapon_item
 				containerLike	true
 			}
 
@@ -257,7 +257,7 @@ window hud extends ahud
 				pos				"285 103"
 				size 			"150 80"
 				scale			"3.5 3.5 3.5"
-				model			*cvar:mn_hovered_lweapon_item
+				src				*cvar:mn_hovered_lweapon_item
 				containerLike	true
 			}
 
@@ -270,7 +270,7 @@ window hud extends ahud
 
 			model head
 			{
-				model		*cvar:mn_hovered_head
+				src			*cvar:mn_hovered_head
 				skin		*cvar:mn_hovered_skin
 				angles		"0 60 90"
 				autoscale	true

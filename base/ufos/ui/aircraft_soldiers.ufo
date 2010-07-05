@@ -105,7 +105,7 @@ window team extends iaircraft
 	// ==================
 	model aircraft
 	{
-		model		*cvar:mn_aircraft_model
+		src			*cvar:mn_aircraft_model
 		pos			"478 107"
 		size		"529 260"
 		origin		"-45 25 0"
@@ -319,7 +319,7 @@ window team extends iaircraft
 	model body
 	{
 		{
-			model	*cvar:mn_body
+			src		*cvar:mn_body
 			skin	*cvar:mn_skin
 			anim	"stand2"
 			angles	"0 70 90"
@@ -331,7 +331,7 @@ window team extends iaircraft
 
 		model head
 		{
-			model	*cvar:mn_head
+			src		*cvar:mn_head
 			skin	*cvar:mn_skin
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"
@@ -339,13 +339,13 @@ window team extends iaircraft
 
 		model right_rweapon
 		{
-			model	*cvar:mn_rweapon
+			src		*cvar:mn_rweapon
 			tag		"tag_rweapon"
 		}
 
 		model right_lweapon
 		{
-			model	*cvar:mn_lweapon
+			src		*cvar:mn_lweapon
 			tag		"tag_lweapon"
 		}
 	}

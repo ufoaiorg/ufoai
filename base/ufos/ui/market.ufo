@@ -372,7 +372,7 @@ window market extends objectinfo
 
 		item itemmodel
 		{
-			model		*cvar:mn_item
+			src			*cvar:mn_item
 			pos			"12 55"
 			size		"385 200"
 			angles		"-10 160 70"

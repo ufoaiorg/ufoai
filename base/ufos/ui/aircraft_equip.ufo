@@ -63,7 +63,7 @@ window aircraft_equip extends iaircraft
 
 	model aircraftequip
 	{
-		model	"*cvar:mn_aircraft_model"
+		src		*cvar:mn_aircraft_model
 		pos		"482 106"
 		size	"522 259"
 		angles	"0 0 180"
@@ -99,7 +99,7 @@ window aircraft_equip extends iaircraft
 
 		model mdl_top
 		{
-			model	"*cvar:mn_upmodel_top"
+			src	"*cvar:mn_upmodel_top"
 			autoscale	true
 			pos		"14 76"
 			size	"225 96"
@@ -363,7 +363,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot0
 	{
-		model		"*cvar:mn_aircraft_item_model_slot0"
+		src		"*cvar:mn_aircraft_item_model_slot0"
 		pos			"911 123"
 		size		"60 60"
 		autoscale	true
@@ -382,7 +382,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot1
 	{
-		model	"*cvar:mn_aircraft_item_model_slot1"
+		src	"*cvar:mn_aircraft_item_model_slot1"
 		pos		"911 203"
 		size	"60 60"
 		autoscale	true
@@ -401,7 +401,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot2
 	{
-		model	"*cvar:mn_aircraft_item_model_slot2"
+		src	"*cvar:mn_aircraft_item_model_slot2"
 		pos		"911 283"
 		size	"60 60"
 		autoscale	true
@@ -420,7 +420,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot3
 	{
-		model	"*cvar:mn_aircraft_item_model_slot3"
+		src	"*cvar:mn_aircraft_item_model_slot3"
 		pos		"711 123"
 		size	"60 60"
 		autoscale	true
@@ -439,7 +439,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot4
 	{
-		model	"*cvar:mn_aircraft_item_model_slot4"
+		src	"*cvar:mn_aircraft_item_model_slot4"
 		pos		"711 283"
 		size	"60 60"
 		autoscale	true
@@ -458,7 +458,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot5
 	{
-		model	"*cvar:mn_aircraft_item_model_slot5"
+		src	"*cvar:mn_aircraft_item_model_slot5"
 		pos		"511 123"
 		size	"60 60"
 		autoscale	true
@@ -477,7 +477,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot6
 	{
-		model	"*cvar:mn_aircraft_item_model_slot6"
+		src	"*cvar:mn_aircraft_item_model_slot6"
 		pos		"511 203"
 		size	"60 60"
 		autoscale	true
@@ -496,7 +496,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot7
 	{
-		model	"*cvar:mn_aircraft_item_model_slot7"
+		src	"*cvar:mn_aircraft_item_model_slot7"
 		pos		"511 283"
 		size	"60 60"
 		autoscale	true
