@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_aircraft_callbacks.h"
 #include "cp_aircraft.h"
 #include "cp_team.h"
-#include "cp_mapfightequip.h" /* for AII_ReloadAircraftWeapons */
+#include "cp_mapfightequip.h"
 
 /**
  * @brief Script function for AIR_AircraftReturnToBase

@@ -24,10 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h" /* cls, cl */
-#ifdef DEBUG
-#include "../cl_ugv.h"
-#endif
-#include "../cl_team.h" /* MAX_WHOLETEAM */
 #include "../menu/m_main.h"
 #include "cp_campaign.h"
 #include "cp_overlay.h"
@@ -85,61 +81,61 @@ typedef struct {
  */
 void CP_ParseCharacterData (struct dbuffer *msg)
 {
-	static updateCharacter_t updateCharacterArray[MAX_WHOLETEAM];
-	static int num = 0;
-	int i;
+	static linkedList_t *updateCharacters = NULL;
 
 	if (!msg) {
-		for (i = 0; i < num; i++) {
-			employee_t *employee = E_GetEmployeeFromChrUCN(updateCharacterArray[i].ucn);
+		const linkedList_t *l = updateCharacters;
+		while (l) {
+			const updateCharacter_t *c = (updateCharacter_t*)l->data;
+			employee_t *employee = E_GetEmployeeFromChrUCN(c->ucn);
 			character_t* chr;
+
+			l = l->next;
+
 			if (!employee) {
-				Com_Printf("Warning: Could not get character with ucn: %i.\n", updateCharacterArray[i].ucn);
+				Com_Printf("Warning: Could not get character with ucn: %i.\n", c->ucn);
 				continue;
 			}
 			chr = &employee->chr;
-			chr->HP = updateCharacterArray[i].HP;
-			chr->STUN = updateCharacterArray[i].STUN;
-			chr->morale = updateCharacterArray[i].morale;
+			chr->HP = c->HP;
+			chr->STUN = c->STUN;
+			chr->morale = c->morale;
 
 			/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-			memcpy(chr->score.experience, updateCharacterArray[i].chrscore.experience, sizeof(chr->score.experience));
-			memcpy(chr->score.skills, updateCharacterArray[i].chrscore.skills, sizeof(chr->score.skills));
-			memcpy(chr->score.kills, updateCharacterArray[i].chrscore.kills, sizeof(chr->score.kills));
-			memcpy(chr->score.stuns, updateCharacterArray[i].chrscore.stuns, sizeof(chr->score.stuns));
-			chr->score.assignedMissions = updateCharacterArray[i].chrscore.assignedMissions;
+			memcpy(chr->score.experience, c->chrscore.experience, sizeof(chr->score.experience));
+			memcpy(chr->score.skills, c->chrscore.skills, sizeof(chr->score.skills));
+			memcpy(chr->score.kills, c->chrscore.kills, sizeof(chr->score.kills));
+			memcpy(chr->score.stuns, c->chrscore.stuns, sizeof(chr->score.stuns));
+			chr->score.assignedMissions = c->chrscore.assignedMissions;
 		}
-		num = 0;
+		LIST_Delete(&updateCharacters);
 	} else {
-		int j;
-		/* invalidate ucn in the array first */
-		for (i = 0; i < MAX_WHOLETEAM; i++) {
-			updateCharacterArray[i].ucn = -1;
-		}
-		/* number of soldiers */
-		num = NET_ReadByte(msg);
-		if (num > MAX_WHOLETEAM)
-			Com_Error(ERR_DROP, "CP_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
-		else if (num < 0)
+		int i, j;
+		const int num = NET_ReadByte(msg);
+
+		if (num < 0)
 			Com_Error(ERR_DROP, "CP_ParseCharacterData: NET_ReadShort error (%i)\n", num);
 
-		for (i = 0; i < num; i++) {
-			/* updateCharacter_t */
-			updateCharacterArray[i].ucn = NET_ReadShort(msg);
-			updateCharacterArray[i].HP = NET_ReadShort(msg);
-			updateCharacterArray[i].STUN = NET_ReadByte(msg);
-			updateCharacterArray[i].morale = NET_ReadByte(msg);
+		LIST_Delete(&updateCharacters);
 
-			/** Scores @sa inv_shared.h:chrScoreGlobal_t */
+		for (i = 0; i < num; i++) {
+			updateCharacter_t c;
+			memset(&c, 0, sizeof(c));
+			c.ucn = NET_ReadShort(msg);
+			c.HP = NET_ReadShort(msg);
+			c.STUN = NET_ReadByte(msg);
+			c.morale = NET_ReadByte(msg);
+
 			for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-				updateCharacterArray[i].chrscore.experience[j] = NET_ReadLong(msg);
+				c.chrscore.experience[j] = NET_ReadLong(msg);
 			for (j = 0; j < SKILL_NUM_TYPES; j++)
-				updateCharacterArray[i].chrscore.skills[j] = NET_ReadByte(msg);
+				c.chrscore.skills[j] = NET_ReadByte(msg);
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
-				updateCharacterArray[i].chrscore.kills[j] = NET_ReadShort(msg);
+				c.chrscore.kills[j] = NET_ReadShort(msg);
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
-				updateCharacterArray[i].chrscore.stuns[j] = NET_ReadShort(msg);
-			updateCharacterArray[i].chrscore.assignedMissions = NET_ReadShort(msg);
+				c.chrscore.stuns[j] = NET_ReadShort(msg);
+			c.chrscore.assignedMissions = NET_ReadShort(msg);
+			LIST_Add(&updateCharacters, (const byte*)&c, sizeof(c));
 		}
 	}
 }
@@ -1518,14 +1514,6 @@ static void CL_DebugNewEmployees_f (void)
 	for (j = 0; j < 5; j++)
 		/* Create a worker. */
 		E_CreateEmployee(EMPL_WORKER, nation, NULL);
-
-	for (j = 0; j < 5; j++)
-		/* Create a ares ugv. */
-		E_CreateEmployee(EMPL_ROBOT, nation, CL_GetUGVByID("ugv_ares_w"));
-
-	for (j = 0; j < 5; j++)
-		/* Create a phoenix ugv. */
-		E_CreateEmployee(EMPL_ROBOT, nation, CL_GetUGVByID("ugv_phoenix"));
 }
 #endif
 

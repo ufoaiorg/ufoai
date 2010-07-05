@@ -65,6 +65,8 @@ typedef struct {
 /** @todo define the import interface */
 typedef struct {
 	csi_t *csi;
+	client_static_t *cls;
+	client_state_t *cl;
 
 	void (IMPORT *MN_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 

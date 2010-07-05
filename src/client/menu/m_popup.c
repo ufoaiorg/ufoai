@@ -138,9 +138,9 @@ static void MN_SetOneButton (menuNode_t* menu, const char *button, const char *c
  * @param[in] clickAction2 Action to perform when one clicked on the second button.
  * @param[in] clickText2 String that will be written in second button.
  * @param[in] tooltip2 Tooltip of second button.
- * @param[in] clickAction3 Action to perform when one clicked on the second button.
- * @param[in] clickText3 String that will be written in second button.
- * @param[in] tooltip3 Tooltip of second button.
+ * @param[in] clickAction3 Action to perform when one clicked on the third button.
+ * @param[in] clickText3 String that will be written in third button.
+ * @param[in] tooltip3 Tooltip of third button.
  * @note clickAction AND clickText must be NULL if button should be invisible.
  */
 void MN_PopupButton (const char *title, const char *text,
