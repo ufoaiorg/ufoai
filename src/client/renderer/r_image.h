@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_IMAGE_H
 #define R_IMAGE_H
 
+#include "r_material.h"
 /*
 skins will be outline flood filled and mip mapped
 pics and sprites with alpha will be outline flood filled
@@ -61,7 +62,6 @@ typedef struct image_s {
 	imagetype_t type;
 	int width, height;					/**< source image dimensions */
 	int upload_width, upload_height;	/**< dimensions after power of two and picmip */
-	struct mBspSurface_s *texturechain;	/**< for sort-by-texture world drawing */
 	unsigned int texnum;				/**< gl texture binding */
 	qboolean has_alpha;
 	material_t material;

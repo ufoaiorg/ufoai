@@ -24,7 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../cl_shared.h"
+#include "../renderer/r_image.h"
 #include "cp_campaign.h"
 #include "cp_overlay.h"
 
@@ -166,7 +167,7 @@ static void CP_SetMinMaxOverlayRows (const vec2_t pos, float radius, const int h
  * @param[in] yLat latitude of current point (in radians).
  * @note This is an implementation of the following facts:
  * - the distance (on a sphere) between the center of the circle and the border of the circle
- *    at current lattitude is equal to radius
+ *    at current latitude is equal to radius
  * - the border of the circle on a row has the same latitude than current latitude.
  */
 static inline float CP_GetCircleDeltaLongitude (const vec2_t centerPos, float radius, const float yLat)

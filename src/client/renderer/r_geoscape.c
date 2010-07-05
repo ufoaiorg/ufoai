@@ -653,7 +653,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		r_globeEarth.overlay = NULL;
 	}
 
-
 	/* disable 3d geoscape lighting */
 	glDisable(GL_LIGHTING);
 
