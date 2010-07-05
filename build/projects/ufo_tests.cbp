@@ -324,6 +324,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_routing.h" />
+		<Unit filename="..\..\src\tests\test_campaign.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_campaign.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
