@@ -84,7 +84,7 @@ static void G_Morale (int type, const edict_t * victim, const edict_t * attacker
 			switch (type) {
 			case ML_WOUND:
 			case ML_DEATH:
-				/* morale damage is damage dependant */
+				/* morale damage depends on the damage */
 				mod = mob_wound->value * param;
 				/* death hurts morale even more than just damage */
 				if (type == ML_DEATH)
@@ -100,7 +100,7 @@ static void G_Morale (int type, const edict_t * victim, const edict_t * attacker
 					else
 						mod *= mof_enemy->value;
 				}
-				/* seeing a civi die is more "acceptable" */
+				/* seeing a civilian die is more "acceptable" */
 				if (G_IsCivilian(victim))
 					mod *= mof_civilian->value;
 				/* if an ally (or in singleplayermode, as human, a civilian) got shot, lower the morale, don't heighten it. */
@@ -110,7 +110,7 @@ static void G_Morale (int type, const edict_t * victim, const edict_t * attacker
 				mod *= mor_default->value + pow(0.5, VectorDist(ent->origin, victim->origin) / mor_distance->value)
 					* mor_victim->value + pow(0.5, VectorDist(ent->origin, attacker->origin) / mor_distance->value)
 					* mor_attacker->value;
-				/* morale damage is dependant on the number of living allies */
+				/* morale damage depends on the number of living allies */
 				mod *= (1 - mon_teamfactor->value)
 					+ mon_teamfactor->value * (level.num_spawned[victim->team] + 1)
 					/ (level.num_alive[victim->team] + 1);
@@ -195,7 +195,8 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
 	switch (target->team) {
 	case TEAM_ALIEN:
 		type = KILLED_ENEMIES;
-		/** @todo Add check for valid values of fd->weaponSkill */
+		assert(fd->weaponSkill >= 0);
+		assert(fd->weaponSkill < lengthof(scoreMission->skillKills));
 		scoreMission->skillKills[fd->weaponSkill]++;
 		break;
 	case TEAM_CIVILIAN:
@@ -990,10 +991,9 @@ static void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const 
  * @param[in,out] container Container with weapon being used. It is 0 when calling this function.
  * @param[in,out] fd Firemode being used. It is NULL when calling this function.
  * @return qtrue if function is able to check and set everything correctly.
- * @todo This function should be renamed, GetShotFromType is very misleading here.
  * @sa G_ClientShoot
  */
-static qboolean G_GetShotFromType (edict_t *ent, shoot_types_t shootType, fireDefIndex_t firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
+static qboolean G_PrepareShot (edict_t *ent, shoot_types_t shootType, fireDefIndex_t firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
 {
 	const fireDef_t *fdArray;
 	objDef_t *od;
@@ -1067,7 +1067,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	weapon = NULL;
 	fd = NULL;
 	container = 0;
-	if (!G_GetShotFromType(ent, shootType, firemode, &weapon, &container, &fd)) {
+	if (!G_PrepareShot(ent, shootType, firemode, &weapon, &container, &fd)) {
 		if (!weapon && !quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not activatable!\n"));
 		return qfalse;
