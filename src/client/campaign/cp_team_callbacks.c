@@ -97,7 +97,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 		}
 
 		/* Set name of the employee. */
-		Cvar_ForceSet(va("mn_ename%i", guiId), employee->chr.name);
+		Cvar_Set(va("mn_ename%i", guiId), employee->chr.name);
 
 		/* Search all aircraft except the current one. */
 		otherShip = AIR_IsEmployeeInAircraft(employee, NULL);
@@ -133,7 +133,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 	for (; id - beginIndex < drawableListSize; id++) {
 		const int guiId = id - beginIndex;
 		MN_ExecuteConfunc("aircraft_%s_unusedslot %i", nodeTag, guiId);
-		Cvar_ForceSet(va("mn_name%i", guiId), "");
+		Cvar_Set(va("mn_name%i", guiId), "");
 	}
 
 	return qtrue;

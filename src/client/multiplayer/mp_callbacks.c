@@ -152,9 +152,9 @@ static void CL_SelectTeam_Init_f (void)
 	MN_ResetData(TEXT_STANDARD);
 
 	if (Com_ServerState())
-		Cvar_ForceSet("cl_admin", "1");
+		Cvar_Set("cl_admin", "1");
 	else
-		Cvar_ForceSet("cl_admin", "0");
+		Cvar_Set("cl_admin", "0");
 
 	NET_OOB_Printf(cls.netStream, "teaminfo %i", PROTOCOL_VERSION);
 	MN_RegisterText(TEXT_STANDARD, _("Select a free team or your coop team"));

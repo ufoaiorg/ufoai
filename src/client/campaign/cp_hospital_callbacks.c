@@ -207,8 +207,6 @@ static void HOS_ListClick_f (void)
 		MN_PushWindow("hospital_employee", NULL);
 }
 
-static char employeeDesc[512];
-
 /**
  * @brief This is the init function for the hospital_employee menu
  */
@@ -221,9 +219,7 @@ static void HOS_EmployeeInit_f (void)
 		return;
 	}
 
-	/** @todo */
-	MN_RegisterText(TEXT_STANDARD, employeeDesc);
-	*employeeDesc = '\0';
+	MN_ResetData(TEXT_STANDARD);
 
 	c = &currentEmployeeInHospital->chr;
 	CL_UpdateCharacterValues(c, "mn_");

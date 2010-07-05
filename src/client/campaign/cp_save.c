@@ -534,8 +534,6 @@ static void SAV_GameSaveNameCleanup_f (void)
 	if (slotID < 0 || slotID > 7)
 		return;
 
-	Com_sprintf(cvar, sizeof(cvar), "mn_slot%i", slotID);
-
 	FS_OpenFile(va("save/slot%i.%s", slotID, SAVEGAME_EXTENSION), &f, FILE_READ);
 	if (!f.f && !f.z)
 		return;
@@ -543,6 +541,8 @@ static void SAV_GameSaveNameCleanup_f (void)
 	/* read the comment */
 	if (FS_Read(&header, sizeof(header), &f) != sizeof(header))
 		Com_Printf("Warning: Savefile header may be corrupted\n");
+
+	Com_sprintf(cvar, sizeof(cvar), "mn_slot%i", slotID);
 	Cvar_Set(cvar, header.name);
 	FS_CloseFile(&f);
 }

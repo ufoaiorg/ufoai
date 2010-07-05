@@ -623,9 +623,9 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 /**
  * @brief Will set the variable even if NOSET or LATCH
  */
-cvar_t *Cvar_ForceSet (const char *var_name, const char *value)
+cvar_t *Cvar_ForceSet (const char *varName, const char *value)
 {
-	return Cvar_Set2(var_name, value, qtrue);
+	return Cvar_Set2(varName, value, qtrue);
 }
 
 /**

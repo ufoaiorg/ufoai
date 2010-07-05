@@ -123,17 +123,17 @@ void MP_MultiplayerTeamSlotComments_f (void)
 			if (FS_Read(&header, clen, &f) != clen) {
 				Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 				FS_CloseFile(&f);
-				Cvar_ForceSet(va("mn_slot%i", i), "");
+				Cvar_Set(va("mn_slot%i", i), "");
 				continue;
 			}
 			FS_CloseFile(&f);
 			if (LittleLong(header.version) == MPTEAM_SAVE_FILE_VERSION) {
 				MN_ExecuteConfunc("set_slotname %i %i \"%s\"", i, LittleLong(header.soldiercount), header.name);
 			} else {
-				Cvar_ForceSet(va("mn_slot%i", i), "");
+				Cvar_Set(va("mn_slot%i", i), "");
 			}
 		} else {
-			Cvar_ForceSet(va("mn_slot%i", i), "");
+			Cvar_Set(va("mn_slot%i", i), "");
 		}
 	}
 }
@@ -451,7 +451,7 @@ void MP_UpdateMenuParameters_f (void)
 			name = chrDisplayList.chr[i]->name;
 		else
 			name = "";
-		Cvar_ForceSet(va("mn_name%i", i), name);
+		Cvar_Set(va("mn_name%i", i), name);
 	}
 
 	MP_GetEquipment();

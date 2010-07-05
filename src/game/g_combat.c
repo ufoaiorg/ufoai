@@ -810,7 +810,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	}
 
 	/* Calc direction of the shot. */
-	gi.GridPosToVec(gi.routingMap, ent->fieldSize, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used only temporary here)*/
+	gi.GridPosToVec(gi.routingMap, ent->fieldSize, at, impact);	/* Get the position of the targeted grid-cell. ('impact' is used only temporary here)*/
 	impact[2] -= z_align;
 	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */

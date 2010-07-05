@@ -128,7 +128,7 @@ static void E_EmployeeListScroll_f (void)
 	}
 
 	for (;cnt < maxEmployeesPerPage; cnt++) {
-		Cvar_ForceSet(va("mn_name%i", cnt), "");
+		Cvar_Set(va("mn_name%i", cnt), "");
 		MN_ExecuteConfunc("employeedisable %i", cnt);
 	}
 

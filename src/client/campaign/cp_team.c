@@ -245,15 +245,15 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 	Cvar_Set("mn_pilotassigned", va("%i", aircraft->pilot != NULL));
 
 	if (aircraft->pilot) {
-		Cvar_ForceSet("mn_pilot_name", aircraft->pilot->chr.name);
-		Cvar_ForceSet("mn_pilot_body", CHRSH_CharGetBody(&aircraft->pilot->chr));
-		Cvar_ForceSet("mn_pilot_head", CHRSH_CharGetHead(&aircraft->pilot->chr));
-		Cvar_ForceSet("mn_pilot_skin", va("%i", aircraft->pilot->chr.skin));
+		Cvar_Set("mn_pilot_name", aircraft->pilot->chr.name);
+		Cvar_Set("mn_pilot_body", CHRSH_CharGetBody(&aircraft->pilot->chr));
+		Cvar_Set("mn_pilot_head", CHRSH_CharGetHead(&aircraft->pilot->chr));
+		Cvar_Set("mn_pilot_skin", va("%i", aircraft->pilot->chr.skin));
 	} else {
-		Cvar_ForceSet("mn_pilot_name", "");
-		Cvar_ForceSet("mn_pilot_body", "");
-		Cvar_ForceSet("mn_pilot_head", "");
-		Cvar_ForceSet("mn_pilot_skin", "");
+		Cvar_Set("mn_pilot_name", "");
+		Cvar_Set("mn_pilot_body", "");
+		Cvar_Set("mn_pilot_head", "");
+		Cvar_Set("mn_pilot_skin", "");
 	}
 
 	size = lengthof(chrDisplayList.chr);
@@ -272,7 +272,7 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 		if (!chrDisplayList.chr[chrDisplayList.num])
 			Com_Error(ERR_DROP, "CL_UpdateActorAircraftVar: Could not get employee character with idx: %i", chrDisplayList.num);
 		Com_DPrintf(DEBUG_CLIENT, "add %s to chrDisplayList (pos: %i)\n", chrDisplayList.chr[chrDisplayList.num]->name, chrDisplayList.num);
-		Cvar_ForceSet(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
+		Cvar_Set(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
 
 		/* Update number of displayed team-members. */
 		chrDisplayList.num++;
