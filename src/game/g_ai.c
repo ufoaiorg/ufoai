@@ -408,7 +408,7 @@ qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t targ
  * from shooting at the breakable parts of their own ship.
  * So I disabled it for now. Duke, 23.10.09
  */
-static edict_t *AI_SearchDestroyableObject (const edict_t *ent, const fireDef_t *fd, aiAction_t * aia)
+static edict_t *AI_SearchDestroyableObject (const edict_t *ent, const fireDef_t *fd)
 {
 #if 0
 	/* search best none human target */
@@ -507,7 +507,7 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 			}
 
 			if (!aia->target) {
-				aia->target = AI_SearchDestroyableObject(ent, fd, aia);
+				aia->target = AI_SearchDestroyableObject(ent, fd);
 				if (aia->target) {
 					/* don't take vis into account, don't multiply with amount of shots
 					 * others (human victims) should be preferred, that's why we don't
