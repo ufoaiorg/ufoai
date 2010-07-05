@@ -235,31 +235,34 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
  */
 static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const fireDef_t * fd, const int splashDamage)
 {
+	chrScoreMission_t *score;
+
 	if (!attacker || !target || !fd)
 		return;
 
+	score = attacker->chr.scoreMission;
 	/* Abort if no player team. */
-	if (!attacker->chr.scoreMission)
+	if (!score)
 		return;
 
 	if (!splashDamage) {
-		if (attacker->team == target->team && !attacker->chr.scoreMission->firedHit[KILLED_TEAM]) {
+		if (attacker->team == target->team && !score->firedHit[KILLED_TEAM]) {
 			/* Increase friendly fire counter. */
-			attacker->chr.scoreMission->hits[fd->weaponSkill][KILLED_TEAM]++;
-			attacker->chr.scoreMission->firedHit[KILLED_TEAM] = qtrue;
+			score->hits[fd->weaponSkill][KILLED_TEAM]++;
+			score->firedHit[KILLED_TEAM] = qtrue;
 		}
 
 		switch (target->team) {
 			case TEAM_CIVILIAN:
-				if (!attacker->chr.scoreMission->firedHit[KILLED_CIVILIANS]) {
-					attacker->chr.scoreMission->hits[fd->weaponSkill][KILLED_CIVILIANS]++;
-					attacker->chr.scoreMission->firedHit[KILLED_CIVILIANS] = qtrue;
+				if (!score->firedHit[KILLED_CIVILIANS]) {
+					score->hits[fd->weaponSkill][KILLED_CIVILIANS]++;
+					score->firedHit[KILLED_CIVILIANS] = qtrue;
 				}
 				break;
 			case TEAM_ALIEN:
-				if (!attacker->chr.scoreMission->firedHit[KILLED_ENEMIES]) {
-					attacker->chr.scoreMission->hits[fd->weaponSkill][KILLED_ENEMIES]++;
-					attacker->chr.scoreMission->firedHit[KILLED_ENEMIES] = qtrue;
+				if (!score->firedHit[KILLED_ENEMIES]) {
+					score->hits[fd->weaponSkill][KILLED_ENEMIES]++;
+					score->firedHit[KILLED_ENEMIES] = qtrue;
 				}
 				break;
 			default:
@@ -268,26 +271,26 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
 	} else {
 		if (attacker->team == target->team) {
 			/* Increase friendly fire counter. */
-			attacker->chr.scoreMission->hitsSplashDamage[fd->weaponSkill][KILLED_TEAM] += splashDamage;
-			if (!attacker->chr.scoreMission->firedSplashHit[KILLED_TEAM]) {
-				attacker->chr.scoreMission->hitsSplash[fd->weaponSkill][KILLED_TEAM]++;
-				attacker->chr.scoreMission->firedSplashHit[KILLED_TEAM] = qtrue;
+			score->hitsSplashDamage[fd->weaponSkill][KILLED_TEAM] += splashDamage;
+			if (!score->firedSplashHit[KILLED_TEAM]) {
+				score->hitsSplash[fd->weaponSkill][KILLED_TEAM]++;
+				score->firedSplashHit[KILLED_TEAM] = qtrue;
 			}
 		}
 
 		switch (target->team) {
 			case TEAM_CIVILIAN:
-				attacker->chr.scoreMission->hitsSplashDamage[fd->weaponSkill][KILLED_CIVILIANS] += splashDamage;
-				if (!attacker->chr.scoreMission->firedSplashHit[KILLED_CIVILIANS]) {
-					attacker->chr.scoreMission->hitsSplash[fd->weaponSkill][KILLED_CIVILIANS]++;
-					attacker->chr.scoreMission->firedSplashHit[KILLED_CIVILIANS] = qtrue;
+				score->hitsSplashDamage[fd->weaponSkill][KILLED_CIVILIANS] += splashDamage;
+				if (!score->firedSplashHit[KILLED_CIVILIANS]) {
+					score->hitsSplash[fd->weaponSkill][KILLED_CIVILIANS]++;
+					score->firedSplashHit[KILLED_CIVILIANS] = qtrue;
 				}
 				break;
 			case TEAM_ALIEN:
-				attacker->chr.scoreMission->hitsSplashDamage[fd->weaponSkill][KILLED_ENEMIES] += splashDamage;
-				if (!attacker->chr.scoreMission->firedSplashHit[KILLED_ENEMIES]) {
-					attacker->chr.scoreMission->hitsSplash[fd->weaponSkill][KILLED_ENEMIES]++;
-					attacker->chr.scoreMission->firedSplashHit[KILLED_ENEMIES] = qtrue;
+				score->hitsSplashDamage[fd->weaponSkill][KILLED_ENEMIES] += splashDamage;
+				if (!score->firedSplashHit[KILLED_ENEMIES]) {
+					score->hitsSplash[fd->weaponSkill][KILLED_ENEMIES]++;
+					score->firedSplashHit[KILLED_ENEMIES] = qtrue;
 				}
 				break;
 			default:
