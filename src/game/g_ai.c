@@ -403,6 +403,39 @@ qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t targ
 }
 
 /**
+ * @todo This feature causes the 'aliens shoot at walls'-bug.
+ * I considered adding a visibility check, but that wouldn't prevent aliens
+ * from shooting at the breakable parts of their own ship.
+ * So I disabled it for now. Duke, 23.10.09
+ */
+static edict_t *AI_SearchDestroyableObject (edict_t *ent, const fireDef_t *fd, aiAction_t * aia)
+{
+#if 0
+	/* search best none human target */
+	edict_t *check = NULL;
+	float dist;
+
+	while ((check = G_EdictsGetNextInUse(check))) {
+		if (G_IsBreakable(check)) {
+			float vis;
+
+			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
+				continue;
+
+			/* check whether target is visible enough */
+			vis = G_ActorVis(ent->origin, check, qtrue);
+			if (vis < ACTOR_VIS_0)
+				continue;
+
+			/* take the first best breakable or door and try to shoot it */
+			return check;
+		}
+	}
+#endif
+	return NULL;
+}
+
+/**
  * @sa AI_ActorThink
  * @todo fill z_align values
  * @todo optimize this
@@ -518,42 +551,21 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 							aia->target = check;
 							aia->fd = fd;
 						}
-					}
-#if 0
-				/**
-				 * @todo This feature causes the 'aliens shoot at walls'-bug.
-				 * I considered adding a visibility check, but that wouldn't prevent aliens
-				 * from shooting at the breakable parts of their own ship.
-				 * So I disabled it for now. Duke, 23.10.09
-				 */
-				if (!aia->target) {
-					/* search best none human target */
-					check = NULL;
-					while ((check = G_EdictsGetNextInUse(check))) {
-						if (G_IsBreakable(check)) {
-							if (!AI_FighterCheckShoot(ent, check, fd, &dist))
-								continue;
 
-							/* check whether target is visible enough */
-							vis = G_ActorVis(ent->origin, check, qtrue);
-							if (vis < ACTOR_VIS_0)
-								continue;
-
-							/* don't take vis into account, don't multiply with amout of shots
-							 * others (human victims) should be prefered, that's why we don't
-							 * want a too high value here */
-							maxDmg = (fd->damage[0] + fd->spldmg[0]);
-							aia->mode = shootType;
-							aia->shots = shots;
-							aia->target = check;
-							aia->fd = fd;
-							bestTime = fd->time * shots;
-							/* take the first best breakable or door and try to shoot it */
-							break;
+						if (!aia->target) {
+							aia->target = AI_SearchDestroyableObject(ent, fd, aia);
+							if (aia->target) {
+								/* don't take vis into account, don't multiply with amount of shots
+								 * others (human victims) should be preferred, that's why we don't
+								 * want a too high value here */
+								maxDmg = (fd->damage[0] + fd->spldmg[0]);
+								aia->shootType = shootType;
+								aia->shots = shots;
+								aia->fd = fd;
+								bestTime = fd->time * shots;
+							}
 						}
 					}
-				}
-#endif
 				}
 			}
 		} /* firedefs */
