@@ -3297,604 +3297,604 @@ base/sound/weapons/smg2.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/smokeexplosion.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/sniperrifle.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/stun_grenade.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/textures/pt/b/b2_04_0_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0b6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0b7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0b8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0c0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0c1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0c2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0c3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0c4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0c5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0c6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0c7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0c8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0d0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0d1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0d2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0d3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0d4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0d5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0d6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0d7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_0d8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_1_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_2_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_04_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0a10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0a11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0a12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0a9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0b10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0b11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0b12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0b6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0b7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0b8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0b9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0c0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0c1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0c10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0c11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0c12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0c2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0c3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0c4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0c5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0c6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0c7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0c8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_0c9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1c0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1c1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1c2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1c3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1c4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1c5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1d0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1d1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1d2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1d3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1d4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_1d5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2c0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2c1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2c2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2c3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2c4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2c5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2d0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2d1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2d2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2d3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2d4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_2d5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3a10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3a11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3a9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3b10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3b11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3b6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3b7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3b8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3b9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3c0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3c1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3c10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3c11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3c2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3c3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3c4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3c5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3c6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3c7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3c8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3c9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3d0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3d1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3d10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3d11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3d2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3d3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3d4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3d5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3d6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3d7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3d8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_3d9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4c0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4c1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4c2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4c3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4c4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4c5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4d0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4d1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4d2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4d3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4d4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4d5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4e0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4e1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4e2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4e3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4e4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_4e5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_5_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_5a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_6_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_6a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_7_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_7a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_8_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_06_8a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0a9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_0b9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1b6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1b7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1b8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1c0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1c1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1c2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1c3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1c4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1c5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1c6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1c7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_1c8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2b6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2b7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2b8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2c0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2c1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2c2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2c3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2c4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2c5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2c6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2c7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2c8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2c9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2d0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2d1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2d2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2d3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2d4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2d5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2d6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2d7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_2d8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3b6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3b7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_07_3b8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0_sk0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0a9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0b9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0c9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0d9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0e9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0f9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0r_0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0r_1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0s_0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0s_1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0t_0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0t_1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0u_0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0u_1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0w_0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0w_1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0x_0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0x_1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0y_0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0y_1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0z_0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_0z_1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1b9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1c0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1c1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1c2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1c3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1c4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1c5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1c6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1c7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1c8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1e9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1g0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1g1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1g2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1g3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1g4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1g5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1g6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1g7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1g8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_13-16_1h9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0a9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_0b9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1a9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_1b9.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2b0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2b1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2b2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2b3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2b4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2b5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2b6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2b7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/pt/b/b2_17_2b8.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/b/b2_04_0_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0a1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0a2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0a3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0a4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0a5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0a6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0a7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0a8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0b6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0b7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0b8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0c0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0c1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0c2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0c3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0c4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0c5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0c6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0c7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0c8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0d0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0d1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0d2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0d3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0d4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0d5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0d6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0d7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_0d8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_1_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_1a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_2_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_04_2a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0a1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0a10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0a11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0a12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0a2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0a3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0a4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0a5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0a6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0a7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0a8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0a9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0b10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0b11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0b12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0b6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0b7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0b8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0b9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0c0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0c1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0c10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0c11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0c12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0c2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0c3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0c4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0c5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0c6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0c7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0c8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_0c9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1a1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1a2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1a3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1a4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1a5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1c0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1c1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1c2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1c3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1c4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1c5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1d0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1d1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1d2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1d3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1d4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_1d5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2a1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2a2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2a3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2a4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2a5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2c0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2c1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2c2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2c3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2c4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2c5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2d0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2d1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2d2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2d3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2d4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_2d5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3a1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3a10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3a11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3a2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3a3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3a4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3a5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3a6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3a7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3a8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3a9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3b10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3b11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3b6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3b7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3b8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3b9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3c0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3c1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3c10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3c11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3c2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3c3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3c4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3c5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3c6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3c7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3c8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3c9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3d0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3d1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3d10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3d11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3d2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3d3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3d4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3d5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3d6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3d7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3d8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_3d9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4a1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4a2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4a3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4a4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4a5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4c0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4c1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4c2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4c3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4c4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4c5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4d0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4d1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4d2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4d3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4d4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4d5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4e0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4e1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4e2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4e3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4e4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_4e5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_5_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_5a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_6_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_6a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_7_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_7a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_8_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_06_8a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0a9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_0b9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1a1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1a2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1a3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1a4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1a5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1a6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1a7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1a8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1b6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1b7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1b8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1c0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1c1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1c2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1c3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1c4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1c5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1c6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1c7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_1c8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2a1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2a2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2a3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2a4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2a5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2a6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2a7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2a8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2b6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2b7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2b8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2c0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2c1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2c2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2c3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2c4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2c5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2c6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2c7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2c8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2c9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2d0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2d1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2d2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2d3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2d4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2d5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2d6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2d7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_2d8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3a1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3a2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3a3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3a4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3a5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3a6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3a7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3a8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3b6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3b7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_07_3b8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0_sk0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0a9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0b9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0c9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0d9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0e9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0f9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0r_0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0r_1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0s_0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0s_1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0t_0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0t_1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0u_0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0u_1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0w_0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0w_1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0x_0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0x_1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0y_0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0y_1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0z_0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_0z_1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1b9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1c0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1c1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1c2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1c3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1c4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1c5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1c6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1c7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1c8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1e9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1g0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1g1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1g2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1g3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1g4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1g5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1g6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1g7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1g8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_13-16_1h9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0a9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_0b9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1a9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b10.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b11.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b12.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b13.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b14.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b15.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_1b9.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2a0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2a1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2a2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2a3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2a4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2a5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2a6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2a7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2a8.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2b0.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2b1.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2b2.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2b3.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2b4.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2b5.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2b6.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2b7.png | GNU General Public License 2.0 | MCR
+base/textures/pt/b/b2_17_2b8.png | GNU General Public License 2.0 | MCR
 base/textures/pt/b/bctex001_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
 base/textures/pt/b/bctex001_0a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
 base/textures/pt/b/bctex001_0a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
