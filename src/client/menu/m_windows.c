@@ -417,7 +417,7 @@ void MN_InitStack (const char* activeMenu, const char* mainMenu, qboolean popAll
 /**
  * @brief Check if a named window is on the stack if active windows
  */
-qboolean MN_IsWindowOnStack(const char* name)
+qboolean MN_IsWindowOnStack (const char* name)
 {
 	return MN_GetWindowPositionFromStackByName(name) != -1;
 }

@@ -428,7 +428,7 @@ void GAME_CP_InitializeBattlescape (const chrList_t *team)
 	NET_WriteByte(msg, team->num);
 
 	for (i = 0; i < team->num; i++) {
-		character_t *chr = team->chr[i];
+		const character_t *chr = team->chr[i];
 		NET_WriteShort(msg, chr->ucn);
 		NET_WriteShort(msg, chr->state);
 	}
