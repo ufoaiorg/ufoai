@@ -33,7 +33,7 @@ static int airequipID = -1;				/**< value of aircraftItemType_t that defines wha
 
 static int airequipSelectedZone = ZONE_NONE;		/**< Selected zone in equip menu */
 static int airequipSelectedSlot = ZONE_NONE;			/**< Selected slot in equip menu */
-static technology_t *AIM_selectedTechnology = NULL;		/**< Selected technolgy in equip menu */
+static technology_t *aimSelectedTechnology = NULL;		/**< Selected technolgy in equip menu */
 
 /**
  * @brief Check airequipID value and set the correct values for aircraft items
@@ -289,11 +289,7 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
  */
 static inline void AIM_EmphazeAmmoSlotText (void)
 {
-	/** @todo confunc please */
-	menuNode_t *node = MN_GetNodeByPath("aircraft_equip.airequip_text_zone2");
-	if (!node)
-		return;
-	VectorSet(node->color, 1.0f, 0.0f, 0.0f);
+	MN_ExecuteConfunc("airequip_zone2_color \"1 0 0 1\"");
 }
 
 /**
@@ -303,11 +299,7 @@ static inline void AIM_EmphazeAmmoSlotText (void)
  */
 static inline void AIM_NoEmphazeAmmoSlotText (void)
 {
-	/** @todo confunc please */
-	menuNode_t *node = MN_GetNodeByPath("aircraft_equip.airequip_text_zone2");
-	if (!node)
-		return;
-	VectorSet(node->color, 1.0f, 1.0f, 1.0f);
+	MN_ExecuteConfunc("airequip_zone2_color \"1 1 1 1\"");
 }
 
 static void AIM_AircraftEquipMenuUpdate (qboolean updateItem)
@@ -430,7 +422,7 @@ static void AIM_AircraftEquipMenuUpdate (qboolean updateItem)
 #define AIM_LOADING_NOTUSABLEWITHWEAPON			8
 
 /**
- * @todo It is a generic function, we can move it into cm_mapfightequip
+ * @todo It is a generic function, we can move it into cp_mapfightequip.c
  * @param[in] slot Pointer to an aircraft slot (can be base/installation too)
  * @param[in] tech Pointer to the technology to test
  * @return The status of the technology versus the slot
@@ -523,7 +515,7 @@ static void AIM_UpdateItemDescription (qboolean fromList, qboolean fromSlot)
 	/* update mini ufopedia */
 	/** @todo we should clone the text, and not using the ufopaedia text */
 	if (fromList)
-		UP_AircraftItemDescription(INVSH_GetItemByIDSilent(AIM_selectedTechnology ? AIM_selectedTechnology->provides : NULL));
+		UP_AircraftItemDescription(INVSH_GetItemByIDSilent(aimSelectedTechnology ? aimSelectedTechnology->provides : NULL));
 	else if (fromSlot) {
 		if (airequipID == AC_ITEM_AMMO)
 			UP_AircraftItemDescription(slot->ammo);
@@ -532,7 +524,7 @@ static void AIM_UpdateItemDescription (qboolean fromList, qboolean fromSlot)
 	}
 
 	/* update status */
-	status = AIM_CheckTechnologyIntoSlot(slot, AIM_selectedTechnology);
+	status = AIM_CheckTechnologyIntoSlot(slot, aimSelectedTechnology);
 	switch (status) {
 	case AIM_LOADING_NOSLOTSELECTED:
 		Cvar_Set("mn_aircraft_item_warning", _("No slot selected."));
@@ -754,7 +746,7 @@ static void AIM_AircraftEquipAddItem_f (void)
 	zone = (airequipID == AC_ITEM_AMMO)?2:1;
 
 	/* proceed only if an item has been selected */
-	if (!AIM_selectedTechnology)
+	if (!aimSelectedTechnology)
 		return;
 
 	assert(base);
@@ -779,10 +771,10 @@ static void AIM_AircraftEquipAddItem_f (void)
 			/* we add the weapon, shield, item if slot is free or the installation of current item just began */
 			if (!slot->item || (slot->item && slot->installationTime == slot->item->craftitem.installationTime)) {
 				AII_RemoveItemFromSlot(base, slot, qfalse);
-				AII_AddItemToSlot(base, AIM_selectedTechnology, slot, qfalse); /* Aircraft stats are updated below */
+				AII_AddItemToSlot(base, aimSelectedTechnology, slot, qfalse); /* Aircraft stats are updated below */
 				AII_AutoAddAmmo(slot);
 				break;
-			} else if (slot->item == INVSH_GetItemByID(AIM_selectedTechnology->provides)) {
+			} else if (slot->item == INVSH_GetItemByID(aimSelectedTechnology->provides)) {
 				/* the added item is the same than the one in current slot */
 				if (slot->installationTime == -slot->item->craftitem.installationTime) {
 					/* player changed his mind: he just want to re-add the item he just removed */
@@ -805,13 +797,13 @@ static void AIM_AircraftEquipAddItem_f (void)
 
 		/* we change the weapon, shield, item, or base defence that will be installed AFTER the removal
 		 * of the one in the slot atm */
-		AII_AddItemToSlot(base, AIM_selectedTechnology, slot, qtrue);
+		AII_AddItemToSlot(base, aimSelectedTechnology, slot, qtrue);
 		AII_AutoAddAmmo(slot);
 		break;
 	case ZONE_AMMO:
 		/* we can change ammo only if the selected item is an ammo (for weapon or base defence system) */
 		if (airequipID >= AC_ITEM_AMMO) {
-			AII_AddAmmoToSlot(base, AIM_selectedTechnology, slot);
+			AII_AddAmmoToSlot(base, aimSelectedTechnology, slot);
 		}
 		break;
 	default:
@@ -906,7 +898,7 @@ static void AIM_AircraftEquipMenuClick_f (void)
 	/* Which tech? */
 	techIdx = atoi(Cmd_Argv(1));
 
-	AIM_selectedTechnology = (techIdx >= 0) ? &ccs.technologies[techIdx] : NULL;
+	aimSelectedTechnology = (techIdx >= 0) ? &ccs.technologies[techIdx] : NULL;
 	AIM_UpdateItemDescription(qtrue, qfalse);
 }
 

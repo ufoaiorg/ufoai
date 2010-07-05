@@ -507,6 +507,14 @@ window aircraft_equip extends iaircraft
 	// functions
 	// ==================
 
+	/**
+	 * @param <1> color
+	 */
+	confunc airequip_zone2_color
+	{
+		*airequip_text_zone2@color = "<1>"
+	}
+	
 	confunc airequip_zone2_off
 	{
 		*airequip_header2@invis = true
@@ -557,6 +565,10 @@ window aircraft_equip extends iaircraft
 		*node:parent.item.button_remove@invis = true
 	}
 
+	/**
+	 * @param <1> slot index
+	 * @param <2> status
+	 */
 	confunc airequip_display_slot
 	{
 		*cvar:status = <2>
