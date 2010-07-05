@@ -165,7 +165,7 @@ static void INV_InventoryList_f (void)
  * @note Check that the sum of all probabilities is smaller or equal to 100 for a weapon type.
  * @sa INVSH_EquipActor
  */
-qboolean INV_EquipmentDefSanityCheck (void)
+static qboolean INV_EquipmentDefSanityCheck (void)
 {
 	int i, j;
 	int sum;
@@ -409,5 +409,7 @@ void INV_InitStartup (void)
 	Cmd_AddCommand("debug_listinventory", INV_InventoryList_f, "Print the current inventory to the game console");
 #endif
 	INV_InitCallbacks();
+
+	INV_EquipmentDefSanityCheck();
 }
 

@@ -23,11 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../cl_shared.h"
-#include "../cl_game.h"
+#include "../client.h" /* cl_genericPool */
+#include "../cl_game.h" /* GAME_ReloadMode */
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
-#include "../mxml/mxml_ufoai.h"
 #include "cp_campaign.h"
 #include "cp_save.h"
 #include "cp_time.h"

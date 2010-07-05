@@ -23,10 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../client.h" /* image_t */
 #include "../renderer/r_overlay.h"
-#include "../renderer/r_draw.h"
-#include "../renderer/r_geoscape.h"
+#include "../renderer/r_draw.h" /* R_DrawLineStrip */
+#include "../renderer/r_geoscape.h" /* OVERLAY_RADAR */
 #include "../menu/m_nodes.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
@@ -173,7 +173,7 @@ void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, const vec2_t
 			if (UFO_IsUFOSeenOnGeoscape(ufo) && MAP_AllMapToScreen(node, ufo->pos, &x, &y, NULL)) {
 				pts[1].x = x;
 				pts[1].y = y;
-				R_DrawLineStrip(2, (int*)pts); /** @todo */
+				R_DrawLineStrip(2, (int*)pts);
 			}
 		}
 	}
