@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../client.h" /* cls */
 #include "../cl_team.h"
 #include "../cl_ugv.h"
 #include "cp_campaign.h"

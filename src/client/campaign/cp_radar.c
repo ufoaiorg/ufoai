@@ -23,7 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h" /* image_t */
+#include "../cl_shared.h"
+#include "../cl_renderer.h" /* R_Color */
+#include "../renderer/r_image.h"
 #include "../renderer/r_draw.h" /* R_DrawLineStrip */
 #include "../menu/m_nodes.h"
 #include "cp_campaign.h"
@@ -126,14 +128,8 @@ void RADAR_UpdateWholeRadarOverlay (void)
 static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar, const vec2_t pos)
 {
 	const vec4_t color = {1., 1., 1., .4};
-
-	/* Set color */
-	R_Color(color);
-
 	MAP_MapDrawEquidistantPoints(node, pos, radar->range, color);
 	MAP_MapDrawEquidistantPoints(node, pos, radar->trackingRange, color);
-
-	R_Color(NULL);
 }
 
 /**

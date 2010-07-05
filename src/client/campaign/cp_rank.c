@@ -52,7 +52,7 @@ int CL_GetRankIdx (const char* rankID)
  */
 rank_t *CL_GetRankByIdx (const int index)
 {
-	if ((index < 0) || (index >= ccs.numRanks))
+	if (index < 0 || index >= ccs.numRanks)
 		return NULL;
 
 	return &ccs.ranks[index];
