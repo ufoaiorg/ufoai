@@ -23,12 +23,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 #include "../cl_shared.h"
+#include "../cl_team.h"
 #include "../cl_game.h"
 #include "../menu/m_main.h"
 #include "../menu/m_data.h"
 #include "../menu/m_draw.h"
-#include "../battlescape/cl_localentity.h"	/**< cl_actor.h needs this */
-#include "../battlescape/cl_actor.h"
 #include "cp_campaign.h"
 #include "cp_employee_callbacks.h"
 #include "cp_employee.h"
@@ -82,7 +81,7 @@ static void E_EmployeeSelect (employee_t *employee)
 		Cvar_SetValue("mn_ucn", chr->ucn);
 
 		/* set info cvars */
-		CL_ActorCvars(chr, "mn_");
+		CL_UpdateCharacterValues(chr, "mn_");
 	}
 }
 

@@ -26,11 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "cl_localentity.h"
 #include "cl_actor.h"
-#include "cl_ugv.h"
 #include "cl_hud.h"
 #include "cl_hud_callbacks.h"
-#include "../cl_game.h"
 #include "cl_view.h"
+#include "../cl_team.h"
+#include "../cl_game.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
 #include "../menu/m_nodes.h"
@@ -1265,17 +1265,7 @@ static void HUD_ActorGetCvarData_f (void)
 			return;
 		}
 
-		switch (le->fieldSize) {
-		case ACTOR_SIZE_NORMAL:
-			CL_ActorCvars(chr, cvarPrefix);
-			break;
-		case ACTOR_SIZE_2x2:
-			CL_UGVCvars(chr, cvarPrefix);
-			break;
-		default:
-			Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize");
-			return;
-		}
+		CL_UpdateCharacterValues(chr, cvarPrefix);
 
 		/* override some cvar with HUD data */
 		HUD_UpdateActorCvar(le, cvarPrefix);

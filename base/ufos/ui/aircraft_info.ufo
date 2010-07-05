@@ -91,7 +91,7 @@ window aircraft extends iaircraft
 			*aircraft_navigation@disabled = false
 
 			*aircraft_return@tooltip = "_Start Aircraft"
-			*aircraft_return@onClick = { cmd "aircraft_start;mn_pop;mn_pop;" }
+			*aircraft_return@onClick = { cmd "aircraft_start;" }
 			*aircraft_return@texl = "0 32"
 		} else {
 			*aircraft_navigation@disabled = true

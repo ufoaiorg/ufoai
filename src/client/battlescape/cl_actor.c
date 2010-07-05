@@ -159,39 +159,6 @@ int CL_ActorMoveMode (const le_t *le, int length)
 }
 
 /**
- * @brief Updates the character cvars for the given character.
- *
- * The models and stats that are displayed in the menu are stored in cvars.
- * These cvars are updated here when you select another character.
- *
- * @param chr Pointer to character_t (may not be null)
- * @sa CL_UGVCvars
- * @sa CL_ActorSelect
- * @todo This does not really belong into the battlescape code
- */
-void CL_ActorCvars (const character_t * chr, const char* cvarPrefix)
-{
-	invList_t *weapon;
-	assert(chr);
-
-	/* visible equipment */
-	weapon = RIGHT(chr);
-	if (weapon)
-		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), weapon->item.t->model);
-	else
-		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), "");
-	weapon = LEFT(chr);
-	if (weapon)
-		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), weapon->item.t->model);
-	else
-		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), "");
-
-	GAME_CharacterCvars(chr);
-
-	CL_CharacterSkillAndScoreCvars(chr, cvarPrefix);
-}
-
-/**
  * @brief Returns the number of the actor in the teamlist.
  * @param[in] le The actor to search.
  * @return The number of the actor in the teamlist. Or @c -1 if the given entity is not in the team list.
@@ -483,16 +450,7 @@ qboolean CL_ActorSelect (le_t * le)
 	if (!chr)
 		Com_Error(ERR_DROP, "No character given for local entity");
 
-	switch (le->fieldSize) {
-	case ACTOR_SIZE_NORMAL:
-		CL_ActorCvars(chr, "mn_");
-		break;
-	case ACTOR_SIZE_2x2:
-		CL_UGVCvars(chr, "mn_");
-		break;
-	default:
-		Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize");
-	}
+	CL_UpdateCharacterValues(chr, "mn_");
 
 	CL_ActorConditionalMoveCalc(le);
 
@@ -2278,10 +2236,7 @@ static void CL_ActorEquipmentSelect_f (void)
 	Cvar_SetValue("mn_ucn", chrDisplayList.chr[num]->ucn);
 
 	/* set info cvars */
-	if (chr->teamDef->race == RACE_ROBOT)
-		CL_UGVCvars(chr, "mn_");
-	else
-		CL_ActorCvars(chr, "mn_");
+	CL_UpdateCharacterValues(chr, "mn_");
 }
 
 /**
@@ -2311,11 +2266,8 @@ static void CL_ActorUpdate_f (void)
 
 	/* We are in the base or multiplayer inventory */
 	if (num < chrDisplayList.num) {
-		assert(chrDisplayList.chr[num]);
-		if (chrDisplayList.chr[num]->teamDef->race == RACE_ROBOT)
-			CL_UGVCvars(chrDisplayList.chr[num], "mn_");
-		else
-			CL_ActorCvars(chrDisplayList.chr[num], "mn_");
+		const character_t *chr = chrDisplayList.chr[num];
+		CL_UpdateCharacterValues(chr, "mn_");
 	}
 }
 

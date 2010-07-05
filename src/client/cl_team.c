@@ -64,7 +64,7 @@ static const char* CL_GetTeamSkinName (int id)
 	Com_Error(ERR_DROP, "CL_GetTeamSkinName: Unknown skin id %i - max is %i", id, NUM_TEAMSKINS - 1);
 }
 
-void CL_CharacterSkillAndScoreCvars (const character_t *chr, const char* cvarPrefix)
+static void CL_CharacterSkillAndScoreCvars (const character_t *chr, const char* cvarPrefix)
 {
 	Cvar_ForceSet(va("%s%s", cvarPrefix, "name"), chr->name);
 	Cvar_ForceSet(va("%s%s", cvarPrefix, "body"), CHRSH_CharGetBody(chr));
@@ -103,6 +103,66 @@ void CL_CharacterSkillAndScoreCvars (const character_t *chr, const char* cvarPre
 	Cvar_Set(va("%s%s", cvarPrefix, "tsnp"), va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_SNIPER]), chr->score.skills[SKILL_SNIPER]));
 	Cvar_Set(va("%s%s", cvarPrefix, "texp"), va("%s (%i)", CL_ActorGetSkillString(chr->score.skills[SKILL_EXPLOSIVE]), chr->score.skills[SKILL_EXPLOSIVE]));
 	Cvar_Set(va("%s%s", cvarPrefix, "thp"), va("%i (%i)", chr->HP, chr->maxHP));
+}
+
+/**
+ * @brief Updates the character cvars for the given character.
+ *
+ * The models and stats that are displayed in the menu are stored in cvars.
+ * These cvars are updated here when you select another character.
+ *
+ * @param[in] chr Pointer to character_t (may not be null)
+ * @param[in] cvarPrefix
+ * @sa CL_UGVCvars
+ * @sa CL_ActorSelect
+ */
+static void CL_ActorCvars (const character_t * chr, const char* cvarPrefix)
+{
+	invList_t *weapon;
+	assert(chr);
+
+	/* visible equipment */
+	weapon = RIGHT(chr);
+	if (weapon)
+		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), weapon->item.t->model);
+	else
+		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), "");
+	weapon = LEFT(chr);
+	if (weapon)
+		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), weapon->item.t->model);
+	else
+		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), "");
+}
+
+/**
+ * @brief Updates the UGV cvars for the given "character".
+ *
+ * The models and stats that are displayed in the menu are stored in cvars.
+ * These cvars are updated here when you select another character.
+ *
+ * @param[in] chr Pointer to character_t (may not be null)
+ * @param[in] cvarPrefix
+ * @sa CL_ActorCvars
+ * @sa CL_ActorSelect
+ */
+static void CL_UGVCvars (const character_t *chr, const char* cvarPrefix)
+{
+	Cvar_Set("mn_lweapon", "");
+	Cvar_Set("mn_rweapon", "");
+	Cvar_Set("mn_vmnd", "0");
+	Cvar_Set("mn_tmnd", va("%s (0)", CL_ActorGetSkillString(chr->score.skills[ABILITY_MIND])));
+}
+
+void CL_UpdateCharacterValues (const character_t *chr, const char *cvarPrefix)
+{
+	CL_CharacterSkillAndScoreCvars(chr, cvarPrefix);
+
+	if (chr->teamDef->race == RACE_ROBOT)
+		CL_UGVCvars(chr, cvarPrefix);
+	else
+		CL_ActorCvars(chr, cvarPrefix);
+
+	GAME_CharacterCvars(chr);
 }
 
 /**
