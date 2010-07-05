@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "r_error.h"
-#include "r_overlay.h"
 #include "r_geoscape.h"
 #include "../../shared/images.h"
 
@@ -723,7 +722,6 @@ void R_InitImages (void)
 	}
 
 	R_InitGeoscape();
-	R_InitOverlay();
 }
 
 /**
@@ -741,8 +739,6 @@ void R_ShutdownImages (void)
 		R_DeleteImage(image);
 	}
 	memset(imageHash, 0, sizeof(imageHash));
-
-	R_ShutdownOverlay();
 }
 
 

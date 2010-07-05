@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_error.h"
 #include "r_sphere.h"
-#include "r_overlay.h"
 #include "r_geoscape.h"
 
 #include "r_mesh.h"
@@ -37,14 +36,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define DAWN		0.03
 
 extern const float STANDARD_3D_ZOOM;
-extern image_t *r_xviTexture;
-extern image_t *r_radarTexture;
 
 /** the last q value for the 2d geoscape night overlay */
 static float lastQ = 0.0f;
 
 /** this is the mask that is used to display day/night on (2d-)geoscape */
 static image_t *r_dayandnightTexture;
+static image_t *r_radarTexture;				/**< radar texture */
+static image_t *r_xviTexture;					/**< XVI alpha mask texture */
 
 /** this is the data that is used with r_dayandnightTexture */
 static byte r_dayandnightAlpha[DAN_WIDTH * DAN_HEIGHT];
@@ -104,9 +103,8 @@ static void R_CalcAndUploadDayAndNightTexture (float q)
  * @param[in] y The y position of the geoscape node
  * @param[in] w The width of the geoscape node
  * @param[in] h The height of the geoscape node
- * @param[in] overlay The bitmask of the overlays to render on the geoscape
  */
-void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map, int overlay)
+void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar)
 {
 	image_t *gl;
 	float geoscape_texcoords[4 * 2];
@@ -186,7 +184,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	}
 
 	/* draw nation overlay */
-	if (overlay & OVERLAY_NATION) {
+	if (overlayNation) {
 		gl = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
 		if (gl == r_noTexture)
 			Com_Error(ERR_FATAL, "Could not load geoscape nation overlay image");
@@ -197,7 +195,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	}
 
 	/* draw XVI image */
-	if (overlay & OVERLAY_XVI) {
+	if (overlayXVI) {
 		gl = R_FindImage(va("pics/geoscape/%s_xvi_overlay", map), it_wrappic);
 		if (gl == r_noTexture)
 			Com_Error(ERR_FATAL, "Could not load xvi overlay image");
@@ -213,7 +211,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	}
 
 	/* draw radar image */
-	if (overlay & OVERLAY_RADAR) {
+	if (overlayRadar) {
 		R_BindTexture(r_radarTexture->texnum);
 		glDrawArrays(GL_QUADS, 0, 4);
 	}
@@ -483,11 +481,10 @@ static inline void RotateCelestialBody (const vec4_t v, vec4_t * r, const vec3_t
  * @param[in] rotate the rotate angle of the globe
  * @param[in] zoom the current globe zoon
  * @param[in] map the prefix of the map to use (image must be at base/pics/menu/\<map\>_[day|night])
- * @param[in] overlay The bitmask of the overlays to render on the geoscape
  * @sa R_DrawFlatGeoscape
  * @sa R_SphereGenerate
  */
-void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender, float ambient, int overlay)
+void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender, float ambient, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar)
 {
 	/* globe scaling */
 	const float fullscale = zoom / STANDARD_3D_ZOOM;
@@ -678,7 +675,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	glDisable(GL_DEPTH_TEST);
 
 	/* draw nation overlay */
-	if (overlay & OVERLAY_NATION) {
+	if (overlayNation) {
 		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_nations_overlay", map), it_wrappic);
 		if (r_globeEarth.overlay == r_noTexture)
 			Com_Error(ERR_FATAL, "Could not load geoscape nation overlay image");
@@ -699,18 +696,18 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		r_globeEarth.overlay = NULL;
 	}
 	/* draw XVI overlay */
-	if (overlay & OVERLAY_XVI) {
-		assert(r_xviTexture);
+	if (overlayXVI) {
 		r_globeEarth.overlay = R_FindImage(va("pics/geoscape/%s_xvi_overlay", map), it_wrappic);
 		r_globeEarth.overlayAlphaMask = r_xviTexture;
+		assert(r_globeEarth.overlayAlphaMask);
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
 		r_globeEarth.overlayAlphaMask = NULL;
 		r_globeEarth.overlay = NULL;
 	}
 	/* draw radar overlay */
-	if (overlay & OVERLAY_RADAR) {
-		assert(r_radarTexture);
+	if (overlayRadar) {
 		r_globeEarth.overlay = r_radarTexture;
+		assert(r_globeEarth.overlay);
 		R_SphereRender(&r_globeEarth, earthPos, rotate, fullscale, sunPos);
 		r_globeEarth.overlay = NULL;
 	}

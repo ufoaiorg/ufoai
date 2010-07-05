@@ -24,15 +24,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-void R_DecreaseXVILevelEverywhere(void);
-void R_ChangeXVILevel(const vec2_t pos, float factor);
-void R_InitializeXVIOverlay(const byte *data);
-void R_InitOverlay(void);
-void R_GetXVIMapDimensions(int *width, int *height);
-int R_GetXVILevel(int x, int y);
-void R_SetXVILevel(int x, int y, int value);
-void R_InitializeRadarOverlay(qboolean source);
-void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
-void R_UploadRadarCoverage(void);
-void R_ShutdownOverlay(void);
+void CP_DecreaseXVILevelEverywhere(void);
+void CP_ChangeXVILevel(const vec2_t pos, float factor);
+void CP_InitializeXVIOverlay(const byte *data);
+void CP_InitOverlay(void);
+void CP_GetXVIMapDimensions(int *width, int *height);
+int CP_GetXVILevel(int x, int y);
+void CP_SetXVILevel(int x, int y, int value);
+void CP_InitializeRadarOverlay(qboolean source);
+void CP_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
+void CP_UploadRadarCoverage(void);
+void CP_ShutdownOverlay(void);
+
+#define OVERLAY_NATION		(1<<0)
+#define OVERLAY_XVI			(1<<1)
+#define OVERLAY_RADAR		(1<<2)
 

@@ -24,10 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h" /* image_t */
-#include "../renderer/r_overlay.h"
 #include "../renderer/r_draw.h" /* R_DrawLineStrip */
 #include "../menu/m_nodes.h"
 #include "cp_campaign.h"
+#include "cp_overlay.h"
 #include "cp_map.h"
 #include "cp_ufo.h"
 
@@ -55,13 +55,13 @@ void RADAR_UpdateStaticRadarCoverage (void)
 	int baseIdx, installationIdx;
 
 	/* Initialise radar range (will be filled below) */
-	R_InitializeRadarOverlay(qtrue);
+	CP_InitializeRadarOverlay(qtrue);
 
 	/* Add base radar coverage */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (base && base->radar.range) {
-			R_AddRadarCoverage(base->pos, base->radar.range, base->radar.trackingRange, qtrue);
+			CP_AddRadarCoverage(base->pos, base->radar.range, base->radar.trackingRange, qtrue);
 		}
 	}
 
@@ -70,14 +70,14 @@ void RADAR_UpdateStaticRadarCoverage (void)
 		const installation_t const *installation = INS_GetFoundedInstallationByIDX(installationIdx);
 		if (installation && installation->founded &&
 			installation->installationStatus == INSTALLATION_WORKING && installation->radar.range) {
-			R_AddRadarCoverage(installation->pos, installation->radar.range, installation->radar.trackingRange, qtrue);
+			CP_AddRadarCoverage(installation->pos, installation->radar.range, installation->radar.trackingRange, qtrue);
 		}
 	}
 
 	/* Smooth and bind radar overlay without aircraft (in case no aircraft is on geoscape:
 	 * RADAR_UpdateWholeRadarOverlay won't be called) */
-	R_InitializeRadarOverlay(qfalse);
-	R_UploadRadarCoverage();
+	CP_InitializeRadarOverlay(qfalse);
+	CP_UploadRadarCoverage();
 }
 
 /**
@@ -86,7 +86,7 @@ void RADAR_UpdateStaticRadarCoverage (void)
  */
 static inline void RADAR_DrawCoverage (const radar_t* radar, const vec2_t pos)
 {
-	R_AddRadarCoverage(pos, radar->range, radar->trackingRange, qfalse);
+	CP_AddRadarCoverage(pos, radar->range, radar->trackingRange, qfalse);
 }
 
 /**
@@ -97,7 +97,7 @@ void RADAR_UpdateWholeRadarOverlay (void)
 	int baseIdx;
 
 	/* Copy Base and installation radar overlay*/
-	R_InitializeRadarOverlay(qfalse);
+	CP_InitializeRadarOverlay(qfalse);
 
 	/* Add aircraft radar coverage */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
@@ -113,7 +113,7 @@ void RADAR_UpdateWholeRadarOverlay (void)
 		}
 	}
 
-	R_UploadRadarCoverage();
+	CP_UploadRadarCoverage();
 }
 
 /**

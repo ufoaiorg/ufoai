@@ -134,6 +134,7 @@ CLIENT_SRCS = \
 	client/campaign/cp_uforecovery_callbacks.c \
 	client/campaign/cp_messageoptions.c \
 	client/campaign/cp_messageoptions_callbacks.c \
+	client/campaign/cp_overlay.c \
 	client/campaign/cp_popup.c \
 	client/campaign/cp_fightequip_callbacks.c \
 	\
@@ -280,7 +281,6 @@ CLIENT_SRCS = \
 	client/renderer/r_model_md2.c \
 	client/renderer/r_model_md3.c \
 	client/renderer/r_model_obj.c \
-	client/renderer/r_overlay.c \
 	client/renderer/r_particle.c \
 	client/renderer/r_program.c \
 	client/renderer/r_sdl.c \

@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_render.h" /* MN_DrawString */
 #include "../menu/node/m_node_abstractnode.h" /* MN_GetNodeAbsPos */
 #include "../menu/node/m_node_map.h" /* paddingRight */
+#include "cp_overlay.h"
 #include "cp_campaign.h"
 #include "cp_popup.h"
 #include "cp_mapfightequip.h"
@@ -1918,7 +1919,9 @@ void MAP_DrawMap (const menuNode_t* node)
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
 		R_Draw3DGlobe(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1],
-				ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, ccs.curCampaign->map, disableSolarRender, cl_3dmapAmbient->value, cl_geoscape_overlay->integer);
+				ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, ccs.curCampaign->map, disableSolarRender,
+				cl_3dmapAmbient->value, MAP_IsNationOverlayActivated(), MAP_IsXVIOverlayActivated(),
+				MAP_IsRadarOverlayActivated());
 
 		MAP_DrawMapMarkers(node);
 
@@ -1930,7 +1933,8 @@ void MAP_DrawMap (const menuNode_t* node)
 		if (smoothRotation)
 			MAP_SmoothTranslate();
 		R_DrawFlatGeoscape(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], (float) ccs.date.sec / SECONDS_PER_DAY, q,
-			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, ccs.curCampaign->map, cl_geoscape_overlay->integer);
+			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, ccs.curCampaign->map, MAP_IsNationOverlayActivated(),
+			MAP_IsXVIOverlayActivated(), MAP_IsRadarOverlayActivated());
 		MAP_DrawMapMarkers(node);
 	}
 

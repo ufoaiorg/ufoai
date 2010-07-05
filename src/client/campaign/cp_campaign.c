@@ -29,8 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 #include "../cl_team.h" /* MAX_WHOLETEAM */
 #include "../menu/m_main.h"
-#include "../renderer/r_overlay.h" /* R_InitializeXVIOverlay */
 #include "cp_campaign.h"
+#include "cp_overlay.h"
 #include "cp_mapfightequip.h"
 #include "cp_hospital.h"
 #include "cp_hospital_callbacks.h"
@@ -1645,6 +1645,8 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 
+	CP_InitOverlay();
+
 	CP_XVIInit();
 
 	MN_InitStack("geoscape", "campaign_main", qtrue, qtrue);
@@ -1682,7 +1684,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	/* Initialize XVI overlay */
 	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
-	R_InitializeXVIOverlay(NULL);
+	CP_InitializeXVIOverlay(NULL);
 
 	/* create a base as first step */
 	B_SelectBase(NULL);
@@ -1705,6 +1707,8 @@ void CP_CampaignExit (void)
 		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
 		CP_RemoveCampaignCommands();
 	}
+
+	CP_ShutdownOverlay();
 }
 
 /**
@@ -1989,4 +1993,3 @@ void CP_InitStartup (void)
 	NAT_InitStartup();
 	STATS_InitStartup();
 }
-

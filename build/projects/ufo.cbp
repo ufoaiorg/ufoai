@@ -580,6 +580,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/campaign/cp_nations.h" />
+		<Unit filename="../../src/client/campaign/cp_overlay.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/campaign/cp_overlay.h" />
 		<Unit filename="../../src/client/campaign/cp_parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -1188,10 +1192,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/renderer/r_model_obj.h" />
-		<Unit filename="../../src/client/renderer/r_overlay.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/client/renderer/r_overlay.h" />
 		<Unit filename="../../src/client/renderer/r_geoscape.c">
 			<Option compilerVar="CC" />
 		</Unit>
