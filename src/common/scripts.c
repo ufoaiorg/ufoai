@@ -2820,23 +2820,23 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 			if (csi.dts[csi.numDTs].showInMenu) {
 				Com_DPrintf(DEBUG_CLIENT, "Com_ParseDamageTypes: dmgtype/dmgweight %s\n", token);
 				/* Special IDs */
-				if (!strncmp(token, "normal", 6))
+				if (!strcmp(token, "normal"))
 					csi.damNormal = csi.numDTs;
-				else if (!strncmp(token, "blast", 5))
+				else if (!strcmp(token, "blast"))
 					csi.damBlast = csi.numDTs;
-				else if (!strncmp(token, "fire", 4))
+				else if (!strcmp(token, "fire"))
 					csi.damFire = csi.numDTs;
-				else if (!strncmp(token, "shock", 5))
+				else if (!strcmp(token, "shock"))
 					csi.damShock = csi.numDTs;
-				else if (!strncmp(token, "laser", 5))
+				else if (!strcmp(token, "laser"))
 					csi.damLaser = csi.numDTs;
-				else if (!strncmp(token, "plasma", 6))
+				else if (!strcmp(token, "plasma"))
 					csi.damPlasma = csi.numDTs;
-				else if (!strncmp(token, "particle", 7))
+				else if (!strcmp(token, "particle"))
 					csi.damParticle = csi.numDTs;
-				else if (!strncmp(token, "stun_electro", 12))
+				else if (!strcmp(token, "stun_electro"))
 					csi.damStunElectro = csi.numDTs;
-				else if (!strncmp(token, "stun_gas", 8))
+				else if (!strcmp(token, "stun_gas"))
 					csi.damStunGas = csi.numDTs;
 				else
 					Com_Printf("Unknown dmgtype: '%s'\n", token);

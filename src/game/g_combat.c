@@ -707,6 +707,7 @@ static void G_ShootGrenade (const player_t *player, edict_t *ent, const fireDef_
 	}
 }
 
+#ifdef DEBUG
 /**
  * @brief Displays the results of a trace. Used to see if a bullet hit something.
  * @param[in] start The starting loaction of the trace.
@@ -747,6 +748,7 @@ static void DumpAllEntities (void)
 		i++;
 	}
 }
+#endif
 
 /**
  * @brief Fires straight shots.
@@ -853,13 +855,14 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		 * but rather the 'endofrange' location, see below for another use.*/
 		VectorMA(cur_loc, range, dir, impact);
 
-		DumpAllEntities();
-
 		/* Do the trace from current position of the projectile
 		 * to the end_of_range location.*/
 		tr = G_Trace(tracefrom, impact, ent, MASK_SHOT);
 
+#ifdef DEBUG
+		DumpAllEntities();
 		DumpTrace(tracefrom, tr);
+#endif
 
 		/* maybe we start the trace from within a brush (e.g. in case of throughWall) */
 		if (tr.startsolid)
