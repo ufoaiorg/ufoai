@@ -154,9 +154,6 @@ static void AIM_AircraftStart_f (void)
 	aircraft->status = AIR_IDLE;
 
 	MAP_SelectAircraft(aircraft);
-	/* Return to geoscape. */
-	MN_PopWindow(qfalse);
-	MN_PopWindow(qfalse);
 }
 
 #define SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE 1
