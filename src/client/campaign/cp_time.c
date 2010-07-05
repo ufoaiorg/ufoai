@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../menu/m_main.h"
+#include "../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_time.h"
 
@@ -84,7 +83,7 @@ void CL_UpdateTime (void)
 void CL_GameTimeStop (void)
 {
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (!cp_missiontest->integer && !CL_OnBattlescape())
+	if (!cp_missiontest->integer && CP_OnGeoscape())
 		gameLapse = 0;
 
 	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
@@ -104,14 +103,12 @@ qboolean CL_IsTimeStopped (void)
  */
 static qboolean CL_AllowTimeScale (void)
 {
-	const char *menuName = MN_GetActiveWindowName();
-
 	/* check the stats value - already build bases might have been destroyed
 	 * so the ccs.numBases values is pointless here */
 	if (!ccs.campaignStats.basesBuilt)
 		return qfalse;
 
-	return !strncmp(menuName, "geoscape", 3) || !strncmp(menuName, "airfight", 8);
+	return CP_OnGeoscape();
 }
 
 /**

@@ -610,6 +610,11 @@ static void CL_CampaignFunctionPeriodicCall (int dt, qboolean updateRadarOverlay
 	UFO_CampaignCheckEvents();
 }
 
+qboolean CP_OnGeoscape (void)
+{
+	return !strcmp("geoscape", MN_GetActiveWindowName());
+}
+
 /**
  * @brief delay between actions that must be executed independently of time scale
  * @sa RADAR_CheckUFOSensored
@@ -633,7 +638,7 @@ void CL_CampaignRun (void)
 	if (!CP_IsRunning())
 		return;
 
-	if (strcmp("geoscape", MN_GetActiveWindowName()))
+	if (!CP_OnGeoscape())
 		return;
 
 	/* advance time */

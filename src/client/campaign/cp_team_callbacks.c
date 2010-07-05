@@ -23,10 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../battlescape/cl_localentity.h"	/**< cl_actor.h needs this */
-#include "../battlescape/cl_actor.h"
-#include "../battlescape/cl_ugv.h"
+#include "../cl_shared.h"
 #include "../cl_team.h"
 #include "../cl_ugv.h"
 #include "../menu/m_main.h"
@@ -53,6 +50,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 	linkedList_t *emplList;
 	int id;
 	base_t *base = B_GetCurrentSelectedBase();
+	const int selected = Cvar_GetInteger("cl_selected");
 
 	/* Check if we are allowed to be here.
 	 * We are only allowed to be here if we already set up a base. */
@@ -123,7 +121,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 		else
 			MN_ExecuteConfunc("aircraft_%s_holdsnoequip %i", nodeTag, guiId);
 
-		if (cl_selected->integer == id)
+		if (selected == id)
 			MN_ExecuteConfunc("aircraft_%s_selected %i", nodeTag, guiId);
 
 		emplList = emplList->next;

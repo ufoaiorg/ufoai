@@ -586,6 +586,7 @@ void CL_GameAutoGo(mission_t *mission);
 void CP_InitMissionResults(qboolean won);
 void CP_CampaignInit(campaign_t *campaign, qboolean load);
 void CP_CampaignExit(void);
+qboolean CP_OnGeoscape(void);
 
 /* Mission related functions */
 int CP_CountMission(void);
