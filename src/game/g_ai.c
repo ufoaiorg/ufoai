@@ -408,7 +408,7 @@ qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t targ
  * from shooting at the breakable parts of their own ship.
  * So I disabled it for now. Duke, 23.10.09
  */
-static edict_t *AI_SearchDestroyableObject (edict_t *ent, const fireDef_t *fd, aiAction_t * aia)
+static edict_t *AI_SearchDestroyableObject (const edict_t *ent, const fireDef_t *fd, aiAction_t * aia)
 {
 #if 0
 	/* search best none human target */
@@ -436,6 +436,94 @@ static edict_t *AI_SearchDestroyableObject (edict_t *ent, const fireDef_t *fd, a
 }
 
 /**
+ * @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance
+ */
+static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *check, const item_t *item, shoot_types_t shootType, int tu, float *maxDmg, int *bestTime, const fireDef_t *fdArray)
+{
+	const objDef_t *ad;
+	qboolean visChecked = qfalse;	/* only check visibily once for an actor */
+	fireDefIndex_t fdIdx;
+	float dist;
+
+	for (fdIdx = 0; fdIdx < item->m->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+		const fireDef_t *fd = &fdArray[fdIdx];
+		const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
+			GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
+		/* how many shoots can this actor do */
+		const int shots = tu / fd->time;
+		if (shots) {
+			float dmg;
+			float vis = ACTOR_VIS_0;
+			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
+				continue;
+
+			/* check how good the target is visible */
+			if (!visChecked) {	/* only do this once per actor ! */
+				vis = G_ActorVis(ent->origin, check, qtrue);
+				visChecked = qtrue;
+			}
+			if (vis == ACTOR_VIS_0)
+				continue;
+
+			/* calculate expected damage */
+			dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
+			if (nspread && dist > nspread)
+				dmg *= nspread / dist;
+
+			/* take into account armour */
+			if (CONTAINER(check, gi.csi->idArmour)) {
+				ad = CONTAINER(check, gi.csi->idArmour)->item.t;
+				dmg *= 1.0 - ad->protection[ad->dmgtype] * 0.01;
+			}
+
+			if (dmg > check->HP && G_IsReaction(check))
+				/* reaction shooters eradication bonus */
+				dmg = check->HP + GUETE_KILL + GUETE_REACTION_ERADICATION;
+			else if (dmg > check->HP)
+				/* standard kill bonus */
+				dmg = check->HP + GUETE_KILL;
+
+			/* ammo is limited and shooting gives away your position */
+			if ((dmg < 25.0 && vis < 0.2) /* too hard to hit */
+				|| (dmg < 10.0 && vis < 0.6) /* uber-armour */
+				|| dmg < 0.1) /* at point blank hit even with a stick */
+				continue;
+
+			/* civilian malus */
+			if (G_IsCivilian(check) && !G_IsInsane(ent))
+				dmg *= GUETE_CIV_FACTOR;
+
+			/* add random effects */
+			dmg += GUETE_RANDOM * frand();
+
+			/* check if most damage can be done here */
+			if (dmg > *maxDmg) {
+				*maxDmg = dmg;
+				*bestTime = fd->time * shots;
+				aia->shootType = shootType;
+				aia->shots = shots;
+				aia->target = check;
+				aia->fd = fd;
+			}
+
+			if (!aia->target) {
+				aia->target = AI_SearchDestroyableObject(ent, fd, aia);
+				if (aia->target) {
+					/* don't take vis into account, don't multiply with amount of shots
+					 * others (human victims) should be preferred, that's why we don't
+					 * want a too high value here */
+					*maxDmg = (fd->damage[0] + fd->spldmg[0]);
+					*bestTime = fd->time * shots;
+					aia->shootType = shootType;
+					aia->shots = shots;
+					aia->fd = fd;
+				}
+			}
+		}
+	}
+}
+
+/**
  * @sa AI_ActorThink
  * @todo fill z_align values
  * @todo optimize this
@@ -446,9 +534,9 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	int tu;
 	pos_t move;
 	shoot_types_t shootType;
-	float dist, minDist;
-	float bestActionPoints, dmg, maxDmg, bestTime = -1;
-	const objDef_t *ad;
+	float minDist;
+	float bestActionPoints, maxDmg;
+	int bestTime = -1;
 
 	move = gi.MoveLength(gi.pathingMap, to,
 			G_IsCrouched(ent) ? 1 : 0, qtrue);
@@ -470,8 +558,6 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	/* search best target */
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (ent != check && (check->team != ent->team || G_IsInsane(ent))) {
-			qboolean visChecked = qfalse;	/* only check visibily once for an actor */
-
 			/* don't shoot civilians in mp */
 			if (G_IsCivilian(check) && sv_maxclients->integer > 1 && !G_IsInsane(ent))
 				continue;
@@ -480,7 +566,6 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			maxDmg = 0.0;
 			for (shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
 				const item_t *item;
-				fireDefIndex_t fdIdx;
 				const fireDef_t *fdArray;
 
 				item = AI_GetItemForShootType(shootType, ent);
@@ -491,82 +576,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 				if (fdArray == NULL)
 					continue;
 
-				/** @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance */
-				for (fdIdx = 0; fdIdx < item->m->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
-					const fireDef_t *fd = &fdArray[fdIdx];
-					const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
-						GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
-					/* how many shoots can this actor do */
-					const int shots = tu / fd->time;
-					if (shots) {
-						float vis = ACTOR_VIS_0;
-						if (!AI_FighterCheckShoot(ent, check, fd, &dist))
-							continue;
-
-						/* check how good the target is visible */
-						if (!visChecked) {	/* only do this once per actor ! */
-							vis = G_ActorVis(ent->origin, check, qtrue);
-							visChecked = qtrue;
-						}
-						if (vis == ACTOR_VIS_0)
-							continue;
-
-						/* calculate expected damage */
-						dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
-						if (nspread && dist > nspread)
-							dmg *= nspread / dist;
-
-						/* take into account armour */
-						if (CONTAINER(check, gi.csi->idArmour)) {
-							ad = CONTAINER(check, gi.csi->idArmour)->item.t;
-							dmg *= 1.0 - ad->protection[ad->dmgtype] * 0.01;
-						}
-
-						if (dmg > check->HP && G_IsReaction(check))
-							/* reaction shooters eradication bonus */
-							dmg = check->HP + GUETE_KILL + GUETE_REACTION_ERADICATION;
-						else if (dmg > check->HP)
-							/* standard kill bonus */
-							dmg = check->HP + GUETE_KILL;
-
-						/* ammo is limited and shooting gives away your position */
-						if ((dmg < 25.0 && vis < 0.2) /* too hard to hit */
-							|| (dmg < 10.0 && vis < 0.6) /* uber-armour */
-							|| dmg < 0.1) /* at point blank hit even with a stick */
-							continue;
-
-						/* civilian malus */
-						if (G_IsCivilian(check) && !G_IsInsane(ent))
-							dmg *= GUETE_CIV_FACTOR;
-
-						/* add random effects */
-						dmg += GUETE_RANDOM * frand();
-
-						/* check if most damage can be done here */
-						if (dmg > maxDmg) {
-							maxDmg = dmg;
-							bestTime = fd->time * shots;
-							aia->shootType = shootType;
-							aia->shots = shots;
-							aia->target = check;
-							aia->fd = fd;
-						}
-
-						if (!aia->target) {
-							aia->target = AI_SearchDestroyableObject(ent, fd, aia);
-							if (aia->target) {
-								/* don't take vis into account, don't multiply with amount of shots
-								 * others (human victims) should be preferred, that's why we don't
-								 * want a too high value here */
-								maxDmg = (fd->damage[0] + fd->spldmg[0]);
-								aia->shootType = shootType;
-								aia->shots = shots;
-								aia->fd = fd;
-								bestTime = fd->time * shots;
-							}
-						}
-					}
-				}
+				AI_SearchBestTarget(aia, ent, check, item, shootType, tu, &maxDmg, &bestTime, fdArray);
 			}
 		} /* firedefs */
 	}
@@ -612,9 +622,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	check = NULL;
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (check->team != ent->team) {
-			dist = VectorDist(ent->origin, check->origin);
-			if (dist < minDist)
-				minDist = dist;
+			const float dist = VectorDist(ent->origin, check->origin);
+			minDist = min(dist, minDist);
 		}
 	}
 	bestActionPoints += GUETE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
