@@ -231,8 +231,7 @@ static void B_BuildBase_f (void)
 		if (ccs.mapAction == MA_NEWBASE)
 			ccs.mapAction = MA_NONE;
 
-		Com_sprintf(popupText, sizeof(popupText), _("Not enough credits to set up a new base."));
-		CP_PopupList(_("Notice"), popupText);
+		CP_PopupList(_("Notice"), _("Not enough credits to set up a new base."));
 	}
 }
 
@@ -569,15 +568,13 @@ static void B_CheckBuildingStatusForMenu_f (void)
 
 	/* Maybe base is under attack ? */
 	if (base->baseStatus == BASE_UNDER_ATTACK) {
-		Com_sprintf(popupText, sizeof(popupText), _("Base is under attack, you can't access this building !"));
-		MN_Popup(_("Notice"), popupText);
+		MN_Popup(_("Notice"), _("Base is under attack, you can't access this building !"));
 		return;
 	}
 
 	if (building->buildingType == B_HANGAR) {
 		/* this is an exception because you must have a small or large hangar to enter aircraft menu */
-		Com_sprintf(popupText, sizeof(popupText), _("You need at least one Hangar (and its dependencies) to use aircraft."));
-		MN_Popup(_("Notice"), popupText);
+		MN_Popup(_("Notice"), _("You need at least one Hangar (and its dependencies) to use aircraft."));
 		return;
 	}
 
