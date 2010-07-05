@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void MN_MapNodeDraw (menuNode_t *node)
 {
-	if (GAME_CP_IsRunning()) {
+	if (CP_IsRunning()) {
 		vec2_t pos;
 
 		MN_GetNodeAbsPos(node, pos);

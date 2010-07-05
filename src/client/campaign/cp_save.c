@@ -254,7 +254,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	char message[30];
 	char timeStampBuffer[32];
 
-	if (!GAME_CP_IsRunning()) {
+	if (!CP_IsRunning()) {
 		*error = _("No campaign active.");
 		Com_Printf("Error: No campaign active.\n");
 		return qfalse;
@@ -356,7 +356,7 @@ static void SAV_GameSave_f (void)
 		return;
 	}
 
-	if (!GAME_CP_IsRunning()) {
+	if (!CP_IsRunning()) {
 		Com_Printf("No running game - no saving...\n");
 		return;
 	}
@@ -416,7 +416,7 @@ static void SAV_GameReadGameComments_f (void)
 
 	if (Cmd_Argc() == 2) {
 		/* checks whether we plan to save without a running game */
-		if (!GAME_CP_IsRunning() && !strncmp(Cmd_Argv(1), "save", 4)) {
+		if (!CP_IsRunning() && !strncmp(Cmd_Argv(1), "save", 4)) {
 			MN_PopWindow(qfalse);
 			return;
 		}
@@ -462,7 +462,7 @@ static void SAV_GameLoad_f (void)
 		Cbuf_Execute(); /* wipe outstanding campaign commands */
 		Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
 		MN_Popup(_("Error"), popupText);
-		GAME_SetMode(GAME_NONE);
+		Cmd_ExecuteString("game_exit");
 	}
 }
 
@@ -480,13 +480,13 @@ static void SAV_GameContinue_f (void)
 		return;
 	}
 
-	if (!GAME_CP_IsRunning()) {
+	if (!CP_IsRunning()) {
 		/* try to load the last saved campaign */
 		if (!SAV_GameLoad(cl_lastsave->string, &error)) {
 			Cbuf_Execute(); /* wipe outstanding campaign commands */
 			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
 			MN_Popup(_("Error"), popupText);
-			GAME_SetMode(GAME_NONE);
+			Cmd_ExecuteString("game_exit");
 		}
 	} else {
 		/* just continue the current running game */
@@ -588,7 +588,7 @@ static void SAV_GameQuickLoadInit_f (void)
  */
 static void SAV_GameQuickSave_f (void)
 {
-	if (!GAME_CP_IsRunning())
+	if (!CP_IsRunning())
 		return;
 
 	if (!SAV_QuickSave())

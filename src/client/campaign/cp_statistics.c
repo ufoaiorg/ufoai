@@ -187,7 +187,7 @@ static void CP_CampaignStats_f (void)
 {
 	campaign_t *campaign = ccs.curCampaign;
 
-	if (!GAME_CP_IsRunning()) {
+	if (!CP_IsRunning()) {
 		Com_Printf("No campaign active\n");
 		return;
 	}

@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
-#include "battlescape/cl_localentity.h"
 #include "cl_game.h"
 #include "cl_team.h"
 #include "campaign/cp_campaign.h"
@@ -35,14 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_nodes.h"
 #include "menu/node/m_node_model.h"
 #include "menu/node/m_node_text.h"
-
-/**
- * @brief Checks whether a campaign mode game is running
- */
-qboolean GAME_CP_IsRunning (void)
-{
-	return ccs.curCampaign != NULL;
-}
 
 /**
  * @sa GAME_CP_MissionAutoCheck_f
@@ -149,23 +140,27 @@ static char campaignDesc[MAXCAMPAIGNTEXT];
 static void GAME_CP_GetCampaigns_f (void)
 {
 	int i;
-
 	linkedList_t *campaignList = NULL;
+
 	*campaignDesc = '\0';
+
 	for (i = 0; i < ccs.numCampaigns; i++) {
-		if (ccs.campaigns[i].visible)
-			LIST_AddString(&campaignList, va("%s", _(ccs.campaigns[i].name)));
+		const campaign_t *c = &ccs.campaigns[i];
+		if (c->visible)
+			LIST_AddString(&campaignList, va("%s", _(c->name)));
 	}
 	/* default campaign */
 	MN_RegisterText(TEXT_STANDARD, campaignDesc);
 	MN_RegisterLinkedListText(TEXT_CAMPAIGN_LIST, campaignList);
 
 	/* select main as default */
-	for (i = 0; i < ccs.numCampaigns; i++)
-		if (!strcmp(ccs.campaigns[i].id, "main")) {
+	for (i = 0; i < ccs.numCampaigns; i++) {
+		const campaign_t *c = &ccs.campaigns[i];
+		if (!strcmp(c->id, "main")) {
 			Cmd_ExecuteString(va("campaignlist_click %i", i));
 			return;
 		}
+	}
 	Cmd_ExecuteString("campaignlist_click 0");
 }
 
@@ -398,12 +393,8 @@ void GAME_CP_Frame (void)
 	if (cls.keyDest == key_console)
 		return;
 
-	if (GAME_CP_IsRunning()) {
-		if (!strcmp("geoscape", MN_GetActiveWindowName())) {
-			/* advance time */
-			CL_CampaignRun();
-		}
-	}
+	/* advance time */
+	CL_CampaignRun();
 }
 
 /**

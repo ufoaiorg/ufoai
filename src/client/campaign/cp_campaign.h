@@ -551,6 +551,10 @@ typedef struct dateLong_s {
 	byte sec;	/**< Second of the minute. */
 } dateLong_t;
 
+typedef struct {
+	int x, y;
+} screenPoint_t;
+
 extern ccs_t ccs;
 extern const int DETECTION_INTERVAL;
 extern cvar_t *cp_campaign;
@@ -593,6 +597,7 @@ qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 
 void CP_UFOProceedMission(aircraft_t *ufocraft);
+qboolean CP_IsRunning(void);
 
 base_t *CP_GetMissionBase(void);
 

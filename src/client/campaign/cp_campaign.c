@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef DEBUG
 #include "../cl_ugv.h"
 #endif
-#include "../cl_game.h"
 #include "../cl_team.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
@@ -147,6 +146,14 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 			updateCharacterArray[i].chrscore.assignedMissions = NET_ReadShort(msg);
 		}
 	}
+}
+
+/**
+ * @brief Checks whether a campaign mode game is running
+ */
+qboolean CP_IsRunning (void)
+{
+	return ccs.curCampaign != NULL;
 }
 
 /**
@@ -310,7 +317,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
  */
 void CP_EndCampaign (qboolean won)
 {
-	GAME_SetMode(GAME_NONE);
+	Cmd_ExecuteString("game_exit");
 
 	if (won)
 		MN_InitStack("endgame", NULL, qtrue, qtrue);
@@ -622,6 +629,12 @@ void CL_CampaignRun (void)
 {
 	const int currentinterval = (int)floor(ccs.date.sec) % DETECTION_INTERVAL;
 	int checks, dt, i;
+
+	if (!CP_IsRunning())
+		return;
+
+	if (strcmp("geoscape", MN_GetActiveWindowName()))
+		return;
 
 	/* advance time */
 	ccs.timer += cls.frametime * ccs.gameTimeScale;
@@ -1685,7 +1698,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 void CP_CampaignExit (void)
 {
-	if (GAME_CP_IsRunning()) {
+	if (CP_IsRunning()) {
 		cl_geoscape_overlay->integer = 0;
 		/* singleplayer commands are no longer available */
 		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
