@@ -113,6 +113,7 @@ typedef struct {
 	/* console variable interaction */
 	cvar_t *(IMPORT *Cvar_Get) (const char *varName, const char *value, int flags, const char* desc);
 	cvar_t *(IMPORT *Cvar_Set) (const char *varName, const char *value);
+	void (IMPORT *Cvar_SetValue) (const char *varName, float value);
 	const char *(IMPORT *Cvar_String) (const char *varName);
 	int (IMPORT *Cvar_Integer) (const char *varName);
 	qboolean (IMPORT *Cvar_Delete) (const char *varName);
@@ -131,6 +132,9 @@ typedef struct {
 	int (IMPORT *Cmd_Argc) (void);
 	const char *(IMPORT *Cmd_Argv) (int n);
 	const char *(IMPORT *Cmd_Args) (void);		/**< concatenation of all argv >= 1 */
+	void (IMPORT *Cmd_AddCommand) (const char *cmdName, xcommand_t function, const char *desc);
+	void (IMPORT *Cmd_RemoveCommand) (const char *cmdName);
+	void (IMPORT *Cmd_ExecuteString) (const char *text);
 } cgame_import_t;
 
 cgame_export_t *GetCGameAPI(cgame_import_t *import);
