@@ -24,17 +24,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_screen.h"
 #include "../renderer/r_framebuffer.h"
 #include "../renderer/r_draw.h"
 #include "../renderer/r_geoscape.h"
 #include "../menu/m_main.h"
-#include "../menu/m_popup.h"
-#include "../menu/m_font.h"
-#include "../menu/m_nodes.h"
-#include "../menu/m_render.h"
-#include "../menu/node/m_node_abstractnode.h"
-#include "../menu/node/m_node_map.h"
+#include "../menu/m_font.h" /* MN_GetFontFromNode */
+#include "../menu/m_render.h" /* MN_DrawString */
+#include "../menu/node/m_node_abstractnode.h" /* MN_GetNodeAbsPos */
+#include "../menu/node/m_node_map.h" /* paddingRight */
 #include "cp_campaign.h"
 #include "cp_popup.h"
 #include "cp_mapfightequip.h"
@@ -1687,7 +1684,7 @@ void MAP_UpdateGeoscapeDock (void)
 {
 	const linkedList_t *list;
 	int ufoIDX;
-	char buf[MAX_SMALLMENUTEXTLEN];
+	char buf[512];
 
 	MN_ExecuteConfunc("clean_geoscape_object");
 

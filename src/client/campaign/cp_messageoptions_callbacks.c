@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_shared.h"
 #include "../menu/m_main.h"
 #include "../menu/m_data.h"
-#include "../menu/node/m_node_text.h"
 #include "cp_campaign.h"
 #include "cp_messageoptions.h"
 #include "cp_messageoptions_callbacks.h"

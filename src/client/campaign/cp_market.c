@@ -25,10 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../cl_shared.h"
-#include "../mxml/mxml_ufoai.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
-#include "../cl_inventory.h"
+#include "../cl_inventory.h" /* INV_GetEquipmentDefinitionByID */
 #include "cp_campaign.h"
 #include "cp_market.h"
 #include "cp_market_callbacks.h"

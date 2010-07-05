@@ -24,14 +24,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../cl_shared.h"
-#include "../cl_game.h"
 #include "../menu/m_main.h"
 #include "cp_campaign.h"
 #include "cp_installation_callbacks.h"
 #include "cp_installation.h"
 #include "cp_map.h"
-#include "../menu/m_popup.h"
-#include "../renderer/r_geoscape.h"
+#include "../menu/m_popup.h" /* popupText */
+#include "../renderer/r_geoscape.h" /* OVERLAY_RADAR */
 
  /**
  * @brief Sets the title of the installation to a cvar to prepare the rename menu.
