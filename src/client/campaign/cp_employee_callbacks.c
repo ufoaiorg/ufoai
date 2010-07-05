@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "../cl_shared.h"
 #include "../cl_team.h"
-#include "../cl_game.h"
 #include "../menu/m_main.h"
 #include "../menu/m_data.h"
 #include "../menu/m_draw.h"
@@ -33,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_employee.h"
 
 
-/** Currently selected employee. @sa cl_employee.h */
+/** Currently selected employee. */
 static employee_t *selectedEmployee = NULL;
 /* Holds the current active employee category */
 static int employeeCategory = 0;

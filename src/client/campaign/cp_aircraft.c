@@ -29,12 +29,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_team.h"
-#include "../battlescape/cl_localentity.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
 #include "../renderer/r_geoscape.h"
 #include "../../shared/parse.h"
-#include "../mxml/mxml_ufoai.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
 #include "cp_map.h"
@@ -57,17 +55,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int AIR_UpdateHangarCapForOne (const aircraft_t const *aircraftTemplate, base_t *base)
 {
-	int aircraftSize;
 	int freeSpace = 0;
 
 	assert(aircraftTemplate);
 	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
 
-	aircraftSize = aircraftTemplate->size;
-
-	/** @todo what means aircraftSize < 1? Is this a value that must be given in the scripts? if yes, this should be
-	 * a sys_error in the aircraft parsing */
-	if (aircraftSize < AIRCRAFT_SMALL || !base)
+	if (!base)
 		return AIRCRAFT_HANGAR_ERROR;
 
 	if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
@@ -75,7 +68,7 @@ static int AIR_UpdateHangarCapForOne (const aircraft_t const *aircraftTemplate, 
 		return AIRCRAFT_HANGAR_ERROR;
 	}
 
-	if (aircraftSize >= AIRCRAFT_LARGE) {
+	if (aircraftTemplate->size >= AIRCRAFT_LARGE) {
 		if (!B_GetBuildingStatus(base, B_HANGAR)) {
 			Com_Printf("AIR_UpdateHangarCapForOne: base does not have big hangar - error!\n");
 			return AIRCRAFT_HANGAR_ERROR;
@@ -1575,7 +1568,6 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 			continue;
 		}
 		if (assignAircraftItems) {
-			assert(aircraftTemplate);
 			/* write into cp_campaignPool - this data is reparsed on every new game */
 			/* blocks like param { [..] } - otherwise we would leave the loop too early */
 			if (*token == '{') {
@@ -1787,6 +1779,9 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 			}
 		} /* assignAircraftItems */
 	} while (*text);
+
+	if (aircraftTemplate->size < AIRCRAFT_SMALL || aircraftTemplate->size > AIRCRAFT_LARGE)
+		Sys_Error("Invalid aircraft size given for '%s'", aircraftTemplate->id);
 }
 
 #ifdef DEBUG
