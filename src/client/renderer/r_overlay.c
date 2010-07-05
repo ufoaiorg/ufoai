@@ -2,6 +2,8 @@
  * @file r_overlay.c
  * @brief Functions to generate and render overlay for geoscape
  * @todo update the alpha values for radar like the ones for the xvi map - it's much faster like this
+ * @todo R_LoadImageData, R_UploadAlpha and R_SoftenTexture are the only real renderer
+ * functions here - move the remaining into the campaign code
  */
 
 /*
