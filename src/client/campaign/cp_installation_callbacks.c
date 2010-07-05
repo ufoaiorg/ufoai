@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_installation.h"
 #include "cp_map.h"
 #include "../menu/m_popup.h" /* popupText */
-#include "../renderer/r_geoscape.h" /* OVERLAY_RADAR */
 
  /**
  * @brief Sets the title of the installation to a cvar to prepare the rename menu.
@@ -75,7 +74,7 @@ void INS_SelectInstallation (installation_t *installation)
 			ccs.mapAction = MA_NEWINSTALLATION;
 
 			/* show radar overlay (if not already displayed) */
-			if (!(cl_geoscape_overlay->integer & OVERLAY_RADAR))
+			if (!MAP_IsRadarOverlayActivated())
 				MAP_SetOverlay("radar");
 
 			INS_SetInstallationTitle();
@@ -146,7 +145,7 @@ static void INS_BuildInstallation_f (void)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s"), installation->name);
 		MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDSTART, _("Installation building"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 	} else {
-		if (cl_geoscape_overlay->integer & OVERLAY_RADAR)
+		if (MAP_IsRadarOverlayActivated())
 			MAP_SetOverlay("radar");
 		if (ccs.mapAction == MA_NEWINSTALLATION)
 			ccs.mapAction = MA_NONE;

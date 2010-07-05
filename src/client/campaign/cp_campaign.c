@@ -23,16 +23,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../client.h" /* cls, image_t */
 #ifdef DEBUG
 #include "../cl_ugv.h"
 #endif
-#include "../cl_team.h"
+#include "../cl_team.h" /* MAX_WHOLETEAM */
 #include "../menu/m_main.h"
-#include "../menu/m_popup.h"
-#include "../menu/node/m_node_container.h"
-#include "../renderer/r_draw.h"
-#include "../renderer/r_overlay.h"
+#include "../renderer/r_overlay.h" /* R_InitializeXVIOverlay */
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
 #include "cp_hospital.h"
@@ -44,7 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_popup.h"
 #include "cp_map.h"
 #include "cp_ufo.h"
-#include "cp_installation.h"
 #include "cp_installation_callbacks.h"
 #include "cp_alien_interest.h"
 #include "cp_missions.h"
@@ -1325,7 +1321,7 @@ void CL_GameAutoGo (mission_t *mis)
  */
 void CP_InitMissionResults (qboolean won)
 {
-	static char resultText[MAX_SMALLMENUTEXTLEN];
+	static char resultText[1024];
 	/* init result text */
 	MN_RegisterText(TEXT_STANDARD, resultText);
 

@@ -24,15 +24,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../cl_shared.h"
-#include "../cl_game.h"
+#include "../client.h" /* cls */
+#include "../cl_game.h" /* GAME_GetTeamDef */
 #include "../cl_ugv.h"
 #include "../cl_team.h"
-#include "../battlescape/cl_localentity.h"	/**< cl_actor.h needs this */
-#include "../battlescape/cl_actor.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
-#include "../mxml/mxml_ufoai.h"
 #include "cp_campaign.h"
 #include "cp_employee_callbacks.h"
 #include "cp_rank.h"

@@ -73,5 +73,8 @@ qboolean MAP_PositionFitsTCPNTypes(const vec2_t posT, const linkedList_t* terrai
 void MAP_SetOverlay(const char *overlayID);
 void MAP_DeactivateOverlay(const char *overlayID);
 void MAP_UpdateGeoscapeDock(void);
+qboolean MAP_IsRadarOverlayActivated(void);
+qboolean MAP_IsXVIOverlayActivated(void);
+qboolean MAP_IsNationOverlayActivated(void);
 
 #endif /* CLIENT_CL_MAP_H */

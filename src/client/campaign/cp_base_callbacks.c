@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_shared.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
-#include "../renderer/r_geoscape.h"
 #include "cp_campaign.h"
 #include "cp_base_callbacks.h"
 #include "cp_base.h"
@@ -227,7 +226,7 @@ static void B_BuildBase_f (void)
 		B_UpdateBaseCount();
 		B_SelectBase(base);
 	} else {
-		if (cl_geoscape_overlay->integer & OVERLAY_RADAR)
+		if (MAP_IsRadarOverlayActivated())
 			MAP_SetOverlay("radar");
 		if (ccs.mapAction == MA_NEWBASE)
 			ccs.mapAction = MA_NONE;

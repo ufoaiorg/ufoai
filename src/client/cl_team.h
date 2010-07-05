@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_TEAM_H
 
 #include "mxml/mxml_ufoai.h"
-#include "../common/msg.h"
 
 #define MAX_WHOLETEAM	32
 

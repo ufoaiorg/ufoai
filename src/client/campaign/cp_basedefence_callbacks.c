@@ -24,8 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "../cl_shared.h"
 #include "../menu/m_main.h"
-#include "../menu/node/m_node_abstractnode.h"
-#include "../menu/node/m_node_text.h"
 #include "cp_campaign.h"
 #include "cp_basedefence_callbacks.h"
 #include "cp_fightequip_callbacks.h"
@@ -153,7 +151,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 	base_t *base = B_GetCurrentSelectedBase();
 	installation_t *installation = INS_GetCurrentSelectedInstallation();
 	aircraftItemType_t bdefType;
-	char defBuffer[MAX_SMALLMENUTEXTLEN];
+	char defBuffer[512];
 	linkedList_t *slotList = NULL;
 	const qboolean missileResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"));
 	const qboolean laserResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_laser"));
@@ -207,14 +205,13 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 
 	/* Check if we can change to laser or missile */
 	if (base) {
-		Com_sprintf(defBuffer, lengthof(defBuffer), "set_defencetypes %s %s",
-			(!missileResearched) ? "na" : (base && base->numBatteries > 0) ? "enable" : "disable",
-			(!laserResearched) ? "na" : (base && base->numLasers > 0) ? "enable" : "disable");
-		MN_ExecuteConfunc("%s", defBuffer);
+		MN_ExecuteConfunc("set_defencetypes %s %s",
+				(!missileResearched) ? "na" : (base && base->numBatteries > 0) ? "enable" : "disable",
+				(!laserResearched) ? "na" : (base && base->numLasers > 0) ? "enable" : "disable");
 	} else if (installation) {
-		Com_sprintf(defBuffer, lengthof(defBuffer), "set_defencetypes %s %s",
-			(!missileResearched) ? "na" : (installation && installation->installationStatus == INSTALLATION_WORKING && installation->numBatteries > 0) ? "enable" : "disable", "na");
-		MN_ExecuteConfunc("%s", defBuffer);
+		MN_ExecuteConfunc("set_defencetypes %s %s",
+				(!missileResearched) ? "na" : (installation && installation->installationStatus == INSTALLATION_WORKING
+						&& installation->numBatteries > 0) ? "enable" : "disable", "na");
 	}
 
 	if (!strcmp(type, "missile"))
@@ -243,8 +240,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 	if (installation) {
 		/* we are in the installation defence menu */
 		if (installation->installationTemplate->maxBatteries == 0) {
-			Q_strncpyz(defBuffer, _("No defence of this type in this installation"), lengthof(defBuffer));
-			LIST_AddString(&slotList, defBuffer);
+			LIST_AddString(&slotList, _("No defence of this type in this installation"));
 		} else {
 			BDEF_UpdateAircraftItemList(&installation->batteries[0].slot, NULL);
 			for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
@@ -271,8 +267,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 	} else if (bdefType == AC_ITEM_BASE_MISSILE) {
 		/* we are in the base defence menu for missile */
 		if (base->numBatteries == 0) {
-			Q_strncpyz(defBuffer, _("No defence of this type in this base"), lengthof(defBuffer));
-			LIST_AddString(&slotList, defBuffer);
+			LIST_AddString(&slotList, _("No defence of this type in this base"));
 		} else {
 			BDEF_UpdateAircraftItemList(&base->batteries[0].slot, NULL);
 			for (i = 0; i < base->numBatteries; i++) {
@@ -299,8 +294,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 	} else if (bdefType == AC_ITEM_BASE_LASER) {
 		/* we are in the base defence menu for laser */
 		if (base->numLasers == 0) {
-			Q_strncpyz(defBuffer, _("No defence of this type in this base"), lengthof(defBuffer));
-			LIST_AddString(&slotList, defBuffer);
+			LIST_AddString(&slotList, _("No defence of this type in this base"));
 		} else {
 			BDEF_UpdateAircraftItemList(&base->lasers[0].slot, NULL);
 			for (i = 0; i < base->numLasers; i++) {

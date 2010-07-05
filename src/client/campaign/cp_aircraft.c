@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_team.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
-#include "../renderer/r_geoscape.h"
 #include "../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
@@ -1323,7 +1322,7 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 		}
 	}
 
-	if (updateRadarOverlay && radarOverlayReset && (cl_geoscape_overlay->integer & OVERLAY_RADAR)) {
+	if (updateRadarOverlay && radarOverlayReset && MAP_IsRadarOverlayActivated()) {
 		RADAR_UpdateWholeRadarOverlay();
 		radarOverlayReset = qfalse;
 	}

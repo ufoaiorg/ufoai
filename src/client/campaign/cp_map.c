@@ -1455,7 +1455,7 @@ static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installati
 	}
 
 	/* Draw installation radar (only the "wire" style part) */
-	if (cl_geoscape_overlay->integer & OVERLAY_RADAR)
+	if (MAP_IsRadarOverlayActivated())
 		RADAR_DrawInMap(node, &installation->radar, installation->pos);
 
 	/* Draw installation */
@@ -1503,7 +1503,7 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
 	}
 
 	/* Draw base radar (only the "wire" style part) */
-	if (cl_geoscape_overlay->integer & OVERLAY_RADAR)
+	if (MAP_IsRadarOverlayActivated())
 		RADAR_DrawInMap(node, &base->radar, base->pos);
 
 	/* Draw base */
@@ -1540,7 +1540,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 	float angle;
 
 	/* Draw aircraft radar (only the "wire" style part) */
-	if (cl_geoscape_overlay->integer & OVERLAY_RADAR)
+	if (MAP_IsRadarOverlayActivated())
 		RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);
 
 	/* Draw only the bigger weapon range on geoscape: more detail will be given on airfight map */
@@ -2613,7 +2613,7 @@ void MAP_Scroll_f (void)
 void MAP_SetOverlay (const char *overlayID)
 {
 	if (!strcmp(overlayID, "nations")) {
-		if (cl_geoscape_overlay->integer & OVERLAY_NATION)
+		if (MAP_IsNationOverlayActivated())
 			cl_geoscape_overlay->integer ^= OVERLAY_NATION;
 		else
 			cl_geoscape_overlay->integer |= OVERLAY_NATION;
@@ -2629,7 +2629,7 @@ void MAP_SetOverlay (const char *overlayID)
 		else
 			cl_geoscape_overlay->integer |= OVERLAY_XVI;
 	} else if (!strcmp(overlayID, "radar")) {
-		if (cl_geoscape_overlay->integer & OVERLAY_RADAR)
+		if (MAP_IsRadarOverlayActivated())
 			cl_geoscape_overlay->integer ^= OVERLAY_RADAR;
 		else {
 			cl_geoscape_overlay->integer |= OVERLAY_RADAR;
@@ -2655,7 +2655,7 @@ static void MAP_SetOverlay_f (void)
 
 	/* save last decision player took on radar display, in order to be able to restore it later */
 	if (!strcmp(arg, "radar"))
-		radarOverlayWasSet = (cl_geoscape_overlay->integer & OVERLAY_RADAR);
+		radarOverlayWasSet = MAP_IsRadarOverlayActivated();
 }
 
 /**
@@ -2665,19 +2665,19 @@ static void MAP_SetOverlay_f (void)
 void MAP_DeactivateOverlay (const char *overlayID)
 {
 	if (!strcmp(overlayID, "nations")) {
-		if (cl_geoscape_overlay->integer & OVERLAY_NATION)
+		if (MAP_IsNationOverlayActivated())
 			MAP_SetOverlay("nations");
 		else
 			return;
 	}
 
 	if (!strcmp(overlayID, "xvi")) {
-		if (cl_geoscape_overlay->integer & OVERLAY_XVI)
+		if (MAP_IsXVIOverlayActivated())
 			MAP_SetOverlay("xvi");
 		else
 			return;
 	} else if (!strcmp(overlayID, "radar")) {
-		if (cl_geoscape_overlay->integer & OVERLAY_RADAR)
+		if (MAP_IsRadarOverlayActivated())
 			MAP_SetOverlay("radar");
 		else
 			return;
@@ -2698,6 +2698,21 @@ static void MAP_DeactivateOverlay_f (void)
 
 	arg = Cmd_Argv(1);
 	MAP_DeactivateOverlay(arg);
+}
+
+qboolean MAP_IsRadarOverlayActivated (void)
+{
+	return cl_geoscape_overlay->integer & OVERLAY_RADAR;
+}
+
+qboolean MAP_IsNationOverlayActivated (void)
+{
+	return cl_geoscape_overlay->integer & OVERLAY_NATION;
+}
+
+qboolean MAP_IsXVIOverlayActivated (void)
+{
+	return cl_geoscape_overlay->integer & OVERLAY_XVI;
 }
 
 /**
