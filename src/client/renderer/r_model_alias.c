@@ -223,6 +223,7 @@ qboolean R_ModLoadMDX (model_t *mod)
 		byte *buffer = NULL, *buf;
 		const int32_t *intbuf;
 		int32_t numIndexes;
+		uint32_t version;
 		int sharedTris[MAX_ALIAS_VERTS];
 
 		Com_StripExtension(mod->name, mdxFileName, sizeof(mdxFileName));
@@ -235,9 +236,10 @@ qboolean R_ModLoadMDX (model_t *mod)
 		if (strncmp((const char *) buf, IDMDXHEADER, strlen(IDMDXHEADER)))
 			Com_Error(ERR_DROP, "No mdx file buffer given");
 		buffer += strlen(IDMDXHEADER) * sizeof(char);
-		if (*(uint32_t*) buffer != LittleLong(MDX_VERSION))
-			Com_Error(ERR_DROP, "Invalid version of the mdx file, expected %i, found %i", LittleLong(MDX_VERSION),
-					*(uint32_t*) buffer);
+		version = LittleLong(*(uint32_t*) buffer);
+		if (version != MDX_VERSION)
+			Com_Error(ERR_DROP, "Invalid version of the mdx file, expected %i, found %i",
+					MDX_VERSION, version);
 		buffer += sizeof(uint32_t);
 
 		intbuf = (const int32_t *) buffer;

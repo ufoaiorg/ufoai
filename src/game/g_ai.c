@@ -88,6 +88,94 @@ static qboolean AI_FighterCheckShoot (const edict_t* ent, const edict_t* check, 
 }
 
 /**
+ * @brief Find and estimate the best shot/hit we can deal to a target
+ * @param[in] ent AI actor that is trying to shoot
+ * @param[in] the TU's the shooting actor can spend shooting
+ * @param[in] The target we're shooting at
+ * @param[out] aia used for returning the optimal shooting information. Overwries all relevant data
+ * @param[out] the damage expected from the optimal shot
+ */
+static float AI_GetDamagePotential (const edict_t * ent, int tu, edict_t * check, aiAction_t * aia)
+{
+	shoot_types_t shootType;
+	float maxDmg = 0.0;
+
+	for (shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
+		const item_t *item;
+		fireDefIndex_t fdIdx;
+		const fireDef_t *fdArray;
+
+		item = AI_GetItemForShootType(shootType, ent);
+
+		/* Reaction fire and @todo grenade/knife-tossing from inventory return NULL */
+		if (!item) {
+			continue;
+		}
+
+		/** @todo: we never consider switching ammo type */
+		fdArray = FIRESH_FiredefForWeapon(item);
+		if (fdArray == NULL) {
+			continue;
+		}
+
+		/** @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance */
+		for (fdIdx = 0; fdIdx < item->m->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+			const fireDef_t *fd = &fdArray[fdIdx];
+			const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1])
+					* 0.5 + GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY],
+					fd->weaponSkill));
+			float dist, dmg = 0.0;
+			const objDef_t *ad;
+
+			/* how many shoots can this actor do */
+			const int shots = tu / fd->time;
+
+			if (shots) {
+				float vis = ACTOR_VIS_0;
+
+				if (!AI_FighterCheckShoot(ent, check, fd, &dist)) {
+					continue;
+				}
+
+				/* check how good the target is visible */
+				vis = G_ActorVis(ent->origin, check, qtrue);
+				if (vis == ACTOR_VIS_0) {
+					continue;
+				}
+
+				/* calculate raw expected damage */
+				dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
+				if (nspread && dist > nspread) {
+					dmg *= nspread / dist;
+				}
+
+				/* take into account armour */
+				if (CONTAINER(check, gi.csi->idArmour)) {
+					ad = CONTAINER(check, gi.csi->idArmour)->item.t;
+					dmg *= 1.0 - ad->protection[ad->dmgtype] * 0.01;
+				}
+
+				if (dmg > maxDmg) {
+					maxDmg = dmg;
+					if (aia != NULL) {
+						aia->shootType = shootType;
+						aia->shots = shots;
+						aia->target = check;
+						aia->fd = fd;
+						Com_DPrintf(DEBUG_GAME, "BEFORE :bestTime is: %d*%d\n",
+								fd->time, fd->shots);
+					}
+				}
+			} /* if(shots) */
+		} /* foreach firedef */
+	} /* foreach shootType */
+
+	return maxDmg;
+}
+
+
+
+/**
  * @brief Checks whether the AI controlled actor wants to use a door
  * @param[in] ent The AI controlled actor
  * @param[in] door The door edict
@@ -186,9 +274,12 @@ static qboolean AI_CheckCrouch (const edict_t *ent)
  */
 static qboolean AI_HideNeeded (const edict_t *ent)
 {
+    //Com_DPrintf(DEBUG_GAME, "AI_HideNeeded: We're in for %s\n",(ent->chr).name);
 	/* only brave aliens are trying to stay on the field if no dangerous actor is visible */
 	if (ent->morale > mor_brave->integer) {
 		edict_t *from = NULL;
+		float hp_exected_to_loose;
+        hp_exected_to_loose = 0.0;
 		/* test if check is visible */
 		while ((from = G_EdictsGetNextLivingActor(from))) {
 			if (from->team == ent->team)
@@ -197,7 +288,7 @@ static qboolean AI_HideNeeded (const edict_t *ent)
 			if (G_IsCivilian(from))
 				continue;
 
-			if (G_IsVisibleForTeam(from, ent->team)) {
+			if (G_IsVisibleForTeam(from, ent->team) || qtrue) {
 				const invList_t *invlist = RIGHT(from);
 				const fireDef_t *fd = NULL;
 				if (invlist && invlist->item.t) {
@@ -208,22 +299,48 @@ static qboolean AI_HideNeeded (const edict_t *ent)
 						fd = FIRESH_FiredefForWeapon(&invlist->item);
 				}
 				/* search the (visible) inventory (by just checking the weapon in the hands of the enemy */
-				if (fd != NULL && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
-					const int damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
-					if (damage >= ent->HP / 3) {
-						const int hidingTeam = AI_GetHidingTeam(ent);
-						/* now check whether this enemy is visible for this alien */
-						if (G_Vis(hidingTeam, ent, from, VT_NOFRUSTUM))
+				/*if (fd != NULL && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {*/
+				if (qtrue){
+                    /*const int damage = max(0, fd->damage[0] + (fd->damage[1] * crand())); */
+                    /** @todo: we still need to consider the enemy getting in range if that's not the case */
+                    const int damage = AI_GetDamagePotential(from, 30, ent, NULL);
+                    const int hidingTeam = AI_GetHidingTeam(ent);
+
+                    /* Add the damage he can dish out to our expected HP loss and check to see if we can take it */
+                    /** @todo: check properly the damage the enemy can dish out, as it is it only checks for one shot */
+                    if (G_Vis(hidingTeam, ent, from, VT_NOFRUSTUM) || qtrue) {
+                        hp_exected_to_loose += damage;
+						/*if (damage>0){Com_DPrintf(DEBUG_GAME, "AI_HideNeeded: expecting: %d damage from %s\n", damage, (from->chr).name);} */
+						if (hp_exected_to_loose > (ent->HP
+								* GUETE_DAMAGE_AVOID_FACTOR)) {
+							Com_DPrintf(DEBUG_GAME, "AI_HideNeeded: We expect too much total damage (%f), we need to hide\n",
+									hp_exected_to_loose);
 							return qtrue;
-					}
+						}
+                    } else {
+                        /*Com_DPrintf(DEBUG_GAME, "AI_HideNeeded: %s can't see us\n", (from->chr).name);*/
+                    }
+				} else {
+				    /*Com_DPrintf(DEBUG_GAME, "AI_HideNeeded: We're outside %s's weapon range \n", (from->chr).name);*/
 				}
+			} else {
+			    /*Com_DPrintf(DEBUG_GAME, "AI_HideNeeded: we can't see %s\n", (from->chr).name);*/
 			}
 		}
+		/*Com_DPrintf(DEBUG_GAME, "AI_HideNeeded: Checked all hostiles, We don't need to hide\n");*/
 		return qfalse;
 	}
+	/*Com_DPrintf(DEBUG_GAME, "AI_HideNeeded: We're not brave enough. We need to hide\n");*/
 	return qtrue;
 }
 
+/**
+ * Returns the item of the currently chosen shoot type of the ai actor.
+ * @param shootType The current selected shoot type
+ * @param ent The ai actor
+ * @return The item that was selected for the given shoot type. This might be @c NULL if
+ * no item was found.
+ */
 const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edict_t *ent)
 {
 	/* optimization: reaction fire is automatic */
@@ -243,7 +360,6 @@ const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edict_t *en
 			|| LEFT(ent)->item.a > 0)) {
 		return &LEFT(ent)->item;
 	} else {
-		Com_DPrintf(DEBUG_GAME, "AI_FighterCalcBestAction: todo - grenade/knife toss from inventory using empty hand\n");
 		/** @todo grenade/knife toss from inventory using empty hand */
 		/** @todo evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
 		return NULL;
@@ -394,10 +510,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	edict_t *check = NULL;
 	int tu;
 	pos_t move;
-	shoot_types_t shootType;
 	float dist, minDist;
-	float bestActionPoints, dmg, maxDmg, bestTime = -1;
-	const objDef_t *ad;
+	float bestActionPoints, maxDmg, bestTime = -1;
 
 	move = gi.MoveLength(gi.pathingMap, to,
 			G_IsCrouched(ent) ? 1 : 0, qtrue);
@@ -419,129 +533,48 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	/* search best target */
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (ent != check && (check->team != ent->team || G_IsInsane(ent))) {
-			qboolean visChecked = qfalse;	/* only check visibily once for an actor */
+			aiAction_t dmgAia;
+			float dmg = 0.0;
 
-			/* don't shoot civilians in mp */
-			if (G_IsCivilian(check) && sv_maxclients->integer > 1 && !G_IsInsane(ent))
+			/* don't shoot sane civilians in mp */
+			if (G_IsCivilian(check) && sv_maxclients->integer > 1
+					&& !G_IsInsane(ent)) {
 				continue;
-
-			/* shooting */
-			maxDmg = 0.0;
-			for (shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
-				const item_t *item;
-				fireDefIndex_t fdIdx;
-				const fireDef_t *fdArray;
-
-				item = AI_GetItemForShootType(shootType, ent);
-				if (!item)
-					continue;
-
-				fdArray = FIRESH_FiredefForWeapon(item);
-				if (fdArray == NULL)
-					continue;
-
-				/** @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance */
-				for (fdIdx = 0; fdIdx < item->m->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
-					const fireDef_t *fd = &fdArray[fdIdx];
-					const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
-						GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
-					/* how many shoots can this actor do */
-					const int shots = tu / fd->time;
-					if (shots) {
-						float vis = ACTOR_VIS_0;
-						if (!AI_FighterCheckShoot(ent, check, fd, &dist))
-							continue;
-
-						/* check how good the target is visible */
-						if (!visChecked) {	/* only do this once per actor ! */
-							vis = G_ActorVis(ent->origin, check, qtrue);
-							visChecked = qtrue;
-						}
-						if (vis == ACTOR_VIS_0)
-							continue;
-
-						/* calculate expected damage */
-						dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
-						if (nspread && dist > nspread)
-							dmg *= nspread / dist;
-
-						/* take into account armour */
-						if (CONTAINER(check, gi.csi->idArmour)) {
-							ad = CONTAINER(check, gi.csi->idArmour)->item.t;
-							dmg *= 1.0 - ad->protection[ad->dmgtype] * 0.01;
-						}
-
-						if (dmg > check->HP && G_IsReaction(check))
-							/* reaction shooters eradication bonus */
-							dmg = check->HP + GUETE_KILL + GUETE_REACTION_ERADICATION;
-						else if (dmg > check->HP)
-							/* standard kill bonus */
-							dmg = check->HP + GUETE_KILL;
-
-						/* ammo is limited and shooting gives away your position */
-						if ((dmg < 25.0 && vis < 0.2) /* too hard to hit */
-							|| (dmg < 10.0 && vis < 0.6) /* uber-armour */
-							|| dmg < 0.1) /* at point blank hit even with a stick */
-							continue;
-
-						/* civilian malus */
-						if (G_IsCivilian(check) && !G_IsInsane(ent))
-							dmg *= GUETE_CIV_FACTOR;
-
-						/* add random effects */
-						dmg += GUETE_RANDOM * frand();
-
-						/* check if most damage can be done here */
-						if (dmg > maxDmg) {
-							maxDmg = dmg;
-							bestTime = fd->time * shots;
-							aia->shootType = shootType;
-							aia->shots = shots;
-							aia->target = check;
-							aia->fd = fd;
-						}
-					}
-#if 0
-				/**
-				 * @todo This feature causes the 'aliens shoot at walls'-bug.
-				 * I considered adding a visibility check, but that wouldn't prevent aliens
-				 * from shooting at the breakable parts of their own ship.
-				 * So I disabled it for now. Duke, 23.10.09
-				 */
-				if (!aia->target) {
-					/* search best none human target */
-					check = NULL;
-					while ((check = G_EdictsGetNextInUse(check))) {
-						if (G_IsBreakable(check)) {
-							if (!AI_FighterCheckShoot(ent, check, fd, &dist))
-								continue;
-
-							/* check whether target is visible enough */
-							vis = G_ActorVis(ent->origin, check, qtrue);
-							if (vis < ACTOR_VIS_0)
-								continue;
-
-							/* don't take vis into account, don't multiply with amout of shots
-							 * others (human victims) should be prefered, that's why we don't
-							 * want a too high value here */
-							maxDmg = (fd->damage[0] + fd->spldmg[0]);
-							aia->mode = shootType;
-							aia->shots = shots;
-							aia->target = check;
-							aia->fd = fd;
-							bestTime = fd->time * shots;
-							/* take the first best breakable or door and try to shoot it */
-							break;
-						}
-					}
-				}
-#endif
-				}
 			}
+
+			/* AI_GetDamagePotential test START */
+			dmg = AI_GetDamagePotential(ent, tu, check, &dmgAia);
+			if (dmg > 0) {
+				/*Com_DPrintf(DEBUG_GAME, "TEST AI_GETDAMAGEPOTENTIAL: Max damage found: %f with %d shots of shootType: %d to %s\n",dmg, dmgAia.shots, dmgAia.shootType, (check->chr).name); */
+			}
+
+			/* REMOVED: ammo is limited and shooting gives away your position */
+			/* Reason: low vis&dmg considerations are naturally included in score */
+
+			/* civilian malus */
+			if (G_IsCivilian(check) && !G_IsInsane(ent)){dmg *= GUETE_CIV_FACTOR;}
+
+			/* add random effects */
+			dmg += GUETE_RANDOM * frand();
+
+			/* check if most damage can be done here */
+			if (dmg > maxDmg) {
+				maxDmg = dmg;
+				bestTime = (dmgAia.fd)->time * ((dmgAia.fd)->shots);
+				Com_DPrintf(DEBUG_GAME,
+						"TEST : bestTime is: %d*%d=%f for damage: %f \n",
+						(dmgAia.fd)->time, (dmgAia.fd)->shots, bestTime, dmg);
+				aia->shootType = dmgAia.shootType;
+				aia->shots = (dmgAia.fd)->shots;
+				aia->target = check;
+				aia->fd = dmgAia.fd;
+			}
+			/* AI_GetDamagePotential END */
 		} /* firedefs */
 	}
 	/* add damage to bestActionPoints */
 	if (aia->target) {
+	    assert(maxDmg > 0);
 		bestActionPoints += maxDmg;
 		assert(bestTime > 0);
 		tu -= bestTime;
