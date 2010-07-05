@@ -246,6 +246,7 @@ const char* E_GetEmployeeString (employeeType_t type)
  * @brief Convert string to employeeType_t
  * @param type Pointer to employee type string
  * @return employeeType_t
+ * @todo use Com_ConstInt*
  */
 employeeType_t E_GetEmployeeType (const char* type)
 {

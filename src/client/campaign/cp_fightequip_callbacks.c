@@ -125,33 +125,6 @@ static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 	}
 }
 
-#if 0
-/**
- * @brief Get the technology of the item that is in current zone.
- * @note NULL if zone is empty.
- * @param[in] slot Pointer to the slot.
- */
-static inline technology_t *AII_GetTechnologyToDisplay (const aircraftSlot_t const *slot)
-{
-	assert(slot);
-
-	if (airequipSelectedZone == ZONE_MAIN) {
-		if (!slot->item)
-			return NULL;
-		else if (slot->nextItem)
-			return slot->nextItem->tech;
-		else
-			return slot->item->tech;
-	} else if (airequipSelectedZone == ZONE_AMMO) {
-		if (slot->ammo)
-			return slot->ammo->tech;
-		else
-			return NULL;
-	} else
-		return NULL;
-}
-#endif
-
 /**
  * @brief Returns the userfriendly name for craftitem types (shown in aircraft equip menu)
  */
@@ -173,8 +146,7 @@ static inline const char *AIM_AircraftItemtypeName (const int equiptype)
 }
 
 /**
- * @brief True if the tech is available and mach the filter
- * @
+ * @return @c true if the technology is available and matches the filter
  */
 static qboolean AIM_CrafttypeFilter (const base_t *base, const aircraftSlot_t *slot, int filterType, const technology_t *tech)
 {
@@ -268,7 +240,7 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 	const aircraftSlot_t *slot;
 	int max;
 
-	/* initialise models Cvar */
+	/* initialise model cvars */
 	for (i = 0; i < 8; i++)
 		Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
 
@@ -317,10 +289,11 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
  */
 static inline void AIM_EmphazeAmmoSlotText (void)
 {
+	/** @todo confunc please */
 	menuNode_t *node = MN_GetNodeByPath("aircraft_equip.airequip_text_zone2");
 	if (!node)
 		return;
-	VectorSet(node->color, 1.0f, .0f, .0f);
+	VectorSet(node->color, 1.0f, 0.0f, 0.0f);
 }
 
 /**
@@ -330,6 +303,7 @@ static inline void AIM_EmphazeAmmoSlotText (void)
  */
 static inline void AIM_NoEmphazeAmmoSlotText (void)
 {
+	/** @todo confunc please */
 	menuNode_t *node = MN_GetNodeByPath("aircraft_equip.airequip_text_zone2");
 	if (!node)
 		return;
