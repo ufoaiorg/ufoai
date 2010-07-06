@@ -411,7 +411,6 @@ void G_EventParticleSpawn(int playerMask, const char *name, int levelFlags, cons
 
 #define MAX_DVTAB 32
 
-void G_FlushSteps(void);
 edict_t* G_ClientGetFreeSpawnPointForActorSize(const player_t *player, const actorSizeEnum_t actorSize);
 qboolean G_ClientUseEdict(const player_t *player, edict_t *actor, edict_t *door);
 qboolean G_ActionCheck(const player_t *player, edict_t *ent, int TU);
