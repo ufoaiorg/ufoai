@@ -1,5 +1,5 @@
 /**
- * @file inv_shared.c
+ * @file chr_shared.c
  * @note Shared character generating functions prefix: CHRSH_
  */
 
