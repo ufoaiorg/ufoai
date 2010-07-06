@@ -970,7 +970,7 @@ void AIL_ActorThink (player_t * player, edict_t * ent)
 	lua_State *L;
 
 	/* The Lua State we will work with. */
-	L = ent->chr.AI.L;
+	L = ent->AI.L;
 
 	/* Set the global player and edict */
 	AIL_ent = ent;
@@ -1004,7 +1004,7 @@ int AIL_InitActor (edict_t * ent, char *type, char *subtype)
 	char *fbuf;
 
 	/* Prepare the AI */
-	AI = &ent->chr.AI;
+	AI = &ent->AI;
 	Q_strncpyz(AI->type, type, sizeof(AI->type));
 	Q_strncpyz(AI->subtype, subtype, sizeof(AI->type));
 
@@ -1045,8 +1045,7 @@ int AIL_InitActor (edict_t * ent, char *type, char *subtype)
  */
 static void AIL_CleanupActor (edict_t * ent)
 {
-	AI_t *AI;
-	AI = &ent->chr.AI;
+	AI_t *AI = &ent->AI;
 
 	/* Cleanup. */
 	if (AI->L != NULL) {

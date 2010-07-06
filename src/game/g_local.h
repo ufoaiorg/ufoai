@@ -615,6 +615,13 @@ struct player_s {
  */
 #define FL_TRIGGERED	0x00000100
 
+/** @brief Artificial intelligence of a character */
+typedef struct AI_s {
+	char type[MAX_QPATH];	/**< Lua file used by the AI. */
+	char subtype[MAX_VAR];	/**< Subtype to be used by AI. */
+	lua_State* L;			/**< The lua state used by the AI. */
+} AI_t;
+
 /**
  * @brief Everything that is not in the bsp tree is an edict, the spawnpoints,
  * the actors, the misc_models, the weapons and so on.
@@ -749,6 +756,8 @@ struct edict_s {
 	edict_t *groupChain;
 	edict_t *groupMaster;	/**< first entry in the list */
 	int flags;		/**< FL_* */
+
+	AI_t AI; /**< The character's artificial intelligence */
 
 	pos3_t *forbiddenListPos; /**< this is used for e.g. misc_models with the solid flag set - this will
 								* hold a list of grid positions that are blocked by the aabb of the model */

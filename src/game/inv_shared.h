@@ -609,14 +609,6 @@ typedef enum {
 	RES_TYPES /**< Max. */
 } reservation_types_t;
 
-/** @brief Artificial intelligence of a character
- * @todo doesn't belong here  */
-typedef struct AI_s {
-	char type[MAX_QPATH];	/**< Lua file used by the AI. */
-	char subtype[MAX_VAR];	/**< Subtype to be used by AI. */
-	lua_State* L;			/**< The lua state used by the AI. */
-} AI_t;
-
 /** @brief Describes a character with all its attributes
  * @todo doesn't belong here */
 typedef struct character_s {
@@ -647,8 +639,6 @@ typedef struct character_s {
 	int gender;				/**< Gender index. */
 	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
 	chrFiremodeSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
-
-	AI_t AI; /**< The character's artificial intelligence */
 } character_t;
 
 #define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == (HAND) && (fm)->fmIdx == (fdIdx))
