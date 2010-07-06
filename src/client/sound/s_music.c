@@ -147,7 +147,7 @@ static void M_Start (const char *file)
 		return;
 
 	/* we are still playing some background track - fade it out */
-	if (Mix_PlayingMusic()) {
+	if (music.data && Mix_PlayingMusic()) {
 		if (!Mix_FadeOutMusic(1500))
 			M_Stop();
 		Q_strncpyz(music.nextTrack, name, sizeof(music.nextTrack));
