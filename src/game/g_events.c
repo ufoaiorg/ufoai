@@ -193,13 +193,14 @@ void G_EventShootHidden (int visMask, const fireDef_t* fd, qboolean firstShoot)
  * @param ent The entity that is doing the shooting
  * @param visMask the vis mask to determine the clients from this event is send to
  * @param fd The firedefinition to use for the shoot
+ * @param firstShoot Is this the first shoot
  * @param shootType The type of the shoot
  * @param flags Define some flags in a bitmask: @c SF_BODY, @c SF_IMPACT, @c SF_BOUNCING and @c SF_BOUNCING
  * @param trace The trace what was used to determine whether this shot has hit something
  * @param from The position the entity shoots from
  * @param impact The impact world vector for the shot
  */
-void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
+void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, qboolean firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
 {
 	const edict_t *targetEdict = trace->ent;
 
@@ -209,6 +210,7 @@ void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, shoot_t
 		gi.WriteShort(targetEdict->number);
 	else
 		gi.WriteShort(SKIP_LOCAL_ENTITY);
+	gi.WriteByte(firstShoot);
 	gi.WriteShort(fd->obj->idx);
 	gi.WriteByte(fd->weapFdsIdx);
 	gi.WriteByte(fd->fdIdx);

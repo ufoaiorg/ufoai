@@ -178,7 +178,7 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 			vec3_t muzzle, impact;
 
 			/* read data */
-			NET_ReadFormat(msg, eventData->formatString, &dummy, &dummy, &objIdx, &weap_fds_idx, &fd_idx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
+			NET_ReadFormat(msg, eventData->formatString, &dummy, &dummy, &dummy, &objIdx, &weap_fds_idx, &fd_idx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
 
 			obj = INVSH_GetItemByIDX(objIdx);
 			fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);

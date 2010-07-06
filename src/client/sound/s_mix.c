@@ -101,6 +101,7 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
 {
 	s_channel_t *ch;
 	int i;
+	float volume;
 
 	if (!s_env.initialized)
 		return;
@@ -126,7 +127,10 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
 		S_SpatializeChannel(ch);
 	}
 
-	Mix_VolumeChunk(ch->sample->chunk, snd_volume->value * relVolume * MIX_MAX_VOLUME);
+	volume = snd_volume->value * relVolume * MIX_MAX_VOLUME;
+	Com_DPrintf(DEBUG_SOUND, "%i: Playing sample '%s' at volume %f at channel %i\n",
+			CL_Milliseconds(), sample->name, volume, i);
+	Mix_VolumeChunk(ch->sample->chunk, volume);
 	Mix_PlayChannel(i, ch->sample->chunk, 0);
 }
 

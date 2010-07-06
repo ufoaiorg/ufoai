@@ -890,7 +890,8 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		if (!mock) {
 			/* send shot */
-			G_EventShoot(ent, mask, fd, shootType, flags, &tr, tracefrom, impact);
+			const qboolean firstShot = (i == 0);
+			G_EventShoot(ent, mask, fd, firstShot, shootType, flags, &tr, tracefrom, impact);
 
 			/* send shot sound to the others */
 			G_EventShootHidden(mask, fd, qfalse);
