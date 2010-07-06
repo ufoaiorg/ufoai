@@ -116,6 +116,8 @@ static void CM_InitBoxHull(void);
 static void CM_SetInlineList (const char **list)
 {
 	inlineList = list;
+	if (inlineList != NULL && *inlineList == NULL)
+		inlineList = NULL;
 }
 
 /*
