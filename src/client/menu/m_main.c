@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_draw.h"
 #include "m_timer.h"
 #include "m_font.h"
+#include "m_sound.h"
 
 #include "../client.h"
 
@@ -336,6 +337,7 @@ void MN_Init (void)
 	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "This is the sequence menu to render the sequence in");
 	/** @todo should be a client Cvar, not a menu */
 	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE | CVAR_LATCH, "This is the current selected hud");
+	mn_sounds = Cvar_Get("mn_sounds", "1", CVAR_ARCHIVE, "Activates menu sounds");
 
 	/* add menu commands */
 	Cmd_AddCommand("mn_modify", MN_Modify_f, NULL);

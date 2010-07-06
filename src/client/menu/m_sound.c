@@ -22,9 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "m_main.h"
 #include "m_sound.h"
-#include "../client.h"
 #include "../sound/s_main.h"
+
+cvar_t *mn_sounds;
 
 /**
  * @brief Plays a ui sound
@@ -32,5 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void MN_PlaySound (const char *soundFile)
 {
-	S_StartLocalSample(va("gui/%s", soundFile), SND_VOLUME_DEFAULT);
+	if (mn_sounds->integer)
+		S_StartLocalSample(va("gui/%s", soundFile), SND_VOLUME_DEFAULT);
 }
