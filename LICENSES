@@ -5563,6 +5563,8 @@ base/textures/tex_misc/bask_board.png | GNU General Public License 2.0 or later 
 base/textures/tex_misc/bask_board_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/billiard001.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/billiard001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_misc/biohazard_clean.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_misc/biohazard_dirty.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/box001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -5612,7 +5614,13 @@ base/textures/tex_misc/e8_btrim02.jpg | GNU General Public License 2.0 | Nexuiz 
 base/textures/tex_misc/e8_btrim05b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/e8beam02.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/e8jumpspawn02b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_misc/exit_clean.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_misc/exit_clean_gm.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_misc/exit_dirty.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_misc/exit_dirty_gm.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/fridge001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
+base/textures/tex_misc/glasses_clean.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_misc/glasses_dirty.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/laminate001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
 base/textures/tex_misc/microwave001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
 base/textures/tex_misc/microwave001_side.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
@@ -5663,6 +5671,8 @@ base/textures/tex_misc/soft_drinks2_nm.png | GNU General Public License 2.0 or l
 base/textures/tex_misc/stainless001.jpg | GNU General Public License 2.0 | wotwot | http://ufoai.ninex.info/forum/index.php?topic=2389.0
 base/textures/tex_misc/straw.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2'ed photo by Martin Gerhardy (mattn)
 base/textures/tex_misc/straw_zyl.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2'ed photo by Martin Gerhardy (mattn)
+base/textures/tex_misc/toxic_clean.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_misc/toxic_dirty.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_misc/trashbin001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/trashbin001_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/vehentpan.png | GNU General Public License 2.0 or later | Nate Wright
@@ -5729,6 +5739,10 @@ base/textures/tex_nature/ice002_nm.png | GNU General Public License 2.0 or later
 base/textures/tex_nature/ice003.png | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_nature/ice003_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/icefloor.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_nature/leaves1.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_nature/leaves2.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_nature/leaves3.png | GNU General Public License 2.0 |  | OpenArena
+base/textures/tex_nature/leaves4.png | GNU General Public License 2.0 |  | OpenArena
 base/textures/tex_nature/pjrock1.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/pjrock16.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_nature/pjrock17.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
