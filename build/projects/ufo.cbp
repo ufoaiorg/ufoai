@@ -801,6 +801,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/menu/m_actions.h" />
+		<Unit filename="../../src/client/menu/m_sound.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/menu/m_sound.h" />
 		<Unit filename="../../src/client/menu/m_components.c">
 			<Option compilerVar="CC" />
 		</Unit>

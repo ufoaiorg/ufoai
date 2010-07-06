@@ -166,6 +166,7 @@ CLIENT_SRCS = \
 	client/menu/m_parse.c \
 	client/menu/m_popup.c \
 	client/menu/m_render.c \
+	client/menu/m_sound.c \
 	client/menu/m_timer.c \
 	client/menu/m_tooltip.c \
 	client/menu/m_windows.c \
