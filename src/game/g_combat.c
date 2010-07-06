@@ -1047,7 +1047,10 @@ static qboolean G_PrepareShot (edict_t *ent, shoot_types_t shootType, fireDefInd
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] allowReaction Set to qtrue to check whether this has forced any reaction fire, otherwise qfalse.
  * @return qtrue if everything went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
- * @param[in] z_align This value may change the target z height
+ * @param[in] z_align This value may change the target z height - often @c GROUND_DELTA is used to calculate
+ * the alignment. This can be used for splash damage weapons. It's often useful to target the ground close to the
+ * victim. That way you don't need a 100 percent chance to hit your target. Even if you don't hit it, the splash
+ * damage might reduce the health of your target.
  */
 qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoot_types_t shootType,
 		fireDefIndex_t firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
