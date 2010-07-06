@@ -243,7 +243,7 @@ item laser_ammo
 			projtl		laserFrizzledBeam
 			impact		laserFrizzledImpact
 			hitbody		laserFrizzledImpact
-			firesnd		weapons/electrolaser
+			firesnd		weapons/electro-taser
 			speed		0
 			spread		"0.8 0.8"
 			crouch		0.8

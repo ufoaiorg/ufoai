@@ -3100,7 +3100,6 @@ base/sound/footsteps/flesh1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/flesh2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/flesh3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/flesh4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/grass.ogg | GNU General Public License 2.0 |  | Worldforge media repository (Footsteps_on_grass_sasquatch.wav)
 base/sound/footsteps/grass1.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/footsteps/grass2.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/footsteps/grass3.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
@@ -3225,13 +3224,13 @@ base/sound/soldiers/malehurt01.ogg | GNU General Public License 2.0 | Nexuiz GPL
 base/sound/weapons/bloodspider.ogg | GNU General Public License 2.0 or later | Pretend | Nexuiz' GPLed data - weapons/weapon_switch.wav
 base/sound/weapons/brass1.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/weapons/bullet-bolter.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
-base/sound/weapons/bullet-chaingun.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
+base/sound/weapons/bullet-chaingun-10x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
+base/sound/weapons/bullet-chaingun-40x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
+base/sound/weapons/bullet-chaingun-50x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
+base/sound/weapons/bullet-chaingun-5x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/bullet-heavybolter.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
-base/sound/weapons/bullet-hmg-1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
-base/sound/weapons/bullet-hmg-2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
-base/sound/weapons/bullet-hmg-3.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
-base/sound/weapons/bullet-hmg-4.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
-base/sound/weapons/bullet-hmg-5.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
+base/sound/weapons/bullet-hmg-20x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
+base/sound/weapons/bullet-hmg-5x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/bullet-needler.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/bullet-needlerheavy.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/bullet-pistol.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
@@ -3261,7 +3260,6 @@ base/sound/weapons/grenade-bounce.ogg | Creative Commons Attribution-Share Alike
 base/sound/weapons/grenade-launcher-3x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/grenade-launcher.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/grenade-pin.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
-base/sound/weapons/grenade-smoke.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/grenade.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/heavy_laser.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/weapons/irgoggles.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers

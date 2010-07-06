@@ -244,7 +244,8 @@ item machinegun_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-hmg-1
+			firesnd				weapons/bullet-hmg-5x
+			sndonce				true
 			speed				0
 			spread				"2 2"
 			crouch				0.75
@@ -264,7 +265,8 @@ item machinegun_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-hmg-1
+			firesnd				weapons/bullet-hmg-20x
+			sndonce				true
 			speed				0
 			spread				"3 3"
 			crouch				0.5
@@ -283,7 +285,8 @@ item machinegun_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-hmg-1
+			firesnd				weapons/bullet-hmg-20x
+			sndonce				true
 			speed				0
 			spread				"3 20"
 			crouch				0.5
