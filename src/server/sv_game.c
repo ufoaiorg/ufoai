@@ -203,6 +203,7 @@ static byte* SV_WriteDummyByte (byte c)
 {
 	byte *pos = (byte*) pfe_msg->end;
 	NET_WriteByte(pfe_msg, c);
+	assert(pos != NULL);
 	return pos;
 }
 
