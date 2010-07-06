@@ -136,9 +136,10 @@ item fraggrenade
 			projtl	fraggren
 			impact	frag_explosion
 			hitbody frag_explosion
-			impsnd	weapons/grenade
-			bodysnd	weapons/grenade
-			bncsnd	misc/klonk03
+			firesnd	weapons/grenade-pin
+			impsnd	weapons/explosion-grenade
+			bodysnd	weapons/explosion-grenade
+			bncsnd	weapons/grenade-bounce
 			gravity	true
 			delay	1
 			bounce	10
@@ -160,9 +161,10 @@ item fraggrenade
 			projtl	fraggren
 			impact	frag_explosion
 			hitbody frag_explosion
-			impsnd	weapons/grenade
-			bodysnd	weapons/grenade
-			bncsnd	misc/klonk03
+			firesnd	weapons/grenade-pin
+			impsnd	weapons/explosion-grenade
+			bodysnd	weapons/explosion-grenade
+			bncsnd	weapons/grenade-bounce
 			gravity	true
 			rolled true
 			delay	1
@@ -210,9 +212,10 @@ item flashbang
 			projtl	flashgren
 			impact	flash_explosion
 			hitbody flash_explosion
-			impsnd	weapons/flashbang
-			bodysnd	weapons/flashbang
-			bncsnd	misc/klonk03
+			firesnd	weapons/grenade-pin
+			impsnd	weapons/explosion-flashbang
+			bodysnd	weapons/explosion-flashbang
+			bncsnd	weapons/grenade-bounce
 			impactattenuation 0.07
 			gravity	true
 			delay	1
@@ -235,9 +238,10 @@ item flashbang
 			projtl	flashgren
 			impact	flash_explosion
 			hitbody flash_explosion
-			impsnd	weapons/flashbang
-			bodysnd	weapons/flashbang
-			bncsnd	misc/klonk03
+			firesnd	weapons/grenade-pin
+			impsnd	weapons/explosion-flashbang
+			bodysnd	weapons/explosion-flashbang
+			bncsnd	weapons/grenade-bounce
 			impactattenuation 0.07
 			gravity	true
 			rolled true
@@ -285,9 +289,9 @@ item smokegrenade
 			projtl	smokegren
 			impact	smoke_explosion
 			hitbody smoke_explosion
-			impsnd	weapons/smokeexplosion
-			bodysnd	weapons/smokeexplosion
-			bncsnd	misc/klonk03
+			impsnd	weapons/explosion-smoke
+			bodysnd	weapons/explosion-smoke
+			bncsnd	weapons/grenade-bounce
 			firesnd	weapons/grenade-pin
 			impactattenuation 0.07
 			gravity	true
@@ -311,10 +315,10 @@ item smokegrenade
 			projtl	smokegren
 			impact	smoke_explosion
 			hitbody smoke_explosion
-			impsnd	weapons/smokeexplosion
-			bodysnd	weapons/smokeexplosion
+			impsnd	weapons/explosion-smoke
+			bodysnd	weapons/explosion-smoke
 			firesnd	weapons/grenade-pin
-			bncsnd	misc/klonk03
+			bncsnd	weapons/grenade-bounce
 			impactattenuation 0.07
 			gravity	true
 			rolled true
@@ -362,9 +366,9 @@ item stungrenade
 			projtl	stungren
 			impact	coronaImpact
 			hitbody	coronaImpact
-			impsnd	weapons/smokeexplosion
-			bodysnd	weapons/smokeexplosion
-			bncsnd	misc/klonk03
+			impsnd	weapons/explosion-smoke
+			bodysnd	weapons/explosion-smoke
+			bncsnd	weapons/grenade-bounce
 			firesnd	weapons/grenade-pin
 			impactattenuation 0.07
 			gravity	true
@@ -388,9 +392,9 @@ item stungrenade
 			projtl	stungren
 			impact	coronaImpact
 			hitbody	coronaImpact
-			impsnd	weapons/smokeexplosion
-			bodysnd	weapons/smokeexplosion
-			bncsnd	misc/klonk03
+			impsnd	weapons/explosion-smoke
+			bodysnd	weapons/explosion-smoke
+			bncsnd	weapons/grenade-bounce
 			firesnd	weapons/grenade-pin
 			impactattenuation 0.07
 			gravity	true
@@ -440,10 +444,10 @@ item stungrenade_alien
 			projtl	stungren_alien
 			impact	coronaImpact
 			hitbody	coronaImpact
-			impsnd	weapons/smokeexplosion
+			impsnd	weapons/explosion-smoke
 			firesnd	weapons/grenade-pin
-			bodysnd	weapons/smokeexplosion
-			bncsnd	misc/klonk03
+			bodysnd	weapons/explosion-smoke
+			bncsnd	weapons/grenade-bounce
 			impactattenuation 0.07
 			gravity	true
 			delay	1
@@ -466,10 +470,10 @@ item stungrenade_alien
 			projtl	stungren_alien
 			impact	coronaImpact
 			hitbody	coronaImpact
-			impsnd	weapons/smokeexplosion
+			impsnd	weapons/explosion-smoke
 			firesnd	weapons/grenade-pin
-			bodysnd	weapons/smokeexplosion
-			bncsnd	misc/klonk03
+			bodysnd	weapons/explosion-smoke
+			bncsnd	weapons/grenade-bounce
 			impactattenuation 0.07
 			gravity	true
 			rolled true
@@ -518,10 +522,10 @@ item incgrenade
 			projtl	incgren
 			impact	fire_explosion
 			hitbody fire_explosion
-			impsnd	weapons/fireexplosion
+			impsnd	weapons/explosion-fire
 			firesnd	weapons/grenade-pin
-			bodysnd	weapons/fireexplosion
-			bncsnd	misc/klonk03
+			bodysnd	weapons/explosion-fire
+			bncsnd	weapons/grenade-bounce
 			impactattenuation 0.07
 			gravity	true
 			delay	1
@@ -544,10 +548,10 @@ item incgrenade
 			projtl	incgren
 			impact	fire_explosion
 			hitbody fire_explosion
-			impsnd	weapons/fireexplosion
+			impsnd	weapons/explosion-fire
 			firesnd	weapons/grenade-pin
-			bodysnd	weapons/fireexplosion
-			bncsnd	misc/klonk03
+			bodysnd	weapons/explosion-fire
+			bncsnd	weapons/grenade-bounce
 			impactattenuation 0.07
 			gravity	true
 			rolled true
@@ -596,9 +600,9 @@ item plasmagrenade
 			impact	plasmaBigExplosion
 			hitbody	plasmaBigExplosion
 			firesnd	weapons/grenade-pin
-			impsnd	weapons/plasma_grenade
-			bodysnd	weapons/plasma_grenade
-			bncsnd	misc/klonk03
+			impsnd	weapons/explosion-plasma
+			bodysnd	weapons/explosion-plasma
+			bncsnd	weapons/grenade-bounce
 			gravity	true
 			delay	1
 			bounce	10
@@ -620,10 +624,10 @@ item plasmagrenade
 			projtl	plasmagren
 			impact	plasmaBigExplosion
 			hitbody	plasmaBigExplosion
-			impsnd	weapons/plasma_grenade
+			impsnd	weapons/explosion-plasma
 			firesnd	weapons/grenade-pin
-			bodysnd	weapons/plasma_grenade
-			bncsnd	misc/klonk03
+			bodysnd	weapons/explosion-plasma
+			bncsnd	weapons/grenade-bounce
 			gravity	true
 			rolled true
 			delay	1

@@ -44,6 +44,7 @@ item plaspistol_ammo
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
 			firesnd				weapons/plasma-small
+			impsnd				impact/plasma-impact
 			speed				1800
 			spread				"1.5 1.5"
 			crouch				0.8
@@ -64,6 +65,7 @@ item plaspistol_ammo
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
 			firesnd				weapons/plasma-small
+			impsnd				impact/plasma-impact
 			speed				1800
 			spread				"1.2 1.2"
 			crouch				0.8
@@ -84,6 +86,7 @@ item plaspistol_ammo
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
 			firesnd				weapons/plasma-small
+			impsnd				impact/plasma-impact
 			speed				1800
 			spread				"1.9 1.9"
 			crouch				0.8
@@ -145,6 +148,7 @@ item plasrifle_ammo
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
 			firesnd				weapons/plasma-medium
+			impsnd				impact/plasma-impact
 			speed				1700
 			spread				"1.7 1.7"
 			crouch				0.8
@@ -165,6 +169,7 @@ item plasrifle_ammo
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
 			firesnd				weapons/plasma-medium
+			impsnd				impact/plasma-impact
 			speed				1700
 			spread				"1 1"
 			crouch				0.8
@@ -185,6 +190,7 @@ item plasrifle_ammo
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
 			firesnd				weapons/plasma-medium
+			impsnd				impact/plasma-impact
 			speed				1700
 			spread				"1.9 1.9"
 			crouch				0.7
@@ -205,6 +211,7 @@ item plasrifle_ammo
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
 			firesnd				weapons/plasma-medium
+			impsnd				impact/plasma-impact
 			speed				1700
 			spread				"2.7 2.7"
 			crouch				0.6
@@ -269,7 +276,8 @@ item plasblaster_ammo
 			projtl				plasmaContinuous
 			impact				plasmaImpact
 			hitbody				plasmaImpact
-			firesnd				weapons/plasma_big
+			firesnd				weapons/plasma-large
+			impsnd				impact/plasma-impact
 			sndonce				true
 			speed				0
 			spread				"2.2 2.2"
@@ -290,7 +298,8 @@ item plasblaster_ammo
 			projtl				plasmaBigBall
 			impact				plasmaBigImpact
 			hitbody				plasmaBigImpact
-			firesnd				weapons/plasma-large
+			firesnd				weapons/plasma-huge
+			impsnd				impact/plasma-impact
 			speed				2000
 			spread				"2 2"
 			crouch 				0.6
@@ -312,7 +321,8 @@ item plasblaster_ammo
 			projtl				plasmaContinuous
 			impact				plasmaImpact
 			hitbody				plasmaImpact
-			firesnd				weapons/plasma_big
+			firesnd				weapons/plasma-huge
+			impsnd				impact/plasma-impact
 			sndonce				true
 			speed				0
 			spread				"2.7 2.7"
