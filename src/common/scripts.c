@@ -1945,7 +1945,7 @@ const char *const name_strings[NAME_NUM_TYPES] = {
 	"male_lastname"
 };
 
-/** @brief Valid equipement definition values from script files. */
+/** @brief Valid equipment definition values from script files. */
 static const value_t equipment_definition_vals[] = {
 	{"mininterest", V_INT, offsetof(equipDef_t, minInterest), 0},
 	{"maxinterest", V_INT, offsetof(equipDef_t, maxInterest), 0},
@@ -2066,7 +2066,7 @@ NAME AND TEAM DEFINITION INTERPRETER
 
 /**
  * @param[in] gender 1 (female) or 2 (male)
- * @param[in] td The team defintion to get the name from
+ * @param[in] td The team definition to get the name from
  * @sa Com_GetCharacterValues
  */
 const char *Com_GiveName (int gender, teamDef_t *td)
@@ -2598,7 +2598,7 @@ static const value_t terrainTypeValues[] = {
 };
 
 /**
- * @brief Searches the terrain defintion if given
+ * @brief Searches the terrain definition if given
  * @param[in] textureName The terrain definition id from script files
  * which is the texture name relative to base/textures
  */
