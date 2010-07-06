@@ -2832,7 +2832,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 					csi.damLaser = csi.numDTs;
 				else if (!strcmp(token, "plasma"))
 					csi.damPlasma = csi.numDTs;
-				else if (!strcmp(token, "particle"))
+				else if (!strcmp(token, "particlebeam"))
 					csi.damParticle = csi.numDTs;
 				else if (!strcmp(token, "stun_electro"))
 					csi.damStunElectro = csi.numDTs;
