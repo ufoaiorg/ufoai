@@ -153,8 +153,7 @@ typedef enum {
 	RES_TYPES /**< Max. */
 } reservation_types_t;
 
-/** @brief Describes a character with all its attributes
- * @todo doesn't belong here */
+/** @brief Describes a character with all its attributes */
 typedef struct character_s {
 	int ucn;					/**< unique character number */
 	char name[MAX_VAR];			/**< Character name (as in: soldier name). */
