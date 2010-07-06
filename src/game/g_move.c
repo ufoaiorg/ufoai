@@ -258,6 +258,9 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			break;
 	}
 
+	/* make sure to end any other pending events - we rely on EV_ACTOR_MOVE not being active anymore */
+	gi.EndEvents();
+
 	/* everything ok, found valid route? */
 	if (VectorCompare(pos, ent->pos)) {
 		int usedTUs = 0;
