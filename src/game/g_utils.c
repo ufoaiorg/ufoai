@@ -250,6 +250,9 @@ void G_PrintStats (const char *buffer)
 		time(&aclock);
 		t = localtime(&aclock);
 
+		Com_sprintf(tbuf, sizeof(tbuf), "%4i/%02i/%02i %02i:%02i:%02i", t->tm_year + 1900,
+				t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
+
 		fprintf(logstatsfile, "[STATS] %s - %s\n", tbuf, buffer);
 	}
 }

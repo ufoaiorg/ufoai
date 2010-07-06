@@ -210,7 +210,7 @@ void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, qboolea
 		gi.WriteShort(targetEdict->number);
 	else
 		gi.WriteShort(SKIP_LOCAL_ENTITY);
-	gi.WriteByte(firstShoot);
+	gi.WriteByte(firstShoot ? 1 : 0);
 	gi.WriteShort(fd->obj->idx);
 	gi.WriteByte(fd->weapFdsIdx);
 	gi.WriteByte(fd->fdIdx);

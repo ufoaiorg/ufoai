@@ -236,9 +236,10 @@ static void G_Init (void)
 	INVSH_InitCSI(gi.csi);
 	INV_InitInventory(&game.i, gi.csi, invChain, lengthof(invChain));
 
-	logstatsfile = NULL;
 	if (logstats->integer)
 		logstatsfile = fopen(va("%s/stats.log", gi.FS_Gamedir()), "a");
+	else
+		logstatsfile = NULL;
 
 	AIL_Init();
 }
