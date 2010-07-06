@@ -9,9 +9,9 @@ window options
 	// ===========
 	// BACKGROUND
 	// ===========
-	pic background
+	image background
 	{
-		image		"ui/options_bg"
+		src		"ui/options_bg"
 	}
 	// ============
 	// HIDE PANELS
@@ -382,9 +382,9 @@ window options
 			pos			"85 515"
 			size		"150 20"
 		}
-		pic gamma_rahmen
+		image gamma_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"244 517"
 		}
 		bar gamma_bar
@@ -406,9 +406,9 @@ window options
 			pos			"85 540"
 			size		"150 20"
 		}
-		pic contrast_rahmen
+		image contrast_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"244 542"
 		}
 		bar contrast_bar
@@ -430,9 +430,9 @@ window options
 			pos			"85 565"
 			size		"150 20"
 		}
-		pic brightness_rahmen
+		image brightness_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"244 567"
 		}
 		bar brightness_bar
@@ -454,9 +454,9 @@ window options
 			pos			"85 590"
 			size		"150 20"
 		}
-		pic lightmap_rahmen
+		image lightmap_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"244 592"
 		}
 		bar lightmap_bar
@@ -714,9 +714,9 @@ window options
 			pos			"95 195"
 			size		"150 20"
 		}
-		pic effects_rahmen
+		image effects_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"244 197"
 		}
 		bar effects_bar
@@ -739,9 +739,9 @@ window options
 			pos			"95 220"
 			size		"150 20"
 		}
-		pic music_rahmen
+		image music_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"244 222"
 		}
 		bar music_bar
@@ -1001,9 +1001,9 @@ window options
 			pos			"85 465"
 			size		"150 20"
 		}
-		pic m3dmapambient_rahmen
+		image m3dmapambient_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"240 467"
 		}
 		bar m3dmapambient_bar
@@ -1150,9 +1150,9 @@ window options
 			pos			"95 170"
 			size		"150 20"
 		}
-		pic camspeed_rahmen
+		image camspeed_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"244 172"
 		}
 		bar camspeed_bar
@@ -1177,9 +1177,9 @@ window options
 			pos			"95 195"
 			size		"150 20"
 		}
-		pic camrot_rahmen
+		image camrot_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"244 197"
 		}
 		bar camrot_bar
@@ -1204,9 +1204,9 @@ window options
 			pos			"95 220"
 			size		"150 20"
 		}
-		pic cammoveaccel_rahmen
+		image cammoveaccel_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"244 222"
 		}
 		bar cammoveaccel_bar
@@ -1240,9 +1240,9 @@ window options
 			pos			"95 335"
 			size		"150 20"
 		}
-		pic actorsspeed_rahmen
+		image actorsspeed_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"244 337"
 		}
 		bar actorsspeed_bar
@@ -1290,9 +1290,9 @@ window options
 			pos			"95 550"
 			size		"150 20"
 		}
-		pic joystick_threshold_rahmen
+		image joystick_threshold_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"244 552"
 		}
 		bar joystick_threshold_bar
@@ -1315,9 +1315,9 @@ window options
 			pos			"95 575"
 			size		"150 20"
 		}
-		pic joystick_speed_rahmen
+		image joystick_speed_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"244 577"
 		}
 		bar joystick_speed_bar

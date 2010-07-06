@@ -32,14 +32,18 @@ window multiplayer
 	}
 }
 
-window abstract_multiplayer {
+window abstract_multiplayer
+{
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		"ui/options_bg"
+		src		"ui/options_bg"
 	}
 
 	// ==================
@@ -133,9 +137,12 @@ window abstract_multiplayer_join extends abstract_multiplayer {
 // ==================
 window serverinfo
 {
-	pic background
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
+	image background
 	{
-		image		"ui/multiplayer_bg"
+		src		"ui/multiplayer_bg"
 	}
 
 	text server_info
@@ -200,9 +207,9 @@ window serverinfo
 		size		"300 35"
 	}
 
-	pic mappic
+	image mappic
 	{
-		image		*cvar:mn_mappic
+		src		*cvar:mn_mappic
 		pos			"800 80"
 		texl		"0 0"
 		texh		"128 96"
@@ -985,9 +992,9 @@ window multiplayer_wait extends levelbuttons
 			excluderect	{ pos "32 333" size "8 8" }
 		}
 
-		pic bar_floor
+		image bar_floor
 		{
-			image	"hud/bar_floor"
+			src	"hud/bar_floor"
 			pos		"0 0"
 			size	"40 346"
 			texh	"40 346"
@@ -1139,11 +1146,11 @@ window multiplayer_wait extends levelbuttons
 			textalign	ALIGN_CC
 		}
 
-		pic mappic
+		image mappic
 		{
 			pos			"40 80"
 			size		"320 200"
-			image		*cvar:mn_mappicbig
+			src		*cvar:mn_mappicbig
 		}
 
 		string maxplayersperteams_str
@@ -1202,16 +1209,16 @@ window multiplayer_wait extends levelbuttons
 				size		"16 300"
 			}
 
-			pic p0 { size "16 16" }
-			pic p1 { size "16 16" }
-			pic p2 { size "16 16" }
-			pic p3 { size "16 16" }
-			pic p4 { size "16 16" }
-			pic p5 { size "16 16" }
-			pic p6 { size "16 16" }
-			pic p7 { size "16 16" }
-			pic p8 { size "16 16" }
-			pic p9 { size "16 16" }
+			image p0 { size "16 16" }
+			image p1 { size "16 16" }
+			image p2 { size "16 16" }
+			image p3 { size "16 16" }
+			image p4 { size "16 16" }
+			image p5 { size "16 16" }
+			image p6 { size "16 16" }
+			image p7 { size "16 16" }
+			image p8 { size "16 16" }
+			image p9 { size "16 16" }
 		}
 
 		text userlist
@@ -1607,10 +1614,10 @@ window multiplayer_wait extends levelbuttons
 	confunc multiplayer_playerIsReady {
 		if ( ( <1> < 10 ) and ( <1> >= 0 ) ) {
 			if ( <2> == 0 ) {
-				*node:root.players.ready.p<1>@image = "icons/off"
+				*node:(image)root.players.ready.p<1>@src = "icons/off"
 				*node:root.players.ready.p<1>@invis = false
 			} else {
-				*node:root.players.ready.p<1>@image = "icons/on"
+				*node:(image)root.players.ready.p<1>@src = "icons/on"
 				*node:root.players.ready.p<1>@invis = false
 			}
 		}

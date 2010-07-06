@@ -56,13 +56,16 @@ component panel cmpResearchItem {
 
 window research
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	"ui/base_bg"
+		src	"ui/base_bg"
 	}
 
 	cmpBaseHeader baseHeader {
@@ -437,11 +440,11 @@ window research
 		color		"0 .78 0 1"
 		size		"290 18"
 	}
-	pic progress_img
+	image progress_img
 	{
 		visiblewhen	"*cvar:mn_research_seltimebar != 0"
 		pos			"684 657"
-		image		"ui/bar_rahmen"
+		src		"ui/bar_rahmen"
 	}
 	bar progress_bar
 	{

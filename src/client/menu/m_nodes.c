@@ -100,6 +100,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterEditorNode,
 	MN_RegisterEKGNode,
 	MN_RegisterFuncNode,
+	MN_RegisterImageNode,
 	MN_RegisterItemNode,
 	MN_RegisterKeyBindingNode,
 	MN_RegisterLineChartNode,
@@ -111,7 +112,6 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterOptionListNode,
 	MN_RegisterOptionTreeNode,
 	MN_RegisterPanelNode,
-	MN_RegisterImageNode,	/* pic */
 	MN_RegisterRadarNode,
 	MN_RegisterRadioButtonNode,
 	MN_RegisterRowsNode,

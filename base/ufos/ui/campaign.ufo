@@ -4,13 +4,16 @@
 
 window campaigns
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	"ui/options_bg"
+		src	"ui/options_bg"
 	}
 
 	string version
@@ -123,13 +126,16 @@ window campaigns
 
 window campaign_main
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		"ui/main_bg"
+		src		"ui/main_bg"
 	}
 
 	string version
@@ -217,13 +223,16 @@ window quickload
 
 window load
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		"ui/main_bg"
+		src		"ui/main_bg"
 	}
 
 	string version
@@ -387,13 +396,16 @@ window load
 
 window save
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		"ui/main_bg"
+		src		"ui/main_bg"
 	}
 
 	string version
@@ -568,9 +580,12 @@ window save
 
 window lostgame
 {
-	pic background
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
+	image background
 	{
-		image		"ui/losegame_bg"
+		src		"ui/losegame_bg"
 	}
 
 	string title
@@ -641,9 +656,12 @@ window lostgame
 
 window endgame
 {
-	pic background
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
+	image background
 	{
-		image		"ui/wingame_bg"
+		src		"ui/wingame_bg"
 	}
 
 	string title

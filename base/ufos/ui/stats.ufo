@@ -4,13 +4,16 @@
 
 window stats
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		"ui/stats_bg"
+		src		"ui/stats_bg"
 	}
 
 	custombutton button_exit
@@ -181,13 +184,16 @@ window stats
 
 window nations
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		"ui/stats_bg"
+		src		"ui/stats_bg"
 	}
 
 	custombutton button_exit
@@ -464,9 +470,9 @@ window nations
 		font		"f_small"
 	}
 
-	pic nation_symbol
+	image nation_symbol
 	{
-		image		*cvar:mn_nat_symbol
+		src		*cvar:mn_nat_symbol
 		pos			"269 390"
 		size		"486 300"
 		preventratio	true

@@ -18,9 +18,9 @@ window inventory
 	// background
 	// ==================
 
-	pic bar_inventory
+	image bar_inventory
 	{
-		image	"hud/bar_inventory"
+		src	"hud/bar_inventory"
 		pos		"0 0"
 	}
 	string s_backpack

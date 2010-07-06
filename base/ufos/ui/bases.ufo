@@ -84,26 +84,28 @@ component cmpDefBaseHeader cmpBaseviewHeader
 
 window bases
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
 
 	// ==================
 	// background
 	// ==================
 
-	pic back_ul
+	image back_ul
 	{
-		image		"ui/base_ul"
+		src		"ui/base_ul"
 		pos			"0 0"
 	}
 
-	pic back_ur
+	image back_ur
 	{
-		image		"ui/base_ur"
+		src		"ui/base_ur"
 		pos			"512 0"
 	}
 
-	pic back_lr
+	image back_lr
 	{
-		image		"ui/base_lr"
+		src		"ui/base_lr"
 		pos			"512 256"
 	}
 

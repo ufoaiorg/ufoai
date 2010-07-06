@@ -37,13 +37,16 @@ component panel cmpMarketItem
 
 window market extends objectinfo
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		"ui/base_bg"
+		src		"ui/base_bg"
 	}
 
 	cmpBaseHeader baseHeader {

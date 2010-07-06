@@ -3,7 +3,10 @@
 // ==================
 
 component cmpDefNamedTbar cmpPhysNamedTbar {
-	pic			bdr {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
+	image bdr {
 		pos "3 18"
 	}
 	tbar		bar {
@@ -26,9 +29,9 @@ window physdata
 	// background
 	// ==================
 
-	pic bar_physdata
+	image bar_physdata
 	{
-		image		"hud/bar_phys"
+		src		"hud/bar_phys"
 		pos			"0 0"
 	}
 

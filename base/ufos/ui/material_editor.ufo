@@ -73,9 +73,9 @@ window material_editor {
 			size		"80 20"
 			font		"f_verysmall"
 		}
-		pic hardness_rahmen
+		image hardness_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"90 5"
 			size		"108 16"
 		}
@@ -96,9 +96,9 @@ window material_editor {
 			size		"80 20"
 			font		"f_verysmall"
 		}
-		pic bump_rahmen
+		image bump_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"90 25"
 			size		"108 16"
 		}
@@ -119,9 +119,9 @@ window material_editor {
 			size		"80 20"
 			font		"f_verysmall"
 		}
-		pic specular_rahmen
+		image specular_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"90 45"
 			size		"108 16"
 		}
@@ -142,9 +142,9 @@ window material_editor {
 			size		"80 20"
 			font		"f_verysmall"
 		}
-		pic parallax_rahmen
+		image parallax_rahmen
 		{
-			image		"ui/bar_rahmen"
+			src		"ui/bar_rahmen"
 			pos			"90 65"
 			size		"108 16"
 		}

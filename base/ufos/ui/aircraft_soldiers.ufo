@@ -6,7 +6,7 @@ component cmpDefNamedTbar cmpNamedTbar {
 	{
 		size	"450 20"
 	}
-	pic			bdr {
+	image	bdr {
 		pos "165 2"
 	}
 	tbar		bar {
@@ -22,9 +22,9 @@ component panel cmpNamedBar {
 	{
 		size	"450 20"
 	}
-	pic			bdr {
+	image			bdr {
 		pos "165 2"
-		image "ui/bar_border"
+		src "ui/bar_border"
 	}
 	bar		currbar {
 		pos "167 7"
@@ -181,7 +181,7 @@ window team extends iaircraft
 		*(checkbox)actor_select<1>.check_actor@current = 0
 		*actor_select<1>.check_actor@invis = false
 		*actor_select<1>.txt_actor@invis = false
-		*(pic)actor_select<1>.bt_equip@invis = false
+		*(image)actor_select<1>.bt_equip@invis = false
 		if ( *cvar:mn_hirable_count == 0 ) {
 			*(checkbox)actor_select<1>.check_actor@disabled = true
 			*(checkbox)actor_select<1>.check_actor@tooltip = "_No more soldiers can be assigned to this craft"
@@ -310,10 +310,10 @@ window team extends iaircraft
 		image	"ui/panel_green"
 	}
 
-	pic	rank_img {
+	image	rank_img {
 		pos "8 10"
 		size "50 50"
-		image *cvar:mn_chrrank_img
+		src *cvar:mn_chrrank_img
 	}
 
 	model body
@@ -488,10 +488,10 @@ window team extends iaircraft
 		invis true
 	}
 
-	pic	rank_img {
+	image	rank_img {
 		pos "195 30"
 		size "50 50"
-		image *cvar:mn_chrrank_img
+		src *cvar:mn_chrrank_img
 	}
 
 	string	rank_lbl { pos "10 85" size "420 20" string *cvar:mn_chrrank textalign ALIGN_UC font "f_normal_bold" }

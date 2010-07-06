@@ -4,13 +4,16 @@
 
 window won
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	"ui/won_bg"
+		src	"ui/won_bg"
 	}
 
 	// ==================
@@ -68,13 +71,16 @@ window won
 
 window lost
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	"ui/lost_bg"
+		src	"ui/lost_bg"
 	}
 
 	// ==================

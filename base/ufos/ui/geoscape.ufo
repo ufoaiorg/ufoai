@@ -9,8 +9,8 @@ component panel cmpGeoscapeDocklet {
 		align	LAYOUTALIGN_TOP
 	}
 
-	pic bg {
-		image			"geoscape/docklet_bg"
+	image bg {
+		src			"geoscape/docklet_bg"
 		size			"280 60"
 		onMouseEnter	{ *node:this@image = "geoscape/docklet_bg_hovered" }
 		onMouseLeave	{ *node:this@image = "geoscape/docklet_bg" }
@@ -125,9 +125,9 @@ window geoscape
 			align	LAYOUTALIGN_RIGHT
 		}
 
-		pic back
+		image back
 		{
-			image		"ui/geo_menu"
+			src		"ui/geo_menu"
 			pos			"0 0"
 		}
 
@@ -352,11 +352,11 @@ window geoscape
 				size	"164 164"
 			}
 
-			pic background {
+			image background {
 				pos		"0 0"
 				size	"164 164"
 				texh	"164 164"
-				image	"ui/geo_miniglobe"
+				src	"ui/geo_miniglobe"
 			}
 
 			zone panel_scroll_up
@@ -510,10 +510,10 @@ window geoscape
 		// small buttons
 		// ==================
 
-		pic bt_show_overlay
+		image bt_show_overlay
 		{
 			tooltip		"_Highlight nation borders"
-			image		"icons/geo_nations_highlight"
+			src		"icons/geo_nations_highlight"
 			pos			"40 515"
 			texl		"0 0"
 			texh		"32 32"
@@ -522,10 +522,10 @@ window geoscape
 			onMouseEnter			{ *node:this@texl = "32 0" *node:this@texh = "64 32" }
 		}
 
-		pic bt_show_radar
+		image bt_show_radar
 		{
 			tooltip		"_Show radar range"
-			image		"icons/geo_radar"
+			src		"icons/geo_radar"
 			pos			"70 515"
 			texl		"0 0"
 			texh		"32 32"
@@ -534,11 +534,11 @@ window geoscape
 			onMouseEnter			{ *node:this@texl = "32 0" *node:this@texh = "64 32" }
 		}
 
-		pic bt_show_xvi
+		image bt_show_xvi
 		{
 			visiblewhen "*cvar:mn_xvimap == 1"
 			tooltip		"_Show XVI map"
-			image		"icons/geo_xvi"
+			src		"icons/geo_xvi"
 			pos			"100 515"
 			texl		"0 0"
 			texh		"32 32"
@@ -1034,15 +1034,15 @@ window popup_newinstallation_type
 		font		"f_normal"
 	}
 
-	pic bt_highlight
+	image bt_highlight
 	{
-		image		"ui/popup_button_hl"
+		src		"ui/popup_button_hl"
 		invis		true
 	}
 
-	pic radar_icon
+	image radar_icon
 	{
-		image		"geoscape/radar"
+		src		"geoscape/radar"
 		pos			"46 78"
 	}
 	string radar_type
@@ -1082,9 +1082,9 @@ window popup_newinstallation_type
 		}
 	}
 
-	pic sam_icon
+	image sam_icon
 	{
-		image		"geoscape/defence"
+		src		"geoscape/defence"
 		pos			"46 98"
 	}
 	string sam_type
@@ -1124,9 +1124,9 @@ window popup_newinstallation_type
 		}
 	}
 
-	pic ufoyard_icon
+	image ufoyard_icon
 	{
-		image		"geoscape/ufoyard"
+		src		"geoscape/ufoyard"
 		pos			"46 118"
 	}
 	string ufoyard_type
@@ -1170,9 +1170,9 @@ window popup_newinstallation_type
 	// Create a base
 	//
 
-	pic base_icon
+	image base_icon
 	{
-		image		"geoscape/base"
+		src		"geoscape/base"
 		pos			"46 138"
 	}
 

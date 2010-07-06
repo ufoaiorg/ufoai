@@ -98,9 +98,9 @@ window ufopedia extends objectinfo
 		// deco
 		// ==================
 
-		pic image_top
+		image image_top
 		{
-			image		*cvar:mn_upimage_top
+			src		*cvar:mn_upimage_top
 			pos			"432 65"
 			size		"163 298"
 			preventratio	true

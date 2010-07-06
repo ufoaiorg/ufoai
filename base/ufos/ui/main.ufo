@@ -4,13 +4,16 @@
 
 window main
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	"ui/main_bg"
+		src	"ui/main_bg"
 	}
 
 	string version
@@ -142,9 +145,9 @@ window checkcvars
 		pos			"41 198"
 		size		"150 20"
 	}
-	pic effects_rahmen
+	image effects_rahmen
 	{
-		image		"ui/bar_rahmen"
+		src		"ui/bar_rahmen"
 		pos			"161 203"
 	}
 	bar effects_bar
@@ -161,9 +164,9 @@ window checkcvars
 		pos			"41 223"
 		size		"150 20"
 	}
-	pic music_rahmen
+	image music_rahmen
 	{
-		image		"ui/bar_rahmen"
+		src		"ui/bar_rahmen"
 		pos			"161 228"
 	}
 	bar music_bar

@@ -14,13 +14,16 @@ component checkbox cmpSelect
 
 window employees
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		"ui/base_bg"
+		src		"ui/base_bg"
 	}
 
 	// ==================
@@ -248,10 +251,10 @@ window employees
 		}
 	}
 
-	pic	rank_img
+	image	rank_img
 	{
 		visiblewhen "*cvar:mn_show_employee >= 1"
-		image		*cvar:mn_chrrank_img
+		src		*cvar:mn_chrrank_img
 		pos			"473 387"
 	}
 

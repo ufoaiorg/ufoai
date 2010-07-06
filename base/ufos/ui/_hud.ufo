@@ -9,9 +9,9 @@ component panel cmpFiremodeEntry {
 		align	LAYOUTALIGN_TOP
 	}
 
-	pic bg
+	image bg
 	{
-		image	"hud/firemode"
+		src	"hud/firemode"
 		pos		"0 576"
 		texl	"0 0"
 		texh	"214  63"
@@ -21,9 +21,9 @@ component panel cmpFiremodeEntry {
 		onMouseLeave { *node:this@image = "hud/firemode" }
 	}
 
-	pic cb
+	image cb
 	{
-		image	"hud/checkbox"
+		src	"hud/checkbox"
 		tooltip	"_Check to use this firemode for reaction fire"
 		pos		"0 32"
 		texl	"0 0"
@@ -247,10 +247,10 @@ window firemode_left {
 		size	"192 0"
 	}
 
-	pic bt_left_fm0
+	image bt_left_fm0
 	{
 		{
-			image			"hud/firemode"
+			src			"hud/firemode"
 			pos				"0 576"
 			texl			"0 0"
 			texh			"214  63"
@@ -262,9 +262,9 @@ window firemode_left {
 			tooltip			*cvar:mn_l_fm_name0 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -276,10 +276,10 @@ window firemode_left {
 		string shot	{ string *cvar:mn_l_fm_shot0	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
-	pic bt_left_fm1
+	image bt_left_fm1
 	{
 		{
-			image			"hud/firemode"
+			src			"hud/firemode"
 			pos				"0 512"
 			texl			"0 0"
 			texh			"214  63"
@@ -291,9 +291,9 @@ window firemode_left {
 			tooltip			*cvar:mn_l_fm_name1 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -305,10 +305,10 @@ window firemode_left {
 		string shot	{ string *cvar:mn_l_fm_shot1	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
-	pic bt_left_fm2
+	image bt_left_fm2
 	{
 		{
-			image			"hud/firemode"
+			src			"hud/firemode"
 			pos				"0 448"
 			texl			"0 0"
 			texh			"214  63"
@@ -320,9 +320,9 @@ window firemode_left {
 			tooltip			*cvar:mn_l_fm_name2 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -334,10 +334,10 @@ window firemode_left {
 		string shot	{ string *cvar:mn_l_fm_shot2	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
-	pic bt_left_fm3
+	image bt_left_fm3
 	{
 		{
-			image			"hud/firemode"
+			src			"hud/firemode"
 			pos				"0 384"
 			texl			"0 0"
 			texh			"214  63"
@@ -349,9 +349,9 @@ window firemode_left {
 			tooltip			*cvar:mn_l_fm_name3 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -363,10 +363,10 @@ window firemode_left {
 		string shot	{ string *cvar:mn_l_fm_shot3	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
-	pic bt_left_fm4
+	image bt_left_fm4
 	{
 		{
-			image	"hud/firemode"
+			src	"hud/firemode"
 			pos		"0 320"
 			texl	"0 0"
 			texh	"214  63"
@@ -378,9 +378,9 @@ window firemode_left {
 			tooltip *cvar:mn_l_fm_name4 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -392,10 +392,10 @@ window firemode_left {
 		string shot	{ string *cvar:mn_l_fm_shot4	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
-	pic bt_left_fm5
+	image bt_left_fm5
 	{
 		{
-			image	"hud/firemode"
+			src	"hud/firemode"
 			pos		"0 256"
 			texl	"0 0"
 			texh	"214  63"
@@ -407,9 +407,9 @@ window firemode_left {
 			tooltip *cvar:mn_l_fm_name5 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -421,10 +421,10 @@ window firemode_left {
 		string shot	{ string *cvar:mn_l_fm_shot5	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
-	pic bt_left_fm6
+	image bt_left_fm6
 	{
 		{
-			image	"hud/firemode"
+			src	"hud/firemode"
 			pos		"0 192"
 			texl	"0 0"
 			texh	"214  63"
@@ -436,9 +436,9 @@ window firemode_left {
 			tooltip *cvar:mn_l_fm_name6 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -450,10 +450,10 @@ window firemode_left {
 		string shot	{ string *cvar:mn_l_fm_shot6	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
-	pic bt_left_fm7
+	image bt_left_fm7
 	{
 		{
-			image	"hud/firemode"
+			src	"hud/firemode"
 			pos		"0 128"
 			texl	"0 0"
 			texh	"214  63"
@@ -465,9 +465,9 @@ window firemode_left {
 			tooltip *cvar:mn_l_fm_name7 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -482,7 +482,7 @@ window firemode_left {
 	/* Firemode console functions ===================================*/
 
 	confunc set_left_inv {
-		*(pic)bt_left_fm<1>@invis = true
+		*(image)bt_left_fm<1>@invis = true
 	}
 
 	/**
@@ -491,14 +491,14 @@ window firemode_left {
 	 */
 	confunc set_left_vis {
 		*cvar:tmp = "<2>"
-		*(pic)bt_left_fm<1>@invis = false
+		*(image)bt_left_fm<1>@invis = false
 
 		if ( *cvar:tmp eq "1" ) {
-			*(pic)bt_left_fm<1>@texl = "0 0"
-			*(pic)bt_left_fm<1>@texh = "214 63"
+			*(image)bt_left_fm<1>@texl = "0 0"
+			*(image)bt_left_fm<1>@texh = "214 63"
 		} else {
-			*(pic)bt_left_fm<1>@texl = "0 64"
-			*(pic)bt_left_fm<1>@texh = "214 128"
+			*(image)bt_left_fm<1>@texl = "0 64"
+			*(image)bt_left_fm<1>@texh = "214 128"
 		}
 		delete *cvar:tmp
 	}
@@ -506,19 +506,19 @@ window firemode_left {
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
 
 	confunc set_left_cb_ina {
-		*(pic)bt_left_fm<1>.cb@texl = "0 0"
-		*(pic)bt_left_fm<1>.cb@texh = "31 31"
-		*(pic)bt_left_fm<1>.cb@invis = false
+		*(image)bt_left_fm<1>.cb@texl = "0 0"
+		*(image)bt_left_fm<1>.cb@texh = "31 31"
+		*(image)bt_left_fm<1>.cb@invis = false
 	}
 
 	confunc set_left_cb_a {
-		*(pic)bt_left_fm<1>.cb@texl = "0 32"
-		*(pic)bt_left_fm<1>.cb@texh = "31 63"
-		*(pic)bt_left_fm<1>.cb@invis = false
+		*(image)bt_left_fm<1>.cb@texl = "0 32"
+		*(image)bt_left_fm<1>.cb@texh = "31 63"
+		*(image)bt_left_fm<1>.cb@invis = false
 	}
 
 	confunc set_left_cb_invis {
-		*(pic)bt_left_fm<1>.cb@invis = true
+		*(image)bt_left_fm<1>.cb@invis = true
 	}
 }
 
@@ -536,10 +536,10 @@ window firemode_right {
 		size	"192 0"
 	}
 
-	pic bt_right_fm0
+	image bt_right_fm0
 	{
 		{
-			image	"hud/firemode"
+			src	"hud/firemode"
 			pos		"0 576"
 			texl	"0 0"
 			texh	"214  63"
@@ -551,9 +551,9 @@ window firemode_right {
 			tooltip *cvar:mn_r_fm_name0 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -565,10 +565,10 @@ window firemode_right {
 		string shot	{ string *cvar:mn_r_fm_shot0	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
-	pic bt_right_fm1
+	image bt_right_fm1
 	{
 		{
-			image	"hud/firemode"
+			src	"hud/firemode"
 			pos		"0 512"
 			texl	"0 0"
 			texh	"214  63"
@@ -580,9 +580,9 @@ window firemode_right {
 			tooltip *cvar:mn_r_fm_name1 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -594,10 +594,10 @@ window firemode_right {
 		string shot	{ string *cvar:mn_r_fm_shot1	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
-	pic bt_right_fm2
+	image bt_right_fm2
 	{
 		{
-			image	"hud/firemode"
+			src	"hud/firemode"
 			pos		"0 448"
 			texl	"0 0"
 			texh	"214  63"
@@ -609,9 +609,9 @@ window firemode_right {
 			tooltip *cvar:mn_r_fm_name2 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -623,10 +623,10 @@ window firemode_right {
 		string shot	{ string *cvar:mn_r_fm_shot2	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
-	pic bt_right_fm3
+	image bt_right_fm3
 	{
 		{
-			image	"hud/firemode"
+			src	"hud/firemode"
 			pos		"0 384"
 			texl	"0 0"
 			texh	"214  63"
@@ -638,9 +638,9 @@ window firemode_right {
 			tooltip *cvar:mn_r_fm_name3 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -652,10 +652,10 @@ window firemode_right {
 		string shot	{ string *cvar:mn_r_fm_shot3	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
-	pic bt_right_fm4
+	image bt_right_fm4
 	{
 		{
-			image	"hud/firemode"
+			src	"hud/firemode"
 			pos		"0 320"
 			texl	"0 0"
 			texh	"214  63"
@@ -667,9 +667,9 @@ window firemode_right {
 			tooltip *cvar:mn_r_fm_name4 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -681,10 +681,10 @@ window firemode_right {
 		string shot	{ string *cvar:mn_r_fm_shot4	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
-	pic bt_right_fm5
+	image bt_right_fm5
 	{
 		{
-			image	"hud/firemode"
+			src	"hud/firemode"
 			pos		"0 256"
 			texl	"0 0"
 			texh	"214  63"
@@ -696,9 +696,9 @@ window firemode_right {
 			tooltip *cvar:mn_r_fm_name5 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -710,10 +710,10 @@ window firemode_right {
 		string shot	{ string *cvar:mn_r_fm_shot5	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
-	pic bt_right_fm6
+	image bt_right_fm6
 	{
 		{
-			image	"hud/firemode"
+			src	"hud/firemode"
 			pos		"0 192"
 			texl	"0 0"
 			texh	"214  63"
@@ -725,9 +725,9 @@ window firemode_right {
 			tooltip *cvar:mn_r_fm_name6 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -739,10 +739,10 @@ window firemode_right {
 		string shot	{ string *cvar:mn_r_fm_shot6	pos "99 32"	size "111 28"	textalign ALIGN_CC	ghost true font		"f_verysmall" }
 	}
 
-	pic bt_right_fm7
+	image bt_right_fm7
 	{
 		{
-			image	"hud/firemode"
+			src	"hud/firemode"
 			pos		"0 128"
 			texl	"0 0"
 			texh	"214  63"
@@ -754,9 +754,9 @@ window firemode_right {
 			tooltip *cvar:mn_r_fm_name7 // @todo create a better tooltip with name, tu, shots...
 		}
 
-		pic cb
+		image cb
 		{
-			image	"hud/checkbox"
+			src	"hud/checkbox"
 			tooltip	"_Check to use this firemode for reaction fire"
 			pos		"0 32"
 			texl	"0 0"
@@ -780,7 +780,7 @@ window firemode_right {
 	*/
 
 	confunc set_right_inv {
-		*(pic)bt_right_fm<1>@invis = true
+		*(image)bt_right_fm<1>@invis = true
 	}
 
 	/**
@@ -789,14 +789,14 @@ window firemode_right {
 	 */
 	confunc set_right_vis {
 		*cvar:tmp = "<2>"
-		*(pic)bt_right_fm<1>@invis = false
+		*(image)bt_right_fm<1>@invis = false
 
 		if ( *cvar:tmp eq "1" ) {
-			*(pic)bt_right_fm<1>@texl = "0 0"
-			*(pic)bt_right_fm<1>@texh = "214 63"
+			*(image)bt_right_fm<1>@texl = "0 0"
+			*(image)bt_right_fm<1>@texh = "214 63"
 		} else {
-			*(pic)bt_right_fm<1>@texl = "0 64"
-			*(pic)bt_right_fm<1>@texh = "214 128"
+			*(image)bt_right_fm<1>@texl = "0 64"
+			*(image)bt_right_fm<1>@texh = "214 128"
 		}
 		delete *cvar:tmp
 	}
@@ -804,19 +804,19 @@ window firemode_right {
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
 
 	confunc set_right_cb_ina {
-		*(pic)bt_right_fm<1>.cb@texl = "0 0"
-		*(pic)bt_right_fm<1>.cb@texh = "31 31"
-		*(pic)bt_right_fm<1>.cb@invis = false
+		*(image)bt_right_fm<1>.cb@texl = "0 0"
+		*(image)bt_right_fm<1>.cb@texh = "31 31"
+		*(image)bt_right_fm<1>.cb@invis = false
 	}
 
 	confunc set_right_cb_a {
-		*(pic)bt_right_fm<1>.cb@texl = "0 32"
-		*(pic)bt_right_fm<1>.cb@texh = "31 63"
-		*(pic)bt_right_fm<1>.cb@invis = false
+		*(image)bt_right_fm<1>.cb@texl = "0 32"
+		*(image)bt_right_fm<1>.cb@texh = "31 63"
+		*(image)bt_right_fm<1>.cb@invis = false
 	}
 
 	confunc set_right_cb_invis {
-		*(pic)bt_right_fm<1>.cb@invis = true
+		*(image)bt_right_fm<1>.cb@invis = true
 	}
 
 	/**

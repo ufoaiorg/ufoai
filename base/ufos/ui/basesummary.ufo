@@ -16,13 +16,16 @@ component baselayout cmpBase
 
 window basesummary
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	"ui/base_bg"
+		src	"ui/base_bg"
 	}
 
 	func reset_color {

@@ -60,9 +60,9 @@ window aircraft_pilots extends iaircraft
 		autoscale	true
 	}
 
-	pic aircraft_slot
+	image aircraft_slot
 	{
-		image	"ui/button_square"
+		src	"ui/button_square"
 		pos		"494 120"
 		size	"64 64"
 		texh	"64 64"
@@ -101,10 +101,10 @@ window aircraft_pilots extends iaircraft
 	// pilot selected
 	// ==================
 
-	pic	rank_img {
+	image	rank_img {
 		pos "378 465"
 		size "50 50"
-		image *cvar:mn_chrrank_img
+		src *cvar:mn_chrrank_img
 	}
 
 	model body

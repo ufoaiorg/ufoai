@@ -121,7 +121,7 @@ void MN_RegisterEKGNode (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "ekg";
 	behaviour->loading = MN_EKGNodeLoading;
-	behaviour->extends = "pic";
+	behaviour->extends = "image";
 	behaviour->draw = MN_EKGNodeDraw;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);

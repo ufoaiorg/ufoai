@@ -3,7 +3,10 @@
 // ==================
 
 component cmpDefNamedTbar cmpHospitalNamedTbar {
-	pic			bdr {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
+	image	bdr {
 		pos "17 18"
 	}
 	tbar		bar {
@@ -18,12 +21,12 @@ component panel cmpHospitalPanel {
 	{
 	size "300 85"
 	}
-	pic button {
-		image "ui/hosp_button_green"
+	image button {
+		src "ui/hosp_button_green"
 		pos "0 0"
 	}
 
-	pic icon	{ visiblewhen "exists *cvar:mn_hos_item<node:parent@num>"		image "icons/health_unused" 	pos "248  11" }
+	image icon	{ visiblewhen "exists *cvar:mn_hos_item<node:parent@num>"		src "icons/health_unused" 	pos "248  11" }
 
 	string item	{ pos "15 10"	color "1 1 1 1"	size "220 16" }
 
@@ -41,13 +44,16 @@ component panel cmpHospitalPanel {
 
 window hospital
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	"ui/base_bg"
+		src	"ui/base_bg"
 	}
 
 	// ==================
@@ -102,7 +108,7 @@ window hospital
 	{
 		*cvar:i = 0
 		while ( *cvar:i < 20 ) {
-			*hos<cvar:i>.button@image = "ui/hosp_button_green"
+			*(image)hos<cvar:i>.button@src = "ui/hosp_button_green"
 			*hos<cvar:i>.click_button@tooltip = "_Unused"
 			*cvar:i = ( *cvar:i + 1 )
 		}
@@ -110,23 +116,23 @@ window hospital
 	}
 
 	confunc hospitalserious	{
-		*hos<1>.icon@image				= "icons/health_critical"
-		*hos<1>.button@image			= "ui/hosp_button_light"
+		*(image)hos<1>.icon@src				= "icons/health_critical"
+		*(image)hos<1>.button@src			= "ui/hosp_button_light"
 		*hos<1>.click_button@tooltip	= "_Heavily wounded"
 	}
 	confunc hospitalmedium	{
-		*hos<1>.icon@image				= "icons/health_medium"
-		*hos<1>.button@image			= "ui/hosp_button_light"
+		*(image)hos<1>.icon@src				= "icons/health_medium"
+		*(image)hos<1>.button@src			= "ui/hosp_button_light"
 		*hos<1>.click_button@tooltip	= "_Medium wounds"
 	}
 	confunc hospitallight	{
-		*hos<1>.icon@image				= "icons/health_normal"
-		*hos<1>.button@image			= "ui/hosp_button_light"
+		*(image)hos<1>.icon@src				= "icons/health_normal"
+		*(image)hos<1>.button@src			= "ui/hosp_button_light"
 		*hos<1>.click_button@tooltip	= "_Slightly wounded"
 	}
 	confunc hospitalunused	{
-		*hos<1>.icon@image				= "icons/health_unused"
-		*hos<1>.button@image			= "ui/hosp_button_green"
+		*(image)hos<1>.icon@src				= "icons/health_unused"
+		*(image)hos<1>.button@src			= "ui/hosp_button_green"
 		*hos<1>.click_button@tooltip	= "_Unused"
 	}
 
@@ -394,13 +400,16 @@ window hospital
 // ======================
 window hospital_employee
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	"ui/base_bg"
+		src	"ui/base_bg"
 	}
 
 	// ==================
@@ -449,7 +458,7 @@ window hospital_employee
 		}
 	}
 
-	pic	rank_img { pos "475 470" image *cvar:mn_chrrank_img }
+	image	rank_img { pos "475 470" src *cvar:mn_chrrank_img }
 	string	rank_lbl { pos "475 175" size "200 20" string *cvar:mn_chrrank longlines LONGLINES_PRETTYCHOP }
 
 	cmpHospitalNamedTbar pwr {

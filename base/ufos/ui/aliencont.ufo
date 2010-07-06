@@ -2,9 +2,9 @@
 // ALIEN CONTAINMENU MENU
 // ======================
 
-component pic cmpAlienContainment {
+component image cmpAlienContainment {
 	{
-		image		"ui/hosp_button_green"
+		src				"ui/hosp_button_green"
 		onClick			{ cmd "aliencont_click <num>;" }
 		onRClick		{ cmd "aliencont_pedia <num>;" }
 	}
@@ -49,13 +49,16 @@ component pic cmpAlienContainment {
 
 window aliencont
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		"ui/base_bg"
+		src		"ui/base_bg"
 	}
 
 	// ==================
@@ -270,9 +273,9 @@ window aliencont
 			textalign	ALIGN_CC
 		}
 
-		pic image
+		image image
 		{
-			image			*cvar:mn_al_alienimage
+			src			*cvar:mn_al_alienimage
 			pos				"21 23"
 			size			"239 397"
 			preventratio	true

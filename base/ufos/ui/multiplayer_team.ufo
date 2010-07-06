@@ -11,13 +11,16 @@ component checkbox mpTeamCheckbox
 
 window mp_team_edit extends objectinfo
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	"ui/mp_team_edit_bg"
+		src	"ui/mp_team_edit_bg"
 	}
 
 	string s_backpack

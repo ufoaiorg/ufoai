@@ -162,7 +162,7 @@ static const value_t properties[] = {
 void MN_RegisterImageNode (nodeBehaviour_t* behaviour)
 {
 	/** @todo rename it according to the function name when its possible */
-	behaviour->name = "pic";
+	behaviour->name = "image";
 	behaviour->draw = MN_ImageNodeDraw;
 	behaviour->loaded = MN_ImageNodeLoaded;
 	behaviour->properties = properties;

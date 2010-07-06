@@ -313,7 +313,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 
 	/* if the menu should have a close button, add it here */
 	if (EXTRADATA(node).closeButton) {
-		menuNode_t *button = MN_AllocNode("close_window_button", "pic", node->dynamic);
+		menuNode_t *button = MN_AllocNode("close_window_button", "image", node->dynamic);
 		const int positionFromRight = CONTROLS_PADDING;
 		button->root = node;
 		button->image = "icons/system_close";
