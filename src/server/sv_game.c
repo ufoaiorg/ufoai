@@ -349,6 +349,7 @@ static void SV_EndEvents (void)
  */
 static void SV_AddEvent (unsigned int mask, int eType)
 {
+	Com_DPrintf(DEBUG_EVENTSYS, "Event type: %i (mask %i)\n", eType, mask);
 	/* finish the last event */
 	if (pfe_pending)
 		SV_EndEvents();
