@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "inv_shared.h"
-#include "chr_shared.h"
 #include "../shared/shared.h"
 
 static csi_t *CSI;
