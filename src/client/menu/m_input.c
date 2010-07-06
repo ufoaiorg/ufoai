@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../input/cl_keys.h"
 #include "../input/cl_input.h"
+#include "../sound/s_main.h"
 
 /**
  * @brief save the node with the focus
@@ -684,6 +685,7 @@ void MN_MouseDown (int x, int y, int button)
 		MN_MiddleClick(x, y);
 		break;
 	}
+	S_StartLocalSample("gui/click1", SND_VOLUME_DEFAULT);
 }
 
 /**

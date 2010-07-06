@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_container.h"
 
 #include "../input/cl_input.h"
+#include "../sound/s_main.h"
 
 static int oldMousePosX = -1;				/**< Save position X of the mouse to know when it move */
 static int oldMousePosY = -1;				/**< Save position Y of the mouse to know when it move */
@@ -107,6 +108,8 @@ static void MN_DNDDrag (menuNode_t *node)
 	assert(!MN_DNDIsDragging());
 	objectType = DND_SOMETHING;
 	sourceNode = node;
+
+	S_StartLocalSample("gui/item-drag", SND_VOLUME_DEFAULT);
 }
 
 /**
@@ -174,6 +177,8 @@ void MN_DNDDrop (void)
 		result = targetNode->behaviour->dndDrop(targetNode, mousePosX, mousePosY);
 	}
 	sourceNode->behaviour->dndFinished(sourceNode, result);
+
+	S_StartLocalSample("gui/item-drop", SND_VOLUME_DEFAULT);
 
 	MN_DNDCleanup();
 	MN_InvalidateMouse();
