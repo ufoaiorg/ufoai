@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/defines.h"
 #include "../shared/typedefs.h"
 #include "../common/tracing.h"
+#include "chr_shared.h"
 
 #define	GAME_API_VERSION	7
 

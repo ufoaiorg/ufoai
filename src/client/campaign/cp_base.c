@@ -2134,7 +2134,7 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 		character_t *chr = &employee->chr;
 		/* pack equipment */
 		Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
-		cls.i.EquipActor(&cls.i, &chr->i, ed, chr);
+		cls.i.EquipActor(&cls.i, &chr->i, ed, chr->teamDef);
 		chrListTemp.chr[chrListTemp.num] = chr;
 		chrListTemp.num++;
 	}

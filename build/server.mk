@@ -41,7 +41,8 @@ SERVER_SRCS += \
 	shared/utf8.c \
 	\
 	game/q_shared.c \
-	game/inv_shared.c
+	game/inv_shared.c \
+	game/chr_shared.c
 
 ifeq ($(HARD_LINKED_GAME),1)
 	SERVER_SRCS+=$(GAME_SRCS) \

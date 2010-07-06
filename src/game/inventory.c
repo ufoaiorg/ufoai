@@ -607,15 +607,15 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
  * @param[in] chr Pointer to character data.
  * @note Weapons assigned here cannot be collected in any case. These are dummy "actor weapons".
  */
-static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const inv, character_t* chr)
+static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const inv, const teamDef_t* td)
 {
 	objDef_t *obj;
 	item_t item;
 
-	assert(chr->teamDef->onlyWeapon);
+	assert(td->onlyWeapon);
 
 	/* Get weapon */
-	obj = chr->teamDef->onlyWeapon;
+	obj = td->onlyWeapon;
 
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
 	item.t = obj;
@@ -623,7 +623,7 @@ static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const in
 	item.a = NONE_AMMO;
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)
-		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded!\n", obj->id, chr->teamDef->id);
+		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded!\n", obj->id, td->id);
 	self->TryAddToInventory(self, inv, item, &self->csi->ids[self->csi->idRight]);
 }
 
@@ -633,13 +633,12 @@ static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const in
  * @param[in] chr Pointer to character data.
  * @param[in] weapon Pointer to the item which being added to robot's inventory.
  */
-static void I_EquipActorRobot (inventoryInterface_t *self, inventory_t* const inv, character_t* chr, objDef_t* weapon)
+static void I_EquipActorRobot (inventoryInterface_t *self, inventory_t* const inv, const teamDef_t* td, objDef_t* weapon)
 {
 	item_t item;
 
-	assert(chr);
 	assert(weapon);
-	assert(chr->teamDef->race == RACE_ROBOT);
+	assert(td->race == RACE_ROBOT);
 
 	/* Prepare weapon in item. */
 	item.t = weapon;
@@ -667,13 +666,13 @@ typedef enum {
  * is taken from the equipment script definition.
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] ed The equipment that is added from to the actors inventory
- * @param[in] chr Pointer to character data - to get the weapon and armour bools.
+ * @param[in] td Pointer to teamdef data - to get the weapon and armour bools.
  * @note The code below is a complete implementation
  * of the scheme sketched at the beginning of equipment_missions.ufo.
  * Beware: If two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, const equipDef_t *ed, const character_t* chr)
+static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, const equipDef_t *ed, const teamDef_t* td)
 {
 	int i, sum;
 	const int numEquip = lengthof(ed->numItems);
@@ -684,7 +683,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 	const float AKIMBO_CHANCE = 0.3; 	/**< if you got a one-handed secondary weapon (and no primary weapon),
 											 this is the chance to get another one (between 0 and 1) */
 
-	if (chr->teamDef->weapons) {
+	if (td->weapons) {
 		objDef_t *primaryWeapon = NULL;
 		/* Primary weapons */
 		const int maxWeaponIdx = min(self->csi->numODs - 1, numEquip - 1);
@@ -819,7 +818,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		return;
 	}
 
-	if (chr->teamDef->armour) {
+	if (td->armour) {
 		do {
 			int randNumber = rand() % 100;
 			for (i = 0; i < self->csi->numODs; i++) {
@@ -837,7 +836,7 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 			}
 		} while (repeat-- > 0);
 	} else {
-		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry armour\n", chr->name);
+		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: teamdef '%s' may not carry armour\n", td->name);
 	}
 
 	{

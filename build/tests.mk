@@ -51,6 +51,7 @@ TESTS_SRCS = \
 	\
 	game/q_shared.c \
 	game/inv_shared.c \
+	game/chr_shared.c \
 	game/inventory.c \
 	\
 	client/menu/m_timer.c

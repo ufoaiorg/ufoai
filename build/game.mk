@@ -71,6 +71,7 @@ ifneq ($(HARD_LINKED_GAME),1)
 		shared/infostring.c \
 		\
 		game/q_shared.c \
+		game/chr_shared.c \
 		game/inv_shared.c \
 		game/inventory.c
 endif

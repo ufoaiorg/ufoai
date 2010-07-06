@@ -97,7 +97,7 @@ void GAME_AppendTeamMember (int memberIndex, const char *teamDefID, const equipD
 
 	CL_GenerateCharacter(chr, teamDefID);
 	/* pack equipment */
-	cls.i.EquipActor(&cls.i, &chr->i, ed, chr);
+	cls.i.EquipActor(&cls.i, &chr->i, ed, chr->teamDef);
 
 	chrDisplayList.chr[memberIndex] = chr;
 	chrDisplayList.num++;
@@ -436,6 +436,22 @@ static void GAME_SetMode_f (void)
 	Com_Printf("GAME_SetMode_f: Mode '%s' not found\n", modeName);
 }
 
+static qboolean GAME_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t *teamDef)
+{
+	if (teamDef != NULL && teamDef->armour && INV_IsArmour(od)) {
+		if (CHRSH_IsTeamDefAlien(teamDef))
+			return od->useable == TEAM_ALIEN;
+		else if (teamDef->race == RACE_PHALANX_HUMAN)
+			return od->useable == TEAM_PHALANX;
+		else if (teamDef->race == RACE_CIVILIAN)
+			return od->useable == TEAM_CIVILIAN;
+		else
+			return qfalse;
+	}
+
+	return qtrue;
+}
+
 qboolean GAME_ItemIsUseable (const objDef_t *od)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
@@ -443,7 +459,7 @@ qboolean GAME_ItemIsUseable (const objDef_t *od)
 	const teamDef_t *teamDef = Com_GetTeamDefinitionByID((teamDefID));
 
 	/* Don't allow armour for other teams */
-	if (!INVSH_IsArmourUseableForTeam(od, teamDef))
+	if (!GAME_IsArmourUseableForTeam(od, teamDef))
 		return qfalse;
 
 	if (list && list->IsItemUseable)

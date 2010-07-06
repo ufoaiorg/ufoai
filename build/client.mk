@@ -299,6 +299,7 @@ CLIENT_SRCS = \
 	shared/shared.c \
 	\
 	game/q_shared.c \
+	game/chr_shared.c \
 	game/inv_shared.c \
 	game/inventory.c
 

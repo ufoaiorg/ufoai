@@ -170,7 +170,7 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 		if (employee->ugv) {
 			/* Check if there is a weapon and add it if there isn't. */
 			if (!RIGHT(chr) || !RIGHT(chr)->item.t)
-				cls.i.EquipActorRobot(&cls.i, &chr->i, chr, INVSH_GetItemByID(employee->ugv->weapon));
+				cls.i.EquipActorRobot(&cls.i, &chr->i, chr->teamDef, INVSH_GetItemByID(employee->ugv->weapon));
 		}
 	}
 
