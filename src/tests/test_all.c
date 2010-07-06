@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "stdlib.h"
 #include "stdio.h"
 #include "CUnit/Basic.h"
+#include "CUnit/Automated.h"
 #include "CUnit/Console.h"
 
 typedef int (*testSuite_t) (void);
@@ -61,6 +62,7 @@ void Sys_Init (void)
 
 typedef struct config_s {
 	int console;
+	int automated;
 } config_t;
 
 static config_t config;
@@ -72,10 +74,13 @@ static void Test_Parameters (const int argc, const char **argv)
 	for (i = 1; i < argc; i++) {
 		if (!strcmp(argv[i], "-c") || !strcmp(argv[i], "--console")) {
 			config.console = 1;
+		} else if (!strcmp(argv[i], "-a") || !strcmp(argv[i], "--automated")) {
+			config.automated = 1;
 		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
 			printf("Usage:\n");
-			printf("-h  --help    | show this help screen\n");
-			printf("-c  --console | run tests in console mode\n");
+			printf("-h  --help      | show this help screen\n");
+			printf("-c  --console   | run tests in console mode\n");
+			printf("-a  --automated | run tests in automated mode (create xml file)\n");
 			exit(0);
 		}
 	}
@@ -107,7 +112,10 @@ int main (int argc, const char **argv)
 	if (config.console)
 		/* Run all tests using the console interface */
 		CU_console_run_tests();
-	else
+	else if (config.automated) {
+		CU_set_output_filename("ufoai");
+		CU_automated_run_tests();
+	} else
 		CU_basic_run_tests();
 
 	CU_cleanup_registry();
