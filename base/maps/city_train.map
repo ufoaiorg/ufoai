@@ -13237,7 +13237,7 @@
 {
 "classname" "misc_sound"
 "origin" "876 -116 98"
-"noise" "sound/ambience/tv_newswav.iletypes"
+"noise" "sound/ambience/earth-news"
 "spawnflags" "6"
 }
 // entity 196
