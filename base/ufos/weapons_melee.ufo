@@ -167,7 +167,7 @@ item stunrod
 			projtl				null
 			impact				null
 			hitbody				null
-			firesnd				weapons/electro-taser
+			firesnd				weapons/electro-taserdouble
 			speed				0
 			range				1.5
 			shots				2

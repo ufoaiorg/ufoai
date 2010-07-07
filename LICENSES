@@ -3242,9 +3242,9 @@ base/sound/weapons/bullet-smg.ogg | Creative Commons Attribution-Share Alike 3.0
 base/sound/weapons/bullet-sniper.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/bullet-sniperbig.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/casings3.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
-base/sound/weapons/chaingun.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/deepexplosion.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/electro-taser.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
+base/sound/weapons/electro-taserdouble.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/electrolaser.ogg | Public Domain | Vermind
 base/sound/weapons/expire.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
 base/sound/weapons/explode.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
@@ -3273,12 +3273,10 @@ base/sound/weapons/melee-swoosh.ogg | Creative Commons Attribution-Share Alike 3
 base/sound/weapons/melee-throw.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/pbeam_rocket.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/weapons/pbeamcannon_explosive.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/pbeamrifle.ogg |  | Mikolaj Konarski (bandobraz)
 base/sound/weapons/plasma-huge.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/plasma-large.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/plasma-medium.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/plasma-small.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
-base/sound/weapons/plasma_big.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/weapons/plasma_blade.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/weapons/plasmablade.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/psiattack.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
