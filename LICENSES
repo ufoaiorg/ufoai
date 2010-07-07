@@ -1844,12 +1844,15 @@ base/models/soldiers/malepower/head05c.md2 | Creative Commons Attribution-Share 
 base/models/soldiers/ugv_ares/ares.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_h.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_ares/ares_h.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/soldiers/ugv_ares/ares_h_gm.png | GNU General Public License 2.0 or later | MCR; Willem Sitters
 base/models/soldiers/ugv_ares/ares_t.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_ares/ares_t.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/soldiers/ugv_ares/ares_t_gm.png | GNU General Public License 2.0 or later | MCR; Willem Sitters
 base/models/soldiers/ugv_ares/ares_w.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/soldiers/ugv_ares/ares_w.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_ares/ares_w.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_ares/ares_w.tag | GNU General Public License 2.0 or later | Willem Sitters
+base/models/soldiers/ugv_ares/ares_w_gm.png | GNU General Public License 2.0 or later | MCR; Willem Sitters
 base/models/soldiers/ugv_ares/ares_w_turret.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_heli/ugv_heli.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_heli/ugv_heli.obj | GNU General Public License 2.0 or later | Willem Sitters
