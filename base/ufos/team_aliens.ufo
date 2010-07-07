@@ -94,16 +94,11 @@ team taman
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/echovoice1
-			hurtsound aliens/echovoice2
-			hurtsound aliens/echovoice3
-			hurtsound aliens/tamancall01
-			hurtsound aliens/tamancall02
-			hurtsound aliens/tamancall03
-			hurtsound aliens/tamancall04
-			hurtsound aliens/tamancall05
-			deathsound aliens/aliendeath01
-			deathsound aliens/aliendeath03
+			hurtsound aliens/taman/hurt1
+			hurtsound aliens/taman/hurt2
+			hurtsound aliens/taman/hurt3
+			deathsound aliens/taman/die1
+			deathsound aliens/taman/die2
 		}
 	}
 }
@@ -175,16 +170,11 @@ team ortnok
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/alienhurt01
-			hurtsound aliens/big_angry
-			hurtsound aliens/big_angry2
-			hurtsound aliens/big_angry3
-			hurtsound aliens/ortnokhurt01
-			hurtsound aliens/ortnokhurt02
-			hurtsound aliens/ortnokcall01
-			hurtsound aliens/ortnokcall02
-			hurtsound aliens/ortnokcall03
-			deathsound aliens/ortnok
+			hurtsound aliens/ortnok/hurt1
+			hurtsound aliens/ortnok/hurt2
+			hurtsound aliens/ortnok/hurt3
+			deathsound aliens/ortnok/die1
+			deathsound aliens/ortnok/die2
 		}
 	}
 }
@@ -245,16 +235,11 @@ team shevaar
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/shevaarhurt01
-			hurtsound aliens/shevaarhurt02
-			hurtsound aliens/shevaarhurt03
-			hurtsound aliens/shevaarhurt04
-			hurtsound aliens/gurgle
-			hurtsound aliens/shevaarcall01
-			deathsound aliens/slithering
-			deathsound aliens/shevaar
-			deathsound aliens/shevaardeath01
-			deathsound aliens/shevaardeath02
+			hurtsound aliens/shevaar/hurt1
+			hurtsound aliens/shevaar/hurt2
+			hurtsound aliens/shevaar/hurt3
+			deathsound aliens/shevaar/die1
+			deathsound aliens/shevaar/die2
 		}
 	}
 }
@@ -288,9 +273,11 @@ team bloodspider
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/hiss
-			deathsound aliens/hiss
-			deathsound aliens/spiderdeath01
+			hurtsound aliens/bloodspider/hurt1
+			hurtsound aliens/bloodspider/hurt2
+			hurtsound aliens/bloodspider/hurt3
+			deathsound aliens/bloodspider/die1
+			deathsound aliens/bloodspider/die2
 		}
 	}
 }
