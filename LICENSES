@@ -6133,6 +6133,7 @@ base/ufos/weapons_melee.ufo | GNU General Public License 2.0
 base/ufos/weapons_particle.ufo | GNU General Public License 2.0
 base/ufos/weapons_plasma.ufo | GNU General Public License 2.0
 base/ufos/weapons_ugv.ufo | GNU General Public License 2.0
+base/videos/intro.ogm | GNU General Public License 2.0 or later | David Reeves (Destructavator)
 contrib/7th.zip |  | 2002 Iconian Fonts - Daniel Zadorozny - http://www.iconian.com/
 contrib/scripts/compile_po.bat |  | Kostia "Kildor" Romanov
 contrib/scripts/update_potfiles_in.bat |  | Kostia "Kildor" Romanov
