@@ -1860,9 +1860,11 @@ base/models/soldiers/ugv_phoenix/phoenix.anm | GNU General Public License 2.0 or
 base/models/soldiers/ugv_phoenix/phoenix.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_phoenix/phoenix.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_phoenix/phoenix.tag | GNU General Public License 2.0 or later | Willem Sitters
+base/models/soldiers/ugv_phoenix/phoenix_gm.png | GNU General Public License 2.0 or later | MCR; Willem Sitters
 base/models/soldiers/ugv_phoenix/phoenix_turret.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_phoenix/rocket_pods.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_phoenix/rocket_pods.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/soldiers/ugv_phoenix/rocket_pods_gm.png | GNU General Public License 2.0 or later | MCR; Willem Sitters
 base/models/soldiers/ugv_robot/robot.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_robot/robot.obj | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/ugv_wheel/ugv_wheel.jpg | GNU General Public License 2.0 or later | Willem Sitters
