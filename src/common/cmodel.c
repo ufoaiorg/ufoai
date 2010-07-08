@@ -117,62 +117,13 @@ static void CM_SetInlineList (const char **list)
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[in] levelmask
- * @param[in] entlist of entities that might be on this line
- * @sa CM_EntTestLine
- * @return qtrue - hit something
- * @return qfalse - hit nothing
- */
-qboolean CM_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
-{
-	qboolean hit;
-
-	/* set the list of entities to check */
-	CM_SetInlineList(entlist);
-	/* do the line test */
-	hit = CM_EntTestLine(start, stop, levelmask);
-	/* zero the list */
-	CM_SetInlineList(NULL);
-
-	return hit;
-}
-
-/**
- * @brief Checks traces against the world and all inline models
- * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
- * @param[out] end The position where the trace hits something
- * @param[in] levelmask The bsp level that is used for tracing in (see @c TL_FLAG_*)
- * @param[in] entlist of entities that might be on this line
- * @sa CM_EntTestLineDM
- * @return qtrue - hit something
- * @return qfalse - hit nothing
- */
-qboolean CM_TestLineDMWithEnt (const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist)
-{
-	qboolean hit;
-
-	/* set the list of entities to check */
-	CM_SetInlineList(entlist);
-	/* do the line test */
-	hit = CM_EntTestLineDM(start, stop, end, levelmask);
-	/* zero the list */
-	CM_SetInlineList(NULL);
-
-	return hit;
-}
-
-/**
- * @brief Checks traces against the world and all inline models
- * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
- * @param[in] levelmask
  * @sa TR_TestLine
  * @sa CM_InlineModel
  * @sa TR_TransformedBoxTrace
  * @return qtrue - hit something
  * @return qfalse - hit nothing
  */
-qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelmask)
+static qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
 {
 	trace_t trace;
 	cBspModel_t *model;
@@ -184,10 +135,10 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 		return qtrue;
 
 	/* no local models, so we made it. */
-	if (!inlineList)
+	if (!entlist)
 		return qfalse;
 
-	for (name = inlineList; *name; name++) {
+	for (name = entlist; *name; name++) {
 		/* check whether this is really an inline model */
 		if (*name[0] != '*')
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s'", *name);
@@ -200,7 +151,8 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 		if (CM_LineMissesModel(start, stop, model))
 			continue;
 
-		trace = CM_HintedTransformedBoxTrace(model->tile, start, stop, vec3_origin, vec3_origin, model->headnode, MASK_VISIBILILITY, 0, model->origin, model->angles, model->shift, 1.0);
+		trace = CM_HintedTransformedBoxTrace(model->tile, start, stop, vec3_origin, vec3_origin,
+				model->headnode, MASK_VISIBILILITY, 0, model->origin, model->angles, model->shift, 1.0);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
 		if (trace.startsolid || trace.fraction < 1.0)
@@ -220,7 +172,7 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
  * @sa TR_TestLineDM
  * @sa TR_TransformedBoxTrace
  */
-qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask)
+static qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist)
 {
 	trace_t trace;
 	cBspModel_t *model;
@@ -230,15 +182,15 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 
 	/* trace against world first */
 	blocked = TR_TestLineDM(start, stop, end, levelmask);
-	if (!inlineList)
+	if (!entlist)
 		return blocked;
 
-	for (name = inlineList; *name; name++) {
+	for (name = entlist; *name; name++) {
 		/* check whether this is really an inline model */
 		if (*name[0] != '*') {
 			/* Let's see what the data looks like... */
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s' (inlines: %p, name: %p)",
-					*name, inlineList, name);
+					*name, entlist, name);
 		}
 		model = CM_InlineModel(*name);
 		assert(model);
@@ -249,7 +201,8 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 		if (CM_LineMissesModel(start, stop, model))
 			continue;
 
-		trace = CM_HintedTransformedBoxTrace(model->tile, start, end, vec3_origin, vec3_origin, model->headnode, MASK_ALL, 0, model->origin, model->angles, vec3_origin, fraction);
+		trace = CM_HintedTransformedBoxTrace(model->tile, start, end, vec3_origin, vec3_origin,
+				model->headnode, MASK_ALL, 0, model->origin, model->angles, vec3_origin, fraction);
 		/* if we started the trace in a wall */
 		if (trace.startsolid) {
 			VectorCopy(start, end);
@@ -349,4 +302,40 @@ void CM_RecalcRouting (routing_t *map, const char *name, const char **list)
 	CM_SetInlineList(list);
 	Grid_RecalcRouting(map, name);
 	CM_SetInlineList(NULL);
+}
+
+
+/**
+ * @brief Checks traces against the world and all inline models
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
+ * @param[in] levelmask
+ * @param[in] entlist of entities that might be on this line
+ * @sa CM_EntTestLine
+ * @return qtrue - hit something
+ * @return qfalse - hit nothing
+ */
+qboolean CM_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
+{
+	/* do the line test */
+	const qboolean hit = CM_EntTestLine(start, stop, levelmask, entlist);
+	return hit;
+}
+
+/**
+ * @brief Checks traces against the world and all inline models
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
+ * @param[out] end The position where the trace hits something
+ * @param[in] levelmask The bsp level that is used for tracing in (see @c TL_FLAG_*)
+ * @param[in] entlist of entities that might be on this line
+ * @sa CM_EntTestLineDM
+ * @return qtrue - hit something
+ * @return qfalse - hit nothing
+ */
+qboolean CM_TestLineDMWithEnt (const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist)
+{
+	/* do the line test */
+	const qboolean hit = CM_EntTestLineDM(start, stop, end, levelmask, entlist);
+	return hit;
 }
