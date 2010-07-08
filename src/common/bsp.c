@@ -855,14 +855,14 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 
 	/* Now find the map bounds with the updated numTiles. */
 	/* calculate new border after merge */
-	RT_GetMapSize(mapMin, mapMax);
+	RT_GetMapSize(mapMin, mapMax, NULL);
 
 	FS_FreeFile(buf);
 
 	return checksum;
 }
 
-static void CMod_RerouteMap (void)
+static void CMod_RerouteMap (const char **list)
 {
 	actorSizeEnum_t size;
 	int x, y, z, dir;
@@ -893,7 +893,7 @@ static void CMod_RerouteMap (void)
 				if (reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
 					/* Com_Printf("Tracing floor (%i %i s:%i)\n", x, y, size); */
 					for (z = maxs[2]; z >= mins[2]; z--) {
-						const int newZ = RT_CheckCell(clMap, size + 1, x, y, z);
+						const int newZ = RT_CheckCell(clMap, size + 1, x, y, z, NULL);
 						assert(newZ <= z);
 						z = newZ;
 					}
@@ -928,7 +928,7 @@ static void CMod_RerouteMap (void)
 							/** @note This update MUST go from the bottom (0) to the top (7) of the model.
 							 * RT_UpdateConnection expects it and breaks otherwise. */
 							/* Com_Printf("Tracing passage (%i %i s:%i d:%i)\n", x, y, size, dir); */
-							RT_UpdateConnectionColumn(clMap, size + 1, x, y, dir);
+							RT_UpdateConnectionColumn(clMap, size + 1, x, y, dir, list);
 						}
 					}
 				}
@@ -982,7 +982,7 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *map
 		/* get tile name */
 		token = Com_Parse(&tiles);
 		if (!tiles) {
-			CMod_RerouteMap();
+			CMod_RerouteMap(NULL);
 			/* Copy the server map from the client */
 			memcpy(&svMap, &clMap, sizeof(svMap));
 			return;

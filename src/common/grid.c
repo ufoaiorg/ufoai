@@ -885,7 +885,7 @@ void Grid_PosToVec (const routing_t *map, const actorSizeEnum_t actorSize, const
  * @param[in] min The lower extents of the box to recalc routing for
  * @param[in] max The upper extents of the box to recalc routing for
  */
-void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max)
+void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max, const char **list)
 {
 	int x, y, z, actorSize, dir;
 
@@ -905,7 +905,7 @@ void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max)
 			for (x = max(min[0] - actorSize + 1, 0); x < maxX; x++) {
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
 				for (z = max[2]; z >= 0; z--) {
-					const int newZ = RT_CheckCell(map, actorSize, x, y, z);
+					const int newZ = RT_CheckCell(map, actorSize, x, y, z, list);
 					assert(newZ <= z);
 					z = newZ;
 				}
@@ -933,7 +933,7 @@ void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max)
 					if ((dir & 1) && x != minX && x != maxX && y != minY && y != maxY)
 						continue;
 #endif
-					RT_UpdateConnectionColumn(map, actorSize, x, y, dir);
+					RT_UpdateConnectionColumn(map, actorSize, x, y, dir, list);
 				}
 			}
 		}
@@ -951,7 +951,7 @@ void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max)
  * @param[in] map The routing map (either server or client map)
  * @param[in] name Name of the inline model to compute the mins/maxs for
  */
-void Grid_RecalcRouting (routing_t *map, const char *name)
+void Grid_RecalcRouting (routing_t *map, const char *name, const char **list)
 {
 	cBspModel_t *model;
 	pos3_t min, max;
@@ -1019,7 +1019,7 @@ void Grid_RecalcRouting (routing_t *map, const char *name)
 		min[i] = max(min[i] - 1, 0);
 
 	/* We now have the dimensions, call the generic rerouting function. */
-	Grid_RecalcBoxRouting(map, min, max);
+	Grid_RecalcBoxRouting(map, min, max, list);
 
 	end = time(NULL);
 	Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s between (%i, %i, %i) and (%i, %i %i) in %5.1fs\n",

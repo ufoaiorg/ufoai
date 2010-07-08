@@ -50,7 +50,7 @@ trace_t CM_CompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_t m
 trace_t CM_HintedTransformedBoxTrace(const int tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction);
 qboolean CM_TestLineWithEnt(const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
 qboolean CM_TestLineDMWithEnt(const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist);
-trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const box_t* traceBox, int levelmask, int brushmask, int brushreject);
+trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const box_t* traceBox, int levelmask, int brushmask, int brushreject, const char **list);
 void CM_RecalcRouting(routing_t *map, const char *name, const char **list);
 
 /*==========================================================
@@ -64,8 +64,8 @@ void Grid_DumpWholeServerMap_f(void);
 void Grid_DumpWholeClientMap_f(void);
 void Grid_DumpClientRoutes_f(void);
 void Grid_DumpServerRoutes_f(void);
-void Grid_RecalcBoxRouting(routing_t *map, const pos3_t min, const pos3_t max);
-void Grid_RecalcRouting(routing_t *map, const char *name);
+void Grid_RecalcBoxRouting(routing_t *map, const pos3_t min, const pos3_t max, const char **list);
+void Grid_RecalcRouting(routing_t *map, const char *name, const char **list);
 void Grid_DumpDVTable(const pathing_t *path);
 void Grid_MoveCalc(const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingSstate, int distance, byte ** fb_list, int fb_length);
 void Grid_MoveStore(pathing_t *path);

@@ -100,18 +100,6 @@ int CM_HeadnodeForBox (int tile, const vec3_t mins, const vec3_t maxs)
 
 /* TRACING FUNCTIONS */
 
-/** @note a list with all inline models (like func_breakable)
- * @todo not threadsafe */
-static const char **inlineList;
-
-
-static void CM_SetInlineList (const char **list)
-{
-	inlineList = list;
-	if (inlineList != NULL && *inlineList == NULL)
-		inlineList = NULL;
-}
-
 /**
  * @brief Checks traces against the world and all inline models
  * @param[in] start The position to start the trace.
@@ -228,11 +216,12 @@ static qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t 
  * @param[in] levelmask A mask of the game levels to trace against. Mask 0x100 filters clips.
  * @param[in] brushmask Any brush detected must at least have one of these contents.
  * @param[in] brushreject Any brush detected with any of these contents will be ignored.
+ * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  * @return a trace_t with the information of the closest brush intersected.
  * @sa TR_CompleteBoxTrace
  * @sa CM_HintedTransformedBoxTrace
  */
-trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_t* traceBox, int levelmask, int brushmask, int brushreject)
+trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_t* traceBox, int levelmask, int brushmask, int brushreject, const char **list)
 {
 	trace_t trace, newtr;
 	cBspModel_t *model;
@@ -241,7 +230,7 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_
 
 	/* trace against world first */
 	trace = TR_CompleteBoxTrace(start, end, traceBox->mins, traceBox->maxs, levelmask, brushmask, brushreject);
-	if (!inlineList || trace.fraction == 0.0)
+	if (!list || trace.fraction == 0.0)
 		return trace;
 
 	/* Find the original bounding box for the tracing line. */
@@ -252,7 +241,7 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_
 	VectorAdd(bmaxs, traceBox->maxs, bmaxs);
 	/* Now bmins and bmaxs specify the whole volume to be traced through. */
 
-	for (name = inlineList; *name; name++) {
+	for (name = list; *name; name++) {
 		vec3_t amins, amaxs;
 
 		/* check whether this is really an inline model */
@@ -275,7 +264,8 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_
 		 || bmaxs[2] < amins[2])
 			continue;
 
-		newtr = CM_HintedTransformedBoxTrace(model->tile, start, end, traceBox->mins, traceBox->maxs, model->headnode, brushmask, brushreject, model->origin, model->angles, model->shift, trace.fraction);
+		newtr = CM_HintedTransformedBoxTrace(model->tile, start, end, traceBox->mins, traceBox->maxs,
+				model->headnode, brushmask, brushreject, model->origin, model->angles, model->shift, trace.fraction);
 
 		/* memorize the trace with the minimal fraction */
 		if (newtr.fraction == 0.0)
@@ -299,9 +289,7 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_
  */
 void CM_RecalcRouting (routing_t *map, const char *name, const char **list)
 {
-	CM_SetInlineList(list);
-	Grid_RecalcRouting(map, name);
-	CM_SetInlineList(NULL);
+	Grid_RecalcRouting(map, name, list);
 }
 
 

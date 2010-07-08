@@ -29,12 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 GLOBAL TYPES
 ==============================================================*/
 #if defined(COMPILE_MAP)
-  #define RT_COMPLETEBOXTRACE_SIZE(s,e,b)		TR_SingleTileBoxTrace(s,e,b,TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0)
-  #define RT_COMPLETEBOXTRACE_PASSAGE(s,e,b)	TR_SingleTileBoxTrace(s,e,b,TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE)
+  #define RT_COMPLETEBOXTRACE_SIZE(s,e,b,list)		TR_SingleTileBoxTrace((s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0)
+  #define RT_COMPLETEBOXTRACE_PASSAGE(s,e,b,list)	TR_SingleTileBoxTrace((s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE)
 
 #elif defined(COMPILE_UFO)
-  #define RT_COMPLETEBOXTRACE_SIZE(s,e,b)		CM_EntCompleteBoxTrace(s,e,b,TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0)
-  #define RT_COMPLETEBOXTRACE_PASSAGE(s,e,b)	CM_EntCompleteBoxTrace(s,e,b,TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE)
+  #define RT_COMPLETEBOXTRACE_SIZE(s,e,b,list)		CM_EntCompleteBoxTrace((s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0, (list))
+  #define RT_COMPLETEBOXTRACE_PASSAGE(s,e,b,list)	CM_EntCompleteBoxTrace((s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE, (list))
 
 #else
   #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.
@@ -132,10 +132,10 @@ GAME RELATED TRACING
 */
 
 
-int RT_CheckCell(routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int z);
-void RT_UpdateConnectionColumn(routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int dir);
+int RT_CheckCell(routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int z, const char **list);
+void RT_UpdateConnectionColumn(routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int dir, const char **list);
 qboolean RT_AllCellsBelowAreFilled(const routing_t * map, const actorSizeEnum_t actorSize, const pos3_t pos);
-void RT_GetMapSize(vec3_t map_min, vec3_t map_max);
+void RT_GetMapSize(vec3_t map_min, vec3_t map_max, const char **list);
 
 
 /*
