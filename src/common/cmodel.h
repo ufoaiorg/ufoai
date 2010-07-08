@@ -82,9 +82,3 @@ int Grid_Filled(const routing_t *map, const actorSizeEnum_t actorSize, const pos
 pos_t Grid_Fall(const routing_t *map, const actorSizeEnum_t actorSize, const pos3_t pos);
 void Grid_PosToVec(const routing_t *map, const actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
 
-
-/*==========================================================
-MISC WORLD RELATED
-==========================================================*/
-
-float Com_GrenadeTarget(const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);

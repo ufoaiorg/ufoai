@@ -264,6 +264,8 @@ void Qcommon_Frame(void);
 void Qcommon_Shutdown(void);
 void Com_SetGameType(void);
 
+float Com_GrenadeTarget(const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
+
 #define NUMVERTEXNORMALS	162
 extern const vec3_t bytedirs[NUMVERTEXNORMALS];
 

@@ -44,6 +44,16 @@ static cBspSurface_t nullSurface;
  * @todo not threadsafe */
 static byte reroute[ACTOR_MAX_SIZE][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 
+/**
+ * @note The vectors are from 0 up to 2*MAX_WORLD_WIDTH - but not negative
+ * @note holds the smallest bounding box that will contain the map
+ * @sa CL_ClampCamToMap
+ * @sa CL_OutsideMap
+ * @sa CMod_GetMapSize
+ * @sa SV_ClearWorld
+ */
+vec3_t mapMin, mapMax;
+
 /*
 ===============================================================================
 MAP LOADING
