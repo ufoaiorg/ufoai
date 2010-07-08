@@ -1516,7 +1516,6 @@ void RT_UpdateConnectionColumn (routing_t * map, const actorSizeEnum_t actorSize
 	}
 }
 
-#ifdef DEBUG
 void RT_WriteCSVFiles (const routing_t *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
 {
 	char filename[MAX_OSPATH], ext[MAX_OSPATH];
@@ -1608,4 +1607,3 @@ void RT_WriteCSVFiles (const routing_t *map, const char* baseFilename, const ipo
 		FS_CloseFile(&f);
 	}
 }
-#endif
