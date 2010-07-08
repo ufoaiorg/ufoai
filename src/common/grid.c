@@ -28,9 +28,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "routing.h"
 #include "../shared/parse.h"
 
-/** @brief server and client routing table */
-routing_t svMap[ACTOR_MAX_SIZE], clMap[ACTOR_MAX_SIZE]; /**< A routing_t per size */
-pathing_t svPathMap; /**< This is where the data for TUS used to move and actor locations go */
+/**
+ * @brief server routing table
+ * @todo put this into server only code and given it via parameter to the functions that are using it
+ */
+routing_t svMap[ACTOR_MAX_SIZE];
+/**
+ * @brief client routing table
+ * @todo put this into client only code and given it via parameter to the functions that are using it
+ */
+routing_t clMap[ACTOR_MAX_SIZE];
+/**
+ * @brief This is where the data for TUS used to move and actor locations go
+ * @todo This is not used in the server - only in the game.
+ */
+pathing_t svPathMap;
 
 /** @note these are the TUs used to intentionally move in a given direction.  Falling not included. */
 static const int TUsUsed[] = {
