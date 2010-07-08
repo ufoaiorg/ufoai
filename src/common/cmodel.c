@@ -56,9 +56,6 @@ static const char **inlineList;
 /** @note a pointer to the bsp file model data */
 static byte *cModelBase;
 
-/** @note this is the position of the current actor- so the actor can stand in the cell it is in when pathfinding */
-static pos3_t excludeFromForbiddenList;
-
 /** @note this is a zeroed surface structure */
 static cBspSurface_t nullSurface;
 
@@ -1537,13 +1534,14 @@ void Grid_DumpServerRoutes_f (void)
  * @param[in] x Field in x direction
  * @param[in] y Field in y direction
  * @param[in] z Field in z direction
+ * @param[in] exclude Exclude this position from the forbidden list check
  * @sa Grid_MoveMark
  * @sa G_BuildForbiddenList
  * @sa CL_BuildForbiddenList
  * @return qtrue if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in
  * the forbidden list) otherwise false.
  */
-static qboolean Grid_CheckForbidden (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, int x, int y, int z)
+static qboolean Grid_CheckForbidden (const routing_t *map, const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t *path, int x, int y, int z)
 {
 	pos_t **p;
 	int i;
@@ -1553,7 +1551,7 @@ static qboolean Grid_CheckForbidden (const routing_t *map, const actorSizeEnum_t
 
 	for (i = 0, p = path->fblist; i < path->fblength / 2; i++, p += 2) {
 		/* Skip initial position. */
-		if (VectorCompare((*p), excludeFromForbiddenList)) {
+		if (VectorCompare((*p), exclude)) {
 			/* Com_DPrintf(DEBUG_PATHING, "Grid_CheckForbidden: skipping %i|%i|%i\n", (*p)[0], (*p)[1], (*p)[2]); */
 			continue;
 		}
@@ -1631,6 +1629,7 @@ static void Grid_SetMoveData (pathing_t *path, const int x, const int y, const i
 
 /**
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] exclude Exclude this position from the forbidden list check
  * @param[in] actorSize Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @param[in,out] path Pointer to client or server side pathing table (clMap, svMap)
  * @param[in] pos Current location in the map.
@@ -1639,7 +1638,7 @@ static void Grid_SetMoveData (pathing_t *path, const int x, const int y, const i
  * @param[in,out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
  * @sa Grid_CheckForbidden
  */
-void Grid_MoveMark (const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
+static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t pos, byte crouchingState, const int dir, priorityQueue_t *pqueue)
 {
 	int x, y, z;
 	int nx, ny, nz;
@@ -1888,7 +1887,7 @@ void Grid_MoveMark (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 				return;
 			}
 			/* We cannot fall if there is an entity below the cell we want to move to. */
-			if (Grid_CheckForbidden(map, actorSize, path, nx, ny, nz - 1)) {
+			if (Grid_CheckForbidden(map, exclude, actorSize, path, nx, ny, nz - 1)) {
 				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: The fall destination is occupied.\n");
 				return;
 			}
@@ -1961,7 +1960,7 @@ void Grid_MoveMark (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 	}
 
 	/* Test for forbidden (by other entities) areas. */
-	if (Grid_CheckForbidden(map, actorSize, path, nx, ny, nz)) {
+	if (Grid_CheckForbidden(map, exclude, actorSize, path, nx, ny, nz)) {
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: That spot is occupied.\n");
 		return;
 	}
@@ -1996,6 +1995,8 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 	priorityQueue_t pqueue;
 	pos4_t epos; /**< Extended position; includes crouching state */
 	pos3_t pos;
+	/* this is the position of the current actor- so the actor can stand in the cell it is in when pathfinding */
+	pos3_t excludeFromForbiddenList;
 
 	/* reset move data */
 	memset(path->area, ROUTING_NOT_REACHABLE, PATHFINDING_WIDTH * PATHFINDING_WIDTH * PATHFINDING_HEIGHT * ACTOR_MAX_STATES);
@@ -2006,7 +2007,8 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 	if (distance > MAX_ROUTE + 3)	/* +3 is added to calc at least one square (diagonal) more */
 		distance = MAX_ROUTE + 3;	/* and later show one step beyond the walkable path in red */
 
-	VectorCopy(from, excludeFromForbiddenList); /**< Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
+	/* Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
+	VectorCopy(from, excludeFromForbiddenList);
 
 	PQueueInitialise(&pqueue, 1024);
 	Vector4Set(epos, from[0], from[1], from[2], crouchingState);
@@ -2036,7 +2038,7 @@ void Grid_MoveCalc (const routing_t *map, const actorSizeEnum_t actorSize, pathi
 			continue;
 
 		for (dir = 0; dir < PATHFINDING_DIRECTIONS; dir++) {
-			Grid_MoveMark(map, actorSize, path, pos, epos[3], dir, &pqueue);
+			Grid_MoveMark(map, excludeFromForbiddenList, actorSize, path, pos, epos[3], dir, &pqueue);
 		}
 	}
 	/* Com_Printf("Loop: %i", count); */
