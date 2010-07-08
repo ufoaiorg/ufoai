@@ -544,8 +544,8 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 	if (enable && image != NULL)
 		R_BindTextureForTexUnit(image->texnum, &texunit_glowmap);
 
-	//if (r_state.glowmap_enabled == enable)
-	//	return;
+	/*if (r_state.glowmap_enabled == enable)
+		return;*/
 
 	r_state.glowmap_enabled = enable;
 
