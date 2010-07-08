@@ -24,7 +24,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "common.h"
 
-/* writing functions */
+const vec3_t bytedirs[] = {
+#include "../shared/vertex_normals.h"
+};
 
 void NET_WriteChar (struct dbuffer *buf, char c)
 {
@@ -424,7 +426,7 @@ void NET_ReadData (struct dbuffer *buf, void *data, int len)
 void NET_ReadDir (struct dbuffer *buf, vec3_t dir)
 {
 	const int b = NET_ReadByte(buf);
-	if (b >= NUMVERTEXNORMALS)
+	if (b >= lengthof(bytedirs))
 		Com_Error(ERR_DROP, "NET_ReadDir: out of range");
 	VectorCopy(bytedirs[b], dir);
 }
