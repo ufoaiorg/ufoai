@@ -1,6 +1,6 @@
 /**
  * @file msg.c
- * @brief Message IO functions - handles byte ordering and avoids alignment errors
+ * @brief Message IO functions - handles size buffers
  */
 
 /*
@@ -25,13 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "common.h"
 #include "msg.h"
-
-const vec3_t bytedirs[NUMVERTEXNORMALS] = {
-#include "../shared/vertex_normals.h"
-};
-
-/* writing functions */
-
 
 void SZ_Init (sizebuf_t * buf, byte * data, int length)
 {
@@ -71,19 +64,4 @@ void *SZ_GetSpace (sizebuf_t * buf, int length)
 void SZ_Write (sizebuf_t * buf, const void *data, int length)
 {
 	memcpy(SZ_GetSpace(buf, length), data, length);
-}
-
-void SZ_Print (sizebuf_t * buf, const char *data)
-{
-	int len;
-
-	len = strlen(data) + 1;
-
-	if (buf->cursize) {
-		if (buf->data[buf->cursize - 1])
-			memcpy((byte *) SZ_GetSpace(buf, len), data, len);	/* no trailing 0 */
-		else
-			memcpy((byte *) SZ_GetSpace(buf, len - 1) - 1, data, len);	/* write over trailing 0 */
-	} else
-		memcpy((byte *) SZ_GetSpace(buf, len), data, len);
 }

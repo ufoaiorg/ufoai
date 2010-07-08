@@ -81,6 +81,10 @@ typedef int SOCKET;
 #define AI_ADDRCONFIG 0
 #endif
 
+const vec3_t bytedirs[NUMVERTEXNORMALS] = {
+#include "../shared/vertex_normals.h"
+};
+
 /**
  * @brief use an admin local address per default so that
  * network admins can decide on how to handle traffic.
