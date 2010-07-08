@@ -838,6 +838,11 @@ static qboolean SV_CheckMaxSoldiersPerPlayer (cvar_t* cvar)
 	return Cvar_AssertValue(cvar, 1, max, qtrue);
 }
 
+const routing_t** SV_GetRoutingMap (void)
+{
+	return (const routing_t **) &sv.svMap;
+}
+
 /**
  * @brief Only called once at startup, not for each game
  */

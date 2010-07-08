@@ -525,6 +525,9 @@ void CL_RequestNextDownload (void)
 			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers (%s)", UFO_VERSION, cl.configstrings[CS_VERSION]);
 			return;
 		}
+	} else {
+		/* Copy the client map from the server */
+		memcpy(&cl.clMap, SV_GetRoutingMap(), sizeof(cl.clMap));
 	}
 
 	CL_ViewLoadMedia();
