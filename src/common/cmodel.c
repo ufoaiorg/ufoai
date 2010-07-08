@@ -50,7 +50,8 @@ pathing_t svPathMap; /**< This is where the data for TUS used to move and actor 
 /** @note holds the number of inline entities, e.g. ET_DOOR */
 static int numInline;
 
-/** @note a list with all inline models (like func_breakable) */
+/** @note a list with all inline models (like func_breakable)
+ * @todo not threadsafe */
 static const char **inlineList;
 
 /** @note a pointer to the bsp file model data */
@@ -104,7 +105,8 @@ static const int TUsUsed[] = {
 };
 CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
 
-/** @brief Used to track where rerouting needs to occur. */
+/** @brief Used to track where rerouting needs to occur.
+ * @todo not threadsafe */
 static byte reroute[ACTOR_MAX_SIZE][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
 
 static void CM_MakeTracingNodes(void);
