@@ -307,6 +307,8 @@ void NET_Init (void)
 	signal(SIGPIPE, SIG_IGN);
 #endif
 
+	dbuffer_init();
+
 	net_ipv4 = Cvar_Get("net_ipv4", "1", CVAR_ARCHIVE, "Only use ipv4");
 	Cmd_AddCommand("net_showstreams", NET_ShowStreams_f, "Show opened streams");
 }
@@ -319,6 +321,7 @@ void NET_Shutdown (void)
 #ifdef _WIN32
 	WSACleanup();
 #endif
+	dbuffer_shutdown();
 }
 
 /**

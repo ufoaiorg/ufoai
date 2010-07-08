@@ -168,6 +168,7 @@ enum clc_ops_e {
 #include "filesys.h"
 #include "scripts.h"
 #include "net.h"
+#include "dbuffer.h"
 #include "netpack.h"
 
 /*
