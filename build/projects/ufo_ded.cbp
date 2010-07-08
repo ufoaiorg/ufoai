@@ -102,6 +102,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/common/cmd.h" />
+		<Unit filename="../../src/common/bsp.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/common/cmodel.c">
 			<Option compilerVar="CC" />
 		</Unit>

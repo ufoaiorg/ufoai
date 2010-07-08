@@ -15,6 +15,7 @@ TESTS_SRCS = \
 	common/http.c \
 	common/ioapi.c \
 	common/unzip.c \
+	common/bsp.c \
 	common/cmodel.c \
 	common/common.c \
 	common/cvar.c \
