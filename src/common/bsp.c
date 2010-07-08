@@ -1,7 +1,6 @@
 /**
- * @file cmodel.c
- * @brief model loading and grid oriented movement and scanning
- * @note collision detection code (server side)
+ * @file bsp.c
+ * @brief bsp model loading
  */
 
 /*
@@ -25,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "common.h"
-#include "pqueue.h"
 #include "tracing.h"
 #include "routing.h"
 #include "../shared/parse.h"
@@ -36,71 +34,15 @@ static char mapEntityString[MAX_MAP_ENTSTRING];
 /** @note holds the number of inline entities, e.g. ET_DOOR */
 static int numInline;
 
-/** @note a list with all inline models (like func_breakable)
- * @todo not threadsafe */
-static const char **inlineList;
-
 /** @note a pointer to the bsp file model data */
 static byte *cModelBase;
 
 /** @note this is a zeroed surface structure */
 static cBspSurface_t nullSurface;
 
-/** @note these are the TUs used to intentionally move in a given direction.  Falling not included. */
-static const int TUsUsed[] = {
-	TU_MOVE_STRAIGHT, /* E  */
-	TU_MOVE_STRAIGHT, /* W  */
-	TU_MOVE_STRAIGHT, /* N  */
-	TU_MOVE_STRAIGHT, /* S  */
-	TU_MOVE_DIAGONAL, /* NE */
-	TU_MOVE_DIAGONAL, /* SW */
-	TU_MOVE_DIAGONAL, /* NW */
-	TU_MOVE_DIAGONAL, /* SE */
-	TU_MOVE_CLIMB,    /* UP     */
-	TU_MOVE_CLIMB,    /* DOWN   */
-	TU_CROUCH,        /* STAND  */
-	TU_CROUCH,        /* CROUCH */
-	0,				  /* ???    */
-	TU_MOVE_FALL,	  /* FALL   */
-	0,				  /* ???    */
-	0,				  /* ???    */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY UP & E  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY UP & W  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY UP & N  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY UP & S  */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY UP & NE */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY UP & SW */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY UP & NW */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY UP & SE */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & E  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & W  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & N  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & S  */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & NE */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & SW */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & NW */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & SE */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & E  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & W  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & N  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & S  */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & NE */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & SW */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & NW */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR  /* FLY DOWN & SE */
-};
-CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
-
 /** @brief Used to track where rerouting needs to occur.
  * @todo not threadsafe */
 static byte reroute[ACTOR_MAX_SIZE][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-
-static void CM_SetInlineList (const char **list)
-{
-	inlineList = list;
-	if (inlineList != NULL && *inlineList == NULL)
-		inlineList = NULL;
-}
 
 /*
 ===============================================================================
@@ -549,8 +491,6 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 	unsigned int i;
 	double start, end;
 	const int targetLength = sizeof(curTile->wpMins) + sizeof(curTile->wpMaxs) + sizeof(tempMap);
-
-	CM_SetInlineList(NULL);
 
 	start = time(NULL);
 
@@ -1140,7 +1080,7 @@ int CM_NumInlineModels (void)
  * @sa G_SpawnEntities
  * @sa SV_SpawnServer
  */
-char *CM_EntityString (void)
+const char *CM_EntityString (void)
 {
 	return mapEntityString;
 }

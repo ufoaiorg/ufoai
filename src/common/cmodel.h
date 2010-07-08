@@ -38,7 +38,7 @@ void CM_SetInlineModelOrientation(const char *name, const vec3_t origin, const v
 
 int CM_NumClusters(void);
 int CM_NumInlineModels(void);
-char *CM_EntityString(void);
+const char *CM_EntityString(void);
 
 /*==============================================================
 CMODEL BOX TRACING
@@ -53,6 +53,7 @@ qboolean CM_TestLineDMWithEnt(const vec3_t start, const vec3_t stop, vec3_t end,
 qboolean CM_EntTestLine(const vec3_t start, const vec3_t stop, const int levelmask);
 qboolean CM_EntTestLineDM(const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);
 trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const box_t* traceBox, int levelmask, int brushmask, int brushreject);
+void CM_RecalcRouting(routing_t *map, const char *name, const char **list);
 
 /*==========================================================
 GRID ORIENTED MOVEMENT AND SCANNING
@@ -66,7 +67,7 @@ void Grid_DumpWholeClientMap_f(void);
 void Grid_DumpClientRoutes_f(void);
 void Grid_DumpServerRoutes_f(void);
 void Grid_RecalcBoxRouting(routing_t *map, const pos3_t min, const pos3_t max);
-void Grid_RecalcRouting(routing_t *map, const char *name, const char **list);
+void Grid_RecalcRouting(routing_t *map, const char *name);
 void Grid_DumpDVTable(const pathing_t *path);
 void Grid_MoveCalc(const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingSstate, int distance, byte ** fb_list, int fb_length);
 void Grid_MoveStore(pathing_t *path);

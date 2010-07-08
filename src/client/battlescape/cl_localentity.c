@@ -68,7 +68,7 @@ void CL_CompleteRecalcRouting (void)
 		 * An unused model is NOT included in the inline list, so it doesn't get
 		 * traced against. */
 		if (le->model1 && le->inlineModelName[0] == '*')
-			Grid_RecalcRouting(clMap, le->inlineModelName, cl.leInlineModelList);
+			CM_RecalcRouting(clMap, le->inlineModelName, cl.leInlineModelList);
 }
 
 /**
@@ -82,7 +82,7 @@ void CL_RecalcRouting (const le_t* le)
 	 * An unused model is NOT included in the inline list, so it doesn't get
 	 * traced against. */
 	if (le->model1 && le->inlineModelName[0] == '*')
-		Grid_RecalcRouting(clMap, le->inlineModelName, cl.leInlineModelList);
+		CM_RecalcRouting(clMap, le->inlineModelName, cl.leInlineModelList);
 
 	CL_ActorConditionalMoveCalc(selActor);
 }
