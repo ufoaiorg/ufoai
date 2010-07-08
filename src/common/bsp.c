@@ -951,6 +951,8 @@ static void CMod_RerouteMap (const char **list, routing_t *map)
  * @param[in] pos In case you gave more than one tile (Random map assembly [rma]) you also
  * have to provide the positions where those tiles should be placed at.
  * @param[out] mapchecksum The checksum of the bsp file to check for in multiplayer games
+ * @param[out] map The routing map to load the data into
+ * @param[in] entries the amount of routing maps behind the @c map pointer
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
  * @note Make sure that mapchecksum was set to 0 before you call this function
