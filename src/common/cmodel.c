@@ -29,80 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "routing.h"
 #include "../shared/parse.h"
 
-/** @note a list with all inline models (like func_breakable)
- * @todo not threadsafe */
-static const char **inlineList;
-
-/** @note these are the TUs used to intentionally move in a given direction.  Falling not included. */
-static const int TUsUsed[] = {
-	TU_MOVE_STRAIGHT, /* E  */
-	TU_MOVE_STRAIGHT, /* W  */
-	TU_MOVE_STRAIGHT, /* N  */
-	TU_MOVE_STRAIGHT, /* S  */
-	TU_MOVE_DIAGONAL, /* NE */
-	TU_MOVE_DIAGONAL, /* SW */
-	TU_MOVE_DIAGONAL, /* NW */
-	TU_MOVE_DIAGONAL, /* SE */
-	TU_MOVE_CLIMB,    /* UP     */
-	TU_MOVE_CLIMB,    /* DOWN   */
-	TU_CROUCH,        /* STAND  */
-	TU_CROUCH,        /* CROUCH */
-	0,				  /* ???    */
-	TU_MOVE_FALL,	  /* FALL   */
-	0,				  /* ???    */
-	0,				  /* ???    */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY UP & E  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY UP & W  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY UP & N  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY UP & S  */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY UP & NE */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY UP & SW */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY UP & NW */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY UP & SE */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & E  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & W  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & N  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & S  */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & NE */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & SW */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & NW */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & SE */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & E  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & W  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & N  */
-	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & S  */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & NE */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & SW */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & NW */
-	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR  /* FLY DOWN & SE */
-};
-CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
-
-static void CM_SetInlineList (const char **list)
-{
-	inlineList = list;
-	if (inlineList != NULL && *inlineList == NULL)
-		inlineList = NULL;
-}
-
-/**
- * @brief This function recalculates the routing surrounding the entity name.
- * @sa CM_InlineModel
- * @sa CM_CheckUnit
- * @sa CM_UpdateConnection
- * @sa CMod_LoadSubmodels
- * @sa Grid_RecalcBoxRouting
- * @param[in] map The routing map (either server or client map)
- * @param[in] name Name of the inline model to compute the mins/maxs for
- * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
- */
-void CM_RecalcRouting (routing_t *map, const char *name, const char **list)
-{
-	CM_SetInlineList(list);
-	Grid_RecalcRouting(map, name);
-	CM_SetInlineList(NULL);
-}
-
 /*
 ===============================================================================
 GAME RELATED TRACING USING ENTITIES
@@ -154,6 +80,88 @@ static qboolean CM_LineMissesModel (const vec3_t start, const vec3_t stop, const
 }
 
 /**
+ * @brief Wrapper for TR_TransformedBoxTrace that accepts a tile number,
+ * @sa TR_TransformedBoxTrace
+ */
+trace_t CM_HintedTransformedBoxTrace (const int tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
+{
+	return TR_HintedTransformedBoxTrace(&mapTiles[tile], start, end, mins, maxs, headnode, brushmask, brushrejects, origin, angles, rmaShift, fraction);
+}
+
+/**
+ * @brief To keep everything totally uniform, bounding boxes are turned into small
+ * BSP trees instead of being compared directly.
+ */
+int CM_HeadnodeForBox (int tile, const vec3_t mins, const vec3_t maxs)
+{
+	assert(tile < numTiles && tile >= 0);
+	return TR_HeadnodeForBox(&mapTiles[tile], mins, maxs);
+}
+
+/* TRACING FUNCTIONS */
+
+/** @note a list with all inline models (like func_breakable)
+ * @todo not threadsafe */
+static const char **inlineList;
+
+
+static void CM_SetInlineList (const char **list)
+{
+	inlineList = list;
+	if (inlineList != NULL && *inlineList == NULL)
+		inlineList = NULL;
+}
+
+/**
+ * @brief Checks traces against the world and all inline models
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
+ * @param[in] levelmask
+ * @param[in] entlist of entities that might be on this line
+ * @sa CM_EntTestLine
+ * @return qtrue - hit something
+ * @return qfalse - hit nothing
+ */
+qboolean CM_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
+{
+	qboolean hit;
+
+	/* set the list of entities to check */
+	CM_SetInlineList(entlist);
+	/* do the line test */
+	hit = CM_EntTestLine(start, stop, levelmask);
+	/* zero the list */
+	CM_SetInlineList(NULL);
+
+	return hit;
+}
+
+/**
+ * @brief Checks traces against the world and all inline models
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
+ * @param[out] end The position where the trace hits something
+ * @param[in] levelmask The bsp level that is used for tracing in (see @c TL_FLAG_*)
+ * @param[in] entlist of entities that might be on this line
+ * @sa CM_EntTestLineDM
+ * @return qtrue - hit something
+ * @return qfalse - hit nothing
+ */
+qboolean CM_TestLineDMWithEnt (const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist)
+{
+	qboolean hit;
+
+	/* set the list of entities to check */
+	CM_SetInlineList(entlist);
+	/* do the line test */
+	hit = CM_EntTestLineDM(start, stop, end, levelmask);
+	/* zero the list */
+	CM_SetInlineList(NULL);
+
+	return hit;
+}
+
+/**
  * @brief Checks traces against the world and all inline models
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
@@ -202,58 +210,6 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 	/* not blocked */
 	return qfalse;
 }
-
-
-/**
- * @brief Checks traces against the world and all inline models
- * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
- * @param[in] levelmask
- * @param[in] entlist of entities that might be on this line
- * @sa CM_EntTestLine
- * @return qtrue - hit something
- * @return qfalse - hit nothing
- */
-qboolean CM_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
-{
-	qboolean hit;
-
-	/* set the list of entities to check */
-	CM_SetInlineList(entlist);
-	/* do the line test */
-	hit = CM_EntTestLine(start, stop, levelmask);
-	/* zero the list */
-	CM_SetInlineList(NULL);
-
-	return hit;
-}
-
-
-/**
- * @brief Checks traces against the world and all inline models
- * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
- * @param[out] end The position where the trace hits something
- * @param[in] levelmask The bsp level that is used for tracing in (see @c TL_FLAG_*)
- * @param[in] entlist of entities that might be on this line
- * @sa CM_EntTestLineDM
- * @return qtrue - hit something
- * @return qfalse - hit nothing
- */
-qboolean CM_TestLineDMWithEnt (const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist)
-{
-	qboolean hit;
-
-	/* set the list of entities to check */
-	CM_SetInlineList(entlist);
-	/* do the line test */
-	hit = CM_EntTestLineDM(start, stop, end, levelmask);
-	/* zero the list */
-	CM_SetInlineList(NULL);
-
-	return hit;
-}
-
 
 /**
  * @brief Checks traces against the world and all inline models, gives the hit position back
@@ -309,15 +265,6 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 
 	/* return result */
 	return blocked;
-}
-
-/**
- * @brief Wrapper for TR_TransformedBoxTrace that accepts a tile number,
- * @sa TR_TransformedBoxTrace
- */
-trace_t CM_HintedTransformedBoxTrace (const int tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
-{
-	return TR_HintedTransformedBoxTrace(&mapTiles[tile], start, end, mins, maxs, headnode, brushmask, brushrejects, origin, angles, rmaShift, fraction);
 }
 
 /**
@@ -386,18 +333,20 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_
 	return trace;
 }
 
-/*
-===============================================================================
-BOX TRACING
-===============================================================================
-*/
-
 /**
- * @brief To keep everything totally uniform, bounding boxes are turned into small
- * BSP trees instead of being compared directly.
+ * @brief This function recalculates the routing surrounding the entity name.
+ * @sa CM_InlineModel
+ * @sa CM_CheckUnit
+ * @sa CM_UpdateConnection
+ * @sa CMod_LoadSubmodels
+ * @sa Grid_RecalcBoxRouting
+ * @param[in] map The routing map (either server or client map)
+ * @param[in] name Name of the inline model to compute the mins/maxs for
+ * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
-int CM_HeadnodeForBox (int tile, const vec3_t mins, const vec3_t maxs)
+void CM_RecalcRouting (routing_t *map, const char *name, const char **list)
 {
-	assert(tile < numTiles && tile >= 0);
-	return TR_HeadnodeForBox(&mapTiles[tile], mins, maxs);
+	CM_SetInlineList(list);
+	Grid_RecalcRouting(map, name);
+	CM_SetInlineList(NULL);
 }
