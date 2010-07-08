@@ -30,7 +30,7 @@ const vec3_t vec3_origin = { 0, 0, 0 };
 const vec4_t vec4_origin = { 0, 0, 0, 0 };
 
 /** @brief cos 45 degree */
-#define RT2 0.707107
+#define RT2 0.70710678118654752440084436210485
 
 /**
  * @note DIRECTIONS
