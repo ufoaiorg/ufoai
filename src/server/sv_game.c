@@ -642,8 +642,6 @@ void SV_InitGameProgs (void)
 
 	/* import the server routing table */
 	import.routingMap = (void *) &svMap;
-	/* import the server pathing table */
-	import.pathingMap = (void *) &svPathMap;
 
 	ge = SV_GetGameAPI(&import);
 

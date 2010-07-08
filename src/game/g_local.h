@@ -124,8 +124,9 @@ typedef struct {
 	int numplayers;
 	int activeTeam;
 	int nextEndRound;
-
 	int actualRound;	/**< the current running round counter */
+
+	pathing_t pathingMap;	/**< This is where the data for TUS used to move and actor locations go */
 
 	int randomSpawn;	/**< can be set via worldspawn to force random spawn point order for each team */
 

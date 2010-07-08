@@ -38,11 +38,6 @@ routing_t svMap[ACTOR_MAX_SIZE];
  * @todo put this into client only code and given it via parameter to the functions that are using it
  */
 routing_t clMap[ACTOR_MAX_SIZE];
-/**
- * @brief This is where the data for TUS used to move and actor locations go
- * @todo This is not used in the server - only in the game.
- */
-pathing_t svPathMap;
 
 /** @note these are the TUs used to intentionally move in a given direction.  Falling not included. */
 static const int TUsUsed[] = {

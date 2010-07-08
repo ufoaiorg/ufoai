@@ -538,7 +538,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	float bestActionPoints, maxDmg;
 	int bestTime = -1;
 
-	move = gi.MoveLength(gi.pathingMap, to,
+	move = gi.MoveLength(&level.pathingMap, to,
 			G_IsCrouched(ent) ? 1 : 0, qtrue);
 	tu = ent->TU - move;
 
@@ -657,7 +657,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
 
-	move = gi.MoveLength(gi.pathingMap, to, crouchingState, qtrue);
+	move = gi.MoveLength(&level.pathingMap, to, crouchingState, qtrue);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -778,7 +778,7 @@ static int AI_CheckForMissionTargets (const player_t* player, edict_t *ent, aiAc
 			/* the lower the count value - the nearer the final target */
 			if (checkPoint->count < ent->count) {
 				if (VectorDist(ent->origin, checkPoint->origin) <= WAYPOINT_CIV_DIST) {
-					const pos_t move = gi.MoveLength(gi.pathingMap, checkPoint->pos, crouchingState, qtrue);
+					const pos_t move = gi.MoveLength(&level.pathingMap, checkPoint->pos, crouchingState, qtrue);
 					i++;
 					if (move == ROUTING_NOT_REACHABLE)
 						continue;
@@ -836,7 +836,7 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	/* calculate move table */
 	G_MoveCalc(0, ent, ent->pos, crouchingState, ent->TU);
 	Com_DPrintf(DEBUG_ENGINE, "AI_PrepBestAction: Called MoveMark.\n");
-	gi.MoveStore(gi.pathingMap);
+	gi.MoveStore(&level.pathingMap);
 
 	/* set borders */
 	dist = (ent->TU + 1) / 2;
@@ -855,7 +855,7 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++) {
-				const pos_t move = gi.MoveLength(gi.pathingMap, to, crouchingState, qtrue);
+				const pos_t move = gi.MoveLength(&level.pathingMap, to, crouchingState, qtrue);
 				if (move != ROUTING_NOT_REACHABLE && move <= ent->TU) {
 					if (G_IsCivilian(ent) || G_IsPaniced(ent))
 						bestActionPoints = AI_CivilianCalcBestAction(ent, to, &aia);
@@ -930,7 +930,7 @@ void AI_TurnIntoDirection (edict_t *ent, const pos3_t pos)
 
 	G_MoveCalc(ent->team, ent, pos, crouchingState, ent->TU);
 
-	dv = gi.MoveNext(gi.pathingMap, pos, crouchingState);
+	dv = gi.MoveNext(&level.pathingMap, pos, crouchingState);
 	if (dv != ROUTING_UNREACHABLE) {
 		const byte dir = getDVdir(dv);
 		/* Only attempt to turn if the direction is not a vertical only action */
