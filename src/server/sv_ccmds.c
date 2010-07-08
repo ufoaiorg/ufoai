@@ -573,6 +573,30 @@ static void SV_PrintConfigStrings_f (void)
 	}
 }
 
+#ifdef DEBUG
+/**
+ * @brief  Dumps contents of the entire server map to console for inspection.
+ * @sa CL_InitLocal
+ */
+static void Grid_DumpWholeServerMap_f (void)
+{
+	RT_DumpWholeMap(sv.svMap[0]);
+	RT_DumpWholeMap(sv.svMap[1]);
+}
+
+/**
+ * @brief  Dumps contents of the entire server routing table to CSV file.
+ * @sa CL_InitLocal
+ */
+static void Grid_DumpServerRoutes_f (void)
+{
+	ipos3_t wpMins, wpMaxs;
+	VecToPos(mapMin, wpMins);
+	VecToPos(mapMax, wpMaxs);
+	RT_WriteCSVFiles(sv.svMap, "ufoaiserver", wpMins, wpMaxs);
+}
+#endif
+
 /**
  * @sa SV_Init
  */
@@ -600,6 +624,11 @@ void SV_InitOperatorCommands (void)
 
 #ifdef DEDICATED_ONLY
 	Cmd_AddCommand("say", SV_ConSay_f, "Broadcasts server messages to all connected players");
+#endif
+
+#ifdef DEBUG
+	Cmd_AddCommand("debug_sgrid", Grid_DumpWholeServerMap_f, "Shows the whole server side pathfinding grid of the current loaded map");
+	Cmd_AddCommand("debug_sroute", Grid_DumpServerRoutes_f, "Shows the whole server side pathfinding grid of the current loaded map");
 #endif
 
 	Cmd_AddCommand("killserver", SV_KillServer_f, "Shuts the server down - and disconnect all clients");

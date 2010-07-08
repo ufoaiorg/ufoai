@@ -144,6 +144,7 @@ DEBUGGING CODE
 ==========================================================
 */
 
-void RT_DumpMap(const routing_t *map, actorSizeEnum_t actorSize, int lx, int ly, int lz, int hx, int hy, int hz);
+#ifdef DEBUG
 void RT_DumpWholeMap(const routing_t *map);
 void RT_WriteCSVFiles(const routing_t *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs);
+#endif

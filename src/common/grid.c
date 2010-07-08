@@ -28,17 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "routing.h"
 #include "../shared/parse.h"
 
-/**
- * @brief server routing table
- * @todo put this into server only code and given it via parameter to the functions that are using it
- */
-routing_t svMap[ACTOR_MAX_SIZE];
-/**
- * @brief client routing table
- * @todo put this into client only code and given it via parameter to the functions that are using it
- */
-routing_t clMap[ACTOR_MAX_SIZE];
-
 /** @note these are the TUs used to intentionally move in a given direction.  Falling not included. */
 static const int TUsUsed[] = {
 	TU_MOVE_STRAIGHT, /* E  */
@@ -83,52 +72,6 @@ static const int TUsUsed[] = {
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR  /* FLY DOWN & SE */
 };
 CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
-
-#ifdef DEBUG
-/**
- * @brief  Dumps contents of the entire client map to console for inspection.
- * @sa CL_InitLocal
- */
-void Grid_DumpWholeClientMap_f (void)
-{
-	RT_DumpWholeMap(&clMap[0]);
-	RT_DumpWholeMap(&clMap[1]);
-}
-
-/**
- * @brief  Dumps contents of the entire server map to console for inspection.
- * @sa CL_InitLocal
- */
-void Grid_DumpWholeServerMap_f (void)
-{
-	RT_DumpWholeMap(&svMap[0]);
-	RT_DumpWholeMap(&svMap[1]);
-}
-
-/**
- * @brief  Dumps contents of the entire client routing table to CSV file.
- * @sa CL_InitLocal
- */
-void Grid_DumpClientRoutes_f (void)
-{
-	ipos3_t wpMins, wpMaxs;
-	VecToPos(mapMin, wpMins);
-	VecToPos(mapMax, wpMaxs);
-	RT_WriteCSVFiles(clMap, "ufoaiclient", wpMins, wpMaxs);
-}
-
-/**
- * @brief  Dumps contents of the entire server routing table to CSV file.
- * @sa CL_InitLocal
- */
-void Grid_DumpServerRoutes_f (void)
-{
-	ipos3_t wpMins, wpMaxs;
-	VecToPos(mapMin, wpMins);
-	VecToPos(mapMax, wpMaxs);
-	RT_WriteCSVFiles(svMap, "ufoaiserver", wpMins, wpMaxs);
-}
-#endif
 
 /**
 * @brief Checks one field (square) on the grid of the given routing data (i.e. the map).

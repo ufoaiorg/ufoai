@@ -260,3 +260,27 @@ qboolean CL_OutsideMap (const vec3_t position, const float delta)
 	/* still inside the map borders */
 	return qfalse;
 }
+
+#ifdef DEBUG
+/**
+ * @brief  Dumps contents of the entire client map to console for inspection.
+ * @sa CL_InitLocal
+ */
+void Grid_DumpWholeClientMap_f (void)
+{
+	RT_DumpWholeMap(cl.clMap[0]);
+	RT_DumpWholeMap(cl.clMap[1]);
+}
+
+/**
+ * @brief  Dumps contents of the entire client routing table to CSV file.
+ * @sa CL_InitLocal
+ */
+void Grid_DumpClientRoutes_f (void)
+{
+	ipos3_t wpMins, wpMaxs;
+	VecToPos(mapMin, wpMins);
+	VecToPos(mapMax, wpMaxs);
+	RT_WriteCSVFiles(cl.clMap, "ufoaiclient", wpMins, wpMaxs);
+}
+#endif

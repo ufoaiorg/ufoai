@@ -68,7 +68,7 @@ void CL_CompleteRecalcRouting (void)
 		 * An unused model is NOT included in the inline list, so it doesn't get
 		 * traced against. */
 		if (le->model1 && le->inlineModelName[0] == '*')
-			CM_RecalcRouting(clMap, le->inlineModelName, cl.leInlineModelList);
+			CM_RecalcRouting(cl.clMap, le->inlineModelName, cl.leInlineModelList);
 }
 
 /**
@@ -82,7 +82,7 @@ void CL_RecalcRouting (const le_t* le)
 	 * An unused model is NOT included in the inline list, so it doesn't get
 	 * traced against. */
 	if (le->model1 && le->inlineModelName[0] == '*')
-		CM_RecalcRouting(clMap, le->inlineModelName, cl.leInlineModelList);
+		CM_RecalcRouting(cl.clMap, le->inlineModelName, cl.leInlineModelList);
 
 	CL_ActorConditionalMoveCalc(selActor);
 }
@@ -541,8 +541,8 @@ int LE_ActorGetStepTime (const le_t *le, const pos3_t pos, const pos3_t oldPos, 
 	} else {
 		vec3_t start, dest;
 		/* This needs to account for the distance of the fall. */
-		Grid_PosToVec(clMap, le->fieldSize, oldPos, start);
-		Grid_PosToVec(clMap, le->fieldSize, pos, dest);
+		Grid_PosToVec(cl.clMap, le->fieldSize, oldPos, start);
+		Grid_PosToVec(cl.clMap, le->fieldSize, pos, dest);
 		/* 1/1000th of a second per model unit in height change */
 		return (start[2] - dest[2]);
 	}
@@ -650,7 +650,7 @@ static void LET_PathMove (le_t * le)
 	/* move ahead */
 	while (cl.time >= le->endTime) {
 		/* Ensure that we are displayed where we are supposed to be, in case the last frame came too quickly. */
-		Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
+		Grid_PosToVec(cl.clMap, le->fieldSize, le->pos, le->origin);
 
 		/* Record the last position of movement calculations. */
 		VectorCopy(le->pos, le->oldPos);
@@ -664,8 +664,8 @@ static void LET_PathMove (le_t * le)
 	}
 
 	/* interpolate the position */
-	Grid_PosToVec(clMap, le->fieldSize, le->oldPos, start);
-	Grid_PosToVec(clMap, le->fieldSize, le->pos, dest);
+	Grid_PosToVec(cl.clMap, le->fieldSize, le->oldPos, start);
+	Grid_PosToVec(cl.clMap, le->fieldSize, le->pos, dest);
 	VectorSubtract(dest, start, delta);
 
 	frac = (float) (cl.time - le->startTime) / (float) (le->endTime - le->startTime);
@@ -869,7 +869,7 @@ void LE_PlaceItem (le_t *le)
 		if (!le->model1)
 			Com_Error(ERR_DROP, "Model for item %s is not precached in the cls.model_weapons array",
 				biggest->id);
-		Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
+		Grid_PosToVec(cl.clMap, le->fieldSize, le->pos, le->origin);
 		VectorSubtract(le->origin, biggest->center, le->origin);
 		le->angles[ROLL] = 90;
 		/*le->angles[YAW] = 10*(int)(le->origin[0] + le->origin[1] + le->origin[2]) % 360; */

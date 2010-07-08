@@ -29,10 +29,9 @@ CMODEL
 #include "../common/qfiles.h"
 #include "pqueue.h"
 
-
 extern vec3_t mapMin, mapMax;
 
-void CM_LoadMap(const char *tiles, qboolean day, const char *pos, unsigned *checksum);
+void CM_LoadMap(const char *tiles, qboolean day, const char *pos, unsigned *checksum, routing_t *map, int entries);
 cBspModel_t *CM_InlineModel(const char *name);
 void CM_SetInlineModelOrientation(const char *name, const vec3_t origin, const vec3_t angles);
 
@@ -57,13 +56,6 @@ void CM_RecalcRouting(routing_t *map, const char *name, const char **list);
 GRID ORIENTED MOVEMENT AND SCANNING
 ==========================================================*/
 
-extern routing_t svMap[ACTOR_MAX_SIZE], clMap[ACTOR_MAX_SIZE];
-extern pathing_t svPathMap;
-
-void Grid_DumpWholeServerMap_f(void);
-void Grid_DumpWholeClientMap_f(void);
-void Grid_DumpClientRoutes_f(void);
-void Grid_DumpServerRoutes_f(void);
 void Grid_RecalcBoxRouting(routing_t *map, const pos3_t min, const pos3_t max, const char **list);
 void Grid_RecalcRouting(routing_t *map, const char *name, const char **list);
 void Grid_DumpDVTable(const pathing_t *path);

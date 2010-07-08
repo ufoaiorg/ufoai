@@ -76,6 +76,8 @@ typedef struct client_state_s {
 	qboolean spawned;		/**< soldiers already spawned? This is only true if we are already on battlescape but
 							 * our team is not yet spawned */
 
+	routing_t clMap[ACTOR_MAX_SIZE];	/**< client routing table */
+
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
 } client_state_t;
 
@@ -85,5 +87,10 @@ qboolean CL_OnBattlescape(void);
 qboolean CL_BattlescapeRunning(void);
 int CL_GetHitProbability(const le_t* actor);
 qboolean CL_OutsideMap(const vec3_t impact, const float delta);
+
+#ifdef DEBUG
+void Grid_DumpWholeClientMap_f(void);
+void Grid_DumpClientRoutes_f(void);
+#endif
 
 #endif /* CL_BATTLESCAPE_H_ */

@@ -131,19 +131,20 @@ typedef struct opening_s {
 ==========================================================
 */
 
+#ifdef DEBUG
 /**
- * @brief  Dumps contents of a map to console for inspection.
+ * @brief Dumps contents of a map to console for inspection.
  * @sa Grid_RecalcRouting
  * @param[in] map The routing map (either server or client map)
  * @param[in] actorSize The size of the actor along the X and Y axis in cell units
- * @param[in] lx  The low end of the x range updated
- * @param[in] ly  The low end of the y range updated
- * @param[in] lz  The low end of the z range updated
- * @param[in] hx  The high end of the x range updated
- * @param[in] hy  The high end of the y range updated
- * @param[in] hz  The high end of the z range updated
+ * @param[in] lx The low end of the x range updated
+ * @param[in] ly The low end of the y range updated
+ * @param[in] lz The low end of the z range updated
+ * @param[in] hx The high end of the x range updated
+ * @param[in] hy The high end of the y range updated
+ * @param[in] hz The high end of the z range updated
  */
-void RT_DumpMap (const routing_t *map, actorSizeEnum_t actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
+static void RT_DumpMap (const routing_t *map, actorSizeEnum_t actorSize, int lx, int ly, int lz, int hx, int hy, int hz)
 {
 	int x, y, z;
 
@@ -169,9 +170,8 @@ void RT_DumpMap (const routing_t *map, actorSizeEnum_t actorSize, int lx, int ly
 	}
 }
 
-#ifdef DEBUG
 /**
- * @brief  Dumps contents of the entire client map to console for inspection.
+ * @brief Dumps contents of the entire client map to console for inspection.
  * @param[in] map A pointer to the map being dumped
  */
 void RT_DumpWholeMap (const routing_t *map)
@@ -316,6 +316,7 @@ NEW MAP TRACING FUNCTIONS
  * @param[in] pos The position to check below
  * @return true if solid
  * @sa CL_AddTargetingBox
+ * @todo see CL_ActorMoveMouse
  */
 qboolean RT_AllCellsBelowAreFilled (const routing_t * map, const actorSizeEnum_t actorSize, const pos3_t pos)
 {
@@ -1515,7 +1516,7 @@ void RT_UpdateConnectionColumn (routing_t * map, const actorSizeEnum_t actorSize
 	}
 }
 
-
+#ifdef DEBUG
 void RT_WriteCSVFiles (const routing_t *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
 {
 	char filename[MAX_OSPATH], ext[MAX_OSPATH];
@@ -1607,3 +1608,4 @@ void RT_WriteCSVFiles (const routing_t *map, const char* baseFilename, const ipo
 		FS_CloseFile(&f);
 	}
 }
+#endif
