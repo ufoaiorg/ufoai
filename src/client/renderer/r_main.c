@@ -940,6 +940,10 @@ static inline void R_VerifyDriver (void)
 	if (!Q_strcasecmp((const char*)glGetString(GL_RENDERER), "gdi generic"))
 		Com_Error(ERR_FATAL, "No hardware acceleration detected.\n"
 			"Update your graphic card drivers.");
+#else
+	if (!Q_strcasecmp((const char*)glGetString(GL_RENDERER), "Software Rasterizer"))
+		Com_Error(ERR_FATAL, "No hardware acceleration detected.\n"
+			"Update your graphic card drivers.");
 #endif
 	if (r_intel_hack->integer && R_SearchForVendor("Intel")) {
 		/* HACK: */
