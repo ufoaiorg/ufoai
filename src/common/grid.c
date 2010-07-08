@@ -77,6 +77,7 @@ static const int TUsUsed[] = {
 };
 CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
 
+#ifdef DEBUG
 /**
  * @brief  Dumps contents of the entire client map to console for inspection.
  * @sa CL_InitLocal
@@ -120,6 +121,7 @@ void Grid_DumpServerRoutes_f (void)
 	VecToPos(mapMax, wpMaxs);
 	RT_WriteCSVFiles(svMap, "ufoaiserver", wpMins, wpMaxs);
 }
+#endif
 
 /**
 * @brief Checks one field (square) on the grid of the given routing data (i.e. the map).

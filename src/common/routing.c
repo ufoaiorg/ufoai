@@ -169,7 +169,7 @@ void RT_DumpMap (const routing_t *map, actorSizeEnum_t actorSize, int lx, int ly
 	}
 }
 
-
+#ifdef DEBUG
 /**
  * @brief  Dumps contents of the entire client map to console for inspection.
  * @param[in] map A pointer to the map being dumped
@@ -183,14 +183,14 @@ void RT_DumpWholeMap (const routing_t *map)
 	int i;
 
 	/* Initialize start, end, and normal */
-	VectorSet(start, 0, 0, 0);
+	VectorClear(start);
 	VectorSet(end, PATHFINDING_WIDTH - 1, PATHFINDING_WIDTH - 1, PATHFINDING_HEIGHT - 1);
 	VectorSet(normal, UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2);
-	VectorCopy(vec3_origin, origin);
+	VectorClear(origin);
 
 	for (i = 0; i < 3; i++) {
 		/* Lower positive boundary */
-		while (end[i]>start[i]) {
+		while (end[i] > start[i]) {
 			/* Adjust ceiling */
 			VectorCopy(start, test);
 			test[i] = end[i] - 1; /* test is now one floor lower than end */
@@ -229,7 +229,7 @@ void RT_DumpWholeMap (const routing_t *map)
 	/* Dump the client map */
 	RT_DumpMap(map, 0, start[0], start[1], start[2], end[0], end[1], end[2]);
 }
-
+#endif
 
 /**
  * @brief Calculate the map size via model data and store grid size
