@@ -2151,45 +2151,6 @@ static void CL_DebugPath_f (void)
 		return;
 
 	CL_DebugPathDisplay(actorSize, x, y, z);
-
-#if 0
-	vec3_t from,to;
-	PosToVec(selActor->pos,from);
-	PosToVec(mousePos,to);
-	Com_Printf("TestLine from actor to cursor.\n");
-	if (!TR_TestLine(from, to, TL_FLAG_REGULAR_LEVELS))
-		Com_Printf("succeeded.\n");
-	else
-		Com_Printf("failed.\n");
-#endif
-#if 0
-	pos3_t c1;
-	pos3_t c2;
-	c1[0] = 132;
-	c1[1] = 122;
-	c1[2] = 1;
-	c2[0] = 137;
-	c2[1] = 128;
-	c2[2] = 3;
-	Grid_RecalcBoxRouting(clMap, c1, c2);
-	Com_Printf("RecalcBoxRouting done.\n");
-#endif
-#if 0
-	Com_Printf("performing RT_UpdateConnection() in dir: %i\n", dir);
-	RT_UpdateConnectionColumn(clMap, actorSize, x, y, dir);
-	CL_DebugPathDisplay(actorSize, x, y, z);
-#endif
-#if 0
-/*	int new_z = RT_CheckCell(clMap, actorSize, x, y, z); */
-	int new_z = RT_CheckCell(clMap, actorSize, 138, 146, 5);
-	Com_Printf("check returns: Z=%i\n", new_z);
-#endif
-#if 0
-	priorityQueue_t pqueue;
-	PQueueInitialise(&pqueue, 1024);
-	Grid_MoveMark(clMap, actorSize, selActor->pathMap, mousePos, 0, dir, &pqueue);
-	PQueueFree(&pqueue);
-#endif
 }
 #endif
 

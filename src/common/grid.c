@@ -893,10 +893,9 @@ void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max)
 		(int)min[0], (int)min[1], (int)min[2],
 		(int)max[0], (int)max[1], (int)max[2]);
 
-	/* Com_Printf("Before:\n"); */
-	/* Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]); */
-
 	/* check unit heights */
+	/** @todo A temporary hack- if we decrease ACTOR_MAX_SIZE we need to bump the BSPVERSION again.
+	 * I'm just commenting out the CORRECT code for now. */
 	/*for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {*/
 	for (actorSize = 1; actorSize <= 1; actorSize++) {
 		const int maxY = max[1] + actorSize;
@@ -913,10 +912,6 @@ void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max)
 			}
 		}
 	}
-
-#if 0
-	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
-#endif
 
 	/* check connections */
 	/** @todo A temporary hack- if we decrease ACTOR_MAX_SIZE we need to bump the BSPVERSION again.
@@ -943,11 +938,6 @@ void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max)
 			}
 		}
 	}
-
-#if 0
-	Com_Printf("After:\n");
-	Grid_DumpMap(map, (int)min[0], (int)min[1], (int)min[2], (int)max[0], (int)max[1], (int)max[2]);
-#endif
 }
 
 
