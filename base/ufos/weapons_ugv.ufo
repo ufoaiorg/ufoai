@@ -82,7 +82,7 @@ item ugv_chaingun_belt
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/chaingun
+			firesnd				weapons/bullet-chaingun-10x
 			speed				0
 			spread				"1 4"
 			crouch				1.0
@@ -103,7 +103,7 @@ item ugv_chaingun_belt
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/chaingun
+			firesnd				weapons/bullet-chaingun-50x
 			speed				0
 			spread				"3 6"
 			crouch				1.0
@@ -125,7 +125,7 @@ item ugv_chaingun_belt
 //			projtl				bullet
 //			impact				bulletImpact
 //			hitbody				null
-//			firesnd				weapons/chaingun
+//			firesnd				weapons/bullet-chaingun-50x
 //			speed				0
 //			spread				"3 15"
 //			crouch				1.0
