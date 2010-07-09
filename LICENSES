@@ -1672,12 +1672,17 @@ base/models/soldiers/malehybrid/head05c.md2 | GNU General Public License 2.0 or 
 base/models/soldiers/malelight/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/body.png | GNU General Public License 2.0 | Lukas Beyeler (Rasta);MCR
 base/models/soldiers/malelight/body.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/body_arctic.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/body_arctic.png | GNU General Public License 2.0 | Lukas Beyeler (Rasta);MCR
 base/models/soldiers/malelight/body_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/body_desert.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/body_desert.png | GNU General Public License 2.0 | Lukas Beyeler (Rasta);MCR
 base/models/soldiers/malelight/body_jungle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/soldiers/malelight/body_jungle.png | GNU General Public License 2.0 | Lukas Beyeler (Rasta);MCR
 base/models/soldiers/malelight/body_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
+base/models/soldiers/malelight/body_yellow.png | GNU General Public License 2.0 | Lukas Beyeler (Rasta);MCR | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/head01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head01a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head01a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
