@@ -1916,6 +1916,7 @@ item bolterrifle_ammo
 			impact		bolterImpact
 			hitbody		null
 			firesnd		weapons/bullet-bolter
+			sndonce		true
 			speed		0
 			spread		"1.7 1.7"
 			crouch		0.8
@@ -1937,6 +1938,7 @@ item bolterrifle_ammo
 			impact		bolterImpact
 			hitbody		null
 			firesnd		weapons/bullet-heavybolter
+			sndonce		true
 			speed		0
 			spread		"2.4 2.4"
 			crouch		0.8

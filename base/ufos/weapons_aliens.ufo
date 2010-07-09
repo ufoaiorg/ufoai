@@ -127,7 +127,7 @@ item needlergun_ammo
 			projtl		bolter
 			impact		bolterImpact
 			hitbody		null
-			firesnd		weapons/bullet-needlerheavy
+			firesnd		weapons/bullet-needler
 			speed		0
 			spread		"2 2"
 			crouch		0.8

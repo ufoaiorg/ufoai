@@ -265,7 +265,7 @@ item pbeamcannon_ammo
 			projtl		pbeamBigBeam
 			impact		pbeamBigImpact
 			hitbody		pbeamBigImpact
-			firesnd		weapons/pbeamcannon_explosive
+			firesnd		weapons/laser-blast
 			speed		0
 			spread		"1.5 1.5"
 			crouch		0.8
