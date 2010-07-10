@@ -3,6 +3,7 @@
 	material tex_lights/land_li_yellow
 	{
 		texture tex_lights/land_li_yellow
+		rotate 0.2
 		color 1.0 1.0 0.7
 		flare 2
 	}
