@@ -287,12 +287,15 @@ void BS_InitMarket (qboolean load)
 		if (!ccs.curCampaign->marketDef->numItems[i])
 			continue;
 
-		if (!RS_IsResearched_ptr(od->tech) && campaign->marketDef->numItems[i] > 0)
-			Com_Error(ERR_DROP, "BS_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s",
+		if (!RS_IsResearched_ptr(od->tech) && campaign->marketDef->numItems[i] > 0) {
+			Com_Printf("BS_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n",
 					od->id, campaign->id);
-		else
+			campaign->marketDef->numItems[i] = 0;
+			ccs.eMarket.numItems[i] = 0;
+		} else {
 			/* the other relevant values were already set above */
 			ccs.eMarket.numItems[i] = campaign->marketDef->numItems[i];
+		}
 	}
 
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
@@ -306,12 +309,15 @@ void BS_InitMarket (qboolean load)
 		if (!ccs.curCampaign->marketDef->numAircraft[i])
 			continue;
 
-		if (!RS_IsResearched_ptr(aircraft->tech) && campaign->marketDef->numAircraft[i] > 0)
-			Com_Error(ERR_DROP, "BS_InitMarket: Could not add aircraft %s to the market - not marked as researched in campaign %s",
+		if (!RS_IsResearched_ptr(aircraft->tech) && campaign->marketDef->numAircraft[i] > 0) {
+			Com_Printf("BS_InitMarket: Could not add aircraft %s to the market - not marked as researched in campaign %s\n",
 					aircraft->id, campaign->id);
-		else
+			campaign->marketDef->numAircraft[i] = 0;
+			ccs.eMarket.numAircraft[i] = 0;
+		} else {
 			/* the other relevant values were already set above */
 			ccs.eMarket.numAircraft[i] = campaign->marketDef->numAircraft[i];
+		}
 	}
 }
 
