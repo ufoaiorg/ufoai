@@ -3168,16 +3168,16 @@ base/sound/footsteps/wood1.ogg | Creative Commons Attribution-Share Alike 2.0 | 
 base/sound/footsteps/wood2.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/footsteps/wood3.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/footsteps/wood4.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
-base/sound/geoscape/alarm.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/geoscape/alien-activity.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/geoscape/attack.ogg | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/basealert.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/geoscape/build-place.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
-base/sound/geoscape/info.ogg | GNU General Public License 2.0 | BlakeD
+base/sound/geoscape/info.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/geoscape/mail.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/geoscape/newmission.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/geoscape/promotion.ogg |  |  | ambience/jingle.ogg
 base/sound/geoscape/standard.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
-base/sound/geoscape/ufospotted.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/geoscape/ufospotted.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/gui/beep1.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/gui/beep2.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/gui/click1.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
@@ -3267,7 +3267,6 @@ base/sound/weapons/medikit.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/melee-swoosh.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/melee-throw.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/weapons/pbeam_rocket.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/pbeamcannon_explosive.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/weapons/plasma-huge.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/plasma-large.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/weapons/plasma-medium.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
