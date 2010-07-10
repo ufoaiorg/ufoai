@@ -130,6 +130,7 @@ static char textStandard[2048];		/**< Buffer to display standard text in geoscap
 static int centerOnEventIdx;		/**< Current Event centered on 3D geoscape */
 
 /* Colors */
+static const vec4_t green = {0.0f, 1.0f, 0.0f, 0.8f};
 static const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 static const vec4_t red = {1.0f, 0.0f, 0.0f, 0.8f};
 
@@ -1363,7 +1364,6 @@ static void MAP_SmoothTranslate (void)
 static void MAP_DrawBullets (const menuNode_t* node, const vec3_t pos)
 {
 	int x, y;
-	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 
 	if (MAP_AllMapToScreen(node, pos, &x, &y, NULL))
 		R_DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, yellow);
@@ -1535,6 +1535,40 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
 }
 
 /**
+ * @brief Draws health bar for an aircraft (either phalanx or ufo)
+ * @param[in] node Pointer to the meunode to draw in
+ * @param[in] aircraft Pointer to the aircraft to draw for
+ * @note if max health (AIR_STATS_DAMAGE) <= 0 no healthbar drawn
+ */
+static void MAP_DrawAircraftHealthBar (const menuNode_t* node, const aircraft_t *aircraft) {
+	const vec4_t bordercolor = {1, 1, 1, 1};
+	const int width = 8 * ccs.zoom;
+	const int height = 1 * ccs.zoom * 0.9;
+	vec4_t color;
+	int centerX;
+	int centerY;
+
+	if (!aircraft)
+		return;
+	if (aircraft->stats[AIR_STATS_DAMAGE] <= 0)
+		return;
+
+	if (((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE]) <= .33) {
+		Vector4Copy(red, color);
+	} else if (((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE]) <= .75) {
+		Vector4Copy(yellow, color);
+	} else {
+		Vector4Copy(green, color);
+	}
+
+	MAP_AllMapToScreen(node, aircraft->pos, &centerX, &centerY, NULL);
+
+	R_DrawFill(centerX - width / 2 , centerY - 5 * ccs.zoom, round(width * ((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE])), height, color);
+	R_DrawRect(centerX - width / 2, centerY - 5 * ccs.zoom, width, height, bordercolor, 1.0, 1);
+
+}
+
+/**
  * @brief Draws one Phalanx aircraft on the geoscape map (2D and 3D)
  * @param[in] node The menu node which will be used for drawing markers.
  * @param[in] aircraft Pointer to the aircraft to draw.
@@ -1542,7 +1576,6 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
  */
 static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *aircraft, qboolean oneUFOVisible)
 {
-	int x, y;
 	float angle;
 
 	/* Draw aircraft radar (only the "wire" style part) */
@@ -1577,6 +1610,9 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 	/* Draw a circle around selected aircraft */
 	if (aircraft == ccs.selectedAircraft) {
 		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
+		int x;
+		int y;
+
 		if (cl_3dmap->integer)
 			MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 		else
@@ -1594,6 +1630,9 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 	/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
 	MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 	VectorCopy(aircraft->pos, aircraft->oldDrawPos);
+
+	if (Cvar_GetInteger("showcrafthealth") >= 1)
+		MAP_DrawAircraftHealthBar(node, aircraft);
 }
 
 /**
@@ -1819,6 +1858,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			}
 			MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 			VectorCopy(aircraft->pos, aircraft->oldDrawPos);
+			if ((RS_IsResearched_ptr(aircraft->tech) && Cvar_GetInteger("showcrafthealth") >= 1)
+			 || Cvar_GetInteger("debug_showufohealth") == 1)
+				MAP_DrawAircraftHealthBar(node, aircraft);
 		}
 	}
 
