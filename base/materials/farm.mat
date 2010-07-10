@@ -123,7 +123,6 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	{
-		envmap 0
 		lightmap
 	}
 }
@@ -271,7 +270,6 @@
 	}
 	{
 		lightmap
-		envmap 0
 	}
 
 }
@@ -338,7 +336,6 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	{
-		envmap 0
 		lightmap
 	}
 }
@@ -382,6 +379,77 @@
 		texture pt/fx/fx2_10_1a0
 		anim 14 19.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+
+/* ufo2_12: Engines & Powersource (Corrupter & Bomber) */
+{
+	material tex_ufo/ufo2_12
+	bump 2.0
+	hardness 0.2
+	parallax 1.5
+	specular 1.5
+	/* fx Animation (green/yellow animation #2) */
+	{
+		texture pt/fx/fx2_12_1a0
+		anim 16 18.5
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Additional flare (green) */
+	{
+		flare 2
+		color 0.1 0.6 0.0
+		scale.s 0.6
+	}
+}
+
+/* ufo2_17: Small widescreen monitor with buttons (Corrupter, Bomber) */
+{
+	material tex_ufo/ufo2_17
+	bump 1.0
+	hardness 0.8
+	parallax 1.0
+	specular 5.0
+	/* Buttons skin */
+	{
+		texture pt/sk/usk2_17_1_2a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Clear screen */ 
+	{
+		texture pt/cs/s2_17_0_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* 3 small buttons animation (top right) */
+	{
+		texture pt/b/b2_17_0b0
+		anim 16 2.5
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		pulse 0.5
+	}
+	/* 3 small buttons animation (bottom left) */
+	{
+		texture pt/b/b2_17_1b0
+		anim 16 10.0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		pulse 2.0
+	}
+	/* 7 small buttons alternating animation (bottom right) */
+	{
+		texture pt/b/b2_17_2a0
+		anima 9 6.3
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Screen overlay animation (blue text) */
+	{
+		texture pt/so/so2_17_0_a0
+		anim 16 5.5
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	{
+		lightmap
 	}
 }
 
