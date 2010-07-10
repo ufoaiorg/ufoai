@@ -1,0 +1,18 @@
+/* land_li_yellow: big yellow light with additional flare effect (used outside) */
+{
+	material tex_lights/land_li_yellow
+	{
+		texture tex_lights/land_li_yellow
+		color 1.0 1.0 0.7
+		flare 2
+	}
+}
+/* land_li_yellow2: small yellow light with additional flare effect (used inside the catacombs) */
+{
+	material tex_lights/land_li_yellow2
+	{
+		texture tex_lights/land_li_yellow2
+		color 1.0 1.0 0.7
+		flare 5
+	}
+}
