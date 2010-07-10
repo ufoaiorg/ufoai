@@ -1307,10 +1307,13 @@ base/models/objects/trucks/truck/truck.jpg | GNU General Public License 2.0 or l
 base/models/objects/trucks/truck/truck.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/trucks/truck2/fuel.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/trucks/truck2/fuel.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/trucks/truck2/fuel_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/trucks/truck2/load.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/trucks/truck2/load.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/trucks/truck2/load_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/trucks/truck2/truck.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/trucks/truck2/truck.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/trucks/truck2/truck_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/trucks/watertruck/watertruck.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/trucks/watertruck/watertruck.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/trucks/watertruck/watertruck_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
