@@ -106,9 +106,6 @@
 		texture pt/sk/usk2_05_0_0b0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		pulse 0.2
-		lightmap
-	}
-	{
 		envmap 0
 		lightmap
 	}
@@ -130,18 +127,6 @@
 	/* Skin around 3 small buttons (position top left) */
 	{
 		texture pt/b/b2_06_0_sk0a0
-		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		lightmap
-	}
-	/* Skin around 2 middle buttons (positions top left & bottom left) */
-	{
-		texture pt/b/b2_06_1_sk0a0
-		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		lightmap
-	}
-	/* Skin around 2 middle buttons #2 (positions top left & bottom right) */
-	{
-		texture pt/b/b2_06_2_sk0a0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		lightmap
 	}
@@ -186,18 +171,6 @@
 	{
 		texture pt/b/b2_06_0a0
 		anim 13 2.6
-		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-	}
-	/* 2 middle buttons (top left & bottom left) alternating animation (red)*/
-	{
-		texture pt/b/b2_06_1a0
-		anima 6 9.0
-		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-	}
-	/* 2 middle buttons #2 (top left & bottom right) alternating animation (red/blue) */
-	{
-		texture pt/b/b2_06_2a0
-		anima 6 14.5
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* Sixpack of buttons (top) randomized animation (red-blue) */
