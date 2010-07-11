@@ -317,6 +317,12 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 
 	r_state.dynamic_lighting_enabled = qtrue;
 
+
+	if (!r_state.glowmap_enabled)
+		R_ProgramParameter1f("GLOWSCALE", 0.0);
+	else 
+		R_ProgramParameter1f("GLOWSCALE", 1.0);
+
 	R_EnableAttribute("TANGENTS");
 	R_ProgramParameter1i("DYNAMICLIGHTS", 1);
 
@@ -544,8 +550,8 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 	if (enable && image != NULL)
 		R_BindTextureForTexUnit(image->texnum, &texunit_glowmap);
 
-	/*if (r_state.glowmap_enabled == enable)
-		return;*/
+	if (!enable && r_state.glowmap_enabled == enable)
+		return;
 
 	r_state.glowmap_enabled = enable;
 
