@@ -114,10 +114,12 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 	R_BindTexture(image->texnum);  /* texture */
 
 	if (!r_state.build_shadowmap_enabled) {
+#if 0
 		if (texunit_lightmap.enabled) {  /* lightmap */
 			if (surf->flags & MSURF_LIGHTMAP)
 				R_BindLightmapTexture(surf->lightmap_texnum);
 		}
+#endif
 
 		R_SetSurfaceBumpMappingParameters(surf, image->normalmap);
 
@@ -156,7 +158,7 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 	int i;
 
 	/* @todo: at the moment, all BSP surfaces should have lightmaps, but that might change */
-	R_EnableLightmap(qtrue);
+	//R_EnableLightmap(qtrue);
 
 	for (i = 0; i < surfs->count; i++) {
 		if (r_locals.framecheck && surfs->surfaces[i]->frame != r_locals.frame)
@@ -174,7 +176,7 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 	if (r_state.glowmap_enabled)
 		R_EnableGlowMap(NULL, qfalse);
 
-	R_EnableLightmap(qfalse);
+	//R_EnableLightmap(qfalse);
 
 	/* and restore array pointers */
 	R_ResetArrayState();
@@ -191,12 +193,12 @@ void R_DrawOpaqueSurfaces (const mBspSurfaces_t *surfs)
 	if (!surfs->count)
 		return;
 
-	R_EnableTexture(&texunit_lightmap, qtrue);
-	R_EnableLighting(r_state.world_program, qtrue);
+	//R_EnableTexture(&texunit_lightmap, qtrue);
+	//R_EnableLighting(r_state.world_program, qtrue);
 	R_DrawSurfaces(surfs);
-	R_EnableLighting(NULL, qfalse);
+	//R_EnableLighting(NULL, qfalse);
 
-	R_EnableTexture(&texunit_lightmap, qfalse);
+	//R_EnableTexture(&texunit_lightmap, qfalse);
 }
 
 /**
@@ -208,9 +210,10 @@ void R_DrawOpaqueWarpSurfaces (mBspSurfaces_t *surfs)
 	if (!surfs->count)
 		return;
 
-	R_EnableWarp(r_state.warp_program, qtrue);
+	/* @todo - fix warp surfaces */
+	//R_EnableWarp(r_state.warp_program, qtrue);
 	R_DrawSurfaces(surfs);
-	R_EnableWarp(NULL, qfalse);
+	//R_EnableWarp(NULL, qfalse);
 }
 
 void R_DrawAlphaTestSurfaces (mBspSurfaces_t *surfs)
@@ -219,9 +222,9 @@ void R_DrawAlphaTestSurfaces (mBspSurfaces_t *surfs)
 		return;
 
 	R_EnableAlphaTest(qtrue);
-	R_EnableLighting(r_state.world_program, qtrue);
+	//R_EnableLighting(r_state.world_program, qtrue);
 	R_DrawSurfaces(surfs);
-	R_EnableLighting(NULL, qfalse);
+	//R_EnableLighting(NULL, qfalse);
 	R_EnableAlphaTest(qfalse);
 }
 
@@ -235,9 +238,9 @@ void R_DrawBlendSurfaces (const mBspSurfaces_t *surfs)
 		return;
 
 	assert(r_state.blend_enabled);
-	R_EnableTexture(&texunit_lightmap, qtrue);
+	//R_EnableTexture(&texunit_lightmap, qtrue);
 	R_DrawSurfaces(surfs);
-	R_EnableTexture(&texunit_lightmap, qfalse);
+	//R_EnableTexture(&texunit_lightmap, qfalse);
 }
 
 /**
@@ -250,7 +253,7 @@ void R_DrawBlendWarpSurfaces (mBspSurfaces_t *surfs)
 		return;
 
 	assert(r_state.blend_enabled);
-	R_EnableWarp(r_state.warp_program, qtrue);
+	//R_EnableWarp(r_state.warp_program, qtrue);
 	R_DrawSurfaces(surfs);
-	R_EnableWarp(NULL, qfalse);
+	//R_EnableWarp(NULL, qfalse);
 }

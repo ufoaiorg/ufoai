@@ -26,11 +26,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_STATE_H
 #define R_STATE_H
 
+struct r_framebuffer_s;
+
 #include "r_program.h"
 #include "r_material.h"
 #include "r_framebuffer.h"
 #include "r_light.h"
 #include "r_entity.h"
+#include "r_viewport.h"
+#include "r_viewpoint.h"
 
 /* vertex arrays are used for many things */
 #define MAX_GL_ARRAY_LENGTH 0x40000
@@ -44,6 +48,7 @@ typedef struct gltexunit_s {
 	GLenum texenv;		/**< e.g. GL_MODULATE */
 	GLfloat texcoord_array[MAX_GL_ARRAY_LENGTH * 2];
 } gltexunit_t;
+
 
 #define MAX_GL_TEXUNITS		8
 
@@ -73,6 +78,8 @@ typedef struct gltexunit_s {
 typedef struct {
 	qboolean fullscreen;
 
+	viewpoint_t camera;
+
 	/* arrays */
 	GLfloat vertex_array_3d[MAX_GL_ARRAY_LENGTH * 3];
 	GLshort vertex_array_2d[MAX_GL_ARRAY_LENGTH * 2];
@@ -88,21 +95,23 @@ typedef struct {
 
 	/* lights */
 	r_light_t dynamicLights[MAX_DYNAMIC_LIGHTS];
+	r_light_t *active_light;
 	int numActiveLights;
 
 	entity_t world_entity;
 	entity_t *active_entity;
 
 	/* framebuffer objects*/
-	r_framebuffer_t *renderBuffer;
-	r_framebuffer_t *bloomBuffer0;
-	r_framebuffer_t *bloomBuffer1;
-	r_framebuffer_t *buffers0[DOWNSAMPLE_PASSES];
-	r_framebuffer_t *buffers1[DOWNSAMPLE_PASSES];
-	r_framebuffer_t *buffers2[DOWNSAMPLE_PASSES];
-	r_framebuffer_t *shadowmapBuffer;
-	r_framebuffer_t *shadowmapBlur1;
-	r_framebuffer_t *shadowmapBlur2;
+	struct r_framebuffer_s *renderBuffer;
+	struct r_framebuffer_s *bloomBuffer0;
+	struct r_framebuffer_s *bloomBuffer1;
+	struct r_framebuffer_s *buffers0[DOWNSAMPLE_PASSES];
+	struct r_framebuffer_s *buffers1[DOWNSAMPLE_PASSES];
+	struct r_framebuffer_s *buffers2[DOWNSAMPLE_PASSES];
+	struct r_framebuffer_s *shadowMapBuffer;
+	struct r_framebuffer_s *shadowMapBlur1;
+	struct r_framebuffer_s *shadowMapBlur2;
+	struct r_framebuffer_s *shadowCubeMapBuffer;
 
 	/* texunit in use */
 	gltexunit_t *active_texunit;
@@ -110,6 +119,7 @@ typedef struct {
 	r_shader_t shaders[MAX_SHADERS];
 	r_program_t programs[MAX_PROGRAMS];
 	r_program_t *world_program;
+	r_program_t *lighting_program;
 	r_program_t *warp_program;
 	r_program_t *geoscape_program;
 	r_program_t *convolve_program;
@@ -118,6 +128,8 @@ typedef struct {
 	r_program_t *simple_glow_program;
 	r_program_t *build_shadowmap_program;
 	r_program_t *battlescape_program;
+	r_program_t *build_shadowmap_flat_program;
+	r_program_t *build_shadowmap_cube_program;
 	r_program_t *active_program;
 
 	/* blend function */
@@ -176,16 +188,21 @@ qboolean R_EnableLighting(r_program_t *program, qboolean enable);
 void R_EnableLightmap(qboolean enable);
 void R_EnableBumpmap(const image_t *normalmap, qboolean enable);
 void R_EnableWarp(r_program_t *program, qboolean enable);
-void R_EnableBlur(r_program_t *program, qboolean enable, r_framebuffer_t *source, r_framebuffer_t *dest, int dir);
+void R_EnableBlur(r_program_t *program, qboolean enable, struct r_framebuffer_s *source, struct r_framebuffer_s *dest, int dir);
 void R_EnableShell(qboolean enable);
 void R_EnableFog(qboolean enable);
 void R_EnableDrawAsGlow(qboolean enable);
 void R_EnableGlowMap(const image_t *image, qboolean enable);
-void R_EnableDynamicLights(entity_t *ent, qboolean enable);
+void R_EnableDynamicLights(r_light_t *l, qboolean enable);
+void R_EnableShadowTransform(const entity_t *ent);
+void R_EnableStaticLights(qboolean enable);
 void R_EnableSpecularMap(const image_t *image, qboolean enable);
 void R_EnableRoughnessMap(const image_t *image, qboolean enable);
 void R_EnableAnimation(const mAliasMesh_t *mesh, float backlerp, qboolean enable);
 void R_EnableBuildShadowmap(qboolean enable, const r_light_t *light);
 void R_EnableUseShadowmap(qboolean enable);
+void R_UseViewpoint(const viewpoint_t *vp);
+void R_SetupViewpoint(r_light_t *light);
+void R_SetupCameraViewpoint(void);
 
 #endif

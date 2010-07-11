@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_program.h"
 #include "r_error.h"
+#include "r_viewpoint.h"
 
 /* useful for particles, pics, etc.. */
 const float default_texcoords[] = {
@@ -191,17 +192,17 @@ void R_BlendFunc (GLenum src, GLenum dest)
 
 void R_EnableBlend (qboolean enable)
 {
-	if (r_state.blend_enabled == enable)
+	if (r_state.blend_enabled == enable || r_state.dynamic_lighting_enabled)
 		return;
 
 	r_state.blend_enabled = enable;
 
 	if (enable) {
 		glEnable(GL_BLEND);
-		glDepthMask(GL_FALSE);
+		//glDepthMask(GL_FALSE);
 	} else {
 		glDisable(GL_BLEND);
-		glDepthMask(GL_TRUE);
+		//glDepthMask(GL_TRUE);
 	}
 }
 
@@ -273,10 +274,6 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 	if (enable && (!program || !program->id))
 		return r_state.lighting_enabled;
 
-	//if (program == r_state.world_program)
-	//	program = r_state.battlescape_program;
-
-
 	if (!r_lights->integer || (r_state.lighting_enabled == enable && r_state.active_program == program))
 		return r_state.lighting_enabled;
 
@@ -287,8 +284,8 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 
 		glEnableClientState(GL_NORMAL_ARRAY);
 
-		if (r_state.active_program == r_state.world_program || r_state.battlescape_program) {
-			R_EnableDynamicLights(r_state.active_entity, qtrue);
+		if (r_state.active_program == r_state.world_program) {
+			//R_EnableDynamicLights(r_state.active_entity, qtrue);
 			if (r_state.build_shadowmap_enabled)
 				R_ProgramParameter1i("BUILD_SHADOWMAP", 1);
 			else
@@ -297,8 +294,8 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
 	} else {
 		glDisableClientState(GL_NORMAL_ARRAY);
 
-		if (r_state.active_program == r_state.world_program || r_state.battlescape_program)
-			R_EnableDynamicLights(NULL, qfalse);
+		//if (r_state.active_program == r_state.world_program || r_state.battlescape_program)
+		//	R_EnableDynamicLights(NULL, qfalse);
 
 		R_UseProgram(NULL);
 	}
@@ -321,33 +318,20 @@ void R_EnableLightmap (qboolean enable)
  * @param ent The entity to enable/disable lighting for
  * @param enable Whether to turn realtime lighting on or off
  */
-void R_EnableDynamicLights (entity_t *ent, qboolean enable)
+void R_EnableDynamicLights (r_light_t *l, qboolean enable)
 {
-	int i, j;
-	r_light_t *l;
-	vec4_t location[MAX_DYNAMIC_LIGHTS];
-	vec4_t ambient[MAX_DYNAMIC_LIGHTS];
-	vec4_t diffuse[MAX_DYNAMIC_LIGHTS];
-	vec4_t specular[MAX_DYNAMIC_LIGHTS];
-	vec3_t attenuation[MAX_DYNAMIC_LIGHTS];
-	float mat[16];
-	int maxLights = r_dynamic_lights->integer;
+	//int i, j;
+	//r_light_t *l;
+	vec3_t attenuation;
+	//float mat[16];
 
-	if (enable)
-		r_state.active_entity = ent;
-
-	if (!enable || !r_state.lighting_enabled || r_state.numActiveLights == 0 || !ent) {
-		if (r_state.lighting_enabled && r_shadowmapping->integer) {
-			R_ProgramParameter1i("SHADOWMAP", 0);
-		}
+	if (!enable || !r_state.lighting_enabled || r_state.numActiveLights == 0) {
 		r_state.dynamic_lighting_enabled = qfalse;
 		return;
 	}
 
-	if (!ent)
-		ent = &r_state.world_entity;
-
 	r_state.dynamic_lighting_enabled = qtrue;
+	r_state.active_light = l;
 
 	R_EnableAttribute("TANGENTS");
 
@@ -356,11 +340,15 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 
 	if (r_state.use_shadowmap_enabled) {
 		R_ProgramParameter1i("SHADOWMAP", 1);
-		R_BindTextureForTexUnit(r_state.shadowmapBuffer->textures[0], &texunit_shadowmap);
-		//R_BindTextureForTexUnit(r_state.shadowmapBuffer->depth, &texunit_shadowmap);
+		R_BindTextureForTexUnit(r_state.shadowMapBuffer->textures[0], &texunit_shadowmap);
 		R_ProgramParameterMat4fv("SHADOW_MATRIX", 1, r_locals.shadow_matrix);
 	}
 
+	if (r_state.glowmap_enabled) {
+		R_ProgramParameter1f("GLOWSCALE", 1.0);
+	} else {
+		R_ProgramParameter1f("GLOWSCALE", 0.0);
+	}
 
 	if (r_state.fog_enabled) {
 		R_ProgramParameter1f("FogDensity", 1.0);
@@ -369,6 +357,7 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 		R_ProgramParameter1f("FogDensity", 0.0);
 	}
 
+#if 0
 	for (i = 0, j = 0; i < maxLights && (i + j) < ent->numLights; i++) {
 		l = ent->lights[i + j];
 		while (!l->enabled && (i+j) < ent->numLights - 1) {
@@ -386,17 +375,65 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 		Vector4Copy(l->ambientColor, ambient[i]);
 		Vector4Copy(l->diffuseColor, diffuse[i]);
 		Vector4Copy(l->specularColor, specular[i]);
-		VectorSet(attenuation[i], l->constantAttenuation, l->linearAttenuation, l->quadraticAttenuation);
 	}
+#endif
 
 	/* pass light info to the shader program */
-	R_ProgramParameter1i("NUM_ACTIVE_LIGHTS", i);
+	//R_ProgramParameter1i("NUM_ACTIVE_LIGHTS", i);
 
-	R_ProgramParameter4fvs("LightLocation", i, (GLfloat*)&location[0]);
-	R_ProgramParameter4fvs("LightAmbient", i, (GLfloat*)&ambient[0]);
-	R_ProgramParameter4fvs("LightDiffuse", i, (GLfloat*)&diffuse[0]);
-	R_ProgramParameter4fvs("LightSpecular", i, (GLfloat*)&specular[0]);
-	R_ProgramParameter3fvs("LightAttenuation", i, (GLfloat*)&attenuation[0]);
+	R_ProgramParameter4fv("LightLocation", (GLfloat*)l->loc);
+	R_ProgramParameter4fv("LightAmbient", (GLfloat*)l->ambientColor);
+	R_ProgramParameter4fv("LightDiffuse", (GLfloat*)l->diffuseColor);
+	R_ProgramParameter4fv("LightSpecular", (GLfloat*)l->specularColor);
+	VectorSet(attenuation, l->constantAttenuation, l->linearAttenuation, l->quadraticAttenuation);
+	R_ProgramParameter3fv("LightAttenuation", (GLfloat*)attenuation);
+}
+
+void R_EnableShadowTransform (const entity_t *ent)
+{
+	vec4_t location;
+
+	if (!r_state.dynamic_lighting_enabled)
+		return;
+
+	if (ent->transform.done) {
+		float mat[16];
+		GLMatrixInvertTR(ent->transform.matrix, mat);
+		GLVectorTransform(mat, r_state.active_light->loc, location);
+	} else {
+		Vector4Copy(r_state.active_light->loc, location);
+	}
+	R_ProgramParameter4fv("LightLocation", (GLfloat*)location);
+
+}
+
+void R_EnableStaticLights (qboolean enable) {
+	r_light_t *l = &r_state.dynamicLights[0];
+	/* @todo - use more than one light? */
+
+	if (!enable) {
+		glDisable(GL_LIGHTING);
+	}
+
+	if (r_state.lighting_enabled) {
+		/* use GLSL */
+
+	} else {
+		/* use the fixed pipeline */
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT0);
+		glLightfv(GL_LIGHT0, GL_AMBIENT, l->ambientColor);
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, l->diffuseColor);
+		glLightfv(GL_LIGHT0, GL_SPECULAR, l->specularColor);
+		glLightfv(GL_LIGHT0, GL_POSITION, l->loc);
+		if (l->loc[3] != 0.0) {
+			if (l->type == DIRECTIONAL_LIGHT) {
+				Com_Error(ERR_DROP, "directional light with non-zero 4th component for fixed pipeline");
+			}
+			Com_Error(ERR_DROP, "non-directional lightsource for fixed pipeline");
+		}
+	}
+
 }
 
 /**
@@ -591,10 +628,13 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 	if (!r_postprocess->integer || r_state.build_shadowmap_enabled)
 		return;
 
+	if (!r_state.lighting_enabled)
+		return;
+
 	if (enable && image != NULL)
 		R_BindTextureForTexUnit(image->texnum, &texunit_glowmap);
 
-	if (r_state.glowmap_enabled == enable)
+	if (!enable && r_state.glowmap_enabled == enable)
 		return;
 
 	r_state.glowmap_enabled = enable;
@@ -617,14 +657,15 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 
 		if (r_state.draw_glow_enabled)
 			R_BindColorAttachments(1, &glowRenderTarget);
-		else
-			R_DrawBuffers(1);
+		//else
+		//	R_DrawBuffers(1);
 	}
 }
 
 void R_EnableDrawAsGlow (qboolean enable)
 {
 	static GLenum glowRenderTarget = GL_COLOR_ATTACHMENT1_EXT;
+	Com_Printf("EnableDrawAsGlow\n");
 
 	if (!r_postprocess->integer || r_state.draw_glow_enabled == enable || r_state.build_shadowmap_enabled)
 		return;
@@ -749,11 +790,170 @@ static void R_SetupCameraMatrix (void)
 	glTranslatef(-refdef.viewOrigin[0], -refdef.viewOrigin[1], -refdef.viewOrigin[2]);
 }
 
-#define MAX_SHADOW_SIZE 1600
-#define SHADOW_SPLITS 5
+void R_UseViewpoint (const viewpoint_t *vp) 
+{
+	glViewport(vp->viewport.x, vp->viewport.y, vp->viewport.width, vp->viewport.height);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(vp->projMat);
+	//glMultMatrixf(vp->projMat);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(vp->modelviewMat);
+	//glMultMatrixf(vp->modelviewMat);
+}
+
+
 #define MAT_I4  { 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 }
 
-void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
+void R_SetupCameraViewpoint (void)
+{
+	viewpoint_t *vp = &r_state.camera;
+	int x, x2, y2, y, w, h;
+
+	/* set up viewport */
+	x = floor(viddef.x * viddef.width / viddef.width);
+	x2 = ceil((viddef.x + viddef.viewWidth) * viddef.width / viddef.width);
+	y = floor(viddef.height - viddef.y * viddef.height / viddef.height);
+	y2 = ceil(viddef.height - (viddef.y + viddef.viewHeight) * viddef.height / viddef.height);
+
+	w = x2 - x;
+	h = y - y2;
+
+	vp->viewport.x = x;
+	vp->viewport.y = y2;
+	vp->viewport.width = w;
+	vp->viewport.height = h;
+
+	VectorCopy(refdef.viewOrigin, vp->viewOrigin);
+	VectorCopy(refdef.viewAngles, vp->viewAngles);
+
+	/* set up projection matrix */
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	MYgluPerspective(44.0, MAX_WORLD_WIDTH);
+	glGetFloatv(GL_PROJECTION_MATRIX, vp->projMat);
+	/* @todo - legacy code; try to remove this next line */
+	glGetFloatv(GL_PROJECTION_MATRIX, r_locals.proj_matrix);
+	glPopMatrix();
+
+	/* set up the modelview matrix */
+	glMatrixMode(GL_MODELVIEW_MATRIX);
+	glPushMatrix();
+	R_SetupCameraMatrix();
+	glGetFloatv(GL_MODELVIEW_MATRIX, vp->modelviewMat);
+	/* @todo - legacy code; try to remove this next line */
+	glGetFloatv(GL_MODELVIEW_MATRIX, r_locals.world_matrix);
+	glPopMatrix();
+}
+
+void R_SetupViewpoint (r_light_t *light)
+{
+	int i, j;
+	vec3_t up = {0.0, 0.0, 1.0};
+	vec3_t target, lightDir, lightPos;
+	vec3_t R[3];
+	viewpoint_t *vp = &(light->viewpoint);
+
+
+	if (light->type == DIRECTIONAL_LIGHT) {
+		vp->viewport = r_state.shadowMapBuffer->viewport;
+	} else {
+		vp->viewport = r_state.shadowCubeMapBuffer->viewport;
+	}
+
+
+	/* setup modelview matrix for the viewpoint */
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+	VectorCopy(light->loc, lightPos);
+	VectorSet(target, 0, 0, 0);
+	if (light->type == DIRECTIONAL_LIGHT) {
+		VectorMul(-1.0, lightPos, lightPos);
+		VectorNormalize2(lightPos, lightDir);
+		VectorAdd(lightPos, target, lightPos);
+	} else {
+		/* @todo - fix "target" if neccessary */
+		VectorSubtract(target, lightPos, lightDir);
+		VectorNormalize(lightDir);
+	}
+
+	VectorCopy(lightPos, vp->viewOrigin);
+
+	if (DotProduct(lightDir, up) > 0.75)
+		VectorSet(up, 0.0, 1.0, 0.0);
+	MYgluLookAt(lightPos, target, up);
+
+	glGetFloatv(GL_MODELVIEW_MATRIX, vp->modelviewMat);
+	glPopMatrix();
+
+	/* invert matricies for computing shadow-projections */
+
+	for (i = 0; i < 3; i++) {
+		for (j = 0; j < 3; j++) {
+			R[i][j] = vp->modelviewMat[i*4+j];
+		}
+	}
+
+	/* set up projection matrix for the viewpoint */
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	if (light->type == DIRECTIONAL_LIGHT ) {
+		vec3_t corners[8];
+		vec3_t cornersRot[8];
+		vec3_t a = {HUGE_VAL, HUGE_VAL, HUGE_VAL};
+		vec3_t b = {-HUGE_VAL, -HUGE_VAL, -HUGE_VAL};
+
+		for (i = 0; i < 4; i++) {
+			VectorCopy(r_locals.mins, corners[i]);
+			VectorCopy(r_locals.maxs, corners[i+4]);
+		}
+
+		for (i = 0; i < 3; i++) {
+			corners[i][i] = r_locals.maxs[i];
+			corners[i+4][i] = r_locals.mins[i];
+		}
+
+		for (i = 0; i < 8; i++) {
+			VectorRotate(R, corners[i], cornersRot[i]);
+		}
+
+		for (i = 0; i < 8; i++) {
+			for (j = 0; j < 3; j++) {
+				a[j] = min(a[j], cornersRot[i][j]);
+				b[j] = max(b[j], cornersRot[i][j]);
+			}
+
+		}
+
+		glOrtho(a[0], b[0], a[1], b[1], a[2], b[2]);
+	} else {
+		/* @todo - handle this case better */
+		GLdouble zNear = 4.0;
+		GLdouble zFar = MAX_WORLD_WIDTH;
+		GLdouble xmin, xmax, ymin, ymax;
+		const double yaspect = (double) vp->fieldOfViewY / vp->fieldOfViewX;
+		xmax = zNear * tan(vp->fieldOfViewX * (M_PI / 360.0));
+		xmin = -xmax;
+
+		ymin = xmin * yaspect;
+		ymax = xmax * yaspect;
+
+		glFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
+		Com_Printf("WARNING: non-directional light source!\n");
+	}
+
+	glGetFloatv(GL_PROJECTION_MATRIX, vp->projMat);
+	glPopMatrix();
+
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) 
+{
 	int i, j;
 
 	if (!r_shadowmapping->integer)
@@ -764,123 +964,67 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 		return;
 	}
 
-	if (r_state.build_shadowmap_enabled == enable)
+	if (enable && r_state.build_shadowmap_enabled == qtrue) {
+		Com_Printf("Error: R_EnableBuildShadowmap called when build_shadowmap was already active!\n");
 		return;
+	}
+
+	if (r_state.build_shadowmap_enabled == enable) {
+		if (enable) 
+			Com_Printf("Error: R_EnableBuildShadowmap called when build_shadowmap was already active!\n");
+		return;
+	}
 
 	r_state.build_shadowmap_enabled = enable;
 
 	if (enable) {
-		float modelView[16];
-		float projection[16];
+		/* set up for rendering to a shadowmap */
+		const viewpoint_t *vp = &light->viewpoint;
 		float M1[16] = MAT_I4;
 		const GLfloat bias[16] = {	0.5, 0.0, 0.0, 0.0,
 									0.0, 0.5, 0.0, 0.0,
 									0.0, 0.0, 0.5, 0.0,
 									0.5, 0.5, 0.5, 1.0 };
-		vec3_t up = {0.0, 0.0, 1.0};
-		vec3_t target, lightDir, lightPos;
-		vec3_t R[3];
 
-		/* get the camera matrix for shadow-space transform */
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		glLoadIdentity();
-		R_SetupCameraMatrix();
-		glGetFloatv(GL_MODELVIEW_MATRIX, r_locals.world_matrix);
-		glPopMatrix();
-
-
-		R_EnableShadowbuffer(qtrue);
-		//R_UseProgram(r_state.build_shadowmap_program);
-		glEnable(GL_DEPTH_TEST);
-
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		glLoadIdentity();
-		VectorCopy(light->loc, lightPos);
-		VectorSet(target, 0, 0, 0);
-		if (light->loc[3] == 0) {
-			VectorMul(-1.0, lightPos, lightPos);
-			VectorNormalize2(lightPos, lightDir);
-			VectorAdd(lightPos, target, lightPos);
+		if (light->type == DIRECTIONAL_LIGHT) {
+			R_EnableShadowbuffer(qtrue, r_state.shadowMapBuffer);
 		} else {
-			VectorSubtract(target, lightPos, lightDir);
-			VectorNormalize(lightDir);
+			R_EnableShadowbuffer(qtrue, r_state.shadowCubeMapBuffer);
 		}
+		//R_UseProgram(r_state.build_shadowmap_program);
 
-		if (DotProduct(lightDir, up) > 0.75)
-			VectorSet(up, 0.0, 1.0, 0.0);
-		MYgluLookAt(lightPos, target, up);
-
-		glGetFloatv(GL_MODELVIEW_MATRIX, modelView);
-
-		for (i = 0; i < 3; i++) {
-			for (j = 0; j < 3; j++) {
-				M1[i*4+j] = r_locals.world_matrix[j*4+i];
-				R[i][j] = modelView[i*4+j];
-			}
-		}
-		for (i = 0; i < 3; i++) {
-			M1[12+i] = refdef.viewOrigin[i];
-		}
-
-		/* set up matrixes for the light source as viewpoint */
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
-		glLoadIdentity();
-		if (light->loc[3] == 0) {
-			vec3_t corners[8];
-			vec3_t cornersRot[8];
-			vec3_t a = {HUGE_VAL, HUGE_VAL, HUGE_VAL};
-			vec3_t b = {-HUGE_VAL, -HUGE_VAL, -HUGE_VAL};
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		R_UseViewpoint(&light->viewpoint);
 
-			for (i = 0; i < 4; i++) {
-				VectorCopy(r_locals.mins, corners[i]);
-				VectorCopy(r_locals.maxs, corners[i+4]);
+		/* invert camera matrix */
+		for (i = 0; i < 3; i++) {
+			for (j = 0; j < 3; j++) {
+				M1[i*4+j] = r_state.camera.modelviewMat[j*4+i];
 			}
-
-			for (i = 0; i < 3; i++) {
-				corners[i][i] = r_locals.maxs[i];
-				corners[i+4][i] = r_locals.mins[i];
-			}
-			
-			for (i = 0; i < 8; i++) {
-				VectorRotate(R, corners[i], cornersRot[i]);
-			}
-
-			for (i = 0; i < 8; i++) {
-				for (j = 0; j < 3; j++) {
-					a[j] = min(a[j], cornersRot[i][j]);
-					b[j] = max(b[j], cornersRot[i][j]);
-				}
-				
-			}
-
-			glOrtho(a[0], b[0], a[1], b[1], a[2], b[2]);
-
-			R_UseViewport(r_state.shadowmapBuffer);
-		} else {
-			/* @todo - handle this case */
-			MYgluPerspective(4.0, MAX_WORLD_WIDTH);
+		}
+		for (i = 0; i < 3; i++) {
+			M1[12+i] = r_state.camera.viewOrigin[i];
 		}
 
-
-		glGetFloatv(GL_PROJECTION_MATRIX, projection);
-
-
+		/* set up shadow projection matrix */
+#if 1
 		glMatrixMode(GL_TEXTURE);
 		glPushMatrix();
 		glLoadIdentity();
 		glLoadMatrixf(bias);
-		glMultMatrixf(projection);
-		glMultMatrixf(modelView);
+		glMultMatrixf(vp->projMat);
+		glMultMatrixf(vp->modelviewMat);
 		glMultMatrixf(M1);
-
 		glGetFloatv(GL_TEXTURE_MATRIX, r_locals.shadow_matrix);
-
 		glPopMatrix();
-
 		glMatrixMode(GL_MODELVIEW);
+#else
+		/* @todo - we shouldn't actually need to use the GL_TEXTURE matrix */
+		//GLMatrixMultiply();
+#endif
 
 	} else {
 		/* Re-enable standard rendering */
@@ -890,7 +1034,7 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light) {
 		glPopMatrix();
 
 		R_UseProgram(default_program);
-		R_EnableShadowbuffer(qfalse);
+		R_EnableShadowbuffer(qfalse, NULL);
 	}
 
 	R_CheckError();
@@ -908,14 +1052,7 @@ void R_EnableUseShadowmap (qboolean enable)
 
 
 	if (r_state.lighting_enabled) {
-		if (enable) {
-			R_ProgramParameter1i("SHADOWMAP", 1);
-			R_BindTextureForTexUnit(r_state.shadowmapBuffer->textures[0], &texunit_shadowmap);
-			//R_BindTextureForTexUnit(r_state.shadowmapBuffer->depth, &texunit_shadowmap);
-			R_ProgramParameterMat4fv("SHADOW_MATRIX", 1, r_locals.shadow_matrix);
-		} else {
-			R_ProgramParameter1i("SHADOWMAP", 0);
-		}
+		Com_Error(ERR_DROP, "R_EnableUseShadowmap called with lighting active!");
 	}
 }
 
@@ -925,6 +1062,7 @@ void R_EnableUseShadowmap (qboolean enable)
  */
 void R_Setup3D (void)
 {
+#if 0
 	int x, x2, y2, y, w, h;
 
 	/* set up viewport */
@@ -949,6 +1087,7 @@ void R_Setup3D (void)
 	R_SetupCameraMatrix();
 	/* retrieve the resulting matrix for other manipulations  */
 	glGetFloatv(GL_MODELVIEW_MATRIX, r_locals.world_matrix);
+#endif
 	
 	/* set vertex array pointer */
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
@@ -959,6 +1098,9 @@ void R_Setup3D (void)
 
 	/* set up framebuffers for postprocessing */
 	R_EnableRenderbuffer(qtrue);
+
+	R_DrawBuffers(2);
+	R_ClearFramebuffer();
 
 	R_CheckError();
 }

@@ -1393,6 +1393,7 @@ static void R_BlurStack (int levels, r_framebuffer_t ** sources, r_framebuffer_t
 
 		R_UseProgram(i == 0 ? default_program : r_state.combine2_program);
 		R_UseFramebuffer(dests[l]);
+		R_ClearFramebuffer();
 		R_BindTextureForTexUnit(sources[l]->textures[0], &texunit(0));
 		if (i != 0)
 			R_BindTextureForTexUnit(dests[l + 1]->textures[0], &texunit(1));
@@ -1435,6 +1436,7 @@ void R_DrawBloom (void)
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
+	
 
 	if (r_postprocess->integer) {
 
@@ -1446,6 +1448,7 @@ void R_DrawBloom (void)
 		R_Blur(fbo_bloom0, fbo_bloom1, 0, 1);
 
 		R_UseFramebuffer(r_state.buffers0[0]);
+		R_ClearFramebuffer();
 		R_BindTexture(fbo_bloom1->textures[0]);
 		//qglGenerateMipmapEXT(GL_TEXTURE_2D);
 		R_UseViewport(r_state.buffers0[0]);
@@ -1455,6 +1458,7 @@ void R_DrawBloom (void)
 			R_Blur(r_state.buffers0[i - 1], r_state.buffers1[i - 1], 0, 0);
 			R_Blur(r_state.buffers1[i - 1], r_state.buffers2[i - 1], 0, 1);
 			R_UseFramebuffer(r_state.buffers0[i]);
+			R_ClearFramebuffer();
 			R_BindTexture(r_state.buffers2[i - 1]->textures[0]);
 			//qglGenerateMipmapEXT(GL_TEXTURE_2D);
 			R_UseViewport(r_state.buffers0[i]);
@@ -1467,6 +1471,7 @@ void R_DrawBloom (void)
 		/* re-combine the blurred version with the original "glow" image */
 		R_UseProgram(r_state.combine2_program);
 		R_UseFramebuffer(fbo_bloom0);
+		R_ClearFramebuffer();
 		R_BindTextureForTexUnit(fbo_render->textures[1], &texunit(0));
 		R_BindTextureForTexUnit(r_state.buffers1[0]->textures[0], &texunit(1));
 
@@ -1481,6 +1486,7 @@ void R_DrawBloom (void)
 
 	/* draw final result to the screenbuffer */
 	R_UseFramebuffer(fbo_screen);
+	R_ClearFramebuffer();
 	R_UseProgram(r_state.combine2_program);
 
 	R_DrawQuad();

@@ -175,7 +175,7 @@ vec3 LightContribution(in vec4 location,
 vec4 IlluminateFragment(void){
 
 	vec3 totalColor= vec3(0.0);
-	vec2 coords = gl_TexCoord[0].st;
+	vec2 coords = texCoord0.st;
 
 	/* do per-fragment calculations */
 	vec3 V = -normalize(eyedir);
@@ -187,6 +187,8 @@ vec4 IlluminateFragment(void){
 		N.xy *= BUMP;
 		if (PARALLAX > 0.0)
 			coords += vec2(normalMap.a * PARALLAX * 0.04 - 0.02) * V.xy;
+#else 
+		N = vec3(0.0, 0.0, 1.0);
 #endif
 	} else {  /* just use the basic surface normal */
 		N = vec3(0.0, 0.0, 1.0);

@@ -152,6 +152,7 @@ typedef struct ptl_s {
 	vec3_t lightColor;
 	float lightIntensity;
 	float lightSustain;
+	r_light_t *lightsource;
 	int levelFlags;
 
 	int skin;		/**< model skin to use for this particle */

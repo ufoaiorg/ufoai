@@ -452,8 +452,6 @@ void R_DrawAliasModel (entity_t *e)
 	mAliasModel_t *mod = (mAliasModel_t *)&e->model->alias;
 	/* the values are sane here already - see R_DrawEntities */
 	image_t *skin = mod->meshes[e->as.mesh].skins[e->skinnum].skin;
-	const int numSurfs = mod->meshes[e->as.mesh].skins[e->skinnum].numSurfs;
-	mAliasSurface_t **surfs = mod->meshes[e->as.mesh].skins[e->skinnum].surfs;
 	int i;
 	float g;
 	vec4_t color = {0.8, 0.8, 0.8, 1.0};
@@ -467,7 +465,7 @@ void R_DrawAliasModel (entity_t *e)
 		glScalef(e->scale[0], e->scale[1], e->scale[2]);
 
 
-	/* @todo implement "shell" as a surface layer? */
+	/* @todo implement "shell" as a material layer? */
 	if (!r_state.build_shadowmap_enabled) {
 		/* IR goggles override color for entities that are affected */
 		if (refdef.rendererFlags & RDF_IRGOGGLES && e->flags & RF_IRGOGGLES)
@@ -493,59 +491,32 @@ void R_DrawAliasModel (entity_t *e)
 
 	}
 
-	/* @todo - make sure all the stuff we touch here exists */
-#if 0
-
-
-	lodMesh = R_GetLevelOfDetailForModel(e->origin, mod);
-	refdef.aliasCount += lodMesh->num_tris;
-
-	R_EnableDynamicLights(e, qtrue);
-
-	for (i = 0; i < numSurfs; i++) {
-		if (surfs[i]->hidden)
-			continue;
-
-		skin = surfs[i]->image;
-
-		assert(skin->texnum > 0);
-		R_BindTexture(skin->texnum);
-
-		/* @todo - check surface flags, set up alpha blend, etc. if requested */
-		if (!r_state.build_shadowmap_enabled) {
-			R_EnableGlowMap(skin->glowmap, qtrue);
-
-			if (skin->normalmap)
-				R_EnableBumpmap(skin->normalmap, qtrue);
-
-			if (skin->specularmap)
-				R_EnableSpecularMap(skin->specularmap, qtrue);
-
-			if (skin->roughnessmap)
-				R_EnableRoughnessMap(skin->roughnessmap, qtrue);
-		}
-
-		R_DrawAliasMesh(mod, lodMesh, e->as.backlerp, e->as.frame, e->as.oldframe, e->shell, surfs[i]->indexOffset);
-
-	}
-#else
-
 	assert(skin->texnum > 0);
 	R_BindTexture(skin->texnum);
 
-	R_EnableDynamicLights(e, qtrue);
+	//R_EnableDynamicLights(e, qtrue);
+	R_EnableShadowTransform(e);
 
 	if (!r_state.build_shadowmap_enabled) {
-		R_EnableGlowMap(skin->glowmap, qtrue);
+		if (skin->glowmap)
+			R_EnableGlowMap(skin->glowmap, qtrue);
+		else
+			R_EnableGlowMap(NULL, qfalse);
 
 		if (skin->normalmap)
 			R_EnableBumpmap(skin->normalmap, qtrue);
+		else
+			R_EnableBumpmap(NULL, qfalse);
 
 		if (skin->specularmap)
 			R_EnableSpecularMap(skin->specularmap, qtrue);
+		else
+			R_EnableSpecularMap(NULL, qfalse);
 
 		if (skin->roughnessmap)
 			R_EnableRoughnessMap(skin->roughnessmap, qtrue);
+		else
+			R_EnableRoughnessMap(NULL, qfalse);
 	}
 
 	if (!r_state.lighting_enabled)
@@ -570,7 +541,6 @@ void R_DrawAliasModel (entity_t *e)
 	if (r_state.bumpmap_enabled)
 		R_EnableBumpmap(NULL, qfalse);
 
-#endif
 
 	/* show model bounding box */
 	if (r_showbox->integer)

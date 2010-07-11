@@ -146,8 +146,10 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 			surf->frame = r_locals.frame;
 	}
 
+	R_EnableFog(qtrue);
 
-	R_EnableDynamicLights(e, qtrue);
+	//R_EnableDynamicLights(e, qtrue);
+	R_EnableShadowTransform(e);
 
 	R_DrawOpaqueSurfaces(e->model->bsp.opaque_surfaces);
 
@@ -158,7 +160,10 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 	if (!r_state.build_shadowmap_enabled) {
 		R_EnableBlend(qtrue);
 
+		/* @todo - figure out why this causes segfaults in OpenGL library code and re-enable it... */
+#if 0
 		R_DrawMaterialSurfaces(e->model->bsp.material_surfaces);
+#endif
 
 		R_DrawFlareSurfaces(e->model->bsp.flare_surfaces);
 
@@ -195,6 +200,8 @@ void R_DrawBrushModel (const entity_t * e)
 		VectorRotatePoint(modelorg, rotationMatrix);
 	}
 
+	/* @todo - why do we shift particle-based lights here??? if this is
+	 * really needed, it needs to be fixed for the new dynamic light system */
 	R_ShiftLights(e->origin);
 
 	glPushMatrix();

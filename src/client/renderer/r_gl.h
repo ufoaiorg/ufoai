@@ -63,6 +63,7 @@ void (APIENTRY *qglDetachShader)(GLuint prog, GLuint shader);
 void (APIENTRY *qglLinkProgram)(GLuint id);
 void (APIENTRY *qglUseProgram)(GLuint id);
 void (APIENTRY *qglGetProgramiv)(GLuint id, GLenum field, GLuint *dest);
+void (APIENTRY *qglProgramParameteriEXT)(GLuint id, GLenum field, GLuint *dest);
 void (APIENTRY *qglGetProgramInfoLog)(GLuint id, GLuint maxlen, GLuint *len, GLchar *dest);
 GLint (APIENTRY *qglGetUniformLocation)(GLuint id, const GLchar *name);
 void (APIENTRY *qglUniform1i)(GLint location, GLint i);

@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_draw.h"
 #include "r_error.h"
 #include "r_state.h"
+#include "../battlescape/cl_localentity.h"
 
 #define	MAX_ENTITIES	2048
 
@@ -509,6 +510,327 @@ static qboolean R_CullEntity (entity_t *e)
 		return R_CullMeshModel(e);
 }
 
+
+void R_DrawEntityList (const entityListNode_t *cur)
+{
+	if (!r_drawentities->integer)
+		return;
+
+	while (cur) {
+		entity_t *e = cur->ent;
+
+#if DEBUG
+		assert(e != NULL);
+#endif
+
+#if 0
+		if (R_CullEntity(e)) {
+			cur = cur->next;
+			continue;
+		}
+#endif
+
+		R_CalcTransform(e);
+
+		R_UpdateLightList(e);
+
+		R_EnableBlend(qfalse);
+
+		if (!e->model) { /* special and null entities get don't actually have meshes */
+			if (e->flags & RF_BOX) {
+				R_EnableBlend(qtrue);
+				R_DrawBox(e);
+			} else if (e->flags & RF_PATH) {
+				R_EnableBlend(qtrue);
+				R_DrawFloor(e);
+			} else if (e->flags & RF_ARROW) {
+				R_EnableBlend(qtrue);
+				R_DrawArrow(e);
+			} else {
+				R_DrawNullModel(e);
+			}
+		} else {
+			const image_t *skin;
+			switch (e->model->type) {
+				case mod_bsp:
+				case mod_bsp_submodel:
+					R_DrawBrushModel(e);
+					break;
+				case mod_alias_dpm:
+				case mod_alias_md2:
+				case mod_alias_md3:
+				case mod_obj:
+					skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
+					/** @todo activate this once #2890118 is fixed */
+					if (skin == NULL/* || skin->texnum == 0*/)
+						Com_Error(ERR_DROP, "Model '%s' has no skin assigned", e->model->name);
+					if (skin->has_alpha || e->flags & RF_TRANSLUCENT)
+						R_EnableBlend(qtrue);
+
+					R_DrawAliasModel(e);
+					break;
+				default:
+					Com_Error(ERR_DROP, "Unknown model type in R_DrawEntityList: %i", e->model->type);
+					break;
+			}
+		}
+
+		cur = cur->next;
+	}
+}
+
+entityListNode_t * R_ListLevelEntities (void)
+{
+	int i, tile;
+	entityListNode_t *n = NULL;
+	entityListNode_t *head = NULL;
+
+	entityListNode_t *r_bsp_entities, *r_opaque_mesh_entities;
+	entityListNode_t *r_blend_mesh_entities, *r_null_entities;
+	entityListNode_t *r_special_entities;
+	entityListNode_t **chain;
+
+	entity_t *e;
+
+	r_bsp_entities = r_opaque_mesh_entities = r_special_entities =
+		r_blend_mesh_entities = r_null_entities = NULL;
+
+	refdef.numEntities = 0;
+	r_locals.framecheck = qfalse;
+	for (i = 0; i < 3; i++) {
+		r_locals.mins[i] = HUGE_VAL;
+		r_locals.maxs[i] = -HUGE_VAL;
+	}
+	R_GetLevelSurfaceLists();
+
+	/* add map tiles */
+	for (tile = 0; tile < r_numMapTiles; tile++) {
+		e = R_GetFreeEntity();
+		e->model = r_mapTiles[tile];
+		
+		if (e->model->type != mod_bsp)
+			Com_Printf("type=%d", e->model->type);
+
+		VectorSet(e->origin, 0, 0, 0);
+		VectorSet(e->angles, 0, 0, 0);
+		VectorSet(e->scale, 1, 1, 1);
+		e->isOriginBrushModel = qtrue;
+		R_AddEntity(e);
+	}
+	
+	/* add local entities */
+	LM_AddToScene();
+	LE_AddToScene();
+
+	/* create the linked list */
+	for (i = 0; i < refdef.numEntities; i++) {
+		e = &r_entities[i];
+
+		if (!e->model) {
+			if (e->flags & RF_BOX || e->flags & RF_PATH || e->flags & RF_ARROW)
+				chain = &r_special_entities;
+			else
+				chain = &r_null_entities;
+		} else {
+			const image_t *skin;
+			switch (e->model->type) {
+				case mod_bsp:
+				case mod_bsp_submodel:
+					chain = &r_bsp_entities;
+					break;
+				case mod_alias_dpm:
+				case mod_alias_md2:
+				case mod_alias_md3:
+				case mod_obj:
+					skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
+					/** @todo activate this once #2890118 is fixed */
+					if (skin == NULL/* || skin->texnum == 0*/)
+						Com_Error(ERR_DROP, "Model '%s' has no skin assigned", e->model->name);
+					if (skin->has_alpha || e->flags & RF_TRANSLUCENT)
+						chain = &r_blend_mesh_entities;
+					else
+						chain = &r_opaque_mesh_entities;
+					break;
+				default:
+					Com_Error(ERR_DROP, "Unknown model type in R_DrawEntities entity chain: %i", e->model->type);
+					break;
+			}
+		}
+
+		n = (entityListNode_t *)Mem_PoolAlloc(sizeof(entityListNode_t), vid_modelPool, 0);
+		n->ent = e;
+		if (*chain)
+			n->next = *chain;
+		else
+			n->next = NULL;
+		*chain = n;
+	}
+
+
+	n = head = r_bsp_entities;
+	while (n && n->next)
+		n = n->next;
+
+	if (!head)
+		n = head = r_opaque_mesh_entities;
+	else
+		n->next = r_opaque_mesh_entities;
+	while (n && n->next)
+		n = n->next;
+
+	if (!head)
+		n = head = r_blend_mesh_entities;
+	else
+		n->next = r_blend_mesh_entities;
+	while (n && n->next)
+		n = n->next;
+
+	if (!head)
+		n = head = r_special_entities;
+	else
+		n->next = r_special_entities;
+	while (n && n->next)
+		n = n->next;
+
+	if (!head)
+		n = head = r_null_entities;
+	else
+		n->next = r_null_entities;
+
+	return head;
+}
+
+entityListNode_t * R_ListAllEntities (void)
+{
+	int i, tile;
+	entityListNode_t *n = NULL;
+	entityListNode_t *head = NULL;
+
+	entityListNode_t *r_bsp_entities, *r_opaque_mesh_entities;
+	entityListNode_t *r_blend_mesh_entities, *r_null_entities;
+	entityListNode_t *r_special_entities;
+	entityListNode_t **chain;
+
+	entity_t *e;
+
+	r_bsp_entities = r_opaque_mesh_entities = r_special_entities =
+		r_blend_mesh_entities = r_null_entities = NULL;
+
+	refdef.numEntities = 0;
+	r_locals.framecheck = qfalse;
+	for (i = 0; i < 3; i++) {
+		r_locals.mins[i] = HUGE_VAL;
+		r_locals.maxs[i] = -HUGE_VAL;
+	}
+	R_GetAllSurfaceLists();
+
+	/* add map tiles */
+	for (tile = 0; tile < r_numMapTiles; tile++) {
+		e = R_GetFreeEntity();
+		e->model = r_mapTiles[tile];
+		
+		if (e->model->type != mod_bsp)
+			Com_Printf("type=%d", e->model->type);
+
+		VectorSet(e->origin, 0, 0, 0);
+		VectorSet(e->angles, 0, 0, 0);
+		VectorSet(e->scale, 1, 1, 1);
+		e->isOriginBrushModel = qtrue;
+		R_AddEntity(e);
+	}
+	
+	/* add local entities */
+	LM_AddToScene();
+	LE_AddToScene();
+
+	/* create the linked list */
+	for (i = 0; i < refdef.numEntities; i++) {
+		e = &r_entities[i];
+
+		if (!e->model) {
+			if (e->flags & RF_BOX || e->flags & RF_PATH || e->flags & RF_ARROW)
+				chain = &r_special_entities;
+			else
+				chain = &r_null_entities;
+		} else {
+			const image_t *skin;
+			switch (e->model->type) {
+				case mod_bsp:
+				case mod_bsp_submodel:
+					chain = &r_bsp_entities;
+					break;
+				case mod_alias_dpm:
+				case mod_alias_md2:
+				case mod_alias_md3:
+				case mod_obj:
+					skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
+					/** @todo activate this once #2890118 is fixed */
+					if (skin == NULL/* || skin->texnum == 0*/)
+						Com_Error(ERR_DROP, "Model '%s' has no skin assigned", e->model->name);
+					if (skin->has_alpha || e->flags & RF_TRANSLUCENT)
+						chain = &r_blend_mesh_entities;
+					else
+						chain = &r_opaque_mesh_entities;
+					break;
+				default:
+					Com_Error(ERR_DROP, "Unknown model type in R_DrawEntities entity chain: %i", e->model->type);
+					break;
+			}
+		}
+
+		n = (entityListNode_t *)Mem_PoolAlloc(sizeof(entityListNode_t), vid_modelPool, 0);
+		n->ent = e;
+		if (*chain)
+			n->next = *chain;
+		else
+			n->next = NULL;
+		*chain = n;
+	}
+
+
+	n = head = r_bsp_entities;
+	while (n && n->next)
+		n = n->next;
+
+	if (!head)
+		n = head = r_opaque_mesh_entities;
+	else
+		n->next = r_opaque_mesh_entities;
+	while (n && n->next)
+		n = n->next;
+
+	if (!head)
+		n = head = r_blend_mesh_entities;
+	else
+		n->next = r_blend_mesh_entities;
+	while (n && n->next)
+		n = n->next;
+
+	if (!head)
+		n = head = r_special_entities;
+	else
+		n->next = r_special_entities;
+	while (n && n->next)
+		n = n->next;
+
+	if (!head)
+		n = head = r_null_entities;
+	else
+		n->next = r_null_entities;
+
+	return head;
+}
+
+void R_FreeEntityList (entityListNode_t *head)
+{
+	entityListNode_t *n = head;
+	while (n) {
+		entityListNode_t *p = n;
+		n = n->next;
+		Mem_Free(p);
+	}
+}
+
 /**
  * @brief Primary entry point for drawing all entities.
  * @sa R_RenderFrame
@@ -618,10 +940,21 @@ int R_AddEntity (const entity_t *ent)
 		Com_Error(ERR_DROP, "R_AddEntity: MAX_ENTITIES exceeded");
 
 	/* don't add the bsp tiles from random map assemblies */
-	if (ent->model && ent->model->type == mod_bsp)
-		return -1;
+	//if (ent->model && ent->model->type == mod_bsp)
+	//	return -1;
+	//
+	//Com_Printf("numEntities=%d\n", refdef.numEntities + 1);
 
 	r_entities[refdef.numEntities++] = *ent;
 	return refdef.numEntities - 1;
 }
 
+
+void R_AddEntityToList (entityListNode_t *head, entity_t *e)
+{
+	entityListNode_t *ptr = head;
+
+	head = (entityListNode_t *)Mem_PoolAlloc(sizeof(entityListNode_t), vid_modelPool, 0);
+	head->ent = e;
+	head->next = ptr;
+}

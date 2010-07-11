@@ -24,20 +24,18 @@
 #ifndef R_FRAMEBUFFER_H_
 #define R_FRAMEBUFFER_H_
 
-typedef struct {
-	GLint x;
-	GLint y;
-	GLsizei width;
-	GLsizei height;
-} r_viewport_t;
 
-typedef struct {
+#include "r_viewport.h"
+#include "r_state.h"
+
+typedef struct r_framebuffer_s {
 	GLsizei width;
 	GLsizei height;
 	GLfloat clearColor[4];
 	r_viewport_t viewport;
 	GLenum pixelFormat;
 	GLenum byteFormat;
+	GLenum type;
 	GLuint depth;
 	GLuint fbo;
 	GLsizei nTextures;
@@ -57,9 +55,10 @@ void R_UseViewport(const r_framebuffer_t *buf);
 void R_UseFramebuffer(const r_framebuffer_t *buf);
 void R_DrawBuffers(int n);
 void R_BindColorAttachments(int n, GLenum *Attachments);
+void R_ClearFramebuffer(void);
 qboolean R_EnableRenderbuffer(qboolean enable);
 qboolean R_RenderbufferEnabled(void);
-qboolean R_EnableShadowbuffer(qboolean enable);
+qboolean R_EnableShadowbuffer(qboolean enable, const r_framebuffer_t *buf);
 qboolean R_ShadowbufferEnabled(void);
 
 #endif /* R_FRAMEBUFFER_H_ */

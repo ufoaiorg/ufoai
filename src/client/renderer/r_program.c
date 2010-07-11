@@ -28,6 +28,8 @@
 #include "r_error.h"
 #include "../../shared/parse.h"
 #include "../../shared/shared.h"
+#include "r_program.h"
+#include "glext.h"
 
 
 #define SHADER_BUF_SIZE 16384
@@ -625,12 +627,17 @@ r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 	prog->id = qglCreateProgram();
 
 	prog->v = R_LoadShader(GL_VERTEX_SHADER, va("%s_vs.glsl", name));
+	/* @todo - use a cvar and/or something in r_config to check for geometry shader support */
+	prog->g = R_LoadShader(GL_GEOMETRY_SHADER_EXT, va("%s_gs.glsl", name));
 	prog->f = R_LoadShader(GL_FRAGMENT_SHADER, va("%s_fs.glsl", name));
 
 	if (prog->v)
 		qglAttachShader(prog->id, prog->v->id);
 	if (prog->f)
 		qglAttachShader(prog->id, prog->f->id);
+	if (prog->g) {
+		qglAttachShader(prog->id, prog->g->id);
+	}
 
 	qglLinkProgram(prog->id);
 
@@ -644,6 +651,19 @@ r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 		return NULL;
 	}
 
+	if (prog->g) {
+		GLint maxOutputs;
+		//qglProgramParameteriEXT(prog->id, GL_GEOMETRY_INPUT_TYPE_EXT, GL_TRIANGLES);
+		//qglProgramParameteriEXT(prog->id, GL_GEOMETRY_OUTPUT_TYPE_EXT, GL_TRIANGLE_STRIP);
+		qglProgramParameteriEXT(prog->id, GL_GEOMETRY_INPUT_TYPE_EXT, GL_POINTS);
+		qglProgramParameteriEXT(prog->id, GL_GEOMETRY_OUTPUT_TYPE_EXT, GL_POINTS);
+		glGetIntegerv(GL_MAX_GEOMETRY_OUTPUT_VERTICES_EXT, &maxOutputs); 
+		Com_Printf("max geometry shader outputs: %d\n", maxOutputs);
+		/* @todo - use the smallest number of outputs possible to reduce shader overhead */
+		qglProgramParameteriEXT(prog->id, GL_GEOMETRY_VERTICES_OUT_EXT, &maxOutputs);
+	}
+
+
 	prog->init = init;
 
 	if (prog->init) {  /* invoke initialization function */
@@ -656,7 +676,11 @@ r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 
 	prog->use = use;
 
-	Com_Printf("R_LoadProgram: '%s' loaded.\n", name);
+	if (prog->g) {
+		Com_Printf("R_LoadProgram: '%s' loaded with geometry shader.\n", name);
+	} else {
+		Com_Printf("R_LoadProgram: '%s' loaded.\n", name);
+	}
 
 	return prog;
 }
@@ -689,36 +713,32 @@ static void R_InitWorldProgram (r_program_t *prog)
 
 }
 
-static void R_InitBattlescapeProgram (r_program_t *prog)
+static void R_InitLightingProgram (r_program_t *prog)
 {
 	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
-	R_ProgramParameter1i("SAMPLER_LIGHTMAP", 1);
-	R_ProgramParameter1i("SAMPLER_DELUXEMAP", 2);
+	//R_ProgramParameter1i("SAMPLER_LIGHTMAP", 1);
+	//R_ProgramParameter1i("SAMPLER_DELUXEMAP", 2);
 	R_ProgramParameter1i("SAMPLER_NORMALMAP", 3);
-	R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
+	if (r_postprocess->integer)
+		R_ProgramParameter1i("SAMPLER_GLOWMAP", 4);
 	R_ProgramParameter1i("SAMPLER_SPECMAP", 5);
 	R_ProgramParameter1i("SAMPLER_ROUGHMAP", 6);
 
-	R_ProgramParameter1i("SAMPLER_SHADOW0", 7);
+	R_ProgramParameter1i("SAMPLER_SHADOW", 7);
 
 	R_ProgramParameter1i("LIGHTMAP", 0);
 	R_ProgramParameter1i("BUMPMAP", 0);
 	R_ProgramParameter1i("ROUGHMAP", 0);
 	R_ProgramParameter1i("SPECULARMAP", 0);
 	R_ProgramParameter1i("ANIMATE", 0);
-	R_ProgramParameter1i("WARP", 0);
-	R_ProgramParameter1i("BUILD_SHADOWMAP", 0);
 
 	R_ProgramParameter1f("BUMP", 1.0);
 	R_ProgramParameter1f("PARALLAX", 1.0);
 	R_ProgramParameter1f("HARDNESS", 0.2);
 	R_ProgramParameter1f("SPECULAR", 1.0);
-	R_ProgramParameter1f("GLOWSCALE", 1.0);
-}
+	if (r_postprocess->integer)
+		R_ProgramParameter1f("GLOWSCALE", 1.0);
 
-static void R_UseWorldProgram (r_program_t *prog)
-{
-	/*R_ProgramParameter1i("LIGHTS", refdef.numLights);*/
 }
 
 static void R_InitWarpProgram (r_program_t *prog)
@@ -843,6 +863,21 @@ static void R_InitSimpleGlowProgram (r_program_t *prog)
 	R_ProgramParameter1f("GLOWSCALE", 1.0);
 }
 
+
+static void R_InitShadowmapProgram (r_program_t *prog)
+{
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("ANIMATE", 0);
+	R_ProgramParameter1f("OFFSET", 0.0);
+}
+
+static void R_InitShadowCubemapProgram (r_program_t *prog)
+{
+	R_ProgramParameter1i("SAMPLER_DIFFUSE", 0);
+	R_ProgramParameter1i("ANIMATE", 0);
+	R_ProgramParameter1f("OFFSET", 0.0);
+}
+
 void R_InitParticleProgram (r_program_t *prog)
 {
 	R_ProgramParameter1i("SAMPLER0", 0);
@@ -870,14 +905,16 @@ void R_InitPrograms (void)
 	if (!r_programs->integer)
 		return;
 
-	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, R_UseWorldProgram);
+	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, NULL);
+	r_state.lighting_program = R_LoadProgram("illuminate-world", R_InitLightingProgram, NULL);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 	r_state.geoscape_program = R_LoadProgram("geoscape", R_InitGeoscapeProgram, NULL);
 	r_state.combine2_program = R_LoadProgram("combine2", R_InitCombine2Program, NULL);
 	r_state.convolve_program = R_LoadProgram("convolve" DOUBLEQUOTE(FILTER_SIZE), R_InitConvolveProgram, R_UseConvolveProgram);
 	r_state.atmosphere_program = R_LoadProgram("atmosphere", R_InitAtmosphereProgram, NULL);
 	r_state.simple_glow_program = R_LoadProgram("simple_glow", R_InitSimpleGlowProgram, NULL);
-	//r_state.battlescape_program = R_LoadProgram("battlescape", R_InitBattlescapeProgram, NULL);
+	r_state.build_shadowmap_flat_program = R_LoadProgram("build-shadowmap-flat", R_InitShadowmapProgram, NULL);
+	r_state.build_shadowmap_cube_program = R_LoadProgram("build-shadowmap-cube", R_InitShadowCubemapProgram, NULL);
 }
 
 /**

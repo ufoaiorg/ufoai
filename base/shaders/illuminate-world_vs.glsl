@@ -1,7 +1,7 @@
 //#version 130
 /* battlescape vertex shader */
 
-uniform vec4 LightLocation[#replace r_dynamic_lights ];
+uniform vec4 LightLocation;
 
 uniform float FogDensity;
 uniform vec4 FogColor;
@@ -11,8 +11,6 @@ uniform int BUMPMAP;
 uniform int ANIMATE;
 uniform float TIME;
 uniform mat4 SHADOW_TRANSFORM;
-uniform int NUM_ACTIVE_LIGHTS;
-uniform int BUILD_SHADOWMAP;
 
 in vec3 NEXT_FRAME_VERTS;
 in vec3 NEXT_FRAME_NORMALS;
@@ -39,11 +37,10 @@ out vec4 vPosScreen;
 out vec4 vPos;
 out vec3 vNormal;
 out vec3 eyedir;
-out vec3 lightDirs[#replace r_dynamic_lights ];
+out vec3 lightDir;
 out vec4 shadowCoord;
 out float fog;
-out vec4 texCoord0;
-out vec4 texCoord1;
+out vec4 texCoord;
 out vec4 gl_Position;
 
 /* @note - these values come from #defines in r_state.c */
@@ -75,47 +72,37 @@ void main (void) {
 
 
 	/* pass texcoords and color through */
-	texCoord0 = gl_MultiTexCoord0 + OFFSET;
-	texCoord1 = gl_MultiTexCoord1 + OFFSET;
+	texCoord = gl_MultiTexCoord0 + OFFSET;
 
-	/* if we're just building shadowmaps, we don't need to set up stuff for lighting */
-	if (BUILD_SHADOWMAP == 0) {
-#if r_shadowmapping
-		/* calculate vertex projection onto the shadowmap */ 
-		shadowCoord = SHADOW_MATRIX * gl_ModelViewMatrix * Vertex;
-#endif
+	/* calculate vertex projection onto the shadowmap */ 
+	shadowCoord = SHADOW_MATRIX * gl_ModelViewMatrix * Vertex;
 
 #if r_fog
-		/* calculate interpolated fog depth */
-		fog = clamp((vPosScreen.z - fogStart) / fogRange, 0.0, 1.0) * FogDensity;
+	/* calculate interpolated fog depth */
+	fog = clamp((vPosScreen.z - fogStart) / fogRange, 0.0, 1.0) * FogDensity;
 #endif
 
-		/* setup tangent space */
-		vec3 tangent = normalize(gl_NormalMatrix * Tangent.xyz);
-		vec3 bitangent = normalize(cross(vNormal, tangent)) * Tangent.w;
+	/* setup tangent space */
+	vec3 tangent = normalize(gl_NormalMatrix * Tangent.xyz);
+	vec3 bitangent = normalize(cross(vNormal, tangent)) * Tangent.w;
 
-		/* transform the eye direction into tangent space */
-		vec3 v;
-		v.x = dot(-vPos.xyz, tangent);
-		v.y = dot(-vPos.xyz, bitangent);
-		v.z = dot(-vPos.xyz, vNormal);
-		eyedir = normalize(v);
+	/* transform the eye direction into tangent space */
+	vec3 v;
+	v.x = dot(-vPos.xyz, tangent);
+	v.y = dot(-vPos.xyz, bitangent);
+	v.z = dot(-vPos.xyz, vNormal);
+	eyedir = normalize(v);
 
-		/* transform relative light positions into tangent space */
-#unroll r_dynamic_lights
-		if ($ < NUM_ACTIVE_LIGHTS) {
-			vec3 lpos; 
-			if(LightLocation[$].w > 0.0001) {
-				lpos = normalize(gl_NormalMatrix * LightLocation[$].xyz - vPos.xyz);
-			} else { // directional light source at "infinite" distance 
-				lpos = normalize(gl_NormalMatrix * LightLocation[$].xyz);
-			}
-
-			lightDirs[$].x = dot(lpos, tangent);
-			lightDirs[$].y = dot(lpos, bitangent);
-			lightDirs[$].z = dot(lpos, vNormal);
-		}
-#endunroll
+	/* transform relative light positions into tangent space */
+	vec3 lpos; 
+	if(LightLocation.w > 0.0001) {
+		lpos = normalize(gl_NormalMatrix * LightLocation.xyz - vPos.xyz);
+	} else { // directional light source at "infinite" distance 
+		lpos = normalize(gl_NormalMatrix * LightLocation.xyz);
 	}
+
+	lightDir.x = dot(lpos, tangent);
+	lightDir.y = dot(lpos, bitangent);
+	lightDir.z = dot(lpos, vNormal);
 
 }

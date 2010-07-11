@@ -688,6 +688,10 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 	/* copy levelflags */
 	p->levelFlags = levelFlags;
 
+	/* setup lightsource */
+	if (!p->lightsource)
+		p->lightsource = R_GetFreeLightsource();
+
 	/* run init function */
 	CL_ParticleFunction(p, pd->init);
 
@@ -721,6 +725,8 @@ void CL_ParticleFree (ptl_t *p)
 
 	p->inuse = qfalse;
 	p->invis = qtrue;
+	if (p->lightsource)
+		p->lightsource->enabled = qfalse;
 	for (c = p->children; c; c = c->next) {
 		CL_ParticleFree(c);
 	}
@@ -891,6 +897,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 	}
 
 	/* add light to the scene */
+#if 0
 	if (VectorNotEmpty(p->lightColor)) {
 		const float intensity = 0.5 + p->lightIntensity;
 		if (p->lightSustain)
@@ -898,6 +905,16 @@ static void CL_ParticleRun2 (ptl_t *p)
 		else
 			R_AddLight(p->s, intensity, p->lightColor);
 	}
+#else
+	if (p->lightsource->enabled) {
+		const float intensity = 0.5 + p->lightIntensity;
+		R_UpdateLight(p->lightsource, p->s, intensity, p->lightColor);
+	} else if (VectorNotEmpty(p->lightColor)) {
+		const float intensity = 0.5 + p->lightIntensity;
+		R_SetupLight(p->lightsource, p->s, intensity, p->lightColor, p->lightSustain);
+	}
+#endif
+
 
 	p->invis = qfalse;
 }

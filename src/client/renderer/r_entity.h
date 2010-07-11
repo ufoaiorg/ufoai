@@ -84,8 +84,20 @@ typedef struct entity_s {
 	struct entity_s *next;		/**< for chaining */
 } entity_t;
 
+typedef struct entityListNode_s {
+	struct entityListNode_s *next;
+	struct entity_s *ent;
+} entityListNode_t;
+
 int R_AddEntity(const entity_t *ent);
 entity_t *R_GetFreeEntity(void);
 entity_t *R_GetEntity(int id);
+
+void R_DrawEntityList(const entityListNode_t *cur);
+entityListNode_t * R_ListAllEntities(void);
+entityListNode_t * R_ListLevelEntities(void);
+void R_FreeEntityList(entityListNode_t *head);
+
+void R_AddEntityToList(entityListNode_t *head, entity_t *e);
 
 #endif

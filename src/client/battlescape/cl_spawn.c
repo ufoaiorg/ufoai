@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_renderer.h"
 
 static r_light_t sun;
+static r_light_t sun2;
 
 cvar_t *r_map_maxlevel;
 
@@ -160,6 +161,7 @@ void CL_SpawnParseEntitystring (void)
 	/* clear active light list before adding lights for the new map */
 	R_ClearActiveLights();
 	memset(&sun, 0, sizeof(sun));
+	memset(&sun2, 0, sizeof(sun2));
 
 	/* parse ents */
 	while (1) {
@@ -212,7 +214,8 @@ void CL_SpawnParseEntitystring (void)
 	}
 
 	/* add the appropriate directional source to the list of active light sources*/
-	R_AddLightsource(&sun);
+	R_AddLightsource(sun);
+	R_AddLightsource(sun2);
 
 	/* after we have parsed all the entities we can resolve the target, targetname
 	 * connections for the misc_model entities */
@@ -256,6 +259,7 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 	while (VectorSum(sun.ambientColor) < MIN_AMBIENT_SUM)
 		VectorScale(sun.ambientColor, 1.25, sun.ambientColor);
 
+
 	/* set up "global" (ie. directional) light sources */
 	//Vector4Set(sun.loc, 0, 0, -1, 0.0);
 	//Vector4Set(sun.loc, 0, 0, -1, 1.0);
@@ -264,7 +268,11 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 	sun.constantAttenuation = 1.0;
 	sun.linearAttenuation = 0.0;
 	sun.quadraticAttenuation = 0.0;
+	sun.cutoffRadius = -1.0;
 	sun.enabled = qtrue;
+	sun.castsShadows = qtrue;
+	sun.decay = qfalse;
+	sun.type = DIRECTIONAL_LIGHT;
 	if (dayLightmap) { /* sunlight color */
 		Vector4Set(sun.diffuseColor, 0.8, 0.8, 0.8, 1);
 		Vector4Set(sun.specularColor, 1.0, 1.0, 0.9, 1);
@@ -272,6 +280,15 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 		Vector4Set(sun.diffuseColor, 0.2, 0.2, 0.3, 1);
 		Vector4Set(sun.specularColor, 0.5, 0.5, 0.7, 1);
 	}
+
+
+	/* @todo - temporary hack to test multiple light sources; remove later */
+	VectorScale(sun.ambientColor, 0.3, sun.ambientColor);
+	VectorScale(sun.diffuseColor, 0.6, sun.diffuseColor);
+	VectorScale(sun.specularColor, 0.6, sun.specularColor);
+	sun2 = sun;
+	Vector4Set(sun2.loc, -0.155, 0.255, -1, 0.0);
+	VectorNormalize(sun2.loc);
 }
 
 static void SP_misc_model (const localEntityParse_t *entData)

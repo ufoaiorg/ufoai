@@ -36,7 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_image.h"
 #include "r_model.h"
 #include "r_thread.h"
-#include "r_framebuffer.h"
 #include "r_lightmap.h"
 #include "r_corona.h"
 #include "r_flare.h"
@@ -116,6 +115,7 @@ extern cvar_t *r_debug_normalmaps;
 extern cvar_t *r_debug_lightmaps;
 extern cvar_t *r_debug_deluxemaps;
 extern cvar_t *r_debug_shadows;
+
 
 /* private renderer variables */
 typedef struct rlocals_s {

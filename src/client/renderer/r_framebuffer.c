@@ -87,10 +87,15 @@ static void R_FreeFBOTexture (int texnum)
  * @param[in] halfFloat Use half float pixel format
  * @param[in] filters Filters for the textures. Must have @c ntextures entries
  */
-static r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qboolean depth, qboolean depthTexture, qboolean halfFloat, qboolean mipmap, GLenum *filters)
+#define R_CreateFramebuffer_RGBA(w, h, n, f) R_CreateFramebuffer(w, h, n, qtrue, qfalse, qfalse, qfalse, qfalse, qfalse, f)
+#define R_CreateFramebuffer_RGBAD(w, h, n, f) R_CreateFramebuffer(w, h, n, qtrue, qtrue, qtrue, qfalse, qfalse, qfalse, f)
+#define R_CreateFramebuffer_RGBA_float(w, h, n, f) R_CreateFramebuffer(w, h, n, qtrue, qfalse, qfalse, qtrue, qfalse, qfalse, f)
+#define R_CreateFramebuffer_RGBAD_float(w, h, n, f) R_CreateFramebuffer(w, h, n, qtrue, qtrue, qtrue, qtrue, qfalse, qfalse, f)
+#define R_CreateFramebuffer_RGBAD_cube_float(w, h, n, f) R_CreateFramebuffer(w, h, n, qtrue, qtrue, qfalse, qtrue, qfalse, qtrue, f)
+static r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qboolean colorTexture, qboolean depth, qboolean depthTexture, qboolean halfFloat, qboolean mipmap, qboolean cubemap, GLenum *filters)
 {
 	r_framebuffer_t *buf;
-	int i;
+	int i, j;
 
 	if (!frameBufferObjectsInitialized) {
 		Com_Printf("Warning: framebuffer creation failed; framebuffers not initialized!\n");
@@ -115,30 +120,44 @@ static r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextur
 		buf->pixelFormat = (halfFloat == qtrue) ? GL_RGBA32F_ARB : GL_RGBA8;
 		//buf->byteFormat = (halfFloat == qtrue) ? GL_HALF_FLOAT_ARB : GL_UNSIGNED_BYTE;
 		buf->byteFormat = (halfFloat == qtrue) ? GL_FLOAT : GL_UNSIGNED_BYTE;
+		buf->type = (cubemap == qtrue) ? GL_TEXTURE_CUBE_MAP : GL_TEXTURE_2D;
 
 		for (i = 0 ; i < buf->nTextures; i++) {
-			buf->textures[i] = R_GetFreeFBOTexture();
-			glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
-			glTexImage2D(GL_TEXTURE_2D, 0, buf->pixelFormat, buf->width, buf->height, 0, GL_RGBA, buf->byteFormat, 0);
-
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filters[i]);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-#if 1
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-#else
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-			vec4_t border = {0.0, 1.0, 0.0, 1.0};
-			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
-#endif
-			if (mipmap) {
-				glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+			if (!colorTexture) {
+				qglGenRenderbuffersEXT(1, &buf->textures[i]);
+				qglBindRenderbufferEXT(GL_RENDERBUFFER_EXT, buf->textures[i]);
+				qglRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, buf->pixelFormat, buf->width, buf->height);
 			} else {
-				glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_FALSE);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_LOD, 0);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LOD, 0);
+				vec4_t borderColor = {0.0, 1.0, 0.0, 1.0};
+				buf->textures[i] = R_GetFreeFBOTexture();
+				glBindTexture(buf->type, buf->textures[i]);
+
+				glTexParameteri(buf->type, GL_TEXTURE_MIN_FILTER, filters[i]);
+				glTexParameteri(buf->type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				glTexParameteri(buf->type, GL_TEXTURE_WRAP_S, GL_CLAMP);
+				glTexParameteri(buf->type, GL_TEXTURE_WRAP_T, GL_CLAMP);
+				glTexParameterfv(buf->type, GL_TEXTURE_BORDER_COLOR, borderColor);
+
+				if (mipmap) {
+					glTexParameteri(buf->type, GL_GENERATE_MIPMAP, GL_TRUE);
+				} else {
+					glTexParameteri(buf->type, GL_GENERATE_MIPMAP, GL_FALSE);
+					glTexParameteri(buf->type, GL_TEXTURE_MAX_LEVEL, 0);
+					glTexParameteri(buf->type, GL_TEXTURE_MIN_LOD, 0);
+					glTexParameteri(buf->type, GL_TEXTURE_MAX_LOD, 0);
+				}
+
+				if (cubemap) {
+					glTexParameteri(buf->type, GL_TEXTURE_WRAP_R, GL_CLAMP);
+					for (j = 0; j < 6; j++) {
+						glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + j, 0, 
+									 buf->pixelFormat, buf->width, buf->height, 0, GL_RGBA, buf->byteFormat, 0);
+					}
+					
+				} else {
+					glTexImage2D(GL_TEXTURE_2D, 0, buf->pixelFormat, buf->width, buf->height, 0, GL_RGBA, buf->byteFormat, 0);
+				}
+
 			}
 
 			R_CheckError();
@@ -157,17 +176,26 @@ static r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextur
 			qglRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, buf->width, buf->height);
 		} else {
 			buf->depth = R_GetFreeFBOTexture();
-			glBindTexture(GL_TEXTURE_2D, buf->depth);
+			glBindTexture(buf->type, buf->depth);
 
-			/* we use GL_LINEAR for PFC with shadowmapping */
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE_ARB);
-			/* No need to force GL_DEPTH_COMPONENT24, drivers usually give you the max precision if available */
-			glTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, buf->width, buf->height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
-			glBindTexture(GL_TEXTURE_2D, 0);
+			/* we use GL_LINEAR for variance shadowmapping */
+			glTexParameteri(buf->type, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(buf->type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(buf->type, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE_ARB);
+			glTexParameterf(buf->type, GL_TEXTURE_WRAP_S, GL_CLAMP );
+			glTexParameterf(buf->type, GL_TEXTURE_WRAP_T, GL_CLAMP );
+			if (cubemap) {
+				glTexParameterf(buf->type, GL_TEXTURE_WRAP_R, GL_CLAMP );
+				for (j = 0; j < 6; j++) {
+					glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + j, 0, GL_DEPTH_COMPONENT24, 
+							     buf->width, buf->height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
+				}
+
+			} else {
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, 
+						    buf->width, buf->height, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
+			}
+			glBindTexture(buf->type, 0);
 		}
 		R_CheckError();
 	} else {
@@ -181,8 +209,12 @@ static r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextur
 	/* bind textures to FBO */
 	if (buf->nTextures > 0) {
 		for (i = 0; i < buf->nTextures; i++) {
-			glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
-			qglFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, colorAttachments[i], GL_TEXTURE_2D, buf->textures[i], 0);
+			if (colorTexture) {
+				glBindTexture(GL_TEXTURE_2D, buf->textures[i]);
+				qglFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, colorAttachments[i], GL_TEXTURE_2D, buf->textures[i], 0);
+			} else {
+				qglFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, colorAttachments[i], GL_RENDERBUFFER_EXT, buf->textures[i]);
+			}
 		}
 	} else {
 		qglDrawBuffer(GL_NONE);
@@ -247,11 +279,11 @@ void R_InitFBObjects (void)
 	filters[1] = GL_NEAREST;
 
 	/* setup main 3D render target */
-	r_state.renderBuffer = R_CreateFramebuffer(viddef.width, viddef.height, 2, qtrue, qfalse, qfalse, qfalse, filters);
+	r_state.renderBuffer = R_CreateFramebuffer_RGBAD(viddef.width, viddef.height, 2, filters);
 
 	/* setup buffer render targets */
-	fbo_bloom0 = R_CreateFramebuffer(viddef.width, viddef.height, 1, qfalse, qfalse, qfalse, qfalse, filters);
-	fbo_bloom1 = R_CreateFramebuffer(viddef.width, viddef.height, 1, qfalse, qfalse, qfalse, qfalse, filters);
+	fbo_bloom0 = R_CreateFramebuffer_RGBA(viddef.width, viddef.height, 1, filters);
+	fbo_bloom1 = R_CreateFramebuffer_RGBA(viddef.width, viddef.height, 1, filters);
 
 	//filters[0] = GL_LINEAR;
 	filters[0] = GL_NEAREST;
@@ -259,17 +291,18 @@ void R_InitFBObjects (void)
 	for (i = 0; i < DOWNSAMPLE_PASSES; i++) {
 		const int h = (int)((float)viddef.height / scales[i]);
 		const int w = (int)((float)viddef.width / scales[i]);
-		r_state.buffers0[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, qfalse, qfalse, filters);
-		r_state.buffers1[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, qfalse, qfalse, filters);
-		r_state.buffers2[i] = R_CreateFramebuffer(w, h, 1, qfalse, qfalse, qfalse, qfalse, filters);
+		r_state.buffers0[i] = R_CreateFramebuffer_RGBA(w, h, 1, filters);
+		r_state.buffers1[i] = R_CreateFramebuffer_RGBA(w, h, 1, filters);
+		r_state.buffers2[i] = R_CreateFramebuffer_RGBA(w, h, 1, filters);
 
 		R_CheckError();
 	}
 
 	/* setup buffers for shadowmapping */
 	filters[0] = GL_LINEAR;
-	r_state.shadowmapBuffer = R_CreateFramebuffer(r_maxlightmap->integer, r_maxlightmap->integer, 1, qtrue, qtrue, qtrue, qfalse, filters);
-	r_state.shadowmapBlur1 = R_CreateFramebuffer(r_maxlightmap->integer, r_maxlightmap->integer, 1, qtrue, qtrue, qtrue, qfalse, filters);
+	r_state.shadowMapBuffer = R_CreateFramebuffer_RGBAD_float(r_maxlightmap->integer, r_maxlightmap->integer, 1, filters);
+	r_state.shadowMapBlur1 = R_CreateFramebuffer_RGBAD_float(r_maxlightmap->integer, r_maxlightmap->integer, 1, filters);
+	r_state.shadowCubeMapBuffer = R_CreateFramebuffer_RGBAD_cube_float(r_maxlightmap->integer, r_maxlightmap->integer, 1, filters);
 }
 
 
@@ -366,13 +399,17 @@ void R_UseFramebuffer (const r_framebuffer_t *buf)
 	}
 
 	glClearColor(buf->clearColor[0], buf->clearColor[1], buf->clearColor[2], buf->clearColor[3]);
-	glClear((buf->nTextures > 0 ? GL_COLOR_BUFFER_BIT : 0) | (buf->depth ? GL_DEPTH_BUFFER_BIT : 0));
 
 	activeFramebuffer = buf;
 
 #ifdef PARANOID
 	R_CheckError();
 #endif
+}
+
+void R_ClearFramebuffer (void)
+{
+	glClear((activeFramebuffer->nTextures > 0 ? GL_COLOR_BUFFER_BIT : 0) | (activeFramebuffer->depth ? GL_DEPTH_BUFFER_BIT : 0));
 }
 
 /**
@@ -439,7 +476,7 @@ qboolean R_EnableRenderbuffer (qboolean enable)
 			R_UseFramebuffer(fbo_render);
 		else {
 			if (shadowbuffer_enabled)
-				R_UseFramebuffer(r_state.shadowmapBuffer);
+				R_UseFramebuffer(r_state.shadowMapBuffer);
 			else
 				R_UseFramebuffer(fbo_screen);
 		}
@@ -450,17 +487,18 @@ qboolean R_EnableRenderbuffer (qboolean enable)
 	return qtrue;
 }
 
-qboolean R_EnableShadowbuffer (qboolean enable)
+qboolean R_EnableShadowbuffer (qboolean enable, const r_framebuffer_t *buf)
 {
 	if (!frameBufferObjectsInitialized || !r_shadowmapping->integer)
 		return qfalse;
 
-	if (enable != shadowbuffer_enabled) {
-		shadowbuffer_enabled = enable;
-		if (enable) {
-			R_UseFramebuffer(r_state.shadowmapBuffer);
+	if (enable != shadowbuffer_enabled || buf != activeFramebuffer) {
+		if (enable && buf) {
+			shadowbuffer_enabled = qtrue;
+			R_UseFramebuffer(buf);
 			R_DrawBuffers(1);
 		} else {
+			shadowbuffer_enabled = qfalse;
 			if (renderbuffer_enabled)
 				R_UseFramebuffer(fbo_render);
 			else 

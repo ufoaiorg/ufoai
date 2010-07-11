@@ -108,27 +108,6 @@ static void R_ModLoadNormals (const lump_t *l)
 	}
 }
 
-static void R_ModLoadTangents (const lump_t *l)
-{
-	const dBspNormal_t *in;
-	mBspVertex_t *out;
-	int i, count;
-
-	in = (const void *)(mod_base + l->fileofs);
-	if (l->filelen % sizeof(*in)) {
-		Com_Error(ERR_DROP, "R_LoadTangents: Funny lump size in %s.", r_worldmodel->name);
-	}
-	count = l->filelen / sizeof(*in);
-
-	if (count != r_worldmodel->bsp.numvertexes) {  /* ensure sane normals count */
-		Com_Error(ERR_DROP, "R_LoadTangents: unexpected vector count in %s: (%d != %d).",
-				r_worldmodel->name, count, r_worldmodel->bsp.numvertexes);
-	}
-
-	out = r_worldmodel->bsp.vertexes;
-
-}
-
 static inline float R_RadiusFromBounds (const vec3_t mins, const vec3_t maxs)
 {
 	int i;
@@ -952,6 +931,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	if (r_numMapTiles < 0 || r_numMapTiles >= MAX_MAPTILES)
 		Com_Error(ERR_DROP, "R_ModAddMapTile: Too many map tiles");
 
+
 	/* alloc model and tile */
 	r_worldmodel = &r_models[r_numModels++];
 	r_mapTiles[r_numMapTiles++] = r_worldmodel;
@@ -1003,6 +983,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	/* in case of random map assembly shift some vectors */
 	if (VectorNotEmpty(shift))
 		R_ModShiftTile();
+
 
 	FS_FreeFile(buffer);
 }

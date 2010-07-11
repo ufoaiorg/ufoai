@@ -54,6 +54,7 @@ void R_AddLight (const vec3_t origin, float radius, const vec3_t color)
 /**
  * @sa R_AddSustainedLights
  */
+#if 0
 void R_AddSustainedLight (const vec3_t org, float radius, const vec3_t color, float sustain)
 {
 	sustain_t *s;
@@ -77,6 +78,48 @@ void R_AddSustainedLight (const vec3_t org, float radius, const vec3_t color, fl
 
 	s->time = refdef.time;
 	s->sustain = refdef.time + sustain;
+}
+#endif
+
+void R_SetupLight (r_light_t *l, const vec3_t org, float radius, const vec3_t color, float sustain)
+{
+	VectorCopy(color, l->loc);
+	VectorCopy(color, l->ambientColor);
+	VectorCopy(color, l->diffuseColor);
+	VectorCopy(color, l->specularColor);
+
+	l->cutoffRadius = radius;
+
+	if (sustain) {
+		l->decay = qtrue;
+		l->timeCreated = refdef.time;
+		l->timeToLive = refdef.time + sustain;
+	} else {
+		l->decay = qfalse;
+	}
+
+	l->enabled = qtrue;
+	l->castsShadows = qtrue;
+
+	/* @todo - setup l->viewpoint */
+}
+
+void R_UpdateLight (r_light_t *l, const vec3_t org, float radius, const vec3_t color)
+{
+	vec3_t color2;
+	if (l->decay) {
+		const float scale = (l->timeToLive - refdef.time) / (l->timeToLive - l->timeCreated);
+		VectorScale(color, scale, color2);
+	} else {
+		VectorCopy(color, color2);
+	}
+
+	VectorCopy(color2, l->ambientColor);
+	VectorCopy(color2, l->diffuseColor);
+	VectorCopy(color2, l->specularColor);
+
+	VectorCopy(org, l->loc);
+	l->cutoffRadius = radius;
 }
 
 /**
@@ -138,16 +181,25 @@ void R_EnableLights (void)
 		glLightf(GL_LIGHT0 + i, GL_CONSTANT_ATTENUATION, 0.0);
 }
 
-void R_AddLightsource (const r_light_t *source)
+r_light_t * R_GetFreeLightsource (void) {
+	if (r_state.numActiveLights >= MAX_DYNAMIC_LIGHTS) {
+		Com_Printf("Failed to add lightsource: MAX_DYNAMIC_LIGHTS exceeded\n");
+		return NULL;
+	}
+
+	return &(r_state.dynamicLights[r_state.numActiveLights++]);
+}
+
+void R_AddLightsource (const r_light_t source)
 {
 	if (r_state.numActiveLights >= MAX_DYNAMIC_LIGHTS) {
 		Com_Printf("Failed to add lightsource: MAX_DYNAMIC_LIGHTS exceeded\n");
 		return;
 	}
 
-	Com_Printf("added light, ambient=%f\n", source->ambientColor[0]);
+	Com_Printf("added light, ambient=%f\n", source.ambientColor[0]);
 
-	r_state.dynamicLights[r_state.numActiveLights++] = *source;
+	r_state.dynamicLights[r_state.numActiveLights++] = source;
 }
 
 void R_ClearActiveLights (void)

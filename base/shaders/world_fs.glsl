@@ -55,7 +55,8 @@ in vec3 lightDirs[];
 in vec4 shadowCoord;
 in float fog;
 in float alpha;
-in vec4 gl_TexCoord[];
+in vec4 texCoord0;
+in vec4 texCoord1;
 
 /* per-fragment output colors */
 #if r_framebuffers
@@ -86,7 +87,7 @@ void main(void){
 		//moment2 += 0.25*(dx*dx+dy*dy) ;
 
 		/* we use the diffuse texture alpha so transparent objects don't cast shadows */
-		outColor = vec4(depth, moment2, 0.0, texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st).a);
+		outColor = vec4(depth, moment2, 0.0, texture2D(SAMPLER_DIFFUSE, texCoord0.st).a);
 
 	/* standard rendering pass */
 	} else {
@@ -100,37 +101,10 @@ void main(void){
 		/* @todo - decide whether we actually want this or not, and then either
 				   make new lightmaps to use with it or just remove the feature
 				   entirely and use dynamic lights instead */
-		if (LIGHTMAP > 0) {
-			vec2 offset = vec2(0.0);
-			float NdotL = 1.0;
-			float specular = 0.0;
 
-#if r_bumpmap
-			if(BUMPMAP > 0){
-				vec4 normalmap = texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st);
-				normalmap.rgb = normalize(2.0 * (normalmap.rgb - vec3(0.5)));
-				/* pre-computed incoming light vectors in object tangent space */
-				vec3 deluxemap = texture2D(SAMPLER_DELUXEMAP, gl_TexCoord[1].st).rgb;
-				deluxemap = normalize(2.0 * (deluxemap - vec3(0.5)));
 
-				/* compute parallax offset and bump mapping reflection */
-				vec3 V = normalize(eyedir);
-				vec3 L = vec3(normalize(deluxemap).rgb);
-				vec3 N = vec3(normalize(normalmap.rgb).rgb);
-				N.xy *= BUMP;
-
-				offset = vec2(normalmap.a * PARALLAX * 0.04 - 0.02) * V.xy;
-				NdotL = dot(N, L);
-				specular = HARDNESS * pow(max(-dot(V, reflect(L, N)), 0.0), 8.0 * SPECULAR);
-			}
-#endif
-			/* sample the diffuse texture, using any parallax offset */
-			vec4 diffuse = texture2D(SAMPLER_DIFFUSE, gl_TexCoord[0].st + offset);
-			/* lightmap contains pre-computed incoming light color */
-			vec3 lightmap = texture2D(SAMPLER_LIGHTMAP, gl_TexCoord[1].st).rgb;
-
-			/* add light from lightmap */
-			//outColor.rgb += diffuse.rgb * lightmap * (NdotL + specular);
+		if (outColor.a <= 0.0) {
+			discard;
 		}
 
 #if r_fog
@@ -140,7 +114,7 @@ void main(void){
 
 		/* use glow-map */
 		if(GLOWSCALE > 0.0){
-			vec4 glow = texture2D(SAMPLER_GLOWMAP, gl_TexCoord[0].st);
+			vec4 glow = texture2D(SAMPLER_GLOWMAP, texCoord0.st);
 			glowColor = vec4(glow.rgb * glow.a * GLOWSCALE, 1.0);
 		} 
 
@@ -159,7 +133,7 @@ void main(void){
 
 
 #if r_debug_normalmaps
-		vec3 n = normalize(2.0 * (texture2D(SAMPLER_NORMALMAP, gl_TexCoord[0].st).rgb - 0.5));
+		vec3 n = normalize(2.0 * (texture2D(SAMPLER_NORMALMAP, texCoord0.st).rgb - 0.5));
 		outColor = (1.0 + dot(n, normalize(-lightDirs[0]))) * 0.5 * vec4(1.0);
 #endif
 

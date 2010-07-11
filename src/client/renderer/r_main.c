@@ -228,6 +228,7 @@ void R_BeginFrame (void)
 		else if (Cvar_PendingCvars(CVAR_R_PROGRAMS))
 			R_RestartPrograms_f();
 
+		/* @todo - restart FBOs if required */
 		//R_RestartFBObjects();
 
 		Com_SetRenderModified(qfalse);
@@ -299,8 +300,110 @@ void R_BeginFrame (void)
  */
 void R_RenderFrame (void)
 {
-	int tile;
+	//int tile;
+	entityListNode_t *allEntities;
+	entityListNode_t *levelEntities;
 
+	R_Setup3D();
+	R_SetupCameraViewpoint();
+
+#if 1
+	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
+		/* @todo - this only needs to be updated when models are added/removed (eg. due to visibility) */
+		allEntities = R_ListAllEntities();
+		R_SetupFrustum();
+		levelEntities = R_ListLevelEntities();
+		r_state.camera.ents = levelEntities;
+		/* @todo - per-viewpoint lists; eg. objects that cast shadows, objects visible on the current level, etc. */
+		/* @todo - per-viewpoint lists don't need to be updated every frame, but when things might have changed (eg. camera has moved more than some delta) */
+		/* @todo - sort lists; first opaque things front to back, then transparent things back to front.  Again, doesn't need to happen every frame. */
+		/* @todo - move all of this list generating/sorting/etc. into another thread with lower priority */
+		/* @todo - use KD-tree to build/update lists */
+
+		if (r_shadowmapping->integer) {
+			int i, j;
+
+			/* do a first pass rendering scene to depth buffer only */
+			R_UseViewpoint(&r_state.camera);
+			/* @todo - we don't need the full lighting program here, just
+			 * the vertex LERPing; should make a separate shader for this */
+			R_EnableLighting(r_state.lighting_program, qtrue);
+			glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+			glDepthMask(GL_TRUE);
+			R_DrawEntityList(r_state.camera.ents);
+			R_DrawBuffers(2);
+			glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+			R_DrawBuffers(1);
+			R_EnableLighting(NULL, qfalse);
+
+
+			for (i = 0, j = 0; i < r_dynamic_lights->integer; i++, j++) {
+				for (; !r_state.dynamicLights[j].enabled && j < MAX_DYNAMIC_LIGHTS; j++);
+
+				if (j > 1)
+					continue;
+
+				/* build shadowmap for this lightsource */
+				R_SetupViewpoint(&r_state.dynamicLights[j]);
+				/* @todo - don't use allEntities, use light-specific list.
+				 * we only need to render things that generate shadows here; 
+				 * this means no material stages, no "special" entities, etc. 
+				 * as well as things that can't be illuminated by a given light 
+				 * due to being too far away. */
+				r_state.dynamicLights[j].viewpoint.ents = allEntities;
+				R_EnableBuildShadowmap(qtrue, &r_state.dynamicLights[j]);
+				R_ClearFramebuffer();
+
+				R_EnableLighting(r_state.build_shadowmap_flat_program, qtrue);
+				R_DrawEntityList(r_state.dynamicLights[j].viewpoint.ents);
+				R_EnableLighting(NULL, qfalse);
+
+				R_EnableBuildShadowmap(qfalse, NULL);
+
+				/* blur the shadowmap to get smooth, soft shadow edges */
+				if (r_softshadows->integer) {
+					R_Blur(r_state.shadowMapBuffer, r_state.shadowMapBlur1, 0, 0);
+					R_Blur(r_state.shadowMapBlur1, r_state.shadowMapBuffer, 0, 1);
+				}
+
+				/* render scene using this lightsource */
+
+				/* @todo - fix glow being rendered each time */
+				R_UseViewpoint(&r_state.camera);
+				R_EnableUseShadowmap(qtrue);
+				R_EnableBlend(qtrue);
+				R_BlendFunc(GL_ONE, GL_ONE);
+				R_EnableLighting(r_state.lighting_program, qtrue);
+				R_EnableDynamicLights(&r_state.dynamicLights[j], qtrue);
+				glDepthMask(GL_FALSE);
+				R_DrawEntityList(r_state.camera.ents);
+				glDepthMask(GL_TRUE);
+				R_EnableDynamicLights(NULL, qfalse);
+				R_EnableLighting(NULL, qfalse);
+				R_EnableUseShadowmap(qfalse);
+				R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				R_EnableBlend(qfalse);
+			}
+		} else {
+			/* if shadows are disabled, we do what we can using the fixed pipeline */
+
+			R_UseViewpoint(&r_state.camera);
+
+			R_EnableLighting(r_state.world_program, qtrue);
+			R_EnableStaticLights(qtrue);
+			R_DrawEntityList(r_state.camera.ents);
+			R_EnableStaticLights(qfalse);
+			R_EnableLighting(NULL, qfalse);
+
+		}
+
+		
+		/* @todo - move this "free" somewhere else when making the list persist across frames */
+		R_FreeEntityList(allEntities);
+		R_FreeEntityList(levelEntities);
+		R_CheckError();
+	}
+#else 
 
 	/* build shadowmaps */
 	if (r_shadowmapping->integer) {
@@ -322,10 +425,12 @@ void R_RenderFrame (void)
 		LE_AddToScene();
 		R_GetAllSurfaceLists();
 
+		R_SetupViewpoint(&r_state.dynamicLights[0]);
 		R_EnableBuildShadowmap(qtrue, &r_state.dynamicLights[0]);
 
 		for (tile = 0; tile < r_numMapTiles; tile++) {
-			//R_UpdateLightList(&r_state.world_entity);
+
+			R_UpdateLightList(&r_state.world_entity);
 			R_EnableDynamicLights(&r_state.world_entity, qtrue);
 			R_DrawOpaqueSurfaces(r_mapTiles[tile]->bsp.opaque_surfaces);
 		}
@@ -346,15 +451,21 @@ void R_RenderFrame (void)
 
 		/* blur the shadowmap to get smooth, soft shadow edges */
 		if (r_softshadows->integer) {
-			R_Blur(r_state.shadowmapBuffer, r_state.shadowmapBlur1, 0, 0);
-			R_Blur(r_state.shadowmapBlur1, r_state.shadowmapBuffer, 0, 1);
+			R_Blur(r_state.shadowMapBuffer, r_state.shadowMapBlur1, 0, 0);
+			R_Blur(r_state.shadowMapBlur1, r_state.shadowMapBuffer, 0, 1);
 		}
+
 	}
 
+	R_UseViewpoint(&r_state.camera);
+
+	/* @todo - we shouldn't really need to call this a second time if we do things right */
+	//R_Setup3D();
 	R_CheckError();
-	R_Setup3D();
-	R_EnableUseShadowmap(qtrue);
-	r_locals.framecheck = qtrue;
+	
+	if ( r_shadowmapping->integer)
+		R_EnableUseShadowmap(qtrue);
+	//r_locals.framecheck = qtrue;
 
 	/* render scene */
 
@@ -417,13 +528,16 @@ void R_RenderFrame (void)
 
 	R_DrawEntities();
 
+#endif
+	
+
 	R_EnableBlend(qtrue);
 
 	R_DrawParticles();
 
 	R_EnableBlend(qfalse);
 
-	R_EnableDynamicLights(NULL, qfalse);
+	//R_EnableDynamicLights(NULL, qfalse);
 
 	R_EnableUseShadowmap(qfalse);
 
@@ -456,8 +570,14 @@ void R_RenderFrame (void)
 
 		glColor4f(1,1,1,1);
 		glActiveTextureARB(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->textures[0]);
-		//glBindTexture(GL_TEXTURE_2D, r_state.shadowmapBuffer->depth);
+		glBindTexture(GL_TEXTURE_2D, r_state.renderBuffer->textures[1]);
+		//glBindTexture(GL_TEXTURE_2D, r_state.renderBuffer->depth);
+		//glBindTexture(GL_TEXTURE_2D, r_state.shadowMapBuffer->textures[0]);
+		//glBindTexture(GL_TEXTURE_2D, r_state.shadowMapBuffer->depth);
+
+		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);
+
 		glEnable(GL_TEXTURE_2D);
 		//glTranslated(0,0,-1);
 
@@ -481,6 +601,8 @@ void R_RenderFrame (void)
 		glMatrixMode(GL_TEXTURE);
 		glPopMatrix();
 		R_CheckError();
+
+		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 #endif
 
 
@@ -805,6 +927,7 @@ static qboolean R_InitExtensions (void)
 	qglLinkProgram = NULL;
 	qglUseProgram = NULL;
 	qglGetProgramiv = NULL;
+	qglProgramParameteriEXT = NULL;
 	qglGetProgramInfoLog = NULL;
 	qglGetUniformLocation = NULL;
 	qglUniform1i = NULL;
@@ -913,6 +1036,7 @@ static qboolean R_InitExtensions (void)
 		qglLinkProgram = SDL_GL_GetProcAddress("glLinkProgram");
 		qglUseProgram = SDL_GL_GetProcAddress("glUseProgram");
 		qglGetProgramiv = SDL_GL_GetProcAddress("glGetProgramiv");
+		qglProgramParameteriEXT = SDL_GL_GetProcAddress("glProgramParameteriEXT");
 		qglGetProgramInfoLog = SDL_GL_GetProcAddress("glGetProgramInfoLog");
 		qglGetUniformLocation = SDL_GL_GetProcAddress("glGetUniformLocation");
 		qglUniform1i = SDL_GL_GetProcAddress("glUniform1i");
