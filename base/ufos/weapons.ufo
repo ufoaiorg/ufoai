@@ -38,8 +38,8 @@ item medikit
 			name	"_Throw"
 			skill	close
 			projtl	medikit
-			impsnd	misc/klonk03
-			bodysnd misc/klonk01
+			impsnd	weapons/grenade-bounce
+			bodysnd weapons/grenade-bounce
 			gravity	true
 			speed	220
 			range	8
@@ -92,8 +92,8 @@ item irgoggles
 			name	"_Throw"
 			skill	close
 			projtl	irgoggles
-			impsnd	misc/klonk03
-			bodysnd misc/klonk01
+			impsnd	weapons/grenade-bounce
+			bodysnd weapons/grenade-bounce
 			gravity	true
 			speed	220
 			range	10

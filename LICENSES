@@ -3203,7 +3203,10 @@ base/sound/gui/click3.ogg | Creative Commons Attribution-Share Alike 3.0 | Chris
 base/sound/gui/click4.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/gui/item-drag.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/gui/item-drop.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/impact/bullet-impact.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
+base/sound/impact/knife-impact.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/impact/laser-impact.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
+base/sound/impact/nail-impact.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/impact/plasma-impact.ogg | Creative Commons Attribution-Share Alike 2.0 | Christian Hoffmann
 base/sound/misc/breakelectric01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
 base/sound/misc/breakelectric02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
@@ -3225,10 +3228,10 @@ base/sound/misc/breakwood05.ogg | Creative Commons Attribution-Share Alike 3.0 U
 base/sound/misc/breakwood06.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
 base/sound/misc/breakwood07.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
 base/sound/misc/electro.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
-base/sound/misc/lobbyprivmsg.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
-base/sound/misc/popup.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/misc/lobbyprivmsg.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
+base/sound/misc/popup.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/misc/roundstart.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/misc/talk.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/sound/misc/talk.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Hoffmann
 base/sound/soldiers/femaledeath01.ogg | GNU General Public License 2.0 | Openarena GPLed Data
 base/sound/soldiers/femaledeath02.ogg | GNU General Public License 2.0 | Openarena GPLed Data
 base/sound/soldiers/femaledeath03.ogg | GNU General Public License 2.0 | Openarena GPLed Data
