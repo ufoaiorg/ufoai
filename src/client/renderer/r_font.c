@@ -494,7 +494,8 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
 	chunksUsed = R_FontMakeChunks(f, text, maxWidth, method, &lines, &aborted);
 
 	wrap = &wrapCache[numWraps];
-	Q_strncpyz(wrap->text, text, sizeof(wrap->text));
+	strncpy(wrap->text, text, sizeof(wrap->text));
+	wrap->text[MAX_CACHE_STRING] = '\0';
 	wrap->font = f;
 	wrap->maxWidth = maxWidth;
 	wrap->method = method;
