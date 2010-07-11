@@ -287,7 +287,7 @@ item plasblade
 			projtl		null
 			impact		plasmaImpactCharged
 			hitbody		plasmaImpactCharged
-			firesnd		weapons/plasmablade
+			firesnd		weapons/plasma-blade
 			speed		0
 			range		1.5
 			spread		"1 4"
@@ -305,8 +305,9 @@ item plasblade
 			projtl		plasblade
 			impact		plasmaImpactCharged
 			hitbody		plasmaImpactCharged
-			impsnd		misc/klonk03
-			bodysnd		weapons/plasmablade
+			impsnd		impact/plasma-impact
+			bodysnd		impact/plasma-impact
+			firesnd		weapons/plasma-blade
 			speed		320
 			range		7
 			spread		"2 5"
