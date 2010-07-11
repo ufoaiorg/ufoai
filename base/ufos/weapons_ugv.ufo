@@ -128,7 +128,7 @@ item ugv_chaingun_belt
 //			impact				bulletImpact
 //			hitbody				null
 //			firesnd				weapons/bullet-chaingun-50x
-			sndonce				true
+//			sndonce				true
 //			speed				0
 //			spread				"3 15"
 //			crouch				1.0
