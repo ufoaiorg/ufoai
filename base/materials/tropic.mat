@@ -166,11 +166,10 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		lightmap
 	}
-
-	/* 3 small buttons (top left) animation (red)*/
+	/* 3 small buttons (top left) randomized animation (red)*/
 	{
 		texture pt/b/b2_06_0a0
-		anim 13 2.6
+		animr 9 2.3
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* Sixpack of buttons (top) randomized animation (red-blue) */
@@ -339,11 +338,10 @@
 	/* Additional flare (green) */
 	{
 		flare 2
-		color 0.1 0.6 0.0
-		scale.s 0.6
+		color 0.1 0.7 0.0
+		scale.s 0.7
 	}
 }
-
 
 /* Screens & Panels (Corrupter only) */
 
@@ -366,12 +364,6 @@
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		lightmap
 	}
-	/* Display skin */
-	{
-		texture pt/d/d2_13-16_0_sk0a0
-		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		lightmap
-	}
 	/* Clear screen */
 	{
 		texture pt/cs/s2_13-16_0_sk0a0
@@ -381,12 +373,6 @@
 	/* Big button animation (green to red)*/
 	{
 		texture pt/b/b2_13-16_0a0
-		anim 16 4.2
-		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-	}
-	/* Display animation (green-red) */
-	{
-		texture pt/d/d2_13-16_0a0
 		anim 16 4.2
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
@@ -653,11 +639,10 @@
 	{
 		texture tex_lights/land_li_orange
 		pulse 0.2
-		rotate 0.3
+		rotate 0.2
 	}
 	{
 		flare 2
 		color 0.7 0.7 0.5
-		scale.s 1.3
 	}
 }
