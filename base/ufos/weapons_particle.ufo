@@ -44,6 +44,8 @@ item pbeampistol_ammo
 			impact		pbeamImpact
 			hitbody		pbeamImpact
 			firesnd		weapons/laser-small
+			impsnd		impact/laser-impact
+			bodysnd 	impact/laser-bodyimpact
 			speed		0
 			spread		"1 1"
 			crouch		0.9
@@ -63,6 +65,8 @@ item pbeampistol_ammo
 			impact				pbeamImpact
 			hitbody				pbeamImpact
 			firesnd				weapons/laser-small
+			impsnd				impact/laser-impact
+			bodysnd 			impact/laser-bodyimpact
 			speed				0
 			spread				"1.8 1.8"
 			crouch				0.9
@@ -125,6 +129,8 @@ item pbeamrifle_ammo
 			impact		pbeamImpact
 			hitbody		pbeamImpact
 			firesnd		weapons/laser-medium
+			impsnd		impact/laser-impact
+			bodysnd 	impact/laser-bodyimpact
 			speed		0
 			spread		"1.5 1.5"
 			crouch		0.7
@@ -144,6 +150,8 @@ item pbeamrifle_ammo
 			impact		pbeamImpact
 			hitbody		pbeamImpact
 			firesnd		weapons/laser-medium
+			impsnd		impact/laser-impact
+			bodysnd 	impact/laser-bodyimpact
 			speed		0
 			spread		"1 1"
 			crouch		0.7
@@ -162,6 +170,8 @@ item pbeamrifle_ammo
 			impact				pbeamImpact
 			hitbody				pbeamImpact
 			firesnd				weapons/laser-medium
+			impsnd				impact/laser-impact
+			bodysnd 			impact/laser-bodyimpact
 			speed				0
 			spread				"2 2"
 			crouch				0.7
@@ -226,6 +236,8 @@ item pbeamcannon_ammo
 			impact				pbeamImpact
 			hitbody				pbeamImpact
 			firesnd				weapons/laser-large
+			impsnd				impact/laser-impact
+			bodysnd 			impact/laser-bodyimpact
 			speed				0
 			spread				"1.8 1.8"
 			crouch				0.6
@@ -246,6 +258,8 @@ item pbeamcannon_ammo
 			impact				pbeamImpact
 			hitbody				pbeamImpact
 			firesnd				weapons/laser-large
+			impsnd				impact/laser-impact
+			bodysnd 			impact/laser-bodyimpact
 			speed				0
 			spread				"2.5 2.5"
 			crouch				0.6
@@ -266,6 +280,8 @@ item pbeamcannon_ammo
 			impact		pbeamBigImpact
 			hitbody		pbeamBigImpact
 			firesnd		weapons/laser-blast
+			impsnd		impact/laser-impact
+			bodysnd 	impact/laser-bodyimpact
 			speed		0
 			spread		"1.5 1.5"
 			crouch		0.8

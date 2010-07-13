@@ -84,6 +84,7 @@ item ugv_chaingun_belt
 			hitbody				null
 			firesnd				weapons/bullet-chaingun-10x
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"1 4"
@@ -107,6 +108,7 @@ item ugv_chaingun_belt
 			hitbody				null
 			firesnd				weapons/bullet-chaingun-50x
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"3 6"
@@ -131,6 +133,7 @@ item ugv_chaingun_belt
 //			hitbody				null
 //			firesnd				weapons/bullet-chaingun-50x
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 //			sndonce				true
 //			speed				0
 //			spread				"3 15"

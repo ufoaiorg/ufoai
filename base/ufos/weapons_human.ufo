@@ -46,6 +46,7 @@ item assault_ammo
 			hitbody		null
 			firesnd		weapons/bullet-rifle
 			impsnd		impact/bullet-impact
+			bodysnd 	impact/bullet-bodyimpact
 			speed		0
 			spread		"1.8 1.8"
 			crouch		0.7
@@ -66,6 +67,7 @@ item assault_ammo
 			hitbody				null
 			firesnd				weapons/bullet-rifle
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			speed				0
 			spread				"2.0 2.0"
 			crouch				0.7
@@ -87,6 +89,7 @@ item assault_ammo
 			hitbody				null
 			firesnd				weapons/bullet-rifle
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			speed				0
 			spread				"2.5 2.5"
 			crouch				0.6
@@ -107,6 +110,7 @@ item assault_ammo
 			hitbody		null
 			firesnd		weapons/bullet-rifle
 			impsnd		impact/bullet-impact
+			bodysnd 	impact/bullet-bodyimpact
 			speed		0
 			spread		"1 1"
 			crouch		0.7
@@ -130,6 +134,7 @@ item assault_ammo
 			hitbody		null
 			firesnd		weapons/bullet-rifle
 			impsnd		impact/bullet-impact
+			bodysnd 	impact/bullet-bodyimpact
 			speed		0
 			spread		"1.0 1.0"
 			crouch		0.7
@@ -150,6 +155,7 @@ item assault_ammo
 			hitbody				null
 			firesnd				weapons/bullet-rifle
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			speed				0
 			spread				"1.2 1.2"
 			crouch				0.7
@@ -171,6 +177,7 @@ item assault_ammo
 			hitbody				null
 			firesnd				weapons/bullet-rifle
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			speed				0
 			spread				"1.8 1.8"
 			crouch				0.6
@@ -191,6 +198,7 @@ item assault_ammo
 			hitbody		null
 			firesnd		weapons/bullet-rifle
 			impsnd		impact/bullet-impact
+			bodysnd 	impact/bullet-bodyimpact
 			speed		0
 			spread		"0.75 0.75"
 			crouch		0.6
@@ -254,6 +262,7 @@ item machinegun_ammo
 			hitbody				null
 			firesnd				weapons/bullet-hmg-5x
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"2 2"
@@ -276,6 +285,7 @@ item machinegun_ammo
 			hitbody				null
 			firesnd				weapons/bullet-hmg-20x
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"3 3"
@@ -297,6 +307,7 @@ item machinegun_ammo
 			hitbody				null
 			firesnd				weapons/bullet-hmg-20x
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"3 20"
@@ -361,6 +372,7 @@ item sniper_ammo
 			hitbody		null
 			firesnd		weapons/bullet-sniper
 			impsnd		impact/bullet-impact
+			bodysnd 	impact/bullet-bodyimpact
 			speed		0
 			spread		"1.5 1.5"
 			crouch		0.5
@@ -382,6 +394,7 @@ item sniper_ammo
 			hitbody		null
 			firesnd		weapons/bullet-sniper
 			impsnd		impact/bullet-impact
+			bodysnd 	impact/bullet-bodyimpact
 			speed		0
 			spread		"0.9 0.9"
 			crouch		0.5
@@ -446,6 +459,7 @@ item coilgun_ammo
 			hitbody		null
 			firesnd		weapons/bullet-bolter
 			impsnd		impact/nail-impact
+			bodysnd 	impact/nail-bodyimpact
 			speed		0
 			spread		"1.5 1.5"
 			crouch		0.5
@@ -467,6 +481,7 @@ item coilgun_ammo
 			hitbody		null
 			firesnd		weapons/bullet-bolter
 			impsnd		impact/nail-impact
+			bodysnd 	impact/nail-bodyimpact
 			speed		0
 			spread		"0.9 0.9"
 			crouch		0.5
@@ -530,6 +545,7 @@ item pistol_ammo
 			hitbody		null
 			firesnd		weapons/bullet-pistol
 			impsnd		impact/bullet-impact
+			bodysnd 	impact/bullet-bodyimpact
 			speed		0
 			spread		"1.1 1.1"
 			crouch		0.9
@@ -550,6 +566,7 @@ item pistol_ammo
 			hitbody				null
 			firesnd				weapons/bullet-pistol
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			speed				0
 			spread				"1.3 1.3"
 			crouch				0.9
@@ -571,6 +588,7 @@ item pistol_ammo
 			hitbody				null
 			firesnd				weapons/bullet-pistol
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			speed				0
 			spread				"1 1"
 			crouch				0.9
@@ -633,6 +651,7 @@ item pistol2_ammo
 			hitbody		null
 			firesnd		weapons/bullet-pistol2
 			impsnd		impact/bullet-impact
+			bodysnd 	impact/bullet-bodyimpact
 			speed		0
 			spread		"1.5 1.5"
 			crouch		0.9
@@ -653,6 +672,7 @@ item pistol2_ammo
 			hitbody				null
 			firesnd				weapons/bullet-pistol2
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			speed				0
 			spread				"1.6 1.6"
 			crouch				0.9
@@ -674,6 +694,7 @@ item pistol2_ammo
 			hitbody				null
 			firesnd				weapons/bullet-pistol2
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			speed				0
 			spread				"1.7 1.7"
 			crouch				0.9
@@ -737,6 +758,7 @@ item smg_ammo
 			hitbody		null
 			firesnd		weapons/bullet-smg
 			impsnd		impact/bullet-impact
+			bodysnd 	impact/bullet-bodyimpact
 			speed		0
 			spread		"1.7 1.7"
 			crouch		0.8
@@ -757,6 +779,7 @@ item smg_ammo
 			hitbody				null
 			firesnd				weapons/bullet-smg
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			speed				0
 			spread				"2.0 2.0"
 			crouch				0.7
@@ -778,6 +801,7 @@ item smg_ammo
 			hitbody				null
 			firesnd				weapons/bullet-smg
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			speed				0
 			spread				"3.0 3.0"
 			crouch				0.6
@@ -799,6 +823,7 @@ item smg_ammo
 			hitbody		null
 			firesnd		weapons/bullet-smg
 			impsnd		impact/bullet-impact
+			bodysnd 	impact/bullet-bodyimpact
 			speed		0
 			spread		"1.25 1.25"
 			crouch		0.8
@@ -861,6 +886,7 @@ item shotgun2_slug_ammo
 			hitbody				null
 			firesnd				weapons/bullet-shotgun
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"1.5 1.5"
@@ -884,6 +910,7 @@ item shotgun2_slug_ammo
 			hitbody				null
 			firesnd				weapons/bullet-shotgun
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				false
 			speed				0
 			spread				"2.4 2.4"
@@ -947,6 +974,7 @@ item shotgun_micro_ammo
 			hitbody				null
 			firesnd				weapons/bullet-shotgunmini
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"1.6 1.6"
@@ -970,6 +998,7 @@ item shotgun_micro_ammo
 			hitbody				null
 			firesnd				weapons/bullet-shotgunmini
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				false
 			speed				0
 			spread				"2.6 2.6"
@@ -996,6 +1025,7 @@ item shotgun_micro_ammo
 			hitbody				null
 			firesnd				weapons/bullet-shotgunmini
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"1.7 1.7"
@@ -1019,6 +1049,7 @@ item shotgun_micro_ammo
 			hitbody				null
 			firesnd				weapons/bullet-shotgunmini
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				false
 			speed				0
 			spread				"2.5 2.5"
@@ -1042,6 +1073,7 @@ item shotgun_micro_ammo
 			hitbody				null
 			firesnd				weapons/bullet-shotgunmini
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				false
 			speed				0
 			spread				"3 3"
@@ -1949,6 +1981,7 @@ item bolterrifle_ammo
 			hitbody		null
 			firesnd		weapons/bullet-bolter
 			impsnd		impact/nail-impact
+			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
 			speed		0
 			spread		"1.7 1.7"
@@ -1972,6 +2005,7 @@ item bolterrifle_ammo
 			hitbody		null
 			firesnd		weapons/bullet-heavybolter
 			impsnd		impact/nail-impact
+			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
 			speed		0
 			spread		"2.4 2.4"
@@ -1995,6 +2029,7 @@ item bolterrifle_ammo
 			hitbody				null
 			firesnd				weapons/bullet-bolter
 			impsnd				impact/nail-impact
+			bodysnd 			impact/nail-bodyimpact
 			speed				0
 			spread				"1.1 1.1"
 			crouch				0.70

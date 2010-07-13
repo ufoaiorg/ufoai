@@ -134,6 +134,8 @@ item laser_ammo
 			impact				laserImpact
 			hitbody				laserImpact
 			firesnd				weapons/laser-small
+			impsnd				impact/laser-impact
+			bodysnd 			impact/laser-bodyimpact
 			delaybetweenshots	6
 			speed				0
 			spread				"0.75 0.75"
@@ -158,6 +160,8 @@ item laser_ammo
 			impact		laserImpact
 			hitbody		laserImpact
 			firesnd		weapons/laser-medium
+			impsnd		impact/laser-impact
+			bodysnd 	impact/laser-bodyimpact
 			speed		0
 			spread		"0.5 0.5"
 			crouch		0.8
@@ -177,6 +181,8 @@ item laser_ammo
 			impact				laserImpact
 			hitbody				laserImpact
 			firesnd				weapons/laser-medium
+			impsnd				impact/laser-impact
+			bodysnd 			impact/laser-bodyimpact
 			delaybetweenshots	6
 			speed				0
 			spread				"0.5 0.5"
@@ -220,6 +226,8 @@ item laser_ammo
 			impact				laserImpact
 			hitbody				laserImpact
 			firesnd				weapons/laser-large
+			impsnd				impact/laser-impact
+			bodysnd 			impact/laser-bodyimpact
 			delaybetweenshots	6
 			speed				0
 			spread				"0.5 0.5"

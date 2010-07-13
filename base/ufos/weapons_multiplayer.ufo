@@ -52,6 +52,7 @@ item chaingun_ammo
 			hitbody				null
 			firesnd				weapons/bullet-chaingun-5x
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"0.5 2"
@@ -75,6 +76,7 @@ item chaingun_ammo
 			hitbody				null
 			firesnd				weapons/bullet-chaingun-40x
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"1.5 3"
@@ -97,6 +99,7 @@ item chaingun_ammo
 			hitbody				null
 			firesnd				weapons/bullet-chaingun-40x
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"1.5 7.5"
@@ -162,6 +165,7 @@ item shotgun_ammo
 			hitbody				null
 			firesnd				weapons/bullet-shotgun
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"1.8 1.8"
@@ -185,6 +189,7 @@ item shotgun_ammo
 			hitbody				null
 			firesnd				weapons/bullet-shotgun
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"2.8 2.8"
@@ -274,6 +279,7 @@ item xaw95_ammo
 			hitbody				null
 			firesnd				weapons/bullet-chaingun-10x
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"0.5 2"
@@ -297,6 +303,7 @@ item xaw95_ammo
 			hitbody				null
 			firesnd				weapons/bullet-chaingun-50x
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"1.5 3"
@@ -319,6 +326,7 @@ item xaw95_ammo
 			hitbody				null
 			firesnd				weapons/bullet-chaingun-50x
 			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"1.5 7.5"

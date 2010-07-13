@@ -27,6 +27,8 @@ item knife
 			impact		null
 			hitbody		null
 			firesnd		weapons/melee-swoosh
+			impsnd		impact/knife-impact
+			bodysnd 	impact/knife-bodyimpact
 			speed		0
 			range		1.5
 			shots		1
@@ -44,7 +46,7 @@ item knife
 			hitbody		null
 			firesnd		weapons/melee-throw
 			impsnd		impact/knife-impact
-			bodysnd		impact/knife-impact
+			bodysnd 	impact/knife-bodyimpact
 			speed		320
 			range		7
 			spread		"1 4"
@@ -87,6 +89,8 @@ item knifemono
 			impact		null
 			hitbody		null
 			firesnd		weapons/melee-swoosh
+			impsnd		impact/knife-impact
+			bodysnd 	impact/knife-bodyimpact
 			speed		0
 			range		1.5
 			shots		1
@@ -104,7 +108,7 @@ item knifemono
 			hitbody		null
 			firesnd		weapons/melee-throw
 			impsnd		impact/knife-impact
-			bodysnd		impact/knife-impact
+			bodysnd 	impact/knife-bodyimpact
 			speed		320
 			range		7
 			spread		"1 4"
@@ -228,6 +232,8 @@ item kerrblade
 			impact		null
 			hitbody		null
 			firesnd		weapons/melee-swoosh
+			impsnd		impact/knife-impact
+			bodysnd 	impact/knife-bodyimpact
 			speed		0
 			range		1.5
 			shots		1
@@ -244,6 +250,8 @@ item kerrblade
 			impact		null
 			hitbody		null
 			firesnd		weapons/melee-swoosh
+			impsnd		impact/knife-impact
+			bodysnd 	impact/knife-bodyimpact
 			speed		0
 			range		1.5
 			shots		1
@@ -288,6 +296,8 @@ item plasblade
 			impact		plasmaImpactCharged
 			hitbody		plasmaImpactCharged
 			firesnd		weapons/plasma-blade
+			impsnd		impact/plasma-impact
+			bodysnd 	impact/plasma-bodyimpact
 			speed		0
 			range		1.5
 			spread		"1 4"
@@ -306,7 +316,7 @@ item plasblade
 			impact		plasmaImpactCharged
 			hitbody		plasmaImpactCharged
 			impsnd		impact/plasma-impact
-			bodysnd		impact/plasma-impact
+			bodysnd 	impact/plasma-bodyimpact
 			firesnd		weapons/plasma-blade
 			speed		320
 			range		7
