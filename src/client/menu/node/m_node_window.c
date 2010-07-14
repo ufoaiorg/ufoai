@@ -119,7 +119,7 @@ qboolean MN_WindowNodeAddIndexedNode (menuNode_t* const node, menuNode_t* const 
  */
 qboolean MN_WindowNodeRemoveIndexedNode (menuNode_t* const node, menuNode_t* const child)
 {
-	/** @todo implement it anyway we use it or not */
+	/** FIXME implement it */
 	return qfalse;
 }
 
