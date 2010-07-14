@@ -2576,18 +2576,23 @@ void B_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 {
 	aliensTmp_t *cargo;
 
-	AII_ReloadAircraftWeapons(aircraft);				/**< Reload weapons */
+	/* Reset UFO sensored on radar */
+	RADAR_InitialiseUFOs(&aircraft->radar);
+	/* Reload weapons */
+	AII_ReloadAircraftWeapons(aircraft);
 
 	/* Don't call cargo functions if aircraft is not a transporter. */
 	if (aircraft->type != AIRCRAFT_TRANSPORTER)
 		return;
-	AL_AddAliens(aircraft);			/**< Add aliens to Alien Containment. */
-	B_SellOrAddItems(aircraft);		/**< Sell collected items or add them to storage. */
-	RS_MarkResearchable(qfalse, aircraft->homebase);		/**< Mark new technologies researchable. */
-	RADAR_InitialiseUFOs(&aircraft->radar);		/**< Reset UFO sensored on radar */
 
-	/* Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground */
 	assert(aircraft->homebase);
+	/* Add aliens to Alien Containment. */
+	AL_AddAliens(aircraft);
+	/* Sell collected items or add them to storage. */
+	B_SellOrAddItems(aircraft);
+	/* Mark new technologies researchable. */
+	RS_MarkResearchable(qfalse, aircraft->homebase);
+	/* Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground */
 	B_UpdateStorageCap(aircraft->homebase);
 
 	/* Now empty alien/item cargo just in case. */
