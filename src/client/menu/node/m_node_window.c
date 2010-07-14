@@ -346,6 +346,10 @@ static void MN_WindowNodeClone (const menuNode_t *source, menuNode_t *clone)
 		Com_Printf("MN_WindowNodeClone: Do not inherite window using a render node. Render node ignored (\"%s\")\n", MN_GetPath(clone));
 		EXTRADATA(clone).renderNode = NULL;
 	}
+
+	/* clean up index */
+	EXTRADATA(clone).index = NULL;
+	memset(EXTRADATA(clone).index_hash, 0, sizeof(EXTRADATA(clone).index_hash[0]) * INDEXEDCHILD_HASH_SIZE);
 }
 
 /**

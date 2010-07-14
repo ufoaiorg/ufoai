@@ -254,6 +254,9 @@ void MN_InsertNode (menuNode_t* const node, menuNode_t *prevNode, menuNode_t *ne
 		newNode->parent = node;
 	}
 
+	if (newNode->root && newNode->indexed)
+		MN_WindowNodeAddIndexedNode(newNode->root, newNode);
+
 	MN_Invalidate(node);
 }
 
@@ -293,6 +296,9 @@ menuNode_t* MN_RemoveNode (menuNode_t* const node, menuNode_t *child)
 		while (node->lastChild && node->lastChild->next)
 			node->lastChild = node->lastChild->next;
 	}
+	if (child->root && child->indexed)
+		MN_WindowNodeRemoveIndexedNode(child->root, child);
+
 	child->next = NULL;
 	return child;
 }
