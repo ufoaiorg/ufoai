@@ -37,24 +37,13 @@ tech rs_contained_organic_alien
 
 //========================================================
 
-tech rs_fighter_AND_particle
+tech rs_fighter_OR_harvester
 {
-	type	logic
-	name	"LOGIC:Fighter AND 1beamweapon"
-	require_AND
+	type logic
+	name	"LOGIC:fighter OR harvester"
+	require_OR
 	{
-		item craft_weapon_particle_beam 1
 		tech rs_craft_ufo_fighter
-	}
-}
-
-tech rs_harvester_AND_particle
-{
-	type	logic
-	name	"LOGIC:Harvester AND 1beamweapon"
-	require_AND
-	{
-		item craft_weapon_particle_beam 1
 		tech rs_craft_ufo_harvester
 	}
 }
