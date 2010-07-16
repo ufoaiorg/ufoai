@@ -1095,10 +1095,11 @@ base/models/objects/city/tombstones/ts5.jpg | GNU General Public License 2.0 or 
 base/models/objects/city/tombstones/ts5.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/tombstones/ts6.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/tombstones/ts6.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/city/trafficlights/trafficlight.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/city/trafficlights/trafficlight.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/city/trafficlights/trafficlight1.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/trafficlights/trafficlight2.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/trafficlights/trafficlight3.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/city/trafficlights/trafficlight_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/objects/city/trafficsign/sign.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/trafficsign/sign1.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/trafficsign/sign2.md2 | GNU General Public License 2.0 or later | Willem Sitters
