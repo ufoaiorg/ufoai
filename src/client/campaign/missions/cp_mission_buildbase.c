@@ -211,11 +211,12 @@ static void CP_BuildBaseSubvertGovernment (mission_t *mission)
 
 	mission->stage = STAGE_SUBVERT_GOV;
 
+	/* mission appear on geoscape, player can go there */
+	CP_MissionAddToGeoscape(mission, qfalse);
+
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	CP_UFORemoveFromGeoscape(mission, qfalse);
-	/* mission appear on geoscape, player can go there */
-	CP_MissionAddToGeoscape(mission, qfalse);
 }
 
 /**

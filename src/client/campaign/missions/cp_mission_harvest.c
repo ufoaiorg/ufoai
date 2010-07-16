@@ -142,6 +142,7 @@ void CP_HarvestMissionGo (mission_t *mission)
 				continue;
 			if (MAP_PositionCloseToBase(mission->pos))
 				continue;
+			mission->posAssigned = qtrue;
 			break;
 		}
 		if (counter >= MAX_POS_LOOP) {
