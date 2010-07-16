@@ -105,7 +105,7 @@
 	{
 		texture pt/sk/usk2_05_0_0b0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		pulse 0.2
+		pulse 0.1
 		envmap 0
 		lightmap
 	}
@@ -169,7 +169,7 @@
 	/* 3 small buttons (top left) randomized animation (red)*/
 	{
 		texture pt/b/b2_06_0a0
-		animr 9 2.3
+		anim 13 2.6
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 	/* Sixpack of buttons (top) randomized animation (red-blue) */
@@ -633,16 +633,20 @@
 /* Lights & LightFX (Corrupter) */
 
 /* land_li_green: Small Light (green) (Corrupter) */
-
 {
 	material tex_lights/land_li_green
 	{
-		texture tex_lights/land_li_orange
-		pulse 0.2
-		rotate 0.2
+		texture tex_lights/land_li_green
+	}
+	{
+		texture pt/fx/rfx_lali_green_sp2
+		pulse 0.05
+		rotate 0.1
+		glowscale 0.7
 	}
 	{
 		flare 2
+		scale.s 1.5
 		color 0.7 0.7 0.5
 	}
 }
