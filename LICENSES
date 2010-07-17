@@ -1397,10 +1397,12 @@ base/models/objects/vehicles/motorbike/motorbike.png | GNU General Public Licens
 base/models/objects/vehicles/puma/puma.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vehicles/puma/puma.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vehicles/tractor/tractor.md2 | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/vehicles/tractor/tractor.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/vehicles/tractor/tractor1.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/vehicles/tractor/tractor.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
+base/models/objects/vehicles/tractor/tractor1.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/vehicles/tractor/tractor1_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
+base/models/objects/vehicles/tractor/tractor1_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/vehicles/tractor/tractor_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
+base/models/objects/vehicles/tractor/tractor_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/pilots/female/body.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/pilots/female/head01.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/pilots/male/body.jpg | GNU General Public License 2.0 or later | Willem Sitters
