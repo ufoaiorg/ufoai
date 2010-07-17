@@ -494,7 +494,8 @@ static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *c
 				dmg *= GUETE_CIV_FACTOR;
 
 			/* add random effects */
-			dmg += GUETE_RANDOM * frand();
+			if (dmg > 0)
+				dmg += GUETE_RANDOM * frand();
 
 			/* check if most damage can be done here */
 			if (dmg > *maxDmg) {
