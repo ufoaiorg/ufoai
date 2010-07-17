@@ -239,10 +239,12 @@ static int PR_DisassembleItem (base_t *base, components_t *comp, float condition
 		size += compOd->size * amount;
 		/* Add to base storage only if this is real disassembling, not calculation of size. */
 		if (!calculate) {
-			if (!strcmp(compOd->id, ANTIMATTER_TECH_ID))
+			if (!strcmp(compOd->id, ANTIMATTER_TECH_ID)) {
 				B_ManageAntimatter(base, amount, qtrue);
-			else
+			} else {
 				B_UpdateStorageAndCapacity(base, compOd, amount, qfalse, qfalse);
+				RS_MarkCollected(compOd->tech);
+			}
 			Com_DPrintf(DEBUG_CLIENT, "PR_DisassembleItem: added %i amounts of %s\n", amount, compOd->id);
 		}
 	}
