@@ -555,7 +555,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			if (G_IsCivilian(check) && !G_IsInsane(ent)){dmg *= GUETE_CIV_FACTOR;}
 
 			/* add random effects */
-			dmg += GUETE_RANDOM * frand();
+			if (dmg > 0)
+				dmg += GUETE_RANDOM * frand();
 
 			/* check if most damage can be done here */
 			if (dmg > maxDmg) {
