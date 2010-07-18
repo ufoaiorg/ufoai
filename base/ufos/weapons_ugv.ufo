@@ -132,8 +132,8 @@ item ugv_chaingun_belt
 //			impact				bulletImpact
 //			hitbody				null
 //			firesnd				weapons/bullet-chaingun-50x
-			impsnd				impact/bullet-impact
-			bodysnd 			impact/bullet-bodyimpact
+//			impsnd				impact/bullet-impact
+//			bodysnd 			impact/bullet-bodyimpact
 //			sndonce				true
 //			speed				0
 //			spread				"3 15"
