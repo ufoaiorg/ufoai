@@ -62,7 +62,9 @@
 
 inline void spin_button_set_step (GtkSpinButton* spin, gfloat step)
 {
-	gtk_spin_button_get_adjustment(spin)->step_increment = step;
+	GtkAdjustment* adjustment = gtk_spin_button_get_adjustment(spin);
+	adjustment->step_increment = step;
+	gtk_adjustment_changed(adjustment);
 }
 
 class Increment
