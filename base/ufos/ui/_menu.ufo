@@ -219,35 +219,45 @@ component panel cmpMapPanel
 	// ===================
 	string map_label
 	{
-		string		"_Map name:"
+		string		"_Map Name:"
 		pos			"10 155"
 		size		"256 20"
 	}
-	cmpMapSlot mapSlot {
+	cmpMapSlot mapSlot
+	{
 		{
 			pos "140 150"
 		}
 	}
 
-	// ===================
-	// DAY + NIGHT
-	// ===================
-	todo todo3
-	{
-		pos "425 200"
-		string "It should be better to have a selectbox with day/night"
-	}
+	// =============================
+	// DAY/NIGHT STRING & SELECTBOX
+	// =============================
 	string daynight_str
 	{
-		string		"_Day version:"
+		string		"_Daytime Version:"
 		pos			"10 200"
 		size		"280 20"
 	}
-	checkbox daynight_value
+	selectbox daynight_box
 	{
-		current		*cvar:mn_serverday
-		pos			"335 200"
-		size		"20 18"
-		image		"ui/checkbox_blue"
+		{
+			tooltip		"_Select whether you want to play @ day- or nighttime."
+			cvar		*cvar:mn_serverday
+			image		"ui/selectbox_green"
+			pos			"240 200"
+			size		"200 20"
+			color		"0.6 0.6 0.6 0.3"
+		}
+		option night
+		{
+			label	"_Night"
+			value	"0"
+		}
+		option day
+		{
+				label	"_Day"
+				value	"1"
+		}
 	}
 }

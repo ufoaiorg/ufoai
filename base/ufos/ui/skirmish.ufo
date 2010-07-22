@@ -1,81 +1,174 @@
-// ==================
+// ==============
 // SKIRMISH MENU
-// ==================
+// ==============
 
 window skirmish
 {
 	/** @todo Remove me */
-	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
-
-	// ==================
-	// background
-	// ==================
-
+	{ } 
+	// empty properties to fix parsing problem with "image" token (behaviour or property?)
+	// ===========
+	// BACKGROUND
+	// ===========
 	image background
 	{
 		src		"ui/skirmish_bg"
 	}
-
+	// ============
+	// BACK BUTTON
+	// ============	
 	cmpMenuButton button_back
 	{
 		string		"_Back"
 		pos			"90 200"
-		onClick		{ cmd "mn_pop;" }
+		onClick
+		{
+			cmd "mn_pop;"
+		}
 	}
-
-	// ====================
-	// start game button
-	// ====================
+	// ==================
+	// START GAME BUTTON
+	// ==================
 	cmpMenuButton button_start
 	{
-		string		"_Start game"
+		string		"_Start Game"
 		pos			"90 80"
-		onClick		{ cmd "sk_start;" }
+		onClick		
+		{
+			cmd "sk_start;"
+		}
 	}
-
+	// ==============================
+	// SKIRMISH GAME SETTINGS STRING
+	// ==============================
 	string settings
 	{
-		string		"_Skirmish game settings"
+		string		"_Skirmish Game Settings"
 		pos			"500 80"
 		size		"450 30"
 		font		"f_big"
 	}
-
-	tab create_natigation {
+	// ============================
+	// MAP/OPTIONS NAVIGATION TABS
+	// ============================
+	tab create_navigation
+	{
 		{
 			pos	"462 150"
 			size	"500 40"
 			cvar	*cvar:mn_skirmish_config_tab
-			onChange {
+			onChange
+			{
 				call *node:root.sk_update_config_navigation
 			}
 		}
-		option map {
+		option map
+		{
 			label	"_Map"
 			value	"1"
 		}
-		option option {
+		option options
+		{
 			label	"_Options"
 			value	"2"
 		}
 	}
-
-	panel panel_option {
+	// ========
+	// MAP TAB
+	// ========
+	cmpMapPanel panel_map
+	{
 		{
 			pos		"495 210"
 			size	"475 370"
 		}
-
-		// ===================
-		// EQUIPMENT AI
-		// ===================
+		// ====================
+		// U.F.O.(S) SELECTBOX
+		// ====================
+		string ufos_str
+		{
+			string		"_U.F.O.:"
+			pos			"10 245"
+			size		"200 20"
+			tooltip		"_Select the U.F.O. that should be used (only possible if available for that map)."
+		}
+		selectbox ufos_box
+		{
+			image	"ui/selectbox_green"
+			pos		"240 245"
+			size	"200 20"
+			color	"0.6 0.6 0.6 0.3"
+			cvar	*cvar:rm_ufo
+			dataid	OPTION_UFOS
+		}
+		// ======================
+		// DROPSHIP(S) SELECTBOX
+		// ======================
+		string dropships_str
+		{
+			string		"_Dropship:"
+			pos			"10 295"
+			size		"200 20"
+			tooltip		"_Select the dropship that should be used (only possible if available for that map)."
+		}
+		selectbox dropships_box
+		{
+			image	"ui/selectbox_green"
+			pos		"240 295"
+			size	"200 20"
+			color	"0.6 0.6 0.6 0.3"
+			cvar	*cvar:rm_drop
+			dataid	OPTION_DROPSHIPS
+		}
+		// =============================
+		// DAY/NIGHT STRING & SELECTBOX
+		// =============================
+		string daynight_str
+		{
+			string		"_Daytime Version:"
+			pos			"10 200"
+			size		"280 20"
+		}
+		selectbox daynight_box
+		{
+			{
+				tooltip		"_Select whether you want to play @ day- or nighttime."
+				cvar		*cvar:mn_serverday
+				image		"ui/selectbox_green"
+				pos			"240 200"
+				size		"200 20"
+				color		"0.6 0.6 0.6 0.3"
+			}
+			option night
+			{
+				label	"_Night"
+				value	"0"
+			}
+			option day
+			{
+				label	"_Day"
+				value	"1"
+			}
+		}
+	}
+	// ============
+	// OPTIONS TAB
+	// ============
+	panel panel_options
+	{
+		{
+			pos		"495 210"
+			size	"475 370"
+		}
+		// ==========================================
+		// EQUIPMENT AI STRINGS, TEXTENTRY & BUTTONS
+		// ==========================================
 		string equipment_alien
 		{
-			string		"_Equipment AI"
+			string		"_Equipment AI Team."
 			pos			"10 0"
 			size		"450 20"
 		}
-
 		textentry slot_alien_equipment
 		{
 			string		*cvar:ai_equipment
@@ -109,17 +202,15 @@ window skirmish
 			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
 			onClick		{ cmd "sk_nextequip ai_equipment;" }
 		}
-
-		// ===================
-		// EQUIPMENT
-		// ===================
+		// ==============================================
+		// EQUIPMENT PLAYER STRINGS, TEXTENTRY & BUTTONS
+		// ==============================================
 		string equipment
 		{
-			string		"_Equipment"
+			string		"_Equipment of your team."
 			pos			"10 75"
 			size		"450 20"
 		}
-
 		textentry slot_equipment
 		{
 			string		*cvar:cl_equip
@@ -153,16 +244,15 @@ window skirmish
 			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
 			onClick		{ cmd "sk_nextequip cl_equip;" }
 		}
-
-		// ===================
-		// AI_NUMACTORS
-		// ===================
+		// ======================================
+		// NUMBER OF AI ACTORS STRINGS & SPINNER
+		// ======================================
 		string ai_numactors_str
 		{
 			string		"_Max. AI actors:"
 			pos			"10 150"
 			size		"200 20"
-			tooltip		"_Max AI actors for this game"
+			tooltip		"_The maximum of AI actors for this game."
 		}
 		string ai_numactors_value
 		{
@@ -180,14 +270,13 @@ window skirmish
 			max			30
 			delta		1
 		}
-
-		// =====================
-		// MAXSOLDIER PER PLAYER
-		// =====================
+		// ===========================================
+		// MAXSOLDIER(S) PER PLAYER STRINGS & SPINNER
+		// ===========================================
 		string maxsoldierperplayer_str
 		{
-			string		"_Max. soldiers:"
-			tooltip		"_Sets the amount of soldiers"
+			string		"_Max. Soldiers:"
+			tooltip		"_Sets the maximum amount of soldiers."
 			pos			"10 175"
 			size		"300 20"
 		}
@@ -207,16 +296,15 @@ window skirmish
 			max			8
 			delta		1
 		}
-
-		// ===================
-		// UGVS
-		// ===================
+		// =======================
+		// UGVS STRINGS & SPINNER
+		// =======================
 		string numugvs_str
 		{
 			string		"_UGVs:"
 			pos			"10 200"
 			size		"200 20"
-			tooltip		"_UGVs for this game - only if enough free soldier slot"
+			tooltip		"_UGVs for this game - only valid if enough free soldier slots are available."
 		}
 		string numugvs_value
 		{
@@ -234,18 +322,16 @@ window skirmish
 			max			2
 			delta		1
 		}
-
-		// ===================
-		// TEAM
-		// ===================
+		// ========================
+		// TEAM STRING & SELECTBOX
+		// ========================
 		string team_str
 		{
 			string		"_Team:"
 			pos			"10 245"
 			size		"200 20"
-			tooltip		"_Select which side you want to play with"
+			tooltip		"_Select which side you want to play with."
 		}
-
 		selectbox team_box
 		{
 			image	"ui/selectbox_green"
@@ -256,97 +342,44 @@ window skirmish
 			dataid	OPTION_TEAMDEFS
 		}
 	}
-
-	cmpMapPanel panel_map {
-		{
-			pos		"495 210"
-			size	"475 370"
-		}
-
-		// ===================
-		// UFOS
-		// ===================
-
-		string ufos_str
-		{
-			string		"_UFO:"
-			pos			"10 245"
-			size		"200 20"
-			tooltip		"_Select the ufo that should be used"
-		}
-
-		selectbox ufos_box
-		{
-			image	"ui/selectbox_green"
-			pos		"240 245"
-			size	"200 20"
-			color	"0.6 0.6 0.6 0.3"
-			cvar	*cvar:rm_ufo
-			dataid	OPTION_UFOS
-		}
-
-		// ===================
-		// DROPSHIPS
-		// ===================
-
-		string dropships_str
-		{
-			string		"_Dropship:"
-			pos			"10 290"
-			size		"200 20"
-			tooltip		"_Select the dropship that should be used"
-		}
-
-		selectbox dropships_box
-		{
-			image	"ui/selectbox_green"
-			pos		"240 290"
-			size	"200 20"
-			color	"0.6 0.6 0.6 0.3"
-			cvar	*cvar:rm_drop
-			dataid	OPTION_DROPSHIPS
-		}
-	}
-
-	// ===================
-	// Interaction
-	// ===================
-
-	/**
-	 * @param<1> boolean to hide or show
-	 */
-	confunc skirmish_hide_dropships {
+	// ============
+	// INTERACTION
+	// ============
+	//*
+	// @param<1> boolean to hide or show
+	confunc skirmish_hide_dropships 
+	{
 		*node:root.panel_map.dropships_str@invis = <1>
 		*node:root.panel_map.dropships_box@invis = <1>
 	}
-
-	/**
-	 * @param<1> boolean to hide or show
-	 */
-	confunc skirmish_hide_ufos {
+	//*
+	// @param<1> boolean to hide or show
+	confunc skirmish_hide_ufos 
+	{
 		*node:root.panel_map.ufos_str@invis = <1>
 		*node:root.panel_map.ufos_box@invis = <1>
 	}
-
-	func sk_update_config_navigation {
+	func sk_update_config_navigation 
+	{
 		*panel_map@invis = true
-		*panel_option@invis = true
-		if ( *cvar:mn_skirmish_config_tab == 1 ) {
+		*panel_options@invis = true
+		if ( *cvar:mn_skirmish_config_tab == 1 ) 
+		{
 			*panel_map@invis = false
 		}
-		elif ( *cvar:mn_skirmish_config_tab == 2 ) {
-			*panel_option@invis = false
+		elif ( *cvar:mn_skirmish_config_tab == 2 ) 
+		{
+			*panel_options@invis = false
 		}
 	}
-
-	// ===================
+	// =====
 	// INIT
-	// ===================
+	// =====
 	func onInit
 	{
 		// TODO: Allow changing the difficulty via menu
 		cmd	"game_setmode;set ai_numaliens 8;set ai_equipment multiplayer_alien;set difficulty 0;"
-		cmd "set mn_serverday 1;mn_getmaps;define cl_ugvs 0;define cl_teamdef phalanx;"
+		cmd "set mn_serverday 0;mn_getmaps;define cl_ugvs 0;define cl_teamdef phalanx;"
 		*cvar:mn_skirmish_config_tab = 1
 		call *node:root.sk_update_config_navigation
 	}
