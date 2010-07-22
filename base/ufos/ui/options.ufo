@@ -648,7 +648,7 @@ window options
 		// ==============================
 		string monochrome_str
 		{
-			tooltip		"_Monochrome means black & white, without colors."
+			tooltip		"_Monochrome means black & white, without colors. Setting this to active will render monochrome battlescape maps, but not models."
 			string		"_Monochrome World:"
 			pos			"72 365"
 			size		"170 20"
@@ -750,7 +750,7 @@ window options
 		// =====================================
 		string other_display_settings
 		{
-			tooltip		"_Calibrate your display here."
+			tooltip		"_Adjust other settings here."
 			string 		"_Other Display Settings"
 			pos			"62 540"
 			size		"256 20"
@@ -990,36 +990,6 @@ window options
 			pos			"415 0"
 			size		"608 768"
 		}
-		// ======================================
-		// CAMERA/GAMEPLAY/INPUT NAVIGATION TABS
-		// ======================================
-//		tab create_gameplay_navigation
-//		{
-//			{
-//				pos	"45 70"
-//				size	"485 40"
-//				cvar	*cvar:mn_gameplay_config_tab
-//				onChange
-//				{
-//					call *node:root.sk_update_gameplay_navigation
-//				}
-//			}
-//			option cameratab
-//			{
-//				label	"_Camera"
-//				value	"1"
-//			}
-//			option gameplaytab
-//			{
-//				label	"_Gameplay"
-//				value	"2"
-//			}
-//			option inputtab
-//			{
-//				label	"_Input"
-//				value	"3"
-//			}
-//		}
 		// =========================
 		// GAMEPLAY SETTINGS STRING
 		// =========================
@@ -1325,13 +1295,12 @@ window options
 				value	"8.0"
 			}
 		}
-
 		// =================================================
 		// BATTLESCAPE CAMERA ZOOM QUANT STRING & SELECTBOX
 		// =================================================
 		string camzoomquant_str
 		{
-			tooltip		"_The zoom quant of the battlescape camera."
+			tooltip		"_The zoom quant of the battlescape camera defines how fast the zoom will be."
 			string		"_Zoom Quant:"
 			pos			"72 260"
 			size		"170 20"
@@ -1339,7 +1308,7 @@ window options
 		selectbox zoom_quant
 		{
 			{
-				tooltip		"_Attention: ."
+				tooltip		"_Set zoom quant to low values if you want more control, set this value higher if the zoom is too slow."
 				cvar		*cvar:cl_camzoomquant
 				image		"ui/selectbox_green"
 				pos			"418 260"
@@ -1947,11 +1916,10 @@ window options
 			string		*cvar:r_dynamic_lights
 			pos			"460 395"
 			size		"100 20"
-//			textalign	ALIGN_CC
 		}
 		spinner dynamiclights_change
 		{
-			tooltip		"_Change the number of allowed hardware accelerated dynamic lights."
+			tooltip		"_Change the number of allowed hardware accelerated dynamic lights. Attention: Realtime lighting has to be turned on for this setting to work."
 			current		*cvar:r_dynamic_lights
 			image		"ui/spinner_blue"
 			pos			"488 395"
@@ -1971,7 +1939,7 @@ window options
 		}
 		checkbox bumpmapping
 		{
-			tooltip		"_Enable normal-/bumpmapping. Attention: Real-time lighting must be turned on for normalmapping to work."
+			tooltip		"_Enable normal-/bumpmapping. Attention: Realtime lighting must be turned on for normalmapping to work."
 			current		*cvar:r_bumpmap
 			pos			"485 420"
 			size		"20 18"
@@ -1982,7 +1950,7 @@ window options
 		// ==========================
 		string shadows_str
 		{
-			tooltip		"_Shadows."
+			tooltip		"_@ the moment these are just drop-shadows."
 			string		"_Shadows:"
 			pos			"72 445"
 			size		"240 20"
@@ -2171,7 +2139,7 @@ window options
 		// ==================================
 		string materialsys_str
 		{
-			tooltip		"_The material system is used to display texture animations, fx like rotating or stretching or scrolling textures & manipulate rendering through applying special material properties."
+			tooltip		"_The material system is used to display texture animations, effects like rotating or stretching or scrolling textures & manipulate rendering through applying special material properties like specularity or hardness to defined textures."
 			string		"_Material System:"
 			pos			"72 675"
 			size		"240 20"
@@ -2205,7 +2173,6 @@ window options
 			textalign	ALIGN_CC
 			color		"0 0.79 0 1"
 		}
-
 		// only show the current binding - no support for changing them atm
 		text keylist
 		{
@@ -2247,29 +2214,6 @@ window options
 		call *node:root.sk_update_gameplay_navigation
 	}
 }
-
-// =====================================
-// INTERACTION GAMEPLAY NAVIGATION FUNC
-// =====================================
-
-	func sk_update_gameplay_navigation 
-	{
-		*panel_cameratab@invis = true
-		*panel_gameplaytab@invis = true
-		*panel_inputtab@invis = true
-		if ( *cvar:mn_gameplay_config_tab == 1 ) 
-		{
-			*panel_cameratab@invis = false
-		}
-		elif ( *cvar:mn_gameplay_config_tab == 2 ) 
-		{
-			*panel_gameplaytab@invis = false
-		}
-		elif ( *cvar:mn_gameplay_config_tab == 3 ) 
-		{
-			*panel_inputtab@invis = false
-		}
-	}
 // =================================
 // MAINTAIN RESOLUTION POPUP WINDOW
 // =================================
