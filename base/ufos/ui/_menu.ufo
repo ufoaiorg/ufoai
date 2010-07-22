@@ -206,7 +206,7 @@ component panel cmpMapPanel
 	cmpMapImage mappic2
 	{
 		image		*cvar:mn_mappic2
-		pos			"150 30"
+		pos			"155 30"
 	}
 	cmpMapImage mappic3
 	{
