@@ -175,7 +175,6 @@ int MN_GetDataVersion (int textId)
 /**
  * @brief Initializes an option with a very little set of values.
  * @param[in] option Context option
- * @param[in] nameID name of the option (should be unique in the option list)
  * @param[in] label label displayed
  * @param[in] value value used when this option is selected
  */

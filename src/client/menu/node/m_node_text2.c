@@ -150,10 +150,8 @@ static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y)
 /**
  * @brief Handles line breaks and drawing for MN_TEXT menu nodes
  * @param[in] node The context node
- * @param[in] text The test to draw else NULL
  * @param[in] list The test to draw else NULL
  * @param[in] noDraw If true, calling of this function only update the cache (real number of lines)
- * @note text or list but be used, not both
  */
 static void MN_TextNodeDrawText (menuNode_t* node, const linkedList_t* list, qboolean noDraw)
 {

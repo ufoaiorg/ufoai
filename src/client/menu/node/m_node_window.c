@@ -437,6 +437,8 @@ qboolean MN_WindowIsModal(const struct menuNode_s* const node)
  * @brief Add a key binding to a window node.
  * Window node store key bindings for his node child.
  * @param node A window node
+ * @param binding Key binding to link with the window (structure should not be already linked somewhere)
+ * @todo Rework that function to remove possible wrong use of that function
  */
 void MN_WindowNodeRegisterKeyBinding (menuNode_t* node, menuKeyBinding_t *binding)
 {
@@ -448,9 +450,10 @@ void MN_WindowNodeRegisterKeyBinding (menuNode_t* node, menuKeyBinding_t *bindin
 const menuKeyBinding_t *binding;
 
 /**
- * @brief Search a a key binding fromp a window node.
+ * @brief Search a a key binding from a window node.
  * Window node store key bindings for his node child.
  * @param node A window node
+ * @param key A key code, either K_ value or lowercase ascii
  */
 menuKeyBinding_t *MN_WindowNodeGetKeyBinding (const struct menuNode_s* const node, unsigned int key)
 {
