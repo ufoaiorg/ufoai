@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_TRANSFERS	16
 #define TRANS_LIST_EMPTY_SLOT -1
 
+struct transferData_s;
+
 enum {
 	CARGO_TYPE_INVALID = 0,
 	CARGO_TYPE_ITEM,
@@ -70,10 +72,14 @@ typedef struct transferCargo_s {
 	int itemidx;			/**< Index of item in cargo. */
 } transferCargo_t;
 
-void TR_TransferAircraftMenu(aircraft_t* aircraft);
 void TR_TransferCheck(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 
 void TR_InitStartup(void);
+
+void TR_TransferStart(base_t *srcBase, struct transferData_s *transData);
+void TR_TransferAlienAfterMissionStart(const base_t *base, aircraft_t *transferAircraft);
+
+transfer_t* TR_GetNext(transfer_t *lastTransfer);
 
 #endif /* CLIENT_CL_TRANSFER_H */

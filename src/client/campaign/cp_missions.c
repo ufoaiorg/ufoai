@@ -1159,7 +1159,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	if (AL_GetAircraftAlienCargoTypes(aircraft) && !B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment.
 		 * Popup aircraft transfer dialog to choose a better base. */
-		TR_TransferAircraftMenu(aircraft);
+		Cmd_ExecuteString(va("trans_aliens %i", aircraft->idx));
 	} else {
 		/* The aircraft can be safely sent to its homebase without losing aliens */
 	}
