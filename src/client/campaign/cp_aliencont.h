@@ -28,6 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_ALIENCONT_CAP	32
 
+/** @todo remove harcoded tech */
+#define BREATHINGAPPARATUS_TECH "rs_alien_breathing"
+
 /** cases of alien amount calculation */
 typedef enum {
 	AL_RESEARCH,			/**< When we remove alien(s) because of research topic. */

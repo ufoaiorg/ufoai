@@ -30,9 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_aliencont_callbacks.h"
 #include "save/save_aliencont.h"
 
-/** @todo remove harcoded tech */
-#define BREATHINGAPPARATUS_TECH "rs_alien_breathing"
-
 /**
  * Collecting aliens functions for aircraft
  */
@@ -186,13 +183,17 @@ void AL_AddAliens (aircraft_t *aircraft)
 	toBase = aircraft->homebase;
 	assert(toBase);
 
+	cargo = AL_GetAircraftAlienCargo(aircraft);
+	alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
+
+	if (alienCargoTypes == 0)
+		return;
+	
 	if (!B_GetBuildingStatus(toBase, B_ALIEN_CONTAINMENT)) {
 		MS_AddNewMessage(_("Notice"), _("You cannot process aliens yet. Alien Containment not ready in this base."), qfalse, MSG_STANDARD, NULL);
 		return;
 	}
 
-	cargo = AL_GetAircraftAlienCargo(aircraft);
-	alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
 	breathingTech = RS_GetTechByID(BREATHINGAPPARATUS_TECH);
 	if (!breathingTech)
 		Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus tech definition");
