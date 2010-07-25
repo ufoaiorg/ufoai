@@ -774,8 +774,9 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 				if (transfer->alienAmount[i][TRANS_ALIEN_ALIVE] > 0) {
 					AL_ChangeAliveAlienNumber(destination, &(destination->alienscont[i]), transfer->alienAmount[i][TRANS_ALIEN_ALIVE]);
 				}
-				if (transfer->alienAmount[i][TRANS_ALIEN_DEAD] > 0)
+				if (transfer->alienAmount[i][TRANS_ALIEN_DEAD] > 0) {
 					destination->alienscont[i].amountDead += transfer->alienAmount[i][TRANS_ALIEN_DEAD];
+				}
 			}
 		}
 	}
@@ -818,6 +819,18 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 	int alienCargoTypes;
 	aliensTmp_t *cargo;
 
+	const technology_t *breathingTech;
+	qboolean alienBreathing = qfalse;
+	const objDef_t *alienBreathingObjDef;
+
+	breathingTech = RS_GetTechByID(BREATHINGAPPARATUS_TECH);
+	if (!breathingTech)
+		Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus tech definition");
+	alienBreathing = RS_IsResearched_ptr(breathingTech);
+	alienBreathingObjDef = INVSH_GetItemByID(breathingTech->provides);
+	if (!alienBreathingObjDef)
+		Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus item definition");
+
 	if (!base) {
 		Com_Printf("TR_TransferAlienAfterMissionStart_f: No base selected!\n");
 		return;
@@ -852,6 +865,10 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 	alienCargoTypes = AL_GetAircraftAlienCargoTypes(td.transferStartAircraft);
 	cargo = AL_GetAircraftAlienCargo(td.transferStartAircraft);
 	for (i = 0; i < alienCargoTypes; i++, cargo++) {		/* Aliens. */
+		if (!alienBreathing) {
+			cargo->amountDead += cargo->amountAlive;
+			cargo->amountAlive = 0;
+		}
 		if (cargo->amountAlive > 0) {
 			for (j = 0; j < ccs.numAliensTD; j++) {
 				if (!CHRSH_IsTeamDefAlien(&csi.teamDef[j]))
@@ -871,12 +888,17 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 				if (base->alienscont[j].teamDef == cargo->teamDef) {
 					transfer->hasAliens = qtrue;
 					transfer->alienAmount[j][TRANS_ALIEN_DEAD] = cargo->amountDead;
+
+					/* If we transfer aliens from battlefield add also breathing apparatur(s) */
+					transfer->hasItems = qtrue;
+					transfer->itemAmount[alienBreathingObjDef->idx] += cargo->amountDead;
 					cargo->amountDead = 0;
 					break;
 				}
 			}
 		}
 	}
+	AL_SetAircraftAlienCargoTypes(td.transferStartAircraft, 0);
 
 	/* Make sure that we don't use transferStartAircraft after this point
 	 * (Could be a fake aircraft in case of base attack) */
