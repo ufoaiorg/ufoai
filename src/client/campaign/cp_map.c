@@ -1631,7 +1631,8 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 	MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 	VectorCopy(aircraft->pos, aircraft->oldDrawPos);
 
-	if (Cvar_GetInteger("showcrafthealth") >= 1)
+	/** @todo we should only show healthbar if aircraft is fighting but it's a slow algo */
+	if (oneUFOVisible || Cvar_GetInteger("debug_showcrafthealth") >= 1)
 		MAP_DrawAircraftHealthBar(node, aircraft);
 }
 
@@ -1772,7 +1773,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	qboolean showXVI = qfalse;
 	qboolean oneUFOVisible = qfalse;
 	static char buffer[512] = "";
-	float closestInterceptorDistance = -1.0f;
 	int maxInterpolationPoints;
 
 	assert(node);
@@ -1807,8 +1807,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			continue;
 		MAP_DrawMapOneInstallation(node, installation, oneUFOVisible, font);
 	}
-
-	closestInterceptorDistance = -1.0f;
 
 	/* draw bases */
  	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
@@ -1858,8 +1856,10 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			}
 			MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 			VectorCopy(aircraft->pos, aircraft->oldDrawPos);
-			if ((RS_IsResearched_ptr(aircraft->tech) && Cvar_GetInteger("showcrafthealth") >= 1)
-			 || Cvar_GetInteger("debug_showufohealth") == 1)
+
+			/** @todo we should only show healthbar if aircraft is fighting but it's a slow algo */
+			if (RS_IsResearched_ptr(aircraft->tech)
+			 || Cvar_GetInteger("debug_showcrafthealth") >= 1)
 				MAP_DrawAircraftHealthBar(node, aircraft);
 		}
 	}
