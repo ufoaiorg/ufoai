@@ -238,7 +238,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		return qfalse;
 	}
 
-	/* allow to use "equal" char between name and value */
+	/* must use "equal" char between name and value */
 	*token = Com_EParse(text, errhead, NULL);
 	if (!*text)
 		return qfalse;
