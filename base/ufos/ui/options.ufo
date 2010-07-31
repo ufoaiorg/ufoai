@@ -1676,7 +1676,7 @@ window options
 		selectbox texres_box
 		{
 			{
-				tooltip		"_Low means a maximum of 256 x 256 pixel texture resolution. Extreme means up to 8192 x 8192 pixel."
+				tooltip		"_Low means a maximum of 256x256 pixel texture resolution. Extreme means up to 8192x8192 pixel."
 				cvar		*cvar:r_maxtexres
 				image		"ui/selectbox_green"
 				pos			"359 137"
@@ -1976,7 +1976,7 @@ window options
 		selectbox lightmapres_box
 		{
 			{
-				tooltip		"_Low means a maximum lightmap resolution of 512 x 512 pixel. High means up to 2048 x 2048 pixel."
+				tooltip		"_Low means a maximum lightmap resolution of 512x512 pixel. High means up to 2048x2048 pixel."
 				cvar		*cvar:r_maxlightmap
 				image		"ui/selectbox_green"
 				pos			"359 472"
