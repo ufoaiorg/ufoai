@@ -360,7 +360,9 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 		const nodeBehaviour_t *castedBehaviour;
 		const char *propertyName;
 		qboolean relativeToNode;
+#if 0	/* it looks useless, an unused cache */
 		const value_t *property;
+#endif
 
 		relativeToNode = !strncmp(path, "node:", 5);
 		if (relativeToNode)
@@ -402,6 +404,7 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 		}
 		propertyName++;
 
+#if 0	/* it looks useless, an unused cache */
 		property = MN_GetPropertyFromBehaviour(castedBehaviour, propertyName);
 		if (!property && source) {
 			menuNode_t *node;
@@ -410,11 +413,10 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 			if (!node)
 				Com_Printf("MN_ParseValueExpression: node \"%s\" not yet known (in event), you can try to cast it\n", path);
 		}
-
 		if (property && property->type) {
 			expression->d.terminal.d2.constData = property;
 		}
-
+#endif
 		return expression;
 	}
 
