@@ -345,15 +345,17 @@ window skirmish
 	// ============
 	// INTERACTION
 	// ============
-	//*
-	// @param<1> boolean to hide or show
+	/**
+	 * @param<1> boolean to hide or show
+	 */
 	confunc skirmish_hide_dropships 
 	{
 		*node:root.panel_map.dropships_str@invis = <1>
 		*node:root.panel_map.dropships_box@invis = <1>
 	}
-	//*
-	// @param<1> boolean to hide or show
+	/**
+	 * @param<1> boolean to hide or show
+	 */
 	confunc skirmish_hide_ufos 
 	{
 		*node:root.panel_map.ufos_str@invis = <1>

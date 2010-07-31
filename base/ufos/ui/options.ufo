@@ -30,7 +30,7 @@ window options
 	// =========================================================
 	cmpMenuButton button_overall
 	{
-		tooltip		"_Overall game settings like your name & language or menu settings."
+		tooltip		"_Overall game settings like your name and language or menu settings."
 		string		"_Overall"
 		pos			"80 170"
 		onClick
@@ -64,7 +64,7 @@ window options
 	}
 	cmpMenuButton button_gameplay
 	{
-		tooltip		"_Battlescape camera, gameplay & input settings."
+		tooltip		"_Battlescape camera, gameplay and input settings."
 		string		"_Gameplay"
 		pos			"80 380"
 		onClick
@@ -116,7 +116,7 @@ window options
 		// ===============		
 		textentry slot_name
 		{
-			tooltip		"_Change your name. It is that simple in the virtual world ;)."
+			tooltip		"_Change your name."
 			string		*cvar:cl_name
 			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
@@ -341,7 +341,7 @@ window options
 		// =================================
 		string tipoftheday_string
 		{
-			tooltip		"_Enable this if you are new to UFO:AI & want to see interesting tips written by the most experienced UFO:AI players out there."
+			tooltip		"_Enable this if you are new to UFO:AI and want to see interesting tips written by the most experienced UFO:AI players out there."
 			string		"_Show 'Tip of the Day':"
 			pos			"72 595"
 			size		"250 20"
@@ -408,8 +408,8 @@ window options
 		// ===================================
 		string resolution_settings
 		{
-			tooltip		"_Adjust resolution & display settings here."
-			string 		"_Resolution & Display Settings"
+			tooltip		"_Adjust resolution and display settings here."
+			string 		"_Resolution and Display Settings"
 			pos			"62 110"
 			size		"256 20"
 			color		"1.0 0.75 0 1"
@@ -576,7 +576,7 @@ window options
 		// ======================
 		string contrast_str
 		{
-			tooltip		"_Contrast means the difference in brightness between the light & dark areas of a picture."
+			tooltip		"_Contrast means the difference in brightness between the light and dark areas of a picture."
 			string		"_Contrast:"
 			pos			"72 290"
 			size		"170 20"
@@ -648,7 +648,7 @@ window options
 		// ==============================
 		string monochrome_str
 		{
-			tooltip		"_Monochrome means black & white, without colors. Setting this to active will render monochrome battlescape maps, but not models."
+			tooltip		"_Monochrome means black and white, without colors. Setting this to active will render monochrome battlescape maps, but not models."
 			string		"_Monochrome World:"
 			pos			"72 365"
 			size		"170 20"
@@ -714,7 +714,7 @@ window options
 		// =====================================
 		string screenshot_format_str
 		{
-			tooltip		"_The file format that will be used for compressing & saving your screenshots."
+			tooltip		"_The file format that will be used for compressing and saving your screenshots."
 			string		"_Screenshot Format:"
 			pos			"72 470"
 			size		"170 20"
@@ -722,7 +722,7 @@ window options
 		selectbox screenshot_format
 		{
 			{
-				tooltip		"_png & tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
+				tooltip		"_png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
 				cvar		*cvar:r_screenshot_format
 				image		"ui/selectbox_green"
 				pos			"359 470"
@@ -896,7 +896,7 @@ window options
 		// =========================
 		// MENU SOUNDS STRING & BAR
 		// =========================
-		// yes/no only @ the moment
+		// yes/no only at the moment
 		//
 		string menusounds_str
 		{
@@ -973,7 +973,7 @@ window options
 		}
 		button rate_test_pic
 		{
-			tooltip		"_Restart the sound-engine & apply your settings."
+			tooltip		"_Restart the sound-engine and apply your settings."
 			icon		bordered_question
 			pos			"486 297"
 			size		"16 16"
@@ -995,7 +995,7 @@ window options
 		// =========================
 		string gameplaysettings_str
 		{
-			tooltip		"_Configure input devices, battlescape camera & battlescape gameplay settings."
+			tooltip		"_Configure input devices, battlescape camera and battlescape gameplay settings."
 			string		"_Gameplay Settings"
 			pos			"55 67"
 			size		"465 35"
@@ -1204,7 +1204,6 @@ window options
 		selectbox camzoom_min
 		{
 			{
-				tooltip		"_Attention: ."
 				cvar		*cvar:cl_camzoommin
 				image		"ui/selectbox_green"
 				pos			"343 235"
@@ -1251,7 +1250,6 @@ window options
 		selectbox camzoom_max
 		{
 			{
-				tooltip		"_Attention: ."
 				cvar		*cvar:cl_camzoommax
 				image		"ui/selectbox_red"
 				pos			"418 235"
@@ -1403,7 +1401,7 @@ window options
 		// =========================
 		string actorsspeed_str
 		{
-			tooltip		"_Actor speed changes the speed of aliens & humans."
+			tooltip		"_Actor speed changes the speed of aliens and humans."
 			string		"_Actor Speed:"
 			pos			"72 365"
 			size		"150 20"
@@ -1500,7 +1498,7 @@ window options
 		selectbox select_hud
 		{
 			{
-				tooltip		"_Don't be shy & try the Alternative HUD."
+				tooltip		"_Don't be shy and try the Alternative HUD."
 				cvar		*cvar:mn_hud
 				image		"ui/selectbox_green"
 				pos			"343 440"
@@ -1668,7 +1666,7 @@ window options
 		// ==========================================
 		string texres_str
 		{
-			tooltip		"_Sets the maximum size for textures & caps resolutions higher than that value."
+			tooltip		"_Sets the maximum size for textures and caps resolutions higher than that value."
 			string		"_Resolution Cap:"
 			pos			"72 135"
 			size		"250 20"
@@ -1731,7 +1729,7 @@ window options
 		// ==============================
 		string lod_str
 		{
-			tooltip		"_Texture Level-of-Detail. Enable this if you want more detailed textures & higher rendering quality."
+			tooltip		"_Texture Level-of-Detail. Enable this if you want more detailed textures and higher rendering quality."
 			string		"_LoD:"
 			pos			"72 185"
 			size		"250 20"
@@ -1831,7 +1829,7 @@ window options
 		}
 		string samplebuf_value
 		{
-			tooltip		"_Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing & will enhance picture quality."
+			tooltip		"_Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
 			string		*cvar:r_multisample
 			pos			"400 315"
 			size		"100 20"
@@ -1886,7 +1884,7 @@ window options
 		// =======================================
 		string light_shadow_settings
 		{
-			tooltip		"_Adjust various light & shadow settings here."
+			tooltip		"_Adjust various light and shadow settings here."
 			string 		"_Light & Shadow"
 			pos			"62 370"
 			size		"256 20"
@@ -1950,7 +1948,7 @@ window options
 		// ==========================
 		string shadows_str
 		{
-			tooltip		"_@ the moment these are just drop-shadows."
+			tooltip		"_At the moment these are just drop-shadows."
 			string		"_Shadows:"
 			pos			"72 445"
 			size		"240 20"
@@ -1976,7 +1974,7 @@ window options
 		selectbox lightmapres_box
 		{
 			{
-				tooltip		"_Low means a maximum lightmap resolution of 512 x 512 pixel. High means up to 2048 x 2048 pixel."
+				tooltip		"_Low means a maximum lightmap resolution of 512x512 pixel. High means up to 2048x2048 pixel."
 				cvar		*cvar:r_maxlightmap
 				image		"ui/selectbox_green"
 				pos			"359 472"
@@ -2005,7 +2003,7 @@ window options
 		// ============================
 		string lightmap_str
 		{
-			tooltip		"_Lightmaps are scaled using lumels (lumination elements). The smaller the lumels & the more of them on the lightmap, the higher the resolution & visual quality, at the price of performance."
+			tooltip		"_Lightmaps are scaled using lumels (lumination elements). The smaller the lumels and the more of them on the lightmap, the higher the resolution & visual quality, at the price of performance."
 			string		"_Lightmap Scale:"
 			pos			"72 495"
 			size		"150 20"
@@ -2030,7 +2028,7 @@ window options
 		// =====================================
 		string m3dmapambient_str
 		{
-			tooltip		"_Amount of light emitting from the sun & shining on the earth."
+			tooltip		"_Amount of light emitting from the sun and shining on the earth."
 			string		"_Geo Ambient Lighting:"
 			pos			"72 520"
 			size		"200 20"
@@ -2121,7 +2119,7 @@ window options
 		// ===========================================
 		string ptlweather_str
 		{
-			tooltip		"_Weather effects like rain (not enabled yet) or snow."
+			tooltip		"_Weather effects like rain or snow."
 			string		"_Weather Effects:"
 			pos			"72 650"
 			size		"240 20"
@@ -2139,7 +2137,7 @@ window options
 		// ==================================
 		string materialsys_str
 		{
-			tooltip		"_The material system is used to display texture animations, effects like rotating or stretching or scrolling textures & manipulate rendering through applying special material properties like specularity or hardness to defined textures."
+			tooltip		"_The material system is used to display texture animations, effects like rotating or stretching or scrolling textures and manipulate rendering through applying special material properties like specularity or hardness to defined textures."
 			string		"_Material System:"
 			pos			"72 675"
 			size		"240 20"
