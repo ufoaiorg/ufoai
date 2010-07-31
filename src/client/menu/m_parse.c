@@ -229,13 +229,20 @@ menuAction_t *MN_AllocStaticAction (void)
  *
  * @param action Action to initialize
  * @param node Current node we are parsing, only used for error message
- * @param property Type of the value to parse
+ * @param property Type of the value to parse, if NULL the string is not stored as string
  * @param string String value to parse
  * @return True if the action is initialized
  * @todo remove node param and catch error where we call that function
  */
 qboolean MN_InitRawActionValue (menuAction_t* action, menuNode_t *node, const value_t *property, const char *string)
 {
+	if (property == NULL) {
+		action->type = EA_VALUE_STRING;
+		action->d.terminal.d1.data = MN_AllocStaticString(string, 0);
+		action->d.terminal.d2.integer = 0;
+		return qtrue;
+	}
+
 	if (property->type == V_UI_ICONREF) {
 		menuIcon_t* icon = MN_GetIconByName(string);
 		if (icon == NULL) {
@@ -300,10 +307,6 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 	}
 
 	property = (const value_t *) action->d.nonTerminal.left->d.terminal.d2.data;
-	if (property == NULL) {
-		Com_Printf("MN_ParseSetAction: Typed node property expected. Cast the left operand.\n");
-		return qfalse;
-	}
 
 	*token = Com_EParse(text, errhead, NULL);
 	if (!*text)
@@ -312,8 +315,8 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 	if (!strcmp(*token, "{")) {
 		menuAction_t* actionList;
 
-		/* @todo remove it when it is possible, move it at runtime */
-		if (property->type != V_UI_ACTION) {
+		if (property != NULL && property->type != V_UI_ACTION) {
+			Com_Printf("MN_ParseSetAction: Property %s@%s do not expect code block.\n", MN_GetPath(menuNode), property->string);
 			return qfalse;
 		}
 
@@ -336,8 +339,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		return qtrue;
 	}
 
-	/* @todo remove "property" dependency, most of the thing must be expression */
-	/* @todo harder type checking on for the runtime set action */
+	/* @todo everything should come from MN_ParseExpression */
 
 	if (MN_IsInjectedString(*token)) {
 		localAction = MN_AllocStaticAction();

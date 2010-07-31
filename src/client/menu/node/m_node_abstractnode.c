@@ -325,8 +325,10 @@ void MN_NodeSetPropertyFromRAW (menuNode_t* node, const value_t *property, void*
 {
 	void *mem = ((byte *) node + property->ofs);
 
-	if (property->type != rawType)
-		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: type %i expected, but @%s type %i found. Property setter to '%s@%s' skipped", rawType, property->string, property->type, MN_GetPath(node), property->string);
+	if (property->type != rawType) {
+		Com_Printf("MN_NodeSetPropertyFromRAW: type %i expected, but @%s type %i found. Property setter to '%s@%s' skipped\n", rawType, property->string, property->type, MN_GetPath(node), property->string);
+		return;
+	}
 
 	if ((property->type & V_UI_MASK) == V_NOT_UI)
 		Com_SetValue(node, rawValue, property->type, property->ofs, property->size);
@@ -347,7 +349,7 @@ void MN_NodeSetPropertyFromRAW (menuNode_t* node, const value_t *property, void*
 	} else if (property->type == V_UI_ICONREF) {
 		*(menuIcon_t**) mem = (menuIcon_t*) rawValue;
 	} else {
-		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: Property type '%d' unsupported", property->type);
+		Com_Error(ERR_FATAL, "MN_NodeSetPropertyFromRAW: Property type '%d' unsupported", property->type);
 	}
 	node->behaviour->propertyChanged(node, property);
 }
