@@ -353,7 +353,7 @@ static void MN_NodeSetPropertyFromActionValue (menuNode_t *node, const value_t *
 	/* decode RAW value */
 	if (value->type == EA_VALUE_RAW) {
 		void *rawValue = value->d.terminal.d1.data;
-		const value_t *rawType = value->d.terminal.d2.constData;
+		int rawType = value->d.terminal.d2.integer;
 		MN_NodeSetPropertyFromRAW(node, property, rawValue, rawType);
 	}
 	/* else it is an expression */

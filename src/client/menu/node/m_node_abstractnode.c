@@ -321,13 +321,12 @@ void MN_AppendNode (menuNode_t* const node, menuNode_t *newNode)
 	MN_InsertNode(node, node->lastChild, newNode);
 }
 
-void MN_NodeSetPropertyFromRAW (menuNode_t* node, const value_t *property, void* rawValue, const value_t *rawType)
+void MN_NodeSetPropertyFromRAW (menuNode_t* node, const value_t *property, void* rawValue, int rawType)
 {
 	void *mem = ((byte *) node + property->ofs);
 
-	/** @todo should we only check the type, not the property? IMO yes */
-	if (property != rawType)
-		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: @%s type %i expected, but @%s type %i found. Property setter to '%s@%s' skipped", rawType->string, rawType->type, property->string, property->type, MN_GetPath(node), property->string);
+	if (property->type != rawType)
+		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: type %i expected, but @%s type %i found. Property setter to '%s@%s' skipped", rawType, property->string, property->type, MN_GetPath(node), property->string);
 
 	if ((property->type & V_UI_MASK) == V_NOT_UI)
 		Com_SetValue(node, rawValue, property->type, property->ofs, property->size);

@@ -244,7 +244,7 @@ qboolean MN_InitRawActionValue (menuAction_t* action, menuNode_t *node, const va
 		}
 		action->type = EA_VALUE_RAW;
 		action->d.terminal.d1.data = icon;
-		action->d.terminal.d2.constData = property;
+		action->d.terminal.d2.integer = property->type;
 		return qtrue;
 	} else {
 		const int baseType = property->type & V_UI_MASK;
@@ -255,7 +255,7 @@ qboolean MN_InitRawActionValue (menuAction_t* action, menuNode_t *node, const va
 		mn.curadata = Com_AlignPtr(mn.curadata, property->type & V_BASETYPEMASK);
 		action->type = EA_VALUE_RAW;
 		action->d.terminal.d1.data = mn.curadata;
-		action->d.terminal.d2.constData = property;
+		action->d.terminal.d2.integer = property->type;
 		/** @todo we should hide use of mn.curadata */
 		mn.curadata += Com_EParseValue(mn.curadata, string, property->type & V_BASETYPEMASK, 0, property->size);
 		return qtrue;
@@ -324,8 +324,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		localAction = MN_AllocStaticAction();
 		localAction->type = EA_VALUE_RAW;
 		localAction->d.terminal.d1.data = actionList;
-		/* @todo property is not need but only the property type */
-		localAction->d.terminal.d2.constData = property;
+		localAction->d.terminal.d2.integer = V_UI_ACTION;
 		action->d.nonTerminal.right = localAction;
 
 		return qtrue;

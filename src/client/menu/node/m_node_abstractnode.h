@@ -34,7 +34,7 @@ struct menuNode_s;
 qboolean MN_NodeInstanceOf(const menuNode_t *node, const char* behaviourName);
 qboolean MN_NodeInstanceOfPointer(const menuNode_t *node, const nodeBehaviour_t* behaviour);
 qboolean MN_NodeSetProperty(menuNode_t* node, const value_t *property, const char* value);
-void MN_NodeSetPropertyFromRAW(menuNode_t* node, const value_t *property, void* rawValue, const value_t *rawType);
+void MN_NodeSetPropertyFromRAW(menuNode_t* node, const value_t *property, void* rawValue, int rawType);
 float MN_GetFloatFromNodeProperty(const struct menuNode_s* node, const value_t* property);
 const char* MN_GetStringFromNodeProperty(const menuNode_t* node, const value_t* property);
 
