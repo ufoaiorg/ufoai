@@ -669,9 +669,15 @@ void R_FreeImage (image_t *image)
 	if (!image || !image->texnum)
 		return;
 
-	/* also free a normalmap if there is one */
+	/* also free the several maps if they are loaded */
 	if (image->normalmap)
 		R_DeleteImage(image->normalmap);
+	if (image->glowmap)
+		R_DeleteImage(image->glowmap);
+	if (image->roughnessmap)
+		R_DeleteImage(image->roughnessmap);
+	if (image->specularmap)
+		R_DeleteImage(image->specularmap);
 	R_DeleteImage(image);
 }
 
