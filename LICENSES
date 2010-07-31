@@ -5280,6 +5280,7 @@ base/textures/tex_mattn/art001.jpg | GNU General Public License 2.0 or later | M
 base/textures/tex_mattn/art002.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/art003.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/art004.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/art005.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/automat.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/bar1.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/bar2.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -5310,6 +5311,7 @@ base/textures/tex_mattn/dirt001.jpg | GNU General Public License 2.0 or later | 
 base/textures/tex_mattn/dirt001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/dirt002.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/dirt002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/dirt003.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/door001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/door001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/door002.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -5418,6 +5420,7 @@ base/textures/tex_mattn/hedge001.jpg | GNU General Public License 2.0 or later |
 base/textures/tex_mattn/jute.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/klavier.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/klavier_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/magazine.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/market001.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/marmor.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/marmor_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -5662,6 +5665,9 @@ base/textures/tex_mattn/wood024.jpg | GNU General Public License 2.0 or later | 
 base/textures/tex_mattn/wood024_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood025.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood025_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wood027.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wood028.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_mattn/wood029.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_misc/access_denied.jpg | GNU General Public License 2.0 or later
 base/textures/tex_misc/advert_back.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_misc/advert_back_nm.png | GNU General Public License 2.0 or later | Nate Wright
