@@ -1,6 +1,7 @@
 /**
  * @brief Unittest for event function from window node
  * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "mn_push unittest_runtimeerror"
+ * @todo Create it as real executable unittest
  */
 
 window unittest_runtimeerror
@@ -32,11 +33,17 @@ window unittest_runtimeerror
 		// it mean nothing but we only can evaluate it at runtime
 		// property is not a default property and node type is unknown
 		*node:root.foo<cvar:foo1>@min = {  }
+
+		// this properties do not exists, the code must not crash 
+		*node:root.foo<cvar:foo1>@foo__nothing__bar = 1
+		if ( *node:root.foo<cvar:foo1>@foo__nothing__bar == *node:root.foo__nothing__<cvar:foo1>@min ) {
+		}
 		
 		// not possible to parse value as binary 
 		*node:root.foo<cvar:foo1>@max = 100
 		*node:root.foo<cvar:foo2>@icon = "bordered_magnifying_glass"
-		
+
+		// not possible to type nodes at run time 
 		if ( *node:root.foo<cvar:foo1>@max == *node:root.foo<cvar:foo1>@min ) {
 			cmd "echo ok"
 		}
