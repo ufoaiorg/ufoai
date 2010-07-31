@@ -96,7 +96,7 @@ typedef enum ea_s {
 	EA_VALUE_PATHNODE_WITHINJECTION = EA_VALUE + 8,		/**< should be into an extra action type */
 	EA_VALUE_PATHPROPERTY = EA_VALUE + 9,				/**< reference to a path, and a property */
 	EA_VALUE_PATHPROPERTY_WITHINJECTION = EA_VALUE + 10,/**< should be into an extra action type */
-	EA_VALUE_NODEPROPERTY = EA_VALUE + 11				/**< reference to a node, and a property (not a string) */
+	EA_VALUE_NODEPROPERTY = EA_VALUE + 11,				/**< reference to a node, and a property (not a string) */
 } ea_t;
 
 /**

@@ -218,6 +218,38 @@ menuAction_t *MN_AllocStaticAction (void)
 	return &mn.actions[mn.numActions++];
 }
 
+static menuAction_t* MN_ParseRawValue(menuNode_t *menuNode, const char **token, const value_t *property)
+{
+	menuAction_t* a;
+
+	if (property->type == V_UI_ICONREF) {
+		menuIcon_t* icon = MN_GetIconByName(*token);
+		if (icon == NULL) {
+			Com_Printf("MN_ParseSetAction: icon '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
+			return qfalse;
+		}
+		a = MN_AllocStaticAction();
+		a->type = EA_VALUE_RAW;
+		a->d.terminal.d1.data = icon;
+		a->d.terminal.d2.constData = property;
+		return a;
+	} else {
+		const int baseType = property->type & V_UI_MASK;
+		if (baseType != 0 && baseType != V_UI_CVAR) {
+			Com_Printf("MN_ParseRawValue: setter for property '%s' (type %d, 0x%X) is not supported (%s)\n", property->string, property->type, property->type, MN_GetPath(menuNode));
+			return qfalse;
+		}
+		mn.curadata = Com_AlignPtr(mn.curadata, property->type & V_BASETYPEMASK);
+		a = MN_AllocStaticAction();
+		a->type = EA_VALUE_RAW;
+		a->d.terminal.d1.data = mn.curadata;
+		a->d.terminal.d2.constData = property;
+		/** @todo we should hide use of mn.curadata */
+		mn.curadata += Com_EParseValue(mn.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size);
+		return a;
+	}
+}
+
 /**
  * @brief Parser for setter command
  */
@@ -225,6 +257,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 {
 	const value_t *property;
 	int type;
+	menuAction_t* localAction;
 
 	assert((*token)[0] == '*');
 
@@ -263,60 +296,47 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 	if (!*text)
 		return qfalse;
 
+	if (!strcmp(*token, "{")) {
+		menuAction_t* actionList;
+
+		// TODO remove it when it is possible, move it at runtime
+		if (property->type != V_UI_ACTION) {
+			return qfalse;
+		}
+
+		actionList = MN_ParseActionList(menuNode, text, token);
+		if (actionList == NULL)
+			return qfalse;
+
+		localAction = MN_AllocStaticAction();
+		localAction->type = EA_VALUE_RAW;
+		localAction->d.terminal.d1.data = actionList;
+		// TODO property is not need but only the property type
+		localAction->d.terminal.d2.constData = property;
+		action->d.nonTerminal.right = localAction;
+
+		return qtrue;
+	}
+
 	if (!strcmp(*token, "(")) {
 		Com_UnParseLastToken();
 		action->d.nonTerminal.right = MN_ParseExpression(text, errhead, menuNode);
 		return qtrue;
 	}
 
-	if (property->type == V_UI_ACTION) {
-		menuAction_t* actionList;
-		menuAction_t*a;
-		actionList = MN_ParseActionList(menuNode, text, token);
-		if (actionList == NULL)
-			return qfalse;
+	// TODO remove "property" dependency, most of the thing must be expression
+	// TODO harder type checking on for the runtime set action
 
-		a = MN_AllocStaticAction();
-		a->type = EA_VALUE_RAW;
-		a->d.terminal.d1.data = actionList;
-		a->d.terminal.d2.constData = property;
-		action->d.nonTerminal.right = a;
-	} else if (property->type == V_UI_ICONREF) {
-		menuIcon_t* icon = MN_GetIconByName(*token);
-		menuAction_t*a;
-		if (icon == NULL) {
-			Com_Printf("MN_ParseSetAction: icon '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
-			return qfalse;
-		}
-		a = MN_AllocStaticAction();
-		a->type = EA_VALUE_RAW;
-		a->d.terminal.d1.data = icon;
-		a->d.terminal.d2.constData = property;
-		action->d.nonTerminal.right = a;
-	} else {
-		if (MN_IsInjectedString(*token)) {
-			menuAction_t *a;
-			a = MN_AllocStaticAction();
-			a->type = EA_VALUE_STRING_WITHINJECTION;
-			a->d.terminal.d1.data = MN_AllocStaticString(*token, 0);
-			action->d.nonTerminal.right = a;
-		} else {
-			menuAction_t *a;
-			const int baseType = property->type & V_UI_MASK;
-			if (baseType != 0 && baseType != V_UI_CVAR) {
-				Com_Printf("MN_ParseSetAction: setter for property '%s' (type %d, 0x%X) is not supported (%s)\n", property->string, property->type, property->type, MN_GetPath(menuNode));
-				return qfalse;
-			}
-			mn.curadata = Com_AlignPtr(mn.curadata, property->type & V_BASETYPEMASK);
-			a = MN_AllocStaticAction();
-			a->type = EA_VALUE_RAW;
-			a->d.terminal.d1.data = mn.curadata;
-			a->d.terminal.d2.constData = property;
-			action->d.nonTerminal.right = a;
-			/** @todo we should hide use of mn.curadata */
-			mn.curadata += Com_EParseValue(mn.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size);
-		}
+	if (MN_IsInjectedString(*token)) {
+		localAction = MN_AllocStaticAction();
+		localAction->type = EA_VALUE_STRING_WITHINJECTION;
+		localAction->d.terminal.d1.data = MN_AllocStaticString(*token, 0);
+		action->d.nonTerminal.right = localAction;
+		return qtrue;
 	}
+
+	localAction = MN_ParseRawValue(menuNode, token, property);
+	action->d.nonTerminal.right = localAction;
 	return qtrue;
 }
 
