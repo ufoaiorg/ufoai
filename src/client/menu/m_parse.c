@@ -56,11 +56,17 @@ static const value_t menuModelProperties[] = {
 	{NULL, V_NULL, 0, 0},
 };
 
-/** @brief reserved token preventing calling a node with it */
+/** @brief reserved token preventing calling a node with it
+ * @todo Use dichotomic search
+ */
 static const char *reserved_tokens[] = {
 	"this",
 	"parent",
 	"root",
+	"null",
+	"super",
+	"node",
+	"cvar",
 	NULL
 };
 
