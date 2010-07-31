@@ -83,14 +83,14 @@ window skirmish
 			size	"475 370"
 		}
 		// ====================
-		// U.F.O.(S) SELECTBOX
+		// UFO(S) SELECTBOX
 		// ====================
 		string ufos_str
 		{
-			string		"_U.F.O.:"
+			string		"_UFO:"
 			pos			"10 245"
 			size		"200 20"
-			tooltip		"_Select the U.F.O. that should be used (only possible if available for that map)."
+			tooltip		"_Select the UFO that should be used (only possible if available for that map)."
 		}
 		selectbox ufos_box
 		{
