@@ -330,6 +330,40 @@ const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const 
 	return va("%s", cmd);
 }
 
+/**
+ * Apply an action value to a node property. If the tuple property/value allow it, the function
+ * pre compute the value and update the action value to speed up the next call.
+ * @param node Node to edit
+ * @param property Property of the node to edit
+ * @param value Action value containing the value to set to the node property
+ * @param context Call context of the script
+ * @todo refactoring it to remove "context", we should only call that function when the action
+ * value is a leaf (then a value, and not an expression)
+ */
+static void MN_NodeSetPropertyFromActionValue (menuNode_t *node, const value_t *property, const menuCallContext_t *context, menuAction_t* value)
+{
+	/* @todo we can use a new EA_VALUE type to flag already parsed values, we dont need to do it again and again */
+	/* pre compute value if possible */
+	if (value->type == EA_VALUE_STRING) {
+		const char* string = value->d.terminal.d1.string;
+		/* @todo here we must catch error in a better way, and using cvar for error code to create unittest automations */
+		MN_InitRawActionValue(value, node, property, string);
+	}
+
+	/* decode RAW value */
+	if (value->type == EA_VALUE_RAW) {
+		void *rawValue = value->d.terminal.d1.data;
+		const value_t *rawType = value->d.terminal.d2.constData;
+		MN_NodeSetPropertyFromRAW(node, property, rawValue, rawType);
+	}
+	/* else it is an expression */
+	else {
+		/** @todo we should improve if when the prop is a boolean/int/float */
+		const char* string = MN_GetStringFromExpression(value, context);
+		MN_NodeSetProperty(node, property, string);
+	}
+}
+
 static inline void MN_ExecuteSetAction (const menuAction_t* action, const menuCallContext_t *context)
 {
 	const char* path;
@@ -386,18 +420,7 @@ static inline void MN_ExecuteSetAction (const menuAction_t* action, const menuCa
 		return;
 	}
 
-	/* decode RAW value */
-	if (right->type == EA_VALUE_RAW) {
-		void *rawValue = right->d.terminal.d1.data;
-		const value_t *rawType = right->d.terminal.d2.constData;
-		MN_NodeSetPropertyFromRAW(node, property, rawValue, rawType);
-	}
-	/* else it is an expression */
-	else {
-		/** @todo we should improve if when the prop is a boolean/int/float */
-		const char* value = MN_GetStringFromExpression(right, context);
-		MN_NodeSetProperty(node, property, value);
-	}
+	MN_NodeSetPropertyFromActionValue(node, property, context, right);
 }
 
 static inline void MN_ExecuteCallAction (const menuAction_t* action, const menuCallContext_t *context)

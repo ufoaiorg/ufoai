@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct menuNode_s;
 struct menuAction_s;
+struct value_s;
 
 void MN_ParseWindow(const char *type, const char *name, const char **text);
 void MN_ParseComponent(const char *type, const char **text);
@@ -41,6 +42,7 @@ char* MN_AllocStaticString(const char* string, int size) __attribute__ ((warn_un
 float* MN_AllocStaticFloat(int count) __attribute__ ((warn_unused_result));
 vec4_t* MN_AllocStaticColor(int count) __attribute__ ((warn_unused_result));
 struct menuAction_s *MN_AllocStaticAction(void) __attribute__ ((warn_unused_result));
+qboolean MN_InitRawActionValue(struct menuAction_s* action, struct menuNode_s *node, const struct value_s *property, const char *string);
 
 /* main special type */
 /** @todo we should split/flag parse type (type need only 1 lex; and other) */

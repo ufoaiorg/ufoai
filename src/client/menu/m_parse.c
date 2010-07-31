@@ -218,36 +218,43 @@ menuAction_t *MN_AllocStaticAction (void)
 	return &mn.actions[mn.numActions++];
 }
 
-static menuAction_t* MN_ParseRawValue(menuNode_t *menuNode, const char **token, const value_t *property)
+/**
+ * Parse a string according to a property type, and allocate a raw value to the static memory
+ *
+ * @param action Action to initialize
+ * @param node Current node we are parsing, only used for error message
+ * @param property Type of the value to parse
+ * @param string String value to parse
+ * @return True if the action is initialized
+ * @todo remove node param and catch error where we call that function
+ */
+qboolean MN_InitRawActionValue (menuAction_t* action, menuNode_t *node, const value_t *property, const char *string)
 {
-	menuAction_t* a;
-
 	if (property->type == V_UI_ICONREF) {
-		menuIcon_t* icon = MN_GetIconByName(*token);
+		menuIcon_t* icon = MN_GetIconByName(string);
 		if (icon == NULL) {
-			Com_Printf("MN_ParseSetAction: icon '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
+			Com_Printf("MN_ParseSetAction: icon '%s' not found (%s)\n", string, MN_GetPath(node));
 			return qfalse;
 		}
-		a = MN_AllocStaticAction();
-		a->type = EA_VALUE_RAW;
-		a->d.terminal.d1.data = icon;
-		a->d.terminal.d2.constData = property;
-		return a;
+		action->type = EA_VALUE_RAW;
+		action->d.terminal.d1.data = icon;
+		action->d.terminal.d2.constData = property;
+		return qtrue;
 	} else {
 		const int baseType = property->type & V_UI_MASK;
 		if (baseType != 0 && baseType != V_UI_CVAR) {
-			Com_Printf("MN_ParseRawValue: setter for property '%s' (type %d, 0x%X) is not supported (%s)\n", property->string, property->type, property->type, MN_GetPath(menuNode));
+			Com_Printf("MN_ParseRawValue: setter for property '%s' (type %d, 0x%X) is not supported (%s)\n", property->string, property->type, property->type, MN_GetPath(node));
 			return qfalse;
 		}
 		mn.curadata = Com_AlignPtr(mn.curadata, property->type & V_BASETYPEMASK);
-		a = MN_AllocStaticAction();
-		a->type = EA_VALUE_RAW;
-		a->d.terminal.d1.data = mn.curadata;
-		a->d.terminal.d2.constData = property;
+		action->type = EA_VALUE_RAW;
+		action->d.terminal.d1.data = mn.curadata;
+		action->d.terminal.d2.constData = property;
 		/** @todo we should hide use of mn.curadata */
-		mn.curadata += Com_EParseValue(mn.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size);
-		return a;
+		mn.curadata += Com_EParseValue(mn.curadata, string, property->type & V_BASETYPEMASK, 0, property->size);
+		return qtrue;
 	}
+	return qfalse;
 }
 
 /**
@@ -299,7 +306,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 	if (!strcmp(*token, "{")) {
 		menuAction_t* actionList;
 
-		// TODO remove it when it is possible, move it at runtime
+		/* @todo remove it when it is possible, move it at runtime */
 		if (property->type != V_UI_ACTION) {
 			return qfalse;
 		}
@@ -311,7 +318,7 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		localAction = MN_AllocStaticAction();
 		localAction->type = EA_VALUE_RAW;
 		localAction->d.terminal.d1.data = actionList;
-		// TODO property is not need but only the property type
+		/* @todo property is not need but only the property type */
 		localAction->d.terminal.d2.constData = property;
 		action->d.nonTerminal.right = localAction;
 
@@ -324,8 +331,8 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		return qtrue;
 	}
 
-	// TODO remove "property" dependency, most of the thing must be expression
-	// TODO harder type checking on for the runtime set action
+	/* @todo remove "property" dependency, most of the thing must be expression */
+	/* @todo harder type checking on for the runtime set action */
 
 	if (MN_IsInjectedString(*token)) {
 		localAction = MN_AllocStaticAction();
@@ -335,7 +342,8 @@ static qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, c
 		return qtrue;
 	}
 
-	localAction = MN_ParseRawValue(menuNode, token, property);
+	localAction = MN_AllocStaticAction();
+	MN_InitRawActionValue(localAction, menuNode, property, *token);
 	action->d.nonTerminal.right = localAction;
 	return qtrue;
 }
