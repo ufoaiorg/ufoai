@@ -67,7 +67,7 @@ item needlergun_ammo
 			firesnd		weapons/bullet-needler
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
-			speed		0
+			speed		2000
 			spread		"1.7 1.7"
 			crouch		0.8
 			range		250
@@ -90,7 +90,7 @@ item needlergun_ammo
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
-			speed		0
+			speed		2000
 			spread		"2.1 2.1"
 			crouch		0.8
 			range		250
@@ -112,7 +112,7 @@ item needlergun_ammo
 			firesnd				weapons/bullet-needler
 			impsnd				impact/nail-impact
 			bodysnd 			impact/nail-bodyimpact
-			speed				0
+			speed				2000
 			spread				"1.2 1.2"
 			crouch				0.5
 			range				250
@@ -137,7 +137,7 @@ item needlergun_ammo
 			firesnd		weapons/bullet-needler
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
-			speed		0
+			speed		2000
 			spread		"2 2"
 			crouch		0.8
 			range		250
@@ -160,7 +160,7 @@ item needlergun_ammo
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
-			speed		0
+			speed		2000
 			spread		"2.6 2.6"
 			crouch		0.8
 			range		250
@@ -182,7 +182,7 @@ item needlergun_ammo
 			firesnd				weapons/bullet-needler
 			impsnd				impact/nail-impact
 			bodysnd 			impact/nail-bodyimpact
-			speed				0
+			speed				2000
 			spread				"1.8 1.8"
 			crouch				0.5
 			range				250

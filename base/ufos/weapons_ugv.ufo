@@ -86,7 +86,7 @@ item ugv_chaingun_belt
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
-			speed				0
+			speed				3000
 			spread				"1 4"
 			crouch				1.0
 			range				60
@@ -110,7 +110,7 @@ item ugv_chaingun_belt
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
-			speed				0
+			speed				3000
 			spread				"3 6"
 			crouch				1.0
 			range				60
@@ -135,7 +135,7 @@ item ugv_chaingun_belt
 //			impsnd				impact/bullet-impact
 //			bodysnd 			impact/bullet-bodyimpact
 //			sndonce				true
-//			speed				0
+//			speed				3000
 //			spread				"3 15"
 //			crouch				1.0
 //			range				60

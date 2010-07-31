@@ -6,18 +6,32 @@
 // BOLTER EFFECTS
 // ==================
 
+//(old bolter effect)
+//particle bolter
+//{
+//	init
+//	{
+//		image  sfx/bolter
+//		blend  add
+//		style  beam
+//		thinkfade  out
+//		size	"0 2"
+//		tps    4.0
+//	}
+//	think { kill }
+//}
+
 particle bolter
 {
 	init
 	{
-		image  sfx/bolter
+		image  sfx/bolt
+		tps    60
+		style  axis
 		blend  add
-		style  beam
-		thinkfade  out
-		size	"0 2"
-		tps    4.0
+		offset "0 -16 0"
+		size   "70 3"
 	}
-	think { kill }
 }
 
 particle bolterImpact
@@ -82,18 +96,83 @@ particle bolterFragment
 // BULLET EFFECTS
 // ==================
 
+//(old bullet effect)
+//particle bullet
+//{
+//	init
+//	{
+//		image  sfx/bullet
+//		blend  add
+//		style  beam
+//		thinkfade  out
+//		size	"0 2"
+//		tps    4.0
+//	}
+//	think { kill }
+//}
+
+
 particle bullet
 {
 	init
 	{
-		image  sfx/bullet
+		image  sfx/bullet1
+		tps    190
+		style  axis
 		blend  add
-		style  beam
-		thinkfade  out
-		size	"0 2"
-		tps    4.0
+		offset "0 -16 0"
+		size   "70 10"
+		child  muzzle_rifle
 	}
-	think { kill }
+	think
+	{
+		push   pos "15 10"		// push the vector onto the stack
+		mul    *t				// multiply stack value with the time value from the particle
+		add    pos "50 10"		// add another position 2d vector to the current stack value
+		pop    *size			// write the vector back into the particle size value
+	}
+}
+
+particle bullet-shotgun
+{
+	init
+	{
+		image  sfx/bullet1
+		tps    190
+		style  axis
+		blend  add
+		offset "0 -16 0"
+		size   "70 10"
+	}
+	think
+	{
+		push   pos "15 10"		// push the vector onto the stack
+		mul    *t				// multiply stack value with the time value from the particle
+		add    pos "50 10"		// add another position 2d vector to the current stack value
+		pop    *size			// write the vector back into the particle size value
+	}
+}
+
+
+particle bullet_sniper
+{
+	init
+	{
+		image  sfx/bullet1
+		tps    190
+		style  axis
+		blend  add
+		offset "0 -16 0"
+		size   "70 10"
+		child  muzzle_sniper
+	}
+	think
+	{
+		push   pos "40 10"		// push the vector onto the stack
+		mul    *t				// multiply stack value with the time value from the particle
+		add    pos "90 10"		// add another position 2d vector to the current stack value
+		pop    *size			// write the vector back into the particle size value
+	}
 }
 
 particle bulletImpact
@@ -1404,4 +1483,185 @@ particle incz
 		spawn Smokez
 		spawn Firez
 	}
+}
+
+// ==================
+// Muzzle Flashes
+// ==================
+particle muzzle_rifle
+{
+	init
+	{
+		spawn  muzzle_1
+		spawn  muzzle_glow
+		spawn  muzzle_2
+		spawn  muzzle_glow_2
+		push   int 25
+		lightcolor "0.4 0.4 1.0"
+		lightintensity 0.1
+		kill
+	}
+}
+
+particle muzzle_1
+{
+	init
+	{
+		image  sfx/uexp_01
+		blend  add
+		style  facing
+		thinkfade  out
+		life   0.1
+		tps    1
+		size   "10 10"
+		offset "5 5 0"
+	}
+	run
+	{
+
+		// change the position a little bit randomly
+		crand  vector "1 0 0"	// push a value between -1 and 1 onto the stack
+		add    *s				// add the current location
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
+
+	}
+	think { kill }
+}
+
+particle muzzle_glow
+{
+	init
+	{
+		image  sfx/corona_y
+		blend  add
+		style  facing
+		thinkfade  out
+		life   0.1
+		tps    1
+		size   "15 15"
+		offset "5 5 0"
+	}
+	run
+	{
+
+		// change the position a little bit randomly
+		crand  vector "1 1 1"	// push a value between -1 and 1 onto the stack
+		add    *s				// add the current location
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
+
+	}
+	think { kill }
+}
+
+particle muzzle_2
+{
+	init
+	{
+		image  sfx/uexp_01
+		blend  add
+		style  facing
+		thinkfade  out
+		life   0.1
+		tps    1
+		size   "5 5"
+		offset "5 3 0"
+	}
+	run
+	{
+
+		// change the position a little bit randomly
+		crand  vector "1 0 0"	// push a value between -1 and 1 onto the stack
+		add    *s				// add the current location
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
+
+	}
+	think { kill }
+}
+
+particle muzzle_glow_2
+{
+	init
+	{
+		image  sfx/corona_y
+		blend  add
+		style  facing
+		thinkfade  out
+		life   0.1
+		tps    1
+		size   "10 10"
+		offset "5 3 0"
+	}
+	run
+	{
+
+		// change the position a little bit randomly
+		crand  vector "1 1 1"	// push a value between -1 and 1 onto the stack
+		add    *s				// add the current location
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
+
+	}
+	think { kill }
+}
+
+particle muzzle_sniper
+{
+	init
+	{
+		spawn  muzzle_sniper_1
+		spawn  muzzle_sniper_glow
+		push   int 25
+		lightcolor "0.4 0.4 1.0"
+		lightintensity 0.1
+		kill
+	}
+}
+
+particle muzzle_sniper_1
+{
+	init
+	{
+		image  sfx/uexp_01
+		blend  add
+		style  facing
+		thinkfade  out
+		life   0.1
+		tps    1
+		size   "20 20"
+		offset "5 0 0"
+	}
+	run
+	{
+
+		// change the position a little bit randomly
+		crand  vector "1 0 0"	// push a value between -1 and 1 onto the stack
+		add    *s				// add the current location
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
+
+	}
+	think { kill }
+}
+
+particle muzzle_sniper_glow
+{
+	init
+	{
+		image  sfx/corona_y
+		blend  add
+		style  facing
+		thinkfade  out
+		life   0.1
+		tps    1
+		size   "30 30"
+		offset "5 0 0"
+	}
+	run
+	{
+
+		// change the position a little bit randomly
+		crand  vector "1 1 1"	// push a value between -1 and 1 onto the stack
+		add    *s				// add the current location
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
+
+	}
+	think { kill }
 }
