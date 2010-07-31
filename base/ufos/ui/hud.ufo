@@ -1011,11 +1011,11 @@ window hud extends ahud
 	}
 	confunc crouch_checkbox_clear	{
 		*left.bt_crouch_reservation@disabled = false
-		*(checkbox)left.bt_crouch_reservation@current = 0
+		*left.bt_crouch_reservation@current = 0
 	}
 	confunc crouch_checkbox_check	{
 		*left.bt_crouch_reservation@disabled = false
-		*(checkbox)left.bt_crouch_reservation@current = 1
+		*left.bt_crouch_reservation@current = 1
 	}
 
 	confunc hudselect {

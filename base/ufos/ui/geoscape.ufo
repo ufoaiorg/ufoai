@@ -79,7 +79,7 @@ window geoscape
 		call *node:root.messages.dock@createChild ( "<1><2>" , "cmpGeoscapeDocklet" )
 		*node:root.messages.dock.<1><2>.type@string = <1>
 		*node:root.messages.dock.<1><2>.id@string = <2>
-		*node:(model)root.messages.dock.<1><2>.siteModel@src = <4>
+		*node:root.messages.dock.<1><2>.siteModel@src = <4>
 		*node:root.messages.dock.<1><2>.message@string = <5>
 	}
 
@@ -171,9 +171,9 @@ window geoscape
 			tabwidth	70
 			rows		8
 			onViewChange {
-				*node:(abstractscrollbar)parent.description_scroll@fullsize = <fullsize>
-				*node:(abstractscrollbar)parent.description_scroll@current = <viewpos>
-				*node:(abstractscrollbar)parent.description_scroll@viewsize = <viewsize>
+				*node:parent.description_scroll@fullsize = <fullsize>
+				*node:parent.description_scroll@current = <viewpos>
+				*node:parent.description_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -609,7 +609,7 @@ window geoscape
 				fullsize	50
 				hidewhenunused true
 				onChange	{
-					*node:(messagelist)parent.message@viewpos = <current>
+					*node:parent.message@viewpos = <current>
 				}
 			}
 
@@ -630,9 +630,9 @@ window geoscape
 					}
 				}
 				onViewChange {
-					*node:(abstractscrollbar)parent.scroll@fullsize = <fullsize>
-					*node:(abstractscrollbar)parent.scroll@current = <viewpos>
-					*node:(abstractscrollbar)parent.scroll@viewsize = <viewsize>
+					*node:parent.scroll@fullsize = <fullsize>
+					*node:parent.scroll@current = <viewpos>
+					*node:parent.scroll@viewsize = <viewsize>
 				}
 			}
 		}
@@ -1352,9 +1352,9 @@ window popup_newinstallation
 		size		"350 80"
 		lineheight	20
 		onViewChange {
-			*node:(abstractscrollbar)parent.description_scroll@fullsize = <fullsize>
-			*node:(abstractscrollbar)parent.description_scroll@current = <viewpos>
-			*node:(abstractscrollbar)parent.description_scroll@viewsize = <viewsize>
+			*node:parent.description_scroll@fullsize = <fullsize>
+			*node:parent.description_scroll@current = <viewpos>
+			*node:parent.description_scroll@viewsize = <viewsize>
 		}
 	}
 	vscrollbar description_scroll
@@ -1564,9 +1564,9 @@ window popup_intercept
 			rows		"13"
 			longlines	LONGLINES_PRETTYCHOP
 			onViewChange {
-				*(abstractscrollbar)aircraft.ships_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)aircraft.ships_scroll@current = <viewpos>
-				*(abstractscrollbar)aircraft.ships_scroll@viewsize = <viewsize>
+				*aircraft.ships_scroll@fullsize = <fullsize>
+				*aircraft.ships_scroll@current = <viewpos>
+				*aircraft.ships_scroll@viewsize = <viewsize>
 			}
 			onClick		{ cmd "ships_click <lineselected>;" }
 			onRClick	{ cmd "ships_rclick <lineselected>;" }
@@ -1610,9 +1610,9 @@ window popup_intercept
 			mousefx		true
 			rows		"13"
 			onViewChange {
-				*(abstractscrollbar)sam.bases_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)sam.bases_scroll@current = <viewpos>
-				*(abstractscrollbar)sam.bases_scroll@viewsize = <viewsize>
+				*sam.bases_scroll@fullsize = <fullsize>
+				*sam.bases_scroll@current = <viewpos>
+				*sam.bases_scroll@viewsize = <viewsize>
 			}
 			onClick	{ cmd "bases_click <lineselected>;" }
 		}
@@ -1764,9 +1764,9 @@ window popup_multi_selection
 		mousefx		true
 		onClick		{ cmd "multi_select_click <lineselected>;" }
 		onViewChange	{
-			*(abstractscrollbar)multi_select_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)multi_select_scroll@current = <viewpos>
-			*(abstractscrollbar)multi_select_scroll@viewsize = <viewsize>
+			*multi_select_scroll@fullsize = <fullsize>
+			*multi_select_scroll@current = <viewpos>
+			*multi_select_scroll@viewsize = <viewsize>
 		}
 	}
 	vscrollbar multi_select_scroll {
@@ -1831,9 +1831,9 @@ window popup_aircraft
 		mousefx		true
 		onClick		{ cmd "popup_aircraft_action_click <lineselected>;" }
 		onViewChange	{
-			*(abstractscrollbar)popup_aircraft_action_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)popup_aircraft_action_scroll@current = <viewpos>
-			*(abstractscrollbar)popup_aircraft_action_scroll@viewsize = <viewsize>
+			*popup_aircraft_action_scroll@fullsize = <fullsize>
+			*popup_aircraft_action_scroll@current = <viewpos>
+			*popup_aircraft_action_scroll@viewsize = <viewsize>
 		}
 	}
 	vscrollbar popup_aircraft_action_scroll {

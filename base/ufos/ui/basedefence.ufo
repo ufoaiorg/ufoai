@@ -77,16 +77,16 @@ window basedefence extends objectinfo
 
 		/* @todo: We should check if the slot is empty but can't do from here */
 		confunc update_buttons {
-			if ( *node:(text)parent.slots.slotlist@lineselected < 0 ) {
+			if ( *node:parent.slots.slotlist@lineselected < 0 ) {
 				*node:parent.bt_add@disabled = true
 				*node:parent.bt_remove@disabled = true
-			} elif ( *node:(text)parent.slots.slotlist@lineselected >= *node:(text)parent.slots.slotlist@lines ) {
+			} elif ( *node:parent.slots.slotlist@lineselected >= *node:parent.slots.slotlist@lines ) {
 				*node:parent.bt_add@disabled = true
 				*node:parent.bt_remove@disabled = true
-			} elif ( *node:(text)parent.store.storelist@lineselected < 0 ) {
+			} elif ( *node:parent.store.storelist@lineselected < 0 ) {
 				*node:parent.bt_add@disabled = true
 				*node:parent.bt_remove@disabled = false
-			} elif ( *node:(text)parent.store.storelist@lineselected >= *node:(text)parent.store.storelist@lines ) {
+			} elif ( *node:parent.store.storelist@lineselected >= *node:parent.store.storelist@lines ) {
 				*node:parent.bt_add@disabled = true
 				*node:parent.bt_remove@disabled = false
 			} else {
@@ -133,9 +133,9 @@ window basedefence extends objectinfo
 					cmd "basedef_selectitem <cvar:mn_bdef_type> <lineselected> -1;"
 				}
 				onViewChange {
-					*node:(abstractscrollbar)parent.slotlist_scroll@fullsize = <fullsize>
-					*node:(abstractscrollbar)parent.slotlist_scroll@current = <viewpos>
-					*node:(abstractscrollbar)parent.slotlist_scroll@viewsize = <viewsize>
+					*node:parent.slotlist_scroll@fullsize = <fullsize>
+					*node:parent.slotlist_scroll@current = <viewpos>
+					*node:parent.slotlist_scroll@viewsize = <viewsize>
 				}
 			}
 			vscrollbar slotlist_scroll
@@ -210,9 +210,9 @@ window basedefence extends objectinfo
 					cmd "basedef_selectitem <cvar:mn_bdef_type> -1 <lineselected>;"
 				}
 				onViewChange {
-					*node:(abstractscrollbar)parent.storelist_scroll@fullsize = <fullsize>
-					*node:(abstractscrollbar)parent.storelist_scroll@current = <viewpos>
-					*node:(abstractscrollbar)parent.storelist_scroll@viewsize = <viewsize>
+					*node:parent.storelist_scroll@fullsize = <fullsize>
+					*node:parent.storelist_scroll@current = <viewpos>
+					*node:parent.storelist_scroll@viewsize = <viewsize>
 				}
 			}
 			vscrollbar storelist_scroll
@@ -268,9 +268,9 @@ window basedefence extends objectinfo
 				color		"0.60 0.60 0.60 1"
 				selectcolor	"1 1 1 1"
 				onViewChange {
-					*node:(abstractscrollbar)parent.description_scroll@fullsize = <fullsize>
-					*node:(abstractscrollbar)parent.description_scroll@current = <viewpos>
-					*node:(abstractscrollbar)parent.description_scroll@viewsize = <viewsize>
+					*node:parent.description_scroll@fullsize = <fullsize>
+					*node:parent.description_scroll@current = <viewpos>
+					*node:parent.description_scroll@viewsize = <viewsize>
 				}
 			}
 			vscrollbar description_scroll

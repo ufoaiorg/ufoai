@@ -94,8 +94,8 @@ window unittest_option
 		string "Add new option"
 		onClick {
 			call *node:parent.tabTest@createchild ( "option<cvar:nb>" , "option" )
-			*node:(option)parent.tabTest.option<cvar:nb>@value = ( *cvar:nb + 20 )
-			*node:(option)parent.tabTest.option<cvar:nb>@label = "Option <cvar:nb>"
+			*node:parent.tabTest.option<cvar:nb>@value = ( *cvar:nb + 20 )
+			*node:parent.tabTest.option<cvar:nb>@label = "Option <cvar:nb>"
 			*cvar:nb = ( *cvar:nb + 1 )
 		}
 	}

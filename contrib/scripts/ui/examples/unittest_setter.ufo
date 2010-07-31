@@ -310,7 +310,7 @@ window unittest_setter
 		if ( *node:root.testPropFoo3@current == 1 ) { *testProperty13@color = "0 1 0 1" }
 		else { *testProperty13@color = "1 0 0 1" }
 
-		*node:(vscrollbar)root.testPropFoo<3>@current = 1
+		*node:root.testPropFoo<3>@current = 1
 		if ( *node:root.testPropFoo3@current == 1 ) { *testProperty14@color = "0 1 0 1" }
 		else { *testProperty14@color = "1 0 0 1" }
 
@@ -319,7 +319,7 @@ window unittest_setter
 		else { *testProperty15@color = "1 0 0 1" }
 
 		*node:root.testPropFoo3@current = 1
-		*node:root.testPropFoo3@current = ( ( <1> + *node:(vscrollbar)root.testPropFoo<3>@current ) + <2> )
+		*node:root.testPropFoo3@current = ( ( <1> + *node:root.testPropFoo<3>@current ) + <2> )
 		if ( *node:root.testPropFoo3@current == 4 ) { *testProperty16@color = "0 1 0 1" }
 		else { *testProperty16@color = "1 0 0 1" }
 	}

@@ -482,7 +482,7 @@ window firemode_left {
 	/* Firemode console functions ===================================*/
 
 	confunc set_left_inv {
-		*(image)bt_left_fm<1>@invis = true
+		*bt_left_fm<1>@invis = true
 	}
 
 	/**
@@ -491,14 +491,14 @@ window firemode_left {
 	 */
 	confunc set_left_vis {
 		*cvar:tmp = "<2>"
-		*(image)bt_left_fm<1>@invis = false
+		*bt_left_fm<1>@invis = false
 
 		if ( *cvar:tmp eq "1" ) {
-			*(image)bt_left_fm<1>@texl = "0 0"
-			*(image)bt_left_fm<1>@texh = "214 63"
+			*bt_left_fm<1>@texl = "0 0"
+			*bt_left_fm<1>@texh = "214 63"
 		} else {
-			*(image)bt_left_fm<1>@texl = "0 64"
-			*(image)bt_left_fm<1>@texh = "214 128"
+			*bt_left_fm<1>@texl = "0 64"
+			*bt_left_fm<1>@texh = "214 128"
 		}
 		delete *cvar:tmp
 	}
@@ -506,19 +506,19 @@ window firemode_left {
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
 
 	confunc set_left_cb_ina {
-		*(image)bt_left_fm<1>.cb@texl = "0 0"
-		*(image)bt_left_fm<1>.cb@texh = "31 31"
-		*(image)bt_left_fm<1>.cb@invis = false
+		*bt_left_fm<1>.cb@texl = "0 0"
+		*bt_left_fm<1>.cb@texh = "31 31"
+		*bt_left_fm<1>.cb@invis = false
 	}
 
 	confunc set_left_cb_a {
-		*(image)bt_left_fm<1>.cb@texl = "0 32"
-		*(image)bt_left_fm<1>.cb@texh = "31 63"
-		*(image)bt_left_fm<1>.cb@invis = false
+		*bt_left_fm<1>.cb@texl = "0 32"
+		*bt_left_fm<1>.cb@texh = "31 63"
+		*bt_left_fm<1>.cb@invis = false
 	}
 
 	confunc set_left_cb_invis {
-		*(image)bt_left_fm<1>.cb@invis = true
+		*bt_left_fm<1>.cb@invis = true
 	}
 }
 
@@ -780,7 +780,7 @@ window firemode_right {
 	*/
 
 	confunc set_right_inv {
-		*(image)bt_right_fm<1>@invis = true
+		*bt_right_fm<1>@invis = true
 	}
 
 	/**
@@ -789,14 +789,14 @@ window firemode_right {
 	 */
 	confunc set_right_vis {
 		*cvar:tmp = "<2>"
-		*(image)bt_right_fm<1>@invis = false
+		*bt_right_fm<1>@invis = false
 
 		if ( *cvar:tmp eq "1" ) {
-			*(image)bt_right_fm<1>@texl = "0 0"
-			*(image)bt_right_fm<1>@texh = "214 63"
+			*bt_right_fm<1>@texl = "0 0"
+			*bt_right_fm<1>@texh = "214 63"
 		} else {
-			*(image)bt_right_fm<1>@texl = "0 64"
-			*(image)bt_right_fm<1>@texh = "214 128"
+			*bt_right_fm<1>@texl = "0 64"
+			*bt_right_fm<1>@texh = "214 128"
 		}
 		delete *cvar:tmp
 	}
@@ -804,19 +804,19 @@ window firemode_right {
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
 
 	confunc set_right_cb_ina {
-		*(image)bt_right_fm<1>.cb@texl = "0 0"
-		*(image)bt_right_fm<1>.cb@texh = "31 31"
-		*(image)bt_right_fm<1>.cb@invis = false
+		*bt_right_fm<1>.cb@texl = "0 0"
+		*bt_right_fm<1>.cb@texh = "31 31"
+		*bt_right_fm<1>.cb@invis = false
 	}
 
 	confunc set_right_cb_a {
-		*(image)bt_right_fm<1>.cb@texl = "0 32"
-		*(image)bt_right_fm<1>.cb@texh = "31 63"
-		*(image)bt_right_fm<1>.cb@invis = false
+		*bt_right_fm<1>.cb@texl = "0 32"
+		*bt_right_fm<1>.cb@texh = "31 63"
+		*bt_right_fm<1>.cb@invis = false
 	}
 
 	confunc set_right_cb_invis {
-		*(image)bt_right_fm<1>.cb@invis = true
+		*bt_right_fm<1>.cb@invis = true
 	}
 
 	/**

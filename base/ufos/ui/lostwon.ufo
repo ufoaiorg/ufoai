@@ -224,13 +224,13 @@ window uforecovery
 			tabwidth	100
 			rows		"8"
 			onClick		{
-				*(textlist)store_panel.ur_capacities@lineselected = <lineselected>
+				*store_panel.ur_capacities@lineselected = <lineselected>
 			}
 			onViewChange	{
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@current = <viewpos>
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@viewsize = <viewsize>
-				*(textlist)store_panel.ur_capacities@viewpos = <viewpos>
+				*store_panel.ur_ufoyards_scroll@fullsize = <fullsize>
+				*store_panel.ur_ufoyards_scroll@current = <viewpos>
+				*store_panel.ur_ufoyards_scroll@viewsize = <viewsize>
+				*store_panel.ur_capacities@viewpos = <viewpos>
 			}
 		}
 		textlist ur_capacities
@@ -244,12 +244,12 @@ window uforecovery
 			rows		"8"
 			textalign	ALIGN_UR
 			onClick		{
-				*(textlist)store_panel.ur_ufoyards@lineselected = <lineselected>
+				*store_panel.ur_ufoyards@lineselected = <lineselected>
 			}
 			onViewChange	{
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@current = <viewpos>
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@viewsize = <viewsize>
+				*store_panel.ur_ufoyards_scroll@fullsize = <fullsize>
+				*store_panel.ur_ufoyards_scroll@current = <viewpos>
+				*store_panel.ur_ufoyards_scroll@viewsize = <viewsize>
 				*store_panel.ur_ufoyards@viewpos = <viewpos>
 			}
 		}
@@ -342,9 +342,9 @@ window uforecovery
 			longlines	LONGLINES_PRETTYCHOP
 			onClick		{ cmd "cp_uforecovery_nationlist_click <lineselected>;" }
 			onViewChange	{
-				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@current = <viewpos>
-				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@viewsize = <viewsize>
+				*sell_panel.cp_ur_nationlist_scroll@fullsize = <fullsize>
+				*sell_panel.cp_ur_nationlist_scroll@current = <viewpos>
+				*sell_panel.cp_ur_nationlist_scroll@viewsize = <viewsize>
 			}
 		}
 		vscrollbar cp_ur_nationlist_scroll {

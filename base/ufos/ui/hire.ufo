@@ -55,7 +55,7 @@ window employees
 	 */
 	confunc employeedel
 	{
-		*(abstractvalue)bt_employee<1>@current = 0
+		*bt_employee<1>@current = 0
 		*bt_employee<1>@invis = false
 	}
 
@@ -64,7 +64,7 @@ window employees
 	 */
 	confunc employeeadd
 	{
-		*(abstractvalue)bt_employee<1>@current = 1
+		*bt_employee<1>@current = 1
 		*bt_employee<1>@invis = false
 	}
 
@@ -170,12 +170,12 @@ window employees
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc hire_update_number {
-		*(abstractscrollbar)scroll@fullsize = <1>
+		*scroll@fullsize = <1>
 	}
 
 	confunc hire_fix_scroll {
-		*(abstractscrollbar)scroll@current = <1>
-		*(rows)list_background@current = <1>
+		*scroll@current = <1>
+		*list_background@current = <1>
 	}
 
 	textlist employee_list
@@ -190,9 +190,9 @@ window employees
 		selectcolor	"1 1 1 1"
 		onClick			{ cmd "employee_select <lineselected>;" }
 		onViewChange	{
-			*(abstractscrollbar)scroll@fullsize = <fullsize>
-			*(abstractscrollbar)scroll@current = <viewpos>
-			*(abstractscrollbar)scroll@viewsize = <viewsize>
+			*scroll@fullsize = <fullsize>
+			*scroll@current = <viewpos>
+			*scroll@viewsize = <viewsize>
 			cmd "employee_scroll <viewpos>;"
 		}
 	}

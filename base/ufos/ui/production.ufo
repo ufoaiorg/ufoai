@@ -234,21 +234,21 @@ window production
 		size		"265 550"
 		longlines	LONGLINES_PRETTYCHOP
 		onClick		{
-			*node:(text)root.prodlist_amount@lineselected = <node:this@lineselected>
-			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
+			*node:root.prodlist_amount@lineselected = <node:this@lineselected>
+			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_click <lineselected>;"
 		}
 		onRClick	{
-			*node:(text)root.prodlist_amount@lineselected = <node:this@lineselected>
-			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
+			*node:root.prodlist_amount@lineselected = <node:this@lineselected>
+			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_rclick <lineselected>;"
 		}
 		onViewChange	{
-			*(abstractscrollbar)prodlist_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)prodlist_scroll@current = <viewpos>
-			*(abstractscrollbar)prodlist_scroll@viewsize = <viewsize>
-			*(textlist)prodlist_amount@viewpos = <viewpos>
-			*(textlist)prodlist_queued@viewpos = <viewpos>
+			*prodlist_scroll@fullsize = <fullsize>
+			*prodlist_scroll@current = <viewpos>
+			*prodlist_scroll@viewsize = <viewsize>
+			*prodlist_amount@viewpos = <viewpos>
+			*prodlist_queued@viewpos = <viewpos>
 		}
 	}
 
@@ -262,21 +262,21 @@ window production
 		size		"40 550"
 		lineheight	"25"
 		onClick		{
-			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
-			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
+			*node:root.prodlist@lineselected = <node:this@lineselected>
+			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_click <lineselected>;"
 		}
 		onRClick	{
-			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
-			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
+			*node:root.prodlist@lineselected = <node:this@lineselected>
+			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_rclick <lineselected>;"
 		}
 		onViewChange	{
-			*(abstractscrollbar)prodlist_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)prodlist_scroll@current = <viewpos>
-			*(abstractscrollbar)prodlist_scroll@viewsize = <viewsize>
+			*prodlist_scroll@fullsize = <fullsize>
+			*prodlist_scroll@current = <viewpos>
+			*prodlist_scroll@viewsize = <viewsize>
 			*prodlist@viewpos = <viewpos>
-			*(textlist)prodlist_queued@viewpos = <viewpos>
+			*prodlist_queued@viewpos = <viewpos>
 		}
 	}
 
@@ -289,19 +289,19 @@ window production
 		lineheight	"25"
 		rows		"22"
 		onClick		{
-			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
-			*node:(text)root.prodlist_amount@lineselected = <node:this@lineselected>
+			*node:root.prodlist@lineselected = <node:this@lineselected>
+			*node:root.prodlist_amount@lineselected = <node:this@lineselected>
 			cmd "prodlist_click <lineselected>;"
 		}
 		onRClick	{
-			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
-			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
+			*node:root.prodlist@lineselected = <node:this@lineselected>
+			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_rclick <lineselected>;"
 		}
 		onViewChange	{
-			*(abstractscrollbar)prodlist_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)prodlist_scroll@current = <viewpos>
-			*(abstractscrollbar)prodlist_scroll@viewsize = <viewsize>
+			*prodlist_scroll@fullsize = <fullsize>
+			*prodlist_scroll@current = <viewpos>
+			*prodlist_scroll@viewsize = <viewsize>
 			*prodlist_amount@viewpos = <viewpos>
 			*prodlist@viewpos = <viewpos>
 		}
@@ -508,9 +508,9 @@ window production
 		tabwidth	260
 		rows		"10"
 		onViewChange	{
-			*(abstractscrollbar)description_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)description_scroll@current = <viewpos>
-			*(abstractscrollbar)description_scroll@viewsize = <viewsize>
+			*description_scroll@fullsize = <fullsize>
+			*description_scroll@current = <viewpos>
+			*description_scroll@viewsize = <viewsize>
 		}
 	}
 

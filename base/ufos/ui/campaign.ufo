@@ -74,9 +74,9 @@ window campaigns
 		selectcolor	"1 1 1 1"
 		rows	"6"
 		onViewChange	{
-			*(abstractscrollbar)campaignlist_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)campaignlist_scroll@current = <viewpos>
-			*(abstractscrollbar)campaignlist_scroll@viewsize = <viewsize>
+			*campaignlist_scroll@fullsize = <fullsize>
+			*campaignlist_scroll@current = <viewpos>
+			*campaignlist_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -99,9 +99,9 @@ window campaigns
 		lineheight	20
 		rows		18
 		onViewChange {
-			*(abstractscrollbar)campaign_desc_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)campaign_desc_scroll@current = <viewpos>
-			*(abstractscrollbar)campaign_desc_scroll@viewsize = <viewsize>
+			*campaign_desc_scroll@fullsize = <fullsize>
+			*campaign_desc_scroll@current = <viewpos>
+			*campaign_desc_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -631,9 +631,9 @@ window lostgame
 		font		"f_normal"
 		onClick		{ call *node:parent.leave@click }
 		onViewChange	{
-			*(abstractscrollbar)reason_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)reason_scroll@current = <viewpos>
-			*(abstractscrollbar)reason_scroll@viewsize = <viewsize>
+			*reason_scroll@fullsize = <fullsize>
+			*reason_scroll@current = <viewpos>
+			*reason_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -709,9 +709,9 @@ window endgame
 		font		"f_normal"
 		onClick		{ call *node:parent.leave@click }
 		onViewChange	{
-			*(abstractscrollbar)reason_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)reason_scroll@current = <viewpos>
-			*(abstractscrollbar)reason_scroll@viewsize = <viewsize>
+			*reason_scroll@fullsize = <fullsize>
+			*reason_scroll@current = <viewpos>
+			*reason_scroll@viewsize = <viewsize>
 		}
 	}
 

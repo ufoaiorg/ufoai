@@ -37,14 +37,14 @@ window ufopedia extends objectinfo
 			selectcolor	"1 1 1 1"
 			onChange	{
 				cmd "ufopedia_click <cvar:up_summary_selection>;"
-				*node:(abstractscrollbar)root.content.ufopedia_scroll@current = 0
-				*node:(text)root.content.ufopedia@viewpos = 0
+				*node:root.content.ufopedia_scroll@current = 0
+				*node:root.content.ufopedia@viewpos = 0
 				cmd "update_ufopedia_layout;"
 			}
 			onViewChange	{
-				*node:(abstractscrollbar)parent.list_scroll@current = <viewpos>
-				*node:(abstractscrollbar)parent.list_scroll@fullsize = <fullsize>
-				*node:(abstractscrollbar)parent.list_scroll@viewsize = <viewsize>
+				*node:parent.list_scroll@current = <viewpos>
+				*node:parent.list_scroll@fullsize = <fullsize>
+				*node:parent.list_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -140,9 +140,9 @@ window ufopedia extends objectinfo
 			tabwidth	100
 			rows		26
 			onViewChange	{
-				*node:(abstractscrollbar)parent.ufopedia_scroll@fullsize = <fullsize>
-				*node:(abstractscrollbar)parent.ufopedia_scroll@current = <viewpos>
-				*node:(abstractscrollbar)parent.ufopedia_scroll@viewsize = <viewsize>
+				*node:parent.ufopedia_scroll@fullsize = <fullsize>
+				*node:parent.ufopedia_scroll@current = <viewpos>
+				*node:parent.ufopedia_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -165,9 +165,9 @@ window ufopedia extends objectinfo
 			tabwidth	230
 			rows		20
 			onViewChange	{
-				*node:(abstractscrollbar)parent.description_scroll@fullsize = <fullsize>
-				*node:(abstractscrollbar)parent.description_scroll@current = <viewpos>
-				*node:(abstractscrollbar)parent.description_scroll@viewsize = <viewsize>
+				*node:parent.description_scroll@fullsize = <fullsize>
+				*node:parent.description_scroll@current = <viewpos>
+				*node:parent.description_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -206,9 +206,9 @@ window ufopedia extends objectinfo
 				selectcolor	"0 .78 0 1"
 				onChange		{ cmd "techtree_click <lineselected>;" }
 				onViewChange	{
-					*node:(abstractscrollbar)parent.techtree_scroll@fullsize = <fullsize>
-					*node:(abstractscrollbar)parent.techtree_scroll@current = <viewpos>
-					*node:(abstractscrollbar)parent.techtree_scroll@viewsize = <viewsize>
+					*node:parent.techtree_scroll@fullsize = <fullsize>
+					*node:parent.techtree_scroll@current = <viewpos>
+					*node:parent.techtree_scroll@viewsize = <viewsize>
 				}
 			}
 

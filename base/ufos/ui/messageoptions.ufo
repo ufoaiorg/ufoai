@@ -123,9 +123,9 @@ window messageoptions
 		pos			"30 90"
 		size		"325 325"
 		onViewChange {
-			*(abstractscrollbar)messagetypes_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)messagetypes_scroll@current = <viewpos>
-			*(abstractscrollbar)messagetypes_scroll@viewsize = <viewsize>
+			*messagetypes_scroll@fullsize = <fullsize>
+			*messagetypes_scroll@current = <viewpos>
+			*messagetypes_scroll@viewsize = <viewsize>
 			cmd "msgoptions_scroll <viewpos>;"
 		}
 	}
@@ -230,15 +230,15 @@ window messageoptions
 	confunc ms_btnstate {
 		*cvar:tmp = "<3>"
 		if ( *cvar:tmp == 0 ) {
-			*node:(checkbox)parent.option<1>.pause@disabled = true
-			*node:(checkbox)parent.option<1>.sound@disabled = true
+			*node:parent.option<1>.pause@disabled = true
+			*node:parent.option<1>.sound@disabled = true
 		} else {
-			*node:(checkbox)parent.option<1>.pause@disabled = false
-			*node:(checkbox)parent.option<1>.sound@disabled = false
+			*node:parent.option<1>.pause@disabled = false
+			*node:parent.option<1>.sound@disabled = false
 		}
-		*node:(checkbox)parent.option<1>.pause@current = <2>
-		*node:(checkbox)parent.option<1>.notify@current = <3>
-		*node:(checkbox)parent.option<1>.sound@current = <4>
+		*node:parent.option<1>.pause@current = <2>
+		*node:parent.option<1>.notify@current = <3>
+		*node:parent.option<1>.sound@current = <4>
 		delete *cvar:tmp
 	}
 

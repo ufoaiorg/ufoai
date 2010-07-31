@@ -330,9 +330,9 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			onClick		{ cmd "servers_click <lineselected>;" }
 			onRClick	{ cmd "pingservers;" }
 			onViewChange {
-				*(abstractscrollbar)content.servers_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)content.servers_scroll@current = <viewpos>
-				*(abstractscrollbar)content.servers_scroll@viewsize = <viewsize>
+				*content.servers_scroll@fullsize = <fullsize>
+				*content.servers_scroll@current = <viewpos>
+				*content.servers_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -1452,9 +1452,9 @@ window multiplayer_wait extends levelbuttons
 					onClick		{ cmd "irc_userlist_click <lineselected>;" }
 					onRClick	{ cmd "irc_userlist_rclick <lineselected>;" }
 					onViewChange {
-						*node:(abstractscrollbar)parent.scroll@fullsize = <fullsize>
-						*node:(abstractscrollbar)parent.scroll@current = <viewpos>
-						*node:(abstractscrollbar)parent.scroll@viewsize = <viewsize>
+						*node:parent.scroll@fullsize = <fullsize>
+						*node:parent.scroll@current = <viewpos>
+						*node:parent.scroll@viewsize = <viewsize>
 					}
 				}
 
@@ -1476,9 +1476,9 @@ window multiplayer_wait extends levelbuttons
 				lineheight	"16"
 				padding		5
 				onViewChange {
-					*node:(abstractscrollbar)parent.irc_scroll@fullsize = <fullsize>
-					*node:(abstractscrollbar)parent.irc_scroll@viewsize = <viewsize>
-					*node:(abstractscrollbar)parent.irc_scroll@current = <viewpos>
+					*node:parent.irc_scroll@fullsize = <fullsize>
+					*node:parent.irc_scroll@viewsize = <viewsize>
+					*node:parent.irc_scroll@current = <viewpos>
 				}
 			}
 
@@ -1549,9 +1549,9 @@ window multiplayer_wait extends levelbuttons
 				lineheight	"16"
 				padding		5
 				onViewChange {
-					*node:(abstractscrollbar)parent.chat_scroll@fullsize = <fullsize>
-					*node:(abstractscrollbar)parent.chat_scroll@viewsize = <viewsize>
-					*node:(abstractscrollbar)parent.chat_scroll@current = <viewpos>
+					*node:parent.chat_scroll@fullsize = <fullsize>
+					*node:parent.chat_scroll@viewsize = <viewsize>
+					*node:parent.chat_scroll@current = <viewpos>
 				}
 			}
 
@@ -1614,10 +1614,10 @@ window multiplayer_wait extends levelbuttons
 	confunc multiplayer_playerIsReady {
 		if ( ( <1> < 10 ) and ( <1> >= 0 ) ) {
 			if ( <2> == 0 ) {
-				*node:(image)root.players.ready.p<1>@src = "icons/off"
+				*node:root.players.ready.p<1>@src = "icons/off"
 				*node:root.players.ready.p<1>@invis = false
 			} else {
-				*node:(image)root.players.ready.p<1>@src = "icons/on"
+				*node:root.players.ready.p<1>@src = "icons/on"
 				*node:root.players.ready.p<1>@invis = false
 			}
 		}

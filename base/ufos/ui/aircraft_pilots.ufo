@@ -139,8 +139,8 @@ window aircraft_pilots extends iaircraft
 	confunc aircraft_pilot_usedelsewhere
 	{
 		*actor_select<1>.txt_actor@color = ".50 .50 .50 1"
-		*(checkbox)actor_select<1>.check_actor@current = 0
-		*(checkbox)actor_select<1>.check_actor@tooltip = "_Pilot is assigned to another craft"
+		*actor_select<1>.check_actor@current = 0
+		*actor_select<1>.check_actor@tooltip = "_Pilot is assigned to another craft"
 		*actor_select<1>.check_actor@disabled = true
 		*actor_select<1>.check_actor@invis = false
 		*actor_select<1>.txt_actor@invis = false
@@ -152,15 +152,15 @@ window aircraft_pilots extends iaircraft
 	confunc aircraft_pilot_unassigned {
 		*actor_select<1>.txt_actor@color = "0 .78 0 1"
 		*actor_select<1>.check_actor@disabled = false
-		*(checkbox)actor_select<1>.check_actor@current = 0
+		*actor_select<1>.check_actor@current = 0
 
 		*actor_select<1>.check_actor@invis = false
 		*actor_select<1>.txt_actor@invis = false
 		if ( *cvar:mn_pilotassigned == 1 ) {
-			*(checkbox)actor_select<1>.check_actor@disabled = true
-			*(checkbox)actor_select<1>.check_actor@tooltip = "_A pilot is already assigned to this craft"
+			*actor_select<1>.check_actor@disabled = true
+			*actor_select<1>.check_actor@tooltip = "_A pilot is already assigned to this craft"
 		} else {
-			*(checkbox)actor_select<1>.check_actor@tooltip = "_Assign pilot to this craft"
+			*actor_select<1>.check_actor@tooltip = "_Assign pilot to this craft"
 		}
 	}
 
@@ -170,8 +170,8 @@ window aircraft_pilots extends iaircraft
 	confunc aircraft_pilot_assigned {
 		*actor_select<1>.txt_actor@color = "0 .78 0 1"
 		*actor_select<1>.check_actor@disabled = false
-		*(checkbox)actor_select<1>.check_actor@current = 1
-		*(checkbox)actor_select<1>.check_actor@tooltip = "_Remove pilot from this craft"
+		*actor_select<1>.check_actor@current = 1
+		*actor_select<1>.check_actor@tooltip = "_Remove pilot from this craft"
 		*actor_select<1>.check_actor@invis = false
 		*actor_select<1>.txt_actor@invis = false
 	}
@@ -200,7 +200,7 @@ window aircraft_pilots extends iaircraft
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc aircraft_pilot_list_size {
-		*(abstractscrollbar)scroll_employees@fullsize = <1>
+		*scroll_employees@fullsize = <1>
 	}
 
 	/**

@@ -50,11 +50,11 @@ window buildings
 		longlines	LONGLINES_PRETTYCHOP
 		onClick		{ cmd "buildings_click <lineselected>;" }
 		onViewChange {
-			*(abstractscrollbar)buildings_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)buildings_scroll@current = <viewpos>
+			*buildings_scroll@fullsize = <fullsize>
+			*buildings_scroll@current = <viewpos>
 		}
 		onWheel {
-			*(abstractscrollbar)buildings_scroll@current = <viewpos>
+			*buildings_scroll@current = <viewpos>
 		}
 	}
 

@@ -204,9 +204,9 @@ window checkcvars
 		selectcolor	"1 1 1 1"
 		dataid		OPTION_LANGUAGES
 		onViewChange {
-			*(vscrollbar)select_language_scroll@current = <viewpos>
-			*(vscrollbar)select_language_scroll@fullsize = <fullsize>
-			*(vscrollbar)select_language_scroll@viewsize = <viewsize>
+			*select_language_scroll@current = <viewpos>
+			*select_language_scroll@fullsize = <fullsize>
+			*select_language_scroll@viewsize = <viewsize>
 		}
 	}
 

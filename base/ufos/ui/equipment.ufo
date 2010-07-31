@@ -237,27 +237,27 @@ window equipment extends objectinfo
 
 	confunc update_item_list {
 		if ( *cvar:mn_equiptype == 0 ) {
-			*(container)equip@filter = FILTER_S_PRIMARY
-			*(container)equip_ammo@filter = FILTER_S_PRIMARY
+			*equip@filter = FILTER_S_PRIMARY
+			*equip_ammo@filter = FILTER_S_PRIMARY
 		}
 		elif ( *cvar:mn_equiptype == 1 ) {
-			*(container)equip@filter = FILTER_S_SECONDARY
-			*(container)equip_ammo@filter = FILTER_S_SECONDARY
+			*equip@filter = FILTER_S_SECONDARY
+			*equip_ammo@filter = FILTER_S_SECONDARY
 		}
 		elif ( *cvar:mn_equiptype == 2 ) {
-			*(container)equip@filter = FILTER_S_HEAVY
-			*(container)equip_ammo@filter = FILTER_S_HEAVY
+			*equip@filter = FILTER_S_HEAVY
+			*equip_ammo@filter = FILTER_S_HEAVY
 		}
 		elif ( *cvar:mn_equiptype == 3 ) {
-			*(container)equip@filter = FILTER_S_MISC
-			*(container)equip_ammo@filter = FILTER_S_MISC
+			*equip@filter = FILTER_S_MISC
+			*equip_ammo@filter = FILTER_S_MISC
 		}
 		elif ( *cvar:mn_equiptype == 4 ) {
-			*(container)equip@filter = FILTER_S_ARMOUR
-			*(container)equip_ammo@filter = FILTER_S_ARMOUR
+			*equip@filter = FILTER_S_ARMOUR
+			*equip_ammo@filter = FILTER_S_ARMOUR
 		}
-		*(container)equip@scrollpos = 0
-		*(container)equip_ammo@scrollpos = 0
+		*equip@scrollpos = 0
+		*equip_ammo@scrollpos = 0
 	}
 
 	tab equip_type
@@ -329,11 +329,11 @@ window equipment extends objectinfo
 			rows		"7"
 			dataid		TEXT_ITEMDESCRIPTION
 			onViewChange {
-				*(abstractscrollbar)itemdescription.description_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
+				*itemdescription.description_scroll@fullsize = <fullsize>
+				*itemdescription.description_scroll@current = <viewpos>
 			}
 			onWheel {
-				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
+				*itemdescription.description_scroll@current = <viewpos>
 			}
 		}
 		vscrollbar description_scroll {
@@ -652,9 +652,9 @@ window equipment extends objectinfo
 		displayunavailableitem	true
 		columns					1
 		onViewChange {
-			*(abstractscrollbar)equip_scroll@current = <scrollpos>
-			*(abstractscrollbar)equip_scroll@viewsize = <viewsize>
-			*(abstractscrollbar)equip_scroll@fullsize = <fullsize>
+			*equip_scroll@current = <scrollpos>
+			*equip_scroll@viewsize = <viewsize>
+			*equip_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}
@@ -665,9 +665,9 @@ window equipment extends objectinfo
 		displayammo		true
 		columns			2
 		onViewChange {
-			*(abstractscrollbar)equip_ammo_scroll@current = <scrollpos>
-			*(abstractscrollbar)equip_ammo_scroll@viewsize = <viewsize>
-			*(abstractscrollbar)equip_ammo_scroll@fullsize = <fullsize>
+			*equip_ammo_scroll@current = <scrollpos>
+			*equip_ammo_scroll@viewsize = <viewsize>
+			*equip_ammo_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}

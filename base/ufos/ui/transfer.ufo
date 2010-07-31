@@ -111,11 +111,11 @@ window transfer
 				}
 			}
 			onViewChange	{
-				*(textlist)itemlist.trans_list_amount@viewpos = <viewpos>
-				*(textlist)itemlist.trans_list_transfered@viewpos = <viewpos>
-				*(abstractscrollbar)itemlist.trans_list_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)itemlist.trans_list_scroll@current = <viewpos>
-				*(abstractscrollbar)itemlist.trans_list_scroll@viewsize = <viewsize>
+				*itemlist.trans_list_amount@viewpos = <viewpos>
+				*itemlist.trans_list_transfered@viewpos = <viewpos>
+				*itemlist.trans_list_scroll@fullsize = <fullsize>
+				*itemlist.trans_list_scroll@current = <viewpos>
+				*itemlist.trans_list_scroll@viewsize = <viewsize>
 				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
 			}
 		}
@@ -128,11 +128,11 @@ window transfer
 			lineheight	"25"
 			textalign	ALIGN_CR
 			onViewChange	{
-				*(textlist)itemlist.trans_list@viewpos = <viewpos>
-				*(textlist)itemlist.trans_list_transfered@viewpos = <viewpos>
-				*(abstractscrollbar)itemlist.trans_list_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)itemlist.trans_list_scroll@current = <viewpos>
-				*(abstractscrollbar)itemlist.trans_list_scroll@viewsize = <viewsize>
+				*itemlist.trans_list@viewpos = <viewpos>
+				*itemlist.trans_list_transfered@viewpos = <viewpos>
+				*itemlist.trans_list_scroll@fullsize = <fullsize>
+				*itemlist.trans_list_scroll@current = <viewpos>
+				*itemlist.trans_list_scroll@viewsize = <viewsize>
 				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
 			}
 		}
@@ -145,11 +145,11 @@ window transfer
 			lineheight	"25"
 			textalign	ALIGN_CR
 			onViewChange	{
-				*(textlist)itemlist.trans_list@viewpos = <viewpos>
-				*(textlist)itemlist.trans_list_amount@viewpos = <viewpos>
-				*(abstractscrollbar)itemlist.trans_list_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)itemlist.trans_list_scroll@current = <viewpos>
-				*(abstractscrollbar)itemlist.trans_list_scroll@viewsize = <viewsize>
+				*itemlist.trans_list@viewpos = <viewpos>
+				*itemlist.trans_list_amount@viewpos = <viewpos>
+				*itemlist.trans_list_scroll@fullsize = <fullsize>
+				*itemlist.trans_list_scroll@current = <viewpos>
+				*itemlist.trans_list_scroll@viewsize = <viewsize>
 				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
 			}
 		}
@@ -431,9 +431,9 @@ window transfer
 	 * @param[in] <4> max value allowed
 	 */
 	confunc trans_updatespinners {
-		*(abstractvalue)itemlist.t_spinner<1>@current = <2>
-		*(abstractvalue)itemlist.t_spinner<1>@min = <3>
-		*(abstractvalue)itemlist.t_spinner<1>@max = <4>
+		*itemlist.t_spinner<1>@current = <2>
+		*itemlist.t_spinner<1>@min = <3>
+		*itemlist.t_spinner<1>@max = <4>
 	}
 
 	/**
@@ -466,10 +466,10 @@ window transfer
 				}
 			}
 			onViewChange	{
-				*(textlist)transfer_cargolist.trans_cargolist_amount@viewpos = <viewpos>
-				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
-				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
+				*transfer_cargolist.trans_cargolist_amount@viewpos = <viewpos>
+				*transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
+				*transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
+				*transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -481,10 +481,10 @@ window transfer
 			lineheight	"25"
 			textalign	ALIGN_CR
 			onViewChange	{
-				*(textlist)transfer_cargolist.trans_cargolist@viewpos = <viewpos>
-				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
-				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
+				*transfer_cargolist.trans_cargolist@viewpos = <viewpos>
+				*transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
+				*transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
+				*transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -547,9 +547,9 @@ window transfer
 			size		"360 160"
 			lineheight	"20"
 			onViewChange	{
-				*(abstractscrollbar)infopanel.t_baseinfo_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)infopanel.t_baseinfo_scroll@current = <viewpos>
-				*(abstractscrollbar)infopanel.t_baseinfo_scroll@viewsize = <viewsize>
+				*infopanel.t_baseinfo_scroll@fullsize = <fullsize>
+				*infopanel.t_baseinfo_scroll@current = <viewpos>
+				*infopanel.t_baseinfo_scroll@viewsize = <viewsize>
 			}
 		}
 

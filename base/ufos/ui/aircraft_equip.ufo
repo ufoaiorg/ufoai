@@ -117,9 +117,9 @@ window aircraft_equip extends iaircraft
 			tabwidth	130
 			font		"f_verysmall"
 			onViewChange {
-				*node:(abstractscrollbar)parent.description_scroll@fullsize = <fullsize>
-				*node:(abstractscrollbar)parent.description_scroll@viewsize = <viewsize>
-				*node:(abstractscrollbar)parent.description_scroll@current = <viewpos>
+				*node:parent.description_scroll@fullsize = <fullsize>
+				*node:parent.description_scroll@viewsize = <viewsize>
+				*node:parent.description_scroll@current = <viewpos>
 			}
 		}
 
@@ -242,10 +242,10 @@ window aircraft_equip extends iaircraft
 				cmd "airequip_select item <cvar:mn_aircraft_item_selected>;"
 			}
 			onViewChange {
-				*node:(abstractscrollbar)parent.airequip_list_scroll@fullsize = <fullsize>
-				*node:(abstractscrollbar)parent.airequip_list_scroll@viewsize = <viewsize>
-				*node:(abstractscrollbar)parent.airequip_list_scroll@current = <viewpos>
-				*node:(textlist)parent.airequip_list_amount@viewpos = <viewpos>
+				*node:parent.airequip_list_scroll@fullsize = <fullsize>
+				*node:parent.airequip_list_scroll@viewsize = <viewsize>
+				*node:parent.airequip_list_scroll@current = <viewpos>
+				*node:parent.airequip_list_amount@viewpos = <viewpos>
 			}
 		}
 
@@ -260,10 +260,10 @@ window aircraft_equip extends iaircraft
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			onViewChange {
-				*node:(abstractscrollbar)parent.airequip_list_scroll@fullsize = <fullsize>
-				*node:(abstractscrollbar)parent.airequip_list_scroll@viewsize = <viewsize>
-				*node:(abstractscrollbar)parent.airequip_list_scroll@current = <viewpos>
-				*node:(textlist)parent.airequip_list@viewpos = <viewpos>
+				*node:parent.airequip_list_scroll@fullsize = <fullsize>
+				*node:parent.airequip_list_scroll@viewsize = <viewsize>
+				*node:parent.airequip_list_scroll@current = <viewpos>
+				*node:parent.airequip_list@viewpos = <viewpos>
 			}
 		}
 
@@ -281,7 +281,7 @@ window aircraft_equip extends iaircraft
 
 	confunc aircraft_equip_unselectlist {
 		*cvar:mn_aircraft_item_selected = -1
-		*node:(textlist)itemlist.airequip_list_amount@lineselected = -1
+		*node:itemlist.airequip_list_amount@lineselected = -1
 	}
 
 	// ==================
@@ -576,15 +576,15 @@ window aircraft_equip extends iaircraft
 	{
 		*cvar:status = <2>
 		if ( *cvar:status == 2 ) {
-			*(image)airequip_slot<1>@invis = false
-			*(image)airequip_slot<1>@texl = "64 0"
-			*(image)airequip_slot<1>@texh = "128 64"
+			*airequip_slot<1>@invis = false
+			*airequip_slot<1>@texl = "64 0"
+			*airequip_slot<1>@texh = "128 64"
 		} elif ( *cvar:status == 1 ) {
-			*(image)airequip_slot<1>@invis = false
-			*(image)airequip_slot<1>@texl = "0 0"
-			*(image)airequip_slot<1>@texh = "64 64"
+			*airequip_slot<1>@invis = false
+			*airequip_slot<1>@texl = "0 0"
+			*airequip_slot<1>@texh = "64 64"
 		} else {
-			*(image)airequip_slot<1>@invis = true
+			*airequip_slot<1>@invis = true
 		}
 		delete *cvar:status
 	}

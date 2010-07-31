@@ -29,9 +29,9 @@ window mail
 		lineheight	24
 		tabwidth	100
 		onViewChange	{
-			*(abstractscrollbar)mail_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)mail_scroll@current = <viewpos>
-			*(abstractscrollbar)mail_scroll@viewsize = <viewsize>
+			*mail_scroll@fullsize = <fullsize>
+			*mail_scroll@current = <viewpos>
+			*mail_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -98,7 +98,7 @@ window mail
 	func onInit
 	{
 		*node:root.mail@viewpos = 0
-		*node:(abstractscrollbar)root.mail_scroll@current = 0
+		*node:root.mail_scroll@current = 0
 	}
 }
 
@@ -537,9 +537,9 @@ window mailclient
 		mousefx		true
 		onClick		{ cmd "mailclient_click <lineselected>;" }
 		onViewChange	{
-			*(abstractscrollbar)mailclient_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)mailclient_scroll@current = <viewpos>
-			*(abstractscrollbar)mailclient_scroll@viewsize = <viewsize>
+			*mailclient_scroll@fullsize = <fullsize>
+			*mailclient_scroll@current = <viewpos>
+			*mailclient_scroll@viewsize = <viewsize>
 			cmd "ufopedia_scrollmail <viewpos>;"
 		}
 	}

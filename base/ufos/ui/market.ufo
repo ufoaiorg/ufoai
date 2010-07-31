@@ -392,11 +392,11 @@ window market extends objectinfo
 			tabwidth	168
 			font		"f_verysmall"
 			onViewChange {
-				*(abstractscrollbar)itemdescription.description_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
+				*itemdescription.description_scroll@fullsize = <fullsize>
+				*itemdescription.description_scroll@current = <viewpos>
 			}
 			onWheel {
-				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
+				*itemdescription.description_scroll@current = <viewpos>
 			}
 		}
 		vscrollbar description_scroll {
@@ -500,7 +500,7 @@ window market extends objectinfo
 	 */
 	confunc buy_autoselle {
 		*item<1>.bt_autosell@invis = false
-		*(abstractvalue)item<1>.bt_autosell@current = 1
+		*item<1>.bt_autosell@current = 1
 		*item<1>.bt_autosell@tooltip = "_Item autosell enabled"
 	}
 	/**
@@ -509,7 +509,7 @@ window market extends objectinfo
 	 */
 	confunc buy_autoselld {
 		*item<1>.bt_autosell@invis = false
-		*(abstractvalue)item<1>.bt_autosell@current = 0
+		*item<1>.bt_autosell@current = 0
 		*item<1>.bt_autosell@tooltip = "_Item autosell disabled"
 	}
 	/**
@@ -536,9 +536,9 @@ window market extends objectinfo
 	 * @param[in] <4> max value allowed
 	 */
 	confunc buy_updateitem {
-		*(abstractvalue)item<1>.bt_buysell@current = <2>
-		*(abstractvalue)item<1>.bt_buysell@min = <3>
-		*(abstractvalue)item<1>.bt_buysell@max = <4>
+		*item<1>.bt_buysell@current = <2>
+		*item<1>.bt_buysell@min = <3>
+		*item<1>.bt_buysell@max = <4>
 	}
 
 	/**

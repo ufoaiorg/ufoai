@@ -20,9 +20,9 @@ window material_editor {
 		selectcolor "1 1 1 1"
 
 		onViewChange {
-			*(abstractscrollbar)editor_scroll@current = <viewpos>
-			*(abstractscrollbar)editor_scroll@viewsize = <viewsize>
-			*(abstractscrollbar)editor_scroll@fullsize = <fullsize>
+			*editor_scroll@current = <viewpos>
+			*editor_scroll@viewsize = <viewsize>
+			*editor_scroll@fullsize = <fullsize>
 		}
 		onChange {
 			*cvar:me_image_id = <num>
@@ -220,10 +220,10 @@ window material_editor {
 				cmd "mn_materialeditor_selectstage <cvar:me_image_id> <lineselected>;"
 			}
 			onViewChange {
-				*(abstractscrollbar)stages.stage_scroll@current = <viewpos>
-				*(abstractscrollbar)stages.stage_scroll@viewsize = <viewsize>
-				*(abstractscrollbar)stages.stage_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)stages.stage_scroll@height = <height>
+				*stages.stage_scroll@current = <viewpos>
+				*stages.stage_scroll@viewsize = <viewsize>
+				*stages.stage_scroll@fullsize = <fullsize>
+				*stages.stage_scroll@height = <height>
 			}
 		}
 

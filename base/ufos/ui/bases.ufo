@@ -44,7 +44,7 @@ component cmpDefBaseHeader cmpBaseviewHeader
 		padding 0
 		onClick
 		{
-			call *node:(textentry)parent.name@edit
+			call *node:parent.name@edit
 		}
 	}
 

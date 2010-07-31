@@ -39,9 +39,9 @@ window tutorials
 		rows		"14"
 		onClick		{ cmd "tutoriallist_click <lineselected>;" }
 		onViewChange	{
-			*(abstractscrollbar)tutoriallist_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)tutoriallist_scroll@current = <viewpos>
-			*(abstractscrollbar)tutoriallist_scroll@viewsize = <viewsize>
+			*tutoriallist_scroll@fullsize = <fullsize>
+			*tutoriallist_scroll@current = <viewpos>
+			*tutoriallist_scroll@viewsize = <viewsize>
 		}
 	}
 

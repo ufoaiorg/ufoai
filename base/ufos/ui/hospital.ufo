@@ -108,7 +108,7 @@ window hospital
 	{
 		*cvar:i = 0
 		while ( *cvar:i < 20 ) {
-			*(image)hos<cvar:i>.button@src = "ui/hosp_button_green"
+			*hos<cvar:i>.button@src = "ui/hosp_button_green"
 			*hos<cvar:i>.click_button@tooltip = "_Unused"
 			*cvar:i = ( *cvar:i + 1 )
 		}
@@ -116,23 +116,23 @@ window hospital
 	}
 
 	confunc hospitalserious	{
-		*(image)hos<1>.icon@src				= "icons/health_critical"
-		*(image)hos<1>.button@src			= "ui/hosp_button_light"
+		*hos<1>.icon@src				= "icons/health_critical"
+		*hos<1>.button@src			= "ui/hosp_button_light"
 		*hos<1>.click_button@tooltip	= "_Heavily wounded"
 	}
 	confunc hospitalmedium	{
-		*(image)hos<1>.icon@src				= "icons/health_medium"
-		*(image)hos<1>.button@src			= "ui/hosp_button_light"
+		*hos<1>.icon@src				= "icons/health_medium"
+		*hos<1>.button@src			= "ui/hosp_button_light"
 		*hos<1>.click_button@tooltip	= "_Medium wounds"
 	}
 	confunc hospitallight	{
-		*(image)hos<1>.icon@src				= "icons/health_normal"
-		*(image)hos<1>.button@src			= "ui/hosp_button_light"
+		*hos<1>.icon@src				= "icons/health_normal"
+		*hos<1>.button@src			= "ui/hosp_button_light"
 		*hos<1>.click_button@tooltip	= "_Slightly wounded"
 	}
 	confunc hospitalunused	{
-		*(image)hos<1>.icon@src				= "icons/health_unused"
-		*(image)hos<1>.button@src			= "ui/hosp_button_green"
+		*hos<1>.icon@src				= "icons/health_unused"
+		*hos<1>.button@src			= "ui/hosp_button_green"
 		*hos<1>.click_button@tooltip	= "_Unused"
 	}
 
