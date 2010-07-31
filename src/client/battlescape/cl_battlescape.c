@@ -25,6 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "cl_battlescape.h"
 #include "cl_actor.h"
+#ifdef DEBUG
+/** @todo this does not belong here */
+#include "../../common/routing.h"
+#endif
 
 client_state_t cl;
 
@@ -268,8 +272,8 @@ qboolean CL_OutsideMap (const vec3_t position, const float delta)
  */
 void Grid_DumpWholeClientMap_f (void)
 {
-	RT_DumpWholeMap(cl.clMap[0]);
-	RT_DumpWholeMap(cl.clMap[1]);
+	RT_DumpWholeMap(&cl.clMap[0]);
+	RT_DumpWholeMap(&cl.clMap[1]);
 }
 
 /**
