@@ -574,14 +574,19 @@ static void SV_PrintConfigStrings_f (void)
 }
 
 #ifdef DEBUG
+/** @todo this does not belong here */
+#include "../common/routing.h"
+
 /**
  * @brief  Dumps contents of the entire server map to console for inspection.
  * @sa CL_InitLocal
  */
 static void Grid_DumpWholeServerMap_f (void)
 {
-	RT_DumpWholeMap(sv.svMap[0]);
-	RT_DumpWholeMap(sv.svMap[1]);
+	int i;
+
+	for (i = 0; i < ACTOR_MAX_SIZE; i++)
+		RT_DumpWholeMap(&sv.svMap[i]);
 }
 
 /**
