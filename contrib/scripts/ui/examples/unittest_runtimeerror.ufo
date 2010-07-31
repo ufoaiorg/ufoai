@@ -1,6 +1,6 @@
 /**
  * @brief Unittest for event function from window node
- * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "mn_push unittest_option"
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "mn_push unittest_runtimeerror"
  */
 
 window unittest_runtimeerror
@@ -17,6 +17,7 @@ window unittest_runtimeerror
 
 	spinner foo1 {
 		pos "1 50"
+		min 100
 	}
 
 	button foo2 {
@@ -35,6 +36,10 @@ window unittest_runtimeerror
 		// not possible to parse value as binary 
 		*node:root.foo<cvar:foo1>@max = 100
 		*node:root.foo<cvar:foo2>@icon = "bordered_magnifying_glass"
+		
+		if ( *node:root.foo<cvar:foo1>@max == *node:root.foo<cvar:foo1>@min ) {
+			cmd "echo ok"
+		}
 	}
 
 	func onClose {
