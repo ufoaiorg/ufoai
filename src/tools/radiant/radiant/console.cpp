@@ -180,8 +180,6 @@ std::size_t Sys_Print (int level, const char* buf, std::size_t length)
 			GtkTextIter iter;
 			gtk_text_buffer_get_end_iter(buffer, &iter);
 
-			static GtkTextMark* end = gtk_text_buffer_create_mark(buffer, "end", &iter, FALSE);
-
 			const GdkColor yellow = { 0, 0xb0ff, 0xb0ff, 0x0000 };
 			const GdkColor red = { 0, 0xffff, 0x0000, 0x0000 };
 			const GdkColor black = { 0, 0x0000, 0x0000, 0x0000 };
