@@ -35,7 +35,7 @@ struct base_s;
 struct uiBehaviour_s;
 struct uiNode_s;
 
-extern struct inventory_s *menuInventory;
+extern struct inventory_s *ui_inventory;
 
 void UI_RegisterContainerNode(struct uiBehaviour_s *behaviour);
 void UI_DrawItem(struct uiNode_s *node, const vec3_t org, const struct item_s *item, int x, int y, const vec3_t scale, const vec4_t color);

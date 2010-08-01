@@ -403,7 +403,7 @@ void CL_ActorRemoveFromTeamList (le_t * le)
 
 /**
  * @brief Selects an actor.
- * @param le Pointer to local entity struct. If this is @c NULL the menuInventory that is linked from the actors
+ * @param le Pointer to local entity struct. If this is @c NULL the ui_inventory that is linked from the actors
  * @sa CL_UGVCvars
  * @sa CL_ActorCvars
  */
@@ -417,7 +417,7 @@ qboolean CL_ActorSelect (le_t * le)
 		if (selActor)
 			selActor->selected = qfalse;
 		selActor = NULL;
-		menuInventory = NULL;
+		ui_inventory = NULL;
 		return qfalse;
 	}
 
@@ -438,7 +438,7 @@ qboolean CL_ActorSelect (le_t * le)
 	mousePosTargettingAlign = 0;
 	selActor = le;
 	selActor->selected = qtrue;
-	menuInventory = &selActor->i;
+	ui_inventory = &selActor->i;
 
 	actorIdx = CL_ActorGetNumber(le);
 	if (actorIdx == -1)
@@ -2182,12 +2182,12 @@ static void CL_ActorEquipmentSelect_f (void)
 
 	chr = chrDisplayList.chr[num];
 	/* update menu inventory */
-	if (menuInventory && menuInventory != &chr->i) {
-		CONTAINER(chr, csi.idEquip) = menuInventory->c[csi.idEquip];
+	if (ui_inventory && ui_inventory != &chr->i) {
+		CONTAINER(chr, csi.idEquip) = ui_inventory->c[csi.idEquip];
 		/* set 'old' idEquip to NULL */
-		menuInventory->c[csi.idEquip] = NULL;
+		ui_inventory->c[csi.idEquip] = NULL;
 	}
-	menuInventory = &chr->i;
+	ui_inventory = &chr->i;
 
 	/* deselect current selected soldier and select the new one */
 	UI_ExecuteConfunc("equipdeselect %i", cl_selected->integer);

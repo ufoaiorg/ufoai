@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_team.h"
 #include "../menu/m_main.h"
 #include "../menu/m_popup.h"
-#include "../menu/node/m_node_container.h"	/**< menuInventory */
+#include "../menu/node/m_node_container.h"	/**< ui_inventory */
 #include "mp_team.h"
 #include "save_multiplayer.h"
 
@@ -418,9 +418,9 @@ static void MP_GetEquipment (void)
 	}
 
 	if (chrDisplayList.num > 0)
-		menuInventory = &chrDisplayList.chr[0]->i;
+		ui_inventory = &chrDisplayList.chr[0]->i;
 	else
-		menuInventory = NULL;
+		ui_inventory = NULL;
 
 	ed = GAME_GetEquipmentDefinition();
 	*ed = *edFromScript;

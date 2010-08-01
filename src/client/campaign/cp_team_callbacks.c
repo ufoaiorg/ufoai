@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_team.h"
 #include "../cl_ugv.h"
 #include "../menu/m_main.h"
-#include "../menu/node/m_node_container.h"	/**< menuInventory */
+#include "../menu/node/m_node_container.h"	/**< ui_inventory */
 
 #include "cp_campaign.h"
 #include "cp_team.h"
@@ -218,9 +218,9 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	/** @todo Skip EMPL_ROBOT (i.e. ugvs) for now . */
 	p = CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 	if (p > 0)
-		menuInventory = &chrDisplayList.chr[0]->i;
+		ui_inventory = &chrDisplayList.chr[0]->i;
 	else
-		menuInventory = NULL;
+		ui_inventory = NULL;
 
 	size = MAX_ACTIVETEAM;
 	for (; p < size; p++)

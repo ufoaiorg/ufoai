@@ -52,7 +52,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../battlescape/cl_actor.h"
 #include "../../cl_inventory.h"
 
-inventory_t *menuInventory = NULL;
+/**
+ * @todo need refactoring to remove, reduce use... of that var
+ * Global access to many node content like that is very bad.
+ */
+inventory_t *ui_inventory = NULL;
 
 #define EXTRADATA_TYPE containerExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -90,7 +94,7 @@ static const invList_t *dragInfoIC;
  */
 static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
 {
-	return INVSH_SearchInInventoryWithFilter(menuInventory, EXTRADATACONST(node).container, NONE, NONE, item, filterType);
+	return INVSH_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).container, NONE, NONE, item, filterType);
 }
 
 /**
@@ -112,12 +116,12 @@ static inline qboolean UI_IsScrollContainerNode (const uiNode_t* const node)
 }
 
 /**
- * @brief Fills the ground container of the menuInventory with unused items from a given
+ * @brief Fills the ground container of the ui_inventory with unused items from a given
  * equipment definition
  * @note Keep in mind that @c ed is changed here - so items are removed and the ground container
  * of a inventory definition is in general a temp container - that means you should make a copy
  * of the @c equipDef_t you want to add to the temp ground container of the given @c inv
- * @todo it's not obvious for the caller that @c menuInventory pointer must be set
+ * @todo it's not obvious for the caller that @c ui_inventory pointer must be set
  * @param[in,out] inv The inventory to add the unused items from @c ed to
  * @param[in,out] ed The equipment definition to get the used items from that should be added
  * to the ground container of @c inv
@@ -146,9 +150,9 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 		}
 	}
 
-	/* First-time linking of menuInventory. */
-	if (menuInventory && !menuInventory->c[csi.idEquip]) {
-		menuInventory->c[csi.idEquip] = inv->c[csi.idEquip];
+	/* First-time linking of ui_inventory. */
+	if (ui_inventory && !ui_inventory->c[csi.idEquip]) {
+		ui_inventory->c[csi.idEquip] = inv->c[csi.idEquip];
 	}
 }
 
@@ -457,9 +461,9 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
 	pos[2] = 0;
 
 	/* Single item container (special case for left hand). */
-	if (INV_IsLeftDef(EXTRADATA(node).container) && !menuInventory->c[csi.idLeft]) {
-		if (menuInventory->c[csi.idRight]) {
-			const item_t *item = &menuInventory->c[csi.idRight]->item;
+	if (INV_IsLeftDef(EXTRADATA(node).container) && !ui_inventory->c[csi.idLeft]) {
+		if (ui_inventory->c[csi.idRight]) {
+			const item_t *item = &ui_inventory->c[csi.idRight]->item;
 			assert(item);
 			assert(item->t);
 
@@ -472,23 +476,23 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
 				UI_DrawItem(node, pos, item, -1, -1, scale, color);
 			}
 		}
-	} else if (menuInventory->c[EXTRADATA(node).container->id]) {
+	} else if (ui_inventory->c[EXTRADATA(node).container->id]) {
 		const item_t *item;
 
-		if (menuInventory->c[csi.idRight]) {
-			item = &menuInventory->c[csi.idRight]->item;
+		if (ui_inventory->c[csi.idRight]) {
+			item = &ui_inventory->c[csi.idRight]->item;
 			/* If there is a weapon in the right hand that needs two hands to shoot it
 			 * and there is a weapon in the left, then draw a disabled marker for the
 			 * fireTwoHanded weapon. */
 			assert(item);
 			assert(item->t);
-			if (INV_IsRightDef(EXTRADATA(node).container) && item->t->fireTwoHanded && menuInventory->c[csi.idLeft]) {
+			if (INV_IsRightDef(EXTRADATA(node).container) && item->t->fireTwoHanded && ui_inventory->c[csi.idLeft]) {
 				disabled = qtrue;
 				UI_DrawDisabled(node);
 			}
 		}
 
-		item = &menuInventory->c[EXTRADATA(node).container->id]->item;
+		item = &ui_inventory->c[EXTRADATA(node).container->id]->item;
 		assert(item);
 		assert(item->t);
 		if (highlightType && INVSH_LoadableInWeapon(highlightType, item->t)) {
@@ -519,7 +523,7 @@ static void UI_ContainerNodeDrawGrid (uiNode_t *node, objDef_t *highlightType)
 	UI_GetNodeAbsPos(node, pos);
 	pos[2] = 0;
 
-	for (ic = menuInventory->c[EXTRADATA(node).container->id]; ic; ic = ic->next) {
+	for (ic = ui_inventory->c[EXTRADATA(node).container->id]; ic; ic = ic->next) {
 		assert(ic->item.t);
 		if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
 			UI_DrawItem(node, pos, &ic->item, ic->x, ic->y, scale, colorLoadable);
@@ -544,7 +548,7 @@ static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 	/* copy the DND item to not change the original one */
 	previewItem = *UI_DNDGetItem();
 	previewItem.rotated = qfalse;
-	checkedTo = INVSH_CheckToInventory(menuInventory, previewItem.t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
+	checkedTo = INVSH_CheckToInventory(ui_inventory, previewItem.t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
 	if (checkedTo == INV_FITS_ONLY_ROTATED)
 		previewItem.rotated = qtrue;
 
@@ -588,7 +592,7 @@ static void UI_ContainerNodeDraw (uiNode_t *node)
 
 	if (!EXTRADATA(node).container)
 		return;
-	if (!menuInventory)
+	if (!ui_inventory)
 		return;
 	/* is container invisible */
 	if (node->color[3] < 0.001)
@@ -611,7 +615,7 @@ static void UI_ContainerNodeDraw (uiNode_t *node)
 
 	/* Draw free space if dragging - but not for idEquip */
 	if (UI_DNDIsDragging() && EXTRADATA(node).container->id != csi.idEquip)
-		UI_ContainerNodeDrawFreeSpace(node, menuInventory);
+		UI_ContainerNodeDrawFreeSpace(node, ui_inventory);
 
 	if (UI_DNDIsTargetNode(node))
 		UI_ContainerNodeDrawDropPreview(node);
@@ -645,7 +649,7 @@ static invList_t *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node,
 		if (contY)
 			*contY = fromY;
 
-		result = INVSH_SearchInInventory(menuInventory, EXTRADATACONST(node).container, fromX, fromY);
+		result = INVSH_SearchInInventory(ui_inventory, EXTRADATACONST(node).container, fromX, fromY);
 	}
 	return result;
 }
@@ -697,7 +701,7 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 	invList_t *ic;
 	int fromX, fromY;
 
-	if (!menuInventory)
+	if (!ui_inventory)
 		return;
 
 	/* don't allow this in tactical missions */
@@ -722,10 +726,10 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 	if (EXTRADATA(node).container->id != csi.idEquip) {
 		if (ic->item.m && ic->item.m != ic->item.t && ic->item.a) {
 			/* Remove ammo on removing weapon from a soldier */
-			INV_UnloadWeapon(ic, menuInventory, INVDEF(csi.idEquip));
+			INV_UnloadWeapon(ic, ui_inventory, INVDEF(csi.idEquip));
 		} else {
 			/* Move back to idEquip (ground, floor) container. */
-			INV_MoveItem(menuInventory, INVDEF(csi.idEquip), NONE, NONE, EXTRADATA(node).container, ic);
+			INV_MoveItem(ui_inventory, INVDEF(csi.idEquip), NONE, NONE, EXTRADATA(node).container, ic);
 		}
 	} else {
 		qboolean packed = qfalse;
@@ -733,72 +737,72 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 		assert(ic->item.t);
 		/* armour can only have one target */
 		if (INV_IsArmour(ic->item.t)) {
-			packed = INV_MoveItem(menuInventory, INVDEF(csi.idArmour), 0, 0, EXTRADATA(node).container, ic);
+			packed = INV_MoveItem(ui_inventory, INVDEF(csi.idArmour), 0, 0, EXTRADATA(node).container, ic);
 		/* ammo or item */
 		} else if (INV_IsAmmo(ic->item.t)) {
-			INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idBelt), &px, &py, NULL);
-			packed = INV_MoveItem(menuInventory, INVDEF(csi.idBelt), px, py, EXTRADATA(node).container, ic);
+			INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idBelt), &px, &py, NULL);
+			packed = INV_MoveItem(ui_inventory, INVDEF(csi.idBelt), px, py, EXTRADATA(node).container, ic);
 			if (!packed) {
-				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idHolster), &px, &py, NULL);
-				packed = INV_MoveItem(menuInventory, INVDEF(csi.idHolster), px, py, EXTRADATA(node).container, ic);
+				INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idHolster), &px, &py, NULL);
+				packed = INV_MoveItem(ui_inventory, INVDEF(csi.idHolster), px, py, EXTRADATA(node).container, ic);
 			}
 			if (!packed) {
-				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idBackpack), &px, &py, NULL);
-				packed = INV_MoveItem( menuInventory, INVDEF(csi.idBackpack), px, py, EXTRADATA(node).container, ic);
+				INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idBackpack), &px, &py, NULL);
+				packed = INV_MoveItem( ui_inventory, INVDEF(csi.idBackpack), px, py, EXTRADATA(node).container, ic);
 			}
 			/* Finally try left and right hand. There is no other place to put it now. */
 			if (!packed) {
-				const invList_t *rightHand = INVSH_SearchInInventory(menuInventory, INVDEF(csi.idRight), 0, 0);
+				const invList_t *rightHand = INVSH_SearchInInventory(ui_inventory, INVDEF(csi.idRight), 0, 0);
 
 				/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
 				if (!rightHand || !rightHand->item.t->fireTwoHanded) {
-					INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idLeft), &px, &py, NULL);
-					packed = INV_MoveItem(menuInventory, INVDEF(csi.idLeft), px, py, EXTRADATA(node).container, ic);
+					INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idLeft), &px, &py, NULL);
+					packed = INV_MoveItem(ui_inventory, INVDEF(csi.idLeft), px, py, EXTRADATA(node).container, ic);
 				}
 			}
 			if (!packed) {
-				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idRight), &px, &py, NULL);
-				packed = INV_MoveItem(menuInventory, INVDEF(csi.idRight), px, py, EXTRADATA(node).container, ic);
+				INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idRight), &px, &py, NULL);
+				packed = INV_MoveItem(ui_inventory, INVDEF(csi.idRight), px, py, EXTRADATA(node).container, ic);
 			}
 		} else {
 			if (ic->item.t->headgear) {
-				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idHeadgear), &px, &py, NULL);
-				packed = INV_MoveItem(menuInventory, INVDEF(csi.idHeadgear), px, py, EXTRADATA(node).container, ic);
+				INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idHeadgear), &px, &py, NULL);
+				packed = INV_MoveItem(ui_inventory, INVDEF(csi.idHeadgear), px, py, EXTRADATA(node).container, ic);
 			} else {
 				/* left and right are single containers, but this might change - it's cleaner to check
 				 * for available space here, too */
-				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idRight), &px, &py, NULL);
-				packed = INV_MoveItem(menuInventory, INVDEF(csi.idRight), px, py, EXTRADATA(node).container, ic);
+				INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idRight), &px, &py, NULL);
+				packed = INV_MoveItem(ui_inventory, INVDEF(csi.idRight), px, py, EXTRADATA(node).container, ic);
 				if (ic->item.t->weapon && !ic->item.a && packed)
-					INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idRight));
+					INV_LoadWeapon(ic, ui_inventory, EXTRADATA(node).container, INVDEF(csi.idRight));
 				if (!packed) {
-					const invList_t *rightHand = INVSH_SearchInInventory(menuInventory, INVDEF(csi.idRight), 0, 0);
+					const invList_t *rightHand = INVSH_SearchInInventory(ui_inventory, INVDEF(csi.idRight), 0, 0);
 
 					/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
 					if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
-						INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idLeft), &px, &py, NULL);
-						packed = INV_MoveItem(menuInventory, INVDEF(csi.idLeft), px, py, EXTRADATA(node).container, ic);
+						INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idLeft), &px, &py, NULL);
+						packed = INV_MoveItem(ui_inventory, INVDEF(csi.idLeft), px, py, EXTRADATA(node).container, ic);
 						if (ic->item.t->weapon && !ic->item.a && packed)
-							INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idLeft));
+							INV_LoadWeapon(ic, ui_inventory, EXTRADATA(node).container, INVDEF(csi.idLeft));
 					}
 				}
 				if (!packed) {
-					INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idBelt), &px, &py, NULL);
-					packed = INV_MoveItem(menuInventory, INVDEF(csi.idBelt), px, py, EXTRADATA(node).container, ic);
+					INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idBelt), &px, &py, NULL);
+					packed = INV_MoveItem(ui_inventory, INVDEF(csi.idBelt), px, py, EXTRADATA(node).container, ic);
 					if (ic->item.t->weapon && !ic->item.a && packed)
-						INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idBelt));
+						INV_LoadWeapon(ic, ui_inventory, EXTRADATA(node).container, INVDEF(csi.idBelt));
 				}
 				if (!packed) {
-					INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idHolster), &px, &py, NULL);
-					packed = INV_MoveItem(menuInventory, INVDEF(csi.idHolster), px, py, EXTRADATA(node).container, ic);
+					INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idHolster), &px, &py, NULL);
+					packed = INV_MoveItem(ui_inventory, INVDEF(csi.idHolster), px, py, EXTRADATA(node).container, ic);
 					if (ic->item.t->weapon && !ic->item.a && packed)
-						INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idHolster));
+						INV_LoadWeapon(ic, ui_inventory, EXTRADATA(node).container, INVDEF(csi.idHolster));
 				}
 				if (!packed) {
-					INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idBackpack), &px, &py, NULL);
-					packed = INV_MoveItem(menuInventory, INVDEF(csi.idBackpack), px, py, EXTRADATA(node).container, ic);
+					INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idBackpack), &px, &py, NULL);
+					packed = INV_MoveItem(ui_inventory, INVDEF(csi.idBackpack), px, py, EXTRADATA(node).container, ic);
 					if (ic->item.t->weapon && !ic->item.a && packed)
-						INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idBackpack));
+						INV_LoadWeapon(ic, ui_inventory, EXTRADATA(node).container, INVDEF(csi.idBackpack));
 				}
 			}
 		}
@@ -957,7 +961,7 @@ static qboolean UI_ContainerNodeDNDMove (uiNode_t *target, int x, int y)
 	exists = qfalse;
 	if ((INV_IsFloorDef(EXTRADATA(target).container) || INV_IsEquipDef(EXTRADATA(target).container))
 		&& (dragInfoToX < 0 || dragInfoToY < 0 || dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)
-		&& INVSH_ExistsInInventory(menuInventory, EXTRADATA(target).container, *dragItem)) {
+		&& INVSH_ExistsInInventory(ui_inventory, EXTRADATA(target).container, *dragItem)) {
 		exists = qtrue;
 	}
 
@@ -969,9 +973,9 @@ static qboolean UI_ContainerNodeDNDMove (uiNode_t *target, int x, int y)
 #if 0
 /* ... or there is something in the way. */
 /* We would need to check for weapon/ammo as well here, otherwise a preview would be drawn as well when hovering over the correct weapon to reload. */
-		|| (INVSH_CheckToInventory(menuInventory, dragItem->t, EXTRADATA(target).container, dragInfoToX, dragInfoToY) == INV_DOES_NOT_FIT)) {
+		|| (INVSH_CheckToInventory(ui_inventory, dragItem->t, EXTRADATA(target).container, dragInfoToX, dragInfoToY) == INV_DOES_NOT_FIT)) {
 #endif
-		INVSH_FindSpace(menuInventory, dragItem, EXTRADATA(target).container, &dragInfoToX, &dragInfoToY, dragInfoIC);
+		INVSH_FindSpace(ui_inventory, dragItem, EXTRADATA(target).container, &dragInfoToX, &dragInfoToY, dragInfoIC);
 	}
 
 	/* we can drag every thing */
@@ -983,12 +987,12 @@ static qboolean UI_ContainerNodeDNDMove (uiNode_t *target, int x, int y)
 		invList_t *fItem;
 
 		/* is there empty slot? */
-		const int checkedTo = INVSH_CheckToInventory(menuInventory, dragItem->t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
+		const int checkedTo = INVSH_CheckToInventory(ui_inventory, dragItem->t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
 		if (checkedTo != INV_DOES_NOT_FIT)
 			return qtrue;
 
 		/* can we equip dragging item into the target item? */
-		fItem = INVSH_SearchInInventory(menuInventory, EXTRADATA(target).container, dragInfoToX, dragInfoToY);
+		fItem = INVSH_SearchInInventory(ui_inventory, EXTRADATA(target).container, dragInfoToX, dragInfoToY);
 		if (!fItem)
 			return qfalse;
 		if (EXTRADATA(target).container->single)
@@ -1037,7 +1041,7 @@ static qboolean UI_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 				const int equipType = EXTRADATA(source).filterEquipType;
 				fItem = UI_ContainerNodeGetExistingItem(source, dragItem->t, equipType);
 			} else
-				fItem = INVSH_SearchInInventory(menuInventory, EXTRADATA(source).container, dragInfoFromX, dragInfoFromY);
+				fItem = INVSH_SearchInInventory(ui_inventory, EXTRADATA(source).container, dragInfoFromX, dragInfoFromY);
 
 			/** @todo We must split the move in two. Here, we should not know how to add the item to the target (see dndDrop) */
 			assert(EXTRADATA(target).container);
@@ -1045,14 +1049,14 @@ static qboolean UI_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 
 			/* Remove ammo on removing weapon from a soldier */
 			if (UI_IsScrollContainerNode(target) && fItem->item.m && fItem->item.m != fItem->item.t)
-				INV_UnloadWeapon(fItem, menuInventory, EXTRADATA(target).container);
+				INV_UnloadWeapon(fItem, ui_inventory, EXTRADATA(target).container);
 			/* move the item */
-			INV_MoveItem(menuInventory,
+			INV_MoveItem(ui_inventory,
 				EXTRADATA(target).container, dragInfoToX, dragInfoToY,
 				EXTRADATA(source).container, fItem);
 			/* Add ammo on adding weapon to a soldier  */
 			if (UI_IsScrollContainerNode(source) && fItem->item.t->weapon && !fItem->item.a)
-				INV_LoadWeapon(fItem, menuInventory, EXTRADATA(source).container, EXTRADATA(target).container);
+				INV_LoadWeapon(fItem, ui_inventory, EXTRADATA(source).container, EXTRADATA(target).container);
 			/* Run onChange events */
 			if (source->onChange)
 				UI_ExecuteEventActions(source, source->onChange);

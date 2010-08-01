@@ -82,7 +82,7 @@ static const invList_t *dragInfoIC;
  */
 static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
 {
-	return INVSH_SearchInInventoryWithFilter(menuInventory, EXTRADATACONST(node).container, NONE, NONE, item, filterType);
+	return INVSH_SearchInInventoryWithFilter(ui_inventory, EXTRADATACONST(node).container, NONE, NONE, item, filterType);
 }
 
 /**
@@ -490,7 +490,7 @@ static void UI_BaseInventoryNodeDraw (uiNode_t *node)
 
 	if (!EXTRADATA(node).container)
 		return;
-	if (!menuInventory)
+	if (!ui_inventory)
 		return;
 	/* is container invisible */
 	if (node->color[3] < 0.001)
@@ -682,7 +682,7 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 	invList_t *ic;
 	int fromX, fromY;
 
-	if (!menuInventory)
+	if (!ui_inventory)
 		return;
 
 	/* don't allow this in tactical missions */
@@ -707,10 +707,10 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 	if (EXTRADATA(node).container->id != csi.idEquip) {
 		if (ic->item.m && ic->item.m != ic->item.t && ic->item.a) {
 			/* Remove ammo on removing weapon from a soldier */
-			INV_UnloadWeapon(ic, menuInventory, INVDEF(csi.idEquip));
+			INV_UnloadWeapon(ic, ui_inventory, INVDEF(csi.idEquip));
 		} else {
 			/* Move back to idEquip (ground, floor) container. */
-			INV_MoveItem(menuInventory, INVDEF(csi.idEquip), NONE, NONE, EXTRADATA(node).container, ic);
+			INV_MoveItem(ui_inventory, INVDEF(csi.idEquip), NONE, NONE, EXTRADATA(node).container, ic);
 		}
 	} else {
 		qboolean packed = qfalse;
@@ -718,72 +718,72 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 		assert(ic->item.t);
 		/* armour can only have one target */
 		if (INV_IsArmour(ic->item.t)) {
-			packed = INV_MoveItem(menuInventory, INVDEF(csi.idArmour), 0, 0, EXTRADATA(node).container, ic);
+			packed = INV_MoveItem(ui_inventory, INVDEF(csi.idArmour), 0, 0, EXTRADATA(node).container, ic);
 		/* ammo or item */
 		} else if (INV_IsAmmo(ic->item.t)) {
-			INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idBelt), &px, &py, NULL);
-			packed = INV_MoveItem(menuInventory, INVDEF(csi.idBelt), px, py, EXTRADATA(node).container, ic);
+			INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idBelt), &px, &py, NULL);
+			packed = INV_MoveItem(ui_inventory, INVDEF(csi.idBelt), px, py, EXTRADATA(node).container, ic);
 			if (!packed) {
-				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idHolster), &px, &py, NULL);
-				packed = INV_MoveItem(menuInventory, INVDEF(csi.idHolster), px, py, EXTRADATA(node).container, ic);
+				INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idHolster), &px, &py, NULL);
+				packed = INV_MoveItem(ui_inventory, INVDEF(csi.idHolster), px, py, EXTRADATA(node).container, ic);
 			}
 			if (!packed) {
-				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idBackpack), &px, &py, NULL);
-				packed = INV_MoveItem( menuInventory, INVDEF(csi.idBackpack), px, py, EXTRADATA(node).container, ic);
+				INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idBackpack), &px, &py, NULL);
+				packed = INV_MoveItem( ui_inventory, INVDEF(csi.idBackpack), px, py, EXTRADATA(node).container, ic);
 			}
 			/* Finally try left and right hand. There is no other place to put it now. */
 			if (!packed) {
-				const invList_t *rightHand = INVSH_SearchInInventory(menuInventory, INVDEF(csi.idRight), 0, 0);
+				const invList_t *rightHand = INVSH_SearchInInventory(ui_inventory, INVDEF(csi.idRight), 0, 0);
 
 				/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
 				if (!rightHand || !rightHand->item.t->fireTwoHanded) {
-					INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idLeft), &px, &py, NULL);
-					packed = INV_MoveItem(menuInventory, INVDEF(csi.idLeft), px, py, EXTRADATA(node).container, ic);
+					INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idLeft), &px, &py, NULL);
+					packed = INV_MoveItem(ui_inventory, INVDEF(csi.idLeft), px, py, EXTRADATA(node).container, ic);
 				}
 			}
 			if (!packed) {
-				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idRight), &px, &py, NULL);
-				packed = INV_MoveItem(menuInventory, INVDEF(csi.idRight), px, py, EXTRADATA(node).container, ic);
+				INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idRight), &px, &py, NULL);
+				packed = INV_MoveItem(ui_inventory, INVDEF(csi.idRight), px, py, EXTRADATA(node).container, ic);
 			}
 		} else {
 			if (ic->item.t->headgear) {
-				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idHeadgear), &px, &py, NULL);
-				packed = INV_MoveItem(menuInventory, INVDEF(csi.idHeadgear), px, py, EXTRADATA(node).container, ic);
+				INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idHeadgear), &px, &py, NULL);
+				packed = INV_MoveItem(ui_inventory, INVDEF(csi.idHeadgear), px, py, EXTRADATA(node).container, ic);
 			} else {
 				/* left and right are single containers, but this might change - it's cleaner to check
 				 * for available space here, too */
-				INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idRight), &px, &py, NULL);
-				packed = INV_MoveItem(menuInventory, INVDEF(csi.idRight), px, py, EXTRADATA(node).container, ic);
+				INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idRight), &px, &py, NULL);
+				packed = INV_MoveItem(ui_inventory, INVDEF(csi.idRight), px, py, EXTRADATA(node).container, ic);
 				if (ic->item.t->weapon && !ic->item.a && packed)
-					INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idRight));
+					INV_LoadWeapon(ic, ui_inventory, EXTRADATA(node).container, INVDEF(csi.idRight));
 				if (!packed) {
-					const invList_t *rightHand = INVSH_SearchInInventory(menuInventory, INVDEF(csi.idRight), 0, 0);
+					const invList_t *rightHand = INVSH_SearchInInventory(ui_inventory, INVDEF(csi.idRight), 0, 0);
 
 					/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
 					if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
-						INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idLeft), &px, &py, NULL);
-						packed = INV_MoveItem(menuInventory, INVDEF(csi.idLeft), px, py, EXTRADATA(node).container, ic);
+						INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idLeft), &px, &py, NULL);
+						packed = INV_MoveItem(ui_inventory, INVDEF(csi.idLeft), px, py, EXTRADATA(node).container, ic);
 						if (ic->item.t->weapon && !ic->item.a && packed)
-							INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idLeft));
+							INV_LoadWeapon(ic, ui_inventory, EXTRADATA(node).container, INVDEF(csi.idLeft));
 					}
 				}
 				if (!packed) {
-					INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idBelt), &px, &py, NULL);
-					packed = INV_MoveItem(menuInventory, INVDEF(csi.idBelt), px, py, EXTRADATA(node).container, ic);
+					INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idBelt), &px, &py, NULL);
+					packed = INV_MoveItem(ui_inventory, INVDEF(csi.idBelt), px, py, EXTRADATA(node).container, ic);
 					if (ic->item.t->weapon && !ic->item.a && packed)
-						INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idBelt));
+						INV_LoadWeapon(ic, ui_inventory, EXTRADATA(node).container, INVDEF(csi.idBelt));
 				}
 				if (!packed) {
-					INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idHolster), &px, &py, NULL);
-					packed = INV_MoveItem(menuInventory, INVDEF(csi.idHolster), px, py, EXTRADATA(node).container, ic);
+					INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idHolster), &px, &py, NULL);
+					packed = INV_MoveItem(ui_inventory, INVDEF(csi.idHolster), px, py, EXTRADATA(node).container, ic);
 					if (ic->item.t->weapon && !ic->item.a && packed)
-						INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idHolster));
+						INV_LoadWeapon(ic, ui_inventory, EXTRADATA(node).container, INVDEF(csi.idHolster));
 				}
 				if (!packed) {
-					INVSH_FindSpace(menuInventory, &ic->item, INVDEF(csi.idBackpack), &px, &py, NULL);
-					packed = INV_MoveItem(menuInventory, INVDEF(csi.idBackpack), px, py, EXTRADATA(node).container, ic);
+					INVSH_FindSpace(ui_inventory, &ic->item, INVDEF(csi.idBackpack), &px, &py, NULL);
+					packed = INV_MoveItem(ui_inventory, INVDEF(csi.idBackpack), px, py, EXTRADATA(node).container, ic);
 					if (ic->item.t->weapon && !ic->item.a && packed)
-						INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, INVDEF(csi.idBackpack));
+						INV_LoadWeapon(ic, ui_inventory, EXTRADATA(node).container, INVDEF(csi.idBackpack));
 				}
 			}
 		}
