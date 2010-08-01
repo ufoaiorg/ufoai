@@ -1,6 +1,7 @@
 /**
  * @file m_parse.c
  * @todo remove all "token" param from function and use Com_UnParseLastToken
+ * @todo reduce use of uiGlobal (create global functions to add/get/... entities)
  */
 
 /*
