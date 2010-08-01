@@ -566,6 +566,7 @@ void NET_WriteConstMsg (struct net_stream *s, const struct dbuffer *buf)
 
 	while (pos < dbuffer_len(buf)) {
 		const int x = dbuffer_get_at(buf, pos, tmp, sizeof(tmp));
+		assert(x > 0);
 		NET_StreamEnqueue(s, tmp, x);
 		pos += x;
 	}
