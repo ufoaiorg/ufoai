@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define luaL_dobuffer(L, b, n, s) \
 	(luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
 #define AIL_invalidparameter(n)	\
-	gi.dprintf("AIL: Invalid parameter #%d in '%s'.\n", n, __func__)
+	gi.DPrintf("AIL: Invalid parameter #%d in '%s'.\n", n, __func__)
 
 /*
  * Helper functions
@@ -560,13 +560,13 @@ static int AIL_print (lua_State *L)
 				break;
 			}
 		}
-		gi.dprintf("%s%s", (i > 1) ? "\t" : "", s);
+		gi.DPrintf("%s%s", (i > 1) ? "\t" : "", s);
 		lua_pop(L, 1); /* Pop the value */
 		if (meta) /* Meta creates an additional string. */
 			lua_pop(L, 1);
 	}
 
-	gi.dprintf("\n");
+	gi.DPrintf("\n");
 	return 0;
 }
 
@@ -979,7 +979,7 @@ void AIL_ActorThink (player_t * player, edict_t * ent)
 	/* Try to run the function. */
 	lua_getglobal(L, "think");
 	if (lua_pcall(L, 0, 0, 0)) { /* error has occured */
-		gi.dprintf("Error while running Lua: %s\n",
+		gi.DPrintf("Error while running Lua: %s\n",
 			lua_isstring(L, -1) ? lua_tostring(L, -1) : "Unknown Error");
 	}
 
@@ -1011,7 +1011,7 @@ int AIL_InitActor (edict_t * ent, char *type, char *subtype)
 	/* Create the new Lua state */
 	AI->L = luaL_newstate();
 	if (AI->L == NULL) {
-		gi.dprintf("Unable to create Lua state.\n");
+		gi.DPrintf("Unable to create Lua state.\n");
 		return -1;
 	}
 
@@ -1026,11 +1026,11 @@ int AIL_InitActor (edict_t * ent, char *type, char *subtype)
 	Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
 	size = gi.FS_LoadFile(path, (byte **) &fbuf);
 	if (size == 0) {
-		gi.dprintf("Unable to load Lua file '%s'.\n", path);
+		gi.DPrintf("Unable to load Lua file '%s'.\n", path);
 		return -1;
 	}
 	if (luaL_dobuffer(AI->L, fbuf, size, path)) {
-		gi.dprintf("Unable to parse Lua file '%s'\n", path);
+		gi.DPrintf("Unable to parse Lua file '%s'\n", path);
 		gi.FS_FreeFile(fbuf);
 		return -1;
 	}

@@ -96,7 +96,7 @@ static qboolean G_PhysicsThink (edict_t *ent)
 
 	ent->nextthink = level.time + SERVER_FRAME_SECONDS;
 	if (!ent->think)
-		gi.error("G_PhysicsThink ent->think is NULL");
+		gi.Error("G_PhysicsThink ent->think is NULL");
 	ent->think(ent);
 
 	return qfalse;

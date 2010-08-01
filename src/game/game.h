@@ -107,7 +107,7 @@ typedef struct {
 	/** sends message to all players */
 	void (IMPORT *BroadcastPrintf) (int printlevel, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
 	/** print output to server console */
-	void (IMPORT *dprintf) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+	void (IMPORT *DPrintf) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 	/** sends message to only one player (don't use this to send messages to an AI player struct) */
 	void (IMPORT *PlayerPrintf) (const player_t * player, int printlevel, const char *fmt, va_list ap);
 
@@ -119,7 +119,7 @@ typedef struct {
 	void (IMPORT *ConfigString) (int num, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
 
 	/** @note The error message should not have a newline - it's added inside of this function */
-	void (IMPORT *error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
+	void (IMPORT *Error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
 
 	/** the *index functions create configstrings and some internal server state */
 	int (IMPORT *ModelIndex) (const char *name);
@@ -134,7 +134,7 @@ typedef struct {
 	 * via contentmask (MASK_*). Mins and maxs set the box which will do the tracing - if NULL then a line is used instead
 	 * @return the trace data
 	 */
-	trace_t (IMPORT *trace) (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, const edict_t * passent, int contentmask);
+	trace_t (IMPORT *Trace) (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, const edict_t * passent, int contentmask);
 
 	int (IMPORT *PointContents) (vec3_t point);
 	const char* (IMPORT *GetFootstepSound) (const char* texture);

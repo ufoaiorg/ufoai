@@ -213,7 +213,7 @@ void G_ClientEndRound (player_t * player)
 	 * be updated for ai players */
 	p = G_GetPlayerForTeam(level.activeTeam);
 	if (p == NULL)
-		gi.error("Could not find player for team %i", level.activeTeam);
+		gi.Error("Could not find player for team %i", level.activeTeam);
 
 	/* finish off events */
 	gi.EndEvents();

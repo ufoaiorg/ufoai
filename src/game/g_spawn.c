@@ -242,17 +242,17 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 		if (c[0] == '}')
 			break;
 		if (!data)
-			gi.error("ED_ParseEntity: EOF without closing brace");
+			gi.Error("ED_ParseEntity: EOF without closing brace");
 
 		Q_strncpyz(keyname, c, sizeof(keyname));
 
 		/* parse value */
 		c = Com_Parse(&data);
 		if (!data)
-			gi.error("ED_ParseEntity: EOF without closing brace");
+			gi.Error("ED_ParseEntity: EOF without closing brace");
 
 		if (c[0] == '}')
-			gi.error("ED_ParseEntity: closing brace without data");
+			gi.Error("ED_ParseEntity: closing brace without data");
 
 		init = qtrue;
 
@@ -338,7 +338,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 		if (!entities)
 			break;
 		if (token[0] != '{')
-			gi.error("ED_LoadFromFile: found %s when expecting {", token);
+			gi.Error("ED_LoadFromFile: found %s when expecting {", token);
 
 		if (!ent)
 			ent = G_EdictsGetFirst();
@@ -363,12 +363,12 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 	/* spawn ai players, if needed */
 	if (level.num_spawnpoints[TEAM_CIVILIAN]) {
 		if (AI_CreatePlayer(TEAM_CIVILIAN) == NULL)
-			gi.dprintf("Could not create civilian\n");
+			gi.DPrintf("Could not create civilian\n");
 	}
 
 	if ((sv_maxclients->integer == 1 || ai_numactors->integer) && level.num_spawnpoints[TEAM_ALIEN]) {
 		if (AI_CreatePlayer(TEAM_ALIEN) == NULL)
-			gi.dprintf("Could not create alien\n");
+			gi.DPrintf("Could not create alien\n");
 	}
 
 	G_FindEdictGroups();
@@ -399,7 +399,7 @@ edict_t *G_Spawn (void)
 	edict_t *ent = G_EdictsGetNewEdict();
 
 	if (!ent)
-		gi.error("G_Spawn: no free edicts");
+		gi.Error("G_Spawn: no free edicts");
 
 	G_InitEdict(ent);
 	return ent;
@@ -463,7 +463,7 @@ static void G_ActorSpawn (edict_t *ent)
 
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
-		gi.dprintf("G_ActorSpawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
+		gi.DPrintf("G_ActorSpawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 
 	G_EdictCalcOrigin(ent);
 
@@ -495,7 +495,7 @@ static void G_Actor2x2Spawn (edict_t *ent)
 		ent->pos[2] = PATHFINDING_HEIGHT - 1;
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
-		gi.dprintf("G_Actor2x2Spawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
+		gi.DPrintf("G_Actor2x2Spawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 	G_EdictCalcOrigin(ent);
 
 	/* link it for collision detection */
@@ -685,7 +685,7 @@ static void SP_misc_mission (edict_t *ent)
 
 	if (!ent->HP && !ent->time && !ent->target) {
 		G_FreeEdict(ent);
-		gi.dprintf("misc_mission given with no objective\n");
+		gi.DPrintf("misc_mission given with no objective\n");
 		return;
 	}
 
@@ -789,11 +789,11 @@ static void SP_misc_model (edict_t *ent)
 				G_BuildForbiddenListForEntity(ent);
 				gi.LinkEdict(ent);
 			} else {
-				gi.dprintf("Could not get mins/maxs for model '%s'\n", ent->model);
+				gi.DPrintf("Could not get mins/maxs for model '%s'\n", ent->model);
 				G_FreeEdict(ent);
 			}
 		} else {
-			gi.dprintf("server_solid misc_model with no model given\n");
+			gi.DPrintf("server_solid misc_model with no model given\n");
 			G_FreeEdict(ent);
 		}
 	} else {
@@ -808,7 +808,7 @@ static void SP_misc_model (edict_t *ent)
 static void SP_misc_item (edict_t *ent)
 {
 	if (!ent->item) {
-		gi.dprintf("No item defined in misc_item\n");
+		gi.DPrintf("No item defined in misc_item\n");
 		G_FreeEdict(ent);
 		return;
 	}
@@ -846,7 +846,7 @@ static void SP_misc_message (edict_t *ent)
 	}
 
 	if (ent->message[0] != '_')
-		gi.dprintf("No translation marker for misc_message set\n");
+		gi.DPrintf("No translation marker for misc_message set\n");
 	ent->use = Message_Use;
 	ent->classname = "misc_message";
 	ent->type = ET_MESSAGE;

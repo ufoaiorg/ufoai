@@ -119,13 +119,13 @@ static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 
 	self->owner = G_FindTargetEntity(self->target);
 	if (!self->owner) {
-		gi.dprintf("Target '%s' wasn't found for %s\n", self->target, self->classname);
+		gi.DPrintf("Target '%s' wasn't found for %s\n", self->target, self->classname);
 		G_FreeEdict(self);
 		return qfalse;
 	}
 
 	if (!self->owner->use) {
-		gi.dprintf("Owner of %s doesn't have a use function\n", self->classname);
+		gi.DPrintf("Owner of %s doesn't have a use function\n", self->classname);
 		G_FreeEdict(self);
 		return qfalse;
 	}
@@ -146,7 +146,7 @@ void SP_trigger_touch (edict_t *ent)
 	ent->type = ET_TRIGGER_TOUCH;
 
 	if (!ent->target) {
-		gi.dprintf("No target given for %s\n", ent->classname);
+		gi.DPrintf("No target given for %s\n", ent->classname);
 		G_FreeEdict(ent);
 		return;
 	}

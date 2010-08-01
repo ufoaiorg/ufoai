@@ -401,7 +401,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		newFloor = qtrue;
 	} else if (INV_IsFloorDef(from) && !floor) {
 		/* We are moving from the floor, but no existing edict for this floor-tile found -> this should never be the case. */
-		gi.dprintf("G_ClientInvMove: No source-floor found.\n");
+		gi.DPrintf("G_ClientInvMove: No source-floor found.\n");
 		return;
 	} else {
 		/* There already exists an edict for this floor-tile. */

@@ -110,7 +110,7 @@ qboolean G_MissionUse (edict_t *self, edict_t *activator)
 {
 	edict_t *target = G_FindTargetEntity(self->target);
 	if (!target) {
-		gi.dprintf("Target '%s' wasn't found for misc_mission\n", self->target);
+		gi.DPrintf("Target '%s' wasn't found for misc_mission\n", self->target);
 		G_FreeEdict(self);
 		return qfalse;
 	}

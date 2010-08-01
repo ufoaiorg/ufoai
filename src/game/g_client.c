@@ -218,7 +218,7 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
 
 		default:
 			if (G_IsVisibleOnBattlefield(check))
-				gi.error("Missing edict type %i in G_AppearPerishEvent", check->type);
+				gi.Error("Missing edict type %i in G_AppearPerishEvent", check->type);
 			break;
 		}
 	} else if (G_IsVisibleOnBattlefield(check)) {
@@ -451,7 +451,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 		}
 		break;
 	default:
-		gi.dprintf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
+		gi.DPrintf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
 		return;
 	}
 
@@ -623,13 +623,13 @@ int G_ClientAction (player_t * player)
 		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
 
 		if (from < 0 || from >= gi.csi->numIDs || to < 0 || to >= gi.csi->numIDs) {
-			gi.dprintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
+			gi.DPrintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
 		} else {
 			invDef_t *fromPtr = INVDEF(from);
 			invDef_t *toPtr = INVDEF(to);
 			invList_t *fromItem = INVSH_SearchInInventory(&ent->chr.i, fromPtr, fx, fy);
 			if (!fromItem)
-				gi.error("Could not find item in inventory of ent %i (type %i) at %i:%i",
+				gi.Error("Could not find item in inventory of ent %i (type %i) at %i:%i",
 						ent->number, ent->type, fx, fy);
 			G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, qtrue);
 		}
@@ -668,7 +668,7 @@ int G_ClientAction (player_t * player)
 		break;
 
 	default:
-		gi.error("G_ClientAction: Unknown action!\n");
+		gi.Error("G_ClientAction: Unknown action!\n");
 	}
 	return action;
 }
@@ -709,12 +709,12 @@ static void G_GetTeam (player_t * player)
 		}
 		/* we need at least 2 different team spawnpoints for multiplayer in a death match game */
 		if (spawnSpots < 2)
-			gi.error("G_GetTeam: Not enough spawn spots in map!");
+			gi.Error("G_GetTeam: Not enough spawn spots in map!");
 
 		/* assign random valid team number */
 		randomSpot = rand() % spawnSpots;
 		G_SetTeamForPlayer(player, spawnCheck[randomSpot]);
-		gi.dprintf("You have been randomly assigned to team %i\n", player->pers.team);
+		gi.DPrintf("You have been randomly assigned to team %i\n", player->pers.team);
 		return;
 	}
 
@@ -723,19 +723,19 @@ static void G_GetTeam (player_t * player)
 		G_SetTeamForPlayer(player, TEAM_PHALANX);
 	else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
-		gi.dprintf("Get a team for teamplay for %s\n", player->pers.netname);
+		gi.DPrintf("Get a team for teamplay for %s\n", player->pers.netname);
 		i = G_ClientGetTeamNumPref(player);
 		/* civilians are at team zero */
 		if (i > TEAM_CIVILIAN && sv_maxteams->integer >= i) {
 			G_SetTeamForPlayer(player, i);
 			gi.BroadcastPrintf(PRINT_CONSOLE, "serverconsole: %s has chosen team %i\n", player->pers.netname, i);
 		} else {
-			gi.dprintf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
+			gi.DPrintf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
 			G_SetTeamForPlayer(player, TEAM_DEFAULT);
 		}
 	} else {
 		/* search team */
-		gi.dprintf("Getting a multiplayer team for %s\n", player->pers.netname);
+		gi.DPrintf("Getting a multiplayer team for %s\n", player->pers.netname);
 		for (i = TEAM_CIVILIAN + 1; i < MAX_TEAMS; i++) {
 			if (level.num_spawnpoints[i]) {
 				qboolean teamAvailable = qtrue;
@@ -764,7 +764,7 @@ static void G_GetTeam (player_t * player)
 			Com_DPrintf(DEBUG_GAME, "Assigning %s to team %i\n", player->pers.netname, i);
 			G_SetTeamForPlayer(player, i);
 		} else {
-			gi.dprintf("No free team - disconnecting '%s'\n", player->pers.netname);
+			gi.DPrintf("No free team - disconnecting '%s'\n", player->pers.netname);
 			G_ClientDisconnect(player);
 		}
 	}
@@ -781,7 +781,7 @@ void G_SetTeamForPlayer (player_t* player, const int team)
 	if (!g_nospawn->integer) {
 		if (team >= 0 && team < MAX_TEAMS) {
 			if (!level.num_spawnpoints[team])
-				gi.error("No spawnpoints for team %i", team);
+				gi.Error("No spawnpoints for team %i", team);
 		}
 	}
 
@@ -953,7 +953,7 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 			ent->morale = 100;
 		}
 	} else {
-		gi.error("G_ClientGetFreeSpawnPointForActorSize: unknown fieldSize for actor edict (actorSize: %i)\n",
+		gi.Error("G_ClientGetFreeSpawnPointForActorSize: unknown fieldSize for actor edict (actorSize: %i)\n",
 				actorSize);
 	}
 
@@ -999,7 +999,7 @@ static void G_ClientReadInventory (edict_t *ent)
 		int x, y;
 		G_ReadItem(&item, &container, &x, &y);
 		if (game.i.AddToInventory(&game.i, &ent->chr.i, item, container, x, y, 1) == NULL)
-			gi.error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
+			gi.Error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
 					item.t->id, container->id, x, y);
 	}
 }
@@ -1026,7 +1026,7 @@ static void G_ClientReadCharacter (edict_t *ent)
 	ent->chr.maxHP = gi.ReadShort();
 	teamDefIdx = gi.ReadByte();
 	if (teamDefIdx < 0 || teamDefIdx >= MAX_TEAMDEFS)
-		gi.error("Invalid team definition index given: %i", teamDefIdx);
+		gi.Error("Invalid team definition index given: %i", teamDefIdx);
 	ent->chr.teamDef = &gi.csi->teamDef[teamDefIdx];
 
 	ent->chr.gender = gi.ReadByte();
@@ -1102,7 +1102,7 @@ void G_ClientInitActorStates (const player_t * player)
 		int saveTU;
 		edict_t *ent = G_ActorGetByUCN(ucn, player->pers.team);
 		if (!ent)
-			gi.error("Could not find character on team %i with unique character number %i", player->pers.team, ucn);
+			gi.Error("Could not find character on team %i with unique character number %i", player->pers.team, ucn);
 
 		/* these state changes are not consuming any TUs */
 		saveTU = ent->TU;

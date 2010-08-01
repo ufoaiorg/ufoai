@@ -544,11 +544,11 @@ void SV_InitGameProgs (void)
 
 	/* load a new game dll */
 	import.BroadcastPrintf = SV_BroadcastPrintf;
-	import.dprintf = SV_dprintf;
+	import.DPrintf = SV_dprintf;
 	import.PlayerPrintf = SV_PlayerPrintf;
-	import.error = SV_error;
+	import.Error = SV_error;
 
-	import.trace = SV_Trace;
+	import.Trace = SV_Trace;
 	import.LinkEdict = SV_LinkEdict;
 	import.UnlinkEdict = SV_UnlinkEdict;
 	import.BoxEdicts = SV_AreaEdicts;

@@ -117,7 +117,7 @@ static int G_CharacterGetMaxExperiencePerMission (const abilityskills_t skill)
 	case SKILL_NUM_TYPES: /* This is health. */
 		return 2154;
 	default:
-		gi.error("G_GetMaxExperiencePerMission: invalid skill type\n");
+		gi.Error("G_GetMaxExperiencePerMission: invalid skill type\n");
 	}
 }
 

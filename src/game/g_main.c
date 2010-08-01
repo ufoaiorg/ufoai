@@ -124,7 +124,7 @@ static invList_t invChain[MAX_INVLIST];
  */
 static void G_Init (void)
 {
-	gi.dprintf("==== InitGame ====\n");
+	gi.DPrintf("==== InitGame ====\n");
 
 	/* noset vars */
 	sv_dedicated = gi.Cvar_Get("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
@@ -250,7 +250,7 @@ static void G_Init (void)
  */
 static void G_Shutdown (void)
 {
-	gi.dprintf("==== ShutdownGame ====\n");
+	gi.DPrintf("==== ShutdownGame ====\n");
 
 	AIL_Shutdown();
 
@@ -313,7 +313,7 @@ void Sys_Error (const char *error, ...)
 	Q_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
 
-	gi.error("%s", text);
+	gi.Error("%s", text);
 }
 
 void Com_Printf (const char *msg, ...)
@@ -325,7 +325,7 @@ void Com_Printf (const char *msg, ...)
 	Q_vsnprintf(text, sizeof(text), msg, argptr);
 	va_end(argptr);
 
-	gi.dprintf("%s", text);
+	gi.DPrintf("%s", text);
 }
 
 void Com_DPrintf (int level, const char *msg, ...)
@@ -344,7 +344,7 @@ void Com_DPrintf (int level, const char *msg, ...)
 	Q_vsnprintf(text, sizeof(text), msg, argptr);
 	va_end(argptr);
 
-	gi.dprintf("%s", text);
+	gi.DPrintf("%s", text);
 }
 #endif
 
@@ -405,7 +405,7 @@ qboolean G_RunFrame (void)
 			level.roundstartTime = level.time;
 			/* don't allow smaller values here */
 			if (sv_roundtimelimit->integer < 30 && sv_roundtimelimit->integer > 0) {
-				gi.dprintf("The minimum value for sv_roundtimelimit is 30\n");
+				gi.DPrintf("The minimum value for sv_roundtimelimit is 30\n");
 				gi.Cvar_Set("sv_roundtimelimit", "30");
 			}
 			sv_roundtimelimit->modified = qfalse;

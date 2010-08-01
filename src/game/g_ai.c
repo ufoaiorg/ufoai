@@ -142,7 +142,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 		 * try to hide behind the door when there is an alien */
 		break;
 	default:
-		gi.dprintf("Invalid team in AI_CheckUsingDoor: %i for ent type: %i\n",
+		gi.DPrintf("Invalid team in AI_CheckUsingDoor: %i for ent type: %i\n",
 			ent->team, ent->type);
 		break;
 	}
@@ -671,7 +671,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 		if (!G_IsPaniced(ent) && teamDef->weapons)
 			return AI_FighterCalcBestAction(ent, to, aia);
 	} else
-		gi.dprintf("AI_CivilianCalcBestAction: Error - civilian team with no teamdef\n");
+		gi.DPrintf("AI_CivilianCalcBestAction: Error - civilian team with no teamdef\n");
 
 	/* run away */
 	minDist = minDistCivilian = minDistFighter = RUN_AWAY_DIST * UNIT_SIZE;
@@ -1099,7 +1099,7 @@ static void AI_SetCharacterValues (edict_t * ent, int team)
 	}
 	gi.GetCharacterValues(teamDefintion, &ent->chr);
 	if (!ent->chr.teamDef)
-		gi.error("Could not set teamDef for character: '%s'", teamDefintion);
+		gi.Error("Could not set teamDef for character: '%s'", teamDefintion);
 }
 
 
@@ -1118,7 +1118,7 @@ static void AI_SetEquipment (edict_t * ent, int team, const equipDef_t * ed)
 		/* actor cannot handle equipment but no weapons */
 		game.i.EquipActorMelee(&game.i, &ent->chr.i, ent->chr.teamDef);
 	else
-		gi.dprintf("AI_InitPlayer: actor with no equipment\n");
+		gi.DPrintf("AI_InitPlayer: actor with no equipment\n");
 }
 
 
@@ -1156,7 +1156,7 @@ static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDe
 	else if (team == TEAM_ALIEN)
 		AIL_InitActor(ent, "alien", "default");
 	else
-		gi.dprintf("AI_InitPlayer: unknown team AI\n");
+		gi.DPrintf("AI_InitPlayer: unknown team AI\n");
 }
 
 /**
@@ -1188,7 +1188,7 @@ static void G_SpawnAIPlayer (const player_t * player, int numSpawn)
 	for (i = 0; i < numSpawn; i++) {
 		edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
 		if (!ent) {
-			gi.dprintf("Not enough spawn points for team %i\n", team);
+			gi.DPrintf("Not enough spawn points for team %i\n", team);
 			break;
 		}
 
@@ -1214,7 +1214,7 @@ player_t *AI_CreatePlayer (int team)
 	int i;
 
 	if (!sv_ai->integer) {
-		gi.dprintf("AI deactivated - set sv_ai cvar to 1 to activate it\n");
+		gi.DPrintf("AI deactivated - set sv_ai cvar to 1 to activate it\n");
 		return NULL;
 	}
 
@@ -1232,7 +1232,7 @@ player_t *AI_CreatePlayer (int team)
 				G_SpawnAIPlayer(p, ai_numaliens->integer);
 			else
 				G_SpawnAIPlayer(p, ai_numactors->integer);
-			gi.dprintf("Created AI player (team %i)\n", p->pers.team);
+			gi.DPrintf("Created AI player (team %i)\n", p->pers.team);
 			return p;
 		}
 

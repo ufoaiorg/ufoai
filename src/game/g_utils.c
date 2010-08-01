@@ -221,7 +221,7 @@ qboolean G_TestLine (const vec3_t start, const vec3_t end)
 trace_t G_Trace (const vec3_t start, const vec3_t end, const edict_t * passent, int contentmask)
 {
 	G_TraceDraw(start, end);
-	return gi.trace(start, NULL, NULL, end, passent, contentmask);
+	return gi.Trace(start, NULL, NULL, end, passent, contentmask);
 }
 
 /**
@@ -241,7 +241,7 @@ const char* G_GetPlayerName (int pnum)
  */
 void G_PrintStats (const char *buffer)
 {
-	gi.dprintf("[STATS] %s\n", buffer);
+	gi.DPrintf("[STATS] %s\n", buffer);
 	if (logstatsfile) {
 		struct tm *t;
 		char tbuf[32];

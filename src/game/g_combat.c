@@ -119,7 +119,7 @@ static void G_Morale (int type, const edict_t * victim, const edict_t * attacker
 					mod *= mor_pain->value;
 				break;
 			default:
-				gi.dprintf("Undefined morale modifier type %i\n", type);
+				gi.DPrintf("Undefined morale modifier type %i\n", type);
 				mod = 0;
 			}
 			/* clamp new morale */
@@ -1001,7 +1001,7 @@ static qboolean G_PrepareShot (edict_t *ent, shoot_types_t shootType, fireDefInd
 	item_t *item;
 
 	if (shootType >= ST_NUM_SHOOT_TYPES)
-		gi.error("G_GetShotFromType: unknown shoot type %i.\n", shootType);
+		gi.Error("G_GetShotFromType: unknown shoot type %i.\n", shootType);
 
 	if (IS_SHOT_HEADGEAR(shootType)) {
 		if (!HEADGEAR(ent))

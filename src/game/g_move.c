@@ -75,7 +75,7 @@ static void G_BuildForbiddenList (int team, const edict_t *movingActor)
 	}
 
 	if (forbiddenListLength > MAX_FORBIDDENLIST)
-		gi.error("G_BuildForbiddenList: list too long\n");
+		gi.Error("G_BuildForbiddenList: list too long\n");
 }
 
 /**
@@ -362,7 +362,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 					gi.WriteDummyByte(0); /* y */
 					gi.WriteDummyByte(0); /* z */
 				} else if (!stepAmount) {
-					gi.dprintf("Event %i activate and no stepAmount pointer set\n", gi.GetEvent());
+					gi.DPrintf("Event %i activate and no stepAmount pointer set\n", gi.GetEvent());
 					break;
 				}
 

@@ -69,7 +69,7 @@ qboolean G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerI
 		if (item != NULL && !strcmp(item->id, itemID)) {
 			/* remove the virtual item to update the inventory lists */
 			if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
-				gi.error("Could not remove item '%s' from inventory %i",
+				gi.Error("Could not remove item '%s' from inventory %i",
 						ic->item.t->id, container);
 			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), INVDEF(container), ic->x, ic->y);
 			return qtrue;
@@ -102,7 +102,7 @@ static qboolean G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t cont
 				invList_t *next = ic->next;
 				/* remove the virtual item to update the inventory lists */
 				if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
-					gi.error("Could not remove virtual item '%s' from inventory %i",
+					gi.Error("Could not remove virtual item '%s' from inventory %i",
 							ic->item.t->id, container);
 				ic = next;
 			} else {
@@ -128,7 +128,7 @@ qboolean G_AddItemToFloor (const pos3_t pos, const char *itemID)
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 	objDef_t *od = INVSH_GetItemByIDSilent(itemID);
 	if (!od) {
-		gi.dprintf("Could not find item '%s'\n", itemID);
+		gi.DPrintf("Could not find item '%s'\n", itemID);
 		return qfalse;
 	}
 
@@ -211,10 +211,10 @@ void G_InventoryToFloor (edict_t *ent)
 			/* only floor can summarize, so everything on the actor must have amount=1 */
 			assert(item.amount == 1);
 			if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
-				gi.error("Could not remove item '%s' from inventory %i of entity %i",
+				gi.Error("Could not remove item '%s' from inventory %i of entity %i",
 						ic->item.t->id, container, ent->number);
 			if (game.i.AddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
-				gi.error("Could not add item '%s' from inventory %i of entity %i to floor container",
+				gi.Error("Could not add item '%s' from inventory %i of entity %i to floor container",
 						ic->item.t->id, container, ent->number);
 #ifdef ADJACENT
 				Vector2Copy(ent->pos, oldPos);
@@ -283,12 +283,12 @@ void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
 	gi.ReadFormat("sbsbbbbs", &t, &item->a, &m, &containerID, x, y, &item->rotated, &item->amount);
 
 	if (t < 0 || t >= gi.csi->numODs)
-		gi.error("Item index out of bounds: %i", t);
+		gi.Error("Item index out of bounds: %i", t);
 	item->t = &gi.csi->ods[t];
 
 	if (m != NONE) {
 		if (m < 0 || m >= gi.csi->numODs)
-			gi.error("Ammo index out of bounds: %i", m);
+			gi.Error("Ammo index out of bounds: %i", m);
 		item->m = &gi.csi->ods[m];
 	} else {
 		item->m = NULL;
@@ -297,7 +297,7 @@ void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
 	if (containerID >= 0 && containerID < gi.csi->numIDs)
 		*container = INVDEF(containerID);
 	else
-		gi.error("container id is out of bounds: %i", containerID);
+		gi.Error("container id is out of bounds: %i", containerID);
 }
 
 /**
