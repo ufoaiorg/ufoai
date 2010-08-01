@@ -364,8 +364,11 @@ static void SV_ServerCommand_f (void)
 		Com_Printf("No game loaded.\n");
 		return;
 	}
+	SDL_mutexP(svs.serverMutex);
 
 	ge->ServerCommand();
+
+	SDL_mutexV(svs.serverMutex);
 }
 
 /*=========================================================== */

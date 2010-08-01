@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../common/common.h"
 #include "../shared/infostring.h"
+#include <SDL_thread.h>
 
 extern struct memPool_s *sv_gameSysPool;	/**< the mempool for the game lib */
 extern struct memPool_s *sv_genericPool;
@@ -107,6 +108,7 @@ typedef struct {
 	client_t *clients;			/**< [sv_maxclients->value]; */
 	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
 								 * Set to a huge negative value to send immmediately */
+	SDL_mutex *serverMutex;
 } server_static_t;
 
 /**

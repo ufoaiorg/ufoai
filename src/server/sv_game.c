@@ -28,7 +28,6 @@
 
 #include "server.h"
 #include <SDL.h>
-#include <SDL_thread.h>
 
 game_export_t *ge;
 
@@ -204,6 +203,7 @@ static void SV_WriteByte (byte c)
 
 /**
  * @brief Use this if the value might change and you need the position in the buffer
+ * @note If someone aborts or adds an event, this pointer is of course no longer valid
  */
 static byte* SV_WriteDummyByte (byte c)
 {
@@ -357,6 +357,7 @@ static void SV_EndEvents (void)
 static void SV_AddEvent (unsigned int mask, int eType)
 {
 	Com_DPrintf(DEBUG_EVENTSYS, "Event type: %i (mask %i)\n", eType, mask);
+
 	/* finish the last event */
 	if (pe.pending)
 		SV_EndEvents();
@@ -534,7 +535,11 @@ int SV_RunGameFrameThread (void *data)
  */
 void SV_RunGameFrame (void)
 {
+	SDL_mutexP(svs.serverMutex);
+
 	sv.endgame = ge->RunFrame();
+
+	SDL_mutexV(svs.serverMutex);
 }
 
 /**

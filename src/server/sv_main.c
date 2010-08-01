@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "server.h"
 #include "../shared/parse.h"
-#include <SDL_thread.h>
 
 /** current client */
 client_t *sv_client;
@@ -79,7 +78,9 @@ void SV_DropClient (client_t * drop, const char *message)
 	if (drop->state == cs_spawned || drop->state == cs_spawning) {
 		/* call the prog function for removing a client */
 		/* this will remove the body, among other things */
+		SDL_mutexP(svs.serverMutex);
 		ge->ClientDisconnect(drop->player);
+		SDL_mutexV(svs.serverMutex);
 	}
 
 	NET_StreamFinished(drop->stream);
@@ -232,6 +233,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	player_t *player;
 	int playernum;
 	int version;
+	qboolean connected;
 	char buf[256];
 	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), qfalse);
 
@@ -293,8 +295,12 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	cl->player = player;
 	cl->player->num = playernum;
 
+	SDL_mutexP(svs.serverMutex);
+	connected = ge->ClientConnect(player, userinfo, sizeof(userinfo));
+	SDL_mutexV(svs.serverMutex);
+
 	/* get the game a chance to reject this connection or modify the userinfo */
-	if (!ge->ClientConnect(player, userinfo, sizeof(userinfo))) {
+	if (!connected) {
 		const char *rejmsg = Info_ValueForKey(userinfo, "rejmsg");
 		if (rejmsg[0] != '\0') {
 			NET_OOB_Printf(stream, "print\n%s\nConnection refused.\n", rejmsg);
@@ -817,7 +823,9 @@ void SV_UserinfoChanged (client_t * cl)
 	unsigned int i;
 
 	/* call prog code to allow overrides */
+	SDL_mutexP(svs.serverMutex);
 	ge->ClientUserinfoChanged(cl->player, cl->userinfo);
+	SDL_mutexV(svs.serverMutex);
 
 	/* name for C code */
 	strncpy(cl->name, Info_ValueForKey(cl->userinfo, "cl_name"), sizeof(cl->name) - 1);
@@ -952,6 +960,9 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	/* free server static data */
 	if (svs.clients)
 		Mem_Free(svs.clients);
+
+	if (svs.serverMutex != NULL)
+		SDL_DestroyMutex(svs.serverMutex);
 
 	memset(&svs, 0, sizeof(svs));
 
