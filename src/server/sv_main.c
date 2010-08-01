@@ -392,10 +392,11 @@ static void SVC_RemoteCommand (struct net_stream *stream)
  */
 static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *msg)
 {
-	const char *s, *c;
+	const char *c;
+	char s[512];
 	char buf[256];
 
-	s = NET_ReadStringLine(msg);
+	NET_ReadStringLine(msg, s, sizeof(s));
 
 	Cmd_TokenizeString(s, qfalse);
 

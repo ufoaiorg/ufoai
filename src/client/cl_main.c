@@ -330,11 +330,11 @@ static void CL_Packet_f (void)
  */
 static void CL_ConnectionlessPacket (struct dbuffer *msg)
 {
-	const char *s;
+	char s[1024];
 	const char *c;
 	int i;
 
-	s = NET_ReadStringLine(msg);
+	NET_ReadStringLine(msg, s, sizeof(s));
 
 	Cmd_TokenizeString(s, qfalse);
 

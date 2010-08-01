@@ -314,9 +314,8 @@ int NET_ReadString (struct dbuffer *buf, char *string, size_t length)
 /**
  * @sa NET_ReadString
  */
-char *NET_ReadStringLine (struct dbuffer *buf)
+int NET_ReadStringLine (struct dbuffer *buf, char *string, size_t length)
 {
-	static char string[2048];
 	unsigned int l;
 
 	l = 0;
@@ -330,11 +329,11 @@ char *NET_ReadStringLine (struct dbuffer *buf)
 			c = '.';
 		string[l] = c;
 		l++;
-	} while (l < sizeof(string) - 1);
+	} while (l < length - 1);
 
 	string[l] = 0;
 
-	return string;
+	return l;
 }
 
 float NET_ReadCoord (struct dbuffer *buf)

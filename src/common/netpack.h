@@ -62,7 +62,7 @@ int NET_ReadShort(struct dbuffer *buf);
 int NET_PeekShort(const struct dbuffer *buf);
 int NET_ReadLong(struct dbuffer *buf);
 int NET_ReadString(struct dbuffer *buf, char *string, size_t length);
-char *NET_ReadStringLine(struct dbuffer *buf);
+int NET_ReadStringLine(struct dbuffer *buf, char *string, size_t length);
 
 float NET_ReadCoord(struct dbuffer *buf);
 void NET_ReadPos(struct dbuffer *buf, vec3_t pos);

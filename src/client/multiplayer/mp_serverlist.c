@@ -113,10 +113,11 @@ static void CL_PingServerCallback (struct net_stream *s)
 	struct dbuffer *buf = NET_ReadMsg(s);
 	serverList_t *server = NET_StreamGetData(s);
 	const int cmd = NET_ReadByte(buf);
-	const char *str2 = NET_ReadStringLine(buf);
+	char str[512];
 
-	if (cmd == clc_oob && strncmp(str2, "info", 4) == 0) {
-		char str[512];
+	NET_ReadStringLine(buf, str, sizeof(str));
+
+	if (cmd == clc_oob && strncmp(str, "info", 4) == 0) {
 		NET_ReadString(buf, str, sizeof(str));
 		if (CL_ProcessPingReply(server, str)) {
 			if (CL_ShowServer(server)) {
@@ -352,7 +353,8 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 	struct dbuffer *buf = NET_ReadMsg(s);
 	if (buf) {
 		const int cmd = NET_ReadByte(buf);
-		const char *str = NET_ReadStringLine(buf);
+		char str[8];
+		NET_ReadStringLine(buf, str, sizeof(str));
 
 		if (cmd == clc_oob && !strcmp(str, "print")) {
 			char hostname[256];
