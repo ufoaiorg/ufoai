@@ -637,10 +637,7 @@ struct edict_s {
 	vec3_t origin;		/**< the position in the world */
 	vec3_t angles;		/**< the rotation in the world (pitch, yaw, roll) */
 
-	/** @todo move these fields to a server private sv_entity_t */
-	link_t area;				/**< linked to a division node or leaf */
-
-	/* tracing info SOLID_BSP, SOLID_BBOX, ... */
+	/** tracing info SOLID_BSP, SOLID_BBOX, ... */
 	solid_t solid;
 
 	vec3_t mins, maxs; /**< position of min and max points - relative to origin */
@@ -649,7 +646,7 @@ struct edict_s {
 
 	edict_t *child;	/**< e.g. the trigger for this edict */
 	edict_t *owner;	/**< e.g. the door model in case of func_door */
-	/*
+	/**
 	 * type of objects the entity will not pass through
 	 * can be any of MASK_* or CONTENTS_*
 	 */

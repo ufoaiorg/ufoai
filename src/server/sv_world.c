@@ -29,6 +29,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "server.h"
 #include "../common/tracing.h"
 
+/** @brief entity area link */
+typedef struct link_s {
+	struct link_s *prev;
+	struct link_s *next;
+	edict_t *ent;
+} link_t;
+
+typedef struct sv_edict_s {
+	link_t area;				/**< linked to a division node or leaf */
+} sv_edict_t;
+
 /** @brief static mesh models (none-animated) can have a server side flag set to be clipped for pathfinding */
 typedef struct sv_model_s {
 	vec3_t mins, maxs;	/**< the mins and maxs of the model bounding box */
@@ -39,17 +50,14 @@ typedef struct sv_model_s {
 static sv_model_t sv_models[MAX_MOD_KNOWN];
 static int sv_numModels;
 
+static sv_edict_t sv_edicts[MAX_EDICTS];
+
 /*
 ===============================================================================
 ENTITY AREA CHECKING
 ===============================================================================
 */
 /** @todo this use of "area" is different from the bsp file use */
-
-/** @todo remove this mess! */
-#define	STRUCT_FROM_LINK(l,t,m) ((t *)((byte *)l - (ptrdiff_t)&(((t *)0)->m)))
-
-#define	EDICT_FROM_AREA(l) STRUCT_FROM_LINK(l,edict_t,area)
 
 typedef struct areanode_s {
 	int axis;					/**< -1 = leaf node */
@@ -153,21 +161,32 @@ void SV_ClearWorld (void)
 	memset(sv_models, 0, sizeof(sv_models));
 	sv_numModels = 0;
 
+	memset(sv_edicts, 0, sizeof(sv_edicts));
+
 	memset(sv_areaNodes, 0, sizeof(sv_areaNodes));
 	sv_numAreaNodes = 0;
+
 	SV_CreateAreaNode(0, mapMin, mapMax);
 }
 
+static inline sv_edict_t* SV_GetServerDataForEdict (const edict_t *ent)
+{
+	if (!ent || ent->number < 0 || ent->number >= MAX_EDICTS)
+		Com_Error(ERR_DROP, "SV_GetServerDataForEdict: bad game ent");
+
+	return &sv_edicts[ent->number];
+}
 
 /**
  * @brief call before removing an entity, and before trying to move one, so it doesn't clip against itself
  */
 void SV_UnlinkEdict (edict_t * ent)
 {
-	if (!ent->area.prev)
+	sv_edict_t *sv_ent = SV_GetServerDataForEdict(ent);
+	if (!sv_ent->area.prev)
 		return;					/* not linked in anywhere */
-	RemoveLink(&ent->area);
-	ent->area.prev = ent->area.next = NULL;
+	RemoveLink(&sv_ent->area);
+	sv_ent->area.prev = sv_ent->area.next = NULL;
 	if (ent->child)
 		SV_UnlinkEdict(ent->child);
 }
@@ -180,8 +199,9 @@ void SV_UnlinkEdict (edict_t * ent)
 void SV_LinkEdict (edict_t * ent)
 {
 	areanode_t *node;
+	sv_edict_t *sv_ent = SV_GetServerDataForEdict(ent);
 
-	if (ent->area.prev)
+	if (sv_ent->area.prev)
 		SV_UnlinkEdict(ent);	/* unlink from old position */
 
 	if (ent == ge->edicts)
@@ -251,9 +271,10 @@ void SV_LinkEdict (edict_t * ent)
 
 	/* link it in */
 	if (ent->solid == SOLID_TRIGGER)
-		InsertLinkBefore(&ent->area, &node->triggerEdicts);
+		InsertLinkBefore(&sv_ent->area, &node->triggerEdicts);
 	else
-		InsertLinkBefore(&ent->area, &node->solidEdicts);
+		InsertLinkBefore(&sv_ent->area, &node->solidEdicts);
+	sv_ent->area.ent = ent;
 
 	/* If this ent has a child, link it back in, too */
 	if (ent->child) {
@@ -311,7 +332,7 @@ static void SV_AreaEdicts_r (areanode_t * node, int areaType)
 	for (l = start->next; l != start; l = next) {
 		edict_t *check;
 		next = l->next;
-		check = EDICT_FROM_AREA(l);
+		check = l->ent;
 
 		/* deactivated */
 		if (check->solid == SOLID_NOT)
