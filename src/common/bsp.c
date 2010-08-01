@@ -858,7 +858,7 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 
 	/* Now find the map bounds with the updated numTiles. */
 	/* calculate new border after merge */
-	RT_GetMapSize(mapMin, mapMax, NULL);
+	RT_GetMapSize(mapMin, mapMax);
 
 	FS_FreeFile(buf);
 

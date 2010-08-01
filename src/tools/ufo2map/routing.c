@@ -148,7 +148,7 @@ void DoRouting (void)
 	memset(Nmap, 0, sizeof(Nmap));
 
 	/* get world bounds for optimizing */
-	RT_GetMapSize(mins, maxs, NULL);
+	RT_GetMapSize(mins, maxs);
 	/* Com_Printf("Vectors: (%f, %f, %f) to (%f, %f, %f)\n", mins[0], mins[1], mins[2], maxs[0], maxs[1], maxs[2]); */
 	VecToPos(mins, wpMins);
 	VecToPos(maxs, wpMaxs);

@@ -135,7 +135,7 @@ GAME RELATED TRACING
 int RT_CheckCell(routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int z, const char **list);
 void RT_UpdateConnectionColumn(routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int dir, const char **list);
 qboolean RT_AllCellsBelowAreFilled(const routing_t * map, const actorSizeEnum_t actorSize, const pos3_t pos);
-void RT_GetMapSize(vec3_t map_min, vec3_t map_max, const char **list);
+void RT_GetMapSize(vec3_t map_min, vec3_t map_max);
 
 
 /*

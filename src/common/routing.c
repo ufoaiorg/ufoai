@@ -239,7 +239,7 @@ void RT_DumpWholeMap (const routing_t *map)
  * @sa CMod_LoadRouting
  * @sa DoRouting
  */
-void RT_GetMapSize (vec3_t map_min, vec3_t map_max, const char **list)
+void RT_GetMapSize (vec3_t map_min, vec3_t map_max)
 {
 	box_t box;
 	const vec3_t normal = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
@@ -265,7 +265,7 @@ void RT_GetMapSize (vec3_t map_min, vec3_t map_max, const char **list)
 			PosToVec(end, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE_SIZE(origin, origin, &box, list);
+			trace = RT_COMPLETEBOXTRACE_SIZE(origin, origin, &box, NULL);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, lower the boundary. */
@@ -283,7 +283,7 @@ void RT_GetMapSize (vec3_t map_min, vec3_t map_max, const char **list)
 			PosToVec(test, box.maxs);
 			VectorAdd(box.maxs, normal, box.maxs);
 			/* Test for stuff in a small box, if there is something then exit while */
-			trace = RT_COMPLETEBOXTRACE_SIZE(origin, origin, &box, list);
+			trace = RT_COMPLETEBOXTRACE_SIZE(origin, origin, &box, NULL);
 			if (trace.fraction < 1.0)
 				break;
 			/* There is nothing, raise the boundary. */
