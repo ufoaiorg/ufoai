@@ -334,6 +334,8 @@ qboolean Cvar_Delete (const char *varName)
 			}
 			Mem_Free(var->name);
 			Mem_Free(var->string);
+			if (var->description)
+				Mem_Free(var->description);
 			if (var->oldString)
 				Mem_Free(var->oldString);
 			if (var->default_string)
@@ -388,8 +390,11 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 		if (!var->default_string && flags & CVAR_CHEAT)
 			var->default_string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 		var->flags |= flags;
-		if (desc)
-			var->description = desc;
+		if (desc) {
+			if (var->description)
+				Mem_Free(var->description);
+			var->description = Mem_PoolStrDup(desc, com_cvarSysPool, 0);
+		}
 		return var;
 	}
 
@@ -409,7 +414,8 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 	var->modified = qtrue;
 	var->value = atof(var->string);
 	var->integer = atoi(var->string);
-	var->description = desc;
+	if (desc)
+		var->description = Mem_PoolStrDup(desc, com_cvarSysPool, 0);
 
 	HASH_Add(cvarVarsHash, var, hash);
 	/* link the variable in */

@@ -108,7 +108,7 @@ typedef struct cvar_s {
 	char *latchedString;	/**< for CVAR_LATCH vars */
 	char *default_string;	/**< default string set on first init - only set for CVAR_CHEAT */
 	char *oldString;		/**< value of the cvar before we changed it */
-	const char *description;		/**< cvar description */
+	char *description;		/**< cvar description */
 	int flags;				/**< cvar flags CVAR_ARCHIVE|CVAR_NOSET.... */
 	qboolean modified;		/**< set each time the cvar is changed */
 	float value;			/**< value as float */
