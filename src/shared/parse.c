@@ -133,6 +133,9 @@ skipwhite:
 			if (c == '\\' && data[0] == 'n') {
 				c = '\n';
 				data++;
+			} else if (c == '\\' && data[0] == 't') {
+				c = '\t';
+				data++;
 			/* nested quotation */
 			} else if (c == '\\' && data[0] == '\"') {
 				c = '\"';

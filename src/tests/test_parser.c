@@ -97,6 +97,24 @@ static void testParser (void)
 }
 
 /**
+ * @brief unittest to check back slash entity conversion
+ */
+static void testParserWithEntity (void)
+{
+	const char* string = "\n\taaaa \"  \\n  \\t  \\\"  \"";
+	const char* cursor = string;
+	const char *token;
+
+	token = Com_Parse(&cursor);
+	CU_ASSERT_FALSE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_STRING_EQUAL(token, "aaaa");
+
+	token = Com_Parse(&cursor);
+	CU_ASSERT_TRUE(Com_ParsedTokenIsQuoted());
+	CU_ASSERT_STRING_EQUAL(token, "  \n  \t  \"  ");
+}
+
+/**
  * @brief unittest around default use of parser
  */
 static void testParserWithUnParse (void)
@@ -228,6 +246,8 @@ int UFO_AddParserTests (void)
 	if (CU_ADD_TEST(ParserSuite, testParserWithFunctionScriptToken) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(ParserSuite, testParserWithUnParse) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(ParserSuite, testParserWithEntity) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
