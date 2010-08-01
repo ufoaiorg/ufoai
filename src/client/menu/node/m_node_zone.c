@@ -39,34 +39,34 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_keys.h"
 
 #define EXTRADATA_TYPE zoneExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
 static uiTimer_t *capturedTimer;
 
-static void MN_ZoneNodeRepeat (uiNode_t *node, uiTimer_t *timer)
+static void UI_ZoneNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 {
 	if (node->onClick) {
-		MN_ExecuteEventActions(node, node->onClick);
+		UI_ExecuteEventActions(node, node->onClick);
 	}
 }
 
-static void MN_ZoneNodeDown (uiNode_t *node, int x, int y, int button)
+static void UI_ZoneNodeDown (uiNode_t *node, int x, int y, int button)
 {
 	if (!EXTRADATA(node).repeat)
 		return;
 	if (button == K_MOUSE1) {
-		MN_SetMouseCapture(node);
-		capturedTimer = MN_AllocTimer(node, EXTRADATA(node).clickDelay, MN_ZoneNodeRepeat);
-		MN_TimerStart(capturedTimer);
+		UI_SetMouseCapture(node);
+		capturedTimer = UI_AllocTimer(node, EXTRADATA(node).clickDelay, UI_ZoneNodeRepeat);
+		UI_TimerStart(capturedTimer);
 	}
 }
 
-static void MN_ZoneNodeUp (uiNode_t *node, int x, int y, int button)
+static void UI_ZoneNodeUp (uiNode_t *node, int x, int y, int button)
 {
 	if (!EXTRADATA(node).repeat)
 		return;
 	if (button == K_MOUSE1) {
-		MN_MouseRelease();
+		UI_MouseRelease();
 	}
 }
 
@@ -74,10 +74,10 @@ static void MN_ZoneNodeUp (uiNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-static void MN_ZoneNodeCapturedMouseLost (uiNode_t *node)
+static void UI_ZoneNodeCapturedMouseLost (uiNode_t *node)
 {
 	if (capturedTimer) {
-		MN_TimerRelease(capturedTimer);
+		UI_TimerRelease(capturedTimer);
 		capturedTimer = NULL;
 	}
 }
@@ -85,7 +85,7 @@ static void MN_ZoneNodeCapturedMouseLost (uiNode_t *node)
 /**
  * @brief Call before the script initialized the node
  */
-static void MN_ZoneNodeLoading (uiNode_t *node)
+static void UI_ZoneNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).clickDelay = 1000;
 }
@@ -93,28 +93,28 @@ static void MN_ZoneNodeLoading (uiNode_t *node)
 /**
  * @brief Call after the script initialized the node
  */
-static void MN_ZoneNodeLoaded (uiNode_t *node)
+static void UI_ZoneNodeLoaded (uiNode_t *node)
 {
 	if (!strcmp(node->name, "render"))
-		MN_WindowNodeSetRenderNode(node->root, node);
+		UI_WindowNodeSetRenderNode(node->root, node);
 }
 
 static const value_t properties[] = {
 	/* If true, the <code>onclick</code> call back is called more than one time if the user do not release the button. */
-	{"repeat", V_BOOL, MN_EXTRADATA_OFFSETOF(zoneExtraData_t, repeat), MEMBER_SIZEOF(zoneExtraData_t, repeat)},
+	{"repeat", V_BOOL, UI_EXTRADATA_OFFSETOF(zoneExtraData_t, repeat), MEMBER_SIZEOF(zoneExtraData_t, repeat)},
 	/* Delay it is used between 2 calls of <code>onclick</code>. */
-	{"clickdelay", V_INT, MN_EXTRADATA_OFFSETOF(zoneExtraData_t, clickDelay), MEMBER_SIZEOF(zoneExtraData_t, clickDelay)},
+	{"clickdelay", V_INT, UI_EXTRADATA_OFFSETOF(zoneExtraData_t, clickDelay), MEMBER_SIZEOF(zoneExtraData_t, clickDelay)},
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterZoneNode (uiBehaviour_t *behaviour)
+void UI_RegisterZoneNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "zone";
-	behaviour->loading = MN_ZoneNodeLoading;
-	behaviour->loaded = MN_ZoneNodeLoaded;
-	behaviour->mouseDown = MN_ZoneNodeDown;
-	behaviour->mouseUp = MN_ZoneNodeUp;
-	behaviour->capturedMouseLost = MN_ZoneNodeCapturedMouseLost;
+	behaviour->loading = UI_ZoneNodeLoading;
+	behaviour->loaded = UI_ZoneNodeLoaded;
+	behaviour->mouseDown = UI_ZoneNodeDown;
+	behaviour->mouseUp = UI_ZoneNodeUp;
+	behaviour->capturedMouseLost = UI_ZoneNodeCapturedMouseLost;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

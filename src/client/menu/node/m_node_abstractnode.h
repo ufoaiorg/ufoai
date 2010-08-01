@@ -27,35 +27,35 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_nodes.h"
 
-void MN_RegisterAbstractNode(uiBehaviour_t *);
+void UI_RegisterAbstractNode(uiBehaviour_t *);
 
 struct uiNode_s;
 
-qboolean MN_NodeInstanceOf(const uiNode_t *node, const char* behaviourName);
-qboolean MN_NodeInstanceOfPointer(const uiNode_t *node, const uiBehaviour_t* behaviour);
-qboolean MN_NodeSetProperty(uiNode_t* node, const value_t *property, const char* value);
-void MN_NodeSetPropertyFromRAW(uiNode_t* node, const value_t *property, void* rawValue, int rawType);
-float MN_GetFloatFromNodeProperty(const struct uiNode_s* node, const value_t* property);
-const char* MN_GetStringFromNodeProperty(const uiNode_t* node, const value_t* property);
+qboolean UI_NodeInstanceOf(const uiNode_t *node, const char* behaviourName);
+qboolean UI_NodeInstanceOfPointer(const uiNode_t *node, const uiBehaviour_t* behaviour);
+qboolean UI_NodeSetProperty(uiNode_t* node, const value_t *property, const char* value);
+void UI_NodeSetPropertyFromRAW(uiNode_t* node, const value_t *property, void* rawValue, int rawType);
+float UI_GetFloatFromNodeProperty(const struct uiNode_s* node, const value_t* property);
+const char* UI_GetStringFromNodeProperty(const uiNode_t* node, const value_t* property);
 
 /* visibility */
-void MN_UnHideNode(struct uiNode_s *node);
-void MN_HideNode(struct uiNode_s *node);
-void MN_Invalidate(struct uiNode_s *node);
-void MN_Validate(struct uiNode_s *node);
-void MN_NodeSetSize(uiNode_t* node, vec2_t size);
+void UI_UnHideNode(struct uiNode_s *node);
+void UI_HideNode(struct uiNode_s *node);
+void UI_Invalidate(struct uiNode_s *node);
+void UI_Validate(struct uiNode_s *node);
+void UI_NodeSetSize(uiNode_t* node, vec2_t size);
 
 /* position */
-void MN_GetNodeAbsPos(const struct uiNode_s* node, vec2_t pos);
-void MN_NodeAbsoluteToRelativePos(const struct uiNode_s* node, int *x, int *y);
-void MN_NodeRelativeToAbsolutePoint(const uiNode_t* node, vec2_t pos);
-void MN_NodeGetPoint(const uiNode_t* node, vec2_t pos, byte pointDirection);
+void UI_GetNodeAbsPos(const struct uiNode_s* node, vec2_t pos);
+void UI_NodeAbsoluteToRelativePos(const struct uiNode_s* node, int *x, int *y);
+void UI_NodeRelativeToAbsolutePoint(const uiNode_t* node, vec2_t pos);
+void UI_NodeGetPoint(const uiNode_t* node, vec2_t pos, byte pointDirection);
 
 /* navigation */
-struct uiNode_s *MN_GetNode(const struct uiNode_s* const node, const char *name);
-void MN_InsertNode(struct uiNode_s* const node, struct uiNode_s *prevNode, struct uiNode_s *newNode);
-void MN_AppendNode(struct uiNode_s* const node, struct uiNode_s *newNode);
-uiNode_t* MN_RemoveNode(uiNode_t* const node, uiNode_t *child);
-void MN_UpdateRoot(uiNode_t *node, uiNode_t *newRoot);
+struct uiNode_s *UI_GetNode(const struct uiNode_s* const node, const char *name);
+void UI_InsertNode(struct uiNode_s* const node, struct uiNode_s *prevNode, struct uiNode_s *newNode);
+void UI_AppendNode(struct uiNode_s* const node, struct uiNode_s *newNode);
+uiNode_t* UI_RemoveNode(uiNode_t* const node, uiNode_t *child);
+void UI_UpdateRoot(uiNode_t *node, uiNode_t *newRoot);
 
 #endif

@@ -38,6 +38,6 @@ void MP_AddChatMessage (const char *text)
 	char message[2048];
 	Q_strncpyz(message, text, sizeof(message));
 	LIST_AddString(&mp_chatMessageStack, Com_Trim(message));
-	MN_RegisterLinkedListText(TEXT_CHAT_WINDOW, mp_chatMessageStack);
-	MN_ExecuteConfunc("unhide_chatscreen");
+	UI_RegisterLinkedListText(TEXT_CHAT_WINDOW, mp_chatMessageStack);
+	UI_ExecuteConfunc("unhide_chatscreen");
 }

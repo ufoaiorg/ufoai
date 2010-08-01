@@ -40,13 +40,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 #include "m_node_abstractvalue.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, abstractValueExtraData_t)
+#define EXTRADATA(node) UI_EXTRADATA(node, abstractValueExtraData_t)
 
-static void MN_CheckBoxNodeDraw (uiNode_t* node)
+static void UI_CheckBoxNodeDraw (uiNode_t* node)
 {
-	const float value = MN_GetReferenceFloat(node, EXTRADATA(node).value);
+	const float value = UI_GetReferenceFloat(node, EXTRADATA(node).value);
 	vec2_t pos;
-	const char *image = MN_GetReferenceString(node, node->image);
+	const char *image = UI_GetReferenceString(node, node->image);
 	int texx, texy;
 
 	/* image set? */
@@ -71,17 +71,17 @@ static void MN_CheckBoxNodeDraw (uiNode_t* node)
 		texx = 64;
 	}
 
-	MN_GetNodeAbsPos(node, pos);
-	MN_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
+	UI_GetNodeAbsPos(node, pos);
+	UI_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
 		texx + node->size[0], texy + node->size[1], texx, texy, image);
 }
 
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-static void MN_CheckBoxNodeActivate (uiNode_t *node)
+static void UI_CheckBoxNodeActivate (uiNode_t *node)
 {
-	const float last = MN_GetReferenceFloat(node, EXTRADATA(node).value);
+	const float last = UI_GetReferenceFloat(node, EXTRADATA(node).value);
 	float value;
 
 	if (node->disabled)
@@ -95,37 +95,37 @@ static void MN_CheckBoxNodeActivate (uiNode_t *node)
 	/* save result */
 	EXTRADATA(node).lastdiff = value - last;
 	if (!strncmp(EXTRADATA(node).value, "*cvar:", 6)) {
-		MN_SetCvar(&((char*)EXTRADATA(node).value)[6], NULL, value);
+		UI_SetCvar(&((char*)EXTRADATA(node).value)[6], NULL, value);
 	} else {
 		*(float*) EXTRADATA(node).value = value;
 	}
 
 	/* fire change event */
 	if (node->onChange) {
-		MN_ExecuteEventActions(node, node->onChange);
+		UI_ExecuteEventActions(node, node->onChange);
 	}
 }
 
-static void MN_CheckBoxNodeCallActivate (uiNode_t *node, const uiCallContext_t *context)
+static void UI_CheckBoxNodeCallActivate (uiNode_t *node, const uiCallContext_t *context)
 {
-	MN_CheckBoxNodeActivate(node);
+	UI_CheckBoxNodeActivate(node);
 }
 
 /**
  * @brief Handles checkboxes clicks
  */
-static void MN_CheckBoxNodeClick (uiNode_t * node, int x, int y)
+static void UI_CheckBoxNodeClick (uiNode_t * node, int x, int y)
 {
 	if (node->onClick)
-		MN_ExecuteEventActions(node, node->onClick);
+		UI_ExecuteEventActions(node, node->onClick);
 
-	MN_CheckBoxNodeActivate(node);
+	UI_CheckBoxNodeActivate(node);
 }
 
 /**
  * @brief Handled before the begin of the load of the node from the script
  */
-static void MN_CheckBoxNodeLoading (uiNode_t *node)
+static void UI_CheckBoxNodeLoading (uiNode_t *node)
 {
 }
 
@@ -139,17 +139,17 @@ static const value_t properties[] = {
 	 */
 
 	/* Call it to toggle the node status. */
-	{"toggle", V_UI_NODEMETHOD, ((size_t) MN_CheckBoxNodeCallActivate), 0},
+	{"toggle", V_UI_NODEMETHOD, ((size_t) UI_CheckBoxNodeCallActivate), 0},
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterCheckBoxNode (uiBehaviour_t *behaviour)
+void UI_RegisterCheckBoxNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "checkbox";
 	behaviour->extends = "abstractvalue";
-	behaviour->draw = MN_CheckBoxNodeDraw;
-	behaviour->leftClick = MN_CheckBoxNodeClick;
-	behaviour->loading = MN_CheckBoxNodeLoading;
-	behaviour->activate = MN_CheckBoxNodeActivate;
+	behaviour->draw = UI_CheckBoxNodeDraw;
+	behaviour->leftClick = UI_CheckBoxNodeClick;
+	behaviour->loading = UI_CheckBoxNodeLoading;
+	behaviour->activate = UI_CheckBoxNodeActivate;
 	behaviour->properties = properties;
 }

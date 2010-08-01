@@ -120,11 +120,11 @@ typedef enum {
 } uiTextIDs_t;
 
 typedef enum {
-	MN_SHARED_NONE = 0,
-	MN_SHARED_TEXT,
-	MN_SHARED_LINKEDLISTTEXT,
-	MN_SHARED_OPTION,
-	MN_SHARED_LINESTRIP
+	UI_SHARED_NONE = 0,
+	UI_SHARED_TEXT,
+	UI_SHARED_LINKEDLISTTEXT,
+	UI_SHARED_OPTION,
+	UI_SHARED_LINESTRIP
 } uiSharedType_t;
 
 typedef struct uiSharedData_s {
@@ -153,30 +153,30 @@ typedef struct {
 } uiOptionIterator_t;
 
 /* common */
-int MN_GetDataVersion(int textId) __attribute__ ((warn_unused_result));
-void MN_ResetData(int dataId);
-int MN_GetDataIDByName(const char* name) __attribute__ ((warn_unused_result));
-void MN_InitData(void);
+int UI_GetDataVersion(int textId) __attribute__ ((warn_unused_result));
+void UI_ResetData(int dataId);
+int UI_GetDataIDByName(const char* name) __attribute__ ((warn_unused_result));
+void UI_InitData(void);
 
 /* text */
-void MN_RegisterText(int textId, const char *text);
-const char *MN_GetText(int textId) __attribute__ ((warn_unused_result));
+void UI_RegisterText(int textId, const char *text);
+const char *UI_GetText(int textId) __attribute__ ((warn_unused_result));
 
 /* linked list */
-void MN_RegisterLinkedListText(int textId, struct linkedList_s *text);
+void UI_RegisterLinkedListText(int textId, struct linkedList_s *text);
 
 /* option */
-void MN_RegisterOption(int dataId, struct uiNode_s *option);
-struct uiNode_s *MN_GetOption(int dataId) __attribute__ ((warn_unused_result));
-void MN_SortOptions(struct uiNode_s **option);
-struct uiNode_s* MN_InitOptionIteratorAtIndex(int index, struct uiNode_s* option, uiOptionIterator_t* iterator);
-struct uiNode_s* MN_OptionIteratorNextOption(uiOptionIterator_t* iterator);
-void MN_UpdateInvisOptions(struct uiNode_s *option, const struct linkedList_s *stringList);
-struct uiNode_s* MN_FindOptionByValue(uiOptionIterator_t* iterator, const char* value);
-int MN_FindOptionPosition(uiOptionIterator_t* iterator, const struct uiNode_s* option);
-struct uiNode_s* MN_AddOption(struct uiNode_s**tree, const char* name, const char* label, const char* value);
+void UI_RegisterOption(int dataId, struct uiNode_s *option);
+struct uiNode_s *UI_GetOption(int dataId) __attribute__ ((warn_unused_result));
+void UI_SortOptions(struct uiNode_s **option);
+struct uiNode_s* UI_InitOptionIteratorAtIndex(int index, struct uiNode_s* option, uiOptionIterator_t* iterator);
+struct uiNode_s* UI_OptionIteratorNextOption(uiOptionIterator_t* iterator);
+void UI_UpdateInvisOptions(struct uiNode_s *option, const struct linkedList_s *stringList);
+struct uiNode_s* UI_FindOptionByValue(uiOptionIterator_t* iterator, const char* value);
+int UI_FindOptionPosition(uiOptionIterator_t* iterator, const struct uiNode_s* option);
+struct uiNode_s* UI_AddOption(struct uiNode_s**tree, const char* name, const char* label, const char* value);
 
 /* line strip */
-void MN_RegisterLineStrip(int dataId, struct lineStrip_s *text);
+void UI_RegisterLineStrip(int dataId, struct lineStrip_s *text);
 
 #endif

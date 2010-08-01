@@ -908,7 +908,7 @@ qboolean AIRFIGHT_LoadXML (mxml_node_t *parent)
 }
 
 /**
- * @sa MN_InitStartup
+ * @sa UI_InitStartup
  */
 void AIRFIGHT_InitStartup (void)
 {

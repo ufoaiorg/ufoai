@@ -44,65 +44,65 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #define EXTRADATA_TYPE radioButtonExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 #define EPSILON 0.001f
 
 /** Height of a status in a 4 status 256*256 texture */
-#define MN_4STATUS_TEX_HEIGHT 64
+#define UI_4STATUS_TEX_HEIGHT 64
 
 /**
  * @brief Handles RadioButton draw
  * @todo need to implement image. We can't do everything with only one icon (or use nother icon)
  */
-static void MN_RadioButtonNodeDraw (uiNode_t *node)
+static void UI_RadioButtonNodeDraw (uiNode_t *node)
 {
 	vec2_t pos;
 	uiIconStatus_t iconStatus;
-	const float current = MN_GetReferenceFloat(node, EXTRADATA(node).cvar);
+	const float current = UI_GetReferenceFloat(node, EXTRADATA(node).cvar);
 	const qboolean disabled = node->disabled || node->parent->disabled;
 	int texY;
 	const char *image;
 
 	if (disabled) {
 		iconStatus = ICON_STATUS_DISABLED;
-		texY = MN_4STATUS_TEX_HEIGHT * 2;
+		texY = UI_4STATUS_TEX_HEIGHT * 2;
 	} else if (current > EXTRADATA(node).value - EPSILON && current < EXTRADATA(node).value + EPSILON) {
 		iconStatus = ICON_STATUS_CLICKED;
-		texY = MN_4STATUS_TEX_HEIGHT * 3;
+		texY = UI_4STATUS_TEX_HEIGHT * 3;
 	} else if (node->state) {
 		iconStatus = ICON_STATUS_HOVER;
-		texY = MN_4STATUS_TEX_HEIGHT;
+		texY = UI_4STATUS_TEX_HEIGHT;
 	} else {
 		iconStatus = ICON_STATUS_NORMAL;
 		texY = 0;
 	}
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 
-	image = MN_GetReferenceString(node, node->image);
+	image = UI_GetReferenceString(node, node->image);
 	if (image) {
 		const int texX = 0;
-		MN_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
+		UI_DrawNormImageByName(pos[0], pos[1], node->size[0], node->size[1],
 			texX + node->size[0], texY + node->size[1], texX, texY, image);
 	}
 
 	if (EXTRADATA(node).icon) {
-		MN_DrawIconInBox(EXTRADATA(node).icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
+		UI_DrawIconInBox(EXTRADATA(node).icon, iconStatus, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 }
 
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-static void MN_RadioButtonNodeActivate (uiNode_t * node)
+static void UI_RadioButtonNodeActivate (uiNode_t * node)
 {
 	float current;
 
 	/* no cvar given? */
 	if (!EXTRADATA(node).cvar || !*(char*)(EXTRADATA(node).cvar)) {
-		Com_Printf("MN_RadioButtonNodeClick: node '%s' doesn't have a valid cvar assigned\n", MN_GetPath(node));
+		Com_Printf("UI_RadioButtonNodeClick: node '%s' doesn't have a valid cvar assigned\n", UI_GetPath(node));
 		return;
 	}
 
@@ -111,47 +111,47 @@ static void MN_RadioButtonNodeActivate (uiNode_t * node)
 	if (strncmp((const char *)(EXTRADATA(node).cvar), "*cvar", 5))
 		return;
 
-	current = MN_GetReferenceFloat(node, EXTRADATA(node).cvar);
+	current = UI_GetReferenceFloat(node, EXTRADATA(node).cvar);
 	/* Is we click on the action button, we can continue */
 	if (current > EXTRADATA(node).value - EPSILON && current < EXTRADATA(node).value + EPSILON)
 		return;
 
 	{
 		const char *cvarName = &((const char *)(EXTRADATA(node).cvar))[6];
-		MN_SetCvar(cvarName, NULL, EXTRADATA(node).value);
+		UI_SetCvar(cvarName, NULL, EXTRADATA(node).value);
 		if (node->onChange)
-			MN_ExecuteEventActions(node, node->onChange);
+			UI_ExecuteEventActions(node, node->onChange);
 	}
 }
 
 /**
  * @brief Handles radio button clicks
  */
-static void MN_RadioButtonNodeClick (uiNode_t * node, int x, int y)
+static void UI_RadioButtonNodeClick (uiNode_t * node, int x, int y)
 {
 	if (node->onClick)
-		MN_ExecuteEventActions(node, node->onClick);
+		UI_ExecuteEventActions(node, node->onClick);
 
-	MN_RadioButtonNodeActivate(node);
+	UI_RadioButtonNodeActivate(node);
 }
 
 static const value_t properties[] = {
 	/* Value defining the radiobutton. Cvar is updated with this value when the radio button is selected. */
-	{"value", V_FLOAT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, value), MEMBER_SIZEOF(EXTRADATA_TYPE, value)},
+	{"value", V_FLOAT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, value), MEMBER_SIZEOF(EXTRADATA_TYPE, value)},
 	/* Cvar name shared with the radio button group to identify when a radio button is selected. */
-	{"cvar", V_UI_CVAR, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, cvar), 0},
+	{"cvar", V_UI_CVAR, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, cvar), 0},
 	/* Icon used to display the node */
-	{"icon", V_UI_ICONREF, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
+	{"icon", V_UI_ICONREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterRadioButtonNode (uiBehaviour_t *behaviour)
+void UI_RegisterRadioButtonNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "radiobutton";
-	behaviour->draw = MN_RadioButtonNodeDraw;
-	behaviour->leftClick = MN_RadioButtonNodeClick;
-	behaviour->activate = MN_RadioButtonNodeActivate;
+	behaviour->draw = UI_RadioButtonNodeDraw;
+	behaviour->leftClick = UI_RadioButtonNodeClick;
+	behaviour->activate = UI_RadioButtonNodeActivate;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

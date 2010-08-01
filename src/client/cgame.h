@@ -71,18 +71,18 @@ typedef struct {
 	client_state_t *cl;
 
 	/* menu functions */
-	void (IMPORT *MN_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
-	void (IMPORT *MN_PopWindow) (qboolean all);
-	uiNode_t* (IMPORT *MN_PushWindow) (const char *name, const char *parentName);
-	void (IMPORT *MN_InitStack) (const char* activeMenu, const char* mainMenu, qboolean popAll, qboolean pushActive);
-	void (IMPORT *MN_Popup) (const char *title, const char *text);
-	uiNode_t* (IMPORT *MN_AddOption) (uiNode_t** tree, const char* name, const char* label, const char* value);
-	void (IMPORT *MN_RegisterOption) (int dataId, uiNode_t *option);
-	void (IMPORT *MN_RegisterText) (int textId, const char *text);
-	void (IMPORT *MN_ResetData) (int dataId);
-	void (IMPORT *MN_RegisterLinkedListText) (int textId, linkedList_t *text);
-	void (IMPORT *MN_TextNodeSelectLine) (uiNode_t *node, int num);
-	uiNode_t *(IMPORT *MN_PopupList) (const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
+	void (IMPORT *UI_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+	void (IMPORT *UI_PopWindow) (qboolean all);
+	uiNode_t* (IMPORT *UI_PushWindow) (const char *name, const char *parentName);
+	void (IMPORT *UI_InitStack) (const char* activeMenu, const char* mainMenu, qboolean popAll, qboolean pushActive);
+	void (IMPORT *UI_Popup) (const char *title, const char *text);
+	uiNode_t* (IMPORT *UI_AddOption) (uiNode_t** tree, const char* name, const char* label, const char* value);
+	void (IMPORT *UI_RegisterOption) (int dataId, uiNode_t *option);
+	void (IMPORT *UI_RegisterText) (int textId, const char *text);
+	void (IMPORT *UI_ResetData) (int dataId);
+	void (IMPORT *UI_RegisterLinkedListText) (int textId, linkedList_t *text);
+	void (IMPORT *UI_TextNodeSelectLine) (uiNode_t *node, int num);
+	uiNode_t *(IMPORT *UI_PopupList) (const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
 
 	/* xml functions */
 	mxml_node_t * (IMPORT *mxml_AddNode) (mxml_node_t *parent, const char *name);

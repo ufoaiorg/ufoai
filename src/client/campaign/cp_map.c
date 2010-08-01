@@ -29,9 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_draw.h"
 #include "../renderer/r_geoscape.h"
 #include "../menu/m_main.h"
-#include "../menu/m_font.h" /* MN_GetFontFromNode */
-#include "../menu/m_render.h" /* MN_DrawString */
-#include "../menu/node/m_node_abstractnode.h" /* MN_GetNodeAbsPos */
+#include "../menu/m_font.h" /* UI_GetFontFromNode */
+#include "../menu/m_render.h" /* UI_DrawString */
+#include "../menu/node/m_node_abstractnode.h" /* UI_GetNodeAbsPos */
 #include "../menu/node/m_node_map.h" /* paddingRight */
 #include "cp_overlay.h"
 #include "cp_campaign.h"
@@ -198,7 +198,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		selected = 0;
 	} else {
 		/* Call from a geoscape popup menu (popup_multi_selection) */
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 		selected = atoi(Cmd_Argv(1));
 		multiSelection = qtrue;
 	}
@@ -303,7 +303,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 
 			if (ccs.numBases < MAX_BASES) {
 				Cmd_ExecuteString("mn_set_base_title");
-				MN_PushWindow("popup_newbase", NULL);
+				UI_PushWindow("popup_newbase", NULL);
 			}
 			return;
 		}
@@ -314,13 +314,13 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 
 			if (ccs.numInstallations < MAX_INSTALLATIONS) {
 				CL_GameTimeStop();
-				MN_PushWindow("popup_newinstallation", NULL);
+				UI_PushWindow("popup_newinstallation", NULL);
 			}
 			return;
 		}
 		break;
 	case MA_UFORADAR:
-		MN_PushWindow("popup_intercept_ufo", NULL);
+		UI_PushWindow("popup_intercept_ufo", NULL);
 		break;
 	default:
 		break;
@@ -381,9 +381,9 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 		Cmd_ExecuteString("multi_select_click");
 	} else if (multiSelect.nbSelect > 1) {
 		/* Display popup for multi selection */
-		MN_RegisterText(TEXT_MULTISELECTION, multiSelect.popupText);
+		UI_RegisterText(TEXT_MULTISELECTION, multiSelect.popupText);
 		CL_GameTimeStop();
-		MN_PushWindow("popup_multi_selection", NULL);
+		UI_PushWindow("popup_multi_selection", NULL);
 	} else {
 		/* Nothing selected */
 		if (!ccs.selectedAircraft)
@@ -407,7 +407,7 @@ GEOSCAPE DRAWING AND COORDINATES
  * @brief maximum distance (in pixel) to get a valid mouse click
  * @note this is for a 1024 * 768 screen
  */
-#define MN_MAP_DIST_SELECTION 15
+#define UI_MAP_DIST_SELECTION 15
 /**
  * @brief Tell if the specified position is considered clicked
  */
@@ -416,8 +416,8 @@ static qboolean MAP_IsMapPositionSelected (const uiNode_t* node, const vec2_t po
 	int msx, msy;
 
 	if (MAP_AllMapToScreen(node, pos, &msx, &msy, NULL))
-		if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION
-		 && y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
+		if (x >= msx - UI_MAP_DIST_SELECTION && x <= msx + UI_MAP_DIST_SELECTION
+		 && y >= msy - UI_MAP_DIST_SELECTION && y <= msy + UI_MAP_DIST_SELECTION)
 			return qtrue;
 
 	return qfalse;
@@ -1249,7 +1249,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
  */
 void MAP_CenterOnPoint_f (void)
 {
-	if (strcmp(MN_GetActiveWindowName(), "geoscape"))
+	if (strcmp(UI_GetActiveWindowName(), "geoscape"))
 		return;
 
 	centerOnEventIdx++;
@@ -1319,8 +1319,8 @@ static void MAP3D_SmoothRotate (void)
 
 /**
  * @brief stop smooth translation on geoscape
- * @sa MN_RightClick
- * @sa MN_MouseWheel
+ * @sa UI_RightClick
+ * @sa UI_MouseWheel
  */
 void MAP_StopSmoothMovement (void)
 {
@@ -1432,7 +1432,7 @@ static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *ms)
 		R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 	}
 
-	MN_DrawString("f_verysmall", ALIGN_UL, x + 10, y, 0, 0, 0, 0, 0,  _(ms->location), 0, 0, NULL, qfalse, 0);
+	UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, 0, 0, 0, 0, 0,  _(ms->location), 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -1475,7 +1475,7 @@ static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation
 
 	/* Draw installation names */
 	if (MAP_AllMapToScreen(node, installation->pos, &x, &y, NULL))
-		MN_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, 0, 0, installation->name, 0, 0, NULL, qfalse, 0);
+		UI_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, 0, 0, installation->name, 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -1531,7 +1531,7 @@ static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
 
 	/* Draw base names */
 	if (MAP_AllMapToScreen(node, base->pos, &x, &y, NULL))
-		MN_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, 0, 0, base->name, 0, 0, NULL, qfalse, 0);
+		UI_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, 0, 0, base->name, 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -1732,14 +1732,14 @@ void MAP_UpdateGeoscapeDock (void)
 	int ufoIDX;
 	char buf[512];
 
-	MN_ExecuteConfunc("clean_geoscape_object");
+	UI_ExecuteConfunc("clean_geoscape_object");
 
 	/* draw mission pics */
 	for (list = ccs.missions; list; list = list->next) {
 		const mission_t *ms = (mission_t *)list->data;
 		if (!ms->onGeoscape)
 			continue;
-		MN_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
+		UI_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
 				ms->idx, ms->location, MAP_GetMissionModel(ms), MAP_GetShortMissionText(buf, sizeof(buf), ms));
 	}
 
@@ -1749,7 +1749,7 @@ void MAP_UpdateGeoscapeDock (void)
 		if (!UFO_IsUFOSeenOnGeoscape(ufo))
 			continue;
 
-		MN_ExecuteConfunc("add_geoscape_object ufo %i %i %s \"%s\"",
+		UI_ExecuteConfunc("add_geoscape_object ufo %i %i %s \"%s\"",
 				ufoIDX, ufoIDX, ufo->model, MAP_GetUFOText(buf, sizeof(buf), ufo));
 	}
 }
@@ -1780,7 +1780,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	/* font color on geoscape */
 	R_Color(node->color);
 	/* default font */
-	font = MN_GetFontFromNode(node);
+	font = UI_GetFontFromNode(node);
 
 	/* check if at least 1 UFO is visible */
 	for (aircraftIdx = 0; aircraftIdx < ccs.numUFOs; aircraftIdx++) {
@@ -1919,14 +1919,14 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	/* Draw nation names */
 	for (i = 0; i < ccs.numNations; i++) {
 		if (MAP_AllMapToScreen(node, ccs.nations[i].pos, &x, &y, NULL))
-			MN_DrawString("f_verysmall", ALIGN_UC, x , y, 0, 0, 0, 0, 0, _(ccs.nations[i].name), 0, 0, NULL, qfalse, 0);
+			UI_DrawString("f_verysmall", ALIGN_UC, x , y, 0, 0, 0, 0, 0, _(ccs.nations[i].name), 0, 0, NULL, qfalse, 0);
 		if (showXVI)
 			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(ccs.nations[i].name), ccs.nations[i].stats[0].xviInfection), sizeof(buffer));
 	}
 	if (showXVI)
-		MN_RegisterText(TEXT_XVI, buffer);
+		UI_RegisterText(TEXT_XVI, buffer);
 	else
-		MN_ResetData(TEXT_XVI);
+		UI_ResetData(TEXT_XVI);
 
 	R_Color(NULL);
 }
@@ -1941,12 +1941,12 @@ void MAP_DrawMap (const uiNode_t* node)
 	vec2_t pos;
 
 	/* store these values in ccs struct to be able to handle this even in the input code */
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 	Vector2Copy(pos, ccs.mapPos);
 	Vector2Copy(node->size, ccs.mapSize);
 	if (cl_3dmap->integer) {
 		/* remove the left padding */
-		ccs.mapSize[0] -= MN_MAPEXTRADATACONST(node).paddingRight;
+		ccs.mapSize[0] -= UI_MAPEXTRADATACONST(node).paddingRight;
 	}
 
 	/* Draw the map and markers */
@@ -1993,28 +1993,28 @@ void MAP_DrawMap (const uiNode_t* node)
 	}
 
 	/* display text */
-	MN_ResetData(TEXT_STANDARD);
+	UI_ResetData(TEXT_STANDARD);
 	switch (ccs.mapAction) {
 	case MA_NEWBASE:
-		MN_RegisterText(TEXT_STANDARD, _("Select the desired location of the new base on the map.\n"));
+		UI_RegisterText(TEXT_STANDARD, _("Select the desired location of the new base on the map.\n"));
 		return;
 	case MA_NEWINSTALLATION:
-		MN_RegisterText(TEXT_STANDARD, _("Select the desired location of the new installation on the map.\n"));
+		UI_RegisterText(TEXT_STANDARD, _("Select the desired location of the new installation on the map.\n"));
 		return;
 	case MA_BASEATTACK:
 		if (ccs.selectedMission)
 			break;
-		MN_RegisterText(TEXT_STANDARD, _("Aliens are attacking our base at this very moment.\n"));
+		UI_RegisterText(TEXT_STANDARD, _("Aliens are attacking our base at this very moment.\n"));
 		return;
 	case MA_INTERCEPT:
 		if (ccs.selectedMission)
 			break;
-		MN_RegisterText(TEXT_STANDARD, _("Select ufo or mission on map\n"));
+		UI_RegisterText(TEXT_STANDARD, _("Select ufo or mission on map\n"));
 		return;
 	case MA_UFORADAR:
 		if (ccs.selectedMission)
 			break;
-		MN_RegisterText(TEXT_STANDARD, _("UFO in radar range\n"));
+		UI_RegisterText(TEXT_STANDARD, _("UFO in radar range\n"));
 		return;
 	case MA_NONE:
 		break;
@@ -2022,26 +2022,26 @@ void MAP_DrawMap (const uiNode_t* node)
 
 	/* Nothing is displayed yet */
 	if (ccs.selectedMission) {
-		MN_RegisterText(TEXT_STANDARD, MAP_GetMissionText(textStandard, sizeof(textStandard), ccs.selectedMission));
+		UI_RegisterText(TEXT_STANDARD, MAP_GetMissionText(textStandard, sizeof(textStandard), ccs.selectedMission));
 	} else if (ccs.selectedAircraft) {
 		const aircraft_t *aircraft = ccs.selectedAircraft;
 		if (AIR_IsAircraftInBase(aircraft)) {
-			MN_RegisterText(TEXT_STANDARD, NULL);
+			UI_RegisterText(TEXT_STANDARD, NULL);
 			MAP_ResetAction();
 			return;
 		}
-		MN_RegisterText(TEXT_STANDARD, MAP_GetAircraftText(textStandard, sizeof(textStandard), ccs.selectedAircraft));
+		UI_RegisterText(TEXT_STANDARD, MAP_GetAircraftText(textStandard, sizeof(textStandard), ccs.selectedAircraft));
 	} else if (ccs.selectedUFO) {
-		MN_RegisterText(TEXT_STANDARD, MAP_GetUFOText(textStandard, sizeof(textStandard), ccs.selectedUFO));
+		UI_RegisterText(TEXT_STANDARD, MAP_GetUFOText(textStandard, sizeof(textStandard), ccs.selectedUFO));
 	} else {
 #ifdef DEBUG
 		if (debug_showInterest->integer) {
 			static char t[64];
 			Com_sprintf(t, lengthof(t), "Interest level: %i\n", ccs.overallInterest);
-			MN_RegisterText(TEXT_STANDARD, t);
+			UI_RegisterText(TEXT_STANDARD, t);
 		} else
 #endif
-		MN_RegisterText(TEXT_STANDARD, "");
+		UI_RegisterText(TEXT_STANDARD, "");
 	}
 }
 

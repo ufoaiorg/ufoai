@@ -45,13 +45,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 
 #define EXTRADATA_TYPE imageExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 /**
  * @brief Handled after the end of the load of the node from the script (all data and/or child are set)
  */
-static void MN_ImageNodeLoaded (uiNode_t *node)
+static void UI_ImageNodeLoaded (uiNode_t *node)
 {
 	/* update the size when its possible */
 	if (node->size[0] == 0 && node->size[1] == 0) {
@@ -59,7 +59,7 @@ static void MN_ImageNodeLoaded (uiNode_t *node)
 			node->size[0] = EXTRADATA(node).texh[0] - EXTRADATA(node).texl[0];
 			node->size[1] = EXTRADATA(node).texh[1] - EXTRADATA(node).texl[1];
 		} else if (node->image) {
-			const image_t *image = MN_LoadImage(node->image);
+			const image_t *image = UI_LoadImage(node->image);
 			if (image) {
 				node->size[0] = image->width;
 				node->size[1] = image->height;
@@ -69,7 +69,7 @@ static void MN_ImageNodeLoaded (uiNode_t *node)
 #ifdef DEBUG
 	if (node->size[0] == 0 && node->size[1] == 0) {
 		if (node->onClick || node->onRightClick || node->onMouseEnter || node->onMouseLeave || node->onWheelUp || node->onWheelDown || node->onWheel || node->onMiddleClick) {
-			Com_DPrintf(DEBUG_CLIENT, "Node '%s' is an active image without size\n", MN_GetPath(node));
+			Com_DPrintf(DEBUG_CLIENT, "Node '%s' is an active image without size\n", UI_GetPath(node));
 		}
 	}
 #endif
@@ -78,17 +78,17 @@ static void MN_ImageNodeLoaded (uiNode_t *node)
 /**
  * @todo Center image, or use textalign property
  */
-void MN_ImageNodeDraw (uiNode_t *node)
+void UI_ImageNodeDraw (uiNode_t *node)
 {
 	vec2_t size;
 	vec2_t nodepos;
 	const image_t *image;
 
-	const char* imageName = MN_GetReferenceString(node, node->image);
+	const char* imageName = UI_GetReferenceString(node, node->image);
 	if (!imageName || imageName[0] == '\0')
 		return;
 
-	image = MN_LoadImage(imageName);
+	image = UI_LoadImage(imageName);
 	if (!image)
 		return;
 
@@ -105,7 +105,7 @@ void MN_ImageNodeDraw (uiNode_t *node)
 	}
 #endif
 
-	MN_GetNodeAbsPos(node, nodepos);
+	UI_GetNodeAbsPos(node, nodepos);
 
 	/** @todo code is duplicated in the ekg node code */
 	if (node->size[0] && !node->size[1]) {
@@ -127,7 +127,7 @@ void MN_ImageNodeDraw (uiNode_t *node)
 			Vector2Copy(node->size, size);
 		}
 	}
-	MN_DrawNormImage(nodepos[0], nodepos[1], size[0], size[1],
+	UI_DrawNormImage(nodepos[0], nodepos[1], size[0], size[1],
 		EXTRADATA(node).texh[0], EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], image);
 
 	/** @todo convert all pic using mousefx into button.
@@ -142,16 +142,16 @@ void MN_ImageNodeDraw (uiNode_t *node)
 
 static const value_t properties[] = {
 	/* Do not change the image ratio. The image will be proportionally stretched. */
-	{"preventratio", V_BOOL, MN_EXTRADATA_OFFSETOF(imageExtraData_t, preventRatio), MEMBER_SIZEOF(imageExtraData_t, preventRatio)},
+	{"preventratio", V_BOOL, UI_EXTRADATA_OFFSETOF(imageExtraData_t, preventRatio), MEMBER_SIZEOF(imageExtraData_t, preventRatio)},
 	/* Now this property do nothing. But we use it like a tag, to remember nodes we should convert into button...
 	 * @todo delete it when its possible (use more button instead of image)
 	 */
-	{"mousefx", V_BOOL, MN_EXTRADATA_OFFSETOF(imageExtraData_t, mousefx), MEMBER_SIZEOF(imageExtraData_t, mousefx)},
+	{"mousefx", V_BOOL, UI_EXTRADATA_OFFSETOF(imageExtraData_t, mousefx), MEMBER_SIZEOF(imageExtraData_t, mousefx)},
 
 	/* Texture high. Optional. Define the higher corner of the texture we want to display. Used with texl to crop the image. */
-	{"texh", V_POS, MN_EXTRADATA_OFFSETOF(imageExtraData_t, texh), MEMBER_SIZEOF(imageExtraData_t, texh)},
+	{"texh", V_POS, UI_EXTRADATA_OFFSETOF(imageExtraData_t, texh), MEMBER_SIZEOF(imageExtraData_t, texh)},
 	/* Texture low. Optional. Define the lower corner of the texture we want to display. Used with texh to crop the image. */
-	{"texl", V_POS, MN_EXTRADATA_OFFSETOF(imageExtraData_t, texl), MEMBER_SIZEOF(imageExtraData_t, texl)},
+	{"texl", V_POS, UI_EXTRADATA_OFFSETOF(imageExtraData_t, texl), MEMBER_SIZEOF(imageExtraData_t, texl)},
 
 	/* Source of the image */
 	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
@@ -159,12 +159,12 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterImageNode (uiBehaviour_t* behaviour)
+void UI_RegisterImageNode (uiBehaviour_t* behaviour)
 {
 	/** @todo rename it according to the function name when its possible */
 	behaviour->name = "image";
-	behaviour->draw = MN_ImageNodeDraw;
-	behaviour->loaded = MN_ImageNodeLoaded;
+	behaviour->draw = UI_ImageNodeDraw;
+	behaviour->loaded = UI_ImageNodeLoaded;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

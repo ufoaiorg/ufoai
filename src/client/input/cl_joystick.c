@@ -275,13 +275,13 @@ void IN_JoystickInitMenu (void)
 	const int total = SDL_NumJoysticks();
 
 	if (total == 0) {
-		MN_AddOption(&joystickOptions, "", _("None"), "0");
+		UI_AddOption(&joystickOptions, "", _("None"), "0");
 	} else {
 		int i;
 		for (i = 0; i < total; i++)
-			MN_AddOption(&joystickOptions, "", SDL_JoystickName(i), va("%i", i));
+			UI_AddOption(&joystickOptions, "", SDL_JoystickName(i), va("%i", i));
 	}
-	MN_RegisterOption(OPTION_JOYSTICKS, joystickOptions);
+	UI_RegisterOption(OPTION_JOYSTICKS, joystickOptions);
 }
 
 /**

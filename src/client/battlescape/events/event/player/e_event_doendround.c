@@ -40,7 +40,7 @@ void CL_DoEndRound (const eventRegister_t *self, struct dbuffer *msg)
 {
 	/* hud changes */
 	if (cls.team == cl.actTeam)
-		MN_ExecuteConfunc("endround");
+		UI_ExecuteConfunc("endround");
 
 	refdef.rendererFlags &= ~RDF_IRGOGGLES;
 
@@ -53,7 +53,7 @@ void CL_DoEndRound (const eventRegister_t *self, struct dbuffer *msg)
 	if (cls.team == cl.actTeam) {
 		/* check whether a particle has to go */
 		CL_ParticleCheckRounds();
-		MN_ExecuteConfunc("startround");
+		UI_ExecuteConfunc("startround");
 		HUD_DisplayMessage(_("Your round started!\n"));
 		S_StartLocalSample("misc/roundstart", SND_VOLUME_DEFAULT);
 		CL_ActorConditionalMoveCalc(selActor);

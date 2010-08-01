@@ -32,6 +32,6 @@ typedef struct {
 
 struct uiBehaviour_s;
 
-void MN_RegisterZoneNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterZoneNode(struct uiBehaviour_s *behaviour);
 
 #endif

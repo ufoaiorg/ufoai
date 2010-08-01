@@ -67,7 +67,7 @@ static void B_Destroy_AntimaterStorage_f (void)
 
 	if (prob < atof(Cmd_Argv(1))) {
 		MS_AddNewMessage(_("Notice"), va(_("%s has been destroyed by an antimatter storage breach."), base->name), qfalse, MSG_STANDARD, NULL);
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 		B_Destroy(base);
 	}
 }
@@ -183,7 +183,7 @@ static void B_SetBaseTitle_f (void)
 		Cvar_Set("mn_base_title", baseName);
 	} else {
 		MS_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
-		MN_PopWindow(qfalse);		/* remove the new base popup */
+		UI_PopWindow(qfalse);		/* remove the new base popup */
 	}
 }
 
@@ -284,47 +284,47 @@ static void B_BaseInit_f (void)
 	/* activate or deactivate the aircraft button */
 	if (AIR_AircraftAllowed(base)) {
 		if (base->numAircraftInBase)
-			MN_ExecuteConfunc("update_basebutton aircraft false \"%s\"", _("Aircraft management and crew equipment"));
+			UI_ExecuteConfunc("update_basebutton aircraft false \"%s\"", _("Aircraft management and crew equipment"));
 		else
-			MN_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("Buy or produce at least one aircraft first."));
+			UI_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("Buy or produce at least one aircraft first."));
 	} else {
-			MN_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("No Hangar functional in base."));
+			UI_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("No Hangar functional in base."));
 	}
 
 	if (BS_BuySellAllowed(base))
-		MN_ExecuteConfunc("update_basebutton buysell false \"%s\"", _("Buy/Sell equipment, aircraft and UGV"));
+		UI_ExecuteConfunc("update_basebutton buysell false \"%s\"", _("Buy/Sell equipment, aircraft and UGV"));
 	else
-		MN_ExecuteConfunc("update_basebutton buysell true \"%s\"", va(_("No %s functional in base."), _("Storage")));
+		UI_ExecuteConfunc("update_basebutton buysell true \"%s\"", va(_("No %s functional in base."), _("Storage")));
 
 	if (ccs.numBases > 1)
-		MN_ExecuteConfunc("update_basebutton transfer false \"%s\"", _("Transfer equipment, aircraft, UGV, aliens and employees to other bases"));
+		UI_ExecuteConfunc("update_basebutton transfer false \"%s\"", _("Transfer equipment, aircraft, UGV, aliens and employees to other bases"));
 	else
-		MN_ExecuteConfunc("update_basebutton transfer true \"%s\"", _("Build at least a second base to transfer equipment or personnel"));
+		UI_ExecuteConfunc("update_basebutton transfer true \"%s\"", _("Build at least a second base to transfer equipment or personnel"));
 
 	if (RS_ResearchAllowed(base))
-		MN_ExecuteConfunc("update_basebutton research false \"%s\"", _("Research new technology"));
+		UI_ExecuteConfunc("update_basebutton research false \"%s\"", _("Research new technology"));
 	else
-		MN_ExecuteConfunc("update_basebutton research true \"%s\"", va(_("No %s functional in base."), _("Laboratory")));
+		UI_ExecuteConfunc("update_basebutton research true \"%s\"", va(_("No %s functional in base."), _("Laboratory")));
 
 	if (PR_ProductionAllowed(base))
-		MN_ExecuteConfunc("update_basebutton production false \"%s\"", _("Produce equipment, aircraft and UGV"));
+		UI_ExecuteConfunc("update_basebutton production false \"%s\"", _("Produce equipment, aircraft and UGV"));
 	else
-		MN_ExecuteConfunc("update_basebutton production true \"%s\"", va(_("No %s functional in base."), _("Workshop")));
+		UI_ExecuteConfunc("update_basebutton production true \"%s\"", va(_("No %s functional in base."), _("Workshop")));
 
 	if (E_HireAllowed(base))
-		MN_ExecuteConfunc("update_basebutton hire false \"%s\"", _("Hire or dismiss employees"));
+		UI_ExecuteConfunc("update_basebutton hire false \"%s\"", _("Hire or dismiss employees"));
 	else
-		MN_ExecuteConfunc("update_basebutton hire true \"%s\"", va(_("No %s functional in base."), _("Living Quarters")));
+		UI_ExecuteConfunc("update_basebutton hire true \"%s\"", va(_("No %s functional in base."), _("Living Quarters")));
 
 	if (AC_ContainmentAllowed(base))
-		MN_ExecuteConfunc("update_basebutton containment false \"%s\"", _("Manage captured aliens"));
+		UI_ExecuteConfunc("update_basebutton containment false \"%s\"", _("Manage captured aliens"));
 	else
-		MN_ExecuteConfunc("update_basebutton containment true \"%s\"", va(_("No %s functional in base."), _("Containment")));
+		UI_ExecuteConfunc("update_basebutton containment true \"%s\"", va(_("No %s functional in base."), _("Containment")));
 
 	if (HOS_HospitalAllowed(base))
-		MN_ExecuteConfunc("update_basebutton hospital false \"%s\"", _("Treat wounded soldiers and perform implant surgery"));
+		UI_ExecuteConfunc("update_basebutton hospital false \"%s\"", _("Treat wounded soldiers and perform implant surgery"));
 	else
-		MN_ExecuteConfunc("update_basebutton hospital true \"%s\"", va(_("No %s functional in base."), _("Hospital")));
+		UI_ExecuteConfunc("update_basebutton hospital true \"%s\"", va(_("No %s functional in base."), _("Hospital")));
 }
 
 /**
@@ -423,10 +423,10 @@ static void B_BuildingInit (base_t* base)
 	if (base->buildingCurrent)
 		B_DrawBuilding(base, base->buildingCurrent);
 	else
-		MN_ExecuteConfunc("mn_buildings_reset");
+		UI_ExecuteConfunc("mn_buildings_reset");
 
 	buildingNumber = LIST_Count(buildingList);
-	MN_RegisterLinkedListText(TEXT_BUILDINGS, buildingList);
+	UI_RegisterLinkedListText(TEXT_BUILDINGS, buildingList);
 }
 
 /**
@@ -568,13 +568,13 @@ static void B_CheckBuildingStatusForMenu_f (void)
 
 	/* Maybe base is under attack ? */
 	if (base->baseStatus == BASE_UNDER_ATTACK) {
-		MN_Popup(_("Notice"), _("Base is under attack, you can't access this building !"));
+		UI_Popup(_("Notice"), _("Base is under attack, you can't access this building !"));
 		return;
 	}
 
 	if (building->buildingType == B_HANGAR) {
 		/* this is an exception because you must have a small or large hangar to enter aircraft menu */
-		MN_Popup(_("Notice"), _("You need at least one Hangar (and its dependencies) to use aircraft."));
+		UI_Popup(_("Notice"), _("You need at least one Hangar (and its dependencies) to use aircraft."));
 		return;
 	}
 
@@ -596,7 +596,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 
 			Com_sprintf(popupText, sizeof(popupText), ngettext("Construction of building will be over in %i day.\nPlease wait to enter.", "Construction of building will be over in %i days.\nPlease wait to enter.",
 				minDay), minDay);
-			MN_Popup(_("Notice"), popupText);
+			UI_Popup(_("Notice"), popupText);
 			return;
 		}
 
@@ -606,7 +606,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			if (B_GetNumberOfBuildingsInBaseByBuildingType(base, dependenceBuilding->buildingType) <= 0) {
 				/* the dependence of the building is not built */
 				Com_sprintf(popupText, sizeof(popupText), _("You need a building %s to make building %s functional."), _(dependenceBuilding->name), _(building->name));
-				MN_Popup(_("Notice"), popupText);
+				UI_Popup(_("Notice"), popupText);
 				return;
 			} else {
 				/* maybe the dependence of the building is under construction
@@ -618,14 +618,14 @@ static void B_CheckBuildingStatusForMenu_f (void)
 					if (b->buildTime > (ccs.date.day - b->timeStart)) {
 						Com_sprintf(popupText, sizeof(popupText), _("Building %s is not finished yet, and is needed to use building %s."),
 							_(dependenceBuilding->name), _(building->name));
-						MN_Popup(_("Notice"), popupText);
+						UI_Popup(_("Notice"), popupText);
 						return;
 					}
 				}
 				/* the dependence is built but doesn't work - must be because of their dependendes */
 				Com_sprintf(popupText, sizeof(popupText), _("Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."),
 					_(dependenceBuilding->name), _(dependenceBuilding->dependsBuilding->name), _(building->name));
-				MN_Popup(_("Notice"), popupText);
+				UI_Popup(_("Notice"), popupText);
 				return;
 			}
 		}
@@ -633,17 +633,17 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		if (building->buildingType == B_WORKSHOP && E_CountHired(base, EMPL_WORKER) <= 0) {
 			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
 				E_GetEmployeeString(EMPL_WORKER), _(building->name));
-			MN_Popup(_("Notice"), popupText);
+			UI_Popup(_("Notice"), popupText);
 			return;
 		} else if (building->buildingType == B_LAB && E_CountHired(base, EMPL_SCIENTIST) <= 0) {
 			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
 				E_GetEmployeeString(EMPL_SCIENTIST), _(building->name));
-			MN_Popup(_("Notice"), popupText);
+			UI_Popup(_("Notice"), popupText);
 			return;
 		}
 	} else {
 		Com_sprintf(popupText, sizeof(popupText), _("Build a %s first."), _(building->name));
-		MN_Popup(_("Notice"), popupText);
+		UI_Popup(_("Notice"), popupText);
 		return;
 	}
 }
@@ -696,7 +696,7 @@ static void BaseSummary_Init (const base_t *base)
 	}
 
 	/* link into the menu */
-	MN_RegisterText(TEXT_STANDARD, textInfoBuffer);
+	UI_RegisterText(TEXT_STANDARD, textInfoBuffer);
 
 	Q_strcat(textStatsBuffer, _("^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"), sizeof(textStatsBuffer));
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
@@ -775,7 +775,7 @@ static void BaseSummary_Init (const base_t *base)
 		Q_strcat(textStatsBuffer, _("Nothing\n"), sizeof(textStatsBuffer));
 
 	/* link into the menu */
-	MN_RegisterText(TEXT_STATS_BASESUMMARY, textStatsBuffer);
+	UI_RegisterText(TEXT_STATS_BASESUMMARY, textStatsBuffer);
 }
 
 /**
@@ -799,7 +799,7 @@ static void BaseSummary_SelectBase_f (void)
 
 	if (base != NULL) {
 		BaseSummary_Init(base);
-		MN_ExecuteConfunc("basesummary_change_color %i", base->idx);
+		UI_ExecuteConfunc("basesummary_change_color %i", base->idx);
 	}
 }
 
@@ -818,7 +818,7 @@ static void B_MakeBaseMapShot_f (void)
 	Cvar_SetValue("r_isometric", 1);
 	/* we are interested in the second level only */
 	Cvar_SetValue("cl_worldlevel", 1);
-	MN_PushWindow("nohud", NULL);
+	UI_PushWindow("nohud", NULL);
 	/* hide any active console */
 	Cmd_ExecuteString("toggleconsole");
 	Cmd_ExecuteString("r_screenshot tga");

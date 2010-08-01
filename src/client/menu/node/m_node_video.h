@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "../../cinematic/cl_cinematic.h"
 
-void MN_RegisterVideoNode(uiBehaviour_t *behaviour);
+void UI_RegisterVideoNode(uiBehaviour_t *behaviour);
 
 typedef struct {
 	cinematic_t cin;

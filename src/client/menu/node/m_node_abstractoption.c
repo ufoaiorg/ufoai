@@ -32,18 +32,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #define EXTRADATA_TYPE abstractOptionExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
 const uiBehaviour_t *abstractOptionBehaviour;
 
 /**
  * @brief Sort options by alphabet
  */
-void MN_OptionNodeSortOptions (uiNode_t *node)
+void UI_OptionNodeSortOptions (uiNode_t *node)
 {
 	uiNode_t *option;
-	assert(MN_NodeInstanceOf(node, "abstractoption"));
-	MN_SortOptions(&node->firstChild);
+	assert(UI_NodeInstanceOf(node, "abstractoption"));
+	UI_SortOptions(&node->firstChild);
 
 	/** update lastChild */
 	/** @todo the sort option should do it itself */
@@ -53,11 +53,11 @@ void MN_OptionNodeSortOptions (uiNode_t *node)
 	node->lastChild = option;
 }
 
-const char *MN_AbstractOptionGetCurrentValue (uiNode_t * node)
+const char *UI_AbstractOptionGetCurrentValue (uiNode_t * node)
 {
 	/* no cvar given? */
 	if (!(EXTRADATA(node).cvar) || !*(char*)(EXTRADATA(node).cvar)) {
-		Com_Printf("MN_AbstractOptionGetCurrentValue: node '%s' doesn't have a valid cvar assigned\n", MN_GetPath(node));
+		Com_Printf("UI_AbstractOptionGetCurrentValue: node '%s' doesn't have a valid cvar assigned\n", UI_GetPath(node));
 		return NULL;
 	}
 
@@ -65,49 +65,49 @@ const char *MN_AbstractOptionGetCurrentValue (uiNode_t * node)
 	if (strncmp((const char *)(EXTRADATA(node).cvar), "*cvar", 5))
 		return NULL;
 
-	return MN_GetReferenceString(node, (EXTRADATA(node).cvar));
+	return UI_GetReferenceString(node, (EXTRADATA(node).cvar));
 }
 
-void MN_AbstractOptionSetCurrentValue(uiNode_t * node, const char *value)
+void UI_AbstractOptionSetCurrentValue(uiNode_t * node, const char *value)
 {
 	const char *cvarName = &((const char *)(EXTRADATA(node).cvar))[6];
-	MN_SetCvar(cvarName, value, 0);
+	UI_SetCvar(cvarName, value, 0);
 	if (node->onChange)
-		MN_ExecuteEventActions(node, node->onChange);
+		UI_ExecuteEventActions(node, node->onChange);
 }
 
 static const value_t properties[] = {
 	/** Optional. Data ID we want to use. It must be an option list. It substitute to the inline options */
-	{"dataid", V_UI_DATAID, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, dataId), MEMBER_SIZEOF(EXTRADATA_TYPE, dataId)},
+	{"dataid", V_UI_DATAID, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, dataId), MEMBER_SIZEOF(EXTRADATA_TYPE, dataId)},
 	/** Optional. We can define the height of the block containing an option. */
-	{"lineheight", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, lineHeight),  MEMBER_SIZEOF(EXTRADATA_TYPE, lineHeight)},
+	{"lineheight", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, lineHeight),  MEMBER_SIZEOF(EXTRADATA_TYPE, lineHeight)},
 
 	/* position of the vertical view (into the full number of elements the node contain) */
-	{"viewpos", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.viewPos),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.viewPos)},
+	{"viewpos", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.viewPos),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.viewPos)},
 	/* size of the vertical view (proportional to the number of elements the node can display without moving) */
-	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.viewSize),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.viewSize)},
+	{"viewsize", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.viewSize),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.viewSize)},
 	/* full vertical size (proportional to the number of elements the node contain) */
-	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.fullSize),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.fullSize)},
+	{"fullsize", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, scrollY.fullSize),  MEMBER_SIZEOF(EXTRADATA_TYPE, scrollY.fullSize)},
 
 	/* number of elements contain the node */
-	{"count", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, count),  MEMBER_SIZEOF(EXTRADATA_TYPE, count)},
+	{"count", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, count),  MEMBER_SIZEOF(EXTRADATA_TYPE, count)},
 
 	/* Define the cvar containing the value of the current selected option */
-	{"cvar", V_UI_CVAR, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, cvar), 0},
+	{"cvar", V_UI_CVAR, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, cvar), 0},
 
 	/* Called when one of the properties viewpos/viewsize/fullsize change */
-	{"onviewchange", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onViewChange), MEMBER_SIZEOF(EXTRADATA_TYPE, onViewChange)},
+	{"onviewchange", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onViewChange), MEMBER_SIZEOF(EXTRADATA_TYPE, onViewChange)},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-static void MN_AbstractOptionDoLayout (uiNode_t *node) {
+static void UI_AbstractOptionDoLayout (uiNode_t *node) {
 	uiNode_t *option = node->firstChild;
 	int count = 0;
 
 	if (EXTRADATA(node).dataId == 0) {
 		while(option && option->behaviour == optionBehaviour) {
-			MN_Validate(option);
+			UI_Validate(option);
 			if (!option->invis)
 				count++;
 			option = option->next;
@@ -123,15 +123,15 @@ static void MN_AbstractOptionDoLayout (uiNode_t *node) {
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
  */
-uiNode_t*  MN_AbstractOptionGetFirstOption (uiNode_t * node)
+uiNode_t*  UI_AbstractOptionGetFirstOption (uiNode_t * node)
 {
 	if (node->firstChild && node->firstChild->behaviour == optionBehaviour) {
 		return node->firstChild;
 	} else {
-		const int v = MN_GetDataVersion(EXTRADATA(node).dataId);
+		const int v = UI_GetDataVersion(EXTRADATA(node).dataId);
 		if (v != EXTRADATA(node).dataId) {
 			int count = 0;
-			uiNode_t *option = MN_GetOption(EXTRADATA(node).dataId);
+			uiNode_t *option = UI_GetOption(EXTRADATA(node).dataId);
 			while (option) {
 				if (option->invis == qfalse)
 					count++;
@@ -140,17 +140,17 @@ uiNode_t*  MN_AbstractOptionGetFirstOption (uiNode_t * node)
 			EXTRADATA(node).count = count;
 			EXTRADATA(node).versionId = v;
 		}
-		return MN_GetOption(EXTRADATA(node).dataId);
+		return UI_GetOption(EXTRADATA(node).dataId);
 	}
 }
 
-void MN_RegisterAbstractOptionNode (uiBehaviour_t *behaviour)
+void UI_RegisterAbstractOptionNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractoption";
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->drawItselfChild = qtrue;
-	behaviour->doLayout = MN_AbstractOptionDoLayout;
+	behaviour->doLayout = UI_AbstractOptionDoLayout;
 	abstractOptionBehaviour = behaviour;
 }

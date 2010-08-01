@@ -41,6 +41,6 @@ typedef struct abstractValueExtraData_s {
 
 struct uiBehaviour_s; /* prototype */
 
-void MN_RegisterAbstractValueNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterAbstractValueNode(struct uiBehaviour_s *behaviour);
 
 #endif

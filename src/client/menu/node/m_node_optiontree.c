@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
-#define EXTRADATA(node) MN_EXTRADATA(node, abstractOptionExtraData_t)
+#define EXTRADATA(node) UI_EXTRADATA(node, abstractOptionExtraData_t)
 
 #define CORNER_SIZE 25
 #define MID_SIZE 1
@@ -54,56 +54,56 @@ static uiIcon_t *systemExpand;
  * @brief Update the scroll according to the number
  * of items and the size of the node
  */
-static void MN_OptionTreeNodeUpdateScroll (uiNode_t *node)
+static void UI_OptionTreeNodeUpdateScroll (uiNode_t *node)
 {
 	const char *font;
 	int fontHeight;
 	qboolean updated;
 	int elements;
 
-	font = MN_GetFontFromNode(node);
+	font = UI_GetFontFromNode(node);
 	fontHeight = EXTRADATA(node).lineHeight;
 	if (fontHeight == 0)
-		fontHeight = MN_FontGetHeight(font);
+		fontHeight = UI_FontGetHeight(font);
 
 	elements = (node->size[1] - node->padding - node->padding) / fontHeight;
-	updated = MN_SetScroll(&EXTRADATA(node).scrollY, -1, elements, EXTRADATA(node).count);
+	updated = UI_SetScroll(&EXTRADATA(node).scrollY, -1, elements, EXTRADATA(node).count);
 	if (updated && EXTRADATA(node).onViewChange)
-		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 }
 
 /** @todo we should remove this call loop */
-static uiNode_t* MN_OptionTreeNodeGetFirstOption(uiNode_t * node);
+static uiNode_t* UI_OptionTreeNodeGetFirstOption(uiNode_t * node);
 
-static void MN_OptionTreeNodeUpdateCache (uiNode_t * node)
+static void UI_OptionTreeNodeUpdateCache (uiNode_t * node)
 {
-	uiNode_t* option = MN_OptionTreeNodeGetFirstOption(node);
+	uiNode_t* option = UI_OptionTreeNodeGetFirstOption(node);
 	if (option)
-		EXTRADATA(node).count = MN_OptionUpdateCache(option);
+		EXTRADATA(node).count = UI_OptionUpdateCache(option);
 }
 
 /**
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
  */
-static uiNode_t* MN_OptionTreeNodeGetFirstOption (uiNode_t * node)
+static uiNode_t* UI_OptionTreeNodeGetFirstOption (uiNode_t * node)
 {
 	if (node->firstChild) {
 		/** FIXME it MUST be an option behaviour */
 		assert(node->firstChild->behaviour == optionBehaviour);
 		return node->firstChild;
 	} else {
-		const int v = MN_GetDataVersion(EXTRADATA(node).dataId);
-		uiNode_t *option = MN_GetOption(EXTRADATA(node).dataId);
+		const int v = UI_GetDataVersion(EXTRADATA(node).dataId);
+		uiNode_t *option = UI_GetOption(EXTRADATA(node).dataId);
 		if (v != EXTRADATA(node).versionId) {
 			EXTRADATA(node).versionId = v;
-			MN_OptionTreeNodeUpdateCache(node);
+			UI_OptionTreeNodeUpdateCache(node);
 		}
 		return option;
 	}
 }
 
-static void MN_OptionTreeNodeDraw (uiNode_t *node)
+static void UI_OptionTreeNodeDraw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -124,37 +124,37 @@ static void MN_OptionTreeNodeDraw (uiNode_t *node)
 	uiOptionIterator_t iterator;
 
 	if (!systemExpand)
-		systemExpand = MN_GetIconByName("system_expand");
+		systemExpand = UI_GetIconByName("system_expand");
 	if (!systemCollapse)
-		systemCollapse = MN_GetIconByName("system_collapse");
+		systemCollapse = UI_GetIconByName("system_collapse");
 
-	ref = MN_AbstractOptionGetCurrentValue(node);
+	ref = UI_AbstractOptionGetCurrentValue(node);
 	if (ref == NULL)
 		return;
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 
-	image = MN_GetReferenceString(node, node->image);
+	image = UI_GetReferenceString(node, node->image);
 	if (image)
-		MN_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
+		UI_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
 
-	font = MN_GetFontFromNode(node);
+	font = UI_GetFontFromNode(node);
 	fontHeight = EXTRADATA(node).lineHeight;
 	currentY = pos[1] + node->padding;
 	if (fontHeight == 0)
-		fontHeight = MN_FontGetHeight(font);
+		fontHeight = UI_FontGetHeight(font);
 	else {
-		const int height = MN_FontGetHeight(font);
+		const int height = UI_FontGetHeight(font);
 		currentDecY = (fontHeight - height) / 2;
 	}
 
 	/* skip option over current position */
-	option = MN_OptionTreeNodeGetFirstOption(node);
-	MN_OptionTreeNodeUpdateScroll(node);
-	option = MN_InitOptionIteratorAtIndex(EXTRADATA(node).scrollY.viewPos, option, &iterator);
+	option = UI_OptionTreeNodeGetFirstOption(node);
+	UI_OptionTreeNodeUpdateScroll(node);
+	option = UI_InitOptionIteratorAtIndex(EXTRADATA(node).scrollY.viewPos, option, &iterator);
 
 	/* draw all available options for this selectbox */
-	for (; option; option = MN_OptionIteratorNextOption(&iterator)) {
+	for (; option; option = UI_OptionIteratorNextOption(&iterator)) {
 		int decX;
 		const char *label;
 
@@ -166,7 +166,7 @@ static void MN_OptionTreeNodeDraw (uiNode_t *node)
 
 		/* draw the hover effect */
 		if (OPTIONEXTRADATA(option).hovered)
-			MN_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, fontHeight, node->color);
+			UI_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, fontHeight, node->color);
 
 		/* text color */
 		if (!strcmp(OPTIONEXTRADATA(option).value, ref)) {
@@ -183,7 +183,7 @@ static void MN_OptionTreeNodeDraw (uiNode_t *node)
 		R_Color(NULL);
 		if (option->firstChild) {
 			uiIcon_t *icon = OPTIONEXTRADATA(option).collapsed ? systemExpand : systemCollapse;
-			MN_DrawIconInBox(icon, ICON_STATUS_NORMAL, decX, currentY, icon->size[0], fontHeight);
+			UI_DrawIconInBox(icon, ICON_STATUS_NORMAL, decX, currentY, icon->size[0], fontHeight);
 		}
 
 		decX += COLLAPSEBUTTON_WIDTH;
@@ -192,7 +192,7 @@ static void MN_OptionTreeNodeDraw (uiNode_t *node)
 			uiIconStatus_t iconStatus = ICON_STATUS_NORMAL;
 			if (option->disabled)
 				iconStatus = ICON_STATUS_DISABLED;
-			MN_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], fontHeight);
+			UI_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], fontHeight);
 			decX += OPTIONEXTRADATA(option).icon->size[0] + fontHeight / 4;
 		}
 
@@ -201,7 +201,7 @@ static void MN_OptionTreeNodeDraw (uiNode_t *node)
 			label = _(label + 1);
 
 		R_Color(textColor);
-		MN_DrawString(font, ALIGN_UL, decX, currentY + currentDecY,
+		UI_DrawString(font, ALIGN_UL, decX, currentY + currentDecY,
 			pos[0], currentY + currentDecY, node->size[0] - node->padding - node->padding, node->size[1],
 			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
@@ -212,7 +212,7 @@ static void MN_OptionTreeNodeDraw (uiNode_t *node)
 	R_Color(NULL);
 }
 
-static uiNode_t* MN_OptionTreeNodeGetOptionAtPosition (uiNode_t * node, int x, int y, int *depth)
+static uiNode_t* UI_OptionTreeNodeGetOptionAtPosition (uiNode_t * node, int x, int y, int *depth)
 {
 	uiNode_t* option;
 	const char *font;
@@ -220,16 +220,16 @@ static uiNode_t* MN_OptionTreeNodeGetOptionAtPosition (uiNode_t * node, int x, i
 	int count;
 	uiOptionIterator_t iterator;
 
-	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
-	font = MN_GetFontFromNode(node);
+	font = UI_GetFontFromNode(node);
 	fontHeight = EXTRADATA(node).lineHeight;
 	if (fontHeight == 0)
-		fontHeight = MN_FontGetHeight(font);
+		fontHeight = UI_FontGetHeight(font);
 
-	option = MN_OptionTreeNodeGetFirstOption(node);
+	option = UI_OptionTreeNodeGetFirstOption(node);
 	count = EXTRADATA(node).scrollY.viewPos + (y - node->padding) / fontHeight;
-	option = MN_InitOptionIteratorAtIndex(count, option, &iterator);
+	option = UI_InitOptionIteratorAtIndex(count, option, &iterator);
 	*depth = iterator.depthPos;
 	return option;
 }
@@ -237,67 +237,67 @@ static uiNode_t* MN_OptionTreeNodeGetOptionAtPosition (uiNode_t * node, int x, i
 /**
  * @brief Handles selectboxes clicks
  */
-static void MN_OptionTreeNodeClick (uiNode_t * node, int x, int y)
+static void UI_OptionTreeNodeClick (uiNode_t * node, int x, int y)
 {
 	uiNode_t* option;
 	int depth;
 
-	if (MN_AbstractOptionGetCurrentValue(node) == NULL)
+	if (UI_AbstractOptionGetCurrentValue(node) == NULL)
 		return;
 
 	/* select the right option */
-	option = MN_OptionTreeNodeGetOptionAtPosition(node, x, y, &depth);
+	option = UI_OptionTreeNodeGetOptionAtPosition(node, x, y, &depth);
 
-	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	/* extend/collapse*/
 	x -= depth * DEPTH_WIDTH;
 	if (x >= 0 && x < COLLAPSEBUTTON_WIDTH) {
 		if (option && option->firstChild) {
 			OPTIONEXTRADATA(option).collapsed = !OPTIONEXTRADATA(option).collapsed;
-			MN_OptionTreeNodeUpdateCache(node);
+			UI_OptionTreeNodeUpdateCache(node);
 		}
 		return;
 	}
 
 	/* update the status */
 	if (option)
-		MN_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
+		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
 }
 
 /**
  * @brief Auto scroll the list
  */
-static void MN_OptionTreeNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_OptionTreeNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
 {
 	qboolean updated;
-	updated = MN_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
+	updated = UI_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
 	if (EXTRADATA(node).onViewChange && updated)
-		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 
 	if (node->onWheelUp && !down)
-		MN_ExecuteEventActions(node, node->onWheelUp);
+		UI_ExecuteEventActions(node, node->onWheelUp);
 	if (node->onWheelDown && down)
-		MN_ExecuteEventActions(node, node->onWheelDown);
+		UI_ExecuteEventActions(node, node->onWheelDown);
 	if (node->onWheel)
-		MN_ExecuteEventActions(node, node->onWheel);
+		UI_ExecuteEventActions(node, node->onWheel);
 }
 
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void MN_OptionTreeNodeLoading (uiNode_t *node)
+static void UI_OptionTreeNodeLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	EXTRADATA(node).versionId = -1;
 	node->padding = 3;
 }
 
-static void MN_OptionTreeNodeLoaded (uiNode_t *node)
+static void UI_OptionTreeNodeLoaded (uiNode_t *node)
 {
 }
 
-static void MN_OptionTreeSetSelectedValue (uiNode_t *node, const uiCallContext_t *context)
+static void UI_OptionTreeSetSelectedValue (uiNode_t *node, const uiCallContext_t *context)
 {
 	uiOptionIterator_t iterator;
 	uiNode_t *option;
@@ -305,64 +305,64 @@ static void MN_OptionTreeSetSelectedValue (uiNode_t *node, const uiCallContext_t
 	const char* value;
 	int pos, i;
 
-	if (MN_GetParamNumber(context) != 1) {
-		Com_Printf("MN_OptionTreeSetSelectedValue: Invalide number of param\n");
+	if (UI_GetParamNumber(context) != 1) {
+		Com_Printf("UI_OptionTreeSetSelectedValue: Invalide number of param\n");
 		return;
 	}
 
-	value = MN_GetParam(context, 1);
+	value = UI_GetParam(context, 1);
 
 	/* is the option exists */
-	firstOption = MN_OptionTreeNodeGetFirstOption(node);
-	MN_InitOptionIteratorAtIndex(0, firstOption, &iterator);
+	firstOption = UI_OptionTreeNodeGetFirstOption(node);
+	UI_InitOptionIteratorAtIndex(0, firstOption, &iterator);
 	/** @todo merge that into the Init iterator function */
 	iterator.skipCollapsed = qfalse;
-	option = MN_FindOptionByValue(&iterator, value);
+	option = UI_FindOptionByValue(&iterator, value);
 
 	/* update the selection */
 	if (option) {
-		MN_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
+		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
 	} else {
-		Com_Printf("MN_OptionTreeSetSelectedValue: Option value \"%s\" not found\n", value);
+		Com_Printf("UI_OptionTreeSetSelectedValue: Option value \"%s\" not found\n", value);
 		return;
 	}
 
 	/* expend parents */
 	for (i = 0; i < iterator.depthPos; i++)
 		OPTIONEXTRADATA(iterator.depthCache[i]).collapsed = qfalse;
-	MN_OptionTreeNodeUpdateCache(node);
-	MN_OptionTreeNodeUpdateScroll(node);
+	UI_OptionTreeNodeUpdateCache(node);
+	UI_OptionTreeNodeUpdateScroll(node);
 
 	/* fix scroll bar */
-	firstOption = MN_OptionTreeNodeGetFirstOption(node);
-	MN_InitOptionIteratorAtIndex(0, firstOption, &iterator);
-	pos = MN_FindOptionPosition(&iterator, option);
+	firstOption = UI_OptionTreeNodeGetFirstOption(node);
+	UI_InitOptionIteratorAtIndex(0, firstOption, &iterator);
+	pos = UI_FindOptionPosition(&iterator, option);
 	if (pos == -1)
 		return;
 	if (pos < EXTRADATA(node).scrollY.viewPos || pos >= EXTRADATA(node).scrollY.viewPos + EXTRADATA(node).scrollY.viewSize) {
 		qboolean updated;
-		updated = MN_SetScroll(&EXTRADATA(node).scrollY, pos, -1, -1);
+		updated = UI_SetScroll(&EXTRADATA(node).scrollY, pos, -1, -1);
 		if (updated && EXTRADATA(node).onViewChange)
-			MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+			UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 	}
 }
 
 static const value_t properties[] = {
 	/* Call it to toggle the node status. */
-	{"setselectedvalue", V_UI_NODEMETHOD, ((size_t) MN_OptionTreeSetSelectedValue), 0},
+	{"setselectedvalue", V_UI_NODEMETHOD, ((size_t) UI_OptionTreeSetSelectedValue), 0},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
+void UI_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "optiontree";
 	behaviour->extends = "abstractoption";
-	behaviour->draw = MN_OptionTreeNodeDraw;
-	behaviour->leftClick = MN_OptionTreeNodeClick;
-	behaviour->mouseWheel = MN_OptionTreeNodeMouseWheel;
-	behaviour->loading = MN_OptionTreeNodeLoading;
-	behaviour->loaded = MN_OptionTreeNodeLoaded;
+	behaviour->draw = UI_OptionTreeNodeDraw;
+	behaviour->leftClick = UI_OptionTreeNodeClick;
+	behaviour->mouseWheel = UI_OptionTreeNodeMouseWheel;
+	behaviour->loading = UI_OptionTreeNodeLoading;
+	behaviour->loaded = UI_OptionTreeNodeLoaded;
 	behaviour->properties = properties;
 	behaviour->drawItselfChild = qtrue;
 }

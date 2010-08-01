@@ -51,8 +51,8 @@ typedef struct {
 	int layoutMargin;		/**< The margin between all children nodes of the panel */
 } panelExtraData_t;
 
-void MN_RegisterPanelNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterPanelNode(struct uiBehaviour_s *behaviour);
 
-void MN_StarLayout(struct uiNode_s *node);
+void UI_StarLayout(struct uiNode_s *node);
 
 #endif

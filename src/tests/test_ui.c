@@ -59,44 +59,44 @@ static void testTimerDataStructure (void)
 	timerCallback_t dummyCallback = (timerCallback_t) 0x1;
 
 	uiTimer_t *a, *b, *c;
-	a = MN_AllocTimer(dummyNode, 10, dummyCallback);
-	b = MN_AllocTimer(dummyNode, 20, dummyCallback);
-	c = MN_AllocTimer(dummyNode, 30, dummyCallback);
-	CU_ASSERT(MN_GetFirstTimer() == NULL);
+	a = UI_AllocTimer(dummyNode, 10, dummyCallback);
+	b = UI_AllocTimer(dummyNode, 20, dummyCallback);
+	c = UI_AllocTimer(dummyNode, 30, dummyCallback);
+	CU_ASSERT(UI_GetFirstTimer() == NULL);
 
-	MN_TimerStart(b);
-	CU_ASSERT(MN_GetFirstTimer() == b);
+	UI_TimerStart(b);
+	CU_ASSERT(UI_GetFirstTimer() == b);
 
-	MN_TimerStart(a);
-	CU_ASSERT(MN_GetFirstTimer() == a);
+	UI_TimerStart(a);
+	CU_ASSERT(UI_GetFirstTimer() == a);
 
-	MN_TimerStart(c);
-	CU_ASSERT(MN_GetFirstTimer()->next->next == c);
+	UI_TimerStart(c);
+	CU_ASSERT(UI_GetFirstTimer()->next->next == c);
 
-	MN_TimerStop(a);
-	MN_TimerStop(b);
+	UI_TimerStop(a);
+	UI_TimerStop(b);
 	CU_ASSERT(a->owner != NULL);
-	CU_ASSERT(MN_GetFirstTimer() == c);
-	CU_ASSERT(MN_GetFirstTimer()->next == NULL);
+	CU_ASSERT(UI_GetFirstTimer() == c);
+	CU_ASSERT(UI_GetFirstTimer()->next == NULL);
 
-	MN_TimerStart(a);
-	CU_ASSERT(MN_GetFirstTimer() == a);
-	CU_ASSERT(MN_GetFirstTimer()->next == c);
+	UI_TimerStart(a);
+	CU_ASSERT(UI_GetFirstTimer() == a);
+	CU_ASSERT(UI_GetFirstTimer()->next == c);
 
-	MN_PrivateInsertTimerInActiveList(a->next, b);
-	CU_ASSERT(MN_GetFirstTimer() == a);
-	CU_ASSERT(MN_GetFirstTimer()->next == b);
-	CU_ASSERT(MN_GetFirstTimer()->next->next == c);
+	UI_PrivateInsertTimerInActiveList(a->next, b);
+	CU_ASSERT(UI_GetFirstTimer() == a);
+	CU_ASSERT(UI_GetFirstTimer()->next == b);
+	CU_ASSERT(UI_GetFirstTimer()->next->next == c);
 
-	MN_TimerRelease(b);
-	CU_ASSERT(MN_GetFirstTimer() == a);
-	CU_ASSERT(MN_GetFirstTimer()->next == c);
+	UI_TimerRelease(b);
+	CU_ASSERT(UI_GetFirstTimer() == a);
+	CU_ASSERT(UI_GetFirstTimer()->next == c);
 
-	MN_TimerRelease(a);
-	CU_ASSERT(MN_GetFirstTimer() == c);
+	UI_TimerRelease(a);
+	CU_ASSERT(UI_GetFirstTimer() == c);
 
-	MN_TimerRelease(c);
-	CU_ASSERT(MN_GetFirstTimer() == NULL);
+	UI_TimerRelease(c);
+	CU_ASSERT(UI_GetFirstTimer() == NULL);
 	CU_ASSERT(c->owner == NULL);
 }
 

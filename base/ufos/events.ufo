@@ -48,7 +48,7 @@ mail alienbreathing
 	icon icons/mail_un
 }
 
-// FIXME: Use these and remove the MN_AddNewMessage stuff for these
+// FIXME: Use these and remove the UI_AddNewMessage stuff for these
 mail ufo_crashed_report
 {
 	to "_mail_to_base_commander"

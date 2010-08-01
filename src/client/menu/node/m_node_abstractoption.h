@@ -51,10 +51,10 @@ typedef struct {
 struct uiNode_s;
 struct uiBehaviour_s;
 
-void MN_RegisterAbstractOptionNode(struct uiBehaviour_s *behaviour);
-void MN_OptionNodeSortOptions(struct uiNode_s *node);
-struct uiNode_s* MN_AbstractOptionGetFirstOption(uiNode_t * node);
-const char *MN_AbstractOptionGetCurrentValue(uiNode_t * node);
-void MN_AbstractOptionSetCurrentValue(uiNode_t * node, const char *value);
+void UI_RegisterAbstractOptionNode(struct uiBehaviour_s *behaviour);
+void UI_OptionNodeSortOptions(struct uiNode_s *node);
+struct uiNode_s* UI_AbstractOptionGetFirstOption(uiNode_t * node);
+const char *UI_AbstractOptionGetCurrentValue(uiNode_t * node);
+void UI_AbstractOptionSetCurrentValue(uiNode_t * node, const char *value);
 
 #endif

@@ -826,7 +826,7 @@ qboolean UFO_IsUFOSeenOnGeoscape (const aircraft_t const *ufo)
 }
 
 /**
- * @sa MN_InitStartup
+ * @sa UI_InitStartup
  */
 void UFO_InitStartup (void)
 {

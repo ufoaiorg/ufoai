@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_mesh_anim.h"
 
 #define EXTRADATA_TYPE modelExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
 #define ROTATE_SPEED	0.5
 #define MAX_OLDREFVALUE MAX_VAR
@@ -54,7 +54,7 @@ static const uiBehaviour_t const *localBehaviour;
  * @param[in] menuModel menu model id from script files
  * @return menuModel_t pointer
  */
-menuModel_t *MN_GetMenuModel (const char *menuModel)
+menuModel_t *UI_GetMenuModel (const char *menuModel)
 {
 	int i;
 	menuModel_t *m;
@@ -67,7 +67,7 @@ menuModel_t *MN_GetMenuModel (const char *menuModel)
 	return NULL;
 }
 
-void MN_ListMenuModels_f (void)
+void UI_ListMenuModels_f (void)
 {
 	int i;
 
@@ -77,15 +77,15 @@ void MN_ListMenuModels_f (void)
 		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", mn.menuModels[i].id, mn.menuModels[i].model, mn.menuModels[i].need);
 }
 
-static void MN_ModelNodeDraw (uiNode_t *node)
+static void UI_ModelNodeDraw (uiNode_t *node)
 {
-	const char* ref = MN_GetReferenceString(node, EXTRADATA(node).model);
+	const char* ref = UI_GetReferenceString(node, EXTRADATA(node).model);
 	char source[MAX_VAR];
 	if (ref == NULL || ref[0] == '\0')
 		source[0] = '\0';
 	else
 		Q_strncpyz(source, ref, sizeof(source));
-	MN_DrawModelNode(node, source);
+	UI_DrawModelNode(node, source);
 }
 
 static vec3_t nullVector = {0, 0, 0};
@@ -93,10 +93,10 @@ static vec3_t nullVector = {0, 0, 0};
 /**
  * @brief Set the Model info view (angle,origin,scale) according to the node definition
  */
-static inline void MN_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, menuModel_t *menuModel)
+static inline void UI_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, menuModel_t *menuModel)
 {
 	vec3_t nodeorigin;
-	MN_GetNodeAbsPos(node, nodeorigin);
+	UI_GetNodeAbsPos(node, nodeorigin);
 	nodeorigin[0] += node->size[0] / 2 + EXTRADATA(node).origin[0];
 	nodeorigin[1] += node->size[1] / 2 + EXTRADATA(node).origin[1];
 	nodeorigin[2] = EXTRADATA(node).origin[2];
@@ -111,7 +111,7 @@ static inline void MN_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, menuMo
 /**
  * @brief Draw a model using "menu model" definition
  */
-static void MN_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, modelInfo_t *mi, menuModel_t *menuModel)
+static void UI_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, modelInfo_t *mi, menuModel_t *menuModel)
 {
 	qboolean autoScaleComputed = qfalse;
 	vec3_t autoScale;
@@ -147,7 +147,7 @@ static void MN_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, m
 			vec3_t pmiorigin;
 			animState_t *as;
 			/* place this menumodel part on an already existing menumodel tag */
-			menuModelParent = MN_GetMenuModel(menuModel->parent);
+			menuModelParent = UI_GetMenuModel(menuModel->parent);
 			if (!menuModelParent) {
 				Com_Printf("Menumodel: Could not get the menuModel '%s'\n", menuModel->parent);
 				break;
@@ -192,7 +192,7 @@ static void MN_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, m
 		} else {
 			/* no tag and no parent means - base model or single model */
 			const char *ref;
-			MN_InitModelInfoView(node, mi, menuModel);
+			UI_InitModelInfoView(node, mi, menuModel);
 			Vector4Copy(node->color, mi->color);
 
 			/* compute the scale and center for the first model.
@@ -214,7 +214,7 @@ static void MN_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, m
 
 			/* get the animation given by menu node properties */
 			if (EXTRADATA(node).animation && *(char *) EXTRADATA(node).animation) {
-				ref = MN_GetReferenceString(node, EXTRADATA(node).animation);
+				ref = UI_GetReferenceString(node, EXTRADATA(node).animation);
 			/* otherwise use the standard animation from modelmenu definition */
 			} else
 				ref = menuModel->anim;
@@ -245,7 +245,7 @@ static void MN_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, m
  * @todo Menu models should inherite the node values from their parent
  * @todo need to merge menuModel case, and the common case (look to be a copy-pasted code)
  */
-void MN_DrawModelNode (uiNode_t *node, const char *source)
+void UI_DrawModelNode (uiNode_t *node, const char *source)
 {
 	modelInfo_t mi;
 	menuModel_t *menuModel;
@@ -253,12 +253,12 @@ void MN_DrawModelNode (uiNode_t *node, const char *source)
 	vec3_t autoScale;
 	vec3_t autoCenter;
 
-	assert(MN_NodeInstanceOf(node, "model"));			/**< We use model extradata */
+	assert(UI_NodeInstanceOf(node, "model"));			/**< We use model extradata */
 
 	if (source[0] == '\0')
 		return;
 
-	menuModel = MN_GetMenuModel(source);
+	menuModel = UI_GetMenuModel(source);
 	/* direct model name - no menumodel definition */
 	if (!menuModel) {
 		/* prevent the searching for a menumodel def in the next frame */
@@ -271,7 +271,7 @@ void MN_DrawModelNode (uiNode_t *node, const char *source)
 	}
 
 	/* compute the absolute origin ('origin' property is relative to the node center) */
-	MN_GetNodeAbsPos(node, nodeorigin);
+	UI_GetNodeAbsPos(node, nodeorigin);
 	R_CleanupDepthBuffer(nodeorigin[0], nodeorigin[1], node->size[0], node->size[1]);
 	if (EXTRADATA(node).clipOverflow)
 		R_PushClipRect(nodeorigin[0], nodeorigin[1], node->size[0], node->size[1]);
@@ -288,7 +288,7 @@ void MN_DrawModelNode (uiNode_t *node, const char *source)
 
 	/* special case to draw models with "menu model" */
 	if (menuModel) {
-		MN_DrawModelNodeWithMenuModel(node, source, &mi, menuModel);
+		UI_DrawModelNodeWithMenuModel(node, source, &mi, menuModel);
 		if (EXTRADATA(node).clipOverflow)
 			R_PopClipRect();
 		return;
@@ -316,7 +316,7 @@ void MN_DrawModelNode (uiNode_t *node, const char *source)
 
 	/* get skin */
 	if (EXTRADATA(node).skin && *(char *) EXTRADATA(node).skin)
-		mi.skin = atoi(MN_GetReferenceString(node, EXTRADATA(node).skin));
+		mi.skin = atoi(UI_GetReferenceString(node, EXTRADATA(node).skin));
 	else
 		mi.skin = 0;
 
@@ -324,7 +324,7 @@ void MN_DrawModelNode (uiNode_t *node, const char *source)
 	if (EXTRADATA(node).animation && *(char *) EXTRADATA(node).animation) {
 		animState_t *as;
 		const char *ref;
-		ref = MN_GetReferenceString(node, EXTRADATA(node).animation);
+		ref = UI_GetReferenceString(node, EXTRADATA(node).animation);
 
 		/* check whether the cvar value changed */
 		if (strncmp(EXTRADATA(node).oldRefValue, source, MAX_OLDREFVALUE)) {
@@ -375,7 +375,7 @@ void MN_DrawModelNode (uiNode_t *node, const char *source)
 				continue;
 
 			/* skip invisible child */
-			if (child->invis || !MN_CheckVisibility(child))
+			if (child->invis || !UI_CheckVisibility(child))
 				continue;
 
 			memset(&mi, 0, sizeof(mi));
@@ -389,7 +389,7 @@ void MN_DrawModelNode (uiNode_t *node, const char *source)
 			tag = EXTRADATA(child).tag;
 
 			/* init model name */
-			childRef = MN_GetReferenceString(child, EXTRADATA(child).model);
+			childRef = UI_GetReferenceString(child, EXTRADATA(child).model);
 			if (childRef == NULL || childRef[0] == '\0')
 				childSource[0] = '\0';
 			else
@@ -399,7 +399,7 @@ void MN_DrawModelNode (uiNode_t *node, const char *source)
 
 			/* init skin */
 			if (EXTRADATA(child).skin && *(char *) EXTRADATA(child).skin)
-				mi.skin = atoi(MN_GetReferenceString(child, EXTRADATA(child).skin));
+				mi.skin = atoi(UI_GetReferenceString(child, EXTRADATA(child).skin));
 			else
 				mi.skin = 0;
 
@@ -414,7 +414,7 @@ void MN_DrawModelNode (uiNode_t *node, const char *source)
 static int oldMousePosX = 0;
 static int oldMousePosY = 0;
 
-static void MN_ModelNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+static void UI_ModelNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	float *rotateAngles = EXTRADATA(node).angles;
 
@@ -437,30 +437,30 @@ static void MN_ModelNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
-static void MN_ModelNodeMouseDown (uiNode_t *node, int x, int y, int button)
+static void UI_ModelNodeMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
 	if (!EXTRADATA(node).rotateWithMouse)
 		return;
-	MN_SetMouseCapture(node);
+	UI_SetMouseCapture(node);
 	oldMousePosX = x;
 	oldMousePosY = y;
 }
 
-static void MN_ModelNodeMouseUp (uiNode_t *node, int x, int y, int button)
+static void UI_ModelNodeMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
-	if (MN_GetMouseCapture() != node)
+	if (UI_GetMouseCapture() != node)
 		return;
-	MN_MouseRelease();
+	UI_MouseRelease();
 }
 
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void MN_ModelNodeLoading (uiNode_t *node)
+static void UI_ModelNodeLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	VectorSet(EXTRADATA(node).scale, 1, 1, 1);
@@ -470,86 +470,86 @@ static void MN_ModelNodeLoading (uiNode_t *node)
 /**
  * @brief Call to update a cloned node
  */
-static void MN_ModelNodeClone (const uiNode_t *source, uiNode_t *clone)
+static void UI_ModelNodeClone (const uiNode_t *source, uiNode_t *clone)
 {
 	localBehaviour->super->clone(source, clone);
 	if (!clone->dynamic)
-		EXTRADATA(clone).oldRefValue = MN_AllocStaticString("", MAX_OLDREFVALUE);
+		EXTRADATA(clone).oldRefValue = UI_AllocStaticString("", MAX_OLDREFVALUE);
 }
 
-static void MN_ModelNodeNew (uiNode_t *node)
+static void UI_ModelNodeNew (uiNode_t *node)
 {
 	EXTRADATA(node).oldRefValue = (char*) Mem_PoolAlloc(MAX_OLDREFVALUE, mn_dynPool, 0);
 	EXTRADATA(node).oldRefValue[0] = '\0';
 }
 
-static void MN_ModelNodeDelete (uiNode_t *node)
+static void UI_ModelNodeDelete (uiNode_t *node)
 {
 	Mem_Free(EXTRADATA(node).oldRefValue);
 	EXTRADATA(node).oldRefValue = NULL;
 }
 
-static void MN_ModelNodeLoaded (uiNode_t *node)
+static void UI_ModelNodeLoaded (uiNode_t *node)
 {
 	/* a tag without but not a submodel */
 	if (EXTRADATA(node).tag != NULL && node->behaviour != node->parent->behaviour) {
-		Com_Printf("MN_ModelNodeLoaded: '%s' use a tag but is not a submodel. Tag removed.\n", MN_GetPath(node));
+		Com_Printf("UI_ModelNodeLoaded: '%s' use a tag but is not a submodel. Tag removed.\n", UI_GetPath(node));
 		EXTRADATA(node).tag = NULL;
 	}
 
 	if (EXTRADATA(node).oldRefValue == NULL)
-		EXTRADATA(node).oldRefValue = MN_AllocStaticString("", MAX_OLDREFVALUE);
+		EXTRADATA(node).oldRefValue = UI_AllocStaticString("", MAX_OLDREFVALUE);
 
 	/* no tag but no size */
 	if (EXTRADATA(node).tag == NULL && (node->size[0] == 0 || node->size[1] == 0)) {
-		Com_Printf("MN_ModelNodeLoaded: Please set a pos and size to the node '%s'. Note: 'origin' is a relative value to the center of the node\n", MN_GetPath(node));
+		Com_Printf("UI_ModelNodeLoaded: Please set a pos and size to the node '%s'. Note: 'origin' is a relative value to the center of the node\n", UI_GetPath(node));
 	}
 }
 
 /** @brief valid properties for model */
 static const value_t properties[] = {
 	/* Both. Name of the animation for the model */
-	{"anim", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, animation), 0},
+	{"anim", V_CVAR_OR_STRING, UI_EXTRADATA_OFFSETOF(modelExtraData_t, animation), 0},
 	/* Main model only. Point of view. */
-	{"angles", V_VECTOR, MN_EXTRADATA_OFFSETOF(modelExtraData_t, angles), MEMBER_SIZEOF(modelExtraData_t, angles)},
+	{"angles", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, angles), MEMBER_SIZEOF(modelExtraData_t, angles)},
 	/* Main model only. Position of the model relative to the center of the node. */
-	{"origin", V_VECTOR, MN_EXTRADATA_OFFSETOF(modelExtraData_t, origin), MEMBER_SIZEOF(modelExtraData_t, origin)},
+	{"origin", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, origin), MEMBER_SIZEOF(modelExtraData_t, origin)},
 	/* Both. Scale the model */
-	{"scale", V_VECTOR, MN_EXTRADATA_OFFSETOF(modelExtraData_t, scale), MEMBER_SIZEOF(modelExtraData_t, scale)},
+	{"scale", V_VECTOR, UI_EXTRADATA_OFFSETOF(modelExtraData_t, scale), MEMBER_SIZEOF(modelExtraData_t, scale)},
 	/* Submodel only. A tag name to link the model to the parent model. */
-	{"tag", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, tag), 0},
+	{"tag", V_CVAR_OR_STRING, UI_EXTRADATA_OFFSETOF(modelExtraData_t, tag), 0},
 	/* Main model only. Auto compute the "better" scale for the model. The function dont work
 	 * very well at the moment because it dont check the angle and no more submodel bounding box.
 	 */
-	{"autoscale", V_BOOL, MN_EXTRADATA_OFFSETOF(modelExtraData_t, autoscale), MEMBER_SIZEOF(modelExtraData_t, autoscale)},
+	{"autoscale", V_BOOL, UI_EXTRADATA_OFFSETOF(modelExtraData_t, autoscale), MEMBER_SIZEOF(modelExtraData_t, autoscale)},
 	/* Main model only. Allow to change the POV of the model with the mouse (only for main model) */
-	{"rotatewithmouse", V_BOOL, MN_EXTRADATA_OFFSETOF(modelExtraData_t, rotateWithMouse), MEMBER_SIZEOF(modelExtraData_t, rotateWithMouse)},
+	{"rotatewithmouse", V_BOOL, UI_EXTRADATA_OFFSETOF(modelExtraData_t, rotateWithMouse), MEMBER_SIZEOF(modelExtraData_t, rotateWithMouse)},
 	/* Main model only. Clip the model with the node rect */
-	{"clipoverflow", V_BOOL, MN_EXTRADATA_OFFSETOF(modelExtraData_t, clipOverflow), MEMBER_SIZEOF(modelExtraData_t, clipOverflow)},
+	{"clipoverflow", V_BOOL, UI_EXTRADATA_OFFSETOF(modelExtraData_t, clipOverflow), MEMBER_SIZEOF(modelExtraData_t, clipOverflow)},
 	/* Source of the model. The path to the model, relative to <code>base/models</code> */
-	{"src", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, model), 0},
+	{"src", V_CVAR_OR_STRING, UI_EXTRADATA_OFFSETOF(modelExtraData_t, model), 0},
 	/* Both. Name of the skin for the model. */
-	{"skin", V_CVAR_OR_STRING, MN_EXTRADATA_OFFSETOF(modelExtraData_t, skin), 0},
+	{"skin", V_CVAR_OR_STRING, UI_EXTRADATA_OFFSETOF(modelExtraData_t, skin), 0},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterModelNode (uiBehaviour_t *behaviour)
+void UI_RegisterModelNode (uiBehaviour_t *behaviour)
 {
 	localBehaviour = behaviour;
 	behaviour->name = "model";
 	behaviour->drawItselfChild = qtrue;
-	behaviour->draw = MN_ModelNodeDraw;
-	behaviour->mouseDown = MN_ModelNodeMouseDown;
-	behaviour->mouseUp = MN_ModelNodeMouseUp;
-	behaviour->loading = MN_ModelNodeLoading;
-	behaviour->loaded = MN_ModelNodeLoaded;
-	behaviour->clone = MN_ModelNodeClone;
-	behaviour->new = MN_ModelNodeNew;
-	behaviour->delete = MN_ModelNodeDelete;
-	behaviour->capturedMouseMove = MN_ModelNodeCapturedMouseMove;
+	behaviour->draw = UI_ModelNodeDraw;
+	behaviour->mouseDown = UI_ModelNodeMouseDown;
+	behaviour->mouseUp = UI_ModelNodeMouseUp;
+	behaviour->loading = UI_ModelNodeLoading;
+	behaviour->loaded = UI_ModelNodeLoaded;
+	behaviour->clone = UI_ModelNodeClone;
+	behaviour->new = UI_ModelNodeNew;
+	behaviour->delete = UI_ModelNodeDelete;
+	behaviour->capturedMouseMove = UI_ModelNodeCapturedMouseMove;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
-	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
+	Cmd_AddCommand("menumodelslist", UI_ListMenuModels_f, NULL);
 }

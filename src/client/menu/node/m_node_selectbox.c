@@ -57,7 +57,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
-#define EXTRADATA(node) MN_EXTRADATA(node, abstractOptionExtraData_t)
+#define EXTRADATA(node) UI_EXTRADATA(node, abstractOptionExtraData_t)
 
 #define SELECTBOX_DEFAULT_HEIGHT 20.0f
 
@@ -71,12 +71,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief call when the mouse move is the node is captured
  * @todo we can remove the loop if we save the current element in the node
  */
-static void MN_SelectBoxNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+static void UI_SelectBoxNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	uiNode_t* option;
 	int posy;
 
-	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	/* test bounded box */
 	if (x < 0 || y < 0 || x > node->size[0] || y > node->size[1] * (EXTRADATA(node).count + 1)) {
@@ -84,7 +84,7 @@ static void MN_SelectBoxNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	}
 
 	posy = node->size[1];
-	for (option = MN_AbstractOptionGetFirstOption(node); option; option = option->next) {
+	for (option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
 		if (option->invis)
 			continue;
 		OPTIONEXTRADATA(option).hovered = (posy <= y && y < posy + node->size[1]);
@@ -92,7 +92,7 @@ static void MN_SelectBoxNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	}
 }
 
-static void MN_SelectBoxNodeDraw (uiNode_t *node)
+static void UI_SelectBoxNodeDraw (uiNode_t *node)
 {
 	uiNode_t* option;
 	int selBoxX, selBoxY;
@@ -103,33 +103,33 @@ static void MN_SelectBoxNodeDraw (uiNode_t *node)
 	const image_t *image;
 	static vec4_t invisColor = {1.0, 1.0, 1.0, 0.7};
 
-	ref = MN_AbstractOptionGetCurrentValue(node);
+	ref = UI_AbstractOptionGetCurrentValue(node);
 	if (ref == NULL)
 		return;
 
-	MN_GetNodeAbsPos(node, nodepos);
-	imageName = MN_GetReferenceString(node, node->image);
+	UI_GetNodeAbsPos(node, nodepos);
+	imageName = UI_GetReferenceString(node, node->image);
 	if (!imageName)
 		imageName = "ui/selectbox";
 
-	image = MN_LoadImage(imageName);
+	image = UI_LoadImage(imageName);
 
-	font = MN_GetFontFromNode(node);
+	font = UI_GetFontFromNode(node);
 	selBoxX = nodepos[0] + SELECTBOX_SIDE_WIDTH;
 	selBoxY = nodepos[1] + SELECTBOX_SPACER;
 
 	/* left border */
-	MN_DrawNormImage(nodepos[0], nodepos[1], SELECTBOX_SIDE_WIDTH, node->size[1],
+	UI_DrawNormImage(nodepos[0], nodepos[1], SELECTBOX_SIDE_WIDTH, node->size[1],
 		SELECTBOX_SIDE_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 0.0f, 0.0f, image);
 	/* stretched middle bar */
-	MN_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1], node->size[0]-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1],
+	UI_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1], node->size[0]-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1],
 		12.0f, SELECTBOX_DEFAULT_HEIGHT, 7.0f, 0.0f, image);
 	/* right border (arrow) */
-	MN_DrawNormImage(nodepos[0] + node->size[0] - SELECTBOX_RIGHT_WIDTH, nodepos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
+	UI_DrawNormImage(nodepos[0] + node->size[0] - SELECTBOX_RIGHT_WIDTH, nodepos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
 		12.0f + SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 12.0f, 0.0f, image);
 
 	/* draw the label for the current selected option */
-	for (option = MN_AbstractOptionGetFirstOption(node); option; option = option->next) {
+	for (option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
 		const char *label;
 
 		if (strcmp(OPTIONEXTRADATA(option).value, ref) != 0)
@@ -142,7 +142,7 @@ static void MN_SelectBoxNodeDraw (uiNode_t *node)
 		if (label[0] == '_')
 			label = _(label + 1);
 
-		MN_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
+		UI_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, selBoxY, node->size[0] - 4, 0,
 			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
@@ -151,12 +151,12 @@ static void MN_SelectBoxNodeDraw (uiNode_t *node)
 	}
 
 	/* must we draw the drop-down list */
-	if (MN_GetMouseCapture() == node) {
-		MN_CaptureDrawOver(node);
+	if (UI_GetMouseCapture() == node) {
+		UI_CaptureDrawOver(node);
 	}
 }
 
-static void MN_SelectBoxNodeDrawOverMenu (uiNode_t *node)
+static void UI_SelectBoxNodeDrawOverMenu (uiNode_t *node)
 {
 	uiNode_t* option;
 	int selBoxX, selBoxY;
@@ -166,18 +166,18 @@ static void MN_SelectBoxNodeDrawOverMenu (uiNode_t *node)
 	const char* imageName;
 	const image_t *image;
 
-	ref = MN_AbstractOptionGetCurrentValue(node);
+	ref = UI_AbstractOptionGetCurrentValue(node);
 	if (ref == NULL)
 		return;
 
-	MN_GetNodeAbsPos(node, nodepos);
-	imageName = MN_GetReferenceString(node, node->image);
+	UI_GetNodeAbsPos(node, nodepos);
+	imageName = UI_GetReferenceString(node, node->image);
 	if (!imageName)
 		imageName = "ui/selectbox";
 
-	image = MN_LoadImage(imageName);
+	image = UI_LoadImage(imageName);
 
-	font = MN_GetFontFromNode(node);
+	font = UI_GetFontFromNode(node);
 	selBoxX = nodepos[0] + SELECTBOX_SIDE_WIDTH;
 	selBoxY = nodepos[1] + SELECTBOX_SPACER;
 
@@ -185,47 +185,47 @@ static void MN_SelectBoxNodeDrawOverMenu (uiNode_t *node)
 
 	/* drop down menu */
 	/* left side */
-	MN_DrawNormImage(nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * EXTRADATA(node).count,
+	UI_DrawNormImage(nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * EXTRADATA(node).count,
 		7.0f, 28.0f, 0.0f, 21.0f, image);
 
 	/* stretched middle bar */
-	MN_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1] * EXTRADATA(node).count,
+	UI_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, nodepos[1] + node->size[1], node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, node->size[1] * EXTRADATA(node).count,
 		16.0f, 28.0f, 7.0f, 21.0f, image);
 
 	/* right side */
-	MN_DrawNormImage(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * EXTRADATA(node).count,
+	UI_DrawNormImage(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * EXTRADATA(node).count,
 		23.0f, 28.0f, 16.0f, 21.0f, image);
 
 	/* now draw all available options for this selectbox */
-	for (option = MN_AbstractOptionGetFirstOption(node); option; option = option->next) {
+	for (option = UI_AbstractOptionGetFirstOption(node); option; option = option->next) {
 		const char *label;
 		if (option->invis)
 			continue;
 		/* draw the hover effect */
 		if (OPTIONEXTRADATA(option).hovered)
-			MN_DrawFill(selBoxX, selBoxY, node->size[0] -SELECTBOX_SIDE_WIDTH - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
+			UI_DrawFill(selBoxX, selBoxY, node->size[0] -SELECTBOX_SIDE_WIDTH - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
 					SELECTBOX_DEFAULT_HEIGHT, node->color);
 		/* print the option label */
 		label = OPTIONEXTRADATA(option).label;
 		if (label[0] == '_')
 			label = _(label + 1);
-		MN_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
+		UI_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, nodepos[1] + node->size[1], node->size[0] - 4, 0,
 			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		/* next entries' position */
 		selBoxY += node->size[1];
 	}
 	/* left side */
-	MN_DrawNormImage(nodepos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
+	UI_DrawNormImage(nodepos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
 		7.0f, 32.0f, 0.0f, 28.0f, image);
 
 	/* stretched middle bar */
-	MN_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
+	UI_DrawNormImage(nodepos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH,
 			SELECTBOX_BOTTOM_HEIGHT,
 		16.0f, 32.0f, 7.0f, 28.0f, image);
 
 	/* right bottom side */
-	MN_DrawNormImage(nodepos[0] + node->size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH, selBoxY - SELECTBOX_SPACER,
+	UI_DrawNormImage(nodepos[0] + node->size[0] - SELECTBOX_SIDE_WIDTH - SELECTBOX_RIGHT_WIDTH, selBoxY - SELECTBOX_SPACER,
 		SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
 		23.0f, 32.0f, 16.0f, 28.0f, image);
 }
@@ -233,30 +233,30 @@ static void MN_SelectBoxNodeDrawOverMenu (uiNode_t *node)
 /**
  * @brief Handles selectboxes clicks
  */
-static void MN_SelectBoxNodeClick (uiNode_t *node, int x, int y)
+static void UI_SelectBoxNodeClick (uiNode_t *node, int x, int y)
 {
 	uiNode_t* option;
 	int clickedAtOption;
 	vec2_t pos;
 
 	/* dropdown the node */
-	if (MN_GetMouseCapture() == NULL) {
-		MN_SetMouseCapture(node);
+	if (UI_GetMouseCapture() == NULL) {
+		UI_SetMouseCapture(node);
 		return;
 	}
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 	clickedAtOption = (y - pos[1]);
 
 	/* we click outside */
 	if (x < pos[0] || y < pos[1] || x >= pos[0] + node->size[0] || y >= pos[1] + node->size[1] * (EXTRADATA(node).count + 1)) {
-		MN_MouseRelease();
+		UI_MouseRelease();
 		return;
 	}
 
 	/* we click on the head */
 	if (clickedAtOption < node->size[1]) {
-		MN_MouseRelease();
+		UI_MouseRelease();
 		return;
 	}
 
@@ -264,11 +264,11 @@ static void MN_SelectBoxNodeClick (uiNode_t *node, int x, int y)
 	if (clickedAtOption < 0 || clickedAtOption >= EXTRADATA(node).count)
 		return;
 
-	if (MN_AbstractOptionGetCurrentValue(node) == NULL)
+	if (UI_AbstractOptionGetCurrentValue(node) == NULL)
 		return;
 
 	/* select the right option */
-	option = MN_AbstractOptionGetFirstOption(node);
+	option = UI_AbstractOptionGetFirstOption(node);
 	for (; option; option = option->next) {
 		if (option->invis)
 			continue;
@@ -279,35 +279,35 @@ static void MN_SelectBoxNodeClick (uiNode_t *node, int x, int y)
 
 	/* update the status */
 	if (option)
-		MN_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
+		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
 
 	/* close the dropdown */
-	MN_MouseRelease();
+	UI_MouseRelease();
 }
 
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void MN_SelectBoxNodeLoading (uiNode_t *node)
+static void UI_SelectBoxNodeLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
 
-static void MN_SelectBoxNodeLoaded (uiNode_t *node)
+static void UI_SelectBoxNodeLoaded (uiNode_t *node)
 {
 	/* force a size (according to the texture) */
 	node->size[1] = SELECTBOX_DEFAULT_HEIGHT;
 }
 
-void MN_RegisterSelectBoxNode (uiBehaviour_t *behaviour)
+void UI_RegisterSelectBoxNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "selectbox";
 	behaviour->extends = "abstractoption";
-	behaviour->draw = MN_SelectBoxNodeDraw;
-	behaviour->drawOverMenu = MN_SelectBoxNodeDrawOverMenu;
-	behaviour->leftClick = MN_SelectBoxNodeClick;
-	behaviour->loading = MN_SelectBoxNodeLoading;
-	behaviour->loaded = MN_SelectBoxNodeLoaded;
-	behaviour->capturedMouseMove = MN_SelectBoxNodeCapturedMouseMove;
+	behaviour->draw = UI_SelectBoxNodeDraw;
+	behaviour->drawOverMenu = UI_SelectBoxNodeDrawOverMenu;
+	behaviour->leftClick = UI_SelectBoxNodeClick;
+	behaviour->loading = UI_SelectBoxNodeLoading;
+	behaviour->loaded = UI_SelectBoxNodeLoaded;
+	behaviour->capturedMouseMove = UI_SelectBoxNodeCapturedMouseMove;
 	behaviour->drawItselfChild = qtrue;
 }

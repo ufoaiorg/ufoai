@@ -34,35 +34,35 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Call after the script initialized the node
  * @todo special cases should be managed as a common property event of the parent node
  */
-static void MN_FuncNodeLoaded (uiNode_t *node)
+static void UI_FuncNodeLoaded (uiNode_t *node)
 {
 	/** @todo move this code into the parser (it should not create a node) */
-	const value_t *prop = MN_GetPropertyFromBehaviour(node->parent->behaviour, node->name);
+	const value_t *prop = UI_GetPropertyFromBehaviour(node->parent->behaviour, node->name);
 	if (prop && prop->type == V_UI_ACTION) {
 		void **value = (void**) ((uintptr_t)node->parent + prop->ofs);
 		if (*value == NULL)
 			*value = (void*) node->onClick;
 		else
-			Com_Printf("MN_FuncNodeLoaded: '%s' already defined. Second function ignored (\"%s\")\n", prop->string, MN_GetPath(node));
+			Com_Printf("UI_FuncNodeLoaded: '%s' already defined. Second function ignored (\"%s\")\n", prop->string, UI_GetPath(node));
 	}
 }
 
-void MN_RegisterSpecialNode (uiBehaviour_t *behaviour)
+void UI_RegisterSpecialNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "special";
 	behaviour->isVirtual = qtrue;
 }
 
-void MN_RegisterFuncNode (uiBehaviour_t *behaviour)
+void UI_RegisterFuncNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "func";
 	behaviour->extends = "special";
 	behaviour->isVirtual = qtrue;
 	behaviour->isFunction = qtrue;
-	behaviour->loaded = MN_FuncNodeLoaded;
+	behaviour->loaded = UI_FuncNodeLoaded;
 }
 
-void MN_RegisterNullNode (uiBehaviour_t *behaviour)
+void UI_RegisterNullNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "";
 	behaviour->extends = "special";
@@ -72,12 +72,12 @@ void MN_RegisterNullNode (uiBehaviour_t *behaviour)
 /**
  * @brief Callback to execute a confunc
  */
-static void MN_ConfuncCommand_f (void)
+static void UI_ConfuncCommand_f (void)
 {
 	uiNode_t *node = (uiNode_t *) Cmd_Userdata();
 	assert(node);
-	assert(MN_NodeInstanceOf(node, "confunc"));
-	MN_ExecuteConFuncActions(node, node->onClick);
+	assert(UI_NodeInstanceOf(node, "confunc"));
+	UI_ExecuteConFuncActions(node, node->onClick);
 }
 
 /**
@@ -85,86 +85,86 @@ static void MN_ConfuncCommand_f (void)
  * @param node The node to check (must be a confunc node).
  * @return @c true if the given node is a dummy node, @c false otherwise.
  */
-static qboolean MN_ConFuncIsVirtual (const uiNode_t *const node)
+static qboolean UI_ConFuncIsVirtual (const uiNode_t *const node)
 {
 	/* magic way to know if it is a dummy node (used for inherited confunc) */
 	const uiNode_t *dummy = (const uiNode_t*) Cmd_GetUserdata(node->name);
 	assert(node);
-	assert(MN_NodeInstanceOf(node, "confunc"));
+	assert(UI_NodeInstanceOf(node, "confunc"));
 	return (dummy != NULL && dummy->parent == NULL);
 }
 
 /**
  * @brief Call after the script initialized the node
  */
-static void MN_ConFuncNodeLoaded (uiNode_t *node)
+static void UI_ConFuncNodeLoaded (uiNode_t *node)
 {
 	/* register confunc non inherited */
 	if (node->super == NULL) {
 		/* don't add a callback twice */
 		if (!Cmd_Exists(node->name)) {
-			Cmd_AddCommand(node->name, MN_ConfuncCommand_f, "Confunc callback");
+			Cmd_AddCommand(node->name, UI_ConfuncCommand_f, "Confunc callback");
 			Cmd_AddUserdata(node->name, node);
 		} else {
-			Com_Printf("MN_ParseNodeBody: Command name for confunc '%s' already registered\n", MN_GetPath(node));
+			Com_Printf("UI_ParseNodeBody: Command name for confunc '%s' already registered\n", UI_GetPath(node));
 		}
 	} else {
 		uiNode_t *dummy;
 
 		/* convert a confunc to an "inherited" confunc if it is possible */
 		if (Cmd_Exists(node->name)) {
-			if (MN_ConFuncIsVirtual(node))
+			if (UI_ConFuncIsVirtual(node))
 				return;
 		}
 
-		dummy = MN_AllocNode(node->name, "confunc", qfalse);
-		Cmd_AddCommand(node->name, MN_ConfuncCommand_f, "Inherited confunc callback");
+		dummy = UI_AllocNode(node->name, "confunc", qfalse);
+		Cmd_AddCommand(node->name, UI_ConfuncCommand_f, "Inherited confunc callback");
 		Cmd_AddUserdata(dummy->name, dummy);
 	}
 }
 
-static void MN_ConFuncNodeClone (const uiNode_t *source, uiNode_t *clone)
+static void UI_ConFuncNodeClone (const uiNode_t *source, uiNode_t *clone)
 {
-	MN_ConFuncNodeLoaded(clone);
+	UI_ConFuncNodeLoaded(clone);
 }
 
 /**
  * @brief Callback every time the parent window is opened (pushed into the active window stack)
  */
-static void MN_ConFuncNodeInit (uiNode_t *node)
+static void UI_ConFuncNodeInit (uiNode_t *node)
 {
-	if (MN_ConFuncIsVirtual(node)) {
-		const value_t *property = MN_GetPropertyFromBehaviour(node->behaviour, "onClick");
+	if (UI_ConFuncIsVirtual(node)) {
+		const value_t *property = UI_GetPropertyFromBehaviour(node->behaviour, "onClick");
 		uiNode_t *userData = (uiNode_t*) Cmd_GetUserdata(node->name);
-		MN_AddListener(userData, property, node);
+		UI_AddListener(userData, property, node);
 	}
 }
 
 /**
  * @brief Callback every time the parent window is closed (pop from the active window stack)
  */
-static void MN_ConFuncNodeClose (uiNode_t *node)
+static void UI_ConFuncNodeClose (uiNode_t *node)
 {
-	if (MN_ConFuncIsVirtual(node)) {
-		const value_t *property = MN_GetPropertyFromBehaviour(node->behaviour, "onClick");
+	if (UI_ConFuncIsVirtual(node)) {
+		const value_t *property = UI_GetPropertyFromBehaviour(node->behaviour, "onClick");
 		uiNode_t *userData = (uiNode_t*) Cmd_GetUserdata(node->name);
-		MN_RemoveListener(userData, property, node);
+		UI_RemoveListener(userData, property, node);
 	}
 }
 
-void MN_RegisterConFuncNode (uiBehaviour_t *behaviour)
+void UI_RegisterConFuncNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "confunc";
 	behaviour->extends = "special";
 	behaviour->isVirtual = qtrue;
 	behaviour->isFunction = qtrue;
-	behaviour->loaded = MN_ConFuncNodeLoaded;
-	behaviour->init = MN_ConFuncNodeInit;
-	behaviour->close = MN_ConFuncNodeClose;
-	behaviour->clone = MN_ConFuncNodeClone;
+	behaviour->loaded = UI_ConFuncNodeLoaded;
+	behaviour->init = UI_ConFuncNodeInit;
+	behaviour->close = UI_ConFuncNodeClose;
+	behaviour->clone = UI_ConFuncNodeClone;
 }
 
-void MN_RegisterCvarFuncNode (uiBehaviour_t *behaviour)
+void UI_RegisterCvarFuncNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "cvarfunc";
 	behaviour->extends = "special";

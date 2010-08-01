@@ -30,6 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct uiBehaviour_s;
 struct uiAction_s;
 
-void MN_RegisterMessageListNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterMessageListNode(struct uiBehaviour_s *behaviour);
 
 #endif

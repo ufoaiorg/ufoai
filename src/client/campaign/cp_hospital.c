@@ -167,7 +167,7 @@ static void HOS_HurtAll_f (void)
 /**
  * @brief Initial stuff for hospitals
  * Bind some of the functions in this file to console-commands that you can call ingame.
- * Called from MN_InitStartup resp. CL_InitLocal
+ * Called from UI_InitStartup resp. CL_InitLocal
  */
 void HOS_InitStartup (void)
 {

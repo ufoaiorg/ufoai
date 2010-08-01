@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Fills a box of pixels with a single color
  */
-void MN_DrawFill (int x, int y, int w, int h, const vec4_t color)
+void UI_DrawFill (int x, int y, int w, int h, const vec4_t color)
 {
 	R_DrawFill(x, y, w, h, color);
 }
@@ -48,7 +48,7 @@ void MN_DrawFill (int x, int y, int w, int h, const vec4_t color)
  * @sa R_PopMatrix
  * @sa R_PushMatrix
  */
-void MN_Transform (const vec3_t transform, const vec3_t rotate, const vec3_t scale)
+void UI_Transform (const vec3_t transform, const vec3_t rotate, const vec3_t scale)
 {
 	vec3_t pos;
 
@@ -71,7 +71,7 @@ void MN_Transform (const vec3_t transform, const vec3_t rotate, const vec3_t sca
  * @return NULL on error or image_t pointer on success
  * @sa R_FindImage
  */
-const struct image_s *MN_LoadImage (const char *name)
+const struct image_s *UI_LoadImage (const char *name)
 {
 	const struct image_s *image = R_FindImage(va("pics/%s", name), it_pic);
 	if (image == r_noTexture)
@@ -79,7 +79,7 @@ const struct image_s *MN_LoadImage (const char *name)
 	return image;
 }
 
-void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, float sl, float tl, const image_t *image)
+void UI_DrawNormImage (float x, float y, float w, float h, float sh, float th, float sl, float tl, const image_t *image)
 {
 	float nw, nh, x1, x2, x3, x4, y1, y2, y3, y4;
 
@@ -153,17 +153,17 @@ void MN_DrawNormImage (float x, float y, float w, float h, float sh, float th, f
  * @note All these parameter are normalized to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are adjusted in this function
  */
-const image_t *MN_DrawNormImageByName (float x, float y, float w, float h, float sh, float th, float sl, float tl, const char *name)
+const image_t *UI_DrawNormImageByName (float x, float y, float w, float h, float sh, float th, float sl, float tl, const char *name)
 {
 	const struct image_s *image;
 
-	image = MN_LoadImage(name);
+	image = UI_LoadImage(name);
 	if (!image) {
 		Com_Printf("Can't find pic: %s\n", name);
 		return NULL;
 	}
 
-	MN_DrawNormImage(x, y, w, h, sh, th, sl, tl, image);
+	UI_DrawNormImage(x, y, w, h, sh, th, sl, tl, image);
 	return image;
 }
 
@@ -180,7 +180,7 @@ const image_t *MN_DrawNormImageByName (float x, float y, float w, float h, float
  * top height, mid height, bottom height, and margin
  * @todo can we improve the code? is it need?
  */
-void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int panelDef[6])
+void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int panelDef[6])
 {
 	const int leftWidth = panelDef[0];
 	const int midWidth = panelDef[1];
@@ -200,35 +200,35 @@ void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
 
 	int y, h;
 
-	const image_t *image = MN_LoadImage(texture);
+	const image_t *image = UI_LoadImage(texture);
 	if (!image)
 		return;
 
 	/* draw top (from left to right) */
-	MN_DrawNormImage(pos[0], pos[1], leftWidth, topHeight, texX + firstPos + leftWidth, texY + firstPosY + topHeight,
+	UI_DrawNormImage(pos[0], pos[1], leftWidth, topHeight, texX + firstPos + leftWidth, texY + firstPosY + topHeight,
 		texX + firstPos, texY + firstPosY, image);
-	MN_DrawNormImage(pos[0] + leftWidth, pos[1], size[0] - leftWidth - rightWidth, topHeight, texX + secondPos + midWidth, texY + firstPosY + topHeight,
+	UI_DrawNormImage(pos[0] + leftWidth, pos[1], size[0] - leftWidth - rightWidth, topHeight, texX + secondPos + midWidth, texY + firstPosY + topHeight,
 		texX + secondPos, texY + firstPosY, image);
-	MN_DrawNormImage(pos[0] + size[0] - rightWidth, pos[1], rightWidth, topHeight, texX + thirdPos + rightWidth, texY + firstPosY + topHeight,
+	UI_DrawNormImage(pos[0] + size[0] - rightWidth, pos[1], rightWidth, topHeight, texX + thirdPos + rightWidth, texY + firstPosY + topHeight,
 		texX + thirdPos, texY + firstPosY, image);
 
 	/* draw middle (from left to right) */
 	y = pos[1] + topHeight;
 	h = size[1] - topHeight - bottomHeight; /* height of middle */
-	MN_DrawNormImage(pos[0], y, leftWidth, h, texX + firstPos + leftWidth, texY + secondPosY + midHeight,
+	UI_DrawNormImage(pos[0], y, leftWidth, h, texX + firstPos + leftWidth, texY + secondPosY + midHeight,
 		texX + firstPos, texY + secondPosY, image);
-	MN_DrawNormImage(pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, h, texX + secondPos + midWidth, texY + secondPosY + midHeight,
+	UI_DrawNormImage(pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, h, texX + secondPos + midWidth, texY + secondPosY + midHeight,
 		texX + secondPos, texY + secondPosY, image);
-	MN_DrawNormImage(pos[0] + size[0] - rightWidth, y, rightWidth, h, texX + thirdPos + rightWidth, texY + secondPosY + midHeight,
+	UI_DrawNormImage(pos[0] + size[0] - rightWidth, y, rightWidth, h, texX + thirdPos + rightWidth, texY + secondPosY + midHeight,
 		texX + thirdPos, texY + secondPosY, image);
 
 	/* draw bottom (from left to right) */
 	y = pos[1] + size[1] - bottomHeight;
-	MN_DrawNormImage(pos[0], y, leftWidth, bottomHeight, texX + firstPos + leftWidth, texY + thirdPosY + bottomHeight,
+	UI_DrawNormImage(pos[0], y, leftWidth, bottomHeight, texX + firstPos + leftWidth, texY + thirdPosY + bottomHeight,
 		texX + firstPos, texY + thirdPosY, image);
-	MN_DrawNormImage(pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, bottomHeight, texX + secondPos + midWidth, texY + thirdPosY + bottomHeight,
+	UI_DrawNormImage(pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, bottomHeight, texX + secondPos + midWidth, texY + thirdPosY + bottomHeight,
 		texX + secondPos, texY + thirdPosY, image);
-	MN_DrawNormImage(pos[0] + size[0] - bottomHeight, y, rightWidth, bottomHeight, texX + thirdPos + rightWidth, texY + thirdPosY + bottomHeight,
+	UI_DrawNormImage(pos[0] + size[0] - bottomHeight, y, rightWidth, bottomHeight, texX + thirdPos + rightWidth, texY + thirdPosY + bottomHeight,
 		texX + thirdPos, texY + thirdPosY, image);
 }
 
@@ -246,27 +246,27 @@ void MN_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
  * @note the x, y, width and height values are all normalized here - don't use the
  * viddef settings for drawstring calls - make them all relative to VID_NORM_WIDTH
  * and VID_NORM_HEIGHT
- * @todo remove the use of MN_DrawString
+ * @todo remove the use of UI_DrawString
  * @todo test the code for multiline?
- * @todo fix problem with truncation (maybe problem into MN_DrawString)
+ * @todo fix problem with truncation (maybe problem into UI_DrawString)
  */
-int MN_DrawStringInBox (const char *fontID, int align, int x, int y, int width, int height, const char *text, longlines_t method)
+int UI_DrawStringInBox (const char *fontID, int align, int x, int y, int width, int height, const char *text, longlines_t method)
 {
 	const int horizontalAlign = align % 3; /* left, center, right */
 	const int verticalAlign = align / 3;  /* top, center, bottom */
 
-	/* position of the text for MN_DrawString */
+	/* position of the text for UI_DrawString */
 	const int xx = x + ((width * horizontalAlign) >> 1);
 	const int yy = y + ((height * verticalAlign) >> 1);
 
-	return MN_DrawString(fontID, align, xx, yy, xx, yy, width, height,
+	return UI_DrawString(fontID, align, xx, yy, xx, yy, width, height,
 		0, text, 0, 0, NULL, qfalse, method);
 }
 
-int MN_DrawString (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
+int UI_DrawString (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
 		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, qboolean increaseLine, longlines_t method)
 {
-	const uiFont_t *font = MN_GetFontByID(fontID);
+	const uiFont_t *font = UI_GetFontByID(fontID);
 	const int verticalAlign = align / 3;  /* top, center, bottom */
 	int lines;
 
@@ -274,7 +274,7 @@ int MN_DrawString (const char *fontID, int align, int x, int y, int absX, int ab
 		Com_Error(ERR_FATAL, "Could not find font with id: '%s'", fontID);
 
 	if (lineHeight <= 0)
-		lineHeight = MN_FontGetHeight(font->name);
+		lineHeight = UI_FontGetHeight(font->name);
 
 	/* vertical alignment makes only a single-line adjustment in this
 	 * function. That means that ALIGN_Lx values will not show more than

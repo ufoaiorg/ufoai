@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] behaviourName Behaviour name we check
  * @return True if the node inherits from the behaviour
  */
-qboolean MN_NodeInstanceOf (const uiNode_t *node, const char* behaviourName)
+qboolean UI_NodeInstanceOf (const uiNode_t *node, const char* behaviourName)
 {
 	const uiBehaviour_t *behaviour;
 	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
@@ -51,7 +51,7 @@ qboolean MN_NodeInstanceOf (const uiNode_t *node, const char* behaviourName)
  * @param[in] behaviour Behaviour we check
  * @return True if the node inherits from the behaviour
  */
-qboolean MN_NodeInstanceOfPointer (const uiNode_t *node, const uiBehaviour_t* behaviour)
+qboolean UI_NodeInstanceOfPointer (const uiNode_t *node, const uiBehaviour_t* behaviour)
 {
 	const uiBehaviour_t *b;
 	for (b = node->behaviour; b; b = b->super) {
@@ -68,7 +68,7 @@ qboolean MN_NodeInstanceOfPointer (const uiNode_t *node, const uiBehaviour_t* be
  * @param [in] pointDirection
  * @note For example we can request the right-bottom corner with ALIGN_LR (low, right)
  */
-void MN_NodeGetPoint (const uiNode_t* node, vec2_t pos, byte pointDirection)
+void UI_NodeGetPoint (const uiNode_t* node, vec2_t pos, byte pointDirection)
 {
 	switch (pointDirection % 3) {
 	case 0:	/* left */
@@ -105,20 +105,20 @@ void MN_NodeGetPoint (const uiNode_t* node, vec2_t pos, byte pointDirection)
  * @param[in] node Context node
  * @param[out] pos Absolute position
  */
-void MN_GetNodeAbsPos (const uiNode_t* node, vec2_t pos)
+void UI_GetNodeAbsPos (const uiNode_t* node, vec2_t pos)
 {
 	assert(node);
 	assert(pos);
 
 	/* if we request the position of a non drawable node, there is a problem */
 	if (node->behaviour->isVirtual)
-		Com_Error(ERR_FATAL, "MN_GetNodeAbsPos: Node '%s' doesn't have a position", node->name);
+		Com_Error(ERR_FATAL, "UI_GetNodeAbsPos: Node '%s' doesn't have a position", node->name);
 
 	Vector2Set(pos, 0, 0);
 	while (node) {
 #ifdef DEBUG
 		if (node->pos[0] != (int)node->pos[0] || node->pos[1] != (int)node->pos[1])
-			Com_Error(ERR_FATAL, "MN_GetNodeAbsPos: Node '%s' position %f,%f is not integer", MN_GetPath(node), node->pos[0], node->pos[1]);
+			Com_Error(ERR_FATAL, "UI_GetNodeAbsPos: Node '%s' position %f,%f is not integer", UI_GetPath(node), node->pos[0], node->pos[1]);
 #endif
 		pos[0] += node->pos[0];
 		pos[1] += node->pos[1];
@@ -131,7 +131,7 @@ void MN_GetNodeAbsPos (const uiNode_t* node, vec2_t pos)
  * @param[in] node The requested node
  * @param[in,out] pos A point to transform
  */
-void MN_NodeRelativeToAbsolutePoint (const uiNode_t* node, vec2_t pos)
+void UI_NodeRelativeToAbsolutePoint (const uiNode_t* node, vec2_t pos)
 {
 	assert(node);
 	assert(pos);
@@ -148,7 +148,7 @@ void MN_NodeRelativeToAbsolutePoint (const uiNode_t* node, vec2_t pos)
  * @param[in,out] x an absolute x position
  * @param[in,out] y an absolute y position
  */
-void MN_NodeAbsoluteToRelativePos (const uiNode_t* node, int *x, int *y)
+void UI_NodeAbsoluteToRelativePos (const uiNode_t* node, int *x, int *y)
 {
 	assert(node != NULL);
 	/* if we request the position of an undrawable node, there is a problem */
@@ -158,7 +158,7 @@ void MN_NodeAbsoluteToRelativePos (const uiNode_t* node, int *x, int *y)
 
 	/* if we request the position of an undrawable node, there is a problem */
 	if (node->behaviour->isVirtual)
-		Com_Error(ERR_DROP, "MN_NodeAbsoluteToRelativePos: Node '%s' doesn't have a position", node->name);
+		Com_Error(ERR_DROP, "UI_NodeAbsoluteToRelativePos: Node '%s' doesn't have a position", node->name);
 
 	while (node) {
 		*x -= node->pos[0];
@@ -171,30 +171,30 @@ void MN_NodeAbsoluteToRelativePos (const uiNode_t* node, int *x, int *y)
  * @brief Hides a given menu node
  * @note Sanity check whether node is null included
  */
-void MN_HideNode (uiNode_t* node)
+void UI_HideNode (uiNode_t* node)
 {
 	if (node)
 		node->invis = qtrue;
 	else
-		Com_Printf("MN_HideNode: No node given\n");
+		Com_Printf("UI_HideNode: No node given\n");
 }
 
 /**
  * @brief Unhides a given menu node
  * @note Sanity check whether node is null included
  */
-void MN_UnHideNode (uiNode_t* node)
+void UI_UnHideNode (uiNode_t* node)
 {
 	if (node)
 		node->invis = qfalse;
 	else
-		Com_Printf("MN_UnHideNode: No node given\n");
+		Com_Printf("UI_UnHideNode: No node given\n");
 }
 
 /**
  * @brief Update the node size and fire the size callback
  */
-void MN_NodeSetSize (uiNode_t* node, vec2_t size)
+void UI_NodeSetSize (uiNode_t* node, vec2_t size)
 {
 	if (node->size[0] == size[0] && node->size[1] == size[1])
 		return;
@@ -207,7 +207,7 @@ void MN_NodeSetSize (uiNode_t* node, vec2_t size)
  * @brief Search a child node by given name
  * @note Only search with one depth
  */
-uiNode_t *MN_GetNode (const uiNode_t* const node, const char *name)
+uiNode_t *UI_GetNode (const uiNode_t* const node, const char *name)
 {
 	uiNode_t *current = NULL;
 
@@ -227,7 +227,7 @@ uiNode_t *MN_GetNode (const uiNode_t* const node, const char *name)
  * @param[in] prevNode previous node, will became before the newNode; else NULL if newNode will become the first child of the node
  * @param[in] newNode node we insert
  */
-void MN_InsertNode (uiNode_t* const node, uiNode_t *prevNode, uiNode_t *newNode)
+void UI_InsertNode (uiNode_t* const node, uiNode_t *prevNode, uiNode_t *newNode)
 {
 	if (newNode->root == NULL)
 		newNode->root = node->root;
@@ -255,9 +255,9 @@ void MN_InsertNode (uiNode_t* const node, uiNode_t *prevNode, uiNode_t *newNode)
 	}
 
 	if (newNode->root && newNode->indexed)
-		MN_WindowNodeAddIndexedNode(newNode->root, newNode);
+		UI_WindowNodeAddIndexedNode(newNode->root, newNode);
 
-	MN_Invalidate(node);
+	UI_Invalidate(node);
 }
 
 /**
@@ -266,7 +266,7 @@ void MN_InsertNode (uiNode_t* const node, uiNode_t *prevNode, uiNode_t *newNode)
  * @param[in] node Node where is the child
  * @param[in] child Node we want to remove
  */
-uiNode_t* MN_RemoveNode (uiNode_t* const node, uiNode_t *child)
+uiNode_t* UI_RemoveNode (uiNode_t* const node, uiNode_t *child)
 {
 	assert(node);
 	assert(child);
@@ -288,7 +288,7 @@ uiNode_t* MN_RemoveNode (uiNode_t* const node, uiNode_t *child)
 		if (previous == NULL)
 			return NULL;
 	}
-	MN_Invalidate(node);
+	UI_Invalidate(node);
 
 	/** update cache */
 	if (node->lastChild == child) {
@@ -297,18 +297,18 @@ uiNode_t* MN_RemoveNode (uiNode_t* const node, uiNode_t *child)
 			node->lastChild = node->lastChild->next;
 	}
 	if (child->root && child->indexed)
-		MN_WindowNodeRemoveIndexedNode(child->root, child);
+		UI_WindowNodeRemoveIndexedNode(child->root, child);
 
 	child->next = NULL;
 	return child;
 }
 
-void MN_UpdateRoot (uiNode_t *node, uiNode_t *newRoot)
+void UI_UpdateRoot (uiNode_t *node, uiNode_t *newRoot)
 {
 	node->root = newRoot;
 	node = node->firstChild;
 	while (node) {
-		MN_UpdateRoot(node, newRoot);
+		UI_UpdateRoot(node, newRoot);
 		node = node->next;
 	}
 }
@@ -316,24 +316,24 @@ void MN_UpdateRoot (uiNode_t *node, uiNode_t *newRoot)
 /**
  * @brief add a node at the end of the node child
  */
-void MN_AppendNode (uiNode_t* const node, uiNode_t *newNode)
+void UI_AppendNode (uiNode_t* const node, uiNode_t *newNode)
 {
-	MN_InsertNode(node, node->lastChild, newNode);
+	UI_InsertNode(node, node->lastChild, newNode);
 }
 
-void MN_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, void* rawValue, int rawType)
+void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, void* rawValue, int rawType)
 {
 	void *mem = ((byte *) node + property->ofs);
 
 	if (property->type != rawType) {
-		Com_Printf("MN_NodeSetPropertyFromRAW: type %i expected, but @%s type %i found. Property setter to '%s@%s' skipped\n", rawType, property->string, property->type, MN_GetPath(node), property->string);
+		Com_Printf("UI_NodeSetPropertyFromRAW: type %i expected, but @%s type %i found. Property setter to '%s@%s' skipped\n", rawType, property->string, property->type, UI_GetPath(node), property->string);
 		return;
 	}
 
 	if ((property->type & V_UI_MASK) == V_NOT_UI)
 		Com_SetValue(node, rawValue, property->type, property->ofs, property->size);
 	else if ((property->type & V_UI_MASK) == V_UI_CVAR) {
-		MN_FreeStringProperty(*(void**)mem);
+		UI_FreeStringProperty(*(void**)mem);
 		switch (property->type & V_BASETYPEMASK) {
 		case V_FLOAT:
 			**(float **) mem = *(float*) rawValue;
@@ -349,7 +349,7 @@ void MN_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, void* r
 	} else if (property->type == V_UI_ICONREF) {
 		*(uiIcon_t**) mem = (uiIcon_t*) rawValue;
 	} else {
-		Com_Error(ERR_FATAL, "MN_NodeSetPropertyFromRAW: Property type '%d' unsupported", property->type);
+		Com_Error(ERR_FATAL, "UI_NodeSetPropertyFromRAW: Property type '%d' unsupported", property->type);
 	}
 	node->behaviour->propertyChanged(node, property);
 }
@@ -357,7 +357,7 @@ void MN_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, void* r
 /**
  * @brief Set node property
  */
-qboolean MN_NodeSetProperty (uiNode_t* node, const value_t *property, const char* value)
+qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char* value)
 {
 	byte* b = (byte*)node + property->ofs;
 	const int specialType = property->type & V_UI_MASK;
@@ -368,7 +368,7 @@ qboolean MN_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 	case V_NOT_UI:	/* common type */
 		result = Com_ParseValue(node, value, property->type, property->ofs, property->size, &bytes);
 		if (result != RESULT_OK) {
-			Com_Printf("MN_NodeSetProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
+			Com_Printf("UI_NodeSetProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 			return qfalse;
 		}
 		node->behaviour->propertyChanged(node, property);
@@ -381,7 +381,7 @@ qboolean MN_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 				float f;
 
 				if (!strncmp(value, "*cvar", 5)) {
-					MN_FreeStringProperty(*(void**)b);
+					UI_FreeStringProperty(*(void**)b);
 					*(char**) b = Mem_PoolStrDup(value, mn_dynStringPool, 0);
 					node->behaviour->propertyChanged(node, property);
 					return qtrue;
@@ -389,13 +389,13 @@ qboolean MN_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 
 				result = Com_ParseValue(&f, value, V_FLOAT, 0, sizeof(f), &bytes);
 				if (result != RESULT_OK) {
-					Com_Printf("MN_NodeSetProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
+					Com_Printf("UI_NodeSetProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 					return qfalse;
 				}
 
 				b = (byte*) (*(void**)b);
 				if (!strncmp((const char*)b, "*cvar", 5))
-					MN_SetCvar(&((char*)b)[6], NULL, f);
+					UI_SetCvar(&((char*)b)[6], NULL, f);
 				else
 					*(float*) b = f;
 				node->behaviour->propertyChanged(node, property);
@@ -404,7 +404,7 @@ qboolean MN_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 		case V_CVAR_OR_LONGSTRING:
 		case V_CVAR_OR_STRING:
 			{
-				MN_FreeStringProperty(*(void**)b);
+				UI_FreeStringProperty(*(void**)b);
 				*(char**) b = Mem_PoolStrDup(value, mn_dynStringPool, 0);
 				node->behaviour->propertyChanged(node, property);
 				return qtrue;
@@ -412,7 +412,7 @@ qboolean MN_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 		}
 	}
 
-	Com_Printf("MN_NodeSetProperty: Unimplemented type for property '%s@%s'\n", MN_GetPath(node), property->string);
+	Com_Printf("UI_NodeSetProperty: Unimplemented type for property '%s@%s'\n", UI_GetPath(node), property->string);
 	return qfalse;
 }
 
@@ -422,7 +422,7 @@ qboolean MN_NodeSetProperty (uiNode_t* node, const value_t *property, const char
  * @param[in] property Requested property
  * @return Return a string value of a property, else NULL, if the type is not supported
  */
-const char* MN_GetStringFromNodeProperty (const uiNode_t* node, const value_t* property)
+const char* UI_GetStringFromNodeProperty (const uiNode_t* node, const value_t* property)
 {
 	const int baseType = property->type & V_UI_MASK;
 	const byte* b = (const byte*)node + property->ofs;
@@ -436,7 +436,7 @@ const char* MN_GetStringFromNodeProperty (const uiNode_t* node, const value_t* p
 		switch (property->type) {
 		case V_CVAR_OR_FLOAT:
 			{
-				const float f = MN_GetReferenceFloat(node, *(const void*const*)b);
+				const float f = UI_GetReferenceFloat(node, *(const void*const*)b);
 				const int i = f;
 				if (f == i)
 					return va("%i", i);
@@ -445,14 +445,14 @@ const char* MN_GetStringFromNodeProperty (const uiNode_t* node, const value_t* p
 			}
 		case V_CVAR_OR_LONGSTRING:
 		case V_CVAR_OR_STRING:
-			return MN_GetReferenceString(node, *(const char*const*)b);
+			return UI_GetReferenceString(node, *(const char*const*)b);
 		}
 		break;
 	default:
 		break;
 	}
 
-	Com_Printf("MN_GetStringFromNodeProperty: Unsupported string getter for property type 0x%X (%s@%s)\n", property->type, MN_GetPath(node), property->string);
+	Com_Printf("UI_GetStringFromNodeProperty: Unsupported string getter for property type 0x%X (%s@%s)\n", property->type, UI_GetPath(node), property->string);
 	return NULL;
 }
 
@@ -463,7 +463,7 @@ const char* MN_GetStringFromNodeProperty (const uiNode_t* node, const value_t* p
  * @return Return the float value of a property, else 0, if the type is not supported
  * @note If the type is not supported, a waring is reported to the console
  */
-float MN_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property)
+float UI_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property)
 {
 	const byte* b = (const byte*)node + property->ofs;
 	assert(node);
@@ -485,9 +485,9 @@ float MN_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property
 		return *(const qboolean *) b;
 	} else {
 #ifdef DEBUG
-		Com_Printf("MN_GetFloatFromNodeProperty: Unimplemented float getter for property '%s@%s'. If it should return a float, request it.\n", MN_GetPath(node), property->string);
+		Com_Printf("UI_GetFloatFromNodeProperty: Unimplemented float getter for property '%s@%s'. If it should return a float, request it.\n", UI_GetPath(node), property->string);
 #else
-		Com_Printf("MN_GetFloatFromNodeProperty: Property '%s@%s' can't return a float\n", MN_GetPath(node), property->string);
+		Com_Printf("UI_GetFloatFromNodeProperty: Property '%s@%s' can't return a float\n", UI_GetPath(node), property->string);
 #endif
 	}
 
@@ -498,7 +498,7 @@ float MN_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property
 /**
  * @brief display value of a node property from the command line
  */
-static void MN_NodeGetProperty_f (void)
+static void UI_NodeGetProperty_f (void)
 {
 	uiNode_t *node;
 	const value_t *property;
@@ -510,27 +510,27 @@ static void MN_NodeGetProperty_f (void)
 		return;
 	}
 
-	MN_ReadNodePath(Cmd_Argv(1), NULL, &node, &property);
+	UI_ReadNodePath(Cmd_Argv(1), NULL, &node, &property);
 
 	if (node == NULL) {
-		Com_Printf("MN_NodeGetProperty_f: Node from path '%s' doesn't exist\n", Cmd_Argv(1));
+		Com_Printf("UI_NodeGetProperty_f: Node from path '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
 
 	if (property == NULL) {
-		Com_Printf("MN_NodeGetProperty_f: Property from path '%s' doesn't exist\n", Cmd_Argv(1));
+		Com_Printf("UI_NodeGetProperty_f: Property from path '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
 
 	/* check string value */
-	sValue = MN_GetStringFromNodeProperty(node, property);
+	sValue = UI_GetStringFromNodeProperty(node, property);
 	if (sValue) {
 		Com_Printf("\"%s\" is \"%s\"\n", Cmd_Argv(1), sValue);
 		return;
 	}
 
 	/* check float value */
-	fValue = MN_GetFloatFromNodeProperty(node, property);
+	fValue = UI_GetFloatFromNodeProperty(node, property);
 	Com_Printf("\"%s\" is \"%f\"\n", Cmd_Argv(1), fValue);
 }
 
@@ -538,7 +538,7 @@ static void MN_NodeGetProperty_f (void)
  * @brief set a node property from the command line
  * @todo Unify path syntaxe to allow to create a common autocompletion
  */
-static void MN_NodeSetProperty_f (void)
+static void UI_NodeSetProperty_f (void)
 {
 	uiNode_t *node;
 	const value_t *property;
@@ -548,26 +548,26 @@ static void MN_NodeSetProperty_f (void)
 		return;
 	}
 
-	node = MN_GetNodeByPath(Cmd_Argv(1));
+	node = UI_GetNodeByPath(Cmd_Argv(1));
 	if (!node) {
-		Com_Printf("MN_NodeSetProperty_f: Node '%s' not found\n", Cmd_Argv(1));
+		Com_Printf("UI_NodeSetProperty_f: Node '%s' not found\n", Cmd_Argv(1));
 		return;
 	}
 
-	property = MN_GetPropertyFromBehaviour(node->behaviour, Cmd_Argv(2));
+	property = UI_GetPropertyFromBehaviour(node->behaviour, Cmd_Argv(2));
 	if (!property) {
-		Com_Printf("Property '%s@%s' doesn't exist\n", MN_GetPath(node), Cmd_Argv(2));
+		Com_Printf("Property '%s@%s' doesn't exist\n", UI_GetPath(node), Cmd_Argv(2));
 		return;
 	}
 
-	MN_NodeSetProperty(node, property, Cmd_Argv(3));
+	UI_NodeSetProperty(node, property, Cmd_Argv(3));
 }
 #endif
 
 /**
  * @brief Invalidate a node and all his parent to request a layout update
  */
-void MN_Invalidate (uiNode_t *node)
+void UI_Invalidate (uiNode_t *node)
 {
 	while (node) {
 		if (node->invalidated)
@@ -580,32 +580,32 @@ void MN_Invalidate (uiNode_t *node)
 /**
  * @brief Validate a node tree
  */
-void MN_Validate (uiNode_t *node)
+void UI_Validate (uiNode_t *node)
 {
 	if (node->invalidated)
 		node->behaviour->doLayout(node);
 }
 
-static qboolean MN_AbstractNodeDNDEnter (uiNode_t *node)
+static qboolean UI_AbstractNodeDNDEnter (uiNode_t *node)
 {
 	return qfalse;
 }
 
-static qboolean MN_AbstractNodeDNDMove (uiNode_t *node, int x, int y)
+static qboolean UI_AbstractNodeDNDMove (uiNode_t *node, int x, int y)
 {
 	return qtrue;
 }
 
-static void MN_AbstractNodeDNDLeave (uiNode_t *node)
+static void UI_AbstractNodeDNDLeave (uiNode_t *node)
 {
 }
 
-static qboolean MN_AbstractNodeDNDDrop (uiNode_t *node, int x, int y)
+static qboolean UI_AbstractNodeDNDDrop (uiNode_t *node, int x, int y)
 {
 	return qtrue;
 }
 
-static qboolean MN_AbstractNodeDNDFinished (uiNode_t *node, qboolean isDroped)
+static qboolean UI_AbstractNodeDNDFinished (uiNode_t *node, qboolean isDroped)
 {
 	return isDroped;
 }
@@ -613,23 +613,23 @@ static qboolean MN_AbstractNodeDNDFinished (uiNode_t *node, qboolean isDroped)
 /**
  * @brief Call to update a cloned node
  */
-static void MN_AbstractNodeClone (const uiNode_t *source, uiNode_t *clone)
+static void UI_AbstractNodeClone (const uiNode_t *source, uiNode_t *clone)
 {
 }
 
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-static void MN_AbstractNodeActivate (uiNode_t *node)
+static void UI_AbstractNodeActivate (uiNode_t *node)
 {
 	if (node->onClick)
-		MN_ExecuteEventActions(node, node->onClick);
+		UI_ExecuteEventActions(node, node->onClick);
 }
 
 /**
  * @brief Call to update the node layout. This common code revalidates the node tree.
  */
-static void MN_AbstractNodeDoLayout (uiNode_t *node)
+static void UI_AbstractNodeDoLayout (uiNode_t *node)
 {
 	uiNode_t *child;
 	if (!node->invalidated)
@@ -642,7 +642,7 @@ static void MN_AbstractNodeDoLayout (uiNode_t *node)
 	node->invalidated = qfalse;
 }
 
-static void MN_AbstractNodeInit (uiNode_t *node)
+static void UI_AbstractNodeInit (uiNode_t *node)
 {
 	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
@@ -652,7 +652,7 @@ static void MN_AbstractNodeInit (uiNode_t *node)
 	}
 }
 
-static void MN_AbstractNodeClose (uiNode_t *node)
+static void UI_AbstractNodeClose (uiNode_t *node)
 {
 	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
@@ -665,16 +665,16 @@ static void MN_AbstractNodeClose (uiNode_t *node)
 /**
  * @brief Callback stub
  */
-static void MN_AbstractNodeSizeChanged (uiNode_t *node)
+static void UI_AbstractNodeSizeChanged (uiNode_t *node)
 {
 	if (node->firstChild != NULL)
-		MN_Invalidate(node);
+		UI_Invalidate(node);
 }
 
-static void MN_AbstractNodeVisibilityChange (uiNode_t *node)
+static void UI_AbstractNodeVisibilityChange (uiNode_t *node)
 {
 	if (node->parent != NULL)
-		MN_Invalidate(node->parent);
+		UI_Invalidate(node->parent);
 }
 
 static const value_t *propertyWidth;
@@ -682,61 +682,61 @@ static const value_t *propertyHeight;
 static const value_t *propertySize;
 static const value_t *propertyInvis;
 
-static void MN_AbstractNodePropertyChanged (uiNode_t *node, const value_t *property)
+static void UI_AbstractNodePropertyChanged (uiNode_t *node, const value_t *property)
 {
 	if (property == propertyWidth || property == propertyHeight || property == propertySize) {
 		node->behaviour->sizeChanged(node);
 	} else if (property == propertyInvis) {
-		MN_AbstractNodeVisibilityChange(node);
+		UI_AbstractNodeVisibilityChange(node);
 	}
 }
 
-static void MN_AbstractNodeCallRemovaAllChild (uiNode_t *node, const uiCallContext_t *context)
+static void UI_AbstractNodeCallRemovaAllChild (uiNode_t *node, const uiCallContext_t *context)
 {
-	if (MN_GetParamNumber(context) != 0) {
-		Com_Printf("MN_AbstractNodeCallRemovaAllChild: Invalide number of param\n");
+	if (UI_GetParamNumber(context) != 0) {
+		Com_Printf("UI_AbstractNodeCallRemovaAllChild: Invalide number of param\n");
 		return;
 	}
-	MN_DeleteAllChild(node);
+	UI_DeleteAllChild(node);
 }
 
-static void MN_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_t *context)
+static void UI_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_t *context)
 {
 	uiNode_t *child;
 	uiNode_t *component;
 	const char *name;
 	const char *type;
 
-	if (MN_GetParamNumber(context) != 2) {
-		Com_Printf("MN_AbstractNodeCallCreateChild: Invalide number of param\n");
+	if (UI_GetParamNumber(context) != 2) {
+		Com_Printf("UI_AbstractNodeCallCreateChild: Invalide number of param\n");
 		return;
 	}
 
-	name = MN_GetParam(context, 1);
-	type = MN_GetParam(context, 2);
+	name = UI_GetParam(context, 1);
+	type = UI_GetParam(context, 2);
 
-	component = MN_GetComponent(type);
+	component = UI_GetComponent(type);
 	if (component) {
-		child = MN_CloneNode(component, node->root, qtrue, name, qtrue);
+		child = UI_CloneNode(component, node->root, qtrue, name, qtrue);
 	} else {
-		child = MN_AllocNode(name, type, qtrue);
+		child = UI_AllocNode(name, type, qtrue);
 	}
 
 	if (child == NULL) {
-		Com_Printf("MN_AbstractNodeCallCreateChild: Impossible de create the node\n");
+		Com_Printf("UI_AbstractNodeCallCreateChild: Impossible de create the node\n");
 		return;
 	}
 
-	MN_AppendNode(node, child);
+	UI_AppendNode(node, child);
 }
 
-static void MN_AbstractNodeCallDelete (uiNode_t *node, const uiCallContext_t *context)
+static void UI_AbstractNodeCallDelete (uiNode_t *node, const uiCallContext_t *context)
 {
-	if (MN_GetParamNumber(context) != 0) {
-		Com_Printf("MN_AbstractNodeCallDelete: Invalide number of param\n");
+	if (UI_GetParamNumber(context) != 0) {
+		Com_Printf("UI_AbstractNodeCallDelete: Invalide number of param\n");
 		return;
 	}
-	MN_DeleteNode(node);
+	UI_DeleteNode(node);
 }
 
 /** @brief valid properties for a node */
@@ -792,7 +792,7 @@ static const value_t properties[] = {
 	{"num", V_INT, offsetof(uiNode_t, num), MEMBER_SIZEOF(uiNode_t, num)},
 
 	/* Tooltip we want to use. */
-	{"tooltip", V_CVAR_OR_LONGSTRING, offsetof(uiNode_t, tooltip), 0},	/* translated in MN_Tooltip */
+	{"tooltip", V_CVAR_OR_LONGSTRING, offsetof(uiNode_t, tooltip), 0},	/* translated in UI_Tooltip */
 	/* Image to use. Each behaviour use it like they want.
 	 * @todo Move it into behaviour need it.
 	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
@@ -839,41 +839,41 @@ static const value_t properties[] = {
 	{"excluderect", V_UI_EXCLUDERECT, 0, 0},
 
 	/* Remove all child from the node (only dynamic allocated nodes). */
-	{"removeallchild", V_UI_NODEMETHOD, ((size_t) MN_AbstractNodeCallRemovaAllChild), 0},
+	{"removeallchild", V_UI_NODEMETHOD, ((size_t) UI_AbstractNodeCallRemovaAllChild), 0},
 
 	/* Create a new child with name and type. */
-	{"createchild", V_UI_NODEMETHOD, ((size_t) MN_AbstractNodeCallCreateChild), 0},
+	{"createchild", V_UI_NODEMETHOD, ((size_t) UI_AbstractNodeCallCreateChild), 0},
 
 	/* Delete the node and remove it from his parent. */
-	{"delete", V_UI_NODEMETHOD, ((size_t) MN_AbstractNodeCallDelete), 0},
+	{"delete", V_UI_NODEMETHOD, ((size_t) UI_AbstractNodeCallDelete), 0},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterAbstractNode (uiBehaviour_t *behaviour)
+void UI_RegisterAbstractNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractnode";
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
 
-	propertyWidth = MN_GetPropertyFromBehaviour(behaviour, "width");
-	propertyHeight = MN_GetPropertyFromBehaviour(behaviour, "height");
-	propertySize = MN_GetPropertyFromBehaviour(behaviour, "size");
-	propertyInvis = MN_GetPropertyFromBehaviour(behaviour, "invis");
+	propertyWidth = UI_GetPropertyFromBehaviour(behaviour, "width");
+	propertyHeight = UI_GetPropertyFromBehaviour(behaviour, "height");
+	propertySize = UI_GetPropertyFromBehaviour(behaviour, "size");
+	propertyInvis = UI_GetPropertyFromBehaviour(behaviour, "invis");
 
 	/* callbacks */
-	behaviour->dndEnter = MN_AbstractNodeDNDEnter;
-	behaviour->dndMove = MN_AbstractNodeDNDMove;
-	behaviour->dndLeave = MN_AbstractNodeDNDLeave;
-	behaviour->dndDrop = MN_AbstractNodeDNDDrop;
-	behaviour->dndFinished = MN_AbstractNodeDNDFinished;
-	behaviour->doLayout = MN_AbstractNodeDoLayout;
-	behaviour->clone = MN_AbstractNodeClone;
-	behaviour->activate = MN_AbstractNodeActivate;
-	behaviour->propertyChanged = MN_AbstractNodePropertyChanged;
-	behaviour->sizeChanged = MN_AbstractNodeSizeChanged;
-	behaviour->init = MN_AbstractNodeInit;
-	behaviour->close = MN_AbstractNodeClose;
+	behaviour->dndEnter = UI_AbstractNodeDNDEnter;
+	behaviour->dndMove = UI_AbstractNodeDNDMove;
+	behaviour->dndLeave = UI_AbstractNodeDNDLeave;
+	behaviour->dndDrop = UI_AbstractNodeDNDDrop;
+	behaviour->dndFinished = UI_AbstractNodeDNDFinished;
+	behaviour->doLayout = UI_AbstractNodeDoLayout;
+	behaviour->clone = UI_AbstractNodeClone;
+	behaviour->activate = UI_AbstractNodeActivate;
+	behaviour->propertyChanged = UI_AbstractNodePropertyChanged;
+	behaviour->sizeChanged = UI_AbstractNodeSizeChanged;
+	behaviour->init = UI_AbstractNodeInit;
+	behaviour->close = UI_AbstractNodeClose;
 
 	/** @todo move it into common? */
 	Com_RegisterConstInt("ALIGN_UL", ALIGN_UL);
@@ -888,7 +888,7 @@ void MN_RegisterAbstractNode (uiBehaviour_t *behaviour)
 
 	/* some commands */
 #ifdef DEBUG
-	Cmd_AddCommand("debug_mnsetnodeproperty", MN_NodeSetProperty_f, "Set a node property");
-	Cmd_AddCommand("debug_mngetnodeproperty", MN_NodeGetProperty_f, "Get a node property");
+	Cmd_AddCommand("debug_mnsetnodeproperty", UI_NodeSetProperty_f, "Set a node property");
+	Cmd_AddCommand("debug_mngetnodeproperty", UI_NodeGetProperty_f, "Get a node property");
 #endif
 }

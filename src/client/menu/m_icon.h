@@ -50,8 +50,8 @@ typedef struct uiIcon_s {
 
 extern const value_t mn_iconProperties[];
 
-uiIcon_t* MN_GetIconByName(const char* name);
-uiIcon_t* MN_AllocStaticIcon(const char* name) __attribute__ ((warn_unused_result));
-void MN_DrawIconInBox(const uiIcon_t* icon, uiIconStatus_t status, int posX, int posY, int sizeX, int sizeY);
+uiIcon_t* UI_GetIconByName(const char* name);
+uiIcon_t* UI_AllocStaticIcon(const char* name) __attribute__ ((warn_unused_result));
+void UI_DrawIconInBox(const uiIcon_t* icon, uiIconStatus_t status, int posX, int posY, int sizeX, int sizeY);
 
 #endif

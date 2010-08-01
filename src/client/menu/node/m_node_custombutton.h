@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "m_node_button.h"
 
-void MN_RegisterCustomButtonNode(uiBehaviour_t *behaviour);
+void UI_RegisterCustomButtonNode(uiBehaviour_t *behaviour);
 
 typedef struct customButtonExtraData_s {
 	buttonExtraData_t super;

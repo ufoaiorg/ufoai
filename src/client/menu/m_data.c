@@ -117,7 +117,7 @@ CASSERT(lengthof(menutextid_names) == MAX_MENUTEXTS);
  * @brief Return a dataId by name
  * @return A dataId if data found, else -1
  */
-int MN_GetDataIDByName (const char* name)
+int UI_GetDataIDByName (const char* name)
 {
 	int num;
 	for (num = 0; num < MAX_MENUTEXTS; num++)
@@ -131,14 +131,14 @@ int MN_GetDataIDByName (const char* name)
  * @brief link a text to a menu text id
  * @note The menu doesn't manage the text memory, only save a pointer
  */
-void MN_RegisterText (int textId, const char *text)
+void UI_RegisterText (int textId, const char *text)
 {
-	MN_ResetData(textId);
+	UI_ResetData(textId);
 
 	if (!text)
 		return;
 
-	mn.sharedData[textId].type = MN_SHARED_TEXT;
+	mn.sharedData[textId].type = UI_SHARED_TEXT;
 	mn.sharedData[textId].data.text = text;
 	mn.sharedData[textId].versionId++;
 }
@@ -147,27 +147,27 @@ void MN_RegisterText (int textId, const char *text)
  * @brief link a text to a menu text id
  * @note The menu doesn't manage the text memory, only save a pointer
  */
-void MN_RegisterLinkedListText (int textId, linkedList_t *text)
+void UI_RegisterLinkedListText (int textId, linkedList_t *text)
 {
 	/** Hack to disable release memory, if we only want to update the same list */
-	if (mn.sharedData[textId].type == MN_SHARED_LINKEDLISTTEXT && mn.sharedData[textId].data.linkedListText == text) {
+	if (mn.sharedData[textId].type == UI_SHARED_LINKEDLISTTEXT && mn.sharedData[textId].data.linkedListText == text) {
 		mn.sharedData[textId].versionId++;
 		return;
 	}
-	MN_ResetData(textId);
-	mn.sharedData[textId].type = MN_SHARED_LINKEDLISTTEXT;
+	UI_ResetData(textId);
+	mn.sharedData[textId].type = UI_SHARED_LINKEDLISTTEXT;
 	mn.sharedData[textId].data.linkedListText = text;
 	mn.sharedData[textId].versionId++;
 }
 
-const char *MN_GetText (int textId)
+const char *UI_GetText (int textId)
 {
-	if (mn.sharedData[textId].type != MN_SHARED_TEXT)
+	if (mn.sharedData[textId].type != UI_SHARED_TEXT)
 		return NULL;
 	return mn.sharedData[textId].data.text;
 }
 
-int MN_GetDataVersion (int textId)
+int UI_GetDataVersion (int textId)
 {
 	return mn.sharedData[textId].versionId;
 }
@@ -178,7 +178,7 @@ int MN_GetDataVersion (int textId)
  * @param[in] label label displayed
  * @param[in] value value used when this option is selected
  */
-static void MN_InitOption (uiNode_t* option, const char* label, const char* value)
+static void UI_InitOption (uiNode_t* option, const char* label, const char* value)
 {
 	assert(option);
 	assert(option->behaviour == optionBehaviour);
@@ -194,14 +194,14 @@ static void MN_InitOption (uiNode_t* option, const char* label, const char* valu
  * @param[in] value value used when this option is selected
  * @return The new option
  */
-uiNode_t* MN_AddOption (uiNode_t** tree, const char* name, const char* label, const char* value)
+uiNode_t* UI_AddOption (uiNode_t** tree, const char* name, const char* label, const char* value)
 {
 	uiNode_t *last;
 	uiNode_t *option;
 	assert(tree != NULL);
 
-	option = MN_AllocNode(name, "option", qtrue);
-	MN_InitOption(option, label, value);
+	option = UI_AllocNode(name, "option", qtrue);
+	UI_InitOption(option, label, value);
 
 	/* append the option */
 	last = *tree;
@@ -223,37 +223,37 @@ uiNode_t* MN_AddOption (uiNode_t** tree, const char* name, const char* label, co
  * relation with parent node are not updated
  * @param tree
  */
-static void MN_DeleteOption (uiNode_t* tree)
+static void UI_DeleteOption (uiNode_t* tree)
 {
 	while (tree) {
 		uiNode_t* del = tree;
 		tree = tree->next;
-		MN_DeleteNode(del);
+		UI_DeleteNode(del);
 	}
 }
 
 /**
  * @brief Reset a shared data. Type became NONE and value became NULL
  */
-void MN_ResetData (int dataId)
+void UI_ResetData (int dataId)
 {
 	assert(dataId < MAX_MENUTEXTS);
 	assert(dataId >= 0);
 
 	switch (mn.sharedData[dataId].type) {
-	case MN_SHARED_LINKEDLISTTEXT:
+	case UI_SHARED_LINKEDLISTTEXT:
 		LIST_Delete(&mn.sharedData[dataId].data.linkedListText);
 		break;
-	case MN_SHARED_OPTION:
+	case UI_SHARED_OPTION:
 		if (_Mem_AllocatedInPool(com_genericPool, mn.sharedData[dataId].data.option)) {
-			MN_DeleteOption(mn.sharedData[dataId].data.option);
+			UI_DeleteOption(mn.sharedData[dataId].data.option);
 		}
 		break;
 	default:
 		break;
 	}
 
-	mn.sharedData[dataId].type = MN_SHARED_NONE;
+	mn.sharedData[dataId].type = UI_SHARED_NONE;
 	mn.sharedData[dataId].data.text = NULL;
 	mn.sharedData[dataId].versionId++;
 }
@@ -263,7 +263,7 @@ void MN_ResetData (int dataId)
  * @todo option should start with '_' if we need to translate it
  * @warning update parent
  */
-static uiNode_t *MN_OptionNodeRemoveHigherOption (uiNode_t **option)
+static uiNode_t *UI_OptionNodeRemoveHigherOption (uiNode_t **option)
 {
 	uiNode_t *prev = *option;
 	uiNode_t *prevfind = NULL;
@@ -303,7 +303,7 @@ static uiNode_t *MN_OptionNodeRemoveHigherOption (uiNode_t **option)
 /**
  * @brief Sort options by alphabet
  */
-void MN_SortOptions (uiNode_t **first)
+void UI_SortOptions (uiNode_t **first)
 {
 	uiNode_t *option;
 
@@ -316,7 +316,7 @@ void MN_SortOptions (uiNode_t **first)
 	/* construct a sorted list */
 	while (option) {
 		uiNode_t *element;
-		element = MN_OptionNodeRemoveHigherOption(&option);
+		element = UI_OptionNodeRemoveHigherOption(&option);
 		element->next = *first;
 		*first = element;
 	}
@@ -327,7 +327,7 @@ void MN_SortOptions (uiNode_t **first)
  * @param[in,out] option Option list we want to update
  * @param[in] stringList List of option name (ID) we want to display
  */
-void MN_UpdateInvisOptions (uiNode_t *option, const linkedList_t *stringList)
+void UI_UpdateInvisOptions (uiNode_t *option, const linkedList_t *stringList)
 {
 	if (option == NULL || stringList == NULL)
 		return;
@@ -341,30 +341,30 @@ void MN_UpdateInvisOptions (uiNode_t *option, const linkedList_t *stringList)
 	}
 }
 
-void MN_RegisterOption (int dataId, uiNode_t *option)
+void UI_RegisterOption (int dataId, uiNode_t *option)
 {
 	/** Hack to disable release option memory, if we only want to update the same option */
-	if (mn.sharedData[dataId].type == MN_SHARED_OPTION && mn.sharedData[dataId].data.option == option) {
+	if (mn.sharedData[dataId].type == UI_SHARED_OPTION && mn.sharedData[dataId].data.option == option) {
 		mn.sharedData[dataId].versionId++;
 		return;
 	}
-	MN_ResetData(dataId);
-	mn.sharedData[dataId].type = MN_SHARED_OPTION;
+	UI_ResetData(dataId);
+	mn.sharedData[dataId].type = UI_SHARED_OPTION;
 	mn.sharedData[dataId].data.option = option;
 	mn.sharedData[dataId].versionId++;
 }
 
-void MN_RegisterLineStrip (int dataId, lineStrip_t *lineStrip)
+void UI_RegisterLineStrip (int dataId, lineStrip_t *lineStrip)
 {
-	MN_ResetData(dataId);
-	mn.sharedData[dataId].type = MN_SHARED_LINESTRIP;
+	UI_ResetData(dataId);
+	mn.sharedData[dataId].type = UI_SHARED_LINESTRIP;
 	mn.sharedData[dataId].data.lineStrip = lineStrip;
 	mn.sharedData[dataId].versionId++;
 }
 
-uiNode_t *MN_GetOption (int dataId)
+uiNode_t *UI_GetOption (int dataId)
 {
-	if (mn.sharedData[dataId].type == MN_SHARED_OPTION) {
+	if (mn.sharedData[dataId].type == UI_SHARED_OPTION) {
 		return mn.sharedData[dataId].data.option;
 	}
 	return NULL;
@@ -376,7 +376,7 @@ uiNode_t *MN_GetOption (int dataId)
  * @param[in] option First element of options (it can be a tree)
  * @param[in,out] iterator need an initialised iterator, and update it into the write index
  */
-static uiNode_t* MN_FindOptionAtIndex (int index, uiNode_t* option, uiOptionIterator_t* iterator)
+static uiNode_t* UI_FindOptionAtIndex (int index, uiNode_t* option, uiOptionIterator_t* iterator)
 {
 	while (option) {
 		assert(option->behaviour == optionBehaviour);
@@ -405,7 +405,7 @@ static uiNode_t* MN_FindOptionAtIndex (int index, uiNode_t* option, uiOptionIter
 				assert(qfalse);
 			iterator->depthCache[iterator->depthPos] = option;
 			iterator->depthPos++;
-			return MN_FindOptionAtIndex(index, option->firstChild, iterator);
+			return UI_FindOptionAtIndex(index, option->firstChild, iterator);
 		}
 		index -= OPTIONEXTRADATA(option).childCount;
 		option = option->next;
@@ -424,28 +424,28 @@ static uiNode_t* MN_FindOptionAtIndex (int index, uiNode_t* option, uiOptionIter
  * @return the first option element found (current position of the iterator)
  * @code
  * uiOptionIterator_t iterator;
- * MN_InitOptionIteratorAtIndex(index, firstOption, &iterator);	// also return the option
+ * UI_InitOptionIteratorAtIndex(index, firstOption, &iterator);	// also return the option
  * while (iterator.option) {
  *     ...
- *     MN_OptionIteratorNextOption(&iterator);	// also return the option
+ *     UI_OptionIteratorNextOption(&iterator);	// also return the option
  * }
  * @endcode
  * @todo Rework that code, we should split "Init" and "AtIndex"
  */
-uiNode_t* MN_InitOptionIteratorAtIndex (int index, uiNode_t* option, uiOptionIterator_t* iterator)
+uiNode_t* UI_InitOptionIteratorAtIndex (int index, uiNode_t* option, uiOptionIterator_t* iterator)
 {
 	assert(option->behaviour == optionBehaviour);
 	memset(iterator, 0, sizeof(*iterator));
 	iterator->skipCollapsed = qtrue;
 	iterator->skipInvisible = qtrue;
-	return MN_FindOptionAtIndex(index, option, iterator);
+	return UI_FindOptionAtIndex(index, option, iterator);
 }
 
 /**
  * @brief Find the next element from the iterator
  * Iterator skipCollapsed and skipInvisible attribute can control the option flow
  */
-uiNode_t* MN_OptionIteratorNextOption (uiOptionIterator_t* iterator)
+uiNode_t* UI_OptionIteratorNextOption (uiOptionIterator_t* iterator)
 {
 	uiNode_t* option;
 
@@ -483,13 +483,13 @@ uiNode_t* MN_OptionIteratorNextOption (uiOptionIterator_t* iterator)
  * @param[in] value The value we search
  * @return The right option, else NULL
  */
-uiNode_t* MN_FindOptionByValue (uiOptionIterator_t* iterator, const char* value)
+uiNode_t* UI_FindOptionByValue (uiOptionIterator_t* iterator, const char* value)
 {
 	while (iterator->option) {
 		assert(iterator->option->behaviour == optionBehaviour);
 		if (!strcmp(OPTIONEXTRADATA(iterator->option).value, value))
 			return iterator->option;
-		MN_OptionIteratorNextOption(iterator);
+		UI_OptionIteratorNextOption(iterator);
 	}
 	return NULL;
 }
@@ -500,14 +500,14 @@ uiNode_t* MN_FindOptionByValue (uiOptionIterator_t* iterator, const char* value)
  * @param[in] option The value we search
  * @return The option index, else -1
  */
-int MN_FindOptionPosition (uiOptionIterator_t* iterator, const uiNode_t* option)
+int UI_FindOptionPosition (uiOptionIterator_t* iterator, const uiNode_t* option)
 {
 	int i = 0;
 	while (iterator->option) {
 		if (iterator->option == option)
 			return i;
 		i++;
-		MN_OptionIteratorNextOption(iterator);
+		UI_OptionIteratorNextOption(iterator);
 	}
 	return -1;
 }
@@ -517,27 +517,27 @@ int MN_FindOptionPosition (uiOptionIterator_t* iterator, const uiNode_t* option)
  * @note You can give this function a parameter to only delete a specific data
  * @sa menutextid_names
  */
-static void MN_ResetData_f (void)
+static void UI_ResetData_f (void)
 {
 	if (Cmd_Argc() == 2) {
 		const char *menuTextID = Cmd_Argv(1);
-		const int id = MN_GetDataIDByName(menuTextID);
+		const int id = UI_GetDataIDByName(menuTextID);
 		if (id < 0)
 			Com_Printf("%s: invalid mn.menuText ID: %s\n", Cmd_Argv(0), menuTextID);
 		else
-			MN_ResetData(id);
+			UI_ResetData(id);
 	} else {
 		int i;
 		for (i = 0; i < MAX_MENUTEXTS; i++)
-			MN_ResetData(i);
+			UI_ResetData(i);
 	}
 }
 
 /**
  * @brief Initialize console command about shared menu data
- * @note called by MN_Init
+ * @note called by UI_Init
  */
-void MN_InitData (void)
+void UI_InitData (void)
 {
-	Cmd_AddCommand("mn_datareset", MN_ResetData_f, "Resets a menu data pointers");
+	Cmd_AddCommand("mn_datareset", UI_ResetData_f, "Resets a menu data pointers");
 }

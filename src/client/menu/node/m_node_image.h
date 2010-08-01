@@ -28,8 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct uiBehaviour_s;
 struct uiNode_s;
 
-void MN_RegisterImageNode(struct uiBehaviour_s* behaviour);
-void MN_ImageNodeDraw(struct uiNode_s *node);
+void UI_RegisterImageNode(struct uiBehaviour_s* behaviour);
+void UI_ImageNodeDraw(struct uiNode_s *node);
 
 typedef struct imageExtraData_s {
 	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */

@@ -48,18 +48,18 @@ void CL_StatsUpdate_f (void)
 	pos = statsBuffer;
 
 	/* missions */
-	MN_RegisterText(TEXT_STATS_MISSION, pos);
+	UI_RegisterText(TEXT_STATS_MISSION, pos);
 	Com_sprintf(pos, MAX_STATS_BUFFER, _("Won:\t%i\nLost:\t%i\n\n"), ccs.campaignStats.missionsWon, ccs.campaignStats.missionsLost);
 
 	/* bases */
 	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_BASES, pos);
+	UI_RegisterText(TEXT_STATS_BASES, pos);
 	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
 			ccs.campaignStats.basesBuilt, ccs.numBases, ccs.campaignStats.basesAttacked),
 
 	/* installations */
 	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_INSTALLATIONS, pos);
+	UI_RegisterText(TEXT_STATS_INSTALLATIONS, pos);
 	for (i = 0; i < ccs.numInstallations; i++) {
 		const installation_t *inst = &ccs.installations[i];
 		Q_strcat(pos, va("%s\n", inst->name), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
@@ -67,7 +67,7 @@ void CL_StatsUpdate_f (void)
 
 	/* nations */
 	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_NATIONS, pos);
+	UI_RegisterText(TEXT_STATS_NATIONS, pos);
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = &ccs.nations[i];
 		Q_strcat(pos, va(_("%s\t%s\n"), _(nation->name), NAT_GetHappinessString(nation)), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
@@ -86,14 +86,14 @@ void CL_StatsUpdate_f (void)
 
 	/* employees - this is between the two costs parts to count the hired employees */
 	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_EMPLOYEES, pos);
+	UI_RegisterText(TEXT_STATS_EMPLOYEES, pos);
 	for (i = 0; i < MAX_EMPL; i++) {
 		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
 	/* costs - second part */
 	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_COSTS, pos);
+	UI_RegisterText(TEXT_STATS_COSTS, pos);
 	Q_strcat(pos, va(_("Employees:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
@@ -135,7 +135,7 @@ void CL_StatsUpdate_f (void)
 
 	/* campaign */
 	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_GENERIC, pos);
+	UI_RegisterText(TEXT_GENERIC, pos);
 	Q_strcat(pos, va(_("Max. allowed debts: %ic\n"), ccs.curCampaign->negativeCreditsUntilLost),
 		(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 

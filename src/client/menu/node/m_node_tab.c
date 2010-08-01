@@ -39,15 +39,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_input.h"
 
 #define EXTRADATA_TYPE abstractOptionExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 typedef enum {
-	MN_TAB_NOTHING = 0,
-	MN_TAB_NORMAL = 1,
-	MN_TAB_SELECTED = 2,
-	MN_TAB_HIGHLIGHTED = 3,
-	MN_TAB_DISABLED = 4
+	UI_TAB_NOTHING = 0,
+	UI_TAB_NORMAL = 1,
+	UI_TAB_SELECTED = 2,
+	UI_TAB_HIGHLIGHTED = 3,
+	UI_TAB_DISABLED = 4
 } mn_tab_type_t;
 
 static const int TILE_WIDTH = 33;
@@ -63,14 +63,14 @@ static const int TILE_SIZE = 40;
  * @todo improve test when we are on a junction
  * @todo improve test when we are on a chopped tab
  */
-static uiNode_t* MN_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
+static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 {
 	const char *font;
 	uiNode_t* option;
 	uiNode_t* prev = NULL;
 	int allowedWidth;
 
-	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	/** @todo this dont work when an option is hidden */
 	allowedWidth = node->size[0] - TILE_WIDTH * (EXTRADATACONST(node).count + 1);
@@ -79,7 +79,7 @@ static uiNode_t* MN_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 	if (x < 0 || y < 0 || x >= node->size[0] || y >= node->size[1])
 		return NULL;
 
-	font = MN_GetFontFromNode(node);
+	font = UI_GetFontFromNode(node);
 
 	/* Text box test */
 	for (option = node->firstChild; option; option = option->next) {
@@ -124,14 +124,14 @@ static uiNode_t* MN_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 /**
  * @brief Handles tab clicks
  */
-static void MN_TabNodeClick (uiNode_t * node, int x, int y)
+static void UI_TabNodeClick (uiNode_t * node, int x, int y)
 {
 	uiNode_t* option;
 
-	if (MN_AbstractOptionGetCurrentValue(node) == NULL)
+	if (UI_AbstractOptionGetCurrentValue(node) == NULL)
 		return;
 
-	option = MN_TabNodeTabAtPosition(node, x, y);
+	option = UI_TabNodeTabAtPosition(node, x, y);
 	if (option == NULL)
 		return;
 
@@ -140,7 +140,7 @@ static void MN_TabNodeClick (uiNode_t * node, int x, int y)
 
 	/* only execute the click stuff if the selectbox is active */
 	if (node->state)
-		MN_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
+		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
 }
 
 /**
@@ -151,10 +151,10 @@ static void MN_TabNodeClick (uiNode_t * node, int x, int y)
  * @param[in] width The width size of the screen to use (stretch)
  * @param[in] type The status of the tab we display
  */
-static inline void MN_TabNodeDrawPlain (const char *image, int x, int y, int width, mn_tab_type_t type)
+static inline void UI_TabNodeDrawPlain (const char *image, int x, int y, int width, mn_tab_type_t type)
 {
 	/* Hack sl=1 to not use the pixel on the left border on the texture (create graphic bug) */
-	MN_DrawNormImageByName(x, y, width, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * 0, TILE_HEIGHT + TILE_SIZE * type,
+	UI_DrawNormImageByName(x, y, width, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * 0, TILE_HEIGHT + TILE_SIZE * type,
 		1 + TILE_SIZE * 0, 0 + TILE_SIZE * type, image);
 }
 
@@ -166,15 +166,15 @@ static inline void MN_TabNodeDrawPlain (const char *image, int x, int y, int wid
  * @param[in] leftType The status of the left tab of the junction we display
  * @param[in] rightType The status of the right tab of the junction we display
  */
-static inline void MN_TabNodeDrawJunction (const char *image, int x, int y, mn_tab_type_t leftType, mn_tab_type_t rightType)
+static inline void UI_TabNodeDrawJunction (const char *image, int x, int y, mn_tab_type_t leftType, mn_tab_type_t rightType)
 {
-	MN_DrawNormImageByName(x, y, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * (1 + rightType), TILE_HEIGHT + TILE_SIZE * leftType,
+	UI_DrawNormImageByName(x, y, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * (1 + rightType), TILE_HEIGHT + TILE_SIZE * leftType,
 		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, image);
 }
 
-static void MN_TabNodeDraw (uiNode_t *node)
+static void UI_TabNodeDraw (uiNode_t *node)
 {
-	mn_tab_type_t lastStatus = MN_TAB_NOTHING;
+	mn_tab_type_t lastStatus = UI_TAB_NOTHING;
 	uiNode_t* option;
 	uiNode_t* overMouseOption = NULL;
 	const char *ref;
@@ -183,21 +183,21 @@ static void MN_TabNodeDraw (uiNode_t *node)
 	int allowedWidth;
 	vec2_t pos;
 
-	const char* image = MN_GetReferenceString(node, node->image);
+	const char* image = UI_GetReferenceString(node, node->image);
 	if (!image)
 		image = "ui/tab";
 
-	ref = MN_AbstractOptionGetCurrentValue(node);
+	ref = UI_AbstractOptionGetCurrentValue(node);
 	if (ref == NULL)
 		return;
 
-	font = MN_GetFontFromNode(node);
+	font = UI_GetFontFromNode(node);
 
 	if (node->state) {
-		overMouseOption = MN_TabNodeTabAtPosition(node, mousePosX, mousePosY);
+		overMouseOption = UI_TabNodeTabAtPosition(node, mousePosX, mousePosY);
 	}
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 	currentX = pos[0];
 	option = node->firstChild;
 	assert(option->behaviour == optionBehaviour);
@@ -211,7 +211,7 @@ static void MN_TabNodeDraw (uiNode_t *node)
 		int textPos;
 		const char *label;
 		qboolean drawIcon = qfalse;
-		mn_tab_type_t status = MN_TAB_NORMAL;
+		mn_tab_type_t status = UI_TAB_NORMAL;
 		assert(option->behaviour == optionBehaviour);
 
 		/* skip hidden options */
@@ -222,15 +222,15 @@ static void MN_TabNodeDraw (uiNode_t *node)
 
 		/* Check the status of the current tab */
 		if (!strcmp(OPTIONEXTRADATA(option).value, ref)) {
-			status = MN_TAB_SELECTED;
+			status = UI_TAB_SELECTED;
 		} else if (option->disabled || node->disabled) {
-			status = MN_TAB_DISABLED;
+			status = UI_TAB_DISABLED;
 		} else if (option == overMouseOption) {
-			status = MN_TAB_HIGHLIGHTED;
+			status = UI_TAB_HIGHLIGHTED;
 		}
 
 		/* Display */
-		MN_TabNodeDrawJunction(image, currentX, pos[1], lastStatus, status);
+		UI_TabNodeDrawJunction(image, currentX, pos[1], lastStatus, status);
 		currentX += TILE_WIDTH;
 
 		label = OPTIONEXTRADATA(option).label;
@@ -251,22 +251,22 @@ static void MN_TabNodeDraw (uiNode_t *node)
 		}
 
 		if (tabWidth > 0) {
-			MN_TabNodeDrawPlain(image, currentX, pos[1], tabWidth, status);
+			UI_TabNodeDrawPlain(image, currentX, pos[1], tabWidth, status);
 		}
 
 		textPos = currentX;
 		if (drawIcon) {
 			uiIconStatus_t iconStatus = ICON_STATUS_NORMAL;
-			if (status == MN_TAB_DISABLED) {
+			if (status == UI_TAB_DISABLED) {
 				iconStatus = ICON_STATUS_DISABLED;
 			}
-			MN_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, currentX, pos[1], OPTIONEXTRADATA(option).icon->size[0], TILE_HEIGHT);
+			UI_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, currentX, pos[1], OPTIONEXTRADATA(option).icon->size[0], TILE_HEIGHT);
 			textPos += OPTIONEXTRADATA(option).icon->size[0];
 		}
 
 		/** @todo fontWidth can be =0, maybe a bug from the font cache */
 		OPTIONEXTRADATA(option).truncated = tabWidth < fontWidth || tabWidth == 0;
-		MN_DrawString(font, ALIGN_UL, textPos, pos[1] + ((node->size[1] - fontHeight) / 2),
+		UI_DrawString(font, ALIGN_UL, textPos, pos[1] + ((node->size[1] - fontHeight) / 2),
 			textPos, pos[1], tabWidth + 1, TILE_HEIGHT,
 			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		currentX += tabWidth;
@@ -278,10 +278,10 @@ static void MN_TabNodeDraw (uiNode_t *node)
 	}
 
 	/* Display last junction and end of header */
-	MN_TabNodeDrawJunction(image, currentX, pos[1], lastStatus, MN_TAB_NOTHING);
+	UI_TabNodeDrawJunction(image, currentX, pos[1], lastStatus, UI_TAB_NOTHING);
 	currentX += TILE_WIDTH;
 	if (currentX < pos[0] + node->size[0])
-		MN_TabNodeDrawPlain(image, currentX, pos[1], pos[0] + node->size[0] - currentX, MN_TAB_NOTHING);
+		UI_TabNodeDrawPlain(image, currentX, pos[1], pos[0] + node->size[0] - currentX, UI_TAB_NOTHING);
 }
 
 /**
@@ -290,13 +290,13 @@ static void MN_TabNodeDraw (uiNode_t *node)
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void MN_TabNodeDrawTooltip (uiNode_t *node, int x, int y)
+static void UI_TabNodeDrawTooltip (uiNode_t *node, int x, int y)
 {
 	uiNode_t *option;
 	const int tooltipWidth = 250;
 	const char *label;
 
-	option = MN_TabNodeTabAtPosition(node, x, y);
+	option = UI_TabNodeTabAtPosition(node, x, y);
 	if (option == NULL)
 		return;
 
@@ -307,14 +307,14 @@ static void MN_TabNodeDrawTooltip (uiNode_t *node, int x, int y)
 	if (label[0] == '_')
 		label = _(label + 1);
 
-	MN_DrawTooltip(label, x, y, tooltipWidth, 0);
+	UI_DrawTooltip(label, x, y, tooltipWidth, 0);
 }
 
 /** called when the window is pushed
  * check cvar then, reduce runtime check
  * @todo move cvar check to AbstractOption
  */
-static void MN_TabNodeInit (uiNode_t *node)
+static void UI_TabNodeInit (uiNode_t *node)
 {
 	const char *cvarName;
 
@@ -325,7 +325,7 @@ static void MN_TabNodeInit (uiNode_t *node)
 	/* not a cvar? */
 	if (strncmp((char *)(EXTRADATA(node).cvar), "*cvar:", 6) != 0) {
 		/* normalize */
-		Com_Printf("MN_TabNodeInit: node '%s' doesn't have a valid cvar assigned (\"%s\" read)\n", MN_GetPath(node), (char*) (EXTRADATA(node).cvar));
+		Com_Printf("UI_TabNodeInit: node '%s' doesn't have a valid cvar assigned (\"%s\" read)\n", UI_GetPath(node), (char*) (EXTRADATA(node).cvar));
 		EXTRADATA(node).cvar = NULL;
 		return;
 	}
@@ -341,13 +341,13 @@ static void MN_TabNodeInit (uiNode_t *node)
 	}
 }
 
-void MN_RegisterTabNode (uiBehaviour_t *behaviour)
+void UI_RegisterTabNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "tab";
 	behaviour->extends = "abstractoption";
-	behaviour->draw = MN_TabNodeDraw;
-	behaviour->drawTooltip = MN_TabNodeDrawTooltip;
-	behaviour->leftClick = MN_TabNodeClick;
-	behaviour->init = MN_TabNodeInit;
+	behaviour->draw = UI_TabNodeDraw;
+	behaviour->drawTooltip = UI_TabNodeDrawTooltip;
+	behaviour->leftClick = UI_TabNodeClick;
+	behaviour->init = UI_TabNodeInit;
 	behaviour->drawItselfChild = qtrue;
 }

@@ -31,6 +31,6 @@ typedef struct buttonExtraData_s {
 	struct uiIcon_s *icon;	/**< Link to an icon */
 } buttonExtraData_t;
 
-void MN_RegisterButtonNode(uiBehaviour_t *behaviour);
+void UI_RegisterButtonNode(uiBehaviour_t *behaviour);
 
 #endif

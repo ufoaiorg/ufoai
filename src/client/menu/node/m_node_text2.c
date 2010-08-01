@@ -36,12 +36,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/parse.h"
 
 #define EXTRADATA_TYPE text2ExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void MN_TextUpdateCache(uiNode_t *node);
+static void UI_TextUpdateCache(uiNode_t *node);
 
-static void MN_TextNodeGenerateLineSplit (uiNode_t *node)
+static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 {
 	const char *data;
 	int bufferSize = 1024;
@@ -50,15 +50,15 @@ static void MN_TextNodeGenerateLineSplit (uiNode_t *node)
 	LIST_Delete(&EXTRADATA(node).lineSplit);
 
 	if (node->text != NULL)
-		data = MN_GetReferenceString(node, node->text);
+		data = UI_GetReferenceString(node, node->text);
 	else if (EXTRADATA(node).super.dataID != TEXT_NULL) {
 		const uiSharedData_t *shared;
 		shared = &mn.sharedData[EXTRADATA(node).super.dataID];
 		switch (shared->type) {
-		case MN_SHARED_TEXT:
-			data = MN_GetText(EXTRADATA(node).super.dataID);
+		case UI_SHARED_TEXT:
+			data = UI_GetText(EXTRADATA(node).super.dataID);
 			break;
-		case MN_SHARED_LINKEDLISTTEXT:
+		case UI_SHARED_LINKEDLISTTEXT:
 			return;
 		default:
 			return;
@@ -94,15 +94,15 @@ static void MN_TextNodeGenerateLineSplit (uiNode_t *node)
 	Mem_Free(buffer);
 }
 
-static void MN_TextValidateCache (uiNode_t *node)
+static void UI_TextValidateCache (uiNode_t *node)
 {
 	int v;
 	if (EXTRADATA(node).super.dataID == TEXT_NULL || node->text != NULL)
 		return;
 
-	v = MN_GetDataVersion(EXTRADATA(node).super.dataID);
+	v = UI_GetDataVersion(EXTRADATA(node).super.dataID);
 	if (v != EXTRADATA(node).super.versionId) {
-		MN_TextUpdateCache(node);
+		UI_TextUpdateCache(node);
 	}
 }
 
@@ -113,19 +113,19 @@ static void MN_TextValidateCache (uiNode_t *node)
  * @param[in] y position y on the screen
  * @return The line number under the position (0 = first line)
  */
-static int MN_TextNodeGetLine (const uiNode_t *node, int x, int y)
+static int UI_TextNodeGetLine (const uiNode_t *node, int x, int y)
 {
 	int lineHeight;
 	int line;
-	assert(MN_NodeInstanceOf(node, "text"));
+	assert(UI_NodeInstanceOf(node, "text"));
 
 	lineHeight = EXTRADATACONST(node).super.lineHeight;
 	if (lineHeight == 0) {
-		const char *font = MN_GetFontFromNode(node);
-		lineHeight = MN_FontGetHeight(font);
+		const char *font = UI_GetFontFromNode(node);
+		lineHeight = UI_FontGetHeight(font);
 	}
 
-	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 	y -= node->padding;
 
 	/* skip position over the first line */
@@ -140,20 +140,20 @@ static int MN_TextNodeGetLine (const uiNode_t *node, int x, int y)
 	return line;
 }
 
-static void MN_TextNodeMouseMove (uiNode_t *node, int x, int y)
+static void UI_TextNodeMouseMove (uiNode_t *node, int x, int y)
 {
-	EXTRADATA(node).super.lineUnderMouse = MN_TextNodeGetLine(node, x, y);
+	EXTRADATA(node).super.lineUnderMouse = UI_TextNodeGetLine(node, x, y);
 }
 
 #define MAX_MENUTEXTLEN		32768
 
 /**
- * @brief Handles line breaks and drawing for MN_TEXT menu nodes
+ * @brief Handles line breaks and drawing for UI_TEXT menu nodes
  * @param[in] node The context node
  * @param[in] list The test to draw else NULL
  * @param[in] noDraw If true, calling of this function only update the cache (real number of lines)
  */
-static void MN_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qboolean noDraw)
+static void UI_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qboolean noDraw)
 {
 	char newFont[MAX_VAR];
 	const char* oldFont = NULL;
@@ -161,18 +161,18 @@ static void MN_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qbool
 	vec4_t colorSelectedHover;
 	int fullSizeY;
 	int x1; /* variable x position */
-	const char *font = MN_GetFontFromNode(node);
+	const char *font = UI_GetFontFromNode(node);
 	vec2_t pos;
 	int x, y, width, height;
 	int viewSizeY;
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 
-	if (MN_AbstractScrollableNodeIsSizeChange(node)) {
+	if (UI_AbstractScrollableNodeIsSizeChange(node)) {
 		int lineHeight = EXTRADATA(node).super.lineHeight;
 		if (lineHeight == 0) {
-			const char *font = MN_GetFontFromNode(node);
-			lineHeight = MN_FontGetHeight(font);
+			const char *font = UI_GetFontFromNode(node);
+			lineHeight = UI_FontGetHeight(font);
 		}
 		viewSizeY = node->size[1] / lineHeight;
 	} else {
@@ -239,35 +239,35 @@ static void MN_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qbool
 				R_FontTextSize (font, cur, width, EXTRADATA(node).super.longlines, NULL, NULL, &lines, NULL);
 				fullSizeY += lines;
 			} else
-				MN_DrawString(font, node->textalign, x1, y, x, y, width, height, EXTRADATA(node).super.lineHeight, cur, viewSizeY, EXTRADATA(node).super.super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).super.longlines);
+				UI_DrawString(font, node->textalign, x1, y, x, y, width, height, EXTRADATA(node).super.lineHeight, cur, viewSizeY, EXTRADATA(node).super.super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).super.longlines);
 		}
 
 		list = list->next;
 	}
 
 	/* update scroll status */
-	MN_AbstractScrollableNodeSetY(node, -1, viewSizeY, fullSizeY);
+	UI_AbstractScrollableNodeSetY(node, -1, viewSizeY, fullSizeY);
 
 	R_Color(NULL);
 }
 
-static void MN_TextUpdateCache (uiNode_t *node)
+static void UI_TextUpdateCache (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 
-	MN_TextNodeGenerateLineSplit(node);
+	UI_TextNodeGenerateLineSplit(node);
 
 	if (EXTRADATA(node).super.dataID == TEXT_NULL && node->text != NULL) {
-		MN_TextNodeDrawText(node, EXTRADATA(node).lineSplit, qtrue);
+		UI_TextNodeDrawText(node, EXTRADATA(node).lineSplit, qtrue);
 		return;
 	}
 
 	shared = &mn.sharedData[EXTRADATA(node).super.dataID];
 
-	if (shared->type == MN_SHARED_LINKEDLISTTEXT) {
-		MN_TextNodeDrawText(node, shared->data.linkedListText, qtrue);
+	if (shared->type == UI_SHARED_LINKEDLISTTEXT) {
+		UI_TextNodeDrawText(node, shared->data.linkedListText, qtrue);
 	} else {
-		MN_TextNodeDrawText(node, EXTRADATA(node).lineSplit, qtrue);
+		UI_TextNodeDrawText(node, EXTRADATA(node).lineSplit, qtrue);
 	}
 
 	EXTRADATA(node).super.versionId = shared->versionId;
@@ -276,25 +276,25 @@ static void MN_TextUpdateCache (uiNode_t *node)
 /**
  * @brief Draw a text node
  */
-static void MN_TextNodeDraw (uiNode_t *node)
+static void UI_TextNodeDraw (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 
-	MN_TextValidateCache(node);
+	UI_TextValidateCache(node);
 
 	if (EXTRADATA(node).super.dataID == TEXT_NULL && node->text != NULL) {
-		MN_TextNodeDrawText(node, EXTRADATA(node).lineSplit, qfalse);
+		UI_TextNodeDrawText(node, EXTRADATA(node).lineSplit, qfalse);
 		return;
 	}
 
 	shared = &mn.sharedData[EXTRADATA(node).super.dataID];
 
 	switch (shared->type) {
-	case MN_SHARED_TEXT:
-		MN_TextNodeDrawText(node, EXTRADATA(node).lineSplit, qfalse);
+	case UI_SHARED_TEXT:
+		UI_TextNodeDrawText(node, EXTRADATA(node).lineSplit, qfalse);
 		break;
-	case MN_SHARED_LINKEDLISTTEXT:
-		MN_TextNodeDrawText(node, shared->data.linkedListText, qfalse);
+	case UI_SHARED_LINKEDLISTTEXT:
+		UI_TextNodeDrawText(node, shared->data.linkedListText, qfalse);
 		break;
 	default:
 		break;
@@ -305,65 +305,65 @@ static void MN_TextNodeDraw (uiNode_t *node)
 
 /**
  * @brief Calls the script command for a text node that is clickable
- * @sa MN_TextNodeRightClick
+ * @sa UI_TextNodeRightClick
  */
-static void MN_TextNodeClick (uiNode_t * node, int x, int y)
+static void UI_TextNodeClick (uiNode_t * node, int x, int y)
 {
-	int line = MN_TextNodeGetLine(node, x, y);
+	int line = UI_TextNodeGetLine(node, x, y);
 
 	if (line < 0 || line >= EXTRADATA(node).super.super.scrollY.fullSize)
 		return;
 
-	MN_TextNodeSelectLine(node, line);
+	UI_TextNodeSelectLine(node, line);
 
 	if (node->onClick)
-		MN_ExecuteEventActions(node, node->onClick);
+		UI_ExecuteEventActions(node, node->onClick);
 }
 
 /**
  * @brief Calls the script command for a text node that is clickable via right mouse button
- * @sa MN_TextNodeClick
+ * @sa UI_TextNodeClick
  */
-static void MN_TextNodeRightClick (uiNode_t * node, int x, int y)
+static void UI_TextNodeRightClick (uiNode_t * node, int x, int y)
 {
-	int line = MN_TextNodeGetLine(node, x, y);
+	int line = UI_TextNodeGetLine(node, x, y);
 
 	if (line < 0 || line >= EXTRADATA(node).super.super.scrollY.fullSize)
 		return;
 
-	MN_TextNodeSelectLine(node, line);
+	UI_TextNodeSelectLine(node, line);
 
 	if (node->onRightClick)
-		MN_ExecuteEventActions(node, node->onRightClick);
+		UI_ExecuteEventActions(node, node->onRightClick);
 }
 
-static void MN_TextNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_TextNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
 {
-	MN_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
+	UI_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
 	if (node->onWheelUp && !down)
-		MN_ExecuteEventActions(node, node->onWheelUp);
+		UI_ExecuteEventActions(node, node->onWheelUp);
 	if (node->onWheelDown && down)
-		MN_ExecuteEventActions(node, node->onWheelDown);
+		UI_ExecuteEventActions(node, node->onWheelDown);
 	if (node->onWheel)
-		MN_ExecuteEventActions(node, node->onWheel);
+		UI_ExecuteEventActions(node, node->onWheel);
 }
 
-static void MN_TextNodeLoading (uiNode_t *node)
+static void UI_TextNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).super.textLineSelected = -1; /**< Invalid/no line selected per default. */
 	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
-static void MN_TextNodeLoaded (uiNode_t *node)
+static void UI_TextNodeLoaded (uiNode_t *node)
 {
 	int lineheight = EXTRADATA(node).super.lineHeight;
 	/* auto compute lineheight */
 	/* we don't overwrite EXTRADATA(node).lineHeight, because "0" is dynamically replaced by font height on draw function */
 	if (lineheight == 0) {
 		/* the font is used */
-		const char *font = MN_GetFontFromNode(node);
-		lineheight = MN_FontGetHeight(font);
+		const char *font = UI_GetFontFromNode(node);
+		lineheight = UI_FontGetHeight(font);
 	}
 
 	/* auto compute rows (super.viewSizeY) */
@@ -372,7 +372,7 @@ static void MN_TextNodeLoaded (uiNode_t *node)
 			EXTRADATA(node).super.super.scrollY.viewSize = node->size[1] / lineheight;
 		} else {
 			EXTRADATA(node).super.super.scrollY.viewSize = 1;
-			Com_Printf("MN_TextNodeLoaded: node '%s' has no rows value\n", MN_GetPath(node));
+			Com_Printf("UI_TextNodeLoaded: node '%s' has no rows value\n", UI_GetPath(node));
 		}
 	}
 
@@ -383,34 +383,34 @@ static void MN_TextNodeLoaded (uiNode_t *node)
 
 	/* is text slot exists */
 	if (EXTRADATA(node).super.dataID >= MAX_MENUTEXTS)
-		Com_Error(ERR_DROP, "Error in node %s - max menu num exceeded (num: %i, max: %i)", MN_GetPath(node), EXTRADATA(node).super.dataID, MAX_MENUTEXTS);
+		Com_Error(ERR_DROP, "Error in node %s - max menu num exceeded (num: %i, max: %i)", UI_GetPath(node), EXTRADATA(node).super.dataID, MAX_MENUTEXTS);
 
 #ifdef DEBUG
 	if (EXTRADATA(node).super.super.scrollY.viewSize != (int)(node->size[1] / lineheight)) {
-		Com_Printf("MN_TextNodeLoaded: rows value (%i) of node '%s' differs from size (%.0f) and format (%i) values\n",
-			EXTRADATA(node).super.super.scrollY.viewSize, MN_GetPath(node), node->size[1], lineheight);
+		Com_Printf("UI_TextNodeLoaded: rows value (%i) of node '%s' differs from size (%.0f) and format (%i) values\n",
+			EXTRADATA(node).super.super.scrollY.viewSize, UI_GetPath(node), node->size[1], lineheight);
 	}
 #endif
 
 	if (node->text == NULL && EXTRADATA(node).super.dataID == TEXT_NULL)
-		Com_Printf("MN_TextNodeLoaded: 'textid' property of node '%s' is not set\n", MN_GetPath(node));
+		Com_Printf("UI_TextNodeLoaded: 'textid' property of node '%s' is not set\n", UI_GetPath(node));
 }
 
 static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterText2Node (uiBehaviour_t *behaviour)
+void UI_RegisterText2Node (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "text2";
 	behaviour->extends = "text";
-	behaviour->draw = MN_TextNodeDraw;
-	behaviour->leftClick = MN_TextNodeClick;
-	behaviour->rightClick = MN_TextNodeRightClick;
-	behaviour->mouseWheel = MN_TextNodeMouseWheel;
-	behaviour->mouseMove = MN_TextNodeMouseMove;
-	behaviour->loading = MN_TextNodeLoading;
-	behaviour->loaded = MN_TextNodeLoaded;
+	behaviour->draw = UI_TextNodeDraw;
+	behaviour->leftClick = UI_TextNodeClick;
+	behaviour->rightClick = UI_TextNodeRightClick;
+	behaviour->mouseWheel = UI_TextNodeMouseWheel;
+	behaviour->mouseMove = UI_TextNodeMouseMove;
+	behaviour->loading = UI_TextNodeLoading;
+	behaviour->loaded = UI_TextNodeLoaded;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

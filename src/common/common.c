@@ -599,7 +599,7 @@ void Com_InitArgv (int argc, const char **argv)
  * @brief Expands strings with cvar values that are dereferenced by a '*cvar'
  * @note There is an overflow check for cvars that also contain a '*cvar'
  * @sa Cmd_TokenizeString
- * @sa MN_GetReferenceString
+ * @sa UI_GetReferenceString
  */
 const char *Com_MacroExpandString (const char *text)
 {

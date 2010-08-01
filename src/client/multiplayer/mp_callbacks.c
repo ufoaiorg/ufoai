@@ -46,12 +46,12 @@ void CL_Connect_f (void)
 	}
 
 	if (!chrDisplayList.num && !MP_LoadDefaultTeamMultiplayer()) {
-		MN_Popup(_("Error"), _("Assemble a team first"));
+		UI_Popup(_("Error"), _("Assemble a team first"));
 		return;
 	}
 
 	if (Cvar_GetInteger("mn_server_need_password")) {
-		MN_PushWindow("serverpassword", NULL);
+		UI_PushWindow("serverpassword", NULL);
 		return;
 	}
 
@@ -75,7 +75,7 @@ void CL_Connect_f (void)
 
 	CL_SetClientState(ca_connecting);
 
-	MN_InitStack(NULL, "multiplayerInGame", qfalse, qfalse);
+	UI_InitStack(NULL, "multiplayerInGame", qfalse, qfalse);
 }
 
 /**
@@ -149,7 +149,7 @@ void CL_Reconnect_f (void)
 static void CL_SelectTeam_Init_f (void)
 {
 	/* reset menu text */
-	MN_ResetData(TEXT_STANDARD);
+	UI_ResetData(TEXT_STANDARD);
 
 	if (Com_ServerState())
 		Cvar_Set("cl_admin", "1");
@@ -157,7 +157,7 @@ static void CL_SelectTeam_Init_f (void)
 		Cvar_Set("cl_admin", "0");
 
 	NET_OOB_Printf(cls.netStream, "teaminfo %i", PROTOCOL_VERSION);
-	MN_RegisterText(TEXT_STANDARD, _("Select a free team or your coop team"));
+	UI_RegisterText(TEXT_STANDARD, _("Select a free team or your coop team"));
 }
 
 /**
@@ -186,10 +186,10 @@ static void CL_TeamNum_f (void)
 			if (teamData.maxPlayersPerTeam > teamData.teamCount[i]) {
 				Cvar_SetValue("cl_teamnum", i);
 				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
-				MN_RegisterText(TEXT_STANDARD, buf);
+				UI_RegisterText(TEXT_STANDARD, buf);
 				break;
 			} else {
-				MN_RegisterText(TEXT_STANDARD, _("Team is already in use"));
+				UI_RegisterText(TEXT_STANDARD, _("Team is already in use"));
 				Com_DPrintf(DEBUG_CLIENT, "team %i is already in use: %i (max: %i)\n",
 					i, teamData.teamCount[i], teamData.maxPlayersPerTeam);
 			}
@@ -199,10 +199,10 @@ static void CL_TeamNum_f (void)
 			if (teamData.maxPlayersPerTeam > teamData.teamCount[i]) {
 				Cvar_SetValue("cl_teamnum", i);
 				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
-				MN_RegisterText(TEXT_STANDARD, buf);
+				UI_RegisterText(TEXT_STANDARD, buf);
 				break;
 			} else {
-				MN_RegisterText(TEXT_STANDARD, _("Team is already in use"));
+				UI_RegisterText(TEXT_STANDARD, _("Team is already in use"));
 				Com_DPrintf(DEBUG_CLIENT, "team %i is already in use: %i (max: %i)\n",
 					i, teamData.teamCount[i], teamData.maxPlayersPerTeam);
 			}
@@ -211,7 +211,7 @@ static void CL_TeamNum_f (void)
 
 #if 0
 	if (!teamnum->modified)
-		MN_RegisterText(TEXT_STANDARD, _("Invalid or full team"));
+		UI_RegisterText(TEXT_STANDARD, _("Invalid or full team"));
 #endif
 	CL_SelectTeam_Init_f();
 }

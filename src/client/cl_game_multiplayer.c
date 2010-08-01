@@ -45,8 +45,8 @@ void GAME_MP_AutoTeam (void)
 
 void GAME_MP_StartBattlescape (qboolean isTeamPlay)
 {
-	MN_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
-	MN_InitStack("multiplayer_wait", NULL, qtrue, qtrue);
+	UI_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
+	UI_InitStack("multiplayer_wait", NULL, qtrue, qtrue);
 }
 
 void GAME_MP_EndRoundAnnounce (int playerNum, int team)
@@ -79,7 +79,7 @@ static void GAME_MP_StartServer_f (void)
 
 	if (Cvar_GetInteger("sv_teamplay")
 	 && Cvar_GetValue("sv_maxsoldiersperplayer") > Cvar_GetValue("sv_maxsoldiersperteam")) {
-		MN_Popup(_("Settings doesn't make sense"), _("Set soldiers per player lower than soldiers per team"));
+		UI_Popup(_("Settings doesn't make sense"), _("Set soldiers per player lower than soldiers per team"));
 		return;
 	}
 
@@ -99,7 +99,7 @@ static void GAME_MP_StartServer_f (void)
 
 	Cmd_ExecuteString(map);
 
-	MN_InitStack("multiplayer_wait", "multiplayerInGame", qfalse, qtrue);
+	UI_InitStack("multiplayer_wait", "multiplayerInGame", qfalse, qtrue);
 }
 
 /**
@@ -112,7 +112,7 @@ static void GAME_MP_UpdateGametype_f (void)
 
 /**
  * @brief Switch to the next multiplayer game type
- * @sa MN_PrevGametype_f
+ * @sa UI_PrevGametype_f
  */
 static void GAME_MP_ChangeGametype_f (void)
 {
@@ -127,7 +127,7 @@ static void GAME_MP_ChangeGametype_f (void)
 
 	md = &csi.mds[cls.currentSelectedMap];
 	if (!md || !md->multiplayer) {
-		Com_Printf("MN_ChangeGametype_f: No mapdef for the map\n");
+		Com_Printf("UI_ChangeGametype_f: No mapdef for the map\n");
 		return;
 	}
 
@@ -209,7 +209,7 @@ void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	CL_Drop();
 
 	if (winner == 0) {
-		MN_Popup(_("Game Drawn!"), _("The game was a draw!\n\nNo survivors left on any side."));
+		UI_Popup(_("Game Drawn!"), _("The game was a draw!\n\nNo survivors left on any side."));
 		return;
 	}
 
@@ -224,10 +224,10 @@ void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	Com_sprintf(resultText, sizeof(resultText), _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), their_killed + their_stunned, numAlive[cls.team]);
 	if (winner == cls.team) {
 		Com_sprintf(popupText, lengthof(popupText), "%s%s", _("You won the game!"), resultText);
-		MN_Popup(_("Congratulations"), popupText);
+		UI_Popup(_("Congratulations"), popupText);
 	} else {
 		Com_sprintf(popupText, lengthof(popupText), "%s%s", _("You've lost the game!"), resultText);
-		MN_Popup(_("Better luck next time"), popupText);
+		UI_Popup(_("Better luck next time"), popupText);
 	}
 }
 

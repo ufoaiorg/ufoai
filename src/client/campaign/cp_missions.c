@@ -96,7 +96,7 @@ void CP_StartMissionMap (mission_t* mission)
 	const char *param = NULL;
 
 	/* prepare */
-	MN_InitStack(NULL, "singleplayermission", qtrue, qfalse);
+	UI_InitStack(NULL, "singleplayermission", qtrue, qfalse);
 
 	assert(mission->mapDef->map);
 

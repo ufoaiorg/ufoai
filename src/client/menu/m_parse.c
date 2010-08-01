@@ -39,9 +39,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 
 /** prototypes */
-static qboolean MN_ParseProperty(void* object, const value_t *property, const char* objectName, const char **text, const char **token);
-static uiAction_t *MN_ParseActionList(uiNode_t *menuNode, const char **text, const const char **token);
-static uiNode_t *MN_ParseNode(uiNode_t * parent, const char **text, const char **token, const char *errhead);
+static qboolean UI_ParseProperty(void* object, const value_t *property, const char* objectName, const char **text, const char **token);
+static uiAction_t *UI_ParseActionList(uiNode_t *menuNode, const char **text, const const char **token);
+static uiNode_t *UI_ParseNode(uiNode_t * parent, const char **text, const char **token, const char *errhead);
 
 /** @brief valid properties for a menu model definition */
 static const value_t menuModelProperties[] = {
@@ -70,7 +70,7 @@ static const char *reserved_tokens[] = {
 	NULL
 };
 
-static qboolean MN_TokenIsReserved (const char *name)
+static qboolean UI_TokenIsReserved (const char *name)
 {
 	const char **token = reserved_tokens;
 	while (*token) {
@@ -81,7 +81,7 @@ static qboolean MN_TokenIsReserved (const char *name)
 	return qfalse;
 }
 
-static qboolean MN_TokenIsValue (const char *name, qboolean isQuoted)
+static qboolean UI_TokenIsValue (const char *name, qboolean isQuoted)
 {
 	assert(name);
 	if (isQuoted)
@@ -114,7 +114,7 @@ static qboolean MN_TokenIsValue (const char *name, qboolean isQuoted)
 	return qfalse;
 }
 
-static qboolean MN_TokenIsName (const char *name, qboolean isQuoted)
+static qboolean UI_TokenIsName (const char *name, qboolean isQuoted)
 {
 	assert(name);
 	if (isQuoted)
@@ -142,7 +142,7 @@ static qboolean MN_TokenIsName (const char *name, qboolean isQuoted)
  * @param[in] name Property name we search
  * @return A value_t with the requested name, else NULL
  */
-const value_t* MN_FindPropertyByName (const value_t* propertyList, const char* name)
+const value_t* UI_FindPropertyByName (const value_t* propertyList, const char* name)
 {
 	const value_t* current = propertyList;
 	while (current->string != NULL) {
@@ -159,7 +159,7 @@ const value_t* MN_FindPropertyByName (const value_t* propertyList, const char* n
  * @param[in] count number of element need to allocate
  * @todo Assert out when we are not in parsing/loading stage
  */
-float* MN_AllocStaticFloat (int count)
+float* UI_AllocStaticFloat (int count)
 {
 	float *result;
 	assert(count > 0);
@@ -167,7 +167,7 @@ float* MN_AllocStaticFloat (int count)
 	result = (float*) mn.curadata;
 	mn.curadata += sizeof(float) * count;
 	if (mn.curadata - mn.adata > mn.adataize)
-		Com_Error(ERR_FATAL, "MN_AllocFloat: Menu memory hunk exceeded - increase the size");
+		Com_Error(ERR_FATAL, "UI_AllocFloat: Menu memory hunk exceeded - increase the size");
 	return result;
 }
 
@@ -177,7 +177,7 @@ float* MN_AllocStaticFloat (int count)
  * @param[in] count number of element need to allocate
  * @todo Assert out when we are not in parsing/loading stage
  */
-vec4_t* MN_AllocStaticColor (int count)
+vec4_t* UI_AllocStaticColor (int count)
 {
 	vec4_t *result;
 	assert(count > 0);
@@ -185,7 +185,7 @@ vec4_t* MN_AllocStaticColor (int count)
 	result = (vec4_t*) mn.curadata;
 	mn.curadata += sizeof(vec_t) * 4 * count;
 	if (mn.curadata - mn.adata > mn.adataize)
-		Com_Error(ERR_FATAL, "MN_AllocColor: Menu memory hunk exceeded - increase the size");
+		Com_Error(ERR_FATAL, "UI_AllocColor: Menu memory hunk exceeded - increase the size");
 	return result;
 }
 
@@ -196,18 +196,18 @@ vec4_t* MN_AllocStaticColor (int count)
  * @param[in] size request a fixed memory size, if 0 the string size is used
  * @todo Assert out when we are not in parsing/loading stage
  */
-char* MN_AllocStaticString (const char* string, int size)
+char* UI_AllocStaticString (const char* string, int size)
 {
 	char* result = (char *)mn.curadata;
 	mn.curadata = ALIGN_PTR(mn.curadata, sizeof(char));
 	if (size != 0) {
 		if (mn.curadata - mn.adata + size > mn.adataize)
-			Com_Error(ERR_FATAL, "MN_AllocString: Menu memory hunk exceeded - increase the size");
+			Com_Error(ERR_FATAL, "UI_AllocString: Menu memory hunk exceeded - increase the size");
 		strncpy((char *)mn.curadata, string, size);
 		mn.curadata += size;
 	} else {
 		if (mn.curadata - mn.adata + strlen(string) + 1 > mn.adataize)
-			Com_Error(ERR_FATAL, "MN_AllocString: Menu memory hunk exceeded - increase the size");
+			Com_Error(ERR_FATAL, "UI_AllocString: Menu memory hunk exceeded - increase the size");
 		mn.curadata += sprintf((char *)mn.curadata, "%s", string) + 1;
 	}
 	return result;
@@ -217,10 +217,10 @@ char* MN_AllocStaticString (const char* string, int size)
  * @brief Allocate an action
  * @return An action
  */
-uiAction_t *MN_AllocStaticAction (void)
+uiAction_t *UI_AllocStaticAction (void)
 {
 	if (mn.numActions >= MAX_MENUACTIONS)
-		Com_Error(ERR_FATAL, "MN_AllocAction: Too many menu actions");
+		Com_Error(ERR_FATAL, "UI_AllocAction: Too many menu actions");
 	return &mn.actions[mn.numActions++];
 }
 
@@ -234,19 +234,19 @@ uiAction_t *MN_AllocStaticAction (void)
  * @return True if the action is initialized
  * @todo remove node param and catch error where we call that function
  */
-qboolean MN_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_t *property, const char *string)
+qboolean UI_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_t *property, const char *string)
 {
 	if (property == NULL) {
 		action->type = EA_VALUE_STRING;
-		action->d.terminal.d1.data = MN_AllocStaticString(string, 0);
+		action->d.terminal.d1.data = UI_AllocStaticString(string, 0);
 		action->d.terminal.d2.integer = 0;
 		return qtrue;
 	}
 
 	if (property->type == V_UI_ICONREF) {
-		uiIcon_t* icon = MN_GetIconByName(string);
+		uiIcon_t* icon = UI_GetIconByName(string);
 		if (icon == NULL) {
-			Com_Printf("MN_ParseSetAction: icon '%s' not found (%s)\n", string, MN_GetPath(node));
+			Com_Printf("UI_ParseSetAction: icon '%s' not found (%s)\n", string, UI_GetPath(node));
 			return qfalse;
 		}
 		action->type = EA_VALUE_RAW;
@@ -256,7 +256,7 @@ qboolean MN_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_
 	} else {
 		const int baseType = property->type & V_UI_MASK;
 		if (baseType != 0 && baseType != V_UI_CVAR) {
-			Com_Printf("MN_ParseRawValue: setter for property '%s' (type %d, 0x%X) is not supported (%s)\n", property->string, property->type, property->type, MN_GetPath(node));
+			Com_Printf("UI_ParseRawValue: setter for property '%s' (type %d, 0x%X) is not supported (%s)\n", property->string, property->type, property->type, UI_GetPath(node));
 			return qfalse;
 		}
 		mn.curadata = Com_AlignPtr(mn.curadata, property->type & V_BASETYPEMASK);
@@ -273,7 +273,7 @@ qboolean MN_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_
 /**
  * @brief Parser for setter command
  */
-static qboolean MN_ParseSetAction (uiNode_t *menuNode, uiAction_t *action, const char **text, const char **token, const char *errhead)
+static qboolean UI_ParseSetAction (uiNode_t *menuNode, uiAction_t *action, const char **text, const char **token, const char *errhead)
 {
 	const value_t *property;
 	int type;
@@ -282,12 +282,12 @@ static qboolean MN_ParseSetAction (uiNode_t *menuNode, uiAction_t *action, const
 	assert((*token)[0] == '*');
 
 	Com_UnParseLastToken();
-	action->d.nonTerminal.left = MN_ParseExpression(text, errhead, menuNode);
+	action->d.nonTerminal.left = UI_ParseExpression(text, errhead, menuNode);
 
 	type = action->d.nonTerminal.left->type;
 	if (type != EA_VALUE_CVARNAME && type != EA_VALUE_CVARNAME_WITHINJECTION
 		&& type != EA_VALUE_PATHPROPERTY && type != EA_VALUE_PATHPROPERTY_WITHINJECTION) {
-		Com_Printf("MN_ParseSetAction: Cvar or Node property expected. Type '%i' found\n", type);
+		Com_Printf("UI_ParseSetAction: Cvar or Node property expected. Type '%i' found\n", type);
 		return qfalse;
 	}
 
@@ -296,13 +296,13 @@ static qboolean MN_ParseSetAction (uiNode_t *menuNode, uiAction_t *action, const
 	if (!*text)
 		return qfalse;
 	if (strcmp(*token, "=") != 0) {
-		Com_Printf("MN_ParseSetAction: Assign sign '=' expected between variable and value. '%s' found in node %s.\n", *token, MN_GetPath(menuNode));
+		Com_Printf("UI_ParseSetAction: Assign sign '=' expected between variable and value. '%s' found in node %s.\n", *token, UI_GetPath(menuNode));
 		return qfalse;
 	}
 
 	/* get the value */
 	if (type == EA_VALUE_CVARNAME || type == EA_VALUE_CVARNAME_WITHINJECTION) {
-		action->d.nonTerminal.right = MN_ParseExpression(text, errhead, menuNode);
+		action->d.nonTerminal.right = UI_ParseExpression(text, errhead, menuNode);
 		return qtrue;
 	}
 
@@ -316,15 +316,15 @@ static qboolean MN_ParseSetAction (uiNode_t *menuNode, uiAction_t *action, const
 		uiAction_t* actionList;
 
 		if (property != NULL && property->type != V_UI_ACTION) {
-			Com_Printf("MN_ParseSetAction: Property %s@%s do not expect code block.\n", MN_GetPath(menuNode), property->string);
+			Com_Printf("UI_ParseSetAction: Property %s@%s do not expect code block.\n", UI_GetPath(menuNode), property->string);
 			return qfalse;
 		}
 
-		actionList = MN_ParseActionList(menuNode, text, token);
+		actionList = UI_ParseActionList(menuNode, text, token);
 		if (actionList == NULL)
 			return qfalse;
 
-		localAction = MN_AllocStaticAction();
+		localAction = UI_AllocStaticAction();
 		localAction->type = EA_VALUE_RAW;
 		localAction->d.terminal.d1.data = actionList;
 		localAction->d.terminal.d2.integer = V_UI_ACTION;
@@ -335,22 +335,22 @@ static qboolean MN_ParseSetAction (uiNode_t *menuNode, uiAction_t *action, const
 
 	if (!strcmp(*token, "(")) {
 		Com_UnParseLastToken();
-		action->d.nonTerminal.right = MN_ParseExpression(text, errhead, menuNode);
+		action->d.nonTerminal.right = UI_ParseExpression(text, errhead, menuNode);
 		return qtrue;
 	}
 
-	/* @todo everything should come from MN_ParseExpression */
+	/* @todo everything should come from UI_ParseExpression */
 
-	if (MN_IsInjectedString(*token)) {
-		localAction = MN_AllocStaticAction();
+	if (UI_IsInjectedString(*token)) {
+		localAction = UI_AllocStaticAction();
 		localAction->type = EA_VALUE_STRING_WITHINJECTION;
-		localAction->d.terminal.d1.data = MN_AllocStaticString(*token, 0);
+		localAction->d.terminal.d1.data = UI_AllocStaticString(*token, 0);
 		action->d.nonTerminal.right = localAction;
 		return qtrue;
 	}
 
-	localAction = MN_AllocStaticAction();
-	MN_InitRawActionValue(localAction, menuNode, property, *token);
+	localAction = UI_AllocStaticAction();
+	UI_InitRawActionValue(localAction, menuNode, property, *token);
 	action->d.nonTerminal.right = localAction;
 	return qtrue;
 }
@@ -358,17 +358,17 @@ static qboolean MN_ParseSetAction (uiNode_t *menuNode, uiAction_t *action, const
 /**
  * @brief Parser for c command
  */
-static qboolean MN_ParseCallAction (uiNode_t *menuNode, uiAction_t *action, const char **text, const char **token, const char *errhead)
+static qboolean UI_ParseCallAction (uiNode_t *menuNode, uiAction_t *action, const char **text, const char **token, const char *errhead)
 {
 	uiAction_t *expression;
 	uiAction_t *lastParam = NULL;
 	int paramID = 0;
-	expression = MN_ParseExpression(text, errhead, menuNode);
+	expression = UI_ParseExpression(text, errhead, menuNode);
 	if (expression == NULL)
 		return qfalse;
 
 	if (expression->type != EA_VALUE_PATHNODE_WITHINJECTION && expression->type != EA_VALUE_PATHNODE && expression->type != EA_VALUE_PATHPROPERTY && expression->type != EA_VALUE_PATHPROPERTY_WITHINJECTION) {
-		Com_Printf("MN_ParseCallAction: \"call\" keyword only support pathnode and pathproperty (node: %s)\n", MN_GetPath(menuNode));
+		Com_Printf("UI_ParseCallAction: \"call\" keyword only support pathnode and pathproperty (node: %s)\n", UI_GetPath(menuNode));
 		return qfalse;
 	}
 
@@ -391,9 +391,9 @@ static qboolean MN_ParseCallAction (uiNode_t *menuNode, uiAction_t *action, cons
 		paramID++;
 
 		/* parameter */
-		param = MN_ParseExpression(text, errhead, menuNode);
+		param = UI_ParseExpression(text, errhead, menuNode);
 		if (param == NULL) {
-			Com_Printf("MN_ParseCallAction: problem with the %i parameter\n", paramID);
+			Com_Printf("UI_ParseCallAction: problem with the %i parameter\n", paramID);
 			return qfalse;
 		}
 		if (lastParam == NULL)
@@ -410,7 +410,7 @@ static qboolean MN_ParseCallAction (uiNode_t *menuNode, uiAction_t *action, cons
 			if (strcmp(*token, ")") == 0)
 				break;
 			Com_UnParseLastToken();
-			Com_Printf("MN_ParseCallAction: Invalidate end of 'call' after param %i\n", paramID);
+			Com_Printf("UI_ParseCallAction: Invalidate end of 'call' after param %i\n", paramID);
 			return qfalse;
 		}
 	} while(qtrue);
@@ -424,9 +424,9 @@ static qboolean MN_ParseCallAction (uiNode_t *menuNode, uiAction_t *action, cons
  * @sa ea_t
  * @todo need cleanup, compute action out of the final memory; reduce number of var
  */
-static uiAction_t *MN_ParseActionList (uiNode_t *menuNode, const char **text, const const char **token)
+static uiAction_t *UI_ParseActionList (uiNode_t *menuNode, const char **text, const const char **token)
 {
-	const char *errhead = "MN_ParseActionList: unexpected end of file (in event)";
+	const char *errhead = "UI_ParseActionList: unexpected end of file (in event)";
 	uiAction_t *firstAction;
 	uiAction_t *lastAction;
 	uiAction_t *action;
@@ -437,7 +437,7 @@ static uiAction_t *MN_ParseActionList (uiNode_t *menuNode, const char **text, co
 
 	/* prevent bad position */
 	if ((*token)[0] != '{') {
-		Com_Printf("MN_ParseActionList: token \"{\" expected, but \"%s\" found (in event) (node: %s)\n", *token, MN_GetPath(menuNode));
+		Com_Printf("UI_ParseActionList: token \"{\" expected, but \"%s\" found (in event) (node: %s)\n", *token, UI_GetPath(menuNode));
 		return NULL;
 	}
 
@@ -452,19 +452,19 @@ static uiAction_t *MN_ParseActionList (uiNode_t *menuNode, const char **text, co
 		if ((*token)[0] == '}')
 			break;
 
-		type = MN_GetActionTokenType(*token, EA_ACTION);
+		type = UI_GetActionTokenType(*token, EA_ACTION);
 		/* setter form */
 		if (type == EA_NULL && (*token)[0] == '*')
 			type = EA_ASSIGN;
 
 		/* unknown, we break the parsing */
 		if (type == EA_NULL) {
-			Com_Printf("MN_ParseActionList: unknown token \"%s\" ignored (in event) (node: %s)\n", *token, MN_GetPath(menuNode));
+			Com_Printf("UI_ParseActionList: unknown token \"%s\" ignored (in event) (node: %s)\n", *token, UI_GetPath(menuNode));
 			return NULL;
 		}
 
 		/* add the action */
-		action = MN_AllocStaticAction();
+		action = UI_AllocStaticAction();
 		/** @todo better to append the action after initialization */
 		if (lastAction)
 			lastAction->next = action;
@@ -481,17 +481,17 @@ static uiAction_t *MN_ParseActionList (uiNode_t *menuNode, const char **text, co
 				return NULL;
 
 			/* get the value */
-			action->d.terminal.d1.string = MN_AllocStaticString(*token, 0);
+			action->d.terminal.d1.string = UI_AllocStaticString(*token, 0);
 			break;
 
 		case EA_ASSIGN:
-			result = MN_ParseSetAction(menuNode, action, text, token, errhead);
+			result = UI_ParseSetAction(menuNode, action, text, token, errhead);
 			if (!result)
 				return NULL;
 			break;
 
 		case EA_CALL:
-			result = MN_ParseCallAction(menuNode, action, text, token, errhead);
+			result = UI_ParseCallAction(menuNode, action, text, token, errhead);
 			if (!result)
 				return NULL;
 			break;
@@ -499,12 +499,12 @@ static uiAction_t *MN_ParseActionList (uiNode_t *menuNode, const char **text, co
 		case EA_DELETE:
 			{
 				uiAction_t *expression;
-				expression = MN_ParseExpression(text, errhead, menuNode);
+				expression = UI_ParseExpression(text, errhead, menuNode);
 				if (expression == NULL)
 					return NULL;
 
 				if (expression->type != EA_VALUE_CVARNAME) {
-					Com_Printf("MN_ParseActionList: \"delete\" keyword only support cvarname (node: %s)\n", MN_GetPath(menuNode));
+					Com_Printf("UI_ParseActionList: \"delete\" keyword only support cvarname (node: %s)\n", UI_GetPath(menuNode));
 					return NULL;
 				}
 
@@ -515,7 +515,7 @@ static uiAction_t *MN_ParseActionList (uiNode_t *menuNode, const char **text, co
 		case EA_ELIF:
 			/* check previous action */
 			if (!lastAction || (lastAction->type != EA_IF && lastAction->type != EA_ELIF)) {
-				Com_Printf("MN_ParseActionList: 'elif' must be set after an 'if' or an 'elif' (node: %s)\n", MN_GetPath(menuNode));
+				Com_Printf("UI_ParseActionList: 'elif' must be set after an 'if' or an 'elif' (node: %s)\n", UI_GetPath(menuNode));
 				return NULL;
 			}
 			/* then it execute EA_IF, no break */
@@ -525,7 +525,7 @@ static uiAction_t *MN_ParseActionList (uiNode_t *menuNode, const char **text, co
 				uiAction_t *expression;
 
 				/* get the condition */
-				expression = MN_ParseExpression(text, errhead, menuNode);
+				expression = UI_ParseExpression(text, errhead, menuNode);
 				if (expression == NULL)
 					return NULL;
 				action->d.nonTerminal.left = expression;
@@ -534,14 +534,14 @@ static uiAction_t *MN_ParseActionList (uiNode_t *menuNode, const char **text, co
 				*token = Com_EParse(text, errhead, NULL);
 				if (!*text)
 					return NULL;
-				action->d.nonTerminal.right = MN_ParseActionList(menuNode, text, token);
+				action->d.nonTerminal.right = UI_ParseActionList(menuNode, text, token);
 				if (action->d.nonTerminal.right == NULL) {
 					if (action->type == EA_IF)
-						Com_Printf("MN_ParseActionList: block expected after \"if\" (node: %s)\n", MN_GetPath(menuNode));
+						Com_Printf("UI_ParseActionList: block expected after \"if\" (node: %s)\n", UI_GetPath(menuNode));
 					else if (action->type == EA_ELIF)
-						Com_Printf("MN_ParseActionList: block expected after \"elif\" (node: %s)\n", MN_GetPath(menuNode));
+						Com_Printf("UI_ParseActionList: block expected after \"elif\" (node: %s)\n", UI_GetPath(menuNode));
 					else
-						Com_Printf("MN_ParseActionList: block expected after \"while\" (node: %s)\n", MN_GetPath(menuNode));
+						Com_Printf("UI_ParseActionList: block expected after \"while\" (node: %s)\n", UI_GetPath(menuNode));
 					return NULL;
 				}
 				break;
@@ -550,7 +550,7 @@ static uiAction_t *MN_ParseActionList (uiNode_t *menuNode, const char **text, co
 		case EA_ELSE:
 			/* check previous action */
 			if (!lastAction || (lastAction->type != EA_IF && lastAction->type != EA_ELIF)) {
-				Com_Printf("MN_ParseActionList: 'else' must be set after an 'if' or an 'elif' (node: %s)\n", MN_GetPath(menuNode));
+				Com_Printf("UI_ParseActionList: 'else' must be set after an 'if' or an 'elif' (node: %s)\n", UI_GetPath(menuNode));
 				return NULL;
 			}
 
@@ -559,9 +559,9 @@ static uiAction_t *MN_ParseActionList (uiNode_t *menuNode, const char **text, co
 			if (!*text)
 				return NULL;
 			action->d.nonTerminal.left = NULL;
-			action->d.nonTerminal.right = MN_ParseActionList(menuNode, text, token);
+			action->d.nonTerminal.right = UI_ParseActionList(menuNode, text, token);
 			if (action->d.nonTerminal.right == NULL) {
-				Com_Printf("MN_ParseActionList: block expected after \"else\" (node: %s)\n", MN_GetPath(menuNode));
+				Com_Printf("UI_ParseActionList: block expected after \"else\" (node: %s)\n", UI_GetPath(menuNode));
 				return NULL;
 			}
 			break;
@@ -578,13 +578,13 @@ static uiAction_t *MN_ParseActionList (uiNode_t *menuNode, const char **text, co
 
 	/* return non NULL value */
 	if (firstAction == NULL) {
-		firstAction = MN_AllocStaticAction();
+		firstAction = UI_AllocStaticAction();
 	}
 
 	return firstAction;
 }
 
-static qboolean MN_ParseExcludeRect (uiNode_t * node, const char **text, const char **token, const char *errhead)
+static qboolean UI_ParseExcludeRect (uiNode_t * node, const char **text, const char **token, const char *errhead)
 {
 	uiExcludeRect_t rect;
 
@@ -593,7 +593,7 @@ static qboolean MN_ParseExcludeRect (uiNode_t * node, const char **text, const c
 	if (!*text)
 		return qfalse;
 	if ((*token)[0] != '{') {
-		Com_Printf("MN_ParseExcludeRect: node with bad excluderect ignored (node \"%s\")\n", MN_GetPath(node));
+		Com_Printf("UI_ParseExcludeRect: node with bad excluderect ignored (node \"%s\")\n", UI_GetPath(node));
 		return qtrue;
 	}
 
@@ -616,7 +616,7 @@ static qboolean MN_ParseExcludeRect (uiNode_t * node, const char **text, const c
 	} while ((*token)[0] != '}');
 
 	if (mn.numExcludeRect >= MAX_EXLUDERECTS) {
-		Com_Printf("MN_ParseExcludeRect: exluderect limit exceeded (max: %i)\n", MAX_EXLUDERECTS);
+		Com_Printf("UI_ParseExcludeRect: exluderect limit exceeded (max: %i)\n", MAX_EXLUDERECTS);
 		return qfalse;
 	}
 
@@ -634,7 +634,7 @@ static qboolean MN_ParseExcludeRect (uiNode_t * node, const char **text, const c
 	return qtrue;
 }
 
-static qboolean MN_ParseEventProperty (uiNode_t * node, const value_t *event, const char **text, const char **token, const char *errhead)
+static qboolean UI_ParseEventProperty (uiNode_t * node, const value_t *event, const char **text, const char **token, const char *errhead)
 {
 	uiAction_t **action;
 
@@ -648,11 +648,11 @@ static qboolean MN_ParseEventProperty (uiNode_t * node, const value_t *event, co
 		return qfalse;
 
 	if ((*token)[0] != '{') {
-		Com_Printf("MN_ParseEventProperty: Event '%s' without body (%s)\n", event->string, MN_GetPath(node));
+		Com_Printf("UI_ParseEventProperty: Event '%s' without body (%s)\n", event->string, UI_GetPath(node));
 		return qfalse;
 	}
 
-	*action = MN_ParseActionList(node, text, token);
+	*action = UI_ParseActionList(node, text, token);
 	if (*action == NULL)
 		return qfalse;
 
@@ -666,10 +666,10 @@ static qboolean MN_ParseEventProperty (uiNode_t * node, const value_t *event, co
  * @brief Parse a property value
  * @todo don't read the next token (need to change the script language)
  */
-static qboolean MN_ParseProperty (void* object, const value_t *property, const char* objectName, const char **text, const char **token)
+static qboolean UI_ParseProperty (void* object, const value_t *property, const char* objectName, const char **text, const char **token)
 {
-	const char *errhead = "MN_ParseProperty: unexpected end of file (object";
-	static const char *notWellFormedValue = "MN_ParseProperty: \"%s\" is not a well formed node name (it must be quoted, uppercase const, a number, or prefixed with '*')\n";
+	const char *errhead = "UI_ParseProperty: unexpected end of file (object";
+	static const char *notWellFormedValue = "UI_ParseProperty: \"%s\" is not a well formed node name (it must be quoted, uppercase const, a number, or prefixed with '*')\n";
 	size_t bytes;
 	void *valuePtr = (void*) ((uintptr_t)object + property->ofs);
 	int result;
@@ -685,7 +685,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		*token = Com_EParse(text, errhead, objectName);
 		if (!*text)
 			return qfalse;
-		if (!MN_TokenIsValue(*token, Com_ParsedTokenIsQuoted())) {
+		if (!UI_TokenIsValue(*token, Com_ParsedTokenIsQuoted())) {
 			Com_Printf(notWellFormedValue, *token);
 			return qfalse;
 		}
@@ -701,7 +701,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		} else {
 			result = Com_ParseValue(object, *token, property->type, property->ofs, property->size, &bytes);
 			if (result != RESULT_OK) {
-				Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
+				Com_Printf("UI_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 				return qfalse;
 			}
 		}
@@ -711,7 +711,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		*token = Com_EParse(text, errhead, objectName);
 		if (!*text)
 			return qfalse;
-		if (!MN_TokenIsValue(*token, Com_ParsedTokenIsQuoted())) {
+		if (!UI_TokenIsValue(*token, Com_ParsedTokenIsQuoted())) {
 			Com_Printf(notWellFormedValue, *token);
 			return qfalse;
 		}
@@ -725,13 +725,13 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 		/* sanity check */
 		if ((property->type & V_BASETYPEMASK) == V_STRING && strlen(*token) > MAX_VAR - 1) {
-			Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, property->string);
+			Com_Printf("UI_ParseProperty: Value '%s' is too long (key %s)\n", *token, property->string);
 			return qfalse;
 		}
 
 		result = Com_ParseValue(mn.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size, &bytes);
 		if (result != RESULT_OK) {
-			Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
+			Com_Printf("UI_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 			return qfalse;
 		}
 		mn.curadata += bytes;
@@ -742,7 +742,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		*token = Com_EParse(text, errhead, objectName);
 		if (!*text)
 			return qfalse;
-		if (!MN_TokenIsValue(*token, Com_ParsedTokenIsQuoted())) {
+		if (!UI_TokenIsValue(*token, Com_ParsedTokenIsQuoted())) {
 			Com_Printf(notWellFormedValue, *token);
 			return qfalse;
 		}
@@ -755,13 +755,13 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 			/* sanity check */
 			if (strlen(*token) > MAX_VAR - 1) {
-				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, property->string);
+				Com_Printf("UI_ParseProperty: Value '%s' is too long (key %s)\n", *token, property->string);
 				return qfalse;
 			}
 
 			result = Com_ParseValue(mn.curadata, *token, V_STRING, 0, 0, &bytes);
 			if (result != RESULT_OK) {
-				Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
+				Com_Printf("UI_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 				return qfalse;
 			}
 			mn.curadata += bytes;
@@ -772,13 +772,13 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 			/* sanity check */
 			if ((property->type & V_BASETYPEMASK) == V_STRING && strlen(*token) > MAX_VAR - 1) {
-				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, property->string);
+				Com_Printf("UI_ParseProperty: Value '%s' is too long (key %s)\n", *token, property->string);
 				return qfalse;
 			}
 
 			result = Com_ParseValue(mn.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size, &bytes);
 			if (result != RESULT_OK) {
-				Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
+				Com_Printf("UI_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 				return qfalse;
 			}
 			mn.curadata += bytes;
@@ -789,13 +789,13 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 		switch (property->type) {
 		case V_UI_ACTION:
-			result = MN_ParseEventProperty(object, property, text, token, errhead);
+			result = UI_ParseEventProperty(object, property, text, token, errhead);
 			if (!result)
 				return qfalse;
 			break;
 
 		case V_UI_EXCLUDERECT:
-			result = MN_ParseExcludeRect(object, text, token, errhead);
+			result = UI_ParseExcludeRect(object, text, token, errhead);
 			if (!result)
 				return qfalse;
 			break;
@@ -807,9 +807,9 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 				if (!*text)
 					return qfalse;
 
-				*icon = MN_GetIconByName(*token);
+				*icon = UI_GetIconByName(*token);
 				if (*icon == NULL) {
-					Com_Printf("MN_ParseProperty: icon '%s' not found (object %s)\n", *token, objectName);
+					Com_Printf("UI_ParseProperty: icon '%s' not found (object %s)\n", *token, objectName);
 				}
 			}
 			break;
@@ -822,7 +822,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 				if (!*text)
 					return qfalse;
 
-				*expression = MN_AllocStaticStringCondition(*token);
+				*expression = UI_AllocStaticStringCondition(*token);
 				if (*expression == NULL)
 					return qfalse;
 			}
@@ -835,9 +835,9 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 				if (!*text)
 					return qfalse;
 
-				*dataId = MN_GetDataIDByName(*token);
+				*dataId = UI_GetDataIDByName(*token);
 				if (*dataId < 0) {
-					Com_Printf("MN_ParseProperty: Could not find menu dataId '%s' (%s@%s)\n",
+					Com_Printf("UI_ParseProperty: Could not find menu dataId '%s' (%s@%s)\n",
 							*token, objectName, property->string);
 					return qfalse;
 				}
@@ -845,14 +845,14 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 			break;
 
 		default:
-			Com_Printf("MN_ParseProperty: unknown property type '%d' (0x%X) (%s@%s)\n",
+			Com_Printf("UI_ParseProperty: unknown property type '%d' (0x%X) (%s@%s)\n",
 					property->type, property->type, objectName, property->string);
 			return qfalse;
 		}
 		break;
 
 	default:
-		Com_Printf("MN_ParseProperties: unknown property type '%d' (0x%X) (%s@%s)\n",
+		Com_Printf("UI_ParseProperties: unknown property type '%d' (0x%X) (%s@%s)\n",
 				property->type, property->type, objectName, property->string);
 		return qfalse;
 	}
@@ -860,13 +860,13 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 	return qtrue;
 }
 
-static qboolean MN_ParseFunction (uiNode_t * node, const char **text, const char **token)
+static qboolean UI_ParseFunction (uiNode_t * node, const char **text, const char **token)
 {
 	uiAction_t **action;
 	assert(node->behaviour->isFunction);
 
 	action = &node->onClick;
-	*action = MN_ParseActionList(node, text, token);
+	*action = UI_ParseActionList(node, text, token);
 	if (*action == NULL)
 		return qfalse;
 
@@ -874,7 +874,7 @@ static qboolean MN_ParseFunction (uiNode_t * node, const char **text, const char
 }
 
 /**
- * @sa MN_ParseNodeProperties
+ * @sa UI_ParseNodeProperties
  * @brief parse all sequencial properties into a block
  * @note allow to use an extra block
  * @code
@@ -890,9 +890,9 @@ static qboolean MN_ParseFunction (uiNode_t * node, const char **text, const char
  * }
  * @endcode
  */
-static qboolean MN_ParseNodeProperties (uiNode_t * node, const char **text, const char **token)
+static qboolean UI_ParseNodeProperties (uiNode_t * node, const char **text, const char **token)
 {
-	const char *errhead = "MN_ParseNodeProperties: unexpected end of file (node";
+	const char *errhead = "UI_ParseNodeProperties: unexpected end of file (node";
 	qboolean nextTokenAlreadyRead = qfalse;
 
 	if ((*token)[0] != '{')
@@ -916,19 +916,19 @@ static qboolean MN_ParseNodeProperties (uiNode_t * node, const char **text, cons
 			break;
 
 		/* find the property */
-		val = MN_GetPropertyFromBehaviour(node->behaviour, *token);
+		val = UI_GetPropertyFromBehaviour(node->behaviour, *token);
 		if (!val) {
 			/* unknown token, print message and continue */
-			Com_Printf("MN_ParseNodeProperties: unknown property \"%s\", node ignored (node %s)\n",
-					*token, MN_GetPath(node));
+			Com_Printf("UI_ParseNodeProperties: unknown property \"%s\", node ignored (node %s)\n",
+					*token, UI_GetPath(node));
 			return qfalse;
 		}
 
 		/* get parameter values */
-		result = MN_ParseProperty(node, val, node->name, text, token);
+		result = UI_ParseProperty(node, val, node->name, text, token);
 		if (!result) {
-			Com_Printf("MN_ParseNodeProperties: Problem with parsing of node property '%s@%s'. See upper\n",
-					MN_GetPath(node), val->string);
+			Com_Printf("UI_ParseNodeProperties: Problem with parsing of node property '%s@%s'. See upper\n",
+					UI_GetPath(node), val->string);
 			return qfalse;
 		}
 
@@ -949,7 +949,7 @@ static qboolean MN_ParseNodeProperties (uiNode_t * node, const char **text, cons
  * { { properties } nodes }
  * @endcode
  */
-static qboolean MN_ParseNodeBody (uiNode_t * node, const char **text, const char **token, const char *errhead)
+static qboolean UI_ParseNodeBody (uiNode_t * node, const char **text, const char **token, const char *errhead)
 {
 	qboolean result = qtrue;
 
@@ -959,7 +959,7 @@ static qboolean MN_ParseNodeBody (uiNode_t * node, const char **text, const char
 		if (!*text)
 			return qfalse;
 		if ((*token)[0] != '{') {
-			Com_Printf("MN_ParseNodeBody: node doesn't have body, token '%s' read (node \"%s\")\n", *token, MN_GetPath(node));
+			Com_Printf("UI_ParseNodeBody: node doesn't have body, token '%s' read (node \"%s\")\n", *token, UI_GetPath(node));
 			mn.numNodes--;
 			return qfalse;
 		}
@@ -967,7 +967,7 @@ static qboolean MN_ParseNodeBody (uiNode_t * node, const char **text, const char
 
 	/* functions are a special case */
 	if (node->behaviour->isFunction) {
-		result = MN_ParseFunction(node, text, token);
+		result = UI_ParseFunction(node, text, token);
 	} else {
 
 		/* check the content */
@@ -977,7 +977,7 @@ static qboolean MN_ParseNodeBody (uiNode_t * node, const char **text, const char
 
 		if ((*token)[0] == '{') {
 			/* we have a special block for properties */
-			result = MN_ParseNodeProperties(node, text, token);
+			result = UI_ParseNodeProperties(node, text, token);
 			if (!result)
 				return qfalse;
 
@@ -988,7 +988,7 @@ static qboolean MN_ParseNodeBody (uiNode_t * node, const char **text, const char
 
 			/* and then read all nodes */
 			while ((*token)[0] != '}') {
-				uiNode_t *new = MN_ParseNode(node, text, token, errhead);
+				uiNode_t *new = UI_ParseNode(node, text, token, errhead);
 				if (!new)
 					return qfalse;
 
@@ -996,13 +996,13 @@ static qboolean MN_ParseNodeBody (uiNode_t * node, const char **text, const char
 				if (*text == NULL)
 					return qfalse;
 			}
-		} else if (MN_GetPropertyFromBehaviour(node->behaviour, *token)) {
+		} else if (UI_GetPropertyFromBehaviour(node->behaviour, *token)) {
 			/* we should have a block with properties only */
-			result = MN_ParseNodeProperties(node, text, token);
+			result = UI_ParseNodeProperties(node, text, token);
 		} else {
 			/* we should have a block with nodes only */
 			while ((*token)[0] != '}') {
-				uiNode_t *new = MN_ParseNode(node, text, token, errhead);
+				uiNode_t *new = UI_ParseNode(node, text, token, errhead);
 				if (!new)
 					return qfalse;
 
@@ -1013,24 +1013,24 @@ static qboolean MN_ParseNodeBody (uiNode_t * node, const char **text, const char
 		}
 	}
 	if (!result) {
-		Com_Printf("MN_ParseNodeBody: node with bad body ignored (node \"%s\")\n", MN_GetPath(node));
+		Com_Printf("UI_ParseNodeBody: node with bad body ignored (node \"%s\")\n", UI_GetPath(node));
 		mn.numNodes--;
 		return qfalse;
 	}
 
-	/* already check on MN_ParseNodeProperties */
+	/* already check on UI_ParseNodeProperties */
 	assert((*token)[0] == '}');
 	return qtrue;
 }
 
 /**
  * @brief parse a node and complet the menu with it
- * @sa MN_ParseNodeProperties
- * @todo we can think about merging MN_ParseNodeProperties here
+ * @sa UI_ParseNodeProperties
+ * @todo we can think about merging UI_ParseNodeProperties here
  * @note first token already read
  * @note dont read more than the need token (last right token is '}' of end of node)
  */
-static uiNode_t *MN_ParseNode (uiNode_t * parent, const char **text, const char **token, const char *errhead)
+static uiNode_t *UI_ParseNode (uiNode_t * parent, const char **text, const char **token, const char *errhead)
 {
 	uiNode_t *node = NULL;
 	uiBehaviour_t *behaviour;
@@ -1045,12 +1045,12 @@ static uiNode_t *MN_ParseNode (uiNode_t * parent, const char **text, const char 
 	}
 
 	/* get the behaviour */
-	behaviour = MN_GetNodeBehaviour(*token);
+	behaviour = UI_GetNodeBehaviour(*token);
 	if (!behaviour) {
-		component = MN_GetComponent(*token);
+		component = UI_GetComponent(*token);
 	}
 	if (behaviour == NULL && component == NULL) {
-		Com_Printf("MN_ParseNode: node behaviour/component '%s' doesn't exists\n", *token);
+		Com_Printf("UI_ParseNode: node behaviour/component '%s' doesn't exists\n", *token);
 		return NULL;
 	}
 
@@ -1058,50 +1058,50 @@ static uiNode_t *MN_ParseNode (uiNode_t * parent, const char **text, const char 
 	*token = Com_EParse(text, errhead, "");
 	if (!*text)
 		return NULL;
-	if (!MN_TokenIsName(*token, Com_ParsedTokenIsQuoted())) {
-		Com_Printf("MN_ParseNode: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", *token);
+	if (!UI_TokenIsName(*token, Com_ParsedTokenIsQuoted())) {
+		Com_Printf("UI_ParseNode: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", *token);
 		return NULL;
 	}
-	if (MN_TokenIsReserved(*token)) {
-		Com_Printf("MN_ParseNode: \"%s\" is a reserved token, we can't call a node with it\n", *token);
+	if (UI_TokenIsReserved(*token)) {
+		Com_Printf("UI_ParseNode: \"%s\" is a reserved token, we can't call a node with it\n", *token);
 		return NULL;
 	}
 
 	/* test if node already exists */
 	/* Already existing node should only come from inherited node,we should not have 2 definitions of the same node into the same window. */
 	if (parent)
-		node = MN_GetNode(parent, *token);
+		node = UI_GetNode(parent, *token);
 
 	/* reuse a node */
 	if (node) {
 		if (node->behaviour != behaviour) {
-			Com_Printf("MN_ParseNode: we can't change node type (node \"%s\")\n", MN_GetPath(node));
+			Com_Printf("UI_ParseNode: we can't change node type (node \"%s\")\n", UI_GetPath(node));
 			return NULL;
 		}
-		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s\n", MN_GetPath(node));
+		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s\n", UI_GetPath(node));
 
 	/* else initialize a component */
 	} else if (component) {
-		node = MN_CloneNode(component, NULL, qtrue, *token, qfalse);
+		node = UI_CloneNode(component, NULL, qtrue, *token, qfalse);
 		if (parent) {
 			if (parent->root)
-				MN_UpdateRoot(node, parent->root);
-			MN_AppendNode(parent, node);
+				UI_UpdateRoot(node, parent->root);
+			UI_AppendNode(parent, node);
 		}
 
 	/* else initialize a new node */
 	} else {
-		node = MN_AllocNode(*token, behaviour->name, qfalse);
+		node = UI_AllocNode(*token, behaviour->name, qfalse);
 		node->parent = parent;
 		if (parent)
 			node->root = parent->root;
 		/** @todo move it into caller */
 		if (parent)
-			MN_AppendNode(parent, node);
+			UI_AppendNode(parent, node);
 	}
 
 	/* get body */
-	result = MN_ParseNodeBody(node, text, token, errhead);
+	result = UI_ParseNodeBody(node, text, token, errhead);
 	if (!result)
 		return NULL;
 
@@ -1116,23 +1116,23 @@ static uiNode_t *MN_ParseNode (uiNode_t * parent, const char **text, const char 
  * @brief parses the models.ufo and all files where menu_models are defined
  * @sa CL_ParseClientData
  */
-void MN_ParseMenuModel (const char *name, const char **text)
+void UI_ParseMenuModel (const char *name, const char **text)
 {
 	menuModel_t *menuModel;
 	const char *token;
 	int i;
 	const value_t *v = NULL;
-	const char *errhead = "MN_ParseMenuModel: unexpected end of file (names ";
+	const char *errhead = "UI_ParseMenuModel: unexpected end of file (names ";
 
 	/* search for menumodels with same name */
 	for (i = 0; i < mn.numMenuModels; i++)
 		if (!strcmp(mn.menuModels[i].id, name)) {
-			Com_Printf("MN_ParseMenuModel: menu_model \"%s\" with same name found, second ignored\n", name);
+			Com_Printf("UI_ParseMenuModel: menu_model \"%s\" with same name found, second ignored\n", name);
 			return;
 		}
 
 	if (mn.numMenuModels >= MAX_MENUMODELS) {
-		Com_Printf("MN_ParseMenuModel: Max menu models reached\n");
+		Com_Printf("UI_ParseMenuModel: Max menu models reached\n");
 		return;
 	}
 
@@ -1149,7 +1149,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 	token = Com_Parse(text);
 
 	if (!*text || token[0] != '{') {
-		Com_Printf("MN_ParseMenuModel: menu \"%s\" without body ignored\n", menuModel->id);
+		Com_Printf("UI_ParseMenuModel: menu \"%s\" without body ignored\n", menuModel->id);
 		return;
 	}
 
@@ -1163,16 +1163,16 @@ void MN_ParseMenuModel (const char *name, const char **text)
 		if (token[0] == '}')
 			break;
 
-		v = MN_FindPropertyByName(menuModelProperties, token);
+		v = UI_FindPropertyByName(menuModelProperties, token);
 		if (!v)
-			Com_Printf("MN_ParseMenuModel: unknown token \"%s\" ignored (menu_model %s)\n", token, name);
+			Com_Printf("UI_ParseMenuModel: unknown token \"%s\" ignored (menu_model %s)\n", token, name);
 
 		if (v->type == V_NULL) {
 			if (!strcmp(v->string, "need")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				menuModel->next = MN_GetMenuModel(token);
+				menuModel->next = UI_GetMenuModel(token);
 				if (!menuModel->next)
 					Com_Printf("Could not find menumodel %s", token);
 				menuModel->need = Mem_PoolStrDup(token, mn_sysPool, 0);
@@ -1192,13 +1192,13 @@ void MN_ParseMenuModel (const char *name, const char **text)
 	} while (*text);
 }
 
-void MN_ParseIcon (const char *name, const char **text)
+void UI_ParseIcon (const char *name, const char **text)
 {
 	uiIcon_t *icon;
 	const char *token;
 
 	/* search for menus with same name */
-	icon = MN_AllocStaticIcon(name);
+	icon = UI_AllocStaticIcon(name);
 
 	/* get it's body */
 	token = Com_Parse(text);
@@ -1216,16 +1216,16 @@ void MN_ParseIcon (const char *name, const char **text)
 		if (token[0] == '}')
 			break;
 
-		property = MN_FindPropertyByName(mn_iconProperties, token);
+		property = UI_FindPropertyByName(mn_iconProperties, token);
 		if (!property) {
-			Com_Printf("MN_ParseIcon: unknown options property: '%s' - ignore it\n", token);
+			Com_Printf("UI_ParseIcon: unknown options property: '%s' - ignore it\n", token);
 			return;
 		}
 
 		/* get parameter values */
-		result = MN_ParseProperty(icon, property, icon->name, text, &token);
+		result = UI_ParseProperty(icon, property, icon->name, text, &token);
 		if (!result) {
-			Com_Printf("MN_ParseIcon: Parsing for icon '%s'. See upper\n", icon->name);
+			Com_Printf("UI_ParseIcon: Parsing for icon '%s'. See upper\n", icon->name);
 			return;
 		}
 	}
@@ -1241,14 +1241,14 @@ void MN_ParseIcon (const char *name, const char **text)
  * }
  * @endcode
  */
-void MN_ParseComponent (const char *type, const char **text)
+void UI_ParseComponent (const char *type, const char **text)
 {
-	const char *errhead = "MN_ParseComponent: unexpected end of file (component";
+	const char *errhead = "UI_ParseComponent: unexpected end of file (component";
 	uiNode_t *component;
 	const char *token;
 
 	if (strcmp(type, "component") != 0) {
-		Com_Error(ERR_FATAL, "MN_ParseComponent: \"component\" expected but \"%s\" found.\n", type);
+		Com_Error(ERR_FATAL, "UI_ParseComponent: \"component\" expected but \"%s\" found.\n", type);
 		return;	/* never reached */
 	}
 
@@ -1256,9 +1256,9 @@ void MN_ParseComponent (const char *type, const char **text)
 	Com_UnParseLastToken();
 	token = Com_Parse(text);
 
-	component = MN_ParseNode(NULL, text, &token, errhead);
+	component = UI_ParseNode(NULL, text, &token, errhead);
 	if (component)
-		MN_InsertComponent(component);
+		UI_InsertComponent(component);
 }
 
 
@@ -1270,25 +1270,25 @@ void MN_ParseComponent (const char *type, const char **text)
  * }
  * @endcode
  */
-void MN_ParseWindow (const char *type, const char *name, const char **text)
+void UI_ParseWindow (const char *type, const char *name, const char **text)
 {
-	const char *errhead = "MN_ParseWindow: unexpected end of file (menu";
+	const char *errhead = "UI_ParseWindow: unexpected end of file (menu";
 	uiNode_t *menu;
 	const char *token;
 	qboolean result;
 	int i;
 
 	if (strcmp(type, "window") != 0) {
-		Com_Error(ERR_FATAL, "MN_ParseWindow: '%s %s' is not a window node\n", type, name);
+		Com_Error(ERR_FATAL, "UI_ParseWindow: '%s %s' is not a window node\n", type, name);
 		return;	/* never reached */
 	}
 
-	if (!MN_TokenIsName(name, Com_ParsedTokenIsQuoted())) {
-		Com_Printf("MN_ParseWindow: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
+	if (!UI_TokenIsName(name, Com_ParsedTokenIsQuoted())) {
+		Com_Printf("UI_ParseWindow: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
 		return;
 	}
-	if (MN_TokenIsReserved(name)) {
-		Com_Printf("MN_ParseWindow: \"%s\" is a reserved token, we can't call a node with it (node \"%s\")\n", name, name);
+	if (UI_TokenIsReserved(name)) {
+		Com_Printf("UI_ParseWindow: \"%s\" is a reserved token, we can't call a node with it (node \"%s\")\n", name, name);
 		return;
 	}
 
@@ -1298,11 +1298,11 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
 			break;
 
 	if (i < mn.numWindows) {
-		Com_Printf("MN_ParseWindow: %s \"%s\" with same name found, second ignored\n", type, name);
+		Com_Printf("UI_ParseWindow: %s \"%s\" with same name found, second ignored\n", type, name);
 	}
 
 	if (mn.numWindows >= MAX_WINDOWS) {
-		Com_Error(ERR_FATAL, "MN_ParseWindow: max menus exceeded (%i) - ignore '%s'\n", MAX_WINDOWS, name);
+		Com_Error(ERR_FATAL, "UI_ParseWindow: max menus exceeded (%i) - ignore '%s'\n", MAX_WINDOWS, name);
 		return;	/* never reached */
 	}
 
@@ -1313,22 +1313,22 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
 	if (!strcmp(token, "extends")) {
 		uiNode_t *superMenu;
 		token = Com_Parse(text);
-		superMenu = MN_GetWindow(token);
+		superMenu = UI_GetWindow(token);
 		if (superMenu == NULL)
 			Sys_Error("Could not get the super menu %s", token);
-		menu = MN_CloneNode(superMenu, NULL, qtrue, name, qfalse);
+		menu = UI_CloneNode(superMenu, NULL, qtrue, name, qfalse);
 		token = Com_Parse(text);
 	} else {
-		menu = MN_AllocNode(name, type, qfalse);
+		menu = UI_AllocNode(name, type, qfalse);
 		menu->root = menu;
 	}
 
-	MN_InsertWindow(menu);
+	UI_InsertWindow(menu);
 
 	/* parse it's body */
-	result = MN_ParseNodeBody(menu, text, &token, errhead);
+	result = UI_ParseNodeBody(menu, text, &token, errhead);
 	if (!result) {
-		Com_Error(ERR_FATAL, "MN_ParseWindow: menu \"%s\" has a bad body\n", menu->name);
+		Com_Error(ERR_FATAL, "UI_ParseWindow: menu \"%s\" has a bad body\n", menu->name);
 		return;	/* never reached */
 	}
 
@@ -1339,7 +1339,7 @@ void MN_ParseWindow (const char *type, const char *name, const char **text)
  * @sa Com_MacroExpandString
  * @todo we should review this code, '*' doesn't work very well for all the needed things
  */
-const char *MN_GetReferenceString (const uiNode_t* const node, const char *ref)
+const char *UI_GetReferenceString (const uiNode_t* const node, const char *ref)
 {
 	if (!ref)
 		return NULL;
@@ -1363,7 +1363,7 @@ const char *MN_GetReferenceString (const uiNode_t* const node, const char *ref)
 			token = token + 8;
 			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
 		} else {
-			Sys_Error("MN_GetReferenceString: unknown reference");	/**< maybe this code is never used */
+			Sys_Error("UI_GetReferenceString: unknown reference");	/**< maybe this code is never used */
 #if 0	/** @todo need a full rework */
 			uiNode_t *refNode;
 			const value_t *val;
@@ -1373,12 +1373,12 @@ const char *MN_GetReferenceString (const uiNode_t* const node, const char *ref)
 				return NULL;
 
 			/* draw a reference to a node property */
-			refNode = MN_GetNode(node->root, ident);
+			refNode = UI_GetNode(node->root, ident);
 			if (!refNode)
 				return NULL;
 
 			/* get the property */
-			val = MN_GetPropertyFromBehaviour(refNode->behaviour, token);
+			val = UI_GetPropertyFromBehaviour(refNode->behaviour, token);
 			if (!val)
 				return NULL;
 
@@ -1398,7 +1398,7 @@ const char *MN_GetReferenceString (const uiNode_t* const node, const char *ref)
 	}
 }
 
-float MN_GetReferenceFloat (const uiNode_t* const node, const void *ref)
+float UI_GetReferenceFloat (const uiNode_t* const node, const void *ref)
 {
 	if (!ref)
 		return 0.0;
@@ -1414,19 +1414,19 @@ float MN_GetReferenceFloat (const uiNode_t* const node, const void *ref)
 			return Cvar_GetValue(token + 5);
 		} else {
 			/** @todo maybe this code is never used */
-			Sys_Error("MN_GetReferenceFloat: unknown reference '%s' from node '%s'",
+			Sys_Error("UI_GetReferenceFloat: unknown reference '%s' from node '%s'",
 					token, node->name);
 #if 0	/** @todo need a full rework */
 			uiNode_t *refNode;
 			const value_t *val;
 
 			/* draw a reference to a node property */
-			refNode = MN_GetNode(node->root, ident);
+			refNode = UI_GetNode(node->root, ident);
 			if (!refNode)
 				return 0.0;
 
 			/* get the property */
-			val = MN_GetPropertyFromBehaviour(refNode->behaviour, token);
+			val = UI_GetPropertyFromBehaviour(refNode->behaviour, token);
 			if (!val || val->type != V_FLOAT)
 				return 0.0;
 

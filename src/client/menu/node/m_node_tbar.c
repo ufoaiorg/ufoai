@@ -30,31 +30,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #define EXTRADATA_TYPE tbarExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 #define TEXTURE_WIDTH 250.0
 
-static void MN_TBarNodeDraw (uiNode_t *node)
+static void UI_TBarNodeDraw (uiNode_t *node)
 {
 	/* dataImageOrModel is the texture name */
 	float shx;
 	vec2_t nodepos;
-	const char* ref = MN_GetReferenceString(node, node->image);
+	const char* ref = UI_GetReferenceString(node, node->image);
 	float pointWidth;
 	float width;
 	if (!ref || ref[0] == '\0')
 		return;
 
-	MN_GetNodeAbsPos(node, nodepos);
+	UI_GetNodeAbsPos(node, nodepos);
 
 	pointWidth = TEXTURE_WIDTH / 100.0;	/* relative to the texture */
 
 	{
 		float ps;
-		const float min = MN_GetReferenceFloat(node, EXTRADATA(node).super.min);
-		const float max = MN_GetReferenceFloat(node, EXTRADATA(node).super.max);
-		float value = MN_GetReferenceFloat(node, EXTRADATA(node).super.value);
+		const float min = UI_GetReferenceFloat(node, EXTRADATA(node).super.min);
+		const float max = UI_GetReferenceFloat(node, EXTRADATA(node).super.max);
+		float value = UI_GetReferenceFloat(node, EXTRADATA(node).super.value);
 		/* clamp the value */
 		if (value > max)
 			value = max;
@@ -67,23 +67,23 @@ static void MN_TBarNodeDraw (uiNode_t *node)
 
 	width = (shx * node->size[0]) / TEXTURE_WIDTH;
 
-	MN_DrawNormImageByName(nodepos[0], nodepos[1], width, node->size[1],
+	UI_DrawNormImageByName(nodepos[0], nodepos[1], width, node->size[1],
 		shx, EXTRADATA(node).texh[1], EXTRADATA(node).texl[0], EXTRADATA(node).texl[1], ref);
 }
 
 static const value_t properties[] = {
 	/* @todo Need documentation */
-	{"texh", V_POS, MN_EXTRADATA_OFFSETOF(tbarExtraData_t, texh), MEMBER_SIZEOF(tbarExtraData_t, texh)},
+	{"texh", V_POS, UI_EXTRADATA_OFFSETOF(tbarExtraData_t, texh), MEMBER_SIZEOF(tbarExtraData_t, texh)},
 	/* @todo Need documentation */
-	{"texl", V_POS, MN_EXTRADATA_OFFSETOF(tbarExtraData_t, texl), MEMBER_SIZEOF(tbarExtraData_t, texl)},
+	{"texl", V_POS, UI_EXTRADATA_OFFSETOF(tbarExtraData_t, texl), MEMBER_SIZEOF(tbarExtraData_t, texl)},
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterTBarNode (uiBehaviour_t *behaviour)
+void UI_RegisterTBarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "tbar";
 	behaviour->extends = "abstractvalue";
-	behaviour->draw = MN_TBarNodeDraw;
+	behaviour->draw = UI_TBarNodeDraw;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

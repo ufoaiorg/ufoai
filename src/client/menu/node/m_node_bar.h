@@ -39,6 +39,6 @@ typedef struct {
 	qboolean readOnly;	/**< True if the user can't edit the content */
 } barExtraData_t;
 
-void MN_RegisterBarNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterBarNode(struct uiBehaviour_s *behaviour);
 
 #endif

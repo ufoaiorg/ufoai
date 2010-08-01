@@ -41,7 +41,7 @@ typedef struct {
 	int fullSize;			/**< Full size allowed */
 } menuScroll_t;
 
-qboolean MN_SetScroll(menuScroll_t *scroll, int viewPos, int viewSize, int fullSize);
+qboolean UI_SetScroll(menuScroll_t *scroll, int viewPos, int viewSize, int fullSize);
 
 typedef struct {
 	vec2_t cacheSize;		/**< check the size change while we dont have a realy event from property setter */
@@ -53,10 +53,10 @@ typedef struct {
 	struct uiAction_s *onViewChange;	/**< called when view change (number of elements...) */
 } abstractScrollableExtraData_t;
 
-qboolean MN_AbstractScrollableNodeIsSizeChange(struct uiNode_s *node);
-qboolean MN_AbstractScrollableNodeScrollY(struct uiNode_s *node, int offset);
-qboolean MN_AbstractScrollableNodeSetY(struct uiNode_s *node, int viewPos, int viewSize, int fullSize);
+qboolean UI_AbstractScrollableNodeIsSizeChange(struct uiNode_s *node);
+qboolean UI_AbstractScrollableNodeScrollY(struct uiNode_s *node, int offset);
+qboolean UI_AbstractScrollableNodeSetY(struct uiNode_s *node, int viewPos, int viewSize, int fullSize);
 
-void MN_RegisterAbstractScrollableNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterAbstractScrollableNode(struct uiBehaviour_s *behaviour);
 
 #endif

@@ -27,13 +27,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_nodes.h"
 
-void MN_RegisterOptionNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterOptionNode(struct uiBehaviour_s *behaviour);
 
 extern const struct uiBehaviour_s *optionBehaviour;
 
 #define OPTIONEXTRADATA_TYPE optionExtraData_t
-#define OPTIONEXTRADATA(node) MN_EXTRADATA(node, OPTIONEXTRADATA_TYPE)
-#define OPTIONEXTRADATACONST(node) MN_EXTRADATACONST(node, OPTIONEXTRADATA_TYPE)
+#define OPTIONEXTRADATA(node) UI_EXTRADATA(node, OPTIONEXTRADATA_TYPE)
+#define OPTIONEXTRADATACONST(node) UI_EXTRADATACONST(node, OPTIONEXTRADATA_TYPE)
 
 /** @brief Option definition */
 typedef struct optionExtraData_s {
@@ -52,6 +52,6 @@ typedef struct optionExtraData_s {
 
 } optionExtraData_t;
 
-int MN_OptionUpdateCache(struct uiNode_s* option);
+int UI_OptionUpdateCache(struct uiNode_s* option);
 
 #endif

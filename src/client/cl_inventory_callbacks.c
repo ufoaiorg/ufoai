@@ -73,9 +73,9 @@ void INV_ItemDescription (const objDef_t *od)
 	if (!od) {	/* If nothing selected return */
 		Cvar_Set("mn_itemname", "");
 		Cvar_Set("mn_item", "");
-		MN_ResetData(TEXT_ITEMDESCRIPTION);
+		UI_ResetData(TEXT_ITEMDESCRIPTION);
 		itemIndex = fireModeIndex = 0;
-		MN_ExecuteConfunc("itemdesc_view 0 0;");
+		UI_ExecuteConfunc("itemdesc_view 0 0;");
 		return;
 	}
 
@@ -192,12 +192,12 @@ void INV_ItemDescription (const objDef_t *od)
 			}
 		}
 
-		MN_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
-		MN_ExecuteConfunc("itemdesc_view %i %i;", count, numFiredefs);
+		UI_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
+		UI_ExecuteConfunc("itemdesc_view %i %i;", count, numFiredefs);
 	} else {
 		Com_sprintf(itemText, sizeof(itemText), _("Unknown - not useable"));
-		MN_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
-		MN_ExecuteConfunc("itemdesc_view 0 0;");
+		UI_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
+		UI_ExecuteConfunc("itemdesc_view 0 0;");
 	}
 }
 
@@ -328,7 +328,7 @@ static void INV_UpdateObject_f (void)
 		const int filter = INV_GetFilterFromItem(obj);
 		if (var && var->integer != filter) {
 			Cvar_SetValue("mn_equiptype", filter);
-			MN_ExecuteConfunc("update_item_list");
+			UI_ExecuteConfunc("update_item_list");
 		}
 	}
 }

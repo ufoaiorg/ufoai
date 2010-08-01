@@ -49,10 +49,10 @@ typedef struct uiGlobal_s {
 	/**
 	 * @brief Holds shared data
 	 * @note The array id is given via num in the menuNode definitions
-	 * @sa MN_ResetData
-	 * @sa MN_RegisterText
-	 * @sa MN_GetText
-	 * @sa MN_RegisterLinkedListText
+	 * @sa UI_ResetData
+	 * @sa UI_RegisterText
+	 * @sa UI_GetText
+	 * @sa UI_RegisterLinkedListText
 	 */
 	uiSharedData_t sharedData[MAX_MENUTEXTS];
 

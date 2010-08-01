@@ -116,9 +116,9 @@ static void E_EmployeeListScroll_f (void)
 		}
 		/* change the buttons */
 		if (E_IsHired(employee))
-			MN_ExecuteConfunc("employeeadd %i", cnt);
+			UI_ExecuteConfunc("employeeadd %i", cnt);
 		else
-			MN_ExecuteConfunc("employeedel %i", cnt);
+			UI_ExecuteConfunc("employeedel %i", cnt);
 
 		cnt++;
 
@@ -129,10 +129,10 @@ static void E_EmployeeListScroll_f (void)
 
 	for (;cnt < maxEmployeesPerPage; cnt++) {
 		Cvar_Set(va("mn_name%i", cnt), "");
-		MN_ExecuteConfunc("employeedisable %i", cnt);
+		UI_ExecuteConfunc("employeedisable %i", cnt);
 	}
 
-	MN_ExecuteConfunc("hire_fix_scroll %i", employeeScrollPos);
+	UI_ExecuteConfunc("hire_fix_scroll %i", employeeScrollPos);
 }
 
 /**
@@ -168,7 +168,7 @@ static void E_EmployeeList_f (void)
 
 	LIST_Delete(&employeeList);
 	/* make sure, that we are using the linked list */
-	MN_ResetData(TEXT_LIST);
+	UI_ResetData(TEXT_LIST);
 	employeeListName = NULL;
 
 	employee = NULL;
@@ -180,7 +180,7 @@ static void E_EmployeeList_f (void)
 		LIST_AddPointer(&employeeList, employee);
 		employeesInCurrentList++;
 	}
-	MN_RegisterLinkedListText(TEXT_LIST, employeeListName);
+	UI_RegisterLinkedListText(TEXT_LIST, employeeListName);
 
 	/* If the list is empty OR we are in pilots/scientists/workers-mode: don't show the model&stats. */
 	/** @note
@@ -207,8 +207,8 @@ static void E_EmployeeList_f (void)
 	E_EmployeeSelect(employee);
 
 	/* update scroll */
-	MN_ExecuteConfunc("hire_update_number %i", employeesInCurrentList);
-	MN_ExecuteConfunc("employee_scroll 0");
+	UI_ExecuteConfunc("hire_update_number %i", employeesInCurrentList);
+	UI_ExecuteConfunc("employee_scroll 0");
 }
 
 
@@ -271,7 +271,7 @@ static void E_EmployeeDelete_f (void)
 
 	if (E_IsHired(employee)) {
 		if (!E_UnhireEmployee(employee)) {
-			MN_DisplayNotice(_("Could not fire employee"), 2000, "employees");
+			UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			return;
 		}
@@ -325,16 +325,16 @@ static void E_EmployeeHire_f (void)
 	if (E_IsHired(employee)) {
 		if (!E_UnhireEmployee(employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
-			MN_DisplayNotice(_("Could not fire employee"), 2000, "employees");
+			UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
 		} else
-			MN_ExecuteConfunc("employeedel %i", button);
+			UI_ExecuteConfunc("employeedel %i", button);
 	} else {
 		if (!E_HireEmployee(base, employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't hire employee\n");
-			MN_DisplayNotice(_("Could not hire employee"), 2000, "employees");
-			MN_ExecuteConfunc("employeedel %i", button);
+			UI_DisplayNotice(_("Could not hire employee"), 2000, "employees");
+			UI_ExecuteConfunc("employeedel %i", button);
 		} else
-			MN_ExecuteConfunc("employeeadd %i", button);
+			UI_ExecuteConfunc("employeeadd %i", button);
 	}
 	E_EmployeeSelect(employee);
 

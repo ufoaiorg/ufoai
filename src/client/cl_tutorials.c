@@ -45,7 +45,7 @@ static void TUT_GetTutorials_f (void)
 		const tutorial_t *t = &tutorials[i];
 		LIST_AddString(&tutorialList, va("%s", _(t->name)));
 	}
-	MN_RegisterLinkedListText(TEXT_LIST, tutorialList);
+	UI_RegisterLinkedListText(TEXT_LIST, tutorialList);
 }
 
 static void TUT_List_f (void)

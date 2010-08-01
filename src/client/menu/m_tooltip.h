@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_window.h"
 #include "m_nodes.h"
 
-int MN_DrawTooltip(const char *string, int x, int y, int maxWidth, int maxHeight);
-void MN_Tooltip(uiNode_t *node, int x, int y);
+int UI_DrawTooltip(const char *string, int x, int y, int maxWidth, int maxHeight);
+void UI_Tooltip(uiNode_t *node, int x, int y);
 
 #endif

@@ -127,8 +127,8 @@ static void TR_TransferAliensFromMission_f (void)
 		string = va("%s %s", base->name, string);
 		LIST_AddString(&transfer, string);
 	}
-	MN_RegisterLinkedListText(TEXT_LIST, transfer);
-	MN_PushWindow("popup_transferbaselist", NULL);
+	UI_RegisterLinkedListText(TEXT_LIST, transfer);
+	UI_PushWindow("popup_transferbaselist", NULL);
 }
 
 /**
@@ -155,7 +155,7 @@ static void TR_TransferStart_f (void)
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to %s"), td.transferBase->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
-	MN_PopWindow(qfalse);
+	UI_PopWindow(qfalse);
 }
 
 
@@ -205,14 +205,14 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 	if (!strcmp(od->id, ANTIMATTER_TECH_ID)) {
 		/* Give some meaningful feedback to the player if the player clicks on an a.m. item but base doesn't have am storage. */
 		if (!B_GetBuildingStatus(destbase, B_ANTIMATTER) && B_GetBuildingStatus(destbase, B_STORAGE)) {
-			MN_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
+			UI_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
 			return qfalse;
 		} else if (!B_GetBuildingStatus(destbase, B_ANTIMATTER)) {	/* Return if the target base doesn't have antimatter storage or power. */
 			return 0;
 		}
 		amount = min(amount, destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer);
 		if (amount <= 0) {
-			MN_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
+			UI_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
 			return 0;
 		} else {
 			/* amount to transfer can't be bigger than what we have */
@@ -225,7 +225,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 		/* Does the destination base has enough space in storage? */
 		amount = min(amount, destbase->capacities[CAP_ITEMS].max - destbase->capacities[CAP_ITEMS].cur - intransfer / od->size);
 		if (amount <= 0) {
-			MN_Popup(_("Not enough space"), _("Destination base does not have enough\nStorage space to store this item.\n"));
+			UI_Popup(_("Not enough space"), _("Destination base does not have enough\nStorage space to store this item.\n"));
 			return 0;
 		}
 	}
@@ -256,7 +256,7 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 
 	/* Does the destination base has enough space in living quarters? */
 	if (destbase->capacities[CAP_EMPLOYEES].max - destbase->capacities[CAP_EMPLOYEES].cur - intransfer < 1) {
-		MN_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Living Quarters.\n"));
+		UI_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Living Quarters.\n"));
 		return qfalse;
 	}
 
@@ -267,7 +267,7 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 			const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 			Com_sprintf(popupText, sizeof(popupText), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
 				_(rank->shortname), employee->chr.name);
-			MN_Popup(_("Soldier in aircraft"), popupText);
+			UI_Popup(_("Soldier in aircraft"), popupText);
 			return qfalse;
 		}
 		break;
@@ -276,7 +276,7 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
 			Com_sprintf(popupText, sizeof(popupText), _("%s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
 				employee->chr.name);
-			MN_Popup(_("Pilot in aircraft"), popupText);
+			UI_Popup(_("Pilot in aircraft"), popupText);
 			return qfalse;
 		}
 		break;
@@ -310,7 +310,7 @@ static qboolean TR_CheckAlien (int alienidx, base_t *destbase)
 
 	/* Does the destination base has enough space in alien containment? */
 	if (!AL_CheckAliveFreeSpace(destbase, NULL, intransfer)) {
-		MN_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Alien Containment.\n"));
+		UI_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Alien Containment.\n"));
 		return qfalse;
 	}
 
@@ -341,19 +341,19 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 
 	/* Hangars in destbase functional? */
 	if (!B_GetBuildingStatus(destbase, B_POWER)) {
-		MN_Popup(_("Hangars not ready"), _("Destination base does not have hangars ready.\nProvide power supplies.\n"));
+		UI_Popup(_("Hangars not ready"), _("Destination base does not have hangars ready.\nProvide power supplies.\n"));
 		return qfalse;
 	} else if (!B_GetBuildingStatus(destbase, B_COMMAND)) {
-		MN_Popup(_("Hangars not ready"), _("Destination base does not have command centre.\nHangars not functional.\n"));
+		UI_Popup(_("Hangars not ready"), _("Destination base does not have command centre.\nHangars not functional.\n"));
 		return qfalse;
 	} else if (!B_GetBuildingStatus(destbase, B_HANGAR) && !B_GetBuildingStatus(destbase, B_SMALL_HANGAR)) {
-		MN_Popup(_("Hangars not ready"), _("Destination base does not have any hangar."));
+		UI_Popup(_("Hangars not ready"), _("Destination base does not have any hangar."));
 		return qfalse;
 	}
 	/* Is there a place for this aircraft in destination base? */
 	hangarStorage = AIR_CalculateHangarStorage(aircraft->tpl, destbase, numAircraftTransfer);
 	if (hangarStorage == 0) {
-		MN_Popup(_("Not enough space"), _("Destination base does not have enough space in hangars.\n"));
+		UI_Popup(_("Not enough space"), _("Destination base does not have enough space in hangars.\n"));
 		return qfalse;
 	} else if (hangarStorage > 0) {
 		return qtrue;
@@ -482,8 +482,8 @@ static void TR_CargoList (void)
 		}
 	}
 
-	MN_RegisterLinkedListText(TEXT_CARGO_LIST, cargoList);
-	MN_RegisterLinkedListText(TEXT_CARGO_LIST_AMOUNT, cargoListAmount);
+	UI_RegisterLinkedListText(TEXT_CARGO_LIST, cargoList);
+	UI_RegisterLinkedListText(TEXT_CARGO_LIST_AMOUNT, cargoListAmount);
 }
 
 /**
@@ -523,9 +523,9 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	char str[128];
 
 	/* reset for every new call */
-	MN_ResetData(TEXT_TRANSFER_LIST);
-	MN_ResetData(TEXT_TRANSFER_LIST_AMOUNT);
-	MN_ResetData(TEXT_TRANSFER_LIST_TRANSFERED);
+	UI_ResetData(TEXT_TRANSFER_LIST);
+	UI_ResetData(TEXT_TRANSFER_LIST_AMOUNT);
+	UI_ResetData(TEXT_TRANSFER_LIST_TRANSFERED);
 
 	/* Reset and fill temp employees arrays. */
 	for (i = 0; i < MAX_EMPL; i++) {
@@ -566,7 +566,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			LIST_AddString(&transferListAmount, "");
 			LIST_AddString(&transferListTransfered, "");
 		}
-		MN_ExecuteConfunc("trans_display_spinners %i", cnt);
+		UI_ExecuteConfunc("trans_display_spinners %i", cnt);
 		break;
 	case TRANS_TYPE_EMPLOYEE:
 		if (B_GetBuildingStatus(destbase, B_QUARTERS)) {
@@ -613,7 +613,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			LIST_AddString(&transferListAmount, "");
 			LIST_AddString(&transferListTransfered, "");
 		}
-		MN_ExecuteConfunc("trans_display_spinners 0");
+		UI_ExecuteConfunc("trans_display_spinners 0");
 		break;
 	case TRANS_TYPE_ALIEN:
 		if (B_GetBuildingStatus(destbase, B_ALIEN_CONTAINMENT)) {
@@ -655,7 +655,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			LIST_AddString(&transferListAmount, "");
 			LIST_AddString(&transferListTransfered, "");
 		}
-		MN_ExecuteConfunc("trans_display_spinners 0");
+		UI_ExecuteConfunc("trans_display_spinners 0");
 		break;
 	case TRANS_TYPE_AIRCRAFT:
 		if (B_GetBuildingStatus(destbase, B_HANGAR) || B_GetBuildingStatus(destbase, B_SMALL_HANGAR)) {
@@ -681,11 +681,11 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			LIST_AddString(&transferListAmount, "");
 			LIST_AddString(&transferListTransfered, "");
 		}
-		MN_ExecuteConfunc("trans_display_spinners 0");
+		UI_ExecuteConfunc("trans_display_spinners 0");
 		break;
 	default:
 		Com_Printf("TR_TransferSelect: Unknown transferType id %i\n", transferType);
-		MN_ExecuteConfunc("trans_display_spinners 0");
+		UI_ExecuteConfunc("trans_display_spinners 0");
 		return;
 	}
 
@@ -693,9 +693,9 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	TR_CargoList();
 
 	td.currentTransferType = transferType;
-	MN_RegisterLinkedListText(TEXT_TRANSFER_LIST, transferList);
-	MN_RegisterLinkedListText(TEXT_TRANSFER_LIST_AMOUNT, transferListAmount);
-	MN_RegisterLinkedListText(TEXT_TRANSFER_LIST_TRANSFERED, transferListTransfered);
+	UI_RegisterLinkedListText(TEXT_TRANSFER_LIST, transferList);
+	UI_RegisterLinkedListText(TEXT_TRANSFER_LIST_AMOUNT, transferListAmount);
+	UI_RegisterLinkedListText(TEXT_TRANSFER_LIST_TRANSFERED, transferListTransfered);
 }
 
 /**
@@ -758,7 +758,7 @@ static void TR_TransferListClear_f (void)
 	/* Update cargo list and items list. */
 	TR_CargoList();
 	TR_TransferSelect(base, td.transferBase, td.currentTransferType);
-	MN_ExecuteConfunc("trans_resetscroll");
+	UI_ExecuteConfunc("trans_resetscroll");
 }
 
 /**
@@ -810,7 +810,7 @@ static void TR_TransferListSelect_f (void)
 		return;
 
 	if (!td.transferBase) {
-		MN_Popup(_("No target base selected"), _("Please select the target base from the list"));
+		UI_Popup(_("No target base selected"), _("Please select the target base from the list"));
 		return;
 	}
 
@@ -1005,7 +1005,7 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 	if (!powercomm)
 		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 
-	MN_RegisterText(TEXT_BASE_INFO, baseInfo);
+	UI_RegisterText(TEXT_BASE_INFO, baseInfo);
 
 	/* Set global pointer to current selected base. */
 	td.transferBase = destbase;
@@ -1032,10 +1032,10 @@ static void TR_InitBaseList (void)
 		if (base == currentBase)
 			continue;
 
-		MN_AddOption(&baseList, va("base%i", baseIdx), base->name, va("%i", baseIdx));
+		UI_AddOption(&baseList, va("base%i", baseIdx), base->name, va("%i", baseIdx));
 	}
 
-	MN_RegisterOption(OPTION_BASELIST, baseList);
+	UI_RegisterOption(OPTION_BASELIST, baseList);
 }
 
 /**
@@ -1284,7 +1284,7 @@ static void TR_Init_f (void)
 	Cmd_ExecuteString(va("trans_type %s", transferTypeIDs[0]));
 
 	/* Reset scrolling for item-in-base list */
-	MN_ExecuteConfunc("trans_resetscroll");
+	UI_ExecuteConfunc("trans_resetscroll");
 }
 
 /**
@@ -1339,7 +1339,7 @@ static void TR_TransferList_Scroll_f (void)
 			if (cnt >= viewPos + MAX_TRANSLIST_MENU_ENTRIES)
 				break;
 			if (cnt >= viewPos)
-				MN_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos,
+				UI_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos,
 						td.trItemsTmp[od->idx], 0, srcBase->storage.numItems[od->idx] + td.trItemsTmp[od->idx]);
 			cnt++;
 		}

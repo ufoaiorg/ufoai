@@ -37,9 +37,9 @@ struct uiNode_s;
 
 extern struct inventory_s *menuInventory;
 
-void MN_RegisterContainerNode(struct uiBehaviour_s *behaviour);
-void MN_DrawItem(struct uiNode_s *node, const vec3_t org, const struct item_s *item, int x, int y, const vec3_t scale, const vec4_t color);
-void MN_ContainerNodeUpdateEquipment(inventory_t *inv, equipDef_t *ed);
+void UI_RegisterContainerNode(struct uiBehaviour_s *behaviour);
+void UI_DrawItem(struct uiNode_s *node, const vec3_t org, const struct item_s *item, int x, int y, const vec3_t scale, const vec4_t color);
+void UI_ContainerNodeUpdateEquipment(inventory_t *inv, equipDef_t *ed);
 
 /**
  * @brief extradata for container widget

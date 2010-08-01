@@ -101,7 +101,7 @@ void MSO_Set (const int listIndex, const notify_t type, const int optionType, co
 	}
 
 	if (sendCommands)
-		MN_ExecuteConfunc("ms_btnstate %i %i %i %i", listIndex, settings->doPause, settings->doNotify, settings->doSound);
+		UI_ExecuteConfunc("ms_btnstate %i %i %i %i", listIndex, settings->doPause, settings->doNotify, settings->doSound);
 	else
 		/* ensure that message buttons will be initialized correctly if menu is shown next time */
 		MSO_SetMenuState(MSO_MSTATE_PREPARED,qfalse, qfalse);

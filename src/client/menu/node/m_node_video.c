@@ -38,10 +38,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cinematic/cl_cinematic.h"
 
 #define EXTRADATA_TYPE videoExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void MN_VideoNodeDraw (uiNode_t *node)
+static void UI_VideoNodeDraw (uiNode_t *node)
 {
 	vec2_t pos;
 
@@ -49,11 +49,11 @@ static void MN_VideoNodeDraw (uiNode_t *node)
 		return;
 
 	if (EXTRADATA(node).cin.fullScreen) {
-		MN_CaptureDrawOver(node);
+		UI_CaptureDrawOver(node);
 		return;
 	}
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 
 	if (EXTRADATA(node).cin.status == CIN_STATUS_NONE)
 		CIN_PlayCinematic(&(EXTRADATA(node).cin), va("videos/%s", (const char *)node->image));
@@ -64,15 +64,15 @@ static void MN_VideoNodeDraw (uiNode_t *node)
 	}
 }
 
-static void MN_VideoNodeDrawOverMenu (uiNode_t *node)
+static void UI_VideoNodeDrawOverMenu (uiNode_t *node)
 {
 	vec2_t pos;
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 	CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_PLAYING, qtrue);
 	CIN_RunCinematic(&(EXTRADATA(node).cin));
 }
 
-static void MN_VideoNodeInit (uiNode_t *node)
+static void UI_VideoNodeInit (uiNode_t *node)
 {
 	CIN_InitCinematic(&(EXTRADATA(node).cin));
 
@@ -81,7 +81,7 @@ static void MN_VideoNodeInit (uiNode_t *node)
 	CIN_PlayCinematic(&(EXTRADATA(node).cin), va("videos/%s", (const char *)node->image));
 }
 
-static void MN_VideoNodeClose (uiNode_t *node)
+static void UI_VideoNodeClose (uiNode_t *node)
 {
 	/* If playing a cinematic, stop it */
 	CIN_StopCinematic(&(EXTRADATA(node).cin));
@@ -93,13 +93,13 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterVideoNode (uiBehaviour_t* behaviour)
+void UI_RegisterVideoNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "video";
-	behaviour->draw = MN_VideoNodeDraw;
+	behaviour->draw = UI_VideoNodeDraw;
 	behaviour->properties = properties;
-	behaviour->init = MN_VideoNodeInit;
-	behaviour->close = MN_VideoNodeClose;
-	behaviour->drawOverMenu = MN_VideoNodeDrawOverMenu;
+	behaviour->init = UI_VideoNodeInit;
+	behaviour->close = UI_VideoNodeClose;
+	behaviour->drawOverMenu = UI_VideoNodeDrawOverMenu;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

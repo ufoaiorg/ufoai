@@ -574,7 +574,7 @@ qboolean R_SetMode (void)
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
 	R_UpdateVidDef(&vidmode);
-	MN_InvalidateStack();
+	UI_InvalidateStack();
 
 	Cvar_SetValue("vid_width", viddef.width);
 	Cvar_SetValue("vid_height", viddef.height);
@@ -601,7 +601,7 @@ qboolean R_SetMode (void)
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
 	R_UpdateVidDef(&vidmode);
-	MN_InvalidateStack();
+	UI_InvalidateStack();
 	return result;
 }
 

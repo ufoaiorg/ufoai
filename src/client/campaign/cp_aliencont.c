@@ -680,7 +680,7 @@ static void AC_AddOne_f (void)
 
 /**
  * @brief Defines commands and cvars for the alien containment menu(s).
- * @sa MN_InitStartup
+ * @sa UI_InitStartup
  */
 void AC_InitStartup (void)
 {

@@ -34,10 +34,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct uiBehaviour_s;
 struct uiAction_s;
 
-void MN_TextScrollEnd(const char* nodePath);
-void MN_TextNodeSelectLine(struct uiNode_s *node, int num);
+void UI_TextScrollEnd(const char* nodePath);
+void UI_TextNodeSelectLine(struct uiNode_s *node, int num);
 
-void MN_RegisterTextNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterTextNode(struct uiBehaviour_s *behaviour);
 
 typedef struct {
 	abstractScrollableExtraData_t super;
@@ -46,7 +46,7 @@ typedef struct {
 	int versionId;				/**< Cached version of the shared data, to check update */
 
 	int textLineSelected;		/**< Which line is currenlty selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/
-	int lineUnderMouse;			/**< MN_TEXT: The line under the mouse, when the mouse is over the node */
+	int lineUnderMouse;			/**< UI_TEXT: The line under the mouse, when the mouse is over the node */
 	int lineHeight;				/**< size between two lines */
 	int tabWidth;				/**< max size of a tabulation */
 	int longlines;				/**< what to do with long lines */

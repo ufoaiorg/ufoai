@@ -212,7 +212,7 @@ qboolean MS_SaveXML (mxml_node_t *p)
  * @brief Load callback for messages
  * @param[in] p XML Node structure, where we get the information from
  * @sa MS_SaveXML
- * @sa MN_AddNewMessageSound
+ * @sa UI_AddNewMessageSound
  */
 qboolean MS_LoadXML (mxml_node_t *p)
 {

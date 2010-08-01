@@ -32,9 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_draw.h"
 
 #define EXTRADATA_TYPE lineChartExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
-static void MN_LineChartNodeDraw (uiNode_t *node)
+static void UI_LineChartNodeDraw (uiNode_t *node)
 {
 	lineStrip_t *lineStrip;
 	const int dataId = EXTRADATA(node).dataId;
@@ -43,16 +43,16 @@ static void MN_LineChartNodeDraw (uiNode_t *node)
 	if (dataId == 0)
 		return;
 
-	if (mn.sharedData[dataId].type != MN_SHARED_LINESTRIP) {
-		Com_Printf("MN_LineStripNodeDraw: Node '%s' have use an invalide dataId type. LineStrip expected. dataId invalidated\n", MN_GetPath(node));
+	if (mn.sharedData[dataId].type != UI_SHARED_LINESTRIP) {
+		Com_Printf("UI_LineStripNodeDraw: Node '%s' have use an invalide dataId type. LineStrip expected. dataId invalidated\n", UI_GetPath(node));
 		EXTRADATA(node).dataId = 0;
 		return;
 	}
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 	pos[2] = 0;
 
-	MN_Transform(pos, NULL, NULL);
+	UI_Transform(pos, NULL, NULL);
 
 	/* Draw axes */
 	if (EXTRADATA(node).displayAxes) {
@@ -78,23 +78,23 @@ static void MN_LineChartNodeDraw (uiNode_t *node)
 	}
 	R_Color(NULL);
 
-	MN_Transform(NULL, NULL, NULL);
+	UI_Transform(NULL, NULL, NULL);
 }
 
 static const value_t properties[] = {
 	/* Identity the shared data the node use. It must be a LINESTRIP data. */
-	{"dataid", V_UI_DATAID, MN_EXTRADATA_OFFSETOF(lineChartExtraData_t, dataId), MEMBER_SIZEOF(lineChartExtraData_t, dataId)},
+	{"dataid", V_UI_DATAID, UI_EXTRADATA_OFFSETOF(lineChartExtraData_t, dataId), MEMBER_SIZEOF(lineChartExtraData_t, dataId)},
 	/* If true, it display axes of the chart. */
-	{"displayaxes", V_BOOL, MN_EXTRADATA_OFFSETOF(lineChartExtraData_t, displayAxes), MEMBER_SIZEOF(lineChartExtraData_t, displayAxes)},
+	{"displayaxes", V_BOOL, UI_EXTRADATA_OFFSETOF(lineChartExtraData_t, displayAxes), MEMBER_SIZEOF(lineChartExtraData_t, displayAxes)},
 	/* Axe color. */
-	{"axescolor", V_COLOR, MN_EXTRADATA_OFFSETOF(lineChartExtraData_t, axesColor), MEMBER_SIZEOF(lineChartExtraData_t, axesColor)},
+	{"axescolor", V_COLOR, UI_EXTRADATA_OFFSETOF(lineChartExtraData_t, axesColor), MEMBER_SIZEOF(lineChartExtraData_t, axesColor)},
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterLineChartNode (uiBehaviour_t *behaviour)
+void UI_RegisterLineChartNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "linechart";
-	behaviour->draw = MN_LineChartNodeDraw;
+	behaviour->draw = UI_LineChartNodeDraw;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

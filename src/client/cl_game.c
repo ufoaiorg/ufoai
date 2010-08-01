@@ -156,7 +156,7 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 	if (list != NULL && list->StartBattlescape) {
 		list->StartBattlescape(isTeamPlay);
 	} else {
-		MN_InitStack(mn_hud->string, NULL, qtrue, qtrue);
+		UI_InitStack(mn_hud->string, NULL, qtrue, qtrue);
 	}
 }
 
@@ -216,18 +216,18 @@ static cgame_import_t* GAME_GetImportData (void)
 		cgi->Cvar_String = Cvar_GetString;
 		cgi->FS_FreeFile = FS_FreeFile;
 		cgi->FS_LoadFile = FS_LoadFile;
-		cgi->MN_AddOption = MN_AddOption;
-		cgi->MN_ExecuteConfunc = MN_ExecuteConfunc;
-		cgi->MN_InitStack = MN_InitStack;
-		cgi->MN_Popup = MN_Popup;
-		cgi->MN_PopupList = MN_PopupList;
-		cgi->MN_PopWindow = MN_PopWindow;
-		cgi->MN_PushWindow = MN_PushWindow;
-		cgi->MN_RegisterLinkedListText = MN_RegisterLinkedListText;
-		cgi->MN_RegisterOption = MN_RegisterOption;
-		cgi->MN_RegisterText = MN_RegisterText;
-		cgi->MN_ResetData = MN_ResetData;
-		cgi->MN_TextNodeSelectLine = MN_TextNodeSelectLine;
+		cgi->UI_AddOption = UI_AddOption;
+		cgi->UI_ExecuteConfunc = UI_ExecuteConfunc;
+		cgi->UI_InitStack = UI_InitStack;
+		cgi->UI_Popup = UI_Popup;
+		cgi->UI_PopupList = UI_PopupList;
+		cgi->UI_PopWindow = UI_PopWindow;
+		cgi->UI_PushWindow = UI_PushWindow;
+		cgi->UI_RegisterLinkedListText = UI_RegisterLinkedListText;
+		cgi->UI_RegisterOption = UI_RegisterOption;
+		cgi->UI_RegisterText = UI_RegisterText;
+		cgi->UI_ResetData = UI_ResetData;
+		cgi->UI_TextNodeSelectLine = UI_TextNodeSelectLine;
 		cgi->mxml_AddBool = mxml_AddBool;
 		cgi->mxml_AddBoolValue = mxml_AddBoolValue;
 		cgi->mxml_AddByte = mxml_AddByte;
@@ -278,8 +278,8 @@ void GAME_SetMode (int gametype)
 		list->Shutdown();
 
 		/* we dont need to go back to "main" stack if we are already on this stack */
-		if (!MN_IsWindowOnStack("main"))
-			MN_InitStack("main", "", qtrue, qtrue);
+		if (!UI_IsWindowOnStack("main"))
+			UI_InitStack("main", "", qtrue, qtrue);
 	}
 
 	cls.gametype = gametype;
@@ -296,7 +296,7 @@ void GAME_SetMode (int gametype)
 	}
 }
 
-static void MN_MapInfoGetNext (int step)
+static void UI_MapInfoGetNext (int step)
 {
 	const mapDef_t *md;
 
@@ -311,14 +311,14 @@ static void MN_MapInfoGetNext (int step)
 
 	/* special purpose maps are not startable without the specific context */
 	if (md->map[0] == '.')
-		MN_MapInfoGetNext(step);
+		UI_MapInfoGetNext(step);
 }
 
 /**
  * @brief Prints the map info for the server creation dialogue
  * @todo Skip special map that start with a '.' (e.g. .baseattack)
  */
-static void MN_MapInfo (int step)
+static void UI_MapInfo (int step)
 {
 	const char *mapname;
 	const mapDef_t *md;
@@ -330,7 +330,7 @@ static void MN_MapInfo (int step)
 	if (!csi.numMDs)
 		return;
 
-	MN_MapInfoGetNext(step);
+	UI_MapInfoGetNext(step);
 
 	md = list->MapInfo(step);
 	if (!md)
@@ -361,20 +361,20 @@ static void MN_MapInfo (int step)
 		Cvar_Set("mn_mappic3", "maps/shots/default");
 }
 
-static void MN_GetMaps_f (void)
+static void UI_GetMaps_f (void)
 {
-	MN_MapInfo(0);
+	UI_MapInfo(0);
 }
 
-static void MN_ChangeMap_f (void)
+static void UI_ChangeMap_f (void)
 {
 	if (!strcmp(Cmd_Argv(0), "mn_nextmap"))
-		MN_MapInfo(1);
+		UI_MapInfo(1);
 	else
-		MN_MapInfo(-1);
+		UI_MapInfo(-1);
 }
 
-static void MN_SelectMap_f (void)
+static void UI_SelectMap_f (void)
 {
 	const char *mapname;
 	int i;
@@ -394,7 +394,7 @@ static void MN_SelectMap_f (void)
 		if (strcmp(md->map, mapname))
 			continue;
 		cls.currentSelectedMap = i;
-		MN_MapInfo(0);
+		UI_MapInfo(0);
 		return;
 	}
 
@@ -403,7 +403,7 @@ static void MN_SelectMap_f (void)
 		if (strcmp(md->id, mapname))
 			continue;
 		cls.currentSelectedMap = i;
-		MN_MapInfo(0);
+		UI_MapInfo(0);
 		return;
 	}
 
@@ -421,7 +421,7 @@ static void GAME_SetMode_f (void)
 	if (Cmd_Argc() == 2)
 		modeName = Cmd_Argv(1);
 	else
-		modeName = MN_GetActiveWindowName();
+		modeName = UI_GetActiveWindowName();
 
 	if (modeName[0] == '\0')
 		return;
@@ -728,7 +728,7 @@ void GAME_Drop (void)
 	} else {
 		SV_Shutdown("Drop", qfalse);
 		GAME_SetMode(GAME_NONE);
-		MN_InitStack("main", NULL, qfalse, qtrue);
+		UI_InitStack("main", NULL, qfalse, qtrue);
 	}
 }
 
@@ -765,7 +765,7 @@ const char* GAME_GetModelForItem (const objDef_t *od, menuModel_t** menuModel)
 		const char *model = list->GetModelForItem(od);
 		if (model != NULL) {
 			if (menuModel != NULL)
-				*menuModel = MN_GetMenuModel(model);
+				*menuModel = UI_GetMenuModel(model);
 			return model;
 		}
 	}
@@ -780,8 +780,8 @@ void GAME_InitStartup (void)
 	Cmd_AddCommand("game_setmode", GAME_SetMode_f, "Decides with game mode should be set - takes the menu as reference");
 	Cmd_AddCommand("game_exit", GAME_Exit_f, "Abort the game and let the aliens/opponents win");
 	Cmd_AddCommand("game_abort", GAME_Abort_f, "Abort the game and let the aliens/opponents win");
-	Cmd_AddCommand("mn_getmaps", MN_GetMaps_f, "The initial map to show");
-	Cmd_AddCommand("mn_nextmap", MN_ChangeMap_f, "Switch to the next valid map for the selected gametype");
-	Cmd_AddCommand("mn_prevmap", MN_ChangeMap_f, "Switch to the previous valid map for the selected gametype");
-	Cmd_AddCommand("mn_selectmap", MN_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype");
+	Cmd_AddCommand("mn_getmaps", UI_GetMaps_f, "The initial map to show");
+	Cmd_AddCommand("mn_nextmap", UI_ChangeMap_f, "Switch to the next valid map for the selected gametype");
+	Cmd_AddCommand("mn_prevmap", UI_ChangeMap_f, "Switch to the previous valid map for the selected gametype");
+	Cmd_AddCommand("mn_selectmap", UI_SelectMap_f, "Switch to the map given by the parameter - may be invalid for the current gametype");
 }

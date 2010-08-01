@@ -37,20 +37,20 @@ typedef enum {
 } uiDNDType_t;
 
 /* management */
-void MN_DrawDragAndDrop(int mousePosX, int mousePosY);
+void UI_DrawDragAndDrop(int mousePosX, int mousePosY);
 
 /* command */
-void MN_DNDDragItem(struct uiNode_s *node, const struct item_s *item);
-void MN_DNDDrop(void);
-void MN_DNDAbort(void);
+void UI_DNDDragItem(struct uiNode_s *node, const struct item_s *item);
+void UI_DNDDrop(void);
+void UI_DNDAbort(void);
 
 /*  getter */
-qboolean MN_DNDIsDragging(void);
-qboolean MN_DNDIsTargetNode(struct uiNode_s *node);
-qboolean MN_DNDIsSourceNode(struct uiNode_s *node);
-struct uiNode_s *MN_DNDGetTargetNode(void);
-struct uiNode_s *MN_DNDGetSourceNode(void);
-int MN_DNDGetType(void);
-struct item_s *MN_DNDGetItem(void);
+qboolean UI_DNDIsDragging(void);
+qboolean UI_DNDIsTargetNode(struct uiNode_s *node);
+qboolean UI_DNDIsSourceNode(struct uiNode_s *node);
+struct uiNode_s *UI_DNDGetTargetNode(void);
+struct uiNode_s *UI_DNDGetSourceNode(void);
+int UI_DNDGetType(void);
+struct item_s *UI_DNDGetItem(void);
 
 #endif

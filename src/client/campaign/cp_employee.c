@@ -493,7 +493,7 @@ employee_t* E_GetUnassignedEmployee (const base_t* const base, const employeeTyp
 qboolean E_HireEmployee (base_t* base, employee_t* employee)
 {
 	if (base->capacities[CAP_EMPLOYEES].cur >= base->capacities[CAP_EMPLOYEES].max) {
-		MN_Popup(_("Not enough quarters"), _("You don't have enough quarters for your employees.\nBuild more quarters."));
+		UI_Popup(_("Not enough quarters"), _("You don't have enough quarters for your employees.\nBuild more quarters."));
 		return qfalse;
 	}
 
@@ -1194,7 +1194,7 @@ static void E_ListHired_f (void)
 /**
  * @brief This is more or less the initial
  * Bind some of the functions in this file to console-commands that you can call ingame.
- * Called from MN_InitStartup resp. CL_InitLocal
+ * Called from UI_InitStartup resp. CL_InitLocal
  */
 void E_InitStartup (void)
 {

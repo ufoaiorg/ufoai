@@ -29,12 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct uiNode_s;
 
 /* module initialization */
-void MN_InitDraw(void);
+void UI_InitDraw(void);
 
 /* draw */
-void MN_Draw(void);
-void MN_DisplayNotice(const char *text, int time, const char *menuName);
-void MN_DrawCursor(void);
-void MN_CaptureDrawOver(struct uiNode_s *node);
+void UI_Draw(void);
+void UI_DisplayNotice(const char *text, int time, const char *menuName);
+void UI_DrawCursor(void);
+void UI_CaptureDrawOver(struct uiNode_s *node);
 
 #endif

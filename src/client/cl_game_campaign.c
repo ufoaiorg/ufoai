@@ -150,8 +150,8 @@ static void GAME_CP_GetCampaigns_f (void)
 			LIST_AddString(&campaignList, va("%s", _(c->name)));
 	}
 	/* default campaign */
-	MN_RegisterText(TEXT_STANDARD, campaignDesc);
-	MN_RegisterLinkedListText(TEXT_CAMPAIGN_LIST, campaignList);
+	UI_RegisterText(TEXT_STANDARD, campaignDesc);
+	UI_RegisterLinkedListText(TEXT_CAMPAIGN_LIST, campaignList);
 
 	/* select main as default */
 	for (i = 0; i < ccs.numCampaigns; i++) {
@@ -207,11 +207,11 @@ static void GAME_CP_CampaignListClick_f (void)
 			ccs.campaigns[num].credits, CP_ToDifficultyName(ccs.campaigns[num].difficulty),
 			(int)(round(ccs.campaigns[num].minhappiness * 100.0f)), ccs.campaigns[num].negativeCreditsUntilLost,
 			_(ccs.campaigns[num].text));
-	MN_RegisterText(TEXT_STANDARD, campaignDesc);
+	UI_RegisterText(TEXT_STANDARD, campaignDesc);
 
 	/* Highlight currently selected entry */
-	campaignlist = MN_GetNodeByPath("campaigns.campaignlist");
-	MN_TextNodeSelectLine(campaignlist, num);
+	campaignlist = UI_GetNodeByPath("campaigns.campaignlist");
+	UI_TextNodeSelectLine(campaignlist, num);
 }
 
 /**
@@ -310,14 +310,14 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 
 	CP_InitMissionResults(winner == cls.team);
 
-	MN_InitStack("geoscape", "campaign_main", qtrue, qtrue);
+	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
 	CP_ExecuteMissionTrigger(ccs.selectedMission, winner == cls.team);
 
 	if (winner == cls.team) {
-		MN_PushWindow("won", NULL);
+		UI_PushWindow("won", NULL);
 	} else
-		MN_PushWindow("lost", NULL);
+		UI_PushWindow("lost", NULL);
 
 	CL_Disconnect();
 	SV_Shutdown("Mission end", qfalse);
@@ -345,7 +345,7 @@ qboolean GAME_CP_Spawn (void)
 	CL_CleanTempInventory(base);
 
 	/* activate hud */
-	MN_InitStack(mn_hud->string, NULL, qfalse, qtrue);
+	UI_InitStack(mn_hud->string, NULL, qfalse, qtrue);
 
 	return qtrue;
 }
@@ -381,7 +381,7 @@ qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 void GAME_CP_Drop (void)
 {
 	/** @todo maybe create a savegame? */
-	MN_InitStack("geoscape", "campaign_main", qtrue, qtrue);
+	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
 	SV_Shutdown("Mission end", qfalse);
 	CL_Disconnect();
@@ -466,13 +466,13 @@ void GAME_CP_DisplayItemInfo (uiNode_t *node, const char *string)
 	const aircraft_t *aircraft = AIR_GetAircraftSilent(string);
 	if (aircraft) {
 		assert(aircraft->tech);
-		MN_DrawModelNode(node, aircraft->tech->mdl);
+		UI_DrawModelNode(node, aircraft->tech->mdl);
 	} else {
 		const technology_t *tech = RS_GetTechByProvided(string);
 		if (tech)
-			MN_DrawModelNode(node, tech->mdl);
+			UI_DrawModelNode(node, tech->mdl);
 		else
-			Com_Printf("MN_ItemNodeDraw: Unknown item: '%s'\n", string);
+			Com_Printf("UI_ItemNodeDraw: Unknown item: '%s'\n", string);
 	}
 }
 

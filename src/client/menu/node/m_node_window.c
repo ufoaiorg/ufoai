@@ -39,8 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h" /* gettext _() */
 
 #define EXTRADATA_TYPE windowExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 /* constants defining all tile of the texture */
 
@@ -73,7 +73,7 @@ static const vec4_t anamorphicBorder = {0, 0, 0, 1};
  * @brief Get a node from child index
  * @return A child node by his name, else NULL
  */
-uiNode_t* MN_WindowNodeGetIndexedChild (uiNode_t* const node, const char* childName)
+uiNode_t* UI_WindowNodeGetIndexedChild (uiNode_t* const node, const char* childName)
 {
 	node_index_t *a;
 	unsigned int hash;
@@ -90,7 +90,7 @@ uiNode_t* MN_WindowNodeGetIndexedChild (uiNode_t* const node, const char* childN
 /**
  * @brief Add a node to the child index
  */
-qboolean MN_WindowNodeAddIndexedNode (uiNode_t* const node, uiNode_t* const child)
+qboolean UI_WindowNodeAddIndexedNode (uiNode_t* const node, uiNode_t* const child)
 {
 	node_index_t *a;
 	unsigned int hash;
@@ -117,7 +117,7 @@ qboolean MN_WindowNodeAddIndexedNode (uiNode_t* const node, uiNode_t* const chil
 /**
  * @brief Remove a node from the child index
  */
-qboolean MN_WindowNodeRemoveIndexedNode (uiNode_t* const node, uiNode_t* const child)
+qboolean UI_WindowNodeRemoveIndexedNode (uiNode_t* const node, uiNode_t* const child)
 {
 	/** FIXME implement it */
 	return qfalse;
@@ -126,55 +126,55 @@ qboolean MN_WindowNodeRemoveIndexedNode (uiNode_t* const node, uiNode_t* const c
 /**
  * @brief Check if a window is fullscreen or not
  */
-qboolean MN_WindowIsFullScreen (const uiNode_t* const node)
+qboolean UI_WindowIsFullScreen (const uiNode_t* const node)
 {
-	assert(MN_NodeInstanceOf(node, "window"));
+	assert(UI_NodeInstanceOf(node, "window"));
 	return EXTRADATACONST(node).isFullScreen;
 }
 
-static void MN_WindowNodeDraw (uiNode_t *node)
+static void UI_WindowNodeDraw (uiNode_t *node)
 {
 	const char* image;
 	const char* text;
 	vec2_t pos;
-	const char *font = MN_GetFontFromNode(node);
+	const char *font = UI_GetFontFromNode(node);
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 
 	/* black border for anamorphic mode */
 	/** @todo it should be over the window */
 	/** @todo why not using glClear here with glClearColor set to black here? */
-	if (MN_WindowIsFullScreen(node)) {
+	if (UI_WindowIsFullScreen(node)) {
 		/* top */
 		if (pos[1] != 0)
-			MN_DrawFill(0, 0, viddef.virtualWidth, pos[1], anamorphicBorder);
+			UI_DrawFill(0, 0, viddef.virtualWidth, pos[1], anamorphicBorder);
 		/* left-right */
 		if (pos[0] != 0)
-			MN_DrawFill(0, pos[1], pos[0], node->size[1], anamorphicBorder);
+			UI_DrawFill(0, pos[1], pos[0], node->size[1], anamorphicBorder);
 		if (pos[0] + node->size[0] < viddef.virtualWidth) {
 			const int width = viddef.virtualWidth - (pos[0] + node->size[0]);
-			MN_DrawFill(viddef.virtualWidth - width, pos[1], width, node->size[1], anamorphicBorder);
+			UI_DrawFill(viddef.virtualWidth - width, pos[1], width, node->size[1], anamorphicBorder);
 		}
 		/* bottom */
 		if (pos[1] + node->size[1] < viddef.virtualHeight) {
 			const int height = viddef.virtualHeight - (pos[1] + node->size[1]);
-			MN_DrawFill(0, viddef.virtualHeight - height, viddef.virtualWidth, height, anamorphicBorder);
+			UI_DrawFill(0, viddef.virtualHeight - height, viddef.virtualWidth, height, anamorphicBorder);
 		}
 	}
 
 	/* darker background if last window is a modal */
 	if (EXTRADATA(node).modal && mn.windowStack[mn.windowStackPos - 1] == node)
-		MN_DrawFill(0, 0, viddef.virtualWidth, viddef.virtualHeight, modalBackground);
+		UI_DrawFill(0, 0, viddef.virtualWidth, viddef.virtualHeight, modalBackground);
 
 	/* draw the background */
-	image = MN_GetReferenceString(node, node->image);
+	image = UI_GetReferenceString(node, node->image);
 	if (image)
-		MN_DrawPanel(pos, node->size, image, 0, 0, windowTemplate);
+		UI_DrawPanel(pos, node->size, image, 0, 0, windowTemplate);
 
 	/* draw the title */
-	text = MN_GetReferenceString(node, node->text);
+	text = UI_GetReferenceString(node, node->text);
 	if (text)
-		MN_DrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text, LONGLINES_PRETTYCHOP);
+		UI_DrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text, LONGLINES_PRETTYCHOP);
 
 	/* embedded timer */
 	if (EXTRADATA(node).onTimeOut && EXTRADATA(node).timeOut) {
@@ -182,13 +182,13 @@ static void MN_WindowNodeDraw (uiNode_t *node)
 			EXTRADATA(node).lastTime = CL_Milliseconds();
 		if (EXTRADATA(node).lastTime + EXTRADATA(node).timeOut < CL_Milliseconds()) {
 			EXTRADATA(node).lastTime = 0;	/**< allow to reset timeOut on the event, and restart it, with an uptodate lastTime */
-			Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", node->name);
-			MN_ExecuteEventActions(node, EXTRADATA(node).onTimeOut);
+			Com_DPrintf(DEBUG_CLIENT, "UI_DrawMenus: timeout for node '%s'\n", node->name);
+			UI_ExecuteEventActions(node, EXTRADATA(node).onTimeOut);
 		}
 	}
 }
 
-static void MN_WindowNodeDoLayout (uiNode_t *node)
+static void UI_WindowNodeDoLayout (uiNode_t *node)
 {
 	if (!node->invalidated)
 		return;
@@ -204,7 +204,7 @@ static void MN_WindowNodeDoLayout (uiNode_t *node)
 	}
 
 	/* move fullscreen menu on the center of the screen */
-	if (MN_WindowIsFullScreen(node)) {
+	if (UI_WindowIsFullScreen(node)) {
 		node->pos[0] = (int) ((viddef.virtualWidth - node->size[0]) / 2);
 		node->pos[1] = (int) ((viddef.virtualHeight - node->size[1]) / 2);
 	}
@@ -212,7 +212,7 @@ static void MN_WindowNodeDoLayout (uiNode_t *node)
 	/** @todo check and fix here window outside the screen */
 
 	if (EXTRADATA(node).starLayout) {
-		MN_StarLayout(node);
+		UI_StarLayout(node);
 	}
 
 	/* super */
@@ -223,7 +223,7 @@ static void MN_WindowNodeDoLayout (uiNode_t *node)
  * @brief Called when we init the node on the screen
  * @todo we can move generic code into abstract node
  */
-static void MN_WindowNodeInit (uiNode_t *node)
+static void UI_WindowNodeInit (uiNode_t *node)
 {
 	uiNode_t *child;
 
@@ -239,16 +239,16 @@ static void MN_WindowNodeInit (uiNode_t *node)
 
 	/* script callback */
 	if (EXTRADATA(node).onInit)
-		MN_ExecuteEventActions(node, EXTRADATA(node).onInit);
+		UI_ExecuteEventActions(node, EXTRADATA(node).onInit);
 
-	MN_Invalidate(node);
+	UI_Invalidate(node);
 }
 
 /**
  * @brief Called when we close the node on the screen
  * @todo we can move generic code into abstract node
  */
-static void MN_WindowNodeClose (uiNode_t *node)
+static void UI_WindowNodeClose (uiNode_t *node)
 {
 	uiNode_t *child;
 
@@ -261,13 +261,13 @@ static void MN_WindowNodeClose (uiNode_t *node)
 
 	/* script callback */
 	if (EXTRADATA(node).onClose)
-		MN_ExecuteEventActions(node, EXTRADATA(node).onClose);
+		UI_ExecuteEventActions(node, EXTRADATA(node).onClose);
 }
 
 /**
  * @brief Called at the begin of the load from script
  */
-static void MN_WindowNodeLoading (uiNode_t *node)
+static void UI_WindowNodeLoading (uiNode_t *node)
 {
 	node->size[0] = VID_NORM_WIDTH;
 	node->size[1] = VID_NORM_HEIGHT;
@@ -275,15 +275,15 @@ static void MN_WindowNodeLoading (uiNode_t *node)
 	node->padding = 5;
 }
 
-void MN_WindowNodeSetRenderNode (uiNode_t *node, uiNode_t *renderNode)
+void UI_WindowNodeSetRenderNode (uiNode_t *node, uiNode_t *renderNode)
 {
-	if (!MN_NodeInstanceOf(node, "window")) {
-		Com_Printf("MN_WindowNodeSetRenderNode: '%s' node is not an 'window'.\n", MN_GetPath(node));
+	if (!UI_NodeInstanceOf(node, "window")) {
+		Com_Printf("UI_WindowNodeSetRenderNode: '%s' node is not an 'window'.\n", UI_GetPath(node));
 		return;
 	}
 
 	if (EXTRADATA(node).renderNode) {
-		Com_Printf("MN_WindowNodeSetRenderNode: second render node ignored (\"%s\")\n", MN_GetPath(renderNode));
+		Com_Printf("UI_WindowNodeSetRenderNode: second render node ignored (\"%s\")\n", UI_GetPath(renderNode));
 		return;
 	}
 
@@ -293,13 +293,13 @@ void MN_WindowNodeSetRenderNode (uiNode_t *node, uiNode_t *renderNode)
 /**
  * @brief Called at the end of the load from script
  */
-static void MN_WindowNodeLoaded (uiNode_t *node)
+static void UI_WindowNodeLoaded (uiNode_t *node)
 {
 	static char* closeCommand = "mn_close <path:root>;";
 
 	/* if it need, construct the drag button */
 	if (EXTRADATA(node).dragButton) {
-		uiNode_t *control = MN_AllocNode("move_window_button", "controls", node->dynamic);
+		uiNode_t *control = UI_AllocNode("move_window_button", "controls", node->dynamic);
 		control->root = node;
 		control->image = NULL;
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
@@ -308,12 +308,12 @@ static void MN_WindowNodeLoaded (uiNode_t *node)
 		control->pos[0] = 0;
 		control->pos[1] = 0;
 		control->tooltip = _("Drag to move window");
-		MN_AppendNode(node, control);
+		UI_AppendNode(node, control);
 	}
 
 	/* if the menu should have a close button, add it here */
 	if (EXTRADATA(node).closeButton) {
-		uiNode_t *button = MN_AllocNode("close_window_button", "image", node->dynamic);
+		uiNode_t *button = UI_AllocNode("close_window_button", "image", node->dynamic);
 		const int positionFromRight = CONTROLS_PADDING;
 		button->root = node;
 		button->image = "icons/system_close";
@@ -323,15 +323,15 @@ static void MN_WindowNodeLoaded (uiNode_t *node)
 		button->pos[0] = node->size[0] - positionFromRight - button->size[0];
 		button->pos[1] = CONTROLS_PADDING;
 		button->tooltip = _("Close the window");
-		button->onClick = MN_AllocStaticCommandAction(closeCommand);
-		MN_AppendNode(node, button);
+		button->onClick = UI_AllocStaticCommandAction(closeCommand);
+		UI_AppendNode(node, button);
 	}
 
 	EXTRADATA(node).isFullScreen = node->size[0] == VID_NORM_WIDTH
 			&& node->size[1] == VID_NORM_HEIGHT;
 
 	if (EXTRADATA(node).starLayout)
-		MN_Invalidate(node);
+		UI_Invalidate(node);
 
 #ifdef DEBUG
 	if (node->size[0] < LEFT_WIDTH + MID_WIDTH + RIGHT_WIDTH || node->size[1] < TOP_HEIGHT + MID_HEIGHT + BOTTOM_HEIGHT)
@@ -339,11 +339,11 @@ static void MN_WindowNodeLoaded (uiNode_t *node)
 #endif
 }
 
-static void MN_WindowNodeClone (const uiNode_t *source, uiNode_t *clone)
+static void UI_WindowNodeClone (const uiNode_t *source, uiNode_t *clone)
 {
 	/** @todo anyway we should remove soon renderNode */
 	if (EXTRADATACONST(source).renderNode != NULL) {
-		Com_Printf("MN_WindowNodeClone: Do not inherite window using a render node. Render node ignored (\"%s\")\n", MN_GetPath(clone));
+		Com_Printf("UI_WindowNodeClone: Do not inherite window using a render node. Render node ignored (\"%s\")\n", UI_GetPath(clone));
 		EXTRADATA(clone).renderNode = NULL;
 	}
 
@@ -367,36 +367,36 @@ static const value_t windowNodeProperties[] = {
 	 */
 
 	/* In windows where notify messages appear (like e.g. the video options window when you have to restart the game until the settings take effects) you can define the position of those messages with this option. */
-	{"noticepos", V_POS, MN_EXTRADATA_OFFSETOF(windowExtraData_t, noticePos), MEMBER_SIZEOF(windowExtraData_t, noticePos)},
+	{"noticepos", V_POS, UI_EXTRADATA_OFFSETOF(windowExtraData_t, noticePos), MEMBER_SIZEOF(windowExtraData_t, noticePos)},
 	/* Create subnode allowing to move the window when we click on the header. Updating this attribute at the runtime will change nothing. */
-	{"dragbutton", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, dragButton), MEMBER_SIZEOF(windowExtraData_t, dragButton)},
+	{"dragbutton", V_BOOL, UI_EXTRADATA_OFFSETOF(windowExtraData_t, dragButton), MEMBER_SIZEOF(windowExtraData_t, dragButton)},
 	/* Add a button on the top right the window to close it. Updating this attribute at the runtime will change nothing. */
-	{"closebutton", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, closeButton), MEMBER_SIZEOF(windowExtraData_t, closeButton)},
+	{"closebutton", V_BOOL, UI_EXTRADATA_OFFSETOF(windowExtraData_t, closeButton), MEMBER_SIZEOF(windowExtraData_t, closeButton)},
 	/* If true, the user can't select something outside the modal window. He must first close the window. */
-	{"modal", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, modal), MEMBER_SIZEOF(windowExtraData_t, modal)},
+	{"modal", V_BOOL, UI_EXTRADATA_OFFSETOF(windowExtraData_t, modal), MEMBER_SIZEOF(windowExtraData_t, modal)},
 	/* If true, if the user click outside the window, it will close it. */
-	{"dropdown", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, dropdown), MEMBER_SIZEOF(windowExtraData_t, dropdown)},
+	{"dropdown", V_BOOL, UI_EXTRADATA_OFFSETOF(windowExtraData_t, dropdown), MEMBER_SIZEOF(windowExtraData_t, dropdown)},
 	/* If true, the user can't use ''ESC'' key to close the window. */
-	{"preventtypingescape", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, preventTypingEscape), MEMBER_SIZEOF(windowExtraData_t, preventTypingEscape)},
+	{"preventtypingescape", V_BOOL, UI_EXTRADATA_OFFSETOF(windowExtraData_t, preventTypingEscape), MEMBER_SIZEOF(windowExtraData_t, preventTypingEscape)},
 	/* If true, the window is filled according to the widescreen. */
-	{"fill", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, fill), MEMBER_SIZEOF(windowExtraData_t, fill)},
+	{"fill", V_BOOL, UI_EXTRADATA_OFFSETOF(windowExtraData_t, fill), MEMBER_SIZEOF(windowExtraData_t, fill)},
 	/* If true, when the window size change, the window content position is updated according to the "star" layout.
 	 * @todo Need more documentation.
 	 */
-	{"starlayout", V_BOOL, MN_EXTRADATA_OFFSETOF(windowExtraData_t, starLayout), MEMBER_SIZEOF(windowExtraData_t, starLayout)},
+	{"starlayout", V_BOOL, UI_EXTRADATA_OFFSETOF(windowExtraData_t, starLayout), MEMBER_SIZEOF(windowExtraData_t, starLayout)},
 
 	/* This property control milliseconds between each calls of <code>onEvent</code>.
 	 * If value is 0 (the default value) nothing is called. We can change the
 	 * value at the runtime.
 	 */
-	{"timeout", V_INT,MN_EXTRADATA_OFFSETOF(windowExtraData_t, timeOut), MEMBER_SIZEOF(windowExtraData_t, timeOut)},
+	{"timeout", V_INT,UI_EXTRADATA_OFFSETOF(windowExtraData_t, timeOut), MEMBER_SIZEOF(windowExtraData_t, timeOut)},
 
 	/* Called when the window is puched into the active window stack. */
-	{"oninit", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(windowExtraData_t, onInit), MEMBER_SIZEOF(windowExtraData_t, onInit)},
+	{"oninit", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onInit), MEMBER_SIZEOF(windowExtraData_t, onInit)},
 	/* Called when the window is removed from the active window stack. */
-	{"onclose", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(windowExtraData_t, onClose), MEMBER_SIZEOF(windowExtraData_t, onClose)},
+	{"onclose", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onClose), MEMBER_SIZEOF(windowExtraData_t, onClose)},
 	/* Called periodically. See <code>timeout</code>. */
-	{"onevent", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(windowExtraData_t, onTimeOut), MEMBER_SIZEOF(windowExtraData_t, onTimeOut)},
+	{"onevent", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(windowExtraData_t, onTimeOut), MEMBER_SIZEOF(windowExtraData_t, onTimeOut)},
 
 	{NULL, V_NULL, 0, 0}
 };
@@ -406,7 +406,7 @@ static const value_t windowNodeProperties[] = {
  * @param node A window node
  * @return A position, else NULL if no notice position
  */
-vec_t *MN_WindowNodeGetNoticePosition(struct uiNode_s *node)
+vec_t *UI_WindowNodeGetNoticePosition(struct uiNode_s *node)
 {
 	if (EXTRADATA(node).noticePos[0] == 0 && EXTRADATA(node).noticePos[1] == 0)
 		return NULL;
@@ -418,7 +418,7 @@ vec_t *MN_WindowNodeGetNoticePosition(struct uiNode_s *node)
  * @param node A window node
  * @return True if the window is a drop down.
  */
-qboolean MN_WindowIsDropDown(const struct uiNode_s* const node)
+qboolean UI_WindowIsDropDown(const struct uiNode_s* const node)
 {
 	return EXTRADATACONST(node).dropdown;
 }
@@ -428,7 +428,7 @@ qboolean MN_WindowIsDropDown(const struct uiNode_s* const node)
  * @param node A window node
  * @return True if the window is a modal.
  */
-qboolean MN_WindowIsModal(const struct uiNode_s* const node)
+qboolean UI_WindowIsModal(const struct uiNode_s* const node)
 {
 	return EXTRADATACONST(node).modal;
 }
@@ -440,9 +440,9 @@ qboolean MN_WindowIsModal(const struct uiNode_s* const node)
  * @param binding Key binding to link with the window (structure should not be already linked somewhere)
  * @todo Rework that function to remove possible wrong use of that function
  */
-void MN_WindowNodeRegisterKeyBinding (uiNode_t* node, uiKeyBinding_t *binding)
+void UI_WindowNodeRegisterKeyBinding (uiNode_t* node, uiKeyBinding_t *binding)
 {
-	assert(MN_NodeInstanceOf(node, "window"));
+	assert(UI_NodeInstanceOf(node, "window"));
 	binding->next = EXTRADATA(node).keyList;
 	EXTRADATA(node).keyList = binding;
 }
@@ -455,10 +455,10 @@ const uiKeyBinding_t *binding;
  * @param node A window node
  * @param key A key code, either K_ value or lowercase ascii
  */
-uiKeyBinding_t *MN_WindowNodeGetKeyBinding (const struct uiNode_s* const node, unsigned int key)
+uiKeyBinding_t *UI_WindowNodeGetKeyBinding (const struct uiNode_s* const node, unsigned int key)
 {
 	uiKeyBinding_t *binding = EXTRADATACONST(node).keyList;
-	assert(MN_NodeInstanceOf(node, "window"));
+	assert(UI_NodeInstanceOf(node, "window"));
 	while (binding) {
 		if (binding->key == key)
 			break;
@@ -467,17 +467,17 @@ uiKeyBinding_t *MN_WindowNodeGetKeyBinding (const struct uiNode_s* const node, u
 	return binding;
 }
 
-void MN_RegisterWindowNode (uiBehaviour_t *behaviour)
+void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 {
 	windowBehaviour = behaviour;
 	behaviour->name = "window";
-	behaviour->loading = MN_WindowNodeLoading;
-	behaviour->loaded = MN_WindowNodeLoaded;
-	behaviour->init = MN_WindowNodeInit;
-	behaviour->close = MN_WindowNodeClose;
-	behaviour->draw = MN_WindowNodeDraw;
-	behaviour->doLayout = MN_WindowNodeDoLayout;
-	behaviour->clone = MN_WindowNodeClone;
+	behaviour->loading = UI_WindowNodeLoading;
+	behaviour->loaded = UI_WindowNodeLoaded;
+	behaviour->init = UI_WindowNodeInit;
+	behaviour->close = UI_WindowNodeClose;
+	behaviour->draw = UI_WindowNodeDraw;
+	behaviour->doLayout = UI_WindowNodeDoLayout;
+	behaviour->clone = UI_WindowNodeClone;
 	behaviour->properties = windowNodeProperties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

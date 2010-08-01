@@ -61,7 +61,7 @@ static void HOS_UpdateMenu (void)
 		return;
 
 	/* Reset list. */
-	MN_ExecuteConfunc("hospital_clear");
+	UI_ExecuteConfunc("hospital_clear");
 
 	for (type = 0, j = 0, entry = 0; type < MAX_EMPL; type++) {
 		employee_t *employee = NULL;
@@ -85,12 +85,12 @@ static void HOS_UpdateMenu (void)
 				Com_DPrintf(DEBUG_CLIENT, "%s idx: %i entry: %i\n", name, employee->idx, entry);
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))
-					MN_ExecuteConfunc("hospitalserious %i", entry);
+					UI_ExecuteConfunc("hospitalserious %i", entry);
 				/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
 				else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85))
-					MN_ExecuteConfunc("hospitalmedium %i", entry);
+					UI_ExecuteConfunc("hospitalmedium %i", entry);
 				else
-					MN_ExecuteConfunc("hospitallight %i", entry);
+					UI_ExecuteConfunc("hospitallight %i", entry);
 
 				/* Display name in the correct list-entry. */
 				Cvar_Set(va("mn_hos_item%i", entry), name);
@@ -113,7 +113,7 @@ static void HOS_UpdateMenu (void)
 		Cvar_Set(va("mn_hos_rank%i", entry), "");
 		Cvar_Set(va("mn_hos_hp%i", entry), "0");
 		Cvar_Set(va("mn_hos_hpmax%i", entry), "1");
-		MN_ExecuteConfunc("hospitalunused %i", entry);
+		UI_ExecuteConfunc("hospitalunused %i", entry);
 	}
 }
 
@@ -129,7 +129,7 @@ static void HOS_Init_f (void)
 		return;
 
 	if (!B_GetBuildingStatus(base, B_HOSPITAL)) {
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 		return;
 	}
 
@@ -204,7 +204,7 @@ static void HOS_ListClick_f (void)
 
 	/* open the hospital menu for this employee */
 	if (type != MAX_EMPL)
-		MN_PushWindow("hospital_employee", NULL);
+		UI_PushWindow("hospital_employee", NULL);
 }
 
 /**
@@ -219,7 +219,7 @@ static void HOS_EmployeeInit_f (void)
 		return;
 	}
 
-	MN_ResetData(TEXT_STANDARD);
+	UI_ResetData(TEXT_STANDARD);
 
 	c = &currentEmployeeInHospital->chr;
 	CL_UpdateCharacterValues(c, "mn_");

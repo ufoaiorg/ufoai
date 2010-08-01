@@ -34,23 +34,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../campaign/cp_campaign.h"
 
 #define EXTRADATA_TYPE baseExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, baseExtraData_t)
+#define EXTRADATA(node) UI_EXTRADATA(node, baseExtraData_t)
 
 /**
  * @brief Called after the end of the node load from script (all data and/or child are set)
  */
-static void MN_AbstractBaseNodeLoaded (uiNode_t * node)
+static void UI_AbstractBaseNodeLoaded (uiNode_t * node)
 {
 	const int id = EXTRADATA(node).baseid;
 	if (id < 0 || id >= MAX_BASES) {
-		Com_Printf("MN_AbstractBaseNodeLoaded: Invalid baseid given %i", id);
+		Com_Printf("UI_AbstractBaseNodeLoaded: Invalid baseid given %i", id);
 	}
 }
 
 /**
  * @brief Draw a small square with the menu layout of the given base
  */
-static void MN_BaseLayoutNodeDraw (uiNode_t * node)
+static void UI_BaseLayoutNodeDraw (uiNode_t * node)
 {
 	base_t *base;
 	int height, width, y;
@@ -66,7 +66,7 @@ static void MN_BaseLayoutNodeDraw (uiNode_t * node)
 	width = (node->size[0] - totalMarge) / BASE_SIZE;
 	height = (node->size[1] - totalMarge) / BASE_SIZE;
 
-	MN_GetNodeAbsPos(node, nodepos);
+	UI_GetNodeAbsPos(node, nodepos);
 
 	base = B_GetBaseByIDX(EXTRADATA(node).baseid);
 
@@ -75,11 +75,11 @@ static void MN_BaseLayoutNodeDraw (uiNode_t * node)
 		int x = nodepos[0] + node->padding;
 		for (col = 0; col < BASE_SIZE; col++) {
 			if (base->map[row][col].blocked) {
-				MN_DrawFill(x, y, width, height, c_gray);
+				UI_DrawFill(x, y, width, height, c_gray);
 			} else if (base->map[row][col].building) {
 				/* maybe destroyed in the meantime */
 				if (base->founded)
-					MN_DrawFill(x, y, width, height, node->color);
+					UI_DrawFill(x, y, width, height, node->color);
 			}
 			x += width + node->padding;
 		}
@@ -98,11 +98,11 @@ static void MN_BaseLayoutNodeDraw (uiNode_t * node)
  * @param[out] col Col of the cell at the position (-1 if no cell)
  * @param[out] row Row of the cell at the position (-1 if no cell)
  */
-static void MN_BaseMapGetCellAtPos (const uiNode_t *node, int x, int y, int *col, int *row)
+static void UI_BaseMapGetCellAtPos (const uiNode_t *node, int x, int y, int *col, int *row)
 {
 	assert(col);
 	assert(row);
-	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 	if (x < 0 || y < 0 || x >= node->size[0] || y >= node->size[1]) {
 		*col = -1;
 		*row = -1;
@@ -118,7 +118,7 @@ static void MN_BaseMapGetCellAtPos (const uiNode_t *node, int x, int y, int *col
  * @brief Check a base cell
  * @return True if the cell is free to build
  */
-static inline qboolean MN_BaseMapIsCellFree (const base_t *base, int col, int row)
+static inline qboolean UI_BaseMapIsCellFree (const base_t *base, int col, int row)
 {
 	return col >= 0 && col < BASE_SIZE
 	 && row >= 0 && row < BASE_SIZE
@@ -129,7 +129,7 @@ static inline qboolean MN_BaseMapIsCellFree (const base_t *base, int col, int ro
 /**
  * @brief Draws a base.
  */
-static void MN_BaseMapNodeDraw (uiNode_t * node)
+static void UI_BaseMapNodeDraw (uiNode_t * node)
 {
 	int width, height, row, col;
 	char image[MAX_QPATH];		/**< this buffer should not be need */
@@ -139,7 +139,7 @@ static void MN_BaseMapNodeDraw (uiNode_t * node)
 	qboolean used[MAX_BUILDINGS];
 
 	if (!base) {
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 		return;
 	}
 
@@ -152,7 +152,7 @@ static void MN_BaseMapNodeDraw (uiNode_t * node)
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
 			vec2_t pos;
-			MN_GetNodeAbsPos(node, pos);
+			UI_GetNodeAbsPos(node, pos);
 			pos[0] += col * width;
 			pos[1] += row * (height - BASE_IMAGE_OVERLAY);
 
@@ -187,7 +187,7 @@ static void MN_BaseMapNodeDraw (uiNode_t * node)
 
 			/* draw tile */
 			if (image[0] != '\0')
-				MN_DrawNormImageByName(pos[0], pos[1], width, height, 0, 0, 0, 0, image);
+				UI_DrawNormImageByName(pos[0], pos[1], width, height, 0, 0, 0, 0, image);
 
 			/* only draw for first part of building */
 			if (building && !secondBuilding) {
@@ -198,7 +198,7 @@ static void MN_BaseMapNodeDraw (uiNode_t * node)
 				case B_STATUS_UNDER_CONSTRUCTION:
 				{
 					const int time = building->buildTime - (ccs.date.day - building->timeStart);
-					MN_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, pos[1] + 10, node->size[0], 0, 0, va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
+					UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, pos[1] + 10, node->size[0], 0, 0, va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
 					break;
 				}
 				default:
@@ -211,7 +211,7 @@ static void MN_BaseMapNodeDraw (uiNode_t * node)
 	if (!node->state)
 		return;
 
-	MN_BaseMapGetCellAtPos(node, mousePosX, mousePosY, &col, &row);
+	UI_BaseMapGetCellAtPos(node, mousePosX, mousePosY, &col, &row);
 	if (col == -1)
 		return;
 
@@ -220,16 +220,16 @@ static void MN_BaseMapNodeDraw (uiNode_t * node)
 		qboolean isLarge;
 		assert(base->buildingCurrent);
 		/** @todo we should not compute here if we can (or not build something) the map model know it better */
-		if (!MN_BaseMapIsCellFree(base, col, row))
+		if (!UI_BaseMapIsCellFree(base, col, row))
 			return;
 
 		isLarge = base->buildingCurrent->needs != NULL;
 
 		/* large building */
 		if (isLarge) {
-			if (MN_BaseMapIsCellFree(base, col + 1, row)) {
+			if (UI_BaseMapIsCellFree(base, col + 1, row)) {
 				/* ok */
-			} else if (MN_BaseMapIsCellFree(base, col - 1, row)) {
+			} else if (UI_BaseMapIsCellFree(base, col - 1, row)) {
 				/* fix col at the left cell */
 				col--;
 			} else {
@@ -238,11 +238,11 @@ static void MN_BaseMapNodeDraw (uiNode_t * node)
 		}
 		if (col != -1) {
 			vec2_t pos;
-			MN_GetNodeAbsPos(node, pos);
+			UI_GetNodeAbsPos(node, pos);
 			if (isLarge) {
-				MN_DrawNormImageByName(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width + width, height, 0, 0, 0, 0, "base/hover2");
+				UI_DrawNormImageByName(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width + width, height, 0, 0, 0, 0, "base/hover2");
 			} else
-				MN_DrawNormImageByName(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width, height, 0, 0, 0, 0, "base/hover");
+				UI_DrawNormImageByName(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width, height, 0, 0, 0, 0, "base/hover");
 		}
 	}
 }
@@ -253,7 +253,7 @@ static void MN_BaseMapNodeDraw (uiNode_t * node)
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void MN_BaseMapNodeDrawTooltip (uiNode_t *node, int x, int y)
+static void UI_BaseMapNodeDrawTooltip (uiNode_t *node, int x, int y)
 {
 	int col, row;
 	building_t *building;
@@ -261,7 +261,7 @@ static void MN_BaseMapNodeDrawTooltip (uiNode_t *node, int x, int y)
 	char *tooltipText;
 	base_t *base = B_GetCurrentSelectedBase();
 
-	MN_BaseMapGetCellAtPos(node, x, y, &col, &row);
+	UI_BaseMapGetCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
 		return;
 
@@ -272,17 +272,17 @@ static void MN_BaseMapNodeDrawTooltip (uiNode_t *node, int x, int y)
 	tooltipText = _(building->name);
 	if (!B_CheckBuildingDependencesStatus(base, building))
 		tooltipText = va("%s\n%s %s", tooltipText, _("not operational, depends on"), _(building->dependsBuilding->name));
-	MN_DrawTooltip(tooltipText, x, y, itemToolTipWidth, 0);
+	UI_DrawTooltip(tooltipText, x, y, itemToolTipWidth, 0);
 }
 
 /**
  * @brief Left click on the basemap
- * @sa MN_BaseMapRightClick
+ * @sa UI_BaseMapRightClick
  * @param[in] node The menu node definition for the base map
  * @param[in] x Absolute X mouse position into the screen
  * @param[in] y Absolute Y mouse position into the screen
  */
-static void MN_BaseMapNodeClick (uiNode_t *node, int x, int y)
+static void UI_BaseMapNodeClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -291,7 +291,7 @@ static void MN_BaseMapNodeClick (uiNode_t *node, int x, int y)
 	assert(node);
 	assert(node->root);
 
-	MN_BaseMapGetCellAtPos(node, x, y, &col, &row);
+	UI_BaseMapGetCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
 		return;
 
@@ -310,7 +310,7 @@ static void MN_BaseMapNodeClick (uiNode_t *node, int x, int y)
 	if (base->map[row][col].building) {
 		const building_t *entry = base->map[row][col].building;
 		if (!entry)
-			Com_Error(ERR_DROP, "MN_BaseMapNodeClick: no entry at %i:%i", x, y);
+			Com_Error(ERR_DROP, "UI_BaseMapNodeClick: no entry at %i:%i", x, y);
 
 		assert(!base->map[row][col].blocked);
 
@@ -322,12 +322,12 @@ static void MN_BaseMapNodeClick (uiNode_t *node, int x, int y)
 
 /**
  * @brief Right click on the basemap
- * @sa MN_BaseMapNodeClick
+ * @sa UI_BaseMapNodeClick
  * @param[in] node Context node
  * @param[in] x Absolute x mouse coordinate (screen coordinates)
  * @param[in] y Absolute y mouse coordinate (screen coordinates)
  */
-static void MN_BaseMapNodeRightClick (uiNode_t *node, int x, int y)
+static void UI_BaseMapNodeRightClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -336,14 +336,14 @@ static void MN_BaseMapNodeRightClick (uiNode_t *node, int x, int y)
 	assert(node);
 	assert(node->root);
 
-	MN_BaseMapGetCellAtPos(node, x, y, &col, &row);
+	UI_BaseMapGetCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
 		return;
 
 	if (base->map[row][col].building) {
 		building_t *entry = base->map[row][col].building;
 		if (!entry)
-			Sys_Error("MN_BaseMapNodeRightClick: no entry at %i:%i\n", x, y);
+			Sys_Error("UI_BaseMapNodeRightClick: no entry at %i:%i\n", x, y);
 
 		assert(!base->map[row][col].blocked);
 		B_MarkBuildingDestroy(base, entry);
@@ -353,13 +353,13 @@ static void MN_BaseMapNodeRightClick (uiNode_t *node, int x, int y)
 
 /**
  * @brief Middle click on the basemap
- * @sa MN_BaseMapNodeClick
+ * @sa UI_BaseMapNodeClick
  * @param[in] node The menu node definition for the base map
  * @param[in] x The x screen coordinate
  * @param[in] y The y screen coordinate
  * @note relies on @c baseCurrent
  */
-static void MN_BaseMapNodeMiddleClick (uiNode_t *node, int x, int y)
+static void UI_BaseMapNodeMiddleClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -368,14 +368,14 @@ static void MN_BaseMapNodeMiddleClick (uiNode_t *node, int x, int y)
 	assert(node);
 	assert(node->root);
 
-	MN_BaseMapGetCellAtPos(node, x, y, &col, &row);
+	UI_BaseMapGetCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
 		return;
 
 	if (base->map[row][col].building) {
 		building_t *entry = base->map[row][col].building;
 		if (!entry)
-			Com_Error(ERR_DROP, "MN_BaseMapNodeMiddleClick: no entry at %i:%i", x, y);
+			Com_Error(ERR_DROP, "UI_BaseMapNodeMiddleClick: no entry at %i:%i", x, y);
 
 		assert(!base->map[row][col].blocked);
 		B_DrawBuilding(base, entry);
@@ -386,7 +386,7 @@ static void MN_BaseMapNodeMiddleClick (uiNode_t *node, int x, int y)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void MN_BaseLayoutNodeLoading (uiNode_t *node)
+static void UI_BaseLayoutNodeLoading (uiNode_t *node)
 {
 	node->padding = 3;
 	Vector4Set(node->color, 1, 1, 1, 1);
@@ -394,34 +394,34 @@ static void MN_BaseLayoutNodeLoading (uiNode_t *node)
 
 static const value_t properties[] = {
 	/* Identify the base, from a base ID, the node use. */
-	{"baseid", V_INT, MN_EXTRADATA_OFFSETOF(baseExtraData_t, baseid), MEMBER_SIZEOF(baseExtraData_t, baseid)},
+	{"baseid", V_INT, UI_EXTRADATA_OFFSETOF(baseExtraData_t, baseid), MEMBER_SIZEOF(baseExtraData_t, baseid)},
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterAbstractBaseNode (uiBehaviour_t *behaviour)
+void UI_RegisterAbstractBaseNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractbase";
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
-	behaviour->loaded = MN_AbstractBaseNodeLoaded;
+	behaviour->loaded = UI_AbstractBaseNodeLoaded;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }
 
-void MN_RegisterBaseMapNode (uiBehaviour_t *behaviour)
+void UI_RegisterBaseMapNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "basemap";
 	behaviour->extends = "abstractbase";
-	behaviour->draw = MN_BaseMapNodeDraw;
-	behaviour->leftClick = MN_BaseMapNodeClick;
-	behaviour->rightClick = MN_BaseMapNodeRightClick;
-	behaviour->drawTooltip = MN_BaseMapNodeDrawTooltip;
-	behaviour->middleClick = MN_BaseMapNodeMiddleClick;
+	behaviour->draw = UI_BaseMapNodeDraw;
+	behaviour->leftClick = UI_BaseMapNodeClick;
+	behaviour->rightClick = UI_BaseMapNodeRightClick;
+	behaviour->drawTooltip = UI_BaseMapNodeDrawTooltip;
+	behaviour->middleClick = UI_BaseMapNodeMiddleClick;
 }
 
-void MN_RegisterBaseLayoutNode (uiBehaviour_t *behaviour)
+void UI_RegisterBaseLayoutNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "baselayout";
 	behaviour->extends = "abstractbase";
-	behaviour->draw = MN_BaseLayoutNodeDraw;
-	behaviour->loading = MN_BaseLayoutNodeLoading;
+	behaviour->draw = UI_BaseLayoutNodeDraw;
+	behaviour->loading = UI_BaseLayoutNodeLoading;
 }

@@ -708,11 +708,11 @@ void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
 				/* Assign the sci to the lab and set number of used lab-space. */
 				employee->building = building;
 			} else {
-				MN_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
+				UI_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
 				return;
 			}
 		} else {
-			MN_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
+			UI_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
 			return;
 		}
 
@@ -1035,7 +1035,7 @@ static void RS_TechnologyList_f (void)
 /**
  * @brief Mark everything as researched
  * @sa CL_Connect_f
- * @sa MN_StartServer
+ * @sa UI_StartServer
  */
 static void RS_DebugMarkResearchedAll (void)
 {
@@ -1113,7 +1113,7 @@ static void RS_DebugFinishResearches_f (void)
 /**
  * @brief This is more or less the initial
  * Bind some of the functions in this file to console-commands that you can call ingame.
- * Called from MN_InitStartup resp. CL_InitLocal
+ * Called from UI_InitStartup resp. CL_InitLocal
  */
 void RS_InitStartup (void)
 {

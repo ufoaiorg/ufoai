@@ -38,21 +38,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../campaign/cp_messages.h" /**< message_t */
 #include "../../../shared/parse.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, abstractScrollableExtraData_t)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, abstractScrollableExtraData_t)
+#define EXTRADATA(node) UI_EXTRADATA(node, abstractScrollableExtraData_t)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, abstractScrollableExtraData_t)
 
 /** @todo use the font height? */
 static const int LINEHEIGHT	= 20;
 
-static const int DATETIME_COLUMN_SIZE = 180;
+static const int DATETIME_COLUUI_SIZE = 180;
 
 /**
  * @return Number of lines need to display this message
  */
-static int MN_MessageGetLines (const uiNode_t *node, message_t *message, const char *fontID, int width)
+static int UI_MessageGetLines (const uiNode_t *node, message_t *message, const char *fontID, int width)
 {
-	const int column1 = DATETIME_COLUMN_SIZE;
-	const int column2 = width - DATETIME_COLUMN_SIZE - node->padding;
+	const int column1 = DATETIME_COLUUI_SIZE;
+	const int column2 = width - DATETIME_COLUUI_SIZE - node->padding;
 	int lines1;
 	int lines2;
 	R_FontTextSize(fontID, message->timestamp, column1, LONGLINES_WRAP, NULL, NULL, &lines1, NULL);
@@ -66,7 +66,7 @@ static char *lastDate;
  * @todo do not hard code icons
  * @todo cache icon result
  */
-static uiIcon_t *MN_MessageGetIcon (const message_t *message)
+static uiIcon_t *UI_MessageGetIcon (const message_t *message)
 {
 	const char* iconName;
 
@@ -127,13 +127,13 @@ static uiIcon_t *MN_MessageGetIcon (const message_t *message)
 		break;
 	}
 
-	return MN_GetIconByName(iconName);
+	return UI_GetIconByName(iconName);
 }
 
-static void MN_MessageDraw (const uiNode_t *node, message_t *message, const char *fontID, int x, int y, int width, int height, int *screenLines)
+static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char *fontID, int x, int y, int width, int height, int *screenLines)
 {
-	const int column1 = DATETIME_COLUMN_SIZE;
-	const int column2 = width - DATETIME_COLUMN_SIZE - node->padding;
+	const int column1 = DATETIME_COLUUI_SIZE;
+	const int column2 = width - DATETIME_COLUUI_SIZE - node->padding;
 	int lines1 = *screenLines;
 	int lines2 = *screenLines;
 
@@ -143,19 +143,19 @@ static void MN_MessageDraw (const uiNode_t *node, message_t *message, const char
 
 	/* display the date */
 	if (lastDate == NULL || strcmp(lastDate, message->timestamp) != 0)
-		MN_DrawString(fontID, ALIGN_UL, x, y, x, y, column1, height, LINEHEIGHT, message->timestamp, EXTRADATACONST(node).scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
+		UI_DrawString(fontID, ALIGN_UL, x, y, x, y, column1, height, LINEHEIGHT, message->timestamp, EXTRADATACONST(node).scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
 
-	x += DATETIME_COLUMN_SIZE + node->padding;
+	x += DATETIME_COLUUI_SIZE + node->padding;
 
 	/* identify the begin of a message with a mark */
 	if (lines2 >= 0) {
 		const uiIcon_t *icon;
-		icon = MN_MessageGetIcon(message);
-		MN_DrawIconInBox(icon, ICON_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
+		icon = UI_MessageGetIcon(message);
+		UI_DrawIconInBox(icon, ICON_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
 	}
 
 	/* draw the message */
-	MN_DrawString(fontID, ALIGN_UL, x, y, x, y, column2, height, LINEHEIGHT, message->text, EXTRADATACONST(node).scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);
+	UI_DrawString(fontID, ALIGN_UL, x, y, x, y, column2, height, LINEHEIGHT, message->text, EXTRADATACONST(node).scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);
 	*screenLines = max(lines1, lines2);
 	lastDate = message->timestamp;
 }
@@ -164,11 +164,11 @@ static void MN_MessageDraw (const uiNode_t *node, message_t *message, const char
  * @brief Draws the messagesystem node
  * @param[in] node The context menu node
  */
-static void MN_MessageListNodeDraw (uiNode_t *node)
+static void UI_MessageListNodeDraw (uiNode_t *node)
 {
 	message_t *message;
 	int screenLines;
-	const char *font = MN_GetFontFromNode(node);
+	const char *font = UI_GetFontFromNode(node);
 	vec2_t pos;
 	int x, y, width, height;
 	int defaultHeight;
@@ -179,7 +179,7 @@ static void MN_MessageListNodeDraw (uiNode_t *node)
 #ifdef AUTOSCROLL
 	qboolean autoscroll;
 #endif
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 
 	defaultHeight = LINEHEIGHT;
 
@@ -195,11 +195,11 @@ static void MN_MessageListNodeDraw (uiNode_t *node)
 	height = node->size[1] - node->padding - node->padding;
 
 	/* update message cache */
-	if (MN_AbstractScrollableNodeIsSizeChange(node)) {
+	if (UI_AbstractScrollableNodeIsSizeChange(node)) {
 		/* recompute all line size */
 		message = cp_messageStack;
 		while (message) {
-			message->lineUsed = MN_MessageGetLines(node, message, font, width);
+			message->lineUsed = UI_MessageGetLines(node, message, font, width);
 			lineNumber += message->lineUsed;
 			message = message->next;
 		}
@@ -208,7 +208,7 @@ static void MN_MessageListNodeDraw (uiNode_t *node)
 		message = cp_messageStack;
 		while (message) {
 			if (message->lineUsed == 0)
-				message->lineUsed = MN_MessageGetLines(node, message, font, width);
+				message->lineUsed = UI_MessageGetLines(node, message, font, width);
 			lineNumber += message->lineUsed;
 			message = message->next;
 		}
@@ -217,11 +217,11 @@ static void MN_MessageListNodeDraw (uiNode_t *node)
 	/* update scroll status */
 #ifdef AUTOSCROLL
 	if (autoscroll)
-		MN_AbstractScrollableNodeSetY(node, lineNumber, node->size[1] / defaultHeight, lineNumber);
+		UI_AbstractScrollableNodeSetY(node, lineNumber, node->size[1] / defaultHeight, lineNumber);
 	else
-		MN_AbstractScrollableNodeSetY(node, -1, node->size[1] / defaultHeight, lineNumber);
+		UI_AbstractScrollableNodeSetY(node, -1, node->size[1] / defaultHeight, lineNumber);
 #else
-	MN_AbstractScrollableNodeSetY(node, -1, node->size[1] / defaultHeight, lineNumber);
+	UI_AbstractScrollableNodeSetY(node, -1, node->size[1] / defaultHeight, lineNumber);
 #endif
 
 	/* found the first message we must display */
@@ -239,26 +239,26 @@ static void MN_MessageListNodeDraw (uiNode_t *node)
 	lastDate = NULL;
 	screenLines = posY;
 	while (message) {
-		MN_MessageDraw(node, message, font, x, y, width, height, &screenLines);
+		UI_MessageDraw(node, message, font, x, y, width, height, &screenLines);
 		if (screenLines >= EXTRADATA(node).scrollY.viewSize)
 			break;
 		message = message->next;
 	}
 }
 
-static void MN_MessageListNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_MessageListNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
 {
-	MN_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
+	UI_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
 	if (node->onWheelUp && !down)
-		MN_ExecuteEventActions(node, node->onWheelUp);
+		UI_ExecuteEventActions(node, node->onWheelUp);
 	if (node->onWheelDown && down)
-		MN_ExecuteEventActions(node, node->onWheelDown);
+		UI_ExecuteEventActions(node, node->onWheelDown);
 	if (node->onWheel)
-		MN_ExecuteEventActions(node, node->onWheel);
+		UI_ExecuteEventActions(node, node->onWheel);
 }
 
 #ifdef DEBUG
-static void MN_MessageDebugUseAllIcons_f (void)
+static void UI_MessageDebugUseAllIcons_f (void)
 {
 	message_t *message;
 	int i = 0;
@@ -272,13 +272,13 @@ static void MN_MessageDebugUseAllIcons_f (void)
 }
 #endif
 
-void MN_RegisterMessageListNode (uiBehaviour_t *behaviour)
+void UI_RegisterMessageListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "messagelist";
 	behaviour->extends = "abstractscrollable";
-	behaviour->draw = MN_MessageListNodeDraw;
-	behaviour->mouseWheel = MN_MessageListNodeMouseWheel;
+	behaviour->draw = UI_MessageListNodeDraw;
+	behaviour->mouseWheel = UI_MessageListNodeMouseWheel;
 #ifdef DEBUG
-	Cmd_AddCommand("debug_mn_message_useallicons", MN_MessageDebugUseAllIcons_f, "Update message to use all icons");
+	Cmd_AddCommand("debug_mn_message_useallicons", UI_MessageDebugUseAllIcons_f, "Update message to use all icons");
 #endif
 }

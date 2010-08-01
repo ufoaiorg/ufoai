@@ -35,21 +35,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_game.h"
 #include "../../renderer/r_draw.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, modelExtraData_t)
+#define EXTRADATA(node) UI_EXTRADATA(node, modelExtraData_t)
 
 /**
  * @brief Draw an item node
  */
-static void MN_ItemNodeDraw (uiNode_t *node)
+static void UI_ItemNodeDraw (uiNode_t *node)
 {
 	const objDef_t *od;
-	const char* ref = MN_GetReferenceString(node, EXTRADATA(node).model);
+	const char* ref = UI_GetReferenceString(node, EXTRADATA(node).model);
 	vec2_t pos;
 
 	if (!ref || ref[0] == '\0')
 		return;
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 	R_CleanupDepthBuffer(pos[0], pos[1], node->size[0], node->size[1]);
 
 	od = INVSH_GetItemByIDSilent(ref);
@@ -61,15 +61,15 @@ static void MN_ItemNodeDraw (uiNode_t *node)
 
 		if (EXTRADATA(node).containerLike || INV_IsArmour(item.t)) {
 			/* We position the model of the item ourself (in the middle of the item
-			 * node). See the "-1, -1" parameter of MN_DrawItem. */
-			MN_GetNodeAbsPos(node, pos);
+			 * node). See the "-1, -1" parameter of UI_DrawItem. */
+			UI_GetNodeAbsPos(node, pos);
 			pos[0] += node->size[0] / 2.0;
 			pos[1] += node->size[1] / 2.0;
 			pos[2] = 0;
 			/** @todo we should not use DrawItem but draw the image with render function (remove dependency with container) */
-			MN_DrawItem(node, pos, &item, -1, -1, EXTRADATA(node).scale, color);
+			UI_DrawItem(node, pos, &item, -1, -1, EXTRADATA(node).scale, color);
 		} else {
-			MN_DrawModelNode(node, GAME_GetModelForItem(item.t, NULL));
+			UI_DrawModelNode(node, GAME_GetModelForItem(item.t, NULL));
 		}
 	} else {
 		GAME_DisplayItemInfo(node, ref);
@@ -79,15 +79,15 @@ static void MN_ItemNodeDraw (uiNode_t *node)
 /** @brief valid properties for model */
 static const value_t properties[] = {
 	/* Display an item like a container node do it */
-	{"containerlike", V_BOOL, MN_EXTRADATA_OFFSETOF(modelExtraData_t, containerLike), MEMBER_SIZEOF(modelExtraData_t, containerLike)},
+	{"containerlike", V_BOOL, UI_EXTRADATA_OFFSETOF(modelExtraData_t, containerLike), MEMBER_SIZEOF(modelExtraData_t, containerLike)},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterItemNode (uiBehaviour_t *behaviour)
+void UI_RegisterItemNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "item";
 	behaviour->properties = properties;
 	behaviour->extends = "model";
-	behaviour->draw = MN_ItemNodeDraw;
+	behaviour->draw = UI_ItemNodeDraw;
 }

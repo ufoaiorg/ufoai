@@ -369,7 +369,7 @@ static void AB_AlienBaseList_f (void)
 #endif
 
 /**
- * @sa MN_InitStartup
+ * @sa UI_InitStartup
  */
 void AB_InitStartup (void)
 {

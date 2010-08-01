@@ -176,7 +176,7 @@ static void BS_UpdateItem (const base_t *base, int itemNum)
 	int min, max, value;
 
 	if (BS_GetMinMaxValueByItemID(base, itemNum, &min, &max, &value))
-		MN_ExecuteConfunc("buy_updateitem %d %d %d %d", itemNum, value, min, max);
+		UI_ExecuteConfunc("buy_updateitem %d %d %d %d", itemNum, value, min, max);
 }
 
 /**
@@ -203,7 +203,7 @@ static void BS_MarketScroll_f (void)
 
 	/* now update the menu pics */
 	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++) {
-		MN_ExecuteConfunc("buy_autoselli %i", i);
+		UI_ExecuteConfunc("buy_autoselli %i", i);
 	}
 
 	/* get item list */
@@ -214,12 +214,12 @@ static void BS_MarketScroll_f (void)
 			const objDef_t *od = BS_GetObjectDefition(&buyList.l[i]);
 			/* Check whether the item matches the proper filter, storage in current base and market. */
 			if (od && (base->storage.numItems[od->idx] || ccs.eMarket.numItems[od->idx]) && INV_ItemMatchesFilter(od, buyCat)) {
-				MN_ExecuteConfunc("buy_show %i", i - buyList.scroll);
+				UI_ExecuteConfunc("buy_show %i", i - buyList.scroll);
 				BS_UpdateItem(base, i - buyList.scroll);
 				if (ccs.autosell[od->idx])
-					MN_ExecuteConfunc("buy_autoselle %i", i - buyList.scroll);
+					UI_ExecuteConfunc("buy_autoselle %i", i - buyList.scroll);
 				else
-					MN_ExecuteConfunc("buy_autoselld %i", i - buyList.scroll);
+					UI_ExecuteConfunc("buy_autoselld %i", i - buyList.scroll);
 			}
 		}
 	}
@@ -272,7 +272,7 @@ static void BS_MarketClick_f (void)
 	}
 
 	/* update selected element */
-	MN_ExecuteConfunc("buy_selectitem %i", num);
+	UI_ExecuteConfunc("buy_selectitem %i", num);
 }
 
 /**
@@ -325,7 +325,7 @@ static void BS_BuyType (const base_t *base)
 	bsMarketStorage = NULL;
 	bsMarketMarket = NULL;
 	bsMarketPrices = NULL;
-	MN_ResetData(TEXT_ITEMDESCRIPTION);
+	UI_ResetData(TEXT_ITEMDESCRIPTION);
 
 	/* 'normal' items */
 	switch (buyCat) {
@@ -340,8 +340,8 @@ static void BS_BuyType (const base_t *base)
 			assert(tech);
 			if (BS_GetStorageAmountInBase(base, aircraftTemplate->id) + BS_GetAircraftOnMarket(aircraftTemplate) > 0) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-					MN_ExecuteConfunc("buy_autoselli %i", j - buyList.scroll);
-					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
+					UI_ExecuteConfunc("buy_autoselli %i", j - buyList.scroll);
+					UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 				}
 				BS_AddToList(aircraftTemplate->name, BS_GetStorageAmountInBase(base, aircraftTemplate->id),
 						BS_GetAircraftOnMarket(aircraftTemplate), BS_GetAircraftBuyingPrice(aircraftTemplate));
@@ -366,11 +366,11 @@ static void BS_BuyType (const base_t *base)
 			if (od->tech && (base->storage.numItems[i] || ccs.eMarket.numItems[i])
 			 && INV_ItemMatchesFilter(od, FILTER_CRAFTITEM)) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
+					UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 					if (ccs.autosell[i])
-						MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
+						UI_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
 					else
-						MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
+						UI_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
 				}
 				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 				if (j >= MAX_BUYLIST)
@@ -401,7 +401,7 @@ static void BS_BuyType (const base_t *base)
 					continue;
 
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
+					UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 				}
 
 				/** @todo use the market to get the price */
@@ -430,11 +430,11 @@ static void BS_BuyType (const base_t *base)
 				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 				/* Set state of Autosell button. */
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
+					UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 					if (ccs.autosell[i])
-						MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
+						UI_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
 					else
-						MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
+						UI_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
 				}
 
 				if (j >= MAX_BUYLIST)
@@ -460,11 +460,11 @@ static void BS_BuyType (const base_t *base)
 					BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 					/* Set state of Autosell button. */
 					if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-						MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
+						UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 						if (ccs.autosell[i])
-							MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
+							UI_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
 						else
-							MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
+							UI_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
 					}
 
 					if (j >= MAX_BUYLIST)
@@ -483,8 +483,8 @@ static void BS_BuyType (const base_t *base)
 
 	for (; j < MAX_MARKET_MENU_ENTRIES; j++) {
 		/* Hide the rest of the entries. */
-		MN_ExecuteConfunc("buy_autoselli %i", j);
-		MN_ExecuteConfunc("buy_hide %i", j);
+		UI_ExecuteConfunc("buy_autoselli %i", j);
+		UI_ExecuteConfunc("buy_hide %i", j);
 	}
 
 	/* Update some menu cvars. */
@@ -530,10 +530,10 @@ static void BS_BuyType (const base_t *base)
 		INV_ItemDescription(NULL);
 	}
 
-	MN_RegisterLinkedListText(TEXT_MARKET_NAMES, bsMarketNames);
-	MN_RegisterLinkedListText(TEXT_MARKET_STORAGE, bsMarketStorage);
-	MN_RegisterLinkedListText(TEXT_MARKET_MARKET, bsMarketMarket);
-	MN_RegisterLinkedListText(TEXT_MARKET_PRICES, bsMarketPrices);
+	UI_RegisterLinkedListText(TEXT_MARKET_NAMES, bsMarketNames);
+	UI_RegisterLinkedListText(TEXT_MARKET_STORAGE, bsMarketStorage);
+	UI_RegisterLinkedListText(TEXT_MARKET_MARKET, bsMarketMarket);
+	UI_RegisterLinkedListText(TEXT_MARKET_PRICES, bsMarketPrices);
 }
 
 /**
@@ -562,9 +562,9 @@ static void BS_BuyType_f (void)
 
 	BS_BuyType(base);
 	buyList.scroll = 0;
-	MN_ExecuteConfunc("sync_market_scroll 0 %d", buyList.scroll);
-	MN_ExecuteConfunc("market_scroll %d", buyList.scroll);
-	MN_ExecuteConfunc("market_click 0");
+	UI_ExecuteConfunc("sync_market_scroll 0 %d", buyList.scroll);
+	UI_ExecuteConfunc("market_scroll %d", buyList.scroll);
+	UI_ExecuteConfunc("market_click 0");
 }
 
 /**
@@ -592,12 +592,12 @@ static void BS_BuyAircraft_f (void)
 	if (buyCat == FILTER_AIRCRAFT) {
 		/* We cannot buy aircraft if there is no power in our base. */
 		if (!B_GetBuildingStatus(base, B_POWER)) {
-			MN_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
+			UI_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
 			return;
 		}
 		/* We cannot buy aircraft without any hangar. */
 		if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-			MN_Popup(_("Note"), _("Build a hangar first."));
+			UI_Popup(_("Note"), _("Build a hangar first."));
 			return;
 		}
 		aircraftTemplate = buyList.l[num].aircraft;
@@ -610,12 +610,12 @@ static void BS_BuyAircraft_f (void)
 		}
 
 		if (freeSpace == 0) {
-			MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough space in hangars.\n"));
+			UI_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough space in hangars.\n"));
 			return;
 		} else {
 			const int price = BS_GetAircraftBuyingPrice(aircraftTemplate);
 			if (ccs.credits < price) {
-				MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough credits.\n"));
+				UI_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough credits.\n"));
 				return;
 			} else {
 				/* Hangar capacities are being updated in AIR_NewAircraft().*/
@@ -703,9 +703,9 @@ static void BS_SellAircraft_f (void)
 			BS_BuyType(base);
 		} else {
 			if (teamNote)
-				MN_Popup(_("Note"), _("You can't sell an aircraft if it still has a team assigned"));
+				UI_Popup(_("Note"), _("You can't sell an aircraft if it still has a team assigned"));
 			else if (aircraftOutNote)
-				MN_Popup(_("Note"), _("You can't sell an aircraft that is not in base"));
+				UI_Popup(_("Note"), _("You can't sell an aircraft that is not in base"));
 			else
 				Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: There are no aircraft available (with no team assigned) for selling\n");
 		}
@@ -741,7 +741,7 @@ static void BS_BuyItem_f (void)
 	if (num < 0 || num >= buyList.length)
 		return;
 
-	MN_ExecuteConfunc("buy_selectitem %i", num + buyList.scroll);
+	UI_ExecuteConfunc("buy_selectitem %i", num + buyList.scroll);
 
 	if (buyCat == FILTER_UGVITEM && buyList.l[num + buyList.scroll].ugv) {
 		/* The list entry is an actual ugv/robot */
@@ -762,7 +762,7 @@ static void BS_BuyItem_f (void)
 
 			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur <
 				UGV_SIZE + ugvWeapon->size) {
-				MN_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
+				UI_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
 				ugvWeaponBuyable = qfalse;
 			}
 
@@ -821,7 +821,7 @@ static void BS_SellItem_f (void)
 	if (num < 0 || num >= buyList.length)
 		return;
 
-	MN_ExecuteConfunc("buy_selectitem %i", num + buyList.scroll);
+	UI_ExecuteConfunc("buy_selectitem %i", num + buyList.scroll);
 	if (buyCat == FILTER_UGVITEM && buyList.l[num + buyList.scroll].ugv) {
 		employee_t *employee;
 		/* The list entry is an actual ugv/robot */

@@ -312,9 +312,9 @@ void CP_EndCampaign (qboolean won)
 	Cmd_ExecuteString("game_exit");
 
 	if (won)
-		MN_InitStack("endgame", NULL, qtrue, qtrue);
+		UI_InitStack("endgame", NULL, qtrue, qtrue);
 	else
-		MN_InitStack("lostgame", NULL, qtrue, qtrue);
+		UI_InitStack("lostgame", NULL, qtrue, qtrue);
 
 	Com_Drop();
 }
@@ -332,7 +332,7 @@ void CP_CheckLostCondition (void)
 		return;
 
 	if (!endCampaign && ccs.credits < -ccs.curCampaign->negativeCreditsUntilLost) {
-		MN_RegisterText(TEXT_STANDARD, _("You've gone too far into debt."));
+		UI_RegisterText(TEXT_STANDARD, _("You've gone too far into debt."));
 		endCampaign = qtrue;
 	}
 
@@ -340,13 +340,13 @@ void CP_CheckLostCondition (void)
 	 * until he has set up a base again, the aliens might have invaded the whole
 	 * world ;) - i mean, removing the credits check here. */
 	if (!ccs.numBases && ccs.credits < ccs.curCampaign->basecost - ccs.curCampaign->negativeCreditsUntilLost) {
-		MN_RegisterText(TEXT_STANDARD, _("You've lost your bases and don't have enough money to build new ones."));
+		UI_RegisterText(TEXT_STANDARD, _("You've lost your bases and don't have enough money to build new ones."));
 		endCampaign = qtrue;
 	}
 
 	if (!endCampaign) {
 		if (CP_GetAverageXVIRate() > ccs.curCampaign->maxAllowedXVIRateUntilLost) {
-			MN_RegisterText(TEXT_STANDARD, _("You have failed in your charter to protect Earth."
+			UI_RegisterText(TEXT_STANDARD, _("You have failed in your charter to protect Earth."
 				" Our home and our people have fallen to the alien infection. Only a handful"
 				" of people on Earth remain human, and the remaining few no longer have a"
 				" chance to stem the tide. Your command is no more; PHALANX is no longer"
@@ -364,7 +364,7 @@ void CP_CheckLostCondition (void)
 			}
 			if (nationBelowLimit >= nationBelowLimitPercentage * ccs.numNations) {
 				/* lost the game */
-				MN_RegisterText(TEXT_STANDARD, _("Under your command, PHALANX operations have"
+				UI_RegisterText(TEXT_STANDARD, _("Under your command, PHALANX operations have"
 					" consistently failed to protect nations."
 					" The UN, highly unsatisfied with your performance, has decided to remove"
 					" you from command and subsequently disbands the PHALANX project as an"
@@ -604,7 +604,7 @@ static void CL_CampaignFunctionPeriodicCall (int dt, qboolean updateRadarOverlay
 
 qboolean CP_OnGeoscape (void)
 {
-	return !strcmp("geoscape", MN_GetActiveWindowName());
+	return !strcmp("geoscape", UI_GetActiveWindowName());
 }
 
 /**
@@ -617,7 +617,7 @@ const int DETECTION_INTERVAL = (SECONDS_PER_HOUR / 2);
 
 /**
  * @brief Called every frame when we are in geoscape view
- * @note Called for node types MN_MAP and MN_3DMAP
+ * @note Called for node types UI_MAP and UI_3DMAP
  * @sa CP_NationHandleBudget
  * @sa B_UpdateBaseData
  * @sa CL_CampaignRunAircraft
@@ -1248,7 +1248,7 @@ void CL_GameAutoGo (mission_t *mis)
 		winProbability = CP_GetWinProbabilty(mis, (base_t *)mis->data, NULL);
 	}
 
-	MN_PopWindow(qfalse);
+	UI_PopWindow(qfalse);
 
 	won = frand() < winProbability;
 
@@ -1277,7 +1277,7 @@ void CL_GameAutoGo (mission_t *mis)
 		ccs.missionResults.ownSurvived = AIR_GetTeamSize(aircraft);
 		CP_InitMissionResults(won);
 		Cvar_SetValue("mn_autogo", 1);
-		MN_PushWindow("won", NULL);
+		UI_PushWindow("won", NULL);
 	}
 
 	/* handle base attack mission */
@@ -1319,7 +1319,7 @@ void CP_InitMissionResults (qboolean won)
 {
 	static char resultText[1024];
 	/* init result text */
-	MN_RegisterText(TEXT_STANDARD, resultText);
+	UI_RegisterText(TEXT_STANDARD, resultText);
 
 	/* needs to be cleared and then append to it */
 	Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), ccs.missionResults.aliensKilled);
@@ -1637,7 +1637,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	CP_XVIInit();
 
-	MN_InitStack("geoscape", "campaign_main", qtrue, qtrue);
+	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
 	if (load) {
 		/** @todo this should be called in this function for new campaigns too but as researched items

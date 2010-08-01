@@ -1007,7 +1007,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
  * @note This function is called for listen servers, too. This loads the bsp
  * struct for rendering it. The @c CM_LoadMap code only loads the collision
  * and pathfinding stuff.
- * @sa MN_BuildRadarImageList
+ * @sa UI_BuildRadarImageList
  */
 void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const char *mapName)
 {

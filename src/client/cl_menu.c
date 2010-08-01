@@ -53,7 +53,7 @@ static void CLMN_InitKeyList_f (void)
 		if (battleKeyBindings[i] && battleKeyBindings[i][0])
 			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(battleKeyBindings[i])), sizeof(keylist));
 
-	MN_RegisterText(TEXT_LIST, keylist);
+	UI_RegisterText(TEXT_LIST, keylist);
 }
 
 /**
@@ -67,5 +67,5 @@ void CLMN_InitStartup (void)
 	/* print the keyBindings to mn.menuText */
 	Cmd_AddCommand("mn_init_keylist", CLMN_InitKeyList_f, NULL);
 
-	MN_Init();
+	UI_Init();
 }

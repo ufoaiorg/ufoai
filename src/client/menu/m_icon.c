@@ -64,26 +64,26 @@ const value_t mn_iconProperties[] = {
  * @param name Name of the icon
  * @return An icon, else NULL
  */
-static uiIcon_t* MN_AutoGenerateIcon (const char* name)
+static uiIcon_t* UI_AutoGenerateIcon (const char* name)
 {
 	uiIcon_t* icon = NULL;
 	const char* suffix[ICON_STATUS_MAX] = {"", "_hovered", "_disabled", "_clicked"};
 	int i;
 
 	const char *picName = va("icons/%s", name);
-	const image_t *pic = MN_LoadImage(picName);
+	const image_t *pic = UI_LoadImage(picName);
 	if (pic == NULL)
 		return NULL;
 
-	icon = MN_AllocStaticIcon(name);
-	icon->image[ICON_STATUS_NORMAL] = MN_AllocStaticString(picName, 0);
+	icon = UI_AllocStaticIcon(name);
+	icon->image[ICON_STATUS_NORMAL] = UI_AllocStaticString(picName, 0);
 	icon->size[0] = pic->width;
 	icon->size[1] = pic->height;
 	for (i = 1; i < ICON_STATUS_MAX; i++) {
 		picName = va("icons/%s%s", name, suffix[i]);
-		pic = MN_LoadImage(picName);
+		pic = UI_LoadImage(picName);
 		if (pic != NULL)
-			icon->image[i] = MN_AllocStaticString(picName, 0);
+			icon->image[i] = UI_AllocStaticString(picName, 0);
 	}
 	return icon;
 }
@@ -95,7 +95,7 @@ static uiIcon_t* MN_AutoGenerateIcon (const char* name)
  * @return True if the icon exists
  * @note not very fast; if we use it often we should improve the search
  */
-static qboolean MN_IconExists (const char* name)
+static qboolean UI_IconExists (const char* name)
 {
 	int i;
 	for (i = 0; i < mn.numIcons; i++) {
@@ -113,7 +113,7 @@ static qboolean MN_IconExists (const char* name)
  * @return The requested icon, else NULL
  * @note not very fast; if we use it often we should improve the search
  */
-uiIcon_t* MN_GetIconByName (const char* name)
+uiIcon_t* UI_GetIconByName (const char* name)
 {
 	int i;
 	for (i = 0; i < mn.numIcons; i++) {
@@ -121,7 +121,7 @@ uiIcon_t* MN_GetIconByName (const char* name)
 			continue;
 		return &mn.icons[i];
 	}
-	return MN_AutoGenerateIcon(name);
+	return UI_AutoGenerateIcon(name);
 }
 
 /**
@@ -130,15 +130,15 @@ uiIcon_t* MN_GetIconByName (const char* name)
  * @param[in] name Name of the icon
  * @todo Assert out when we are not in parsing/loading stage
  */
-uiIcon_t* MN_AllocStaticIcon (const char* name)
+uiIcon_t* UI_AllocStaticIcon (const char* name)
 {
 	uiIcon_t* result;
 	/** @todo understand why we must hide this assert in release build with mingw */
 #ifdef DEBUG
-	assert(!MN_IconExists(name));
+	assert(!UI_IconExists(name));
 #endif
 	if (mn.numIcons >= MAX_MENUICONS)
-		Com_Error(ERR_FATAL, "MN_AllocStaticIcon: MAX_MENUICONS hit");
+		Com_Error(ERR_FATAL, "UI_AllocStaticIcon: MAX_MENUICONS hit");
 
 	result = &mn.icons[mn.numIcons];
 	mn.numIcons++;
@@ -157,7 +157,7 @@ uiIcon_t* MN_AllocStaticIcon (const char* name)
  * @param[in] sizeY Height of the bounded box
  * @todo use named const for status
  */
-void MN_DrawIconInBox (const uiIcon_t* icon, uiIconStatus_t status, int posX, int posY, int sizeX, int sizeY)
+void UI_DrawIconInBox (const uiIcon_t* icon, uiIconStatus_t status, int posX, int posY, int sizeX, int sizeY)
 {
 	int texX;
 	int texY;
@@ -198,7 +198,7 @@ void MN_DrawIconInBox (const uiIcon_t* icon, uiIconStatus_t status, int posX, in
 		R_Color(color);
 	}
 
-	MN_DrawNormImageByName(posX, posY, icon->size[0], icon->size[1],
+	UI_DrawNormImageByName(posX, posY, icon->size[0], icon->size[1],
 		texX + icon->size[0], texY + icon->size[1], texX, texY, image);
 	if (icon->blend)
 		R_Color(NULL);

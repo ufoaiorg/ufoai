@@ -43,12 +43,12 @@ static char popupAction3[MAX_SMALLMENUTEXTLEN];
  * @note Only use static strings here - or use popupText if you really have to
  * build the string
  */
-void MN_Popup (const char *title, const char *text)
+void UI_Popup (const char *title, const char *text)
 {
 	Cvar_Set("mn_sys_popup_title", title);
-	MN_RegisterText(TEXT_POPUP_INFO, text);
-	if (!MN_IsWindowOnStack(POPUP_MENU_NAME))
-		MN_PushWindow(POPUP_MENU_NAME, NULL);
+	UI_RegisterText(TEXT_POPUP_INFO, text);
+	if (!UI_IsWindowOnStack(POPUP_MENU_NAME))
+		UI_PushWindow(POPUP_MENU_NAME, NULL);
 }
 
 /**
@@ -58,22 +58,22 @@ void MN_Popup (const char *title, const char *text)
  * @param[in] entries List of the selectables choices.
  * @param[in] clickAction Action to perform when one clicked on the popup.
  */
-uiNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t* entries, const char *clickAction)
+uiNode_t *UI_PopupList (const char *title, const char *headline, linkedList_t* entries, const char *clickAction)
 {
 	uiNode_t* popupListMenu;
 	uiNode_t* listNode;
 
 	Cvar_Set("mn_sys_popup_title", title);
-	MN_RegisterText(TEXT_POPUP_INFO, headline);
+	UI_RegisterText(TEXT_POPUP_INFO, headline);
 
 	/* make sure, that we are using the linked list */
-	MN_ResetData(TEXT_LIST);
-	MN_RegisterLinkedListText(TEXT_LIST, entries);
+	UI_ResetData(TEXT_LIST);
+	UI_RegisterLinkedListText(TEXT_LIST, entries);
 
-	popupListMenu = MN_GetWindow(POPUPLIST_MENU_NAME);
+	popupListMenu = UI_GetWindow(POPUPLIST_MENU_NAME);
 	if (!popupListMenu)
 		Com_Error(ERR_FATAL, "Could not get "POPUPLIST_MENU_NAME" menu");
-	listNode = MN_GetNode(popupListMenu, POPUPLIST_NODE_NAME);
+	listNode = UI_GetNode(popupListMenu, POPUPLIST_NODE_NAME);
 	if (!listNode)
 		Com_Error(ERR_FATAL, "Could not get "POPUPLIST_NODE_NAME" node in "POPUPLIST_MENU_NAME" menu");
 
@@ -86,13 +86,13 @@ uiNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t* e
 	}
 
 	if (clickAction) {
-		MN_PoolAllocAction(&listNode->onClick, EA_CMD, clickAction);
+		UI_PoolAllocAction(&listNode->onClick, EA_CMD, clickAction);
 	} else {
 		listNode->onClick = NULL;
 	}
 
-	if (!MN_IsWindowOnStack(popupListMenu->name))
-		MN_PushWindow(popupListMenu->name, NULL);
+	if (!UI_IsWindowOnStack(popupListMenu->name))
+		UI_PushWindow(popupListMenu->name, NULL);
 	return listNode;
 }
 
@@ -103,11 +103,11 @@ uiNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t* e
  * @param[in] clickAction Action to perform when button is clicked.
  * @note clickAction may be NULL if button is not needed.
  */
-static void MN_SetOneButton (uiNode_t* menu, const char *button, const char *clickAction)
+static void UI_SetOneButton (uiNode_t* menu, const char *button, const char *clickAction)
 {
 	uiNode_t* buttonNode;
 
-	buttonNode = MN_GetNode(menu, button);
+	buttonNode = UI_GetNode(menu, button);
 	if (!buttonNode)
 		Com_Error(ERR_FATAL, "Could not get %s node in %s menu", button, menu->name);
 
@@ -120,7 +120,7 @@ static void MN_SetOneButton (uiNode_t* menu, const char *button, const char *cli
 	}
 
 	if (clickAction) {
-		MN_PoolAllocAction(&buttonNode->onClick, EA_CMD, clickAction);
+		UI_PoolAllocAction(&buttonNode->onClick, EA_CMD, clickAction);
 		buttonNode->invis = qfalse;
 	} else {
 		buttonNode->onClick = NULL;
@@ -143,7 +143,7 @@ static void MN_SetOneButton (uiNode_t* menu, const char *button, const char *cli
  * @param[in] tooltip3 Tooltip of third button.
  * @note clickAction AND clickText must be NULL if button should be invisible.
  */
-void MN_PopupButton (const char *title, const char *text,
+void UI_PopupButton (const char *title, const char *text,
 	const char *clickAction1, const char *clickText1, const char *tooltip1,
 	const char *clickAction2, const char *clickText2, const char *tooltip2,
 	const char *clickAction3, const char *clickText3, const char *tooltip3)
@@ -152,42 +152,42 @@ void MN_PopupButton (const char *title, const char *text,
 
 	Cvar_Set("mn_sys_popup_title", title);
 	if (text)
-		MN_RegisterText(TEXT_POPUP_INFO, text);
+		UI_RegisterText(TEXT_POPUP_INFO, text);
 	else
-		MN_RegisterText(TEXT_POPUP_INFO, popupText);
+		UI_RegisterText(TEXT_POPUP_INFO, popupText);
 
-	popupButtonMenu = MN_GetWindow(POPUPBUTTON_MENU_NAME);
+	popupButtonMenu = UI_GetWindow(POPUPBUTTON_MENU_NAME);
 	if (!popupButtonMenu)
 		Com_Error(ERR_FATAL, "Could not get "POPUPBUTTON_MENU_NAME" menu");
 
 	Cvar_Set("mn_sys_popup_button_text1", clickText1);
 	Cvar_Set("mn_sys_popup_button_tooltip1", tooltip1);
 	if (!clickAction1 && !clickText1) {
-		MN_SetOneButton(popupButtonMenu, va("%s1", POPUPBUTTON_NODE_NAME),
+		UI_SetOneButton(popupButtonMenu, va("%s1", POPUPBUTTON_NODE_NAME),
 			NULL);
 	} else {
-		MN_SetOneButton(popupButtonMenu, va("%s1", POPUPBUTTON_NODE_NAME),
+		UI_SetOneButton(popupButtonMenu, va("%s1", POPUPBUTTON_NODE_NAME),
 			clickAction1 ? clickAction1 : popupAction1);
 	}
 
 	Cvar_Set("mn_sys_popup_button_text2", clickText2);
 	Cvar_Set("mn_sys_popup_button_tooltip2", tooltip2);
 	if (!clickAction2 && !clickText2) {
-		MN_SetOneButton(popupButtonMenu, va("%s2", POPUPBUTTON_NODE_NAME), NULL);
+		UI_SetOneButton(popupButtonMenu, va("%s2", POPUPBUTTON_NODE_NAME), NULL);
 	} else {
-		MN_SetOneButton(popupButtonMenu, va("%s2", POPUPBUTTON_NODE_NAME),
+		UI_SetOneButton(popupButtonMenu, va("%s2", POPUPBUTTON_NODE_NAME),
 			clickAction2 ? clickAction2 : popupAction2);
 	}
 
 	Cvar_Set("mn_sys_popup_button_text3", clickText3);
 	Cvar_Set("mn_sys_popup_button_tooltip3", tooltip3);
 	if (!clickAction3 && !clickText3) {
-		MN_SetOneButton(popupButtonMenu, va("%s3", POPUPBUTTON_NODE_NAME), NULL);
+		UI_SetOneButton(popupButtonMenu, va("%s3", POPUPBUTTON_NODE_NAME), NULL);
 	} else {
-		MN_SetOneButton(popupButtonMenu, va("%s3", POPUPBUTTON_NODE_NAME),
+		UI_SetOneButton(popupButtonMenu, va("%s3", POPUPBUTTON_NODE_NAME),
 			clickAction3 ? clickAction3 : popupAction3);
 	}
 
-	if (!MN_IsWindowOnStack(popupButtonMenu->name))
-		MN_PushWindow(popupButtonMenu->name, NULL);
+	if (!UI_IsWindowOnStack(popupButtonMenu->name))
+		UI_PushWindow(popupButtonMenu->name, NULL);
 }

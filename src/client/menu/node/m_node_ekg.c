@@ -32,21 +32,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 
 #define EXTRADATA_TYPE ekgExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
-static void MN_EKGNodeDraw (uiNode_t *node)
+static void UI_EKGNodeDraw (uiNode_t *node)
 {
 	vec2_t size;
 	vec2_t nodepos;
 	const image_t *image;
 
-	const char* imageName = MN_GetReferenceString(node, node->image);
+	const char* imageName = UI_GetReferenceString(node, node->image);
 	if (!imageName || imageName[0] == '\0')
 		return;
 
-	MN_GetNodeAbsPos(node, nodepos);
+	UI_GetNodeAbsPos(node, nodepos);
 
-	image = MN_LoadImage(imageName);
+	image = UI_LoadImage(imageName);
 	if (image) {
 		const int ekgHeight = node->size[1];
 		const int ekgWidth = image->width;
@@ -94,7 +94,7 @@ static void MN_EKGNodeDraw (uiNode_t *node)
 				Vector2Copy(node->size, size);
 			}
 		}
-		MN_DrawNormImage(nodepos[0], nodepos[1], size[0], size[1],
+		UI_DrawNormImage(nodepos[0], nodepos[1], size[0], size[1],
 				EXTRADATA(node).super.texh[0], EXTRADATA(node).super.texh[1], EXTRADATA(node).super.texl[0], EXTRADATA(node).super.texl[1], image);
 	}
 }
@@ -102,7 +102,7 @@ static void MN_EKGNodeDraw (uiNode_t *node)
 /**
  * @brief Called at the begin of the load from script
  */
-static void MN_EKGNodeLoading (uiNode_t *node)
+static void UI_EKGNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).scaleCvarValue = 1.0f;
 	EXTRADATA(node).scrollSpeed= 0.07f;
@@ -110,19 +110,19 @@ static void MN_EKGNodeLoading (uiNode_t *node)
 
 static const value_t properties[] = {
 	/* @todo Need documentation */
-	{"scrollspeed", V_FLOAT, MN_EXTRADATA_OFFSETOF(ekgExtraData_t, scrollSpeed), MEMBER_SIZEOF(ekgExtraData_t, scrollSpeed)},
+	{"scrollspeed", V_FLOAT, UI_EXTRADATA_OFFSETOF(ekgExtraData_t, scrollSpeed), MEMBER_SIZEOF(ekgExtraData_t, scrollSpeed)},
 	/* @todo Need documentation */
-	{"scale", V_FLOAT, MN_EXTRADATA_OFFSETOF(ekgExtraData_t, scaleCvarValue), MEMBER_SIZEOF(ekgExtraData_t, scaleCvarValue)},
+	{"scale", V_FLOAT, UI_EXTRADATA_OFFSETOF(ekgExtraData_t, scaleCvarValue), MEMBER_SIZEOF(ekgExtraData_t, scaleCvarValue)},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterEKGNode (uiBehaviour_t* behaviour)
+void UI_RegisterEKGNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "ekg";
-	behaviour->loading = MN_EKGNodeLoading;
+	behaviour->loading = UI_EKGNodeLoading;
 	behaviour->extends = "image";
-	behaviour->draw = MN_EKGNodeDraw;
+	behaviour->draw = UI_EKGNodeDraw;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

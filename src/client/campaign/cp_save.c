@@ -228,7 +228,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 	mxmlDelete(topNode);
 
-	MN_InitStack("geoscape", NULL, qtrue, qtrue);
+	UI_InitStack("geoscape", NULL, qtrue, qtrue);
 	return qtrue;
 }
 
@@ -372,7 +372,7 @@ static void SAV_GameSave_f (void)
 			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error saving game."), error);
 		else
 			Com_sprintf(popupText, sizeof(popupText), "%s\n", _("Error saving game."));
-		MN_Popup(_("Note"), popupText);
+		UI_Popup(_("Note"), popupText);
 	}
 }
 
@@ -394,7 +394,7 @@ static void SAV_GameReadGameComment (const int idx)
 		if (!SAV_VerifyHeader(&header))
 			Com_Printf("Savegame header for slot%d is corrupted!\n", idx);
 		else
-			MN_ExecuteConfunc("update_save_game_info %i \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate);
+			UI_ExecuteConfunc("update_save_game_info %i \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate);
 
 		FS_CloseFile(&f);
 	}
@@ -416,7 +416,7 @@ static void SAV_GameReadGameComments_f (void)
 	if (Cmd_Argc() == 2) {
 		/* checks whether we plan to save without a running game */
 		if (!CP_IsRunning() && !strncmp(Cmd_Argv(1), "save", 4)) {
-			MN_PopWindow(qfalse);
+			UI_PopWindow(qfalse);
 			return;
 		}
 	}
@@ -460,7 +460,7 @@ static void SAV_GameLoad_f (void)
 	if (!SAV_GameLoad(Cmd_Argv(1), &error)) {
 		Cbuf_Execute(); /* wipe outstanding campaign commands */
 		Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
-		MN_Popup(_("Error"), popupText);
+		UI_Popup(_("Error"), popupText);
 		Cmd_ExecuteString("game_exit");
 	}
 }
@@ -475,7 +475,7 @@ static void SAV_GameContinue_f (void)
 	char *error = NULL;
 
 	if (CL_OnBattlescape()) {
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 		return;
 	}
 
@@ -484,12 +484,12 @@ static void SAV_GameContinue_f (void)
 		if (!SAV_GameLoad(cl_lastsave->string, &error)) {
 			Cbuf_Execute(); /* wipe outstanding campaign commands */
 			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
-			MN_Popup(_("Error"), popupText);
+			UI_Popup(_("Error"), popupText);
 			Cmd_ExecuteString("game_exit");
 		}
 	} else {
 		/* just continue the current running game */
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 	}
 }
 
@@ -576,7 +576,7 @@ static void SAV_GameQuickLoadInit_f (void)
 
 	FS_OpenFile(va("save/slotquick.%s", SAVEGAME_EXTENSION), &f, FILE_READ);
 	if (f.f || f.z) {
-		MN_PushWindow("quickload", NULL);
+		UI_PushWindow("quickload", NULL);
 		FS_CloseFile(&f);
 	}
 }
@@ -612,7 +612,7 @@ static void SAV_GameQuickLoad_f (void)
 	if (!SAV_GameLoad("slotquick", &error)) {
 		Cbuf_Execute(); /* wipe outstanding campaign commands */
 		Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
-		MN_Popup(_("Error"), popupText);
+		UI_Popup(_("Error"), popupText);
 	} else {
 		MS_AddNewMessage(_("Campaign loaded"), _("Quicksave campaign was successfully loaded."), qfalse, MSG_INFO, NULL);
 		Cmd_ExecuteString("check_baseattacks");

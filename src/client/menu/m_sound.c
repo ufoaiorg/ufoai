@@ -32,7 +32,7 @@ cvar_t *mn_sounds;
  * @brief Plays a ui sound
  * @param soundFile Sound file relative to sound/gui
  */
-void MN_PlaySound (const char *soundFile)
+void UI_PlaySound (const char *soundFile)
 {
 	if (mn_sounds->integer)
 		S_StartLocalSample(va("gui/%s", soundFile), SND_VOLUME_DEFAULT);

@@ -188,11 +188,11 @@ static void PR_UpdateProductionList (const base_t* base)
 	}
 
 	/* bind the menu text to our static char array */
-	MN_RegisterLinkedListText(TEXT_PRODUCTION_LIST, productionList);
+	UI_RegisterLinkedListText(TEXT_PRODUCTION_LIST, productionList);
 	/* bind the amount of available items */
-	MN_RegisterLinkedListText(TEXT_PRODUCTION_AMOUNT, productionAmount);
+	UI_RegisterLinkedListText(TEXT_PRODUCTION_AMOUNT, productionAmount);
 	/* bind the amount of queued items */
-	MN_RegisterLinkedListText(TEXT_PRODUCTION_QUEUED, productionQueued);
+	UI_RegisterLinkedListText(TEXT_PRODUCTION_QUEUED, productionQueued);
 }
 
 /**
@@ -229,7 +229,7 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, const
 		Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size), sizeof(productionInfo));
 		Cvar_Set("mn_item", od->id);
 	}
-	MN_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
+	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 }
 
 /**
@@ -270,7 +270,7 @@ static void PR_DisassemblyInfo (const base_t *base, const storedUFO_t *ufo, floa
 
 		Q_strcat(productionInfo, va("  %s (%i)\n", _(compOd->name), amount), sizeof(productionInfo));
 	}
-	MN_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
+	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	Cvar_Set("mn_item", ufo->id);
 }
 
@@ -296,7 +296,7 @@ static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTempl
 		sizeof(productionInfo));
 	assert(aircraftTemplate->tech);
 	Q_strcat(productionInfo, va(_("Production time\t%ih\n"), time), sizeof(productionInfo));
-	MN_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
+	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	Cvar_Set("mn_item", aircraftTemplate->id);
 }
 
@@ -311,30 +311,30 @@ static void PR_ProductionInfo (const base_t *base)
 {
 	if (selectedProduction) {
 		production_t *prod = selectedProduction;
-		MN_ExecuteConfunc("prod_taskselected");
+		UI_ExecuteConfunc("prod_taskselected");
 		if (prod->aircraft) {
 			PR_AircraftInfo(base, prod->aircraft, prod->percentDone);
-			MN_ExecuteConfunc("amountsetter enable");
+			UI_ExecuteConfunc("amountsetter enable");
 		} else if (prod->item) {
 			PR_ItemProductionInfo(base, prod->item, prod->percentDone);
-			MN_ExecuteConfunc("amountsetter enable");
+			UI_ExecuteConfunc("amountsetter enable");
 		} else if (prod->ufo) {
 			PR_DisassemblyInfo(base, prod->ufo, prod->percentDone);
-			MN_ExecuteConfunc("amountsetter disable");
+			UI_ExecuteConfunc("amountsetter disable");
 		} else {
 			Com_Error(ERR_DROP, "PR_ProductionInfo: Selected production is not item nor aircraft nor ufo.\n");
 		}
 		Cvar_SetValue("mn_production_amount", selectedProduction->amount);
 	} else {
 		if (!(selectedAircraft || selectedItem || selectedDisassembly)) {
-			MN_ExecuteConfunc("prod_nothingselected");
+			UI_ExecuteConfunc("prod_nothingselected");
 			if (produceCategory == FILTER_AIRCRAFT)
-				MN_RegisterText(TEXT_PRODUCTION_INFO, _("No aircraft selected."));
+				UI_RegisterText(TEXT_PRODUCTION_INFO, _("No aircraft selected."));
 			else
-				MN_RegisterText(TEXT_PRODUCTION_INFO, _("No item selected"));
+				UI_RegisterText(TEXT_PRODUCTION_INFO, _("No item selected"));
 			Cvar_Set("mn_item", "");
 		} else {
-			MN_ExecuteConfunc("prod_availableselected");
+			UI_ExecuteConfunc("prod_availableselected");
 			if (selectedAircraft) {
 				PR_AircraftInfo(base, selectedAircraft, 0.0);
 			} else if (selectedItem) {
@@ -550,7 +550,7 @@ static void PR_ProductionType_f (void)
 	}
 	/* update selection index if first entry of actual list was chosen */
 	if (!selectedProduction)
-		MN_ExecuteConfunc("prod_selectline %i", ccs.productions[base->idx].numItems + QUEUE_SPACERS);
+		UI_ExecuteConfunc("prod_selectline %i", ccs.productions[base->idx].numItems + QUEUE_SPACERS);
 
 	/* Update displayed info about selected entry (if any). */
 	PR_ProductionInfo(base);
@@ -625,7 +625,7 @@ static void PR_ProductionIncrease_f (void)
 		if (prod->aircraft) {
 			/* Don't allow to queue more aircraft if there is no free space. */
 			if (AIR_CalculateHangarStorage(prod->aircraft, base, 0) <= 0) {
-				MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
+				UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 				Cvar_SetValue("mn_production_amount", prod->amount);
 				return;
 			}
@@ -649,12 +649,12 @@ static void PR_ProductionIncrease_f (void)
 
 		producibleAmount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
 		if (producibleAmount == 0) {
-			MN_Popup(_("Not enough materials"), _("You don't have the materials needed for producing more of this item.\n"));
+			UI_Popup(_("Not enough materials"), _("You don't have the materials needed for producing more of this item.\n"));
 			Cvar_SetValue("mn_production_amount", prod->amount);
 			return;
 		} else if (amount != producibleAmount) {
 			Com_sprintf(productionPopup, lengthof(productionPopup), _("You don't have enough material to produce all (%i) additional items. Only %i could be added."), amount, producibleAmount);
-			MN_Popup(_("Not enough material!"), productionPopup);
+			UI_Popup(_("Not enough material!"), productionPopup);
 		}
 
 		PR_IncreaseProduction(prod, producibleAmount);
@@ -664,7 +664,7 @@ static void PR_ProductionIncrease_f (void)
 
 		/* no free production slot */
 		if (PR_QueueFreeSpace(queue) <= 0) {
-			MN_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
+			UI_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
 			return;
 		}
 
@@ -685,11 +685,11 @@ static void PR_ProductionIncrease_f (void)
 
 		producibleAmount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
 		if (producibleAmount == 0) {
-			MN_Popup(_("Not enough materials"), _("You don't have the materials needed for producing this item.\n"));
+			UI_Popup(_("Not enough materials"), _("You don't have the materials needed for producing this item.\n"));
 			return;
 		} else if (amount != producibleAmount) {
 			Com_sprintf(productionPopup, lengthof(productionPopup), _("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."), amount, producibleAmount);
-			MN_Popup(_("Not enough material!"), productionPopup);
+			UI_Popup(_("Not enough material!"), productionPopup);
 		}
 		/** @todo
 		 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
@@ -697,7 +697,7 @@ static void PR_ProductionIncrease_f (void)
 		 *  -) can can (if possible) change the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).*/
 
 		if (selectedAircraft && AIR_CalculateHangarStorage(selectedAircraft, base, 0) <= 0) {
-			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
+			UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 			return;
 		}
 
@@ -709,7 +709,7 @@ static void PR_ProductionIncrease_f (void)
 			return;
 
 		/* Now we select the item we just created. */
-		MN_ExecuteConfunc("prod_selectline %i", prod->idx);
+		UI_ExecuteConfunc("prod_selectline %i", prod->idx);
 		PR_ClearSelected();
 		selectedProduction = &queue->items[queue->numItems - 1];
 
@@ -741,10 +741,10 @@ static void PR_ProductionStop_f (void)
 
 	if (queue->numItems == 0) {
 		selectedProduction = NULL;
-		MN_ExecuteConfunc("prod_selectline -1");
+		UI_ExecuteConfunc("prod_selectline -1");
 	} else if (prodIDX >= queue->numItems) {
 		selectedProduction = &queue->items[queue->numItems - 1];
-		MN_ExecuteConfunc("prod_selectline %i", prodIDX);
+		UI_ExecuteConfunc("prod_selectline %i", prodIDX);
 	}
 
 	PR_ProductionInfo(base);
@@ -822,7 +822,7 @@ static void PR_ProductionUp_f (void)
 	PR_QueueMove(queue, selectedProduction->idx, -1);
 
 	selectedProduction = &queue->items[selectedProduction->idx - 1];
-	MN_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
+	UI_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
 	PR_UpdateProductionList(base);
 }
 
@@ -845,7 +845,7 @@ static void PR_ProductionDown_f (void)
 	PR_QueueMove(queue, selectedProduction->idx, 1);
 
 	selectedProduction = &queue->items[selectedProduction->idx + 1];
-	MN_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
+	UI_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
 	PR_UpdateProductionList(base);
 }
 

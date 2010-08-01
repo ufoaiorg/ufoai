@@ -31,8 +31,8 @@ typedef struct baseExtraData_s {
 
 struct uiBehaviour_s;
 
-void MN_RegisterAbstractBaseNode(struct uiBehaviour_s *behaviour);
-void MN_RegisterBaseMapNode(struct uiBehaviour_s *behaviour);
-void MN_RegisterBaseLayoutNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterAbstractBaseNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterBaseMapNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterBaseLayoutNode(struct uiBehaviour_s *behaviour);
 
 #endif

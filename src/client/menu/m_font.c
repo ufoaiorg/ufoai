@@ -49,7 +49,7 @@ static const value_t fontValues[] = {
  * fonts for every translation
  * @param[in] font
  */
-static void MN_RegisterFont (const uiFont_t *font)
+static void UI_RegisterFont (const uiFont_t *font)
 {
 	const char *path = _(font->path);
 
@@ -65,21 +65,21 @@ static void MN_RegisterFont (const uiFont_t *font)
 /**
  * @sa CL_ParseClientData
  */
-void MN_ParseFont (const char *name, const char **text)
+void UI_ParseFont (const char *name, const char **text)
 {
 	uiFont_t *font;
-	const char *errhead = "MN_ParseFont: unexpected end of file (font";
+	const char *errhead = "UI_ParseFont: unexpected end of file (font";
 	const char *token;
 	const value_t *v = NULL;
 
 	/* search for font with same name */
-	if (MN_GetFontByID(name)) {
-		Com_Printf("MN_ParseFont: font \"%s\" with same name found, second ignored\n", name);
+	if (UI_GetFontByID(name)) {
+		Com_Printf("UI_ParseFont: font \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
 	if (numFonts >= MAX_FONTS) {
-		Com_Printf("MN_ParseFont: Max fonts reached\n");
+		Com_Printf("UI_ParseFont: Max fonts reached\n");
 		return;
 	}
 
@@ -95,7 +95,7 @@ void MN_ParseFont (const char *name, const char **text)
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("MN_ParseFont: font \"%s\" without body ignored\n", name);
+		Com_Printf("UI_ParseFont: font \"%s\" without body ignored\n", name);
 		return;
 	}
 
@@ -130,10 +130,10 @@ void MN_ParseFont (const char *name, const char **text)
 			}
 
 		if (!v->string)
-			Com_Printf("MN_ParseFont: unknown token \"%s\" ignored (font %s)\n", token, name);
+			Com_Printf("UI_ParseFont: unknown token \"%s\" ignored (font %s)\n", token, name);
 	} while (*text);
 
-	MN_RegisterFont(font);
+	UI_RegisterFont(font);
 }
 
 /**
@@ -141,10 +141,10 @@ void MN_ParseFont (const char *name, const char **text)
  * @param[in] node Context node
  * @return char pointer with font name (default is f_small)
  */
-const char *MN_GetFontFromNode (const uiNode_t *const node)
+const char *UI_GetFontFromNode (const uiNode_t *const node)
 {
 	if (node && node->font) {
-		return MN_GetReferenceString(node, node->font);
+		return UI_GetReferenceString(node, node->font);
 	}
 	return "f_small";
 }
@@ -153,7 +153,7 @@ const char *MN_GetFontFromNode (const uiNode_t *const node)
 /**
  * @brief Return the font for a specific id
  */
-const uiFont_t *MN_GetFontByID (const char *name)
+const uiFont_t *UI_GetFontByID (const char *name)
 {
 	int i;
 
@@ -164,7 +164,7 @@ const uiFont_t *MN_GetFontByID (const char *name)
 	return NULL;
 }
 
-int MN_FontGetHeight (const char *fontID)
+int UI_FontGetHeight (const char *fontID)
 {
 	font_t *font = R_GetFont(fontID);
 	if (font != NULL)
@@ -175,11 +175,11 @@ int MN_FontGetHeight (const char *fontID)
 /**
  * @brief after a video restart we have to reinitialize the fonts
  */
-void MN_InitFonts (void)
+void UI_InitFonts (void)
 {
 	int i;
 
 	Com_Printf("...registering %i fonts\n", numFonts);
 	for (i = 0; i < numFonts; i++)
-		MN_RegisterFont(&fonts[i]);
+		UI_RegisterFont(&fonts[i]);
 }

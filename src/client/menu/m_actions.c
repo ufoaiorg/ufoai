@@ -82,20 +82,20 @@ static const menuTypedActionToken_t actionTokens[] = {
 	{"||", EA_OPERATOR_OR, EA_BINARYOPERATOR},
 };
 
-static void MN_ExecuteInjectedActions(const uiAction_t* firstAction, uiCallContext_t *context);
+static void UI_ExecuteInjectedActions(const uiAction_t* firstAction, uiCallContext_t *context);
 
 /**
  * @brief Check if the action token list is sorted by alphabet,
  * else dichotomic search can't work
  */
-static void MN_CheckActionTokenTypeSanity (void)
+static void UI_CheckActionTokenTypeSanity (void)
 {
 	int i;
 	for (i = 0; i < lengthof(actionTokens) - 1; i++) {
 		const char *a = actionTokens[i].token;
 		const char *b = actionTokens[i + 1].token;
 		if (strcmp(a, b) >= 0) {
-			Sys_Error("MN_CheckActionTokenTypeSanity: '%s' is before '%s'. actionList must be sorted by alphabet", a, b);
+			Sys_Error("UI_CheckActionTokenTypeSanity: '%s' is before '%s'. actionList must be sorted by alphabet", a, b);
 		}
 	}
 }
@@ -107,7 +107,7 @@ static void MN_CheckActionTokenTypeSanity (void)
  * @sa actionTokens
  * @return a action type from the requested group, else EA_NULL
  */
-int MN_GetActionTokenType (const char* token, int group)
+int UI_GetActionTokenType (const char* token, int group)
 {
 	unsigned char min = 0;
 	unsigned char max = lengthof(actionTokens);
@@ -137,7 +137,7 @@ int MN_GetActionTokenType (const char* token, int group)
  * @brief read a property name from an input buffer to an output
  * @return last position in the input buffer if we find the property, NULL otherwise
  */
-static inline const char* MN_GenCommandReadProperty (const char* input, char* output, int outputSize)
+static inline const char* UI_GenCommandReadProperty (const char* input, char* output, int outputSize)
 {
 	assert(input[0] == '<');
 	outputSize--;
@@ -160,7 +160,7 @@ static inline const char* MN_GenCommandReadProperty (const char* input, char* ou
  * @param[in] context The execution context
  * @return The requested param
  */
-int MN_GetParamNumber (const uiCallContext_t *context)
+int UI_GetParamNumber (const uiCallContext_t *context)
 {
 	if (context->useCmdParam)
 		return Cmd_Argc();
@@ -173,7 +173,7 @@ int MN_GetParamNumber (const uiCallContext_t *context)
  * @param[in] paramID The ID of the requested param (first param is integer 1)
  * @return The requested param
  */
-const char* MN_GetParam (const uiCallContext_t *context, int paramID)
+const char* UI_GetParam (const uiCallContext_t *context, int paramID)
 {
 	linkedList_t *current;
 	assert(paramID >= 1);
@@ -182,7 +182,7 @@ const char* MN_GetParam (const uiCallContext_t *context, int paramID)
 		return Cmd_Argv(paramID);
 
 	if (paramID > context->paramNumber) {
-		Com_Printf("MN_GetParam: %i out of range\n", paramID);
+		Com_Printf("UI_GetParam: %i out of range\n", paramID);
 		return "";
 	}
 
@@ -203,7 +203,7 @@ const char* MN_GetParam (const uiCallContext_t *context, int paramID)
  * cmd "set someCvar &lt;min&gt;/&lt;max&gt;"
  * @endcode
  */
-const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const uiCallContext_t *context)
+const char* UI_GenInjectedString (const char* input, qboolean addNewLine, const uiCallContext_t *context)
 {
 	static char cmd[256];
 	int length = sizeof(cmd) - (addNewLine ? 2 : 1);
@@ -214,7 +214,7 @@ const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const 
 	while (length && cin[0] != '\0') {
 		if (cin[0] == '<') {
 			/* read propertyName between '<' and '>' */
-			const char *next = MN_GenCommandReadProperty(cin, propertyName, sizeof(propertyName));
+			const char *next = UI_GenCommandReadProperty(cin, propertyName, sizeof(propertyName));
 			if (next) {
 				/* cvar injection */
 				if (!strncmp(propertyName, "cvar:", 5)) {
@@ -231,20 +231,20 @@ const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const 
 					const value_t *property;
 					const char* string;
 					int l;
-					MN_ReadNodePath(path, context->source, &node, &property);
+					UI_ReadNodePath(path, context->source, &node, &property);
 					if (!node) {
-						Com_Printf("MN_GenInjectedString: Node '%s' wasn't found; '' returned\n", path);
+						Com_Printf("UI_GenInjectedString: Node '%s' wasn't found; '' returned\n", path);
 #ifdef DEBUG
-						Com_Printf("MN_GenInjectedString: Path relative to '%s'\n", MN_GetPath(context->source));
+						Com_Printf("UI_GenInjectedString: Path relative to '%s'\n", UI_GetPath(context->source));
 #endif
 						string = "";
 					} else if (!property) {
-						Com_Printf("MN_GenInjectedString: Property '%s' wasn't found; '' returned\n", path);
+						Com_Printf("UI_GenInjectedString: Property '%s' wasn't found; '' returned\n", path);
 						string = "";
 					} else {
-						string = MN_GetStringFromNodeProperty(node, property);
+						string = UI_GetStringFromNodeProperty(node, property);
 						if (string == NULL) {
-							Com_Printf("MN_GenInjectedString: String getter for '%s' property do not exists; '' injected\n", path);
+							Com_Printf("UI_GenInjectedString: String getter for '%s' property do not exists; '' injected\n", path);
 							string = "";
 						}
 					}
@@ -267,10 +267,10 @@ const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const 
 						else if (!strcmp(command, "parent"))
 							node = context->source->parent;
 						else
-							Com_Printf("MN_GenCommand: Command '%s' for path injection unknown\n", command);
+							Com_Printf("UI_GenCommand: Command '%s' for path injection unknown\n", command);
 
 						if (node) {
-							const int l = snprintf(cout, length, "%s", MN_GetPath(node));
+							const int l = snprintf(cout, length, "%s", UI_GetPath(node));
 							cout += l;
 							cin = next;
 							length -= l;
@@ -283,12 +283,12 @@ const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const 
 					/* source property injection */
 					if (context->source) {
 						/* find property definition */
-						const value_t *property = MN_GetPropertyFromBehaviour(context->source->behaviour, propertyName);
+						const value_t *property = UI_GetPropertyFromBehaviour(context->source->behaviour, propertyName);
 						if (property) {
 							const char* value;
 							int l;
 							/* inject the property value */
-							value = MN_GetStringFromNodeProperty(context->source, property);
+							value = UI_GetStringFromNodeProperty(context->source, property);
 							if (value == NULL)
 								value = "";
 							l = snprintf(cout, length, "%s", value);
@@ -300,11 +300,11 @@ const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const 
 					}
 
 					/* param injection */
-					if (MN_GetParamNumber(context) != 0) {
+					if (UI_GetParamNumber(context) != 0) {
 						int arg;
 						const int checked = sscanf(propertyName, "%d", &arg);
-						if (checked == 1 && arg >= 1 && arg <= MN_GetParamNumber(context)) {
-							const int l = snprintf(cout, length, "%s", MN_GetParam(context, arg));
+						if (checked == 1 && arg >= 1 && arg <= UI_GetParamNumber(context)) {
+							const int l = snprintf(cout, length, "%s", UI_GetParam(context, arg));
 							cout += l;
 							cin = next;
 							length -= l;
@@ -340,31 +340,31 @@ const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const 
  * @todo refactoring it to remove "context", we should only call that function when the action
  * value is a leaf (then a value, and not an expression)
  */
-static void MN_NodeSetPropertyFromActionValue (uiNode_t *node, const value_t *property, const uiCallContext_t *context, uiAction_t* value)
+static void UI_NodeSetPropertyFromActionValue (uiNode_t *node, const value_t *property, const uiCallContext_t *context, uiAction_t* value)
 {
 	/* @todo we can use a new EA_VALUE type to flag already parsed values, we dont need to do it again and again */
 	/* pre compute value if possible */
 	if (value->type == EA_VALUE_STRING) {
 		const char* string = value->d.terminal.d1.string;
 		/* @todo here we must catch error in a better way, and using cvar for error code to create unittest automations */
-		MN_InitRawActionValue(value, node, property, string);
+		UI_InitRawActionValue(value, node, property, string);
 	}
 
 	/* decode RAW value */
 	if (value->type == EA_VALUE_RAW) {
 		void *rawValue = value->d.terminal.d1.data;
 		int rawType = value->d.terminal.d2.integer;
-		MN_NodeSetPropertyFromRAW(node, property, rawValue, rawType);
+		UI_NodeSetPropertyFromRAW(node, property, rawValue, rawType);
 	}
 	/* else it is an expression */
 	else {
 		/** @todo we should improve if when the prop is a boolean/int/float */
-		const char* string = MN_GetStringFromExpression(value, context);
-		MN_NodeSetProperty(node, property, string);
+		const char* string = UI_GetStringFromExpression(value, context);
+		UI_NodeSetProperty(node, property, string);
 	}
 }
 
-static inline void MN_ExecuteSetAction (const uiAction_t* action, const uiCallContext_t *context)
+static inline void UI_ExecuteSetAction (const uiAction_t* action, const uiCallContext_t *context)
 {
 	const char* path;
 	uiNode_t *node;
@@ -374,13 +374,13 @@ static inline void MN_ExecuteSetAction (const uiAction_t* action, const uiCallCo
 
 	left = action->d.nonTerminal.left;
 	if (left == NULL) {
-		Com_Printf("MN_ExecuteSetAction: Action without left operand skipped.\n");
+		Com_Printf("UI_ExecuteSetAction: Action without left operand skipped.\n");
 		return;
 	}
 
 	right = action->d.nonTerminal.right;
 	if (right == NULL) {
-		Com_Printf("MN_ExecuteSetAction: Action without right operand skipped.\n");
+		Com_Printf("UI_ExecuteSetAction: Action without right operand skipped.\n");
 		return;
 	}
 
@@ -391,9 +391,9 @@ static inline void MN_ExecuteSetAction (const uiAction_t* action, const uiCallCo
 		if (left->type == EA_VALUE_CVARNAME)
 			cvarName = left->d.terminal.d1.string;
 		else
-			cvarName = MN_GenInjectedString(left->d.terminal.d1.string, qfalse, context);
+			cvarName = UI_GenInjectedString(left->d.terminal.d1.string, qfalse, context);
 
-		textValue = MN_GetStringFromExpression(right, context);
+		textValue = UI_GetStringFromExpression(right, context);
 
 		if (textValue[0] == '_')
 			textValue = _(textValue + 1);
@@ -406,24 +406,24 @@ static inline void MN_ExecuteSetAction (const uiAction_t* action, const uiCallCo
 	if (left->type == EA_VALUE_PATHPROPERTY)
 		path = left->d.terminal.d1.string;
 	else if (left->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
-		path = MN_GenInjectedString(left->d.terminal.d1.string, qfalse, context);
+		path = UI_GenInjectedString(left->d.terminal.d1.string, qfalse, context);
 	else
-		Com_Error(ERR_FATAL, "MN_ExecuteSetAction: Property setter with wrong type '%d'", left->type);
+		Com_Error(ERR_FATAL, "UI_ExecuteSetAction: Property setter with wrong type '%d'", left->type);
 
-	MN_ReadNodePath(path, context->source, &node, &property);
+	UI_ReadNodePath(path, context->source, &node, &property);
 	if (!node) {
-		Com_Printf("MN_ExecuteSetAction: node \"%s\" doesn't exist (source: %s)\n", path, MN_GetPath(context->source));
+		Com_Printf("UI_ExecuteSetAction: node \"%s\" doesn't exist (source: %s)\n", path, UI_GetPath(context->source));
 		return;
 	}
 	if (!property) {
-		Com_Printf("MN_ExecuteSetAction: property \"%s\" doesn't exist (source: %s)\n", path, MN_GetPath(context->source));
+		Com_Printf("UI_ExecuteSetAction: property \"%s\" doesn't exist (source: %s)\n", path, UI_GetPath(context->source));
 		return;
 	}
 
-	MN_NodeSetPropertyFromActionValue(node, property, context, right);
+	UI_NodeSetPropertyFromActionValue(node, property, context, right);
 }
 
-static inline void MN_ExecuteCallAction (const uiAction_t* action, const uiCallContext_t *context)
+static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallContext_t *context)
 {
 	uiNode_t* callNode = NULL;
 	uiAction_t* param;
@@ -435,16 +435,16 @@ static inline void MN_ExecuteCallAction (const uiAction_t* action, const uiCallC
 	if (left->type == EA_VALUE_PATHPROPERTY || left->type == EA_VALUE_PATHNODE)
 		path = left->d.terminal.d1.string;
 	else if (left->type == EA_VALUE_PATHPROPERTY_WITHINJECTION || left->type == EA_VALUE_PATHNODE_WITHINJECTION)
-		path = MN_GenInjectedString(left->d.terminal.d1.string, qfalse, context);
-	MN_ReadNodePath(path, context->source, &callNode, &callProperty);
+		path = UI_GenInjectedString(left->d.terminal.d1.string, qfalse, context);
+	UI_ReadNodePath(path, context->source, &callNode, &callProperty);
 
 	if (callNode == NULL) {
-		Com_Printf("MN_ExecuteInjectedAction: Node from path \"%s\" not found (relative to \"%s\").\n", path, MN_GetPath(context->source));
+		Com_Printf("UI_ExecuteInjectedAction: Node from path \"%s\" not found (relative to \"%s\").\n", path, UI_GetPath(context->source));
 		return;
 	}
 
 	if (callProperty != NULL && callProperty->type != V_UI_ACTION && callProperty->type != V_UI_NODEMETHOD) {
-		Com_Printf("MN_ExecuteInjectedAction: Call operand %d unsupported. (%s)\n", callProperty->type, MN_GetPath(callNode));
+		Com_Printf("UI_ExecuteInjectedAction: Call operand %d unsupported. (%s)\n", callProperty->type, UI_GetPath(callNode));
 		return;
 	}
 
@@ -473,7 +473,7 @@ static inline void MN_ExecuteCallAction (const uiAction_t* action, const uiCallC
 		param = action->d.nonTerminal.right;
 		while (param) {
 			const char* value;
-			value = MN_GetStringFromExpression(param, context);
+			value = UI_GetStringFromExpression(param, context);
 			LIST_AddString(&newContext.params, value);
 			newContext.paramNumber++;
 			param = param->next;
@@ -486,7 +486,7 @@ static inline void MN_ExecuteCallAction (const uiAction_t* action, const uiCallC
 			actionsRef = callNode->onClick;
 		else
 			actionsRef = *(uiAction_t **) ((byte *) callNode + callProperty->ofs);
-		MN_ExecuteInjectedActions(actionsRef, &newContext);
+		UI_ExecuteInjectedActions(actionsRef, &newContext);
 	} else if (callProperty->type == V_UI_NODEMETHOD) {
 		uiNodeMethod_t func = (uiNodeMethod_t) callProperty->ofs;
 		func(callNode, &newContext);
@@ -503,7 +503,7 @@ static inline void MN_ExecuteCallAction (const uiAction_t* action, const uiCallC
  * @param[in] context Context node
  * @param[in] action Action to execute
  */
-static void MN_ExecuteInjectedAction (const uiAction_t* action, uiCallContext_t *context)
+static void UI_ExecuteInjectedAction (const uiAction_t* action, uiCallContext_t *context)
 {
 	switch (action->type) {
 	case EA_NULL:
@@ -513,16 +513,16 @@ static void MN_ExecuteInjectedAction (const uiAction_t* action, uiCallContext_t 
 	case EA_CMD:
 		/* execute a command */
 		if (action->d.terminal.d1.string)
-			Cbuf_AddText(MN_GenInjectedString(action->d.terminal.d1.string, qtrue, context));
+			Cbuf_AddText(UI_GenInjectedString(action->d.terminal.d1.string, qtrue, context));
 		break;
 
 	case EA_CALL:
 	case EA_LISTENER:
-		MN_ExecuteCallAction(action, context);
+		UI_ExecuteCallAction(action, context);
 		break;
 
 	case EA_ASSIGN:
-		MN_ExecuteSetAction(action, context);
+		UI_ExecuteSetAction(action, context);
 		break;
 
 	case EA_DELETE:
@@ -535,10 +535,10 @@ static void MN_ExecuteInjectedAction (const uiAction_t* action, uiCallContext_t 
 	case EA_WHILE:
 		{
 			int loop = 0;
-			while (MN_GetBooleanFromExpression(action->d.nonTerminal.left, context)) {
-				MN_ExecuteInjectedActions(action->d.nonTerminal.right, context);
+			while (UI_GetBooleanFromExpression(action->d.nonTerminal.left, context)) {
+				UI_ExecuteInjectedActions(action->d.nonTerminal.right, context);
 				if (loop > 1000) {
-					Com_Printf("MN_ExecuteInjectedAction: Infinite loop. Force breaking 'while'\n");
+					Com_Printf("UI_ExecuteInjectedAction: Infinite loop. Force breaking 'while'\n");
 					break;
 				}
 				loop++;
@@ -547,20 +547,20 @@ static void MN_ExecuteInjectedAction (const uiAction_t* action, uiCallContext_t 
 		}
 
 	case EA_IF:
-		if (MN_GetBooleanFromExpression(action->d.nonTerminal.left, context)) {
-			MN_ExecuteInjectedActions(action->d.nonTerminal.right, context);
+		if (UI_GetBooleanFromExpression(action->d.nonTerminal.left, context)) {
+			UI_ExecuteInjectedActions(action->d.nonTerminal.right, context);
 			return;
 		}
 		action = action->next;
 		while (action && action->type == EA_ELIF) {
-			if (MN_GetBooleanFromExpression(action->d.nonTerminal.left, context)) {
-				MN_ExecuteInjectedActions(action->d.nonTerminal.right, context);
+			if (UI_GetBooleanFromExpression(action->d.nonTerminal.left, context)) {
+				UI_ExecuteInjectedActions(action->d.nonTerminal.right, context);
 				return;
 			}
 			action = action->next;
 		}
 		if (action && action->type == EA_ELSE) {
-			MN_ExecuteInjectedActions(action->d.nonTerminal.right, context);
+			UI_ExecuteInjectedActions(action->d.nonTerminal.right, context);
 		}
 		break;
 
@@ -570,20 +570,20 @@ static void MN_ExecuteInjectedAction (const uiAction_t* action, uiCallContext_t 
 		break;
 
 	default:
-		Com_Error(ERR_FATAL, "MN_ExecuteInjectedAction: Unknown action type %i", action->type);
+		Com_Error(ERR_FATAL, "UI_ExecuteInjectedAction: Unknown action type %i", action->type);
 	}
 }
 
-static void MN_ExecuteInjectedActions (const uiAction_t* firstAction, uiCallContext_t *context)
+static void UI_ExecuteInjectedActions (const uiAction_t* firstAction, uiCallContext_t *context)
 {
 	static int callnumber = 0;
 	const uiAction_t *action;
 	if (callnumber++ > 20) {
-		Com_Printf("MN_ExecuteInjectedActions: Possible recursion\n");
+		Com_Printf("UI_ExecuteInjectedActions: Possible recursion\n");
 		return;
 	}
 	for (action = firstAction; action; action = action->next) {
-		MN_ExecuteInjectedAction(action, context);
+		UI_ExecuteInjectedAction(action, context);
 	}
 	callnumber--;
 }
@@ -591,22 +591,22 @@ static void MN_ExecuteInjectedActions (const uiAction_t* firstAction, uiCallCont
 /**
  * @brief allow to inject command param into cmd of confunc command
  */
-void MN_ExecuteConFuncActions (const uiNode_t* source, const uiAction_t* firstAction)
+void UI_ExecuteConFuncActions (const uiNode_t* source, const uiAction_t* firstAction)
 {
 	uiCallContext_t context;
 	context.source = source;
 	context.useCmdParam = qtrue;
-	MN_ExecuteInjectedActions(firstAction, &context);
+	UI_ExecuteInjectedActions(firstAction, &context);
 }
 
-void MN_ExecuteEventActions (const uiNode_t* source, const uiAction_t* firstAction)
+void UI_ExecuteEventActions (const uiNode_t* source, const uiAction_t* firstAction)
 {
 	uiCallContext_t context;
 	context.source = source;
 	context.useCmdParam = qfalse;
 	context.paramNumber = 0;
 	context.params = NULL;
-	MN_ExecuteInjectedActions(firstAction, &context);
+	UI_ExecuteInjectedActions(firstAction, &context);
 }
 
 /**
@@ -614,7 +614,7 @@ void MN_ExecuteEventActions (const uiNode_t* source, const uiAction_t* firstActi
  * @param[in] string The string to check for injection
  * @return True if we find the following syntax in the string "<" {thing without space} ">"
  */
-qboolean MN_IsInjectedString (const char *string)
+qboolean UI_IsInjectedString (const char *string)
 {
 	const char *c = string;
 	assert(string);
@@ -641,7 +641,7 @@ qboolean MN_IsInjectedString (const char *string)
  * @param[in,out] pointer The pointer to the data that should be freed
  * @sa mn_dynStringPool
  */
-void MN_FreeStringProperty (void* pointer)
+void UI_FreeStringProperty (void* pointer)
 {
 	/* skip const string */
 	if ((uintptr_t)mn.adata <= (uintptr_t)pointer && (uintptr_t)pointer < (uintptr_t)mn.adata + (uintptr_t)mn.adataize)
@@ -659,9 +659,9 @@ void MN_FreeStringProperty (void* pointer)
  * @param[in] command A command for the action
  * @return An initialised action
  */
-uiAction_t* MN_AllocStaticCommandAction (char *command)
+uiAction_t* UI_AllocStaticCommandAction (char *command)
 {
-	uiAction_t* action = MN_AllocStaticAction();
+	uiAction_t* action = UI_AllocStaticAction();
 	action->type = EA_CMD;
 	action->d.terminal.d1.string = command;
 	return action;
@@ -677,7 +677,7 @@ uiAction_t* MN_AllocStaticCommandAction (char *command)
  * @todo we should create a function to free the memory. We can use a tag in the Mem_PoolAlloc
  * calls and use use Mem_FreeTag.
  */
-void MN_PoolAllocAction (uiAction_t** action, int type, const void *data)
+void UI_PoolAllocAction (uiAction_t** action, int type, const void *data)
 {
 	if (*action)
 		Com_Error(ERR_FATAL, "There is already an action assigned");
@@ -698,25 +698,25 @@ void MN_PoolAllocAction (uiAction_t** action, int type, const void *data)
  * @param[in] property The property of the node to add the listener to.
  * @param[in] functionNode The node of the listener callback.
  */
-void MN_AddListener (uiNode_t *node, const value_t *property, uiNode_t *functionNode)
+void UI_AddListener (uiNode_t *node, const value_t *property, uiNode_t *functionNode)
 {
 	uiAction_t *lastAction;
 	uiAction_t *action;
 	uiAction_t *value;
 
 	if (node->dynamic) {
-		Com_Printf("MN_AddListener: '%s' is a dynamic node. We can't listen it.\n", MN_GetPath(node));
+		Com_Printf("UI_AddListener: '%s' is a dynamic node. We can't listen it.\n", UI_GetPath(node));
 		return;
 	}
 	if (functionNode->dynamic) {
-		Com_Printf("MN_AddListener: '%s' is a dynamic node. It can't be a listener callback.\n", MN_GetPath(functionNode));
+		Com_Printf("UI_AddListener: '%s' is a dynamic node. It can't be a listener callback.\n", UI_GetPath(functionNode));
 		return;
 	}
 
 	/* create the call action */
 	action = (uiAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
 	value = (uiAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
-	value->d.terminal.d1.constString = Mem_PoolStrDup(MN_GetPath(functionNode), mn_sysPool, 0);
+	value->d.terminal.d1.constString = Mem_PoolStrDup(UI_GetPath(functionNode), mn_sysPool, 0);
 	value->next = NULL;
 	action->type = EA_LISTENER;
 	action->d.nonTerminal.left = value;
@@ -737,7 +737,7 @@ void MN_AddListener (uiNode_t *node, const value_t *property, uiNode_t *function
 /**
  * @brief add a call of a function into a node event
  */
-static void MN_AddListener_f (void)
+static void UI_AddListener_f (void)
 {
 	uiNode_t *node;
 	uiNode_t *function;
@@ -748,23 +748,23 @@ static void MN_AddListener_f (void)
 		return;
 	}
 
-	MN_ReadNodePath(Cmd_Argv(1), NULL, &node, &property);
+	UI_ReadNodePath(Cmd_Argv(1), NULL, &node, &property);
 	if (node == NULL) {
-		Com_Printf("MN_AddListener_f: '%s' node not found.\n", Cmd_Argv(1));
+		Com_Printf("UI_AddListener_f: '%s' node not found.\n", Cmd_Argv(1));
 		return;
 	}
 	if (property == NULL || property->type != V_UI_ACTION) {
-		Com_Printf("MN_AddListener_f: '%s' property not found, or is not an event.\n", Cmd_Argv(1));
+		Com_Printf("UI_AddListener_f: '%s' property not found, or is not an event.\n", Cmd_Argv(1));
 		return;
 	}
 
-	function = MN_GetNodeByPath(Cmd_Argv(2));
+	function = UI_GetNodeByPath(Cmd_Argv(2));
 	if (function == NULL) {
-		Com_Printf("MN_AddListener_f: '%s' node not found.\n", Cmd_Argv(2));
+		Com_Printf("UI_AddListener_f: '%s' node not found.\n", Cmd_Argv(2));
 		return;
 	}
 
-	MN_AddListener(node, property, function);
+	UI_AddListener(node, property, function);
 }
 
 /**
@@ -773,7 +773,7 @@ static void MN_AddListener_f (void)
  * @param[in] property The property of the node to remove the listener from.
  * @param[in] functionNode The node of the listener callback.
  */
-void MN_RemoveListener (uiNode_t *node, const value_t *property, uiNode_t *functionNode)
+void UI_RemoveListener (uiNode_t *node, const value_t *property, uiNode_t *functionNode)
 {
 	void *data;
 	uiAction_t *lastAction;
@@ -806,14 +806,14 @@ void MN_RemoveListener (uiNode_t *node, const value_t *property, uiNode_t *funct
 			Mem_Free(tmp);
 		}
 		else
-			Com_Printf("MN_RemoveListener_f: '%s' into '%s' not found.\n", Cmd_Argv(2), Cmd_Argv(1));
+			Com_Printf("UI_RemoveListener_f: '%s' into '%s' not found.\n", Cmd_Argv(2), Cmd_Argv(1));
 	}
 }
 
 /**
  * @brief Remove a function callback from a node event
  */
-static void MN_RemoveListener_f (void)
+static void UI_RemoveListener_f (void)
 {
 	uiNode_t *node;
 	uiNode_t *function;
@@ -824,28 +824,28 @@ static void MN_RemoveListener_f (void)
 		return;
 	}
 
-	MN_ReadNodePath(Cmd_Argv(1), NULL, &node, &property);
+	UI_ReadNodePath(Cmd_Argv(1), NULL, &node, &property);
 	if (node == NULL) {
-		Com_Printf("MN_RemoveListener_f: '%s' node not found.\n", Cmd_Argv(1));
+		Com_Printf("UI_RemoveListener_f: '%s' node not found.\n", Cmd_Argv(1));
 		return;
 	}
 	if (property == NULL || property->type != V_UI_ACTION) {
-		Com_Printf("MN_RemoveListener_f: '%s' property not found, or is not an event.\n", Cmd_Argv(1));
+		Com_Printf("UI_RemoveListener_f: '%s' property not found, or is not an event.\n", Cmd_Argv(1));
 		return;
 	}
 
-	function = MN_GetNodeByPath(Cmd_Argv(2));
+	function = UI_GetNodeByPath(Cmd_Argv(2));
 	if (function == NULL) {
-		Com_Printf("MN_RemoveListener_f: '%s' node not found.\n", Cmd_Argv(2));
+		Com_Printf("UI_RemoveListener_f: '%s' node not found.\n", Cmd_Argv(2));
 		return;
 	}
 
-	MN_RemoveListener(node, property, function);
+	UI_RemoveListener(node, property, function);
 }
 
-void MN_InitActions (void)
+void UI_InitActions (void)
 {
-	MN_CheckActionTokenTypeSanity();
-	Cmd_AddCommand("mn_addlistener", MN_AddListener_f, "Add a function into a node event");
-	Cmd_AddCommand("mn_removelistener", MN_RemoveListener_f, "Remove a function from a node event");
+	UI_CheckActionTokenTypeSanity();
+	Cmd_AddCommand("mn_addlistener", UI_AddListener_f, "Add a function into a node event");
+	Cmd_AddCommand("mn_removelistener", UI_RemoveListener_f, "Remove a function from a node event");
 }

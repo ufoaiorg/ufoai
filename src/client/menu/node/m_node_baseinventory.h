@@ -30,6 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* prototypes */
 struct uiBehaviour_s;
 
-void MN_RegisterBaseInventoryNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterBaseInventoryNode(struct uiBehaviour_s *behaviour);
 
 #endif

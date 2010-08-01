@@ -133,7 +133,7 @@ static void AIM_AircraftStart_f (void)
 
 	/* Aircraft cannot start without Command Centre operational. */
 	if (!B_GetBuildingStatus(base, B_COMMAND)) {
-		MN_Popup(_("Notice"), _("No operational Command Centre in this base.\n\nAircraft can not start.\n"));
+		UI_Popup(_("Notice"), _("No operational Command Centre in this base.\n\nAircraft can not start.\n"));
 		return;
 	}
 
@@ -141,7 +141,7 @@ static void AIM_AircraftStart_f (void)
 
 	/* Aircraft cannot start without a pilot. */
 	if (!aircraft->pilot) {
-		MN_Popup(_("Notice"), _("There is no pilot assigned to this aircraft.\n\nAircraft can not start.\n"));
+		UI_Popup(_("Notice"), _("There is no pilot assigned to this aircraft.\n\nAircraft can not start.\n"));
 		return;
 	}
 
@@ -154,8 +154,8 @@ static void AIM_AircraftStart_f (void)
 
 	MAP_SelectAircraft(aircraft);
 	/* Return to geoscape. */
-	MN_PopWindow(qfalse);
-	MN_PopWindow(qfalse);
+	UI_PopWindow(qfalse);
+	UI_PopWindow(qfalse);
 }
 
 #define SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE 1
@@ -235,7 +235,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 		base = NULL;
 
 	if (!base || !base->numAircraftInBase) {
-		MN_ResetData(TEXT_AIRCRAFT_INFO);
+		UI_ResetData(TEXT_AIRCRAFT_INFO);
 		return;
 	}
 
@@ -261,7 +261,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Q_strcat(aircraftInfo, va(_("Armour:\t%i on 1\n"), AIR_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Electronics:\t%i on %i"), AIR_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
 
-	MN_RegisterText(TEXT_AIRCRAFT_INFO, aircraftInfo);
+	UI_RegisterText(TEXT_AIRCRAFT_INFO, aircraftInfo);
 
 	/* compute the ID and... */
 	for (id = 0; id < base->numAircraftInBase; id++) {
@@ -276,7 +276,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Cvar_SetValue("mn_aircraft_id", id);
 
 	/* ...update the GUI */
-	MN_ExecuteConfunc("aircraft_change %i", id);
+	UI_ExecuteConfunc("aircraft_change %i", id);
 }
 
 /**
@@ -296,7 +296,7 @@ static void AIR_AircraftUpdateList_f (void)
 		LIST_AddString(&list, aircraft->name);
 	}
 
-	MN_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);
+	UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);
 }
 
 /**

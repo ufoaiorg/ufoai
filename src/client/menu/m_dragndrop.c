@@ -47,7 +47,7 @@ static uiNode_t *targetNode;				/**< Current node under the mouse */
 /**
  * @brief Return true if we are dragging something
  */
-qboolean MN_DNDIsDragging (void)
+qboolean UI_DNDIsDragging (void)
 {
 	return objectType != DND_NOTHING;
 }
@@ -55,9 +55,9 @@ qboolean MN_DNDIsDragging (void)
 /**
  * @brief Return true if the requested node is the current target of the DND
  */
-qboolean MN_DNDIsTargetNode (struct uiNode_s *node)
+qboolean UI_DNDIsTargetNode (struct uiNode_s *node)
 {
-	if (!MN_DNDIsDragging())
+	if (!UI_DNDIsDragging())
 		return qfalse;
 	return targetNode == node;
 }
@@ -65,9 +65,9 @@ qboolean MN_DNDIsTargetNode (struct uiNode_s *node)
 /**
  * @brief Return true if the requested node is the source of the DND
  */
-qboolean MN_DNDIsSourceNode (struct uiNode_s *node)
+qboolean UI_DNDIsSourceNode (struct uiNode_s *node)
 {
-	if (!MN_DNDIsDragging())
+	if (!UI_DNDIsDragging())
 		return qfalse;
 	return sourceNode == node;
 }
@@ -75,7 +75,7 @@ qboolean MN_DNDIsSourceNode (struct uiNode_s *node)
 /**
  * @brief Return the current type of the dragging object, else DND_NOTHING
  */
-int MN_DNDGetType (void)
+int UI_DNDGetType (void)
 {
 	return objectType;
 }
@@ -83,46 +83,46 @@ int MN_DNDGetType (void)
 /**
  * @brief Return target of the DND
  */
-uiNode_t *MN_DNDGetTargetNode (void)
+uiNode_t *UI_DNDGetTargetNode (void)
 {
-	assert(MN_DNDIsDragging());
+	assert(UI_DNDIsDragging());
 	return targetNode;
 }
 
 /**
  * @brief Return source of the DND
  */
-uiNode_t *MN_DNDGetSourceNode (void)
+uiNode_t *UI_DNDGetSourceNode (void)
 {
-	assert(MN_DNDIsDragging());
+	assert(UI_DNDIsDragging());
 	return sourceNode;
 }
 
 /**
  * @brief Private function to initialize a the start of a DND
- * @sa MN_DNDDragItem
- * @sa MN_DNDDrop
- * @sa MN_DNDAbort
+ * @sa UI_DNDDragItem
+ * @sa UI_DNDDrop
+ * @sa UI_DNDAbort
  */
-static void MN_DNDDrag (uiNode_t *node)
+static void UI_DNDDrag (uiNode_t *node)
 {
-	assert(!MN_DNDIsDragging());
+	assert(!UI_DNDIsDragging());
 	objectType = DND_SOMETHING;
 	sourceNode = node;
 
-	MN_PlaySound("item-drag");
+	UI_PlaySound("item-drag");
 }
 
 /**
  * @brief Start to drag an item
- * @sa MN_DNDDrag
- * @sa MN_DNDDrop
- * @sa MN_DNDAbort
+ * @sa UI_DNDDrag
+ * @sa UI_DNDDrop
+ * @sa UI_DNDAbort
  */
-void MN_DNDDragItem (uiNode_t *node, const item_t *item)
+void UI_DNDDragItem (uiNode_t *node, const item_t *item)
 {
-	MN_DNDDrag(node);
-	assert(MN_DNDIsDragging());
+	UI_DNDDrag(node);
+	assert(UI_DNDIsDragging());
 	objectType = DND_ITEM;
 	draggingItem = *item;
 }
@@ -130,7 +130,7 @@ void MN_DNDDragItem (uiNode_t *node, const item_t *item)
 /**
  * @brief Cleanup data about DND
  */
-static inline void MN_DNDCleanup (void)
+static inline void UI_DNDCleanup (void)
 {
 	objectType = DND_NOTHING;
 	targetNode = NULL;
@@ -139,12 +139,12 @@ static inline void MN_DNDCleanup (void)
 
 /**
  * @brief Drop the object at the current position
- * @sa MN_DNDStartDrag
- * @sa MN_DNDDrop
+ * @sa UI_DNDStartDrag
+ * @sa UI_DNDDrop
  */
-void MN_DNDAbort (void)
+void UI_DNDAbort (void)
 {
-	assert(MN_DNDIsDragging());
+	assert(UI_DNDIsDragging());
 	assert(objectType != DND_NOTHING);
 	assert(sourceNode != NULL);
 
@@ -153,24 +153,24 @@ void MN_DNDAbort (void)
 	}
 	sourceNode->behaviour->dndFinished(sourceNode, qfalse);
 
-	MN_DNDCleanup();
-	MN_InvalidateMouse();
+	UI_DNDCleanup();
+	UI_InvalidateMouse();
 }
 
 /**
  * @brief Drop the object at the current position
- * @sa MN_DNDStartDrag
- * @sa MN_DNDAbort
+ * @sa UI_DNDStartDrag
+ * @sa UI_DNDAbort
  */
-void MN_DNDDrop (void)
+void UI_DNDDrop (void)
 {
 	qboolean result = qfalse;
-	assert(MN_DNDIsDragging());
+	assert(UI_DNDIsDragging());
 	assert(objectType != DND_NOTHING);
 	assert(sourceNode != NULL);
 
 	if (!positionAcceptDND) {
-		MN_DNDAbort();
+		UI_DNDAbort();
 		return;
 	}
 
@@ -179,13 +179,13 @@ void MN_DNDDrop (void)
 	}
 	sourceNode->behaviour->dndFinished(sourceNode, result);
 
-	MN_PlaySound("item-drop");
+	UI_PlaySound("item-drop");
 
-	MN_DNDCleanup();
-	MN_InvalidateMouse();
+	UI_DNDCleanup();
+	UI_InvalidateMouse();
 }
 
-item_t *MN_DNDGetItem (void)
+item_t *UI_DNDGetItem (void)
 {
 	assert(objectType == DND_ITEM);
 	return &draggingItem;
@@ -194,9 +194,9 @@ item_t *MN_DNDGetItem (void)
 /**
  * @brief Manage the DND when we move the mouse
  */
-static void MN_DNDMouseMove (int mousePosX, int mousePosY)
+static void UI_DNDMouseMove (int mousePosX, int mousePosY)
 {
-	uiNode_t *node = MN_GetNodeAtPosition(mousePosX, mousePosY);
+	uiNode_t *node = UI_GetNodeAtPosition(mousePosX, mousePosY);
 
 	if (node != targetNode) {
 		if (nodeAcceptDND && targetNode) {
@@ -226,7 +226,7 @@ static void MN_DNDMouseMove (int mousePosX, int mousePosY)
 /**
  * @brief Draw to dragging object and catch mouse move event
  */
-void MN_DrawDragAndDrop (int mousePosX, int mousePosY)
+void UI_DrawDragAndDrop (int mousePosX, int mousePosY)
 {
 	const vec3_t scale = { 3.5, 3.5, 3.5 };
 	vec3_t orgine;
@@ -236,7 +236,7 @@ void MN_DrawDragAndDrop (int mousePosX, int mousePosY)
 	if (mousePosX != oldMousePosX || mousePosY != oldMousePosY) {
 		oldMousePosX = mousePosX;
 		oldMousePosY = mousePosY;
-		MN_DNDMouseMove(mousePosX, mousePosY);
+		UI_DNDMouseMove(mousePosX, mousePosY);
 	}
 
 	/* draw the dragging item */
@@ -249,7 +249,7 @@ void MN_DrawDragAndDrop (int mousePosX, int mousePosY)
 
 	switch (objectType) {
 	case DND_ITEM:
-		MN_DrawItem(NULL, orgine, &draggingItem, -1, -1, scale, color);
+		UI_DrawItem(NULL, orgine, &draggingItem, -1, -1, scale, color);
 		break;
 
 	default:

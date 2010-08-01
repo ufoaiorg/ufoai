@@ -118,7 +118,7 @@ static void CP_ChangeNationHappiness_f (void)
  */
 static void CP_EndGame_f (void)
 {
-	MN_RegisterText(TEXT_STANDARD, _("Congratulations! You have reached the end of the UFO:AI campaign.\n"
+	UI_RegisterText(TEXT_STANDARD, _("Congratulations! You have reached the end of the UFO:AI campaign.\n"
 		"However, this is not the end of the road. The game remains in development.\n"
 		"The campaign will be expanded with new missions, new enemies, "
 		"new UFOs, new player controllable craft and more research.\n\n"

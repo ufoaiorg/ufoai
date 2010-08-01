@@ -26,6 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_SPINNER_H
 #define CLIENT_MENU_M_NODE_SPINNER_H
 
-void MN_RegisterSpinnerNode(uiBehaviour_t *behaviour);
+void UI_RegisterSpinnerNode(uiBehaviour_t *behaviour);
 
 #endif

@@ -32,24 +32,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static const value_t properties[] = {
 	/* Current position of the scroll. Image of the <code>viewpos</code> from <code>abstractscrollable</code> node. */
-	{"current", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, pos),  MEMBER_SIZEOF(EXTRADATA_TYPE, pos)},
+	{"current", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, pos),  MEMBER_SIZEOF(EXTRADATA_TYPE, pos)},
 	/* Image of the <code>viewsize</code> from <code>abstractscrollable</code> node. */
-	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, viewsize),  MEMBER_SIZEOF(EXTRADATA_TYPE, viewsize)},
+	{"viewsize", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, viewsize),  MEMBER_SIZEOF(EXTRADATA_TYPE, viewsize)},
 	/* Image of the <code>fullsize</code> from <code>abstractscrollable</code> node. */
-	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, fullsize),  MEMBER_SIZEOF(EXTRADATA_TYPE, fullsize)},
+	{"fullsize", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, fullsize),  MEMBER_SIZEOF(EXTRADATA_TYPE, fullsize)},
 
 	/* If true, hide the scroll when the position is 0 and can't change (when <code>viewsize</code> >= <code>fullsize</code>). */
-	{"hidewhenunused", V_BOOL, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, hideWhenUnused),  MEMBER_SIZEOF(EXTRADATA_TYPE, hideWhenUnused)},
+	{"hidewhenunused", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, hideWhenUnused),  MEMBER_SIZEOF(EXTRADATA_TYPE, hideWhenUnused)},
 
 	/* Callback value set when before calling onChange. It is used to know the change apply by the user
 	 * @Deprecated
 	 */
-	{"lastdiff", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, lastdiff),  MEMBER_SIZEOF(EXTRADATA_TYPE, lastdiff)},
+	{"lastdiff", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, lastdiff),  MEMBER_SIZEOF(EXTRADATA_TYPE, lastdiff)},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterAbstractScrollbarNode (uiBehaviour_t *behaviour)
+void UI_RegisterAbstractScrollbarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractscrollbar";
 	behaviour->isAbstract = qtrue;

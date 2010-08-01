@@ -440,7 +440,7 @@ static void Key_Console (int key, int unicode)
  * @brief Handles input when cls.keyDest == key_message
  * @note Used for chatting and cvar editing via menu
  * @sa Key_Event
- * @sa MN_LeftClick
+ * @sa UI_LeftClick
  */
 static void Key_Message (int key)
 {
@@ -726,7 +726,7 @@ static void Key_Bind_f (void)
 	}
 
 	if (!strcmp(Cmd_Argv(0), "bindui"))
-		MN_SetKeyBinding(cmd, b);
+		UI_SetKeyBinding(cmd, b);
 	else if (!strcmp(Cmd_Argv(0), "bindmenu"))
 		Key_SetBinding(b, cmd, KEYSPACE_MENU);
 	else if (!strcmp(Cmd_Argv(0), "bindbattle"))
@@ -780,15 +780,15 @@ void Key_WriteBindings (const char* filename)
 			cnt++;
 		}
 
-	for (i = 0; i < MN_GetKeyBindingCount(); i++) {
+	for (i = 0; i < UI_GetKeyBindingCount(); i++) {
 		const char *path;
-		uiKeyBinding_t*binding = MN_GetKeyBindingByIndex (i);
+		uiKeyBinding_t*binding = UI_GetKeyBindingByIndex (i);
 		if (binding->node == NULL)
 			continue;
 		if (binding->property == NULL)
-			path = va("%s", MN_GetPath(binding->node));
+			path = va("%s", UI_GetPath(binding->node));
 		else
-			path = va("%s@%s", MN_GetPath(binding->node), binding->property->string);
+			path = va("%s@%s", UI_GetPath(binding->node), binding->property->string);
 
 		if (FS_Printf(&f, "bindui %s \"%s\"\n", Key_KeynumToString(binding->key), path) < 0)
 			deleteFile = qtrue;
@@ -909,7 +909,7 @@ void Key_SetDest (int keyDest)
 	cls.keyDest = keyDest;
 	if (cls.keyDest == key_console) {
 		/* make sure the menu no more capture inputs */
-		MN_ReleaseInput();
+		UI_ReleaseInput();
 	}
 }
 
@@ -929,7 +929,7 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 	/* any key (except F1-F12) during the sequence mode will bring up the menu */
 
 	if (cls.keyDest == key_game && down) {
-		if (MN_KeyPressed(key, unicode))
+		if (UI_KeyPressed(key, unicode))
 			return;
 	}
 

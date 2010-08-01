@@ -181,20 +181,20 @@ typedef struct uiCallContext_s {
 } uiCallContext_t;
 
 
-void MN_ExecuteEventActions(const struct uiNode_s* source, const uiAction_t* firstAction);
-void MN_ExecuteConFuncActions(const struct uiNode_s* source, const uiAction_t* firstAction);
-qboolean MN_IsInjectedString(const char *string);
-void MN_FreeStringProperty(void* pointer);
-const char* MN_GenInjectedString(const char* input, qboolean addNewLine, const uiCallContext_t *context);
-int MN_GetActionTokenType(const char* token, int group);
+void UI_ExecuteEventActions(const struct uiNode_s* source, const uiAction_t* firstAction);
+void UI_ExecuteConFuncActions(const struct uiNode_s* source, const uiAction_t* firstAction);
+qboolean UI_IsInjectedString(const char *string);
+void UI_FreeStringProperty(void* pointer);
+const char* UI_GenInjectedString(const char* input, qboolean addNewLine, const uiCallContext_t *context);
+int UI_GetActionTokenType(const char* token, int group);
 
-void MN_PoolAllocAction(uiAction_t** action, int type, const void *data);
-uiAction_t* MN_AllocStaticCommandAction(char *command);
-void MN_InitActions(void);
-void MN_AddListener(struct uiNode_s *node, const value_t *property, struct uiNode_s *functionNode);
-void MN_RemoveListener(struct uiNode_s *node, const value_t *property, struct uiNode_s *functionNode);
+void UI_PoolAllocAction(uiAction_t** action, int type, const void *data);
+uiAction_t* UI_AllocStaticCommandAction(char *command);
+void UI_InitActions(void);
+void UI_AddListener(struct uiNode_s *node, const value_t *property, struct uiNode_s *functionNode);
+void UI_RemoveListener(struct uiNode_s *node, const value_t *property, struct uiNode_s *functionNode);
 
-const char* MN_GetParam(const uiCallContext_t *context, int paramID);
-int MN_GetParamNumber(const uiCallContext_t *context);
+const char* UI_GetParam(const uiCallContext_t *context, int paramID);
+int UI_GetParamNumber(const uiCallContext_t *context);
 
 #endif

@@ -41,6 +41,6 @@ typedef struct abstractScrollbarExtraData_s {
 
 struct uiBehaviour_s; /* prototype */
 
-void MN_RegisterAbstractScrollbarNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterAbstractScrollbarNode(struct uiBehaviour_s *behaviour);
 
 #endif

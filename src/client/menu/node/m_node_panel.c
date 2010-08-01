@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../common/scripts.h"
 
 #define EXTRADATA_TYPE panelExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
 #define CORNER_SIZE 25
 #define MID_SIZE 1
@@ -42,7 +42,7 @@ static const uiBehaviour_t const *localBehaviour;
 /**
  * @brief Handles Button draw
  */
-static void MN_PanelNodeDraw (uiNode_t *node)
+static void UI_PanelNodeDraw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -52,11 +52,11 @@ static void MN_PanelNodeDraw (uiNode_t *node)
 	const char *image;
 	vec2_t pos;
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 
-	image = MN_GetReferenceString(node, node->image);
+	image = UI_GetReferenceString(node, node->image);
 	if (image)
-		MN_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
+		UI_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
 }
 
 typedef enum {
@@ -90,7 +90,7 @@ typedef enum {
  * @param[in] margin The margin between all children nodes in their y-position of the panel
  * @note test only
  */
-static void MN_TopDownFlowLayout (uiNode_t *node, int margin)
+static void UI_TopDownFlowLayout (uiNode_t *node, int margin)
 {
 	const int width = node->size[0] - node->padding - node->padding;
 	int positionY = node->padding;
@@ -99,7 +99,7 @@ static void MN_TopDownFlowLayout (uiNode_t *node, int margin)
 
 	while (child) {
 		newSize[1] = child->size[1];
-		MN_NodeSetSize(child, newSize);
+		UI_NodeSetSize(child, newSize);
 		child->pos[0] = node->padding;
 		child->pos[1] = positionY;
 		positionY += child->size[1] + margin;
@@ -118,7 +118,7 @@ static void MN_TopDownFlowLayout (uiNode_t *node, int margin)
  * @param[in] margin The margin between all children nodes in their y-position of the panel
  * @note test only
  */
-static void MN_BorderLayout (uiNode_t *node, int margin)
+static void UI_BorderLayout (uiNode_t *node, int margin)
 {
 	uiNode_t *child;
 	vec2_t newSize;
@@ -135,7 +135,7 @@ static void MN_BorderLayout (uiNode_t *node, int margin)
 			continue;
 		newSize[0] = maxX - minX;
 		newSize[1] = child->size[1];
-		MN_NodeSetSize(child, newSize);
+		UI_NodeSetSize(child, newSize);
 		child->pos[0] = minX;
 		child->pos[1] = minY;
 		minY += child->size[1] + margin;
@@ -149,7 +149,7 @@ static void MN_BorderLayout (uiNode_t *node, int margin)
 			continue;
 		newSize[0] = maxX - minX;
 		newSize[1] = child->size[1];
-		MN_NodeSetSize(child, newSize);
+		UI_NodeSetSize(child, newSize);
 		child->pos[0] = minX;
 		child->pos[1] = maxY - child->size[1];
 		maxY -= child->size[1] + margin;
@@ -163,7 +163,7 @@ static void MN_BorderLayout (uiNode_t *node, int margin)
 			continue;
 		newSize[0] = child->size[0];
 		newSize[1] = maxY - minY;
-		MN_NodeSetSize(child, newSize);
+		UI_NodeSetSize(child, newSize);
 		child->pos[0] = minX;
 		child->pos[1] = minY;
 		minX += child->size[0] + margin;
@@ -177,7 +177,7 @@ static void MN_BorderLayout (uiNode_t *node, int margin)
 			continue;
 		newSize[0] = child->size[0];
 		newSize[1] = maxY - minY;
-		MN_NodeSetSize(child, newSize);
+		UI_NodeSetSize(child, newSize);
 		child->pos[0] = maxX - child->size[0];
 		child->pos[1] = minY;
 		maxX -= child->size[0] + margin;
@@ -191,7 +191,7 @@ static void MN_BorderLayout (uiNode_t *node, int margin)
 			continue;
 		newSize[0] = maxX - minX;
 		newSize[1] = maxY - minY;
-		MN_NodeSetSize(child, newSize);
+		UI_NodeSetSize(child, newSize);
 		child->pos[0] = minX;
 		child->pos[1] = minY;
 	}
@@ -207,7 +207,7 @@ static void MN_BorderLayout (uiNode_t *node, int margin)
  * @param[in] margin The margin between all children nodes
  * @note test only
  */
-static void MN_PackLayout (uiNode_t *node, int margin)
+static void UI_PackLayout (uiNode_t *node, int margin)
 {
 	uiNode_t *child;
 	vec2_t newSize;
@@ -224,7 +224,7 @@ static void MN_PackLayout (uiNode_t *node, int margin)
 		case LAYOUTALIGN_TOP:
 			newSize[0] = maxX - minX;
 			newSize[1] = child->size[1];
-			MN_NodeSetSize(child, newSize);
+			UI_NodeSetSize(child, newSize);
 			child->pos[0] = minX;
 			child->pos[1] = minY;
 			minY += child->size[1] + margin;
@@ -232,7 +232,7 @@ static void MN_PackLayout (uiNode_t *node, int margin)
 		case LAYOUTALIGN_BOTTOM:
 			newSize[0] = maxX - minX;
 			newSize[1] = child->size[1];
-			MN_NodeSetSize(child, newSize);
+			UI_NodeSetSize(child, newSize);
 			child->pos[0] = minX;
 			child->pos[1] = maxY - child->size[1];
 			maxY -= child->size[1] + margin;
@@ -240,7 +240,7 @@ static void MN_PackLayout (uiNode_t *node, int margin)
 		case LAYOUTALIGN_LEFT:
 			newSize[0] = child->size[0];
 			newSize[1] = maxY - minY;
-			MN_NodeSetSize(child, newSize);
+			UI_NodeSetSize(child, newSize);
 			child->pos[0] = minX;
 			child->pos[1] = minY;
 			minX += child->size[0] + margin;
@@ -248,7 +248,7 @@ static void MN_PackLayout (uiNode_t *node, int margin)
 		case LAYOUTALIGN_RIGHT:
 			newSize[0] = child->size[0];
 			newSize[1] = maxY - minY;
-			MN_NodeSetSize(child, newSize);
+			UI_NodeSetSize(child, newSize);
 			child->pos[0] = maxX - child->size[0];
 			child->pos[1] = minY;
 			maxX -= child->size[0] + margin;
@@ -256,7 +256,7 @@ static void MN_PackLayout (uiNode_t *node, int margin)
 		case LAYOUTALIGN_FILL:
 			newSize[0] = maxX - minX;
 			newSize[1] = maxY - minY;
-			MN_NodeSetSize(child, newSize);
+			UI_NodeSetSize(child, newSize);
 			child->pos[0] = minX;
 			child->pos[1] = minY;
 			break;
@@ -291,7 +291,7 @@ static const align_t starlayoutmap[] = {
  * 10=fill
  * @todo Tag it static when it is possible
  */
-void MN_StarLayout (uiNode_t *node)
+void UI_StarLayout (uiNode_t *node)
 {
 	uiNode_t *child;
 	for (child = node->firstChild; child; child = child->next) {
@@ -305,16 +305,16 @@ void MN_StarLayout (uiNode_t *node)
 		if (child->align == LAYOUTALIGN_FILL) {
 			child->pos[0] = 0;
 			child->pos[1] = 0;
-			MN_NodeSetSize(child, node->size);
+			UI_NodeSetSize(child, node->size);
 			child->behaviour->doLayout(child);
 			continue;
 		}
 
 		align = starlayoutmap[child->align - 1];
-		MN_NodeGetPoint(node, destination, align);
-		MN_NodeRelativeToAbsolutePoint(node, destination);
-		MN_NodeGetPoint(child, source, align);
-		MN_NodeRelativeToAbsolutePoint(child, source);
+		UI_NodeGetPoint(node, destination, align);
+		UI_NodeRelativeToAbsolutePoint(node, destination);
+		UI_NodeGetPoint(child, source, align);
+		UI_NodeRelativeToAbsolutePoint(child, source);
 		child->pos[0] += destination[0] - source[0];
 		child->pos[1] += destination[1] - source[1];
 	}
@@ -323,7 +323,7 @@ void MN_StarLayout (uiNode_t *node)
 /**
  * Update the client zone
  */
-static void MN_ClientLayout (uiNode_t *node)
+static void UI_ClientLayout (uiNode_t *node)
 {
 	int width = 0;
 	int height = 0;
@@ -342,13 +342,13 @@ static void MN_ClientLayout (uiNode_t *node)
 	width += node->padding;
 	height += node->padding;
 
-	updated = MN_SetScroll(&EXTRADATA(node).super.scrollX, -1, node->size[0], width);
-	updated = MN_SetScroll(&EXTRADATA(node).super.scrollY, -1, node->size[1], height) || updated;
+	updated = UI_SetScroll(&EXTRADATA(node).super.scrollX, -1, node->size[0], width);
+	updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, -1, node->size[1], height) || updated;
 	if (updated && EXTRADATA(node).super.onViewChange)
-		MN_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 }
 
-static void MN_PanelNodeDoLayout (uiNode_t *node)
+static void UI_PanelNodeDoLayout (uiNode_t *node)
 {
 	if (!node->invalidated)
 		return;
@@ -357,22 +357,22 @@ static void MN_PanelNodeDoLayout (uiNode_t *node)
 	case LAYOUT_NONE:
 		break;
 	case LAYOUT_TOP_DOWN_FLOW:
-		MN_TopDownFlowLayout(node, EXTRADATA(node).layoutMargin);
+		UI_TopDownFlowLayout(node, EXTRADATA(node).layoutMargin);
 		break;
 	case LAYOUT_BORDER:
-		MN_BorderLayout(node, EXTRADATA(node).layoutMargin);
+		UI_BorderLayout(node, EXTRADATA(node).layoutMargin);
 		break;
 	case LAYOUT_PACK:
-		MN_PackLayout(node, EXTRADATA(node).layoutMargin);
+		UI_PackLayout(node, EXTRADATA(node).layoutMargin);
 		break;
 	case LAYOUT_STAR:
-		MN_StarLayout(node);
+		UI_StarLayout(node);
 		break;
 	case LAYOUT_CLIENT:
-		MN_ClientLayout(node);
+		UI_ClientLayout(node);
 		break;
 	default:
-		Com_Printf("MN_PanelNodeDoLayout: layout '%d' unsupported.", EXTRADATA(node).layout);
+		Com_Printf("UI_PanelNodeDoLayout: layout '%d' unsupported.", EXTRADATA(node).layout);
 	}
 
 	localBehaviour->super->doLayout(node);
@@ -381,17 +381,17 @@ static void MN_PanelNodeDoLayout (uiNode_t *node)
 /**
  * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
-static void MN_PanelNodeLoaded (uiNode_t *node)
+static void UI_PanelNodeLoaded (uiNode_t *node)
 {
 #ifdef DEBUG
 	if (node->size[0] < CORNER_SIZE + MID_SIZE + CORNER_SIZE || node->size[1] < CORNER_SIZE + MID_SIZE + CORNER_SIZE)
-		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical glitches\n", MN_GetPath(node));
+		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical glitches\n", UI_GetPath(node));
 #endif
 	if (EXTRADATA(node).layout != LAYOUT_NONE)
-		MN_Invalidate(node);
+		UI_Invalidate(node);
 }
 
-static void MN_PanelNodeGetClientPosition (uiNode_t *node, vec2_t position)
+static void UI_PanelNodeGetClientPosition (uiNode_t *node, vec2_t position)
 {
 	position[0] = -EXTRADATA(node).super.scrollX.viewPos;
 	position[1] = -EXTRADATA(node).super.scrollY.viewPos;
@@ -414,26 +414,26 @@ static const value_t properties[] = {
 	 * <li>LAYOUT_STAR: Align the corner of child into the corner of the node. Child size do not change.
 	 * @image html http://ufoai.ninex.info/wiki/images/Layout.png
 	 */
-	{"layout", V_INT, MN_EXTRADATA_OFFSETOF(panelExtraData_t, layout), MEMBER_SIZEOF(panelExtraData_t, layout)},
+	{"layout", V_INT, UI_EXTRADATA_OFFSETOF(panelExtraData_t, layout), MEMBER_SIZEOF(panelExtraData_t, layout)},
 	/**
 	 * Margin use to layout children (margin between children)
 	 */
-	{"layoutMargin", V_INT, MN_EXTRADATA_OFFSETOF(panelExtraData_t, layoutMargin), MEMBER_SIZEOF(panelExtraData_t, layoutMargin)},
+	{"layoutMargin", V_INT, UI_EXTRADATA_OFFSETOF(panelExtraData_t, layoutMargin), MEMBER_SIZEOF(panelExtraData_t, layoutMargin)},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterPanelNode (uiBehaviour_t *behaviour)
+void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
 {
 	localBehaviour = behaviour;
 	behaviour->extends = "abstractscrollable";
 	behaviour->name = "panel";
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->draw = MN_PanelNodeDraw;
-	behaviour->loaded = MN_PanelNodeLoaded;
-	behaviour->doLayout = MN_PanelNodeDoLayout;
-	behaviour->getClientPosition = MN_PanelNodeGetClientPosition;
+	behaviour->draw = UI_PanelNodeDraw;
+	behaviour->loaded = UI_PanelNodeLoaded;
+	behaviour->doLayout = UI_PanelNodeDoLayout;
+	behaviour->getClientPosition = UI_PanelNodeGetClientPosition;
 
 	Com_RegisterConstInt("LAYOUTALIGN_TOPLEFT", LAYOUTALIGN_TOPLEFT);
 	Com_RegisterConstInt("LAYOUTALIGN_TOP", LAYOUTALIGN_TOP);

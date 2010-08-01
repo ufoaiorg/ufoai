@@ -477,27 +477,27 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 static void CL_InitSkin_f (void)
 {
 	/* create singleplayer skins */
-	if (MN_GetOption(OPTION_SINGLEPLAYER_SKINS) == NULL) {
+	if (UI_GetOption(OPTION_SINGLEPLAYER_SKINS) == NULL) {
 		uiNode_t *skins = NULL;
 		assert(NUM_TEAMSKINS_SINGLEPLAYER >= 4);	/*< the current code create 4 skins */
-		MN_AddOption(&skins, "urban", N_("Urban"), "0");
-		MN_AddOption(&skins, "jungle", N_("Jungle"), "1");
-		MN_AddOption(&skins, "desert", N_("Desert"), "2");
-		MN_AddOption(&skins, "arctic", N_("Arctic"), "3");
-		MN_RegisterOption(OPTION_SINGLEPLAYER_SKINS, skins);
+		UI_AddOption(&skins, "urban", N_("Urban"), "0");
+		UI_AddOption(&skins, "jungle", N_("Jungle"), "1");
+		UI_AddOption(&skins, "desert", N_("Desert"), "2");
+		UI_AddOption(&skins, "arctic", N_("Arctic"), "3");
+		UI_RegisterOption(OPTION_SINGLEPLAYER_SKINS, skins);
 	}
 
 	/* create multiplayer skins */
-	if (MN_GetOption(OPTION_MULTIPLAYER_SKINS) == NULL) {
+	if (UI_GetOption(OPTION_MULTIPLAYER_SKINS) == NULL) {
 		uiNode_t *skins = NULL;
 		assert(NUM_TEAMSKINS >= 6);		/*< the current code create 6 skins */
-		MN_AddOption(&skins, "urban", N_("Urban"), "0");
-		MN_AddOption(&skins, "jungle", N_("Jungle"), "1");
-		MN_AddOption(&skins, "desert", N_("Desert"), "2");
-		MN_AddOption(&skins, "arctic", N_("Arctic"), "3");
-		MN_AddOption(&skins, "multionly_yellow", N_("Yellow"), "4");
-		MN_AddOption(&skins, "multionly_cccp", N_("CCCP"), "5");
-		MN_RegisterOption(OPTION_MULTIPLAYER_SKINS, skins);
+		UI_AddOption(&skins, "urban", N_("Urban"), "0");
+		UI_AddOption(&skins, "jungle", N_("Jungle"), "1");
+		UI_AddOption(&skins, "desert", N_("Desert"), "2");
+		UI_AddOption(&skins, "arctic", N_("Arctic"), "3");
+		UI_AddOption(&skins, "multionly_yellow", N_("Yellow"), "4");
+		UI_AddOption(&skins, "multionly_cccp", N_("CCCP"), "5");
+		UI_RegisterOption(OPTION_MULTIPLAYER_SKINS, skins);
 	}
 }
 

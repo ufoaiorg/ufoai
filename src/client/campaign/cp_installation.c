@@ -360,7 +360,7 @@ installation_t *INS_GetFirstUFOYard (qboolean free)
 
 /**
  * @brief Resets console commands.
- * @sa MN_ResetMenus
+ * @sa UI_ResetMenus
  */
 void INS_InitStartup (void)
 {

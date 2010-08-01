@@ -29,12 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Number max of timer slot.
  */
-#define MN_TIMER_SLOT_NUMBER 10
+#define UI_TIMER_SLOT_NUMBER 10
 
 /**
  * @brief Timer slot. Only one.
  */
-static uiTimer_t mn_timerSlots[MN_TIMER_SLOT_NUMBER];
+static uiTimer_t mn_timerSlots[UI_TIMER_SLOT_NUMBER];
 
 /**
  * @brief First timer from the timer list.
@@ -46,9 +46,9 @@ static uiTimer_t *mn_firstTimer;
  * @brief Remove a timer from the active linked list
  * @note The function doesn't set to null next and previous attributes of the timer
  */
-static inline void MN_RemoveTimerFromActiveList (uiTimer_t *timer)
+static inline void UI_RemoveTimerFromActiveList (uiTimer_t *timer)
 {
-	assert(timer >= mn_timerSlots && timer < mn_timerSlots + MN_TIMER_SLOT_NUMBER);
+	assert(timer >= mn_timerSlots && timer < mn_timerSlots + UI_TIMER_SLOT_NUMBER);
 	if (timer->prev) {
 		timer->prev->next = timer->next;
 	} else {
@@ -63,7 +63,7 @@ static inline void MN_RemoveTimerFromActiveList (uiTimer_t *timer)
  * @brief Insert a timer in a sorted linked list of timers.
  * List are ordered from smaller to bigger nextTime value
  */
-static void MN_InsertTimerInActiveList (uiTimer_t* first, uiTimer_t* newTimer)
+static void UI_InsertTimerInActiveList (uiTimer_t* first, uiTimer_t* newTimer)
 {
 	uiTimer_t* current = first;
 	uiTimer_t* prev = NULL;
@@ -95,7 +95,7 @@ static void MN_InsertTimerInActiveList (uiTimer_t* first, uiTimer_t* newTimer)
 /**
  * @brief Internal function to handle timers
  */
-void MN_HandleTimers (void)
+void UI_HandleTimers (void)
 {
 	/* is first element is out of date? */
 	while (mn_firstTimer && mn_firstTimer->nextTime <= CL_Milliseconds()) {
@@ -107,9 +107,9 @@ void MN_HandleTimers (void)
 
 		/* update the sorted list */
 		if (timer->isRunning) {
-			MN_RemoveTimerFromActiveList(timer);
+			UI_RemoveTimerFromActiveList(timer);
 			timer->nextTime += timer->delay;
-			MN_InsertTimerInActiveList(timer->next, timer);
+			UI_InsertTimerInActiveList(timer->next, timer);
 		}
 	}
 }
@@ -120,20 +120,20 @@ void MN_HandleTimers (void)
  * @param[in] firstDelay millisecond delay to wait the callback
  * @param[in] callback callback function to call every delay
  */
-uiTimer_t* MN_AllocTimer (uiNode_t *node, int firstDelay, timerCallback_t callback)
+uiTimer_t* UI_AllocTimer (uiNode_t *node, int firstDelay, timerCallback_t callback)
 {
 	uiTimer_t *timer = NULL;
 	int i;
 
 	/* search empty slot */
-	for (i = 0; i < MN_TIMER_SLOT_NUMBER; i++) {
+	for (i = 0; i < UI_TIMER_SLOT_NUMBER; i++) {
 		if (mn_timerSlots[i].callback != NULL)
 			continue;
 		timer = mn_timerSlots + i;
 		break;
 	}
 	if (timer == NULL)
-		Com_Error(ERR_FATAL, "MN_AllocTimer: No more timer slot");
+		Com_Error(ERR_FATAL, "UI_AllocTimer: No more timer slot");
 
 	timer->owner = node;
 	timer->delay = firstDelay;
@@ -148,24 +148,24 @@ uiTimer_t* MN_AllocTimer (uiNode_t *node, int firstDelay, timerCallback_t callba
 /**
  * @brief Restart a timer
  */
-void MN_TimerStart (uiTimer_t *timer)
+void UI_TimerStart (uiTimer_t *timer)
 {
 	if (timer->isRunning)
 		return;
 	assert(mn_firstTimer != timer && timer->prev == NULL && timer->next == NULL);
 	timer->nextTime = CL_Milliseconds() + timer->delay;
 	timer->isRunning = qtrue;
-	MN_InsertTimerInActiveList(mn_firstTimer, timer);
+	UI_InsertTimerInActiveList(mn_firstTimer, timer);
 }
 
 /**
  * @brief Stop a timer
  */
-void MN_TimerStop (uiTimer_t *timer)
+void UI_TimerStop (uiTimer_t *timer)
 {
 	if (!timer->isRunning)
 		return;
-	MN_RemoveTimerFromActiveList(timer);
+	UI_RemoveTimerFromActiveList(timer);
 	timer->prev = NULL;
 	timer->next = NULL;
 	timer->isRunning = qfalse;
@@ -174,9 +174,9 @@ void MN_TimerStop (uiTimer_t *timer)
 /**
  * @brief Release the timer. It no more exists
  */
-void MN_TimerRelease (uiTimer_t *timer)
+void UI_TimerRelease (uiTimer_t *timer)
 {
-	MN_RemoveTimerFromActiveList(timer);
+	UI_RemoveTimerFromActiveList(timer);
 	timer->prev = NULL;
 	timer->next = NULL;
 	timer->owner = NULL;
@@ -189,14 +189,14 @@ void MN_TimerRelease (uiTimer_t *timer)
  * @brief Return the first timer.
  * Only used for white box unittests
  */
-uiTimer_t *MN_GetFirstTimer (void)
+uiTimer_t *UI_GetFirstTimer (void)
 {
 	return mn_firstTimer;
 }
 
-void MN_PrivateInsertTimerInActiveList (uiTimer_t* first, uiTimer_t* newTimer)
+void UI_PrivateInsertTimerInActiveList (uiTimer_t* first, uiTimer_t* newTimer)
 {
-	MN_InsertTimerInActiveList(first, newTimer);
+	UI_InsertTimerInActiveList(first, newTimer);
 }
 
 #endif

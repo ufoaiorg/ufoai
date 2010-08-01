@@ -886,7 +886,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 
 	/* you can't destroy buildings if base is under attack */
 	if (base->baseStatus == BASE_UNDER_ATTACK) {
-		MN_Popup(_("Notice"), _("Base is under attack, you can't destroy buildings!"));
+		UI_Popup(_("Notice"), _("Base is under attack, you can't destroy buildings!"));
 		return;
 	}
 
@@ -897,7 +897,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 
 	/** @todo: make base destroyable by destroying entrance */
 	if (building->buildingType == B_ENTRANCE) {
-		MN_Popup(_("Destroy Entrance"), _("You can't destroy the entrance of the base!"));
+		UI_Popup(_("Destroy Entrance"), _("You can't destroy the entrance of the base!"));
 		return;
 	}
 
@@ -906,7 +906,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 		case B_HANGAR:
 		case B_SMALL_HANGAR:
 			if (base->capacities[cap].cur >= base->capacities[cap].max) {
-				MN_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
+				UI_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
 					"mn_pop;mn_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
 					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
 					(ccs.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
@@ -916,7 +916,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 			break;
 		case B_QUARTERS:
 			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
-				MN_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
+				UI_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
 					"mn_pop;mn_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
 					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
 					(ccs.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
@@ -926,7 +926,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 			break;
 		case B_STORAGE:
 			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
-				MN_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
+				UI_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
 					"mn_pop;mn_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
 					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
 					(ccs.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
@@ -939,7 +939,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 		}
 	}
 
-	MN_PopupButton(_("Destroy building"), _("Are you sure you want to destroy this building?"),
+	UI_PopupButton(_("Destroy building"), _("Are you sure you want to destroy this building?"),
 		NULL, NULL, NULL,
 		"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
 		NULL, NULL, NULL);
@@ -1437,7 +1437,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 		Com_Error(ERR_DROP, "no current building\n");
 #endif
 	if (!B_CheckCredits(buildingTemplate->fixCosts)) {
-		MN_Popup(_("Notice"), _("Not enough credits to build this\n"));
+		UI_Popup(_("Notice"), _("Not enough credits to build this\n"));
 		return NULL;
 	}
 
@@ -1539,7 +1539,7 @@ void B_DrawBuilding (base_t* base, building_t* building)
 		Cvar_Set("mn_building_image", "base/empty");
 
 	/* link into menu text array */
-	MN_RegisterText(TEXT_BUILDING_INFO, buildingText);
+	UI_RegisterText(TEXT_BUILDING_INFO, buildingText);
 }
 
 /**
@@ -1988,7 +1988,7 @@ void B_SelectBase (const base_t *base)
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", base->idx);
 		ccs.mapAction = MA_NONE;
-		MN_PushWindow("bases", NULL);
+		UI_PushWindow("bases", NULL);
 		B_SetCurrentSelectedBase(base);
 	}
 
@@ -2259,62 +2259,62 @@ void B_BuildingOpenAfterClick (const base_t *base, const building_t *building)
 		switch (building->buildingType) {
 		case B_LAB:
 			if (RS_ResearchAllowed(base))
-				MN_PushWindow("research", NULL);
+				UI_PushWindow("research", NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_HOSPITAL:
 			if (HOS_HospitalAllowed(base))
-				MN_PushWindow("hospital", NULL);
+				UI_PushWindow("hospital", NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_ALIEN_CONTAINMENT:
 			if (AC_ContainmentAllowed(base))
-				MN_PushWindow("aliencont", NULL);
+				UI_PushWindow("aliencont", NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_QUARTERS:
 			if (E_HireAllowed(base))
-				MN_PushWindow("employees", NULL);
+				UI_PushWindow("employees", NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_WORKSHOP:
 			if (PR_ProductionAllowed(base))
-				MN_PushWindow("production", NULL);
+				UI_PushWindow("production", NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_DEFENCE_LASER:
 		case B_DEFENCE_MISSILE:
-			MN_PushWindow("basedefence", NULL);
+			UI_PushWindow("basedefence", NULL);
 			break;
 		case B_HANGAR:
 		case B_SMALL_HANGAR:
 			if (!AIR_AircraftAllowed(base)) {
 				UP_OpenWith(building->pedia);
 			} else if (base->numAircraftInBase) {
-				MN_PushWindow("aircraft", NULL);
+				UI_PushWindow("aircraft", NULL);
 			} else {
-				MN_PushWindow("buyaircraft", NULL);
+				UI_PushWindow("buyaircraft", NULL);
 				/* transfer is only possible when there are at least two bases */
 				if (ccs.numBases > 1)
-					MN_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
+					UI_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
 				else
-					MN_Popup(_("Note"), _("No aircraft in this base - You first have to purchase an aircraft\n"));
+					UI_Popup(_("Note"), _("No aircraft in this base - You first have to purchase an aircraft\n"));
 			}
 			break;
 		case B_STORAGE:
 			if (BS_BuySellAllowed(base))
-				MN_PushWindow("market", NULL);
+				UI_PushWindow("market", NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;
 		case B_ANTIMATTER:
 			Com_sprintf(popupText, sizeof(popupText), "%s %d/%d", _("Antimatter (current/max):"), base->capacities[CAP_ANTIMATTER].cur, base->capacities[CAP_ANTIMATTER].max);
-			MN_Popup(_("Information"), popupText);
+			UI_Popup(_("Information"), popupText);
 			break;
 		default:
 			UP_OpenWith(building->pedia);
@@ -2407,7 +2407,7 @@ static void B_ResetAllStatusAndCapacities_f (void)
 
 /**
  * @brief Resets console commands.
- * @sa MN_InitStartup
+ * @sa UI_InitStartup
  */
 void B_InitStartup (void)
 {

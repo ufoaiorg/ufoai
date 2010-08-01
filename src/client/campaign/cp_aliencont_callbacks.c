@@ -109,7 +109,7 @@ static void AC_ResearchAlien_f (void)
 		Com_Error(ERR_DROP, "aliencontCurrent without tech pointer");
 
 	if (!RS_IsResearched_ptr(tech))
-		MN_PushWindow("research", NULL);
+		UI_PushWindow("research", NULL);
 }
 
 /**
@@ -184,7 +184,7 @@ static void AC_UpdateMenu (const base_t *base)
 	Cvar_SetValue("mn_al_capacity_max", base->capacities[CAP_ALIENS].max);
 
 	/* Reset list. */
-	MN_ExecuteConfunc("aliencont_clear");
+	UI_ExecuteConfunc("aliencont_clear");
 	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		const aliensCont_t *containment = base->alienscont;
 		for (i = 0, j = 0; i < ccs.numAliensTD; i++) {
@@ -206,9 +206,9 @@ static void AC_UpdateMenu (const base_t *base)
 						} else {
 							Cvar_Set(va("mn_ac_statusstr%i", j), _("Needs autopsy!"));
 							if (!containment[i].amountDead) {
-								MN_ExecuteConfunc("aliencontkill %i", j);
+								UI_ExecuteConfunc("aliencontkill %i", j);
 							} else {
-								MN_ExecuteConfunc("aliencontneedautopsy %i", j);
+								UI_ExecuteConfunc("aliencontneedautopsy %i", j);
 							}
 						}
 						Cvar_SetValue(va("mn_ac_progress%i", j), (1 - tech->time / tech->overallTime) * 100);

@@ -39,8 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_panel.h"
 
 #define EXTRADATA_TYPE buttonExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 #include "../../client.h"
 
@@ -52,17 +52,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Handles Button clicks
  */
-static void MN_ButtonNodeClick (uiNode_t * node, int x, int y)
+static void UI_ButtonNodeClick (uiNode_t * node, int x, int y)
 {
 	if (node->onClick) {
-		MN_ExecuteEventActions(node, node->onClick);
+		UI_ExecuteEventActions(node, node->onClick);
 	}
 }
 
 /**
  * @brief Handles Button draw
  */
-static void MN_ButtonNodeDraw (uiNode_t *node)
+static void UI_ButtonNodeDraw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -77,7 +77,7 @@ static void MN_ButtonNodeDraw (uiNode_t *node)
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int iconPadding = 0;
 	uiIconStatus_t iconStatus = ICON_STATUS_NORMAL;
-	const char *font = MN_GetFontFromNode(node);
+	const char *font = UI_GetFontFromNode(node);
 
 	if (!node->onClick || node->disabled) {
 		/** @todo need custom color when button is disabled */
@@ -96,11 +96,11 @@ static void MN_ButtonNodeDraw (uiNode_t *node)
 		texY = 0;
 	}
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 
-	image = MN_GetReferenceString(node, node->image);
+	image = UI_GetReferenceString(node, node->image);
 	if (image)
-		MN_DrawPanel(pos, node->size, image, texX, texY, panelTemplate);
+		UI_DrawPanel(pos, node->size, image, texX, texY, panelTemplate);
 
 	/* display the icon at the left */
 	/** @todo should we move it according to the text align? */
@@ -109,15 +109,15 @@ static void MN_ButtonNodeDraw (uiNode_t *node)
 		int size = node->size[1] - node->padding - node->padding;
 		if (size < EXTRADATA(node).icon->size[0])
 			size = EXTRADATA(node).icon->size[0];
-		MN_DrawIconInBox(EXTRADATA(node).icon, iconStatus, pos[0] + node->padding, pos[1] + node->padding, size, node->size[1] - node->padding - node->padding);
+		UI_DrawIconInBox(EXTRADATA(node).icon, iconStatus, pos[0] + node->padding, pos[1] + node->padding, size, node->size[1] - node->padding - node->padding);
 		iconPadding = size + node->padding;
 	}
 
-	text = MN_GetReferenceString(node, node->text);
+	text = UI_GetReferenceString(node, node->text);
 	if (text != NULL && *text != '\0') {
 		R_Color(textColor);
 		text = _(text);
-		MN_DrawStringInBox(font, node->textalign,
+		UI_DrawStringInBox(font, node->textalign,
 			pos[0] + node->padding + iconPadding, pos[1] + node->padding,
 			node->size[0] - node->padding - node->padding - iconPadding, node->size[1] - node->padding - node->padding,
 			text, LONGLINES_PRETTYCHOP);
@@ -128,7 +128,7 @@ static void MN_ButtonNodeDraw (uiNode_t *node)
 /**
  * @brief Handles Button before loading. Used to set default attribute values
  */
-static void MN_ButtonNodeLoading (uiNode_t *node)
+static void UI_ButtonNodeLoading (uiNode_t *node)
 {
 	node->padding = 8;
 	node->textalign = ALIGN_CC;
@@ -139,16 +139,16 @@ static void MN_ButtonNodeLoading (uiNode_t *node)
 /**
  * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
-static void MN_ButtonNodeLoaded (uiNode_t *node)
+static void UI_ButtonNodeLoaded (uiNode_t *node)
 {
 	/* auto calc the size if none was given via script files */
 	if (node->size[1] == 0) {
-		const char *font = MN_GetFontFromNode(node);
-		node->size[1] = (MN_FontGetHeight(font) / 2) + (node->padding * 2);
+		const char *font = UI_GetFontFromNode(node);
+		node->size[1] = (UI_FontGetHeight(font) / 2) + (node->padding * 2);
 	}
 #ifdef DEBUG
 	if (node->size[0] < CORNER_SIZE + MID_SIZE + CORNER_SIZE || node->size[1] < CORNER_SIZE + MID_SIZE + CORNER_SIZE)
-		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical glitches\n", MN_GetPath(node));
+		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical glitches\n", UI_GetPath(node));
 #endif
 }
 
@@ -163,19 +163,19 @@ static const value_t properties[] = {
 
 	/* Icon used to display the node
 	 */
-	{"icon", V_UI_ICONREF, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
+	{"icon", V_UI_ICONREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
 
 	{NULL, V_NULL, 0, 0}
 };
 
 
-void MN_RegisterButtonNode (uiBehaviour_t *behaviour)
+void UI_RegisterButtonNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "button";
-	behaviour->draw = MN_ButtonNodeDraw;
-	behaviour->loaded = MN_ButtonNodeLoaded;
-	behaviour->leftClick = MN_ButtonNodeClick;
-	behaviour->loading = MN_ButtonNodeLoading;
+	behaviour->draw = UI_ButtonNodeDraw;
+	behaviour->loaded = UI_ButtonNodeLoaded;
+	behaviour->leftClick = UI_ButtonNodeClick;
+	behaviour->loading = UI_ButtonNodeLoading;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

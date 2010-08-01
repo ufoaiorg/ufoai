@@ -45,13 +45,13 @@ void CL_Reset (const eventRegister_t *self, struct dbuffer *msg)
 
 	/** @todo this can and should be done earlier - it's not the correct place here for doing this */
 	if (GAME_IsMultiplayer()) {
-		MN_InitStack(mn_hud->string, "multiplayerInGame", qtrue, qtrue);
+		UI_InitStack(mn_hud->string, "multiplayerInGame", qtrue, qtrue);
 	}
 
 	CL_CompleteRecalcRouting();
 
 	if (cls.team == cl.actTeam)
-		MN_ExecuteConfunc("startround");
+		UI_ExecuteConfunc("startround");
 	else
 		Com_Printf("You lost the coin-toss for first-turn\n");
 }

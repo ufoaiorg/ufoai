@@ -36,8 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../../shared/parse.h"
 
-#define EXTRADATA(node) MN_EXTRADATA(node, textExtraData_t)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, textExtraData_t)
+#define EXTRADATA(node) UI_EXTRADATA(node, textExtraData_t)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, textExtraData_t)
 
 /**
  * @brief Get the line number under an absolute position
@@ -46,35 +46,35 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] y position y on the screen
  * @return The line number under the position (0 = first line)
  */
-static int MN_TextListNodeGetLine (const uiNode_t *node, int x, int y)
+static int UI_TextListNodeGetLine (const uiNode_t *node, int x, int y)
 {
 	int lineHeight = EXTRADATACONST(node).lineHeight;
 	if (lineHeight == 0) {
-		const char *font = MN_GetFontFromNode(node);
-		lineHeight = MN_FontGetHeight(font);
+		const char *font = UI_GetFontFromNode(node);
+		lineHeight = UI_FontGetHeight(font);
 	}
 
-	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 	y -= node->padding;
 	return (int) (y / lineHeight) + EXTRADATACONST(node).super.scrollY.viewPos;
 }
 
-static void MN_TextListNodeMouseMove (uiNode_t *node, int x, int y)
+static void UI_TextListNodeMouseMove (uiNode_t *node, int x, int y)
 {
-	EXTRADATA(node).lineUnderMouse = MN_TextListNodeGetLine(node, x, y);
+	EXTRADATA(node).lineUnderMouse = UI_TextListNodeGetLine(node, x, y);
 }
 
 /**
- * @brief Handles line breaks and drawing for MN_TEXT menu nodes
+ * @brief Handles line breaks and drawing for UI_TEXT menu nodes
  * @param[in] node The context node
  * @param[in] list The text list to draw
  */
-static void MN_TextLineNodeDrawText (uiNode_t* node, const linkedList_t* list)
+static void UI_TextLineNodeDrawText (uiNode_t* node, const linkedList_t* list)
 {
 	vec4_t colorHover;
 	vec4_t colorSelectedHover;
 	int count; /* variable x position */
-	const char *font = MN_GetFontFromNode(node);
+	const char *font = UI_GetFontFromNode(node);
 	vec2_t pos;
 	int currentY;
 	int viewSizeY;
@@ -83,15 +83,15 @@ static void MN_TextLineNodeDrawText (uiNode_t* node, const linkedList_t* list)
 
 	lineHeight = EXTRADATA(node).lineHeight;
 	if (lineHeight == 0)
-		lineHeight = MN_FontGetHeight(font);
+		lineHeight = UI_FontGetHeight(font);
 
-	if (MN_AbstractScrollableNodeIsSizeChange(node))
+	if (UI_AbstractScrollableNodeIsSizeChange(node))
 		viewSizeY = node->size[1] / lineHeight;
 	else
 		viewSizeY = EXTRADATA(node).super.scrollY.viewSize;
 
 	/* text box */
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 	pos[0] += node->padding;
 	pos[1] += node->padding;
 
@@ -130,7 +130,7 @@ static void MN_TextLineNodeDrawText (uiNode_t* node, const linkedList_t* list)
 				R_Color(colorHover);
 		}
 
-		MN_DrawStringInBox(font, node->textalign, pos[0], currentY, width, lineHeight, text, LONGLINES_PRETTYCHOP);
+		UI_DrawStringInBox(font, node->textalign, pos[0], currentY, width, lineHeight, text, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */
 		currentY += lineHeight;
@@ -147,7 +147,7 @@ static void MN_TextLineNodeDrawText (uiNode_t* node, const linkedList_t* list)
 	}
 
 	/* update scroll status */
-	MN_AbstractScrollableNodeSetY(node, -1, viewSizeY, count);
+	UI_AbstractScrollableNodeSetY(node, -1, viewSizeY, count);
 
 	R_Color(NULL);
 }
@@ -155,30 +155,30 @@ static void MN_TextLineNodeDrawText (uiNode_t* node, const linkedList_t* list)
 /**
  * @brief Draw a text node
  */
-static void MN_TextListNodeDraw (uiNode_t *node)
+static void UI_TextListNodeDraw (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
 	shared = &mn.sharedData[EXTRADATA(node).dataID];
 
 	/* nothing set yet? */
-	if (shared->type == MN_SHARED_NONE)
+	if (shared->type == UI_SHARED_NONE)
 		return;
-	if (shared->type != MN_SHARED_LINKEDLISTTEXT) {
-		Com_Printf("MN_TextListNodeDraw: Only linkedlist text supported (dataid %d).\n", EXTRADATA(node).dataID);
-		MN_ResetData(EXTRADATA(node).dataID);
+	if (shared->type != UI_SHARED_LINKEDLISTTEXT) {
+		Com_Printf("UI_TextListNodeDraw: Only linkedlist text supported (dataid %d).\n", EXTRADATA(node).dataID);
+		UI_ResetData(EXTRADATA(node).dataID);
 		return;
 	}
 
-	MN_TextLineNodeDrawText(node, shared->data.linkedListText);
+	UI_TextLineNodeDrawText(node, shared->data.linkedListText);
 }
 
 /**
  * @brief Calls the script command for a text node that is clickable
- * @sa MN_TextNodeRightClick
+ * @sa UI_TextNodeRightClick
  */
-static void MN_TextListNodeClick (uiNode_t * node, int x, int y)
+static void UI_TextListNodeClick (uiNode_t * node, int x, int y)
 {
-	const int line = MN_TextListNodeGetLine(node, x, y);
+	const int line = UI_TextListNodeGetLine(node, x, y);
 
 	if (line < 0 || line >= EXTRADATA(node).super.scrollY.fullSize)
 		return;
@@ -186,20 +186,20 @@ static void MN_TextListNodeClick (uiNode_t * node, int x, int y)
 	if (line != EXTRADATA(node).textLineSelected) {
 		EXTRADATA(node).textLineSelected = line;
 		if (node->onChange)
-			MN_ExecuteEventActions(node, node->onChange);
+			UI_ExecuteEventActions(node, node->onChange);
 	}
 
 	if (node->onClick)
-		MN_ExecuteEventActions(node, node->onClick);
+		UI_ExecuteEventActions(node, node->onClick);
 }
 
 /**
  * @brief Calls the script command for a text node that is clickable via right mouse button
  * @todo we should delete that function
  */
-static void MN_TextListNodeRightClick (uiNode_t * node, int x, int y)
+static void UI_TextListNodeRightClick (uiNode_t * node, int x, int y)
 {
-	const int line = MN_TextListNodeGetLine(node, x, y);
+	const int line = UI_TextListNodeGetLine(node, x, y);
 
 	if (line < 0 || line >= EXTRADATA(node).super.scrollY.fullSize)
 		return;
@@ -207,27 +207,27 @@ static void MN_TextListNodeRightClick (uiNode_t * node, int x, int y)
 	if (line != EXTRADATA(node).textLineSelected) {
 		EXTRADATA(node).textLineSelected = line;
 		if (node->onChange)
-			MN_ExecuteEventActions(node, node->onChange);
+			UI_ExecuteEventActions(node, node->onChange);
 	}
 
 	if (node->onRightClick)
-		MN_ExecuteEventActions(node, node->onRightClick);
+		UI_ExecuteEventActions(node, node->onRightClick);
 }
 
 /**
  */
-static void MN_TextListNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_TextListNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
 {
-	MN_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
+	UI_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
 	if (node->onWheelUp && !down)
-		MN_ExecuteEventActions(node, node->onWheelUp);
+		UI_ExecuteEventActions(node, node->onWheelUp);
 	if (node->onWheelDown && down)
-		MN_ExecuteEventActions(node, node->onWheelDown);
+		UI_ExecuteEventActions(node, node->onWheelDown);
 	if (node->onWheel)
-		MN_ExecuteEventActions(node, node->onWheel);
+		UI_ExecuteEventActions(node, node->onWheel);
 }
 
-static void MN_TextListNodeLoading (uiNode_t *node)
+static void UI_TextListNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).textLineSelected = -1; /**< Invalid/no line selected per default. */
 	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
@@ -235,14 +235,14 @@ static void MN_TextListNodeLoading (uiNode_t *node)
 	node->textalign = ALIGN_CL;	/**< left center of each cells */
 }
 
-void MN_RegisterTextListNode (uiBehaviour_t *behaviour)
+void UI_RegisterTextListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "textlist";
 	behaviour->extends = "text";
-	behaviour->draw = MN_TextListNodeDraw;
-	behaviour->leftClick = MN_TextListNodeClick;
-	behaviour->rightClick = MN_TextListNodeRightClick;
-	behaviour->mouseWheel = MN_TextListNodeMouseWheel;
-	behaviour->mouseMove = MN_TextListNodeMouseMove;
-	behaviour->loading = MN_TextListNodeLoading;
+	behaviour->draw = UI_TextListNodeDraw;
+	behaviour->leftClick = UI_TextListNodeClick;
+	behaviour->rightClick = UI_TextListNodeRightClick;
+	behaviour->mouseWheel = UI_TextListNodeMouseWheel;
+	behaviour->mouseMove = UI_TextListNodeMouseMove;
+	behaviour->loading = UI_TextListNodeLoading;
 }

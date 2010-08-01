@@ -94,7 +94,7 @@ static void GAME_SK_Start_f (void)
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
 
 	/* prepare */
-	MN_InitStack(NULL, "singleplayermission", qtrue, qfalse);
+	UI_InitStack(NULL, "singleplayermission", qtrue, qfalse);
 
 	Cbuf_AddText(map);
 }
@@ -156,7 +156,7 @@ void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	CL_Drop();
 
 	if (winner == 0) {
-		MN_Popup(_("Game Drawn!"), _("The game was a draw!\n\nNo survivors left on any side."));
+		UI_Popup(_("Game Drawn!"), _("The game was a draw!\n\nNo survivors left on any side."));
 		return;
 	}
 
@@ -179,10 +179,10 @@ void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 			numKilled[cls.team][cls.team], numKilled[cls.team][TEAM_CIVILIAN], numKilled[TEAM_ALIEN][TEAM_CIVILIAN]);
 	if (winner == cls.team) {
 		Com_sprintf(popupText, lengthof(popupText), "%s\n%s", _("You won the game!"), resultText);
-		MN_Popup(_("Congratulations"), popupText);
+		UI_Popup(_("Congratulations"), popupText);
 	} else {
 		Com_sprintf(popupText, lengthof(popupText), "%s\n%s", _("You've lost the game!"), resultText);
-		MN_Popup(_("Better luck next time"), popupText);
+		UI_Popup(_("Better luck next time"), popupText);
 	}
 }
 
@@ -195,14 +195,14 @@ static inline void GAME_SK_HideDropships (const linkedList_t *dropships)
 {
 	const qboolean hide = (dropships == NULL);
 	if (hide) {
-		MN_ExecuteConfunc("skirmish_hide_dropships true");
+		UI_ExecuteConfunc("skirmish_hide_dropships true");
 		Cvar_Set("rm_drop", "");
 	} else {
 		const char *rma = Com_GetRandomMapAssemblyNameForCraft((const char *)dropships->data);
 		Cvar_Set("rm_drop", rma);
-		MN_UpdateInvisOptions(MN_GetOption(OPTION_DROPSHIPS), dropships);
+		UI_UpdateInvisOptions(UI_GetOption(OPTION_DROPSHIPS), dropships);
 
-		MN_ExecuteConfunc("skirmish_hide_dropships false");
+		UI_ExecuteConfunc("skirmish_hide_dropships false");
 	}
 }
 
@@ -215,14 +215,14 @@ static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 {
 	const qboolean hide = (ufos == NULL);
 	if (hide) {
-		MN_ExecuteConfunc("skirmish_hide_ufos true");
+		UI_ExecuteConfunc("skirmish_hide_ufos true");
 		Cvar_Set("rm_ufo", "");
 	} else {
 		const char *rma = Com_GetRandomMapAssemblyNameForCraft((const char *)ufos->data);
 		Cvar_Set("rm_ufo", rma);
-		MN_UpdateInvisOptions(MN_GetOption(OPTION_UFOS), ufos);
+		UI_UpdateInvisOptions(UI_GetOption(OPTION_UFOS), ufos);
 
-		MN_ExecuteConfunc("skirmish_hide_ufos false");
+		UI_ExecuteConfunc("skirmish_hide_ufos false");
 	}
 }
 
@@ -257,19 +257,19 @@ static void GAME_InitMenuOptions (void)
 
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOTypeToShortName(i);
-		MN_AddOption(&ufoOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
+		UI_AddOption(&ufoOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 	}
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOCrashedTypeToShortName(i);
-		MN_AddOption(&ufoOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
+		UI_AddOption(&ufoOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 	}
-	MN_RegisterOption(OPTION_UFOS, ufoOptions);
+	UI_RegisterOption(OPTION_UFOS, ufoOptions);
 
 	for (i = 0; i < DROPSHIP_MAX; i++) {
 		const char *shortName = Com_DropShipTypeToShortName(i);
-		MN_AddOption(&aircraftOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
+		UI_AddOption(&aircraftOptions, shortName, shortName, Com_GetRandomMapAssemblyNameForCraft(shortName));
 	}
-	MN_RegisterOption(OPTION_DROPSHIPS, aircraftOptions);
+	UI_RegisterOption(OPTION_DROPSHIPS, aircraftOptions);
 }
 
 void GAME_SK_InitStartup (void)
@@ -294,8 +294,8 @@ void GAME_SK_Shutdown (void)
 	Cmd_RemoveCommand("sk_prevequip");
 	Cmd_RemoveCommand("game_go");
 
-	MN_ResetData(OPTION_DROPSHIPS);
-	MN_ResetData(OPTION_UFOS);
+	UI_ResetData(OPTION_DROPSHIPS);
+	UI_ResetData(OPTION_UFOS);
 
 	SV_Shutdown("Quitting server.", qfalse);
 }

@@ -83,7 +83,7 @@ typedef struct hudRadar_s {
 
 static hudRadar_t radar;
 
-static void MN_FreeRadarImages (void)
+static void UI_FreeRadarImages (void)
 {
 	int i, j;
 
@@ -101,10 +101,10 @@ static void MN_FreeRadarImages (void)
  * (screencoordinates)
  * @param[in] tiles The configstring with the tiles (map tiles)
  * @param[in] pos The position string, only used in case of random map assembly
- * @sa MN_DrawRadar
+ * @sa UI_DrawRadar
  * @sa R_ModBeginLoading
  */
-static void MN_BuildRadarImageList (const char *tiles, const char *pos)
+static void UI_BuildRadarImageList (const char *tiles, const char *pos)
 {
 	const float mapMidX = (mapMax[0] + mapMin[0]) * 0.5;
 	const float mapMidY = (mapMax[1] + mapMin[1]) * 0.5;
@@ -145,7 +145,7 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 		for (i = 0; i < 3; i++) {
 			token = Com_Parse(&pos);
 			if (!pos)
-				Com_Error(ERR_DROP, "MN_BuildRadarImageList: invalid positions\n");
+				Com_Error(ERR_DROP, "UI_BuildRadarImageList: invalid positions\n");
 			sh[i] = atoi(token);
 		}
 		image->gridX = sh[0];
@@ -165,9 +165,9 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
  * @brief Get the width of radar.
  * @param[in] node Menu node of the radar
  * @param[in] gridSize size of the radar picture, in grid units.
- * @sa MN_InitRadar
+ * @sa UI_InitRadar
  */
-static void MN_GetRadarWidth (const uiNode_t *node, vec2_t gridSize)
+static void UI_GetRadarWidth (const uiNode_t *node, vec2_t gridSize)
 {
 	int j;
 	int tileWidth[2];		/**< Contains the width of the first and the last tile of the first line (in screen unit) */
@@ -251,7 +251,7 @@ static const char *imageExtensions[] = {
 	"tga", "jpg", "png", NULL
 };
 
-static qboolean MN_CheckRadarImage (const char *imageName, const int level)
+static qboolean UI_CheckRadarImage (const char *imageName, const int level)
 {
 	const char **ext = imageExtensions;
 
@@ -269,7 +269,7 @@ static qboolean MN_CheckRadarImage (const char *imageName, const int level)
  * @note Called for every new map (client_state_t is wiped with every
  * level change)
  */
-static void MN_InitRadar (const uiNode_t *node)
+static void UI_InitRadar (const uiNode_t *node)
 {
 	int i, j;
 	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
@@ -279,10 +279,10 @@ static void MN_InitRadar (const uiNode_t *node)
 	vec2_t min;
 	vec2_t max;
 
-	MN_FreeRadarImages();
-	MN_BuildRadarImageList(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
+	UI_FreeRadarImages();
+	UI_BuildRadarImageList(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
 
-	MN_GetNodeAbsPos(node, nodepos);
+	UI_GetNodeAbsPos(node, nodepos);
 	radar.x = nodepos[0] + node->size[0] / 2;
 	radar.y = nodepos[1] + node->size[1] / 2;
 
@@ -293,7 +293,7 @@ static void MN_InitRadar (const uiNode_t *node)
 		for (i = 0; i < PATHFINDING_HEIGHT; i++) {
 			char imagePath[MAX_QPATH];
 			const image_t *image;
-			if (!MN_CheckRadarImage(tile->name, i + 1)) {
+			if (!UI_CheckRadarImage(tile->name, i + 1)) {
 				if (i == 0) {
 					/* there should be at least one level */
 					Com_Printf("No radar images for map: '%s'\n", tile->name);
@@ -358,7 +358,7 @@ static void MN_InitRadar (const uiNode_t *node)
 	distAB = (Vector2Dist(radar.a, radar.b) / UNIT_SIZE);
 	distBC = (Vector2Dist(radar.b, radar.c) / UNIT_SIZE);
 
-	MN_GetRadarWidth(node, gridSize);
+	UI_GetRadarWidth(node, gridSize);
 
 	/* get the dimensions for one grid field on the radar map */
 	radar.gridWidth = radar.w / distAB;
@@ -389,7 +389,7 @@ static void MN_InitRadar (const uiNode_t *node)
  DRAW FUNCTIONS
 =========================================*/
 
-static void MN_RadarNodeGetActorColor (const le_t *le, vec4_t color)
+static void UI_RadarNodeGetActorColor (const le_t *le, vec4_t color)
 {
 	const int actorLevel = le->pos[2];
 	Vector4Set(color, 0, 1, 0, 1);
@@ -414,14 +414,14 @@ static void MN_RadarNodeGetActorColor (const le_t *le, vec4_t color)
 	}
 }
 
-static void MN_RadarNodeDrawArrays (const vec4_t color, vec2_t coords[4], vec2_t vertices[4], const image_t *image)
+static void UI_RadarNodeDrawArrays (const vec4_t color, vec2_t coords[4], vec2_t vertices[4], const image_t *image)
 {
 	R_Color(color);
 	R_DrawImageArray((const vec2_t *)coords, (const vec2_t *)vertices, image);
 	R_Color(NULL);
 }
 
-static void MN_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
+static void UI_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 {
 	vec2_t coords[4];
 	vec2_t vertices[4];
@@ -433,7 +433,7 @@ static void MN_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 	vec4_t color;
 	const float pov = directionAngles[le->dir] * torad + M_PI;
 
-	image = MN_LoadImage("ui/radar");
+	image = UI_LoadImage("ui/radar");
 	if (image == NULL)
 		return;
 
@@ -464,9 +464,9 @@ static void MN_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 			vertices[i][1] = pos[1] + dx * cos(pov) - dy * sin(pov);
 		}
 
-		MN_RadarNodeGetActorColor(le, color);
+		UI_RadarNodeGetActorColor(le, color);
 		Vector4Set(color, 1, 1, 1, color[3] * 0.75);
-		MN_RadarNodeDrawArrays(color, coords, vertices, image);
+		UI_RadarNodeDrawArrays(color, coords, vertices, image);
 	}
 
 	if (LE_IsDead(le))
@@ -502,14 +502,14 @@ static void MN_RadarNodeDrawActor (const le_t *le, const vec3_t pos)
 		vertices[i][1] = pos[1] + dx * cos(pov) - dy * sin(pov);
 	}
 
-	MN_RadarNodeGetActorColor(le, color);
-	MN_RadarNodeDrawArrays(color, coords, vertices, image);
+	UI_RadarNodeGetActorColor(le, color);
+	UI_RadarNodeDrawArrays(color, coords, vertices, image);
 }
 
 /**
  * @todo We can merge actor and items draw function
  */
-static void MN_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
+static void UI_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
 {
 	float coords[4 * 2];
 	short vertices[4 * 2];
@@ -520,7 +520,7 @@ static void MN_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
 	int tilePos = 96;
 	const image_t *image;
 
-	image = MN_LoadImage("ui/radar");
+	image = UI_LoadImage("ui/radar");
 	if (image == NULL)
 		return;
 
@@ -548,7 +548,7 @@ static void MN_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
 		vertices[i + 1] += pos[1];
 	}
 
-	MN_RadarNodeGetActorColor(le, color);
+	UI_RadarNodeGetActorColor(le, color);
 	Vector4Set(color, 0, 1, 0, color[3]);
 }
 
@@ -560,7 +560,7 @@ static void MN_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
  * @note we only need to handle the 2d plane and can ignore the z level
  * @param[in] node The radar menu node (located in the hud menu definitions)
  */
-static void MN_RadarNodeDraw (uiNode_t *node)
+static void UI_RadarNodeDraw (uiNode_t *node)
 {
 	le_t *le;
 	int i;
@@ -581,16 +581,16 @@ static void MN_RadarNodeDraw (uiNode_t *node)
 	if (cls.state != ca_active)
 		return;
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 	R_CleanupDepthBuffer(pos[0], pos[1], node->size[0], node->size[1]);
-	MN_DrawFill(pos[0], pos[1], mapWidth * mapCoefX, mapHeight * mapCoefY, backgroundColor);
+	UI_DrawFill(pos[0], pos[1], mapWidth * mapCoefX, mapHeight * mapCoefY, backgroundColor);
 #ifndef RADARSIZE_DEBUG
 	R_PushClipRect(pos[0], pos[1], node->size[0], node->size[1]);
 #endif
 
 	/* the cl struct is wiped with every new map */
 	if (!cl.radarInited) {
-		MN_InitRadar(node);
+		UI_InitRadar(node);
 		cl.radarInited = qtrue;
 	}
 
@@ -605,9 +605,9 @@ static void MN_RadarNodeDraw (uiNode_t *node)
 		radar.gridHeight = 6;
 
 #ifdef RADARSIZE_DEBUG
-		MN_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f %fx%f map", mapMin[0], mapMin[1], mapMax[0], mapMax[1]), LONGLINES_PRETTYCHOP);
+		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f %fx%f map", mapMin[0], mapMin[1], mapMax[0], mapMax[1]), LONGLINES_PRETTYCHOP);
 		textposy += 25;
-		MN_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f map", mapWidth, mapHeight), LONGLINES_PRETTYCHOP);
+		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f map", mapWidth, mapHeight), LONGLINES_PRETTYCHOP);
 		textposy += 25;
 #endif
 
@@ -624,20 +624,20 @@ static void MN_RadarNodeDraw (uiNode_t *node)
 		imagePos[0] = radar.x + mapCoefX * (tile->mapX - mapMin[0]);
 		imagePos[1] = radar.y + mapCoefY * (tile->mapY - mapMin[1]);
 
-		MN_DrawNormImageByName(imagePos[0], imagePos[1],
+		UI_DrawNormImageByName(imagePos[0], imagePos[1],
 				mapCoefX * tile->mapWidth, mapCoefY * tile->mapHeight,
 				0, 0, 0, 0, tile->path[maxlevel]);
 #ifdef RADARSIZE_DEBUG
-		MN_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%dx%d %dx%d %s", tile->x, tile->y, tile->width, tile->height, tile->path[maxlevel]), LONGLINES_PRETTYCHOP);
+		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%dx%d %dx%d %s", tile->x, tile->y, tile->width, tile->height, tile->path[maxlevel]), LONGLINES_PRETTYCHOP);
 		textposy += 25;
-		MN_DrawStringInBox("f_small", 0, imagePos[0], imagePos[1],
+		UI_DrawStringInBox("f_small", 0, imagePos[0], imagePos[1],
 				500, 25, va("%dx%d", tile->gridX, tile->gridY), LONGLINES_PRETTYCHOP);
 #endif
 	}
 
 #ifdef RADARSIZE_DEBUG
-	MN_DrawFill(pos[0], pos[1], 100.0f * mapCoefX, 100.0f * mapCoefY, red);
-	MN_DrawFill(pos[0], pos[1], UNIT_SIZE * mapCoefX, UNIT_SIZE * mapCoefY, red);
+	UI_DrawFill(pos[0], pos[1], 100.0f * mapCoefX, 100.0f * mapCoefY, red);
+	UI_DrawFill(pos[0], pos[1], UNIT_SIZE * mapCoefX, UNIT_SIZE * mapCoefY, red);
 #endif
 
 	le = NULL;
@@ -653,19 +653,19 @@ static void MN_RadarNodeDraw (uiNode_t *node)
 		switch (le->type) {
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
-			MN_RadarNodeDrawActor(le, itempos);
+			UI_RadarNodeDrawActor(le, itempos);
 			break;
 		case ET_ITEM:
-			MN_RadarNodeDrawItem(le, itempos);
+			UI_RadarNodeDrawItem(le, itempos);
 			break;
 		default:
 			break;
 		}
 #ifdef RADARSIZE_DEBUG
-		MN_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f %dx%d actor", le->origin[0], le->origin[1], le->pos[0], le->pos[1]), LONGLINES_PRETTYCHOP);
+		UI_DrawStringInBox("f_small", 0, 50, textposy, 500, 25, va("%fx%f %dx%d actor", le->origin[0], le->origin[1], le->pos[0], le->pos[1]), LONGLINES_PRETTYCHOP);
 		textposy += 25;
-		MN_DrawFill(itempos[0], itempos[1], UNIT_SIZE * mapCoefX, 1, red);
-		MN_DrawFill(itempos[0], itempos[1], 1, UNIT_SIZE * mapCoefY, red);
+		UI_DrawFill(itempos[0], itempos[1], UNIT_SIZE * mapCoefX, 1, red);
+		UI_DrawFill(itempos[0], itempos[1], 1, UNIT_SIZE * mapCoefY, red);
 #endif
 	}
 
@@ -677,7 +677,7 @@ static void MN_RadarNodeDraw (uiNode_t *node)
 /**
  * @brief Called when the node is captured by the mouse
  */
-static void MN_RadarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+static void UI_RadarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const float mapWidth = mapMax[0] - mapMin[0];
 	const float mapHeight = mapMax[1] - mapMin[1];
@@ -686,7 +686,7 @@ static void MN_RadarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	vec3_t pos;
 
 	/* from absolute to relative to node */
-	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	/* from node to map */
 	VectorCenterFromMinsMaxs(mapMin, mapMax, pos);
@@ -696,21 +696,21 @@ static void MN_RadarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	VectorCopy(pos, cl.cam.origin);
 }
 
-static void MN_RadarNodeMouseDown (uiNode_t *node, int x, int y, int button)
+static void UI_RadarNodeMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (node->disabled)
 		return;
 
 	if (button == K_MOUSE1) {
-		MN_SetMouseCapture(node);
-		MN_RadarNodeCapturedMouseMove(node, x, y);
+		UI_SetMouseCapture(node);
+		UI_RadarNodeCapturedMouseMove(node, x, y);
 	}
 }
 
-static void MN_RadarNodeMouseUp (uiNode_t *node, int x, int y, int button)
+static void UI_RadarNodeMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1)
-		MN_MouseRelease();
+		UI_MouseRelease();
 }
 
 /**
@@ -721,7 +721,7 @@ static void MN_RadarNodeMouseUp (uiNode_t *node, int x, int y, int button)
  * @param[out] height Height of the rect in the frame buffer (from bottom-to-top according to the screen)
  * @todo fix that function, map is not well captured
  */
-static void MN_GetRadarMapInFrameBuffer(int *x, int *y, int *width, int *height)
+static void UI_GetRadarMapInFrameBuffer(int *x, int *y, int *width, int *height)
 {
 	/* Coefficient come from metric (Bunker map, and game with resolution 1024x1024) == 0.350792947 */
 	static const float magicCoef =  0.351f;
@@ -737,11 +737,11 @@ static void MN_GetRadarMapInFrameBuffer(int *x, int *y, int *width, int *height)
 	*height = (y2 - *y);
 }
 
-static void MN_GenPreviewRadarMap_f (void)
+static void UI_GenPreviewRadarMap_f (void)
 {
 	int x, y, width, height;
 	/* map to screen */
-	MN_GetRadarMapInFrameBuffer(&x, &y, &width, &height);
+	UI_GetRadarMapInFrameBuffer(&x, &y, &width, &height);
 
 	/* from screen to virtual screen */
 	x /= viddef.rx;
@@ -750,7 +750,7 @@ static void MN_GenPreviewRadarMap_f (void)
 	height /= viddef.ry;
 	y = viddef.virtualHeight - y - height;
 
-	MN_ExecuteConfunc("mn_radarhud_setmapborder %d %d %d %d", x, y, width, height);
+	UI_ExecuteConfunc("mn_radarhud_setmapborder %d %d %d %d", x, y, width, height);
 }
 
 /**
@@ -759,7 +759,7 @@ static void MN_GenPreviewRadarMap_f (void)
  * We add 1 pixel into the border to easy check the result:
  * the screen shot must have a border of 1 black pixel
  */
-static void MN_GenRadarMap_f (void)
+static void UI_GenRadarMap_f (void)
 {
 	const int border = 0;
 	const char *mapName = Cvar_GetString("sv_mapname");
@@ -768,13 +768,13 @@ static void MN_GenRadarMap_f (void)
 	const char *filename = NULL;
 	int x, y, width, height;
 
-	MN_GetRadarMapInFrameBuffer(&x, &y, &width, &height);
+	UI_GetRadarMapInFrameBuffer(&x, &y, &width, &height);
 	if (mapName)
 		filename = va("%s_%i", mapName, level + 1);
 	R_ScreenShot(x - border, y - border, width + border * 2, height + border * 2, filename, NULL);
 }
 
-static void MN_GenAllRadarMap (uiNode_t *node, uiTimer_t *timer)
+static void UI_GenAllRadarMap (uiNode_t *node, uiTimer_t *timer)
 {
 	int level = (timer->calledTime - 1) / 2;
 	int mode = (timer->calledTime - 1) % 2;
@@ -793,34 +793,34 @@ static void MN_GenAllRadarMap (uiNode_t *node, uiTimer_t *timer)
 uiTimer_t* timer;
 
 /**
- * @todo allow to call MN_TimerRelease into timer callback
+ * @todo allow to call UI_TimerRelease into timer callback
  */
-static void MN_GenAllRadarMapRelease_f (void) {
-	MN_TimerRelease(timer);
-	MN_ExecuteConfunc("mn_radarhud_reinit");
+static void UI_GenAllRadarMapRelease_f (void) {
+	UI_TimerRelease(timer);
+	UI_ExecuteConfunc("mn_radarhud_reinit");
 }
 
 /**
  * Take all screenshots from lower to upper map level.
  * Use a timer to delay each capture
  */
-static void MN_GenAllRadarMap_f (void)
+static void UI_GenAllRadarMap_f (void)
 {
 	const int delay = 1000;
-	timer = MN_AllocTimer(NULL, delay, MN_GenAllRadarMap);
-	MN_TimerStart(timer);
+	timer = UI_AllocTimer(NULL, delay, UI_GenAllRadarMap);
+	UI_TimerStart(timer);
 }
 
-void MN_RegisterRadarNode (uiBehaviour_t *behaviour)
+void UI_RegisterRadarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "radar";
-	behaviour->draw = MN_RadarNodeDraw;
-	behaviour->mouseDown = MN_RadarNodeMouseDown;
-	behaviour->mouseUp = MN_RadarNodeMouseUp;
-	behaviour->capturedMouseMove = MN_RadarNodeCapturedMouseMove;
+	behaviour->draw = UI_RadarNodeDraw;
+	behaviour->mouseDown = UI_RadarNodeMouseDown;
+	behaviour->mouseUp = UI_RadarNodeMouseUp;
+	behaviour->capturedMouseMove = UI_RadarNodeCapturedMouseMove;
 
-	Cmd_AddCommand("mn_genpreviewradarmap", MN_GenPreviewRadarMap_f, NULL);
-	Cmd_AddCommand("mn_genradarmap", MN_GenRadarMap_f, NULL);
-	Cmd_AddCommand("mn_genallradarmap", MN_GenAllRadarMap_f, NULL);
-	Cmd_AddCommand("mn_genallradarmaprelease", MN_GenAllRadarMapRelease_f, NULL);
+	Cmd_AddCommand("mn_genpreviewradarmap", UI_GenPreviewRadarMap_f, NULL);
+	Cmd_AddCommand("mn_genradarmap", UI_GenRadarMap_f, NULL);
+	Cmd_AddCommand("mn_genallradarmap", UI_GenAllRadarMap_f, NULL);
+	Cmd_AddCommand("mn_genallradarmaprelease", UI_GenAllRadarMapRelease_f, NULL);
 }

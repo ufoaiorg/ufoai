@@ -43,12 +43,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MARGE 3
 
 #define EXTRADATA_TYPE keyBindingExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
 /**
  * @brief Called when the user click with the right mouse button
  */
-static void MN_KeyBindingNodeClick (uiNode_t *node, int x, int y)
+static void UI_KeyBindingNodeClick (uiNode_t *node, int x, int y)
 {
 	if (node->disabled)
 		return;
@@ -60,10 +60,10 @@ static void MN_KeyBindingNodeClick (uiNode_t *node, int x, int y)
 	if (strncmp(node->text, "*binding", 8))
 		return;
 
-	if (!MN_HasFocus(node)) {
+	if (!UI_HasFocus(node)) {
 		if (node->onClick)
-			MN_ExecuteEventActions(node, node->onClick);
-		MN_RequestFocus(node);
+			UI_ExecuteEventActions(node, node->onClick);
+		UI_RequestFocus(node);
 	}
 }
 
@@ -71,12 +71,12 @@ static void MN_KeyBindingNodeClick (uiNode_t *node, int x, int y)
  * @brief Called when we press a key when the node got the focus
  * @return True, if we use the event
  */
-static qboolean MN_KeyBindingNodeKeyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
+static qboolean UI_KeyBindingNodeKeyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
 {
 	const char *command;
 	const char *binding;
 
-	MN_RemoveFocus();
+	UI_RemoveFocus();
 
 	/** @todo what about macro expansion? */
 	if (strncmp(node->text, "*binding:", 9))
@@ -92,21 +92,21 @@ static qboolean MN_KeyBindingNodeKeyPressed (uiNode_t *node, unsigned int key, u
 		 * show the reason why nothing was changed */
 		if (strcmp(binding, command)) {
 			const char *keyStr = Key_KeynumToString(key);
-			MN_DisplayNotice(va(_("Key %s already bound"), keyStr), 2000, NULL);
+			UI_DisplayNotice(va(_("Key %s already bound"), keyStr), 2000, NULL);
 		}
 		return qfalse;
 	}
 
 	/* fire change event */
 	if (node->onChange)
-		MN_ExecuteEventActions(node, node->onChange);
+		UI_ExecuteEventActions(node, node->onChange);
 
 	Key_SetBinding(key, command, EXTRADATA(node).keySpace);
 
 	return qtrue;
 }
 
-static void MN_KeyBindingNodeDraw (uiNode_t *node)
+static void UI_KeyBindingNodeDraw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -118,7 +118,7 @@ static void MN_KeyBindingNodeDraw (uiNode_t *node)
 	const float *textColor;
 	const char *image;
 	vec2_t pos;
-	const char *font = MN_GetFontFromNode(node);
+	const char *font = UI_GetFontFromNode(node);
 	const int bindingWidth = EXTRADATA(node).bindingWidth;
 	const int descriptionWidth = node->size[0] - bindingWidth;
 	vec2_t descriptionPos, descriptionSize;
@@ -133,23 +133,23 @@ static void MN_KeyBindingNodeDraw (uiNode_t *node)
 		texX = 0;
 		texY = 0;
 	}
-	if (MN_HasFocus(node))
+	if (UI_HasFocus(node))
 		textColor = node->selectedColor;
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 
 	Vector2Set(descriptionSize, descriptionWidth, node->size[1]);
 	Vector2Set(bindingSize, bindingWidth, node->size[1]);
 	Vector2Set(descriptionPos, pos[0], pos[1]);
 	Vector2Set(bindingPos, pos[0] + descriptionWidth + node->padding, pos[1]);
 
-	image = MN_GetReferenceString(node, node->image);
+	image = UI_GetReferenceString(node, node->image);
 	if (image) {
-		MN_DrawPanel(descriptionPos, descriptionSize, image, texX, texY, panelTemplate);
-		MN_DrawPanel(bindingPos, bindingSize, image, texX, texY, panelTemplate);
+		UI_DrawPanel(descriptionPos, descriptionSize, image, texX, texY, panelTemplate);
+		UI_DrawPanel(bindingPos, bindingSize, image, texX, texY, panelTemplate);
 	}
 
-	binding = MN_GetReferenceString(node, node->text);
+	binding = UI_GetReferenceString(node, node->text);
 	if (binding == NULL || binding[0] == '\0')
 		binding = _("NONE");
 
@@ -161,12 +161,12 @@ static void MN_KeyBindingNodeDraw (uiNode_t *node)
 
 	R_Color(textColor);
 
-	MN_DrawStringInBox(font, node->textalign,
+	UI_DrawStringInBox(font, node->textalign,
 		descriptionPos[0] + node->padding, descriptionPos[1] + node->padding,
 		descriptionSize[0] - node->padding - node->padding, descriptionSize[1] - node->padding - node->padding,
 		description, LONGLINES_PRETTYCHOP);
 
-	MN_DrawStringInBox(font, node->textalign,
+	UI_DrawStringInBox(font, node->textalign,
 		bindingPos[0] + node->padding, bindingPos[1] + node->padding,
 		bindingSize[0] - node->padding - node->padding, bindingSize[1] - node->padding - node->padding,
 		binding, LONGLINES_PRETTYCHOP);
@@ -177,7 +177,7 @@ static void MN_KeyBindingNodeDraw (uiNode_t *node)
 /**
  * @brief Call before the script initialization of the node
  */
-static void MN_KeyBindingNodeLoading (uiNode_t *node)
+static void UI_KeyBindingNodeLoading (uiNode_t *node)
 {
 	node->padding = 8;
 	node->textalign = ALIGN_CL;
@@ -187,19 +187,19 @@ static void MN_KeyBindingNodeLoading (uiNode_t *node)
 }
 
 static const value_t properties[] = {
-	{"keyspace", V_INT, MN_EXTRADATA_OFFSETOF(keyBindingExtraData_t, keySpace), MEMBER_SIZEOF(keyBindingExtraData_t, keySpace)},
-	{"bindingwidth", V_INT, MN_EXTRADATA_OFFSETOF(keyBindingExtraData_t, bindingWidth), MEMBER_SIZEOF(keyBindingExtraData_t, bindingWidth)},
+	{"keyspace", V_INT, UI_EXTRADATA_OFFSETOF(keyBindingExtraData_t, keySpace), MEMBER_SIZEOF(keyBindingExtraData_t, keySpace)},
+	{"bindingwidth", V_INT, UI_EXTRADATA_OFFSETOF(keyBindingExtraData_t, bindingWidth), MEMBER_SIZEOF(keyBindingExtraData_t, bindingWidth)},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterKeyBindingNode (uiBehaviour_t *behaviour)
+void UI_RegisterKeyBindingNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "keybinding";
-	behaviour->leftClick = MN_KeyBindingNodeClick;
-	behaviour->keyPressed = MN_KeyBindingNodeKeyPressed;
-	behaviour->draw = MN_KeyBindingNodeDraw;
-	behaviour->loading = MN_KeyBindingNodeLoading;
+	behaviour->leftClick = UI_KeyBindingNodeClick;
+	behaviour->keyPressed = UI_KeyBindingNodeKeyPressed;
+	behaviour->draw = UI_KeyBindingNodeDraw;
+	behaviour->loading = UI_KeyBindingNodeLoading;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

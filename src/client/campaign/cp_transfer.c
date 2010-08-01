@@ -267,7 +267,7 @@ void TR_TransferAlienAfterMissionStart (const base_t *base, aircraft_t *transfer
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to %s"), transfer->destBase->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_ALIENBODIES_DEFERED, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
-	MN_PopWindow(qfalse);
+	UI_PopWindow(qfalse);
 }
 
 /**
@@ -738,7 +738,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 
 /**
  * @brief Defines commands and cvars for the Transfer menu(s).
- * @sa MN_InitStartup
+ * @sa UI_InitStartup
  */
 void TR_InitStartup (void)
 {

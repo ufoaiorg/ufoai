@@ -39,43 +39,43 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void MN_TodoNodeDrawTooltip (uiNode_t *node, int x, int y)
+static void UI_TodoNodeDrawTooltip (uiNode_t *node, int x, int y)
 {
 	const int tooltipWidth = 250;
 	static char tooltiptext[1024];
 
-	const char* text = MN_GetReferenceString(node, node->text);
+	const char* text = UI_GetReferenceString(node, node->text);
 	if (!text)
 		return;
 
 	tooltiptext[0] = '\0';
 	Q_strcat(tooltiptext, text, sizeof(tooltiptext));
-	MN_DrawTooltip(tooltiptext, x, y, tooltipWidth, 0);
+	UI_DrawTooltip(tooltiptext, x, y, tooltipWidth, 0);
 }
 
-static void MN_TodoNodeDraw (uiNode_t *node)
+static void UI_TodoNodeDraw (uiNode_t *node)
 {
 	static vec4_t red = {1.0, 0.0, 0.0, 1.0};
 	vec2_t pos;
 
-	MN_GetNodeAbsPos(node, pos);
-	MN_DrawFill(pos[0], pos[1], node->size[0], node->size[1], red);
+	UI_GetNodeAbsPos(node, pos);
+	UI_DrawFill(pos[0], pos[1], node->size[0], node->size[1], red);
 
 	if (node->state)
-		MN_CaptureDrawOver(node);
+		UI_CaptureDrawOver(node);
 }
 
-static void MN_TodoNodeDrawOverMenu (uiNode_t *node)
+static void UI_TodoNodeDrawOverMenu (uiNode_t *node)
 {
-	MN_TodoNodeDrawTooltip(node, mousePosX, mousePosY);
+	UI_TodoNodeDrawTooltip(node, mousePosX, mousePosY);
 }
 
-static void MN_TodoNodeLoading (uiNode_t *node)
+static void UI_TodoNodeLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
-static void MN_TodoNodeLoaded (uiNode_t *node)
+static void UI_TodoNodeLoaded (uiNode_t *node)
 {
 #ifndef DEBUG
 	node->invis = qtrue;
@@ -84,13 +84,13 @@ static void MN_TodoNodeLoaded (uiNode_t *node)
 	node->size[1] = 10;
 }
 
-void MN_RegisterTodoNode (uiBehaviour_t *behaviour)
+void UI_RegisterTodoNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "todo";
 	behaviour->extends = "string";
-	behaviour->draw = MN_TodoNodeDraw;
-	behaviour->drawOverMenu = MN_TodoNodeDrawOverMenu;
-	behaviour->loading = MN_TodoNodeLoading;
-	behaviour->loaded = MN_TodoNodeLoaded;
+	behaviour->draw = UI_TodoNodeDraw;
+	behaviour->drawOverMenu = UI_TodoNodeDrawOverMenu;
+	behaviour->loading = UI_TodoNodeLoading;
+	behaviour->loaded = UI_TodoNodeLoaded;
 }
 

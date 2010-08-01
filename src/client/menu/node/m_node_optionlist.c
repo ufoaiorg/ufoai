@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h" /* gettext _() */
 
-#define EXTRADATA(node) MN_EXTRADATA(node, abstractOptionExtraData_t)
+#define EXTRADATA(node) UI_EXTRADATA(node, abstractOptionExtraData_t)
 
 #define CORNER_SIZE 25
 #define MID_SIZE 1
@@ -47,23 +47,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Update the scroll according to the number
  * of items and the size of the node
  */
-static void MN_OptionListNodeUpdateScroll (uiNode_t *node)
+static void UI_OptionListNodeUpdateScroll (uiNode_t *node)
 {
 	const char *font;
 	int fontHeight;
 	qboolean updated;
 	int elements;
 
-	font = MN_GetFontFromNode(node);
-	fontHeight = MN_FontGetHeight(font);
+	font = UI_GetFontFromNode(node);
+	fontHeight = UI_FontGetHeight(font);
 
 	elements = (node->size[1] - node->padding - node->padding) / fontHeight;
-	updated = MN_SetScroll(&EXTRADATA(node).scrollY, -1, elements, EXTRADATA(node).count);
+	updated = UI_SetScroll(&EXTRADATA(node).scrollY, -1, elements, EXTRADATA(node).count);
 	if (updated && EXTRADATA(node).onViewChange)
-		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 }
 
-static void MN_OptionListNodeDraw (uiNode_t *node)
+static void UI_OptionListNodeDraw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -81,22 +81,22 @@ static void MN_OptionListNodeDraw (uiNode_t *node)
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int count = 0;
 
-	ref = MN_AbstractOptionGetCurrentValue(node);
+	ref = UI_AbstractOptionGetCurrentValue(node);
 	if (ref == NULL)
 		return;
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 
-	image = MN_GetReferenceString(node, node->image);
+	image = UI_GetReferenceString(node, node->image);
 	if (image)
-		MN_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
+		UI_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
 
-	font = MN_GetFontFromNode(node);
-	fontHeight = MN_FontGetHeight(font);
+	font = UI_GetFontFromNode(node);
+	fontHeight = UI_FontGetHeight(font);
 	currentY = pos[1] + node->padding;
 
 	/* skip option over current position */
-	option = MN_AbstractOptionGetFirstOption(node);
+	option = UI_AbstractOptionGetFirstOption(node);
 	while (option && count < EXTRADATA(node).scrollY.viewPos) {
 		option = option->next;
 		count++;
@@ -114,7 +114,7 @@ static void MN_OptionListNodeDraw (uiNode_t *node)
 
 		/* draw the hover effect */
 		if (OPTIONEXTRADATA(option).hovered)
-			MN_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, fontHeight, node->color);
+			UI_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, fontHeight, node->color);
 
 		/* text color */
 		if (!strcmp(OPTIONEXTRADATA(option).value, ref)) {
@@ -130,7 +130,7 @@ static void MN_OptionListNodeDraw (uiNode_t *node)
 			if (option->disabled)
 				iconStatus = ICON_STATUS_DISABLED;
 			R_Color(NULL);
-			MN_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], fontHeight);
+			UI_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], fontHeight);
 			decX += OPTIONEXTRADATA(option).icon->size[0] + fontHeight / 4;
 		}
 
@@ -140,7 +140,7 @@ static void MN_OptionListNodeDraw (uiNode_t *node)
 			label = _(label + 1);
 
 		R_Color(textColor);
-		MN_DrawString(font, ALIGN_UL, decX, currentY,
+		UI_DrawString(font, ALIGN_UL, decX, currentY,
 			pos[0], currentY, node->size[0] - node->padding - node->padding, node->size[1],
 			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
@@ -159,10 +159,10 @@ static void MN_OptionListNodeDraw (uiNode_t *node)
 		EXTRADATA(node).count = count;
 	}
 
-	MN_OptionListNodeUpdateScroll(node);
+	UI_OptionListNodeUpdateScroll(node);
 }
 
-static uiNode_t* MN_OptionListNodeGetOptionAtPosition (uiNode_t * node, int x, int y)
+static uiNode_t* UI_OptionListNodeGetOptionAtPosition (uiNode_t * node, int x, int y)
 {
 	uiNode_t* option;
 	vec2_t pos;
@@ -171,13 +171,13 @@ static uiNode_t* MN_OptionListNodeGetOptionAtPosition (uiNode_t * node, int x, i
 	int count = 0;
 	const char *font;
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 	currentY = pos[1] + node->padding;
 
-	font = MN_GetFontFromNode(node);
-	fontHeight = MN_FontGetHeight(font);
+	font = UI_GetFontFromNode(node);
+	fontHeight = UI_FontGetHeight(font);
 
-	option = MN_AbstractOptionGetFirstOption(node);
+	option = UI_AbstractOptionGetFirstOption(node);
 	while (option && count < EXTRADATA(node).scrollY.viewPos) {
 		option = option->next;
 		count++;
@@ -197,61 +197,61 @@ static uiNode_t* MN_OptionListNodeGetOptionAtPosition (uiNode_t * node, int x, i
 /**
  * @brief Handles selectboxes clicks
  */
-static void MN_OptionListNodeClick (uiNode_t * node, int x, int y)
+static void UI_OptionListNodeClick (uiNode_t * node, int x, int y)
 {
 	uiNode_t* option;
 
-	if (MN_AbstractOptionGetCurrentValue(node) == NULL)
+	if (UI_AbstractOptionGetCurrentValue(node) == NULL)
 		return;
 
 	/* select the right option */
-	option = MN_OptionListNodeGetOptionAtPosition(node, x, y);
+	option = UI_OptionListNodeGetOptionAtPosition(node, x, y);
 
 	/* update the status */
 	if (option)
-		MN_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
+		UI_AbstractOptionSetCurrentValue(node, OPTIONEXTRADATA(option).value);
 }
 
 /**
  * @brief Auto scroll the list
  */
-static void MN_OptionListNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_OptionListNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
 {
 	qboolean updated;
-	updated = MN_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
+	updated = UI_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
 	if (EXTRADATA(node).onViewChange && updated)
-		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 
 	if (node->onWheelUp && !down)
-		MN_ExecuteEventActions(node, node->onWheelUp);
+		UI_ExecuteEventActions(node, node->onWheelUp);
 	if (node->onWheelDown && down)
-		MN_ExecuteEventActions(node, node->onWheelDown);
+		UI_ExecuteEventActions(node, node->onWheelDown);
 	if (node->onWheel)
-		MN_ExecuteEventActions(node, node->onWheel);
+		UI_ExecuteEventActions(node, node->onWheel);
 }
 
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void MN_OptionListNodeLoading (uiNode_t *node)
+static void UI_OptionListNodeLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	EXTRADATA(node).versionId = -1;
 	node->padding = 3;
 }
 
-static void MN_OptionListNodeLoaded (uiNode_t *node)
+static void UI_OptionListNodeLoaded (uiNode_t *node)
 {
 }
 
-void MN_RegisterOptionListNode (uiBehaviour_t *behaviour)
+void UI_RegisterOptionListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "optionlist";
 	behaviour->extends = "abstractoption";
-	behaviour->draw = MN_OptionListNodeDraw;
-	behaviour->leftClick = MN_OptionListNodeClick;
-	behaviour->mouseWheel = MN_OptionListNodeMouseWheel;
-	behaviour->loading = MN_OptionListNodeLoading;
-	behaviour->loaded = MN_OptionListNodeLoaded;
+	behaviour->draw = UI_OptionListNodeDraw;
+	behaviour->leftClick = UI_OptionListNodeClick;
+	behaviour->mouseWheel = UI_OptionListNodeMouseWheel;
+	behaviour->loading = UI_OptionListNodeLoading;
+	behaviour->loaded = UI_OptionListNodeLoaded;
 	behaviour->drawItselfChild = qtrue;
 }

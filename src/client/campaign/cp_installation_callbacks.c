@@ -50,9 +50,9 @@ static void INS_SetInstallationTitle (void)
 
 	Cvar_Set("mn_installation_title", insName);
 	if (!insTemp || !insTemp->description || !strlen(insTemp->description))
-		MN_ResetData(TEXT_BUILDING_INFO);
+		UI_ResetData(TEXT_BUILDING_INFO);
 	else
-		MN_RegisterText(TEXT_BUILDING_INFO, _(insTemp->description));
+		UI_RegisterText(TEXT_BUILDING_INFO, _(insTemp->description));
 }
 
 /**
@@ -90,7 +90,7 @@ void INS_SelectInstallation (installation_t *installation)
 			Cvar_Set("mn_installation_timetobuild", va(ngettext("%d day", "%d days", timetobuild), timetobuild));
 		}
 		INS_SetCurrentSelectedInstallation(installation);
-		MN_PushWindow("popup_installationstatus", NULL);
+		UI_PushWindow("popup_installationstatus", NULL);
 	}
 }
 
@@ -150,7 +150,7 @@ static void INS_BuildInstallation_f (void)
 		if (ccs.mapAction == MA_NEWINSTALLATION)
 			ccs.mapAction = MA_NONE;
 
-		MN_Popup(_("Notice"), _("Not enough credits to set up a new installation."));
+		UI_Popup(_("Notice"), _("Not enough credits to set up a new installation."));
 	}
 }
 
@@ -216,7 +216,7 @@ static void INS_DestroyInstallation_f (void)
 		char command[MAX_VAR];
 
 		Com_sprintf(command, sizeof(command), "mn_installation_destroy %d 1; mn_pop;", installation->idx);
-		MN_PopupButton(_("Destroy Installation"), _("Do you really want to destroy this installation?"),
+		UI_PopupButton(_("Destroy Installation"), _("Do you really want to destroy this installation?"),
 			command, _("Destroy"), _("Destroy installation"),
 			"mn_pop;", _("Cancel"), _("Forget it"),
 			NULL, NULL, NULL);

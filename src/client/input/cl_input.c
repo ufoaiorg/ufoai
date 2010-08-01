@@ -289,7 +289,7 @@ static void CL_LevelDown_f (void)
 static void CL_ZoomInQuant_f (void)
 {
 	if (mouseSpace == MS_MENU)
-		MN_MouseWheel(qfalse, mousePosX, mousePosY);
+		UI_MouseWheel(qfalse, mousePosX, mousePosY);
 	else
 		CL_CameraZoomIn();
 }
@@ -297,7 +297,7 @@ static void CL_ZoomInQuant_f (void)
 static void CL_ZoomOutQuant_f (void)
 {
 	if (mouseSpace == MS_MENU)
-		MN_MouseWheel(qtrue, mousePosX, mousePosY);
+		UI_MouseWheel(qtrue, mousePosX, mousePosY);
 	else
 		CL_CameraZoomOut();
 }
@@ -359,9 +359,9 @@ static void CL_TurnUp_f (void)
  */
 static void CL_HudRadarDown_f (void)
 {
-	if (!MN_IsWindowOnStack(mn_hud->string))
+	if (!UI_IsWindowOnStack(mn_hud->string))
 		return;
-	MN_PushWindow("radarmenu", NULL);
+	UI_PushWindow("radarmenu", NULL);
 }
 
 /**
@@ -369,9 +369,9 @@ static void CL_HudRadarDown_f (void)
  */
 static void CL_HudRadarUp_f (void)
 {
-	if (!MN_IsWindowOnStack(mn_hud->string))
+	if (!UI_IsWindowOnStack(mn_hud->string))
 		return;
-	MN_CloseWindow("radarmenu");
+	UI_CloseWindow("radarmenu");
 }
 
 /**
@@ -380,7 +380,7 @@ static void CL_HudRadarUp_f (void)
 static void CL_RightClickDown_f (void)
 {
 	if (mouseSpace == MS_MENU) {
-		MN_MouseDown(mousePosX, mousePosY, K_MOUSE2);
+		UI_MouseDown(mousePosX, mousePosY, K_MOUSE2);
 	}
 }
 
@@ -390,7 +390,7 @@ static void CL_RightClickDown_f (void)
 static void CL_RightClickUp_f (void)
 {
 	if (mouseSpace == MS_MENU) {
-		MN_MouseUp(mousePosX, mousePosY, K_MOUSE2);
+		UI_MouseUp(mousePosX, mousePosY, K_MOUSE2);
 	}
 }
 
@@ -400,7 +400,7 @@ static void CL_RightClickUp_f (void)
 static void CL_MiddleClickDown_f (void)
 {
 	if (mouseSpace == MS_MENU) {
-		MN_MouseDown(mousePosX, mousePosY, K_MOUSE3);
+		UI_MouseDown(mousePosX, mousePosY, K_MOUSE3);
 	}
 }
 
@@ -410,7 +410,7 @@ static void CL_MiddleClickDown_f (void)
 static void CL_MiddleClickUp_f (void)
 {
 	if (mouseSpace == MS_MENU) {
-		MN_MouseUp(mousePosX, mousePosY, K_MOUSE3);
+		UI_MouseUp(mousePosX, mousePosY, K_MOUSE3);
 	}
 }
 
@@ -420,7 +420,7 @@ static void CL_MiddleClickUp_f (void)
 static void CL_LeftClickDown_f (void)
 {
 	if (mouseSpace == MS_MENU) {
-		MN_MouseDown(mousePosX, mousePosY, K_MOUSE1);
+		UI_MouseDown(mousePosX, mousePosY, K_MOUSE1);
 	}
 }
 
@@ -430,7 +430,7 @@ static void CL_LeftClickDown_f (void)
 static void CL_LeftClickUp_f (void)
 {
 	if (mouseSpace == MS_MENU) {
-		MN_MouseUp(mousePosX, mousePosY, K_MOUSE1);
+		UI_MouseUp(mousePosX, mousePosY, K_MOUSE1);
 	}
 }
 
@@ -477,7 +477,7 @@ float CL_GetKeyMouseState (int dir)
 
 /**
  * @brief Called every frame to parse the input
- * @note The geoscape zooming code is in MN_MouseWheel too
+ * @note The geoscape zooming code is in UI_MouseWheel too
  * @sa CL_Frame
  */
 static void IN_Parse (void)
@@ -485,7 +485,7 @@ static void IN_Parse (void)
 	mouseSpace = MS_NULL;
 
 	/* standard menu and world mouse handling */
-	if (MN_IsPointOnWindow()) {
+	if (UI_IsPointOnWindow()) {
 		mouseSpace = MS_MENU;
 		return;
 	}
@@ -891,7 +891,7 @@ void IN_Frame (void)
 		case SDL_ACTIVEEVENT:
 			/* make sure menu no more capture input when the game window lose the focus */
 			if (event.active.state == SDL_APPINPUTFOCUS && event.active.gain == 0)
-				MN_ReleaseInput();
+				UI_ReleaseInput();
 			break;
 
 		case SDL_QUIT:

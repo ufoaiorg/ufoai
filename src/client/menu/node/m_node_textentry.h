@@ -37,6 +37,6 @@ typedef struct textEntryExtraData_s {
 	struct uiAction_s *onAbort;
 } textEntryExtraData_t;
 
-void MN_RegisterTextEntryNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterTextEntryNode(struct uiBehaviour_s *behaviour);
 
 #endif

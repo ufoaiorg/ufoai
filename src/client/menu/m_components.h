@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* prototype */
 struct uiNode_s;
 
-void MN_InsertComponent(struct uiNode_s* menu);
-struct uiNode_s *MN_GetComponent(const char *name);
+void UI_InsertComponent(struct uiNode_s* menu);
+struct uiNode_s *UI_GetComponent(const char *name);
 
 #endif

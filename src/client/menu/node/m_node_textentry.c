@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/utf8.h"
 
 #define EXTRADATA_TYPE textEntryExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
 #define TILE_SIZE 64
 #define CORNER_SIZE 17
@@ -65,7 +65,7 @@ static qboolean isAborted = qfalse;
 /**
  * @brief callback from the keyboard
  */
-static void MN_TextEntryNodeValidateEdition (uiNode_t *node)
+static void UI_TextEntryNodeValidateEdition (uiNode_t *node)
 {
 	/* invalidate cache */
 	editedCvar = NULL;
@@ -73,14 +73,14 @@ static void MN_TextEntryNodeValidateEdition (uiNode_t *node)
 
 	/* fire change event */
 	if (node->onChange) {
-		MN_ExecuteEventActions(node, node->onChange);
+		UI_ExecuteEventActions(node, node->onChange);
 	}
 }
 
 /**
  * @brief callback from the keyboard
  */
-static void MN_TextEntryNodeAbortEdition (uiNode_t *node)
+static void UI_TextEntryNodeAbortEdition (uiNode_t *node)
 {
 	assert(editedCvar);
 
@@ -93,7 +93,7 @@ static void MN_TextEntryNodeAbortEdition (uiNode_t *node)
 
 	/* fire abort event */
 	if (EXTRADATA(node).onAbort) {
-		MN_ExecuteEventActions(node, EXTRADATA(node).onAbort);
+		UI_ExecuteEventActions(node, EXTRADATA(node).onAbort);
 	}
 }
 
@@ -101,18 +101,18 @@ static void MN_TextEntryNodeAbortEdition (uiNode_t *node)
  * @brief force edition of a textentry node
  * @note the textentry must be on the active menu
  */
-static void MN_TextEntryNodeFocus (uiNode_t *node, const uiCallContext_t *context)
+static void UI_TextEntryNodeFocus (uiNode_t *node, const uiCallContext_t *context)
 {
 	/* remove the focus to show changes */
-	if (!MN_HasFocus(node)) {
-		MN_RequestFocus(node);
+	if (!UI_HasFocus(node)) {
+		UI_RequestFocus(node);
 	}
 }
 
 /**
  * @brief Called when the user click with the right mouse button
  */
-static void MN_TextEntryNodeClick (uiNode_t *node, int x, int y)
+static void UI_TextEntryNodeClick (uiNode_t *node, int x, int y)
 {
 	if (node->disabled)
 		return;
@@ -123,18 +123,18 @@ static void MN_TextEntryNodeClick (uiNode_t *node, int x, int y)
 	if (strncmp(node->text, "*cvar", 5))
 		return;
 
-	if (!MN_HasFocus(node)) {
+	if (!UI_HasFocus(node)) {
 		if (node->onClick) {
-			MN_ExecuteEventActions(node, node->onClick);
+			UI_ExecuteEventActions(node, node->onClick);
 		}
-		MN_RequestFocus(node);
+		UI_RequestFocus(node);
 	}
 }
 
 /**
  * @brief Called when the node got the focus
  */
-static void MN_TextEntryFocusGained (uiNode_t *node)
+static void UI_TextEntryFocusGained (uiNode_t *node)
 {
 	assert(editedCvar == NULL);
 	/* skip '*cvar ' */
@@ -147,7 +147,7 @@ static void MN_TextEntryFocusGained (uiNode_t *node)
 /**
  * @brief Called when the node lost the focus
  */
-static void MN_TextEntryFocusLost (uiNode_t *node)
+static void UI_TextEntryFocusLost (uiNode_t *node)
 {
 	/* already aborted/changed with the keyboard */
 	if (editedCvar == NULL)
@@ -155,16 +155,16 @@ static void MN_TextEntryFocusLost (uiNode_t *node)
 
 	/* release the keyboard */
 	if (isAborted || EXTRADATA(node).clickOutAbort) {
-		MN_TextEntryNodeAbortEdition(node);
+		UI_TextEntryNodeAbortEdition(node);
 	} else {
-		MN_TextEntryNodeValidateEdition(node);
+		UI_TextEntryNodeValidateEdition(node);
 	}
 }
 
 /**
  * @brief edit the current cvar with a char
  */
-static void MN_TextEntryNodeEdit (uiNode_t *node, unsigned int key)
+static void UI_TextEntryNodeEdit (uiNode_t *node, unsigned int key)
 {
 	char buffer[MAX_CVAR_EDITING_LENGTH];
 	int length;
@@ -193,23 +193,23 @@ static void MN_TextEntryNodeEdit (uiNode_t *node, unsigned int key)
  * @brief Called when we press a key when the node got the focus
  * @return True, if we use the event
  */
-static qboolean MN_TextEntryNodeKeyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
+static qboolean UI_TextEntryNodeKeyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
 {
 	switch (key) {
 	/* remove the last char */
 	case K_BACKSPACE:
-		MN_TextEntryNodeEdit(node, K_BACKSPACE);
+		UI_TextEntryNodeEdit(node, K_BACKSPACE);
 		return qtrue;
 	/* cancel the edition */
 	case K_ESCAPE:
 		isAborted = qtrue;
-		MN_RemoveFocus();
+		UI_RemoveFocus();
 		return qtrue;
 	/* validate the edition */
 	case K_ENTER:
 	case K_KP_ENTER:
-		MN_TextEntryNodeValidateEdition(node);
-		MN_RemoveFocus();
+		UI_TextEntryNodeValidateEdition(node);
+		UI_RemoveFocus();
 		return qtrue;
 	}
 
@@ -218,11 +218,11 @@ static qboolean MN_TextEntryNodeKeyPressed (uiNode_t *node, unsigned int key, un
 		return qfalse;
 
 	/* add a char */
-	MN_TextEntryNodeEdit(node, unicode);
+	UI_TextEntryNodeEdit(node, unicode);
 	return qtrue;
 }
 
-static void MN_TextEntryNodeDraw (uiNode_t *node)
+static void UI_TextEntryNodeDraw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -235,7 +235,7 @@ static void MN_TextEntryNodeDraw (uiNode_t *node)
 	const char *image;
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
-	const char *font = MN_GetFontFromNode(node);
+	const char *font = UI_GetFontFromNode(node);
 
 	if (node->disabled) {
 		/** @todo need custom color when node is disabled */
@@ -251,19 +251,19 @@ static void MN_TextEntryNodeDraw (uiNode_t *node)
 		texX = 0;
 		texY = 0;
 	}
-	if (MN_HasFocus(node))
+	if (UI_HasFocus(node))
 		textColor = node->selectedColor;
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 
-	image = MN_GetReferenceString(node, node->image);
+	image = UI_GetReferenceString(node, node->image);
 	if (image)
-		MN_DrawPanel(pos, node->size, image, texX, texY, panelTemplate);
+		UI_DrawPanel(pos, node->size, image, texX, texY, panelTemplate);
 
-	text = MN_GetReferenceString(node, node->text);
+	text = UI_GetReferenceString(node, node->text);
 	if (text != NULL) {
 		/** @todo we don't need to edit the text to draw the cursor */
-		if (MN_HasFocus(node)) {
+		if (UI_HasFocus(node)) {
 			if (CL_Milliseconds() % 1000 < 500) {
 				text = va("%s%c", text, CURSOR);
 			}
@@ -280,7 +280,7 @@ static void MN_TextEntryNodeDraw (uiNode_t *node)
 				size--;
 			}
 			/* readd the cursor */
-			if (MN_HasFocus(node)) {
+			if (UI_HasFocus(node)) {
 				if (CL_Milliseconds() % 1000 < 500) {
 					c--;
 					*c++ = CURSOR;
@@ -291,7 +291,7 @@ static void MN_TextEntryNodeDraw (uiNode_t *node)
 
 		if (*text != '\0') {
 			R_Color(textColor);
-			MN_DrawStringInBox(font, node->textalign,
+			UI_DrawStringInBox(font, node->textalign,
 				pos[0] + node->padding, pos[1] + node->padding,
 				node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding,
 				text, LONGLINES_PRETTYCHOP);
@@ -304,7 +304,7 @@ static void MN_TextEntryNodeDraw (uiNode_t *node)
 /**
  * @brief Call before the script initialization of the node
  */
-static void MN_TextEntryNodeLoading (uiNode_t *node)
+static void UI_TextEntryNodeLoading (uiNode_t *node)
 {
 	node->padding = 8;
 	node->textalign = ALIGN_CL;
@@ -330,28 +330,28 @@ static const value_t properties[] = {
 	 */
 
 	/* Custom the draw behaviour by hiding each character of the text with a star (''*''). */
-	{"ispassword", V_BOOL, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, isPassword), MEMBER_SIZEOF(textEntryExtraData_t, isPassword)},
+	{"ispassword", V_BOOL, UI_EXTRADATA_OFFSETOF(textEntryExtraData_t, isPassword), MEMBER_SIZEOF(textEntryExtraData_t, isPassword)},
 	/* ustom the mouse event behaviour. When we are editing the text, if we click out of the node, the edition is aborted. Changes on
 	 * the text are canceled, and no change event are fired.
 	 */
-	{"clickoutabort", V_BOOL, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, clickOutAbort), MEMBER_SIZEOF(textEntryExtraData_t, clickOutAbort)},
+	{"clickoutabort", V_BOOL, UI_EXTRADATA_OFFSETOF(textEntryExtraData_t, clickOutAbort), MEMBER_SIZEOF(textEntryExtraData_t, clickOutAbort)},
 	/* Call it when we abort the edition */
-	{"onabort", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(textEntryExtraData_t, onAbort), MEMBER_SIZEOF(textEntryExtraData_t, onAbort)},
+	{"onabort", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(textEntryExtraData_t, onAbort), MEMBER_SIZEOF(textEntryExtraData_t, onAbort)},
 	/* Call it to force node edition */
-	{"edit", V_UI_NODEMETHOD, ((size_t) MN_TextEntryNodeFocus), 0},
+	{"edit", V_UI_NODEMETHOD, ((size_t) UI_TextEntryNodeFocus), 0},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterTextEntryNode (uiBehaviour_t *behaviour)
+void UI_RegisterTextEntryNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "textentry";
-	behaviour->leftClick = MN_TextEntryNodeClick;
-	behaviour->focusGained = MN_TextEntryFocusGained;
-	behaviour->focusLost = MN_TextEntryFocusLost;
-	behaviour->keyPressed = MN_TextEntryNodeKeyPressed;
-	behaviour->draw = MN_TextEntryNodeDraw;
-	behaviour->loading = MN_TextEntryNodeLoading;
+	behaviour->leftClick = UI_TextEntryNodeClick;
+	behaviour->focusGained = UI_TextEntryFocusGained;
+	behaviour->focusLost = UI_TextEntryFocusLost;
+	behaviour->keyPressed = UI_TextEntryNodeKeyPressed;
+	behaviour->draw = UI_TextEntryNodeDraw;
+	behaviour->loading = UI_TextEntryNodeLoading;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

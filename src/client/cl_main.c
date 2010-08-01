@@ -400,8 +400,8 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		s = NET_ReadString(msg);
 		/* special reject messages needs proper handling */
 		if (strstr(s, REJ_PASSWORD_REQUIRED_OR_INCORRECT))
-			MN_PushWindow("serverpassword", NULL);
-		MN_Popup(_("Notice"), _(s));
+			UI_PushWindow("serverpassword", NULL);
+		UI_Popup(_("Notice"), _(s));
 		return;
 	}
 
@@ -502,18 +502,18 @@ void CL_RequestNextDownload (void)
 		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM]
 		 || !*cl.configstrings[CS_UFOCHECKSUM] || !*cl.configstrings[CS_OBJECTAMOUNT]) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers"), UFO_VERSION);
-			MN_Popup(_("Error"), popupText);
+			UI_Popup(_("Error"), popupText);
 			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers", UFO_VERSION);
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
 		} else if (mapChecksum != atoi(cl.configstrings[CS_MAPCHECKSUM])) {
-			MN_Popup(_("Error"), _("Local map version differs from server"));
+			UI_Popup(_("Error"), _("Local map version differs from server"));
 			Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%s'",
 				mapChecksum, cl.configstrings[CS_MAPCHECKSUM]);
 			return;
 		/* amount of objects from script files doensn't match */
 		} else if (csi.numODs != atoi(cl.configstrings[CS_OBJECTAMOUNT])) {
-			MN_Popup(_("Error"), _("Script files are not the same"));
+			UI_Popup(_("Error"), _("Script files are not the same"));
 			Com_Error(ERR_DISCONNECT, "Script files are not the same");
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
@@ -521,7 +521,7 @@ void CL_RequestNextDownload (void)
 			Com_Printf("You are using modified ufo script files - might produce problems\n");
 		} else if (strncmp(UFO_VERSION, cl.configstrings[CS_VERSION], sizeof(UFO_VERSION))) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers (%s)"), UFO_VERSION, cl.configstrings[CS_VERSION]);
-			MN_Popup(_("Error"), popupText);
+			UI_Popup(_("Error"), popupText);
 			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers (%s)", UFO_VERSION, cl.configstrings[CS_VERSION]);
 			return;
 		}
@@ -643,7 +643,7 @@ static void CL_PrecacheModels (void)
 
 static void CL_SetRatioFilter_f (void)
 {
-	uiNode_t* firstOption = MN_GetOption(OPTION_VIDEO_RESOLUTIONS);
+	uiNode_t* firstOption = UI_GetOption(OPTION_VIDEO_RESOLUTIONS);
 	uiNode_t* option = firstOption;
 	float requestedRation = atof(Cmd_Argv(1));
 	qboolean all = qfalse;
@@ -685,34 +685,34 @@ static void CL_SetRatioFilter_f (void)
 	}
 
 	/* the content change */
-	MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, firstOption);
+	UI_RegisterOption(OPTION_VIDEO_RESOLUTIONS, firstOption);
 }
 
 static void CL_VideoInitMenu (void)
 {
-	uiNode_t* option = MN_GetOption(OPTION_VIDEO_RESOLUTIONS);
+	uiNode_t* option = UI_GetOption(OPTION_VIDEO_RESOLUTIONS);
 	if (option == NULL) {
 		int i;
 		for (i = 0; i < VID_GetModeNums(); i++) {
 			vidmode_t vidmode;
 			if (VID_GetModeInfo(i, &vidmode))
-				MN_AddOption(&option, va("r%ix%i", vidmode.width, vidmode.height), va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
+				UI_AddOption(&option, va("r%ix%i", vidmode.width, vidmode.height), va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
 		}
-		MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, option);
+		UI_RegisterOption(OPTION_VIDEO_RESOLUTIONS, option);
 	}
 }
 
 static void CL_TeamDefInitMenu (void)
 {
-	uiNode_t* option = MN_GetOption(OPTION_TEAMDEFS);
+	uiNode_t* option = UI_GetOption(OPTION_TEAMDEFS);
 	if (option == NULL) {
 		int i;
 		for (i = 0; i < csi.numTeamDefs; i++) {
 			teamDef_t *td = &csi.teamDef[i];
 			if (td->race != RACE_CIVILIAN)
-				MN_AddOption(&option, td->id, _(td->name), td->id);
+				UI_AddOption(&option, td->id, _(td->name), td->id);
 		}
-		MN_RegisterOption(OPTION_TEAMDEFS, option);
+		UI_RegisterOption(OPTION_TEAMDEFS, option);
 	}
 }
 
@@ -770,13 +770,13 @@ void CL_InitAfter (void)
 void CL_ParseClientData (const char *type, const char *name, const char **text)
 {
 	if (!strcmp(type, "font"))
-		MN_ParseFont(name, text);
+		UI_ParseFont(name, text);
 	else if (!strcmp(type, "tutorial"))
 		TUT_ParseTutorials(name, text);
 	else if (!strcmp(type, "menu_model"))
-		MN_ParseMenuModel(name, text);
+		UI_ParseMenuModel(name, text);
 	else if (!strcmp(type, "icon"))
-		MN_ParseIcon(name, text);
+		UI_ParseIcon(name, text);
 	else if (!strcmp(type, "particle"))
 		CL_ParseParticle(name, text);
 	else if (!strcmp(type, "sequence"))
@@ -790,9 +790,9 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 	else if (!strcmp(type, "ugv"))
 		CL_ParseUGVs(name, text);
 	else if (!strcmp(type, "window"))
-		MN_ParseWindow(type, name, text);
+		UI_ParseWindow(type, name, text);
 	else if (!strcmp(type, "component"))
-		MN_ParseComponent(type, text);
+		UI_ParseComponent(type, text);
 }
 
 /** @brief Cvars for initial check (popup at first start) */
@@ -814,7 +814,7 @@ static void CL_CheckCvars_f (void)
 			checkcvar[i].var = Cvar_Get(checkcvar[i].name, "", 0, NULL);
 		if (checkcvar[i].var->string[0] == '\0') {
 			Com_Printf("%s has no value\n", checkcvar[i].var->name);
-			MN_PushWindow("checkcvars", NULL);
+			UI_PushWindow("checkcvars", NULL);
 			break;
 		}
 		i++;
@@ -1193,7 +1193,7 @@ void CL_Shutdown (void)
 	Key_WriteBindings("keys.cfg");
 	S_Shutdown();
 	R_Shutdown();
-	MN_Shutdown();
+	UI_Shutdown();
 	CIN_Shutdown();
 	FS_Shutdown();
 }

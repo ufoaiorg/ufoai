@@ -27,14 +27,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_nodes.h"
 
-#define MN_MAPEXTRADATA_TYPE mapExtraData_t
-#define MN_MAPEXTRADATA(node) MN_EXTRADATA(node, MN_MAPEXTRADATA_TYPE)
-#define MN_MAPEXTRADATACONST(node) MN_EXTRADATACONST(node, MN_MAPEXTRADATA_TYPE)
+#define UI_MAPEXTRADATA_TYPE mapExtraData_t
+#define UI_MAPEXTRADATA(node) UI_EXTRADATA(node, UI_MAPEXTRADATA_TYPE)
+#define UI_MAPEXTRADATACONST(node) UI_EXTRADATACONST(node, UI_MAPEXTRADATA_TYPE)
 
 typedef struct mapExtraData_s {
 	float paddingRight;
 } mapExtraData_t;
 
-void MN_RegisterMapNode(uiBehaviour_t *behaviour);
+void UI_RegisterMapNode(uiBehaviour_t *behaviour);
 
 #endif

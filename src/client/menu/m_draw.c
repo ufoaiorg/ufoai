@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_draw.h"
 #include "m_actions.h"
 #include "m_input.h"
-#include "m_timer.h" /* define MN_HandleTimers */
+#include "m_timer.h" /* define UI_HandleTimers */
 #include "m_dragndrop.h"
 #include "m_tooltip.h"
 #include "m_render.h"
@@ -49,7 +49,7 @@ static uiNode_t *noticeMenu;
 
 /**
  * @brief Node we will draw over
- * @sa MN_CaptureDrawOver
+ * @sa UI_CaptureDrawOver
  * @sa uiBehaviour_t.drawOverMenu
  */
 static uiNode_t *drawOverNode;
@@ -59,7 +59,7 @@ static uiNode_t *drawOverNode;
  * @note The node must be captured every frames
  * @todo it can be better to capture the draw over only one time (need new event like mouseEnter, mouseLeave)
  */
-void MN_CaptureDrawOver (uiNode_t *node)
+void UI_CaptureDrawOver (uiNode_t *node)
 {
 	drawOverNode = node;
 }
@@ -70,7 +70,7 @@ static int debugTextPositionY = 0;
 static int debugPositionX = 0;
 #define DEBUG_PANEL_WIDTH 300
 
-static void MN_HighlightNode (const uiNode_t *node, const vec4_t color)
+static void UI_HighlightNode (const uiNode_t *node, const vec4_t color)
 {
 	static const vec4_t grey = {0.7, 0.7, 0.7, 1.0};
 	vec2_t pos;
@@ -79,15 +79,15 @@ static void MN_HighlightNode (const uiNode_t *node, const vec4_t color)
 	const char* text;
 
 	if (node->parent)
-		MN_HighlightNode(node->parent, grey);
+		UI_HighlightNode(node->parent, grey);
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 
 	text = va("%s (%s)", node->name, node->behaviour->name);
 	R_FontTextSize("f_small_bold", text, DEBUG_PANEL_WIDTH, LONGLINES_PRETTYCHOP, &width, NULL, NULL, NULL);
 
 	R_Color(color);
-	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX + 20, debugTextPositionY, debugPositionX + 20, debugTextPositionY, DEBUG_PANEL_WIDTH, DEBUG_PANEL_WIDTH, 0, text, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX + 20, debugTextPositionY, debugPositionX + 20, debugTextPositionY, DEBUG_PANEL_WIDTH, DEBUG_PANEL_WIDTH, 0, text, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 
 	if (debugPositionX != 0) {
@@ -111,7 +111,7 @@ static void MN_HighlightNode (const uiNode_t *node, const vec4_t color)
 		for (i = 0; i < node->excludeRectNum; i++) {
 			const int x = pos[0] + node->excludeRect[i].pos[0];
 			const int y = pos[1] + node->excludeRect[i].pos[1];
-			MN_DrawFill(x, y, node->excludeRect[i].size[0], node->excludeRect[i].size[1], trans);
+			UI_DrawFill(x, y, node->excludeRect[i].size[0], node->excludeRect[i].size[1], trans);
 		}
 	}
 
@@ -122,7 +122,7 @@ static void MN_HighlightNode (const uiNode_t *node, const vec4_t color)
 /**
  * @brief Prints active node names for debugging
  */
-static void MN_DrawDebugMenuNodeNames (void)
+static void UI_DrawDebugMenuNodeNames (void)
 {
 	static const vec4_t red = {1.0, 0.0, 0.0, 1.0};
 	static const vec4_t green = {0.0, 0.5, 0.0, 1.0};
@@ -140,56 +140,56 @@ static void MN_DrawDebugMenuNodeNames (void)
 		debugPositionX = 0;
 
 	/* mouse position */
-	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, va("Mouse X: %i Y: %i", mousePosX, mousePosY), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, va("Mouse X: %i Y: %i", mousePosX, mousePosY), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 	/* main menus */
-	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "main active menu:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "main active menu:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, Cvar_GetString("mn_sys_active"), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, Cvar_GetString("mn_sys_active"), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "main option menu:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "main option menu:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, Cvar_GetString("mn_sys_main"), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, Cvar_GetString("mn_sys_main"), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "-----------------------", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "-----------------------", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 
 	/* background */
-	MN_DrawFill(debugPositionX, debugTextPositionY, DEBUG_PANEL_WIDTH, VID_NORM_HEIGHT - debugTextPositionY - 100, background);
+	UI_DrawFill(debugPositionX, debugTextPositionY, DEBUG_PANEL_WIDTH, VID_NORM_HEIGHT - debugTextPositionY - 100, background);
 
 	/* menu stack */
 	R_Color(white);
-	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "menu stack:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "menu stack:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 	for (stackPosition = 0; stackPosition < mn.windowStackPos; stackPosition++) {
 		uiNode_t *menu = mn.windowStack[stackPosition];
-		MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, menu->name, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+		UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, menu->name, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
 	}
 
 	/* hovered node */
-	hoveredNode = MN_GetHoveredNode();
+	hoveredNode = UI_GetHoveredNode();
 	if (hoveredNode) {
-		MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "-----------------------", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+		UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "-----------------------", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
 
-		MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "hovered node:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+		UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "hovered node:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
-		MN_HighlightNode(hoveredNode, red);
+		UI_HighlightNode(hoveredNode, red);
 		R_Color(white);
 	}
 
 	/* target node */
-	if (MN_DNDIsDragging()) {
-		uiNode_t *targetNode = MN_DNDGetTargetNode();
+	if (UI_DNDIsDragging()) {
+		uiNode_t *targetNode = UI_DNDGetTargetNode();
 		if (targetNode) {
-			MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "-----------------------", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "-----------------------", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 			debugTextPositionY += 15;
 
 			R_Color(green);
-			MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "drag and drop target node:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "drag and drop target node:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 			debugTextPositionY += 15;
-			MN_HighlightNode(targetNode, green);
+			UI_HighlightNode(targetNode, green);
 		}
 	}
 	R_Color(NULL);
@@ -197,13 +197,13 @@ static void MN_DrawDebugMenuNodeNames (void)
 #endif
 
 
-static void MN_CheckTooltipDelay (uiNode_t *node, uiTimer_t *timer)
+static void UI_CheckTooltipDelay (uiNode_t *node, uiTimer_t *timer)
 {
 	tooltipVisible = qtrue;
-	MN_TimerStop(timer);
+	UI_TimerStop(timer);
 }
 
-static void MN_DrawNode (uiNode_t *node)
+static void UI_DrawNode (uiNode_t *node)
 {
 	static int globalTransX = 0;
 	static int globalTransY = 0;
@@ -211,16 +211,16 @@ static void MN_DrawNode (uiNode_t *node)
 	vec2_t pos;
 
 	/* update the layout */
-	MN_Validate(node);
+	UI_Validate(node);
 
 	/* skip invisible, virtual, and undrawable nodes */
 	if (node->invis || node->behaviour->isVirtual)
 		return;
 	/* if construct */
-	if (!MN_CheckVisibility(node))
+	if (!UI_CheckVisibility(node))
 		return;
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 
 	/** @todo remove it when its possible:
 	 * we can create a 'box' node with this properties,
@@ -228,7 +228,7 @@ static void MN_DrawNode (uiNode_t *node)
 	/* check node size x and y value to check whether they are zero */
 	if (node->size[0] && node->size[1]) {
 		if (node->bgcolor[3] != 0)
-			MN_DrawFill(pos[0], pos[1], node->size[0], node->size[1], node->bgcolor);
+			UI_DrawFill(pos[0], pos[1], node->size[0], node->size[1], node->bgcolor);
 
 		if (node->border && node->bordercolor[3] != 0) {
 			R_DrawRect(pos[0], pos[1], node->size[0], node->size[1],
@@ -264,7 +264,7 @@ static void MN_DrawNode (uiNode_t *node)
 		}
 
 		for (child = node->firstChild; child; child = child->next)
-			MN_DrawNode(child);
+			UI_DrawNode(child);
 
 		/** @todo move it at the right position */
 		if (hasClient) {
@@ -285,7 +285,7 @@ static void MN_DrawNode (uiNode_t *node)
  * @brief Generic notice function that renders a message to the screen
  * @todo Move it into Window node, and/or convert it in a reserved named string node and update the protocol
  */
-static void MN_DrawNotice (void)
+static void UI_DrawNotice (void)
 {
 	const vec4_t noticeBG = { 1.0f, 0.0f, 0.0f, 0.2f };
 	const vec4_t noticeColor = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -298,7 +298,7 @@ static void MN_DrawNotice (void)
 	int x, y;
 	vec_t *noticePosition;
 
-	noticePosition = MN_WindowNodeGetNoticePosition(noticeMenu);
+	noticePosition = UI_WindowNodeGetNoticePosition(noticeMenu);
 	if (noticePosition) {
 		x = noticePosition[0];
 		y = noticePosition[1];
@@ -321,9 +321,9 @@ static void MN_DrawNotice (void)
 	else
 		dx = 0;
 
-	MN_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, noticeBG);
+	UI_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, noticeBG);
 	R_Color(noticeColor);
-	MN_DrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, noticeText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
+	UI_DrawString(font, 0, x + 1 + dx, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, noticeText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 	R_Color(NULL);
 }
 
@@ -331,30 +331,30 @@ static void MN_DrawNotice (void)
  * @brief Draws the menu stack
  * @sa SCR_UpdateScreen
  */
-void MN_Draw (void)
+void UI_Draw (void)
 {
 	uiNode_t *hoveredNode;
 	uiNode_t *menu;
 	int pos;
 	qboolean mouseMoved = qfalse;
 
-	MN_HandleTimers();
+	UI_HandleTimers();
 
 	assert(mn.windowStackPos >= 0);
 
-	mouseMoved = MN_CheckMouseMove();
-	hoveredNode = MN_GetHoveredNode();
+	mouseMoved = UI_CheckMouseMove();
+	hoveredNode = UI_GetHoveredNode();
 
 	/* handle delay time for tooltips */
 	if (mouseMoved && tooltipVisible) {
-		MN_TimerStop(tooltipTimer);
+		UI_TimerStop(tooltipTimer);
 		tooltipVisible = qfalse;
 	} else if (!tooltipVisible && !mouseMoved && !tooltipTimer->isRunning && mn_show_tooltips->integer && hoveredNode) {
-		MN_TimerStart(tooltipTimer);
+		UI_TimerStart(tooltipTimer);
 	}
 
 	/* under a fullscreen, menu should not be visible */
-	pos = MN_GetLastFullScreenWindow();
+	pos = UI_GetLastFullScreenWindow();
 	if (pos < 0)
 		return;
 
@@ -364,11 +364,11 @@ void MN_Draw (void)
 
 		drawOverNode = NULL;
 
-		MN_DrawNode(menu);
+		UI_DrawNode(menu);
 
 		/* draw a special notice */
 		if (menu == noticeMenu && CL_Milliseconds() < noticeTime)
-			MN_DrawNotice();
+			UI_DrawNotice();
 
 		/* draw a node over the menu */
 		if (drawOverNode && drawOverNode->behaviour->drawOverMenu) {
@@ -381,25 +381,25 @@ void MN_Draw (void)
 		noticeMenu = NULL;
 
 	/* draw tooltip */
-	if (hoveredNode && tooltipVisible && !MN_DNDIsDragging()) {
+	if (hoveredNode && tooltipVisible && !UI_DNDIsDragging()) {
 		if (hoveredNode->behaviour->drawTooltip) {
 			hoveredNode->behaviour->drawTooltip(hoveredNode, mousePosX, mousePosY);
 		} else {
-			MN_Tooltip(hoveredNode, mousePosX, mousePosY);
+			UI_Tooltip(hoveredNode, mousePosX, mousePosY);
 		}
 	}
 
 #ifdef DEBUG
 	/* debug information */
-	if (MN_DebugMode() >= 1) {
-		MN_DrawDebugMenuNodeNames();
+	if (UI_DebugMode() >= 1) {
+		UI_DrawDebugMenuNodeNames();
 	}
 #endif
 }
 
-void MN_DrawCursor (void)
+void UI_DrawCursor (void)
 {
-	MN_DrawDragAndDrop(mousePosX, mousePosY);
+	UI_DrawDragAndDrop(mousePosX, mousePosY);
 }
 
 /**
@@ -409,24 +409,24 @@ void MN_DrawCursor (void)
  * @param[in] text text is already translated here
  * @param[in] windowName Window name where we must display the notice; else NULL to use the current active window
  */
-void MN_DisplayNotice (const char *text, int time, const char* windowName)
+void UI_DisplayNotice (const char *text, int time, const char* windowName)
 {
 	noticeTime = CL_Milliseconds() + time;
 	Q_strncpyz(noticeText, text, sizeof(noticeText));
 
 	if (windowName == NULL) {
-		noticeMenu = MN_GetActiveWindow();
+		noticeMenu = UI_GetActiveWindow();
 		if (noticeMenu == NULL)
-			Com_Printf("MN_DisplayNotice: No active menu\n");
+			Com_Printf("UI_DisplayNotice: No active menu\n");
 	} else {
-		noticeMenu = MN_GetWindow(windowName);
+		noticeMenu = UI_GetWindow(windowName);
 		if (noticeMenu == NULL)
-			Com_Printf("MN_DisplayNotice: '%s' not found\n", windowName);
+			Com_Printf("UI_DisplayNotice: '%s' not found\n", windowName);
 	}
 }
 
-void MN_InitDraw (void)
+void UI_InitDraw (void)
 {
 	mn_show_tooltips = Cvar_Get("mn_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
-	tooltipTimer = MN_AllocTimer(NULL, TOOLTIP_DELAY, MN_CheckTooltipDelay);
+	tooltipTimer = UI_AllocTimer(NULL, TOOLTIP_DELAY, UI_CheckTooltipDelay);
 }

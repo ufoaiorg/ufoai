@@ -35,8 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 const uiBehaviour_t *optionBehaviour = NULL;
 
 #define EXTRADATA_TYPE optionExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 static const value_t *propertyCollapsed;
 
@@ -46,7 +46,7 @@ static const value_t *propertyCollapsed;
  * @note can be a common function for all option node
  * @return number of visible elements
  */
-int MN_OptionUpdateCache (uiNode_t* option)
+int UI_OptionUpdateCache (uiNode_t* option)
 {
 	int count = 0;
 	while (option) {
@@ -63,7 +63,7 @@ int MN_OptionUpdateCache (uiNode_t* option)
 			continue;
 		}
 		if (option->firstChild)
-			localCount = MN_OptionUpdateCache(option->firstChild);
+			localCount = UI_OptionUpdateCache(option->firstChild);
 		OPTIONEXTRADATA(option).childCount = localCount;
 		count += 1 + localCount;
 		option = option->next;
@@ -71,12 +71,12 @@ int MN_OptionUpdateCache (uiNode_t* option)
 	return count;
 }
 
-static void MN_OptionDoLayout (uiNode_t *node) {
+static void UI_OptionDoLayout (uiNode_t *node) {
 	uiNode_t *child = node->firstChild;
 	int count = 0;
 
 	while(child && child->behaviour == optionBehaviour) {
-		MN_Validate(child);
+		UI_Validate(child);
 		if (!child->invis) {
 			if (EXTRADATA(child).collapsed)
 				count += 1 + EXTRADATA(child).childCount;
@@ -89,10 +89,10 @@ static void MN_OptionDoLayout (uiNode_t *node) {
 	node->invalidated = qfalse;
 }
 
-static void MN_OptionPropertyChanged (uiNode_t *node, const value_t *property)
+static void UI_OptionPropertyChanged (uiNode_t *node, const value_t *property)
 {
 	if (property == propertyCollapsed) {
-		MN_Invalidate(node);
+		UI_Invalidate(node);
 		return;
 	}
 	optionBehaviour->super->propertyChanged(node, property);
@@ -103,34 +103,34 @@ static const value_t properties[] = {
 	/**
 	 * Displayed text
 	 */
-	{"label", V_STRING, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, label), 0},
+	{"label", V_STRING, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, label), 0},
 
 	/**
 	 * Value of the option
 	 */
-	{"value", V_STRING, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, value), 0},
+	{"value", V_STRING, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, value), 0},
 
 	/**
 	 * If true, child are not displayed
 	 */
-	{"collapsed", V_BOOL, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, collapsed), MEMBER_SIZEOF(EXTRADATA_TYPE, collapsed)},
+	{"collapsed", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, collapsed), MEMBER_SIZEOF(EXTRADATA_TYPE, collapsed)},
 
 	/* Icon used to display the node
 	 */
-	{"icon", V_UI_ICONREF, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
+	{"icon", V_UI_ICONREF, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, icon), MEMBER_SIZEOF(EXTRADATA_TYPE, icon)},
 
 	{NULL, V_NULL, 0, 0},
 };
 
-void MN_RegisterOptionNode (uiBehaviour_t *behaviour)
+void UI_RegisterOptionNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "option";
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
-	behaviour->doLayout = MN_OptionDoLayout;
-	behaviour->propertyChanged = MN_OptionPropertyChanged;
+	behaviour->doLayout = UI_OptionDoLayout;
+	behaviour->propertyChanged = UI_OptionPropertyChanged;
 
-	propertyCollapsed = MN_GetPropertyFromBehaviour(behaviour, "collapsed");
+	propertyCollapsed = UI_GetPropertyFromBehaviour(behaviour, "collapsed");
 
 	optionBehaviour = behaviour;
 }

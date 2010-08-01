@@ -54,7 +54,7 @@ static void MP_UpdateActiveTeamList (void)
 	for (i = 0; i < chrDisplayList.num; i++)
 		characterActive[i] = qtrue;
 
-	MN_ExecuteConfunc("mp_checkboxes_update %i", chrDisplayList.num);
+	UI_ExecuteConfunc("mp_checkboxes_update %i", chrDisplayList.num);
 }
 
 void MP_AutoTeam_f (void)
@@ -128,7 +128,7 @@ void MP_MultiplayerTeamSlotComments_f (void)
 			}
 			FS_CloseFile(&f);
 			if (LittleLong(header.version) == MPTEAM_SAVE_FILE_VERSION) {
-				MN_ExecuteConfunc("set_slotname %i %i \"%s\"", i, LittleLong(header.soldiercount), header.name);
+				UI_ExecuteConfunc("set_slotname %i %i \"%s\"", i, LittleLong(header.soldiercount), header.name);
 			} else {
 				Cvar_Set(va("mn_slot%i", i), "");
 			}
@@ -251,7 +251,7 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 void MP_SaveTeamMultiplayer_f (void)
 {
 	if (!chrDisplayList.num) {
-		MN_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
+		UI_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
 		return;
 	} else {
 		char filename[MAX_OSPATH];
@@ -272,7 +272,7 @@ void MP_SaveTeamMultiplayer_f (void)
 		/* save */
 		Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", index);
 		if (!MP_SaveTeamMultiplayer(filename, name))
-			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
+			UI_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 	}
 }
 
@@ -428,7 +428,7 @@ static void MP_GetEquipment (void)
 	/* we don't want to lose anything from ed - so we copy it and screw the copied stuff afterwards */
 	unused = *edFromScript;
 	/* manage inventory */
-	MN_ContainerNodeUpdateEquipment(&mp_inventory, &unused);
+	UI_ContainerNodeUpdateEquipment(&mp_inventory, &unused);
 }
 
 /**
@@ -443,7 +443,7 @@ void MP_UpdateMenuParameters_f (void)
 	/* reset description */
 	Cvar_Set("mn_itemname", "");
 	Cvar_Set("mn_item", "");
-	MN_ResetData(TEXT_STANDARD);
+	UI_ResetData(TEXT_STANDARD);
 
 	for (i = 0; i < size; i++) {
 		const char *name;
@@ -472,7 +472,7 @@ void MP_TeamSelect_f (void)
 	if (num < 0 || num >= chrDisplayList.num)
 		return;
 
-	MN_ExecuteConfunc("mp_soldier_select %i", num);
-	MN_ExecuteConfunc("mp_soldier_unselect %i", old);
+	UI_ExecuteConfunc("mp_soldier_select %i", num);
+	UI_ExecuteConfunc("mp_soldier_unselect %i", old);
 	Cmd_ExecuteString(va("actor_select_equip %i", num));
 }

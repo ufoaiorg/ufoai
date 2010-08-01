@@ -207,9 +207,9 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 	linkedList_t *userTeam = NULL;
 
 	if (!s) {
-		MN_ResetData(TEXT_MULTIPLAYER_USERLIST);
-		MN_ResetData(TEXT_MULTIPLAYER_USERTEAM);
-		MN_ExecuteConfunc("multiplayer_playerNumber 0");
+		UI_ResetData(TEXT_MULTIPLAYER_USERLIST);
+		UI_ResetData(TEXT_MULTIPLAYER_USERTEAM);
+		UI_ExecuteConfunc("multiplayer_playerNumber 0");
 		Com_DPrintf(DEBUG_CLIENT, "CL_ParseTeamInfoMessage: No teaminfo string\n");
 		return;
 	}
@@ -235,7 +235,7 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 		else
 			LIST_AddString(&userTeam, _("No team"));
 
-		MN_ExecuteConfunc("multiplayer_playerIsReady %i %i", cnt, isReady);
+		UI_ExecuteConfunc("multiplayer_playerIsReady %i %i", cnt, isReady);
 
 		/* next line */
 		s = strstr(s, "\n");
@@ -244,9 +244,9 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 		cnt++;
 	}
 
-	MN_RegisterLinkedListText(TEXT_MULTIPLAYER_USERLIST, userList);
-	MN_RegisterLinkedListText(TEXT_MULTIPLAYER_USERTEAM, userTeam);
-	MN_ExecuteConfunc("multiplayer_playerNumber %i", cnt);
+	UI_RegisterLinkedListText(TEXT_MULTIPLAYER_USERLIST, userList);
+	UI_RegisterLinkedListText(TEXT_MULTIPLAYER_USERTEAM, userTeam);
+	UI_ExecuteConfunc("multiplayer_playerNumber %i", cnt);
 
 	/* no players are connected ATM */
 	if (!cnt) {
@@ -328,7 +328,7 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per player:\t%s\n"), Info_ValueForKey(s, "sv_maxsoldiersperplayer"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per team:\t%s\n"), Info_ValueForKey(s, "sv_maxsoldiersperteam"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Password protected:\t%s\n"), _(Info_BoolForKey(s, "sv_needpass")));
-		MN_RegisterText(TEXT_STANDARD, serverInfoText);
+		UI_RegisterText(TEXT_STANDARD, serverInfoText);
 		userInfoText[0] = '\0';
 		do {
 			token = Com_Parse(&users);
@@ -340,8 +340,8 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 				break;
 			Com_sprintf(userInfoText + strlen(userInfoText), sizeof(userInfoText) - strlen(userInfoText), "%s\t%i\n", token, team);
 		} while (1);
-		MN_RegisterText(TEXT_LIST, userInfoText);
-		MN_PushWindow("serverinfo", NULL);
+		UI_RegisterText(TEXT_LIST, userInfoText);
+		UI_PushWindow("serverinfo", NULL);
 	} else
 		Com_Printf(COLORED_GREEN "%s", s);
 }
@@ -467,7 +467,7 @@ static void CL_BookmarkAdd_f (void)
 		}
 	}
 	/* bookmarks are full - overwrite the first entry */
-	MN_Popup(_("Notice"), _("All bookmark slots are used - please removed unused entries and repeat this step"));
+	UI_Popup(_("Notice"), _("All bookmark slots are used - please removed unused entries and repeat this step"));
 }
 
 /**
@@ -520,7 +520,7 @@ static void CL_ServerListClick_f (void)
 	}
 	num = atoi(Cmd_Argv(1));
 
-	MN_RegisterText(TEXT_STANDARD, serverInfoText);
+	UI_RegisterText(TEXT_STANDARD, serverInfoText);
 	if (num >= 0 && num < serverListLength)
 		for (i = 0; i < serverListLength; i++)
 			if (serverList[i].pinged && serverList[i].serverListPos == num) {
@@ -561,7 +561,7 @@ void CL_PingServers_f (void)
 		serverListLength = 0;
 		memset(serverList, 0, sizeof(serverList));
 	} else {
-		MN_RegisterText(TEXT_LIST, serverText);
+		UI_RegisterText(TEXT_LIST, serverText);
 		return;
 	}
 
@@ -573,7 +573,7 @@ void CL_PingServers_f (void)
 		const char buf[] = "discover";
 		NET_DatagramBroadcast(cls.netDatagramSocket, buf, sizeof(buf), PORT_SERVER);
 	}
-	MN_RegisterText(TEXT_LIST, serverText);
+	UI_RegisterText(TEXT_LIST, serverText);
 
 	/* don't query the masterservers with every call */
 	if (serversAlreadyQueried) {

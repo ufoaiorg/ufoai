@@ -105,11 +105,11 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 
 		/* Update status */
 		if (alreadyInOtherShip)
-			MN_ExecuteConfunc("aircraft_%s_usedelsewhere %i", nodeTag, guiId);
+			UI_ExecuteConfunc("aircraft_%s_usedelsewhere %i", nodeTag, guiId);
 		else if (AIR_IsEmployeeInAircraft(employee, aircraft))
-			MN_ExecuteConfunc("aircraft_%s_assigned %i", nodeTag, guiId);
+			UI_ExecuteConfunc("aircraft_%s_assigned %i", nodeTag, guiId);
 		else
-			MN_ExecuteConfunc("aircraft_%s_unassigned %i", nodeTag, guiId);
+			UI_ExecuteConfunc("aircraft_%s_unassigned %i", nodeTag, guiId);
 
 		/* Check if the employee has something equipped. */
 		for (container = 0; container < csi.numIDs; container++) {
@@ -117,22 +117,22 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 				break;
 		}
 		if (container < csi.numIDs)
-			MN_ExecuteConfunc("aircraft_%s_holdsequip %i", nodeTag, guiId);
+			UI_ExecuteConfunc("aircraft_%s_holdsequip %i", nodeTag, guiId);
 		else
-			MN_ExecuteConfunc("aircraft_%s_holdsnoequip %i", nodeTag, guiId);
+			UI_ExecuteConfunc("aircraft_%s_holdsnoequip %i", nodeTag, guiId);
 
 		if (selected == id)
-			MN_ExecuteConfunc("aircraft_%s_selected %i", nodeTag, guiId);
+			UI_ExecuteConfunc("aircraft_%s_selected %i", nodeTag, guiId);
 
 		emplList = emplList->next;
 		id++;
 	}
 
-	MN_ExecuteConfunc("aircraft_%s_list_size %i", nodeTag, id);
+	UI_ExecuteConfunc("aircraft_%s_list_size %i", nodeTag, id);
 
 	for (; id - beginIndex < drawableListSize; id++) {
 		const int guiId = id - beginIndex;
-		MN_ExecuteConfunc("aircraft_%s_unusedslot %i", nodeTag, guiId);
+		UI_ExecuteConfunc("aircraft_%s_unusedslot %i", nodeTag, guiId);
 		Cvar_Set(va("mn_name%i", guiId), "");
 	}
 
@@ -160,7 +160,7 @@ static void CL_UpdateSoldierList_f (void)
 
 	result = CL_UpdateEmployeeList(EMPL_SOLDIER, "soldier", beginIndex, drawableListSize);
 	if (!result)
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 }
 
 /**
@@ -183,7 +183,7 @@ static void CL_UpdatePilotList_f (void)
 
 	result = CL_UpdateEmployeeList(EMPL_PILOT, "pilot", beginIndex, drawableListSize);
 	if (!result)
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 }
 
 /**
@@ -209,7 +209,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 
 	/* no soldiers are assigned to the current aircraft. */
 	if (AIR_GetTeamSize(aircraft) == 0) {
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 		return;
 	}
 
@@ -224,7 +224,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 
 	size = MAX_ACTIVETEAM;
 	for (; p < size; p++)
-		MN_ExecuteConfunc("equipdisable %i", p);
+		UI_ExecuteConfunc("equipdisable %i", p);
 
 	/* manage inventory */
 	unused = aircraft->homebase->storage; /* copied, including arrays inside! */
@@ -235,7 +235,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 		CL_CleanupAircraftCrew(AIR_GetAircraftFromBaseByIDX(aircraft->homebase, p), &unused);
 	}
 
-	MN_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
+	UI_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
 }
 
 /**
@@ -284,7 +284,7 @@ static void CL_AssignPilot_f (void)
 
 	CL_UpdateActorAircraftVar(aircraft, employeeType);
 
-	MN_ExecuteConfunc("aircraft_status_change");
+	UI_ExecuteConfunc("aircraft_status_change");
 	Cmd_ExecuteString(va("pilot_select %i %i", num - relativeId, relativeId));
 }
 
@@ -324,7 +324,7 @@ static void CL_AssignSoldier_f (void)
 	AIM_AddEmployeeFromMenu(aircraft, num);
 	CL_UpdateActorAircraftVar(aircraft, employeeType);
 
-	MN_ExecuteConfunc("aircraft_status_change");
+	UI_ExecuteConfunc("aircraft_status_change");
 	Cbuf_AddText(va("team_select %i %i\n", num - relativeId, relativeId));
 }
 
@@ -351,7 +351,7 @@ static void CL_ActorPilotSelect_f (void)
 
 	num = atoi(Cmd_Argv(1)) + relativeId;
 	if (num >= E_CountHired(base, employeeType)) {
-		MN_ExecuteConfunc("reset_character_cvars");
+		UI_ExecuteConfunc("reset_character_cvars");
 		return;
 	}
 
@@ -366,7 +366,7 @@ static void CL_ActorPilotSelect_f (void)
 
 	/* set info cvars */
 	CL_UpdateCharacterValues(chr, "mn_");
-	MN_ExecuteConfunc("update_pilot_list %i %i", soldierListSize, soldierListPos);
+	UI_ExecuteConfunc("update_pilot_list %i %i", soldierListSize, soldierListPos);
 }
 
 static void CL_ActorTeamSelect_f (void)
@@ -391,7 +391,7 @@ static void CL_ActorTeamSelect_f (void)
 
 	num = atoi(Cmd_Argv(1)) + relativeId;
 	if (num >= E_CountHired(base, EMPL_SOLDIER)) {
-		MN_ExecuteConfunc("reset_character_cvars");
+		UI_ExecuteConfunc("reset_character_cvars");
 		return;
 	}
 
@@ -406,7 +406,7 @@ static void CL_ActorTeamSelect_f (void)
 
 	/* set info cvars */
 	CL_UpdateCharacterValues(chr, "mn_");
-	MN_ExecuteConfunc("update_soldier_list %i %i", soldierListSize, soldierListPos);
+	UI_ExecuteConfunc("update_soldier_list %i %i", soldierListSize, soldierListPos);
 }
 
 #ifdef DEBUG

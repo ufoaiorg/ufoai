@@ -167,14 +167,14 @@ static void UR_DialogInitStore_f (void)
 	if (count == 0) {
 		/* No UFO base with proper conditions, show a hint and disable list. */
 		LIST_AddString(&recoveryYardName, _("No free UFO yard available."));
-		MN_ExecuteConfunc("uforecovery_tabselect sell");
-		MN_ExecuteConfunc("btbasesel disable");
+		UI_ExecuteConfunc("uforecovery_tabselect sell");
+		UI_ExecuteConfunc("btbasesel disable");
 	} else {
-		MN_ExecuteConfunc("cp_basesel_select 0");
-		MN_ExecuteConfunc("btbasesel enable");
+		UI_ExecuteConfunc("cp_basesel_select 0");
+		UI_ExecuteConfunc("btbasesel enable");
 	}
-	MN_RegisterLinkedListText(TEXT_UFORECOVERY_UFOYARDS, recoveryYardName);
-	MN_RegisterLinkedListText(TEXT_UFORECOVERY_CAPACITIES, recoveryYardCapacity);
+	UI_RegisterLinkedListText(TEXT_UFORECOVERY_UFOYARDS, recoveryYardName);
+	UI_RegisterLinkedListText(TEXT_UFORECOVERY_CAPACITIES, recoveryYardCapacity);
 }
 
 /**
@@ -244,7 +244,7 @@ static void UR_DialogFillNations (void)
 		}
 	}
 
-	MN_RegisterLinkedListText(TEXT_UFORECOVERY_NATIONS, nationList);
+	UI_RegisterLinkedListText(TEXT_UFORECOVERY_NATIONS, nationList);
 }
 
 /**
@@ -380,7 +380,7 @@ static void UR_DialogInitSell_f (void)
 	}
 	UR_SortNations(UR_GetSortFunctionByColumn(ufoRecovery.sortedColumn), ufoRecovery.sortDescending);
 	UR_DialogFillNations();
-	MN_ExecuteConfunc("btnatsel disable");
+	UI_ExecuteConfunc("btnatsel disable");
 }
 
 /**
@@ -445,7 +445,7 @@ static void UR_DialogSortByColumn_f (void)
 		/* changed line selection corresponding to current nation */
 		index = UR_DialogGetCurrentNationIndex();
 		if (index != -1)
-			MN_ExecuteConfunc("cp_nationsel_select %d", index);
+			UI_ExecuteConfunc("cp_nationsel_select %d", index);
 	}
 }
 
@@ -476,7 +476,7 @@ static void UR_DialogSelectSellNation_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
 
 	Cvar_Set("mission_recoverynation", _(nation->name));
-	MN_ExecuteConfunc("btnatsel enable");
+	UI_ExecuteConfunc("btnatsel enable");
 }
 
 /**

@@ -30,8 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 
-#define WINDOWEXTRADATA(node) MN_EXTRADATA(node, windowExtraData_t)
-#define WINDOWEXTRADATACONST(node)  MN_EXTRADATACONST(node, windowExtraData_t)
+#define WINDOWEXTRADATA(node) UI_EXTRADATA(node, windowExtraData_t)
+#define WINDOWEXTRADATACONST(node)  UI_EXTRADATACONST(node, windowExtraData_t)
 
 /**
  * @brief Window name use as alternative for option
@@ -47,12 +47,12 @@ static cvar_t *mn_sys_active;
  * @brief Returns the ID of the last fullscreen ID. Before this, window should be hidden.
  * @return The last full screen window on the screen, else 0. If the stack is empty, return -1
  */
-int MN_GetLastFullScreenWindow (void)
+int UI_GetLastFullScreenWindow (void)
 {
 	/* stack pos */
 	int pos = mn.windowStackPos - 1;
 	while (pos > 0) {
-		if (MN_WindowIsFullScreen(mn.windowStack[pos]))
+		if (UI_WindowIsFullScreen(mn.windowStack[pos]))
 			break;
 		pos--;
 	}
@@ -66,11 +66,11 @@ int MN_GetLastFullScreenWindow (void)
  * with the same window parent.
  * @param window Window we want to move
  */
-void MN_MoveWindowOnTop (uiNode_t * window)
+void UI_MoveWindowOnTop (uiNode_t * window)
 {
 	int i, j;
 
-	if (MN_WindowIsFullScreen(window))
+	if (UI_WindowIsFullScreen(window))
 		return;
 
 	/* get window index */
@@ -81,7 +81,7 @@ void MN_MoveWindowOnTop (uiNode_t * window)
 
 	/* search the last compatible window */
 	for (j = i; j < mn.windowStackPos; j++) {
-		if (MN_WindowIsFullScreen(mn.windowStack[j]))
+		if (UI_WindowIsFullScreen(mn.windowStack[j]))
 			break;
 		if (WINDOWEXTRADATA(window).parent != WINDOWEXTRADATA(mn.windowStack[j]).parent)
 			break;
@@ -100,10 +100,10 @@ void MN_MoveWindowOnTop (uiNode_t * window)
 /**
  * @brief Remove the window from the window stack
  * @param[in] window The window to remove from the stack
- * @sa MN_PushWindowDelete
+ * @sa UI_PushWindowDelete
  * @todo Why dont we call onClose?
  */
-static void MN_DeleteWindowFromStack (uiNode_t *window)
+static void UI_DeleteWindowFromStack (uiNode_t *window)
 {
 	int i;
 
@@ -118,7 +118,7 @@ static void MN_DeleteWindowFromStack (uiNode_t *window)
 		mn.windowStackPos--;
 		for (; i < mn.windowStackPos; i++)
 			mn.windowStack[i] = mn.windowStack[i + 1];
-		MN_InvalidateMouse();
+		UI_InvalidateMouse();
 	}
 }
 
@@ -126,7 +126,7 @@ static void MN_DeleteWindowFromStack (uiNode_t *window)
  * @brief Searches the position in the current window stack for a given window id
  * @return -1 if the window is not on the stack
  */
-static inline int MN_GetWindowPositionFromStackByName (const char *name)
+static inline int UI_GetWindowPositionFromStackByName (const char *name)
 {
 	int i;
 	for (i = 0; i < mn.windowStackPos; i++)
@@ -141,7 +141,7 @@ static inline int MN_GetWindowPositionFromStackByName (const char *name)
  * @param[in] window The window to insert
  * @param[in] position Where we want to add the window (0 is the deeper element of the stack)
  */
-static inline void MN_InsertWindowIntoStack (uiNode_t *window, int position)
+static inline void UI_InsertWindowIntoStack (uiNode_t *window, int position)
 {
 	int i;
 	assert(position <= mn.windowStackPos);
@@ -164,13 +164,13 @@ static inline void MN_InsertWindowIntoStack (uiNode_t *window, int position)
  * @param[in] delete Delete the window from the window stack before adding it again
  * @return pointer to uiNode_t
  */
-static uiNode_t* MN_PushWindowDelete (const char *name, const char *parent, qboolean delete)
+static uiNode_t* UI_PushWindowDelete (const char *name, const char *parent, qboolean delete)
 {
 	uiNode_t *window;
 
-	MN_ReleaseInput();
+	UI_ReleaseInput();
 
-	window = MN_GetWindow(name);
+	window = UI_GetWindow(name);
 	if (window == NULL) {
 		Com_Printf("Window \"%s\" not found.\n", name);
 		return NULL;
@@ -178,16 +178,16 @@ static uiNode_t* MN_PushWindowDelete (const char *name, const char *parent, qboo
 
 	/* found the correct add it to stack or bring it on top */
 	if (delete)
-		MN_DeleteWindowFromStack(window);
+		UI_DeleteWindowFromStack(window);
 
 	if (mn.windowStackPos < MAX_MENUSTACK)
 		if (parent) {
-			const int parentPos = MN_GetWindowPositionFromStackByName(parent);
+			const int parentPos = UI_GetWindowPositionFromStackByName(parent);
 			if (parentPos == -1) {
 				Com_Printf("Didn't find parent window \"%s\" for window push of \"%s\"\n", parent, name);
 				return NULL;
 			}
-			MN_InsertWindowIntoStack(window, parentPos + 1);
+			UI_InsertWindowIntoStack(window, parentPos + 1);
 			WINDOWEXTRADATA(window).parent = mn.windowStack[parentPos];
 		} else
 			mn.windowStack[mn.windowStackPos++] = window;
@@ -201,17 +201,17 @@ static uiNode_t* MN_PushWindowDelete (const char *name, const char *parent, qboo
 	/* change from e.g. console mode to game input mode (fetch input) */
 	Key_SetDest(key_game);
 
-	MN_InvalidateMouse();
+	UI_InvalidateMouse();
 	return window;
 }
 
 /**
  * @brief Complete function for mn_push
  * @sa Cmd_AddParamCompleteFunction
- * @sa MN_PushWindow
+ * @sa UI_PushWindow
  * @note Does not really complete the input - but shows at least all parsed windows
  */
-int MN_CompleteWithWindow (const char *partial, const char **match)
+int UI_CompleteWithWindow (const char *partial, const char **match)
 {
 	int i;
 	int matches = 0;
@@ -230,7 +230,7 @@ int MN_CompleteWithWindow (const char *partial, const char **match)
 			Com_Printf("%s\n", mn.windows[i]->name);
 			localMatch[matches++] = mn.windows[i]->name;
 			if (matches >= MAX_COMPLETE) {
-				Com_Printf("MN_CompleteWithWindow: hit MAX_COMPLETE\n");
+				Com_Printf("UI_CompleteWithWindow: hit MAX_COMPLETE\n");
 				break;
 			}
 		}
@@ -244,44 +244,44 @@ int MN_CompleteWithWindow (const char *partial, const char **match)
  * @param[in] parentName Window name to link as parent-child (else NULL)
  * @return pointer to uiNode_t
  */
-uiNode_t* MN_PushWindow (const char *name, const char *parentName)
+uiNode_t* UI_PushWindow (const char *name, const char *parentName)
 {
-	return MN_PushWindowDelete(name, parentName, qtrue);
+	return UI_PushWindowDelete(name, parentName, qtrue);
 }
 
 /**
  * @brief Console function to push a child window onto the window stack
- * @sa MN_PushWindow
+ * @sa UI_PushWindow
  */
-static void MN_PushChildWindow_f (void)
+static void UI_PushChildWindow_f (void)
 {
 	if (Cmd_Argc() > 1)
-		MN_PushWindow(Cmd_Argv(1), Cmd_Argv(2));
+		UI_PushWindow(Cmd_Argv(1), Cmd_Argv(2));
 	else
 		Com_Printf("Usage: %s <name> <parentname>\n", Cmd_Argv(0));
 }
 
 /**
  * @brief Console function to push a window onto the window stack
- * @sa MN_PushWindow
+ * @sa UI_PushWindow
  */
-static void MN_PushWindow_f (void)
+static void UI_PushWindow_f (void)
 {
 	if (Cmd_Argc() > 1)
-		MN_PushWindow(Cmd_Argv(1), NULL);
+		UI_PushWindow(Cmd_Argv(1), NULL);
 	else
 		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
 }
 
 /**
- * @brief Console function to push a dropdown window at a position. It work like MN_PushWindow but move the window at the right position
- * @sa MN_PushWindow
+ * @brief Console function to push a dropdown window at a position. It work like UI_PushWindow but move the window at the right position
+ * @sa UI_PushWindow
  * @note The usage is "mn_push_dropdown sourcenode pointposition destinationnode pointposition"
  * sourcenode must be a node into the window we want to push,
  * we will move the window to have sourcenode over destinationnode
  * pointposition select for each node a position (like a corner).
  */
-static void MN_PushDropDownWindow_f (void)
+static void UI_PushDropDownWindow_f (void)
 {
 	vec2_t source;
 	vec2_t destination;
@@ -296,18 +296,18 @@ static void MN_PushDropDownWindow_f (void)
 	}
 
 	/* get the source anchor */
-	node = MN_GetNodeByPath(Cmd_Argv(1));
+	node = UI_GetNodeByPath(Cmd_Argv(1));
 	if (node == NULL) {
-		Com_Printf("MN_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
+		Com_Printf("UI_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
 	result = Com_ParseValue(&pointPosition, Cmd_Argv(2), V_ALIGN, 0, sizeof(pointPosition), &writtenBytes);
 	if (result != RESULT_OK) {
-		Com_Printf("MN_PushDropDownWindow_f: '%s' in not a V_ALIGN\n", Cmd_Argv(2));
+		Com_Printf("UI_PushDropDownWindow_f: '%s' in not a V_ALIGN\n", Cmd_Argv(2));
 		return;
 	}
-	MN_NodeGetPoint(node, source, pointPosition);
-	MN_NodeRelativeToAbsolutePoint(node, source);
+	UI_NodeGetPoint(node, source, pointPosition);
+	UI_NodeRelativeToAbsolutePoint(node, source);
 
 	/* get the destination anchor */
 	if (!strcmp(Cmd_Argv(4), "mouse")) {
@@ -315,47 +315,47 @@ static void MN_PushDropDownWindow_f (void)
 		destination[1] = mousePosY;
 	} else {
 		/* get the source anchor */
-		node = MN_GetNodeByPath(Cmd_Argv(3));
+		node = UI_GetNodeByPath(Cmd_Argv(3));
 		if (node == NULL) {
-			Com_Printf("MN_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(3));
+			Com_Printf("UI_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(3));
 			return;
 		}
 		result = Com_ParseValue(&pointPosition, Cmd_Argv(4), V_ALIGN, 0, sizeof(pointPosition), &writtenBytes);
 		if (result != RESULT_OK) {
-			Com_Printf("MN_PushDropDownWindow_f: '%s' in not a V_ALIGN\n", Cmd_Argv(4));
+			Com_Printf("UI_PushDropDownWindow_f: '%s' in not a V_ALIGN\n", Cmd_Argv(4));
 			return;
 		}
-		MN_NodeGetPoint(node, destination, pointPosition);
-		MN_NodeRelativeToAbsolutePoint(node, destination);
+		UI_NodeGetPoint(node, destination, pointPosition);
+		UI_NodeRelativeToAbsolutePoint(node, destination);
 	}
 
 	/* update the window and push it */
-	node = MN_GetNodeByPath(Cmd_Argv(1));
+	node = UI_GetNodeByPath(Cmd_Argv(1));
 	if (node == NULL) {
-		Com_Printf("MN_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
+		Com_Printf("UI_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
 	node = node->root;
 	node->pos[0] += destination[0] - source[0];
 	node->pos[1] += destination[1] - source[1];
-	MN_PushWindow(node->name, NULL);
+	UI_PushWindow(node->name, NULL);
 }
 
 /**
  * @brief Console function to hide the HUD in battlescape mode
  * Note: relies on a "nohud" window existing
- * @sa MN_PushWindow
+ * @sa UI_PushWindow
  */
-static void MN_PushNoHud_f (void)
+static void UI_PushNoHud_f (void)
 {
 	/* can't hide hud if we are not in battlescape */
 	if (!CL_BattlescapeRunning())
 		return;
 
-	MN_PushWindow("nohud", NULL);
+	UI_PushWindow("nohud", NULL);
 }
 
-static void MN_RemoveWindowAtPositionFromStack (int position)
+static void UI_RemoveWindowAtPositionFromStack (int position)
 {
 	int i;
 	assert(position < mn.windowStackPos);
@@ -368,7 +368,7 @@ static void MN_RemoveWindowAtPositionFromStack (int position)
 	mn.windowStack[mn.windowStackPos--] = NULL;
 }
 
-static void MN_CloseAllWindow (void)
+static void UI_CloseAllWindow (void)
 {
 	int i;
 	for (i = mn.windowStackPos - 1; i >= 0; i--) {
@@ -395,18 +395,18 @@ static void MN_CloseAllWindow (void)
  * @todo We should only call it a very few time. When we switch from/to this different par of the game: main-option-menu / geoscape-and-base / battlescape
  * @todo Update the code: popAll should be every time true
  * @todo Update the code: pushActive should be every time true
- * @todo Illustration about when/how we should use MN_InitStack http://ufoai.ninex.info/wiki/index.php/Image:MN_InitStack.jpg
+ * @todo Illustration about when/how we should use UI_InitStack http://ufoai.ninex.info/wiki/index.php/Image:UI_InitStack.jpg
  */
-void MN_InitStack (const char* activeMenu, const char* mainMenu, qboolean popAll, qboolean pushActive)
+void UI_InitStack (const char* activeMenu, const char* mainMenu, qboolean popAll, qboolean pushActive)
 {
 	if (popAll)
-		MN_PopWindow(qtrue);
+		UI_PopWindow(qtrue);
 	if (activeMenu) {
 		Cvar_Set("mn_sys_active", activeMenu);
 		/* prevent calls before UI script initialization */
 		if (mn.numWindows != 0) {
 			if (pushActive)
-				MN_PushWindow(activeMenu, NULL);
+				UI_PushWindow(activeMenu, NULL);
 		}
 	}
 
@@ -417,23 +417,23 @@ void MN_InitStack (const char* activeMenu, const char* mainMenu, qboolean popAll
 /**
  * @brief Check if a named window is on the stack if active windows
  */
-qboolean MN_IsWindowOnStack (const char* name)
+qboolean UI_IsWindowOnStack (const char* name)
 {
-	return MN_GetWindowPositionFromStackByName(name) != -1;
+	return UI_GetWindowPositionFromStackByName(name) != -1;
 }
 
 /**
  * @todo Find  better name
  */
-static void MN_CloseWindowByRef (uiNode_t *window)
+static void UI_CloseWindowByRef (uiNode_t *window)
 {
 	int i;
 
 	/** @todo If the focus is not on the window we close, we don't need to remove it */
-	MN_ReleaseInput();
+	UI_ReleaseInput();
 
 	assert(mn.windowStackPos);
-	i = MN_GetWindowPositionFromStackByName(window->name);
+	i = UI_GetWindowPositionFromStackByName(window->name);
 	if (i == -1) {
 		Com_Printf("Window '%s' is not on the active stack\n", window->name);
 		return;
@@ -448,48 +448,48 @@ static void MN_CloseWindowByRef (uiNode_t *window)
 		if (window->behaviour->close)
 			window->behaviour->close(window);
 		WINDOWEXTRADATA(m).parent = NULL;
-		MN_RemoveWindowAtPositionFromStack(i + 1);
+		UI_RemoveWindowAtPositionFromStack(i + 1);
 	}
 
 	/* close the window */
 	if (window->behaviour->close)
 		window->behaviour->close(window);
 	WINDOWEXTRADATA(window).parent = NULL;
-	MN_RemoveWindowAtPositionFromStack(i);
+	UI_RemoveWindowAtPositionFromStack(i);
 
-	MN_InvalidateMouse();
+	UI_InvalidateMouse();
 }
 
-void MN_CloseWindow (const char* name)
+void UI_CloseWindow (const char* name)
 {
-	uiNode_t *window = MN_GetWindow(name);
+	uiNode_t *window = UI_GetWindow(name);
 	if (window == NULL) {
 		Com_Printf("Window '%s' not found\n", name);
 		return;
 	}
 
 	/* found the correct add it to stack or bring it on top */
-	MN_CloseWindowByRef(window);
+	UI_CloseWindowByRef(window);
 }
 
 /**
  * @brief Pops a window from the window stack
  * @param[in] all If true pop all windows from stack
- * @sa MN_PopWindow_f
+ * @sa UI_PopWindow_f
  */
-void MN_PopWindow (qboolean all)
+void UI_PopWindow (qboolean all)
 {
 	uiNode_t *oldfirst = mn.windowStack[0];
 
 	if (all) {
-		MN_CloseAllWindow();
+		UI_CloseAllWindow();
 	} else {
 		uiNode_t *mainMenu = mn.windowStack[mn.windowStackPos - 1];
 		if (!mn.windowStackPos)
 			return;
 		if (WINDOWEXTRADATA(mainMenu).parent)
 			mainMenu = WINDOWEXTRADATA(mainMenu).parent;
-		MN_CloseWindowByRef(mainMenu);
+		UI_CloseWindowByRef(mainMenu);
 
 		if (mn.windowStackPos == 0) {
 			/* mn_main contains the window that is the very first window and should be
@@ -497,14 +497,14 @@ void MN_PopWindow (qboolean all)
 			 * right now) */
 			if (!strcmp(oldfirst->name, mn_sys_main->string)) {
 				if (mn_sys_active->string[0] != '\0')
-					MN_PushWindow(mn_sys_active->string, NULL);
+					UI_PushWindow(mn_sys_active->string, NULL);
 				if (!mn.windowStackPos)
-					MN_PushWindow(mn_sys_main->string, NULL);
+					UI_PushWindow(mn_sys_main->string, NULL);
 			} else {
 				if (mn_sys_main->string[0] != '\0')
-					MN_PushWindow(mn_sys_main->string, NULL);
+					UI_PushWindow(mn_sys_main->string, NULL);
 				if (!mn.windowStackPos)
-					MN_PushWindow(mn_sys_active->string, NULL);
+					UI_PushWindow(mn_sys_active->string, NULL);
 			}
 		}
 	}
@@ -515,19 +515,19 @@ void MN_PopWindow (qboolean all)
 
 /**
  * @brief Console function to close a named window
- * @sa MN_PushWindow
+ * @sa UI_PushWindow
  */
-static void MN_CloseWindow_f (void)
+static void UI_CloseWindow_f (void)
 {
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
 		return;
 	}
 
-	MN_CloseWindow(Cmd_Argv(1));
+	UI_CloseWindow(Cmd_Argv(1));
 }
 
-void MN_PopWindowWithEscKey (void)
+void UI_PopWindowWithEscKey (void)
 {
 	const uiNode_t *window = mn.windowStack[mn.windowStackPos - 1];
 
@@ -539,29 +539,29 @@ void MN_PopWindowWithEscKey (void)
 	if (WINDOWEXTRADATACONST(window).preventTypingEscape)
 		return;
 
-	MN_PopWindow(qfalse);
+	UI_PopWindow(qfalse);
 }
 
 /**
  * @brief Console function to pop a window from the window stack
- * @sa MN_PopWindow
+ * @sa UI_PopWindow
  */
-static void MN_PopWindow_f (void)
+static void UI_PopWindow_f (void)
 {
 	if (Cmd_Argc() > 1) {
 		Com_Printf("Usage: %s\n", Cmd_Argv(0));
 		return;
 	}
 
-	MN_PopWindow(qfalse);
+	UI_PopWindow(qfalse);
 }
 
 /**
  * @brief Returns the current active window from the window stack or NULL if there is none
  * @return uiNode_t pointer from window stack
- * @sa MN_GetWindow
+ * @sa UI_GetWindow
  */
-uiNode_t* MN_GetActiveWindow (void)
+uiNode_t* UI_GetActiveWindow (void)
 {
 	return (mn.windowStackPos > 0 ? mn.windowStack[mn.windowStackPos - 1] : NULL);
 }
@@ -569,22 +569,22 @@ uiNode_t* MN_GetActiveWindow (void)
 /**
  * @brief Determine the position and size of render
  */
-void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
+void UI_GetActiveRenderRect (int *x, int *y, int *width, int *height)
 {
-	uiNode_t *window = MN_GetActiveWindow();
+	uiNode_t *window = UI_GetActiveWindow();
 
 	/** @todo the better way is to add a 'battlescape' node */
 	if (!window || !WINDOWEXTRADATA(window).renderNode)
-		if (MN_IsWindowOnStack(mn_hud->string))
-			window = MN_GetWindow(mn_hud->string);
+		if (UI_IsWindowOnStack(mn_hud->string))
+			window = UI_GetWindow(mn_hud->string);
 
 	if (window && WINDOWEXTRADATA(window).renderNode) {
 		uiNode_t* node = WINDOWEXTRADATA(window).renderNode;
 		vec2_t pos;
 
-		MN_Validate(window);
+		UI_Validate(window);
 
-		MN_GetNodeAbsPos(node, pos);
+		UI_GetNodeAbsPos(node, pos);
 		*x = pos[0] * viddef.rx;
 		*y = pos[1] * viddef.ry;
 		*width = node->size[0] * viddef.rx;
@@ -600,11 +600,11 @@ void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
 /**
  * @brief Returns the name of the current window
  * @return Active window name, else empty string
- * @sa MN_GetActiveWIndow
+ * @sa UI_GetActiveWIndow
  */
-const char* MN_GetActiveWindowName (void)
+const char* UI_GetActiveWindowName (void)
 {
-	const uiNode_t* window = MN_GetActiveWindow();
+	const uiNode_t* window = UI_GetActiveWindow();
 	if (window == NULL)
 		return "";
 	return window->name;
@@ -614,11 +614,11 @@ const char* MN_GetActiveWindowName (void)
  * @brief Check if a point is over a window from the stack
  * @sa IN_Parse
  */
-qboolean MN_IsPointOnWindow (void)
+qboolean UI_IsPointOnWindow (void)
 {
 	const uiNode_t *hovered;
 
-	if (MN_GetMouseCapture() != NULL)
+	if (UI_GetMouseCapture() != NULL)
 		return qtrue;
 
 	if (mn.windowStackPos != 0) {
@@ -626,7 +626,7 @@ qboolean MN_IsPointOnWindow (void)
 			return qtrue;
 	}
 
-	hovered = MN_GetHoveredNode();
+	hovered = UI_GetHoveredNode();
 	if (hovered) {
 		/* else if it is a render node */
 		if (hovered->root && hovered == WINDOWEXTRADATACONST(hovered->root).renderNode) {
@@ -643,9 +643,9 @@ qboolean MN_IsPointOnWindow (void)
  * @param[in] name Name of the window we search
  * @return The window found, else NULL
  * @note Use dichotomic search
- * @sa MN_GetActiveWindow
+ * @sa UI_GetActiveWindow
  */
-uiNode_t *MN_GetWindow (const char *name)
+uiNode_t *UI_GetWindow (const char *name)
 {
 	unsigned char min = 0;
 	unsigned char max = mn.numWindows;
@@ -671,11 +671,11 @@ uiNode_t *MN_GetWindow (const char *name)
 /**
  * @brief Invalidate all windows of the current stack.
  */
-void MN_InvalidateStack (void)
+void UI_InvalidateStack (void)
 {
 	int pos;
 	for (pos = 0; pos < mn.windowStackPos; pos++) {
-		MN_Invalidate(mn.windowStack[pos]);
+		UI_Invalidate(mn.windowStack[pos]);
 	}
 	Cvar_SetValue("mn_sys_screenwidth", viddef.virtualWidth);
 	Cvar_SetValue("mn_sys_screenheight", viddef.virtualHeight);
@@ -685,7 +685,7 @@ void MN_InvalidateStack (void)
  * @brief Sets new x and y coordinates for a given window
  * @todo remove that
  */
-void MN_SetNewWindowPos (uiNode_t* window, int x, int y)
+void UI_SetNewWindowPos (uiNode_t* window, int x, int y)
 {
 	if (window)
 		Vector2Set(window->pos, x, y);
@@ -695,13 +695,13 @@ void MN_SetNewWindowPos (uiNode_t* window, int x, int y)
  * @brief Add a new window to the list of all windows
  * @note Sort windows by alphabet
  */
-void MN_InsertWindow (uiNode_t* window)
+void UI_InsertWindow (uiNode_t* window)
 {
 	int pos = 0;
 	int i;
 
 	if (mn.numWindows >= MAX_WINDOWS)
-		Com_Error(ERR_FATAL, "MN_InsertWindow: hit MAX_WINDOWS");
+		Com_Error(ERR_FATAL, "UI_InsertWindow: hit MAX_WINDOWS");
 
 	/* search the insertion position */
 	for (pos = 0; pos < mn.numWindows; pos++) {
@@ -722,14 +722,14 @@ void MN_InsertWindow (uiNode_t* window)
 /**
  * @brief Console command for moving a window
  */
-static void MN_SetNewWindowPos_f (void)
+static void UI_SetNewWindowPos_f (void)
 {
-	uiNode_t* window = MN_GetActiveWindow();
+	uiNode_t* window = UI_GetActiveWindow();
 
 	if (Cmd_Argc() < 3)
 		Com_Printf("Usage: %s <x> <y>\n", Cmd_Argv(0));
 
-	MN_SetNewWindowPos(window, atoi(Cmd_Argv(1)), atoi(Cmd_Argv(2)));
+	UI_SetNewWindowPos(window, atoi(Cmd_Argv(1)), atoi(Cmd_Argv(2)));
 }
 
 /**
@@ -737,7 +737,7 @@ static void MN_SetNewWindowPos_f (void)
  * @note also available as script command mn_reinit
  * @todo replace that by a common action "call *ufopedia.init"
  */
-static void MN_FireInit_f (void)
+static void UI_FireInit_f (void)
 {
 	const uiNode_t* window;
 
@@ -746,26 +746,26 @@ static void MN_FireInit_f (void)
 		return;
 	}
 
-	window = MN_GetNodeByPath(Cmd_Argv(1));
+	window = UI_GetNodeByPath(Cmd_Argv(1));
 	if (window == NULL) {
-		Com_Printf("MN_FireInit_f: Node '%s' not found\n", Cmd_Argv(1));
+		Com_Printf("UI_FireInit_f: Node '%s' not found\n", Cmd_Argv(1));
 		return;
 	}
 
-	if (!MN_NodeInstanceOf(window, "window")) {
-		Com_Printf("MN_FireInit_f: Node '%s' is not a 'window'\n", Cmd_Argv(1));
+	if (!UI_NodeInstanceOf(window, "window")) {
+		Com_Printf("UI_FireInit_f: Node '%s' is not a 'window'\n", Cmd_Argv(1));
 		return;
 	}
 
 	/* initialize it */
 	if (window) {
 		if (WINDOWEXTRADATACONST(window).onInit)
-			MN_ExecuteEventActions(window, WINDOWEXTRADATACONST(window).onInit);
+			UI_ExecuteEventActions(window, WINDOWEXTRADATACONST(window).onInit);
 		Com_DPrintf(DEBUG_CLIENT, "Reinitialize %s\n", window->name);
 	}
 }
 
-static void MN_InitStack_f (void) {
+static void UI_InitStack_f (void) {
 	const char *mainWindow;
 	const char *optionWindow = NULL;
 
@@ -779,13 +779,13 @@ static void MN_InitStack_f (void) {
 		optionWindow = Cmd_Argv(2);
 	}
 
-	MN_InitStack(mainWindow, optionWindow, qtrue, qtrue);
+	UI_InitStack(mainWindow, optionWindow, qtrue, qtrue);
 }
 
 /**
  * @brief Display in the conde the tree of nodes
  */
-static void MN_DebugTree(const uiNode_t *node, int depth)
+static void UI_DebugTree(const uiNode_t *node, int depth)
 {
 	const uiNode_t *child = node->firstChild;
 	int i;
@@ -796,12 +796,12 @@ static void MN_DebugTree(const uiNode_t *node, int depth)
 	Com_Printf("+ %s %s\n", node->behaviour->name, node->name);
 
 	while (child) {
-		MN_DebugTree(child, depth + 1);
+		UI_DebugTree(child, depth + 1);
 		child = child->next;
 	}
 }
 
-static void MN_DebugTree_f (void)
+static void UI_DebugTree_f (void)
 {
 	const char *window;
 	const uiNode_t *node;
@@ -812,29 +812,29 @@ static void MN_DebugTree_f (void)
 	}
 
 	window = Cmd_Argv(1);
-	node = MN_GetWindow(window);
-	MN_DebugTree(node, 0);
+	node = UI_GetWindow(window);
+	UI_DebugTree(node, 0);
 }
 
-void MN_InitWindows (void)
+void UI_InitWindows (void)
 {
 	mn_sys_main = Cvar_Get("mn_sys_main", "", 0, "This is the main window id that is at the very first menu stack - also see mn_sys_active");
 	mn_sys_active = Cvar_Get("mn_sys_active", "", 0, "The active window we will return to when hitting esc once - also see mn_sys_main");
 
 	/* add command */
-	Cmd_AddCommand("mn_fireinit", MN_FireInit_f, "Call the init function of a window");
-	Cmd_AddCommand("mn_push", MN_PushWindow_f, "Push a window to the menustack");
-	Cmd_AddParamCompleteFunction("mn_push", MN_CompleteWithWindow);
-	Cmd_AddCommand("mn_push_dropdown", MN_PushDropDownWindow_f, "Push a dropdown window at a position");
-	Cmd_AddCommand("mn_push_child", MN_PushChildWindow_f, "Push a window to the windowstack with a big dependancy to a parent window");
-	Cmd_AddCommand("mn_pop", MN_PopWindow_f, "Pops the current window from the stack");
-	Cmd_AddCommand("mn_close", MN_CloseWindow_f, "Close a window");
-	Cmd_AddCommand("mn_move", MN_SetNewWindowPos_f, "Moves the window to a new position.");
-	Cmd_AddCommand("mn_initstack", MN_InitStack_f, "Initialize the window stack with a main and an option window.");
+	Cmd_AddCommand("mn_fireinit", UI_FireInit_f, "Call the init function of a window");
+	Cmd_AddCommand("mn_push", UI_PushWindow_f, "Push a window to the menustack");
+	Cmd_AddParamCompleteFunction("mn_push", UI_CompleteWithWindow);
+	Cmd_AddCommand("mn_push_dropdown", UI_PushDropDownWindow_f, "Push a dropdown window at a position");
+	Cmd_AddCommand("mn_push_child", UI_PushChildWindow_f, "Push a window to the windowstack with a big dependancy to a parent window");
+	Cmd_AddCommand("mn_pop", UI_PopWindow_f, "Pops the current window from the stack");
+	Cmd_AddCommand("mn_close", UI_CloseWindow_f, "Close a window");
+	Cmd_AddCommand("mn_move", UI_SetNewWindowPos_f, "Moves the window to a new position.");
+	Cmd_AddCommand("mn_initstack", UI_InitStack_f, "Initialize the window stack with a main and an option window.");
 
-	Cmd_AddCommand("mn_tree", MN_DebugTree_f, "Display a tree of nodes fropm a window into the console.");
-	Cmd_AddParamCompleteFunction("mn_tree", MN_CompleteWithWindow);
+	Cmd_AddCommand("mn_tree", UI_DebugTree_f, "Display a tree of nodes fropm a window into the console.");
+	Cmd_AddParamCompleteFunction("mn_tree", UI_CompleteWithWindow);
 
 	/** @todo move it outside */
-	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
+	Cmd_AddCommand("hidehud", UI_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
 }

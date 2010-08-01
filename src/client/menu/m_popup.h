@@ -32,9 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern char popupText[MAX_SMALLMENUTEXTLEN];
 
-void MN_Popup(const char *title, const char *text);
-struct uiNode_s *MN_PopupList(const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
-void MN_PopupButton(const char *title, const char *text,
+void UI_Popup(const char *title, const char *text);
+struct uiNode_s *UI_PopupList(const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
+void UI_PopupButton(const char *title, const char *text,
 	const char *clickAction1, const char *clickText1, const char *tooltip1,
 	const char *clickAction2, const char *clickText2, const char *tooltip2,
 	const char *clickAction3, const char *clickText3, const char *tooltip3);

@@ -34,13 +34,13 @@ extern struct cvar_s *mn_sequence;
 extern struct cvar_s *mn_hud;
 
 /* initialization */
-void MN_Init(void);
-void MN_Shutdown(void);
-void MN_Reinit(void);
+void UI_Init(void);
+void UI_Shutdown(void);
+void UI_Reinit(void);
 
 /* misc */
-void MN_SetCvar(const char *name, const char *str, float value);
-void MN_ExecuteConfunc(const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
-int MN_DebugMode(void);
+void UI_SetCvar(const char *name, const char *str, float value);
+void UI_ExecuteConfunc(const char *fmt, ...) __attribute__((format(__printf__, 1, 2)));
+int UI_DebugMode(void);
 
 #endif

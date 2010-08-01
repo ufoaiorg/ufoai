@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @return A float value, else 0
  */
-float MN_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *context)
+float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *context)
 {
 	switch (expression->type & EA_HIGHT_MASK) {
 	case EA_VALUE:
@@ -43,7 +43,7 @@ float MN_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 			{
 				const char* string = expression->d.terminal.d1.string;
 				if (expression->type == EA_VALUE_STRING_WITHINJECTION)
-					string = MN_GenInjectedString(string, qfalse, context);
+					string = UI_GenInjectedString(string, qfalse, context);
 				return atof(string);
 			}
 		case EA_VALUE_FLOAT:
@@ -54,7 +54,7 @@ float MN_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 				cvar_t *cvar = NULL;
 				const char *cvarName = expression->d.terminal.d1.string;
 				if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
-					cvarName = MN_GenInjectedString(cvarName, qfalse, context);
+					cvarName = UI_GenInjectedString(cvarName, qfalse, context);
 				cvar = Cvar_Get(cvarName, "", 0, "Cvar from menu expression");
 				return cvar->value;
 			}
@@ -65,25 +65,25 @@ float MN_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 				const value_t *property;
 				const char *path = expression->d.terminal.d1.string;
 				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
-					path = MN_GenInjectedString(path, qfalse, context);
+					path = UI_GenInjectedString(path, qfalse, context);
 
-				MN_ReadNodePath(path, context->source, &node, &property);
+				UI_ReadNodePath(path, context->source, &node, &property);
 				if (!node) {
-					Com_Printf("MN_GetFloatFromParam: Node '%s' wasn't found; '0' returned\n", path);
+					Com_Printf("UI_GetFloatFromParam: Node '%s' wasn't found; '0' returned\n", path);
 					return 0;
 				}
 				if (!property) {
-					Com_Printf("MN_GetFloatFromParam: Property '%s' wasn't found; '0' returned\n", path);
+					Com_Printf("UI_GetFloatFromParam: Property '%s' wasn't found; '0' returned\n", path);
 					return 0;
 				}
-				return MN_GetFloatFromNodeProperty(node, property);
+				return UI_GetFloatFromNodeProperty(node, property);
 			}
 		}
 		break;
 	case EA_OPERATOR_FLOAT2FLOAT:
 		{
-			const float value1 = MN_GetFloatFromExpression(expression->d.nonTerminal.left, context);
-			const float value2 = MN_GetFloatFromExpression(expression->d.nonTerminal.right, context);
+			const float value1 = UI_GetFloatFromExpression(expression->d.nonTerminal.left, context);
+			const float value2 = UI_GetFloatFromExpression(expression->d.nonTerminal.right, context);
 
 			switch (expression->type) {
 			case EA_OPERATOR_ADD:
@@ -94,7 +94,7 @@ float MN_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 				return value1 * value2;
 			case EA_OPERATOR_DIV:
 				if (value2 == 0) {
-					Com_Printf("MN_GetFloatFromExpression: Div by 0. '0' returned");
+					Com_Printf("UI_GetFloatFromExpression: Div by 0. '0' returned");
 					return 0;
 				} else
 					return value1 / value2;
@@ -111,7 +111,7 @@ float MN_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 
 	}
 
-	Com_Printf("MN_GetFloatFromExpression: Unsupported expression type: %i. '0' returned", expression->type);
+	Com_Printf("UI_GetFloatFromExpression: Unsupported expression type: %i. '0' returned", expression->type);
 	return 0;
 }
 
@@ -120,7 +120,7 @@ float MN_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
  * @todo this should not work very well, because too much va are used
  * then we should locally cache values, or manage a temporary string structure
  */
-const char* MN_GetStringFromExpression (uiAction_t *expression, const uiCallContext_t *context)
+const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallContext_t *context)
 {
 	switch (expression->type & EA_HIGHT_MASK) {
 	case EA_VALUE:
@@ -130,7 +130,7 @@ const char* MN_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 			{
 				const char* string = expression->d.terminal.d1.string;
 				if (expression->type == EA_VALUE_STRING_WITHINJECTION)
-					string = MN_GenInjectedString(string, qfalse, context);
+					string = UI_GenInjectedString(string, qfalse, context);
 				return string;
 			}
 		case EA_VALUE_FLOAT:
@@ -149,7 +149,7 @@ const char* MN_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 			cvar_t *cvar = NULL;
 			const char *cvarName = expression->d.terminal.d1.string;
 			if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
-				cvarName = MN_GenInjectedString(cvarName, qfalse, context);
+				cvarName = UI_GenInjectedString(cvarName, qfalse, context);
 			cvar = Cvar_Get(cvarName, "", 0, "Cvar from menu expression");
 			return cvar->string;
 		}
@@ -161,20 +161,20 @@ const char* MN_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 				const char* string;
 				const char *path = expression->d.terminal.d1.string;
 				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
-					path = MN_GenInjectedString(path, qfalse, context);
+					path = UI_GenInjectedString(path, qfalse, context);
 
-				MN_ReadNodePath(path, context->source, &node, &property);
+				UI_ReadNodePath(path, context->source, &node, &property);
 				if (!node) {
-					Com_Printf("MN_GetStringFromExpression: Node '%s' wasn't found; '' returned\n", path);
+					Com_Printf("UI_GetStringFromExpression: Node '%s' wasn't found; '' returned\n", path);
 					return "";
 				}
 				if (!property) {
-					Com_Printf("MN_GetStringFromExpression: Property '%s' wasn't found; '' returned\n", path);
+					Com_Printf("UI_GetStringFromExpression: Property '%s' wasn't found; '' returned\n", path);
 					return "";
 				}
-				string = MN_GetStringFromNodeProperty(node, property);
+				string = UI_GetStringFromNodeProperty(node, property);
 				if (string == NULL) {
-					Com_Printf("MN_GetStringFromExpression: String getter for '%s' property do not exists; '' returned\n", path);
+					Com_Printf("UI_GetStringFromExpression: String getter for '%s' property do not exists; '' returned\n", path);
 					return "";
 				}
 				return string;
@@ -186,13 +186,13 @@ const char* MN_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 	case EA_OPERATOR_FLOAT2BOOLEAN:
 	case EA_OPERATOR_STRING2BOOLEAN:
 		{
-			const qboolean v = MN_GetBooleanFromExpression(expression, context);
+			const qboolean v = UI_GetBooleanFromExpression(expression, context);
 			return (v)?"1":"0";
 		}
 
 	case EA_OPERATOR_FLOAT2FLOAT:
 		{
-			const float number = MN_GetFloatFromExpression(expression, context);
+			const float number = UI_GetFloatFromExpression(expression, context);
 			const int integer = number;
 			/** @todo should we add a delta? */
 			if (number == integer)
@@ -203,7 +203,7 @@ const char* MN_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 	}
 
 
-	Com_Printf("MN_GetStringFromExpression: Unsupported expression type: %i", expression->type);
+	Com_Printf("UI_GetStringFromExpression: Unsupported expression type: %i", expression->type);
 	return "";
 }
 
@@ -211,19 +211,19 @@ const char* MN_GetStringFromExpression (uiAction_t *expression, const uiCallCont
  * @brief Check if an expression is true
  * @return True if the expression is true
  */
-qboolean MN_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t *context)
+qboolean UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t *context)
 {
 	if (expression == NULL)
 		return qfalse;
 
 	switch (expression->type & EA_HIGHT_MASK) {
 	case EA_VALUE:
-		return MN_GetFloatFromExpression(expression, context) != 0;
+		return UI_GetFloatFromExpression(expression, context) != 0;
 
 	case EA_OPERATOR_BOOLEAN2BOOLEAN:
 		{
-			const qboolean value1 = MN_GetBooleanFromExpression(expression->d.nonTerminal.left, context);
-			const qboolean value2 = MN_GetBooleanFromExpression(expression->d.nonTerminal.right, context);
+			const qboolean value1 = UI_GetBooleanFromExpression(expression->d.nonTerminal.left, context);
+			const qboolean value2 = UI_GetBooleanFromExpression(expression->d.nonTerminal.right, context);
 
 			switch (expression->type) {
 			case EA_OPERATOR_AND:
@@ -235,14 +235,14 @@ qboolean MN_GetBooleanFromExpression (uiAction_t *expression, const uiCallContex
 			case EA_OPERATOR_NOT:
 				return !value1;
 			default:
-				Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: (BOOL2BOOL) Invalid expression type");
+				Com_Error(ERR_FATAL, "UI_GetBooleanFromExpression: (BOOL2BOOL) Invalid expression type");
 			}
 		}
 
 	case EA_OPERATOR_FLOAT2BOOLEAN:
 		{
-			const float value1 = MN_GetFloatFromExpression(expression->d.nonTerminal.left, context);
-			const float value2 = MN_GetFloatFromExpression(expression->d.nonTerminal.right, context);
+			const float value1 = UI_GetFloatFromExpression(expression->d.nonTerminal.left, context);
+			const float value2 = UI_GetFloatFromExpression(expression->d.nonTerminal.right, context);
 
 			switch (expression->type) {
 			case EA_OPERATOR_EQ:
@@ -258,7 +258,7 @@ qboolean MN_GetBooleanFromExpression (uiAction_t *expression, const uiCallContex
 			case EA_OPERATOR_NE:
 				return value1 != value2;
 			default:
-				Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: (FLOAT2BOOL) Invalid expression type");
+				Com_Error(ERR_FATAL, "UI_GetBooleanFromExpression: (FLOAT2BOOL) Invalid expression type");
 			}
 		}
 
@@ -270,14 +270,14 @@ qboolean MN_GetBooleanFromExpression (uiAction_t *expression, const uiCallContex
 			assert(e->type == EA_VALUE_CVARNAME || e->type == EA_VALUE_CVARNAME_WITHINJECTION);
 			cvarName = e->d.terminal.d1.string;
 			if (e->type == EA_VALUE_CVARNAME_WITHINJECTION)
-				cvarName = MN_GenInjectedString(cvarName, qfalse, context);
+				cvarName = UI_GenInjectedString(cvarName, qfalse, context);
 			return Cvar_FindVar(cvarName) != NULL;
 		}
 
 	case EA_OPERATOR_STRING2BOOLEAN:
 		{
-			const char* value1 = MN_GetStringFromExpression(expression->d.nonTerminal.left, context);
-			const char* value2 = MN_GetStringFromExpression(expression->d.nonTerminal.right, context);
+			const char* value1 = UI_GetStringFromExpression(expression->d.nonTerminal.left, context);
+			const char* value2 = UI_GetStringFromExpression(expression->d.nonTerminal.right, context);
 
 			switch (expression->type) {
 			case EA_OPERATOR_STR_EQ:
@@ -285,12 +285,12 @@ qboolean MN_GetBooleanFromExpression (uiAction_t *expression, const uiCallContex
 			case EA_OPERATOR_STR_NE:
 				return strcmp(value1, value2) != 0;
 			default:
-				Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: (STRING2BOOL) Invalid expression type");
+				Com_Error(ERR_FATAL, "UI_GetBooleanFromExpression: (STRING2BOOL) Invalid expression type");
 			}
 		}
 
 	default:
-		Com_Error(ERR_FATAL, "MN_GetBooleanFromExpression: Unsupported expression type: %i", expression->type);
+		Com_Error(ERR_FATAL, "UI_GetBooleanFromExpression: Unsupported expression type: %i", expression->type);
 	}
 }
 
@@ -299,17 +299,17 @@ qboolean MN_GetBooleanFromExpression (uiAction_t *expression, const uiCallContex
  * @param[in] description String describing a condition
  * @return The condition if everything is ok, NULL otherwise
  */
-uiAction_t *MN_AllocStaticStringCondition (const char *description)
+uiAction_t *UI_AllocStaticStringCondition (const char *description)
 {
-	const char *errhead = "MN_AllocStaticStringCondition: unexpected end of string (object";
+	const char *errhead = "UI_AllocStaticStringCondition: unexpected end of string (object";
 	const char *text, *base;
 	uiAction_t *expression;
 
 	base = va("( %s )", description);
 	text = base;
-	expression = MN_ParseExpression(&text, errhead, NULL);
+	expression = UI_ParseExpression(&text, errhead, NULL);
 	if (!expression) {
-		Com_Printf("MN_AllocStaticStringCondition: Parse error on expression \"%s\"\n", base);
+		Com_Printf("UI_AllocStaticStringCondition: Parse error on expression \"%s\"\n", base);
 		return NULL;
 	}
 
@@ -320,21 +320,21 @@ uiAction_t *MN_AllocStaticStringCondition (const char *description)
  * @brief Read a value from the stream and init an action with it
  * @return An initialized action else NULL
  */
-static uiAction_t *MN_ParseValueExpression (const char **text, const char *errhead, const uiNode_t *source)
+static uiAction_t *UI_ParseValueExpression (const char **text, const char *errhead, const uiNode_t *source)
 {
 	const char* token;
-	uiAction_t *expression = MN_AllocStaticAction();
+	uiAction_t *expression = UI_AllocStaticAction();
 
 	token = Com_Parse(text);
 	if (*text == NULL) {
-		Com_Printf("MN_ParseTerminalExpression: Token expected\n");
+		Com_Printf("UI_ParseTerminalExpression: Token expected\n");
 		return NULL;
 	}
 
 	/* it is a const string (or an injection tag for compatibility) */
 	if (Com_ParsedTokenIsQuoted() || token[0] == '<') {
-		expression->d.terminal.d1.string = MN_AllocStaticString(token, 0);
-		if (MN_IsInjectedString(token))
+		expression->d.terminal.d1.string = UI_AllocStaticString(token, 0);
+		if (UI_IsInjectedString(token))
 			expression->type = EA_VALUE_STRING_WITHINJECTION;
 		else
 			expression->type = EA_VALUE_STRING;
@@ -344,8 +344,8 @@ static uiAction_t *MN_ParseValueExpression (const char **text, const char *errhe
 	/* it is a cvarname */
 	if (!strncmp(token, "*cvar:", 6)) {
 		const char* cvarName = token + 6;
-		expression->d.terminal.d1.string = MN_AllocStaticString(cvarName, 0);
-		if (MN_IsInjectedString(cvarName))
+		expression->d.terminal.d1.string = UI_AllocStaticString(cvarName, 0);
+		if (UI_IsInjectedString(cvarName))
 			expression->type = EA_VALUE_CVARNAME_WITHINJECTION;
 		else
 			expression->type = EA_VALUE_CVARNAME;
@@ -381,17 +381,17 @@ static uiAction_t *MN_ParseValueExpression (const char **text, const char *errhe
 			}
 		}
 
-		if (MN_IsInjectedString(path))
+		if (UI_IsInjectedString(path))
 			expression->type = EA_VALUE_PATHPROPERTY_WITHINJECTION;
 		else
 			expression->type = EA_VALUE_PATHPROPERTY;
 		if (!relativeToNode)
 			path = va("root.%s", path);
-		expression->d.terminal.d1.string = MN_AllocStaticString(path, 0);
+		expression->d.terminal.d1.string = UI_AllocStaticString(path, 0);
 
-		castedBehaviour = MN_GetNodeBehaviour(cast);
+		castedBehaviour = UI_GetNodeBehaviour(cast);
 		if (castedBehaviour == NULL)
-			Com_Error(ERR_FATAL, "MN_ParseValueExpression: Node behaviour cast '%s' doesn't exists\n", cast);
+			Com_Error(ERR_FATAL, "UI_ParseValueExpression: Node behaviour cast '%s' doesn't exists\n", cast);
 
 		/* get property name */
 		propertyName = strchr(path, '@');
@@ -405,13 +405,13 @@ static uiAction_t *MN_ParseValueExpression (const char **text, const char *errhe
 		propertyName++;
 
 #if 0	/* it looks useless, an unused cache */
-		property = MN_GetPropertyFromBehaviour(castedBehaviour, propertyName);
+		property = UI_GetPropertyFromBehaviour(castedBehaviour, propertyName);
 		if (!property && source) {
 			uiNode_t *node;
 			/* do we ALREADY know this node? and his type */
-			MN_ReadNodePath(path, source, &node, &property);
+			UI_ReadNodePath(path, source, &node, &property);
 			if (!node)
-				Com_Printf("MN_ParseValueExpression: node \"%s\" not yet known (in event), you can try to cast it\n", path);
+				Com_Printf("UI_ParseValueExpression: node \"%s\" not yet known (in event), you can try to cast it\n", path);
 		}
 		if (property && property->type) {
 			expression->d.terminal.d2.constData = property;
@@ -442,10 +442,10 @@ static uiAction_t *MN_ParseValueExpression (const char **text, const char *errhe
 		return expression;
 	}
 
-	Com_Error(ERR_FATAL, "MN_ParseValueExpression: Token \"%s\" unknown. String must use quotes, cvar and nodes must use prefix.\n", token);
+	Com_Error(ERR_FATAL, "UI_ParseValueExpression: Token \"%s\" unknown. String must use quotes, cvar and nodes must use prefix.\n", token);
 }
 
-uiAction_t *MN_ParseExpression (const char **text, const char *errhead, const uiNode_t *source)
+uiAction_t *UI_ParseExpression (const char **text, const char *errhead, const uiNode_t *source)
 {
 	const char* token;
 
@@ -457,7 +457,7 @@ uiAction_t *MN_ParseExpression (const char **text, const char *errhead, const ui
 		uiAction_t *expression;
 		uiAction_t *e;
 
-		e = MN_ParseExpression(text, errhead, source);
+		e = UI_ParseExpression(text, errhead, source);
 
 		token = Com_Parse(text);
 		if (*text == NULL)
@@ -468,42 +468,42 @@ uiAction_t *MN_ParseExpression (const char **text, const char *errhead, const ui
 			return e;
 
 		/* then its an operator */
-		expression = MN_AllocStaticAction();
+		expression = UI_AllocStaticAction();
 		expression->d.nonTerminal.left = e;
-		expression->type = MN_GetActionTokenType(token, EA_BINARYOPERATOR);
+		expression->type = UI_GetActionTokenType(token, EA_BINARYOPERATOR);
 		if (expression->type == EA_NULL) {
-			Com_Printf("MN_ParseExpression: Invalid 'expression' statement. Unknown '%s' operator\n", token);
+			Com_Printf("UI_ParseExpression: Invalid 'expression' statement. Unknown '%s' operator\n", token);
 			return NULL;
 		}
 
-		e = MN_ParseExpression(text, errhead, source);
+		e = UI_ParseExpression(text, errhead, source);
 		expression->d.nonTerminal.right = e;
 
 		token = Com_Parse(text);
 		if (*text == NULL)
 			return NULL;
 		if (strcmp(token, ")") != 0) {
-			Com_Printf("MN_ParseExpression: Token ')' expected\n");
+			Com_Printf("UI_ParseExpression: Token ')' expected\n");
 			return NULL;
 		}
 
 		return expression;
 	} else {
-		const int type = MN_GetActionTokenType(token, EA_UNARYOPERATOR);
+		const int type = UI_GetActionTokenType(token, EA_UNARYOPERATOR);
 		if (type == EA_NULL) {
 			Com_UnParseLastToken();
-			return MN_ParseValueExpression(text, errhead, source);
+			return UI_ParseValueExpression(text, errhead, source);
 		} else {
-			uiAction_t *expression = MN_AllocStaticAction();
+			uiAction_t *expression = UI_AllocStaticAction();
 			uiAction_t *e;
 
-			e = MN_ParseExpression(text, errhead, source);
+			e = UI_ParseExpression(text, errhead, source);
 			expression->type = type;
 			expression->d.nonTerminal.left = e;
 
 			if (expression->type == EA_OPERATOR_EXISTS) {
 				if (e->type != EA_VALUE_CVARNAME && e->type != EA_VALUE_CVARNAME_WITHINJECTION) {
-					Com_Printf("MN_ParseExpression: Cvar expected, but type %d found\n", e->type);
+					Com_Printf("UI_ParseExpression: Cvar expected, but type %d found\n", e->type);
 					return NULL;
 				}
 			}

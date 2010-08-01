@@ -38,18 +38,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../input/cl_keys.h"
 
 #define EXTRADATA_TYPE barExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 
-static void MN_BarNodeDraw (uiNode_t *node)
+static void UI_BarNodeDraw (uiNode_t *node)
 {
 	vec4_t color;
 	float fac;
 	vec2_t nodepos;
-	const float min = MN_GetReferenceFloat(node, EXTRADATA(node).super.min);
-	const float max = MN_GetReferenceFloat(node, EXTRADATA(node).super.max);
-	const float value = MN_GetReferenceFloat(node, EXTRADATA(node).super.value);
+	const float min = UI_GetReferenceFloat(node, EXTRADATA(node).super.min);
+	const float max = UI_GetReferenceFloat(node, EXTRADATA(node).super.max);
+	const float value = UI_GetReferenceFloat(node, EXTRADATA(node).super.value);
 
-	MN_GetNodeAbsPos(node, nodepos);
+	UI_GetNodeAbsPos(node, nodepos);
 
 	if (node->state && !EXTRADATA(node).readOnly) {
 		Vector4Copy(node->color, color);
@@ -68,31 +68,31 @@ static void MN_BarNodeDraw (uiNode_t *node)
 
 	switch (EXTRADATA(node).orientation) {
 	case ALIGN_UC:
-		MN_DrawFill(nodepos[0], nodepos[1] + node->size[1] - fac * node->size[1], node->size[0], fac * node->size[1], color);
+		UI_DrawFill(nodepos[0], nodepos[1] + node->size[1] - fac * node->size[1], node->size[0], fac * node->size[1], color);
 		break;
 	case ALIGN_LC:
-		MN_DrawFill(nodepos[0], nodepos[1], node->size[0], fac * node->size[1], color);
+		UI_DrawFill(nodepos[0], nodepos[1], node->size[0], fac * node->size[1], color);
 		break;
 	case ALIGN_CR:
-		MN_DrawFill(nodepos[0], nodepos[1], fac * node->size[0], node->size[1], color);
+		UI_DrawFill(nodepos[0], nodepos[1], fac * node->size[0], node->size[1], color);
 		break;
 	case ALIGN_CL:
-		MN_DrawFill(nodepos[0] + node->size[0] - fac * node->size[0], nodepos[1], fac * node->size[0], node->size[1], color);
+		UI_DrawFill(nodepos[0] + node->size[0] - fac * node->size[0], nodepos[1], fac * node->size[0], node->size[1], color);
 		break;
 	default:
-		Com_Printf("MN_BarNodeDraw: Orientation %d not supported\n", EXTRADATA(node).orientation);
+		Com_Printf("UI_BarNodeDraw: Orientation %d not supported\n", EXTRADATA(node).orientation);
 	}
 }
 
 /**
  * @brief Called when the node is captured by the mouse
  */
-static void MN_BarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+static void UI_BarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	char var[MAX_VAR];
 	vec2_t pos;
 
-	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	if (x < 0)
 		x = 0;
@@ -103,14 +103,14 @@ static void MN_BarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	else if (y > node->size[1])
 		y = node->size[1];
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 	Q_strncpyz(var, EXTRADATA(node).super.value, sizeof(var));
 	/* no cvar? */
 	if (!strncmp(var, "*cvar:", 6)) {
 		/* normalize it */
 		float frac;
-		const float min = MN_GetReferenceFloat(node, EXTRADATA(node).super.min);
-		const float max = MN_GetReferenceFloat(node, EXTRADATA(node).super.max);
+		const float min = UI_GetReferenceFloat(node, EXTRADATA(node).super.min);
+		const float max = UI_GetReferenceFloat(node, EXTRADATA(node).super.max);
 
 		switch (EXTRADATA(node).orientation) {
 		case ALIGN_UC:
@@ -127,37 +127,37 @@ static void MN_BarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 			break;
 		default:
 			frac = 0;
-			Com_Printf("MN_BarNodeCapturedMouseMove: Orientation %d not supported\n", EXTRADATA(node).orientation);
+			Com_Printf("UI_BarNodeCapturedMouseMove: Orientation %d not supported\n", EXTRADATA(node).orientation);
 		}
-		MN_SetCvar(&var[6], NULL, min + frac * (max - min));
+		UI_SetCvar(&var[6], NULL, min + frac * (max - min));
 	}
 
 	/* callback */
 	if (node->onChange)
-		MN_ExecuteEventActions(node, node->onChange);
+		UI_ExecuteEventActions(node, node->onChange);
 }
 
-static void MN_BarNodeMouseDown (uiNode_t *node, int x, int y, int button)
+static void UI_BarNodeMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (node->disabled || EXTRADATA(node).readOnly)
 		return;
 
 	if (button == K_MOUSE1) {
-		MN_SetMouseCapture(node);
-		MN_BarNodeCapturedMouseMove(node, x, y);
+		UI_SetMouseCapture(node);
+		UI_BarNodeCapturedMouseMove(node, x, y);
 	}
 }
 
-static void MN_BarNodeMouseUp (uiNode_t *node, int x, int y, int button)
+static void UI_BarNodeMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1)
-		MN_MouseRelease();
+		UI_MouseRelease();
 }
 
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void MN_BarNodeLoading (uiNode_t *node)
+static void UI_BarNodeLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	EXTRADATA(node).orientation = ALIGN_CR;
@@ -170,24 +170,24 @@ static const value_t properties[] = {
 	/**
 	 * Orientation of the bar. Default value "cr". Other available values are "uc", "lc", "cr", "cl"
 	 */
-	{"direction", V_UI_ALIGN, MN_EXTRADATA_OFFSETOF(barExtraData_t, orientation), MEMBER_SIZEOF(barExtraData_t, orientation)},
+	{"direction", V_UI_ALIGN, UI_EXTRADATA_OFFSETOF(barExtraData_t, orientation), MEMBER_SIZEOF(barExtraData_t, orientation)},
 	/**
 	 *  if true, the user can't edit the content
 	 */
-	{"readonly", V_BOOL, MN_EXTRADATA_OFFSETOF(barExtraData_t, readOnly),  MEMBER_SIZEOF(barExtraData_t, readOnly)},
+	{"readonly", V_BOOL, UI_EXTRADATA_OFFSETOF(barExtraData_t, readOnly),  MEMBER_SIZEOF(barExtraData_t, readOnly)},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterBarNode (uiBehaviour_t *behaviour)
+void UI_RegisterBarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "bar";
 	behaviour->extends = "abstractvalue";
 	behaviour->properties = properties;
-	behaviour->draw = MN_BarNodeDraw;
-	behaviour->loading = MN_BarNodeLoading;
-	behaviour->mouseDown = MN_BarNodeMouseDown;
-	behaviour->mouseUp = MN_BarNodeMouseUp;
-	behaviour->capturedMouseMove = MN_BarNodeCapturedMouseMove;
+	behaviour->draw = UI_BarNodeDraw;
+	behaviour->loading = UI_BarNodeLoading;
+	behaviour->mouseDown = UI_BarNodeMouseDown;
+	behaviour->mouseUp = UI_BarNodeMouseUp;
+	behaviour->capturedMouseMove = UI_BarNodeCapturedMouseMove;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

@@ -78,18 +78,18 @@ typedef struct {
 
 } windowExtraData_t;
 
-void MN_RegisterWindowNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterWindowNode(struct uiBehaviour_s *behaviour);
 
-qboolean MN_WindowIsFullScreen(const struct uiNode_s* const menu);
-qboolean MN_WindowIsDropDown(const struct uiNode_s* const menu);
-qboolean MN_WindowIsModal(const struct uiNode_s* const menu);
-void MN_WindowNodeRegisterKeyBinding(struct uiNode_s* menu, struct uiKeyBinding_s *binding);
-struct uiKeyBinding_s *MN_WindowNodeGetKeyBinding(const struct uiNode_s* const node, unsigned int key);
-void MN_WindowNodeSetRenderNode(struct uiNode_s *node, struct uiNode_s *renderNode);
-vec_t *MN_WindowNodeGetNoticePosition(struct uiNode_s *node);
+qboolean UI_WindowIsFullScreen(const struct uiNode_s* const menu);
+qboolean UI_WindowIsDropDown(const struct uiNode_s* const menu);
+qboolean UI_WindowIsModal(const struct uiNode_s* const menu);
+void UI_WindowNodeRegisterKeyBinding(struct uiNode_s* menu, struct uiKeyBinding_s *binding);
+struct uiKeyBinding_s *UI_WindowNodeGetKeyBinding(const struct uiNode_s* const node, unsigned int key);
+void UI_WindowNodeSetRenderNode(struct uiNode_s *node, struct uiNode_s *renderNode);
+vec_t *UI_WindowNodeGetNoticePosition(struct uiNode_s *node);
 /* child index */
-struct uiNode_s* MN_WindowNodeGetIndexedChild(struct uiNode_s* const node, const char* childName);
-qboolean MN_WindowNodeAddIndexedNode(struct uiNode_s* const node, struct uiNode_s* const child);
-qboolean MN_WindowNodeRemoveIndexedNode(struct uiNode_s* const node, struct uiNode_s* const child);
+struct uiNode_s* UI_WindowNodeGetIndexedChild(struct uiNode_s* const node, const char* childName);
+qboolean UI_WindowNodeAddIndexedNode(struct uiNode_s* const node, struct uiNode_s* const child);
+qboolean UI_WindowNodeRemoveIndexedNode(struct uiNode_s* const node, struct uiNode_s* const child);
 
 #endif

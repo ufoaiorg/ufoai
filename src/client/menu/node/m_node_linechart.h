@@ -49,6 +49,6 @@ typedef struct lineChartExtraData_s {
 	vec4_t axesColor;			/**< color of the axes */
 } lineChartExtraData_t;
 
-void MN_RegisterLineChartNode(struct uiBehaviour_s *behaviour);
+void UI_RegisterLineChartNode(struct uiBehaviour_s *behaviour);
 
 #endif

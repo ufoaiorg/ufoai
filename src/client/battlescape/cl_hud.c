@@ -115,13 +115,13 @@ static char hudText[256];
 
 /**
  * @brief Displays a message on the hud.
- * @sa MN_DisplayNotice
+ * @sa UI_DisplayNotice
  * @param[in] text text is already translated here
  */
 void HUD_DisplayMessage (const char *text)
 {
 	assert(text);
-	MN_DisplayNotice(text, cl_hud_message_timeout->integer, mn_hud->string);
+	UI_DisplayNotice(text, cl_hud_message_timeout->integer, mn_hud->string);
 }
 
 /**
@@ -150,11 +150,11 @@ static void HUD_UpdateAllActors (void)
 			tooltip = va(_("%s\nHP: %i/%i TU: %i\n%s"),
 				chr->name, le->HP, le->maxHP, le->TU, (invList && invList->item.t) ? _(invList->item.t->name) : "");
 
-			MN_ExecuteConfunc("updateactorvalues %i \"%s\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%s\"",
+			UI_ExecuteConfunc("updateactorvalues %i \"%s\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%i\" \"%s\"",
 					i, le->model2->name, le->HP, le->maxHP, le->TU, le->maxTU, le->morale, le->maxMorale, le->STUN, tooltip);
 		} else {
 			/** @todo only call this once on death */
-			MN_ExecuteConfunc("updateactorvalues %i \"\" \"0\" \"1\" \"0\" \"1\" \"0\" \"1\" \"0\" \"\"", i);
+			UI_ExecuteConfunc("updateactorvalues %i \"\" \"0\" \"1\" \"0\" \"1\" \"0\" \"1\" \"0\" \"\"", i);
 		}
 	}
 }
@@ -177,7 +177,7 @@ static void HUD_SetWeaponButton (int button, weaponButtonState_t state)
 		prefix = "disable_";
 
 	/* Connect confunc strings to the ones as defined in "menu nohud". */
-	MN_ExecuteConfunc("%s%s", prefix, shootTypeStrings[button]);
+	UI_ExecuteConfunc("%s%s", prefix, shootTypeStrings[button]);
 }
 
 /**
@@ -187,7 +187,7 @@ void HUD_HideFiremodes (void)
 {
 	visibleFiremodeListLeft = qfalse;
 	visibleFiremodeListRight = qfalse;
-	MN_ExecuteConfunc("hide_firemodes");
+	UI_ExecuteConfunc("hide_firemodes");
 }
 
 /**
@@ -294,7 +294,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 	}
 
 	/* reset the list */
-	MN_ResetData(TEXT_LIST);
+	UI_ResetData(TEXT_LIST);
 
 	LIST_Delete(&popupListData);
 
@@ -351,11 +351,11 @@ static void HUD_PopupFiremodeReservation (qboolean reset, qboolean popupReload)
 	if (LIST_Count(popupListData) > 1 || popupReload) {
 		/* We have more entries than the "0 TUs" one
 		 * or we want to simply refresh/display the popup content (no matter how many TUs are left). */
-		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "hud_shotreserve <lineselected>");
+		popupListNode = UI_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "hud_shotreserve <lineselected>");
 		/* Set color for selected entry. */
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);
 		popupListNode->selectedColor[3] = 1.0;
-		MN_TextNodeSelectLine(popupListNode, selectedEntry);
+		UI_TextNodeSelectLine(popupListNode, selectedEntry);
 	}
 }
 
@@ -408,7 +408,7 @@ static void HUD_ShotReserve_f (void)
 		if (GAME_ItemIsUseable(od)) {
 			HUD_SetShootReservation(selActor, max(0, reserveShotData->TUs), reserveShotData->hand, reserveShotData->fireModeIndex, od);
 			if (popupListNode)
-				MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
+				UI_TextNodeSelectLine(popupListNode, selectedPopupIndex);
 		}
 	}
 }
@@ -431,9 +431,9 @@ static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, c
 	} else {
 		/* Hide this entry */
 		if (hand == ACTOR_HAND_RIGHT)
-			MN_ExecuteConfunc("set_right_inv %i", index);
+			UI_ExecuteConfunc("set_right_inv %i", index);
 		else
-			MN_ExecuteConfunc("set_left_inv %i", index);
+			UI_ExecuteConfunc("set_left_inv %i", index);
 		return;
 	}
 
@@ -449,7 +449,7 @@ static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, c
 	} else
 		tooltip = _("No remaining TUs left after shot.");
 
-	MN_ExecuteConfunc("set_firemode %c %i %i %i \"%s\" \"%s\" \"%s\" \"%s\"", ACTOR_GET_HAND_CHAR(hand),
+	UI_ExecuteConfunc("set_firemode %c %i %i %i \"%s\" \"%s\" \"%s\" \"%s\"", ACTOR_GET_HAND_CHAR(hand),
 			fd->fdIdx, fd->reaction, status, _(fd->name), va(_("TU: %i"), fd->time),
 			va(_("Shots: %i"), fd->ammo), tooltip);
 
@@ -458,7 +458,7 @@ static void HUD_DisplayFiremodeEntry (const le_t* actor, const objDef_t* ammo, c
 		character_t* chr = CL_ActorGetChr(actor);
 		const qboolean active = THIS_FIREMODE(&chr->RFmode, hand, fd->fdIdx);
 		/* Change the state of the checkbox. */
-		MN_ExecuteConfunc("set_firemode_checkbox %c %i %i", ACTOR_GET_HAND_CHAR(hand), fd->fdIdx, active);
+		UI_ExecuteConfunc("set_firemode_checkbox %c %i %i", ACTOR_GET_HAND_CHAR(hand), fd->fdIdx, active);
 	}
 }
 
@@ -734,9 +734,9 @@ static qboolean HUD_DisplayImpossibleReaction (const le_t * actor)
 
 	/* Display 'impossible" (red) reaction buttons */
 	if (actor->state & STATE_REACTION_ONCE)
-		MN_ExecuteConfunc("startreactiononce_impos");
+		UI_ExecuteConfunc("startreactiononce_impos");
 	else if (actor->state & STATE_REACTION_MANY)
-		MN_ExecuteConfunc("startreactionmany_impos");
+		UI_ExecuteConfunc("startreactionmany_impos");
 	else
 		return qtrue;
 
@@ -758,9 +758,9 @@ static void HUD_DisplayPossibleReaction (const le_t * actor)
 
 	/* Display 'usable" (blue) reaction buttons */
 	if (actor->state & STATE_REACTION_ONCE)
-		MN_ExecuteConfunc("startreactiononce");
+		UI_ExecuteConfunc("startreactiononce");
 	else if (actor->state & STATE_REACTION_MANY)
-		MN_ExecuteConfunc("startreactionmany");
+		UI_ExecuteConfunc("startreactionmany");
 }
 
 /**
@@ -809,27 +809,27 @@ static void HUD_RefreshButtons (const le_t *le)
 
 	/* Crouch/stand reservation checkbox. */
 	if (CL_ActorReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
-		MN_ExecuteConfunc("crouch_checkbox_check");
+		UI_ExecuteConfunc("crouch_checkbox_check");
 		Cvar_Set("mn_crouch_reservation_tt", va(_("%i TUs reserved for crouching/standing up.\nClick to clear."),
 				CL_ActorReservedTUs(le, RES_CROUCH)));
 	} else if (time >= TU_CROUCH) {
-		MN_ExecuteConfunc("crouch_checkbox_clear");
+		UI_ExecuteConfunc("crouch_checkbox_clear");
 		Cvar_Set("mn_crouch_reservation_tt", va(_("Reserve %i TUs for crouching/standing up."), TU_CROUCH));
 	} else {
-		MN_ExecuteConfunc("crouch_checkbox_disable");
+		UI_ExecuteConfunc("crouch_checkbox_disable");
 		Cvar_Set("mn_crouch_reservation_tt", _("Not enough TUs left to reserve for crouching/standing up."));
 	}
 
 	/* Shot reservation button. mn_shot_reservation_tt is the tooltip text */
 	if (CL_ActorReservedTUs(le, RES_SHOT)) {
-		MN_ExecuteConfunc("reserve_shot_check");
+		UI_ExecuteConfunc("reserve_shot_check");
 		Cvar_Set("mn_shot_reservation_tt", va(_("%i TUs reserved for shooting.\nClick to change.\nRight-Click to clear."),
 				CL_ActorReservedTUs(le, RES_SHOT)));
 	} else if (HUD_CheckFiremodeReservation()) {
-		MN_ExecuteConfunc("reserve_shot_clear");
+		UI_ExecuteConfunc("reserve_shot_clear");
 		Cvar_Set("mn_shot_reservation_tt", _("Reserve TUs for shooting."));
 	} else {
-		MN_ExecuteConfunc("reserve_shot_disable");
+		UI_ExecuteConfunc("reserve_shot_disable");
 		Cvar_Set("mn_shot_reservation_tt", _("Reserving TUs for shooting not possible."));
 	}
 
@@ -900,8 +900,8 @@ static void HUD_RefreshButtons (const le_t *le)
 
 	/* Check if the firemode reservation popup is shown and refresh its content. (i.e. close&open it) */
 	{
-		const char* menuName = MN_GetActiveWindowName();
-		if (menuName[0] != '\0' && strstr(MN_GetActiveWindowName(), POPUPLIST_MENU_NAME)) {
+		const char* menuName = UI_GetActiveWindowName();
+		if (menuName[0] != '\0' && strstr(UI_GetActiveWindowName(), POPUPLIST_MENU_NAME)) {
 			/* Update firemode reservation popup. */
 			/** @todo this is called every frames... is this really needed? */
 			HUD_PopupFiremodeReservation(qfalse, qtrue);
@@ -917,7 +917,7 @@ static void HUD_RefreshButtons (const le_t *le)
  */
 static void HUD_DrawMouseCursorText (int xOffset, int yOffset, int textId)
 {
-	const char *string = MN_GetText(textId);
+	const char *string = UI_GetText(textId);
 
 	if (string && cl_show_cursor_tooltips->integer) {
 		int width = 0;
@@ -928,7 +928,7 @@ static void HUD_DrawMouseCursorText (int xOffset, int yOffset, int textId)
 		if (!width)
 			return;
 
-		MN_DrawString("f_verysmall", ALIGN_UL, mousePosX + xOffset, mousePosY - yOffset, 0, 0, viddef.virtualWidth, viddef.virtualHeight, 12, string, 0, 0, NULL, qfalse, 0);
+		UI_DrawString("f_verysmall", ALIGN_UL, mousePosX + xOffset, mousePosY - yOffset, 0, 0, viddef.virtualWidth, viddef.virtualHeight, 12, string, 0, 0, NULL, qfalse, 0);
 	}
 }
 
@@ -963,8 +963,8 @@ void HUD_UpdateCursor (void)
 			bgX += iconW + 4;
 
 		/* if exists gets width of player name */
-		if (MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES))
-			R_FontTextSize("f_verysmall", MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, NULL, NULL, NULL);
+		if (UI_GetText(TEXT_MOUSECURSOR_PLAYERNAMES))
+			R_FontTextSize("f_verysmall", UI_GetText(TEXT_MOUSECURSOR_PLAYERNAMES), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, NULL, NULL, NULL);
 
 		/* check if second line should be drawn */
 		if (width || (le->state & STATE_REACTION)) {
@@ -973,8 +973,8 @@ void HUD_UpdateCursor (void)
 		}
 
 		/* gets width of background */
-		if (width == 0 && MN_GetText(TEXT_MOUSECURSOR_RIGHT)) {
-			R_FontTextSize("f_verysmall", MN_GetText(TEXT_MOUSECURSOR_RIGHT), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, NULL, NULL, NULL);
+		if (width == 0 && UI_GetText(TEXT_MOUSECURSOR_RIGHT)) {
+			R_FontTextSize("f_verysmall", UI_GetText(TEXT_MOUSECURSOR_RIGHT), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, NULL, NULL, NULL);
 			bgW += width;
 		}
 
@@ -1010,7 +1010,7 @@ void HUD_UpdateCursor (void)
 
 	/* playernames */
 	HUD_DrawMouseCursorText(iconOffsetX + 16, -26, TEXT_MOUSECURSOR_PLAYERNAMES);
-	MN_ResetData(TEXT_MOUSECURSOR_PLAYERNAMES);
+	UI_ResetData(TEXT_MOUSECURSOR_PLAYERNAMES);
 
 	if (cl_map_debug->integer & MAPDEBUG_TEXT) {
 		/* Display ceiling text */
@@ -1039,19 +1039,19 @@ static void HUD_MapDebugCursor (const le_t *le)
 		Com_sprintf(topText, lengthof(topText), "%u-(%i,%i,%i)\n",
 				Grid_Ceiling(cl.clMap, ACTOR_GET_FIELDSIZE(le), truePos), truePos[0], truePos[1], truePos[2]);
 		/* Save the text for later display next to the cursor. */
-		MN_RegisterText(TEXT_MOUSECURSOR_TOP, topText);
+		UI_RegisterText(TEXT_MOUSECURSOR_TOP, topText);
 
 		/* Display the floor and ceiling values for the current cell. */
 		Com_sprintf(bottomText, lengthof(bottomText), "%i-(%i,%i,%i)\n",
 				Grid_Floor(cl.clMap, ACTOR_GET_FIELDSIZE(le), truePos), mousePos[0], mousePos[1], mousePos[2]);
 		/* Save the text for later display next to the cursor. */
-		MN_RegisterText(TEXT_MOUSECURSOR_BOTTOM, bottomText);
+		UI_RegisterText(TEXT_MOUSECURSOR_BOTTOM, bottomText);
 
 		/* Display the floor and ceiling values for the current cell. */
 		dv = Grid_MoveNext(le->pathMap, mousePos, 0);
 		Com_sprintf(leftText, lengthof(leftText), "%i-%i\n", getDVdir(dv), getDVz(dv));
 		/* Save the text for later display next to the cursor. */
-		MN_RegisterText(TEXT_MOUSECURSOR_LEFT, leftText);
+		UI_RegisterText(TEXT_MOUSECURSOR_LEFT, leftText);
 	}
 }
 
@@ -1073,7 +1073,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 		selWeapon = RIGHT(actor);
 	}
 
-	MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
+	UI_ResetData(TEXT_MOUSECURSOR_RIGHT);
 
 	if (selWeapon) {
 		static char infoText[MAX_SMALLMENUTEXTLEN];
@@ -1120,7 +1120,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 
 			/* Save the text for later display next to the cursor. */
 			Q_strncpyz(mouseText, infoText, lengthof(mouseText));
-			MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
+			UI_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
 
 			time = actor->fd->time;
 			/* if no TUs left for this firing action
@@ -1132,7 +1132,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 			Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(selWeapon->item.t->name));
 		}
 
-		MN_RegisterText(TEXT_STANDARD, infoText);
+		UI_RegisterText(TEXT_STANDARD, infoText);
 	} else {
 		CL_ActorSetMode(actor, M_MOVE);
 	}
@@ -1149,7 +1149,7 @@ static int HUD_UpdateActorMove (const le_t *actor)
 	const int reservedTUs = CL_ActorReservedTUs(actor, RES_ALL_ACTIVE);
 	static char infoText[MAX_SMALLMENUTEXTLEN];
 	if (actor->actorMoveLength == ROUTING_NOT_REACHABLE) {
-		MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
+		UI_ResetData(TEXT_MOUSECURSOR_RIGHT);
 		if (reservedTUs > 0)
 			Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n"), actor->morale, reservedTUs);
 		else
@@ -1170,10 +1170,10 @@ static int HUD_UpdateActorMove (const le_t *actor)
 		else
 			Com_sprintf(mouseText, lengthof(mouseText), "- (-)\n");
 
-		MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
+		UI_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
 	}
 
-	MN_RegisterText(TEXT_STANDARD, infoText);
+	UI_RegisterText(TEXT_STANDARD, infoText);
 
 	return actor->actorMoveLength;
 }
@@ -1289,7 +1289,7 @@ static void HUD_UpdateActor (le_t *actor)
 
 	/* handle actor in a panic */
 	if (LE_IsPaniced(actor)) {
-		MN_RegisterText(TEXT_STANDARD, _("Currently panics!\n"));
+		UI_RegisterText(TEXT_STANDARD, _("Currently panics!\n"));
 	} else if (displayRemainingTus[REMAINING_TU_CROUCH]) {
 		if (CL_ActorUsableTUs(actor) >= TU_CROUCH)
 			time = TU_CROUCH;
@@ -1356,7 +1356,7 @@ void HUD_Update (void)
 				status = 2;
 			else if (i < cl.mapMaxLevel)
 				status = 1;
-			MN_ExecuteConfunc("updateLevelStatus %i %i", i, status);
+			UI_ExecuteConfunc("updateLevelStatus %i %i", i, status);
 		}
 		cl_worldlevel->modified = qfalse;
 	}
@@ -1385,7 +1385,7 @@ void HUD_Update (void)
 
 	/* display special message */
 	if (cl.time < hudTime)
-		MN_RegisterText(TEXT_STANDARD, hudText);
+		UI_RegisterText(TEXT_STANDARD, hudText);
 }
 
 /**
@@ -1403,7 +1403,7 @@ static void HUD_ActorSelectionChangeListener (const char *cvarName, const char *
 		const int actorIdx = atoi(newValue);
 		const size_t size = lengthof(cl.teamList);
 		if (actorIdx >= 0 && actorIdx < size)
-			MN_ExecuteConfunc("hudselect %s", newValue);
+			UI_ExecuteConfunc("hudselect %s", newValue);
 	}
 }
 

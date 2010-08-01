@@ -115,10 +115,10 @@ typedef struct uiNode_s {
  * @param TYPE Extradata type
  * @param NODE Pointer to the node
  */
-#define MN_EXTRADATA_POINTER(NODE, TYPE) ((TYPE*)((char*)NODE + sizeof(uiNode_t)))
-#define MN_EXTRADATA(NODE, TYPE) (*MN_EXTRADATA_POINTER(NODE, TYPE))
-#define MN_EXTRADATACONST_POINTER(NODE, TYPE) ((TYPE*)((const char*)NODE + sizeof(uiNode_t)))
-#define MN_EXTRADATACONST(NODE, TYPE) (*MN_EXTRADATACONST_POINTER(NODE, const TYPE))
+#define UI_EXTRADATA_POINTER(NODE, TYPE) ((TYPE*)((char*)NODE + sizeof(uiNode_t)))
+#define UI_EXTRADATA(NODE, TYPE) (*UI_EXTRADATA_POINTER(NODE, TYPE))
+#define UI_EXTRADATACONST_POINTER(NODE, TYPE) ((TYPE*)((const char*)NODE + sizeof(uiNode_t)))
+#define UI_EXTRADATACONST(NODE, TYPE) (*UI_EXTRADATACONST_POINTER(NODE, const TYPE))
 
 /**
  * @brief Return the offset of an extradata node attribute
@@ -126,7 +126,7 @@ typedef struct uiNode_s {
  * @param MEMBER Attribute name
  * @sa offsetof
  */
-#define MN_EXTRADATA_OFFSETOF(TYPE, MEMBER) ((size_t) &((TYPE *)(MN_EXTRADATA_POINTER(0, TYPE)))->MEMBER)
+#define UI_EXTRADATA_OFFSETOF(TYPE, MEMBER) ((size_t) &((TYPE *)(UI_EXTRADATA_POINTER(0, TYPE)))->MEMBER)
 
 /**
  * @brief node behaviour, how a node work
@@ -153,7 +153,7 @@ typedef struct uiBehaviour_s {
 	/* draw callback */
 	void (*draw)(uiNode_t *node);							/**< how to draw a node */
 	void (*drawTooltip)(uiNode_t *node, int x, int y);	/**< allow to draw a custom tooltip */
-	void (*drawOverMenu)(uiNode_t *node);					/**< callback to draw content over the menu @sa MN_CaptureDrawOver */
+	void (*drawOverMenu)(uiNode_t *node);					/**< callback to draw content over the menu @sa UI_CaptureDrawOver */
 
 	/* mouse events */
 	void (*leftClick)(uiNode_t *node, int x, int y);		/**< left mouse click event in the node */
@@ -203,23 +203,23 @@ typedef struct uiBehaviour_s {
 } uiBehaviour_t;
 
 /* module initialization */
-void MN_InitNodes(void);
+void UI_InitNodes(void);
 
 /* nodes */
-uiNode_t* MN_AllocNode(const char* name, const char* type, qboolean isDynamic);
-uiNode_t* MN_GetNodeByPath(const char* path) __attribute__ ((warn_unused_result));
-void MN_ReadNodePath(const char* path, const uiNode_t *relativeNode, uiNode_t** resultNode, const value_t **resultProperty);
-struct uiNode_s *MN_GetNodeAtPosition(int x, int y) __attribute__ ((warn_unused_result));
-const char* MN_GetPath(const uiNode_t* node) __attribute__ ((warn_unused_result));
-struct uiNode_s *MN_CloneNode(const struct uiNode_s * node, struct uiNode_s *newMenu, qboolean recursive, const char *newName, qboolean isDynamic) __attribute__ ((warn_unused_result));
-qboolean MN_CheckVisibility(uiNode_t *node);
-void MN_DeleteAllChild(uiNode_t* node);
-void MN_DeleteNode(uiNode_t* node);
+uiNode_t* UI_AllocNode(const char* name, const char* type, qboolean isDynamic);
+uiNode_t* UI_GetNodeByPath(const char* path) __attribute__ ((warn_unused_result));
+void UI_ReadNodePath(const char* path, const uiNode_t *relativeNode, uiNode_t** resultNode, const value_t **resultProperty);
+struct uiNode_s *UI_GetNodeAtPosition(int x, int y) __attribute__ ((warn_unused_result));
+const char* UI_GetPath(const uiNode_t* node) __attribute__ ((warn_unused_result));
+struct uiNode_s *UI_CloneNode(const struct uiNode_s * node, struct uiNode_s *newMenu, qboolean recursive, const char *newName, qboolean isDynamic) __attribute__ ((warn_unused_result));
+qboolean UI_CheckVisibility(uiNode_t *node);
+void UI_DeleteAllChild(uiNode_t* node);
+void UI_DeleteNode(uiNode_t* node);
 
 /* behaviours */
-uiBehaviour_t* MN_GetNodeBehaviour(const char* name) __attribute__ ((warn_unused_result));
-uiBehaviour_t* MN_GetNodeBehaviourByIndex(int index) __attribute__ ((warn_unused_result));
-int MN_GetNodeBehaviourCount(void) __attribute__ ((warn_unused_result));
-const struct value_s *MN_GetPropertyFromBehaviour(const uiBehaviour_t *behaviour, const char* name) __attribute__ ((warn_unused_result));
+uiBehaviour_t* UI_GetNodeBehaviour(const char* name) __attribute__ ((warn_unused_result));
+uiBehaviour_t* UI_GetNodeBehaviourByIndex(int index) __attribute__ ((warn_unused_result));
+int UI_GetNodeBehaviourCount(void) __attribute__ ((warn_unused_result));
+const struct value_s *UI_GetPropertyFromBehaviour(const uiBehaviour_t *behaviour, const char* name) __attribute__ ((warn_unused_result));
 
 #endif

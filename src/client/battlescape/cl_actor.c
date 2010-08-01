@@ -348,7 +348,7 @@ void CL_ActorAddToTeamList (le_t * le)
 		actorIdx = cl.numTeamList;
 		le->pathMap = Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
 		cl.teamList[cl.numTeamList] = le;
-		MN_ExecuteConfunc("hudenable %i", cl.numTeamList);
+		UI_ExecuteConfunc("hudenable %i", cl.numTeamList);
 		cl.numTeamList++;
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
@@ -381,7 +381,7 @@ void CL_ActorRemoveFromTeamList (le_t * le)
 			CL_ActorCleanup(le);
 
 			/* disable hud button */
-			MN_ExecuteConfunc("huddisable %i", i);
+			UI_ExecuteConfunc("huddisable %i", i);
 
 			/* remove from list */
 			cl.teamList[i] = NULL;
@@ -1757,13 +1757,13 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 			default:
 				if (LE_IsAlien(mouseActor)) {
 					if (GAME_TeamIsKnown(mouseActor->teamDef))
-						MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _(mouseActor->teamDef->name));
+						UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _(mouseActor->teamDef->name));
 					else
-						MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _("Unknown alien race"));
+						UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _("Unknown alien race"));
 				} else {
 					/* multiplayer names */
 					/* see CL_ParseClientinfo */
-					MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, CL_PlayerGetName(mouseActor->pnum));
+					UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, CL_PlayerGetName(mouseActor->pnum));
 				}
 				/* Aliens (and players not in our team [multiplayer]) are red */
 				VectorSet(ent.color, 1, 0, 0); /* Red */
@@ -1772,12 +1772,12 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 		} else {
 			/* coop multiplayer games */
 			if (mouseActor->pnum != cl.pnum) {
-				MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, CL_PlayerGetName(mouseActor->pnum));
+				UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, CL_PlayerGetName(mouseActor->pnum));
 			} else {
 				/* we know the names of our own actors */
 				character_t* chr = CL_ActorGetChr(mouseActor);
 				assert(chr);
-				MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, chr->name);
+				UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, chr->name);
 			}
 			/* Paint a light blue box if on our team */
 			VectorSet(ent.color, 0.2, 0.3, 1); /* Light Blue */
@@ -2190,8 +2190,8 @@ static void CL_ActorEquipmentSelect_f (void)
 	menuInventory = &chr->i;
 
 	/* deselect current selected soldier and select the new one */
-	MN_ExecuteConfunc("equipdeselect %i", cl_selected->integer);
-	MN_ExecuteConfunc("equipselect %i", num);
+	UI_ExecuteConfunc("equipdeselect %i", cl_selected->integer);
+	UI_ExecuteConfunc("equipselect %i", num);
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));

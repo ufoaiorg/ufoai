@@ -55,8 +55,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 inventory_t *menuInventory = NULL;
 
 #define EXTRADATA_TYPE containerExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 /**
  * self cache for drag item
@@ -88,7 +88,7 @@ static const invList_t *dragInfoIC;
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa INVSH_SearchInInventory
  */
-static invList_t *MN_ContainerNodeGetExistingItem (const uiNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
+static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
 {
 	return INVSH_SearchInInventoryWithFilter(menuInventory, EXTRADATACONST(node).container, NONE, NONE, item, filterType);
 }
@@ -99,14 +99,14 @@ static invList_t *MN_ContainerNodeGetExistingItem (const uiNode_t *node, objDef_
  * set by the "in" and "out" functions of the scroll buttons.
  * @param[in] node Context node
  */
-static void MN_ContainerNodeUpdateScroll (uiNode_t* node)
+static void UI_ContainerNodeUpdateScroll (uiNode_t* node)
 {
 	if (EXTRADATA(node).onViewChange) {
-		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
+		UI_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 	}
 }
 
-static inline qboolean MN_IsScrollContainerNode (const uiNode_t* const node)
+static inline qboolean UI_IsScrollContainerNode (const uiNode_t* const node)
 {
 	return EXTRADATACONST(node).container && EXTRADATACONST(node).container->scroll;
 }
@@ -123,7 +123,7 @@ static inline qboolean MN_IsScrollContainerNode (const uiNode_t* const node)
  * to the ground container of @c inv
  * @todo dont use, and dont called by the container node; should we move it outside?
  */
-void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
+void UI_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 {
 	int i;
 
@@ -165,7 +165,7 @@ void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
  * Used to draw an item to the equipment containers. First look whether the objDef_t
  * includes an image - if there is none then draw the model
  */
-void MN_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color)
+void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color)
 {
 	objDef_t *od = item->t;
 	vec4_t col;
@@ -214,7 +214,7 @@ void MN_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
 
 		/* Draw the image. */
 		R_Color(color);
-		MN_DrawNormImageByName(origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, od->image);
+		UI_DrawNormImageByName(origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, od->image);
 		R_Color(NULL);
 	} else {
 		menuModel_t *menuModel = NULL;
@@ -222,12 +222,12 @@ void MN_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
 
 		/* no model definition in the tech struct, not in the fallback object definition */
 		if (modelName == NULL || modelName[0] == '\0') {
-			Com_Printf("MN_DrawItem: No model given for item: '%s'\n", od->id);
+			Com_Printf("UI_DrawItem: No model given for item: '%s'\n", od->id);
 			return;
 		}
 
 		if (menuModel && node) {
-			MN_DrawModelNode(node, modelName);
+			UI_DrawModelNode(node, modelName);
 		} else {
 			modelInfo_t mi;
 			vec3_t angles = {-10, 160, 70};
@@ -263,7 +263,7 @@ void MN_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
  * @param[in] stringMaxLength Max. string size of @c tooltipText.
  * @return Number of lines
  */
-static void MN_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
+static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
 {
 	int i;
 	objDef_t *weapon;
@@ -308,31 +308,31 @@ static void MN_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
 /**
  * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
  */
-static void MN_DrawDisabled (const uiNode_t* node)
+static void UI_DrawDisabled (const uiNode_t* node)
 {
 	const vec4_t color = { 0.3f, 0.3f, 0.3f, 0.7f };
 	vec2_t nodepos;
 
-	MN_GetNodeAbsPos(node, nodepos);
-	MN_DrawFill(nodepos[0], nodepos[1], node->size[0], node->size[1], color);
+	UI_GetNodeAbsPos(node, nodepos);
+	UI_DrawFill(nodepos[0], nodepos[1], node->size[0], node->size[1], color);
 }
 
 /**
  * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
  */
-static void MN_DrawFree (containerIndex_t container, const uiNode_t *node, int posx, int posy, int sizex, int sizey, qboolean showTUs)
+static void UI_DrawFree (containerIndex_t container, const uiNode_t *node, int posx, int posy, int sizex, int sizey, qboolean showTUs)
 {
 	const vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
 	invDef_t* inv = INVDEF(container);
 	vec2_t nodepos;
 
-	MN_GetNodeAbsPos(node, nodepos);
-	MN_DrawFill(posx, posy, sizex, sizey, color);
+	UI_GetNodeAbsPos(node, nodepos);
+	UI_DrawFill(posx, posy, sizex, sizey, color);
 
 	/* if showTUs is true (only the first time in none single containers)
 	 * and we are connected to a game */
 	if (showTUs && CL_BattlescapeRunning()) {
-		MN_DrawString("f_verysmall", ALIGN_UL, nodepos[0] + 3, nodepos[1] + 3,
+		UI_DrawString("f_verysmall", ALIGN_UL, nodepos[0] + 3, nodepos[1] + 3,
 			nodepos[0] + 3, nodepos[1] + 3, node->size[0] - 6, 0, 0,
 			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse, 0);
 	}
@@ -342,21 +342,21 @@ static void MN_DrawFree (containerIndex_t container, const uiNode_t *node, int p
  * @brief Draws the free and usable inventory positions when dragging an item.
  * @note Only call this function in dragging mode
  */
-static void MN_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
+static void UI_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 {
-	const objDef_t *od = MN_DNDGetItem()->t;	/**< Get the 'type' of the dragged item. */
+	const objDef_t *od = UI_DNDGetItem()->t;	/**< Get the 'type' of the dragged item. */
 	vec2_t nodepos;
 
 	/* Draw only in dragging-mode and not for the equip-floor */
-	assert(MN_DNDIsDragging());
+	assert(UI_DNDIsDragging());
 	assert(inv);
 
-	MN_GetNodeAbsPos(node, nodepos);
+	UI_GetNodeAbsPos(node, nodepos);
 	/* if single container (hands, extension, headgear) */
 	if (EXTRADATA(node).container->single) {
 		/* if container is free or the dragged-item is in it */
-		if (MN_DNDIsSourceNode(node) || INVSH_CheckToInventory(inv, od, EXTRADATA(node).container, 0, 0, dragInfoIC))
-			MN_DrawFree(EXTRADATA(node).container->id, node, nodepos[0], nodepos[1], node->size[0], node->size[1], qtrue);
+		if (UI_DNDIsSourceNode(node) || INVSH_CheckToInventory(inv, od, EXTRADATA(node).container, 0, 0, dragInfoIC))
+			UI_DrawFree(EXTRADATA(node).container->id, node, nodepos[0], nodepos[1], node->size[0], node->size[1], qtrue);
 	} else {
 		/* The shape of the free positions. */
 		uint32_t free[SHAPE_BIG_MAX_HEIGHT];
@@ -379,7 +379,7 @@ static void MN_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 				/* Only draw on existing positions. */
 				if (INVSH_CheckShape(EXTRADATA(node).container->shape, x, y)) {
 					if (INVSH_CheckShape(free, x, y)) {
-						MN_DrawFree(EXTRADATA(node).container->id, node, nodepos[0] + x * C_UNIT, nodepos[1] + y * C_UNIT, C_UNIT, C_UNIT, showTUs);
+						UI_DrawFree(EXTRADATA(node).container->id, node, nodepos[0] + x * C_UNIT, nodepos[1] + y * C_UNIT, C_UNIT, C_UNIT, showTUs);
 						showTUs = qfalse;
 					}
 				}
@@ -393,7 +393,7 @@ static void MN_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
  * into the node (uses the @c invDef_t shape bitmask to determine the size)
  * @param[in,out] node The node to get the size for
  */
-static void MN_ContainerNodeLoaded (uiNode_t* const node)
+static void UI_ContainerNodeLoaded (uiNode_t* const node)
 {
 	const char *name;
 	invDef_t *container;
@@ -410,7 +410,7 @@ static void MN_ContainerNodeLoaded (uiNode_t* const node)
 
 	EXTRADATA(node).container = container;
 
-	if (MN_IsScrollContainerNode(node)) {
+	if (UI_IsScrollContainerNode(node)) {
 		/* No need to calculate the size, this is done in the menu script */
 	} else {
 		/* Start on the last bit of the shape mask. */
@@ -445,13 +445,13 @@ static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview ite
  * @param node
  * @param highlightType
  */
-static void MN_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
+static void UI_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
 {
 	vec4_t color;
 	vec3_t pos;
 	qboolean disabled = qfalse;
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 	pos[0] += node->size[0] / 2.0;
 	pos[1] += node->size[1] / 2.0;
 	pos[2] = 0;
@@ -469,7 +469,7 @@ static void MN_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
 				else
 					memcpy(color, colorDefault, sizeof(vec4_t));
 				color[3] = 0.5;
-				MN_DrawItem(node, pos, item, -1, -1, scale, color);
+				UI_DrawItem(node, pos, item, -1, -1, scale, color);
 			}
 		}
 	} else if (menuInventory->c[EXTRADATA(node).container->id]) {
@@ -484,7 +484,7 @@ static void MN_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
 			assert(item->t);
 			if (INV_IsRightDef(EXTRADATA(node).container) && item->t->fireTwoHanded && menuInventory->c[csi.idLeft]) {
 				disabled = qtrue;
-				MN_DrawDisabled(node);
+				UI_DrawDisabled(node);
 			}
 		}
 
@@ -504,45 +504,45 @@ static void MN_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
 		}
 		if (disabled)
 			color[3] = 0.5;
-		MN_DrawItem(node, pos, item, -1, -1, scale, color);
+		UI_DrawItem(node, pos, item, -1, -1, scale, color);
 	}
 }
 
 /**
  * @brief Draw a grip container
  */
-static void MN_ContainerNodeDrawGrid (uiNode_t *node, objDef_t *highlightType)
+static void UI_ContainerNodeDrawGrid (uiNode_t *node, objDef_t *highlightType)
 {
 	const invList_t *ic;
 	vec3_t pos;
 
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 	pos[2] = 0;
 
 	for (ic = menuInventory->c[EXTRADATA(node).container->id]; ic; ic = ic->next) {
 		assert(ic->item.t);
 		if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
-			MN_DrawItem(node, pos, &ic->item, ic->x, ic->y, scale, colorLoadable);
+			UI_DrawItem(node, pos, &ic->item, ic->x, ic->y, scale, colorLoadable);
 		else
-			MN_DrawItem(node, pos, &ic->item, ic->x, ic->y, scale, colorDefault);
+			UI_DrawItem(node, pos, &ic->item, ic->x, ic->y, scale, colorDefault);
 	}
 }
 
 /**
  * @brief Draw a preview of the DND item dropped into the node
  */
-static void MN_ContainerNodeDrawDropPreview (uiNode_t *target)
+static void UI_ContainerNodeDrawDropPreview (uiNode_t *target)
 {
 	item_t previewItem;
 	int checkedTo;
 	vec3_t origine;
 
 	/* no preview into scrollable list */
-	if (MN_IsScrollContainerNode(target))
+	if (UI_IsScrollContainerNode(target))
 		return;
 
 	/* copy the DND item to not change the original one */
-	previewItem = *MN_DNDGetItem();
+	previewItem = *UI_DNDGetItem();
 	previewItem.rotated = qfalse;
 	checkedTo = INVSH_CheckToInventory(menuInventory, previewItem.t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
 	if (checkedTo == INV_FITS_ONLY_ROTATED)
@@ -556,7 +556,7 @@ static void MN_ContainerNodeDrawDropPreview (uiNode_t *target)
 	if (INV_IsArmour(previewItem.t))
 		return;
 
-	MN_GetNodeAbsPos(target, origine);
+	UI_GetNodeAbsPos(target, origine);
 	origine[2] = -40;
 
 	/* Get center of single container for placement of preview item */
@@ -576,13 +576,13 @@ static void MN_ContainerNodeDrawDropPreview (uiNode_t *target)
 		}
 	}
 
-	MN_DrawItem(NULL, origine, &previewItem, -1, -1, scale, colorPreview);
+	UI_DrawItem(NULL, origine, &previewItem, -1, -1, scale, colorPreview);
 }
 
 /**
  * @brief Main function to draw a container node
  */
-static void MN_ContainerNodeDraw (uiNode_t *node)
+static void UI_ContainerNodeDraw (uiNode_t *node)
 {
 	objDef_t *highlightType = NULL;
 
@@ -595,26 +595,26 @@ static void MN_ContainerNodeDraw (uiNode_t *node)
 		return;
 
 	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
-	if (MN_DNDIsDragging() && MN_DNDGetType() == DND_ITEM) {
-		highlightType = MN_DNDGetItem()->t;
+	if (UI_DNDIsDragging() && UI_DNDGetType() == DND_ITEM) {
+		highlightType = UI_DNDGetItem()->t;
 	}
 
 	if (EXTRADATA(node).container->single) {
-		MN_ContainerNodeDrawSingle(node, highlightType);
+		UI_ContainerNodeDrawSingle(node, highlightType);
 	} else {
-		if (MN_IsScrollContainerNode(node)) {
+		if (UI_IsScrollContainerNode(node)) {
 			assert(qfalse);
 		} else {
-			MN_ContainerNodeDrawGrid(node, highlightType);
+			UI_ContainerNodeDrawGrid(node, highlightType);
 		}
 	}
 
 	/* Draw free space if dragging - but not for idEquip */
-	if (MN_DNDIsDragging() && EXTRADATA(node).container->id != csi.idEquip)
-		MN_ContainerNodeDrawFreeSpace(node, menuInventory);
+	if (UI_DNDIsDragging() && EXTRADATA(node).container->id != csi.idEquip)
+		UI_ContainerNodeDrawFreeSpace(node, menuInventory);
 
-	if (MN_DNDIsTargetNode(node))
-		MN_ContainerNodeDrawDropPreview(node);
+	if (UI_DNDIsTargetNode(node))
+		UI_ContainerNodeDrawDropPreview(node);
 }
 
 /**
@@ -624,19 +624,19 @@ static void MN_ContainerNodeDraw (uiNode_t *node)
  * @param[in] mouseY Y location of the mouse.
  * @param[out] contX X location in the container (index of item in row).
  * @param[out] contY Y location in the container (row).
- * @sa MN_ContainerNodeSearchInScrollableContainer
+ * @sa UI_ContainerNodeSearchInScrollableContainer
  */
-static invList_t *MN_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
+static invList_t *UI_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
 {
 	invList_t *result = NULL;
 	/* Get coordinates inside a scrollable container (if it is one). */
-	if (MN_IsScrollContainerNode(node)) {
+	if (UI_IsScrollContainerNode(node)) {
 		assert(qfalse);
 	} else {
 		vec2_t nodepos;
 		int fromX, fromY;
 
-		MN_GetNodeAbsPos(node, nodepos);
+		UI_GetNodeAbsPos(node, nodepos);
 		/* Normalize screen coordinates to container coordinates. */
 		fromX = (int) (mouseX - nodepos[0]) / C_UNIT;
 		fromY = (int) (mouseY - nodepos[1]) / C_UNIT;
@@ -656,27 +656,27 @@ static invList_t *MN_ContainerNodeGetItemAtPosition (const uiNode_t* const node,
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void MN_ContainerNodeDrawTooltip (uiNode_t *node, int x, int y)
+static void UI_ContainerNodeDrawTooltip (uiNode_t *node, int x, int y)
 {
 	static char tooltiptext[MAX_VAR * 2];
 	const invList_t *itemHover;
 	vec2_t nodepos;
 
-	MN_GetNodeAbsPos(node, nodepos);
+	UI_GetNodeAbsPos(node, nodepos);
 
 	/* Find out where the mouse is. */
-	itemHover = MN_ContainerNodeGetItemAtPosition(node, x, y, NULL, NULL);
+	itemHover = UI_ContainerNodeGetItemAtPosition(node, x, y, NULL, NULL);
 
 	if (itemHover) {
 		const int itemToolTipWidth = 250;
 
 		/* Get name and info about item */
-		MN_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
+		UI_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
 #ifdef DEBUG
 		/* Display stored container-coordinates of the item. */
 		Q_strcat(tooltiptext, va("\n%i/%i", itemHover->x, itemHover->y), sizeof(tooltiptext));
 #endif
-		MN_DrawTooltip(tooltiptext, x, y, itemToolTipWidth, 0);
+		UI_DrawTooltip(tooltiptext, x, y, itemToolTipWidth, 0);
 	}
 }
 
@@ -688,7 +688,7 @@ static void MN_ContainerNodeDrawTooltip (uiNode_t *node, int x, int y)
  * @param[in] mouseY Y mouse coordinates.
  * @todo None generic function. Not sure we can do it in a generic way
  */
-static void MN_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
+static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 {
 	int sel;
 #if 0	/* see bellow #1 */
@@ -710,8 +710,8 @@ static void MN_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 
 	assert(EXTRADATA(node).container);
 
-	ic = MN_ContainerNodeGetItemAtPosition(node, mouseX, mouseY, &fromX, &fromY);
-	Com_DPrintf(DEBUG_CLIENT, "MN_ContainerNodeAutoPlace: item %i/%i selected from scrollable container.\n", fromX, fromY);
+	ic = UI_ContainerNodeGetItemAtPosition(node, mouseX, mouseY, &fromX, &fromY);
+	Com_DPrintf(DEBUG_CLIENT, "UI_ContainerNodeAutoPlace: item %i/%i selected from scrollable container.\n", fromX, fromY);
 	if (!ic)
 		return;
 #if 0	/* see bellow #1 */
@@ -813,55 +813,55 @@ static void MN_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 	 * The right way is to compute the source and the target container
 	 * and fire the change event for both */
 	if (INV_IsArmour(ic->item.t)) {
-		const uiNode_t *armour = MN_GetNode(node->root, "armour");
+		const uiNode_t *armour = UI_GetNode(node->root, "armour");
 		if (armour && armour->onChange)
-			MN_ExecuteEventActions(armour, armour->onChange);
+			UI_ExecuteEventActions(armour, armour->onChange);
 	}
 
 	/* Update display of scroll buttons. */
-	if (MN_IsScrollContainerNode(node))
-		MN_ContainerNodeUpdateScroll(node);
+	if (UI_IsScrollContainerNode(node))
+		UI_ContainerNodeUpdateScroll(node);
 }
 
 static int oldMouseX = 0;
 static int oldMouseY = 0;
 
-static void MN_ContainerNodeCapturedMouseMove (uiNode_t *node, int x, int y)
+static void UI_ContainerNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int delta = abs(oldMouseX - x) + abs(oldMouseY - y);
 	if (delta > 15) {
-		MN_DNDDragItem(node, &(dragInfoIC->item));
-		MN_MouseRelease();
+		UI_DNDDragItem(node, &(dragInfoIC->item));
+		UI_MouseRelease();
 	}
 }
 
-static void MN_ContainerNodeMouseDown (uiNode_t *node, int x, int y, int button)
+static void UI_ContainerNodeMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	switch (button) {
 	case K_MOUSE1:
 	{
 		/* start drag and drop */
 		int fromX, fromY;
-		dragInfoIC = MN_ContainerNodeGetItemAtPosition(node, x, y, &fromX, &fromY);
+		dragInfoIC = UI_ContainerNodeGetItemAtPosition(node, x, y, &fromX, &fromY);
 		if (dragInfoIC) {
 			dragInfoFromX = fromX;
 			dragInfoFromY = fromY;
 			oldMouseX = x;
 			oldMouseY = y;
-			MN_SetMouseCapture(node);
+			UI_SetMouseCapture(node);
 			EXTRADATA(node).lastSelectedId = dragInfoIC->item.t->idx;
 			if (EXTRADATA(node).onSelect) {
-				MN_ExecuteEventActions(node, EXTRADATA(node).onSelect);
+				UI_ExecuteEventActions(node, EXTRADATA(node).onSelect);
 			}
 		}
 		break;
 	}
 	case K_MOUSE2:
-		if (MN_DNDIsDragging()) {
-			MN_DNDAbort();
+		if (UI_DNDIsDragging()) {
+			UI_DNDAbort();
 		} else {
 			/* auto place */
-			MN_ContainerNodeAutoPlace(node, x, y);
+			UI_ContainerNodeAutoPlace(node, x, y);
 		}
 		break;
 	default:
@@ -869,20 +869,20 @@ static void MN_ContainerNodeMouseDown (uiNode_t *node, int x, int y, int button)
 	}
 }
 
-static void MN_ContainerNodeMouseUp (uiNode_t *node, int x, int y, int button)
+static void UI_ContainerNodeMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
-	if (MN_GetMouseCapture() == node) {
-		MN_MouseRelease();
+	if (UI_GetMouseCapture() == node) {
+		UI_MouseRelease();
 	}
-	if (MN_DNDIsDragging()) {
-		MN_DNDDrop();
+	if (UI_DNDIsDragging()) {
+		UI_DNDDrop();
 	}
 }
-static void MN_ContainerNodeWheel (uiNode_t *node, qboolean down, int x, int y)
+static void UI_ContainerNodeWheel (uiNode_t *node, qboolean down, int x, int y)
 {
-	if (MN_IsScrollContainerNode(node)) {
+	if (UI_IsScrollContainerNode(node)) {
 		const int delta = 20;
 		if (down) {
 			const int lenght = EXTRADATA(node).scrollTotalNum - EXTRADATA(node).scrollNum;
@@ -890,20 +890,20 @@ static void MN_ContainerNodeWheel (uiNode_t *node, qboolean down, int x, int y)
 				EXTRADATA(node).scrollCur += delta;
 				if (EXTRADATA(node).scrollCur > lenght)
 					EXTRADATA(node).scrollCur = lenght;
-				MN_ContainerNodeUpdateScroll(node);
+				UI_ContainerNodeUpdateScroll(node);
 			}
 		} else {
 			if (EXTRADATA(node).scrollCur > 0) {
 				EXTRADATA(node).scrollCur -= delta;
 				if (EXTRADATA(node).scrollCur < 0)
 					EXTRADATA(node).scrollCur = 0;
-				MN_ContainerNodeUpdateScroll(node);
+				UI_ContainerNodeUpdateScroll(node);
 			}
 		}
 	}
 }
 
-static void MN_ContainerNodeLoading (uiNode_t *node)
+static void UI_ContainerNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).container = NULL;
 	EXTRADATA(node).columns = 1;
@@ -913,34 +913,34 @@ static void MN_ContainerNodeLoading (uiNode_t *node)
 /**
  * @brief Call when a DND enter into the node
  */
-static qboolean MN_ContainerNodeDNDEnter (uiNode_t *target)
+static qboolean UI_ContainerNodeDNDEnter (uiNode_t *target)
 {
 	/* accept items only, if we have a container */
-	return MN_DNDGetType() == DND_ITEM && EXTRADATA(target).container && (!MN_IsScrollContainerNode(target) || MN_DNDGetSourceNode() !=  target);
+	return UI_DNDGetType() == DND_ITEM && EXTRADATA(target).container && (!UI_IsScrollContainerNode(target) || UI_DNDGetSourceNode() !=  target);
 }
 
 /**
  * @brief Call into the target when the DND hover it
  * @return True if the DND is accepted
  */
-static qboolean MN_ContainerNodeDNDMove (uiNode_t *target, int x, int y)
+static qboolean UI_ContainerNodeDNDMove (uiNode_t *target, int x, int y)
 {
 	vec2_t nodepos;
 	qboolean exists;
 	int itemX = 0;
 	int itemY = 0;
-	item_t *dragItem = MN_DNDGetItem();
+	item_t *dragItem = UI_DNDGetItem();
 
 	/* we already check it when the node accept the DND */
 	assert(EXTRADATA(target).container);
 
-	MN_GetNodeAbsPos(target, nodepos);
+	UI_GetNodeAbsPos(target, nodepos);
 
 	/** We calculate the position of the top-left corner of the dragged
 	 * item in oder to compensate for the centered-drawn cursor-item.
 	 * Or to be more exact, we calculate the relative offset from the cursor
 	 * location to the middle of the top-left square of the item.
-	 * @sa MN_LeftClick */
+	 * @sa UI_LeftClick */
 	if (dragItem->t) {
 		itemX = C_UNIT * dragItem->t->sx / 2;	/* Half item-width. */
 		itemY = C_UNIT * dragItem->t->sy / 2;	/* Half item-height. */
@@ -975,7 +975,7 @@ static qboolean MN_ContainerNodeDNDMove (uiNode_t *target, int x, int y)
 	}
 
 	/* we can drag every thing */
-	if (MN_IsScrollContainerNode(target)) {
+	if (UI_IsScrollContainerNode(target)) {
 		return qtrue;
 	}
 
@@ -1000,7 +1000,7 @@ static qboolean MN_ContainerNodeDNDMove (uiNode_t *target, int x, int y)
 /**
  * @brief Call when a DND enter into the node
  */
-static void MN_ContainerNodeDNDLeave (uiNode_t *node)
+static void UI_ContainerNodeDNDLeave (uiNode_t *node)
 {
 	dragInfoToX = -1;
 	dragInfoToY = -1;
@@ -1009,9 +1009,9 @@ static void MN_ContainerNodeDNDLeave (uiNode_t *node)
 /**
  * @brief Call into the source when the DND end
  */
-static qboolean MN_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDropped)
+static qboolean UI_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDropped)
 {
-	item_t *dragItem = MN_DNDGetItem();
+	item_t *dragItem = UI_DNDGetItem();
 
 	/* if the target can't finalize the DND we stop */
 	if (!isDropped) {
@@ -1020,7 +1020,7 @@ static qboolean MN_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 
 	/* on tactical mission */
 	if (CL_BattlescapeRunning()) {
-		const uiNode_t *target = MN_DNDGetTargetNode();
+		const uiNode_t *target = UI_DNDGetTargetNode();
 		assert(EXTRADATA(source).container);
 		assert(target);
 		assert(EXTRADATACONST(target).container);
@@ -1028,14 +1028,14 @@ static qboolean MN_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 		CL_ActorInvMove(selActor, EXTRADATA(source).container->id, dragInfoFromX, dragInfoFromY,
 			EXTRADATACONST(target).container->id, dragInfoToX, dragInfoToY);
 	} else {
-		uiNode_t *target = MN_DNDGetTargetNode();
+		uiNode_t *target = UI_DNDGetTargetNode();
 		if (target) {
 			invList_t *fItem;
 			/* menu */
 			/** @todo Is filterEquipType needed here?, we can use anyway INVSH_SearchInInventory if we disable dragInfoFromX/Y when we start DND */
-			if (MN_IsScrollContainerNode(source)) {
+			if (UI_IsScrollContainerNode(source)) {
 				const int equipType = EXTRADATA(source).filterEquipType;
-				fItem = MN_ContainerNodeGetExistingItem(source, dragItem->t, equipType);
+				fItem = UI_ContainerNodeGetExistingItem(source, dragItem->t, equipType);
 			} else
 				fItem = INVSH_SearchInInventory(menuInventory, EXTRADATA(source).container, dragInfoFromX, dragInfoFromY);
 
@@ -1044,20 +1044,20 @@ static qboolean MN_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 			assert(fItem);
 
 			/* Remove ammo on removing weapon from a soldier */
-			if (MN_IsScrollContainerNode(target) && fItem->item.m && fItem->item.m != fItem->item.t)
+			if (UI_IsScrollContainerNode(target) && fItem->item.m && fItem->item.m != fItem->item.t)
 				INV_UnloadWeapon(fItem, menuInventory, EXTRADATA(target).container);
 			/* move the item */
 			INV_MoveItem(menuInventory,
 				EXTRADATA(target).container, dragInfoToX, dragInfoToY,
 				EXTRADATA(source).container, fItem);
 			/* Add ammo on adding weapon to a soldier  */
-			if (MN_IsScrollContainerNode(source) && fItem->item.t->weapon && !fItem->item.a)
+			if (UI_IsScrollContainerNode(source) && fItem->item.t->weapon && !fItem->item.a)
 				INV_LoadWeapon(fItem, menuInventory, EXTRADATA(source).container, EXTRADATA(target).container);
 			/* Run onChange events */
 			if (source->onChange)
-				MN_ExecuteEventActions(source, source->onChange);
+				UI_ExecuteEventActions(source, source->onChange);
 			if (source != target && target->onChange)
-				MN_ExecuteEventActions(target, target->onChange);
+				UI_ExecuteEventActions(target, target->onChange);
 		}
 	}
 
@@ -1068,56 +1068,56 @@ static qboolean MN_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 
 static const value_t properties[] = {
 	/* Base container only. Display/hide weapons. */
-	{"displayweapon", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayWeapon)},
+	{"displayweapon", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayWeapon)},
 	/* Base container only. Display/hide ammo. */
-	{"displayammo", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayAmmo),  MEMBER_SIZEOF(containerExtraData_t, displayAmmo)},
+	{"displayammo", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayAmmo),  MEMBER_SIZEOF(containerExtraData_t, displayAmmo)},
 	/* Base container only. Display/hide out of stock items. */
-	{"displayunavailableitem", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayUnavailableItem),  MEMBER_SIZEOF(containerExtraData_t, displayUnavailableItem)},
+	{"displayunavailableitem", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayUnavailableItem),  MEMBER_SIZEOF(containerExtraData_t, displayUnavailableItem)},
 	/* Base container only. Sort the list to display in stock items on top of the list. */
-	{"displayavailableontop", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayAvailableOnTop),  MEMBER_SIZEOF(containerExtraData_t, displayAvailableOnTop)},
+	{"displayavailableontop", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayAvailableOnTop),  MEMBER_SIZEOF(containerExtraData_t, displayAvailableOnTop)},
 	/* Base container only. Display/hide ammo near weapons. */
-	{"displayammoofweapon", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayAmmoOfWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayAmmoOfWeapon)},
+	{"displayammoofweapon", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayAmmoOfWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayAmmoOfWeapon)},
 	/* Base container only. Display/hide out of stock ammo near weapons. <code>displayammoofweapon</code> must be activated first. */
-	{"displayunavailableammoofweapon", V_BOOL, MN_EXTRADATA_OFFSETOF(containerExtraData_t, displayUnavailableAmmoOfWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayUnavailableAmmoOfWeapon)},
+	{"displayunavailableammoofweapon", V_BOOL, UI_EXTRADATA_OFFSETOF(containerExtraData_t, displayUnavailableAmmoOfWeapon),  MEMBER_SIZEOF(containerExtraData_t, displayUnavailableAmmoOfWeapon)},
 	/* Base container only. Custom the number of column we must use to display items. */
-	{"columns", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, columns),  MEMBER_SIZEOF(containerExtraData_t, columns)},
+	{"columns", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, columns),  MEMBER_SIZEOF(containerExtraData_t, columns)},
 	/* Base container only. Filter items by a category. */
-	{"filter", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, filterEquipType),  MEMBER_SIZEOF(containerExtraData_t, filterEquipType)},
+	{"filter", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, filterEquipType),  MEMBER_SIZEOF(containerExtraData_t, filterEquipType)},
 
 	/* Callback value set before calling onSelect. It is used to know the item selected */
-	{"lastselectedid", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, lastSelectedId),  MEMBER_SIZEOF(containerExtraData_t, lastSelectedId)},
+	{"lastselectedid", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, lastSelectedId),  MEMBER_SIZEOF(containerExtraData_t, lastSelectedId)},
 	/* Callback event called when the user select an item */
-	{"onselect", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(containerExtraData_t, onSelect),  MEMBER_SIZEOF(containerExtraData_t, onSelect)},
+	{"onselect", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(containerExtraData_t, onSelect),  MEMBER_SIZEOF(containerExtraData_t, onSelect)},
 
 	/* Base container only. Position of the vertical view (into the full number of elements the node contain)
 	 * @todo Rename it viewpos (like scrollable node)
 	 */
-	{"scrollpos", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, scrollCur),  MEMBER_SIZEOF(containerExtraData_t, scrollCur)},
+	{"scrollpos", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, scrollCur),  MEMBER_SIZEOF(containerExtraData_t, scrollCur)},
 	/* Base container only. Size of the vertical view (proportional to the number of elements the node can display without moving) */
-	{"viewsize", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, scrollNum),  MEMBER_SIZEOF(containerExtraData_t, scrollNum)},
+	{"viewsize", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, scrollNum),  MEMBER_SIZEOF(containerExtraData_t, scrollNum)},
 	/* Base container only. Full vertical size (proportional to the number of elements the node contain) */
-	{"fullsize", V_INT, MN_EXTRADATA_OFFSETOF(containerExtraData_t, scrollTotalNum),  MEMBER_SIZEOF(containerExtraData_t, scrollTotalNum)},
+	{"fullsize", V_INT, UI_EXTRADATA_OFFSETOF(containerExtraData_t, scrollTotalNum),  MEMBER_SIZEOF(containerExtraData_t, scrollTotalNum)},
 	/* Base container only. Called when one of the properties viewpos/viewsize/fullsize change */
-	{"onviewchange", V_UI_ACTION, MN_EXTRADATA_OFFSETOF(containerExtraData_t, onViewChange), MEMBER_SIZEOF(containerExtraData_t, onViewChange)},
+	{"onviewchange", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(containerExtraData_t, onViewChange), MEMBER_SIZEOF(containerExtraData_t, onViewChange)},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterContainerNode (uiBehaviour_t* behaviour)
+void UI_RegisterContainerNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "container";
-	behaviour->draw = MN_ContainerNodeDraw;
-	behaviour->drawTooltip = MN_ContainerNodeDrawTooltip;
-	behaviour->mouseDown = MN_ContainerNodeMouseDown;
-	behaviour->mouseUp = MN_ContainerNodeMouseUp;
-	behaviour->capturedMouseMove = MN_ContainerNodeCapturedMouseMove;
-	behaviour->loading = MN_ContainerNodeLoading;
-	behaviour->loaded = MN_ContainerNodeLoaded;
-	behaviour->dndEnter = MN_ContainerNodeDNDEnter;
-	behaviour->dndFinished = MN_ContainerNodeDNDFinished;
-	behaviour->dndMove = MN_ContainerNodeDNDMove;
-	behaviour->dndLeave = MN_ContainerNodeDNDLeave;
-	behaviour->mouseWheel = MN_ContainerNodeWheel;
+	behaviour->draw = UI_ContainerNodeDraw;
+	behaviour->drawTooltip = UI_ContainerNodeDrawTooltip;
+	behaviour->mouseDown = UI_ContainerNodeMouseDown;
+	behaviour->mouseUp = UI_ContainerNodeMouseUp;
+	behaviour->capturedMouseMove = UI_ContainerNodeCapturedMouseMove;
+	behaviour->loading = UI_ContainerNodeLoading;
+	behaviour->loaded = UI_ContainerNodeLoaded;
+	behaviour->dndEnter = UI_ContainerNodeDNDEnter;
+	behaviour->dndFinished = UI_ContainerNodeDNDFinished;
+	behaviour->dndMove = UI_ContainerNodeDNDMove;
+	behaviour->dndLeave = UI_ContainerNodeDNDLeave;
+	behaviour->mouseWheel = UI_ContainerNodeWheel;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

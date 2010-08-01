@@ -249,16 +249,16 @@ production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *it
 	if (aircraftTemplate) {
 		if (!B_GetBuildingStatus(base, B_COMMAND)) {
 			/** @todo move popup into menucode */
-			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
+			UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
 			return NULL;
 		} else if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 			/** @todo move popup into menucode */
-			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
+			UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
 			return NULL;
 		}
 		/** @todo we should also count aircraft that are already in the queue list */
 		if (AIR_CalculateHangarStorage(aircraftTemplate, base, 0) <= 0) {
-			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
+			UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 			return NULL;
 		}
 	}

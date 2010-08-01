@@ -36,7 +36,7 @@ void CIN_InitCinematic (cinematic_t *cin)
 }
 
 /**
- * @sa MN_Draw
+ * @sa UI_Draw
  * @note Coordinates should be relative to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are normalized inside this function
  */

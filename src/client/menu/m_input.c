@@ -43,9 +43,9 @@ static uiNode_t* focusNode;
 
 /**
  * @brief save the current hovered node (first node under the mouse)
- * @sa MN_GetHoveredNode
- * @sa MN_MouseMove
- * @sa MN_CheckMouseMove
+ * @sa UI_GetHoveredNode
+ * @sa UI_MouseMove
+ * @sa UI_CheckMouseMove
  */
 static uiNode_t* hoveredNode;
 
@@ -61,9 +61,9 @@ static int oldMousePosX, oldMousePosY;
 
 /**
  * @brief save the captured node
- * @sa MN_SetMouseCapture
- * @sa MN_GetMouseCapture
- * @sa MN_MouseRelease
+ * @sa UI_SetMouseCapture
+ * @sa UI_GetMouseCapture
+ * @sa UI_MouseRelease
  * @todo think about replacing it by a boolean. When capturedNode != NULL => hoveredNode == capturedNode
  * it create unneed case
  */
@@ -73,22 +73,22 @@ static uiNode_t* capturedNode;
  * @brief Execute the current focused action node
  * @note Action nodes are nodes with click defined
  * @sa Key_Event
- * @sa MN_FocusNextActionNode
+ * @sa UI_FocusNextActionNode
  */
-static qboolean MN_FocusExecuteActionNode (void)
+static qboolean UI_FocusExecuteActionNode (void)
 {
 #if 0	/**< @todo need a cleanup */
 	if (mouseSpace != MS_MENU)
 		return qfalse;
 
-	if (MN_GetMouseCapture())
+	if (UI_GetMouseCapture())
 		return qfalse;
 
 	if (focusNode) {
 		if (focusNode->onClick) {
-			MN_ExecuteEventActions(focusNode, focusNode->onClick);
+			UI_ExecuteEventActions(focusNode, focusNode->onClick);
 		}
-		MN_ExecuteEventActions(focusNode, focusNode->onMouseLeave);
+		UI_ExecuteEventActions(focusNode, focusNode->onMouseLeave);
 		focusNode = NULL;
 		return qtrue;
 	}
@@ -98,15 +98,15 @@ static qboolean MN_FocusExecuteActionNode (void)
 
 #if 0	/**< @todo need a cleanup */
 /**
- * @sa MN_FocusExecuteActionNode
+ * @sa UI_FocusExecuteActionNode
  * @note node must not be in menu
  */
-static uiNode_t *MN_GetNextActionNode (uiNode_t* node)
+static uiNode_t *UI_GetNextActionNode (uiNode_t* node)
 {
 	if (node)
 		node = node->next;
 	while (node) {
-		if (MN_CheckVisibility(node) && !node->invis
+		if (UI_CheckVisibility(node) && !node->invis
 		 && ((node->onClick && node->onMouseEnter) || node->onMouseEnter))
 			return node;
 		node = node->next;
@@ -119,9 +119,9 @@ static uiNode_t *MN_GetNextActionNode (uiNode_t* node)
  * @brief Set the focus to the next action node
  * @note Action nodes are nodes with click defined
  * @sa Key_Event
- * @sa MN_FocusExecuteActionNode
+ * @sa UI_FocusExecuteActionNode
  */
-static qboolean MN_FocusNextActionNode (void)
+static qboolean UI_FocusNextActionNode (void)
 {
 #if 0	/**< @todo need a cleanup */
 	uiNode_t* menu;
@@ -130,29 +130,29 @@ static qboolean MN_FocusNextActionNode (void)
 	if (mouseSpace != MS_MENU)
 		return qfalse;
 
-	if (MN_GetMouseCapture())
+	if (UI_GetMouseCapture())
 		return qfalse;
 
 	if (i >= mn.menuStackPos)
-		i = MN_GetLastFullScreenWindow();
+		i = UI_GetLastFullScreenWindow();
 
 	assert(i >= 0);
 
 	if (focusNode) {
-		uiNode_t *node = MN_GetNextActionNode(focusNode);
+		uiNode_t *node = UI_GetNextActionNode(focusNode);
 		if (node)
-			return MN_FocusSetNode(node);
+			return UI_FocusSetNode(node);
 	}
 
 	while (i < mn.menuStackPos) {
 		menu = mn.menuStack[i++];
-		if (MN_FocusSetNode(MN_GetNextActionNode(menu->firstChild)))
+		if (UI_FocusSetNode(UI_GetNextActionNode(menu->firstChild)))
 			return qtrue;
 	}
-	i = MN_GetLastFullScreenWindow();
+	i = UI_GetLastFullScreenWindow();
 
 	/* no node to focus */
-	MN_RemoveFocus();
+	UI_RemoveFocus();
 #endif
 	return qfalse;
 }
@@ -160,7 +160,7 @@ static qboolean MN_FocusNextActionNode (void)
 /**
  * @brief request the focus for a node
  */
-void MN_RequestFocus (uiNode_t* node)
+void UI_RequestFocus (uiNode_t* node)
 {
 	uiNode_t* tmp;
 	assert(node);
@@ -186,22 +186,22 @@ void MN_RequestFocus (uiNode_t* node)
 /**
  * @brief check if a node got the focus
  */
-qboolean MN_HasFocus (const uiNode_t* node)
+qboolean UI_HasFocus (const uiNode_t* node)
 {
 	return node == focusNode;
 }
 
 /**
- * @sa MN_FocusExecuteActionNode
- * @sa MN_FocusNextActionNode
+ * @sa UI_FocusExecuteActionNode
+ * @sa UI_FocusNextActionNode
  * @sa IN_Frame
  * @sa Key_Event
  */
-void MN_RemoveFocus (void)
+void UI_RemoveFocus (void)
 {
 	uiNode_t* tmp;
 
-	if (MN_GetMouseCapture())
+	if (UI_GetMouseCapture())
 		return;
 
 	if (!focusNode)
@@ -217,11 +217,11 @@ void MN_RemoveFocus (void)
 	}
 }
 
-static uiKeyBinding_t* MN_AllocStaticKeyBinding (void)
+static uiKeyBinding_t* UI_AllocStaticKeyBinding (void)
 {
 	uiKeyBinding_t* result;
 	if (mn.numKeyBindings >= MAX_MENUKEYBINDING)
-		Com_Error(ERR_FATAL, "MN_AllocStaticKeyBinding: MAX_MENUKEYBINDING hit");
+		Com_Error(ERR_FATAL, "UI_AllocStaticKeyBinding: MAX_MENUKEYBINDING hit");
 
 	result = &mn.keyBindings[mn.numKeyBindings];
 	mn.numKeyBindings++;
@@ -230,12 +230,12 @@ static uiKeyBinding_t* MN_AllocStaticKeyBinding (void)
 	return result;
 }
 
-int MN_GetKeyBindingCount (void)
+int UI_GetKeyBindingCount (void)
 {
 	return mn.numKeyBindings;
 }
 
-uiKeyBinding_t* MN_GetKeyBindingByIndex (int index)
+uiKeyBinding_t* UI_GetKeyBindingByIndex (int index)
 {
 	return &mn.keyBindings[index];
 }
@@ -243,42 +243,42 @@ uiKeyBinding_t* MN_GetKeyBindingByIndex (int index)
 /**
  * @todo check: only one binding per nodes
  * @todo check: key per window must be unique
- * @todo check: key used into MN_KeyPressed can't be used
+ * @todo check: key used into UI_KeyPressed can't be used
  */
-void MN_SetKeyBinding (const char* path, int key)
+void UI_SetKeyBinding (const char* path, int key)
 {
 	uiNode_t *node;
 	uiKeyBinding_t *binding;
 	const value_t *property = NULL;
 
-	MN_ReadNodePath(path, NULL, &node, &property);
+	UI_ReadNodePath(path, NULL, &node, &property);
 	if (node == NULL) {
-		Com_Printf("MN_SetKeyBinding: node \"%s\" not found.\n", path);
+		Com_Printf("UI_SetKeyBinding: node \"%s\" not found.\n", path);
 		return;
 	}
 
 	if (property != NULL && property->type != V_UI_NODEMETHOD)
-		Com_Error(ERR_FATAL, "MN_SetKeyBinding: Only node and method are supported. Property @%s not found in path \"%s\".", property->string, path);
+		Com_Error(ERR_FATAL, "UI_SetKeyBinding: Only node and method are supported. Property @%s not found in path \"%s\".", property->string, path);
 
 	/* init and link the keybinding */
-	binding = MN_AllocStaticKeyBinding();
+	binding = UI_AllocStaticKeyBinding();
 	binding->node = node;
 	binding->property = property;
 	binding->key = key;
 	node->key = binding;
-	MN_WindowNodeRegisterKeyBinding(node->root, binding);
+	UI_WindowNodeRegisterKeyBinding(node->root, binding);
 }
 
 /**
  * @brief Check if a key binding exists for a window and execute it
  */
-static qboolean MN_KeyPressedInWindow (unsigned int key, const uiNode_t *window)
+static qboolean UI_KeyPressedInWindow (unsigned int key, const uiNode_t *window)
 {
 	uiNode_t *node;
 	const uiKeyBinding_t *binding;
 
 	/* search requested key binding */
-	binding = MN_WindowNodeGetKeyBinding(window, key);
+	binding = UI_WindowNodeGetKeyBinding(window, key);
 	if (!binding)
 		return qfalse;
 
@@ -301,7 +301,7 @@ static qboolean MN_KeyPressedInWindow (unsigned int key, const uiNode_t *window)
 		newContext.useCmdParam = qfalse;
 		func(node, &newContext);
 	} else
-		Com_Printf("MN_KeyPressedInWindow: @%s not supported.", binding->property->string);
+		Com_Printf("UI_KeyPressedInWindow: @%s not supported.", binding->property->string);
 
 	return qtrue;
 }
@@ -313,14 +313,14 @@ static qboolean MN_KeyPressedInWindow (unsigned int key, const uiNode_t *window)
  * @return qtrue, if we used the event
  * @todo think about what we should do when the mouse is captured
  */
-qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
+qboolean UI_KeyPressed (unsigned int key, unsigned short unicode)
 {
 	int windowId;
 	int lastWindowId;
 
-	if (MN_DNDIsDragging()) {
+	if (UI_DNDIsDragging()) {
 		if (key == K_ESCAPE)
-			MN_DNDAbort();
+			UI_DNDAbort();
 		return qtrue;
 	}
 
@@ -333,24 +333,24 @@ qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 	/* else use common behaviour */
 	switch (key) {
 	case K_TAB:
-		if (MN_FocusNextActionNode())
+		if (UI_FocusNextActionNode())
 			return qtrue;
 		break;
 	case K_ENTER:
 	case K_KP_ENTER:
-		if (MN_FocusExecuteActionNode())
+		if (UI_FocusExecuteActionNode())
 			return qtrue;
 		break;
 	case K_ESCAPE:
-		if (MN_GetMouseCapture() != NULL) {
-			MN_MouseRelease();
+		if (UI_GetMouseCapture() != NULL) {
+			UI_MouseRelease();
 			return qtrue;
 		}
-		MN_PopWindowWithEscKey();
+		UI_PopWindowWithEscKey();
 		return qtrue;
 	}
 
-	lastWindowId = MN_GetLastFullScreenWindow();
+	lastWindowId = UI_GetLastFullScreenWindow();
 	if (lastWindowId < 0)
 		return qfalse;
 
@@ -359,9 +359,9 @@ qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 		const uiNode_t *window = mn.windowStack[windowId];
 		if (!window)
 			return qfalse;
-		if (MN_KeyPressedInWindow(key, window))
+		if (UI_KeyPressedInWindow(key, window))
 			return qtrue;
-		if (MN_WindowIsModal(window))
+		if (UI_WindowIsModal(window))
 			break;
 	}
 
@@ -371,19 +371,19 @@ qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 /**
  * @brief Release all captured input (keyboard or mouse)
  */
-void MN_ReleaseInput (void)
+void UI_ReleaseInput (void)
 {
-	MN_RemoveFocus();
-	MN_MouseRelease();
-	if (MN_DNDIsDragging())
-		MN_DNDAbort();
+	UI_RemoveFocus();
+	UI_MouseRelease();
+	if (UI_DNDIsDragging())
+		UI_DNDAbort();
 }
 
 /**
  * @brief Return the captured node
  * @return Return a node, else NULL
  */
-uiNode_t* MN_GetMouseCapture (void)
+uiNode_t* UI_GetMouseCapture (void)
 {
 	return capturedNode;
 }
@@ -391,7 +391,7 @@ uiNode_t* MN_GetMouseCapture (void)
 /**
  * @brief Captured the mouse into a node
  */
-void MN_SetMouseCapture (uiNode_t* node)
+void UI_SetMouseCapture (uiNode_t* node)
 {
 	assert(capturedNode == NULL);
 	assert(node != NULL);
@@ -401,7 +401,7 @@ void MN_SetMouseCapture (uiNode_t* node)
 /**
  * @brief Release the captured node
  */
-void MN_MouseRelease (void)
+void UI_MouseRelease (void)
 {
 	uiNode_t *tmp = capturedNode;
 
@@ -412,14 +412,14 @@ void MN_MouseRelease (void)
 	if (tmp->behaviour->capturedMouseLost)
 		tmp->behaviour->capturedMouseLost(tmp);
 
-	MN_InvalidateMouse();
+	UI_InvalidateMouse();
 }
 
 /**
  * @brief Get the current hovered node
  * @return A node, else NULL if the mouse hover nothing
  */
-uiNode_t *MN_GetHoveredNode (void)
+uiNode_t *UI_GetHoveredNode (void)
 {
 	return hoveredNode;
 }
@@ -427,7 +427,7 @@ uiNode_t *MN_GetHoveredNode (void)
 /**
  * @brief Force to invalidate the mouse position and then to update hover nodes...
  */
-void MN_InvalidateMouse (void)
+void UI_InvalidateMouse (void)
 {
 	oldMousePosX = -1;
 	oldMousePosY = -1;
@@ -436,16 +436,16 @@ void MN_InvalidateMouse (void)
 /**
  * @brief Call mouse move only if the mouse position change
  */
-qboolean MN_CheckMouseMove (void)
+qboolean UI_CheckMouseMove (void)
 {
 	/* is hovered node no more draw */
-	if (hoveredNode && (hoveredNode->invis || !MN_CheckVisibility(hoveredNode)))
-		MN_InvalidateMouse();
+	if (hoveredNode && (hoveredNode->invis || !UI_CheckVisibility(hoveredNode)))
+		UI_InvalidateMouse();
 
 	if (mousePosX != oldMousePosX || mousePosY != oldMousePosY) {
 		oldMousePosX = mousePosX;
 		oldMousePosY = mousePosY;
-		MN_MouseMove(mousePosX, mousePosY);
+		UI_MouseMove(mousePosX, mousePosY);
 		return qtrue;
 	}
 
@@ -455,9 +455,9 @@ qboolean MN_CheckMouseMove (void)
 /**
  * @brief Is called every time the mouse position change
  */
-void MN_MouseMove (int x, int y)
+void UI_MouseMove (int x, int y)
 {
-	if (MN_DNDIsDragging())
+	if (UI_DNDIsDragging())
 		return;
 
 	/* send the captured move mouse event */
@@ -467,7 +467,7 @@ void MN_MouseMove (int x, int y)
 		return;
 	}
 
-	hoveredNode = MN_GetNodeAtPosition(x, y);
+	hoveredNode = UI_GetNodeAtPosition(x, y);
 
 	/* update nodes: send 'in' and 'out' event */
 	if (oldHoveredNode != hoveredNode) {
@@ -490,7 +490,7 @@ void MN_MouseMove (int x, int y)
 		/* send 'leave' event from old node to common node */
 		node = oldHoveredNode;
 		while (node != commonNode) {
-			MN_ExecuteEventActions(node, node->onMouseLeave);
+			UI_ExecuteEventActions(node, node->onMouseLeave);
 			node = node->parent;
 		}
 		if (oldHoveredNode)
@@ -503,11 +503,11 @@ void MN_MouseMove (int x, int y)
 			while (node->parent != commonNode)
 				node = node->parent;
 			commonNode = node;
-			MN_ExecuteEventActions(node, node->onMouseEnter);
+			UI_ExecuteEventActions(node, node->onMouseEnter);
 		}
 		if (hoveredNode) {
 			hoveredNode->state = qtrue;
-			MN_ExecuteEventActions(hoveredNode, hoveredNode->onMouseEnter);
+			UI_ExecuteEventActions(hoveredNode, hoveredNode->onMouseEnter);
 		}
 	}
 	oldHoveredNode = hoveredNode;
@@ -518,19 +518,19 @@ void MN_MouseMove (int x, int y)
 	}
 }
 
-#define MN_IsMouseInvalidate (oldMousePosX == -1)
+#define UI_IsMouseInvalidate (oldMousePosX == -1)
 
 /**
  * @brief Is called every time one clicks on a menu/screen. Then checks if anything needs to be executed in the area of the click
  * (e.g. button-commands, inventory-handling, geoscape-stuff, etc...)
- * @sa MN_ExecuteEventActions
- * @sa MN_RightClick
+ * @sa UI_ExecuteEventActions
+ * @sa UI_RightClick
  * @sa Key_Message
  */
-static void MN_LeftClick (int x, int y)
+static void UI_LeftClick (int x, int y)
 {
 	qboolean disabled;
-	if (MN_IsMouseInvalidate)
+	if (UI_IsMouseInvalidate)
 		return;
 
 	/* send it to the captured mouse node */
@@ -545,8 +545,8 @@ static void MN_LeftClick (int x, int y)
 	/** @todo at least should be moved on the mouse down event (when the focus should change) */
 	if (!hoveredNode && mn.windowStackPos != 0) {
 		uiNode_t *menu = mn.windowStack[mn.windowStackPos - 1];
-		if (MN_WindowIsDropDown(menu)) {
-			MN_PopWindow(qfalse);
+		if (UI_WindowIsDropDown(menu)) {
+			UI_PopWindow(qfalse);
 		}
 	}
 
@@ -555,22 +555,22 @@ static void MN_LeftClick (int x, int y)
 		if (hoveredNode->behaviour->leftClick) {
 			hoveredNode->behaviour->leftClick(hoveredNode, x, y);
 		} else {
-			MN_ExecuteEventActions(hoveredNode, hoveredNode->onClick);
+			UI_ExecuteEventActions(hoveredNode, hoveredNode->onClick);
 		}
 	}
 }
 
 /**
  * @sa MAP_ResetAction
- * @sa MN_ExecuteEventActions
- * @sa MN_LeftClick
- * @sa MN_MiddleClick
- * @sa MN_MouseWheel
+ * @sa UI_ExecuteEventActions
+ * @sa UI_LeftClick
+ * @sa UI_MiddleClick
+ * @sa UI_MouseWheel
  */
-static void MN_RightClick (int x, int y)
+static void UI_RightClick (int x, int y)
 {
 	qboolean disabled;
-	if (MN_IsMouseInvalidate)
+	if (UI_IsMouseInvalidate)
 		return;
 
 	/* send it to the captured mouse node */
@@ -585,20 +585,20 @@ static void MN_RightClick (int x, int y)
 		if (hoveredNode->behaviour->rightClick) {
 			hoveredNode->behaviour->rightClick(hoveredNode, x, y);
 		} else {
-			MN_ExecuteEventActions(hoveredNode, hoveredNode->onRightClick);
+			UI_ExecuteEventActions(hoveredNode, hoveredNode->onRightClick);
 		}
 	}
 }
 
 /**
- * @sa MN_LeftClick
- * @sa MN_RightClick
- * @sa MN_MouseWheel
+ * @sa UI_LeftClick
+ * @sa UI_RightClick
+ * @sa UI_MouseWheel
  */
-static void MN_MiddleClick (int x, int y)
+static void UI_MiddleClick (int x, int y)
 {
 	qboolean disabled;
-	if (MN_IsMouseInvalidate)
+	if (UI_IsMouseInvalidate)
 		return;
 
 	/* send it to the captured mouse node */
@@ -613,7 +613,7 @@ static void MN_MiddleClick (int x, int y)
 		if (hoveredNode->behaviour->middleClick) {
 			hoveredNode->behaviour->middleClick(hoveredNode, x, y);
 		} else {
-			MN_ExecuteEventActions(hoveredNode, hoveredNode->onMiddleClick);
+			UI_ExecuteEventActions(hoveredNode, hoveredNode->onMiddleClick);
 		}
 		return;
 	}
@@ -622,13 +622,13 @@ static void MN_MiddleClick (int x, int y)
 /**
  * @brief Called when we are in menu mode and scroll via mousewheel
  * @note The geoscape zooming code is here, too (also in @see CL_ParseInput)
- * @sa MN_LeftClick
- * @sa MN_RightClick
- * @sa MN_MiddleClick
+ * @sa UI_LeftClick
+ * @sa UI_RightClick
+ * @sa UI_MiddleClick
  * @sa CL_ZoomInQuant
  * @sa CL_ZoomOutQuant
  */
-void MN_MouseWheel (qboolean down, int x, int y)
+void UI_MouseWheel (qboolean down, int x, int y)
 {
 	/* send it to the captured mouse node */
 	if (capturedNode) {
@@ -642,24 +642,24 @@ void MN_MouseWheel (qboolean down, int x, int y)
 			hoveredNode->behaviour->mouseWheel(hoveredNode, down, x, y);
 		} else {
 			if (hoveredNode->onWheelUp && !down)
-				MN_ExecuteEventActions(hoveredNode, hoveredNode->onWheelUp);
+				UI_ExecuteEventActions(hoveredNode, hoveredNode->onWheelUp);
 			if (hoveredNode->onWheelDown && down)
-				MN_ExecuteEventActions(hoveredNode, hoveredNode->onWheelDown);
+				UI_ExecuteEventActions(hoveredNode, hoveredNode->onWheelDown);
 			else
-				MN_ExecuteEventActions(hoveredNode, hoveredNode->onWheel);
+				UI_ExecuteEventActions(hoveredNode, hoveredNode->onWheel);
 		}
 	}
 }
 
 /**
  * @brief Called when we are in menu mode and down a mouse button
- * @sa MN_LeftClick
- * @sa MN_RightClick
- * @sa MN_MiddleClick
+ * @sa UI_LeftClick
+ * @sa UI_RightClick
+ * @sa UI_MiddleClick
  * @sa CL_ZoomInQuant
  * @sa CL_ZoomOutQuant
  */
-void MN_MouseDown (int x, int y, int button)
+void UI_MouseDown (int x, int y, int button)
 {
 	uiNode_t *node;
 
@@ -667,7 +667,7 @@ void MN_MouseDown (int x, int y, int button)
 	node = capturedNode ? capturedNode : hoveredNode;
 
 	if (node != NULL) {
-		MN_MoveWindowOnTop(node->root);
+		UI_MoveWindowOnTop(node->root);
 		if (node->behaviour->mouseDown)
 			node->behaviour->mouseDown(node, x, y, button);
 	}
@@ -676,27 +676,27 @@ void MN_MouseDown (int x, int y, int button)
 	/** @todo should be send this event when the mouse up (after a down on the same node) */
 	switch (button) {
 	case K_MOUSE1:
-		MN_LeftClick(x, y);
+		UI_LeftClick(x, y);
 		break;
 	case K_MOUSE2:
-		MN_RightClick(x, y);
+		UI_RightClick(x, y);
 		break;
 	case K_MOUSE3:
-		MN_MiddleClick(x, y);
+		UI_MiddleClick(x, y);
 		break;
 	}
-	MN_PlaySound("click1");
+	UI_PlaySound("click1");
 }
 
 /**
  * @brief Called when we are in menu mode and up a mouse button
- * @sa MN_LeftClick
- * @sa MN_RightClick
- * @sa MN_MiddleClick
+ * @sa UI_LeftClick
+ * @sa UI_RightClick
+ * @sa UI_MiddleClick
  * @sa CL_ZoomInQuant
  * @sa CL_ZoomOutQuant
  */
-void MN_MouseUp (int x, int y, int button)
+void UI_MouseUp (int x, int y, int button)
 {
 	uiNode_t *node;
 

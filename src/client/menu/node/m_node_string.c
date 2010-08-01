@@ -47,20 +47,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #define EXTRADATA_TYPE stringExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void MN_StringNodeDraw (uiNode_t *node)
+static void UI_StringNodeDraw (uiNode_t *node)
 {
 	vec2_t nodepos;
-	const char *font = MN_GetFontFromNode(node);
-	const char* ref = MN_GetReferenceString(node, node->text);
+	const char *font = UI_GetFontFromNode(node);
+	const char* ref = UI_GetReferenceString(node, node->text);
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	vec_t *color;
 
 	if (!ref)
 		return;
-	MN_GetNodeAbsPos(node, nodepos);
+	UI_GetNodeAbsPos(node, nodepos);
 
 	if (node->disabled)
 		color = disabledColor;
@@ -69,9 +69,9 @@ static void MN_StringNodeDraw (uiNode_t *node)
 
 	R_Color(color);
 	if (node->size[0] == 0)
-		MN_DrawString(font, node->textalign, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, 0, ref, 0, 0, NULL, qfalse, 0);
+		UI_DrawString(font, node->textalign, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, 0, ref, 0, 0, NULL, qfalse, 0);
 	else
-		MN_DrawStringInBox(font, node->textalign, nodepos[0] + node->padding, nodepos[1] + node->padding, node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding, ref, EXTRADATA(node).longlines);
+		UI_DrawStringInBox(font, node->textalign, nodepos[0] + node->padding, nodepos[1] + node->padding, node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding, ref, EXTRADATA(node).longlines);
 	R_Color(NULL);
 }
 
@@ -81,13 +81,13 @@ static void MN_StringNodeDraw (uiNode_t *node)
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void MN_StringNodeDrawTooltip (uiNode_t *node, int x, int y)
+static void UI_StringNodeDrawTooltip (uiNode_t *node, int x, int y)
 {
 	if (node->tooltip) {
-		MN_Tooltip(node, x, y);
+		UI_Tooltip(node, x, y);
 	} else {
-		const char *font = MN_GetFontFromNode(node);
-		const char* text = MN_GetReferenceString(node, node->text);
+		const char *font = UI_GetFontFromNode(node);
+		const char* text = UI_GetReferenceString(node, node->text);
 		qboolean isTruncated;
 		if (!text)
 			return;
@@ -98,12 +98,12 @@ static void MN_StringNodeDrawTooltip (uiNode_t *node, int x, int y)
 			static char tooltiptext[MAX_VAR * 4];
 			tooltiptext[0] = '\0';
 			Q_strcat(tooltiptext, text, sizeof(tooltiptext));
-			MN_DrawTooltip(tooltiptext, x, y, tooltipWidth, 0);
+			UI_DrawTooltip(tooltiptext, x, y, tooltipWidth, 0);
 		}
 	}
 }
 
-static void MN_StringNodeLoading (uiNode_t *node)
+static void UI_StringNodeLoading (uiNode_t *node)
 {
 	node->padding = 3;
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
@@ -114,17 +114,17 @@ static const value_t properties[] = {
 	/* What to do with text lines longer than node width. Default is to wordwrap them to make multiple lines.
 	 * It can be LONGLINES_WRAP, LONGLINES_CHOP, LONGLINES_PRETTYCHOP
 	 */
-	{"longlines", V_INT, MN_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, longlines), MEMBER_SIZEOF(EXTRADATA_TYPE, longlines)},
+	{"longlines", V_INT, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, longlines), MEMBER_SIZEOF(EXTRADATA_TYPE, longlines)},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterStringNode (uiBehaviour_t *behaviour)
+void UI_RegisterStringNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
 	behaviour->properties = properties;
-	behaviour->draw = MN_StringNodeDraw;
-	behaviour->drawTooltip = MN_StringNodeDrawTooltip;
-	behaviour->loading = MN_StringNodeLoading;
+	behaviour->draw = UI_StringNodeDraw;
+	behaviour->drawTooltip = UI_StringNodeDrawTooltip;
+	behaviour->loading = UI_StringNodeLoading;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

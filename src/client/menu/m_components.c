@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @return The component found, else NULL
  * @note Use dichotomic search
  */
-uiNode_t *MN_GetComponent (const char *name)
+uiNode_t *UI_GetComponent (const char *name)
 {
 	unsigned char min = 0;
 	unsigned char max = mn.numComponents;
@@ -58,13 +58,13 @@ uiNode_t *MN_GetComponent (const char *name)
  * @brief Add a new component to the list of all components
  * @note Sort components by alphabet
  */
-void MN_InsertComponent(uiNode_t* component)
+void UI_InsertComponent(uiNode_t* component)
 {
 	int pos = 0;
 	int i;
 
 	if (mn.numComponents >= MAX_COMPONENTS)
-		Com_Error(ERR_FATAL, "MN_InsertComponent: hit MAX_COMPONENTS");
+		Com_Error(ERR_FATAL, "UI_InsertComponent: hit MAX_COMPONENTS");
 
 	/* search the insertion position */
 	for (pos = 0; pos < mn.numComponents; pos++) {

@@ -38,7 +38,7 @@ static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
 /**
  * @brief Generic tooltip function
  */
-int MN_DrawTooltip (const char *string, int x, int y, int maxWidth, int maxHeight)
+int UI_DrawTooltip (const char *string, int x, int y, int maxWidth, int maxHeight)
 {
 	const char *font = "f_small";
 	int height = 0, width = 0;
@@ -60,9 +60,9 @@ int MN_DrawTooltip (const char *string, int x, int y, int maxWidth, int maxHeigh
 	if (y + height + 3 > VID_NORM_HEIGHT)
 		y -= height + 10;
 
-	MN_DrawFill(x - 1, y - 1, width + 4, height + 4, tooltipBG);
+	UI_DrawFill(x - 1, y - 1, width + 4, height + 4, tooltipBG);
 	R_Color(tooltipColor);
-	MN_DrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, string, 0, 0, NULL, qfalse, LONGLINES_WRAP);
+	UI_DrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, string, 0, 0, NULL, qfalse, LONGLINES_WRAP);
 	R_Color(NULL);
 
 	return width;
@@ -71,7 +71,7 @@ int MN_DrawTooltip (const char *string, int x, int y, int maxWidth, int maxHeigh
 /**
  * @brief Wrapper for menu tooltips
  */
-void MN_Tooltip (uiNode_t *node, int x, int y)
+void UI_Tooltip (uiNode_t *node, int x, int y)
 {
 	const char *string;
 	const char *key = NULL;
@@ -82,7 +82,7 @@ void MN_Tooltip (uiNode_t *node, int x, int y)
 	if (node->key)
 		key = Key_KeynumToString(node->key->key);
 	if (node->tooltip)
-		tooltip = MN_GetReferenceString(node, node->tooltip);
+		tooltip = UI_GetReferenceString(node, node->tooltip);
 
 	/* normalize */
 	if (tooltip && tooltip[0] == '\0')
@@ -103,5 +103,5 @@ void MN_Tooltip (uiNode_t *node, int x, int y)
 		return;
 	}
 
-	MN_DrawTooltip(string, x, y, maxWidth, 0);
+	UI_DrawTooltip(string, x, y, maxWidth, 0);
 }

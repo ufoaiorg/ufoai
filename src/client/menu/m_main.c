@@ -45,25 +45,25 @@ static cvar_t *mn_debug;
 #endif
 
 /**
- * @sa MN_DisplayNotice
+ * @sa UI_DisplayNotice
  * @todo move it into a better file
  */
-static void MN_CheckCvar (const cvar_t *cvar)
+static void UI_CheckCvar (const cvar_t *cvar)
 {
 	if (cvar->modified) {
 		if (cvar->flags & CVAR_R_CONTEXT) {
-			MN_DisplayNotice(_("This change requires a restart"), 2000, NULL);
+			UI_DisplayNotice(_("This change requires a restart"), 2000, NULL);
 		} else if (cvar->flags & CVAR_R_IMAGES) {
-			MN_DisplayNotice(_("This change might require a restart"), 2000, NULL);
+			UI_DisplayNotice(_("This change might require a restart"), 2000, NULL);
 		}
 	}
 }
 
 /**
- * @sa MN_DisplayNotice
+ * @sa UI_DisplayNotice
  * @todo move it into a better file
  */
-int MN_DebugMode (void)
+int UI_DebugMode (void)
 {
 #ifdef DEBUG
 	return mn_debug->integer;
@@ -78,7 +78,7 @@ int MN_DebugMode (void)
  * @param[in] value Float value to set
  * @todo move it into a better file
  */
-void MN_SetCvar (const char *name, const char *str, float value)
+void UI_SetCvar (const char *name, const char *str, float value)
 {
 	const cvar_t *cvar;
 	cvar = Cvar_FindVar(name);
@@ -90,15 +90,15 @@ void MN_SetCvar (const char *name, const char *str, float value)
 		Cvar_Set(cvar->name, str);
 	else
 		Cvar_SetValue(cvar->name, value);
-	MN_CheckCvar(cvar);
+	UI_CheckCvar(cvar);
 }
 
 /**
  * @brief Adds a given value to the numeric representation of a cvar. Also
  * performs min and max check for that value.
- * @sa MN_ModifyWrap_f
+ * @sa UI_ModifyWrap_f
  */
-static void MN_Modify_f (void)
+static void UI_Modify_f (void)
 {
 	float value;
 
@@ -120,9 +120,9 @@ static void MN_Modify_f (void)
  * performs min and max check for that value. If there would be an overflow
  * we use the min value - and if there would be an underrun, we use the max
  * value.
- * @sa MN_Modify_f
+ * @sa UI_Modify_f
  */
-static void MN_ModifyWrap_f (void)
+static void UI_ModifyWrap_f (void)
 {
 	float value;
 
@@ -145,7 +145,7 @@ static void MN_ModifyWrap_f (void)
  * @brief Shows the corresponding strings in menu
  * Example: Optionsmenu - fullscreen: yes
  */
-static void MN_Translate_f (void)
+static void UI_Translate_f (void)
 {
 	qboolean next;
 	const char *current, *list;
@@ -197,7 +197,7 @@ static void MN_Translate_f (void)
  * @brief display info about menu memory
  * @todo it can be nice to have number of nodes per behaviours
  */
-static void MN_Memory_f (void)
+static void UI_Memory_f (void)
 {
 	int i;
 	const size_t nodeSize = sizeof(uiNode_t);
@@ -214,14 +214,14 @@ static void MN_Memory_f (void)
 	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(uiAction_t));
 	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(menuModel_t));
 	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B x%d\n", sizeof(uiNode_t), mn.numNodes);
-	for (i = 0; i < MN_GetNodeBehaviourCount(); i++) {
-		uiBehaviour_t *b = MN_GetNodeBehaviourByIndex(i);
+	for (i = 0; i < UI_GetNodeBehaviourCount(); i++) {
+		uiBehaviour_t *b = UI_GetNodeBehaviourByIndex(i);
 		Com_Printf("\t -Behaviour %20s structure size: "UFO_SIZE_T" (+"UFO_SIZE_T" B) x%4u\n", b->name, sizeof(uiNode_t) + b->extraDataSize, b->extraDataSize, b->count);
 	}
 
 	size = 0;
-	for (i = 0; i < MN_GetNodeBehaviourCount(); i++) {
-		uiBehaviour_t *b = MN_GetNodeBehaviourByIndex(i);
+	for (i = 0; i < UI_GetNodeBehaviourCount(); i++) {
+		uiBehaviour_t *b = UI_GetNodeBehaviourByIndex(i);
 		size += nodeSize * b->count + b->extraDataSize * b->count;
 	}
 	Com_Printf("Global memory:\n");
@@ -242,7 +242,7 @@ static void MN_Memory_f (void)
  * this frame.
  * @param[in] fmt Construct string it will execute (command and param)
  */
-void MN_ExecuteConfunc (const char *fmt, ...)
+void UI_ExecuteConfunc (const char *fmt, ...)
 {
 	va_list ap;
 	char confunc[MAX_CONFUNC_SIZE];
@@ -256,21 +256,21 @@ void MN_ExecuteConfunc (const char *fmt, ...)
 /**
  * Reinit input and font
  */
-void MN_Reinit (void)
+void UI_Reinit (void)
 {
-	MN_InitFonts();
-	MN_ReleaseInput();
-	MN_InvalidateMouse();
+	UI_InitFonts();
+	UI_ReleaseInput();
+	UI_InvalidateMouse();
 }
 
 /**
  * @brief Reset and free the menu data hunk
  * @note Even called in case of an error when CL_Shutdown was called - maybe even
- * before CL_InitLocal (and thus MN_Init) was called
+ * before CL_InitLocal (and thus UI_Init) was called
  * @sa CL_Shutdown
- * @sa MN_Init
+ * @sa UI_Init
  */
-void MN_Shutdown (void)
+void UI_Shutdown (void)
 {
 	int i;
 	const uiBehaviour_t *confunc;
@@ -279,7 +279,7 @@ void MN_Shutdown (void)
 	if (mn.adata == NULL)
 		return;
 
-	confunc = MN_GetNodeBehaviour("confunc");
+	confunc = UI_GetNodeBehaviour("confunc");
 
 	/* remove all confunc commands */
 	for (i = 0; i < mn.numWindows; i++) {
@@ -324,7 +324,7 @@ void MN_Shutdown (void)
 
 #define MENU_HUNK_SIZE 2*1024*1024
 
-void MN_Init (void)
+void UI_Init (void)
 {
 #ifdef DEBUG
 	mn_debug = Cvar_Get("debug_menu", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");
@@ -340,11 +340,11 @@ void MN_Init (void)
 	mn_sounds = Cvar_Get("mn_sounds", "1", CVAR_ARCHIVE, "Activates menu sounds");
 
 	/* add menu commands */
-	Cmd_AddCommand("mn_modify", MN_Modify_f, NULL);
-	Cmd_AddCommand("mn_modifywrap", MN_ModifyWrap_f, NULL);
-	Cmd_AddCommand("mn_translate", MN_Translate_f, NULL);
+	Cmd_AddCommand("mn_modify", UI_Modify_f, NULL);
+	Cmd_AddCommand("mn_modifywrap", UI_ModifyWrap_f, NULL);
+	Cmd_AddCommand("mn_translate", UI_Translate_f, NULL);
 #ifdef DEBUG
-	Cmd_AddCommand("debug_mnmemory", MN_Memory_f, "Display info about menu memory allocation");
+	Cmd_AddCommand("debug_mnmemory", UI_Memory_f, "Display info about menu memory allocation");
 #endif
 
 	mn_sysPool = Mem_CreatePool("Client: UI");
@@ -356,9 +356,9 @@ void MN_Init (void)
 	mn.adata = (byte*)Mem_PoolAlloc(mn.adataize, mn_sysPool, 0);
 	mn.curadata = mn.adata;
 
-	MN_InitData();
-	MN_InitNodes();
-	MN_InitWindows();
-	MN_InitDraw();
-	MN_InitActions();
+	UI_InitData();
+	UI_InitNodes();
+	UI_InitWindows();
+	UI_InitDraw();
+	UI_InitActions();
 }

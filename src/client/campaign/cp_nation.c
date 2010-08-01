@@ -544,7 +544,7 @@ static void CP_NationStatsClick_f (void)
 	if (num < 0 || num >= ccs.numNations)
 		return;
 
-	MN_PushWindow("nations", NULL);
+	UI_PushWindow("nations", NULL);
 	Cbuf_AddText(va("nation_select %i;", num));
 }
 
@@ -679,7 +679,7 @@ static void CL_NationStatsUpdate_f (void)
 
 	usedColPtslists = 0;
 
-	colorNode = MN_GetNodeByPath("nations.nation_graph_colors");
+	colorNode = UI_GetNodeByPath("nations.nation_graph_colors");
 	if (colorNode) {
 		dy = (int)(colorNode->size[1] / MAX_NATIONS);
 	}
@@ -693,9 +693,9 @@ static void CL_NationStatsUpdate_f (void)
 		funding = NAT_GetFunding(&(ccs.nations[i]), 0);
 
 		if (selectedNation == i) {
-			MN_ExecuteConfunc("nation_marksel %i", i);
+			UI_ExecuteConfunc("nation_marksel %i", i);
 		} else {
-			MN_ExecuteConfunc("nation_markdesel %i", i);
+			UI_ExecuteConfunc("nation_markdesel %i", i);
 		}
 		Cvar_Set(va("mn_nat_name%i",i), _(ccs.nations[i].name));
 		Cvar_Set(va("mn_nat_fund%i",i), va("%i", funding));
@@ -719,17 +719,17 @@ static void CL_NationStatsUpdate_f (void)
 		}
 	}
 
-	MN_RegisterLineStrip(LINESTRIP_COLOR, &colorLineStrip[0]);
+	UI_RegisterLineStrip(LINESTRIP_COLOR, &colorLineStrip[0]);
 
 	/* Hide unused nation-entries. */
 	for (i = ccs.numNations; i < MAX_NATIONS; i++) {
-		MN_ExecuteConfunc("nation_hide %i", i);
+		UI_ExecuteConfunc("nation_hide %i", i);
 	}
 
 	/** @todo Display summary of nation info */
 
 	/* Display graph of nations-values so far. */
-	graphNode = MN_GetNodeByPath("nations.nation_graph_funding");
+	graphNode = UI_GetNodeByPath("nations.nation_graph_funding");
 	if (graphNode) {
 		usedFundPtslist = 0;
 
@@ -748,7 +748,7 @@ static void CL_NationStatsUpdate_f (void)
 			}
 		}
 
-		MN_RegisterLineStrip(LINESTRIP_FUNDING, &fundingLineStrip[0]);
+		UI_RegisterLineStrip(LINESTRIP_FUNDING, &fundingLineStrip[0]);
 	}
 }
 

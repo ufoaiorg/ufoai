@@ -78,7 +78,7 @@ static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFon
 			string++;
 		}
 	} else
-		MN_DrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, viddef.virtualWidth, viddef.virtualHeight, 12, string, 0, 0, NULL, qfalse, 0);
+		UI_DrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, viddef.virtualWidth, viddef.virtualHeight, 12, string, 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -112,7 +112,7 @@ void SCR_DrawPrecacheScreen (qboolean string)
 		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, image);
 	if (string) {
 		/* Not used with gettext because it would make removing it too easy. */
-		MN_DrawString("f_menubig", ALIGN_UC,
+		UI_DrawString("f_menubig", ALIGN_UC,
 			(int)(viddef.virtualWidth / 2), 30,
 			0, 1, viddef.virtualWidth, viddef.virtualHeight, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse, 0);
 	}
@@ -162,7 +162,7 @@ static const image_t* SCR_SetLoadingBackground (const char *mapString)
 static void SCR_DrawDownloading (void)
 {
 	const char *dlmsg = va(_("Downloading [%s]"), cls.downloadName);
-	MN_DrawString("f_menubig", ALIGN_UC,
+	UI_DrawString("f_menubig", ALIGN_UC,
 		(int)(viddef.virtualWidth / 2),
 		(int)(viddef.virtualHeight / 2 - 60),
 		(int)(viddef.virtualWidth / 2),
@@ -201,7 +201,7 @@ static void SCR_DrawLoading (void)
 
 	if (cl.configstrings[CS_TILES][0]) {
 		mapmsg = va(_("Loading Map [%s]"), _(cl.configstrings[CS_MAPTITLE]));
-		MN_DrawString("f_menubig", ALIGN_UC,
+		UI_DrawString("f_menubig", ALIGN_UC,
 			(int)(viddef.virtualWidth / 2),
 			(int)(viddef.virtualHeight / 2 - 60),
 			(int)(viddef.virtualWidth / 2),
@@ -209,7 +209,7 @@ static void SCR_DrawLoading (void)
 			viddef.virtualWidth, viddef.virtualHeight, 50, mapmsg, 1, 0, NULL, qfalse, 0);
 	}
 
-	MN_DrawString("f_menu", ALIGN_UC,
+	UI_DrawString("f_menu", ALIGN_UC,
 		(int)(viddef.virtualWidth / 2),
 		(int)(viddef.virtualHeight / 2),
 		(int)(viddef.virtualWidth / 2),
@@ -261,7 +261,7 @@ static void SCR_DrawCursor (void)
 	if (!cursorImage[0])
 		return;
 
-	if (!MN_DNDIsDragging()) {
+	if (!UI_DNDIsDragging()) {
 		const char *pic;
 		image_t *image;
 
@@ -278,7 +278,7 @@ static void SCR_DrawCursor (void)
 			HUD_UpdateCursor();
 		}
 	} else {
-		MN_DrawCursor();
+		UI_DrawCursor();
 	}
 }
 
@@ -403,7 +403,7 @@ static void SCR_TimeRefresh_f (void)
 
 /**
  * @brief This is called every frame, and can also be called explicitly to flush text to the screen
- * @sa MN_Draw
+ * @sa UI_Draw
  * @sa CL_ViewRender
  * @sa SCR_DrawConsole
  * @sa SCR_DrawCursor
@@ -432,11 +432,11 @@ void SCR_UpdateScreen (void)
 	if (screenDrawLoading)
 		SCR_DrawLoading();
 	else {
-		MN_GetActiveRenderRect(&viddef.x, &viddef.y, &viddef.viewWidth, &viddef.viewHeight);
+		UI_GetActiveRenderRect(&viddef.x, &viddef.y, &viddef.viewWidth, &viddef.viewHeight);
 		/* draw scene */
 		CL_ViewRender();
 		/* draw the menus on top of the render view (for hud and so on) */
-		MN_Draw();
+		UI_Draw();
 
 		SCR_DrawConsole();
 

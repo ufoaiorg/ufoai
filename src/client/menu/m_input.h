@@ -36,31 +36,31 @@ typedef struct uiKeyBinding_s {
 	struct uiKeyBinding_s *next;	/* next binding from the window list */
 } uiKeyBinding_t;
 
-void MN_SetKeyBinding(const char* path, int key);
+void UI_SetKeyBinding(const char* path, int key);
 
 /* mouse input */
-void MN_MouseWheel(qboolean down, int x, int y);
-void MN_MouseMove(int x, int y);
-void MN_MouseDown(int x, int y, int button);
-void MN_MouseUp(int x, int y, int button);
-void MN_InvalidateMouse(void);
-qboolean MN_CheckMouseMove(void);
-struct uiNode_s *MN_GetHoveredNode(void);
+void UI_MouseWheel(qboolean down, int x, int y);
+void UI_MouseMove(int x, int y);
+void UI_MouseDown(int x, int y, int button);
+void UI_MouseUp(int x, int y, int button);
+void UI_InvalidateMouse(void);
+qboolean UI_CheckMouseMove(void);
+struct uiNode_s *UI_GetHoveredNode(void);
 
 /* focus */
-void MN_RequestFocus(struct uiNode_s* node);
-qboolean MN_HasFocus(const struct uiNode_s* node);
-void MN_RemoveFocus(void);
-qboolean MN_KeyPressed(unsigned int key, unsigned short unicode);
-int MN_GetKeyBindingCount(void);
-uiKeyBinding_t* MN_GetKeyBindingByIndex(int index);
+void UI_RequestFocus(struct uiNode_s* node);
+qboolean UI_HasFocus(const struct uiNode_s* node);
+void UI_RemoveFocus(void);
+qboolean UI_KeyPressed(unsigned int key, unsigned short unicode);
+int UI_GetKeyBindingCount(void);
+uiKeyBinding_t* UI_GetKeyBindingByIndex(int index);
 
 /* mouse capture */
-struct uiNode_s* MN_GetMouseCapture(void);
-void MN_SetMouseCapture(struct uiNode_s* node);
-void MN_MouseRelease(void);
+struct uiNode_s* UI_GetMouseCapture(void);
+void UI_SetMouseCapture(struct uiNode_s* node);
+void UI_MouseRelease(void);
 
 /* all inputs */
-void MN_ReleaseInput(void);
+void UI_ReleaseInput(void);
 
 #endif

@@ -28,18 +28,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #define EXTRADATA_TYPE rowsExtraData_t
-#define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
-#define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
+#define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
+#define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
 /**
  * @brief Handles Button draw
  */
-static void MN_RowsNodeDraw (uiNode_t *node)
+static void UI_RowsNodeDraw (uiNode_t *node)
 {
 	int current = 0;
 	int i = EXTRADATA(node).current;
 	vec2_t pos;
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 
 	while (current < node->size[1]) {
 		const float *color;
@@ -49,13 +49,13 @@ static void MN_RowsNodeDraw (uiNode_t *node)
 			color = node->color;
 		else
 			color = node->selectedColor;
-		MN_DrawFill(pos[0], pos[1] + current, node->size[0], height, color);
+		UI_DrawFill(pos[0], pos[1] + current, node->size[0], height, color);
 		current += height;
 		i++;
 	}
 }
 
-static void MN_RowsNodeLoaded (uiNode_t *node)
+static void UI_RowsNodeLoaded (uiNode_t *node)
 {
 	/* prevent infinite loop into the draw */
 	if (EXTRADATA(node).lineHeight == 0) {
@@ -69,17 +69,17 @@ static const value_t properties[] = {
 	/* Background color for even elements */
 	{"color2", V_COLOR, offsetof(uiNode_t, selectedColor), MEMBER_SIZEOF(uiNode_t, selectedColor)},
 	/* Element height */
-	{"lineheight", V_INT, MN_EXTRADATA_OFFSETOF(rowsExtraData_t, lineHeight), MEMBER_SIZEOF(rowsExtraData_t, lineHeight)},
+	{"lineheight", V_INT, UI_EXTRADATA_OFFSETOF(rowsExtraData_t, lineHeight), MEMBER_SIZEOF(rowsExtraData_t, lineHeight)},
 	/* Element number on the top of the list. It is used to scroll the node content. */
-	{"current", V_INT, MN_EXTRADATA_OFFSETOF(rowsExtraData_t, current), MEMBER_SIZEOF(rowsExtraData_t, current)},
+	{"current", V_INT, UI_EXTRADATA_OFFSETOF(rowsExtraData_t, current), MEMBER_SIZEOF(rowsExtraData_t, current)},
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterRowsNode (uiBehaviour_t *behaviour)
+void UI_RegisterRowsNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "rows";
-	behaviour->draw = MN_RowsNodeDraw;
-	behaviour->loaded = MN_RowsNodeLoaded;
+	behaviour->draw = UI_RowsNodeDraw;
+	behaviour->loaded = UI_RowsNodeLoaded;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

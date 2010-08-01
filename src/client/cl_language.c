@@ -249,13 +249,13 @@ void CL_LanguageInit (void)
 
 		/* Test the locale first, add to list if setting given locale possible. */
 		if (CL_LanguageTest(language->localeID) || !strcmp(language->localeID, "none")) {
-			MN_AddOption(&languageOption, "", language->localeString, language->localeID);
+			UI_AddOption(&languageOption, "", language->localeString, language->localeID);
 		}
 	}
 
 	/* sort the list, and register it to the menu */
-	MN_SortOptions(&languageOption);
-	MN_RegisterOption(OPTION_LANGUAGES, languageOption);
+	UI_SortOptions(&languageOption);
+	UI_RegisterOption(OPTION_LANGUAGES, languageOption);
 
 	/* Set to the locale remembered previously. */
 	CL_LanguageTryToSet(systemLanguage);
@@ -268,7 +268,7 @@ static void CL_NewLanguage (void)
 {
 	R_FontShutdown();
 	R_FontInit();
-	MN_InitFonts();
+	UI_InitFonts();
 	R_FontSetTruncationMarker(_("..."));
 }
 

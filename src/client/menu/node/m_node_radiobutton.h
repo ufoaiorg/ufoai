@@ -33,6 +33,6 @@ typedef struct radioButtonExtraData_s {
 	struct uiIcon_s *icon;	/**< Link to an icon */
 } radioButtonExtraData_t;
 
-void MN_RegisterRadioButtonNode(uiBehaviour_t *behaviour);
+void UI_RegisterRadioButtonNode(uiBehaviour_t *behaviour);
 
 #endif
