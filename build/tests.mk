@@ -10,6 +10,7 @@ TESTS_SRCS = \
 	tests/test_shared.c \
 	tests/test_ui.c \
 	tests/test_campaign.c \
+	tests/test_parser.c \
 	\
 	common/cmd.c \
 	common/http.c \
