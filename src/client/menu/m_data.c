@@ -138,9 +138,9 @@ void UI_RegisterText (int textId, const char *text)
 	if (!text)
 		return;
 
-	mn.sharedData[textId].type = UI_SHARED_TEXT;
-	mn.sharedData[textId].data.text = text;
-	mn.sharedData[textId].versionId++;
+	uiGlobal.sharedData[textId].type = UI_SHARED_TEXT;
+	uiGlobal.sharedData[textId].data.text = text;
+	uiGlobal.sharedData[textId].versionId++;
 }
 
 /**
@@ -150,26 +150,26 @@ void UI_RegisterText (int textId, const char *text)
 void UI_RegisterLinkedListText (int textId, linkedList_t *text)
 {
 	/** Hack to disable release memory, if we only want to update the same list */
-	if (mn.sharedData[textId].type == UI_SHARED_LINKEDLISTTEXT && mn.sharedData[textId].data.linkedListText == text) {
-		mn.sharedData[textId].versionId++;
+	if (uiGlobal.sharedData[textId].type == UI_SHARED_LINKEDLISTTEXT && uiGlobal.sharedData[textId].data.linkedListText == text) {
+		uiGlobal.sharedData[textId].versionId++;
 		return;
 	}
 	UI_ResetData(textId);
-	mn.sharedData[textId].type = UI_SHARED_LINKEDLISTTEXT;
-	mn.sharedData[textId].data.linkedListText = text;
-	mn.sharedData[textId].versionId++;
+	uiGlobal.sharedData[textId].type = UI_SHARED_LINKEDLISTTEXT;
+	uiGlobal.sharedData[textId].data.linkedListText = text;
+	uiGlobal.sharedData[textId].versionId++;
 }
 
 const char *UI_GetText (int textId)
 {
-	if (mn.sharedData[textId].type != UI_SHARED_TEXT)
+	if (uiGlobal.sharedData[textId].type != UI_SHARED_TEXT)
 		return NULL;
-	return mn.sharedData[textId].data.text;
+	return uiGlobal.sharedData[textId].data.text;
 }
 
 int UI_GetDataVersion (int textId)
 {
-	return mn.sharedData[textId].versionId;
+	return uiGlobal.sharedData[textId].versionId;
 }
 
 /**
@@ -240,22 +240,22 @@ void UI_ResetData (int dataId)
 	assert(dataId < MAX_MENUTEXTS);
 	assert(dataId >= 0);
 
-	switch (mn.sharedData[dataId].type) {
+	switch (uiGlobal.sharedData[dataId].type) {
 	case UI_SHARED_LINKEDLISTTEXT:
-		LIST_Delete(&mn.sharedData[dataId].data.linkedListText);
+		LIST_Delete(&uiGlobal.sharedData[dataId].data.linkedListText);
 		break;
 	case UI_SHARED_OPTION:
-		if (_Mem_AllocatedInPool(com_genericPool, mn.sharedData[dataId].data.option)) {
-			UI_DeleteOption(mn.sharedData[dataId].data.option);
+		if (_Mem_AllocatedInPool(com_genericPool, uiGlobal.sharedData[dataId].data.option)) {
+			UI_DeleteOption(uiGlobal.sharedData[dataId].data.option);
 		}
 		break;
 	default:
 		break;
 	}
 
-	mn.sharedData[dataId].type = UI_SHARED_NONE;
-	mn.sharedData[dataId].data.text = NULL;
-	mn.sharedData[dataId].versionId++;
+	uiGlobal.sharedData[dataId].type = UI_SHARED_NONE;
+	uiGlobal.sharedData[dataId].data.text = NULL;
+	uiGlobal.sharedData[dataId].versionId++;
 }
 
 /**
@@ -344,28 +344,28 @@ void UI_UpdateInvisOptions (uiNode_t *option, const linkedList_t *stringList)
 void UI_RegisterOption (int dataId, uiNode_t *option)
 {
 	/** Hack to disable release option memory, if we only want to update the same option */
-	if (mn.sharedData[dataId].type == UI_SHARED_OPTION && mn.sharedData[dataId].data.option == option) {
-		mn.sharedData[dataId].versionId++;
+	if (uiGlobal.sharedData[dataId].type == UI_SHARED_OPTION && uiGlobal.sharedData[dataId].data.option == option) {
+		uiGlobal.sharedData[dataId].versionId++;
 		return;
 	}
 	UI_ResetData(dataId);
-	mn.sharedData[dataId].type = UI_SHARED_OPTION;
-	mn.sharedData[dataId].data.option = option;
-	mn.sharedData[dataId].versionId++;
+	uiGlobal.sharedData[dataId].type = UI_SHARED_OPTION;
+	uiGlobal.sharedData[dataId].data.option = option;
+	uiGlobal.sharedData[dataId].versionId++;
 }
 
 void UI_RegisterLineStrip (int dataId, lineStrip_t *lineStrip)
 {
 	UI_ResetData(dataId);
-	mn.sharedData[dataId].type = UI_SHARED_LINESTRIP;
-	mn.sharedData[dataId].data.lineStrip = lineStrip;
-	mn.sharedData[dataId].versionId++;
+	uiGlobal.sharedData[dataId].type = UI_SHARED_LINESTRIP;
+	uiGlobal.sharedData[dataId].data.lineStrip = lineStrip;
+	uiGlobal.sharedData[dataId].versionId++;
 }
 
 uiNode_t *UI_GetOption (int dataId)
 {
-	if (mn.sharedData[dataId].type == UI_SHARED_OPTION) {
-		return mn.sharedData[dataId].data.option;
+	if (uiGlobal.sharedData[dataId].type == UI_SHARED_OPTION) {
+		return uiGlobal.sharedData[dataId].data.option;
 	}
 	return NULL;
 }
@@ -513,7 +513,7 @@ int UI_FindOptionPosition (uiOptionIterator_t* iterator, const uiNode_t* option)
 }
 
 /**
- * @brief Resets the mn.menuText pointers from a func node
+ * @brief Resets the uiGlobal.menuText pointers from a func node
  * @note You can give this function a parameter to only delete a specific data
  * @sa menutextid_names
  */
@@ -523,7 +523,7 @@ static void UI_ResetData_f (void)
 		const char *menuTextID = Cmd_Argv(1);
 		const int id = UI_GetDataIDByName(menuTextID);
 		if (id < 0)
-			Com_Printf("%s: invalid mn.menuText ID: %s\n", Cmd_Argv(0), menuTextID);
+			Com_Printf("%s: invalid uiGlobal.menuText ID: %s\n", Cmd_Argv(0), menuTextID);
 		else
 			UI_ResetData(id);
 	} else {

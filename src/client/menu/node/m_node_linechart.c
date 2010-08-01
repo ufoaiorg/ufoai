@@ -43,7 +43,7 @@ static void UI_LineChartNodeDraw (uiNode_t *node)
 	if (dataId == 0)
 		return;
 
-	if (mn.sharedData[dataId].type != UI_SHARED_LINESTRIP) {
+	if (uiGlobal.sharedData[dataId].type != UI_SHARED_LINESTRIP) {
 		Com_Printf("UI_LineStripNodeDraw: Node '%s' have use an invalide dataId type. LineStrip expected. dataId invalidated\n", UI_GetPath(node));
 		EXTRADATA(node).dataId = 0;
 		return;
@@ -68,7 +68,7 @@ static void UI_LineChartNodeDraw (uiNode_t *node)
 	}
 
 	/* Draw all linestrips. */
-	lineStrip = mn.sharedData[dataId].data.lineStrip;
+	lineStrip = uiGlobal.sharedData[dataId].data.lineStrip;
 	for (; lineStrip; lineStrip = lineStrip->next) {
 		/* Draw this line if it's valid. */
 		if (lineStrip->pointList && lineStrip->numPoints > 0) {

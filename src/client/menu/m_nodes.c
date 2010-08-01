@@ -329,13 +329,13 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, qbo
 	nodeSize = sizeof(*node) + behaviour->extraDataSize;
 
 	if (!isDynamic) {
-		if (mn.curadata + nodeSize > mn.adata + mn.adataize)
+		if (uiGlobal.curadata + nodeSize > uiGlobal.adata + uiGlobal.adataize)
 			Com_Error(ERR_FATAL, "UI_AllocNodeWithoutNew: No more memory to allocate a new node");
-		node = (uiNode_t*) mn.curadata;
+		node = (uiNode_t*) uiGlobal.curadata;
 		/** @todo fix this hard coded '8' value */
-		mn.curadata = ALIGN_PTR(mn.curadata, 8);
-		mn.curadata += nodeSize;
-		mn.numNodes++;
+		uiGlobal.curadata = ALIGN_PTR(uiGlobal.curadata, 8);
+		uiGlobal.curadata += nodeSize;
+		uiGlobal.numNodes++;
 		memset(node, 0, nodeSize);
 	} else {
 		node = (uiNode_t*)Mem_PoolAlloc(nodeSize, mn_dynPool, 0);
@@ -458,8 +458,8 @@ uiNode_t *UI_GetNodeAtPosition (int x, int y)
 	int pos;
 
 	/* find the first menu under the mouse */
-	for (pos = mn.windowStackPos - 1; pos >= 0; pos--) {
-		uiNode_t *menu = mn.windowStack[pos];
+	for (pos = uiGlobal.windowStackPos - 1; pos >= 0; pos--) {
+		uiNode_t *menu = uiGlobal.windowStack[pos];
 		uiNode_t *find;
 
 		/* update the layout */

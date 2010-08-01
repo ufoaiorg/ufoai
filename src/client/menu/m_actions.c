@@ -644,7 +644,7 @@ qboolean UI_IsInjectedString (const char *string)
 void UI_FreeStringProperty (void* pointer)
 {
 	/* skip const string */
-	if ((uintptr_t)mn.adata <= (uintptr_t)pointer && (uintptr_t)pointer < (uintptr_t)mn.adata + (uintptr_t)mn.adataize)
+	if ((uintptr_t)uiGlobal.adata <= (uintptr_t)pointer && (uintptr_t)pointer < (uintptr_t)uiGlobal.adata + (uintptr_t)uiGlobal.adataize)
 		return;
 
 	/* skip pointer out of mn_dynStringPool */
@@ -673,7 +673,7 @@ uiAction_t* UI_AllocStaticCommandAction (char *command)
  * @param[in] type Only @c EA_CMD is supported
  * @param[in] data The data for this action - in case of @c EA_CMD this is the commandline
  * @note You first have to free existing node actions - only free those that are
- * not static in @c mn.menuActions array
+ * not static in @c uiGlobal.menuActions array
  * @todo we should create a function to free the memory. We can use a tag in the Mem_PoolAlloc
  * calls and use use Mem_FreeTag.
  */

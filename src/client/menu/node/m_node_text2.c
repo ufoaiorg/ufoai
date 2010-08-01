@@ -53,7 +53,7 @@ static void UI_TextNodeGenerateLineSplit (uiNode_t *node)
 		data = UI_GetReferenceString(node, node->text);
 	else if (EXTRADATA(node).super.dataID != TEXT_NULL) {
 		const uiSharedData_t *shared;
-		shared = &mn.sharedData[EXTRADATA(node).super.dataID];
+		shared = &uiGlobal.sharedData[EXTRADATA(node).super.dataID];
 		switch (shared->type) {
 		case UI_SHARED_TEXT:
 			data = UI_GetText(EXTRADATA(node).super.dataID);
@@ -262,7 +262,7 @@ static void UI_TextUpdateCache (uiNode_t *node)
 		return;
 	}
 
-	shared = &mn.sharedData[EXTRADATA(node).super.dataID];
+	shared = &uiGlobal.sharedData[EXTRADATA(node).super.dataID];
 
 	if (shared->type == UI_SHARED_LINKEDLISTTEXT) {
 		UI_TextNodeDrawText(node, shared->data.linkedListText, qtrue);
@@ -287,7 +287,7 @@ static void UI_TextNodeDraw (uiNode_t *node)
 		return;
 	}
 
-	shared = &mn.sharedData[EXTRADATA(node).super.dataID];
+	shared = &uiGlobal.sharedData[EXTRADATA(node).super.dataID];
 
 	switch (shared->type) {
 	case UI_SHARED_TEXT:

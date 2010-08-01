@@ -59,8 +59,8 @@ menuModel_t *UI_GetMenuModel (const char *menuModel)
 	int i;
 	menuModel_t *m;
 
-	for (i = 0; i < mn.numMenuModels; i++) {
-		m = &mn.menuModels[i];
+	for (i = 0; i < uiGlobal.numMenuModels; i++) {
+		m = &uiGlobal.menuModels[i];
 		if (!strncmp(m->id, menuModel, MAX_VAR))
 			return m;
 	}
@@ -72,9 +72,9 @@ void UI_ListMenuModels_f (void)
 	int i;
 
 	/* search for menumodels with same name */
-	Com_Printf("menu models: %i\n", mn.numMenuModels);
-	for (i = 0; i < mn.numMenuModels; i++)
-		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", mn.menuModels[i].id, mn.menuModels[i].model, mn.menuModels[i].need);
+	Com_Printf("menu models: %i\n", uiGlobal.numMenuModels);
+	for (i = 0; i < uiGlobal.numMenuModels; i++)
+		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", uiGlobal.menuModels[i].id, uiGlobal.menuModels[i].model, uiGlobal.menuModels[i].need);
 }
 
 static void UI_ModelNodeDraw (uiNode_t *node)

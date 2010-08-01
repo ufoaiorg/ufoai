@@ -340,7 +340,7 @@ static void UI_TextUpdateCache (uiNode_t *node)
 	if (EXTRADATA(node).dataID == TEXT_NULL && node->text != NULL)
 		return;
 
-	shared = &mn.sharedData[EXTRADATA(node).dataID];
+	shared = &uiGlobal.sharedData[EXTRADATA(node).dataID];
 
 	switch (shared->type) {
 	case UI_SHARED_TEXT:
@@ -376,7 +376,7 @@ static void UI_TextNodeDraw (uiNode_t *node)
 		return;
 	}
 
-	shared = &mn.sharedData[EXTRADATA(node).dataID];
+	shared = &uiGlobal.sharedData[EXTRADATA(node).dataID];
 
 	switch (shared->type) {
 	case UI_SHARED_TEXT:

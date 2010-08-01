@@ -87,7 +87,8 @@ typedef struct uiGlobal_s {
 
 } uiGlobal_t;
 
-extern uiGlobal_t mn;
+extern uiGlobal_t uiGlobal;
+
 extern struct memPool_s *mn_sysPool;
 extern struct memPool_s *mn_dynStringPool;
 extern struct memPool_s *mn_dynPool;

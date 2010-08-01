@@ -34,16 +34,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 uiNode_t *UI_GetComponent (const char *name)
 {
 	unsigned char min = 0;
-	unsigned char max = mn.numComponents;
+	unsigned char max = uiGlobal.numComponents;
 
 	while (min != max) {
 		const int mid = (min + max) >> 1;
-		const char diff = strcmp(mn.components[mid]->name, name);
+		const char diff = strcmp(uiGlobal.components[mid]->name, name);
 		assert(mid < max);
 		assert(mid >= min);
 
 		if (diff == 0)
-			return mn.components[mid];
+			return uiGlobal.components[mid];
 
 		if (diff > 0)
 			max = mid;
@@ -63,21 +63,21 @@ void UI_InsertComponent(uiNode_t* component)
 	int pos = 0;
 	int i;
 
-	if (mn.numComponents >= MAX_COMPONENTS)
+	if (uiGlobal.numComponents >= MAX_COMPONENTS)
 		Com_Error(ERR_FATAL, "UI_InsertComponent: hit MAX_COMPONENTS");
 
 	/* search the insertion position */
-	for (pos = 0; pos < mn.numComponents; pos++) {
-		const uiNode_t* node = mn.components[pos];
+	for (pos = 0; pos < uiGlobal.numComponents; pos++) {
+		const uiNode_t* node = uiGlobal.components[pos];
 		if (strcmp(component->name, node->name) < 0)
 			break;
 	}
 
 	/* create the space */
-	for (i = mn.numComponents - 1; i >= pos; i--)
-		mn.components[i + 1] = mn.components[i];
+	for (i = uiGlobal.numComponents - 1; i >= pos; i--)
+		uiGlobal.components[i + 1] = uiGlobal.components[i];
 
 	/* insert */
-	mn.components[pos] = component;
-	mn.numComponents++;
+	uiGlobal.components[pos] = component;
+	uiGlobal.numComponents++;
 }

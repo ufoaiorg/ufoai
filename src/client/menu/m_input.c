@@ -133,7 +133,7 @@ static qboolean UI_FocusNextActionNode (void)
 	if (UI_GetMouseCapture())
 		return qfalse;
 
-	if (i >= mn.menuStackPos)
+	if (i >= uiGlobal.menuStackPos)
 		i = UI_GetLastFullScreenWindow();
 
 	assert(i >= 0);
@@ -144,8 +144,8 @@ static qboolean UI_FocusNextActionNode (void)
 			return UI_FocusSetNode(node);
 	}
 
-	while (i < mn.menuStackPos) {
-		menu = mn.menuStack[i++];
+	while (i < uiGlobal.menuStackPos) {
+		menu = uiGlobal.menuStack[i++];
 		if (UI_FocusSetNode(UI_GetNextActionNode(menu->firstChild)))
 			return qtrue;
 	}
@@ -220,11 +220,11 @@ void UI_RemoveFocus (void)
 static uiKeyBinding_t* UI_AllocStaticKeyBinding (void)
 {
 	uiKeyBinding_t* result;
-	if (mn.numKeyBindings >= MAX_MENUKEYBINDING)
+	if (uiGlobal.numKeyBindings >= MAX_MENUKEYBINDING)
 		Com_Error(ERR_FATAL, "UI_AllocStaticKeyBinding: MAX_MENUKEYBINDING hit");
 
-	result = &mn.keyBindings[mn.numKeyBindings];
-	mn.numKeyBindings++;
+	result = &uiGlobal.keyBindings[uiGlobal.numKeyBindings];
+	uiGlobal.numKeyBindings++;
 
 	memset(result, 0, sizeof(*result));
 	return result;
@@ -232,12 +232,12 @@ static uiKeyBinding_t* UI_AllocStaticKeyBinding (void)
 
 int UI_GetKeyBindingCount (void)
 {
-	return mn.numKeyBindings;
+	return uiGlobal.numKeyBindings;
 }
 
 uiKeyBinding_t* UI_GetKeyBindingByIndex (int index)
 {
-	return &mn.keyBindings[index];
+	return &uiGlobal.keyBindings[index];
 }
 
 /**
@@ -355,8 +355,8 @@ qboolean UI_KeyPressed (unsigned int key, unsigned short unicode)
 		return qfalse;
 
 	/* check "active" window from top to down */
-	for (windowId = mn.windowStackPos - 1; windowId >= lastWindowId; windowId--) {
-		const uiNode_t *window = mn.windowStack[windowId];
+	for (windowId = uiGlobal.windowStackPos - 1; windowId >= lastWindowId; windowId--) {
+		const uiNode_t *window = uiGlobal.windowStack[windowId];
 		if (!window)
 			return qfalse;
 		if (UI_KeyPressedInWindow(key, window))
@@ -543,8 +543,8 @@ static void UI_LeftClick (int x, int y)
 	/* if we click out side a dropdown menu, we close it */
 	/** @todo need to refactoring it with the focus code (cleaner) */
 	/** @todo at least should be moved on the mouse down event (when the focus should change) */
-	if (!hoveredNode && mn.windowStackPos != 0) {
-		uiNode_t *menu = mn.windowStack[mn.windowStackPos - 1];
+	if (!hoveredNode && uiGlobal.windowStackPos != 0) {
+		uiNode_t *menu = uiGlobal.windowStack[uiGlobal.windowStackPos - 1];
 		if (UI_WindowIsDropDown(menu)) {
 			UI_PopWindow(qfalse);
 		}

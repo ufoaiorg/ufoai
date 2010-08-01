@@ -35,7 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 cvar_t *mn_sequence;
 cvar_t *mn_hud;
 
-uiGlobal_t mn;
+uiGlobal_t uiGlobal;
+
 struct memPool_s *mn_dynStringPool;
 struct memPool_s *mn_dynPool;
 struct memPool_s *mn_sysPool;
@@ -203,17 +204,17 @@ static void UI_Memory_f (void)
 	const size_t nodeSize = sizeof(uiNode_t);
 	size_t size;
 	Com_Printf("Allocation:\n");
-	Com_Printf("\t-Window allocation: %i/%i\n", mn.numWindows, MAX_WINDOWS);
+	Com_Printf("\t-Window allocation: %i/%i\n", uiGlobal.numWindows, MAX_WINDOWS);
 	Com_Printf("\t-Rendering menu stack slot: %i\n", MAX_MENUSTACK);
-	Com_Printf("\t-Action allocation: %i/%i\n", mn.numActions, MAX_MENUACTIONS);
-	Com_Printf("\t-Model allocation: %i/%i\n", mn.numMenuModels, MAX_MENUMODELS);
-	Com_Printf("\t-Exclude rect allocation: %i/%i\n", mn.numExcludeRect, MAX_EXLUDERECTS);
-	Com_Printf("\t -Node allocation: %i\n", mn.numNodes);
+	Com_Printf("\t-Action allocation: %i/%i\n", uiGlobal.numActions, MAX_MENUACTIONS);
+	Com_Printf("\t-Model allocation: %i/%i\n", uiGlobal.numMenuModels, MAX_MENUMODELS);
+	Com_Printf("\t-Exclude rect allocation: %i/%i\n", uiGlobal.numExcludeRect, MAX_EXLUDERECTS);
+	Com_Printf("\t -Node allocation: %i\n", uiGlobal.numNodes);
 
 	Com_Printf("Memory:\n");
 	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(uiAction_t));
 	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(menuModel_t));
-	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B x%d\n", sizeof(uiNode_t), mn.numNodes);
+	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B x%d\n", sizeof(uiNode_t), uiGlobal.numNodes);
 	for (i = 0; i < UI_GetNodeBehaviourCount(); i++) {
 		uiBehaviour_t *b = UI_GetNodeBehaviourByIndex(i);
 		Com_Printf("\t -Behaviour %20s structure size: "UFO_SIZE_T" (+"UFO_SIZE_T" B) x%4u\n", b->name, sizeof(uiNode_t) + b->extraDataSize, b->extraDataSize, b->count);
@@ -226,7 +227,7 @@ static void UI_Memory_f (void)
 	}
 	Com_Printf("Global memory:\n");
 	Com_Printf("\t-System pool: %ui B\n", _Mem_PoolSize(mn_sysPool));
-	Com_Printf("\t -AData allocation: "UFO_SIZE_T"/%i B\n", (ptrdiff_t)(mn.curadata - mn.adata), mn.adataize);
+	Com_Printf("\t -AData allocation: "UFO_SIZE_T"/%i B\n", (ptrdiff_t)(uiGlobal.curadata - uiGlobal.adata), uiGlobal.adataize);
 	Com_Printf("\t -AData used by nodes: "UFO_SIZE_T" B\n", size);
 	Com_Printf("\t-Dynamic node/data pool: %ui B\n", _Mem_PoolSize(mn_dynPool));
 	Com_Printf("\t-Dynamic strings pool: %ui B\n", _Mem_PoolSize(mn_dynStringPool));
@@ -276,14 +277,14 @@ void UI_Shutdown (void)
 	const uiBehaviour_t *confunc;
 
 	/* MN is not yet initialized */
-	if (mn.adata == NULL)
+	if (uiGlobal.adata == NULL)
 		return;
 
 	confunc = UI_GetNodeBehaviour("confunc");
 
 	/* remove all confunc commands */
-	for (i = 0; i < mn.numWindows; i++) {
-		uiNode_t *node = mn.windows[i];
+	for (i = 0; i < uiGlobal.numWindows; i++) {
+		uiNode_t *node = uiGlobal.windows[i];
 		while (node) {
 
 			/* remove the command */
@@ -308,10 +309,10 @@ void UI_Shutdown (void)
 		}
 	}
 
-	if (mn.adataize)
-		Mem_Free(mn.adata);
-	mn.adata = NULL;
-	mn.adataize = 0;
+	if (uiGlobal.adataize)
+		Mem_Free(uiGlobal.adata);
+	uiGlobal.adata = NULL;
+	uiGlobal.adataize = 0;
 
 	/* release pools */
 	Mem_FreePool(mn_sysPool);
@@ -331,7 +332,7 @@ void UI_Init (void)
 #endif
 
 	/* reset menu structures */
-	memset(&mn, 0, sizeof(mn));
+	memset(&uiGlobal, 0, sizeof(uiGlobal));
 
 	/* add cvars */
 	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "This is the sequence menu to render the sequence in");
@@ -352,9 +353,9 @@ void UI_Init (void)
 	mn_dynPool = Mem_CreatePool("Client: Dynamic memory for UI");
 
 	/* 256kb */
-	mn.adataize = MENU_HUNK_SIZE;
-	mn.adata = (byte*)Mem_PoolAlloc(mn.adataize, mn_sysPool, 0);
-	mn.curadata = mn.adata;
+	uiGlobal.adataize = MENU_HUNK_SIZE;
+	uiGlobal.adata = (byte*)Mem_PoolAlloc(uiGlobal.adataize, mn_sysPool, 0);
+	uiGlobal.curadata = uiGlobal.adata;
 
 	UI_InitData();
 	UI_InitNodes();

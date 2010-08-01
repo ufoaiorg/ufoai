@@ -163,7 +163,7 @@ static void UI_WindowNodeDraw (uiNode_t *node)
 	}
 
 	/* darker background if last window is a modal */
-	if (EXTRADATA(node).modal && mn.windowStack[mn.windowStackPos - 1] == node)
+	if (EXTRADATA(node).modal && uiGlobal.windowStack[uiGlobal.windowStackPos - 1] == node)
 		UI_DrawFill(0, 0, viddef.virtualWidth, viddef.virtualHeight, modalBackground);
 
 	/* draw the background */
