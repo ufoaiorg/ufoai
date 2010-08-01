@@ -496,8 +496,6 @@ int G_TouchTriggers (edict_t *ent)
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
 		edict_t *hit = touch[i];
-		if (!hit->inuse)
-			continue;
 		if (hit->solid != SOLID_TRIGGER)
 			continue;
 		if (!hit->touch)
