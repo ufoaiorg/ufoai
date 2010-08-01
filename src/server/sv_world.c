@@ -73,10 +73,6 @@ typedef struct areanode_s {
 static areanode_t sv_areaNodes[AREA_NODES];
 static int sv_numAreaNodes;
 
-static vec3_t areaMins, areaMaxs;
-static edict_t **areaEdictList;
-static int areaEdictListCount, areaEdictListMaxCount;
-
 /**
  * @brief ClearLink is used for new headnodes
  */
@@ -308,6 +304,13 @@ static qboolean SV_BoundingBoxesIntersect (const vec3_t mins, const vec3_t maxs,
 	return qtrue;
 }
 
+typedef struct {
+	const float *areaMins, *areaMaxs; /**< size of the moving object */
+	edict_t **areaEdictList;
+	int areaType;
+	int areaEdictListCount, areaEdictListMaxCount;
+} areaParms_t;
+
 /**
  * @brief fills in a table of edict pointers with edicts that have bounding boxes
  * that intersect the given area. It is possible for a non-axial bmodel
@@ -316,7 +319,7 @@ static qboolean SV_BoundingBoxesIntersect (const vec3_t mins, const vec3_t maxs,
  * @param node
  * @param areaType @c AREA_SOLID or @c AREA_TRIGGERS
  */
-static void SV_AreaEdicts_r (areanode_t * node, int areaType)
+static void SV_AreaEdicts_r (areanode_t * node, areaParms_t *ap)
 {
 	link_t *l, *next, *start;
 	int count;
@@ -324,7 +327,7 @@ static void SV_AreaEdicts_r (areanode_t * node, int areaType)
 	count = 0;
 
 	/* touch linked edicts */
-	if (areaType == AREA_SOLID)
+	if (ap->areaType == AREA_SOLID)
 		start = &node->solidEdicts;
 	else
 		start = &node->triggerEdicts;
@@ -341,26 +344,26 @@ static void SV_AreaEdicts_r (areanode_t * node, int areaType)
 		if (!check->inuse)
 			continue;
 
-		if (!SV_BoundingBoxesIntersect(areaMins, areaMaxs, check))
+		if (!SV_BoundingBoxesIntersect(ap->areaMins, ap->areaMaxs, check))
 			continue;			/* not touching */
 
-		if (areaEdictListCount == areaEdictListMaxCount) {
+		if (ap->areaEdictListCount == ap->areaEdictListMaxCount) {
 			Com_Printf("SV_AreaEdicts_r: MAXCOUNT\n");
 			return;
 		}
 
-		areaEdictList[areaEdictListCount] = check;
-		areaEdictListCount++;
+		ap->areaEdictList[ap->areaEdictListCount] = check;
+		ap->areaEdictListCount++;
 	}
 
 	if (node->axis == LEAFNODE)
 		return;					/* terminal node - end of tree */
 
 	/* recurse down both sides */
-	if (areaMaxs[node->axis] > node->dist)
-		SV_AreaEdicts_r(node->children[0], areaType);
-	if (areaMins[node->axis] < node->dist)
-		SV_AreaEdicts_r(node->children[1], areaType);
+	if (ap->areaMaxs[node->axis] > node->dist)
+		SV_AreaEdicts_r(node->children[0], ap);
+	if (ap->areaMins[node->axis] < node->dist)
+		SV_AreaEdicts_r(node->children[1], ap);
 }
 
 /**
@@ -374,15 +377,18 @@ static void SV_AreaEdicts_r (areanode_t * node, int areaType)
  */
 int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxCount, int areaType)
 {
-	VectorCopy(mins, areaMins);
-	VectorCopy(maxs, areaMaxs);
-	areaEdictList = list;
-	areaEdictListCount = 0;
-	areaEdictListMaxCount = maxCount;
+	areaParms_t	ap;
 
-	SV_AreaEdicts_r(sv_areaNodes, areaType);
+	ap.areaMins = mins;
+	ap.areaMaxs = maxs;
+	ap.areaType = areaType;
+	ap.areaEdictList = list;
+	ap.areaEdictListCount = 0;
+	ap.areaEdictListMaxCount = maxCount;
 
-	return areaEdictListCount;
+	SV_AreaEdicts_r(sv_areaNodes, &ap);
+
+	return ap.areaEdictListCount;
 }
 
 
