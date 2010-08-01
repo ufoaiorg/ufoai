@@ -338,8 +338,8 @@ qboolean Cvar_Delete (const char *varName)
 				Mem_Free(var->description);
 			if (var->oldString)
 				Mem_Free(var->oldString);
-			if (var->default_string)
-				Mem_Free(var->default_string);
+			if (var->defaultString)
+				Mem_Free(var->defaultString);
 			/* latched cvars should not be removable */
 			assert(var->latchedString == NULL);
 			changeListener = var->changeListener;
@@ -387,8 +387,8 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 
 	var = Cvar_FindVar(var_name);
 	if (var) {
-		if (!var->default_string && flags & CVAR_CHEAT)
-			var->default_string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
+		if (!var->defaultString && flags & CVAR_CHEAT)
+			var->defaultString = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 		var->flags |= flags;
 		if (desc) {
 			if (var->description)
@@ -426,7 +426,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 
 	var->flags = flags;
 	if (var->flags & CVAR_CHEAT)
-		var->default_string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
+		var->defaultString = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 
 	return var;
 }
@@ -1070,12 +1070,12 @@ void Cvar_FixCheatVars (void)
 		if (!(var->flags & CVAR_CHEAT))
 			continue;
 
-		if (!var->default_string) {
+		if (!var->defaultString) {
 			Com_Printf("Cheat cvars: Cvar %s has no default value\n", var->name);
 			continue;
 		}
 
-		if (!strcmp(var->string, var->default_string))
+		if (!strcmp(var->string, var->defaultString))
 			continue;
 
 		/* also remove the oldString value here */
@@ -1084,7 +1084,7 @@ void Cvar_FixCheatVars (void)
 			var->oldString = NULL;
 		}
 		Mem_Free(var->string);
-		var->string = Mem_PoolStrDup(var->default_string, com_cvarSysPool, 0);
+		var->string = Mem_PoolStrDup(var->defaultString, com_cvarSysPool, 0);
 		var->value = atof(var->string);
 		var->integer = atoi(var->string);
 

@@ -106,7 +106,7 @@ typedef struct cvar_s {
 	char *name;				/**< cvar name */
 	char *string;			/**< value as string */
 	char *latchedString;	/**< for CVAR_LATCH vars */
-	char *default_string;	/**< default string set on first init - only set for CVAR_CHEAT */
+	char *defaultString;	/**< default string set on first init - only set for CVAR_CHEAT */
 	char *oldString;		/**< value of the cvar before we changed it */
 	char *description;		/**< cvar description */
 	int flags;				/**< cvar flags CVAR_ARCHIVE|CVAR_NOSET.... */
