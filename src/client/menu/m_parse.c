@@ -653,9 +653,13 @@ static qboolean UI_ParseEventProperty (uiNode_t * node, const value_t *event, co
 		return qfalse;
 	}
 
+	Com_EnableFunctionScriptToken(qtrue);
+
 	*action = UI_ParseActionList(node, text, token);
 	if (*action == NULL)
 		return qfalse;
+
+	Com_EnableFunctionScriptToken(qfalse);
 
 	/* block terminal already read */
 	assert((*token)[0] == '}');
@@ -866,10 +870,14 @@ static qboolean UI_ParseFunction (uiNode_t * node, const char **text, const char
 	uiAction_t **action;
 	assert(node->behaviour->isFunction);
 
+	Com_EnableFunctionScriptToken(qtrue);
+
 	action = &node->onClick;
 	*action = UI_ParseActionList(node, text, token);
 	if (*action == NULL)
 		return qfalse;
+
+	Com_EnableFunctionScriptToken(qfalse);
 
 	return (*token)[0] == '}';
 }

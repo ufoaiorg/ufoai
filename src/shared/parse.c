@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static char com_token[4096];
 static qboolean isUnparsedToken;
 static qboolean isQuotedToken;
+static qboolean functionScriptTokenEnabled;
 
 /**
  * @brief Put back the last token into the parser
@@ -52,6 +53,16 @@ void Com_UnParseLastToken (void)
 qboolean Com_ParsedTokenIsQuoted (void)
 {
 	return isQuotedToken;
+}
+
+/**
+ * @brief Enable parsing of token '(', ')' and ','
+ * @param enable If true, enable parsing of extra tokens
+ * @sa Com_Parse
+ */
+void Com_EnableFunctionScriptToken (qboolean enable)
+{
+	functionScriptTokenEnabled = enable;
 }
 
 /**
@@ -141,9 +152,10 @@ skipwhite:
 		return com_token;
 	}
 
-	if (c == '{' || c == '}') {
+	if ((c == '{' || c == '}') || (functionScriptTokenEnabled && (c == '(' || c == ')' || c == ','))) {
 		data++;
 		com_token[len] = c;
+		com_token[len + 1] = '\0';
 		len++;
 		*data_p = data;
 		return com_token;
@@ -151,12 +163,6 @@ skipwhite:
 
 	/* parse a regular word */
 	do {
-#if 0	/* useless, use quotes to do that */
-		if (c == '\\' && data[1] == 'n') {
-			c = '\n';
-			data++;
-		}
-#endif
 		if (len < sizeof(com_token)) {
 			com_token[len] = c;
 			len++;
@@ -164,6 +170,8 @@ skipwhite:
 		data++;
 		c = *data;
 		if (c == '{' || c == '}')
+			break;
+		if (functionScriptTokenEnabled && (c == '(' || c == ')' || c == ','))
 			break;
 	} while (c > 32);
 
