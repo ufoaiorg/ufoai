@@ -501,7 +501,7 @@ player_t *AI_CreatePlayer(int team);
 qboolean AI_CheckUsingDoor(const edict_t *ent, const edict_t *door);
 
 /* g_svcmds.c */
-void ServerCommand(void);
+void G_ServerCommand(void);
 qboolean SV_FilterPacket(const char *from);
 
 /* g_match.c */

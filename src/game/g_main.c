@@ -294,7 +294,7 @@ game_export_t *GetGameAPI (game_import_t * import)
 
 	globals.RunFrame = G_RunFrame;
 
-	globals.ServerCommand = ServerCommand;
+	globals.ServerCommand = G_ServerCommand;
 
 	globals.edict_size = sizeof(edict_t);
 	globals.player_size = sizeof(player_t);

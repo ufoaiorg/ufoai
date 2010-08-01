@@ -322,7 +322,7 @@ static void SVCmd_ActorInvList_f (void)
  * of the parameters
  * @sa serverCommandList
  */
-void ServerCommand (void)
+void G_ServerCommand (void)
 {
 	const char *cmd;
 
