@@ -367,6 +367,9 @@ size_t dbuffer_get_at (const struct dbuffer *buf, size_t offset, char *data, siz
 		p = &e->data[0];
 	}
 
+	if (e == NULL || e->len <= 0)
+		return 0;
+
 	while (len > 0 && e && e->len > 0) {
 		size_t l = e->len - offset;
 		if (len < l)
