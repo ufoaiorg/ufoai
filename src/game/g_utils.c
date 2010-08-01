@@ -488,7 +488,7 @@ int G_TouchTriggers (edict_t *ent)
 	if (!G_IsLivingActor(ent))
 		return 0;
 
-	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, AREA_TRIGGERS);
+	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS);
 
 	G_ResetTriggers(ent, touch, num);
 
@@ -496,6 +496,10 @@ int G_TouchTriggers (edict_t *ent)
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
 		edict_t *hit = touch[i];
+		if (!hit->inuse)
+			continue;
+		if (hit->solid != SOLID_TRIGGER)
+			continue;
 		if (!hit->touch)
 			continue;
 		if (hit->touch(hit, ent))
@@ -513,13 +517,15 @@ void G_TouchSolids (edict_t *ent)
 	int i, num;
 	edict_t *touch[MAX_EDICTS];
 
-	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, AREA_SOLID);
+	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
 		edict_t* hit = touch[i];
 		if (!hit->inuse)
+			continue;
+		if (hit->solid == SOLID_TRIGGER)
 			continue;
 		if (ent->touch)
 			ent->touch(ent, hit);
