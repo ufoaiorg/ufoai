@@ -1,0 +1,79 @@
+// character animations
+// name				start	end		fps
+
+death1			63		69		5	// D
+dead1				69		70		1	// D
+death2			107		111		5	// D
+dead2				111		112		1	// D
+death3			119		124		5	// D
+dead3				124		125		1	// D
+
+stand0			17		18		1	// D
+walk0				7		12		10	// D
+cstand0			75		76		1	// D
+cwalk0			139		145		10	// D
+
+stand1			20		21		1	// D
+walk1				23		28		10	// D
+cstand1			72		73		1	// D
+cwalk1			146		151		10	// D
+
+move_rifle			35		40		1	// D
+shoot_rifle			41		43		30	// D
+cmove_rifle			127		130		1	// D
+cshoot_rifle		78		80		30	// D
+
+move_biggun			35		40		1
+shoot_biggun		41		43		30
+cmove_biggun		72		73		1
+cshoot_biggun		78		80		30
+
+move_melee			155		155		4
+shoot_melee			156		160		10
+cmove_melee			181		182		10
+cshoot_melee		183		187		10
+
+stand2			45		46		1	// D
+walk2				48		53		10	// D
+cstand2			82		83		1	// D
+cwalk2			153		158		10	// D
+
+move_pistol			160		169		8	// D
+shoot_pistol		55		57		30	// D
+cmove_pistol		82		83		1
+cshoot_pistol		85		87		30	// D
+
+move_pistol_d		240		240		4
+shoot_pistol_d		241		249		10
+cmove_pistol_d		280		281		10
+cshoot_pistol_d		282		290		10
+
+move_grenade		253		253		4
+shoot_grenade		254		259		10
+cmove_grenade		293		294		10
+cshoot_grenade		295		300		10
+
+move_item			30		33		1	// D
+shoot_item			59		61		15	// D
+cmove_item			75		76		1
+cshoot_item			89		91		15	// D
+
+stand3			93		94		1	// D
+walk3				132		137		10	// D
+cstand3			104		105		1	// D
+cwalk3			334		349		15
+
+move_rpg			93		94		1
+shoot_rpg			96		98		30	// D
+cmove_rpg			104		105		1
+cshoot_rpg			100		102		30	// D
+
+stand_menu			14		15		1	// D
+panic0			114		117		1	// D
+
+stand_still			2		2		1	// D
+
+
+// "*move_*" is actually an "idle" animation and has nothing to do with moving around. 
+// 0=items, 1=rifles, 2=pistols, 3=over shoulder or big weapon
+// D=Done (new animation completed, everything else is TODO)

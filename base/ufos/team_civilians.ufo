@@ -103,6 +103,7 @@ team states
 			civilians/male body01 head01 1
 			civilians/male body01 head01 2
 			civilians/male body01 head03 2
+			// civilians/male boy01 boy_head01 0
 		}
 	}
 
@@ -165,6 +166,7 @@ team europe
 			civilians/male body01 head01 0
 			civilians/male body01 head01 1
 			civilians/male body01 head01 2
+			// civilians/male boy01 boy_head01 0
 		}
 	}
 
@@ -342,6 +344,7 @@ team russia
 
 		male {
 			civilians/male body02 head02 0
+			// civilians/male boy01 boy_head01 0
 		}
 	}
 
