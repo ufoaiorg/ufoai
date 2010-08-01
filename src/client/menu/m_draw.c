@@ -161,8 +161,8 @@ static void UI_DrawDebugMenuNodeNames (void)
 	R_Color(white);
 	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "menu stack:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	for (stackPosition = 0; stackPosition < uiGlobal.windowStackPos; stackPosition++) {
-		uiNode_t *menu = uiGlobal.windowStack[stackPosition];
+	for (stackPosition = 0; stackPosition < ui_global.windowStackPos; stackPosition++) {
+		uiNode_t *menu = ui_global.windowStack[stackPosition];
 		UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, menu->name, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
 	}
@@ -340,7 +340,7 @@ void UI_Draw (void)
 
 	UI_HandleTimers();
 
-	assert(uiGlobal.windowStackPos >= 0);
+	assert(ui_global.windowStackPos >= 0);
 
 	mouseMoved = UI_CheckMouseMove();
 	hoveredNode = UI_GetHoveredNode();
@@ -359,8 +359,8 @@ void UI_Draw (void)
 		return;
 
 	/* draw all visible menus */
-	for (; pos < uiGlobal.windowStackPos; pos++) {
-		menu = uiGlobal.windowStack[pos];
+	for (; pos < ui_global.windowStackPos; pos++) {
+		menu = ui_global.windowStack[pos];
 
 		drawOverNode = NULL;
 

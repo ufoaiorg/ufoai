@@ -106,7 +106,7 @@ static void UI_AbstractOptionDoLayout (uiNode_t *node) {
 	int count = 0;
 
 	if (EXTRADATA(node).dataId == 0) {
-		while(option && option->behaviour == optionBehaviour) {
+		while(option && option->behaviour == ui_optionBehaviour) {
 			UI_Validate(option);
 			if (!option->invis)
 				count++;
@@ -125,7 +125,7 @@ static void UI_AbstractOptionDoLayout (uiNode_t *node) {
  */
 uiNode_t*  UI_AbstractOptionGetFirstOption (uiNode_t * node)
 {
-	if (node->firstChild && node->firstChild->behaviour == optionBehaviour) {
+	if (node->firstChild && node->firstChild->behaviour == ui_optionBehaviour) {
 		return node->firstChild;
 	} else {
 		const int v = UI_GetDataVersion(EXTRADATA(node).dataId);

@@ -50,9 +50,9 @@ static cvar_t *mn_sys_active;
 int UI_GetLastFullScreenWindow (void)
 {
 	/* stack pos */
-	int pos = uiGlobal.windowStackPos - 1;
+	int pos = ui_global.windowStackPos - 1;
 	while (pos > 0) {
-		if (UI_WindowIsFullScreen(uiGlobal.windowStack[pos]))
+		if (UI_WindowIsFullScreen(ui_global.windowStack[pos]))
 			break;
 		pos--;
 	}
@@ -74,16 +74,16 @@ void UI_MoveWindowOnTop (uiNode_t * window)
 		return;
 
 	/* get window index */
-	for (i = 0; i < uiGlobal.windowStackPos; i++) {
-		if (uiGlobal.windowStack[i] == window)
+	for (i = 0; i < ui_global.windowStackPos; i++) {
+		if (ui_global.windowStack[i] == window)
 			break;
 	}
 
 	/* search the last compatible window */
-	for (j = i; j < uiGlobal.windowStackPos; j++) {
-		if (UI_WindowIsFullScreen(uiGlobal.windowStack[j]))
+	for (j = i; j < ui_global.windowStackPos; j++) {
+		if (UI_WindowIsFullScreen(ui_global.windowStack[j]))
 			break;
-		if (WINDOWEXTRADATA(window).parent != WINDOWEXTRADATA(uiGlobal.windowStack[j]).parent)
+		if (WINDOWEXTRADATA(window).parent != WINDOWEXTRADATA(ui_global.windowStack[j]).parent)
 			break;
 	}
 	if (i + 1 == j)
@@ -91,10 +91,10 @@ void UI_MoveWindowOnTop (uiNode_t * window)
 
 	/* translate windows */
 	for (; i < j - 1; i++) {
-		uiGlobal.windowStack[i] = uiGlobal.windowStack[i+1];
+		ui_global.windowStack[i] = ui_global.windowStack[i+1];
 	}
 	/* add the current window on top */
-	uiGlobal.windowStack[i] = window;
+	ui_global.windowStack[i] = window;
 }
 
 /**
@@ -108,16 +108,16 @@ static void UI_DeleteWindowFromStack (uiNode_t *window)
 	int i;
 
 	/* get window index */
-	for (i = 0; i < uiGlobal.windowStackPos; i++) {
-		if (uiGlobal.windowStack[i] == window)
+	for (i = 0; i < ui_global.windowStackPos; i++) {
+		if (ui_global.windowStack[i] == window)
 			break;
 	}
 
 	/* update stack */
-	if (i < uiGlobal.windowStackPos) {
-		uiGlobal.windowStackPos--;
-		for (; i < uiGlobal.windowStackPos; i++)
-			uiGlobal.windowStack[i] = uiGlobal.windowStack[i + 1];
+	if (i < ui_global.windowStackPos) {
+		ui_global.windowStackPos--;
+		for (; i < ui_global.windowStackPos; i++)
+			ui_global.windowStack[i] = ui_global.windowStack[i + 1];
 		UI_InvalidateMouse();
 	}
 }
@@ -129,8 +129,8 @@ static void UI_DeleteWindowFromStack (uiNode_t *window)
 static inline int UI_GetWindowPositionFromStackByName (const char *name)
 {
 	int i;
-	for (i = 0; i < uiGlobal.windowStackPos; i++)
-		if (!strcmp(uiGlobal.windowStack[i]->name, name))
+	for (i = 0; i < ui_global.windowStackPos; i++)
+		if (!strcmp(ui_global.windowStack[i]->name, name))
 			return i;
 
 	return -1;
@@ -144,17 +144,17 @@ static inline int UI_GetWindowPositionFromStackByName (const char *name)
 static inline void UI_InsertWindowIntoStack (uiNode_t *window, int position)
 {
 	int i;
-	assert(position <= uiGlobal.windowStackPos);
+	assert(position <= ui_global.windowStackPos);
 	assert(position > 0);
 	assert(window != NULL);
 
 	/* create space for the new window */
-	for (i = uiGlobal.windowStackPos; i > position; i--) {
-		uiGlobal.windowStack[i] = uiGlobal.windowStack[i - 1];
+	for (i = ui_global.windowStackPos; i > position; i--) {
+		ui_global.windowStack[i] = ui_global.windowStack[i - 1];
 	}
 	/* insert */
-	uiGlobal.windowStack[position] = window;
-	uiGlobal.windowStackPos++;
+	ui_global.windowStack[position] = window;
+	ui_global.windowStackPos++;
 }
 
 /**
@@ -180,7 +180,7 @@ static uiNode_t* UI_PushWindowDelete (const char *name, const char *parent, qboo
 	if (delete)
 		UI_DeleteWindowFromStack(window);
 
-	if (uiGlobal.windowStackPos < MAX_MENUSTACK)
+	if (ui_global.windowStackPos < MAX_MENUSTACK)
 		if (parent) {
 			const int parentPos = UI_GetWindowPositionFromStackByName(parent);
 			if (parentPos == -1) {
@@ -188,9 +188,9 @@ static uiNode_t* UI_PushWindowDelete (const char *name, const char *parent, qboo
 				return NULL;
 			}
 			UI_InsertWindowIntoStack(window, parentPos + 1);
-			WINDOWEXTRADATA(window).parent = uiGlobal.windowStack[parentPos];
+			WINDOWEXTRADATA(window).parent = ui_global.windowStack[parentPos];
 		} else
-			uiGlobal.windowStack[uiGlobal.windowStackPos++] = window;
+			ui_global.windowStack[ui_global.windowStackPos++] = window;
 	else
 		Com_Printf("Window stack overflow\n");
 
@@ -219,16 +219,16 @@ int UI_CompleteWithWindow (const char *partial, const char **match)
 	const size_t len = strlen(partial);
 
 	if (len == 0) {
-		for (i = 0; i < uiGlobal.numWindows; i++)
-			Com_Printf("%s\n", uiGlobal.windows[i]->name);
+		for (i = 0; i < ui_global.numWindows; i++)
+			Com_Printf("%s\n", ui_global.windows[i]->name);
 		return 0;
 	}
 
 	/* check for partial matches */
-	for (i = 0; i < uiGlobal.numWindows; i++)
-		if (!strncmp(partial, uiGlobal.windows[i]->name, len)) {
-			Com_Printf("%s\n", uiGlobal.windows[i]->name);
-			localMatch[matches++] = uiGlobal.windows[i]->name;
+	for (i = 0; i < ui_global.numWindows; i++)
+		if (!strncmp(partial, ui_global.windows[i]->name, len)) {
+			Com_Printf("%s\n", ui_global.windows[i]->name);
+			localMatch[matches++] = ui_global.windows[i]->name;
 			if (matches >= MAX_COMPLETE) {
 				Com_Printf("UI_CompleteWithWindow: hit MAX_COMPLETE\n");
 				break;
@@ -358,29 +358,29 @@ static void UI_PushNoHud_f (void)
 static void UI_RemoveWindowAtPositionFromStack (int position)
 {
 	int i;
-	assert(position < uiGlobal.windowStackPos);
+	assert(position < ui_global.windowStackPos);
 	assert(position >= 0);
 
 	/* create space for the new window */
-	for (i = position; i < uiGlobal.windowStackPos; i++) {
-		uiGlobal.windowStack[i] = uiGlobal.windowStack[i + 1];
+	for (i = position; i < ui_global.windowStackPos; i++) {
+		ui_global.windowStack[i] = ui_global.windowStack[i + 1];
 	}
-	uiGlobal.windowStack[uiGlobal.windowStackPos--] = NULL;
+	ui_global.windowStack[ui_global.windowStackPos--] = NULL;
 }
 
 static void UI_CloseAllWindow (void)
 {
 	int i;
-	for (i = uiGlobal.windowStackPos - 1; i >= 0; i--) {
-		uiNode_t *window = uiGlobal.windowStack[i];
+	for (i = ui_global.windowStackPos - 1; i >= 0; i--) {
+		uiNode_t *window = ui_global.windowStack[i];
 
 		if (window->behaviour->close)
 			window->behaviour->close(window);
 
 		/* safe: unlink window */
 		WINDOWEXTRADATA(window).parent = NULL;
-		uiGlobal.windowStackPos--;
-		uiGlobal.windowStack[uiGlobal.windowStackPos] = NULL;
+		ui_global.windowStackPos--;
+		ui_global.windowStack[ui_global.windowStackPos] = NULL;
 	}
 }
 
@@ -404,7 +404,7 @@ void UI_InitStack (const char* activeMenu, const char* mainMenu, qboolean popAll
 	if (activeMenu) {
 		Cvar_Set("mn_sys_active", activeMenu);
 		/* prevent calls before UI script initialization */
-		if (uiGlobal.numWindows != 0) {
+		if (ui_global.numWindows != 0) {
 			if (pushActive)
 				UI_PushWindow(activeMenu, NULL);
 		}
@@ -432,7 +432,7 @@ static void UI_CloseWindowByRef (uiNode_t *window)
 	/** @todo If the focus is not on the window we close, we don't need to remove it */
 	UI_ReleaseInput();
 
-	assert(uiGlobal.windowStackPos);
+	assert(ui_global.windowStackPos);
 	i = UI_GetWindowPositionFromStackByName(window->name);
 	if (i == -1) {
 		Com_Printf("Window '%s' is not on the active stack\n", window->name);
@@ -440,8 +440,8 @@ static void UI_CloseWindowByRef (uiNode_t *window)
 	}
 
 	/* close child */
-	while (i + 1 < uiGlobal.windowStackPos) {
-		uiNode_t *m = uiGlobal.windowStack[i + 1];
+	while (i + 1 < ui_global.windowStackPos) {
+		uiNode_t *m = ui_global.windowStack[i + 1];
 		if (WINDOWEXTRADATA(m).parent != window) {
 			break;
 		}
@@ -479,31 +479,31 @@ void UI_CloseWindow (const char* name)
  */
 void UI_PopWindow (qboolean all)
 {
-	uiNode_t *oldfirst = uiGlobal.windowStack[0];
+	uiNode_t *oldfirst = ui_global.windowStack[0];
 
 	if (all) {
 		UI_CloseAllWindow();
 	} else {
-		uiNode_t *mainMenu = uiGlobal.windowStack[uiGlobal.windowStackPos - 1];
-		if (!uiGlobal.windowStackPos)
+		uiNode_t *mainMenu = ui_global.windowStack[ui_global.windowStackPos - 1];
+		if (!ui_global.windowStackPos)
 			return;
 		if (WINDOWEXTRADATA(mainMenu).parent)
 			mainMenu = WINDOWEXTRADATA(mainMenu).parent;
 		UI_CloseWindowByRef(mainMenu);
 
-		if (uiGlobal.windowStackPos == 0) {
+		if (ui_global.windowStackPos == 0) {
 			/* mn_main contains the window that is the very first window and should be
 			 * pushed back onto the stack (otherwise there would be no window at all
 			 * right now) */
 			if (!strcmp(oldfirst->name, mn_sys_main->string)) {
 				if (mn_sys_active->string[0] != '\0')
 					UI_PushWindow(mn_sys_active->string, NULL);
-				if (!uiGlobal.windowStackPos)
+				if (!ui_global.windowStackPos)
 					UI_PushWindow(mn_sys_main->string, NULL);
 			} else {
 				if (mn_sys_main->string[0] != '\0')
 					UI_PushWindow(mn_sys_main->string, NULL);
-				if (!uiGlobal.windowStackPos)
+				if (!ui_global.windowStackPos)
 					UI_PushWindow(mn_sys_active->string, NULL);
 			}
 		}
@@ -529,10 +529,10 @@ static void UI_CloseWindow_f (void)
 
 void UI_PopWindowWithEscKey (void)
 {
-	const uiNode_t *window = uiGlobal.windowStack[uiGlobal.windowStackPos - 1];
+	const uiNode_t *window = ui_global.windowStack[ui_global.windowStackPos - 1];
 
 	/* nothing if stack is empty */
-	if (uiGlobal.windowStackPos == 0)
+	if (ui_global.windowStackPos == 0)
 		return;
 
 	/* some window can prevent escape */
@@ -563,7 +563,7 @@ static void UI_PopWindow_f (void)
  */
 uiNode_t* UI_GetActiveWindow (void)
 {
-	return (uiGlobal.windowStackPos > 0 ? uiGlobal.windowStack[uiGlobal.windowStackPos - 1] : NULL);
+	return (ui_global.windowStackPos > 0 ? ui_global.windowStack[ui_global.windowStackPos - 1] : NULL);
 }
 
 /**
@@ -621,8 +621,8 @@ qboolean UI_IsPointOnWindow (void)
 	if (UI_GetMouseCapture() != NULL)
 		return qtrue;
 
-	if (uiGlobal.windowStackPos != 0) {
-		if (WINDOWEXTRADATA(uiGlobal.windowStack[uiGlobal.windowStackPos - 1]).dropdown)
+	if (ui_global.windowStackPos != 0) {
+		if (WINDOWEXTRADATA(ui_global.windowStack[ui_global.windowStackPos - 1]).dropdown)
 			return qtrue;
 	}
 
@@ -648,16 +648,16 @@ qboolean UI_IsPointOnWindow (void)
 uiNode_t *UI_GetWindow (const char *name)
 {
 	unsigned char min = 0;
-	unsigned char max = uiGlobal.numWindows;
+	unsigned char max = ui_global.numWindows;
 
 	while (min != max) {
 		const int mid = (min + max) >> 1;
-		const char diff = strcmp(uiGlobal.windows[mid]->name, name);
+		const char diff = strcmp(ui_global.windows[mid]->name, name);
 		assert(mid < max);
 		assert(mid >= min);
 
 		if (diff == 0)
-			return uiGlobal.windows[mid];
+			return ui_global.windows[mid];
 
 		if (diff > 0)
 			max = mid;
@@ -674,8 +674,8 @@ uiNode_t *UI_GetWindow (const char *name)
 void UI_InvalidateStack (void)
 {
 	int pos;
-	for (pos = 0; pos < uiGlobal.windowStackPos; pos++) {
-		UI_Invalidate(uiGlobal.windowStack[pos]);
+	for (pos = 0; pos < ui_global.windowStackPos; pos++) {
+		UI_Invalidate(ui_global.windowStack[pos]);
 	}
 	Cvar_SetValue("mn_sys_screenwidth", viddef.virtualWidth);
 	Cvar_SetValue("mn_sys_screenheight", viddef.virtualHeight);
@@ -700,23 +700,23 @@ void UI_InsertWindow (uiNode_t* window)
 	int pos = 0;
 	int i;
 
-	if (uiGlobal.numWindows >= MAX_WINDOWS)
+	if (ui_global.numWindows >= MAX_WINDOWS)
 		Com_Error(ERR_FATAL, "UI_InsertWindow: hit MAX_WINDOWS");
 
 	/* search the insertion position */
-	for (pos = 0; pos < uiGlobal.numWindows; pos++) {
-		const uiNode_t* node = uiGlobal.windows[pos];
+	for (pos = 0; pos < ui_global.numWindows; pos++) {
+		const uiNode_t* node = ui_global.windows[pos];
 		if (strcmp(window->name, node->name) < 0)
 			break;
 	}
 
 	/* create the space */
-	for (i = uiGlobal.numWindows - 1; i >= pos; i--)
-		uiGlobal.windows[i + 1] = uiGlobal.windows[i];
+	for (i = ui_global.numWindows - 1; i >= pos; i--)
+		ui_global.windows[i + 1] = ui_global.windows[i];
 
 	/* insert */
-	uiGlobal.windows[pos] = window;
-	uiGlobal.numWindows++;
+	ui_global.windows[pos] = window;
+	ui_global.numWindows++;
 }
 
 /**

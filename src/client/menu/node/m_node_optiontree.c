@@ -90,7 +90,7 @@ static uiNode_t* UI_OptionTreeNodeGetFirstOption (uiNode_t * node)
 {
 	if (node->firstChild) {
 		/** FIXME it MUST be an option behaviour */
-		assert(node->firstChild->behaviour == optionBehaviour);
+		assert(node->firstChild->behaviour == ui_optionBehaviour);
 		return node->firstChild;
 	} else {
 		const int v = UI_GetDataVersion(EXTRADATA(node).dataId);

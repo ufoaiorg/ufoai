@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * Allow to check if a node is an option without string check
  */
-const uiBehaviour_t *optionBehaviour = NULL;
+const uiBehaviour_t *ui_optionBehaviour = NULL;
 
 #define EXTRADATA_TYPE optionExtraData_t
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
@@ -51,7 +51,7 @@ int UI_OptionUpdateCache (uiNode_t* option)
 	int count = 0;
 	while (option) {
 		int localCount = 0;
-		assert(option->behaviour == optionBehaviour);
+		assert(option->behaviour == ui_optionBehaviour);
 		if (option->invis) {
 			option = option->next;
 			continue;
@@ -75,7 +75,7 @@ static void UI_OptionDoLayout (uiNode_t *node) {
 	uiNode_t *child = node->firstChild;
 	int count = 0;
 
-	while(child && child->behaviour == optionBehaviour) {
+	while(child && child->behaviour == ui_optionBehaviour) {
 		UI_Validate(child);
 		if (!child->invis) {
 			if (EXTRADATA(child).collapsed)
@@ -95,7 +95,7 @@ static void UI_OptionPropertyChanged (uiNode_t *node, const value_t *property)
 		UI_Invalidate(node);
 		return;
 	}
-	optionBehaviour->super->propertyChanged(node, property);
+	ui_optionBehaviour->super->propertyChanged(node, property);
 }
 
 /** @brief valid properties for options (used by selectbox, tab, optonlist and optiontree) */
@@ -132,5 +132,5 @@ void UI_RegisterOptionNode (uiBehaviour_t *behaviour)
 
 	propertyCollapsed = UI_GetPropertyFromBehaviour(behaviour, "collapsed");
 
-	optionBehaviour = behaviour;
+	ui_optionBehaviour = behaviour;
 }

@@ -87,10 +87,10 @@ typedef struct uiGlobal_s {
 
 } uiGlobal_t;
 
-extern uiGlobal_t uiGlobal;
+extern uiGlobal_t ui_global;
 
-extern struct memPool_s *mn_sysPool;
-extern struct memPool_s *mn_dynStringPool;
-extern struct memPool_s *mn_dynPool;
+extern struct memPool_s *ui_sysPool;
+extern struct memPool_s *ui_dynStringPool;
+extern struct memPool_s *ui_dynPool;
 
 #endif

@@ -98,8 +98,8 @@ static uiIcon_t* UI_AutoGenerateIcon (const char* name)
 static qboolean UI_IconExists (const char* name)
 {
 	int i;
-	for (i = 0; i < uiGlobal.numIcons; i++) {
-		if (strncmp(name, uiGlobal.icons[i].name, MEMBER_SIZEOF(uiIcon_t, name)) != 0)
+	for (i = 0; i < ui_global.numIcons; i++) {
+		if (strncmp(name, ui_global.icons[i].name, MEMBER_SIZEOF(uiIcon_t, name)) != 0)
 			continue;
 		return qtrue;
 	}
@@ -116,10 +116,10 @@ static qboolean UI_IconExists (const char* name)
 uiIcon_t* UI_GetIconByName (const char* name)
 {
 	int i;
-	for (i = 0; i < uiGlobal.numIcons; i++) {
-		if (strncmp(name, uiGlobal.icons[i].name, MEMBER_SIZEOF(uiIcon_t, name)) != 0)
+	for (i = 0; i < ui_global.numIcons; i++) {
+		if (strncmp(name, ui_global.icons[i].name, MEMBER_SIZEOF(uiIcon_t, name)) != 0)
 			continue;
-		return &uiGlobal.icons[i];
+		return &ui_global.icons[i];
 	}
 	return UI_AutoGenerateIcon(name);
 }
@@ -137,11 +137,11 @@ uiIcon_t* UI_AllocStaticIcon (const char* name)
 #ifdef DEBUG
 	assert(!UI_IconExists(name));
 #endif
-	if (uiGlobal.numIcons >= MAX_MENUICONS)
+	if (ui_global.numIcons >= MAX_MENUICONS)
 		Com_Error(ERR_FATAL, "UI_AllocStaticIcon: MAX_MENUICONS hit");
 
-	result = &uiGlobal.icons[uiGlobal.numIcons];
-	uiGlobal.numIcons++;
+	result = &ui_global.icons[ui_global.numIcons];
+	ui_global.numIcons++;
 
 	memset(result, 0, sizeof(*result));
 	Q_strncpyz(result->name, name, sizeof(result->name));

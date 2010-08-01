@@ -271,7 +271,7 @@ void UI_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t *
 			break;
 		case '#':	/* window index */
 			/** FIXME use a warning instead of an assert */
-			assert(node->behaviour == windowBehaviour);
+			assert(node->behaviour == ui_windowBehaviour);
 			node = UI_WindowNodeGetIndexedChild(node, name);
 			break;
 		case '@':	/* property */
@@ -329,16 +329,16 @@ static uiNode_t* UI_AllocNodeWithoutNew (const char* name, const char* type, qbo
 	nodeSize = sizeof(*node) + behaviour->extraDataSize;
 
 	if (!isDynamic) {
-		if (uiGlobal.curadata + nodeSize > uiGlobal.adata + uiGlobal.adataize)
+		if (ui_global.curadata + nodeSize > ui_global.adata + ui_global.adataize)
 			Com_Error(ERR_FATAL, "UI_AllocNodeWithoutNew: No more memory to allocate a new node");
-		node = (uiNode_t*) uiGlobal.curadata;
+		node = (uiNode_t*) ui_global.curadata;
 		/** @todo fix this hard coded '8' value */
-		uiGlobal.curadata = ALIGN_PTR(uiGlobal.curadata, 8);
-		uiGlobal.curadata += nodeSize;
-		uiGlobal.numNodes++;
+		ui_global.curadata = ALIGN_PTR(ui_global.curadata, 8);
+		ui_global.curadata += nodeSize;
+		ui_global.numNodes++;
 		memset(node, 0, nodeSize);
 	} else {
-		node = (uiNode_t*)Mem_PoolAlloc(nodeSize, mn_dynPool, 0);
+		node = (uiNode_t*)Mem_PoolAlloc(nodeSize, ui_dynPool, 0);
 		memset(node, 0, nodeSize);
 		node->dynamic = qtrue;
 	}
@@ -458,8 +458,8 @@ uiNode_t *UI_GetNodeAtPosition (int x, int y)
 	int pos;
 
 	/* find the first menu under the mouse */
-	for (pos = uiGlobal.windowStackPos - 1; pos >= 0; pos--) {
-		uiNode_t *menu = uiGlobal.windowStack[pos];
+	for (pos = ui_global.windowStackPos - 1; pos >= 0; pos--) {
+		uiNode_t *menu = ui_global.windowStack[pos];
 		uiNode_t *find;
 
 		/* update the layout */

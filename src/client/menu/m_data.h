@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct linkedList_s;
 struct uiIcon_s;
 
-/** @brief linked into uiGlobal.menuText - defined in menu scripts via num */
+/** @brief linked into ui_global.menuText - defined in menu scripts via num */
 typedef enum {
 	TEXT_NULL,		/**< default value, should not be used */
 	TEXT_STANDARD,

@@ -164,10 +164,10 @@ float* UI_AllocStaticFloat (int count)
 {
 	float *result;
 	assert(count > 0);
-	uiGlobal.curadata = ALIGN_PTR(uiGlobal.curadata, sizeof(float));
-	result = (float*) uiGlobal.curadata;
-	uiGlobal.curadata += sizeof(float) * count;
-	if (uiGlobal.curadata - uiGlobal.adata > uiGlobal.adataize)
+	ui_global.curadata = ALIGN_PTR(ui_global.curadata, sizeof(float));
+	result = (float*) ui_global.curadata;
+	ui_global.curadata += sizeof(float) * count;
+	if (ui_global.curadata - ui_global.adata > ui_global.adataize)
 		Com_Error(ERR_FATAL, "UI_AllocFloat: Menu memory hunk exceeded - increase the size");
 	return result;
 }
@@ -182,10 +182,10 @@ vec4_t* UI_AllocStaticColor (int count)
 {
 	vec4_t *result;
 	assert(count > 0);
-	uiGlobal.curadata = ALIGN_PTR(uiGlobal.curadata, sizeof(vec_t));
-	result = (vec4_t*) uiGlobal.curadata;
-	uiGlobal.curadata += sizeof(vec_t) * 4 * count;
-	if (uiGlobal.curadata - uiGlobal.adata > uiGlobal.adataize)
+	ui_global.curadata = ALIGN_PTR(ui_global.curadata, sizeof(vec_t));
+	result = (vec4_t*) ui_global.curadata;
+	ui_global.curadata += sizeof(vec_t) * 4 * count;
+	if (ui_global.curadata - ui_global.adata > ui_global.adataize)
 		Com_Error(ERR_FATAL, "UI_AllocColor: Menu memory hunk exceeded - increase the size");
 	return result;
 }
@@ -199,17 +199,17 @@ vec4_t* UI_AllocStaticColor (int count)
  */
 char* UI_AllocStaticString (const char* string, int size)
 {
-	char* result = (char *)uiGlobal.curadata;
-	uiGlobal.curadata = ALIGN_PTR(uiGlobal.curadata, sizeof(char));
+	char* result = (char *)ui_global.curadata;
+	ui_global.curadata = ALIGN_PTR(ui_global.curadata, sizeof(char));
 	if (size != 0) {
-		if (uiGlobal.curadata - uiGlobal.adata + size > uiGlobal.adataize)
+		if (ui_global.curadata - ui_global.adata + size > ui_global.adataize)
 			Com_Error(ERR_FATAL, "UI_AllocString: Menu memory hunk exceeded - increase the size");
-		strncpy((char *)uiGlobal.curadata, string, size);
-		uiGlobal.curadata += size;
+		strncpy((char *)ui_global.curadata, string, size);
+		ui_global.curadata += size;
 	} else {
-		if (uiGlobal.curadata - uiGlobal.adata + strlen(string) + 1 > uiGlobal.adataize)
+		if (ui_global.curadata - ui_global.adata + strlen(string) + 1 > ui_global.adataize)
 			Com_Error(ERR_FATAL, "UI_AllocString: Menu memory hunk exceeded - increase the size");
-		uiGlobal.curadata += sprintf((char *)uiGlobal.curadata, "%s", string) + 1;
+		ui_global.curadata += sprintf((char *)ui_global.curadata, "%s", string) + 1;
 	}
 	return result;
 }
@@ -220,9 +220,9 @@ char* UI_AllocStaticString (const char* string, int size)
  */
 uiAction_t *UI_AllocStaticAction (void)
 {
-	if (uiGlobal.numActions >= MAX_MENUACTIONS)
+	if (ui_global.numActions >= MAX_MENUACTIONS)
 		Com_Error(ERR_FATAL, "UI_AllocAction: Too many menu actions");
-	return &uiGlobal.actions[uiGlobal.numActions++];
+	return &ui_global.actions[ui_global.numActions++];
 }
 
 /**
@@ -260,12 +260,12 @@ qboolean UI_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_
 			Com_Printf("UI_ParseRawValue: setter for property '%s' (type %d, 0x%X) is not supported (%s)\n", property->string, property->type, property->type, UI_GetPath(node));
 			return qfalse;
 		}
-		uiGlobal.curadata = Com_AlignPtr(uiGlobal.curadata, property->type & V_BASETYPEMASK);
+		ui_global.curadata = Com_AlignPtr(ui_global.curadata, property->type & V_BASETYPEMASK);
 		action->type = EA_VALUE_RAW;
-		action->d.terminal.d1.data = uiGlobal.curadata;
+		action->d.terminal.d1.data = ui_global.curadata;
 		action->d.terminal.d2.integer = property->type;
-		/** @todo we should hide use of uiGlobal.curadata */
-		uiGlobal.curadata += Com_EParseValue(uiGlobal.curadata, string, property->type & V_BASETYPEMASK, 0, property->size);
+		/** @todo we should hide use of ui_global.curadata */
+		ui_global.curadata += Com_EParseValue(ui_global.curadata, string, property->type & V_BASETYPEMASK, 0, property->size);
 		return qtrue;
 	}
 	return qfalse;
@@ -616,20 +616,20 @@ static qboolean UI_ParseExcludeRect (uiNode_t * node, const char **text, const c
 		}
 	} while ((*token)[0] != '}');
 
-	if (uiGlobal.numExcludeRect >= MAX_EXLUDERECTS) {
+	if (ui_global.numExcludeRect >= MAX_EXLUDERECTS) {
 		Com_Printf("UI_ParseExcludeRect: exluderect limit exceeded (max: %i)\n", MAX_EXLUDERECTS);
 		return qfalse;
 	}
 
 	/* copy the rect into the global structure */
-	uiGlobal.excludeRect[uiGlobal.numExcludeRect] = rect;
+	ui_global.excludeRect[ui_global.numExcludeRect] = rect;
 
 	/* link only the first element */
 	if (node->excludeRect == NULL) {
-		node->excludeRect = &uiGlobal.excludeRect[uiGlobal.numExcludeRect];
+		node->excludeRect = &ui_global.excludeRect[ui_global.numExcludeRect];
 	}
 
-	uiGlobal.numExcludeRect++;
+	ui_global.numExcludeRect++;
 	node->excludeRectNum++;
 
 	return qtrue;
@@ -718,8 +718,8 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 		}
 
 		/* a reference to data is handled like this */
-		uiGlobal.curadata = Com_AlignPtr(uiGlobal.curadata, property->type & V_BASETYPEMASK);
-		*(byte **) ((byte *) object + property->ofs) = uiGlobal.curadata;
+		ui_global.curadata = Com_AlignPtr(ui_global.curadata, property->type & V_BASETYPEMASK);
+		*(byte **) ((byte *) object + property->ofs) = ui_global.curadata;
 
 		/** @todo check for the moment its not a cvar */
 		assert((*token)[0] != '*');
@@ -730,12 +730,12 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 			return qfalse;
 		}
 
-		result = Com_ParseValue(uiGlobal.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size, &bytes);
+		result = Com_ParseValue(ui_global.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size, &bytes);
 		if (result != RESULT_OK) {
 			Com_Printf("UI_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 			return qfalse;
 		}
-		uiGlobal.curadata += bytes;
+		ui_global.curadata += bytes;
 
 		break;
 
@@ -751,8 +751,8 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 		/* references are parsed as string */
 		if ((*token)[0] == '*') {
 			/* a reference to data */
-			uiGlobal.curadata = Com_AlignPtr(uiGlobal.curadata, V_STRING);
-			*(byte **) valuePtr = uiGlobal.curadata;
+			ui_global.curadata = Com_AlignPtr(ui_global.curadata, V_STRING);
+			*(byte **) valuePtr = ui_global.curadata;
 
 			/* sanity check */
 			if (strlen(*token) > MAX_VAR - 1) {
@@ -760,16 +760,16 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 				return qfalse;
 			}
 
-			result = Com_ParseValue(uiGlobal.curadata, *token, V_STRING, 0, 0, &bytes);
+			result = Com_ParseValue(ui_global.curadata, *token, V_STRING, 0, 0, &bytes);
 			if (result != RESULT_OK) {
 				Com_Printf("UI_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 				return qfalse;
 			}
-			uiGlobal.curadata += bytes;
+			ui_global.curadata += bytes;
 		} else {
 			/* a reference to data */
-			uiGlobal.curadata = Com_AlignPtr(uiGlobal.curadata, property->type & V_BASETYPEMASK);
-			*(byte **) valuePtr = uiGlobal.curadata;
+			ui_global.curadata = Com_AlignPtr(ui_global.curadata, property->type & V_BASETYPEMASK);
+			*(byte **) valuePtr = ui_global.curadata;
 
 			/* sanity check */
 			if ((property->type & V_BASETYPEMASK) == V_STRING && strlen(*token) > MAX_VAR - 1) {
@@ -777,12 +777,12 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 				return qfalse;
 			}
 
-			result = Com_ParseValue(uiGlobal.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size, &bytes);
+			result = Com_ParseValue(ui_global.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size, &bytes);
 			if (result != RESULT_OK) {
 				Com_Printf("UI_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 				return qfalse;
 			}
-			uiGlobal.curadata += bytes;
+			ui_global.curadata += bytes;
 		}
 		break;
 
@@ -961,7 +961,7 @@ static qboolean UI_ParseNodeBody (uiNode_t * node, const char **text, const char
 			return qfalse;
 		if ((*token)[0] != '{') {
 			Com_Printf("UI_ParseNodeBody: node doesn't have body, token '%s' read (node \"%s\")\n", *token, UI_GetPath(node));
-			uiGlobal.numNodes--;
+			ui_global.numNodes--;
 			return qfalse;
 		}
 	}
@@ -1015,7 +1015,7 @@ static qboolean UI_ParseNodeBody (uiNode_t * node, const char **text, const char
 	}
 	if (!result) {
 		Com_Printf("UI_ParseNodeBody: node with bad body ignored (node \"%s\")\n", UI_GetPath(node));
-		uiGlobal.numNodes--;
+		ui_global.numNodes--;
 		return qfalse;
 	}
 
@@ -1126,25 +1126,25 @@ void UI_ParseMenuModel (const char *name, const char **text)
 	const char *errhead = "UI_ParseMenuModel: unexpected end of file (names ";
 
 	/* search for menumodels with same name */
-	for (i = 0; i < uiGlobal.numMenuModels; i++)
-		if (!strcmp(uiGlobal.menuModels[i].id, name)) {
+	for (i = 0; i < ui_global.numMenuModels; i++)
+		if (!strcmp(ui_global.menuModels[i].id, name)) {
 			Com_Printf("UI_ParseMenuModel: menu_model \"%s\" with same name found, second ignored\n", name);
 			return;
 		}
 
-	if (uiGlobal.numMenuModels >= MAX_MENUMODELS) {
+	if (ui_global.numMenuModels >= MAX_MENUMODELS) {
 		Com_Printf("UI_ParseMenuModel: Max menu models reached\n");
 		return;
 	}
 
 	/* initialize the menu */
-	menuModel = &uiGlobal.menuModels[uiGlobal.numMenuModels];
+	menuModel = &ui_global.menuModels[ui_global.numMenuModels];
 	memset(menuModel, 0, sizeof(*menuModel));
 
 	Vector4Set(menuModel->color, 1, 1, 1, 1);
 
-	menuModel->id = Mem_PoolStrDup(name, mn_sysPool, 0);
-	Com_DPrintf(DEBUG_CLIENT, "Found menu model %s (%i)\n", menuModel->id, uiGlobal.numMenuModels);
+	menuModel->id = Mem_PoolStrDup(name, ui_sysPool, 0);
+	Com_DPrintf(DEBUG_CLIENT, "Found menu model %s (%i)\n", menuModel->id, ui_global.numMenuModels);
 
 	/* get it's body */
 	token = Com_Parse(text);
@@ -1154,7 +1154,7 @@ void UI_ParseMenuModel (const char *name, const char **text)
 		return;
 	}
 
-	uiGlobal.numMenuModels++;
+	ui_global.numMenuModels++;
 
 	do {
 		/* get the name type */
@@ -1176,7 +1176,7 @@ void UI_ParseMenuModel (const char *name, const char **text)
 				menuModel->next = UI_GetMenuModel(token);
 				if (!menuModel->next)
 					Com_Printf("Could not find menumodel %s", token);
-				menuModel->need = Mem_PoolStrDup(token, mn_sysPool, 0);
+				menuModel->need = Mem_PoolStrDup(token, ui_sysPool, 0);
 			}
 		} else {
 			token = Com_EParse(text, errhead, name);
@@ -1184,7 +1184,7 @@ void UI_ParseMenuModel (const char *name, const char **text)
 				return;
 			switch (v->type) {
 			case V_CLIENT_HUNK_STRING:
-				Mem_PoolStrDupTo(token, (char**) ((char*)menuModel + (int)v->ofs), mn_sysPool, 0);
+				Mem_PoolStrDupTo(token, (char**) ((char*)menuModel + (int)v->ofs), ui_sysPool, 0);
 				break;
 			default:
 				Com_EParseValue(menuModel, token, v->type, v->ofs, v->size);
@@ -1294,15 +1294,15 @@ void UI_ParseWindow (const char *type, const char *name, const char **text)
 	}
 
 	/* search for menus with same name */
-	for (i = 0; i < uiGlobal.numWindows; i++)
-		if (!strncmp(name, uiGlobal.windows[i]->name, sizeof(uiGlobal.windows[i]->name)))
+	for (i = 0; i < ui_global.numWindows; i++)
+		if (!strncmp(name, ui_global.windows[i]->name, sizeof(ui_global.windows[i]->name)))
 			break;
 
-	if (i < uiGlobal.numWindows) {
+	if (i < ui_global.numWindows) {
 		Com_Printf("UI_ParseWindow: %s \"%s\" with same name found, second ignored\n", type, name);
 	}
 
-	if (uiGlobal.numWindows >= MAX_WINDOWS) {
+	if (ui_global.numWindows >= MAX_WINDOWS) {
 		Com_Error(ERR_FATAL, "UI_ParseWindow: max menus exceeded (%i) - ignore '%s'\n", MAX_WINDOWS, name);
 		return;	/* never reached */
 	}

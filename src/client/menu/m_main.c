@@ -35,14 +35,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 cvar_t *mn_sequence;
 cvar_t *mn_hud;
 
-uiGlobal_t uiGlobal;
+uiGlobal_t ui_global;
 
-struct memPool_s *mn_dynStringPool;
-struct memPool_s *mn_dynPool;
-struct memPool_s *mn_sysPool;
+struct memPool_s *ui_dynStringPool;
+struct memPool_s *ui_dynPool;
+struct memPool_s *ui_sysPool;
 
 #ifdef DEBUG
-static cvar_t *mn_debug;
+static cvar_t *ui_debug;
 #endif
 
 /**
@@ -67,7 +67,7 @@ static void UI_CheckCvar (const cvar_t *cvar)
 int UI_DebugMode (void)
 {
 #ifdef DEBUG
-	return mn_debug->integer;
+	return ui_debug->integer;
 #else
 	return 0;
 #endif
@@ -204,17 +204,17 @@ static void UI_Memory_f (void)
 	const size_t nodeSize = sizeof(uiNode_t);
 	size_t size;
 	Com_Printf("Allocation:\n");
-	Com_Printf("\t-Window allocation: %i/%i\n", uiGlobal.numWindows, MAX_WINDOWS);
+	Com_Printf("\t-Window allocation: %i/%i\n", ui_global.numWindows, MAX_WINDOWS);
 	Com_Printf("\t-Rendering menu stack slot: %i\n", MAX_MENUSTACK);
-	Com_Printf("\t-Action allocation: %i/%i\n", uiGlobal.numActions, MAX_MENUACTIONS);
-	Com_Printf("\t-Model allocation: %i/%i\n", uiGlobal.numMenuModels, MAX_MENUMODELS);
-	Com_Printf("\t-Exclude rect allocation: %i/%i\n", uiGlobal.numExcludeRect, MAX_EXLUDERECTS);
-	Com_Printf("\t -Node allocation: %i\n", uiGlobal.numNodes);
+	Com_Printf("\t-Action allocation: %i/%i\n", ui_global.numActions, MAX_MENUACTIONS);
+	Com_Printf("\t-Model allocation: %i/%i\n", ui_global.numMenuModels, MAX_MENUMODELS);
+	Com_Printf("\t-Exclude rect allocation: %i/%i\n", ui_global.numExcludeRect, MAX_EXLUDERECTS);
+	Com_Printf("\t -Node allocation: %i\n", ui_global.numNodes);
 
 	Com_Printf("Memory:\n");
 	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(uiAction_t));
 	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(menuModel_t));
-	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B x%d\n", sizeof(uiNode_t), uiGlobal.numNodes);
+	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B x%d\n", sizeof(uiNode_t), ui_global.numNodes);
 	for (i = 0; i < UI_GetNodeBehaviourCount(); i++) {
 		uiBehaviour_t *b = UI_GetNodeBehaviourByIndex(i);
 		Com_Printf("\t -Behaviour %20s structure size: "UFO_SIZE_T" (+"UFO_SIZE_T" B) x%4u\n", b->name, sizeof(uiNode_t) + b->extraDataSize, b->extraDataSize, b->count);
@@ -226,13 +226,13 @@ static void UI_Memory_f (void)
 		size += nodeSize * b->count + b->extraDataSize * b->count;
 	}
 	Com_Printf("Global memory:\n");
-	Com_Printf("\t-System pool: %ui B\n", _Mem_PoolSize(mn_sysPool));
-	Com_Printf("\t -AData allocation: "UFO_SIZE_T"/%i B\n", (ptrdiff_t)(uiGlobal.curadata - uiGlobal.adata), uiGlobal.adataize);
+	Com_Printf("\t-System pool: %ui B\n", _Mem_PoolSize(ui_sysPool));
+	Com_Printf("\t -AData allocation: "UFO_SIZE_T"/%i B\n", (ptrdiff_t)(ui_global.curadata - ui_global.adata), ui_global.adataize);
 	Com_Printf("\t -AData used by nodes: "UFO_SIZE_T" B\n", size);
-	Com_Printf("\t-Dynamic node/data pool: %ui B\n", _Mem_PoolSize(mn_dynPool));
-	Com_Printf("\t-Dynamic strings pool: %ui B\n", _Mem_PoolSize(mn_dynStringPool));
+	Com_Printf("\t-Dynamic node/data pool: %ui B\n", _Mem_PoolSize(ui_dynPool));
+	Com_Printf("\t-Dynamic strings pool: %ui B\n", _Mem_PoolSize(ui_dynStringPool));
 
-	size = _Mem_PoolSize(mn_sysPool) + _Mem_PoolSize(mn_dynPool) + _Mem_PoolSize(mn_dynStringPool);
+	size = _Mem_PoolSize(ui_sysPool) + _Mem_PoolSize(ui_dynPool) + _Mem_PoolSize(ui_dynStringPool);
 	Com_Printf("\t-Full size: "UFO_SIZE_T" B\n", size);
 }
 #endif
@@ -277,14 +277,14 @@ void UI_Shutdown (void)
 	const uiBehaviour_t *confunc;
 
 	/* MN is not yet initialized */
-	if (uiGlobal.adata == NULL)
+	if (ui_global.adata == NULL)
 		return;
 
 	confunc = UI_GetNodeBehaviour("confunc");
 
 	/* remove all confunc commands */
-	for (i = 0; i < uiGlobal.numWindows; i++) {
-		uiNode_t *node = uiGlobal.windows[i];
+	for (i = 0; i < ui_global.numWindows; i++) {
+		uiNode_t *node = ui_global.windows[i];
 		while (node) {
 
 			/* remove the command */
@@ -309,18 +309,18 @@ void UI_Shutdown (void)
 		}
 	}
 
-	if (uiGlobal.adataize)
-		Mem_Free(uiGlobal.adata);
-	uiGlobal.adata = NULL;
-	uiGlobal.adataize = 0;
+	if (ui_global.adataize)
+		Mem_Free(ui_global.adata);
+	ui_global.adata = NULL;
+	ui_global.adataize = 0;
 
 	/* release pools */
-	Mem_FreePool(mn_sysPool);
-	Mem_FreePool(mn_dynStringPool);
-	Mem_FreePool(mn_dynPool);
-	mn_sysPool = NULL;
-	mn_dynStringPool = NULL;
-	mn_dynPool = NULL;
+	Mem_FreePool(ui_sysPool);
+	Mem_FreePool(ui_dynStringPool);
+	Mem_FreePool(ui_dynPool);
+	ui_sysPool = NULL;
+	ui_dynStringPool = NULL;
+	ui_dynPool = NULL;
 }
 
 #define MENU_HUNK_SIZE 2*1024*1024
@@ -328,17 +328,19 @@ void UI_Shutdown (void)
 void UI_Init (void)
 {
 #ifdef DEBUG
-	mn_debug = Cvar_Get("debug_menu", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");
+	ui_debug = Cvar_Get("debug_ui", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");
 #endif
 
 	/* reset menu structures */
-	memset(&uiGlobal, 0, sizeof(uiGlobal));
+	memset(&ui_global, 0, sizeof(ui_global));
 
 	/* add cvars */
+	/** @todo not sure it is a ui var */
 	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "This is the sequence menu to render the sequence in");
-	/** @todo should be a client Cvar, not a menu */
+	/** @todo should be a client Cvar, not a ui */
 	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE | CVAR_LATCH, "This is the current selected hud");
-	mn_sounds = Cvar_Get("mn_sounds", "1", CVAR_ARCHIVE, "Activates menu sounds");
+
+	ui_sounds = Cvar_Get("ui_sounds", "1", CVAR_ARCHIVE, "Activates UI sounds");
 
 	/* add menu commands */
 	Cmd_AddCommand("mn_modify", UI_Modify_f, NULL);
@@ -348,14 +350,14 @@ void UI_Init (void)
 	Cmd_AddCommand("debug_mnmemory", UI_Memory_f, "Display info about menu memory allocation");
 #endif
 
-	mn_sysPool = Mem_CreatePool("Client: UI");
-	mn_dynStringPool = Mem_CreatePool("Client: Dynamic string for UI");
-	mn_dynPool = Mem_CreatePool("Client: Dynamic memory for UI");
+	ui_sysPool = Mem_CreatePool("Client: UI");
+	ui_dynStringPool = Mem_CreatePool("Client: Dynamic string for UI");
+	ui_dynPool = Mem_CreatePool("Client: Dynamic memory for UI");
 
 	/* 256kb */
-	uiGlobal.adataize = MENU_HUNK_SIZE;
-	uiGlobal.adata = (byte*)Mem_PoolAlloc(uiGlobal.adataize, mn_sysPool, 0);
-	uiGlobal.curadata = uiGlobal.adata;
+	ui_global.adataize = MENU_HUNK_SIZE;
+	ui_global.adata = (byte*)Mem_PoolAlloc(ui_global.adataize, ui_sysPool, 0);
+	ui_global.curadata = ui_global.adata;
 
 	UI_InitData();
 	UI_InitNodes();

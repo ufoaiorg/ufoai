@@ -382,7 +382,7 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 
 				if (!strncmp(value, "*cvar", 5)) {
 					UI_FreeStringProperty(*(void**)b);
-					*(char**) b = Mem_PoolStrDup(value, mn_dynStringPool, 0);
+					*(char**) b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
 					node->behaviour->propertyChanged(node, property);
 					return qtrue;
 				}
@@ -405,7 +405,7 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 		case V_CVAR_OR_STRING:
 			{
 				UI_FreeStringProperty(*(void**)b);
-				*(char**) b = Mem_PoolStrDup(value, mn_dynStringPool, 0);
+				*(char**) b = Mem_PoolStrDup(value, ui_dynStringPool, 0);
 				node->behaviour->propertyChanged(node, property);
 				return qtrue;
 			}

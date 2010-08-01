@@ -87,7 +87,7 @@ void UI_ParseFont (const char *name, const char **text)
 	font = &fonts[numFonts];
 	memset(font, 0, sizeof(*font));
 
-	font->name = Mem_PoolStrDup(name, mn_sysPool, 0);
+	font->name = Mem_PoolStrDup(name, ui_sysPool, 0);
 
 	Com_DPrintf(DEBUG_CLIENT, "...found font %s (%i)\n", font->name, numFonts);
 
@@ -120,7 +120,7 @@ void UI_ParseFont (const char *name, const char **text)
 				case V_TRANSLATION_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)font + (int)v->ofs), mn_sysPool, 0);
+					Mem_PoolStrDupTo(token, (char**) ((char*)font + (int)v->ofs), ui_sysPool, 0);
 					break;
 				default:
 					Com_EParseValue(font, token, v->type, v->ofs, v->size);

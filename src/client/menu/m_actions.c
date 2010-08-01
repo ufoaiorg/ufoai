@@ -644,11 +644,11 @@ qboolean UI_IsInjectedString (const char *string)
 void UI_FreeStringProperty (void* pointer)
 {
 	/* skip const string */
-	if ((uintptr_t)uiGlobal.adata <= (uintptr_t)pointer && (uintptr_t)pointer < (uintptr_t)uiGlobal.adata + (uintptr_t)uiGlobal.adataize)
+	if ((uintptr_t)ui_global.adata <= (uintptr_t)pointer && (uintptr_t)pointer < (uintptr_t)ui_global.adata + (uintptr_t)ui_global.adataize)
 		return;
 
 	/* skip pointer out of mn_dynStringPool */
-	if (!_Mem_AllocatedInPool(mn_dynStringPool, pointer))
+	if (!_Mem_AllocatedInPool(ui_dynStringPool, pointer))
 		return;
 
 	Mem_Free(pointer);
@@ -673,7 +673,7 @@ uiAction_t* UI_AllocStaticCommandAction (char *command)
  * @param[in] type Only @c EA_CMD is supported
  * @param[in] data The data for this action - in case of @c EA_CMD this is the commandline
  * @note You first have to free existing node actions - only free those that are
- * not static in @c uiGlobal.menuActions array
+ * not static in @c ui_global.menuActions array
  * @todo we should create a function to free the memory. We can use a tag in the Mem_PoolAlloc
  * calls and use use Mem_FreeTag.
  */
@@ -681,11 +681,11 @@ void UI_PoolAllocAction (uiAction_t** action, int type, const void *data)
 {
 	if (*action)
 		Com_Error(ERR_FATAL, "There is already an action assigned");
-	*action = (uiAction_t *)Mem_PoolAlloc(sizeof(**action), mn_sysPool, 0);
+	*action = (uiAction_t *)Mem_PoolAlloc(sizeof(**action), ui_sysPool, 0);
 	(*action)->type = type;
 	switch (type) {
 	case EA_CMD:
-		(*action)->d.terminal.d1.string = Mem_PoolStrDup((const char *)data, mn_sysPool, 0);
+		(*action)->d.terminal.d1.string = Mem_PoolStrDup((const char *)data, ui_sysPool, 0);
 		break;
 	default:
 		Com_Error(ERR_FATAL, "Action type %i is not yet implemented", type);
@@ -714,9 +714,9 @@ void UI_AddListener (uiNode_t *node, const value_t *property, uiNode_t *function
 	}
 
 	/* create the call action */
-	action = (uiAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
-	value = (uiAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
-	value->d.terminal.d1.constString = Mem_PoolStrDup(UI_GetPath(functionNode), mn_sysPool, 0);
+	action = (uiAction_t*) Mem_PoolAlloc(sizeof(*action), ui_sysPool, 0);
+	value = (uiAction_t*) Mem_PoolAlloc(sizeof(*action), ui_sysPool, 0);
+	value->d.terminal.d1.constString = Mem_PoolStrDup(UI_GetPath(functionNode), ui_sysPool, 0);
 	value->next = NULL;
 	action->type = EA_LISTENER;
 	action->d.nonTerminal.left = value;

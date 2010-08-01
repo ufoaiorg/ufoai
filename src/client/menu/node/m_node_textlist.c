@@ -158,7 +158,7 @@ static void UI_TextLineNodeDrawText (uiNode_t* node, const linkedList_t* list)
 static void UI_TextListNodeDraw (uiNode_t *node)
 {
 	const uiSharedData_t *shared;
-	shared = &uiGlobal.sharedData[EXTRADATA(node).dataID];
+	shared = &ui_global.sharedData[EXTRADATA(node).dataID];
 
 	/* nothing set yet? */
 	if (shared->type == UI_SHARED_NONE)

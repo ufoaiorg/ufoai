@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void UI_RegisterOptionNode(struct uiBehaviour_s *behaviour);
 
-extern const struct uiBehaviour_s *optionBehaviour;
+extern const struct uiBehaviour_s *ui_optionBehaviour;
 
 #define OPTIONEXTRADATA_TYPE optionExtraData_t
 #define OPTIONEXTRADATA(node) UI_EXTRADATA(node, OPTIONEXTRADATA_TYPE)

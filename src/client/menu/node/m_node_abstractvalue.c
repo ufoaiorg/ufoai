@@ -53,10 +53,10 @@ static void UI_AbstractValueLoaded (uiNode_t * node)
 
 static void UI_AbstractValueNew (uiNode_t * node)
 {
-	EXTRADATA(node).value = Mem_PoolAlloc(sizeof(float), mn_dynPool, 0);
-	EXTRADATA(node).delta = Mem_PoolAlloc(sizeof(float), mn_dynPool, 0);
-	EXTRADATA(node).max = Mem_PoolAlloc(sizeof(float), mn_dynPool, 0);
-	EXTRADATA(node).min = Mem_PoolAlloc(sizeof(float), mn_dynPool, 0);
+	EXTRADATA(node).value = Mem_PoolAlloc(sizeof(float), ui_dynPool, 0);
+	EXTRADATA(node).delta = Mem_PoolAlloc(sizeof(float), ui_dynPool, 0);
+	EXTRADATA(node).max = Mem_PoolAlloc(sizeof(float), ui_dynPool, 0);
+	EXTRADATA(node).min = Mem_PoolAlloc(sizeof(float), ui_dynPool, 0);
 }
 
 static void UI_AbstractValueDelete (uiNode_t * node)

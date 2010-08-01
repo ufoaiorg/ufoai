@@ -59,8 +59,8 @@ menuModel_t *UI_GetMenuModel (const char *menuModel)
 	int i;
 	menuModel_t *m;
 
-	for (i = 0; i < uiGlobal.numMenuModels; i++) {
-		m = &uiGlobal.menuModels[i];
+	for (i = 0; i < ui_global.numMenuModels; i++) {
+		m = &ui_global.menuModels[i];
 		if (!strncmp(m->id, menuModel, MAX_VAR))
 			return m;
 	}
@@ -72,9 +72,9 @@ void UI_ListMenuModels_f (void)
 	int i;
 
 	/* search for menumodels with same name */
-	Com_Printf("menu models: %i\n", uiGlobal.numMenuModels);
-	for (i = 0; i < uiGlobal.numMenuModels; i++)
-		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", uiGlobal.menuModels[i].id, uiGlobal.menuModels[i].model, uiGlobal.menuModels[i].need);
+	Com_Printf("menu models: %i\n", ui_global.numMenuModels);
+	for (i = 0; i < ui_global.numMenuModels; i++)
+		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", ui_global.menuModels[i].id, ui_global.menuModels[i].model, ui_global.menuModels[i].need);
 }
 
 static void UI_ModelNodeDraw (uiNode_t *node)
@@ -479,7 +479,7 @@ static void UI_ModelNodeClone (const uiNode_t *source, uiNode_t *clone)
 
 static void UI_ModelNodeNew (uiNode_t *node)
 {
-	EXTRADATA(node).oldRefValue = (char*) Mem_PoolAlloc(MAX_OLDREFVALUE, mn_dynPool, 0);
+	EXTRADATA(node).oldRefValue = (char*) Mem_PoolAlloc(MAX_OLDREFVALUE, ui_dynPool, 0);
 	EXTRADATA(node).oldRefValue[0] = '\0';
 }
 

@@ -54,7 +54,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MARGE 3
 
-const uiBehaviour_t const *windowBehaviour;
+const uiBehaviour_t const *ui_windowBehaviour;
 
 static const int CONTROLS_IMAGE_DIMENSIONS = 17;
 static const int CONTROLS_PADDING = 22;
@@ -104,7 +104,7 @@ qboolean UI_WindowNodeAddIndexedNode (uiNode_t* const node, uiNode_t* const chil
 	}
 
 	if (!a) {
-		a = Mem_PoolAlloc(sizeof(*a), mn_sysPool, 0);
+		a = Mem_PoolAlloc(sizeof(*a), ui_sysPool, 0);
 		a->next = EXTRADATA(node).index;
 		a->hash_next = EXTRADATA(node).index_hash[hash];
 		EXTRADATA(node).index_hash[hash] = a;
@@ -163,7 +163,7 @@ static void UI_WindowNodeDraw (uiNode_t *node)
 	}
 
 	/* darker background if last window is a modal */
-	if (EXTRADATA(node).modal && uiGlobal.windowStack[uiGlobal.windowStackPos - 1] == node)
+	if (EXTRADATA(node).modal && ui_global.windowStack[ui_global.windowStackPos - 1] == node)
 		UI_DrawFill(0, 0, viddef.virtualWidth, viddef.virtualHeight, modalBackground);
 
 	/* draw the background */
@@ -216,7 +216,7 @@ static void UI_WindowNodeDoLayout (uiNode_t *node)
 	}
 
 	/* super */
-	windowBehaviour->super->doLayout(node);
+	ui_windowBehaviour->super->doLayout(node);
 }
 
 /**
@@ -469,7 +469,7 @@ uiKeyBinding_t *UI_WindowNodeGetKeyBinding (const struct uiNode_s* const node, u
 
 void UI_RegisterWindowNode (uiBehaviour_t *behaviour)
 {
-	windowBehaviour = behaviour;
+	ui_windowBehaviour = behaviour;
 	behaviour->name = "window";
 	behaviour->loading = UI_WindowNodeLoading;
 	behaviour->loaded = UI_WindowNodeLoaded;

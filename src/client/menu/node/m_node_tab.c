@@ -85,7 +85,7 @@ static uiNode_t* UI_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 	for (option = node->firstChild; option; option = option->next) {
 		int tabWidth;
 		const char *label;
-		assert(option->behaviour == optionBehaviour);
+		assert(option->behaviour == ui_optionBehaviour);
 
 		/* skip hidden options */
 		if (option->invis)
@@ -200,7 +200,7 @@ static void UI_TabNodeDraw (uiNode_t *node)
 	UI_GetNodeAbsPos(node, pos);
 	currentX = pos[0];
 	option = node->firstChild;
-	assert(option->behaviour == optionBehaviour);
+	assert(option->behaviour == ui_optionBehaviour);
 	/** @todo this dont work when an option is hidden */
 	allowedWidth = node->size[0] - TILE_WIDTH * (EXTRADATA(node).count + 1);
 
@@ -212,7 +212,7 @@ static void UI_TabNodeDraw (uiNode_t *node)
 		const char *label;
 		qboolean drawIcon = qfalse;
 		mn_tab_type_t status = UI_TAB_NORMAL;
-		assert(option->behaviour == optionBehaviour);
+		assert(option->behaviour == ui_optionBehaviour);
 
 		/* skip hidden options */
 		if (option->invis) {
@@ -335,7 +335,7 @@ static void UI_TabNodeInit (uiNode_t *node)
 	if (Cvar_FindVar(cvarName) == NULL) {
 		/* search default value, if possible */
 		uiNode_t* option = node->firstChild;
-		assert(option->behaviour == optionBehaviour);
+		assert(option->behaviour == ui_optionBehaviour);
 		if (option)
 			Cvar_ForceSet(cvarName, OPTIONEXTRADATA(option).value);
 	}
