@@ -31,7 +31,7 @@ client_state_t cl;
 /**
  * @brief Check whether we already have actors spawned on the battlefield
  * @sa CL_OnBattlescape
- * @return true when we are in battlefield and have soldiers spawned (game is running)
+ * @return @c true when we are in battlefield and have soldiers spawned (game is running)
  */
 qboolean CL_BattlescapeRunning (void)
 {

@@ -121,9 +121,9 @@ typedef struct {
 	/* sound functions */
 	void (IMPORT *S_StartLocalSample) (const char *s, float volume);
 	void (IMPORT *S_SetSampleRepeatRate) (int sampleRepeatRate);
-	void (IMPORT *R_SoftenTexture) (byte *in, int width, int height, int bpp);
 
 	/* renderer functions */
+	void (IMPORT *R_SoftenTexture) (byte *in, int width, int height, int bpp);
 	void (IMPORT *R_UploadAlpha) (const image_t *image, const byte *alphaData);
 	void (IMPORT *R_LoadImage) (const char *name, byte **pic, int *width, int *height);
 	image_t *(IMPORT *R_LoadImageData) (const char *name, byte * pic, int width, int height, imagetype_t type);
