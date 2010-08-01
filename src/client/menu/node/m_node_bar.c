@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE barExtraData_t
 #define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
-static void MN_BarNodeDraw (menuNode_t *node)
+static void MN_BarNodeDraw (uiNode_t *node)
 {
 	vec4_t color;
 	float fac;
@@ -87,7 +87,7 @@ static void MN_BarNodeDraw (menuNode_t *node)
 /**
  * @brief Called when the node is captured by the mouse
  */
-static void MN_BarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+static void MN_BarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	char var[MAX_VAR];
 	vec2_t pos;
@@ -137,7 +137,7 @@ static void MN_BarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 		MN_ExecuteEventActions(node, node->onChange);
 }
 
-static void MN_BarNodeMouseDown (menuNode_t *node, int x, int y, int button)
+static void MN_BarNodeMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (node->disabled || EXTRADATA(node).readOnly)
 		return;
@@ -148,7 +148,7 @@ static void MN_BarNodeMouseDown (menuNode_t *node, int x, int y, int button)
 	}
 }
 
-static void MN_BarNodeMouseUp (menuNode_t *node, int x, int y, int button)
+static void MN_BarNodeMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1)
 		MN_MouseRelease();
@@ -157,7 +157,7 @@ static void MN_BarNodeMouseUp (menuNode_t *node, int x, int y, int button)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void MN_BarNodeLoading (menuNode_t *node)
+static void MN_BarNodeLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	EXTRADATA(node).orientation = ALIGN_CR;
@@ -179,7 +179,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
+void MN_RegisterBarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "bar";
 	behaviour->extends = "abstractvalue";

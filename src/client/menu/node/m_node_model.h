@@ -66,7 +66,7 @@ typedef struct modelExtraData_s {
 
 menuModel_t *MN_GetMenuModel(const char *menuModel);
 void MN_ListMenuModels_f(void);
-void MN_DrawModelNode(struct menuNode_s *node, const char *source);
-void MN_RegisterModelNode(struct nodeBehaviour_s *behaviour);
+void MN_DrawModelNode(struct uiNode_s *node, const char *source);
+void MN_RegisterModelNode(struct uiBehaviour_s *behaviour);
 
 #endif

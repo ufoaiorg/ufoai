@@ -82,7 +82,7 @@ static const menuTypedActionToken_t actionTokens[] = {
 	{"||", EA_OPERATOR_OR, EA_BINARYOPERATOR},
 };
 
-static void MN_ExecuteInjectedActions(const menuAction_t* firstAction, menuCallContext_t *context);
+static void MN_ExecuteInjectedActions(const uiAction_t* firstAction, uiCallContext_t *context);
 
 /**
  * @brief Check if the action token list is sorted by alphabet,
@@ -160,7 +160,7 @@ static inline const char* MN_GenCommandReadProperty (const char* input, char* ou
  * @param[in] context The execution context
  * @return The requested param
  */
-int MN_GetParamNumber (const menuCallContext_t *context)
+int MN_GetParamNumber (const uiCallContext_t *context)
 {
 	if (context->useCmdParam)
 		return Cmd_Argc();
@@ -173,7 +173,7 @@ int MN_GetParamNumber (const menuCallContext_t *context)
  * @param[in] paramID The ID of the requested param (first param is integer 1)
  * @return The requested param
  */
-const char* MN_GetParam (const menuCallContext_t *context, int paramID)
+const char* MN_GetParam (const uiCallContext_t *context, int paramID)
 {
 	linkedList_t *current;
 	assert(paramID >= 1);
@@ -203,7 +203,7 @@ const char* MN_GetParam (const menuCallContext_t *context, int paramID)
  * cmd "set someCvar &lt;min&gt;/&lt;max&gt;"
  * @endcode
  */
-const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const menuCallContext_t *context)
+const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const uiCallContext_t *context)
 {
 	static char cmd[256];
 	int length = sizeof(cmd) - (addNewLine ? 2 : 1);
@@ -227,7 +227,7 @@ const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const 
 
 				} else if (!strncmp(propertyName, "node:", 5)) {
 					const char *path = propertyName + 5;
-					menuNode_t *node;
+					uiNode_t *node;
 					const value_t *property;
 					const char* string;
 					int l;
@@ -259,7 +259,7 @@ const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const 
 				} else if (!strncmp(propertyName, "path:", 5)) {
 					if (context->source) {
 						const char *command = propertyName + 5;
-						const menuNode_t *node = NULL;
+						const uiNode_t *node = NULL;
 						if (!strcmp(command, "root"))
 							node = context->source->root;
 						else if (!strcmp(command, "this"))
@@ -340,7 +340,7 @@ const char* MN_GenInjectedString (const char* input, qboolean addNewLine, const 
  * @todo refactoring it to remove "context", we should only call that function when the action
  * value is a leaf (then a value, and not an expression)
  */
-static void MN_NodeSetPropertyFromActionValue (menuNode_t *node, const value_t *property, const menuCallContext_t *context, menuAction_t* value)
+static void MN_NodeSetPropertyFromActionValue (uiNode_t *node, const value_t *property, const uiCallContext_t *context, uiAction_t* value)
 {
 	/* @todo we can use a new EA_VALUE type to flag already parsed values, we dont need to do it again and again */
 	/* pre compute value if possible */
@@ -364,13 +364,13 @@ static void MN_NodeSetPropertyFromActionValue (menuNode_t *node, const value_t *
 	}
 }
 
-static inline void MN_ExecuteSetAction (const menuAction_t* action, const menuCallContext_t *context)
+static inline void MN_ExecuteSetAction (const uiAction_t* action, const uiCallContext_t *context)
 {
 	const char* path;
-	menuNode_t *node;
+	uiNode_t *node;
 	const value_t *property;
-	const menuAction_t *left;
-	menuAction_t *right;
+	const uiAction_t *left;
+	uiAction_t *right;
 
 	left = action->d.nonTerminal.left;
 	if (left == NULL) {
@@ -423,12 +423,12 @@ static inline void MN_ExecuteSetAction (const menuAction_t* action, const menuCa
 	MN_NodeSetPropertyFromActionValue(node, property, context, right);
 }
 
-static inline void MN_ExecuteCallAction (const menuAction_t* action, const menuCallContext_t *context)
+static inline void MN_ExecuteCallAction (const uiAction_t* action, const uiCallContext_t *context)
 {
-	menuNode_t* callNode = NULL;
-	menuAction_t* param;
-	menuAction_t* left = action->d.nonTerminal.left;
-	menuCallContext_t newContext;
+	uiNode_t* callNode = NULL;
+	uiAction_t* param;
+	uiAction_t* left = action->d.nonTerminal.left;
+	uiCallContext_t newContext;
 	const value_t* callProperty = NULL;
 	const char* path = left->d.terminal.d1.constString;
 
@@ -481,14 +481,14 @@ static inline void MN_ExecuteCallAction (const menuAction_t* action, const menuC
 	}
 
 	if (callProperty == NULL || callProperty->type == V_UI_ACTION) {
-		menuAction_t *actionsRef = NULL;
+		uiAction_t *actionsRef = NULL;
 		if (callProperty == NULL)
 			actionsRef = callNode->onClick;
 		else
-			actionsRef = *(menuAction_t **) ((byte *) callNode + callProperty->ofs);
+			actionsRef = *(uiAction_t **) ((byte *) callNode + callProperty->ofs);
 		MN_ExecuteInjectedActions(actionsRef, &newContext);
 	} else if (callProperty->type == V_UI_NODEMETHOD) {
-		menuNodeMethod_t func = (menuNodeMethod_t) callProperty->ofs;
+		uiNodeMethod_t func = (uiNodeMethod_t) callProperty->ofs;
 		func(callNode, &newContext);
 	} else {
 		/* unreachable, already checked few line before */
@@ -503,7 +503,7 @@ static inline void MN_ExecuteCallAction (const menuAction_t* action, const menuC
  * @param[in] context Context node
  * @param[in] action Action to execute
  */
-static void MN_ExecuteInjectedAction (const menuAction_t* action, menuCallContext_t *context)
+static void MN_ExecuteInjectedAction (const uiAction_t* action, uiCallContext_t *context)
 {
 	switch (action->type) {
 	case EA_NULL:
@@ -574,10 +574,10 @@ static void MN_ExecuteInjectedAction (const menuAction_t* action, menuCallContex
 	}
 }
 
-static void MN_ExecuteInjectedActions (const menuAction_t* firstAction, menuCallContext_t *context)
+static void MN_ExecuteInjectedActions (const uiAction_t* firstAction, uiCallContext_t *context)
 {
 	static int callnumber = 0;
-	const menuAction_t *action;
+	const uiAction_t *action;
 	if (callnumber++ > 20) {
 		Com_Printf("MN_ExecuteInjectedActions: Possible recursion\n");
 		return;
@@ -591,17 +591,17 @@ static void MN_ExecuteInjectedActions (const menuAction_t* firstAction, menuCall
 /**
  * @brief allow to inject command param into cmd of confunc command
  */
-void MN_ExecuteConFuncActions (const menuNode_t* source, const menuAction_t* firstAction)
+void MN_ExecuteConFuncActions (const uiNode_t* source, const uiAction_t* firstAction)
 {
-	menuCallContext_t context;
+	uiCallContext_t context;
 	context.source = source;
 	context.useCmdParam = qtrue;
 	MN_ExecuteInjectedActions(firstAction, &context);
 }
 
-void MN_ExecuteEventActions (const menuNode_t* source, const menuAction_t* firstAction)
+void MN_ExecuteEventActions (const uiNode_t* source, const uiAction_t* firstAction)
 {
-	menuCallContext_t context;
+	uiCallContext_t context;
 	context.source = source;
 	context.useCmdParam = qfalse;
 	context.paramNumber = 0;
@@ -659,16 +659,16 @@ void MN_FreeStringProperty (void* pointer)
  * @param[in] command A command for the action
  * @return An initialised action
  */
-menuAction_t* MN_AllocStaticCommandAction (char *command)
+uiAction_t* MN_AllocStaticCommandAction (char *command)
 {
-	menuAction_t* action = MN_AllocStaticAction();
+	uiAction_t* action = MN_AllocStaticAction();
 	action->type = EA_CMD;
 	action->d.terminal.d1.string = command;
 	return action;
 }
 
 /**
- * @brief Set a new action to a @c menuAction_t pointer
+ * @brief Set a new action to a @c uiAction_t pointer
  * @param[in,out] action Allocated action
  * @param[in] type Only @c EA_CMD is supported
  * @param[in] data The data for this action - in case of @c EA_CMD this is the commandline
@@ -677,11 +677,11 @@ menuAction_t* MN_AllocStaticCommandAction (char *command)
  * @todo we should create a function to free the memory. We can use a tag in the Mem_PoolAlloc
  * calls and use use Mem_FreeTag.
  */
-void MN_PoolAllocAction (menuAction_t** action, int type, const void *data)
+void MN_PoolAllocAction (uiAction_t** action, int type, const void *data)
 {
 	if (*action)
 		Com_Error(ERR_FATAL, "There is already an action assigned");
-	*action = (menuAction_t *)Mem_PoolAlloc(sizeof(**action), mn_sysPool, 0);
+	*action = (uiAction_t *)Mem_PoolAlloc(sizeof(**action), mn_sysPool, 0);
 	(*action)->type = type;
 	switch (type) {
 	case EA_CMD:
@@ -698,11 +698,11 @@ void MN_PoolAllocAction (menuAction_t** action, int type, const void *data)
  * @param[in] property The property of the node to add the listener to.
  * @param[in] functionNode The node of the listener callback.
  */
-void MN_AddListener (menuNode_t *node, const value_t *property, menuNode_t *functionNode)
+void MN_AddListener (uiNode_t *node, const value_t *property, uiNode_t *functionNode)
 {
-	menuAction_t *lastAction;
-	menuAction_t *action;
-	menuAction_t *value;
+	uiAction_t *lastAction;
+	uiAction_t *action;
+	uiAction_t *value;
 
 	if (node->dynamic) {
 		Com_Printf("MN_AddListener: '%s' is a dynamic node. We can't listen it.\n", MN_GetPath(node));
@@ -714,8 +714,8 @@ void MN_AddListener (menuNode_t *node, const value_t *property, menuNode_t *func
 	}
 
 	/* create the call action */
-	action = (menuAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
-	value = (menuAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
+	action = (uiAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
+	value = (uiAction_t*) Mem_PoolAlloc(sizeof(*action), mn_sysPool, 0);
 	value->d.terminal.d1.constString = Mem_PoolStrDup(MN_GetPath(functionNode), mn_sysPool, 0);
 	value->next = NULL;
 	action->type = EA_LISTENER;
@@ -725,13 +725,13 @@ void MN_AddListener (menuNode_t *node, const value_t *property, menuNode_t *func
 	action->next = NULL;
 
 	/* insert the action */
-	lastAction = *(menuAction_t**)((char*)node + property->ofs);
+	lastAction = *(uiAction_t**)((char*)node + property->ofs);
 	if (lastAction) {
 		while (lastAction->next)
 			lastAction = lastAction->next;
 		lastAction->next = action;
 	} else
-		*(menuAction_t**)((char*)node + property->ofs) = action;
+		*(uiAction_t**)((char*)node + property->ofs) = action;
 }
 
 /**
@@ -739,8 +739,8 @@ void MN_AddListener (menuNode_t *node, const value_t *property, menuNode_t *func
  */
 static void MN_AddListener_f (void)
 {
-	menuNode_t *node;
-	menuNode_t *function;
+	uiNode_t *node;
+	uiNode_t *function;
 	const value_t *property;
 
 	if (Cmd_Argc() != 3) {
@@ -773,21 +773,21 @@ static void MN_AddListener_f (void)
  * @param[in] property The property of the node to remove the listener from.
  * @param[in] functionNode The node of the listener callback.
  */
-void MN_RemoveListener (menuNode_t *node, const value_t *property, menuNode_t *functionNode)
+void MN_RemoveListener (uiNode_t *node, const value_t *property, uiNode_t *functionNode)
 {
 	void *data;
-	menuAction_t *lastAction;
+	uiAction_t *lastAction;
 
 	/* data we must remove */
 	data = (void*) &functionNode->onClick;
 
 	/* remove the action */
-	lastAction = *(menuAction_t**)((char*)node + property->ofs);
+	lastAction = *(uiAction_t**)((char*)node + property->ofs);
 	if (lastAction) {
-		menuAction_t *tmp = NULL;
+		uiAction_t *tmp = NULL;
 		if (lastAction->type == EA_LISTENER && lastAction->d.terminal.d2.data == data) {
 			tmp = lastAction;
-			*(menuAction_t**)((char*)node + property->ofs) = lastAction->next;
+			*(uiAction_t**)((char*)node + property->ofs) = lastAction->next;
 		} else {
 			while (lastAction->next) {
 				if (lastAction->next->type == EA_LISTENER && lastAction->next->d.terminal.d2.data == data)
@@ -800,7 +800,7 @@ void MN_RemoveListener (menuNode_t *node, const value_t *property, menuNode_t *f
 			}
 		}
 		if (tmp) {
-			menuAction_t* value = tmp->d.nonTerminal.left;
+			uiAction_t* value = tmp->d.nonTerminal.left;
 			Mem_Free(value->d.terminal.d1.data);
 			Mem_Free(value);
 			Mem_Free(tmp);
@@ -815,8 +815,8 @@ void MN_RemoveListener (menuNode_t *node, const value_t *property, menuNode_t *f
  */
 static void MN_RemoveListener_f (void)
 {
-	menuNode_t *node;
-	menuNode_t *function;
+	uiNode_t *node;
+	uiNode_t *function;
 	const value_t *property;
 
 	if (Cmd_Argc() != 3) {

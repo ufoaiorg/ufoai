@@ -86,7 +86,7 @@ static popup_intercept_t popupIntercept;	/**< Data about popup_intercept */
 /** Reservation-popup info */
 static int popupNum;							/**< Number of entries in the popup list */
 static linkedList_t* popupListData = NULL;		/**< Further datas needed when popup is clicked */
-static menuNode_t* popupListNode = NULL;		/**< Node used for popup */
+static uiNode_t* popupListNode = NULL;		/**< Node used for popup */
 
 static int INVALID_BASE = -1;
 

@@ -86,7 +86,7 @@ static materialStage_t *MN_MaterialEditorGetStage (material_t *material, int sta
 /**
  * @brief return the number of images we can display
  */
-static int MN_MaterialEditorNodeGetImageCount (menuNode_t *node)
+static int MN_MaterialEditorNodeGetImageCount (uiNode_t *node)
 {
 	int i;
 	int cnt = 0;
@@ -109,7 +109,7 @@ static int MN_MaterialEditorNodeGetImageCount (menuNode_t *node)
 /**
  * @brief Update the scrollable view
  */
-static void MN_MaterialEditorNodeUpdateView (menuNode_t *node, qboolean reset)
+static void MN_MaterialEditorNodeUpdateView (uiNode_t *node, qboolean reset)
 {
 	const int imageCount = MN_MaterialEditorNodeGetImageCount(node);
 	const int imagesPerLine = (node->size[0] - node->padding) / (IMAGE_WIDTH + node->padding);
@@ -126,7 +126,7 @@ static void MN_MaterialEditorNodeUpdateView (menuNode_t *node, qboolean reset)
 /**
  * @param node The node to draw
  */
-static void MN_MaterialEditorNodeDraw (menuNode_t *node)
+static void MN_MaterialEditorNodeDraw (uiNode_t *node)
 {
 	int i;
 	vec2_t pos;
@@ -187,7 +187,7 @@ static void MN_MaterialEditorNodeDraw (menuNode_t *node)
 /**
  * @brief Return index of the image (r_images[i]) else NULL
  */
-static int MN_MaterialEditorNodeGetImageAtPosition (menuNode_t *node, int x, int y)
+static int MN_MaterialEditorNodeGetImageAtPosition (uiNode_t *node, int x, int y)
 {
 	int i;
 	vec2_t pos;
@@ -324,7 +324,7 @@ static int MN_MaterialEditorNameToStage (const char *stageName)
 	return -1;
 }
 
-static void MN_MaterialEditorMouseDown (menuNode_t *node, int x, int y, int button)
+static void MN_MaterialEditorMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	int id;
 	if (button != K_MOUSE1)
@@ -350,7 +350,7 @@ static void MN_MaterialEditorMouseDown (menuNode_t *node, int x, int y, int butt
 /**
  * @brief Called when we push a window with this node
  */
-static void MN_MaterialEditorNodeInit (menuNode_t *node)
+static void MN_MaterialEditorNodeInit (uiNode_t *node)
 {
 	node->num = -1;
 	MN_MaterialEditorNodeUpdateView(node, qtrue);
@@ -359,7 +359,7 @@ static void MN_MaterialEditorNodeInit (menuNode_t *node)
 /**
  * @brief Called when the user wheel the mouse over the node
  */
-static void MN_MaterialEditorNodeWheel (menuNode_t *node, qboolean down, int x, int y)
+static void MN_MaterialEditorNodeWheel (uiNode_t *node, qboolean down, int x, int y)
 {
 	const int diff = (down) ? 1 : -1;
 	MN_AbstractScrollableNodeScrollY(node, diff);
@@ -586,7 +586,7 @@ static void MN_MaterialEditorNewStage_f (void)
 	MN_MaterialEditorUpdate(&r_images[id], s);
 }
 
-void MN_RegisterMaterialEditorNode (nodeBehaviour_t *behaviour)
+void MN_RegisterMaterialEditorNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "material_editor";
 	behaviour->extends = "abstractscrollable";

@@ -59,15 +59,15 @@ static const int TILE_SIZE = 40;
  * @param[in] node A tab node
  * @param[in] x The x position of the screen to test
  * @param[in] y The x position of the screen to test
- * @return A menuNode_t, or NULL if nothing.
+ * @return A uiNode_t, or NULL if nothing.
  * @todo improve test when we are on a junction
  * @todo improve test when we are on a chopped tab
  */
-static menuNode_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int y)
+static uiNode_t* MN_TabNodeTabAtPosition (const uiNode_t *node, int x, int y)
 {
 	const char *font;
-	menuNode_t* option;
-	menuNode_t* prev = NULL;
+	uiNode_t* option;
+	uiNode_t* prev = NULL;
 	int allowedWidth;
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
@@ -124,9 +124,9 @@ static menuNode_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int y
 /**
  * @brief Handles tab clicks
  */
-static void MN_TabNodeClick (menuNode_t * node, int x, int y)
+static void MN_TabNodeClick (uiNode_t * node, int x, int y)
 {
-	menuNode_t* option;
+	uiNode_t* option;
 
 	if (MN_AbstractOptionGetCurrentValue(node) == NULL)
 		return;
@@ -172,11 +172,11 @@ static inline void MN_TabNodeDrawJunction (const char *image, int x, int y, mn_t
 		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, image);
 }
 
-static void MN_TabNodeDraw (menuNode_t *node)
+static void MN_TabNodeDraw (uiNode_t *node)
 {
 	mn_tab_type_t lastStatus = MN_TAB_NOTHING;
-	menuNode_t* option;
-	menuNode_t* overMouseOption = NULL;
+	uiNode_t* option;
+	uiNode_t* overMouseOption = NULL;
 	const char *ref;
 	const char *font;
 	int currentX;
@@ -256,7 +256,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 
 		textPos = currentX;
 		if (drawIcon) {
-			iconStatus_t iconStatus = ICON_STATUS_NORMAL;
+			uiIconStatus_t iconStatus = ICON_STATUS_NORMAL;
 			if (status == MN_TAB_DISABLED) {
 				iconStatus = ICON_STATUS_DISABLED;
 			}
@@ -290,9 +290,9 @@ static void MN_TabNodeDraw (menuNode_t *node)
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void MN_TabNodeDrawTooltip (menuNode_t *node, int x, int y)
+static void MN_TabNodeDrawTooltip (uiNode_t *node, int x, int y)
 {
-	menuNode_t *option;
+	uiNode_t *option;
 	const int tooltipWidth = 250;
 	const char *label;
 
@@ -314,7 +314,7 @@ static void MN_TabNodeDrawTooltip (menuNode_t *node, int x, int y)
  * check cvar then, reduce runtime check
  * @todo move cvar check to AbstractOption
  */
-static void MN_TabNodeInit (menuNode_t *node)
+static void MN_TabNodeInit (uiNode_t *node)
 {
 	const char *cvarName;
 
@@ -334,14 +334,14 @@ static void MN_TabNodeInit (menuNode_t *node)
 	cvarName = &((const char *)(EXTRADATA(node).cvar))[6];
 	if (Cvar_FindVar(cvarName) == NULL) {
 		/* search default value, if possible */
-		menuNode_t* option = node->firstChild;
+		uiNode_t* option = node->firstChild;
 		assert(option->behaviour == optionBehaviour);
 		if (option)
 			Cvar_ForceSet(cvarName, OPTIONEXTRADATA(option).value);
 	}
 }
 
-void MN_RegisterTabNode (nodeBehaviour_t *behaviour)
+void MN_RegisterTabNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "tab";
 	behaviour->extends = "abstractoption";

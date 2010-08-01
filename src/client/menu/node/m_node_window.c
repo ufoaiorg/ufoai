@@ -54,7 +54,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MARGE 3
 
-const nodeBehaviour_t const *windowBehaviour;
+const uiBehaviour_t const *windowBehaviour;
 
 static const int CONTROLS_IMAGE_DIMENSIONS = 17;
 static const int CONTROLS_PADDING = 22;
@@ -73,7 +73,7 @@ static const vec4_t anamorphicBorder = {0, 0, 0, 1};
  * @brief Get a node from child index
  * @return A child node by his name, else NULL
  */
-menuNode_t* MN_WindowNodeGetIndexedChild (menuNode_t* const node, const char* childName)
+uiNode_t* MN_WindowNodeGetIndexedChild (uiNode_t* const node, const char* childName)
 {
 	node_index_t *a;
 	unsigned int hash;
@@ -90,7 +90,7 @@ menuNode_t* MN_WindowNodeGetIndexedChild (menuNode_t* const node, const char* ch
 /**
  * @brief Add a node to the child index
  */
-qboolean MN_WindowNodeAddIndexedNode (menuNode_t* const node, menuNode_t* const child)
+qboolean MN_WindowNodeAddIndexedNode (uiNode_t* const node, uiNode_t* const child)
 {
 	node_index_t *a;
 	unsigned int hash;
@@ -117,7 +117,7 @@ qboolean MN_WindowNodeAddIndexedNode (menuNode_t* const node, menuNode_t* const 
 /**
  * @brief Remove a node from the child index
  */
-qboolean MN_WindowNodeRemoveIndexedNode (menuNode_t* const node, menuNode_t* const child)
+qboolean MN_WindowNodeRemoveIndexedNode (uiNode_t* const node, uiNode_t* const child)
 {
 	/** FIXME implement it */
 	return qfalse;
@@ -126,13 +126,13 @@ qboolean MN_WindowNodeRemoveIndexedNode (menuNode_t* const node, menuNode_t* con
 /**
  * @brief Check if a window is fullscreen or not
  */
-qboolean MN_WindowIsFullScreen (const menuNode_t* const node)
+qboolean MN_WindowIsFullScreen (const uiNode_t* const node)
 {
 	assert(MN_NodeInstanceOf(node, "window"));
 	return EXTRADATACONST(node).isFullScreen;
 }
 
-static void MN_WindowNodeDraw (menuNode_t *node)
+static void MN_WindowNodeDraw (uiNode_t *node)
 {
 	const char* image;
 	const char* text;
@@ -188,7 +188,7 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 	}
 }
 
-static void MN_WindowNodeDoLayout (menuNode_t *node)
+static void MN_WindowNodeDoLayout (uiNode_t *node)
 {
 	if (!node->invalidated)
 		return;
@@ -223,9 +223,9 @@ static void MN_WindowNodeDoLayout (menuNode_t *node)
  * @brief Called when we init the node on the screen
  * @todo we can move generic code into abstract node
  */
-static void MN_WindowNodeInit (menuNode_t *node)
+static void MN_WindowNodeInit (uiNode_t *node)
 {
-	menuNode_t *child;
+	uiNode_t *child;
 
 	/* init the embeded timer */
 	EXTRADATA(node).lastTime = CL_Milliseconds();
@@ -248,9 +248,9 @@ static void MN_WindowNodeInit (menuNode_t *node)
  * @brief Called when we close the node on the screen
  * @todo we can move generic code into abstract node
  */
-static void MN_WindowNodeClose (menuNode_t *node)
+static void MN_WindowNodeClose (uiNode_t *node)
 {
-	menuNode_t *child;
+	uiNode_t *child;
 
 	/* close child */
 	for (child = node->firstChild; child; child = child->next) {
@@ -267,7 +267,7 @@ static void MN_WindowNodeClose (menuNode_t *node)
 /**
  * @brief Called at the begin of the load from script
  */
-static void MN_WindowNodeLoading (menuNode_t *node)
+static void MN_WindowNodeLoading (uiNode_t *node)
 {
 	node->size[0] = VID_NORM_WIDTH;
 	node->size[1] = VID_NORM_HEIGHT;
@@ -275,7 +275,7 @@ static void MN_WindowNodeLoading (menuNode_t *node)
 	node->padding = 5;
 }
 
-void MN_WindowNodeSetRenderNode (menuNode_t *node, menuNode_t *renderNode)
+void MN_WindowNodeSetRenderNode (uiNode_t *node, uiNode_t *renderNode)
 {
 	if (!MN_NodeInstanceOf(node, "window")) {
 		Com_Printf("MN_WindowNodeSetRenderNode: '%s' node is not an 'window'.\n", MN_GetPath(node));
@@ -293,13 +293,13 @@ void MN_WindowNodeSetRenderNode (menuNode_t *node, menuNode_t *renderNode)
 /**
  * @brief Called at the end of the load from script
  */
-static void MN_WindowNodeLoaded (menuNode_t *node)
+static void MN_WindowNodeLoaded (uiNode_t *node)
 {
 	static char* closeCommand = "mn_close <path:root>;";
 
 	/* if it need, construct the drag button */
 	if (EXTRADATA(node).dragButton) {
-		menuNode_t *control = MN_AllocNode("move_window_button", "controls", node->dynamic);
+		uiNode_t *control = MN_AllocNode("move_window_button", "controls", node->dynamic);
 		control->root = node;
 		control->image = NULL;
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
@@ -313,7 +313,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 
 	/* if the menu should have a close button, add it here */
 	if (EXTRADATA(node).closeButton) {
-		menuNode_t *button = MN_AllocNode("close_window_button", "image", node->dynamic);
+		uiNode_t *button = MN_AllocNode("close_window_button", "image", node->dynamic);
 		const int positionFromRight = CONTROLS_PADDING;
 		button->root = node;
 		button->image = "icons/system_close";
@@ -339,7 +339,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 #endif
 }
 
-static void MN_WindowNodeClone (const menuNode_t *source, menuNode_t *clone)
+static void MN_WindowNodeClone (const uiNode_t *source, uiNode_t *clone)
 {
 	/** @todo anyway we should remove soon renderNode */
 	if (EXTRADATACONST(source).renderNode != NULL) {
@@ -406,7 +406,7 @@ static const value_t windowNodeProperties[] = {
  * @param node A window node
  * @return A position, else NULL if no notice position
  */
-vec_t *MN_WindowNodeGetNoticePosition(struct menuNode_s *node)
+vec_t *MN_WindowNodeGetNoticePosition(struct uiNode_s *node)
 {
 	if (EXTRADATA(node).noticePos[0] == 0 && EXTRADATA(node).noticePos[1] == 0)
 		return NULL;
@@ -418,7 +418,7 @@ vec_t *MN_WindowNodeGetNoticePosition(struct menuNode_s *node)
  * @param node A window node
  * @return True if the window is a drop down.
  */
-qboolean MN_WindowIsDropDown(const struct menuNode_s* const node)
+qboolean MN_WindowIsDropDown(const struct uiNode_s* const node)
 {
 	return EXTRADATACONST(node).dropdown;
 }
@@ -428,7 +428,7 @@ qboolean MN_WindowIsDropDown(const struct menuNode_s* const node)
  * @param node A window node
  * @return True if the window is a modal.
  */
-qboolean MN_WindowIsModal(const struct menuNode_s* const node)
+qboolean MN_WindowIsModal(const struct uiNode_s* const node)
 {
 	return EXTRADATACONST(node).modal;
 }
@@ -440,14 +440,14 @@ qboolean MN_WindowIsModal(const struct menuNode_s* const node)
  * @param binding Key binding to link with the window (structure should not be already linked somewhere)
  * @todo Rework that function to remove possible wrong use of that function
  */
-void MN_WindowNodeRegisterKeyBinding (menuNode_t* node, menuKeyBinding_t *binding)
+void MN_WindowNodeRegisterKeyBinding (uiNode_t* node, uiKeyBinding_t *binding)
 {
 	assert(MN_NodeInstanceOf(node, "window"));
 	binding->next = EXTRADATA(node).keyList;
 	EXTRADATA(node).keyList = binding;
 }
 
-const menuKeyBinding_t *binding;
+const uiKeyBinding_t *binding;
 
 /**
  * @brief Search a a key binding from a window node.
@@ -455,9 +455,9 @@ const menuKeyBinding_t *binding;
  * @param node A window node
  * @param key A key code, either K_ value or lowercase ascii
  */
-menuKeyBinding_t *MN_WindowNodeGetKeyBinding (const struct menuNode_s* const node, unsigned int key)
+uiKeyBinding_t *MN_WindowNodeGetKeyBinding (const struct uiNode_s* const node, unsigned int key)
 {
-	menuKeyBinding_t *binding = EXTRADATACONST(node).keyList;
+	uiKeyBinding_t *binding = EXTRADATACONST(node).keyList;
 	assert(MN_NodeInstanceOf(node, "window"));
 	while (binding) {
 		if (binding->key == key)
@@ -467,7 +467,7 @@ menuKeyBinding_t *MN_WindowNodeGetKeyBinding (const struct menuNode_s* const nod
 	return binding;
 }
 
-void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
+void MN_RegisterWindowNode (uiBehaviour_t *behaviour)
 {
 	windowBehaviour = behaviour;
 	behaviour->name = "window";

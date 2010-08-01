@@ -39,8 +39,8 @@ typedef struct abstractValueExtraData_s {
 	float lastdiff;	/**< Different of the value from the last update. Its more an event property than a node property */
 } abstractValueExtraData_t;
 
-struct nodeBehaviour_s; /* prototype */
+struct uiBehaviour_s; /* prototype */
 
-void MN_RegisterAbstractValueNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterAbstractValueNode(struct uiBehaviour_s *behaviour);
 
 #endif

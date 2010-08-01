@@ -34,14 +34,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE abstractOptionExtraData_t
 #define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
-const nodeBehaviour_t *abstractOptionBehaviour;
+const uiBehaviour_t *abstractOptionBehaviour;
 
 /**
  * @brief Sort options by alphabet
  */
-void MN_OptionNodeSortOptions (menuNode_t *node)
+void MN_OptionNodeSortOptions (uiNode_t *node)
 {
-	menuNode_t *option;
+	uiNode_t *option;
 	assert(MN_NodeInstanceOf(node, "abstractoption"));
 	MN_SortOptions(&node->firstChild);
 
@@ -53,7 +53,7 @@ void MN_OptionNodeSortOptions (menuNode_t *node)
 	node->lastChild = option;
 }
 
-const char *MN_AbstractOptionGetCurrentValue (menuNode_t * node)
+const char *MN_AbstractOptionGetCurrentValue (uiNode_t * node)
 {
 	/* no cvar given? */
 	if (!(EXTRADATA(node).cvar) || !*(char*)(EXTRADATA(node).cvar)) {
@@ -68,7 +68,7 @@ const char *MN_AbstractOptionGetCurrentValue (menuNode_t * node)
 	return MN_GetReferenceString(node, (EXTRADATA(node).cvar));
 }
 
-void MN_AbstractOptionSetCurrentValue(menuNode_t * node, const char *value)
+void MN_AbstractOptionSetCurrentValue(uiNode_t * node, const char *value)
 {
 	const char *cvarName = &((const char *)(EXTRADATA(node).cvar))[6];
 	MN_SetCvar(cvarName, value, 0);
@@ -101,8 +101,8 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-static void MN_AbstractOptionDoLayout (menuNode_t *node) {
-	menuNode_t *option = node->firstChild;
+static void MN_AbstractOptionDoLayout (uiNode_t *node) {
+	uiNode_t *option = node->firstChild;
 	int count = 0;
 
 	if (EXTRADATA(node).dataId == 0) {
@@ -123,7 +123,7 @@ static void MN_AbstractOptionDoLayout (menuNode_t *node) {
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
  */
-menuNode_t*  MN_AbstractOptionGetFirstOption (menuNode_t * node)
+uiNode_t*  MN_AbstractOptionGetFirstOption (uiNode_t * node)
 {
 	if (node->firstChild && node->firstChild->behaviour == optionBehaviour) {
 		return node->firstChild;
@@ -131,7 +131,7 @@ menuNode_t*  MN_AbstractOptionGetFirstOption (menuNode_t * node)
 		const int v = MN_GetDataVersion(EXTRADATA(node).dataId);
 		if (v != EXTRADATA(node).dataId) {
 			int count = 0;
-			menuNode_t *option = MN_GetOption(EXTRADATA(node).dataId);
+			uiNode_t *option = MN_GetOption(EXTRADATA(node).dataId);
 			while (option) {
 				if (option->invis == qfalse)
 					count++;
@@ -144,7 +144,7 @@ menuNode_t*  MN_AbstractOptionGetFirstOption (menuNode_t * node)
 	}
 }
 
-void MN_RegisterAbstractOptionNode (nodeBehaviour_t *behaviour)
+void MN_RegisterAbstractOptionNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractoption";
 	behaviour->isAbstract = qtrue;

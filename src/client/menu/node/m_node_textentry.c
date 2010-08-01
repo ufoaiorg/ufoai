@@ -65,7 +65,7 @@ static qboolean isAborted = qfalse;
 /**
  * @brief callback from the keyboard
  */
-static void MN_TextEntryNodeValidateEdition (menuNode_t *node)
+static void MN_TextEntryNodeValidateEdition (uiNode_t *node)
 {
 	/* invalidate cache */
 	editedCvar = NULL;
@@ -80,7 +80,7 @@ static void MN_TextEntryNodeValidateEdition (menuNode_t *node)
 /**
  * @brief callback from the keyboard
  */
-static void MN_TextEntryNodeAbortEdition (menuNode_t *node)
+static void MN_TextEntryNodeAbortEdition (uiNode_t *node)
 {
 	assert(editedCvar);
 
@@ -101,7 +101,7 @@ static void MN_TextEntryNodeAbortEdition (menuNode_t *node)
  * @brief force edition of a textentry node
  * @note the textentry must be on the active menu
  */
-static void MN_TextEntryNodeFocus (menuNode_t *node, const menuCallContext_t *context)
+static void MN_TextEntryNodeFocus (uiNode_t *node, const uiCallContext_t *context)
 {
 	/* remove the focus to show changes */
 	if (!MN_HasFocus(node)) {
@@ -112,7 +112,7 @@ static void MN_TextEntryNodeFocus (menuNode_t *node, const menuCallContext_t *co
 /**
  * @brief Called when the user click with the right mouse button
  */
-static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
+static void MN_TextEntryNodeClick (uiNode_t *node, int x, int y)
 {
 	if (node->disabled)
 		return;
@@ -134,7 +134,7 @@ static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
 /**
  * @brief Called when the node got the focus
  */
-static void MN_TextEntryFocusGained (menuNode_t *node)
+static void MN_TextEntryFocusGained (uiNode_t *node)
 {
 	assert(editedCvar == NULL);
 	/* skip '*cvar ' */
@@ -147,7 +147,7 @@ static void MN_TextEntryFocusGained (menuNode_t *node)
 /**
  * @brief Called when the node lost the focus
  */
-static void MN_TextEntryFocusLost (menuNode_t *node)
+static void MN_TextEntryFocusLost (uiNode_t *node)
 {
 	/* already aborted/changed with the keyboard */
 	if (editedCvar == NULL)
@@ -164,7 +164,7 @@ static void MN_TextEntryFocusLost (menuNode_t *node)
 /**
  * @brief edit the current cvar with a char
  */
-static void MN_TextEntryNodeEdit (menuNode_t *node, unsigned int key)
+static void MN_TextEntryNodeEdit (uiNode_t *node, unsigned int key)
 {
 	char buffer[MAX_CVAR_EDITING_LENGTH];
 	int length;
@@ -193,7 +193,7 @@ static void MN_TextEntryNodeEdit (menuNode_t *node, unsigned int key)
  * @brief Called when we press a key when the node got the focus
  * @return True, if we use the event
  */
-static qboolean MN_TextEntryNodeKeyPressed (menuNode_t *node, unsigned int key, unsigned short unicode)
+static qboolean MN_TextEntryNodeKeyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
 {
 	switch (key) {
 	/* remove the last char */
@@ -222,7 +222,7 @@ static qboolean MN_TextEntryNodeKeyPressed (menuNode_t *node, unsigned int key, 
 	return qtrue;
 }
 
-static void MN_TextEntryNodeDraw (menuNode_t *node)
+static void MN_TextEntryNodeDraw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -304,7 +304,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 /**
  * @brief Call before the script initialization of the node
  */
-static void MN_TextEntryNodeLoading (menuNode_t *node)
+static void MN_TextEntryNodeLoading (uiNode_t *node)
 {
 	node->padding = 8;
 	node->textalign = ALIGN_CL;
@@ -343,7 +343,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)
+void MN_RegisterTextEntryNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "textentry";
 	behaviour->leftClick = MN_TextEntryNodeClick;

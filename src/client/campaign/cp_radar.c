@@ -125,7 +125,7 @@ void RADAR_UpdateWholeRadarOverlay (void)
  * @param[in] pos Position of the radar.
  * @sa MAP_MapDrawEquidistantPoints
  */
-static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar, const vec2_t pos)
+static void RADAR_DrawLineCoverage (const uiNode_t* node, const radar_t* radar, const vec2_t pos)
 {
 	const vec4_t color = {1., 1., 1., .4};
 	MAP_MapDrawEquidistantPoints(node, pos, radar->range, color);
@@ -138,7 +138,7 @@ static void RADAR_DrawLineCoverage (const menuNode_t* node, const radar_t* radar
  * @param[in] radar Pointer to the radar that will be drawn.
  * @param[in] pos Position of the radar.
  */
-void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, const vec2_t pos)
+void RADAR_DrawInMap (const uiNode_t *node, const radar_t *radar, const vec2_t pos)
 {
 	int x, y;
 	const vec4_t color = {1., 1., 1., .3};

@@ -27,11 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../common/common.h"
 
-/** @brief Type for menuAction_t
+/** @brief Type for uiAction_t
  * It also contain type about type (for example EA_BINARYOPERATOR)
- * @sa menuAction_t
+ * @sa uiAction_t
  */
-typedef enum ea_s {
+typedef enum uiActionType_s {
 	EA_NULL = 0,
 
 	EA_BINARYOPERATOR,
@@ -97,12 +97,12 @@ typedef enum ea_s {
 	EA_VALUE_PATHPROPERTY = EA_VALUE + 9,				/**< reference to a path, and a property */
 	EA_VALUE_PATHPROPERTY_WITHINJECTION = EA_VALUE + 10,/**< should be into an extra action type */
 	EA_VALUE_NODEPROPERTY = EA_VALUE + 11				/**< reference to a node, and a property (not a string) */
-} ea_t;
+} uiActionType_t;
 
 /**
- * @brief Defines the data of a @c menuAction_t leaf.
+ * @brief Defines the data of a @c uiAction_t leaf.
  * It allows different kind of data without cast
- * @sa menuAction_t
+ * @sa uiAction_t
  */
 typedef union {
 	int integer;
@@ -111,7 +111,7 @@ typedef union {
 	const char* constString;
 	void* data;
 	const void* constData;
-} menuTerminalActionData_t;
+} uiTerminalActionData_t;
 
 /**
  * @brief Atomic element to store UI scripts
@@ -123,7 +123,7 @@ typedef union {
  * <li> Operators (EA_OPERATOR_*) use binary tree structure (left and right operands), else are unary.</li>
  * <li> A value (EA_VALUE_*) is a terminal action (a leaf).</li></ul>
  */
-typedef struct menuAction_s {
+typedef struct uiAction_s {
 	/**
 	 * @brief Define the type of the element, it can be a command, an operator, or a value
 	 * @sa ea_t
@@ -144,8 +144,8 @@ typedef struct menuAction_s {
 		 * @note The action type must be a command or an operator
 		 */
 		struct {
-			struct menuAction_s *left;
-			struct menuAction_s *right;
+			struct uiAction_s *left;
+			struct uiAction_s *right;
 		} nonTerminal;
 
 		/**
@@ -154,47 +154,47 @@ typedef struct menuAction_s {
 		 * @todo Define the "sometimes"
 		 */
 		struct {
-			menuTerminalActionData_t d1;
-			menuTerminalActionData_t d2;
+			uiTerminalActionData_t d1;
+			uiTerminalActionData_t d2;
 		} terminal;
 	} d;
 
 	/**
 	 * @brief Next element in the action list
 	 */
-	struct menuAction_s *next;
-} menuAction_t;
+	struct uiAction_s *next;
+} uiAction_t;
 
 /* prototype */
-struct menuNode_s;
+struct uiNode_s;
 
 /**
  * @brief Contain the context of the calling of a function
  */
-typedef struct menuCallContext_s {
+typedef struct uiCallContext_s {
 	/** node owning the action */
-	const struct menuNode_s* source;
+	const struct uiNode_s* source;
 	/** is the function can use param from command line */
 	qboolean useCmdParam;
 	linkedList_t *params;
 	int paramNumber;
-} menuCallContext_t;
+} uiCallContext_t;
 
 
-void MN_ExecuteEventActions(const struct menuNode_s* source, const menuAction_t* firstAction);
-void MN_ExecuteConFuncActions(const struct menuNode_s* source, const menuAction_t* firstAction);
+void MN_ExecuteEventActions(const struct uiNode_s* source, const uiAction_t* firstAction);
+void MN_ExecuteConFuncActions(const struct uiNode_s* source, const uiAction_t* firstAction);
 qboolean MN_IsInjectedString(const char *string);
 void MN_FreeStringProperty(void* pointer);
-const char* MN_GenInjectedString(const char* input, qboolean addNewLine, const menuCallContext_t *context);
+const char* MN_GenInjectedString(const char* input, qboolean addNewLine, const uiCallContext_t *context);
 int MN_GetActionTokenType(const char* token, int group);
 
-void MN_PoolAllocAction(menuAction_t** action, int type, const void *data);
-menuAction_t* MN_AllocStaticCommandAction(char *command);
+void MN_PoolAllocAction(uiAction_t** action, int type, const void *data);
+uiAction_t* MN_AllocStaticCommandAction(char *command);
 void MN_InitActions(void);
-void MN_AddListener(struct menuNode_s *node, const value_t *property, struct menuNode_s *functionNode);
-void MN_RemoveListener(struct menuNode_s *node, const value_t *property, struct menuNode_s *functionNode);
+void MN_AddListener(struct uiNode_s *node, const value_t *property, struct uiNode_s *functionNode);
+void MN_RemoveListener(struct uiNode_s *node, const value_t *property, struct uiNode_s *functionNode);
 
-const char* MN_GetParam(const menuCallContext_t *context, int paramID);
-int MN_GetParamNumber(const menuCallContext_t *context);
+const char* MN_GetParam(const uiCallContext_t *context, int paramID);
+int MN_GetParamNumber(const uiCallContext_t *context);
 
 #endif

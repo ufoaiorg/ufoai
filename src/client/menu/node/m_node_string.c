@@ -50,7 +50,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void MN_StringNodeDraw (menuNode_t *node)
+static void MN_StringNodeDraw (uiNode_t *node)
 {
 	vec2_t nodepos;
 	const char *font = MN_GetFontFromNode(node);
@@ -81,7 +81,7 @@ static void MN_StringNodeDraw (menuNode_t *node)
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void MN_StringNodeDrawTooltip (menuNode_t *node, int x, int y)
+static void MN_StringNodeDrawTooltip (uiNode_t *node, int x, int y)
 {
 	if (node->tooltip) {
 		MN_Tooltip(node, x, y);
@@ -103,7 +103,7 @@ static void MN_StringNodeDrawTooltip (menuNode_t *node, int x, int y)
 	}
 }
 
-static void MN_StringNodeLoading (menuNode_t *node)
+static void MN_StringNodeLoading (uiNode_t *node)
 {
 	node->padding = 3;
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
@@ -119,7 +119,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterStringNode (nodeBehaviour_t *behaviour)
+void MN_RegisterStringNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
 	behaviour->properties = properties;

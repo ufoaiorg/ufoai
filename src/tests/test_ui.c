@@ -55,10 +55,10 @@ static int UFO_CleanSuiteUI (void)
  */
 static void testTimerDataStructure (void)
 {
-	menuNode_t *dummyNode = (menuNode_t *) 0x1;
+	uiNode_t *dummyNode = (uiNode_t *) 0x1;
 	timerCallback_t dummyCallback = (timerCallback_t) 0x1;
 
-	menuTimer_t *a, *b, *c;
+	uiTimer_t *a, *b, *c;
 	a = MN_AllocTimer(dummyNode, 10, dummyCallback);
 	b = MN_AllocTimer(dummyNode, 20, dummyCallback);
 	c = MN_AllocTimer(dummyNode, 30, dummyCallback);

@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * Allow to check if a node is an option without string check
  */
-const nodeBehaviour_t *optionBehaviour = NULL;
+const uiBehaviour_t *optionBehaviour = NULL;
 
 #define EXTRADATA_TYPE optionExtraData_t
 #define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
@@ -46,7 +46,7 @@ static const value_t *propertyCollapsed;
  * @note can be a common function for all option node
  * @return number of visible elements
  */
-int MN_OptionUpdateCache (menuNode_t* option)
+int MN_OptionUpdateCache (uiNode_t* option)
 {
 	int count = 0;
 	while (option) {
@@ -71,8 +71,8 @@ int MN_OptionUpdateCache (menuNode_t* option)
 	return count;
 }
 
-static void MN_OptionDoLayout (menuNode_t *node) {
-	menuNode_t *child = node->firstChild;
+static void MN_OptionDoLayout (uiNode_t *node) {
+	uiNode_t *child = node->firstChild;
 	int count = 0;
 
 	while(child && child->behaviour == optionBehaviour) {
@@ -89,7 +89,7 @@ static void MN_OptionDoLayout (menuNode_t *node) {
 	node->invalidated = qfalse;
 }
 
-static void MN_OptionPropertyChanged (menuNode_t *node, const value_t *property)
+static void MN_OptionPropertyChanged (uiNode_t *node, const value_t *property)
 {
 	if (property == propertyCollapsed) {
 		MN_Invalidate(node);
@@ -122,7 +122,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0},
 };
 
-void MN_RegisterOptionNode (nodeBehaviour_t *behaviour)
+void MN_RegisterOptionNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "option";
 	behaviour->properties = properties;

@@ -88,7 +88,7 @@ static const invList_t *dragInfoIC;
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa INVSH_SearchInInventory
  */
-static invList_t *MN_ContainerNodeGetExistingItem (const menuNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
+static invList_t *MN_ContainerNodeGetExistingItem (const uiNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
 {
 	return INVSH_SearchInInventoryWithFilter(menuInventory, EXTRADATACONST(node).container, NONE, NONE, item, filterType);
 }
@@ -99,14 +99,14 @@ static invList_t *MN_ContainerNodeGetExistingItem (const menuNode_t *node, objDe
  * set by the "in" and "out" functions of the scroll buttons.
  * @param[in] node Context node
  */
-static void MN_ContainerNodeUpdateScroll (menuNode_t* node)
+static void MN_ContainerNodeUpdateScroll (uiNode_t* node)
 {
 	if (EXTRADATA(node).onViewChange) {
 		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 	}
 }
 
-static inline qboolean MN_IsScrollContainerNode (const menuNode_t* const node)
+static inline qboolean MN_IsScrollContainerNode (const uiNode_t* const node)
 {
 	return EXTRADATACONST(node).container && EXTRADATACONST(node).container->scroll;
 }
@@ -165,7 +165,7 @@ void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
  * Used to draw an item to the equipment containers. First look whether the objDef_t
  * includes an image - if there is none then draw the model
  */
-void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color)
+void MN_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color)
 {
 	objDef_t *od = item->t;
 	vec4_t col;
@@ -308,7 +308,7 @@ static void MN_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
 /**
  * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
  */
-static void MN_DrawDisabled (const menuNode_t* node)
+static void MN_DrawDisabled (const uiNode_t* node)
 {
 	const vec4_t color = { 0.3f, 0.3f, 0.3f, 0.7f };
 	vec2_t nodepos;
@@ -320,7 +320,7 @@ static void MN_DrawDisabled (const menuNode_t* node)
 /**
  * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
  */
-static void MN_DrawFree (containerIndex_t container, const menuNode_t *node, int posx, int posy, int sizex, int sizey, qboolean showTUs)
+static void MN_DrawFree (containerIndex_t container, const uiNode_t *node, int posx, int posy, int sizex, int sizey, qboolean showTUs)
 {
 	const vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
 	invDef_t* inv = INVDEF(container);
@@ -342,7 +342,7 @@ static void MN_DrawFree (containerIndex_t container, const menuNode_t *node, int
  * @brief Draws the free and usable inventory positions when dragging an item.
  * @note Only call this function in dragging mode
  */
-static void MN_ContainerNodeDrawFreeSpace (menuNode_t *node, inventory_t *inv)
+static void MN_ContainerNodeDrawFreeSpace (uiNode_t *node, inventory_t *inv)
 {
 	const objDef_t *od = MN_DNDGetItem()->t;	/**< Get the 'type' of the dragged item. */
 	vec2_t nodepos;
@@ -393,7 +393,7 @@ static void MN_ContainerNodeDrawFreeSpace (menuNode_t *node, inventory_t *inv)
  * into the node (uses the @c invDef_t shape bitmask to determine the size)
  * @param[in,out] node The node to get the size for
  */
-static void MN_ContainerNodeLoaded (menuNode_t* const node)
+static void MN_ContainerNodeLoaded (uiNode_t* const node)
 {
 	const char *name;
 	invDef_t *container;
@@ -445,7 +445,7 @@ static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview ite
  * @param node
  * @param highlightType
  */
-static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightType)
+static void MN_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
 {
 	vec4_t color;
 	vec3_t pos;
@@ -511,7 +511,7 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 /**
  * @brief Draw a grip container
  */
-static void MN_ContainerNodeDrawGrid (menuNode_t *node, objDef_t *highlightType)
+static void MN_ContainerNodeDrawGrid (uiNode_t *node, objDef_t *highlightType)
 {
 	const invList_t *ic;
 	vec3_t pos;
@@ -531,7 +531,7 @@ static void MN_ContainerNodeDrawGrid (menuNode_t *node, objDef_t *highlightType)
 /**
  * @brief Draw a preview of the DND item dropped into the node
  */
-static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
+static void MN_ContainerNodeDrawDropPreview (uiNode_t *target)
 {
 	item_t previewItem;
 	int checkedTo;
@@ -582,7 +582,7 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
 /**
  * @brief Main function to draw a container node
  */
-static void MN_ContainerNodeDraw (menuNode_t *node)
+static void MN_ContainerNodeDraw (uiNode_t *node)
 {
 	objDef_t *highlightType = NULL;
 
@@ -626,7 +626,7 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
  * @param[out] contY Y location in the container (row).
  * @sa MN_ContainerNodeSearchInScrollableContainer
  */
-static invList_t *MN_ContainerNodeGetItemAtPosition (const menuNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
+static invList_t *MN_ContainerNodeGetItemAtPosition (const uiNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
 {
 	invList_t *result = NULL;
 	/* Get coordinates inside a scrollable container (if it is one). */
@@ -656,7 +656,7 @@ static invList_t *MN_ContainerNodeGetItemAtPosition (const menuNode_t* const nod
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
+static void MN_ContainerNodeDrawTooltip (uiNode_t *node, int x, int y)
 {
 	static char tooltiptext[MAX_VAR * 2];
 	const invList_t *itemHover;
@@ -688,7 +688,7 @@ static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
  * @param[in] mouseY Y mouse coordinates.
  * @todo None generic function. Not sure we can do it in a generic way
  */
-static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
+static void MN_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 {
 	int sel;
 #if 0	/* see bellow #1 */
@@ -813,7 +813,7 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 	 * The right way is to compute the source and the target container
 	 * and fire the change event for both */
 	if (INV_IsArmour(ic->item.t)) {
-		const menuNode_t *armour = MN_GetNode(node->root, "armour");
+		const uiNode_t *armour = MN_GetNode(node->root, "armour");
 		if (armour && armour->onChange)
 			MN_ExecuteEventActions(armour, armour->onChange);
 	}
@@ -826,7 +826,7 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 static int oldMouseX = 0;
 static int oldMouseY = 0;
 
-static void MN_ContainerNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+static void MN_ContainerNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int delta = abs(oldMouseX - x) + abs(oldMouseY - y);
 	if (delta > 15) {
@@ -835,7 +835,7 @@ static void MN_ContainerNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	}
 }
 
-static void MN_ContainerNodeMouseDown (menuNode_t *node, int x, int y, int button)
+static void MN_ContainerNodeMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	switch (button) {
 	case K_MOUSE1:
@@ -869,7 +869,7 @@ static void MN_ContainerNodeMouseDown (menuNode_t *node, int x, int y, int butto
 	}
 }
 
-static void MN_ContainerNodeMouseUp (menuNode_t *node, int x, int y, int button)
+static void MN_ContainerNodeMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -880,7 +880,7 @@ static void MN_ContainerNodeMouseUp (menuNode_t *node, int x, int y, int button)
 		MN_DNDDrop();
 	}
 }
-static void MN_ContainerNodeWheel (menuNode_t *node, qboolean down, int x, int y)
+static void MN_ContainerNodeWheel (uiNode_t *node, qboolean down, int x, int y)
 {
 	if (MN_IsScrollContainerNode(node)) {
 		const int delta = 20;
@@ -903,7 +903,7 @@ static void MN_ContainerNodeWheel (menuNode_t *node, qboolean down, int x, int y
 	}
 }
 
-static void MN_ContainerNodeLoading (menuNode_t *node)
+static void MN_ContainerNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).container = NULL;
 	EXTRADATA(node).columns = 1;
@@ -913,7 +913,7 @@ static void MN_ContainerNodeLoading (menuNode_t *node)
 /**
  * @brief Call when a DND enter into the node
  */
-static qboolean MN_ContainerNodeDNDEnter (menuNode_t *target)
+static qboolean MN_ContainerNodeDNDEnter (uiNode_t *target)
 {
 	/* accept items only, if we have a container */
 	return MN_DNDGetType() == DND_ITEM && EXTRADATA(target).container && (!MN_IsScrollContainerNode(target) || MN_DNDGetSourceNode() !=  target);
@@ -923,7 +923,7 @@ static qboolean MN_ContainerNodeDNDEnter (menuNode_t *target)
  * @brief Call into the target when the DND hover it
  * @return True if the DND is accepted
  */
-static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
+static qboolean MN_ContainerNodeDNDMove (uiNode_t *target, int x, int y)
 {
 	vec2_t nodepos;
 	qboolean exists;
@@ -1000,7 +1000,7 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 /**
  * @brief Call when a DND enter into the node
  */
-static void MN_ContainerNodeDNDLeave (menuNode_t *node)
+static void MN_ContainerNodeDNDLeave (uiNode_t *node)
 {
 	dragInfoToX = -1;
 	dragInfoToY = -1;
@@ -1009,7 +1009,7 @@ static void MN_ContainerNodeDNDLeave (menuNode_t *node)
 /**
  * @brief Call into the source when the DND end
  */
-static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDropped)
+static qboolean MN_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDropped)
 {
 	item_t *dragItem = MN_DNDGetItem();
 
@@ -1020,7 +1020,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 
 	/* on tactical mission */
 	if (CL_BattlescapeRunning()) {
-		const menuNode_t *target = MN_DNDGetTargetNode();
+		const uiNode_t *target = MN_DNDGetTargetNode();
 		assert(EXTRADATA(source).container);
 		assert(target);
 		assert(EXTRADATACONST(target).container);
@@ -1028,7 +1028,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 		CL_ActorInvMove(selActor, EXTRADATA(source).container->id, dragInfoFromX, dragInfoFromY,
 			EXTRADATACONST(target).container->id, dragInfoToX, dragInfoToY);
 	} else {
-		menuNode_t *target = MN_DNDGetTargetNode();
+		uiNode_t *target = MN_DNDGetTargetNode();
 		if (target) {
 			invList_t *fItem;
 			/* menu */
@@ -1103,7 +1103,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
+void MN_RegisterContainerNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "container";
 	behaviour->draw = MN_ContainerNodeDraw;

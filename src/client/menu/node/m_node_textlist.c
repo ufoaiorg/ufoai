@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] y position y on the screen
  * @return The line number under the position (0 = first line)
  */
-static int MN_TextListNodeGetLine (const menuNode_t *node, int x, int y)
+static int MN_TextListNodeGetLine (const uiNode_t *node, int x, int y)
 {
 	int lineHeight = EXTRADATACONST(node).lineHeight;
 	if (lineHeight == 0) {
@@ -59,7 +59,7 @@ static int MN_TextListNodeGetLine (const menuNode_t *node, int x, int y)
 	return (int) (y / lineHeight) + EXTRADATACONST(node).super.scrollY.viewPos;
 }
 
-static void MN_TextListNodeMouseMove (menuNode_t *node, int x, int y)
+static void MN_TextListNodeMouseMove (uiNode_t *node, int x, int y)
 {
 	EXTRADATA(node).lineUnderMouse = MN_TextListNodeGetLine(node, x, y);
 }
@@ -69,7 +69,7 @@ static void MN_TextListNodeMouseMove (menuNode_t *node, int x, int y)
  * @param[in] node The context node
  * @param[in] list The text list to draw
  */
-static void MN_TextLineNodeDrawText (menuNode_t* node, const linkedList_t* list)
+static void MN_TextLineNodeDrawText (uiNode_t* node, const linkedList_t* list)
 {
 	vec4_t colorHover;
 	vec4_t colorSelectedHover;
@@ -155,9 +155,9 @@ static void MN_TextLineNodeDrawText (menuNode_t* node, const linkedList_t* list)
 /**
  * @brief Draw a text node
  */
-static void MN_TextListNodeDraw (menuNode_t *node)
+static void MN_TextListNodeDraw (uiNode_t *node)
 {
-	const menuSharedData_t *shared;
+	const uiSharedData_t *shared;
 	shared = &mn.sharedData[EXTRADATA(node).dataID];
 
 	/* nothing set yet? */
@@ -176,7 +176,7 @@ static void MN_TextListNodeDraw (menuNode_t *node)
  * @brief Calls the script command for a text node that is clickable
  * @sa MN_TextNodeRightClick
  */
-static void MN_TextListNodeClick (menuNode_t * node, int x, int y)
+static void MN_TextListNodeClick (uiNode_t * node, int x, int y)
 {
 	const int line = MN_TextListNodeGetLine(node, x, y);
 
@@ -197,7 +197,7 @@ static void MN_TextListNodeClick (menuNode_t * node, int x, int y)
  * @brief Calls the script command for a text node that is clickable via right mouse button
  * @todo we should delete that function
  */
-static void MN_TextListNodeRightClick (menuNode_t * node, int x, int y)
+static void MN_TextListNodeRightClick (uiNode_t * node, int x, int y)
 {
 	const int line = MN_TextListNodeGetLine(node, x, y);
 
@@ -216,7 +216,7 @@ static void MN_TextListNodeRightClick (menuNode_t * node, int x, int y)
 
 /**
  */
-static void MN_TextListNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+static void MN_TextListNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
 {
 	MN_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
 	if (node->onWheelUp && !down)
@@ -227,7 +227,7 @@ static void MN_TextListNodeMouseWheel (menuNode_t *node, qboolean down, int x, i
 		MN_ExecuteEventActions(node, node->onWheel);
 }
 
-static void MN_TextListNodeLoading (menuNode_t *node)
+static void MN_TextListNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).textLineSelected = -1; /**< Invalid/no line selected per default. */
 	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
@@ -235,7 +235,7 @@ static void MN_TextListNodeLoading (menuNode_t *node)
 	node->textalign = ALIGN_CL;	/**< left center of each cells */
 }
 
-void MN_RegisterTextListNode (nodeBehaviour_t *behaviour)
+void MN_RegisterTextListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "textlist";
 	behaviour->extends = "text";

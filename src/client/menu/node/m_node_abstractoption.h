@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/shared.h"
 #include "m_node_abstractscrollable.h"
 
-struct menuAction_s;
+struct uiAction_s;
 struct menuOption_s;
 
 typedef struct {
@@ -45,16 +45,16 @@ typedef struct {
 
 	menuScroll_t scrollY;				/**< Scroll position, if need */
 
-	struct menuAction_s *onViewChange;	/**< called when view change (number of elements...) */
+	struct uiAction_s *onViewChange;	/**< called when view change (number of elements...) */
 } abstractOptionExtraData_t;
 
-struct menuNode_s;
-struct nodeBehaviour_s;
+struct uiNode_s;
+struct uiBehaviour_s;
 
-void MN_RegisterAbstractOptionNode(struct nodeBehaviour_s *behaviour);
-void MN_OptionNodeSortOptions(struct menuNode_s *node);
-struct menuNode_s* MN_AbstractOptionGetFirstOption(menuNode_t * node);
-const char *MN_AbstractOptionGetCurrentValue(menuNode_t * node);
-void MN_AbstractOptionSetCurrentValue(menuNode_t * node, const char *value);
+void MN_RegisterAbstractOptionNode(struct uiBehaviour_s *behaviour);
+void MN_OptionNodeSortOptions(struct uiNode_s *node);
+struct uiNode_s* MN_AbstractOptionGetFirstOption(uiNode_t * node);
+const char *MN_AbstractOptionGetCurrentValue(uiNode_t * node);
+void MN_AbstractOptionSetCurrentValue(uiNode_t * node, const char *value);
 
 #endif

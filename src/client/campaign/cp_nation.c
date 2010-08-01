@@ -608,7 +608,7 @@ static lineStrip_t fundingLineStrip[MAX_NATIONS];
  * @param[in] color If this is -1 draw the line for the current selected nation
  * @todo Somehow the display of the months isn't really correct right now (straight line :-/)
  */
-static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, lineStrip_t *funding, int maxFunding, int color)
+static void CL_NationDrawStats (const nation_t *nation, uiNode_t *node, lineStrip_t *funding, int maxFunding, int color)
 {
 	int width, height, dx;
 	int m;
@@ -673,8 +673,8 @@ static void CL_NationStatsUpdate_f (void)
 {
 	int i;
 	int funding, maxFunding;
-	menuNode_t *colorNode;
-	menuNode_t *graphNode;
+	uiNode_t *colorNode;
+	uiNode_t *graphNode;
 	int dy = 10;
 
 	usedColPtslists = 0;

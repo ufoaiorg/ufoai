@@ -26,6 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_MATERIAL_EDITOR_H
 #define CLIENT_MENU_M_NODE_MATERIAL_EDITOR_H
 
-void MN_RegisterMaterialEditorNode(nodeBehaviour_t *behaviour);
+void MN_RegisterMaterialEditorNode(uiBehaviour_t *behaviour);
 
 #endif

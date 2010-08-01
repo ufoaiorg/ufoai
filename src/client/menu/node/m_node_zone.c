@@ -41,16 +41,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE zoneExtraData_t
 #define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
-static menuTimer_t *capturedTimer;
+static uiTimer_t *capturedTimer;
 
-static void MN_ZoneNodeRepeat (menuNode_t *node, menuTimer_t *timer)
+static void MN_ZoneNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 {
 	if (node->onClick) {
 		MN_ExecuteEventActions(node, node->onClick);
 	}
 }
 
-static void MN_ZoneNodeDown (menuNode_t *node, int x, int y, int button)
+static void MN_ZoneNodeDown (uiNode_t *node, int x, int y, int button)
 {
 	if (!EXTRADATA(node).repeat)
 		return;
@@ -61,7 +61,7 @@ static void MN_ZoneNodeDown (menuNode_t *node, int x, int y, int button)
 	}
 }
 
-static void MN_ZoneNodeUp (menuNode_t *node, int x, int y, int button)
+static void MN_ZoneNodeUp (uiNode_t *node, int x, int y, int button)
 {
 	if (!EXTRADATA(node).repeat)
 		return;
@@ -74,7 +74,7 @@ static void MN_ZoneNodeUp (menuNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-static void MN_ZoneNodeCapturedMouseLost (menuNode_t *node)
+static void MN_ZoneNodeCapturedMouseLost (uiNode_t *node)
 {
 	if (capturedTimer) {
 		MN_TimerRelease(capturedTimer);
@@ -85,7 +85,7 @@ static void MN_ZoneNodeCapturedMouseLost (menuNode_t *node)
 /**
  * @brief Call before the script initialized the node
  */
-static void MN_ZoneNodeLoading (menuNode_t *node)
+static void MN_ZoneNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).clickDelay = 1000;
 }
@@ -93,7 +93,7 @@ static void MN_ZoneNodeLoading (menuNode_t *node)
 /**
  * @brief Call after the script initialized the node
  */
-static void MN_ZoneNodeLoaded (menuNode_t *node)
+static void MN_ZoneNodeLoaded (uiNode_t *node)
 {
 	if (!strcmp(node->name, "render"))
 		MN_WindowNodeSetRenderNode(node->root, node);
@@ -107,7 +107,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterZoneNode (nodeBehaviour_t *behaviour)
+void MN_RegisterZoneNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "zone";
 	behaviour->loading = MN_ZoneNodeLoading;

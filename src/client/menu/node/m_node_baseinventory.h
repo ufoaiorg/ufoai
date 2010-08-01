@@ -28,8 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../game/inventory.h"
 
 /* prototypes */
-struct nodeBehaviour_s;
+struct uiBehaviour_s;
 
-void MN_RegisterBaseInventoryNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterBaseInventoryNode(struct uiBehaviour_s *behaviour);
 
 #endif

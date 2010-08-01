@@ -28,9 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../shared/mathlib.h"
 
-struct nodeBehaviour_s;
-struct menuAction_s;
-struct menuNode_s;
+struct uiBehaviour_s;
+struct uiAction_s;
+struct uiNode_s;
 
 /**
  * @brief Scroll representation
@@ -50,13 +50,13 @@ typedef struct {
 	menuScroll_t scrollX;
 	menuScroll_t scrollY;
 
-	struct menuAction_s *onViewChange;	/**< called when view change (number of elements...) */
+	struct uiAction_s *onViewChange;	/**< called when view change (number of elements...) */
 } abstractScrollableExtraData_t;
 
-qboolean MN_AbstractScrollableNodeIsSizeChange(struct menuNode_s *node);
-qboolean MN_AbstractScrollableNodeScrollY(struct menuNode_s *node, int offset);
-qboolean MN_AbstractScrollableNodeSetY(struct menuNode_s *node, int viewPos, int viewSize, int fullSize);
+qboolean MN_AbstractScrollableNodeIsSizeChange(struct uiNode_s *node);
+qboolean MN_AbstractScrollableNodeScrollY(struct uiNode_s *node, int offset);
+qboolean MN_AbstractScrollableNodeSetY(struct uiNode_s *node, int viewPos, int viewSize, int fullSize);
 
-void MN_RegisterAbstractScrollableNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterAbstractScrollableNode(struct uiBehaviour_s *behaviour);
 
 #endif

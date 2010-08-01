@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* prototype */
 struct linkedList_s;
-struct menuIcon_s;
+struct uiIcon_s;
 
 /** @brief linked into mn.menuText - defined in menu scripts via num */
 typedef enum {
@@ -117,7 +117,7 @@ typedef enum {
 	LINESTRIP_COLOR,
 
 	MAX_MENUTEXTS
-} menuTextIDs_t;
+} uiTextIDs_t;
 
 typedef enum {
 	MN_SHARED_NONE = 0,
@@ -125,32 +125,32 @@ typedef enum {
 	MN_SHARED_LINKEDLISTTEXT,
 	MN_SHARED_OPTION,
 	MN_SHARED_LINESTRIP
-} menuSharedType_t;
+} uiSharedType_t;
 
-typedef struct menuSharedData_s {
-	menuSharedType_t type;		/**< Type of the shared data */
+typedef struct uiSharedData_s {
+	uiSharedType_t type;		/**< Type of the shared data */
 	union {
 		/** @brief Holds static array of characters to display */
 		const char *text;
 		/** @brief Holds a linked list for displaying in the menu */
 		struct linkedList_s *linkedListText;
 		/** @brief Holds a linked list for option (label, action, icon...) */
-		struct menuNode_s *option;
+		struct uiNode_s *option;
 		/** @brief Holds a line strip, a list of point */
 		struct lineStrip_s	*lineStrip;
 	} data;						/**< The data */
 	int versionId;				/**< Id identify the value, to check changes */
-} menuSharedData_t;
+} uiSharedData_t;
 
 #define MAX_DEPTH_OPTIONITERATORCACHE 8
 
 typedef struct {
-	menuNode_t* option;		/**< current option */
-	menuNode_t* depthCache[MAX_DEPTH_OPTIONITERATORCACHE];	/**< parent link */
+	uiNode_t* option;		/**< current option */
+	uiNode_t* depthCache[MAX_DEPTH_OPTIONITERATORCACHE];	/**< parent link */
 	int depthPos;				/**< current cache position */
 	qboolean skipInvisible;		/**< skip invisible options when we iterate */
 	qboolean skipCollapsed;		/**< skip collapsed options when we iterate */
-} menuOptionIterator_t;
+} uiOptionIterator_t;
 
 /* common */
 int MN_GetDataVersion(int textId) __attribute__ ((warn_unused_result));
@@ -166,15 +166,15 @@ const char *MN_GetText(int textId) __attribute__ ((warn_unused_result));
 void MN_RegisterLinkedListText(int textId, struct linkedList_s *text);
 
 /* option */
-void MN_RegisterOption(int dataId, struct menuNode_s *option);
-struct menuNode_s *MN_GetOption(int dataId) __attribute__ ((warn_unused_result));
-void MN_SortOptions(struct menuNode_s **option);
-struct menuNode_s* MN_InitOptionIteratorAtIndex(int index, struct menuNode_s* option, menuOptionIterator_t* iterator);
-struct menuNode_s* MN_OptionIteratorNextOption(menuOptionIterator_t* iterator);
-void MN_UpdateInvisOptions(struct menuNode_s *option, const struct linkedList_s *stringList);
-struct menuNode_s* MN_FindOptionByValue(menuOptionIterator_t* iterator, const char* value);
-int MN_FindOptionPosition(menuOptionIterator_t* iterator, const struct menuNode_s* option);
-struct menuNode_s* MN_AddOption(struct menuNode_s**tree, const char* name, const char* label, const char* value);
+void MN_RegisterOption(int dataId, struct uiNode_s *option);
+struct uiNode_s *MN_GetOption(int dataId) __attribute__ ((warn_unused_result));
+void MN_SortOptions(struct uiNode_s **option);
+struct uiNode_s* MN_InitOptionIteratorAtIndex(int index, struct uiNode_s* option, uiOptionIterator_t* iterator);
+struct uiNode_s* MN_OptionIteratorNextOption(uiOptionIterator_t* iterator);
+void MN_UpdateInvisOptions(struct uiNode_s *option, const struct linkedList_s *stringList);
+struct uiNode_s* MN_FindOptionByValue(uiOptionIterator_t* iterator, const char* value);
+int MN_FindOptionPosition(uiOptionIterator_t* iterator, const struct uiNode_s* option);
+struct uiNode_s* MN_AddOption(struct uiNode_s**tree, const char* name, const char* label, const char* value);
 
 /* line strip */
 void MN_RegisterLineStrip(int dataId, struct lineStrip_s *text);

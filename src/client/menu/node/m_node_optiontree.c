@@ -47,14 +47,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const int COLLAPSEBUTTON_WIDTH = 20;		/**< Size used for the collapse button */
 static const int DEPTH_WIDTH = 25;				/**< Width between each depth level */
 
-static menuIcon_t *systemCollapse;
-static menuIcon_t *systemExpand;
+static uiIcon_t *systemCollapse;
+static uiIcon_t *systemExpand;
 
 /**
  * @brief Update the scroll according to the number
  * of items and the size of the node
  */
-static void MN_OptionTreeNodeUpdateScroll (menuNode_t *node)
+static void MN_OptionTreeNodeUpdateScroll (uiNode_t *node)
 {
 	const char *font;
 	int fontHeight;
@@ -73,11 +73,11 @@ static void MN_OptionTreeNodeUpdateScroll (menuNode_t *node)
 }
 
 /** @todo we should remove this call loop */
-static menuNode_t* MN_OptionTreeNodeGetFirstOption(menuNode_t * node);
+static uiNode_t* MN_OptionTreeNodeGetFirstOption(uiNode_t * node);
 
-static void MN_OptionTreeNodeUpdateCache (menuNode_t * node)
+static void MN_OptionTreeNodeUpdateCache (uiNode_t * node)
 {
-	menuNode_t* option = MN_OptionTreeNodeGetFirstOption(node);
+	uiNode_t* option = MN_OptionTreeNodeGetFirstOption(node);
 	if (option)
 		EXTRADATA(node).count = MN_OptionUpdateCache(option);
 }
@@ -86,7 +86,7 @@ static void MN_OptionTreeNodeUpdateCache (menuNode_t * node)
  * @brief Return the first option of the node
  * @todo check versionId and update cached data, and fire events
  */
-static menuNode_t* MN_OptionTreeNodeGetFirstOption (menuNode_t * node)
+static uiNode_t* MN_OptionTreeNodeGetFirstOption (uiNode_t * node)
 {
 	if (node->firstChild) {
 		/** FIXME it MUST be an option behaviour */
@@ -94,7 +94,7 @@ static menuNode_t* MN_OptionTreeNodeGetFirstOption (menuNode_t * node)
 		return node->firstChild;
 	} else {
 		const int v = MN_GetDataVersion(EXTRADATA(node).dataId);
-		menuNode_t *option = MN_GetOption(EXTRADATA(node).dataId);
+		uiNode_t *option = MN_GetOption(EXTRADATA(node).dataId);
 		if (v != EXTRADATA(node).versionId) {
 			EXTRADATA(node).versionId = v;
 			MN_OptionTreeNodeUpdateCache(node);
@@ -103,14 +103,14 @@ static menuNode_t* MN_OptionTreeNodeGetFirstOption (menuNode_t * node)
 	}
 }
 
-static void MN_OptionTreeNodeDraw (menuNode_t *node)
+static void MN_OptionTreeNodeDraw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
 		MARGE
 	};
-	menuNode_t* option;
+	uiNode_t* option;
 	const char *ref;
 	const char *font;
 	vec2_t pos;
@@ -121,7 +121,7 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	const float *textColor;
 	vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int count = 0;
-	menuOptionIterator_t iterator;
+	uiOptionIterator_t iterator;
 
 	if (!systemExpand)
 		systemExpand = MN_GetIconByName("system_expand");
@@ -182,14 +182,14 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 
 		R_Color(NULL);
 		if (option->firstChild) {
-			menuIcon_t *icon = OPTIONEXTRADATA(option).collapsed ? systemExpand : systemCollapse;
+			uiIcon_t *icon = OPTIONEXTRADATA(option).collapsed ? systemExpand : systemCollapse;
 			MN_DrawIconInBox(icon, ICON_STATUS_NORMAL, decX, currentY, icon->size[0], fontHeight);
 		}
 
 		decX += COLLAPSEBUTTON_WIDTH;
 
 		if (OPTIONEXTRADATA(option).icon) {
-			iconStatus_t iconStatus = ICON_STATUS_NORMAL;
+			uiIconStatus_t iconStatus = ICON_STATUS_NORMAL;
 			if (option->disabled)
 				iconStatus = ICON_STATUS_DISABLED;
 			MN_DrawIconInBox(OPTIONEXTRADATA(option).icon, iconStatus, decX, currentY, OPTIONEXTRADATA(option).icon->size[0], fontHeight);
@@ -212,13 +212,13 @@ static void MN_OptionTreeNodeDraw (menuNode_t *node)
 	R_Color(NULL);
 }
 
-static menuNode_t* MN_OptionTreeNodeGetOptionAtPosition (menuNode_t * node, int x, int y, int *depth)
+static uiNode_t* MN_OptionTreeNodeGetOptionAtPosition (uiNode_t * node, int x, int y, int *depth)
 {
-	menuNode_t* option;
+	uiNode_t* option;
 	const char *font;
 	int fontHeight;
 	int count;
-	menuOptionIterator_t iterator;
+	uiOptionIterator_t iterator;
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 
@@ -237,9 +237,9 @@ static menuNode_t* MN_OptionTreeNodeGetOptionAtPosition (menuNode_t * node, int 
 /**
  * @brief Handles selectboxes clicks
  */
-static void MN_OptionTreeNodeClick (menuNode_t * node, int x, int y)
+static void MN_OptionTreeNodeClick (uiNode_t * node, int x, int y)
 {
-	menuNode_t* option;
+	uiNode_t* option;
 	int depth;
 
 	if (MN_AbstractOptionGetCurrentValue(node) == NULL)
@@ -268,7 +268,7 @@ static void MN_OptionTreeNodeClick (menuNode_t * node, int x, int y)
 /**
  * @brief Auto scroll the list
  */
-static void MN_OptionTreeNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+static void MN_OptionTreeNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
 {
 	qboolean updated;
 	updated = MN_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
@@ -286,22 +286,22 @@ static void MN_OptionTreeNodeMouseWheel (menuNode_t *node, qboolean down, int x,
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void MN_OptionTreeNodeLoading (menuNode_t *node)
+static void MN_OptionTreeNodeLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	EXTRADATA(node).versionId = -1;
 	node->padding = 3;
 }
 
-static void MN_OptionTreeNodeLoaded (menuNode_t *node)
+static void MN_OptionTreeNodeLoaded (uiNode_t *node)
 {
 }
 
-static void MN_OptionTreeSetSelectedValue (menuNode_t *node, const menuCallContext_t *context)
+static void MN_OptionTreeSetSelectedValue (uiNode_t *node, const uiCallContext_t *context)
 {
-	menuOptionIterator_t iterator;
-	menuNode_t *option;
-	menuNode_t *firstOption;
+	uiOptionIterator_t iterator;
+	uiNode_t *option;
+	uiNode_t *firstOption;
 	const char* value;
 	int pos, i;
 
@@ -354,7 +354,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterOptionTreeNode (nodeBehaviour_t *behaviour)
+void MN_RegisterOptionTreeNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "optiontree";
 	behaviour->extends = "abstractoption";

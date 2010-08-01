@@ -28,32 +28,32 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/common.h"
 
 /* prototype */
-struct menuNode_s;
+struct uiNode_s;
 
 /* module initialization */
 void MN_InitWindows(void);
 
 /* window stack */
 int MN_GetLastFullScreenWindow(void);
-struct menuNode_s* MN_PushWindow(const char *name, const char *parentName);
+struct uiNode_s* MN_PushWindow(const char *name, const char *parentName);
 void MN_InitStack(const char* activeMenu, const char* mainMenu, qboolean popAll, qboolean pushActive);
 void MN_PopWindow(qboolean all);
 void MN_PopWindowWithEscKey(void);
 void MN_CloseWindow(const char* name);
-struct menuNode_s* MN_GetActiveWindow(void);
+struct uiNode_s* MN_GetActiveWindow(void);
 int MN_CompleteWithWindow(const char *partial, const char **match);
 qboolean MN_IsWindowOnStack(const char* name);
 qboolean MN_IsPointOnWindow(void);
 void MN_InvalidateStack(void);
-void MN_InsertWindow(struct menuNode_s* window);
-void MN_MoveWindowOnTop (struct menuNode_s * window);
+void MN_InsertWindow(struct uiNode_s* window);
+void MN_MoveWindowOnTop (struct uiNode_s * window);
 
 /* deprecated */
 const char* MN_GetActiveWindowName(void);
 void MN_GetActiveRenderRect(int *x, int *y, int *width, int *height);
 
 /** @todo move it on m_nodes, its a common getter/setter */
-void MN_SetNewWindowPos(struct menuNode_s* menu, int x, int y);
-struct menuNode_s *MN_GetWindow(const char *name);
+void MN_SetNewWindowPos(struct uiNode_s* menu, int x, int y);
+struct uiNode_s *MN_GetWindow(const char *name);
 
 #endif

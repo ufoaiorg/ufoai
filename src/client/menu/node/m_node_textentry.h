@@ -34,9 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct textEntryExtraData_s {
 	qboolean isPassword;	/**< Display '*' instead of the real text */
 	qboolean clickOutAbort;	/**< If we click out an activated node, it abort the edition */
-	struct menuAction_s *onAbort;
+	struct uiAction_s *onAbort;
 } textEntryExtraData_t;
 
-void MN_RegisterTextEntryNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterTextEntryNode(struct uiBehaviour_s *behaviour);
 
 #endif

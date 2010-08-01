@@ -71,7 +71,7 @@ int MN_DrawTooltip (const char *string, int x, int y, int maxWidth, int maxHeigh
 /**
  * @brief Wrapper for menu tooltips
  */
-void MN_Tooltip (menuNode_t *node, int x, int y)
+void MN_Tooltip (uiNode_t *node, int x, int y)
 {
 	const char *string;
 	const char *key = NULL;

@@ -44,7 +44,7 @@ static const int ELEMENT_HEIGHT = 16;
 
 static int oldPos;
 static int oldMouseY;
-static menuTimer_t *capturedTimer;
+static uiTimer_t *capturedTimer;
 static int capturedElement;
 
 #define EXTRADATA(node) MN_EXTRADATA(node, abstractScrollbarExtraData_t)
@@ -52,7 +52,7 @@ static int capturedElement;
 /**
  * @brief Return size of all elements of the scrollbar
  */
-static void MN_VScrollbarNodeGetElementSize (menuNode_t *node, int description[5])
+static void MN_VScrollbarNodeGetElementSize (uiNode_t *node, int description[5])
 {
 	const int cuttableSize = node->size[1] - (ELEMENT_HEIGHT * 4);
 	const int low = cuttableSize * ((float)(EXTRADATA(node).pos + 0) / (float)EXTRADATA(node).fullsize);
@@ -73,7 +73,7 @@ static void MN_VScrollbarNodeGetElementSize (menuNode_t *node, int description[5
  * @param[in] x Absolute position x
  * @param[in] y Absolute position y
  */
-static int MN_VScrollbarNodeGetElement (menuNode_t *node, int description[5], int x, int y)
+static int MN_VScrollbarNodeGetElement (uiNode_t *node, int description[5], int x, int y)
 {
 	int i;
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
@@ -88,7 +88,7 @@ static int MN_VScrollbarNodeGetElement (menuNode_t *node, int description[5], in
 /**
  * @brief Set the position of the scrollbar to a value
  */
-static void MN_VScrollbarNodeSet (menuNode_t *node, int value)
+static void MN_VScrollbarNodeSet (uiNode_t *node, int value)
 {
 	int pos = value;
 
@@ -117,14 +117,14 @@ static void MN_VScrollbarNodeSet (menuNode_t *node, int value)
 /**
  * @brief Translate the position to a value
  */
-static inline void MN_VScrollbarNodeDiff (menuNode_t *node, int value)
+static inline void MN_VScrollbarNodeDiff (uiNode_t *node, int value)
 {
 	MN_VScrollbarNodeSet(node, EXTRADATA(node).pos + value);
 }
 
-static inline void MN_VScrollbarNodeAction(menuNode_t *node, int hoveredElement, qboolean allowCapture);
+static inline void MN_VScrollbarNodeAction(uiNode_t *node, int hoveredElement, qboolean allowCapture);
 
-static void MN_VScrollbarNodeRepeat (menuNode_t *node, menuTimer_t *timer)
+static void MN_VScrollbarNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 {
 	MN_VScrollbarNodeAction(node, capturedElement, qfalse);
 	switch (timer->calledTime) {
@@ -134,7 +134,7 @@ static void MN_VScrollbarNodeRepeat (menuNode_t *node, menuTimer_t *timer)
 	}
 }
 
-static inline void MN_VScrollbarNodeAction (menuNode_t *node, int hoveredElement, qboolean allowCapture)
+static inline void MN_VScrollbarNodeAction (uiNode_t *node, int hoveredElement, qboolean allowCapture)
 {
 	switch (hoveredElement) {
 	case 0:
@@ -193,7 +193,7 @@ static inline void MN_VScrollbarNodeAction (menuNode_t *node, int hoveredElement
  */
 static void MN_ActiveVScrollbarNode_f ()
 {
-	menuNode_t *node;
+	uiNode_t *node;
 	int actionId;
 
 	if (Cmd_Argc() != 3) {
@@ -215,7 +215,7 @@ static void MN_ActiveVScrollbarNode_f ()
 	MN_VScrollbarNodeAction(node, actionId, qfalse);
 }
 
-static void MN_VScrollbarNodeMouseDown (menuNode_t *node, int x, int y, int button)
+static void MN_VScrollbarNodeMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	int hoveredElement = -1;
 	int description[5];
@@ -230,7 +230,7 @@ static void MN_VScrollbarNodeMouseDown (menuNode_t *node, int x, int y, int butt
 	MN_VScrollbarNodeAction(node, hoveredElement, qtrue);
 }
 
-static void MN_VScrollbarNodeMouseUp (menuNode_t *node, int x, int y, int button)
+static void MN_VScrollbarNodeMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize < EXTRADATA(node).viewsize)
 		return;
@@ -246,7 +246,7 @@ static void MN_VScrollbarNodeMouseUp (menuNode_t *node, int x, int y, int button
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-static void MN_VScrollbarNodeCapturedMouseLost (menuNode_t *node)
+static void MN_VScrollbarNodeCapturedMouseLost (uiNode_t *node)
 {
 	if (capturedTimer) {
 		MN_TimerRelease(capturedTimer);
@@ -257,7 +257,7 @@ static void MN_VScrollbarNodeCapturedMouseLost (menuNode_t *node)
 /**
  * @brief Called when the user wheel the mouse over the node
  */
-static void MN_VScrollbarNodeWheel (menuNode_t *node, qboolean down, int x, int y)
+static void MN_VScrollbarNodeWheel (uiNode_t *node, qboolean down, int x, int y)
 {
 	const int diff = (down)?1:-1;
 
@@ -270,7 +270,7 @@ static void MN_VScrollbarNodeWheel (menuNode_t *node, qboolean down, int x, int 
 /**
  * @brief Called when the node is captured by the mouse
  */
-static void MN_VScrollbarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+static void MN_VScrollbarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int posSize = EXTRADATA(node).fullsize;
 	const int graphicSize = node->size[1] - (4 * ELEMENT_HEIGHT);
@@ -291,7 +291,7 @@ static void MN_VScrollbarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 /**
  * @brief Call to draw the node
  */
-static void MN_VScrollbarNodeDraw (menuNode_t *node)
+static void MN_VScrollbarNodeDraw (uiNode_t *node)
 {
 	vec2_t pos;
 	int y = 0;
@@ -409,12 +409,12 @@ static void MN_VScrollbarNodeDraw (menuNode_t *node)
 
 }
 
-static void MN_VScrollbarNodeLoading (menuNode_t *node)
+static void MN_VScrollbarNodeLoading (uiNode_t *node)
 {
 	node->size[0] = 19;
 }
 
-static void MN_VScrollbarNodeLoaded (menuNode_t *node)
+static void MN_VScrollbarNodeLoaded (uiNode_t *node)
 {
 #ifdef DEBUG
 	if (node->size[1] - (ELEMENT_HEIGHT * 4) < 0)
@@ -422,7 +422,7 @@ static void MN_VScrollbarNodeLoaded (menuNode_t *node)
 #endif
 }
 
-void MN_RegisterVScrollbarNode (nodeBehaviour_t *behaviour)
+void MN_RegisterVScrollbarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "vscrollbar";
 	behaviour->extends = "abstractscrollbar";

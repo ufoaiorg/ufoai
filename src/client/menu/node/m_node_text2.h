@@ -28,10 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractscrollable.h"
 #include "m_node_text.h"
 
-struct nodeBehaviour_s;
-struct menuAction_s;
+struct uiBehaviour_s;
+struct uiAction_s;
 
-void MN_RegisterText2Node(struct nodeBehaviour_s *behaviour);
+void MN_RegisterText2Node(struct uiBehaviour_s *behaviour);
 
 typedef struct {
 	textExtraData_t super;

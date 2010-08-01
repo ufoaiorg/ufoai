@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @return A float value, else 0
  */
-float MN_GetFloatFromExpression (menuAction_t *expression, const menuCallContext_t *context)
+float MN_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *context)
 {
 	switch (expression->type & EA_HIGHT_MASK) {
 	case EA_VALUE:
@@ -61,7 +61,7 @@ float MN_GetFloatFromExpression (menuAction_t *expression, const menuCallContext
 		case EA_VALUE_PATHPROPERTY:
 		case EA_VALUE_PATHPROPERTY_WITHINJECTION:
 			{
-				menuNode_t *node;
+				uiNode_t *node;
 				const value_t *property;
 				const char *path = expression->d.terminal.d1.string;
 				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
@@ -120,7 +120,7 @@ float MN_GetFloatFromExpression (menuAction_t *expression, const menuCallContext
  * @todo this should not work very well, because too much va are used
  * then we should locally cache values, or manage a temporary string structure
  */
-const char* MN_GetStringFromExpression (menuAction_t *expression, const menuCallContext_t *context)
+const char* MN_GetStringFromExpression (uiAction_t *expression, const uiCallContext_t *context)
 {
 	switch (expression->type & EA_HIGHT_MASK) {
 	case EA_VALUE:
@@ -156,7 +156,7 @@ const char* MN_GetStringFromExpression (menuAction_t *expression, const menuCall
 		case EA_VALUE_PATHPROPERTY:
 		case EA_VALUE_PATHPROPERTY_WITHINJECTION:
 			{
-				menuNode_t *node;
+				uiNode_t *node;
 				const value_t *property;
 				const char* string;
 				const char *path = expression->d.terminal.d1.string;
@@ -211,7 +211,7 @@ const char* MN_GetStringFromExpression (menuAction_t *expression, const menuCall
  * @brief Check if an expression is true
  * @return True if the expression is true
  */
-qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuCallContext_t *context)
+qboolean MN_GetBooleanFromExpression (uiAction_t *expression, const uiCallContext_t *context)
 {
 	if (expression == NULL)
 		return qfalse;
@@ -264,7 +264,7 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuCallCo
 
 	case EA_OPERATOR_EXISTS:
 		{
-			const menuAction_t *e = expression->d.nonTerminal.left;
+			const uiAction_t *e = expression->d.nonTerminal.left;
 			const char* cvarName;
 			assert(e);
 			assert(e->type == EA_VALUE_CVARNAME || e->type == EA_VALUE_CVARNAME_WITHINJECTION);
@@ -299,11 +299,11 @@ qboolean MN_GetBooleanFromExpression (menuAction_t *expression, const menuCallCo
  * @param[in] description String describing a condition
  * @return The condition if everything is ok, NULL otherwise
  */
-menuAction_t *MN_AllocStaticStringCondition (const char *description)
+uiAction_t *MN_AllocStaticStringCondition (const char *description)
 {
 	const char *errhead = "MN_AllocStaticStringCondition: unexpected end of string (object";
 	const char *text, *base;
-	menuAction_t *expression;
+	uiAction_t *expression;
 
 	base = va("( %s )", description);
 	text = base;
@@ -320,10 +320,10 @@ menuAction_t *MN_AllocStaticStringCondition (const char *description)
  * @brief Read a value from the stream and init an action with it
  * @return An initialized action else NULL
  */
-static menuAction_t *MN_ParseValueExpression (const char **text, const char *errhead, const menuNode_t *source)
+static uiAction_t *MN_ParseValueExpression (const char **text, const char *errhead, const uiNode_t *source)
 {
 	const char* token;
-	menuAction_t *expression = MN_AllocStaticAction();
+	uiAction_t *expression = MN_AllocStaticAction();
 
 	token = Com_Parse(text);
 	if (*text == NULL) {
@@ -357,7 +357,7 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 	if (!strncmp(token, "*node:", 6) || !strncmp(token, "*", 1)) {
 		const char* path = token + 1;
 		char cast[32] = "abstractnode";
-		const nodeBehaviour_t *castedBehaviour;
+		const uiBehaviour_t *castedBehaviour;
 		const char *propertyName;
 		qboolean relativeToNode;
 #if 0	/* it looks useless, an unused cache */
@@ -407,7 +407,7 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 #if 0	/* it looks useless, an unused cache */
 		property = MN_GetPropertyFromBehaviour(castedBehaviour, propertyName);
 		if (!property && source) {
-			menuNode_t *node;
+			uiNode_t *node;
 			/* do we ALREADY know this node? and his type */
 			MN_ReadNodePath(path, source, &node, &property);
 			if (!node)
@@ -445,7 +445,7 @@ static menuAction_t *MN_ParseValueExpression (const char **text, const char *err
 	Com_Error(ERR_FATAL, "MN_ParseValueExpression: Token \"%s\" unknown. String must use quotes, cvar and nodes must use prefix.\n", token);
 }
 
-menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const menuNode_t *source)
+uiAction_t *MN_ParseExpression (const char **text, const char *errhead, const uiNode_t *source)
 {
 	const char* token;
 
@@ -454,8 +454,8 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const 
 		return NULL;
 
 	if (!strcmp(token, "(")) {
-		menuAction_t *expression;
-		menuAction_t *e;
+		uiAction_t *expression;
+		uiAction_t *e;
 
 		e = MN_ParseExpression(text, errhead, source);
 
@@ -494,8 +494,8 @@ menuAction_t *MN_ParseExpression (const char **text, const char *errhead, const 
 			Com_UnParseLastToken();
 			return MN_ParseValueExpression(text, errhead, source);
 		} else {
-			menuAction_t *expression = MN_AllocStaticAction();
-			menuAction_t *e;
+			uiAction_t *expression = MN_AllocStaticAction();
+			uiAction_t *e;
 
 			e = MN_ParseExpression(text, errhead, source);
 			expression->type = type;

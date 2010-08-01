@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE lineChartExtraData_t
 #define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
-static void MN_LineChartNodeDraw (menuNode_t *node)
+static void MN_LineChartNodeDraw (uiNode_t *node)
 {
 	lineStrip_t *lineStrip;
 	const int dataId = EXTRADATA(node).dataId;
@@ -91,7 +91,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterLineChartNode (nodeBehaviour_t *behaviour)
+void MN_RegisterLineChartNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "linechart";
 	behaviour->draw = MN_LineChartNodeDraw;

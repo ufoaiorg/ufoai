@@ -39,9 +39,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void MN_TextUpdateCache(menuNode_t *node);
+static void MN_TextUpdateCache(uiNode_t *node);
 
-static void MN_TextNodeGenerateLineSplit (menuNode_t *node)
+static void MN_TextNodeGenerateLineSplit (uiNode_t *node)
 {
 	const char *data;
 	int bufferSize = 1024;
@@ -52,7 +52,7 @@ static void MN_TextNodeGenerateLineSplit (menuNode_t *node)
 	if (node->text != NULL)
 		data = MN_GetReferenceString(node, node->text);
 	else if (EXTRADATA(node).super.dataID != TEXT_NULL) {
-		const menuSharedData_t *shared;
+		const uiSharedData_t *shared;
 		shared = &mn.sharedData[EXTRADATA(node).super.dataID];
 		switch (shared->type) {
 		case MN_SHARED_TEXT:
@@ -94,7 +94,7 @@ static void MN_TextNodeGenerateLineSplit (menuNode_t *node)
 	Mem_Free(buffer);
 }
 
-static void MN_TextValidateCache (menuNode_t *node)
+static void MN_TextValidateCache (uiNode_t *node)
 {
 	int v;
 	if (EXTRADATA(node).super.dataID == TEXT_NULL || node->text != NULL)
@@ -113,7 +113,7 @@ static void MN_TextValidateCache (menuNode_t *node)
  * @param[in] y position y on the screen
  * @return The line number under the position (0 = first line)
  */
-static int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
+static int MN_TextNodeGetLine (const uiNode_t *node, int x, int y)
 {
 	int lineHeight;
 	int line;
@@ -140,7 +140,7 @@ static int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 	return line;
 }
 
-static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y)
+static void MN_TextNodeMouseMove (uiNode_t *node, int x, int y)
 {
 	EXTRADATA(node).super.lineUnderMouse = MN_TextNodeGetLine(node, x, y);
 }
@@ -153,7 +153,7 @@ static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y)
  * @param[in] list The test to draw else NULL
  * @param[in] noDraw If true, calling of this function only update the cache (real number of lines)
  */
-static void MN_TextNodeDrawText (menuNode_t* node, const linkedList_t* list, qboolean noDraw)
+static void MN_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qboolean noDraw)
 {
 	char newFont[MAX_VAR];
 	const char* oldFont = NULL;
@@ -251,9 +251,9 @@ static void MN_TextNodeDrawText (menuNode_t* node, const linkedList_t* list, qbo
 	R_Color(NULL);
 }
 
-static void MN_TextUpdateCache (menuNode_t *node)
+static void MN_TextUpdateCache (uiNode_t *node)
 {
-	const menuSharedData_t *shared;
+	const uiSharedData_t *shared;
 
 	MN_TextNodeGenerateLineSplit(node);
 
@@ -276,9 +276,9 @@ static void MN_TextUpdateCache (menuNode_t *node)
 /**
  * @brief Draw a text node
  */
-static void MN_TextNodeDraw (menuNode_t *node)
+static void MN_TextNodeDraw (uiNode_t *node)
 {
-	const menuSharedData_t *shared;
+	const uiSharedData_t *shared;
 
 	MN_TextValidateCache(node);
 
@@ -307,7 +307,7 @@ static void MN_TextNodeDraw (menuNode_t *node)
  * @brief Calls the script command for a text node that is clickable
  * @sa MN_TextNodeRightClick
  */
-static void MN_TextNodeClick (menuNode_t * node, int x, int y)
+static void MN_TextNodeClick (uiNode_t * node, int x, int y)
 {
 	int line = MN_TextNodeGetLine(node, x, y);
 
@@ -324,7 +324,7 @@ static void MN_TextNodeClick (menuNode_t * node, int x, int y)
  * @brief Calls the script command for a text node that is clickable via right mouse button
  * @sa MN_TextNodeClick
  */
-static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
+static void MN_TextNodeRightClick (uiNode_t * node, int x, int y)
 {
 	int line = MN_TextNodeGetLine(node, x, y);
 
@@ -337,7 +337,7 @@ static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 		MN_ExecuteEventActions(node, node->onRightClick);
 }
 
-static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+static void MN_TextNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
 {
 	MN_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
 	if (node->onWheelUp && !down)
@@ -348,14 +348,14 @@ static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y
 		MN_ExecuteEventActions(node, node->onWheel);
 }
 
-static void MN_TextNodeLoading (menuNode_t *node)
+static void MN_TextNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).super.textLineSelected = -1; /**< Invalid/no line selected per default. */
 	Vector4Set(node->selectedColor, 1.0, 1.0, 1.0, 1.0);
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
-static void MN_TextNodeLoaded (menuNode_t *node)
+static void MN_TextNodeLoaded (uiNode_t *node)
 {
 	int lineheight = EXTRADATA(node).super.lineHeight;
 	/* auto compute lineheight */
@@ -400,7 +400,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterText2Node (nodeBehaviour_t *behaviour)
+void MN_RegisterText2Node (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "text2";
 	behaviour->extends = "text";

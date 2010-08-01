@@ -29,10 +29,10 @@ typedef struct baseExtraData_s {
 	int baseid;		/**< the baseid */
 } baseExtraData_t;
 
-struct nodeBehaviour_s;
+struct uiBehaviour_s;
 
-void MN_RegisterAbstractBaseNode(struct nodeBehaviour_s *behaviour);
-void MN_RegisterBaseMapNode(struct nodeBehaviour_s *behaviour);
-void MN_RegisterBaseLayoutNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterAbstractBaseNode(struct uiBehaviour_s *behaviour);
+void MN_RegisterBaseMapNode(struct uiBehaviour_s *behaviour);
+void MN_RegisterBaseLayoutNode(struct uiBehaviour_s *behaviour);
 
 #endif

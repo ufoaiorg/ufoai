@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void MN_MapNodeDraw (menuNode_t *node)
+static void MN_MapNodeDraw (uiNode_t *node)
 {
 	if (CP_IsRunning()) {
 		vec2_t pos;
@@ -64,7 +64,7 @@ static int oldMousePosX = 0;
 static int oldMousePosY = 0;
 static mapDragMode_t mode = MODE_NULL;
 
-static void MN_MapNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+static void MN_MapNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	switch (mode) {
 	case MODE_SHIFT2DMAP:
@@ -127,7 +127,7 @@ static void MN_MapNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
-static void MN_MapNodeMouseDown (menuNode_t *node, int x, int y, int button)
+static void MN_MapNodeMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	/* finish the last drag before */
 	if (mode != MODE_NULL)
@@ -153,7 +153,7 @@ static void MN_MapNodeMouseDown (menuNode_t *node, int x, int y, int button)
 	}
 }
 
-static void MN_MapNodeMouseUp (menuNode_t *node, int x, int y, int button)
+static void MN_MapNodeMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (mode == MODE_NULL)
 		return;
@@ -176,12 +176,12 @@ static void MN_MapNodeMouseUp (menuNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-static void MN_MapNodeCapturedMouseLost (menuNode_t *node)
+static void MN_MapNodeCapturedMouseLost (uiNode_t *node)
 {
 	mode = MODE_NULL;
 }
 
-static void MN_MapNodeZoom (menuNode_t *node, qboolean out)
+static void MN_MapNodeZoom (uiNode_t *node, qboolean out)
 {
 	ccs.zoom *= pow(0.995, (out ? 10: -10));
 	if (ccs.zoom < cl_mapzoommin->value)
@@ -198,17 +198,17 @@ static void MN_MapNodeZoom (menuNode_t *node, qboolean out)
 	MAP_StopSmoothMovement();
 }
 
-static void MN_MapNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+static void MN_MapNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
 {
 	MN_MapNodeZoom(node, down);
 }
 
-static void MN_MapNodeZoomIn (menuNode_t *node, const menuCallContext_t *context)
+static void MN_MapNodeZoomIn (uiNode_t *node, const uiCallContext_t *context)
 {
 	MN_MapNodeZoom(node, qfalse);
 }
 
-static void MN_MapNodeZoomOut (menuNode_t *node, const menuCallContext_t *context)
+static void MN_MapNodeZoomOut (uiNode_t *node, const uiCallContext_t *context)
 {
 	MN_MapNodeZoom(node, qtrue);
 }
@@ -216,7 +216,7 @@ static void MN_MapNodeZoomOut (menuNode_t *node, const menuCallContext_t *contex
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void MN_MapNodeLoading (menuNode_t *node)
+static void MN_MapNodeLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
@@ -232,7 +232,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterMapNode (nodeBehaviour_t *behaviour)
+void MN_RegisterMapNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "map";
 	behaviour->properties = properties;

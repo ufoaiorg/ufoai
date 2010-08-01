@@ -171,7 +171,7 @@ static void GAME_CP_CampaignListClick_f (void)
 {
 	int num;
 	const char *racetype;
-	menuNode_t *campaignlist;
+	uiNode_t *campaignlist;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <campaign list index>\n", Cmd_Argv(0));
@@ -461,7 +461,7 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
 }
 
-void GAME_CP_DisplayItemInfo (menuNode_t *node, const char *string)
+void GAME_CP_DisplayItemInfo (uiNode_t *node, const char *string)
 {
 	const aircraft_t *aircraft = AIR_GetAircraftSilent(string);
 	if (aircraft) {

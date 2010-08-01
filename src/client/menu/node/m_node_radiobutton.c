@@ -56,10 +56,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Handles RadioButton draw
  * @todo need to implement image. We can't do everything with only one icon (or use nother icon)
  */
-static void MN_RadioButtonNodeDraw (menuNode_t *node)
+static void MN_RadioButtonNodeDraw (uiNode_t *node)
 {
 	vec2_t pos;
-	iconStatus_t iconStatus;
+	uiIconStatus_t iconStatus;
 	const float current = MN_GetReferenceFloat(node, EXTRADATA(node).cvar);
 	const qboolean disabled = node->disabled || node->parent->disabled;
 	int texY;
@@ -96,7 +96,7 @@ static void MN_RadioButtonNodeDraw (menuNode_t *node)
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-static void MN_RadioButtonNodeActivate (menuNode_t * node)
+static void MN_RadioButtonNodeActivate (uiNode_t * node)
 {
 	float current;
 
@@ -127,7 +127,7 @@ static void MN_RadioButtonNodeActivate (menuNode_t * node)
 /**
  * @brief Handles radio button clicks
  */
-static void MN_RadioButtonNodeClick (menuNode_t * node, int x, int y)
+static void MN_RadioButtonNodeClick (uiNode_t * node, int x, int y)
 {
 	if (node->onClick)
 		MN_ExecuteEventActions(node, node->onClick);
@@ -146,7 +146,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterRadioButtonNode (nodeBehaviour_t *behaviour)
+void MN_RegisterRadioButtonNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "radiobutton";
 	behaviour->draw = MN_RadioButtonNodeDraw;

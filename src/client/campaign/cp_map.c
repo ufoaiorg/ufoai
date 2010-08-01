@@ -121,9 +121,9 @@ STATIC DEFINITION
 */
 
 /* Functions */
-static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, const vec2_t pos, int x, int y);
-static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
-static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
+static qboolean MAP_IsMapPositionSelected(const uiNode_t* node, const vec2_t pos, int x, int y);
+static void MAP3D_ScreenToMap(const uiNode_t* node, int x, int y, vec2_t pos);
+static void MAP_ScreenToMap(const uiNode_t* node, int x, int y, vec2_t pos);
 
 /* static variables */
 static char textStandard[2048];		/**< Buffer to display standard text in geoscape */
@@ -279,7 +279,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 /**
  * @brief Click on the map/geoscape
  */
-void MAP_MapClick (menuNode_t* node, int x, int y)
+void MAP_MapClick (uiNode_t* node, int x, int y)
 {
 	aircraft_t *aircraft;
 	int i;
@@ -411,7 +411,7 @@ GEOSCAPE DRAWING AND COORDINATES
 /**
  * @brief Tell if the specified position is considered clicked
  */
-static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, const vec2_t pos, int x, int y)
+static qboolean MAP_IsMapPositionSelected (const uiNode_t* node, const vec2_t pos, int x, int y)
 {
 	int msx, msy;
 
@@ -444,7 +444,7 @@ const float STANDARD_3D_ZOOM = 40.0f;
  * @return qtrue if the point is visible, qfalse else (if it's outside the node or on the wrong side of earth).
  * @note In the function, we do the opposite of MAP3D_ScreenToMap
  */
-static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z)
+static qboolean MAP_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
 {
 	vec2_t mid;
 	vec3_t v, v1, rotationAxis;
@@ -492,7 +492,7 @@ static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
  * node. Otherwise returns qfalse.
  * @sa MAP_3DMapToScreen
  */
-qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y)
+qboolean MAP_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y)
 {
 	float sx;
 
@@ -526,7 +526,7 @@ qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int 
  * @sa MAP_MapToScreen
  * @sa MAP_3DMapToScreen
  */
-qboolean MAP_AllMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z)
+qboolean MAP_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
 {
 	if (cl_3dmap->integer)
 		return MAP_3DMapToScreen(node, pos, x, y, z);
@@ -545,7 +545,7 @@ qboolean MAP_AllMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, i
  * @param[in] model The name of the model of the marker.
  * @param[in] skin Number of modelskin to draw on marker
  */
-void MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
+void MAP_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
 {
 	if (cl_3dmap->integer) {
 		R_Draw3DMapMarkers(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], ccs.angles, pos, theta, GLOBE_RADIUS, model, skin);
@@ -568,7 +568,7 @@ void MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float 
  * @param[in] y Y coordinate on the screen that was clicked to
  * @param[out] pos vec2_t was filled with longitude and latitude
  */
-static void MAP_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
+static void MAP_ScreenToMap (const uiNode_t* node, int x, int y, vec2_t pos)
 {
 	pos[0] = (((ccs.mapPos[0] - x) / ccs.mapSize[0] + 0.5) / ccs.zoom - (ccs.center[0] - 0.5)) * 360.0;
 	pos[1] = (((ccs.mapPos[1] - y) / ccs.mapSize[1] + 0.5) / ccs.zoom - (ccs.center[1] - 0.5)) * 180.0;
@@ -587,7 +587,7 @@ static void MAP_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
  * @param[out] pos vec2_t was filled with longitude and latitude
  * @sa MAP_3DMapToScreen
  */
-static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
+static void MAP3D_ScreenToMap (const uiNode_t* node, int x, int y, vec2_t pos)
 {
 	vec2_t mid;
 	vec3_t v, v1, rotationAxis;
@@ -726,7 +726,7 @@ void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
  * @param[in] line The path which is to be drawn
  * @sa MAP_MapCalcLine
  */
-static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
+static void MAP_MapDrawLine (const uiNode_t* node, const mapline_t* line)
 {
 	const vec4_t color = {1, 0.5, 0.5, 1};
 	screenPoint_t pts[LINE_MAXPTS];
@@ -775,7 +775,7 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
  * @param[in] line The path which is to be drawn
  * @sa MAP_MapCalcLine
  */
-static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
+static void MAP_3DMapDrawLine (const uiNode_t* node, const mapline_t* line)
 {
 	const vec4_t color = {1, 0.5, 0.5, 1};
 	screenPoint_t pts[LINE_MAXPTS];
@@ -807,7 +807,7 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
  * @param[in] color The color for drawing
  * @sa RADAR_DrawCoverage
  */
-void MAP_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t center, const float angle, const vec4_t color)
+void MAP_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t center, const float angle, const vec4_t color)
 {
 	int i, xCircle, yCircle;
 	screenPoint_t pts[CIRCLE_DRAW_POINTS + 1];
@@ -1361,7 +1361,7 @@ static void MAP_SmoothTranslate (void)
  * @param[in] pos
  * @sa MAP_DrawMap
  */
-static void MAP_DrawBullets (const menuNode_t* node, const vec3_t pos)
+static void MAP_DrawBullets (const uiNode_t* node, const vec3_t pos)
 {
 	int x, y;
 
@@ -1377,7 +1377,7 @@ static void MAP_DrawBullets (const menuNode_t* node, const vec3_t pos)
  * @param[in] color color of the beam
  * @sa MAP_DrawMap
  */
-static void MAP_DrawBeam (const menuNode_t* node, const vec3_t start, const vec3_t end, const vec4_t color)
+static void MAP_DrawBeam (const uiNode_t* node, const vec3_t start, const vec3_t end, const vec4_t color)
 {
 	int points[4];
 
@@ -1398,7 +1398,7 @@ static void MAP_DrawBeam (const menuNode_t* node, const vec3_t start, const vec3
  * @param[in] node The menu node which will be used for drawing markers.
  * @param[in] ms Pointer to the mission to draw.
  */
-static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
+static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *ms)
 {
 	int x, y;
 
@@ -1443,7 +1443,7 @@ static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
  * @param[in] font Default font.
  * @pre installation is not NULL.
  */
-static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installation_t *installation,
+static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation_t *installation,
 	qboolean oneUFOVisible, const char* font)
 {
 	const installationTemplate_t *tpl = installation->installationTemplate;
@@ -1485,7 +1485,7 @@ static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installati
  * @param[in] oneUFOVisible Is there at least one UFO visible on the geoscape?
  * @param[in] font Default font.
  */
-static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
+static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
 	qboolean oneUFOVisible, const char* font)
 {
 	int i, x, y;
@@ -1540,7 +1540,7 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
  * @param[in] aircraft Pointer to the aircraft to draw for
  * @note if max health (AIR_STATS_DAMAGE) <= 0 no healthbar drawn
  */
-static void MAP_DrawAircraftHealthBar (const menuNode_t* node, const aircraft_t *aircraft) {
+static void MAP_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *aircraft) {
 	const vec4_t bordercolor = {1, 1, 1, 1};
 	const int width = 8 * ccs.zoom;
 	const int height = 1 * ccs.zoom * 0.9;
@@ -1574,7 +1574,7 @@ static void MAP_DrawAircraftHealthBar (const menuNode_t* node, const aircraft_t 
  * @param[in] aircraft Pointer to the aircraft to draw.
  * @param[in] oneUFOVisible Is there at least one UFO visible on the geoscape?
  */
-static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *aircraft, qboolean oneUFOVisible)
+static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *aircraft, qboolean oneUFOVisible)
 {
 	float angle;
 
@@ -1763,7 +1763,7 @@ void MAP_UpdateGeoscapeDock (void)
  * going to change when you rotate earth around itself and time is stopped eg.).
  * @sa MAP_DrawMap
  */
-static void MAP_DrawMapMarkers (const menuNode_t* node)
+static void MAP_DrawMapMarkers (const uiNode_t* node)
 {
 	const linkedList_t *list;
 	int x, y, i, baseIdx, installationIdx, aircraftIdx, idx;
@@ -1936,7 +1936,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
  * @param[in] node The map menu node
  * @sa MAP_DrawMapMarkers
  */
-void MAP_DrawMap (const menuNode_t* node)
+void MAP_DrawMap (const uiNode_t* node)
 {
 	vec2_t pos;
 

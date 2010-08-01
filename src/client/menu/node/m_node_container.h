@@ -32,13 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* prototypes */
 struct base_s;
-struct nodeBehaviour_s;
-struct menuNode_s;
+struct uiBehaviour_s;
+struct uiNode_s;
 
 extern struct inventory_s *menuInventory;
 
-void MN_RegisterContainerNode(struct nodeBehaviour_s *behaviour);
-void MN_DrawItem(struct menuNode_s *node, const vec3_t org, const struct item_s *item, int x, int y, const vec3_t scale, const vec4_t color);
+void MN_RegisterContainerNode(struct uiBehaviour_s *behaviour);
+void MN_DrawItem(struct uiNode_s *node, const vec3_t org, const struct item_s *item, int x, int y, const vec3_t scale, const vec4_t color);
 void MN_ContainerNodeUpdateEquipment(inventory_t *inv, equipDef_t *ed);
 
 /**
@@ -50,7 +50,7 @@ typedef struct containerExtraData_s {
 	invDef_t *container;	/**< The container linked to this node. */
 
 	int lastSelectedId;		/**< id oject the object type selected */
-	struct menuAction_s *onSelect;	/**< call when we select an item */
+	struct uiAction_s *onSelect;	/**< call when we select an item */
 
 	/* for scrolled container */
 
@@ -67,7 +67,7 @@ typedef struct containerExtraData_s {
 	int scrollCur;			/**< Index of first item that is displayed. */
 	int scrollNum;			/**< Number of items that are displayed. */
 	int scrollTotalNum;		/**< Total number of displayable items. */
-	struct menuAction_s *onViewChange;	/**< called when view change (scrollCur, scrollNum, scrollTotalNum) */
+	struct uiAction_s *onViewChange;	/**< called when view change (scrollCur, scrollNum, scrollTotalNum) */
 } containerExtraData_t;
 
 

@@ -27,29 +27,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../game/inventory.h"
 
-struct menuNode_s;
+struct uiNode_s;
 struct item_s;
 
 typedef enum {
 	DND_NOTHING,
 	DND_SOMETHING,	/**< Untyped object */
 	DND_ITEM,
-} dndType_t;
+} uiDNDType_t;
 
 /* management */
 void MN_DrawDragAndDrop(int mousePosX, int mousePosY);
 
 /* command */
-void MN_DNDDragItem(struct menuNode_s *node, const struct item_s *item);
+void MN_DNDDragItem(struct uiNode_s *node, const struct item_s *item);
 void MN_DNDDrop(void);
 void MN_DNDAbort(void);
 
 /*  getter */
 qboolean MN_DNDIsDragging(void);
-qboolean MN_DNDIsTargetNode(struct menuNode_s *node);
-qboolean MN_DNDIsSourceNode(struct menuNode_s *node);
-struct menuNode_s *MN_DNDGetTargetNode(void);
-struct menuNode_s *MN_DNDGetSourceNode(void);
+qboolean MN_DNDIsTargetNode(struct uiNode_s *node);
+qboolean MN_DNDIsSourceNode(struct uiNode_s *node);
+struct uiNode_s *MN_DNDGetTargetNode(void);
+struct uiNode_s *MN_DNDGetSourceNode(void);
 int MN_DNDGetType(void);
 struct item_s *MN_DNDGetItem(void);
 

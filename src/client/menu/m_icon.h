@@ -34,9 +34,9 @@ typedef enum {
 	ICON_STATUS_CLICKED = 3,
 
 	ICON_STATUS_MAX
-} iconStatus_t;
+} uiIconStatus_t;
 
-typedef struct menuIcon_s {
+typedef struct uiIcon_s {
 	char name[MAX_VAR];
 	vec2_t size;
 	qboolean single;
@@ -46,12 +46,12 @@ typedef struct menuIcon_s {
 	vec4_t color[ICON_STATUS_MAX];
 	char* image[ICON_STATUS_MAX];
 	vec2_t pos[ICON_STATUS_MAX];
-} menuIcon_t;
+} uiIcon_t;
 
 extern const value_t mn_iconProperties[];
 
-menuIcon_t* MN_GetIconByName(const char* name);
-menuIcon_t* MN_AllocStaticIcon(const char* name) __attribute__ ((warn_unused_result));
-void MN_DrawIconInBox(const menuIcon_t* icon, iconStatus_t status, int posX, int posY, int sizeX, int sizeY);
+uiIcon_t* MN_GetIconByName(const char* name);
+uiIcon_t* MN_AllocStaticIcon(const char* name) __attribute__ ((warn_unused_result));
+void MN_DrawIconInBox(const uiIcon_t* icon, uiIconStatus_t status, int posX, int posY, int sizeX, int sizeY);
 
 #endif

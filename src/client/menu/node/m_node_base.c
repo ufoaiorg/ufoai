@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Called after the end of the node load from script (all data and/or child are set)
  */
-static void MN_AbstractBaseNodeLoaded (menuNode_t * node)
+static void MN_AbstractBaseNodeLoaded (uiNode_t * node)
 {
 	const int id = EXTRADATA(node).baseid;
 	if (id < 0 || id >= MAX_BASES) {
@@ -50,7 +50,7 @@ static void MN_AbstractBaseNodeLoaded (menuNode_t * node)
 /**
  * @brief Draw a small square with the menu layout of the given base
  */
-static void MN_BaseLayoutNodeDraw (menuNode_t * node)
+static void MN_BaseLayoutNodeDraw (uiNode_t * node)
 {
 	base_t *base;
 	int height, width, y;
@@ -98,7 +98,7 @@ static void MN_BaseLayoutNodeDraw (menuNode_t * node)
  * @param[out] col Col of the cell at the position (-1 if no cell)
  * @param[out] row Row of the cell at the position (-1 if no cell)
  */
-static void MN_BaseMapGetCellAtPos (const menuNode_t *node, int x, int y, int *col, int *row)
+static void MN_BaseMapGetCellAtPos (const uiNode_t *node, int x, int y, int *col, int *row)
 {
 	assert(col);
 	assert(row);
@@ -129,7 +129,7 @@ static inline qboolean MN_BaseMapIsCellFree (const base_t *base, int col, int ro
 /**
  * @brief Draws a base.
  */
-static void MN_BaseMapNodeDraw (menuNode_t * node)
+static void MN_BaseMapNodeDraw (uiNode_t * node)
 {
 	int width, height, row, col;
 	char image[MAX_QPATH];		/**< this buffer should not be need */
@@ -253,7 +253,7 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void MN_BaseMapNodeDrawTooltip (menuNode_t *node, int x, int y)
+static void MN_BaseMapNodeDrawTooltip (uiNode_t *node, int x, int y)
 {
 	int col, row;
 	building_t *building;
@@ -282,7 +282,7 @@ static void MN_BaseMapNodeDrawTooltip (menuNode_t *node, int x, int y)
  * @param[in] x Absolute X mouse position into the screen
  * @param[in] y Absolute Y mouse position into the screen
  */
-static void MN_BaseMapNodeClick (menuNode_t *node, int x, int y)
+static void MN_BaseMapNodeClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -327,7 +327,7 @@ static void MN_BaseMapNodeClick (menuNode_t *node, int x, int y)
  * @param[in] x Absolute x mouse coordinate (screen coordinates)
  * @param[in] y Absolute y mouse coordinate (screen coordinates)
  */
-static void MN_BaseMapNodeRightClick (menuNode_t *node, int x, int y)
+static void MN_BaseMapNodeRightClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -359,7 +359,7 @@ static void MN_BaseMapNodeRightClick (menuNode_t *node, int x, int y)
  * @param[in] y The y screen coordinate
  * @note relies on @c baseCurrent
  */
-static void MN_BaseMapNodeMiddleClick (menuNode_t *node, int x, int y)
+static void MN_BaseMapNodeMiddleClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
 	base_t *base = B_GetCurrentSelectedBase();
@@ -386,7 +386,7 @@ static void MN_BaseMapNodeMiddleClick (menuNode_t *node, int x, int y)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void MN_BaseLayoutNodeLoading (menuNode_t *node)
+static void MN_BaseLayoutNodeLoading (uiNode_t *node)
 {
 	node->padding = 3;
 	Vector4Set(node->color, 1, 1, 1, 1);
@@ -398,7 +398,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterAbstractBaseNode (nodeBehaviour_t *behaviour)
+void MN_RegisterAbstractBaseNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractbase";
 	behaviour->isAbstract = qtrue;
@@ -407,7 +407,7 @@ void MN_RegisterAbstractBaseNode (nodeBehaviour_t *behaviour)
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }
 
-void MN_RegisterBaseMapNode (nodeBehaviour_t *behaviour)
+void MN_RegisterBaseMapNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "basemap";
 	behaviour->extends = "abstractbase";
@@ -418,7 +418,7 @@ void MN_RegisterBaseMapNode (nodeBehaviour_t *behaviour)
 	behaviour->middleClick = MN_BaseMapNodeMiddleClick;
 }
 
-void MN_RegisterBaseLayoutNode (nodeBehaviour_t *behaviour)
+void MN_RegisterBaseLayoutNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "baselayout";
 	behaviour->extends = "abstractbase";

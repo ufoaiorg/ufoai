@@ -167,7 +167,7 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
  * @param[in] gridSize size of the radar picture, in grid units.
  * @sa MN_InitRadar
  */
-static void MN_GetRadarWidth (const menuNode_t *node, vec2_t gridSize)
+static void MN_GetRadarWidth (const uiNode_t *node, vec2_t gridSize)
 {
 	int j;
 	int tileWidth[2];		/**< Contains the width of the first and the last tile of the first line (in screen unit) */
@@ -269,7 +269,7 @@ static qboolean MN_CheckRadarImage (const char *imageName, const int level)
  * @note Called for every new map (client_state_t is wiped with every
  * level change)
  */
-static void MN_InitRadar (const menuNode_t *node)
+static void MN_InitRadar (const uiNode_t *node)
 {
 	int i, j;
 	const vec3_t offset = {MAP_SIZE_OFFSET, MAP_SIZE_OFFSET, MAP_SIZE_OFFSET};
@@ -560,7 +560,7 @@ static void MN_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
  * @note we only need to handle the 2d plane and can ignore the z level
  * @param[in] node The radar menu node (located in the hud menu definitions)
  */
-static void MN_RadarNodeDraw (menuNode_t *node)
+static void MN_RadarNodeDraw (uiNode_t *node)
 {
 	le_t *le;
 	int i;
@@ -677,7 +677,7 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 /**
  * @brief Called when the node is captured by the mouse
  */
-static void MN_RadarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+static void MN_RadarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const float mapWidth = mapMax[0] - mapMin[0];
 	const float mapHeight = mapMax[1] - mapMin[1];
@@ -696,7 +696,7 @@ static void MN_RadarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	VectorCopy(pos, cl.cam.origin);
 }
 
-static void MN_RadarNodeMouseDown (menuNode_t *node, int x, int y, int button)
+static void MN_RadarNodeMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (node->disabled)
 		return;
@@ -707,7 +707,7 @@ static void MN_RadarNodeMouseDown (menuNode_t *node, int x, int y, int button)
 	}
 }
 
-static void MN_RadarNodeMouseUp (menuNode_t *node, int x, int y, int button)
+static void MN_RadarNodeMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1)
 		MN_MouseRelease();
@@ -774,7 +774,7 @@ static void MN_GenRadarMap_f (void)
 	R_ScreenShot(x - border, y - border, width + border * 2, height + border * 2, filename, NULL);
 }
 
-static void MN_GenAllRadarMap (menuNode_t *node, menuTimer_t *timer)
+static void MN_GenAllRadarMap (uiNode_t *node, uiTimer_t *timer)
 {
 	int level = (timer->calledTime - 1) / 2;
 	int mode = (timer->calledTime - 1) % 2;
@@ -790,7 +790,7 @@ static void MN_GenAllRadarMap (menuNode_t *node, menuTimer_t *timer)
 		Cmd_ExecuteString("mn_genradarmap");
 }
 
-menuTimer_t* timer;
+uiTimer_t* timer;
 
 /**
  * @todo allow to call MN_TimerRelease into timer callback
@@ -811,7 +811,7 @@ static void MN_GenAllRadarMap_f (void)
 	MN_TimerStart(timer);
 }
 
-void MN_RegisterRadarNode (nodeBehaviour_t *behaviour)
+void MN_RegisterRadarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "radar";
 	behaviour->draw = MN_RadarNodeDraw;

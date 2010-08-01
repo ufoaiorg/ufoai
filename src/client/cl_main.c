@@ -643,8 +643,8 @@ static void CL_PrecacheModels (void)
 
 static void CL_SetRatioFilter_f (void)
 {
-	menuNode_t* firstOption = MN_GetOption(OPTION_VIDEO_RESOLUTIONS);
-	menuNode_t* option = firstOption;
+	uiNode_t* firstOption = MN_GetOption(OPTION_VIDEO_RESOLUTIONS);
+	uiNode_t* option = firstOption;
 	float requestedRation = atof(Cmd_Argv(1));
 	qboolean all = qfalse;
 	qboolean custom = qfalse;
@@ -690,7 +690,7 @@ static void CL_SetRatioFilter_f (void)
 
 static void CL_VideoInitMenu (void)
 {
-	menuNode_t* option = MN_GetOption(OPTION_VIDEO_RESOLUTIONS);
+	uiNode_t* option = MN_GetOption(OPTION_VIDEO_RESOLUTIONS);
 	if (option == NULL) {
 		int i;
 		for (i = 0; i < VID_GetModeNums(); i++) {
@@ -704,7 +704,7 @@ static void CL_VideoInitMenu (void)
 
 static void CL_TeamDefInitMenu (void)
 {
-	menuNode_t* option = MN_GetOption(OPTION_TEAMDEFS);
+	uiNode_t* option = MN_GetOption(OPTION_TEAMDEFS);
 	if (option == NULL) {
 		int i;
 		for (i = 0; i < csi.numTeamDefs; i++) {

@@ -28,17 +28,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/mathlib.h"
 
 /* prototype */
-struct menuNode_s;
-struct menuAction_s;
-struct nodeBehaviour_s;
-struct menuKeyBinding_s;
+struct uiNode_s;
+struct uiAction_s;
+struct uiBehaviour_s;
+struct uiKeyBinding_s;
 
-extern const struct nodeBehaviour_s const *windowBehaviour;
+extern const struct uiBehaviour_s const *windowBehaviour;
 
 #define INDEXEDCHILD_HASH_SIZE 32
 
 typedef struct node_index_s {
-	struct menuNode_s *node;
+	struct uiNode_s *node;
 	struct node_index_s *hash_next;
 	struct node_index_s *next;
 } node_index_t;
@@ -61,35 +61,35 @@ typedef struct {
 	int timeOut;					/**< ms value until calling onTimeOut (see cl.time) */
 	int lastTime;					/**< when a menu was pushed this value is set to cl.time */
 
-	struct menuNode_s *parent;	/**< to create child window */
+	struct uiNode_s *parent;	/**< to create child window */
 
 	/** @todo we can remove it if we create a node for the battlescape */
-	struct menuNode_s *renderNode;
+	struct uiNode_s *renderNode;
 
-	struct menuKeyBinding_s *keyList;	/** list of key binding */
+	struct uiKeyBinding_s *keyList;	/** list of key binding */
 
 	/** @todo think about converting it to action instead of node */
-	struct menuAction_s *onInit; 	/**< Call when the menu is push */
-	struct menuAction_s *onClose;	/**< Call when the menu is pop */
-	struct menuAction_s *onTimeOut;	/**< Call when the own timer of the window out */
+	struct uiAction_s *onInit; 	/**< Call when the menu is push */
+	struct uiAction_s *onClose;	/**< Call when the menu is pop */
+	struct uiAction_s *onTimeOut;	/**< Call when the own timer of the window out */
 
 	node_index_t *index;
 	node_index_t *index_hash[INDEXEDCHILD_HASH_SIZE];
 
 } windowExtraData_t;
 
-void MN_RegisterWindowNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterWindowNode(struct uiBehaviour_s *behaviour);
 
-qboolean MN_WindowIsFullScreen(const struct menuNode_s* const menu);
-qboolean MN_WindowIsDropDown(const struct menuNode_s* const menu);
-qboolean MN_WindowIsModal(const struct menuNode_s* const menu);
-void MN_WindowNodeRegisterKeyBinding(struct menuNode_s* menu, struct menuKeyBinding_s *binding);
-struct menuKeyBinding_s *MN_WindowNodeGetKeyBinding(const struct menuNode_s* const node, unsigned int key);
-void MN_WindowNodeSetRenderNode(struct menuNode_s *node, struct menuNode_s *renderNode);
-vec_t *MN_WindowNodeGetNoticePosition(struct menuNode_s *node);
+qboolean MN_WindowIsFullScreen(const struct uiNode_s* const menu);
+qboolean MN_WindowIsDropDown(const struct uiNode_s* const menu);
+qboolean MN_WindowIsModal(const struct uiNode_s* const menu);
+void MN_WindowNodeRegisterKeyBinding(struct uiNode_s* menu, struct uiKeyBinding_s *binding);
+struct uiKeyBinding_s *MN_WindowNodeGetKeyBinding(const struct uiNode_s* const node, unsigned int key);
+void MN_WindowNodeSetRenderNode(struct uiNode_s *node, struct uiNode_s *renderNode);
+vec_t *MN_WindowNodeGetNoticePosition(struct uiNode_s *node);
 /* child index */
-struct menuNode_s* MN_WindowNodeGetIndexedChild(struct menuNode_s* const node, const char* childName);
-qboolean MN_WindowNodeAddIndexedNode(struct menuNode_s* const node, struct menuNode_s* const child);
-qboolean MN_WindowNodeRemoveIndexedNode(struct menuNode_s* const node, struct menuNode_s* const child);
+struct uiNode_s* MN_WindowNodeGetIndexedChild(struct uiNode_s* const node, const char* childName);
+qboolean MN_WindowNodeAddIndexedNode(struct uiNode_s* const node, struct uiNode_s* const child);
+qboolean MN_WindowNodeRemoveIndexedNode(struct uiNode_s* const node, struct uiNode_s* const child);
 
 #endif

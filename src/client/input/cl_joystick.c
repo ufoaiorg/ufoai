@@ -271,7 +271,7 @@ void IN_JoystickMove (void)
  */
 void IN_JoystickInitMenu (void)
 {
-	menuNode_t* joystickOptions = NULL;
+	uiNode_t* joystickOptions = NULL;
 	const int total = SDL_NumJoysticks();
 
 	if (total == 0) {

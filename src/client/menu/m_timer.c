@@ -34,19 +34,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Timer slot. Only one.
  */
-static menuTimer_t mn_timerSlots[MN_TIMER_SLOT_NUMBER];
+static uiTimer_t mn_timerSlots[MN_TIMER_SLOT_NUMBER];
 
 /**
  * @brief First timer from the timer list.
  * This list is ordered from smaller to bigger nextTime value
  */
-static menuTimer_t *mn_firstTimer;
+static uiTimer_t *mn_firstTimer;
 
 /**
  * @brief Remove a timer from the active linked list
  * @note The function doesn't set to null next and previous attributes of the timer
  */
-static inline void MN_RemoveTimerFromActiveList (menuTimer_t *timer)
+static inline void MN_RemoveTimerFromActiveList (uiTimer_t *timer)
 {
 	assert(timer >= mn_timerSlots && timer < mn_timerSlots + MN_TIMER_SLOT_NUMBER);
 	if (timer->prev) {
@@ -63,10 +63,10 @@ static inline void MN_RemoveTimerFromActiveList (menuTimer_t *timer)
  * @brief Insert a timer in a sorted linked list of timers.
  * List are ordered from smaller to bigger nextTime value
  */
-static void MN_InsertTimerInActiveList (menuTimer_t* first, menuTimer_t* newTimer)
+static void MN_InsertTimerInActiveList (uiTimer_t* first, uiTimer_t* newTimer)
 {
-	menuTimer_t* current = first;
-	menuTimer_t* prev = NULL;
+	uiTimer_t* current = first;
+	uiTimer_t* prev = NULL;
 
 	/* find insert position */
 	if (current != NULL) {
@@ -99,7 +99,7 @@ void MN_HandleTimers (void)
 {
 	/* is first element is out of date? */
 	while (mn_firstTimer && mn_firstTimer->nextTime <= CL_Milliseconds()) {
-		menuTimer_t *timer = mn_firstTimer;
+		uiTimer_t *timer = mn_firstTimer;
 
 		/* throw event */
 		timer->calledTime++;
@@ -120,9 +120,9 @@ void MN_HandleTimers (void)
  * @param[in] firstDelay millisecond delay to wait the callback
  * @param[in] callback callback function to call every delay
  */
-menuTimer_t* MN_AllocTimer (menuNode_t *node, int firstDelay, timerCallback_t callback)
+uiTimer_t* MN_AllocTimer (uiNode_t *node, int firstDelay, timerCallback_t callback)
 {
-	menuTimer_t *timer = NULL;
+	uiTimer_t *timer = NULL;
 	int i;
 
 	/* search empty slot */
@@ -148,7 +148,7 @@ menuTimer_t* MN_AllocTimer (menuNode_t *node, int firstDelay, timerCallback_t ca
 /**
  * @brief Restart a timer
  */
-void MN_TimerStart (menuTimer_t *timer)
+void MN_TimerStart (uiTimer_t *timer)
 {
 	if (timer->isRunning)
 		return;
@@ -161,7 +161,7 @@ void MN_TimerStart (menuTimer_t *timer)
 /**
  * @brief Stop a timer
  */
-void MN_TimerStop (menuTimer_t *timer)
+void MN_TimerStop (uiTimer_t *timer)
 {
 	if (!timer->isRunning)
 		return;
@@ -174,7 +174,7 @@ void MN_TimerStop (menuTimer_t *timer)
 /**
  * @brief Release the timer. It no more exists
  */
-void MN_TimerRelease (menuTimer_t *timer)
+void MN_TimerRelease (uiTimer_t *timer)
 {
 	MN_RemoveTimerFromActiveList(timer);
 	timer->prev = NULL;
@@ -189,12 +189,12 @@ void MN_TimerRelease (menuTimer_t *timer)
  * @brief Return the first timer.
  * Only used for white box unittests
  */
-menuTimer_t *MN_GetFirstTimer (void)
+uiTimer_t *MN_GetFirstTimer (void)
 {
 	return mn_firstTimer;
 }
 
-void MN_PrivateInsertTimerInActiveList (menuTimer_t* first, menuTimer_t* newTimer)
+void MN_PrivateInsertTimerInActiveList (uiTimer_t* first, uiTimer_t* newTimer)
 {
 	MN_InsertTimerInActiveList(first, newTimer);
 }

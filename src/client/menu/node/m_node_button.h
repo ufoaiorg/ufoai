@@ -28,9 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 
 typedef struct buttonExtraData_s {
-	struct menuIcon_s *icon;	/**< Link to an icon */
+	struct uiIcon_s *icon;	/**< Link to an icon */
 } buttonExtraData_t;
 
-void MN_RegisterButtonNode(nodeBehaviour_t *behaviour);
+void MN_RegisterButtonNode(uiBehaviour_t *behaviour);
 
 #endif

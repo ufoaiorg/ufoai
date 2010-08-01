@@ -49,7 +49,7 @@ static const int DATETIME_COLUMN_SIZE = 180;
 /**
  * @return Number of lines need to display this message
  */
-static int MN_MessageGetLines (const menuNode_t *node, message_t *message, const char *fontID, int width)
+static int MN_MessageGetLines (const uiNode_t *node, message_t *message, const char *fontID, int width)
 {
 	const int column1 = DATETIME_COLUMN_SIZE;
 	const int column2 = width - DATETIME_COLUMN_SIZE - node->padding;
@@ -66,7 +66,7 @@ static char *lastDate;
  * @todo do not hard code icons
  * @todo cache icon result
  */
-static menuIcon_t *MN_MessageGetIcon (const message_t *message)
+static uiIcon_t *MN_MessageGetIcon (const message_t *message)
 {
 	const char* iconName;
 
@@ -130,7 +130,7 @@ static menuIcon_t *MN_MessageGetIcon (const message_t *message)
 	return MN_GetIconByName(iconName);
 }
 
-static void MN_MessageDraw (const menuNode_t *node, message_t *message, const char *fontID, int x, int y, int width, int height, int *screenLines)
+static void MN_MessageDraw (const uiNode_t *node, message_t *message, const char *fontID, int x, int y, int width, int height, int *screenLines)
 {
 	const int column1 = DATETIME_COLUMN_SIZE;
 	const int column2 = width - DATETIME_COLUMN_SIZE - node->padding;
@@ -149,7 +149,7 @@ static void MN_MessageDraw (const menuNode_t *node, message_t *message, const ch
 
 	/* identify the begin of a message with a mark */
 	if (lines2 >= 0) {
-		const menuIcon_t *icon;
+		const uiIcon_t *icon;
 		icon = MN_MessageGetIcon(message);
 		MN_DrawIconInBox(icon, ICON_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
 	}
@@ -164,7 +164,7 @@ static void MN_MessageDraw (const menuNode_t *node, message_t *message, const ch
  * @brief Draws the messagesystem node
  * @param[in] node The context menu node
  */
-static void MN_MessageListNodeDraw (menuNode_t *node)
+static void MN_MessageListNodeDraw (uiNode_t *node)
 {
 	message_t *message;
 	int screenLines;
@@ -246,7 +246,7 @@ static void MN_MessageListNodeDraw (menuNode_t *node)
 	}
 }
 
-static void MN_MessageListNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+static void MN_MessageListNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
 {
 	MN_AbstractScrollableNodeScrollY(node, (down ? 1 : -1));
 	if (node->onWheelUp && !down)
@@ -272,7 +272,7 @@ static void MN_MessageDebugUseAllIcons_f (void)
 }
 #endif
 
-void MN_RegisterMessageListNode (nodeBehaviour_t *behaviour)
+void MN_RegisterMessageListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "messagelist";
 	behaviour->extends = "abstractscrollable";

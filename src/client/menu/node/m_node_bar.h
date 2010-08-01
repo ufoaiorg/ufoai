@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractvalue.h"
 
 /* prototype */
-struct nodeBehaviour_s;
+struct uiBehaviour_s;
 
 /**
  * @brief extradata for the panel node
@@ -39,6 +39,6 @@ typedef struct {
 	qboolean readOnly;	/**< True if the user can't edit the content */
 } barExtraData_t;
 
-void MN_RegisterBarNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterBarNode(struct uiBehaviour_s *behaviour);
 
 #endif

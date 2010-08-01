@@ -178,7 +178,7 @@ int MN_GetDataVersion (int textId)
  * @param[in] label label displayed
  * @param[in] value value used when this option is selected
  */
-static void MN_InitOption (menuNode_t* option, const char* label, const char* value)
+static void MN_InitOption (uiNode_t* option, const char* label, const char* value)
 {
 	assert(option);
 	assert(option->behaviour == optionBehaviour);
@@ -194,10 +194,10 @@ static void MN_InitOption (menuNode_t* option, const char* label, const char* va
  * @param[in] value value used when this option is selected
  * @return The new option
  */
-menuNode_t* MN_AddOption (menuNode_t** tree, const char* name, const char* label, const char* value)
+uiNode_t* MN_AddOption (uiNode_t** tree, const char* name, const char* label, const char* value)
 {
-	menuNode_t *last;
-	menuNode_t *option;
+	uiNode_t *last;
+	uiNode_t *option;
 	assert(tree != NULL);
 
 	option = MN_AllocNode(name, "option", qtrue);
@@ -223,10 +223,10 @@ menuNode_t* MN_AddOption (menuNode_t** tree, const char* name, const char* label
  * relation with parent node are not updated
  * @param tree
  */
-static void MN_DeleteOption (menuNode_t* tree)
+static void MN_DeleteOption (uiNode_t* tree)
 {
 	while (tree) {
-		menuNode_t* del = tree;
+		uiNode_t* del = tree;
 		tree = tree->next;
 		MN_DeleteNode(del);
 	}
@@ -263,11 +263,11 @@ void MN_ResetData (int dataId)
  * @todo option should start with '_' if we need to translate it
  * @warning update parent
  */
-static menuNode_t *MN_OptionNodeRemoveHigherOption (menuNode_t **option)
+static uiNode_t *MN_OptionNodeRemoveHigherOption (uiNode_t **option)
 {
-	menuNode_t *prev = *option;
-	menuNode_t *prevfind = NULL;
-	menuNode_t *search = (*option)->next;
+	uiNode_t *prev = *option;
+	uiNode_t *prevfind = NULL;
+	uiNode_t *search = (*option)->next;
 	const char *label = OPTIONEXTRADATA(*option).label;
 
 	if (label[0] == '_')
@@ -290,11 +290,11 @@ static menuNode_t *MN_OptionNodeRemoveHigherOption (menuNode_t **option)
 
 	/* remove the first element */
 	if (prevfind == NULL) {
-		menuNode_t *tmp = *option;
+		uiNode_t *tmp = *option;
 		*option = (*option)->next;
 		return tmp;
 	} else {
-		menuNode_t *tmp = prevfind->next;
+		uiNode_t *tmp = prevfind->next;
 		prevfind->next = tmp->next;
 		return tmp;
 	}
@@ -303,9 +303,9 @@ static menuNode_t *MN_OptionNodeRemoveHigherOption (menuNode_t **option)
 /**
  * @brief Sort options by alphabet
  */
-void MN_SortOptions (menuNode_t **first)
+void MN_SortOptions (uiNode_t **first)
 {
-	menuNode_t *option;
+	uiNode_t *option;
 
 	/* unlink the unsorted list */
 	option = *first;
@@ -315,7 +315,7 @@ void MN_SortOptions (menuNode_t **first)
 
 	/* construct a sorted list */
 	while (option) {
-		menuNode_t *element;
+		uiNode_t *element;
 		element = MN_OptionNodeRemoveHigherOption(&option);
 		element->next = *first;
 		*first = element;
@@ -327,7 +327,7 @@ void MN_SortOptions (menuNode_t **first)
  * @param[in,out] option Option list we want to update
  * @param[in] stringList List of option name (ID) we want to display
  */
-void MN_UpdateInvisOptions (menuNode_t *option, const linkedList_t *stringList)
+void MN_UpdateInvisOptions (uiNode_t *option, const linkedList_t *stringList)
 {
 	if (option == NULL || stringList == NULL)
 		return;
@@ -341,7 +341,7 @@ void MN_UpdateInvisOptions (menuNode_t *option, const linkedList_t *stringList)
 	}
 }
 
-void MN_RegisterOption (int dataId, menuNode_t *option)
+void MN_RegisterOption (int dataId, uiNode_t *option)
 {
 	/** Hack to disable release option memory, if we only want to update the same option */
 	if (mn.sharedData[dataId].type == MN_SHARED_OPTION && mn.sharedData[dataId].data.option == option) {
@@ -362,7 +362,7 @@ void MN_RegisterLineStrip (int dataId, lineStrip_t *lineStrip)
 	mn.sharedData[dataId].versionId++;
 }
 
-menuNode_t *MN_GetOption (int dataId)
+uiNode_t *MN_GetOption (int dataId)
 {
 	if (mn.sharedData[dataId].type == MN_SHARED_OPTION) {
 		return mn.sharedData[dataId].data.option;
@@ -376,7 +376,7 @@ menuNode_t *MN_GetOption (int dataId)
  * @param[in] option First element of options (it can be a tree)
  * @param[in,out] iterator need an initialised iterator, and update it into the write index
  */
-static menuNode_t* MN_FindOptionAtIndex (int index, menuNode_t* option, menuOptionIterator_t* iterator)
+static uiNode_t* MN_FindOptionAtIndex (int index, uiNode_t* option, uiOptionIterator_t* iterator)
 {
 	while (option) {
 		assert(option->behaviour == optionBehaviour);
@@ -423,7 +423,7 @@ static menuNode_t* MN_FindOptionAtIndex (int index, menuNode_t* option, menuOpti
  * @param[out] iterator Initialised iterator
  * @return the first option element found (current position of the iterator)
  * @code
- * menuOptionIterator_t iterator;
+ * uiOptionIterator_t iterator;
  * MN_InitOptionIteratorAtIndex(index, firstOption, &iterator);	// also return the option
  * while (iterator.option) {
  *     ...
@@ -432,7 +432,7 @@ static menuNode_t* MN_FindOptionAtIndex (int index, menuNode_t* option, menuOpti
  * @endcode
  * @todo Rework that code, we should split "Init" and "AtIndex"
  */
-menuNode_t* MN_InitOptionIteratorAtIndex (int index, menuNode_t* option, menuOptionIterator_t* iterator)
+uiNode_t* MN_InitOptionIteratorAtIndex (int index, uiNode_t* option, uiOptionIterator_t* iterator)
 {
 	assert(option->behaviour == optionBehaviour);
 	memset(iterator, 0, sizeof(*iterator));
@@ -445,9 +445,9 @@ menuNode_t* MN_InitOptionIteratorAtIndex (int index, menuNode_t* option, menuOpt
  * @brief Find the next element from the iterator
  * Iterator skipCollapsed and skipInvisible attribute can control the option flow
  */
-menuNode_t* MN_OptionIteratorNextOption (menuOptionIterator_t* iterator)
+uiNode_t* MN_OptionIteratorNextOption (uiOptionIterator_t* iterator)
 {
-	menuNode_t* option;
+	uiNode_t* option;
 
 	option = iterator->option;
 	assert(iterator->depthPos < MAX_DEPTH_OPTIONITERATORCACHE);
@@ -483,7 +483,7 @@ menuNode_t* MN_OptionIteratorNextOption (menuOptionIterator_t* iterator)
  * @param[in] value The value we search
  * @return The right option, else NULL
  */
-menuNode_t* MN_FindOptionByValue (menuOptionIterator_t* iterator, const char* value)
+uiNode_t* MN_FindOptionByValue (uiOptionIterator_t* iterator, const char* value)
 {
 	while (iterator->option) {
 		assert(iterator->option->behaviour == optionBehaviour);
@@ -500,7 +500,7 @@ menuNode_t* MN_FindOptionByValue (menuOptionIterator_t* iterator, const char* va
  * @param[in] option The value we search
  * @return The option index, else -1
  */
-int MN_FindOptionPosition (menuOptionIterator_t* iterator, const menuNode_t* option)
+int MN_FindOptionPosition (uiOptionIterator_t* iterator, const uiNode_t* option)
 {
 	int i = 0;
 	while (iterator->option) {

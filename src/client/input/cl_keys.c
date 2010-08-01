@@ -782,7 +782,7 @@ void Key_WriteBindings (const char* filename)
 
 	for (i = 0; i < MN_GetKeyBindingCount(); i++) {
 		const char *path;
-		menuKeyBinding_t*binding = MN_GetKeyBindingByIndex (i);
+		uiKeyBinding_t*binding = MN_GetKeyBindingByIndex (i);
 		if (binding->node == NULL)
 			continue;
 		if (binding->property == NULL)

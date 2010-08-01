@@ -35,9 +35,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] behaviourName Behaviour name we check
  * @return True if the node inherits from the behaviour
  */
-qboolean MN_NodeInstanceOf (const menuNode_t *node, const char* behaviourName)
+qboolean MN_NodeInstanceOf (const uiNode_t *node, const char* behaviourName)
 {
-	const nodeBehaviour_t *behaviour;
+	const uiBehaviour_t *behaviour;
 	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
 		if (strcmp(behaviour->name, behaviourName) == 0)
 			return qtrue;
@@ -51,9 +51,9 @@ qboolean MN_NodeInstanceOf (const menuNode_t *node, const char* behaviourName)
  * @param[in] behaviour Behaviour we check
  * @return True if the node inherits from the behaviour
  */
-qboolean MN_NodeInstanceOfPointer (const menuNode_t *node, const nodeBehaviour_t* behaviour)
+qboolean MN_NodeInstanceOfPointer (const uiNode_t *node, const uiBehaviour_t* behaviour)
 {
-	const nodeBehaviour_t *b;
+	const uiBehaviour_t *b;
 	for (b = node->behaviour; b; b = b->super) {
 		if (b == behaviour)
 			return qtrue;
@@ -68,7 +68,7 @@ qboolean MN_NodeInstanceOfPointer (const menuNode_t *node, const nodeBehaviour_t
  * @param [in] pointDirection
  * @note For example we can request the right-bottom corner with ALIGN_LR (low, right)
  */
-void MN_NodeGetPoint (const menuNode_t* node, vec2_t pos, byte pointDirection)
+void MN_NodeGetPoint (const uiNode_t* node, vec2_t pos, byte pointDirection)
 {
 	switch (pointDirection % 3) {
 	case 0:	/* left */
@@ -105,7 +105,7 @@ void MN_NodeGetPoint (const menuNode_t* node, vec2_t pos, byte pointDirection)
  * @param[in] node Context node
  * @param[out] pos Absolute position
  */
-void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
+void MN_GetNodeAbsPos (const uiNode_t* node, vec2_t pos)
 {
 	assert(node);
 	assert(pos);
@@ -131,7 +131,7 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
  * @param[in] node The requested node
  * @param[in,out] pos A point to transform
  */
-void MN_NodeRelativeToAbsolutePoint (const menuNode_t* node, vec2_t pos)
+void MN_NodeRelativeToAbsolutePoint (const uiNode_t* node, vec2_t pos)
 {
 	assert(node);
 	assert(pos);
@@ -148,7 +148,7 @@ void MN_NodeRelativeToAbsolutePoint (const menuNode_t* node, vec2_t pos)
  * @param[in,out] x an absolute x position
  * @param[in,out] y an absolute y position
  */
-void MN_NodeAbsoluteToRelativePos (const menuNode_t* node, int *x, int *y)
+void MN_NodeAbsoluteToRelativePos (const uiNode_t* node, int *x, int *y)
 {
 	assert(node != NULL);
 	/* if we request the position of an undrawable node, there is a problem */
@@ -171,7 +171,7 @@ void MN_NodeAbsoluteToRelativePos (const menuNode_t* node, int *x, int *y)
  * @brief Hides a given menu node
  * @note Sanity check whether node is null included
  */
-void MN_HideNode (menuNode_t* node)
+void MN_HideNode (uiNode_t* node)
 {
 	if (node)
 		node->invis = qtrue;
@@ -183,7 +183,7 @@ void MN_HideNode (menuNode_t* node)
  * @brief Unhides a given menu node
  * @note Sanity check whether node is null included
  */
-void MN_UnHideNode (menuNode_t* node)
+void MN_UnHideNode (uiNode_t* node)
 {
 	if (node)
 		node->invis = qfalse;
@@ -194,7 +194,7 @@ void MN_UnHideNode (menuNode_t* node)
 /**
  * @brief Update the node size and fire the size callback
  */
-void MN_NodeSetSize (menuNode_t* node, vec2_t size)
+void MN_NodeSetSize (uiNode_t* node, vec2_t size)
 {
 	if (node->size[0] == size[0] && node->size[1] == size[1])
 		return;
@@ -207,9 +207,9 @@ void MN_NodeSetSize (menuNode_t* node, vec2_t size)
  * @brief Search a child node by given name
  * @note Only search with one depth
  */
-menuNode_t *MN_GetNode (const menuNode_t* const node, const char *name)
+uiNode_t *MN_GetNode (const uiNode_t* const node, const char *name)
 {
-	menuNode_t *current = NULL;
+	uiNode_t *current = NULL;
 
 	if (!node)
 		return NULL;
@@ -227,7 +227,7 @@ menuNode_t *MN_GetNode (const menuNode_t* const node, const char *name)
  * @param[in] prevNode previous node, will became before the newNode; else NULL if newNode will become the first child of the node
  * @param[in] newNode node we insert
  */
-void MN_InsertNode (menuNode_t* const node, menuNode_t *prevNode, menuNode_t *newNode)
+void MN_InsertNode (uiNode_t* const node, uiNode_t *prevNode, uiNode_t *newNode)
 {
 	if (newNode->root == NULL)
 		newNode->root = node->root;
@@ -266,7 +266,7 @@ void MN_InsertNode (menuNode_t* const node, menuNode_t *prevNode, menuNode_t *ne
  * @param[in] node Node where is the child
  * @param[in] child Node we want to remove
  */
-menuNode_t* MN_RemoveNode (menuNode_t* const node, menuNode_t *child)
+uiNode_t* MN_RemoveNode (uiNode_t* const node, uiNode_t *child)
 {
 	assert(node);
 	assert(child);
@@ -278,7 +278,7 @@ menuNode_t* MN_RemoveNode (menuNode_t* const node, menuNode_t *child)
 		node->firstChild = child->next;
 	} else {
 		/** find node before 'child' node */
-		menuNode_t *previous = node->firstChild;
+		uiNode_t *previous = node->firstChild;
 		while (previous != NULL) {
 			if (previous->next == child)
 				break;
@@ -303,7 +303,7 @@ menuNode_t* MN_RemoveNode (menuNode_t* const node, menuNode_t *child)
 	return child;
 }
 
-void MN_UpdateRoot (menuNode_t *node, menuNode_t *newRoot)
+void MN_UpdateRoot (uiNode_t *node, uiNode_t *newRoot)
 {
 	node->root = newRoot;
 	node = node->firstChild;
@@ -316,12 +316,12 @@ void MN_UpdateRoot (menuNode_t *node, menuNode_t *newRoot)
 /**
  * @brief add a node at the end of the node child
  */
-void MN_AppendNode (menuNode_t* const node, menuNode_t *newNode)
+void MN_AppendNode (uiNode_t* const node, uiNode_t *newNode)
 {
 	MN_InsertNode(node, node->lastChild, newNode);
 }
 
-void MN_NodeSetPropertyFromRAW (menuNode_t* node, const value_t *property, void* rawValue, int rawType)
+void MN_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, void* rawValue, int rawType)
 {
 	void *mem = ((byte *) node + property->ofs);
 
@@ -345,9 +345,9 @@ void MN_NodeSetPropertyFromRAW (menuNode_t* node, const value_t *property, void*
 			*(byte **) mem = (byte*) rawValue;
 		}
 	} else if (property->type == V_UI_ACTION) {
-		*(menuAction_t**) mem = (menuAction_t*) rawValue;
+		*(uiAction_t**) mem = (uiAction_t*) rawValue;
 	} else if (property->type == V_UI_ICONREF) {
-		*(menuIcon_t**) mem = (menuIcon_t*) rawValue;
+		*(uiIcon_t**) mem = (uiIcon_t*) rawValue;
 	} else {
 		Com_Error(ERR_FATAL, "MN_NodeSetPropertyFromRAW: Property type '%d' unsupported", property->type);
 	}
@@ -357,7 +357,7 @@ void MN_NodeSetPropertyFromRAW (menuNode_t* node, const value_t *property, void*
 /**
  * @brief Set node property
  */
-qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const char* value)
+qboolean MN_NodeSetProperty (uiNode_t* node, const value_t *property, const char* value)
 {
 	byte* b = (byte*)node + property->ofs;
 	const int specialType = property->type & V_UI_MASK;
@@ -422,7 +422,7 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
  * @param[in] property Requested property
  * @return Return a string value of a property, else NULL, if the type is not supported
  */
-const char* MN_GetStringFromNodeProperty (const menuNode_t* node, const value_t* property)
+const char* MN_GetStringFromNodeProperty (const uiNode_t* node, const value_t* property)
 {
 	const int baseType = property->type & V_UI_MASK;
 	const byte* b = (const byte*)node + property->ofs;
@@ -463,7 +463,7 @@ const char* MN_GetStringFromNodeProperty (const menuNode_t* node, const value_t*
  * @return Return the float value of a property, else 0, if the type is not supported
  * @note If the type is not supported, a waring is reported to the console
  */
-float MN_GetFloatFromNodeProperty (const menuNode_t* node, const value_t* property)
+float MN_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property)
 {
 	const byte* b = (const byte*)node + property->ofs;
 	assert(node);
@@ -500,7 +500,7 @@ float MN_GetFloatFromNodeProperty (const menuNode_t* node, const value_t* proper
  */
 static void MN_NodeGetProperty_f (void)
 {
-	menuNode_t *node;
+	uiNode_t *node;
 	const value_t *property;
 	const char *sValue;
 	float fValue;
@@ -540,7 +540,7 @@ static void MN_NodeGetProperty_f (void)
  */
 static void MN_NodeSetProperty_f (void)
 {
-	menuNode_t *node;
+	uiNode_t *node;
 	const value_t *property;
 
 	if (Cmd_Argc() != 4) {
@@ -567,7 +567,7 @@ static void MN_NodeSetProperty_f (void)
 /**
  * @brief Invalidate a node and all his parent to request a layout update
  */
-void MN_Invalidate (menuNode_t *node)
+void MN_Invalidate (uiNode_t *node)
 {
 	while (node) {
 		if (node->invalidated)
@@ -580,32 +580,32 @@ void MN_Invalidate (menuNode_t *node)
 /**
  * @brief Validate a node tree
  */
-void MN_Validate (menuNode_t *node)
+void MN_Validate (uiNode_t *node)
 {
 	if (node->invalidated)
 		node->behaviour->doLayout(node);
 }
 
-static qboolean MN_AbstractNodeDNDEnter (menuNode_t *node)
+static qboolean MN_AbstractNodeDNDEnter (uiNode_t *node)
 {
 	return qfalse;
 }
 
-static qboolean MN_AbstractNodeDNDMove (menuNode_t *node, int x, int y)
+static qboolean MN_AbstractNodeDNDMove (uiNode_t *node, int x, int y)
 {
 	return qtrue;
 }
 
-static void MN_AbstractNodeDNDLeave (menuNode_t *node)
+static void MN_AbstractNodeDNDLeave (uiNode_t *node)
 {
 }
 
-static qboolean MN_AbstractNodeDNDDrop (menuNode_t *node, int x, int y)
+static qboolean MN_AbstractNodeDNDDrop (uiNode_t *node, int x, int y)
 {
 	return qtrue;
 }
 
-static qboolean MN_AbstractNodeDNDFinished (menuNode_t *node, qboolean isDroped)
+static qboolean MN_AbstractNodeDNDFinished (uiNode_t *node, qboolean isDroped)
 {
 	return isDroped;
 }
@@ -613,14 +613,14 @@ static qboolean MN_AbstractNodeDNDFinished (menuNode_t *node, qboolean isDroped)
 /**
  * @brief Call to update a cloned node
  */
-static void MN_AbstractNodeClone (const menuNode_t *source, menuNode_t *clone)
+static void MN_AbstractNodeClone (const uiNode_t *source, uiNode_t *clone)
 {
 }
 
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-static void MN_AbstractNodeActivate (menuNode_t *node)
+static void MN_AbstractNodeActivate (uiNode_t *node)
 {
 	if (node->onClick)
 		MN_ExecuteEventActions(node, node->onClick);
@@ -629,9 +629,9 @@ static void MN_AbstractNodeActivate (menuNode_t *node)
 /**
  * @brief Call to update the node layout. This common code revalidates the node tree.
  */
-static void MN_AbstractNodeDoLayout (menuNode_t *node)
+static void MN_AbstractNodeDoLayout (uiNode_t *node)
 {
-	menuNode_t *child;
+	uiNode_t *child;
 	if (!node->invalidated)
 		return;
 
@@ -642,9 +642,9 @@ static void MN_AbstractNodeDoLayout (menuNode_t *node)
 	node->invalidated = qfalse;
 }
 
-static void MN_AbstractNodeInit (menuNode_t *node)
+static void MN_AbstractNodeInit (uiNode_t *node)
 {
-	menuNode_t* child;
+	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
 		if (child->behaviour->init) {
 			child->behaviour->init(child);
@@ -652,9 +652,9 @@ static void MN_AbstractNodeInit (menuNode_t *node)
 	}
 }
 
-static void MN_AbstractNodeClose (menuNode_t *node)
+static void MN_AbstractNodeClose (uiNode_t *node)
 {
-	menuNode_t* child;
+	uiNode_t* child;
 	for (child = node->firstChild; child; child = child->next) {
 		if (child->behaviour->close) {
 			child->behaviour->close(child);
@@ -665,13 +665,13 @@ static void MN_AbstractNodeClose (menuNode_t *node)
 /**
  * @brief Callback stub
  */
-static void MN_AbstractNodeSizeChanged (menuNode_t *node)
+static void MN_AbstractNodeSizeChanged (uiNode_t *node)
 {
 	if (node->firstChild != NULL)
 		MN_Invalidate(node);
 }
 
-static void MN_AbstractNodeVisibilityChange (menuNode_t *node)
+static void MN_AbstractNodeVisibilityChange (uiNode_t *node)
 {
 	if (node->parent != NULL)
 		MN_Invalidate(node->parent);
@@ -682,7 +682,7 @@ static const value_t *propertyHeight;
 static const value_t *propertySize;
 static const value_t *propertyInvis;
 
-static void MN_AbstractNodePropertyChanged (menuNode_t *node, const value_t *property)
+static void MN_AbstractNodePropertyChanged (uiNode_t *node, const value_t *property)
 {
 	if (property == propertyWidth || property == propertyHeight || property == propertySize) {
 		node->behaviour->sizeChanged(node);
@@ -691,7 +691,7 @@ static void MN_AbstractNodePropertyChanged (menuNode_t *node, const value_t *pro
 	}
 }
 
-static void MN_AbstractNodeCallRemovaAllChild (menuNode_t *node, const menuCallContext_t *context)
+static void MN_AbstractNodeCallRemovaAllChild (uiNode_t *node, const uiCallContext_t *context)
 {
 	if (MN_GetParamNumber(context) != 0) {
 		Com_Printf("MN_AbstractNodeCallRemovaAllChild: Invalide number of param\n");
@@ -700,10 +700,10 @@ static void MN_AbstractNodeCallRemovaAllChild (menuNode_t *node, const menuCallC
 	MN_DeleteAllChild(node);
 }
 
-static void MN_AbstractNodeCallCreateChild (menuNode_t *node, const menuCallContext_t *context)
+static void MN_AbstractNodeCallCreateChild (uiNode_t *node, const uiCallContext_t *context)
 {
-	menuNode_t *child;
-	menuNode_t *component;
+	uiNode_t *child;
+	uiNode_t *component;
 	const char *name;
 	const char *type;
 
@@ -730,7 +730,7 @@ static void MN_AbstractNodeCallCreateChild (menuNode_t *node, const menuCallCont
 	MN_AppendNode(node, child);
 }
 
-static void MN_AbstractNodeCallDelete (menuNode_t *node, const menuCallContext_t *context)
+static void MN_AbstractNodeCallDelete (uiNode_t *node, const uiCallContext_t *context)
 {
 	if (MN_GetParamNumber(context) != 0) {
 		Com_Printf("MN_AbstractNodeCallDelete: Invalide number of param\n");
@@ -742,36 +742,36 @@ static void MN_AbstractNodeCallDelete (menuNode_t *node, const menuCallContext_t
 /** @brief valid properties for a node */
 static const value_t properties[] = {
 	/* Top-left position of the node */
-	{"pos", V_POS, offsetof(menuNode_t, pos), MEMBER_SIZEOF(menuNode_t, pos)},
+	{"pos", V_POS, offsetof(uiNode_t, pos), MEMBER_SIZEOF(uiNode_t, pos)},
 	/* Size of the node */
-	{"size", V_POS, offsetof(menuNode_t, size), MEMBER_SIZEOF(menuNode_t, size)},
+	{"size", V_POS, offsetof(uiNode_t, size), MEMBER_SIZEOF(uiNode_t, size)},
 	/* Width of the node (see also <code>size</code>) */
-	{"width", V_FLOAT, offsetof(menuNode_t, size[0]), MEMBER_SIZEOF(menuNode_t, size[0])},
+	{"width", V_FLOAT, offsetof(uiNode_t, size[0]), MEMBER_SIZEOF(uiNode_t, size[0])},
 	/* Height of the node (see also <code>size</code>) */
-	{"height", V_FLOAT, offsetof(menuNode_t, size[1]), MEMBER_SIZEOF(menuNode_t, size[1])},
+	{"height", V_FLOAT, offsetof(uiNode_t, size[1]), MEMBER_SIZEOF(uiNode_t, size[1])},
 	/* Left position of the node (see also <code>pos</code>) */
-	{"left", V_FLOAT, offsetof(menuNode_t, pos[0]), MEMBER_SIZEOF(menuNode_t, pos[0])},
+	{"left", V_FLOAT, offsetof(uiNode_t, pos[0]), MEMBER_SIZEOF(uiNode_t, pos[0])},
 	/* Top position of the node (see also <code>pos</code>) */
-	{"top", V_FLOAT, offsetof(menuNode_t, pos[1]), MEMBER_SIZEOF(menuNode_t, pos[1])},
+	{"top", V_FLOAT, offsetof(uiNode_t, pos[1]), MEMBER_SIZEOF(uiNode_t, pos[1])},
 
 	/* If true, the node name is indexed into the window. We can access to the node with
 	 * the path "windowName#nodeName"
 	 */
-	{"indexed", V_BOOL, offsetof(menuNode_t, indexed), MEMBER_SIZEOF(menuNode_t, indexed)},
+	{"indexed", V_BOOL, offsetof(uiNode_t, indexed), MEMBER_SIZEOF(uiNode_t, indexed)},
 	/* If true, the node is not displayed nor or activatable. */
-	{"invis", V_BOOL, offsetof(menuNode_t, invis), MEMBER_SIZEOF(menuNode_t, invis)},
+	{"invis", V_BOOL, offsetof(uiNode_t, invis), MEMBER_SIZEOF(uiNode_t, invis)},
 	/* If true, the node is disabled. Few nodes support it, fell free to request an update. */
-	{"disabled", V_BOOL, offsetof(menuNode_t, disabled), MEMBER_SIZEOF(menuNode_t, disabled)},
+	{"disabled", V_BOOL, offsetof(uiNode_t, disabled), MEMBER_SIZEOF(uiNode_t, disabled)},
 	/* If true, the node is not ''tangible''. We click through it, then it will not receive mouse event. */
-	{"ghost", V_BOOL, offsetof(menuNode_t, ghost), MEMBER_SIZEOF(menuNode_t, ghost)},
+	{"ghost", V_BOOL, offsetof(uiNode_t, ghost), MEMBER_SIZEOF(uiNode_t, ghost)},
 	/* Border size we want to display. */
-	{"border", V_INT, offsetof(menuNode_t, border), MEMBER_SIZEOF(menuNode_t, border)},
+	{"border", V_INT, offsetof(uiNode_t, border), MEMBER_SIZEOF(uiNode_t, border)},
 	/* Padding size we want to use. Few node support it. */
-	{"padding", V_INT, offsetof(menuNode_t, padding), MEMBER_SIZEOF(menuNode_t, padding)},
+	{"padding", V_INT, offsetof(uiNode_t, padding), MEMBER_SIZEOF(uiNode_t, padding)},
 	/* Background color we want to display. */
-	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor), MEMBER_SIZEOF(menuNode_t, bgcolor)},
+	{"bgcolor", V_COLOR, offsetof(uiNode_t, bgcolor), MEMBER_SIZEOF(uiNode_t, bgcolor)},
 	/* Border color we want to display. */
-	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
+	{"bordercolor", V_COLOR, offsetof(uiNode_t, bordercolor), MEMBER_SIZEOF(uiNode_t, bordercolor)},
 
 	/*
 	 * Used to set the position of the node when the parent use a layout manager.
@@ -783,57 +783,57 @@ static const value_t properties[] = {
 	 * m_node_panel.c
 	 * @image html http://ufoai.ninex.info/wiki/images/Layout.png
 	 */
-	{"align", V_INT, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
+	{"align", V_INT, offsetof(uiNode_t, align), MEMBER_SIZEOF(uiNode_t, align)},
 
 	/*
 	 * Used share an int, only used by 1 behavour
 	 * @todo move it to the right behaviour, delete it
 	 */
-	{"num", V_INT, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
+	{"num", V_INT, offsetof(uiNode_t, num), MEMBER_SIZEOF(uiNode_t, num)},
 
 	/* Tooltip we want to use. */
-	{"tooltip", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, tooltip), 0},	/* translated in MN_Tooltip */
+	{"tooltip", V_CVAR_OR_LONGSTRING, offsetof(uiNode_t, tooltip), 0},	/* translated in MN_Tooltip */
 	/* Image to use. Each behaviour use it like they want.
 	 * @todo Move it into behaviour need it.
 	 * @todo use V_REF_OF_STRING when its possible ('image' is never a cvar)
 	 */
-	{"image", V_CVAR_OR_STRING, offsetof(menuNode_t, image), 0},
+	{"image", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
 	/* Text the node will display. */
-	{"string", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
+	{"string", V_CVAR_OR_LONGSTRING, offsetof(uiNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
 	/* Text font the node will use.
 	 * @todo use V_REF_OF_STRING when its possible ('font' is never a cvar).
 	 */
-	{"font", V_CVAR_OR_STRING, offsetof(menuNode_t, font), 0},
+	{"font", V_CVAR_OR_STRING, offsetof(uiNode_t, font), 0},
 
 	/* Text color the node will use. */
-	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
+	{"color", V_COLOR, offsetof(uiNode_t, color), MEMBER_SIZEOF(uiNode_t, color)},
 	/* Text color the node will use when something is selected. */
-	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
+	{"selectcolor", V_COLOR, offsetof(uiNode_t, selectedColor), MEMBER_SIZEOF(uiNode_t, selectedColor)},
 	/* Alignement of the text into the node, or elements into blocks. */
-	{"textalign", V_UI_ALIGN, offsetof(menuNode_t, textalign), MEMBER_SIZEOF(menuNode_t, textalign)},
+	{"textalign", V_UI_ALIGN, offsetof(uiNode_t, textalign), MEMBER_SIZEOF(uiNode_t, textalign)},
 	/* When <code>invis</code> property is false (default value), this condition say if the node is visible or not. It use a script expression. */
-	{"visiblewhen", V_UI_IF, offsetof(menuNode_t, visibilityCondition), 0},
+	{"visiblewhen", V_UI_IF, offsetof(uiNode_t, visibilityCondition), 0},
 
 	/* Called when the user click with left button into the node. */
-	{"onclick", V_UI_ACTION, offsetof(menuNode_t, onClick), MEMBER_SIZEOF(menuNode_t, onClick)},
+	{"onclick", V_UI_ACTION, offsetof(uiNode_t, onClick), MEMBER_SIZEOF(uiNode_t, onClick)},
 	/* Called when the user click with right button into the node. */
-	{"onrclick", V_UI_ACTION, offsetof(menuNode_t, onRightClick), MEMBER_SIZEOF(menuNode_t, onRightClick)},
+	{"onrclick", V_UI_ACTION, offsetof(uiNode_t, onRightClick), MEMBER_SIZEOF(uiNode_t, onRightClick)},
 	/* Called when the user click with middle button into the node. */
-	{"onmclick", V_UI_ACTION, offsetof(menuNode_t, onMiddleClick), MEMBER_SIZEOF(menuNode_t, onMiddleClick)},
+	{"onmclick", V_UI_ACTION, offsetof(uiNode_t, onMiddleClick), MEMBER_SIZEOF(uiNode_t, onMiddleClick)},
 	/* Called when the user use the mouse wheel over the node. */
-	{"onwheel", V_UI_ACTION, offsetof(menuNode_t, onWheel), MEMBER_SIZEOF(menuNode_t, onWheel)},
+	{"onwheel", V_UI_ACTION, offsetof(uiNode_t, onWheel), MEMBER_SIZEOF(uiNode_t, onWheel)},
 	/* Called when the user use the mouse wheel up over the node. */
-	{"onwheelup", V_UI_ACTION, offsetof(menuNode_t, onWheelUp), MEMBER_SIZEOF(menuNode_t, onWheelUp)},
+	{"onwheelup", V_UI_ACTION, offsetof(uiNode_t, onWheelUp), MEMBER_SIZEOF(uiNode_t, onWheelUp)},
 	/* Called when the user use the mouse wheel down over the node. */
-	{"onwheeldown", V_UI_ACTION, offsetof(menuNode_t, onWheelDown), MEMBER_SIZEOF(menuNode_t, onWheelDown)},
+	{"onwheeldown", V_UI_ACTION, offsetof(uiNode_t, onWheelDown), MEMBER_SIZEOF(uiNode_t, onWheelDown)},
 	/* Called when the mouse enter over the node. */
-	{"onmouseenter", V_UI_ACTION, offsetof(menuNode_t, onMouseEnter), MEMBER_SIZEOF(menuNode_t, onMouseEnter)},
+	{"onmouseenter", V_UI_ACTION, offsetof(uiNode_t, onMouseEnter), MEMBER_SIZEOF(uiNode_t, onMouseEnter)},
 	/* Called when the mouse go out of the node. */
-	{"onmouseleave", V_UI_ACTION, offsetof(menuNode_t, onMouseLeave), MEMBER_SIZEOF(menuNode_t, onMouseLeave)},
+	{"onmouseleave", V_UI_ACTION, offsetof(uiNode_t, onMouseLeave), MEMBER_SIZEOF(uiNode_t, onMouseLeave)},
 	/* Called when the internal content of the nde change. Each behaviour use it how they need it.
 	 * @todo Move it where it is need.
 	 */
-	{"onchange", V_UI_ACTION, offsetof(menuNode_t, onChange), MEMBER_SIZEOF(menuNode_t, onChange)},
+	{"onchange", V_UI_ACTION, offsetof(uiNode_t, onChange), MEMBER_SIZEOF(uiNode_t, onChange)},
 
 	/* Special attribute only use into the node description to exclude part of the node (see also <code>ghost</code>). Rectangle position is relative to the node. */
 	{"excluderect", V_UI_EXCLUDERECT, 0, 0},
@@ -850,7 +850,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
+void MN_RegisterAbstractNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractnode";
 	behaviour->isAbstract = qtrue;

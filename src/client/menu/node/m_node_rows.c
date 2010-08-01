@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Handles Button draw
  */
-static void MN_RowsNodeDraw (menuNode_t *node)
+static void MN_RowsNodeDraw (uiNode_t *node)
 {
 	int current = 0;
 	int i = EXTRADATA(node).current;
@@ -55,7 +55,7 @@ static void MN_RowsNodeDraw (menuNode_t *node)
 	}
 }
 
-static void MN_RowsNodeLoaded (menuNode_t *node)
+static void MN_RowsNodeLoaded (uiNode_t *node)
 {
 	/* prevent infinite loop into the draw */
 	if (EXTRADATA(node).lineHeight == 0) {
@@ -65,9 +65,9 @@ static void MN_RowsNodeLoaded (menuNode_t *node)
 
 static const value_t properties[] = {
 	/* Background color for odd elements */
-	{"color1", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
+	{"color1", V_COLOR, offsetof(uiNode_t, color), MEMBER_SIZEOF(uiNode_t, color)},
 	/* Background color for even elements */
-	{"color2", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
+	{"color2", V_COLOR, offsetof(uiNode_t, selectedColor), MEMBER_SIZEOF(uiNode_t, selectedColor)},
 	/* Element height */
 	{"lineheight", V_INT, MN_EXTRADATA_OFFSETOF(rowsExtraData_t, lineHeight), MEMBER_SIZEOF(rowsExtraData_t, lineHeight)},
 	/* Element number on the top of the list. It is used to scroll the node content. */
@@ -75,7 +75,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterRowsNode (nodeBehaviour_t *behaviour)
+void MN_RegisterRowsNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "rows";
 	behaviour->draw = MN_RowsNodeDraw;

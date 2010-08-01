@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void MN_TodoNodeDrawTooltip (menuNode_t *node, int x, int y)
+static void MN_TodoNodeDrawTooltip (uiNode_t *node, int x, int y)
 {
 	const int tooltipWidth = 250;
 	static char tooltiptext[1024];
@@ -53,7 +53,7 @@ static void MN_TodoNodeDrawTooltip (menuNode_t *node, int x, int y)
 	MN_DrawTooltip(tooltiptext, x, y, tooltipWidth, 0);
 }
 
-static void MN_TodoNodeDraw (menuNode_t *node)
+static void MN_TodoNodeDraw (uiNode_t *node)
 {
 	static vec4_t red = {1.0, 0.0, 0.0, 1.0};
 	vec2_t pos;
@@ -65,17 +65,17 @@ static void MN_TodoNodeDraw (menuNode_t *node)
 		MN_CaptureDrawOver(node);
 }
 
-static void MN_TodoNodeDrawOverMenu (menuNode_t *node)
+static void MN_TodoNodeDrawOverMenu (uiNode_t *node)
 {
 	MN_TodoNodeDrawTooltip(node, mousePosX, mousePosY);
 }
 
-static void MN_TodoNodeLoading (menuNode_t *node)
+static void MN_TodoNodeLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
-static void MN_TodoNodeLoaded (menuNode_t *node)
+static void MN_TodoNodeLoaded (uiNode_t *node)
 {
 #ifndef DEBUG
 	node->invis = qtrue;
@@ -84,7 +84,7 @@ static void MN_TodoNodeLoaded (menuNode_t *node)
 	node->size[1] = 10;
 }
 
-void MN_RegisterTodoNode (nodeBehaviour_t *behaviour)
+void MN_RegisterTodoNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "todo";
 	behaviour->extends = "string";

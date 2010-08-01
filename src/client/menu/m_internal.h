@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Global data shared into all menu code
  */
-typedef struct menuGlobal_s {
+typedef struct uiGlobal_s {
 
 	/**
 	 * @brief Holds shared data
@@ -54,40 +54,40 @@ typedef struct menuGlobal_s {
 	 * @sa MN_GetText
 	 * @sa MN_RegisterLinkedListText
 	 */
-	menuSharedData_t sharedData[MAX_MENUTEXTS];
+	uiSharedData_t sharedData[MAX_MENUTEXTS];
 
 	int numNodes;
 
-	menuNode_t* windows[MAX_WINDOWS];
+	uiNode_t* windows[MAX_WINDOWS];
 	int numWindows;
 
-	menuNode_t* components[MAX_COMPONENTS];
+	uiNode_t* components[MAX_COMPONENTS];
 	int numComponents;
 
 	byte *adata, *curadata;
 	int adataize;
 
-	menuNode_t *windowStack[MAX_MENUSTACK];
+	uiNode_t *windowStack[MAX_MENUSTACK];
 	int windowStackPos;
 
-	menuAction_t actions[MAX_MENUACTIONS];
+	uiAction_t actions[MAX_MENUACTIONS];
 	int numActions;
 
 	menuModel_t menuModels[MAX_MENUMODELS];
 	int numMenuModels;
 
-	excludeRect_t excludeRect[MAX_EXLUDERECTS];
+	uiExcludeRect_t excludeRect[MAX_EXLUDERECTS];
 	int numExcludeRect;
 
-	menuIcon_t icons[MAX_MENUICONS];
+	uiIcon_t icons[MAX_MENUICONS];
 	int numIcons;
 
-	menuKeyBinding_t keyBindings[MAX_MENUKEYBINDING];
+	uiKeyBinding_t keyBindings[MAX_MENUKEYBINDING];
 	int numKeyBindings;
 
-} menuGlobal_t;
+} uiGlobal_t;
 
-extern menuGlobal_t mn;
+extern uiGlobal_t mn;
 extern struct memPool_s *mn_sysPool;
 extern struct memPool_s *mn_dynStringPool;
 extern struct memPool_s *mn_dynPool;

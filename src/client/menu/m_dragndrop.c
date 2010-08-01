@@ -37,11 +37,11 @@ static int oldMousePosY = -1;				/**< Save position Y of the mouse to know when 
 static qboolean nodeAcceptDND = qfalse;		/**< Save if the current target node can accept the DND object */
 static qboolean positionAcceptDND = qfalse;	/**< Save if the current position accept the DND object */
 
-static dndType_t objectType;				/**< Save the type of the object we are dragging */
+static uiDNDType_t objectType;				/**< Save the type of the object we are dragging */
 static item_t draggingItem;					/**< Save the dragging object */
 
-static menuNode_t *sourceNode;				/**< Node where come from the DND object */
-static menuNode_t *targetNode;				/**< Current node under the mouse */
+static uiNode_t *sourceNode;				/**< Node where come from the DND object */
+static uiNode_t *targetNode;				/**< Current node under the mouse */
 
 
 /**
@@ -55,7 +55,7 @@ qboolean MN_DNDIsDragging (void)
 /**
  * @brief Return true if the requested node is the current target of the DND
  */
-qboolean MN_DNDIsTargetNode (struct menuNode_s *node)
+qboolean MN_DNDIsTargetNode (struct uiNode_s *node)
 {
 	if (!MN_DNDIsDragging())
 		return qfalse;
@@ -65,7 +65,7 @@ qboolean MN_DNDIsTargetNode (struct menuNode_s *node)
 /**
  * @brief Return true if the requested node is the source of the DND
  */
-qboolean MN_DNDIsSourceNode (struct menuNode_s *node)
+qboolean MN_DNDIsSourceNode (struct uiNode_s *node)
 {
 	if (!MN_DNDIsDragging())
 		return qfalse;
@@ -83,7 +83,7 @@ int MN_DNDGetType (void)
 /**
  * @brief Return target of the DND
  */
-menuNode_t *MN_DNDGetTargetNode (void)
+uiNode_t *MN_DNDGetTargetNode (void)
 {
 	assert(MN_DNDIsDragging());
 	return targetNode;
@@ -92,7 +92,7 @@ menuNode_t *MN_DNDGetTargetNode (void)
 /**
  * @brief Return source of the DND
  */
-menuNode_t *MN_DNDGetSourceNode (void)
+uiNode_t *MN_DNDGetSourceNode (void)
 {
 	assert(MN_DNDIsDragging());
 	return sourceNode;
@@ -104,7 +104,7 @@ menuNode_t *MN_DNDGetSourceNode (void)
  * @sa MN_DNDDrop
  * @sa MN_DNDAbort
  */
-static void MN_DNDDrag (menuNode_t *node)
+static void MN_DNDDrag (uiNode_t *node)
 {
 	assert(!MN_DNDIsDragging());
 	objectType = DND_SOMETHING;
@@ -119,7 +119,7 @@ static void MN_DNDDrag (menuNode_t *node)
  * @sa MN_DNDDrop
  * @sa MN_DNDAbort
  */
-void MN_DNDDragItem (menuNode_t *node, const item_t *item)
+void MN_DNDDragItem (uiNode_t *node, const item_t *item)
 {
 	MN_DNDDrag(node);
 	assert(MN_DNDIsDragging());
@@ -196,7 +196,7 @@ item_t *MN_DNDGetItem (void)
  */
 static void MN_DNDMouseMove (int mousePosX, int mousePosY)
 {
-	menuNode_t *node = MN_GetNodeAtPosition(mousePosX, mousePosY);
+	uiNode_t *node = MN_GetNodeAtPosition(mousePosX, mousePosY);
 
 	if (node != targetNode) {
 		if (nodeAcceptDND && targetNode) {

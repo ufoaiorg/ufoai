@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int deltaMouseX;
 static int deltaMouseY;
 
-static void MN_ControlsNodeMouseDown (menuNode_t *node, int x, int y, int button)
+static void MN_ControlsNodeMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1) {
 		MN_SetMouseCapture(node);
@@ -51,7 +51,7 @@ static void MN_ControlsNodeMouseDown (menuNode_t *node, int x, int y, int button
 	}
 }
 
-static void MN_ControlsNodeMouseUp (menuNode_t *node, int x, int y, int button)
+static void MN_ControlsNodeMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1)
 		MN_MouseRelease();
@@ -60,7 +60,7 @@ static void MN_ControlsNodeMouseUp (menuNode_t *node, int x, int y, int button)
 /**
  * @brief Called when the node is captured by the mouse
  */
-static void MN_ControlsNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+static void MN_ControlsNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	/* compute new x position of the menu */
 	x -= deltaMouseX;
@@ -79,7 +79,7 @@ static void MN_ControlsNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	MN_SetNewWindowPos(node->root, x, y);
 }
 
-void MN_RegisterControlsNode (nodeBehaviour_t *behaviour)
+void MN_RegisterControlsNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "controls";
 	behaviour->extends = "image";

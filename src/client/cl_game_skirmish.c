@@ -252,8 +252,8 @@ int GAME_SK_GetTeam (void)
 static void GAME_InitMenuOptions (void)
 {
 	int i;
-	menuNode_t* ufoOptions = NULL;
-	menuNode_t* aircraftOptions = NULL;
+	uiNode_t* ufoOptions = NULL;
+	uiNode_t* aircraftOptions = NULL;
 
 	for (i = 0; i < UFO_MAX; i++) {
 		const char *shortName = Com_UFOTypeToShortName(i);

@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Call after the script initialized the node
  * @todo special cases should be managed as a common property event of the parent node
  */
-static void MN_FuncNodeLoaded (menuNode_t *node)
+static void MN_FuncNodeLoaded (uiNode_t *node)
 {
 	/** @todo move this code into the parser (it should not create a node) */
 	const value_t *prop = MN_GetPropertyFromBehaviour(node->parent->behaviour, node->name);
@@ -47,13 +47,13 @@ static void MN_FuncNodeLoaded (menuNode_t *node)
 	}
 }
 
-void MN_RegisterSpecialNode (nodeBehaviour_t *behaviour)
+void MN_RegisterSpecialNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "special";
 	behaviour->isVirtual = qtrue;
 }
 
-void MN_RegisterFuncNode (nodeBehaviour_t *behaviour)
+void MN_RegisterFuncNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "func";
 	behaviour->extends = "special";
@@ -62,7 +62,7 @@ void MN_RegisterFuncNode (nodeBehaviour_t *behaviour)
 	behaviour->loaded = MN_FuncNodeLoaded;
 }
 
-void MN_RegisterNullNode (nodeBehaviour_t *behaviour)
+void MN_RegisterNullNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "";
 	behaviour->extends = "special";
@@ -74,7 +74,7 @@ void MN_RegisterNullNode (nodeBehaviour_t *behaviour)
  */
 static void MN_ConfuncCommand_f (void)
 {
-	menuNode_t *node = (menuNode_t *) Cmd_Userdata();
+	uiNode_t *node = (uiNode_t *) Cmd_Userdata();
 	assert(node);
 	assert(MN_NodeInstanceOf(node, "confunc"));
 	MN_ExecuteConFuncActions(node, node->onClick);
@@ -85,10 +85,10 @@ static void MN_ConfuncCommand_f (void)
  * @param node The node to check (must be a confunc node).
  * @return @c true if the given node is a dummy node, @c false otherwise.
  */
-static qboolean MN_ConFuncIsVirtual (const menuNode_t *const node)
+static qboolean MN_ConFuncIsVirtual (const uiNode_t *const node)
 {
 	/* magic way to know if it is a dummy node (used for inherited confunc) */
-	const menuNode_t *dummy = (const menuNode_t*) Cmd_GetUserdata(node->name);
+	const uiNode_t *dummy = (const uiNode_t*) Cmd_GetUserdata(node->name);
 	assert(node);
 	assert(MN_NodeInstanceOf(node, "confunc"));
 	return (dummy != NULL && dummy->parent == NULL);
@@ -97,7 +97,7 @@ static qboolean MN_ConFuncIsVirtual (const menuNode_t *const node)
 /**
  * @brief Call after the script initialized the node
  */
-static void MN_ConFuncNodeLoaded (menuNode_t *node)
+static void MN_ConFuncNodeLoaded (uiNode_t *node)
 {
 	/* register confunc non inherited */
 	if (node->super == NULL) {
@@ -109,7 +109,7 @@ static void MN_ConFuncNodeLoaded (menuNode_t *node)
 			Com_Printf("MN_ParseNodeBody: Command name for confunc '%s' already registered\n", MN_GetPath(node));
 		}
 	} else {
-		menuNode_t *dummy;
+		uiNode_t *dummy;
 
 		/* convert a confunc to an "inherited" confunc if it is possible */
 		if (Cmd_Exists(node->name)) {
@@ -123,7 +123,7 @@ static void MN_ConFuncNodeLoaded (menuNode_t *node)
 	}
 }
 
-static void MN_ConFuncNodeClone (const menuNode_t *source, menuNode_t *clone)
+static void MN_ConFuncNodeClone (const uiNode_t *source, uiNode_t *clone)
 {
 	MN_ConFuncNodeLoaded(clone);
 }
@@ -131,11 +131,11 @@ static void MN_ConFuncNodeClone (const menuNode_t *source, menuNode_t *clone)
 /**
  * @brief Callback every time the parent window is opened (pushed into the active window stack)
  */
-static void MN_ConFuncNodeInit (menuNode_t *node)
+static void MN_ConFuncNodeInit (uiNode_t *node)
 {
 	if (MN_ConFuncIsVirtual(node)) {
 		const value_t *property = MN_GetPropertyFromBehaviour(node->behaviour, "onClick");
-		menuNode_t *userData = (menuNode_t*) Cmd_GetUserdata(node->name);
+		uiNode_t *userData = (uiNode_t*) Cmd_GetUserdata(node->name);
 		MN_AddListener(userData, property, node);
 	}
 }
@@ -143,16 +143,16 @@ static void MN_ConFuncNodeInit (menuNode_t *node)
 /**
  * @brief Callback every time the parent window is closed (pop from the active window stack)
  */
-static void MN_ConFuncNodeClose (menuNode_t *node)
+static void MN_ConFuncNodeClose (uiNode_t *node)
 {
 	if (MN_ConFuncIsVirtual(node)) {
 		const value_t *property = MN_GetPropertyFromBehaviour(node->behaviour, "onClick");
-		menuNode_t *userData = (menuNode_t*) Cmd_GetUserdata(node->name);
+		uiNode_t *userData = (uiNode_t*) Cmd_GetUserdata(node->name);
 		MN_RemoveListener(userData, property, node);
 	}
 }
 
-void MN_RegisterConFuncNode (nodeBehaviour_t *behaviour)
+void MN_RegisterConFuncNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "confunc";
 	behaviour->extends = "special";
@@ -164,7 +164,7 @@ void MN_RegisterConFuncNode (nodeBehaviour_t *behaviour)
 	behaviour->clone = MN_ConFuncNodeClone;
 }
 
-void MN_RegisterCvarFuncNode (nodeBehaviour_t *behaviour)
+void MN_RegisterCvarFuncNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "cvarfunc";
 	behaviour->extends = "special";

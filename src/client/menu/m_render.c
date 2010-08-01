@@ -266,7 +266,7 @@ int MN_DrawStringInBox (const char *fontID, int align, int x, int y, int width, 
 int MN_DrawString (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
 		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, qboolean increaseLine, longlines_t method)
 {
-	const menuFont_t *font = MN_GetFontByID(fontID);
+	const uiFont_t *font = MN_GetFontByID(fontID);
 	const int verticalAlign = align / 3;  /* top, center, bottom */
 	int lines;
 

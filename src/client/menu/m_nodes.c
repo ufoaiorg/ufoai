@@ -72,7 +72,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_vscrollbar.h"
 #include "node/m_node_zone.h"
 
-typedef void (*registerFunction_t)(nodeBehaviour_t *node);
+typedef void (*registerFunction_t)(uiBehaviour_t *node);
 
 /**
  * @brief List of functions to register nodes
@@ -136,7 +136,7 @@ const static registerFunction_t registerFunctions[] = {
 /**
  * @brief List of all node behaviours, indexes by nodetype num.
  */
-static nodeBehaviour_t nodeBehaviourList[NUMBER_OF_BEHAVIOURS];
+static uiBehaviour_t nodeBehaviourList[NUMBER_OF_BEHAVIOURS];
 
 /**
  * @brief Get a property from a behaviour or his inheritance
@@ -144,7 +144,7 @@ static nodeBehaviour_t nodeBehaviourList[NUMBER_OF_BEHAVIOURS];
  * @param[in] name Property name we search
  * @return A value_t with the requested name, else NULL
  */
-const value_t *MN_GetPropertyFromBehaviour (const nodeBehaviour_t *behaviour, const char* name)
+const value_t *MN_GetPropertyFromBehaviour (const uiBehaviour_t *behaviour, const char* name)
 {
 	for (; behaviour; behaviour = behaviour->super) {
 		const value_t *result;
@@ -162,9 +162,9 @@ const value_t *MN_GetPropertyFromBehaviour (const nodeBehaviour_t *behaviour, co
  * @sa V_UI_IF
  * @returns qfalse if the node is not drawn due to not meet if conditions
  */
-qboolean MN_CheckVisibility (menuNode_t *node)
+qboolean MN_CheckVisibility (uiNode_t *node)
 {
-	menuCallContext_t context;
+	uiCallContext_t context;
 	if (!node->visibilityCondition)
 		return qtrue;
 	context.source = node;
@@ -177,10 +177,10 @@ qboolean MN_CheckVisibility (menuNode_t *node)
  * @return A path "menuname.nodename.nodename.givennodename"
  * @note Use a static buffer for the result
  */
-const char* MN_GetPath (const menuNode_t* node)
+const char* MN_GetPath (const uiNode_t* node)
 {
 	static char result[MAX_VAR];
-	const menuNode_t* nodes[8];
+	const uiNode_t* nodes[8];
 	int i = 0;
 
 	while (node) {
@@ -217,10 +217,10 @@ const char* MN_GetPath (const menuNode_t* node)
  * @param[out] resultProperty Property found. Else NULL.
  * TODO Speed up, evilly used function, use strncmp instead of using buffer copy (name[MAX_VAR])
  */
-void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, menuNode_t **resultNode, const value_t **resultProperty)
+void MN_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t **resultNode, const value_t **resultProperty)
 {
 	char name[MAX_VAR];
-	menuNode_t* node = NULL;
+	uiNode_t* node = NULL;
 	const char* nextName;
 	char nextCommand = '^';
 
@@ -249,7 +249,7 @@ void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, menuNode
 				if (relativeNode == NULL)
 					return;
 				/** @todo find a way to fix the bad cast. only here to remove "discards qualifiers" warning */
-				node = *(menuNode_t**) ((void*)&relativeNode);
+				node = *(uiNode_t**) ((void*)&relativeNode);
 			} else if (!strcmp(name, "parent")) {
 				if (relativeNode == NULL)
 					return;
@@ -299,9 +299,9 @@ void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, menuNode
  * @sa MN_ReadNodePath
  * @endcode
  */
-menuNode_t* MN_GetNodeByPath (const char* path)
+uiNode_t* MN_GetNodeByPath (const char* path)
 {
-	menuNode_t* node = NULL;
+	uiNode_t* node = NULL;
 	const value_t *property;
 	MN_ReadNodePath(path, NULL, &node, &property);
 	/** FIXME warning if it return a peroperty */
@@ -316,10 +316,10 @@ menuNode_t* MN_GetNodeByPath (const char* path)
  * @param[in] type Name of the node behavior
  * @param[in] isDynamic Allocate a node in static or dynamic memory
  */
-static menuNode_t* MN_AllocNodeWithoutNew (const char* name, const char* type, qboolean isDynamic)
+static uiNode_t* MN_AllocNodeWithoutNew (const char* name, const char* type, qboolean isDynamic)
 {
-	menuNode_t* node;
-	nodeBehaviour_t *behaviour;
+	uiNode_t* node;
+	uiBehaviour_t *behaviour;
 	int nodeSize;
 
 	behaviour = MN_GetNodeBehaviour(type);
@@ -331,14 +331,14 @@ static menuNode_t* MN_AllocNodeWithoutNew (const char* name, const char* type, q
 	if (!isDynamic) {
 		if (mn.curadata + nodeSize > mn.adata + mn.adataize)
 			Com_Error(ERR_FATAL, "MN_AllocNodeWithoutNew: No more memory to allocate a new node");
-		node = (menuNode_t*) mn.curadata;
+		node = (uiNode_t*) mn.curadata;
 		/** @todo fix this hard coded '8' value */
 		mn.curadata = ALIGN_PTR(mn.curadata, 8);
 		mn.curadata += nodeSize;
 		mn.numNodes++;
 		memset(node, 0, nodeSize);
 	} else {
-		node = (menuNode_t*)Mem_PoolAlloc(nodeSize, mn_dynPool, 0);
+		node = (uiNode_t*)Mem_PoolAlloc(nodeSize, mn_dynPool, 0);
 		memset(node, 0, nodeSize);
 		node->dynamic = qtrue;
 	}
@@ -371,9 +371,9 @@ static menuNode_t* MN_AllocNodeWithoutNew (const char* name, const char* type, q
  * @param[in] type Name of the node behavior
  * @param[in] isDynamic Allocate a node in static or dynamic memory
  */
-menuNode_t* MN_AllocNode (const char* name, const char* type, qboolean isDynamic)
+uiNode_t* MN_AllocNode (const char* name, const char* type, qboolean isDynamic)
 {
-	menuNode_t* node = MN_AllocNodeWithoutNew (name, type, isDynamic);
+	uiNode_t* node = MN_AllocNodeWithoutNew (name, type, isDynamic);
 
 	/* allocate memories */
 	if (node->dynamic && node->behaviour->new)
@@ -389,9 +389,9 @@ menuNode_t* MN_AllocNode (const char* name, const char* type, qboolean isDynamic
  * @param[in] ry Relative y position to the parent of the node
  * @return The first visible node at position, else NULL
  */
-static menuNode_t *MN_GetNodeInTreeAtPosition (menuNode_t *node, int rx, int ry)
+static uiNode_t *MN_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 {
-	menuNode_t *find;
+	uiNode_t *find;
 	int i;
 
 	if (node->invis || node->behaviour->isVirtual || !MN_CheckVisibility(node))
@@ -408,7 +408,7 @@ static menuNode_t *MN_GetNodeInTreeAtPosition (menuNode_t *node, int rx, int ry)
 	/** @todo we should improve the loop (last-to-first) */
 	find = NULL;
 	if (node->firstChild) {
-		menuNode_t *child;
+		uiNode_t *child;
 		vec2_t clientPosition = {0, 0};
 
 		if (node->behaviour->getClientPosition)
@@ -418,7 +418,7 @@ static menuNode_t *MN_GetNodeInTreeAtPosition (menuNode_t *node, int rx, int ry)
 		ry -= clientPosition[1];
 
 		for (child = node->firstChild; child; child = child->next) {
-			menuNode_t *tmp;
+			uiNode_t *tmp;
 			tmp = MN_GetNodeInTreeAtPosition(child, rx, ry);
 			if (tmp)
 				find = tmp;
@@ -453,14 +453,14 @@ static menuNode_t *MN_GetNodeInTreeAtPosition (menuNode_t *node, int rx, int ry)
 /**
  * @brief Return the first visible node at a position
  */
-menuNode_t *MN_GetNodeAtPosition (int x, int y)
+uiNode_t *MN_GetNodeAtPosition (int x, int y)
 {
 	int pos;
 
 	/* find the first menu under the mouse */
 	for (pos = mn.windowStackPos - 1; pos >= 0; pos--) {
-		menuNode_t *menu = mn.windowStack[pos];
-		menuNode_t *find;
+		uiNode_t *menu = mn.windowStack[pos];
+		uiNode_t *find;
 
 		/* update the layout */
 		MN_Validate(menu);
@@ -487,7 +487,7 @@ menuNode_t *MN_GetNodeAtPosition (int x, int y)
  * @param[in] name Behaviour name requested
  * @return The bahaviour found, else NULL
  */
-nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
+uiBehaviour_t* MN_GetNodeBehaviour (const char* name)
 {
 	unsigned char min = 0;
 	unsigned char max = NUMBER_OF_BEHAVIOURS;
@@ -510,7 +510,7 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 	return NULL;
 }
 
-nodeBehaviour_t* MN_GetNodeBehaviourByIndex(int index)
+uiBehaviour_t* MN_GetNodeBehaviourByIndex(int index)
 {
 	return &nodeBehaviourList[index];
 }
@@ -524,12 +524,12 @@ int MN_GetNodeBehaviourCount(void)
  * @brief Remove all child from a node (only remove dynamic memory allocation nodes)
  * @param node The node we want to clean
  */
-void MN_DeleteAllChild (menuNode_t* node)
+void MN_DeleteAllChild (uiNode_t* node)
 {
-	menuNode_t *child;
+	uiNode_t *child;
 	child = node->firstChild;
 	while (child) {
-		menuNode_t *next = child->next;
+		uiNode_t *next = child->next;
 		MN_DeleteNode(child);
 		child = next;
 	}
@@ -539,9 +539,9 @@ void MN_DeleteAllChild (menuNode_t* node)
  * Delete the node and remove it from his parent
  * @param node The node we want to delete
  */
-void MN_DeleteNode (menuNode_t* node)
+void MN_DeleteNode (uiNode_t* node)
 {
-	nodeBehaviour_t *behaviour;
+	uiBehaviour_t *behaviour;
 
 	if (!node->dynamic)
 		return;
@@ -589,9 +589,9 @@ void MN_DeleteNode (menuNode_t* node)
  * @todo exclude rect is not safe cloned.
  * @todo actions are not cloned. It is be a problem if we use add/remove listener into a cloned node.
  */
-menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean recursive, const char *newName, qboolean isDynamic)
+uiNode_t* MN_CloneNode (const uiNode_t* node, uiNode_t *newMenu, qboolean recursive, const char *newName, qboolean isDynamic)
 {
-	menuNode_t* newNode = MN_AllocNodeWithoutNew(NULL, node->behaviour->name, isDynamic);
+	uiNode_t* newNode = MN_AllocNodeWithoutNew(NULL, node->behaviour->name, isDynamic);
 
 	/* clone all data */
 	memcpy(newNode, node, sizeof(*node) + node->behaviour->extraDataSize);
@@ -612,13 +612,13 @@ menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean 
 	newNode->firstChild = NULL;
 	newNode->lastChild = NULL;
 	newNode->next = NULL;
-	newNode->super = *(menuNode_t**) ((void*)&node);
+	newNode->super = *(uiNode_t**) ((void*)&node);
 
 	/* clone child */
 	if (recursive) {
-		menuNode_t* childNode;
+		uiNode_t* childNode;
 		for (childNode = node->firstChild; childNode; childNode = childNode->next) {
-			menuNode_t* newChildNode = MN_CloneNode(childNode, newMenu, recursive, NULL, isDynamic);
+			uiNode_t* newChildNode = MN_CloneNode(childNode, newMenu, recursive, NULL, isDynamic);
 			MN_AppendNode(newNode, newChildNode);
 		}
 	}
@@ -634,36 +634,36 @@ menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean 
 
 /** @brief position of virtual function into node behaviour */
 static const int virtualFunctions[] = {
-	offsetof(nodeBehaviour_t, draw),
-	offsetof(nodeBehaviour_t, drawTooltip),
-	offsetof(nodeBehaviour_t, leftClick),
-	offsetof(nodeBehaviour_t, rightClick),
-	offsetof(nodeBehaviour_t, middleClick),
-	offsetof(nodeBehaviour_t, mouseWheel),
-	offsetof(nodeBehaviour_t, mouseMove),
-	offsetof(nodeBehaviour_t, mouseDown),
-	offsetof(nodeBehaviour_t, mouseUp),
-	offsetof(nodeBehaviour_t, capturedMouseMove),
-	offsetof(nodeBehaviour_t, loading),
-	offsetof(nodeBehaviour_t, loaded),
-	offsetof(nodeBehaviour_t, init),
-	offsetof(nodeBehaviour_t, close),
-	offsetof(nodeBehaviour_t, clone),
-	offsetof(nodeBehaviour_t, new),
-	offsetof(nodeBehaviour_t, delete),
-	offsetof(nodeBehaviour_t, activate),
-	offsetof(nodeBehaviour_t, doLayout),
-	offsetof(nodeBehaviour_t, dndEnter),
-	offsetof(nodeBehaviour_t, dndMove),
-	offsetof(nodeBehaviour_t, dndLeave),
-	offsetof(nodeBehaviour_t, dndDrop),
-	offsetof(nodeBehaviour_t, dndFinished),
-	offsetof(nodeBehaviour_t, focusGained),
-	offsetof(nodeBehaviour_t, focusLost),
-	offsetof(nodeBehaviour_t, extraDataSize),
-	offsetof(nodeBehaviour_t, sizeChanged),
-	offsetof(nodeBehaviour_t, propertyChanged),
-	offsetof(nodeBehaviour_t, getClientPosition),
+	offsetof(uiBehaviour_t, draw),
+	offsetof(uiBehaviour_t, drawTooltip),
+	offsetof(uiBehaviour_t, leftClick),
+	offsetof(uiBehaviour_t, rightClick),
+	offsetof(uiBehaviour_t, middleClick),
+	offsetof(uiBehaviour_t, mouseWheel),
+	offsetof(uiBehaviour_t, mouseMove),
+	offsetof(uiBehaviour_t, mouseDown),
+	offsetof(uiBehaviour_t, mouseUp),
+	offsetof(uiBehaviour_t, capturedMouseMove),
+	offsetof(uiBehaviour_t, loading),
+	offsetof(uiBehaviour_t, loaded),
+	offsetof(uiBehaviour_t, init),
+	offsetof(uiBehaviour_t, close),
+	offsetof(uiBehaviour_t, clone),
+	offsetof(uiBehaviour_t, new),
+	offsetof(uiBehaviour_t, delete),
+	offsetof(uiBehaviour_t, activate),
+	offsetof(uiBehaviour_t, doLayout),
+	offsetof(uiBehaviour_t, dndEnter),
+	offsetof(uiBehaviour_t, dndMove),
+	offsetof(uiBehaviour_t, dndLeave),
+	offsetof(uiBehaviour_t, dndDrop),
+	offsetof(uiBehaviour_t, dndFinished),
+	offsetof(uiBehaviour_t, focusGained),
+	offsetof(uiBehaviour_t, focusLost),
+	offsetof(uiBehaviour_t, extraDataSize),
+	offsetof(uiBehaviour_t, sizeChanged),
+	offsetof(uiBehaviour_t, propertyChanged),
+	offsetof(uiBehaviour_t, getClientPosition),
 	-1
 };
 
@@ -671,7 +671,7 @@ static const int virtualFunctions[] = {
  * Initializes the inheritance (every node extends the abstract node)
  * @param behaviour The behaviour to initialize
  */
-static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
+static void MN_InitializeNodeBehaviour (uiBehaviour_t* behaviour)
 {
 	if (behaviour->isInitialized)
 		return;
@@ -721,7 +721,7 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 		while (property->string != NULL) {
 			const value_t *p = MN_GetPropertyFromBehaviour(behaviour->super, property->string);
 #if 0	/**< @todo not possible at the moment, not sure its the right way */
-			const nodeBehaviour_t *b = MN_GetNodeBehaviour(current->string);
+			const uiBehaviour_t *b = MN_GetNodeBehaviour(current->string);
 #endif
 			if (p != NULL)
 				Com_Error(ERR_FATAL, "MN_InitializeNodeBehaviour: property '%s' from node behaviour '%s' overwrite another property", property->string, behaviour->name);
@@ -735,7 +735,7 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 
 	/* Sanity: A property must not be outside the node memory */
 	if (behaviour->properties) {
-		const int size = sizeof(menuNode_t) + behaviour->extraDataSize;
+		const int size = sizeof(uiNode_t) + behaviour->extraDataSize;
 		const value_t* property = behaviour->properties;
 		while (property->string != NULL) {
 			if (property->type != V_UI_NODEMETHOD && property->ofs + property->size > size)
@@ -750,7 +750,7 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 void MN_InitNodes (void)
 {
 	int i = 0;
-	nodeBehaviour_t *current = nodeBehaviourList;
+	uiBehaviour_t *current = nodeBehaviourList;
 
 	/* compute list of node behaviours */
 	for (i = 0; i < NUMBER_OF_BEHAVIOURS; i++) {
@@ -762,8 +762,8 @@ void MN_InitNodes (void)
 	current = nodeBehaviourList;
 	assert(current);
 	for (i = 0; i < NUMBER_OF_BEHAVIOURS - 1; i++) {
-		const nodeBehaviour_t *a = current;
-		const nodeBehaviour_t *b = current + 1;
+		const uiBehaviour_t *a = current;
+		const uiBehaviour_t *b = current + 1;
 		assert(b);
 		if (strcmp(a->name, b->name) >= 0) {
 #ifdef DEBUG

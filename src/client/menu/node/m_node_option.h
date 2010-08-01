@@ -27,9 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_nodes.h"
 
-void MN_RegisterOptionNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterOptionNode(struct uiBehaviour_s *behaviour);
 
-extern const struct nodeBehaviour_s *optionBehaviour;
+extern const struct uiBehaviour_s *optionBehaviour;
 
 #define OPTIONEXTRADATA_TYPE optionExtraData_t
 #define OPTIONEXTRADATA(node) MN_EXTRADATA(node, OPTIONEXTRADATA_TYPE)
@@ -40,7 +40,7 @@ typedef struct optionExtraData_s {
 	char label[MAX_VAR];	/**< text for the select box */
 	char value[MAX_VAR];	/**< the value the cvar should get */
 
-	struct menuIcon_s *icon;	/**< Link to an icon */
+	struct uiIcon_s *icon;	/**< Link to an icon */
 
 	/* status */
 	qboolean collapsed;		/**< If true, child are not displayed */
@@ -52,6 +52,6 @@ typedef struct optionExtraData_s {
 
 } optionExtraData_t;
 
-int MN_OptionUpdateCache(struct menuNode_s* option);
+int MN_OptionUpdateCache(struct uiNode_s* option);
 
 #endif

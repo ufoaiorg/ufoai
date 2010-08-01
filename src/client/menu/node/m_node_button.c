@@ -52,7 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Handles Button clicks
  */
-static void MN_ButtonNodeClick (menuNode_t * node, int x, int y)
+static void MN_ButtonNodeClick (uiNode_t * node, int x, int y)
 {
 	if (node->onClick) {
 		MN_ExecuteEventActions(node, node->onClick);
@@ -62,7 +62,7 @@ static void MN_ButtonNodeClick (menuNode_t * node, int x, int y)
 /**
  * @brief Handles Button draw
  */
-static void MN_ButtonNodeDraw (menuNode_t *node)
+static void MN_ButtonNodeDraw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -76,7 +76,7 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 	int iconPadding = 0;
-	iconStatus_t iconStatus = ICON_STATUS_NORMAL;
+	uiIconStatus_t iconStatus = ICON_STATUS_NORMAL;
 	const char *font = MN_GetFontFromNode(node);
 
 	if (!node->onClick || node->disabled) {
@@ -128,7 +128,7 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 /**
  * @brief Handles Button before loading. Used to set default attribute values
  */
-static void MN_ButtonNodeLoading (menuNode_t *node)
+static void MN_ButtonNodeLoading (uiNode_t *node)
 {
 	node->padding = 8;
 	node->textalign = ALIGN_CC;
@@ -139,7 +139,7 @@ static void MN_ButtonNodeLoading (menuNode_t *node)
 /**
  * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
-static void MN_ButtonNodeLoaded (menuNode_t *node)
+static void MN_ButtonNodeLoaded (uiNode_t *node)
 {
 	/* auto calc the size if none was given via script files */
 	if (node->size[1] == 0) {
@@ -169,7 +169,7 @@ static const value_t properties[] = {
 };
 
 
-void MN_RegisterButtonNode (nodeBehaviour_t *behaviour)
+void MN_RegisterButtonNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "button";
 	behaviour->draw = MN_ButtonNodeDraw;

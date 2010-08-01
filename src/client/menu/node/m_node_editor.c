@@ -50,7 +50,7 @@ typedef enum {
 } zoneNode_t;
 
 
-static menuNode_t* anchoredNode = NULL;
+static uiNode_t* anchoredNode = NULL;
 static const vec4_t red = {1.0, 0.0, 0.0, 1.0};
 static const vec4_t grey = {0.8, 0.8, 0.8, 1.0};
 static const int anchorSize = 10;
@@ -58,7 +58,7 @@ static zoneNode_t dragStatus = ZONE_NONE;
 static int startX;
 static int startY;
 
-static void MN_EditorNodeHighlightNode (menuNode_t *node, const vec4_t color, qboolean displayAnchor)
+static void MN_EditorNodeHighlightNode (uiNode_t *node, const vec4_t color, qboolean displayAnchor)
 {
 	vec2_t pos;
 	MN_GetNodeAbsPos(node, pos);
@@ -73,7 +73,7 @@ static void MN_EditorNodeHighlightNode (menuNode_t *node, const vec4_t color, qb
 	}
 }
 
-static zoneNode_t MN_EditorNodeGetElementAtPosition (menuNode_t *node, int x, int y)
+static zoneNode_t MN_EditorNodeGetElementAtPosition (uiNode_t *node, int x, int y)
 {
 	MN_NodeAbsoluteToRelativePos(anchoredNode, &x, &y);
 
@@ -97,14 +97,14 @@ static zoneNode_t MN_EditorNodeGetElementAtPosition (menuNode_t *node, int x, in
 	return ZONE_NONE;
 }
 
-static void MN_EditorNodeDraw (menuNode_t *node)
+static void MN_EditorNodeDraw (uiNode_t *node)
 {
 	MN_CaptureDrawOver(node);
 }
 
-static void MN_EditorNodeDrawOverMenu (menuNode_t *node)
+static void MN_EditorNodeDrawOverMenu (uiNode_t *node)
 {
-	menuNode_t* hovered = NULL;
+	uiNode_t* hovered = NULL;
 
 	if (MN_GetMouseCapture() != node) {
 		if (anchoredNode)
@@ -130,7 +130,7 @@ static void MN_EditorNodeDrawOverMenu (menuNode_t *node)
 		MN_EditorNodeHighlightNode(anchoredNode, red, qtrue);
 }
 
-static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+static void MN_EditorNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	vec2_t size;
 	const int diffX = x - startX;
@@ -185,12 +185,12 @@ static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 /**
  * @brief Called when the node have lost the captured node
  */
-static void MN_EditorNodeCapturedMouseLost (menuNode_t *node)
+static void MN_EditorNodeCapturedMouseLost (uiNode_t *node)
 {
 	dragStatus = ZONE_NONE;
 }
 
-static void MN_EditorNodeMouseUp (menuNode_t *node, int x, int y, int button)
+static void MN_EditorNodeMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (MN_GetMouseCapture() != node)
 		return;
@@ -199,7 +199,7 @@ static void MN_EditorNodeMouseUp (menuNode_t *node, int x, int y, int button)
 	dragStatus = ZONE_NONE;
 }
 
-static void MN_EditorNodeSelectNode (menuNode_t *node, menuNode_t *selected)
+static void MN_EditorNodeSelectNode (uiNode_t *node, uiNode_t *selected)
 {
 	if (selected == NULL)
 		return;
@@ -211,9 +211,9 @@ static void MN_EditorNodeSelectNode (menuNode_t *node, menuNode_t *selected)
 	Cvar_Set("mn_sys_editor_window", anchoredNode->root->name);
 }
 
-static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
+static void MN_EditorNodeMouseDown (uiNode_t *node, int x, int y, int button)
 {
-	menuNode_t* hovered;
+	uiNode_t* hovered;
 
 	if (MN_GetMouseCapture() != node)
 		return;
@@ -250,17 +250,17 @@ static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
 	MN_EditorNodeSelectNode(node, hovered);
 }
 
-static void MN_EditorNodeStart (menuNode_t *node, const menuCallContext_t *context)
+static void MN_EditorNodeStart (uiNode_t *node, const uiCallContext_t *context)
 {
 	MN_SetMouseCapture(node);
 }
 
-static void MN_EditorNodeStop (menuNode_t *node, const menuCallContext_t *context)
+static void MN_EditorNodeStop (uiNode_t *node, const uiCallContext_t *context)
 {
 	MN_MouseRelease();
 }
 
-static void MN_EditorNodeSelectNext (menuNode_t *node, const menuCallContext_t *context)
+static void MN_EditorNodeSelectNext (uiNode_t *node, const uiCallContext_t *context)
 {
 	if (dragStatus != ZONE_NONE)
 		return;
@@ -269,7 +269,7 @@ static void MN_EditorNodeSelectNext (menuNode_t *node, const menuCallContext_t *
 	MN_EditorNodeSelectNode(node, anchoredNode->next);
 }
 
-static void MN_EditorNodeSelectParent (menuNode_t *node, const menuCallContext_t *context)
+static void MN_EditorNodeSelectParent (uiNode_t *node, const uiCallContext_t *context)
 {
 	if (dragStatus != ZONE_NONE)
 		return;
@@ -278,7 +278,7 @@ static void MN_EditorNodeSelectParent (menuNode_t *node, const menuCallContext_t
 	MN_EditorNodeSelectNode(node, anchoredNode->parent);
 }
 
-static void MN_EditorNodeSelectFirstChild (menuNode_t *node, const menuCallContext_t *context)
+static void MN_EditorNodeSelectFirstChild (uiNode_t *node, const uiCallContext_t *context)
 {
 	if (dragStatus != ZONE_NONE)
 		return;
@@ -287,11 +287,11 @@ static void MN_EditorNodeSelectFirstChild (menuNode_t *node, const menuCallConte
 	MN_EditorNodeSelectNode(node, anchoredNode->firstChild);
 }
 
-static void MN_EditorNodeExtractNode (qFILE *file, menuNode_t *node, int depth)
+static void MN_EditorNodeExtractNode (qFILE *file, uiNode_t *node, int depth)
 {
 	int i;
 	char tab[16];
-	menuNode_t *child;
+	uiNode_t *child;
 	assert(depth < 16);
 
 	for (i = 0; i < depth; i++) {
@@ -328,7 +328,7 @@ static void MN_EditorNodeExtractNode (qFILE *file, menuNode_t *node, int depth)
  */
 static void MN_EditorNodeExtract_f (void)
 {
-	menuNode_t* menu;
+	uiNode_t* menu;
 	qFILE file;
 
 	if (Cmd_Argc() != 2) {
@@ -362,7 +362,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterEditorNode (nodeBehaviour_t *behaviour)
+void MN_RegisterEditorNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "editor";
 	behaviour->extends = "special";

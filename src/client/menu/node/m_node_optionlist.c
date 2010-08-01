@@ -47,7 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Update the scroll according to the number
  * of items and the size of the node
  */
-static void MN_OptionListNodeUpdateScroll (menuNode_t *node)
+static void MN_OptionListNodeUpdateScroll (uiNode_t *node)
 {
 	const char *font;
 	int fontHeight;
@@ -63,14 +63,14 @@ static void MN_OptionListNodeUpdateScroll (menuNode_t *node)
 		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
 }
 
-static void MN_OptionListNodeDraw (menuNode_t *node)
+static void MN_OptionListNodeDraw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
 		MARGE
 	};
-	menuNode_t* option;
+	uiNode_t* option;
 	const char *ref;
 	const char *font;
 	int fontHeight;
@@ -126,7 +126,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 		}
 
 		if (OPTIONEXTRADATA(option).icon) {
-			iconStatus_t iconStatus = ICON_STATUS_NORMAL;
+			uiIconStatus_t iconStatus = ICON_STATUS_NORMAL;
 			if (option->disabled)
 				iconStatus = ICON_STATUS_DISABLED;
 			R_Color(NULL);
@@ -162,9 +162,9 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 	MN_OptionListNodeUpdateScroll(node);
 }
 
-static menuNode_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, int x, int y)
+static uiNode_t* MN_OptionListNodeGetOptionAtPosition (uiNode_t * node, int x, int y)
 {
-	menuNode_t* option;
+	uiNode_t* option;
 	vec2_t pos;
 	int fontHeight;
 	int currentY;
@@ -197,9 +197,9 @@ static menuNode_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, int 
 /**
  * @brief Handles selectboxes clicks
  */
-static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
+static void MN_OptionListNodeClick (uiNode_t * node, int x, int y)
 {
-	menuNode_t* option;
+	uiNode_t* option;
 
 	if (MN_AbstractOptionGetCurrentValue(node) == NULL)
 		return;
@@ -215,7 +215,7 @@ static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
 /**
  * @brief Auto scroll the list
  */
-static void MN_OptionListNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
+static void MN_OptionListNodeMouseWheel (uiNode_t *node, qboolean down, int x, int y)
 {
 	qboolean updated;
 	updated = MN_SetScroll(&EXTRADATA(node).scrollY, EXTRADATA(node).scrollY.viewPos + (down ? 1 : -1), -1, -1);
@@ -233,18 +233,18 @@ static void MN_OptionListNodeMouseWheel (menuNode_t *node, qboolean down, int x,
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void MN_OptionListNodeLoading (menuNode_t *node)
+static void MN_OptionListNodeLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	EXTRADATA(node).versionId = -1;
 	node->padding = 3;
 }
 
-static void MN_OptionListNodeLoaded (menuNode_t *node)
+static void MN_OptionListNodeLoaded (uiNode_t *node)
 {
 }
 
-void MN_RegisterOptionListNode (nodeBehaviour_t *behaviour)
+void MN_RegisterOptionListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "optionlist";
 	behaviour->extends = "abstractoption";

@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief return true if the node size change and update the cache
  */
-qboolean MN_AbstractScrollableNodeIsSizeChange (menuNode_t *node)
+qboolean MN_AbstractScrollableNodeIsSizeChange (uiNode_t *node)
 {
 	assert(MN_NodeInstanceOf(node, "abstractscrollable"));
 
@@ -112,7 +112,7 @@ qboolean MN_SetScroll (menuScroll_t *scroll, int viewPos, int viewSize, int full
  * @param[in] fullSize New full size to set, else -1 if no change
  * @return True, if something have change
  */
-qboolean MN_AbstractScrollableNodeSetY (menuNode_t *node, int viewPos, int viewSize, int fullSize)
+qboolean MN_AbstractScrollableNodeSetY (uiNode_t *node, int viewPos, int viewSize, int fullSize)
 {
 	qboolean updated;
 	assert(MN_NodeInstanceOf(node, "abstractscrollable"));
@@ -128,31 +128,31 @@ qboolean MN_AbstractScrollableNodeSetY (menuNode_t *node, int viewPos, int viewS
 /**
  * @note pos == -1 is a reserved value, that why we clamp the value
  */
-static void MN_AbstractScrollableNodePageUp (menuNode_t *node, const menuCallContext_t *context) {
+static void MN_AbstractScrollableNodePageUp (uiNode_t *node, const uiCallContext_t *context) {
 	const int pos = EXTRADATA(node).scrollY.viewPos - 10;
 	MN_AbstractScrollableNodeSetY(node, (pos >= 0)?pos:0, -1, -1);
 }
 
-static void MN_AbstractScrollableNodePageDown (menuNode_t *node, const menuCallContext_t *context) {
+static void MN_AbstractScrollableNodePageDown (uiNode_t *node, const uiCallContext_t *context) {
 	MN_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos + 10, -1, -1);
 }
 
-static void MN_AbstractScrollableNodeMoveUp (menuNode_t *node, const menuCallContext_t *context) {
+static void MN_AbstractScrollableNodeMoveUp (uiNode_t *node, const uiCallContext_t *context) {
 	MN_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos - 1, -1, -1);
 }
 
-static void MN_AbstractScrollableNodeMoveDown (menuNode_t *node, const menuCallContext_t *context) {
+static void MN_AbstractScrollableNodeMoveDown (uiNode_t *node, const uiCallContext_t *context) {
 	MN_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos + 1, -1, -1);
 }
 
-static void MN_AbstractScrollableNodeMoveHome (menuNode_t *node, const menuCallContext_t *context) {
+static void MN_AbstractScrollableNodeMoveHome (uiNode_t *node, const uiCallContext_t *context) {
 	MN_AbstractScrollableNodeSetY(node, 0, -1, -1);
 }
 
 /**
  * @note fullSize is bigger than the "end" position. But the function will clamp it right
  */
-static void MN_AbstractScrollableNodeMoveEnd (menuNode_t *node, const menuCallContext_t *context) {
+static void MN_AbstractScrollableNodeMoveEnd (uiNode_t *node, const uiCallContext_t *context) {
 	MN_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.fullSize, -1, -1);
 }
 
@@ -160,7 +160,7 @@ static void MN_AbstractScrollableNodeMoveEnd (menuNode_t *node, const menuCallCo
  * @brief Scroll the Y scroll with a relative position, and call event if need
  * @return True, if something have change
  */
-qboolean MN_AbstractScrollableNodeScrollY (menuNode_t *node, int offset)
+qboolean MN_AbstractScrollableNodeScrollY (uiNode_t *node, int offset)
 {
 	assert(MN_NodeInstanceOf(node, "abstractscrollable"));
 	return MN_AbstractScrollableNodeSetY(node, EXTRADATA(node).scrollY.viewPos + offset, -1, -1);
@@ -192,7 +192,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterAbstractScrollableNode (nodeBehaviour_t *behaviour)
+void MN_RegisterAbstractScrollableNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractscrollable";
 	behaviour->isAbstract = qtrue;

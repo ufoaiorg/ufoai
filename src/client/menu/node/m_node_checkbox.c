@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define EXTRADATA(node) MN_EXTRADATA(node, abstractValueExtraData_t)
 
-static void MN_CheckBoxNodeDraw (menuNode_t* node)
+static void MN_CheckBoxNodeDraw (uiNode_t* node)
 {
 	const float value = MN_GetReferenceFloat(node, EXTRADATA(node).value);
 	vec2_t pos;
@@ -79,7 +79,7 @@ static void MN_CheckBoxNodeDraw (menuNode_t* node)
 /**
  * @brief Activate the node. Can be used without the mouse (ie. a button will execute onClick)
  */
-static void MN_CheckBoxNodeActivate (menuNode_t *node)
+static void MN_CheckBoxNodeActivate (uiNode_t *node)
 {
 	const float last = MN_GetReferenceFloat(node, EXTRADATA(node).value);
 	float value;
@@ -106,7 +106,7 @@ static void MN_CheckBoxNodeActivate (menuNode_t *node)
 	}
 }
 
-static void MN_CheckBoxNodeCallActivate (menuNode_t *node, const menuCallContext_t *context)
+static void MN_CheckBoxNodeCallActivate (uiNode_t *node, const uiCallContext_t *context)
 {
 	MN_CheckBoxNodeActivate(node);
 }
@@ -114,7 +114,7 @@ static void MN_CheckBoxNodeCallActivate (menuNode_t *node, const menuCallContext
 /**
  * @brief Handles checkboxes clicks
  */
-static void MN_CheckBoxNodeClick (menuNode_t * node, int x, int y)
+static void MN_CheckBoxNodeClick (uiNode_t * node, int x, int y)
 {
 	if (node->onClick)
 		MN_ExecuteEventActions(node, node->onClick);
@@ -125,7 +125,7 @@ static void MN_CheckBoxNodeClick (menuNode_t * node, int x, int y)
 /**
  * @brief Handled before the begin of the load of the node from the script
  */
-static void MN_CheckBoxNodeLoading (menuNode_t *node)
+static void MN_CheckBoxNodeLoading (uiNode_t *node)
 {
 }
 
@@ -143,7 +143,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterCheckBoxNode (nodeBehaviour_t *behaviour)
+void MN_RegisterCheckBoxNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "checkbox";
 	behaviour->extends = "abstractvalue";

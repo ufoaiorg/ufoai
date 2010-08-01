@@ -25,38 +25,38 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_TIMER_H
 #define CLIENT_MENU_M_TIMER_H
 
-struct menuNode_s;
-struct menuTimer_s;
+struct uiNode_s;
+struct uiTimer_s;
 
-typedef void (*timerCallback_t)(struct menuNode_s *node, struct menuTimer_s *timer);
+typedef void (*timerCallback_t)(struct uiNode_s *node, struct uiTimer_s *timer);
 
 /**
  * @todo We can use void* for the owner type, and allow to use it outside nodes
  */
-typedef struct menuTimer_s {
-	struct menuTimer_s *next;	/**< next timer in the ordered list of active timers */
-	struct menuTimer_s *prev;	/**< previous timer in the ordered list of active timers */
+typedef struct uiTimer_s {
+	struct uiTimer_s *next;	/**< next timer in the ordered list of active timers */
+	struct uiTimer_s *prev;	/**< previous timer in the ordered list of active timers */
 	int nextTime;				/**< next time we must call the callback function. Must node be edited, it used to sort linkedlist of timers */
 
-	struct menuNode_s *owner;	/**< owner node of the timer */
+	struct uiNode_s *owner;	/**< owner node of the timer */
 	timerCallback_t callback;	/**< function called every delay */
 	int calledTime;				/**< time we call the function. For the first call the value is 1 */
 
 	int delay;					/**< delay in millisecond between each call of */
 	void *userData;				/**< free to use data, not used by the core functions */
 	qboolean isRunning;			/**< true if the timer is running */
-} menuTimer_t;
+} uiTimer_t;
 
-menuTimer_t* MN_AllocTimer(struct menuNode_s *node, int firstDelay, timerCallback_t callback) __attribute__ ((warn_unused_result));
-void MN_TimerStart(menuTimer_t *timer);
-void MN_TimerStop(menuTimer_t *timer);
-void MN_TimerRelease(menuTimer_t *timer);
+uiTimer_t* MN_AllocTimer(struct uiNode_s *node, int firstDelay, timerCallback_t callback) __attribute__ ((warn_unused_result));
+void MN_TimerStart(uiTimer_t *timer);
+void MN_TimerStop(uiTimer_t *timer);
+void MN_TimerRelease(uiTimer_t *timer);
 
 void MN_HandleTimers(void);
 
 #ifdef COMPILE_UNITTESTS
-menuTimer_t *MN_GetFirstTimer(void);
-void MN_PrivateInsertTimerInActiveList(menuTimer_t* first, menuTimer_t* newTimer);
+uiTimer_t *MN_GetFirstTimer(void);
+void MN_PrivateInsertTimerInActiveList(uiTimer_t* first, uiTimer_t* newTimer);
 #endif
 
 #endif

@@ -27,22 +27,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../common/scripts.h"
 
-struct menuNode_s;
-struct menuAction_s;
+struct uiNode_s;
+struct uiAction_s;
 struct value_s;
 
 void MN_ParseWindow(const char *type, const char *name, const char **text);
 void MN_ParseComponent(const char *type, const char **text);
 void MN_ParseIcon(const char *name, const char **text);
 void MN_ParseMenuModel(const char *name, const char **text);
-float MN_GetReferenceFloat(const struct menuNode_s* const node, const void *ref);
-const char *MN_GetReferenceString(const struct menuNode_s* const node, const char *ref) __attribute__ ((warn_unused_result));
+float MN_GetReferenceFloat(const struct uiNode_s* const node, const void *ref);
+const char *MN_GetReferenceString(const struct uiNode_s* const node, const char *ref) __attribute__ ((warn_unused_result));
 const value_t* MN_FindPropertyByName(const value_t* propertyList, const char* name) __attribute__ ((warn_unused_result));
 char* MN_AllocStaticString(const char* string, int size) __attribute__ ((warn_unused_result));
 float* MN_AllocStaticFloat(int count) __attribute__ ((warn_unused_result));
 vec4_t* MN_AllocStaticColor(int count) __attribute__ ((warn_unused_result));
-struct menuAction_s *MN_AllocStaticAction(void) __attribute__ ((warn_unused_result));
-qboolean MN_InitRawActionValue(struct menuAction_s* action, struct menuNode_s *node, const struct value_s *property, const char *string);
+struct uiAction_s *MN_AllocStaticAction(void) __attribute__ ((warn_unused_result));
+qboolean MN_InitRawActionValue(struct uiAction_s* action, struct uiNode_s *node, const struct value_s *property, const char *string);
 
 /* main special type */
 /** @todo we should split/flag parse type (type need only 1 lex; and other) */

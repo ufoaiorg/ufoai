@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define EXTRADATA(node) MN_EXTRADATA(node, abstractValueExtraData_t)
 
-static const nodeBehaviour_t const *localBehaviour;
+static const uiBehaviour_t const *localBehaviour;
 
 static const int TILE_SIZE = 32;
 static const int SPINNER_WIDTH = 15;
@@ -52,7 +52,7 @@ static const int BUTTON_BOTTOM_SIZE = 10;
  * @param[in] node Spinner to change
  * @param[in] down Direction of the step (if down is true, decrease the value)
  */
-static void MN_SpinnerNodeStep (menuNode_t *node, qboolean down)
+static void MN_SpinnerNodeStep (uiNode_t *node, qboolean down)
 {
 	float value = MN_GetReferenceFloat(node, EXTRADATA(node).value);
 	const float last = value;
@@ -97,9 +97,9 @@ static void MN_SpinnerNodeStep (menuNode_t *node, qboolean down)
 }
 
 static qboolean capturedDownButton;
-static menuTimer_t *capturedTimer = NULL;
+static uiTimer_t *capturedTimer = NULL;
 
-static void MN_SpinnerNodeRepeat (menuNode_t *node, menuTimer_t *timer)
+static void MN_SpinnerNodeRepeat (uiNode_t *node, uiTimer_t *timer)
 {
 	MN_SpinnerNodeStep(node, capturedDownButton);
 	switch (timer->calledTime) {
@@ -109,7 +109,7 @@ static void MN_SpinnerNodeRepeat (menuNode_t *node, menuTimer_t *timer)
 	}
 }
 
-static void MN_SpinnerNodeDown (menuNode_t *node, int x, int y, int button)
+static void MN_SpinnerNodeDown (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1) {
 		MN_SetMouseCapture(node);
@@ -121,7 +121,7 @@ static void MN_SpinnerNodeDown (menuNode_t *node, int x, int y, int button)
 	}
 }
 
-static void MN_SpinnerNodeUp (menuNode_t *node, int x, int y, int button)
+static void MN_SpinnerNodeUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button == K_MOUSE1) {
 		MN_MouseRelease();
@@ -132,7 +132,7 @@ static void MN_SpinnerNodeUp (menuNode_t *node, int x, int y, int button)
  * @brief Called when the node have lost the captured node
  * We clean cached data
  */
-static void MN_SpinnerNodeCapturedMouseLost (menuNode_t *node)
+static void MN_SpinnerNodeCapturedMouseLost (uiNode_t *node)
 {
 	if (capturedTimer) {
 		MN_TimerRelease(capturedTimer);
@@ -143,7 +143,7 @@ static void MN_SpinnerNodeCapturedMouseLost (menuNode_t *node)
 /**
  * @note Mouse wheel is not inhibited when node is disabled
  */
-static void MN_SpinnerNodeWheel (menuNode_t *node, qboolean down, int x, int y)
+static void MN_SpinnerNodeWheel (uiNode_t *node, qboolean down, int x, int y)
 {
 	const qboolean disabled = node->disabled || node->parent->disabled;
 	if (disabled)
@@ -151,7 +151,7 @@ static void MN_SpinnerNodeWheel (menuNode_t *node, qboolean down, int x, int y)
 	MN_SpinnerNodeStep(node, down);
 }
 
-static void MN_SpinnerNodeDraw (menuNode_t *node)
+static void MN_SpinnerNodeDraw (uiNode_t *node)
 {
 	vec2_t pos;
 	int topTexX, topTexY;
@@ -207,7 +207,7 @@ static void MN_SpinnerNodeDraw (menuNode_t *node)
 		bottomTexX + SPINNER_WIDTH, bottomTexY + SPINNER_HEIGHT, bottomTexX, bottomTexY + SPINNER_HEIGHT - BUTTON_BOTTOM_SIZE, image);
 }
 
-static void MN_SpinnerNodeLoaded (menuNode_t *node)
+static void MN_SpinnerNodeLoaded (uiNode_t *node)
 {
 	localBehaviour->super->loaded(node);
 	/* we can't choose a size */
@@ -229,7 +229,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterSpinnerNode (nodeBehaviour_t *behaviour)
+void MN_RegisterSpinnerNode (uiBehaviour_t *behaviour)
 {
 	localBehaviour = behaviour;
 	behaviour->name = "spinner";

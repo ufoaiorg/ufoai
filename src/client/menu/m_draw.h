@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MENU_M_DRAW_H
 
 /* prototype */
-struct menuNode_s;
+struct uiNode_s;
 
 /* module initialization */
 void MN_InitDraw(void);
@@ -35,6 +35,6 @@ void MN_InitDraw(void);
 void MN_Draw(void);
 void MN_DisplayNotice(const char *text, int time, const char *menuName);
 void MN_DrawCursor(void);
-void MN_CaptureDrawOver(struct menuNode_s *node);
+void MN_CaptureDrawOver(struct uiNode_s *node);
 
 #endif

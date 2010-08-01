@@ -71,9 +71,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief call when the mouse move is the node is captured
  * @todo we can remove the loop if we save the current element in the node
  */
-static void MN_SelectBoxNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+static void MN_SelectBoxNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
-	menuNode_t* option;
+	uiNode_t* option;
 	int posy;
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
@@ -92,9 +92,9 @@ static void MN_SelectBoxNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	}
 }
 
-static void MN_SelectBoxNodeDraw (menuNode_t *node)
+static void MN_SelectBoxNodeDraw (uiNode_t *node)
 {
-	menuNode_t* option;
+	uiNode_t* option;
 	int selBoxX, selBoxY;
 	const char *ref;
 	const char *font;
@@ -156,9 +156,9 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 	}
 }
 
-static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
+static void MN_SelectBoxNodeDrawOverMenu (uiNode_t *node)
 {
-	menuNode_t* option;
+	uiNode_t* option;
 	int selBoxX, selBoxY;
 	const char *ref;
 	const char *font;
@@ -233,9 +233,9 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 /**
  * @brief Handles selectboxes clicks
  */
-static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
+static void MN_SelectBoxNodeClick (uiNode_t *node, int x, int y)
 {
-	menuNode_t* option;
+	uiNode_t* option;
 	int clickedAtOption;
 	vec2_t pos;
 
@@ -288,18 +288,18 @@ static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void MN_SelectBoxNodeLoading (menuNode_t *node)
+static void MN_SelectBoxNodeLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
 
-static void MN_SelectBoxNodeLoaded (menuNode_t *node)
+static void MN_SelectBoxNodeLoaded (uiNode_t *node)
 {
 	/* force a size (according to the texture) */
 	node->size[1] = SELECTBOX_DEFAULT_HEIGHT;
 }
 
-void MN_RegisterSelectBoxNode (nodeBehaviour_t *behaviour)
+void MN_RegisterSelectBoxNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "selectbox";
 	behaviour->extends = "abstractoption";

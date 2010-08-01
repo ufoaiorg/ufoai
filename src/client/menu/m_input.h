@@ -26,15 +26,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MENU_M_INPUT_H
 
 /* prototype */
-struct menuNode_s;
+struct uiNode_s;
 
 #define MAX_MENUKEYBINDING	128
-typedef struct menuKeyBinding_s {
-	struct menuNode_s *node;
+typedef struct uiKeyBinding_s {
+	struct uiNode_s *node;
 	const struct value_s *property;
 	int key;
-	struct menuKeyBinding_s *next;	/* next binding from the window list */
-} menuKeyBinding_t;
+	struct uiKeyBinding_s *next;	/* next binding from the window list */
+} uiKeyBinding_t;
+
 void MN_SetKeyBinding(const char* path, int key);
 
 /* mouse input */
@@ -44,19 +45,19 @@ void MN_MouseDown(int x, int y, int button);
 void MN_MouseUp(int x, int y, int button);
 void MN_InvalidateMouse(void);
 qboolean MN_CheckMouseMove(void);
-struct menuNode_s *MN_GetHoveredNode(void);
+struct uiNode_s *MN_GetHoveredNode(void);
 
 /* focus */
-void MN_RequestFocus(struct menuNode_s* node);
-qboolean MN_HasFocus(const struct menuNode_s* node);
+void MN_RequestFocus(struct uiNode_s* node);
+qboolean MN_HasFocus(const struct uiNode_s* node);
 void MN_RemoveFocus(void);
 qboolean MN_KeyPressed(unsigned int key, unsigned short unicode);
 int MN_GetKeyBindingCount(void);
-menuKeyBinding_t* MN_GetKeyBindingByIndex(int index);
+uiKeyBinding_t* MN_GetKeyBindingByIndex(int index);
 
 /* mouse capture */
-struct menuNode_s* MN_GetMouseCapture(void);
-void MN_SetMouseCapture(struct menuNode_s* node);
+struct uiNode_s* MN_GetMouseCapture(void);
+void MN_SetMouseCapture(struct uiNode_s* node);
 void MN_MouseRelease(void);
 
 /* all inputs */

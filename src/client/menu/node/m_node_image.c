@@ -51,7 +51,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Handled after the end of the load of the node from the script (all data and/or child are set)
  */
-static void MN_ImageNodeLoaded (menuNode_t *node)
+static void MN_ImageNodeLoaded (uiNode_t *node)
 {
 	/* update the size when its possible */
 	if (node->size[0] == 0 && node->size[1] == 0) {
@@ -78,7 +78,7 @@ static void MN_ImageNodeLoaded (menuNode_t *node)
 /**
  * @todo Center image, or use textalign property
  */
-void MN_ImageNodeDraw (menuNode_t *node)
+void MN_ImageNodeDraw (uiNode_t *node)
 {
 	vec2_t size;
 	vec2_t nodepos;
@@ -154,12 +154,12 @@ static const value_t properties[] = {
 	{"texl", V_POS, MN_EXTRADATA_OFFSETOF(imageExtraData_t, texl), MEMBER_SIZEOF(imageExtraData_t, texl)},
 
 	/* Source of the image */
-	{"src", V_CVAR_OR_STRING, offsetof(menuNode_t, image), 0},
+	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
 
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterImageNode (nodeBehaviour_t* behaviour)
+void MN_RegisterImageNode (uiBehaviour_t* behaviour)
 {
 	/** @todo rename it according to the function name when its possible */
 	behaviour->name = "image";

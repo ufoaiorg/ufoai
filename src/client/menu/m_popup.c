@@ -58,10 +58,10 @@ void MN_Popup (const char *title, const char *text)
  * @param[in] entries List of the selectables choices.
  * @param[in] clickAction Action to perform when one clicked on the popup.
  */
-menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t* entries, const char *clickAction)
+uiNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t* entries, const char *clickAction)
 {
-	menuNode_t* popupListMenu;
-	menuNode_t* listNode;
+	uiNode_t* popupListMenu;
+	uiNode_t* listNode;
 
 	Cvar_Set("mn_sys_popup_title", title);
 	MN_RegisterText(TEXT_POPUP_INFO, headline);
@@ -103,9 +103,9 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
  * @param[in] clickAction Action to perform when button is clicked.
  * @note clickAction may be NULL if button is not needed.
  */
-static void MN_SetOneButton (menuNode_t* menu, const char *button, const char *clickAction)
+static void MN_SetOneButton (uiNode_t* menu, const char *button, const char *clickAction)
 {
-	menuNode_t* buttonNode;
+	uiNode_t* buttonNode;
 
 	buttonNode = MN_GetNode(menu, button);
 	if (!buttonNode)
@@ -148,7 +148,7 @@ void MN_PopupButton (const char *title, const char *text,
 	const char *clickAction2, const char *clickText2, const char *tooltip2,
 	const char *clickAction3, const char *clickText3, const char *tooltip3)
 {
-	menuNode_t* popupButtonMenu;
+	uiNode_t* popupButtonMenu;
 
 	Cvar_Set("mn_sys_popup_title", title);
 	if (text)

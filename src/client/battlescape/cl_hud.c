@@ -266,7 +266,7 @@ static void HUD_SetShootReservation (const le_t* le, const int tus, const actorH
 }
 
 static linkedList_t* popupListData;
-static menuNode_t* popupListNode;
+static uiNode_t* popupListNode;
 
 /**
  * @brief Creates a (text) list of all firemodes of the currently selected actor.

@@ -31,13 +31,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* used to speed up buffer safe string copies */
 #define MAX_SMALLMENUTEXTLEN	1024
 
-struct nodeBehaviour_s;
-struct menuAction_s;
+struct uiBehaviour_s;
+struct uiAction_s;
 
 void MN_TextScrollEnd(const char* nodePath);
-void MN_TextNodeSelectLine(struct menuNode_s *node, int num);
+void MN_TextNodeSelectLine(struct uiNode_s *node, int num);
 
-void MN_RegisterTextNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterTextNode(struct uiBehaviour_s *behaviour);
 
 typedef struct {
 	abstractScrollableExtraData_t super;

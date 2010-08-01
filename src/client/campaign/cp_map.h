@@ -36,23 +36,23 @@ extern cvar_t *cl_mapzoommin;
 extern cvar_t *cl_3dmap;
 
 /* prototype */
-struct menuNode_s;
+struct uiNode_s;
 
 nation_t* MAP_GetNation(const vec2_t pos);
-qboolean MAP_AllMapToScreen(const struct menuNode_s* node, const vec2_t pos, int *x, int *y, int *z);
-qboolean MAP_MapToScreen(const struct menuNode_s* node, const vec2_t pos, int *x, int *y);
-void MAP_Draw3DMarkerIfVisible(const struct menuNode_s* node, const vec2_t pos, float angle, const char *model, int skin);
-void MAP_MapDrawEquidistantPoints(const struct menuNode_s* node, const vec2_t center, const float angle, const vec4_t color);
+qboolean MAP_AllMapToScreen(const struct uiNode_s* node, const vec2_t pos, int *x, int *y, int *z);
+qboolean MAP_MapToScreen(const struct uiNode_s* node, const vec2_t pos, int *x, int *y);
+void MAP_Draw3DMarkerIfVisible(const struct uiNode_s* node, const vec2_t pos, float angle, const char *model, int skin);
+void MAP_MapDrawEquidistantPoints(const struct uiNode_s* node, const vec2_t center, const float angle, const vec4_t color);
 float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector);
 void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
-void MAP_DrawMap(const struct menuNode_s* node);
+void MAP_DrawMap(const struct uiNode_s* node);
 void MAP_CenterOnPoint_f(void);
 void MAP_StopSmoothMovement(void);
 base_t* MAP_PositionCloseToBase(const vec2_t pos);
 
 void MAP_Scroll_f(void);
 void MAP_Zoom_f(void);
-void MAP_MapClick(struct menuNode_s * node, int x, int y);
+void MAP_MapClick(struct uiNode_s * node, int x, int y);
 void MAP_ResetAction(void);
 void MAP_SelectAircraft(aircraft_t* aircraft);
 void MAP_SelectUFO(aircraft_t* ufo);

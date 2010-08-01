@@ -80,7 +80,7 @@ static const invList_t *dragInfoIC;
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa INVSH_SearchInInventory
  */
-static invList_t *MN_ContainerNodeGetExistingItem (const menuNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
+static invList_t *MN_ContainerNodeGetExistingItem (const uiNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
 {
 	return INVSH_SearchInInventoryWithFilter(menuInventory, EXTRADATACONST(node).container, NONE, NONE, item, filterType);
 }
@@ -95,7 +95,7 @@ static invList_t *MN_ContainerNodeGetExistingItem (const menuNode_t *node, objDe
 #define CII_END 0x80
 
 typedef struct {
-	const menuNode_t* node;
+	const uiNode_t* node;
 	byte groupSteps[6];
 	int groupID;
 	itemFilterTypes_t filterEquipType;
@@ -167,7 +167,7 @@ static void MN_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 /**
  * @brief Use a container node to init an item iterator
  */
-static void MN_ContainerItemIteratorInit (containerItemIterator_t *iterator, const menuNode_t* const node)
+static void MN_ContainerItemIteratorInit (containerItemIterator_t *iterator, const uiNode_t* const node)
 {
 	int groupID = 0;
 	iterator->itemID = -1;
@@ -207,7 +207,7 @@ static void MN_ContainerItemIteratorInit (containerItemIterator_t *iterator, con
  * set by the "in" and "out" functions of the scroll buttons.
  * @param[in] node Context node
  */
-static void MN_BaseInventoryNodeUpdateScroll (menuNode_t* node)
+static void MN_BaseInventoryNodeUpdateScroll (uiNode_t* node)
 {
 	if (EXTRADATA(node).onViewChange) {
 		MN_ExecuteEventActions(node, EXTRADATA(node).onViewChange);
@@ -268,7 +268,7 @@ static void MN_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
  * into the node (uses the @c invDef_t shape bitmask to determine the size)
  * @param[in,out] node The node to get the size for
  */
-static void MN_BaseInventoryNodeLoaded (menuNode_t* const node)
+static void MN_BaseInventoryNodeLoaded (uiNode_t* const node)
 {
 	EXTRADATA(node).container = INVSH_GetInventoryDefinitionByID("equip");
 }
@@ -286,7 +286,7 @@ static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview ite
  * @brief Draw the base inventory
  * @return The full height requested by the current view (not the node height)
  */
-static int MN_BaseInventoryNodeDrawItems (menuNode_t *node, objDef_t *highlightType)
+static int MN_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightType)
 {
 	qboolean outOfNode = qfalse;
 	vec2_t nodepos;
@@ -440,7 +440,7 @@ static int MN_BaseInventoryNodeDrawItems (menuNode_t *node, objDef_t *highlightT
 /**
  * @brief Draw the inventory of the base
  */
-static void MN_BaseInventoryNodeDraw2 (menuNode_t *node, objDef_t *highlightType)
+static void MN_BaseInventoryNodeDraw2 (uiNode_t *node, objDef_t *highlightType)
 {
 	qboolean updateScroll = qfalse;
 	int visibleHeight = 0;
@@ -484,7 +484,7 @@ static void MN_BaseInventoryNodeDraw2 (menuNode_t *node, objDef_t *highlightType
 /**
  * @brief Main function to draw a container node
  */
-static void MN_BaseInventoryNodeDraw (menuNode_t *node)
+static void MN_BaseInventoryNodeDraw (uiNode_t *node)
 {
 	objDef_t *highlightType = NULL;
 
@@ -507,7 +507,7 @@ static void MN_BaseInventoryNodeDraw (menuNode_t *node)
 /**
  * @note this function is a copy-paste of MN_ContainerNodeDrawItems (with remove of unneed code)
  */
-static invList_t *MN_BaseInventoryNodeGetItem (const menuNode_t* const node,
+static invList_t *MN_BaseInventoryNodeGetItem (const uiNode_t* const node,
 	int mouseX, int mouseY, int* contX, int* contY)
 {
 	qboolean outOfNode = qfalse;
@@ -641,7 +641,7 @@ static invList_t *MN_BaseInventoryNodeGetItem (const menuNode_t* const node,
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
  */
-static void MN_BaseInventoryNodeDrawTooltip (menuNode_t *node, int x, int y)
+static void MN_BaseInventoryNodeDrawTooltip (uiNode_t *node, int x, int y)
 {
 	static char tooltiptext[MAX_VAR * 2];
 	const invList_t *itemHover;
@@ -673,7 +673,7 @@ static void MN_BaseInventoryNodeDrawTooltip (menuNode_t *node, int x, int y)
  * @param[in] mouseY Y mouse coordinates.
  * @todo None generic function. Not sure we can do it in a generic way
  */
-static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
+static void MN_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 {
 	int sel;
 #if 0	/* see bellow #1 */
@@ -798,7 +798,7 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 	 * The right way is to compute the source and the target container
 	 * and fire the change event for both */
 	if (INV_IsArmour(ic->item.t)) {
-		const menuNode_t *armour = MN_GetNode(node->root, "armour");
+		const uiNode_t *armour = MN_GetNode(node->root, "armour");
 		if (armour && armour->onChange)
 			MN_ExecuteEventActions(armour, armour->onChange);
 	}
@@ -810,7 +810,7 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 static int oldMouseX = 0;
 static int oldMouseY = 0;
 
-static void MN_BaseInventoryNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+static void MN_BaseInventoryNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	const int delta = abs(oldMouseX - x) + abs(oldMouseY - y);
 	if (delta > 15) {
@@ -819,7 +819,7 @@ static void MN_BaseInventoryNodeCapturedMouseMove (menuNode_t *node, int x, int 
 	}
 }
 
-static void MN_BaseInventoryNodeMouseDown (menuNode_t *node, int x, int y, int button)
+static void MN_BaseInventoryNodeMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	switch (button) {
 	case K_MOUSE1:
@@ -853,7 +853,7 @@ static void MN_BaseInventoryNodeMouseDown (menuNode_t *node, int x, int y, int b
 	}
 }
 
-static void MN_BaseInventoryNodeMouseUp (menuNode_t *node, int x, int y, int button)
+static void MN_BaseInventoryNodeMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -864,7 +864,7 @@ static void MN_BaseInventoryNodeMouseUp (menuNode_t *node, int x, int y, int but
 		MN_DNDDrop();
 	}
 }
-static void MN_BaseInventoryNodeWheel (menuNode_t *node, qboolean down, int x, int y)
+static void MN_BaseInventoryNodeWheel (uiNode_t *node, qboolean down, int x, int y)
 {
 	const int delta = 20;
 	if (down) {
@@ -885,7 +885,7 @@ static void MN_BaseInventoryNodeWheel (menuNode_t *node, qboolean down, int x, i
 	}
 }
 
-static void MN_BaseInventoryNodeLoading (menuNode_t *node)
+static void MN_BaseInventoryNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).container = NULL;
 	EXTRADATA(node).columns = 1;
@@ -895,7 +895,7 @@ static void MN_BaseInventoryNodeLoading (menuNode_t *node)
 /**
  * @brief Call when a DND enter into the node
  */
-static qboolean MN_BaseInventoryNodeDNDEnter (menuNode_t *target)
+static qboolean MN_BaseInventoryNodeDNDEnter (uiNode_t *target)
 {
 	/* The node is invalide */
 	if (EXTRADATA(target).container == NULL)
@@ -908,7 +908,7 @@ static qboolean MN_BaseInventoryNodeDNDEnter (menuNode_t *target)
  * @brief Call into the target when the DND hover it
  * @return True if the DND is accepted
  */
-static qboolean MN_BaseInventoryNodeDNDMove (menuNode_t *target, int x, int y)
+static qboolean MN_BaseInventoryNodeDNDMove (uiNode_t *target, int x, int y)
 {
 	return qtrue;
 }
@@ -916,20 +916,20 @@ static qboolean MN_BaseInventoryNodeDNDMove (menuNode_t *target, int x, int y)
 /**
  * @brief Call when a DND enter into the node
  */
-static void MN_BaseInventoryNodeDNDLeave (menuNode_t *node)
+static void MN_BaseInventoryNodeDNDLeave (uiNode_t *node)
 {
 }
 
 /**
  * @brief Call when we open the window containing the node
  */
-static void MN_BaseInventoryNodeInit (menuNode_t *node)
+static void MN_BaseInventoryNodeInit (uiNode_t *node)
 {
 	/** ATM it should not work with the battlescape cause TU is not computed */
 	assert(!CL_BattlescapeRunning());
 }
 
-void MN_RegisterBaseInventoryNode (nodeBehaviour_t* behaviour)
+void MN_RegisterBaseInventoryNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "baseinventory";
 	behaviour->extends = "container";

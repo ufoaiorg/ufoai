@@ -49,7 +49,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterAbstractScrollbarNode (nodeBehaviour_t *behaviour)
+void MN_RegisterAbstractScrollbarNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractscrollbar";
 	behaviour->isAbstract = qtrue;

@@ -48,7 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Called when the user click with the right mouse button
  */
-static void MN_KeyBindingNodeClick (menuNode_t *node, int x, int y)
+static void MN_KeyBindingNodeClick (uiNode_t *node, int x, int y)
 {
 	if (node->disabled)
 		return;
@@ -71,7 +71,7 @@ static void MN_KeyBindingNodeClick (menuNode_t *node, int x, int y)
  * @brief Called when we press a key when the node got the focus
  * @return True, if we use the event
  */
-static qboolean MN_KeyBindingNodeKeyPressed (menuNode_t *node, unsigned int key, unsigned short unicode)
+static qboolean MN_KeyBindingNodeKeyPressed (uiNode_t *node, unsigned int key, unsigned short unicode)
 {
 	const char *command;
 	const char *binding;
@@ -106,7 +106,7 @@ static qboolean MN_KeyBindingNodeKeyPressed (menuNode_t *node, unsigned int key,
 	return qtrue;
 }
 
-static void MN_KeyBindingNodeDraw (menuNode_t *node)
+static void MN_KeyBindingNodeDraw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -177,7 +177,7 @@ static void MN_KeyBindingNodeDraw (menuNode_t *node)
 /**
  * @brief Call before the script initialization of the node
  */
-static void MN_KeyBindingNodeLoading (menuNode_t *node)
+static void MN_KeyBindingNodeLoading (uiNode_t *node)
 {
 	node->padding = 8;
 	node->textalign = ALIGN_CL;
@@ -193,7 +193,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterKeyBindingNode (nodeBehaviour_t *behaviour)
+void MN_RegisterKeyBindingNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "keybinding";
 	behaviour->leftClick = MN_KeyBindingNodeClick;

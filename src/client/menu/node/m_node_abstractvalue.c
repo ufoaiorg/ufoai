@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static const nodeBehaviour_t const *localBehaviour;
+static const uiBehaviour_t const *localBehaviour;
 
 static inline void MN_InitCvarOrFloat (float** adress, float defaultValue)
 {
@@ -43,7 +43,7 @@ static inline void MN_InitCvarOrFloat (float** adress, float defaultValue)
 	}
 }
 
-static void MN_AbstractValueLoaded (menuNode_t * node)
+static void MN_AbstractValueLoaded (uiNode_t * node)
 {
 	MN_InitCvarOrFloat((float**)&EXTRADATA(node).value, 0);
 	MN_InitCvarOrFloat((float**)&EXTRADATA(node).delta, 1);
@@ -51,7 +51,7 @@ static void MN_AbstractValueLoaded (menuNode_t * node)
 	MN_InitCvarOrFloat((float**)&EXTRADATA(node).min, 0);
 }
 
-static void MN_AbstractValueNew (menuNode_t * node)
+static void MN_AbstractValueNew (uiNode_t * node)
 {
 	EXTRADATA(node).value = Mem_PoolAlloc(sizeof(float), mn_dynPool, 0);
 	EXTRADATA(node).delta = Mem_PoolAlloc(sizeof(float), mn_dynPool, 0);
@@ -59,7 +59,7 @@ static void MN_AbstractValueNew (menuNode_t * node)
 	EXTRADATA(node).min = Mem_PoolAlloc(sizeof(float), mn_dynPool, 0);
 }
 
-static void MN_AbstractValueDelete (menuNode_t * node)
+static void MN_AbstractValueDelete (uiNode_t * node)
 {
 	Mem_Free(EXTRADATA(node).value);
 	Mem_Free(EXTRADATA(node).delta);
@@ -71,7 +71,7 @@ static void MN_AbstractValueDelete (menuNode_t * node)
 	EXTRADATA(node).min = NULL;
 }
 
-static void MN_CloneCvarOrFloat (const menuNode_t *source, menuNode_t *clone, const float*const* sourceData, float** cloneData)
+static void MN_CloneCvarOrFloat (const uiNode_t *source, uiNode_t *clone, const float*const* sourceData, float** cloneData)
 {
 	/* dont update cvar */
 	if (!strncmp(*(const char*const*)sourceData, "*cvar", 5)) {
@@ -91,7 +91,7 @@ static void MN_CloneCvarOrFloat (const menuNode_t *source, menuNode_t *clone, co
 /**
  * @brief Call to update a cloned node
  */
-static void MN_AbstractValueClone (const menuNode_t *source, menuNode_t *clone)
+static void MN_AbstractValueClone (const uiNode_t *source, uiNode_t *clone)
 {
 	localBehaviour->super->clone(source, clone);
 	MN_CloneCvarOrFloat(source, clone, (const float*const*)&EXTRADATACONST(source).value, (float**)&EXTRADATA(clone).value);
@@ -117,7 +117,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterAbstractValueNode (nodeBehaviour_t *behaviour)
+void MN_RegisterAbstractValueNode (uiBehaviour_t *behaviour)
 {
 	localBehaviour = behaviour;
 	behaviour->name = "abstractvalue";

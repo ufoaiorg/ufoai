@@ -27,9 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_node_abstractscrollable.h"
 
-struct nodeBehaviour_s;
-struct menuAction_s;
+struct uiBehaviour_s;
+struct uiAction_s;
 
-void MN_RegisterMessageListNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterMessageListNode(struct uiBehaviour_s *behaviour);
 
 #endif

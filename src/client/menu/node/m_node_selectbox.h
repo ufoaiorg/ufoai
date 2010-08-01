@@ -27,6 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_nodes.h"
 
-void MN_RegisterSelectBoxNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterSelectBoxNode(struct uiBehaviour_s *behaviour);
 
 #endif

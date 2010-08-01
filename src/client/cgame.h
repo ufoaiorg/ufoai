@@ -45,7 +45,7 @@ typedef struct {
 	/** check whether the given item is usable in the current game mode */
 	qboolean (EXPORT *IsItemUseable) (const objDef_t *od);
 	/** shows item info if not resolvable via objDef_t */
-	void (EXPORT *DisplayItemInfo) (menuNode_t *node, const char *string);
+	void (EXPORT *DisplayItemInfo) (uiNode_t *node, const char *string);
 	/** returns the equipment definition the game mode is using */
 	equipDef_t* (EXPORT *GetEquipmentDefinition) (void);
 	/** update character display values for game type dependent stuff */
@@ -73,16 +73,16 @@ typedef struct {
 	/* menu functions */
 	void (IMPORT *MN_ExecuteConfunc) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 	void (IMPORT *MN_PopWindow) (qboolean all);
-	menuNode_t* (IMPORT *MN_PushWindow) (const char *name, const char *parentName);
+	uiNode_t* (IMPORT *MN_PushWindow) (const char *name, const char *parentName);
 	void (IMPORT *MN_InitStack) (const char* activeMenu, const char* mainMenu, qboolean popAll, qboolean pushActive);
 	void (IMPORT *MN_Popup) (const char *title, const char *text);
-	menuNode_t* (IMPORT *MN_AddOption) (menuNode_t** tree, const char* name, const char* label, const char* value);
-	void (IMPORT *MN_RegisterOption) (int dataId, menuNode_t *option);
+	uiNode_t* (IMPORT *MN_AddOption) (uiNode_t** tree, const char* name, const char* label, const char* value);
+	void (IMPORT *MN_RegisterOption) (int dataId, uiNode_t *option);
 	void (IMPORT *MN_RegisterText) (int textId, const char *text);
 	void (IMPORT *MN_ResetData) (int dataId);
 	void (IMPORT *MN_RegisterLinkedListText) (int textId, linkedList_t *text);
-	void (IMPORT *MN_TextNodeSelectLine) (menuNode_t *node, int num);
-	menuNode_t *(IMPORT *MN_PopupList) (const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
+	void (IMPORT *MN_TextNodeSelectLine) (uiNode_t *node, int num);
+	uiNode_t *(IMPORT *MN_PopupList) (const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
 
 	/* xml functions */
 	mxml_node_t * (IMPORT *mxml_AddNode) (mxml_node_t *parent, const char *name);

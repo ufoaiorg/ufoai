@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) MN_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void MN_VideoNodeDraw (menuNode_t *node)
+static void MN_VideoNodeDraw (uiNode_t *node)
 {
 	vec2_t pos;
 
@@ -64,7 +64,7 @@ static void MN_VideoNodeDraw (menuNode_t *node)
 	}
 }
 
-static void MN_VideoNodeDrawOverMenu (menuNode_t *node)
+static void MN_VideoNodeDrawOverMenu (uiNode_t *node)
 {
 	vec2_t pos;
 	MN_GetNodeAbsPos(node, pos);
@@ -72,7 +72,7 @@ static void MN_VideoNodeDrawOverMenu (menuNode_t *node)
 	CIN_RunCinematic(&(EXTRADATA(node).cin));
 }
 
-static void MN_VideoNodeInit (menuNode_t *node)
+static void MN_VideoNodeInit (uiNode_t *node)
 {
 	CIN_InitCinematic(&(EXTRADATA(node).cin));
 
@@ -81,7 +81,7 @@ static void MN_VideoNodeInit (menuNode_t *node)
 	CIN_PlayCinematic(&(EXTRADATA(node).cin), va("videos/%s", (const char *)node->image));
 }
 
-static void MN_VideoNodeClose (menuNode_t *node)
+static void MN_VideoNodeClose (uiNode_t *node)
 {
 	/* If playing a cinematic, stop it */
 	CIN_StopCinematic(&(EXTRADATA(node).cin));
@@ -89,11 +89,11 @@ static void MN_VideoNodeClose (menuNode_t *node)
 
 static const value_t properties[] = {
 	/** Source of the video. File name without prefix ./base/videos and without extension */
-	{"src", V_CVAR_OR_STRING, offsetof(menuNode_t, image), 0},
+	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterVideoNode (nodeBehaviour_t* behaviour)
+void MN_RegisterVideoNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "video";
 	behaviour->draw = MN_VideoNodeDraw;

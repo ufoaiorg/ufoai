@@ -27,8 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_node_abstractscrollable.h"
 
-struct menuNode_s;
-struct nodeBehaviour_s;
+struct uiNode_s;
+struct uiBehaviour_s;
 
 typedef enum {
 	LAYOUT_NONE,
@@ -51,8 +51,8 @@ typedef struct {
 	int layoutMargin;		/**< The margin between all children nodes of the panel */
 } panelExtraData_t;
 
-void MN_RegisterPanelNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterPanelNode(struct uiBehaviour_s *behaviour);
 
-void MN_StarLayout(struct menuNode_s *node);
+void MN_StarLayout(struct uiNode_s *node);
 
 #endif

@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 cvar_t *mn_sequence;
 cvar_t *mn_hud;
 
-menuGlobal_t mn;
+uiGlobal_t mn;
 struct memPool_s *mn_dynStringPool;
 struct memPool_s *mn_dynPool;
 struct memPool_s *mn_sysPool;
@@ -200,7 +200,7 @@ static void MN_Translate_f (void)
 static void MN_Memory_f (void)
 {
 	int i;
-	const size_t nodeSize = sizeof(menuNode_t);
+	const size_t nodeSize = sizeof(uiNode_t);
 	size_t size;
 	Com_Printf("Allocation:\n");
 	Com_Printf("\t-Window allocation: %i/%i\n", mn.numWindows, MAX_WINDOWS);
@@ -211,17 +211,17 @@ static void MN_Memory_f (void)
 	Com_Printf("\t -Node allocation: %i\n", mn.numNodes);
 
 	Com_Printf("Memory:\n");
-	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(menuAction_t));
+	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(uiAction_t));
 	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(menuModel_t));
-	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B x%d\n", sizeof(menuNode_t), mn.numNodes);
+	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B x%d\n", sizeof(uiNode_t), mn.numNodes);
 	for (i = 0; i < MN_GetNodeBehaviourCount(); i++) {
-		nodeBehaviour_t *b = MN_GetNodeBehaviourByIndex(i);
-		Com_Printf("\t -Behaviour %20s structure size: "UFO_SIZE_T" (+"UFO_SIZE_T" B) x%4u\n", b->name, sizeof(menuNode_t) + b->extraDataSize, b->extraDataSize, b->count);
+		uiBehaviour_t *b = MN_GetNodeBehaviourByIndex(i);
+		Com_Printf("\t -Behaviour %20s structure size: "UFO_SIZE_T" (+"UFO_SIZE_T" B) x%4u\n", b->name, sizeof(uiNode_t) + b->extraDataSize, b->extraDataSize, b->count);
 	}
 
 	size = 0;
 	for (i = 0; i < MN_GetNodeBehaviourCount(); i++) {
-		nodeBehaviour_t *b = MN_GetNodeBehaviourByIndex(i);
+		uiBehaviour_t *b = MN_GetNodeBehaviourByIndex(i);
 		size += nodeSize * b->count + b->extraDataSize * b->count;
 	}
 	Com_Printf("Global memory:\n");
@@ -273,7 +273,7 @@ void MN_Reinit (void)
 void MN_Shutdown (void)
 {
 	int i;
-	const nodeBehaviour_t *confunc;
+	const uiBehaviour_t *confunc;
 
 	/* MN is not yet initialized */
 	if (mn.adata == NULL)
@@ -283,7 +283,7 @@ void MN_Shutdown (void)
 
 	/* remove all confunc commands */
 	for (i = 0; i < mn.numWindows; i++) {
-		menuNode_t *node = mn.windows[i];
+		uiNode_t *node = mn.windows[i];
 		while (node) {
 
 			/* remove the command */

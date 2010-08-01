@@ -37,12 +37,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MID_SIZE 1
 #define MARGE 3
 
-static const nodeBehaviour_t const *localBehaviour;
+static const uiBehaviour_t const *localBehaviour;
 
 /**
  * @brief Handles Button draw
  */
-static void MN_PanelNodeDraw (menuNode_t *node)
+static void MN_PanelNodeDraw (uiNode_t *node)
 {
 	static const int panelTemplate[] = {
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
@@ -90,11 +90,11 @@ typedef enum {
  * @param[in] margin The margin between all children nodes in their y-position of the panel
  * @note test only
  */
-static void MN_TopDownFlowLayout (menuNode_t *node, int margin)
+static void MN_TopDownFlowLayout (uiNode_t *node, int margin)
 {
 	const int width = node->size[0] - node->padding - node->padding;
 	int positionY = node->padding;
-	menuNode_t *child = node->firstChild;
+	uiNode_t *child = node->firstChild;
 	vec2_t newSize = {width, 0};
 
 	while (child) {
@@ -118,9 +118,9 @@ static void MN_TopDownFlowLayout (menuNode_t *node, int margin)
  * @param[in] margin The margin between all children nodes in their y-position of the panel
  * @note test only
  */
-static void MN_BorderLayout (menuNode_t *node, int margin)
+static void MN_BorderLayout (uiNode_t *node, int margin)
 {
-	menuNode_t *child;
+	uiNode_t *child;
 	vec2_t newSize;
 	int minX = node->padding;
 	int maxX = node->size[0] - node->padding;
@@ -207,9 +207,9 @@ static void MN_BorderLayout (menuNode_t *node, int margin)
  * @param[in] margin The margin between all children nodes
  * @note test only
  */
-static void MN_PackLayout (menuNode_t *node, int margin)
+static void MN_PackLayout (uiNode_t *node, int margin)
 {
-	menuNode_t *child;
+	uiNode_t *child;
 	vec2_t newSize;
 	int minX = node->padding;
 	int maxX = node->size[0] - node->padding;
@@ -291,9 +291,9 @@ static const align_t starlayoutmap[] = {
  * 10=fill
  * @todo Tag it static when it is possible
  */
-void MN_StarLayout (menuNode_t *node)
+void MN_StarLayout (uiNode_t *node)
 {
-	menuNode_t *child;
+	uiNode_t *child;
 	for (child = node->firstChild; child; child = child->next) {
 		vec2_t source;
 		vec2_t destination;
@@ -323,11 +323,11 @@ void MN_StarLayout (menuNode_t *node)
 /**
  * Update the client zone
  */
-static void MN_ClientLayout (menuNode_t *node)
+static void MN_ClientLayout (uiNode_t *node)
 {
 	int width = 0;
 	int height = 0;
-	menuNode_t *child;
+	uiNode_t *child;
 	qboolean updated;
 	for (child = node->firstChild; child; child = child->next) {
 		int value;
@@ -348,7 +348,7 @@ static void MN_ClientLayout (menuNode_t *node)
 		MN_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 }
 
-static void MN_PanelNodeDoLayout (menuNode_t *node)
+static void MN_PanelNodeDoLayout (uiNode_t *node)
 {
 	if (!node->invalidated)
 		return;
@@ -381,7 +381,7 @@ static void MN_PanelNodeDoLayout (menuNode_t *node)
 /**
  * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
-static void MN_PanelNodeLoaded (menuNode_t *node)
+static void MN_PanelNodeLoaded (uiNode_t *node)
 {
 #ifdef DEBUG
 	if (node->size[0] < CORNER_SIZE + MID_SIZE + CORNER_SIZE || node->size[1] < CORNER_SIZE + MID_SIZE + CORNER_SIZE)
@@ -391,7 +391,7 @@ static void MN_PanelNodeLoaded (menuNode_t *node)
 		MN_Invalidate(node);
 }
 
-static void MN_PanelNodeGetClientPosition (menuNode_t *node, vec2_t position)
+static void MN_PanelNodeGetClientPosition (uiNode_t *node, vec2_t position)
 {
 	position[0] = -EXTRADATA(node).super.scrollX.viewPos;
 	position[1] = -EXTRADATA(node).super.scrollY.viewPos;
@@ -423,7 +423,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterPanelNode (nodeBehaviour_t *behaviour)
+void MN_RegisterPanelNode (uiBehaviour_t *behaviour)
 {
 	localBehaviour = behaviour;
 	behaviour->extends = "abstractscrollable";

@@ -27,10 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_nodes.h"
 
-void MN_RegisterConFuncNode(nodeBehaviour_t *behaviour);
-void MN_RegisterCvarFuncNode(nodeBehaviour_t *behaviour);
-void MN_RegisterFuncNode(nodeBehaviour_t *behaviour);
-void MN_RegisterNullNode(nodeBehaviour_t *behaviour);
-void MN_RegisterSpecialNode(nodeBehaviour_t *behaviour);
+void MN_RegisterConFuncNode(uiBehaviour_t *behaviour);
+void MN_RegisterCvarFuncNode(uiBehaviour_t *behaviour);
+void MN_RegisterFuncNode(uiBehaviour_t *behaviour);
+void MN_RegisterNullNode(uiBehaviour_t *behaviour);
+void MN_RegisterSpecialNode(uiBehaviour_t *behaviour);
 
 #endif

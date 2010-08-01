@@ -60,7 +60,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Handles CustomButton draw
  */
-static void MN_CustomButtonNodeDraw (menuNode_t *node)
+static void MN_CustomButtonNodeDraw (uiNode_t *node)
 {
 	const char *text;
 	int texY;
@@ -68,7 +68,7 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 	const char *image;
 	vec2_t pos;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
-	iconStatus_t iconStatus = ICON_STATUS_NORMAL;
+	uiIconStatus_t iconStatus = ICON_STATUS_NORMAL;
 	const char *font = MN_GetFontFromNode(node);
 
 	if (!node->onClick || node->disabled) {
@@ -116,7 +116,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterCustomButtonNode (nodeBehaviour_t *behaviour)
+void MN_RegisterCustomButtonNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "custombutton";
 	behaviour->extends = "button";

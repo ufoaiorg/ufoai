@@ -35,25 +35,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define TILE_HEIGHT 64
 
 const value_t mn_iconProperties[] = {
-	{"size", V_POS, offsetof(menuIcon_t, size), MEMBER_SIZEOF(menuIcon_t, size)},
-	{"single", V_BOOL, offsetof(menuIcon_t, single), 0},
-	{"blend", V_BOOL, offsetof(menuIcon_t, blend), 0},
-	{"pack64", V_BOOL, offsetof(menuIcon_t, pack64), 0},
+	{"size", V_POS, offsetof(uiIcon_t, size), MEMBER_SIZEOF(uiIcon_t, size)},
+	{"single", V_BOOL, offsetof(uiIcon_t, single), 0},
+	{"blend", V_BOOL, offsetof(uiIcon_t, blend), 0},
+	{"pack64", V_BOOL, offsetof(uiIcon_t, pack64), 0},
 
-	{"texl", V_POS, offsetof(menuIcon_t, pos[ICON_STATUS_NORMAL]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_NORMAL])},
-	{"hoveredtexl", V_POS, offsetof(menuIcon_t, pos[ICON_STATUS_HOVER]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_HOVER])},
-	{"disabledtexl", V_POS, offsetof(menuIcon_t, pos[ICON_STATUS_DISABLED]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_DISABLED])},
-	{"clickedtexl", V_POS, offsetof(menuIcon_t, pos[ICON_STATUS_CLICKED]), MEMBER_SIZEOF(menuIcon_t, pos[ICON_STATUS_CLICKED])},
+	{"texl", V_POS, offsetof(uiIcon_t, pos[ICON_STATUS_NORMAL]), MEMBER_SIZEOF(uiIcon_t, pos[ICON_STATUS_NORMAL])},
+	{"hoveredtexl", V_POS, offsetof(uiIcon_t, pos[ICON_STATUS_HOVER]), MEMBER_SIZEOF(uiIcon_t, pos[ICON_STATUS_HOVER])},
+	{"disabledtexl", V_POS, offsetof(uiIcon_t, pos[ICON_STATUS_DISABLED]), MEMBER_SIZEOF(uiIcon_t, pos[ICON_STATUS_DISABLED])},
+	{"clickedtexl", V_POS, offsetof(uiIcon_t, pos[ICON_STATUS_CLICKED]), MEMBER_SIZEOF(uiIcon_t, pos[ICON_STATUS_CLICKED])},
 
-	{"image", V_REF_OF_STRING, offsetof(menuIcon_t, image[ICON_STATUS_NORMAL]), 0},
-	{"hoveredimage", V_REF_OF_STRING, offsetof(menuIcon_t, image[ICON_STATUS_HOVER]), 0},
-	{"disabledimage", V_REF_OF_STRING, offsetof(menuIcon_t, image[ICON_STATUS_DISABLED]), 0},
-	{"clickedimage", V_REF_OF_STRING, offsetof(menuIcon_t, image[ICON_STATUS_CLICKED]), 0},
+	{"image", V_REF_OF_STRING, offsetof(uiIcon_t, image[ICON_STATUS_NORMAL]), 0},
+	{"hoveredimage", V_REF_OF_STRING, offsetof(uiIcon_t, image[ICON_STATUS_HOVER]), 0},
+	{"disabledimage", V_REF_OF_STRING, offsetof(uiIcon_t, image[ICON_STATUS_DISABLED]), 0},
+	{"clickedimage", V_REF_OF_STRING, offsetof(uiIcon_t, image[ICON_STATUS_CLICKED]), 0},
 
-	{"color", V_COLOR, offsetof(menuIcon_t, color[ICON_STATUS_NORMAL]), MEMBER_SIZEOF(menuIcon_t, color[ICON_STATUS_NORMAL])},
-	{"hoveredcolor", V_COLOR, offsetof(menuIcon_t, color[ICON_STATUS_HOVER]), MEMBER_SIZEOF(menuIcon_t, color[ICON_STATUS_HOVER])},
-	{"disabledcolor", V_COLOR, offsetof(menuIcon_t, color[ICON_STATUS_DISABLED]), MEMBER_SIZEOF(menuIcon_t, color[ICON_STATUS_DISABLED])},
-	{"clickedcolor", V_COLOR, offsetof(menuIcon_t, color[ICON_STATUS_CLICKED]), MEMBER_SIZEOF(menuIcon_t, color[ICON_STATUS_CLICKED])},
+	{"color", V_COLOR, offsetof(uiIcon_t, color[ICON_STATUS_NORMAL]), MEMBER_SIZEOF(uiIcon_t, color[ICON_STATUS_NORMAL])},
+	{"hoveredcolor", V_COLOR, offsetof(uiIcon_t, color[ICON_STATUS_HOVER]), MEMBER_SIZEOF(uiIcon_t, color[ICON_STATUS_HOVER])},
+	{"disabledcolor", V_COLOR, offsetof(uiIcon_t, color[ICON_STATUS_DISABLED]), MEMBER_SIZEOF(uiIcon_t, color[ICON_STATUS_DISABLED])},
+	{"clickedcolor", V_COLOR, offsetof(uiIcon_t, color[ICON_STATUS_CLICKED]), MEMBER_SIZEOF(uiIcon_t, color[ICON_STATUS_CLICKED])},
 
 	{NULL, V_NULL, 0, 0}
 };
@@ -64,9 +64,9 @@ const value_t mn_iconProperties[] = {
  * @param name Name of the icon
  * @return An icon, else NULL
  */
-static menuIcon_t* MN_AutoGenerateIcon (const char* name)
+static uiIcon_t* MN_AutoGenerateIcon (const char* name)
 {
-	menuIcon_t* icon = NULL;
+	uiIcon_t* icon = NULL;
 	const char* suffix[ICON_STATUS_MAX] = {"", "_hovered", "_disabled", "_clicked"};
 	int i;
 
@@ -99,7 +99,7 @@ static qboolean MN_IconExists (const char* name)
 {
 	int i;
 	for (i = 0; i < mn.numIcons; i++) {
-		if (strncmp(name, mn.icons[i].name, MEMBER_SIZEOF(menuIcon_t, name)) != 0)
+		if (strncmp(name, mn.icons[i].name, MEMBER_SIZEOF(uiIcon_t, name)) != 0)
 			continue;
 		return qtrue;
 	}
@@ -113,11 +113,11 @@ static qboolean MN_IconExists (const char* name)
  * @return The requested icon, else NULL
  * @note not very fast; if we use it often we should improve the search
  */
-menuIcon_t* MN_GetIconByName (const char* name)
+uiIcon_t* MN_GetIconByName (const char* name)
 {
 	int i;
 	for (i = 0; i < mn.numIcons; i++) {
-		if (strncmp(name, mn.icons[i].name, MEMBER_SIZEOF(menuIcon_t, name)) != 0)
+		if (strncmp(name, mn.icons[i].name, MEMBER_SIZEOF(uiIcon_t, name)) != 0)
 			continue;
 		return &mn.icons[i];
 	}
@@ -130,9 +130,9 @@ menuIcon_t* MN_GetIconByName (const char* name)
  * @param[in] name Name of the icon
  * @todo Assert out when we are not in parsing/loading stage
  */
-menuIcon_t* MN_AllocStaticIcon (const char* name)
+uiIcon_t* MN_AllocStaticIcon (const char* name)
 {
-	menuIcon_t* result;
+	uiIcon_t* result;
 	/** @todo understand why we must hide this assert in release build with mingw */
 #ifdef DEBUG
 	assert(!MN_IconExists(name));
@@ -157,7 +157,7 @@ menuIcon_t* MN_AllocStaticIcon (const char* name)
  * @param[in] sizeY Height of the bounded box
  * @todo use named const for status
  */
-void MN_DrawIconInBox (const menuIcon_t* icon, iconStatus_t status, int posX, int posY, int sizeX, int sizeY)
+void MN_DrawIconInBox (const uiIcon_t* icon, uiIconStatus_t status, int posX, int posY, int sizeX, int sizeY)
 {
 	int texX;
 	int texY;

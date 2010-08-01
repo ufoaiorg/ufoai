@@ -66,7 +66,7 @@ int MN_GetLastFullScreenWindow (void)
  * with the same window parent.
  * @param window Window we want to move
  */
-void MN_MoveWindowOnTop (menuNode_t * window)
+void MN_MoveWindowOnTop (uiNode_t * window)
 {
 	int i, j;
 
@@ -103,7 +103,7 @@ void MN_MoveWindowOnTop (menuNode_t * window)
  * @sa MN_PushWindowDelete
  * @todo Why dont we call onClose?
  */
-static void MN_DeleteWindowFromStack (menuNode_t *window)
+static void MN_DeleteWindowFromStack (uiNode_t *window)
 {
 	int i;
 
@@ -141,7 +141,7 @@ static inline int MN_GetWindowPositionFromStackByName (const char *name)
  * @param[in] window The window to insert
  * @param[in] position Where we want to add the window (0 is the deeper element of the stack)
  */
-static inline void MN_InsertWindowIntoStack (menuNode_t *window, int position)
+static inline void MN_InsertWindowIntoStack (uiNode_t *window, int position)
 {
 	int i;
 	assert(position <= mn.windowStackPos);
@@ -162,11 +162,11 @@ static inline void MN_InsertWindowIntoStack (menuNode_t *window, int position)
  * @param[in] name Name of the window to push onto window stack
  * @param[in] parent Window name to link as parent-child (else NULL)
  * @param[in] delete Delete the window from the window stack before adding it again
- * @return pointer to menuNode_t
+ * @return pointer to uiNode_t
  */
-static menuNode_t* MN_PushWindowDelete (const char *name, const char *parent, qboolean delete)
+static uiNode_t* MN_PushWindowDelete (const char *name, const char *parent, qboolean delete)
 {
-	menuNode_t *window;
+	uiNode_t *window;
 
 	MN_ReleaseInput();
 
@@ -242,9 +242,9 @@ int MN_CompleteWithWindow (const char *partial, const char **match)
  * @brief Push a window onto the menu stack
  * @param[in] name Name of the window to push onto window stack
  * @param[in] parentName Window name to link as parent-child (else NULL)
- * @return pointer to menuNode_t
+ * @return pointer to uiNode_t
  */
-menuNode_t* MN_PushWindow (const char *name, const char *parentName)
+uiNode_t* MN_PushWindow (const char *name, const char *parentName)
 {
 	return MN_PushWindowDelete(name, parentName, qtrue);
 }
@@ -285,7 +285,7 @@ static void MN_PushDropDownWindow_f (void)
 {
 	vec2_t source;
 	vec2_t destination;
-	menuNode_t *node;
+	uiNode_t *node;
 	byte pointPosition;
 	size_t writtenBytes;
 	int result;
@@ -372,7 +372,7 @@ static void MN_CloseAllWindow (void)
 {
 	int i;
 	for (i = mn.windowStackPos - 1; i >= 0; i--) {
-		menuNode_t *window = mn.windowStack[i];
+		uiNode_t *window = mn.windowStack[i];
 
 		if (window->behaviour->close)
 			window->behaviour->close(window);
@@ -425,7 +425,7 @@ qboolean MN_IsWindowOnStack (const char* name)
 /**
  * @todo Find  better name
  */
-static void MN_CloseWindowByRef (menuNode_t *window)
+static void MN_CloseWindowByRef (uiNode_t *window)
 {
 	int i;
 
@@ -441,7 +441,7 @@ static void MN_CloseWindowByRef (menuNode_t *window)
 
 	/* close child */
 	while (i + 1 < mn.windowStackPos) {
-		menuNode_t *m = mn.windowStack[i + 1];
+		uiNode_t *m = mn.windowStack[i + 1];
 		if (WINDOWEXTRADATA(m).parent != window) {
 			break;
 		}
@@ -462,7 +462,7 @@ static void MN_CloseWindowByRef (menuNode_t *window)
 
 void MN_CloseWindow (const char* name)
 {
-	menuNode_t *window = MN_GetWindow(name);
+	uiNode_t *window = MN_GetWindow(name);
 	if (window == NULL) {
 		Com_Printf("Window '%s' not found\n", name);
 		return;
@@ -479,12 +479,12 @@ void MN_CloseWindow (const char* name)
  */
 void MN_PopWindow (qboolean all)
 {
-	menuNode_t *oldfirst = mn.windowStack[0];
+	uiNode_t *oldfirst = mn.windowStack[0];
 
 	if (all) {
 		MN_CloseAllWindow();
 	} else {
-		menuNode_t *mainMenu = mn.windowStack[mn.windowStackPos - 1];
+		uiNode_t *mainMenu = mn.windowStack[mn.windowStackPos - 1];
 		if (!mn.windowStackPos)
 			return;
 		if (WINDOWEXTRADATA(mainMenu).parent)
@@ -529,7 +529,7 @@ static void MN_CloseWindow_f (void)
 
 void MN_PopWindowWithEscKey (void)
 {
-	const menuNode_t *window = mn.windowStack[mn.windowStackPos - 1];
+	const uiNode_t *window = mn.windowStack[mn.windowStackPos - 1];
 
 	/* nothing if stack is empty */
 	if (mn.windowStackPos == 0)
@@ -558,10 +558,10 @@ static void MN_PopWindow_f (void)
 
 /**
  * @brief Returns the current active window from the window stack or NULL if there is none
- * @return menuNode_t pointer from window stack
+ * @return uiNode_t pointer from window stack
  * @sa MN_GetWindow
  */
-menuNode_t* MN_GetActiveWindow (void)
+uiNode_t* MN_GetActiveWindow (void)
 {
 	return (mn.windowStackPos > 0 ? mn.windowStack[mn.windowStackPos - 1] : NULL);
 }
@@ -571,7 +571,7 @@ menuNode_t* MN_GetActiveWindow (void)
  */
 void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
 {
-	menuNode_t *window = MN_GetActiveWindow();
+	uiNode_t *window = MN_GetActiveWindow();
 
 	/** @todo the better way is to add a 'battlescape' node */
 	if (!window || !WINDOWEXTRADATA(window).renderNode)
@@ -579,7 +579,7 @@ void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
 			window = MN_GetWindow(mn_hud->string);
 
 	if (window && WINDOWEXTRADATA(window).renderNode) {
-		menuNode_t* node = WINDOWEXTRADATA(window).renderNode;
+		uiNode_t* node = WINDOWEXTRADATA(window).renderNode;
 		vec2_t pos;
 
 		MN_Validate(window);
@@ -604,7 +604,7 @@ void MN_GetActiveRenderRect (int *x, int *y, int *width, int *height)
  */
 const char* MN_GetActiveWindowName (void)
 {
-	const menuNode_t* window = MN_GetActiveWindow();
+	const uiNode_t* window = MN_GetActiveWindow();
 	if (window == NULL)
 		return "";
 	return window->name;
@@ -616,7 +616,7 @@ const char* MN_GetActiveWindowName (void)
  */
 qboolean MN_IsPointOnWindow (void)
 {
-	const menuNode_t *hovered;
+	const uiNode_t *hovered;
 
 	if (MN_GetMouseCapture() != NULL)
 		return qtrue;
@@ -645,7 +645,7 @@ qboolean MN_IsPointOnWindow (void)
  * @note Use dichotomic search
  * @sa MN_GetActiveWindow
  */
-menuNode_t *MN_GetWindow (const char *name)
+uiNode_t *MN_GetWindow (const char *name)
 {
 	unsigned char min = 0;
 	unsigned char max = mn.numWindows;
@@ -685,7 +685,7 @@ void MN_InvalidateStack (void)
  * @brief Sets new x and y coordinates for a given window
  * @todo remove that
  */
-void MN_SetNewWindowPos (menuNode_t* window, int x, int y)
+void MN_SetNewWindowPos (uiNode_t* window, int x, int y)
 {
 	if (window)
 		Vector2Set(window->pos, x, y);
@@ -695,7 +695,7 @@ void MN_SetNewWindowPos (menuNode_t* window, int x, int y)
  * @brief Add a new window to the list of all windows
  * @note Sort windows by alphabet
  */
-void MN_InsertWindow (menuNode_t* window)
+void MN_InsertWindow (uiNode_t* window)
 {
 	int pos = 0;
 	int i;
@@ -705,7 +705,7 @@ void MN_InsertWindow (menuNode_t* window)
 
 	/* search the insertion position */
 	for (pos = 0; pos < mn.numWindows; pos++) {
-		const menuNode_t* node = mn.windows[pos];
+		const uiNode_t* node = mn.windows[pos];
 		if (strcmp(window->name, node->name) < 0)
 			break;
 	}
@@ -724,7 +724,7 @@ void MN_InsertWindow (menuNode_t* window)
  */
 static void MN_SetNewWindowPos_f (void)
 {
-	menuNode_t* window = MN_GetActiveWindow();
+	uiNode_t* window = MN_GetActiveWindow();
 
 	if (Cmd_Argc() < 3)
 		Com_Printf("Usage: %s <x> <y>\n", Cmd_Argv(0));
@@ -739,7 +739,7 @@ static void MN_SetNewWindowPos_f (void)
  */
 static void MN_FireInit_f (void)
 {
-	const menuNode_t* window;
+	const uiNode_t* window;
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <window>\n", Cmd_Argv(0));
@@ -785,9 +785,9 @@ static void MN_InitStack_f (void) {
 /**
  * @brief Display in the conde the tree of nodes
  */
-static void MN_DebugTree(const menuNode_t *node, int depth)
+static void MN_DebugTree(const uiNode_t *node, int depth)
 {
-	const menuNode_t *child = node->firstChild;
+	const uiNode_t *child = node->firstChild;
 	int i;
 
 	for (i = 0; i < depth; i++) {
@@ -804,7 +804,7 @@ static void MN_DebugTree(const menuNode_t *node, int depth)
 static void MN_DebugTree_f (void)
 {
 	const char *window;
-	const menuNode_t *node;
+	const uiNode_t *node;
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <mainwindow>\n", Cmd_Argv(0));

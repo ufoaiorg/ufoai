@@ -33,12 +33,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_FONTS 16
 static int numFonts = 0;
-static menuFont_t fonts[MAX_FONTS];
+static uiFont_t fonts[MAX_FONTS];
 
 static const value_t fontValues[] = {
-	{"font", V_TRANSLATION_STRING, offsetof(menuFont_t, path), 0},
-	{"size", V_INT, offsetof(menuFont_t, size), MEMBER_SIZEOF(menuFont_t, size)},
-	{"style", V_CLIENT_HUNK_STRING, offsetof(menuFont_t, style), 0},
+	{"font", V_TRANSLATION_STRING, offsetof(uiFont_t, path), 0},
+	{"size", V_INT, offsetof(uiFont_t, size), MEMBER_SIZEOF(uiFont_t, size)},
+	{"style", V_CLIENT_HUNK_STRING, offsetof(uiFont_t, style), 0},
 
 	{NULL, V_NULL, 0},
 };
@@ -49,7 +49,7 @@ static const value_t fontValues[] = {
  * fonts for every translation
  * @param[in] font
  */
-static void MN_RegisterFont (const menuFont_t *font)
+static void MN_RegisterFont (const uiFont_t *font)
 {
 	const char *path = _(font->path);
 
@@ -67,7 +67,7 @@ static void MN_RegisterFont (const menuFont_t *font)
  */
 void MN_ParseFont (const char *name, const char **text)
 {
-	menuFont_t *font;
+	uiFont_t *font;
 	const char *errhead = "MN_ParseFont: unexpected end of file (font";
 	const char *token;
 	const value_t *v = NULL;
@@ -141,7 +141,7 @@ void MN_ParseFont (const char *name, const char **text)
  * @param[in] node Context node
  * @return char pointer with font name (default is f_small)
  */
-const char *MN_GetFontFromNode (const menuNode_t *const node)
+const char *MN_GetFontFromNode (const uiNode_t *const node)
 {
 	if (node && node->font) {
 		return MN_GetReferenceString(node, node->font);
@@ -153,7 +153,7 @@ const char *MN_GetFontFromNode (const menuNode_t *const node)
 /**
  * @brief Return the font for a specific id
  */
-const menuFont_t *MN_GetFontByID (const char *name)
+const uiFont_t *MN_GetFontByID (const char *name)
 {
 	int i;
 

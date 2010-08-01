@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA_TYPE ekgExtraData_t
 #define EXTRADATA(node) MN_EXTRADATA(node, EXTRADATA_TYPE)
 
-static void MN_EKGNodeDraw (menuNode_t *node)
+static void MN_EKGNodeDraw (uiNode_t *node)
 {
 	vec2_t size;
 	vec2_t nodepos;
@@ -102,7 +102,7 @@ static void MN_EKGNodeDraw (menuNode_t *node)
 /**
  * @brief Called at the begin of the load from script
  */
-static void MN_EKGNodeLoading (menuNode_t *node)
+static void MN_EKGNodeLoading (uiNode_t *node)
 {
 	EXTRADATA(node).scaleCvarValue = 1.0f;
 	EXTRADATA(node).scrollSpeed= 0.07f;
@@ -117,7 +117,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterEKGNode (nodeBehaviour_t* behaviour)
+void MN_RegisterEKGNode (uiBehaviour_t* behaviour)
 {
 	behaviour->name = "ekg";
 	behaviour->loading = MN_EKGNodeLoading;

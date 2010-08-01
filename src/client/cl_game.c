@@ -178,7 +178,7 @@ void GAME_EndRoundAnnounce (int playerNum, int team)
  * @param[in] node The menu node to show the information in.
  * @param[in] string The id of the 'thing' to show information for.
  */
-void GAME_DisplayItemInfo (menuNode_t *node, const char *string)
+void GAME_DisplayItemInfo (uiNode_t *node, const char *string)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list != NULL && list->DisplayItemInfo)

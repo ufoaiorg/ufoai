@@ -28,9 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/common.h"
 
 /* prototype */
-struct menuNode_s;
+struct uiNode_s;
 
-void MN_InsertComponent(struct menuNode_s* menu);
-struct menuNode_s *MN_GetComponent(const char *name);
+void MN_InsertComponent(struct uiNode_s* menu);
+struct uiNode_s *MN_GetComponent(const char *name);
 
 #endif

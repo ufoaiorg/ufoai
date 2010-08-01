@@ -25,6 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_EDITOR_H
 #define CLIENT_MENU_M_NODE_EDITOR_H
 
-void MN_RegisterEditorNode(nodeBehaviour_t* behaviour);
+void MN_RegisterEditorNode(uiBehaviour_t* behaviour);
 
 #endif

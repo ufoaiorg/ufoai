@@ -41,25 +41,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cvar_t *mn_show_tooltips;
 static const int TOOLTIP_DELAY = 500; /* delay that msecs before showing tooltip */
 static qboolean tooltipVisible = qfalse;
-static menuTimer_t *tooltipTimer;
+static uiTimer_t *tooltipTimer;
 
 static int noticeTime;
 static char noticeText[256];
-static menuNode_t *noticeMenu;
+static uiNode_t *noticeMenu;
 
 /**
  * @brief Node we will draw over
  * @sa MN_CaptureDrawOver
- * @sa nodeBehaviour_t.drawOverMenu
+ * @sa uiBehaviour_t.drawOverMenu
  */
-static menuNode_t *drawOverNode;
+static uiNode_t *drawOverNode;
 
 /**
  * @brief Capture a node we will draw over all nodes per menu
  * @note The node must be captured every frames
  * @todo it can be better to capture the draw over only one time (need new event like mouseEnter, mouseLeave)
  */
-void MN_CaptureDrawOver (menuNode_t *node)
+void MN_CaptureDrawOver (uiNode_t *node)
 {
 	drawOverNode = node;
 }
@@ -70,7 +70,7 @@ static int debugTextPositionY = 0;
 static int debugPositionX = 0;
 #define DEBUG_PANEL_WIDTH 300
 
-static void MN_HighlightNode (const menuNode_t *node, const vec4_t color)
+static void MN_HighlightNode (const uiNode_t *node, const vec4_t color)
 {
 	static const vec4_t grey = {0.7, 0.7, 0.7, 1.0};
 	vec2_t pos;
@@ -128,7 +128,7 @@ static void MN_DrawDebugMenuNodeNames (void)
 	static const vec4_t green = {0.0, 0.5, 0.0, 1.0};
 	static const vec4_t white = {1, 1.0, 1.0, 1.0};
 	static const vec4_t background = {0.0, 0.0, 0.0, 0.5};
-	menuNode_t *hoveredNode;
+	uiNode_t *hoveredNode;
 	int stackPosition;
 
 	debugTextPositionY = 100;
@@ -162,7 +162,7 @@ static void MN_DrawDebugMenuNodeNames (void)
 	MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "menu stack:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 	for (stackPosition = 0; stackPosition < mn.windowStackPos; stackPosition++) {
-		menuNode_t *menu = mn.windowStack[stackPosition];
+		uiNode_t *menu = mn.windowStack[stackPosition];
 		MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX+20, debugTextPositionY, 200, 200, 0, menu->name, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		debugTextPositionY += 15;
 	}
@@ -181,7 +181,7 @@ static void MN_DrawDebugMenuNodeNames (void)
 
 	/* target node */
 	if (MN_DNDIsDragging()) {
-		menuNode_t *targetNode = MN_DNDGetTargetNode();
+		uiNode_t *targetNode = MN_DNDGetTargetNode();
 		if (targetNode) {
 			MN_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, debugTextPositionY, 200, 200, 0, "-----------------------", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 			debugTextPositionY += 15;
@@ -197,17 +197,17 @@ static void MN_DrawDebugMenuNodeNames (void)
 #endif
 
 
-static void MN_CheckTooltipDelay (menuNode_t *node, menuTimer_t *timer)
+static void MN_CheckTooltipDelay (uiNode_t *node, uiTimer_t *timer)
 {
 	tooltipVisible = qtrue;
 	MN_TimerStop(timer);
 }
 
-static void MN_DrawNode (menuNode_t *node)
+static void MN_DrawNode (uiNode_t *node)
 {
 	static int globalTransX = 0;
 	static int globalTransY = 0;
-	menuNode_t *child;
+	uiNode_t *child;
 	vec2_t pos;
 
 	/* update the layout */
@@ -333,8 +333,8 @@ static void MN_DrawNotice (void)
  */
 void MN_Draw (void)
 {
-	menuNode_t *hoveredNode;
-	menuNode_t *menu;
+	uiNode_t *hoveredNode;
+	uiNode_t *menu;
 	int pos;
 	qboolean mouseMoved = qfalse;
 

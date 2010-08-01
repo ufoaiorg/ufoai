@@ -47,7 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ROTATE_SPEED	0.5
 #define MAX_OLDREFVALUE MAX_VAR
 
-static const nodeBehaviour_t const *localBehaviour;
+static const uiBehaviour_t const *localBehaviour;
 
 /**
  * @brief Returns pointer to menu model
@@ -77,7 +77,7 @@ void MN_ListMenuModels_f (void)
 		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", mn.menuModels[i].id, mn.menuModels[i].model, mn.menuModels[i].need);
 }
 
-static void MN_ModelNodeDraw (menuNode_t *node)
+static void MN_ModelNodeDraw (uiNode_t *node)
 {
 	const char* ref = MN_GetReferenceString(node, EXTRADATA(node).model);
 	char source[MAX_VAR];
@@ -93,7 +93,7 @@ static vec3_t nullVector = {0, 0, 0};
 /**
  * @brief Set the Model info view (angle,origin,scale) according to the node definition
  */
-static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menuModel_t *menuModel)
+static inline void MN_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, menuModel_t *menuModel)
 {
 	vec3_t nodeorigin;
 	MN_GetNodeAbsPos(node, nodeorigin);
@@ -111,7 +111,7 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 /**
  * @brief Draw a model using "menu model" definition
  */
-static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source, modelInfo_t *mi, menuModel_t *menuModel)
+static void MN_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, modelInfo_t *mi, menuModel_t *menuModel)
 {
 	qboolean autoScaleComputed = qfalse;
 	vec3_t autoScale;
@@ -245,7 +245,7 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
  * @todo Menu models should inherite the node values from their parent
  * @todo need to merge menuModel case, and the common case (look to be a copy-pasted code)
  */
-void MN_DrawModelNode (menuNode_t *node, const char *source)
+void MN_DrawModelNode (uiNode_t *node, const char *source)
 {
 	modelInfo_t mi;
 	menuModel_t *menuModel;
@@ -363,7 +363,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 
 	/* draw all childs */
 	if (node->firstChild) {
-		menuNode_t *child;
+		uiNode_t *child;
 		modelInfo_t pmi = mi;
 		for (child = node->firstChild; child; child = child->next) {
 			const char *tag;
@@ -414,7 +414,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 static int oldMousePosX = 0;
 static int oldMousePosY = 0;
 
-static void MN_ModelNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+static void MN_ModelNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
 	float *rotateAngles = EXTRADATA(node).angles;
 
@@ -437,7 +437,7 @@ static void MN_ModelNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	oldMousePosY = y;
 }
 
-static void MN_ModelNodeMouseDown (menuNode_t *node, int x, int y, int button)
+static void MN_ModelNodeMouseDown (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -448,7 +448,7 @@ static void MN_ModelNodeMouseDown (menuNode_t *node, int x, int y, int button)
 	oldMousePosY = y;
 }
 
-static void MN_ModelNodeMouseUp (menuNode_t *node, int x, int y, int button)
+static void MN_ModelNodeMouseUp (uiNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
@@ -460,7 +460,7 @@ static void MN_ModelNodeMouseUp (menuNode_t *node, int x, int y, int button)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void MN_ModelNodeLoading (menuNode_t *node)
+static void MN_ModelNodeLoading (uiNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	VectorSet(EXTRADATA(node).scale, 1, 1, 1);
@@ -470,26 +470,26 @@ static void MN_ModelNodeLoading (menuNode_t *node)
 /**
  * @brief Call to update a cloned node
  */
-static void MN_ModelNodeClone (const menuNode_t *source, menuNode_t *clone)
+static void MN_ModelNodeClone (const uiNode_t *source, uiNode_t *clone)
 {
 	localBehaviour->super->clone(source, clone);
 	if (!clone->dynamic)
 		EXTRADATA(clone).oldRefValue = MN_AllocStaticString("", MAX_OLDREFVALUE);
 }
 
-static void MN_ModelNodeNew (menuNode_t *node)
+static void MN_ModelNodeNew (uiNode_t *node)
 {
 	EXTRADATA(node).oldRefValue = (char*) Mem_PoolAlloc(MAX_OLDREFVALUE, mn_dynPool, 0);
 	EXTRADATA(node).oldRefValue[0] = '\0';
 }
 
-static void MN_ModelNodeDelete (menuNode_t *node)
+static void MN_ModelNodeDelete (uiNode_t *node)
 {
 	Mem_Free(EXTRADATA(node).oldRefValue);
 	EXTRADATA(node).oldRefValue = NULL;
 }
 
-static void MN_ModelNodeLoaded (menuNode_t *node)
+static void MN_ModelNodeLoaded (uiNode_t *node)
 {
 	/* a tag without but not a submodel */
 	if (EXTRADATA(node).tag != NULL && node->behaviour != node->parent->behaviour) {
@@ -534,7 +534,7 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
+void MN_RegisterModelNode (uiBehaviour_t *behaviour)
 {
 	localBehaviour = behaviour;
 	behaviour->name = "model";

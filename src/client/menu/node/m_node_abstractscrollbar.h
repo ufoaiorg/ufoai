@@ -39,8 +39,8 @@ typedef struct abstractScrollbarExtraData_s {
 	qboolean hideWhenUnused; /** Hide the scrollbar when we can't scroll anything */
 } abstractScrollbarExtraData_t;
 
-struct nodeBehaviour_s; /* prototype */
+struct uiBehaviour_s; /* prototype */
 
-void MN_RegisterAbstractScrollbarNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterAbstractScrollbarNode(struct uiBehaviour_s *behaviour);
 
 #endif
