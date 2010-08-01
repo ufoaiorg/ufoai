@@ -159,9 +159,6 @@ void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1
 void Com_Printf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
 void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
 
-#define AREA_SOLID			1
-#define AREA_TRIGGERS		2
-
 #define TEAM_NO_ACTIVE -1
 #define TEAM_CIVILIAN   0
 #define TEAM_PHALANX    1
