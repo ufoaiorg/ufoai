@@ -370,10 +370,12 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		if (!NET_StreamIsLoopback(cls.netStream)) {
 			Com_Printf("Command packet from remote host. Ignored.\n");
 			return;
+		} else {
+			char str[1024];
+			NET_ReadString(msg, str, sizeof(str));
+			Cbuf_AddText(str);
+			Cbuf_AddText("\n");
 		}
-		s = NET_ReadString(msg);
-		Cbuf_AddText(s);
-		Cbuf_AddText("\n");
 		return;
 	}
 
@@ -397,11 +399,12 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 
 	/* print */
 	if (!strncmp(c, "print", 5)) {
-		s = NET_ReadString(msg);
+		char str[1024];
+		NET_ReadString(msg, str, sizeof(str));
 		/* special reject messages needs proper handling */
 		if (strstr(s, REJ_PASSWORD_REQUIRED_OR_INCORRECT))
 			UI_PushWindow("serverpassword", NULL);
-		UI_Popup(_("Notice"), _(s));
+		UI_Popup(_("Notice"), _(str));
 		return;
 	}
 

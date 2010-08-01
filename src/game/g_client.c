@@ -1015,10 +1015,10 @@ static void G_ClientReadCharacter (edict_t *ent)
 
 	/* model */
 	ent->chr.ucn = gi.ReadShort();
-	Q_strncpyz(ent->chr.name, gi.ReadString(), sizeof(ent->chr.name));
-	Q_strncpyz(ent->chr.path, gi.ReadString(), sizeof(ent->chr.path));
-	Q_strncpyz(ent->chr.body, gi.ReadString(), sizeof(ent->chr.body));
-	Q_strncpyz(ent->chr.head, gi.ReadString(), sizeof(ent->chr.head));
+	gi.ReadString(ent->chr.name, sizeof(ent->chr.name));
+	gi.ReadString(ent->chr.path, sizeof(ent->chr.path));
+	gi.ReadString(ent->chr.body, sizeof(ent->chr.body));
+	gi.ReadString(ent->chr.head, sizeof(ent->chr.head));
 	ent->chr.skin = gi.ReadByte();
 
 	ent->chr.HP = gi.ReadShort();

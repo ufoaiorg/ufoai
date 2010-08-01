@@ -238,17 +238,18 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		break;
 
 	case clc_userinfo:
-		Q_strncpyz(cl->userinfo, NET_ReadString(msg), sizeof(cl->userinfo));
+		NET_ReadString(msg, cl->userinfo, sizeof(cl->userinfo));
 		Com_DPrintf(DEBUG_SERVER, "userinfo from client: %s\n", cl->userinfo);
 		SV_UserinfoChanged(cl);
 		break;
 
 	case clc_stringcmd:
 	{
-		const char *s = NET_ReadString(msg);
+		char str[1024];
+		NET_ReadString(msg, str, sizeof(str));
 
-		Com_DPrintf(DEBUG_SERVER, "stringcmd from client: %s\n", s);
-		SV_ExecuteUserCommand(s);
+		Com_DPrintf(DEBUG_SERVER, "stringcmd from client: %s\n", str);
+		SV_ExecuteUserCommand(str);
 
 		if (cl->state == cs_free)
 			return;			/* disconnect command */

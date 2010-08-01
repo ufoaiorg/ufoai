@@ -278,47 +278,19 @@ int NET_ReadLong (struct dbuffer *buf)
 }
 
 /**
- * @brief Don't strip high bits - use this for utf-8 strings
  * @note Don't use this function in a way like
- * <code> char *s = NET_ReadStringRaw(sb);
- * char *t = NET_ReadStringRaw(sb);</code>
- * The second reading uses the same data buffer for the string - so
- * s is no longer the first - but the second string
- * @sa NET_ReadString
- * @sa NET_ReadStringLine
- */
-char *NET_ReadStringRaw (struct dbuffer *buf)
-{
-	static char string[2048];
-	unsigned int l;
-
-	l = 0;
-	do {
-		const int c = NET_ReadByte(buf);
-		if (c == -1 || c == 0)
-			break;
-		string[l] = c;
-		l++;
-	} while (l < sizeof(string) - 1);
-
-	string[l] = 0;
-
-	return string;
-}
-
-/**
- * @note Don't use this function in a way like
- * <code> char *s = NET_ReadStringRaw(sb);
- * char *t = NET_ReadStringRaw(sb);</code>
+ * <code> char *s = NET_ReadString(sb);
+ * char *t = NET_ReadString(sb);</code>
  * The second reading uses the same data buffer for the string - so
  * s is no longer the first - but the second string
  * @note strip high bits - don't use this for utf-8 strings
- * @sa NET_ReadStringRaw
  * @sa NET_ReadStringLine
+ * @param[in,out] buf The input buffer to read the string data from
+ * @param[out] string The output buffer to read the string into
+ * @param[in] length The size of the output buffer
  */
-char *NET_ReadString (struct dbuffer *buf)
+int NET_ReadString (struct dbuffer *buf, char *string, size_t length)
 {
-	static char string[2048];
 	unsigned int l;
 
 	l = 0;
@@ -332,16 +304,15 @@ char *NET_ReadString (struct dbuffer *buf)
 			c = '.';
 		string[l] = c;
 		l++;
-	} while (l < sizeof(string) - 1);
+	} while (l < length - 1);
 
 	string[l] = 0;
 
-	return string;
+	return l;
 }
 
 /**
  * @sa NET_ReadString
- * @sa NET_ReadStringRaw
  */
 char *NET_ReadStringLine (struct dbuffer *buf)
 {
@@ -471,9 +442,12 @@ void NET_vReadFormat (struct dbuffer *buf, const char *format, va_list ap)
 		case '!':
 			format++;
 			break;
-		case '&':
-			*va_arg(ap, char **) = NET_ReadString(buf);
+		case '&': {
+			char *str = va_arg(ap, char *);
+			const size_t length = va_arg(ap, size_t);
+			NET_ReadString(buf, str, length);
 			break;
+		}
 		case '*':
 			{
 				int i;
@@ -502,6 +476,7 @@ void NET_vReadFormat (struct dbuffer *buf, const char *format, va_list ap)
 void NET_ReadFormat (struct dbuffer *buf, const char *format, ...)
 {
 	va_list ap;
+
 	va_start(ap, format);
 	NET_vReadFormat(buf, format, ap);
 	va_end(ap);
@@ -516,8 +491,8 @@ void NET_ReadFormat (struct dbuffer *buf, const char *format, ...)
 void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
 {
 	va_list argptr;
-	static char string[4096];
-	char cmd = (char)clc_oob;
+	char string[4096];
+	const char cmd = (const char)clc_oob;
 	int len;
 
 	va_start(argptr, format);
@@ -525,7 +500,7 @@ void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
 	va_end(argptr);
 
 	len = LittleLong(strlen(string) + 1);
-	NET_StreamEnqueue(s, (char *)&len, 4);
+	NET_StreamEnqueue(s, (const char *)&len, 4);
 	NET_StreamEnqueue(s, &cmd, 1);
 	NET_StreamEnqueue(s, string, strlen(string));
 }
@@ -604,17 +579,8 @@ struct dbuffer *NET_ReadMsg (struct net_stream *s)
 	return buf;
 }
 
-void NET_VPrintf (struct dbuffer *buf, const char *format, va_list ap)
+void NET_VPrintf (struct dbuffer *buf, const char *format, va_list ap, char *str, size_t length)
 {
-	static char str[32768];
-	const int len = Q_vsnprintf(str, sizeof(str), format, ap);
+	const int len = Q_vsnprintf(str, length, format, ap);
 	dbuffer_add(buf, str, len);
-}
-
-void NET_Printf (struct dbuffer *buf, const char *format, ...)
-{
-	va_list ap;
-	va_start(ap, format);
-	NET_VPrintf(buf, format, ap);
-	va_end(ap);
 }

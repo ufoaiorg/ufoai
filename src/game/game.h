@@ -196,7 +196,7 @@ typedef struct {
 	int (IMPORT *ReadByte) (void);
 	int (IMPORT *ReadShort) (void);
 	int (IMPORT *ReadLong) (void);
-	char *(IMPORT *ReadString) (void);
+	int (IMPORT *ReadString) (char *str, size_t length);
 	void (IMPORT *ReadPos) (vec3_t pos);
 	void (IMPORT *ReadGPos) (pos3_t pos);
 	void (IMPORT *ReadDir) (vec3_t vector);

@@ -276,9 +276,9 @@ static int SV_ReadLong (void)
 	return NET_ReadLong(sv_msg);
 }
 
-static char *SV_ReadString (void)
+static int SV_ReadString (char *str, size_t length)
 {
-	return NET_ReadString(sv_msg);
+	return NET_ReadString(sv_msg, str, length);
 }
 
 static void SV_ReadPos (vec3_t pos)
@@ -316,6 +316,7 @@ static void SV_ReadFormat (const char *format, ...)
 	assert(format);
 	if (!*format) /* PA_NULL */
 		return;
+
 	va_start(ap, format);
 	NET_vReadFormat(sv_msg, format, ap);
 	va_end(ap);
