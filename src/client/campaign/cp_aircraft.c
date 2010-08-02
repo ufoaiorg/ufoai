@@ -146,6 +146,7 @@ void AIR_UpdateHangarCapForAll (base_t *base)
 	base->capacities[CAP_AIRCRAFT_BIG].cur = 0;
 	base->capacities[CAP_AIRCRAFT_SMALL].cur = 0;
 
+	aircraft = NULL;
 	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll: base: %s, aircraft: %s\n", base->name, aircraft->id);
 		AIR_UpdateHangarCapForOne(aircraft->tpl, base);
@@ -671,6 +672,7 @@ int AIR_GetAircraftIDXInBase (const aircraft_t* aircraft)
 	base = aircraft->homebase;
 
 	i = 0;
+	aircraftInBase = NULL;
 	while ((aircraftInBase = AIR_GetNextFromBase(base, aircraftInBase)) != NULL) {
 		if (aircraftInBase == aircraft)
 			return i;
