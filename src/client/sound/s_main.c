@@ -222,13 +222,8 @@ void S_Init (void)
 	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file. Pass path relative to base/sound without file extension");
 	Cmd_AddParamCompleteFunction("snd_play", S_CompleteSounds);
 
-	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
+	if (SDL_WasInit(SDL_INIT_AUDIO) == 0) {
 		if (SDL_Init(SDL_INIT_AUDIO) < 0) {
-			Com_Printf("S_Init: %s.\n", SDL_GetError());
-			return;
-		}
-	} else if (SDL_WasInit(SDL_INIT_AUDIO) == 0) {
-		if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0) {
 			Com_Printf("S_Init: %s.\n", SDL_GetError());
 			return;
 		}

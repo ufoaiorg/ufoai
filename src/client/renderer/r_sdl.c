@@ -78,12 +78,9 @@ qboolean Rimp_Init (void)
 
 	Sys_Setenv("SDL_VIDEO_CENTERED", "1");
 
-	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_VIDEO) == 0) {
+	if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
 			Com_Error(ERR_FATAL, "Video SDL_Init failed: %s", SDL_GetError());
-	} else if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
-		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0)
-			Com_Error(ERR_FATAL, "Video SDL_InitSubsystem failed: %s", SDL_GetError());
 	}
 
 	SDL_VERSION(&version)
