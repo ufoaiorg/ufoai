@@ -111,6 +111,8 @@ void VID_Restart_f (void)
 {
 	refdef.ready = qfalse;
 
+	Com_Printf("renderer restart\n");
+
 	R_Shutdown();
 	R_Init();
 	UI_Reinit();

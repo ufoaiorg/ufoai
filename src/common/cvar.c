@@ -597,11 +597,11 @@ static cvar_t *Cvar_Set2 (const char *varName, const char *value, qboolean force
 		}
 	}
 
-	if (var->flags & CVAR_R_MASK)
-		Com_SetRenderModified(qtrue);
-
 	if (!strcmp(value, var->string))
 		return var;				/* not changed */
+
+	if (var->flags & CVAR_R_MASK)
+		Com_SetRenderModified(qtrue);
 
 	if (var->oldString)
 		Mem_Free(var->oldString);		/* free the old value string */

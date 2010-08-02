@@ -1044,6 +1044,9 @@ void Qcommon_Init (int argc, const char **argv)
 	Cbuf_AddEarlyCommands(qtrue);
 	Cbuf_Execute();
 
+	Com_SetRenderModified(qfalse);
+	Com_SetUserinfoModified(qfalse);
+
 	/* init commands and vars */
 	Cmd_AddCommand("saveconfig", Com_WriteConfig_f, "Write the configuration to file");
 	Cmd_AddCommand("gametypelist", Com_GameTypeList_f, "List all available multiplayer game types");

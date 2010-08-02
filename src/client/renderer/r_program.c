@@ -834,6 +834,8 @@ void R_InitPrograms (void)
  */
 void R_RestartPrograms_f (void)
 {
+	Com_Printf("glsl restart\n");
+
 	R_ShutdownPrograms();
 	R_InitPrograms();
 }
