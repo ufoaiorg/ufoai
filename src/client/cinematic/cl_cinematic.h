@@ -37,7 +37,6 @@ typedef struct cinematic_s {
 	char			name[MAX_QPATH];	/**< virtual filesystem path with file suffix */
 
 	qboolean		replay;	/**< autmatically replay in endless loop */
-	qboolean		inMenu;	/**< is this cinematic shown in a menu node? */
 	int				x, y, w, h; /**< for drawing in the menu maybe */
 
 	qboolean		noSound;	/**< no sound while playing the cinematic */
