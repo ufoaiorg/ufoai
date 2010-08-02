@@ -291,7 +291,6 @@ int CL_ActorUsableTUs (const le_t * le)
  * @param[in] le The actor to change it for.
  * @param[in] type The reservation type to be changed (i.e be replaced).
  * @param[in] tus How many TUs to set.
- * @todo Make the "type" into enum
  */
 void CL_ActorReserveTUs (const le_t * le, const reservation_types_t type, const int tus)
 {
@@ -1118,7 +1117,6 @@ static void CL_ActorMoveMouse (void)
 
 /**
  * @brief Selects an actor using the mouse.
- * @todo Comment on the cl.actorMode stuff.
  * @sa CL_ActorStartMove
  */
 void CL_ActorSelectMouse (void)
@@ -1557,8 +1555,6 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 		? target->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
-	/** @todo Adjust the toPos to the actor in case the actor is 2x2 */
-
 	Grid_PosToVec(cl.clMap, fromActorSize, fromPos, start);
 	Grid_PosToVec(cl.clMap, toActorSize, toPos, end);
 	if (mousePosTargettingAlign)
@@ -1640,8 +1636,6 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 	toActorSize = target
 		? target->fieldSize
 		: ACTOR_SIZE_NORMAL;
-
-	/** @todo Adjust the toPos to the actor in case the actor is 2x2 */
 
 	/* get vectors, paint cross */
 	Grid_PosToVec(cl.clMap, fromActorSize, fromPos, from);

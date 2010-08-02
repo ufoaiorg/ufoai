@@ -103,7 +103,7 @@ void PQueuePop (priorityQueue_t *pq, pos4_t item)
 	priorityQueueElement_t pLastElement;
 
 	if (PQueueIsEmpty(pq))
-		return; /* XXX */
+		return;
 
 	pMaxElement = elements[PQ_FIRST_ENTRY];
 

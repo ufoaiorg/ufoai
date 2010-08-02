@@ -74,7 +74,7 @@ typedef struct le_s {
 
 	fireDefIndex_t currentSelectedFiremode;
 
-	actorModes_t actorMode;		/**< current selected action for the selected actor */
+	actorModes_t actorMode;		/**< current selected action for this actor */
 	/** for double-click movement and confirmations ... */
 	pos3_t mousePendPos;
 	/**

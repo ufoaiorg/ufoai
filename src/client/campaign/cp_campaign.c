@@ -1134,7 +1134,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 					/* if the soldier was ever on a mission */
 					if (score->assignedMissions) {
 						const rank_t *rank = CL_GetRankByIdx(score->rank);
-						/* @sa G_CharacterGetMaxExperiencePerMission */
+						/** @sa G_CharacterGetMaxExperiencePerMission */
 						if (score->experience[SKILL_CLOSE] > 70) { /** @todo fix this value */
 							increaseWinProbability *= rank->factor;
 						}
