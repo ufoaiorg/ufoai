@@ -737,10 +737,7 @@ static void IN_TranslateKey (SDL_keysym *keysym, unsigned int *ascii, unsigned s
 		Com_Printf("unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *ascii, *ascii);
 }
 
-/**
- * @todo rename this function
- */
-static inline void EVENT_ENQUEUE (unsigned int keyNum, unsigned short keyUnicode, qboolean keyDown)
+void IN_EventEnqueue (unsigned int keyNum, unsigned short keyUnicode, qboolean keyDown)
 {
 	if (keyNum > 0) {
 		if (in_debug->integer)
@@ -750,11 +747,6 @@ static inline void EVENT_ENQUEUE (unsigned int keyNum, unsigned short keyUnicode
 		keyq[keyq_head].key = (keyNum);
 		keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1);
 	}
-}
-
-void IN_EventEnqueue (unsigned int key, unsigned short unicode, qboolean down)
-{
-	EVENT_ENQUEUE(key, unicode, down);
 }
 
 /**
@@ -836,7 +828,7 @@ void IN_Frame (void)
 				mouse_buttonstate = K_AUX1 + (event.button.button - 8) % 16;
 				break;
 			}
-			EVENT_ENQUEUE(mouse_buttonstate, 0, (event.type == SDL_MOUSEBUTTONDOWN));
+			IN_EventEnqueue(mouse_buttonstate, 0, (event.type == SDL_MOUSEBUTTONDOWN));
 			break;
 
 		case SDL_MOUSEMOTION:
@@ -876,7 +868,7 @@ void IN_Frame (void)
 			}
 
 			IN_TranslateKey(&event.key.keysym, &key, &unicode);
-			EVENT_ENQUEUE(key, unicode, qtrue);
+			IN_EventEnqueue(key, unicode, qtrue);
 			break;
 
 		case SDL_VIDEOEXPOSE:
@@ -885,7 +877,7 @@ void IN_Frame (void)
 		case SDL_KEYUP:
 			IN_PrintKey(&event, 0);
 			IN_TranslateKey(&event.key.keysym, &key, &unicode);
-			EVENT_ENQUEUE(key, unicode, qfalse);
+			IN_EventEnqueue(key, unicode, qfalse);
 			break;
 
 		case SDL_ACTIVEEVENT:
