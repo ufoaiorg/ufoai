@@ -2956,7 +2956,6 @@ qboolean B_LoadXML (mxml_node_t *parent)
 				Com_UnregisterConstList(saveBaseConstants);
 				return qfalse;
 			}
-			building = &ccs.buildings[i][buildId];
 
 			Q_strncpyz(buildingType, mxml_GetString(snode, SAVE_BASES_BUILDINGTYPE), sizeof(buildingType));
 			if (buildingType[0] == '\0') {
@@ -2965,10 +2964,12 @@ qboolean B_LoadXML (mxml_node_t *parent)
 				return qfalse;
 			}
 
-			*building = *B_GetBuildingTemplate(buildingType);
+			building = B_GetBuildingTemplate(buildingType);
 			if (!building)
 				continue;
 
+			ccs.buildings[i][buildId] = *building;
+			building = &ccs.buildings[i][buildId];
 			building->idx = B_GetBuildingIDX(b, building);
 			if (building->idx != buildId) {
 				Com_Printf("building ID doesn't match\n");
