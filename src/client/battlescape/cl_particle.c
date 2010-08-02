@@ -173,13 +173,6 @@ static const value_t pps[] = {
 	{NULL, 0, 0, 0}
 };
 
-/** @brief particle art type */
-typedef enum artType_s {
-	ART_PIC,
-	ART_MODEL
-} artType_t;
-
-
 /* =========================================================== */
 
 #define		MAX_PTLDEFS		256

@@ -118,15 +118,21 @@ typedef struct ptlDef_s {
 	ptlCmd_t *init, *run, *think, *round, *physics;
 } ptlDef_t;
 
+/** @brief particle art type */
+typedef enum artType_s {
+	ART_PIC,
+	ART_MODEL
+} artType_t;
+
 typedef struct ptlArt_s {
-	byte type;
-	byte frame;
 	char name[MAX_VAR];
+	int frame;
 	int skin;
 	union {
 		const image_t *image;
 		model_t *model;
 	} art;
+	artType_t type;
 } ptlArt_t;
 
 typedef struct ptl_s {
