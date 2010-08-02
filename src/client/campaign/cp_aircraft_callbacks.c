@@ -76,46 +76,6 @@ static void AIM_SelectAircraft_f (void)
 }
 
 /**
- * @brief Switch to next aircraft in base.
- * @sa AIR_AircraftSelect
- * @sa AIM_PrevAircraft_f
- */
-static void AIM_NextAircraft_f (void)
-{
-	base_t *base = B_GetCurrentSelectedBase();
-
-	if (!AIR_BaseHasAircraft(base))
-		return;
-
-	if (!base->aircraftCurrent || base->aircraftCurrent == AIR_GetAircraftFromBaseByIDX(base, base->numAircraftInBase - 1))
-		base->aircraftCurrent = AIR_GetAircraftFromBaseByIDX(base, 0);
-	else
-		base->aircraftCurrent++;
-
-	AIR_AircraftSelect(base->aircraftCurrent);
-}
-
-/**
- * @brief Switch to previous aircraft in base.
- * @sa AIR_AircraftSelect
- * @sa AIM_NextAircraft_f
- */
-static void AIM_PrevAircraft_f (void)
-{
-	base_t *base = B_GetCurrentSelectedBase();
-
-	if (!AIR_BaseHasAircraft(base))
-		return;
-
-	if (!base->aircraftCurrent || base->aircraftCurrent == AIR_GetAircraftFromBaseByIDX(base, 0))
-		base->aircraftCurrent = AIR_GetAircraftFromBaseByIDX(base, base->numAircraftInBase - 1);
-	else
-		base->aircraftCurrent--;
-
-	AIR_AircraftSelect(base->aircraftCurrent);
-}
-
-/**
  * @brief Starts an aircraft or stops the current mission and let the aircraft idle around.
  */
 static void AIM_AircraftStart_f (void)
@@ -227,6 +187,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 {
 	static char aircraftInfo[256];
 	base_t *base;
+	aircraft_t *aircraftInBase;
 	int id;
 
 	if (aircraft != NULL)
@@ -264,13 +225,16 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	UI_RegisterText(TEXT_AIRCRAFT_INFO, aircraftInfo);
 
 	/* compute the ID and... */
-	for (id = 0; id < base->numAircraftInBase; id++) {
-		if (aircraft == AIR_GetAircraftFromBaseByIDX(base, id))
+	aircraftInBase = NULL;
+	id = 0;
+	while ((aircraftInBase = AIR_GetNextFromBase(base, aircraftInBase)) != NULL) {
+		if (aircraft == aircraftInBase)
 			break;
+		id++;
 	}
 
 	/* the aircraft must really be in this base */
-	assert(id != base->numAircraftInBase);
+	assert(id != LIST_Count(base->aircraft));
 
 	base->aircraftCurrent = aircraft;
 	Cvar_SetValue("mn_aircraft_id", id);
@@ -320,8 +284,6 @@ void AIR_InitCallbacks (void)
 	/* menu aircraft */
 	Cmd_AddCommand("aircraft_start", AIM_AircraftStart_f, NULL);
 	/* menu aircraft_equip, aircraft */
-	Cmd_AddCommand("mn_next_aircraft", AIM_NextAircraft_f, NULL);
-	Cmd_AddCommand("mn_prev_aircraft", AIM_PrevAircraft_f, NULL);
 	Cmd_AddCommand("mn_select_aircraft", AIM_SelectAircraft_f, NULL);
 	/* menu aircraft, popup_transferbaselist */
 	Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase");
@@ -334,8 +296,6 @@ void AIR_ShutdownCallbacks (void)
 {
 	Cmd_RemoveCommand("aircraft_namechange");
 	Cmd_RemoveCommand("aircraft_start");
-	Cmd_RemoveCommand("mn_next_aircraft");
-	Cmd_RemoveCommand("mn_prev_aircraft");
 	Cmd_RemoveCommand("mn_select_aircraft");
 	Cmd_RemoveCommand("aircraft_return");
 	Cmd_RemoveCommand("aircraft_update_list");

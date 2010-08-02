@@ -373,12 +373,14 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 
 	ufo->status = AIR_TRANSIT;
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+
 		if (!base)
 			continue;
-		/* check if the ufo can attack an aircraft
-		 * reverse order - because aircraft can be destroyed in here */
-		for (phalanxAircraft = AIR_GetAircraftFromBaseByIDX(base, base->numAircraftInBase - 1); phalanxAircraft >= base->aircraft; phalanxAircraft--) {
+
+		/* check if the ufo can attack an aircraft */
+		phalanxAircraft = NULL;
+		while ((phalanxAircraft = AIR_GetNextFromBase(base, phalanxAircraft)) != NULL) {
 			/* check that aircraft is flying */
 			if (AIR_IsAircraftOnGeoscape(phalanxAircraft)) {
 				/* get the distance from ufo to aircraft */
@@ -733,7 +735,8 @@ qboolean UFO_CampaignCheckEvents (void)
 			}
 
 			/* Check if UFO is detected by an aircraft */
-			for (aircraft = AIR_GetAircraftFromBaseByIDX(base, base->numAircraftInBase - 1); aircraft >= base->aircraft; aircraft--) {
+			aircraft = NULL;
+			while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 				if (!AIR_IsAircraftOnGeoscape(aircraft))
 					continue;
 				/* maybe the ufo is already detected, don't reset it */

@@ -1292,7 +1292,7 @@ void B_SetUpBase (base_t* base, vec2_t pos)
 	base->idx = B_GetBaseIDX(base);
 	base->founded = qtrue;
 	base->baseStatus = BASE_WORKING;
-	base->numAircraftInBase = 0;
+	LIST_Delete(&base->aircraft);
 
 	/* setup for first base */
 	if (ccs.campaignStats.basesBuilt == 0)
@@ -2206,6 +2206,7 @@ static void B_BaseList_f (void)
 	base_t *base;
 
 	for (i = 0, base = ccs.bases; i < MAX_BASES; i++, base++) {
+		aircraft_t *aircraft = NULL;
 		if (!base->founded) {
 			Com_Printf("Base idx %i not founded\n\n", i);
 			continue;
@@ -2214,7 +2215,6 @@ static void B_BaseList_f (void)
 		Com_Printf("Base idx %i\n", base->idx);
 		Com_Printf("Base name %s\n", base->name);
 		Com_Printf("Base founded %i\n", base->founded);
-		Com_Printf("Base numAircraftInBase %i\n", base->numAircraftInBase);
 		Com_Printf("Base numMissileBattery %i\n", base->numBatteries);
 		Com_Printf("Base numLaserBattery %i\n", base->numLasers);
 		Com_Printf("Base radarRange %i\n", base->radar.range);
@@ -2225,10 +2225,9 @@ static void B_BaseList_f (void)
 		Com_Printf("Misc  Lab Quar Stor Work Hosp Hang Cont SHgr UHgr SUHg Powr  Cmd AMtr Entr Miss Lasr  Rdr Team\n");
 		for (j = 0; j < MAX_BUILDING_TYPE; j++)
 			Com_Printf("  %i  ", B_GetBuildingStatus(base, j));
-		Com_Printf("\nBase aircraft %i\n", base->numAircraftInBase);
-		for (j = 0; j < base->numAircraftInBase; j++) {
-			Com_Printf("Base aircraft-team %i\n", AIR_GetTeamSize(&base->aircraft[j]));
-		}
+		Com_Printf("\nBase aircraft %i\n", LIST_Count(base->aircraft));
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
+			Com_Printf("Base aircraft-team %i\n", AIR_GetTeamSize(aircraft));
 		Com_Printf("Base pos %.02f:%.02f\n", base->pos[0], base->pos[1]);
 		Com_Printf("Base map:\n");
 		for (row = 0; row < BASE_SIZE; row++) {
@@ -2924,7 +2923,9 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		aircraftIdxInBase = mxml_GetInt(base, SAVE_BASES_CURRENTAIRCRAFTIDX, AIRCRAFT_INBASE_INVALID);
 		if (aircraftIdxInBase != AIRCRAFT_INBASE_INVALID) {
 			/* aircraft are not yet loaded! */
-			b->aircraftCurrent = &b->aircraft[aircraftIdxInBase];
+			/** @todo this must be set after the aircraft are loaded */
+			/*b->aircraftCurrent = &b->aircraft[aircraftIdxInBase];*/
+			b->aircraftCurrent = NULL;
 		} else {
 			b->aircraftCurrent = NULL;
 		}

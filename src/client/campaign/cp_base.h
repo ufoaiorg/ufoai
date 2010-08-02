@@ -224,10 +224,8 @@ typedef struct base_s {
 	qboolean hasBuilding[MAX_BUILDING_TYPE];
 
 	/** All aircraft in this base
-	  @todo make me a linked list (see cl_market.c aircraft selling) */
-	/** @todo move aircraft out from base structure */
-	aircraft_t aircraft[MAX_AIRCRAFT];
-	int numAircraftInBase;	/**< How many aircraft are in this base. */
+	 * @todo move aircraft out from base structure */
+	linkedList_t *aircraft;
 	aircraft_t *aircraftCurrent;		/**< Currently selected aircraft in _this base_. (i.e. an entry in base_t->aircraft). */
 
 	baseStatus_t baseStatus; /**< the current base status */
