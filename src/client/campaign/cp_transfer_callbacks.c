@@ -618,22 +618,23 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	case TRANS_TYPE_ALIEN:
 		if (B_GetBuildingStatus(destbase, B_ALIEN_CONTAINMENT)) {
 			for (i = 0; i < ccs.numAliensTD; i++) {
-				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amountDead > 0) {
+				const aliensCont_t *alienCont = &srcbase->alienscont[i];
+				if (alienCont->teamDef && alienCont->amountDead > 0) {
 					Com_sprintf(str, sizeof(str), _("Corpse of %s"),
 					_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))));
 					LIST_AddString(&transferList, str);
-					LIST_AddString(&transferListAmount, va("%i", srcbase->alienscont[i].amountDead));
+					LIST_AddString(&transferListAmount, va("%i", alienCont->amountDead));
 					if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
 						LIST_AddString(&transferListTransfered, va("%i", td.trAliensTmp[i][TRANS_ALIEN_DEAD]));
 					else
 						LIST_AddString(&transferListTransfered, "");
 					cnt++;
 				}
-				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amountAlive > 0) {
+				if (alienCont->teamDef && alienCont->amountAlive > 0) {
 					Com_sprintf(str, sizeof(str), _("Alive %s"),
 						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))));
 					LIST_AddString(&transferList, str);
-					LIST_AddString(&transferListAmount, va("%i", srcbase->alienscont[i].amountAlive));
+					LIST_AddString(&transferListAmount, va("%i", alienCont->amountAlive));
 					if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
 						LIST_AddString(&transferListTransfered, va("%i", td.trAliensTmp[i][TRANS_ALIEN_ALIVE]));
 					else
