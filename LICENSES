@@ -533,13 +533,16 @@ base/models/aircraft/drop_herakles/ammobox.png | GNU General Public License 2.0 
 base/models/aircraft/drop_herakles/extinguiser.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/extinguiser.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/herakles.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/drop_herakles/herakles_1.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/drop_herakles/herakles_2.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/drop_herakles/herakles_3.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/herakles_carryall.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/herakles_int.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/herakles_int.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/herakles_int_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/aircraft/drop_herakles/herakles_int_top.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/herakles_int_top.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/aircraft/drop_herakles/herakles_nm.png |  |  | data_source/models/sitters/craft_drop_herakles/dropship_normal.bmp
+base/models/aircraft/drop_herakles/herakles_nm.png | GNU General Public License 2.0 or later | Willem Sitters | data_source/models/sitters/craft_drop_herakles/dropship_normal.bmp
 base/models/aircraft/drop_herakles/herakles_pod.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/herakles_pod_back.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_herakles/seats.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -549,6 +552,7 @@ base/models/aircraft/drop_herakles/wallbox.md2 | GNU General Public License 2.0 
 base/models/aircraft/drop_herakles/wallbox.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_raptor/drop_raptor.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_raptor/drop_raptor.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/drop_raptor/drop_raptor_gear.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_raptor/drop_raptor_landed.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_raptor/drop_raptor_low.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/drop_raptor/drop_raptor_nm.png | GNU General Public License 2.0 or later | Willem Sitters
@@ -562,6 +566,7 @@ base/models/aircraft/inter_saracen/saracen_interceptor_flying.md2 | GNU General 
 base/models/aircraft/inter_starchaser/starchaser.md2 | GNU General Public License 2.0 | Willem Sitters
 base/models/aircraft/inter_starchaser/starchaser.png | GNU General Public License 2.0 | Willem Sitters
 base/models/aircraft/inter_starchaser/starchaser_folded.md2 | GNU General Public License 2.0 | Willem Sitters
+base/models/aircraft/inter_starchaser/starchaser_gear.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/inter_starchaser/starchaser_nm.png | GNU General Public License 2.0 | Willem Sitters
 base/models/aircraft/inter_stiletto/stiletto.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aircraft/inter_stiletto/stiletto.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
