@@ -414,7 +414,8 @@ void G_EventParticleSpawn(int playerMask, const char *name, int levelFlags, cons
 
 edict_t* G_ClientGetFreeSpawnPointForActorSize(const player_t *player, const actorSizeEnum_t actorSize);
 qboolean G_ClientUseEdict(const player_t *player, edict_t *actor, edict_t *door);
-qboolean G_ActionCheck(const player_t *player, edict_t *ent, int TU);
+qboolean G_ActionCheckForCurrentTeam(const player_t *player, edict_t *ent, int TU);
+qboolean G_ActionCheckWithoutTeam(const player_t *player, edict_t *ent, int TU);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
 edict_t *G_SpawnFloor(const pos3_t pos);
 int G_CheckVisTeam(const int team, edict_t *check, qboolean perish, edict_t *ent);

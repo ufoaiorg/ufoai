@@ -1080,9 +1080,15 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	ammo = weapon->a;
 	reactionLeftover = IS_SHOT_REACTION(shootType) ? player->reactionLeftover : 0;
 
-	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, fd->time + reactionLeftover))
-		return qfalse;
+	/* check if action is possible
+	 * if allowReaction is false, it is a shot from reaction fire, so don't check the active team */
+	if (allowReaction) {
+		if (!G_ActionCheckForCurrentTeam(player, ent, fd->time + reactionLeftover))
+			return qfalse;
+	} else {
+		if (!G_ActionCheckWithoutTeam(player, ent, fd->time + reactionLeftover))
+			return qfalse;
+	}
 
 	/* Don't allow to shoot yourself */
 	if (!fd->irgoggles && G_EdictPosIsSameAs(ent, at))

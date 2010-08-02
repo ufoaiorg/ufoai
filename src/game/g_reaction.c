@@ -354,15 +354,8 @@ static qboolean G_ReactionFireTryToShoot (edict_t *ent)
 		return qfalse;
 	}
 
-	/* Change active team for this shot only. */
-	team = level.activeTeam;
-	level.activeTeam = ent->team;
-
 	/* take the shot */
 	tookShot = G_ReactionFireShoot(G_PLAYER_FROM_ENT(ent), ent, ent->reactionTarget->pos, ST_RIGHT_REACTION, ent->chr.RFmode.fmIdx);
-
-	/* Revert active team. */
-	level.activeTeam = team;
 
 	/* clear any shakenness */
 	if (tookShot)

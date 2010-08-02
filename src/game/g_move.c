@@ -205,7 +205,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	byte crouchingState;
 
 	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, TU_MOVE_STRAIGHT))
+	if (!G_ActionCheckForCurrentTeam(player, ent, TU_MOVE_STRAIGHT))
 		return;
 
 	crouchingState = G_IsCrouched(ent) ? 1 : 0;

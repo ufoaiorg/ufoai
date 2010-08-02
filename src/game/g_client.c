@@ -287,6 +287,7 @@ int G_GetActiveTeam (void)
 	return level.activeTeam;
 }
 
+
 /**
  * @brief Checks whether the requested action is possible
  * @param[in] player Which player (human player) is trying to do the action
@@ -294,17 +295,11 @@ int G_GetActiveTeam (void)
  * @param[in] TU The time units to check against the ones ent has.
  * the action with
  */
-qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU)
+static qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU)
 {
 	/* don't check for a player - but maybe a server action */
 	if (!player)
 		return qtrue;
-
-	/* a generic tester if an action could be possible */
-	if (level.activeTeam != player->pers.team) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - this isn't your round!\n"));
-		return qfalse;
-	}
 
 	if (!ent || !ent->inuse) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not present!\n"));
@@ -345,6 +340,41 @@ qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU)
 }
 
 /**
+ * @brief Checks whether the requested action is possible for the current active team
+ * @param[in] player Which player (human player) is trying to do the action
+ * @param[in] ent Which of his units is trying to do the action.
+ * @param[in] TU The time units to check against the ones ent has.
+ * the action with
+ */
+qboolean G_ActionCheckForCurrentTeam (const player_t *player, edict_t *ent, int TU)
+{
+	/* don't check for a player - but maybe a server action */
+	if (!player)
+		return qtrue;
+
+	/* a generic tester if an action could be possible */
+	if (level.activeTeam != player->pers.team) {
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - this isn't your round!\n"));
+		return qfalse;
+	}
+
+	return G_ActionCheck(player, ent, TU);
+}
+
+/**
+ * @brief Checks whether the requested action is possible
+ * @param[in] player Which player (human player) is trying to do the action
+ * @param[in] ent Which of his units is trying to do the action.
+ * @param[in] TU The time units to check against the ones ent has.
+ * the action with
+ * @sa G_ActionCheck
+ */
+qboolean G_ActionCheckWithoutTeam (const player_t *player, edict_t *ent, int TU)
+{
+	return G_ActionCheck(player, ent, TU);
+}
+
+/**
  * @brief Sends the actual actor turn event over the netchannel
  */
 static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
@@ -352,7 +382,7 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
 	const int dir = getDVdir(dv);
 
 	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, TU_TURN))
+	if (!G_ActionCheckForCurrentTeam(player, ent, TU_TURN))
 		return;
 
 	/* check if we're already facing that direction */
@@ -403,13 +433,13 @@ static void G_ClientStateChangeUpdate (edict_t *ent)
  * @param[in] ent the edict to perform the state change for
  * @param[in] reqState The bit-map of the requested state change
  * @param[in] checkaction only activate the events - network stuff is handled in the calling function
- * don't even use the G_ActionCheck function
+ * don't even use the G_ActionCheckForCurrentTeam function
  * @note Use checkaction true only for e.g. spawning values
  */
 void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qboolean checkaction)
 {
 	/* Check if any action is possible. */
-	if (checkaction && !G_ActionCheck(player, ent, 0))
+	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 0))
 		return;
 
 	if (!reqState)
@@ -418,7 +448,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 	switch (reqState) {
 	case STATE_CROUCHED: /* Toggle between crouch/stand. */
 		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
-		if (!checkaction || G_ActionCheck(player, ent, TU_CROUCH)) {
+		if (!checkaction || G_ActionCheckForCurrentTeam(player, ent, TU_CROUCH)) {
 			G_ToggleCrouched(ent);
 			G_ActorUseTU(ent, TU_CROUCH);
 			G_ActorSetMaxs(ent);
@@ -553,7 +583,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, edict_t *ent)
 qboolean G_ClientUseEdict (const player_t *player, edict_t *actor, edict_t *edict)
 {
 	/* check whether the actor has sufficient TUs to 'use' this edicts */
-	if (!G_ActionCheck(player, actor, edict->TU))
+	if (!G_ActionCheckForCurrentTeam(player, actor, edict->TU))
 		return qfalse;
 
 	if (!G_UseEdict(edict, actor))

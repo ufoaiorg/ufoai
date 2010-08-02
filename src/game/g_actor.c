@@ -390,7 +390,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 
 	/* Check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
-	if (checkaction && !G_ActionCheck(player, ent, 1))
+	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 1))
 		return;
 
 	/* "get floor ready" - searching for existing floor-edict */
