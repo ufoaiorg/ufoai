@@ -41,10 +41,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
+static void UI_VideoNodeDrawOverMenu (uiNode_t *node)
+{
+	if (EXTRADATA(node).cin.status) {
+		/* only set replay to true if video was found and is running */
+		/** @todo why is sound deactivated? */
+		CIN_RunCinematic(&(EXTRADATA(node).cin));
+	}
+}
+
 static void UI_VideoNodeDraw (uiNode_t *node)
 {
-	vec2_t pos;
-
 	if (!node->image)
 		return;
 
@@ -53,34 +60,22 @@ static void UI_VideoNodeDraw (uiNode_t *node)
 		return;
 	}
 
-	UI_GetNodeAbsPos(node, pos);
-
-	if (EXTRADATA(node).cin.status == CIN_STATUS_NONE)
-		CIN_PlayCinematic(&(EXTRADATA(node).cin), va("videos/%s", (const char *)node->image));
-	if (EXTRADATA(node).cin.status) {
-		/* only set replay to true if video was found and is running */
-		/** @todo why is sound deactivated? */
-		CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_PLAYING, qtrue);
-		CIN_RunCinematic(&(EXTRADATA(node).cin));
-	}
-}
-
-static void UI_VideoNodeDrawOverMenu (uiNode_t *node)
-{
-	vec2_t pos;
-	UI_GetNodeAbsPos(node, pos);
-	/** @todo why is sound deactivated? */
-	CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_PLAYING, qtrue);
-	CIN_RunCinematic(&(EXTRADATA(node).cin));
+	UI_VideoNodeDrawOverMenu(node);
 }
 
 static void UI_VideoNodeInit (uiNode_t *node)
 {
+	vec2_t pos;
+
 	CIN_InitCinematic(&(EXTRADATA(node).cin));
 
 	if (!node->image)
 		return;
+
 	CIN_PlayCinematic(&(EXTRADATA(node).cin), va("videos/%s", (const char *)node->image));
+
+	UI_GetNodeAbsPos(node, pos);
+	CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_PLAYING, qtrue);
 }
 
 static void UI_VideoNodeClose (uiNode_t *node)
