@@ -103,13 +103,11 @@ void RADAR_UpdateWholeRadarOverlay (void)
 
 	/* Add aircraft radar coverage */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
-		int aircraftIdx;
-		if (!base)
-			continue;
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		aircraft_t *aircraft;
 
-		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-			const aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, aircraftIdx);
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (AIR_IsAircraftOnGeoscape(aircraft))
 				RADAR_DrawCoverage(&aircraft->radar, aircraft->pos);
 		}
@@ -181,25 +179,25 @@ void RADAR_DrawInMap (const uiNode_t *node, const radar_t *radar, const vec2_t p
  */
 void RADAR_DeactivateRadarOverlay (void)
 {
-	int idx, aircraftIdx;
+	int idx;
 
 	/* never deactivate radar if player wants it to be always turned on */
 	if (radarOverlayWasSet)
 		return;
 
 	for (idx = 0; idx < MAX_BASES; idx++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(idx);
+		base_t *base = B_GetFoundedBaseByIDX(idx);
+		aircraft_t *aircraft;
 		if (!base)
 			continue;
 
 		if (base->radar.numUFOs)
 			return;
 
-		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-			const aircraft_t const *aircraft = AIR_GetAircraftFromBaseByIDX(base, aircraftIdx);
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 			if (aircraft->radar.numUFOs)
 				return;
-		}
 	}
 
 	for (idx = 0; idx < MAX_INSTALLATIONS; idx++) {
@@ -301,16 +299,17 @@ void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
 	int baseIdx;
 	int installationIdx;
-	aircraft_t *aircraft;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		aircraft_t *aircraft;
 		if (!base)
 			continue;
 
 		RADAR_NotifyUFORemovedFromOneRadar(&base->radar, ufo, destroyed);
 
-		for (aircraft = base->aircraft; aircraft < base->aircraft + base->numAircraftInBase; aircraft++)
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 			RADAR_NotifyUFORemovedFromOneRadar(&aircraft->radar, ufo, destroyed);
 	}
 
@@ -431,7 +430,7 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 
 	for (idx = 0; idx < MAX_BASES; idx++) {
 		base_t *base = B_GetFoundedBaseByIDX(idx);
-		int aircraftIdx;
+		aircraft_t *aircraft;
 
 		if (!base)
 			continue;
@@ -442,9 +441,8 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 				RADAR_AddUFO(&base->radar, ufo);
 		}
 
-		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-			aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, aircraftIdx);
-
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (!AIR_IsAircraftOnGeoscape(aircraft))
 				continue;
 

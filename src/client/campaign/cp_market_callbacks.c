@@ -122,14 +122,14 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
  */
 static int BS_GetStorageAmountInBase (const base_t* base, const char *aircraftID)
 {
-	const aircraft_t *aircraft;
+	aircraft_t *aircraft;
 	int storage = 0;
-	int j;
 
 	assert(base);
 
 	/* Get storage amount in the base. */
-	for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 		if (!strcmp(aircraft->id, aircraftID))
 			storage++;
 	}
@@ -634,7 +634,7 @@ static void BS_BuyAircraft_f (void)
  */
 static void BS_SellAircraft_f (void)
 {
-	int num, j;
+	int num;
 	qboolean found = qfalse;
 	qboolean teamNote = qfalse;
 	qboolean aircraftOutNote = qfalse;
@@ -658,7 +658,8 @@ static void BS_SellAircraft_f (void)
 		if (!aircraftTemplate)
 			return;
 
-		for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (!strcmp(aircraft->id, aircraftTemplate->id)) {
 				if (AIR_GetTeamSize(aircraft) > 0) {
 					teamNote = qtrue;
@@ -676,6 +677,7 @@ static void BS_SellAircraft_f (void)
 		/* ok, we've found an empty aircraft (no team) in a base
 		 * so now we can sell it */
 		if (found) {
+			int j;
 			/* sell off any items which are mounted on it */
 			for (j = 0; j < aircraft->maxWeapons; j++) {
 				BS_ProcessCraftItemSale(base, aircraft->weapons[j].item, 1);

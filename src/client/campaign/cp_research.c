@@ -639,14 +639,14 @@ void RS_InitTree (qboolean load)
 	if (load) {
 		/* when you load a savegame right after starting UFO, the aircraft in bases
 		 * and installations don't have any tech assigned */
-		int k;
-
 		for (j = 0; j < ccs.numBases; j++) {
 			base_t *b = B_GetFoundedBaseByIDX(j);
+			aircraft_t *aircraft;
 			if (!b)
 				continue;
-			for (k = 0; k < b->numAircraftInBase; k++) {
-				aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(b, k);
+
+			aircraft = NULL;
+			while ((aircraft = AIR_GetNextFromBase(b, aircraft)) != NULL) {
 				/* if you already played before loading the game, tech are already defined for templates */
 				if (!aircraft->tech)
 					aircraft->tech = RS_GetTechByProvided(aircraft->id);

@@ -46,26 +46,32 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Iterates through the aircraft of a base
  * @param[in] lastAircraft Pointer of the aircraft to iterate from. call with NULL to get the first one.
  */
-aircraft_t* AIR_GetNextFromBase (base_t *base, aircraft_t *lastAircraft)
+aircraft_t* AIR_GetNextFromBase (const base_t *b, aircraft_t *lastAircraft)
 {
-	aircraft_t *endOfAircraft = &base->aircraft[base->numAircraftInBase];
-	aircraft_t* aircraft;
-
-	if (!AIR_BaseHasAircraft(base))
+	if (!b)
 		return NULL;
 
-	if (!lastAircraft)
-		return base->aircraft;
-	assert(lastAircraft >= base->aircraft);
-	assert(lastAircraft < endOfAircraft);
+	{
+		base_t *base = B_GetBaseByIDX(b->idx);
+		aircraft_t *endOfAircraft = &base->aircraft[base->numAircraftInBase];
+		aircraft_t* aircraft;
 
-	aircraft = lastAircraft;
+		if (!AIR_BaseHasAircraft(base))
+			return NULL;
 
-	aircraft++;
-	if (aircraft >= endOfAircraft)
-		return NULL;
-	else
-		return aircraft;
+		if (!lastAircraft)
+			return base->aircraft;
+		assert(lastAircraft >= base->aircraft);
+		assert(lastAircraft < endOfAircraft);
+
+		aircraft = lastAircraft;
+
+		aircraft++;
+		if (aircraft >= endOfAircraft)
+			return NULL;
+		else
+			return aircraft;
+	}
 }
 
 qboolean AIR_BaseHasAircraft (const base_t *base)
@@ -521,14 +527,13 @@ qboolean AIR_IsAircraftOnGeoscape (const aircraft_t * aircraft)
  */
 int AIR_CountTypeInBase (const base_t *base, aircraftType_t aircraftType)
 {
-	int i, count = 0;
+	int count = 0;
+	aircraft_t *aircraft;
 
-	assert(base);
-
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		if (base->aircraft[i].type == aircraftType)
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
+		if (aircraft->type == aircraftType)
 			count++;
-	}
 
 	return count;
 }
@@ -711,7 +716,7 @@ aircraft_t *AIR_GetAircraftFromBaseByIDX (const base_t* base, int index)
 aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (base_t* base, int index)
 {
 	aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, index);
-	if (!aircraft && base->numAircraftInBase)
+	if (!aircraft && AIR_BaseHasAircraft(base))
 		return &base->aircraft[0];
 
 	return aircraft;
@@ -1088,17 +1093,13 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	i = AIR_GetAircraftIDXInBase(aircraft);
 	/* move other aircraft if the deleted aircraft was not the last one of the base */
 	if (i != AIRCRAFT_INBASE_INVALID) {
-		int j;
+		aircraft_t *aircraftTemp;
 
 		REMOVE_ELEM(base->aircraft, i, base->numAircraftInBase);
 
-		for (j = i; j < base->numAircraftInBase; j++) {
-			aircraft_t *aircraftTemp = AIR_GetAircraftFromBaseByIDX(base, j);
-
-			if (!aircraftTemp)
-				continue;
+		aircraftTemp = NULL;
+		while ((aircraftTemp = AIR_GetNextFromBase(base, aircraftTemp)) != NULL)
 			AII_CorrectAircraftSlotPointers(aircraftTemp);
-		}
 	}
 
 	if (!AIR_BaseHasAircraft(base)) {
@@ -1301,8 +1302,7 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
  */
 void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 {
-	aircraft_t *aircraft;
-	int i, j, k;
+	int j, k;
 	/* true if at least one aircraft moved: radar overlay must be updated
 	 * This is static because aircraft can move without radar being
 	 * updated (sa CL_CampaignRun) */
@@ -1313,47 +1313,46 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 	if (dt > 0) {
 		for (j = 0; j < MAX_BASES; j++) {
 			base_t *base = B_GetBaseByIDX(j);
+			aircraft_t *aircraft;
 
 			/* Run each aircraft */
-			for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
-				if (aircraft->homebase) {
-					if (aircraft->status == AIR_IDLE) {
-						/* Aircraft idle out of base */
-						aircraft->fuel -= dt;
-					} else if (AIR_IsAircraftOnGeoscape(aircraft)) {
-						AIR_Move(aircraft, dt);
-						/* radar overlay should be updated */
-						radarOverlayReset = qtrue;
-					} else if (aircraft->status == AIR_REFUEL) {
-						AIR_Refuel(aircraft, dt);
-					}
-
-					/* Check aircraft low fuel (only if aircraft is not already returning to base or in base) */
-					if (aircraft->status != AIR_RETURNING && AIR_IsAircraftOnGeoscape(aircraft) &&
-						!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
-						/** @todo check if aircraft can go to a closer base with free space */
-						MS_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), aircraft->name), qfalse, MSG_STANDARD, NULL);
-						AIR_AircraftReturnToBase(aircraft);
-					}
-
-					/* Aircraft purchasing ufo */
-					if (aircraft->status == AIR_UFO) {
-						/* Solve the fight */
-						AIRFIGHT_ExecuteActions(aircraft, aircraft->aircraftTarget);
-					}
-
-					for (k = 0; k < aircraft->maxWeapons; k++) {
-						/* Update delay to launch next projectile */
-						if (AIR_IsAircraftOnGeoscape(aircraft) && (aircraft->weapons[k].delayNextShot > 0))
-							aircraft->weapons[k].delayNextShot -= dt;
-						/* Reload if needed */
-						if (aircraft->weapons[k].ammoLeft <= 0)
-							AII_ReloadWeapon(&aircraft->weapons[k]);
-					}
-				} else {
-					Com_Error(ERR_DROP, "CL_CampaignRunAircraft: aircraft with no homebase (base: %i, aircraft '%s')",
-						j, aircraft->id);
+			aircraft = NULL;
+			while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
+				assert(aircraft->homebase);
+				if (aircraft->status == AIR_IDLE) {
+					/* Aircraft idle out of base */
+					aircraft->fuel -= dt;
+				} else if (AIR_IsAircraftOnGeoscape(aircraft)) {
+					AIR_Move(aircraft, dt);
+					/* radar overlay should be updated */
+					radarOverlayReset = qtrue;
+				} else if (aircraft->status == AIR_REFUEL) {
+					AIR_Refuel(aircraft, dt);
 				}
+
+				/* Check aircraft low fuel (only if aircraft is not already returning to base or in base) */
+				if (aircraft->status != AIR_RETURNING && AIR_IsAircraftOnGeoscape(aircraft) &&
+					!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
+					/** @todo check if aircraft can go to a closer base with free space */
+					MS_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), aircraft->name), qfalse, MSG_STANDARD, NULL);
+					AIR_AircraftReturnToBase(aircraft);
+				}
+
+				/* Aircraft purchasing ufo */
+				if (aircraft->status == AIR_UFO) {
+					/* Solve the fight */
+					AIRFIGHT_ExecuteActions(aircraft, aircraft->aircraftTarget);
+				}
+
+				for (k = 0; k < aircraft->maxWeapons; k++) {
+					/* Update delay to launch next projectile */
+					if (AIR_IsAircraftOnGeoscape(aircraft) && (aircraft->weapons[k].delayNextShot > 0))
+						aircraft->weapons[k].delayNextShot -= dt;
+					/* Reload if needed */
+					if (aircraft->weapons[k].ammoLeft <= 0)
+						AII_ReloadWeapon(&aircraft->weapons[k]);
+				}
+			}
 		}
 	}
 
@@ -1371,7 +1370,6 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 aircraft_t* AIR_AircraftGetFromIDX (int idx)
 {
 	int baseIdx;
-	aircraft_t* aircraft;
 
 	if (idx == AIRCRAFT_INVALID || idx >= ccs.numAircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: bad aircraft index: %i\n", idx);
@@ -1386,9 +1384,10 @@ aircraft_t* AIR_AircraftGetFromIDX (int idx)
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
-		for (aircraft = base->aircraft; aircraft < (base->aircraft + base->numAircraftInBase); aircraft++) {
+		aircraft_t* aircraft;
+
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (aircraft->idx == idx) {
 				Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: aircraft idx: %i - base idx: %i (%s)\n",
 						aircraft->idx, base->idx, base->name);
@@ -1876,12 +1875,9 @@ void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
 	/* Aircraft currently moving to the mission will be redirect to base */
 	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
 
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
-			aircraft >= base->aircraft; aircraft--) {
-
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (aircraft->status == AIR_MISSION && aircraft->mission == mission)
 				AIR_AircraftReturnToBase(aircraft);
 		}
@@ -1920,8 +1916,8 @@ void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, qboolean destro
 				base->lasers[i].target--;
 		}
 		/* Aircraft currently purchasing the specified ufo will be redirect to base */
-		for (aircraft = base->aircraft;
-			aircraft < base->aircraft + base->numAircraftInBase; aircraft++)
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 			if (aircraft->status == AIR_UFO) {
 				if (ufo == aircraft->aircraftTarget)
 					AIR_AircraftReturnToBase(aircraft);
@@ -2339,10 +2335,10 @@ int AIR_GetTeamSize (const aircraft_t *aircraft)
  */
 void AIR_AutoAddPilotToAircraft (base_t* base, employee_t* pilot)
 {
-	int i;
+	aircraft_t *aircraft;
 
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 		if (!aircraft->pilot) {
 			aircraft->pilot = pilot;
 			break;
@@ -2358,10 +2354,10 @@ void AIR_AutoAddPilotToAircraft (base_t* base, employee_t* pilot)
  */
 void AIR_RemovePilotFromAssignedAircraft (base_t* base, const employee_t* pilot)
 {
-	int i;
+	aircraft_t *aircraft;
 
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 		if (aircraft->pilot == pilot) {
 			aircraft->pilot = NULL;
 			break;
@@ -2596,16 +2592,15 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 	snode = mxml_AddNode(parent, SAVE_AIRCRAFT_PHALANX);
 	mxml_AddIntValue(snode, SAVE_AIRCRAFT_NUMAIRCRAFT, ccs.numAircraft);
 	for (i = 0; i < MAX_BASES; i++) {
-		int j;
 		base_t *base = B_GetFoundedBaseByIDX(i);
+		aircraft_t *aircraft;
 
 		if (!base)
 			continue;
 
-		for (j = 0; j < base->numAircraftInBase; j++) {
-			aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, j);
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 			AIR_SaveAircraftXML(snode, aircraft, qfalse);
-		}
 	}
 
 	/* save the ufos on geoscape */

@@ -840,19 +840,19 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	* doesn't know anything (at that stage) about the new missions that were
 	* add in this load function */
 	for (i = 0; i < MAX_BASES; i++) {
-		int j;
+		aircraft_t *aircraft;
 		base_t *base = B_GetFoundedBaseByIDX(i);
 		if (!base)
 			continue;
 
-		for (j = 0; j < base->numAircraftInBase; j++) {
-			aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, j);
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (aircraft->status == AIR_MISSION) {
 				assert(aircraft->missionID);
 				aircraft->mission = CP_GetMissionByID(aircraft->missionID);
 
 				/* not found */
-				if (!base->aircraft[j].mission) {
+				if (!aircraft->mission) {
 					Com_Printf("Could not link mission '%s' in aircraft\n", aircraft->missionID);
 					Mem_Free(aircraft->missionID);
 					aircraft->missionID = NULL;

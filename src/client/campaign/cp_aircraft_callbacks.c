@@ -285,16 +285,12 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 static void AIR_AircraftUpdateList_f (void)
 {
 	linkedList_t *list = NULL;
-	int i;
 	base_t *base = B_GetCurrentSelectedBase();
+	aircraft_t *aircraft;
 
-	if (!base)
-		return;
-
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		const aircraft_t * aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 		LIST_AddString(&list, aircraft->name);
-	}
 
 	UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);
 }

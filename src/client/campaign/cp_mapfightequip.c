@@ -167,11 +167,11 @@ qboolean AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t
  */
 qboolean AIM_PilotAssignedAircraft (const base_t* base, const employee_t* pilot)
 {
-	int i;
 	qboolean found = qfalse;
+	aircraft_t *aircraft;
 
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		const aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 		if (aircraft->pilot == pilot) {
 			found = qtrue;
 			break;
@@ -404,7 +404,7 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
  */
 void AII_UpdateInstallationDelay (void)
 {
-	int i, j, k;
+	int j, k;
 
 	for (j = 0; j < MAX_INSTALLATIONS; j++) {
 		installation_t *installation = INS_GetFoundedInstallationByIDX(j);
@@ -429,7 +429,8 @@ void AII_UpdateInstallationDelay (void)
 			AII_UpdateOneInstallationDelay(base, NULL, NULL, &base->lasers[k].slot);
 
 		/* Update each aircraft */
-		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (aircraft->homebase) {
 				assert(aircraft->homebase == base);
 				if (AIR_IsAircraftInBase(aircraft)) {
@@ -445,6 +446,7 @@ void AII_UpdateInstallationDelay (void)
 					AII_UpdateOneInstallationDelay(base, NULL, aircraft, &aircraft->shield);
 				}
 			}
+		}
 	}
 }
 
@@ -1081,16 +1083,15 @@ float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t *slot, int maxSlot)
  */
 void AII_RepairAircraft (void)
 {
-	int baseIDX, aircraftIDX;
+	int baseIDX;
 	const int REPAIR_PER_HOUR = 1;	/**< Number of damage points repaired per hour */
 
 	for (baseIDX = 0; baseIDX < MAX_BASES; baseIDX++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIDX);
-		if (!base)
-			continue;
+		aircraft_t *aircraft;
 
-		for (aircraftIDX = 0; aircraftIDX < base->numAircraftInBase; aircraftIDX++) {
-			aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, aircraftIDX);
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (!AIR_IsAircraftInBase(aircraft))
 				continue;
 			aircraft->damage = min(aircraft->damage + REPAIR_PER_HOUR, aircraft->stats[AIR_STATS_DAMAGE]);

@@ -233,13 +233,11 @@ void AB_UpdateStealthForAllBase (void)
 	int baseIdx;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
-		int aircraftIdx;
-		if (!base)
-			continue;
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		aircraft_t *aircraft;
 
-		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-			const aircraft_t const *aircraft = AIR_GetAircraftFromBaseByIDX(base, aircraftIdx);
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			alienBase_t* alienBase;
 
 			/* Only aircraft on geoscape can detect alien bases */

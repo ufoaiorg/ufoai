@@ -640,9 +640,9 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingType)
 {
 	baseCapacities_t capacity;
-	int aircraftIdx;
 	aircraft_t *awayAircraft[MAX_AIRCRAFT];
 	int numAwayAircraft, randomNum;
+	aircraft_t *aircraft;
 
 	memset(awayAircraft, 0, sizeof(awayAircraft));
 
@@ -651,9 +651,10 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 	if (base->capacities[capacity].cur <= base->capacities[capacity].max)
 		return;
 
+	numAwayAircraft = 0;
 	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
-	for (aircraftIdx = 0, numAwayAircraft = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, aircraftIdx);
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 		const int aircraftSize = aircraft->size;
 		switch (aircraftSize) {
 		case AIRCRAFT_SMALL:
@@ -792,12 +793,12 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
  * in a base that no longer has any hangar left
  * @param base The base that is going to be destroyed
  */
-static void B_MoveAircraftOnGeoscapeToOtherBases (base_t *base)
+static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 {
-	int i;
+	aircraft_t *aircraft;
 
-	for (i = base->numAircraftInBase - 1; i >= 0; --i) {
-		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 		if (AIR_IsAircraftOnGeoscape(aircraft)) {
 			int j;
 			for (j = 0; j < ccs.numBases; j++) {
@@ -1187,7 +1188,7 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 static void B_SetUpFirstBase (base_t* base)
 {
 	campaign_t *campaign = ccs.curCampaign;
-	int i;
+	aircraft_t *aircraft;
 	const equipDef_t *ed;
 
 	if (campaign->firstBaseTemplate[0] == '\0')
@@ -1223,9 +1224,8 @@ static void B_SetUpFirstBase (base_t* base)
 	/* Copy it to base storage. */
 	base->storage = *ed;
 
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
-
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 		if (!E_HireEmployeeByType(base, EMPL_PILOT)) {
 			Com_DPrintf(DEBUG_CLIENT, "B_SetUpFirstBase: Hiring pilot failed.\n");
 		}

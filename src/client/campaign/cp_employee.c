@@ -107,8 +107,8 @@ employee_t* E_GetNextHired (employeeType_t type, employee_t *lastEmployee)
  */
 qboolean E_IsAwayFromBase (const employee_t *employee)
 {
-	int i;
-	const base_t *base;
+	base_t *base;
+	aircraft_t *aircraft;
 
 	assert(employee);
 
@@ -126,13 +126,11 @@ qboolean E_IsAwayFromBase (const employee_t *employee)
 		return qfalse;
 
 	base = employee->baseHired;
-	assert(base);
 
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		const aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 		if (!AIR_IsAircraftInBase(aircraft) && AIR_IsInAircraftTeam(aircraft, employee))
 			return qtrue;
-	}
 
 	return qfalse;
 }
@@ -797,15 +795,15 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 
 	if (found) {
 		transfer_t *transfer;
-		int j, k;
+		int j;
 
 		for (j = 0; j < MAX_BASES; j++) {
 			base_t *base = B_GetFoundedBaseByIDX(j);
-			if (!base)
-				continue;
-			for (k = 0; k < base->numAircraftInBase; k++) {
+			aircraft_t *aircraft;
+
+			aircraft = NULL;
+			while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 				linkedList_t* l;
-				aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, k);
 
 				for (l = aircraft->acTeam; l != NULL; l = l->next) {
 					/* no need to check for == here, the employee should
@@ -826,6 +824,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 			if (!transfer->active)
 				continue;
 			for (j = 0; j < MAX_EMPL; j++) {
+				int k;
 				for (k = 0; k < MAX_EMPLOYEES; k++) {
 					if (transfer->employeeArray[j][k] > employee)
 						transfer->employeeArray[j][k]--;

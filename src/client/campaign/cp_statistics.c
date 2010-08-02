@@ -38,7 +38,7 @@ void CL_StatsUpdate_f (void)
 	char *pos;
 	static char statsBuffer[MAX_STATS_BUFFER];
 	int hired[MAX_EMPL];
-	int i, j, costs = 0, sum = 0, totalfunds = 0;
+	int i, costs = 0, sum = 0, totalfunds = 0;
 	employee_t *employee;
 
 	/* delete buffer */
@@ -99,14 +99,12 @@ void CL_StatsUpdate_f (void)
 
 	costs = 0;
 	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
+		base_t *base = B_GetFoundedBaseByIDX(i);
+		aircraft_t *aircraft;
 
-		for (j = 0; j < base->numAircraftInBase; j++) {
-			const aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, j);
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 			costs += aircraft->price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
-		}
 	}
 	Q_strcat(pos, va(_("Aircraft:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
