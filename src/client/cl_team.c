@@ -451,7 +451,6 @@ void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
  * @brief Generates the skills and inventory for a character and for a 2x2 unit
  * @param[in] chr The employee to create character data for.
  * @param[in] teamDefName Which team to use for creation.
- * @todo fix the assignment of ucn??
  */
 void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 {

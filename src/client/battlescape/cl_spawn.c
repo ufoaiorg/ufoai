@@ -145,8 +145,8 @@ void CL_SpawnParseEntitystring (void)
 	const char *es = CM_EntityString();
 	int entnum = 0, maxLevel;
 
-	if (cl.mapMaxLevelBase > 0 && cl.mapMaxLevelBase < PATHFINDING_HEIGHT)
-		maxLevel = cl.mapMaxLevelBase;
+	if (cl.mapMaxLevel > 0 && cl.mapMaxLevel < PATHFINDING_HEIGHT)
+		maxLevel = cl.mapMaxLevel;
 	else
 		maxLevel = PATHFINDING_HEIGHT;
 

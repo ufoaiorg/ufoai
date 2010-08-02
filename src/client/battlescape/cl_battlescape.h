@@ -61,7 +61,6 @@ typedef struct client_state_s {
 	clientinfo_t clientinfo[MAX_CLIENTS]; /**< client info of all connected clients */
 
 	int mapMaxLevel;
-	int mapMaxLevelBase;
 
 	int numMapParticles;
 

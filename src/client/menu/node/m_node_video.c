@@ -59,6 +59,7 @@ static void UI_VideoNodeDraw (uiNode_t *node)
 		CIN_PlayCinematic(&(EXTRADATA(node).cin), va("videos/%s", (const char *)node->image));
 	if (EXTRADATA(node).cin.status) {
 		/* only set replay to true if video was found and is running */
+		/** @todo why is sound deactivated? */
 		CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_PLAYING, qtrue);
 		CIN_RunCinematic(&(EXTRADATA(node).cin));
 	}
@@ -68,6 +69,7 @@ static void UI_VideoNodeDrawOverMenu (uiNode_t *node)
 {
 	vec2_t pos;
 	UI_GetNodeAbsPos(node, pos);
+	/** @todo why is sound deactivated? */
 	CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_PLAYING, qtrue);
 	CIN_RunCinematic(&(EXTRADATA(node).cin));
 }

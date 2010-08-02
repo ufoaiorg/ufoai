@@ -53,10 +53,10 @@ typedef struct {
  */
 static guiResearchElement_t researchList2[MAX_RESEARCHLIST + MAX_BASES + MAX_BASES];
 
-/* The number of entries in the above list. */
+/** The number of entries in the above list. */
 static int researchListLength;
 
-/* The currently selected entry in the above list. */
+/** The currently selected entry in the above list. */
 static int researchListPos;
 
 /**
@@ -72,8 +72,6 @@ static void RS_UpdateInfo (const base_t* base)
 	Cvar_Set("mn_research_imagetop", "");
 	Cvar_Set("mn_researchitemname", "");
 	Cvar_Set("mn_researchitem", "");
-	Cvar_Set("mn_researchweapon", "");	/**< @todo Do we even need/use mn_researchweapon and mn_researchammo (now or in the future?) */
-	Cvar_Set("mn_researchammo", "");
 	UI_ResetData(TEXT_STANDARD);
 
 	if (researchListLength <= 0 || researchListPos >= researchListLength)

@@ -394,6 +394,7 @@ typedef struct ccs_s {
 
 	/* how fast the game is running */
 	int gameTimeScale;
+	int gameLapse;
 
 	aircraft_t *missionAircraft;	/**< aircraft pointer for mission handling */
 
@@ -498,8 +499,6 @@ typedef struct ccs_s {
 
 	/* == production == */
 	/* we will allow only one active production at the same time for each base */
-	/* NOTE The facility to produce equipment should have the once-flag set */
-	/** @todo more_than_one is true in the scripts for the workshop - is the above NOTE comment still valid? */
 	production_queue_t productions[MAX_BASES];
 
 	/* == Aircraft == */

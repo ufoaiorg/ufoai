@@ -188,8 +188,7 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 	node = mxml_AddNode(parent, SAVE_MARKET_MARKET);
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
-		/** @todo where do we have an item with empty id? */
-		if (od->id[0] != '\0' && BS_IsOnMarket(od)) {
+		if (BS_IsOnMarket(od)) {
 			mxml_node_t * snode = mxml_AddNode(node, SAVE_MARKET_ITEM);
 			mxml_AddString(snode, SAVE_MARKET_ID, od->id);
 			mxml_AddIntValue(snode, SAVE_MARKET_NUM, ccs.eMarket.numItems[i]);

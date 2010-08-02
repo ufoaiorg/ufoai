@@ -1653,6 +1653,8 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	od->craftitem.type = MAX_ACITEMS; /**< default is no craftitem */
 
 	Q_strncpyz(od->id, name, sizeof(od->id));
+	if (od->id[0] == '\0')
+		Sys_Error("Com_ParseItem: no id given\n");
 
 	od->idx = csi.numODs - 1;
 

@@ -392,7 +392,7 @@ qboolean B_AssembleMap (base_t *base)
 	}
 
 	/* set maxlevel for base attacks */
-	cl.mapMaxLevelBase = BASE_MAX_WORLDLEVEL;
+	cl.mapMaxLevel = BASE_MAX_WORLDLEVEL;
 
 	SAV_QuickSave();
 
@@ -1154,7 +1154,7 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 				freeSpace--;
 			}
 		}
-		/* @todo if there is no more space for mandatory building, remove a non mandatory one
+		/** @todo if there is no more space for mandatory building, remove a non mandatory one
 		 * or build mandatory ones first */
 		if (!B_GetBuildingStatus(base, building->buildingType))
 			Com_Error(ERR_DROP, "B_BuildFromTemplate: Cannot build base. No space for it's buildings!");
@@ -2727,9 +2727,6 @@ qboolean B_SaveStorageXML (mxml_node_t *parent, const equipDef_t equip)
 	int k;
 	for (k = 0; k < csi.numODs; k++) {
 		const objDef_t *od = INVSH_GetItemByIDX(k);
-		/** @todo where do we have an item without id? */
-		if (od->id[0] == '\0')
-			continue;
 		if (equip.numItems[k] || equip.numItemsLoose[k]) {
 			mxml_node_t *node = mxml_AddNode(parent, SAVE_BASES_ITEM);
 
