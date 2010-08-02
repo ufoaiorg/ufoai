@@ -137,7 +137,7 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 		sound = "geoscape/ufospotted";
 		break;
 	case MSG_BASEATTACK:
-		sound = "geoscape/attack";
+		sound = "geoscape/basealert";
 		break;
 	case MSG_TERRORSITE:
 		sound = "geoscape/alien-activity";
