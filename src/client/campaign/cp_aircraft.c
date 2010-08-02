@@ -54,6 +54,11 @@ aircraft_t* AIR_GetNextFromBase (const base_t *b, aircraft_t *lastAircraft)
 		return LIST_GetNext(b->aircraft, lastAircraft);
 }
 
+/**
+ * @brief Checks whether there is any aircraft assigned to the given base
+ * @param[in] base The base to check
+ * @return @c true if there is at least one aircraft, @c false otherwise (or when the @c base pointer is @c NULL)
+ */
 qboolean AIR_BaseHasAircraft (const base_t *base)
 {
 	return base != NULL && !LIST_IsEmpty(base->aircraft);
@@ -736,6 +741,14 @@ static void AII_SetAircraftInSlots (aircraft_t *aircraft)
 	aircraft->shield.aircraft = aircraft;
 }
 
+/**
+ * @brief Adds a new aircraft from a given aircraft template to the base and sets the homebase for the new aircraft
+ * to the given base
+ * @param[out] base The base to add the aircraft to
+ * @param[in] aircraftTemplate The template to create the new aircraft from
+ * @return the newly added aircraft
+ * @sa AIR_Delete
+ */
 aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
 {
 	aircraft_t *aircraft = (aircraft_t *)LIST_Add(&base->aircraft, (const void *)aircraftTemplate, sizeof(*aircraftTemplate))->data;
@@ -743,6 +756,13 @@ aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
 	return aircraft;
 }
 
+/**
+ * @brief Will remove the given aircraft from the base
+ * @param[out] base The base to remove the aircraft from
+ * @param aircraft The aircraft to remove
+ * @return @c true if the aircraft was removed, @c false otherwise
+ * @sa AIR_Add
+ */
 qboolean AIR_Delete (base_t *base, const aircraft_t *aircraft)
 {
 	return LIST_RemovePointer(&base->aircraft, (const void *)aircraft);
@@ -1038,17 +1058,9 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 
 	ccs.numAircraft--;	/**< Decrease the global number of aircraft. */
 
-	/* Finally remove the aircraft-struct itself from the base-array and update the order. */
-	/**
-	 * @todo We need to update _all_ aircraft references here.
-	 * Every single index that points to an aircraft after this one will need to be updated.
-	 * attackingAircraft, aimedAircraft for airfights
-	 * mission_t->ufo
-	 * baseWeapon_t->target
-	 */
+	if (base->aircraftCurrent == aircraft)
+		base->aircraftCurrent = NULL;
 
-	/* rearrange the aircraft-list (in base) */
-	/* Find the index of aircraft in base */
 	if (AIR_Delete(base, aircraft)) {
 		aircraft_t *aircraftTemp;
 
@@ -1063,7 +1075,6 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		Cvar_Set("mn_aircraftinbase", "0");
 		Cvar_Set("mn_aircraftname", "");
 		Cvar_Set("mn_aircraft_model", "");
-		base->aircraftCurrent = NULL;
 	}
 
 	/* also update the base menu buttons */
