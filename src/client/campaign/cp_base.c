@@ -2295,7 +2295,7 @@ void B_BuildingOpenAfterClick (const base_t *base, const building_t *building)
 		case B_SMALL_HANGAR:
 			if (!AIR_AircraftAllowed(base)) {
 				UP_OpenWith(building->pedia);
-			} else if (base->numAircraftInBase) {
+			} else if (AIR_BaseHasAircraft(base)) {
 				UI_PushWindow("aircraft", NULL);
 			} else {
 				UI_PushWindow("buyaircraft", NULL);

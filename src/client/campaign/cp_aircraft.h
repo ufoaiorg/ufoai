@@ -243,6 +243,8 @@ void AIR_ListAircraftSamples_f(void);
 void AIR_ListCraftIndexes_f(void);
 #endif
 
+qboolean AIR_BaseHasAircraft(const struct base_s *base);
+aircraft_t* AIR_GetNextFromBase(struct base_s *base, aircraft_t *lastAircraft);
 int AIR_GetAircraftIDXInBase(const aircraft_t* aircraft);
 aircraft_t *AIR_GetAircraftFromBaseByIDX(const struct base_s *base, int index);
 aircraft_t *AIR_GetAircraftFromBaseByIDXSafe(struct base_s *base, int index);

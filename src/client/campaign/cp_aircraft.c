@@ -41,6 +41,38 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_missions.h"
 #include "save/save_aircraft.h"
 
+
+/**
+ * @brief Iterates through the aircraft of a base
+ * @param[in] lastAircraft Pointer of the aircraft to iterate from. call with NULL to get the first one.
+ */
+aircraft_t* AIR_GetNextFromBase (base_t *base, aircraft_t *lastAircraft)
+{
+	aircraft_t *endOfAircraft = &base->aircraft[base->numAircraftInBase];
+	aircraft_t* aircraft;
+
+	if (!AIR_BaseHasAircraft(base))
+		return NULL;
+
+	if (!lastAircraft)
+		return base->aircraft;
+	assert(lastAircraft >= base->aircraft);
+	assert(lastAircraft < endOfAircraft);
+
+	aircraft = lastAircraft;
+
+	aircraft++;
+	if (aircraft >= endOfAircraft)
+		return NULL;
+	else
+		return aircraft;
+}
+
+qboolean AIR_BaseHasAircraft (const base_t *base)
+{
+	return base != NULL && base->numAircraftInBase > 0;
+}
+
 /**
  * @brief Updates hangar capacities for one aircraft in given base.
  * @param[in] aircraftTemplate Aircraft template.
@@ -105,7 +137,7 @@ static int AIR_UpdateHangarCapForOne (const aircraft_t const *aircraftTemplate, 
  */
 void AIR_UpdateHangarCapForAll (base_t *base)
 {
-	int i;
+	aircraft_t *aircraft;
 
 	if (!base)
 		return;
@@ -114,8 +146,7 @@ void AIR_UpdateHangarCapForAll (base_t *base)
 	base->capacities[CAP_AIRCRAFT_BIG].cur = 0;
 	base->capacities[CAP_AIRCRAFT_SMALL].cur = 0;
 
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		const aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDX(base, i);
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll: base: %s, aircraft: %s\n", base->name, aircraft->id);
 		AIR_UpdateHangarCapForOne(aircraft->tpl, base);
 	}
@@ -631,16 +662,19 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 int AIR_GetAircraftIDXInBase (const aircraft_t* aircraft)
 {
 	int i;
-	const base_t *base;
+	base_t *base;
+	aircraft_t *aircraftInBase;
 
 	if (!aircraft || !aircraft->homebase)
 		return AIRCRAFT_INBASE_INVALID;
 
 	base = aircraft->homebase;
 
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		if (&base->aircraft[i] == aircraft)
+	i = 0;
+	while ((aircraftInBase = AIR_GetNextFromBase(base, aircraftInBase)) != NULL) {
+		if (aircraftInBase == aircraft)
 			return i;
+		i++;
 	}
 
 	/* Aircraft not found in base */
@@ -658,7 +692,7 @@ int AIR_GetAircraftIDXInBase (const aircraft_t* aircraft)
  */
 aircraft_t *AIR_GetAircraftFromBaseByIDX (const base_t* base, int index)
 {
-	if (base->numAircraftInBase <= 0)
+	if (!AIR_BaseHasAircraft(base))
 		return NULL;
 
 	if (index < 0 || index >= base->numAircraftInBase)
@@ -1065,7 +1099,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		}
 	}
 
-	if (base->numAircraftInBase < 1) {
+	if (!AIR_BaseHasAircraft(base)) {
 		Cvar_SetValue("mn_equipsoldierstate", 0);
 		Cvar_Set("mn_aircraftstatus", "");
 		Cvar_Set("mn_aircraftinbase", "0");

@@ -283,7 +283,7 @@ static void B_BaseInit_f (void)
 
 	/* activate or deactivate the aircraft button */
 	if (AIR_AircraftAllowed(base)) {
-		if (base->numAircraftInBase)
+		if (AIR_BaseHasAircraft(base))
 			UI_ExecuteConfunc("update_basebutton aircraft false \"%s\"", _("Aircraft management and crew equipment"));
 		else
 			UI_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("Buy or produce at least one aircraft first."));

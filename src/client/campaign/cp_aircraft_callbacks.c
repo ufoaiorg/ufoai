@@ -84,7 +84,7 @@ static void AIM_NextAircraft_f (void)
 {
 	base_t *base = B_GetCurrentSelectedBase();
 
-	if (!base || base->numAircraftInBase <= 0)
+	if (!AIR_BaseHasAircraft(base))
 		return;
 
 	if (!base->aircraftCurrent || base->aircraftCurrent == AIR_GetAircraftFromBaseByIDX(base, base->numAircraftInBase - 1))
@@ -104,7 +104,7 @@ static void AIM_PrevAircraft_f (void)
 {
 	base_t *base = B_GetCurrentSelectedBase();
 
-	if (!base || base->numAircraftInBase <= 0)
+	if (!AIR_BaseHasAircraft(base))
 		return;
 
 	if (!base->aircraftCurrent || base->aircraftCurrent == AIR_GetAircraftFromBaseByIDX(base, 0))
@@ -234,7 +234,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	else
 		base = NULL;
 
-	if (!base || !base->numAircraftInBase) {
+	if (!AIR_BaseHasAircraft(base)) {
 		UI_ResetData(TEXT_AIRCRAFT_INFO);
 		return;
 	}
