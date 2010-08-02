@@ -593,11 +593,6 @@ void CIN_ROQ_PlayCinematic (cinematic_t *cin, const char *fileName)
 	/* Fill it in */
 	Q_strncpyz(cin->name, fileName, sizeof(cin->name));
 
-	/* Set to play the cinematic in fullscreen mode */
-	/** @todo why? the node ask what it want, fullscreen or not
-	 * because it's also possible to play a video without menu node, no? (mattn) */
-	CIN_SetParameters(cin, 0, 0, viddef.virtualWidth, viddef.virtualHeight, CIN_STATUS_PLAYING, qfalse);
-
 	M_PlayMusicStream(&ROQCIN.musicStream);
 
 	ROQCIN.size = size;
