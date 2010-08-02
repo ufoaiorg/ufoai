@@ -241,20 +241,10 @@ void *LIST_GetNext (linkedList_t *list, void *lastData)
  */
 qboolean LIST_RemovePointer (linkedList_t **list, const void *data)
 {
-	linkedList_t *next;
-	linkedList_t *l = *list;
-
-	while (l != NULL && data != NULL) {
-		next = l->next;
-		if (l->data == data) {
-			if (!l->ptr)
-				Mem_Free(l->data);
-			Mem_Free(l);
-			return qtrue;
-		}
-		l = next;
-	}
-	return qfalse;
+	linkedList_t *l = LIST_GetPointer(*list, data);
+	if (l != NULL)
+		LIST_Remove(list, l);
+	return l != NULL;
 }
 
 /**
