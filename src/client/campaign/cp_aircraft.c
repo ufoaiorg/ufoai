@@ -1023,6 +1023,8 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	}
 	AII_RemoveItemFromSlot(NULL, &aircraft->shield, qfalse);
 
+	/** @todo why is that needed? this only produces problems with some multi
+	 * selection popup is currently active that is using those indices (and maybe other locations) */
 	for (i = aircraft->idx + 1; i < ccs.numAircraft; i++) {
 		/* Decrease the global index of aircraft that have a higher index than the deleted one. */
 		aircraft_t *aircraftTemp = AIR_AircraftGetFromIDX(i);
