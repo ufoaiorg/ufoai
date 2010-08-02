@@ -300,7 +300,13 @@ window popup_tipoftheday
 		pos			"266 188"
 		font		"f_menu"
 		color		"0 0.5 0 1"
-		onClick		{ cmd "tipoftheday;" }
+		onClick		{ 
+			if ( *cvar:cl_showTipOfTheDay == 1 ) {
+				cmd "tipoftheday;"
+			} else {
+				cmd "mn_close popup_tipoftheday;"
+			}
+		}
 	}
 
 	confunc check_nexttip
@@ -316,6 +322,10 @@ window popup_tipoftheday
 
 	func onInit
 	{
-		cmd "tipoftheday random; check_nexttip;"
+		if ( *cvar:cl_showTipOfTheDay == 1 ) {
+			cmd "tipoftheday random; check_nexttip;"
+		} else {
+			cmd "mn_close popup_tipoftheday;"
+		}
 	}
 }
