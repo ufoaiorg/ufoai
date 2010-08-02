@@ -213,6 +213,16 @@ void LIST_Delete (linkedList_t **list)
 }
 
 /**
+ * @brief Checks whether the given list is empty
+ * @param[in] list The linked list to check
+ * @return @c true if empty, @c false otherwise
+ */
+qboolean LIST_IsEmpty (const linkedList_t *list)
+{
+	return list == NULL;
+}
+
+/**
  * @sa LIST_Add
  * @sa LIST_Remove
  */
@@ -226,6 +236,22 @@ int LIST_Count (const linkedList_t *list)
 		l = l->next;
 	}
 	return count;
+}
+
+/**
+ * @brief Returns the last entry in the linked list
+ * @param[in] list Linked list to get the entry from.
+ */
+void *LIST_GetLast (linkedList_t *list)
+{
+	while (list) {
+		linkedList_t *next = list->next;
+		if (next == NULL)
+			return (void *)list->data;
+		list = next;
+	}
+
+	return NULL;
 }
 
 /**

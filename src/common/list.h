@@ -16,7 +16,9 @@ const linkedList_t* LIST_ContainsString(const linkedList_t* list, const char* st
 const linkedList_t* LIST_ContainsPointer(const linkedList_t* list, const void* data);
 void LIST_Delete(linkedList_t **list);
 void LIST_Remove(linkedList_t **list, linkedList_t *entry);
+qboolean LIST_IsEmpty(const linkedList_t *list);
 int LIST_Count(const linkedList_t *list);
 void *LIST_GetByIdx(linkedList_t *list, int index);
+void *LIST_GetLast(linkedList_t *list);
 
 #endif /* LIST_H_ */
