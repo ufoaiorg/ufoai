@@ -1193,12 +1193,6 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
  */
 qboolean G_ClientBegin (player_t* player)
 {
-	/* this doesn't belong here, but it works */
-	if (!level.routed) {
-		level.routed = qtrue;
-		G_CompleteRecalcRouting();
-	}
-
 	player->began = qtrue;
 	level.numplayers++;
 

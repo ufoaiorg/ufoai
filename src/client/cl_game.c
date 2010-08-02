@@ -636,7 +636,13 @@ static qboolean GAME_Spawn (void)
  */
 static void GAME_InitializeBattlescape (chrList_t *team)
 {
+	int i;
 	const cgame_export_t *list = GAME_GetCurrentType();
+
+	for (i = 0; i < lengthof(cl.teamList); i++) {
+		UI_ExecuteConfunc("huddisable %i", i);
+	}
+
 	if (list && list->InitializeBattlescape)
 		list->InitializeBattlescape(team);
 }

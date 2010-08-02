@@ -390,6 +390,12 @@ qboolean G_RunFrame (void)
 	/* server is running at 10 fps */
 	level.time = level.framenum * SERVER_FRAME_SECONDS;
 
+	/* this doesn't belong here, but it works */
+	if (!level.routed) {
+		level.routed = qtrue;
+		G_CompleteRecalcRouting();
+	}
+
 	/* still waiting for other players */
 	if (!G_MatchIsRunning()) {
 		if (sv_maxteams->modified) {

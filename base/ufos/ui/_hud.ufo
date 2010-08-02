@@ -81,7 +81,7 @@ window ahud extends levelbuttons {
 
 	confunc hudselect { }
 	confunc hudenable { }
-	confunc huddisable { }
+	confunc huddisable { cmd "updateactorvalues <1> \"\" \"0\" \"1\" \"0\" \"1\" \"0\" \"1\" \"0\" \"\";" }
 
 	confunc deselect_primaryleft { }
 	confunc deselect_primaryright { }

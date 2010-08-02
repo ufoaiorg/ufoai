@@ -1026,6 +1026,7 @@ window hud extends ahud
 	}
 	confunc huddisable {
 		*team_selection.buttonList.bt_actor<1>@disabled = true
+		cmd "updateactorvalues <1> \"\" \"0\" \"1\" \"0\" \"1\" \"0\" \"1\" \"0\" \"\";"
 	}
 
 	// CROUCH/STAND UP BUTTON
