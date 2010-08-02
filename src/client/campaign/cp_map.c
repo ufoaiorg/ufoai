@@ -355,7 +355,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 
 		/* Get selected aircraft which belong to the base */
 		aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 			if (AIR_IsAircraftOnGeoscape(aircraft) && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), aircraft->name);
 	}
