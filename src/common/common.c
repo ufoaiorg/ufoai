@@ -1356,16 +1356,6 @@ void Qcommon_Frame (void)
 	 * IO is ready (but always try at least once, to make sure IO
 	 * doesn't stall) */
 	do {
-		/** @todo This shouldn't exist - move into SV_Frame? */
-		if (sv_dedicated && sv_dedicated->integer) {
-			const char *s;
-			do {
-				s = Sys_ConsoleInput();
-				if (s)
-					Cbuf_AddText(va("%s\n", s));
-			} while (s);
-		}
-
 		time_to_next = event_queue ? (event_queue->when - Sys_Milliseconds()) : 1000;
 		if (time_to_next < 0)
 			time_to_next = 0;

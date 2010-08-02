@@ -764,6 +764,15 @@ void SV_Frame (int now, void *data)
 		sv_gametype->modified = qfalse;
 	}
 
+	if (sv_dedicated->integer) {
+		const char *s;
+		do {
+			s = Sys_ConsoleInput();
+			if (s)
+				Cbuf_AddText(va("%s\n", s));
+		} while (s);
+	}
+
 	/* if server is not active, do nothing */
 	if (!svs.initialized)
 		return;
