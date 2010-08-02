@@ -1437,8 +1437,12 @@ base/models/objects/vehicles/tractor/tractor_gm.png | GNU General Public License
 base/models/objects/vehicles/tractor/tractor_nm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/pilots/female/body.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/pilots/female/head01.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/models/pilots/male/body.anm | GNU General Public License 2.0 or later | Willem Sitters
 base/models/pilots/male/body.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/models/pilots/male/body.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/pilots/male/body.tag | GNU General Public License 2.0 or later | Willem Sitters
 base/models/pilots/male/head01.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/models/pilots/male/head01.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/soldiers/female/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/female/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/female/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
