@@ -341,7 +341,6 @@ static qboolean G_ReactionFireShoot (const player_t *player, edict_t *shooter, c
  */
 static qboolean G_ReactionFireTryToShoot (edict_t *ent)
 {
-	int team;
 	qboolean tookShot;
 
 	/* check whether this ent has a reaction fire queued */
