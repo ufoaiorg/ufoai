@@ -85,13 +85,10 @@ CASSERT(lengthof(shootTypeStrings) == BT_NUM_TYPES);
 /**
  * @brief Defines the various states of a button.
  * @note Not all buttons do have all of these states (e.g. "unusable" is not very common).
- * @todo is BT_STATE_UNUSABLE still needed? (e.g. rpg had this state for the reaction fire buttons if rf was enabled
- * but imo one should not have reaction fire enabled for a none-reaction fire weapon)
  */
 typedef enum {
 	BT_STATE_DISABLE,		/**< 'Disabled' display (grey) */
-	BT_STATE_DESELECT,		/**< Normal display (blue) */
-	BT_STATE_UNUSABLE		/**< Normal + red (activated but unusable aka "impossible") */
+	BT_STATE_DESELECT		/**< Normal display (blue) */
 } weaponButtonState_t;
 
 /** @note Order of elements here must correspond to order of elements in walkType_t. */
@@ -163,18 +160,18 @@ static void HUD_UpdateAllActors (void)
  * @brief Sets the display for a single weapon/reload HUD button.
  * @todo This should be a confunc which also sets the tooltips
  */
-static void HUD_SetWeaponButton (int button, weaponButtonState_t state)
+static void HUD_SetWeaponButton (buttonTypes_t button, weaponButtonState_t state)
 {
 	const char const* prefix;
 
-	assert(button < BT_NUM_TYPES);
-
-	if (state == BT_STATE_DESELECT)
+	switch (state) {
+	case BT_STATE_DESELECT:
 		prefix = "deselect_";
-	else if (state == BT_STATE_DISABLE)
+		break;
+	case BT_STATE_DISABLE:
 		prefix = "disable_";
-	else
-		prefix = "disable_";
+		break;
+	}
 
 	/* Connect confunc strings to the ones as defined in "menu nohud". */
 	UI_ExecuteConfunc("%s%s", prefix, shootTypeStrings[button]);
