@@ -74,10 +74,9 @@ const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* s
  * @return the linkedList_t pointer if the string is found, otherwise @c NULL
  * @note if data is @c NULL, the function returns @c NULL
  */
-const linkedList_t* LIST_ContainsPointer (const linkedList_t* list, const void* data)
+linkedList_t* LIST_GetPointer (linkedList_t* list, const void* data)
 {
 	assert(list);
-	assert(list->ptr);
 
 	while ((data != NULL) && (list != NULL)) {
 		if (list->data == data)
@@ -210,6 +209,52 @@ void LIST_Delete (linkedList_t **list)
 		l = next;
 	}
 	*list = NULL;
+}
+
+/**
+ * @brief Linked list iterator
+ * @param list The linked list to iterate over
+ * @param lastData The last data entry
+ */
+void *LIST_GetNext (linkedList_t *list, void *lastData)
+{
+	linkedList_t *entry;
+
+	if (LIST_IsEmpty(list))
+		return NULL;
+
+	if (lastData == NULL)
+		return list->data;
+
+	entry = LIST_GetPointer(list, lastData);
+	assert(entry);
+
+	if (entry->next)
+		return entry->next->data;
+
+	return NULL;
+}
+
+/**
+ * @sa LIST_Add
+ * @sa LIST_Remove
+ */
+qboolean LIST_RemovePointer (linkedList_t **list, const void *data)
+{
+	linkedList_t *next;
+	linkedList_t *l = *list;
+
+	while (l != NULL && data != NULL) {
+		next = l->next;
+		if (l->data == data) {
+			if (!l->ptr)
+				Mem_Free(l->data);
+			Mem_Free(l);
+			return qtrue;
+		}
+		l = next;
+	}
+	return qfalse;
 }
 
 /**
