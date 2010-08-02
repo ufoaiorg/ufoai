@@ -1039,7 +1039,7 @@ base/models/objects/boat/engine.md2 | GNU General Public License 2.0
 base/models/objects/cars/4x4/4x4.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4.md2 | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4_t.md2 | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
-base/models/objects/cars/4x4/cars_tires.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
+base/models/objects/cars/4x4/cars_tires.png | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery;MCR
 base/models/objects/cars/buggy/buggy.md2 | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/cars/buggy/buggy.png | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/cars/car2/car2a.jpg | GNU General Public License 2.0
@@ -1060,7 +1060,7 @@ base/models/objects/cars/golf/car1_dmg.jpg | GNU General Public License 2.0 | Lu
 base/models/objects/cars/golf/car1_red.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/cars/golf/car1_white.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/cars/golf/car1t.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/objects/cars/golf/cars_tires.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
+base/models/objects/cars/golf/cars_tires.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler;MCR
 base/models/objects/cars/hummer/hummer.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/cars/hummer/hummer.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/cars/hummer/hummer_bright.png | GNU General Public License 2.0 or later | Willem Sitters
@@ -1080,7 +1080,7 @@ base/models/objects/cars/trailer/boxtrailer.md2 | GNU General Public License 2.0
 base/models/objects/cars/trailer/boxtrailer_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/cars/transporter/transporter.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/cars/transporter/transporter.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/cars/van/cars_tires.jpg | GNU General Public License 2.0
+base/models/objects/cars/van/cars_tires.png | GNU General Public License 2.0 | MCR
 base/models/objects/cars/van/van1.md2 | GNU General Public License 2.0
 base/models/objects/cars/van/van1_blue.jpg | GNU General Public License 2.0
 base/models/objects/cars/van/van1_brown.jpg | GNU General Public License 2.0
