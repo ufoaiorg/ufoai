@@ -312,7 +312,11 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	mxmlDelete(topNode);
 	Com_Printf("XML Written to buffer (%d Bytes)\n", res);
 
-	bufLen = (uLongf) (24 + 1.02 * requiredBufferLength);
+	if (header.compressed)
+		bufLen = (uLongf) (24 + 1.02 * requiredBufferLength);
+	else
+		bufLen = requiredBufferLength;
+
 	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, 0);
 	memcpy(fbuf, &header, sizeof(header));
 
