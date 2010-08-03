@@ -786,7 +786,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 
 	assert(base);
 
-	/* copy generic aircraft description to individal aircraft in base */
+	/* copy generic aircraft description to individual aircraft in base */
 	/* we do this because every aircraft can have its own parameters */
 	/* now lets use the aircraft array for the base to set some parameters */
 	aircraft = AIR_Add(base, aircraftTemplate);

@@ -1872,7 +1872,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	else
 		maxInterpolationPoints = 0;
 
-	/** draws projectiles */
+	/* draws projectiles */
 	for (idx = 0; idx < ccs.numProjectiles; idx++) {
 		aircraftProjectile_t *projectile = &ccs.projectiles[idx];
 		vec3_t drawPos = {0, 0, 0};

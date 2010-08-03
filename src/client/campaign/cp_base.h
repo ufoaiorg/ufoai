@@ -232,7 +232,7 @@ typedef struct base_s {
 
 	float alienInterest;	/**< How much aliens know this base (and may attack it) */
 
-	struct radar_s	radar;	/**< the onconstruct value of the buliding building_radar increases the sensor width */
+	struct radar_s radar;
 
 	aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/**< alien containment capacity */
 
