@@ -1018,6 +1018,7 @@ base/models/objects/barrel/barrel2_1.png | GNU General Public License 2.0 or lat
 base/models/objects/barrel/barrel2_2.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/barrel/barrel3.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/barrel/barrel3.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/barrel/barrel_nm.png | GNU General Public License 2.0 | Nate Wright
 base/models/objects/base/minicrane/minicrane.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/minicrane/minicrane.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/radar/radar_a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1111,6 +1112,7 @@ base/models/objects/city/garbagecan/garbagecan.md2 | GNU General Public License 
 base/models/objects/city/garbagecan/garbagecan_nm.png | GNU General Public License 2.0 or later
 base/models/objects/city/lantern/lantern.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/lantern/lantern.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/city/light/light.jpg | GNU General Public License 2.0 or later | Werner Höhrer
 base/models/objects/city/mailbox/mailbox.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/mailbox/mailbox.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/oriental.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -1196,11 +1198,13 @@ base/models/objects/furniture/automat/automat.md2 | GNU General Public License 2
 base/models/objects/furniture/automat/automat.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/furniture/automat/automat_nm.png | GNU General Public License 2.0 or later
 base/models/objects/furniture/bed/bed.jpg | GNU General Public License 2.0 or later | Nate Wright
+base/models/objects/furniture/bed/bed_nm.png | GNU General Public License 2.0 | Nate Wright
 base/models/objects/furniture/bookshelf/bookshelf.png | GNU General Public License 2.0 or later | Nate Wright
 base/models/objects/furniture/bookshelf/bookshelf_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/models/objects/furniture/campbed/campbed.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/campbed/campbed.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/chair/chair.jpg | GNU General Public License 2.0 or later | Nate Wright
+base/models/objects/furniture/chair/chair_nm.png | GNU General Public License 2.0 | Nate Wright
 base/models/objects/furniture/coffeemaker/coffeemaker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/coffeemaker/coffeemaker.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/comptable/comptable.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -1264,6 +1268,14 @@ base/models/objects/industrial/lamp/lamp.md2 | Creative Commons Attribution-Shar
 base/models/objects/industrial/lamp/lamp.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/industrial/valve/valve.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/industrial/valve/valve.png | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/japan/bed.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/japan/bed.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/japan/buddha.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/japan/buddha.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/japan/mat.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/japan/mat.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/japan/stoel.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/japan/stoel.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/laserturret/laserturret.md2 | GNU General Public License 2.0 or later | Willem Sitter
 base/models/objects/laserturret/laserturret.png | GNU General Public License 2.0 or later | Willem Sitter
 base/models/objects/laserturret/laserturret_nm.png | GNU General Public License 2.0 or later | Willem Sitter
@@ -1781,6 +1793,7 @@ base/models/soldiers/malelight/head04b.jpg | GNU General Public License 2.0 | Lu
 base/models/soldiers/malelight/head04b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head04b_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/head04b_yellow.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
+base/models/soldiers/malelight/head04c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head05a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head05a.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/malelight/head05a_cccp.jpg | GNU General Public License 2.0 | Kohli | Work based on original textures in base/models/soldiers/malelight/ by Lukas Beyeler (Rasta)
