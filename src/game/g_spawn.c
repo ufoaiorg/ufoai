@@ -456,6 +456,7 @@ static void G_ActorSpawn (edict_t *ent)
 	ent->classname = "actor";
 	ent->type = ET_ACTORSPAWN;
 	ent->fieldSize = ACTOR_SIZE_NORMAL;
+	ent->flags |= FL_DESTROYABLE;
 
 	/* Fall to ground */
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
