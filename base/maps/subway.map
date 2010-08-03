@@ -19903,27 +19903,27 @@
 "classname" "misc_model"
 "spawnflags" "248"
 "model" "models/objects/cars/golf/car1t.md2"
-"origin" "-306 -402 212"
+"origin" "-306 -402 206"
 }
 // entity 370
 {
 "classname" "misc_model"
 "spawnflags" "248"
 "model" "models/objects/cars/golf/car1.md2"
-"origin" "-306 -402 212"
+"origin" "-306 -402 206"
 }
 // entity 371
 {
 "classname" "misc_model"
 "spawnflags" "248"
-"origin" "-30 -388 228"
+"origin" "-30 -388 224"
 "model" "models/objects/cars/van/van1t.md2"
 }
 // entity 372
 {
 "classname" "misc_model"
 "spawnflags" "248"
-"origin" "-30 -388 228"
+"origin" "-30 -388 224"
 "model" "models/objects/cars/van/van1.md2"
 }
 // entity 373
