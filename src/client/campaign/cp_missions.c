@@ -1381,6 +1381,12 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 		return;
 	}
 
+	if (aircraft->homebase->aircraftCurrent == aircraft)
+		aircraft->homebase->aircraftCurrent = NULL;
+
+	if (ccs.selectedAircraft == aircraft)
+		ccs.selectedAircraft = NULL;
+
 	Vector2Copy(aircraft->pos, mission->pos);
 	mission->posAssigned = qtrue;
 

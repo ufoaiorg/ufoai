@@ -48,10 +48,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 aircraft_t* AIR_GetNextFromBase (const base_t *b, aircraft_t *lastAircraft)
 {
-	if (!b)
-		return NULL;
-	else
-		return LIST_GetNext(b->aircraft, lastAircraft);
+	if (b) {
+		aircraft_t *aircraft = lastAircraft;
+		while ((aircraft = LIST_GetNext(b->aircraft, aircraft)) != NULL) {
+			if (aircraft->status != AIR_CRASHED)
+				return aircraft;
+		}
+		return aircraft;
+	}
+
+	return NULL;
 }
 
 /**
@@ -61,7 +67,7 @@ aircraft_t* AIR_GetNextFromBase (const base_t *b, aircraft_t *lastAircraft)
  */
 qboolean AIR_BaseHasAircraft (const base_t *base)
 {
-	return base != NULL && !LIST_IsEmpty(base->aircraft);
+	return base != NULL && AIR_GetNextFromBase(base, NULL) != NULL;
 }
 
 /**
@@ -460,8 +466,8 @@ const char *AIR_AircraftStatusToName (const aircraft_t * aircraft)
 		return _("enroute to new home base");
 	case AIR_RETURNING:
 		return _("returning to base");
-	default:
-		Com_Printf("Error: Unknown aircraft status for %s\n", aircraft->id);
+	case AIR_CRASHED:
+		Com_Error(ERR_DROP, "This should not be visible anywhere");
 	}
 	return NULL;
 }
@@ -683,11 +689,18 @@ int AIR_GetAircraftIDXInBase (const aircraft_t* aircraft)
  */
 aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (base_t* base, int index)
 {
-	aircraft_t *aircraft = LIST_GetByIdx(base->aircraft, index);
-	if (!aircraft && AIR_BaseHasAircraft(base))
-		return AIR_GetNextFromBase(base, NULL);
+	aircraft_t *aircraft;
+	int i;
 
-	return aircraft;
+	i = 0;
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
+		if (index == i)
+			return aircraft;
+		i++;
+	}
+
+	return NULL;
 }
 
 /**
