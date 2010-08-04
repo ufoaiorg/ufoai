@@ -467,7 +467,7 @@ const char *AIR_AircraftStatusToName (const aircraft_t * aircraft)
 	case AIR_RETURNING:
 		return _("returning to base");
 	case AIR_CRASHED:
-		Com_Error(ERR_DROP, "This should not be visible anywhere");
+		Com_Error(ERR_DROP, "AIR_CRASHED should not be visible anywhere");
 	}
 	return NULL;
 }
