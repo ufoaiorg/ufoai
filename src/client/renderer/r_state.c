@@ -294,10 +294,9 @@ qboolean R_EnableLighting (r_program_t *program, qboolean enable)
  * @param ent The entity to enable/disable lighting for
  * @param enable Whether to turn realtime lighting on or off
  */
-void R_EnableDynamicLights (entity_t *ent, qboolean enable)
+void R_EnableDynamicLights (const entity_t *ent, qboolean enable)
 {
 	int i, j;
-	r_light_t *l;
 	int maxLights = r_dynamic_lights->integer;
 
 	if (!enable || !r_state.lighting_enabled || r_state.numActiveLights == 0 || !ent) {
@@ -317,10 +316,7 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 
 	r_state.dynamic_lighting_enabled = qtrue;
 
-
-	if (!r_state.glowmap_enabled)
-		R_ProgramParameter1f("GLOWSCALE", 0.0);
-	else 
+	if (r_state.glowmap_enabled)
 		R_ProgramParameter1f("GLOWSCALE", 1.0);
 
 	R_EnableAttribute("TANGENTS");
@@ -332,7 +328,7 @@ void R_EnableDynamicLights (entity_t *ent, qboolean enable)
 	glEnable(GL_LIGHTING);
 
 	for (i = 0, j = 0; i < maxLights && (i + j) < ent->numLights; i++) {
-		l = ent->lights[i + j];
+		const r_light_t *l = ent->lights[i + j];
 		if (!l->enabled) {
 			j++;
 			continue;

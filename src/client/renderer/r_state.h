@@ -170,7 +170,7 @@ void R_EnableShell(qboolean enable);
 void R_EnableFog(qboolean enable);
 void R_EnableDrawAsGlow(qboolean enable);
 void R_EnableGlowMap(const image_t *image, qboolean enable);
-void R_EnableDynamicLights(entity_t *ent, qboolean enable);
+void R_EnableDynamicLights(const entity_t *ent, qboolean enable);
 void R_EnableSpecularMap(const image_t *image, qboolean enable);
 void R_EnableRoughnessMap(const image_t *image, qboolean enable);
 void R_EnableAnimation(const mAliasMesh_t *mesh, float backlerp, qboolean enable);
