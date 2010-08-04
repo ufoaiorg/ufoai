@@ -448,16 +448,17 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 
 		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN)))
 			CP_SpawnRescueMission(aircraft, shooter);
-
-		/* Destroy the aircraft and everything onboard - the aircraft pointer
-		 * is no longer valid after this point */
-		AIR_DestroyAircraft(aircraft);
+		else {
+			/* Destroy the aircraft and everything onboard - the aircraft pointer
+			 * is no longer valid after this point */
+			AIR_DestroyAircraft(aircraft);
+		}
 
 		/* Make UFO proceed with its mission, if it has not been already destroyed */
 		if (shooter)
 			CP_UFOProceedMission(shooter);
 
-		MS_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_UFOSPOTTED, NULL);
+		MS_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_DEATH, NULL);
 	}
 }
 
