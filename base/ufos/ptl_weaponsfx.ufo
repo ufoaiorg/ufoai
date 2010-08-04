@@ -1306,7 +1306,7 @@ particle frag_explosion
 		nspawn grenadeFragment
 		lightcolor "0.4 0.4 1.0"
 		lightintensity 0.1
-		lightsustain 1.0
+		// lightsustain 1.0
 		kill
 	}
 }
