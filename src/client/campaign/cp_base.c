@@ -2570,20 +2570,12 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 }
 
 /**
- * @brief Do anything when dropship returns to base
- * @param[in] aircraft Returning aircraft.
- * @note Place here any stuff, which should be called
- * @note when Drophip returns to base.
- * @sa CL_CampaignRunAircraft
+ * @brief Will unload all cargo to the homebase
+ * @param[in,out] aircraft The aircraft to dump
  */
-void B_AircraftReturnedToHomeBase (aircraft_t* aircraft)
+void B_DumpAircraftToHomeBase (aircraft_t *aircraft)
 {
 	aliensTmp_t *cargo;
-
-	/* Reset UFO sensored on radar */
-	RADAR_InitialiseUFOs(&aircraft->radar);
-	/* Reload weapons */
-	AII_ReloadAircraftWeapons(aircraft);
 
 	/* Don't call cargo functions if aircraft is not a transporter. */
 	if (aircraft->type != AIRCRAFT_TRANSPORTER)
@@ -2599,6 +2591,22 @@ void B_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 	memset(cargo, 0, sizeof(*cargo));
 	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));
 	AL_SetAircraftAlienCargoTypes(aircraft, 0);
+}
+
+/**
+ * @brief Do anything when dropship returns to base
+ * @param[in] aircraft Returning aircraft.
+ * @note Place here any stuff, which should be called when Drophip returns to base.
+ * @sa CL_CampaignRunAircraft
+ */
+void B_AircraftReturnedToHomeBase (aircraft_t* aircraft)
+{
+	/* Reset UFO sensored on radar */
+	RADAR_InitialiseUFOs(&aircraft->radar);
+	/* Reload weapons */
+	AII_ReloadAircraftWeapons(aircraft);
+
+	B_DumpAircraftToHomeBase(aircraft);
 }
 
 /**

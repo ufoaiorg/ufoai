@@ -1260,53 +1260,54 @@ void CL_GameAutoGo (mission_t *mis)
 	won = frand() < winProbability;
 
 	/* update nation opinions */
-	CL_HandleNationData(won, ccs.selectedMission);
+	CL_HandleNationData(won, mis);
 
 	CP_CheckLostCondition();
 
 	CL_AutoMissionAlienCollect(aircraft);
 
 	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(ccs.selectedMission, won);
+	CP_ExecuteMissionTrigger(mis, won);
 
 	/* if a UFO has been recovered, send it to a base */
 	if (won && ccs.missionResults.recovery) {
 		/** @todo set other counts, use the counts above */
-		ccs.missionResults.aliensKilled = ccs.battleParameters.aliens;
-		ccs.missionResults.aliensStunned = 0;
-		ccs.missionResults.aliensSurvived = 0;
-		ccs.missionResults.civiliansKilled = 0;
-		ccs.missionResults.civiliansKilledFriendlyFire = 0;
-		ccs.missionResults.civiliansSurvived = ccs.battleParameters.civilians;
-		ccs.missionResults.ownKilled = 0;
-		ccs.missionResults.ownKilledFriendlyFire = 0;
-		ccs.missionResults.ownStunned = 0;
-		ccs.missionResults.ownSurvived = AIR_GetTeamSize(aircraft);
+		missionResults_t *results = &ccs.missionResults;
+		results->aliensKilled = ccs.battleParameters.aliens;
+		results->aliensStunned = 0;
+		results->aliensSurvived = 0;
+		results->civiliansKilled = 0;
+		results->civiliansKilledFriendlyFire = 0;
+		results->civiliansSurvived = ccs.battleParameters.civilians;
+		results->ownKilled = 0;
+		results->ownKilledFriendlyFire = 0;
+		results->ownStunned = 0;
+		results->ownSurvived = AIR_GetTeamSize(aircraft);
 		CP_InitMissionResults(won);
 		Cvar_SetValue("mn_autogo", 1);
 		UI_PushWindow("won", NULL);
 	}
 
 	/* handle base attack mission */
-	if (ccs.selectedMission->stage == STAGE_BASE_ATTACK) {
-		const base_t *base = (base_t*)ccs.selectedMission->data;
-		assert(base);
-
+	if (mis->stage == STAGE_BASE_ATTACK) {
 		if (won) {
-			/* fake an aircraft return to collect goods and aliens */
-			B_AircraftReturnedToHomeBase(ccs.interceptAircraft);
+			const base_t *base = (base_t*)mis->data;
+			assert(base);
+
+			/* fake aircraft returns the collected goods and aliens */
+			B_DumpAircraftToHomeBase(aircraft);
 
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-			CP_BaseAttackMissionIsFailure(ccs.selectedMission);
+			CP_BaseAttackMissionIsFailure(mis);
 			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else {
-			CP_BaseAttackMissionDestroyBase(ccs.selectedMission);
+			CP_BaseAttackMissionDestroyBase(mis);
 		}
 	} else {
-		AIR_AircraftReturnToBase(ccs.interceptAircraft);
+		AIR_AircraftReturnToBase(aircraft);
 		if (won)
-			CP_MissionIsOver(ccs.selectedMission);
+			CP_MissionIsOver(mis);
 	}
 
 	if (won)

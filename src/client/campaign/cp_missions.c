@@ -1218,7 +1218,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	if (mission->stage == STAGE_BASE_ATTACK) {
 		if (won) {
 			/* fake an aircraft return to collect goods and aliens */
-			B_AircraftReturnedToHomeBase(aircraft);
+			B_DumpAircraftToHomeBase(aircraft);
 
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -1230,8 +1230,9 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	}
 
 	if (mission->category == INTERESTCATEGORY_RESCUE) {
-		/* return to collect goods and aliens from the crashed aircraft */
-		B_AircraftReturnedToHomeBase((aircraft_t *)mission->data);
+		if (won)
+			/* return to collect goods and aliens from the crashed aircraft */
+			B_DumpAircraftToHomeBase((aircraft_t *)mission->data);
 		AIR_DestroyAircraft((aircraft_t *)mission->data);
 	}
 

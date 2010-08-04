@@ -322,6 +322,7 @@ int B_AddToStorage(base_t* base, const objDef_t *obj, int amount);
 
 /* aircraft functions */
 void B_AircraftReturnedToHomeBase(aircraft_t* aircraft);
+void B_DumpAircraftToHomeBase(aircraft_t *aircraft);
 
 /* capacity functions */
 void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
