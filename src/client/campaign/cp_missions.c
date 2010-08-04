@@ -735,6 +735,42 @@ void CP_MissionRemoveFromGeoscape (mission_t *mission)
 }
 
 /**
+ * @brief Decides which message level to take for the given mission
+ * @param[in] mission The mission to chose the message level for
+ * @return The message level
+ */
+static inline messageType_t CP_MissionGetMessageLevel (const mission_t *mission)
+{
+	switch (mission->stage) {
+	case STAGE_BASE_ATTACK:
+		return MSG_BASEATTACK;
+	case STAGE_TERROR_MISSION:
+		return MSG_TERRORSITE;
+	default:
+		break;
+	}
+
+	if (mission->crashed)
+		return MSG_CRASHSITE;
+	return MSG_STANDARD;
+}
+
+/**
+ * @brief Assembles a message that is send to the gamer once the given mission is added to geoscape
+ * @param[in] mission The mission that was added to the geoscape and for that a message should be created
+ * @return The pointer to the static buffer that holds the message.
+ */
+static inline const char *CP_MissionGetMessage (const mission_t *mission)
+{
+	if (mission->category == INTERESTCATEGORY_RESCUE)
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Go on a rescue mission at %s. You might some of your soldiers alive."), mission->location);
+	else
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Alien activity has been detected in %s."), mission->location);
+
+	return cp_messageBuffer;
+}
+
+/**
  * @brief Add a mission to geoscape: make it visible and stop time
  * @param[in] mission Pointer to added mission.
  * @param[in] force true if the mission should be added even for mission needing a probabilty test to be seen.
@@ -756,11 +792,7 @@ void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
 #endif
 
 	/* Notify the player */
-	if (mission->category == INTERESTCATEGORY_RESCUE)
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Some soldiers survived, go and rescue them at %s."), mission->location);
-	else
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Alien activity has been detected in %s."), mission->location);
-	MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessage(_("Notice"), CP_MissionGetMessage(mission), qfalse, CP_MissionGetMessageLevel(mission), NULL);
 
 	mission->onGeoscape = qtrue;
 	CL_GameTimeStop();
