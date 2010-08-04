@@ -371,7 +371,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 	return qtrue;
 }
 
-qboolean MP_LoadDefaultTeamMultiplayer(void)
+qboolean MP_LoadDefaultTeamMultiplayer (void)
 {
 	return MP_LoadTeamMultiplayer("save/team0.mpt");
 }
