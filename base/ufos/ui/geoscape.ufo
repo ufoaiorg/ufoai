@@ -854,8 +854,8 @@ window popup_baseattack
 
 	func listen_mission
 	{
-		cmd "game_go"
-		cmd "mn_removelistener equipment@onClose <path:this>"
+		cmd "game_go;"
+		cmd "mn_removelistener equipment@onClose <path:this>;"
 	}
 	cmpPopupButton bt_go
 	{
