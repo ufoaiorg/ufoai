@@ -1221,7 +1221,7 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft)
  * @sa CP_MissionEnd
  * @sa AL_CollectingAliens
  */
-void CL_GameAutoGo (mission_t *mis)
+void CL_GameAutoGo (mission_t *mission)
 {
 	qboolean won;
 	float winProbability;
@@ -1230,29 +1230,29 @@ void CL_GameAutoGo (mission_t *mis)
 	 * note that ccs.interceptAircraft is a fake aircraft for base attack missions */
 	aircraft_t *aircraft = ccs.interceptAircraft;
 
-	assert(mis);
+	assert(mission);
 
-	CP_CreateBattleParameters(mis, &ccs.battleParameters);
+	CP_CreateBattleParameters(mission, &ccs.battleParameters);
 
 	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo: No update after automission\n");
 		return;
 	}
 
-	if (mis->stage != STAGE_BASE_ATTACK) {
-		if (!mis->active) {
+	if (mission->stage != STAGE_BASE_ATTACK) {
+		if (!mission->active) {
 			MS_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
 			return;
-		} else if (mis->mapDef->storyRelated) {
+		} else if (mission->mapDef->storyRelated) {
 			Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
 			/* ensure, that the automatic button is no longer visible */
 			Cvar_Set("cp_mission_autogo_available", "0");
 			return;
 		}
 
-		winProbability = CP_GetWinProbabilty(mis, NULL, aircraft);
+		winProbability = CP_GetWinProbabilty(mission, NULL, aircraft);
 	} else {
-		winProbability = CP_GetWinProbabilty(mis, (base_t *)mis->data, NULL);
+		winProbability = CP_GetWinProbabilty(mission, (base_t *)mission->data, NULL);
 	}
 
 	UI_PopWindow(qfalse);
@@ -1260,14 +1260,14 @@ void CL_GameAutoGo (mission_t *mis)
 	won = frand() < winProbability;
 
 	/* update nation opinions */
-	CL_HandleNationData(won, mis);
+	CL_HandleNationData(won, mission);
 
 	CP_CheckLostCondition();
 
 	CL_AutoMissionAlienCollect(aircraft);
 
 	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(mis, won);
+	CP_ExecuteMissionTrigger(mission, won);
 
 	/* if a UFO has been recovered, send it to a base */
 	if (won && ccs.missionResults.recovery) {
@@ -1289,9 +1289,9 @@ void CL_GameAutoGo (mission_t *mis)
 	}
 
 	/* handle base attack mission */
-	if (mis->stage == STAGE_BASE_ATTACK) {
+	if (mission->stage == STAGE_BASE_ATTACK) {
 		if (won) {
-			const base_t *base = (base_t*)mis->data;
+			const base_t *base = (base_t*)mission->data;
 			assert(base);
 
 			/* fake aircraft returns the collected goods and aliens */
@@ -1299,15 +1299,15 @@ void CL_GameAutoGo (mission_t *mis)
 
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-			CP_BaseAttackMissionIsFailure(mis);
+			CP_BaseAttackMissionIsFailure(mission);
 			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else {
-			CP_BaseAttackMissionDestroyBase(mis);
+			CP_BaseAttackMissionDestroyBase(mission);
 		}
 	} else {
 		AIR_AircraftReturnToBase(aircraft);
 		if (won)
-			CP_MissionIsOver(mis);
+			CP_MissionIsOver(mission);
 	}
 
 	if (won)

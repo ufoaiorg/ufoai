@@ -1039,6 +1039,7 @@ void CP_MissionStageEnd (mission_t *mission)
 
 	/* Crash mission is on the map for too long: aliens die or go away. End mission */
 	if (mission->crashed) {
+		/** @todo wouldn't that mean that we've won the battle? but in fact we did nothing, no? */
 		CP_MissionIsOver(mission);
 		return;
 	}
@@ -1078,7 +1079,7 @@ void CP_MissionStageEnd (mission_t *mission)
 }
 
 /**
- * @brief Mission is finished because Phalanx team ended it.
+ * @brief Mission is finished because Phalanx team won it.
  * @param[in] mission Pointer to the mission that is ended.
  */
 void CP_MissionIsOver (mission_t *mission)
@@ -1126,11 +1127,14 @@ void CP_MissionIsOver (mission_t *mission)
 	case INTERESTCATEGORY_ALIENBASE:
 		CP_BuildBaseMissionBaseDestroyed(mission);
 		break;
-	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_RESCUE:
+		CP_MissionRemove(mission);
+		break;
+	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
 		Com_Printf("CP_MissionIsOver: Invalid type of mission (%i), remove mission\n", mission->category);
 		CP_MissionRemove(mission);
+		break;
 	}
 }
 
