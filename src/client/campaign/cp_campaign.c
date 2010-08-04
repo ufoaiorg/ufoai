@@ -766,12 +766,9 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 {
 	mxml_node_t *campaignNode;
 	mxml_node_t *mapNode;
-	mxml_node_t *missions;
-	mxml_node_t *interests;
 	const char *name;
 	campaign_t *campaign;
 	mxml_node_t *mapDefStat;
-	int i;
 
 	campaignNode = mxml_GetNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 	if (!campaignNode) {
@@ -821,55 +818,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	cl_geoscape_overlay->integer = mxml_GetInt(mapNode, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, 0);
 	radarOverlayWasSet = mxml_GetBool(mapNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, qfalse);
  	ccs.XVIShowMap = mxml_GetBool(mapNode, SAVE_CAMPAIGN_XVISHOWMAP, qfalse);
-
-	/* read interest values */
-	interests = mxml_GetNode(parent, SAVE_CAMPAIGN_INTERESTS);
-	if (!interests) {
-		Com_Printf("Did not find interests entry in xml!\n");
-		return qfalse;
-	}
-	if (!CP_LoadInterestsXML(interests))
-		return qfalse;
-
 	CP_UpdateXVIMapButton();
-
-	/* read missions */
-	missions = mxml_GetNode(parent, SAVE_CAMPAIGN_MISSIONS);
-	if (!missions) {
-		Com_Printf("Did not find missions entry in xml!\n");
-		return qfalse;
-	}
-	if (!CP_LoadMissionsXML(missions))
-		return qfalse;
-
-	/* and now fix the mission pointers for e.g. ufocrash sites
-	* this is needed because the base load function which loads the aircraft
-	* doesn't know anything (at that stage) about the new missions that were
-	* add in this load function */
-	for (i = 0; i < MAX_BASES; i++) {
-		aircraft_t *aircraft;
-		base_t *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
-
-		aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-			if (aircraft->status == AIR_MISSION) {
-				assert(aircraft->missionID);
-				aircraft->mission = CP_GetMissionByID(aircraft->missionID);
-
-				/* not found */
-				if (!aircraft->mission) {
-					Com_Printf("Could not link mission '%s' in aircraft\n", aircraft->missionID);
-					Mem_Free(aircraft->missionID);
-					aircraft->missionID = NULL;
-					return qfalse;
-				}
-				Mem_Free(aircraft->missionID);
-				aircraft->missionID = NULL;
-			}
-		}
-	}
 
 	mapDefStat = mxml_GetNode(campaignNode, SAVE_CAMPAIGN_MAPDEFSTAT);
 	if (mapDefStat && !CP_LoadMapDefStatXML(mapDefStat))
@@ -906,8 +855,6 @@ static qboolean CP_SaveMapDefStatXML (mxml_node_t *parent)
 qboolean CP_SaveXML (mxml_node_t *parent)
 {
 	mxml_node_t *campaign;
-	mxml_node_t *missions;
-	mxml_node_t *interests;
 	mxml_node_t *map;
 	mxml_node_t *mapDefStat;
 
@@ -932,16 +879,6 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	mxml_AddShort(map, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, cl_geoscape_overlay->integer);
 	mxml_AddBool(map, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
 	mxml_AddBool(map, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
-
-	/* Interests */
-	interests = mxml_AddNode(parent, SAVE_CAMPAIGN_INTERESTS);
-	if (!CP_SaveInterestsXML(interests))
-		return qfalse;
-
-	/* store missions */
-	missions = mxml_AddNode(parent, SAVE_CAMPAIGN_MISSIONS);
-	if (!CP_SaveMissionsXML(missions))
-		return qfalse;
 
 	mapDefStat = mxml_AddNode(parent, SAVE_CAMPAIGN_MAPDEFSTAT);
 	if (!CP_SaveMapDefStatXML(mapDefStat))

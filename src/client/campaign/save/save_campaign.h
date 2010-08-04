@@ -76,7 +76,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 DTD:
 
-<!ELEMENT campaign (map interests missions date mapDefStat)>
+<!ELEMENT campaign (map date mapDefStat)>
 <!ATTLIST campaign
 	id							CDATA	#REQUIRED
 	credits						CDATA	'0'

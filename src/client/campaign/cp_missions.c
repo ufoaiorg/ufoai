@@ -1971,6 +1971,7 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 {
 	mxml_node_t *node;
 	qboolean success = qtrue;
+	int i;
 
 	Com_RegisterConstList(saveInterestConstants);
 	Com_RegisterConstList(saveMissionConstants);
@@ -2108,6 +2109,36 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 	}
 	Com_UnregisterConstList(saveInterestConstants);
 	Com_UnregisterConstList(saveMissionConstants);
+
+	/* and now fix the mission pointers for e.g. ufocrash sites
+	* this is needed because the base load function which loads the aircraft
+	* doesn't know anything (at that stage) about the new missions that were
+	* add in this load function */
+	for (i = 0; i < MAX_BASES; i++) {
+		aircraft_t *aircraft;
+		base_t *base = B_GetFoundedBaseByIDX(i);
+		if (!base)
+			continue;
+
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
+			if (aircraft->status == AIR_MISSION) {
+				assert(aircraft->missionID);
+				aircraft->mission = CP_GetMissionByID(aircraft->missionID);
+
+				/* not found */
+				if (!aircraft->mission) {
+					Com_Printf("Could not link mission '%s' in aircraft\n", aircraft->missionID);
+					Mem_Free(aircraft->missionID);
+					aircraft->missionID = NULL;
+					return qfalse;
+				}
+				Mem_Free(aircraft->missionID);
+				aircraft->missionID = NULL;
+			}
+		}
+	}
+
 	return success;
 }
 

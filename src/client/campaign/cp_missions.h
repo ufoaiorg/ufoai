@@ -70,7 +70,4 @@ void CP_MissionIsOverByUFO(aircraft_t *ufocraft);
 void CP_MissionEnd(mission_t* mission, qboolean won);
 void CP_MissionEndActions(mission_t *mission, aircraft_t *aircraft, qboolean won);
 
-qboolean CP_LoadMissionsXML(mxml_node_t *parent);
-qboolean CP_SaveMissionsXML(mxml_node_t *parent);
-
 #endif
