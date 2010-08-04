@@ -600,8 +600,6 @@ void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 void CP_UFOProceedMission(aircraft_t *ufocraft);
 qboolean CP_IsRunning(void);
 
-base_t *CP_GetMissionBase(void);
-
 mission_t *CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
 qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos);
 void CP_StartSelectedMission(void);

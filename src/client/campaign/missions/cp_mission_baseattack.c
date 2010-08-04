@@ -226,7 +226,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	base->aircraftCurrent = &baseAttackFakeAircraft;
 	ccs.missionAircraft = &baseAttackFakeAircraft;
 	/** @todo remove me - this is not needed because we are using the base->aircraftCurrent
-	 * pointer for resolving the aircraft*/
+	 * pointer for resolving the aircraft - only CL_GameAutoGo needs this */
 	ccs.interceptAircraft = &baseAttackFakeAircraft;	/* needed for updating soldier stats sa CL_UpdateCharacterStats*/
 	B_SetCurrentSelectedBase(base);						/* needed for equipment menu */
 

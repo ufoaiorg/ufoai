@@ -1149,6 +1149,42 @@ void CP_MissionIsOverByUFO (aircraft_t *ufocraft)
 }
 
 /**
+ *
+ * @param[in,out] mission
+ * @param[in,out] aircraft
+ * @param[in] won
+ */
+void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, qboolean won)
+{
+	/* handle base attack mission */
+	if (mission->stage == STAGE_BASE_ATTACK) {
+		if (won) {
+			/* fake an aircraft return to collect goods and aliens */
+			B_DumpAircraftToHomeBase(aircraft);
+
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Defence of base: %s successful!"),
+					aircraft->homebase->name);
+			MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+			CP_BaseAttackMissionIsFailure(mission);
+		} else
+			CP_BaseAttackMissionDestroyBase(mission);
+
+		return;
+	}
+
+	if (mission->category == INTERESTCATEGORY_RESCUE) {
+		if (won)
+			/* return to collect goods and aliens from the crashed aircraft */
+			B_DumpAircraftToHomeBase((aircraft_t *)mission->data);
+		AIR_DestroyAircraft((aircraft_t *)mission->data);
+	}
+
+	AIR_AircraftReturnToBase(aircraft);
+	if (won)
+		CP_MissionIsOver(mission);
+}
+
+/**
  * @sa CL_GameAutoGo
  */
 void CP_MissionEnd (mission_t* mission, qboolean won)
@@ -1167,7 +1203,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 		aircraft = base->aircraftCurrent;
 	} else {
 		aircraft = ccs.missionAircraft;
-		base = CP_GetMissionBase();
+		base = aircraft->homebase;
 	}
 
 	/* add the looted goods to base storage and market */
@@ -1218,31 +1254,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 		/* The aircraft can be safely sent to its homebase without losing aliens */
 	}
 
-	/* handle base attack mission */
-	if (mission->stage == STAGE_BASE_ATTACK) {
-		if (won) {
-			/* fake an aircraft return to collect goods and aliens */
-			B_DumpAircraftToHomeBase(aircraft);
-
-			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Defence of base: %s successful!"), base->name);
-			MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-			CP_BaseAttackMissionIsFailure(mission);
-		} else
-			CP_BaseAttackMissionDestroyBase(mission);
-
-		return;
-	}
-
-	if (mission->category == INTERESTCATEGORY_RESCUE) {
-		if (won)
-			/* return to collect goods and aliens from the crashed aircraft */
-			B_DumpAircraftToHomeBase((aircraft_t *)mission->data);
-		AIR_DestroyAircraft((aircraft_t *)mission->data);
-	}
-
-	AIR_AircraftReturnToBase(aircraft);
-	if (won)
-		CP_MissionIsOver(mission);
+	CP_MissionEndActions(mission, aircraft, won);
 }
 
 /**

@@ -417,8 +417,8 @@ static void CL_TeamListDebug_f (void)
 	aircraft_t *aircraft;
 	linkedList_t *l;
 
-	base = CP_GetMissionBase();
 	aircraft = ccs.missionAircraft;
+	base = aircraft->homebase;
 
 	if (!base) {
 		Com_Printf("Build and select a base first\n");

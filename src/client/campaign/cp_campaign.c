@@ -1029,7 +1029,7 @@ void CP_StartSelectedMission (void)
 		return;
 
 	aircraft = ccs.missionAircraft;
-	base = CP_GetMissionBase();
+	base = aircraft->homebase;
 
 	if (!ccs.selectedMission)
 		ccs.selectedMission = aircraft->mission;
@@ -1199,13 +1199,15 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft)
 	MS_AddNewMessage(_("Notice"), _("Collected dead alien bodies"), qfalse, MSG_STANDARD, NULL);
 
 	while (aliens > 0) {
-		for (i = 0; i < ccs.battleParameters.alienTeamGroup->numAlienTeams; i++) {
-			const teamDef_t *teamDef = ccs.battleParameters.alienTeamGroup->alienTeams[i];
+		battleParam_t *param = &ccs.battleParameters;
+		for (i = 0; i < param->alienTeamGroup->numAlienTeams; i++) {
+			const alienTeamGroup_t *group = param->alienTeamGroup;
+			const teamDef_t *teamDef = group->alienTeams[i];
 			const int addDeadAlienAmount = aliens > 1 ? rand() % aliens : aliens;
 			if (!addDeadAlienAmount)
 				continue;
 			assert(i < MAX_CARGO);
-			assert(ccs.battleParameters.alienTeamGroup->alienTeams[i]);
+			assert(group->alienTeams[i]);
 			AL_AddAlienTypeToAircraftCargo(aircraft, teamDef, addDeadAlienAmount, qtrue);
 			aliens -= addDeadAlienAmount;
 			if (!aliens)
@@ -1225,6 +1227,7 @@ void CL_GameAutoGo (mission_t *mission)
 {
 	qboolean won;
 	float winProbability;
+	base_t *base;
 	/* maybe ccs.interceptAircraft is changed in some functions we call here
 	 * so store a local pointer to guarantee that we access the right aircraft
 	 * note that ccs.interceptAircraft is a fake aircraft for base attack missions */
@@ -1238,6 +1241,8 @@ void CL_GameAutoGo (mission_t *mission)
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo: No update after automission\n");
 		return;
 	}
+
+	base = aircraft->homebase;
 
 	if (mission->stage != STAGE_BASE_ATTACK) {
 		if (!mission->active) {
@@ -1288,27 +1293,7 @@ void CL_GameAutoGo (mission_t *mission)
 		UI_PushWindow("won", NULL);
 	}
 
-	/* handle base attack mission */
-	if (mission->stage == STAGE_BASE_ATTACK) {
-		if (won) {
-			const base_t *base = (base_t*)mission->data;
-			assert(base);
-
-			/* fake aircraft returns the collected goods and aliens */
-			B_DumpAircraftToHomeBase(aircraft);
-
-			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Defence of base: %s successful!"), base->name);
-			MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-			CP_BaseAttackMissionIsFailure(mission);
-			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
-		} else {
-			CP_BaseAttackMissionDestroyBase(mission);
-		}
-	} else {
-		AIR_AircraftReturnToBase(aircraft);
-		if (won)
-			CP_MissionIsOver(mission);
-	}
+	CP_MissionEndActions(mission, aircraft, won);
 
 	if (won)
 		MS_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
@@ -1792,20 +1777,6 @@ static void CL_DebugChangeCharacterStats_f (void)
 }
 
 #endif /* DEBUG */
-
-/**
- * @brief Returns "homebase" of the mission.
- * @note see struct client_static_s
- * @note This might be @c NULL for skirmish and multiplayer
- */
-base_t *CP_GetMissionBase (void)
-{
-	if (!ccs.missionAircraft)
-		Com_Error(ERR_DROP, "CP_GetMissionBase: No mission aircraft given");
-	if (!ccs.missionAircraft->homebase)
-		Com_Error(ERR_DROP, "CP_GetMissionBase: Mission aircraft has no homebase set");
-	return ccs.missionAircraft->homebase;
-}
 
 /**
  * @brief Determines a random position on geoscape

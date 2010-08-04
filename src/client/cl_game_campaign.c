@@ -339,7 +339,7 @@ qboolean GAME_CP_Spawn (void)
 		cl.chrList.num++;
 	}
 
-	base = CP_GetMissionBase();
+	base = aircraft->homebase;
 
 	/* clean temp inventory */
 	CL_CleanTempInventory(base);
