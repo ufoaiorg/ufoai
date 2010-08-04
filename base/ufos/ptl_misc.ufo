@@ -243,26 +243,98 @@ particle fire_explosion
 	}
 }
 
+// particle explosion_1
+// {
+// 	init
+// 	{
+// 		frame			0
+// 		endframe		10
+// 		image			+sfx/uexp_
+// 		blend			blend
+// 		style			facing
+// 		framefade		in
+// 		lightcolor		"1 0.4 0.4"
+// 		lightintensity	-0.5
+// 		size			"170 170"
+// 		fps				8.0
+// 		tps				0.8
+// 		push			*v
+// 		mul				float 30.0
+// 		add				*s
+// 		pop				*s
+// 		v				"0 0 0"
+// 	}
+// 	think { kill }
+// }
+
 particle explosion_1
 {
 	init
 	{
-		frame			0
-		endframe		10
-		image			+sfx/uexp_
-		blend			blend
-		style			facing
-		framefade		in
-		lightcolor		"1 0.4 0.4"
-		lightintensity	-0.5
-		size			"170 170"
-		fps				8.0
-		tps				0.8
-		push			*v
-		mul				float 30.0
-		add				*s
-		pop				*s
-		v				"0 0 0"
+		push   int 25
+		nspawn explosionFlame
+
+		push   int 25
+		nspawn explosionVolumetric
+
+		lightcolor "0.3 1.0 3.0"
+		lightintensity 0.2
+	}
+	think { kill }
+}
+
+particle explosionFlame
+{
+	init
+	{
+		image  sfx/explosions2
+		blend  add
+		style  facing
+		thinkfade  out
+		size   "70 90"
+
+		a      "0 0 0"
+		crand  vector "30 30 30"
+		add    vector "0 0 30"
+		pop    *v
+
+		crand  vector "15 15 15"
+		add    *s
+		pop    *s
+
+		rand   float 1.5
+		add    float 1.5
+		pop    *tps
+
+		lightcolor "0.3 0.2 0.07"
+	}
+	think { kill }
+}
+
+particle explosionVolumetric
+{
+	init
+	{
+		image  sfx/uexp_04
+		blend  blend
+		style  facing
+		thinkfade  out
+		size   "70 70"
+
+		a      "0 0 0"
+		crand  vector "30 30 30"
+		add    vector "0 0 30"
+		pop    *v
+
+		crand  vector "15 15 15"
+		add    *s
+		pop    *s
+
+		rand   float 1.5
+		add    float 1.5
+		pop    *tps
+
+		lightcolor "0.3 0.2 0.07"
 	}
 	think { kill }
 }
@@ -271,28 +343,36 @@ particle explosion_2
 {
 	init
 	{
-		frame			0
-		endframe		10
-		image			+sfx/uexp_
-		blend			blend
-		style			facing
-		lightcolor		"0.4 0.4 1.0"
-		lightintensity	0.5
-		lightsustain	1.0
-		framefade		out
-		lightcolor		"1 0.4 0.4"
-		lightintensity	-0.5
-		size			"170 170"
-		fps				8.0
-		tps				0.8
-		push			*v
-		mul				float 30.0
-		add				*s
-		pop				*s
-		v				"0 0 0"
+		kill
 	}
-	think { kill }
 }
+
+// particle explosion_2
+// {
+// 	init
+// 	{
+// 		frame			0
+// 		endframe		10
+// 		image			+sfx/uexp_
+// 		blend			blend
+// 		style			facing
+// 		lightcolor		"0.4 0.4 1.0"
+// 		lightintensity	0.5
+// 		lightsustain	1.0
+// 		framefade		out
+// 		lightcolor		"1 0.4 0.4"
+// 		lightintensity	-0.5
+// 		size			"170 170"
+// 		fps				8.0
+// 		tps				0.8
+// 		push			*v
+// 		mul				float 30.0
+// 		add				*s
+// 		pop				*s
+// 		v				"0 0 0"
+// 	}
+// 	think { kill }
+// }
 
 particle flash
 {
