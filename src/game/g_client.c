@@ -1004,8 +1004,9 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 		ent->nextthink = 1;
 	}
 
-	if (ent->spawnflags & STATE_DEAD) {
-		ent->HP = 0;
+	if (ent->spawnflags & STATE_STUN) {
+		if (ent->spawnflags & STATE_DEAD)
+			ent->HP = 0;
 		ent->think = G_ThinkActorDieAfterSpawn;
 		ent->nextthink = 1;
 	}
