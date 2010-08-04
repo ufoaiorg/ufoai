@@ -1051,7 +1051,7 @@ void CP_StartSelectedMission (void)
 	SV_Shutdown("Server quit.", qfalse);
 	CL_Disconnect();
 
-	CP_CreateBattleParameters(mis);
+	CP_CreateBattleParameters(mis, &ccs.battleParameters);
 	CP_SetMissionVars(mis);
 	/* Set the states of mission Cvars to proper values. */
 	Cvar_SetValue("mission_uforecovered", 0);
@@ -1225,7 +1225,7 @@ void CL_GameAutoGo (mission_t *mis)
 
 	assert(mis);
 
-	CP_CreateBattleParameters(mis);
+	CP_CreateBattleParameters(mis, &ccs.battleParameters);
 
 	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo: No update after automission\n");

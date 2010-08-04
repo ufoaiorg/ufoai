@@ -307,7 +307,7 @@ static void CP_CreateCivilianTeam (const mission_t *mission)
  * @sa CP_CreateAlienTeam
  * @sa CP_CreateCivilianTeam
  */
-void CP_CreateBattleParameters (mission_t *mission)
+void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param)
 {
 	const char *zoneType;
 	const byte *color;
@@ -318,35 +318,36 @@ void CP_CreateBattleParameters (mission_t *mission)
 	CP_CreateCivilianTeam(mission);
 
 	/* Reset parameters */
-	if (ccs.battleParameters.param) {
-		Mem_Free(ccs.battleParameters.param);
-		ccs.battleParameters.param = NULL;
+	if (param->param) {
+		Mem_Free(param->param);
+		param->param = NULL;
 	}
 
-	ccs.battleParameters.mission = mission;
+	param->mission = mission;
 	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN);
 	zoneType = MAP_GetTerrainType(color);
-	ccs.battleParameters.zoneType = zoneType; /* store to terrain type for texture replacement */
+	param->zoneType = zoneType; /* store to terrain type for texture replacement */
 	/* Is there a UFO to recover ? */
-	if (ccs.selectedMission->ufo) {
+	if (mission->ufo) {
+		const aircraft_t *ufo = mission->ufo;
 		const char *shortUFOType;
-		float UFOCondition;
+		float ufoCondition;
 
 		if (mission->crashed) {
-			shortUFOType = Com_UFOCrashedTypeToShortName(ccs.selectedMission->ufo->ufotype);
+			shortUFOType = Com_UFOCrashedTypeToShortName(ufo->ufotype);
 			/* Set random map UFO if this is a random map */
 			if (mission->mapDef->map[0] == '+') {
 				/* set battleParameters.param to the ufo type: used for ufocrash random map */
 				if (!strcmp(mission->mapDef->id, "ufocrash"))
-					ccs.battleParameters.param = Mem_PoolStrDup(shortUFOType, cp_campaignPool, 0);
+					param->param = Mem_PoolStrDup(shortUFOType, cp_campaignPool, 0);
 			}
-			UFOCondition = frand() * (MAX_CRASHEDUFO_CONDITION - MIN_CRASHEDUFO_CONDITION) + MIN_CRASHEDUFO_CONDITION;
+			ufoCondition = frand() * (MAX_CRASHEDUFO_CONDITION - MIN_CRASHEDUFO_CONDITION) + MIN_CRASHEDUFO_CONDITION;
 		} else {
-			shortUFOType = Com_UFOTypeToShortName(ccs.selectedMission->ufo->ufotype);
-			UFOCondition = 1.0f;
+			shortUFOType = Com_UFOTypeToShortName(ufo->ufotype);
+			ufoCondition = 1.0f;
 		}
 
-		Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery_init %s %f", mission->ufo->id, UFOCondition);
+		Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery_init %s %f", ufo->id, ufoCondition);
 		/* Set random map UFO if this is a random map */
 		if (mission->mapDef->map[0] == '+') {
 			/* set rm_ufo to the ufo type used */
