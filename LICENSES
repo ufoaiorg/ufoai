@@ -927,6 +927,7 @@ base/models/objects/abrams/abrams.png | GNU General Public License 2.0 or later 
 base/models/objects/abrams/abrams_bottom.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_bump.png | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_gun.obj | GNU General Public License 2.0 or later | feanix
+base/models/objects/abrams/abrams_sm.png | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_spec.png | GNU General Public License 2.0 or later | feanix
 base/models/objects/abrams/abrams_turret.obj | GNU General Public License 2.0 or later | feanix
 base/models/objects/aircraft/airplane/airplane_1.png | GNU General Public License 2.0 or later | Willem Sitters
