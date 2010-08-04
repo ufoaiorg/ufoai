@@ -828,7 +828,7 @@ static qboolean R_InitExtensions (void)
 	glGetIntegerv(GL_MAX_LIGHTS, &r_config.maxLights);
 	Com_Printf("max supported lights: %i\n", r_config.maxLights);
 
-	r_dynamic_lights = Cvar_Get("r_dynamic_lights", "4", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Sets max number of GL lightsources to use in shaders");
+	r_dynamic_lights = Cvar_Get("r_dynamic_lights", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Sets max number of GL lightsources to use in shaders");
 	Cvar_SetCheckFunction("r_dynamic_lights", R_CvarCheckDynamicLights);
 
 	glGetIntegerv(GL_MAX_TEXTURE_UNITS, &r_config.maxTextureUnits);
