@@ -231,7 +231,8 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 	 * use mission->initialOverallInterest and not ccs.overallInterest: the alien equipment should not change depending on
 	 * when you encounter it */
 	for (i = 0; i < csi.numEDs; i++) {
-		if (CP_IsAlienEquipmentSelectable(mission, &csi.eds[i]))
+		const equipDef_t *ed = &csi.eds[i];
+		if (CP_IsAlienEquipmentSelectable(mission, ed))
 			availableEquipDef++;
 	}
 
@@ -245,9 +246,10 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 
 	availableEquipDef = 0;
 	for (i = 0; i < csi.numEDs; i++) {
-		if (CP_IsAlienEquipmentSelectable(mission, &csi.eds[i])) {
+		const equipDef_t *ed = &csi.eds[i];
+		if (CP_IsAlienEquipmentSelectable(mission, ed)) {
 			if (availableEquipDef == randomNum) {
-				Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "%s", csi.eds[i].name);
+				Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "%s", ed->name);
 				break;
 			} else
 				availableEquipDef++;

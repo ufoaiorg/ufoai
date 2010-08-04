@@ -146,6 +146,57 @@ qboolean G_AddItemToFloor (const pos3_t pos, const char *itemID)
  * floor edict are full */
 /* #define ADJACENT */
 
+#ifdef ADJACENT
+static qboolean G_InventoryPlaceItemAdjacent (edict_t *ent)
+{
+	vec2_t oldPos; /* if we have to place it to adjacent  */
+	edict_t *floorAdjacent;
+	int i;
+
+	Vector2Copy(ent->pos, oldPos);
+	floorAdjacent = NULL;
+
+	for (i = 0; i < DIRECTIONS; i++) {
+		/** @todo Check whether movement is possible here - otherwise don't use this field */
+		/* extend pos with the direction vectors */
+		Vector2Set(ent->pos, ent->pos[0] + dvecs[i][0], ent->pos[0] + dvecs[i][1]);
+		/* now try to get a floor entity for that new location */
+		floorAdjacent = G_GetFloorItems(ent);
+		if (!floorAdjacent) {
+			floorAdjacent = G_SpawnFloor(ent->pos);
+		} else {
+			/* destroy this edict (send this event to all clients that see the edict) */
+			G_EventPerish(floorAdjacent);
+			floorAdjacent->visflags = 0;
+		}
+
+		INVSH_FindSpace(&floorAdjacent->i, &ic->item, INVDEF(gi.csi->idFloor), &x, &y, ic);
+		if (x != NONE) {
+			ic->x = x;
+			ic->y = y;
+			ic->next = FLOOR(floorAdjacent);
+			FLOOR(floorAdjacent) = ic;
+			break;
+		}
+		/* restore original pos */
+		Vector2Copy(oldPos, ent->pos);
+	}
+
+	/* added to adjacent pos? */
+	if (i < DIRECTIONS) {
+		/* restore original pos - if no free space, this was done
+		 * already in the for loop */
+		Vector2Copy(oldPos, ent->pos);
+		return qfalse;
+	}
+
+	if (floorAdjacent)
+		G_CheckVis(floorAdjacent, qtrue);
+
+	return qtrue;
+}
+#endif
+
 /**
  * @brief Move the whole given inventory to the floor and destroy the items that do not fit there.
  * @param[in] ent Pointer to an edict_t being an actor.
@@ -157,10 +208,6 @@ void G_InventoryToFloor (edict_t *ent)
 	containerIndex_t container;
 	edict_t *floor;
 	item_t item;
-#ifdef ADJACENT
-	edict_t *floorAdjacent;
-	int i;
-#endif
 
 	/* check for items */
 	for (container = 0; container < gi.csi->numIDs; container++) {
@@ -199,9 +246,6 @@ void G_InventoryToFloor (edict_t *ent)
 
 		/* now cycle through all items for the container of the character (or the entity) */
 		for (ic = CONTAINER(ent, container); ic; ic = next) {
-#ifdef ADJACENT
-			vec2_t oldPos; /* if we have to place it to adjacent  */
-#endif
 			/* Save the next inv-list before it gets overwritten below.
 			 * Do not put this in the "for" statement,
 			 * unless you want an endless loop. ;) */
@@ -217,39 +261,7 @@ void G_InventoryToFloor (edict_t *ent)
 				gi.Error("Could not add item '%s' from inventory %i of entity %i to floor container",
 						ic->item.t->id, container, ent->number);
 #ifdef ADJACENT
-				Vector2Copy(ent->pos, oldPos);
-				for (i = 0; i < DIRECTIONS; i++) {
-					/** @todo Check whether movement is possible here - otherwise don't use this field */
-					/* extend pos with the direction vectors */
-					Vector2Set(ent->pos, ent->pos[0] + dvecs[i][0], ent->pos[0] + dvecs[i][1]);
-					/* now try to get a floor entity for that new location */
-					floorAdjacent = G_GetFloorItems(ent);
-					if (!floorAdjacent) {
-						floorAdjacent = G_SpawnFloor(ent->pos);
-					} else {
-						/* destroy this edict (send this event to all clients that see the edict) */
-						G_EventPerish(floorAdjacent);
-						floorAdjacent->visflags = 0;
-					}
-
-					INVSH_FindSpace(&floorAdjacent->i, &ic->item, INVDEF(gi.csi->idFloor], &x, &y, ic);
-					if (x != NONE) {
-						ic->x = x;
-						ic->y = y;
-						ic->next = FLOOR(floorAdjacent);
-						FLOOR(floorAdjacent) = ic;
-						break;
-					}
-					/* restore original pos */
-					Vector2Copy(oldPos, ent->pos);
-				}
-				/* added to adjacent pos? */
-				if (i < DIRECTIONS) {
-					/* restore original pos - if no free space, this was done
-					 * already in the for loop */
-					Vector2Copy(oldPos, ent->pos);
-					continue;
-				}
+			G_InventoryPlaceItemAdjacent(ent);
 #endif
 		}
 		/* destroy link */
@@ -260,10 +272,6 @@ void G_InventoryToFloor (edict_t *ent)
 
 	/* send item info to the clients */
 	G_CheckVis(floor, qtrue);
-#ifdef ADJACENT
-	if (floorAdjacent)
-		G_CheckVis(floorAdjacent, qtrue);
-#endif
 }
 
 /**
