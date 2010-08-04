@@ -612,6 +612,7 @@ qboolean R_SetMode (void)
 static qboolean R_InitExtensions (void)
 {
 	GLenum err;
+	int tmpInteger;
 
 	/* multitexture */
 	qglActiveTexture = NULL;
@@ -841,6 +842,15 @@ static qboolean R_InitExtensions (void)
 
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &r_config.maxVertexAttribs);
 	Com_Printf("max vertex attributes: %i\n", r_config.maxVertexAttribs);
+
+	glGetIntegerv(GL_MAX_VARYING_FLOATS, &tmpInteger);
+	Com_Printf("max varying floats: %i\n", tmpInteger);
+
+	glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS, &tmpInteger);
+	Com_Printf("max fragment uniform components: %i\n", tmpInteger);
+
+	glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &tmpInteger);
+	Com_Printf("max vertex uniform components: %i\n", tmpInteger);
 
 	/* reset gl error state */
 	R_CheckError();
