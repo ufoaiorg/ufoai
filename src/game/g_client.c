@@ -995,6 +995,7 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 	ent->pnum = player->num;
 	ent->chr.fieldSize = actorSize;
 	ent->fieldSize = ent->chr.fieldSize;
+	ent->flags |= FL_DESTROYABLE;
 
 	gi.LinkEdict(ent);
 
