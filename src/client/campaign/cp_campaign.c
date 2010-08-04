@@ -880,7 +880,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	mxml_AddBool(map, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
 	mxml_AddBool(map, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
 
-	mapDefStat = mxml_AddNode(parent, SAVE_CAMPAIGN_MAPDEFSTAT);
+	mapDefStat = mxml_AddNode(campaign, SAVE_CAMPAIGN_MAPDEFSTAT);
 	if (!CP_SaveMapDefStatXML(mapDefStat))
 		return qfalse;
 
