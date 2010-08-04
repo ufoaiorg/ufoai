@@ -137,6 +137,7 @@ typedef enum interestCategory_s {
 	INTERESTCATEGORY_ALIENBASE,		/**< Alien base already built on earth
 									 * @note This is not a mission alien can undertake, but the result of
 									 * INTERESTCATEGORY_BUILDING */
+	INTERESTCATEGORY_RESCUE,
 
 	INTERESTCATEGORY_MAX
 } interestCategory_t;
@@ -238,6 +239,7 @@ typedef struct battleParam_s {
 	const char *zoneType;							/**< Terrain type (used for texture replacement in some missions (base, ufocrash)) */
 	int aliens, civilians;			/**< number of aliens and civilians in that particular mission */
 	struct nation_s *nation;		/**< nation where the mission takes place */
+	int seed;						/**< the seed in case of a random map assembly - so we get the same map in case of a retry */
 } battleParam_t;
 
 /** @brief Structure with mission info needed to create results summary at menu won. */

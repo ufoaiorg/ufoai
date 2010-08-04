@@ -34,6 +34,7 @@
 // * craft_drop_firebird
 // * craft_drop_herakles
 // * craft_drop_raptor
+// * craft_drop_dragon
 
 ////////////////////////
 // INDUSTRIAL RANDOM MAPS
@@ -3611,6 +3612,37 @@ mapdef ufocrash
 		craft_crash_harvester
 		craft_crash_supply
 		craft_crash_bomber
+	}
+
+	aircraft
+	{
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_dragon
+		craft_drop_raptor
+	}
+}
+
+///////////////////////
+// RESCUE RANDOM MAPS
+///////////////////////
+
+mapdef rescue
+{
+	map				"+rescue"
+	multiplayer		false
+	description		"_Rescue mission."
+	storyrelated	false
+	maxaliens		30
+	hurtaliens		true
+	ufos
+	{
+		craft_ufo_scout
+		craft_ufo_fighter
+		craft_ufo_corrupter
+		craft_ufo_harvester
+		craft_ufo_supply
+		craft_ufo_bomber
 	}
 
 	aircraft

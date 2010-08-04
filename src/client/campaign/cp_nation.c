@@ -93,7 +93,8 @@ void NAT_UpdateHappinessForAllNations (void)
 				happinessFactor = HAPPINESS_ALIEN_MISSION_LOSS;
 				break;
 			default:
-				/* mission is not active on earth, skip this mission */
+				/* mission is not active on earth or does not have any influence
+				 * on the nation happiness, skip this mission */
 				continue;
 			}
 

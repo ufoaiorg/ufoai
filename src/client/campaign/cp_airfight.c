@@ -446,6 +446,9 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		/* notify UFOs that a phalanx aircraft has been destroyed */
 		UFO_NotifyPhalanxAircraftRemoved(aircraft);
 
+		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN)))
+			CP_SpawnRescueMission(aircraft, shooter);
+
 		/* Destroy the aircraft and everything onboard - the aircraft pointer
 		 * is no longer valid after this point */
 		AIR_DestroyAircraft(aircraft);

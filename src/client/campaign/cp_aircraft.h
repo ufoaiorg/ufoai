@@ -155,6 +155,7 @@ typedef enum aircraftStatus_s {
 	AIR_DROP,			/**< ready to drop down */
 	AIR_INTERCEPT,		/**< ready to intercept */
 	AIR_TRANSFER,		/**< being transfered */
+	AIR_CRASHED,		/**< crashed */
 	AIR_RETURNING		/**< returning to homebase */
 } aircraftStatus_t;
 

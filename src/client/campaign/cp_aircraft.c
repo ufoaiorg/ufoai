@@ -501,6 +501,7 @@ qboolean AIR_IsAircraftOnGeoscape (const aircraft_t * aircraft)
 	case AIR_REFUEL:
 	case AIR_HOME:
 	case AIR_TRANSFER:
+	case AIR_CRASHED:
 		return qfalse;
 	}
 

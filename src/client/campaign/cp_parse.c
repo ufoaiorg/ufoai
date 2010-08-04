@@ -53,6 +53,8 @@ static int CL_GetAlienMissionTypeByID (const char *type)
 		return INTERESTCATEGORY_HARVEST;
 	else if (!strcmp(type, "alienbase"))
 		return INTERESTCATEGORY_ALIENBASE;
+	else if (!strcmp(type, "rescue"))
+		return INTERESTCATEGORY_RESCUE;
 	else {
 		Com_Printf("CL_GetAlienMissionTypeByID: unknown alien mission category '%s'\n", type);
 		return INTERESTCATEGORY_NONE;

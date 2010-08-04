@@ -2562,6 +2562,11 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 
 	/* ship no longer has cargo aboard */
 	aircraft->itemTypes = 0;
+
+	/* Mark new technologies researchable. */
+	RS_MarkResearchable(qfalse, aircraft->homebase);
+	/* Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground */
+	B_UpdateStorageCap(aircraft->homebase);
 }
 
 /**
@@ -2584,15 +2589,10 @@ void B_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 	if (aircraft->type != AIRCRAFT_TRANSPORTER)
 		return;
 
-	assert(aircraft->homebase);
 	/* Add aliens to Alien Containment. */
 	AL_AddAliens(aircraft);
 	/* Sell collected items or add them to storage. */
 	B_SellOrAddItems(aircraft);
-	/* Mark new technologies researchable. */
-	RS_MarkResearchable(qfalse, aircraft->homebase);
-	/* Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground */
-	B_UpdateStorageCap(aircraft->homebase);
 
 	/* Now empty alien/item cargo just in case. */
 	cargo = AL_GetAircraftAlienCargo(aircraft);

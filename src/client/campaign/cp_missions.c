@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_shared.h"
 #include "../cl_renderer.h" /* refdef */
 #include "../cl_team.h"
+#include "../cl_game.h"
 #include "../menu/m_main.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
@@ -302,8 +303,10 @@ static void CP_CreateCivilianTeam (const mission_t *mission)
 }
 
 /**
- * @brief Create parameters needed for battle.
+ * @brief Create parameters needed for battle. This is the data that is used for starting
+ * the tactical part of the mission.
  * @param[in] mission Pointer to the mission that generates the battle
+ * @param[out] param The battle parameters to set
  * @sa CP_CreateAlienTeam
  * @sa CP_CreateCivilianTeam
  */
@@ -439,6 +442,9 @@ int MAP_GetIDXByMission (const mission_t *mis)
  */
 const char* CP_MissionToTypeString (const mission_t *mission)
 {
+	if (mission->category == INTERESTCATEGORY_RESCUE)
+		return _("Crashed aircraft");
+
 	switch (mission->stage) {
 	case STAGE_RECON_GROUND:
 	case STAGE_SPREAD_XVI:
@@ -483,6 +489,8 @@ static const char* CP_MissionCategoryToName (interestCategory_t category)
 		return "Harvest";
 	case INTERESTCATEGORY_ALIENBASE:
 		return "Alien base discovered";
+	case INTERESTCATEGORY_RESCUE:
+		return "Rescue mission";
 	case INTERESTCATEGORY_MAX:
 		return "Unknown mission category";
 	}
@@ -643,6 +651,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 	Com_DPrintf(DEBUG_CLIENT, "Mission is %s, %d\n", mission->id, mission->category);
 	switch (mission->category) {
 	/** @todo each category should have a its own model */
+	case INTERESTCATEGORY_RESCUE:
 	case INTERESTCATEGORY_RECON:
 	case INTERESTCATEGORY_XVI:
 	case INTERESTCATEGORY_HARVEST:
@@ -679,6 +688,9 @@ static missionDetectionStatus_t CP_CheckMissionVisibleOnGeoscape (const mission_
 		return MISDET_ALWAYS_DETECTED;
 
 	if (mission->ufo && mission->ufo->detected && mission->ufo->landed)
+		return MISDET_ALWAYS_DETECTED;
+
+	if (mission->category == INTERESTCATEGORY_RESCUE)
 		return MISDET_ALWAYS_DETECTED;
 
 	switch (mission->stage) {
@@ -744,7 +756,10 @@ void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
 #endif
 
 	/* Notify the player */
-	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Alien activity has been detected in %s."), mission->location);
+	if (mission->category == INTERESTCATEGORY_RESCUE)
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Some soldiers survived, go and rescue them at %s."), mission->location);
+	else
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Alien activity has been detected in %s."), mission->location);
 	MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 
 	mission->onGeoscape = qtrue;
@@ -1022,6 +1037,7 @@ void CP_MissionStageEnd (mission_t *mission)
 		CP_HarvestMissionNextStage(mission);
 		break;
 	case INTERESTCATEGORY_ALIENBASE:
+	case INTERESTCATEGORY_RESCUE:
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
 		Com_Printf("CP_MissionStageEnd: Invalid type of mission (%i), remove mission '%s'\n", mission->category, mission->id);
@@ -1079,6 +1095,7 @@ void CP_MissionIsOver (mission_t *mission)
 		CP_BuildBaseMissionBaseDestroyed(mission);
 		break;
 	case INTERESTCATEGORY_NONE:
+	case INTERESTCATEGORY_RESCUE:
 	case INTERESTCATEGORY_MAX:
 		Com_Printf("CP_MissionIsOver: Invalid type of mission (%i), remove mission\n", mission->category);
 		CP_MissionRemove(mission);
@@ -1176,11 +1193,19 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 			CP_BaseAttackMissionIsFailure(mission);
 		} else
 			CP_BaseAttackMissionDestroyBase(mission);
-	} else {
-		AIR_AircraftReturnToBase(aircraft);
-		if (won)
-			CP_MissionIsOver(mission);
+
+		return;
 	}
+
+	if (mission->category == INTERESTCATEGORY_RESCUE) {
+		/* return to collect goods and aliens from the crashed aircraft */
+		B_AircraftReturnedToHomeBase((aircraft_t *)mission->data);
+		AIR_DestroyAircraft((aircraft_t *)mission->data);
+	}
+
+	AIR_AircraftReturnToBase(aircraft);
+	if (won)
+		CP_MissionIsOver(mission);
 }
 
 /**
@@ -1280,6 +1305,66 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 }
 
 
+/**
+ * @brief Spawn a new rescue mission for a crashed aircraft
+ * @param[in] aircraft The crashed aircraft to spawn the rescue mission for.
+ * @param[in] ufo The UFO that shot down the phalanx aircraft, can also
+ * be @c NULL if the UFO was destroyed, too or left already.
+ */
+void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
+{
+	const date_t minCrashDelay = {7, 0};
+	/* How long the crash mission will stay before aliens leave / die */
+	const date_t crashDelay = {14, 0};
+	const nation_t *nation;
+	mission_t *mission;
+	linkedList_t* l;
+	employee_t *pilot;
+
+	mission = CP_CreateNewMission(INTERESTCATEGORY_RESCUE, qtrue);
+	if (!mission)
+		Com_Error(ERR_DROP, "CP_SpawnRescueMission: mission could not be created");
+
+	/* Reset mapDef. CP_ChooseMap don't overwrite if set */
+	mission->mapDef = NULL;
+	if (!CP_ChooseMap(mission, aircraft->pos)) {
+		CP_MissionRemove(mission);
+		return;
+	}
+
+	Vector2Copy(aircraft->pos, mission->pos);
+	mission->posAssigned = qtrue;
+
+	nation = MAP_GetNation(mission->pos);
+	if (nation) {
+		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(nation->name));
+	} else {
+		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
+	}
+
+	mission->data = aircraft;
+	mission->ufo = ufo;
+	mission->stage = STAGE_TERROR_MISSION;
+
+	for (l = aircraft->acTeam; l != NULL; l = l->next) {
+		employee_t *employee = (employee_t *)l->data;
+		/*const character_t *chr = &employee->chr;
+		const chrScoreGlobal_t *score = &chr->score;*/
+		/** @todo don't "kill" everyone - this should depend on luck and a little bit on the skills */
+		AIR_RemoveEmployee(employee, aircraft);
+	}
+
+	pilot = aircraft->pilot;
+	AIR_RemovePilotFromAssignedAircraft(aircraft->homebase, pilot);
+	E_DeleteEmployee(pilot, EMPL_PILOT);
+
+	aircraft->status = AIR_CRASHED;
+
+	mission->finalDate = Date_Add(ccs.date, Date_Random(minCrashDelay, crashDelay));
+	/* mission appear on geoscape, player can go there */
+	CP_MissionAddToGeoscape(mission, qfalse);
+}
+
 
 /*====================================
 *
@@ -1367,6 +1452,7 @@ ufoType_t CP_MissionChooseUFO (const mission_t *mission)
 		break;
 	case INTERESTCATEGORY_ALIENBASE:
 		/* can't be spawned: alien base is the result of base building mission */
+	case INTERESTCATEGORY_RESCUE:
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
 		Com_Error(ERR_DROP, "CP_MissionChooseUFO: Wrong mission category %i", mission->category);
@@ -1590,6 +1676,21 @@ static void CP_SpawnNewMissions_f (void)
 		}
 		CP_SpawnAlienBaseMission(base);				/* make base visible */
 		return;
+	} else if (category == INTERESTCATEGORY_RESCUE) {
+		const base_t *base = B_GetFoundedBaseByIDX(0);
+		aircraft_t *aircraft;
+		if (!base) {
+			Com_Printf("No base yet\n");
+			return;
+		}
+
+		aircraft = AIR_GetNextFromBase(base, NULL);
+		if (!aircraft) {
+			Com_Printf("No aircraft in base\n");
+			return;
+		}
+		CP_SpawnRescueMission(aircraft, NULL);
+		return;
 	}
 
 	mission = CP_CreateNewMission(category, qtrue);
@@ -1778,6 +1879,12 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 					mxml_AddShort(missionNode, SAVE_MISSIONS_INSTALLATIONINDEX, installation->idx);
 			}
 			break;
+		case INTERESTCATEGORY_RESCUE:
+			{
+				const aircraft_t *aircraft = (const aircraft_t *)mission->data;
+				mxml_AddShort(missionNode, SAVE_MISSIONS_CRASHED_AIRCRAFT, aircraft->idx);
+			}
+			break;
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
 			{
@@ -1848,13 +1955,13 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 			mission.mapDef = NULL;
 
 		if (!Com_GetConstIntFromNamespace(SAVE_INTERESTCAT_NAMESPACE, categoryId, (int*) &mission.category)) {
-			Com_Printf("Invaild mission category '%s'\n", categoryId);
+			Com_Printf("Invalid mission category '%s'\n", categoryId);
 			success = qfalse;
 			break;
 		}
 
 		if (!Com_GetConstIntFromNamespace(SAVE_MISSIONSTAGE_NAMESPACE, stageId, (int*) &mission.stage)) {
-			Com_Printf("Invaild mission stage '%s'\n", stageId);
+			Com_Printf("Invalid mission stage '%s'\n", stageId);
 			success = qfalse;
 			break;
 		}
@@ -1895,6 +2002,18 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 				}
 			}
 			break;
+		case INTERESTCATEGORY_RESCUE:
+			{
+				const int aircraftIdx = mxml_GetInt(node, SAVE_MISSIONS_CRASHED_AIRCRAFT, -1);
+				/** @todo aircraft are not yet loaded */
+				mission.data = (void *) AIR_AircraftGetFromIDX(aircraftIdx);
+				if (mission.data == NULL) {
+					Com_Printf("Error while loading rescue mission (missionidx %i, aircraftidx: %i, category: %i, stage: %i)\n",
+							mission.idx, aircraftIdx, mission.category, mission.stage);
+					success = qfalse;
+				}
+			}
+			break;
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
 			{
@@ -1924,10 +2043,10 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 		mxml_GetPos2(node, SAVE_MISSIONS_POS, mission.pos);
 
 		ufoIdx = mxml_GetInt(node, SAVE_MISSIONS_UFO, -1);
-		if (ufoIdx <= -1)
+		if (ufoIdx <= -1 || ufoIdx >= lengthof(ccs.ufos))
 			mission.ufo = NULL;
 		else
-			mission.ufo = ccs.ufos + ufoIdx;
+			mission.ufo = &ccs.ufos[ufoIdx];
 
 		mission.crashed = mxml_GetBool(node, SAVE_MISSIONS_CRASHED, qfalse);
 		mission.onGeoscape = mxml_GetBool(node, SAVE_MISSIONS_ONGEOSCAPE, qfalse);
