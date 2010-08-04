@@ -96,6 +96,9 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 	const objDef_t* od;
 	const invList_t *invlistWeapon;
 
+	if (actor == NULL)
+		return;
+
 	if (IS_SHOT_RIGHT(shootType)) {
 		tag = "tag_rweapon";
 		invlistWeapon = RIGHT(actor);
