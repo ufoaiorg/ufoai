@@ -638,9 +638,9 @@ void SAV_Init (void)
 	static saveSubsystems_t e_subsystemXML = {"employee", E_SaveXML, E_LoadXML};
 	static saveSubsystems_t ac_subsystemXML = {"aliencont", AC_SaveXML, AC_LoadXML};
 	static saveSubsystems_t pr_subsystemXML = {"production", PR_SaveXML, PR_LoadXML};
-	static saveSubsystems_t air_subsystemXML = {"aircraft", AIR_SaveXML, AIR_LoadXML};
 	static saveSubsystems_t int_subsystemXML = {"interest", CP_SaveInterestsXML, CP_LoadInterestsXML};
 	static saveSubsystems_t mis_subsystemXML = {"mission", CP_SaveMissionsXML, CP_LoadMissionsXML};
+	static saveSubsystems_t air_subsystemXML = {"aircraft", AIR_SaveXML, AIR_LoadXML};
 	static saveSubsystems_t ms_subsystemXML = {"messagesystem", MS_SaveXML, MS_LoadXML};
 	static saveSubsystems_t stats_subsystemXML = {"stats", STATS_SaveXML, STATS_LoadXML};
 	static saveSubsystems_t na_subsystemXML = {"nations", NAT_SaveXML, NAT_LoadXML};
@@ -664,9 +664,9 @@ void SAV_Init (void)
 	SAV_AddSubsystem(&bs_subsystemXML);
 	SAV_AddSubsystem(&e_subsystemXML);
 	SAV_AddSubsystem(&ac_subsystemXML);
-	SAV_AddSubsystem(&air_subsystemXML);
 	SAV_AddSubsystem(&int_subsystemXML);
 	SAV_AddSubsystem(&mis_subsystemXML);
+	SAV_AddSubsystem(&air_subsystemXML);
 	SAV_AddSubsystem(&ins_subsystemXML);
 	SAV_AddSubsystem(&us_subsystemXML);
 	SAV_AddSubsystem(&pr_subsystemXML);
