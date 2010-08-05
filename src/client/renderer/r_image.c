@@ -332,14 +332,6 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 		/* no mipmapping for these images - just use GL_NEAREST here to not waste memory */
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-		if (r_monochrome->integer) {
-			if (image->has_alpha)
-				samples = GL_LUMINANCE_ALPHA;
-			else
-				samples = GL_LUMINANCE;
-		}
-
 		glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		return;
 	}
@@ -384,9 +376,6 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		R_CheckError();
 	}
-
-	if (r_monochrome->integer)
-		samples = GL_LUMINANCE16_ALPHA16;
 
 	glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 	R_CheckError();
@@ -775,6 +764,12 @@ static const gltmode_t gl_alpha_modes[] = {
 	{"GL_RGB5_A1", GL_RGB5_A1},
 	{"GL_RGBA4", GL_RGBA4},
 	{"GL_RGBA2", GL_RGBA2},
+	{"GL_LUMINANCE4_ALPHA4", GL_LUMINANCE4_ALPHA4},
+	{"GL_LUMINANCE6_ALPHA2", GL_LUMINANCE6_ALPHA2},
+	{"GL_LUMINANCE8_ALPHA8", GL_LUMINANCE8_ALPHA8},
+	{"GL_LUMINANCE12_ALPHA4", GL_LUMINANCE12_ALPHA4},
+	{"GL_LUMINANCE12_ALPHA12", GL_LUMINANCE12_ALPHA12},
+	{"GL_LUMINANCE16_ALPHA16", GL_LUMINANCE16_ALPHA16}
 };
 
 
@@ -806,7 +801,12 @@ static const gltmode_t gl_solid_modes[] = {
 	{"GL_RGB8", GL_RGB8_EXT},
 	{"GL_RGB10", GL_RGB10_EXT},
 	{"GL_RGB12", GL_RGB12_EXT},
-	{"GL_RGB16", GL_RGB16_EXT}
+	{"GL_RGB16", GL_RGB16_EXT},
+	{"GL_LUMINANCE", GL_LUMINANCE},
+	{"GL_LUMINANCE4", GL_LUMINANCE4},
+	{"GL_LUMINANCE8", GL_LUMINANCE8},
+	{"GL_LUMINANCE12", GL_LUMINANCE12},
+	{"GL_LUMINANCE16", GL_LUMINANCE16}
 };
 
 void R_TextureSolidMode (const char *string)

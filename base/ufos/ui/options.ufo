@@ -643,37 +643,6 @@ window options
 			max			3.0
 			onClick		{ }
 		}
-		// ===========
-		// MONOCHROME
-		// ===========
-		string monochrome_str
-		{
-			tooltip		"_Monochrome means black and white, without colors. Setting this to active will render monochrome battlescape maps, but not models."
-			string		"_Monochrome World:"
-			pos			"72 365"
-			size		"170 20"
-		}
-		selectbox monochrome_box
-		{
-			{
-				tooltip		"_You most likely do not want to change that."
-				cvar		*cvar:r_monochrome
-				image		"ui/selectbox_green"
-				pos			"359 365"
-				size		"125 20"
-				color		"0.6 0.6 0.6 0.3"
-			}
-			option monochrome_off
-			{
-				label	"Off"
-				value	"0"
-			}
-			option monochrome_on
-			{
-				label	"On"
-				value	"1"
-			}
-		}
 		// ============================
 		// SCREENSHOT SETTINGS SUBMENU
 		// ============================

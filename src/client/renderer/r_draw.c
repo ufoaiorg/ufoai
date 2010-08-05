@@ -137,12 +137,25 @@ int R_UploadData (const char *name, byte *frame, int width, int height)
 	image_t *img;
 	unsigned *scaled;
 	int scaledWidth, scaledHeight;
+	int samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
+	int i, c;
+	byte *scan;
 
 	R_GetScaledTextureSize(width, height, &scaledWidth, &scaledHeight);
 
 	img = R_FindImage(name, it_pic);
 	if (img == r_noTexture)
 		Com_Error(ERR_FATAL, "Could not find the searched image: %s", name);
+
+	/* scan the texture for any non-255 alpha */
+	c = scaledWidth * scaledHeight;
+	/* set scan to the first alpha byte */
+	for (i = 0, scan = ((byte *) frame) + 3; i < c; i++, scan += 4) {
+		if (*scan != 255) {
+			samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
+			break;
+		}
+	}
 
 	if (scaledWidth != width || scaledHeight != height) {  /* whereas others need to be scaled */
 		scaled = (unsigned *)Mem_PoolAllocExt(scaledWidth * scaledHeight * sizeof(unsigned), qfalse, vid_imagePool, 0);
@@ -160,7 +173,7 @@ int R_UploadData (const char *name, byte *frame, int width, int height)
 		img->height = height;
 		img->upload_width = scaledWidth;
 		img->upload_height = scaledHeight;
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+		glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 	}
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
