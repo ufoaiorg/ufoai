@@ -752,12 +752,12 @@ typedef struct {
 } glTextureMode_t;
 
 static const glTextureMode_t gl_texture_modes[] = {
-	{"GL_NEAREST", GL_NEAREST, GL_NEAREST},
-	{"GL_LINEAR", GL_LINEAR, GL_LINEAR},
-	{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST},
-	{"GL_LINEAR_MIPMAP_NEAREST", GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR},
-	{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR, GL_NEAREST},
-	{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR}
+	{"GL_NEAREST", GL_NEAREST, GL_NEAREST}, /* no filtering, no mipmaps */
+	{"GL_LINEAR", GL_LINEAR, GL_LINEAR}, /* bilinear filtering, no mipmaps */
+	{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST}, /* no filtering, mipmaps */
+	{"GL_LINEAR_MIPMAP_NEAREST", GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR}, /* bilinear filtering, mipmaps */
+	{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR, GL_NEAREST}, /* trilinear filtering, mipmaps */
+	{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR} /* bilinear filtering, trilinear filtering, mipmaps */
 };
 
 void R_TextureMode (const char *string)
@@ -781,14 +781,12 @@ void R_TextureMode (const char *string)
 
 	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
 		if (image->type == it_chars || image->type == it_pic || image->type == it_wrappic)
-			continue;
+			continue; /* no mipmaps */
 
 		R_BindTexture(image->texnum);
-		if (r_config.anisotropic)
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
-		R_CheckError();
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mode->minimize);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mode->maximize);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
 		R_CheckError();
 	}
 }
@@ -807,18 +805,21 @@ static const gltmode_t gl_alpha_modes[] = {
 	{"GL_RGBA2", GL_RGBA2},
 };
 
-#define NUM_R_ALPHA_MODES (sizeof(gl_alpha_modes) / sizeof(gltmode_t))
 
 void R_TextureAlphaMode (const char *string)
 {
 	int i;
+	const size_t size = lengthof(gl_alpha_modes);
+	const gltmode_t *mode;
 
-	for (i = 0; i < NUM_R_ALPHA_MODES; i++) {
-		if (!Q_strcasecmp(gl_alpha_modes[i].name, string))
+	mode = NULL;
+	for (i = 0; i < size; i++) {
+		mode = &gl_alpha_modes[i];
+		if (!Q_strcasecmp(mode->name, string))
 			break;
 	}
 
-	if (i == NUM_R_ALPHA_MODES) {
+	if (mode == NULL) {
 		Com_Printf("bad alpha texture mode name\n");
 		return;
 	}
@@ -833,27 +834,35 @@ static const gltmode_t gl_solid_modes[] = {
 	{"GL_RGB5", GL_RGB5},
 	{"GL_RGB4", GL_RGB4},
 	{"GL_R3_G3_B2", GL_R3_G3_B2},
-#ifdef GL_RGB2_EXT
+#ifdef GL_EXT_texture
 	{"GL_RGB2", GL_RGB2_EXT},
+	{"GL_RGB4", GL_RGB4_EXT},
+	{"GL_RGB5", GL_RGB5_EXT},
+	{"GL_RGB8", GL_RGB8_EXT},
+	{"GL_RGB10", GL_RGB10_EXT},
+	{"GL_RGB12", GL_RGB12_EXT},
+	{"GL_RGB16", GL_RGB16_EXT}
 #endif
 };
-
-#define NUM_R_SOLID_MODES (sizeof(gl_solid_modes) / sizeof(gltmode_t))
 
 void R_TextureSolidMode (const char *string)
 {
 	int i;
+	const size_t size = lengthof(gl_solid_modes);
+	const gltmode_t *mode;
 
-	for (i = 0; i < NUM_R_SOLID_MODES; i++) {
-		if (!Q_strcasecmp(gl_solid_modes[i].name, string))
+	mode = NULL;
+	for (i = 0; i < size; i++) {
+		mode = &gl_solid_modes[i];
+		if (!Q_strcasecmp(mode->name, string))
 			break;
 	}
 
-	if (i == NUM_R_SOLID_MODES) {
+	if (mode == NULL) {
 		Com_Printf("bad solid texture mode name\n");
 		return;
 	}
 
-	r_config.gl_solid_format = gl_solid_modes[i].mode;
+	r_config.gl_solid_format = mode->mode;
 }
 
