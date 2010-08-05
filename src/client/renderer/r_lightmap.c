@@ -33,7 +33,7 @@ lightmaps_t r_lightmaps;
 
 static void R_UploadLightmapBlock (void)
 {
-	const samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
+	const int samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 	if (r_lightmaps.lightmap_texnum == MAX_GL_LIGHTMAPS) {
 		Com_Printf("R_UploadLightmapBlock: MAX_GL_LIGHTMAPS reached.\n");
 		return;
