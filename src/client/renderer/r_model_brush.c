@@ -826,11 +826,12 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 	R_SortSurfacesArrays(mod);
 }
 
-static void R_LoadSurfacesArrays (model_t *mod)
+static void R_LoadSurfacesArrays (void)
 {
 	int i;
 
-	R_LoadSurfacesArrays_(mod);
+	for (i = 0; i < r_numMapTiles; i++)
+		R_LoadSurfacesArrays_(r_mapTiles[i]);
 
 	for (i = 0; i < r_numModelsInline; i++)
 		R_LoadSurfacesArrays_(&r_modelsInline[i]);
@@ -981,8 +982,6 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 
 	R_LoadBspVertexArrays(r_worldmodel);
 
-	R_LoadSurfacesArrays(r_worldmodel);
-
 	/* in case of random map assembly shift some vectors */
 	if (VectorNotEmpty(shift))
 		R_ModShiftTile();
@@ -1020,12 +1019,6 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 
 	R_FreeWorldImages();
 
-	if (mapName[0] == '+' || mapName[0] == '.')
-		R_LoadMaterials(mapName + 1);
-	/* already assembled maps via console command? Skip them */
-	else if (mapName[0] != '-')
-		R_LoadMaterials(mapName);
-
 	/* clear any lights leftover in the active list from previous maps */
 	R_ClearActiveLights();
 
@@ -1041,6 +1034,8 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 		if (!tiles) {
 			/* finish */
 			R_EndBuildingLightmaps();
+			R_LoadMaterials(mapName);
+			R_LoadSurfacesArrays();
 			return;
 		}
 
@@ -1075,6 +1070,8 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 			/* load only a single tile, if no positions are specified */
 			R_ModAddMapTile(name, day, 0, 0, 0);
 			R_EndBuildingLightmaps();
+			R_LoadMaterials(mapName);
+			R_LoadSurfacesArrays();
 			return;
 		}
 	}
@@ -1091,11 +1088,12 @@ void R_ModReloadSurfacesArrays (void)
 
 	for (i = 0; i < r_numMapTiles; i++) {
 		model_t *mod = r_mapTiles[i];
-		for (j = 0; j < NUM_SURFACES_ARRAYS; j++)
+		const size_t size = lengthof(mod->bsp.sorted_surfaces);
+		for (j = 0; j < size; j++)
 			if (mod->bsp.sorted_surfaces[j]) {
 				Mem_Free(mod->bsp.sorted_surfaces[j]);
 				mod->bsp.sorted_surfaces[j] = NULL;
 			}
-		R_LoadSurfacesArrays(mod);
 	}
+	R_LoadSurfacesArrays();
 }

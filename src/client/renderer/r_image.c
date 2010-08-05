@@ -498,7 +498,7 @@ static inline void R_DeleteImage (image_t *image)
 	memset(image, 0, sizeof(*image));
 }
 
-static inline image_t *R_GetImage (const char *name)
+image_t *R_GetImage (const char *name)
 {
 	image_t *image;
 	const unsigned hash = Com_HashKey(name, MAX_IMAGEHASH);

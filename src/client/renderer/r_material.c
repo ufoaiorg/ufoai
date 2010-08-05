@@ -864,6 +864,11 @@ void R_LoadMaterials (const char *map)
 	/* clear previously loaded materials */
 	R_ImageClearMaterials();
 
+	if (map[0] == '+' || map[0] == '-')
+		map++;
+	else if (map[0] == '-')
+		return;
+
 	/* load the materials file for parsing */
 	Com_sprintf(path, sizeof(path), "materials/%s.mat", Com_SkipPath(map));
 
@@ -893,11 +898,9 @@ void R_LoadMaterials (const char *map)
 
 		if (!strcmp(c, "material")) {
 			c = Com_Parse(&buffer);
-			image = R_FindImage(va("textures/%s", c), it_world);
-			if (image == r_noTexture) {
-				Com_Printf("R_LoadMaterials: Failed to resolve texture: %s\n", c);
-				image = NULL;
-			}
+			image = R_GetImage(va("textures/%s", c));
+			if (image == NULL)
+				Com_DPrintf(DEBUG_RENDERER, "R_LoadMaterials: skip texture: %s - not used in the map\n", c);
 
 			continue;
 		}
@@ -914,6 +917,16 @@ void R_LoadMaterials (const char *map)
 			if (image->normalmap == r_noTexture){
 				Com_Printf("R_LoadMaterials: Failed to resolve normalmap: %s\n", c);
 				image->normalmap = NULL;
+			}
+		}
+
+		if (!strcmp(c, "glowmap")){
+			c = Com_Parse(&buffer);
+			image->glowmap = R_FindImage(va("textures/%s", c), it_glowmap);
+
+			if (image->glowmap == r_noTexture){
+				Com_Printf("R_LoadMaterials: Failed to resolve glowmap: %s\n", c);
+				image->glowmap = NULL;
 			}
 		}
 
