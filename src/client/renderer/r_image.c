@@ -797,7 +797,6 @@ typedef struct {
 } gltmode_t;
 
 static const gltmode_t gl_alpha_modes[] = {
-	{"default", 4},
 	{"GL_RGBA", GL_RGBA},
 	{"GL_RGBA8", GL_RGBA8},
 	{"GL_RGB5_A1", GL_RGB5_A1},
@@ -823,7 +822,6 @@ void R_TextureAlphaMode (const char *string)
 }
 
 static const gltmode_t gl_solid_modes[] = {
-	{"default", 3},
 	{"GL_RGB", GL_RGB},
 	{"GL_RGB8", GL_RGB8},
 	{"GL_RGB5", GL_RGB5},
