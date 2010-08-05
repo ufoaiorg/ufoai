@@ -356,8 +356,6 @@ static uiAction_t *UI_ParseValueExpression (const char **text, const char *errhe
 	/** @todo We MUST remove the OLD code as fast as possible */
 	if (!strncmp(token, "*node:", 6) || !strncmp(token, "*", 1)) {
 		const char* path = token + 1;
-		char cast[32] = "abstractnode";
-		const uiBehaviour_t *castedBehaviour;
 		const char *propertyName;
 		qboolean relativeToNode;
 #if 0	/* it looks useless, an unused cache */
@@ -368,19 +366,6 @@ static uiAction_t *UI_ParseValueExpression (const char **text, const char *errhe
 		if (relativeToNode)
 			path = path + 5;
 
-		/* check cast */
-		if (path[0] == '(') {
-			const char *end = strchr(path, ')');
-			assert(end != NULL);
-			assert(end - path < sizeof(cast));
-
-			/* copy the cast and update the path */
-			if (end != NULL) {
-				Q_strncpyz(cast, path + 1, end - path);
-				path = end + 1;
-			}
-		}
-
 		if (UI_IsInjectedString(path))
 			expression->type = EA_VALUE_PATHPROPERTY_WITHINJECTION;
 		else
@@ -388,10 +373,6 @@ static uiAction_t *UI_ParseValueExpression (const char **text, const char *errhe
 		if (!relativeToNode)
 			path = va("root.%s", path);
 		expression->d.terminal.d1.string = UI_AllocStaticString(path, 0);
-
-		castedBehaviour = UI_GetNodeBehaviour(cast);
-		if (castedBehaviour == NULL)
-			Com_Error(ERR_FATAL, "UI_ParseValueExpression: Node behaviour cast '%s' doesn't exists\n", cast);
 
 		/* get property name */
 		propertyName = strchr(path, '@');
@@ -404,19 +385,6 @@ static uiAction_t *UI_ParseValueExpression (const char **text, const char *errhe
 		}
 		propertyName++;
 
-#if 0	/* it looks useless, an unused cache */
-		property = UI_GetPropertyFromBehaviour(castedBehaviour, propertyName);
-		if (!property && source) {
-			uiNode_t *node;
-			/* do we ALREADY know this node? and his type */
-			UI_ReadNodePath(path, source, &node, &property);
-			if (!node)
-				Com_Printf("UI_ParseValueExpression: node \"%s\" not yet known (in event), you can try to cast it\n", path);
-		}
-		if (property && property->type) {
-			expression->d.terminal.d2.constData = property;
-		}
-#endif
 		return expression;
 	}
 
@@ -430,12 +398,12 @@ static uiAction_t *UI_ParseValueExpression (const char **text, const char *errhe
 		return expression;
 	}
 
+	/* boolean */
 	if (!strcmp(token, "true")) {
 		expression->d.terminal.d1.number = 1.0;
 		expression->type = EA_VALUE_FLOAT;
 		return expression;
 	}
-
 	if (!strcmp(token, "false")) {
 		expression->d.terminal.d1.number = 0.0;
 		expression->type = EA_VALUE_FLOAT;
