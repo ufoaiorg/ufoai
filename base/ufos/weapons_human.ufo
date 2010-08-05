@@ -271,7 +271,7 @@ item machinegun_ammo
 			shots				5
 			ammo				5
 			delaybetweenshots	10
-			time				25
+			time				14
 			damage				"45 9"
 			dmgweight			normal_medium
 			reaction			true
