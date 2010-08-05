@@ -759,24 +759,25 @@ static const glTextureMode_t gl_texture_modes[] = {
 	{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR, GL_NEAREST},
 	{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR}
 };
-#define NUM_R_MODES (sizeof(gl_texture_modes) / sizeof(glTextureMode_t))
 
 void R_TextureMode (const char *string)
 {
-	int i, texturemode;
+	int i;
 	image_t *image;
+	const size_t size = lengthof(gl_texture_modes);
+	const glTextureMode_t *mode;
 
-	for (i = 0; i < NUM_R_MODES; i++) {
-		if (!Q_strcasecmp(gl_texture_modes[i].name, string))
+	mode = NULL;
+	for (i = 0; i < size; i++) {
+		mode = &gl_texture_modes[i];
+		if (!Q_strcasecmp(mode->name, string))
 			break;
 	}
 
-	if (i == NUM_R_MODES) {
+	if (mode == NULL) {
 		Com_Printf("bad filter name\n");
 		return;
 	}
-
-	texturemode = i;
 
 	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
 		if (image->type == it_chars || image->type == it_pic || image->type == it_wrappic)
@@ -786,8 +787,8 @@ void R_TextureMode (const char *string)
 		if (r_config.anisotropic)
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
 		R_CheckError();
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_texture_modes[texturemode].minimize);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_texture_modes[texturemode].maximize);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mode->minimize);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mode->maximize);
 		R_CheckError();
 	}
 }
