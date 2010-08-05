@@ -810,21 +810,16 @@ void R_TextureAlphaMode (const char *string)
 {
 	int i;
 	const size_t size = lengthof(gl_alpha_modes);
-	const gltmode_t *mode;
 
-	mode = NULL;
 	for (i = 0; i < size; i++) {
-		mode = &gl_alpha_modes[i];
-		if (!Q_strcasecmp(mode->name, string))
-			break;
+		const gltmode_t *mode = &gl_alpha_modes[i];
+		if (!Q_strcasecmp(mode->name, string)) {
+			r_config.gl_alpha_format = mode->mode;
+			return;
+		}
 	}
 
-	if (mode == NULL) {
-		Com_Printf("bad alpha texture mode name\n");
-		return;
-	}
-
-	r_config.gl_alpha_format = gl_alpha_modes[i].mode;
+	Com_Printf("bad alpha texture mode name (%s)\n", string);
 }
 
 static const gltmode_t gl_solid_modes[] = {
@@ -847,20 +842,15 @@ void R_TextureSolidMode (const char *string)
 {
 	int i;
 	const size_t size = lengthof(gl_solid_modes);
-	const gltmode_t *mode;
 
-	mode = NULL;
 	for (i = 0; i < size; i++) {
-		mode = &gl_solid_modes[i];
-		if (!Q_strcasecmp(mode->name, string))
-			break;
+		const gltmode_t *mode = &gl_solid_modes[i];
+		if (!Q_strcasecmp(mode->name, string)) {
+			r_config.gl_solid_format = mode->mode;
+			return;
+		}
 	}
 
-	if (mode == NULL) {
-		Com_Printf("bad solid texture mode name\n");
-		return;
-	}
-
-	r_config.gl_solid_format = mode->mode;
+	Com_Printf("bad solid texture mode name (%s)\n", string);
 }
 
