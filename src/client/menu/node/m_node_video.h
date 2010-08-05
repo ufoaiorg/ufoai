@@ -30,8 +30,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void UI_RegisterVideoNode(uiBehaviour_t *behaviour);
 
+#define UI_VIDEOEXTRADATA_TYPE videoExtraData_t
+#define UI_VIDEOEXTRADATA(node) UI_EXTRADATA(node, UI_VIDEOEXTRADATA_TYPE)
+#define UI_VIDEOEXTRADATACONST(node) UI_EXTRADATACONST(node, UI_VIDEOEXTRADATA_TYPE)
+
 typedef struct {
 	cinematic_t cin;
+	qboolean nosound;
 } videoExtraData_t;
 
 #endif

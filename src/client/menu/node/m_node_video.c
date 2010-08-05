@@ -43,9 +43,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void UI_VideoNodeDrawOverMenu (uiNode_t *node)
 {
+	if (EXTRADATA(node).cin.status == CIN_STATUS_NONE) {
+		vec2_t pos;
+		qboolean nosound = UI_VIDEOEXTRADATACONST(node).nosound;
+
+		CIN_PlayCinematic(&(EXTRADATA(node).cin), va("videos/%s", (const char *)node->image));
+
+		UI_GetNodeAbsPos(node, pos);
+		CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_PLAYING, nosound);
+	}
+
 	if (EXTRADATA(node).cin.status) {
 		/* only set replay to true if video was found and is running */
-		/** @todo why is sound deactivated? */
 		CIN_RunCinematic(&(EXTRADATA(node).cin));
 	}
 }
@@ -65,17 +74,7 @@ static void UI_VideoNodeDraw (uiNode_t *node)
 
 static void UI_VideoNodeInit (uiNode_t *node)
 {
-	vec2_t pos;
-
 	CIN_InitCinematic(&(EXTRADATA(node).cin));
-
-	if (!node->image)
-		return;
-
-	CIN_PlayCinematic(&(EXTRADATA(node).cin), va("videos/%s", (const char *)node->image));
-
-	UI_GetNodeAbsPos(node, pos);
-	CIN_SetParameters(&(EXTRADATA(node).cin), pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_PLAYING, qtrue);
 }
 
 static void UI_VideoNodeClose (uiNode_t *node)
@@ -87,6 +86,7 @@ static void UI_VideoNodeClose (uiNode_t *node)
 static const value_t properties[] = {
 	/** Source of the video. File name without prefix ./base/videos and without extension */
 	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
+	{"nosound", V_BOOL, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, nosound), MEMBER_SIZEOF(EXTRADATA_TYPE, nosound)},
 	{NULL, V_NULL, 0, 0}
 };
 
