@@ -215,35 +215,8 @@ void R_FilterTexture (byte *in, int width, int height, imagetype_t type, int bpp
 	const float contrast = r_contrast->value;
 	const float saturation = r_saturation->value;
 	vec3_t intensity, luminosity, temp;
-	int j, mask;
+	int j;
 	float max, d;
-
-	enum filter_flags_t {
-		FILTER_NONE       = 0,
-		FILTER_MONOCHROME = 1U << 0,
-		FILTER_INVERT     = 1U << 1
-	} filter;
-
-	/* monochrome/invert */
-	switch (type) {
-	case it_world:
-	case it_effect:
-	case it_material:
-		mask = 1;
-		break;
-	case it_lightmap:
-		mask = 2;
-		break;
-	default:
-		mask = 0;
-		break;
-	}
-
-	filter = FILTER_NONE;
-	if (r_monochrome->integer & mask)
-		filter |= FILTER_MONOCHROME;
-	if (r_invert->integer & mask)
-		filter |= FILTER_INVERT;
 
 	VectorSet(luminosity, 0.2125, 0.7154, 0.0721);
 
@@ -293,15 +266,6 @@ void R_FilterTexture (byte *in, int width, int height, imagetype_t type, int bpp
 
 			p[j] = (byte)temp[j];
 		}
-
-		if (filter & FILTER_MONOCHROME)
-			p[0] = p[1] = p[2] = (p[0] + p[1] + p[2]) / 3;
-
-		if (filter & FILTER_INVERT) {
-			p[0] = 255 - p[0];
-			p[1] = 255 - p[1];
-			p[2] = 255 - p[2];
-		}
 	}
 }
 
@@ -341,7 +305,7 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 {
 	unsigned *scaled;
 	int scaledWidth, scaledHeight;
-	int samples;
+	int samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 	int i, c;
 	byte *scan;
 	qboolean mipmap = (image->type != it_pic && image->type != it_chars);
@@ -349,13 +313,34 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 
 	R_GetScaledTextureSize(width, height, &scaledWidth, &scaledHeight);
 
+	/* scan the texture for any non-255 alpha */
+	c = scaledWidth * scaledHeight;
+	/* set scan to the first alpha byte */
+	for (i = 0, scan = ((byte *) data) + 3; i < c; i++, scan += 4) {
+		if (*scan != 255) {
+			samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
+			break;
+		}
+	}
+
+	image->has_alpha = (samples == r_config.gl_alpha_format || samples == r_config.gl_compressed_alpha_format);
+	image->upload_width = scaledWidth;	/* after power of 2 and scales */
+	image->upload_height = scaledHeight;
+
 	/* some images need very little attention (pics, fonts, etc..) */
 	if (!mipmap && scaledWidth == width && scaledHeight == height) {
 		/* no mipmapping for these images - just use GL_NEAREST here to not waste memory */
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		if (r_monochrome->integer) {
+			if (image->has_alpha)
+				samples = GL_LUMINANCE_ALPHA;
+			else
+				samples = GL_LUMINANCE;
+		}
+
+		glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		return;
 	}
 
@@ -369,21 +354,6 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	/* and filter */
 	if (image->type == it_effect || image->type == it_world || image->type == it_material || image->type == it_skin)
 		R_FilterTexture((byte*)scaled, scaledWidth, scaledHeight, image->type, 4);
-
-	/* scan the texture for any non-255 alpha */
-	c = scaledWidth * scaledHeight;
-	samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
-	/* set scan to the first alpha byte */
-	for (i = 0, scan = ((byte *) scaled) + 3; i < c; i++, scan += 4) {
-		if (*scan != 255) {
-			samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
-			break;
-		}
-	}
-
-	image->has_alpha = (samples == r_config.gl_alpha_format || samples == r_config.gl_compressed_alpha_format);
-	image->upload_width = scaledWidth;	/* after power of 2 and scales */
-	image->upload_height = scaledHeight;
 
 	/* and mipmapped */
 	if (mipmap) {
@@ -414,6 +384,9 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		R_CheckError();
 	}
+
+	if (r_monochrome->integer)
+		samples = GL_LUMINANCE16_ALPHA16;
 
 	glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 	R_CheckError();

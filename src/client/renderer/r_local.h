@@ -55,7 +55,6 @@ void R_SetSurfaceBumpMappingParameters(const mBspSurface_t *surf, const image_t 
 
 extern cvar_t *r_brightness;
 extern cvar_t *r_contrast;
-extern cvar_t *r_invert;
 extern cvar_t *r_monochrome;
 extern cvar_t *r_saturation;
 
