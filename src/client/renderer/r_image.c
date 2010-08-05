@@ -834,7 +834,6 @@ static const gltmode_t gl_solid_modes[] = {
 	{"GL_RGB5", GL_RGB5},
 	{"GL_RGB4", GL_RGB4},
 	{"GL_R3_G3_B2", GL_R3_G3_B2},
-#ifdef GL_EXT_texture
 	{"GL_RGB2", GL_RGB2_EXT},
 	{"GL_RGB4", GL_RGB4_EXT},
 	{"GL_RGB5", GL_RGB5_EXT},
@@ -842,7 +841,6 @@ static const gltmode_t gl_solid_modes[] = {
 	{"GL_RGB10", GL_RGB10_EXT},
 	{"GL_RGB12", GL_RGB12_EXT},
 	{"GL_RGB16", GL_RGB16_EXT}
-#endif
 };
 
 void R_TextureSolidMode (const char *string)
