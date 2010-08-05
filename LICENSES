@@ -1212,10 +1212,13 @@ base/models/objects/furniture/bookshelf/bookshelf.png | GNU General Public Licen
 base/models/objects/furniture/bookshelf/bookshelf_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/models/objects/furniture/campbed/campbed.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/campbed/campbed.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/furniture/chair/chair.jpg | GNU General Public License 2.0 or later | Nate Wright
+base/models/objects/furniture/chair/chair.jpg | GNU General Public License 2.0 or later | qackers | https://sourceforge.net/tracker/index.php?func=detail&aid=1558801&group_id=157793&atid=805244
+base/models/objects/furniture/chair/chair.md2 |  | qackers | https://sourceforge.net/tracker/index.php?func=detail&aid=1558801&group_id=157793&atid=805244
 base/models/objects/furniture/chair/chair_nm.png | GNU General Public License 2.0 | Nate Wright
 base/models/objects/furniture/coffeemaker/coffeemaker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/coffeemaker/coffeemaker.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/compdesk/compdesk.jpg |  | qackers | https://sourceforge.net/tracker/index.php?func=detail&aid=1558801&group_id=157793&atid=805244
+base/models/objects/furniture/compdesk/compdesk.md2 |  | qackers | https://sourceforge.net/tracker/index.php?func=detail&aid=1558801&group_id=157793&atid=805244
 base/models/objects/furniture/comptable/comptable.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/comptable/comptable.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/furniture/curtains/curtain.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
@@ -1251,6 +1254,8 @@ base/models/objects/furniture/pitchfork/pitchfork.jpg | Creative Commons Attribu
 base/models/objects/furniture/pitchfork/pitchfork.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/radiator/radiator.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/radiator/radiator.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/radio/radio.jpg |  | qackers | https://sourceforge.net/tracker/index.php?func=detail&aid=1558801&group_id=157793&atid=805244
+base/models/objects/furniture/radio/radio.md2 |  | qackers | https://sourceforge.net/tracker/index.php?func=detail&aid=1558801&group_id=157793&atid=805244
 base/models/objects/furniture/sunprot/sun_prot.jpg | GNU General Public License 2.0 | "SparX" Beyeler
 base/models/objects/furniture/sunprot/sun_prot.md2 | GNU General Public License 2.0 | "SparX" Beyeler
 base/models/objects/furniture/water_dispenser/waterf.jpg | GNU General Public License 2.0 or later | Willem Sitters
