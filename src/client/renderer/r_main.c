@@ -456,7 +456,7 @@ static void R_RegisterSystemVars (void)
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
 	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE | CVAR_R_IMAGES, "The maximum texture resolution UFO should use");
-	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
+	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, "change the filtering and mipmapping for textures");
 	r_texturealphamode = Cvar_Get("r_texturealphamode", "GL_RGBA", CVAR_ARCHIVE, NULL);
 	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "GL_RGB", CVAR_ARCHIVE, NULL);
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
@@ -699,6 +699,7 @@ static qboolean R_InitExtensions (void)
 			Com_Printf("ignoring GL_ARB_texture_non_power_of_two\n");
 		}
 	} else {
+		/** @todo does opengl 2.0 and later really expose the above extension? the npot support is a must since 2.0 */
 		r_config.nonPowerOfTwo = qfalse;
 	}
 
