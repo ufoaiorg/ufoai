@@ -26,9 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_transfer_callbacks.h"
 #include "cp_transfer.h"
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
-#include "../menu/m_data.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
+#include "../ui/ui_data.h"
 
 /**
  * @brief transfer typeID strings

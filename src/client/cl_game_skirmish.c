@@ -27,8 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_game.h"
 #include "cl_team.h"
 #include "cl_inventory.h"
-#include "menu/m_main.h"
-#include "menu/m_popup.h"
+#include "ui/ui_main.h"
+#include "ui/ui_popup.h"
 
 #define DROPSHIP_MAX INTERCEPTOR_STILETTO
 

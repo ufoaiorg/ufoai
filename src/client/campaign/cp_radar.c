@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_renderer.h" /* R_Color */
 #include "../renderer/r_image.h"
 #include "../renderer/r_draw.h" /* R_DrawLineStrip */
-#include "../menu/m_nodes.h"
+#include "../ui/ui_nodes.h"
 #include "cp_campaign.h"
 #include "cp_overlay.h"
 #include "cp_map.h"

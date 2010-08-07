@@ -25,10 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_inventory.h"
 #include "cl_inventory_callbacks.h"
-#include "menu/m_main.h"
-#include "menu/m_nodes.h"
+#include "ui/ui_main.h"
+#include "ui/ui_nodes.h"
 #include "cl_game.h"
-#include "menu/node/m_node_text.h"
+#include "ui/node/ui_node_text.h"
 
 static const objDef_t *currentDisplayedObject;
 static int itemIndex;

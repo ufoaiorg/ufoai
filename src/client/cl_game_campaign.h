@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_GAME_CAMPAIGN_H
 #define CL_GAME_CAMPAIGN_H
 
-#include "menu/m_nodes.h"
+#include "ui/ui_nodes.h"
 
 void GAME_CP_DisplayItemInfo(uiNode_t *node, const char *string);
 const mapDef_t* GAME_CP_MapInfo(int step);

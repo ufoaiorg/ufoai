@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "save/save_transfer.h"
 #include "cp_transfer_callbacks.h"
-#include "../menu/m_main.h"
+#include "../ui/ui_main.h"
 
 /**
  * @brief Iterates through transfers

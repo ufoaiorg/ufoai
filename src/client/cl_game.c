@@ -26,12 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_game.h"
 #include "cgame.h"
 #include "battlescape/cl_localentity.h"
-#include "menu/m_main.h"
-#include "menu/m_nodes.h"
+#include "ui/ui_main.h"
+#include "ui/ui_nodes.h"
 #include "cl_team.h"
 #include "battlescape/events/e_main.h"
 #include "cl_inventory.h"
-#include "menu/node/m_node_model.h"
+#include "ui/node/ui_node_model.h"
 
 static invList_t invList[MAX_INVLIST];
 

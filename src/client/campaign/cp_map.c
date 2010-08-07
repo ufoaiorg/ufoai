@@ -28,11 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_framebuffer.h"
 #include "../renderer/r_draw.h"
 #include "../renderer/r_geoscape.h"
-#include "../menu/m_main.h"
-#include "../menu/m_font.h" /* UI_GetFontFromNode */
-#include "../menu/m_render.h" /* UI_DrawString */
-#include "../menu/node/m_node_abstractnode.h" /* UI_GetNodeAbsPos */
-#include "../menu/node/m_node_map.h" /* paddingRight */
+#include "../ui/ui_main.h"
+#include "../ui/ui_font.h" /* UI_GetFontFromNode */
+#include "../ui/ui_render.h" /* UI_DrawString */
+#include "../ui/node/ui_node_abstractnode.h" /* UI_GetNodeAbsPos */
+#include "../ui/node/ui_node_map.h" /* paddingRight */
 #include "cp_overlay.h"
 #include "cp_campaign.h"
 #include "cp_popup.h"

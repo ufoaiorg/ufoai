@@ -48,9 +48,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../battlescape/cl_view.h"
 #include "../battlescape/cl_parse.h"
 #include "../battlescape/cl_hud.h"
-#include "../menu/m_main.h"
-#include "../menu/m_input.h"
-#include "../menu/node/m_node_abstractnode.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_input.h"
+#include "../ui/node/ui_node_abstractnode.h"
 
 #include "../../common/tracing.h"
 

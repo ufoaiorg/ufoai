@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_uforecovery.h"
 #include "cp_uforecovery_callbacks.h"
 
-#include "../menu/m_main.h"
+#include "../ui/ui_main.h"
 
 #ifdef DEBUG
 #include "cp_time.h"

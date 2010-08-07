@@ -42,12 +42,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_hud.h"
 #include "renderer/r_main.h"
 #include "renderer/r_draw.h"
-#include "menu/m_main.h"
-#include "menu/m_draw.h"
-#include "menu/m_nodes.h"
-#include "menu/m_windows.h"
-#include "menu/m_dragndrop.h"
-#include "menu/m_render.h"
+#include "ui/ui_main.h"
+#include "ui/ui_draw.h"
+#include "ui/ui_nodes.h"
+#include "ui/ui_windows.h"
+#include "ui/ui_dragndrop.h"
+#include "ui/ui_render.h"
 
 static float scr_con_current;			/* aproaches scr_conlines at scr_conspeed */
 static float scr_conlines;				/* 0.0 to 1.0 lines of console to display */

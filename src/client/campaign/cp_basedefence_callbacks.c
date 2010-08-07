@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 #include "../cl_shared.h"
-#include "../menu/m_data.h"
-#include "../menu/m_main.h" /* UI_ExecuteConfunc */
+#include "../ui/ui_data.h"
+#include "../ui/ui_main.h" /* UI_ExecuteConfunc */
 #include "cp_campaign.h"
 #include "cp_basedefence_callbacks.h"
 #include "cp_fightequip_callbacks.h"

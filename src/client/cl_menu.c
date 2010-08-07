@@ -25,10 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_menu.h"
-#include "menu/m_main.h"
-#include "menu/m_nodes.h"
-#include "menu/m_popup.h"
-#include "menu/node/m_node_abstractnode.h"
+#include "ui/ui_main.h"
+#include "ui/ui_nodes.h"
+#include "ui/ui_popup.h"
+#include "ui/node/ui_node_abstractnode.h"
 
 static inline void CLMN_AddBindings (linkedList_t **list, char **bindings)
 {

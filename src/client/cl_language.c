@@ -27,9 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_language.h"
 #include "../shared/parse.h"
 
-#include "menu/m_main.h"
-#include "menu/m_font.h"
-#include "menu/node/m_node_abstractoption.h"
+#include "ui/ui_main.h"
+#include "ui/ui_font.h"
+#include "ui/node/ui_node_abstractoption.h"
 
 /**
  * @brief List of all mappings for a locale

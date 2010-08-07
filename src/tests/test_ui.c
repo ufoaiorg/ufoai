@@ -26,8 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "CUnit/Basic.h"
 #include "test_shared.h"
 #include "test_ui.h"
-#include "../client/menu/m_nodes.h"
-#include "../client/menu/m_timer.h"
+#include "../client/ui/ui_nodes.h"
+#include "../client/ui/ui_timer.h"
 
 /**
  * The suite initialization function.

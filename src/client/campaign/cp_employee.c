@@ -28,8 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_game.h" /* GAME_GetTeamDef */
 #include "../cl_ugv.h"
 #include "../cl_team.h"
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_employee_callbacks.h"
 #include "cp_rank.h"

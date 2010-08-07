@@ -211,7 +211,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** key / value pair sizes */
 /* ufo2map/common/bspfile.c, client/cl_input.c */
 #define	MAX_KEY		32
-/* ufo2map/common/bspfile.c, client/menu/m_nodes.h, client/menu/m_parse.c */
+/* ufo2map/common/bspfile.c, client/ui/ui_nodes.h, client/ui/ui_parse.c */
 #define	MAX_VALUE	1024
 
 /** Lump ID constants (directory in the bsp header) */

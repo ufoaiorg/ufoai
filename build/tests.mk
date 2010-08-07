@@ -57,7 +57,7 @@ TESTS_SRCS = \
 	game/chr_shared.c \
 	game/inventory.c \
 	\
-	client/menu/m_timer.c
+	client/ui/ui_timer.c
 
 ifeq ($(HARD_LINKED_GAME),1)
 	TESTS_SRCS+=$(GAME_SRCS)
