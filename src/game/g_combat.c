@@ -651,9 +651,11 @@ static void G_ShootGrenade (const player_t *player, edict_t *ent, const fireDef_
 				VectorCopy(tr.endpos, newPos);
 
 			/* calculate additional visibility */
-			for (i = 0; i < MAX_TEAMS; i++)
-				if (player->pers.team != level.activeTeam && G_TeamPointVis(i, newPos))
-					mask |= 1 << i;
+			if (!mock) {
+				for (i = 0; i < MAX_TEAMS; i++)
+					if (player->pers.team != level.activeTeam && G_TeamPointVis(i, newPos))
+						mask |= 1 << i;
+			}
 
 			/* enough bouncing around or we have hit an actor */
 			if (VectorLength(curV) < GRENADE_STOPSPEED || time > 4.0 || bounce > fd->bounce
