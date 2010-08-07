@@ -2,7 +2,7 @@
  * @file ui_node_model.c
  * @brief This node allow to include a 3D-model into the GUI.
  * It provide a way to create composite models, check
- * [[How to script menu#How to create a composite model]]. We call it "main model"
+ * [[How to script UI#How to create a composite model]]. We call it "main model"
  * when a model is a child node of a non model node, and "submodel" when the node
  * is a child node of a model node.
  */
@@ -72,7 +72,7 @@ static void UI_ListUIModels_f (void)
 	int i;
 
 	/* search for UI models with same name */
-	Com_Printf("menu models: %i\n", ui_global.numModels);
+	Com_Printf("UI models: %i\n", ui_global.numModels);
 	for (i = 0; i < ui_global.numModels; i++)
 		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", ui_global.models[i].id, ui_global.models[i].model, ui_global.models[i].need);
 }
@@ -92,8 +92,9 @@ static vec3_t nullVector = {0, 0, 0};
 
 /**
  * @brief Set the Model info view (angle,origin,scale) according to the node definition
+ * @todo the param "model" is not used !?
  */
-static inline void UI_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, uiModel_t *menuModel)
+static inline void UI_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, uiModel_t *model)
 {
 	vec3_t nodeorigin;
 	UI_GetNodeAbsPos(node, nodeorigin);
@@ -109,67 +110,67 @@ static inline void UI_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, uiMode
 }
 
 /**
- * @brief Draw a model using "menu model" definition
+ * @brief Draw a model using UI model definition
  */
-static void UI_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, modelInfo_t *mi, uiModel_t *menuModel)
+static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, modelInfo_t *mi, uiModel_t *model)
 {
 	qboolean autoScaleComputed = qfalse;
 	vec3_t autoScale;
 	vec3_t autoCenter;
 
-	while (menuModel) {
+	while (model) {
 		/* no animation */
 		mi->frame = 0;
 		mi->oldframe = 0;
 		mi->backlerp = 0;
 
-		assert(menuModel->model);
-		mi->model = R_RegisterModelShort(menuModel->model);
+		assert(model->model);
+		mi->model = R_RegisterModelShort(model->model);
 		if (!mi->model) {
-			menuModel = menuModel->next;
+			model = model->next;
 			continue;
 		}
 
-		mi->skin = menuModel->skin;
-		mi->name = menuModel->model;
+		mi->skin = model->skin;
+		mi->name = model->model;
 
-		/* set mi pointers to menuModel */
-		mi->origin = menuModel->origin;
-		mi->angles = menuModel->angles;
-		mi->center = menuModel->center;
-		mi->color = menuModel->color;
-		mi->scale = menuModel->scale;
+		/* set mi pointers to model */
+		mi->origin = model->origin;
+		mi->angles = model->angles;
+		mi->center = model->center;
+		mi->color = model->color;
+		mi->scale = model->scale;
 
-		if (menuModel->tag && menuModel->parent) {
+		if (model->tag && model->parent) {
 			/* tag and parent defined */
-			uiModel_t *menuModelParent;
+			uiModel_t *parentModel;
 			modelInfo_t pmi;
 			vec3_t pmiorigin;
 			animState_t *as;
-			/* place this menumodel part on an already existing menumodel tag */
-			menuModelParent = UI_GetUIModel(menuModel->parent);
-			if (!menuModelParent) {
-				Com_Printf("Menumodel: Could not get the menuModel '%s'\n", menuModel->parent);
+			/* place this model part on an already existing model tag */
+			parentModel = UI_GetUIModel(model->parent);
+			if (!parentModel) {
+				Com_Printf("UI Model: Could not get the model '%s'\n", model->parent);
 				break;
 			}
-			pmi.model = R_RegisterModelShort(menuModelParent->model);
+			pmi.model = R_RegisterModelShort(parentModel->model);
 			if (!pmi.model) {
-				Com_Printf("Menumodel: Could not get the model '%s'\n", menuModelParent->model);
+				Com_Printf("UI Model: Could not get the model '%s'\n", parentModel->model);
 				break;
 			}
 
-			pmi.name = menuModelParent->model;
+			pmi.name = parentModel->model;
 
 			pmi.origin = pmiorigin;
-			pmi.angles = menuModelParent->angles;
-			pmi.scale = menuModelParent->scale;
-			pmi.center = menuModelParent->center;
-			pmi.color = menuModelParent->color;
+			pmi.angles = parentModel->angles;
+			pmi.scale = parentModel->scale;
+			pmi.center = parentModel->center;
+			pmi.color = parentModel->color;
 
-			pmi.origin[0] = menuModelParent->origin[0] + mi->origin[0];
-			pmi.origin[1] = menuModelParent->origin[1] + mi->origin[1];
-			pmi.origin[2] = menuModelParent->origin[2];
-			/* don't count menuoffset twice for tagged models */
+			pmi.origin[0] = parentModel->origin[0] + mi->origin[0];
+			pmi.origin[1] = parentModel->origin[1] + mi->origin[1];
+			pmi.origin[2] = parentModel->origin[2];
+			/* don't count window offset twice for tagged models */
 			mi->origin[0] -= node->root->pos[0];
 			mi->origin[1] -= node->root->pos[1];
 
@@ -181,18 +182,18 @@ static void UI_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, m
 				pmi.center = autoCenter;
 			}
 
-			as = &menuModelParent->animState;
+			as = &parentModel->animState;
 			if (!as)
-				Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", pmi.name, menuModelParent->anim);
+				Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", pmi.name, parentModel->anim);
 			pmi.frame = as->frame;
 			pmi.oldframe = as->oldframe;
 			pmi.backlerp = as->backlerp;
 
-			R_DrawModelDirect(mi, &pmi, menuModel->tag);
+			R_DrawModelDirect(mi, &pmi, model->tag);
 		} else {
 			/* no tag and no parent means - base model or single model */
 			const char *ref;
-			UI_InitModelInfoView(node, mi, menuModel);
+			UI_InitModelInfoView(node, mi, model);
 			Vector4Copy(node->color, mi->color);
 
 			/* compute the scale and center for the first model.
@@ -212,16 +213,16 @@ static void UI_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, m
 				}
 			}
 
-			/* get the animation given by menu node properties */
+			/* get the animation given by node properties */
 			if (EXTRADATA(node).animation && *(char *) EXTRADATA(node).animation) {
 				ref = UI_GetReferenceString(node, EXTRADATA(node).animation);
-			/* otherwise use the standard animation from modelmenu definition */
+			/* otherwise use the standard animation from UI model definition */
 			} else
-				ref = menuModel->anim;
+				ref = model->anim;
 
 			/* only base models have animations */
 			if (ref && *ref) {
-				animState_t *as = &menuModel->animState;
+				animState_t *as = &model->animState;
 				const char *anim = R_AnimGetName(as, mi->model);
 				/* initial animation or animation change */
 				if (!anim || (anim && strncmp(anim, ref, MAX_VAR)))
@@ -237,18 +238,17 @@ static void UI_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, m
 		}
 
 		/* next */
-		menuModel = menuModel->next;
+		model = model->next;
 	}
 }
 
 /**
- * @todo Menu models should inherite the node values from their parent
- * @todo need to merge menuModel case, and the common case (look to be a copy-pasted code)
+ * @todo need to merge UI model case, and the common case (look to be a copy-pasted code)
  */
 void UI_DrawModelNode (uiNode_t *node, const char *source)
 {
 	modelInfo_t mi;
-	uiModel_t *menuModel;
+	uiModel_t *model;
 	vec3_t nodeorigin;
 	vec3_t autoScale;
 	vec3_t autoCenter;
@@ -258,10 +258,10 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	if (source[0] == '\0')
 		return;
 
-	menuModel = UI_GetUIModel(source);
-	/* direct model name - no menumodel definition */
-	if (!menuModel) {
-		/* prevent the searching for a menumodel def in the next frame */
+	model = UI_GetUIModel(source);
+	/* direct model name - no UI model definition */
+	if (!model) {
+		/* prevent the searching for a model def in the next frame */
 		mi.model = R_RegisterModelShort(source);
 		mi.name = source;
 		if (!mi.model) {
@@ -286,9 +286,9 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	mi.color = node->color;
 	mi.mesh = 0;
 
-	/* special case to draw models with "menu model" */
-	if (menuModel) {
-		UI_DrawModelNodeWithMenuModel(node, source, &mi, menuModel);
+	/* special case to draw models with UI model */
+	if (model) {
+		UI_DrawModelNodeWithUIModel(node, source, &mi, model);
 		if (EXTRADATA(node).clipOverflow)
 			R_PopClipRect();
 		return;

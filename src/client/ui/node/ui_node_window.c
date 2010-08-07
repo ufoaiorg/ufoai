@@ -1,9 +1,6 @@
 /**
  * @file ui_node_window.c
- * @note this file is about menu function. Its not yet a real node,
- * but it may become one. Think the code like that will help to merge menu and node.
- * @note It used 'window' instead of 'menu', because a menu is not this king of widget
- * @todo move it as an inheritance of panel bahaviour
+ * @todo move it as an inheritance of panel bahaviour?
  */
 
 /*
@@ -181,8 +178,9 @@ static void UI_WindowNodeDraw (uiNode_t *node)
 		if (EXTRADATA(node).lastTime == 0)
 			EXTRADATA(node).lastTime = CL_Milliseconds();
 		if (EXTRADATA(node).lastTime + EXTRADATA(node).timeOut < CL_Milliseconds()) {
-			EXTRADATA(node).lastTime = 0;	/**< allow to reset timeOut on the event, and restart it, with an uptodate lastTime */
-			Com_DPrintf(DEBUG_CLIENT, "UI_DrawMenus: timeout for node '%s'\n", node->name);
+			/* allow to reset timeOut on the event, and restart it, with an uptodate lastTime */
+			EXTRADATA(node).lastTime = 0;
+			Com_DPrintf(DEBUG_CLIENT, "UI_WindowNodeDraw: timeout for node '%s'\n", node->name);
 			UI_ExecuteEventActions(node, EXTRADATA(node).onTimeOut);
 		}
 	}
@@ -203,7 +201,7 @@ static void UI_WindowNodeDoLayout (uiNode_t *node)
 		}
 	}
 
-	/* move fullscreen menu on the center of the screen */
+	/* move fullscreen window on the center of the screen */
 	if (UI_WindowIsFullScreen(node)) {
 		node->pos[0] = (int) ((viddef.virtualWidth - node->size[0]) / 2);
 		node->pos[1] = (int) ((viddef.virtualHeight - node->size[1]) / 2);
@@ -297,7 +295,7 @@ static void UI_WindowNodeLoaded (uiNode_t *node)
 {
 	static char* closeCommand = "mn_close <path:root>;";
 
-	/* if it need, construct the drag button */
+	/* create a drag zone, if it is requested */
 	if (EXTRADATA(node).dragButton) {
 		uiNode_t *control = UI_AllocNode("move_window_button", "controls", node->dynamic);
 		control->root = node;
@@ -311,7 +309,7 @@ static void UI_WindowNodeLoaded (uiNode_t *node)
 		UI_AppendNode(node, control);
 	}
 
-	/* if the menu should have a close button, add it here */
+	/* create a close button, if it is requested */
 	if (EXTRADATA(node).closeButton) {
 		uiNode_t *button = UI_AllocNode("close_window_button", "image", node->dynamic);
 		const int positionFromRight = CONTROLS_PADDING;
@@ -353,7 +351,7 @@ static void UI_WindowNodeClone (const uiNode_t *source, uiNode_t *clone)
 }
 
 /**
- * @brief Valid properties for a window node (called yet 'menu')
+ * @brief Valid properties for a window node
  */
 static const value_t windowNodeProperties[] = {
 	/* @override image

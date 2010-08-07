@@ -65,7 +65,7 @@ static void UI_TextListNodeMouseMove (uiNode_t *node, int x, int y)
 }
 
 /**
- * @brief Handles line breaks and drawing for UI_TEXT menu nodes
+ * @brief Handles line breaks and drawing for shared data text
  * @param[in] node The context node
  * @param[in] list The text list to draw
  */

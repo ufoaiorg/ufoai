@@ -1,6 +1,6 @@
 /**
  * @file ui_node_editor.c
- * @note type "mn_push editor" to use it, Escape button to close it, and "mn_extract" to extract a menu
+ * @note type "mn_push editor" to use it, Escape button to close it, and "mn_extract" to extract a window to a script
  * @brief Editor is an invisible node used to create an edition mode. The edition mode
  * allow user to move and resize all visible nodes.
  */
@@ -328,24 +328,24 @@ static void UI_EditorNodeExtractNode (qFILE *file, uiNode_t *node, int depth)
  */
 static void UI_EditorNodeExtract_f (void)
 {
-	uiNode_t* menu;
+	uiNode_t* window;
 	qFILE file;
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <menuname>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <windowname>\n", Cmd_Argv(0));
 		return;
 	}
-	menu = UI_GetWindow(Cmd_Argv(1));
-	if (!menu) {
-		Com_Printf("Menu '%s' not found\n", Cmd_Argv(1));
+	window = UI_GetWindow(Cmd_Argv(1));
+	if (!window) {
+		Com_Printf("Window '%s' not found\n", Cmd_Argv(1));
 		return;
 	}
 
-	FS_OpenFile(va("menu_%s_extracted.ufo", menu->name), &file, FILE_WRITE);
-	UI_EditorNodeExtractNode(&file, menu, 0);
+	FS_OpenFile(va("window_%s_extracted.ufo", window->name), &file, FILE_WRITE);
+	UI_EditorNodeExtractNode(&file, window, 0);
 	FS_CloseFile(&file);
 
-	Com_Printf("Menu '%s' extracted.\n", Cmd_Argv(1));
+	Com_Printf("Window '%s' extracted.\n", Cmd_Argv(1));
 }
 
 static const value_t properties[] = {

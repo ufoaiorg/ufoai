@@ -99,7 +99,7 @@ static void UI_TextEntryNodeAbortEdition (uiNode_t *node)
 
 /**
  * @brief force edition of a textentry node
- * @note the textentry must be on the active menu
+ * @note the textentry must be on the active window
  */
 static void UI_TextEntryNodeFocus (uiNode_t *node, const uiCallContext_t *context)
 {

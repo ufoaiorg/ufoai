@@ -48,7 +48,7 @@ static void UI_AbstractBaseNodeLoaded (uiNode_t * node)
 }
 
 /**
- * @brief Draw a small square with the menu layout of the given base
+ * @brief Draw a small square with the layout of the given base
  */
 static void UI_BaseLayoutNodeDraw (uiNode_t * node)
 {
@@ -92,7 +92,7 @@ static void UI_BaseLayoutNodeDraw (uiNode_t * node)
 
 /**
  * @brief Return col and row of a cell, at an absolute position
- * @param[in] node The menu node definition for the base map
+ * @param[in] node Node definition for the base map
  * @param[in] x Absolute x-position requested
  * @param[in] y Absolute y-position requested
  * @param[out] col Col of the cell at the position (-1 if no cell)
@@ -278,7 +278,7 @@ static void UI_BaseMapNodeDrawTooltip (uiNode_t *node, int x, int y)
 /**
  * @brief Left click on the basemap
  * @sa UI_BaseMapRightClick
- * @param[in] node The menu node definition for the base map
+ * @param[in] node Node definition for the base map
  * @param[in] x Absolute X mouse position into the screen
  * @param[in] y Absolute Y mouse position into the screen
  */
@@ -354,7 +354,7 @@ static void UI_BaseMapNodeRightClick (uiNode_t *node, int x, int y)
 /**
  * @brief Middle click on the basemap
  * @sa UI_BaseMapNodeClick
- * @param[in] node The menu node definition for the base map
+ * @param[in] node Node definition for the base map
  * @param[in] x The x screen coordinate
  * @param[in] y The y screen coordinate
  * @note relies on @c baseCurrent

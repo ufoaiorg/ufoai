@@ -44,7 +44,7 @@ static void UI_ControlsNodeMouseDown (uiNode_t *node, int x, int y, int button)
 	if (button == K_MOUSE1) {
 		UI_SetMouseCapture(node);
 
-		/* save position between mouse and menu pos */
+		/* save position between mouse and node pos */
 		UI_NodeAbsoluteToRelativePos(node, &x, &y);
 		deltaMouseX = x + node->pos[0];
 		deltaMouseY = y + node->pos[1];
@@ -62,14 +62,14 @@ static void UI_ControlsNodeMouseUp (uiNode_t *node, int x, int y, int button)
  */
 static void UI_ControlsNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
-	/* compute new x position of the menu */
+	/* compute new x position of the window */
 	x -= deltaMouseX;
 	if (x < 0)
 		x = 0;
 	if (x + node->root->size[0] > viddef.virtualWidth)
 		x = viddef.virtualWidth - node->root->size[0];
 
-	/* compute new y position of the menu */
+	/* compute new y position of the window */
 	y -= deltaMouseY;
 	if (y < 0)
 		y = 0;

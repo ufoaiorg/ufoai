@@ -398,7 +398,7 @@ static void UI_PanelNodeGetClientPosition (uiNode_t *node, vec2_t position)
 }
 
 /**
- * @brief Valid properties for a window node (called yet 'menu')
+ * @brief Valid properties for a panel node
  */
 static const value_t properties[] = {
 	/**

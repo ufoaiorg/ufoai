@@ -145,10 +145,10 @@ static void UI_TextNodeMouseMove (uiNode_t *node, int x, int y)
 	EXTRADATA(node).super.lineUnderMouse = UI_TextNodeGetLine(node, x, y);
 }
 
-#define MAX_MENUTEXTLEN		32768
-
 /**
- * @brief Handles line breaks and drawing for UI_TEXT menu nodes
+ * @brief Handles linked list of text. Each element of the list must be a line of text without line break.
+ * A line break is betwwen 2 element of the list. Text line is wrapped/truncated... according to
+ * a node property
  * @param[in] node The context node
  * @param[in] list The test to draw else NULL
  * @param[in] noDraw If true, calling of this function only update the cache (real number of lines)
@@ -383,7 +383,7 @@ static void UI_TextNodeLoaded (uiNode_t *node)
 
 	/* is text slot exists */
 	if (EXTRADATA(node).super.dataID >= UI_MAX_DATAID)
-		Com_Error(ERR_DROP, "Error in node %s - max menu num exceeded (num: %i, max: %i)", UI_GetPath(node), EXTRADATA(node).super.dataID, UI_MAX_DATAID);
+		Com_Error(ERR_DROP, "Error in node %s - max shared data id exceeded (num: %i, max: %i)", UI_GetPath(node), EXTRADATA(node).super.dataID, UI_MAX_DATAID);
 
 #ifdef DEBUG
 	if (EXTRADATA(node).super.super.scrollY.viewSize != (int)(node->size[1] / lineheight)) {

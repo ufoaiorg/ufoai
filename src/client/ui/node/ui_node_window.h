@@ -53,13 +53,13 @@ typedef struct {
 	qboolean closeButton;			/**< If true, we init the window with a header button to close it */
 	qboolean preventTypingEscape;	/**< If true, we can't use ESC button to close the window */
 	qboolean modal;					/**< If true, we can't click outside the window */
-	qboolean dropdown;				/**< very special property force the menu to close if we click outside */
+	qboolean dropdown;				/**< very special property force the window to close if we click outside */
 	qboolean isFullScreen;			/**< Internal data to allow fullscreen windows without the same size */
 	qboolean fill;					/**< If true, use all the screen space allowed */
 	qboolean starLayout;			/**< If true, do a star layout (move child into a corner according to his num) */
 
 	int timeOut;					/**< ms value until calling onTimeOut (see cl.time) */
-	int lastTime;					/**< when a menu was pushed this value is set to cl.time */
+	int lastTime;					/**< when a window was pushed this value is set to cl.time */
 
 	struct uiNode_s *parent;	/**< to create child window */
 
@@ -69,8 +69,8 @@ typedef struct {
 	struct uiKeyBinding_s *keyList;	/** list of key binding */
 
 	/** @todo think about converting it to action instead of node */
-	struct uiAction_s *onInit; 	/**< Call when the menu is push */
-	struct uiAction_s *onClose;	/**< Call when the menu is pop */
+	struct uiAction_s *onInit; 	/**< Call when the window is pushed */
+	struct uiAction_s *onClose;	/**< Call when the window is popped */
 	struct uiAction_s *onTimeOut;	/**< Call when the own timer of the window out */
 
 	node_index_t *index;
@@ -80,10 +80,10 @@ typedef struct {
 
 void UI_RegisterWindowNode(struct uiBehaviour_s *behaviour);
 
-qboolean UI_WindowIsFullScreen(const struct uiNode_s* const menu);
-qboolean UI_WindowIsDropDown(const struct uiNode_s* const menu);
-qboolean UI_WindowIsModal(const struct uiNode_s* const menu);
-void UI_WindowNodeRegisterKeyBinding(struct uiNode_s* menu, struct uiKeyBinding_s *binding);
+qboolean UI_WindowIsFullScreen(const struct uiNode_s* const window);
+qboolean UI_WindowIsDropDown(const struct uiNode_s* const window);
+qboolean UI_WindowIsModal(const struct uiNode_s* const window);
+void UI_WindowNodeRegisterKeyBinding(struct uiNode_s* window, struct uiKeyBinding_s *binding);
 struct uiKeyBinding_s *UI_WindowNodeGetKeyBinding(const struct uiNode_s* const node, unsigned int key);
 void UI_WindowNodeSetRenderNode(struct uiNode_s *node, struct uiNode_s *renderNode);
 vec_t *UI_WindowNodeGetNoticePosition(struct uiNode_s *node);

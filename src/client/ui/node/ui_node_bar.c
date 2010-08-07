@@ -164,7 +164,7 @@ static void UI_BarNodeLoading (uiNode_t *node)
 }
 
 /**
- * @brief Valid properties for a window node (called yet 'menu')
+ * @brief Valid properties for a bar node
  */
 static const value_t properties[] = {
 	/**

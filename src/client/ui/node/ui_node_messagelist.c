@@ -162,7 +162,7 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 
 /**
  * @brief Draws the messagesystem node
- * @param[in] node The context menu node
+ * @param[in] node The context node
  */
 static void UI_MessageListNodeDraw (uiNode_t *node)
 {

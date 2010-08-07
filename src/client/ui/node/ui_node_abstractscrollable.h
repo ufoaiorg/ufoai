@@ -39,16 +39,16 @@ typedef struct {
 	int viewPos;			/**< Position of the view */
 	int viewSize;			/**< Visible size */
 	int fullSize;			/**< Full size allowed */
-} menuScroll_t;
+} uiScroll_t;
 
-qboolean UI_SetScroll(menuScroll_t *scroll, int viewPos, int viewSize, int fullSize);
+qboolean UI_SetScroll(uiScroll_t *scroll, int viewPos, int viewSize, int fullSize);
 
 typedef struct {
 	vec2_t cacheSize;		/**< check the size change while we dont have a realy event from property setter */
 
 	/** not yet implemented */
-	menuScroll_t scrollX;
-	menuScroll_t scrollY;
+	uiScroll_t scrollX;
+	uiScroll_t scrollY;
 
 	struct uiAction_s *onViewChange;	/**< called when view change (number of elements...) */
 } abstractScrollableExtraData_t;

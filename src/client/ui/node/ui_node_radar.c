@@ -163,7 +163,7 @@ static void UI_BuildRadarImageList (const char *tiles, const char *pos)
 
 /**
  * @brief Get the width of radar.
- * @param[in] node Menu node of the radar
+ * @param[in] node Node description of the radar
  * @param[in] gridSize size of the radar picture, in grid units.
  * @sa UI_InitRadar
  */
@@ -380,7 +380,7 @@ static void UI_InitRadar (const uiNode_t *node)
 		}
 	}
 
-	/* now align the screen coordinates like it's given by the menu node */
+	/* now align the screen coordinates like it's given by the node */
 	radar.x -= (radar.w / 2);
 	radar.y -= (radar.h / 2);
 }
@@ -558,7 +558,7 @@ static void UI_RadarNodeDrawItem (const le_t *le, const vec3_t pos)
  * @sa CMod_GetMapSize
  * @todo Show frustum view area for actors (@sa FrustumVis)
  * @note we only need to handle the 2d plane and can ignore the z level
- * @param[in] node The radar menu node (located in the hud menu definitions)
+ * @param[in] node Node description of the radar
  */
 static void UI_RadarNodeDraw (uiNode_t *node)
 {

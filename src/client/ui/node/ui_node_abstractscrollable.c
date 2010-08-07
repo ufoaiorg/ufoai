@@ -61,7 +61,7 @@ qboolean UI_AbstractScrollableNodeIsSizeChange (uiNode_t *node)
  * @param[in] fullSize New full size to set, else -1 if no change
  * @return True, if something have change
  */
-qboolean UI_SetScroll (menuScroll_t *scroll, int viewPos, int viewSize, int fullSize)
+qboolean UI_SetScroll (uiScroll_t *scroll, int viewPos, int viewSize, int fullSize)
 {
 	qboolean updated = qfalse;
 

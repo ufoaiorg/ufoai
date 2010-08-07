@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_node_abstractscrollable.h"
 
 struct uiAction_s;
-struct menuOption_s;
 
 typedef struct {
 	/* link to shared data (can be used if internal data is null) */
@@ -38,12 +37,10 @@ typedef struct {
 	void* cvar;							/**< Cvar containing current value */
 
 	/* information */
-	struct menuOption_s *selected;		/**< current selected option */
-	struct menuOption_s *hovered;		/**< current hovered option */
 	int count;							/**< number of elements */
 	int lineHeight;
 
-	menuScroll_t scrollY;				/**< Scroll position, if need */
+	uiScroll_t scrollY;				/**< Scroll position, if need */
 
 	struct uiAction_s *onViewChange;	/**< called when view change (number of elements...) */
 } abstractOptionExtraData_t;

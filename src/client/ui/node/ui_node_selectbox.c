@@ -183,7 +183,7 @@ static void UI_SelectBoxNodeDrawOverWindow (uiNode_t *node)
 
 	selBoxY += node->size[1];
 
-	/* drop down menu */
+	/* drop down list */
 	/* left side */
 	UI_DrawNormImage(nodepos[0], nodepos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * EXTRADATA(node).count,
 		7.0f, 28.0f, 0.0f, 21.0f, image);

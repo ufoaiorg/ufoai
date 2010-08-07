@@ -1370,7 +1370,7 @@ const char *UI_GetReferenceString (const uiNode_t* const node, const char *ref)
 		if (!strncmp(token, "binding:", 8)) {
 			/* skip prefix */
 			token = token + 8;
-			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
+			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_UI : KEYSPACE_GAME));
 		} else {
 			Sys_Error("UI_GetReferenceString: unknown reference");	/**< maybe this code is never used */
 #if 0	/** @todo need a full rework */

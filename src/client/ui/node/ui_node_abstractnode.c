@@ -101,7 +101,7 @@ void UI_NodeGetPoint (const uiNode_t* node, vec2_t pos, byte pointDirection)
 }
 
 /**
- * @brief Returns the absolute position of a menunode
+ * @brief Returns the absolute position of a node
  * @param[in] node Context node
  * @param[out] pos Absolute position
  */
@@ -168,7 +168,7 @@ void UI_NodeAbsoluteToRelativePos (const uiNode_t* node, int *x, int *y)
 }
 
 /**
- * @brief Hides a given menu node
+ * @brief Hides a given node
  * @note Sanity check whether node is null included
  */
 void UI_HideNode (uiNode_t* node)
@@ -180,7 +180,7 @@ void UI_HideNode (uiNode_t* node)
 }
 
 /**
- * @brief Unhides a given menu node
+ * @brief Unhides a given node
  * @note Sanity check whether node is null included
  */
 void UI_UnHideNode (uiNode_t* node)
@@ -222,7 +222,7 @@ uiNode_t *UI_GetNode (const uiNode_t* const node, const char *name)
 }
 
 /**
- * @brief Insert a node next another one into a node. If prevNode is NULL add the node on the heap of the menu
+ * @brief Insert a node next another one into a node. If prevNode is NULL add the node on the head of the window
  * @param[in] node Node where inserting a node
  * @param[in] prevNode previous node, will became before the newNode; else NULL if newNode will become the first child of the node
  * @param[in] newNode node we insert
@@ -236,7 +236,7 @@ void UI_InsertNode (uiNode_t* const node, uiNode_t *prevNode, uiNode_t *newNode)
 	assert(newNode);
 	/* insert only a single element */
 	assert(!newNode->next);
-	/* everything come from the same menu (force the dev to update himself this links) */
+	/* everything come from the same window (force the dev to update himself this links) */
 	assert(!prevNode || (prevNode->root == newNode->root));
 	if (prevNode == NULL) {
 		newNode->next = node->firstChild;
@@ -474,7 +474,7 @@ float UI_GetFloatFromNodeProperty (const uiNode_t* node, const value_t* property
 		b = *(const byte* const*) b;
 		if (!strncmp((const char*)b, "*cvar", 5)) {
 			const char* cvarName = (const char*)b + 6;
-			const cvar_t *cvar = Cvar_Get(cvarName, "", 0, "Menu cvar");
+			const cvar_t *cvar = Cvar_Get(cvarName, "", 0, "UI script cvar property");
 			return cvar->value;
 		} else {
 			return *(const float*) b;

@@ -144,8 +144,10 @@ void UI_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 
 		while (ed->numItems[i]) {
 			const item_t item = {NONE_AMMO, NULL, od, 0, 0};
-			if (!cls.i.AddToInventory(&cls.i, inv, item, INVDEF(csi.idEquip), NONE, NONE, 1))
-				break; /* no space left in menu */
+			if (!cls.i.AddToInventory(&cls.i, inv, item, INVDEF(csi.idEquip), NONE, NONE, 1)) {
+				/* no space left in the inventory */
+				break;
+			}
 			ed->numItems[item.t->idx]--;
 		}
 	}
@@ -221,8 +223,8 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
 		UI_DrawNormImageByName(origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, od->image);
 		R_Color(NULL);
 	} else {
-		uiModel_t *menuModel = NULL;
-		const char *modelName = GAME_GetModelForItem(od, &menuModel);
+		uiModel_t *model = NULL;
+		const char *modelName = GAME_GetModelForItem(od, &model);
 
 		/* no model definition in the tech struct, not in the fallback object definition */
 		if (modelName == NULL || modelName[0] == '\0') {
@@ -230,7 +232,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
 			return;
 		}
 
-		if (menuModel && node) {
+		if (model && node) {
 			UI_DrawModelNode(node, modelName);
 		} else {
 			modelInfo_t mi;
@@ -415,7 +417,7 @@ static void UI_ContainerNodeLoaded (uiNode_t* const node)
 	EXTRADATA(node).container = container;
 
 	if (UI_IsScrollContainerNode(node)) {
-		/* No need to calculate the size, this is done in the menu script */
+		/* No need to compute the size, the script provide it */
 	} else {
 		/* Start on the last bit of the shape mask. */
 		for (i = 31; i >= 0; i--) {
@@ -1035,7 +1037,6 @@ static qboolean UI_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 		uiNode_t *target = UI_DNDGetTargetNode();
 		if (target) {
 			invList_t *fItem;
-			/* menu */
 			/** @todo Is filterEquipType needed here?, we can use anyway INVSH_SearchInInventory if we disable dragInfoFromX/Y when we start DND */
 			if (UI_IsScrollContainerNode(source)) {
 				const int equipType = EXTRADATA(source).filterEquipType;

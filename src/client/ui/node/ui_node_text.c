@@ -129,10 +129,10 @@ static void UI_TextNodeMouseMove (uiNode_t *node, int x, int y)
 	EXTRADATA(node).lineUnderMouse = UI_TextNodeGetLine(node, x, y);
 }
 
-#define MAX_MENUTEXTLEN		32768
+#define UI_TEXTNODE_BUFFERSIZE		32768
 
 /**
- * @brief Handles line breaks and drawing for UI_TEXT menu nodes
+ * @brief Handles line breaks and drawing for shared data id
  * @param[in] node The context node
  * @param[in] text The test to draw else NULL
  * @param[in] list The test to draw else NULL
@@ -141,7 +141,8 @@ static void UI_TextNodeMouseMove (uiNode_t *node, int x, int y)
  */
 static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedList_t* list, qboolean noDraw)
 {
-	char textCopy[MAX_MENUTEXTLEN];
+	/** @todo verry big, what about static, rendering is not multi threaded */
+	char textCopy[UI_TEXTNODE_BUFFERSIZE];
 	char newFont[MAX_VAR];
 	const char* oldFont = NULL;
 	vec4_t colorHover;
@@ -259,7 +260,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 
 				tab = strchr(cur, '\t');
 
-				/* use tab stop as given via menu definition format string
+				/* use tab stop as given via property definition
 				 * or use 1/3 of the node size (width) */
 				if (!EXTRADATA(node).tabWidth)
 					tabwidth = width / 3;
@@ -479,7 +480,7 @@ static void UI_TextNodeLoaded (uiNode_t *node)
 
 	/* is text slot exists */
 	if (EXTRADATA(node).dataID >= UI_MAX_DATAID)
-		Com_Error(ERR_DROP, "Error in node %s - max menu num exceeded (num: %i, max: %i)", UI_GetPath(node), EXTRADATA(node).dataID, UI_MAX_DATAID);
+		Com_Error(ERR_DROP, "Error in node %s - max shared data id num exceeded (num: %i, max: %i)", UI_GetPath(node), EXTRADATA(node).dataID, UI_MAX_DATAID);
 
 #ifdef DEBUG
 	if (EXTRADATA(node).super.scrollY.viewSize != (int)(node->size[1] / lineheight)) {

@@ -576,7 +576,7 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
 	char **keySpace = NULL;
 
 	switch (space) {
-	case KEYSPACE_MENU:
+	case KEYSPACE_UI:
 		keySpace = menuKeyBindings;
 		break;
 	case KEYSPACE_GAME:
@@ -616,7 +616,7 @@ void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t space)
 
 	Com_DPrintf(DEBUG_CLIENT, "Binding for '%s' for space ", binding);
 	switch (space) {
-	case KEYSPACE_MENU:
+	case KEYSPACE_UI:
 		keySpace = &menuKeyBindings[keynum];
 		Com_DPrintf(DEBUG_CLIENT, "menu\n");
 		break;
@@ -664,7 +664,7 @@ static void Key_Unbind_f (void)
 	}
 
 	if (!strcmp(Cmd_Argv(0), "unbindmenu"))
-		Key_SetBinding(b, "", KEYSPACE_MENU);
+		Key_SetBinding(b, "", KEYSPACE_UI);
 	else if (!strcmp(Cmd_Argv(0), "unbindbattle"))
 		Key_SetBinding(b, "", KEYSPACE_BATTLE);
 	else
@@ -682,7 +682,7 @@ static void Key_Unbindall_f (void)
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keyBindings[i]) {
 			if (!strcmp(Cmd_Argv(0), "unbindallmenu"))
-				Key_SetBinding(i, "", KEYSPACE_MENU);
+				Key_SetBinding(i, "", KEYSPACE_UI);
 			else
 				Key_SetBinding(i, "", KEYSPACE_GAME);
 		}
@@ -728,7 +728,7 @@ static void Key_Bind_f (void)
 	if (!strcmp(Cmd_Argv(0), "bindui"))
 		UI_SetKeyBinding(cmd, b);
 	else if (!strcmp(Cmd_Argv(0), "bindmenu"))
-		Key_SetBinding(b, cmd, KEYSPACE_MENU);
+		Key_SetBinding(b, cmd, KEYSPACE_UI);
 	else if (!strcmp(Cmd_Argv(0), "bindbattle"))
 		Key_SetBinding(b, cmd, KEYSPACE_BATTLE);
 	else
