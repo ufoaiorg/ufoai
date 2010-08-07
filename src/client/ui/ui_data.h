@@ -1,5 +1,5 @@
 /**
- * @file m_data.h
+ * @file ui_data.h
  * @brief Data and interface to share data
  * @todo clean up the interface
  */
@@ -24,8 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_DATA_H
-#define CLIENT_MENU_M_DATA_H
+#ifndef CLIENT_UI_UI_DATA_H
+#define CLIENT_UI_UI_DATA_H
 
 #include "../../shared/ufotypes.h"
 #include "../../shared/shared.h"
@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct linkedList_s;
 struct uiIcon_s;
 
-/** @brief linked into ui_global.menuText - defined in menu scripts via num */
+/** @brief linked into ui_global.sharedData - defined in UI scripts via dataID property */
 typedef enum {
 	TEXT_NULL,		/**< default value, should not be used */
 	TEXT_STANDARD,
@@ -116,7 +116,7 @@ typedef enum {
 	LINESTRIP_FUNDING,
 	LINESTRIP_COLOR,
 
-	MAX_MENUTEXTS
+	UI_MAX_DATAID
 } uiTextIDs_t;
 
 typedef enum {
@@ -132,7 +132,7 @@ typedef struct uiSharedData_s {
 	union {
 		/** @brief Holds static array of characters to display */
 		const char *text;
-		/** @brief Holds a linked list for displaying in the menu */
+		/** @brief Holds a linked list for displaying in the UI */
 		struct linkedList_s *linkedListText;
 		/** @brief Holds a linked list for option (label, action, icon...) */
 		struct uiNode_s *option;

@@ -1,5 +1,5 @@
 /**
- * @file m_main.h
+ * @file ui_main.h
  */
 
 /*
@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_MAIN_H
-#define CLIENT_MENU_M_MAIN_H
+#ifndef CLIENT_UI_UI_MAIN_H
+#define CLIENT_UI_UI_MAIN_H
 
 #include "ui_data.h"
 #include "ui_windows.h"

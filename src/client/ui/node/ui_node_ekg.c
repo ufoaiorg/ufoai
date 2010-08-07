@@ -1,5 +1,5 @@
 /**
- * @file m_node_ekg.c
+ * @file ui_node_ekg.c
  * @brief Health and morale ekg images for actors
  */
 

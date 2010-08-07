@@ -1,5 +1,5 @@
 /**
- * @file m_node_todo.c
+ * @file ui_node_todo.c
  * @brief A node allowing to tag a GUI with comment (only visible on debug mode).
  */
 
@@ -65,7 +65,7 @@ static void UI_TodoNodeDraw (uiNode_t *node)
 		UI_CaptureDrawOver(node);
 }
 
-static void UI_TodoNodeDrawOverMenu (uiNode_t *node)
+static void UI_TodoNodeDrawOverWindow (uiNode_t *node)
 {
 	UI_TodoNodeDrawTooltip(node, mousePosX, mousePosY);
 }
@@ -89,7 +89,7 @@ void UI_RegisterTodoNode (uiBehaviour_t *behaviour)
 	behaviour->name = "todo";
 	behaviour->extends = "string";
 	behaviour->draw = UI_TodoNodeDraw;
-	behaviour->drawOverMenu = UI_TodoNodeDrawOverMenu;
+	behaviour->drawOverWindow = UI_TodoNodeDrawOverWindow;
 	behaviour->loading = UI_TodoNodeLoading;
 	behaviour->loaded = UI_TodoNodeLoaded;
 }

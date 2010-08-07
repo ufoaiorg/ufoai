@@ -1,5 +1,5 @@
 /**
- * @file m_node_container.c
+ * @file ui_node_container.c
  * @brief The container node refer to 3 different nodes merged into a singler one. Both
  * can drag and drop solider items from a container to another one. The first container
  * is a soldier slot. For example, the left arm, the bag pack... The second is the base
@@ -221,7 +221,7 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
 		UI_DrawNormImageByName(origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, od->image);
 		R_Color(NULL);
 	} else {
-		menuModel_t *menuModel = NULL;
+		uiModel_t *menuModel = NULL;
 		const char *modelName = GAME_GetModelForItem(od, &menuModel);
 
 		/* no model definition in the tech struct, not in the fallback object definition */

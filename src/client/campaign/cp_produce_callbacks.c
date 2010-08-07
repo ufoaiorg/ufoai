@@ -602,7 +602,7 @@ static void PR_ProductionIncrease_f (void)
 	technology_t *tech = NULL;
 	int amount = 1;
 	int producibleAmount;
-	static char productionPopup[MAX_SMALLMENUTEXTLEN];
+	static char productionPopup[UI_MAX_SMALLTEXTLEN];
 
 	if (!base)
 		return;

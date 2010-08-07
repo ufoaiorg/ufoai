@@ -1,5 +1,5 @@
 /**
- * @file m_dragndrop.c
+ * @file ui_dragndrop.c
  */
 
 /*

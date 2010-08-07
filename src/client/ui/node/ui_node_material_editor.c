@@ -1,5 +1,5 @@
 /**
- * @file m_node_material_editor.c
+ * @file ui_node_material_editor.c
  * @brief Material editor related code
  */
 

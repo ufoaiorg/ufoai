@@ -1,5 +1,5 @@
 /**
- * @file m_node_window.c
+ * @file ui_node_window.c
  * @note this file is about menu function. Its not yet a real node,
  * but it may become one. Think the code like that will help to merge menu and node.
  * @note It used 'window' instead of 'menu', because a menu is not this king of widget

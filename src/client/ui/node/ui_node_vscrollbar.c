@@ -1,5 +1,5 @@
 /**
- * @file m_node_vscrollbar.c
+ * @file ui_node_vscrollbar.c
  * @todo implement disabled
  * @todo robustness
  */

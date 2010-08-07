@@ -1,5 +1,5 @@
 /**
- * @file m_node_text.c
+ * @file ui_node_text.c
  * @todo add getter/setter to cleanup access to extradata from cl_*.c files (check "u.text.")
  */
 
@@ -478,8 +478,8 @@ static void UI_TextNodeLoaded (uiNode_t *node)
 	}
 
 	/* is text slot exists */
-	if (EXTRADATA(node).dataID >= MAX_MENUTEXTS)
-		Com_Error(ERR_DROP, "Error in node %s - max menu num exceeded (num: %i, max: %i)", UI_GetPath(node), EXTRADATA(node).dataID, MAX_MENUTEXTS);
+	if (EXTRADATA(node).dataID >= UI_MAX_DATAID)
+		Com_Error(ERR_DROP, "Error in node %s - max menu num exceeded (num: %i, max: %i)", UI_GetPath(node), EXTRADATA(node).dataID, UI_MAX_DATAID);
 
 #ifdef DEBUG
 	if (EXTRADATA(node).super.scrollY.viewSize != (int)(node->size[1] / lineheight)) {

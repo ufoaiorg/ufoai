@@ -1,5 +1,5 @@
 /**
- * @file m_node_tbar.c
+ * @file ui_node_tbar.c
  */
 
 /*

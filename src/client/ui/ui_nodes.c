@@ -1,5 +1,5 @@
 /**
- * @file m_nodes.c
+ * @file ui_nodes.c
  */
 
 /*
@@ -173,8 +173,8 @@ qboolean UI_CheckVisibility (uiNode_t *node)
 }
 
 /**
- * @brief Return a path from a menu to a node
- * @return A path "menuname.nodename.nodename.givennodename"
+ * @brief Return a path from a window to a node
+ * @return A path "windowname.nodename.nodename.givennodename"
  * @note Use a static buffer for the result
  */
 const char* UI_GetPath (const uiNode_t* node)
@@ -204,15 +204,15 @@ const char* UI_GetPath (const uiNode_t* node)
 
 /**
  * @brief Read a path and return every we can use (node and property)
- * @details The path token must be a menu name, and then node child.
- * Reserved token 'menu' and 'parent' can be used to navigate.
+ * @details The path token must be a window name, and then node child.
+ * Reserved token 'root' and 'parent' can be used to navigate.
  * If relativeNode is set, the path can start with reserved token
- * 'this', 'menu' and 'parent' (relative to this node).
+ * 'this', 'root' and 'parent' (relative to this node).
  * The function can return a node property by using a '\@',
- * the path 'foo\@pos' will return the menu foo and the property 'pos'
+ * the path 'foo\@pos' will return the window foo and the property 'pos'
  * from the 'window' behaviour.
  * @param[in] path Path to read. Contain a node location with dot seprator and a facultative property
- * @param[in] relativeNode relative node where the path start. It allow to use facultative command to start the path (this, parent, menu).
+ * @param[in] relativeNode relative node where the path start. It allow to use facultative command to start the path (this, parent, root).
  * @param[out] resultNode Node found. Else NULL.
  * @param[out] resultProperty Property found. Else NULL.
  * TODO Speed up, evilly used function, use strncmp instead of using buffer copy (name[MAX_VAR])
@@ -294,7 +294,7 @@ void UI_ReadNodePath (const char* path, const uiNode_t *relativeNode, uiNode_t *
  * It is a simplification facade over UI_ReadNodePath
  * @return The requested node, else NULL if not found
  * @code
- * // get keylist node from options_keys node from options menu
+ * // get keylist node from options_keys node from options window
  * node = UI_GetNodeByPath("options.options_keys.keylist");
  * @sa UI_ReadNodePath
  * @endcode
@@ -457,24 +457,24 @@ uiNode_t *UI_GetNodeAtPosition (int x, int y)
 {
 	int pos;
 
-	/* find the first menu under the mouse */
+	/* find the first window under the mouse */
 	for (pos = ui_global.windowStackPos - 1; pos >= 0; pos--) {
-		uiNode_t *menu = ui_global.windowStack[pos];
+		uiNode_t *window = ui_global.windowStack[pos];
 		uiNode_t *find;
 
 		/* update the layout */
-		UI_Validate(menu);
+		UI_Validate(window);
 
-		find = UI_GetNodeInTreeAtPosition(menu, x, y);
+		find = UI_GetNodeInTreeAtPosition(window, x, y);
 		if (find)
 			return find;
 
 		/* we must not search anymore */
-		if (UI_WindowIsDropDown(menu))
+		if (UI_WindowIsDropDown(window))
 			break;
-		if (UI_WindowIsModal(menu))
+		if (UI_WindowIsModal(window))
 			break;
-		if (UI_WindowIsFullScreen(menu))
+		if (UI_WindowIsFullScreen(window))
 			break;
 	}
 
@@ -583,13 +583,13 @@ void UI_DeleteNode (uiNode_t* node)
  * @brief Clone a node
  * @param[in] node Node to clone
  * @param[in] recursive True if we also must clone subnodes
- * @param[in] newMenu Menu where the nodes must be add (this function only link node into menu, note menu into the new node)
+ * @param[in] newWindow Window where the nodes must be add (this function only link node into window, not window into the new node)
  * @param[in] newName New node name, else NULL to use the source name
  * @param[in] isDynamic Allocate a node in static or dynamic memory
  * @todo exclude rect is not safe cloned.
  * @todo actions are not cloned. It is be a problem if we use add/remove listener into a cloned node.
  */
-uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newMenu, qboolean recursive, const char *newName, qboolean isDynamic)
+uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newWindow, qboolean recursive, const char *newName, qboolean isDynamic)
 {
 	uiNode_t* newNode = UI_AllocNodeWithoutNew(NULL, node->behaviour->name, isDynamic);
 
@@ -605,9 +605,9 @@ uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newMenu, qboolean recurs
 	}
 
 	/* clean up node navigation */
-	if (node->root == node && newMenu == NULL)
-		newMenu = newNode;
-	newNode->root = newMenu;
+	if (node->root == node && newWindow == NULL)
+		newWindow = newNode;
+	newNode->root = newWindow;
 	newNode->parent = NULL;
 	newNode->firstChild = NULL;
 	newNode->lastChild = NULL;
@@ -618,7 +618,7 @@ uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newMenu, qboolean recurs
 	if (recursive) {
 		uiNode_t* childNode;
 		for (childNode = node->firstChild; childNode; childNode = childNode->next) {
-			uiNode_t* newChildNode = UI_CloneNode(childNode, newMenu, recursive, NULL, isDynamic);
+			uiNode_t* newChildNode = UI_CloneNode(childNode, newWindow, recursive, NULL, isDynamic);
 			UI_AppendNode(newNode, newChildNode);
 		}
 	}

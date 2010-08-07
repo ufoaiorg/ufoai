@@ -1,5 +1,5 @@
 /**
- * @file m_actions.c
+ * @file ui_actions.c
  */
 
 /*
@@ -35,13 +35,13 @@ typedef struct {
 	char* token;
 	int type;
 	int group;
-} menuTypedActionToken_t;
+} ui_typedActionToken_t;
 
 /**
  * @brief List of typed token
  * @note token ordered by alphabet, because it use a dichotomic search
  */
-static const menuTypedActionToken_t actionTokens[] = {
+static const ui_typedActionToken_t actionTokens[] = {
 
 	/* 0x2x */
 	{"!", EA_OPERATOR_NOT, EA_UNARYOPERATOR},
@@ -673,7 +673,7 @@ uiAction_t* UI_AllocStaticCommandAction (char *command)
  * @param[in] type Only @c EA_CMD is supported
  * @param[in] data The data for this action - in case of @c EA_CMD this is the commandline
  * @note You first have to free existing node actions - only free those that are
- * not static in @c ui_global.menuActions array
+ * not static in @c ui_global.actions array
  * @todo we should create a function to free the memory. We can use a tag in the Mem_PoolAlloc
  * calls and use use Mem_FreeTag.
  */
@@ -694,7 +694,7 @@ void UI_PoolAllocAction (uiAction_t** action, int type, const void *data)
 
 /**
  * @brief Add a callback of a function into a node event. There can be more than on listener.
- * @param[in,out] node The menu menu to add the listener to.
+ * @param[in,out] node The node to add the listener to.
  * @param[in] property The property of the node to add the listener to.
  * @param[in] functionNode The node of the listener callback.
  */

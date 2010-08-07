@@ -1,5 +1,5 @@
 /**
- * @file m_node_base.c
+ * @file ui_node_base.c
  */
 
 /*

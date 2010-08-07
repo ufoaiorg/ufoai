@@ -764,20 +764,20 @@ void GAME_Frame (void)
  * @param[out] menuModel The menu model pointer.
  * @return The model path for the item. Never @c NULL.
  */
-const char* GAME_GetModelForItem (const objDef_t *od, menuModel_t** menuModel)
+const char* GAME_GetModelForItem (const objDef_t *od, uiModel_t** uiModel)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list && list->GetModelForItem != NULL) {
 		const char *model = list->GetModelForItem(od);
 		if (model != NULL) {
-			if (menuModel != NULL)
-				*menuModel = UI_GetMenuModel(model);
+			if (uiModel != NULL)
+				*uiModel = UI_GetUIModel(model);
 			return model;
 		}
 	}
 
-	if (menuModel != NULL)
-		*menuModel = NULL;
+	if (uiModel != NULL)
+		*uiModel = NULL;
 	return od->model;
 }
 

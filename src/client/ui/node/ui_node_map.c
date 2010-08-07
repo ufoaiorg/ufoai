@@ -1,5 +1,5 @@
 /**
- * @file m_node_map.c
+ * @file ui_node_map.c
  */
 
 /*

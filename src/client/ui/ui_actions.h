@@ -1,5 +1,5 @@
 /**
- * @file m_actions.h
+ * @file ui_actions.h
  */
 
 /*
@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_ACTIONS_H
-#define CLIENT_MENU_M_ACTIONS_H
+#ifndef CLIENT_UI_UI_ACTIONS_H
+#define CLIENT_UI_UI_ACTIONS_H
 
 #include "../../common/common.h"
 

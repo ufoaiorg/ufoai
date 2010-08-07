@@ -1,5 +1,5 @@
 /**
- * @file m_node_abstractscrollable.c
+ * @file ui_node_abstractscrollable.c
  * @todo use this interface into every scrollable node
  */
 

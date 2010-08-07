@@ -1,5 +1,5 @@
 /**
- * @file m_popup.c
+ * @file ui_popup.c
  */
 
 /*
@@ -28,15 +28,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_actions.h"
 #include "node/ui_node_abstractnode.h"
 
-#define POPUPBUTTON_MENU_NAME "popup_button"
+#define POPUPBUTTON_WINDOW_NAME "popup_button"
 #define POPUPBUTTON_NODE_NAME "popup_button_"
-#define POPUP_MENU_NAME "popup"
+#define POPUP_WINDOW_NAME "popup"
 
 /** @brief strings to be used for popup when text is not static */
-char popupText[MAX_SMALLMENUTEXTLEN];
-static char popupAction1[MAX_SMALLMENUTEXTLEN];
-static char popupAction2[MAX_SMALLMENUTEXTLEN];
-static char popupAction3[MAX_SMALLMENUTEXTLEN];
+char popupText[UI_MAX_SMALLTEXTLEN];
+static char popupAction1[UI_MAX_SMALLTEXTLEN];
+static char popupAction2[UI_MAX_SMALLTEXTLEN];
+static char popupAction3[UI_MAX_SMALLTEXTLEN];
 
 /**
  * @brief Popup on geoscape
@@ -47,8 +47,8 @@ void UI_Popup (const char *title, const char *text)
 {
 	Cvar_Set("mn_sys_popup_title", title);
 	UI_RegisterText(TEXT_POPUP_INFO, text);
-	if (!UI_IsWindowOnStack(POPUP_MENU_NAME))
-		UI_PushWindow(POPUP_MENU_NAME, NULL);
+	if (!UI_IsWindowOnStack(POPUP_WINDOW_NAME))
+		UI_PushWindow(POPUP_WINDOW_NAME, NULL);
 }
 
 /**
@@ -60,7 +60,7 @@ void UI_Popup (const char *title, const char *text)
  */
 uiNode_t *UI_PopupList (const char *title, const char *headline, linkedList_t* entries, const char *clickAction)
 {
-	uiNode_t* popupListMenu;
+	uiNode_t* window;
 	uiNode_t* listNode;
 
 	Cvar_Set("mn_sys_popup_title", title);
@@ -70,12 +70,12 @@ uiNode_t *UI_PopupList (const char *title, const char *headline, linkedList_t* e
 	UI_ResetData(TEXT_LIST);
 	UI_RegisterLinkedListText(TEXT_LIST, entries);
 
-	popupListMenu = UI_GetWindow(POPUPLIST_MENU_NAME);
-	if (!popupListMenu)
-		Com_Error(ERR_FATAL, "Could not get "POPUPLIST_MENU_NAME" menu");
-	listNode = UI_GetNode(popupListMenu, POPUPLIST_NODE_NAME);
+	window = UI_GetWindow(POPUPLIST_WINDOW_NAME);
+	if (!window)
+		Com_Error(ERR_FATAL, "Could not get "POPUPLIST_WINDOW_NAME" window");
+	listNode = UI_GetNode(window, POPUPLIST_NODE_NAME);
 	if (!listNode)
-		Com_Error(ERR_FATAL, "Could not get "POPUPLIST_NODE_NAME" node in "POPUPLIST_MENU_NAME" menu");
+		Com_Error(ERR_FATAL, "Could not get "POPUPLIST_NODE_NAME" node in "POPUPLIST_WINDOW_NAME" window");
 
 	/* free previous actions */
 	if (listNode->onClick) {
@@ -91,25 +91,25 @@ uiNode_t *UI_PopupList (const char *title, const char *headline, linkedList_t* e
 		listNode->onClick = NULL;
 	}
 
-	if (!UI_IsWindowOnStack(popupListMenu->name))
-		UI_PushWindow(popupListMenu->name, NULL);
+	if (!UI_IsWindowOnStack(window->name))
+		UI_PushWindow(window->name, NULL);
 	return listNode;
 }
 
 /**
  * @brief Set string and action button.
- * @param[in] menu menu where buttons are modified.
+ * @param[in] window window where buttons are modified.
  * @param[in] button Name of the node of the button.
  * @param[in] clickAction Action to perform when button is clicked.
  * @note clickAction may be NULL if button is not needed.
  */
-static void UI_SetOneButton (uiNode_t* menu, const char *button, const char *clickAction)
+static void UI_SetOneButton (uiNode_t* window, const char *button, const char *clickAction)
 {
 	uiNode_t* buttonNode;
 
-	buttonNode = UI_GetNode(menu, button);
+	buttonNode = UI_GetNode(window, button);
 	if (!buttonNode)
-		Com_Error(ERR_FATAL, "Could not get %s node in %s menu", button, menu->name);
+		Com_Error(ERR_FATAL, "Could not get %s node in %s window", button, window->name);
 
 	/* free previous actions */
 	if (buttonNode->onClick) {
@@ -148,7 +148,7 @@ void UI_PopupButton (const char *title, const char *text,
 	const char *clickAction2, const char *clickText2, const char *tooltip2,
 	const char *clickAction3, const char *clickText3, const char *tooltip3)
 {
-	uiNode_t* popupButtonMenu;
+	uiNode_t* window;
 
 	Cvar_Set("mn_sys_popup_title", title);
 	if (text)
@@ -156,38 +156,38 @@ void UI_PopupButton (const char *title, const char *text,
 	else
 		UI_RegisterText(TEXT_POPUP_INFO, popupText);
 
-	popupButtonMenu = UI_GetWindow(POPUPBUTTON_MENU_NAME);
-	if (!popupButtonMenu)
-		Com_Error(ERR_FATAL, "Could not get "POPUPBUTTON_MENU_NAME" menu");
+	window = UI_GetWindow(POPUPBUTTON_WINDOW_NAME);
+	if (!window)
+		Com_Error(ERR_FATAL, "Could not get \""POPUPBUTTON_WINDOW_NAME"\" window");
 
 	Cvar_Set("mn_sys_popup_button_text1", clickText1);
 	Cvar_Set("mn_sys_popup_button_tooltip1", tooltip1);
 	if (!clickAction1 && !clickText1) {
-		UI_SetOneButton(popupButtonMenu, va("%s1", POPUPBUTTON_NODE_NAME),
+		UI_SetOneButton(window, va("%s1", POPUPBUTTON_NODE_NAME),
 			NULL);
 	} else {
-		UI_SetOneButton(popupButtonMenu, va("%s1", POPUPBUTTON_NODE_NAME),
+		UI_SetOneButton(window, va("%s1", POPUPBUTTON_NODE_NAME),
 			clickAction1 ? clickAction1 : popupAction1);
 	}
 
 	Cvar_Set("mn_sys_popup_button_text2", clickText2);
 	Cvar_Set("mn_sys_popup_button_tooltip2", tooltip2);
 	if (!clickAction2 && !clickText2) {
-		UI_SetOneButton(popupButtonMenu, va("%s2", POPUPBUTTON_NODE_NAME), NULL);
+		UI_SetOneButton(window, va("%s2", POPUPBUTTON_NODE_NAME), NULL);
 	} else {
-		UI_SetOneButton(popupButtonMenu, va("%s2", POPUPBUTTON_NODE_NAME),
+		UI_SetOneButton(window, va("%s2", POPUPBUTTON_NODE_NAME),
 			clickAction2 ? clickAction2 : popupAction2);
 	}
 
 	Cvar_Set("mn_sys_popup_button_text3", clickText3);
 	Cvar_Set("mn_sys_popup_button_tooltip3", tooltip3);
 	if (!clickAction3 && !clickText3) {
-		UI_SetOneButton(popupButtonMenu, va("%s3", POPUPBUTTON_NODE_NAME), NULL);
+		UI_SetOneButton(window, va("%s3", POPUPBUTTON_NODE_NAME), NULL);
 	} else {
-		UI_SetOneButton(popupButtonMenu, va("%s3", POPUPBUTTON_NODE_NAME),
+		UI_SetOneButton(window, va("%s3", POPUPBUTTON_NODE_NAME),
 			clickAction3 ? clickAction3 : popupAction3);
 	}
 
-	if (!UI_IsWindowOnStack(popupButtonMenu->name))
-		UI_PushWindow(popupButtonMenu->name, NULL);
+	if (!UI_IsWindowOnStack(window->name))
+		UI_PushWindow(window->name, NULL);
 }

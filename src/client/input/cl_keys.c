@@ -986,9 +986,9 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		 * present as bare keys on other keyboards. Smooth over the difference
 		 * here by using the translated value if there is a binding for it. */
 		const char *kb = NULL;
-		if (mouseSpace == MS_MENU && unicode >= 32 && unicode < 127)
+		if (mouseSpace == MS_UI && unicode >= 32 && unicode < 127)
 			kb = menuKeyBindings[unicode];
-		if (!kb && mouseSpace == MS_MENU)
+		if (!kb && mouseSpace == MS_UI)
 			kb = menuKeyBindings[key];
 		if (!kb && unicode >= 32 && unicode < 127)
 			kb = keyBindings[unicode];

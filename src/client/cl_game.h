@@ -62,7 +62,7 @@ qboolean GAME_TeamIsKnown(const teamDef_t *teamDef);
 const char* GAME_GetTeamDef(void);
 void GAME_Drop(void);
 void GAME_Frame(void);
-const char* GAME_GetModelForItem(const objDef_t *od, struct menuModel_s** menuModel);
+const char* GAME_GetModelForItem(const objDef_t *od, struct uiModel_s** menuModel);
 
 #include "cl_game_campaign.h"
 #include "cl_game_skirmish.h"

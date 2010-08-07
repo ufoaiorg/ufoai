@@ -1,5 +1,5 @@
 /**
- * @file m_node_textlist.c
+ * @file ui_node_textlist.c
  */
 
 /*

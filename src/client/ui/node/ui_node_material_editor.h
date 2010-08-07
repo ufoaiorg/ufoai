@@ -1,5 +1,5 @@
 /**
- * @file m_node_material_editor.h
+ * @file ui_node_material_editor.h
  * @brief Material editor related header
  */
 
@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_MATERIAL_EDITOR_H
-#define CLIENT_MENU_M_NODE_MATERIAL_EDITOR_H
+#ifndef CLIENT_UI_UI_NODE_MATERIAL_EDITOR_H
+#define CLIENT_UI_UI_NODE_MATERIAL_EDITOR_H
 
 void UI_RegisterMaterialEditorNode(uiBehaviour_t *behaviour);
 

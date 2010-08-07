@@ -1,5 +1,5 @@
 /**
- * @file m_node_button.c
+ * @file ui_node_button.c
  * @brief <code>button</code> is a node to define a button with a random size. It is skinned
  * with a special image template (see the <code>image</code> property).
  * @todo add an icon if possible.

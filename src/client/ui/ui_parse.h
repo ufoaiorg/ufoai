@@ -1,5 +1,5 @@
 /**
- * @file m_parse.h
+ * @file ui_parse.h
  */
 
 /*
@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_PARSE_H
-#define CLIENT_MENU_M_PARSE_H
+#ifndef CLIENT_UI_UI_PARSE_H
+#define CLIENT_UI_UI_PARSE_H
 
 #include "../../common/scripts.h"
 
@@ -34,7 +34,7 @@ struct value_s;
 void UI_ParseWindow(const char *type, const char *name, const char **text);
 void UI_ParseComponent(const char *type, const char **text);
 void UI_ParseIcon(const char *name, const char **text);
-void UI_ParseMenuModel(const char *name, const char **text);
+void UI_ParseUIModel(const char *name, const char **text);
 float UI_GetReferenceFloat(const struct uiNode_s* const node, const void *ref);
 const char *UI_GetReferenceString(const struct uiNode_s* const node, const char *ref) __attribute__ ((warn_unused_result));
 const value_t* UI_FindPropertyByName(const value_t* propertyList, const char* name) __attribute__ ((warn_unused_result));

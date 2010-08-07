@@ -1,5 +1,5 @@
 /**
- * @file m_timer.h
+ * @file ui_timer.h
  */
 
 /*
@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_TIMER_H
-#define CLIENT_MENU_M_TIMER_H
+#ifndef CLIENT_UI_UI_TIMER_H
+#define CLIENT_UI_UI_TIMER_H
 
 struct uiNode_s;
 struct uiTimer_s;

@@ -1,5 +1,5 @@
 /**
- * @file m_main.c
+ * @file ui_main.c
  */
 
 /*
@@ -143,8 +143,8 @@ static void UI_ModifyWrap_f (void)
 }
 
 /**
- * @brief Shows the corresponding strings in menu
- * Example: Optionsmenu - fullscreen: yes
+ * @brief Shows the corresponding strings in the UI
+ * Example: Options window - fullscreen: yes
  */
 static void UI_Translate_f (void)
 {
@@ -195,7 +195,7 @@ static void UI_Translate_f (void)
 
 #ifdef DEBUG
 /**
- * @brief display info about menu memory
+ * @brief display info about UI memory
  * @todo it can be nice to have number of nodes per behaviours
  */
 static void UI_Memory_f (void)
@@ -204,16 +204,16 @@ static void UI_Memory_f (void)
 	const size_t nodeSize = sizeof(uiNode_t);
 	size_t size;
 	Com_Printf("Allocation:\n");
-	Com_Printf("\t-Window allocation: %i/%i\n", ui_global.numWindows, MAX_WINDOWS);
-	Com_Printf("\t-Rendering menu stack slot: %i\n", MAX_MENUSTACK);
-	Com_Printf("\t-Action allocation: %i/%i\n", ui_global.numActions, MAX_MENUACTIONS);
-	Com_Printf("\t-Model allocation: %i/%i\n", ui_global.numMenuModels, MAX_MENUMODELS);
-	Com_Printf("\t-Exclude rect allocation: %i/%i\n", ui_global.numExcludeRect, MAX_EXLUDERECTS);
+	Com_Printf("\t-Window allocation: %i/%i\n", ui_global.numWindows, UI_MAX_WINDOWS);
+	Com_Printf("\t-Rendering window stack slot: %i\n", UI_MAX_WINDOWSTACK);
+	Com_Printf("\t-Action allocation: %i/%i\n", ui_global.numActions, UI_MAX_ACTIONS);
+	Com_Printf("\t-Model allocation: %i/%i\n", ui_global.numModels, UI_MAX_MODELS);
+	Com_Printf("\t-Exclude rect allocation: %i/%i\n", ui_global.numExcludeRect, UI_MAX_EXLUDERECTS);
 	Com_Printf("\t -Node allocation: %i\n", ui_global.numNodes);
 
 	Com_Printf("Memory:\n");
 	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(uiAction_t));
-	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(menuModel_t));
+	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(uiModel_t));
 	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B x%d\n", sizeof(uiNode_t), ui_global.numNodes);
 	for (i = 0; i < UI_GetNodeBehaviourCount(); i++) {
 		uiBehaviour_t *b = UI_GetNodeBehaviourByIndex(i);
@@ -265,7 +265,7 @@ void UI_Reinit (void)
 }
 
 /**
- * @brief Reset and free the menu data hunk
+ * @brief Reset and free the UI data hunk
  * @note Even called in case of an error when CL_Shutdown was called - maybe even
  * before CL_InitLocal (and thus UI_Init) was called
  * @sa CL_Shutdown
@@ -323,7 +323,7 @@ void UI_Shutdown (void)
 	ui_dynPool = NULL;
 }
 
-#define MENU_HUNK_SIZE 2*1024*1024
+#define UI_HUNK_SIZE 2*1024*1024
 
 void UI_Init (void)
 {
@@ -331,23 +331,23 @@ void UI_Init (void)
 	ui_debug = Cvar_Get("debug_ui", "0", CVAR_DEVELOPER, "Prints node names for debugging purposes - valid values are 1 and 2");
 #endif
 
-	/* reset menu structures */
+	/* reset global UI structures */
 	memset(&ui_global, 0, sizeof(ui_global));
 
 	/* add cvars */
 	/** @todo not sure it is a ui var */
-	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "This is the sequence menu to render the sequence in");
+	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "This is the sequence window to render the sequence in");
 	/** @todo should be a client Cvar, not a ui */
-	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE | CVAR_LATCH, "This is the current selected hud");
+	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE | CVAR_LATCH, "This is the current selected HUD");
 
 	ui_sounds = Cvar_Get("ui_sounds", "1", CVAR_ARCHIVE, "Activates UI sounds");
 
-	/* add menu commands */
+	/* add global UI commands */
 	Cmd_AddCommand("mn_modify", UI_Modify_f, NULL);
 	Cmd_AddCommand("mn_modifywrap", UI_ModifyWrap_f, NULL);
 	Cmd_AddCommand("mn_translate", UI_Translate_f, NULL);
 #ifdef DEBUG
-	Cmd_AddCommand("debug_mnmemory", UI_Memory_f, "Display info about menu memory allocation");
+	Cmd_AddCommand("debug_mnmemory", UI_Memory_f, "Display info about UI memory allocation");
 #endif
 
 	ui_sysPool = Mem_CreatePool("Client: UI");
@@ -355,7 +355,7 @@ void UI_Init (void)
 	ui_dynPool = Mem_CreatePool("Client: Dynamic memory for UI");
 
 	/* 256kb */
-	ui_global.adataize = MENU_HUNK_SIZE;
+	ui_global.adataize = UI_HUNK_SIZE;
 	ui_global.adata = (byte*)Mem_PoolAlloc(ui_global.adataize, ui_sysPool, 0);
 	ui_global.curadata = ui_global.adata;
 

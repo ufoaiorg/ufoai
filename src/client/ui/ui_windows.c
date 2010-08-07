@@ -1,5 +1,5 @@
 /**
- * @file m_windows.c
+ * @file ui_windows.c
  */
 
 /*
@@ -180,7 +180,7 @@ static uiNode_t* UI_PushWindowDelete (const char *name, const char *parent, qboo
 	if (delete)
 		UI_DeleteWindowFromStack(window);
 
-	if (ui_global.windowStackPos < MAX_MENUSTACK)
+	if (ui_global.windowStackPos < UI_MAX_WINDOWSTACK)
 		if (parent) {
 			const int parentPos = UI_GetWindowPositionFromStackByName(parent);
 			if (parentPos == -1) {
@@ -239,7 +239,7 @@ int UI_CompleteWithWindow (const char *partial, const char **match)
 }
 
 /**
- * @brief Push a window onto the menu stack
+ * @brief Push a window onto the window stack
  * @param[in] name Name of the window to push onto window stack
  * @param[in] parentName Window name to link as parent-child (else NULL)
  * @return pointer to uiNode_t
@@ -386,32 +386,32 @@ static void UI_CloseAllWindow (void)
 
 /**
  * @brief Init the stack to start with a window, and have an alternative window with ESC
- * @param[in] activeMenu The first active window of the stack, else NULL
- * @param[in] mainMenu The alternative window, else NULL if nothing
+ * @param[in] activeWindow The first active window of the stack, else NULL
+ * @param[in] mainWindow The alternative window, else NULL if nothing
  * @param[in] popAll If true, clean up the stack first
  * @param[in] pushActive If true, push the active window into the stack
  * @todo remove Cvar_Set we have direct access to the cvar
- * @todo check why activeMenu can be NULL. It should never be NULL: a stack must not be empty
- * @todo We should only call it a very few time. When we switch from/to this different par of the game: main-option-menu / geoscape-and-base / battlescape
+ * @todo check why activeWindow can be NULL. It should never be NULL: a stack must not be empty
+ * @todo We should only call it a very few time. When we switch from/to this different par of the game: main-option-interface / geoscape-and-base / battlescape
  * @todo Update the code: popAll should be every time true
  * @todo Update the code: pushActive should be every time true
  * @todo Illustration about when/how we should use UI_InitStack http://ufoai.ninex.info/wiki/index.php/Image:UI_InitStack.jpg
  */
-void UI_InitStack (const char* activeMenu, const char* mainMenu, qboolean popAll, qboolean pushActive)
+void UI_InitStack (const char* activeWindow, const char* mainWindow, qboolean popAll, qboolean pushActive)
 {
 	if (popAll)
 		UI_PopWindow(qtrue);
-	if (activeMenu) {
-		Cvar_Set("mn_sys_active", activeMenu);
+	if (activeWindow) {
+		Cvar_Set("mn_sys_active", activeWindow);
 		/* prevent calls before UI script initialization */
 		if (ui_global.numWindows != 0) {
 			if (pushActive)
-				UI_PushWindow(activeMenu, NULL);
+				UI_PushWindow(activeWindow, NULL);
 		}
 	}
 
-	if (mainMenu)
-		Cvar_Set("mn_sys_main", mainMenu);
+	if (mainWindow)
+		Cvar_Set("mn_sys_main", mainWindow);
 }
 
 /**
@@ -484,12 +484,12 @@ void UI_PopWindow (qboolean all)
 	if (all) {
 		UI_CloseAllWindow();
 	} else {
-		uiNode_t *mainMenu = ui_global.windowStack[ui_global.windowStackPos - 1];
+		uiNode_t *mainWindow = ui_global.windowStack[ui_global.windowStackPos - 1];
 		if (!ui_global.windowStackPos)
 			return;
-		if (WINDOWEXTRADATA(mainMenu).parent)
-			mainMenu = WINDOWEXTRADATA(mainMenu).parent;
-		UI_CloseWindowByRef(mainMenu);
+		if (WINDOWEXTRADATA(mainWindow).parent)
+			mainWindow = WINDOWEXTRADATA(mainWindow).parent;
+		UI_CloseWindowByRef(mainWindow);
 
 		if (ui_global.windowStackPos == 0) {
 			/* mn_main contains the window that is the very first window and should be
@@ -700,8 +700,8 @@ void UI_InsertWindow (uiNode_t* window)
 	int pos = 0;
 	int i;
 
-	if (ui_global.numWindows >= MAX_WINDOWS)
-		Com_Error(ERR_FATAL, "UI_InsertWindow: hit MAX_WINDOWS");
+	if (ui_global.numWindows >= UI_MAX_WINDOWS)
+		Com_Error(ERR_FATAL, "UI_InsertWindow: hit UI_MAX_WINDOWS");
 
 	/* search the insertion position */
 	for (pos = 0; pos < ui_global.numWindows; pos++) {
@@ -818,12 +818,12 @@ static void UI_DebugTree_f (void)
 
 void UI_InitWindows (void)
 {
-	mn_sys_main = Cvar_Get("mn_sys_main", "", 0, "This is the main window id that is at the very first menu stack - also see mn_sys_active");
+	mn_sys_main = Cvar_Get("mn_sys_main", "", 0, "This is the main window id that is at the very first window stack - also see mn_sys_active");
 	mn_sys_active = Cvar_Get("mn_sys_active", "", 0, "The active window we will return to when hitting esc once - also see mn_sys_main");
 
 	/* add command */
 	Cmd_AddCommand("mn_fireinit", UI_FireInit_f, "Call the init function of a window");
-	Cmd_AddCommand("mn_push", UI_PushWindow_f, "Push a window to the menustack");
+	Cmd_AddCommand("mn_push", UI_PushWindow_f, "Push a window to the window stack");
 	Cmd_AddParamCompleteFunction("mn_push", UI_CompleteWithWindow);
 	Cmd_AddCommand("mn_push_dropdown", UI_PushDropDownWindow_f, "Push a dropdown window at a position");
 	Cmd_AddCommand("mn_push_child", UI_PushChildWindow_f, "Push a window to the windowstack with a big dependancy to a parent window");

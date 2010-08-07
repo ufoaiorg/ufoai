@@ -1,5 +1,5 @@
 /**
- * @file m_node_text2.h
+ * @file ui_node_text2.h
  */
 
 /*
@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_TEXT2_H
-#define CLIENT_MENU_M_NODE_TEXT2_H
+#ifndef CLIENT_UI_UI_NODE_TEXT2_H
+#define CLIENT_UI_UI_NODE_TEXT2_H
 
 #include "ui_node_abstractscrollable.h"
 #include "ui_node_text.h"

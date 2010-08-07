@@ -1,5 +1,5 @@
 /**
- * @file m_render.c
+ * @file ui_render.c
  */
 
 /*

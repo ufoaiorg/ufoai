@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_main.h"
 #include "ui/ui_nodes.h"
 #include "cl_game.h"
-#include "ui/node/ui_node_text.h"
+#include "ui/ui_popup.h"
 
 static const objDef_t *currentDisplayedObject;
 static int itemIndex;
@@ -64,7 +64,7 @@ static const char* CL_WeaponSkillToName (int weaponSkill)
  */
 void INV_ItemDescription (const objDef_t *od)
 {
-	static char itemText[MAX_SMALLMENUTEXTLEN];
+	static char itemText[UI_MAX_SMALLTEXTLEN];
 	int i;
 	int count;
 

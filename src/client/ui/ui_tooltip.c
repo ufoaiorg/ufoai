@@ -1,5 +1,5 @@
 /**
- * @file m_tooltip.c
+ * @file ui_tooltip.c
  */
 
 /*
@@ -69,7 +69,7 @@ int UI_DrawTooltip (const char *string, int x, int y, int maxWidth, int maxHeigh
 }
 
 /**
- * @brief Wrapper for menu tooltips
+ * @brief Wrapper for UI tooltips
  */
 void UI_Tooltip (uiNode_t *node, int x, int y)
 {

@@ -1,5 +1,5 @@
 /**
- * @file m_draw.h
+ * @file ui_draw.h
  */
 
 /*
@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_DRAW_H
-#define CLIENT_MENU_M_DRAW_H
+#ifndef CLIENT_UI_UI_DRAW_H
+#define CLIENT_UI_UI_DRAW_H
 
 /* prototype */
 struct uiNode_s;
@@ -33,7 +33,7 @@ void UI_InitDraw(void);
 
 /* draw */
 void UI_Draw(void);
-void UI_DisplayNotice(const char *text, int time, const char *menuName);
+void UI_DisplayNotice(const char *text, int time, const char *windowName);
 void UI_DrawCursor(void);
 void UI_CaptureDrawOver(struct uiNode_s *node);
 

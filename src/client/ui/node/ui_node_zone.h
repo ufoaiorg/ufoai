@@ -1,5 +1,5 @@
 /**
- * @file m_node_special.h
+ * @file ui_node_special.h
  */
 
 /*
@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_ZONE_H
-#define CLIENT_MENU_M_NODE_ZONE_H
+#ifndef CLIENT_UI_UI_NODE_ZONE_H
+#define CLIENT_UI_UI_NODE_ZONE_H
 
 typedef struct {
 	qboolean repeat;			/**< repeat action when "click" is held */

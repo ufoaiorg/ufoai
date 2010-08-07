@@ -1,5 +1,5 @@
 /**
- * @file m_node_selectbox.c
+ * @file ui_node_selectbox.c
  * @todo manage disabled option
  * @code
  * selectbox texres_box
@@ -156,7 +156,7 @@ static void UI_SelectBoxNodeDraw (uiNode_t *node)
 	}
 }
 
-static void UI_SelectBoxNodeDrawOverMenu (uiNode_t *node)
+static void UI_SelectBoxNodeDrawOverWindow (uiNode_t *node)
 {
 	uiNode_t* option;
 	int selBoxX, selBoxY;
@@ -304,7 +304,7 @@ void UI_RegisterSelectBoxNode (uiBehaviour_t *behaviour)
 	behaviour->name = "selectbox";
 	behaviour->extends = "abstractoption";
 	behaviour->draw = UI_SelectBoxNodeDraw;
-	behaviour->drawOverMenu = UI_SelectBoxNodeDrawOverMenu;
+	behaviour->drawOverWindow = UI_SelectBoxNodeDrawOverWindow;
 	behaviour->leftClick = UI_SelectBoxNodeClick;
 	behaviour->loading = UI_SelectBoxNodeLoading;
 	behaviour->loaded = UI_SelectBoxNodeLoaded;

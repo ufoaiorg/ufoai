@@ -1,5 +1,5 @@
 /**
- * @file m_input.h
+ * @file ui_input.h
  */
 
 /*
@@ -22,13 +22,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_INPUT_H
-#define CLIENT_MENU_M_INPUT_H
+#ifndef CLIENT_UI_UI_INPUT_H
+#define CLIENT_UI_UI_INPUT_H
 
 /* prototype */
 struct uiNode_s;
 
-#define MAX_MENUKEYBINDING	128
+#define UI_MAX_KEYBINDING	128
+
 typedef struct uiKeyBinding_s {
 	struct uiNode_s *node;
 	const struct value_s *property;

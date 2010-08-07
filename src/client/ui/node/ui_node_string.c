@@ -1,5 +1,5 @@
 /**
- * @file m_node_string.c
+ * @file ui_node_string.c
  * @brief A string can be a normal string, or a cvar string.
  * A string prefixed with a "_" is the auto translated.
  * @code

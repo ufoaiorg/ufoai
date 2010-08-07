@@ -1,5 +1,5 @@
 /**
- * @file m_node_video.h
+ * @file ui_node_video.h
  */
 
 /*
@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_VIDEO_H
-#define CLIENT_MENU_M_NODE_VIDEO_H
+#ifndef CLIENT_UI_UI_NODE_VIDEO_H
+#define CLIENT_UI_UI_NODE_VIDEO_H
 
 #include "../ui_nodes.h"
 #include "../../cinematic/cl_cinematic.h"

@@ -1,5 +1,5 @@
 /**
- * @file m_components.c
+ * @file ui_components.c
  */
 
 /*
@@ -63,7 +63,7 @@ void UI_InsertComponent(uiNode_t* component)
 	int pos = 0;
 	int i;
 
-	if (ui_global.numComponents >= MAX_COMPONENTS)
+	if (ui_global.numComponents >= UI_MAX_COMPONENTS)
 		Com_Error(ERR_FATAL, "UI_InsertComponent: hit MAX_COMPONENTS");
 
 	/* search the insertion position */

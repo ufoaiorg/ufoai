@@ -1,5 +1,5 @@
 /**
- * @file m_node_radar.c
+ * @file ui_node_radar.c
  */
 
 /*

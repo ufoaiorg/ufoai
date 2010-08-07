@@ -1,5 +1,5 @@
 /**
- * @file m_components.h
+ * @file ui_components.h
  */
 
 /*
@@ -22,15 +22,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_COMPONENTS_H
-#define CLIENT_MENU_M_COMPONENTS_H
+#ifndef CLIENT_UI_UI_COMPONENTS_H
+#define CLIENT_UI_UI_COMPONENTS_H
 
 #include "../../common/common.h"
 
 /* prototype */
 struct uiNode_s;
 
-void UI_InsertComponent(struct uiNode_s* menu);
+void UI_InsertComponent(struct uiNode_s* component);
 struct uiNode_s *UI_GetComponent(const char *name);
 
 #endif

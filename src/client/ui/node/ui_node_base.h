@@ -1,5 +1,5 @@
 /**
- * @file m_node_base.h
+ * @file ui_node_base.h
  */
 
 /*
@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_BASE_H
-#define CLIENT_MENU_M_NODE_BASE_H
+#ifndef CLIENT_UI_UI_NODE_BASE_H
+#define CLIENT_UI_UI_NODE_BASE_H
 
 typedef struct baseExtraData_s {
 	int baseid;		/**< the baseid */

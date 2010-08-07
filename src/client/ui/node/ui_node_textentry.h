@@ -1,5 +1,5 @@
 /**
- * @file m_node_textentry.h
+ * @file ui_node_textentry.h
  */
 
 /*
@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-#ifndef CLIENT_MENU_M_NODE_TEXT_ENTRY_H
-#define CLIENT_MENU_M_NODE_TEXT_ENTRY_H
+#ifndef CLIENT_UI_UI_NODE_TEXT_ENTRY_H
+#define CLIENT_UI_UI_NODE_TEXT_ENTRY_H
 
 #include "../ui_nodes.h"
 

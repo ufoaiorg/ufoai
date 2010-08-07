@@ -1,5 +1,5 @@
 /**
- * @file m_data.c
+ * @file ui_data.c
  */
 
 /*
@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief
  */
-static const char *const menutextid_names[] = {
+static const char *const ui_sharedDataIDNames[] = {
 	"", /**< NULL value */
 	"TEXT_STANDARD",
 	"TEXT_LIST",
@@ -111,7 +111,7 @@ static const char *const menutextid_names[] = {
 	"LINESTRIP_FUNDING",
 	"LINESTRIP_COLOR"
 };
-CASSERT(lengthof(menutextid_names) == MAX_MENUTEXTS);
+CASSERT(lengthof(ui_sharedDataIDNames) == UI_MAX_DATAID);
 
 /**
  * @brief Return a dataId by name
@@ -120,44 +120,44 @@ CASSERT(lengthof(menutextid_names) == MAX_MENUTEXTS);
 int UI_GetDataIDByName (const char* name)
 {
 	int num;
-	for (num = 0; num < MAX_MENUTEXTS; num++)
-		if (!strcmp(name, menutextid_names[num]))
+	for (num = 0; num < UI_MAX_DATAID; num++)
+		if (!strcmp(name, ui_sharedDataIDNames[num]))
 			return num;
 
 	return -1;
 }
 
 /**
- * @brief link a text to a menu text id
- * @note The menu doesn't manage the text memory, only save a pointer
+ * @brief share a text with a data id
+ * @note The UI code doesn't manage the text memory, it only save a pointer
  */
-void UI_RegisterText (int textId, const char *text)
+void UI_RegisterText (int dataId, const char *text)
 {
-	UI_ResetData(textId);
+	UI_ResetData(dataId);
 
 	if (!text)
 		return;
 
-	ui_global.sharedData[textId].type = UI_SHARED_TEXT;
-	ui_global.sharedData[textId].data.text = text;
-	ui_global.sharedData[textId].versionId++;
+	ui_global.sharedData[dataId].type = UI_SHARED_TEXT;
+	ui_global.sharedData[dataId].data.text = text;
+	ui_global.sharedData[dataId].versionId++;
 }
 
 /**
- * @brief link a text to a menu text id
- * @note The menu doesn't manage the text memory, only save a pointer
+ * @brief share a linked list of text with a data id
+ * @note The UI code manage the linked list memory (linked list is freed by the UI code)
  */
-void UI_RegisterLinkedListText (int textId, linkedList_t *text)
+void UI_RegisterLinkedListText (int dataId, linkedList_t *text)
 {
-	/** Hack to disable release memory, if we only want to update the same list */
-	if (ui_global.sharedData[textId].type == UI_SHARED_LINKEDLISTTEXT && ui_global.sharedData[textId].data.linkedListText == text) {
-		ui_global.sharedData[textId].versionId++;
+	/** @fixme It is a hack to disable release memory, if we only want to update the same list */
+	if (ui_global.sharedData[dataId].type == UI_SHARED_LINKEDLISTTEXT && ui_global.sharedData[dataId].data.linkedListText == text) {
+		ui_global.sharedData[dataId].versionId++;
 		return;
 	}
-	UI_ResetData(textId);
-	ui_global.sharedData[textId].type = UI_SHARED_LINKEDLISTTEXT;
-	ui_global.sharedData[textId].data.linkedListText = text;
-	ui_global.sharedData[textId].versionId++;
+	UI_ResetData(dataId);
+	ui_global.sharedData[dataId].type = UI_SHARED_LINKEDLISTTEXT;
+	ui_global.sharedData[dataId].data.linkedListText = text;
+	ui_global.sharedData[dataId].versionId++;
 }
 
 const char *UI_GetText (int textId)
@@ -237,7 +237,7 @@ static void UI_DeleteOption (uiNode_t* tree)
  */
 void UI_ResetData (int dataId)
 {
-	assert(dataId < MAX_MENUTEXTS);
+	assert(dataId < UI_MAX_DATAID);
 	assert(dataId >= 0);
 
 	switch (ui_global.sharedData[dataId].type) {
@@ -513,31 +513,31 @@ int UI_FindOptionPosition (uiOptionIterator_t* iterator, const uiNode_t* option)
 }
 
 /**
- * @brief Resets the ui_global.menuText pointers from a func node
+ * @brief Resets the ui_global.sharedData pointers from a func node
  * @note You can give this function a parameter to only delete a specific data
- * @sa menutextid_names
+ * @sa ui_sharedDataIDNames
  */
 static void UI_ResetData_f (void)
 {
 	if (Cmd_Argc() == 2) {
-		const char *menuTextID = Cmd_Argv(1);
-		const int id = UI_GetDataIDByName(menuTextID);
-		if (id < 0)
-			Com_Printf("%s: invalid ui_global.menuText ID: %s\n", Cmd_Argv(0), menuTextID);
+		const char *dataId = Cmd_Argv(1);
+		const int id = UI_GetDataIDByName(dataId);
+		if (id == -1)
+			Com_Printf("%s: invalid data ID: %s\n", Cmd_Argv(0), dataId);
 		else
 			UI_ResetData(id);
 	} else {
 		int i;
-		for (i = 0; i < MAX_MENUTEXTS; i++)
+		for (i = 0; i < UI_MAX_DATAID; i++)
 			UI_ResetData(i);
 	}
 }
 
 /**
- * @brief Initialize console command about shared menu data
+ * @brief Initialize console command about UI shared data
  * @note called by UI_Init
  */
 void UI_InitData (void)
 {
-	Cmd_AddCommand("mn_datareset", UI_ResetData_f, "Resets a menu data pointers");
+	Cmd_AddCommand("mn_datareset", UI_ResetData_f, "Resets memory and data used by a UI data id");
 }

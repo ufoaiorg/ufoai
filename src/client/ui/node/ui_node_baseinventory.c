@@ -1,5 +1,5 @@
 /**
- * @file m_node_baseinventory.c
+ * @file ui_node_baseinventory.c
  * @brief The container node refer to 3 different nodes merged into a singler one. Both
  * can drag and drop solider items from a container to another one. The first container
  * is a soldier slot. For example, the left arm, the bag pack... The second is the base

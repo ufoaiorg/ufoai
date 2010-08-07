@@ -1,5 +1,5 @@
 /**
- * @file m_node_custombutton.c
+ * @file ui_node_custombutton.c
  * @brief Custombutton is a button using a skin with a fixed size.
  * We can define every pixels into the texture. It can't be bigger than
  * 256x64, because each row of 64 pixels are used for the button status (normal,

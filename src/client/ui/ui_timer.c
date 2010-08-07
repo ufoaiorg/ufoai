@@ -1,5 +1,5 @@
 /**
- * @file m_timer.c
+ * @file ui_timer.c
  */
 
 /*

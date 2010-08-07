@@ -1,5 +1,5 @@
 /**
- * @file m_popup.h
+ * @file ui_popup.h
  */
 
 /*
@@ -22,15 +22,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_POPUP_H
-#define CLIENT_MENU_M_POPUP_H
+#ifndef CLIENT_UI_UI_POPUP_H
+#define CLIENT_UI_UI_POPUP_H
 
 #include "node/ui_node_text.h"
 
-#define POPUPLIST_MENU_NAME "popup_list"
+#define POPUPLIST_WINDOW_NAME "popup_list"
 #define POPUPLIST_NODE_NAME "popup_list"
 
-extern char popupText[MAX_SMALLMENUTEXTLEN];
+/** @todo we should delete it, UI script support random text size */
+/* used to speed up buffer safe string copies */
+#define UI_MAX_SMALLTEXTLEN	1024
+
+extern char popupText[UI_MAX_SMALLTEXTLEN];
 
 void UI_Popup(const char *title, const char *text);
 struct uiNode_s *UI_PopupList(const char *title, const char *headline, linkedList_t* entries, const char *clickAction);

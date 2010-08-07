@@ -1,5 +1,5 @@
 /**
- * @file m_node_abstractnode.c
+ * @file ui_node_abstractnode.c
  * @brief Every node extends this node
  */
 
@@ -780,7 +780,7 @@ static const value_t properties[] = {
 	 * LAYOUTALIGN_LEFT, LAYOUTALIGN_MIDDLE, LAYOUTALIGN_RIGHT, LAYOUTALIGN_BOTTOMLEFT,
 	 * LAYOUTALIGN_BOTTOM, LAYOUTALIGN_BOTTOMRIGHT, LAYOUTALIGN_FILL.
 	 * Allowed value depend the layout manager used. The update to date list is into
-	 * m_node_panel.c
+	 * ui_node_panel.c
 	 * @image html http://ufoai.ninex.info/wiki/images/Layout.png
 	 */
 	{"align", V_INT, offsetof(uiNode_t, align), MEMBER_SIZEOF(uiNode_t, align)},

@@ -1,5 +1,5 @@
 /**
- * @file m_node_image.c
+ * @file ui_node_image.c
  * @brief The <code>pic</code> behaviour allow to draw an image or a part of an image
  * into the GUI. It provide some layout properties. We can use it like an active node
  * (mouse in/out/click...) but in this case, it is better to use nodes with a semantics (like button,

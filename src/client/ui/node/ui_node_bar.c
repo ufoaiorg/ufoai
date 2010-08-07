@@ -1,5 +1,5 @@
 /**
- * @file m_node_bar.c
+ * @file ui_node_bar.c
  * @brief The bar node display a graphical horizontal slider.
  * We can use it to allow the user to select a value in a range. Or
  * we can use it do only display a value (in this case, you must disable it).

@@ -1,5 +1,5 @@
 /**
- * @file m_nodes.h
+ * @file ui_nodes.h
  */
 
 /*
@@ -22,23 +22,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODES_H
-#define CLIENT_MENU_M_NODES_H
+#ifndef CLIENT_UI_UI_NODES_H
+#define CLIENT_UI_UI_NODES_H
 
 #include "../../shared/ufotypes.h"
 #include "../../common/scripts.h"
 
 /* prototype */
 struct uiIcon_s;
-struct menuCondition_s;
 struct value_s;
 struct nodeKeyBinding_s;
 struct uiCallContext_s;
 struct uiNode_s;
-struct menuModel_s;
+struct uiModel_s;
 
 /* exclude rect */
-#define MAX_EXLUDERECTS	64
+#define UI_MAX_EXLUDERECTS	64
 
 typedef struct uiExcludeRect_s {
 	vec2_t pos, size;
@@ -47,7 +46,7 @@ typedef struct uiExcludeRect_s {
 typedef void (*uiNodeMethod_t)(struct uiNode_s*node, const struct uiCallContext_s *context);
 
 /**
- * @brief menu node
+ * @brief Atomic structure used to define most of the UI
  */
 typedef struct uiNode_s {
 	/* common identification */
@@ -59,10 +58,10 @@ typedef struct uiNode_s {
 
 	/* common navigation */
 	struct uiNode_s *firstChild;	/**< first element of linked list of child */
-	struct uiNode_s *lastChild;	/**< last element of linked list of child */
-	struct uiNode_s *next;		/**< Next element into linked list */
-	struct uiNode_s *parent;		/**< Parent menu, else NULL */
-	struct uiNode_s *root;		/**< Shortcut to the root node */
+	struct uiNode_s *lastChild;		/**< last element of linked list of child */
+	struct uiNode_s *next;			/**< Next element into linked list */
+	struct uiNode_s *parent;		/**< Parent window, else NULL */
+	struct uiNode_s *root;			/**< Shortcut to the root node */
 
 	/* common pos */
 	vec2_t pos;
@@ -153,7 +152,7 @@ typedef struct uiBehaviour_s {
 	/* draw callback */
 	void (*draw)(uiNode_t *node);							/**< how to draw a node */
 	void (*drawTooltip)(uiNode_t *node, int x, int y);	/**< allow to draw a custom tooltip */
-	void (*drawOverMenu)(uiNode_t *node);					/**< callback to draw content over the menu @sa UI_CaptureDrawOver */
+	void (*drawOverWindow)(uiNode_t *node);					/**< callback to draw content over the window @sa UI_CaptureDrawOver */
 
 	/* mouse events */
 	void (*leftClick)(uiNode_t *node, int x, int y);		/**< left mouse click event in the node */
@@ -211,7 +210,7 @@ uiNode_t* UI_GetNodeByPath(const char* path) __attribute__ ((warn_unused_result)
 void UI_ReadNodePath(const char* path, const uiNode_t *relativeNode, uiNode_t** resultNode, const value_t **resultProperty);
 struct uiNode_s *UI_GetNodeAtPosition(int x, int y) __attribute__ ((warn_unused_result));
 const char* UI_GetPath(const uiNode_t* node) __attribute__ ((warn_unused_result));
-struct uiNode_s *UI_CloneNode(const struct uiNode_s * node, struct uiNode_s *newMenu, qboolean recursive, const char *newName, qboolean isDynamic) __attribute__ ((warn_unused_result));
+struct uiNode_s *UI_CloneNode(const struct uiNode_s * node, struct uiNode_s *newWindow, qboolean recursive, const char *newName, qboolean isDynamic) __attribute__ ((warn_unused_result));
 qboolean UI_CheckVisibility(uiNode_t *node);
 void UI_DeleteAllChild(uiNode_t* node);
 void UI_DeleteNode(uiNode_t* node);

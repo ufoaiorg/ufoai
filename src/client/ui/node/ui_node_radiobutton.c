@@ -1,5 +1,5 @@
 /**
- * @file m_node_radiobutton.c
+ * @file ui_node_radiobutton.c
  * @brief The radiobutton is a clickable widget. Commonly, with use it in
  * a group of radiobuttons; the user is allowed to choose only one button
  * from this set. The current implementation share the value of the group

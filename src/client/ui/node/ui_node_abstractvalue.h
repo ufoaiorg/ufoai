@@ -1,5 +1,5 @@
 /**
- * @file m_node_abstractvalue.h
+ * @file ui_node_abstractvalue.h
  * @brief Define common thing for GUI controls which allow to
  * edit a value (scroolbar, spinner, and more)
  */
@@ -24,8 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_ABSTRACTVALUE_H
-#define CLIENT_MENU_M_NODE_ABSTRACTVALUE_H
+#ifndef CLIENT_UI_UI_NODE_ABSTRACTVALUE_H
+#define CLIENT_UI_UI_NODE_ABSTRACTVALUE_H
 
 /**
  * @brief extradata for common GUI widget which allow to

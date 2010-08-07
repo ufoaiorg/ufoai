@@ -1,5 +1,5 @@
 /**
- * @file m_icon.c
+ * @file ui_icon.c
  */
 
 /*
@@ -125,7 +125,7 @@ uiIcon_t* UI_GetIconByName (const char* name)
 }
 
 /**
- * @brief Allocate an icon from the menu memory
+ * @brief Allocate an icon to the UI static memory
  * @note Its not a dynamic memory allocation. Please only use it at the loading time
  * @param[in] name Name of the icon
  * @todo Assert out when we are not in parsing/loading stage
@@ -137,8 +137,8 @@ uiIcon_t* UI_AllocStaticIcon (const char* name)
 #ifdef DEBUG
 	assert(!UI_IconExists(name));
 #endif
-	if (ui_global.numIcons >= MAX_MENUICONS)
-		Com_Error(ERR_FATAL, "UI_AllocStaticIcon: MAX_MENUICONS hit");
+	if (ui_global.numIcons >= UI_MAX_ICONS)
+		Com_Error(ERR_FATAL, "UI_AllocStaticIcon: UI_MAX_ICONS hit");
 
 	result = &ui_global.icons[ui_global.numIcons];
 	ui_global.numIcons++;

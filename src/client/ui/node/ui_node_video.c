@@ -1,5 +1,5 @@
 /**
- * @file m_node_video.c
+ * @file ui_node_video.c
  * @todo add function to play/stop/pause
  * @todo fix fullscreen, looped video
  * @todo event when video end
@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
-static void UI_VideoNodeDrawOverMenu (uiNode_t *node)
+static void UI_VideoNodeDrawOverWindow (uiNode_t *node)
 {
 	if (EXTRADATA(node).cin.status == CIN_STATUS_NONE) {
 		vec2_t pos;
@@ -69,7 +69,7 @@ static void UI_VideoNodeDraw (uiNode_t *node)
 		return;
 	}
 
-	UI_VideoNodeDrawOverMenu(node);
+	UI_VideoNodeDrawOverWindow(node);
 }
 
 static void UI_VideoNodeInit (uiNode_t *node)
@@ -97,6 +97,6 @@ void UI_RegisterVideoNode (uiBehaviour_t* behaviour)
 	behaviour->properties = properties;
 	behaviour->init = UI_VideoNodeInit;
 	behaviour->close = UI_VideoNodeClose;
-	behaviour->drawOverMenu = UI_VideoNodeDrawOverMenu;
+	behaviour->drawOverWindow = UI_VideoNodeDrawOverWindow;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 }

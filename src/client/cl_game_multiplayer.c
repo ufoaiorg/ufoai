@@ -202,7 +202,7 @@ static void GAME_MP_ChangeGametype_f (void)
  */
 void GAME_MP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
-	char resultText[MAX_SMALLMENUTEXTLEN];
+	char resultText[UI_MAX_SMALLTEXTLEN];
 	int their_killed, their_stunned;
 	int i;
 

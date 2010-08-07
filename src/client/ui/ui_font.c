@@ -1,5 +1,5 @@
 /**
- * @file m_font.c
+ * @file ui_font.c
  */
 
 /*
@@ -83,7 +83,7 @@ void UI_ParseFont (const char *name, const char **text)
 		return;
 	}
 
-	/* initialize the menu */
+	/* initialize the UI */
 	font = &fonts[numFonts];
 	memset(font, 0, sizeof(*font));
 

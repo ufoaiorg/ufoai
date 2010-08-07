@@ -288,7 +288,7 @@ static void CL_LevelDown_f (void)
 
 static void CL_ZoomInQuant_f (void)
 {
-	if (mouseSpace == MS_MENU)
+	if (mouseSpace == MS_UI)
 		UI_MouseWheel(qfalse, mousePosX, mousePosY);
 	else
 		CL_CameraZoomIn();
@@ -296,7 +296,7 @@ static void CL_ZoomInQuant_f (void)
 
 static void CL_ZoomOutQuant_f (void)
 {
-	if (mouseSpace == MS_MENU)
+	if (mouseSpace == MS_UI)
 		UI_MouseWheel(qtrue, mousePosX, mousePosY);
 	else
 		CL_CameraZoomOut();
@@ -314,7 +314,7 @@ static void CL_SelectDown_f (void)
 
 static void CL_SelectUp_f (void)
 {
-	if (mouseSpace == MS_MENU)
+	if (mouseSpace == MS_UI)
 		return;
 	mouseSpace = MS_NULL;
 }
@@ -331,7 +331,7 @@ static void CL_ActionDown_f (void)
 
 static void CL_ActionUp_f (void)
 {
-	if (mouseSpace == MS_MENU)
+	if (mouseSpace == MS_UI)
 		return;
 	mouseSpace = MS_NULL;
 }
@@ -341,7 +341,7 @@ static void CL_ActionUp_f (void)
  */
 static void CL_TurnDown_f (void)
 {
-	if (mouseSpace == MS_MENU)
+	if (mouseSpace == MS_UI)
 		return;
 	if (mouseSpace == MS_WORLD)
 		CL_ActorTurnMouse();
@@ -349,7 +349,7 @@ static void CL_TurnDown_f (void)
 
 static void CL_TurnUp_f (void)
 {
-	if (mouseSpace == MS_MENU)
+	if (mouseSpace == MS_UI)
 		return;
 	mouseSpace = MS_NULL;
 }
@@ -379,7 +379,7 @@ static void CL_HudRadarUp_f (void)
  */
 static void CL_RightClickDown_f (void)
 {
-	if (mouseSpace == MS_MENU) {
+	if (mouseSpace == MS_UI) {
 		UI_MouseDown(mousePosX, mousePosY, K_MOUSE2);
 	}
 }
@@ -389,7 +389,7 @@ static void CL_RightClickDown_f (void)
  */
 static void CL_RightClickUp_f (void)
 {
-	if (mouseSpace == MS_MENU) {
+	if (mouseSpace == MS_UI) {
 		UI_MouseUp(mousePosX, mousePosY, K_MOUSE2);
 	}
 }
@@ -399,7 +399,7 @@ static void CL_RightClickUp_f (void)
  */
 static void CL_MiddleClickDown_f (void)
 {
-	if (mouseSpace == MS_MENU) {
+	if (mouseSpace == MS_UI) {
 		UI_MouseDown(mousePosX, mousePosY, K_MOUSE3);
 	}
 }
@@ -409,7 +409,7 @@ static void CL_MiddleClickDown_f (void)
  */
 static void CL_MiddleClickUp_f (void)
 {
-	if (mouseSpace == MS_MENU) {
+	if (mouseSpace == MS_UI) {
 		UI_MouseUp(mousePosX, mousePosY, K_MOUSE3);
 	}
 }
@@ -419,7 +419,7 @@ static void CL_MiddleClickUp_f (void)
  */
 static void CL_LeftClickDown_f (void)
 {
-	if (mouseSpace == MS_MENU) {
+	if (mouseSpace == MS_UI) {
 		UI_MouseDown(mousePosX, mousePosY, K_MOUSE1);
 	}
 }
@@ -429,7 +429,7 @@ static void CL_LeftClickDown_f (void)
  */
 static void CL_LeftClickUp_f (void)
 {
-	if (mouseSpace == MS_MENU) {
+	if (mouseSpace == MS_UI) {
 		UI_MouseUp(mousePosX, mousePosY, K_MOUSE1);
 	}
 }
@@ -486,7 +486,7 @@ static void IN_Parse (void)
 
 	/* standard menu and world mouse handling */
 	if (UI_IsPointOnWindow()) {
-		mouseSpace = MS_MENU;
+		mouseSpace = MS_UI;
 		return;
 	}
 

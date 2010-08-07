@@ -1,7 +1,7 @@
 /**
- * @file m_internal.h
- * @brief Internal data use by the menu package
- * @note It should not be include by a file outside the menu package
+ * @file ui_internal.h
+ * @brief Internal data use by the UI package
+ * @note It should not be include by a file outside the UI package
  */
 
 /*
@@ -24,13 +24,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_INTERNAL_H
-#define CLIENT_MENU_M_INTERNAL_H
+#ifndef CLIENT_UI_UI_INTERNAL_H
+#define CLIENT_UI_UI_INTERNAL_H
 
-#define MAX_WINDOWS			128
-#define MAX_COMPONENTS		64
-#define MAX_MENUSTACK		32
-#define MAX_MENUACTIONS		2*8192
+#define UI_MAX_WINDOWS			128
+#define UI_MAX_COMPONENTS		64
+#define UI_MAX_WINDOWSTACK		32
+#define UI_MAX_ACTIONS			2*8192
 
 #include "node/ui_node_window.h"
 #include "node/ui_node_model.h"
@@ -42,47 +42,47 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui_data.h"
 
 /**
- * @brief Global data shared into all menu code
+ * @brief Global data shared into all UI code
  */
 typedef struct uiGlobal_s {
 
 	/**
 	 * @brief Holds shared data
-	 * @note The array id is given via num in the menuNode definitions
+	 * @note The array id is given via dataID in the node definitions
 	 * @sa UI_ResetData
 	 * @sa UI_RegisterText
 	 * @sa UI_GetText
 	 * @sa UI_RegisterLinkedListText
 	 */
-	uiSharedData_t sharedData[MAX_MENUTEXTS];
+	uiSharedData_t sharedData[UI_MAX_DATAID];
 
 	int numNodes;
 
-	uiNode_t* windows[MAX_WINDOWS];
+	uiNode_t* windows[UI_MAX_WINDOWS];
 	int numWindows;
 
-	uiNode_t* components[MAX_COMPONENTS];
+	uiNode_t* components[UI_MAX_COMPONENTS];
 	int numComponents;
 
 	byte *adata, *curadata;
 	int adataize;
 
-	uiNode_t *windowStack[MAX_MENUSTACK];
+	uiNode_t *windowStack[UI_MAX_WINDOWSTACK];
 	int windowStackPos;
 
-	uiAction_t actions[MAX_MENUACTIONS];
+	uiAction_t actions[UI_MAX_ACTIONS];
 	int numActions;
 
-	menuModel_t menuModels[MAX_MENUMODELS];
-	int numMenuModels;
+	uiModel_t models[UI_MAX_MODELS];
+	int numModels;
 
-	uiExcludeRect_t excludeRect[MAX_EXLUDERECTS];
+	uiExcludeRect_t excludeRect[UI_MAX_EXLUDERECTS];
 	int numExcludeRect;
 
-	uiIcon_t icons[MAX_MENUICONS];
+	uiIcon_t icons[UI_MAX_ICONS];
 	int numIcons;
 
-	uiKeyBinding_t keyBindings[MAX_MENUKEYBINDING];
+	uiKeyBinding_t keyBindings[UI_MAX_KEYBINDING];
 	int numKeyBindings;
 
 } uiGlobal_t;

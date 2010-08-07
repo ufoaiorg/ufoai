@@ -1,5 +1,5 @@
 /**
- * @file m_windows.h
+ * @file ui_windows.h
  */
 
 /*
@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_WINDOWS_H
-#define CLIENT_MENU_M_WINDOWS_H
+#ifndef CLIENT_UI_UI_WINDOWS_H
+#define CLIENT_UI_UI_WINDOWS_H
 
 #include "../../common/common.h"
 
@@ -36,7 +36,7 @@ void UI_InitWindows(void);
 /* window stack */
 int UI_GetLastFullScreenWindow(void);
 struct uiNode_s* UI_PushWindow(const char *name, const char *parentName);
-void UI_InitStack(const char* activeMenu, const char* mainMenu, qboolean popAll, qboolean pushActive);
+void UI_InitStack(const char* activeWindow, const char* mainWindow, qboolean popAll, qboolean pushActive);
 void UI_PopWindow(qboolean all);
 void UI_PopWindowWithEscKey(void);
 void UI_CloseWindow(const char* name);
@@ -53,7 +53,7 @@ const char* UI_GetActiveWindowName(void);
 void UI_GetActiveRenderRect(int *x, int *y, int *width, int *height);
 
 /** @todo move it on m_nodes, its a common getter/setter */
-void UI_SetNewWindowPos(struct uiNode_s* menu, int x, int y);
+void UI_SetNewWindowPos(struct uiNode_s* window, int x, int y);
 struct uiNode_s *UI_GetWindow(const char *name);
 
 #endif

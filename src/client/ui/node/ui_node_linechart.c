@@ -1,5 +1,5 @@
 /**
- * @file m_node_linechart.c
+ * @file ui_node_linechart.c
  */
 
 /*

@@ -895,7 +895,7 @@ static void HUD_RefreshButtons (const le_t *le)
 	/* Check if the firemode reservation popup is shown and refresh its content. (i.e. close&open it) */
 	{
 		const char* menuName = UI_GetActiveWindowName();
-		if (menuName[0] != '\0' && strstr(UI_GetActiveWindowName(), POPUPLIST_MENU_NAME)) {
+		if (menuName[0] != '\0' && strstr(UI_GetActiveWindowName(), POPUPLIST_NODE_NAME)) {
 			/* Update firemode reservation popup. */
 			/** @todo this is called every frames... is this really needed? */
 			HUD_PopupFiremodeReservation(qfalse, qtrue);
@@ -1025,9 +1025,9 @@ static void HUD_MapDebugCursor (const le_t *le)
 	if (cl_map_debug->integer & MAPDEBUG_TEXT) {
 		int dv;
 
-		static char topText[MAX_SMALLMENUTEXTLEN];
-		static char bottomText[MAX_SMALLMENUTEXTLEN];
-		static char leftText[MAX_SMALLMENUTEXTLEN];
+		static char topText[UI_MAX_SMALLTEXTLEN];
+		static char bottomText[UI_MAX_SMALLTEXTLEN];
+		static char leftText[UI_MAX_SMALLTEXTLEN];
 
 		/* Display the floor and ceiling values for the current cell. */
 		Com_sprintf(topText, lengthof(topText), "%u-(%i,%i,%i)\n",
@@ -1070,7 +1070,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 	UI_ResetData(TEXT_MOUSECURSOR_RIGHT);
 
 	if (selWeapon) {
-		static char infoText[MAX_SMALLMENUTEXTLEN];
+		static char infoText[UI_MAX_SMALLTEXTLEN];
 
 		if (!selWeapon->item.t) {
 			/* No valid weapon in the hand. */
@@ -1106,7 +1106,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 			CL_ActorSetMode(actor, M_MOVE);
 		} else if (actor->fd) {
 			const int hitProbability = CL_GetHitProbability(actor);
-			static char mouseText[MAX_SMALLMENUTEXTLEN];
+			static char mouseText[UI_MAX_SMALLTEXTLEN];
 
 			Com_sprintf(infoText, lengthof(infoText),
 						"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(actor->fd->name),
@@ -1141,7 +1141,7 @@ static int HUD_UpdateActorFireMode (le_t *actor)
 static int HUD_UpdateActorMove (const le_t *actor)
 {
 	const int reservedTUs = CL_ActorReservedTUs(actor, RES_ALL_ACTIVE);
-	static char infoText[MAX_SMALLMENUTEXTLEN];
+	static char infoText[UI_MAX_SMALLTEXTLEN];
 	if (actor->actorMoveLength == ROUTING_NOT_REACHABLE) {
 		UI_ResetData(TEXT_MOUSECURSOR_RIGHT);
 		if (reservedTUs > 0)
@@ -1149,7 +1149,7 @@ static int HUD_UpdateActorMove (const le_t *actor)
 		else
 			Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), actor->morale);
 	} else {
-		static char mouseText[MAX_SMALLMENUTEXTLEN];
+		static char mouseText[UI_MAX_SMALLTEXTLEN];
 		const int moveMode = CL_ActorMoveMode(actor, actor->actorMoveLength);
 		if (reservedTUs > 0)
 			Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
@@ -1176,7 +1176,7 @@ static void HUD_UpdateActorCvar (le_t *actor, const char *cvarPrefix)
 {
 	const invList_t* invList;
 	const char *animName;
-	static char tuTooltipText[MAX_SMALLMENUTEXTLEN];
+	static char tuTooltipText[UI_MAX_SMALLTEXTLEN];
 
 	Cvar_SetValue(va("%s%s", cvarPrefix, "hp"), actor->HP);
 	Cvar_SetValue(va("%s%s", cvarPrefix, "hpmax"), actor->maxHP);

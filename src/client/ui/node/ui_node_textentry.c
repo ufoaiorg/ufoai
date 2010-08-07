@@ -1,5 +1,5 @@
 /**
- * @file m_node_textentry.c
+ * @file ui_node_textentry.c
  * @brief This node allow to edit a cvar text with the keyboard. When we
  * click on the node, we active the edition, we can validate it with the ''RETURN'' key,
  * or abort it with ''ESCAPE'' key. A validation fire a scriptable callback event.

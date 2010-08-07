@@ -1,5 +1,5 @@
 /**
- * @file m_node_editor.c
+ * @file ui_node_editor.c
  * @note type "mn_push editor" to use it, Escape button to close it, and "mn_extract" to extract a menu
  * @brief Editor is an invisible node used to create an edition mode. The edition mode
  * allow user to move and resize all visible nodes.
@@ -102,7 +102,7 @@ static void UI_EditorNodeDraw (uiNode_t *node)
 	UI_CaptureDrawOver(node);
 }
 
-static void UI_EditorNodeDrawOverMenu (uiNode_t *node)
+static void UI_EditorNodeDrawOverWindow (uiNode_t *node)
 {
 	uiNode_t* hovered = NULL;
 
@@ -367,7 +367,7 @@ void UI_RegisterEditorNode (uiBehaviour_t *behaviour)
 	behaviour->name = "editor";
 	behaviour->extends = "special";
 	behaviour->draw = UI_EditorNodeDraw;
-	behaviour->drawOverMenu = UI_EditorNodeDrawOverMenu;
+	behaviour->drawOverWindow = UI_EditorNodeDrawOverWindow;
 	behaviour->mouseDown = UI_EditorNodeMouseDown;
 	behaviour->mouseUp = UI_EditorNodeMouseUp;
 	behaviour->capturedMouseMove = UI_EditorNodeCapturedMouseMove;

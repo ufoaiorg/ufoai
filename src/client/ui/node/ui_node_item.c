@@ -1,5 +1,5 @@
 /**
- * @file m_node_item.c
+ * @file ui_node_item.c
  * @brief An item is only a model node allowing to display soldier armour.
  * Soldier armour is an image, not a model.
  */

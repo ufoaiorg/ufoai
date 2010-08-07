@@ -1,5 +1,5 @@
 /**
- * @file m_node_messagelist.c
+ * @file ui_node_messagelist.c
  * @todo add getter/setter to cleanup access to extradata from cl_*.c files (check "u.text.")
  */
 

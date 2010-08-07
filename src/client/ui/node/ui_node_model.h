@@ -1,5 +1,5 @@
 /**
- * @file m_node_model.h
+ * @file ui_node_model.h
  */
 
 /*
@@ -22,16 +22,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_MODEL_H
-#define CLIENT_MENU_M_NODE_MODEL_H
+#ifndef CLIENT_UI_UI_NODE_MODEL_H
+#define CLIENT_UI_UI_NODE_MODEL_H
 
 #include "../ui_nodes.h"
 #include "../../cl_renderer.h"	/**< include animState_t */
 
-#define MAX_MENUMODELS		128
+#define UI_MAX_MODELS		128
 
 /** @brief Model that have more than one part (head, body) but may only use one menu node */
-typedef struct menuModel_s {
+typedef struct uiModel_s {
 	char *id;
 	char *need;
 	char *anim;	/**< animation to run for this model */
@@ -42,8 +42,8 @@ typedef struct menuModel_s {
 	animState_t animState;
 	vec3_t origin, scale, angles, center;	/**< to cache the calculated values */
 	vec4_t color;				/**< rgba */
-	struct menuModel_s *next;
-} menuModel_t;
+	struct uiModel_s *next;
+} uiModel_t;
 
 /**
  * @brief extradata for the model node
@@ -64,8 +64,7 @@ typedef struct modelExtraData_s {
 	qboolean containerLike;		/**< Display an item like an item from the container */
 } modelExtraData_t;
 
-menuModel_t *UI_GetMenuModel(const char *menuModel);
-void UI_ListMenuModels_f(void);
+uiModel_t *UI_GetUIModel(const char *modelName);
 void UI_DrawModelNode(struct uiNode_s *node, const char *source);
 void UI_RegisterModelNode(struct uiBehaviour_s *behaviour);
 

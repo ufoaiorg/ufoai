@@ -1,5 +1,5 @@
 /**
- * @file m_parse.c
+ * @file ui_parse.c
  * @todo remove all "token" param from function and use Com_UnParseLastToken
  * @todo reduce use of uiGlobal (create global functions to add/get/... entities)
  */
@@ -41,18 +41,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** prototypes */
 static qboolean UI_ParseProperty(void* object, const value_t *property, const char* objectName, const char **text, const char **token);
-static uiAction_t *UI_ParseActionList(uiNode_t *menuNode, const char **text, const const char **token);
+static uiAction_t *UI_ParseActionList(uiNode_t *node, const char **text, const const char **token);
 static uiNode_t *UI_ParseNode(uiNode_t * parent, const char **text, const char **token, const char *errhead);
 
-/** @brief valid properties for a menu model definition */
-static const value_t menuModelProperties[] = {
-	{"model", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, model), 0},
+/** @brief valid properties for a UI model definition */
+static const value_t uiModelProperties[] = {
+	{"model", V_CLIENT_HUNK_STRING, offsetof(uiModel_t, model), 0},
 	{"need", V_NULL, 0, 0},
-	{"anim", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, anim), 0},
-	{"skin", V_INT, offsetof(menuModel_t, skin), sizeof(int)},
-	{"color", V_COLOR, offsetof(menuModel_t, color), sizeof(vec4_t)},
-	{"tag", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, tag), 0},
-	{"parent", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, parent), 0},
+	{"anim", V_CLIENT_HUNK_STRING, offsetof(uiModel_t, anim), 0},
+	{"skin", V_INT, offsetof(uiModel_t, skin), sizeof(int)},
+	{"color", V_COLOR, offsetof(uiModel_t, color), sizeof(vec4_t)},
+	{"tag", V_CLIENT_HUNK_STRING, offsetof(uiModel_t, tag), 0},
+	{"parent", V_CLIENT_HUNK_STRING, offsetof(uiModel_t, parent), 0},
 
 	{NULL, V_NULL, 0, 0},
 };
@@ -155,7 +155,7 @@ const value_t* UI_FindPropertyByName (const value_t* propertyList, const char* n
 }
 
 /**
- * @brief Allocate a float into the menu memory
+ * @brief Allocate a float into the UI static memory
  * @note Its not a dynamic memory allocation. Please only use it at the loading time
  * @param[in] count number of element need to allocate
  * @todo Assert out when we are not in parsing/loading stage
@@ -168,12 +168,12 @@ float* UI_AllocStaticFloat (int count)
 	result = (float*) ui_global.curadata;
 	ui_global.curadata += sizeof(float) * count;
 	if (ui_global.curadata - ui_global.adata > ui_global.adataize)
-		Com_Error(ERR_FATAL, "UI_AllocFloat: Menu memory hunk exceeded - increase the size");
+		Com_Error(ERR_FATAL, "UI_AllocFloat: UI memory hunk exceeded - increase the size");
 	return result;
 }
 
 /**
- * @brief Allocate a color into the menu memory
+ * @brief Allocate a color into the UI static memory
  * @note Its not a dynamic memory allocation. Please only use it at the loading time
  * @param[in] count number of element need to allocate
  * @todo Assert out when we are not in parsing/loading stage
@@ -186,12 +186,12 @@ vec4_t* UI_AllocStaticColor (int count)
 	result = (vec4_t*) ui_global.curadata;
 	ui_global.curadata += sizeof(vec_t) * 4 * count;
 	if (ui_global.curadata - ui_global.adata > ui_global.adataize)
-		Com_Error(ERR_FATAL, "UI_AllocColor: Menu memory hunk exceeded - increase the size");
+		Com_Error(ERR_FATAL, "UI_AllocColor: UI memory hunk exceeded - increase the size");
 	return result;
 }
 
 /**
- * @brief Allocate a string into the menu memory
+ * @brief Allocate a string into the UI static memory
  * @note Its not a dynamic memory allocation. Please only use it at the loading time
  * @param[in] string Use to initialize the string
  * @param[in] size request a fixed memory size, if 0 the string size is used
@@ -203,12 +203,12 @@ char* UI_AllocStaticString (const char* string, int size)
 	ui_global.curadata = ALIGN_PTR(ui_global.curadata, sizeof(char));
 	if (size != 0) {
 		if (ui_global.curadata - ui_global.adata + size > ui_global.adataize)
-			Com_Error(ERR_FATAL, "UI_AllocString: Menu memory hunk exceeded - increase the size");
+			Com_Error(ERR_FATAL, "UI_AllocString: UI memory hunk exceeded - increase the size");
 		strncpy((char *)ui_global.curadata, string, size);
 		ui_global.curadata += size;
 	} else {
 		if (ui_global.curadata - ui_global.adata + strlen(string) + 1 > ui_global.adataize)
-			Com_Error(ERR_FATAL, "UI_AllocString: Menu memory hunk exceeded - increase the size");
+			Com_Error(ERR_FATAL, "UI_AllocString: UI memory hunk exceeded - increase the size");
 		ui_global.curadata += sprintf((char *)ui_global.curadata, "%s", string) + 1;
 	}
 	return result;
@@ -220,8 +220,8 @@ char* UI_AllocStaticString (const char* string, int size)
  */
 uiAction_t *UI_AllocStaticAction (void)
 {
-	if (ui_global.numActions >= MAX_MENUACTIONS)
-		Com_Error(ERR_FATAL, "UI_AllocAction: Too many menu actions");
+	if (ui_global.numActions >= UI_MAX_ACTIONS)
+		Com_Error(ERR_FATAL, "UI_AllocAction: Too many UI actions");
 	return &ui_global.actions[ui_global.numActions++];
 }
 
@@ -274,7 +274,7 @@ qboolean UI_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_
 /**
  * @brief Parser for setter command
  */
-static qboolean UI_ParseSetAction (uiNode_t *menuNode, uiAction_t *action, const char **text, const char **token, const char *errhead)
+static qboolean UI_ParseSetAction (uiNode_t *node, uiAction_t *action, const char **text, const char **token, const char *errhead)
 {
 	const value_t *property;
 	int type;
@@ -283,7 +283,7 @@ static qboolean UI_ParseSetAction (uiNode_t *menuNode, uiAction_t *action, const
 	assert((*token)[0] == '*');
 
 	Com_UnParseLastToken();
-	action->d.nonTerminal.left = UI_ParseExpression(text, errhead, menuNode);
+	action->d.nonTerminal.left = UI_ParseExpression(text, errhead, node);
 
 	type = action->d.nonTerminal.left->type;
 	if (type != EA_VALUE_CVARNAME && type != EA_VALUE_CVARNAME_WITHINJECTION
@@ -297,13 +297,13 @@ static qboolean UI_ParseSetAction (uiNode_t *menuNode, uiAction_t *action, const
 	if (!*text)
 		return qfalse;
 	if (strcmp(*token, "=") != 0) {
-		Com_Printf("UI_ParseSetAction: Assign sign '=' expected between variable and value. '%s' found in node %s.\n", *token, UI_GetPath(menuNode));
+		Com_Printf("UI_ParseSetAction: Assign sign '=' expected between variable and value. '%s' found in node %s.\n", *token, UI_GetPath(node));
 		return qfalse;
 	}
 
 	/* get the value */
 	if (type == EA_VALUE_CVARNAME || type == EA_VALUE_CVARNAME_WITHINJECTION) {
-		action->d.nonTerminal.right = UI_ParseExpression(text, errhead, menuNode);
+		action->d.nonTerminal.right = UI_ParseExpression(text, errhead, node);
 		return qtrue;
 	}
 
@@ -317,11 +317,11 @@ static qboolean UI_ParseSetAction (uiNode_t *menuNode, uiAction_t *action, const
 		uiAction_t* actionList;
 
 		if (property != NULL && property->type != V_UI_ACTION) {
-			Com_Printf("UI_ParseSetAction: Property %s@%s do not expect code block.\n", UI_GetPath(menuNode), property->string);
+			Com_Printf("UI_ParseSetAction: Property %s@%s do not expect code block.\n", UI_GetPath(node), property->string);
 			return qfalse;
 		}
 
-		actionList = UI_ParseActionList(menuNode, text, token);
+		actionList = UI_ParseActionList(node, text, token);
 		if (actionList == NULL)
 			return qfalse;
 
@@ -336,7 +336,7 @@ static qboolean UI_ParseSetAction (uiNode_t *menuNode, uiAction_t *action, const
 
 	if (!strcmp(*token, "(")) {
 		Com_UnParseLastToken();
-		action->d.nonTerminal.right = UI_ParseExpression(text, errhead, menuNode);
+		action->d.nonTerminal.right = UI_ParseExpression(text, errhead, node);
 		return qtrue;
 	}
 
@@ -351,7 +351,7 @@ static qboolean UI_ParseSetAction (uiNode_t *menuNode, uiAction_t *action, const
 	}
 
 	localAction = UI_AllocStaticAction();
-	UI_InitRawActionValue(localAction, menuNode, property, *token);
+	UI_InitRawActionValue(localAction, node, property, *token);
 	action->d.nonTerminal.right = localAction;
 	return qtrue;
 }
@@ -359,17 +359,17 @@ static qboolean UI_ParseSetAction (uiNode_t *menuNode, uiAction_t *action, const
 /**
  * @brief Parser for c command
  */
-static qboolean UI_ParseCallAction (uiNode_t *menuNode, uiAction_t *action, const char **text, const char **token, const char *errhead)
+static qboolean UI_ParseCallAction (uiNode_t *node, uiAction_t *action, const char **text, const char **token, const char *errhead)
 {
 	uiAction_t *expression;
 	uiAction_t *lastParam = NULL;
 	int paramID = 0;
-	expression = UI_ParseExpression(text, errhead, menuNode);
+	expression = UI_ParseExpression(text, errhead, node);
 	if (expression == NULL)
 		return qfalse;
 
 	if (expression->type != EA_VALUE_PATHNODE_WITHINJECTION && expression->type != EA_VALUE_PATHNODE && expression->type != EA_VALUE_PATHPROPERTY && expression->type != EA_VALUE_PATHPROPERTY_WITHINJECTION) {
-		Com_Printf("UI_ParseCallAction: \"call\" keyword only support pathnode and pathproperty (node: %s)\n", UI_GetPath(menuNode));
+		Com_Printf("UI_ParseCallAction: \"call\" keyword only support pathnode and pathproperty (node: %s)\n", UI_GetPath(node));
 		return qfalse;
 	}
 
@@ -392,7 +392,7 @@ static qboolean UI_ParseCallAction (uiNode_t *menuNode, uiAction_t *action, cons
 		paramID++;
 
 		/* parameter */
-		param = UI_ParseExpression(text, errhead, menuNode);
+		param = UI_ParseExpression(text, errhead, node);
 		if (param == NULL) {
 			Com_Printf("UI_ParseCallAction: problem with the %i parameter\n", paramID);
 			return qfalse;
@@ -425,7 +425,7 @@ static qboolean UI_ParseCallAction (uiNode_t *menuNode, uiAction_t *action, cons
  * @sa ea_t
  * @todo need cleanup, compute action out of the final memory; reduce number of var
  */
-static uiAction_t *UI_ParseActionList (uiNode_t *menuNode, const char **text, const const char **token)
+static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const const char **token)
 {
 	const char *errhead = "UI_ParseActionList: unexpected end of file (in event)";
 	uiAction_t *firstAction;
@@ -438,7 +438,7 @@ static uiAction_t *UI_ParseActionList (uiNode_t *menuNode, const char **text, co
 
 	/* prevent bad position */
 	if ((*token)[0] != '{') {
-		Com_Printf("UI_ParseActionList: token \"{\" expected, but \"%s\" found (in event) (node: %s)\n", *token, UI_GetPath(menuNode));
+		Com_Printf("UI_ParseActionList: token \"{\" expected, but \"%s\" found (in event) (node: %s)\n", *token, UI_GetPath(node));
 		return NULL;
 	}
 
@@ -460,7 +460,7 @@ static uiAction_t *UI_ParseActionList (uiNode_t *menuNode, const char **text, co
 
 		/* unknown, we break the parsing */
 		if (type == EA_NULL) {
-			Com_Printf("UI_ParseActionList: unknown token \"%s\" ignored (in event) (node: %s)\n", *token, UI_GetPath(menuNode));
+			Com_Printf("UI_ParseActionList: unknown token \"%s\" ignored (in event) (node: %s)\n", *token, UI_GetPath(node));
 			return NULL;
 		}
 
@@ -486,13 +486,13 @@ static uiAction_t *UI_ParseActionList (uiNode_t *menuNode, const char **text, co
 			break;
 
 		case EA_ASSIGN:
-			result = UI_ParseSetAction(menuNode, action, text, token, errhead);
+			result = UI_ParseSetAction(node, action, text, token, errhead);
 			if (!result)
 				return NULL;
 			break;
 
 		case EA_CALL:
-			result = UI_ParseCallAction(menuNode, action, text, token, errhead);
+			result = UI_ParseCallAction(node, action, text, token, errhead);
 			if (!result)
 				return NULL;
 			break;
@@ -500,12 +500,12 @@ static uiAction_t *UI_ParseActionList (uiNode_t *menuNode, const char **text, co
 		case EA_DELETE:
 			{
 				uiAction_t *expression;
-				expression = UI_ParseExpression(text, errhead, menuNode);
+				expression = UI_ParseExpression(text, errhead, node);
 				if (expression == NULL)
 					return NULL;
 
 				if (expression->type != EA_VALUE_CVARNAME) {
-					Com_Printf("UI_ParseActionList: \"delete\" keyword only support cvarname (node: %s)\n", UI_GetPath(menuNode));
+					Com_Printf("UI_ParseActionList: \"delete\" keyword only support cvarname (node: %s)\n", UI_GetPath(node));
 					return NULL;
 				}
 
@@ -516,7 +516,7 @@ static uiAction_t *UI_ParseActionList (uiNode_t *menuNode, const char **text, co
 		case EA_ELIF:
 			/* check previous action */
 			if (!lastAction || (lastAction->type != EA_IF && lastAction->type != EA_ELIF)) {
-				Com_Printf("UI_ParseActionList: 'elif' must be set after an 'if' or an 'elif' (node: %s)\n", UI_GetPath(menuNode));
+				Com_Printf("UI_ParseActionList: 'elif' must be set after an 'if' or an 'elif' (node: %s)\n", UI_GetPath(node));
 				return NULL;
 			}
 			/* then it execute EA_IF, no break */
@@ -526,7 +526,7 @@ static uiAction_t *UI_ParseActionList (uiNode_t *menuNode, const char **text, co
 				uiAction_t *expression;
 
 				/* get the condition */
-				expression = UI_ParseExpression(text, errhead, menuNode);
+				expression = UI_ParseExpression(text, errhead, node);
 				if (expression == NULL)
 					return NULL;
 				action->d.nonTerminal.left = expression;
@@ -535,14 +535,14 @@ static uiAction_t *UI_ParseActionList (uiNode_t *menuNode, const char **text, co
 				*token = Com_EParse(text, errhead, NULL);
 				if (!*text)
 					return NULL;
-				action->d.nonTerminal.right = UI_ParseActionList(menuNode, text, token);
+				action->d.nonTerminal.right = UI_ParseActionList(node, text, token);
 				if (action->d.nonTerminal.right == NULL) {
 					if (action->type == EA_IF)
-						Com_Printf("UI_ParseActionList: block expected after \"if\" (node: %s)\n", UI_GetPath(menuNode));
+						Com_Printf("UI_ParseActionList: block expected after \"if\" (node: %s)\n", UI_GetPath(node));
 					else if (action->type == EA_ELIF)
-						Com_Printf("UI_ParseActionList: block expected after \"elif\" (node: %s)\n", UI_GetPath(menuNode));
+						Com_Printf("UI_ParseActionList: block expected after \"elif\" (node: %s)\n", UI_GetPath(node));
 					else
-						Com_Printf("UI_ParseActionList: block expected after \"while\" (node: %s)\n", UI_GetPath(menuNode));
+						Com_Printf("UI_ParseActionList: block expected after \"while\" (node: %s)\n", UI_GetPath(node));
 					return NULL;
 				}
 				break;
@@ -551,7 +551,7 @@ static uiAction_t *UI_ParseActionList (uiNode_t *menuNode, const char **text, co
 		case EA_ELSE:
 			/* check previous action */
 			if (!lastAction || (lastAction->type != EA_IF && lastAction->type != EA_ELIF)) {
-				Com_Printf("UI_ParseActionList: 'else' must be set after an 'if' or an 'elif' (node: %s)\n", UI_GetPath(menuNode));
+				Com_Printf("UI_ParseActionList: 'else' must be set after an 'if' or an 'elif' (node: %s)\n", UI_GetPath(node));
 				return NULL;
 			}
 
@@ -560,9 +560,9 @@ static uiAction_t *UI_ParseActionList (uiNode_t *menuNode, const char **text, co
 			if (!*text)
 				return NULL;
 			action->d.nonTerminal.left = NULL;
-			action->d.nonTerminal.right = UI_ParseActionList(menuNode, text, token);
+			action->d.nonTerminal.right = UI_ParseActionList(node, text, token);
 			if (action->d.nonTerminal.right == NULL) {
-				Com_Printf("UI_ParseActionList: block expected after \"else\" (node: %s)\n", UI_GetPath(menuNode));
+				Com_Printf("UI_ParseActionList: block expected after \"else\" (node: %s)\n", UI_GetPath(node));
 				return NULL;
 			}
 			break;
@@ -616,8 +616,8 @@ static qboolean UI_ParseExcludeRect (uiNode_t * node, const char **text, const c
 		}
 	} while ((*token)[0] != '}');
 
-	if (ui_global.numExcludeRect >= MAX_EXLUDERECTS) {
-		Com_Printf("UI_ParseExcludeRect: exluderect limit exceeded (max: %i)\n", MAX_EXLUDERECTS);
+	if (ui_global.numExcludeRect >= UI_MAX_EXLUDERECTS) {
+		Com_Printf("UI_ParseExcludeRect: exluderect limit exceeded (max: %i)\n", UI_MAX_EXLUDERECTS);
 		return qfalse;
 	}
 
@@ -842,7 +842,7 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 
 				*dataId = UI_GetDataIDByName(*token);
 				if (*dataId < 0) {
-					Com_Printf("UI_ParseProperty: Could not find menu dataId '%s' (%s@%s)\n",
+					Com_Printf("UI_ParseProperty: Could not find shared data ID '%s' (%s@%s)\n",
 							*token, objectName, property->string);
 					return qfalse;
 				}
@@ -1033,7 +1033,7 @@ static qboolean UI_ParseNodeBody (uiNode_t * node, const char **text, const char
 }
 
 /**
- * @brief parse a node and complet the menu with it
+ * @brief parse a node
  * @sa UI_ParseNodeProperties
  * @todo we can think about merging UI_ParseNodeProperties here
  * @note first token already read
@@ -1122,47 +1122,47 @@ static uiNode_t *UI_ParseNode (uiNode_t * parent, const char **text, const char 
 }
 
 /**
- * @brief parses the models.ufo and all files where menu_models are defined
+ * @brief parses the models.ufo and all files where UI models (menu_model) are defined
  * @sa CL_ParseClientData
  */
-void UI_ParseMenuModel (const char *name, const char **text)
+void UI_ParseUIModel (const char *name, const char **text)
 {
-	menuModel_t *menuModel;
+	uiModel_t *model;
 	const char *token;
 	int i;
 	const value_t *v = NULL;
-	const char *errhead = "UI_ParseMenuModel: unexpected end of file (names ";
+	const char *errhead = "UI_ParseUIModel: unexpected end of file (names ";
 
-	/* search for menumodels with same name */
-	for (i = 0; i < ui_global.numMenuModels; i++)
-		if (!strcmp(ui_global.menuModels[i].id, name)) {
-			Com_Printf("UI_ParseMenuModel: menu_model \"%s\" with same name found, second ignored\n", name);
+	/* search for a UI models with same name */
+	for (i = 0; i < ui_global.numModels; i++)
+		if (!strcmp(ui_global.models[i].id, name)) {
+			Com_Printf("UI_ParseUIModel: menu_model \"%s\" with same name found, second ignored\n", name);
 			return;
 		}
 
-	if (ui_global.numMenuModels >= MAX_MENUMODELS) {
-		Com_Printf("UI_ParseMenuModel: Max menu models reached\n");
+	if (ui_global.numModels >= UI_MAX_MODELS) {
+		Com_Printf("UI_ParseUIModel: Max UI models reached\n");
 		return;
 	}
 
-	/* initialize the menu */
-	menuModel = &ui_global.menuModels[ui_global.numMenuModels];
-	memset(menuModel, 0, sizeof(*menuModel));
+	/* initialize the model */
+	model = &ui_global.models[ui_global.numModels];
+	memset(model, 0, sizeof(*model));
 
-	Vector4Set(menuModel->color, 1, 1, 1, 1);
+	Vector4Set(model->color, 1, 1, 1, 1);
 
-	menuModel->id = Mem_PoolStrDup(name, ui_sysPool, 0);
-	Com_DPrintf(DEBUG_CLIENT, "Found menu model %s (%i)\n", menuModel->id, ui_global.numMenuModels);
+	model->id = Mem_PoolStrDup(name, ui_sysPool, 0);
+	Com_DPrintf(DEBUG_CLIENT, "Found UI model %s (%i)\n", model->id, ui_global.numModels);
 
 	/* get it's body */
 	token = Com_Parse(text);
 
 	if (!*text || token[0] != '{') {
-		Com_Printf("UI_ParseMenuModel: menu \"%s\" without body ignored\n", menuModel->id);
+		Com_Printf("UI_ParseUIModel: Model \"%s\" without body ignored\n", model->id);
 		return;
 	}
 
-	ui_global.numMenuModels++;
+	ui_global.numModels++;
 
 	do {
 		/* get the name type */
@@ -1172,19 +1172,19 @@ void UI_ParseMenuModel (const char *name, const char **text)
 		if (token[0] == '}')
 			break;
 
-		v = UI_FindPropertyByName(menuModelProperties, token);
+		v = UI_FindPropertyByName(uiModelProperties, token);
 		if (!v)
-			Com_Printf("UI_ParseMenuModel: unknown token \"%s\" ignored (menu_model %s)\n", token, name);
+			Com_Printf("UI_ParseUIModel: unknown token \"%s\" ignored (UI model %s)\n", token, name);
 
 		if (v->type == V_NULL) {
 			if (!strcmp(v->string, "need")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				menuModel->next = UI_GetMenuModel(token);
-				if (!menuModel->next)
-					Com_Printf("Could not find menumodel %s", token);
-				menuModel->need = Mem_PoolStrDup(token, ui_sysPool, 0);
+				model->next = UI_GetUIModel(token);
+				if (!model->next)
+					Com_Printf("Could not find UI model %s", token);
+				model->need = Mem_PoolStrDup(token, ui_sysPool, 0);
 			}
 		} else {
 			token = Com_EParse(text, errhead, name);
@@ -1192,10 +1192,10 @@ void UI_ParseMenuModel (const char *name, const char **text)
 				return;
 			switch (v->type) {
 			case V_CLIENT_HUNK_STRING:
-				Mem_PoolStrDupTo(token, (char**) ((char*)menuModel + (int)v->ofs), ui_sysPool, 0);
+				Mem_PoolStrDupTo(token, (char**) ((char*)model + (int)v->ofs), ui_sysPool, 0);
 				break;
 			default:
-				Com_EParseValue(menuModel, token, v->type, v->ofs, v->size);
+				Com_EParseValue(model, token, v->type, v->ofs, v->size);
 			}
 		}
 	} while (*text);
@@ -1206,7 +1206,7 @@ void UI_ParseIcon (const char *name, const char **text)
 	uiIcon_t *icon;
 	const char *token;
 
-	/* search for menus with same name */
+	/* search for icons with same name */
 	icon = UI_AllocStaticIcon(name);
 
 	/* get it's body */
@@ -1281,8 +1281,8 @@ void UI_ParseComponent (const char *type, const char **text)
  */
 void UI_ParseWindow (const char *type, const char *name, const char **text)
 {
-	const char *errhead = "UI_ParseWindow: unexpected end of file (menu";
-	uiNode_t *menu;
+	const char *errhead = "UI_ParseWindow: unexpected end of file (window";
+	uiNode_t *window;
 	const char *token;
 	qboolean result;
 	int i;
@@ -1301,7 +1301,7 @@ void UI_ParseWindow (const char *type, const char *name, const char **text)
 		return;
 	}
 
-	/* search for menus with same name */
+	/* search for windows with same name */
 	for (i = 0; i < ui_global.numWindows; i++)
 		if (!strncmp(name, ui_global.windows[i]->name, sizeof(ui_global.windows[i]->name)))
 			break;
@@ -1310,38 +1310,38 @@ void UI_ParseWindow (const char *type, const char *name, const char **text)
 		Com_Printf("UI_ParseWindow: %s \"%s\" with same name found, second ignored\n", type, name);
 	}
 
-	if (ui_global.numWindows >= MAX_WINDOWS) {
-		Com_Error(ERR_FATAL, "UI_ParseWindow: max menus exceeded (%i) - ignore '%s'\n", MAX_WINDOWS, name);
+	if (ui_global.numWindows >= UI_MAX_WINDOWS) {
+		Com_Error(ERR_FATAL, "UI_ParseWindow: max windows exceeded (%i) - ignore '%s'\n", UI_MAX_WINDOWS, name);
 		return;	/* never reached */
 	}
 
-	/* get menu body */
+	/* get window body */
 	token = Com_Parse(text);
 
-	/* does this menu inherit data from another menu? */
+	/* does this window inherit data from another window? */
 	if (!strcmp(token, "extends")) {
-		uiNode_t *superMenu;
+		uiNode_t *superWindow;
 		token = Com_Parse(text);
-		superMenu = UI_GetWindow(token);
-		if (superMenu == NULL)
-			Sys_Error("Could not get the super menu %s", token);
-		menu = UI_CloneNode(superMenu, NULL, qtrue, name, qfalse);
+		superWindow = UI_GetWindow(token);
+		if (superWindow == NULL)
+			Sys_Error("Could not get the super window \"%s\"", token);
+		window = UI_CloneNode(superWindow, NULL, qtrue, name, qfalse);
 		token = Com_Parse(text);
 	} else {
-		menu = UI_AllocNode(name, type, qfalse);
-		menu->root = menu;
+		window = UI_AllocNode(name, type, qfalse);
+		window->root = window;
 	}
 
-	UI_InsertWindow(menu);
+	UI_InsertWindow(window);
 
 	/* parse it's body */
-	result = UI_ParseNodeBody(menu, text, &token, errhead);
+	result = UI_ParseNodeBody(window, text, &token, errhead);
 	if (!result) {
-		Com_Error(ERR_FATAL, "UI_ParseWindow: menu \"%s\" has a bad body\n", menu->name);
+		Com_Error(ERR_FATAL, "UI_ParseWindow: window \"%s\" has a bad body\n", window->name);
 		return;	/* never reached */
 	}
 
-	menu->behaviour->loaded(menu);
+	window->behaviour->loaded(window);
 }
 
 /**

@@ -1,5 +1,5 @@
 /**
- * @file m_node_controls.h
+ * @file ui_node_controls.h
  */
 
 /*
@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_CONTROLS_H
-#define CLIENT_MENU_M_NODE_CONTROLS_H
+#ifndef CLIENT_UI_UI_NODE_CONTROLS_H
+#define CLIENT_UI_UI_NODE_CONTROLS_H
 
 void UI_RegisterControlsNode(uiBehaviour_t *behaviour);
 

@@ -1,5 +1,5 @@
 /**
- * @file m_node_selectbox.c
+ * @file ui_node_selectbox.c
  * @todo manage disabled option
  */
 

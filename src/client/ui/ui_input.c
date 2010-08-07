@@ -1,5 +1,5 @@
 /**
- * @file m_input.c
+ * @file ui_input.c
  */
 
 /*
@@ -78,7 +78,7 @@ static uiNode_t* capturedNode;
 static qboolean UI_FocusExecuteActionNode (void)
 {
 #if 0	/**< @todo need a cleanup */
-	if (mouseSpace != MS_MENU)
+	if (mouseSpace != MS_UI)
 		return qfalse;
 
 	if (UI_GetMouseCapture())
@@ -99,7 +99,7 @@ static qboolean UI_FocusExecuteActionNode (void)
 #if 0	/**< @todo need a cleanup */
 /**
  * @sa UI_FocusExecuteActionNode
- * @note node must not be in menu
+ * @note node must be in a window
  */
 static uiNode_t *UI_GetNextActionNode (uiNode_t* node)
 {
@@ -124,16 +124,15 @@ static uiNode_t *UI_GetNextActionNode (uiNode_t* node)
 static qboolean UI_FocusNextActionNode (void)
 {
 #if 0	/**< @todo need a cleanup */
-	uiNode_t* menu;
-	static int i = MAX_MENUSTACK + 1;	/* to cycle between all menus */
+	static int i = UI_MAX_WINDOWSTACK + 1;	/* to cycle between all windows */
 
-	if (mouseSpace != MS_MENU)
+	if (mouseSpace != MS_UI)
 		return qfalse;
 
 	if (UI_GetMouseCapture())
 		return qfalse;
 
-	if (i >= ui_global.menuStackPos)
+	if (i >= ui_global.windowStackPos)
 		i = UI_GetLastFullScreenWindow();
 
 	assert(i >= 0);
@@ -144,9 +143,10 @@ static qboolean UI_FocusNextActionNode (void)
 			return UI_FocusSetNode(node);
 	}
 
-	while (i < ui_global.menuStackPos) {
-		menu = ui_global.menuStack[i++];
-		if (UI_FocusSetNode(UI_GetNextActionNode(menu->firstChild)))
+	while (i < ui_global.windowStackPos) {
+		uiNode_t* window;
+		window = ui_global.windowStack[i++];
+		if (UI_FocusSetNode(UI_GetNextActionNode(window->firstChild)))
 			return qtrue;
 	}
 	i = UI_GetLastFullScreenWindow();
@@ -220,8 +220,8 @@ void UI_RemoveFocus (void)
 static uiKeyBinding_t* UI_AllocStaticKeyBinding (void)
 {
 	uiKeyBinding_t* result;
-	if (ui_global.numKeyBindings >= MAX_MENUKEYBINDING)
-		Com_Error(ERR_FATAL, "UI_AllocStaticKeyBinding: MAX_MENUKEYBINDING hit");
+	if (ui_global.numKeyBindings >= UI_MAX_KEYBINDING)
+		Com_Error(ERR_FATAL, "UI_AllocStaticKeyBinding: UI_MAX_KEYBINDING hit");
 
 	result = &ui_global.keyBindings[ui_global.numKeyBindings];
 	ui_global.numKeyBindings++;
@@ -521,7 +521,7 @@ void UI_MouseMove (int x, int y)
 #define UI_IsMouseInvalidate (oldMousePosX == -1)
 
 /**
- * @brief Is called every time one clicks on a menu/screen. Then checks if anything needs to be executed in the area of the click
+ * @brief Is called every time one clicks on a window/screen. Then checks if anything needs to be executed in the area of the click
  * (e.g. button-commands, inventory-handling, geoscape-stuff, etc...)
  * @sa UI_ExecuteEventActions
  * @sa UI_RightClick
@@ -540,12 +540,12 @@ static void UI_LeftClick (int x, int y)
 		return;
 	}
 
-	/* if we click out side a dropdown menu, we close it */
+	/* if we click outside a dropdown window, we close it */
 	/** @todo need to refactoring it with the focus code (cleaner) */
 	/** @todo at least should be moved on the mouse down event (when the focus should change) */
 	if (!hoveredNode && ui_global.windowStackPos != 0) {
-		uiNode_t *menu = ui_global.windowStack[ui_global.windowStackPos - 1];
-		if (UI_WindowIsDropDown(menu)) {
+		uiNode_t *window = ui_global.windowStack[ui_global.windowStackPos - 1];
+		if (UI_WindowIsDropDown(window)) {
 			UI_PopWindow(qfalse);
 		}
 	}
@@ -620,7 +620,7 @@ static void UI_MiddleClick (int x, int y)
 }
 
 /**
- * @brief Called when we are in menu mode and scroll via mousewheel
+ * @brief Called when we are in UI mode and scroll via mousewheel
  * @note The geoscape zooming code is here, too (also in @see CL_ParseInput)
  * @sa UI_LeftClick
  * @sa UI_RightClick
@@ -652,7 +652,7 @@ void UI_MouseWheel (qboolean down, int x, int y)
 }
 
 /**
- * @brief Called when we are in menu mode and down a mouse button
+ * @brief Called when we are in UI mode and down a mouse button
  * @sa UI_LeftClick
  * @sa UI_RightClick
  * @sa UI_MiddleClick
@@ -689,7 +689,7 @@ void UI_MouseDown (int x, int y, int button)
 }
 
 /**
- * @brief Called when we are in menu mode and up a mouse button
+ * @brief Called when we are in UI mode and up a mouse button
  * @sa UI_LeftClick
  * @sa UI_RightClick
  * @sa UI_MiddleClick

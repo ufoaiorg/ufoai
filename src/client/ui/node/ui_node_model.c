@@ -1,5 +1,5 @@
 /**
- * @file m_node_model.c
+ * @file ui_node_model.c
  * @brief This node allow to include a 3D-model into the GUI.
  * It provide a way to create composite models, check
  * [[How to script menu#How to create a composite model]]. We call it "main model"
@@ -50,31 +50,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const uiBehaviour_t const *localBehaviour;
 
 /**
- * @brief Returns pointer to menu model
- * @param[in] menuModel menu model id from script files
- * @return menuModel_t pointer
+ * @brief Returns pointer to UI model
+ * @param[in] modelName model id from script files
+ * @return uiModel_t pointer
  */
-menuModel_t *UI_GetMenuModel (const char *menuModel)
+uiModel_t *UI_GetUIModel (const char *modelName)
 {
 	int i;
-	menuModel_t *m;
+	uiModel_t *m;
 
-	for (i = 0; i < ui_global.numMenuModels; i++) {
-		m = &ui_global.menuModels[i];
-		if (!strncmp(m->id, menuModel, MAX_VAR))
+	for (i = 0; i < ui_global.numModels; i++) {
+		m = &ui_global.models[i];
+		if (!strncmp(m->id, modelName, MAX_VAR))
 			return m;
 	}
 	return NULL;
 }
 
-void UI_ListMenuModels_f (void)
+static void UI_ListUIModels_f (void)
 {
 	int i;
 
-	/* search for menumodels with same name */
-	Com_Printf("menu models: %i\n", ui_global.numMenuModels);
-	for (i = 0; i < ui_global.numMenuModels; i++)
-		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", ui_global.menuModels[i].id, ui_global.menuModels[i].model, ui_global.menuModels[i].need);
+	/* search for UI models with same name */
+	Com_Printf("menu models: %i\n", ui_global.numModels);
+	for (i = 0; i < ui_global.numModels; i++)
+		Com_Printf("id: %s\n...model: %s\n...need: %s\n\n", ui_global.models[i].id, ui_global.models[i].model, ui_global.models[i].need);
 }
 
 static void UI_ModelNodeDraw (uiNode_t *node)
@@ -93,7 +93,7 @@ static vec3_t nullVector = {0, 0, 0};
 /**
  * @brief Set the Model info view (angle,origin,scale) according to the node definition
  */
-static inline void UI_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, menuModel_t *menuModel)
+static inline void UI_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, uiModel_t *menuModel)
 {
 	vec3_t nodeorigin;
 	UI_GetNodeAbsPos(node, nodeorigin);
@@ -111,7 +111,7 @@ static inline void UI_InitModelInfoView (uiNode_t *node, modelInfo_t *mi, menuMo
 /**
  * @brief Draw a model using "menu model" definition
  */
-static void UI_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, modelInfo_t *mi, menuModel_t *menuModel)
+static void UI_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, modelInfo_t *mi, uiModel_t *menuModel)
 {
 	qboolean autoScaleComputed = qfalse;
 	vec3_t autoScale;
@@ -142,12 +142,12 @@ static void UI_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, m
 
 		if (menuModel->tag && menuModel->parent) {
 			/* tag and parent defined */
-			menuModel_t *menuModelParent;
+			uiModel_t *menuModelParent;
 			modelInfo_t pmi;
 			vec3_t pmiorigin;
 			animState_t *as;
 			/* place this menumodel part on an already existing menumodel tag */
-			menuModelParent = UI_GetMenuModel(menuModel->parent);
+			menuModelParent = UI_GetUIModel(menuModel->parent);
 			if (!menuModelParent) {
 				Com_Printf("Menumodel: Could not get the menuModel '%s'\n", menuModel->parent);
 				break;
@@ -248,7 +248,7 @@ static void UI_DrawModelNodeWithMenuModel (uiNode_t *node, const char *source, m
 void UI_DrawModelNode (uiNode_t *node, const char *source)
 {
 	modelInfo_t mi;
-	menuModel_t *menuModel;
+	uiModel_t *menuModel;
 	vec3_t nodeorigin;
 	vec3_t autoScale;
 	vec3_t autoCenter;
@@ -258,7 +258,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	if (source[0] == '\0')
 		return;
 
-	menuModel = UI_GetMenuModel(source);
+	menuModel = UI_GetUIModel(source);
 	/* direct model name - no menumodel definition */
 	if (!menuModel) {
 		/* prevent the searching for a menumodel def in the next frame */
@@ -551,5 +551,5 @@ void UI_RegisterModelNode (uiBehaviour_t *behaviour)
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 
-	Cmd_AddCommand("menumodelslist", UI_ListMenuModels_f, NULL);
+	Cmd_AddCommand("uimodelslist", UI_ListUIModels_f, NULL);
 }

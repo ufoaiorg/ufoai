@@ -1,5 +1,5 @@
 /**
- * @file m_sound.h
+ * @file ui_sound.h
  */
 
 /*

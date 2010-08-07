@@ -777,7 +777,7 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 	else if (!strcmp(type, "tutorial"))
 		TUT_ParseTutorials(name, text);
 	else if (!strcmp(type, "menu_model"))
-		UI_ParseMenuModel(name, text);
+		UI_ParseUIModel(name, text);
 	else if (!strcmp(type, "icon"))
 		UI_ParseIcon(name, text);
 	else if (!strcmp(type, "particle"))
