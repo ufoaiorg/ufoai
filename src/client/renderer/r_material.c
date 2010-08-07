@@ -501,10 +501,16 @@ static int R_LoadAnimImages (materialStage_t *s)
 	/* now load the rest */
 	for (i = 1; i < s->anim.num_frames; i++) {
 		const char *c = va("%s%d", name, i);
-		s->anim.images[i] = R_FindImage(c, it_material);
-		if (s->anim.images[i] == r_noTexture) {
+		image_t *image = R_FindImage(c, it_material);
+		s->anim.images[i] = image;
+		if (image == r_noTexture) {
 			Com_Printf("R_LoadAnimImages: Failed to resolve texture: %s\n", c);
 			return -1;
+		}
+		if (s->flags & STAGE_GLOWMAPLINK) {
+			if (image->glowmap)
+				Com_Printf("R_LoadAnimImages: overriding already existing glowmap for %s\n", image->name);
+			image->glowmap = image;
 		}
 	}
 
@@ -778,6 +784,11 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			/* the frame images are loaded once the stage is parsed completely */
 
 			s->flags |= STAGE_ANIM;
+			continue;
+		}
+
+		if (!strcmp(c, "glowmaplink")) {
+			s->flags |= STAGE_GLOWMAPLINK;
 			continue;
 		}
 
