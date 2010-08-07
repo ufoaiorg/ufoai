@@ -1396,6 +1396,8 @@ base/models/objects/trucks/watertruck/watertruck.png | GNU General Public Licens
 base/models/objects/trucks/watertruck/watertruck_gm.png | GNU General Public License 2.0 or later | Willem Sitters;MCR
 base/models/objects/vegi/banana/banana.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/vegi/banana/banana.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/vegi/bush/trop_bush.png | GNU General Public License 2.0 | MCR
+base/models/objects/vegi/bush/trop_bush_nm.png | GNU General Public License 2.0 | MCR
 base/models/objects/vegi/chestnut/chestnut_blaetter2.md2 | GNU General Public License 2.0 | "SparX" Beyeler
 base/models/objects/vegi/chestnut/chestnut_blaetter3.md2 | GNU General Public License 2.0 | "SparX" Beyeler
 base/models/objects/vegi/chestnut/chestnut_stamm1.md2 | GNU General Public License 2.0 | "SparX" Beyeler
