@@ -63,9 +63,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CAMPAIGN_MONEYWEAPONS "moneyWeapons"
 #define SAVE_CAMPAIGN_UFOSDETECTED "UFOsDetected"
 
-#define SAVE_CAMPAIGN_MISSIONS "missions"
-#define SAVE_CAMPAIGN_INTERESTS "interests"
-
 #define SAVE_CAMPAIGN_MAPDEFSTAT "mapDefStat"
 #define SAVE_CAMPAIGN_MAPDEF "mapDef"
 #define SAVE_CAMPAIGN_MAPDEF_ID "id"

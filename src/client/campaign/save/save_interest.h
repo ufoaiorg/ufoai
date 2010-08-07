@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef SAVE_INTEREST_H
 #define SAVE_INTEREST_H
 
+#define SAVE_INTERESTS "interests"
+
 #define SAVE_INTERESTS_LASTINCREASEDELAY "lastIncreaseDelay"
 #define SAVE_INTERESTS_LASTMISSIONSPAWNEDDELAY "lastMissionSpawnedDelay"
 #define SAVE_INTERESTS_OVERALL "overall"

@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef SAVE_MISSIONS_H
 #define SAVE_MISSIONS_H
 
+#define SAVE_MISSIONS "missions"
 #define SAVE_MISSIONS_MISSION "mission"
 #define SAVE_MISSIONS_MISSION_IDX "IDX"
 #define SAVE_MISSIONS_ID "id"

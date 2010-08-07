@@ -1899,12 +1899,13 @@ static void CP_SetAlienInterest_f (void)
 qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 {
 	const linkedList_t *list = ccs.missions;
+	mxml_node_t *missionsNode = mxml_AddNode(parent, SAVE_MISSIONS);
 
 	Com_RegisterConstList(saveInterestConstants);
 	Com_RegisterConstList(saveMissionConstants);
 	for (; list; list = list->next) {
 		const mission_t *mission = (mission_t *)list->data;
-		mxml_node_t *missionNode = mxml_AddNode(parent, SAVE_MISSIONS_MISSION);
+		mxml_node_t *missionNode = mxml_AddNode(missionsNode, SAVE_MISSIONS_MISSION);
 
 		mxml_AddInt(missionNode, SAVE_MISSIONS_MISSION_IDX, mission->idx);
 		mxml_AddString(missionNode, SAVE_MISSIONS_ID, mission->id);
@@ -1977,14 +1978,16 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
  */
 qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 {
+	mxml_node_t *missionNode;
 	mxml_node_t *node;
 	qboolean success = qtrue;
 	int i;
 
 	Com_RegisterConstList(saveInterestConstants);
 	Com_RegisterConstList(saveMissionConstants);
-	for (node = mxml_GetNode(parent, SAVE_MISSIONS_MISSION); node;
-			node = mxml_GetNextNode(node, parent, SAVE_MISSIONS_MISSION)) {
+	missionNode = mxml_GetNode(parent, SAVE_MISSIONS);
+	for (node = mxml_GetNode(missionNode, SAVE_MISSIONS_MISSION); node;
+			node = mxml_GetNextNode(node, missionNode, SAVE_MISSIONS_MISSION)) {
 		const char *name;
 		mission_t mission;
 		int ufoIdx;
