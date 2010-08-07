@@ -231,6 +231,77 @@ particle explosion
 	}
 }
 
+particle plasma_explosion
+{
+	init
+	{
+		push   int 25
+		nspawn pexplosionFlame
+
+		push   int 25
+		nspawn pexplosionVolumetric
+
+	}
+	think { kill }
+}
+
+particle pexplosionFlame
+{
+	init
+	{
+		image  sfx/plasmaball
+		blend  add
+		style  facing
+		thinkfade  out
+		size   "70 90"
+
+		a      "0 0 0"
+		crand  vector "30 30 30"
+		add    vector "0 0 30"
+		pop    *v
+
+		crand  vector "15 15 15"
+		add    *s
+		pop    *s
+
+		rand   float 1.5
+		add    float 1.5
+		pop    *tps
+
+		lightcolor "0.3 0.2 0.07"
+	}
+	think { kill }
+}
+
+particle pexplosionVolumetric
+{
+	init
+	{
+		image  sfx/uexp_04
+		blend  blend
+		style  facing
+		thinkfade  out
+		size   "70 70"
+		color  "0 30 100 0"
+
+		a      "0 0 0"
+		crand  vector "30 30 30"
+		add    vector "0 0 30"
+		pop    *v
+
+		crand  vector "15 15 15"
+		add    *s
+		pop    *s
+
+		rand   float 1.5
+		add    float 1.5
+		pop    *tps
+
+		lightcolor "0.3 0.2 0.07"
+	}
+	think { kill }
+}
+
 particle fire_explosion
 {
 	init

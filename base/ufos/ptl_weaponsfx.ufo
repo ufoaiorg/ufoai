@@ -625,26 +625,28 @@ particle plasmaMiniPulse
 }
 
 particle plasmaPulse
-{
-	init
-	{
-		image  sfx/plasmapulse
-		blend  add
-		style  axis
-		child  plasmaPulseBall
-		offset "0 -26 0"
-	}
-	run
-	{
-		push pos "1 1"
-		push *t
-		mul  float 16.0
+ {
+ 	init
+ 	{
+ 		image  sfx/plasmapulse
+ 		blend  add
+ 		style  axis
+ 		child  plasmaPulseBall
+ 		offset "0 -26 0"
+ 	}
+ 	run
+ 	{
+ 		push pos "1 1"
+ 		push *t
+ 		mul  float 16.0
 		sin  #
-		mul  #
-		add  pos "64 12"
-		pop  *size
+ 		mul  #
+ 		add  pos "64 12"
+ 		pop  *size
 	}
-}
+ }
+
+
 
 particle plasmaMiniPulseBall
 {
@@ -863,9 +865,8 @@ particle plasmaBigExplosion
 {
 	init
 	{
-		spawn  explosion_1
-		spawn  explosion_2
-		push   int 10
+		spawn  plasma_explosion
+		push   int 25
 		nspawn plasmaBigSplash
 		kill
 	}
