@@ -35,5 +35,5 @@ cvar_t *ui_sounds;
 void UI_PlaySound (const char *soundFile)
 {
 	if (ui_sounds->integer)
-		S_StartLocalSample(va("gui/%s", soundFile), SND_VOLUME_DEFAULT);
+		S_StartLocalSample(va("ui/%s", soundFile), SND_VOLUME_DEFAULT);
 }
