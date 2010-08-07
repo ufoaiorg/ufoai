@@ -79,10 +79,12 @@ static void R_UpdateMaterial (material_t *m)
 					break;
 				case ANIM_RANDOM:
 					frame = rand() % s->anim.num_frames;
-					Com_Printf("frame: %i\n", frame);
 					break;
-				default:
-					continue;
+				case ANIM_RANDOMFORCE:
+					frame = rand() % s->anim.num_frames;
+					if (s->image == s->anim.images[frame])
+						frame = (frame + 1) % s->anim.num_frames;
+					break;
 				}
 				assert(frame >= 0);
 				assert(frame < s->anim.num_frames);
@@ -758,6 +760,9 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 				break;
 			case 'r':
 				s->anim.type = ANIM_RANDOM;
+				break;
+			case 'f':
+				s->anim.type = ANIM_RANDOMFORCE;
 				break;
 			default:
 				s->anim.type = ANIM_NORMAL;
