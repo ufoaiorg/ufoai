@@ -212,9 +212,8 @@ typedef struct aircraft_s {
 
 	struct mission_s* mission;	/**< The mission the aircraft is moving to if this is a PHALANX aircraft
 								 * The mission the UFO is involved if this is a UFO */
-	char *missionID;			/**< if this is a crashsite, we need the string here
-								 * this is needed because we won't find the ufocrash mission
-								 * in the parsed missions in @c ccs.missions until we loaded the campaign */
+	char *missionID;			/**< aircraft loaded before missions, we need this temporary as reference 
+								 * AIR_PostLoadInitMissions resolves the pointers after game loaded and frees this */
 	struct aircraft_s *aircraftTarget;		/**< Target of the aircraft (ufo or phalanx) */
 	struct radar_s radar;				/**< Radar to track ufos */
 	int stats[AIR_STATS_MAX];	/**< aircraft parameters for speed, damage and so on

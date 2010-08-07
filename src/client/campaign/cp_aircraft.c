@@ -2714,16 +2714,13 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 		Com_UnregisterConstList(saveAircraftConstants);
 		return qfalse;
 	}
+	craft->missionID = Mem_PoolStrDup(s, cp_campaignPool, 0);
 
 	if (!craft->homebase) {
 		craft->idx = ccs.numUFOs;
-		craft->mission = CP_GetMissionByID(s);
 		/* detection id and time */
 		craft->detectionIdx = mxml_GetInt(p, SAVE_AIRCRAFT_DETECTIONIDX, 0);
 		mxml_GetDate(p, SAVE_AIRCRAFT_LASTSPOTTED_DATE, &craft->lastSpotted.day, &craft->lastSpotted.sec);
-	} else if (craft->status == AIR_MISSION) {
-		craft->missionID = Mem_PoolStrDup(s, cp_campaignPool, 0);
-		craft->mission = CP_GetMissionByIDSilent(s);
 	}
 
 	snode = mxml_GetNode(p, SAVE_AIRCRAFT_AIRSTATS);
@@ -2879,6 +2876,48 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 	}
 
 	return qtrue;
+}
+
+/**
+ * @brief Set the mission pointers for all the aircraft after loading a savegame
+ */
+static void AIR_PostLoadInitMissions (void)
+{
+	int i;
+
+	/* PHALANX aircraft */
+	for (i = 0; i < ccs.numBases; i++) {
+		const base_t *base = B_GetFoundedBaseByIDX(i);
+		aircraft_t *aircraft = NULL;
+
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft))) {
+			if (!aircraft->missionID || aircraft->missionID[0] == '\0')
+				continue;
+			aircraft->mission = CP_GetMissionByID(aircraft->missionID);
+			Mem_Free(aircraft->missionID);
+			aircraft->missionID = NULL;
+		}
+	}
+
+	/* UFOs */
+	for (i = 0; i < ccs.numUFOs; i++) {
+		aircraft_t *aircraft = UFO_GetByIDX(i);
+
+		if (!aircraft || !aircraft->missionID || aircraft->missionID[0] == '\0')
+			continue;
+		aircraft->mission = CP_GetMissionByID(aircraft->missionID);
+		Mem_Free(aircraft->missionID);
+		aircraft->missionID = NULL;
+	}
+}
+
+/**
+ * @brief Actions needs to be done after loading the savegame
+ * @sa SAV_GameActionsAfterLoad
+ */
+void AIR_PostLoadInit (void)
+{
+	AIR_PostLoadInitMissions();
 }
 
 /**
