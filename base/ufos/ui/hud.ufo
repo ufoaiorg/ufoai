@@ -143,8 +143,8 @@ window hud extends ahud
 	 * @param <2> status: 0 not available, 1 available, 2 selected
 	 */
 	confunc updateLevelStatus {
-		if ( <2> == 0 ) { *floor.bt<1>@disabled = true }
-		elif ( <2> >= 1 ) { *floor.bt<1>@disabled = false }
+		if ( <2> == 0 ) { *node:root.floor.bt<1>@disabled = true }
+		elif ( <2> >= 1 ) { *node:root.floor.bt<1>@disabled = false }
 	}
 
 	// ==================
@@ -954,15 +954,15 @@ window hud extends ahud
 			texl		"64 0"
 			texh		"96 32"
 			onMouseLeave			{
-				*chatscreen@size = "690 48"
-				*chatscreen@rows = "3"
+				*node:root.chatscreen@size = "690 48"
+				*node:root.chatscreen@rows = "3"
 				*node:root@timeout = 10000
 			}
 			onMouseEnter			{
-				*chatscreen@size = "690 400"
-				*chatscreen@rows = "25"
+				*node:root.chatscreen@size = "690 400"
+				*node:root.chatscreen@rows = "25"
 				*node:root@timeout = 0
-				*chatscreen@invis = false
+				*node:root.chatscreen@invis = false
 			}
 		}
 
@@ -999,7 +999,7 @@ window hud extends ahud
 
 	func onEvent
 	{
-		*chatscreen@invis = true
+		*node:root.chatscreen@invis = true
 	}
 
 	// ==================
@@ -1007,46 +1007,46 @@ window hud extends ahud
 	// ==================
 
 	confunc crouch_checkbox_disable {
-		*left.bt_crouch_reservation@disabled = true
+		*node:root.left.bt_crouch_reservation@disabled = true
 	}
 	confunc crouch_checkbox_clear	{
-		*left.bt_crouch_reservation@disabled = false
-		*left.bt_crouch_reservation@current = 0
+		*node:root.left.bt_crouch_reservation@disabled = false
+		*node:root.left.bt_crouch_reservation@current = 0
 	}
 	confunc crouch_checkbox_check	{
-		*left.bt_crouch_reservation@disabled = false
-		*left.bt_crouch_reservation@current = 1
+		*node:root.left.bt_crouch_reservation@disabled = false
+		*node:root.left.bt_crouch_reservation@current = 1
 	}
 
 	confunc hudselect {
 		*cvar:selected_soldier = <1>
 	}
 	confunc hudenable {
-		*team_selection.buttonList.bt_actor<1>@disabled = false
+		*node:root.team_selection.buttonList.bt_actor<1>@disabled = false
 	}
 	confunc huddisable {
-		*team_selection.buttonList.bt_actor<1>@disabled = true
+		*node:root.team_selection.buttonList.bt_actor<1>@disabled = true
 		cmd "updateactorvalues <1> \"\" \"0\" \"1\" \"0\" \"1\" \"0\" \"1\" \"0\" \"\";"
 	}
 
 	// CROUCH/STAND UP BUTTON
-	confunc deselect_stand { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = "hud/buttons2" }
-	confunc deselect_crouch { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = "hud/buttons2" }
-	confunc disable_stand { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = "hud/buttons2g" }
-	confunc disable_crouch { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = "hud/buttons2g" }
+	confunc deselect_stand { *node:root.left.bt_duck@texl = "52 75" *node:root.left.bt_duck@texh = "104 112" *node:root.left.bt_duck@image = "hud/buttons2" }
+	confunc deselect_crouch { *node:root.left.bt_duck@texl = "0 75" *node:root.left.bt_duck@texh = "52 112" *node:root.left.bt_duck@image = "hud/buttons2" }
+	confunc disable_stand { *node:root.left.bt_duck@texl = "52 75" *node:root.left.bt_duck@texh = "104 112" *node:root.left.bt_duck@image = "hud/buttons2g" }
+	confunc disable_crouch { *node:root.left.bt_duck@texl = "0 75" *node:root.left.bt_duck@texh = "52 112" *node:root.left.bt_duck@image = "hud/buttons2g" }
 
-	confunc deselect_primaryleft { *left.bt_pfire@image = "hud/buttons1" }
-	confunc deselect_primaryright { *right.bt_pfire@image = "hud/buttons1" }
-	confunc deselect_reloadleft { *left.bt_reload@image = "hud/buttons2" }
-	confunc deselect_reloadright { *right.bt_reload@image = "hud/buttons2" }
+	confunc deselect_primaryleft { *node:root.left.bt_pfire@image = "hud/buttons1" }
+	confunc deselect_primaryright { *node:root.right.bt_pfire@image = "hud/buttons1" }
+	confunc deselect_reloadleft { *node:root.left.bt_reload@image = "hud/buttons2" }
+	confunc deselect_reloadright { *node:root.right.bt_reload@image = "hud/buttons2" }
 
-	confunc disable_primaryleft { *left.bt_pfire@image = "hud/buttons1g" }
-	confunc disable_primaryright { *right.bt_pfire@image = "hud/buttons1g" }
-	confunc disable_reloadleft { *left.bt_reload@image = "hud/buttons2g" }
-	confunc disable_reloadright { *right.bt_reload@image = "hud/buttons2g" }
+	confunc disable_primaryleft { *node:root.left.bt_pfire@image = "hud/buttons1g" }
+	confunc disable_primaryright { *node:root.right.bt_pfire@image = "hud/buttons1g" }
+	confunc disable_reloadleft { *node:root.left.bt_reload@image = "hud/buttons2g" }
+	confunc disable_reloadright { *node:root.right.bt_reload@image = "hud/buttons2g" }
 
-	confunc deselect_headgear { *right.hud_bt_use_headgear@image = "hud/buttons2" }
-	confunc disable_headgear { *right.hud_bt_use_headgear@image = "hud/buttons2g" }
+	confunc deselect_headgear { *node:root.right.hud_bt_use_headgear@image = "hud/buttons2" }
+	confunc disable_headgear { *node:root.right.hud_bt_use_headgear@image = "hud/buttons2g" }
 
 	// ==================
 	// round events
@@ -1054,67 +1054,67 @@ window hud extends ahud
 
 	confunc startround
 	{
-		*next.bt_nextround@disabled = false
+		*node:root.next.bt_nextround@disabled = false
 	}
 
 	confunc endround
 	{
-		*next.bt_nextround@disabled = true
+		*node:root.next.bt_nextround@disabled = true
 	}
 
 	// "RESERVATION FOR SHOT" BUTTON
 	confunc reserve_shot_clear
 	{
 		*cvar:mn_shot_reservation_tt = "_Reserve TUs for shooting."
-		*info.bt_shot_reservation@texl	= "0 0"
-		*info.bt_shot_reservation@texh	= "51 32"
+		*node:root.info.bt_shot_reservation@texl	= "0 0"
+		*node:root.info.bt_shot_reservation@texh	= "51 32"
 	}
 	confunc reserve_shot_check
 	{
-		*info.bt_shot_reservation@texl	= "0 32"
-		*info.bt_shot_reservation@texh	= "51 64"
+		*node:root.info.bt_shot_reservation@texl	= "0 32"
+		*node:root.info.bt_shot_reservation@texh	= "51 64"
 	}
 	confunc reserve_shot_disable
 	{
-		*info.bt_shot_reservation@texl	= "64 32"
-		*info.bt_shot_reservation@texh	= "115 64"
+		*node:root.info.bt_shot_reservation@texl	= "64 32"
+		*node:root.info.bt_shot_reservation@texh	= "115 64"
 	}
 
 	// REACTION MODE BUTTON
 	confunc startreactionmany
 	{
-		*info.bt_reaction_s@texl	= "0 96"
-		*info.bt_reaction_s@texh	= "31 127"
-		*info.bt_reaction_s@tooltip = "_Multiple-shot reaction fire"
+		*node:root.info.bt_reaction_s@texl	= "0 96"
+		*node:root.info.bt_reaction_s@texh	= "31 127"
+		*node:root.info.bt_reaction_s@tooltip = "_Multiple-shot reaction fire"
 	}
 	confunc startreactionmany_impos
 	{
-		*info.bt_reaction_s@texl	= "32 96"
-		*info.bt_reaction_s@texh	= "63 127"
-		*info.bt_reaction_s@tooltip = "_Multiple-shot reaction fire (Not possible)"
+		*node:root.info.bt_reaction_s@texl	= "32 96"
+		*node:root.info.bt_reaction_s@texh	= "63 127"
+		*node:root.info.bt_reaction_s@tooltip = "_Multiple-shot reaction fire (Not possible)"
 	}
 	confunc startreactiononce
 	{
-		*info.bt_reaction_s@texl	= "0 64"
-		*info.bt_reaction_s@texh	= "31 95"
-		*info.bt_reaction_s@tooltip = "_One-shot reaction fire"
+		*node:root.info.bt_reaction_s@texl	= "0 64"
+		*node:root.info.bt_reaction_s@texh	= "31 95"
+		*node:root.info.bt_reaction_s@tooltip = "_One-shot reaction fire"
 	}
 	confunc startreactiononce_impos
 	{
-		*info.bt_reaction_s@texl	= "32 64"
-		*info.bt_reaction_s@texh	= "63 95"
-		*info.bt_reaction_s@tooltip = "_One-shot reaction fire (Not possible)"
+		*node:root.info.bt_reaction_s@texl	= "32 64"
+		*node:root.info.bt_reaction_s@texh	= "63 95"
+		*node:root.info.bt_reaction_s@tooltip = "_One-shot reaction fire (Not possible)"
 	}
 	confunc deselect_reaction
 	{
-		*info.bt_reaction_s@texl	= "0 32"
-		*info.bt_reaction_s@texh	= "31 63"
-		*info.bt_reaction_s@tooltip = "_No reaction fire"
+		*node:root.info.bt_reaction_s@texl	= "0 32"
+		*node:root.info.bt_reaction_s@texh	= "31 63"
+		*node:root.info.bt_reaction_s@tooltip = "_No reaction fire"
 	}
 	confunc disable_reaction
 	{
-		*info.bt_reaction_s@texl	= "0 0"
-		*info.bt_reaction_s@texh	= "31 31"
+		*node:root.info.bt_reaction_s@texl	= "0 0"
+		*node:root.info.bt_reaction_s@texh	= "31 31"
 	}
 
 	// ==================
@@ -1123,7 +1123,7 @@ window hud extends ahud
 
 	func onInit
 	{
-		*chatscreen@invis = true
+		*node:root.chatscreen@invis = true
 		cmd "music_change battlescape;"
 		cmd "set mn_showchatbuttons 0;"
 	}

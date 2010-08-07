@@ -111,11 +111,11 @@ window transfer
 				}
 			}
 			onViewChange	{
-				*itemlist.trans_list_amount@viewpos = <viewpos>
-				*itemlist.trans_list_transfered@viewpos = <viewpos>
-				*itemlist.trans_list_scroll@fullsize = <fullsize>
-				*itemlist.trans_list_scroll@current = <viewpos>
-				*itemlist.trans_list_scroll@viewsize = <viewsize>
+				*node:root.itemlist.trans_list_amount@viewpos = <viewpos>
+				*node:root.itemlist.trans_list_transfered@viewpos = <viewpos>
+				*node:root.itemlist.trans_list_scroll@fullsize = <fullsize>
+				*node:root.itemlist.trans_list_scroll@current = <viewpos>
+				*node:root.itemlist.trans_list_scroll@viewsize = <viewsize>
 				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
 			}
 		}
@@ -128,11 +128,11 @@ window transfer
 			lineheight	"25"
 			textalign	ALIGN_CR
 			onViewChange	{
-				*itemlist.trans_list@viewpos = <viewpos>
-				*itemlist.trans_list_transfered@viewpos = <viewpos>
-				*itemlist.trans_list_scroll@fullsize = <fullsize>
-				*itemlist.trans_list_scroll@current = <viewpos>
-				*itemlist.trans_list_scroll@viewsize = <viewsize>
+				*node:root.itemlist.trans_list@viewpos = <viewpos>
+				*node:root.itemlist.trans_list_transfered@viewpos = <viewpos>
+				*node:root.itemlist.trans_list_scroll@fullsize = <fullsize>
+				*node:root.itemlist.trans_list_scroll@current = <viewpos>
+				*node:root.itemlist.trans_list_scroll@viewsize = <viewsize>
 				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
 			}
 		}
@@ -145,11 +145,11 @@ window transfer
 			lineheight	"25"
 			textalign	ALIGN_CR
 			onViewChange	{
-				*itemlist.trans_list@viewpos = <viewpos>
-				*itemlist.trans_list_amount@viewpos = <viewpos>
-				*itemlist.trans_list_scroll@fullsize = <fullsize>
-				*itemlist.trans_list_scroll@current = <viewpos>
-				*itemlist.trans_list_scroll@viewsize = <viewsize>
+				*node:root.itemlist.trans_list@viewpos = <viewpos>
+				*node:root.itemlist.trans_list_amount@viewpos = <viewpos>
+				*node:root.itemlist.trans_list_scroll@fullsize = <fullsize>
+				*node:root.itemlist.trans_list_scroll@current = <viewpos>
+				*node:root.itemlist.trans_list_scroll@viewsize = <viewsize>
 				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
 			}
 		}
@@ -160,10 +160,10 @@ window transfer
 			height		"521"
 			hidewhenunused	true
 			onChange	{
-				*itemlist.trans_list_scroll@current = <current>
-				*itemlist.trans_list@viewpos = <current>
-				*itemlist.trans_list_amount@viewpos = <current>
-				*itemlist.trans_list_transfered@viewpos = <current>
+				*node:root.itemlist.trans_list_scroll@current = <current>
+				*node:root.itemlist.trans_list@viewpos = <current>
+				*node:root.itemlist.trans_list_amount@viewpos = <current>
+				*node:root.itemlist.trans_list_transfered@viewpos = <current>
 				cmd "trans_list_scroll <cvar:mn_itemtype> <current>;"
 			}
 		}
@@ -415,11 +415,11 @@ window transfer
 			*cvar:loop_max = 21
 		}
 		while ( *cvar:i < *cvar:loop_max ) {
-			*itemlist.t_spinner<cvar:i>@invis = false
+			*node:root.itemlist.t_spinner<cvar:i>@invis = false
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		while ( *cvar:i < 21 ) {
-			*itemlist.t_spinner<cvar:i>@invis = true
+			*node:root.itemlist.t_spinner<cvar:i>@invis = true
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	}
@@ -431,9 +431,9 @@ window transfer
 	 * @param[in] <4> max value allowed
 	 */
 	confunc trans_updatespinners {
-		*itemlist.t_spinner<1>@current = <2>
-		*itemlist.t_spinner<1>@min = <3>
-		*itemlist.t_spinner<1>@max = <4>
+		*node:root.itemlist.t_spinner<1>@current = <2>
+		*node:root.itemlist.t_spinner<1>@min = <3>
+		*node:root.itemlist.t_spinner<1>@max = <4>
 	}
 
 	/**
@@ -466,10 +466,10 @@ window transfer
 				}
 			}
 			onViewChange	{
-				*transfer_cargolist.trans_cargolist_amount@viewpos = <viewpos>
-				*transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
-				*transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
-				*transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
+				*node:root.transfer_cargolist.trans_cargolist_amount@viewpos = <viewpos>
+				*node:root.transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
+				*node:root.transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
+				*node:root.transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -481,10 +481,10 @@ window transfer
 			lineheight	"25"
 			textalign	ALIGN_CR
 			onViewChange	{
-				*transfer_cargolist.trans_cargolist@viewpos = <viewpos>
-				*transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
-				*transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
-				*transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
+				*node:root.transfer_cargolist.trans_cargolist@viewpos = <viewpos>
+				*node:root.transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
+				*node:root.transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
+				*node:root.transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -494,8 +494,8 @@ window transfer
 			height		"221"
 			hidewhenunused	true
 			onChange	{
-				*transfer_cargolist.trans_cargolist@viewpos = <current>
-				*transfer_cargolist.trans_cargolist_amount@viewpos = <current>
+				*node:root.transfer_cargolist.trans_cargolist@viewpos = <current>
+				*node:root.transfer_cargolist.trans_cargolist_amount@viewpos = <current>
 			}
 		}
 	}
@@ -547,9 +547,9 @@ window transfer
 			size		"360 160"
 			lineheight	"20"
 			onViewChange	{
-				*infopanel.t_baseinfo_scroll@fullsize = <fullsize>
-				*infopanel.t_baseinfo_scroll@current = <viewpos>
-				*infopanel.t_baseinfo_scroll@viewsize = <viewsize>
+				*node:root.infopanel.t_baseinfo_scroll@fullsize = <fullsize>
+				*node:root.infopanel.t_baseinfo_scroll@current = <viewpos>
+				*node:root.infopanel.t_baseinfo_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -559,7 +559,7 @@ window transfer
 			height		"160"
 			hidewhenunused	true
 			onChange	{
-				*infopanel.t_baseinfo@viewpos = <current>
+				*node:root.infopanel.t_baseinfo@viewpos = <current>
 			}
 		}
 	}
@@ -570,10 +570,10 @@ window transfer
 	}
 
 	confunc trans_resetscroll {
-		*itemlist.trans_list_scroll@current = 0
-		*itemlist.trans_list@viewpos = 0
-		*itemlist.trans_list_amount@viewpos = 0
-		*itemlist.trans_list_transfered@viewpos = 0
+		*node:root.itemlist.trans_list_scroll@current = 0
+		*node:root.itemlist.trans_list@viewpos = 0
+		*node:root.itemlist.trans_list_amount@viewpos = 0
+		*node:root.itemlist.trans_list_transfered@viewpos = 0
 		cmd "trans_list_scroll <cvar:mn_itemtype> <itemlist.trans_list@viewpos>;"
 	}
 

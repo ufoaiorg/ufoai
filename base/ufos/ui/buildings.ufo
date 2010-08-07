@@ -50,11 +50,11 @@ window buildings
 		longlines	LONGLINES_PRETTYCHOP
 		onClick		{ cmd "buildings_click <lineselected>;" }
 		onViewChange {
-			*buildings_scroll@fullsize = <fullsize>
-			*buildings_scroll@current = <viewpos>
+			*node:root.buildings_scroll@fullsize = <fullsize>
+			*node:root.buildings_scroll@current = <viewpos>
 		}
 		onWheel {
-			*buildings_scroll@current = <viewpos>
+			*node:root.buildings_scroll@current = <viewpos>
 		}
 	}
 
@@ -97,7 +97,7 @@ window buildings
 
 	confunc mn_buildings_reset
 	{
-		*buildings@lineselected	= -1
+		*node:root.buildings@lineselected	= -1
 		*cvar:mn_building_name	= "_Select building"
 		*cvar:mn_building_image	= ""
 		*cvar:mn_building_info	= ""

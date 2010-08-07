@@ -28,9 +28,9 @@ window popup
 		tabwidth	100
 		rows		8
 		onViewChange	{
-			*popup_text_scroll@fullsize = <fullsize>
-			*popup_text_scroll@current = <viewpos>
-			*popup_text_scroll@viewsize = <viewsize>
+			*node:root.popup_text_scroll@fullsize = <fullsize>
+			*node:root.popup_text_scroll@current = <viewpos>
+			*node:root.popup_text_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -42,7 +42,7 @@ window popup
 		viewsize	8
 		fullsize	8
 		hidewhenunused true
-		onChange	{ *popup_text@viewpos = <current> }
+		onChange	{ *node:root.popup_text@viewpos = <current> }
 	}
 	button button_ok
 	{
@@ -90,9 +90,9 @@ window popup_list
 		tabwidth	100
 		rows		6
 		onViewChange	{
-			*popup_list_scroll@fullsize = <fullsize>
-			*popup_list_scroll@current = <viewpos>
-			*popup_list_scroll@viewsize = <viewsize>
+			*node:root.popup_list_scroll@fullsize = <fullsize>
+			*node:root.popup_list_scroll@current = <viewpos>
+			*node:root.popup_list_scroll@viewsize = <viewsize>
 		}
 	}
 	vscrollbar popup_list_scroll {
@@ -103,7 +103,7 @@ window popup_list
 		viewsize	6
 		fullsize	6
 		hidewhenunused true
-		onChange	{ *popup_list@viewpos = <current> }
+		onChange	{ *node:root.popup_list@viewpos = <current> }
 	}
 
 	cmpPopupButton bt_ok
@@ -139,9 +139,9 @@ window popup_button
 		tabwidth	100
 		rows		8
 		onViewChange	{
-			*popup_text_scroll@fullsize = <fullsize>
-			*popup_text_scroll@current = <viewpos>
-			*popup_text_scroll@viewsize = <viewsize>
+			*node:root.popup_text_scroll@fullsize = <fullsize>
+			*node:root.popup_text_scroll@current = <viewpos>
+			*node:root.popup_text_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -153,7 +153,7 @@ window popup_button
 		viewsize	8
 		fullsize	8
 		hidewhenunused true
-		onChange	{ *popup_text@viewpos = <current> }
+		onChange	{ *node:root.popup_text@viewpos = <current> }
 	}
 
 	cmpPopupButton popup_button_1

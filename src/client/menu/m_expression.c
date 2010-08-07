@@ -370,8 +370,10 @@ static uiAction_t *UI_ParseValueExpression (const char **text, const char *errhe
 			expression->type = EA_VALUE_PATHPROPERTY_WITHINJECTION;
 		else
 			expression->type = EA_VALUE_PATHPROPERTY;
-		if (!relativeToNode)
+		if (!relativeToNode) {
+			Com_Printf("UI_ParseExpression: Old syntax, please prefix '%s' with \"*node:root.\" \n", token);
 			path = va("root.%s", path);
+		}
 		expression->d.terminal.d1.string = UI_AllocStaticString(path, 0);
 
 		/* get property name */

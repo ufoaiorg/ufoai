@@ -204,9 +204,9 @@ window checkcvars
 		selectcolor	"1 1 1 1"
 		dataid		OPTION_LANGUAGES
 		onViewChange {
-			*select_language_scroll@current = <viewpos>
-			*select_language_scroll@fullsize = <fullsize>
-			*select_language_scroll@viewsize = <viewsize>
+			*node:root.select_language_scroll@current = <viewpos>
+			*node:root.select_language_scroll@fullsize = <fullsize>
+			*node:root.select_language_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -218,7 +218,7 @@ window checkcvars
 		viewsize		8
 		fullsize		21
 		onChange {
-			*select_language@viewpos = <current>
+			*node:root.select_language@viewpos = <current>
 		}
 	}
 
@@ -312,11 +312,11 @@ window popup_tipoftheday
 	confunc check_nexttip
 	{
 		if ( *cvar:cl_showTipOfTheDay == 1 ) {
-			*bt_next@string = "_Next"
-			*bt_next@tooltip = "_Next tip"
+			*node:root.bt_next@string = "_Next"
+			*node:root.bt_next@tooltip = "_Next tip"
 		} else {
-			*bt_next@string = "_Close"
-			*bt_next@tooltip = "_Close window"
+			*node:root.bt_next@string = "_Close"
+			*node:root.bt_next@tooltip = "_Close window"
 		}
 	}
 

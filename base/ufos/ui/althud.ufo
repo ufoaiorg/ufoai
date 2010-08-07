@@ -162,19 +162,19 @@ window althud extends ahud
 			*cvar:tmp = ( <1> + 1 )
 			*cvar:i = 1
 			while ( *cvar:i < *cvar:tmp ) {
-				*floor.bar_teambox<cvar:i>@invis = false  *floor.bar_teamsep<cvar:i>@invis = false  *floor.head<cvar:i>@invis = false
+				*node:root.floor.bar_teambox<cvar:i>@invis = false  *node:root.floor.bar_teamsep<cvar:i>@invis = false  *node:root.floor.head<cvar:i>@invis = false
 				*cvar:i = ( *cvar:i + 1 )
 			}
 
 			while ( *cvar:tmp < 8 ) {
-				*floor.bar_teambox<cvar:tmp>@invis = true  *floor.bar_teamsep<cvar:tmp>@invis = true  *floor.head<cvar:tmp>@invis = true
+				*node:root.floor.bar_teambox<cvar:tmp>@invis = true  *node:root.floor.bar_teamsep<cvar:tmp>@invis = true  *node:root.floor.head<cvar:tmp>@invis = true
 				*cvar:tmp = ( *cvar:tmp + 1 )
 			}
 
 			delete *cvar:tmp
 			delete *cvar:i
 
-			*floor.bar_teamright@left = ( *node:root.floor.bar_teambox<1>@left + *node:root.floor.bar_teambox<1>@width )
+			*node:root.floor.bar_teamright@left = ( *node:root.floor.bar_teambox<1>@left + *node:root.floor.bar_teambox<1>@width )
 		}
 
 		image bar_selbox
@@ -766,25 +766,25 @@ window althud extends ahud
 
 		func show_rightweapon
 		{
-			*right.right@invis = false
-			*right.ammoright@invis = false
-			*right.left@invis = true
-			*right.ammoleft@invis = true
-			*right.bt_primaryright@invis = false
-			*right.bt_primaryleft@invis = true
-			*right.bt_reloadright@invis = false
-			*right.bt_reloadleft@invis = true
+			*node:root.right.right@invis = false
+			*node:root.right.ammoright@invis = false
+			*node:root.right.left@invis = true
+			*node:root.right.ammoleft@invis = true
+			*node:root.right.bt_primaryright@invis = false
+			*node:root.right.bt_primaryleft@invis = true
+			*node:root.right.bt_reloadright@invis = false
+			*node:root.right.bt_reloadleft@invis = true
 		}
 		func show_leftweapon
 		{
-			*right.right@invis = true
-			*right.ammoright@invis = true
-			*right.left@invis = false
-			*right.ammoleft@invis = false
-			*right.bt_primaryright@invis = true
-			*right.bt_primaryleft@invis = false
-			*right.bt_reloadright@invis = true
-			*right.bt_reloadleft@invis = false
+			*node:root.right.right@invis = true
+			*node:root.right.ammoright@invis = true
+			*node:root.right.left@invis = false
+			*node:root.right.ammoleft@invis = false
+			*node:root.right.bt_primaryright@invis = true
+			*node:root.right.bt_primaryleft@invis = false
+			*node:root.right.bt_reloadright@invis = true
+			*node:root.right.bt_reloadleft@invis = false
 		}
 
 		button switch_to_right_hand
@@ -878,15 +878,15 @@ window althud extends ahud
 			texl		"64 0"
 			texh		"96 32"
 			onMouseLeave			{
-				*chatscreen@size = "690 48"
-				*chatscreen@rows = "3"
+				*node:root.chatscreen@size = "690 48"
+				*node:root.chatscreen@rows = "3"
 				*node:root@timeout = 10000
 			}
 			onMouseEnter			{
-				*chatscreen@size = "690 400"
-				*chatscreen@rows = "25"
+				*node:root.chatscreen@size = "690 400"
+				*node:root.chatscreen@rows = "25"
 				*node:root@timeout = 0
-				*chatscreen@invis = false
+				*node:root.chatscreen@invis = false
 			}
 		}
 
@@ -923,7 +923,7 @@ window althud extends ahud
 
 	func onEvent
 	{
-		*chatscreen@invis = true
+		*node:root.chatscreen@invis = true
 	}
 
 	panel lowerright {
@@ -1048,29 +1048,29 @@ window althud extends ahud
 	// ==================
 
 	confunc crouch_checkbox_disable {
-		*right.bt_crouch_reservation@disabled = true
+		*node:root.right.bt_crouch_reservation@disabled = true
 	}
 	confunc crouch_checkbox_clear	{
-		*right.bt_crouch_reservation@disabled = false
-		*right.bt_crouch_reservation@current = 0
+		*node:root.right.bt_crouch_reservation@disabled = false
+		*node:root.right.bt_crouch_reservation@current = 0
 	}
 	confunc crouch_checkbox_check	{
-		*right.bt_crouch_reservation@disabled = false
-		*right.bt_crouch_reservation@current = 1
+		*node:root.right.bt_crouch_reservation@disabled = false
+		*node:root.right.bt_crouch_reservation@current = 1
 	}
 
 	confunc hudselect {
-		*floor.bar_selbox@left = ( *node:root.floor.bar_teambox<1>@left - 7 )
+		*node:root.floor.bar_selbox@left = ( *node:root.floor.bar_teambox<1>@left - 7 )
 	}
 
 	// CROUCH/STAND UP BUTTON
-	confunc deselect_stand  { *right.bt_duck@texl = "27 37" *right.bt_duck@texh = "52 70" *right.bt_duck@image = "althud/buttons_althud1" }
-	confunc deselect_crouch { *right.bt_duck@texl = "54 37" *right.bt_duck@texh = "79 70" *right.bt_duck@image = "althud/buttons_althud1" }
-	confunc disable_stand    { *right.bt_duck@texl = "27 37" *right.bt_duck@texh = "52 70" *right.bt_duck@image = "althud/buttons_althud1g" }
-	confunc disable_crouch   { *right.bt_duck@texl = "54 37" *right.bt_duck@texh = "79 70" *right.bt_duck@image = "althud/buttons_althud1g" }
+	confunc deselect_stand  { *node:root.right.bt_duck@texl = "27 37" *node:root.right.bt_duck@texh = "52 70" *node:root.right.bt_duck@image = "althud/buttons_althud1" }
+	confunc deselect_crouch { *node:root.right.bt_duck@texl = "54 37" *node:root.right.bt_duck@texh = "79 70" *node:root.right.bt_duck@image = "althud/buttons_althud1" }
+	confunc disable_stand    { *node:root.right.bt_duck@texl = "27 37" *node:root.right.bt_duck@texh = "52 70" *node:root.right.bt_duck@image = "althud/buttons_althud1g" }
+	confunc disable_crouch   { *node:root.right.bt_duck@texl = "54 37" *node:root.right.bt_duck@texh = "79 70" *node:root.right.bt_duck@image = "althud/buttons_althud1g" }
 
-	confunc deselect_headgear { *right.althud_bt_use_headgear@image = "althud/buttons_althud1a" }
-	confunc disable_headgear { *right.althud_bt_use_headgear@image = "althud/buttons_althud1g" }
+	confunc deselect_headgear { *node:root.right.althud_bt_use_headgear@image = "althud/buttons_althud1a" }
+	confunc disable_headgear { *node:root.right.althud_bt_use_headgear@image = "althud/buttons_althud1g" }
 
 	// ==================
 	// round events
@@ -1078,71 +1078,71 @@ window althud extends ahud
 
 	confunc startround
 	{
-		*upperright.nextround@image = "althud/buttons_althud1"
+		*node:root.upperright.nextround@image = "althud/buttons_althud1"
 	}
 	confunc endround
 	{
-		*upperright.nextround@image = "althud/buttons_althud1g"
+		*node:root.upperright.nextround@image = "althud/buttons_althud1g"
 	}
 
-	confunc deselect_primaryleft { *right.bt_primaryleft@image		= "althud/buttons_althud1" }
-	confunc deselect_primaryright { *right.bt_primaryright@image	= "althud/buttons_althud1" }
-	confunc deselect_reloadleft { *right.bt_reloadleft@image		= "althud/buttons_althud1" }
-	confunc deselect_reloadright { *right.bt_reloadright@image		= "althud/buttons_althud1" }
+	confunc deselect_primaryleft { *node:root.right.bt_primaryleft@image		= "althud/buttons_althud1" }
+	confunc deselect_primaryright { *node:root.right.bt_primaryright@image	= "althud/buttons_althud1" }
+	confunc deselect_reloadleft { *node:root.right.bt_reloadleft@image		= "althud/buttons_althud1" }
+	confunc deselect_reloadright { *node:root.right.bt_reloadright@image		= "althud/buttons_althud1" }
 
-	confunc disable_primaryleft { *right.bt_primaryleft@image	= "althud/buttons_althud1g" }
-	confunc disable_primaryright { *right.bt_primaryright@image	= "althud/buttons_althud1g" }
-	confunc disable_reloadleft { *right.bt_reloadleft@image		= "althud/buttons_althud1g" }
-	confunc disable_reloadright { *right.bt_reloadright@image	= "althud/buttons_althud1g" }
+	confunc disable_primaryleft { *node:root.right.bt_primaryleft@image	= "althud/buttons_althud1g" }
+	confunc disable_primaryright { *node:root.right.bt_primaryright@image	= "althud/buttons_althud1g" }
+	confunc disable_reloadleft { *node:root.right.bt_reloadleft@image		= "althud/buttons_althud1g" }
+	confunc disable_reloadright { *node:root.right.bt_reloadright@image	= "althud/buttons_althud1g" }
 
 	confunc startreactionmany
 	{
-		*right.bt_reaction_a@image = "althud/buttons_althud1b"
-		*right.bt_reaction_a@tooltip = "_Multiple-shot reaction fire"
+		*node:root.right.bt_reaction_a@image = "althud/buttons_althud1b"
+		*node:root.right.bt_reaction_a@tooltip = "_Multiple-shot reaction fire"
 	}
 	confunc startreactionmany_impos
 	{
-		*right.bt_reaction_a@image = "althud/buttons_althud1br"
-		*right.bt_reaction_a@tooltip = "_Multiple-shot reaction fire (not possible)"
+		*node:root.right.bt_reaction_a@image = "althud/buttons_althud1br"
+		*node:root.right.bt_reaction_a@tooltip = "_Multiple-shot reaction fire (not possible)"
 	}
 	confunc startreactiononce
 	{
-		*right.bt_reaction_a@image		= "althud/buttons_althud1a"
-		*right.bt_reaction_a@tooltip	= "_One-shot reaction fire"
+		*node:root.right.bt_reaction_a@image		= "althud/buttons_althud1a"
+		*node:root.right.bt_reaction_a@tooltip	= "_One-shot reaction fire"
 	}
 	confunc startreactiononce_impos
 	{
-		*right.bt_reaction_a@image		= "althud/buttons_althud1ar"
-		*right.bt_reaction_a@tooltip	= "_One-shot reaction fire (not possible)"
+		*node:root.right.bt_reaction_a@image		= "althud/buttons_althud1ar"
+		*node:root.right.bt_reaction_a@tooltip	= "_One-shot reaction fire (not possible)"
 	}
 
 	confunc deselect_reaction
 	{
-		*right.bt_reaction_a@image		= "althud/buttons_althud1"
-		*right.bt_reaction_a@tooltip	= "_No reaction fire"
+		*node:root.right.bt_reaction_a@image		= "althud/buttons_althud1"
+		*node:root.right.bt_reaction_a@tooltip	= "_No reaction fire"
 	}
 	confunc disable_reaction {
-		*right.bt_reaction_a@image		= "althud/buttons_althud1g"
+		*node:root.right.bt_reaction_a@image		= "althud/buttons_althud1g"
 	}
 
 	// "RESERVATION FOR SHOT" BUTTON
 	confunc reserve_shot_clear
 	{
 		*cvar:mn_shot_reservation_tt		= "_Reserve TUs for shooting."
-		*right.bt_shot_reservation@image	= "althud/buttons_althud1"
+		*node:root.right.bt_shot_reservation@image	= "althud/buttons_althud1"
 	}
 	confunc reserve_shot_check
 	{
-		*right.bt_shot_reservation@image = "althud/buttons_althud1"
+		*node:root.right.bt_shot_reservation@image = "althud/buttons_althud1"
 	}
 	confunc reserve_shot_disable
 	{
-		*right.bt_shot_reservation@image = "althud/buttons_althud1g"
+		*node:root.right.bt_shot_reservation@image = "althud/buttons_althud1g"
 	}
 
 	confunc hudenable
 	{
-		call *floor.hudenable_floor ( <1> )
+		call *node:root.floor.hudenable_floor ( <1> )
 	}
 
 	// ==================
@@ -1151,7 +1151,7 @@ window althud extends ahud
 
 	func onInit
 	{
-		*chatscreen@invis = true
+		*node:root.chatscreen@invis = true
 		cmd "music_change battlescape;"
 		call *node:root.right.show_rightweapon
 		cmd "set mn_showchatbuttons 0;"

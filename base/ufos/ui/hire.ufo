@@ -55,8 +55,8 @@ window employees
 	 */
 	confunc employeedel
 	{
-		*bt_employee<1>@current = 0
-		*bt_employee<1>@invis = false
+		*node:root.bt_employee<1>@current = 0
+		*node:root.bt_employee<1>@invis = false
 	}
 
 	/**
@@ -64,8 +64,8 @@ window employees
 	 */
 	confunc employeeadd
 	{
-		*bt_employee<1>@current = 1
-		*bt_employee<1>@invis = false
+		*node:root.bt_employee<1>@current = 1
+		*node:root.bt_employee<1>@invis = false
 	}
 
 	/**
@@ -73,7 +73,7 @@ window employees
 	 */
 	confunc employeedisable
 	{
-		*bt_employee<1>@invis = true
+		*node:root.bt_employee<1>@invis = true
 	}
 
 	cmpSelect bt_employee0
@@ -170,12 +170,12 @@ window employees
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc hire_update_number {
-		*scroll@fullsize = <1>
+		*node:root.scroll@fullsize = <1>
 	}
 
 	confunc hire_fix_scroll {
-		*scroll@current = <1>
-		*list_background@current = <1>
+		*node:root.scroll@current = <1>
+		*node:root.list_background@current = <1>
 	}
 
 	textlist employee_list
@@ -190,9 +190,9 @@ window employees
 		selectcolor	"1 1 1 1"
 		onClick			{ cmd "employee_select <lineselected>;" }
 		onViewChange	{
-			*scroll@fullsize = <fullsize>
-			*scroll@current = <viewpos>
-			*scroll@viewsize = <viewsize>
+			*node:root.scroll@fullsize = <fullsize>
+			*node:root.scroll@current = <viewpos>
+			*node:root.scroll@viewsize = <viewsize>
 			cmd "employee_scroll <viewpos>;"
 		}
 	}
@@ -206,7 +206,7 @@ window employees
 		viewsize	15
 		fullsize	50
 		onChange	{
-			*employee_list@viewpos = <current>
+			*node:root.employee_list@viewpos = <current>
 			cmd "employee_scroll <current>;"
 		}
 	}

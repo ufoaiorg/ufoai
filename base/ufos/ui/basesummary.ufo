@@ -31,7 +31,7 @@ window basesummary
 	func reset_color {
 		*cvar:i = 0
 		while ( *cvar:i < 8 ) {
-			*basenavigation.base<cvar:i>@bgcolor = "1 1 1 0.4"
+			*node:root.basenavigation.base<cvar:i>@bgcolor = "1 1 1 0.4"
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	delete *cvar:i
@@ -39,7 +39,7 @@ window basesummary
 
 	confunc basesummary_change_color {
 		call *node:root.reset_color
-		*basenavigation.base<1>@bgcolor = "1 1 1 0.7"
+		*node:root.basenavigation.base<1>@bgcolor = "1 1 1 0.7"
 	}
 
 	panel basenavigation {
@@ -130,9 +130,9 @@ window basesummary
 		rows		"38"
 		longlines	LONGLINES_PRETTYCHOP
 		onViewChange	{
-			*base_summary_scroll@fullsize = <fullsize>
-			*base_summary_scroll@current = <viewpos>
-			*base_summary_scroll@viewsize = <viewsize>
+			*node:root.base_summary_scroll@fullsize = <fullsize>
+			*node:root.base_summary_scroll@current = <viewpos>
+			*node:root.base_summary_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -144,7 +144,7 @@ window basesummary
 		viewsize	38
 		fullsize	38
 		hidewhenunused true
-		onChange	{ *txt_base_summary@viewpos = <current> }
+		onChange	{ *node:root.txt_base_summary@viewpos = <current> }
 	}
 
 	// ==================
@@ -167,9 +167,9 @@ window basesummary
 		rows		"23"
 		dataid			TEXT_STANDARD
 		onViewChange	{
-			*info_scroll@fullsize = <fullsize>
-			*info_scroll@current = <viewpos>
-			*info_scroll@viewsize = <viewsize>
+			*node:root.info_scroll@fullsize = <fullsize>
+			*node:root.info_scroll@current = <viewpos>
+			*node:root.info_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -181,7 +181,7 @@ window basesummary
 		viewsize	38
 		fullsize	38
 		hidewhenunused true
-		onChange	{ *txt_info@viewpos = <current> }
+		onChange	{ *node:root.txt_info@viewpos = <current> }
 	}
 
 	// ==================

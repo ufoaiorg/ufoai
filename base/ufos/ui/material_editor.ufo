@@ -20,9 +20,9 @@ window material_editor {
 		selectcolor "1 1 1 1"
 
 		onViewChange {
-			*editor_scroll@current = <viewpos>
-			*editor_scroll@viewsize = <viewsize>
-			*editor_scroll@fullsize = <fullsize>
+			*node:root.editor_scroll@current = <viewpos>
+			*node:root.editor_scroll@viewsize = <viewsize>
+			*node:root.editor_scroll@fullsize = <fullsize>
 		}
 		onChange {
 			*cvar:me_image_id = <num>
@@ -35,7 +35,7 @@ window material_editor {
 		height		210
 		hidewhenunused true
 		onChange	{
-			*editor@viewpos = <current>
+			*node:root.editor@viewpos = <current>
 		}
 	}
 
@@ -54,7 +54,7 @@ window material_editor {
 	 * @param<5> value for specular
 	 */
 	confunc hideshaders {
-		*shader_attributes@invis = <1>
+		*node:root.shader_attributes@invis = <1>
 		*cvar:me_bump = <2>
 		*cvar:me_hardness = <3>
 		*cvar:me_parallax = <4>
@@ -160,11 +160,11 @@ window material_editor {
 	}
 
 	func hidestageattributestabs {
-		*stage_attributes.stage_attributes_scale@invis = true
-		*stage_attributes.stage_attributes_scroll@invis = true
-		*stage_attributes.stage_attributes_pulse@invis = true
-		*stage_attributes.stage_attributes_stretch@invis = true
-		*stage_attributes.stage_attributes_rotate@invis = true
+		*node:root.stage_attributes.stage_attributes_scale@invis = true
+		*node:root.stage_attributes.stage_attributes_scroll@invis = true
+		*node:root.stage_attributes.stage_attributes_pulse@invis = true
+		*node:root.stage_attributes.stage_attributes_stretch@invis = true
+		*node:root.stage_attributes.stage_attributes_rotate@invis = true
 	}
 
 	/**
@@ -173,11 +173,11 @@ window material_editor {
 	 */
 	confunc hidestages {
 		*cvar:me_tmp = <1>
-		*stage_attributes@invis = <1>
+		*node:root.stage_attributes@invis = <1>
 		call *node:root.hidestageattributestabs
 		if ( *cvar:me_tmp == false ) {
 			*cvar:me_stagetype = <2>
-			*stage_attributes.stage_attributes_<cvar:me_stagetype>@invis = false
+			*node:root.stage_attributes.stage_attributes_<cvar:me_stagetype>@invis = false
 		}
 
 		cmd "del me_tmp;"
@@ -220,10 +220,10 @@ window material_editor {
 				cmd "mn_materialeditor_selectstage <cvar:me_image_id> <lineselected>;"
 			}
 			onViewChange {
-				*stages.stage_scroll@current = <viewpos>
-				*stages.stage_scroll@viewsize = <viewsize>
-				*stages.stage_scroll@fullsize = <fullsize>
-				*stages.stage_scroll@height = <height>
+				*node:root.stages.stage_scroll@current = <viewpos>
+				*node:root.stages.stage_scroll@viewsize = <viewsize>
+				*node:root.stages.stage_scroll@fullsize = <fullsize>
+				*node:root.stages.stage_scroll@height = <height>
 			}
 		}
 
@@ -233,7 +233,7 @@ window material_editor {
 			height		90
 			hidewhenunused true
 			onChange	{
-				*stages.stages@viewpos = <current>
+				*node:root.stages.stages@viewpos = <current>
 			}
 		}
 
@@ -647,7 +647,7 @@ window material_editor {
 
 				onChange {
 					call *node:root.hidestageattributestabs
-					*stage_attributes.stage_attributes_<cvar:me_stagetype>@invis = false
+					*node:root.stage_attributes.stage_attributes_<cvar:me_stagetype>@invis = false
 				}
 			}
 

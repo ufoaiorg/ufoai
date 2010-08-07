@@ -29,16 +29,16 @@ window aircraft_equip extends iaircraft
 	 */
 	confunc airequip_select {
 		if ( <1> eq "zone1" ) {
-			*airequip_zone_select1@image  = "ui/airequip_selected_element"
-			*airequip_zone_select2@image  = ""
+			*node:root.airequip_zone_select1@image  = "ui/airequip_selected_element"
+			*node:root.airequip_zone_select2@image  = ""
 			*cvar:mn_aircraft_item_selected = -1
-			*itemlist@image = "ui/panel_grey_green"
+			*node:root.itemlist@image = "ui/panel_grey_green"
 			cmd "airequip_zone_select 1;"
 		} elif ( <1> eq "zone2" ) {
-			*airequip_zone_select1@image  = ""
-			*airequip_zone_select2@image  = "ui/airequip_selected_element"
+			*node:root.airequip_zone_select1@image  = ""
+			*node:root.airequip_zone_select2@image  = "ui/airequip_selected_element"
 			*cvar:mn_aircraft_item_selected = -1
-			*itemlist@image = "ui/panel_grey_green"
+			*node:root.itemlist@image = "ui/panel_grey_green"
 			cmd "airequip_zone_select 2;"
 		} elif ( <1> eq "slot" ) {
 			*cvar:tmp = ""
@@ -52,9 +52,9 @@ window aircraft_equip extends iaircraft
 			cmd "airequip_slot_select <2> <cvar:tmp>;"
 			delete *cvar:tmp
 		} elif ( <1> eq "item" ) {
-			*airequip_zone_select1@image  = ""
-			*airequip_zone_select2@image  = ""
-			*itemlist@image = "ui/panel_grey_white"
+			*node:root.airequip_zone_select1@image  = ""
+			*node:root.airequip_zone_select2@image  = ""
+			*node:root.itemlist@image = "ui/panel_grey_white"
 			*cvar:mn_aircraft_item_selected = <2>
 			cmd "airequip_list_click <2>;"
 		}
@@ -515,25 +515,25 @@ window aircraft_equip extends iaircraft
 	 */
 	confunc airequip_zone2_color
 	{
-		*airequip_text_zone2@color = "<1>"
+		*node:root.airequip_text_zone2@color = "<1>"
 	}
 	
 	confunc airequip_zone2_off
 	{
-		*airequip_header2@invis = true
-		*airequip_text_zone2@invis = true
-		*airequip_zone_select2@invis = true
-		*equipment_background@texh = "432 160"
-		*equipment_background@size = "432 160"
+		*node:root.airequip_header2@invis = true
+		*node:root.airequip_text_zone2@invis = true
+		*node:root.airequip_zone_select2@invis = true
+		*node:root.equipment_background@texh = "432 160"
+		*node:root.equipment_background@size = "432 160"
 	}
 
 	confunc airequip_zone2_on
 	{
-		*airequip_header2@invis = false
-		*airequip_text_zone2@invis = false
-		*airequip_zone_select2@invis = false
-		*equipment_background@texh = "432 293"
-		*equipment_background@size = "432 293"
+		*node:root.airequip_header2@invis = false
+		*node:root.airequip_text_zone2@invis = false
+		*node:root.airequip_zone_select2@invis = false
+		*node:root.equipment_background@texh = "432 293"
+		*node:root.equipment_background@size = "432 293"
 	}
 
 	confunc airequip_installable_item
@@ -576,15 +576,15 @@ window aircraft_equip extends iaircraft
 	{
 		*cvar:status = <2>
 		if ( *cvar:status == 2 ) {
-			*airequip_slot<1>@invis = false
-			*airequip_slot<1>@texl = "64 0"
-			*airequip_slot<1>@texh = "128 64"
+			*node:root.airequip_slot<1>@invis = false
+			*node:root.airequip_slot<1>@texl = "64 0"
+			*node:root.airequip_slot<1>@texh = "128 64"
 		} elif ( *cvar:status == 1 ) {
-			*airequip_slot<1>@invis = false
-			*airequip_slot<1>@texl = "0 0"
-			*airequip_slot<1>@texh = "64 64"
+			*node:root.airequip_slot<1>@invis = false
+			*node:root.airequip_slot<1>@texl = "0 0"
+			*node:root.airequip_slot<1>@texh = "64 64"
 		} else {
-			*airequip_slot<1>@invis = true
+			*node:root.airequip_slot<1>@invis = true
 		}
 		delete *cvar:status
 	}
@@ -598,7 +598,7 @@ window aircraft_equip extends iaircraft
 	 */
 	confunc aircraft_change
 	{
-		*aircraft_list@lineselected = <1>
+		*node:root.aircraft_list@lineselected = <1>
 		cmd "airequip_updatemenu;"
 		cmd "airequip_select zone1;"
 		// absent from base, go back to the main GUI

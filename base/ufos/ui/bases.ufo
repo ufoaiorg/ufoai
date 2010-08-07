@@ -202,8 +202,8 @@ window bases
 }
 	confunc update_basebutton
 	{
-		*base_buttons.<1>@disabled = <2>
-		*base_buttons.<1>@tooltip = <3>
+		*node:root.base_buttons.<1>@disabled = <2>
+		*node:root.base_buttons.<1>@tooltip = <3>
 	}
 
 	func onInit

@@ -330,9 +330,9 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			onClick		{ cmd "servers_click <lineselected>;" }
 			onRClick	{ cmd "pingservers;" }
 			onViewChange {
-				*content.servers_scroll@fullsize = <fullsize>
-				*content.servers_scroll@current = <viewpos>
-				*content.servers_scroll@viewsize = <viewsize>
+				*node:root.content.servers_scroll@fullsize = <fullsize>
+				*node:root.content.servers_scroll@current = <viewpos>
+				*node:root.content.servers_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -487,12 +487,12 @@ window mp_bookmarks extends abstract_multiplayer_join
 		*cvar:i = 0
 		while ( *cvar:i <= 15 ) {
 			if ( *cvar:adr<cvar:i> ne "" ) {
-				*content.adr<cvar:i>.resetadr@invis = false
-				*content.adr<cvar:i>.adr@invis = false
-				*content.adr<cvar:i>.adr@string = *cvar:adr<cvar:i>
+				*node:root.content.adr<cvar:i>.resetadr@invis = false
+				*node:root.content.adr<cvar:i>.adr@invis = false
+				*node:root.content.adr<cvar:i>.adr@string = *cvar:adr<cvar:i>
 			} else {
-				*content.adr<cvar:i>.resetadr@invis = true
-				*content.adr<cvar:i>.adr@invis = true
+				*node:root.content.adr<cvar:i>.resetadr@invis = true
+				*node:root.content.adr<cvar:i>.adr@invis = true
 			}
 			*cvar:i = ( *cvar:i + 1 )
 		}
@@ -939,17 +939,17 @@ window mp_create_server extends abstract_multiplayer
 	// ===================
 
 	func mp_update_config_navigation {
-		*panel_map@invis = true
-		*panel_option@invis = true
-		*panel_security@invis = true
+		*node:root.panel_map@invis = true
+		*node:root.panel_option@invis = true
+		*node:root.panel_security@invis = true
 		if ( *cvar:mn_server_config_tab == 1 ) {
-			*panel_map@invis = false
+			*node:root.panel_map@invis = false
 		}
 		elif ( *cvar:mn_server_config_tab == 2 ) {
-			*panel_option@invis = false
+			*node:root.panel_option@invis = false
 		}
 		elif ( *cvar:mn_server_config_tab == 3 ) {
-			*panel_security@invis = false
+			*node:root.panel_security@invis = false
 		}
 	}
 
@@ -1648,8 +1648,8 @@ window multiplayer_wait extends levelbuttons
 	 * @param <2> status: 0 not available, 1 available, 2 selected
 	 */
 	confunc updateLevelStatus {
-		if ( <2> == 0 ) { *floor.bt<1>@disabled = true }
-		elif ( <2> >= 1 ) { *floor.bt<1>@disabled = false }
+		if ( <2> == 0 ) { *node:root.floor.bt<1>@disabled = true }
+		elif ( <2> >= 1 ) { *node:root.floor.bt<1>@disabled = false }
 	}
 
 	// ===================

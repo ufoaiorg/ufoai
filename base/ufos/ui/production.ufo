@@ -244,11 +244,11 @@ window production
 			cmd "prodlist_rclick <lineselected>;"
 		}
 		onViewChange	{
-			*prodlist_scroll@fullsize = <fullsize>
-			*prodlist_scroll@current = <viewpos>
-			*prodlist_scroll@viewsize = <viewsize>
-			*prodlist_amount@viewpos = <viewpos>
-			*prodlist_queued@viewpos = <viewpos>
+			*node:root.prodlist_scroll@fullsize = <fullsize>
+			*node:root.prodlist_scroll@current = <viewpos>
+			*node:root.prodlist_scroll@viewsize = <viewsize>
+			*node:root.prodlist_amount@viewpos = <viewpos>
+			*node:root.prodlist_queued@viewpos = <viewpos>
 		}
 	}
 
@@ -272,11 +272,11 @@ window production
 			cmd "prodlist_rclick <lineselected>;"
 		}
 		onViewChange	{
-			*prodlist_scroll@fullsize = <fullsize>
-			*prodlist_scroll@current = <viewpos>
-			*prodlist_scroll@viewsize = <viewsize>
-			*prodlist@viewpos = <viewpos>
-			*prodlist_queued@viewpos = <viewpos>
+			*node:root.prodlist_scroll@fullsize = <fullsize>
+			*node:root.prodlist_scroll@current = <viewpos>
+			*node:root.prodlist_scroll@viewsize = <viewsize>
+			*node:root.prodlist@viewpos = <viewpos>
+			*node:root.prodlist_queued@viewpos = <viewpos>
 		}
 	}
 
@@ -299,11 +299,11 @@ window production
 			cmd "prodlist_rclick <lineselected>;"
 		}
 		onViewChange	{
-			*prodlist_scroll@fullsize = <fullsize>
-			*prodlist_scroll@current = <viewpos>
-			*prodlist_scroll@viewsize = <viewsize>
-			*prodlist_amount@viewpos = <viewpos>
-			*prodlist@viewpos = <viewpos>
+			*node:root.prodlist_scroll@fullsize = <fullsize>
+			*node:root.prodlist_scroll@current = <viewpos>
+			*node:root.prodlist_scroll@viewsize = <viewsize>
+			*node:root.prodlist_amount@viewpos = <viewpos>
+			*node:root.prodlist@viewpos = <viewpos>
 		}
 	}
 
@@ -315,9 +315,9 @@ window production
 		viewsize	30
 		fullsize	30
 		onChange	{
-			*prodlist@viewpos = <current>
-			*prodlist_amount@viewpos = <current>
-			*prodlist_queued@viewpos = <current>
+			*node:root.prodlist@viewpos = <current>
+			*node:root.prodlist_amount@viewpos = <current>
+			*node:root.prodlist_queued@viewpos = <current>
 		}
 	}
 
@@ -452,15 +452,15 @@ window production
 	 */
 	confunc prod_nothingselected
 	{
-		*prod_stop@invis = true
-		*prod_down@invis = true
-		*prod_up@invis = true
-		*prod_change@invis = true
-		*prod_change_10@invis = true
-		*prod_new@invis = true
-		*prod_amount@invis = true
-		*label_1@invis = true
-		*label_10@invis = true
+		*node:root.prod_stop@invis = true
+		*node:root.prod_down@invis = true
+		*node:root.prod_up@invis = true
+		*node:root.prod_change@invis = true
+		*node:root.prod_change_10@invis = true
+		*node:root.prod_new@invis = true
+		*node:root.prod_amount@invis = true
+		*node:root.label_1@invis = true
+		*node:root.label_10@invis = true
 	}
 
 	/**
@@ -468,15 +468,15 @@ window production
 	 */
 	confunc prod_availableselected
 	{
-		*prod_stop@invis = true
-		*prod_down@invis = true
-		*prod_up@invis = true
-		*prod_change@invis = true
-		*prod_change_10@invis = true
-		*prod_amount@invis = true
-		*prod_new@invis = false
-		*label_1@invis = true
-		*label_10@invis = true
+		*node:root.prod_stop@invis = true
+		*node:root.prod_down@invis = true
+		*node:root.prod_up@invis = true
+		*node:root.prod_change@invis = true
+		*node:root.prod_change_10@invis = true
+		*node:root.prod_amount@invis = true
+		*node:root.prod_new@invis = false
+		*node:root.label_1@invis = true
+		*node:root.label_10@invis = true
 	}
 
 	/**
@@ -484,15 +484,15 @@ window production
 	 */
 	confunc prod_taskselected
 	{
-		*prod_stop@invis = false
-		*prod_down@invis = false
-		*prod_up@invis = false
-		*prod_change@invis = false
-		*prod_change_10@invis = false
-		*prod_amount@invis = false
-		*prod_new@invis = true
-		*label_1@invis = false
-		*label_10@invis = false
+		*node:root.prod_stop@invis = false
+		*node:root.prod_down@invis = false
+		*node:root.prod_up@invis = false
+		*node:root.prod_change@invis = false
+		*node:root.prod_change_10@invis = false
+		*node:root.prod_amount@invis = false
+		*node:root.prod_new@invis = true
+		*node:root.label_1@invis = false
+		*node:root.label_10@invis = false
 	}
 
 	// ==================
@@ -508,9 +508,9 @@ window production
 		tabwidth	260
 		rows		"10"
 		onViewChange	{
-			*description_scroll@fullsize = <fullsize>
-			*description_scroll@current = <viewpos>
-			*description_scroll@viewsize = <viewsize>
+			*node:root.description_scroll@fullsize = <fullsize>
+			*node:root.description_scroll@current = <viewpos>
+			*node:root.description_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -522,7 +522,7 @@ window production
 		viewsize	10
 		fullsize	10
 		hidewhenunused true
-		onChange	{ *description@viewpos = <current> }
+		onChange	{ *node:root.description@viewpos = <current> }
 	}
 
 	// ==================
@@ -532,11 +532,11 @@ window production
 	confunc amountsetter {
 		*cvar:tmp = "<1>"
 		if ( *cvar:tmp eq "disable" ) {
-			*prod_change@disabled = true
-			*prod_change_10@disabled = true
+			*node:root.prod_change@disabled = true
+			*node:root.prod_change_10@disabled = true
 		} else {
-			*prod_change@disabled = false
-			*prod_change_10@disabled = false
+			*node:root.prod_change@disabled = false
+			*node:root.prod_change_10@disabled = false
 		}
 		delete *cvar:tmp
 	}

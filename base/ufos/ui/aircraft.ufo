@@ -134,9 +134,9 @@ window iaircraft
 		color	"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		onViewChange {
-			*aircraft_list_scroll@fullsize = <fullsize>
-			*aircraft_list_scroll@viewsize = <viewsize>
-			*aircraft_list_scroll@current = <viewpos>
+			*node:root.aircraft_list_scroll@fullsize = <fullsize>
+			*node:root.aircraft_list_scroll@viewsize = <viewsize>
+			*node:root.aircraft_list_scroll@current = <viewpos>
 		}
 		onClick {
 			cmd "mn_select_aircraft <lineselected>"	// @note the node autocomplet the command with the selected line
@@ -152,7 +152,7 @@ window iaircraft
 		fullsize		19
 		hidewhenunused	true
 		onChange {
-			*aircraft_list@viewpos = <current>
+			*node:root.aircraft_list@viewpos = <current>
 		}
 	}
 

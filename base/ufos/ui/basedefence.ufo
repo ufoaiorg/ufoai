@@ -17,11 +17,11 @@ window basedefence extends objectinfo
 			cvar	*cvar:mn_bdef_type
 			onChange {
 				if ( *cvar:mn_bdef_type ne "info" ) {
-					*infopanel@invis = true
-					*equippanel@invis = false
+					*node:root.infopanel@invis = true
+					*node:root.equippanel@invis = false
 				} else {
-					*infopanel@invis = false
-					*equippanel@invis = true
+					*node:root.infopanel@invis = false
+					*node:root.equippanel@invis = true
 				}
 				cmd "basedef_updatemenu <cvar:mn_bdef_type>;"
 			}

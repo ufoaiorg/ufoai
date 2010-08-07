@@ -321,7 +321,7 @@ window ufopedia extends objectinfo
 		if ( *cvar:mn_uprequirement ne "" ) { *cvar:mn_rightpanel = 1 }
 
 		// invalidate techtree selection
-		*content.requirement.techtree@lineselected = -1
+		*node:root.content.requirement.techtree@lineselected = -1
 
 		// update tab
 		if ( *cvar:mn_uppreavailable == 1 ) {
@@ -344,43 +344,43 @@ window ufopedia extends objectinfo
 		}
 
 		if ( *cvar:ufopedia_content eq "description" ) {
-			*content.ufopedia@invis = false
-			*content.ufopedia_scroll@invis = false
-			*content.description@invis = true
-			*content.description_scroll@invis = true
-			*content.requirement@invis = false
-			*itemdescription@invis = true
+			*node:root.content.ufopedia@invis = false
+			*node:root.content.ufopedia_scroll@invis = false
+			*node:root.content.description@invis = true
+			*node:root.content.description_scroll@invis = true
+			*node:root.content.requirement@invis = false
+			*node:root.itemdescription@invis = true
 			if ( *cvar:mn_rightpanel == 1 ) {
-				*content.ufopedia@width = 406
+				*node:root.content.ufopedia@width = 406
 			} else {
-				*content.ufopedia@width = 583
+				*node:root.content.ufopedia@width = 583
 			}
 			cmd "set mn_uppretext 0; mn_upupdate;"
 		} elif ( *cvar:ufopedia_content eq "preresearch" ) {
-			*content.ufopedia@invis = false
-			*content.ufopedia_scroll@invis = false
-			*content.description@invis = true
-			*content.description_scroll@invis = true
-			*content.requirement@invis = false
-			*itemdescription@invis = true
+			*node:root.content.ufopedia@invis = false
+			*node:root.content.ufopedia_scroll@invis = false
+			*node:root.content.description@invis = true
+			*node:root.content.description_scroll@invis = true
+			*node:root.content.requirement@invis = false
+			*node:root.itemdescription@invis = true
 			if ( *cvar:mn_rightpanel == 1 ) {
-				*content.ufopedia@width = 406
+				*node:root.content.ufopedia@width = 406
 			} else {
-				*content.ufopedia@width = 583
+				*node:root.content.ufopedia@width = 583
 			}
 			cmd "set mn_uppretext 1; mn_upupdate;"
 		} elif ( *cvar:ufopedia_content eq "stats" ) {
-			*content.ufopedia@invis = true
-			*content.ufopedia_scroll@invis = true
-			*content.description@invis = false
-			*content.description_scroll@invis = false
-			*content.requirement@invis = true
-			*itemdescription@invis = false
+			*node:root.content.ufopedia@invis = true
+			*node:root.content.ufopedia_scroll@invis = true
+			*node:root.content.description@invis = false
+			*node:root.content.description_scroll@invis = false
+			*node:root.content.requirement@invis = true
+			*node:root.itemdescription@invis = false
 		}
 
 		// we only show requirements if they are needed
 		if ( *cvar:mn_uprequirement eq "" ) {
-			*content.requirement@invis = true
+			*node:root.content.requirement@invis = true
 		}
 
 		cmd "del mn_rightpanel;"

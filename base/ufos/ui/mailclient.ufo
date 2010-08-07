@@ -29,9 +29,9 @@ window mail
 		lineheight	24
 		tabwidth	100
 		onViewChange	{
-			*mail_scroll@fullsize = <fullsize>
-			*mail_scroll@current = <viewpos>
-			*mail_scroll@viewsize = <viewsize>
+			*node:root.mail_scroll@fullsize = <fullsize>
+			*node:root.mail_scroll@current = <viewpos>
+			*node:root.mail_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -40,7 +40,7 @@ window mail
 		pos			"960 208"
 		height		"470"
 		hidewhenunused true
-		onChange	{ *mail@viewpos = <current> }
+		onChange	{ *node:root.mail@viewpos = <current> }
 	}
 
 
@@ -537,9 +537,9 @@ window mailclient
 		mousefx		true
 		onClick		{ cmd "mailclient_click <lineselected>;" }
 		onViewChange	{
-			*mailclient_scroll@fullsize = <fullsize>
-			*mailclient_scroll@current = <viewpos>
-			*mailclient_scroll@viewsize = <viewsize>
+			*node:root.mailclient_scroll@fullsize = <fullsize>
+			*node:root.mailclient_scroll@current = <viewpos>
+			*node:root.mailclient_scroll@viewsize = <viewsize>
 			cmd "ufopedia_scrollmail <viewpos>;"
 		}
 	}
@@ -553,7 +553,7 @@ window mailclient
 		fullsize	50
 		hidewhenunused true
 		onChange		{
-			*mailclient@viewpos = <current>
+			*node:root.mailclient@viewpos = <current>
 			cmd "ufopedia_scrollmail <current>;"
 		}
 	}

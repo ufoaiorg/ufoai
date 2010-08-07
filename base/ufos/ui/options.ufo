@@ -18,12 +18,12 @@ window options
 	// ============
 	func hidepanels
 	{
-		*options_overall@invis = true
-		*options_video@invis = true
-		*options_advanced_video@invis = true	
-		*options_gameplay@invis = true
-		*options_keys@invis = true
-		*options_sound@invis = true
+		*node:root.options_overall@invis = true
+		*node:root.options_video@invis = true
+		*node:root.options_advanced_video@invis = true	
+		*node:root.options_gameplay@invis = true
+		*node:root.options_keys@invis = true
+		*node:root.options_sound@invis = true
 	}
 	// =================================================
 	// MAIN OPTIONS MENU (OVERALL/VIDEO/SOUND/GAMEPLAY)
@@ -36,7 +36,7 @@ window options
 		onClick
 		{
 			call *node:root.hidepanels
-			*options_overall@invis = false
+			*node:root.options_overall@invis = false
 		}
 	}
 	cmpMenuButton button_video
@@ -47,7 +47,7 @@ window options
 		onClick
 		{
 			call *node:root.hidepanels
-			*options_video@invis = false
+			*node:root.options_video@invis = false
 			cmd "copy mn_vidmode vid_mode;"
 		}
 	}
@@ -59,7 +59,7 @@ window options
 		onClick
 		{
 			call *node:root.hidepanels
-			*options_sound@invis = false
+			*node:root.options_sound@invis = false
 		}
 	}
 	cmpMenuButton button_gameplay
@@ -70,7 +70,7 @@ window options
 		onClick
 		{
 			call *node:root.hidepanels
-			*options_gameplay@invis = false
+			*node:root.options_gameplay@invis = false
 		}
 	}
 	cmpMenuButton button_back
@@ -150,9 +150,9 @@ window options
 			padding		6
 			textalign	ALIGN_CC
 			onViewchange	{
-				*options_overall.select_language_scroll@current = <viewpos>
-				*options_overall.select_language_scroll@fullsize = <fullsize>
-				*options_overall.select_language_scroll@viewsize = <viewsize>
+				*node:root.options_overall.select_language_scroll@current = <viewpos>
+				*node:root.options_overall.select_language_scroll@fullsize = <fullsize>
+				*node:root.options_overall.select_language_scroll@viewsize = <viewsize>
 			}
 		}
 		vscrollbar select_language_scroll {
@@ -163,7 +163,7 @@ window options
 			viewsize	8
 			fullsize	22
 			onChange		{
-				*options_overall.select_language@viewpos = <current>
+				*node:root.options_overall.select_language@viewpos = <current>
 			}
 		}
 		// =========================
@@ -756,8 +756,8 @@ window options
 			color		"0 0.93 0 1"
 			onClick
 			{
-				*options_video@invis = true
-				*options_advanced_video@invis = false
+				*node:root.options_video@invis = true
+				*node:root.options_advanced_video@invis = false
 			}
 		}
 	}
@@ -1594,8 +1594,8 @@ window options
 			color		"0 0.79 0 1"
 			onClick
 			{
-				*options_gameplay@invis = true
-				*options_keys@invis = false
+				*node:root.options_gameplay@invis = true
+				*node:root.options_keys@invis = false
 			}
 		}
 	}
@@ -2153,12 +2153,12 @@ window options
 			lineheight	"20"
 			onViewChange
 			{
-				*options_keys.keyscroll@fullsize = <fullsize>
-				*options_keys.keyscroll@current = <viewpos>
+				*node:root.options_keys.keyscroll@fullsize = <fullsize>
+				*node:root.options_keys.keyscroll@current = <viewpos>
 			}
 			onWheel
 			{
-				*options_keys.keyscroll@current = <viewpos>
+				*node:root.options_keys.keyscroll@current = <viewpos>
 			}
 		}
 		vscrollbar keyscroll
@@ -2169,7 +2169,7 @@ window options
 			current		0
 			viewsize	28
 			fullsize	50
-			onChange	{ *options_keys.keylist@viewpos = <current> }
+			onChange	{ *node:root.options_keys.keylist@viewpos = <current> }
 		}
 	}
 	func onInit
@@ -2178,7 +2178,7 @@ window options
 		cmd "cl_setratiofilter <cvar:mn_vidratio>"
 		call *node:root.hidepanels
 		cmd "mn_init_keylist;"
-		*options_overall@invis = false
+		*node:root.options_overall@invis = false
 	}
 }
 // ====================

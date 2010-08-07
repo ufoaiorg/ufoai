@@ -108,32 +108,32 @@ window hospital
 	{
 		*cvar:i = 0
 		while ( *cvar:i < 20 ) {
-			*hos<cvar:i>.button@src = "ui/hosp_button_green"
-			*hos<cvar:i>.click_button@tooltip = "_Unused"
+			*node:root.hos<cvar:i>.button@src = "ui/hosp_button_green"
+			*node:root.hos<cvar:i>.click_button@tooltip = "_Unused"
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	delete *cvar:i
 	}
 
 	confunc hospitalserious	{
-		*hos<1>.icon@src				= "icons/health_critical"
-		*hos<1>.button@src			= "ui/hosp_button_light"
-		*hos<1>.click_button@tooltip	= "_Heavily wounded"
+		*node:root.hos<1>.icon@src				= "icons/health_critical"
+		*node:root.hos<1>.button@src			= "ui/hosp_button_light"
+		*node:root.hos<1>.click_button@tooltip	= "_Heavily wounded"
 	}
 	confunc hospitalmedium	{
-		*hos<1>.icon@src				= "icons/health_medium"
-		*hos<1>.button@src			= "ui/hosp_button_light"
-		*hos<1>.click_button@tooltip	= "_Medium wounds"
+		*node:root.hos<1>.icon@src				= "icons/health_medium"
+		*node:root.hos<1>.button@src			= "ui/hosp_button_light"
+		*node:root.hos<1>.click_button@tooltip	= "_Medium wounds"
 	}
 	confunc hospitallight	{
-		*hos<1>.icon@src				= "icons/health_normal"
-		*hos<1>.button@src			= "ui/hosp_button_light"
-		*hos<1>.click_button@tooltip	= "_Slightly wounded"
+		*node:root.hos<1>.icon@src				= "icons/health_normal"
+		*node:root.hos<1>.button@src			= "ui/hosp_button_light"
+		*node:root.hos<1>.click_button@tooltip	= "_Slightly wounded"
 	}
 	confunc hospitalunused	{
-		*hos<1>.icon@src				= "icons/health_unused"
-		*hos<1>.button@src			= "ui/hosp_button_green"
-		*hos<1>.click_button@tooltip	= "_Unused"
+		*node:root.hos<1>.icon@src				= "icons/health_unused"
+		*node:root.hos<1>.button@src			= "ui/hosp_button_green"
+		*node:root.hos<1>.click_button@tooltip	= "_Unused"
 	}
 
 	zone hos_scroll_zone
@@ -383,11 +383,11 @@ window hospital
 		cmd "hosp_init;"
 		*cvar:i = 0
 		while ( *cvar:i < 20 ) {
-			*hos<cvar:i>@num = <cvar:i>
-			*hos<cvar:i>.item@string = *cvar:mn_hos_item<cvar:i>
-			*hos<cvar:i>.rank@string = *cvar:mn_hos_rank<cvar:i>
-//			*hos<cvar:i>.health@current = *cvar:mn_hos_hp<cvar:i>
-//			*hos<cvar:i>.health@max = *cvar:mn_hos_hpmax<cvar:i>
+			*node:root.hos<cvar:i>@num = <cvar:i>
+			*node:root.hos<cvar:i>.item@string = *cvar:mn_hos_item<cvar:i>
+			*node:root.hos<cvar:i>.rank@string = *cvar:mn_hos_rank<cvar:i>
+//			*node:root.hos<cvar:i>.health@current = *cvar:mn_hos_hp<cvar:i>
+//			*node:root.hos<cvar:i>.health@max = *cvar:mn_hos_hpmax<cvar:i>
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	delete *cvar:i

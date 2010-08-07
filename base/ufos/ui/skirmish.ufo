@@ -363,15 +363,15 @@ window skirmish
 	}
 	func sk_update_config_navigation 
 	{
-		*panel_map@invis = true
-		*panel_options@invis = true
+		*node:root.panel_map@invis = true
+		*node:root.panel_options@invis = true
 		if ( *cvar:mn_skirmish_config_tab == 1 ) 
 		{
-			*panel_map@invis = false
+			*node:root.panel_map@invis = false
 		}
 		elif ( *cvar:mn_skirmish_config_tab == 2 ) 
 		{
-			*panel_options@invis = false
+			*node:root.panel_options@invis = false
 		}
 	}
 	// =====

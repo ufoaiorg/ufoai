@@ -138,29 +138,29 @@ window aircraft_pilots extends iaircraft
 	 */
 	confunc aircraft_pilot_usedelsewhere
 	{
-		*actor_select<1>.txt_actor@color = ".50 .50 .50 1"
-		*actor_select<1>.check_actor@current = 0
-		*actor_select<1>.check_actor@tooltip = "_Pilot is assigned to another craft"
-		*actor_select<1>.check_actor@disabled = true
-		*actor_select<1>.check_actor@invis = false
-		*actor_select<1>.txt_actor@invis = false
+		*node:root.actor_select<1>.txt_actor@color = ".50 .50 .50 1"
+		*node:root.actor_select<1>.check_actor@current = 0
+		*node:root.actor_select<1>.check_actor@tooltip = "_Pilot is assigned to another craft"
+		*node:root.actor_select<1>.check_actor@disabled = true
+		*node:root.actor_select<1>.check_actor@invis = false
+		*node:root.actor_select<1>.txt_actor@invis = false
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_pilot_unassigned {
-		*actor_select<1>.txt_actor@color = "0 .78 0 1"
-		*actor_select<1>.check_actor@disabled = false
-		*actor_select<1>.check_actor@current = 0
+		*node:root.actor_select<1>.txt_actor@color = "0 .78 0 1"
+		*node:root.actor_select<1>.check_actor@disabled = false
+		*node:root.actor_select<1>.check_actor@current = 0
 
-		*actor_select<1>.check_actor@invis = false
-		*actor_select<1>.txt_actor@invis = false
+		*node:root.actor_select<1>.check_actor@invis = false
+		*node:root.actor_select<1>.txt_actor@invis = false
 		if ( *cvar:mn_pilotassigned == 1 ) {
-			*actor_select<1>.check_actor@disabled = true
-			*actor_select<1>.check_actor@tooltip = "_A pilot is already assigned to this craft"
+			*node:root.actor_select<1>.check_actor@disabled = true
+			*node:root.actor_select<1>.check_actor@tooltip = "_A pilot is already assigned to this craft"
 		} else {
-			*actor_select<1>.check_actor@tooltip = "_Assign pilot to this craft"
+			*node:root.actor_select<1>.check_actor@tooltip = "_Assign pilot to this craft"
 		}
 	}
 
@@ -168,12 +168,12 @@ window aircraft_pilots extends iaircraft
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_pilot_assigned {
-		*actor_select<1>.txt_actor@color = "0 .78 0 1"
-		*actor_select<1>.check_actor@disabled = false
-		*actor_select<1>.check_actor@current = 1
-		*actor_select<1>.check_actor@tooltip = "_Remove pilot from this craft"
-		*actor_select<1>.check_actor@invis = false
-		*actor_select<1>.txt_actor@invis = false
+		*node:root.actor_select<1>.txt_actor@color = "0 .78 0 1"
+		*node:root.actor_select<1>.check_actor@disabled = false
+		*node:root.actor_select<1>.check_actor@current = 1
+		*node:root.actor_select<1>.check_actor@tooltip = "_Remove pilot from this craft"
+		*node:root.actor_select<1>.check_actor@invis = false
+		*node:root.actor_select<1>.txt_actor@invis = false
 	}
 
 	/**
@@ -192,22 +192,22 @@ window aircraft_pilots extends iaircraft
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_pilot_unusedslot {
-		*actor_select<1>.check_actor@invis = true
-		*actor_select<1>.txt_actor@invis = true
+		*node:root.actor_select<1>.check_actor@invis = true
+		*node:root.actor_select<1>.txt_actor@invis = true
 	}
 
 	/**
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc aircraft_pilot_list_size {
-		*scroll_employees@fullsize = <1>
+		*node:root.scroll_employees@fullsize = <1>
 	}
 
 	/**
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc aircraft_pilot_selected {
-		*actor_select<1>.txt_actor@color = "1 1 1 1"
+		*node:root.actor_select<1>.txt_actor@color = "1 1 1 1"
 	}
 
 	cmpPilotSelect actor_select0 {
@@ -271,7 +271,7 @@ window aircraft_pilots extends iaircraft
 	confunc aircraft_change
 	{
 		cmd "update_pilot_list 8 0;pilot_select 0;set mn_show_employee 1;"
-		*aircraft_list@lineselected = <1>
+		*node:root.aircraft_list@lineselected = <1>
 		// absent from base, go back to the main GUI
 		if ( *cvar:mn_equipsoldierstate == 1 ) {
 			cmd "mn_pop;mn_push aircraft;"
@@ -282,8 +282,8 @@ window aircraft_pilots extends iaircraft
 	{
 		*cvar:i = 0
 		while ( *cvar:i < 8 ) {
-			*actor_select<cvar:i>@num = <cvar:i>
-			*actor_select<cvar:i>.txt_actor@string = *cvar:mn_ename<cvar:i>
+			*node:root.actor_select<cvar:i>@num = <cvar:i>
+			*node:root.actor_select<cvar:i>.txt_actor@string = *cvar:mn_ename<cvar:i>
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i

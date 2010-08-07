@@ -123,9 +123,9 @@ window messageoptions
 		pos			"30 90"
 		size		"325 325"
 		onViewChange {
-			*messagetypes_scroll@fullsize = <fullsize>
-			*messagetypes_scroll@current = <viewpos>
-			*messagetypes_scroll@viewsize = <viewsize>
+			*node:root.messagetypes_scroll@fullsize = <fullsize>
+			*node:root.messagetypes_scroll@current = <viewpos>
+			*node:root.messagetypes_scroll@viewsize = <viewsize>
 			cmd "msgoptions_scroll <viewpos>;"
 		}
 	}
@@ -138,7 +138,7 @@ window messageoptions
 		viewsize	13
 		fullsize	13
 		onChange	{
-			*messagetypes@viewpos = <current>
+			*node:root.messagetypes@viewpos = <current>
 			cmd "msgoptions_scroll <current>;"
 		}
 	}
@@ -250,14 +250,14 @@ window messageoptions
 	 * @param[in] <1> row into the current view
 	 */
 	confunc ms_enable {
-		*option<1>@invis = false
+		*node:root.option<1>@invis = false
 	}
 
 	/**
 	 * @param[in] <1> row into the current view
 	 */
 	confunc ms_disable {
-		*option<1>@invis = true
+		*node:root.option<1>@invis = true
 	}
 
 	func onInit

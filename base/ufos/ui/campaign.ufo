@@ -74,9 +74,9 @@ window campaigns
 		selectcolor	"1 1 1 1"
 		rows	"6"
 		onViewChange	{
-			*campaignlist_scroll@fullsize = <fullsize>
-			*campaignlist_scroll@current = <viewpos>
-			*campaignlist_scroll@viewsize = <viewsize>
+			*node:root.campaignlist_scroll@fullsize = <fullsize>
+			*node:root.campaignlist_scroll@current = <viewpos>
+			*node:root.campaignlist_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -88,7 +88,7 @@ window campaigns
 		viewsize	6
 		fullsize	6
 		hidewhenunused true
-		onChange	{ *campaignlist@viewpos = <current> }
+		onChange	{ *node:root.campaignlist@viewpos = <current> }
 	}
 
 	text campaign_desc
@@ -99,9 +99,9 @@ window campaigns
 		lineheight	20
 		rows		18
 		onViewChange {
-			*campaign_desc_scroll@fullsize = <fullsize>
-			*campaign_desc_scroll@current = <viewpos>
-			*campaign_desc_scroll@viewsize = <viewsize>
+			*node:root.campaign_desc_scroll@fullsize = <fullsize>
+			*node:root.campaign_desc_scroll@current = <viewpos>
+			*node:root.campaign_desc_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -114,7 +114,7 @@ window campaigns
 		fullsize	19
 		hidewhenunused true
 		onChange	{
-			*campaign_desc@viewpos = <current>
+			*node:root.campaign_desc@viewpos = <current>
 		}
 	}
 
@@ -631,9 +631,9 @@ window lostgame
 		font		"f_normal"
 		onClick		{ call *node:parent.leave@click }
 		onViewChange	{
-			*reason_scroll@fullsize = <fullsize>
-			*reason_scroll@current = <viewpos>
-			*reason_scroll@viewsize = <viewsize>
+			*node:root.reason_scroll@fullsize = <fullsize>
+			*node:root.reason_scroll@current = <viewpos>
+			*node:root.reason_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -646,7 +646,7 @@ window lostgame
 		fullsize	12
 		hidewhenunused true
 		onClick		{ call *node:parent.leave@click }
-		onChange	{ *reason@viewpos = <current> }
+		onChange	{ *node:root.reason@viewpos = <current> }
 	}
 }
 
@@ -709,9 +709,9 @@ window endgame
 		font		"f_normal"
 		onClick		{ call *node:parent.leave@click }
 		onViewChange	{
-			*reason_scroll@fullsize = <fullsize>
-			*reason_scroll@current = <viewpos>
-			*reason_scroll@viewsize = <viewsize>
+			*node:root.reason_scroll@fullsize = <fullsize>
+			*node:root.reason_scroll@current = <viewpos>
+			*node:root.reason_scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -724,7 +724,7 @@ window endgame
 		fullsize	12
 		hidewhenunused true
 		onClick		{ call *node:parent.leave@click }
-		onChange	{ *reason@viewpos = <current> }
+		onChange	{ *node:root.reason@viewpos = <current> }
 	}
 
 	func onInit {
