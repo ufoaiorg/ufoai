@@ -799,8 +799,8 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 	/* iterate the surfaces again, populating the allocated arrays based
 	 * on primary render type */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
-		mBspTexInfo_t *texinfo = surf->texinfo;
-		material_t *material = &texinfo->image->material;
+		const mBspTexInfo_t *texinfo = surf->texinfo;
+		const material_t *material = &texinfo->image->material;
 		if (texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
 			if (texinfo->flags & SURF_WARP)
 				R_SurfaceToSurfaces(mod->bsp.blend_warp_surfaces, surf);
