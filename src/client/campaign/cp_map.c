@@ -2134,14 +2134,9 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
  */
 void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft, qboolean destroyed)
 {
-	if (!ccs.selectedAircraft)
-		return;
-
 	/* Unselect the current selected ufo if its the same */
 	if (ccs.selectedAircraft == aircraft || ccs.interceptAircraft == aircraft)
 		MAP_ResetAction();
-	else if (destroyed && (ccs.selectedAircraft->homebase == aircraft->homebase) && ccs.selectedAircraft > aircraft)
-		ccs.selectedAircraft--;
 }
 
 /**
