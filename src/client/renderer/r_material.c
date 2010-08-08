@@ -476,6 +476,28 @@ static GLenum R_ConstByName (const char *c)
 	return GL_ZERO;
 }
 
+static void R_CreateMaterialData_ (model_t *mod)
+{
+	int i;
+
+	for (i = 0; i < mod->bsp.numsurfaces; i++) {
+		mBspSurface_t *surf = &mod->bsp.surfaces[i];
+		/* create flare */
+		R_CreateSurfaceFlare(surf);
+	}
+}
+
+static void R_CreateMaterialData (void)
+{
+	int i;
+
+	for (i = 0; i < r_numMapTiles; i++)
+		R_CreateMaterialData_(r_mapTiles[i]);
+
+	for (i = 0; i < r_numModelsInline; i++)
+		R_CreateMaterialData_(&r_modelsInline[i]);
+}
+
 static int R_LoadAnimImages (materialStage_t *s)
 {
 	char name[MAX_QPATH];
@@ -1033,4 +1055,6 @@ void R_LoadMaterials (const char *map)
 	}
 
 	FS_FreeFile(fileBuffer);
+
+	R_CreateMaterialData();
 }

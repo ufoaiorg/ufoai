@@ -346,9 +346,6 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 		/* create lightmaps */
 		R_CreateSurfaceLightmap(out);
 
-		/* and flare */
-		R_CreateSurfaceFlare(out);
-
 		out->tile = r_numMapTiles - 1;
 	}
 }
@@ -767,58 +764,61 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 	/* determine the maximum counts for each rendered type in order to
 	 * allocate only what is necessary for the specified model */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
-		if (surf->texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
-			if (surf->texinfo->flags & SURF_WARP)
+		const mBspTexInfo_t *texinfo = surf->texinfo;
+		const material_t *material = &texinfo->image->material;
+		if (texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
+			if (texinfo->flags & SURF_WARP)
 				mod->bsp.blend_warp_surfaces->count++;
 			else
 				mod->bsp.blend_surfaces->count++;
 		} else {
-			if (surf->texinfo->flags & SURF_WARP)
+			if (texinfo->flags & SURF_WARP)
 				mod->bsp.opaque_warp_surfaces->count++;
-			else if (surf->texinfo->flags & SURF_ALPHATEST)
+			else if (texinfo->flags & SURF_ALPHATEST)
 				mod->bsp.alpha_test_surfaces->count++;
 			else
 				mod->bsp.opaque_surfaces->count++;
 		}
 
-		if (surf->texinfo->image->material.flags & STAGE_RENDER)
+		if (material->flags & STAGE_RENDER)
 			mod->bsp.material_surfaces->count++;
 
-		if (surf->texinfo->image->material.flags & STAGE_FLARE)
+		if (material->flags & STAGE_FLARE)
 			mod->bsp.flare_surfaces->count++;
 	}
 
 	/* allocate the surfaces pointers based on the counts */
 	for (i = 0; i < NUM_SURFACES_ARRAYS; i++) {
-		if (mod->bsp.sorted_surfaces[i]->count) {
-			mod->bsp.sorted_surfaces[i]->surfaces = (mBspSurface_t **)Mem_PoolAlloc(
-					sizeof(mBspSurface_t *) * mod->bsp.sorted_surfaces[i]->count, vid_modelPool, 0);
-
-			mod->bsp.sorted_surfaces[i]->count = 0;
+		mBspSurfaces_t *surfaces = mod->bsp.sorted_surfaces[i];
+		if (surfaces->count) {
+			surfaces->surfaces = (mBspSurface_t **)Mem_PoolAlloc(sizeof(*surfaces) * surfaces->count, vid_modelPool, 0);
+			surfaces->count = 0;
 		}
 	}
 
 	/* iterate the surfaces again, populating the allocated arrays based
 	 * on primary render type */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
-		if (surf->texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
-			if (surf->texinfo->flags & SURF_WARP)
+		mBspTexInfo_t *texinfo = surf->texinfo;
+		material_t *material = &texinfo->image->material;
+		if (texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
+			if (texinfo->flags & SURF_WARP)
 				R_SurfaceToSurfaces(mod->bsp.blend_warp_surfaces, surf);
 			else
 				R_SurfaceToSurfaces(mod->bsp.blend_surfaces, surf);
 		} else {
-			if (surf->texinfo->flags & SURF_WARP)
+			if (texinfo->flags & SURF_WARP)
 				R_SurfaceToSurfaces(mod->bsp.opaque_warp_surfaces, surf);
-			else if (surf->texinfo->flags & SURF_ALPHATEST)
+			else if (texinfo->flags & SURF_ALPHATEST)
 				R_SurfaceToSurfaces(mod->bsp.alpha_test_surfaces, surf);
 			else
 				R_SurfaceToSurfaces(mod->bsp.opaque_surfaces, surf);
 		}
 
-		if (surf->texinfo->image->material.flags & STAGE_RENDER)
+		if (material->flags & STAGE_RENDER)
 			R_SurfaceToSurfaces(mod->bsp.material_surfaces, surf);
 
-		if (surf->texinfo->image->material.flags & STAGE_FLARE)
+		if (material->flags & STAGE_FLARE)
 			R_SurfaceToSurfaces(mod->bsp.flare_surfaces, surf);
 	}
 
@@ -836,7 +836,6 @@ static void R_LoadSurfacesArrays (void)
 	for (i = 0; i < r_numModelsInline; i++)
 		R_LoadSurfacesArrays_(&r_modelsInline[i]);
 }
-
 
 /**
  * @sa R_SetParent
@@ -989,6 +988,12 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	FS_FreeFile(buffer);
 }
 
+void R_ModEndLoading (void)
+{
+	R_EndBuildingLightmaps();
+	R_LoadSurfacesArrays();
+}
+
 /**
  * @brief Specifies the model that will be used as the world
  * @param[in] tiles The tiles string can be only one map or a list of space
@@ -1033,9 +1038,8 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 		const char *token = Com_Parse(&tiles);
 		if (!tiles) {
 			/* finish */
-			R_EndBuildingLightmaps();
 			R_LoadMaterials(mapName);
-			R_LoadSurfacesArrays();
+			R_ModEndLoading();
 			return;
 		}
 
@@ -1069,9 +1073,8 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 		} else {
 			/* load only a single tile, if no positions are specified */
 			R_ModAddMapTile(name, day, 0, 0, 0);
-			R_EndBuildingLightmaps();
 			R_LoadMaterials(mapName);
-			R_LoadSurfacesArrays();
+			R_ModEndLoading();
 			return;
 		}
 	}

@@ -249,6 +249,7 @@ const image_t *R_RegisterImage(const char *name);
 void R_Color(const vec4_t rgba);
 
 void R_ModBeginLoading(const char *tiles, qboolean day, const char *pos, const char *mapName);
+void R_ModEndLoading(void);
 void R_SwitchModelMemPoolTag(void);
 
 void R_LoadImage(const char *name, byte **pic, int *width, int *height);
