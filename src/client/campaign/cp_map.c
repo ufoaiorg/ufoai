@@ -2132,7 +2132,7 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
  * @param[in] aircraft Pointer to the aircraft has been removed
  * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed)
  */
-void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft, qboolean destroyed)
+void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft)
 {
 	/* Unselect the current selected ufo if its the same */
 	if (ccs.selectedAircraft == aircraft || ccs.interceptAircraft == aircraft)

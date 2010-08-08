@@ -1042,7 +1042,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	base = aircraft->homebase;
 	assert(base);
 
-	MAP_NotifyAircraftRemoved(aircraft, qtrue);
+	MAP_NotifyAircraftRemoved(aircraft);
 	TR_NotifyAircraftRemoved(aircraft);
 
 	/* Remove pilot and all soldiers from the aircraft (the employees are still hired after this). */
