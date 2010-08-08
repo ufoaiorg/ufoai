@@ -277,12 +277,12 @@ particle pexplosionVolumetric
 {
 	init
 	{
-		image  sfx/uexp_04
+		image  sfx/greenplas_02
 		blend  blend
 		style  facing
 		thinkfade  out
 		size   "70 70"
-		color  "0 30 100 0"
+//		color  "0 30 100 0"
 
 		a      "0 0 0"
 		crand  vector "30 30 30"

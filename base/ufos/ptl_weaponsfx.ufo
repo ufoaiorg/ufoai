@@ -749,26 +749,97 @@ particle plasmaImpactCharged
 {
 	init
 	{
-		push   int 10
-		nspawn plasmaParticleCharged
-		image  sfx/plasmaball
-		blend  add
-		style  rotated
-		thinkfade  out
-		tps    2.0
+		spawn	plasmaImpactChargedAnim_1
+		spawn	plasmaImpactChargedAnim_2
+		kill
 	}
-	run
+}
+
+
+particle plasmaImpactChargedAnim_1
+{
+	init
 	{
-		push pos "10 10"
-		push *t
-		mul  float 10.0
-		sin  #
-		mul  #
-		add  pos "30 30"
-		pop  *size
+		frame			0
+		endframe		4
+		image			+sfx/plasmaimpact_
+		blend			blend
+		style			facing
+		framefade		in
+		fps				15.0
+		tps				3
+		push			*v
+		mul				float 30.0
+		add				*s
+		pop				*s
+		v				"0 0 0"
+		size				"55 55"
+		child				plasmaImpactgGlow
 	}
 	think { kill }
 }
+
+particle plasmaImpactChargedAnim_2
+{
+	init
+	{
+		frame			0
+		endframe		4
+		image			+sfx/plasmaimpact_
+		blend			blend
+		style			facing
+		framefade		out
+		fps				15.0
+		tps				3
+		push			*v
+		mul				float 30.0
+		add				*s
+		pop				*s
+		v				"0 0 0"
+		size				"55 55"
+	}
+	think { kill }
+}
+
+particle plasmaImpactgGlow
+{
+	init
+	{
+		image  sfx/corona_b
+		blend  add
+		style  facing
+		thinkfade  out
+		life   2
+		size   "25 25"
+	}
+	think { kill }
+}
+
+
+// particle plasmaImpactCharged
+// {
+// 	init
+// 	{
+// 		push   int 10
+// 		nspawn plasmaParticleCharged
+// 		image  sfx/plasmaball
+// 		blend  add
+// 		style  rotated
+// 		thinkfade  out
+// 		tps    2.0
+// 	}
+// 	run
+// 	{
+// 		push pos "10 10"
+// 		push *t
+// 		mul  float 10.0
+// 		sin  #
+// 		mul  #
+// 		add  pos "30 30"
+// 		pop  *size
+// 	}
+// 	think { kill }
+// }
 
 particle plasmaParticleCharged
 {
