@@ -988,9 +988,10 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	FS_FreeFile(buffer);
 }
 
-void R_ModEndLoading (void)
+static void R_ModEndLoading (const char *mapName)
 {
 	R_EndBuildingLightmaps();
+	R_LoadMaterials(mapName);
 	R_LoadSurfacesArrays();
 }
 
@@ -1038,8 +1039,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 		const char *token = Com_Parse(&tiles);
 		if (!tiles) {
 			/* finish */
-			R_LoadMaterials(mapName);
-			R_ModEndLoading();
+			R_ModEndLoading(mapName);
 			return;
 		}
 
@@ -1073,8 +1073,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 		} else {
 			/* load only a single tile, if no positions are specified */
 			R_ModAddMapTile(name, day, 0, 0, 0);
-			R_LoadMaterials(mapName);
-			R_ModEndLoading();
+			R_ModEndLoading(mapName);
 			return;
 		}
 	}
