@@ -75,6 +75,11 @@ window unittest_action2
 		string	"t11"
 	}
 
+	string testParam12 {
+		pos		"20 280"
+		string	"t12"
+	}
+
 	string listenerTitle {
 		pos		"80 40"
 		string	"/"
@@ -224,12 +229,22 @@ window unittest_action2
 		}
 	}
 
+	func testNotAParam {
+		// a string "param1" is only a string, not a parameter
+		if ("param1" ne "param2") {
+			*node:root.testParam12@color = "0 1 0 1"
+		} else {
+			*node:root.testParam12@color = "1 0 0 1"
+		}
+	}
+
 	func testParam {
 		call *node:root.testParamNum0
 		call *node:root.testParamNum2("a", "b")
 		call *node:root.testParamString("a", "b", "c", "b")
 		call *node:root.testParamNumber(1, 1.5, 2, 3)
 		cmd "testParamConfunc aaaa 1 1.5"
+		call *node:root.testNotAParam("param2")
 	}
 
 	//

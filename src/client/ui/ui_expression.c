@@ -553,6 +553,16 @@ static uiAction_t *UI_ParseValueExpression (const char **text, const char *errhe
 		return NULL;
 	}
 
+	/* it is a const string (or an injection tag for compatibility) */
+	if (Com_ParsedTokenIsQuoted() || token[0] == '<') {
+		expression->d.terminal.d1.string = UI_AllocStaticString(token, 0);
+		if (UI_IsInjectedString(token))
+			expression->type = EA_VALUE_STRING_WITHINJECTION;
+		else
+			expression->type = EA_VALUE_STRING;
+		return expression;
+	}
+
 	/* it is a param */
 	if (!Q_strncasecmp(token, "param", 5)) {
 		if (!Q_strcasecmp(token, "paramcount")) {
@@ -569,16 +579,6 @@ static uiAction_t *UI_ParseValueExpression (const char **text, const char *errhe
 				return expression;
 			}
 		}
-	}
-
-	/* it is a const string (or an injection tag for compatibility) */
-	if (Com_ParsedTokenIsQuoted() || token[0] == '<') {
-		expression->d.terminal.d1.string = UI_AllocStaticString(token, 0);
-		if (UI_IsInjectedString(token))
-			expression->type = EA_VALUE_STRING_WITHINJECTION;
-		else
-			expression->type = EA_VALUE_STRING;
-		return expression;
 	}
 
 	/* it is a cvarname */
