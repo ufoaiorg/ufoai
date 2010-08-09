@@ -116,9 +116,11 @@ void VID_Restart_f (void)
 	R_Shutdown();
 	R_Init();
 	UI_Reinit();
+	/** @todo only reload the skins, not all models */
 	CL_ViewPrecacheModels();
 
-	CL_ViewLoadMedia();
+	/** @todo going back into the map isn't working as long as GAME_ReloadMode is called */
+	/*CL_ViewLoadMedia();*/
 	GAME_ReloadMode();
 }
 
