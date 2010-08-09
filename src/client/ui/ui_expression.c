@@ -554,16 +554,20 @@ static uiAction_t *UI_ParseValueExpression (const char **text, const char *errhe
 	}
 
 	/* it is a param */
-	if (!strncmp(token, "param", 5)) {
-		if (!strncmp(token, "paramcount", 10)) {
+	if (!Q_strncasecmp(token, "param", 5)) {
+		if (!Q_strcasecmp(token, "paramcount")) {
 			expression->type = EA_VALUE_PARAMCOUNT;
 			return expression;
 		} else if (token[5] >= '1' && token[5] <= '9') {
-			int i = atoi(token + 5);
-			/** @todo when it is possible, we must change param id range */
-			expression->type = EA_VALUE_PARAM;
-			expression->d.terminal.d1.integer = i;
-			return expression;
+			int i;
+			if (sscanf(token + 5, "%i", &i) == 1) {
+				/* token range 1-9 already avoid 0 */
+				assert(i != 0);
+				/** @todo when it is possible, we must check range of param id */
+				expression->type = EA_VALUE_PARAM;
+				expression->d.terminal.d1.integer = i;
+				return expression;
+			}
 		}
 	}
 
