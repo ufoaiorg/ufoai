@@ -368,13 +368,8 @@ static void G_SendBoundingBoxes (void)
 {
 	if (sv_send_edicts->integer) {
 		edict_t *ent = G_EdictsGetFirst();	/* skip the world */
-		while ((ent = G_EdictsGetNextInUse(ent))) {
-			gi.AddEvent(PM_ALL, EV_ADD_EDICT);
-			gi.WriteByte(ent->type);
-			gi.WriteShort(ent->number);
-			gi.WritePos(ent->absmin);
-			gi.WritePos(ent->absmax);
-		}
+		while ((ent = G_EdictsGetNextInUse(ent)))
+			G_EventSendEdict(ent);
 	}
 }
 

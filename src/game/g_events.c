@@ -344,3 +344,16 @@ void G_EventThrow (int visMask, const fireDef_t *fd, float dt, byte flags, const
 	gi.WritePos(position);
 	gi.WritePos(velocity);
 }
+
+/**
+ * @brief Send the bounding box info to the client.
+ * @param[in] ent The edict to send the bounding box for
+ */
+void G_EventSendEdict (const edict_t *ent)
+{
+	gi.AddEvent(PM_ALL, EV_ADD_EDICT);
+	gi.WriteByte(ent->type);
+	gi.WriteShort(ent->number);
+	gi.WritePos(ent->absmin);
+	gi.WritePos(ent->absmax);
+}
