@@ -115,7 +115,11 @@ typedef struct ptlCmd_s {
 
 typedef struct ptlDef_s {
 	char name[MAX_VAR];
-	ptlCmd_t *init, *run, *think, *round, *physics;
+	ptlCmd_t *init; /**< only called at particle spawn time */
+	ptlCmd_t *run;	/**< called every frame */
+	ptlCmd_t *think;	/**< depends on the tps value of the particle */
+	ptlCmd_t *round;	/**< called for each ended round */
+	ptlCmd_t *physics;	/**< called when the particle origin hits something solid */
 } ptlDef_t;
 
 /** @brief particle art type */
