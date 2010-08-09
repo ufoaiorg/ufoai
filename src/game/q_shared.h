@@ -416,6 +416,8 @@ typedef int32_t shoot_types_t;
 
 #define MAX_FORBIDDENLIST (MAX_EDICTS * 4)
 
+#define MAX_DAMAGETYPES 64
+
 /* g_spawn.c */
 
 typedef int32_t actorSizeEnum_t;
@@ -492,6 +494,8 @@ typedef struct teamDef_s {
 	actorSizeEnum_t size;	/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
 	char hitParticle[MAX_VAR]; /**< Particle id of what particle effect should be spawned if a unit of this type is hit. */
 	char deathTextureName[MAX_VAR];	/**< texture name for death of any member of this team */
+
+	short resistance[MAX_DAMAGETYPES]; /**< Resistance to damage */
 } teamDef_t;
 
 /** @brief Reject messages that are send to the client from the game module */

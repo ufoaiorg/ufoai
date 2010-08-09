@@ -1663,6 +1663,41 @@ team phalanx_ugv_phoenix
 			soldiers/ugv_phoenix phoenix phoenix_turret 0
 		}
 	}
+
+	//TODO: Balance values they are the same than bloodspider
+	resistance {
+		normal_light 12
+		normal_spray 6
+		normal_medium 7
+		normal_heavy 6
+
+		normal_steelblade 10
+		normal_monomolecularblade 5
+
+		blast -16
+
+		fire_light 10
+		fire_medium 8
+		fire_heavy 6
+		fire_flamer 2
+
+		shock 999
+
+		laser_light 14
+		laser_medium 12
+		laser_heavy 10
+
+		plasma_light 12
+		plasma_medium 9
+		plasma_heavy 7
+
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
+
+		stun_electro 6
+		stun_gas 999
+	}
 }
 
 // wheeled ares ugv
@@ -1686,5 +1721,40 @@ team phalanx_ugv_ares_w
 		neutral {
 			soldiers/ugv_ares ares_w ares_w_turret 0
 		}
+	}
+
+	//TODO: Balance values they are the same than bloodspider
+	resistance {
+		normal_light 12
+		normal_spray 6
+		normal_medium 7
+		normal_heavy 6
+
+		normal_steelblade 10
+		normal_monomolecularblade 5
+
+		blast -16
+
+		fire_light 10
+		fire_medium 8
+		fire_heavy 6
+		fire_flamer 2
+
+		shock 999
+
+		laser_light 14
+		laser_medium 12
+		laser_heavy 10
+
+		plasma_light 12
+		plasma_medium 9
+		plasma_heavy 7
+
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
+
+		stun_electro 6
+		stun_gas 999
 	}
 }

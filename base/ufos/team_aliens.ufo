@@ -101,6 +101,41 @@ team taman
 			deathsound aliens/taman/die2
 		}
 	}
+
+	//TODO: Balance values
+	resistance {
+		normal_light 6
+		normal_spray 3
+		normal_medium 5
+		normal_heavy 4
+
+		normal_steelblade 1
+		normal_monomolecularblade 0
+
+		blast -12
+
+		fire_light 10
+		fire_medium 8
+		fire_heavy 6
+		fire_flamer 2
+
+		shock -8
+
+		laser_light 10
+		laser_medium 8
+		laser_heavy 6
+
+		plasma_light 8
+		plasma_medium 6
+		plasma_heavy 5
+
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
+
+		stun_electro 0
+		stun_gas 0
+	}
 }
 
 team ortnok
@@ -177,6 +212,41 @@ team ortnok
 			deathsound aliens/ortnok/die2
 		}
 	}
+
+	//TODO: Balance values
+	resistance {
+		normal_light 10
+		normal_spray 5
+		normal_medium 5
+		normal_heavy 4
+
+		normal_steelblade 8
+		normal_monomolecularblade 4
+
+		blast 10
+
+		fire_light -5
+		fire_medium -4
+		fire_heavy -3
+		fire_flamer 0
+
+		shock 0
+
+		laser_light 14
+		laser_medium 12
+		laser_heavy 10
+
+		plasma_light 0
+		plasma_medium 0
+		plasma_heavy 0
+
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
+
+		stun_electro 0
+		stun_gas 0
+	}
 }
 
 team shevaar
@@ -242,6 +312,41 @@ team shevaar
 			deathsound aliens/shevaar/die2
 		}
 	}
+
+	//TODO: Balance values
+	resistance {
+		normal_light 8
+		normal_spray 4
+		normal_medium 6
+		normal_heavy 5
+
+		normal_steelblade 6
+		normal_monomolecularblade 3
+
+		blast 10
+
+		fire_light -7
+		fire_medium -6
+		fire_heavy -5
+		fire_flamer -1
+
+		shock 0
+
+		laser_light -6
+		laser_medium -5
+		laser_heavy -4
+
+		plasma_light -8
+		plasma_medium -6
+		plasma_heavy -5
+
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
+
+		stun_electro 3
+		stun_gas -6
+	}
 }
 
 team bloodspider
@@ -279,5 +384,40 @@ team bloodspider
 			deathsound aliens/bloodspider/die1
 			deathsound aliens/bloodspider/die2
 		}
+	}
+
+	//TODO: Balance values
+	resistance {
+		normal_light 12
+		normal_spray 6
+		normal_medium 7
+		normal_heavy 6
+
+		normal_steelblade 10
+		normal_monomolecularblade 5
+
+		blast -16
+
+		fire_light 10
+		fire_medium 8
+		fire_heavy 6
+		fire_flamer 2
+
+		shock 999
+
+		laser_light 14
+		laser_medium 12
+		laser_heavy 10
+
+		plasma_light 12
+		plasma_medium 9
+		plasma_heavy 7
+
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
+
+		stun_electro 6
+		stun_gas 999
 	}
 }

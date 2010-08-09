@@ -1554,13 +1554,14 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 
 
 /**
- * @brief Parses the armour definitions from script files. The protection and rating values
+ * @brief Parses the armour definitions or the team resistance values from script files. The
+ * protection and rating values.
  * @note The rating values are just for menu displaying
  * @sa Com_ParseItem
  */
-static void Com_ParseArmour (const char *name, const char **text, short *ad, qboolean rating)
+static void Com_ParseArmourOrResistance (const char *name, const char **text, short *ad, qboolean rating)
 {
-	const char *errhead = "Com_ParseArmour: unexpected end of file";
+	const char *errhead = "Com_ParseArmourOrResistance: unexpected end of file";
 	const char *token;
 	int i;
 
@@ -1568,7 +1569,7 @@ static void Com_ParseArmour (const char *name, const char **text, short *ad, qbo
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseArmour: armour definition \"%s\" without body ignored\n", name);
+		Com_Printf("Com_ParseArmourOrResistance: armour definition \"%s\" without body ignored\n", name);
 		return;
 	}
 
@@ -1579,20 +1580,23 @@ static void Com_ParseArmour (const char *name, const char **text, short *ad, qbo
 		if (*token == '}')
 			return;
 
-		for (i = 0; i < csi.numDTs; i++)
-			if (!strncmp(token, csi.dts[i].id, MAX_VAR)) {
+		for (i = 0; i < csi.numDTs; i++) {
+			damageType_t *dt = &csi.dts[i];
+			if (!strcmp(token, dt->id)) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				if (rating && !csi.dts[i].showInMenu)
-					Sys_Error("Com_ParseArmour: You try to set a rating value for a none menu displayed damage type '%s'", csi.dts[i].id);
+				if (rating && !dt->showInMenu)
+					Sys_Error("Com_ParseArmourOrResistance: You try to set a rating value for a none menu displayed damage type '%s'",
+							dt->id);
 				/* protection or rating values */
 				ad[i] = atoi(token);
 				break;
 			}
+		}
 
 		if (i >= csi.numDTs)
-			Com_Printf("Com_ParseArmour: unknown damage type \"%s\" ignored (in %s)\n", token, name);
+			Com_Printf("Com_ParseArmourOrResistance: unknown damage type \"%s\" ignored (in %s)\n", token, name);
 	} while (*text);
 }
 
@@ -1739,10 +1743,10 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 						}
 						break;
 					case OD_PROTECTION:
-						Com_ParseArmour(name, text, od->protection, qfalse);
+						Com_ParseArmourOrResistance(name, text, od->protection, qfalse);
 						break;
 					case OD_RATINGS:
-						Com_ParseArmour(name, text, od->ratings, qtrue);
+						Com_ParseArmourOrResistance(name, text, od->ratings, qtrue);
 						break;
 					default:
 						break;
@@ -2569,6 +2573,8 @@ static void Com_ParseTeam (const char *name, const char **text)
 				Com_ParseActorNames(name, text, td);
 			else if (!strcmp(token, "actorsounds"))
 				Com_ParseActorSounds(name, text, td);
+			else if (!strcmp(token, "resistance"))
+				Com_ParseArmourOrResistance(name, text, td->resistance, qfalse);
 			else
 				Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, name);
 		}
