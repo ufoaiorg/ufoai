@@ -453,10 +453,10 @@ void Com_Error (int code, const char *fmt, ...)
 		Com_Printf("********************\n");
 		Com_Printf("ERROR: %s\n", msg);
 		Com_Printf("********************\n");
+		Sys_Backtrace();
 		SV_Shutdown("Server crashed.", qfalse);
 		CL_Drop();
 		recursive = qfalse;
-		Sys_Backtrace();
 		Com_Drop();
 	default:
 		Com_Printf("%s\n", msg);
