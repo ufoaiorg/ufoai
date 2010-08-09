@@ -752,6 +752,8 @@ static void CL_Fading (vec4_t color, fade_t fade, float frac, qboolean onlyAlpha
 		break;
 	case FADE_NONE:
 		break;
+	case FADE_LAST:
+		break;
 	}
 }
 
@@ -842,14 +844,15 @@ static void CL_ParticleRun2 (ptl_t *p)
 	/* fading */
 	if (p->thinkFade || p->frameFade) {
 		const qboolean onlyAlpha = (p->blend == BLEND_BLEND);
-		if (!onlyAlpha) {
+		if (!onlyAlpha)
 			Vector4Set(p->color, 1.0f, 1.0f, 1.0f, 1.0f);
-		} else
+		else
 			p->color[3] = 1.0;
-			if (p->thinkFade)
-				CL_Fading(p->color, p->thinkFade, p->lastThink * p->tps, p->blend == BLEND_BLEND);
-			if (p->frameFade)
-				CL_Fading(p->color, p->frameFade, p->lastFrame * p->fps, p->blend == BLEND_BLEND);
+
+		if (p->thinkFade)
+			CL_Fading(p->color, p->thinkFade, p->lastThink * p->tps, onlyAlpha);
+		if (p->frameFade)
+			CL_Fading(p->color, p->frameFade, p->lastFrame * p->fps, onlyAlpha);
 	}
 
 	/* this is useful for particles like weather effects that are on top of
