@@ -154,8 +154,6 @@ void CL_SpawnParseEntitystring (void)
 	if (cl.numMapParticles || cl.numLMs)
 		return;
 
-	/* clear active light list before adding lights for the new map */
-	R_ClearActiveLights();
 	memset(&sun, 0, sizeof(sun));
 
 	/* parse ents */

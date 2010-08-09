@@ -551,7 +551,6 @@ void CL_RequestNextDownload (void)
 /**
  * @brief The server will send this command right before allowing the client into the server
  * @sa CL_StartGame
- * @todo recheck the checksum server side
  * @sa SV_Configstrings_f
  */
 static void CL_Precache_f (void)
