@@ -51,6 +51,8 @@ typedef enum uiActionType_s {
 	EA_WHILE = EA_ACTION + 7,
 	EA_DELETE = EA_ACTION + 8,
 	EA_LISTENER = EA_ACTION + 9,
+	EA_PUSHVARS = EA_ACTION + 10,
+	EA_POPVARS = EA_ACTION + 11,
 
 	/* boolean to boolean operators */
 	EA_OPERATOR_BOOLEAN2BOOLEAN = 0x0300,
@@ -82,7 +84,10 @@ typedef enum uiActionType_s {
 	EA_OPERATOR_STR_NE = EA_OPERATOR_STRING2BOOLEAN + 2,	/**< ne */
 
 	/* unary operators */
-	EA_OPERATOR_EXISTS = 0x0700, /**< only cvar given - check for existence */
+	EA_OPERATOR_UNARY = 0x0700,
+	EA_OPERATOR_EXISTS = EA_OPERATOR_UNARY + 1,				/**< only cvar given - check for existence */
+	EA_OPERATOR_PATHFROM = EA_OPERATOR_UNARY + 2,			/**< apply a relative path to a node an return a node */
+	EA_OPERATOR_PATHPROPERTYFROM = EA_OPERATOR_UNARY + 3,	/**< apply a relative path to a node an return a property */
 
 	/* terminal values (leafs) */
 	EA_VALUE = 0x0A00,
@@ -96,8 +101,18 @@ typedef enum uiActionType_s {
 	EA_VALUE_PATHNODE_WITHINJECTION = EA_VALUE + 8,		/**< should be into an extra action type */
 	EA_VALUE_PATHPROPERTY = EA_VALUE + 9,				/**< reference to a path, and a property */
 	EA_VALUE_PATHPROPERTY_WITHINJECTION = EA_VALUE + 10,/**< should be into an extra action type */
-	EA_VALUE_NODEPROPERTY = EA_VALUE + 11				/**< reference to a node, and a property (not a string) */
+	EA_VALUE_NODEPROPERTY = EA_VALUE + 11,				/**< reference to a node, and a property (not a string) */
+	EA_VALUE_VAR = EA_VALUE + 12,						/**< reference to a var */
+	EA_VALUE_CVAR = EA_VALUE + 13,						/**< reference to a cvar */
+	EA_VALUE_NODE = EA_VALUE + 14,						/**< reference to a node */
+	EA_VALUE_PARAM = EA_VALUE + 15,						/**< reference to a param */
+	EA_VALUE_PARAMCOUNT = EA_VALUE + 16,				/**< reference to the number of params */
+	EA_VALUE_THIS = EA_VALUE + 17,						/**< reference to the current node */
+	EA_VALUE_WINDOW = EA_VALUE + 18,					/**< reference to the window node */
+	EA_VALUE_PARENT = EA_VALUE + 19						/**< reference to the parent node */
 } uiActionType_t;
+
+
 
 /**
  * @brief Defines the data of a @c uiAction_t leaf.
@@ -122,6 +137,8 @@ typedef union {
  * <ul> <li>Each command (EA_ACTION like EA_CALL, EA_CMD...) uses its own action structure. It can sometimes use child actions, or can be a leaf.</li>
  * <li> Operators (EA_OPERATOR_*) use binary tree structure (left and right operands), else are unary.</li>
  * <li> A value (EA_VALUE_*) is a terminal action (a leaf).</li></ul>
+ * @fixme Merge terminal and nonTerminal, this way is finally stupid. Left can be terminal and right can be non terminal,
+ * then the structure make non sens and can create hidden bugs.
  */
 typedef struct uiAction_s {
 	/**
@@ -167,26 +184,45 @@ typedef struct uiAction_s {
 
 /* prototype */
 struct uiNode_s;
+struct cvar_s;
+
+/** @brief Type for uiAction_t
+ * It also contain type about type (for example EA_BINARYOPERATOR)
+ * @sa uiAction_t
+ */
+typedef struct uiValue_s {
+	uiActionType_t type;	/** Subset of action type to identify the value */
+	union {
+		int integer;
+		float number;
+		char* string;
+		struct cvar_s *cvar;
+		struct uiNode_s *node;
+	} value;
+} uiValue_t;
 
 /**
  * @brief Contain the context of the calling of a function
  */
 typedef struct uiCallContext_s {
 	/** node owning the action */
-	const struct uiNode_s* source;
+	struct uiNode_s* source;
 	/** is the function can use param from command line */
 	qboolean useCmdParam;
 	linkedList_t *params;
 	int paramNumber;
+	int varPosition;
+	int varNumber;
 } uiCallContext_t;
 
 
-void UI_ExecuteEventActions(const struct uiNode_s* source, const uiAction_t* firstAction);
-void UI_ExecuteConFuncActions(const struct uiNode_s* source, const uiAction_t* firstAction);
+void UI_ExecuteEventActions(struct uiNode_s* source, const uiAction_t* firstAction);
+void UI_ExecuteConFuncActions(struct uiNode_s* source, const uiAction_t* firstAction);
 qboolean UI_IsInjectedString(const char *string);
 void UI_FreeStringProperty(void* pointer);
 const char* UI_GenInjectedString(const char* input, qboolean addNewLine, const uiCallContext_t *context);
 int UI_GetActionTokenType(const char* token, int group);
+uiValue_t* UI_GetVariable (const uiCallContext_t *context, int relativeVarId);
 
 void UI_PoolAllocAction(uiAction_t** action, int type, const void *data);
 uiAction_t* UI_AllocStaticCommandAction(char *command);

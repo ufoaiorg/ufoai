@@ -82,7 +82,7 @@ static const ui_typedActionToken_t actionTokens[] = {
 	{"||", EA_OPERATOR_OR, EA_BINARYOPERATOR},
 };
 
-static void UI_ExecuteInjectedActions(const uiAction_t* firstAction, uiCallContext_t *context);
+static void UI_ExecuteActions(const uiAction_t* firstAction, uiCallContext_t *context);
 
 /**
  * @brief Check if the action token list is sorted by alphabet,
@@ -163,7 +163,7 @@ static inline const char* UI_GenCommandReadProperty (const char* input, char* ou
 int UI_GetParamNumber (const uiCallContext_t *context)
 {
 	if (context->useCmdParam)
-		return Cmd_Argc();
+		return Cmd_Argc() - 1;
 	return context->paramNumber;
 }
 
@@ -439,21 +439,23 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 	UI_ReadNodePath(path, context->source, &callNode, &callProperty);
 
 	if (callNode == NULL) {
-		Com_Printf("UI_ExecuteInjectedAction: Node from path \"%s\" not found (relative to \"%s\").\n", path, UI_GetPath(context->source));
+		Com_Printf("UI_ExecuteCallAction: Node from path \"%s\" not found (relative to \"%s\").\n", path, UI_GetPath(context->source));
 		return;
 	}
 
 	if (callProperty != NULL && callProperty->type != V_UI_ACTION && callProperty->type != V_UI_NODEMETHOD) {
-		Com_Printf("UI_ExecuteInjectedAction: Call operand %d unsupported. (%s)\n", callProperty->type, UI_GetPath(callNode));
+		Com_Printf("UI_ExecuteCallAction: Call operand %d unsupported. (%s)\n", callProperty->type, UI_GetPath(callNode));
 		return;
 	}
 
+	newContext.source = callNode;
+	newContext.params = NULL;
+	newContext.paramNumber = 0;
+	newContext.varNumber = 0;
+	newContext.varPosition = context->varPosition + context->varNumber;
+
 	if (action->type == EA_LISTENER) {
-		/* new context is not really need while we do not extend it with local var... */
-		newContext.source = callNode;
 		newContext.useCmdParam = context->useCmdParam;
-		newContext.params = NULL;
-		newContext.paramNumber = 0;
 
 		if (!newContext.useCmdParam) {
 			linkedList_t *p = context->params;
@@ -465,10 +467,7 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 			}
 		}
 	} else {
-		newContext.source = callNode;
 		newContext.useCmdParam = qfalse;
-		newContext.params = NULL;
-		newContext.paramNumber = 0;
 
 		param = action->d.nonTerminal.right;
 		while (param) {
@@ -486,7 +485,7 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 			actionsRef = callNode->onClick;
 		else
 			actionsRef = *(uiAction_t **) ((byte *) callNode + callProperty->ofs);
-		UI_ExecuteInjectedActions(actionsRef, &newContext);
+		UI_ExecuteActions(actionsRef, &newContext);
 	} else if (callProperty->type == V_UI_NODEMETHOD) {
 		uiNodeMethod_t func = (uiNodeMethod_t) callProperty->ofs;
 		func(callNode, &newContext);
@@ -499,11 +498,44 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 }
 
 /**
+ * @bref Return a variable from the context
+ * @param context Call context
+ * @param relativeVarId id of the variable relative to the context
+ */
+uiValue_t* UI_GetVariable (const uiCallContext_t *context, int relativeVarId)
+{
+	const int varId = context->varPosition + relativeVarId;
+	assert(relativeVarId >= 0);
+	assert(relativeVarId < context->varNumber);
+	return &(ui_global.variableStack[varId]);
+}
+
+static void UI_ReleaseVariable (uiValue_t *variable)
+{
+	/** @todo most of cases here are useless, it only should be EA_VALUE_STRING */
+	switch (variable->type) {
+	case EA_VALUE_STRING:
+		UI_FreeStringProperty(variable->value.string);
+		break;
+	case EA_VALUE_FLOAT:
+	case EA_VALUE_NODE:
+	case EA_VALUE_CVAR:
+		/* nothing */
+		break;
+	default:
+		Com_Error(ERR_FATAL, "UI_ReleaseVariable: Variable type \"%d\" unsupported", variable->type);
+	}
+
+	/* bug safe, but useless */
+	memset(variable, 0, sizeof(*variable));
+}
+
+/**
  * @brief Execute an action from a source
  * @param[in] context Context node
  * @param[in] action Action to execute
  */
-static void UI_ExecuteInjectedAction (const uiAction_t* action, uiCallContext_t *context)
+static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t *context)
 {
 	switch (action->type) {
 	case EA_NULL:
@@ -521,6 +553,29 @@ static void UI_ExecuteInjectedAction (const uiAction_t* action, uiCallContext_t 
 		UI_ExecuteCallAction(action, context);
 		break;
 
+	case EA_POPVARS:
+		{
+			int i;
+			const int number = action->d.terminal.d1.integer;
+			assert(number <= context->varNumber);
+			for (i = 0; i < number; i++) {
+				const int varId = context->varPosition + context->varNumber - i - 1;
+				UI_ReleaseVariable(&(ui_global.variableStack[varId]));
+			}
+			context->varNumber -= number;
+		}
+		break;
+
+	case EA_PUSHVARS:
+#ifdef DEBUG
+		/* check sanity */
+		/** @todo check var slots should be empty */
+#endif
+		context->varNumber += action->d.terminal.d1.integer;
+		if (context->varNumber >= UI_MAX_VARIABLESTACK)
+			Com_Error(ERR_FATAL, "UI_ExecuteAction: Variable stack full. UI_MAX_VARIABLESTACK hited.");
+		break;
+
 	case EA_ASSIGN:
 		UI_ExecuteSetAction(action, context);
 		break;
@@ -536,9 +591,9 @@ static void UI_ExecuteInjectedAction (const uiAction_t* action, uiCallContext_t 
 		{
 			int loop = 0;
 			while (UI_GetBooleanFromExpression(action->d.nonTerminal.left, context)) {
-				UI_ExecuteInjectedActions(action->d.nonTerminal.right, context);
+				UI_ExecuteActions(action->d.nonTerminal.right, context);
 				if (loop > 1000) {
-					Com_Printf("UI_ExecuteInjectedAction: Infinite loop. Force breaking 'while'\n");
+					Com_Printf("UI_ExecuteAction: Infinite loop. Force breaking 'while'\n");
 					break;
 				}
 				loop++;
@@ -548,42 +603,45 @@ static void UI_ExecuteInjectedAction (const uiAction_t* action, uiCallContext_t 
 
 	case EA_IF:
 		if (UI_GetBooleanFromExpression(action->d.nonTerminal.left, context)) {
-			UI_ExecuteInjectedActions(action->d.nonTerminal.right, context);
+			UI_ExecuteActions(action->d.nonTerminal.right, context);
 			return;
 		}
 		action = action->next;
 		while (action && action->type == EA_ELIF) {
 			if (UI_GetBooleanFromExpression(action->d.nonTerminal.left, context)) {
-				UI_ExecuteInjectedActions(action->d.nonTerminal.right, context);
+				UI_ExecuteActions(action->d.nonTerminal.right, context);
 				return;
 			}
 			action = action->next;
 		}
 		if (action && action->type == EA_ELSE) {
-			UI_ExecuteInjectedActions(action->d.nonTerminal.right, context);
+			UI_ExecuteActions(action->d.nonTerminal.right, context);
 		}
 		break;
 
+	/** @todo Skipping actions like that is a bad way. the function should return the next action,
+	 * or we should move IF,ELSE,ELIF... in a IF block and not interleave it with default actions
+	 */
 	case EA_ELSE:
 	case EA_ELIF:
 		/* previous EA_IF execute this action */
 		break;
 
 	default:
-		Com_Error(ERR_FATAL, "UI_ExecuteInjectedAction: Unknown action type %i", action->type);
+		Com_Error(ERR_FATAL, "UI_ExecuteAction: Unknown action type %i", action->type);
 	}
 }
 
-static void UI_ExecuteInjectedActions (const uiAction_t* firstAction, uiCallContext_t *context)
+static void UI_ExecuteActions (const uiAction_t* firstAction, uiCallContext_t *context)
 {
 	static int callnumber = 0;
 	const uiAction_t *action;
 	if (callnumber++ > 20) {
-		Com_Printf("UI_ExecuteInjectedActions: Possible recursion\n");
+		Com_Printf("UI_ExecuteActions: Break possible infinit recursion\n");
 		return;
 	}
 	for (action = firstAction; action; action = action->next) {
-		UI_ExecuteInjectedAction(action, context);
+		UI_ExecuteAction(action, context);
 	}
 	callnumber--;
 }
@@ -591,22 +649,22 @@ static void UI_ExecuteInjectedActions (const uiAction_t* firstAction, uiCallCont
 /**
  * @brief allow to inject command param into cmd of confunc command
  */
-void UI_ExecuteConFuncActions (const uiNode_t* source, const uiAction_t* firstAction)
+void UI_ExecuteConFuncActions (uiNode_t* source, const uiAction_t* firstAction)
 {
 	uiCallContext_t context;
+	memset(&context, 0, sizeof(context));
 	context.source = source;
 	context.useCmdParam = qtrue;
-	UI_ExecuteInjectedActions(firstAction, &context);
+	UI_ExecuteActions(firstAction, &context);
 }
 
-void UI_ExecuteEventActions (const uiNode_t* source, const uiAction_t* firstAction)
+void UI_ExecuteEventActions (uiNode_t* source, const uiAction_t* firstAction)
 {
 	uiCallContext_t context;
+	memset(&context, 0, sizeof(context));
 	context.source = source;
 	context.useCmdParam = qfalse;
-	context.paramNumber = 0;
-	context.params = NULL;
-	UI_ExecuteInjectedActions(firstAction, &context);
+	UI_ExecuteActions(firstAction, &context);
 }
 
 /**

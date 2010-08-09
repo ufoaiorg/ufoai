@@ -671,7 +671,8 @@ static void UI_BaseInventoryNodeDrawTooltip (uiNode_t *node, int x, int y)
  * @param[in] node The context node
  * @param[in] mouseX X mouse coordinates.
  * @param[in] mouseY Y mouse coordinates.
- * @todo None generic function. Not sure we can do it in a generic way
+ * @todo Not generic function. Not sure we can do it in a generic way
+ * @todo Merge it with node container, bad code but it is worst to have copy-paste of it
  */
 static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 {
@@ -798,7 +799,7 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 	 * The right way is to compute the source and the target container
 	 * and fire the change event for both */
 	if (INV_IsArmour(ic->item.t)) {
-		const uiNode_t *armour = UI_GetNode(node->root, "armour");
+		uiNode_t *armour = UI_GetNode(node->root, "armour");
 		if (armour && armour->onChange)
 			UI_ExecuteEventActions(armour, armour->onChange);
 	}

@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define UI_MAX_COMPONENTS		64
 #define UI_MAX_WINDOWSTACK		32
 #define UI_MAX_ACTIONS			2*8192
+#define UI_MAX_VARIABLESTACK	64
 
 #include "node/ui_node_window.h"
 #include "node/ui_node_model.h"
@@ -55,6 +56,11 @@ typedef struct uiGlobal_s {
 	 * @sa UI_RegisterLinkedListText
 	 */
 	uiSharedData_t sharedData[UI_MAX_DATAID];
+
+	/**
+	 * @brief Local var for script function
+	 */
+	uiValue_t variableStack[UI_MAX_VARIABLESTACK];
 
 	int numNodes;
 

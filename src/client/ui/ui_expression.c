@@ -31,6 +31,123 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 
 /**
+ * @brief Get a node and a property from an expression
+ * @param expression Expression tree to analyse
+ * @param context Call context
+ * @param[out] property A node property
+ * @return A node (else NULL, if no node found) and a property (else NULL if no/wrong property defined)
+ */
+uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_t *context, const value_t **property)
+{
+	if (property != NULL)
+		*property = NULL;
+
+	switch (expression->type & EA_HIGHT_MASK) {
+	case EA_VALUE:
+		switch (expression->type) {
+		case EA_VALUE_VAR:
+			{
+				uiValue_t *variable =  UI_GetVariable(context, expression->d.terminal.d1.integer);
+				switch (variable->type) {
+				case EA_VALUE_NODE:
+					return variable->value.node;
+				default:
+					break;
+				}
+			}
+			break;
+
+		case EA_VALUE_PATHNODE:
+		case EA_VALUE_PATHNODE_WITHINJECTION:
+		{
+			uiNode_t *node;
+			const value_t *propertyTmp;
+			const char *path = expression->d.terminal.d1.string;
+			if (expression->type == EA_VALUE_PATHNODE_WITHINJECTION)
+				path = UI_GenInjectedString(path, qfalse, context);
+
+			UI_ReadNodePath(path, context->source, &node, &propertyTmp);
+			if (!node) {
+				Com_Printf("UI_GetNodeFromExpression: Node '%s' wasn't found; NULL returned\n", path);
+				return NULL;
+			}
+			if (propertyTmp != NULL)
+				Com_Printf("UI_GetNodeFromExpression: No property expected, but path '%s' contain a property. Property ignored.\n", path);
+
+			return node;
+		}
+
+		case EA_VALUE_PATHPROPERTY:
+		case EA_VALUE_PATHPROPERTY_WITHINJECTION:
+			{
+				uiNode_t *node;
+				const value_t *propertyTmp;
+				const char *path = expression->d.terminal.d1.string;
+				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
+					path = UI_GenInjectedString(path, qfalse, context);
+
+				UI_ReadNodePath(path, context->source, &node, &propertyTmp);
+				if (!node) {
+					Com_Printf("UI_GetNodeFromExpression: Node '%s' wasn't found; NULL returned\n", path);
+					return NULL;
+				}
+				if (property == NULL) {
+					if (propertyTmp != NULL)
+						Com_Printf("UI_GetNodeFromExpression: No property expected, but path '%s' contain a property. Property ignored.\n", path);
+				} else {
+					 *property = propertyTmp;
+				}
+
+				return node;
+			}
+
+		case EA_VALUE_THIS:
+			return context->source;
+
+		case EA_VALUE_PARENT:
+			return context->source->parent;
+
+		case EA_VALUE_WINDOW:
+			return context->source->root;
+
+		default:
+			break;
+		}
+
+	case EA_OPERATOR_UNARY:
+		switch (expression->type) {
+		case EA_OPERATOR_PATHPROPERTYFROM:
+			{
+				uiNode_t *relativeTo = UI_GetNodeFromExpression(expression->d.nonTerminal.left, context, NULL);
+				uiNode_t *node;
+				const value_t *propertyTmp;
+				const char* path = expression->d.terminal.d2.constString;
+				UI_ReadNodePath(path, relativeTo, &node, &propertyTmp);
+				if (!node) {
+					Com_Printf("UI_GetNodeFromExpression: Path '%s' from node '%s' found no node; NULL returned\n", path, UI_GetPath(relativeTo));
+					return NULL;
+				}
+				if (property == NULL) {
+					if (propertyTmp != NULL)
+						Com_Printf("UI_GetNodeFromExpression:  No property expected, but path '%s' from node '%s' found no node; NULL returned\n", path, UI_GetPath(relativeTo));
+				} else {
+					*property = propertyTmp;
+				}
+				return node;
+			}
+		default:
+			break;
+		}
+
+	default:
+		break;
+	}
+
+	return NULL;
+}
+
+
+/**
  * @return A float value, else 0
  */
 float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *context)
@@ -38,6 +155,32 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 	switch (expression->type & EA_HIGHT_MASK) {
 	case EA_VALUE:
 		switch (expression->type) {
+		case EA_VALUE_VAR:
+			{
+				uiValue_t *variable =  UI_GetVariable(context, expression->d.terminal.d1.integer);
+				switch (variable->type) {
+				case EA_VALUE_STRING:
+					if (variable->value.string == NULL) {
+						Com_Printf("UI_GetFloatFromExpression: String variable not initialized. '0' returned");
+						return 0;
+					}
+					return atof(variable->value.string);
+				case EA_VALUE_FLOAT:
+					return variable->value.number;
+				case EA_VALUE_CVAR:
+					{
+						cvar_t *cvar = variable->value.cvar;
+						if (cvar == NULL) {
+							Com_Printf("UI_GetFloatFromExpression: Cvar variable not initialized. '0' returned");
+							return 0;
+						}
+						return cvar->value;
+					}
+				default:
+					Com_Printf("UI_GetFloatFromExpression: Unsupported variable type: %i. '0' returned", variable->type);
+					return 0;
+				}
+			}
 		case EA_VALUE_STRING:
 		case EA_VALUE_STRING_WITHINJECTION:
 			{
@@ -63,23 +206,32 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 			{
 				uiNode_t *node;
 				const value_t *property;
-				const char *path = expression->d.terminal.d1.string;
-				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
-					path = UI_GenInjectedString(path, qfalse, context);
-
-				UI_ReadNodePath(path, context->source, &node, &property);
+				node = UI_GetNodeFromExpression(expression, context, &property);
 				if (!node) {
-					Com_Printf("UI_GetFloatFromParam: Node '%s' wasn't found; '0' returned\n", path);
+					Com_Printf("UI_GetFloatFromParam: Node wasn't found; '0'\n");
 					return 0;
 				}
 				if (!property) {
-					Com_Printf("UI_GetFloatFromParam: Property '%s' wasn't found; '0' returned\n", path);
+					Com_Printf("UI_GetFloatFromParam: Property wasn't found; '0' returned\n");
 					return 0;
 				}
 				return UI_GetFloatFromNodeProperty(node, property);
 			}
+		case EA_VALUE_PARAM:
+		{
+			const int paramId = expression->d.terminal.d1.integer;
+			const char *string = UI_GetParam(context, paramId);
+			if (string[0] == '\0') {
+				Com_Printf("UI_GetFloatFromParam: Param '%i' is out of range, or empty; '0' returned\n", paramId);
+				return 0;
+			}
+			return atof(string);
+		}
+		case EA_VALUE_PARAMCOUNT:
+			return UI_GetParamNumber(context);
 		}
 		break;
+
 	case EA_OPERATOR_FLOAT2FLOAT:
 		{
 			const float value1 = UI_GetFloatFromExpression(expression->d.nonTerminal.left, context);
@@ -109,6 +261,20 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 		}
 		break;
 
+	case EA_OPERATOR_UNARY:
+		switch (expression->type) {
+		case EA_OPERATOR_PATHPROPERTYFROM:
+		{
+			uiNode_t *node;
+			const value_t *property;
+			node = UI_GetNodeFromExpression(expression, context, &property);
+			return UI_GetFloatFromNodeProperty(node, property);
+		}
+		default:
+			Com_Error(ERR_FATAL, "UI_GetFloatFromExpression: (EA_OPERATOR_UNARY) Invalid expression type %i", expression->type);
+			return qfalse;
+		}
+
 	}
 
 	Com_Printf("UI_GetFloatFromExpression: Unsupported expression type: %i. '0' returned", expression->type);
@@ -125,6 +291,40 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 	switch (expression->type & EA_HIGHT_MASK) {
 	case EA_VALUE:
 		switch (expression->type) {
+		case EA_VALUE_VAR:
+			{
+				uiValue_t *variable =  UI_GetVariable(context, expression->d.terminal.d1.integer);
+				switch (variable->type) {
+				case EA_VALUE_STRING:
+					if (variable->value.string == NULL) {
+						Com_Printf("UI_GetStringFromExpression: String variable not initialized. Empty string returned");
+						return "";
+					}
+					return variable->value.string;
+				case EA_VALUE_FLOAT:
+					{
+						const float number = variable->value.number;
+						const int integer = number;
+						/** @todo should we add a delta? */
+						if (number == integer)
+							return va("%i", integer);
+						else
+							return va("%f", number);
+					}
+				case EA_VALUE_CVAR:
+					{
+						cvar_t *cvar = variable->value.cvar;
+						if (cvar == NULL) {
+							Com_Printf("UI_GetStringFromExpression: Cvar variable not initialized. Empty string returned");
+							return "";
+						}
+						return cvar->string;
+					}
+				default:
+					Com_Printf("UI_GetStringFromExpression: Unsupported variable type: %i. Empty string returned", variable->type);
+					return "";
+				}
+			}
 		case EA_VALUE_STRING:
 		case EA_VALUE_STRING_WITHINJECTION:
 			{
@@ -159,27 +359,42 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 				uiNode_t *node;
 				const value_t *property;
 				const char* string;
-				const char *path = expression->d.terminal.d1.string;
-				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
-					path = UI_GenInjectedString(path, qfalse, context);
-
-				UI_ReadNodePath(path, context->source, &node, &property);
+				node = UI_GetNodeFromExpression(expression, context, &property);
 				if (!node) {
-					Com_Printf("UI_GetStringFromExpression: Node '%s' wasn't found; '' returned\n", path);
+					Com_Printf("UI_GetStringFromExpression: Node wasn't found; Empty string returned\n");
 					return "";
 				}
 				if (!property) {
-					Com_Printf("UI_GetStringFromExpression: Property '%s' wasn't found; '' returned\n", path);
+					Com_Printf("UI_GetStringFromExpression: Property wasn't found; Empty string returned\n");
 					return "";
 				}
 				string = UI_GetStringFromNodeProperty(node, property);
 				if (string == NULL) {
-					Com_Printf("UI_GetStringFromExpression: String getter for '%s' property do not exists; '' returned\n", path);
+					Com_Printf("UI_GetStringFromExpression: String getter for '%s@%s' property do not exists; '' returned\n", node->behaviour->name, property->string);
 					return "";
 				}
 				return string;
 			}
 			break;
+		case EA_VALUE_PARAM:
+			return UI_GetParam(context, expression->d.terminal.d1.integer);
+		case EA_VALUE_PARAMCOUNT:
+			return va("%i", UI_GetParamNumber(context));
+		}
+		break;
+
+	case EA_OPERATOR_UNARY:
+		switch (expression->type) {
+		case EA_OPERATOR_PATHPROPERTYFROM:
+		{
+			uiNode_t *node;
+			const value_t *property;
+			node = UI_GetNodeFromExpression(expression, context, &property);
+			return UI_GetStringFromNodeProperty(node, property);
+		}
+		default:
+			Com_Error(ERR_FATAL, "UI_GetFloatFromExpression: (EA_OPERATOR_UNARY) Invalid expression type %i", expression->type);
+			return qfalse;
 		}
 
 	case EA_OPERATOR_BOOLEAN2BOOLEAN:
@@ -201,7 +416,6 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 				return va("%f", number);
 		}
 	}
-
 
 	Com_Printf("UI_GetStringFromExpression: Unsupported expression type: %i", expression->type);
 	return "";
@@ -262,16 +476,24 @@ qboolean UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContex
 			}
 		}
 
-	case EA_OPERATOR_EXISTS:
-		{
-			const uiAction_t *e = expression->d.nonTerminal.left;
-			const char* cvarName;
-			assert(e);
-			assert(e->type == EA_VALUE_CVARNAME || e->type == EA_VALUE_CVARNAME_WITHINJECTION);
-			cvarName = e->d.terminal.d1.string;
-			if (e->type == EA_VALUE_CVARNAME_WITHINJECTION)
-				cvarName = UI_GenInjectedString(cvarName, qfalse, context);
-			return Cvar_FindVar(cvarName) != NULL;
+	case EA_OPERATOR_UNARY:
+		switch (expression->type) {
+		case EA_OPERATOR_EXISTS:
+			{
+				const uiAction_t *e = expression->d.nonTerminal.left;
+				const char* cvarName;
+				assert(e);
+				assert(e->type == EA_VALUE_CVARNAME || e->type == EA_VALUE_CVARNAME_WITHINJECTION);
+				cvarName = e->d.terminal.d1.string;
+				if (e->type == EA_VALUE_CVARNAME_WITHINJECTION)
+					cvarName = UI_GenInjectedString(cvarName, qfalse, context);
+				return Cvar_FindVar(cvarName) != NULL;
+			}
+		case EA_OPERATOR_PATHPROPERTYFROM:
+			return UI_GetFloatFromExpression(expression, context) != 0;
+		default:
+			Com_Error(ERR_FATAL, "UI_GetBooleanFromExpression: (EA_OPERATOR_UNARY) Invalid expression type %i", expression->type);
+			return qfalse;
 		}
 
 	case EA_OPERATOR_STRING2BOOLEAN:
@@ -329,6 +551,20 @@ static uiAction_t *UI_ParseValueExpression (const char **text, const char *errhe
 	if (*text == NULL) {
 		Com_Printf("UI_ParseTerminalExpression: Token expected\n");
 		return NULL;
+	}
+
+	/* it is a param */
+	if (!strncmp(token, "param", 5)) {
+		if (!strncmp(token, "paramcount", 10)) {
+			expression->type = EA_VALUE_PARAMCOUNT;
+			return expression;
+		} else if (token[5] >= '1' && token[5] <= '9') {
+			int i = atoi(token + 5);
+			/** @todo when it is possible, we must change param id range */
+			expression->type = EA_VALUE_PARAM;
+			expression->d.terminal.d1.integer = i;
+			return expression;
+		}
 	}
 
 	/* it is a const string (or an injection tag for compatibility) */

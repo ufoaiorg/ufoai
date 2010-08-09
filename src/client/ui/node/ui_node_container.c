@@ -819,7 +819,7 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 	 * The right way is to compute the source and the target container
 	 * and fire the change event for both */
 	if (INV_IsArmour(ic->item.t)) {
-		const uiNode_t *armour = UI_GetNode(node->root, "armour");
+		uiNode_t *armour = UI_GetNode(node->root, "armour");
 		if (armour && armour->onChange)
 			UI_ExecuteEventActions(armour, armour->onChange);
 	}

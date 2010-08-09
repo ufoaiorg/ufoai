@@ -739,7 +739,7 @@ static void UI_SetNewWindowPos_f (void)
  */
 static void UI_FireInit_f (void)
 {
-	const uiNode_t* window;
+	uiNode_t* window;
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <window>\n", Cmd_Argv(0));
