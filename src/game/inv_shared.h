@@ -281,14 +281,18 @@ typedef struct objDef_s {
 	int numWeapons;		/**< Number of weapons this ammo can be used in.
 						 * Maximum value for fireDef_t.weapFdsIdx <= MAX_WEAPONS_PER_OBJDEF. */
 
+	/**
+	 * @todo move this into campaign only structs
+	 */
 	struct technology_s *tech;	/**< Technology link to item. */
 
 	/* Armour specific */
 	short protection[MAX_DAMAGETYPES];	/**< Protection values for each armour and every damage type. */
 	short ratings[MAX_DAMAGETYPES];		/**< Rating values for each armour and every damage type to display in the menus. */
 
-	/* Aircraft specific */
 	byte dmgtype;
+
+	/* Aircraft specific */
 	craftitem_t craftitem;
 } objDef_t;
 
