@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_entity.h"
 
 cvar_t* cl_map_debug;
+static cvar_t *cl_precache;
 
 /**
  * @brief Call before entering a new level, or after vid_restart
@@ -122,6 +123,98 @@ void CL_ViewLoadMedia (void)
 	refdef.weather = WEATHER_NONE;
 	refdef.fogColor[3] = 1.0;
 	VectorSet(refdef.fogColor, 0.75, 0.75, 0.75);
+}
+
+/**
+ * @brief Precache all menu models for faster access
+ * @sa CL_ViewPrecacheModels
+ * @todo Does not precache armoured models
+ */
+static void CL_PrecacheCharacterModels (void)
+{
+	teamDef_t *td;
+	int i, j, num;
+	char model[MAX_QPATH];
+	const char *path;
+	float loading = cls.loadingPercent;
+	linkedList_t *list;
+	const float percent = 55.0f;
+
+	/* search the name */
+	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
+		for (j = NAME_NEUTRAL; j < NAME_LAST; j++) {
+			/* no models for this gender */
+			if (!td->numModels[j])
+				continue;
+			/* search one of the model definitions */
+			list = td->models[j];
+			assert(list);
+			for (num = 0; num < td->numModels[j]; num++) {
+				assert(list);
+				path = (const char*)list->data;
+				list = list->next;
+				/* register body */
+				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
+				if (!R_RegisterModelShort(model))
+					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
+				list = list->next;
+				/* register head */
+				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
+				if (!R_RegisterModelShort(model))
+					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
+
+				/* skip skin */
+				list = list->next;
+
+				/* new path */
+				list = list->next;
+
+				cls.loadingPercent += percent / (td->numModels[j] * csi.numTeamDefs * NAME_LAST);
+				SCR_DrawPrecacheScreen(qtrue);
+			}
+		}
+	/* some genders may not have models - ensure that we do the wanted percent step */
+	cls.loadingPercent = loading + percent;
+}
+
+/**
+ * @brief Precaches all models at game startup - for faster access
+ */
+void CL_ViewPrecacheModels (void)
+{
+	int i;
+	float percent = 40.0f;
+
+	cls.loadingPercent = 5.0f;
+	SCR_DrawPrecacheScreen(qtrue);
+
+	if (cl_precache->integer)
+		CL_PrecacheCharacterModels(); /* 55% */
+	else
+		percent = 95.0f;
+
+	for (i = 0; i < csi.numODs; i++) {
+		const objDef_t *od = INVSH_GetItemByIDX(i);
+		if (od->type[0] == '\0' || od->isDummy)
+			continue;
+
+		if (od->model[0] != '\0') {
+			cls.modelPool[i] = R_RegisterModelShort(od->model);
+			if (cls.modelPool[i])
+				Com_DPrintf(DEBUG_CLIENT, "CL_PrecacheModels: Registered object model: '%s' (%i)\n", od->model, i);
+		}
+		cls.loadingPercent += percent / csi.numODs;
+		SCR_DrawPrecacheScreen(qtrue);
+	}
+
+	cls.loadingPercent = 100.0f;
+	SCR_DrawPrecacheScreen(qtrue);
+
+	/* now make sure that all the precached models are stored until we quit the game
+	 * otherwise they would be freed with every map change */
+	R_SwitchModelMemPoolTag();
+
+	SCR_DrawPrecacheScreen(qfalse);
 }
 
 /**
@@ -236,4 +329,9 @@ void CL_ViewCenterAtGridPosition (const pos3_t pos)
 	PosToVec(pos, vec);
 	VectorCopy(vec, cl.cam.origin);
 	Cvar_SetValue("cl_worldlevel", pos[2]);
+}
+
+void CL_ViewInit (void)
+{
+	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
 }

@@ -73,7 +73,6 @@ cvar_t *cl_lastsave;
 
 static cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) */
 
-static cvar_t *cl_precache;
 static cvar_t *cl_introshown;
 
 /* userinfo */
@@ -562,88 +561,6 @@ static void CL_Precache_f (void)
 	CL_RequestNextDownload();
 }
 
-/**
- * @brief Precache all menu models for faster access
- * @sa CL_PrecacheModels
- * @todo Does not precache armoured models
- */
-static void CL_PrecacheCharacterModels (void)
-{
-	teamDef_t *td;
-	int i, j, num;
-	char model[MAX_QPATH];
-	const char *path;
-	float loading = cls.loadingPercent;
-	linkedList_t *list;
-	const float percent = 55.0f;
-
-	/* search the name */
-	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
-		for (j = NAME_NEUTRAL; j < NAME_LAST; j++) {
-			/* no models for this gender */
-			if (!td->numModels[j])
-				continue;
-			/* search one of the model definitions */
-			list = td->models[j];
-			assert(list);
-			for (num = 0; num < td->numModels[j]; num++) {
-				assert(list);
-				path = (const char*)list->data;
-				list = list->next;
-				/* register body */
-				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
-				if (!R_RegisterModelShort(model))
-					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
-				list = list->next;
-				/* register head */
-				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
-				if (!R_RegisterModelShort(model))
-					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
-
-				/* skip skin */
-				list = list->next;
-
-				/* new path */
-				list = list->next;
-
-				cls.loadingPercent += percent / (td->numModels[j] * csi.numTeamDefs * NAME_LAST);
-				SCR_DrawPrecacheScreen(qtrue);
-			}
-		}
-	/* some genders may not have models - ensure that we do the wanted percent step */
-	cls.loadingPercent = loading + percent;
-}
-
-/**
- * @brief Precaches all models at game startup - for faster access
- * @todo In case of vid restart due to changed settings the @c vid_genericPool is
- * wiped away, too. So the models has to be reloaded with every map change
- */
-static void CL_PrecacheModels (void)
-{
-	int i;
-	float percent = 40.0f;
-
-	if (cl_precache->integer)
-		CL_PrecacheCharacterModels(); /* 55% */
-	else
-		percent = 95.0f;
-
-	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *od = INVSH_GetItemByIDX(i);
-		if (od->type[0] == '\0' || od->isDummy)
-			continue;
-
-		if (od->model[0] != '\0') {
-			cls.modelPool[i] = R_RegisterModelShort(od->model);
-			if (cls.modelPool[i])
-				Com_DPrintf(DEBUG_CLIENT, "CL_PrecacheModels: Registered object model: '%s' (%i)\n", od->model, i);
-		}
-		cls.loadingPercent += percent / csi.numODs;
-		SCR_DrawPrecacheScreen(qtrue);
-	}
-}
-
 static void CL_SetRatioFilter_f (void)
 {
 	uiNode_t* firstOption = UI_GetOption(OPTION_VIDEO_RESOLUTIONS);
@@ -729,32 +646,14 @@ void CL_InitAfter (void)
 	S_Frame();
 	S_LoadSamples();
 
-	cls.loadingPercent = 2.0f;
-
-	/* precache loading screen */
-	SCR_DrawPrecacheScreen(qtrue);
-
-	/* init irc commands and cvars */
-	Irc_Init();
-
-	cls.loadingPercent = 5.0f;
-	SCR_DrawPrecacheScreen(qtrue);
-
 	/* preload all models for faster access */
-	CL_PrecacheModels(); /* 95% */
-
-	cls.loadingPercent = 100.0f;
-	SCR_DrawPrecacheScreen(qtrue);
+	CL_ViewPrecacheModels(); /* 95% */
 
 	CL_TeamDefInitMenu();
 	CL_VideoInitMenu();
 	IN_JoystickInitMenu();
 
 	CL_LanguageInit();
-
-	/* now make sure that all the precached models are stored until we quit the game
-	 * otherwise they would be freed with every map change */
-	R_SwitchModelMemPoolTag();
 }
 
 /**
@@ -850,7 +749,6 @@ static void CL_InitLocal (void)
 	cls.realtime = Sys_Milliseconds();
 
 	/* register our variables */
-	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
 	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_log_battlescape_events = Cvar_Get("cl_log_battlescape_events", "1", 0, "Log all battlescape events to events.log");
@@ -1152,12 +1050,12 @@ void CL_Init (void)
 
 	VID_Init();
 	S_Init();
-
 	SCR_Init();
 
-	SCR_DrawPrecacheScreen(qfalse);
-
 	CL_InitLocal();
+
+	Irc_Init();
+	CL_ViewInit();
 
 	CL_InitParticles();
 

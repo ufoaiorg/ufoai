@@ -116,6 +116,7 @@ void VID_Restart_f (void)
 	R_Shutdown();
 	R_Init();
 	UI_Reinit();
+	CL_ViewPrecacheModels();
 
 	CL_ViewLoadMedia();
 	GAME_ReloadMode();
