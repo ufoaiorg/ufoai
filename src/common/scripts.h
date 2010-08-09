@@ -142,7 +142,6 @@ typedef enum {
 	FADE_OUT,
 	FADE_SIN,
 	FADE_SAW,
-	FADE_BLEND,
 
 	FADE_LAST
 } fade_t;

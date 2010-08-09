@@ -357,7 +357,7 @@ const char *const style_names[] = {
 CASSERT(lengthof(style_names) == STYLE_LAST);
 
 const char *const fade_names[] = {
-	"none", "in", "out", "sin", "saw", "blend"
+	"none", "in", "out", "sin", "saw"
 };
 CASSERT(lengthof(fade_names) == FADE_LAST);
 

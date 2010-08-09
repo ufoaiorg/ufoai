@@ -718,7 +718,14 @@ void CL_ParticleFree (ptl_t *p)
 	}
 }
 
-static void CL_Fading (vec4_t color, byte fade, float frac, qboolean onlyAlpha)
+/**
+ * @brief Color fade function.
+ * @param[in,out] color The color vector to fade.
+ * @param[in] fade The type of the fade.
+ * @param[in] frac The fraction to fade the color with.
+ * @param[in] onlyAlpha Only fade the alpha channel of the given RGBA color.
+ */
+static void CL_Fading (vec4_t color, fade_t fade, float frac, qboolean onlyAlpha)
 {
 	int i;
 
@@ -743,8 +750,7 @@ static void CL_Fading (vec4_t color, byte fade, float frac, qboolean onlyAlpha)
 			for (i = onlyAlpha ? 3 : 0; i < 4; i++)
 				color[i] *= (1.0 - frac) * 2;
 		break;
-	default:
-		/* shouldn't happen */
+	case FADE_NONE:
 		break;
 	}
 }
