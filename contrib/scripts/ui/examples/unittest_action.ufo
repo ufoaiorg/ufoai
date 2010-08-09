@@ -181,13 +181,13 @@ window unittest_action
 	}
 
 	confunc testActionInjection {
-		if ( *cvar:test == 2 ) { *testCommon4@color = "0 1 0 1" }
-		else { *testCommon4@color = "1 0 0 1" }
+		if ( *cvar:test == 2 ) { *node:root.testCommon4@color = "0 1 0 1" }
+		else { *node:root.testCommon4@color = "1 0 0 1" }
 	}
 
 	confunc testActionEvent {
-		if ( *cvar:test == 4 ) { *testCommon5@color = "0 1 0 1" }
-		else { *testCommon5@color = "1 0 0 1" }
+		if ( *cvar:test == 4 ) { *node:root.testCommon5@color = "0 1 0 1" }
+		else { *node:root.testCommon5@color = "1 0 0 1" }
 	}
 
 	//
@@ -199,37 +199,37 @@ window unittest_action
 		// func
 
 		call *node:root.set0
-		if ( *cvar:test == 0 ) { *testCommon1@color = "0 1 0 1" }
-		else { *testCommon1@color = "1 0 0 1" }
+		if ( *cvar:test == 0 ) { *node:root.testCommon1@color = "0 1 0 1" }
+		else { *node:root.testCommon1@color = "1 0 0 1" }
 		call *node:root.set1
-		if ( *cvar:test == 1 ) { *testCommon2@color = "0 1 0 1" }
-		else { *testCommon2@color = "1 0 0 1" }
+		if ( *cvar:test == 1 ) { *node:root.testCommon2@color = "0 1 0 1" }
+		else { *node:root.testCommon2@color = "1 0 0 1" }
 
 		// confunc
 
 		*cvar:test = 0
 		cmd "unittest_action_inject 2"
-		if ( *cvar:test == 0 ) { *testCommon3@color = "0 1 0 1" }
-		else { *testCommon3@color = "1 0 0 1" }
+		if ( *cvar:test == 0 ) { *node:root.testCommon3@color = "0 1 0 1" }
+		else { *node:root.testCommon3@color = "1 0 0 1" }
 		cmd "testActionInjection"
 
 		// node event
 
-		*testCommon5@color = "1 0 0 1"
+		*node:root.testCommon5@color = "1 0 0 1"
 		cmd "mn_push unittest_action_eventtest"
 		cmd "testActionEvent"
 
-		*testCommon6@color = "1 0 0 1"
-		*testCommon7@color = "1 0 0 1"
-		*node:root.testFoo@onClick = { *testCommon6@color = "0 1 0 1" }
+		*node:root.testCommon6@color = "1 0 0 1"
+		*node:root.testCommon7@color = "1 0 0 1"
+		*node:root.testFoo@onClick = { *node:root.testCommon6@color = "0 1 0 1" }
 		call *node:root.testFoo@onClick
-		*node:root.testFoo@onClick = { *testCommon7@color = "0 1 0 1" }
+		*node:root.testFoo@onClick = { *node:root.testCommon7@color = "0 1 0 1" }
 		call *node:root.testFoo@onClick
 
 		*cvar:test = 1
 		while ( *cvar:test == 1 ) {
-			if ( *cvar:test == 1 ) { *testCommon8@color = "0 1 0 1" }
-			else { *testCommon8@color = "1 0 0 1" }
+			if ( *cvar:test == 1 ) { *node:root.testCommon8@color = "0 1 0 1" }
+			else { *node:root.testCommon8@color = "1 0 0 1" }
 			*cvar:test = 0
 		}
 
@@ -241,27 +241,27 @@ window unittest_action
 			elif ( *cvar:test == 2 ) { *cvar:test = 3 }
 			elif ( *cvar:test == 3 ) { *cvar:test = 4 }
 		}
-		if ( *cvar:test == 3 ) { *testCommon9@color = "0 1 0 1" }
-		else { *testCommon9@color = "1 0 0 1" }
+		if ( *cvar:test == 3 ) { *node:root.testCommon9@color = "0 1 0 1" }
+		else { *node:root.testCommon9@color = "1 0 0 1" }
 	}
 
 	//
 	// Listener tests
 	//
 
-	button sender1 { invis true onClick { *testListener1@color = "0 1 0 1" } }
-	func listener1 { *testListener2@color = "0 1 0 1" }
+	button sender1 { invis true onClick { *node:root.testListener1@color = "0 1 0 1" } }
+	func listener1 { *node:root.testListener2@color = "0 1 0 1" }
 
-	button sender2 { invis true onClick { *testListener3@color = "0 1 0 1" } }
-	func listener2 { *testListener4@color = "1 0 0 1" }
+	button sender2 { invis true onClick { *node:root.testListener3@color = "0 1 0 1" } }
+	func listener2 { *node:root.testListener4@color = "1 0 0 1" }
 
-	button sender3 { invis true onClick { *testListener5@color = "0 1 0 1" } }
-	func listener3-1 { *testListener6@color = "0 1 0 1" }
-	func listener3-2 { *testListener7@color = "0 1 0 1" }
+	button sender3 { invis true onClick { *node:root.testListener5@color = "0 1 0 1" } }
+	func listener3_1 { *node:root.testListener6@color = "0 1 0 1" }
+	func listener3_2 { *node:root.testListener7@color = "0 1 0 1" }
 
-	button sender4 { invis true onClick { *testListener8@color = "0 1 0 1" } }
-	func listener4-1 { *testListener9@color = "1 0 0 1" }
-	func listener4-2 { *testListener10@color = "0 1 0 1" }
+	button sender4 { invis true onClick { *node:root.testListener8@color = "0 1 0 1" } }
+	func listener4_1 { *node:root.testListener9@color = "1 0 0 1" }
+	func listener4_2 { *node:root.testListener10@color = "0 1 0 1" }
 
 	func testListenerSetUp {
 		// one listener
@@ -272,13 +272,13 @@ window unittest_action
 		cmd "mn_removelistener <path:root>.sender2@onClick <path:root>.listener2"
 
 		// two listener
-		cmd "mn_addlistener <path:root>.sender3@onClick <path:root>.listener3-1"
-		cmd "mn_addlistener <path:root>.sender3@onClick <path:root>.listener3-2"
+		cmd "mn_addlistener <path:root>.sender3@onClick <path:root>.listener3_1"
+		cmd "mn_addlistener <path:root>.sender3@onClick <path:root>.listener3_2"
 
 		// one listener
-		cmd "mn_addlistener <path:root>.sender4@onClick <path:root>.listener4-1"
-		cmd "mn_addlistener <path:root>.sender4@onClick <path:root>.listener4-2"
-		cmd "mn_removelistener <path:root>.sender4@onClick <path:root>.listener4-1"
+		cmd "mn_addlistener <path:root>.sender4@onClick <path:root>.listener4_1"
+		cmd "mn_addlistener <path:root>.sender4@onClick <path:root>.listener4_2"
+		cmd "mn_removelistener <path:root>.sender4@onClick <path:root>.listener4_1"
 	}
 
 	confunc testListenerTest {
@@ -286,14 +286,14 @@ window unittest_action
 		call *node:root.sender1@onClick
 
 		// no listener
-		*testListener4@color = "0 1 0 1"
+		*node:root.testListener4@color = "0 1 0 1"
 		call *node:root.sender2@onClick
 
 		// two listener
 		call *node:root.sender3@onClick
 
 		// one listener
-		*testListener9@color = "0 1 0 1"
+		*node:root.testListener9@color = "0 1 0 1"
 		call *node:root.sender4@onClick
 
 		// clean up
@@ -307,11 +307,11 @@ window unittest_action
 		// no listener
 
 		// two listener
-		cmd "mn_removelistener <path:root>.sender3@onClick <path:root>.listener3-1"
-		cmd "mn_removelistener <path:root>.sender3@onClick <path:root>.listener3-2"
+		cmd "mn_removelistener <path:root>.sender3@onClick <path:root>.listener3_1"
+		cmd "mn_removelistener <path:root>.sender3@onClick <path:root>.listener3_2"
 
 		// one listener
-		cmd "mn_removelistener <path:root>.sender4@onClick <path:root>.listener4-2"
+		cmd "mn_removelistener <path:root>.sender4@onClick <path:root>.listener4_2"
 	}
 
 	func testListener {
@@ -331,14 +331,14 @@ window unittest_action
 		// (can be a right behaviour)
 
 		// 1-1) add a listener can change an already set anonymous function
-		*testLack1@color = "1 0 0 1"
+		*node:root.testLack1@color = "1 0 0 1"
 
 		// 1-2) set an anonymous function will remove an existing listener
-		*testLack2@color = "1 0 0 1"
+		*node:root.testLack2@color = "1 0 0 1"
 
 		// 2) listener into an inherited event should also change the super event
 		// (wrong behaviour)
-		*testLack3@color = "1 0 0 1"
+		*node:root.testLack3@color = "1 0 0 1"
 	}
 
 	//
