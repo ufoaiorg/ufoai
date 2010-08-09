@@ -1296,6 +1296,35 @@ static void PTL_DebugSpawnMarker_f (void)
 	CL_ParticleSpawn("debug_marker", 0, worldOrigin, NULL, NULL);
 }
 
+static void PTL_DebugList_f (void)
+{
+	int i;
+
+	Com_Printf("%i particles\n", r_numParticles);
+	for (i = 0; i < r_numParticles; i++) {
+		const ptl_t *p = &r_particles[i];
+		const ptlDef_t *def = p->ctrl;
+		const value_t *pp = pps;
+		if (!p->inuse)
+			continue;
+		Com_Printf("particle %i\n", i);
+		Com_Printf(" name: %s\n", def->name);
+		for (pp = pps; pp->string; pp++) {
+			const char* value = "";
+			if (!strcmp(pp->string, "image") && p->pic) {
+				value = p->pic->name;
+			} else if (!strcmp(pp->string, "model") && p->model) {
+				value = p->model->name;
+			} else if (!strcmp(pp->string, "program") && p->program) {
+				value = p->program->name;
+			} else {
+				value = Com_ValueToStr(p, pp->type, pp->ofs);
+			}
+			Com_Printf(" %s: %s\n", pp->string, value);
+		}
+	}
+}
+
 /**
  * @brief Initializes cvars and commands
  */
@@ -1303,4 +1332,5 @@ void CL_InitParticles (void)
 {
 	cl_particleweather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");
 	Cmd_AddCommand("debug_spawnmarker", PTL_DebugSpawnMarker_f, "Spawn a marker particle in the world at a given location");
+	Cmd_AddCommand("debug_particlelist", PTL_DebugList_f, NULL);
 }

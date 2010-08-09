@@ -144,8 +144,8 @@ typedef struct ptl_s {
 	ptlArt_t *pic;			/**< Picture link. */
 	ptlArt_t *model;		/**< Model link. */
 
-	byte blend;				/**< blend mode */
-	byte style;				/**< style mode */
+	blend_t blend;				/**< blend mode */
+	style_t style;				/**< style mode */
 	vec2_t size;
 	vec3_t scale;
 	vec4_t color;
@@ -172,7 +172,7 @@ typedef struct ptl_s {
 	float lastFrame;	/**< time (in seconds) when the think function was last executed (perhaps this can be used to delay or speed up particle actions). */
 	float tps; /**< think per second - call the think function tps times each second, the first call at 1/tps seconds */
 	float lastThink;
-	byte thinkFade, frameFade;
+	fade_t thinkFade, frameFade;
 	float t;	/**< time that the particle has been active already */
 	float dt;	/**< time increment for rendering this particle (delta time) */
 	float life;	/**< specifies how long a particle will be active (seconds) */
