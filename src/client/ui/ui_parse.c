@@ -68,6 +68,10 @@ static const char *reserved_tokens[] = {
 	"super",
 	"node",
 	"cvar",
+	"int",
+	"float",
+	"string",
+	"var",
 	NULL
 };
 
