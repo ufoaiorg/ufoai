@@ -114,7 +114,7 @@ typedef struct ptlCmd_s {
 } ptlCmd_t;
 
 typedef struct ptlDef_s {
-	char name[MAX_VAR];
+	char name[MAX_VAR];	/**< script id of the particle */
 	ptlCmd_t *init; /**< only called at particle spawn time */
 	ptlCmd_t *run;	/**< called every frame */
 	ptlCmd_t *think;	/**< depends on the tps value of the particle */
@@ -129,21 +129,21 @@ typedef enum artType_s {
 } artType_t;
 
 typedef struct ptlArt_s {
-	char name[MAX_VAR];
+	char name[MAX_VAR];	/**< the path of the particle art */
 	int frame;
-	int skin;
+	int skin;		/**< the skin of the model */
 	union {
 		const image_t *image;
 		model_t *model;
 	} art;
-	artType_t type;
+	artType_t type;	/**< the type of the particle art */
 } ptlArt_t;
 
 typedef struct ptl_s {
 	qboolean inuse;			/**< particle active? */
 	qboolean invis;			/**< is this particle invisible */
 
-	r_program_t *program;
+	r_program_t *program;	/**< this glsl program is bound before the particle is executed */
 
 	ptlArt_t *pic;			/**< Picture link. */
 	ptlArt_t *model;		/**< Model link. */
@@ -169,7 +169,7 @@ typedef struct ptl_s {
 	struct ptl_s* parent;   /**< pointer to parent */
 
 	/* private */
-	ptlDef_t *ctrl;
+	ptlDef_t *ctrl;		/**< pointer to the particle definition */
 	int startTime;
 	int frame, endFrame;
 	float fps;	/**< how many frames per second (animate) */
