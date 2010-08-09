@@ -411,10 +411,10 @@ static const size_t vt_aligns[] = {
 	sizeof(char),	/* V_STRING */
 	sizeof(char),	/* V_TRANSLATION_STRING */
 	sizeof(char),	/* V_LONGSTRING */
-	sizeof(byte),	/* V_ALIGN */
-	sizeof(byte),	/* V_BLEND */
-	sizeof(byte),	/* V_STYLE */
-	sizeof(byte),	/* V_FADE */
+	sizeof(align_t),/* V_ALIGN */
+	sizeof(blend_t),/* V_BLEND */
+	sizeof(style_t),/* V_STYLE */
+	sizeof(fade_t),	/* V_FADE */
 	sizeof(int),	/* V_SHAPE_SMALL */
 	sizeof(uint32_t),	/* V_SHAPE_BIG */
 	sizeof(byte),	/* V_DMGTYPE */
@@ -723,10 +723,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			if (!strcmp(token, align_names[num]))
 				break;
 		if (num == ALIGN_LAST)
-			*b = 0;
+			*(align_t *)b = 0;
 		else
-			*b = num;
-		*writtenBytes = sizeof(byte);
+			*(align_t *)b = num;
+		*writtenBytes = sizeof(align_t);
 		break;
 
 	case V_BLEND:
@@ -734,10 +734,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			if (!strcmp(token, blend_names[num]))
 				break;
 		if (num == BLEND_LAST)
-			*b = 0;
+			*(blend_t *)b = 0;
 		else
-			*b = num;
-		*writtenBytes = sizeof(byte);
+			*(blend_t *)b = num;
+		*writtenBytes = sizeof(blend_t);
 		break;
 
 	case V_STYLE:
@@ -745,10 +745,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			if (!strcmp(token, style_names[num]))
 				break;
 		if (num == STYLE_LAST)
-			*b = 0;
+			*(style_t *)b = 0;
 		else
-			*b = num;
-		*writtenBytes = sizeof(byte);
+			*(style_t *)b = num;
+		*writtenBytes = sizeof(style_t);
 		break;
 
 	case V_FADE:
@@ -756,10 +756,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			if (!strcmp(token, fade_names[num]))
 				break;
 		if (num == FADE_LAST)
-			*b = 0;
+			*(fade_t *)b = 0;
 		else
-			*b = num;
-		*writtenBytes = sizeof(byte);
+			*(fade_t *)b = num;
+		*writtenBytes = sizeof(fade_t);
 		break;
 
 	case V_SHAPE_SMALL:
@@ -1103,11 +1103,20 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		return len;
 
 	case V_ALIGN:
+		*(align_t *)b = *(const align_t *) set;
+		return sizeof(align_t);
+
 	case V_BLEND:
+		*(blend_t *)b = *(const blend_t *) set;
+		return sizeof(blend_t);
+
 	case V_STYLE:
+		*(style_t *)b = *(const style_t *) set;
+		return sizeof(style_t);
+
 	case V_FADE:
-		*b = *(const byte *) set;
-		return 1;
+		*(fade_t *)b = *(const fade_t *) set;
+		return sizeof(fade_t);
 
 	case V_SHAPE_SMALL:
 		*(int *) b = *(const int *) set;
@@ -1309,7 +1318,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 			return (const char *) b;
 
 	case V_ALIGN:
-		assert(*(const int *)b < ALIGN_LAST);
+		assert(*(const align_t *)b < ALIGN_LAST);
 		Q_strncpyz(valuestr, align_names[*(const align_t *)b], sizeof(valuestr));
 		return valuestr;
 
@@ -1334,8 +1343,8 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 
 	case V_DMGWEIGHT:
 	case V_DMGTYPE:
-		assert(*(const int *)b < MAX_DAMAGETYPES);
-		return csi.dts[*(const int *)b].id;
+		assert(*(const byte *)b < MAX_DAMAGETYPES);
+		return csi.dts[*(const byte *)b].id;
 
 	case V_DATE:
 		Com_sprintf(valuestr, sizeof(valuestr), "%i %i %i", ((const date_t *) b)->day / DAYS_PER_YEAR, ((const date_t *) b)->day % DAYS_PER_YEAR, ((const date_t *) b)->sec);
