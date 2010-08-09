@@ -682,6 +682,10 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 
 	/* run init function */
 	CL_ParticleFunction(p, pd->init);
+	if (!p->tps && !p->life) {
+		Com_Printf("Particle %s does not have a tps nor a life set\n", name);
+		p->tps = 1;
+	}
 
 	return p;
 }
