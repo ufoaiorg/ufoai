@@ -241,8 +241,8 @@ particle plasma_explosion
 		push   int 25
 		nspawn pexplosionVolumetric
 
+		kill
 	}
-	think { kill }
 }
 
 particle pexplosionFlame
@@ -348,10 +348,8 @@ particle explosion_1
 		push   int 25
 		nspawn explosionVolumetric
 
-		lightcolor "0.3 1.0 3.0"
-		lightintensity 0.2
+		kill
 	}
-	think { kill }
 }
 
 particle explosionFlame
@@ -695,7 +693,7 @@ particle smokeRound2
 	think { kill }
 }
 
-particle burnFlame2				// fuer falcon_crash
+particle burnFlame2				// for falcon_crash
 {
 	init
 	{
@@ -703,25 +701,25 @@ particle burnFlame2				// fuer falcon_crash
 		blend  add
 		style  facing
 		thinkfade  out
-		rand   float 0.3		// 1/Lebensdauer
+		rand   float 0.3		// 1/lifetime
 		add    float 0.3
 		pop    *tps
-		crand  vector "50 20 15"	// streueung
+		crand  vector "50 20 15"	// variance
 		add    *s
 		pop    *s
-		v      "5 -20 50"		// geschw xyz
+		v      "5 -20 50"		// velocity xyz
 	}
 	run
 	{
-		push   pos "20 20"		// groessenaenderung
+		push   pos "20 20"		// change in size
 		mul    *t
-		add    pos "20 20"		// groesse start
+		add    pos "20 20"		// size to start with
 		pop    *size
 	}
 	think { kill }
 }
 
-particle burnFlame3				// Feuerschweif-Partikel
+particle burnFlame3				// fire train particle
 {
 	init
 	{
