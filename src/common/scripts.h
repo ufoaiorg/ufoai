@@ -188,6 +188,8 @@ typedef enum {
 #ifdef DEBUG
 int Com_EParseValueDebug(void *base, const char *token, valueTypes_t type, int ofs, size_t size, const char* file, int line);
 int Com_SetValueDebug(void *base, const void *set, valueTypes_t type, int ofs, size_t size, const char* file, int line);
+#define Com_SetValue(base, set, type, ofs, size) Com_SetValueDebug(base, set, type, ofs, size, __FILE__, __LINE__)
+#define Com_EParseValue(base, token, type, ofs, size) Com_EParseValueDebug(base, token, type, ofs, size, __FILE__, __LINE__)
 #else
 int Com_EParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size);
 int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t size);

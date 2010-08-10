@@ -31,23 +31,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GAME_Q_SHARED_H
 #define GAME_Q_SHARED_H
 
-#ifdef DEBUG
-#define Com_SetValue(base, set, type, ofs, size) Com_SetValueDebug(base, set, type, ofs, size, __FILE__, __LINE__)
-#define Com_EParseValue(base, token, type, ofs, size) Com_EParseValueDebug(base, token, type, ofs, size, __FILE__, __LINE__)
-#endif
-
 #include "../shared/ufotypes.h"
 #include "../shared/byte.h"
 #include "../shared/shared.h"
 #include "../shared/mathlib.h"
+#include "../shared/defines.h"
+#include "../common/list.h"
 
 /* filesystem stuff */
 #ifdef _WIN32
 # include <direct.h>
 # include <io.h>
-#else
-# include <unistd.h>
-# include <dirent.h>
 #endif
 
 #ifdef DEDICATED_ONLY
@@ -55,13 +49,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define _(String) String
 # define ngettext(x, y, cnt) x
 #endif
-
-#ifndef logf
-#define logf(x) ((float)log((double)(x)))
-#endif
-
-#include "../shared/defines.h"
-#include "../common/list.h"
 
 /*
 ==============================================================

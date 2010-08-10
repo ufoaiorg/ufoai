@@ -25,6 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../common/common.h"
 
+#ifndef logf
+#define logf(x) ((float)log((double)(x)))
+#endif
+
 const vec2_t vec2_origin = { 0, 0 };
 const vec3_t vec3_origin = { 0, 0, 0 };
 const vec4_t vec4_origin = { 0, 0, 0, 0 };
