@@ -273,16 +273,12 @@ void Com_DefaultExtension (char *path, size_t len, const char *extension)
  */
 void Com_FilePath (const char *in, char *out)
 {
-	const char *s;
-
-	s = in + strlen(in) - 1;
+	const char *s = in + strlen(in) - 1;
 
 	while (s != in && *s != '/')
 		s--;
 
-	/** @todo Q_strncpyz */
-	strncpy(out, in, s - in);
-	out[s - in] = 0;
+	Q_strncpyz(out, in, s - in + 1);
 }
 
 /**
