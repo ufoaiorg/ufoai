@@ -41,14 +41,13 @@ static const char* transferTypeIDs[] = {
 };
 CASSERT(lengthof(transferTypeIDs) == TRANS_TYPE_MAX);
 
+/** @todo move this into ccs_t */
 static transferData_t td;
 
 /** @brief Max values for transfer factors. */
 static const int MAX_TR_FACTORS = 500;
 /** @brief number of entries on menu */
 static const int MAX_TRANSLIST_MENU_ENTRIES = 21;
-
-
 
 /**
  * @brief Action to realize when clicking on Transfer Menu.
@@ -399,7 +398,7 @@ static void TR_CargoList (void)
 		for (i = 0; i < ccs.numEmployees[emplType]; i++) {
 			if (td.trEmployeesTmp[emplType][i]) {
 				if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
-					employee_t *employee = td.trEmployeesTmp[emplType][i];
+					const employee_t *employee = td.trEmployeesTmp[emplType][i];
 					if (emplType == EMPL_SOLDIER) {
 						const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 						Com_sprintf(str, lengthof(str), _("Soldier %s %s"), _(rank->shortname), employee->chr.name);
