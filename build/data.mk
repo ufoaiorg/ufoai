@@ -37,8 +37,9 @@ $(PAK_FILES_OUT) :
 	cd base; $(ZIP) $(ZIP_UP_OPTS) $(call DEBASE, $@ $?)
 	-$(ZIP) $(ZIP_DEL_OPTS) $@ $(filter-out $(call DEBASE,$^), $(shell $(call ZIP_LIST, $@)))
 
-$(BASE_DIR)/0pics.pk3 : $(filter %.jpg %.tga %.png, $(shell $(call FIND, pics))) \
-	$(filter %.jpg %.tga %.png, $(shell $(call FIND, textures)))
+$(BASE_DIR)/0pics.pk3 : $(filter %.jpg %.tga %.png, $(shell $(call FIND, pics)))
+
+$(BASE_DIR)/0textures.pk3 : $(filter %.jpg %.tga %.png, $(shell $(call FIND, textures)))
 
 $(BASE_DIR)/0models.pk3 : $(filter %.mdx %.md2 %.md3 %.dpm %.obj %.jpg %.png %.tga %.anm %.txt %.tag, $(shell $(call FIND, models)))
 
