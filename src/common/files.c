@@ -991,6 +991,8 @@ int FS_BuildFileList (const char *fileList)
 			Q_strncpyz(findname, files, sizeof(findname));
 			FS_NormPath(findname);
 			findname[l] = '\0';
+			if (l > 0 && findname[l - 1] == '/')
+				findname[l - 1] = '\0';
 
 			Sys_ListFilteredFiles(search->filename, findname, name, &list);
 
