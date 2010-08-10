@@ -529,10 +529,8 @@ window transfer
 		selectbox destination_base
 		{
 			cvar		*cvar:mn_trans_base_id
-			image		"ui/selectbox_green"
 			pos			"64 50"
 			size		"288 20"
-			color		"0.6 0.6 0.6 0.3"
 			dataid		OPTION_BASELIST
 			onChange {
 				cmd "trans_selectbase <cvar:mn_trans_base_id>;"

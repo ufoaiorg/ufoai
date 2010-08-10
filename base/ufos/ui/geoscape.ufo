@@ -1889,8 +1889,6 @@ window geoscape_options {
 				pos			"250 0"
 				size		"55 20"
 				cvar		*cvar:cl_3dmap
-				image		"ui/selectbox_green"
-				color		"0.6 0.6 0.6 0.3"
 			}
 			option mode2d {
 				label	"_2D"

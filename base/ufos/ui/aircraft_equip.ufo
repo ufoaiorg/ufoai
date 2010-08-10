@@ -204,7 +204,6 @@ window aircraft_equip extends iaircraft
 				image		"ui/selectbox_green"
 				pos			"29 56"
 				size		"235 20"
-				color		"0.6 0.6 0.6 0.3"
 				onChange {
 					cmd "airequip_selectcategory <cvar:mn_equip_itemtype>;"
 					cmd "airequip_select item -1;"

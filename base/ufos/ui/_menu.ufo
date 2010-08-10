@@ -242,12 +242,10 @@ component panel cmpMapPanel
 	selectbox daynight_box
 	{
 		{
-			tooltip		"_Select whether you want to play @ day- or nighttime."
+			tooltip		"_Select whether you want to play at day- or nighttime."
 			cvar		*cvar:mn_serverday
-			image		"ui/selectbox_green"
 			pos			"240 200"
 			size		"200 20"
-			color		"0.6 0.6 0.6 0.3"
 		}
 		option night
 		{
@@ -256,8 +254,8 @@ component panel cmpMapPanel
 		}
 		option day
 		{
-				label	"_Day"
-				value	"1"
+			label	"_Day"
+			value	"1"
 		}
 	}
 }

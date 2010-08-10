@@ -11,7 +11,10 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
 	invList_t* ic = self->invUnused;
 
 	if (!ic)
-		Sys_Error("INVSH_AddInvList: No free inventory space!");
+		Sys_Error("I_AddInvList: No free inventory space!");
+
+	if (!ic->next)
+		Sys_Error("I_AddInvList: No free inventory space");
 
 	/* Ensure, that for later usage invUnused will be the next empty/free slot. */
 	self->invUnused = ic->next;
@@ -864,6 +867,21 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 }
 
 /**
+ * @brief Calculate the number of free inventory slots
+ * @return The number of free inventory slots
+ */
+static int I_GetFreeSlots (inventoryInterface_t* self)
+{
+	int i = 0;
+	const invList_t* slot = self->invUnused;
+	while (slot) {
+		slot = slot->next;
+		i++;
+	}
+	return i;
+}
+
+/**
  * @brief Initializes the inventory definition by linking the ->next pointers properly.
  * @param[in,out] invList Pointer to invList_t definition being initialized.
  * @param[in] length The size of the invList array.
@@ -894,6 +912,7 @@ void INV_InitInventory (inventoryInterface_t *interface, csi_t* csi, invList_t* 
 	interface->EquipActor = I_EquipActor;
 	interface->EquipActorMelee = I_EquipActorMelee;
 	interface->EquipActorRobot = I_EquipActorRobot;
+	interface->GetFreeSlots = I_GetFreeSlots;
 
 	/* first entry doesn't have an ancestor: invList[0]->next = NULL */
 	interface->invUnused->next = NULL;

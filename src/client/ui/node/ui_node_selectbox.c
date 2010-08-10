@@ -5,7 +5,7 @@
  * selectbox texres_box
  * {
  * 	{
- *	 	image	"ui/selectbox_green"
+ *	 	image	"ui/selectbox"
  *	 	pos	"774 232"
  * 		size	"100 20"
  * 		color	"0.6 0.6 0.6 0.3"
@@ -290,7 +290,7 @@ static void UI_SelectBoxNodeClick (uiNode_t *node, int x, int y)
  */
 static void UI_SelectBoxNodeLoading (uiNode_t *node)
 {
-	Vector4Set(node->color, 1, 1, 1, 1);
+	Vector4Set(node->color, 0.6, 0.6, 0.6, 0.3);
 }
 
 static void UI_SelectBoxNodeLoaded (uiNode_t *node)

@@ -5,12 +5,14 @@
 
 typedef struct inventoryInterface_s
 {
+	/* private */
 	invList_t* invUnused;
 
 	item_t cacheItem;
 
 	csi_t* csi;
 
+	/* public */
 	qboolean (*RemoveFromInventory) (struct inventoryInterface_s* self, inventory_t* const i, const invDef_t * container, invList_t *fItem) __attribute__((nonnull(1), nonnull(2), warn_unused_result));
 
 	invList_t* (*AddToInventory) (struct inventoryInterface_s* self, inventory_t * const i, item_t item, const invDef_t * container, int x, int y,
@@ -31,6 +33,7 @@ typedef struct inventoryInterface_s
 
 	void (*EquipActorRobot) (struct inventoryInterface_s* self, inventory_t* const inv, const teamDef_t* td, objDef_t* weapon) __attribute__((nonnull(1), nonnull(2)));
 
+	int (*GetFreeSlots) (struct inventoryInterface_s* self);
 } inventoryInterface_t;
 
 void INV_InitInventory (inventoryInterface_t *interface, csi_t* csi, invList_t* invList, size_t length);

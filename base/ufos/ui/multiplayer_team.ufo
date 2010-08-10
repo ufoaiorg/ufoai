@@ -635,11 +635,9 @@ window mp_team_edit extends objectinfo
 	 * @sa team_initskin
 	 */
 	selectbox skins {
-		image	"ui/selectbox_green"
 		pos		"660 290"
 		size	"120 40"
 		cvar	*cvar:mn_skin
-		color	"0.6 0.6 0.6 0.3"
 		onChange { cmd "team_changeskin;" }
 		dataid	OPTION_MULTIPLAYER_SKINS
 	}
@@ -924,10 +922,8 @@ window mp_team extends abstract_multiplayer
 
 		selectbox team_box
 		{
-			image	"ui/selectbox_green"
 			pos		"200 540"
 			size	"200 20"
-			color	"0.6 0.6 0.6 0.3"
 			cvar	*cvar:cl_teamdef
 			dataid	OPTION_TEAMDEFS
 		}

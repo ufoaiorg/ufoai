@@ -98,7 +98,7 @@ window options
 			size		"465 35"
 			font		"f_menubig"
 			textalign	ALIGN_CC
-			color		"0 1 0 1"
+			color		"0 0.5 0 1"
 		}
 		// ======================
 		// PLAYER'S NAME SUBMENU
@@ -209,10 +209,8 @@ window options
 			{
 				tooltip		"_Default minimum zoom level of the geoscape camera is 1.00."
 				cvar		*cvar:cl_mapzoommin
-				image		"ui/selectbox_green"
 				pos			"343 465"
 				size		"75 20"
-				color		"0.0 0.7 0.0 0.3"
 				textalign	ALIGN_CR
 			}
 			option geocamzoom_min000
@@ -252,10 +250,8 @@ window options
 			{
 				tooltip		"_Default maximum zoom level of the geoscape camera is 6.00."
 				cvar		*cvar:cl_mapzoommax
-				image		"ui/selectbox_red"
 				pos			"418 465"
 				size		"75 20"
-				color		"0.7 0.0 0.0 0.3"
 			}
 			option geocamzoom_max20
 			{
@@ -401,7 +397,7 @@ window options
 			size		"465 35"
 			font		"f_menubig"
 			textalign	ALIGN_CC
-			color		"0 0.93 0 1"
+			color		"0 0.5 0 1"
 		}
 		// ============================
 		// RESOLUTION SETTINGS SUBMENU
@@ -435,8 +431,6 @@ window options
 				cvar		*cvar:mn_vidratio
 				pos			"255 137"
 				size		"100 20"
-				image		"ui/selectbox_green"
-				color		"0.6 0.6 0.6 0.3"
 				onChange {	cmd "cl_setratiofilter <cvar:mn_vidratio>"	}
 			}
 			option all
@@ -484,8 +478,6 @@ window options
 			cvar		*cvar:mn_vidmode
 			pos			"359 137"
 			size		"125 20"
-			image		"ui/selectbox_green"
-			color		"0.6 0.6 0.6 0.3"
 			dataid		OPTION_VIDEO_RESOLUTIONS
 		}
 		// ==================
@@ -693,10 +685,8 @@ window options
 			{
 				tooltip		"_png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
 				cvar		*cvar:r_screenshot_format
-				image		"ui/selectbox_green"
 				pos			"359 470"
 				size		"125 20"
-				color		"0.8 0 0 0.3"
 			}
 			option screenshot_format_jpeg
 			{
@@ -753,7 +743,6 @@ window options
 			tooltip		"_UFO:AI lets you finetune everything if you like."
 			string		"_Advanced Video"
 			pos			"162 635"
-			color		"0 0.93 0 1"
 			onClick
 			{
 				*node:root.options_video@invis = true
@@ -781,7 +770,7 @@ window options
 			size		"465 35"
 			font		"f_menubig"
 			textalign	ALIGN_CC
-			color		"0 0.86 0 1"
+			color		"0 0.5 0 1"
 		}
 		// =======================
 		// VOLUME CONTROL SUBMENU
@@ -914,10 +903,8 @@ window options
 			{
 				tooltip		"_Current sample rate frequency in kHz."
 				cvar		*cvar:snd_rate
-				image		"ui/selectbox_green"
 				pos			"359 295"
 				size		"125 20"
-				color		"0.6 0.6 0.6 0.3"
 			}
 			option low_value
 			{
@@ -970,7 +957,7 @@ window options
 			size		"465 35"
 			font		"f_menubig"
 			textalign	ALIGN_CC
-			color		"0 0.79 0 1"
+			color		"0 0.5 0 1"
 		}
 		// ====================================
 		// BATTLESCAPE CAMERA SETTINGS SUBMENU
@@ -1075,10 +1062,8 @@ window options
 			{
 				tooltip		"_ATTENTION: Setting minimum camera pitch shift below 15 degrees might complicate selecting and commanding your soldiers."
 				cvar		*cvar:cl_campitchmin
-				image		"ui/selectbox_green"
 				pos			"343 210"
 				size		"75 20"
-				color		"0.0 0.7 0.0 0.3"
 				textalign	ALIGN_CR
 			}
 			option minus90degrees
@@ -1123,10 +1108,8 @@ window options
 			{
 				tooltip		"_ATTENTION: Setting maximum camera pitch shift over 90 degrees will turn your camera upside down when exceeding that point."
 				cvar		*cvar:cl_campitchmax
-				image		"ui/selectbox_red"
 				pos			"418 210"
 				size		"75 20"
-				color		"0.7 0.0 0.0 0.3"
 			}
 			option minus90degrees
 			{
@@ -1175,10 +1158,8 @@ window options
 			{
 				tooltip		"_Default minimum zoom level of the battlescape camera is 0.30."
 				cvar		*cvar:cl_camzoommin
-				image		"ui/selectbox_green"
 				pos			"343 235"
 				size		"75 20"
-				color		"0.0 0.7 0.0 0.3"
 			}
 			option zoom_min0
 			{
@@ -1222,10 +1203,8 @@ window options
 			{
 				tooltip		"_Default maximum zoom level of the battlescape camera is 3.40."
 				cvar		*cvar:cl_camzoommax
-				image		"ui/selectbox_red"
 				pos			"418 235"
 				size		"75 20"
-				color		"0.7 0.0 0.0 0.3"
 			}
 			option zoom_max200
 			{
@@ -1279,10 +1258,8 @@ window options
 			{
 				tooltip		"_Set zoom quant to low values if you want more control, set this value higher if the zoom is too slow."
 				cvar		*cvar:cl_camzoomquant
-				image		"ui/selectbox_green"
 				pos			"418 260"
 				size		"75 20"
-				color		"0.6 0.6 0.6 0.3"
 			}
 			option zoom_quant000
 			{
@@ -1407,10 +1384,8 @@ window options
 			{
 				tooltip		"_'No' means all your orders on the battlescape will be executed immediately. 'Yes' means you will be prompted to confirm all of your orders before the soldier begins to execute them. 'Only for moving' means the path will be displayed before you confirm a soldier's move."
 				cvar		*cvar:confirm_actions
-				image		"ui/selectbox_green"
 				pos			"343 390"
 				size		"155 20"
-				color		"0.6 0.6 0.6 0.3"
 			}
 			option confirm_value {
 				label	"_Yes"
@@ -1440,10 +1415,8 @@ window options
 			{
 				tooltip		"_Select 'Yes' if you want more intelligent soldiers."
 				cvar		*cvar:cl_autostand
-				image		"ui/selectbox_green"
 				pos			"343 415"
 				size		"155 20"
-				color		"0.6 0.6 0.6 0.3"
 			}
 			option confirm_value
 			{
@@ -1471,10 +1444,8 @@ window options
 			{
 				tooltip		"_Don't be shy and try the Alternative HUD."
 				cvar		*cvar:mn_hud
-				image		"ui/selectbox_green"
 				pos			"343 440"
 				size		"155 20"
-				color		"0.6 0.6 0.6 0.3"
 			}
 			option hud_value {
 				label	"_Original HUD"
@@ -1528,10 +1499,8 @@ window options
 			tooltip		"_Available game controllers."
 			cvar		*cvar:in_joystickNo
 			dataid		OPTION_JOYSTICKS
-			image		"ui/selectbox_green"
 			pos			"243 545"
 			size		"256 20"
-			color		"0.6 0.6 0.6 0.3"
 		}
 		// ===================
 		// JOYSTICK THRESHOLD
@@ -1588,10 +1557,8 @@ window options
 		// =============
 		cmpMenuButton button_keys
 		{
-			tooltip		"_Keys are the things on your keyboard."
 			string		"_Show Keys"
 			pos			"162 635"
-			color		"0 0.79 0 1"
 			onClick
 			{
 				*node:root.options_gameplay@invis = true
@@ -1647,10 +1614,8 @@ window options
 			{
 				tooltip		"_Low means a maximum of 256x256 pixel texture resolution. Extreme means up to 8192x8192 pixel."
 				cvar		*cvar:r_maxtexres
-				image		"ui/selectbox_green"
 				pos			"359 137"
 				size		"125 20"
-				color		"0.6 0.6 0.6 0.3"
 			}
 			option low_value {
 				label	"_Low"
@@ -1947,10 +1912,8 @@ window options
 			{
 				tooltip		"_Low means a maximum lightmap resolution of 512x512 pixel. High means up to 2048x2048 pixel."
 				cvar		*cvar:r_maxlightmap
-				image		"ui/selectbox_green"
 				pos			"359 472"
 				size		"125 20"
-				color		"0.6 0.6 0.6 0.3"
 			}
 			option low_value {
 				label	"_Low"
