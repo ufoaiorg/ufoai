@@ -228,23 +228,16 @@ typedef struct objDef_s {
 	char image[MAX_VAR];		/**< Object image file - relative to game dir. */
 	char type[MAX_VAR];		/**< melee, rifle, ammo, armour. e.g. used in the ufopedia */
 	char armourPath[MAX_VAR];
-	char extends_item[MAX_VAR];
 	uint32_t shape;			/**< The shape in inventory. */
 
-	byte sx, sy;			/**< Size in x and y direction. */
 	float scale;			/**< scale value for images? and models */
 	vec3_t center;			/**< origin for models */
-	char animationIndex;	/**< The animation index for the character with the weapon. */
 	qboolean weapon;		/**< This item is a weapon or ammo. */
 	qboolean holdTwoHanded;		/**< The soldier needs both hands to hold this object. */
 	qboolean fireTwoHanded;		/**< The soldier needs both hands to fire using object. */
 	qboolean extension;		/**< This is an extension. (may not be headgear, too). */
 	qboolean headgear;		/**< This is a headgear. (may not be extension, too). */
 	qboolean thrown;		/**< This item can be thrown. */
-
-	int price;			/**< Price for this item. */
-	int size;			/**< Size of an item, used in storage capacities. */
-
 	qboolean isVirtual;	/**< virtual equipment don't show up in menus, if it's an ammo no item needed for reload */
 	/** Item type used to check against buytypes.
 	 * @sa type=="armour", type=="ammo"			equals "isAmmo"
@@ -255,8 +248,6 @@ typedef struct objDef_s {
 	qboolean isMisc;
 	qboolean isUGVitem;
 	qboolean isDummy;
-
-	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 
 	/* Weapon specific. */
 	int ammo;			/**< This value is set for weapon and it says how many bullets currently loaded clip would
@@ -284,20 +275,22 @@ typedef struct objDef_s {
 	int numWeapons;		/**< Number of weapons this ammo can be used in.
 						 * Maximum value for fireDef_t.weapFdsIdx <= MAX_WEAPONS_PER_OBJDEF. */
 
-	/**
-	 * @todo move this into campaign only structs
-	 */
-	struct technology_s *tech;	/**< Technology link to item. */
 
 	/* Armour specific */
 	short protection[MAX_DAMAGETYPES];	/**< Protection values for each armour and every damage type. */
 	short ratings[MAX_DAMAGETYPES];		/**< Rating values for each armour and every damage type to display in the menus. */
 
 	byte dmgtype;
+	byte sx, sy;			/**< Size in x and y direction. */
+	char animationIndex;	/**< The animation index for the character with the weapon. */
 
+	/**** @todo move into campaign only structure ****/
 	/* Aircraft specific */
-	/** @todo move into campaign only structure */
 	craftitem_t craftitem;
+	struct technology_s *tech;	/**< Technology link to item. */
+	int price;			/**< Price for this item. */
+	int size;			/**< Size of an item, used in storage capacities. */
+	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 } objDef_t;
 
 /**
