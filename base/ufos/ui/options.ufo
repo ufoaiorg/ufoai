@@ -121,7 +121,7 @@ window options
 			image		"ui/button_green_verysmall"
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	ALIGN_CC
+			textalign	ALIGN_CR
 			padding		8
 			font		"f_verysmall"
 			pos			"72 135"
@@ -1665,7 +1665,7 @@ window options
 		// ============
 		string lod_str
 		{
-			tooltip		"_Texture Level-of-Detail. Enable this if you want more detailed textures and higher rendering quality."
+			tooltip		"_Texture Level-of-Detail. Enabling this might result in some blurry textures if you zoom out a little bit."
 			string		"_LoD:"
 			pos			"72 185"
 			size		"250 20"
