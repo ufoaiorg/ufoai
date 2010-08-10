@@ -34,6 +34,7 @@ help:
 	@echo " * deb          - Builds a debian package"
 	@echo " * lang         - Compiles the language files"
 	@echo " * maps         - Compiles the maps"
+	@echo " * models       - Compiles the model mdx files (faster model loading)"
 	@echo " * pk3          - Generate the pk3 archives for the installers"
 	@echo " * rsync        - Creates a local copy of the whole svn (no checkout)"
 	@echo " * update-po    - Updates the po files with latest source and script files"
