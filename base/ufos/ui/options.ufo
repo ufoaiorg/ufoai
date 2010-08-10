@@ -20,7 +20,6 @@ window options
 	{
 		*node:root.options_overall@invis = true
 		*node:root.options_video@invis = true
-		*node:root.options_advanced_video@invis = true	
 		*node:root.options_gameplay@invis = true
 		*node:root.options_keys@invis = true
 		*node:root.options_sound@invis = true
@@ -389,9 +388,9 @@ window options
 			pos			"415 0"
 			size		"608 768"
 		}
+		
 		string videosettings
 		{
-			tooltip		"_Graphic settings."
 			string		"_Video Settings"
 			pos			"55 67"
 			size		"465 35"
@@ -399,357 +398,903 @@ window options
 			textalign	ALIGN_CC
 			color		"0 0.5 0 1"
 		}
-		// ============================
-		// RESOLUTION SETTINGS SUBMENU
-		// ============================
-		string resolution_settings
-		{
-			tooltip		"_Adjust resolution and display settings here."
-			string 		"_Resolution and Display Settings"
-			pos			"62 110"
-			size		"256 20"
-			color		"1.0 0.75 0 1"
-		}
 
-		// ===========
-		// RESOLUTION
-		// ===========
-		string res_str
-		{
-			tooltip		"_The resolution (x*y) in pixel which UFO:AI should use."
-			string		"_Resolution:"
-			pos			"72 135"
-			size		"240 20"
-		}
-		// ===============================
-		// SELECT SCREEN RESOLUTION RATIO
-		// ===============================
-		selectbox select_ratio
-		{
+		tab video_tabs {
 			{
-				tooltip		"_Display only resolutions using this screen ratio."
-				cvar		*cvar:mn_vidratio
-				pos			"255 137"
-				size		"100 20"
-				onChange {	cmd "cl_setratiofilter <cvar:mn_vidratio>"	}
+				pos		"45 100"
+				size	"498 39"
+				cvar	*cvar:mn_videotab
+				onChange {
+					if ( *cvar:mn_videotab eq "general" ) {
+						*node:root.options_video.options_general_video@invis = false
+						*node:root.options_video.options_advanced_video@invis = true
+						*node:root.options_video.options_other_video@invis = true
+					} elif ( *cvar:mn_videotab eq "advanced" ) {
+						*node:root.options_video.options_general_video@invis = true
+						*node:root.options_video.options_advanced_video@invis = false
+						*node:root.options_video.options_other_video@invis = true
+					} else {
+						*node:root.options_video.options_general_video@invis = true
+						*node:root.options_video.options_advanced_video@invis = true
+						*node:root.options_video.options_other_video@invis = false
+					}
+				}
 			}
-			option all
-			{
-				label	"_All ratios"
-				value	"all"
+			option general {
+				label	"_General"
+				value	"general"
 			}
-			option r5_4
-			{
-				label	"5:4"
-				value	"1.25"
+			option advanced {
+				label	"_Advanced"
+				value	"advanced"
 			}
-			option r4_3
-			{
-				label	"4:3"
-				value	"1.3333333"
-			}
-			option r3_2
-			{
-				label	"3:2"
-				value	"1.5"
-			}
-			option r16_10
-			{
-				label	"16:10"
-				value	"1.6"
-			}
-			option r16_9
-			{
-				label	"16:9"
-				value	"1.7777777"
-			}
-			option custom
-			{
-				label	"_Others"
-				value	"custom"
+			option other {
+				label	"_Other"
+				value	"other"
 			}
 		}
-		// =========================
-		// SELECT SCREEN RESOLUTION
-		// =========================
-		selectbox select_res
-		{
-			tooltip		"_Select your desired screen resolution. ATTENTION: You might have to restart to make this work correctly."
-			cvar		*cvar:mn_vidmode
-			pos			"359 137"
-			size		"125 20"
-			dataid		OPTION_VIDEO_RESOLUTIONS
-		}
-		// ==================
-		// SWITCH RESOLUTION
-		// ==================
-		button res_test_pic
-		{
-			tooltip		"_Switch to the selected resolution. ATTENTION: You might have to restart to make this work correctly."
-			icon		bordered_question
-			pos			"486 139"
-			size		"16 16"
-			padding		0
-			onClick		{ cmd "mn_push popup_maintain_resolution;" }
-		}
-		// ===========
-		// FULLSCREEN
-		// ===========
-		string fullscreen_str
-		{
-			tooltip		"_Play UFO:AI in fullscreen- or window-mode."
-			string		"_Fullscreen:"
-			pos			"72 160"
-			size		"240 20"
-		}
-		checkbox fullscreen
-		{
-			tooltip		"_Play UFO:AI in fullscreen."
-			current		*cvar:vid_fullscreen
-			pos			"485 160"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-		// ===============
-		// STRETCH SCREEN
-		// ===============
-		string stretch_str
-		{
-			tooltip		"_Stretches the screen with a 4:3 ratio."
-			string		"_Stretch the Screen with a 4:3 Ratio:"
-			pos			"72 185"
-			size		"370 20"
-		}
-		checkbox stretch
-		{
-			tooltip		"_Stretch the screen to a ratio of 4:3."
-			current		*cvar:vid_strech
-			pos			"485 185"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-		// =====================================
-		// MONITOR CALIBRATION CONTROLS SUBMENU
-		// =====================================
-		string calibration_settings
-		{
-			tooltip		"_Calibrate your display here."
-			string 		"_Monitor Calibration Controls"
-			pos			"62 240"
-			size		"256 20"
-			color		"1.0 0.75 0 1"
-		}
-		// ===========
-		// BRIGHTNESS
-		// ===========
-		string brightness_str
-		{
-			tooltip		"_Brightness sets the intensity of light emitting from your screen."
-			string		"_Brightness:"
-			pos			"72 265"
-			size		"170 20"
-		}
-		image brightness_rahmen
-		{
-			src		"ui/bar_rahmen"
-			pos			"244 267"
-		}
-		bar brightness_bar
-		{
-			current		*cvar:r_brightness
-			pos			"253 272"
-			size		"238 6"
-			color		"0 0.8 0 1"
-			max			2.0
-			onClick		{ }
-		}
-		// =========
-		// CONTRAST
-		// =========
-		string contrast_str
-		{
-			tooltip		"_Contrast means the difference in brightness between the light and dark areas of a picture."
-			string		"_Contrast:"
-			pos			"72 290"
-			size		"170 20"
-		}
-		image contrast_rahmen
-		{
-			src		"ui/bar_rahmen"
-			pos			"244 292"
-		}
-		bar contrast_bar
-		{
-			current		*cvar:r_contrast
-			pos			"253 297"
-			size		"238 6"
-			color		"0 0.8 0 1"
-			max			2.0
-			onClick		{ }
-		}
-		// ======
-		// GAMMA
-		// ======
-		string gamma_str
-		{
-			tooltip		"_The gamma value manipulates the colors. Increased gamma means basically more intense colors."
-			string		"_Gamma:"
-			pos			"72 315"
-			size		"170 20"
-		}
-		image gamma_rahmen
-		{
-			src		"ui/bar_rahmen"
-			pos			"244 317"
-		}
-		bar gamma_bar
-		{
-			current		*cvar:vid_gamma
-			pos			"253 322"
-			size		"238 6"
-			color		"0 0.8 0 1"
-			max			3.0
-			onClick		{ }
-		}
-		// ===========
-		// SATURATION
-		// ===========
-		string saturation_str
-		{
-			tooltip		"_The saturation value manipulates the colors. Increased saturation means basically more intense colors."
-			string		"_Saturation:"
-			pos			"72 340"
-			size		"170 20"
-		}
-		image saturation_rahmen
-		{
-			src		"ui/bar_rahmen"
-			pos			"244 342"
-		}
-		bar saturation_bar
-		{
-			current		*cvar:r_saturation
-			pos			"253 347"
-			size		"238 6"
-			color		"0 0.8 0 1"
-			max			3.0
-			onClick		{ }
-		}
-		// ============================
-		// SCREENSHOT SETTINGS SUBMENU
-		// ============================
-		string screenshot_settings
-		{
-			tooltip		"_The default key to make screenshots is F12."
-			string 		"_Screenshot Settings"
-			pos			"62 420"
-			size		"256 20"
-			color		"1.0 0.75 0 1"
-		}
-		// ========================
-		// JPEG SCREENSHOT QUALITY
-		// ========================
-		string jpeg_quality_str
-		{
-			tooltip		"_Here you can set the quality of jpeg screenshots."
-			string		"_jpeg Quality:"
-			pos			"72 445"
-			size		"170 20"
-		}
-		image jpeg_quality_rahmen
-		{
-			src		"ui/bar_rahmen"
-			pos			"244 447"
-		}
-		bar jpeg_quality_bar
-		{
-			current		*cvar:r_screenshot_jpeg_quality
-			pos			"253 452"
-			size		"238 6"
-			color		"0 0.8 0 1"
-			max			100
-			onClick		{ }
-		}
-		// ==================
-		// SCREENSHOT FORMAT
-		// ==================
-		string screenshot_format_str
-		{
-			tooltip		"_The file format used for compressing and saving your screenshots."
-			string		"_Screenshot Format:"
-			pos			"72 470"
-			size		"170 20"
-		}
-		selectbox screenshot_format
+		
+		panel options_general_video 
 		{
 			{
-				tooltip		"_png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
-				cvar		*cvar:r_screenshot_format
-				pos			"359 470"
+				pos			"45 145"
+				size		"498 680"
+			}
+			// ============================
+			// RESOLUTION SETTINGS SUBMENU
+			// ============================
+			string resolution_settings
+			{
+				tooltip		"_Adjust resolution and display settings here."
+				string 		"_Resolution and Display Settings"
+				pos			"22 10"
+				size		"256 20"
+				color		"1.0 0.75 0 1"
+			}
+	
+			// ===========
+			// RESOLUTION
+			// ===========
+			string res_str
+			{
+				tooltip		"_The resolution (x*y) in pixel which UFO:AI should use."
+				string		"_Resolution:"
+				pos			"32 35"
+				size		"240 20"
+			}
+			// ===============================
+			// SELECT SCREEN RESOLUTION RATIO
+			// ===============================
+			selectbox select_ratio
+			{
+				{
+					tooltip		"_Display only resolutions using this screen ratio."
+					cvar		*cvar:mn_vidratio
+					pos			"215 37"
+					size		"100 20"
+					onChange {	cmd "cl_setratiofilter <cvar:mn_vidratio>"	}
+				}
+				option all
+				{
+					label	"_All ratios"
+					value	"all"
+				}
+				option r5_4
+				{
+					label	"5:4"
+					value	"1.25"
+				}
+				option r4_3
+				{
+					label	"4:3"
+					value	"1.3333333"
+				}
+				option r3_2
+				{
+					label	"3:2"
+					value	"1.5"
+				}
+				option r16_10
+				{
+					label	"16:10"
+					value	"1.6"
+				}
+				option r16_9
+				{
+					label	"16:9"
+					value	"1.7777777"
+				}
+				option custom
+				{
+					label	"_Others"
+					value	"custom"
+				}
+			}
+			// =========================
+			// SELECT SCREEN RESOLUTION
+			// =========================
+			selectbox select_res
+			{
+				tooltip		"_Select your desired screen resolution. ATTENTION: You might have to restart to make this work correctly."
+				cvar		*cvar:mn_vidmode
+				pos			"319 37"
 				size		"125 20"
+				dataid		OPTION_VIDEO_RESOLUTIONS
 			}
-			option screenshot_format_jpeg
+			// ==================
+			// SWITCH RESOLUTION
+			// ==================
+			button res_test_pic
 			{
-				label	"jpg"
-				value	"jpg"
+				tooltip		"_Switch to the selected resolution. ATTENTION: You might have to restart to make this work correctly."
+				icon		bordered_question
+				pos			"446 39"
+				size		"16 16"
+				padding		0
+				onClick		{ cmd "mn_push popup_maintain_resolution;" }
 			}
-			option screenshot_format_png
+			// ===========
+			// FULLSCREEN
+			// ===========
+			string fullscreen_str
 			{
-				label	"png"
-				value	"png"
+				tooltip		"_Play UFO:AI in fullscreen- or window-mode."
+				string		"_Fullscreen:"
+				pos			"32 60"
+				size		"240 20"
 			}
-			option screenshot_format_tga
+			checkbox fullscreen
 			{
-				label	"tga"
-				value	"tga"
+				tooltip		"_Play UFO:AI in fullscreen."
+				current		*cvar:vid_fullscreen
+				pos			"445 60"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+			// ===============
+			// STRETCH SCREEN
+			// ===============
+			string stretch_str
+			{
+				tooltip		"_Stretches the screen with a 4:3 ratio."
+				string		"_Stretch the Screen with a 4:3 Ratio:"
+				pos			"32 85"
+				size		"370 20"
+			}
+			checkbox stretch
+			{
+				tooltip		"_Stretch the screen to a ratio of 4:3."
+				current		*cvar:vid_strech
+				pos			"445 85"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+			// =====================================
+			// MONITOR CALIBRATION CONTROLS SUBMENU
+			// =====================================
+			string calibration_settings
+			{
+				tooltip		"_Calibrate your display here."
+				string 		"_Monitor Calibration Controls"
+				pos			"22 140"
+				size		"256 20"
+				color		"1.0 0.75 0 1"
+			}
+			// ===========
+			// BRIGHTNESS
+			// ===========
+			string brightness_str
+			{
+				tooltip		"_Brightness sets the intensity of light emitting from your screen."
+				string		"_Brightness:"
+				pos			"32 165"
+				size		"170 20"
+			}
+			image brightness_rahmen
+			{
+				src		"ui/bar_rahmen"
+				pos			"204 167"
+			}
+			bar brightness_bar
+			{
+				current		*cvar:r_brightness
+				pos			"213 172"
+				size		"238 6"
+				color		"0 0.8 0 1"
+				max			2.0
+				onClick		{ }
+			}
+			// =========
+			// CONTRAST
+			// =========
+			string contrast_str
+			{
+				tooltip		"_Contrast means the difference in brightness between the light and dark areas of a picture."
+				string		"_Contrast:"
+				pos			"32 190"
+				size		"170 20"
+			}
+			image contrast_rahmen
+			{
+				src		"ui/bar_rahmen"
+				pos			"204 192"
+			}
+			bar contrast_bar
+			{
+				current		*cvar:r_contrast
+				pos			"213 197"
+				size		"238 6"
+				color		"0 0.8 0 1"
+				max			2.0
+				onClick		{ }
+			}
+			// ======
+			// GAMMA
+			// ======
+			string gamma_str
+			{
+				tooltip		"_The gamma value manipulates the colors. Increased gamma means basically more intense colors."
+				string		"_Gamma:"
+				pos			"32 115"
+				size		"170 20"
+			}
+			image gamma_rahmen
+			{
+				src		"ui/bar_rahmen"
+				pos			"204 217"
+			}
+			bar gamma_bar
+			{
+				current		*cvar:vid_gamma
+				pos			"213 222"
+				size		"238 6"
+				color		"0 0.8 0 1"
+				max			3.0
+				onClick		{ }
+			}
+			// ===========
+			// SATURATION
+			// ===========
+			string saturation_str
+			{
+				tooltip		"_The saturation value manipulates the colors. Increased saturation means basically more intense colors."
+				string		"_Saturation:"
+				pos			"32 240"
+				size		"170 20"
+			}
+			image saturation_rahmen
+			{
+				src		"ui/bar_rahmen"
+				pos			"204 242"
+			}
+			bar saturation_bar
+			{
+				current		*cvar:r_saturation
+				pos			"213 247"
+				size		"238 6"
+				color		"0 0.8 0 1"
+				max			3.0
+				onClick		{ }
+			}
+			// ============================
+			// SCREENSHOT SETTINGS SUBMENU
+			// ============================
+			string screenshot_settings
+			{
+				tooltip		"_The default key to make screenshots is F12."
+				string 		"_Screenshot Settings"
+				pos			"22 320"
+				size		"256 20"
+				color		"1.0 0.75 0 1"
+			}
+			// ========================
+			// JPEG SCREENSHOT QUALITY
+			// ========================
+			string jpeg_quality_str
+			{
+				tooltip		"_Here you can set the quality of jpeg screenshots."
+				string		"_jpeg Quality:"
+				pos			"32 345"
+				size		"170 20"
+			}
+			image jpeg_quality_rahmen
+			{
+				src		"ui/bar_rahmen"
+				pos			"204 347"
+			}
+			bar jpeg_quality_bar
+			{
+				current		*cvar:r_screenshot_jpeg_quality
+				pos			"213 352"
+				size		"238 6"
+				color		"0 0.8 0 1"
+				max			100
+				onClick		{ }
+			}
+			// ==================
+			// SCREENSHOT FORMAT
+			// ==================
+			string screenshot_format_str
+			{
+				tooltip		"_The file format used for compressing and saving your screenshots."
+				string		"_Screenshot Format:"
+				pos			"32 370"
+				size		"170 20"
+			}
+			selectbox screenshot_format
+			{
+				{
+					tooltip		"_png and tga are lossless graphic formats, which will save your screenshots in highest possible quality, filesize will grow tough. You should prefer png, because of the better compression resulting in smaller filesizes than tga. jpg will be the best format if small filesizes are your priority."
+					cvar		*cvar:r_screenshot_format
+					pos			"319 370"
+					size		"125 20"
+				}
+				option screenshot_format_jpeg
+				{
+					label	"jpg"
+					value	"jpg"
+				}
+				option screenshot_format_png
+				{
+					label	"png"
+					value	"png"
+				}
+				option screenshot_format_tga
+				{
+					label	"tga"
+					value	"tga"
+				}
+			}
+			// ==============================
+			// OTHER DISPLAY OPTIONS SUBMENU
+			// ==============================
+			string other_display_settings
+			{
+				tooltip		"_Adjust other settings here."
+				string 		"_Other Display Settings"
+				pos			"22 440"
+				size		"256 20"
+				color		"1.0 0.75 0 1"
+			}
+	
+			// ============================
+			// SHOW FRAMES/SECOND RENDERED
+			// ============================
+			string fps_str
+			{
+				tooltip		"_See how many frames per second are rendered."
+				string		"_Show FPS:"
+				pos			"32 465"
+				size		"240 20"
+			}
+			checkbox fps
+			{
+				tooltip		"_Display the number of rendered frames per second."
+				current		*cvar:cl_fps
+				pos			"445 465"
+				size		"20 18"
+				image		"ui/checkbox_blue"
 			}
 		}
-		// ==============================
-		// OTHER DISPLAY OPTIONS SUBMENU
-		// ==============================
-		string other_display_settings
+		
+		// =======================
+		// ADVANCED VIDEO OPTIONS
+		// =======================
+		panel options_advanced_video
 		{
-			tooltip		"_Adjust other settings here."
-			string 		"_Other Display Settings"
-			pos			"62 540"
-			size		"256 20"
-			color		"1.0 0.75 0 1"
-		}
+			{
+				pos			"45 145"
+				size		"498 680"
+			}
 
-		// ============================
-		// SHOW FRAMES/SECOND RENDERED
-		// ============================
-		string fps_str
-		{
-			tooltip		"_See how many frames per second are rendered."
-			string		"_Show FPS:"
-			pos			"72 565"
-			size		"240 20"
-		}
-		checkbox fps
-		{
-			tooltip		"_Display the number of rendered frames per second."
-			current		*cvar:cl_fps
-			pos			"485 565"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-
-		// ========================
-		// ADVANCED VIDEO SETTINGS
-		// ========================
-		cmpMenuButton button_advanced_video
-		{
-			tooltip		"_UFO:AI lets you finetune everything if you like."
-			string		"_Advanced Video"
-			pos			"162 635"
-			onClick
+			// =========================
+			// TEXTURE SETTINGS SUBMENU 
+			// =========================
+			string texture_settings
 			{
-				*node:root.options_video@invis = true
-				*node:root.options_advanced_video@invis = false
+				tooltip		"_Adjust various texture settings here."
+				string 		"_Texture Settings"
+				pos			"22 10"
+				size		"256 20"
+				color		"1.0 0.75 0 1"
+			}
+			// =======================
+			// TEXTURE RESOLUTION CAP 
+			// =======================
+			string texres_str
+			{
+				tooltip		"_Sets the maximum size for textures and caps resolutions higher than that value."
+				string		"_Resolution Cap:"
+				pos			"32 35"
+				size		"250 20"
+			}
+			selectbox texres_box
+			{
+				{
+					tooltip		"_Low means a maximum of 256x256 pixel texture resolution. Extreme means up to 8192x8192 pixel."
+					cvar		*cvar:r_maxtexres
+					pos			"319 37"
+					size		"125 20"
+				}
+				option low_value {
+					label	"_Low"
+					value	"256"
+				}
+				option medium_value {
+					label	"_Medium"
+					value	"512"
+				}
+				option normal_value {
+					label	"_Normal"
+					value	"1024"
+				}
+				option high_value {
+					label	"_High"
+					value	"2048"
+				}
+				option excellent_value {
+					label	"_Excellent"
+					value	"4096"
+				}
+				option extrem_value {
+					label	"_Extreme"
+					value	"8192"
+				}
+			}
+			// ====================
+			// TEXTURE COMPRESSION 
+			// ====================
+			string compression_str
+			{
+				tooltip		"_Enable texture compression for better memory performance, disable for better rendering quality."
+				string		"_Compression:"
+				pos			"32 60"
+				size		"250 20"
+			}
+			checkbox compression
+			{
+				tooltip		"_Enable texture compression."
+				current		*cvar:r_ext_texture_compression
+				pos			"445 60"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+			// ============
+			// TEXTURE LOD 
+			// ============
+			string lod_str
+			{
+				tooltip		"_Texture Level-of-Detail. Enabling this might result in some blurry textures if you zoom out a little bit."
+				string		"_LoD:"
+				pos			"32 85"
+				size		"250 20"
+			}
+			checkbox lod
+			{
+				tooltip		"_Enable high texture detail."
+				current		*cvar:r_texture_lod
+				pos			"445 85"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+			// ======================
+			// ANISOTROPIC FILTERING 
+			// ======================
+			string aniso_str
+			{
+				tooltip		"_The degree or ratio of anisotropic filtering. High ratios will make distant textures appear more sharp. Very high ratios are only recommended when playing in high resolutions."
+				string		"_Anisotropy Level:"
+				pos			"32 110"
+				size		"250 20"
+			}
+			string aniso_value
+			{
+				tooltip		"_Current value."
+				string		*cvar:r_anisotropic
+				pos			"420 110"
+				size		"100 20"
+			}
+			/* @todo update max with GL max anisotropic */
+			spinner aniso_change
+			{
+				tooltip		"_Very high values are only recommended when playing in very high screen resolutions."
+				current		*cvar:r_anisotropic
+				image		"ui/spinner_blue"
+				pos			"448 110"
+				min			0
+				max			16
+				delta		1
+			}
+			// ========================
+			// OPENGL SETTINGS SUBMENU 
+			// ========================
+			string opengl_settings
+			{
+				tooltip		"_Adjust various OpenGL settings here."
+				string 		"_OpenGL Settings"
+				pos			"22 140"
+				size		"256 20"
+				color		"1.0 0.75 0 1"
+			}
+			// =============
+			// GLSL SHADERS 
+			// =============
+			string glsl_str
+			{
+				tooltip		"_OpenGL GLSL Shaders are available only if your graphics-card driver fully supports OpenGL 2.0+ and will enhance UFO:AI using advanced shading techniques."
+				string		"_GLSL Shaders:"
+				pos			"32 165"
+				size		"240 20"
+			}
+			checkbox glsl
+			{
+				tooltip		"_Enable OpenGL GLSL Shaders. Disable this if you experience graphical problems. ATTENTION: May require restart to take effect."
+				current		*cvar:r_programs
+				pos			"445 165"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+			// ===============
+			// VERTEX BUFFERS 
+			// ===============
+			string vbo_str
+			{
+				tooltip		"_Vertex Buffers are submitting extensible arrays of vertex attributes to be mapped into the GPU for fast drawing."
+				string		"_Vertex Buffers:"
+				pos			"32 190"
+				size		"240 20"
+			}
+			checkbox vbo
+			{
+				tooltip		"_Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
+				current		*cvar:r_vertexbuffers
+				pos			"445 190"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+			// ==================================================================
+			// MULTISAMPLE BUFFERS AND MULTISAMPLE BUFFERS SWAP CONTROL (V-SYNC) 
+			// ==================================================================
+			string samplebuf_swapcontrol_str
+			{
+				tooltip		"_OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
+				string		"_Multisample Buffers / Swap Interval:"
+				pos			"32 215"
+				size		"320 20"
+			}
+			string samplebuf_value
+			{
+				tooltip		"_Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
+				string		*cvar:r_multisample
+				pos			"360 215"
+				size		"100 20"
+			}
+			spinner samplebuf_change
+			{
+				tooltip		"_Change the amount of multisample buffers."
+				current		*cvar:r_multisample
+				image		"ui/spinner_blue"
+				pos			"388 215"
+				min			0
+				max			4
+				delta		1
+			}
+			string swapcontrol_value
+			{
+				tooltip		"_Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
+				string		*cvar:r_swapinterval
+				pos			"420 215"
+				size		"100 20"
+			}
+			spinner swapinterval_change
+			{
+				tooltip		"_Change the swap interval."
+				current		*cvar:r_swapinterval
+				image		"ui/spinner_blue"
+				pos			"428 215"
+				min			0
+				max			2
+				delta		1
+			}
+			// ==============================
+			// POSTPROCESSING SHADER EFFECTS 
+			// ==============================
+			string postprocess_str
+			{
+				tooltip		"_Post-processing shader effects like glowing textures (only available if GLSL Shaders are turned on)."
+				string		"_Post-Processing Shader Effects:"
+				pos			"32 240"
+				size		"370 20"
+			}
+			checkbox postprocess
+			{
+				tooltip		"_Enable post processing shader effects. ATTENTION: May require restart to take effect."
+				current		*cvar:r_postprocess
+				pos			"445 240"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+			// ==================================
+			// LIGHT AND SHADOW SETTINGS SUBMENU 
+			// ==================================
+			string light_shadow_settings
+			{
+				tooltip		"_Adjust various light and shadow settings here."
+				string 		"_Light and Shadow"
+				pos			"22 270"
+				size		"256 20"
+				color		"1.0 0.75 0 1"
+			}
+			// =======================================================
+			// REALTIME LIGHTING AND MAXIMUM NUMBER OF DYNAMIC LIGHTS 
+			// =======================================================
+			string light_dynamiclights_str
+			{
+				tooltip		"_Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic hardware accelerated lights allowed."
+				string		"_Realtime Lighting / Max Dynamic Lights:"
+				pos			"32 295"
+				size		"320 20"
+			}
+			checkbox light
+			{
+				tooltip		"_Enable real-time lighting."
+				current		*cvar:r_lights
+				pos			"385 295"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+			string dynamiclights_value
+			{
+				tooltip		"_Current value."
+				string		*cvar:r_dynamic_lights
+				pos			"420 295"
+				size		"100 20"
+			}
+			spinner dynamiclights_change
+			{
+				tooltip		"_Change the number of allowed hardware accelerated dynamic lights. ATTENTION: Realtime lighting has to be turned on for this setting to work."
+				current		*cvar:r_dynamic_lights
+				image		"ui/spinner_blue"
+				pos			"448 295"
+				min			0
+				max			16
+				delta		1
+			}
+			// ====================
+			// NORMAL-/BUMPMAPPING 
+			// ====================
+			string bumpmapping_str
+			{
+				tooltip		"_Also known as bumpmapping."
+				string		"_Texture Normalmapping:"
+				pos			"32 320"
+				size		"240 20"
+			}
+			checkbox bumpmapping
+			{
+				tooltip		"_Enable normal-/bumpmapping. ATTENTION: Realtime lighting must be turned on for normalmapping to work."
+				current		*cvar:r_bumpmap
+				pos			"445 320"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+			// ========
+			// SHADOWS 
+			// ========
+			string shadows_str
+			{
+				tooltip		"_At the moment these are just drop-shadows."
+				string		"_Shadows:"
+				pos			"32 345"
+				size		"240 20"
+			}
+			checkbox shadows
+			{
+				tooltip		"_Enable shadows."
+				current		*cvar:r_shadows
+				pos			"445 345"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+			// ===============================
+			// LIGHTMAP RESOLUTION BLOCK SIZE 
+			// ===============================
+			string lightmapres_str
+			{
+				tooltip		"_The lightmap block size defines the resolution of the lightmap. Higher block size means using more detailed lightmaps."
+				string		"_Lightmap Block Size:"
+				pos			"32 370"
+				size		"240 20"
+			}
+			selectbox lightmapres_box
+			{
+				{
+					tooltip		"_Low means a maximum lightmap resolution of 512x512 pixel. High means up to 2048x2048 pixel."
+					cvar		*cvar:r_maxlightmap
+					pos			"319 372"
+					size		"125 20"
+				}
+				option low_value {
+					label	"_Low"
+					value	"256"
+				}
+				option medium_value {
+					label	"_Medium"
+					value	"512"
+				}
+				option normal_value {
+					label	"_Normal"
+					value	"1024"
+				}
+				option high_value {
+					label	"_High"
+					value	"2048"
+				}
+			}
+			// ===============
+			// LIGHTMAP SCALE 
+			// ===============
+			string lightmap_str
+			{
+				tooltip		"_Lightmaps are scaled using lumels (lumination elements). The smaller the lumels and the more of them on the lightmap, the higher the resolution and visual quality, at the price of performance."
+				string		"_Lightmap Scale:"
+				pos			"32 395"
+				size		"150 20"
+			}
+			image lightmap_rahmen
+			{
+				src		"ui/bar_rahmen"
+				pos			"204 397"
+			}
+			bar lightmap_bar
+			{
+				tooltip		"_Increase the number of lumels here to improve the lightmap rendering quality."
+				current		*cvar:r_modulate
+				pos			"213 402"
+				size		"238 6"
+				color		"0 .8 0 1"
+				max			4.0
+				onClick		{ }
+			}
+			// ========================
+			// GEOSCAPE 3DMAP LIGHTING 
+			// ========================
+			string m3dmapambient_str
+			{
+				tooltip		"_Amount of light emitting from the sun and shining on the earth."
+				string		"_Geo Ambient Lighting:"
+				pos			"32 420"
+				size		"200 20"
+			}
+			image m3dmapambient_rahmen
+			{
+				src		"ui/bar_rahmen"
+				pos			"204 422"
+			}
+			bar m3dmapambient_bar
+			{
+				tooltip		"_Current amount of ambient light reaching the earth."
+				current		*cvar:cl_3dmapAmbient
+				pos			"213 427"
+				size		"238 6"
+				color		"0 .8 0 1"
+				min			-1
+				max			3
+				onClick		{ }
+			}
+		}
+		
+		panel options_other_video 
+		{
+			{
+				pos			"45 145"
+				size		"498 680"
+			}
+			
+			// =======================
+			// OTHER SETTINGS SUBMENU 
+			// =======================
+			string othergfx_settings
+			{
+				tooltip		"_Adjust various other settings here."
+				string 		"_Other"
+				pos			"22 10"
+				size		"256 20"
+				color		"1.0 0.75 0 1"
+			}
+			// =======
+			// FLARES 
+			// =======
+			string flares_str
+			{
+				tooltip		"_Flares are used to display light reflection effects. Flare visibility is calculated according to the angle of the surface emitting the light."
+				string		"_Flares:"
+				pos			"32 35"
+				size		"240 20"
+			}
+			checkbox flares
+			{
+				tooltip		"_Enable flares."
+				current		*cvar:r_flares
+				pos			"445 35"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+			// ========
+			// CORONAS 
+			// ========
+			string coronas_str
+			{
+				tooltip		"_Coronas are soft, alpha-blended, rounded polygons."
+				string		"_Coronas:"
+				pos			"32 60"
+				size		"240 20"
+			}
+			checkbox coronas
+			{
+				tooltip		"_Enable coronas."
+				current		*cvar:r_coronas
+				pos			"445 60"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+			// ====
+			// FOG 
+			// ====
+			string fog_str
+			{
+				tooltip		"_Fog does not relate to any weather effect here, but when enabled distant textures on the battlescape are faded out."
+				string		"_Fog:"
+				pos			"32 85"
+				size		"240 20"
+			}
+			checkbox fog
+			{
+				tooltip		"_Enable fog."
+				current		*cvar:r_fog
+				pos			"445 85"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+			// =========================
+			// WEATHER PARTICLE EFFECTS 
+			// =========================
+			string ptlweather_str
+			{
+				tooltip		"_Weather effects like rain or snow."
+				string		"_Weather Effects:"
+				pos			"32 110"
+				size		"240 20"
+			}
+			checkbox ptlweather
+			{
+				tooltip		"_Enable weather effects."
+				current		*cvar:cl_particleweather
+				pos			"445 110"
+				size		"20 18"
+				image		"ui/checkbox_blue"
+			}
+			// ================
+			// MATERIAL SYSTEM 
+			// ================
+			string materialsys_str
+			{
+				tooltip		"_The material system is used to display texture animations, effects like rotating or stretching or scrolling textures and manipulate rendering through applying special material properties like specularity or hardness to defined textures."
+				string		"_Material System:"
+				pos			"32 135"
+				size		"240 20"
+			}
+			checkbox materialsys
+			{
+				tooltip		"_Enable the material system."
+				current		*cvar:r_materials
+				pos			"445 135"
+				size		"20 18"
+				image		"ui/checkbox_blue"
 			}
 		}
 	}
+
 	// ========================
 	// MAIN SOUND OPTIONS MENU
 	// ========================
@@ -764,7 +1309,6 @@ window options
 		// ===============
 		string soundsettings
 		{
-			tooltip		"_Sound is the thing that comes out of your speakers or earphones."
 			string		"_Audio Settings"
 			pos			"55 67"
 			size		"465 35"
@@ -951,7 +1495,6 @@ window options
 		// ==================
 		string gameplaysettings_str
 		{
-			tooltip		"_Configure input devices, battlescape camera and battlescape gameplay settings."
 			string		"_Gameplay Settings"
 			pos			"55 67"
 			size		"465 35"
@@ -1566,525 +2109,7 @@ window options
 			}
 		}
 	}
-	// =======================
-	// ADVANCED VIDEO OPTIONS
-	// =======================
-	panel options_advanced_video
-	{
-		{
-			pos			"415 0"
-			size		"608 768"
-		}
-		// ========================
-		// ADVANCED VIDEO SETTINGS 
-		// ========================
-		string advancedvideo
-		{
-			tooltip		"_Here you can mess around with the advanced video options."
-			string		"_Advanced Video Settings"
-			pos			"55 67"
-			size		"465 35"
-			font		"f_menubig"
-			textalign	ALIGN_CC
-			color		"0 0.79 0 1"
-		}
-		// =========================
-		// TEXTURE SETTINGS SUBMENU 
-		// =========================
-		string texture_settings
-		{
-			tooltip		"_Adjust various texture settings here."
-			string 		"_Texture Settings"
-			pos			"62 110"
-			size		"256 20"
-			color		"1.0 0.75 0 1"
-		}
-		// =======================
-		// TEXTURE RESOLUTION CAP 
-		// =======================
-		string texres_str
-		{
-			tooltip		"_Sets the maximum size for textures and caps resolutions higher than that value."
-			string		"_Resolution Cap:"
-			pos			"72 135"
-			size		"250 20"
-		}
-		selectbox texres_box
-		{
-			{
-				tooltip		"_Low means a maximum of 256x256 pixel texture resolution. Extreme means up to 8192x8192 pixel."
-				cvar		*cvar:r_maxtexres
-				pos			"359 137"
-				size		"125 20"
-			}
-			option low_value {
-				label	"_Low"
-				value	"256"
-			}
-			option medium_value {
-				label	"_Medium"
-				value	"512"
-			}
-			option normal_value {
-				label	"_Normal"
-				value	"1024"
-			}
-			option high_value {
-				label	"_High"
-				value	"2048"
-			}
-			option excellent_value {
-				label	"_Excellent"
-				value	"4096"
-			}
-			option extrem_value {
-				label	"_Extreme"
-				value	"8192"
-			}
-		}
-		// ====================
-		// TEXTURE COMPRESSION 
-		// ====================
-		string compression_str
-		{
-			tooltip		"_Enable texture compression for better memory performance, disable for better rendering quality."
-			string		"_Compression:"
-			pos			"72 160"
-			size		"250 20"
-		}
-		checkbox compression
-		{
-			tooltip		"_Enable texture compression."
-			current		*cvar:r_ext_texture_compression
-			pos			"485 160"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-		// ============
-		// TEXTURE LOD 
-		// ============
-		string lod_str
-		{
-			tooltip		"_Texture Level-of-Detail. Enabling this might result in some blurry textures if you zoom out a little bit."
-			string		"_LoD:"
-			pos			"72 185"
-			size		"250 20"
-		}
-		checkbox lod
-		{
-			tooltip		"_Enable high texture detail."
-			current		*cvar:r_texture_lod
-			pos			"485 185"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-		// ======================
-		// ANISOTROPIC FILTERING 
-		// ======================
-		string aniso_str
-		{
-			tooltip		"_The degree or ratio of anisotropic filtering. High ratios will make distant textures appear more sharp. Very high ratios are only recommended when playing in high resolutions."
-			string		"_Anisotropy Level:"
-			pos			"72 210"
-			size		"250 20"
-		}
-		string aniso_value
-		{
-			tooltip		"_Current value."
-			string		*cvar:r_anisotropic
-			pos			"460 210"
-			size		"100 20"
-		}
-		/* @todo update max with GL max anisotropic */
-		spinner aniso_change
-		{
-			tooltip		"_Very high values are only recommended when playing in very high screen resolutions."
-			current		*cvar:r_anisotropic
-			image		"ui/spinner_blue"
-			pos			"488 210"
-			min			0
-			max			16
-			delta		1
-		}
-		// ========================
-		// OPENGL SETTINGS SUBMENU 
-		// ========================
-		string opengl_settings
-		{
-			tooltip		"_Adjust various OpenGL settings here."
-			string 		"_OpenGL Settings"
-			pos			"62 240"
-			size		"256 20"
-			color		"1.0 0.75 0 1"
-		}
-		// =============
-		// GLSL SHADERS 
-		// =============
-		string glsl_str
-		{
-			tooltip		"_OpenGL GLSL Shaders are available only if your graphics-card driver fully supports OpenGL 2.0+ and will enhance UFO:AI using advanced shading techniques."
-			string		"_GLSL Shaders:"
-			pos			"72 265"
-			size		"240 20"
-		}
-		checkbox glsl
-		{
-			tooltip		"_Enable OpenGL GLSL Shaders. Disable this if you experience graphical problems. ATTENTION: May require restart to take effect."
-			current		*cvar:r_programs
-			pos			"485 265"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-		// ===============
-		// VERTEX BUFFERS 
-		// ===============
-		string vbo_str
-		{
-			tooltip		"_Vertex Buffers are submitting extensible arrays of vertex attributes to be mapped into the GPU for fast drawing."
-			string		"_Vertex Buffers:"
-			pos			"72 290"
-			size		"240 20"
-		}
-		checkbox vbo
-		{
-			tooltip		"_Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
-			current		*cvar:r_vertexbuffers
-			pos			"485 290"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-		// ==================================================================
-		// MULTISAMPLE BUFFERS AND MULTISAMPLE BUFFERS SWAP CONTROL (V-SYNC) 
-		// ==================================================================
-		string samplebuf_swapcontrol_str
-		{
-			tooltip		"_OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
-			string		"_Multisample Buffers / Swap Interval:"
-			pos			"72 315"
-			size		"320 20"
-		}
-		string samplebuf_value
-		{
-			tooltip		"_Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
-			string		*cvar:r_multisample
-			pos			"400 315"
-			size		"100 20"
-		}
-		spinner samplebuf_change
-		{
-			tooltip		"_Change the amount of multisample buffers."
-			current		*cvar:r_multisample
-			image		"ui/spinner_blue"
-			pos			"428 315"
-			min			0
-			max			4
-			delta		1
-		}
-		string swapcontrol_value
-		{
-			tooltip		"_Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
-			string		*cvar:r_swapinterval
-			pos			"460 315"
-			size		"100 20"
-		}
-		spinner swapinterval_change
-		{
-			tooltip		"_Change the swap interval."
-			current		*cvar:r_swapinterval
-			image		"ui/spinner_blue"
-			pos			"488 315"
-			min			0
-			max			2
-			delta		1
-		}
-		// ==============================
-		// POSTPROCESSING SHADER EFFECTS 
-		// ==============================
-		string postprocess_str
-		{
-			tooltip		"_Post-processing shader effects like glowing textures (only available if GLSL Shaders are turned on)."
-			string		"_Post-Processing Shader Effects:"
-			pos			"72 340"
-			size		"370 20"
-		}
-		checkbox postprocess
-		{
-			tooltip		"_Enable post processing shader effects. ATTENTION: May require restart to take effect."
-			current		*cvar:r_postprocess
-			pos			"485 340"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-		// ==================================
-		// LIGHT AND SHADOW SETTINGS SUBMENU 
-		// ==================================
-		string light_shadow_settings
-		{
-			tooltip		"_Adjust various light and shadow settings here."
-			string 		"_Light and Shadow"
-			pos			"62 370"
-			size		"256 20"
-			color		"1.0 0.75 0 1"
-		}
-		// =======================================================
-		// REALTIME LIGHTING AND MAXIMUM NUMBER OF DYNAMIC LIGHTS 
-		// =======================================================
-		string light_dynamiclights_str
-		{
-			tooltip		"_Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic hardware accelerated lights allowed."
-			string		"_Realtime Lighting / Max Dynamic Lights:"
-			pos			"72 395"
-			size		"320 20"
-		}
-		checkbox light
-		{
-			tooltip		"_Enable real-time lighting."
-			current		*cvar:r_lights
-			pos			"425 395"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-		string dynamiclights_value
-		{
-			tooltip		"_Current value."
-			string		*cvar:r_dynamic_lights
-			pos			"460 395"
-			size		"100 20"
-		}
-		spinner dynamiclights_change
-		{
-			tooltip		"_Change the number of allowed hardware accelerated dynamic lights. ATTENTION: Realtime lighting has to be turned on for this setting to work."
-			current		*cvar:r_dynamic_lights
-			image		"ui/spinner_blue"
-			pos			"488 395"
-			min			0
-			max			16
-			delta		1
-		}
-		// ====================
-		// NORMAL-/BUMPMAPPING 
-		// ====================
-		string bumpmapping_str
-		{
-			tooltip		"_Also known as bumpmapping."
-			string		"_Texture Normalmapping:"
-			pos			"72 420"
-			size		"240 20"
-		}
-		checkbox bumpmapping
-		{
-			tooltip		"_Enable normal-/bumpmapping. ATTENTION: Realtime lighting must be turned on for normalmapping to work."
-			current		*cvar:r_bumpmap
-			pos			"485 420"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-		// ========
-		// SHADOWS 
-		// ========
-		string shadows_str
-		{
-			tooltip		"_At the moment these are just drop-shadows."
-			string		"_Shadows:"
-			pos			"72 445"
-			size		"240 20"
-		}
-		checkbox shadows
-		{
-			tooltip		"_Enable shadows."
-			current		*cvar:r_shadows
-			pos			"485 445"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-		// ===============================
-		// LIGHTMAP RESOLUTION BLOCK SIZE 
-		// ===============================
-		string lightmapres_str
-		{
-			tooltip		"_The lightmap block size defines the resolution of the lightmap. Higher block size means using more detailed lightmaps."
-			string		"_Lightmap Block Size:"
-			pos			"72 470"
-			size		"240 20"
-		}
-		selectbox lightmapres_box
-		{
-			{
-				tooltip		"_Low means a maximum lightmap resolution of 512x512 pixel. High means up to 2048x2048 pixel."
-				cvar		*cvar:r_maxlightmap
-				pos			"359 472"
-				size		"125 20"
-			}
-			option low_value {
-				label	"_Low"
-				value	"256"
-			}
-			option medium_value {
-				label	"_Medium"
-				value	"512"
-			}
-			option normal_value {
-				label	"_Normal"
-				value	"1024"
-			}
-			option high_value {
-				label	"_High"
-				value	"2048"
-			}
-		}
-		// ===============
-		// LIGHTMAP SCALE 
-		// ===============
-		string lightmap_str
-		{
-			tooltip		"_Lightmaps are scaled using lumels (lumination elements). The smaller the lumels and the more of them on the lightmap, the higher the resolution and visual quality, at the price of performance."
-			string		"_Lightmap Scale:"
-			pos			"72 495"
-			size		"150 20"
-		}
-		image lightmap_rahmen
-		{
-			src		"ui/bar_rahmen"
-			pos			"244 497"
-		}
-		bar lightmap_bar
-		{
-			tooltip		"_Increase the number of lumels here to improve the lightmap rendering quality."
-			current		*cvar:r_modulate
-			pos			"253 502"
-			size		"238 6"
-			color		"0 .8 0 1"
-			max			4.0
-			onClick		{ }
-		}
-		// ========================
-		// GEOSCAPE 3DMAP LIGHTING 
-		// ========================
-		string m3dmapambient_str
-		{
-			tooltip		"_Amount of light emitting from the sun and shining on the earth."
-			string		"_Geo Ambient Lighting:"
-			pos			"72 520"
-			size		"200 20"
-		}
-		image m3dmapambient_rahmen
-		{
-			src		"ui/bar_rahmen"
-			pos			"244 522"
-		}
-		bar m3dmapambient_bar
-		{
-			tooltip		"_Current amount of ambient light reaching the earth."
-			current		*cvar:cl_3dmapAmbient
-			pos			"253 527"
-			size		"238 6"
-			color		"0 .8 0 1"
-			min			-1
-			max			3
-			onClick		{ }
-		}
-		// =======================
-		// OTHER SETTINGS SUBMENU 
-		// =======================
-		string othergfx_settings
-		{
-			tooltip		"_Adjust various other settings here."
-			string 		"_Other"
-			pos			"62 550"
-			size		"256 20"
-			color		"1.0 0.75 0 1"
-		}
-		// =======
-		// FLARES 
-		// =======
-		string flares_str
-		{
-			tooltip		"_Flares are used to display light reflection effects. Flare visibility is calculated according to the angle of the surface emitting the light."
-			string		"_Flares:"
-			pos			"72 575"
-			size		"240 20"
-		}
-		checkbox flares
-		{
-			tooltip		"_Enable flares."
-			current		*cvar:r_flares
-			pos			"485 575"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-		// ========
-		// CORONAS 
-		// ========
-		string coronas_str
-		{
-			tooltip		"_Coronas are soft, alpha-blended, rounded polygons."
-			string		"_Coronas:"
-			pos			"72 600"
-			size		"240 20"
-		}
-		checkbox coronas
-		{
-			tooltip		"_Enable coronas."
-			current		*cvar:r_coronas
-			pos			"485 600"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-		// ====
-		// FOG 
-		// ====
-		string fog_str
-		{
-			tooltip		"_Fog does not relate to any weather effect here, but when enabled distant textures on the battlescape are faded out."
-			string		"_Fog:"
-			pos			"72 625"
-			size		"240 20"
-		}
-		checkbox fog
-		{
-			tooltip		"_Enable fog."
-			current		*cvar:r_fog
-			pos			"485 625"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-		// =========================
-		// WEATHER PARTICLE EFFECTS 
-		// =========================
-		string ptlweather_str
-		{
-			tooltip		"_Weather effects like rain or snow."
-			string		"_Weather Effects:"
-			pos			"72 650"
-			size		"240 20"
-		}
-		checkbox ptlweather
-		{
-			tooltip		"_Enable weather effects."
-			current		*cvar:cl_particleweather
-			pos			"485 650"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-		// ================
-		// MATERIAL SYSTEM 
-		// ================
-		string materialsys_str
-		{
-			tooltip		"_The material system is used to display texture animations, effects like rotating or stretching or scrolling textures and manipulate rendering through applying special material properties like specularity or hardness to defined textures."
-			string		"_Material System:"
-			pos			"72 675"
-			size		"240 20"
-		}
-		checkbox materialsys
-		{
-			tooltip		"_Enable the material system."
-			current		*cvar:r_materials
-			pos			"485 675"
-			size		"20 18"
-			image		"ui/checkbox_blue"
-		}
-	}
+
 	// ==================
 	// SHOW KEY BINDINGS 
 	// ==================
@@ -2097,7 +2122,6 @@ window options
 
 		string showkeys
 		{
-			tooltip		"_Shows all the function keys of UFO:AI."
 			string		"_Key Bindings"
 			pos			"55 67"
 			size		"465 35"
@@ -2141,6 +2165,12 @@ window options
 		cmd "cl_setratiofilter <cvar:mn_vidratio>"
 		call *node:root.hidepanels
 		cmd "mn_init_keylist;"
+
+		*cvar:mn_videotab = "general"
+		*node:root.options_video.options_advanced_video@invis = true
+		*node:root.options_video.options_other_video@invis = true
+		*node:root.options_video.options_general_video@invis = false
+
 		*node:root.options_overall@invis = false
 	}
 }
