@@ -841,6 +841,52 @@ window options
 					value	"8192"
 				}
 			}
+
+			// =======================
+			// TEXTURE FILTERING
+			// =======================
+			string texmode_str
+			{
+				tooltip		"_Sets the texture filtering and mipmapping method."
+				string		"_Filtering:"
+				pos			"32 60"
+				size		"250 20"
+			}
+			selectbox texmode_box
+			{
+				{
+					tooltip		"_Sets the texture filtering and mipmapping method."
+					cvar		*cvar:r_texturemode
+					pos			"169 62"
+					size		"275 20"
+				}
+
+				option low_value {
+					label	"_No filtering, no mipmaps"
+					value	"GL_NEAREST"
+				}
+				option medium_value {
+					label	"_Bilinear filtering, no mipmaps"
+					value	"GL_LINEAR"
+				}
+				option normal_value {
+					label	"_No filtering, mipmaps"
+					value	"GL_NEAREST_MIPMAP_NEAREST"
+				}
+				option high_value {
+					label	"_Bilinear filtering, mipmaps"
+					value	"GL_LINEAR_MIPMAP_NEAREST"
+				}
+				option excellent_value {
+					label	"_Trilinear filtering, mipmaps"
+					value	"GL_NEAREST_MIPMAP_LINEAR"
+				}
+				option extrem_value {
+					label	"_Bilinear filtering, trilinear filtering, mipmaps"
+					value	"GL_LINEAR_MIPMAP_LINEAR"
+				}
+			}
+
 			// ====================
 			// TEXTURE COMPRESSION 
 			// ====================
@@ -848,14 +894,14 @@ window options
 			{
 				tooltip		"_Enable texture compression for better memory performance, disable for better rendering quality."
 				string		"_Compression:"
-				pos			"32 60"
+				pos			"32 85"
 				size		"250 20"
 			}
 			checkbox compression
 			{
 				tooltip		"_Enable texture compression."
 				current		*cvar:r_ext_texture_compression
-				pos			"445 60"
+				pos			"445 85"
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
@@ -866,14 +912,14 @@ window options
 			{
 				tooltip		"_Texture Level-of-Detail. Enabling this might result in some blurry textures if you zoom out a little bit."
 				string		"_LoD:"
-				pos			"32 85"
+				pos			"32 110"
 				size		"250 20"
 			}
 			checkbox lod
 			{
 				tooltip		"_Enable high texture detail."
 				current		*cvar:r_texture_lod
-				pos			"445 85"
+				pos			"445 110"
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
@@ -884,27 +930,28 @@ window options
 			{
 				tooltip		"_The degree or ratio of anisotropic filtering. High ratios will make distant textures appear more sharp. Very high ratios are only recommended when playing in high resolutions."
 				string		"_Anisotropy Level:"
-				pos			"32 110"
+				pos			"32 135"
 				size		"250 20"
 			}
 			string aniso_value
 			{
 				tooltip		"_Current value."
 				string		*cvar:r_anisotropic
-				pos			"420 110"
+				pos			"420 135"
 				size		"100 20"
 			}
-			/* @todo update max with GL max anisotropic */
+			/** @todo update max with GL max anisotropic */
 			spinner aniso_change
 			{
 				tooltip		"_Very high values are only recommended when playing in very high screen resolutions."
 				current		*cvar:r_anisotropic
 				image		"ui/spinner_blue"
-				pos			"448 110"
+				pos			"448 135"
 				min			0
 				max			16
 				delta		1
 			}
+
 			// ========================
 			// OPENGL SETTINGS SUBMENU 
 			// ========================
@@ -912,7 +959,7 @@ window options
 			{
 				tooltip		"_Adjust various OpenGL settings here."
 				string 		"_OpenGL Settings"
-				pos			"22 140"
+				pos			"22 165"
 				size		"256 20"
 				color		"1.0 0.75 0 1"
 			}
@@ -923,14 +970,14 @@ window options
 			{
 				tooltip		"_OpenGL GLSL Shaders are available only if your graphics-card driver fully supports OpenGL 2.0+ and will enhance UFO:AI using advanced shading techniques."
 				string		"_GLSL Shaders:"
-				pos			"32 165"
+				pos			"32 190"
 				size		"240 20"
 			}
 			checkbox glsl
 			{
 				tooltip		"_Enable OpenGL GLSL Shaders. Disable this if you experience graphical problems. ATTENTION: May require restart to take effect."
 				current		*cvar:r_programs
-				pos			"445 165"
+				pos			"445 190"
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
@@ -941,14 +988,14 @@ window options
 			{
 				tooltip		"_Vertex Buffers are submitting extensible arrays of vertex attributes to be mapped into the GPU for fast drawing."
 				string		"_Vertex Buffers:"
-				pos			"32 190"
+				pos			"32 215"
 				size		"240 20"
 			}
 			checkbox vbo
 			{
 				tooltip		"_Enable Vertex Buffers for better 3D performance (requires OpenGL capable hardware)."
 				current		*cvar:r_vertexbuffers
-				pos			"445 190"
+				pos			"445 215"
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
@@ -959,14 +1006,14 @@ window options
 			{
 				tooltip		"_OpenGL multisample buffers provide a mechanism to antialias all GL primitives. / The Swap Interval selects when a buffer swap will occur. The value '0' means that the swap will occur immediately (also known as 'v-sync off')."
 				string		"_Multisample Buffers / Swap Interval:"
-				pos			"32 215"
+				pos			"32 240"
 				size		"320 20"
 			}
 			string samplebuf_value
 			{
 				tooltip		"_Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
 				string		*cvar:r_multisample
-				pos			"360 215"
+				pos			"360 240"
 				size		"100 20"
 			}
 			spinner samplebuf_change
@@ -974,7 +1021,7 @@ window options
 				tooltip		"_Change the amount of multisample buffers."
 				current		*cvar:r_multisample
 				image		"ui/spinner_blue"
-				pos			"388 215"
+				pos			"388 240"
 				min			0
 				max			4
 				delta		1
@@ -983,7 +1030,7 @@ window options
 			{
 				tooltip		"_Set to '0' to turn v-sync off (faster). Set to '1' or higher to turn v-sync on (better quality)."
 				string		*cvar:r_swapinterval
-				pos			"420 215"
+				pos			"420 240"
 				size		"100 20"
 			}
 			spinner swapinterval_change
@@ -991,7 +1038,7 @@ window options
 				tooltip		"_Change the swap interval."
 				current		*cvar:r_swapinterval
 				image		"ui/spinner_blue"
-				pos			"428 215"
+				pos			"428 240"
 				min			0
 				max			2
 				delta		1
@@ -1003,14 +1050,14 @@ window options
 			{
 				tooltip		"_Post-processing shader effects like glowing textures (only available if GLSL Shaders are turned on)."
 				string		"_Post-Processing Shader Effects:"
-				pos			"32 240"
+				pos			"32 265"
 				size		"370 20"
 			}
 			checkbox postprocess
 			{
 				tooltip		"_Enable post processing shader effects. ATTENTION: May require restart to take effect."
 				current		*cvar:r_postprocess
-				pos			"445 240"
+				pos			"445 265"
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
@@ -1021,7 +1068,7 @@ window options
 			{
 				tooltip		"_Adjust various light and shadow settings here."
 				string 		"_Light and Shadow"
-				pos			"22 270"
+				pos			"22 295"
 				size		"256 20"
 				color		"1.0 0.75 0 1"
 			}
@@ -1032,14 +1079,14 @@ window options
 			{
 				tooltip		"_Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic hardware accelerated lights allowed."
 				string		"_Realtime Lighting / Max Dynamic Lights:"
-				pos			"32 295"
+				pos			"32 320"
 				size		"320 20"
 			}
 			checkbox light
 			{
 				tooltip		"_Enable real-time lighting."
 				current		*cvar:r_lights
-				pos			"385 295"
+				pos			"385 320"
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
@@ -1047,7 +1094,7 @@ window options
 			{
 				tooltip		"_Current value."
 				string		*cvar:r_dynamic_lights
-				pos			"420 295"
+				pos			"420 320"
 				size		"100 20"
 			}
 			spinner dynamiclights_change
@@ -1055,7 +1102,7 @@ window options
 				tooltip		"_Change the number of allowed hardware accelerated dynamic lights. ATTENTION: Realtime lighting has to be turned on for this setting to work."
 				current		*cvar:r_dynamic_lights
 				image		"ui/spinner_blue"
-				pos			"448 295"
+				pos			"448 320"
 				min			0
 				max			16
 				delta		1
@@ -1067,14 +1114,14 @@ window options
 			{
 				tooltip		"_Also known as bumpmapping."
 				string		"_Texture Normalmapping:"
-				pos			"32 320"
+				pos			"32 345"
 				size		"240 20"
 			}
 			checkbox bumpmapping
 			{
 				tooltip		"_Enable normal-/bumpmapping. ATTENTION: Realtime lighting must be turned on for normalmapping to work."
 				current		*cvar:r_bumpmap
-				pos			"445 320"
+				pos			"445 345"
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
@@ -1085,14 +1132,14 @@ window options
 			{
 				tooltip		"_At the moment these are just drop-shadows."
 				string		"_Shadows:"
-				pos			"32 345"
+				pos			"32 370"
 				size		"240 20"
 			}
 			checkbox shadows
 			{
 				tooltip		"_Enable shadows."
 				current		*cvar:r_shadows
-				pos			"445 345"
+				pos			"445 370"
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
@@ -1103,7 +1150,7 @@ window options
 			{
 				tooltip		"_The lightmap block size defines the resolution of the lightmap. Higher block size means using more detailed lightmaps."
 				string		"_Lightmap Block Size:"
-				pos			"32 370"
+				pos			"32 395"
 				size		"240 20"
 			}
 			selectbox lightmapres_box
@@ -1111,7 +1158,7 @@ window options
 				{
 					tooltip		"_Low means a maximum lightmap resolution of 512x512 pixel. High means up to 2048x2048 pixel."
 					cvar		*cvar:r_maxlightmap
-					pos			"319 372"
+					pos			"319 397"
 					size		"125 20"
 				}
 				option low_value {
@@ -1138,19 +1185,19 @@ window options
 			{
 				tooltip		"_Lightmaps are scaled using lumels (lumination elements). The smaller the lumels and the more of them on the lightmap, the higher the resolution and visual quality, at the price of performance."
 				string		"_Lightmap Scale:"
-				pos			"32 395"
+				pos			"32 420"
 				size		"150 20"
 			}
 			image lightmap_rahmen
 			{
 				src		"ui/bar_rahmen"
-				pos			"204 397"
+				pos			"204 422"
 			}
 			bar lightmap_bar
 			{
 				tooltip		"_Increase the number of lumels here to improve the lightmap rendering quality."
 				current		*cvar:r_modulate
-				pos			"213 402"
+				pos			"213 427"
 				size		"238 6"
 				color		"0 .8 0 1"
 				max			4.0
@@ -1163,19 +1210,19 @@ window options
 			{
 				tooltip		"_Amount of light emitting from the sun and shining on the earth."
 				string		"_Geo Ambient Lighting:"
-				pos			"32 420"
+				pos			"32 445"
 				size		"200 20"
 			}
 			image m3dmapambient_rahmen
 			{
 				src		"ui/bar_rahmen"
-				pos			"204 422"
+				pos			"204 447"
 			}
 			bar m3dmapambient_bar
 			{
 				tooltip		"_Current amount of ambient light reaching the earth."
 				current		*cvar:cl_3dmapAmbient
-				pos			"213 427"
+				pos			"213 452"
 				size		"238 6"
 				color		"0 .8 0 1"
 				min			-1
