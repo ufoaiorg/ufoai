@@ -929,7 +929,6 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	mapInfo_t *maps[ASSEMBLE_THREADS];
 	int i;
 	static int timeout = 5000;  /* wait for 5 sec initially, double it every time it times out */
-	int now = Sys_Milliseconds();
 	const int threadno = sv_threads->integer < ASSEMBLE_THREADS ? sv_threads->integer : ASSEMBLE_THREADS;
 
 	threadID = 0;
@@ -988,9 +987,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	SDL_DestroySemaphore(mapSem);
 	mapSem = NULL;
 	threadID = 0;
-	now = Sys_Milliseconds() - now;
-
-	Com_Printf("SV_ParallelSearch: Map assembly in %i ms, retries included\n", now);
+	timeout = 5000;
 
 	return 0;
 }
@@ -1127,10 +1124,7 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 			return NULL;
 		}
 	} else {
-		int now = Sys_Milliseconds();
 		SV_AddMapTiles(map);
-		now = Sys_Milliseconds() - now;
-		Com_Printf("SV_AssembleMap: Sequential map assembly in %i ms\n", now);
 	}
 
 	/* prepare map and pos strings */

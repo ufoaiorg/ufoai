@@ -37,4 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern HINSTANCE global_hInstance;
 
+#include "../system.h"
+
 #endif /* WIN_LOCAL_H */

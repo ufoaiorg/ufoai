@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "../../common/tracing.h"
 #include "../ui/ui_windows.h"
+#include "../../ports/system.h"
 
 rendererData_t refdef;
 

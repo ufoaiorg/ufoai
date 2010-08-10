@@ -48,6 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_windows.h"
 #include "ui/ui_dragndrop.h"
 #include "ui/ui_render.h"
+#include "../ports/system.h"
 
 static float scr_con_current;			/* aproaches scr_conlines at scr_conspeed */
 static float scr_conlines;				/* 0.0 to 1.0 lines of console to display */

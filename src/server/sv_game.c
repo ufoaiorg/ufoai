@@ -27,6 +27,7 @@
  */
 
 #include "server.h"
+#include "../ports/system.h"
 #include <SDL.h>
 
 game_export_t *ge;

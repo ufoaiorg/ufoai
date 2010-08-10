@@ -241,6 +241,8 @@ typedef struct date_s {
 #define SECONDS_PER_MINUTE	60		/**< (60) */
 #define MINUTES_PER_HOUR	60		/**< (60) */
 
+#define MAXCMDLINE 256
+
 #define MAX_CVARLISTINGAMETYPE 16
 typedef struct cvarlist_s {
 	char name[MAX_VAR];
@@ -277,32 +279,6 @@ typedef void event_clean_func(void * data);
 void Schedule_Event(int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data);
 void Schedule_Timer(cvar_t *interval, event_func *func, void *data);
 void CL_FilterEventQueue(event_filter *filter);
-
-/*
-==============================================================
-NON-PORTABLE SYSTEM SERVICES
-==============================================================
-*/
-
-void Sys_Init(void);
-void Sys_NormPath(char *path);
-void Sys_Sleep(int milliseconds);
-const char *Sys_GetCurrentUser(void);
-int Sys_Setenv(const char *name, const char *value);
-void Sys_InitSignals(void);
-const char *Sys_SetLocale(const char *localeID);
-const char *Sys_GetLocale(void);
-
-#define MAXCMDLINE 256
-const char *Sys_ConsoleInput(void);
-void Sys_ConsoleOutput(const char *string);
-void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
-void Sys_Quit(void);
-char *Sys_GetHomeDirectory(void);
-
-void Sys_ConsoleShutdown(void);
-void Sys_ConsoleInit(void);
-void Sys_ShowConsole(qboolean show);
 
 /*
 ==============================================================

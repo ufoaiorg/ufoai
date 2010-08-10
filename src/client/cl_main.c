@@ -64,6 +64,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "multiplayer/mp_serverlist.h"
 #include "multiplayer/mp_team.h"
 #include "../shared/infostring.h"
+#include "../ports/system.h"
 
 cvar_t *cl_fps;
 cvar_t *cl_leshowinvis;

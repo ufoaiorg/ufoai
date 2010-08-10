@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "server.h"
 #include "../shared/parse.h"
+#include "../ports/system.h"
 
 /** current client */
 client_t *sv_client;

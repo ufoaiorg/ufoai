@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../common/common.h"
+#include "../ports/system.h"
 
 static void Key_Bind_Null_f (void)
 {

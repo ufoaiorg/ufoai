@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/common.h"
 #include "../shared/utf8.h"
 #include "../shared/shared.h"
+#include "../ports/system.h"
 #include "test_generic.h"
 
 /**

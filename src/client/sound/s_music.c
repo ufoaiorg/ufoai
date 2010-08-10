@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "s_main.h"
 #include "s_music.h"
 #include "../../shared/parse.h"
+#include "../../ports/system.h"
 
 enum {
 	MUSIC_MAIN,

@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_main.h"
 #include "r_sdl.h"
+#include "../../ports/system.h"
 
 r_sdl_config_t r_sdl_config;
 

@@ -112,6 +112,13 @@ FILESYSTEM
 extern char *fs_maps[MAX_MAPS];
 extern int fs_numInstalledMaps;
 
+/* directory searching */
+#define SFF_ARCH    0x01
+#define SFF_HIDDEN  0x02
+#define SFF_RDONLY  0x04
+#define SFF_SUBDIR  0x08
+#define SFF_SYSTEM  0x10
+
 int FS_FileLength(qFILE * f);
 int FS_Seek(qFILE * f, long offset, int origin);
 int FS_WriteFile(const void *buffer, size_t len, const char *filename);
