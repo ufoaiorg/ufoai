@@ -31,12 +31,12 @@ ABS_URL = None
 EOL = "\n"
 THUMBNAIL = True
 
-NON_FREE_LICENSES = [
+NON_FREE_LICENSES = set([
 "UNKNOWN", # ambiguous
 "Creative Commons", # ambiguous
 "Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported",
 "Creative Commons Sampling Plus 1.0"
-]
+])
 
 CSS = u"""
 body { color: #ffffff; background-color: #262626; font-family: verdana, helvetica, arial, sans-serif; margin: 0; padding: 0; }
@@ -46,6 +46,7 @@ a:hover { color: #ffffff; background-color: transparent; text-decoration: none; 
 li { margin-bottom: 8px; }
 .author { }
 .thumb { vertical-align:top; margin-right: 1em; border: 1em solid #101010; }
+.badlicense { color:red; }
 """
 
 HTML = u"""<html>
@@ -560,10 +561,13 @@ class Analysis:
         content += "<ul>" + EOL
         for l in licenseSorting:
             l = l[1]
+            classProp = ""
+            if l in NON_FREE_LICENSES:
+                classProp = " class=\"badlicense\""
             count = len(self.contentByLicense[l])
             self.writeLicensePage(output, l, self.contentByLicense[l])
             url = hashlib.md5(l).hexdigest() + ".html"
-            content += ('<li>%i - <a href="%s">%s</a></li>' % (count, url, l)) + EOL
+            content += ('<li>%i - <a%s href="%s">%s</a></li>' % (count, classProp, url, l)) + EOL
         content += "</ul>" + EOL
         html = html.replace("<!-- CONTENT -->", content)
         html = html.replace("<!-- REVISION -->", str(self.revision))
