@@ -43,8 +43,8 @@
 //		Possible sound-events are:
 //			hurtsound
 //			deathsound
-//  resistance {}
-//          Defines the dmgtypes from the weapon definitions and the resistance against such a damage
+//	resistance {}
+//			Defines the dmgtypes from the weapon definitions and the resistance against such a damage
 //========================================================================
 
 //========================================================================
