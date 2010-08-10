@@ -158,6 +158,7 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 	} else {
 		UI_InitStack(mn_hud->string, NULL, qtrue, qtrue);
 	}
+	Com_Printf("Free inventory slots: %i\n", cls.i.GetFreeSlots(&cls.i));
 }
 
 /**

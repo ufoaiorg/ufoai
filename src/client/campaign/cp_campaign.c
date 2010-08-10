@@ -962,8 +962,10 @@ void CP_StartSelectedMission (void)
 	aircraft_t *aircraft;
 	base_t *base;
 
-	if (!ccs.missionAircraft)
+	if (!ccs.missionAircraft) {
+		Com_Printf("CP_StartSelectedMission: No mission aircraft\n");
 		return;
+	}
 
 	aircraft = ccs.missionAircraft;
 	base = aircraft->homebase;
@@ -972,7 +974,7 @@ void CP_StartSelectedMission (void)
 		ccs.selectedMission = aircraft->mission;
 
 	if (!ccs.selectedMission) {
-		Com_DPrintf(DEBUG_CLIENT, "No ccs.selectedMission\n");
+		Com_Printf("CP_StartSelectedMission: No mission selected\n");
 		return;
 	}
 
@@ -983,11 +985,11 @@ void CP_StartSelectedMission (void)
 
 	/* Various sanity checks. */
 	if (!mis->active) {
-		Com_DPrintf(DEBUG_CLIENT, "CP_StartSelectedMission: Dropship not near landing zone: mis->active: %i\n", mis->active);
+		Com_Printf("CP_StartSelectedMission: Dropship not near landing zone: mis->active: %i\n", mis->active);
 		return;
 	}
 	if (AIR_GetTeamSize(aircraft) == 0) {
-		Com_DPrintf(DEBUG_CLIENT, "CP_StartSelectedMission: No team in dropship.\n");
+		Com_Printf("CP_StartSelectedMission: No team in dropship.\n");
 		return;
 	}
 
@@ -1005,8 +1007,7 @@ void CP_StartSelectedMission (void)
 	ccs.eMission = base->storage; /* copied, including arrays inside! */
 	CL_CleanTempInventory(base);
 	CL_CleanupAircraftCrew(aircraft, &ccs.eMission);
-
-	Com_Printf("Free inventory slots: %i\n", cls.i.GetFreeSlots(&cls.i));
+	CP_StartMissionMap(mis);
 }
 
 /**
