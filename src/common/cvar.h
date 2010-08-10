@@ -1,6 +1,6 @@
 /**
  * @file cvar.h
- * @brief Cvar header file
+ * @brief Cvar (console variable) header file
  *
  * cvar_t variables are used to hold scalar or string variables that can be changed or displayed at the console or prog code as well as accessed directly
  * in C code.
@@ -31,6 +31,63 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
+
+#ifndef COMMON_CVAR
+#define COMMON_CVAR
+
+#define CVAR_ARCHIVE    1       /**< set to cause it to be saved to vars.rc */
+#define CVAR_USERINFO   2       /**< added to userinfo  when changed */
+#define CVAR_SERVERINFO 4       /**< added to serverinfo when changed */
+#define CVAR_NOSET      8       /**< don't allow change from console at all, but can be set from the command line */
+#define CVAR_LATCH      16      /**< save changes until server restart */
+#define CVAR_DEVELOPER  32      /**< set from commandline (not from within the game) and hide from console */
+#define CVAR_CHEAT      64      /**< clamp to the default value when cheats are off */
+#define CVAR_R_IMAGES   128     /**< effects image filtering */
+#define CVAR_R_CONTEXT    256     /**< vid shutdown if such a cvar was modified */
+#define CVAR_R_PROGRAMS 512		/**< if changed, shaders are restarted */
+
+#define CVAR_R_MASK (CVAR_R_IMAGES | CVAR_R_CONTEXT | CVAR_R_PROGRAMS)
+
+/**
+ * @brief Callback for the listener
+ * @param cvarName The name of the cvar that was changed.
+ * @param oldValue The old value of the cvar - this is never @c NULL, but can be empty.
+ * @param newValue The new value of the cvar - this is never @c NULL, but can be empty.
+ */
+typedef void (*cvarChangeListenerFunc_t) (const char *cvarName, const char *oldValue, const char *newValue);
+
+typedef struct cvarListener_s {
+	cvarChangeListenerFunc_t exec;
+	struct cvarListener_s *next;
+} cvarChangeListener_t;
+
+/**
+ * @brief This is a cvar defintion. Cvars can be user modified and used in our menus e.g.
+ * @note nothing outside the Cvar_*() functions should modify these fields!
+ */
+typedef struct cvar_s {
+	char *name;				/**< cvar name */
+	char *string;			/**< value as string */
+	char *latchedString;	/**< for CVAR_LATCH vars */
+	char *defaultString;	/**< default string set on first init - only set for CVAR_CHEAT */
+	char *oldString;		/**< value of the cvar before we changed it */
+	char *description;		/**< cvar description */
+	int flags;				/**< cvar flags CVAR_ARCHIVE|CVAR_NOSET.... */
+	qboolean modified;		/**< set each time the cvar is changed */
+	float value;			/**< value as float */
+	int integer;			/**< value as integer */
+	qboolean (*check) (struct cvar_s* cvar);	/**< cvar check function */
+	cvarChangeListener_t *changeListener;
+	struct cvar_s *next;
+	struct cvar_s *prev;
+	struct cvar_s *hash_next;
+} cvar_t;
+
+typedef struct cvarList_s {
+	const char *name;
+	const char *value;
+	cvar_t *var;
+} cvarList_t;
 
 /**
  * @brief creates the variable if it doesn't exist, or returns the existing one
@@ -171,3 +228,6 @@ void Cvar_ClearVars(int flags);
 #ifdef DEBUG
 void Cvar_PrintDebugCvars(void);
 #endif
+
+#endif
+
