@@ -636,12 +636,11 @@ static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const in
  * @param[in] chr Pointer to character data.
  * @param[in] weapon Pointer to the item which being added to robot's inventory.
  */
-static void I_EquipActorRobot (inventoryInterface_t *self, inventory_t* const inv, const teamDef_t* td, objDef_t* weapon)
+static void I_EquipActorRobot (inventoryInterface_t *self, inventory_t* const inv, objDef_t* weapon)
 {
 	item_t item;
 
 	assert(weapon);
-	assert(td->race == RACE_ROBOT);
 
 	/* Prepare weapon in item. */
 	item.t = weapon;

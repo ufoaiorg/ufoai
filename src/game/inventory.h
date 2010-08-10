@@ -31,7 +31,7 @@ typedef struct inventoryInterface_s
 
 	void (*EquipActorMelee) (struct inventoryInterface_s* self, inventory_t* const inv, const teamDef_t* td) __attribute__((nonnull(1)));
 
-	void (*EquipActorRobot) (struct inventoryInterface_s* self, inventory_t* const inv, const teamDef_t* td, objDef_t* weapon) __attribute__((nonnull(1), nonnull(2)));
+	void (*EquipActorRobot) (struct inventoryInterface_s* self, inventory_t* const inv, objDef_t* weapon) __attribute__((nonnull(1), nonnull(2)));
 
 	int (*GetFreeSlots) (struct inventoryInterface_s* self);
 } inventoryInterface_t;
