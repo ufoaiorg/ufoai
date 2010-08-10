@@ -5,6 +5,20 @@
 
 export LC_ALL=C
 export DH_OPTIONS
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# These are used for cross-compiling and for saving the configure script
+# from having to guess our platform (since we know it already)
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+
+# FOR AUTOCONF 2.52 AND NEWER ONLY
+ifeq ($(DEB_BUILD_GNU_TYPE), $(DEB_HOST_GNU_TYPE))
+	CONFIGUREFLAGS += --build $(DEB_HOST_GNU_TYPE)
+else
+	CONFIGUREFLAGS += --build $(DEB_BUILD_GNU_TYPE) --host $(DEB_HOST_GNU_TYPE)
+endif
 
 CFLAGS = -Wall -g
 
@@ -17,18 +31,24 @@ else
 	CFLAGS += -O4
 endif
 
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	MAKEFLAGS += -j$(NUMJOBS)
+endif
+
+CONFIGUREFLAGS += --with-curses=no \
+	--datadir=/usr/share/games \
+	--libdir=/usr/lib/games \
+	--prefix=/usr
+
 MAINVER := $(shell dpkg-parsechangelog | sed -ne 's/^Version: *\([^~-]*\).*/\1/p' )
-SVNREV := $(shell dpkg-parsechangelog | sed -ne 's/^Version: .*~svn\([^-]*\).*/\1/p' )
-SVNBRANCH = trunk
 TMPDIR = /tmp/
-ORIGDIR = ufoai_$(MAINVER)~svn$(SVNREV).orig
-ORIGTGZ = ufoai_$(MAINVER)~svn$(SVNREV).orig.tar.gz
-DEBTGZ  = ufoai_$(MAINVER)~svn$(SVNREV).debian.tar.gz
+ORIGDIR = ufoai_$(MAINVER).orig
+ORIGTGZ = ufoai_$(MAINVER).orig.tar.gz
+DEBTGZ  = ufoai_$(MAINVER).debian.tar.gz
 
 ../$(ORIGTGZ):
-	svn export -r $(SVNREV) \
-	https://ufoai.svn.sourceforge.net/svnroot/ufoai/ufoai/$(SVNBRANCH) \
-	$(TMPDIR)/$(ORIGDIR)
+	svn export $(CURDIR) $(TMPDIR)/$(ORIGDIR)
 	-rm -rf $(TMPDIR)/$(ORIGDIR)/contrib
 	-rm -rf $(TMPDIR)/$(ORIGDIR)/debian
 	cd $(TMPDIR) ; tar -zcf $(ORIGTGZ) $(ORIGDIR) ; cd $(CURDIR)
@@ -43,7 +63,7 @@ debtar: clean
 
 config.status:
 	dh_testdir
-	./configure --with-curses=no --datadir=/usr/share/games --libdir=/usr/lib/games --prefix=/usr
+	./configure $(CONFIGUREFLAGS) 
 
 build-arch: stamps/build-arch
 stamps/build-arch: config.status
@@ -131,7 +151,7 @@ binary-arch: install-arch
 	dh_installmime
 	dh_installman
 	dh_link
-	dh_strip
+	dh_strip -a --dbg-package=ufoai-dbg
 	dh_compress -X.pdf
 	dh_fixperms
 	dh_installdeb

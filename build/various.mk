@@ -7,15 +7,17 @@ rsync:
 doxygen-docs:
 	doxygen src/docs/doxyall
 
+ifneq ($(SVN_REV),)
+	SVN_REV2 = -$(SVN_REV)
+else
+	SVN_REV2 = -1
+endif
+
 # debian packages
-# build this first - install ufoai-tools and then build debdata
-debbinary:
-	debuild binary-arch
+deb-pre:
+	sed 's/-SVNREVISION/$(SVN_REV2)/' debian/changelog.in > debian/changelog
 
-debdata:
-	debuild binary-indep
-
-deb:
+deb: deb-pre
 	debuild binary
 
 pdf-manual:
