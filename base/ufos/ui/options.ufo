@@ -1183,7 +1183,7 @@ window options
 			// ===============
 			string lightmap_str
 			{
-				tooltip		"_Lightmaps are scaled using lumels (lumination elements). The smaller the lumels and the more of them on the lightmap, the higher the resolution and visual quality, at the price of performance."
+				tooltip		"_Changing this would scale the lightmap brightness."
 				string		"_Lightmap Scale:"
 				pos			"32 420"
 				size		"150 20"
@@ -1195,7 +1195,7 @@ window options
 			}
 			bar lightmap_bar
 			{
-				tooltip		"_Increase the number of lumels here to improve the lightmap rendering quality."
+				tooltip		"_Changing this would scale the lightmap brightness."
 				current		*cvar:r_modulate
 				pos			"213 427"
 				size		"238 6"
