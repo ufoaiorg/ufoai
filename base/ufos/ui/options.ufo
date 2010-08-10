@@ -635,7 +635,7 @@ window options
 			{
 				tooltip		"_The gamma value manipulates the colors. Increased gamma means basically more intense colors."
 				string		"_Gamma:"
-				pos			"32 115"
+				pos			"32 215"
 				size		"170 20"
 			}
 			image gamma_rahmen
