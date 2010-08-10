@@ -149,6 +149,7 @@ void GAME_ReloadMode (void)
  * @brief Called when the server sends the @c EV_START event.
  * @param isTeamPlay @c true if the game is a teamplay round. This can be interesting for
  * multiplayer based game types
+ * @sa GAME_EndBattlescape
  */
 void GAME_StartBattlescape (qboolean isTeamPlay)
 {
@@ -159,6 +160,15 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 		UI_InitStack(mn_hud->string, NULL, qtrue, qtrue);
 	}
 	Com_Printf("Free inventory slots: %i\n", cls.i.GetFreeSlots(&cls.i));
+}
+
+/**
+ * @brief This is called when a client quits the battlescape
+ * @sa GAME_StartBattlescape
+ */
+void GAME_EndBattlescape (void)
+{
+	Com_Printf("Free inventory slots after battle: %i\n", cls.i.GetFreeSlots(&cls.i));
 }
 
 /**
