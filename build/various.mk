@@ -1,3 +1,10 @@
+ifeq ($(wildcard .svn),.svn)
+	SVN_REV2=-$(shell LANG=C svn info | awk '$$1 == "Revision:" {print $$2; exit 0}')
+	ifeq ($(SVN_REV2),-)
+		SVN_REV2=
+	endif
+endif
+
 # sync sourceforget.net svn to local svn dir
 LOCAL_SVN_DIR ?= /var/lib/svn
 rsync:
@@ -6,12 +13,6 @@ rsync:
 # generate doxygen docs
 doxygen-docs:
 	doxygen src/docs/doxyall
-
-ifneq ($(SVN_REV),)
-	SVN_REV2 = -$(SVN_REV)
-else
-	SVN_REV2 = -1
-endif
 
 # debian packages
 deb-pre:
