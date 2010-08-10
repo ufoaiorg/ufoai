@@ -12,7 +12,7 @@
 //	name
 //		The name of the team (translatable)
 //	race
-//
+//      Race of the team
 //	armour
 //		Boolean - team can carry armour
 //	weapons
@@ -43,6 +43,8 @@
 //		Possible sound-events are:
 //			hurtsound
 //			deathsound
+//  resistance {}
+//          Defines the dmgtypes from the weapon definitions and the resistance against such a damage
 //========================================================================
 
 //========================================================================

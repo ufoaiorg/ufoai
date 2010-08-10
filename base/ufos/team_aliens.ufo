@@ -5,21 +5,6 @@
 //	Please see team_humans.ufo
 //========================================================================
 
-// ==================
-// TEAM DESCRIPTIONS
-// weapons	Team may carry and use weapons
-// armour	Team may carry armour
-// race		Race of the team (see CL_GetAlienRaceByID() for available values). Default value is phalanx race.
-// robot	Team is a robot team
-// tech		Tech id to link
-// name		Translatable team name
-// size		Actorsize
-// ==================
-// Things to come:
-// footsteps	Append this to the footstep sound of the terrain to get
-//				the team specific footsteps
-// ==================
-
 team taman
 {
 	name			"_Taman"
