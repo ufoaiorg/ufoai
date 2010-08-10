@@ -520,9 +520,7 @@ qboolean NAT_ScriptSanityCheck (void)
 			MAP_PrintParameterStringByPos(pos);
 		}
 	}
-#ifdef DEBUG
-	Com_Printf("NAT_ScriptSanityCheck Errors: %i\n", error);
-#endif
+
 	return !error;
 }
 

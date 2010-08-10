@@ -789,6 +789,7 @@ void CL_ScriptSanityCheck (void)
 void CL_ReadSinglePlayerData (void)
 {
 	const char *type, *name, *text;
+	int i;
 
 	/* pre-stage parsing */
 	FS_BuildFileList("ufos/*.ufo");
@@ -808,6 +809,14 @@ void CL_ReadSinglePlayerData (void)
 	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		CL_ParseScriptSecond(type, name, &text);
+
+	for (i = 0; i < csi.numTeamDefs; i++) {
+		const teamDef_t *teamDef = &csi.teamDef[i];
+		ccs.teamDefTechs[teamDef->idx] = RS_GetTechByID(teamDef->tech);
+		if (ccs.teamDefTechs == NULL)
+			Com_Error(ERR_DROP, "Could not find a tech for teamdef %s", teamDef->id);
+	}
+
 
 	Com_Printf("Campaign data loaded - size "UFO_SIZE_T" bytes\n", sizeof(ccs));
 	Com_Printf("...techs: %i\n", ccs.numTechnologies);

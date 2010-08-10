@@ -45,7 +45,7 @@ typedef struct aliensCont_s {
 	const teamDef_t* teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
 	int amountAlive;		/**< Amount of live captured aliens. */
 	int amountDead;		/**< Amount of alien corpses. */
-	technology_t *tech;		/**< Related technology. */
+	technology_t *tech;		/**< Team defintion related technology. */
 } aliensCont_t;
 
 /**

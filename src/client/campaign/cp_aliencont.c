@@ -106,19 +106,21 @@ void AL_FillInContainment (base_t *base)
 	containment = base->alienscont;
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
-		if (!CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
+		const teamDef_t *td = &csi.teamDef[i];
+		if (!CHRSH_IsTeamDefAlien(td))
 			continue;
 		if (counter >= MAX_ALIENCONT_CAP)
 			Com_Error(ERR_DROP, "Overflow in AL_FillInContainment");
-		containment[counter].teamDef = &csi.teamDef[i];	/* Link to global race index. */
-		containment[counter].amountAlive = 0;
-		containment[counter].amountDead = 0;
+		containment->teamDef = td;	/* Link to global race index. */
+		containment->amountAlive = 0;
+		containment->amountDead = 0;
 		/* for sanity checking */
-		containment[counter].tech = RS_GetTechByID(csi.teamDef[i].tech);
-		if (!containment[counter].tech)
-			Com_Error(ERR_DROP, "Could not find a valid tech for '%s'\n", containment[i].teamDef->name);
+		containment->tech = ccs.teamDefTechs[td->idx];
+		if (!containment->tech)
+			Com_Error(ERR_DROP, "Could not find a valid tech for '%s'\n", td->name);
+		Com_DPrintf(DEBUG_CLIENT, "AL_FillInContainment: type: %s tech-index: %i\n", td->name, containment->tech->idx);
+		containment++;
 		counter++;
-		Com_DPrintf(DEBUG_CLIENT, "AL_FillInContainment: type: %s tech-index: %i\n", containment[i].teamDef->name, containment[i].tech->idx);
 	}
 	base->capacities[CAP_ALIENS].cur = 0;
 }

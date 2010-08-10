@@ -370,10 +370,7 @@ int GAME_CP_GetTeam (void)
 qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 {
 	if (!ccs.teamDefTechs[teamDef->idx])
-		ccs.teamDefTechs[teamDef->idx] = RS_GetTechByID(teamDef->tech);
-
-	if (!ccs.teamDefTechs[teamDef->idx])
-		Com_Error(ERR_DROP, "Could not find tech for teamdef '%s'", teamDef->tech);
+		Com_Error(ERR_DROP, "Could not find tech for teamdef '%s'", teamDef->id);
 
 	return RS_IsResearched_ptr(ccs.teamDefTechs[teamDef->idx]);
 }
