@@ -152,6 +152,7 @@ typedef struct fireDef_s {
 /**
  * @brief All different types of craft items.
  * @note must begin with weapons and end with ammos
+ * @todo move into campaign only structure
  */
 typedef enum {
 	/* weapons */
@@ -179,6 +180,7 @@ typedef enum {
  * @note This is a list of all aircraft parameters that depends on aircraft items.
  * those values doesn't change with shield or weapon assigned to aircraft
  * @note AIR_STATS_WRANGE must be the last parameter (see AII_UpdateAircraftStats)
+ * @todo move into campaign only structure
  */
 typedef enum {
 	AIR_STATS_SPEED,	/**< Aircraft cruising speed. */
@@ -199,6 +201,7 @@ typedef enum {
  * @brief Aircraft items.
  * @note This is a part of objDef, only filled for aircraft items (weapons, shield, electronics).
  * @sa objDef_t
+ * @todo move into campaign only structure
  */
 typedef struct craftitem_s {
 	aircraftItemType_t type;		/**< The type of the aircraft item. */
@@ -293,6 +296,7 @@ typedef struct objDef_s {
 	byte dmgtype;
 
 	/* Aircraft specific */
+	/** @todo move into campaign only structure */
 	craftitem_t craftitem;
 } objDef_t;
 
