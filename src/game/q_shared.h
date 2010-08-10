@@ -38,12 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/defines.h"
 #include "../common/list.h"
 
-/* filesystem stuff */
-#ifdef _WIN32
-# include <direct.h>
-# include <io.h>
-#endif
-
 #ifdef DEDICATED_ONLY
 /* no gettext support for dedicated servers */
 # define _(String) String
