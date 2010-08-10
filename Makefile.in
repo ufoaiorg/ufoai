@@ -114,9 +114,13 @@ echo_info:
 	@echo "-----------------------"
 	@echo "Type '$(MAKE) lang' to compile the gettext translation files."
 	@echo
+	@echo "Models"
+	@echo "-----------------------"
+	@echo "Type '$(MAKE) models' to generate mdx files for faster model loading"
+	@echo
 	@echo "Maps"
 	@echo "-----------------------"
-	@echo "Execute 'contrib/scripts/map-get.py upgrade' to download the maps"
+	@echo "Execute '$(MAKE) maps-sync' to download the maps"
 	@echo "This is e.g. needed if you want to play multiplayer games and the"
 	@echo "checksums of your maps have to match with the ones from your"
 	@echo "opponents - or just type '$(MAKE) maps' to compile the maps"
