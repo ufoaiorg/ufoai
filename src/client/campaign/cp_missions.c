@@ -1383,9 +1383,6 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 		return;
 	}
 
-	if (aircraft->homebase->aircraftCurrent == aircraft)
-		aircraft->homebase->aircraftCurrent = NULL;
-
 	if (ccs.selectedAircraft == aircraft)
 		ccs.selectedAircraft = NULL;
 
@@ -1416,6 +1413,11 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	E_DeleteEmployee(pilot, EMPL_PILOT);
 
 	aircraft->status = AIR_CRASHED;
+
+	/* after we set this to AIR_CRASHED we can get the next 'valid'
+	 * aircraft to correct the pointer in the homebase */
+	if (aircraft->homebase->aircraftCurrent == aircraft)
+		aircraft->homebase->aircraftCurrent = AIR_GetNextFromBase(aircraft->homebase, NULL);
 
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minCrashDelay, crashDelay));
 	/* mission appear on geoscape, player can go there */

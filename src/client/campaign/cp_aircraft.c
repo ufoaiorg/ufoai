@@ -1001,7 +1001,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	oldBase->capacities[capacity].cur--;
 
 	if (oldBase->aircraftCurrent == aircraft)
-		oldBase->aircraftCurrent = NULL;
+		oldBase->aircraftCurrent = AIR_GetNextFromBase(oldBase, NULL);
 
 	if (!base->aircraftCurrent)
 		base->aircraftCurrent = aircraftDest;
@@ -1092,6 +1092,8 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		Cvar_Set("mn_aircraftinbase", "0");
 		Cvar_Set("mn_aircraftname", "");
 		Cvar_Set("mn_aircraft_model", "");
+	} else if (base->aircraftCurrent == NULL) {
+		base->aircraftCurrent = AIR_GetNextFromBase(base, NULL);
 	}
 
 	/* also update the base menu buttons */

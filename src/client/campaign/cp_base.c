@@ -75,7 +75,7 @@ base_t* B_GetFoundedBaseByIDX (int baseIdx)
 }
 
 /**
- * @brief Iterates throught buildings in a base
+ * @brief Iterates through buildings in a base
  * @param[in] base Pointer to the base which buildings asked
  * @param[in] lastBuilding Pointer to the building iterate from. Call with NULL to get the first one.
  */
@@ -1936,6 +1936,8 @@ void B_SetCurrentSelectedBase (const base_t *base)
 			b->selected = qtrue;
 			if (!b->founded)
 				Com_Error(ERR_DROP, "The base you are trying to select is not founded yet");
+			if (b->aircraftCurrent == NULL)
+				b->aircraftCurrent = AIR_GetNextFromBase(b, NULL);
 		} else
 			b->selected = qfalse;
 	}
@@ -1991,7 +1993,6 @@ void B_SelectBase (const base_t *base)
 		UI_PushWindow("bases", NULL);
 		B_SetCurrentSelectedBase(base);
 	}
-
 }
 
 /**
