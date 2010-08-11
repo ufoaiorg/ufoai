@@ -54,8 +54,11 @@ typedef struct timedParticle_s {
 	vec3_t s;	/**< current position */
 	vec3_t a;	/**< acceleration vector */
 	vec3_t v;	/**< velocity vector */
+	ptl_t *parent;
+	qboolean children;	/**< spawn as children of @c parent */
 	int levelFlags;
-	int n;		/**< the amount of particles to spawn */
+	int max;	/**< the amount of particles to spawn */
+	int n;		/**< the amount of particles already spawned */
 	int dt;		/**< the time delta between of the n particle spawns */
 	int lastTime;	/**< the last time a particle from this queue was spawned */
 } timedParticle_t;
@@ -226,14 +229,12 @@ static byte stackType[MAX_STACK_DEPTH];
 /**
  * @brief Will spawn a @c n particles @c deltaTime ms after the parent was spawned
  * @param[in] name The id of the particle (see ptl_*.ufo script files in base/ufos)
- * @param[in] levelFlags Show at which levels
- * @param[in] s starting/location vector
- * @param[in] v velocity vector
- * @param[in] a acceleration vector
+ * @param[in] parent The parent particle
+ * @param[in] children Spawn as children
  * @param[in] deltaTime The time to wait until this particle should get spawned
  * @param[in] n The amount of particles to spawn (each after deltaTime of its predecessor)
  */
-static void CL_ParticlSpawnTimed (const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a, int deltaTime, int n)
+static void CL_ParticlSpawnTimed (const char *name, ptl_t *parent, qboolean children, int deltaTime, int n)
 {
 	const size_t length = lengthof(timedParticles);
 	int i;
@@ -246,14 +247,15 @@ static void CL_ParticlSpawnTimed (const char *name, int levelFlags, const vec3_t
 
 	for (i = 0; i < length; i++) {
 		timedParticle_t *tp = &timedParticles[i];
-		if (tp->n <= 0) {
+		if (tp->n == tp->max) {
+			/* found a free slot */
 			Q_strncpyz(tp->ptl, name, sizeof(tp->ptl));
-			tp->levelFlags = levelFlags;
+			tp->levelFlags = parent->levelFlags;
 			tp->dt = deltaTime;
-			tp->n = n;
-			VectorCopy(s, tp->s);
-			VectorCopy(a, tp->a);
-			VectorCopy(v, tp->v);
+			tp->n = 0;
+			tp->children = children;
+			tp->max = n;
+			tp->parent = parent;
 			return;
 		}
 	}
@@ -634,25 +636,19 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: stack underflow");
 
 			/* pop elements off the stack */
-			/* delta time */
-			type = stackType[--stackIdx];
-			if (type != V_INT)
-				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for tnspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
-			i = *(int *) stackPtr[stackIdx];
-
 			/* amount of timed particles */
 			type = stackType[--stackIdx];
 			if (type != V_INT)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for tnspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
 			n = *(int *) stackPtr[stackIdx];
 
-			pnew = CL_ParticleSpawn((const char *) cmdData, p->levelFlags, p->s, p->v, p->a);
-			if (pnew) {
-				n--; /* one is already spawned */
-				CL_ParticlSpawnTimed((const char *) cmdData, p->levelFlags, p->s, p->v, p->a, i, n);
-			} else {
-				Com_Printf("PC_NSPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
-			}
+			/* delta time */
+			type = stackType[--stackIdx];
+			if (type != V_INT)
+				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for tnspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
+			i = *(int *) stackPtr[stackIdx];
+
+			CL_ParticlSpawnTimed((const char *) cmdData, p, qtrue, i, n);
 
 			e -= 2 * sizeof(int);
 
@@ -1007,9 +1003,27 @@ static void CL_ParticleRunTimed (void)
 
 	for (i = 0; i < length; i++) {
 		timedParticle_t *tp = &timedParticles[i];
-		if (tp->n > 0 && CL_Milliseconds() - tp->lastTime >= tp->dt) {
-			tp->n--;
-			CL_ParticleSpawn(tp->ptl, tp->levelFlags, tp->s, tp->v, tp->a);
+		if (!tp->parent || !tp->parent->inuse)
+			continue;
+		if (tp->n >= tp->max)
+			continue;
+		if (!tp->n || CL_Milliseconds() - tp->lastTime >= tp->dt) {
+			ptl_t *p;
+			if (!tp->n) {
+				/* first spawn? - then copy the parent values. We have to
+				 * do this here and now earlier because projectile particles
+				 * get these values set after spawn. */
+				VectorCopy(tp->parent->s, tp->s);
+				VectorCopy(tp->parent->v, tp->v);
+				VectorCopy(tp->parent->a, tp->a);
+			}
+			tp->n++;
+			p = CL_ParticleSpawn(tp->ptl, tp->levelFlags, tp->s, tp->v, tp->a);
+			if (p && tp->children) {
+				p->next = tp->parent->children;
+				p->parent = tp->parent;
+				tp->parent->children = p;
+			}
 		}
 	}
 }
