@@ -234,13 +234,13 @@ static byte stackType[MAX_STACK_DEPTH];
  * @param[in] deltaTime The time to wait until this particle should get spawned
  * @param[in] n The amount of particles to spawn (each after deltaTime of its predecessor)
  */
-static void CL_ParticlSpawnTimed (const char *name, ptl_t *parent, qboolean children, int deltaTime, int n)
+static void CL_ParticleSpawnTimed (const char *name, ptl_t *parent, qboolean children, int deltaTime, int n)
 {
 	const size_t length = lengthof(timedParticles);
 	int i;
 
 	if (n <= 0)
-		Com_Error(ERR_DROP, "Timed particle should not spawn any particles");
+		Com_Error(ERR_DROP, "Timed particle should spawn particles");
 
 	if (deltaTime <= 0)
 		Com_Error(ERR_DROP, "Delta time for timed particle is invalid");
@@ -648,7 +648,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for tnspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
 			i = *(int *) stackPtr[stackIdx];
 
-			CL_ParticlSpawnTimed((const char *) cmdData, p, qtrue, i, n);
+			CL_ParticleSpawnTimed((const char *) cmdData, p, qtrue, i, n);
 
 			e -= 2 * sizeof(int);
 
@@ -1007,7 +1007,9 @@ static void CL_ParticleRunTimed (void)
 			continue;
 		if (tp->n >= tp->max)
 			continue;
-		if (!tp->n || CL_Milliseconds() - tp->lastTime >= tp->dt) {
+		if (CL_Milliseconds() - tp->lastTime < tp->dt)
+			continue;
+		{
 			ptl_t *p;
 			if (!tp->n) {
 				/* first spawn? - then copy the parent values. We have to
@@ -1018,6 +1020,7 @@ static void CL_ParticleRunTimed (void)
 				VectorCopy(tp->parent->a, tp->a);
 			}
 			tp->n++;
+			tp->lastTime = CL_Milliseconds();
 			p = CL_ParticleSpawn(tp->ptl, tp->levelFlags, tp->s, tp->v, tp->a);
 			if (p && tp->children) {
 				p->next = tp->parent->children;
