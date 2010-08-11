@@ -262,6 +262,8 @@ static void G_Shutdown (void)
 
 	gi.FreeTags(TAG_LEVEL);
 	gi.FreeTags(TAG_GAME);
+
+	Com_Printf("Free inventory slots in game on shutdown: %i\n", game.i.GetFreeSlots(&game.i));
 }
 
 

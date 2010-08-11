@@ -372,6 +372,8 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 			gi.DPrintf("Could not create alien\n");
 	}
 
+	Com_Printf("Free inventory slots after ai spawn: %i\n", game.i.GetFreeSlots(&game.i));
+
 	G_FindEdictGroups();
 }
 

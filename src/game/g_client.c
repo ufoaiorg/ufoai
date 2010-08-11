@@ -1179,6 +1179,8 @@ void G_ClientTeamInfo (const player_t * player)
 			G_ClientSkipActorInfo();
 		}
 	}
+
+	Com_Printf("Free inventory slots client %s spawn: %i\n", player->pers.netname, game.i.GetFreeSlots(&game.i));
 }
 
 /**
