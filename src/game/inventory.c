@@ -2,6 +2,8 @@
 
 static void I_RemoveInvList (inventoryInterface_t* self, invList_t *ic)
 {
+	Com_DPrintf(DEBUG_SHARED, "I_RemoveInvList: remove one slot (ic: %p, ic->next: %p)\n", ic, ic->next);
+
 	ic->next = self->invUnused;
 	self->invUnused = ic;
 }
@@ -15,6 +17,8 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
 
 	if (!ic->next)
 		Sys_Error("I_AddInvList: No free inventory space");
+
+	Com_DPrintf(DEBUG_SHARED, "I_AddInvList: add one slot (ic: %p, ic->next: %p)\n", ic, ic->next);
 
 	/* Ensure, that for later usage invUnused will be the next empty/free slot. */
 	self->invUnused = ic->next;
