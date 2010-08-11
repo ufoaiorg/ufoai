@@ -117,8 +117,8 @@ SectionGroup /e "Mapping" SECGROUP02
 	Section "Mapping Tools" SEC02
 		SetOutPath "$INSTDIR\base\maps"
 			File "..\..\..\base\maps\compile.p*"
-			File /r /x *.svn /x CVS "..\..\..\base\maps\*.map"
-			File /r /x *.svn /x CVS "..\..\..\base\maps\*.ump"
+			File /r /x *.svn "..\..\..\base\maps\*.map"
+			File /r /x *.svn "..\..\..\base\maps\*.ump"
 		SetOutPath "$INSTDIR\tools"
 			File "..\..\..\src\tools\*.ms"
 			File "..\..\..\src\tools\*.pl"
@@ -129,8 +129,8 @@ SectionGroup /e "Mapping" SECGROUP02
 			File "..\..\..\ufo2map.exe"
 		; RADIANT
 		SetOutPath "$INSTDIR\radiant"
-			File /r /x *.svn /x CVS "..\..\..\radiant\*"
-			File /r /x *.svn /x CVS "..\..\dlls\radiant\*"
+			File /r /x *.svn "..\..\..\radiant\*"
+			File /r /x *.svn "..\..\dlls\radiant\*"
 	SectionEnd
 
 	Section "Mapping Tools Shortcuts" SEC02B
@@ -160,20 +160,20 @@ Section "Source Code" SEC03
 		File "..\..\..\build\projects\*.workspace"
 		File "..\..\..\build\projects\*.manifest"
 	SetOutPath "$INSTDIR\src"
-		File /r /x *.svn /x CVS "..\..\..\src\*.h"
-		File /r /x *.svn /x CVS "..\..\..\src\*.c"
-		File /r /x *.svn /x CVS "..\..\..\src\*.def"
-		File /r /x *.svn /x CVS "..\..\..\src\*.rc"
+		File /r /x *.svn "..\..\..\src\*.h"
+		File /r /x *.svn "..\..\..\src\*.c"
+		File /r /x *.svn "..\..\..\src\*.def"
+		File /r /x *.svn "..\..\..\src\*.rc"
 	SetOutPath "$INSTDIR\src\docs"
-		File /r /x *.svn /x CVS "..\..\..\src\docs\*.*"
+		File /r /x *.svn "..\..\..\src\docs\*.*"
 	SetOutPath "$INSTDIR\src\ports"
-		File /r /x *.svn /x CVS "..\..\..\src\ports\*.m"
-		File /r /x *.svn /x CVS "..\..\..\src\ports\*.xbm"
-		File /r /x *.svn /x CVS "..\..\..\src\ports\*.png"
+		File /r /x *.svn "..\..\..\src\ports\*.m"
+		File /r /x *.svn "..\..\..\src\ports\*.xbm"
+		File /r /x *.svn "..\..\..\src\ports\*.png"
 	SetOutPath "$INSTDIR\src\po"
-		File /r /x *.svn /x CVS "..\..\..\src\po\*.*"
+		File /r /x *.svn "..\..\..\src\po\*.*"
 	SetOutPath "$INSTDIR\src\tools"
-		File /r /x *.svn /x CVS "..\..\..\src\tools\*.*"
+		File /r /x *.svn "..\..\..\src\tools\*.*"
 SectionEnd
 
 Section -AdditionalIcons
