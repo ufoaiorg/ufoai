@@ -2,7 +2,8 @@
 
 static void I_RemoveInvList (inventoryInterface_t* self, invList_t *ic)
 {
-	Com_DPrintf(DEBUG_SHARED, "I_RemoveInvList: remove one slot (ic: %p, ic->next: %p)\n", ic, ic->next);
+	Com_DPrintf(DEBUG_SHARED, "I_RemoveInvList: remove one slot (ic: %p, ic->next: %p) (%s)\n",
+			ic, ic->next, self->name);
 
 	ic->next = self->invUnused;
 	self->invUnused = ic;
@@ -13,12 +14,13 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
 	invList_t* ic = self->invUnused;
 
 	if (!ic)
-		Sys_Error("I_AddInvList: No free inventory space!");
+		Sys_Error("I_AddInvList: No free inventory space! (%s)", self->name);
 
 	if (!ic->next)
-		Sys_Error("I_AddInvList: No free inventory space");
+		Sys_Error("I_AddInvList: No free inventory space! (%s)", self->name);
 
-	Com_DPrintf(DEBUG_SHARED, "I_AddInvList: add one slot (ic: %p, ic->next: %p)\n", ic, ic->next);
+	Com_DPrintf(DEBUG_SHARED, "I_AddInvList: add one slot (ic: %p, ic->next: %p) (%s)\n",
+			ic, ic->next, self->name);
 
 	/* Ensure, that for later usage invUnused will be the next empty/free slot. */
 	self->invUnused = ic->next;
@@ -89,8 +91,8 @@ static invList_t *I_AddToInventory (inventoryInterface_t* self, inventory_t * co
 		for (ic = i->c[container->id]; ic; ic = ic->next)
 			if (INVSH_CompareItem(&ic->item, &item)) {
 				ic->item.amount += amount;
-				Com_DPrintf(DEBUG_SHARED, "I_AddToInventory: Amount of '%s': %i\n",
-					ic->item.t->name, ic->item.amount);
+				Com_DPrintf(DEBUG_SHARED, "I_AddToInventory: Amount of '%s': %i (%s)\n",
+					ic->item.t->name, ic->item.amount, self->name);
 				return ic;
 			}
 	}
@@ -144,13 +146,13 @@ static qboolean I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* 
 		/* temp container like idEquip and idFloor */
 		if (container->temp && ic->item.amount > 1) {
 			ic->item.amount--;
-			Com_DPrintf(DEBUG_SHARED, "I_RemoveFromInventory: Amount of '%s': %i\n",
-				ic->item.t->name, ic->item.amount);
+			Com_DPrintf(DEBUG_SHARED, "I_RemoveFromInventory: Amount of '%s': %i (%s)\n",
+				ic->item.t->name, ic->item.amount, self->name);
 			return qtrue;
 		}
 
 		if (container->single && ic->next)
-			Com_Printf("I_RemoveFromInventory: Error: single container %s has many items.\n", container->name);
+			Com_Printf("I_RemoveFromInventory: Error: single container %s has many items. (%s)\n", container->name, self->name);
 
 		/* An item in other containers than idFloor or idEquip should
 		 * always have an amount value of 1.
@@ -171,8 +173,8 @@ static qboolean I_RemoveFromInventory (inventoryInterface_t* self, inventory_t* 
 			/* temp container like idEquip and idFloor */
 			if (ic->item.amount > 1 && container->temp) {
 				ic->item.amount--;
-				Com_DPrintf(DEBUG_SHARED, "I_RemoveFromInventory: Amount of '%s': %i\n",
-					ic->item.t->name, ic->item.amount);
+				Com_DPrintf(DEBUG_SHARED, "I_RemoveFromInventory: Amount of '%s': %i (%s)\n",
+					ic->item.t->name, ic->item.amount, self->name);
 				return qtrue;
 			}
 
@@ -344,7 +346,7 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 
 					/* Add the currently used ammo in a free place of the "from" container. */
 					if (self->AddToInventory(self, i, item, from, NONE, NONE, 1) == NULL)
-						Sys_Error("Could not reload the weapon - add to inventory failed");
+						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", self->name);
 
 					ic->item.m = self->cacheItem.t;
 					if (icp)
@@ -369,13 +371,13 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 
 		/* temp container like idEquip and idFloor */
 		if (ic && to->temp) {
-			/** We are moving to a blocked location container but it's the base-equipment floor or a battlescape floor.
+			/* We are moving to a blocked location container but it's the base-equipment floor or a battlescape floor.
 			 * We add the item anyway but it'll not be displayed (yet)
-			 * @todo change the other code to browse trough these things. */
-			INVSH_FindSpace(i, &fItem->item, to, &tx, &ty, fItem);	/**< Returns a free place or NONE for x&y if no free space is available elsewhere.
-												 * This is then used in I_AddToInventory below.*/
+			 * This is then used in I_AddToInventory below.*/
+			/** @todo change the other code to browse trough these things. */
+			INVSH_FindSpace(i, &fItem->item, to, &tx, &ty, fItem);
 			if (tx == NONE || ty == NONE) {
-				Com_DPrintf(DEBUG_SHARED, "I_MoveInInventory - item will be added non-visible\n");
+				Com_DPrintf(DEBUG_SHARED, "I_MoveInInventory - item will be added non-visible (%s)\n", self->name);
 			}
 		} else {
 			/* Impossible move -> abort. */
@@ -488,9 +490,11 @@ static void I_DestroyInventory (inventoryInterface_t* self, inventory_t* const i
 	if (!i)
 		return;
 
-	for (container = 0; container < self->csi->numIDs; container++)
-		if (!self->csi->ids[container].temp)
-			self->EmptyContainer(self, i, &self->csi->ids[container]);
+	for (container = 0; container < self->csi->numIDs; container++) {
+		const invDef_t *invDef = &self->csi->ids[container];
+		if (!invDef->temp)
+			self->EmptyContainer(self, i, invDef);
+	}
 
 	memset(i, 0, sizeof(*i));
 }
@@ -528,7 +532,8 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 			/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
 			item.a = weapon->ammo;
 			item.m = weapon;
-			Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", weapon->id, ed->name);
+			Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s' (%s).\n",
+					weapon->id, ed->name, self->name);
 		} else {
 			/* find some suitable ammo for the weapon (we will have at least one if there are ammos for this
 			 * weapon in equipment definition) */
@@ -554,7 +559,8 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 			}
 
 			if (!ammo) {
-				Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", weapon->id, ed->name);
+				Com_DPrintf(DEBUG_SHARED, "I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
+						weapon->id, ed->name, self->name);
 				return 0;
 			}
 			/* load ammo */
@@ -564,7 +570,8 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 	}
 
 	if (!item.m) {
-		Com_Printf("I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", weapon->id, ed->name);
+		Com_Printf("I_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s' (%s).\n",
+				weapon->id, ed->name, self->name);
 		return 0;
 	}
 
@@ -630,7 +637,8 @@ static void I_EquipActorMelee (inventoryInterface_t *self, inventory_t* const in
 	item.a = NONE_AMMO;
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)
-		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded!\n", obj->id, td->id);
+		Sys_Error("INVSH_EquipActorMelee: melee weapon %s for team %s is not firetwohanded! (%s)\n",
+				obj->id, td->id, self->name);
 	self->TryAddToInventory(self, inv, item, &self->csi->ids[self->csi->idRight]);
 }
 
@@ -723,7 +731,8 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 				/* reset missedPrimary: we got a primary weapon */
 				missedPrimary = 0;
 			} else {
-				Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: primary weapon '%s' couldn't be equipped in equipment '%s'.\n", primaryWeapon->id, ed->name);
+				Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: primary weapon '%s' couldn't be equipped in equipment '%s' (%s).\n",
+						primaryWeapon->id, ed->name, self->name);
 				repeat = WEAPONLESS_BONUS > frand();
 			}
 		}
@@ -801,7 +810,8 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		if (!hasWeapon) {
 			int maxPrice = 0;
 			objDef_t *blade = NULL;
-			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", ed->name);
+			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload. (%s)\n",
+					ed->name, self->name);
 			for (i = 0; i < self->csi->numODs; i++) {
 				objDef_t *obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && obj->weapon && obj->isSecondary && !obj->reload) {
@@ -816,7 +826,8 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 		}
 		/* If still no weapon, something is broken, or no blades in equipment. */
 		if (!hasWeapon)
-			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s'.\n", ed->name);
+			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s' (%s).\n",
+					ed->name, self->name);
 
 		/* Armour; especially for those without primary weapons. */
 		repeat = (float) missedPrimary > frand() * 100.0;
@@ -842,7 +853,8 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 			}
 		} while (repeat-- > 0);
 	} else {
-		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: teamdef '%s' may not carry armour\n", td->name);
+		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: teamdef '%s' may not carry armour (%s)\n",
+				td->name, self->name);
 	}
 
 	{
@@ -881,11 +893,13 @@ static int I_GetFreeSlots (inventoryInterface_t* self)
 		slot = slot->next;
 		i++;
 	}
+	Com_DPrintf(DEBUG_SHARED, "Free inventory slots %i (%s)\n", i, self->name);
 	return i;
 }
 
 /**
  * @brief Initializes the inventory definition by linking the ->next pointers properly.
+ * @param[in] name The name that is shown in the output
  * @param[in,out] invList Pointer to invList_t definition being initialized.
  * @param[in] length The size of the invList array.
  * @param[out] interface The inventory interface pointer which should be initialized in this function.
@@ -893,7 +907,7 @@ static int I_GetFreeSlots (inventoryInterface_t* self)
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
  */
-void INV_InitInventory (inventoryInterface_t *interface, csi_t* csi, invList_t* invList, size_t length)
+void INV_InitInventory (const char *name, inventoryInterface_t *interface, csi_t* csi, invList_t* invList, size_t length)
 {
 	int i;
 	const item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
@@ -902,6 +916,7 @@ void INV_InitInventory (inventoryInterface_t *interface, csi_t* csi, invList_t* 
 
 	memset(interface, 0, sizeof(*interface));
 
+	interface->name = name;
 	interface->cacheItem = item;
 	interface->csi = csi;
 	interface->invUnused = invList;

@@ -35,7 +35,7 @@ static inventoryInterface_t i;
 static inline void ResetInventoryList (void)
 {
 	memset(&invList, 0, sizeof(invList));
-	INV_InitInventory(&i, &csi, invList, lengthof(invList));
+	INV_InitInventory("test", &i, &csi, invList, lengthof(invList));
 }
 
 /**

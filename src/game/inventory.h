@@ -12,6 +12,8 @@ typedef struct inventoryInterface_s
 
 	csi_t* csi;
 
+	const char *name;
+
 	/* public */
 	qboolean (*RemoveFromInventory) (struct inventoryInterface_s* self, inventory_t* const i, const invDef_t * container, invList_t *fItem) __attribute__((nonnull(1), nonnull(2), warn_unused_result));
 
@@ -36,6 +38,6 @@ typedef struct inventoryInterface_s
 	int (*GetFreeSlots) (struct inventoryInterface_s* self);
 } inventoryInterface_t;
 
-void INV_InitInventory (inventoryInterface_t *interface, csi_t* csi, invList_t* invList, size_t length);
+void INV_InitInventory (const char *name, inventoryInterface_t *interface, csi_t* csi, invList_t* invList, size_t length);
 
 #endif /* INVENTORY_H_ */

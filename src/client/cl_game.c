@@ -302,7 +302,7 @@ void GAME_SetMode (int gametype)
 		Com_Printf("Change gametype to '%s'\n", list->name);
 		memset(&invList, 0, sizeof(invList));
 		/* inventory structure switched/initialized */
-		INV_InitInventory(&cls.i, &csi, invList, lengthof(invList));
+		INV_InitInventory(list->name, &cls.i, &csi, invList, lengthof(invList));
 		list->Init();
 	}
 }
@@ -629,7 +629,7 @@ static qboolean GAME_Spawn (void)
 		memset(&invList, 0, sizeof(invList));
 
 		/* inventory structure switched/initialized */
-		INV_InitInventory(&cls.i, &csi, invList, lengthof(invList));
+		INV_InitInventory("client", &cls.i, &csi, invList, lengthof(invList));
 		GAME_GenerateTeam(teamDefID, ed, size);
 	}
 

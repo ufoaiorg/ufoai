@@ -426,6 +426,7 @@ invList_t *INVSH_SearchInInventory (const inventory_t* const i, const invDef_t *
  * @param[out] py The y position in the container
  * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
  * @sa INVSH_CheckToInventory
+ * @note x and y are NONE if no free space is available
  */
 void INVSH_FindSpace (const inventory_t* const inv, const item_t *item, const invDef_t * container, int* const px, int* const py, const invList_t *ignoredItem)
 {
