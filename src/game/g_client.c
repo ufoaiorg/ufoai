@@ -198,12 +198,15 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
 			gi.WriteByte(min(MAX_SKILL, GET_MORALE(check->chr.score.skills[ABILITY_MIND])));
 			gi.WriteShort(check->chr.maxHP);
 
-			if (playerMask & G_TeamToPM(check->team)) {
-				gi.AddEvent(playerMask & G_TeamToPM(check->team), EV_ACTOR_STATECHANGE);
-				gi.WriteShort(check->number);
-				gi.WriteShort(check->state);
+			{
+				const int mask = G_TeamToPM(check->team) & playerMask;
+				if (mask) {
+					gi.AddEvent(mask, EV_ACTOR_STATECHANGE);
+					gi.WriteShort(check->number);
+					gi.WriteShort(check->state);
+					G_SendInventory(mask, check);
+				}
 			}
-			G_SendInventory(G_TeamToPM(check->team) & playerMask, check);
 			break;
 
 		case ET_ITEM:
