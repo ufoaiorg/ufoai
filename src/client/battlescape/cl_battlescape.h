@@ -62,6 +62,7 @@ typedef struct client_state_s {
 
 	int mapMaxLevel;
 
+	/** @todo make this private to the particle code */
 	int numMapParticles;
 
 	int numLMs;

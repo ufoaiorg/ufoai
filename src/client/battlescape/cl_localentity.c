@@ -765,13 +765,14 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 		VectorMA(muzzle, 0.5, delta, le->ptl->s);
 		if (flags & (SF_IMPACT | SF_BODY) || (fd->splrad && !fd->bounce)) {
 			ptl_t *ptl = NULL;
+			const float *dir = bytedirs[le->dir];
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0]) {
 					s_sample_t *sample = S_LoadSample(fd->hitBodySound);
 					S_PlaySample(le->origin, sample, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
 				if (fd->hitBody[0])
-					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, bytedirs[le->dir], NULL);
+					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, dir, NULL);
 
 				/* Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead. */
 				/** @todo Special particles for stun attack (mind you that there is
@@ -787,10 +788,10 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 					S_PlaySample(le->origin, sample, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
 				if (fd->impact[0])
-					ptl = CL_ParticleSpawn(fd->impact, 0, impact, bytedirs[le->dir], NULL);
+					ptl = CL_ParticleSpawn(fd->impact, 0, impact, dir, NULL);
 			}
 			if (ptl)
-				VecToAngles(bytedirs[le->dir], ptl->angles);
+				VecToAngles(dir, ptl->angles);
 		}
 		return;
 	}

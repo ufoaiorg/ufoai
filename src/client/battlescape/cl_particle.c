@@ -34,10 +34,34 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 
 #define MAX_MAPPARTICLES	1024
+#define MAX_TIMEDPARTICLES 16
 
 static cvar_t *cl_particleweather;
 
+/** @brief map particles */
+typedef struct mapParticle_s {
+	char ptl[MAX_VAR];
+	const char *info;
+	vec3_t origin;
+	vec2_t wait;
+	int nextTime;
+	int levelflags;
+} mapParticle_t;
+
+typedef struct timedParticle_s {
+	char ptl[MAX_VAR];
+	vec3_t origin;
+	vec3_t s;	/**< current position */
+	vec3_t a;	/**< acceleration vector */
+	vec3_t v;	/**< velocity vector */
+	int levelFlags;
+	int n;		/**< the amount of particles to spawn */
+	int dt;		/**< the time delta between of the n particle spawns */
+	int lastTime;	/**< the last time a particle from this queue was spawned */
+} timedParticle_t;
+
 static mapParticle_t mapParticles[MAX_MAPPARTICLES];
+static timedParticle_t timedParticles[MAX_TIMEDPARTICLES];
 
 #define	V_VECS		((1 << V_FLOAT) | (1 << V_POS) | (1 << V_VECTOR) | (1 << V_COLOR))
 #define PTL_ONLY_ONE_TYPE		(1<<31)
@@ -86,7 +110,7 @@ typedef enum pc_s {
 	PC_V2, PC_V3, PC_V4,
 
 	PC_KILL,
-	PC_SPAWN, PC_NSPAWN, PC_CHILD,
+	PC_SPAWN, PC_NSPAWN, PC_TNSPAWN, PC_CHILD,
 
 	PC_NUM_PTLCMDS
 } pc_t;
@@ -103,7 +127,7 @@ static const char *pc_strings[PC_NUM_PTLCMDS] = {
 	"v2", "v3", "v4",
 
 	"kill",
-	"spawn", "nspawn", "child"
+	"spawn", "nspawn", "tnspawn", "child"
 };
 CASSERT(lengthof(pc_strings) == PC_NUM_PTLCMDS);
 
@@ -119,7 +143,7 @@ static const int pc_types[PC_NUM_PTLCMDS] = {
 	0, 0, 0,
 
 	0,
-	PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING
+	PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING
 };
 CASSERT(lengthof(pc_types) == PC_NUM_PTLCMDS);
 
@@ -199,6 +223,42 @@ static byte cmdStack[MAX_STACK_DATA];
 static void *stackPtr[MAX_STACK_DEPTH];
 static byte stackType[MAX_STACK_DEPTH];
 
+/**
+ * @brief Will spawn a @c n particles @c deltaTime ms after the parent was spawned
+ * @param[in] name The id of the particle (see ptl_*.ufo script files in base/ufos)
+ * @param[in] levelFlags Show at which levels
+ * @param[in] s starting/location vector
+ * @param[in] v velocity vector
+ * @param[in] a acceleration vector
+ * @param[in] deltaTime The time to wait until this particle should get spawned
+ * @param[in] n The amount of particles to spawn (each after deltaTime of its predecessor)
+ */
+static void CL_ParticlSpawnTimed (const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a, int deltaTime, int n)
+{
+	const size_t length = lengthof(timedParticles);
+	int i;
+
+	if (n <= 0)
+		Com_Error(ERR_DROP, "Timed particle should not spawn any particles");
+
+	if (deltaTime <= 0)
+		Com_Error(ERR_DROP, "Delta time for timed particle is invalid");
+
+	for (i = 0; i < length; i++) {
+		timedParticle_t *tp = &timedParticles[i];
+		if (tp->n <= 0) {
+			Q_strncpyz(tp->ptl, name, sizeof(tp->ptl));
+			tp->levelFlags = levelFlags;
+			tp->dt = deltaTime;
+			tp->n = n;
+			VectorCopy(s, tp->s);
+			VectorCopy(a, tp->a);
+			VectorCopy(v, tp->v);
+			return;
+		}
+	}
+	Com_Printf("Could not spawn timed particles due to overflow\n");
+}
 
 /**
  * @brief Spawns the map particle
@@ -568,6 +628,36 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 				Com_Printf("PC_SPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
 			break;
 
+		case PC_TNSPAWN:
+			/* check for stack underflow */
+			if (stackIdx < 2)
+				Com_Error(ERR_DROP, "CL_ParticleFunction: stack underflow");
+
+			/* pop elements off the stack */
+			/* delta time */
+			type = stackType[--stackIdx];
+			if (type != V_INT)
+				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for tnspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
+			i = *(int *) stackPtr[stackIdx];
+
+			/* amount of timed particles */
+			type = stackType[--stackIdx];
+			if (type != V_INT)
+				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for tnspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
+			n = *(int *) stackPtr[stackIdx];
+
+			pnew = CL_ParticleSpawn((const char *) cmdData, p->levelFlags, p->s, p->v, p->a);
+			if (pnew) {
+				n--; /* one is already spawned */
+				CL_ParticlSpawnTimed((const char *) cmdData, p->levelFlags, p->s, p->v, p->a, i, n);
+			} else {
+				Com_Printf("PC_NSPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
+			}
+
+			e -= 2 * sizeof(int);
+
+			break;
+
 		case PC_NSPAWN:
 			/* check for stack underflow */
 			if (stackIdx == 0)
@@ -604,7 +694,6 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 		}
 	}
 }
-
 
 /**
  * @brief Spawn a new particle to the map
@@ -909,6 +998,23 @@ static void CL_ParticleRun2 (ptl_t *p)
 }
 
 /**
+ * @brief Called every frame and checks whether a timed particle should be spawned
+ */
+static void CL_ParticleRunTimed (void)
+{
+	int i;
+	const size_t length = lengthof(timedParticles);
+
+	for (i = 0; i < length; i++) {
+		timedParticle_t *tp = &timedParticles[i];
+		if (tp->n > 0 && CL_Milliseconds() - tp->lastTime >= tp->dt) {
+			tp->n--;
+			CL_ParticleSpawn(tp->ptl, tp->levelFlags, tp->s, tp->v, tp->a);
+		}
+	}
+}
+
+/**
  * @brief General system for particle running during the game.
  * @sa CL_Frame
  */
@@ -919,6 +1025,8 @@ void CL_ParticleRun (void)
 
 	if (cls.state != ca_active)
 		return;
+
+	CL_ParticleRunTimed();
 
 	for (i = 0, p = r_particles; i < r_numParticles; i++, p++)
 		if (p->inuse)
