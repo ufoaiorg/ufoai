@@ -314,11 +314,11 @@ static void UI_MapInfoGetNext (int step)
 	cls.currentSelectedMap += step;
 
 	if (cls.currentSelectedMap < 0)
-		cls.currentSelectedMap = csi.numMDs - 1;
+		cls.currentSelectedMap = cls.numMDs - 1;
 
-	cls.currentSelectedMap %= csi.numMDs;
+	cls.currentSelectedMap %= cls.numMDs;
 
-	md = &csi.mds[cls.currentSelectedMap];
+	md = Com_GetMapDefByIDX(cls.currentSelectedMap);
 
 	/* special purpose maps are not startable without the specific context */
 	if (md->map[0] == '.')
@@ -338,7 +338,7 @@ static void UI_MapInfo (int step)
 	if (!list)
 		return;
 
-	if (!csi.numMDs)
+	if (!cls.numMDs)
 		return;
 
 	UI_MapInfoGetNext(step);
@@ -395,13 +395,13 @@ static void UI_SelectMap_f (void)
 		return;
 	}
 
-	if (!csi.numMDs)
+	if (!cls.numMDs)
 		return;
 
 	mapname = Cmd_Argv(1);
 
-	for (i = 0; i < csi.numMDs; i++) {
-		const mapDef_t *md = &csi.mds[i];
+	for (i = 0; i < cls.numMDs; i++) {
+		const mapDef_t *md = Com_GetMapDefByIDX(i);
 		if (strcmp(md->map, mapname))
 			continue;
 		cls.currentSelectedMap = i;
@@ -409,8 +409,8 @@ static void UI_SelectMap_f (void)
 		return;
 	}
 
-	for (i = 0; i < csi.numMDs; i++) {
-		const mapDef_t *md = &csi.mds[i];
+	for (i = 0; i < cls.numMDs; i++) {
+		const mapDef_t *md = Com_GetMapDefByIDX(i);
 		if (strcmp(md->id, mapname))
 			continue;
 		cls.currentSelectedMap = i;
@@ -790,6 +790,27 @@ const char* GAME_GetModelForItem (const objDef_t *od, uiModel_t** uiModel)
 	if (uiModel != NULL)
 		*uiModel = NULL;
 	return od->model;
+}
+
+mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
+{
+	int i;
+
+	assert(mapDefID);
+
+	for (i = 0; i < cls.numMDs; i++) {
+		mapDef_t *md = Com_GetMapDefByIDX(i);
+		if (!strcmp(md->id, mapDefID))
+			return md;
+	}
+
+	Com_DPrintf(DEBUG_CLIENT, "Com_GetMapDefinition: Could not find mapdef with id: '%s'\n", mapDefID);
+	return NULL;
+}
+
+mapDef_t* Com_GetMapDefByIDX (int index)
+{
+	return &cls.mds[index];
 }
 
 void GAME_InitStartup (void)

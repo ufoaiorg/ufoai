@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../client.h"
 #include "../cl_shared.h"
 #include "../ui/ui_main.h"
 #include "../ui/node/ui_node_linechart.h"
@@ -479,8 +480,8 @@ qboolean NAT_ScriptSanityCheck (void)
 
 		numTypes = CP_TerrorMissionAvailableUFOs(NULL, ufoTypes);
 
-		for (mapIdx = 0; mapIdx < csi.numMDs; mapIdx++) {
-			const mapDef_t const *md = &csi.mds[mapIdx];
+		for (mapIdx = 0; mapIdx < cls.numMDs; mapIdx++) {
+			const mapDef_t const *md = Com_GetMapDefByIDX(mapIdx);
 
 			if (md->storyRelated)
 				continue;

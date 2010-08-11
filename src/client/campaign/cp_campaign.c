@@ -152,7 +152,7 @@ qboolean CP_IsRunning (void)
  * @brief Check if a map may be selected for mission.
  * @param[in] mission Pointer to the mission where mapDef should be added
  * @param[in] pos position of the mission (NULL if the position will be chosen afterwards)
- * @param[in] mapIdx idx of the map in csi.mds[]
+ * @param[in] mapIdx idx of the map in the mapdef array
  * @param[in] ufoCrashed Search the mission definition for crash ufo id if true
  * @return qfalse if map is not selectable
  */
@@ -160,10 +160,7 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t
 {
 	mapDef_t *md;
 
-	assert(mapIdx >= 0);
-	assert(mapIdx < csi.numMDs);
-
-	md = &csi.mds[mapIdx];
+	md = Com_GetMapDefByIDX(mapIdx);
 	if (md->storyRelated)
 		return qfalse;
 
@@ -215,7 +212,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 	/* Set maxHits and hits. */
 	while (maxHits) {
 		maxHits = 0;
-		for (i = 0; i < csi.numMDs; i++) {
+		for (i = 0; i < cls.numMDs; i++) {
 			mapDef_t *md;
 
 			/* Check if mission fulfill conditions */
@@ -223,7 +220,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 				continue;
 
 			maxHits++;
-			md = &csi.mds[i];
+			md = Com_GetMapDefByIDX(i);
 			if (md->timesAlreadyUsed < minMissionAppearance) {
 				/* at least one fulfilling mission as been used less time than minMissionAppearance:
 				 * restart the loop with this number of time.
@@ -235,7 +232,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 				hits++;
 		}
 
-		if (i >= csi.numMDs) {
+		if (i >= cls.numMDs) {
 			/* We scanned all maps in memory without finding a map used less than minMissionAppearance: exit while loop */
 			break;
 		}
@@ -270,22 +267,19 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 		}
 	}
 
-	/* If we reached this point, that means that at least 1 map fulfills the conditions of the mission */
-	assert(hits);
-	assert(hits < csi.numMDs);
-
-	/* set number of mission to select randomly between 0 and hits - 1 */
+	/* If we reached this point, that means that at least 1 map fulfills the conditions of the mission
+	 * set number of mission to select randomly between 0 and hits - 1 */
 	randomNum = rand() % hits;
 
 	/* Select mission mission number 'randomnumber' that fulfills the conditions */
-	for (i = 0; i < csi.numMDs; i++) {
+	for (i = 0; i < cls.numMDs; i++) {
 		mapDef_t *md;
 
 		/* Check if mission fulfill conditions */
 		if (!CP_MapIsSelectable(mission, i, pos))
 			continue;
 
-		md = &csi.mds[i];
+		md = Com_GetMapDefByIDX(i);
 		if (md->timesAlreadyUsed > minMissionAppearance)
 			continue;
 
@@ -299,9 +293,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 	}
 
 	/* A mission must have been selected */
-	assert(i < csi.numMDs);
-
-	mission->mapDef = &csi.mds[i];
+	mission->mapDef = Com_GetMapDefByIDX(i);
 	mission->mapDef->timesAlreadyUsed++;
 	if (cp_missiontest->integer)
 		Com_Printf("Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
@@ -836,8 +828,8 @@ static qboolean CP_SaveMapDefStatXML (mxml_node_t *parent)
 {
 	int i;
 
-	for (i = 0; i < csi.numMDs; i++) {
-		const mapDef_t const* map = &csi.mds[i];
+	for (i = 0; i < cls.numMDs; i++) {
+		const mapDef_t const* map = Com_GetMapDefByIDX(i);
 		if (map->timesAlreadyUsed > 0) {
 			mxml_node_t *node = mxml_AddNode(parent, SAVE_CAMPAIGN_MAPDEF);
 			mxml_AddString(node, SAVE_CAMPAIGN_MAPDEF_ID, map->id);
@@ -1670,8 +1662,10 @@ void CL_ResetSinglePlayerData (void)
 			ccs.alienTeams[ccs.numAliensTD++] = &csi.teamDef[i];
 	}
 	/* Clear mapDef usage staistics */
-	for (i = 0; i < csi.numMDs; i++)
-		csi.mds[i].timesAlreadyUsed = 0;
+	for (i = 0; i < cls.numMDs; i++) {
+		mapDef_t *md = Com_GetMapDefByIDX(i);
+		md->timesAlreadyUsed = 0;
+	}
 }
 
 #ifdef DEBUG

@@ -64,6 +64,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "multiplayer/mp_serverlist.h"
 #include "multiplayer/mp_team.h"
 #include "../shared/infostring.h"
+#include "../shared/parse.h"
 #include "../ports/system.h"
 
 cvar_t *cl_fps;
@@ -637,6 +638,138 @@ static void CL_TeamDefInitMenu (void)
 	}
 }
 
+/** @brief valid mapdef descriptors */
+static const value_t mapdef_vals[] = {
+	{"description", V_TRANSLATION_STRING, offsetof(mapDef_t, description), 0},
+	{"map", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, map), 0},
+	{"param", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, param), 0},
+	{"size", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, size), 0},
+
+	{"maxaliens", V_INT, offsetof(mapDef_t, maxAliens), MEMBER_SIZEOF(mapDef_t, maxAliens)},
+	{"storyrelated", V_BOOL, offsetof(mapDef_t, storyRelated), MEMBER_SIZEOF(mapDef_t, storyRelated)},
+	{"hurtaliens", V_BOOL, offsetof(mapDef_t, hurtAliens), MEMBER_SIZEOF(mapDef_t, hurtAliens)},
+
+	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
+	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},
+
+	{"onwin", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, onwin), 0},
+	{"onlose", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, onlose), 0},
+
+	{NULL, 0, 0, 0}
+};
+
+static void CL_ParseMapDefinition (const char *name, const char **text)
+{
+	const char *errhead = "Com_ParseMapDefinition: unexpected end of file (mapdef ";
+	mapDef_t *md;
+	const value_t *vp;
+	const char *token;
+
+	/* get it's body */
+	token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	md = Com_GetMapDefByIDX(cls.numMDs);
+	cls.numMDs++;
+	if (cls.numMDs >= lengthof(cls.mds))
+		Sys_Error("Com_ParseMapDefinition: Max mapdef hit");
+
+	memset(md, 0, sizeof(*md));
+	md->id = Mem_PoolStrDup(name, com_genericPool, 0);
+
+	do {
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		for (vp = mapdef_vals; vp->string; vp++)
+			if (!strcmp(token, vp->string)) {
+				/* found a definition */
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					return;
+
+				switch (vp->type) {
+				default:
+					Com_EParseValue(md, token, vp->type, vp->ofs, vp->size);
+					break;
+				case V_TRANSLATION_STRING:
+					if (*token == '_')
+						token++;
+				/* fall through */
+				case V_CLIENT_HUNK_STRING:
+					Mem_PoolStrDupTo(token, (char**) ((char*)md + (int)vp->ofs), com_genericPool, 0);
+					break;
+				}
+				break;
+			}
+
+		if (!vp->string) {
+			linkedList_t **list;
+			if (!strcmp(token, "ufos")) {
+				list = &md->ufos;
+			} else if (!strcmp(token, "aircraft")) {
+				list = &md->aircraft;
+			} else if (!strcmp(token, "terrains")) {
+				list = &md->terrains;
+			} else if (!strcmp(token, "populations")) {
+				list = &md->populations;
+			} else if (!strcmp(token, "cultures")) {
+				list = &md->cultures;
+			} else if (!strcmp(token, "gametypes")) {
+				list = &md->gameTypes;
+			} else {
+				Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
+				continue;
+			}
+			token = Com_EParse(text, errhead, name);
+			if (!*text || *token != '{') {
+				Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" has ufos, gametypes, terrains, populations or cultures block with no opening brace\n", name);
+				break;
+			}
+			do {
+				token = Com_EParse(text, errhead, name);
+				if (!*text || *token == '}')
+					break;
+				LIST_AddString(list, token);
+			} while (*text);
+		}
+	} while (*text);
+
+	if (!md->map) {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no map\n", name);
+		cls.numMDs--;
+	}
+
+	if (!md->description) {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no description\n", name);
+		cls.numMDs--;
+	}
+}
+
+/**
+ * @sa FS_MapDefSort
+ */
+static int Com_MapDefSort (const void *mapDef1, const void *mapDef2)
+{
+	const char *map1 = ((const mapDef_t *)mapDef1)->map;
+	const char *map2 = ((const mapDef_t *)mapDef2)->map;
+
+	/* skip special map chars for rma and base attack */
+	if (map1[0] == '+' || map1[0] == '.')
+		map1++;
+	if (map2[0] == '+' || map2[0] == '.')
+		map2++;
+
+	return Q_StringSort(map1, map2);
+}
+
 /**
  * @brief Init function for clients - called after menu was initialized and ufo-scripts were parsed
  * @sa Qcommon_Init
@@ -655,6 +788,9 @@ void CL_InitAfter (void)
 	IN_JoystickInitMenu();
 
 	CL_LanguageInit();
+
+	/* sort the mapdef array */
+	qsort(cls.mds, cls.numMDs, sizeof(mapDef_t), Com_MapDefSort);
 }
 
 /**
@@ -696,6 +832,8 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 		UI_ParseWindow(type, name, text);
 	else if (!strcmp(type, "component"))
 		UI_ParseComponent(type, text);
+	else if (!strcmp(type, "mapdef"))
+		CL_ParseMapDefinition(name, text);
 }
 
 /** @brief Cvars for initial check (popup at first start) */

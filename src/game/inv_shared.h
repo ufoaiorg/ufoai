@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GAME_INV_SHARED_H
 
 #include "q_shared.h"
-#include "../common/filesys.h"
 
 typedef enum {
 	DROPSHIP_FIREBIRD,
@@ -375,38 +374,6 @@ typedef struct equipDef_s {
 #define MAX_CULTURES 8
 #define MAX_POPULATIONS 8
 
-typedef struct mapDef_s {
-	/* general */
-	char *id;				/**< script file id */
-	char *map;				/**< bsp or ump base filename (without extension and day or night char) */
-	char *param;			/**< in case of ump file, the assembly to use */
-	char *description;		/**< the description to show in the menus */
-	char *size;				/**< small, medium, big */
-
-	/* multiplayer */
-	qboolean multiplayer;	/**< is this map multiplayer ready at all */
-	int teams;				/**< multiplayer teams */
-	linkedList_t *gameTypes;	/**< gametype strings this map is useable for */
-
-	/* singleplayer */
-	int maxAliens;				/**< Number of spawning points on the map */
-	qboolean hurtAliens;		/**< hurt the aliens on spawning them - e.g. for ufocrash missions */
-
-	linkedList_t *terrains;		/**< terrain strings this map is useable for */
-	linkedList_t *populations;	/**< population strings this map is useable for */
-	linkedList_t *cultures;		/**< culture strings this map is useable for */
-	qboolean storyRelated;		/**< Is this a mission story related? */
-	int timesAlreadyUsed;		/**< Number of times the map has already been used */
-	linkedList_t *ufos;			/**< Type of allowed UFOs on the map */
-	linkedList_t *aircraft;		/**< Type of allowed aircraft on the map */
-
-	/** @note Don't end with ; - the trigger commands get the base index as
-	 * parameter - see CP_ExecuteMissionTrigger - If you don't need the base index
-	 * in your trigger command, you can seperate more commands with ; of course */
-	char onwin[MAX_VAR];		/**< trigger command after you've won a battle */
-	char onlose[MAX_VAR];		/**< trigger command after you've lost a battle */
-} mapDef_t;
-
 typedef struct damageType_s {
 	char id[MAX_VAR];
 	qboolean showInMenu;	/**< true for values that contains a translatable id */
@@ -426,11 +393,6 @@ typedef struct csi_s {
 	/** Inventory definitions */
 	invDef_t ids[MAX_INVDEFS];
 	int numIDs;
-
-	/** Map definitions */
-	mapDef_t mds[MAX_MAPDEFS];
-	int numMDs;
-	mapDef_t *currentMD;	/**< currently selected mapdef */
 
 	/** Special container ids */
 	containerIndex_t idRight, idLeft, idExtension;

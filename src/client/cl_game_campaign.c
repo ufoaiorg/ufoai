@@ -352,7 +352,7 @@ qboolean GAME_CP_Spawn (void)
 
 const mapDef_t* GAME_CP_MapInfo (int step)
 {
-	return &csi.mds[cls.currentSelectedMap];
+	return Com_GetMapDefByIDX(cls.currentSelectedMap);
 }
 
 qboolean GAME_CP_ItemIsUseable (const objDef_t *od)

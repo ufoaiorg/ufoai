@@ -107,6 +107,11 @@ typedef struct client_static_s {
 	int nextUniqueCharacterNumber;
 
 	inventoryInterface_t i;
+
+	/** Map definitions */
+	mapDef_t mds[MAX_MAPDEFS];
+	int numMDs;
+	mapDef_t *currentMD;	/**< currently selected mapdef */
 } client_static_t;
 
 extern client_static_t cls;

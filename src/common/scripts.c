@@ -3004,152 +3004,6 @@ static void Com_AddObjectLinks (void)
 	}
 }
 
-mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
-{
-	int i;
-
-	assert(mapDefID);
-
-	for (i = 0; i < csi.numMDs; i++) {
-		if (!strcmp(csi.mds[i].id, mapDefID))
-			return &csi.mds[i];
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "Com_GetMapDefinition: Could not find mapdef with id: '%s'\n", mapDefID);
-	return NULL;
-}
-
-/** @brief valid mapdef descriptors */
-static const value_t mapdef_vals[] = {
-	{"description", V_TRANSLATION_STRING, offsetof(mapDef_t, description), 0},
-	{"map", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, map), 0},
-	{"param", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, param), 0},
-	{"size", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, size), 0},
-
-	{"maxaliens", V_INT, offsetof(mapDef_t, maxAliens), MEMBER_SIZEOF(mapDef_t, maxAliens)},
-	{"storyrelated", V_BOOL, offsetof(mapDef_t, storyRelated), MEMBER_SIZEOF(mapDef_t, storyRelated)},
-	{"hurtaliens", V_BOOL, offsetof(mapDef_t, hurtAliens), MEMBER_SIZEOF(mapDef_t, hurtAliens)},
-
-	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
-	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},
-
-	{"onwin", V_STRING, offsetof(mapDef_t, onwin), 0},
-	{"onlose", V_STRING, offsetof(mapDef_t, onlose), 0},
-
-	{NULL, 0, 0, 0}
-};
-
-static void Com_ParseMapDefinition (const char *name, const char **text)
-{
-	const char *errhead = "Com_ParseMapDefinition: unexpected end of file (mapdef ";
-	mapDef_t *md;
-	const value_t *vp;
-	const char *token;
-
-	/* get it's body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" without body ignored\n", name);
-		return;
-	}
-
-	md = &csi.mds[csi.numMDs++];
-	if (csi.numMDs >= MAX_MAPDEFS)
-		Sys_Error("Com_ParseMapDefinition: Max mapdef hit");
-
-	memset(md, 0, sizeof(*md));
-	md->id = Mem_PoolStrDup(name, com_genericPool, 0);
-
-	do {
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		for (vp = mapdef_vals; vp->string; vp++)
-			if (!strcmp(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				switch (vp->type) {
-				default:
-					Com_EParseValue(md, token, vp->type, vp->ofs, vp->size);
-					break;
-				case V_TRANSLATION_STRING:
-					if (*token == '_')
-						token++;
-				/* fall through */
-				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)md + (int)vp->ofs), com_genericPool, 0);
-					break;
-				}
-				break;
-			}
-
-		if (!vp->string) {
-			linkedList_t **list;
-			if (!strcmp(token, "ufos")) {
-				list = &md->ufos;
-			} else if (!strcmp(token, "aircraft")) {
-				list = &md->aircraft;
-			} else if (!strcmp(token, "terrains")) {
-				list = &md->terrains;
-			} else if (!strcmp(token, "populations")) {
-				list = &md->populations;
-			} else if (!strcmp(token, "cultures")) {
-				list = &md->cultures;
-			} else if (!strcmp(token, "gametypes")) {
-				list = &md->gameTypes;
-			} else {
-				Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
-				continue;
-			}
-			token = Com_EParse(text, errhead, name);
-			if (!*text || *token != '{') {
-				Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" has ufos, gametypes, terrains, populations or cultures block with no opening brace\n", name);
-				break;
-			}
-			do {
-				token = Com_EParse(text, errhead, name);
-				if (!*text || *token == '}')
-					break;
-				LIST_AddString(list, token);
-			} while (*text);
-		}
-	} while (*text);
-
-	if (!md->map) {
-		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no map\n", name);
-		csi.numMDs--;
-	}
-
-	if (!md->description) {
-		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no description\n", name);
-		csi.numMDs--;
-	}
-}
-
-/**
- * @sa FS_MapDefSort
- */
-static int Com_MapDefSort (const void *mapDef1, const void *mapDef2)
-{
-	const char *map1 = ((const mapDef_t *)mapDef1)->map;
-	const char *map2 = ((const mapDef_t *)mapDef2)->map;
-
-	/* skip special map chars for rma and base attack */
-	if (map1[0] == '+' || map1[0] == '.')
-		map1++;
-	if (map2[0] == '+' || map2[0] == '.')
-		map2++;
-
-	return Q_StringSort(map1, map2);
-}
-
 /**
  * @sa CL_ParseClientData
  * @sa CL_ParseScriptFirst
@@ -3187,8 +3041,6 @@ void Com_ParseScripts (qboolean onlyServer)
 		/* server/client scripts */
 		if (!strcmp(type, "item"))
 			Com_ParseItem(name, &text, qfalse);
-		else if (!strcmp(type, "mapdef"))
-			Com_ParseMapDefinition(name, &text);
 		else if (!strcmp(type, "craftitem"))
 			Com_ParseItem(name, &text, qtrue);
 		else if (!strcmp(type, "inventory"))
@@ -3225,13 +3077,9 @@ void Com_ParseScripts (qboolean onlyServer)
 			CL_ParseClientData(type, name, &text);
 	}
 
-	/* sort the mapdef array */
-	qsort(csi.mds, csi.numMDs, sizeof(mapDef_t), Com_MapDefSort);
-
 	Com_Printf("Shared Client/Server Info loaded\n");
 	Com_Printf("...%3i items parsed\n", csi.numODs);
 	Com_Printf("...%3i damage types parsed\n", csi.numDTs);
-	Com_Printf("...%3i map definitions parsed\n", csi.numMDs);
 	Com_Printf("...%3i equipment definitions parsed\n", csi.numEDs);
 	Com_Printf("...%3i inventory definitions parsed\n", csi.numIDs);
 	Com_Printf("...%3i team definitions parsed\n", csi.numTeamDefs);

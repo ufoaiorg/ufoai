@@ -38,12 +38,17 @@ static cvar_t *cl_equip;
  * @brief Register some data in the shared client/server structs to ensure that e.g. every known
  * alien race is used in a skirmish game
  */
-static void GAME_SK_SetMissionParameters (void)
+static void GAME_SK_SetMissionParameters (const mapDef_t *md)
 {
 	int i;
 
 	Cvar_SetValue("ai_numcivilians", 8);
 	Cvar_Set("ai_civilian", "europe");
+
+	if (md->hurtAliens)
+		Cvar_Set("sv_hurtaliens", "1");
+	else
+		Cvar_Set("sv_hurtaliens", "0");
 
 	/* now store the alien teams in the shared csi struct to let the game dll
 	 * have access to this data, too */
@@ -80,11 +85,11 @@ static void GAME_SK_Start_f (void)
 	assert(cls.currentSelectedMap >= 0);
 	assert(cls.currentSelectedMap < MAX_MAPDEFS);
 
-	md = &csi.mds[cls.currentSelectedMap];
+	md = Com_GetMapDefByIDX(cls.currentSelectedMap);
 	if (!md)
 		return;
 
-	GAME_SK_SetMissionParameters();
+	GAME_SK_SetMissionParameters(md);
 
 	GAME_GenerateTeam(teamDefID, ed, maxSoldiers);
 	for (i = 0; i < ugvs; i++)
@@ -228,7 +233,7 @@ static inline void GAME_SK_HideUFOs (const linkedList_t *ufos)
 
 const mapDef_t* GAME_SK_MapInfo (int step)
 {
-	const mapDef_t *md = &csi.mds[cls.currentSelectedMap];
+	const mapDef_t *md = Com_GetMapDefByIDX(cls.currentSelectedMap);
 
 	if (md->map[0] == '.')
 		return NULL;

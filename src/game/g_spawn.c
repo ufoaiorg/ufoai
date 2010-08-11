@@ -328,6 +328,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 	ent = NULL;
 	level.activeTeam = TEAM_NO_ACTIVE;
 	level.actualRound = 1;
+	level.hurtAliens = sv_hurtaliens->integer;
 	ai_waypointList = NULL;
 
 	/* parse ents */
@@ -601,7 +602,7 @@ static void SP_alien_start (edict_t *ent)
 	ent->STUN = 0;
 	ent->HP = MAX_HP;
 	/* hurt aliens in ufo crash missions (5%: almost dead, 15%: wounded, 30%: stunned)  */
-	if (gi.csi->currentMD && gi.csi->currentMD->hurtAliens) {
+	if (level.hurtAliens) {
 		const float random = frand();
 		if (random <= .05f) {
 			ent->STUN = 50;
@@ -889,10 +890,6 @@ static void SP_worldspawn (edict_t *ent)
 		gi.ConfigString(CS_MAXSOLDIERSPERTEAM, "%i", sv_maxsoldiersperteam->integer);
 		gi.ConfigString(CS_MAXSOLDIERSPERPLAYER, "%i", sv_maxsoldiersperplayer->integer);
 		gi.ConfigString(CS_ENABLEMORALE, "%i", sv_enablemorale->integer);
-		if (gi.csi->currentMD) {
-			gi.ConfigString(CS_MAXTEAMS, "%i", gi.csi->currentMD->teams);
-			gi.Cvar_Set("sv_maxteams", va("%i", gi.csi->currentMD->teams));
-		} else
-			gi.ConfigString(CS_MAXTEAMS, "%s", sv_maxteams->string);
+		gi.ConfigString(CS_MAXTEAMS, "%s", sv_maxteams->string);
 	}
 }

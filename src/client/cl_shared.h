@@ -55,4 +55,39 @@ typedef struct chr_list_s {
 	int num;	/* Number of entries */
 } chrList_t;
 
+typedef struct mapDef_s {
+	/* general */
+	char *id;				/**< script file id */
+	char *map;				/**< bsp or ump base filename (without extension and day or night char) */
+	char *param;			/**< in case of ump file, the assembly to use */
+	char *description;		/**< the description to show in the menus */
+	char *size;				/**< small, medium, big */
+
+	/* multiplayer */
+	qboolean multiplayer;	/**< is this map multiplayer ready at all */
+	int teams;				/**< multiplayer teams */
+	linkedList_t *gameTypes;	/**< gametype strings this map is useable for */
+
+	/* singleplayer */
+	int maxAliens;				/**< Number of spawning points on the map */
+	qboolean hurtAliens;		/**< hurt the aliens on spawning them - e.g. for ufocrash missions */
+
+	linkedList_t *terrains;		/**< terrain strings this map is useable for */
+	linkedList_t *populations;	/**< population strings this map is useable for */
+	linkedList_t *cultures;		/**< culture strings this map is useable for */
+	qboolean storyRelated;		/**< Is this a mission story related? */
+	int timesAlreadyUsed;		/**< Number of times the map has already been used */
+	linkedList_t *ufos;			/**< Type of allowed UFOs on the map */
+	linkedList_t *aircraft;		/**< Type of allowed aircraft on the map */
+
+	/** @note Don't end with ; - the trigger commands get the base index as
+	 * parameter - see CP_ExecuteMissionTrigger - If you don't need the base index
+	 * in your trigger command, you can seperate more commands with ; of course */
+	char *onwin;		/**< trigger command after you've won a battle */
+	char *onlose;		/**< trigger command after you've lost a battle */
+} mapDef_t;
+
+mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
+mapDef_t* Com_GetMapDefByIDX(int index);
+
 #endif

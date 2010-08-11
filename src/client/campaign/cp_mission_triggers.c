@@ -181,7 +181,7 @@ void CP_ExecuteMissionTrigger (mission_t *m, qboolean won)
 			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", m->onwin);
 			Cmd_ExecuteString(m->onwin);
 		}
-		if (m->mapDef && m->mapDef->onwin[0] != '\0') {
+		if (m->mapDef && m->mapDef->onwin != NULL) {
 			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", m->mapDef->onwin);
 			Cmd_ExecuteString(m->mapDef->onwin);
 		}
@@ -190,7 +190,7 @@ void CP_ExecuteMissionTrigger (mission_t *m, qboolean won)
 			Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", m->onlose);
 			Cmd_ExecuteString(m->onlose);
 		}
-		if (m->mapDef && m->mapDef->onlose[0] != '\0') {
+		if (m->mapDef && m->mapDef->onlose != NULL) {
 			Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", m->mapDef->onlose);
 			Cmd_ExecuteString(m->mapDef->onlose);
 		}

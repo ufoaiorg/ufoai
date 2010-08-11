@@ -110,8 +110,8 @@ typedef struct {
 	char mapname[MAX_QPATH];	/**< the server name (base1, etc) */
 	char nextmap[MAX_QPATH];	/**< @todo Spawn the new map after the current one was ended */
 	qboolean routed;
-	int maxteams; /**< the max team amount for multiplayer games for the current map */
 	qboolean day;
+	qboolean hurtAliens;
 
 	/* intermission state */
 	float intermissionTime;		/**< the seconds to wait until the game will be closed.
@@ -231,6 +231,7 @@ extern cvar_t *sv_maxvelocity;
 extern cvar_t *sv_cheats;
 extern cvar_t *sv_maxclients;
 extern cvar_t *sv_shot_origin;
+extern cvar_t *sv_hurtaliens;
 extern cvar_t *sv_maxplayersperteam;
 extern cvar_t *sv_maxsoldiersperteam;
 extern cvar_t *sv_maxsoldiersperplayer;

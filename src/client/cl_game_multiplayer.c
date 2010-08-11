@@ -83,7 +83,7 @@ static void GAME_MP_StartServer_f (void)
 		return;
 	}
 
-	md = &csi.mds[cls.currentSelectedMap];
+	md = Com_GetMapDefByIDX(cls.currentSelectedMap);
 	if (!md || !md->multiplayer)
 		return;
 	assert(md->map);
@@ -91,11 +91,21 @@ static void GAME_MP_StartServer_f (void)
 	Com_sprintf(map, sizeof(map), "map %s %s %s", Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
 
 	/* let the (local) server know which map we are running right now */
-	csi.currentMD = md;
+	cls.currentMD = md;
 
 	/** @todo implement different ufo and dropship support for multiplayer, too (see skirmish) */
 	Cvar_Set("rm_drop", "");
 	Cvar_Set("rm_ufo", "");
+
+	if (md->hurtAliens)
+		Cvar_Set("sv_hurtaliens", "1");
+	else
+		Cvar_Set("sv_hurtaliens", "0");
+
+	if (md->teams)
+		Cvar_SetValue("sv_maxteams", md->teams);
+	else
+		Cvar_SetValue("sv_maxteams", 2);
 
 	Cmd_ExecuteString(map);
 
@@ -125,7 +135,7 @@ static void GAME_MP_ChangeGametype_f (void)
 	if (numGTs == 0)
 		return;
 
-	md = &csi.mds[cls.currentSelectedMap];
+	md = Com_GetMapDefByIDX(cls.currentSelectedMap);
 	if (!md || !md->multiplayer) {
 		Com_Printf("UI_ChangeGametype_f: No mapdef for the map\n");
 		return;
@@ -236,17 +246,17 @@ const mapDef_t* GAME_MP_MapInfo (int step)
 	const mapDef_t *md;
 	int i = 0;
 
-	while (!csi.mds[cls.currentSelectedMap].multiplayer) {
+	while (!Com_GetMapDefByIDX(cls.currentSelectedMap)->multiplayer) {
 		i++;
 		cls.currentSelectedMap += (step ? step : 1);
 		if (cls.currentSelectedMap < 0)
-			cls.currentSelectedMap = csi.numMDs - 1;
-		cls.currentSelectedMap %= csi.numMDs;
-		if (i >= csi.numMDs)
+			cls.currentSelectedMap = cls.numMDs - 1;
+		cls.currentSelectedMap %= cls.numMDs;
+		if (i >= cls.numMDs)
 			Com_Error(ERR_DROP, "GAME_MP_MapInfo: There is no multiplayer map in any mapdef");
 	}
 
-	md = &csi.mds[cls.currentSelectedMap];
+	md = Com_GetMapDefByIDX(cls.currentSelectedMap);
 
 	if (md->gameTypes) {
 		const linkedList_t *list = md->gameTypes;

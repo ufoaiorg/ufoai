@@ -129,11 +129,16 @@ void CP_StartMissionMap (mission_t* mission)
 	else
 		param = mission->mapDef->param;
 
+	if (mission->mapDef->hurtAliens)
+		Cvar_Set("sv_hurtaliens", "1");
+	else
+		Cvar_Set("sv_hurtaliens", "0");
+
 	Cbuf_AddText(va("map %s %s %s\n", (MAP_IsNight(mission->pos) ? "night" : "day"),
 		mission->mapDef->map, param ? param : ""));
 
 	/* let the (local) server know which map we are running right now */
-	csi.currentMD = mission->mapDef;
+	cls.currentMD = mission->mapDef;
 }
 
 /**
