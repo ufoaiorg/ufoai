@@ -1033,7 +1033,6 @@ void CL_ParticleRun (void)
 			CL_ParticleRun2(p);
 }
 
-
 /**
  * @brief Parses particle used on maps.
  * @param[in,out] ptl Pointer to particle being parsed and updated.
@@ -1055,17 +1054,17 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 		if (token[0] == '}')
 			break;
 		if (!es)
-			Com_Error(ERR_DROP, "ED_ParseEntity: EOF without closing brace");
+			Com_Error(ERR_DROP, "CL_ParseMapParticle: EOF without closing brace");
 
 		Q_strncpyz(keyname, token, sizeof(keyname));
 
 		/* parse value */
 		token = Com_Parse(&es);
 		if (!es)
-			Com_Error(ERR_DROP, "ED_ParseEntity: EOF without closing brace");
+			Com_Error(ERR_DROP, "CL_ParseMapParticle: EOF without closing brace");
 
 		if (token[0] == '}')
-			Com_Error(ERR_DROP, "ED_ParseEntity: closing brace without data");
+			Com_Error(ERR_DROP, "CL_ParseMapParticle: closing brace without data");
 
 		if (!afterwards && keyname[0] != '-')
 			continue;
