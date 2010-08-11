@@ -545,8 +545,7 @@ void R_DrawEntities (void)
 			case mod_alias_md3:
 			case mod_obj:
 				skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
-				/** @todo activate this once #2890118 is fixed */
-				if (skin == NULL/* || skin->texnum == 0*/)
+				if (skin == NULL || skin->texnum == 0)
 					Com_Error(ERR_DROP, "Model '%s' has no skin assigned", e->model->name);
 				if (skin->has_alpha || e->flags & RF_TRANSLUCENT)
 					chain = &r_blend_mesh_entities;
