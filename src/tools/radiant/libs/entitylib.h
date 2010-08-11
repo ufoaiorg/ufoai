@@ -103,7 +103,7 @@ inline void aabb_draw_wire (const Vector3 points[8])
 {
 	const unsigned char indices[] = { 0, 1, 1, 2, 2, 3, 3, 0, 4, 5, 5, 6, 6, 7, 7, 4, 0, 4, 1, 5, 2, 6, 3, 7 };
 	glVertexPointer(3, GL_FLOAT, 0, points);
-	glDrawElements(GL_LINES, 24, GL_UNSIGNED_BYTE, indices);
+	glDrawElements(GL_LINES, sizeof(indices) / sizeof(indices[0]), GL_UNSIGNED_BYTE, indices);
 }
 
 inline void aabb_draw_flatshade (const Vector3 points[8])
