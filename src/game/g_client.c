@@ -615,6 +615,7 @@ int G_ClientAction (player_t * player)
 	actorHands_t hand, fmIdx, objIdx;
 	int resCrouch, resShot;
 	edict_t *ent;
+	const char *format;
 
 	/* read the header */
 	action = gi.ReadByte();
@@ -624,33 +625,35 @@ int G_ClientAction (player_t * player)
 	if (ent == NULL)
 		return action;
 
+	format = pa_format[action];
+
 	switch (action) {
 	case PA_NULL:
 		/* do nothing on a null action */
 		break;
 
 	case PA_TURN:
-		gi.ReadFormat(pa_format[PA_TURN], &i);
+		gi.ReadFormat(format, &i);
 		G_ClientTurn(player, ent, (byte) i);
 		break;
 
 	case PA_MOVE:
-		gi.ReadFormat(pa_format[PA_MOVE], &pos);
+		gi.ReadFormat(format, &pos);
 		G_ClientMove(player, player->pers.team, ent, pos);
 		break;
 
 	case PA_STATE:
-		gi.ReadFormat(pa_format[PA_STATE], &i);
+		gi.ReadFormat(format, &i);
 		G_ClientStateChange(player, ent, i, qtrue);
 		break;
 
 	case PA_SHOOT:
-		gi.ReadFormat(pa_format[PA_SHOOT], &pos, &i, &firemode, &from);
+		gi.ReadFormat(format, &pos, &i, &firemode, &from);
 		G_ClientShoot(player, ent, pos, i, firemode, NULL, qtrue, from);
 		break;
 
 	case PA_INVMOVE:
-		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
+		gi.ReadFormat(format, &from, &fx, &fy, &to, &tx, &ty);
 
 		if (from < 0 || from >= gi.csi->numIDs || to < 0 || to >= gi.csi->numIDs) {
 			gi.DPrintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
@@ -670,7 +673,7 @@ int G_ClientAction (player_t * player)
 			edict_t *door;
 
 			/* read the door the client wants to open */
-			gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
+			gi.ReadFormat(format, &i);
 
 			/* get the door edict */
 			door = G_EdictsGetByNum(i);
@@ -687,12 +690,12 @@ int G_ClientAction (player_t * player)
 		break;
 
 	case PA_REACT_SELECT:
-		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fmIdx, &objIdx);
+		gi.ReadFormat(format, &hand, &fmIdx, &objIdx);
 		G_ReactionFireUpdate(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
 		break;
 
 	case PA_RESERVE_STATE:
-		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resShot, &resCrouch);
+		gi.ReadFormat(format, &resShot, &resCrouch);
 
 		G_ActorReserveTUs(ent, ent->chr.reservedTus.reaction, resShot, resCrouch);
 		break;

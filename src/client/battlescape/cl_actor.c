@@ -532,13 +532,13 @@ ACTOR MOVEMENT AND SHOOTING
  * @note Pointer to le->pos or edict->pos followed by le->fieldSize or edict->fieldSize
  * @see CL_BuildForbiddenList
  */
-pos_t *fb_list[MAX_FORBIDDENLIST];
+static pos_t *fb_list[MAX_FORBIDDENLIST];
 /**
  * @brief Current length of fb_list.
  * @note all byte pointers in the fb_list list (pos + fieldSize)
  * @see fb_list
  */
-int fb_length;
+static int fb_length;
 
 /**
  * @brief Builds a list of locations that cannot be moved to (client side).

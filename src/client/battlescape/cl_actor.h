@@ -48,9 +48,6 @@ extern pos3_t mousePos;
 
 #define ACTOR_GET_FIELDSIZE(actor) ((actor != NULL) ? (actor)->fieldSize : ACTOR_SIZE_NORMAL)
 
-extern pos_t *fb_list[MAX_FORBIDDENLIST];
-extern int fb_length;
-
 void MSG_Write_PA(player_action_t player_action, int num, ...);
 
 void ACTOR_InitStartup(void);

@@ -406,7 +406,7 @@ void NET_ReadDir (struct dbuffer *buf, vec3_t dir)
  * @brief Reads from a buffer according to format; version without syntactic sugar for variable arguments, to call it from other functions with variable arguments
  * @sa SV_ReadFormat
  * @param[in] buf The buffer we read the data from
- * @param[in] format The format string (see e.g. pa_format array) - may not be NULL
+ * @param[in] format The format string may not be NULL
  */
 void NET_vReadFormat (struct dbuffer *buf, const char *format, va_list ap)
 {
