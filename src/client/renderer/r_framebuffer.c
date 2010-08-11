@@ -409,7 +409,8 @@ void R_UseFramebuffer (const r_framebuffer_t *buf)
 
 void R_ClearFramebuffer (void)
 {
-	glClear((activeFramebuffer->nTextures > 0 ? GL_COLOR_BUFFER_BIT : 0) | (activeFramebuffer->depth ? GL_DEPTH_BUFFER_BIT : 0));
+	glClear((!activeFramebuffer || activeFramebuffer->nTextures > 0 ? GL_COLOR_BUFFER_BIT : 0) | (!activeFramebuffer || activeFramebuffer->depth ? GL_DEPTH_BUFFER_BIT : 0));
+	//glClear(activeFramebuffer->nTextures > 0 ? GL_COLOR_BUFFER_BIT : 0 | (activeFramebuffer->depth ? GL_DEPTH_BUFFER_BIT : 0));
 }
 
 /**

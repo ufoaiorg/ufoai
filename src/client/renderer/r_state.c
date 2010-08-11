@@ -640,15 +640,17 @@ void R_EnableGlowMap (const image_t *image, qboolean enable)
 	r_state.glowmap_enabled = enable;
 
 	if (enable) {
-		if (!r_state.active_program)
+		if (!r_state.active_program) {
+			Com_Printf("Trying to enable glow without an active shader program!\n");
 			R_UseProgram(r_state.simple_glow_program);
+		}
 
 		if (image == NULL)
 			R_ProgramParameter1f("GLOWSCALE", 0.0);
 		else
 			R_ProgramParameter1f("GLOWSCALE", 1.0);
 
-		R_DrawBuffers(2);
+		//R_DrawBuffers(2);
 	} else {
 		if (r_state.active_program == r_state.simple_glow_program)
 			R_UseProgram(NULL);
@@ -929,7 +931,8 @@ void R_SetupViewpoint (r_light_t *light)
 
 		}
 
-		glOrtho(a[0], b[0], a[1], b[1], a[2], b[2]);
+		/* need to swap Z coords */
+		glOrtho(a[0], b[0], a[1], b[1], -b[2], -a[2]);
 	} else {
 		/* @todo - handle this case better */
 		GLdouble zNear = 4.0;

@@ -330,16 +330,21 @@ void R_RenderFrame (void)
 			R_EnableLighting(r_state.lighting_program, qtrue);
 			glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 			glDepthMask(GL_TRUE);
+			/* @todo - try to render opaque objects front to back, then transparent
+			 * ones back to front.  If we disable writing to depth-mask for transparent
+			 * objects, this will result in the best quality result */
 			R_DrawEntityList(r_state.camera.ents);
 			R_DrawBuffers(2);
 			glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-			R_DrawBuffers(1);
 			R_EnableLighting(NULL, qfalse);
 
 
+			/* render lighting using up to r_dynamic_lights sources */
 			for (i = 0, j = 0; i < r_dynamic_lights->integer; i++, j++) {
+				/* skip lights that are disabled */
 				for (; !r_state.dynamicLights[j].enabled && j < MAX_DYNAMIC_LIGHTS; j++);
 
+				/* @todo - remove this when more lights are being properly set up */
 				if (j > 1)
 					continue;
 
@@ -350,10 +355,12 @@ void R_RenderFrame (void)
 				 * this means no material stages, no "special" entities, etc. 
 				 * as well as things that can't be illuminated by a given light 
 				 * due to being too far away. */
+
 				r_state.dynamicLights[j].viewpoint.ents = allEntities;
 				R_EnableBuildShadowmap(qtrue, &r_state.dynamicLights[j]);
 				R_ClearFramebuffer();
 
+				/* @todo - for point sources, use shadowmap_cube_program */
 				R_EnableLighting(r_state.build_shadowmap_flat_program, qtrue);
 				R_DrawEntityList(r_state.dynamicLights[j].viewpoint.ents);
 				R_EnableLighting(NULL, qfalse);
@@ -367,8 +374,6 @@ void R_RenderFrame (void)
 				}
 
 				/* render scene using this lightsource */
-
-				/* @todo - fix glow being rendered each time */
 				R_UseViewpoint(&r_state.camera);
 				R_EnableUseShadowmap(qtrue);
 				R_EnableBlend(qtrue);
@@ -384,6 +389,28 @@ void R_RenderFrame (void)
 				R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				R_EnableBlend(qfalse);
 			}
+
+			/* render glow channel in a separate pass to avoid it getting applied multiple times */
+			R_UseViewpoint(&r_state.camera);
+			R_EnableBlend(qtrue);
+			R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			/* @todo - again, we don't need a full lighting pass here, just LERPing and textures,
+			 * so this should be done using a different shader program for efficiency */
+			R_EnableLighting(r_state.lighting_program, qtrue);
+			R_EnableDynamicLights(&r_state.dynamicLights[j], qtrue);
+
+			R_ProgramParameter1i("DRAW_GLOW", 1);
+			glDepthMask(GL_FALSE);
+			R_DrawEntityList(r_state.camera.ents);
+			glDepthMask(GL_TRUE);
+			R_ProgramParameter1i("DRAW_GLOW", 0);
+
+			R_EnableDynamicLights(NULL, qfalse);
+			R_EnableLighting(NULL, qfalse);
+			R_EnableBlend(qfalse);
+
+
+
 		} else {
 			/* if shadows are disabled, we do what we can using the fixed pipeline */
 

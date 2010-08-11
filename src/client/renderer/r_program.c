@@ -731,6 +731,7 @@ static void R_InitLightingProgram (r_program_t *prog)
 	R_ProgramParameter1i("ROUGHMAP", 0);
 	R_ProgramParameter1i("SPECULARMAP", 0);
 	R_ProgramParameter1i("ANIMATE", 0);
+	R_ProgramParameter1i("DRAW_GLOW", 0);
 
 	R_ProgramParameter1f("BUMP", 1.0);
 	R_ProgramParameter1f("PARALLAX", 1.0);
@@ -840,8 +841,6 @@ static void R_InitCombine2Program (r_program_t *prog)
 
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
-
-	R_ProgramParameter4fv("DEFAULTCOLOR", defaultColor);
 }
 
 static void R_InitAtmosphereProgram (r_program_t *prog)

@@ -8,6 +8,7 @@ uniform int SPECULARMAP;
 uniform int LIGHTMAP;
 uniform int SHADOWMAP;
 uniform int BUILD_SHADOWMAP;
+uniform int DRAW_GLOW;
 
 /* scaling factors */
 uniform float BUMP;
@@ -67,13 +68,25 @@ in vec4 texCoord;
 
 #define ATTENUATE_THRESH 0.05 
 
+const ivec2 offsets[] = ivec2[]( 
+						  ivec2(-1, -1),
+						  ivec2(-1,  0),
+						  ivec2(-1,  1),
+						  ivec2( 0, -1),
+						  ivec2( 0,  0),
+						  ivec2( 0,  1),
+						  ivec2( 1, -1),
+						  ivec2( 1,  0),
+						  ivec2( 1,  1) );
+
 
 /* Chebyshev's Upper Bound for the likelyhood a fragment is in shadow */
-float chebyshevUpperBound(vec4 shadow)
+float chebyshevUpperBound (vec4 shadow)
 {
 	vec3 moments = textureProj(SAMPLER_SHADOW, shadow).rgb;
 
-	float shadowZ = (shadow.z / shadow.w) - 0.00;
+	//float shadowZ = (shadow.z / shadow.w) - 0.0001;
+	float shadowZ = shadow.z / shadow.w;
 
 	/* early return if fragment is fully lit */
 	if (shadowZ <= moments.x)
@@ -82,7 +95,7 @@ float chebyshevUpperBound(vec4 shadow)
 	/* otherwise, the fragment is either in shadow or penumbra. We now use
 	 * chebyshev's upper-bound to check How likely this pixel is to be lit */
 	float variance = moments.y - (moments.x * moments.x);
-	variance = max(variance, 0.0000002);
+	variance = max(variance, 0.0000001);
 
 	float d = shadowZ - moments.x;
 	float p_max = variance / (variance + d * d);
@@ -90,11 +103,50 @@ float chebyshevUpperBound(vec4 shadow)
 	return p_max;
 }
 
+float chebyshevUpperBoundOffset (vec4 shadow, const ivec2 offset)
+{
+	vec3 moments = textureProjOffset(SAMPLER_SHADOW, shadow, offset).rgb;
+
+	float shadowZ = (shadow.z / shadow.w) - 0.0001;
+
+	/* early return if fragment is fully lit */
+	if (shadowZ <= moments.x)
+		return 1.0;
+
+	/* otherwise, the fragment is either in shadow or penumbra. We now use
+	 * chebyshev's upper-bound to check How likely this pixel is to be lit */
+	float variance = moments.y - (moments.x * moments.x);
+	variance = max(variance, 0.0000001);
+
+	float d = shadowZ - moments.x;
+	float p_max = variance / (variance + d * d);
+
+	return p_max;
+}
+
+float chebyshevUpperBoundMultisample (vec4 shadow)
+{
+	float sum = 0.0;
+
+	sum += chebyshevUpperBoundOffset(shadow, offsets[0]);
+	sum += chebyshevUpperBoundOffset(shadow, offsets[1]);
+	sum += chebyshevUpperBoundOffset(shadow, offsets[2]);
+	sum += chebyshevUpperBoundOffset(shadow, offsets[3]);
+	sum += chebyshevUpperBoundOffset(shadow, offsets[4]);
+	sum += chebyshevUpperBoundOffset(shadow, offsets[5]);
+	sum += chebyshevUpperBoundOffset(shadow, offsets[6]);
+	sum += chebyshevUpperBoundOffset(shadow, offsets[7]);
+	sum += chebyshevUpperBoundOffset(shadow, offsets[8]);
+
+	sum /= 9.0;
+	return sum;
+}
+
 /* @todo - this on-the-fly dirtmap transparency generation
 		   looks nice, but it's probably more expensive than
 		   it needs to be...still cheaper than doing it
 		   on the CPU, though */
-float dirtNoise(in vec3 v) {
+float dirtNoise (in vec3 v) {
 	float a = 0.0;
 	float b = 0.0;
 	float c = 0.0;
@@ -212,13 +264,20 @@ vec4 IlluminateFragment (void)
 
 
 #if r_debug_shadows
-	return textureProj(SAMPLER_SHADOW0, shadowCoord).rgb;
+	//return vec4(1.0 - ((1.0 - chebyshevUpperBound(shadowCoord)) * pow(NdotL, 0.5)));
+	//return vec4(chebyshevUpperBound(shadowCoord));
+	//return vec4(chebyshevUpperBoundOffset(shadowCoord, offsets[5]));
+	//return vec4(chebyshevUpperBoundMultisample(shadowCoord));
+	return vec4(textureProj(SAMPLER_SHADOW, shadowCoord).rgb, 1.0);
+	//return vec4(textureProjOffset(SAMPLER_SHADOW, shadowCoord, const ivec2(5,5)).rgb, 1.0);
 #endif
 
 	float shadow = 1.0;
 #if r_shadowmapping
 	if (SHADOWMAP > 0) {
-		shadow = 1.0 - ((1.0 - chebyshevUpperBound(shadowCoord)) * NdotL);
+		//shadow = 1.0 - ((1.0 - chebyshevUpperBound(shadowCoord)) * NdotL);
+		//shadow = chebyshevUpperBoundMultisample(shadowCoord);
+		shadow = chebyshevUpperBound(shadowCoord);
 
 		/* if the fragment is completely shadowed, we don't need 
 		 * to calculate anything but ambient color */
@@ -291,7 +350,8 @@ vec4 IlluminateFragment (void)
 /**
  * main
  */
-void main(void){
+void main (void)
+{
 	
 
 	/* calculate dynamic lighting, including 
@@ -336,10 +396,21 @@ void main(void){
 
 	/* return final fragment color */
 #if r_framebuffers
-	gl_FragData[0] = outColor;
-	gl_FragData[1] = glowColor;
+	//gl_FragData[0] = outColor;
+	//gl_FragData[1] = glowColor;
+	if (DRAW_GLOW > 0) {
+		gl_FragData[0] = vec4(0.0);;
+		gl_FragData[1] = glowColor;
+	} else {
+		gl_FragData[0] = outColor;
+		gl_FragData[1] = vec4(0.0);;
+	}
 #else
-	gl_FragColor = outColor + glowColor;
+	if (DRAW_GLOW > 0) {
+		gl_FragColor = glowColor;
+	} else {
+		gl_FragColor = outColor;
+	}
 #endif
 
 }

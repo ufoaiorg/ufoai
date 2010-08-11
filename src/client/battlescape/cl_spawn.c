@@ -263,7 +263,8 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 	/* set up "global" (ie. directional) light sources */
 	//Vector4Set(sun.loc, 0, 0, -1, 0.0);
 	//Vector4Set(sun.loc, 0, 0, -1, 1.0);
-	Vector4Set(sun.loc, 0.455, 0.755, -1, 0.0);
+	//Vector4Set(sun.loc, 0.455, 0.755, -1, 0.0);
+	Vector4Set(sun.loc, 0.0, 0.0, -1, 0.0);
 	VectorNormalize(sun.loc);
 	sun.constantAttenuation = 1.0;
 	sun.linearAttenuation = 0.0;
@@ -283,12 +284,24 @@ static void SP_worldspawn (const localEntityParse_t *entData)
 
 
 	/* @todo - temporary hack to test multiple light sources; remove later */
-	VectorScale(sun.ambientColor, 0.3, sun.ambientColor);
-	VectorScale(sun.diffuseColor, 0.6, sun.diffuseColor);
-	VectorScale(sun.specularColor, 0.6, sun.specularColor);
+
+	VectorScale(sun.ambientColor, 0.5, sun.ambientColor);
+	VectorScale(sun.diffuseColor, 0.5, sun.diffuseColor);
+	VectorScale(sun.specularColor, 0.5, sun.specularColor);
 	sun2 = sun;
 	Vector4Set(sun2.loc, -0.155, 0.255, -1, 0.0);
 	VectorNormalize(sun2.loc);
+#if 0
+	sun2 = sunr
+	Vector4Set(sun2.loc, -0.155, 0.255, -1, 0.0);
+	VectorNormalize(sun2.loc);
+	Vector4Set(sun.ambientColor, 0.2, 0.2, 0.2, 1);
+	Vector4Set(sun2.ambientColor, 0.0, 0.0, 0.0, 1);
+	Vector4Set(sun.diffuseColor, 0.8, 0.5, 0.2, 1);
+	Vector4Set(sun2.diffuseColor, 0.2, 0.5, 0.8, 1);
+	Vector4Set(sun.specularColor, 0.8, 0.4, 0.5, 1);
+	Vector4Set(sun2.specularColor, 0.5, 0.4, 0.8, 1);
+#endif
 }
 
 static void SP_misc_model (const localEntityParse_t *entData)
