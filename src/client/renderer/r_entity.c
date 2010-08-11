@@ -596,7 +596,7 @@ entityListNode_t * R_ListLevelEntities (void)
 		r_blend_mesh_entities = r_null_entities = NULL;
 
 	refdef.numEntities = 0;
-	r_locals.framecheck = qfalse;
+	r_locals.framecheck = qtrue;
 	for (i = 0; i < 3; i++) {
 		r_locals.mins[i] = HUGE_VAL;
 		r_locals.maxs[i] = -HUGE_VAL;

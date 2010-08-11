@@ -125,7 +125,9 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 	/* temporarily swap the view frame so that the surface drawing
 	 * routines pickup only the bsp model's surfaces */
 	const int f = r_locals.frame;
-	r_locals.frame = -1;
+	
+	if (!r_locals.framecheck)
+		r_locals.frame = -1;
 
 	surf = &e->model->bsp.surfaces[e->model->bsp.firstmodelsurface];
 
@@ -400,12 +402,17 @@ void R_GetLevelSurfaceLists (void)
 		/* don't draw weaponclip, actorclip and stepon */
 		for (i = 0; i <= LEVEL_LASTVISIBLE; i++) {
 			/* check the worldlevel flags */
-			if (i && !(i & mask))
+			if (i && !(i & mask)) {
+				r_mapTiles[tile]->visible = qfalse;
 				continue;
+			}
 
-			if (!r_mapTiles[tile]->bsp.submodels[i].numfaces)
+			if (!r_mapTiles[tile]->bsp.submodels[i].numfaces) {
+				r_mapTiles[tile]->visible = qfalse;
 				continue;
+			}
 
+			r_mapTiles[tile]->visible = qtrue;
 			R_RecurseWorld(r_mapTiles[tile]->bsp.nodes + r_mapTiles[tile]->bsp.submodels[i].headnode, tile);
 		}
 	}

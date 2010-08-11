@@ -310,7 +310,9 @@ void R_RenderFrame (void)
 #if 1
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
 		/* @todo - this only needs to be updated when models are added/removed (eg. due to visibility) */
+		r_locals.framecheck = qfalse;
 		allEntities = R_ListAllEntities();
+		r_locals.framecheck = qtrue;
 		R_SetupFrustum();
 		levelEntities = R_ListLevelEntities();
 		r_state.camera.ents = levelEntities;
@@ -323,8 +325,10 @@ void R_RenderFrame (void)
 		if (r_shadowmapping->integer) {
 			int i, j;
 
+			//r_locals.framecheck = qfalse;
 			/* do a first pass rendering scene to depth buffer only */
 			R_UseViewpoint(&r_state.camera);
+			r_locals.framecheck = qtrue;
 			/* @todo - we don't need the full lighting program here, just
 			 * the vertex LERPing; should make a separate shader for this */
 			R_EnableLighting(r_state.lighting_program, qtrue);
@@ -337,7 +341,7 @@ void R_RenderFrame (void)
 			R_DrawBuffers(2);
 			glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 			R_EnableLighting(NULL, qfalse);
-
+			r_locals.framecheck = qfalse;
 
 			/* render lighting using up to r_dynamic_lights sources */
 			for (i = 0, j = 0; i < r_dynamic_lights->integer; i++, j++) {

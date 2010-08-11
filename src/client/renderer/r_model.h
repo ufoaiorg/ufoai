@@ -48,6 +48,7 @@ typedef struct model_s {
 	modtype_t type;	/**< model type */
 
 	int flags;
+	qboolean visible; /**< is the model visible */
 
 	/** volume occupied by the model graphics */
 	vec3_t mins, maxs;

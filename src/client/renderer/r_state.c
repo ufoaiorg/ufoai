@@ -1029,12 +1029,15 @@ void R_EnableBuildShadowmap (qboolean enable, const r_light_t *light)
 		//GLMatrixMultiply();
 #endif
 
+		r_locals.framecheck = qfalse;
 	} else {
 		/* Re-enable standard rendering */
 		glMatrixMode(GL_PROJECTION);
 		glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
+
+		r_locals.framecheck = qtrue;
 
 		R_UseProgram(default_program);
 		R_EnableShadowbuffer(qfalse, NULL);
