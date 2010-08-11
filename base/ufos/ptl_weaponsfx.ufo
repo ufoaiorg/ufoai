@@ -435,19 +435,55 @@ particle laserFrizzledBeam
 	think { kill }
 }
 
+particle laserBeam
+{
+	init
+	{
+		image  sfx/laserbeam_b
+		blend  add
+		style  beam
+		thinkfade  out
+		tps    0.7
+		size	"0 3"
+		child  muzzle_laser
+	}
+	think { kill }
+}
+
 particle laserPulse
 {
 	init
 	{
-		image  sfx/laserbeam
+		image  sfx/laserpulse
+		tps    190
+		style  axis
 		blend  add
-		style  beam
-		thinkfade  sin
-		tps    6.0
-		size	"0 2.2"
+		offset "0 -16 0"
+		size   "30 10"
+		child  muzzle_laser
 	}
-	think { kill }
+	think
+	{
+		push   pos "15 10"		// push the vector onto the stack
+		mul    *t				// multiply stack value with the time value from the particle
+		add    pos "50 10"		// add another position 2d vector to the current stack value
+		pop    *size			// write the vector back into the particle size value
+	}
 }
+
+// particle laserPulse
+// {
+//	init
+//	{
+//		image  sfx/laserbeam
+//		blend  add
+//		style  beam
+//		thinkfade  sin
+//		tps    6.0
+//		size	"0 2.2"
+//	}
+//	think { kill }
+// }
 
 particle laserPulseWhite
 {
@@ -725,25 +761,46 @@ particle plasmaBall
 
 particle plasmaBigBall
 {
-	init
-	{
-		image	sfx/plasmaball
-		blend	add
-		style	facing
-		lightcolor "0.3 1.0 3.0"
-		lightintensity 0.2
+ 	init
+ 	{
+ 		frame			0
+ 		endframe		9
+ 		image			+sfx/plasmashot_
+		blend			blend
+		style			facing
+		framefade		none
+		size			"150 150"
+		fps				24.0
+ 		push			*v
+		mul				float 30.0
+		add				*s
+		pop				*s
+		v				"0 0 0"
 	}
-	run
-	{
-		push	pos	"1.5 1.5"
-		push	*t
-		mul	float	6.0
-		sin	#
-		mul	#
-		add	pos	"12 12"
-		pop	*size
-	}
+ 	think { kill }
 }
+
+// particle plasmaBigBall
+// {
+// 	init
+// 	{
+// 		image	sfx/plasmaball
+// 		blend	add
+// 		style	facing
+// 		lightcolor "0.3 1.0 3.0"
+// 		lightintensity 0.2
+// 	}
+// 	run
+// 	{
+// 		push	pos	"1.5 1.5"
+// 		push	*t
+// 		mul	float	6.0
+// 		sin	#
+// 		mul	#
+// 		add	pos	"12 12"
+// 		pop	*size
+// 	}
+// }
 
 particle plasmaImpactCharged
 {
@@ -1382,15 +1439,36 @@ particle frag_explosion
 		kill
 	}
 }
-
 particle flash_explosion
 {
-	init
-	{
-		spawn	flash
-		kill
+ 	init
+ 	{
+ 		frame			0
+ 		endframe		18
+ 		image			+sfx/flashbang_a
+		blend			blend
+		style			facing
+		framefade		none
+		size			"100 100"
+		fps				26.0
+		tps				1.4
+ 		push			*v
+		mul				float 30.0
+		add				*s
+		pop				*s
+		v				"0 0 0"
 	}
+ 	think { kill }
 }
+
+// particle flash_explosion
+// {
+//	init
+//	{
+//		spawn	flash
+//		kill
+//	}
+// }
 
 particle grenadeFragment
 {
@@ -1731,6 +1809,43 @@ particle muzzle_sniper_glow
 
 		// change the position a little bit randomly
 		crand  vector "1 1 1"	// push a value between -1 and 1 onto the stack
+		add    *s				// add the current location
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
+
+	}
+	think { kill }
+}
+
+particle muzzle_laser
+{
+	init
+	{
+		spawn  muzzle_laser_1
+		push   int 25
+		lightcolor "0.4 0.4 1.0"
+		lightintensity 0.1
+		kill
+	}
+}
+
+particle muzzle_laser_1
+{
+	init
+	{
+		image  sfx/lasermuzzle
+		blend  add
+		style  facing
+		thinkfade  out
+		life   0.1
+		tps    1
+		size   "25 25"
+		offset "0 0 0"
+	}
+	run
+	{
+
+		// change the position a little bit randomly
+		crand  vector "1 0 0"	// push a value between -1 and 1 onto the stack
 		add    *s				// add the current location
 		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
 

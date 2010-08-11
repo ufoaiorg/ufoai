@@ -2973,6 +2973,7 @@ base/pics/sfx/bms2fl_rglow.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/bolt.jpg | GNU General Public License 2.0 or later | Crystan
 base/pics/sfx/bubble.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/sfx/bullet1.jpg | GNU General Public License 2.0 or later | Crystan
+base/pics/sfx/corona_b.jpg |  |  | corona.jpg
 base/pics/sfx/corona_y.jpg |  |  | corona.jpg
 base/pics/sfx/cross.png | GNU General Public License 2.0 or later
 base/pics/sfx/cross_no.png | GNU General Public License 2.0 or later
@@ -3046,6 +3047,10 @@ base/pics/sfx/greenball.png |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplas_00.png |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplas_07.png |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplasbeam.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/sfx/laserbeam_b.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/lasermuzzle.png |  |  | plasmaimpact_00
+base/pics/sfx/laserpulse.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/laserpulse_b.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/lightningscroll.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/lightningscroll2.jpg | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/plasmaimpact_00.png | General Public License 2.0 | Lord Havoc;MCR
@@ -3292,6 +3297,11 @@ base/sound/ambience/water02.ogg | Creative Commons Attribution-Share Alike 3.0 U
 base/sound/ambience/water03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-19 sampler
 base/sound/ambience/wind_turbine.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/ambience/windloop.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
+base/sound/civilians/boy-die1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/civilians/boy-die2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/civilians/boy-hurt1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/civilians/boy-hurt2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/civilians/boy-hurt3.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/civilians/civboydeath01a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/civilians/civfemdeath01a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/civilians/civfemdeath02a.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
