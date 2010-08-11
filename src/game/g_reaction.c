@@ -260,7 +260,7 @@ static qboolean G_ReactionFireIsPossible (const edict_t *ent, const edict_t *tar
  * @sa G_CanReactionFire
  * @sa G_GetFiringTUs
  */
-static void G_ReactionFireSearchTarget (edict_t *target)
+static void G_ReactionFireSearchTarget (const edict_t *target)
 {
 	edict_t *ent = NULL;
 
@@ -356,9 +356,21 @@ static qboolean G_ReactionFireTryToShoot (edict_t *ent)
 	/* take the shot */
 	tookShot = G_ReactionFireShoot(G_PLAYER_FROM_ENT(ent), ent, ent->reactionTarget->pos, ST_RIGHT_REACTION, ent->chr.RFmode.fmIdx);
 
-	/* clear any shakenness */
-	if (tookShot)
+	if (tookShot) {
+		/* clear any shakenness */
 		G_RemoveShaken(ent);
+
+		/* check whether further reaction fire is possible */
+		if (G_ReactionFireIsPossible(ent, ent->reactionTarget)){
+			/* see how quickly ent can fire (if it can fire at all) */
+			const int tus = G_ReactionFireGetTUsForItem(ent, ent->reactionTarget, RIGHT(ent));
+			if (tus >= 0) {
+				/* An enemy getting reaction shot gets more time before
+				 * reaction fire is repeated. */
+				ent->reactionTUs = max(0, ent->reactionTarget->TU - tus);
+			}
+		}
+	}
 
 	return tookShot;
 }
@@ -410,24 +422,22 @@ qboolean G_ReactionFireOnMovement (edict_t *target)
 /**
  * @brief Called when 'target' is about to shoot, this forces a 'draw' to decide who gets the first shot
  * @param[in] target The entity about to shoot
+ * @param[in] fdTime The TU of the shoot
  * @sa G_ClientShoot
  */
-void G_ReactionFirePreShot (const edict_t *target)
+void G_ReactionFirePreShot (const edict_t *target, const int fdTime)
 {
 	edict_t *ent = NULL;
 
+	/* Check to see whether this triggers any reaction fire */
+	G_ReactionFireSearchTarget(target);
+
 	/* check all ents to see who wins and who loses a draw */
 	while ((ent = G_EdictsGetNextLivingActor(ent))) {
-		int entTUs, targTUs;
+		int entTUs;
 
 		if (!ent->reactionTarget)
 			continue;
-
-		/* if the entity has changed then resolve the reaction fire */
-		if (ent->reactionTarget != target) {
-			G_ReactionFireTryToShoot(ent);
-			continue;
-		}
 
 		/* check this ent hasn't already lost the draw */
 		if (ent->reactionNoDraw)
@@ -441,12 +451,9 @@ void G_ReactionFirePreShot (const edict_t *target)
 		}
 
 		/* see who won */
-		targTUs = G_ReactionFireGetTUsForItem(target, ent, RIGHT(ent));
-		if (entTUs >= targTUs) {
+		if (entTUs >= fdTime) {
 			/* target wins, so delay ent */
-			/* target gets the difference in TUs */
-			ent->reactionTUs = max(0, target->TU - (entTUs - targTUs));
-			/* so ent can't lose the TU battle again */
+			/* ent can't lose the TU battle again */
 			ent->reactionNoDraw = qtrue;
 		} else {
 			/* ent wins so take the shot */
@@ -462,7 +469,8 @@ void G_ReactionFirePreShot (const edict_t *target)
  */
 void G_ReactionFirePostShot (edict_t *target)
 {
-	G_ReactionFireOnMovement(target);
+	/* Check to see whether this resolves any reaction fire */
+	G_ReactionFireCheckExecution(target);
 }
 
 /**

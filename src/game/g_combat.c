@@ -1194,7 +1194,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 
 		/* check whether this has forced any reaction fire */
 		if (allowReaction) {
-			G_ReactionFirePreShot(ent);
+			G_ReactionFirePreShot(ent, fd->time);
 			if (G_IsDead(ent))
 				/* dead men can't shoot */
 				return qfalse;

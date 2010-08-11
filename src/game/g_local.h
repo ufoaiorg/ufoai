@@ -355,7 +355,7 @@ qboolean G_TestLineWithEnts(const vec3_t start, const vec3_t end);
 qboolean G_TestLine(const vec3_t start, const vec3_t end);
 
 /* g_reaction.c */
-void G_ReactionFirePreShot(const edict_t *target);
+void G_ReactionFirePreShot(const edict_t *target, const int fdTime);
 void G_ReactionFirePostShot(edict_t *target);
 void G_ReactionFireReset(int team);
 qboolean G_ReactionFireCanBeEnabled(const edict_t *ent);
@@ -698,7 +698,7 @@ struct edict_s {
 								 * if you open one */
 
 	/** delayed reaction fire */
-	edict_t *reactionTarget;	/**< the current moving actor - only set when this actor has reaction fire enabled */
+	const edict_t *reactionTarget;	/**< the current moving actor - only set when this actor has reaction fire enabled */
 	float reactionTUs;	/**< time that an opponent has left until the attacker can react */
 	qboolean reactionNoDraw;
 	qboolean inRescueZone;	/**< the actor is standing in a rescue zone if this is true - this means that
