@@ -124,10 +124,13 @@ static int SV_ParseMapTile (const char *filename, const char **text, mapInfo_t *
 
 	memset(target, 0, sizeof(*target));
 
-	if (inherit)
+	if (inherit) {
+		if (token[0] == '+')
+			token++;
 		Com_sprintf(target->id, sizeof(target->id), "%s%s", map->inheritBasePath, token);
-	else
+	} else {
 		Q_strncpyz(target->id, token, sizeof(target->id));
+	}
 
 	/* start parsing the block */
 	token = Com_EParse(text, errhead, filename);
@@ -350,25 +353,27 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 				break;
 		}
 
-		for (i = 0; i < map->numTiles; i++)
-			if (!strcmp(token, map->mTile[i].id)) {
+		for (i = 0; i < map->numTiles; i++) {
+			const mTile_t *tile = &map->mTile[i];
+			if (!strcmp(token, tile->id)) {
 				/* get min and max tile number */
 				token = Com_EParse(text, errhead, filename);
 				if (!text || *token == '}')
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (invalid syntax for tile %s)", filename, map->mTile[i].id);
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (invalid syntax for tile %s)", filename, tile->id);
 
 				if (!strstr(token, " "))
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min max value of tile %s)", filename, map->mTile[i].id);
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min max value of tile %s)", filename, tile->id);
 
 				sscanf(token, "%i %i", &x, &y);
 				a->min[i] = x;
 				a->max[i] = y;
 				if (a->min[i] > a->max[i])
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min is bigger than max for tile %s)", filename, map->mTile[i].id);
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min is bigger than max for tile %s)", filename, tile->id);
 				if (a->max[i] <= 0)
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (max is <= 0 for tile %s)", filename, map->mTile[i].id);
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (max is <= 0 for tile %s)", filename, tile->id);
 				break;
 			}
+		}
 		if (i == map->numTiles)
 			Com_Error(ERR_DROP, "Could not find tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
 	} while (text);
@@ -1038,8 +1043,7 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 				Com_Printf("SV_ParseMapTile: Too many map tile types (%s)\n", filename);
 			else if (SV_ParseMapTile(filename, &text, map, inherit))
 					map->numTiles++;
-		}
-		else if (!strcmp(token, "assembly")) {
+		} else if (!strcmp(token, "assembly")) {
 			if (inherit) {
 				FS_SkipBlock(&text);
 			} else {
@@ -1048,8 +1052,7 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 				else if (SV_ParseAssembly(map, filename, &text, &map->mAssembly[map->numAssemblies]))
 					map->numAssemblies++;
 			}
-		}
-		else if (token[0] == '{') {
+		} else if (token[0] == '{') {
 			Com_Printf("SV_AssembleMap: Skipping unknown block\n");
 			/* ignore unknown block */
 			text = strchr(text, '}') + 1;
