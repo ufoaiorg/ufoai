@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] name An id taken from scripts.
  * @return Found @c equipDef_t or @c NULL if no equipment definition found.
  */
-equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
+const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 {
 	int i;
 
@@ -46,8 +46,7 @@ equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 		if (!strcmp(name, csi.eds[i].name))
 			return &csi.eds[i];
 
-	Com_DPrintf(DEBUG_CLIENT, "INV_GetEquipmentDefinitionByID: equipment %s not found.\n", name);
-	return NULL;
+	Com_Error(ERR_DROP, "Could not find equipment %s", name);
 }
 
 /**

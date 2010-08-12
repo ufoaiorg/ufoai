@@ -1078,22 +1078,18 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildi
 static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft, const char *eqname, equipDef_t *edTarget)
 {
 	int i, price = 0;
-	equipDef_t *ed;
+	const equipDef_t *ed;
 
 	assert(base);
 	assert(edTarget);
 
 	/* Initial soldiers and their equipment. */
 	ed = INV_GetEquipmentDefinitionByID(eqname);
-	if (ed == NULL) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: Initial Phalanx equipment %s not found.\n", eqname);
+	if (assignInitialAircraft) {
+		B_PackInitialEquipment(assignInitialAircraft, ed);
 	} else {
-		if (assignInitialAircraft) {
-			B_PackInitialEquipment(assignInitialAircraft, ed);
-		} else {
-			for (i = 0; i < csi.numODs; i++)
-				edTarget->numItems[i] += ed->numItems[i] / 5;
-		}
+		for (i = 0; i < csi.numODs; i++)
+			edTarget->numItems[i] += ed->numItems[i] / 5;
 	}
 
 	/* Pay for the initial equipment as well as update storage capacity. */
@@ -1198,7 +1194,7 @@ static void B_SetUpFirstBase (base_t* base)
 	BS_InitMarket(qfalse);
 	E_InitialEmployees();
 
-	B_BuildFromTemplate(base, ccs.curCampaign->firstBaseTemplate, qtrue);
+	B_BuildFromTemplate(base, campaign->firstBaseTemplate, qtrue);
 	/* Add aircraft to the first base */
 	/** @todo move aircraft to .ufo */
 	/* buy two first aircraft and hire pilots for them. */
@@ -1220,7 +1216,7 @@ static void B_SetUpFirstBase (base_t* base)
 	}
 
 	/* Find the initial equipment definition for current campaign. */
-	ed = INV_GetEquipmentDefinitionByID(ccs.curCampaign->equipment);
+	ed = INV_GetEquipmentDefinitionByID(campaign->equipment);
 	/* Copy it to base storage. */
 	base->storage = *ed;
 

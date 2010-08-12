@@ -412,10 +412,6 @@ static void MP_GetEquipment (void)
 
 	/* search equipment definition */
 	edFromScript = INV_GetEquipmentDefinitionByID(equipmentName);
-	if (edFromScript == NULL) {
-		Com_Printf("Equipment '%s' not found!\n", equipmentName);
-		return;
-	}
 
 	if (chrDisplayList.num > 0)
 		ui_inventory = &chrDisplayList.chr[0]->i;

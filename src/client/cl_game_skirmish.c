@@ -115,7 +115,7 @@ static void GAME_SK_Restart_f (void)
  */
 static void GAME_SK_ChangeEquip_f (void)
 {
-	equipDef_t *ed;
+	const equipDef_t *ed;
 	int index;
 	const char *cvarName;
 
@@ -126,7 +126,7 @@ static void GAME_SK_ChangeEquip_f (void)
 
 	cvarName = Cmd_Argv(1);
 	ed = INV_GetEquipmentDefinitionByID(Cvar_GetString(cvarName));
-	index = ed ? ed - csi.eds : 0;
+	index = ed - csi.eds;
 
 	if (!strcmp(Cmd_Argv(0), "sk_prevequip")) {
 		index--;

@@ -291,8 +291,8 @@ typedef struct campaign_s {
 	char equipment[MAX_VAR];	/**< name of the equipment list to use on campaign start */
 	char market[MAX_VAR];		/**< name of the market list containing initial items on market */
 	char asymptoticMarket[MAX_VAR];		/**< name of the market list containing items on market at the end of the game */
-	equipDef_t *marketDef;		/**< market definition for this campaign (how many items on the market) containing initial items */
-	equipDef_t *asymptoticMarketDef;	/**< market definition for this campaign (how many items on the market) containing finale items */
+	const equipDef_t *marketDef;		/**< market definition for this campaign (how many items on the market) containing initial items */
+	const equipDef_t *asymptoticMarketDef;	/**< market definition for this campaign (how many items on the market) containing finale items */
 	char text[MAX_VAR];			/**< placeholder for gettext stuff */
 	char map[MAX_VAR];			/**< geoscape map */
 	int soldiers;				/**< start with x soldiers */
