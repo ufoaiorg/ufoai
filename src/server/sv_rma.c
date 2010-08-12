@@ -109,19 +109,25 @@ static unsigned long tileMask (const char chr)
  * @sa SV_AssembleMap
  * @note Parsed data are stored into *target, which must already be allocated.
  */
-static int SV_ParseMapTile (const char *filename, const char **text, mTile_t *target)
+static int SV_ParseMapTile (const char *filename, const char **text, mapInfo_t *map, qboolean inherit)
 {
 	const char *errhead = "SV_ParseMapTile: Unexpected end of file (";
 	const char *token;
 	char *chr;
 	int x, y, i;
+	mTile_t *target = &map->mTile[map->numTiles];
 
 	/* get tile name */
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
 		return 0;
+
 	memset(target, 0, sizeof(*target));
-	Q_strncpyz(target->id, token, sizeof(target->id));
+
+	if (inherit)
+		Com_sprintf(target->id, sizeof(target->id), "%s%s", map->inheritBasePath, token);
+	else
+		Q_strncpyz(target->id, token, sizeof(target->id));
 
 	/* start parsing the block */
 	token = Com_EParse(text, errhead, filename);
@@ -992,9 +998,15 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	return 0;
 }
 
-static mapInfo_t* SV_ParseUMP (const char *name)
+/**
+ * @brief Parses an ump file that contains the random map definition
+ * @param[in] name The basename of the ump file (without extension)
+ * @param[out] map The data structure to store the parsed data in
+ * @param[in] inherit When @c true, this is called to inherit tile definitions
+ * from another ump file (no assemblies)
+ */
+static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 {
-	mapInfo_t *map;
 	char filename[MAX_QPATH];
 	byte *buf;
 	const char *text, *token;
@@ -1005,9 +1017,6 @@ static mapInfo_t* SV_ParseUMP (const char *name)
 	if (!buf)
 		Com_Error(ERR_DROP, "SV_AssembleMap: Map assembly info '%s' not found", filename);
 
-	map = Mem_Alloc(sizeof(*map));
-	Q_strncpyz(map->name, name, sizeof(map->name));
-
 	/* parse it */
 	text = (const char*)buf;
 	do {
@@ -1015,25 +1024,30 @@ static mapInfo_t* SV_ParseUMP (const char *name)
 		if (!text)
 			break;
 
-		if (!strcmp(token, "base")) {
+		if (!strcmp(token, "extends")) {
 			token = Com_Parse(&text);
-			Q_strncpyz(map->basePath, token, sizeof(map->basePath));
+			SV_ParseUMP(token, map, qtrue);
+		} else if (!strcmp(token, "base")) {
+			token = Com_Parse(&text);
+			if (inherit)
+				Q_strncpyz(map->inheritBasePath, token, sizeof(map->inheritBasePath));
+			else
+				Q_strncpyz(map->basePath, token, sizeof(map->basePath));
 		} else if (!strcmp(token, "tile")) {
-			if (map->numTiles >= MAX_TILETYPES) {
+			if (map->numTiles >= MAX_TILETYPES)
 				Com_Printf("SV_ParseMapTile: Too many map tile types (%s)\n", filename);
-			} else {
-				if (SV_ParseMapTile(filename, &text, &map->mTile[map->numTiles]))
+			else if (SV_ParseMapTile(filename, &text, map, inherit))
 					map->numTiles++;
-			}
 		}
 		else if (!strcmp(token, "assembly")) {
-			if (map->numAssemblies >= MAX_MAPASSEMBLIES) {
-				Com_Printf("SV_ParseAssembly: Too many map assemblies (%s)\n", filename);
-				Mem_Free(map);
-				return NULL;
+			if (inherit) {
+				FS_SkipBlock(&text);
+			} else {
+				if (map->numAssemblies >= MAX_MAPASSEMBLIES)
+					Com_Printf("SV_ParseAssembly: Too many map assemblies (%s)\n", filename);
+				else if (SV_ParseAssembly(map, filename, &text, &map->mAssembly[map->numAssemblies]))
+					map->numAssemblies++;
 			}
-			if (SV_ParseAssembly(map, filename, &text, &map->mAssembly[map->numAssemblies]))
-				map->numAssemblies++;
 		}
 		else if (token[0] == '{') {
 			Com_Printf("SV_AssembleMap: Skipping unknown block\n");
@@ -1047,8 +1061,6 @@ static mapInfo_t* SV_ParseUMP (const char *name)
 
 	/* free the file */
 	FS_FreeFile(buf);
-
-	return map;
 }
 
 /**
@@ -1074,7 +1086,10 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	mAssembly_t *mAsm;
 	mapInfo_t *map;
 
-	map = SV_ParseUMP(name);
+	map = Mem_Alloc(sizeof(*map));
+	Q_strncpyz(map->name, name, sizeof(map->name));
+
+	SV_ParseUMP(name, map, qfalse);
 
 	/* check for parsed tiles and assemblies */
 	if (!map->numTiles)
@@ -1136,7 +1151,7 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 
 	/* prepare map and pos strings */
 	if (map->basePath[0])
-		Com_sprintf(asmMap, sizeof(asmMap), "-%s", map->basePath);
+		Com_sprintf(asmMap, sizeof(map->basePath) + 1, "-%s", map->basePath);
 
 	asmPos[0] = 0;
 
