@@ -992,32 +992,12 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	return 0;
 }
 
-/**
- * @brief Assembles a "random" map
- * parses the *.ump files for assembling the "random" maps
- * @param[in] name The name of the map (ump) file to parse
- * @param[in] assembly The random map assembly that should be used from the given rma
- * @param[out] asmMap The output string of the random map assembly that contains all the
- * map tiles that should be assembled. The order is the same as in the @c asmPos string.
- * Each of the map tiles in this string has a corresponding entry in the pos string, too.
- * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmMap
- * string this string contains three coordinates for shifting the given tile names.
- * @sa B_AssembleMap_f
- * @sa SV_AddTile
- * @sa SV_AddMandatoryParts
- * @sa SV_ParseAssembly
- * @sa SV_ParseMapTile
- * @note Make sure to free the returned pointer
- */
-mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, char *asmPos)
+static mapInfo_t* SV_ParseUMP (const char *name)
 {
+	mapInfo_t *map;
 	char filename[MAX_QPATH];
-	char basePath[MAX_QPATH];
 	byte *buf;
 	const char *text, *token;
-	int i;
-	mapInfo_t *map;
-	mAssembly_t *mAsm;
 
 	/* load the map info */
 	Com_sprintf(filename, sizeof(filename), "maps/%s.ump", name);
@@ -1030,7 +1010,6 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 
 	/* parse it */
 	text = (const char*)buf;
-	basePath[0] = 0;
 	do {
 		token = Com_Parse(&text);
 		if (!text)
@@ -1038,7 +1017,7 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 
 		if (!strcmp(token, "base")) {
 			token = Com_Parse(&text);
-			Q_strncpyz(basePath, token, sizeof(basePath));
+			Q_strncpyz(map->basePath, token, sizeof(map->basePath));
 		} else if (!strcmp(token, "tile")) {
 			if (map->numTiles >= MAX_TILETYPES) {
 				Com_Printf("SV_ParseMapTile: Too many map tile types (%s)\n", filename);
@@ -1069,16 +1048,44 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	/* free the file */
 	FS_FreeFile(buf);
 
+	return map;
+}
+
+/**
+ * @brief Assembles a "random" map
+ * parses the *.ump files for assembling the "random" maps
+ * @param[in] name The name of the map (ump) file to parse
+ * @param[in] assembly The random map assembly that should be used from the given rma
+ * @param[out] asmMap The output string of the random map assembly that contains all the
+ * map tiles that should be assembled. The order is the same as in the @c asmPos string.
+ * Each of the map tiles in this string has a corresponding entry in the pos string, too.
+ * @param[out] asmPos The pos string for the assembly. For each tile from the @c asmMap
+ * string this string contains three coordinates for shifting the given tile names.
+ * @sa B_AssembleMap_f
+ * @sa SV_AddTile
+ * @sa SV_AddMandatoryParts
+ * @sa SV_ParseAssembly
+ * @sa SV_ParseMapTile
+ * @note Make sure to free the returned pointer
+ */
+mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, char *asmPos)
+{
+	int i;
+	mAssembly_t *mAsm;
+	mapInfo_t *map;
+
+	map = SV_ParseUMP(name);
+
 	/* check for parsed tiles and assemblies */
 	if (!map->numTiles)
-		Com_Error(ERR_DROP, "No map tiles defined (%s)!", filename);
+		Com_Error(ERR_DROP, "No map tiles defined (%s)!", name);
 #ifdef DEBUG
 	else
 		Com_DPrintf(DEBUG_SERVER, "numTiles: %i\n", map->numTiles);
 #endif
 
 	if (!map->numAssemblies)
-		Com_Error(ERR_DROP, "No map assemblies defined (%s)!", filename);
+		Com_Error(ERR_DROP, "No map assemblies defined (%s)!", name);
 #ifdef DEBUG
 	else
 		Com_DPrintf(DEBUG_SERVER, "numAssemblies: %i\n", map->numAssemblies);
@@ -1128,9 +1135,9 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	}
 
 	/* prepare map and pos strings */
-	if (basePath[0]) {
+	if (map->basePath[0]) {
 		asmMap[0] = '-';
-		Q_strncpyz(&asmMap[1], basePath, MAX_QPATH - 1);
+		Q_strncpyz(&asmMap[1], map->basePath, MAX_QPATH - 1);
 	}
 	asmPos[0] = 0;
 

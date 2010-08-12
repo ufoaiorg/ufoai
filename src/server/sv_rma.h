@@ -111,6 +111,8 @@ typedef struct mapInfo_s {
 	mTile_t mTile[MAX_TILETYPES];			 /**< A list of parsed map-tiles. */
 	int numTiles; /**< Length of the mTile list */
 
+	char basePath[MAX_QPATH];
+
 	int mAsm;	/**< the index of the selected assembly */
 } mapInfo_t;
 
