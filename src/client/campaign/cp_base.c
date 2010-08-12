@@ -2519,8 +2519,6 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 		const objDef_t *item = cargo[i].item;
 		const int amount = cargo[i].amount;
 		technology_t *tech = RS_GetTechForItem(item);
-		if (!tech)
-			Com_Error(ERR_DROP, "B_SellOrAddItems: No tech for %s / %s\n", item->id, item->name);
 		/* If the related technology is NOT researched, don't sell items. */
 		if (!RS_IsResearched_ptr(tech)) {
 			/* Items not researched cannot be thrown out even if not enough space in storage. */

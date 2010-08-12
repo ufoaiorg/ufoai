@@ -310,7 +310,6 @@ static void AII_CarriedItems (const le_t *soldier)
 {
 	containerIndex_t container;
 	invList_t *invList;
-	technology_t *tech;
 
 	for (container = 0; container < csi.numIDs; container++) {
 		/* Items on the ground are collected as ET_ITEM */
@@ -318,12 +317,8 @@ static void AII_CarriedItems (const le_t *soldier)
 			continue;
 		for (invList = CONTAINER(soldier, container); invList; invList = invList->next) {
 			const objDef_t *item = invList->item.t;
-			assert(item);
-
+			technology_t *tech = RS_GetTechForItem(item);
 			ccs.eMission.numItems[item->idx]++;
-			tech = RS_GetTechForItem(item);
-			if (!tech)
-				Com_Error(ERR_DROP, "AII_CarriedItems: No tech for %s / %s\n", item->id, item->name);
 			RS_MarkCollected(tech);
 
 			if (!item->reload || invList->item.a == 0)

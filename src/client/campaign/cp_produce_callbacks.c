@@ -177,7 +177,7 @@ static void PR_UpdateProductionList (const base_t* base)
 			tech = RS_GetTechForItem(od);
 			/* We will not show items that are not producible.
 			 * We can only produce what was researched before. */
-			if (PR_ItemIsProduceable(od) && RS_IsResearched_ptr(tech) && INV_ItemMatchesFilter(od, produceCategory)) {
+			if (RS_IsResearched_ptr(tech) && PR_ItemIsProduceable(od) && INV_ItemMatchesFilter(od, produceCategory)) {
 				LIST_AddPointer(&productionItemList, od);
 
 				LIST_AddString(&productionList, va("%s", _(od->name)));

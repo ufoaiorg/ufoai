@@ -480,7 +480,7 @@ void AII_AutoAddAmmo (aircraftSlot_t *slot)
 		const objDef_t *ammo = item->ammos[k];
 		if (ammo) {
 			const technology_t *ammoTech = RS_GetTechForItem(ammo);
-			if (ammoTech && AIM_SelectableCraftItem(slot, ammoTech)) {
+			if (AIM_SelectableCraftItem(slot, ammoTech)) {
 				base_t* base;
 				if (ammo->isVirtual)
 					base = NULL;
