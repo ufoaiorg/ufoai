@@ -130,14 +130,14 @@ item laser_ammo
 		{
 			name				"_Pulsed Fire"
 			skill				close
-			projtl				laserPulseSmall
+			projtl				llaserBeamSmall
 			impact				laserImpact
 			hitbody				laserImpact
 			firesnd				weapons/laser-small
 			impsnd				impact/laser-impact
 			bodysnd 			impact/laser-bodyimpact
 			delaybetweenshots	6
-			speed				1400
+			speed				0
 			spread				"0.75 0.75"
 			crouch				0.9
 			range				60
@@ -177,14 +177,14 @@ item laser_ammo
 		{
 			name				"_Pulsed Fire"
 			skill				assault
-			projtl				laserPulse
+			projtl				laserBeam
 			impact				laserImpact
 			hitbody				laserImpact
 			firesnd				weapons/laser-small
 			impsnd				impact/laser-impact
 			bodysnd 			impact/laser-bodyimpact
 			delaybetweenshots	6
-			speed				1400
+			speed				0
 			spread				"0.5 0.5"
 			crouch				0.8
 			range				90
@@ -222,14 +222,14 @@ item laser_ammo
 		{
 			name				"_Pulsed Fire"
 			skill				heavy
-			projtl				laserPulse
+			projtl				laserBeam
 			impact				laserImpact
 			hitbody				laserImpact
 			firesnd				weapons/laser-large
 			impsnd				impact/laser-impact
 			bodysnd 			impact/laser-bodyimpact
 			delaybetweenshots	6
-			speed				1200
+			speed				0
 			spread				"0.5 0.5"
 			crouch				0.7
 			range				120
