@@ -2516,7 +2516,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	cargo = aircraft->itemcargo;
 
 	for (i = 0; i < aircraft->itemTypes; i++) {
-		objDef_t *item = cargo[i].item;
+		const objDef_t *item = cargo[i].item;
 		const int amount = cargo[i].amount;
 		technology_t *tech = item->tech;
 		if (!tech)

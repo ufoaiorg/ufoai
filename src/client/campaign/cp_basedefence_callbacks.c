@@ -188,7 +188,6 @@ static void BDEF_FillSlotList (const baseWeapon_t *batteries, int maxBatteries, 
  */
 static void BDEF_BaseDefenceMenuUpdate_f (void)
 {
-	int i;
 	char type[MAX_VAR];
 	base_t *base = B_GetCurrentSelectedBase();
 	installation_t *installation = INS_GetCurrentSelectedInstallation();
