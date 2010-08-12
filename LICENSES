@@ -938,6 +938,10 @@ base/models/objects/aircraft/airplane/airplane_1.png | GNU General Public Licens
 base/models/objects/aircraft/airplane/airplane_2.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/airplane/airplane_b.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/airplane/airplane_w.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/aircraft/crash_drop_firebird/firebird.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/aircraft/crash_drop_herakles/herakles.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/aircraft/crash_drop_raptor/raptor.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/aircraft/crash_inter_dragon/dragon.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/fighter/fighter.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/fighter/fighter.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/heli/heli.jpg | GNU General Public License 2.0 | Cem Cimrin | heli_uvw.tga
