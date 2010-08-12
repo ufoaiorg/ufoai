@@ -238,9 +238,6 @@ typedef struct objDef_s {
 	qboolean headgear;		/**< This is a headgear. (may not be extension, too). */
 	qboolean thrown;		/**< This item can be thrown. */
 	qboolean isVirtual;	/**< virtual equipment don't show up in menus, if it's an ammo no item needed for reload */
-	/** Item type used to check against buytypes.
-	 * @sa type=="armour", type=="ammo"			equals "isAmmo"
-	 * @sa obj.craftitem.type == MAX_ACITEMS	equals "isCraftitem" */
 	qboolean isPrimary;
 	qboolean isSecondary;
 	qboolean isHeavy;
