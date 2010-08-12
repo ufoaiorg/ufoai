@@ -2245,7 +2245,7 @@ window popup_maintain_resolution
 		tooltip		"_Accept the new resolution."
 		string		"_Accept"
 		pos			"112 188"
-		onClick		{ cmd "mn_pop; copy new_vidmode mn_vidmode; saveconfigcfg;" }
+		onClick		{ cmd "mn_pop; copy new_vidmode mn_vidmode; saveconfig config.cfg;" }
 	}
 	cmpCancelButton bt_cancel
 	{

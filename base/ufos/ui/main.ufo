@@ -239,7 +239,7 @@ window checkcvars
 		string		"_OK"
 		tooltip		"_Save settings"
 		pos			"566 338"
-		onClick		{ cmd "mn_pop; saveconfigcfg;" }
+		onClick		{ cmd "mn_pop; saveconfig config.cfg;" }
 	}
 
 	// check again - maybe the user has forgotton something
