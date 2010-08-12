@@ -1078,13 +1078,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	if (base->aircraftCurrent == aircraft)
 		base->aircraftCurrent = NULL;
 
-	if (AIR_Delete(base, aircraft)) {
-		aircraft_t *aircraftTemp;
-
-		aircraftTemp = NULL;
-		while ((aircraftTemp = AIR_GetNextFromBase(base, aircraftTemp)) != NULL)
-			AII_CorrectAircraftSlotPointers(aircraftTemp);
-	}
+	AIR_Delete(base, aircraft);
 
 	if (!AIR_BaseHasAircraft(base)) {
 		Cvar_SetValue("mn_equipsoldierstate", 0);
