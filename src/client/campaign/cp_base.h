@@ -335,6 +335,8 @@ void B_RemoveAircraftExceedingCapacity(base_t* base, buildingType_t buildingType
 void B_RemoveItemsExceedingCapacity(base_t *base);
 void B_RemoveAntimatterExceedingCapacity(base_t *base);
 
+int B_FreeCapacity(const base_t *base, baseCapacities_t cap);
+
 /* menu functions */
 void B_BaseMenuInit(const base_t *base);
 void B_DrawBuilding(base_t* base, building_t* building);

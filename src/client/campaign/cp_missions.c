@@ -1253,8 +1253,8 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - num %i\n", numberOfSoldiers);
 
 	/* Check for alien containment in aircraft homebase. */
-	if (AL_GetAircraftAlienCargoTypes(aircraft) && !B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
-		/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment.
+	if (AL_GetAircraftAlienCargoTypes(aircraft) && (B_FreeCapacity(base, CAP_ALIENS) <= 0)) {
+		/* We have captured/killed aliens, but the homebase of this aircraft does not have free alien containment space.
 		 * Popup aircraft transfer dialog to choose a better base. */
 		Cmd_ExecuteString(va("trans_aliens %i", aircraft->idx));
 	} else {

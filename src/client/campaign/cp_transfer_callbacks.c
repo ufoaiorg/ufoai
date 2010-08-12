@@ -94,7 +94,6 @@ static void TR_TransferBaseListClick_f (void)
 static void TR_TransferAliensFromMission_f (void)
 {
 	int i;
-	int num;
 	aircraft_t *aircraft;
 	linkedList_t *transfer = NULL;
 
@@ -112,17 +111,20 @@ static void TR_TransferAliensFromMission_f (void)
 	td.transferStartAircraft = aircraft;
 
 	/* make sure that all tests here are the same than in TR_TransferBaseListClick_f */
-	for (i = 0; i < MAX_BASES; i++) {
+	for (i = 0; i < ccs.numBases; i++) {
 		const base_t *base = B_GetFoundedBaseByIDX(i);
 		const char* string;
+		int freeSpace;
+
 		if (!base)
 			continue;
-		/* don't display bases without Alien Containment */
-		if (!base->hasBuilding[B_ALIEN_CONTAINMENT])
+
+		freeSpace = B_FreeCapacity(base, CAP_ALIENS);
+		/* don't display bases without free Alien Containment capacity */
+		if (freeSpace <= 0)
 			continue;
 
-		num = (base->capacities[CAP_ALIENS].max - base->capacities[CAP_ALIENS].cur);
-		string = va(ngettext("(can host %i live alien)", "(can host %i live aliens)", num), num);
+		string = va(ngettext("(can host %i live alien)", "(can host %i live aliens)", freeSpace), freeSpace);
 		string = va("%s %s", base->name, string);
 		LIST_AddString(&transfer, string);
 	}
