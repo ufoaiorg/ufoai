@@ -4,3 +4,5 @@
 
 base rescue/r_
 
+extends ufocrash
+
