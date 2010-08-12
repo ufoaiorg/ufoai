@@ -527,7 +527,7 @@ window options
 			button res_test_pic
 			{
 				tooltip		"_Switch to the selected resolution. ATTENTION: You might have to restart to make this work correctly."
-				icon		bordered_question
+				icon		bordered_magnifying_glass
 				pos			"446 39"
 				size		"16 16"
 				padding		0
@@ -1038,7 +1038,7 @@ window options
 				tooltip		"_Change the swap interval."
 				current		*cvar:r_swapinterval
 				image		"ui/spinner_blue"
-				pos			"428 240"
+				pos			"448 240"
 				min			0
 				max			2
 				delta		1
@@ -1454,21 +1454,28 @@ window options
 			pos			"72 210"
 			size		"170 20"
 		}
-		image menu_sounds_rahmen
+		checkbox menu_sounds_checkbox
 		{
-			src		"ui/bar_rahmen"
-			pos			"244 212"
+			pos			"485 217"
+			size		"20 18"
+			image		"ui/checkbox_blue"
+			current	*cvar:ui_sounds
 		}
-		bar menu_sounds_bar
-		{
-			tooltip		"_You can just turn on/off the menu sounds at the moment."
-			current		*cvar:mn_sounds
-			pos			"253 217"
-			size		"238 6"
-			color		"0 .8 0 1"
-			max			1.0
-			onClick		{ }
-		}
+		//image menu_sounds_rahmen
+		//{
+		//	src		"ui/bar_rahmen"
+		//	pos			"244 212"
+		//}
+		//bar menu_sounds_bar
+		//{
+		//	tooltip		"_You can just turn on/off the menu sounds at the moment."
+		//	current		*cvar:mn_sounds
+		//	pos			"253 217"
+		//	size		"238 6"
+		//	color		"0 .8 0 1"
+		//	max			1.0
+		//	onClick		{ }
+		//}
 		// ============================
 		// OTHER AUDIO OPTIONS SUBMENU
 		// ============================
@@ -1521,7 +1528,7 @@ window options
 		button rate_test_pic
 		{
 			tooltip		"_Restart the sound-engine and apply your settings."
-			icon		bordered_question
+			icon		bordered_magnifying_glass
 			pos			"486 297"
 			size		"16 16"
 			padding		0
