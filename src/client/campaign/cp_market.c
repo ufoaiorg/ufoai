@@ -273,23 +273,20 @@ void BS_InitMarket (qboolean load)
 
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
-		technology_t *tech;
 		if (market->askItems[i] == 0) {
 			market->askItems[i] = od->price;
 			market->bidItems[i] = floor(market->askItems[i] * BID_FACTOR);
 		}
 
-		if (!campaign->marketDef->numItems[i])
+		if (campaign->marketDef->numItems[i] <= 0)
 			continue;
 
-		tech = RS_GetTechForItem(od);
-		if (!RS_IsResearched_ptr(tech) && campaign->marketDef->numItems[i] > 0) {
-			Com_Error(ERR_FATAL, "BS_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n",
-					od->id, campaign->id);
-			market->numItems[i] = 0;
-		} else {
+		if (RS_IsResearched_ptr(RS_GetTechForItem(od))) {
 			/* the other relevant values were already set above */
 			market->numItems[i] = campaign->marketDef->numItems[i];
+		} else {
+			Com_Printf("BS_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n",
+					od->id, campaign->id);
 		}
 	}
 
@@ -301,15 +298,15 @@ void BS_InitMarket (qboolean load)
 			market->bidAircraft[i] = floor(market->askAircraft[i] * BID_FACTOR);
 		}
 
-		if (!campaign->marketDef->numAircraft[i])
+		if (campaign->marketDef->numAircraft[i] <= 0)
 			continue;
 
-		if (!RS_IsResearched_ptr(aircraft->tech) && campaign->marketDef->numAircraft[i] > 0) {
-			Com_Error(ERR_FATAL, "BS_InitMarket: Could not add aircraft %s to the market - not marked as researched in campaign %s\n",
-					aircraft->id, campaign->id);
-		} else {
+		if (RS_IsResearched_ptr(aircraft->tech)) {
 			/* the other relevant values were already set above */
 			market->numAircraft[i] = campaign->marketDef->numAircraft[i];
+		} else {
+			Com_Printf("BS_InitMarket: Could not add aircraft %s to the market - not marked as researched in campaign %s\n",
+					aircraft->id, campaign->id);
 		}
 	}
 }

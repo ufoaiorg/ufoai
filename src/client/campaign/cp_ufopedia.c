@@ -329,39 +329,35 @@ void UP_AircraftDescription (const technology_t* tech)
 
 	if (RS_IsResearched_ptr(tech)) {
 		const aircraft_t* aircraft = AIR_GetAircraft(tech->provides);
-		if (!aircraft) {
-			Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find aircraft"));
-		} else {
-			int i;
-			for (i = 0; i < AIR_STATS_MAX; i++) {
-				switch (i) {
-				case AIR_STATS_SPEED:
-					/* speed may be converted to km/h : multiply by pi / 180 * earth_radius */
-					Q_strcat(upBuffer, va(_("%s:\t%i km/h\n"), CL_AircraftStatToName(i),
-						CL_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
-					break;
-				case AIR_STATS_MAXSPEED:
-					/* speed may be converted to km/h : multiply by pi / 180 * earth_radius */
-					Q_strcat(upBuffer, va(_("%s:\t%i km/h\n"), CL_AircraftStatToName(i),
-						CL_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
-					break;
-				case AIR_STATS_FUELSIZE:
-					Q_strcat(upBuffer, va(_("Operational range:\t%i km\n"),
-						AIR_GetOperationRange(aircraft)), sizeof(upBuffer));
-				case AIR_STATS_ACCURACY:
-					Q_strcat(upBuffer, va(_("%s:\t%i\n"), CL_AircraftStatToName(i),
-						CL_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
-					break;
-				default:
-					break;
-				}
+		int i;
+		for (i = 0; i < AIR_STATS_MAX; i++) {
+			switch (i) {
+			case AIR_STATS_SPEED:
+				/* speed may be converted to km/h : multiply by pi / 180 * earth_radius */
+				Q_strcat(upBuffer, va(_("%s:\t%i km/h\n"), CL_AircraftStatToName(i),
+					CL_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
+				break;
+			case AIR_STATS_MAXSPEED:
+				/* speed may be converted to km/h : multiply by pi / 180 * earth_radius */
+				Q_strcat(upBuffer, va(_("%s:\t%i km/h\n"), CL_AircraftStatToName(i),
+					CL_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
+				break;
+			case AIR_STATS_FUELSIZE:
+				Q_strcat(upBuffer, va(_("Operational range:\t%i km\n"),
+					AIR_GetOperationRange(aircraft)), sizeof(upBuffer));
+			case AIR_STATS_ACCURACY:
+				Q_strcat(upBuffer, va(_("%s:\t%i\n"), CL_AircraftStatToName(i),
+					CL_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
+				break;
+			default:
+				break;
 			}
-			Q_strcat(upBuffer, va(_("Aircraft size:\t%s\n"), CL_AircraftSizeToName(aircraft->size)), sizeof(upBuffer));
-			/* @note: while MAX_ACTIVETEAM limits the number of soldiers on a craft
-			 * there is no use to show this in case of an UFO (would be misleading): */
-			if (!AIR_IsUFO(aircraft))
-				Q_strcat(upBuffer, va(_("Max. soldiers:\t%i\n"), aircraft->maxTeamSize), sizeof(upBuffer));
 		}
+		Q_strcat(upBuffer, va(_("Aircraft size:\t%s\n"), CL_AircraftSizeToName(aircraft->size)), sizeof(upBuffer));
+		/* @note: while MAX_ACTIVETEAM limits the number of soldiers on a craft
+		 * there is no use to show this in case of an UFO (would be misleading): */
+		if (!AIR_IsUFO(aircraft))
+			Q_strcat(upBuffer, va(_("Max. soldiers:\t%i\n"), aircraft->maxTeamSize), sizeof(upBuffer));
 	} else if (RS_Collected_(tech)) {
 		/** @todo Display crippled info and pre-research text here */
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));

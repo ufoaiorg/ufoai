@@ -721,16 +721,16 @@ aircraft_t *AIR_GetAircraftSilent (const char *name)
 /**
  * @brief Searches the global array of aircraft types for a given aircraft.
  * @param[in] name Aircraft id.
- * @return aircraft_t pointer or NULL if not found.
+ * @return aircraft_t pointer or errors out (ERR_DROP)
  */
 aircraft_t *AIR_GetAircraft (const char *name)
 {
 	aircraft_t *aircraft = AIR_GetAircraftSilent(name);
+	if (name == NULL || name[0] == '\0')
+		Com_Error(ERR_DROP, "AIR_GetAircraft called with NULL name!");
+	else if (aircraft == NULL)
+		Com_Error(ERR_DROP, "Aircraft '%s' not found", name);
 
-	if (!name)
-		Com_Printf("AIR_GetAircraft Called with NULL name!\n");
-	else if (!aircraft)
-		Com_Printf("Aircraft '%s' not found (%i).\n", name, ccs.numAircraftTemplates);
 	return aircraft;
 }
 
@@ -786,19 +786,11 @@ qboolean AIR_Delete (base_t *base, const aircraft_t *aircraft)
 aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 {
 	const aircraft_t *aircraftTemplate = AIR_GetAircraft(name);
-	aircraft_t *aircraft;
 
-	if (!aircraftTemplate) {
-		Com_Printf("Could not find aircraft with id: '%s'\n", name);
-		return NULL;
-	}
-
-	assert(base);
-
-	/* copy generic aircraft description to individual aircraft in base */
-	/* we do this because every aircraft can have its own parameters */
-	/* now lets use the aircraft array for the base to set some parameters */
-	aircraft = AIR_Add(base, aircraftTemplate);
+	/* copy generic aircraft description to individual aircraft in base
+	 * we do this because every aircraft can have its own parameters
+	 * now lets use the aircraft array for the base to set some parameters */
+	aircraft_t *aircraft = AIR_Add(base, aircraftTemplate);
 	aircraft->idx = ccs.numAircraft;	/**< set a unique index to this aircraft. */
 	aircraft->homebase = base;
 	/* Update the values of its stats */
@@ -1537,17 +1529,12 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		ccs.numAircraftTemplates++;
 	} else {
 		aircraftTemplate = AIR_GetAircraft(name);
-		if (aircraftTemplate) {
-			/* initialize slot numbers (useful when restarting a single campaign) */
-			aircraftTemplate->maxWeapons = 0;
-			aircraftTemplate->maxElectronics = 0;
+		/* initialize slot numbers (useful when restarting a single campaign) */
+		aircraftTemplate->maxWeapons = 0;
+		aircraftTemplate->maxElectronics = 0;
 
-			if (aircraftTemplate->type == AIRCRAFT_UFO)
-				aircraftTemplate->ufotype = Com_UFOShortNameToID(aircraftTemplate->id);
-		} else {
-			Com_Error(ERR_DROP, "AIR_ParseAircraft: aircraft not found - can not link (%s) - parsed aircraft amount: %i\n",
-					name, ccs.numAircraftTemplates);
-		}
+		if (aircraftTemplate->type == AIRCRAFT_UFO)
+			aircraftTemplate->ufotype = Com_UFOShortNameToID(aircraftTemplate->id);
 	}
 
 	/* get it's body */
@@ -2662,12 +2649,7 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 	int tmpInt;
 	int l;
 	const char *s = mxml_GetString(p, SAVE_AIRCRAFT_ID);
-	aircraft_t *crafttype = AIR_GetAircraft(s);
-
-	if (!crafttype) {
-		Com_Printf("Cannot find aircraft with id '%s'\n", s);
-		return qfalse;
-	}
+	const aircraft_t *crafttype = AIR_GetAircraft(s);
 
 	/* Copy all datas that don't need to be saved (tpl, hangar,...) */
 	*craft = *crafttype;

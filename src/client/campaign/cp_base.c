@@ -1200,17 +1200,13 @@ static void B_SetUpFirstBase (base_t* base)
 	/* buy two first aircraft and hire pilots for them. */
 	if (B_GetBuildingStatus(base, B_HANGAR)) {
 		const char *firebird = Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
-		aircraft_t *aircraft = AIR_GetAircraft(firebird);
-		if (!aircraft)
-			Com_Error(ERR_DROP, "Could not find %s definition", firebird);
+		const aircraft_t *aircraft = AIR_GetAircraft(firebird);
 		AIR_NewAircraft(base, firebird);
 		CL_UpdateCredits(ccs.credits - aircraft->price);
 	}
 	if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 		const char *stiletto = Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
-		aircraft_t *aircraft = AIR_GetAircraft(stiletto);
-		if (!aircraft)
-			Com_Error(ERR_DROP, "Could not find %s definition", stiletto);
+		const aircraft_t *aircraft = AIR_GetAircraft(stiletto);
 		AIR_NewAircraft(base, stiletto);
 		CL_UpdateCredits(ccs.credits - aircraft->price);
 	}

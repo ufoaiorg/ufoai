@@ -107,11 +107,6 @@ static void UR_DialogInit_f (void)
 	}
 
 	ufoCraft = AIR_GetAircraft(ufoID);
-	/* Do nothing without UFO of this type. */
-	if (!ufoCraft) {
-		Com_Printf("CP_UFORecovered: UFO Type: %s is not a valid craft definition!\n", ufoID);
-		return;
-	}
 
 	/* Put relevant info into missionResults array. */
 	ccs.missionResults.recovery = qtrue;
