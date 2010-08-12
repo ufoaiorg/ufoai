@@ -171,13 +171,13 @@ static void PR_UpdateProductionList (const base_t* base)
 	} else {
 		objDef_t *od;
 		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+			const technology_t *tech;
 			if (od->isVirtual)
 				continue;
-			assert(od->tech);
-			/* We will not show items with producetime = -1 - these are not producible.
-			 * We can produce what was researched before. */
-			if (od->name[0] != '\0' && od->tech->produceTime > 0 && RS_IsResearched_ptr(od->tech)
-			 && INV_ItemMatchesFilter(od, produceCategory)) {
+			tech = RS_GetTechForItem(od);
+			/* We will not show items that are not producible.
+			 * We can only produce what was researched before. */
+			if (PR_ItemIsProduceable(od) && RS_IsResearched_ptr(tech) && INV_ItemMatchesFilter(od, produceCategory)) {
 				LIST_AddPointer(&productionItemList, od);
 
 				LIST_AddString(&productionList, va("%s", _(od->name)));
@@ -205,22 +205,19 @@ static void PR_UpdateProductionList (const base_t* base)
 static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, const float percentDone)
 {
 	static char productionInfo[512];
-	int time;
-	float prodPerHour;
 
 	assert(base);
 	assert(od);
-	assert(od->tech);
 
 	/* Don't try to display an item which is not producible. */
-	if (od->tech->produceTime < 0) {
+	if (!PR_ItemIsProduceable(od)) {
 		Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
 		Cvar_Set("mn_item", "");
 	} else {
-		prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, NULL);
+		const technology_t *tech = RS_GetTechForItem(od);
+		const float prodPerHour = PR_CalculateProductionPercentDone(base, tech, NULL);
 		/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
-		assert(prodPerHour > 0);
-		time = ceil((1.0f - percentDone) / prodPerHour);
+		const int time = ceil((1.0f - percentDone) / prodPerHour);
 
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(od->name));
 		Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
@@ -379,10 +376,12 @@ static void PR_ProductionListRightClick_f (void)
 			UP_OpenWith(selectedProduction->aircraft->tech->id);
 		} else if (selectedProduction->item) {
 			const objDef_t *od = selectedProduction->item;
-			assert(od->tech);
-			UP_OpenWith(od->tech->id);
+			const technology_t *tech = RS_GetTechForItem(od);
+			UP_OpenWith(tech->id);
 		} else if (selectedProduction->ufo) {
-			UP_OpenWith(selectedProduction->ufo->ufoTemplate->tech->id);
+			const aircraft_t *ufoTemplate = selectedProduction->ufo->ufoTemplate;
+			const technology_t *tech = ufoTemplate->tech;
+			UP_OpenWith(tech->id);
 		}
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
@@ -402,21 +401,13 @@ static void PR_ProductionListRightClick_f (void)
 			}
 		} else {
 			objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
-#ifdef DEBUG
-			if (!od) {
-				Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListRightClick_f: No item found at the list-position %i!\n", idx);
-				return;
-			}
-
-			if (!od->tech)
-				Sys_Error("PR_ProductionListRightClick_f: No tech pointer for object '%s'\n", od->id);
-#endif
+			const technology_t *tech = RS_GetTechForItem(od);
 
 			/* Open up UFOpaedia for this entry. */
-			if (RS_IsResearched_ptr(od->tech) && INV_ItemMatchesFilter(od, produceCategory)) {
+			if (RS_IsResearched_ptr(tech) && INV_ItemMatchesFilter(od, produceCategory)) {
 				PR_ClearSelected();
 				selectedItem = od;
-				UP_OpenWith(od->tech->id);
+				UP_OpenWith(tech->id);
 				return;
 			}
 		}
@@ -485,18 +476,10 @@ static void PR_ProductionListClick_f (void)
 			}
 		} else {
 			objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
-			if (!od) {
-				Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: No item found at the list-position %i!\n", idx);
-				return;
-			}
+			const technology_t *tech = RS_GetTechForItem(od);
 
-			if (!od->tech)
-				Com_Error(ERR_DROP, "PR_ProductionListClick_f: No tech pointer for object '%s'", od->id);
 			/* We can only produce items that fulfill the following conditions... */
-			if (RS_IsResearched_ptr(od->tech) && od->tech->produceTime >= 0			/* Item is producible */
-			 && INV_ItemMatchesFilter(od, produceCategory)) {	/* Item is in the current inventory-category */
-				assert(od->name[0] != '\0');
-
+			if (RS_IsResearched_ptr(tech) && PR_ItemIsProduceable(od) && INV_ItemMatchesFilter(od, produceCategory)) {
 				PR_ClearSelected();
 				selectedItem = od;
 				PR_ProductionInfo(base);
@@ -641,7 +624,7 @@ static void PR_ProductionIncrease_f (void)
 		}
 
 		if (prod->item) {
-			tech = prod->item->tech;
+			tech = RS_GetTechForItem(prod->item);
 		} else if (prod->aircraft) {
 			tech = prod->aircraft->tech;
 		}
@@ -669,7 +652,7 @@ static void PR_ProductionIncrease_f (void)
 		}
 
 		if (selectedItem) {
-			tech = selectedItem->tech;
+			tech = RS_GetTechForItem(selectedItem);
 			name = selectedItem->name;
 		} else if (selectedAircraft) {
 			tech = selectedAircraft->tech;

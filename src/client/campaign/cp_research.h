@@ -210,6 +210,7 @@ qboolean RS_IsResearched_idx(int techIdx);
 qboolean RS_IsResearched_ptr(const technology_t *tech);
 int RS_Collected_(const technology_t * tech);
 
+technology_t* RS_GetTechForItem(const objDef_t *item);
 void RS_AddObjectTechs(void);
 void RS_RequiredLinksAssign(void);
 void RS_InitTree(qboolean load);

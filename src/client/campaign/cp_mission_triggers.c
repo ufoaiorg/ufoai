@@ -74,10 +74,11 @@ static void CP_AddItemAsCollected_f (void)
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *item = INVSH_GetItemByIDX(i);
 		if (!strcmp(id, item->id)) {
-			ccs.bases[baseID].storage.numItems[i]++;
+			technology_t *tech = RS_GetTechForItem(item);
+			base_t *base = B_GetBaseByIDX(baseID);
+			base->storage.numItems[i]++;
 			Com_DPrintf(DEBUG_CLIENT, "add item: '%s'\n", item->id);
-			assert(item->tech);
-			RS_MarkCollected(item->tech);
+			RS_MarkCollected(tech);
 		}
 	}
 }

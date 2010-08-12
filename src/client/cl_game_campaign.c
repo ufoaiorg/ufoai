@@ -357,8 +357,8 @@ const mapDef_t* GAME_CP_MapInfo (int step)
 
 qboolean GAME_CP_ItemIsUseable (const objDef_t *od)
 {
-	assert(od);
-	return RS_IsResearched_ptr(od->tech);
+	const technology_t *tech = RS_GetTechForItem(od);
+	return RS_IsResearched_ptr(tech);
 }
 
 int GAME_CP_GetTeam (void)
@@ -404,10 +404,11 @@ void GAME_CP_Frame (void)
  */
 const char* GAME_CP_GetModelForItem (const objDef_t *od)
 {
-	if (od->tech && od->tech->mdl) {
+	const technology_t *tech = RS_GetTechForItem(od);
+	if (tech->mdl) {
 		/* the model from the tech structure has higher priority, because the item model itself
 		 * is mainly for the battlescape or the geoscape - only use that as a fallback */
-		return od->tech->mdl;
+		return tech->mdl;
 	}
 	return NULL;
 }

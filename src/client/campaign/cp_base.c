@@ -2518,7 +2518,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	for (i = 0; i < aircraft->itemTypes; i++) {
 		const objDef_t *item = cargo[i].item;
 		const int amount = cargo[i].amount;
-		technology_t *tech = item->tech;
+		technology_t *tech = RS_GetTechForItem(item);
 		if (!tech)
 			Com_Error(ERR_DROP, "B_SellOrAddItems: No tech for %s / %s\n", item->id, item->name);
 		/* If the related technology is NOT researched, don't sell items. */

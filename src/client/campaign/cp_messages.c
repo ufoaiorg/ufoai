@@ -62,7 +62,7 @@ static void MS_TimestampedText (char *text, message_t *message, size_t textsize)
  * @sa CL_EventAddMail_f
  * @note this method forwards to @c MS_AddNewMessageSound with @code playSound = qtrue @endcode
  */
-message_t *MS_AddNewMessage (const char *title, const char *text, qboolean popup, messageType_t type, void *pedia)
+message_t *MS_AddNewMessage (const char *title, const char *text, qboolean popup, messageType_t type, technology_t *pedia)
 {
 	return MS_AddNewMessageSound(title, text, popup, type, pedia, qtrue);
 }
@@ -80,7 +80,7 @@ message_t *MS_AddNewMessage (const char *title, const char *text, qboolean popup
  * @sa UP_OpenMail_f
  * @sa CL_EventAddMail_f
  */
-message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean popup, messageType_t type, void *pedia, qboolean playSound)
+message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean popup, messageType_t type, technology_t *pedia, qboolean playSound)
 {
 	message_t *mess;
 	const char *sound = NULL;

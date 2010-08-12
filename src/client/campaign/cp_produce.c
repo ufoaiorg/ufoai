@@ -226,7 +226,7 @@ production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *it
 	prod->idx = queue->numItems;
 
 	if (item) {
-		tech = item->tech;
+		tech = RS_GetTechForItem(item);
 	} else if (aircraftTemplate) {
 		tech = aircraftTemplate->tech;
 	} else {
@@ -303,7 +303,7 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 	assert(base);
 
 	if (prod->item) {
-		tech = prod->item->tech;
+		tech = RS_GetTechForItem(prod->item);
 	} else if (prod->aircraft) {
 		tech = prod->aircraft->tech;
 	} else if (prod->ufo) {
@@ -447,8 +447,9 @@ static int PR_DisassembleItem (base_t *base, components_t *comp, float condition
 			if (!strcmp(compOd->id, ANTIMATTER_TECH_ID)) {
 				B_ManageAntimatter(base, amount, qtrue);
 			} else {
+				technology_t *tech = RS_GetTechForItem(compOd);
 				B_UpdateStorageAndCapacity(base, compOd, amount, qfalse, qfalse);
-				RS_MarkCollected(compOd->tech);
+				RS_MarkCollected(tech);
 			}
 			Com_DPrintf(DEBUG_CLIENT, "PR_DisassembleItem: added %i amounts of %s\n", amount, compOd->id);
 		}
@@ -503,7 +504,7 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 			PR_ProductionRollBottom_f();
 			return;
 		}
-		prod->percentDone += (PR_CalculateProductionPercentDone(base, od->tech, NULL) / MINUTES_PER_HOUR);
+		prod->percentDone += (PR_CalculateProductionPercentDone(base, RS_GetTechForItem(od), NULL) / MINUTES_PER_HOUR);
 	} else if (aircraft) {
 		/* Not enough money to produce more items in this base. */
 		if (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
@@ -540,13 +541,13 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 			/* Now add it to equipment and update capacity. */
 			B_UpdateStorageAndCapacity(base, prod->item, 1, qfalse, qfalse);
 			name = _(od->name);
-			tech = od->tech;
+			tech = RS_GetTechForItem(od);
 		} else if (aircraft) {
 			CL_UpdateCredits(ccs.credits - (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
 			/* Now add new aircraft. */
 			AIR_NewAircraft(base, aircraft->id);
 			name = _(aircraft->tpl->name);
-			tech = NULL;
+			tech = aircraft->tech;
 		}
 
 		/* queue the next production */
@@ -623,7 +624,7 @@ int PR_IncreaseProduction (production_t *prod, int amount)
 	}
 
 	if (prod->item) {
-		tech = prod->item->tech;
+		tech = RS_GetTechForItem(prod->item);
 	} else if (prod->aircraft) {
 		tech = prod->aircraft->tech;
 	}
@@ -668,7 +669,7 @@ int PR_DecreaseProduction (production_t *prod, int amount)
 	}
 
 	if (prod->item) {
-		tech = prod->item->tech;
+		tech = RS_GetTechForItem(prod->item);
 	} else if (prod->aircraft) {
 		tech = prod->aircraft->tech;
 	} else if (prod->ufo) {
@@ -766,17 +767,17 @@ void PR_UpdateProductionCap (base_t *base)
  */
 qboolean PR_ItemIsProduceable (const objDef_t const *item)
 {
-	assert(item);
-
-	return !(item->tech && item->tech->produceTime == -1);
+	const technology_t *tech = RS_GetTechForItem(item);
+	return tech->produceTime != -1;
 }
 
 /**
  * @brief Returns the base pointer the production belongs to
  * @param[in] production pointer to the production entry
- * @returns base_t pointer to the base
+ * @return base_t pointer to the base
  */
-base_t *PR_ProductionBase (production_t *production) {
+base_t *PR_ProductionBase (production_t *production)
+{
 	int i;
 	for (i = 0; i < ccs.numBases; i++) {
 		base_t *base = B_GetBaseByIDX(i);
@@ -791,7 +792,7 @@ base_t *PR_ProductionBase (production_t *production) {
 /**
  * @brief Returns the base pointer the production queue belongs to
  * @param[in] queue pointer to the production queue
- * @returns base_t pointer to the base
+ * @return base_t pointer to the base
  */
 base_t *PR_ProductionQueueBase (const production_queue_t const *queue)
 {

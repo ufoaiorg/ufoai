@@ -249,6 +249,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 {
 	static char itemText[1024];
 	int i;
+	const technology_t *tech;
 
 	/* Set menu text node content to null. */
 	INV_ItemDescription(NULL);
@@ -263,19 +264,18 @@ void UP_AircraftItemDescription (const objDef_t *item)
 		return;
 	}
 
+	tech = RS_GetTechForItem(item);
 	/* select item */
 	assert(item->craftitem.type >= 0);
-	assert(item->tech);
 	Cvar_Set("mn_item", item->id);
-	Cvar_Set("mn_itemname", _(item->tech->name));
-	if (item->tech->mdl)
-		Cvar_Set("mn_upmodel_top", item->tech->mdl);
+	Cvar_Set("mn_itemname", _(tech->name));
+	if (tech->mdl)
+		Cvar_Set("mn_upmodel_top", tech->mdl);
 	else
 		Cvar_Set("mn_upmodel_top", "");
 
 	/* set description text */
-	if (RS_IsResearched_ptr(item->tech)) {
-
+	if (RS_IsResearched_ptr(tech)) {
 		if (item->craftitem.type == AC_ITEM_WEAPON)
 			Q_strcat(itemText, va(_("Weight:\t%s\n"), AII_WeightToName(AII_GetItemWeightBySize(item))), sizeof(itemText));
 		else if (item->craftitem.type == AC_ITEM_AMMO) {
@@ -557,7 +557,7 @@ static void UP_DrawAssociatedAmmo (const technology_t* tech)
 	const objDef_t *od = INVSH_GetItemByID(tech->provides);
 	/* If this is a weapon, we display the model of the associated ammunition in the lower right */
 	if (od->numAmmos > 0) {
-		const technology_t *associated = od->ammos[0]->tech;
+		const technology_t *associated = RS_GetTechForItem(od->ammos[0]);
 		Cvar_Set("mn_upmodel_bottom", associated->mdl);
 	}
 }
@@ -997,11 +997,11 @@ static void UP_ResearchedLinkClick_f (void)
 	assert(od);
 
 	if (INV_IsAmmo(od)) {
-		const technology_t *t = od->weapons[0]->tech;
+		const technology_t *t = RS_GetTechForItem(od->weapons[0]);
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);
 	} else if (od->weapon && od->reload) {
-		const technology_t *t = od->ammos[0]->tech;
+		const technology_t *t = RS_GetTechForItem(od->ammos[0]);
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);
 	}

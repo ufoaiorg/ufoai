@@ -286,7 +286,6 @@ typedef struct objDef_s {
 	/**** @todo move into campaign only structure ****/
 	/* Aircraft specific */
 	craftitem_t craftitem;
-	struct technology_s *tech;	/**< Technology link to item. */
 	int price;			/**< Price for this item. */
 	int size;			/**< Size of an item, used in storage capacities. */
 	qboolean notOnMarket;		/**< True if this item should not be available on market. */

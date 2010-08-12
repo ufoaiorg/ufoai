@@ -273,8 +273,7 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 					UI_ExecuteConfunc("airequip_display_slot %i 1", i);
 				}
 				if (slot->item) {
-					assert(slot->item->tech);
-					Cvar_Set(va("mn_aircraft_item_model_slot%i", i), slot->item->tech->mdl);
+					Cvar_Set(va("mn_aircraft_item_model_slot%i", i), RS_GetTechForItem(slot->item)->mdl);
 				} else
 					Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
 			}
@@ -362,19 +361,18 @@ static void AIM_AircraftEquipMenuUpdate (qboolean updateItem)
 		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."),
 			AII_WeightToName(slot->size)), sizeof(smallbuffer1));
 	} else {
+		technology_t *tech = RS_GetTechForItem(slot->nextItem ? slot->nextItem : slot->item);
 		/* Print next item if we are removing item currently installed and a new item has been added. */
-		assert(slot->item->tech);
-		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s\n",
-			slot->nextItem ? _(slot->nextItem->tech->name) : _(slot->item->tech->name));
+		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s\n", _(tech->name));
 		if (!slot->installationTime)
 			Q_strcat(smallbuffer1, _("This item is functional.\n"), sizeof(smallbuffer1));
 		else if (slot->installationTime > 0)
 			Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours.\n"),
 				slot->installationTime), sizeof(smallbuffer1));
 		else if (slot->nextItem) {
-			Q_strcat(smallbuffer1, va(_("%s will be removed in %i hours.\n"), _(slot->item->tech->name),
+			Q_strcat(smallbuffer1, va(_("%s will be removed in %i hours.\n"), _(tech->name),
 				- slot->installationTime), sizeof(smallbuffer1));
-			Q_strcat(smallbuffer1, va(_("%s will be installed in %i hours.\n"), _(slot->nextItem->tech->name),
+			Q_strcat(smallbuffer1, va(_("%s will be installed in %i hours.\n"), _(tech->name),
 				slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer1));
 		} else
 			Q_strcat(smallbuffer1, va(_("This item will be removed in %i hours.\n"),
@@ -388,19 +386,13 @@ static void AIM_AircraftEquipMenuUpdate (qboolean updateItem)
 			AIM_EmphazeAmmoSlotText();
 			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), "%s", _("No ammo assigned to this weapon."));
 		} else {
+			const objDef_t *ammo = slot->nextAmmo ? slot->nextAmmo : slot->ammo;
+			const technology_t *tech = RS_GetTechForItem(ammo);
 			AIM_NoEmphazeAmmoSlotText();
-			assert(slot->ammo->tech);
-			if (slot->nextAmmo) {
-				if (!slot->nextAmmo->isVirtual)
-					Q_strncpyz(smallbuffer2, _(slot->nextAmmo->tech->name), sizeof(smallbuffer2));
-				else
-					Q_strncpyz(smallbuffer2, _("No ammo needed"), sizeof(smallbuffer2));
-			} else {
-				if (!slot->ammo->isVirtual)
-					Q_strncpyz(smallbuffer2, _(slot->ammo->tech->name), sizeof(smallbuffer2));
-				else
-					Q_strncpyz(smallbuffer2, _("No ammo needed"), sizeof(smallbuffer2));
-			}
+			if (!ammo->isVirtual)
+				Q_strncpyz(smallbuffer2, _(tech->name), sizeof(smallbuffer2));
+			else
+				Q_strncpyz(smallbuffer2, _("No ammo needed"), sizeof(smallbuffer2));
 		}
 	} else
 		*smallbuffer2 = '\0';

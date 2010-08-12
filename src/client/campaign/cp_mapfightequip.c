@@ -49,10 +49,11 @@ technology_t **AII_GetCraftitemTechsByType (int type)
 	int i, j = 0;
 
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *aircraftitem = INVSH_GetItemByIDX(i);
+		const objDef_t *aircraftitem = INVSH_GetItemByIDX(i);
 		if (aircraftitem->craftitem.type == type) {
+			technology_t *tech = RS_GetTechForItem(aircraftitem);
 			assert(j < MAX_TECHNOLOGIES);
-			techList[j] = aircraftitem->tech;
+			techList[j] = tech;
 			j++;
 		}
 		/* j+1 because last item has to be NULL */
@@ -478,7 +479,7 @@ void AII_AutoAddAmmo (aircraftSlot_t *slot)
 	for (k = 0; k < item->numAmmos; k++) {
 		const objDef_t *ammo = item->ammos[k];
 		if (ammo) {
-			const technology_t *ammoTech = ammo->tech;
+			const technology_t *ammoTech = RS_GetTechForItem(ammo);
 			if (ammoTech && AIM_SelectableCraftItem(slot, ammoTech)) {
 				base_t* base;
 				if (ammo->isVirtual)

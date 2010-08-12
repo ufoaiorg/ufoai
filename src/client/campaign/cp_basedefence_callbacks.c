@@ -161,9 +161,9 @@ static void BDEF_AddSlotToSlotList (const aircraftSlot_t *slot, linkedList_t **s
 			status = _("Removing");
 
 		if (slot->nextItem != NULL)
-			tech = slot->nextItem->tech;
+			tech = RS_GetTechForItem(slot->nextItem);
 		else
-			tech = slot->item->tech;
+			tech = RS_GetTechForItem(slot->item);
 
 		Com_sprintf(defBuffer, lengthof(defBuffer), "%i: %s (%s)", size, _(tech->name), status);
 		LIST_AddString(slotList, defBuffer);

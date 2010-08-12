@@ -265,6 +265,7 @@ void BS_InitMarket (qboolean load)
 {
 	int i;
 	campaign_t *campaign = ccs.curCampaign;
+	market_t *market = &ccs.eMarket;
 
 	/* find the relevant markets */
 	campaign->marketDef = INV_GetEquipmentDefinitionByID(campaign->market);
@@ -278,44 +279,46 @@ void BS_InitMarket (qboolean load)
 
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
-		if (ccs.eMarket.askItems[i] == 0) {
-			ccs.eMarket.askItems[i] = od->price;
-			ccs.eMarket.bidItems[i] = floor(ccs.eMarket.askItems[i] * BID_FACTOR);
+		technology_t *tech;
+		if (market->askItems[i] == 0) {
+			market->askItems[i] = od->price;
+			market->bidItems[i] = floor(market->askItems[i] * BID_FACTOR);
 		}
 
-		if (!ccs.curCampaign->marketDef->numItems[i])
+		if (!campaign->marketDef->numItems[i])
 			continue;
 
-		if (!RS_IsResearched_ptr(od->tech) && campaign->marketDef->numItems[i] > 0) {
+		tech = RS_GetTechForItem(od);
+		if (!RS_IsResearched_ptr(tech) && campaign->marketDef->numItems[i] > 0) {
 			Com_Printf("BS_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n",
 					od->id, campaign->id);
 			campaign->marketDef->numItems[i] = 0;
-			ccs.eMarket.numItems[i] = 0;
+			market->numItems[i] = 0;
 		} else {
 			/* the other relevant values were already set above */
-			ccs.eMarket.numItems[i] = campaign->marketDef->numItems[i];
+			market->numItems[i] = campaign->marketDef->numItems[i];
 		}
 	}
 
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
 		const char* name = Com_DropShipTypeToShortName(i);
 		const aircraft_t *aircraft = AIR_GetAircraft(name);
-		if (ccs.eMarket.askAircraft[i] == 0) {
-			ccs.eMarket.askAircraft[i] = aircraft->price;
-			ccs.eMarket.bidAircraft[i] = floor(ccs.eMarket.askAircraft[i] * BID_FACTOR);
+		if (market->askAircraft[i] == 0) {
+			market->askAircraft[i] = aircraft->price;
+			market->bidAircraft[i] = floor(market->askAircraft[i] * BID_FACTOR);
 		}
 
-		if (!ccs.curCampaign->marketDef->numAircraft[i])
+		if (!campaign->marketDef->numAircraft[i])
 			continue;
 
 		if (!RS_IsResearched_ptr(aircraft->tech) && campaign->marketDef->numAircraft[i] > 0) {
 			Com_Printf("BS_InitMarket: Could not add aircraft %s to the market - not marked as researched in campaign %s\n",
 					aircraft->id, campaign->id);
 			campaign->marketDef->numAircraft[i] = 0;
-			ccs.eMarket.numAircraft[i] = 0;
+			market->numAircraft[i] = 0;
 		} else {
 			/* the other relevant values were already set above */
-			ccs.eMarket.numAircraft[i] = campaign->marketDef->numAircraft[i];
+			market->numAircraft[i] = campaign->marketDef->numAircraft[i];
 		}
 	}
 }
@@ -340,11 +343,8 @@ void CL_CampaignRunMarket (void)
 
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
-		const technology_t *tech = od->tech;
+		const technology_t *tech = RS_GetTechForItem(od);
 		int asymptoticNumber;
-
-		if (!tech)
-			Com_Error(ERR_DROP, "No tech that provides '%s'\n", od->id);
 
 		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->numItems[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
 			/* if items are researched for more than RESEARCH_LIMIT_DELAY or was on the initial market,
@@ -376,9 +376,6 @@ void CL_CampaignRunMarket (void)
 		const aircraft_t* aircraft = AIR_GetAircraft(aircraftID);
 		const technology_t *tech = aircraft->tech;
 		int asymptoticNumber;
-
-		if (!tech)
-			Com_Error(ERR_DROP, "No tech that provides '%s'\n", aircraftID);
 
 		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->numAircraft[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
 			/* if aircraft is researched for more than RESEARCH_LIMIT_DELAY or was on the initial market,

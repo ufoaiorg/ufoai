@@ -524,6 +524,9 @@ typedef struct ccs_s {
 	/* cache for techdef technologies */
 	technology_t *teamDefTechs[MAX_TEAMDEFS];
 
+	/* cache for item technologies */
+	technology_t *objDefTechs[MAX_OBJDEFS];
+
 	campaign_t *curCampaign;			/**< Current running campaign */
 	stats_t campaignStats;
 	missionResults_t missionResults;

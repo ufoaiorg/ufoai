@@ -486,6 +486,17 @@ void RS_RequiredLinksAssign (void)
 	LIST_Delete(&redirectedTechs);
 }
 
+technology_t* RS_GetTechForItem (const objDef_t *item)
+{
+	if (item == NULL)
+		Com_Error(ERR_DROP, "RS_GetTechForItem: No item given");
+	if (item->idx < 0 || item->idx > lengthof(ccs.objDefTechs))
+		Com_Error(ERR_DROP, "RS_GetTechForItem: Buffer overflow");
+	if (ccs.objDefTechs[item->idx] == NULL)
+		Com_Error(ERR_DROP, "RS_GetTechForItem: No technology for item %s", item->id);
+	return ccs.objDefTechs[item->idx];
+}
+
 /**
  * @brief Gets all needed names/file-paths/etc... for each technology entry.
  * Should be executed after the parsing of _all_ the ufo files and e.g. the
@@ -504,9 +515,8 @@ void RS_InitTree (qboolean load)
 
 	/* Add links to technologies. */
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		tech = RS_GetTechByProvided(od->id);
-		od->tech = tech;
-		if (!od->tech)
+		ccs.objDefTechs[od->idx] = RS_GetTechByProvided(od->id);
+		if (!ccs.objDefTechs[od->idx])
 			Com_Error(ERR_DROP, "RS_InitTree: Could not find a valid tech for item %s", od->id);
 	}
 

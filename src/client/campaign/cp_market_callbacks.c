@@ -363,7 +363,7 @@ static void BS_BuyType (const base_t *base)
 			if (!BS_IsOnMarket(od))
 				continue;
 			/* Check whether the item matches the proper filter, storage in current base and market. */
-			if (od->tech && (base->storage.numItems[i] || ccs.eMarket.numItems[i])
+			if ((base->storage.numItems[i] || ccs.eMarket.numItems[i])
 			 && INV_ItemMatchesFilter(od, FILTER_CRAFTITEM)) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
@@ -426,7 +426,7 @@ static void BS_BuyType (const base_t *base)
 				continue;
 
 			/* Check whether the item matches the proper filter, storage in current base and market. */
-			if (od->tech && INV_ItemMatchesFilter(od, FILTER_UGVITEM) && (base->storage.numItems[i] || ccs.eMarket.numItems[i])) {
+			if (INV_ItemMatchesFilter(od, FILTER_UGVITEM) && (base->storage.numItems[i] || ccs.eMarket.numItems[i])) {
 				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 				/* Set state of Autosell button. */
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
@@ -456,7 +456,7 @@ static void BS_BuyType (const base_t *base)
 				if (!BS_IsOnMarket(od))
 					continue;
 				/* Check whether the item matches the proper filter, storage in current base and market. */
-				if (od->tech && (base->storage.numItems[i] || ccs.eMarket.numItems[i]) && INV_ItemMatchesFilter(od, buyCat)) {
+				if ((base->storage.numItems[i] || ccs.eMarket.numItems[i]) && INV_ItemMatchesFilter(od, buyCat)) {
 					BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 					/* Set state of Autosell button. */
 					if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
@@ -923,8 +923,9 @@ static void BS_Autosell_f (void)
 		ccs.autosell[item->idx] = qfalse;
 		Com_DPrintf(DEBUG_CLIENT, "item name: %s, autosell false\n", item->name);
 	} else {
+		const technology_t *tech = RS_GetTechForItem(item);
 		/* Don't allow to enable autosell for items not researched. */
-		if (!RS_IsResearched_ptr(item->tech))
+		if (!RS_IsResearched_ptr(tech))
 			return;
 		ccs.autosell[item->idx] = qtrue;
 		Com_DPrintf(DEBUG_CLIENT, "item name: %s, autosell true\n", item->name);

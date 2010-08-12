@@ -321,7 +321,7 @@ static void AII_CarriedItems (const le_t *soldier)
 			assert(item);
 
 			ccs.eMission.numItems[item->idx]++;
-			tech = item->tech;
+			tech = RS_GetTechForItem(item);
 			if (!tech)
 				Com_Error(ERR_DROP, "AII_CarriedItems: No tech for %s / %s\n", item->id, item->name);
 			RS_MarkCollected(tech);
