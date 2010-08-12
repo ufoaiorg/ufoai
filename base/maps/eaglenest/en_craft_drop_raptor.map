@@ -1184,3 +1184,9 @@
 "origin" "688 464 28"
 "angle" "90"
 }
+// entity 57
+{
+"classname" "info_human_start"
+"origin" "208 400 28"
+"angle" "90"
+}
