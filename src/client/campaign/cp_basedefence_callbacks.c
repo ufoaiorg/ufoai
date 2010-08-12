@@ -141,6 +141,47 @@ static void BDEF_SelectItem_f (void)
 	}
 }
 
+static void BDEF_AddSlotToSlotList (const aircraftSlot_t *slot, linkedList_t **slotList)
+{
+	char defBuffer[512];
+	const int size = LIST_Count(*slotList) + 1;
+	if (!slot->item) {
+		Com_sprintf(defBuffer, lengthof(defBuffer), _("%i: empty"), size);
+		LIST_AddString(slotList, defBuffer);
+	} else {
+		const technology_t *tech;
+		const char *status;
+		if (!slot->installationTime)
+			status = _("Working");
+		else if (slot->installationTime > 0)
+			status = _("Installing");
+		else if (slot->nextItem)
+			status = _("Replacing");
+		else
+			status = _("Removing");
+
+		if (slot->nextItem != NULL)
+			tech = slot->nextItem->tech;
+		else
+			tech = slot->item->tech;
+
+		Com_sprintf(defBuffer, lengthof(defBuffer), "%i: %s (%s)", size, _(tech->name), status);
+		LIST_AddString(slotList, defBuffer);
+	}
+}
+
+static void BDEF_FillSlotList (const baseWeapon_t *batteries, int maxBatteries, linkedList_t **slotList)
+{
+	int i;
+
+	BDEF_UpdateAircraftItemList(&batteries->slot, NULL);
+
+	for (i = 0; i < maxBatteries; i++, batteries++) {
+		const aircraftSlot_t *slot = &batteries->slot;
+		BDEF_AddSlotToSlotList(slot, slotList);
+	}
+}
+
 /**
  * @brief Fills the battery list, descriptions, and weapons in slots
  * of the basedefence equip menu
@@ -152,7 +193,6 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 	base_t *base = B_GetCurrentSelectedBase();
 	installation_t *installation = INS_GetCurrentSelectedInstallation();
 	aircraftItemType_t bdefType;
-	char defBuffer[512];
 	linkedList_t *slotList = NULL;
 	const qboolean missileResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_missile"));
 	const qboolean laserResearched = RS_IsResearched_ptr(RS_GetTechByID("rs_building_laser"));
@@ -243,81 +283,21 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 		if (installation->installationTemplate->maxBatteries == 0) {
 			LIST_AddString(&slotList, _("No defence of this type in this installation"));
 		} else {
-			BDEF_UpdateAircraftItemList(&installation->batteries[0].slot, NULL);
-			for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
-				if (!installation->batteries[i].slot.item) {
-					Com_sprintf(defBuffer, lengthof(defBuffer), _("%i: empty"), i + 1);
-					LIST_AddString(&slotList, defBuffer);
-				} else {
-					const aircraftSlot_t *slot = &installation->batteries[i].slot ;
-					char status[MAX_VAR];
-					if (!slot->installationTime)
-						Q_strncpyz(status, _("Working"), sizeof(status));
-					else if (slot->installationTime > 0)
-						Q_strncpyz(status, _("Installing"), sizeof(status));
-					else if (slot->nextItem)
-						Q_strncpyz(status, _("Replacing"), sizeof(status));
-					else
-						Q_strncpyz(status, _("Removing"), sizeof(status));
-
-					Com_sprintf(defBuffer, lengthof(defBuffer), "%i: %s (%s)", i + 1, (slot->nextItem) ? _(slot->nextItem->tech->name) : _(slot->item->tech->name), status);
-					LIST_AddString(&slotList, defBuffer);
-				}
-			}
+			BDEF_FillSlotList(installation->batteries, installation->installationTemplate->maxBatteries, &slotList);
 		}
 	} else if (bdefType == AC_ITEM_BASE_MISSILE) {
 		/* we are in the base defence menu for missile */
 		if (base->numBatteries == 0) {
 			LIST_AddString(&slotList, _("No defence of this type in this base"));
 		} else {
-			BDEF_UpdateAircraftItemList(&base->batteries[0].slot, NULL);
-			for (i = 0; i < base->numBatteries; i++) {
-				if (!base->batteries[i].slot.item) {
-					Com_sprintf(defBuffer, lengthof(defBuffer), _("%i: empty"), i + 1);
-					LIST_AddString(&slotList, defBuffer);
-				} else {
-					const aircraftSlot_t *slot = &base->batteries[i].slot ;
-					const char *status;
-					if (!slot->installationTime)
-						status = _("Working");
-					else if (slot->installationTime > 0)
-						status = _("Installing");
-					else if (slot->nextItem)
-						status = _("Replacing");
-					else
-						status = _("Removing");
-
-					Com_sprintf(defBuffer, lengthof(defBuffer), "%i: %s (%s)", i + 1, (slot->nextItem) ? _(slot->nextItem->tech->name) : _(slot->item->tech->name), status);
-					LIST_AddString(&slotList, defBuffer);
-				}
-			}
+			BDEF_FillSlotList(base->batteries, base->numBatteries, &slotList);
 		}
 	} else if (bdefType == AC_ITEM_BASE_LASER) {
 		/* we are in the base defence menu for laser */
 		if (base->numLasers == 0) {
 			LIST_AddString(&slotList, _("No defence of this type in this base"));
 		} else {
-			BDEF_UpdateAircraftItemList(&base->lasers[0].slot, NULL);
-			for (i = 0; i < base->numLasers; i++) {
-				if (!base->lasers[i].slot.item) {
-					Com_sprintf(defBuffer, lengthof(defBuffer), _("%i: empty"), i + 1);
-					LIST_AddString(&slotList, defBuffer);
-				} else {
-					const aircraftSlot_t *slot = &base->lasers[i].slot ;
-					const char *status;
-					if (!slot->installationTime)
-						status = _("Working");
-					else if (slot->installationTime > 0)
-						status = _("Installing");
-					else if (slot->nextItem)
-						status = _("Replacing");
-					else
-						status = _("Removing");
-
-					Com_sprintf(defBuffer, lengthof(defBuffer), "%i: %s (%s)", i + 1, (slot->nextItem) ? _(slot->nextItem->tech->name) : _(slot->item->tech->name), status);
-					LIST_AddString(&slotList, defBuffer);
-				}
-			}
+			BDEF_FillSlotList(base->lasers, base->numLasers, &slotList);
 		}
 	} else {
 		Com_Printf("BDEF_BaseDefenceMenuUpdate_f: unknown bdefType.\n");

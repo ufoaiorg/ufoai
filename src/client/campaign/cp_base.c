@@ -2516,31 +2516,33 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	cargo = aircraft->itemcargo;
 
 	for (i = 0; i < aircraft->itemTypes; i++) {
-		technology_t *tech = cargo[i].item->tech;
+		objDef_t *item = cargo[i].item;
+		const int amount = cargo[i].amount;
+		technology_t *tech = item->tech;
 		if (!tech)
-			Com_Error(ERR_DROP, "B_SellOrAddItems: No tech for %s / %s\n", cargo[i].item->id, cargo[i].item->name);
+			Com_Error(ERR_DROP, "B_SellOrAddItems: No tech for %s / %s\n", item->id, item->name);
 		/* If the related technology is NOT researched, don't sell items. */
 		if (!RS_IsResearched_ptr(tech)) {
 			/* Items not researched cannot be thrown out even if not enough space in storage. */
-			B_UpdateStorageAndCapacity(base, cargo[i].item, cargo[i].amount, qfalse, qtrue);
-			if (cargo[i].amount > 0)
+			B_UpdateStorageAndCapacity(base, item, amount, qfalse, qtrue);
+			if (amount > 0)
 				RS_MarkCollected(tech);
 			continue;
 		} else {
 			/* If the related technology is researched, check the autosell option. */
-			if (ccs.autosell[cargo[i].item->idx]) { /* Sell items if autosell is enabled. */
-				BS_AddItemToMarket(cargo[i].item, cargo[i].amount);
-				gained += (cargo[i].item->price * cargo[i].amount);
-				numitems += cargo[i].amount;
+			if (ccs.autosell[item->idx]) { /* Sell items if autosell is enabled. */
+				BS_AddItemToMarket(item, amount);
+				gained += (item->price * amount);
+				numitems += amount;
 			} else {
 				int j;
 				/* Check whether there is enough space for adding this item.
 				 * If yes - add. If not - sell. */
-				for (j = 0; j < cargo[i].amount; j++) {
-					if (!B_UpdateStorageAndCapacity(base, cargo[i].item, 1, qfalse, qfalse)) {
+				for (j = 0; j < amount; j++) {
+					if (!B_UpdateStorageAndCapacity(base, item, 1, qfalse, qfalse)) {
 						/* Not enough space, sell item. */
-						BS_AddItemToMarket(cargo[i].item, 1);
-						forcedgained += cargo[i].item->price;
+						BS_AddItemToMarket(item, 1);
+						forcedgained += item->price;
 						forcedsold++;
 					}
 				}
