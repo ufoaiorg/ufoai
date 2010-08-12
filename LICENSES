@@ -3246,17 +3246,6 @@ base/shaders/warp_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/warp_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/world_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/world_vs.glsl | GNU General Public License 2.0 or later
-base/sound/aliens/aliendeath02.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath04.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath05.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath06.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath07.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/aliens/aliendeath08.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/sound/aliens/alienhurt01.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/sound/aliens/alienhurt02.ogg | Creative Commons Sampling Plus 1.0 | Syna-Max | http://www.freesound.org/samplesViewSingle.php?id=61648
-base/sound/aliens/birdlike1.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/birdlike2.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/birdlike3.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/aliens/bloodspider/attack.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/aliens/bloodspider/die1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/aliens/bloodspider/die2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
@@ -3264,10 +3253,6 @@ base/sound/aliens/bloodspider/hurt1.ogg | Creative Commons Attribution-Share Ali
 base/sound/aliens/bloodspider/hurt2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/aliens/bloodspider/hurt3.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/aliens/bloodspider/move.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/sound/aliens/burble.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/growl.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/huge_angry.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/huge_angry2.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/aliens/ortnok/die1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/aliens/ortnok/die2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/aliens/ortnok/hurt1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
@@ -3278,7 +3263,6 @@ base/sound/aliens/shevaar/die2.ogg | Creative Commons Attribution-Share Alike 3.
 base/sound/aliens/shevaar/hurt1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/aliens/shevaar/hurt2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/aliens/shevaar/hurt3.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/sound/aliens/strange_chat.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/aliens/taman/die1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/aliens/taman/die2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/aliens/taman/hurt1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
