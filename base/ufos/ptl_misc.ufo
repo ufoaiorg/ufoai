@@ -876,25 +876,43 @@ particle crashsite_fire
 
 particle blood
 {
-	init
-	{
-		image  sfx/blood
-		blend  blend
-		style  facing
-		thinkfade  out
-		tps    2.3
-		v      "0 0 0"
-		a      "0 0 0"
+ 	init
+ 	{
+ 		frame			0
+ 		endframe		3
+ 		image			+sfx/bloodsplatter_d
+		blend			blend
+		style			facing
+		framefade		none
+		size			"30 30"
+		fps				15.0
+		tps				3
+		v				"0 0 0"
 	}
-	run
-	{
-		push pos "32 32"
-		mul  *t
-		add  pos "16 16"
-		pop  *size
-	}
-	think { kill }
+ 	think { kill }
 }
+
+//particle blood
+//{
+//	init
+//	{
+//		image  sfx/blood
+//		blend  blend
+//		style  facing
+//		thinkfade  out
+//		tps    2.3
+//		v      "0 0 0"
+//		a      "0 0 0"
+//	}
+//	run
+//	{
+//		push pos "32 32"
+//		mul  *t
+//		add  pos "16 16"
+//		pop  *size
+//	}
+//	think { kill }
+//}
 
 particle inRangeTracer
 {
