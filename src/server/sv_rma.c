@@ -1135,10 +1135,9 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	}
 
 	/* prepare map and pos strings */
-	if (map->basePath[0]) {
-		asmMap[0] = '-';
-		Q_strncpyz(&asmMap[1], map->basePath, MAX_QPATH - 1);
-	}
+	if (map->basePath[0])
+		Com_sprintf(asmMap, sizeof(asmMap), "-%s", map->basePath);
+
 	asmPos[0] = 0;
 
 	/* generate the strings */
@@ -1148,9 +1147,9 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 		if (sv_dumpmapassembly->integer)
 			SV_DumpPlaced(map, i);
 
-		if(asmMap[0])
+		if (asmMap[0])
 			Q_strcat(asmMap, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-		if(asmPos[0])
+		if (asmPos[0])
 			Q_strcat(asmPos, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 
 		Q_strcat(asmMap, va("%s", pl->tile->id), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
