@@ -785,7 +785,7 @@ static void UI_InitStack_f (void) {
 /**
  * @brief Display in the conde the tree of nodes
  */
-static void UI_DebugTree(const uiNode_t *node, int depth)
+static void UI_DebugTree (const uiNode_t *node, int depth)
 {
 	const uiNode_t *child = node->firstChild;
 	int i;

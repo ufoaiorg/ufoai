@@ -188,7 +188,7 @@ void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
 	const int topHeight = panelDef[3];
 	const int midHeight = panelDef[4];
 	const int bottomHeight = panelDef[5];
-	const int marge =  panelDef[6];
+	const int marge = panelDef[6];
 
 	/** @todo merge texX and texY here */
 	const int firstPos = 0;

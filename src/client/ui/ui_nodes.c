@@ -510,12 +510,12 @@ uiBehaviour_t* UI_GetNodeBehaviour (const char* name)
 	return NULL;
 }
 
-uiBehaviour_t* UI_GetNodeBehaviourByIndex(int index)
+uiBehaviour_t* UI_GetNodeBehaviourByIndex (int index)
 {
 	return &nodeBehaviourList[index];
 }
 
-int UI_GetNodeBehaviourCount(void)
+int UI_GetNodeBehaviourCount (void)
 {
 	return NUMBER_OF_BEHAVIOURS;
 }

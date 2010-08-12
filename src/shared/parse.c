@@ -36,7 +36,7 @@ static qboolean functionScriptTokenEnabled;
 
 /**
  * @brief Put back the last token into the parser
- * The next call of Com_Parse will return the token send by Com_UnParse.
+ * The next call of Com_Parse will return the same token again
  * @note Only allow to use it one time
  * @note With it, we can't read to file at the same time
  */
