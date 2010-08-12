@@ -3632,7 +3632,7 @@ mapdef rescue
 	map				"+rescue"
 	multiplayer		false
 	description		"_Rescue mission."
-	storyrelated	false
+	storyrelated		true
 	maxaliens		30
 	hurtaliens		true
 	ufos
