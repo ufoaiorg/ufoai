@@ -2831,6 +2831,31 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 	return qtrue;
 }
 
+/**
+ * @brief resets aircraftSlots' backreference pointers for aircraft
+ * @param[in] aircraft Pointer to the aircraft
+ */
+static void AIR_CorrectAircraftSlotPointers (aircraft_t *aircraft)
+{
+	int i;
+
+	assert(aircraft);
+
+	for (i = 0; i < aircraft->maxWeapons; i++) {
+		aircraft->weapons[i].aircraft = aircraft;
+		aircraft->weapons[i].base = NULL;
+		aircraft->weapons[i].installation = NULL;
+	}
+	for (i = 0; i < aircraft->maxElectronics; i++) {
+		aircraft->electronics[i].aircraft = aircraft;
+		aircraft->electronics[i].base = NULL;
+		aircraft->electronics[i].installation = NULL;
+	}
+	aircraft->shield.aircraft = aircraft;
+	aircraft->shield.base = NULL;
+	aircraft->shield.installation = NULL;
+}
+
 qboolean AIR_LoadXML (mxml_node_t *parent)
 {
 	mxml_node_t *snode, *ssnode;
@@ -2846,7 +2871,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 		if (!AIR_LoadAircraftXML(ssnode, &craft))
 			return qfalse;
 		assert(craft.homebase);
-		AII_CorrectAircraftSlotPointers(AIR_Add(craft.homebase, &craft));
+		AIR_CorrectAircraftSlotPointers(AIR_Add(craft.homebase, &craft));
 	}
 
 	/* load the ufos on geoscape */
