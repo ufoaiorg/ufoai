@@ -130,7 +130,7 @@ item laser_ammo
 		{
 			name				"_Pulsed Fire"
 			skill				close
-			projtl				llaserBeamSmall
+			projtl				laserBeamSmall
 			impact				laserImpact
 			hitbody				laserImpact
 			firesnd				weapons/laser-small
