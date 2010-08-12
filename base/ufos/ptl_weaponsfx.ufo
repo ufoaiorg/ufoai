@@ -435,6 +435,36 @@ particle laserFrizzledBeam
 	think { kill }
 }
 
+particle laserBeamSmall
+{
+	init
+	{
+		image  sfx/laserbeam_b
+		blend  add
+		style  beam
+		thinkfade  out
+		tps    1
+		size	"0 1.5"
+		child  muzzle_laser
+	}
+	think { kill }
+}
+
+particle laserPulseSmall
+{
+	init
+	{
+		image  sfx/laserpulsesmall
+		tps    190
+		style  axis
+		blend  add
+		size   "20 5"
+		offset "0 -16 0"
+		child  muzzle_laser
+	}
+}
+
+
 particle laserBeam
 {
 	init
@@ -459,15 +489,8 @@ particle laserPulse
 		style  axis
 		blend  add
 		offset "0 -16 0"
-		size   "30 10"
+		size   "50 15"
 		child  muzzle_laser
-	}
-	think
-	{
-		push   pos "15 10"		// push the vector onto the stack
-		mul    *t				// multiply stack value with the time value from the particle
-		add    pos "50 10"		// add another position 2d vector to the current stack value
-		pop    *size			// write the vector back into the particle size value
 	}
 }
 

@@ -309,7 +309,7 @@ item plasblaster_ammo
 			firesnd				weapons/plasma-huge
 			impsnd				impact/plasma-impact
 			bodysnd 			impact/plasma-bodyimpact
-			speed				2000
+			speed				1000
 			spread				"2 2"
 			crouch 				0.6
 			range				70

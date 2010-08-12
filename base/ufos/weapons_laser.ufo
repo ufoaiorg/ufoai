@@ -111,7 +111,7 @@ item laser_ammo
 		{
 			name		"_Wave Fire"
 			skill		close
-			projtl		laserBeam
+			projtl		laserBeamSmall
 			impact		laserImpact
 			hitbody		laserImpact
 			firesnd		weapons/laser-small
@@ -130,7 +130,7 @@ item laser_ammo
 		{
 			name				"_Pulsed Fire"
 			skill				close
-			projtl				laserPulse
+			projtl				laserPulseSmall
 			impact				laserImpact
 			hitbody				laserImpact
 			firesnd				weapons/laser-small
