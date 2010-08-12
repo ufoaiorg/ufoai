@@ -399,9 +399,6 @@ typedef struct ccs_s {
 
 	aircraft_t *missionAircraft;	/**< aircraft pointer for mission handling */
 
-	/* True if this objDef_t has autosell enabled. */
-	qboolean autosell[MAX_OBJDEFS];
-
 	/* already paid in this month? */
 	qboolean paid;
 

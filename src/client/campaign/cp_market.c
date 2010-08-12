@@ -195,7 +195,7 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 			mxml_AddIntValue(snode, SAVE_MARKET_BID, ccs.eMarket.bidItems[i]);
 			mxml_AddIntValue(snode, SAVE_MARKET_ASK, ccs.eMarket.askItems[i]);
 			mxml_AddDoubleValue(snode, SAVE_MARKET_EVO, ccs.eMarket.currentEvolutionItems[i]);
-			mxml_AddBoolValue(snode, SAVE_MARKET_AUTOSELL, ccs.autosell[i]);
+			mxml_AddBoolValue(snode, SAVE_MARKET_AUTOSELL, ccs.eMarket.autosell[i]);
 		}
 	}
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
@@ -239,7 +239,7 @@ qboolean BS_LoadXML (mxml_node_t *parent)
 		ccs.eMarket.bidItems[od->idx] = mxml_GetInt(snode, SAVE_MARKET_BID, 0);
 		ccs.eMarket.askItems[od->idx] = mxml_GetInt(snode, SAVE_MARKET_ASK, 0);
 		ccs.eMarket.currentEvolutionItems[od->idx] = mxml_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
-		ccs.autosell[od->idx] = mxml_GetBool(snode, SAVE_MARKET_AUTOSELL, qfalse);
+		ccs.eMarket.autosell[od->idx] = mxml_GetBool(snode, SAVE_MARKET_AUTOSELL, qfalse);
 	}
 	for (snode = mxml_GetNode(node, SAVE_MARKET_AIRCRAFT); snode; snode = mxml_GetNextNode(snode, node, SAVE_MARKET_AIRCRAFT)) {
 		const char *s = mxml_GetString(snode, SAVE_MARKET_ID);

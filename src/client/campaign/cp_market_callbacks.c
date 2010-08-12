@@ -216,7 +216,7 @@ static void BS_MarketScroll_f (void)
 			if (od && (base->storage.numItems[od->idx] || ccs.eMarket.numItems[od->idx]) && INV_ItemMatchesFilter(od, buyCat)) {
 				UI_ExecuteConfunc("buy_show %i", i - buyList.scroll);
 				BS_UpdateItem(base, i - buyList.scroll);
-				if (ccs.autosell[od->idx])
+				if (ccs.eMarket.autosell[od->idx])
 					UI_ExecuteConfunc("buy_autoselle %i", i - buyList.scroll);
 				else
 					UI_ExecuteConfunc("buy_autoselld %i", i - buyList.scroll);
@@ -367,7 +367,7 @@ static void BS_BuyType (const base_t *base)
 			 && INV_ItemMatchesFilter(od, FILTER_CRAFTITEM)) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
-					if (ccs.autosell[i])
+					if (ccs.eMarket.autosell[i])
 						UI_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
 					else
 						UI_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
@@ -431,7 +431,7 @@ static void BS_BuyType (const base_t *base)
 				/* Set state of Autosell button. */
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
-					if (ccs.autosell[i])
+					if (ccs.eMarket.autosell[i])
 						UI_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
 					else
 						UI_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
@@ -461,7 +461,7 @@ static void BS_BuyType (const base_t *base)
 					/* Set state of Autosell button. */
 					if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 						UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
-						if (ccs.autosell[i])
+						if (ccs.eMarket.autosell[i])
 							UI_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
 						else
 							UI_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
@@ -919,15 +919,15 @@ static void BS_Autosell_f (void)
 	item = BS_GetObjectDefition(&buyList.l[num + buyList.scroll]);
 	assert(item);
 
-	if (ccs.autosell[item->idx]) {
-		ccs.autosell[item->idx] = qfalse;
+	if (ccs.eMarket.autosell[item->idx]) {
+		ccs.eMarket.autosell[item->idx] = qfalse;
 		Com_DPrintf(DEBUG_CLIENT, "item name: %s, autosell false\n", item->name);
 	} else {
 		const technology_t *tech = RS_GetTechForItem(item);
 		/* Don't allow to enable autosell for items not researched. */
 		if (!RS_IsResearched_ptr(tech))
 			return;
-		ccs.autosell[item->idx] = qtrue;
+		ccs.eMarket.autosell[item->idx] = qtrue;
 		Com_DPrintf(DEBUG_CLIENT, "item name: %s, autosell true\n", item->name);
 	}
 

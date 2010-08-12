@@ -2532,7 +2532,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 			continue;
 		} else {
 			/* If the related technology is researched, check the autosell option. */
-			if (ccs.autosell[item->idx]) { /* Sell items if autosell is enabled. */
+			if (ccs.eMarket.autosell[item->idx]) { /* Sell items if autosell is enabled. */
 				BS_AddItemToMarket(item, amount);
 				gained += (item->price * amount);
 				numitems += amount;
