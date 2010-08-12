@@ -1,0 +1,39 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 514 256 6 ) ( 514 -768 6 ) ( -510 256 6 ) tex_terrain/dummy 0 0 0 0.25 0.25 65280 0 0
+( 512 256 256 ) ( -512 256 256 ) ( 512 256 0 ) tex_common/nodraw 0 0 0 0.25 0.25
+( 512 256 256 ) ( 512 256 0 ) ( 512 -768 256 ) tex_common/nodraw 0 0 0 0.25 0.25
+( -512 -768 0 ) ( 512 -768 0 ) ( -512 256 0 ) tex_common/nodraw 0 0 0 0.25 0.25
+( -512 -768 0 ) ( -512 -768 256 ) ( 512 -768 0 ) tex_common/nodraw 0 0 0 0.25 0.25
+( -512 -768 0 ) ( -512 256 0 ) ( -512 -768 256 ) tex_common/nodraw 0 0 0 0.25 0.25
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "-40 -112 6"
+"model" "models/objects/aircraft/crash_drop_firebird/part1.md2"
+"skin" "0"
+}
+// entity 2
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "-80 -70 8"
+"model" "models/objects/aircraft/crash_drop_firebird/part2.md2"
+"skin" "0"
+}
+// entity 3
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "-160 46 54"
+"model" "models/objects/aircraft/crash_drop_firebird/part3.md2"
+"skin" "0"
+"angles" "0 0 10.7647"
+}
