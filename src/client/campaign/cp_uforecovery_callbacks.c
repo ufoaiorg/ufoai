@@ -636,8 +636,6 @@ void UR_InitCallbacks (void)
 	Cmd_AddCommand("debug_storeufo", US_StoreUFO_f, "Debug function to Add UFO to Hangars.");
 	Cmd_AddCommand("debug_removestoredufo", US_RemoveStoredUFO_f, "Debug function to Remove UFO from Hangars.");
 #endif
-
-	Cvar_Set("mn_uforecovery_actualufo", "");
 }
 
 void UR_ShutdownCallbacks (void)
@@ -654,6 +652,4 @@ void UR_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("debug_storeufo");
 	Cmd_RemoveCommand("debug_removestoredufo");
 #endif
-
-	Cvar_Delete("mn_uforecovery_actualufo");
 }
