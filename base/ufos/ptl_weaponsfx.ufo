@@ -1673,8 +1673,9 @@ particle muzzle_rifle
 {
 	init
 	{
-		spawn  muzzle_1
+		spawn  muzzle_round
 		spawn  muzzle_glow
+		spawn  muzzle_side
 		push   int 25
 		lightcolor "0.4 0.4 1.0"
 		lightintensity 0.1
@@ -1682,7 +1683,7 @@ particle muzzle_rifle
 	}
 }
 
-particle muzzle_1
+particle muzzle_round
 {
 	init
 	{
@@ -1693,16 +1694,6 @@ particle muzzle_1
 		life   0.1
 		tps    1
 		size   "10 10"
-		offset "5 5 0"
-	}
-	run
-	{
-
-		// change the position a little bit randomly
-		crand  vector "1 0 0"	// push a value between -1 and 1 onto the stack
-		add    *s				// add the current location
-		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
-
 	}
 	think { kill }
 }
@@ -1718,25 +1709,15 @@ particle muzzle_glow
 		life   0.1
 		tps    1
 		size   "15 15"
-		offset "5 5 0"
-	}
-	run
-	{
-
-		// change the position a little bit randomly
-		crand  vector "1 1 1"	// push a value between -1 and 1 onto the stack
-		add    *s				// add the current location
-		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
-
 	}
 	think { kill }
 }
 
-particle muzzle_2
+particle muzzle_side
 {
 	init
 	{
-		image  sfx/lasermuzzleside
+		image  sfx/muzzlebulletside
 		blend  add
 		style  rotated 
 		angles "50 0 0"
@@ -1816,9 +1797,9 @@ particle muzzle_laser
 {
 	init
 	{
-		spawn  muzzle_laser_1
+		spawn  muzzle_laser_round
 		push   int 25
-		spawn  muzzle_laser_2
+		spawn  muzzle_laser_side
 		push   int 25
 		lightcolor "0.4 0.4 1.0"
 		lightintensity 0.1
@@ -1826,7 +1807,7 @@ particle muzzle_laser
 	}
 }
 
-particle muzzle_laser_1
+particle muzzle_laser_round
 {
 	init
 	{
@@ -1838,6 +1819,7 @@ particle muzzle_laser_1
 		tps    1
 		size   "30 30"
 		offset "0 0 0"
+		v      "0 0 0"
 	}
 	run
 	{
@@ -1851,19 +1833,20 @@ particle muzzle_laser_1
 	think { kill }
 }
 
-particle muzzle_laser_2
+particle muzzle_laser_side
 {
 	init
 	{
-		image  sfx/lasermuzzleside
+		image  sfx/muzzlelaserside
 		blend  add
-		style  rotated 
-		angles "50 0 0"
+		style  rotated
+		angles "0 0 0"
 		thinkfade  out
 		life   0.1
 		tps    1
 		size   "40 10"
-		offset "0 7 0"
+		offset "0 9 0"
+		v      "0 0 0"
 	}
 	think { kill }
 }
