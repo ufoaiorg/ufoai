@@ -121,14 +121,14 @@ particle bullet
 		style  axis
 		blend  add
 		offset "0 -16 0"
-		size   "70 10"
+		size   "70 30"
 		child  muzzle_rifle
 	}
 	think
 	{
 		push   pos "15 10"		// push the vector onto the stack
 		mul    *t				// multiply stack value with the time value from the particle
-		add    pos "50 10"		// add another position 2d vector to the current stack value
+		add    pos "40 40"		// add another position 2d vector to the current stack value
 		pop    *size			// write the vector back into the particle size value
 	}
 }
@@ -142,13 +142,13 @@ particle bullet-shotgun
 		style  axis
 		blend  add
 		offset "0 -16 0"
-		size   "70 10"
+		size   "70 30"
 	}
 	think
 	{
 		push   pos "15 10"		// push the vector onto the stack
 		mul    *t				// multiply stack value with the time value from the particle
-		add    pos "50 10"		// add another position 2d vector to the current stack value
+		add    pos "40 40"		// add another position 2d vector to the current stack value
 		pop    *size			// write the vector back into the particle size value
 	}
 }
@@ -163,14 +163,14 @@ particle bullet_sniper
 		style  axis
 		blend  add
 		offset "0 -16 0"
-		size   "70 10"
+		size   "70 30"
 		child  muzzle_sniper
 	}
 	think
 	{
 		push   pos "40 10"		// push the vector onto the stack
 		mul    *t				// multiply stack value with the time value from the particle
-		add    pos "90 10"		// add another position 2d vector to the current stack value
+		add    pos "80 40"		// add another position 2d vector to the current stack value
 		pop    *size			// write the vector back into the particle size value
 	}
 }
