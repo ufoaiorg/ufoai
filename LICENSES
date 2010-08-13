@@ -5387,6 +5387,8 @@ base/textures/tex_doors/door017.jpg | GNU General Public License 2.0 | Werner HÃ
 base/textures/tex_doors/elevator_button.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_doors/metaldoor.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_furniture/basket.jpg | GNU General Public License 2.0 or later | zark127
+base/textures/tex_furniture/bed001_b.jpg | GNU General Public License 2.0 or later
+base/textures/tex_furniture/chest004_2.jpg | GNU General Public License 2.0 or later
 base/textures/tex_furniture/chest007.jpg | GNU General Public License 2.0 or later | zark127 | tex_mattn/door_19 and tex_mattn/door_18
 base/textures/tex_furniture/clothes.jpg | GNU General Public License 2.0 or later | zark127 | models/civilians/ skins
 base/textures/tex_furniture/couch_d.png | GNU General Public License 2.0 or later | Voller
@@ -5394,6 +5396,7 @@ base/textures/tex_furniture/couch_d_nm.png | GNU General Public License 2.0 or l
 base/textures/tex_furniture/couch_e.png | GNU General Public License 2.0 or later | Voller
 base/textures/tex_furniture/couche_sm.png | GNU General Public License 2.0 or later
 base/textures/tex_furniture/kitchen001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_furniture/seat002.jpg | GNU General Public License 2.0 or later
 base/textures/tex_furniture/seat006.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/table001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_furniture/table002_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
