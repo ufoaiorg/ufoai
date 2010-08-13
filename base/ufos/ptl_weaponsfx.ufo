@@ -687,7 +687,7 @@ particle plasmaMiniPulse
 		mul  float 16.0
 		sin  #
 		mul  #
-		add  pos "64 36"
+		add  pos "54 30"
 		pop  *size
 	}
 }
@@ -709,7 +709,7 @@ particle plasmaPulse
  		mul  float 16.0
 		sin  #
  		mul  #
- 		add  pos "126 36"
+ 		add  pos "90 30"
  		pop  *size
 	}
  }
