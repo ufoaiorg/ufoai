@@ -678,6 +678,7 @@ particle plasmaMiniPulse
 		style  axis
 		child  plasmaMiniPulseBall
 		offset "0 -16 0"
+		spawn muzzle_plasma
 	}
 	run
 	{
@@ -686,7 +687,7 @@ particle plasmaMiniPulse
 		mul  float 16.0
 		sin  #
 		mul  #
-		add  pos "32 12"
+		add  pos "64 36"
 		pop  *size
 	}
 }
@@ -698,8 +699,8 @@ particle plasmaPulse
  		image  sfx/plasmapulse
  		blend  add
  		style  axis
- 		child  plasmaPulseBall
  		offset "0 -26 0"
+		spawn muzzle_plasma
  	}
  	run
  	{
@@ -708,7 +709,7 @@ particle plasmaPulse
  		mul  float 16.0
 		sin  #
  		mul  #
- 		add  pos "64 12"
+ 		add  pos "126 36"
  		pop  *size
 	}
  }
@@ -838,7 +839,6 @@ particle plasmaImpactCharged
 	init
 	{
 		spawn	plasmaImpactChargedAnim_1
-		spawn	plasmaImpactChargedAnim_2
 		kill
 	}
 }
@@ -1832,6 +1832,64 @@ particle muzzle_laser_side
 	init
 	{
 		image  sfx/muzzlelaserside
+		blend  add
+		style  rotated
+		angles "0 0 0"
+		thinkfade  out
+		life   0.07
+		tps    1
+		size   "40 10"
+		offset "0 9 0"
+		v      "0 0 0"
+	}
+	think { kill }
+}
+
+particle muzzle_plasma
+{
+	init
+	{
+		spawn  muzzle_plasma_round
+		push   int 25
+		spawn  muzzle_plasma_side
+		push   int 25
+		lightcolor "0.4 0.4 1.0"
+		lightintensity 0.1
+		kill
+	}
+}
+
+particle muzzle_plasma_round
+{
+	init
+	{
+		image  sfx/plasmaimpact_01
+		blend  add
+		style  facing
+		thinkfade  out
+		life   0.07
+		tps    1
+		size   "30 30"
+		offset "0 0 0"
+		v      "0 0 0"
+	}
+	run
+	{
+
+		// change the position a little bit randomly
+		crand  vector "1 0 0"	// push a value between -1 and 1 onto the stack
+		add    *s				// add the current location
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
+
+	}
+	think { kill }
+}
+
+particle muzzle_plasma_side
+{
+	init
+	{
+		image  sfx/muzzleplasmaside
 		blend  add
 		style  rotated
 		angles "0 0 0"
