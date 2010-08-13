@@ -525,3 +525,17 @@
 "origin" "282 270 44"
 "spawnflags" "255"
 }
+// entity 42
+{
+"classname" "trigger_rescue"
+"team" "1"
+// brush 0
+{
+( 192 192 64 ) ( 64 192 64 ) ( 192 352 64 ) tex_common/trigger 0 0 0 0.25 0.25
+( 576 192 96 ) ( 576 352 96 ) ( 576 192 0 ) tex_common/trigger 0 0 0 0.25 0.25
+( 192 192 64 ) ( 192 192 -32 ) ( 64 192 64 ) tex_common/trigger 0 0 0 0.25 0.25
+( 64 352 0 ) ( 64 192 0 ) ( 192 352 0 ) tex_common/trigger 0 0 0 0.25 0.25
+( 64 352 0 ) ( 64 352 96 ) ( 64 192 0 ) tex_common/trigger 0 0 0 0.25 0.25
+( 64 352 0 ) ( 192 352 0 ) ( 64 352 96 ) tex_common/trigger 0 0 0 0.25 0.25
+}
+}

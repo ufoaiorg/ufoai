@@ -1308,3 +1308,17 @@
 "model" "models/aircraft/drop_firebird/firebird.md2"
 "spawnflags" "224"
 }
+// entity 23
+{
+"classname" "trigger_rescue"
+"team" "1"
+// brush 0
+{
+( 512 0 192 ) ( 384 0 192 ) ( 512 160 192 ) tex_common/trigger 0 0 0 0.25 0.25
+( 768 0 224 ) ( 768 160 224 ) ( 768 0 128 ) tex_common/trigger 0 0 0 0.25 0.25
+( 512 0 192 ) ( 512 0 96 ) ( 384 0 192 ) tex_common/trigger 0 0 0 0.25 0.25
+( 384 160 128 ) ( 384 0 128 ) ( 512 160 128 ) tex_common/trigger 0 0 0 0.25 0.25
+( 320 160 128 ) ( 320 160 224 ) ( 320 0 128 ) tex_common/trigger 0 0 0 0.25 0.25
+( 384 224 128 ) ( 512 224 128 ) ( 384 224 224 ) tex_common/trigger 0 0 0 0.25 0.25
+}
+}

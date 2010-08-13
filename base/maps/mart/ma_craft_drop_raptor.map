@@ -1020,3 +1020,17 @@
 "origin" "592 368 28"
 "angle" "90"
 }
+// entity 36
+{
+"classname" "trigger_rescue"
+"team" "1"
+// brush 0
+{
+( 192 288 64 ) ( 64 288 64 ) ( 192 448 64 ) tex_common/trigger 0 0 0 0.25 0.25
+( 640 64 96 ) ( 640 224 96 ) ( 640 64 0 ) tex_common/trigger 0 0 0 0.25 0.25
+( 640 64 64 ) ( 640 64 -32 ) ( 512 64 64 ) tex_common/trigger 0 0 0 0.25 0.25
+( 64 448 0 ) ( 64 288 0 ) ( 192 448 0 ) tex_common/trigger 0 0 0 0.25 0.25
+( 64 448 0 ) ( 64 448 96 ) ( 64 288 0 ) tex_common/trigger 0 0 0 0.25 0.25
+( 64 448 0 ) ( 192 448 0 ) ( 64 448 96 ) tex_common/trigger 0 0 0 0.25 0.25
+}
+}
