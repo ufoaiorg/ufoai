@@ -454,6 +454,7 @@ particle flash
 		size		"250 250"
 		tps			10
 		v			"0 0 0"
+		life		0.5
 	}
 	think { kill }
 }

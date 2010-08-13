@@ -1481,6 +1481,7 @@ particle flash_explosion
 		mul				float 30.0
 		add				*s
 		pop				*s
+		spawn				flash
 		v				"0 0 0"
 	}
  	think { kill }
