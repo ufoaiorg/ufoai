@@ -168,6 +168,9 @@ static void HUD_SetWeaponButton (buttonTypes_t button, weaponButtonState_t state
 	case BT_STATE_DISABLE:
 		prefix = "disable_";
 		break;
+	default:
+		prefix = "";
+		break;
 	}
 
 	/* Connect confunc strings to the ones as defined in "menu nohud". */
