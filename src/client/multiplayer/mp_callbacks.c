@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 teamData_t teamData;
 static cvar_t *rcon_client_password;
+static cvar_t *rcon_address;
 static cvar_t *info_password;
 
 void CL_Connect_f (void)
@@ -97,15 +98,28 @@ void CL_Rcon_f (void)
 		return;
 	}
 
-	if (cls.state < ca_connected) {
-		Com_Printf("You are not connected to any server\n");
-		return;
-	}
-
 	Com_sprintf(message, sizeof(message), "rcon %s %s",
 		rcon_client_password->string, Cmd_Args());
 
-	NET_OOB_Printf(cls.netStream, "%s", message);
+	if (cls.state >= ca_connected) {
+		NET_OOB_Printf(cls.netStream, "%s", message);
+	} else if (rcon_address->string) {
+		const char *port;
+		struct net_stream *s;
+
+		if (strstr(rcon_address->string, ":"))
+			port = strstr(rcon_address->string, ":") + 1;
+		else
+			port = DOUBLEQUOTE(PORT_SERVER);
+
+		s = NET_Connect(rcon_address->string, port);
+		if (s) {
+			NET_OOB_Printf(s, "%s", message);
+			NET_StreamFree(s);
+		}
+	} else {
+		Com_Printf("You are not connected to any server\n");
+	}
 }
 
 /**
@@ -256,6 +270,7 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 void MP_CallbacksInit (void)
 {
 	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
+	rcon_address = Cvar_Get("rcon_address", "", 0, "Address of the host you would like to control via rcon");
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
 	Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
 	Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the prefered teamnum");
