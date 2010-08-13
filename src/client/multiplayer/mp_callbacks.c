@@ -80,6 +80,23 @@ void CL_Connect_f (void)
 	UI_InitStack(NULL, "multiplayerInGame", qfalse, qfalse);
 }
 
+static void CL_RconCallback (struct net_stream *s)
+{
+	struct dbuffer *buf = NET_ReadMsg(s);
+	if (buf) {
+		const int cmd = NET_ReadByte(buf);
+		char str[8];
+		NET_ReadStringLine(buf, str, sizeof(str));
+
+		if (cmd == clc_oob && !strcmp(str, "print")) {
+			char str[2048];
+			NET_ReadString(buf, str, sizeof(str));
+			Com_Printf("%s\n", str);
+		}
+	}
+	NET_StreamFree(s);
+}
+
 /**
  * Send the rest of the command line over as
  * an unconnected command.
@@ -115,7 +132,7 @@ void CL_Rcon_f (void)
 		s = NET_Connect(rcon_address->string, port);
 		if (s) {
 			NET_OOB_Printf(s, "%s", message);
-			NET_StreamFree(s);
+			NET_StreamSetCallback(s, &CL_RconCallback);
 		}
 	} else {
 		Com_Printf("You are not connected to any server\n");
