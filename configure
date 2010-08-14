@@ -2643,6 +2643,10 @@ $as_echo "Win32 (mingw32)" >&6; }
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: Win32 (cygwin)" >&5
 $as_echo "Win32 (cygwin)" >&6; }
 		;;
+	freebsd*)
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: UNIX (FreeBSD)" >&5
+$as_echo "UNIX (FreeBSD)" >&6; }
+		;;
 	openbsd*)
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: UNIX (OpenBSD)" >&5
 $as_echo "UNIX (OpenBSD)" >&6; }
@@ -2971,7 +2975,7 @@ $as_echo "$TARGET_OS" >&6; }
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking target CPU" >&5
 $as_echo_n "checking target CPU... " >&6; }
-if test "$target_cpu" = "x86_64" || test "$target_cpu" = "amd64"
+if test "$target_cpu" = "x86_64" || test "$target_cpu" = "amd64" || test "$target_cpu" = "ia64"
 then
 	TARGET_CPU=x86_64
 
