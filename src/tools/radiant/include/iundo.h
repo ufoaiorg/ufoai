@@ -101,6 +101,10 @@ class UndoTracker
 		 */
 		virtual void clear () = 0;
 		/**
+		 * @brief called whenever redo states should be reseted
+		 */
+		virtual void clearRedo () = 0;
+		/**
 		 * @brief called right before a new action is called, should be used to save current state (e.g. in an UndoMememto)
 		 */
 		virtual void begin () = 0;
@@ -133,6 +137,7 @@ class UndoSystem
 		virtual void undo () = 0;
 		virtual void redo () = 0;
 		virtual void clear () = 0;
+		virtual void clearRedo () = 0;
 
 		virtual void trackerAttach (UndoTracker& tracker) = 0;
 		virtual void trackerDetach (UndoTracker& tracker) = 0;

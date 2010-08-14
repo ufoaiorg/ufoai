@@ -408,8 +408,8 @@ void Entity_createFromSelection (const std::string& name, const Vector3& origin)
 		bool revert = Entity_create(name, origin);
 		if (revert) {
 			GlobalUndoSystem().undo();
+			GlobalUndoSystem().clearRedo();
 			GlobalSceneGraph().sceneChanged();
-			// TODO we have to remove the invalid redo command from stack somehow
 		}
 	} catch (EntityCreationException e) {
 		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), e.what());
