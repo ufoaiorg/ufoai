@@ -30,6 +30,7 @@ CACHING = True
 ABS_URL = None
 EOL = "\n"
 THUMBNAIL = True
+PLOT = True
 
 NON_FREE_LICENSES = set([
 "UNKNOWN", # ambiguous
@@ -290,9 +291,16 @@ def plot(d, data, times, imagename):
     cmds+= 'set object 1 rect from graph 0, graph 0 to graph 1, graph 1 back;\n'
     cmds+= 'set object 1 rect fc rgb "grey" fillstyle solid 1.0;\n'
 
+    ymax = 0
+    for i in data:
+        for y in data[i]:
+            if y[1] > ymax:
+                ymax = y[1]
+
     cmds+= 'set data style linespoints;\n'
     cmds+= 'set output "licenses/html%s/%s";\n' % (d, imagename)
     cmds+= 'set xrange [%i to %i];\n' % (min(times), max(times) + 1 + (max(times)-min(times))*0.15)
+    cmds+= 'set yrange [0 to %i];\n' % (int(ymax * 1.15))
 
     cmds+= 'plot '
     p = []
@@ -471,6 +479,28 @@ class Analysis:
 
         return content
 
+    def getLicenseFileName(self, license):
+        name = license.lower()
+        name = name.replace(' ', '')
+        name = name.replace('-', '')
+        name = name.replace(':', '')
+        name = name.replace('.', '')
+        name = name.replace('(', '')
+        name = name.replace(')', '')
+        name = name.replace('/', '')
+        name = name.replace('_', '')
+        name = name.replace('gplcompatible', '')
+        name = name.replace('gnugeneralpubliclicense', 'gpl-')
+        name = name.replace('generalpubliclicense', 'gpl-')
+        name = name.replace('creativecommons', 'cc-')
+        name = name.replace('attribution', 'by-')
+        name = name.replace('sharealike', 'sa-')
+        name = name.replace('license', '')
+        name = name.replace('lisence', '')	# type problem
+        name = name.replace('and', '_')
+        return 'license-' + name + '.html'
+        #return hashlib.md5(license).hexdigest() + '.html'
+
     def writeLicensePage(self, output, license, contents):
         style = '<link rel="stylesheet" type="text/css" href="' + ('../' * self.deep) + 'style.css" />'
         navigation = '<a href="index.html">back</a><br />' + EOL
@@ -489,7 +519,7 @@ class Analysis:
         html = html.replace("<!-- CONTENT -->", content)
         html = html.replace("<!-- REVISION -->", str(self.revision))
         html = html.encode('utf-8')
-        fileName = hashlib.md5(license).hexdigest() + '.html'
+        fileName = self.getLicenseFileName(license)
         basedir = output + '/licenses/html' + self.getLocalDir()
         if not os.path.exists(basedir):
             os.makedirs(basedir)
@@ -549,7 +579,7 @@ class Analysis:
             os.makedirs(basedir)
         cPickle.dump(licenses, open(basedir + '/' + str(self.revision), 'wt'))
         # generate graph
-        if self.count > 20:
+        if PLOT and self.count > 20:
             if generateGraph(self.getLocalDir()):
                 content += HTML_IMAGE
 
@@ -566,7 +596,7 @@ class Analysis:
                 classProp = " class=\"badlicense\""
             count = len(self.contentByLicense[l])
             self.writeLicensePage(output, l, self.contentByLicense[l])
-            url = hashlib.md5(l).hexdigest() + ".html"
+            url = self.getLicenseFileName(l)
             content += ('<li>%i - <a%s href="%s">%s</a></li>' % (count, classProp, url, l)) + EOL
         content += "</ul>" + EOL
         html = html.replace("<!-- CONTENT -->", content)
@@ -589,7 +619,7 @@ class Analysis:
         self.writeGroups(output, "sources", self.contentBySource)
 
 def main():
-    global ABS_URL, THUMBNAIL # config
+    global ABS_URL, THUMBNAIL, PLOT # config
     from optparse import OptionParser
 
     parser = OptionParser()
@@ -599,6 +629,8 @@ def main():
                       help="base URL where the files will be served", metavar="DIR")
     parser.add_option("-t", "--disable-thumbnails", action="store_false", dest="thumbnail",
                       help="disable thumbnails computation and display")
+    parser.add_option("", "--disable-plot", action="store_false", dest="plot",
+                      help="disable plot computation and display")
 
     (options, args) = parser.parse_args()
 
@@ -608,7 +640,10 @@ def main():
         output_path = '.'
     output_path = os.path.abspath(output_path)
 
-    THUMBNAIL = options.thumbnail
+    if options.thumbnail != None:
+        THUMBNAIL = options.thumbnail
+    if options.plot != None:
+        PLOT = options.plot
 
     # @note we use it nowhere, cause everything is relative
     #ABS_URL = options.abs_url
@@ -620,6 +655,7 @@ def main():
     print "Absolute URL:\t\t", ABS_URL
     print "Absolute output:\t", output_path
     print "Generate thumbnails:\t", THUMBNAIL
+    print "Generate plots:\t\t", PLOT
     print "-------------------------"
     
     setup(output_path)
