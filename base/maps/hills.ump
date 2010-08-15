@@ -155,15 +155,33 @@ vwh    +g     vwh
 0      1      0
 }
 
+tile +road_2h1
+{
+3 4
+0      2      0
+vwg    +h     vwg
+vwg    +h     vwg
+0      2f     0
+}
+
+tile +road_2h2
+{
+3 4
+0      2      0
+vwh    +g     vwh
+vwh    +g     vwh
+0      2f     0
+}
+
 ///**** Cross-roads
 
 tile +road_1c1
 {
 4 4
-0      wvu    wvu    0
+1      wvu    wvu    1
 hg     +vw    +vw    hg
 hg     +vw    +vw    hg
-0      wv     wv    0
+1      wv     wv     1
 
 }
 
@@ -173,17 +191,17 @@ hg     +vw    +vw    hg
 tile +filler_12vu1
 {
 3 3
-0      2      0
+0      2hg    0
 uf     +f     fu
-0      1hg      0
+0      1hg    0
 }
 
 tile +filler_12vu2
 {
 3 3
-0      2      0
+0      2hg    0
 uf     +f     fu
-0      1hg      0
+0      1hg    0
 }
 
 
@@ -218,17 +236,17 @@ wv    +1     1vw
 tile +filler_2s1
 {
 3 3
-0      2      0
-2vw     +2     2vw
-0      2f     0
+0      2hg    0
+2vw    +2     2vw
+0      2fhg   0
 }
 
 tile +filler_2s2
 {
 3 3
-0      2      0
-2vw     +2     2vw
-0      2f     0
+0      2hg    0
+2vw    +2     2vw
+0      2fhg   0
 }
 
 
@@ -271,7 +289,7 @@ tile +house_21
 {
 4 5
 
-0      2      2      0
+0      2hg    2hg    0
 wv     +2     +2     wv
 0      2      +2     wv
 0      2      +2     wv
@@ -341,21 +359,19 @@ fix +road_12vu1 "0 5"
 
 assembly harvester
 {
-size "6 12"
-title "test"
+size "7 9"
+title "_UFO landed in hills area"
 
-//fix +house_13 "2 2"
 fix +road_1c1 "4 0"
-//fix +house_21 "2 5"
 
-
-+filler_1s1 "0 3"
-+filler_1s2 "0 3"
++filler_1s1 "0 2"
++filler_1s2 "0 2"
 +filler_1s3 "1 2"
 
 +filler_2s1 "0 10"
-+filler_12vu1 "0 4"
-+filler_12vu2 "0 4"
++filler_2s2 "0 1"
++filler_12vu1 "0 2"
++filler_12vu2 "0 2"
 
 +road_1v1 "0 1"
 +road_1v2 "0 2"
@@ -363,22 +379,24 @@ fix +road_1c1 "4 0"
 +road_1v4 "0 1"
 +road_1v5 "0 6"
 +road_1v6 "0 6"
++road_1h1 "0 3"
++road_1h2 "0 3"
 
 +road_2v1 "0 10"
 +road_2v2 "0 10"
-+road_1h1 "0 5"
-+road_1h2 "0 5"
++road_2h1 "0 5"
++road_2h2 "0 5"
+
 
 //+road_1c1 "0 2"
 
-+house_11 "0 15"
-+house_12 "0 15"
++house_11 "1 5"
++house_12 "1 5"
++house_13 "1 1"
 
-+house_13 "0 1"
-
-+house_21 "1 1"
 +house_22 "0 1"
 
-+craft_ufo_harvester "1 1"
-+craft_drop_firebird "1 1"
+*rm_ufo +craft_ufo_harvester "1 1"
+*rm_drop +craft_drop_firebird "1 1"
+
 }
