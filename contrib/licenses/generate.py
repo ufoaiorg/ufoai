@@ -57,7 +57,7 @@ HTML = u"""<html>
 </head>
 
 <body>
-<h1>Licenses in UFO:ai (<!-- TITLE -->)</h1>
+<h1>Licenses in UFO:AI (<!-- TITLE -->)</h1>
 Please note that the information are extracted from the svn tags.<br />
 Warning: the statics/graphs might be wrong since it would be to expensive to get information if a enrty was a directory in the past or not.
 <br />
@@ -178,7 +178,12 @@ def computeTextureUsageInMaps():
             mapmeta = getMetadata(mapname)
 
             for tex in get_used_tex(mapname):
-                texmeta = getMetadataByShortImageName("base/textures/" + tex)
+                texname = "base/textures/" + tex
+                texmeta = getMetadataByShortImageName(texname)
+                # texture missing (or wrong python parsing)
+                if texmeta == None:
+                    print "Warning: \"" + texname + "\" from map \"" + mapname + "\" do not exists"
+                    continue
                 texmeta.usedByMaps.add(mapmeta)
                 mapmeta.useTextures.add(texmeta)
 
@@ -629,7 +634,7 @@ def main():
                       help="base URL where the files will be served", metavar="DIR")
     parser.add_option("-t", "--disable-thumbnails", action="store_false", dest="thumbnail",
                       help="disable thumbnails computation and display")
-    parser.add_option("", "--disable-plot", action="store_false", dest="plot",
+    parser.add_option("", "--disable-plots", action="store_false", dest="plot",
                       help="disable plot computation and display")
 
     (options, args) = parser.parse_args()
