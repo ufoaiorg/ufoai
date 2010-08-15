@@ -43,7 +43,7 @@ item pbeampistol_ammo
 			projtl		pbeamBeam
 			impact		pbeamImpact
 			hitbody		pbeamImpact
-			firesnd		weapons/laser-small
+			firesnd		weapons/ptl-small
 			impsnd		impact/laser-impact
 			bodysnd 	impact/laser-bodyimpact
 			speed		0
@@ -64,7 +64,7 @@ item pbeampistol_ammo
 			projtl				pbeamMiniBeam
 			impact				pbeamImpact
 			hitbody				pbeamImpact
-			firesnd				weapons/laser-small
+			firesnd				weapons/ptl-small
 			impsnd				impact/laser-impact
 			bodysnd 			impact/laser-bodyimpact
 			speed				0
@@ -128,7 +128,7 @@ item pbeamrifle_ammo
 			projtl		pbeamBeam
 			impact		pbeamImpact
 			hitbody		pbeamImpact
-			firesnd		weapons/laser-medium
+			firesnd		weapons/ptl-medium
 			impsnd		impact/laser-impact
 			bodysnd 	impact/laser-bodyimpact
 			speed		0
@@ -149,7 +149,7 @@ item pbeamrifle_ammo
 			projtl		pbeamBeam
 			impact		pbeamImpact
 			hitbody		pbeamImpact
-			firesnd		weapons/laser-medium
+			firesnd		weapons/ptl-medium
 			impsnd		impact/laser-impact
 			bodysnd 	impact/laser-bodyimpact
 			speed		0
@@ -169,7 +169,7 @@ item pbeamrifle_ammo
 			projtl				pbeamMiniBeam
 			impact				pbeamImpact
 			hitbody				pbeamImpact
-			firesnd				weapons/laser-medium
+			firesnd				weapons/ptl-medium
 			impsnd				impact/laser-impact
 			bodysnd 			impact/laser-bodyimpact
 			speed				0
@@ -235,7 +235,7 @@ item pbeamcannon_ammo
 			projtl				pbeamMiniBeam
 			impact				pbeamImpact
 			hitbody				pbeamImpact
-			firesnd				weapons/laser-large
+			firesnd				weapons/ptl-large
 			impsnd				impact/laser-impact
 			bodysnd 			impact/laser-bodyimpact
 			speed				0
@@ -257,7 +257,7 @@ item pbeamcannon_ammo
 			projtl				pbeamMiniBeam
 			impact				pbeamImpact
 			hitbody				pbeamImpact
-			firesnd				weapons/laser-large
+			firesnd				weapons/ptl-large
 			impsnd				impact/laser-impact
 			bodysnd 			impact/laser-bodyimpact
 			speed				0
@@ -279,7 +279,7 @@ item pbeamcannon_ammo
 			projtl		pbeamBigBeam
 			impact		pbeamBigImpact
 			hitbody		pbeamBigImpact
-			firesnd		weapons/laser-blast
+			firesnd		weapons/ptl-large
 			impsnd		impact/laser-impact
 			bodysnd 	impact/laser-bodyimpact
 			speed		0

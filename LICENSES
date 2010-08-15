@@ -3084,6 +3084,7 @@ base/pics/sfx/muzzlebulletside.png | Creative Commons Attribution-Share Alike 3.
 base/pics/sfx/muzzlelaserside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/muzzleplasmaside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/muzzleplasmaspiral.png |  |  | plasmaimpact_01
+base/pics/sfx/muzzleptlside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/particlebeam.png |  |  | plasmaimpact_01
 base/pics/sfx/plasmaball-core.png |  |  | plasmaimpact_01
 base/pics/sfx/plasmabeam.png |  |  | plasmaimpact_01
@@ -3104,6 +3105,7 @@ base/pics/sfx/plasmashot_07.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmashot_08.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmashot_09.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/powerup_flare3.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/ptlmuzzle.png |  |  | plasmaimpact_01
 base/pics/sfx/smoke.png | GNU General Public License 2.0 |  | OpenAreana
 base/pics/sfx/smoke_00.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
 base/pics/sfx/smoke_01.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
@@ -3542,6 +3544,9 @@ base/sound/weapons/plasma-large.ogg | Creative Commons Attribution-Share Alike 3
 base/sound/weapons/plasma-medium.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/plasma-small.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/psiattack.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/weapons/ptl-large.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/weapons/ptl-medium.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/weapons/ptl-small.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/reload-nail.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/reload-pistol.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/reload-rifle.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann

@@ -235,7 +235,6 @@ particle bulletFragment
 	think { kill }
 }
 
-
 // ==================
 // FLAMETHROWER EFFECTS
 // ==================
@@ -1129,14 +1128,15 @@ particle pbeamMiniBeam
 		image  sfx/particlebeam
 		blend  add
 		style  beam
-		tps    30.0
+		tps    10.0
 		lightcolor "0.5 0.9 0.5"
 		lightintensity 0.1
+		spawn muzzle_ptl
 	}
 	run
 	{
-		rand float 2.0
-		add  float 1.0
+		rand float 3.0
+		add  float 4.0
 		pop  *size.2
 	}
 	think { kill }
@@ -1153,14 +1153,15 @@ particle pbeamBeam
 		tps    10.0
 		lightcolor "0.5 0.9 0.5"
 		lightintensity -0.2
+		spawn muzzle_ptl
 	}
 	run
 	{
 		push *t
-		mul  float 7.0
+		mul  float 8.0
 		sin  #
-		mul  float 1.0
-		add  float 2.0
+		mul  float 3.0
+		add  float 6.0
 		pop  *size.2
 	}
 	think { kill }
@@ -1177,14 +1178,15 @@ particle pbeamBigBeam
 		tps    2.0
 		lightcolor "0.5 0.9 0.5"
 		lightintensity 0.2
+		spawn muzzle_ptl
 	}
 	run
 	{
 		push *t
-		mul  float 3.0
+		mul  float 15.0
 		sin  #
-		mul  float 2.0
-		add  float 3.0
+		mul  float 5.0
+		add  float 8.0
 		pop  *size.2
 	}
 	think { kill }
@@ -1685,7 +1687,7 @@ particle muzzle_rifle
 		spawn  muzzle_round
 		spawn  muzzle_glow
 		spawn  muzzle_side
-		push   int 25
+		push   int 2
 		lightcolor "0.4 0.4 1.0"
 		lightintensity 0.1
 		kill
@@ -1807,9 +1809,9 @@ particle muzzle_laser
 	init
 	{
 		spawn  muzzle_laser_round
-		push   int 25
+		push   int 2
 		spawn  muzzle_laser_side
-		push   int 25
+		push   int 2
 		lightcolor "0.4 0.4 1.0"
 		lightintensity 0.1
 		kill
@@ -1950,3 +1952,70 @@ particle muzzle_plasma_spiral
 	}
 	think { kill }
 }
+
+
+particle muzzle_ptl
+{
+	init
+	{
+		spawn  muzzle_ptl_side
+		push   int 2
+		spawn  muzzle_ptl_cross
+		push   int 2
+		lightcolor "0.4 0.4 1.0"
+		lightintensity 0.1
+		kill
+	}
+}
+
+
+particle muzzle_ptl_side
+{
+	init
+	{
+		image  sfx/muzzleptlside
+		blend  add
+		style  rotated
+		angles "0 0 0"
+		thinkfade  out
+		life   0.07
+		tps    1
+		size   "40 10"
+		offset "0 9 0"
+		v      "0 0 0"
+	}
+	think { kill }
+}
+
+particle muzzle_ptl_cross
+{
+	init
+	{
+		image  sfx/ptlmuzzle
+		blend  add
+		style  rotated
+		thinkfade  out
+		tps    4
+		offset "0 0 0"
+		v      "0 0 0"
+		angles "0 90 0"
+	}
+	run
+	{
+
+		// change the size of the smoketrail (make it bigger as time advances)
+		push   pos "0 0"		// push the vector onto the stack
+		mul    *t				// multiply stack value with the time value from the particle
+		sub    pos "20 20"		// add another position 2d vector to the current stack value
+		pop    *size			// write the vector back into the particle size value
+
+		// change the color of the smoketrail (more more transparent as time advances)
+		push   *color	// get the color onto the stack
+		mul    float .7	// scalar multiple with 0.5 (to make it more transparent)
+		pop    *color	// write the stack value back into particle structure color and remove from stack
+
+	}
+	think { kill }
+}
+
+
