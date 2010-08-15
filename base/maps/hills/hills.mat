@@ -1,0 +1,303 @@
+###
+### STREETS
+###
+
+# Base texture
+{
+	material tex_streets/base
+	bump 2.0
+	parallax 2.0
+}
+
+# Vertical streets
+{
+       material tex_streets/2ln
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2ln_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+
+}
+{
+       material tex_streets/2ln_crn_ne
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2ln_crn_ne_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2ln_crn_nw
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2ln_crn_nw_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2ln_crn_se
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2ln_crn_se_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2ln_crn_sw
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2ln_crn_sw_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2ln_crnw_ne
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2ln_crnw_ne_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2ln_crnw_nw
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2ln_crnw_nw_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2ln_crnw_se
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2ln_crnw_se_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2ln_crnw_sw
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2ln_crnw_sw_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2ln_cw
+ 	bump 2.0
+	parallax 2.0
+      {
+               texture tex_streets/2ln_cw_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2ln_cwbtm
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2ln_cwbtm_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2ln_cwtop
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2ln_cwtop_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2ln_endbtm
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2ln_endbtm_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2ln_endtop
+ 	bump 2.0
+	parallax 2.0
+      {
+               texture tex_streets/2ln_endtop_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+
+
+
+
+# Horizontal streets
+
+{
+       material tex_streets/2lnh
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2lnh_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2lnh_cw
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2lnh_cw_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2lnh_cwlft
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2lnh_cwlft_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2lnh_cwrgt
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2lnh_cwrgt_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2lnh_endlft
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2lnh_endlft_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+       material tex_streets/2lnh_endrgt
+	bump 2.0
+	parallax 2.0
+       {
+               texture tex_streets/2lnh_endrgt_g
+               blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+               lightmap
+       }
+
+}
+{
+	material tex_streets/2lnh_trnlft
+	bump 2.0
+	parallax 2.0
+	{
+		texture tex_streets/2lnh_trnlft_g
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+}
+{
+	material tex_streets/2lnh_trnrgt
+	bump 2.0
+	parallax 2.0
+	{
+		texture tex_streets/2lnh_trnrgt_g
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+}
+
+# Parking Spaces
+
+{
+	material tex_streets/park1h
+	bump 2.0
+	parallax 2.0
+	{
+		texture tex_streets/park1h_g
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+}
+{
+	material tex_streets/park1v
+	bump 2.0
+	parallax 2.0
+	{
+		texture tex_streets/park1v_g
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+}
+
+///*** other tiles
+
+
+
+{
+	material tex_mattn/sign009
+	{
+		texture tex_mattn/sign_bg002
+		blend GL_SRC_COLOR GL_ONE
+		lightmap
+	}
+}
+{
+	material tex_lights/neon003
+	{
+		flare 2
+		color 0.7 0.7 0.5
+
+	}
+}

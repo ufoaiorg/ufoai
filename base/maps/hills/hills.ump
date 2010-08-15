@@ -1,0 +1,384 @@
+// ****************
+// Hills assembly
+// ****************
+
+
+
+base hills/
+
+// Legend:
+// ------
+// road_*v: vertical road
+//
+
+// Tiletypes
+// ------
+// v: vertical road (even tile, Light on rightside)
+// w: vertical road (odd tile, light on leftside)
+// h: horisontal road (even tile, Light on rightside)
+// g: horisontal road (odd tile, light on leftside)
+// u: up road
+// f: up fillers
+//     Common tiles:
+// 1:         first level
+// 2:         second level
+// 3:         third level
+// 4:         fourth level
+
+
+///*** Crafts:
+
+/// This is road too.
+tile +craft_drop_firebird
+{
+4 5
+0      wvu    wvu    0
+1      +vw    +vw    1
+1      +vw    +vw    hg
+1      +vw    +vw    hg
+0      wv     wv    0
+
+}
+
+tile +craft_ufo_harvester
+{
+8 6
+0      wv     wv     2      2      wv     wv     0
+2      +wv    +wv    +2     +2     +wv    +wv    2
+hg     +wv    +wv    +hg    +hg    +wv    +wv    hg
+hg     +wv    +wv    +hg    +hg    +wv    +wv    hg
+f      +u     +u     +f     +f     +u     +u     f
+0      wv     wv     1hg    1hg    wv     wv     0
+}
+
+
+///*** Roads:
+///**** Vertical
+
+tile +road_1v1
+{
+4 3
+0      wu     wu     0
+1      +v     +v     1
+0      w      w      0
+}
+
+tile +road_1v2
+{
+4 3
+
+0      vu     vu     0
+1      +w     +w     1
+0      v      v      0
+}
+
+// Road with parking
+tile +road_1v3
+{
+4 3
+0      wu     wu     0
+1      +v     +v     1
+0      w      w      0
+}
+
+tile +road_1v4
+{
+4 3
+
+0      vu     vu     0
+1      +w     +w     1
+0      v      v      0
+}
+
+
+// empty road (even)
+tile +road_1v5
+{
+4 3
+0      wu     wu     0
+1      +v     +v     1
+0      w      w      0
+}
+
+// empty road (odd)
+tile +road_1v6
+{
+4 3
+
+0      vu     vu     0
+1      +w     +w     1
+0      v      v      0
+}
+
+
+tile +road_12vu1
+{
+4 3
+0      vw      vw      0
+f      +u     +u     f
+0      vw      wv      0
+}
+
+tile +road_2v1
+{
+4 3
+0      w      w     0
+2      +v     +v     2
+0      wu     wu     0
+}
+
+tile +road_2v2
+{
+4 3
+0      v      v      0
+2      +w     +w     2
+0      vu     vu     0
+}
+
+///**** Horisontal
+
+tile +road_1h1
+{
+3 4
+0      1f     0
+vwg    +h     vwg
+vwg    +h     vwg
+0      1      0
+}
+
+tile +road_1h2
+{
+3 4
+0      1f     0
+vwh    +g     vwh
+vwh    +g     vwh
+0      1      0
+}
+
+///**** Cross-roads
+
+tile +road_1c1
+{
+4 4
+0      wvu    wvu    0
+hg     +vw    +vw    hg
+hg     +vw    +vw    hg
+0      wv     wv    0
+
+}
+
+
+///*** fillers
+
+tile +filler_12vu1
+{
+3 3
+0      2      0
+uf     +f     fu
+0      1hg      0
+}
+
+tile +filler_12vu2
+{
+3 3
+0      2      0
+uf     +f     fu
+0      1hg      0
+}
+
+
+tile +filler_1s1
+{
+3 3
+0      1fhg     0
+1vw     +1     1vw
+0      1hg      0
+}
+
+tile +filler_1s2
+{
+3 3
+0      1fhg     0
+1vw     +1     1vw
+0      1hg      0
+}
+
+// filler with horisontal fence
+tile +filler_1s3
+{
+3 3
+0      1f     0
+wv    +1     1vw
+0      hg     0
+}
+
+
+///**** second level
+
+tile +filler_2s1
+{
+3 3
+0      2      0
+2vw     +2     2vw
+0      2f     0
+}
+
+tile +filler_2s2
+{
+3 3
+0      2      0
+2vw     +2     2vw
+0      2f     0
+}
+
+
+///*** houses
+
+tile +house_11
+{
+3 3
+0      1f     0
+vw     +1     1
+0      1      0
+}
+
+tile +house_12
+{
+3 3
+0      1f     0
+vw     +1     1
+0      1      0
+}
+
+
+tile +house_13
+{
+4 4
+0      1f     1f     0
+vw     +1     +1     vw
+vw     +1     +1     vw
+0      hg     hg    0
+}
+
+
+
+/* __
+  |++|
+    +|
+    +|
+*/
+tile +house_21
+{
+4 5
+
+0      2      2      0
+wv     +2     +2     wv
+0      2      +2     wv
+0      2      +2     wv
+0      0      2f     0
+}
+
+tile +house_22
+{
+3 3
+0      2f     0
+vw     +2     2
+0      2      0
+}
+
+
+
+assembly test
+{
+size "7 9"
+title "test"
+
+fix +house_13 "2 2"
+fix +road_1c1 "4 0"
+fix +house_21 "2 6"
+
+fix +road_12vu1 "0 5"
+
+//fix +road_1v5 "0 0"
+
++road_1v1 "0 1"
++road_1v2 "0 2"
++road_1v3 "0 2"
++road_1v4 "0 1"
++road_1v5 "0 6"
++road_1v6 "0 6"
+
++road_2v1 "1 10"
++road_2v2 "1 10"
+
++road_12vu1 "1 3"
++road_1h1 "0 5"
++road_1h2 "0 5"
+
++road_1c1 "0 2"
+
++house_11 "0 15"
++house_12 "1 15"
+
++house_13 "0 1"
+
++house_21 "0 1"
+
++house_22 "1 1"
+
++filler_1s1 "0 3"
++filler_1s2 "0 3"
++filler_1s3 "0 2"
+
++filler_2s2 "0 1"
++filler_2s1 "0 5"
++filler_12vu1 "0 4"
++filler_12vu2 "0 4"
+
+//+craft_ufo_harvester "1 1"
++craft_drop_firebird "1 1"
+}
+
+assembly harvester
+{
+size "6 12"
+title "test"
+
+//fix +house_13 "2 2"
+fix +road_1c1 "4 0"
+//fix +house_21 "2 5"
+
+
++filler_1s1 "0 3"
++filler_1s2 "0 3"
++filler_1s3 "1 2"
+
++filler_2s1 "0 10"
++filler_12vu1 "0 4"
++filler_12vu2 "0 4"
+
++road_1v1 "0 1"
++road_1v2 "0 2"
++road_1v3 "0 2"
++road_1v4 "0 1"
++road_1v5 "0 6"
++road_1v6 "0 6"
+
++road_2v1 "0 10"
++road_2v2 "0 10"
++road_1h1 "0 5"
++road_1h2 "0 5"
+
+//+road_1c1 "0 2"
+
++house_11 "0 15"
++house_12 "0 15"
+
++house_13 "0 1"
+
++house_21 "1 1"
++house_22 "0 1"
+
++craft_ufo_harvester "1 1"
++craft_drop_firebird "1 1"
+}
