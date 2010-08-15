@@ -984,7 +984,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	aircraftDest->shield.aircraft = aircraftDest;
 
 	/* Remove aircraft from old base */
-	AIR_Delete(base, aircraft);
+	AIR_Delete(oldBase, aircraft);
 	oldBase->capacities[capacity].cur--;
 
 	if (oldBase->aircraftCurrent == aircraft)
