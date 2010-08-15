@@ -958,9 +958,8 @@ void LMT_Init (localModel_t* localModel)
 /**
  * @brief Adds ambient sounds from misc_sound entities
  * @sa CL_SpawnParseEntitystring
- * @todo implement the usage of the radius value
  */
-void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags, float volume, float radius)
+void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags, float volume, float attenuation)
 {
 	le_t* le;
 	s_sample_t* sample;
@@ -982,6 +981,7 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags,
 	VectorCopy(origin, le->origin);
 	le->invis = !cl_leshowinvis->integer;
 	le->levelflags = levelflags;
+	le->attenuation = attenuation;
 
 	if (volume < 0.0f || volume > 1.0f) {
 		le->volume = SND_VOLUME_DEFAULT;

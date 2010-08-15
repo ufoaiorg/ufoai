@@ -393,13 +393,18 @@ entity misc_sound {
 
 	optional {
 		volume	"Relative volume - value between 0.0 and 1.0"
-		radius	"The radius of this sound (one grid tile is 32 units)"
+		attenuation	"3.0 is only audible when the sound source is very close to the camera, 0.0 is audible everywhere."
+	}
+
+	range {
+		attenuation	"0.0 - 3.0"
+		volume	"0.0 - 1.0"
 	}
 
 	type {
 		origin	"V_FLOAT 3"
 		volume	"V_FLOAT"
-		radius	"V_FLOAT"
+		attenuation	"V_FLOAT"
 	}
 
 	default {

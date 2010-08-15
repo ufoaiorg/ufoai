@@ -103,7 +103,7 @@ void S_Frame (void)
 				}
 
 				if (j == MAX_CHANNELS)
-					S_LoopSample(le->origin, le->sample, le->volume);
+					S_LoopSample(le->origin, le->sample, le->volume, le->attenuation);
 			}
 		}
 	}

@@ -131,7 +131,7 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
 /**
  * @brief Adds a loop sample for e.g. ambient sounds
  */
-void S_LoopSample (const vec3_t org, s_sample_t *sample, float volume)
+void S_LoopSample (const vec3_t org, s_sample_t *sample, float volume, float attenuation)
 {
 	s_channel_t *ch;
 	int i;
@@ -165,7 +165,7 @@ void S_LoopSample (const vec3_t org, s_sample_t *sample, float volume)
 		sample->lastPlayed = CL_Milliseconds();
 		VectorCopy(org, ch->org);
 		ch->count = 1;
-		ch->atten = SOUND_ATTN_IDLE;
+		ch->atten = attenuation;
 		ch->sample = sample;
 
 		Mix_PlayChannel(i, ch->sample->chunk, 0);

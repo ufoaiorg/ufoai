@@ -57,7 +57,7 @@ typedef struct {
 	int light;
 	int spawnflags;
 	float volume;
-	float radius;
+	float attenuation;
 	float angle;
 	int maxteams;
 
@@ -71,7 +71,7 @@ static const value_t localEntityValues[] = {
 	{"maxteams", V_INT, offsetof(localEntityParse_t, maxteams), MEMBER_SIZEOF(localEntityParse_t, maxteams)},
 	{"spawnflags", V_INT, offsetof(localEntityParse_t, spawnflags), MEMBER_SIZEOF(localEntityParse_t, spawnflags)},
 	{"maxlevel", V_INT, offsetof(localEntityParse_t, maxLevel), MEMBER_SIZEOF(localEntityParse_t, maxLevel)},
-	{"radius", V_FLOAT, offsetof(localEntityParse_t, radius), MEMBER_SIZEOF(localEntityParse_t, radius)},
+	{"attenuation", V_FLOAT, offsetof(localEntityParse_t, attenuation), MEMBER_SIZEOF(localEntityParse_t, attenuation)},
 	{"volume", V_FLOAT, offsetof(localEntityParse_t, volume), MEMBER_SIZEOF(localEntityParse_t, volume)},
 	{"frame", V_INT, offsetof(localEntityParse_t, frame), MEMBER_SIZEOF(localEntityParse_t, frame)},
 	{"angle", V_FLOAT, offsetof(localEntityParse_t, angle), MEMBER_SIZEOF(localEntityParse_t, angle)},
@@ -178,6 +178,7 @@ void CL_SpawnParseEntitystring (void)
 		entData.entStringPos = es;
 		entData.entnum = entnum;
 		entData.maxMultiplayerTeams = TEAM_MAX_HUMAN;
+		entData.attenuation = SOUND_ATTN_IDLE;
 
 		/* go through all the dictionary pairs */
 		while (1) {
@@ -316,7 +317,7 @@ static void SP_misc_sound (const localEntityParse_t *entData)
 {
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
 	if (!(dayLightmap && (entData->spawnflags & (1 << SPAWNFLAG_NO_DAY))))
-		LE_AddAmbientSound(entData->noise, entData->origin, (entData->spawnflags & 0xFF), entData->volume, entData->radius);
+		LE_AddAmbientSound(entData->noise, entData->origin, (entData->spawnflags & 0xFF), entData->volume, entData->attenuation);
 }
 
 /**

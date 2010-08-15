@@ -81,8 +81,8 @@ typedef struct fireDef_s {
 	char fireSound[MAX_VAR];	/**< the sound when a recruits fires */
 	char impactSound[MAX_VAR];	/**< the sound that is played on impact */
 	char hitBodySound[MAX_VAR];	/**< the sound that is played on hitting a body */
-	int fireAttenuation;		/**< attenuation of firing (less louder over distance), see S_PlaySample() */
-	int impactAttenuation;		/**< attenuation of impact (less louder over distance), see S_PlaySample() */
+	float fireAttenuation;		/**< attenuation of firing (less louder over distance), see S_PlaySample() */
+	float impactAttenuation;		/**< attenuation of impact (less louder over distance), see S_PlaySample() */
 	char bounceSound[MAX_VAR];	/**< bouncing sound */
 
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
@@ -103,7 +103,7 @@ typedef struct fireDef_s {
 	byte dmgweight;			/**< used in G_Damage() to apply damagetype effects - redundant with obj->dmgtype */
 	float speed;			/**< projectile-related; zero value means unlimited speed (most of the cases).
 					     for that unlimited speed we use special particle (which cannot work with speed non-zero valued. */
-	vec2_t shotOrg;			/**< not set for any firedefinition, but called in CL_TargetingGrenade() and G_GetShotOrigin() */
+	vec2_t shotOrg;			/**< This can shift a muzzle vertically (first value) and horizontally (second value) for the trace that is done on the server side. */
 	vec2_t spread;			/**< used for accuracy calculations (G_ShootGrenade(), G_ShootSingle()) */
 	int delay;			/**< applied on grenades and grenade launcher. If no delay is set, a touch with an actor will lead to
 						 * an explosion or a hit of the projectile. If a delay is set, the (e.g. grenade) may bounce away again. */
