@@ -297,10 +297,19 @@ def plot(d, data, times, imagename):
     cmds+= 'set object 1 rect fc rgb "grey" fillstyle solid 1.0;\n'
 
     ymax = 0
+    lastrevision = 0
     for i in data:
-        for y in data[i]:
-            if y[1] > ymax:
-                ymax = y[1]
+        for dot in data[i]:
+            if dot[1] > ymax:
+                ymax = dot[1]
+            if dot[0] > lastrevision:
+                lastrevision = dot[0]
+
+    # fix 0 value when the license is no more used
+    for i in data:
+        lastelement = data[i][len(data[i]) - 1]
+        if lastelement[0] < lastrevision:
+            data[i].append((lastelement[0] + 1, 0))
 
     cmds+= 'set data style linespoints;\n'
     cmds+= 'set output "licenses/html%s/%s";\n' % (d, imagename)
