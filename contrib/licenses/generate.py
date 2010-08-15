@@ -556,7 +556,7 @@ class Analysis:
 
         style = '<link rel="stylesheet" type="text/css" href="' + ('../' * self.deep) + 'style.css" />'
         html = html.replace("<!-- STYLELINK -->", style)
-        html = html.replace("<!-- TITLE -->", self.getName())
+        html = html.replace("<!-- TITLE -->", "base" + self.getLocalDir())
 
         # navigation
         navigation = "<ul>" + EOL
@@ -635,7 +635,7 @@ def main():
     parser.add_option("-t", "--disable-thumbnails", action="store_false", dest="thumbnail",
                       help="disable thumbnails computation and display")
     parser.add_option("", "--disable-plots", action="store_false", dest="plot",
-                      help="disable plot computation and display")
+                      help="disable plots computation and display")
 
     (options, args) = parser.parse_args()
 
