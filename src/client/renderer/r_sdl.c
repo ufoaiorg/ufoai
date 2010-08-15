@@ -78,6 +78,7 @@ qboolean Rimp_Init (void)
 	}
 
 	Sys_Setenv("SDL_VIDEO_CENTERED", "1");
+	Sys_Setenv("SDL_VIDEO_ALLOW_SCREENSAVER", "0");
 
 	if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
