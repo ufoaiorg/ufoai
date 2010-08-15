@@ -562,7 +562,13 @@ class Analysis:
         navigation = "<ul>" + EOL
         if name != "":
             navigation += '<li><a href="../index.html">back</a></li>' + EOL
+
+        subanalysis = []
         for a in self.subAnalysis:
+            subanalysis.append((a.getName(), a))
+        subanalysis.sort()
+        for a in subanalysis:
+            a = a[1]
             a.write(output)
             subname = a.getName()
             dir = a.getLocalDir().replace(self.getLocalDir(), "", 1)
