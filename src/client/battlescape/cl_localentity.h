@@ -181,8 +181,7 @@ extern cvar_t *cl_leshowinvis;
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
 void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, le_t *leVictim);
 void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt, le_t* leVictim);
-void LE_AddAmbientSound(const char *sound, const vec3_t origin, int levelflags, float volume);
-le_t *LE_GetClosestActor(const vec3_t origin);
+void LE_AddAmbientSound(const char *sound, const vec3_t origin, int levelflags, float volume, float radius);
 int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, const int dir, const int sped);
 
 #define LE_IsStunned(le)	(((le)->state & STATE_STUN) & ~STATE_DEAD)

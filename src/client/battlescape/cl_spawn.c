@@ -57,6 +57,7 @@ typedef struct {
 	int light;
 	int spawnflags;
 	float volume;
+	float radius;
 	float angle;
 	int maxteams;
 
@@ -70,8 +71,9 @@ static const value_t localEntityValues[] = {
 	{"maxteams", V_INT, offsetof(localEntityParse_t, maxteams), MEMBER_SIZEOF(localEntityParse_t, maxteams)},
 	{"spawnflags", V_INT, offsetof(localEntityParse_t, spawnflags), MEMBER_SIZEOF(localEntityParse_t, spawnflags)},
 	{"maxlevel", V_INT, offsetof(localEntityParse_t, maxLevel), MEMBER_SIZEOF(localEntityParse_t, maxLevel)},
+	{"radius", V_FLOAT, offsetof(localEntityParse_t, radius), MEMBER_SIZEOF(localEntityParse_t, radius)},
 	{"volume", V_FLOAT, offsetof(localEntityParse_t, volume), MEMBER_SIZEOF(localEntityParse_t, volume)},
-	{"frame", V_FLOAT, offsetof(localEntityParse_t, frame), MEMBER_SIZEOF(localEntityParse_t, frame)},
+	{"frame", V_INT, offsetof(localEntityParse_t, frame), MEMBER_SIZEOF(localEntityParse_t, frame)},
 	{"angle", V_FLOAT, offsetof(localEntityParse_t, angle), MEMBER_SIZEOF(localEntityParse_t, angle)},
 	{"wait", V_POS, offsetof(localEntityParse_t, wait), MEMBER_SIZEOF(localEntityParse_t, wait)},
 	{"angles", V_VECTOR, offsetof(localEntityParse_t, angles), MEMBER_SIZEOF(localEntityParse_t, angles)},
@@ -314,7 +316,7 @@ static void SP_misc_sound (const localEntityParse_t *entData)
 {
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
 	if (!(dayLightmap && (entData->spawnflags & (1 << SPAWNFLAG_NO_DAY))))
-		LE_AddAmbientSound(entData->noise, entData->origin, (entData->spawnflags & 0xFF), entData->volume);
+		LE_AddAmbientSound(entData->noise, entData->origin, (entData->spawnflags & 0xFF), entData->volume, entData->radius);
 }
 
 /**

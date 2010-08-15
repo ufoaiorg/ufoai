@@ -503,35 +503,6 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 }
 
 /**
- * @brief Searches the closest actor to the given world vector
- * @param[in] origin World position to get the closest actor to
- * @note Only your own team is searched
- */
-le_t* LE_GetClosestActor (const vec3_t origin)
-{
-	int dist = 999999;
-	le_t *actor = NULL, *le = NULL;
-	vec3_t leOrigin;
-
-	while ((le = LE_GetNextInUse(le))) {
-		int tmp;
-		if (le->pnum != cl.pnum)
-			continue;
-		/* visible because it's our team - so we just check for living actor here */
-		if (!LE_IsLivingActor(le))
-			continue;
-		VectorSubtract(origin, le->origin, leOrigin);
-		tmp = VectorLength(leOrigin);
-		if (tmp < dist) {
-			actor = le;
-			dist = tmp;
-		}
-	}
-
-	return actor;
-}
-
-/**
  * sqrt(2) for diagonal movement
  */
 int LE_ActorGetStepTime (const le_t *le, const pos3_t pos, const pos3_t oldPos, const int dir, const int speed)
@@ -987,8 +958,9 @@ void LMT_Init (localModel_t* localModel)
 /**
  * @brief Adds ambient sounds from misc_sound entities
  * @sa CL_SpawnParseEntitystring
+ * @todo implement the usage of the radius value
  */
-void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags, float volume)
+void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags, float volume, float radius)
 {
 	le_t* le;
 	s_sample_t* sample;

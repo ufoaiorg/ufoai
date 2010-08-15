@@ -63,15 +63,9 @@ void S_SpatializeChannel (const s_channel_t *ch)
 	vec3_t origin, delta;
 	float dist, angle;
 	const int c = (int)((ptrdiff_t)(ch - s_env.channels));
-	const le_t *actor;
 
 	VectorCopy(ch->org, origin);
-
-	actor = LE_GetClosestActor(origin);
-	if (actor)
-		VectorSubtract(origin, actor->origin, delta);
-	else
-		VectorSubtract(origin, cl.cam.camorg, delta);
+	VectorSubtract(origin, cl.cam.camorg, delta);
 
 	dist = VectorNormalize(delta) * DISTANCE_SCALE * ch->atten;
 
