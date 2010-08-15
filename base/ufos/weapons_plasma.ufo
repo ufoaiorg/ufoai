@@ -46,7 +46,7 @@ item plaspistol_ammo
 			firesnd				weapons/plasma-small
 			impsnd				impact/plasma-impact
 			bodysnd 			impact/plasma-bodyimpact
-			speed				1800
+			speed				1500
 			spread				"1.5 1.5"
 			crouch				0.8
 			range				40
@@ -68,7 +68,7 @@ item plaspistol_ammo
 			firesnd				weapons/plasma-small
 			impsnd				impact/plasma-impact
 			bodysnd 			impact/plasma-bodyimpact
-			speed				1800
+			speed				1500
 			spread				"1.2 1.2"
 			crouch				0.8
 			range				40
@@ -90,7 +90,7 @@ item plaspistol_ammo
 			firesnd				weapons/plasma-small
 			impsnd				impact/plasma-impact
 			bodysnd 			impact/plasma-bodyimpact
-			speed				1800
+			speed				1500
 			spread				"1.9 1.9"
 			crouch				0.8
 			range				40
@@ -153,7 +153,7 @@ item plasrifle_ammo
 			firesnd				weapons/plasma-medium
 			impsnd				impact/plasma-impact
 			bodysnd 			impact/plasma-bodyimpact
-			speed				1700
+			speed				1300
 			spread				"1.7 1.7"
 			crouch				0.8
 			range				70
@@ -175,7 +175,7 @@ item plasrifle_ammo
 			firesnd				weapons/plasma-medium
 			impsnd				impact/plasma-impact
 			bodysnd 			impact/plasma-bodyimpact
-			speed				1700
+			speed				1300
 			spread				"1 1"
 			crouch				0.8
 			range				70
@@ -197,7 +197,7 @@ item plasrifle_ammo
 			firesnd				weapons/plasma-medium
 			impsnd				impact/plasma-impact
 			bodysnd 			impact/plasma-bodyimpact
-			speed				1700
+			speed				1300
 			spread				"1.9 1.9"
 			crouch				0.7
 			range				70
@@ -309,7 +309,7 @@ item plasblaster_ammo
 			firesnd				weapons/plasma-huge
 			impsnd				impact/plasma-impact
 			bodysnd 			impact/plasma-bodyimpact
-			speed				700
+			speed				600
 			spread				"2 2"
 			crouch 				0.6
 			range				70

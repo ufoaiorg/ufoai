@@ -3076,13 +3076,17 @@ base/pics/sfx/greenball.png |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplas_00.png |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplas_07.png |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplasbeam.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/sfx/laserbeam_b.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/laserbeam_b.png |  |  | plasmaimpact_01
 base/pics/sfx/lasermuzzle.png |  |  | plasmaimpact_00
 base/pics/sfx/lightningscroll.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/lightningscroll2.jpg | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/muzzlebulletside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/muzzlelaserside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/muzzleplasmaside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/muzzleplasmaspiral.png |  |  | plasmaimpact_01
+base/pics/sfx/particlebeam.png |  |  | plasmaimpact_01
+base/pics/sfx/plasmaball-core.png |  |  | plasmaimpact_01
+base/pics/sfx/plasmabeam.png |  |  | plasmaimpact_01
 base/pics/sfx/plasmaimpact_00.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmaimpact_01.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmaimpact_02.png | General Public License 2.0 | Lord Havoc;MCR

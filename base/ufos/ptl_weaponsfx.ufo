@@ -444,7 +444,7 @@ particle laserBeamSmall
 		style  beam
 		thinkfade  out
 		tps    1
-		size	"0 1.5"
+		size	"0 7"
 		child  muzzle_laser
 	}
 	think { kill }
@@ -473,7 +473,7 @@ particle laserBeam
 		style  beam
 		thinkfade  out
 		tps    0.7
-		size	"0 3"
+		size	"0 9"
 		child  muzzle_laser
 	}
 	think { kill }
@@ -699,7 +699,7 @@ particle plasmaPulse
  		image  sfx/plasmapulse
  		blend  add
  		style  axis
- 		offset "0 -26 0"
+ 		offset "0 0 0"
 		spawn muzzle_plasma
  	}
  	run
@@ -713,8 +713,6 @@ particle plasmaPulse
  		pop  *size
 	}
  }
-
-
 
 particle plasmaMiniPulseBall
 {
@@ -801,15 +799,39 @@ particle plasmaBigBall
 		blend			blend
 		style			facing
 		framefade		none
-		size			"150 150"
+		size			"200 200"
 		fps				24.0
  		push			*v
 		mul				float 30.0
 		add				*s
 		pop				*s
 		v				"0 0 0"
+		tps 				1
+		child plasmaBallCore
+		spawn muzzle_plasma
 	}
  	think { kill }
+}
+
+particle plasmaBallCore
+{
+ 	init
+ 	{
+ 		image  sfx/plasmaball-core
+ 		blend  add
+ 		style  facing
+ 		offset "0 0 0"
+ 	}
+ 	run
+ 	{
+ 		push pos "1 1"
+ 		push *t
+ 		mul  float 16.0
+		sin  #
+ 		mul  #
+ 		add  pos "40 40"
+ 		pop  *size
+	}
 }
 
 // particle plasmaBigBall
@@ -834,17 +856,8 @@ particle plasmaBigBall
 // 	}
 // }
 
+
 particle plasmaImpactCharged
-{
-	init
-	{
-		spawn	plasmaImpactChargedAnim_1
-		kill
-	}
-}
-
-
-particle plasmaImpactChargedAnim_1
 {
 	init
 	{
@@ -953,14 +966,15 @@ particle plasmaContinuous
 		image  sfx/plasmabeam
 		blend  add
 		style  beam
-		tps    10.0
+		tps    2.0
 		lightcolor "0.3 1.0 3.0"
 		lightintensity 0.1
+		scroll_s -2.5
 	}
 	run
 	{
-		rand float 2.0
-		add  float 1.0
+		rand float 5.0
+		add  float 3.0
 		pop  *size.2
 	}
 	think { kill }
@@ -1112,7 +1126,7 @@ particle pbeamMiniBeam
 {
 	init
 	{
-		image  sfx/greenplasbeam
+		image  sfx/particlebeam
 		blend  add
 		style  beam
 		tps    30.0
@@ -1132,7 +1146,7 @@ particle pbeamBeam
 {
 	init
 	{
-		image  sfx/greenplasbeam
+		image  sfx/particlebeam
 		blend  add
 		style  beam
 		thinkfade  sin
@@ -1156,7 +1170,7 @@ particle pbeamBigBeam
 {
 	init
 	{
-		image  sfx/greenplasbeam
+		image  sfx/particlebeam
 		blend  add
 		style  beam
 		thinkfade  sin
@@ -1851,9 +1865,11 @@ particle muzzle_plasma
 	init
 	{
 		spawn  muzzle_plasma_round
-		push   int 25
+		push   int 2
 		spawn  muzzle_plasma_side
-		push   int 25
+		push   int 2
+		spawn  muzzle_plasma_spiral
+		push   int 2
 		lightcolor "0.4 0.4 1.0"
 		lightintensity 0.1
 		kill
@@ -1900,6 +1916,37 @@ particle muzzle_plasma_side
 		size   "40 10"
 		offset "0 9 0"
 		v      "0 0 0"
+	}
+	think { kill }
+}
+
+particle muzzle_plasma_spiral
+{
+	init
+	{
+		image  sfx/muzzleplasmaspiral
+		blend  add
+		style  rotated
+		thinkfade  out
+		tps    4
+		offset "0 0 0"
+		v      "0 0 0"
+		angles "0 90 0"
+	}
+	run
+	{
+
+		// change the size of the smoketrail (make it bigger as time advances)
+		push   pos "40 40"		// push the vector onto the stack
+		mul    *t				// multiply stack value with the time value from the particle
+		add    pos "10 10"		// add another position 2d vector to the current stack value
+		pop    *size			// write the vector back into the particle size value
+
+		// change the color of the smoketrail (more more transparent as time advances)
+		push   *color	// get the color onto the stack
+		mul    float .7	// scalar multiple with 0.5 (to make it more transparent)
+		pop    *color	// write the stack value back into particle structure color and remove from stack
+
 	}
 	think { kill }
 }
