@@ -393,11 +393,13 @@ entity misc_sound {
 
 	optional {
 		volume	"Relative volume - value between 0.0 and 1.0"
+		radius	"The radius of this sound (one grid tile is 32 units)"
 	}
 
 	type {
 		origin	"V_FLOAT 3"
 		volume	"V_FLOAT"
+		radius	"V_FLOAT"
 	}
 
 	default {
