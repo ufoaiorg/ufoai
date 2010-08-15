@@ -21,6 +21,9 @@ case "$host_os" in
 	cygwin*)
 		AC_MSG_RESULT([Win32 (cygwin)])
 		;;
+        freebsd*)
+                AC_MSG_RESULT([UNIX (FreeBSD)])
+                ;;
 	openbsd*)
 		AC_MSG_RESULT([UNIX (OpenBSD)])
 		;;
@@ -186,7 +189,7 @@ AC_MSG_RESULT($TARGET_OS)
 #---------------------------------------------------------------------------------------------
 
 AC_MSG_CHECKING([target CPU])
-if test "$target_cpu" = "x86_64"
+if test "$target_cpu" = "x86_64" || test "$target_cpu" = "amd64" || test "$target_cpu" = "ia64"
 then
 	AC_SUBST([TARGET_CPU],[x86_64])
 elif test "$target_cpu" = "i386" || test "$target_cpu" = "i486" || test "$target_cpu" = "i586" || test "$target_cpu" = "i686"

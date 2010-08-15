@@ -55,6 +55,7 @@ endif
 # FreeBSD like
 ifeq ($(TARGET_OS),freebsd)
 	CFLAGS+=-D_BSD_SOURCE -D_XOPEN_SOURCE
+	LDFLAGS+=-lexecinfo
 endif
 
 ifeq ($(TARGET_OS),netbsd)
