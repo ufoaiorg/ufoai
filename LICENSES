@@ -2587,14 +2587,14 @@ base/pics/icons/mail_un.png | GNU General Public License 2.0 | Gerd Heisse
 base/pics/icons/notify_notice.png | GNU General Public License 2.0 or later
 base/pics/icons/notify_pause.png | GNU General Public License 2.0 or later
 base/pics/icons/notify_sound.png | GNU General Public License 2.0 or later
-base/pics/icons/off.png | GNU General Public License 2.0 or later
-base/pics/icons/on.png | GNU General Public License 2.0 or later
+base/pics/icons/off.png | GNU General Public License 2.0 or later | bayo
+base/pics/icons/on.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/pack1.png | GNU General Public License 2.0 or later
 base/pics/icons/pack2.png | GNU General Public License 2.0 or later
 base/pics/icons/pack3.png | GNU General Public License 2.0 or later
 base/pics/icons/pack_hud.png | GNU General Public License 2.0 or later
 base/pics/icons/pack_hud2.png | GNU General Public License 2.0 or later
-base/pics/icons/pack_message.png | GNU General Public License 2.0 or later
+base/pics/icons/pack_message.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/pen.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/pen_disabled.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/pen_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
@@ -2604,13 +2604,13 @@ base/pics/icons/scroll_top.png | GNU General Public License 2.0 or later |  | Ba
 base/pics/icons/scroll_top_hovered.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/icons/soldier_holdequipment.png | GNU General Public License 2.0 or later | Gerd Heisse
 base/pics/icons/soldier_noequipment.png | GNU General Public License 2.0 or later | Gerd Heisse
-base/pics/icons/system_capture.png | GNU General Public License 2.0 or later
-base/pics/icons/system_child.png | GNU General Public License 2.0 or later
-base/pics/icons/system_close.png | GNU General Public License 2.0 or later
-base/pics/icons/system_collapse.png | GNU General Public License 2.0 or later
-base/pics/icons/system_expand.png | GNU General Public License 2.0 or later
-base/pics/icons/system_next.png | GNU General Public License 2.0 or later
-base/pics/icons/system_parent.png | GNU General Public License 2.0 or later
+base/pics/icons/system_capture.png | GNU General Public License 2.0 or later | bayo
+base/pics/icons/system_child.png | GNU General Public License 2.0 or later | bayo
+base/pics/icons/system_close.png | GNU General Public License 2.0 or later | bayo
+base/pics/icons/system_collapse.png | GNU General Public License 2.0 or later | bayo
+base/pics/icons/system_expand.png | GNU General Public License 2.0 or later | bayo
+base/pics/icons/system_next.png | GNU General Public License 2.0 or later | bayo
+base/pics/icons/system_parent.png | GNU General Public License 2.0 or later | bayo
 base/pics/icons/ufopedia_aliens.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/icons/ufopedia_artifacts.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/icons/ufopedia_buildings.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
