@@ -498,7 +498,6 @@ class Analysis:
         name = name.replace('attribution', 'by-')
         name = name.replace('sharealike', 'sa-')
         name = name.replace('license', '')
-        name = name.replace('lisence', '')	# type problem
         name = name.replace('and', '_')
         return 'license-' + name + '.html'
         #return hashlib.md5(license).hexdigest() + '.html'
