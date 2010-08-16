@@ -296,6 +296,26 @@ static const char *SV_GetCvarToken (const mAssembly_t *a, const char* token, con
 	return cvar->string;
 }
 
+static inline const char *SV_GetTileFromTileSet (const mapInfo_t *map, const char *filename, const char **text, const mAssembly_t *a)
+{
+	const char *errhead = "SV_GetTileFromTileSet: Unexpected end of file (";
+	const mTileSet_t *tileSet;
+	int random;
+	const char *token;
+
+	/* get tileset id */
+	token = Com_EParse(text, errhead, filename);
+	if (!text)
+		Com_Error(ERR_DROP, "SV_GetTileFromTileSet: illegal tileset syntax in assembly '%s' in %s", a->id, filename);
+
+	tileSet = SV_GetMapTileSet(map, token);
+	if (tileSet == NULL)
+		Com_Error(ERR_DROP, "SV_GetTileFromTileSet: Could not find tileset '%s' in %s", a->id, filename);
+
+	random = rand() % tileSet->numTiles;
+	return tileSet->tiles[random];
+}
+
 /**
  * @brief Parses an assembly block
  * @param[in,out] map All we know about the map to assemble
@@ -385,19 +405,7 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 			continue;
 		/* chose a tile from a tileset */
 		} else if (!strcmp(token, "tileset")) {
-			const mTileSet_t *tileSet;
-			int random;
-			/* get tileset id */
-			token = Com_EParse(text, errhead, filename);
-			if (!text)
-				break;
-
-			tileSet = SV_GetMapTileSet(map, token);
-			if (tileSet == NULL)
-				Com_Error(ERR_DROP, "SV_ParseAssembly: Could not find tileset '%s' in %s", a->id, filename);
-
-			random = rand() % tileSet->numTiles;
-			token = tileSet->tiles[random];
+			token = SV_GetTileFromTileSet(map, filename, text, a);
 		/* fix tilename "x y" */
 		} else if (!strcmp(token, "fix")) {
 			const mTile_t *t;
@@ -411,6 +419,8 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 				token = SV_GetCvarToken(a, token + 1, filename, text, errhead);
 				if (token == NULL)
 					break;
+			} else if (!strcmp(token, "tileset")) {
+				token = SV_GetTileFromTileSet(map, filename, text, a);
 			}
 
 			t = SV_GetMapTile(map, token);
