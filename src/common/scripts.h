@@ -230,6 +230,19 @@ typedef struct constListEntry_s {
 	int value;
 } constListEntry_t;
 
+qboolean Com_GetConstInt(const char *name, int *value);
+qboolean Com_GetConstIntFromNamespace(const char *space, const char *variable, int *value);
+const char* Com_GetConstVariable(const char *space, int value);
+qboolean Com_UnregisterConstVariable(const char *name);
+void Com_RegisterConstInt(const char *name, int value);
+void Com_RegisterConstList(const constListEntry_t constList[]);
+qboolean Com_UnregisterConstList(const constListEntry_t constList[]);
+
+void Com_ParseScripts(qboolean onlyServer);
+const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
+
+#include "../game/q_shared.h"
+
 const char *Com_GiveName(int gender, teamDef_t *td);
 const char *Com_GiveModel(int type, int gender, const teamDef_t *td);
 void Com_GetCharacterValues(const char *teamDefition, character_t * chr);
@@ -242,15 +255,6 @@ const char* Com_DropShipTypeToShortName(humanAircraftType_t type);
 humanAircraftType_t Com_DropShipShortNameToID(const char *token);
 teamDef_t* Com_GetTeamDefinitionByID(const char *team);
 const chrTemplate_t* Com_GetCharacterTemplateByID(const char *chrTemplate);
-void Com_ParseScripts(qboolean onlyServer);
-const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
-qboolean Com_GetConstInt(const char *name, int *value);
-qboolean Com_GetConstIntFromNamespace(const char *space, const char *variable, int *value);
-const char* Com_GetConstVariable(const char *space, int value);
-qboolean Com_UnregisterConstVariable(const char *name);
-void Com_RegisterConstInt(const char *name, int value);
-void Com_RegisterConstList(const constListEntry_t constList[]);
-qboolean Com_UnregisterConstList(const constListEntry_t constList[]);
 
 #endif /* SCRIPTS_H */
 

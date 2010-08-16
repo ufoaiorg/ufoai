@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/mathlib.h"
 #include "../shared/defines.h"
 #include "../shared/typedefs.h"
-#include "../game/inventory.h"
 #include "tracing.h"
 #include "cvar.h"
 #include "mem.h"
@@ -168,6 +167,7 @@ enum clc_ops_e {
 #define SOUND_ATTN_STATIC 3.0f /**< dimish very rapidly with distance */
 #define SOUND_ATTN_MAX SOUND_ATTN_STATIC
 
+#include "../ports/system.h"
 #include "cmd.h"
 #include "cvar.h"
 #include "cmodel.h"
@@ -221,8 +221,6 @@ extern cvar_t *port;
 extern cvar_t* sys_priority;
 extern cvar_t* sys_affinity;
 extern cvar_t* sys_os;
-
-extern csi_t csi;
 
 /* Time information. */
 /**
