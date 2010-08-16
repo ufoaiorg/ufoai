@@ -25,8 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GAME_CHR_SHARED_H
 #define GAME_CHR_SHARED_H
 
-#include "q_shared.h"
-#include "inv_shared.h"
+#define MAX_CHARACTER_TEMPLATES	24
+#define MAX_TEMPLATES_PER_TEAM	16
 
 typedef enum {
 	KILLED_ENEMIES,		/**< Killed enemies */
@@ -52,6 +52,12 @@ typedef enum {
 } abilityskills_t;
 
 #define ABILITY_NUM_TYPES SKILL_CLOSE
+
+typedef struct chrTemplate_s {
+	char id[MAX_VAR];					/** short name of the template */
+	float rate;							/**< rate of this template relative to total */
+	int skills[SKILL_NUM_TYPES + 1][2];	/** ability and skill min and max */
+} chrTemplate_t;
 
 /**
  * @brief Structure of all stats collected in a mission.
@@ -152,6 +158,84 @@ typedef enum {
 	RES_ALL_ACTIVE,
 	RES_TYPES /**< Max. */
 } reservation_types_t;
+
+typedef int32_t actorSizeEnum_t;
+/* NOTE: this only allows quadratic units */
+#define ACTOR_SIZE_INVALID 0
+#define ACTOR_SIZE_NORMAL 1
+#define ACTOR_SIZE_2x2 2
+#define	ACTOR_MAX_SIZE	(ACTOR_SIZE_2x2)
+
+/** @brief Types of actor sounds being issued by CL_ActorPlaySound(). */
+typedef enum {
+	SND_DEATH,	/**< Sound being played on actor death. */
+	SND_HURT,	/**< Sound being played when an actor is being hit. */
+
+	SND_MAX
+} actorSound_t;
+
+/* team definitions */
+
+#define MAX_TEAMDEFS	64
+
+typedef enum {
+	NAME_NEUTRAL,
+	NAME_FEMALE,
+	NAME_MALE,
+
+	NAME_LAST,
+	NAME_FEMALE_LAST,
+	NAME_MALE_LAST,
+
+	NAME_NUM_TYPES
+} nametypes_t;
+
+/**
+ * @brief Different races of actors used in game
+ * @todo add different robot races.
+ */
+typedef enum {
+	RACE_PHALANX_HUMAN,		/**< Phalanx team */
+	RACE_CIVILIAN,			/**< Civilian team */
+
+	RACE_ROBOT,				/**< Robot */
+
+	RACE_TAMAN,				/**< Alien: taman race */
+	RACE_ORTNOK,			/**< Alien: ortnok race */
+	RACE_BLOODSPIDER,		/**< Alien: bloodspider race */
+	RACE_SHEVAAR			/**< Alien: shevaar race */
+} racetypes_t;
+
+typedef struct teamDef_s {
+	int idx;			/**< The index in the teamDef array. */
+	char id[MAX_VAR];	/**< id from script file. */
+	char name[MAX_VAR];	/**< Translatable name. */
+	char tech[MAX_VAR];	/**< technology_t id from research.ufo */
+
+	linkedList_t *names[NAME_NUM_TYPES];	/**< Names list per gender. */
+	int numNames[NAME_NUM_TYPES];	/**< Amount of names in this list for all different genders. */
+
+	linkedList_t *models[NAME_LAST];	/**< Models list per gender. */
+	int numModels[NAME_LAST];	/**< Amount of models in this list for all different genders. */
+
+	linkedList_t *sounds[SND_MAX][NAME_LAST];	/**< Sounds list per gender and per sound type. */
+	int numSounds[SND_MAX][NAME_LAST];	/**< Amount of sounds in this list for all different genders and soundtypes. */
+
+	racetypes_t race;	/**< What is the race of this team?*/
+
+	qboolean armour;	/**< Does this team use armour. */
+	qboolean weapons;	/**< Does this team use weapons. */
+	struct objDef_s *onlyWeapon;	/**< ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
+	 						 * The default value is NONE for every 'normal' actor - but e.g. bloodspiders only have
+							 * the ability to melee attack their victims. They get a weapon assigned with several
+							 * bloodspider melee attack firedefitions */
+
+	actorSizeEnum_t size;	/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
+	char hitParticle[MAX_VAR]; /**< Particle id of what particle effect should be spawned if a unit of this type is hit. */
+	char deathTextureName[MAX_VAR];	/**< texture name for death of any member of this team */
+
+	short resistance[MAX_DAMAGETYPES]; /**< Resistance to damage */
+} teamDef_t;
 
 /** @brief Describes a character with all its attributes */
 typedef struct character_s {

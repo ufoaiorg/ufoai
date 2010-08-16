@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GAME_INV_SHARED_H
 #define GAME_INV_SHARED_H
 
-#include "q_shared.h"
+struct csi_s;
 
 typedef enum {
 	DROPSHIP_FIREBIRD,
@@ -214,6 +214,8 @@ typedef struct craftitem_s {
 	vec4_t beamColor;
 } craftitem_t;
 
+#define MAX_DAMAGETYPES 64
+
 /**
  * @brief Defines all attributes of objects used in the inventory.
  * @note See also http://ufoai.ninex.info/wiki/index.php/UFO-Scripts/weapon_%2A.ufo
@@ -375,53 +377,6 @@ typedef struct damageType_s {
 	qboolean showInMenu;	/**< true for values that contains a translatable id */
 } damageType_t;
 
-/**
- * @brief The csi structure is the client-server-information structure
- * which contains all the UFO info needed by the server and the client.
- * @note Most of this comes from the script files
- * @todo doesn't belong here
- */
-typedef struct csi_s {
-	/** Object definitions */
-	objDef_t ods[MAX_OBJDEFS];
-	int numODs;
-
-	/** Inventory definitions */
-	invDef_t ids[MAX_INVDEFS];
-	int numIDs;
-
-	/** Special container ids */
-	containerIndex_t idRight, idLeft, idExtension;
-	containerIndex_t idHeadgear, idBackpack, idBelt, idHolster;
-	containerIndex_t idArmour, idFloor, idEquip;
-
-	/** Damage type ids */
-	int damNormal, damBlast, damFire;
-	int damShock;	/**< Flashbang-type 'damage' (i.e. Blinding). */
-
-	/** Damage type ids */
-	int damLaser, damPlasma, damParticle;
-	int damStunGas;		/**< Stun gas attack (only effective against organic targets).
-						 * @todo Maybe even make a differentiation between aliens/humans here? */
-	int damStunElectro;	/**< Electro-Shock attack (effective against organic and robotic targets). */
-
-	/** Equipment definitions */
-	equipDef_t eds[MAX_EQUIPDEFS];
-	int numEDs;
-
-	/** Damage types */
-	damageType_t dts[MAX_DAMAGETYPES];
-	int numDTs;
-
-	/** team definitions */
-	teamDef_t teamDef[MAX_TEAMDEFS];
-	int numTeamDefs;
-
-	/** the current assigned teams for this mission */
-	const teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
-	int numAlienTeams;
-} csi_t;
-
 /** @todo remove this and use the container id - not every unit must have two hands */
 typedef enum {
 	ACTOR_HAND_NOT_SET = 0,
@@ -446,7 +401,7 @@ qboolean INV_IsArmourDef(const invDef_t* invDef);
 /* ================================ */
 
 invList_t* INVSH_HasArmour(const inventory_t *inv);
-void INVSH_InitCSI(csi_t * import) __attribute__((nonnull));
+void INVSH_InitCSI(struct csi_s * import) __attribute__((nonnull));
 int INVSH_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t * container, const int x, const int y, const invList_t *ignoredItem);
 qboolean INVSH_CompareItem(item_t *item1, item_t *item2);
 void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);

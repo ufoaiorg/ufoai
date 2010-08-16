@@ -38,6 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/defines.h"
 #include "../common/list.h"
 
+#include "inv_shared.h"
+#include "chr_shared.h"
+
 #ifdef DEDICATED_ONLY
 /* no gettext support for dedicated servers */
 # define _(String) String
@@ -312,87 +315,51 @@ typedef int32_t shoot_types_t;
 
 #define MAX_FORBIDDENLIST (MAX_EDICTS * 4)
 
-#define MAX_DAMAGETYPES 64
-
-/* g_spawn.c */
-
-typedef int32_t actorSizeEnum_t;
-/* NOTE: this only allows quadratic units */
-#define ACTOR_SIZE_INVALID 0
-#define ACTOR_SIZE_NORMAL 1
-#define ACTOR_SIZE_2x2 2
-#define	ACTOR_MAX_SIZE	(ACTOR_SIZE_2x2)
-
-/** @brief Types of actor sounds being issued by CL_ActorPlaySound(). */
-typedef enum {
-	SND_DEATH,	/**< Sound being played on actor death. */
-	SND_HURT,	/**< Sound being played when an actor is being hit. */
-
-	SND_MAX
-} actorSound_t;
-
-/* team definitions */
-
-#define MAX_TEAMDEFS	64
-
-typedef enum {
-	NAME_NEUTRAL,
-	NAME_FEMALE,
-	NAME_MALE,
-
-	NAME_LAST,
-	NAME_FEMALE_LAST,
-	NAME_MALE_LAST,
-
-	NAME_NUM_TYPES
-} nametypes_t;
-
 /**
- * @brief Different races of actors used in game
- * @todo add different robot races.
+ * @brief The csi structure is the client-server-information structure
+ * which contains all the UFO info needed by the server and the client.
+ * @note Most of this comes from the script files
  */
-typedef enum {
-	RACE_PHALANX_HUMAN,		/**< Phalanx team */
-	RACE_CIVILIAN,			/**< Civilian team */
+typedef struct csi_s {
+	/** Object definitions */
+	objDef_t ods[MAX_OBJDEFS];
+	int numODs;
 
-	RACE_ROBOT,				/**< Robot */
+	/** Inventory definitions */
+	invDef_t ids[MAX_INVDEFS];
+	int numIDs;
 
-	RACE_TAMAN,				/**< Alien: taman race */
-	RACE_ORTNOK,			/**< Alien: ortnok race */
-	RACE_BLOODSPIDER,		/**< Alien: bloodspider race */
-	RACE_SHEVAAR			/**< Alien: shevaar race */
-} racetypes_t;
+	/** Special container ids */
+	containerIndex_t idRight, idLeft, idExtension;
+	containerIndex_t idHeadgear, idBackpack, idBelt, idHolster;
+	containerIndex_t idArmour, idFloor, idEquip;
 
-typedef struct teamDef_s {
-	int idx;			/**< The index in the teamDef array. */
-	char id[MAX_VAR];	/**< id from script file. */
-	char name[MAX_VAR];	/**< Translatable name. */
-	char tech[MAX_VAR];	/**< technology_t id from research.ufo */
+	/** Damage type ids */
+	int damNormal, damBlast, damFire;
+	int damShock;	/**< Flashbang-type 'damage' (i.e. Blinding). */
 
-	linkedList_t *names[NAME_NUM_TYPES];	/**< Names list per gender. */
-	int numNames[NAME_NUM_TYPES];	/**< Amount of names in this list for all different genders. */
+	/** Damage type ids */
+	int damLaser, damPlasma, damParticle;
+	int damStunGas;		/**< Stun gas attack (only effective against organic targets).
+						 * @todo Maybe even make a differentiation between aliens/humans here? */
+	int damStunElectro;	/**< Electro-Shock attack (effective against organic and robotic targets). */
 
-	linkedList_t *models[NAME_LAST];	/**< Models list per gender. */
-	int numModels[NAME_LAST];	/**< Amount of models in this list for all different genders. */
+	/** Equipment definitions */
+	equipDef_t eds[MAX_EQUIPDEFS];
+	int numEDs;
 
-	linkedList_t *sounds[SND_MAX][NAME_LAST];	/**< Sounds list per gender and per sound type. */
-	int numSounds[SND_MAX][NAME_LAST];	/**< Amount of sounds in this list for all different genders and soundtypes. */
+	/** Damage types */
+	damageType_t dts[MAX_DAMAGETYPES];
+	int numDTs;
 
-	racetypes_t race;	/**< What is the race of this team?*/
+	/** team definitions */
+	teamDef_t teamDef[MAX_TEAMDEFS];
+	int numTeamDefs;
 
-	qboolean armour;	/**< Does this team use armour. */
-	qboolean weapons;	/**< Does this team use weapons. */
-	struct objDef_s *onlyWeapon;	/**< ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
-	 						 * The default value is NONE for every 'normal' actor - but e.g. bloodspiders only have
-							 * the ability to melee attack their victims. They get a weapon assigned with several
-							 * bloodspider melee attack firedefitions */
-
-	actorSizeEnum_t size;	/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
-	char hitParticle[MAX_VAR]; /**< Particle id of what particle effect should be spawned if a unit of this type is hit. */
-	char deathTextureName[MAX_VAR];	/**< texture name for death of any member of this team */
-
-	short resistance[MAX_DAMAGETYPES]; /**< Resistance to damage */
-} teamDef_t;
+	/** the current assigned teams for this mission */
+	const teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
+	int numAlienTeams;
+} csi_t;
 
 /** @brief Reject messages that are send to the client from the game module */
 #define REJ_PASSWORD_REQUIRED_OR_INCORRECT "Password required or incorrect."

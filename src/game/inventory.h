@@ -1,7 +1,7 @@
 #ifndef INVENTORY_H_
 #define INVENTORY_H_
 
-#include "inv_shared.h"
+#include "q_shared.h"
 
 typedef struct inventoryInterface_s
 {
