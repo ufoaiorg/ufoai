@@ -240,17 +240,17 @@ qboolean Com_UnregisterConstList(const constListEntry_t constList[]);
 
 void Com_ParseScripts(qboolean onlyServer);
 const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
-
-#include "../game/q_shared.h"
-
-void Com_GetCharacterValues(const char *teamDefition, character_t * chr);
-const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);
 const char *Com_GetRandomMapAssemblyNameForCraft(const char *craftID);
 ufoType_t Com_UFOShortNameToID(const char *token);
 const char* Com_UFOTypeToShortName(ufoType_t type);
 const char* Com_UFOCrashedTypeToShortName(ufoType_t type);
+
+#include "../game/q_shared.h"
+
 const char* Com_DropShipTypeToShortName(humanAircraftType_t type);
 humanAircraftType_t Com_DropShipShortNameToID(const char *token);
+void Com_GetCharacterValues(const char *teamDefition, character_t * chr);
+const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);
 teamDef_t* Com_GetTeamDefinitionByID(const char *team);
 const chrTemplate_t* Com_GetCharacterTemplateByID(const char *chrTemplate);
 

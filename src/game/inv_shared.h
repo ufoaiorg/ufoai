@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct csi_s;
 
+/** @todo doesn't belong here, but AIRCRAFTTYPE_MAX is needed for the equipment definitions */
 typedef enum {
 	DROPSHIP_FIREBIRD,
 	DROPSHIP_HERAKLES,
