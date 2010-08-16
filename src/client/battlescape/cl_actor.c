@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_mesh_anim.h"
 #include "../sound/s_main.h"
 #include "../../common/routing.h"
+#include "../../common/grid.h"
 
 /** @brief Confirm actions in tactical mode - valid values are 0, 1 and 2 */
 static cvar_t *confirm_actions;

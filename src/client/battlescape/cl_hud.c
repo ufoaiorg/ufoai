@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui/ui_render.h"
 #include "../renderer/r_mesh_anim.h"
 #include "../renderer/r_draw.h"
+#include "../../common/grid.h"
 
 /** If this is set to qfalse HUD_DisplayFiremodes_f will not attempt to hide the list */
 static qboolean visibleFiremodeListLeft = qfalse;

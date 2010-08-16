@@ -52,23 +52,3 @@ qboolean CM_TestLineDMWithEnt(const vec3_t start, const vec3_t stop, vec3_t end,
 trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const box_t* traceBox, int levelmask, int brushmask, int brushreject, const char **list);
 void CM_RecalcRouting(routing_t *map, const char *name, const char **list);
 
-/*==========================================================
-GRID ORIENTED MOVEMENT AND SCANNING
-==========================================================*/
-
-void Grid_RecalcBoxRouting(routing_t *map, const pos3_t min, const pos3_t max, const char **list);
-void Grid_RecalcRouting(routing_t *map, const char *name, const char **list);
-void Grid_DumpDVTable(const pathing_t *path);
-void Grid_MoveCalc(const routing_t *map, const actorSizeEnum_t actorSize, pathing_t *path, const pos3_t from, byte crouchingSstate, int distance, byte ** fb_list, int fb_length);
-void Grid_MoveStore(pathing_t *path);
-pos_t Grid_MoveLength(const pathing_t *path, const pos3_t to, byte crouchingState, qboolean stored);
-int Grid_MoveNext(const pathing_t *path, const pos3_t toPos, byte crouchingState);
-int Grid_Height(const routing_t *map, const actorSizeEnum_t actorSize, const pos3_t pos);
-unsigned int Grid_Ceiling(const routing_t *map, const actorSizeEnum_t actorSize, const pos3_t pos);
-int Grid_Floor(const routing_t *map, const actorSizeEnum_t actorSize, const pos3_t pos);
-pos_t Grid_StepUp(const routing_t *map, const actorSizeEnum_t actorSize, const pos3_t pos, const int dir);
-int Grid_GetTUsForDirection(int dir);
-int Grid_Filled(const routing_t *map, const actorSizeEnum_t actorSize, const pos3_t pos);
-pos_t Grid_Fall(const routing_t *map, const actorSizeEnum_t actorSize, const pos3_t pos);
-void Grid_PosToVec(const routing_t *map, const actorSizeEnum_t actorSize, const pos3_t pos, vec3_t vec);
-

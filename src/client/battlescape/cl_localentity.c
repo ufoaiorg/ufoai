@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_hud.h"
 #include "../renderer/r_mesh_anim.h"
 #include "../../common/tracing.h"
+#include "../../common/grid.h"
 
 cvar_t *cl_le_debug;
 

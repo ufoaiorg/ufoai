@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../cl_game.h"
 #include "../../../cl_particle.h"
 #include "e_event_actorappear.h"
+#include "../../../../../common/grid.h"
 
 int CL_ActorAppearTime (const eventRegister_t *self, struct dbuffer *msg, const int dt)
 {

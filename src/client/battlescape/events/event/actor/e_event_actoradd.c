@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../../client.h"
 #include "../../../cl_localentity.h"
 #include "e_event_actoradd.h"
+#include "../../../../../common/grid.h"
 
 /**
  * @brief Adds an hidden actor to the list of le's

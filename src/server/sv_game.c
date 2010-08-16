@@ -27,6 +27,7 @@
  */
 
 #include "server.h"
+#include "../common/grid.h"
 #include "../ports/system.h"
 #include <SDL.h>
 
