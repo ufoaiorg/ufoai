@@ -23,6 +23,7 @@ import hashlib, os
 import cPickle
 import sys
 import re
+import shutil
 from xml.dom.minidom import parseString
 
 # config
@@ -38,17 +39,6 @@ NON_FREE_LICENSES = set([
 "Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported",
 "Creative Commons Sampling Plus 1.0"
 ])
-
-CSS = u"""
-body { color: #ffffff; background-color: #262626; font-family: verdana, helvetica, arial, sans-serif; margin: 0; padding: 0; }
-html > body { font-size: 8.5pt; }
-a { color: #ffd800; background-color: transparent; text-decoration: none; }
-a:hover { color: #ffffff; background-color: transparent; text-decoration: none; }
-li { margin-bottom: 8px; }
-.author { }
-.thumb { vertical-align:top; margin-right: 1em; border: 1em solid #101010; }
-.badlicense { color:red; }
-"""
 
 HTML = u"""<html>
 <head>
@@ -344,12 +334,10 @@ def setup(output_path):
             print 'creating', os.path.abspath(test_path)
             os.mkdir(test_path)
 
-
-from shutil import rmtree
 def clean_up(output_path):
     """Delete old html files and create needed directories"""
-    print 'clean up'
-    rmtree(output_path + '/licenses/html')
+    print 'Clean up'
+    shutil.rmtree(output_path + '/licenses/html')
     os.mkdir(output_path + '/licenses/html')
     for i in os.listdir('base'):
         if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
@@ -629,11 +617,6 @@ class Analysis:
         file.write(html)
         file.close()
 
-        if name == "":
-            file = open(basedir + '/style.css', 'wt')
-            file.write(CSS)
-            file.close()
-
         self.writeGroups(output, "copyrights", self.contentByCopyright)
         self.writeGroups(output, "licenses", self.contentByLicense)
         self.writeGroups(output, "sources", self.contentBySource)
@@ -680,6 +663,11 @@ def main():
     
     setup(output_path)
     clean_up(output_path)
+
+    files = ["style.css", "grid.png"]
+    for f in files:
+        print "Copying " + f
+        shutil.copy (sys.path[0] + "/resources/" + f, output_path + "/licenses/html/" + f)
 
     # map-texture relations
     computeTextureUsageInMaps()
