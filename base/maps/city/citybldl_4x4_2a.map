@@ -3,14 +3,15 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
-"light_day" "85"
+"light_day" "240"
 "angles_day" "-85 100"
 "ambient_day" "0.25 0.25 0.25"
 "color_day" "0.15 0.15 0.15"
 "angles_night" "-85 100"
 "light_night" "45"
-"ambient_night" "0.15 0.15 0.19"
+"ambient_night" "0.20 0.20 0.25"
 "color_night" "0.55 0.55 0.95"
+"randomspawn" "1"
 // brush 0
 {
 ( 192 704 72 ) ( 320 736 72 ) ( 320 704 72 ) tex_buildings/con_trim 0 0 180 0.25 0.25 65024 0 0
@@ -30134,4 +30135,12 @@
 {
 "classname" "info_civilian_start"
 "origin" "656 208 92"
+}
+// entity 25
+{
+"classname" "misc_sound"
+"origin" "512 512 96"
+"noise" "ambience/city_abnd_ufoai_atm"
+"volume" "0.2"
+"attenuation" "0.1"
 }

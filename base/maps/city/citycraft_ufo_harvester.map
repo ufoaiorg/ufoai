@@ -3,10 +3,15 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
-"light_day" "85"
+"light_day" "240"
 "angles_day" "-85 100"
 "ambient_day" "0.25 0.25 0.25"
 "color_day" "0.15 0.15 0.15"
+"ambient_night" "0.2 0.2 0.25"
+"angles_night" "-85 100"
+"color_night" "0.55 0.55 0.95"
+"light_night" "45"
+"randomspawn" "1"
 // brush 0
 {
 ( 264 512 72 ) ( 280 24 72 ) ( 264 0 72 ) tex_buildings/con_trim 0 512 180 0.25 0.25 65024 0 0

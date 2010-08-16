@@ -3,11 +3,11 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
-"light_day" "85"
+"light_day" "240"
 "angles_day" "-85 100"
 "ambient_day" "0.25 0.25 0.25"
 "color_day" "0.15 0.15 0.15"
-"ambient_night" "0.15 0.15 0.19"
+"ambient_night" "0.2 0.2 0.25"
 "angles_night" "-85 100"
 "color_night" "0.55 0.55 0.95"
 "light_night" "45"

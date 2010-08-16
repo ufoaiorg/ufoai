@@ -4,12 +4,12 @@
 "classname" "worldspawn"
 "maxlevel" "8"
 "ambient_day" "0.25 0.25 0.25"
-"ambient_night" "0.15 0.15 0.19"
+"ambient_night" "0.2 0.2 0.25"
 "angles_day" "-85 100"
 "angles_night" "-85 100"
 "color_day" "0.15 0.15 0.15"
 "color_night" "0.55 0.55 0.95"
-"light_day" "85"
+"light_day" "240"
 "light_night" "45"
 // brush 0
 {
