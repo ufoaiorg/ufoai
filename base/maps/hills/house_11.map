@@ -751,29 +751,6 @@
 }
 // entity 2
 {
-"classname" "func_door"
-"spawnflags" "255"
-// brush 0
-{
-( 225 191 56 ) ( 225 190 56 ) ( 224 191 56 ) tex_mattn/wood005 128 4 0 0.25 0.25
-( 225 190 41 ) ( 224 190 41 ) ( 225 190 39 ) tex_mattn/wood005 128 12 0 0.25 0.25
-( 226 190 21 ) ( 226 190 19 ) ( 226 189 21 ) tex_mattn/wood005 128 60 0 0.25 0.25
-( 224 188 4 ) ( 225 188 4 ) ( 224 189 4 ) tex_mattn/wood005 128 124 0 0.25 0.25
-( 224 189 4 ) ( 224 189 6 ) ( 225 189 4 ) tex_mattn/wood005 128 0 0 0.25 0.25
-( 224 188 4 ) ( 224 189 4 ) ( 224 188 6 ) tex_mattn/wood005 132 0 0 0.25 0.25
-}
-// brush 1
-{
-( 256 190 56 ) ( 256 158 56 ) ( 224 190 56 ) tex_mattn/door019 64 201.143 0 0.0625 0.109375
-( 256 190 64 ) ( 224 190 64 ) ( 256 190 0 ) tex_mattn/door019 64 30.72 0 0.0625 0.1953125
-( 226 196 64 ) ( 226 196 0 ) ( 226 164 64 ) tex_mattn/door019 27.42851 30.72 0 0.21875 0.1953125
-( 224 160 6 ) ( 256 160 6 ) ( 224 192 6 ) tex_mattn/door019 64 201.143 0 0.0625 0.109375
-( 224 162 0 ) ( 224 162 64 ) ( 256 162 0 ) tex_mattn/door019 64 30.72 0 0.0625 0.1953125
-( 224 160 0 ) ( 224 192 0 ) ( 224 160 64 ) tex_mattn/door019 27.42851 30.72 0 0.21875 0.1953125
-}
-}
-// entity 3
-{
 "classname" "func_group"
 // brush 0
 {
@@ -830,15 +807,16 @@
 ( 70 -357 18 ) ( 70 -355 18 ) ( 70 -355 16 ) tex_furniture/couch_e 66 120 0 -0.5 0.5 65280 0 0
 }
 }
-// entity 4
+// entity 3
 {
 "classname" "misc_sound"
 "origin" "77 119 20"
 "noise" "ambience/radiomessage.wav"
 "spawnflags" "255"
 "angle" "-90"
+"attenuation" "2.5"
 }
-// entity 5
+// entity 4
 {
 "classname" "func_group"
 // brush 0
@@ -902,7 +880,7 @@
 ( 195 56 26 ) ( 195 56 14 ) ( 199 60 14 ) tex_material/c_black 7 8 0 0.5 0.5 134283008 0 0
 }
 }
-// entity 6
+// entity 5
 {
 "classname" "func_group"
 // brush 0
@@ -1013,7 +991,7 @@
 ( -230 -1048 24 ) ( -218 -1048 24 ) ( -214 -1024 24 ) tex_common/nodraw 0 4 0 0.5 0.5 65280 0 0
 }
 }
-// entity 7
+// entity 6
 {
 "classname" "func_group"
 // brush 0
@@ -1161,7 +1139,7 @@
 ( 128 159 24 ) ( 128 127 24 ) ( 128 127 0 ) tex_furniture/kitchen003 2.599911 9 0 0.3125 0.40625 65280 0 0
 }
 }
-// entity 8
+// entity 7
 {
 "classname" "func_group"
 // brush 0
@@ -1210,7 +1188,7 @@
 ( 160 192 28 ) ( 160 224 28 ) ( 160 224 20 ) tex_material/c_gray050 8 0 0 0.5 0.5 134283008 0 0
 }
 }
-// entity 9
+// entity 8
 {
 "classname" "func_group"
 // brush 0
@@ -1295,14 +1273,14 @@
 ( 88 408 16 ) ( 88 412 29 ) ( 88 412 32 ) tex_material/wood002 56 8 0 0.5 0.5 134283008 0 0
 }
 }
-// entity 10
+// entity 9
 {
 "classname" "light"
 "origin" "133 209 39"
 "light" "40"
 "_color" "1 1 1"
 }
-// entity 11
+// entity 10
 {
 "classname" "func_group"
 // brush 0
@@ -1355,7 +1333,7 @@
 ( 126 208 52 ) ( 148 208 52 ) ( 148 208 50 ) tex_material/c_black 20 4 0 -0.5 0.5 65280 0 0
 }
 }
-// entity 12
+// entity 11
 {
 "classname" "func_breakable"
 "spawnflags" "255"
@@ -1370,24 +1348,47 @@
 ( 14 128 24 ) ( 14 256 24 ) ( 14 128 62 ) tex_ctp1/bricks_r_6 8 0 0 0.12 0.12
 }
 }
-// entity 13
+// entity 12
 {
 "classname" "light"
 "_color" "0.82504 1 0.556314"
 "light" "150"
 "origin" "96 176 48"
 }
-// entity 14
+// entity 13
 {
 "classname" "light"
 "_color" "0.82504 1 0.556314"
 "light" "150"
 "origin" "96 80 48"
 }
-// entity 15
+// entity 14
 {
 "classname" "light"
 "_color" "0.82504 1 0.556314"
 "light" "150"
 "origin" "192 112 48"
+}
+// entity 15
+{
+"classname" "func_door"
+"spawnflags" "511"
+// brush 0
+{
+( 256 190 56 ) ( 256 158 56 ) ( 224 190 56 ) tex_mattn/door019 64 201.143 0 0.0625 0.109375 65280 0 0
+( 256 190 64 ) ( 224 190 64 ) ( 256 190 0 ) tex_mattn/door019 64 30.72 0 0.0625 0.1953125 65280 0 0
+( 226 196 64 ) ( 226 196 0 ) ( 226 164 64 ) tex_mattn/door019 27.42851 30.72 0 0.21875 0.1953125 65280 0 0
+( 224 160 6 ) ( 256 160 6 ) ( 224 192 6 ) tex_mattn/door019 64 201.143 0 0.0625 0.109375 65280 0 0
+( 224 162 0 ) ( 224 162 64 ) ( 256 162 0 ) tex_mattn/door019 64 30.72 0 0.0625 0.1953125 65280 0 0
+( 224 160 0 ) ( 224 192 0 ) ( 224 160 64 ) tex_mattn/door019 27.42851 30.72 0 0.21875 0.1953125 65280 0 0
+}
+// brush 1
+{
+( 226 190 56 ) ( 226 188 56 ) ( 224 190 56 ) tex_common/origin 0 0 0 0.25 0.25 16842496 0 0
+( 226 190 56 ) ( 224 190 56 ) ( 226 190 6 ) tex_common/origin 0 0 0 0.25 0.25 16842496 0 0
+( 226 190 56 ) ( 226 190 6 ) ( 226 188 56 ) tex_common/origin 0 0 0 0.25 0.25 16842496 0 0
+( 224 188 6 ) ( 226 188 6 ) ( 224 190 6 ) tex_common/origin 0 0 0 0.25 0.25 16842496 0 0
+( 224 188 6 ) ( 224 188 56 ) ( 226 188 6 ) tex_common/origin 0 0 0 0.25 0.25 16842496 0 0
+( 224 188 6 ) ( 224 190 6 ) ( 224 188 56 ) tex_common/origin 0 0 0 0.25 0.25 16842496 0 0
+}
 }

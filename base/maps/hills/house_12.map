@@ -1401,7 +1401,7 @@
 // entity 1
 {
 "classname" "func_door"
-"spawnflags" "255"
+"spawnflags" "511"
 // brush 0
 {
 ( 64 156 54 ) ( 64 132 54 ) ( 62 156 54 ) tex_mattn/door030 0.002929688 329.1431 0 0.007812503 0.0546875
@@ -1424,7 +1424,7 @@
 // entity 2
 {
 "classname" "func_door"
-"spawnflags" "255"
+"spawnflags" "511"
 // brush 0
 {
 ( 196 226 56 ) ( 196 225 56 ) ( 195 226 56 ) tex_common/origin 52 16 0 0.25 0.25 16777984 0 0
