@@ -29,8 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_RESEARCHDISPLAY 22	/**< Number of the available string (in the list) in the research menu */
 #define MAX_RESEARCHLIST 32
 #define MAX_TECHNOLOGIES 256	/**< Maximum number of technologies overall. */
-#define MAX_TECHLINKS 16	/**< Maximum number of requirements in a technology (i.e in requireAND and requireOR).
-				 *   Needs to be synced with MAX_TECHLINKS in q_shared.h */
+#define MAX_TECHLINKS 16	/**< Maximum number of requirements in a technology (i.e in requireAND and requireOR). */
 #define MAX_DESCRIPTIONS 8	/**< Maximum number of descriptions (per tech and description-type). */
 
 #define TECH_INVALID -1	/**< The value for an "undef" tech-index. */

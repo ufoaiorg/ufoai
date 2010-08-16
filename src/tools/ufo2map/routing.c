@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "bsp.h"
-#include "../../game/q_shared.h"
+#include "../../shared/shared.h"
 #include "../../common/tracing.h"
 #include "../../common/routing.h"
 
@@ -38,7 +38,8 @@ static const vec3_t move_vec[4] = {
 	{         0, -UNIT_SIZE, 0} };
 
 /** routing data structures */
-static routing_t Nmap[ACTOR_MAX_SIZE]; /* A routing_t per size */
+#define ACTOR_MAX_SIZE 2
+static routing_t Nmap[ACTOR_MAX_SIZE]; /**< A routing_t per size */
 
 /** @brief world min and max values converted from vec to pos */
 static ipos3_t wpMins, wpMaxs;

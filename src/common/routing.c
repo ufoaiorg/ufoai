@@ -318,7 +318,7 @@ NEW MAP TRACING FUNCTIONS
  * @sa CL_AddTargetingBox
  * @todo see CL_ActorMoveMouse
  */
-qboolean RT_AllCellsBelowAreFilled (const routing_t * map, const actorSizeEnum_t actorSize, const pos3_t pos)
+qboolean RT_AllCellsBelowAreFilled (const routing_t * map, const int actorSize, const pos3_t pos)
 {
 	int i;
 
@@ -348,7 +348,7 @@ qboolean RT_AllCellsBelowAreFilled (const routing_t * map, const actorSizeEnum_t
  * @return The z value of the next cell to scan, usually the cell with the ceiling.
  * @sa Grid_RecalcRouting
  */
-int RT_CheckCell (routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int z, const char **list)
+int RT_CheckCell (routing_t * map, const int actorSize, const int x, const int y, const int z, const char **list)
 {
 	/* Width of the box required to stand in a cell by an actor's torso.  */
 	const float halfActorWidth = UNIT_SIZE * actorSize / 2 - WALL_SIZE - DIST_EPSILON;
@@ -1471,7 +1471,7 @@ static int RT_UpdateConnection (routing_t * map, const actorSizeEnum_t actorSize
  * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] dir The direction to test for a connection through
  */
-void RT_UpdateConnectionColumn (routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int dir, const char **list)
+void RT_UpdateConnectionColumn (routing_t * map, const int actorSize, const int x, const int y, const int dir, const char **list)
 {
 	int z = 0; /**< The current z value that we are testing. */
 	int new_z; /**< The last z value processed by the tracing function.  */

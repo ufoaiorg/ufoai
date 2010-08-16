@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/ufotypes.h"
 #include "../../common/mem.h"
 #include "../../shared/shared.h"
-#include "../../game/q_shared.h"
 #include "../../common/filesys.h"
 #include "../../common/qfiles.h"
 #include "../../shared/typedefs.h"
