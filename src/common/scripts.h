@@ -243,7 +243,7 @@ const char *Com_EParse(const char **text, const char *errhead, const char *errin
 
 #include "../game/q_shared.h"
 
-const char *Com_GiveName(int gender, teamDef_t *td);
+const char *Com_GiveName(int gender, const teamDef_t *td);
 const char *Com_GiveModel(int type, int gender, const teamDef_t *td);
 void Com_GetCharacterValues(const char *teamDefition, character_t * chr);
 const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);

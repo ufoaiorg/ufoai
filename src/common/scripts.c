@@ -2088,9 +2088,8 @@ NAME AND TEAM DEFINITION INTERPRETER
  * @param[in] td The team definition to get the name from
  * @sa Com_GetCharacterValues
  */
-const char *Com_GiveName (int gender, teamDef_t *td)
+const char *Com_GiveName (int gender, const teamDef_t *td)
 {
-	static char returnName[MAX_VAR];
 	int j, name = 0;
 	linkedList_t* list;
 
@@ -2117,8 +2116,7 @@ const char *Com_GiveName (int gender, teamDef_t *td)
 	}
 
 	/* store the name */
-	Q_strncpyz(returnName, (const char*)list->data, sizeof(returnName));
-	return returnName;
+	return (const char*)list->data;
 }
 
 /**
