@@ -310,7 +310,7 @@ void BS_InitMarket (qboolean load)
 		}
 	}
 
-	for (i = 0; i < csi->numUGV; i++) {
+	for (i = 0; i < csi.numUGV; i++) {
 		if (campaign->marketDef->numUGVs[i] <= 0)
 			continue;
 
