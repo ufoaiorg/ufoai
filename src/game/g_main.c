@@ -51,7 +51,7 @@ FILE *logstatsfile;
 
 cvar_t *sv_filterban;
 
-cvar_t *sv_cheats;
+static cvar_t *sv_cheats;
 
 cvar_t *sv_maxteams;
 

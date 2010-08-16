@@ -165,7 +165,6 @@ static void SV_Map_f (void)
 		Cvar_SetValue("g_nospawn", 1);
 	} else {
 		Cvar_SetValue("sv_ai", 1);
-		Cvar_SetValue("sv_cheats", 0);
 		Cvar_SetValue("sv_send_edicts", 0);
 		Cvar_SetValue("g_notus", 0);
 		Cvar_SetValue("g_nospawn", 0);

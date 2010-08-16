@@ -228,7 +228,6 @@ extern cvar_t *sv_filterban;
 
 extern cvar_t *sv_maxvelocity;
 
-extern cvar_t *sv_cheats;
 extern cvar_t *sv_maxclients;
 extern cvar_t *sv_shot_origin;
 extern cvar_t *sv_hurtaliens;
