@@ -1,0 +1,204 @@
+//========================================================================
+// List of templates for character generation.
+//========================================================================
+//Description:
+//
+// chrtemplate <template-id> {}
+//	defines a template
+//	rate 
+//		only for phalanx soldiers - chance of selecting this template relative to sum of all rates
+//	strength, speed, accuracy, mind, close, heavy, assault, sniper, explosive, health
+//		min and max values for the atributes
+//
+//========================================================================
+
+chrtemplate soldier_common {
+	rate	74
+	strength	"15 25"
+	speed	"15 25"
+	accuracy	"20 30"
+	mind	"20 35"
+	close	"15 25"
+	heavy	"15 25"
+	assault	"15 25"
+	sniper	"15 25"
+	explosive	"15 25"
+	health	"80 110"
+}
+
+chrtemplate soldier_close {
+	rate	5
+	strength	"15 25"
+	speed	"15 25"
+	accuracy	"20 30"
+	mind	"20 35"
+	close	"25 40"
+	heavy	"13 23"
+	assault	"13 23"
+	sniper	"13 23"
+	explosive	"13 23"
+	health	"80 110"
+}
+
+chrtemplate soldier_heavy {
+	rate	5
+	strength	"15 25"
+	speed	"15 25"
+	accuracy	"2 30"
+	mind	"20 35"
+	close	"13 23"
+	heavy	"25 40"
+	assault	"13 23"
+	sniper	"13 23"
+	explosive	"13 23"
+	health	"80 110"
+}
+
+chrtemplate soldier_assault {
+	rate	5
+	strength	"15 25"
+	speed	"15 25"
+	accuracy	"20 30"
+	mind	"20 35"
+	close	"13 23"
+	heavy	"13 23"
+	assault	"25 40"
+	sniper	"13 23"
+	explosive	"13 23"
+	health	"80 110"
+}
+
+chrtemplate soldier_sniper {
+	rate	5
+	strength	"15 25"
+	speed	"15 25"
+	accuracy	"20 30"
+	mind	"20 35"
+	close	"13 23"
+	heavy	"13 23"
+	assault	"13 23"
+	sniper	"25 40"
+	explosive	"13 23"
+	health	"80 110"
+}
+
+chrtemplate soldier_blast {
+	rate	5
+	strength	"15 25"
+	speed	"15 25"
+	accuracy	"20 30"
+	mind	"20 35"
+	close	"13 23"
+	heavy	"13 23"
+	assault	"13 23"
+	sniper	"13 23"
+	explosive	"25 40"
+	health	"80 110"
+}
+
+chrtemplate soldier_elite {
+	rate	1
+	strength	"25 35"
+	speed	"25 35"
+	accuracy	"30 40"
+	mind	"30 45"
+	close	"25 40"
+	heavy	"25 40"
+	assault	"25 40"
+	sniper	"25 40"
+	explosive	"25 40"
+	health	"100 130"
+}
+
+chrtemplate soldier_civil {
+	strength	"5 10"
+	speed	"5 10"
+	accuracy	"10 15"
+	mind	"10 15"
+	close	"5 10"
+	heavy	"5 10"
+	assault	"5 10"
+	sniper	"5 10"
+	explosive	"5 10"
+	health	"20 30"
+}
+
+chrtemplate soldier_taman {
+	strength	"25 35"
+	speed	"25 35"
+	accuracy	"40 50"
+	mind	"50 85"
+	close	"50 90"
+	heavy	"50 90"
+	assault	"50 90"
+	sniper	"50 90"
+	explosive	"50 90"
+	health	"100 130"
+}
+
+chrtemplate soldier_ortnok {
+	strength	"45 65"
+	speed	"20 30"
+	accuracy	"30 45"
+	mind	"20 40"
+	close	"50 90"
+	heavy	"50 90"
+	assault	"50 90"
+	sniper	"50 90"
+	explosive	"50 90"
+	health	"150 190"
+}
+
+chrtemplate soldier_shevaar {
+	strength	"30 40"
+	speed	"30 40"
+	accuracy	"40 70"
+	mind	"30 60"
+	close	"50 90"
+	heavy	"50 90"
+	assault	"50 90"
+	sniper	"50 90"
+	explosive	"50 90"
+	health	"120 160"
+}
+
+chrtemplate soldier_blood {
+	strength	"55 55"
+	speed	"50 50"
+	accuracy	"50 50"
+	mind	"50 50"
+	close	"50 50"
+	heavy	"50 50"
+	assault	"50 50"
+	sniper	"50 50"
+	explosive	"50 50"
+	health	"150 150"
+}
+
+chrtemplate soldier_robot {
+	strength	"55 55"
+	speed	"40 40"
+	accuracy	"50 50"
+	mind	"0 0"
+	close	"50 50"
+	heavy	"50 50"
+	assault	"50 50"
+	sniper	"50 50"
+	explosive	"50 50"
+	health	"200 200"
+}
+
+// For multiplayer characters ONLY! Keep rate set to 0!
+chrtemplate soldier_mp {
+	rate 0
+	strength	"25 75"
+	speed	"25 35"
+	accuracy	"20 75"
+	mind	"30 75"
+	close	"20 75"
+	heavy	"20 75"
+	assault	"20 75"
+	sniper	"20 75"
+	explosive	"50 50"
+	health	"80 130"
+}
