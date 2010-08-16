@@ -36,7 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
 /* if a brush just barely pokes onto the other side, let it slide by without chopping */
-/* common/tracing.c, ufo2map/brushbsp.c */
 #define	PLANESIDE_EPSILON	0.001
 
 /* if you increase this, you also have to change the aircraft buy/sell menu scripts */
@@ -47,16 +46,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	PLANENUM_LEAF -1
 
 /* bsp constants */
-/* ufo2map/csg.c, ufo2map/portals.c, ufo2map/brushbsp.c */
 #define	TEXINFO_NODE		-1		/* side is already on a node */
-/* ufo2map/faces.c, shared/typedefs.h (face_t) */
 #define	MAXEDGES		20
 
-/* game/g_client.c, client/cl_main.c, client/cl_view.c */
 #define	TEAM_DEFAULT 1
 
 /** @sa Com_DeveloperSet_f */
-/* {game}, {ufo}, {ufo_ded} */
 #define	DEBUG_ALL		0x07FE
 #define	DEBUG_SHARED	0x02
 #define	DEBUG_ENGINE	0x04
@@ -72,19 +67,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define DEBUG_PATHING	0x0800
 #define DEBUG_ROUTING	0x1000
 
-/* {game}, [client], common/scripts.c */
 #define	NONE		-1
-/* {game}, [client] */
 #define	NONE_AMMO	0
 
 /* Move/Routing values */
-/* game/g_ai.c, game/g_client.c, client/cl_actor.c, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, common/cmodel.c */
 #define	MAX_ROUTE		33
-/* common/cmodel.c */
 #define	MAX_MOVELENGTH	60
 
 /* Timeunits for the various actions. */
-/* game/g_client.c, client/cl_actor.c, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, common/cmodel.c */
 #define	TU_CROUCH			3	/**< Time units for crouching and standing up */
 #define	TU_TURN				1	/**< Time units for turning (no matter how far). */
 #define	TU_MOVE_STRAIGHT	2	/**< Time units used to move straight to the next field/square. */
@@ -98,11 +88,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define TU_GET_RELOAD(containerOut, containerIn, weapon) (csi.ids[(containerOut)].out + (weapon)->reload + csi.ids[(containerIn)].in)
 
 /* door states */
-/* game/g_client.c, game/g_func.c */
 #define	STATE_OPENED		0
 #define	STATE_CLOSED		1
 
-/* client/cl_console.c, client/input/cl_keys.c, client/cl_main.c, common/cmd.c, common/common.c */
 #define	MAX_STRING_CHARS    1024    /* max length of a string passed to Cmd_TokenizeString */
 /* common/cmd.c */
 #define	MAX_STRING_TOKENS   80  /* max tokens resulting from Cmd_TokenizeString */
@@ -112,33 +100,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* per-level limits */
 /* 25 - bases are 5*5 - see BASE_SIZE*/
-/* game/q_shared.h, client/battlescape/cl_parse.c, server/sv_ccmds.c, server/sv_init.c */
 #define	MAX_TILESTRINGS     25
-/* {game}, [client] */
 #define	MAX_TEAMS           8
-/* game/q_shared.h, client/battlescape/cl_parse.c, client/client.h */
 #define	MAX_CLIENTS         256 /* absolute limit */
-/* game/g_client.c, game/g_local.h, game/g_main.c, game/g_utils.c, game/game.h, game/q_shared.h,
- * client/battlescape/cl_localentity.c, client/battlescape/cl_localentity.h, client/battlescape/cl_parse.c, server/sv_world.c */
 #define	MAX_EDICTS          1024    /* must change protocol to increase more */
-/* game/q_shared.h, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, client/battlescape/cl_view.c, client/client.h,
- * common/cmodel.c, server/server.h, server/sv_init.c, server/sv_world */
 #define	MAX_MODELS          256 /* these are sent over the net as bytes */
-/* game/q_shared.h */
 #define	MAX_GENERAL         (MAX_CLIENTS*2) /* general config strings */
 
 /* not really max hp - but an initial value */
-/* game/g_spawn.c */
 #define	MAX_HP 100
 
 /* game print flags */
-/* game/g_client.c, server/sv_game.c */
 #define	PRINT_NONE		-1  /* suppress printing */
-/* game/g_client.c, game/g_cmds.c, client/battlescape/cl_parse.c, server/sv_ccmds.c, server/sv_main.c */
 #define	PRINT_CHAT		0   /* chat messages */
-/* game/g_client.c, game/g_combat.c, game/g_spawn.c, client/battlescape/cl_parse.c */
 #define	PRINT_HUD		1   /* translated hud strings */
-/* game/g_client.c, game/g_cmds.c, game/g_combat.c, game/g_svccmds.c, server/sv_ccmds.c */
 #define	PRINT_CONSOLE	2   /* critical messages goes to the game console */
 
 #define ERR_FATAL           0   /* exit the entire game with a popup window */
@@ -146,7 +121,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ERR_DISCONNECT      2   /* don't kill server */
 
 /* substract this from the ent->pos[z] to get the ground position */
-/* game/g_combat.c, client/cl_actor.c, client/battlescape/cl_parse.c */
 #define	GROUND_DELTA	28
 
 /* important units */
@@ -163,41 +137,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * leafbrushes, planes, and verts are still bounded by
  * 16 bit short limits
  */
-/* ufo2map/writebsp.c, common/cmodel.c, shared/typedefs.h */
 #define	MAX_MAP_MODELS		1024
-/* ufo2map/bsp.h, ufo2map/common/bspfile.c, ufo2map/map.c, ufo2map/writebsp.c, common/cmodel.c, shared/typedefs.h */
 #define	MAX_MAP_BRUSHES		16384
-/* ufo2map/common/bspfile.c, ufo2map/map.c, common/cmodel.c, shared/typedefs.h, ufo2map/common/bspfile.h */
 #define	MAX_MAP_ENTITIES	2048
-/* common/cmodel.c, common/common.h, shared/typedefs.h */
 #define	MAX_MAP_ENTSTRING	0x40000
-/* ufo2map/patches.c, common/cmodel.c, shared/typedefs.h */
 #define	MAX_MAP_TEXINFO		16384
-/* {ufo2map}, common/cmodel.c shared/typedefs.h */
 #define	MAX_MAP_PLANES		65536
-/* common/tracing.c, ufo2map/writebsp.c, client/battlescape/cl_localentity.c, common/cmodel.c, server/sv_world.c, shared/typedefs.h */
 #define	MAX_MAP_NODES		65536
-/* ufo2map/map.c, ufo2map/writebsp.c, common/cmodel.c, shared/typedefs.h */
 #define	MAX_MAP_BRUSHSIDES	65536
-/* ufo2map/writebsp.c, shared/typedefs.h */
 #define	MAX_MAP_LEAFS		65536
-/* ufo2map/faces.c, ufo2map/lightmap.c, shared/typedefs.h */
 #define	MAX_MAP_VERTS		65536
-/* ufo2map/lightmap.c, ufo2map/radiosity.c, ufo2map/writebsp.c, shared/typedefs.h */
 #define	MAX_MAP_FACES		65536
-/* ufo2map/writebsp.c, common/cmodel.c, shared/typedefs.h */
 #define	MAX_MAP_LEAFBRUSHES	65536
-/* ufo2map/faces.c, ufo2map/lightmap.c, shared/typedefs.h */
 #define	MAX_MAP_EDGES		128000
-/* ufo2map/writebsp.c, renderer/r_model_brush.c, shared/typedefs.h */
 #define	MAX_MAP_SURFEDGES	256000
-/* ufo2map/lightmap.c, shared/typedefs.h */
 #define	MAX_MAP_LIGHTING	0x1000000
 /* WIDTH * WIDTH * 4 */
-/* shared/typedefs.h */
 #define	MAX_MAP_ROUTING		0x100000
 
-/* common/tracing.c */
 #define	MAX_LEAFS		1024
 
 #if defined(COMPILE_MAP)
@@ -209,13 +166,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_MOD_KNOWN   512
 
 /** key / value pair sizes */
-/* ufo2map/common/bspfile.c, client/cl_input.c */
 #define	MAX_KEY		32
-/* ufo2map/common/bspfile.c, client/ui/ui_nodes.h, client/ui/ui_parse.c */
 #define	MAX_VALUE	1024
 
 /** Lump ID constants (directory in the bsp header) */
-/* ufo2map/bspfile.c, common/cmodel.c, common/qfiles.h, renderer/r_model_brush.c */
 #define LUMP_ENTITIES		0
 #define LUMP_PLANES			1
 #define LUMP_VERTEXES		2
@@ -235,30 +189,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LUMP_NORMALS		16
 #define HEADER_LUMPS		17
 
-/* ufo2map/common/polylib.c */
 #define	SIDE_FRONT		0
 #define	SIDE_ON			2
 #define	SIDE_BACK		1
 
 /** 0-2 are axial planes */
-/* common/tracing.c, ufo2map/common/trace.c, ufo2map/map.c, renderer/r_bsp.c, renderer/r_lightmap.c */
 #define	PLANE_X			0
 #define	PLANE_Y			1
 #define	PLANE_Z			2
 
 /** 3-5 are non-axial planes snapped to the nearest */
-/* ufo2map/map.c, renfderer/r_main.c */
 #define	PLANE_ANYX		3
 #define	PLANE_ANYY		4
 #define	PLANE_ANYZ		5
-/* common/tracing.c, ufo2map/common/trace.c */
 #define	PLANE_NONE		6
 
 #define AXIAL(p) ((p)->type < PLANE_ANYX)
 
 /** planes (x & ~1) and (x & ~1) + 1 are always opposites */
 
-/* ufo2map/lightmap.c */
 #define	ANGLE_UP	-1
 #define	ANGLE_DOWN	-2
 
@@ -277,7 +226,6 @@ COLLISION DETECTION
  */
 
 /** lower bits are stronger, and will eat weaker brushes completely */
-/* {game}, {ufo2map}, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, common/cmodel.c, renderer/r_bsp.c */
 #define	CONTENTS_SOLID	0x0001 /**< an eye is never valid in a solid */
 #define	CONTENTS_WINDOW	0x0002 /**< translucent, but not watery */
 #define	CONTENTS_LADDER	0x0004
@@ -287,7 +235,6 @@ COLLISION DETECTION
 /* ufo2map/map.c, ufo2map/portals.c */
 #define	LAST_VISIBLE_CONTENTS	0x80
 
-/* {game}, {ufo2map}, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, common/cmodel.c, renderer/r_bsp.c */
 #define	CONTENTS_LEVEL_ALL	0xFF00
 #define	CONTENTS_LEVEL_1	0x0100
 #define	CONTENTS_LEVEL_2	0x0200
@@ -299,7 +246,6 @@ COLLISION DETECTION
 #define	CONTENTS_LEVEL_8	0x8000
 
 /** remaining contents are non-visible, and don't eat brushes */
-/* {game}, {ufo2map}, client/battlescape/cl_localentity.c, client/battlescape/cl_parse.c, common/cmodel.c, renderer/r_bsp.c */
 #define	CONTENTS_ACTORCLIP		0x00010000
 #define	CONTENTS_PASSABLE		0x00020000
 #define CONTENTS_TERRAIN		0x00040000 /**<  */
@@ -311,7 +257,6 @@ COLLISION DETECTION
 #define	CONTENTS_DETAIL			0x08000000 /**< brushes to be added after vis leafs also used for debugging local entities */
 #define	CONTENTS_TRANSLUCENT	0x10000000 /**< auto set if any surface has trans */
 
-/* {ufo2map}, [renderer] */
 #define	SURF_LIGHT		0x00000001 /**< value will hold the light strength */
 #define	SURF_SLICK		0x00000002 /**< effects game physics */
 #define	SURF_WARP		0x00000008 /**< turbulent water warp */
@@ -328,9 +273,6 @@ COLLISION DETECTION
 #define	SURF_ALPHATEST	0x02000000 /**< alpha test for transparent textures */
 
 /* content masks */
-/* game/g_client.c, game/g_combat.c, game/g_local.h, game/g_phys.c, game/game.h, common/routing.c, common/tracing.c,
- * ufo2map/csg.c, client/cl_actor.c, client/input/cl_input.c, client/battlescape/cl_localentity.c, client/battlescape/cl_particle.c, common/cmodel.c,
- * server/sv_world.c */
 #define	MASK_ALL			(-1)
 #define	MASK_SOLID			(CONTENTS_SOLID | CONTENTS_WINDOW)
 #define	MASK_IMPASSABLE		(MASK_SOLID | CONTENTS_ACTORCLIP)
@@ -341,7 +283,6 @@ COLLISION DETECTION
 
 /*============================================================== */
 
-/* game/g_ai.c, game/g_client.c, ufo2map/routing.c, client/cl_actor.c, common/cmodel.c */
 #define	ROUTING_NOT_REACHABLE	0xFF	/**< (byte) Indicates a cell that is not reachable.  A TU value. */
 #define	ROUTING_UNREACHABLE		-1		/**< (int) Indicates that a cell is not reachable.  A DV value. */
 
@@ -358,33 +299,25 @@ COLLISION DETECTION
 #define CELL_HEIGHT (UNIT_HEIGHT / QUANT)
 
 /* Maximum falling distance in QUANT units (model units / QUANT) */
-/* common/routing.c */
 #define	PATHFINDING_MAX_FALL	16
 /* The height of the box where we don't need the full actor's torso width */
 #define	PATHFINDING_LEGROOMHEIGHT	4
 /* Minimum step-up height in QUANT units (model units/QUANT)
  * Note that 4 is the minimum to rise one cell every 4 moved horizontally. */
-/* common/routing.c */
 #define	PATHFINDING_MIN_STEPUP		2
 /* Minimum step-up height in QUANT units (model units/QUANT)
  * Note that 4 is the minimum to rise one cell every 4 moved horizontally. */
-/* common/routing.c */
 #define	PATHFINDING_MAX_STEPUP		4
 /* A stepup value indicating that there is no way to enter the cell. */
-/* common/routing.c */
 #define	PATHFINDING_NO_STEPUP		(2 * CELL_HEIGHT)
 /* A special bit mask indicating that the stepup causes the actor to rise a cell. */
-/* common/routing.c */
 #define	PATHFINDING_BIG_STEPUP		0x80
 /* A special bit mask indicating that the stepup causes the actor to walk down a cell. */
-/* common/routing.c */
 #define	PATHFINDING_BIG_STEPDOWN		0x40
 /* Minimum height for an opening to be an opening in step units (model units/QUANT)
  * Must be larger than PATHFINDING_MAX_STEPUP!!
  */
-/* common/routing.c */
 #define	PATHFINDING_MIN_OPENING	6
-/* common/routing.c */
 /** @brief The size (in model units) of a microstep.  Must be a power of 2 and less than UNIT_SIZE. */
 #define PATHFINDING_MICROSTEP_SIZE	4
 /** @brief The number of microsteps that can be stepped over by an actor.
@@ -399,11 +332,8 @@ COLLISION DETECTION
 #define DIRECTION_CROUCH		11
 
 
-/* common/cmodel.c */
 #define	ACTOR_MAX_STATES		2
 
-/* common/tracing.c, ufo2map/common/trace.c, ufo2map/csg.c, ufo2map/radiosity.c, ufo2map/routing.c, client/cl_input.c,
- * common/cmodel.c, renderer/r_bsp.c, shared/typedefs.h */
 /**
  * @note The bsp trees are generated based on the levels that a given brush is supposed to be in.
  * So a brush that is tagged for viewing in levels 1, 2, and 3 will be in bsp tree 7 (1 + 2 + 4)
@@ -418,53 +348,36 @@ COLLISION DETECTION
 #define	LEVEL_WEAPONCLIP		257
 #define	LEVEL_ACTORCLIP			258
 #define	LEVEL_MAX				259
-/* ufo2map/bsp.c, common/cmodel.c, renderer/r_model_brush.c */
 #define	NUM_REGULAR_MODELS		(LEVEL_ACTORCLIP + 1)
 
 /* TestLine level masks */
-/* game/g_client.c, game/g_combat.c, common/routing.c, common/tracing.c, ufo2map/lightmap.c, ufo2map/radiosity.c,
- * client/cl_actor.c, client/battlescape/cl_localentity.c */
 #define	TL_FLAG_NONE			0x0000
 #define	TL_FLAG_REGULAR_LEVELS	0x00FF
 #define	TL_FLAG_ACTORCLIP		0x0100
 #define	TL_FLAG_WEAPONCLIP		0x0200
 #define	TL_FLAG_ALL				0x0300
 
-/* ufo2map/common/bspfile.c, renderer/r_lightmap.c, renderer/r_lightmap.h, renderer/r_main.c, renderer/r_model_brush.c,
- * shared/typedefs.h */
 #define	LIGHTMAP_NIGHT	0
 #define	LIGHTMAP_DAY	1
 #define	LIGHTMAP_MAX	2
 
-/* common/tracing.c, ufo2map/brushbsp.c, renderer/r_main.c */
 #define	PSIDE_FRONT			1
 #define	PSIDE_BACK			2
 #define	PSIDE_BOTH			(PSIDE_FRONT|PSIDE_BACK)
 #define	PSIDE_FACING		4
 
-/* shared/shared.c, ufo2map/common/scriplib.c, ufo2map/common/scriplib.h, client/battlescape/cl_parse.c, client/client.h,
- * common/common.c, server/server.h, server/sv_ccmds.c, server/sv_game.c, server/sv_init.c */
 #define	MAX_TOKEN_CHARS		256 /* max length of an individual token */
 
-/* common/tracing.c, ufo2map/common/polylib.c, ufo2map/faces.c, ufo2map/patches.c, ufo2map/portals.c, ufo2map/common/polylib.h */
 #define	ON_EPSILON	0.1
 
 /* 1/32 epsilon to keep floating point happy */
-/* common/tracing.c, ufo2map/map.c, client/cl_actor.c, common/cmodel.c */
 #define	DIST_EPSILON	(0.03125)
 #define	DIST_EPSILON2	(0.0625125) /* DIST_EPSILON * 2 + small bit more */
 
-/* ufo2map/map.c */
 #define	MAP_DIST_EPSILON	0.01
 #define	NORMAL_EPSILON	0.00001
-/*
-From tools/ufo2map/map.c
-#define	DIST_EPSILON	0.01
-*/
 
-/* ufo2map/bsp.h, ufo2map/map.c */
 #define	MAX_MAP_SIDES (MAX_MAP_BRUSHES*6)
-/* ufo2map/bsp.h, ufo2map/textures.c */
 #define	MAX_MAP_TEXTURES	1024
 
 #define MAX_MAP_LIGHTMAP	(512 * 512)

@@ -26,12 +26,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _COMMON_DEFINED
 #define _COMMON_DEFINED
 
-#include "../game/q_shared.h"
-#include "../game/inventory.h"
+#include "../shared/ufotypes.h"
+#include "../shared/byte.h"
+#include "../shared/shared.h"
+#include "../shared/mathlib.h"
 #include "../shared/defines.h"
 #include "../shared/typedefs.h"
-#include "../common/tracing.h"
-#include "../common/cvar.h"
+#include "../game/inventory.h"
+#include "tracing.h"
+#include "cvar.h"
 #include "mem.h"
 #include "http.h"
 
