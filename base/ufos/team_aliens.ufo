@@ -121,6 +121,9 @@ team taman
 		stun_electro 0
 		stun_gas 0
 	}
+	templates {
+		soldier_taman
+	}
 }
 
 team ortnok
@@ -232,6 +235,9 @@ team ortnok
 		stun_electro 0
 		stun_gas 0
 	}
+	templates {
+		soldier_ortnok
+	}
 }
 
 team shevaar
@@ -332,6 +338,9 @@ team shevaar
 		stun_electro 3
 		stun_gas -6
 	}
+	templates {
+		soldier_shevaar
+	}
 }
 
 team bloodspider
@@ -404,5 +413,8 @@ team bloodspider
 
 		stun_electro 6
 		stun_gas 999
+	}
+	templates {
+		soldier_blood
 	}
 }

@@ -176,7 +176,9 @@ typedef enum {
 
 /* team definitions */
 
-#define MAX_TEAMDEFS	64
+#define MAX_TEAMDEFS			64
+#define MAX_CHARACTER_TEMPLATES	24
+#define MAX_TEMPLATES_PER_TEAM	16
 
 typedef enum {
 	NAME_NEUTRAL,
@@ -235,6 +237,9 @@ typedef struct teamDef_s {
 	char deathTextureName[MAX_VAR];	/**< texture name for death of any member of this team */
 
 	short resistance[MAX_DAMAGETYPES]; /**< Resistance to damage */
+
+	chrTemplate_t *characterTemplates[MAX_TEMPLATES_PER_TEAM];
+	int numTemplates;
 } teamDef_t;
 
 /** @brief Describes a character with all its attributes */

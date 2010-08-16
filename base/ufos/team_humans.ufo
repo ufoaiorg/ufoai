@@ -45,6 +45,8 @@
 //			deathsound
 //	resistance {}
 //			Defines the dmgtypes from the weapon definitions and the resistance against such a damage
+//	templates {}
+//			List of character templates for this team (see templates.ufo)
 //========================================================================
 
 //========================================================================
@@ -563,6 +565,16 @@ team phalanx
 			deathsound	soldiers/maledeath05
 		}
 	}
+	templates {
+		soldier_common
+		soldier_close
+		soldier_heavy
+		soldier_assault
+		soldier_sniper
+		soldier_blast
+		soldier_elite
+		soldier_mp // For multiplayer characters ONLY!
+	}
 }
 
 // ======================
@@ -921,6 +933,9 @@ team phalanx_scientist
 			deathsound	soldiers/maledeath04
 			deathsound	soldiers/maledeath05
 		}
+	}
+	templates {
+		soldier_civil
 	}
 }
 
@@ -1281,6 +1296,9 @@ team phalanx_pilot
 			deathsound	soldiers/maledeath05
 		}
 	}
+	templates {
+		soldier_common
+	}
 }
 
 // ======================
@@ -1638,6 +1656,9 @@ team phalanx_worker
 			deathsound	soldiers/maledeath05
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 // ======================
@@ -1700,6 +1721,9 @@ team phalanx_ugv_phoenix
 		stun_electro 6
 		stun_gas 999
 	}
+	templates {
+		soldier_robot
+	}
 }
 
 // wheeled ares ugv
@@ -1758,5 +1782,8 @@ team phalanx_ugv_ares_w
 
 		stun_electro 6
 		stun_gas 999
+	}
+	templates {
+		soldier_robot
 	}
 }

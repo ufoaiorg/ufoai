@@ -1374,12 +1374,17 @@ OBJECT DEFINITION INTERPRETER
 ==============================================================================
 */
 
-static const char *const skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
+static const char *const skillNames[SKILL_NUM_TYPES + 1] = {
+	"strength",
+	"speed",
+	"accuracy",
+	"mind",
 	"close",
 	"heavy",
 	"assault",
 	"sniper",
-	"explosive"
+	"explosive",
+	"health"
 };
 
 /** @brief The order here must be the same as in od_vals */
@@ -1529,7 +1534,7 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 					return;
 
 				for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++)
-					if (!Q_strcasecmp(skillNames[skill - ABILITY_NUM_TYPES], token)) {
+					if (!strcmp(skillNames[skill], token)) {
 						fd->weaponSkill = skill;
 						break;
 					}
@@ -2575,6 +2580,32 @@ static void Com_ParseTeam (const char *name, const char **text)
 					td->onlyWeapon = od;
 				else
 					Sys_Error("Com_ParseTeam: Could not get item definition for '%s'", token);
+			} else if (!strcmp(token, "templates")) {
+				chrTemplate_t *ct;
+				token = Com_EParse(text, errhead, name);
+				if (!*text || *token != '{')
+					Com_Printf("Com_ParseTeam: template list without body ignored in team def \"%s\" \n", name);
+				else {
+					do {
+						token = Com_EParse(text, errhead, name);
+						if (*token == '}')
+							break;
+						for (i = 0; i < td->numTemplates; i++) {
+							if (!strcmp(token, td->characterTemplates[i]->id)) {
+								Com_Printf("Com_ParseTeam: template %s used more than once in team def %s second ignored", token, name);
+								break;
+							}
+						}
+						if (i >= td->numTemplates) {
+							ct = Com_GetCharacterTemplateByID(token);
+							if (ct)
+								td->characterTemplates[td->numTemplates++] = ct;
+							else
+								Sys_Error("Com_ParseTeam: Could not get character template for '%s' in %s", token, name);
+						} else
+							break;
+					} while (*text);
+				}
 			} else if (!strcmp(token, "models"))
 				Com_ParseActorModels(name, text, td);
 			else if (!strcmp(token, "names"))
@@ -2593,6 +2624,84 @@ static void Com_ParseTeam (const char *name, const char **text)
 		Q_strncpyz(td->deathTextureName, va("pics/sfx/blood_%i", i), sizeof(td->deathTextureName));
 		Com_DPrintf(DEBUG_CLIENT, "Using random blood for teamdef: '%s' (%i)\n", td->id, i);
 	}
+}
+
+/**
+ * @brief Returns the chrTemplate pointer for the given id - or NULL if not found in the chrTemplates
+ * array
+ * @param[in] team The character template id (given in ufo-script files)
+ */
+chrTemplate_t* Com_GetCharacterTemplateByID (const char *chrTemplate)
+{
+	int i;
+
+	/* get character template */
+	for (i = 0; i < csi.numChrTemplates; i++)
+		if (!strcmp(chrTemplate, csi.chrTemplates[i].id))
+			return &csi.chrTemplates[i];
+
+	Com_Printf("Com_GetCharacterTemplateByID: could not find character template: '%s'\n", chrTemplate);
+	return NULL;
+}
+
+/**
+ * @brief Parses character templates from scripts
+ */
+static void Com_ParseCharacterTemplate (const char *name, const char **text)
+{
+	const char *errhead = "Com_ParseCharacterTemplate: unexpected end of file";
+	const char *token;
+	chrTemplate_t *ct;
+	int i;
+
+	for (i = 0; i < csi.numChrTemplates; i++)
+		if (!strcmp(name, csi.chrTemplates[i].id)) {
+			Com_Printf("Com_ParseCharacterTemplate: Template with same name found, second ignored '%s'\n", name);
+			return;
+		}
+
+	if (i >= MAX_CHARACTER_TEMPLATES)
+		Sys_Error("Com_ParseCharacterTemplate: too many character templates\n");
+
+	/* initialize the character template */
+	ct = &csi.chrTemplates[csi.numChrTemplates++];
+	memset(ct, 0, sizeof(*ct));
+
+	Q_strncpyz(ct->id, name, sizeof(ct->id));
+
+	token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseCharacterTemplate: character template \"%s\" without body ignored\n", name);
+		csi.numChrTemplates--;
+		return;
+	}
+
+	do {
+		token = Com_EParse(text, errhead, name);
+		if (!*text || *token == '}')
+			return;
+
+		for (i = 0; i < SKILL_NUM_TYPES + 1; i++)
+			if (!Q_strcasecmp(token, skillNames[i])) {
+				/* found a definition */
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					return;
+
+				Com_EParseValue(ct->skills[i], token, V_INT2, 0, sizeof(ct->skills[i]));
+				break;
+			}
+		if (i >= SKILL_NUM_TYPES + 1) {
+			if (!strcmp(token, "rate")) {
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				ct->rate = atof(token);
+			} else
+				Com_Printf("Com_ParseCharacterTemplate: unknown token \"%s\" ignored (template %s)\n", token, name);
+		}
+	} while (*text);
 }
 
 /*
@@ -3047,6 +3156,8 @@ void Com_ParseScripts (qboolean onlyServer)
 			Com_ParseInventory(name, &text);
 		else if (!strcmp(type, "terrain"))
 			Com_ParseTerrain(name, &text);
+		else if (!strcmp(type, "chrtemplate"))
+			Com_ParseCharacterTemplate(name, &text);
 		else if (!onlyServer)
 			CL_ParseClientData(type, name, &text);
 	}

@@ -46,238 +46,53 @@ qboolean CHRSH_IsTeamDefRobot (const teamDef_t* const td)
 }
 
 /**
- * @brief Templates for the different unit types. Each element of the array is a tuple that
- * indicates the minimum and the maximum value for the relevant ability or skill.
- */
-static const int commonSoldier[][2] =
-	{{15, 25}, /* Strength */
-	 {15, 25}, /* Speed */
-	 {20, 30}, /* Accuracy */
-	 {20, 35}, /* Mind */
-	 {15, 25}, /* Close */
-	 {15, 25}, /* Heavy */
-	 {15, 25}, /* Assault */
-	 {15, 25}, /* Sniper */
-	 {15, 25}, /* Explosives */
-	 {80, 110}}; /* Health */
-
-static const int closeSoldier[][2] =
-	{{15, 25}, /* Strength */
-	 {15, 25}, /* Speed */
-	 {20, 30}, /* Accuracy */
-	 {20, 35}, /* Mind */
-	 {25, 40}, /* Close */
-	 {13, 23}, /* Heavy */
-	 {13, 23}, /* Assault */
-	 {13, 23}, /* Sniper */
-	 {13, 23}, /* Explosives */
-	 {80, 110}}; /* Health */
-
-static const int heavySoldier[][2] =
-	{{15, 25}, /* Strength */
-	 {15, 25}, /* Speed */
-	 {20, 30}, /* Accuracy */
-	 {20, 35}, /* Mind */
-	 {13, 23}, /* Close */
-	 {25, 40}, /* Heavy */
-	 {13, 23}, /* Assault */
-	 {13, 23}, /* Sniper */
-	 {13, 23}, /* Explosives */
-	 {80, 110}}; /* Health */
-
-static const int assaultSoldier[][2] =
-	{{15, 25}, /* Strength */
-	 {15, 25}, /* Speed */
-	 {20, 30}, /* Accuracy */
-	 {20, 35}, /* Mind */
-	 {13, 23}, /* Close */
-	 {13, 23}, /* Heavy */
-	 {25, 40}, /* Assault */
-	 {13, 23}, /* Sniper */
-	 {13, 23}, /* Explosives */
-	 {80, 110}}; /* Health */
-
-static const int sniperSoldier[][2] =
-	{{15, 25}, /* Strength */
-	 {15, 25}, /* Speed */
-	 {20, 30}, /* Accuracy */
-	 {20, 35}, /* Mind */
-	 {13, 23}, /* Close */
-	 {13, 23}, /* Heavy */
-	 {13, 23}, /* Assault */
-	 {25, 40}, /* Sniper */
-	 {13, 23}, /* Explosives */
-	 {80, 110}}; /* Health */
-
-static const int blastSoldier[][2] =
-	{{15, 25}, /* Strength */
-	 {15, 25}, /* Speed */
-	 {20, 30}, /* Accuracy */
-	 {20, 35}, /* Mind */
-	 {13, 23}, /* Close */
-	 {13, 23}, /* Heavy */
-	 {13, 23}, /* Assault */
-	 {13, 23}, /* Sniper */
-	 {25, 40}, /* Explosives */
-	 {80, 110}}; /* Health */
-
-static const int eliteSoldier[][2] =
-	{{25, 35}, /* Strength */
-	 {25, 35}, /* Speed */
-	 {30, 40}, /* Accuracy */
-	 {30, 45}, /* Mind */
-	 {25, 40}, /* Close */
-	 {25, 40}, /* Heavy */
-	 {25, 40}, /* Assault */
-	 {25, 40}, /* Sniper */
-	 {25, 40}, /* Explosives */
-	 {100, 130}}; /* Health */
-
-static const int civilSoldier[][2] =
-	{{5, 10}, /* Strength */
-	 {5, 10}, /* Speed */
-	 {10, 15}, /* Accuracy */
-	 {10, 15}, /* Mind */
-	 {5, 10}, /* Close */
-	 {5, 10}, /* Heavy */
-	 {5, 10}, /* Assault */
-	 {5, 10}, /* Sniper */
-	 {5, 10}, /* Explosives */
-	 {5, 10}}; /* Health */
-
-static const int tamanSoldier[][2] =
-	{{25, 35}, /* Strength */
-	 {25, 35}, /* Speed */
-	 {40, 50}, /* Accuracy */
-	 {50, 85}, /* Mind */
-	 {50, 90}, /* Close */
-	 {50, 90}, /* Heavy */
-	 {50, 90}, /* Assault */
-	 {50, 90}, /* Sniper */
-	 {50, 90}, /* Explosives */
-	 {100, 130}}; /* Health */
-
-static const int ortnokSoldier[][2] =
-	{{45, 65}, /* Strength */
-	 {20, 30}, /* Speed */
-	 {30, 45}, /* Accuracy */
-	 {20, 40}, /* Mind */
-	 {50, 90}, /* Close */
-	 {50, 90}, /* Heavy */
-	 {50, 90}, /* Assault */
-	 {50, 90}, /* Sniper */
-	 {50, 90}, /* Explosives */
-	 {150, 190}}; /* Health */
-
-static const int shevaarSoldier[][2] =
-	{{30, 40}, /* Strength */
-	 {30, 40}, /* Speed */
-	 {40, 70}, /* Accuracy */
-	 {30, 60}, /* Mind */
-	 {50, 90}, /* Close */
-	 {50, 90}, /* Heavy */
-	 {50, 90}, /* Assault */
-	 {50, 90}, /* Sniper */
-	 {50, 90}, /* Explosives */
-	 {120, 160}}; /* Health */
-
-static const int bloodSoldier[][2] =
-	{{55, 55}, /* Strength */
-	 {50, 50}, /* Speed */
-	 {50, 50}, /* Accuracy */
-	 {0, 0}, /* Mind */
-	 {50, 50}, /* Close */
-	 {50, 50}, /* Heavy */
-	 {50, 50}, /* Assault */
-	 {50, 50}, /* Sniper */
-	 {50, 50}, /* Explosives */
-	 {150, 150}}; /* Health */
-
-static const int robotSoldier[][2] =
-	{{55, 55}, /* Strength */
-	 {40, 40}, /* Speed */
-	 {50, 50}, /* Accuracy */
-	 {0, 0}, /* Mind */
-	 {50, 50}, /* Close */
-	 {50, 50}, /* Heavy */
-	 {50, 50}, /* Assault */
-	 {50, 50}, /* Sniper */
-	 {50, 50}, /* Explosives */
-	 {200, 200}}; /* Health */
-
-/** @brief For multiplayer characters ONLY! */
-static const int MPSoldier[][2] =
-	{{25, 75}, /* Strength */
-	 {25, 35}, /* Speed */
-	 {20, 75}, /* Accuracy */
-	 {30, 75}, /* Mind */
-	 {20, 75}, /* Close */
-	 {20, 75}, /* Heavy */
-	 {20, 75}, /* Assault */
-	 {20, 75}, /* Sniper */
-	 {20, 75}, /* Explosives */
-	 {80, 130}}; /* Health */
-
-/**
  * @brief Generates a skill and ability set for any character.
  * @param[in] chr Pointer to the character, for which we generate stats.
- * @param[in] multiplayer If this is true we use the skill values from @c MPSoldier
+ * @param[in] multiplayer If this is true we use the skill values from @c soldier_mp
  * mulitplayer is a special case here
  */
 void CHRSH_CharGenAbilitySkills (character_t * chr, qboolean multiplayer)
 {
 	int i;
-	const int (*chrTemplate)[2];
+	float sumRate = 0, curRate = 0;
+	int (*chrTemplate)[2];
+	teamDef_t *td;
+	chrTemplate_t *ct;
+
+	td = chr->teamDef;
 
 	/* Add modifiers for difficulty setting here! */
-	switch (chr->teamDef->race) {
-	case RACE_TAMAN:
-		chrTemplate = tamanSoldier;
-		break;
-	case RACE_ORTNOK:
-		chrTemplate = ortnokSoldier;
-		break;
-	case RACE_BLOODSPIDER:
-		chrTemplate = bloodSoldier;
-		break;
-	case RACE_SHEVAAR:
-		chrTemplate = shevaarSoldier;
-		break;
-	case RACE_CIVILIAN:
-		chrTemplate = civilSoldier;
-		break;
-	case RACE_PHALANX_HUMAN: {
-		if (multiplayer) {
-			chrTemplate = MPSoldier;
-		} else {
-			/* Determine which soldier template to use.
-			 * 25% of the soldiers will be specialists (5% chance each).
-			 * 1% of the soldiers will be elite.
-			 * 74% of the soldiers will be common. */
-			const float soldierRoll = frand();
-			if (soldierRoll <= 0.01f)
-				chrTemplate = eliteSoldier;
-			else if (soldierRoll <= 0.06)
-				chrTemplate = closeSoldier;
-			else if (soldierRoll <= 0.11)
-				chrTemplate = heavySoldier;
-			else if (soldierRoll <= 0.16)
-				chrTemplate = assaultSoldier;
-			else if (soldierRoll <= 0.22)
-				chrTemplate = sniperSoldier;
-			else if (soldierRoll <= 0.26)
-				chrTemplate = blastSoldier;
-			else
-				chrTemplate = commonSoldier;
+	if (multiplayer && td->race == RACE_PHALANX_HUMAN) {
+		for (i = 0; i < td->numTemplates; i++) {
+			if (!strcmp(td->characterTemplates[i]->id, "soldier_mp")) {
+				ct = td->characterTemplates[i];
+				break;
+			}
 		}
-		break;
-	}
-	case RACE_ROBOT:
-		chrTemplate = robotSoldier;
-		break;
-	default:
-		Sys_Error("CHRSH_CharGenAbilitySkills: unexpected race '%i'", chr->teamDef->race);
-	}
+		if (i >= td->numTemplates)
+			Sys_Error("CHRSH_CharGenAbilitySkills: No multiplayer character template found (soldier_mp)");
+	} else if (td->characterTemplates[0]) {
+		if (td->numTemplates > 1) {
+			for (i = 0; i < td->numTemplates; i++) {
+				ct = td->characterTemplates[i];
+				sumRate += ct->rate;
+			}
+			if (sumRate) {
+				const float soldierRoll = frand();
+				for (ct = td->characterTemplates[0]; ct->id; ct++) {
+					curRate += ct->rate;
+					if (curRate && soldierRoll <= (curRate / sumRate))
+						break;
+				}
+			} else
+				/* No rates or all set to 0 default to first template */
+				ct = td->characterTemplates[0];
+		} else
+			/* Only one template */
+			ct = td->characterTemplates[0];
+	} else
+		Sys_Error("CHRSH_CharGenAbilitySkills: No character template for team %s!", td->id);
+	chrTemplate = ct->skills;
 
 	assert(chrTemplate);
 

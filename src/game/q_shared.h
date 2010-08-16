@@ -359,6 +359,10 @@ typedef struct csi_s {
 	/** the current assigned teams for this mission */
 	const teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
 	int numAlienTeams;
+
+	/** character templates for this team */
+	chrTemplate_t chrTemplates[MAX_CHARACTER_TEMPLATES];
+	int numChrTemplates;
 } csi_t;
 
 /** @brief Reject messages that are send to the client from the game module */

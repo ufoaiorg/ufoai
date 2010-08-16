@@ -57,6 +57,9 @@ team latin
 			deathsound	civilians/civmaledeath02a
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 team states
@@ -122,6 +125,9 @@ team states
 			deathsound	civilians/maledeath03
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 team europe
@@ -185,6 +191,9 @@ team europe
 			deathsound	civilians/maledeath03
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 team asia
@@ -228,6 +237,9 @@ team asia
 			deathsound	civilians/maledeath02
 			deathsound	civilians/maledeath03
 		}
+	}
+	templates {
+		soldier_civil
 	}
 }
 
@@ -274,6 +286,9 @@ team middle
 			deathsound	civilians/maledeath03
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 team africa
@@ -317,6 +332,9 @@ team africa
 			deathsound	civilians/maledeath02
 			deathsound	civilians/maledeath03
 		}
+	}
+	templates {
+		soldier_civil
 	}
 }
 
@@ -363,6 +381,9 @@ team russia
 			deathsound	civilians/maledeath03
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 team oceania
@@ -407,6 +428,9 @@ team oceania
 			deathsound	civilians/maledeath03
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 //========================================================================
@@ -446,6 +470,9 @@ team armysoldier
 			deathsound	civilians/maledeath02
 			deathsound	civilians/maledeath03
 		}
+	}
+	templates {
+		soldier_common
 	}
 }
 
@@ -487,6 +514,9 @@ team scientist
 			deathsound	civilians/maledeath03
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 team worker
@@ -524,6 +554,9 @@ team worker
 			deathsound	civilians/maledeath03
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 team miner
@@ -559,5 +592,8 @@ team miner
 			deathsound	civilians/maledeath02
 			deathsound	civilians/maledeath03
 		}
+	}
+	templates {
+		soldier_civil
 	}
 }
