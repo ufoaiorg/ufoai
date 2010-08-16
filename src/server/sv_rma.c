@@ -103,13 +103,89 @@ static unsigned long tileMask (const char chr)
 	Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'", chr);
 }
 
+static inline const mTileSet_t *SV_GetMapTileSet (const mapInfo_t *map, const char *tileSetName)
+{
+	int i;
+
+	for (i = 0; i < map->numTileSets; i++)
+		if (!strcmp(tileSetName, map->mTileSets[i].id))
+			return &map->mTileSets[i];
+
+	return NULL;
+}
+
+static inline const mTile_t *SV_GetMapTile (const mapInfo_t *map, const char *tileName)
+{
+	int i;
+
+	for (i = 0; i < map->numTiles; i++)
+		if (!strcmp(tileName, map->mTile[i].id))
+			return &map->mTile[i];
+
+	return NULL;
+}
+
+/**
+ * @brief Parsed a tileset definition out of the ump-files
+ * @sa SV_ParseAssembly
+ * @sa SV_AssembleMap
+ */
+static qboolean SV_ParseMapTileSet (const char *filename, const char **text, mapInfo_t *map, qboolean inherit)
+{
+	const char *errhead = "SV_ParseMapTileSet: Unexpected end of file (";
+	const char *token;
+	mTileSet_t *target = &map->mTileSets[map->numTileSets];
+
+	memset(target, 0, sizeof(*target));
+
+	/* get tileset name */
+	token = Com_EParse(text, errhead, filename);
+	if (!*text)
+		return qfalse;
+
+	Q_strncpyz(target->id, token, sizeof(target->id));
+
+	/* start parsing the block */
+	token = Com_EParse(text, errhead, filename);
+	if (!*text)
+		return qfalse;
+	if (*token != '{') {
+		Com_Printf("SV_ParseMapTileSet: Expected '{' for tileset '%s' (%s)\n", target->id, filename);
+		return qfalse;
+	}
+
+	do {
+		token = Com_EParse(text, errhead, filename);
+		if (!*text)
+			return qfalse;
+		if (token[0] != '}') {
+			char *tileTarget = target->tiles[target->numTiles];
+			const size_t size = sizeof(target->tiles[target->numTiles]);
+			if (inherit) {
+				if (token[0] == '+')
+					token++;
+
+				Com_sprintf(tileTarget, size, "%s%s", map->inheritBasePath, token);
+			} else {
+				Q_strncpyz(tileTarget, token, size);
+			}
+
+			if (SV_GetMapTile(map, tileTarget) != NULL)
+				target->numTiles++;
+			else
+				Com_Error(ERR_DROP, "Did not find tile '%s' from tileset '%s'", tileTarget, target->id);
+		}
+	} while (token[0] != '}');
+
+	return qfalse;
+}
+
 /**
  * @brief Parsed a tile definition out of the ump-files
  * @sa SV_ParseAssembly
  * @sa SV_AssembleMap
- * @note Parsed data are stored into *target, which must already be allocated.
  */
-static int SV_ParseMapTile (const char *filename, const char **text, mapInfo_t *map, qboolean inherit)
+static qboolean SV_ParseMapTile (const char *filename, const char **text, mapInfo_t *map, qboolean inherit)
 {
 	const char *errhead = "SV_ParseMapTile: Unexpected end of file (";
 	const char *token;
@@ -120,7 +196,7 @@ static int SV_ParseMapTile (const char *filename, const char **text, mapInfo_t *
 	/* get tile name */
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return 0;
+		return qfalse;
 
 	memset(target, 0, sizeof(*target));
 
@@ -135,27 +211,27 @@ static int SV_ParseMapTile (const char *filename, const char **text, mapInfo_t *
 	/* start parsing the block */
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return 0;
+		return qfalse;
 	if (*token != '{') {
 		Com_Printf("SV_ParseMapTile: Expected '{' for tile '%s' (%s)\n", target->id, filename);
-		return 0;
+		return qfalse;
 	}
 
 	/* get width and height */
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return 0;
+		return qfalse;
 	target->w = atoi(token);
 
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return 0;
+		return qfalse;
 	target->h = atoi(token);
 
 	if (target->w > MAX_TILESIZE || target->h > MAX_TILESIZE) {
 		Com_Printf("SV_ParseMapTile: Bad tile size [%i %i] (%s) (max. [%i %i])\n", target->w, target->h, filename, MAX_TILESIZE, MAX_TILESIZE);
 		*text = strchr(*text, '}');
-		return 0;
+		return qfalse;
 	}
 
 	/* get tile specs */
@@ -180,7 +256,7 @@ static int SV_ParseMapTile (const char *filename, const char **text, mapInfo_t *
 		Com_Printf("SV_ParseMapTile: Bad tile desc in '%s' - too many entries for size\n", target->id);
 
 	/* successfully parsed - this tile counts */
-	return 1;
+	return qtrue;
 }
 
 /**
@@ -231,18 +307,19 @@ static const char *SV_GetCvarToken (const mAssembly_t *a, const char* token, con
  * @note: format of size: "size x y"
  * @note: format of fix: "fix [tilename] x y"
  * @note: format of tile: "[tilename] min max"
- * @return 1 if it was parsed, 0 if not.
+ * @return @c true if it was parsed, @c false if not.
  */
-static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **text, mAssembly_t *a)
+static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **text, mAssembly_t *a)
 {
 	const char *errhead = "SV_ParseAssembly: Unexpected end of file (";
 	const char *token;
-	int i, x, y;
+	int x, y;
+	const mTile_t *tile;
 
 	/* get assembly name */
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return 0;
+		return qfalse;
 
 	/* init */
 	memset(a, 0, sizeof(*a));
@@ -262,7 +339,7 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 		if (!text || *token == '}')
 			break;
 
-		if (!strncmp(token, "title", 5)) {
+		if (!strcmp(token, "title")) {
 			/* get map title */
 			token = Com_EParse(text, errhead, filename);
 			if (!text)
@@ -270,7 +347,7 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 
 			Q_strncpyz(a->title, token, sizeof(a->title));
 			continue;
-		} else if (!strncmp(token, "multiplayer", 11)) {
+		} else if (!strcmp(token, "multiplayer")) {
 			/* get map title */
 			token = Com_EParse(text, errhead, filename);
 			if (!text)
@@ -279,17 +356,17 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 			/* a multiplayer only tile - forced to be exactly once in the map when
 			 * we are playing a multiplayer match */
 			if (sv_maxclients->integer >= 2) {
-				for (i = 0; i < map->numTiles; i++)
-					if (!strcmp(token, map->mTile[i].id)) {
-						a->min[i] = 1;
-						a->max[i] = 1;
-						break;
-					}
-				if (i == map->numTiles)
+				const mTile_t *t = SV_GetMapTile(map, token);
+				if (t != NULL) {
+					const ptrdiff_t i = t - map->mTile;
+					a->min[i] = 1;
+					a->max[i] = 1;
+				} else {
 					Com_Error(ERR_DROP, "Could not find multiplayer tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
+				}
 			}
 			continue;
-		} else if (!strncmp(token, "size", 4)) {
+		} else if (!strcmp(token, "size")) {
 			/* get map size */
 			token = Com_EParse(text, errhead, filename);
 			if (!text)
@@ -298,7 +375,7 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 			sscanf(token, "%i %i", &a->width, &a->height);
 			a->size = a->width * a->height;
 			continue;
-		} else if (!strncmp(token, "grid", 4)) {
+		} else if (!strcmp(token, "grid")) {
 			/* get map size */
 			token = Com_EParse(text, errhead, filename);
 			if (!text)
@@ -306,8 +383,25 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 
 			sscanf(token, "%i %i", &a->dx, &a->dy);
 			continue;
+		/* chose a tile from a tileset */
+		} else if (!strcmp(token, "tileset")) {
+			const mTileSet_t *tileSet;
+			int random;
+			/* get tileset id */
+			token = Com_EParse(text, errhead, filename);
+			if (!text)
+				break;
+
+			tileSet = SV_GetMapTileSet(map, token);
+			if (tileSet == NULL)
+				Com_Error(ERR_DROP, "SV_ParseAssembly: Could not find tileset '%s' in %s", a->id, filename);
+
+			random = rand() % tileSet->numTiles;
+			token = tileSet->tiles[random];
 		/* fix tilename "x y" */
-		} else if (!strncmp(token, "fix", 3)) {
+		} else if (!strcmp(token, "fix")) {
+			const mTile_t *t;
+
 			/* get tile */
 			token = Com_EParse(text, errhead, filename);
 			if (!text)
@@ -319,31 +413,30 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 					break;
 			}
 
-			for (i = 0; i < map->numTiles; i++)
-				if (!strcmp(token, map->mTile[i].id)) {
-					if (a->numFixed >= MAX_FIXEDTILES)
-						Com_Error(ERR_DROP, "SV_ParseAssembly: Too many fixed tiles in assembly '%s'\n", a->id);
+			t = SV_GetMapTile(map, token);
+			if (t != NULL) {
+				const ptrdiff_t i = t - map->mTile;
+				if (a->numFixed >= MAX_FIXEDTILES)
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Too many fixed tiles in assembly '%s'", a->id);
 
-					/* get coordinates */
-					token = Com_EParse(text, errhead, filename);
-					if (!text)
-						Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s - could not get coordinates for fixed tile", filename);
+				/* get coordinates */
+				token = Com_EParse(text, errhead, filename);
+				if (!text)
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s - could not get coordinates for fixed tile", filename);
 
-					sscanf(token, "%i %i", &x, &y);
-					if (x < 0 || x >= MAX_RANDOM_MAP_WIDTH) {
-						Com_Error(ERR_DROP, "SV_ParseAssembly: Error, invalid fixed coordinates given for x (%i) boundaries are: [0:%i].",
-								x, MAX_RANDOM_MAP_WIDTH - 1);
-					} else if (y < 0 || y >= MAX_RANDOM_MAP_HEIGHT) {
-						Com_Error(ERR_DROP, "SV_ParseAssembly: Error, invalid fixed coordinates given for y (%i) - boundaries are: [0:%i].",
-								y, MAX_RANDOM_MAP_HEIGHT - 1);
-					}
-					a->fX[a->numFixed] = x;
-					a->fY[a->numFixed] = y;
-					a->fT[a->numFixed] = i;
-					a->numFixed++;
-					break;
+				sscanf(token, "%i %i", &x, &y);
+				if (x < 0 || x >= MAX_RANDOM_MAP_WIDTH) {
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error, invalid fixed coordinates given for x (%i) boundaries are: [0:%i].",
+							x, MAX_RANDOM_MAP_WIDTH - 1);
+				} else if (y < 0 || y >= MAX_RANDOM_MAP_HEIGHT) {
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error, invalid fixed coordinates given for y (%i) - boundaries are: [0:%i].",
+							y, MAX_RANDOM_MAP_HEIGHT - 1);
 				}
-			if (i == map->numTiles)
+				a->fX[a->numFixed] = x;
+				a->fY[a->numFixed] = y;
+				a->fT[a->numFixed] = i;
+				a->numFixed++;
+			} else
 				Com_Error(ERR_DROP, "Could not find fixed tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
 			continue;
 		/* <format>*cvarname <defaultvalue> "min max"</format> */
@@ -353,31 +446,30 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 				break;
 		}
 
-		for (i = 0; i < map->numTiles; i++) {
-			const mTile_t *tile = &map->mTile[i];
-			if (!strcmp(token, tile->id)) {
-				/* get min and max tile number */
-				token = Com_EParse(text, errhead, filename);
-				if (!text || *token == '}')
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (invalid syntax for tile %s)", filename, tile->id);
+		tile = SV_GetMapTile(map, token);
+		if (tile != NULL) {
+			const ptrdiff_t i = tile - map->mTile;
+			/* get min and max tile number */
+			token = Com_EParse(text, errhead, filename);
+			if (!text || *token == '}')
+				Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (invalid syntax for tile %s)", filename, tile->id);
 
-				if (!strstr(token, " "))
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min max value of tile %s)", filename, tile->id);
+			if (!strstr(token, " "))
+				Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min max value of tile %s)", filename, tile->id);
 
-				sscanf(token, "%i %i", &x, &y);
-				a->min[i] = x;
-				a->max[i] = y;
-				if (a->min[i] > a->max[i])
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min is bigger than max for tile %s)", filename, tile->id);
-				if (a->max[i] <= 0)
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (max is <= 0 for tile %s)", filename, tile->id);
-				break;
-			}
-		}
-		if (i == map->numTiles)
+			sscanf(token, "%i %i", &x, &y);
+			a->min[i] = x;
+			a->max[i] = y;
+			if (a->min[i] > a->max[i])
+				Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min is bigger than max for tile %s)", filename, tile->id);
+			if (a->max[i] <= 0)
+				Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (max is <= 0 for tile %s)", filename, tile->id);
+		} else {
 			Com_Error(ERR_DROP, "Could not find tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
+		}
 	} while (text);
-	return 1;
+
+	return qtrue;
 }
 
 
@@ -1020,7 +1112,7 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 	Com_sprintf(filename, sizeof(filename), "maps/%s.ump", name);
 	FS_LoadFile(filename, &buf);
 	if (!buf)
-		Com_Error(ERR_DROP, "SV_AssembleMap: Map assembly info '%s' not found", filename);
+		Com_Error(ERR_DROP, "SV_ParseUMP: Map assembly info '%s' not found", filename);
 
 	/* parse it */
 	text = (const char*)buf;
@@ -1038,28 +1130,33 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 				Q_strncpyz(map->inheritBasePath, token, sizeof(map->inheritBasePath));
 			else
 				Q_strncpyz(map->basePath, token, sizeof(map->basePath));
+		} else if (!strcmp(token, "tileset")) {
+			if (map->numTiles >= MAX_TILETYPES)
+				Com_Printf("SV_ParseUMP: Too many map tileset found in (%s)\n", filename);
+			else if (SV_ParseMapTileSet(filename, &text, map, inherit))
+				map->numTileSets++;
 		} else if (!strcmp(token, "tile")) {
 			if (map->numTiles >= MAX_TILETYPES)
-				Com_Printf("SV_ParseMapTile: Too many map tile types (%s)\n", filename);
+				Com_Printf("SV_ParseUMP: Too many map tile types (%s)\n", filename);
 			else if (SV_ParseMapTile(filename, &text, map, inherit))
-					map->numTiles++;
+				map->numTiles++;
 		} else if (!strcmp(token, "assembly")) {
 			if (inherit) {
 				FS_SkipBlock(&text);
 			} else {
 				if (map->numAssemblies >= MAX_MAPASSEMBLIES)
-					Com_Printf("SV_ParseAssembly: Too many map assemblies (%s)\n", filename);
+					Com_Printf("SV_ParseUMP: Too many map assemblies (%s)\n", filename);
 				else if (SV_ParseAssembly(map, filename, &text, &map->mAssembly[map->numAssemblies]))
 					map->numAssemblies++;
 			}
 		} else if (token[0] == '{') {
-			Com_Printf("SV_AssembleMap: Skipping unknown block\n");
+			Com_Printf("SV_ParseUMP: Skipping unknown block\n");
 			/* ignore unknown block */
 			text = strchr(text, '}') + 1;
 			if (!text)
 				break;
 		} else
-			Com_Printf("SV_AssembleMap: Unknown token '%s' (%s)\n", token, filename);
+			Com_Printf("SV_ParseUMP: Unknown token '%s' (%s)\n", token, filename);
 	} while (text);
 
 	/* free the file */

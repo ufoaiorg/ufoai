@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_MAPASSEMBLIES 32
 #define MAX_TILETYPES 64
+#define MAX_TILESETS 8
+#define MAX_TILESETTILES 8
 #define MAX_TILESIZE 16
 #define MAX_FIXEDTILES 64
 
@@ -43,8 +45,13 @@ typedef struct mTile_s {
 	unsigned long spec[MAX_TILESIZE][MAX_TILESIZE];	/**< connection/alternatives info for the tile  */
 	int w, h;		/**< The width and height of the tile. */
 	int area;	/**< Number of solid parts */
-	struct mTile_s *duplicate;	/**< Pointer to next duplicate **/
 } mTile_t;
+
+typedef struct mTileSet_s {
+	char id[MAX_VAR];
+	char tiles[MAX_VAR][MAX_TILESETTILES];
+	int numTiles;
+} mTileSet_t;
 
 /**
  * @brief Stores the parsed data of an assembly definition.
@@ -107,6 +114,9 @@ typedef struct mapInfo_s {
 
 	mPlaced_t mPlaced[MAX_MAPTILES];	 /**< Holds all tiles that have been placed on the current map. */
 	int numPlaced;				/**< The number of tiles in mPlaced. */
+
+	mTileSet_t mTileSets[MAX_TILESETS];			 /**< A list of parsed map-tiles. */
+	int numTileSets; /**< Length of the mTile list */
 
 	mTile_t mTile[MAX_TILETYPES];			 /**< A list of parsed map-tiles. */
 	int numTiles; /**< Length of the mTile list */
