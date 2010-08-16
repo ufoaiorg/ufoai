@@ -2088,7 +2088,7 @@ NAME AND TEAM DEFINITION INTERPRETER
  * @param[in] td The team definition to get the name from
  * @sa Com_GetCharacterValues
  */
-const char *Com_GiveName (int gender, const teamDef_t *td)
+static const char *Com_GiveName (int gender, const teamDef_t *td)
 {
 	int j, name = 0;
 	linkedList_t* list;
@@ -2125,7 +2125,7 @@ const char *Com_GiveName (int gender, const teamDef_t *td)
  * @param[in] td The team definition
  * @sa Com_GetCharacterValues
  */
-const char *Com_GiveModel (int type, int gender, const teamDef_t *td)
+static const char *Com_GiveModel (int type, int gender, const teamDef_t *td)
 {
 	int j;
 
