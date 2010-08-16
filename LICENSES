@@ -3271,7 +3271,7 @@ base/pics/tutorial/gameplay8b.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/tutorial/skirmish1.png | GNU General Public License 2.0 or later
 base/pics/tutorial/tactical1.jpg | GNU General Public License 2.0 | UFO:AI Team
 base/pics/ufoai.jpg | GNU General Public License 2.0
-base/pics/ui/airequip_element.png | GNU General Public License 2.0 or later
+base/pics/ui/airequip_element.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/airequip_no_shield.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/airequip_no_weapon.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/airequip_selected_element.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
@@ -3287,18 +3287,18 @@ base/pics/ui/base_ur.png | GNU General Public License 2.0 or later |  | Based on
 base/pics/ui/button_background.png | GNU General Public License 2.0 or later
 base/pics/ui/button_background2.png | GNU General Public License 2.0 or later
 base/pics/ui/button_big_menu.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/button_blue.png | GNU General Public License 2.0 or later
-base/pics/ui/button_geoscape.png | GNU General Public License 2.0 or later
-base/pics/ui/button_green_big.png | GNU General Public License 2.0 or later
-base/pics/ui/button_green_small.png | GNU General Public License 2.0 or later
-base/pics/ui/button_green_verysmall.png | GNU General Public License 2.0 or later
+base/pics/ui/button_blue.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/button_geoscape.png | GNU General Public License 2.0 or later | bayo
+base/pics/ui/button_green_big.png | GNU General Public License 2.0 or later | bayo
+base/pics/ui/button_green_small.png | GNU General Public License 2.0 or later | bayo
+base/pics/ui/button_green_verysmall.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/button_pack1.png | GNU General Public License 2.0 or later
 base/pics/ui/button_square.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/checkbox_blue.png | GNU General Public License 2.0 or later
-base/pics/ui/checkbox_green.png | GNU General Public License 2.0 or later
+base/pics/ui/checkbox_blue.png | GNU General Public License 2.0 or later |  | Source: Based on original menu artwork by SparX and Rasta
+base/pics/ui/checkbox_green.png | GNU General Public License 2.0 or later | bayo | Source: Based on original menu artwork by SparX and Rasta
 base/pics/ui/equipment_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/geo_menu.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/ui/geo_menu_mini.png | GNU General Public License 2.0 or later
+base/pics/ui/geo_menu_mini.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/geo_miniglobe.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_blue.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_green.png | GNU General Public License 2.0 or later
@@ -3317,31 +3317,31 @@ base/pics/ui/map_ur.png | GNU General Public License 2.0 or later |  | Based on 
 base/pics/ui/mp_team_edit_bg.png | GNU General Public License 2.0 or later
 base/pics/ui/multiplayer_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/options_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/panel_green.png | GNU General Public License 2.0 or later
-base/pics/ui/panel_green_slim.png | GNU General Public License 2.0 or later
-base/pics/ui/panel_green_tab.png | GNU General Public License 2.0 or later
-base/pics/ui/panel_grey.png | GNU General Public License 2.0 or later
-base/pics/ui/panel_grey_black.png | GNU General Public License 2.0 or later
-base/pics/ui/panel_grey_green.png | GNU General Public License 2.0 or later
-base/pics/ui/panel_grey_green_large.png | GNU General Public License 2.0 or later
-base/pics/ui/panel_grey_green_large2.png | GNU General Public License 2.0 or later
-base/pics/ui/panel_grey_white.png | GNU General Public License 2.0 or later
+base/pics/ui/panel_green.png | GNU General Public License 2.0 or later | bayo
+base/pics/ui/panel_green_slim.png | GNU General Public License 2.0 or later | bayo
+base/pics/ui/panel_green_tab.png | GNU General Public License 2.0 or later | bayo
+base/pics/ui/panel_grey.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_grey_black.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_grey_green.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_grey_green_large.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_grey_green_large2.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_grey_white.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/panel_rounded_black.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/panel_rounded_green.png | GNU General Public License 2.0 or later | bayo
-base/pics/ui/panel_tab.png | GNU General Public License 2.0 or later
-base/pics/ui/panel_window.png | GNU General Public License 2.0 or later
-base/pics/ui/popup_alpha_tile.png | GNU General Public License 2.0 or later
+base/pics/ui/panel_tab.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/panel_window.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/popup_alpha_tile.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/popup_button_hl.png | GNU General Public License 2.0 or later
-base/pics/ui/popup_tile.png | GNU General Public License 2.0 or later
-base/pics/ui/radar.png | GNU General Public License 2.0 or later
-base/pics/ui/scrollbar_v_green.png | GNU General Public License 2.0 or later
+base/pics/ui/popup_tile.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/radar.png | GNU General Public License 2.0 or later | bayo
+base/pics/ui/scrollbar_v_green.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/selectbox.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/selectbox_blue.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/selectbox_red.png | GNU General Public License 2.0 or later | SparX;Rasta;MCR | Based on original menu artwork by SparX and Rasta
 base/pics/ui/skirmish_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/spinner_blue.png | GNU General Public License 2.0 or later
+base/pics/ui/spinner_blue.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/stats_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/tab.png | GNU General Public License 2.0 or later
+base/pics/ui/tab.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/transtypebox.png | GNU General Public License 2.0 or later
 base/pics/ui/vertical_bar.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
