@@ -1,12 +1,12 @@
-// ==================
+// ==============
 // UFOPEDIA MENU
-// ==================
+// ==============
 
 window ufopedia extends objectinfo
 {
 	{
-		pos			"10 50"
-		size		"1000 619"
+		pos			"12 34"
+		size		"1000 700"
 		dragbutton	true
 		closebutton	true
 		image		"ui/popup_alpha_tile"
@@ -18,10 +18,11 @@ window ufopedia extends objectinfo
 	// summary
 	// ==================
 
-	panel summary {
+	panel summary
+	{
 		{
-			pos		"27 92"
-			size	"307 504"
+			pos		"22 92"
+			size	"307 588"
 			image	"ui/panel_green"
 			layout	LAYOUT_BORDER
 			padding	10
@@ -35,20 +36,23 @@ window ufopedia extends objectinfo
 			font		"f_small"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			onChange	{
+			onChange
+			{
 				cmd "ufopedia_click <cvar:up_summary_selection>;"
 				*node:root.content.ufopedia_scroll@current = 0
 				*node:root.content.ufopedia@viewpos = 0
 				cmd "update_ufopedia_layout;"
 			}
-			onViewChange	{
+			onViewChange
+			{
 				*node:parent.list_scroll@current = <viewpos>
 				*node:parent.list_scroll@fullsize = <fullsize>
 				*node:parent.list_scroll@viewsize = <viewsize>
 			}
 		}
 
-		vscrollbar list_scroll {
+		vscrollbar list_scroll
+		{
 			image		"ui/scrollbar_v_green"
 			align		LAYOUTALIGN_RIGHT
 			current		0
@@ -58,37 +62,41 @@ window ufopedia extends objectinfo
 		}
 	}
 
-	panel content {
+	panel content
+	{
 		{
-			pos		"350 55"
-			size	"638 545"
+			pos		"343 55"
+			size	"655 625"
 		}
 
-		panel navigation_panel {
+		panel navigation_panel
+		{
 			pos		"0 32"
-			size	"630 510"
+			size	"637 593"
 			image	"ui/panel_green_tab"
 		}
 
-		tab navigation {
+		tab navigation
+		{
 			{
 				cvar	*cvar:ufopedia_content
 				pos		"1 0"
-				size	"622 43"
-				onChange {
-					cmd "update_ufopedia_layout;"
-				}
+				size	"628 43"
+				onChange { cmd "update_ufopedia_layout;" }
 			}
 
-			option description {
+			option description
+			{
 				label	"_Description"
 				value	"description"
 			}
-			option preresearch {
-				label	"_Pre research text"
+			option preresearch
+			{
+				label	"_Pre-Research Report"
 				value	"preresearch"
 			}
-			option stats {
+			option stats
+			{
 				label	"_Statistics"
 				value	"stats"
 			}
@@ -101,8 +109,8 @@ window ufopedia extends objectinfo
 		image image_top
 		{
 			src		*cvar:mn_upimage_top
-			pos			"432 65"
-			size		"163 298"
+			pos			"425 55"
+			size		"175 600"
 			preventratio	true
 		}
 
@@ -110,8 +118,8 @@ window ufopedia extends objectinfo
 		{
 			src			*cvar:mn_upmodel_top
 			angles		"0 0 120"
-			pos			"433 64"
-			size		"151 151"
+			pos			"425 55"
+			size		"175 175"
 			autoscale	true
 			rotatewithmouse	true
 		}
@@ -120,8 +128,8 @@ window ufopedia extends objectinfo
 		{
 			src			*cvar:mn_upmodel_bottom
 			angles		"0 0 120"
-			pos			"451 246"
-			size		"120 120"
+			pos			"460 250"
+			size		"112 112"
 			autoscale	true
 			rotatewithmouse	true
 		}
@@ -133,23 +141,25 @@ window ufopedia extends objectinfo
 		text2 ufopedia
 		{
 			dataid		TEXT_UFOPEDIA
-			pos			"14 55"
-			size		"406 473"
+			pos			"14 50"
+			size		"406 570"
 			font		"f_small"
 			lineheight	18
 			tabwidth	100
 			rows		26
-			onViewChange	{
+			onViewChange
+			{
 				*node:parent.ufopedia_scroll@fullsize = <fullsize>
 				*node:parent.ufopedia_scroll@current = <viewpos>
 				*node:parent.ufopedia_scroll@viewsize = <viewsize>
 			}
 		}
 
-		vscrollbar ufopedia_scroll {
+		vscrollbar ufopedia_scroll
+		{
 			image		"ui/scrollbar_v_green"
-			pos			"603 50"
-			height		"473"
+			pos			"608 42"
+			height		"573"
 			current		0
 			viewsize	26
 			fullsize	50
@@ -159,7 +169,7 @@ window ufopedia extends objectinfo
 		text description
 		{
 			dataid		TEXT_ITEMDESCRIPTION
-			pos			"10 61"
+			pos			"10 60"
 			size		"390 400"
 			lineheight	20
 			tabwidth	230
@@ -171,31 +181,31 @@ window ufopedia extends objectinfo
 			}
 		}
 
-		vscrollbar description_scroll {
+		vscrollbar description_scroll
+		{
 			image		"ui/scrollbar_v_green"
-			pos			"405 61"
-			height		"400"
+			pos			"405 45"
+			height		"573"
 			current		0
 			viewsize	20
 			fullsize	20
 			hidewhenunused true
 			onChange	{ *node:parent.description@viewpos = <current> }
 		}
-
-		panel requirement {
+		panel requirement
+		{
 			{
-				pos		"430 373"
+				pos		"430 476"
 				size	"166 128"
 				image	"ui/panel_green_slim"
 			}
-
-			string label {
+			string label
+			{
 				pos "5 5"
 				size "120 20"
 				font	"f_small"
 				string "_Requirement:"
 			}
-
 			textlist techtree
 			{
 				dataid		TEXT_UFOPEDIA_REQUIREMENT
@@ -205,7 +215,8 @@ window ufopedia extends objectinfo
 				color		"0 .78 0 1"
 				selectcolor	"0 .78 0 1"
 				onChange		{ cmd "techtree_click <lineselected>;" }
-				onViewChange	{
+				onViewChange
+				{
 					*node:parent.techtree_scroll@fullsize = <fullsize>
 					*node:parent.techtree_scroll@current = <viewpos>
 					*node:parent.techtree_scroll@viewsize = <viewsize>
@@ -228,7 +239,8 @@ window ufopedia extends objectinfo
 	// item description
 	// ==================
 
-	panel itemdescription {
+	panel itemdescription
+	{
 		{
 			pos		"360 530"
 			size	"350 60"
@@ -311,7 +323,8 @@ window ufopedia extends objectinfo
 		}
 	}
 
-	confunc update_ufopedia_layout {
+	confunc update_ufopedia_layout
+	{
 
 		// is right column not empty?
 		*cvar:mn_rightpanel = 0
