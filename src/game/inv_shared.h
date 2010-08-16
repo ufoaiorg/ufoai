@@ -43,9 +43,6 @@ typedef enum {
 	AIRCRAFTTYPE_MAX
 } humanAircraftType_t;
 
-/** @todo belongs into chr_shared.h but the equipment definition needs this */
-#define MAX_UGV					8
-
 /* this is the absolute max for now */
 #define MAX_OBJDEFS		128		/* Remember to adapt the "NONE" define (and similar) if this gets changed. */
 #define MAX_MAPDEFS		128
@@ -364,7 +361,6 @@ typedef struct equipDef_s {
 	int numItems[MAX_OBJDEFS];	/**< Number of item for each item type (see equipment_missions.ufo for more info) */
 	byte numItemsLoose[MAX_OBJDEFS];	/**< currently only used for weapon ammo */
 	int numAircraft[AIRCRAFTTYPE_MAX];
-	int numUGVs[MAX_UGV];
 	int minInterest;		/**< Minimum overall interest to use this equipment definition (only for alien) */
 	int maxInterest;		/**< Maximum overall interest to use this equipment definition (only for alien) */
 } equipDef_t;

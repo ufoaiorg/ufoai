@@ -2064,25 +2064,6 @@ static void Com_ParseEquipment (const char *name, const char **text)
 						type, name);
 				if (n)
 					ed->numAircraft[type] = n;
-			} else if (!strcmp(token, "ugv")) {
-				ugv_t *ugv;
-				token = Com_EParse(text, errhead, name);
-				if (!*text || *token == '}')
-					Sys_Error("Invalid ugv token in equipment definition: %s", ed->name);
-				ugv = Com_GetUGVByIDSilent(token);
-				if (ugv == NULL)
-					Sys_Error("Invalid ugv token in equipment definition: %s", ed->name);
-				token = Com_EParse(text, errhead, name);
-				if (!*text || *token == '}') {
-					Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
-					return;
-				}
-				n = atoi(token);
-				if (ed->numUGVs[ugv->idx])
-					Com_Printf("Com_ParseEquipment: ugv '%s' is used several times in def '%s'. Only last entry will be taken into account.\n",
-						ugv->id, name);
-				if (n)
-					ed->numUGVs[ugv->idx] = n;
 			} else {
 				Sys_Error("unknown token in equipment in definition %s: '%s'", ed->name, token);
 			}

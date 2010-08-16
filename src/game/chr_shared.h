@@ -176,6 +176,7 @@ typedef enum {
 
 /* team definitions */
 
+#define MAX_UGV					8
 #define MAX_TEAMDEFS			64
 #define MAX_CHARACTER_TEMPLATES	24
 #define MAX_TEMPLATES_PER_TEAM	16
