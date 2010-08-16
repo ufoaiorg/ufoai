@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_NODE_CONTAINER_H
 #define CLIENT_UI_UI_NODE_CONTAINER_H
 
-#include "../../../game/inventory.h"
-
 /** @brief One unit in the containers is 25x25. */
 #define C_UNIT				25
 
@@ -35,7 +33,7 @@ struct base_s;
 struct uiBehaviour_s;
 struct uiNode_s;
 
-extern struct inventory_s *ui_inventory;
+extern inventory_t *ui_inventory;
 
 void UI_RegisterContainerNode(struct uiBehaviour_s *behaviour);
 void UI_DrawItem(struct uiNode_s *node, const vec3_t org, const struct item_s *item, int x, int y, const vec3_t scale, const vec4_t color);

@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_UI_UI_DRAGNDROP_H
 #define CLIENT_UI_UI_DRAGNDROP_H
 
-#include "../../game/inventory.h"
+#include "../../shared/ufotypes.h"
 
 struct uiNode_s;
 struct item_s;
