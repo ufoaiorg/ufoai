@@ -2857,7 +2857,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 				else
 					Com_Printf("Unknown dmgtype: '%s'\n", token);
 			} else {
-				Com_DPrintf(DEBUG_CLIENT, "Com_ParseDamageTypes: dmyweight %s\n", token);
+				Com_DPrintf(DEBUG_CLIENT, "Com_ParseDamageTypes: dmgweight %s\n", token);
 			}
 
 			csi.numDTs++;
