@@ -321,6 +321,7 @@ base/maps/italy/it_craft_drop_firebird.map | GNU General Public License 2.0 or l
 base/maps/italy/it_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/japan.ump | GNU General Public License 2.0 or later
 base/maps/japan/ja_craft_drop_firebird.map | GNU General Public License 2.0 or later
+base/maps/japan/ja_h6.map | GNU General Public License 2.0 or later
 base/maps/japan/ja_main.map | GNU General Public License 2.0 or later
 base/maps/laboratory.ump | GNU General Public License 2.0 or later
 base/maps/laboratory/lab_craft_drop_firebird.map | GNU General Public License 2.0 or later
@@ -443,6 +444,7 @@ base/maps/village/vil_c04.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_herakles.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_drop_raptor.map | GNU General Public License 2.0 or later
+base/maps/village/vil_craft_ufo_fighter.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_ufo_harvester.map | GNU General Public License 2.0 or later
 base/maps/village/vil_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/village/vil_d01.map | GNU General Public License 2.0 or later
