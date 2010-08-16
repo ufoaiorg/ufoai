@@ -285,6 +285,35 @@ base/maps/gasstation.ump | GNU General Public License 2.0 or later
 base/maps/gasstation/gas_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/gasstation/gas_main.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/harbour.map | GNU General Public License 2.0 or later | "SparX" Beyeler
+base/maps/hills/corner.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/craft_drop_firebird.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/craft_ufo_harvester.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/filler_12vu1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/filler_12vu2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/filler_1s1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/filler_1s2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/filler_1s3.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/filler_2s1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/filler_2s2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/house_11.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/house_12.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/house_13.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/house_21.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/house_22.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_12vu1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_1c1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_1h1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_1h2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_1v1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_1v2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_1v3.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_1v4.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_1v5.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_1v6.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_2h1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_2h2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_2v1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_2v2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/ice.ump | GNU General Public License 2.0 or later
 base/maps/ice/ice_craft_drop_firebird.map | GNU General Public License 2.0 or later
 base/maps/ice/ice_r01.map | GNU General Public License 2.0 or later
