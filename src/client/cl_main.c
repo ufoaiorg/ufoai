@@ -47,7 +47,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_inventory.h"
 #include "cl_menu.h"
 #include "cl_http.h"
-#include "cl_ugv.h"
 #include "input/cl_joystick.h"
 #include "cinematic/cl_cinematic.h"
 #include "sound/s_music.h"
@@ -826,8 +825,6 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 		CL_ParseTipsOfTheDay(name, text);
 	else if (!strcmp(type, "language"))
 		CL_ParseLanguages(name, text);
-	else if (!strcmp(type, "ugv"))
-		CL_ParseUGVs(name, text);
 	else if (!strcmp(type, "window"))
 		UI_ParseWindow(type, name, text);
 	else if (!strcmp(type, "component"))

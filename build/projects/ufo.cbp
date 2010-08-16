@@ -776,10 +776,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/cl_tutorials.h" />
-		<Unit filename="../../src/client/cl_ugv.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/client/cl_ugv.h" />
 		<Unit filename="../../src/client/cl_video.c">
 			<Option compilerVar="CC" />
 		</Unit>

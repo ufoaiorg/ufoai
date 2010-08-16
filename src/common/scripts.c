@@ -2065,10 +2065,24 @@ static void Com_ParseEquipment (const char *name, const char **text)
 				if (n)
 					ed->numAircraft[type] = n;
 			} else if (!strcmp(token, "ugv")) {
+				ugv_t *ugv;
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token == '}')
 					Sys_Error("Invalid ugv token in equipment definition: %s", ed->name);
-				/** @todo parse ugv */
+				ugv = Com_GetUGVByIDSilent(token);
+				if (ugv == NULL)
+					Sys_Error("Invalid ugv token in equipment definition: %s", ed->name);
+				token = Com_EParse(text, errhead, name);
+				if (!*text || *token == '}') {
+					Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
+					return;
+				}
+				n = atoi(token);
+				if (ed->numUGVs[ugv->idx])
+					Com_Printf("Com_ParseEquipment: ugv '%s' is used several times in def '%s'. Only last entry will be taken into account.\n",
+						ugv->id, name);
+				if (n)
+					ed->numUGVs[ugv->idx] = n;
 			} else {
 				Sys_Error("unknown token in equipment in definition %s: '%s'", ed->name, token);
 			}
@@ -2641,6 +2655,76 @@ const chrTemplate_t* Com_GetCharacterTemplateByID (const char *chrTemplate)
 	return NULL;
 }
 
+static const value_t ugvValues[] = {
+	{"tu", V_INT, offsetof(ugv_t, tu), MEMBER_SIZEOF(ugv_t, tu)},
+	{"weapon", V_STRING, offsetof(ugv_t, weapon), 0},
+	{"armour", V_STRING, offsetof(ugv_t, armour), 0},
+	{"actors", V_STRING, offsetof(ugv_t, actors), 0},
+	{"price", V_INT, offsetof(ugv_t, price), 0},
+
+	{NULL, 0, 0, 0}
+};
+
+/**
+ * @brief Parse 2x2 units (e.g. UGVs)
+ * @sa CL_ParseClientData
+ */
+static void Com_ParseUGVs (const char *name, const char **text)
+{
+	const char *errhead = "Com_ParseUGVs: unexpected end of file (ugv ";
+	const char *token;
+	const value_t *v;
+	ugv_t *ugv;
+	int i;
+
+	/* get name list body body */
+	token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseUGVs: ugv \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	for (i = 0; i < csi.numUGV; i++) {
+		if (!strcmp(name, csi.ugvs[i].id)) {
+			Com_Printf("Com_ParseUGVs: ugv \"%s\" with same name already loaded\n", name);
+			return;
+		}
+	}
+
+	/* parse ugv */
+	if (csi.numUGV >= MAX_UGV) {
+		Com_Printf("Com_ParseUGVs: Too many UGV descriptions, '%s' ignored.\n", name);
+		return;
+	}
+
+	ugv = &csi.ugvs[csi.numUGV];
+	memset(ugv, 0, sizeof(*ugv));
+	ugv->id = Mem_PoolStrDup(name, com_genericPool, 0);
+	ugv->idx = csi.numUGV;
+	csi.numUGV++;
+
+	do {
+		/* get the name type */
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+		for (v = ugvValues; v->string; v++)
+			if (!strncmp(token, v->string, sizeof(v->string))) {
+				/* found a definition */
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				Com_EParseValue(ugv, token, v->type, v->ofs, v->size);
+				break;
+			}
+			if (!v->string)
+				Com_Printf("Com_ParseUGVs: unknown token \"%s\" ignored (ugv %s)\n", token, name);
+	} while (*text);
+}
+
 /**
  * @brief Parses character templates from scripts
  */
@@ -3051,6 +3135,42 @@ const char* Com_UFOCrashedTypeToShortName (ufoType_t type)
 }
 
 /**
+ * @brief Searches an UGV definition by a given script id and returns the pointer to the global data
+ * @param[in] ugvID The script id of the UGV definition you are looking for
+ * @return ugv_t pointer or NULL if not found.
+ * @note This function gives no warning on null name or if no ugv found
+ */
+ugv_t *Com_GetUGVByIDSilent (const char *ugvID)
+{
+	int i;
+
+	if (!ugvID)
+		return NULL;
+	for (i = 0; i < csi.numUGV; i++) {
+		if (!strcmp(csi.ugvs[i].id, ugvID)) {
+			return &csi.ugvs[i];
+		}
+	}
+	return NULL;
+}
+
+/**
+ * @brief Searches an UGV definition by a given script id and returns the pointer to the global data
+ * @param[in] ugvID The script id of the UGV definition you are looking for
+ * @return ugv_t pointer or NULL if not found.
+ */
+ugv_t *Com_GetUGVByID (const char *ugvID)
+{
+	ugv_t *ugv = Com_GetUGVByIDSilent(ugvID);
+
+	if (!ugvID)
+		Com_Printf("Com_GetUGVByID Called with NULL ugvID!\n");
+	else if (!ugv)
+		Com_Printf("Com_GetUGVByID: No ugv_t entry found for id '%s' in %i entries.\n", ugvID, csi.numUGV);
+	return ugv;
+}
+
+/**
  * @brief Creates links to other items (i.e. ammo<->weapons)
  */
 static void Com_AddObjectLinks (void)
@@ -3153,6 +3273,8 @@ void Com_ParseScripts (qboolean onlyServer)
 			Com_ParseInventory(name, &text);
 		else if (!strcmp(type, "terrain"))
 			Com_ParseTerrain(name, &text);
+		else if (!strcmp(type, "ugv"))
+			Com_ParseUGVs(name, &text);
 		else if (!strcmp(type, "chrtemplate"))
 			Com_ParseCharacterTemplate(name, &text);
 		else if (!onlyServer)

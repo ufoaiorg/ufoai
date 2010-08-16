@@ -43,10 +43,12 @@ typedef enum {
 	AIRCRAFTTYPE_MAX
 } humanAircraftType_t;
 
+/** @todo belongs into chr_shared.h but the equipment definition needs this */
+#define MAX_UGV					8
+
 /* this is the absolute max for now */
 #define MAX_OBJDEFS		128		/* Remember to adapt the "NONE" define (and similar) if this gets changed. */
 #define MAX_MAPDEFS		128
-#define MAX_UGV			8
 #define MAX_WEAPONS_PER_OBJDEF 4
 #define MAX_AMMOS_PER_OBJDEF 4
 #define MAX_FIREDEFS_PER_WEAPON 8

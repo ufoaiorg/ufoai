@@ -363,6 +363,9 @@ typedef struct csi_s {
 	/** character templates */
 	chrTemplate_t chrTemplates[MAX_CHARACTER_TEMPLATES];
 	int numChrTemplates;
+
+	ugv_t ugvs[MAX_UGV];
+	int numUGV;
 } csi_t;
 
 extern csi_t csi;

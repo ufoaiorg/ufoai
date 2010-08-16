@@ -309,6 +309,13 @@ void BS_InitMarket (qboolean load)
 					aircraft->id, campaign->id);
 		}
 	}
+
+	for (i = 0; i < csi->numUGV; i++) {
+		if (campaign->marketDef->numUGVs[i] <= 0)
+			continue;
+
+		/** @todo implement ugvs on market */
+	}
 }
 
 /**

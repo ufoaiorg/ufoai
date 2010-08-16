@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_localentity.h"
 #include "battlescape/cl_actor.h"
 #include "cl_inventory.h"
-#include "cl_ugv.h"
 #include "battlescape/events/e_parse.h"
 #include "ui/ui_data.h"
 #include "ui/ui_nodes.h"

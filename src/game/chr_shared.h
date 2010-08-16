@@ -208,6 +208,17 @@ typedef enum {
 	RACE_SHEVAAR			/**< Alien: shevaar race */
 } racetypes_t;
 
+/** @brief Defines a type of UGV/Robot */
+typedef struct ugv_s {
+	char *id;
+	int idx;
+	char weapon[MAX_VAR];
+	char armour[MAX_VAR];
+	int tu;
+	char actors[MAX_VAR];
+	int price;
+} ugv_t;
+
 typedef struct teamDef_s {
 	int idx;			/**< The index in the teamDef array. */
 	char id[MAX_VAR];	/**< id from script file. */

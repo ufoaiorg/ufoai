@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h" /* cls */
 #include "../cl_game.h" /* GAME_GetTeamDef */
-#include "../cl_ugv.h"
 #include "../cl_team.h"
 #include "../ui/ui_main.h"
 #include "../ui/ui_popup.h"
@@ -1155,9 +1154,9 @@ void E_InitialEmployees (void)
 		E_CreateEmployee(EMPL_SCIENTIST, E_RandomNation(), NULL);
 	for (i = 0; i < campaign->ugvs; i++) {
 		if (frand() > 0.5)
-			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), CL_GetUGVByID("ugv_ares_w"));
+			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), Com_GetUGVByID("ugv_ares_w"));
 		else
-			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), CL_GetUGVByID("ugv_phoenix"));
+			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), Com_GetUGVByID("ugv_phoenix"));
 	}
 	for (i = 0; i < campaign->workers; i++)
 		E_CreateEmployee(EMPL_WORKER, E_RandomNation(), NULL);
@@ -1322,7 +1321,7 @@ qboolean E_LoadXML (mxml_node_t *p)
 				break;
 			}
 			/* UGV-Type */
-			e->ugv = CL_GetUGVByIDSilent(mxml_GetString(ssnode, SAVE_EMPLOYEE_UGV));
+			e->ugv = Com_GetUGVByIDSilent(mxml_GetString(ssnode, SAVE_EMPLOYEE_UGV));
 			/* Character Data */
 			chrNode = mxml_GetNode(ssnode, SAVE_EMPLOYEE_CHR);
 			if (!chrNode) {

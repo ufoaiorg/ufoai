@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../cl_shared.h"
 #include "../cl_inventory.h"
-#include "../cl_ugv.h"
 #include "../ui/ui_main.h"
 #include "../ui/ui_icon.h"
 #include "../../shared/parse.h"
@@ -653,7 +652,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 				UP_BuildingDescription(tech);
 				break;
 			case RS_UGV:
-				UP_UGVDescription(CL_GetUGVByIDSilent(tech->provides));
+				UP_UGVDescription(Com_GetUGVByIDSilent(tech->provides));
 				break;
 			default:
 				break;

@@ -18,7 +18,6 @@ CLIENT_SRCS = \
 	client/cl_team.c \
 	client/cl_tip.c \
 	client/cl_tutorials.c \
-	client/cl_ugv.c \
 	client/cl_video.c \
 	\
 	client/input/cl_input.c \

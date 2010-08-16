@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../cl_shared.h"
 #include "../cl_inventory.h"
-#include "../cl_ugv.h"
 #include "../ui/ui_main.h"
 #include "../ui/ui_popup.h"
 #include "cp_campaign.h"
@@ -388,9 +387,9 @@ static void BS_BuyType (const base_t *base)
 		{
 		/* Get item list. */
 		j = 0;
-		for (i = 0; i < numUGV; i++) {
+		for (i = 0; i < csi.numUGV; i++) {
 			/** @todo Add this entry to the list */
-			ugv_t *ugv = &ugvs[i];
+			ugv_t *ugv = &csi.ugvs[i];
 			const technology_t* tech = RS_GetTechByProvided(ugv->id);
 			assert(tech);
 			if (RS_IsResearched_ptr(tech)) {
