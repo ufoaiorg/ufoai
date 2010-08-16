@@ -357,6 +357,8 @@ base/maps/oriental/or_trees_b.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_well.map | GNU General Public License 2.0 or later
 base/maps/oriental_mosque.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/pipes_const.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/rescue/drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/maps/rescue/drop_raptor.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/resort.map | GNU General Public License 2.0 or later | "SparX" Beyeler
 base/maps/rivertown.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/scout_crash.map | GNU General Public License 2.0 or later
