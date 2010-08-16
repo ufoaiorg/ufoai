@@ -13,7 +13,7 @@ window main
 
 	image background
 	{
-		src	"ui/main_bg"
+		src	"background/main_bg"
 	}
 
 	string version

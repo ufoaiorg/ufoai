@@ -13,7 +13,7 @@ window campaigns
 
 	image background
 	{
-		src	"ui/options_bg"
+		src	"background/options_bg"
 	}
 
 	string version
@@ -135,7 +135,7 @@ window campaign_main
 
 	image background
 	{
-		src		"ui/main_bg"
+		src		"background/main_bg"
 	}
 
 	string version
@@ -232,7 +232,7 @@ window load
 
 	image background
 	{
-		src		"ui/main_bg"
+		src		"background/main_bg"
 	}
 
 	string version
@@ -405,7 +405,7 @@ window save
 
 	image background
 	{
-		src		"ui/main_bg"
+		src		"background/main_bg"
 	}
 
 	string version
@@ -585,7 +585,7 @@ window lostgame
 
 	image background
 	{
-		src		"ui/losegame_bg"
+		src		"background/losegame_bg"
 	}
 
 	string title
@@ -661,7 +661,7 @@ window endgame
 
 	image background
 	{
-		src		"ui/wingame_bg"
+		src		"background/wingame_bg"
 	}
 
 	string title

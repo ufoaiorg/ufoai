@@ -14,7 +14,7 @@ window irc
 
 	image background
 	{
-		src		"ui/irc_bg"
+		src		"background/irc_bg"
 	}
 
 	string title

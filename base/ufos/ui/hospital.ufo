@@ -53,7 +53,7 @@ window hospital
 
 	image background
 	{
-		src	"ui/base_bg"
+		src	"background/base_bg"
 	}
 
 	// ==================
@@ -409,7 +409,7 @@ window hospital_employee
 
 	image background
 	{
-		src	"ui/base_bg"
+		src	"background/base_bg"
 	}
 
 	// ==================

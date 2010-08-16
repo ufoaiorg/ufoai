@@ -20,7 +20,7 @@ window mp_team_edit extends objectinfo
 
 	image background
 	{
-		src	"ui/mp_team_edit_bg"
+		src	"background/mp_team_edit_bg"
 	}
 
 	string s_backpack

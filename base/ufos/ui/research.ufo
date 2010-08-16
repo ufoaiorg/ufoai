@@ -65,7 +65,7 @@ window research
 
 	image background
 	{
-		src	"ui/base_bg"
+		src	"background/base_bg"
 	}
 
 	cmpBaseHeader baseHeader {

@@ -13,7 +13,7 @@ window won
 
 	image background
 	{
-		src	"ui/won_bg"
+		src	"background/won_bg"
 	}
 
 	// ==================
@@ -80,7 +80,7 @@ window lost
 
 	image background
 	{
-		src	"ui/lost_bg"
+		src	"background/lost_bg"
 	}
 
 	// ==================

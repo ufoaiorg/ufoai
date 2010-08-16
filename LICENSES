@@ -2420,6 +2420,22 @@ base/pics/armour/ortnok_medium.png | GNU General Public License 2.0
 base/pics/armour/power.png | GNU General Public License 2.0
 base/pics/armour/taman_light.png | GNU General Public License 2.0
 base/pics/armour/taman_medium.png | GNU General Public License 2.0
+base/pics/background/base_bg.jpg | GNU General Public License 2.0 or later
+base/pics/background/equipment_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/irc_bg.jpg | GNU General Public License 2.0 or later
+base/pics/background/losegame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/lost_bg.png | GNU General Public License 2.0 or later
+base/pics/background/mail_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/mailclient_bg.png | GNU General Public License 2.0 or later
+base/pics/background/main_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/mp_team_edit_bg.png | GNU General Public License 2.0 or later
+base/pics/background/multiplayer_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/options_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/skirmish_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/stats_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/won_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/world_bg.png | GNU General Public License 2.0 or later
 base/pics/base/adrop.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl1.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl2.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -3280,7 +3296,6 @@ base/pics/ui/bar_border.png | GNU General Public License 2.0 or later | Wojtek R
 base/pics/ui/bar_health.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
 base/pics/ui/bar_rahmen.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/bar_skill.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
-base/pics/ui/base_bg.jpg | GNU General Public License 2.0 or later
 base/pics/ui/base_lr.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/base_ul.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/base_ur.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
@@ -3296,27 +3311,17 @@ base/pics/ui/button_pack1.png | GNU General Public License 2.0 or later
 base/pics/ui/button_square.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/checkbox_blue.png | GNU General Public License 2.0 or later |  | Source: Based on original menu artwork by SparX and Rasta
 base/pics/ui/checkbox_green.png | GNU General Public License 2.0 or later | bayo | Source: Based on original menu artwork by SparX and Rasta
-base/pics/ui/equipment_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/geo_menu.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/ui/geo_menu_mini.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/geo_miniglobe.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_blue.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_green.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_light.png | GNU General Public License 2.0 or later
-base/pics/ui/irc_bg.jpg | GNU General Public License 2.0 or later
-base/pics/ui/losegame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/lost_bg.png | GNU General Public License 2.0 or later
-base/pics/ui/mail_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/mail_button.png | GNU General Public License 2.0 or later
-base/pics/ui/mailclient_bg.png | GNU General Public License 2.0 or later
-base/pics/ui/main_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/map_ll.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/map_lr.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/map_ul.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/map_ur.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/mp_team_edit_bg.png | GNU General Public License 2.0 or later
-base/pics/ui/multiplayer_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/options_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/panel_green.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/panel_green_slim.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/panel_green_tab.png | GNU General Public License 2.0 or later | bayo
@@ -3338,15 +3343,10 @@ base/pics/ui/scrollbar_v_green.png | GNU General Public License 2.0 or later | b
 base/pics/ui/selectbox.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/selectbox_blue.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/selectbox_red.png | GNU General Public License 2.0 or later | SparX;Rasta;MCR | Based on original menu artwork by SparX and Rasta
-base/pics/ui/skirmish_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/spinner_blue.png | GNU General Public License 2.0 or later | bayo
-base/pics/ui/stats_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/tab.png | GNU General Public License 2.0 or later | bayo
 base/pics/ui/transtypebox.png | GNU General Public License 2.0 or later
 base/pics/ui/vertical_bar.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/won_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/world_bg.png | GNU General Public License 2.0 or later
 base/shaders/atmosphere_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/atmosphere_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/bump_fs.glsl | GNU General Public License 2.0 or later

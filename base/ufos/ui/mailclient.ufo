@@ -113,7 +113,7 @@ window mailclient
 
 	image background
 	{
-		src		"ui/mail_bg"
+		src		"background/mail_bg"
 	}
 
 	// ==================

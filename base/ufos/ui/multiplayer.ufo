@@ -43,7 +43,7 @@ window abstract_multiplayer
 
 	image background
 	{
-		src		"ui/options_bg"
+		src		"background/options_bg"
 	}
 
 	// ==================
@@ -142,7 +142,7 @@ window serverinfo
 
 	image background
 	{
-		src		"ui/multiplayer_bg"
+		src		"background/multiplayer_bg"
 	}
 
 	text server_info

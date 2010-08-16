@@ -25,7 +25,7 @@ window basesummary
 
 	image background
 	{
-		src	"ui/base_bg"
+		src	"background/base_bg"
 	}
 
 	func reset_color {

@@ -11,7 +11,7 @@ window options
 	// ===========
 	image background
 	{
-		src		"ui/options_bg"
+		src		"background/options_bg"
 	}
 	// ============
 	// HIDE PANELS

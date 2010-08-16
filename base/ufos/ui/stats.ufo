@@ -13,7 +13,7 @@ window stats
 
 	image background
 	{
-		src		"ui/stats_bg"
+		src		"background/stats_bg"
 	}
 
 	custombutton button_exit
@@ -193,7 +193,7 @@ window nations
 
 	image background
 	{
-		src		"ui/stats_bg"
+		src		"background/stats_bg"
 	}
 
 	custombutton button_exit

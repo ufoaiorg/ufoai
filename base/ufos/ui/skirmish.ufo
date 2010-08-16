@@ -12,7 +12,7 @@ window skirmish
 	// ===========
 	image background
 	{
-		src		"ui/skirmish_bg"
+		src		"background/skirmish_bg"
 	}
 	// ============
 	// BACK BUTTON

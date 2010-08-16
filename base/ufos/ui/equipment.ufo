@@ -28,7 +28,7 @@ window equipment extends objectinfo
 
 	image background
 	{
-		src	"ui/equipment_bg"
+		src	"background/equipment_bg"
 	}
 
 	string s_backpack

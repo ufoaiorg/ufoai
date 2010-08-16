@@ -13,7 +13,7 @@ window singleplayer
 
 	image background
 	{
-		src		"ui/main_bg"
+		src		"background/main_bg"
 	}
 
 	string version
@@ -64,7 +64,7 @@ window singleplayermission
 
 	image background
 	{
-		src		"ui/main_bg"
+		src		"background/main_bg"
 	}
 
 	string version
