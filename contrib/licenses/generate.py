@@ -182,7 +182,7 @@ def computeTextureUsageInMaps():
                 texmeta = getMetadataByShortImageName(texname)
                 # texture missing (or wrong python parsing)
                 if texmeta == None:
-                    print "Warning: \"" + texname + "\" from map \"" + mapname + "\" do not exists"
+                    print "Warning: \"" + texname + "\" from map \"" + mapname + "\" does not exist"
                     continue
                 texmeta.usedByMaps.add(mapmeta)
                 mapmeta.useTextures.add(texmeta)
