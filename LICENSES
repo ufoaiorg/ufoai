@@ -1294,9 +1294,9 @@ base/models/objects/city/trafficsign/sign2.png | GNU General Public License 2.0 
 base/models/objects/city/trafficsign/sign2_1.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/trafficsign/sign3.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/trafficsign/sign4.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/objects/city/vendorcart/vendor_cart.md2 |  | Nate Wright
-base/models/objects/city/vendorcart/vendor_cart.png |  | Nate Wright
-base/models/objects/city/vendorcart/vendor_cart_nm.png |  | Nate Wright
+base/models/objects/city/vendorcart/vendor_cart.md2 | GNU General Public License 2.0 or later | Nate Wright
+base/models/objects/city/vendorcart/vendor_cart.png | GNU General Public License 2.0 or later | Nate Wright
+base/models/objects/city/vendorcart/vendor_cart_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/models/objects/city/waste/bag.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/waste/bag.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/city/waste/container1.jpg | GNU General Public License 2.0 or later | Willem Sitters
