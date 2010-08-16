@@ -108,7 +108,7 @@ void SCR_DrawPrecacheScreen (qboolean string)
 
 	R_BeginFrame();
 
-	image = R_FindImage("pics/loading", it_pic);
+	image = R_FindImage("pics/background/loading", it_pic);
 	if (image)
 		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, image);
 	if (string) {

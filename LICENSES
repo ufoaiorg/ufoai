@@ -2421,8 +2421,10 @@ base/pics/armour/power.png | GNU General Public License 2.0
 base/pics/armour/taman_light.png | GNU General Public License 2.0
 base/pics/armour/taman_medium.png | GNU General Public License 2.0
 base/pics/background/base_bg.jpg | GNU General Public License 2.0 or later
+base/pics/background/conback.jpg | GNU General Public License 2.0
 base/pics/background/equipment_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/irc_bg.jpg | GNU General Public License 2.0 or later
+base/pics/background/loading.png | GNU General Public License 2.0
 base/pics/background/losegame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/background/lost_bg.png | GNU General Public License 2.0 or later
 base/pics/background/mail_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
@@ -2464,7 +2466,6 @@ base/pics/base/storage.png | GNU General Public License 2.0 or later | Martin Ge
 base/pics/base/teamroom.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/workshop1.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/workshop2.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/conback.jpg | GNU General Public License 2.0
 base/pics/conchars.png | GNU General Public License 2.0 or later
 base/pics/cursors/cursor1.png | GNU General Public License 2.0 or later
 base/pics/cursors/ducked.png | GNU General Public License 2.0 or later
@@ -2618,7 +2619,6 @@ base/pics/icons/ufopedia_equipment.jpg | Creative Commons Attribution-Share Alik
 base/pics/icons/ufopedia_news.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/icons/ufopedia_tech.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/icons/ufopedia_threat.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
-base/pics/loading.png | GNU General Public License 2.0
 base/pics/maps/loading/README | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/africa.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/alienbase.jpg | GNU General Public License 2.0 or later
