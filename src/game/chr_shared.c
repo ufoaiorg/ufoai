@@ -55,9 +55,9 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, qboolean multiplayer)
 {
 	int i;
 	float sumRate = 0, curRate = 0;
-	int (*chrTemplate)[2];
-	teamDef_t *td;
-	chrTemplate_t *ct;
+	const int (*chrTemplate)[2];
+	const teamDef_t *td;
+	const chrTemplate_t *ct;
 
 	td = chr->teamDef;
 

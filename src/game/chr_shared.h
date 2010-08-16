@@ -238,7 +238,7 @@ typedef struct teamDef_s {
 
 	short resistance[MAX_DAMAGETYPES]; /**< Resistance to damage */
 
-	chrTemplate_t *characterTemplates[MAX_TEMPLATES_PER_TEAM];
+	const chrTemplate_t *characterTemplates[MAX_TEMPLATES_PER_TEAM];
 	int numTemplates;
 } teamDef_t;
 

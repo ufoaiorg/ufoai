@@ -2581,7 +2581,6 @@ static void Com_ParseTeam (const char *name, const char **text)
 				else
 					Sys_Error("Com_ParseTeam: Could not get item definition for '%s'", token);
 			} else if (!strcmp(token, "templates")) {
-				chrTemplate_t *ct;
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token != '{')
 					Com_Printf("Com_ParseTeam: template list without body ignored in team def \"%s\" \n", name);
@@ -2597,7 +2596,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 							}
 						}
 						if (i >= td->numTemplates) {
-							ct = Com_GetCharacterTemplateByID(token);
+							const chrTemplate_t *ct = Com_GetCharacterTemplateByID(token);
 							if (ct)
 								td->characterTemplates[td->numTemplates++] = ct;
 							else
@@ -2631,7 +2630,7 @@ static void Com_ParseTeam (const char *name, const char **text)
  * array
  * @param[in] team The character template id (given in ufo-script files)
  */
-chrTemplate_t* Com_GetCharacterTemplateByID (const char *chrTemplate)
+const chrTemplate_t* Com_GetCharacterTemplateByID (const char *chrTemplate)
 {
 	int i;
 
@@ -2683,7 +2682,7 @@ static void Com_ParseCharacterTemplate (const char *name, const char **text)
 			return;
 
 		for (i = 0; i < SKILL_NUM_TYPES + 1; i++)
-			if (!Q_strcasecmp(token, skillNames[i])) {
+			if (!strcmp(token, skillNames[i])) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
