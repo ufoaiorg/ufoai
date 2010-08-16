@@ -360,7 +360,7 @@ typedef struct csi_s {
 	const teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
 	int numAlienTeams;
 
-	/** character templates for this team */
+	/** character templates */
 	chrTemplate_t chrTemplates[MAX_CHARACTER_TEMPLATES];
 	int numChrTemplates;
 } csi_t;

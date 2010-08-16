@@ -532,13 +532,13 @@ ACTOR MOVEMENT AND SHOOTING
  * @note Pointer to le->pos or edict->pos followed by le->fieldSize or edict->fieldSize
  * @see CL_BuildForbiddenList
  */
-static pos_t *fb_list[MAX_FORBIDDENLIST];
+static pos_t *forbiddenList[MAX_FORBIDDENLIST];
 /**
  * @brief Current length of fb_list.
  * @note all byte pointers in the fb_list list (pos + fieldSize)
  * @see fb_list
  */
-static int fb_length;
+static int forbiddenListLength;
 
 /**
  * @brief Builds a list of locations that cannot be moved to (client side).
@@ -552,20 +552,20 @@ static void CL_BuildForbiddenList (void)
 {
 	le_t *le = NULL;
 
-	fb_length = 0;
+	forbiddenListLength = 0;
 
 	while ((le = LE_GetNextInUse(le))) {
 		if (le->invis)
 			continue;
 		/* Dead ugv will stop walking, too. */
 		if (le->type == ET_ACTOR2x2 || LE_IsLivingAndVisibleActor(le)) {
-			fb_list[fb_length++] = le->pos;
-			fb_list[fb_length++] = (byte*)&le->fieldSize;
+			forbiddenList[forbiddenListLength++] = le->pos;
+			forbiddenList[forbiddenListLength++] = (byte*)&le->fieldSize;
 		}
 	}
 
 #ifdef PARANOID
-	if (fb_length > MAX_FORBIDDENLIST)
+	if (forbiddenListLength > MAX_FORBIDDENLIST)
 		Com_Error(ERR_DROP, "CL_BuildForbiddenList: list too long");
 #endif
 }
@@ -632,7 +632,7 @@ void CL_ActorConditionalMoveCalc (le_t *le)
 	CL_BuildForbiddenList();
 	if (le && le->selected) {
 		const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
-		Grid_MoveCalc(cl.clMap, le->fieldSize, le->pathMap, le->pos, crouchingState, MAX_ROUTE, fb_list, fb_length);
+		Grid_MoveCalc(cl.clMap, le->fieldSize, le->pathMap, le->pos, crouchingState, MAX_ROUTE, forbiddenList, forbiddenListLength);
 		CL_ActorResetMoveLength(le);
 	}
 }
@@ -2070,7 +2070,7 @@ static void CL_DumpMoveMark_f (void)
 	developer->integer |= DEBUG_PATHING;
 
 	CL_BuildForbiddenList();
-	Grid_MoveCalc(cl.clMap, ACTOR_GET_FIELDSIZE(selActor), selActor->pathMap, truePos, crouchingState, MAX_ROUTE, fb_list, fb_length);
+	Grid_MoveCalc(cl.clMap, ACTOR_GET_FIELDSIZE(selActor), selActor->pathMap, truePos, crouchingState, MAX_ROUTE, forbiddenList, forbiddenListLength);
 
 	developer->integer ^= DEBUG_PATHING;
 
