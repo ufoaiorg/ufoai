@@ -308,13 +308,11 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	int samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 	int i, c;
 	byte *scan;
-	qboolean mipmap = (image->type != it_pic && image->type != it_chars);
-	qboolean clamp = (image->type == it_pic);
-
-	R_GetScaledTextureSize(width, height, &scaledWidth, &scaledHeight);
+	const qboolean mipmap = (image->type != it_pic && image->type != it_chars);
+	const qboolean clamp = (image->type == it_pic);
 
 	/* scan the texture for any non-255 alpha */
-	c = scaledWidth * scaledHeight;
+	c = width * height;
 	/* set scan to the first alpha byte */
 	for (i = 0, scan = ((byte *) data) + 3; i < c; i++, scan += 4) {
 		if (*scan != 255) {
@@ -322,6 +320,8 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 			break;
 		}
 	}
+
+	R_GetScaledTextureSize(width, height, &scaledWidth, &scaledHeight);
 
 	image->has_alpha = (samples == r_config.gl_alpha_format || samples == r_config.gl_compressed_alpha_format);
 	image->upload_width = scaledWidth;	/* after power of 2 and scales */
