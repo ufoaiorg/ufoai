@@ -1131,7 +1131,7 @@ static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
 			else
 				Q_strncpyz(map->basePath, token, sizeof(map->basePath));
 		} else if (!strcmp(token, "tileset")) {
-			if (map->numTiles >= MAX_TILETYPES)
+			if (map->numTileSets >= MAX_TILESETS)
 				Com_Printf("SV_ParseUMP: Too many map tileset found in (%s)\n", filename);
 			else if (SV_ParseMapTileSet(filename, &text, map, inherit))
 				map->numTileSets++;
