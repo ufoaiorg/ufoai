@@ -95,31 +95,9 @@ void Sys_ConsoleOutput (const char *string)
 #ifdef HAVE_CURSES
 	Curses_Output(string);
 #else
-	char text[2048];
-	int i, j;
-
-	i = j = 0;
-
 	/* skip color char */
-	if (*string == 1)
+	if (!strncmp(string, COLORED_GREEN, strlen(COLORED_GREEN)))
 		string++;
-
-	/* strip high bits */
-	while (string[j]) {
-		text[i] = string[j] & SCHAR_MAX;
-
-		/* strip low bits */
-		if (text[i] >= 32 || text[i] == '\n' || text[i] == '\t')
-			i++;
-
-		j++;
-
-		if (i == sizeof(text) - 2) {
-			text[i++] = '\n';
-			break;
-		}
-	}
-	text[i] = 0;
 
 	fputs(string, stdout);
 #endif /* HAVE_CURSES */
