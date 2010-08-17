@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/defines.h"
 #include "../shared/typedefs.h"
 #include "../shared/parse.h"
+#include <unistd.h>
 
 /** counter for opened files - used to check against missing close calls */
 static int fs_openedFiles;
