@@ -3123,9 +3123,9 @@ base/pics/sfx/bloodsplatter_d02.png | GNU General Public License 2.0 | Lord Havo
 base/pics/sfx/bloodsplatter_d03.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/blueflare.jpg | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/bms2fl_rglow.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/bolt.png |  | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/bolt.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/bubble.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/sfx/bullet1.png |  | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/bullet1.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/corona_b.jpg |  |  | corona.jpg
 base/pics/sfx/corona_y.jpg |  |  | corona.jpg
 base/pics/sfx/cross.png | GNU General Public License 2.0 or later | MCR
@@ -3203,24 +3203,24 @@ base/pics/sfx/greenball.png |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplas_00.png |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplas_07.png |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplasbeam.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/sfx/laserbeam_b.png |  | Lord Havoc;MCR | plasmaimpact_01
-base/pics/sfx/lasermuzzle.png |  | Lord Havoc;MCR | plasmaimpact_00
+base/pics/sfx/laserbeam_b.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/lasermuzzle.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_00
 base/pics/sfx/lightningscroll.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/lightningscroll2.jpg | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/muzzlebulletside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/muzzlelaserside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/muzzleplasmaside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/pics/sfx/muzzleplasmaspiral.png |  | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/muzzleplasmaspiral.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/muzzleptlside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/pics/sfx/particlebeam.png |  | Lord Havoc;MCR | plasmaimpact_01
-base/pics/sfx/plasmaball-core.png |  |  | plasmaimpact_01
-base/pics/sfx/plasmabeam.png |  | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/particlebeam.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/plasmaball-core.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/plasmabeam.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/plasmaimpact_00.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmaimpact_01.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmaimpact_02.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmaimpact_03.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmaimpact_04.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmapulse.png |  | Lord Havoc;MCR | plasmaimpact_00
+base/pics/sfx/plasmapulse.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_00
 base/pics/sfx/plasmashot_00.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmashot_01.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmashot_02.png | General Public License 2.0 | Lord Havoc;MCR
@@ -3506,10 +3506,10 @@ base/sound/footsteps/softrug1.ogg | Creative Commons Attribution 2.5 | (c) 2006 
 base/sound/footsteps/softrug2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/softrug3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/softrug4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/splash1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/splash2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/splash3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/splash4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
+base/sound/footsteps/splash1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/footsteps/splash2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/footsteps/splash3.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/footsteps/splash4.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/squeak_2.ogg | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
 base/sound/footsteps/squeak_3.ogg | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
 base/sound/footsteps/squeak_4.ogg | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
@@ -3523,8 +3523,8 @@ base/sound/footsteps/tile1.ogg | Creative Commons Attribution-Share Alike 3.0 | 
 base/sound/footsteps/tile2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/tile3.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/tile4.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/sound/footsteps/water_in.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/water_out.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
+base/sound/footsteps/water_in.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/footsteps/water_out.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/water_under.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/wood1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/wood2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
@@ -3558,6 +3558,8 @@ base/sound/impact/nail-bodyimpact.ogg | Creative Commons Attribution-Share Alike
 base/sound/impact/nail-impact.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/impact/plasma-bodyimpact.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/impact/plasma-impact.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/impact/water-impact.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/impact/waterbullet-impact.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/misc/breakelectric01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
 base/sound/misc/breakelectric02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
 base/sound/misc/breakelectric03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Created on NN-19 sampler
