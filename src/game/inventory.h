@@ -38,6 +38,6 @@ typedef struct inventoryInterface_s
 	int (*GetFreeSlots) (struct inventoryInterface_s* self);
 } inventoryInterface_t;
 
-void INV_InitInventory (const char *name, inventoryInterface_t *interface, csi_t* csi, invList_t* invList, size_t length);
+void INV_InitInventory (const char *name, inventoryInterface_t *ii, csi_t* csi, invList_t* invList, size_t length);
 
 #endif /* INVENTORY_H_ */
