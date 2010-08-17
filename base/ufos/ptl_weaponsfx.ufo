@@ -53,16 +53,14 @@ particle bolter_trail
 	run
 	{
 
-		// change the size of the smoketrail (make it bigger as time advances)
-		push   pos "40 40"		// push the vector onto the stack
-		mul    *t				// multiply stack value with the time value from the particle
-		add    pos "10 10"		// add another position 2d vector to the current stack value
-		pop    *size			// write the vector back into the particle size value
+		push   pos "40 40"		
+		mul    *t				
+		add    pos "10 10"		
+		pop    *size			
 
-		// change the color of the smoketrail (more more transparent as time advances)
-		push   *color	// get the color onto the stack
-		mul    float .2	// scalar multiple with 0.2 (to make it more transparent)
-		pop    *color	// write the stack value back into particle structure color and remove from stack
+		push   *color	
+		mul    float .2	
+		pop    *color	
 
 	}
 	think { kill }
@@ -160,10 +158,10 @@ particle bullet
 	}
 	think
 	{
-		push   pos "15 10"		// push the vector onto the stack
-		mul    *t				// multiply stack value with the time value from the particle
-		add    pos "40 40"		// add another position 2d vector to the current stack value
-		pop    *size			// write the vector back into the particle size value
+		push   pos "15 10"		
+		mul    *t				
+		add    pos "40 40"		
+		pop    *size			
 	}
 }
 
@@ -180,10 +178,10 @@ particle bullet-shotgun
 	}
 	think
 	{
-		push   pos "15 10"		// push the vector onto the stack
-		mul    *t				// multiply stack value with the time value from the particle
-		add    pos "40 40"		// add another position 2d vector to the current stack value
-		pop    *size			// write the vector back into the particle size value
+		push   pos "15 10"		
+		mul    *t				
+		add    pos "40 40"		
+		pop    *size			
 	}
 }
 
@@ -202,10 +200,10 @@ particle bullet_sniper
 	}
 	think
 	{
-		push   pos "40 10"		// push the vector onto the stack
-		mul    *t				// multiply stack value with the time value from the particle
-		add    pos "80 40"		// add another position 2d vector to the current stack value
-		pop    *size			// write the vector back into the particle size value
+		push   pos "40 10"		
+		mul    *t				
+		add    pos "80 40"		
+		pop    *size			
 	}
 }
 
@@ -527,11 +525,10 @@ particle laserPulse
 	}
 	think
 	{
-		// change the size of the smoketrail (make it bigger as time advances)
-		push   pos "50 10"		// push the vector onto the stack
-		mul    *t				// multiply stack value with the time value from the particle
-		add    pos "30 0"		// add another position 2d vector to the current stack value
-		pop    *size			// write the vector back into the particle size value
+		push   pos "50 10"		
+		mul    *t				
+		add    pos "30 0"		
+		pop    *size			
 	}
 }
 
@@ -1803,10 +1800,9 @@ particle muzzle_sniper_1
 	run
 	{
 
-		// change the position a little bit randomly
-		crand  vector "1 0 0"	// push a value between -1 and 1 onto the stack
-		add    *s				// add the current location
-		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
+		crand  vector "1 0 0"
+		add    *s				
+		pop    *s				
 
 	}
 	think { kill }
@@ -1828,10 +1824,9 @@ particle muzzle_sniper_glow
 	run
 	{
 
-		// change the position a little bit randomly
-		crand  vector "1 1 1"	// push a value between -1 and 1 onto the stack
-		add    *s				// add the current location
-		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
+		crand  vector "1 1 1"	
+		add    *s				
+		pop    *s				
 
 	}
 	think { kill }
@@ -1868,10 +1863,9 @@ particle muzzle_laser_round
 	run
 	{
 
-		// change the position a little bit randomly
-		crand  vector "1 0 0"	// push a value between -1 and 1 onto the stack
-		add    *s				// add the current location
-		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
+		crand  vector "1 0 0"	
+		add    *s				
+		pop    *s				
 
 	}
 	think { kill }
@@ -1928,10 +1922,9 @@ particle muzzle_plasma_round
 	run
 	{
 
-		// change the position a little bit randomly
-		crand  vector "1 0 0"	// push a value between -1 and 1 onto the stack
-		add    *s				// add the current location
-		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
+		crand  vector "1 0 0"	
+		add    *s				
+		pop    *s				
 
 	}
 	think { kill }
@@ -1971,16 +1964,14 @@ particle muzzle_plasma_spiral
 	run
 	{
 
-		// change the size of the smoketrail (make it bigger as time advances)
-		push   pos "40 40"		// push the vector onto the stack
-		mul    *t				// multiply stack value with the time value from the particle
-		add    pos "10 10"		// add another position 2d vector to the current stack value
-		pop    *size			// write the vector back into the particle size value
+		push   pos "40 40"		
+		mul    *t				
+		add    pos "10 10"		
+		pop    *size			
 
-		// change the color of the smoketrail (more more transparent as time advances)
-		push   *color	// get the color onto the stack
-		mul    float .7	// scalar multiple with 0.5 (to make it more transparent)
-		pop    *color	// write the stack value back into particle structure color and remove from stack
+		push   *color	
+		mul    float .7	
+		pop    *color	
 
 	}
 	think { kill }
@@ -2036,16 +2027,14 @@ particle muzzle_ptl_cross
 	run
 	{
 
-		// change the size of the smoketrail (make it bigger as time advances)
-		push   pos "0 0"		// push the vector onto the stack
-		mul    *t				// multiply stack value with the time value from the particle
-		sub    pos "20 20"		// add another position 2d vector to the current stack value
-		pop    *size			// write the vector back into the particle size value
+		push   pos "0 0"		
+		mul    *t				
+		sub    pos "20 20"		
+		pop    *size			
 
-		// change the color of the smoketrail (more more transparent as time advances)
-		push   *color	// get the color onto the stack
-		mul    float .7	// scalar multiple with 0.5 (to make it more transparent)
-		pop    *color	// write the stack value back into particle structure color and remove from stack
+		push   *color	
+		mul    float .7	
+		pop    *color	
 
 	}
 	think { kill }
