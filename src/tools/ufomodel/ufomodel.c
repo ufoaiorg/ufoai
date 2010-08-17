@@ -23,10 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#if defined _WIN32
-#	include	<windows.h>
-#endif
-
 #include "../../shared/ufotypes.h"
 #include "../../common/mem.h"
 #include "../../shared/shared.h"
