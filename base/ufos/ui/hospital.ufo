@@ -546,9 +546,24 @@ window hospital_employee
 		{
 			pos "690 476"
 		}
-		tbar bar   { current *cvar:mn_hp max *cvar:mn_hpmax image "ui/bar_health" }
-		string lbl { string "_Health:" font "f_normal" longlines LONGLINES_PRETTYCHOP }
-		string val { string *cvar:mn_hp  font "f_normal" longlines LONGLINES_PRETTYCHOP }
+		tbar bar   
+		{ 
+			current *cvar:mn_hp 
+			max *cvar:mn_hpmax 
+			image "ui/bar_health" 
+		}
+		string lbl 
+		{
+			string "_Health:" 
+			font "f_normal" 
+			longlines LONGLINES_PRETTYCHOP
+		}
+		string val 
+		{ 
+			string *cvar:mn_hp  
+			font "f_normal" 
+			longlines LONGLINES_PRETTYCHOP 
+		}
 	}
 
 	// ==================
