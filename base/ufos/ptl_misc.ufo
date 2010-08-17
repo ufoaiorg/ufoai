@@ -1088,3 +1088,51 @@ particle energy
 		spawn energy_emit
 	}
 }
+
+particle shortCircuit
+{
+	init
+	{
+		image		sfx/flashbang
+		blend		add
+		style		facing
+		framefade	out
+		size		"20 20"
+		tps			10
+		v			"0 0 0"
+		life		0.8
+		push   int 10		// push 20 to the stack
+		nspawn bulletFragment	// use the 20 from stack and spawn that many particles
+	}
+	think { kill }
+}
+
+particle shortCircuitSparks
+{
+	init
+	{
+		image  sfx/spark
+		blend  add
+		style  facing
+		thinkfade  out		// fade the thinkfunction out
+		size   "2 2"
+
+		push   *v			// get velocity onto the stack
+		rand   float 28.0	// get a random value between 0 and 28
+		add    float 3.0	// add a value onto the random value to ensure a minimum velocity
+		mul    #			// multiply the value with the current stack value (velocity)
+		crand  vector "5 5 5" // get a random vector between -15 and 15
+		add    #			// Add the value to the current stack value (velocity)
+		pop    *v			// write it back into particle structure and remove it from the stack
+
+		crand  vector "5 5 5"	// get a random value between -5 and 5
+		add    *s			// add the value of s to the current stack value (the random value)
+		pop    *s			// write it into particle structure and remove it from the stack
+
+		rand   float 1.3	// get a random value between 0 and 1.3
+		add    float 1.2	// make sure we have a minimum
+		pop    *tps			// write the into think per second particle structure and remove it from the stack
+	}
+	// this is spawned from an impact particle - need to be explicitly killed
+	think { kill }
+}
