@@ -30,8 +30,42 @@ particle bolter
 		style  axis
 		blend  add
 		offset "0 -16 0"
-		size   "70 3"
+		size   "30 15"
 	}
+	think
+	{
+		spawn bolter_trail 
+	}
+}
+
+particle bolter_trail
+{
+	init
+	{
+		image  sfx/muzzleplasmaspiral
+		blend  add
+		style  axis
+		thinkfade  out
+		angles "90 0 0"
+		v      "0 0 0"
+		tps    4
+	}
+	run
+	{
+
+		// change the size of the smoketrail (make it bigger as time advances)
+		push   pos "40 40"		// push the vector onto the stack
+		mul    *t				// multiply stack value with the time value from the particle
+		add    pos "10 10"		// add another position 2d vector to the current stack value
+		pop    *size			// write the vector back into the particle size value
+
+		// change the color of the smoketrail (more more transparent as time advances)
+		push   *color	// get the color onto the stack
+		mul    float .2	// scalar multiple with 0.2 (to make it more transparent)
+		pop    *color	// write the stack value back into particle structure color and remove from stack
+
+	}
+	think { kill }
 }
 
 particle bolterImpact
@@ -1730,8 +1764,8 @@ particle muzzle_side
 	{
 		image  sfx/muzzlebulletside
 		blend  add
-		style  rotated 
-		angles "50 0 0"
+		style  axis 
+//		angles "50 0 0"
 		thinkfade  out
 		life   0.07
 		tps    1
@@ -1747,7 +1781,6 @@ particle muzzle_sniper
 	{
 		spawn  muzzle_sniper_1
 		spawn  muzzle_sniper_glow
-		push   int 25
 		lightcolor "0.4 0.4 1.0"
 		lightintensity 0.1
 		kill

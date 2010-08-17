@@ -3123,9 +3123,9 @@ base/pics/sfx/bloodsplatter_d02.png | GNU General Public License 2.0 | Lord Havo
 base/pics/sfx/bloodsplatter_d03.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/blueflare.jpg | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/bms2fl_rglow.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/bolt.jpg | GNU General Public License 2.0 or later | Crystan
+base/pics/sfx/bolt.png |  | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/bubble.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/sfx/bullet1.png |  |  | plasmaimpact_01
+base/pics/sfx/bullet1.png |  | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/corona_b.jpg |  |  | corona.jpg
 base/pics/sfx/corona_y.jpg |  |  | corona.jpg
 base/pics/sfx/cross.png | GNU General Public License 2.0 or later | MCR
@@ -3203,24 +3203,24 @@ base/pics/sfx/greenball.png |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplas_00.png |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplas_07.png |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplasbeam.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/sfx/laserbeam_b.png |  |  | plasmaimpact_01
-base/pics/sfx/lasermuzzle.png |  |  | plasmaimpact_00
+base/pics/sfx/laserbeam_b.png |  | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/lasermuzzle.png |  | Lord Havoc;MCR | plasmaimpact_00
 base/pics/sfx/lightningscroll.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/lightningscroll2.jpg | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/muzzlebulletside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/muzzlelaserside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/muzzleplasmaside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/pics/sfx/muzzleplasmaspiral.png |  |  | plasmaimpact_01
+base/pics/sfx/muzzleplasmaspiral.png |  | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/muzzleptlside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/pics/sfx/particlebeam.png |  |  | plasmaimpact_01
+base/pics/sfx/particlebeam.png |  | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/plasmaball-core.png |  |  | plasmaimpact_01
-base/pics/sfx/plasmabeam.png |  |  | plasmaimpact_01
+base/pics/sfx/plasmabeam.png |  | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/plasmaimpact_00.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmaimpact_01.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmaimpact_02.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmaimpact_03.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmaimpact_04.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmapulse.png |  |  | plasmaimpact_00
+base/pics/sfx/plasmapulse.png |  | Lord Havoc;MCR | plasmaimpact_00
 base/pics/sfx/plasmashot_00.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmashot_01.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmashot_02.png | General Public License 2.0 | Lord Havoc;MCR
@@ -3232,7 +3232,7 @@ base/pics/sfx/plasmashot_07.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmashot_08.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/plasmashot_09.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/powerup_flare3.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/ptlmuzzle.png |  |  | plasmaimpact_01
+base/pics/sfx/ptlmuzzle.png |  | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/smoke.png | GNU General Public License 2.0 |  | OpenAreana
 base/pics/sfx/smoke_00.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
 base/pics/sfx/smoke_01.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
@@ -3614,6 +3614,7 @@ base/sound/weapons/bullet-chaingun-10x.ogg | Creative Commons Attribution-Share 
 base/sound/weapons/bullet-chaingun-40x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-chaingun-50x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-chaingun-5x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/weapons/bullet-gauss.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-heavybolter.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-hmg-20x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-hmg-5x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann

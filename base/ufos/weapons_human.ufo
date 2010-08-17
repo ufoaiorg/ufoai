@@ -457,7 +457,7 @@ item coilgun_ammo
 			projtl		bolter
 			impact		bolterImpact
 			hitbody		null
-			firesnd		weapons/bullet-bolter
+			firesnd		weapons/bullet-gauss
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			speed		2000
@@ -479,7 +479,7 @@ item coilgun_ammo
 			projtl		bolter
 			impact		bolterImpact
 			hitbody		null
-			firesnd		weapons/bullet-bolter
+			firesnd		weapons/bullet-gauss
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			speed		2000
@@ -1983,7 +1983,7 @@ item bolterrifle_ammo
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
-			speed		2000
+			speed		1700
 			spread		"1.7 1.7"
 			crouch		0.8
 			range		80
@@ -2007,7 +2007,7 @@ item bolterrifle_ammo
 			impsnd		impact/nail-impact
 			bodysnd 	impact/nail-bodyimpact
 			sndonce		true
-			speed		2000
+			speed		1700
 			spread		"2.4 2.4"
 			crouch		0.8
 			range		80
@@ -2030,7 +2030,7 @@ item bolterrifle_ammo
 			firesnd				weapons/bullet-bolter
 			impsnd				impact/nail-impact
 			bodysnd 			impact/nail-bodyimpact
-			speed				2000
+			speed				1700
 			spread				"1.1 1.1"
 			crouch				0.70
 			range				80
