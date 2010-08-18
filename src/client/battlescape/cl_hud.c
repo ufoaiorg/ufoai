@@ -627,7 +627,6 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
 {
 	const fireDef_t *fdArray;
 	int time = 100;
-	const objDef_t *od;
 	int i;
 
 	assert(invList->item.t);
@@ -635,11 +634,6 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
 	fdArray = FIRESH_FiredefForWeapon(&invList->item);
 	if (fdArray == NULL)
 		return time;
-
-	if (invList->item.m)
-		od = invList->item.m;
-	else
-		od = invList->item.t;
 
 	/* Search for the smallest TU needed to shoot. */
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
