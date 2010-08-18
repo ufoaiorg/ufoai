@@ -49,7 +49,7 @@ typedef struct mTile_s {
 
 typedef struct mTileSet_s {
 	char id[MAX_VAR];
-	char tiles[MAX_VAR][MAX_TILESETTILES];
+	char tiles[MAX_TILESETTILES][MAX_VAR];
 	int numTiles;
 } mTileSet_t;
 
