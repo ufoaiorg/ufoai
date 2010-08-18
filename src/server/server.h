@@ -34,8 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../game/game.h"
 #include <SDL_thread.h>
 
-extern struct memPool_s *sv_gameSysPool;	/**< the mempool for the game lib */
-extern struct memPool_s *sv_genericPool;
+extern memPool_t *sv_gameSysPool;	/**< the mempool for the game lib */
+extern memPool_t *sv_genericPool;
 
 /*============================================================================= */
 

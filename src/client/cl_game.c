@@ -33,8 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_inventory.h"
 #include "ui/node/ui_node_model.h"
 
-static invList_t invList[MAX_INVLIST];
-
 static const cgame_export_t gameTypeList[] = {
 	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL, NULL, GAME_MP_EndRoundAnnounce, GAME_MP_StartBattlescape},
 	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_DisplayItemInfo, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape, GAME_CP_Frame, GAME_CP_GetModelForItem, NULL, NULL},
@@ -160,7 +158,7 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
 		UI_InitStack(mn_hud->string, NULL, qtrue, qtrue);
 	}
 	if (list != NULL)
-		Com_Printf("Free inventory slots: %i\n", cls.i.GetFreeSlots(&cls.i));
+		Com_Printf("Used inventory slots: %i\n", cls.i.GetUsedSlots(&cls.i));
 }
 
 /**
@@ -169,7 +167,7 @@ void GAME_StartBattlescape (qboolean isTeamPlay)
  */
 void GAME_EndBattlescape (void)
 {
-	Com_Printf("Free inventory slots after battle: %i\n", cls.i.GetFreeSlots(&cls.i));
+	Com_Printf("Used inventory slots after battle: %i\n", cls.i.GetUsedSlots(&cls.i));
 }
 
 /**
@@ -301,9 +299,9 @@ void GAME_SetMode (int gametype)
 	list = GAME_GetCurrentType();
 	if (list) {
 		Com_Printf("Change gametype to '%s'\n", list->name);
-		memset(&invList, 0, sizeof(invList));
 		/* inventory structure switched/initialized */
-		INV_InitInventory(list->name, &cls.i, &csi, invList, lengthof(invList));
+		INV_DestroyInventory(list->name, &cls.i);
+		INV_InitInventory(list->name, &cls.i, &csi, cl_genericPool);
 		list->Init();
 	}
 }
@@ -627,10 +625,9 @@ static qboolean GAME_Spawn (void)
 		const char *teamDefID = GAME_GetTeamDef();
 		const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
 
-		memset(&invList, 0, sizeof(invList));
-
 		/* inventory structure switched/initialized */
-		INV_InitInventory("client", &cls.i, &csi, invList, lengthof(invList));
+		INV_DestroyInventory("client", &cls.i);
+		INV_InitInventory("client", &cls.i, &csi, cl_genericPool);
 		GAME_GenerateTeam(teamDefID, ed, size);
 	}
 

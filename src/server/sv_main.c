@@ -56,8 +56,8 @@ static qboolean killserver;		/**< will initiate shutdown once abandon is set */
 mapcycle_t *mapcycleList;
 int mapcycleCount;
 
-struct memPool_s *sv_gameSysPool;
-struct memPool_s *sv_genericPool;
+memPool_t *sv_gameSysPool;
+memPool_t *sv_genericPool;
 
 /*============================================================================ */
 

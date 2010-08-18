@@ -29,13 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/common.h"
 #include "../game/inventory.h"
 
-static invList_t invList[MAX_INVLIST];
 static inventoryInterface_t i;
 
 static inline void ResetInventoryList (void)
 {
-	memset(&invList, 0, sizeof(invList));
-	INV_InitInventory("test", &i, &csi, invList, lengthof(invList));
+	INV_DestroyInventory("test", &i);
+	INV_InitInventory("test", &i, &csi, com_genericPool);
 }
 
 /**

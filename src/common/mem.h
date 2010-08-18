@@ -26,6 +26,46 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _COMMON_MEM_H
 #define _COMMON_MEM_H
 
+#define MEM_MAX_POOLNAME	64
+#define MEM_HASH			11
+
+typedef struct memBlockFoot_s {
+	uint32_t sentinel;				/**< For memory integrity checking */
+} memBlockFoot_t;
+
+typedef struct memBlock_s {
+	struct memBlock_s *next;
+
+	uint32_t topSentinel;			/**< For memory integrity checking */
+
+	struct memPool_s *pool;			/**< Owner pool */
+	int tagNum;						/**< For group free */
+	size_t size;					/**< Size of allocation including this header */
+
+	const char *allocFile;			/**< File the memory was allocated in */
+	int allocLine;					/**< Line the memory was allocated at */
+
+	void *memPointer;				/**< pointer to allocated memory */
+	size_t memSize;					/**< Size minus the header */
+
+	memBlockFoot_t *footer;			/**< Allocated in the space AFTER the block to check for overflow */
+
+	uint32_t botSentinel;			/**< For memory integrity checking */
+} memBlock_t;
+
+typedef struct memPool_s {
+	char name[MEM_MAX_POOLNAME];	/**< Name of pool */
+	qboolean inUse;					/**< Slot in use? */
+
+	memBlock_t *blocks[MEM_HASH];	/**< Allocated blocks */
+
+	uint32_t blockCount;			/**< Total allocated blocks */
+	uint32_t byteCount;				/**< Total allocated bytes */
+
+	const char *createFile;			/**< File this pool was created on */
+	int createLine;					/**< Line this pool was created on */
+} memPool_t;
+
 /* constants */
 #define Mem_CreatePool(name)							_Mem_CreatePool((name),__FILE__,__LINE__)
 #define Mem_DeletePool(pool)							_Mem_DeletePool((pool),__FILE__,__LINE__)
@@ -54,30 +94,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define Mem_TouchGlobal()								_Mem_TouchGlobal(__FILE__,__LINE__)
 
 /* functions */
-struct memPool_s *_Mem_CreatePool(const char *name, const char *fileName, const int fileLine) __attribute__ ((malloc));
-uint32_t _Mem_DeletePool(struct memPool_s *pool, const char *fileName, const int fileLine);
+memPool_t *_Mem_CreatePool(const char *name, const char *fileName, const int fileLine) __attribute__ ((malloc));
+uint32_t _Mem_DeletePool(memPool_t *pool, const char *fileName, const int fileLine);
 
 uint32_t _Mem_Free(void *ptr, const char *fileName, const int fileLine);
-uint32_t _Mem_FreeTag(struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine);
-uint32_t _Mem_FreePool(struct memPool_s *pool, const char *fileName, const int fileLine);
-void* _Mem_Alloc(size_t size, qboolean zeroFill, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine) __attribute__ ((malloc));
+uint32_t _Mem_FreeTag(memPool_t *pool, const int tagNum, const char *fileName, const int fileLine);
+uint32_t _Mem_FreePool(memPool_t *pool, const char *fileName, const int fileLine);
+void* _Mem_Alloc(size_t size, qboolean zeroFill, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine) __attribute__ ((malloc));
 void* _Mem_ReAlloc(void *ptr, size_t size, const char *fileName, const int fileLine);
 
 size_t Mem_Size(const void *ptr);
-char* _Mem_PoolStrDupTo(const char *in, char **out, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine);
-void *_Mem_PoolDup(const void *in, size_t size, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine);
-char* _Mem_PoolStrDup(const char *in, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine) __attribute__ ((malloc));
-uint32_t _Mem_PoolSize(struct memPool_s *pool);
-uint32_t _Mem_TagSize(struct memPool_s *pool, const int tagNum);
-uint32_t _Mem_ChangeTag(struct memPool_s *pool, const int tagFrom, const int tagTo);
+char* _Mem_PoolStrDupTo(const char *in, char **out, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine);
+void *_Mem_PoolDup(const void *in, size_t size, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine);
+char* _Mem_PoolStrDup(const char *in, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine) __attribute__ ((malloc));
+uint32_t _Mem_PoolSize(memPool_t *pool);
+uint32_t _Mem_TagSize(memPool_t *pool, const int tagNum);
+uint32_t _Mem_ChangeTag(memPool_t *pool, const int tagFrom, const int tagTo);
 
-void _Mem_CheckPoolIntegrity(struct memPool_s *pool, const char *fileName, const int fileLine);
+void _Mem_CheckPoolIntegrity(memPool_t *pool, const char *fileName, const int fileLine);
 void _Mem_CheckGlobalIntegrity(const char *fileName, const int fileLine);
 
-void _Mem_TouchPool(struct memPool_s *pool, const char *fileName, const int fileLine);
+void _Mem_TouchPool(memPool_t *pool, const char *fileName, const int fileLine);
 void _Mem_TouchGlobal(const char *fileName, const int fileLine);
 
-void* _Mem_AllocatedInPool(struct memPool_s *pool, const void *pointer);
+void* _Mem_AllocatedInPool(memPool_t *pool, const void *pointer);
 
 void Mem_Init(void);
 uint32_t Mem_Shutdown(void);

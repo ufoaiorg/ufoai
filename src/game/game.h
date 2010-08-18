@@ -214,6 +214,7 @@ typedef struct {
 	void (IMPORT *GetCharacterValues) (const char *teamDefinition, character_t *chr);
 
 	/* managed memory allocation */
+	memPool_t *memPool;
 	void *(IMPORT *TagMalloc) (int size, int tag, const char *file, int line);
 	void (IMPORT *TagFree) (void *block, const char *file, int line);
 	void (IMPORT *FreeTags) (int tag);

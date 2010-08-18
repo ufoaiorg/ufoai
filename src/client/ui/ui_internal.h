@@ -95,8 +95,8 @@ typedef struct uiGlobal_s {
 
 extern uiGlobal_t ui_global;
 
-extern struct memPool_s *ui_sysPool;
-extern struct memPool_s *ui_dynStringPool;
-extern struct memPool_s *ui_dynPool;
+extern memPool_t *ui_sysPool;
+extern memPool_t *ui_dynStringPool;
+extern memPool_t *ui_dynPool;
 
 #endif

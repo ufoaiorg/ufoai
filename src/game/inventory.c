@@ -1,37 +1,54 @@
 #include "inventory.h"
 
-static void I_RemoveInvList (inventoryInterface_t* self, invList_t *ic)
-{
-	Com_DPrintf(DEBUG_SHARED, "I_RemoveInvList: remove one slot (ic: %p, ic->next: %p) (%s)\n",
-			ic, ic->next, self->name);
+static const int INVENTORY_TAG_NUM = 7339;
 
-	ic->next = self->invUnused;
-	self->invUnused = ic;
+static void I_RemoveInvList (inventoryInterface_t* self, invList_t *invList)
+{
+	Com_DPrintf(DEBUG_SHARED, "I_RemoveInvList: remove one slot (%s)\n", self->name);
+
+	/* first entry */
+	if (self->invList == invList) {
+		invList_t *ic = self->invList;
+		self->invList = ic->next;
+		Mem_Free(ic);
+	} else {
+		invList_t *ic = self->invList;
+		invList_t* prev = NULL;
+		while (ic) {
+			if (ic == invList) {
+				prev->next = ic->next;
+				Mem_Free(ic);
+				break;
+			}
+			prev = ic;
+			ic = ic->next;
+		}
+	}
 }
 
 static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
 {
-	invList_t* ic = self->invUnused;
+	invList_t *newEntry;
+	invList_t *list;
 
-	if (!ic)
-		Sys_Error("I_AddInvList: No free inventory space! (%s)", self->name);
+	Com_DPrintf(DEBUG_SHARED, "I_AddInvList: add one slot (%s)\n", self->name);
 
-	if (!ic->next)
-		Sys_Error("I_AddInvList: No free inventory space! (%s)", self->name);
+	/* create the list */
+	if (!*invList) {
+		*invList = (invList_t*)Mem_PoolAlloc(sizeof(**invList), self->memPool, INVENTORY_TAG_NUM);
+		(*invList)->next = NULL; /* not really needed - but for better readability */
+		return *invList;
+	} else
+		list = *invList;
 
-	Com_DPrintf(DEBUG_SHARED, "I_AddInvList: add one slot (ic: %p, ic->next: %p) (%s)\n",
-			ic, ic->next, self->name);
+	while (list->next)
+		list = list->next;
 
-	/* Ensure, that for later usage invUnused will be the next empty/free slot. */
-	self->invUnused = ic->next;
+	newEntry = (invList_t*)Mem_PoolAlloc(sizeof(*newEntry), self->memPool, INVENTORY_TAG_NUM);
+	list->next = newEntry;
+	newEntry->next = NULL; /* not really needed - but for better readability */
 
-	/* Set the "next" link of the new "first item" to the original "first item". */
-	ic->next = *invList;
-
-	/* Remember the new "first item" (i.e. the yet empty entry). */
-	*invList = ic;
-
-	return ic;
+	return newEntry;
 }
 
 /**
@@ -882,18 +899,18 @@ static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, co
 }
 
 /**
- * @brief Calculate the number of free inventory slots
+ * @brief Calculate the number of used inventory slots
  * @return The number of free inventory slots
  */
-static int I_GetFreeSlots (inventoryInterface_t* self)
+static int I_GetUsedSlots (inventoryInterface_t* self)
 {
 	int i = 0;
-	const invList_t* slot = self->invUnused;
+	const invList_t* slot = self->invList;
 	while (slot) {
 		slot = slot->next;
 		i++;
 	}
-	Com_DPrintf(DEBUG_SHARED, "Free inventory slots %i (%s)\n", i, self->name);
+	Com_DPrintf(DEBUG_SHARED, "Used inventory slots %i (%s)\n", i, self->name);
 	return i;
 }
 
@@ -907,19 +924,17 @@ static int I_GetFreeSlots (inventoryInterface_t* self)
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
  */
-void INV_InitInventory (const char *name, inventoryInterface_t *interface, csi_t* csi, invList_t* invList, size_t length)
+void INV_InitInventory (const char *name, inventoryInterface_t *interface, csi_t* csi, memPool_t *memPool)
 {
-	int i;
 	const item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
-
-	assert(invList);
 
 	memset(interface, 0, sizeof(*interface));
 
 	interface->name = name;
 	interface->cacheItem = item;
 	interface->csi = csi;
-	interface->invUnused = invList;
+	interface->memPool = memPool;
+	interface->invList = NULL;
 
 	interface->TryAddToInventory = I_TryAddToInventory;
 	interface->AddToInventory = I_AddToInventory;
@@ -930,18 +945,11 @@ void INV_InitInventory (const char *name, inventoryInterface_t *interface, csi_t
 	interface->EquipActor = I_EquipActor;
 	interface->EquipActorMelee = I_EquipActorMelee;
 	interface->EquipActorRobot = I_EquipActorRobot;
-	interface->GetFreeSlots = I_GetFreeSlots;
+	interface->GetUsedSlots = I_GetUsedSlots;
+}
 
-	/* first entry doesn't have an ancestor: invList[0]->next = NULL */
-	interface->invUnused->next = NULL;
-	/* now link the invList_t next pointers
-	 * invList[1]->next = invList[0]
-	 * invList[2]->next = invList[1]
-	 * invList[3]->next = invList[2]
-	 * ... and so on
-	 */
-	for (i = 0; i < length - 1; i++) {
-		invList_t *last = interface->invUnused++;
-		interface->invUnused->next = last;
-	}
+void INV_DestroyInventory (const char *name, inventoryInterface_t *interface)
+{
+	Mem_FreeTag(interface->memPool, INVENTORY_TAG_NUM);
+	memset(interface, 0, sizeof(*interface));
 }

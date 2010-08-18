@@ -2,11 +2,14 @@
 #define INVENTORY_H_
 
 #include "q_shared.h"
+#include "../common/mem.h"
 
 typedef struct inventoryInterface_s
 {
 	/* private */
-	invList_t* invUnused;
+	invList_t* invList;
+
+	memPool_t *memPool;
 
 	item_t cacheItem;
 
@@ -35,9 +38,10 @@ typedef struct inventoryInterface_s
 
 	void (*EquipActorRobot) (struct inventoryInterface_s* self, inventory_t* const inv, objDef_t* weapon) __attribute__((nonnull(1), nonnull(2)));
 
-	int (*GetFreeSlots) (struct inventoryInterface_s* self);
+	int (*GetUsedSlots) (struct inventoryInterface_s* self);
 } inventoryInterface_t;
 
-void INV_InitInventory (const char *name, inventoryInterface_t *ii, csi_t* csi, invList_t* invList, size_t length);
+void INV_InitInventory(const char *name, inventoryInterface_t *ii, csi_t* csi, memPool_t *memPool);
+void INV_DestroyInventory(const char *name, inventoryInterface_t *ii);
 
 #endif /* INVENTORY_H_ */

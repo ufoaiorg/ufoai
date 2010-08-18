@@ -37,15 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int UFO_InitSuiteRouting (void)
 {
-	unsigned int checksum = 0;
-	routing_t map[ACTOR_MAX_SIZE];
-
 	TEST_Init();
-
-	/**
-	 * @todo use a special testmap
-	 */
-	CM_LoadMap("fueldump", qtrue, "", &checksum, map, lengthof(map));
 	return 0;
 }
 
@@ -59,11 +51,16 @@ static int UFO_CleanSuiteRouting (void)
 	return 0;
 }
 
+static routing_t map[ACTOR_MAX_SIZE];
+
 static void testConnection (void)
 {
+	unsigned int checksum = 0;
 	/**
+	 * @todo use a special testmap
 	 * @todo implement the test
 	 */
+	CM_LoadMap("fueldump", qtrue, "", &checksum, map, lengthof(map));
 }
 
 int UFO_AddRoutingTests (void)

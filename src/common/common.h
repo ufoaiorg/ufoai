@@ -310,12 +310,12 @@ const routing_t** SV_GetRoutingMap(void);
 
 /*============================================================================ */
 
-extern struct memPool_s *com_aliasSysPool;
-extern struct memPool_s *com_cmdSysPool;
-extern struct memPool_s *com_cmodelSysPool;
-extern struct memPool_s *com_cvarSysPool;
-extern struct memPool_s *com_fileSysPool;
-extern struct memPool_s *com_genericPool;
+extern memPool_t *com_aliasSysPool;
+extern memPool_t *com_cmdSysPool;
+extern memPool_t *com_cmodelSysPool;
+extern memPool_t *com_cvarSysPool;
+extern memPool_t *com_fileSysPool;
+extern memPool_t *com_genericPool;
 
 /*============================================================================ */
 

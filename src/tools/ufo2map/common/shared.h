@@ -136,8 +136,8 @@ typedef struct threadstate_s {
 
 extern threadstate_t threadstate;
 
-extern struct memPool_s *com_genericPool;
-extern struct memPool_s *com_fileSysPool;
+extern memPool_t *com_genericPool;
+extern memPool_t *com_fileSysPool;
 
 void ThreadLock(void);
 void ThreadUnlock(void);

@@ -117,8 +117,6 @@ cvar_t *flood_waitdelay;
 
 cvar_t *difficulty;
 
-static invList_t invChain[MAX_INVLIST];
-
 /**
  * @brief This will be called when the game library is first loaded
  * @note only happens when a new game/map is started
@@ -236,7 +234,7 @@ static void G_Init (void)
 
 	/* init csi and inventory */
 	INVSH_InitCSI(gi.csi);
-	INV_InitInventory("game", &game.i, gi.csi, invChain, lengthof(invChain));
+	INV_InitInventory("game", &game.i, gi.csi, gi.memPool);
 
 	if (logstats->integer)
 		logstatsfile = fopen(va("%s/stats.log", gi.FS_Gamedir()), "a");
@@ -263,7 +261,7 @@ static void G_Shutdown (void)
 	gi.FreeTags(TAG_LEVEL);
 	gi.FreeTags(TAG_GAME);
 
-	Com_Printf("Free inventory slots in game on shutdown: %i\n", game.i.GetFreeSlots(&game.i));
+	Com_Printf("Free inventory slots in game on shutdown: %i\n", game.i.GetUsedSlots(&game.i));
 }
 
 

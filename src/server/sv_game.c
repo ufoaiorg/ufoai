@@ -638,6 +638,7 @@ void SV_InitGameProgs (void)
 
 	import.GetCharacterValues = Com_GetCharacterValues;
 
+	import.memPool = sv_gameSysPool;
 	import.TagMalloc = SV_TagAlloc;
 	import.TagFree = SV_MemFree;
 	import.FreeTags = SV_FreeTags;

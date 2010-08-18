@@ -69,10 +69,10 @@ typedef struct vidmode_s {
 	int mode;
 } vidmode_t;
 
-extern struct memPool_s *vid_genericPool;
-extern struct memPool_s *vid_imagePool;
-extern struct memPool_s *vid_lightPool;
-extern struct memPool_s *vid_modelPool;
+extern memPool_t *vid_genericPool;
+extern memPool_t *vid_imagePool;
+extern memPool_t *vid_lightPool;
+extern memPool_t *vid_modelPool;
 
 extern viddef_t viddef;			/* global video state */
 
