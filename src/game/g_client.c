@@ -499,7 +499,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
  * @brief Returns true if actor can reload weapon
  * @sa AI_ActorThink
  */
-qboolean G_ClientCanReload (player_t *player, edict_t *ent, containerIndex_t containerID)
+qboolean G_ClientCanReload (edict_t *ent, containerIndex_t containerID)
 {
 	invList_t *ic;
 	containerIndex_t container;
@@ -530,7 +530,7 @@ qboolean G_ClientCanReload (player_t *player, edict_t *ent, containerIndex_t con
  * is standing on a given point.
  * @sa AI_ActorThink
  */
-void G_ClientGetWeaponFromInventory (player_t *player, edict_t *ent)
+void G_ClientGetWeaponFromInventory (edict_t *ent)
 {
 	invList_t *ic;
 	invList_t *icFinal;

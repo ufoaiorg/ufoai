@@ -166,7 +166,7 @@ qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
  * @brief Update storage, the market, and the player's credits
  * @note Don't update capacity here because we can sell items directly from aircraft (already removed from storage).
  */
-void BS_ProcessCraftItemSale (const base_t *base, const objDef_t *craftitem, const int numItems)
+void BS_ProcessCraftItemSale (const objDef_t *craftitem, const int numItems)
 {
 	if (craftitem) {
 		BS_AddItemToMarket(craftitem, numItems);
@@ -200,7 +200,7 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 	}
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
 		market_t *market = &ccs.eMarket;
-		if (market->bidAircraft[i] > 0 || market->askAircraft > 0) {
+		if (market->bidAircraft[i] > 0 || market->askAircraft[i] > 0) {
 			mxml_node_t * snode = mxml_AddNode(node, SAVE_MARKET_AIRCRAFT);
 			mxml_AddString(snode, SAVE_MARKET_ID, Com_DropShipTypeToShortName(i));
 			mxml_AddIntValue(snode, SAVE_MARKET_NUM, market->numAircraft[i]);

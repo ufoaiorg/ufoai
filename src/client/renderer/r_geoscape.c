@@ -43,13 +43,12 @@ extern const float STANDARD_3D_ZOOM;
  * @param[in] cx The x texture coordinate
  * @param[in] cy The y texture coordinate
  * @param[in] p The horizontal shift of the night map
- * @param[in] q The angle the sun is standing against the equator on earth
  * @param[in] x The x position of the geoscape node
  * @param[in] y The y position of the geoscape node
  * @param[in] w The width of the geoscape node
  * @param[in] h The height of the geoscape node
  */
-void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar, image_t *r_dayandnightTexture, image_t *r_xviTexture, image_t *r_radarTexture)
+void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float cx, float cy, float iz, const char *map, qboolean overlayNation, qboolean overlayXVI, qboolean overlayRadar, image_t *r_dayandnightTexture, image_t *r_xviTexture, image_t *r_radarTexture)
 {
 	image_t *gl;
 	float geoscape_texcoords[4 * 2];

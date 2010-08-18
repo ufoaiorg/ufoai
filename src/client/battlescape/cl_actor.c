@@ -1218,7 +1218,7 @@ static le_t* CL_ActorSearchAtGridPos (const pos3_t pos)
 		if (LE_IsLivingAndVisibleActor(le))
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
-				if (VectorCompare(le->pos, mousePos))
+				if (VectorCompare(le->pos, pos))
 					return le;
 				break;
 			case ACTOR_SIZE_2x2: {
@@ -1227,10 +1227,10 @@ static le_t* CL_ActorSearchAtGridPos (const pos3_t pos)
 				VectorSet(actor2x2[0], le->pos[0] + 1, le->pos[1],     le->pos[2]);
 				VectorSet(actor2x2[1], le->pos[0],     le->pos[1] + 1, le->pos[2]);
 				VectorSet(actor2x2[2], le->pos[0] + 1, le->pos[1] + 1, le->pos[2]);
-				if (VectorCompare(le->pos, mousePos)
-				|| VectorCompare(actor2x2[0], mousePos)
-				|| VectorCompare(actor2x2[1], mousePos)
-				|| VectorCompare(actor2x2[2], mousePos))
+				if (VectorCompare(le->pos, pos)
+				|| VectorCompare(actor2x2[0], pos)
+				|| VectorCompare(actor2x2[1], pos)
+				|| VectorCompare(actor2x2[2], pos))
 					return le;
 				break;
 			}

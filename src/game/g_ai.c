@@ -945,7 +945,7 @@ void AI_TurnIntoDirection (edict_t *ent, const pos3_t pos)
  */
 static void AI_TryToReloadWeapon (edict_t *ent, containerIndex_t containerID)
 {
-	if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent, containerID)) {
+	if (G_ClientCanReload(ent, containerID)) {
 		G_ActorReload(ent, INVDEF(containerID));
 	} else {
 		G_ActorInvMove(ent, INVDEF(containerID), CONTAINER(ent, containerID), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
@@ -976,7 +976,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	/* if both hands are empty, attempt to get a weapon out of backpack or the
 	 * floor (if TUs permit) */
 	if (!LEFT(ent) && !RIGHT(ent))
-		G_ClientGetWeaponFromInventory(player, ent);
+		G_ClientGetWeaponFromInventory(ent);
 
 	bestAia = AI_PrepBestAction(player, ent);
 
@@ -1064,9 +1064,8 @@ void AI_Run (void)
 /**
  * @brief Initializes the actor's stats like morals, strength and so on.
  * @param ent Actor to set the stats for.
- * @param[in] team Team to which actor belongs.
  */
-static void AI_SetStats (edict_t * ent, int team)
+static void AI_SetStats (edict_t * ent)
 {
 	CHRSH_CharGenAbilitySkills(&ent->chr, sv_maxclients->integer >= 2);
 
@@ -1106,10 +1105,9 @@ static void AI_SetCharacterValues (edict_t * ent, int team)
 /**
  * @brief Sets the actor's equipment.
  * @param ent Actor to give equipment to.
- * @param[in] team Team to which the actor belongs.
  * @param[in] ed Equipment definition for the new actor.
  */
-static void AI_SetEquipment (edict_t * ent, int team, const equipDef_t * ed)
+static void AI_SetEquipment (edict_t * ent, const equipDef_t * ed)
 {
 	/* Pack equipment. */
 	if (ent->chr.teamDef->weapons)
@@ -1136,11 +1134,11 @@ static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDe
 	AI_SetCharacterValues(ent, team);
 
 	/* Calculate stats. */
-	AI_SetStats(ent, team);
+	AI_SetStats(ent);
 
 	/* Give equipment. */
 	if (ed != NULL)
-		AI_SetEquipment(ent, team, ed);
+		AI_SetEquipment(ent, ed);
 
 	/* after equipping the actor we can also get the model indices */
 	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));

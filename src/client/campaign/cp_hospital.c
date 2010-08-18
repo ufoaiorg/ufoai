@@ -179,16 +179,6 @@ void HOS_InitStartup (void)
 
 /**
  * @brief Saving function for hospital related data
- * @sa HOS_Load
- * @sa SAV_GameSave
- */
-qboolean HOS_Save (sizebuf_t *sb, void* data)
-{
-	/* nothing to save here */
-	return qtrue;
-}
-/**
- * @brief Saving function for hospital related data
  * @sa HOS_LoadXML
  * @sa SAV_GameSaveXML
  */

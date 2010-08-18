@@ -874,7 +874,7 @@ static listBlock_t *fs_blocklist = NULL;
  * @note also checks for duplicates
  * @sa FS_BuildFileList
  */
-static void _AddToListBlock (linkedList_t** fl, listBlock_t* block, listBlock_t* tblock, const char* name, qboolean stripPath)
+static void _AddToListBlock (linkedList_t** fl, listBlock_t* tblock, const char* name, qboolean stripPath)
 {
 	const char *f;
 	const linkedList_t *entry;
@@ -980,7 +980,7 @@ int FS_BuildFileList (const char *fileList)
 					}
 
 					if (add)
-						_AddToListBlock(&block->files, block, tblock, pak->files[i].name, qtrue);
+						_AddToListBlock(&block->files, tblock, pak->files[i].name, qtrue);
 				}
 			}
 		} else if (strstr(files, "**")) {
@@ -999,7 +999,7 @@ int FS_BuildFileList (const char *fileList)
 
 			loopList = list;
 			while (loopList) {
-				_AddToListBlock(&block->files, block, tblock, (const char *)loopList->data, qfalse);
+				_AddToListBlock(&block->files, tblock, (const char *)loopList->data, qfalse);
 				loopList = loopList->next;
 			}
 
@@ -1014,7 +1014,7 @@ int FS_BuildFileList (const char *fileList)
 			filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (filenames != NULL) {
 				for (i = 0; i < nfiles - 1; i++) {
-					_AddToListBlock(&block->files, block, tblock, filenames[i], qtrue);
+					_AddToListBlock(&block->files, tblock, filenames[i], qtrue);
 					Mem_Free(filenames[i]);
 				}
 				Mem_Free(filenames);

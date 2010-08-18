@@ -510,7 +510,7 @@ static const value_t seq2D_vals[] = {
 /**
  * @brief Wait until someone clicks with the mouse
  * @return 0 if you wait for the click
- * @return 1 if the click occured
+ * @return 1 if the click occurred
  */
 static int SEQ_Click (const char *name, const char *data)
 {

@@ -144,7 +144,7 @@ static void CL_ActorCvars (const character_t * chr, const char* cvarPrefix)
  * @sa CL_ActorCvars
  * @sa CL_ActorSelect
  */
-static void CL_UGVCvars (const character_t *chr, const char* cvarPrefix)
+static void CL_UGVCvars (const character_t *chr)
 {
 	Cvar_Set("mn_lweapon", "");
 	Cvar_Set("mn_rweapon", "");
@@ -157,7 +157,7 @@ void CL_UpdateCharacterValues (const character_t *chr, const char *cvarPrefix)
 	CL_CharacterSkillAndScoreCvars(chr, cvarPrefix);
 
 	if (chr->teamDef->race == RACE_ROBOT)
-		CL_UGVCvars(chr, cvarPrefix);
+		CL_UGVCvars(chr);
 	else
 		CL_ActorCvars(chr, cvarPrefix);
 

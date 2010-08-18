@@ -766,8 +766,8 @@ static int AIL_roundsleft (lua_State *L)
  */
 static int AIL_canreload (lua_State *L)
 {
-	lua_pushboolean(L, G_ClientCanReload(AIL_player, AIL_ent, gi.csi->idRight));
-	lua_pushboolean(L, G_ClientCanReload(AIL_player, AIL_ent, gi.csi->idLeft));
+	lua_pushboolean(L, G_ClientCanReload(AIL_ent, gi.csi->idRight));
+	lua_pushboolean(L, G_ClientCanReload(AIL_ent, gi.csi->idLeft));
 	return 2;
 }
 

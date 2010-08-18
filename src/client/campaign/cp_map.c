@@ -1617,13 +1617,15 @@ static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 
 		if (cl_3dmap->integer)
 			MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
-		else
+		else {
+			MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL);
 			R_DrawImage(x - image->width / 2, y - image->height / 2, image);
+		}
 
 		/* Draw a circle around ufo purchased by selected aircraft */
 		if (aircraft->status == AIR_UFO && MAP_AllMapToScreen(node, aircraft->aircraftTarget->pos, &x, &y, NULL)) {
 			if (cl_3dmap->integer)
-				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
+				MAP_MapDrawEquidistantPoints(node, aircraft->aircraftTarget->pos, SELECT_CIRCLE_RADIUS, yellow);
 			else
 				R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 		}
@@ -1989,7 +1991,7 @@ void MAP_DrawMap (const uiNode_t* node)
 			CP_CalcAndUploadDayAndNightTexture(q);
 			lastQ = q;
 		}
-		R_DrawFlatGeoscape(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], (float) ccs.date.sec / SECONDS_PER_DAY, q,
+		R_DrawFlatGeoscape(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], (float) ccs.date.sec / SECONDS_PER_DAY,
 			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, ccs.curCampaign->map, MAP_IsNationOverlayActivated(),
 			MAP_IsXVIOverlayActivated(), MAP_IsRadarOverlayActivated(), r_dayandnightTexture, r_xviTexture, r_radarTexture);
 		MAP_DrawMapMarkers(node);

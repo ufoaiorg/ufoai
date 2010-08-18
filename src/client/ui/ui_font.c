@@ -40,7 +40,7 @@ static const value_t fontValues[] = {
 	{"size", V_INT, offsetof(uiFont_t, size), MEMBER_SIZEOF(uiFont_t, size)},
 	{"style", V_CLIENT_HUNK_STRING, offsetof(uiFont_t, style), 0},
 
-	{NULL, V_NULL, 0},
+	{NULL, V_NULL, 0, 0}
 };
 
 /**

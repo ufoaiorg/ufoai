@@ -1642,7 +1642,7 @@ static linkedList_t *parseItemWeapons = NULL;
  * @brief Parses weapon, equipment, craft items and armour
  * @sa Com_ParseArmour
  */
-static void Com_ParseItem (const char *name, const char **text, qboolean craftitem)
+static void Com_ParseItem (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseItem: unexpected end of file (weapon ";
 	const value_t *val;
@@ -3246,10 +3246,8 @@ void Com_ParseScripts (qboolean onlyServer)
 
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
 		/* server/client scripts */
-		if (!strcmp(type, "item"))
-			Com_ParseItem(name, &text, qfalse);
-		else if (!strcmp(type, "craftitem"))
-			Com_ParseItem(name, &text, qtrue);
+		if (!strcmp(type, "item") || !strcmp(type, "craftitem"))
+			Com_ParseItem(name, &text);
 		else if (!strcmp(type, "inventory"))
 			Com_ParseInventory(name, &text);
 		else if (!strcmp(type, "terrain"))
