@@ -307,8 +307,8 @@ item plasblaster_ammo
 			impact				plasmaBigImpact
 			hitbody				plasmaBigImpact
 			firesnd				weapons/plasma-huge
-			impsnd				impact/plasma-impact
-			bodysnd 			impact/plasma-bodyimpact
+			impsnd				impact/plasmaball-impact
+			bodysnd 			impact/plasmaball-impact
 			speed				600
 			spread				"2 2"
 			crouch 				0.6
@@ -330,7 +330,7 @@ item plasblaster_ammo
 			projtl				plasmaContinuous
 			impact				plasmaImpact
 			hitbody				plasmaImpact
-			firesnd				weapons/plasma-huge
+			firesnd				weapons/plasma-large
 			impsnd				impact/plasma-impact
 			bodysnd 			impact/plasma-bodyimpact
 			sndonce				true

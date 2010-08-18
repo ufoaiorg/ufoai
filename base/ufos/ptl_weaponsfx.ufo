@@ -48,7 +48,7 @@ particle bolter_trail
 		thinkfade  out
 		angles "90 0 0"
 		v      "0 0 0"
-		tps    4
+		tps    3
 	}
 	run
 	{
