@@ -56,7 +56,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 cvar_t *cl_log_battlescape_events;
 
 typedef struct evTimes_s {
-	int eType;					/**< event type to handle */
+	event_t eType;					/**< event type to handle */
 	struct dbuffer *msg;		/**< the parsed network channel data */
 } evTimes_t;
 
@@ -179,8 +179,8 @@ void CL_ParseEvent (struct dbuffer *msg)
 {
 	qboolean now;
 	const eventRegister_t *eventData;
-	int eType = NET_ReadByte(msg);
-	if (eType == 0)
+	event_t eType = NET_ReadByte(msg);
+	if (eType == EV_NULL)
 		return;
 
 	/* check instantly flag */
@@ -191,7 +191,7 @@ void CL_ParseEvent (struct dbuffer *msg)
 		now = qfalse;
 
 	/* check if eType is valid */
-	if (eType < 0 || eType >= EV_NUM_EVENTS)
+	if (eType < EV_NULL || eType >= EV_NUM_EVENTS)
 		Com_Error(ERR_DROP, "CL_ParseEvent: invalid event %i", eType);
 
 	eventData = CL_GetEvent(eType);

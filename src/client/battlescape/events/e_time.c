@@ -45,7 +45,7 @@ static qboolean parsedDeath;	/**< extra delay caused by death - @sa @c impactTim
  * @param[in,out] msg The message buffer that can be modified to get the event time
  * @param[in] dt Delta time in msec since the last event was parsed
  */
-int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
+int CL_GetEventTime (const event_t eType, struct dbuffer *msg, const int dt)
 {
 	const eventRegister_t *eventData = CL_GetEvent(eType);
 

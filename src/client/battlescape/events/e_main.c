@@ -133,7 +133,7 @@ const eventRegister_t events[] = {
 };
 CASSERT(lengthof(events) == EV_NUM_EVENTS);
 
-const eventRegister_t *CL_GetEvent (const int eType)
+const eventRegister_t *CL_GetEvent (const event_t eType)
 {
 	int i;
 

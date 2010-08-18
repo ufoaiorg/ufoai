@@ -25,6 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_PARSE_TIME_H
 #define CLIENT_CL_PARSE_TIME_H
 
-int CL_GetEventTime(const int eType, struct dbuffer *msg, const int dt);
+int CL_GetEventTime(const event_t eType, struct dbuffer *msg, const int dt);
 
 #endif
