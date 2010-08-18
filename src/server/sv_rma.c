@@ -996,6 +996,8 @@ static int SV_AssemblyThread (void* data)
 {
 	mapInfo_t *map = (mapInfo_t*) data;
 
+	srand(time(NULL));
+
 	SV_AddMapTiles(map);
 
 	/* the first thread to reach this point, gets the semaphore */
