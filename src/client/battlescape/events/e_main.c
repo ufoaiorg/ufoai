@@ -70,7 +70,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static qboolean CL_CheckDefault (const eventRegister_t *self, const struct dbuffer *msg)
 {
 	const int number = NET_PeekShort(msg);
-	qboolean result = LE_IsLocked(number);
+	const qboolean result = LE_IsLocked(number);
 	if (result)
 		Com_DPrintf(DEBUG_EVENTSYS, "CL_CheckDefault: Delaying event on entnum %i.\n", number);
 	return (!result);
