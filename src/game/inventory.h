@@ -2,7 +2,6 @@
 #define INVENTORY_H_
 
 #include "q_shared.h"
-#include "../common/mem.h"
 
 typedef struct inventoryImport_s {
 	void (*Free) (void* data);
