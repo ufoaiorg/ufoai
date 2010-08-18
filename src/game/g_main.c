@@ -117,6 +117,26 @@ cvar_t *flood_waitdelay;
 
 cvar_t *difficulty;
 
+static const int TAG_INVENTORY = 2389;
+
+static void G_FreeInventory (void *data)
+{
+	G_MemFree(data);
+}
+
+static void *G_AllocInventoryMemory (size_t size)
+{
+	return G_TagMalloc(size, TAG_INVENTORY);
+}
+
+static void G_FreeAllInventory (void)
+{
+	G_FreeTags(TAG_INVENTORY);
+}
+
+static const inventoryImport_t inventoryImport = { G_FreeInventory, G_FreeAllInventory, G_AllocInventoryMemory };
+
+
 /**
  * @brief This will be called when the game library is first loaded
  * @note only happens when a new game/map is started
@@ -234,7 +254,7 @@ static void G_Init (void)
 
 	/* init csi and inventory */
 	INVSH_InitCSI(gi.csi);
-	INV_InitInventory("game", &game.i, gi.csi, gi.memPool);
+	INV_InitInventory("game", &game.i, gi.csi, &inventoryImport);
 
 	if (logstats->integer)
 		logstatsfile = fopen(va("%s/stats.log", gi.FS_Gamedir()), "a");
@@ -258,8 +278,8 @@ static void G_Shutdown (void)
 		fclose(logstatsfile);
 	logstatsfile = NULL;
 
-	gi.FreeTags(TAG_LEVEL);
-	gi.FreeTags(TAG_GAME);
+	G_FreeTags(TAG_LEVEL);
+	G_FreeTags(TAG_GAME);
 
 	Com_Printf("Free inventory slots in game on shutdown: %i\n", game.i.GetUsedSlots(&game.i));
 }

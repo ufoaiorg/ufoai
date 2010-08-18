@@ -1,6 +1,14 @@
 #include "inventory.h"
 
-static const int INVENTORY_TAG_NUM = 7339;
+static inline void I_Free (inventoryInterface_t* self, void *data)
+{
+	self->import->Free(data);
+}
+
+static inline void *I_Alloc (inventoryInterface_t* self, size_t size)
+{
+	return self->import->Alloc(size);
+}
 
 static void I_RemoveInvList (inventoryInterface_t* self, invList_t *invList)
 {
@@ -10,14 +18,14 @@ static void I_RemoveInvList (inventoryInterface_t* self, invList_t *invList)
 	if (self->invList == invList) {
 		invList_t *ic = self->invList;
 		self->invList = ic->next;
-		Mem_Free(ic);
+		I_Free(self, ic);
 	} else {
 		invList_t *ic = self->invList;
 		invList_t* prev = NULL;
 		while (ic) {
 			if (ic == invList) {
 				prev->next = ic->next;
-				Mem_Free(ic);
+				I_Free(self, ic);
 				break;
 			}
 			prev = ic;
@@ -35,7 +43,7 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
 
 	/* create the list */
 	if (!*invList) {
-		*invList = (invList_t*)Mem_PoolAlloc(sizeof(**invList), self->memPool, INVENTORY_TAG_NUM);
+		*invList = (invList_t*)I_Alloc(self, sizeof(**invList));
 		(*invList)->next = NULL; /* not really needed - but for better readability */
 		return *invList;
 	} else
@@ -44,7 +52,7 @@ static invList_t* I_AddInvList (inventoryInterface_t* self, invList_t **invList)
 	while (list->next)
 		list = list->next;
 
-	newEntry = (invList_t*)Mem_PoolAlloc(sizeof(*newEntry), self->memPool, INVENTORY_TAG_NUM);
+	newEntry = (invList_t*)I_Alloc(self, sizeof(*newEntry));
 	list->next = newEntry;
 	newEntry->next = NULL; /* not really needed - but for better readability */
 
@@ -924,16 +932,16 @@ static int I_GetUsedSlots (inventoryInterface_t* self)
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
  */
-void INV_InitInventory (const char *name, inventoryInterface_t *interface, csi_t* csi, memPool_t *memPool)
+void INV_InitInventory (const char *name, inventoryInterface_t *interface, csi_t* csi, const inventoryImport_t *import)
 {
 	const item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
 
 	memset(interface, 0, sizeof(*interface));
 
+	interface->import = import;
 	interface->name = name;
 	interface->cacheItem = item;
 	interface->csi = csi;
-	interface->memPool = memPool;
 	interface->invList = NULL;
 
 	interface->TryAddToInventory = I_TryAddToInventory;
@@ -950,6 +958,8 @@ void INV_InitInventory (const char *name, inventoryInterface_t *interface, csi_t
 
 void INV_DestroyInventory (const char *name, inventoryInterface_t *interface)
 {
-	Mem_FreeTag(interface->memPool, INVENTORY_TAG_NUM);
+	if (interface->import == NULL)
+		return;
+	interface->import->FreeAll();
 	memset(interface, 0, sizeof(*interface));
 }

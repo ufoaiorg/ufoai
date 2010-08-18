@@ -315,7 +315,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 	edict_t *ent;
 	int entnum;
 
-	gi.FreeTags(TAG_LEVEL);
+	G_FreeTags(TAG_LEVEL);
 
 	memset(&level, 0, sizeof(level));
 	G_EdictsReset();

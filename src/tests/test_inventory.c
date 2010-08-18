@@ -30,11 +30,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../game/inventory.h"
 
 static inventoryInterface_t i;
+static const int TAG_INVENTORY = 5546;
+
+static void FreeInventory (void *data)
+{
+	Mem_Free(data);
+}
+
+static void *AllocInventoryMemory (size_t size)
+{
+	return Mem_PoolAlloc(size, com_genericPool, TAG_INVENTORY);
+}
+
+static void FreeAllInventory (void)
+{
+	Mem_FreeTag(com_genericPool, TAG_INVENTORY);
+}
+
+static const inventoryImport_t inventoryImport = { FreeInventory, FreeAllInventory, AllocInventoryMemory };
 
 static inline void ResetInventoryList (void)
 {
 	INV_DestroyInventory("test", &i);
-	INV_InitInventory("test", &i, &csi, com_genericPool);
+	INV_InitInventory("test", &i, &csi, &inventoryImport);
 }
 
 /**

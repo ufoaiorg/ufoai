@@ -4,12 +4,20 @@
 #include "q_shared.h"
 #include "../common/mem.h"
 
+typedef struct inventoryImport_s {
+	void (*Free) (void* data);
+
+	void (*FreeAll) (void);
+
+	void *(*Alloc) (size_t size);
+} inventoryImport_t;
+
 typedef struct inventoryInterface_s
 {
 	/* private */
-	invList_t* invList;
+	const inventoryImport_t *import;
 
-	memPool_t *memPool;
+	invList_t* invList;
 
 	item_t cacheItem;
 
@@ -41,7 +49,7 @@ typedef struct inventoryInterface_s
 	int (*GetUsedSlots) (struct inventoryInterface_s* self);
 } inventoryInterface_t;
 
-void INV_InitInventory(const char *name, inventoryInterface_t *ii, csi_t* csi, memPool_t *memPool);
+void INV_InitInventory(const char *name, inventoryInterface_t *ii, csi_t* csi, const inventoryImport_t *iimport);
 void INV_DestroyInventory(const char *name, inventoryInterface_t *ii);
 
 #endif /* INVENTORY_H_ */

@@ -405,12 +405,12 @@ static void SV_MemFree (void *ptr, const char *file, int line)
 /**
  * @brief Makes sure the game DLL does not use client, or signed tags
  */
-static void SV_FreeTags (int tagNum)
+static void SV_FreeTags (int tagNum, const char *file, int line)
 {
 	if (tagNum < 0)
 		tagNum *= -1;
 
-	_Mem_FreeTag(sv_gameSysPool, tagNum, "GAME DLL", 0);
+	_Mem_FreeTag(sv_gameSysPool, tagNum, file, line);
 }
 
 static void SV_UnloadGame (void)
@@ -638,7 +638,6 @@ void SV_InitGameProgs (void)
 
 	import.GetCharacterValues = Com_GetCharacterValues;
 
-	import.memPool = sv_gameSysPool;
 	import.TagMalloc = SV_TagAlloc;
 	import.TagFree = SV_MemFree;
 	import.FreeTags = SV_FreeTags;

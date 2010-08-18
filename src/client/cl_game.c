@@ -270,6 +270,26 @@ static cgame_import_t* GAME_GetImportData (void)
 }
 #endif
 
+static const int TAG_INVENTORY = 17462;
+
+static void GAME_FreeInventory (void *data)
+{
+	Mem_Free(data);
+}
+
+static void *GAME_AllocInventoryMemory (size_t size)
+{
+	return Mem_PoolAlloc(size, cl_genericPool, TAG_INVENTORY);
+}
+
+
+static void GAME_FreeAllInventory (void)
+{
+	Mem_FreeTag(cl_genericPool, TAG_INVENTORY);
+}
+
+static const inventoryImport_t inventoryImport = { GAME_FreeInventory, GAME_FreeAllInventory, GAME_AllocInventoryMemory };
+
 void GAME_SetMode (int gametype)
 {
 	const cgame_export_t *list;
@@ -301,7 +321,7 @@ void GAME_SetMode (int gametype)
 		Com_Printf("Change gametype to '%s'\n", list->name);
 		/* inventory structure switched/initialized */
 		INV_DestroyInventory(list->name, &cls.i);
-		INV_InitInventory(list->name, &cls.i, &csi, cl_genericPool);
+		INV_InitInventory(list->name, &cls.i, &csi, &inventoryImport);
 		list->Init();
 	}
 }
@@ -627,7 +647,7 @@ static qboolean GAME_Spawn (void)
 
 		/* inventory structure switched/initialized */
 		INV_DestroyInventory("client", &cls.i);
-		INV_InitInventory("client", &cls.i, &csi, cl_genericPool);
+		INV_InitInventory("client", &cls.i, &csi, &inventoryImport);
 		GAME_GenerateTeam(teamDefID, ed, size);
 	}
 
