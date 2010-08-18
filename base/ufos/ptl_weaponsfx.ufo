@@ -819,7 +819,7 @@ particle plasmaBall
 	}
 }
 
-particle plasmaBigBall
+particle plasmaBallCore
 {
  	init
  	{
@@ -836,14 +836,12 @@ particle plasmaBigBall
 		add				*s
 		pop				*s
 		v				"0 0 0"
-		tps 				1
-		child plasmaBallCore
-		spawn muzzle_plasma
+		tps 				0.1
 	}
  	think { kill }
 }
 
-particle plasmaBallCore
+particle plasmaBigBall
 {
  	init
  	{
@@ -851,9 +849,13 @@ particle plasmaBallCore
  		blend  add
  		style  facing
  		offset "0 0 0"
+		tps    60
+		child plasmaBallCore
+		spawn muzzle_plasma
  	}
- 	run
+ 	think
  	{
+		spawn plasmaBallTrail
  		push pos "1 1"
  		push *t
  		mul  float 16.0
@@ -862,6 +864,30 @@ particle plasmaBallCore
  		add  pos "40 40"
  		pop  *size
 	}
+}
+
+particle plasmaBallTrail
+{
+	init
+	{
+		image  sfx/plasmaball-core
+		blend  add
+		style  axis
+		thinkfade  out
+		angles "90 0 0"
+		v      "0 0 0"
+		size   "30 30"
+		tps    4
+	}
+	run
+	{
+
+		push   *color	
+		mul    float .2	
+		pop    *color	
+
+	}
+	think { kill }
 }
 
 // particle plasmaBigBall
@@ -1360,6 +1386,11 @@ particle grenl_ammo
 		model  weapons/grenl/grenl_clip2
 		color  ".5 .5 .5 1"
 		skin	"0"
+		tps    40.0
+	}
+	think
+	{
+		spawn glSmoke
 	}
 }
 
@@ -1370,6 +1401,11 @@ particle grenl_fle_ammo
 		model  weapons/grenl/grenl_clip2
 		skin	"1"
 		color  ".5 .5 .5 1"
+		tps    40.0
+	}
+	think
+	{
+		spawn glSmoke
 	}
 }
 
@@ -1380,6 +1416,11 @@ particle grenl_ic_ammo
 		model  weapons/grenl/grenl_clip2
 		skin	"2"
 		color  ".5 .5 .5 1"
+		tps    40.0
+	}
+	think
+	{
+		spawn glSmoke
 	}
 }
 
@@ -1390,7 +1431,48 @@ particle grenl_plasma_ammo
 		model  weapons/grenl/grenl_clip2
 		skin	"3"
 		color  ".5 .5 .5 1"
+		tps    40.0
 	}
+	think
+	{
+		spawn glSmoke
+	}
+}
+
+particle glSmoke
+{
+	init
+	{
+		image  sfx/smoke
+		blend  add
+		style  facing
+		thinkfade  out
+		tps    0.8
+		color  ".5 .5 .5 1"
+		v      "0 0 5"			// let the smoketrail get higher as time advances
+		a      "0 0 0"
+
+		// change the position a little bit randomly
+		crand  vector "3 3 3"	
+		add    *s				
+		pop    *s				
+	}
+	// run is executed more often as think (every frame - and think execution depends on the tps value)
+	run
+	{
+		// change the size of the smoketrail (make it bigger as time advances)
+		push   pos "15 15"		// push the vector onto the stack
+		mul    *t				// multiply stack value with the time value from the particle
+		add    pos "10 10"		// add another position 2d vector to the current stack value
+		pop    *size			// write the vector back into the particle size value
+
+		// change the color of the smoketrail (more more transparent as time advances)
+		push   *color	// get the color onto the stack
+		mul    float .5	// scalar multiple with 0.5 (to make it more transparent)
+		pop    *color	// write the stack value back into particle structure color and remove from stack
+
+	}
+	think { kill }
 }
 
 // ==================
