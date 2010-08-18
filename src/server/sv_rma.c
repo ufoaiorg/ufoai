@@ -177,6 +177,7 @@ static qboolean SV_ParseMapTileSet (const char *filename, const char **text, map
 		}
 	} while (token[0] != '}');
 
+	map->numTileSets++;
 	return qfalse;
 }
 
@@ -310,7 +311,7 @@ static inline const char *SV_GetTileFromTileSet (const mapInfo_t *map, const cha
 
 	tileSet = SV_GetMapTileSet(map, token);
 	if (tileSet == NULL)
-		Com_Error(ERR_DROP, "SV_GetTileFromTileSet: Could not find tileset '%s' in %s", a->id, filename);
+		Com_Error(ERR_DROP, "SV_GetTileFromTileSet: Could not find tileset %s 	in %s (assembly %s)", token, filename, a->id);
 
 	random = rand() % tileSet->numTiles;
 	return tileSet->tiles[random];
