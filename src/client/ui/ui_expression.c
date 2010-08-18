@@ -523,7 +523,6 @@ qboolean UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContex
  */
 uiAction_t *UI_AllocStaticStringCondition (const char *description)
 {
-	const char *errhead = "UI_AllocStaticStringCondition: unexpected end of string (object";
 	const char *text, *base;
 	uiAction_t *expression;
 

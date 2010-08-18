@@ -301,7 +301,7 @@ static inline void AIM_NoEmphazeAmmoSlotText (void)
 	UI_ExecuteConfunc("airequip_zone2_color \"1 1 1 1\"");
 }
 
-static void AIM_AircraftEquipMenuUpdate (qboolean updateItem)
+static void AIM_AircraftEquipMenuUpdate (void)
 {
 	static char smallbuffer1[256];
 	static char smallbuffer2[128];
@@ -593,7 +593,7 @@ static void AIM_AircraftEquipMenuUpdate_f (void)
 		}
 	}
 
-	AIM_AircraftEquipMenuUpdate(qfalse);
+	AIM_AircraftEquipMenuUpdate();
 }
 
 /**
@@ -660,7 +660,7 @@ static void AIM_AircraftEquipSlotSelect_f (void)
 	}
 
 	/* Update menu after changing slot */
-	AIM_AircraftEquipMenuUpdate(qfalse);
+	AIM_AircraftEquipMenuUpdate();
 
 	/* update description with the selected slot */
 	if (updateZone > 0)
@@ -716,7 +716,7 @@ static void AIM_AircraftEquipZoneSelect_f (void)
 	airequipSelectedZone = zone;
 
 	/* update menu */
-	AIM_AircraftEquipMenuUpdate(qfalse);
+	AIM_AircraftEquipMenuUpdate();
 	/* Check that the selected zone is OK */
 	AIM_CheckAirequipSelectedZone(slot);
 
@@ -806,7 +806,7 @@ static void AIM_AircraftEquipAddItem_f (void)
 	/* Update the values of aircraft stats (just in case an item has an installationTime of 0) */
 	AII_UpdateAircraftStats(aircraft);
 
-	AIM_AircraftEquipMenuUpdate(qfalse);
+	AIM_AircraftEquipMenuUpdate();
 }
 
 /**
@@ -871,7 +871,7 @@ static void AIM_AircraftEquipRemoveItem_f (void)
 	/* Update the values of aircraft stats */
 	AII_UpdateAircraftStats(aircraft);
 
-	AIM_AircraftEquipMenuUpdate(qfalse);
+	AIM_AircraftEquipMenuUpdate();
 }
 
 /**

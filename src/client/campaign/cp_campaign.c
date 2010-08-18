@@ -1282,11 +1282,10 @@ static qboolean CL_ShouldUpdateSoldierRank (const rank_t *rank, const character_
 /**
  * @brief Update employees stats after mission.
  * @param[in] base The base where the team lives.
- * @param[in] won Determines whether we won the mission or not.
  * @param[in] aircraft The aircraft used for the mission.
  * @note Soldier promotion is being done here.
  */
-void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *aircraft)
+void CL_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 {
 	employee_t *employee = NULL;
 

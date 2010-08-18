@@ -1228,7 +1228,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	CP_ParseCharacterData(NULL);
 
 	/* update stats */
-	CL_UpdateCharacterStats(base, won, aircraft);
+	CL_UpdateCharacterStats(base, aircraft);
 
 	/* Backward loop because ccs.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
 	for (i = ccs.numEmployees[EMPL_SOLDIER] - 1; i >= 0; i--) {

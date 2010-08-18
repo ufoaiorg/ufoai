@@ -65,9 +65,8 @@ static const char *BDEF_GetIDFromItemType (aircraftItemType_t type)
 /**
  * @brief Update the list of item you can choose
  * @param[in] slot Pointer to aircraftSlot where items can be equiped
- * @param[in] tech Pointer to the technolgy to select if needed (NULL if no selected technology).
  */
-static void BDEF_UpdateAircraftItemList (const aircraftSlot_t *slot, const technology_t *tech)
+static void BDEF_UpdateAircraftItemList (const aircraftSlot_t *slot)
 {
 	linkedList_t *itemList = NULL;
 	technology_t **list;
@@ -174,7 +173,7 @@ static void BDEF_FillSlotList (const baseWeapon_t *batteries, int maxBatteries, 
 {
 	int i;
 
-	BDEF_UpdateAircraftItemList(&batteries->slot, NULL);
+	BDEF_UpdateAircraftItemList(&batteries->slot);
 
 	for (i = 0; i < maxBatteries; i++, batteries++) {
 		const aircraftSlot_t *slot = &batteries->slot;
