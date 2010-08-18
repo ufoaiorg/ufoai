@@ -148,7 +148,7 @@ static inline const char *AIM_AircraftItemtypeName (const int equiptype)
 /**
  * @return @c true if the technology is available and matches the filter
  */
-static qboolean AIM_CrafttypeFilter (const base_t *base, const aircraftSlot_t *slot, int filterType, const technology_t *tech)
+static qboolean AIM_CrafttypeFilter (const base_t *base, int filterType, const technology_t *tech)
 {
 	objDef_t *item;
 	if (!base)
@@ -195,15 +195,13 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 	int count = 0;
 	uiNode_t *AIM_items = NULL;
 
-	assert(slot);
-
 	/* Add all items corresponding to airequipID to list */
 	techList = AII_GetCraftitemTechsByType(airequipID);
 
 	/* Count only those which are researched to buffer */
 	currentTech = techList;
 	while (*currentTech) {
-		if (AIM_CrafttypeFilter(base, slot, airequipID, *currentTech))
+		if (AIM_CrafttypeFilter(base, airequipID, *currentTech))
 			count++;
 		currentTech++;
 	}
@@ -211,7 +209,7 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 	/* List only those which are researched to buffer */
 	currentTech = techList;
 	while (*currentTech) {
-		if (AIM_CrafttypeFilter(base, slot, airequipID, *currentTech)) {
+		if (AIM_CrafttypeFilter(base, airequipID, *currentTech)) {
 			int amount;
 			uiNode_t *option;
 			objDef_t *item = INVSH_GetItemByID((*currentTech)->provides);

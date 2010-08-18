@@ -190,15 +190,6 @@ qboolean HOS_SaveXML (mxml_node_t *p)
 
 /**
  * @brief Saving function for hospital related data
- * @sa HOS_Save
- * @sa SAV_GameLoad
- */
-qboolean HOS_Load (sizebuf_t *sb, void* data)
-{
-	return qtrue;
-}
-/**
- * @brief Saving function for hospital related data
  * @sa HOS_SaveXML
  * @sa SAV_GameLoadXML
  */

@@ -129,11 +129,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	return image;
 }
 
-#ifdef DEBUG
-image_t *R_FindImageDebug (const char *pname, imagetype_t type, const char *file, int line)
-#else
 image_t *R_FindImage (const char *pname, imagetype_t type)
-#endif
 {
 	char lname[MAX_QPATH];
 	image_t *image;
