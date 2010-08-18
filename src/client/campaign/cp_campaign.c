@@ -1548,8 +1548,8 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	if (load) {
 		/** @todo this should be called in this function for new campaigns too but as researched items
-			not yet set, it can't. It's called in B_SetUpFirstBase for new campaigns */
-		BS_InitMarket(load);
+		 * not yet set, it can't. It's called in B_SetUpFirstBase for new campaigns */
+		BS_InitMarket();
 		return;
 	}
 
@@ -1689,7 +1689,7 @@ static void CL_DebugChangeCharacterStats_f (void)
 			chr->score.kills[j]++;
 	}
 	if (base->aircraftCurrent)
-		CL_UpdateCharacterStats(base, 1, base->aircraftCurrent);
+		CL_UpdateCharacterStats(base, base->aircraftCurrent);
 }
 
 #endif /* DEBUG */

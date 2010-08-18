@@ -1203,7 +1203,7 @@ static void B_SetUpFirstBase (base_t* base)
 		Com_Error(ERR_DROP, "No base template for setting up the first base given");
 
 	RS_MarkResearchable(qtrue, base);
-	BS_InitMarket(qfalse);
+	BS_InitMarket();
 	E_InitialEmployees();
 
 	B_BuildFromTemplate(base, campaign->firstBaseTemplate, qtrue);

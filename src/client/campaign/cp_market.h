@@ -53,7 +53,7 @@ qboolean BS_CheckAndDoBuyItem(base_t* base, const objDef_t *item, int number);
 void BS_ProcessCraftItemSale(const objDef_t *craftitem, const int numItems);
 
 qboolean BS_IsOnMarket(const objDef_t const* item);
-void BS_InitMarket(qboolean load);
+void BS_InitMarket(void);
 void CL_CampaignRunMarket(void);
 
 #endif /* CLIENT_CL_MARKET_H */
