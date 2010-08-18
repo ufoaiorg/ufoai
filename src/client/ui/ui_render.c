@@ -239,7 +239,6 @@ void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
  * @param[in] x Current x position of the bounded box
  * @param[in] y Current y position of the bounded box
  * @param[in] width Current width of the bounded box
- * @param[in] height Current height of the bounded box
  * @param[in] text The string to draw
  * @param[in] method Truncation method
  * @image html http://ufoai.ninex.info/wiki/images/Text_position.png
@@ -259,11 +258,10 @@ int UI_DrawStringInBox (const char *fontID, int align, int x, int y, int width, 
 	const int xx = x + ((width * horizontalAlign) >> 1);
 	const int yy = y + ((height * verticalAlign) >> 1);
 
-	return UI_DrawString(fontID, align, xx, yy, xx, yy, width, height,
-		0, text, 0, 0, NULL, qfalse, method);
+	return UI_DrawString(fontID, align, xx, yy, xx, yy, width, 0, text, 0, 0, NULL, qfalse, method);
 }
 
-int UI_DrawString (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
+int UI_DrawString (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth,
 		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, qboolean increaseLine, longlines_t method)
 {
 	const uiFont_t *font = UI_GetFontByID(fontID);

@@ -198,7 +198,7 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
 				case B_STATUS_UNDER_CONSTRUCTION:
 				{
 					const int time = building->buildTime - (ccs.date.day - building->timeStart);
-					UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, pos[1] + 10, node->size[0], 0, 0, va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
+					UI_DrawString("f_small", ALIGN_UL, pos[0] + 10, pos[1] + 10, pos[0] + 10, pos[1] + 10, node->size[0], 0, va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
 					break;
 				}
 				default:
@@ -272,7 +272,7 @@ static void UI_BaseMapNodeDrawTooltip (uiNode_t *node, int x, int y)
 	tooltipText = _(building->name);
 	if (!B_CheckBuildingDependencesStatus(base, building))
 		tooltipText = va("%s\n%s %s", tooltipText, _("not operational, depends on"), _(building->dependsBuilding->name));
-	UI_DrawTooltip(tooltipText, x, y, itemToolTipWidth, 0);
+	UI_DrawTooltip(tooltipText, x, y, itemToolTipWidth);
 }
 
 /**

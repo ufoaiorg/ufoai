@@ -339,7 +339,7 @@ static void UI_DrawFree (containerIndex_t container, const uiNode_t *node, int p
 	 * and we are connected to a game */
 	if (showTUs && CL_BattlescapeRunning()) {
 		UI_DrawString("f_verysmall", ALIGN_UL, nodepos[0] + 3, nodepos[1] + 3,
-			nodepos[0] + 3, nodepos[1] + 3, node->size[0] - 6, 0, 0,
+			nodepos[0] + 3, nodepos[1] + 3, node->size[0] - 6, 0,
 			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse, 0);
 	}
 }
@@ -682,7 +682,7 @@ static void UI_ContainerNodeDrawTooltip (uiNode_t *node, int x, int y)
 		/* Display stored container-coordinates of the item. */
 		Q_strcat(tooltiptext, va("\n%i/%i", itemHover->x, itemHover->y), sizeof(tooltiptext));
 #endif
-		UI_DrawTooltip(tooltiptext, x, y, itemToolTipWidth, 0);
+		UI_DrawTooltip(tooltiptext, x, y, itemToolTipWidth);
 	}
 }
 

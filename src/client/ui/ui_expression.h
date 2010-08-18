@@ -33,7 +33,7 @@ struct uiAction_s;
 struct uiCallContext_s;
 
 struct uiAction_s *UI_AllocStaticStringCondition(const char *description) __attribute__ ((warn_unused_result));
-struct uiAction_s *UI_ParseExpression(const char **text, const char *errhead, const struct uiNode_s *source) __attribute__ ((warn_unused_result));
+struct uiAction_s *UI_ParseExpression(const char **text) __attribute__ ((warn_unused_result));
 
 qboolean UI_GetBooleanFromExpression(struct uiAction_s *expression, const struct uiCallContext_s *context) __attribute__ ((warn_unused_result));
 float UI_GetFloatFromExpression(struct uiAction_s *expression, const struct uiCallContext_s *context) __attribute__ ((warn_unused_result));

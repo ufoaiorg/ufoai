@@ -50,7 +50,7 @@ static void UI_TodoNodeDrawTooltip (uiNode_t *node, int x, int y)
 
 	tooltiptext[0] = '\0';
 	Q_strcat(tooltiptext, text, sizeof(tooltiptext));
-	UI_DrawTooltip(tooltiptext, x, y, tooltipWidth, 0);
+	UI_DrawTooltip(tooltiptext, x, y, tooltipWidth);
 }
 
 static void UI_TodoNodeDraw (uiNode_t *node)

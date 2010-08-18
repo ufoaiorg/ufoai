@@ -79,7 +79,7 @@ static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFon
 			string++;
 		}
 	} else
-		UI_DrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, viddef.virtualWidth, viddef.virtualHeight, 12, string, 0, 0, NULL, qfalse, 0);
+		UI_DrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, viddef.virtualWidth, 12, string, 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -115,7 +115,7 @@ void SCR_DrawPrecacheScreen (qboolean string)
 		/* Not used with gettext because it would make removing it too easy. */
 		UI_DrawString("f_menubig", ALIGN_UC,
 			(int)(viddef.virtualWidth / 2), 30,
-			0, 1, viddef.virtualWidth, viddef.virtualHeight, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse, 0);
+			0, 1, viddef.virtualWidth, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse, 0);
 	}
 	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, (int)cls.loadingPercent);
 
@@ -168,7 +168,7 @@ static void SCR_DrawDownloading (void)
 		(int)(viddef.virtualHeight / 2 - 60),
 		(int)(viddef.virtualWidth / 2),
 		(int)(viddef.virtualHeight / 2 - 60),
-		viddef.virtualWidth, viddef.virtualHeight, 50, dlmsg, 1, 0, NULL, qfalse, 0);
+		viddef.virtualWidth, 50, dlmsg, 1, 0, NULL, qfalse, 0);
 
 	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, (int)cls.downloadPercent);
 }
@@ -207,7 +207,7 @@ static void SCR_DrawLoading (void)
 			(int)(viddef.virtualHeight / 2 - 60),
 			(int)(viddef.virtualWidth / 2),
 			(int)(viddef.virtualHeight / 2 - 60),
-			viddef.virtualWidth, viddef.virtualHeight, 50, mapmsg, 1, 0, NULL, qfalse, 0);
+			viddef.virtualWidth, 50, mapmsg, 1, 0, NULL, qfalse, 0);
 	}
 
 	UI_DrawString("f_menu", ALIGN_UC,
@@ -215,7 +215,7 @@ static void SCR_DrawLoading (void)
 		(int)(viddef.virtualHeight / 2),
 		(int)(viddef.virtualWidth / 2),
 		(int)(viddef.virtualHeight / 2),
-		viddef.virtualWidth, viddef.virtualHeight, 50, cls.loadingMessages, 1, 0, NULL, qfalse, 0);
+		viddef.virtualWidth, 50, cls.loadingMessages, 1, 0, NULL, qfalse, 0);
 
 	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, (int)cls.loadingPercent);
 }

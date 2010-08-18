@@ -529,7 +529,7 @@ uiAction_t *UI_AllocStaticStringCondition (const char *description)
 
 	base = va("( %s )", description);
 	text = base;
-	expression = UI_ParseExpression(&text, errhead, NULL);
+	expression = UI_ParseExpression(&text);
 	if (!expression) {
 		Com_Printf("UI_AllocStaticStringCondition: Parse error on expression \"%s\"\n", base);
 		return NULL;
@@ -542,7 +542,7 @@ uiAction_t *UI_AllocStaticStringCondition (const char *description)
  * @brief Read a value from the stream and init an action with it
  * @return An initialized action else NULL
  */
-static uiAction_t *UI_ParseValueExpression (const char **text, const char *errhead, const uiNode_t *source)
+static uiAction_t *UI_ParseValueExpression (const char **text)
 {
 	const char* token;
 	uiAction_t *expression = UI_AllocStaticAction();
@@ -655,7 +655,7 @@ static uiAction_t *UI_ParseValueExpression (const char **text, const char *errhe
 	Com_Error(ERR_FATAL, "UI_ParseValueExpression: Token \"%s\" unknown. String must use quotes, cvar and nodes must use prefix.\n", token);
 }
 
-uiAction_t *UI_ParseExpression (const char **text, const char *errhead, const uiNode_t *source)
+uiAction_t *UI_ParseExpression (const char **text)
 {
 	const char* token;
 
@@ -667,7 +667,7 @@ uiAction_t *UI_ParseExpression (const char **text, const char *errhead, const ui
 		uiAction_t *expression;
 		uiAction_t *e;
 
-		e = UI_ParseExpression(text, errhead, source);
+		e = UI_ParseExpression(text);
 
 		token = Com_Parse(text);
 		if (*text == NULL)
@@ -686,7 +686,7 @@ uiAction_t *UI_ParseExpression (const char **text, const char *errhead, const ui
 			return NULL;
 		}
 
-		e = UI_ParseExpression(text, errhead, source);
+		e = UI_ParseExpression(text);
 		expression->d.nonTerminal.right = e;
 
 		token = Com_Parse(text);
@@ -702,12 +702,12 @@ uiAction_t *UI_ParseExpression (const char **text, const char *errhead, const ui
 		const int type = UI_GetActionTokenType(token, EA_UNARYOPERATOR);
 		if (type == EA_NULL) {
 			Com_UnParseLastToken();
-			return UI_ParseValueExpression(text, errhead, source);
+			return UI_ParseValueExpression(text);
 		} else {
 			uiAction_t *expression = UI_AllocStaticAction();
 			uiAction_t *e;
 
-			e = UI_ParseExpression(text, errhead, source);
+			e = UI_ParseExpression(text);
 			expression->type = type;
 			expression->d.nonTerminal.left = e;
 

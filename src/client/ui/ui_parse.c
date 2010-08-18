@@ -287,7 +287,7 @@ static qboolean UI_ParseSetAction (uiNode_t *node, uiAction_t *action, const cha
 	assert((*token)[0] == '*');
 
 	Com_UnParseLastToken();
-	action->d.nonTerminal.left = UI_ParseExpression(text, errhead, node);
+	action->d.nonTerminal.left = UI_ParseExpression(text);
 
 	type = action->d.nonTerminal.left->type;
 	if (type != EA_VALUE_CVARNAME && type != EA_VALUE_CVARNAME_WITHINJECTION
@@ -307,7 +307,7 @@ static qboolean UI_ParseSetAction (uiNode_t *node, uiAction_t *action, const cha
 
 	/* get the value */
 	if (type == EA_VALUE_CVARNAME || type == EA_VALUE_CVARNAME_WITHINJECTION) {
-		action->d.nonTerminal.right = UI_ParseExpression(text, errhead, node);
+		action->d.nonTerminal.right = UI_ParseExpression(text);
 		return qtrue;
 	}
 
@@ -340,7 +340,7 @@ static qboolean UI_ParseSetAction (uiNode_t *node, uiAction_t *action, const cha
 
 	if (!strcmp(*token, "(")) {
 		Com_UnParseLastToken();
-		action->d.nonTerminal.right = UI_ParseExpression(text, errhead, node);
+		action->d.nonTerminal.right = UI_ParseExpression(text);
 		return qtrue;
 	}
 
@@ -368,7 +368,7 @@ static qboolean UI_ParseCallAction (uiNode_t *node, uiAction_t *action, const ch
 	uiAction_t *expression;
 	uiAction_t *lastParam = NULL;
 	int paramID = 0;
-	expression = UI_ParseExpression(text, errhead, node);
+	expression = UI_ParseExpression(text);
 	if (expression == NULL)
 		return qfalse;
 
@@ -396,7 +396,7 @@ static qboolean UI_ParseCallAction (uiNode_t *node, uiAction_t *action, const ch
 		paramID++;
 
 		/* parameter */
-		param = UI_ParseExpression(text, errhead, node);
+		param = UI_ParseExpression(text);
 		if (param == NULL) {
 			Com_Printf("UI_ParseCallAction: problem with the %i parameter\n", paramID);
 			return qfalse;
@@ -504,7 +504,7 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const 
 		case EA_DELETE:
 			{
 				uiAction_t *expression;
-				expression = UI_ParseExpression(text, errhead, node);
+				expression = UI_ParseExpression(text);
 				if (expression == NULL)
 					return NULL;
 
@@ -530,7 +530,7 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const 
 				uiAction_t *expression;
 
 				/* get the condition */
-				expression = UI_ParseExpression(text, errhead, node);
+				expression = UI_ParseExpression(text);
 				if (expression == NULL)
 					return NULL;
 				action->d.nonTerminal.left = expression;

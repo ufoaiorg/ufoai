@@ -38,7 +38,7 @@ static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
 /**
  * @brief Generic tooltip function
  */
-int UI_DrawTooltip (const char *string, int x, int y, int maxWidth, int maxHeight)
+int UI_DrawTooltip (const char *string, int x, int y, int maxWidth)
 {
 	const char *font = "f_small";
 	int height = 0, width = 0;
@@ -62,7 +62,7 @@ int UI_DrawTooltip (const char *string, int x, int y, int maxWidth, int maxHeigh
 
 	UI_DrawFill(x - 1, y - 1, width + 4, height + 4, tooltipBG);
 	R_Color(tooltipColor);
-	UI_DrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, string, 0, 0, NULL, qfalse, LONGLINES_WRAP);
+	UI_DrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, 0, string, 0, 0, NULL, qfalse, LONGLINES_WRAP);
 	R_Color(NULL);
 
 	return width;
@@ -103,5 +103,5 @@ void UI_Tooltip (uiNode_t *node, int x, int y)
 		return;
 	}
 
-	UI_DrawTooltip(string, x, y, maxWidth, 0);
+	UI_DrawTooltip(string, x, y, maxWidth);
 }

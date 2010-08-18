@@ -366,7 +366,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 		UI_DrawString("f_verysmall", ALIGN_LC,
 			pos[0] + obj->sx * C_UNIT / 2.0, pos[1] + obj->sy * C_UNIT / 2.0,
 			pos[0] + obj->sx * C_UNIT / 2.0, pos[1] + obj->sy * C_UNIT / 2.0,
-			cellWidth - 5,	0,	/* maxWidth/maxHeight */
+			cellWidth - 5, /* maxWidth */
 			0, va("x%i", amount), 0, 0, NULL, qfalse, 0);
 		pos[0] -= obj->sx * C_UNIT / 2.0;
 		pos[1] += obj->sy * C_UNIT / 2.0;
@@ -381,7 +381,7 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 		cellHeight += UI_DrawString("f_verysmall", ALIGN_UL,
 			pos[0], pos[1],
 			pos[0], nodepos[1],
-			cellWidth - 5, 200,	/* max width/height */
+			cellWidth - 5, /* max width */
 			0, _(obj->name), 0, 0, NULL, qfalse, LONGLINES_WRAP);
 
 		/* draw ammos of weapon */
@@ -407,7 +407,6 @@ static int UI_BaseInventoryNodeDrawItems (uiNode_t *node, objDef_t *highlightTyp
 					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.t->sy * C_UNIT / 2.0,
 					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.t->sy * C_UNIT / 2.0,
 					cellWidth - 5 - ammopos[0],	/* maxWidth */
-					0,	/* maxHeight */
 					0, va("x%i", icItem->item.amount), 0, 0, NULL, qfalse, 0);
 				ammopos[0] += icItem->item.t->sx * C_UNIT / 2.0;
 				ammopos[1] += icItem->item.t->sy * C_UNIT / 2.0;
@@ -661,7 +660,7 @@ static void UI_BaseInventoryNodeDrawTooltip (uiNode_t *node, int x, int y)
 		/* Display stored container-coordinates of the item. */
 		Q_strcat(tooltiptext, va("\n%i/%i", itemHover->x, itemHover->y), sizeof(tooltiptext));
 #endif
-		UI_DrawTooltip(tooltiptext, x, y, itemToolTipWidth, 0);
+		UI_DrawTooltip(tooltiptext, x, y, itemToolTipWidth);
 	}
 }
 

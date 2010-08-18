@@ -143,7 +143,7 @@ static void UI_SelectBoxNodeDraw (uiNode_t *node)
 			label = _(label + 1);
 
 		UI_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
-			selBoxX, selBoxY, node->size[0] - 4, 0,
+			selBoxX, selBoxY, node->size[0] - 4,
 			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
 		R_Color(NULL);
@@ -210,7 +210,7 @@ static void UI_SelectBoxNodeDrawOverWindow (uiNode_t *node)
 		if (label[0] == '_')
 			label = _(label + 1);
 		UI_DrawString(font, ALIGN_UL, selBoxX, selBoxY,
-			selBoxX, nodepos[1] + node->size[1], node->size[0] - 4, 0,
+			selBoxX, nodepos[1] + node->size[1], node->size[0] - 4,
 			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		/* next entries' position */
 		selBoxY += node->size[1];

@@ -920,7 +920,7 @@ static void HUD_DrawMouseCursorText (int xOffset, int yOffset, int textId)
 		if (!width)
 			return;
 
-		UI_DrawString("f_verysmall", ALIGN_UL, mousePosX + xOffset, mousePosY - yOffset, 0, 0, viddef.virtualWidth, viddef.virtualHeight, 12, string, 0, 0, NULL, qfalse, 0);
+		UI_DrawString("f_verysmall", ALIGN_UL, mousePosX + xOffset, mousePosY - yOffset, 0, 0, viddef.virtualWidth, 12, string, 0, 0, NULL, qfalse, 0);
 	}
 }
 

@@ -152,7 +152,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 	int x1; /* variable x position */
 	const char *font = UI_GetFontFromNode(node);
 	vec2_t pos;
-	int x, y, width, height;
+	int x, y, width;
 	int viewSizeY;
 
 	UI_GetNodeAbsPos(node, pos);
@@ -172,7 +172,6 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 	x = pos[0] + node->padding;
 	y = pos[1] + node->padding;
 	width = node->size[0] - node->padding - node->padding;
-	height = node->size[1] - node->padding - node->padding;
 
 	if (text) {
 		Q_strncpyz(textCopy, text, sizeof(textCopy));
@@ -288,7 +287,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 					tabwidth = 0;
 
 				if (tabwidth != 0)
-					UI_DrawString(font, node->textalign, x1, y, x1, y, tabwidth - 1, height, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qfalse, LONGLINES_PRETTYCHOP);
+					UI_DrawString(font, node->textalign, x1, y, x1, y, tabwidth - 1, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qfalse, LONGLINES_PRETTYCHOP);
 
 				/* next */
 				x1 += tabwidth;
@@ -310,7 +309,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const char *text, const linkedL
 					R_FontTextSize (font, cur, width, EXTRADATA(node).longlines, NULL, NULL, &lines, NULL);
 					fullSizeY += lines;
 				} else
-					UI_DrawString(font, node->textalign, x1, y, x, y, width, height, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).longlines);
+					UI_DrawString(font, node->textalign, x1, y, x, y, width, EXTRADATA(node).lineHeight, cur, viewSizeY, EXTRADATA(node).super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).longlines);
 			}
 		}
 

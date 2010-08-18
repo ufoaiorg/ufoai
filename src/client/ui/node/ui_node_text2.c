@@ -163,7 +163,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qbool
 	int x1; /* variable x position */
 	const char *font = UI_GetFontFromNode(node);
 	vec2_t pos;
-	int x, y, width, height;
+	int x, y, width;
 	int viewSizeY;
 
 	UI_GetNodeAbsPos(node, pos);
@@ -183,7 +183,6 @@ static void UI_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qbool
 	x = pos[0] + node->padding;
 	y = pos[1] + node->padding;
 	width = node->size[0] - node->padding - node->padding;
-	height = node->size[1] - node->padding - node->padding;
 
 	/* Hover darkening effect for normal text lines. */
 	VectorScale(node->color, 0.8, colorHover);
@@ -239,7 +238,7 @@ static void UI_TextNodeDrawText (uiNode_t* node, const linkedList_t* list, qbool
 				R_FontTextSize (font, cur, width, EXTRADATA(node).super.longlines, NULL, NULL, &lines, NULL);
 				fullSizeY += lines;
 			} else
-				UI_DrawString(font, node->textalign, x1, y, x, y, width, height, EXTRADATA(node).super.lineHeight, cur, viewSizeY, EXTRADATA(node).super.super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).super.longlines);
+				UI_DrawString(font, node->textalign, x1, y, x, y, width, EXTRADATA(node).super.lineHeight, cur, viewSizeY, EXTRADATA(node).super.super.scrollY.viewPos, &fullSizeY, qtrue, EXTRADATA(node).super.longlines);
 		}
 
 		list = list->next;

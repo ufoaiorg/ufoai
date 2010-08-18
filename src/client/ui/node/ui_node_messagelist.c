@@ -130,7 +130,7 @@ static uiIcon_t *UI_MessageGetIcon (const message_t *message)
 	return UI_GetIconByName(iconName);
 }
 
-static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char *fontID, int x, int y, int width, int height, int *screenLines)
+static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char *fontID, int x, int y, int width, int *screenLines)
 {
 	const int column1 = DATETIME_COLUUI_SIZE;
 	const int column2 = width - DATETIME_COLUUI_SIZE - node->padding;
@@ -143,7 +143,7 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 
 	/* display the date */
 	if (lastDate == NULL || strcmp(lastDate, message->timestamp) != 0)
-		UI_DrawString(fontID, ALIGN_UL, x, y, x, y, column1, height, LINEHEIGHT, message->timestamp, EXTRADATACONST(node).scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
+		UI_DrawString(fontID, ALIGN_UL, x, y, x, y, column1, LINEHEIGHT, message->timestamp, EXTRADATACONST(node).scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
 
 	x += DATETIME_COLUUI_SIZE + node->padding;
 
@@ -155,7 +155,7 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 	}
 
 	/* draw the message */
-	UI_DrawString(fontID, ALIGN_UL, x, y, x, y, column2, height, LINEHEIGHT, message->text, EXTRADATACONST(node).scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);
+	UI_DrawString(fontID, ALIGN_UL, x, y, x, y, column2, LINEHEIGHT, message->text, EXTRADATACONST(node).scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);
 	*screenLines = max(lines1, lines2);
 	lastDate = message->timestamp;
 }
@@ -170,7 +170,7 @@ static void UI_MessageListNodeDraw (uiNode_t *node)
 	int screenLines;
 	const char *font = UI_GetFontFromNode(node);
 	vec2_t pos;
-	int x, y, width, height;
+	int x, y, width;
 	int defaultHeight;
 	int lineNumber = 0;
 	int posY;
@@ -192,7 +192,6 @@ static void UI_MessageListNodeDraw (uiNode_t *node)
 	x = pos[0] + node->padding;
 	y = pos[1] + node->padding;
 	width = node->size[0] - node->padding - node->padding;
-	height = node->size[1] - node->padding - node->padding;
 
 	/* update message cache */
 	if (UI_AbstractScrollableNodeIsSizeChange(node)) {
@@ -239,7 +238,7 @@ static void UI_MessageListNodeDraw (uiNode_t *node)
 	lastDate = NULL;
 	screenLines = posY;
 	while (message) {
-		UI_MessageDraw(node, message, font, x, y, width, height, &screenLines);
+		UI_MessageDraw(node, message, font, x, y, width, &screenLines);
 		if (screenLines >= EXTRADATA(node).scrollY.viewSize)
 			break;
 		message = message->next;
