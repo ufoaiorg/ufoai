@@ -103,7 +103,7 @@ static unsigned long tileMask (const char chr)
 	Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'", chr);
 }
 
-static inline const mTileSet_t *SV_GetMapTileSet (const mapInfo_t *map, const char *tileSetName)
+static const mTileSet_t *SV_GetMapTileSet (const mapInfo_t *map, const char *tileSetName)
 {
 	int i;
 
