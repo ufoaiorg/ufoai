@@ -1254,7 +1254,7 @@ qboolean CL_ActorMouseTrace (void)
 	const float projectionDistance = 2048.0f;
 	float nDotP2minusP1;
 	vec3_t forward, right, up, stop;
-	vec3_t from, end, dir;
+	vec3_t from, end;
 	vec3_t mapNormal, P3, P2minusP1, P3minusP1;
 	vec3_t pA, pB, pC;
 	pos3_t testPos;
@@ -1309,6 +1309,8 @@ qboolean CL_ActorMouseTrace (void)
 	/* calculate intersection directly if angle is not parallel to the map plane */
 	if (nDotP2minusP1 > 0.01 || nDotP2minusP1 < -0.01) {
 		float u;
+		vec3_t dir;
+
 		VectorSubtract(P3, from, P3minusP1);
 		u = DotProduct(mapNormal, P3minusP1) / nDotP2minusP1;
 		VectorScale(P2minusP1, (vec_t)u, dir);
