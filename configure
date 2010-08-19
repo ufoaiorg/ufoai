@@ -613,6 +613,7 @@ USE_SIGNALS
 BUILD_DEBUG
 BUILD_UFORADIANT
 BUILD_UFO2MAP
+BUILD_UFOMODEL
 BUILD_DEDICATED
 BUILD_CLIENT
 BUILD_TESTS
@@ -726,6 +727,7 @@ with_opengl_framework
 with_openal_framework
 enable_dedicated
 enable_client
+enable_ufomodel
 enable_ufo2map
 enable_uforadiant
 enable_release
@@ -1383,6 +1385,7 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --disable-dedicated     build dedicated server [default=enabled]
   --disable-client        build client [default=enabled]
+  --disable-ufomodel      build ufomodel [default=enabled]
   --disable-ufo2map       build ufo2map [default=enabled]
   --disable-uforadiant    build uforadiant [default=enabled]
   --enable-release        build release, if disabled then build debug
@@ -2741,6 +2744,14 @@ if test "${enable_client+set}" = set; then :
   enableval=$enable_client;
 else
   enable_client=yes
+fi
+
+
+# Check whether --enable-ufomodel was given.
+if test "${enable_ufomodel+set}" = set; then :
+  enableval=$enable_ufomodel;
+else
+  enable_ufomodel=yes
 fi
 
 
@@ -7378,6 +7389,20 @@ then
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: Enabling dedicated server" >&5
 $as_echo "$as_me: Enabling dedicated server" >&6;}
 	BUILD_DEDICATED=1
+
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for ufomodel
+#---------------------------------------------------------------------------------------------
+
+BUILD_UFOMODEL=0
+
+if test "$enable_ufomodel" = "yes"
+then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: Enabling ufomodel" >&5
+$as_echo "$as_me: Enabling ufomodel" >&6;}
+	BUILD_UFOMODEL=1
 
 fi
 

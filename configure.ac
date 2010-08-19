@@ -74,6 +74,10 @@ AC_ARG_ENABLE(client,
 	[AS_HELP_STRING([--disable-client], [build client @<:@default=enabled@:>@])],
 	[], [enable_client=yes])
 
+AC_ARG_ENABLE(ufomodel,
+	[AS_HELP_STRING([--disable-ufomodel], [build ufomodel @<:@default=enabled@:>@])],
+	[], [enable_ufomodel=yes])
+
 AC_ARG_ENABLE(ufo2map,
 	[AS_HELP_STRING([--disable-ufo2map], [build ufo2map @<:@default=enabled@:>@])],
 	[], [enable_ufo2map=yes])
@@ -811,6 +815,17 @@ if test "$enable_dedicated" = "yes"
 then
 	AC_MSG_NOTICE([Enabling dedicated server])
 	AC_SUBST([BUILD_DEDICATED],1)
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check for ufomodel
+#---------------------------------------------------------------------------------------------
+
+AC_SUBST([BUILD_UFOMODEL],0)
+if test "$enable_ufomodel" = "yes"
+then
+	AC_MSG_NOTICE([Enabling ufomodel])
+	AC_SUBST([BUILD_UFOMODEL],1)
 fi
 
 #---------------------------------------------------------------------------------------------
