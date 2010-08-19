@@ -944,13 +944,9 @@ void HUD_UpdateCursor (void)
 		int iconH = 16;
 		int width = 0;
 		int bgX = mousePosX + iconOffsetX / 2 - 2;
-		int bgW = iconOffsetX / 2 + 4;
-		int bgH = iconOffsetY + 6;
 
 		/* checks if icons should be drawn */
-		if (LE_IsCrouched(le) || (le->state & STATE_REACTION))
-			bgW += iconW;
-		else
+		if (!(LE_IsCrouched(le) || (le->state & STATE_REACTION)))
 			/* make place holder for icons */
 			bgX += iconW + 4;
 
@@ -958,16 +954,9 @@ void HUD_UpdateCursor (void)
 		if (UI_GetText(TEXT_MOUSECURSOR_PLAYERNAMES))
 			R_FontTextSize("f_verysmall", UI_GetText(TEXT_MOUSECURSOR_PLAYERNAMES), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, NULL, NULL, NULL);
 
-		/* check if second line should be drawn */
-		if (width || (le->state & STATE_REACTION)) {
-			bgH += iconH;
-			bgW += width;
-		}
-
 		/* gets width of background */
 		if (width == 0 && UI_GetText(TEXT_MOUSECURSOR_RIGHT)) {
 			R_FontTextSize("f_verysmall", UI_GetText(TEXT_MOUSECURSOR_RIGHT), viddef.virtualWidth - bgX, LONGLINES_WRAP, &width, NULL, NULL, NULL);
-			bgW += width;
 		}
 
 		/* Display 'crouch' icon if actor is crouched. */

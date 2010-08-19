@@ -1201,7 +1201,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 		}
 
 		/* start shoot */
-		G_EventStartShoot(ent, mask, fd, shootType, at);
+		G_EventStartShoot(ent, mask, shootType, at);
 
 		/* send shot sound to the others */
 		G_EventShootHidden(mask, fd, qtrue);

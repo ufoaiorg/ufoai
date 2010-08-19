@@ -55,12 +55,11 @@ void G_EventActorTurn (const edict_t* ent)
  * @param ent The actor that is dying
  * @param attacker The attacker that was responsible for this event
  */
-void G_EventActorDie (const edict_t* ent, const edict_t* attacker)
+void G_EventActorDie (const edict_t* ent)
 {
 	/* send death */
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_DIE);
 	gi.WriteShort(ent->number);
-	gi.WriteShort(attacker ? attacker->number : SKIP_LOCAL_ENTITY);
 	gi.WriteShort(ent->state);
 }
 
@@ -157,17 +156,13 @@ void G_EventInventoryAmmo (const edict_t* ent, const objDef_t* ammo, int amount,
  * @brief Start the shooting event
  * @param ent The entity that starts the shooting
  * @param visMask the vis mask of the teams to determine the clients from this event is send to
- * @param fd The firedefinition to use for the shoot
  * @param shootType The type of the shoot
  * @param at The grid position to target to
  */
-void G_EventStartShoot (const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, const pos3_t at)
+void G_EventStartShoot (const edict_t* ent, int visMask, shoot_types_t shootType, const pos3_t at)
 {
 	gi.AddEvent(G_VisToPM(visMask), EV_ACTOR_START_SHOOT);
 	gi.WriteShort(ent->number);
-	gi.WriteShort(fd->obj->idx);
-	gi.WriteByte(fd->weapFdsIdx);
-	gi.WriteByte(fd->fdIdx);
 	gi.WriteByte(shootType);
 	gi.WriteGPos(ent->pos);
 	gi.WriteGPos(at);

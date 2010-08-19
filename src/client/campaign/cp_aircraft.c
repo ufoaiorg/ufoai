@@ -1268,7 +1268,6 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
  */
 void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 {
-	int j, k;
 	/* true if at least one aircraft moved: radar overlay must be updated
 	 * This is static because aircraft can move without radar being
 	 * updated (sa CL_CampaignRun) */
@@ -1277,6 +1276,7 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 	assert(dt >= 0);
 
 	if (dt > 0) {
+		int j;
 		for (j = 0; j < MAX_BASES; j++) {
 			base_t *base = B_GetBaseByIDX(j);
 			aircraft_t *aircraft;
@@ -1284,6 +1284,7 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 			/* Run each aircraft */
 			aircraft = NULL;
 			while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
+				int k;
 				assert(aircraft->homebase);
 				if (aircraft->status == AIR_IDLE) {
 					/* Aircraft idle out of base */

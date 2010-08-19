@@ -335,8 +335,7 @@ static void UI_TabNodeInit (uiNode_t *node)
 		/* search default value, if possible */
 		uiNode_t* option = node->firstChild;
 		assert(option->behaviour == ui_optionBehaviour);
-		if (option)
-			Cvar_ForceSet(cvarName, OPTIONEXTRADATA(option).value);
+		Cvar_ForceSet(cvarName, OPTIONEXTRADATA(option).value);
 	}
 }
 

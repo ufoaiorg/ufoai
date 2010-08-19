@@ -333,7 +333,7 @@ void G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 
 	level.num_alive[ent->team]--;
 	/* send death */
-	G_EventActorDie(ent, attacker);
+	G_EventActorDie(ent);
 
 	/* handle inventory - drop everything to floor edict (but not the armour) */
 	G_InventoryToFloor(ent);

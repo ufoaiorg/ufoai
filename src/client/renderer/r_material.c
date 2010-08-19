@@ -508,7 +508,7 @@ static int R_LoadAnimImages (materialStage_t *s)
 		return -1;
 	}
 
-	strncpy(name, s->image->name, sizeof(name));
+	Q_strncpyz(name, s->image->name, sizeof(name));
 	j = strlen(name);
 
 	if (name[j - 1] != '0') {
