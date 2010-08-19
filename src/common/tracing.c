@@ -30,10 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common.h"
 #include "mem.h"
 
-/** @note used for statistics
- * @sa CM_LoadMap (cmodel.c) */
-int c_traces, c_brush_traces;
-
 /* static */
 static cBspSurface_t nullsurface;
 
@@ -713,8 +709,6 @@ static void TR_ClipBoxToBrush (boxtrace_t *traceData, cBspBrush_t *brush, TR_LEA
 	if (!brush || !brush->numsides)
 		return;
 
-	c_brush_traces++;
-
 	getout = qfalse;
 	startout = qfalse;
 	leadside = NULL;
@@ -1074,7 +1068,6 @@ static trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t
 	boxtrace_t traceData;
 
 	checkcount++;	/* for multi-check avoidance */
-	c_traces++;		/* for statistics, may be zeroed */
 
 #ifdef COMPILE_UFO
 	if (headnode >= tile->numnodes + 6)

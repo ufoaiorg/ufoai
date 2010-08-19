@@ -98,7 +98,6 @@ typedef struct box_s {
 BOX AND LINE TRACING
 ==============================================================*/
 
-extern int c_traces, c_brush_traces;
 extern TR_TILE_TYPE *curTile;
 extern TR_TILE_TYPE mapTiles[MAX_MAPTILES];
 extern int numTiles;

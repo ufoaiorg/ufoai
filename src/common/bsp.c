@@ -969,7 +969,7 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *map
 	assert(*mapchecksum == 0);
 
 	/* init */
-	c_traces = c_brush_traces = numInline = numTiles = 0;
+	numInline = numTiles = 0;
 	mapEntityString[0] = base[0] = 0;
 
 	memset(map, 0, sizeof(*map) * entries);
