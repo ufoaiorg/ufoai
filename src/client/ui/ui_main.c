@@ -148,9 +148,7 @@ static void UI_ModifyWrap_f (void)
  */
 static void UI_Translate_f (void)
 {
-	qboolean next;
 	const char *current, *list;
-	char *orig, *trans;
 	char original[MAX_VAR], translation[MAX_VAR];
 
 	if (Cmd_Argc() < 4) {
@@ -160,10 +158,10 @@ static void UI_Translate_f (void)
 
 	current = Cvar_GetString(Cmd_Argv(1));
 	list = Cmd_Argv(3);
-	next = qfalse;
 
 	while (list[0] != '\0') {
-		orig = original;
+		char *trans;
+		char *orig = original;
 		while (list[0] != '\0' && list[0] != ':') {
 			/** @todo overflow check */
 			*orig++ = *list++;
