@@ -37,7 +37,7 @@
 
 // UFO -- Scout
 components craft_ufo_scout {
-	time	2000
+	time	300
 	item	alienmaterials			300	%
 	item	antimatter				200	0
 	item	craft_alien_propulsion	2	%
@@ -47,7 +47,7 @@ components craft_ufo_scout {
 
 // UFO -- Fighter
 components craft_ufo_fighter {
-	time	2200
+	time	330
 	item	alienmaterials				400	%
 	item	antimatter					250	0
 	item	craft_alien_propulsion		2	%
@@ -58,7 +58,7 @@ components craft_ufo_fighter {
 
 // UFO -- Harvester
 components craft_ufo_harvester {
-	time	3400
+	time	510
 	item	alienmaterials				800	%
 	item	antimatter					450	0
 	item	craft_alien_propulsion		4	%
@@ -71,7 +71,7 @@ components craft_ufo_harvester {
 
 // UFO -- Supply Transport
 components craft_ufo_supply {
-	time	3000
+	time	450
 	item	alienmaterials				600	%
 	item	antimatter					600	0
 	item	craft_alien_propulsion		2	%
@@ -82,7 +82,7 @@ components craft_ufo_supply {
 
 // UFO -- Corrupter
 components craft_ufo_corrupter {
-	time	4150
+	time	622
 	item	alienmaterials				800	%
 	item	antimatter					670	0
 	item	craft_alien_propulsion		3	%
@@ -93,7 +93,7 @@ components craft_ufo_corrupter {
 
 // UFO -- Bomber
 components craft_ufo_bomber {
-	time	4500
+	time	675
 	item	alienmaterials				1100	%
 	item	antimatter					810	0
 	item	craft_alien_propulsion		4	%
@@ -105,7 +105,7 @@ components craft_ufo_bomber {
 // UFO -- Lander
 // Note that no such UFO in the game YET.
 //components craft_ufo_lander {
-//	time	3200
+//	time	480
 //	item	alienmaterials			500	%
 //	item	antimatter				600	0
 //	item	craft_alien_propulsion	2	%
