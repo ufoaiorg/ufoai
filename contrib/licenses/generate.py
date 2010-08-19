@@ -34,11 +34,28 @@ THUMBNAIL = True
 PLOT = True
 
 NON_FREE_LICENSES = set([
-"UNKNOWN", # ambiguous
-"Creative Commons", # ambiguous
-"Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported",
-"Creative Commons Sampling Plus 1.0"
-])
+    "UNKNOWN", # ambiguous
+    "Creative Commons", # ambiguous
+    "Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported",
+    "Creative Commons Sampling Plus 1.0"
+    ])
+
+# filters for files to ignore
+FILENAME_FILTERS = (re.compile('.txt$'),
+    re.compile('.ufo$'),
+    re.compile('.anm$'),
+    re.compile('.mat$'),
+    re.compile('.pl$'),
+    re.compile('.py$'),
+    re.compile('.glsl$'),
+    re.compile('^Makefile'),
+    re.compile('^COPYING'),
+    re.compile('.html$'),
+    re.compile('.cfg$'),
+    re.compile('.lua$'),
+    re.compile('.bsp$'),
+    re.compile('.ump$')
+    )
 
 HTML = u"""<html>
 <head>
@@ -208,23 +225,8 @@ def get_used_tex(m):
             used.append(tex)
     return used
 
-# filters for files to ignore
-FFILTERS = (re.compile('.txt$'),
-            re.compile('.ufo$'),
-            re.compile('.anm$'),
-            re.compile('.mat$'),
-            re.compile('.pl$'),
-            re.compile('.py$'),
-            re.compile('.glsl$'),
-            re.compile('^Makefile'),
-            re.compile('^COPYING'),
-            re.compile('.html$'),
-            re.compile('.cfg$'),
-            re.compile('.lua$'),
-            re.compile('.bsp$'))
-
 def fileNameFilter(fname):
-    for i in FFILTERS:
+    for i in FILENAME_FILTERS:
         if i.search(fname.lower()):
             print 'Ignoriere: ', fname
             return False
