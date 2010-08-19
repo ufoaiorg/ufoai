@@ -68,15 +68,15 @@ cvar_t *cl_centerview;
  */
 static inline void CL_ClampCamToMap (const float border)
 {
-	if (cl.cam.origin[0] < mapMin[0] - border)
-		cl.cam.origin[0] = mapMin[0] - border;
-	else if (cl.cam.origin[0] > mapMax[0] + border)
-		cl.cam.origin[0] = mapMax[0] + border;
+	if (cl.cam.origin[0] < cl.mapData.mapMin[0] - border)
+		cl.cam.origin[0] = cl.mapData.mapMin[0] - border;
+	else if (cl.cam.origin[0] > cl.mapData.mapMax[0] + border)
+		cl.cam.origin[0] = cl.mapData.mapMax[0] + border;
 
-	if (cl.cam.origin[1] < mapMin[1] - border)
-		cl.cam.origin[1] = mapMin[1] - border;
-	else if (cl.cam.origin[1] > mapMax[1] + border)
-		cl.cam.origin[1] = mapMax[1] + border;
+	if (cl.cam.origin[1] < cl.mapData.mapMin[1] - border)
+		cl.cam.origin[1] = cl.mapData.mapMin[1] - border;
+	else if (cl.cam.origin[1] > cl.mapData.mapMax[1] + border)
+		cl.cam.origin[1] = cl.mapData.mapMax[1] + border;
 }
 
 /**
@@ -351,9 +351,7 @@ static void CL_CamSetZoom_f (void)
 
 static void CL_CenterCameraIntoMap_f (void)
 {
-	vec3_t center;
-	VectorCenterFromMinsMaxs(mapMin, mapMax, center);
-	VectorCopy(center, cl.cam.origin);
+	VectorCenterFromMinsMaxs(cl.mapData.mapMin, cl.mapData.mapMax, cl.cam.origin);
 }
 
 void CL_CameraInit (void)

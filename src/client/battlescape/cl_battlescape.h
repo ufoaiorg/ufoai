@@ -78,6 +78,8 @@ typedef struct client_state_s {
 
 	routing_t clMap[ACTOR_MAX_SIZE];	/**< client routing table */
 
+	mapData_t mapData;
+
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
 } client_state_t;
 

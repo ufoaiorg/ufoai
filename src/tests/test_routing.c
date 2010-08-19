@@ -52,6 +52,7 @@ static int UFO_CleanSuiteRouting (void)
 }
 
 static routing_t map[ACTOR_MAX_SIZE];
+static mapData_t mapData;
 
 static void testConnection (void)
 {
@@ -60,7 +61,7 @@ static void testConnection (void)
 	 * @todo use a special testmap
 	 * @todo implement the test
 	 */
-	CM_LoadMap("fueldump", qtrue, "", &checksum, map, lengthof(map));
+	CM_LoadMap("fueldump", qtrue, "", &checksum, map, lengthof(map), &mapData);
 }
 
 int UFO_AddRoutingTests (void)

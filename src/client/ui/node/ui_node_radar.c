@@ -106,8 +106,8 @@ static void UI_FreeRadarImages (void)
  */
 static void UI_BuildRadarImageList (const char *tiles, const char *pos)
 {
-	const float mapMidX = (mapMax[0] + mapMin[0]) * 0.5;
-	const float mapMidY = (mapMax[1] + mapMin[1]) * 0.5;
+	const float mapMidX = (cl.mapData.mapMax[0] + cl.mapData.mapMin[0]) * 0.5;
+	const float mapMidY = (cl.mapData.mapMax[1] + cl.mapData.mapMin[1]) * 0.5;
 
 	/* load tiles */
 	while (tiles) {
@@ -316,20 +316,20 @@ static void UI_InitRadar (const uiNode_t *node)
 				tile->mapWidth = tile->gridWidth * 8 * UNIT_SIZE;
 				tile->mapHeight = tile->gridHeight * 8 * UNIT_SIZE;
 			} else {
-				tile->mapX = mapMin[0];
-				tile->mapY = mapMin[1];
-				tile->mapWidth = mapMax[0] - mapMin[0];
-				tile->mapHeight = mapMax[1] - mapMin[1];
+				tile->mapX = cl.mapData.mapMin[0];
+				tile->mapY = cl.mapData.mapMin[1];
+				tile->mapWidth = cl.mapData.mapMax[0] - cl.mapData.mapMin[0];
+				tile->mapHeight = cl.mapData.mapMax[1] - cl.mapData.mapMin[1];
 			}
 		}
 		if (tile->isTile) {
-			tile->mapY = mapMax[1] - tile->mapY - tile->mapHeight;
+			tile->mapY = cl.mapData.mapMax[1] - tile->mapY - tile->mapHeight;
 		}
 	}
 
 	/* center tiles into the minMap/maxMap */
-	Vector2Copy(mapMax, min);
-	Vector2Copy(mapMin, max);
+	Vector2Copy(cl.mapData.mapMax, min);
+	Vector2Copy(cl.mapData.mapMin, max);
 	for (j = 0; j < radar.numImages; j++) {
 		hudRadarImage_t *tile = &radar.images[j];
 		if (tile->mapX < min[0])
@@ -342,8 +342,8 @@ static void UI_InitRadar (const uiNode_t *node)
 			max[1] = tile->mapY + tile->mapHeight;
 	}
 	/* compute translation */
-	min[0] = mapMin[0] + (mapMax[0] - mapMin[0] - (max[0] - min[0])) * 0.5 - min[0];
-	min[1] = mapMin[1] + (mapMax[1] - mapMin[1] - (max[1] - min[1])) * 0.5 - min[1];
+	min[0] = cl.mapData.mapMin[0] + (cl.mapData.mapMax[0] - cl.mapData.mapMin[0] - (max[0] - min[0])) * 0.5 - min[0];
+	min[1] = cl.mapData.mapMin[1] + (cl.mapData.mapMax[1] - cl.mapData.mapMin[1] - (max[1] - min[1])) * 0.5 - min[1];
 	for (j = 0; j < radar.numImages; j++) {
 		hudRadarImage_t *tile = &radar.images[j];
 		tile->mapX += min[0];
@@ -351,8 +351,8 @@ static void UI_InitRadar (const uiNode_t *node)
 	}
 
 	/* get the three points of the triangle */
-	VectorSubtract(mapMin, offset, radar.a);
-	VectorAdd(mapMax, offset, radar.c);
+	VectorSubtract(cl.mapData.mapMin, offset, radar.a);
+	VectorAdd(cl.mapData.mapMax, offset, radar.c);
 	VectorSet(radar.b, radar.c[0], radar.a[1], 0);
 
 	distAB = (Vector2Dist(radar.a, radar.b) / UNIT_SIZE);
@@ -571,8 +571,8 @@ static void UI_RadarNodeDraw (uiNode_t *node)
 #endif
 
 	static const vec4_t backgroundColor = {0.0, 0.0, 0.0, 1};
-	const float mapWidth = mapMax[0] - mapMin[0];
-	const float mapHeight = mapMax[1] - mapMin[1];
+	const float mapWidth = cl.mapData.mapMax[0] - cl.mapData.mapMin[0];
+	const float mapHeight = cl.mapData.mapMax[1] - cl.mapData.mapMin[1];
 
 	/** @todo use the same coef for x and y */
 	const float mapCoefX = (float) node->size[0] / (float) mapWidth;
@@ -621,8 +621,8 @@ static void UI_RadarNodeDraw (uiNode_t *node)
 		if (maxlevel >= tile->maxlevel)
 			maxlevel = tile->maxlevel - 1;
 		assert(tile->path[maxlevel]);
-		imagePos[0] = radar.x + mapCoefX * (tile->mapX - mapMin[0]);
-		imagePos[1] = radar.y + mapCoefY * (tile->mapY - mapMin[1]);
+		imagePos[0] = radar.x + mapCoefX * (tile->mapX - cl.mapData.mapMin[0]);
+		imagePos[1] = radar.y + mapCoefY * (tile->mapY - cl.mapData.mapMin[1]);
 
 		UI_DrawNormImageByName(imagePos[0], imagePos[1],
 				mapCoefX * tile->mapWidth, mapCoefY * tile->mapHeight,
@@ -647,8 +647,8 @@ static void UI_RadarNodeDraw (uiNode_t *node)
 			continue;
 
 		/* convert to radar area coordinates */
-		itempos[0] = pos[0] + (le->origin[0] - mapMin[0]) * mapCoefX;
-		itempos[1] = pos[1] + (mapHeight - (le->origin[1] - mapMin[1])) * mapCoefY;
+		itempos[0] = pos[0] + (le->origin[0] - cl.mapData.mapMin[0]) * mapCoefX;
+		itempos[1] = pos[1] + (mapHeight - (le->origin[1] - cl.mapData.mapMin[1])) * mapCoefY;
 
 		switch (le->type) {
 		case ET_ACTOR:
@@ -679,8 +679,8 @@ static void UI_RadarNodeDraw (uiNode_t *node)
  */
 static void UI_RadarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 {
-	const float mapWidth = mapMax[0] - mapMin[0];
-	const float mapHeight = mapMax[1] - mapMin[1];
+	const float mapWidth = cl.mapData.mapMax[0] - cl.mapData.mapMin[0];
+	const float mapHeight = cl.mapData.mapMax[1] - cl.mapData.mapMin[1];
 	const float mapCoefX = (float) node->size[0] / (float) mapWidth;
 	const float mapCoefY = (float) node->size[1] / (float) mapHeight;
 	vec3_t pos;
@@ -689,9 +689,8 @@ static void UI_RadarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	UI_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	/* from node to map */
-	VectorCenterFromMinsMaxs(mapMin, mapMax, pos);
-	pos[0] = mapMin[0] + x / mapCoefX;
-	pos[1] = mapMax[1] - y / mapCoefY;
+	pos[0] = cl.mapData.mapMin[0] + x / mapCoefX;
+	pos[1] = cl.mapData.mapMax[1] - y / mapCoefY;
 
 	VectorCopy(pos, cl.cam.origin);
 }
@@ -725,8 +724,8 @@ static void UI_GetRadarMapInFrameBuffer(int *x, int *y, int *width, int *height)
 {
 	/* Coefficient come from metric (Bunker map, and game with resolution 1024x1024) == 0.350792947 */
 	static const float magicCoef =  0.351f;
-	const float mapWidth = mapMax[0] - mapMin[0];
-	const float mapHeight = mapMax[1] - mapMin[1];
+	const float mapWidth = cl.mapData.mapMax[0] - cl.mapData.mapMin[0];
+	const float mapHeight = cl.mapData.mapMax[1] - cl.mapData.mapMin[1];
 
 	/* compute width and height with the same round error on both sides */
 	const int x2 = (viddef.width / 2) + (mapWidth * magicCoef * 0.5);

@@ -29,15 +29,9 @@ CMODEL
 #include "../common/qfiles.h"
 #include "pqueue.h"
 
-extern vec3_t mapMin, mapMax;
-
-void CM_LoadMap(const char *tiles, qboolean day, const char *pos, unsigned *checksum, routing_t *map, int entries);
+void CM_LoadMap(const char *tiles, qboolean day, const char *pos, unsigned *checksum, routing_t *map, int entries, mapData_t *mapData);
 cBspModel_t *CM_InlineModel(const char *name);
 void CM_SetInlineModelOrientation(const char *name, const vec3_t origin, const vec3_t angles);
-
-int CM_NumClusters(void);
-int CM_NumInlineModels(void);
-const char *CM_EntityString(void);
 
 /*==============================================================
 CMODEL BOX TRACING

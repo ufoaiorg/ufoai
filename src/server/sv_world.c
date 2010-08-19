@@ -87,7 +87,7 @@ static worldSector_t *SV_CreateWorldSector (int depth, const vec3_t mins, const 
  */
 void SV_ClearWorld (void)
 {
-	SV_CreateWorldSector(0, mapMin, mapMax);
+	SV_CreateWorldSector(0, sv.mapData.mapMin, sv.mapData.mapMax);
 }
 
 static inline sv_edict_t* SV_GetServerDataForEdict (const edict_t *ent)
@@ -146,7 +146,7 @@ void SV_LinkEdict (edict_t * ent)
 	if (sv_ent->worldSector)
 		SV_UnlinkEdict(ent);	/* unlink from old position */
 
-	if (ent == ge->edicts)
+	if (ent == svs.ge->edicts)
 		return;					/* don't add the world */
 
 	if (!ent->inuse)
@@ -339,7 +339,7 @@ int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int max
 int SV_TouchEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxCount, edict_t *skip)
 {
 	int num = 0;
-	const int max = min(maxCount, ge->num_edicts);
+	const int max = min(maxCount, svs.ge->num_edicts);
 	int i;
 
 	/* skip the world */
@@ -558,7 +558,7 @@ trace_t SV_Trace (const vec3_t start, const vec3_t mins, const vec3_t maxs, cons
 	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
 	/** @todo There is more than one world in case of a map assembly - use
 	 * @c clip.trace.mapTile to get the correct one */
-	clip.trace.ent = ge->edicts; /* the first edict is the world */
+	clip.trace.ent = svs.ge->edicts; /* the first edict is the world */
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */
 

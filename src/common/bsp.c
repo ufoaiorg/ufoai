@@ -28,35 +28,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "routing.h"
 #include "../shared/parse.h"
 
-/** @note holds all entity data as a single parsable string */
-static char mapEntityString[MAX_MAP_ENTSTRING];
-
-/** @note holds the number of inline entities, e.g. ET_DOOR */
-static int numInline;
-
 /** @note this is a zeroed surface structure */
 static cBspSurface_t nullSurface;
-
-/** @brief Used to track where rerouting needs to occur.
- * @todo not threadsafe */
-static byte reroute[ACTOR_MAX_SIZE][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
-
-/**
- * @note The vectors are from 0 up to 2*MAX_WORLD_WIDTH - but not negative
- * @note holds the smallest bounding box that will contain the map
- * @sa CL_ClampCamToMap
- * @sa CL_OutsideMap
- * @sa CMod_GetMapSize
- * @sa SV_ClearWorld
- */
-vec3_t mapMin, mapMax;
 
 /*
 ===============================================================================
 MAP LOADING
 ===============================================================================
 */
-
 
 /**
  * @brief Loads brush entities like func_door and func_breakable
@@ -487,7 +466,7 @@ static void CM_MakeTracingNodes (void)
  * @sa CM_AddMapTile
  * @todo TEST z-level routing
  */
-static void CMod_LoadRouting (const byte *base, const char *name, const lump_t * l, int sX, int sY, int sZ, routing_t *map)
+static void CMod_LoadRouting (mapData_t *mapData, const byte *base, const char *name, const lump_t * l, int sX, int sY, int sZ, routing_t *map)
 {
 	static routing_t tempMap[ACTOR_MAX_SIZE];
 	const byte *source;
@@ -582,10 +561,10 @@ static void CMod_LoadRouting (const byte *base, const char *name, const lump_t *
 					}
 				}
 				/* Update the reroute table */
-				if (!reroute[size][y][x]) {
-					reroute[size][y][x] = numTiles + 1;
+				if (!mapData->reroute[size][y][x]) {
+					mapData->reroute[size][y][x] = numTiles + 1;
 				} else {
-					reroute[size][y][x] = ROUTING_NOT_REACHABLE;
+					mapData->reroute[size][y][x] = ROUTING_NOT_REACHABLE;
 				}
 			}
 
@@ -604,7 +583,7 @@ static void CMod_LoadRouting (const byte *base, const char *name, const lump_t *
  * loaded map tiles.
  * @sa CM_AddMapTile
  */
-static void CMod_LoadEntityString (const byte *base, const lump_t * l, const vec3_t shift, int tileIndex)
+static void CMod_LoadEntityString (mapData_t *mapData, const byte *base, const lump_t * l, const vec3_t shift, int tileIndex)
 {
 	const char *token;
 	const char *es;
@@ -632,7 +611,7 @@ static void CMod_LoadEntityString (const byte *base, const lump_t * l, const vec
 			Com_Error(ERR_DROP, "CMod_LoadEntityString: found %s when expecting {", token);
 
 		/* new entity */
-		Q_strcat(mapEntityString, "{ ", MAX_MAP_ENTSTRING);
+		Q_strcat(mapData->mapEntityString, "{ ", MAX_MAP_ENTSTRING);
 
 		/* go through all the dictionary pairs */
 		while (1) {
@@ -658,7 +637,7 @@ static void CMod_LoadEntityString (const byte *base, const lump_t * l, const vec
 				/* origins are shifted */
 				sscanf(token, "%f %f %f", &(v[0]), &(v[1]), &(v[2]));
 				VectorAdd(v, shift, v);
-				Q_strcat(mapEntityString, va("%s \"%f %f %f\" ", keyname, v[0], v[1], v[2]), MAX_MAP_ENTSTRING);
+				Q_strcat(mapData->mapEntityString, va("%s \"%f %f %f\" ", keyname, v[0], v[1], v[2]), MAX_MAP_ENTSTRING);
 				/* If we have a model, then unadjust it's mins and maxs. */
 				if (model) {
 					VectorSubtract(model->mins, shift, model->mins);
@@ -671,18 +650,18 @@ static void CMod_LoadEntityString (const byte *base, const lump_t * l, const vec
 				/* Get the model */
 				model = &curTile->models[NUM_REGULAR_MODELS + num - 1];
 				/* Now update the model number to reflect prior tiles loaded. */
-				num += numInline;
-				Q_strcat(mapEntityString, va("%s *%i ", keyname, num), MAX_MAP_ENTSTRING);
+				num += mapData->numInline;
+				Q_strcat(mapData->mapEntityString, va("%s *%i ", keyname, num), MAX_MAP_ENTSTRING);
 			} else if (!strcmp(keyname, "targetname") || !strcmp(keyname, "target")) {
-				Q_strcat(mapEntityString, va("%s \"%s-%i\" ", keyname, token, tileIndex), MAX_MAP_ENTSTRING);
+				Q_strcat(mapData->mapEntityString, va("%s \"%s-%i\" ", keyname, token, tileIndex), MAX_MAP_ENTSTRING);
 			} else {
 				/* just store key and value */
-				Q_strcat(mapEntityString, va("%s \"%s\" ", keyname, token), MAX_MAP_ENTSTRING);
+				Q_strcat(mapData->mapEntityString, va("%s \"%s\" ", keyname, token), MAX_MAP_ENTSTRING);
 			}
 		}
 
 		/* finish entity */
-		Q_strcat(mapEntityString, "} ", MAX_MAP_ENTSTRING);
+		Q_strcat(mapData->mapEntityString, "} ", MAX_MAP_ENTSTRING);
 	}
 }
 
@@ -776,7 +755,7 @@ static void CM_InitBoxHull (void)
  * @sa CM_LoadMap
  * @sa R_ModAddMapTile
  */
-static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, byte sZ, routing_t *map)
+static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, byte sZ, routing_t *map, mapData_t *mapData)
 {
 	char filename[MAX_QPATH];
 	unsigned checksum;
@@ -833,7 +812,7 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	CMod_LoadBrushSides(base, &header.lumps[LUMP_BRUSHSIDES]);
 	CMod_LoadSubmodels(base, &header.lumps[LUMP_MODELS], shift);
 	CMod_LoadNodes(base, &header.lumps[LUMP_NODES], shift);
-	CMod_LoadEntityString(base, &header.lumps[LUMP_ENTITIES], shift, numTiles);
+	CMod_LoadEntityString(mapData, base, &header.lumps[LUMP_ENTITIES], shift, numTiles);
 	if (day)
 		CMod_LoadLighting(&header.lumps[LUMP_LIGHTING_DAY]);
 	else
@@ -847,23 +826,23 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 
 	/* CMod_LoadRouting plays with curTile and numTiles, so let set
 	 * these to the right values now */
-	numInline += curTile->nummodels - NUM_REGULAR_MODELS;
+	mapData->numInline += curTile->nummodels - NUM_REGULAR_MODELS;
 
-	CMod_LoadRouting(base, name, &header.lumps[LUMP_ROUTING], sX, sY, sZ, map);
+	CMod_LoadRouting(mapData, base, name, &header.lumps[LUMP_ROUTING], sX, sY, sZ, map);
 
 	/* now increase the amount of loaded tiles */
 	numTiles++;
 
 	/* Now find the map bounds with the updated numTiles. */
 	/* calculate new border after merge */
-	RT_GetMapSize(mapMin, mapMax);
+	RT_GetMapSize(mapData->mapMin, mapData->mapMax);
 
 	FS_FreeFile(buf);
 
 	return checksum;
 }
 
-static void CMod_RerouteMap (const char **list, routing_t *map)
+static void CMod_RerouteMap (const mapData_t *mapData, routing_t *map)
 {
 	actorSizeEnum_t size;
 	int x, y, z, dir;
@@ -873,8 +852,8 @@ static void CMod_RerouteMap (const char **list, routing_t *map)
 
 	start = time(NULL);
 
-	VecToPos(mapMin, mins);
-	VecToPos(mapMax, maxs);
+	VecToPos(mapData->mapMin, mins);
+	VecToPos(mapData->mapMax, maxs);
 
 	/* fit min/max into the world size */
 	maxs[0] = min(maxs[0], PATHFINDING_WIDTH - 1);
@@ -891,7 +870,7 @@ static void CMod_RerouteMap (const char **list, routing_t *map)
 	for (size = ACTOR_SIZE_INVALID; size < ACTOR_MAX_SIZE; size++) {
 		for (y = mins[1]; y <= maxs[1]; y++) {
 			for (x = mins[0]; x <= maxs[0]; x++) {
-				if (reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
+				if (mapData->reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
 					/* Com_Printf("Tracing floor (%i %i s:%i)\n", x, y, size); */
 					for (z = maxs[2]; z >= mins[2]; z--) {
 						const int newZ = RT_CheckCell(map, size + 1, x, y, z, NULL);
@@ -910,7 +889,7 @@ static void CMod_RerouteMap (const char **list, routing_t *map)
 	for (size = ACTOR_SIZE_INVALID; size < 1; size++) {
 		for (y = mins[1]; y <= maxs[1]; y++) {
 			for (x = mins[0]; x <= maxs[0]; x++) {
-				const byte tile = reroute[size][y][x];
+				const byte tile = mapData->reroute[size][y][x];
 				if (tile) {
 					/** @note The new R_UpdateConnection updates both directions at the same time,
 					 * so we only need to check every other direction. */
@@ -923,13 +902,13 @@ static void CMod_RerouteMap (const char **list, routing_t *map)
 						/* Skip if the destination is out of bounds. */
 						if (dx < 0 || dx >= PATHFINDING_WIDTH || dy < 0 || dy >= PATHFINDING_WIDTH)
 							continue;
-						tile2 = reroute[size][dy][dx];
+						tile2 = mapData->reroute[size][dy][dx];
 						/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
 						if (tile2 && (tile2 == ROUTING_NOT_REACHABLE || tile2 != tile)) {
 							/** @note This update MUST go from the bottom (0) to the top (7) of the model.
 							 * RT_UpdateConnection expects it and breaks otherwise. */
 							/* Com_Printf("Tracing passage (%i %i s:%i d:%i)\n", x, y, size, dir); */
-							RT_UpdateConnectionColumn(map, size + 1, x, y, dir, list);
+							RT_UpdateConnectionColumn(map, size + 1, x, y, dir, NULL);
 						}
 					}
 				}
@@ -955,7 +934,7 @@ static void CMod_RerouteMap (const char **list, routing_t *map)
  * @sa R_ModBeginLoading
  * @note Make sure that mapchecksum was set to 0 before you call this function
  */
-void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *mapchecksum, routing_t *map, int entries)
+void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *mapchecksum, routing_t *map, int entries, mapData_t *mapData)
 {
 	const char *token;
 	char name[MAX_VAR];
@@ -969,13 +948,12 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *map
 	assert(*mapchecksum == 0);
 
 	/* init */
-	numInline = numTiles = 0;
-	mapEntityString[0] = base[0] = 0;
+	base[0] = 0;
 
 	memset(map, 0, sizeof(*map) * entries);
 
 	/* Reset the reroute table */
-	memset(reroute, 0, sizeof(reroute));
+	memset(mapData, 0, sizeof(mapData));
 
 	if (pos && *pos)
 		Com_Printf("CM_LoadMap: \"%s\" \"%s\"\n", tiles, pos);
@@ -985,7 +963,7 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *map
 		/* get tile name */
 		token = Com_Parse(&tiles);
 		if (!tiles) {
-			CMod_RerouteMap(NULL, map);
+			CMod_RerouteMap(mapData, map);
 			return;
 		}
 
@@ -1016,10 +994,10 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *map
 				Com_Error(ERR_DROP, "CM_LoadMap: invalid y position given: %i\n", sh[1]);
 			if (sh[2] >= PATHFINDING_HEIGHT)
 				Com_Error(ERR_DROP, "CM_LoadMap: invalid z position given: %i\n", sh[2]);
-			*mapchecksum += CM_AddMapTile(name, day, sh[0], sh[1], sh[2], map);
+			*mapchecksum += CM_AddMapTile(name, day, sh[0], sh[1], sh[2], map, mapData);
 		} else {
 			/* load only a single tile, if no positions are specified */
-			*mapchecksum = CM_AddMapTile(name, day, 0, 0, 0, map);
+			*mapchecksum = CM_AddMapTile(name, day, 0, 0, 0, map, mapData);
 			return;
 		}
 	}
@@ -1077,19 +1055,4 @@ void CM_SetInlineModelOrientation (const char *name, const vec3_t origin, const 
 	VectorCopy(angles, model->angles);
 }
 
-int CM_NumInlineModels (void)
-{
-	return numInline;
-}
 
-/**
- * @return The entitystring for all the loaded maps
- * @note Every map assembly will attach their entities here
- * @sa CM_LoadMap
- * @sa G_SpawnEntities
- * @sa SV_SpawnServer
- */
-const char *CM_EntityString (void)
-{
-	return mapEntityString;
-}

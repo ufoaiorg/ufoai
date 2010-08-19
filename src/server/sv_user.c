@@ -127,7 +127,7 @@ static void SV_Begin_f (client_t *cl)
 
 	/* call the game begin function */
 	SDL_mutexP(svs.serverMutex);
-	began = ge->ClientBegin(cl->player);
+	began = svs.ge->ClientBegin(cl->player);
 	SDL_mutexV(svs.serverMutex);
 
 	if (!began) {
@@ -152,7 +152,7 @@ static void SV_Spawn_f (client_t *cl)
 	}
 
 	SDL_mutexP(svs.serverMutex);
-	ge->ClientSpawn(cl->player);
+	svs.ge->ClientSpawn(cl->player);
 	SDL_mutexV(svs.serverMutex);
 	SV_SetClientState(cl, cs_spawned);
 
@@ -217,7 +217,7 @@ static void SV_ExecuteUserCommand (client_t * cl, const char *s)
 	if (Com_ServerState() == ss_game) {
 		Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: client command: %s\n", s);
 		SDL_mutexP(svs.serverMutex);
-		ge->ClientCommand(cl->player);
+		svs.ge->ClientCommand(cl->player);
 		SDL_mutexV(svs.serverMutex);
 	}
 }
@@ -262,7 +262,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		/* client actions are handled by the game module */
 		sv.messageBuffer = msg;
 		SDL_mutexP(svs.serverMutex);
-		ge->ClientAction(cl->player);
+		svs.ge->ClientAction(cl->player);
 		SDL_mutexV(svs.serverMutex);
 		sv.messageBuffer = NULL;
 		break;
@@ -271,7 +271,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		/* player wants to end round */
 		sv.messageBuffer = msg;
 		SDL_mutexP(svs.serverMutex);
-		ge->ClientEndRound(cl->player);
+		svs.ge->ClientEndRound(cl->player);
 		SDL_mutexV(svs.serverMutex);
 		sv.messageBuffer = NULL;
 		break;
@@ -281,7 +281,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		/* actors spawn accordingly */
 		sv.messageBuffer = msg;
 		SDL_mutexP(svs.serverMutex);
-		ge->ClientTeamInfo(cl->player);
+		svs.ge->ClientTeamInfo(cl->player);
 		SDL_mutexV(svs.serverMutex);
 		sv.messageBuffer = NULL;
 		break;
@@ -291,7 +291,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		/* actors spawn accordingly */
 		sv.messageBuffer = msg;
 		SDL_mutexP(svs.serverMutex);
-		ge->ClientInitActorStates(cl->player);
+		svs.ge->ClientInitActorStates(cl->player);
 		SDL_mutexV(svs.serverMutex);
 		sv.messageBuffer = NULL;
 		break;

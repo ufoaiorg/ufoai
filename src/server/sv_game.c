@@ -31,7 +31,6 @@
 #include "../ports/system.h"
 #include <SDL.h>
 
-game_export_t *ge;
 static SDL_Thread *gameThread;
 static void *gameLibrary;
 
@@ -484,7 +483,7 @@ void SV_ShutdownGameProgs (void)
 {
 	uint32_t size;
 
-	if (!ge)
+	if (!svs.ge)
 		return;
 
 	if (gameThread)
@@ -492,7 +491,7 @@ void SV_ShutdownGameProgs (void)
 
 	gameThread = NULL;
 
-	ge->Shutdown();
+	svs.ge->Shutdown();
 	SV_UnloadGame();
 
 	size = Mem_PoolSize(sv_gameSysPool);
@@ -500,7 +499,7 @@ void SV_ShutdownGameProgs (void)
 		Com_Printf("WARNING: Game memory leak (%u bytes)\n", size);
 	}
 
-	ge = NULL;
+	svs.ge = NULL;
 }
 
 /**
@@ -527,7 +526,7 @@ void SV_RunGameFrame (void)
 {
 	SDL_mutexP(svs.serverMutex);
 
-	sv.endgame = ge->RunFrame();
+	sv.endgame = svs.ge->RunFrame();
 
 	SDL_mutexV(svs.serverMutex);
 }
@@ -541,7 +540,7 @@ void SV_InitGameProgs (void)
 	game_import_t import;
 
 	/* unload anything we have now */
-	if (ge)
+	if (svs.ge)
 		SV_ShutdownGameProgs();
 
 	/* load a new game dll */
@@ -569,7 +568,6 @@ void SV_InitGameProgs (void)
 	import.GridFall = Grid_Fall;
 	import.GridPosToVec = Grid_PosToVec;
 	import.GridRecalcRouting = CM_RecalcRouting;
-	import.GridDumpDVTable = Grid_DumpDVTable;
 
 	import.ModelIndex = SV_ModelIndex;
 
@@ -645,14 +643,14 @@ void SV_InitGameProgs (void)
 	/* import the server routing table */
 	import.routingMap = (void *) &sv.svMap;
 
-	ge = SV_GetGameAPI(&import);
+	svs.ge = SV_GetGameAPI(&import);
 
-	if (!ge)
+	if (!svs.ge)
 		Com_Error(ERR_DROP, "failed to load game library");
-	if (ge->apiversion != GAME_API_VERSION)
-		Com_Error(ERR_DROP, "game is version %i, not %i", ge->apiversion, GAME_API_VERSION);
+	if (svs.ge->apiversion != GAME_API_VERSION)
+		Com_Error(ERR_DROP, "game is version %i, not %i", svs.ge->apiversion, GAME_API_VERSION);
 
-	ge->Init();
+	svs.ge->Init();
 
 	if (sv_threads->integer)
 		gameThread = SDL_CreateThread(SV_RunGameFrameThread, NULL);

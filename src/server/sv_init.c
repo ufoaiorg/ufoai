@@ -117,7 +117,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 			sv.configstrings[CS_POSITIONS][0] = 0;
 	}
 
-	CM_LoadMap(map, day, pos, &checksum, sv.svMap, lengthof(sv.svMap));
+	CM_LoadMap(map, day, pos, &checksum, sv.svMap, lengthof(sv.svMap), &sv.mapData);
 
 	Com_Printf("checksum for the map '%s': %u\n", server, checksum);
 	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", checksum);
@@ -147,7 +147,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	SV_ClearWorld();
 
 	/* fix this! */
-	for (i = 1; i <= CM_NumInlineModels(); i++)
+	for (i = 1; i <= sv.mapData.numInline; i++)
 		sv.models[i] = CM_InlineModel(va("*%i", i));
 
 	/* precache and static commands can be issued during map initialization */
@@ -155,7 +155,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 
 	SDL_mutexP(svs.serverMutex);
 	/* load and spawn all other entities */
-	ge->SpawnEntities(sv.name, sv.day, CM_EntityString());
+	svs.ge->SpawnEntities(sv.name, sv.day, sv.mapData.mapEntityString);
 	SDL_mutexV(svs.serverMutex);
 
 	/* all precaches are complete */

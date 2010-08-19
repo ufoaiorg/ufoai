@@ -298,6 +298,12 @@ COLLISION DETECTION
 /** @brief A cell's height in QUANT sized units */
 #define CELL_HEIGHT (UNIT_HEIGHT / QUANT)
 
+/* NOTE: this only allows quadratic units */
+#define ACTOR_SIZE_INVALID 0
+#define ACTOR_SIZE_NORMAL 1
+#define ACTOR_SIZE_2x2 2
+#define	ACTOR_MAX_SIZE	(ACTOR_SIZE_2x2)
+
 /* Maximum falling distance in QUANT units (model units / QUANT) */
 #define	PATHFINDING_MAX_FALL	16
 /* The height of the box where we don't need the full actor's torso width */

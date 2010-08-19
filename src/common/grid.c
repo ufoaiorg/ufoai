@@ -124,31 +124,6 @@ static qboolean Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t
 	return qfalse;
 }
 
-void Grid_DumpDVTable (const pathing_t *path)
-{
-	int px, py, pz, cr;
-	pos3_t mins, maxs;
-
-	VecToPos(mapMin, mins);
-	VecToPos(mapMax, maxs);
-
-	Com_Printf("Bounds: (%i %i %i) to (%i %i %i)\n", mins[0], mins[1], mins[2], maxs[0], maxs[1], maxs[2]);
-	for (cr = 0; cr < ACTOR_MAX_STATES; cr++) {
-		for (pz = mins[2]; pz <= maxs[2]; pz++) {
-			Com_Printf("\ncr:%i z:%i\n", cr, pz);
-			for (py = maxs[1]; py >= mins[1]; py--) {
-				for (px = mins[0]; px <= maxs[0]; px++) {
-					const int dv = RT_AREA_FROM(path, px, py, pz, cr);
-					const int oz = getDVz(dv);
-					const int dir = getDVdir(dv);
-					Com_Printf("%3i %2i %1i,", RT_AREA(path, px, py, pz, cr), dir, oz);
-				}
-				Com_Printf("\n");
-			}
-		}
-	}
-}
-
 static void Grid_SetMoveData (pathing_t *path, const int x, const int y, const int z, const int c, const byte length, const int dir, const int ox, const int oy, const int oz, const int oc, priorityQueue_t *pqueue)
 {
 	pos4_t dummy;
@@ -166,7 +141,6 @@ static void Grid_SetMoveData (pathing_t *path, const int x, const int y, const i
 			Com_Printf("Grid_SetMoveData: Created faulty DV table.\nx:%i y:%i z:%i c:%i\ndir:%i\nnx:%i ny:%i nz:%i nc:%i\ntx:%i ty:%i tz:%i tc:%i\n",
 				ox, oy, oz, oc, dir, x, y, z, c, test[0], test[1], test[2], crouch);
 
-			Grid_DumpDVTable(path);
 			Com_Error(ERR_DROP, "Grid_SetMoveData: Created faulty DV table.");
 		}
 	}

@@ -103,6 +103,8 @@ typedef struct {
 	struct dbuffer *messageBuffer;
 	pending_event_t pendingEvent;
 
+	mapData_t mapData;
+
 	sv_model_t svModels[MAX_MOD_KNOWN];
 	unsigned int numSVModels;
 	sv_edict_t edicts[MAX_EDICTS];
@@ -110,11 +112,11 @@ typedef struct {
 	unsigned int numWorldSectors;
 } server_t;
 
-#define EDICT_NUM(n) ((edict_t *)((byte *)ge->edicts + ge->edict_size * (n)))
-#define NUM_FOR_EDICT(e) (((byte *)(e) - (byte *)ge->edicts) / ge->edict_size)
+#define EDICT_NUM(n) ((edict_t *)((byte *)svs.ge->edicts + svs.ge->edict_size * (n)))
+#define NUM_FOR_EDICT(e) (((byte *)(e) - (byte *)svs.ge->edicts) / svs.ge->edict_size)
 
-#define PLAYER_NUM(n) ((player_t *)((byte *)ge->players + ge->player_size * (n)))
-#define NUM_FOR_PLAYER(e) (((byte *)(e) - (byte *)ge->players) / ge->player_size)
+#define PLAYER_NUM(n) ((player_t *)((byte *)svs.ge->players + svs.ge->player_size * (n)))
+#define NUM_FOR_PLAYER(e) (((byte *)(e) - (byte *)svs.ge->players) / svs.ge->player_size)
 
 typedef enum {
 	cs_free,					/**< can be reused for a new connection */
@@ -155,6 +157,7 @@ typedef struct {
 	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
 								 * Set to a huge negative value to send immmediately */
 	SDL_mutex *serverMutex;
+	game_export_t *ge;
 } server_static_t;
 
 /**
@@ -215,8 +218,6 @@ void SV_SetMaster_f(void);
 void SV_Heartbeat_f(void);
 
 /* sv_game.c */
-extern game_export_t *ge;
-
 int SV_RunGameFrameThread(void *data);
 void SV_RunGameFrame(void);
 void SV_InitGameProgs(void);

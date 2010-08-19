@@ -245,7 +245,7 @@ static void SV_Status_f (void)
 		return;
 	}
 	Com_Printf("map              : %s (%s)\n", sv.name, (sv.day ? "day" : "night"));
-	Com_Printf("active team      : %i\n", ge->ClientGetActiveTeam());
+	Com_Printf("active team      : %i\n", svs.ge->ClientGetActiveTeam());
 
 	Com_Printf("num status  name            address              \n");
 	Com_Printf("--- ------- --------------- ---------------------\n");
@@ -358,13 +358,13 @@ static void SV_KillServer_f (void)
  */
 static void SV_ServerCommand_f (void)
 {
-	if (!ge) {
+	if (!svs.ge) {
 		Com_Printf("No game loaded.\n");
 		return;
 	}
 	SDL_mutexP(svs.serverMutex);
 
-	ge->ServerCommand();
+	svs.ge->ServerCommand();
 
 	SDL_mutexV(svs.serverMutex);
 }
@@ -597,8 +597,8 @@ static void Grid_DumpWholeServerMap_f (void)
 static void Grid_DumpServerRoutes_f (void)
 {
 	ipos3_t wpMins, wpMaxs;
-	VecToPos(mapMin, wpMins);
-	VecToPos(mapMax, wpMaxs);
+	VecToPos(sv.mapData.mapMin, wpMins);
+	VecToPos(sv.mapData.mapMax, wpMaxs);
 	RT_WriteCSVFiles(sv.svMap, "ufoaiserver", wpMins, wpMaxs);
 }
 #endif

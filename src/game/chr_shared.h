@@ -160,11 +160,6 @@ typedef enum {
 } reservation_types_t;
 
 typedef int32_t actorSizeEnum_t;
-/* NOTE: this only allows quadratic units */
-#define ACTOR_SIZE_INVALID 0
-#define ACTOR_SIZE_NORMAL 1
-#define ACTOR_SIZE_2x2 2
-#define	ACTOR_MAX_SIZE	(ACTOR_SIZE_2x2)
 
 /** @brief Types of actor sounds being issued by CL_ActorPlaySound(). */
 typedef enum {

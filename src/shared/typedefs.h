@@ -131,6 +131,28 @@ typedef struct {
 	ipos3_t wpMaxs;
 } mapTile_t;
 
+typedef struct mapData_s {
+	/** @note holds all entity data as a single parsable string */
+	char mapEntityString[MAX_MAP_ENTSTRING];
+
+	/** @note holds the number of inline entities, e.g. ET_DOOR */
+	int numInline;
+
+	/** @brief Used to track where rerouting needs to occur.
+	 * @todo not threadsafe */
+	byte reroute[ACTOR_MAX_SIZE][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
+
+	/**
+	 * @note The vectors are from 0 up to 2*MAX_WORLD_WIDTH - but not negative
+	 * @note holds the smallest bounding box that will contain the map
+	 * @sa CL_ClampCamToMap
+	 * @sa CL_OutsideMap
+	 * @sa CMod_GetMapSize
+	 * @sa SV_ClearWorld
+	 */
+	vec3_t mapMin, mapMax;
+} mapData_t;
+
 /**
  * @brief Pathfinding routing structure and tile layout
  * @note Comments strongly WIP!

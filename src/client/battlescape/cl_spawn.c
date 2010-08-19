@@ -144,7 +144,7 @@ static void CL_SpawnCall (const localEntityParse_t *entData)
  */
 void CL_SpawnParseEntitystring (void)
 {
-	const char *es = CM_EntityString();
+	const char *es = cl.mapData.mapEntityString;
 	int entnum = 0, maxLevel;
 
 	if (cl.mapMaxLevel > 0 && cl.mapMaxLevel < PATHFINDING_HEIGHT)

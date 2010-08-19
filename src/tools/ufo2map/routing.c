@@ -38,7 +38,6 @@ static const vec3_t move_vec[4] = {
 	{         0, -UNIT_SIZE, 0} };
 
 /** routing data structures */
-#define ACTOR_MAX_SIZE 2
 static routing_t Nmap[ACTOR_MAX_SIZE]; /**< A routing_t per size */
 
 /** @brief world min and max values converted from vec to pos */

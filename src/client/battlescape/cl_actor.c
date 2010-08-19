@@ -697,9 +697,6 @@ static qboolean CL_ActorTraceMove (const pos3_t to)
 	pos3_t pos;
 	int dv;
 	byte crouchingState;
-#ifdef DEBUG
-	int counter = 0;
-#endif
 
 	if (!selActor)
 		return qfalse;
@@ -716,14 +713,6 @@ static qboolean CL_ActorTraceMove (const pos3_t to)
 	Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
 	while ((dv = Grid_MoveNext(selActor->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
-#ifdef DEBUG
-		if (++counter > 100) {
-			Com_Printf("First pos: (%i, %i, %i, %i).\n", to[0], to[1], to[2], LE_IsCrouched(selActor) ? 1 : 0);
-			Com_Printf("Last pos: (%i, %i, %i, %i).\n", pos[0], pos[1], pos[2], crouchingState);
-			Grid_DumpDVTable(selActor->pathMap);
-			Com_Error(ERR_DROP, "CL_TraceMove: DV table loops.");
-		}
-#endif
 		length = CL_ActorMoveLength(selActor, pos);
 		PosSubDV(pos, crouchingState, dv); /* We are going backwards to the origin. */
 		Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouchingState, dv);

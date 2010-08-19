@@ -77,7 +77,7 @@ void SV_DropClient (client_t * drop, const char *message)
 		/* call the prog function for removing a client */
 		/* this will remove the body, among other things */
 		SDL_mutexP(svs.serverMutex);
-		ge->ClientDisconnect(drop->player);
+		svs.ge->ClientDisconnect(drop->player);
 		SDL_mutexV(svs.serverMutex);
 	}
 
@@ -128,12 +128,12 @@ static void SVC_TeamInfo (struct net_stream *s)
 		if (cl->state >= cs_connected) {
 			char infoPlayer[MAX_INFO_STRING];
 			/* show players that already have a team with their teamnum */
-			int teamId = ge->ClientGetTeamNum(cl->player);
+			int teamId = svs.ge->ClientGetTeamNum(cl->player);
 			if (!teamId)
 				teamId = TEAM_NO_ACTIVE;
 			Com_DPrintf(DEBUG_SERVER, "SVC_TeamInfo: connected client: %i %s\n", i, cl->name);
 			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_team", teamId);
-			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_ready", ge->ClientIsReady(cl->player));
+			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_ready", svs.ge->ClientIsReady(cl->player));
 			Info_SetValueForKey(infoPlayer, sizeof(infoPlayer), "cl_name", cl->name);
 			NET_WriteString(msg, infoPlayer);
 		} else {
@@ -164,7 +164,7 @@ static void SVC_Status (struct net_stream *s)
 	for (i = 0; i < sv_maxclients->integer; i++) {
 		const client_t *cl = &svs.clients[i];
 		if (cl->state > cs_free) {
-			Com_sprintf(player, sizeof(player), "%i \"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
+			Com_sprintf(player, sizeof(player), "%i \"%s\"\n", svs.ge->ClientGetTeamNum(cl->player), cl->name);
 			NET_WriteRawString(msg, player);
 		}
 	}
@@ -293,7 +293,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	cl->player->num = playernum;
 
 	SDL_mutexP(svs.serverMutex);
-	connected = ge->ClientConnect(player, userinfo, sizeof(userinfo));
+	connected = svs.ge->ClientConnect(player, userinfo, sizeof(userinfo));
 	SDL_mutexV(svs.serverMutex);
 
 	/* get the game a chance to reject this connection or modify the userinfo */
@@ -830,7 +830,7 @@ void SV_UserinfoChanged (client_t * cl)
 
 	/* call prog code to allow overrides */
 	SDL_mutexP(svs.serverMutex);
-	ge->ClientUserinfoChanged(cl->player, cl->userinfo);
+	svs.ge->ClientUserinfoChanged(cl->player, cl->userinfo);
 	SDL_mutexV(svs.serverMutex);
 
 	/* name for C code */
@@ -856,6 +856,11 @@ static qboolean SV_CheckMaxSoldiersPerPlayer (cvar_t* cvar)
 const routing_t** SV_GetRoutingMap (void)
 {
 	return (const routing_t **) &sv.svMap;
+}
+
+const mapData_t* SV_GetMapData (void)
+{
+	return &sv.mapData;
 }
 
 /**

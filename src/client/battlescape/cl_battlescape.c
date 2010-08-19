@@ -244,10 +244,10 @@ static const float mapZBorder = -(UNIT_HEIGHT * 5);
  */
 qboolean CL_OutsideMap (const vec3_t position, const float delta)
 {
-	if (position[0] < mapMin[0] - delta || position[0] > mapMax[0] + delta)
+	if (position[0] < cl.mapData.mapMin[0] - delta || position[0] > cl.mapData.mapMax[0] + delta)
 		return qtrue;
 
-	if (position[1] < mapMin[1] - delta || position[1] > mapMax[1] + delta)
+	if (position[1] < cl.mapData.mapMin[1] - delta || position[1] > cl.mapData.mapMax[1] + delta)
 		return qtrue;
 
 	/* if a le is deeper than 5 levels below the latest walkable level (0) then
@@ -284,8 +284,8 @@ void Grid_DumpWholeClientMap_f (void)
 void Grid_DumpClientRoutes_f (void)
 {
 	ipos3_t wpMins, wpMaxs;
-	VecToPos(mapMin, wpMins);
-	VecToPos(mapMax, wpMaxs);
+	VecToPos(cl.mapData.mapMin, wpMins);
+	VecToPos(cl.mapData.mapMax, wpMaxs);
 	RT_WriteCSVFiles(cl.clMap, "ufoaiclient", wpMins, wpMaxs);
 }
 #endif
