@@ -1735,7 +1735,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	 && selActor->actorMoveLength <= CL_ActorUsableTUs(selActor))
 		VectorSet(ent.color, 0, 1, 0); /* Green */
 	else
-		VectorSet(ent.color, 0, 0, 0.8); /* Dark Blue */
+		VectorSet(ent.color, 0.6, 0.68, 1); /* Light Blue */
 
 	VectorAdd(ent.origin, boxSize, ent.oldorigin);
 
