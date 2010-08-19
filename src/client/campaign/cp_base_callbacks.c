@@ -664,7 +664,6 @@ static void BaseSummary_Init (const base_t *base)
 	baseCapacities_t cap;
 	production_queue_t *queue;
 	technology_t *tech;
-	int totalEmployees = 0;
 	int tmp;
 
 	/* wipe away old buffers */
@@ -680,7 +679,6 @@ static void BaseSummary_Init (const base_t *base)
 	Q_strcat(textInfoBuffer, _("^BEmployees\n"), sizeof(textInfoBuffer));
 	for (i = 0; i < MAX_EMPL; i++) {
 		tmp = E_CountHired(base, i);
-		totalEmployees += tmp;
 		Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", E_GetEmployeeString(i), tmp), sizeof(textInfoBuffer));
 	}
 

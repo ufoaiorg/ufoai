@@ -666,19 +666,11 @@ static void RS_InitGUIData (base_t* base)
 {
 	int i, j;
 	int row;
-	int available[MAX_BASES];
 	qboolean first;
 
 	assert(base);
 
 	RS_MarkResearchable(qfalse, base);
-
-	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *b = B_GetFoundedBaseByIDX(i);
-		if (!b)
-			continue;
-		available[i] = E_CountUnassigned(b, EMPL_SCIENTIST);
-	}
 
 	/* update tech of the base */
 	row = 0;

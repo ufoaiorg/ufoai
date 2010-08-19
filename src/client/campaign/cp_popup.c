@@ -104,13 +104,11 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 {
 	int baseIdx, homebase, numAvailableBases = 0;
 	baseCapacities_t capacity;
-	buildingType_t buildingType;
 	linkedList_t* popupListText = NULL;
 
 	assert(aircraft);
 
 	capacity = AIR_GetCapacityByAircraftWeight(aircraft);
-	buildingType = B_GetBuildingTypeByCapacity(capacity);
 
 	LIST_Delete(&popupListData);
 

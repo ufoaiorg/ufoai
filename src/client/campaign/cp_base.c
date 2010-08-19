@@ -720,7 +720,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	const building_t const *buildingTemplate = building->tpl;	/**< Template of the removed building */
 	const qboolean onDestroyCommand = (building->onDestroy[0] != '\0') && (building->buildingStatus == B_STATUS_WORKING);
 	baseCapacities_t cap = MAX_CAP; /* init but don't set to first value of enum */
-	qboolean test;
 
 	/* Don't allow to destroy an entrance. */
 	if (buildingType == B_ENTRANCE)
@@ -768,8 +767,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		building = NULL;
 	}
 	/** @note Don't use the building pointer after this point - it's zeroed. */
-
-	test = qfalse;
 
 	if (buildingType != B_MISC && buildingType != MAX_BUILDING_TYPE) {
 		if (B_GetNumberOfBuildingsInBaseByBuildingType(base, buildingType) <= 0) {

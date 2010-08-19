@@ -191,7 +191,6 @@ static void MP_LoadTeamMultiplayerInfo (mxml_node_t *p)
  */
 static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 {
-	int res;
 	int requiredBufferLength;
 	byte *buf, *fbuf;
 	mpSaveFileHeader_t header;
@@ -230,7 +229,7 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
 		return qfalse;
 	}
-	res = mxmlSaveString(topNode, (char*)buf, requiredBufferLength + 1, MXML_NO_CALLBACK);
+	mxmlSaveString(topNode, (char*)buf, requiredBufferLength + 1, MXML_NO_CALLBACK);
 	mxmlDelete(topNode);
 
 	fbuf = (byte *) Mem_PoolAlloc(requiredBufferLength + 1 + sizeof(header), cl_genericPool, 0);
@@ -239,7 +238,7 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 	Mem_Free(buf);
 
 	/* last step - write data */
-	res = FS_WriteFile(fbuf, requiredBufferLength + 1 + sizeof(header), filename);
+	FS_WriteFile(fbuf, requiredBufferLength + 1 + sizeof(header), filename);
 	Mem_Free(fbuf);
 
 	return qtrue;

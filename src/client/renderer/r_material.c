@@ -897,7 +897,6 @@ void R_LoadMaterials (const char *map)
 	image_t *image;
 	material_t *m;
 	materialStage_t *s, *ss;
-	int i;
 
 	/* clear previously loaded materials */
 	R_ImageClearMaterials();
@@ -910,7 +909,7 @@ void R_LoadMaterials (const char *map)
 	/* load the materials file for parsing */
 	Com_sprintf(path, sizeof(path), "materials/%s.mat", Com_SkipPath(map));
 
-	if ((i = FS_LoadFile(path, &fileBuffer)) < 1) {
+	if (FS_LoadFile(path, &fileBuffer) < 1) {
 		Com_DPrintf(DEBUG_RENDERER, "Couldn't load %s\n", path);
 		return;
 	} else {

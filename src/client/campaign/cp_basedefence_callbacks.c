@@ -316,21 +316,19 @@ static void BDEF_AddItem_f (void)
 	technology_t *itemTech = NULL;
 	int bdefType;
 	int slotIDX;
-	int itemIDX;
 
 	if ((!base && !installation) || (base && installation)) {
 		Com_Printf("Exiting early base and install both true or both false\n");
 		return;
 	}
 
-	if (Cmd_Argc() < 4) {
-		Com_Printf("Usage: %s <type> <slotIDX> <itemIDX>\n", Cmd_Argv(0));
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <type> <slotIDX>\n", Cmd_Argv(0));
 		return;
 	}
 
 	bdefType = BDEF_GetItemTypeFromID(Cmd_Argv(1));
 	slotIDX = atoi(Cmd_Argv(2));
-	itemIDX = atoi(Cmd_Argv(3));
 
 	if (bdefType == MAX_ACITEMS) {
 		Com_Printf("BDEF_AddItem_f: Invalid defence type.\n");

@@ -740,7 +740,6 @@ void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
  */
 void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 {
-	base_t *base;
 	assert(tech);
 
 	/* no need to remove anything, but we can do some check */
@@ -749,9 +748,6 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 		assert(tech->statusResearch == RS_PAUSED);
 		return;
 	}
-
-	assert(tech->base);
-	base = tech->base;
 
 	if (!employee)
 		employee = E_GetAssignedEmployee(tech->base, EMPL_SCIENTIST);

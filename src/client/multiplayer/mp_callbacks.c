@@ -198,13 +198,8 @@ static void CL_SelectTeam_Init_f (void)
  */
 static void CL_TeamNum_f (void)
 {
-	int max = 4;
 	int i = cl_teamnum->integer;
 	static char buf[MAX_STRING_CHARS];
-	const int maxteamnum = Cvar_GetInteger("mn_maxteams");
-
-	if (maxteamnum > 0)
-		max = maxteamnum;
 
 	cl_teamnum->modified = qfalse;
 

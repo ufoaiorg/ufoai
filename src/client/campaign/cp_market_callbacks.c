@@ -872,15 +872,14 @@ static void BS_SellItem_f (void)
 
 static void BS_BuySellItem_f (void)
 {
-	int num;
 	float value;
 
 	if (Cmd_Argc() < 3) {
+		/* num is used in the other callbacks to do the real buy or sell */
 		Com_Printf("Usage: %s <num> <value>\n", Cmd_Argv(0));
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
 	value = atof(Cmd_Argv(2));
 	if (value == 0)
 		return;
