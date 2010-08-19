@@ -36,24 +36,14 @@ void SZ_Init (sizebuf_t * buf, byte * data, int length)
 void SZ_Clear (sizebuf_t * buf)
 {
 	buf->cursize = 0;
-	buf->overflowed = qfalse;
 }
 
-void *SZ_GetSpace (sizebuf_t * buf, int length)
+static void *SZ_GetSpace (sizebuf_t * buf, int length)
 {
 	void *data;
 
-	if (buf->cursize + length > buf->maxsize) {
-		if (!buf->allowoverflow)
-			Com_Error(ERR_FATAL, "SZ_GetSpace: overflow without allowoverflow set");
-
-		if (length > buf->maxsize)
-			Com_Error(ERR_FATAL, "SZ_GetSpace: %i is > full buffer size", length);
-
-		Com_Printf("SZ_GetSpace: overflow\n");
-		SZ_Clear(buf);
-		buf->overflowed = qtrue;
-	}
+	if (buf->cursize + length > buf->maxsize)
+		Com_Error(ERR_FATAL, "SZ_GetSpace: overflow without allowoverflow set");
 
 	data = buf->data + buf->cursize;
 	buf->cursize += length;
