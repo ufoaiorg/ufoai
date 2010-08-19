@@ -296,7 +296,7 @@ void CL_AddMapParticle (const char *ptl, const vec3_t origin, const vec2_t wait,
 /**
  * @brief Loads the image or model for a given particle art
  */
-static inline void CL_ParticleLoadArt (ptlArt_t *a, byte type)
+static inline void CL_ParticleLoadArt (ptlArt_t *a)
 {
 	/* register the art */
 	switch (a->type) {
@@ -328,7 +328,7 @@ void CL_ParticleRegisterArt (void)
 	int i;
 
 	for (i = 0, a = r_particlesArt; i < r_numParticlesArt; i++, a++)
-		CL_ParticleLoadArt(a, a->type);
+		CL_ParticleLoadArt(a);
 }
 
 /**
@@ -359,7 +359,7 @@ static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, byte type)
 	a->frame = frame;
 	Q_strncpyz(a->name, name, sizeof(a->name));
 
-	CL_ParticleLoadArt(a, type);
+	CL_ParticleLoadArt(a);
 
 	/* check for an error */
 	if (!a->art.image)
