@@ -948,8 +948,8 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *map
 	/* init */
 	base[0] = 0;
 
-	/* Reset the reroute table */
-	memset(mapData, 0, sizeof(mapData));
+	/* Reset the mapdata */
+	memset(mapData, 0, sizeof(*mapData));
 
 	if (pos && *pos)
 		Com_Printf("CM_LoadMap: \"%s\" \"%s\"\n", tiles, pos);
