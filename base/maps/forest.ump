@@ -30,20 +30,20 @@ tile +craft_drop_firebird
 {
 5 4
 
-0      abfg    abfg    abfg   0
-acdg     +a     +a     +a   acef
-acdg     +a     +a     +a   acef
-0      abde    abde    abde   0
+0      abfg   abfg   abfg   0
+acdg   +a     +a     +a     acef
+acdg   +a     +a     +a     acef
+0      abde   abde   abde   0
 }
 
 tile +craft_drop_herakles
 {
 5 4
 
-0     abfg    abfg    abfg    0
-acdg   +a      +a      +a     acef
-acdg   +a      +a      +a     acef
-0     abde    abde    abde    0
+0      abfg   abfg   abfg   0
+acdg   +a     +a     +a     acef
+acdg   +a     +a     +a     acef
+0      abde   abde   abde   0
 }
 
 tile +craft_drop_raptor
@@ -106,12 +106,12 @@ tile +craft_ufo_harvester
 {
 7 6
 
-0      abfg    abfg    abfg    abfg    abfg        0
-acdg     +u      +u      +u     +u     +u   acef
-acdg     +u      +u      +u     +u     +u   acef
-acdg     +u      +u      +u     +u     +u   acef
-0        ad      +u      +u     +u     +u   acef
-0         0    abde    abde    abde    abde        0
+0      abfg   abfg   abfg   abfg   abfg   0
+acdg   +u     +u     +u     +u     +u     acef
+acdg   +u     +u     +u     +u     +u     acef
+acdg   +u     +u     +u     +u     +u     acef
+0      ad     +u     +u     +u     +u     acef
+0      0      abde   abde   abde   abde   0
 }
 
 tile +craft_crash_harvester
@@ -135,18 +135,18 @@ tile +f1
 {
 3 3
 
-0      abfgu         0
-acdgu     +a        acefu
-0      abdeu         0
+0      abfgu  0
+acdgu  +a     acefu
+0      abdeu  0
 }
 
 tile +f2
 {
 3 3
 
-0      abfgu         0
-acdgu     +a        acefu
-0      abdeu         0
+0      abfgu  0
+acdgu  +a     acefu
+0      abdeu  0
 }
 
 tile +f3
@@ -398,6 +398,27 @@ b      +d      +g       au
 0       c       au       0
 }
 
+///** tilesets
+
+tileset forest_11 {
++f1
++f2
++f7
++f8
++a1
+}
+tileset forest_12 {
++f3
++f6
+}
+tileset forest_22 {
++f4
++f5
++f9
+}
+
+
+///** Assemblies
 
 assembly small
 {
@@ -412,19 +433,12 @@ size "5 10"
 +w6 "1 1"
 +w7 "0 5"
 +w8 "1 1"
-+f1 "0 5"
-+f2 "0 5"
-+f3 "0 5"
-+f4 "0 5"
-+f5 "0 5"
-+f6 "0 5"
-+f7 "0 5"
-+f8 "0 5"
-+f9 "0 5"
+tileset forest_11 "0 10"
+tileset forest_12 "0 6"
+tileset forest_22 "0 10"
 +f10 "0 1"
 +h1 "1 1"
 +h2 "1 1"
-+a1 "0 4"
 +a2 "0 2"
 *rm_ufo +craft_ufo_scout "1 1"
 *rm_drop +craft_drop_firebird "1 1"
@@ -443,19 +457,12 @@ size "5 10"
 +w6 "1 1"
 +w7 "0 5"
 +w8 "1 1"
-+f1 "0 5"
-+f2 "0 5"
-+f3 "0 5"
-+f4 "0 5"
-+f5 "0 5"
-+f6 "0 5"
-+f7 "0 5"
-+f8 "0 5"
-+f9 "0 5"
+tileset forest_11 "0 10"
+tileset forest_12 "0 6"
+tileset forest_22 "0 10"
 +f10 "0 1"
 +h1 "1 1"
 +h2 "1 1"
-+a1 "0 4"
 +a2 "0 2"
 *rm_ufo +craft_crash_scout "1 1"
 *rm_drop +craft_drop_firebird "1 1"
@@ -474,20 +481,13 @@ size "8 9"
 +w6 "1 4"
 +w7 "0 6"
 +w8 "1 1"
-+f1 "0 3"
-+f2 "0 3"
-+f3 "0 3"
-+f4 "0 3"
-+f5 "0 3"
-+f6 "0 2"
-+f7 "0 1"
-+f8 "0 3"
-+f9 "0 1"
+tileset forest_11 "0 15"
+tileset forest_12 "0 6"
+tileset forest_22 "0 10"
 +f10 "0 2"
-+h1 "1 2"
++h1 "1 1"
 +h2 "1 1"
-+a1 "2 3"
-+a2 "1 2"
++a2 "1 3"
 *rm_ufo +craft_ufo_fighter "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
@@ -505,20 +505,13 @@ size "8 9"
 +w6 "1 4"
 +w7 "0 6"
 +w8 "1 1"
-+f1 "0 3"
-+f2 "0 3"
-+f3 "0 3"
-+f4 "0 3"
-+f5 "0 3"
-+f6 "0 2"
-+f7 "0 1"
-+f8 "0 3"
-+f9 "0 1"
+tileset forest_11 "3 10"
+tileset forest_12 "0 6"
+tileset forest_22 "3 10"
 +f10 "0 2"
 +h1 "1 2"
 +h2 "1 1"
-+a1 "2 3"
-+a2 "1 2"
++a2 "1 3"
 *rm_ufo +craft_crash_fighter "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
