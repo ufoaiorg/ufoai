@@ -190,7 +190,6 @@ static qboolean SV_ParseMapTile (const char *filename, const char **text, mapInf
 {
 	const char *errhead = "SV_ParseMapTile: Unexpected end of file (";
 	const char *token;
-	char *chr;
 	int x, y, i;
 	mTile_t *target = &map->mTile[map->numTiles];
 
@@ -245,7 +244,7 @@ static qboolean SV_ParseMapTile (const char *filename, const char **text, mapInf
 				return 0;
 			}
 			target->spec[y][x] = 0UL;
-			for (i = 0; token[i]; i++, chr++) {
+			for (i = 0; token[i]; i++) {
 				target->spec[y][x] |= tileMask(token[i]);
 			}
 		}

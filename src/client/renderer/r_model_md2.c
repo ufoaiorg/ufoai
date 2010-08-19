@@ -120,7 +120,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	int indRemap[MD2_MAX_TRIANGLES * 3];
 	int32_t *outIndex;
 	int frameSize, numIndexes, numVerts;
-	double isw, ish;
+	double isw;
 	const char *md2Path;
 	int md2Verts;
 
@@ -166,7 +166,6 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	}
 
 	isw = 1.0 / (double)outMesh->skinWidth;
-	ish = 1.0 / (double)outMesh->skinHeight;
 
 	/* load triangle lists */
 	pintri = (const dMD2Triangle_t *) ((const byte *) md2 + LittleLong(md2->ofs_tris));
@@ -289,7 +288,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 	int32_t tempSTIndex[MD2_MAX_TRIANGLES * 3];
 	int32_t *outIndex;
 	int frameSize, numIndexes, numVerts;
-	double isw, ish;
+	double isw;
 	const char *md2Path;
 	int md2Verts;
 
@@ -341,7 +340,6 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 	}
 
 	isw = 1.0 / (double)outMesh->skinWidth;
-	ish = 1.0 / (double)outMesh->skinHeight;
 
 	/* load triangle lists */
 	pintri = (const dMD2Triangle_t *) ((const byte *) md2 + LittleLong(md2->ofs_tris));
