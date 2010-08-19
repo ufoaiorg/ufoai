@@ -34,6 +34,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const int FINAL_OVERALL_INTEREST = 1000;
 
 /**
+ * @brief The amount of time (in hours) it takes for the interest to increase by 1. Is later affected by difficulty.
+ */
+static const int HOURS_PER_ONE_INTEREST = 22;
+
+/**
  * @brief Initialize alien interest values and mission cycle
  * @note Should be used when a new single player campaign starts
  * @sa CP_CampaignInit
@@ -110,8 +115,8 @@ void CL_ChangeIndividualInterest (float percentage, interestCategory_t category)
  */
 void CP_IncreaseAlienInterest (void)
 {
-	/* Number of hours between 2 overall interest increase */
-	const int delayBetweenIncrease = 28 - ccs.curCampaign->difficulty;
+	/* Adjust interest increase rate by difficulty. */
+	const int delayBetweenIncrease = HOURS_PER_ONE_INTEREST - ccs.curCampaign->difficulty;
 
 	ccs.lastInterestIncreaseDelay++;
 
