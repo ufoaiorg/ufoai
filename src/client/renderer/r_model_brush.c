@@ -52,7 +52,7 @@ static model_t *r_worldmodel;
 /**
  * @brief Load the lightmap data
  */
-static void R_ModLoadLighting (const lump_t *l, qboolean day)
+static void R_ModLoadLighting (const lump_t *l)
 {
 	/* map has no lightmap */
 	if (l->filelen == 0)
@@ -969,7 +969,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	R_ModLoadNormals(&header->lumps[LUMP_NORMALS]);
 	R_ModLoadEdges(&header->lumps[LUMP_EDGES]);
 	R_ModLoadSurfedges(&header->lumps[LUMP_SURFEDGES]);
-	R_ModLoadLighting(&header->lumps[lightingLump], day);
+	R_ModLoadLighting(&header->lumps[lightingLump]);
 	R_ModLoadPlanes(&header->lumps[LUMP_PLANES]);
 	R_ModLoadTexinfo(&header->lumps[LUMP_TEXINFO]);
 	R_ModLoadSurfaces(day, &header->lumps[LUMP_FACES]);

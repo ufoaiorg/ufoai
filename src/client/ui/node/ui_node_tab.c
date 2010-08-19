@@ -267,7 +267,7 @@ static void UI_TabNodeDraw (uiNode_t *node)
 		/** @todo fontWidth can be =0, maybe a bug from the font cache */
 		OPTIONEXTRADATA(option).truncated = tabWidth < fontWidth || tabWidth == 0;
 		UI_DrawString(font, ALIGN_UL, textPos, pos[1] + ((node->size[1] - fontHeight) / 2),
-			textPos, pos[1], tabWidth + 1, 0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			textPos, tabWidth + 1, 0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		currentX += tabWidth;
 		allowedWidth -= tabWidth;
 

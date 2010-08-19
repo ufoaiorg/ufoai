@@ -258,10 +258,10 @@ int UI_DrawStringInBox (const char *fontID, int align, int x, int y, int width, 
 	const int xx = x + ((width * horizontalAlign) >> 1);
 	const int yy = y + ((height * verticalAlign) >> 1);
 
-	return UI_DrawString(fontID, align, xx, yy, xx, yy, width, 0, text, 0, 0, NULL, qfalse, method);
+	return UI_DrawString(fontID, align, xx, yy, xx, width, 0, text, 0, 0, NULL, qfalse, method);
 }
 
-int UI_DrawString (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth,
+int UI_DrawString (const char *fontID, int align, int x, int y, int absX, int maxWidth,
 		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, qboolean increaseLine, longlines_t method)
 {
 	const uiFont_t *font = UI_GetFontByID(fontID);
@@ -282,7 +282,7 @@ int UI_DrawString (const char *fontID, int align, int x, int y, int absX, int ab
 	else if (verticalAlign == 2)
 		y += -lineHeight;
 
-	lines = R_FontDrawString(fontID, align, x, y, absX, absY, maxWidth, lineHeight,
+	lines = R_FontDrawString(fontID, align, x, y, absX, maxWidth, lineHeight,
 			c, boxHeight, scrollPos, curLine, method);
 
 	if (curLine && increaseLine)

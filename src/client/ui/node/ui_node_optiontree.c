@@ -202,7 +202,7 @@ static void UI_OptionTreeNodeDraw (uiNode_t *node)
 
 		R_Color(textColor);
 		UI_DrawString(font, ALIGN_UL, decX, currentY + currentDecY,
-			pos[0], currentY + currentDecY, node->size[0] - node->padding - node->padding,
+			pos[0], node->size[0] - node->padding - node->padding,
 			0, label, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
 		/* next entries' position */

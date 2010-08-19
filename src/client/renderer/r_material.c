@@ -94,7 +94,7 @@ static void R_UpdateMaterial (material_t *m)
 	}
 }
 
-static void R_StageGlow (const mBspSurface_t *surf, const materialStage_t *stage)
+static void R_StageGlow (const materialStage_t *stage)
 {
 	if (stage->image->glowmap) {
 		R_EnableGlowMap(stage->image->glowmap, qtrue);
@@ -275,7 +275,7 @@ static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialSta
 	/* and optionally the lightmap */
 	R_StageLighting(surf, stage);
 
-	R_StageGlow(surf, stage);
+	R_StageGlow(stage);
 
 	/* load the texture matrix for rotations, stretches, etc.. */
 	R_StageTextureMatrix(surf, stage);

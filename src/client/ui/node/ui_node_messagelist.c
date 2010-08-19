@@ -143,7 +143,7 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 
 	/* display the date */
 	if (lastDate == NULL || strcmp(lastDate, message->timestamp) != 0)
-		UI_DrawString(fontID, ALIGN_UL, x, y, x, y, column1, LINEHEIGHT, message->timestamp, EXTRADATACONST(node).scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
+		UI_DrawString(fontID, ALIGN_UL, x, y, x, column1, LINEHEIGHT, message->timestamp, EXTRADATACONST(node).scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
 
 	x += DATETIME_COLUUI_SIZE + node->padding;
 
@@ -155,7 +155,7 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 	}
 
 	/* draw the message */
-	UI_DrawString(fontID, ALIGN_UL, x, y, x, y, column2, LINEHEIGHT, message->text, EXTRADATACONST(node).scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);
+	UI_DrawString(fontID, ALIGN_UL, x, y, x, column2, LINEHEIGHT, message->text, EXTRADATACONST(node).scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);
 	*screenLines = max(lines1, lines2);
 	lastDate = message->timestamp;
 }

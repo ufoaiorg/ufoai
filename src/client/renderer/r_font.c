@@ -672,7 +672,7 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
  * and VID_NORM_HEIGHT
  * @todo This could be replaced with a set of much simpler interfaces.
  */
-int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int absY, int maxWidth,
+int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int maxWidth,
 		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, longlines_t method)
 {
 	const font_t *font = R_GetFont(fontId);

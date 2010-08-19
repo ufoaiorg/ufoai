@@ -294,7 +294,7 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
  * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this type of alien is possible.
  */
-static qboolean TR_CheckAlien (int alienidx, base_t *destbase)
+static qboolean TR_CheckAlien (base_t *destbase)
 {
 	int i, intransfer = 0;
 
@@ -915,7 +915,7 @@ static void TR_TransferListSelect_f (void)
 			}
 			if (base->alienscont[i].teamDef && base->alienscont[i].amountAlive > 0) {
 				if (cnt == num) {
-					if (TR_CheckAlien(i, td.transferBase)) {
+					if (TR_CheckAlien(td.transferBase)) {
 						td.trAliensTmp[i][TRANS_ALIEN_ALIVE]++;
 						/* Remove an alien from Alien Containment. */
 						AL_ChangeAliveAlienNumber(base, &(base->alienscont[i]), -1);

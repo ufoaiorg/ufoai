@@ -1434,7 +1434,7 @@ static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *ms)
 		R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 	}
 
-	UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, 0, 0, 0, 0,  _(ms->location), 0, 0, NULL, qfalse, 0);
+	UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, 0, 0, 0,  _(ms->location), 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -1477,7 +1477,7 @@ static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation
 
 	/* Draw installation names */
 	if (MAP_AllMapToScreen(node, installation->pos, &x, &y, NULL))
-		UI_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, 0, installation->name, 0, 0, NULL, qfalse, 0);
+		UI_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, installation->name, 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -1533,7 +1533,7 @@ static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
 
 	/* Draw base names */
 	if (MAP_AllMapToScreen(node, base->pos, &x, &y, NULL))
-		UI_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, 0, base->name, 0, 0, NULL, qfalse, 0);
+		UI_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, base->name, 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -1924,7 +1924,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	/* Draw nation names */
 	for (i = 0; i < ccs.numNations; i++) {
 		if (MAP_AllMapToScreen(node, ccs.nations[i].pos, &x, &y, NULL))
-			UI_DrawString("f_verysmall", ALIGN_UC, x , y, 0, 0, 0, 0, _(ccs.nations[i].name), 0, 0, NULL, qfalse, 0);
+			UI_DrawString("f_verysmall", ALIGN_UC, x , y, 0, 0, 0, _(ccs.nations[i].name), 0, 0, NULL, qfalse, 0);
 		if (showXVI)
 			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(ccs.nations[i].name), ccs.nations[i].stats[0].xviInfection), sizeof(buffer));
 	}

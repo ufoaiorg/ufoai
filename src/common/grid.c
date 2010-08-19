@@ -89,7 +89,7 @@ CASSERT(lengthof(TUsUsed) == PATHFINDING_DIRECTIONS);
  * @return qtrue if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in
  * the forbidden list) otherwise false.
  */
-static qboolean Grid_CheckForbidden (const routing_t *map, const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t *path, int x, int y, int z)
+static qboolean Grid_CheckForbidden (const pos3_t exclude, const actorSizeEnum_t actorSize, pathing_t *path, int x, int y, int z)
 {
 	pos_t **p;
 	int i;
@@ -435,7 +435,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 				return;
 			}
 			/* We cannot fall if there is an entity below the cell we want to move to. */
-			if (Grid_CheckForbidden(map, exclude, actorSize, path, nx, ny, nz - 1)) {
+			if (Grid_CheckForbidden(exclude, actorSize, path, nx, ny, nz - 1)) {
 				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: The fall destination is occupied.\n");
 				return;
 			}
@@ -508,7 +508,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	}
 
 	/* Test for forbidden (by other entities) areas. */
-	if (Grid_CheckForbidden(map, exclude, actorSize, path, nx, ny, nz)) {
+	if (Grid_CheckForbidden(exclude, actorSize, path, nx, ny, nz)) {
 		Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: That spot is occupied.\n");
 		return;
 	}

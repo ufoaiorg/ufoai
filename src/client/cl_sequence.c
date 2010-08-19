@@ -378,7 +378,7 @@ void CL_Sequence2D (void)
 				int maxWidth = (int) s2d->size[0];
 				if (maxWidth <= 0)
 					maxWidth = VID_NORM_WIDTH;
-				height += UI_DrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], s2d->pos[1], maxWidth, -1 /** @todo use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+				height += UI_DrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], maxWidth, -1 /** @todo use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse, LONGLINES_WRAP);
 			}
 		}
 	R_Color(NULL);

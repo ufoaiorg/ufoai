@@ -373,7 +373,7 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
  * @todo use this function more often - the containment[j].amountDead and containment[j].amountAlive counter
  * are used all over the code
  */
-static void AL_AddAliens2 (base_t *base, const teamDef_t *alienType, int amount, const qboolean dead)
+static void AL_AddAliens2 (base_t *base, const teamDef_t *alienType, const qboolean dead)
 {
 	int j;
 	aliensCont_t *containment;
@@ -676,7 +676,7 @@ static void AC_AddOne_f (void)
 	}
 
 	/* call the function that actually changes the persistent datastructure */
-	AL_AddAliens2(base, alienType, 1, !updateAlive);
+	AL_AddAliens2(base, alienType, !updateAlive);
 }
 #endif
 
