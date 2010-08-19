@@ -76,8 +76,6 @@ typedef struct client_state_s {
 	qboolean spawned;		/**< soldiers already spawned? This is only true if we are already on battlescape but
 							 * our team is not yet spawned */
 
-	routing_t clMap[ACTOR_MAX_SIZE];	/**< client routing table */
-
 	mapData_t mapData;
 
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */

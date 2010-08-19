@@ -59,6 +59,6 @@ void CL_EntAppear (const eventRegister_t *self, struct dbuffer *msg)
 		le->invis = !cl_leshowinvis->integer;
 
 	VectorCopy(pos, le->pos);
-	Grid_PosToVec(cl.clMap, le->fieldSize, le->pos, le->origin);
+	Grid_PosToVec(cl.mapData.map, le->fieldSize, le->pos, le->origin);
 }
 

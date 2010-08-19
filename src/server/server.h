@@ -96,8 +96,6 @@ typedef struct {
 	qboolean endgame;
 	qboolean started;			/**< set when the match has started - no further connections are allowed in this case */
 
-	routing_t svMap[ACTOR_MAX_SIZE];	/**< server routing table */
-
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
 	struct dbuffer *messageBuffer;

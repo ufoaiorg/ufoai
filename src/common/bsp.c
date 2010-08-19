@@ -466,7 +466,7 @@ static void CM_MakeTracingNodes (void)
  * @sa CM_AddMapTile
  * @todo TEST z-level routing
  */
-static void CMod_LoadRouting (mapData_t *mapData, const byte *base, const char *name, const lump_t * l, int sX, int sY, int sZ, routing_t *map)
+static void CMod_LoadRouting (mapData_t *mapData, const byte *base, const char *name, const lump_t * l, int sX, int sY, int sZ)
 {
 	static routing_t tempMap[ACTOR_MAX_SIZE];
 	const byte *source;
@@ -553,11 +553,11 @@ static void CMod_LoadRouting (mapData_t *mapData, const byte *base, const char *
 				if (x < 0 || y < 0)
 					continue;
 				for (z = minZ; z <= maxZ; z++) {
-					map[size].floor[z][y][x] = tempMap[size].floor[z - sZ][y - sY][x - sX];
-					map[size].ceil[z][y][x] = tempMap[size].ceil[z - sZ][y - sY][x - sX];
+					mapData->map[size].floor[z][y][x] = tempMap[size].floor[z - sZ][y - sY][x - sX];
+					mapData->map[size].ceil[z][y][x] = tempMap[size].ceil[z - sZ][y - sY][x - sX];
 					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-						map[size].route[z][y][x][dir] = tempMap[size].route[z - sZ][y - sY][x - sX][dir];
-						map[size].stepup[z][y][x][dir] = tempMap[size].stepup[z - sZ][y - sY][x - sX][dir];
+						mapData->map[size].route[z][y][x][dir] = tempMap[size].route[z - sZ][y - sY][x - sX][dir];
+						mapData->map[size].stepup[z][y][x][dir] = tempMap[size].stepup[z - sZ][y - sY][x - sX][dir];
 					}
 				}
 				/* Update the reroute table */
@@ -755,7 +755,7 @@ static void CM_InitBoxHull (void)
  * @sa CM_LoadMap
  * @sa R_ModAddMapTile
  */
-static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, byte sZ, routing_t *map, mapData_t *mapData)
+static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, byte sZ, mapData_t *mapData)
 {
 	char filename[MAX_QPATH];
 	unsigned checksum;
@@ -828,7 +828,7 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	 * these to the right values now */
 	mapData->numInline += curTile->nummodels - NUM_REGULAR_MODELS;
 
-	CMod_LoadRouting(mapData, base, name, &header.lumps[LUMP_ROUTING], sX, sY, sZ, map);
+	CMod_LoadRouting(mapData, base, name, &header.lumps[LUMP_ROUTING], sX, sY, sZ);
 
 	/* now increase the amount of loaded tiles */
 	numTiles++;
@@ -842,7 +842,7 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	return checksum;
 }
 
-static void CMod_RerouteMap (const mapData_t *mapData, routing_t *map)
+static void CMod_RerouteMap (mapData_t *mapData)
 {
 	actorSizeEnum_t size;
 	int x, y, z, dir;
@@ -873,7 +873,7 @@ static void CMod_RerouteMap (const mapData_t *mapData, routing_t *map)
 				if (mapData->reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
 					/* Com_Printf("Tracing floor (%i %i s:%i)\n", x, y, size); */
 					for (z = maxs[2]; z >= mins[2]; z--) {
-						const int newZ = RT_CheckCell(map, size + 1, x, y, z, NULL);
+						const int newZ = RT_CheckCell(mapData->map, size + 1, x, y, z, NULL);
 						assert(newZ <= z);
 						z = newZ;
 					}
@@ -908,7 +908,7 @@ static void CMod_RerouteMap (const mapData_t *mapData, routing_t *map)
 							/** @note This update MUST go from the bottom (0) to the top (7) of the model.
 							 * RT_UpdateConnection expects it and breaks otherwise. */
 							/* Com_Printf("Tracing passage (%i %i s:%i d:%i)\n", x, y, size, dir); */
-							RT_UpdateConnectionColumn(map, size + 1, x, y, dir, NULL);
+							RT_UpdateConnectionColumn(mapData->map, size + 1, x, y, dir, NULL);
 						}
 					}
 				}
@@ -928,13 +928,11 @@ static void CMod_RerouteMap (const mapData_t *mapData, routing_t *map)
  * @param[in] pos In case you gave more than one tile (Random map assembly [rma]) you also
  * have to provide the positions where those tiles should be placed at.
  * @param[out] mapchecksum The checksum of the bsp file to check for in multiplayer games
- * @param[out] map The routing map to load the data into
- * @param[in] entries the amount of routing maps behind the @c map pointer
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
  * @note Make sure that mapchecksum was set to 0 before you call this function
  */
-void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *mapchecksum, routing_t *map, int entries, mapData_t *mapData)
+void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *mapchecksum, mapData_t *mapData)
 {
 	const char *token;
 	char name[MAX_VAR];
@@ -950,8 +948,6 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *map
 	/* init */
 	base[0] = 0;
 
-	memset(map, 0, sizeof(*map) * entries);
-
 	/* Reset the reroute table */
 	memset(mapData, 0, sizeof(mapData));
 
@@ -963,7 +959,7 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *map
 		/* get tile name */
 		token = Com_Parse(&tiles);
 		if (!tiles) {
-			CMod_RerouteMap(mapData, map);
+			CMod_RerouteMap(mapData);
 			return;
 		}
 
@@ -994,10 +990,10 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, unsigned *map
 				Com_Error(ERR_DROP, "CM_LoadMap: invalid y position given: %i\n", sh[1]);
 			if (sh[2] >= PATHFINDING_HEIGHT)
 				Com_Error(ERR_DROP, "CM_LoadMap: invalid z position given: %i\n", sh[2]);
-			*mapchecksum += CM_AddMapTile(name, day, sh[0], sh[1], sh[2], map, mapData);
+			*mapchecksum += CM_AddMapTile(name, day, sh[0], sh[1], sh[2], mapData);
 		} else {
 			/* load only a single tile, if no positions are specified */
-			*mapchecksum = CM_AddMapTile(name, day, 0, 0, 0, map, mapData);
+			*mapchecksum = CM_AddMapTile(name, day, 0, 0, 0, mapData);
 			return;
 		}
 	}

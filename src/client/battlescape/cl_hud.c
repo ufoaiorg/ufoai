@@ -1018,13 +1018,13 @@ static void HUD_MapDebugCursor (const le_t *le)
 
 		/* Display the floor and ceiling values for the current cell. */
 		Com_sprintf(topText, lengthof(topText), "%u-(%i,%i,%i)\n",
-				Grid_Ceiling(cl.clMap, ACTOR_GET_FIELDSIZE(le), truePos), truePos[0], truePos[1], truePos[2]);
+				Grid_Ceiling(cl.mapData.map, ACTOR_GET_FIELDSIZE(le), truePos), truePos[0], truePos[1], truePos[2]);
 		/* Save the text for later display next to the cursor. */
 		UI_RegisterText(TEXT_MOUSECURSOR_TOP, topText);
 
 		/* Display the floor and ceiling values for the current cell. */
 		Com_sprintf(bottomText, lengthof(bottomText), "%i-(%i,%i,%i)\n",
-				Grid_Floor(cl.clMap, ACTOR_GET_FIELDSIZE(le), truePos), mousePos[0], mousePos[1], mousePos[2]);
+				Grid_Floor(cl.mapData.map, ACTOR_GET_FIELDSIZE(le), truePos), mousePos[0], mousePos[1], mousePos[2]);
 		/* Save the text for later display next to the cursor. */
 		UI_RegisterText(TEXT_MOUSECURSOR_BOTTOM, bottomText);
 

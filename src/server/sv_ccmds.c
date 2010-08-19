@@ -587,7 +587,7 @@ static void Grid_DumpWholeServerMap_f (void)
 	int i;
 
 	for (i = 0; i < ACTOR_MAX_SIZE; i++)
-		RT_DumpWholeMap(&sv.svMap[i]);
+		RT_DumpWholeMap(&sv.mapData.map[i]);
 }
 
 /**
@@ -599,7 +599,7 @@ static void Grid_DumpServerRoutes_f (void)
 	ipos3_t wpMins, wpMaxs;
 	VecToPos(sv.mapData.mapMin, wpMins);
 	VecToPos(sv.mapData.mapMax, wpMaxs);
-	RT_WriteCSVFiles(sv.svMap, "ufoaiserver", wpMins, wpMaxs);
+	RT_WriteCSVFiles(sv.mapData.map, "ufoaiserver", wpMins, wpMaxs);
 }
 #endif
 

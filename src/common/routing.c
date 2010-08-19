@@ -77,7 +77,7 @@ typedef struct place_s {
 	qboolean usable;/**< does an actor fit in here ? */
 } place_t;
 
-static inline void RT_PlaceInit (routing_t *map, const actorSizeEnum_t actorSize, place_t *p, const int x, const int y, const int z)
+static inline void RT_PlaceInit (const routing_t *map, const actorSizeEnum_t actorSize, place_t *p, const int x, const int y, const int z)
 {
 	const int relCeiling = RT_CEILING(map, actorSize, x, y, z);
 	p->cell[0] = x;
@@ -823,7 +823,7 @@ static int RT_FindOpeningCeiling (const vec3_t start, const vec3_t end, const ac
 }
 
 
-static int RT_CalcNewZ (routing_t * map, const actorSizeEnum_t actorSize, const int ax, const int ay, const int top, const int hi)
+static int RT_CalcNewZ (const routing_t * map, const actorSizeEnum_t actorSize, const int ax, const int ay, const int top, const int hi)
 {
 	int temp_z, adj_lo;
 
@@ -866,7 +866,7 @@ static int RT_CalcNewZ (routing_t * map, const actorSizeEnum_t actorSize, const 
  * @param[out] hi_val Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_TraceOpening (routing_t * map, const actorSizeEnum_t actorSize, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *lo_val, int *hi_val, const char **list)
+static int RT_TraceOpening (const routing_t * map, const actorSizeEnum_t actorSize, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *lo_val, int *hi_val, const char **list)
 {
 	trace_t tr;
 	int temp_z;
@@ -909,7 +909,7 @@ static int RT_TraceOpening (routing_t * map, const actorSizeEnum_t actorSize, co
  * @param[out] hi_val Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_FindOpening (routing_t * map, const actorSizeEnum_t actorSize, place_t* from, const int ax, const int ay, const int bottom, const int top, int *lo_val, int *hi_val, const char **list)
+static int RT_FindOpening (const routing_t * map, const actorSizeEnum_t actorSize, place_t* from, const int ax, const int ay, const int bottom, const int top, int *lo_val, int *hi_val, const char **list)
 {
 	vec3_t start, end;
 	pos3_t pos;
@@ -963,7 +963,7 @@ static int RT_FindOpening (routing_t * map, const actorSizeEnum_t actorSize, pla
 				Com_Printf("Found opening with sky trace.\n");
 			*lo_val = tempBottom;
 			*hi_val = CELL_HEIGHT * PATHFINDING_HEIGHT;
-			return RT_CalcNewZ (map, actorSize, ax, ay, top, hi);
+			return RT_CalcNewZ(map, actorSize, ax, ay, top, hi);
 		}
 		if (debugTrace)
 			Com_Printf("Failed sky trace.\n");
@@ -1012,7 +1012,7 @@ static int RT_FindOpening (routing_t * map, const actorSizeEnum_t actorSize, pla
  * @param[out] opening descriptor of the opening found, if any
  * @return The change in floor height in QUANT units because of the additional trace.
 */
-static int RT_MicroTrace (routing_t * map, const actorSizeEnum_t actorSize, place_t* from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening, const char **list)
+static int RT_MicroTrace (const routing_t * map, const actorSizeEnum_t actorSize, place_t* from, const int ax, const int ay, const int az, const int stairwaySituation, opening_t* opening, const char **list)
 {
 	/* OK, now we have a viable shot across.  Run microstep tests now. */
 	/* Now calculate the stepup at the floor using microsteps. */
@@ -1207,7 +1207,7 @@ static int RT_MicroTrace (routing_t * map, const actorSizeEnum_t actorSize, plac
  * @param[out] opening descriptor of the opening found, if any
  * @return The size in QUANT units of the detected opening.
  */
-static int RT_TraceOnePassage (routing_t * map, const actorSizeEnum_t actorSize, place_t* from, place_t* to, opening_t* opening, const char **list)
+static int RT_TraceOnePassage (const routing_t * map, const actorSizeEnum_t actorSize, place_t* from, place_t* to, opening_t* opening, const char **list)
 {
 	int hi; /**< absolute ceiling of the passage found. */
 	const int z = from->cell[2];
@@ -1293,7 +1293,7 @@ static int RT_TraceOnePassage (routing_t * map, const actorSizeEnum_t actorSize,
  * @param[in] ay Ending y coordinate
  * @param[out] opening descriptor of the opening found, if any
  */
-static void RT_TracePassage (routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening, const char **list)
+static void RT_TracePassage (const routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int z, const int ax, const int ay, opening_t* opening, const char **list)
 {
 	int aboveCeil, lowCeil;
 	/** we don't need the cell below the adjacent cell because we should have already checked it */
