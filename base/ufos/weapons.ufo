@@ -24,7 +24,7 @@ item medikit
 			name	"_Heal"
 			projtl	null
 			impact	null
-			hitbody null
+			hitbody heal
 			firesnd	weapons/medikit
 			speed	0
 			range	1.5

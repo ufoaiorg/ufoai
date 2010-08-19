@@ -1135,3 +1135,42 @@ particle shortCircuitSparks
 	}
 	think { kill }
 }
+
+particle heal
+{
+	init
+	{
+		push   int 5
+		nspawn healCross
+	}
+}
+
+particle healCross
+{
+	init
+	{
+		image  sfx/heal
+		blend  add
+		style  facing
+		thinkfade  out
+		v      "0 0 5"
+		size   "13 13"
+		tps    0.5
+		a      "0 0 30"
+		offset "0 0 -10"
+
+		crand  vector "17 17 17"	
+		add    *s				
+		pop    *s				
+
+	}
+	run
+	{
+
+		push   *color	
+		mul    float .2	
+		pop    *color
+
+	}
+	think { kill }
+}
