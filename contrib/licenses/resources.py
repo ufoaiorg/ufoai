@@ -176,9 +176,6 @@ class Resources(object):
 
                 for name in get_used_resources_from_ufo_script(ufoname):
                     resource = self.getResource(name)
-                    if resource == None:
-                        print "Warning: \"" + name + "\" from UFO script \"" + ufoname + "\" does not exist"
-                        continue
                     resource.usedByScripts.add(uforesource)
                     uforesource.useResources.add(resource)
 
