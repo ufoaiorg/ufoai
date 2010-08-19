@@ -39,6 +39,13 @@ static const int FINAL_OVERALL_INTEREST = 1000;
 static const int HOURS_PER_ONE_INTEREST = 22;
 
 /**
+ * @brief The probability that any new alien mission will be a non-occurrence mission.
+ * @sa CL_ChangeIndividualInterest
+ * @sa CP_SelectNewMissionType
+ */
+static const float NON_OCCURRENCE_PROBABILITY = 0.3f;
+
+/**
  * @brief Initialize alien interest values and mission cycle
  * @note Should be used when a new single player campaign starts
  * @sa CP_CampaignInit
@@ -65,8 +72,6 @@ void CL_ResetAlienInterest (void)
  */
 void CL_ChangeIndividualInterest (float percentage, interestCategory_t category)
 {
-	const float nonOccurrencePercent = 0.3f;		/**< Non occurence probability */
-
 	if (category == INTERESTCATEGORY_MAX) {
 		Com_Printf("CL_ChangeIndividualInterest: Unsupported value of category\n");
 		return;
@@ -103,9 +108,9 @@ void CL_ChangeIndividualInterest (float percentage, interestCategory_t category)
 	 * If overall alien interest becomes higher than FINAL_OVERALL_INTEREST,
 	 * then the none occurence goes to zero, to make more pressure on the player */
 	if (ccs.overallInterest < FINAL_OVERALL_INTEREST)
-		ccs.interest[INTERESTCATEGORY_NONE] = (int) (nonOccurrencePercent * ccs.overallInterest);
+		ccs.interest[INTERESTCATEGORY_NONE] = (int) (NON_OCCURRENCE_PROBABILITY * ccs.overallInterest);
 	else
-		ccs.interest[INTERESTCATEGORY_NONE] = (int) (nonOccurrencePercent * FINAL_OVERALL_INTEREST * exp((ccs.overallInterest - FINAL_OVERALL_INTEREST) / 30));
+		ccs.interest[INTERESTCATEGORY_NONE] = (int) (NON_OCCURRENCE_PROBABILITY * FINAL_OVERALL_INTEREST * exp((ccs.overallInterest - FINAL_OVERALL_INTEREST) / 30));
 }
 
 /**
