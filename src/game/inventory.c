@@ -956,7 +956,7 @@ void INV_InitInventory (const char *name, inventoryInterface_t *interface, csi_t
 	interface->GetUsedSlots = I_GetUsedSlots;
 }
 
-void INV_DestroyInventory (const char *name, inventoryInterface_t *interface)
+void INV_DestroyInventory (inventoryInterface_t *interface)
 {
 	if (interface->import == NULL)
 		return;

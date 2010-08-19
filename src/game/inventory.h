@@ -49,6 +49,6 @@ typedef struct inventoryInterface_s
 } inventoryInterface_t;
 
 void INV_InitInventory(const char *name, inventoryInterface_t *ii, csi_t* csi, const inventoryImport_t *iimport);
-void INV_DestroyInventory(const char *name, inventoryInterface_t *ii);
+void INV_DestroyInventory(inventoryInterface_t *ii);
 
 #endif /* INVENTORY_H_ */

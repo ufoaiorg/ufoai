@@ -320,7 +320,7 @@ void GAME_SetMode (int gametype)
 	if (list) {
 		Com_Printf("Change gametype to '%s'\n", list->name);
 		/* inventory structure switched/initialized */
-		INV_DestroyInventory(list->name, &cls.i);
+		INV_DestroyInventory(&cls.i);
 		INV_InitInventory(list->name, &cls.i, &csi, &inventoryImport);
 		list->Init();
 	}
@@ -646,7 +646,7 @@ static qboolean GAME_Spawn (void)
 		const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
 
 		/* inventory structure switched/initialized */
-		INV_DestroyInventory("client", &cls.i);
+		INV_DestroyInventory(&cls.i);
 		INV_InitInventory("client", &cls.i, &csi, &inventoryImport);
 		GAME_GenerateTeam(teamDefID, ed, size);
 	}

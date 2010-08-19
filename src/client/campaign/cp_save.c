@@ -61,7 +61,7 @@ static cvar_t* save_compressed;
  * @note error parameter not used actually
  * @sa SAV_GameLoad
  */
-static qboolean SAV_GameActionsAfterLoad (char **error)
+static qboolean SAV_GameActionsAfterLoad (void)
 {
 	B_PostLoadInit();
 	AIR_PostLoadInit();
@@ -221,7 +221,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	}
 	mxmlDelete(node);
 
-	SAV_GameActionsAfterLoad(error);
+	SAV_GameActionsAfterLoad();
 
 	Com_Printf("File '%s' successfully loaded from %s xml savegame.\n",
 			filename, header.compressed ? "compressed" : "");
