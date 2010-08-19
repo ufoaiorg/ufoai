@@ -71,7 +71,7 @@ void CL_ActorDoMove (const eventRegister_t *self, struct dbuffer *msg)
 
 	if (!LE_IsActor(le))
 		Com_Error(ERR_DROP, "Can't move, LE doesn't exist or is not an actor (number: %i, type: %i)\n",
-			number, le ? le->type : -1);
+			number, le->type);
 
 	if (LE_IsDead(le))
 		Com_Error(ERR_DROP, "Can't move, actor on team %i dead", le->team);

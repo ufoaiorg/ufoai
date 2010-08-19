@@ -45,7 +45,7 @@ void CL_ActorDoTurn (const eventRegister_t *self, struct dbuffer *msg)
 
 	if (!LE_IsActor(le))
 		Com_Error(ERR_DROP, "Can't turn, LE doesn't exist or is not an actor (number: %i, type: %i)\n",
-				entnum, le ? le->type : -1);
+				entnum, le->type);
 
 	if (LE_IsDead(le))
 		Com_Error(ERR_DROP, "Can't turn, actor dead\n");
