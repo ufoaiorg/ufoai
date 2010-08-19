@@ -328,14 +328,16 @@ particle rocket
 	init
 	{
 		model  weapons/rpg/rocket
-		color  ".5 .5 .5 1"
 		tps    40.0
+		color  ".5 .5 .5 1"
 	}
 	think
 	{
 		// these particles are killed in their think functions
-		spawn rocketSmoke
+		push   int 5
+		nspawn rocketSmoke
 		spawn rocketFire
+		spawn rocketFlame
 	}
 }
 
@@ -349,15 +351,15 @@ particle rocketSmoke
 		thinkfade  out
 		tps    0.8
 		color  ".5 .5 .5 1"
-		v      "0 0 20"			// let the smoketrail get higher as time advances
+		v      "0 0 5"			// let the smoketrail get higher as time advances
 	}
 	// run is executed more often as think (every frame - and think execution depends on the tps value)
 	run
 	{
 		// change the size of the smoketrail (make it bigger as time advances)
-		push   pos "15 15"		// push the vector onto the stack
+		push   pos "10 10"		// push the vector onto the stack
 		mul    *t				// multiply stack value with the time value from the particle
-		add    pos "10 10"		// add another position 2d vector to the current stack value
+		add    pos "5 5"		// add another position 2d vector to the current stack value
 		pop    *size			// write the vector back into the particle size value
 
 		// change the color of the smoketrail (more more transparent as time advances)
@@ -377,35 +379,91 @@ particle rocketFire
 {
 	init
 	{
-		image  sfx/fireball
+		image  sfx/rocketfire
 		blend  add
 		style  facing
-		lightcolor "1 0.4 0.4"
-		lightintensity 0.2
 		thinkfade  out
-		tps    1.8
-		color  ".5 .5 .5 1"
-
-		push   *v
-		mul    float 0.8
-		pop   *v
+		v      "0 0 0"
+		size   "25 25"
+		tps    3
 	}
 	run
 	{
-		push   pos "10 10"
-		mul    *t
-		add    pos "5 5"
-		pop    *size
-		push   *color
-		mul    float .5
+
+		push   *color	
+		mul    float .2	
 		pop    *color
 
-		crand  vector "0.5 0.5 0.5"
-		add    *s
-		pop    *s
+		// change the position a little bit randomly
+		crand  vector "1 1 1"	// push a value between -1 and 1 onto the stack
+		add    *s				// add the current location
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack	
+
 	}
 	think { kill }
 }
+
+particle rocketFlame
+{
+	init
+	{
+		image  sfx/fireball
+		blend  add
+		style  facing
+		thinkfade  out
+		v      "0 0 0"
+		size   "10 10"
+		tps    2
+	}
+	run
+	{
+
+		push   *color	
+		mul    float .2	
+		pop    *color
+
+		// change the position a little bit randomly
+		crand  vector "1 1 1"	// push a value between -1 and 1 onto the stack
+		add    *s				// add the current location
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack	
+
+	}
+	think { kill }
+}
+
+// particle rocketFire
+// {
+// 	init
+// 	{
+// 		image  sfx/fireball
+// 		blend  add
+// 		style  facing
+// 		lightcolor "1 0.4 0.4"
+// 		lightintensity 0.2
+// 		thinkfade  out
+// 		tps    1.8
+// 		color  ".5 .5 .5 1"
+// 
+// 		push   *v
+// 		mul    float 0.8
+// 		pop   *v
+// 	}
+// 	run
+// 	{
+// 		push   pos "10 10"
+// 		mul    *t
+// 		add    pos "5 5"
+// 		pop    *size
+// 		push   *color
+// 		mul    float .5
+// 		pop    *color
+// 
+// 		crand  vector "0.5 0.5 0.5"
+// 		add    *s
+// 		pop    *s
+// 	}
+// 	think { kill }
+// }
 
 particle rocket_inc
 {
@@ -1178,6 +1236,79 @@ particle plasmaParticleRandom
 // PARTICLE-BEAM EFFECTS
 // =====================
 
+
+particle partLaser
+{
+	init
+	{
+		image  sfx/particlelaser
+		tps    60
+		style  axis
+		blend  add
+		a      "90 0 0"
+		offset "0 -16 0"
+		size   "80 5"
+	}
+	think
+	{
+//		spawn partlaserTrail
+		push   int 20
+		nspawn partTail
+	}
+}
+
+particle partTail
+{
+	init
+	{
+		image  sfx/ptlmuzzle
+		blend  add
+		style  facing
+		thinkfade  out
+		v      "0 0 0"
+		size   "10 10"
+		tps    0.5
+
+	}
+	run
+	{
+
+		push   *color	
+		mul    float .2	
+		pop    *color
+
+		// change the position a little bit randomly
+		crand  vector "1 1 1"	// push a value between -1 and 1 onto the stack
+		add    *s				// add the current location
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack	
+
+	}
+	think { kill }
+}
+
+particle partlaserTrail
+{
+	init
+	{
+		image  sfx/particlelaser
+		blend  add
+		style  axis
+		thinkfade  out
+		v      "0 0 0"
+		tps    10
+		size   "40 10"
+	}
+	run
+	{
+
+		push   *color	
+		mul    float .2	
+		pop    *color	
+
+	}
+	think { kill }
+}
+
 particle pbeamMiniBeam
 {
 	init
@@ -1211,6 +1342,7 @@ particle pbeamBeam
 		lightcolor "0.5 0.9 0.5"
 		lightintensity -0.2
 		spawn muzzle_ptl
+//		spawn partLaser
 	}
 	run
 	{
