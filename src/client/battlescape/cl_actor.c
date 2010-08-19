@@ -1735,13 +1735,13 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	 && selActor->actorMoveLength <= CL_ActorUsableTUs(selActor))
 		VectorSet(ent.color, 0, 1, 0); /* Green */
 	else
-		VectorSet(ent.color, 0, 0, 0.6); /* Dark Blue */
+		VectorSet(ent.color, 0, 0, 0.8); /* Dark Blue */
 
 	VectorAdd(ent.origin, boxSize, ent.oldorigin);
 
 	/* color */
 	if (mouseActor && !mouseActor->selected) {
-		ent.alpha = 0.4 + 0.2 * sin((float) cl.time / 80);
+		ent.alpha = 0.6 + 0.2 * sin((float) cl.time / 80);
 		/* Paint the box red if the soldiers under the cursor is
 		 * not in our team and no civilian either. */
 		if (mouseActor->team != cls.team) {

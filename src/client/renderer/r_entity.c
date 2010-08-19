@@ -59,6 +59,7 @@ static void R_DrawBox (const entity_t * e)
 		VectorCopy(e->origin, upper);
 		upper[2] = e->oldorigin[2];
 
+		glLineWidth(2.0f);
 		glBegin(GL_QUAD_STRIP);
 		glVertex3fv(lower);
 		glVertex3fv(upper);
@@ -80,6 +81,7 @@ static void R_DrawBox (const entity_t * e)
 		glVertex3fv(upper);
 		glEnd();
 
+		glLineWidth(1.0f);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 

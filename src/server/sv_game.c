@@ -32,7 +32,7 @@
 #include <SDL.h>
 
 game_export_t *ge;
-static SDL_Thread *thread;
+static SDL_Thread *gameThread;
 static void *gameLibrary;
 
 /**
@@ -487,10 +487,10 @@ void SV_ShutdownGameProgs (void)
 	if (!ge)
 		return;
 
-	if (thread)
-		SDL_KillThread(thread);
+	if (gameThread)
+		SDL_KillThread(gameThread);
 
-	thread = NULL;
+	gameThread = NULL;
 
 	ge->Shutdown();
 	SV_UnloadGame();
@@ -655,5 +655,5 @@ void SV_InitGameProgs (void)
 	ge->Init();
 
 	if (sv_threads->integer)
-		thread = SDL_CreateThread(SV_RunGameFrameThread, NULL);
+		gameThread = SDL_CreateThread(SV_RunGameFrameThread, NULL);
 }
