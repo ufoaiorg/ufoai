@@ -366,11 +366,15 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 			if (!isRobot) /* Can't stun robots with gas */
 				target->STUN += damage;
 		} else if (shock) {
-			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
+			/* Only do this if it's not one from our own team ... they should have known that there was a flashbang coming. */
 			if (!isRobot && target->team != attacker->team) {
 				/** @todo there should be a possible protection, too */
+				/* dazed entity wont reaction fire */
+				G_RemoveReaction(target);
+				G_ActorReserveTUs(target, 0, target->chr.reservedTus.shot, target->chr.reservedTus.crouch);
 				/* flashbangs kill TUs */
 				G_ActorSetTU(target, 0);
+				G_SendStats(target);
 				/* entity is dazed */
 				G_SetDazed(target);
 				G_ClientPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!\n"));
