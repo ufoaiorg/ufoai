@@ -37,6 +37,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern memPool_t *sv_gameSysPool;	/**< the mempool for the game lib */
 extern memPool_t *sv_genericPool;
 
+typedef struct sv_edict_s {
+	struct worldSector_s *worldSector;	/**< the sector this edict is linked into */
+	struct sv_edict_s *nextEntityInWorldSector;
+	qboolean linked;		/**< linked into the world */
+	edict_t *ent;
+} sv_edict_t;
+
+/** @brief static mesh models (none-animated) can have a server side flag set to be clipped for pathfinding */
+typedef struct sv_model_s {
+	vec3_t mins, maxs;	/**< the mins and maxs of the model bounding box */
+	int frame;			/**< the frame the mins and maxs were calculated for */
+	char *name;			/**< the model path (relative to base/ */
+} sv_model_t;
+
+/**
+ * @brief To avoid linearly searching through lists of entities during environment testing,
+ * the world is carved up with an evenly spaced, axially aligned bsp tree.
+ */
+typedef struct worldSector_s {
+	int axis;					/**< -1 = leaf node */
+	float dist;
+	struct worldSector_s *children[2];
+	sv_edict_t *entities;
+} worldSector_t;
+
+#define	AREA_NODES	32
+
 /*============================================================================= */
 
 typedef enum {
@@ -63,6 +90,12 @@ typedef struct {
 	routing_t svMap[ACTOR_MAX_SIZE];	/**< server routing table */
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
+
+	sv_model_t svModels[MAX_MOD_KNOWN];
+	unsigned int numSVModels;
+	sv_edict_t edicts[MAX_EDICTS];
+	worldSector_t worldSectors[AREA_NODES];
+	unsigned int numWorldSectors;
 } server_t;
 
 #define EDICT_NUM(n) ((edict_t *)((byte *)ge->edicts + ge->edict_size * (n)))

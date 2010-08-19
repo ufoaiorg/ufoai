@@ -946,6 +946,8 @@ void SV_Clear (void)
  */
 void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 {
+	unsigned int i;
+
 	if (!svs.initialized)
 		return;
 
@@ -959,6 +961,10 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 
 	NET_DatagramSocketClose(svs.netDatagramSocket);
 	SV_Stop();
+
+	for (i = 0; i < sv.numSVModels; i++)
+		if (sv.svModels[i].name)
+			Mem_Free(sv.svModels[i].name);
 
 	/* free current level */
 	memset(&sv, 0, sizeof(sv));

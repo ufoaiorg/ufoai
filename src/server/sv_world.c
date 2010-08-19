@@ -29,39 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "server.h"
 #include "../common/tracing.h"
 
-typedef struct sv_edict_s {
-	struct worldSector_s *worldSector;	/**< the sector this edict is linked into */
-	struct sv_edict_s *nextEntityInWorldSector;
-	qboolean linked;		/**< linked into the world */
-	edict_t *ent;
-} sv_edict_t;
-
-/** @brief static mesh models (none-animated) can have a server side flag set to be clipped for pathfinding */
-typedef struct sv_model_s {
-	vec3_t mins, maxs;	/**< the mins and maxs of the model bounding box */
-	int frame;			/**< the frame the mins and maxs were calculated for */
-	char *name;			/**< the model path (relative to base/ */
-} sv_model_t;
-
-/**
- * @brief To avoid linearly searching through lists of entities during environment testing,
- * the world is carved up with an evenly spaced, axially aligned bsp tree.
- */
-typedef struct worldSector_s {
-	int axis;					/**< -1 = leaf node */
-	float dist;
-	struct worldSector_s *children[2];
-	sv_edict_t *entities;
-} worldSector_t;
-
 #define	AREA_DEPTH	4
-#define	AREA_NODES	32
-
-static sv_model_t sv_models[MAX_MOD_KNOWN];
-static int sv_numModels;
-static sv_edict_t sv_edicts[MAX_EDICTS];
-static worldSector_t sv_worldSectors[AREA_NODES];
-static int sv_numWorldSectors;
 
 /**
  * @brief Builds a uniformly subdivided tree for the given world size
@@ -77,11 +45,11 @@ static worldSector_t *SV_CreateWorldSector (int depth, const vec3_t mins, const 
 	vec3_t size;
 	vec3_t mins1, maxs1, mins2, maxs2;
 
-	if (sv_numWorldSectors >= lengthof(sv_worldSectors))
+	if (sv.numWorldSectors >= lengthof(sv.worldSectors))
 		Com_Error(ERR_DROP, "SV_CreateWorldSector: overflow");
 
-	anode = &sv_worldSectors[sv_numWorldSectors];
-	sv_numWorldSectors++;
+	anode = &sv.worldSectors[sv.numWorldSectors];
+	sv.numWorldSectors++;
 
 	anode->entities = NULL;
 
@@ -112,26 +80,13 @@ static worldSector_t *SV_CreateWorldSector (int depth, const vec3_t mins, const 
 }
 
 /**
- * @brief called after the world model has been loaded, before linking any entities
+ * @brief Clear physics interaction links
+ * @note Called after the world model has been loaded, before linking any entities
  * @sa SV_SpawnServer
  * @sa SV_CreateAreaNode
  */
 void SV_ClearWorld (void)
 {
-	int i;
-
-	for (i = 0; i < sv_numModels; i++)
-		if (sv_models[i].name)
-			Mem_Free(sv_models[i].name);
-
-	memset(sv_models, 0, sizeof(sv_models));
-	sv_numModels = 0;
-
-	memset(sv_edicts, 0, sizeof(sv_edicts));
-
-	memset(sv_worldSectors, 0, sizeof(sv_worldSectors));
-	sv_numWorldSectors = 0;
-
 	SV_CreateWorldSector(0, mapMin, mapMax);
 }
 
@@ -140,7 +95,7 @@ static inline sv_edict_t* SV_GetServerDataForEdict (const edict_t *ent)
 	if (!ent || ent->number < 0 || ent->number >= MAX_EDICTS)
 		Com_Error(ERR_DROP, "SV_GetServerDataForEdict: bad game ent");
 
-	return &sv_edicts[ent->number];
+	return &sv.edicts[ent->number];
 }
 
 /**
@@ -245,7 +200,7 @@ void SV_LinkEdict (edict_t * ent)
 		return;
 
 	/* find the first node that the ent's box crosses */
-	node = sv_worldSectors;
+	node = sv.worldSectors;
 	while (1) {
 		/* end of tree */
 		if (node->axis == LEAFNODE)
@@ -366,7 +321,7 @@ int SV_AreaEdicts (const vec3_t mins, const vec3_t maxs, edict_t **list, int max
 	ap.areaEdictListCount = 0;
 	ap.areaEdictListMaxCount = maxCount;
 
-	SV_AreaEdicts_r(sv_worldSectors, &ap);
+	SV_AreaEdicts_r(sv.worldSectors, &ap);
 
 	return ap.areaEdictListCount;
 }
@@ -658,7 +613,7 @@ float SV_GetBounceFraction (const char *texture)
  * @param[in] buffer The mesh model buffer
  * @param[in] bufferLength The mesh model buffer length
  */
-static void SV_ModLoadAliasMD2Model (sv_model_t* mod, const byte *buffer, int bufferLength)
+static void SV_ModLoadAliasMD2Model (sv_model_t* mod, const byte *buffer)
 {
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buffer;
 	const int num_frames = LittleLong(md2->num_frames);
@@ -686,7 +641,7 @@ static void SV_ModLoadAliasMD2Model (sv_model_t* mod, const byte *buffer, int bu
  * @param[in] buffer The mesh model buffer
  * @param[in] bufferLength The mesh model buffer length
  */
-static void SV_ModLoadAliasMD3Model (sv_model_t* mod, const byte *buffer, int bufferLength)
+static void SV_ModLoadAliasMD3Model (sv_model_t* mod, const byte *buffer)
 {
 	const dmd3_t *md3 = (const dmd3_t *)buffer;
 	const dmd3frame_t *frame = (const dmd3frame_t *)((const byte *)md3 + LittleLong(md3->ofs_frames));
@@ -712,7 +667,7 @@ static void SV_ModLoadAliasMD3Model (sv_model_t* mod, const byte *buffer, int bu
  * @param[in] buffer The mesh model buffer
  * @param[in] bufferLength The mesh model buffer length
  */
-static void SV_ModLoadAliasDPMModel (sv_model_t* mod, const byte *buffer, int bufferLength)
+static void SV_ModLoadAliasDPMModel (sv_model_t* mod, const byte *buffer)
 {
 	const dpmheader_t *dpm = (const dpmheader_t *)buffer;
 	const int num_frames = BigLong(dpm->num_frames);
@@ -754,14 +709,14 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 {
 	sv_model_t *mod;
 	byte *buf;
-	int i;
+	unsigned int i;
 	int modfilelen;
 
 	if (model[0] == '\0')
 		Com_Error(ERR_DROP, "SV_LoadModelMinsMaxs: NULL model");
 
 	/* search the currently loaded models */
-	for (i = 0, mod = sv_models; i < sv_numModels; i++, mod++)
+	for (i = 0, mod = sv.svModels; i < sv.numSVModels; i++, mod++)
 		if (mod->frame == frame && !strcmp(mod->name, model)) {
 			VectorCopy(mod->mins, mins);
 			VectorCopy(mod->maxs, maxs);
@@ -769,15 +724,15 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 		}
 
 	/* find a free model slot spot */
-	for (i = 0, mod = sv_models; i < sv_numModels; i++, mod++) {
+	for (i = 0, mod = sv.svModels; i < sv.numSVModels; i++, mod++) {
 		if (!mod->name)
 			break;				/* free spot */
 	}
 
-	if (i == sv_numModels) {
-		if (sv_numModels == MAX_MOD_KNOWN)
+	if (i == sv.numSVModels) {
+		if (sv.numSVModels == MAX_MOD_KNOWN)
 			Com_Error(ERR_DROP, "sv_numModels == MAX_MOD_KNOWN");
-		sv_numModels++;
+		sv.numSVModels++;
 	}
 
 	memset(mod, 0, sizeof(*mod));
@@ -791,7 +746,7 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 	modfilelen = FS_LoadFile(model, &buf);
 	if (!buf) {
 		memset(mod->name, 0, sizeof(mod->name));
-		sv_numModels--;
+		sv.numSVModels--;
 		return qfalse;
 	}
 
@@ -800,15 +755,15 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 	/* call the appropriate loader */
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
-		SV_ModLoadAliasMD2Model(mod, buf, modfilelen);
+		SV_ModLoadAliasMD2Model(mod, buf);
 		break;
 
 	case DPMHEADER:
-		SV_ModLoadAliasDPMModel(mod, buf, modfilelen);
+		SV_ModLoadAliasDPMModel(mod, buf);
 		break;
 
 	case IDMD3HEADER:
-		SV_ModLoadAliasMD3Model(mod, buf, modfilelen);
+		SV_ModLoadAliasMD3Model(mod, buf);
 		break;
 
 	default:
