@@ -34,9 +34,6 @@ static char mapEntityString[MAX_MAP_ENTSTRING];
 /** @note holds the number of inline entities, e.g. ET_DOOR */
 static int numInline;
 
-/** @note a pointer to the bsp file model data */
-static byte *cModelBase;
-
 /** @note this is a zeroed surface structure */
 static cBspSurface_t nullSurface;
 
@@ -69,7 +66,7 @@ MAP LOADING
  * @sa R_ModLoadSubmodels
  * @sa CM_InlineModel
  */
-static void CMod_LoadSubmodels (const lump_t * l, const vec3_t shift)
+static void CMod_LoadSubmodels (const byte *base, const lump_t * l, const vec3_t shift)
 {
 	const dBspModel_t *in;
 	cBspModel_t *out;
@@ -78,7 +75,7 @@ static void CMod_LoadSubmodels (const lump_t * l, const vec3_t shift)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: No lump given");
 
-	in = (const void *) (cModelBase + l->fileofs);
+	in = (const void *) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T")", l->filelen, sizeof(*in));
 	count = l->filelen / sizeof(*in);
@@ -113,7 +110,7 @@ static void CMod_LoadSubmodels (const lump_t * l, const vec3_t shift)
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadSurfaces (const lump_t * l)
+static void CMod_LoadSurfaces (const byte *base, const lump_t * l)
 {
 	const dBspTexinfo_t *in;
 	cBspSurface_t *out;
@@ -122,7 +119,7 @@ static void CMod_LoadSurfaces (const lump_t * l)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: No lump given");
 
-	in = (const void *) (cModelBase + l->fileofs);
+	in = (const void *) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -152,7 +149,7 @@ static void CMod_LoadSurfaces (const lump_t * l)
  * @sa CM_AddMapTile
  * @sa TR_BuildTracingNode_r
  */
-static void CMod_LoadNodes (const lump_t * l, const vec3_t shift)
+static void CMod_LoadNodes (const byte *base, const lump_t * l, const vec3_t shift)
 {
 	const dBspNode_t *in;
 	int child;
@@ -162,7 +159,7 @@ static void CMod_LoadNodes (const lump_t * l, const vec3_t shift)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadNodes: No lump given");
 
-	in = (const void *) (cModelBase + l->fileofs);
+	in = (const void *) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -202,7 +199,7 @@ static void CMod_LoadNodes (const lump_t * l, const vec3_t shift)
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushes (const lump_t * l)
+static void CMod_LoadBrushes (const byte *base, const lump_t * l)
 {
 	const dBspBrush_t *in;
 	cBspBrush_t *out;
@@ -211,7 +208,7 @@ static void CMod_LoadBrushes (const lump_t * l)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: No lump given");
 
-	in = (const void *) (cModelBase + l->fileofs);
+	in = (const void *) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -237,7 +234,7 @@ static void CMod_LoadBrushes (const lump_t * l)
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafs (const lump_t * l)
+static void CMod_LoadLeafs (const byte *base, const lump_t * l)
 {
 	int i;
 	cBspLeaf_t *out;
@@ -247,7 +244,7 @@ static void CMod_LoadLeafs (const lump_t * l)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: No lump given");
 
-	in = (const void *) (cModelBase + l->fileofs);
+	in = (const void *) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -290,7 +287,7 @@ static void CMod_LoadLeafs (const lump_t * l)
  * @sa CM_AddMapTile
  * @sa R_ModLoadPlanes
  */
-static void CMod_LoadPlanes (const lump_t * l, const vec3_t shift)
+static void CMod_LoadPlanes (const byte *base, const lump_t * l, const vec3_t shift)
 {
 	int i, j;
 	cBspPlane_t *out;
@@ -300,7 +297,7 @@ static void CMod_LoadPlanes (const lump_t * l, const vec3_t shift)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: No lump given");
 
-	in = (const void *) (cModelBase + l->fileofs);
+	in = (const void *) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -334,7 +331,7 @@ static void CMod_LoadPlanes (const lump_t * l, const vec3_t shift)
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafBrushes (const lump_t * l)
+static void CMod_LoadLeafBrushes (const byte *base, const lump_t * l)
 {
 	int i;
 	unsigned short *out;
@@ -344,7 +341,7 @@ static void CMod_LoadLeafBrushes (const lump_t * l)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: No lump given");
 
-	in = (const unsigned short *) (cModelBase + l->fileofs);
+	in = (const unsigned short *) (base + l->fileofs);
 	if (l->filelen % sizeof(unsigned short))
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(unsigned short);
@@ -370,7 +367,7 @@ static void CMod_LoadLeafBrushes (const lump_t * l)
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushSides (const lump_t * l)
+static void CMod_LoadBrushSides (const byte *base, const lump_t * l)
 {
 	int i;
 	cBspBrushSide_t *out;
@@ -380,7 +377,7 @@ static void CMod_LoadBrushSides (const lump_t * l)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: No lump given");
 
-	in = (const void *) (cModelBase + l->fileofs);
+	in = (const void *) (base + l->fileofs);
 	if (l->filelen % sizeof(dBspBrushSide_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspBrushSide_t);
@@ -412,11 +409,11 @@ static void CMod_LoadBrushSides (const lump_t * l)
  * @sa CompressRouting (ufo2map)
  * @sa CMod_LoadRouting
  */
-static int CMod_DeCompressRouting (byte ** source, byte * dataStart)
+static int CMod_DeCompressRouting (const byte ** source, byte * dataStart)
 {
 	int i, c;
 	byte *data_p;
-	byte *src;
+	const byte *src;
 
 	data_p = dataStart;
 	src = *source;
@@ -490,10 +487,10 @@ static void CM_MakeTracingNodes (void)
  * @sa CM_AddMapTile
  * @todo TEST z-level routing
  */
-static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY, int sZ, routing_t *map)
+static void CMod_LoadRouting (const byte *base, const char *name, const lump_t * l, int sX, int sY, int sZ, routing_t *map)
 {
 	static routing_t tempMap[ACTOR_MAX_SIZE];
-	byte *source;
+	const byte *source;
 	int length;
 	int x, y, z, size, dir;
 	int minX, minY, minZ;
@@ -514,7 +511,7 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 	assert((sY > -(PATHFINDING_WIDTH / 2)) && (sY < (PATHFINDING_WIDTH / 2)));
 	assert((sZ >= 0) && (sZ < PATHFINDING_HEIGHT));
 
-	source = cModelBase + l->fileofs;
+	source = base + l->fileofs;
 
 	i = CMod_DeCompressRouting(&source, (byte*)curTile->wpMins);
 	length = i;
@@ -607,7 +604,7 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
  * loaded map tiles.
  * @sa CM_AddMapTile
  */
-static void CMod_LoadEntityString (lump_t * l, vec3_t shift, int tileIndex)
+static void CMod_LoadEntityString (const byte *base, const lump_t * l, const vec3_t shift, int tileIndex)
 {
 	const char *token;
 	const char *es;
@@ -625,7 +622,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift, int tileIndex)
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has too large entity lump");
 
 	/* merge entitystring information */
-	es = (const char *) (cModelBase + l->fileofs);
+	es = (const char *) (base + l->fileofs);
 	while (1) {
 		/* parse the opening brace */
 		token = Com_Parse(&es);
@@ -789,6 +786,7 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	dBspHeader_t header;
 	/* use for random map assembly for shifting origins and so on */
 	vec3_t shift;
+	const byte *base;
 
 	Com_DPrintf(DEBUG_ENGINE, "CM_AddMapTile: %s at %i,%i,%i\n", name, sX, sY, sZ);
 	assert(name);
@@ -812,7 +810,7 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	if (header.version != BSPVERSION)
 		Com_Error(ERR_DROP, "CM_AddMapTile: %s has wrong version number (%i should be %i)", name, header.version, BSPVERSION);
 
-	cModelBase = (byte *) buf;
+	base = (const byte *) buf;
 
 	/* init */
 	if (numTiles >= MAX_MAPTILES)
@@ -827,15 +825,15 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_HEIGHT);
 
 	/* load into heap */
-	CMod_LoadSurfaces(&header.lumps[LUMP_TEXINFO]);
-	CMod_LoadLeafs(&header.lumps[LUMP_LEAFS]);
-	CMod_LoadLeafBrushes(&header.lumps[LUMP_LEAFBRUSHES]);
-	CMod_LoadPlanes(&header.lumps[LUMP_PLANES], shift);
-	CMod_LoadBrushes(&header.lumps[LUMP_BRUSHES]);
-	CMod_LoadBrushSides(&header.lumps[LUMP_BRUSHSIDES]);
-	CMod_LoadSubmodels(&header.lumps[LUMP_MODELS], shift);
-	CMod_LoadNodes(&header.lumps[LUMP_NODES], shift);
-	CMod_LoadEntityString(&header.lumps[LUMP_ENTITIES], shift, numTiles);
+	CMod_LoadSurfaces(base, &header.lumps[LUMP_TEXINFO]);
+	CMod_LoadLeafs(base, &header.lumps[LUMP_LEAFS]);
+	CMod_LoadLeafBrushes(base, &header.lumps[LUMP_LEAFBRUSHES]);
+	CMod_LoadPlanes(base, &header.lumps[LUMP_PLANES], shift);
+	CMod_LoadBrushes(base, &header.lumps[LUMP_BRUSHES]);
+	CMod_LoadBrushSides(base, &header.lumps[LUMP_BRUSHSIDES]);
+	CMod_LoadSubmodels(base, &header.lumps[LUMP_MODELS], shift);
+	CMod_LoadNodes(base, &header.lumps[LUMP_NODES], shift);
+	CMod_LoadEntityString(base, &header.lumps[LUMP_ENTITIES], shift, numTiles);
 	if (day)
 		CMod_LoadLighting(&header.lumps[LUMP_LIGHTING_DAY]);
 	else
@@ -851,7 +849,7 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	 * these to the right values now */
 	numInline += curTile->nummodels - NUM_REGULAR_MODELS;
 
-	CMod_LoadRouting(name, &header.lumps[LUMP_ROUTING], sX, sY, sZ, map);
+	CMod_LoadRouting(base, name, &header.lumps[LUMP_ROUTING], sX, sY, sZ, map);
 
 	/* now increase the amount of loaded tiles */
 	numTiles++;
