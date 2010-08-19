@@ -1531,3 +1531,11 @@
 "origin" "319 448 68"
 "spawnflags" "255"
 }
+// entity 51
+{
+"classname" "misc_sound"
+"origin" "288 448 32"
+"noise" "ambience/ufo_night_atm"
+"volume" "0.1"
+"attenuation" "0.1"
+}

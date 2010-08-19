@@ -912,3 +912,11 @@
 ( 96 608 0 ) ( 224 608 0 ) ( 96 608 96 ) tex_common/trigger 0 0 0 0.25 0.25
 }
 }
+// entity 15
+{
+"classname" "misc_sound"
+"origin" "416 320 32"
+"noise" "ambience/ufo_night_atm"
+"volume" "0.1"
+"attenuation" "0.1"
+}

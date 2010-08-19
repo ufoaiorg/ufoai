@@ -1455,3 +1455,11 @@
 "model" "models/aircraft/drop_firebird/firebird.md2"
 "spawnflags" "255"
 }
+// entity 58
+{
+"classname" "misc_sound"
+"origin" "320 224 32"
+"noise" "ambience/ufo_night_atm"
+"volume" "0.1"
+"attenuation" "0.1"
+}
