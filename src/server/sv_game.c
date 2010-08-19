@@ -32,18 +32,6 @@
 #include <SDL.h>
 
 game_export_t *ge;
-
-typedef struct pending_event_s {
-	/** this is true when there was an event - and false if the event reached the end */
-	qboolean pending;
-	/** player mask of the current event */
-	int playerMask;
-	int type;
-	struct dbuffer *buf;
-} pending_event_t;
-
-static pending_event_t pe;
-struct dbuffer *sv_msg = NULL;
 static SDL_Thread *thread;
 static void *gameLibrary;
 
@@ -195,12 +183,12 @@ static void SV_Configstring (int index, const char *fmt, ...)
 
 static void SV_WriteChar (char c)
 {
-	NET_WriteChar(pe.buf, c);
+	NET_WriteChar(sv.pendingEvent.buf, c);
 }
 
 static void SV_WriteByte (byte c)
 {
-	NET_WriteByte(pe.buf, c);
+	NET_WriteByte(sv.pendingEvent.buf, c);
 }
 
 /**
@@ -209,103 +197,103 @@ static void SV_WriteByte (byte c)
  */
 static byte* SV_WriteDummyByte (byte c)
 {
-	byte *pos = (byte*) pe.buf->end;
-	NET_WriteByte(pe.buf, c);
+	byte *pos = (byte*) sv.pendingEvent.buf->end;
+	NET_WriteByte(sv.pendingEvent.buf, c);
 	assert(pos != NULL);
 	return pos;
 }
 
 static void SV_WriteShort (int c)
 {
-	NET_WriteShort(pe.buf, c);
+	NET_WriteShort(sv.pendingEvent.buf, c);
 }
 
 static void SV_WriteLong (int c)
 {
-	NET_WriteLong(pe.buf, c);
+	NET_WriteLong(sv.pendingEvent.buf, c);
 }
 
 static void SV_WriteString (const char *s)
 {
-	NET_WriteString(pe.buf, s);
+	NET_WriteString(sv.pendingEvent.buf, s);
 }
 
 static void SV_WritePos (const vec3_t pos)
 {
-	NET_WritePos(pe.buf, pos);
+	NET_WritePos(sv.pendingEvent.buf, pos);
 }
 
 static void SV_WriteGPos (const pos3_t pos)
 {
-	NET_WriteGPos(pe.buf, pos);
+	NET_WriteGPos(sv.pendingEvent.buf, pos);
 }
 
 static void SV_WriteDir (const vec3_t dir)
 {
-	NET_WriteDir(pe.buf, dir);
+	NET_WriteDir(sv.pendingEvent.buf, dir);
 }
 
 static void SV_WriteAngle (float f)
 {
-	NET_WriteAngle(pe.buf, f);
+	NET_WriteAngle(sv.pendingEvent.buf, f);
 }
 
 static void SV_WriteFormat (const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	NET_vWriteFormat(pe.buf, format, ap);
+	NET_vWriteFormat(sv.pendingEvent.buf, format, ap);
 	va_end(ap);
 }
 
 static int SV_ReadChar (void)
 {
-	return NET_ReadChar(sv_msg);
+	return NET_ReadChar(sv.messageBuffer);
 }
 
 static int SV_ReadByte (void)
 {
-	return NET_ReadByte(sv_msg);
+	return NET_ReadByte(sv.messageBuffer);
 }
 
 static int SV_ReadShort (void)
 {
-	return NET_ReadShort(sv_msg);
+	return NET_ReadShort(sv.messageBuffer);
 }
 
 static int SV_ReadLong (void)
 {
-	return NET_ReadLong(sv_msg);
+	return NET_ReadLong(sv.messageBuffer);
 }
 
 static int SV_ReadString (char *str, size_t length)
 {
-	return NET_ReadString(sv_msg, str, length);
+	return NET_ReadString(sv.messageBuffer, str, length);
 }
 
 static void SV_ReadPos (vec3_t pos)
 {
-	NET_ReadPos(sv_msg, pos);
+	NET_ReadPos(sv.messageBuffer, pos);
 }
 
 static void SV_ReadGPos (pos3_t pos)
 {
-	NET_ReadGPos(sv_msg, pos);
+	NET_ReadGPos(sv.messageBuffer, pos);
 }
 
 static void SV_ReadDir (vec3_t vector)
 {
-	NET_ReadDir(sv_msg, vector);
+	NET_ReadDir(sv.messageBuffer, vector);
 }
 
 static float SV_ReadAngle (void)
 {
-	return NET_ReadAngle(sv_msg);
+	return NET_ReadAngle(sv.messageBuffer);
 }
 
 static void SV_ReadData (void *buffer, int size)
 {
-	NET_ReadData(sv_msg, buffer, size);
+	NET_ReadData(sv.messageBuffer, buffer, size);
 }
 
 /**
@@ -320,7 +308,7 @@ static void SV_ReadFormat (const char *format, ...)
 		return;
 
 	va_start(ap, format);
-	NET_vReadFormat(sv_msg, format, ap);
+	NET_vReadFormat(sv.messageBuffer, format, ap);
 	va_end(ap);
 }
 
@@ -329,12 +317,12 @@ static void SV_ReadFormat (const char *format, ...)
  */
 static void SV_AbortEvents (void)
 {
-	if (!pe.pending)
+	if (!sv.pendingEvent.pending)
 		return;
 
-	pe.pending = qfalse;
-	free_dbuffer(pe.buf);
-	pe.buf = NULL;
+	sv.pendingEvent.pending = qfalse;
+	free_dbuffer(sv.pendingEvent.buf);
+	sv.pendingEvent.buf = NULL;
 }
 
 /**
@@ -342,14 +330,14 @@ static void SV_AbortEvents (void)
  */
 static void SV_EndEvents (void)
 {
-	if (!pe.pending)
+	if (!sv.pendingEvent.pending)
 		return;
 
-	NET_WriteByte(pe.buf, EV_NULL);
-	SV_Multicast(pe.playerMask, pe.buf);
-	pe.pending = qfalse;
+	NET_WriteByte(sv.pendingEvent.buf, EV_NULL);
+	SV_Multicast(sv.pendingEvent.playerMask, sv.pendingEvent.buf);
+	sv.pendingEvent.pending = qfalse;
 	/* freed in SV_Multicast */
-	pe.buf = NULL;
+	sv.pendingEvent.buf = NULL;
 }
 
 /**
@@ -361,18 +349,18 @@ static void SV_AddEvent (unsigned int mask, int eType)
 	Com_DPrintf(DEBUG_EVENTSYS, "Event type: %i (mask %i)\n", eType, mask);
 
 	/* finish the last event */
-	if (pe.pending)
+	if (sv.pendingEvent.pending)
 		SV_EndEvents();
 
 	/* start the new event */
-	pe.pending = qtrue;
-	pe.playerMask = mask;
-	pe.type = eType;
-	pe.buf = new_dbuffer();
+	sv.pendingEvent.pending = qtrue;
+	sv.pendingEvent.playerMask = mask;
+	sv.pendingEvent.type = eType;
+	sv.pendingEvent.buf = new_dbuffer();
 
 	/* write header */
-	NET_WriteByte(pe.buf, svc_event);
-	NET_WriteByte(pe.buf, eType);
+	NET_WriteByte(sv.pendingEvent.buf, svc_event);
+	NET_WriteByte(sv.pendingEvent.buf, eType);
 }
 
 /**
@@ -380,10 +368,10 @@ static void SV_AddEvent (unsigned int mask, int eType)
  */
 static int SV_GetEvent (void)
 {
-	if (!pe.pending)
+	if (!sv.pendingEvent.pending)
 		return -1;
 
-	return pe.type;
+	return sv.pendingEvent.type;
 }
 
 /**

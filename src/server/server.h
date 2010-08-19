@@ -64,6 +64,15 @@ typedef struct worldSector_s {
 
 #define	AREA_NODES	32
 
+typedef struct pending_event_s {
+	/** this is true when there was an event - and false if the event reached the end */
+	qboolean pending;
+	/** player mask of the current event */
+	int playerMask;
+	int type;
+	struct dbuffer *buf;
+} pending_event_t;
+
 /*============================================================================= */
 
 typedef enum {
@@ -90,6 +99,9 @@ typedef struct {
 	routing_t svMap[ACTOR_MAX_SIZE];	/**< server routing table */
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
+
+	struct dbuffer *messageBuffer;
+	pending_event_t pendingEvent;
 
 	sv_model_t svModels[MAX_MOD_KNOWN];
 	unsigned int numSVModels;
@@ -167,8 +179,6 @@ extern cvar_t *sv_mapname;
 extern cvar_t *sv_public;			/**< should heartbeats be sent? (only for public servers) */
 extern cvar_t *sv_dumpmapassembly;
 extern cvar_t *sv_threads;	/**< run the game lib threaded */
-
-extern struct dbuffer *sv_msg;
 
 /*=========================================================== */
 

@@ -260,40 +260,40 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 
 	case clc_action:
 		/* client actions are handled by the game module */
-		sv_msg = msg;
+		sv.messageBuffer = msg;
 		SDL_mutexP(svs.serverMutex);
 		ge->ClientAction(cl->player);
 		SDL_mutexV(svs.serverMutex);
-		sv_msg = NULL;
+		sv.messageBuffer = NULL;
 		break;
 
 	case clc_endround:
 		/* player wants to end round */
-		sv_msg = msg;
+		sv.messageBuffer = msg;
 		SDL_mutexP(svs.serverMutex);
 		ge->ClientEndRound(cl->player);
 		SDL_mutexV(svs.serverMutex);
-		sv_msg = NULL;
+		sv.messageBuffer = NULL;
 		break;
 
 	case clc_teaminfo:
 		/* player sends team info */
 		/* actors spawn accordingly */
-		sv_msg = msg;
+		sv.messageBuffer = msg;
 		SDL_mutexP(svs.serverMutex);
 		ge->ClientTeamInfo(cl->player);
 		SDL_mutexV(svs.serverMutex);
-		sv_msg = NULL;
+		sv.messageBuffer = NULL;
 		break;
 
 	case clc_initactorstates:
 		/* player sends team info */
 		/* actors spawn accordingly */
-		sv_msg = msg;
+		sv.messageBuffer = msg;
 		SDL_mutexP(svs.serverMutex);
 		ge->ClientInitActorStates(cl->player);
 		SDL_mutexV(svs.serverMutex);
-		sv_msg = NULL;
+		sv.messageBuffer = NULL;
 		break;
 	}
 }
