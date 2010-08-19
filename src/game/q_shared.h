@@ -31,24 +31,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GAME_Q_SHARED_H
 #define GAME_Q_SHARED_H
 
-#ifdef DEBUG
-#define Com_SetValue(base, set, type, ofs, size) Com_SetValueDebug(base, set, type, ofs, size, __FILE__, __LINE__)
-#define Com_EParseValue(base, token, type, ofs, size) Com_EParseValueDebug(base, token, type, ofs, size, __FILE__, __LINE__)
-#endif
-
 #include "../shared/ufotypes.h"
 #include "../shared/byte.h"
 #include "../shared/shared.h"
 #include "../shared/mathlib.h"
+#include "../shared/defines.h"
+#include "../common/list.h"
 
-/* filesystem stuff */
-#ifdef _WIN32
-# include <direct.h>
-# include <io.h>
-#else
-# include <unistd.h>
-# include <dirent.h>
-#endif
+#include "inv_shared.h"
+#include "chr_shared.h"
 
 #ifdef DEDICATED_ONLY
 /* no gettext support for dedicated servers */
@@ -56,111 +47,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define ngettext(x, y, cnt) x
 #endif
 
-#ifndef logf
-#define logf(x) ((float)log((double)(x)))
-#endif
-
-#include "../shared/defines.h"
-#include "../common/list.h"
-
-/*
-==========================================================
-CVARS (console variables)
-==========================================================
-*/
-
-#ifndef CVAR
-#define CVAR
-
-#define CVAR_ARCHIVE    1       /**< set to cause it to be saved to vars.rc */
-#define CVAR_USERINFO   2       /**< added to userinfo  when changed */
-#define CVAR_SERVERINFO 4       /**< added to serverinfo when changed */
-#define CVAR_NOSET      8       /**< don't allow change from console at all, but can be set from the command line */
-#define CVAR_LATCH      16      /**< save changes until server restart */
-#define CVAR_DEVELOPER  32      /**< set from commandline (not from within the game) and hide from console */
-#define CVAR_CHEAT      64      /**< clamp to the default value when cheats are off */
-#define CVAR_R_IMAGES   128     /**< effects image filtering */
-#define CVAR_R_CONTEXT    256     /**< vid shutdown if such a cvar was modified */
-#define CVAR_R_PROGRAMS 512		/**< if changed, shaders are restarted */
-
-#define CVAR_R_MASK (CVAR_R_IMAGES | CVAR_R_CONTEXT | CVAR_R_PROGRAMS)
-
-/**
- * @brief Callback for the listener
- * @param cvarName The name of the cvar that was changed.
- * @param oldValue The old value of the cvar - this is never @c NULL, but can be empty.
- * @param newValue The new value of the cvar - this is never @c NULL, but can be empty.
- */
-typedef void (*cvarChangeListenerFunc_t) (const char *cvarName, const char *oldValue, const char *newValue);
-
-typedef struct cvarListener_s {
-	cvarChangeListenerFunc_t exec;
-	struct cvarListener_s *next;
-} cvarChangeListener_t;
-
-/**
- * @brief This is a cvar defintion. Cvars can be user modified and used in our menus e.g.
- * @note nothing outside the Cvar_*() functions should modify these fields!
- */
-typedef struct cvar_s {
-	char *name;				/**< cvar name */
-	char *string;			/**< value as string */
-	char *latchedString;	/**< for CVAR_LATCH vars */
-	char *default_string;	/**< default string set on first init - only set for CVAR_CHEAT */
-	char *oldString;		/**< value of the cvar before we changed it */
-	const char *description;		/**< cvar description */
-	int flags;				/**< cvar flags CVAR_ARCHIVE|CVAR_NOSET.... */
-	qboolean modified;		/**< set each time the cvar is changed */
-	float value;			/**< value as float */
-	int integer;			/**< value as integer */
-	qboolean (*check) (struct cvar_s* cvar);	/**< cvar check function */
-	cvarChangeListener_t *changeListener;
-	struct cvar_s *next;
-	struct cvar_s *prev;
-	struct cvar_s *hash_next;
-} cvar_t;
-
-typedef struct cvarList_s {
-	const char *name;
-	const char *value;
-	cvar_t *var;
-} cvarList_t;
-
-cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, const char* desc);
-
-#endif                          /* CVAR */
-
 /*
 ==============================================================
 SYSTEM SPECIFIC
 ==============================================================
 */
 
-/* directory searching */
-#define SFF_ARCH    0x01
-#define SFF_HIDDEN  0x02
-#define SFF_RDONLY  0x04
-#define SFF_SUBDIR  0x08
-#define SFF_SYSTEM  0x10
-
-/* pass in an attribute mask of things you wish to REJECT */
-char *Sys_FindFirst(const char *path, unsigned musthave, unsigned canthave);
-char *Sys_FindNext(unsigned musthave, unsigned canthave);
-void Sys_FindClose(void);
-void Sys_ListFilteredFiles(const char *basedir, const char *subdirs, const char *filter, linkedList_t **list);
-char *Sys_Cwd(void);
-void Sys_SetAffinityAndPriority(void);
-int Sys_Milliseconds(void);
-void Sys_Mkdir(const char *path);
-void Sys_Backtrace(void);
-
 /* this is only here so the functions in q_shared.c can link */
 void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 void Com_Printf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
 void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
-
-#define AREA_SOLID			1
-#define AREA_TRIGGERS		2
 
 #define TEAM_NO_ACTIVE -1
 #define TEAM_CIVILIAN   0
@@ -245,6 +141,7 @@ typedef enum {
 	ET_TRIGGER,
 	ET_TRIGGER_HURT,
 	ET_TRIGGER_TOUCH,
+	ET_TRIGGER_RESCUE,
 	ET_DOOR,
 	ET_ROTATING,
 	ET_ACTOR2x2SPAWN,
@@ -278,23 +175,49 @@ typedef enum {
 
 extern const char *pa_format[PA_NUM_EVENTS];
 
-/** @brief Available shoot types */
+/** @brief Available shoot types - also see the @c ST_ constants */
 typedef int32_t shoot_types_t;
+/**
+ * @brief The right hand should be used for shooting
+ * @note shoot_types_t value
+ */
 #define ST_RIGHT 0
+/**
+ * @brief The right hand reaction fire should be used for shooting
+ * @note shoot_types_t value
+ */
 #define ST_RIGHT_REACTION 1
+/**
+ * @brief The left hand should be used for shooting
+ * @note shoot_types_t value
+ */
 #define ST_LEFT 2
+/**
+ * @brief The left hand reaction fire should be used for shooting
+ * @note shoot_types_t value
+ */
 #define ST_LEFT_REACTION 3
+/**
+ * @brief The headgear slot item should be used when shooting/using the item in the slot
+ * @note shoot_types_t value
+ */
 #define ST_HEADGEAR 4
+/**
+ * @brief Amount of shoottypes available
+ * @note shoot_types_t value
+ */
 #define ST_NUM_SHOOT_TYPES 5
-/* 20060905 LordHavoc: added reload types */
-#define ST_RIGHT_RELOAD 6
-#define ST_LEFT_RELOAD 7
 
+/** @brief Determine whether the selected shoot type is for reaction fire */
 #define IS_SHOT_REACTION(x) ((x) == ST_RIGHT_REACTION || (x) == ST_LEFT_REACTION)
-#define IS_SHOT(x)          (IS_SHOT_RIGHT(x) || IS_SHOT_LEFT(x) || IS_SHOT_HEADGEAR(x) || IS_SHOT_REACTION(x))
+/** @brief Determine whether the selected shoot type is for the item in the left hand, either shooting or reaction fire */
 #define IS_SHOT_LEFT(x)     ((x) == ST_LEFT || (x) == ST_LEFT_REACTION)
+/** @brief Determine whether the selected shoot type is for the item in the right hand, either shooting or reaction fire */
 #define IS_SHOT_RIGHT(x)    ((x) == ST_RIGHT || (x) == ST_RIGHT_REACTION)
+/** @brief Determine whether the selected shoot type is for the item in the headgear slot */
 #define IS_SHOT_HEADGEAR(x)    ((x) == ST_HEADGEAR)
+
+#define SHOULD_USE_AUTOSTAND(length) ((float) (2.0f * TU_CROUCH) * TU_CROUCH_MOVING_FACTOR / (TU_CROUCH_MOVING_FACTOR - 1.0f) < (float) (length))
 
 /* shoot flags */
 #define SF_IMPACT	1	/**< impact on none actor objects */
@@ -392,84 +315,60 @@ typedef int32_t shoot_types_t;
 
 #define MAX_FORBIDDENLIST (MAX_EDICTS * 4)
 
-/* g_spawn.c */
-
-typedef int32_t actorSizeEnum_t;
-/* NOTE: this only allows quadratic units */
-#define ACTOR_SIZE_INVALID 0
-#define ACTOR_SIZE_NORMAL 1
-#define ACTOR_SIZE_2x2 2
-#define	ACTOR_MAX_SIZE	(ACTOR_SIZE_2x2)
-
-/** @brief Types of actor sounds being issued by CL_ActorPlaySound(). */
-typedef enum {
-	SND_DEATH,	/**< Sound being played on actor death. */
-	SND_HURT,	/**< Sound being played when an actor is being hit. */
-
-	SND_MAX
-} actorSound_t;
-
-/* team definitions */
-
-#define MAX_TEAMDEFS	128
-
-typedef enum {
-	NAME_NEUTRAL,
-	NAME_FEMALE,
-	NAME_MALE,
-
-	NAME_LAST,
-	NAME_FEMALE_LAST,
-	NAME_MALE_LAST,
-
-	NAME_NUM_TYPES
-} nametypes_t;
-
 /**
- * @brief Different races of actors used in game
- * @todo add different robot races.
+ * @brief The csi structure is the client-server-information structure
+ * which contains all the UFO info needed by the server and the client.
+ * @note Most of this comes from the script files
  */
-typedef enum {
-	RACE_PHALANX_HUMAN,		/**< Phalanx team */
-	RACE_CIVILIAN,			/**< Civilian team */
+typedef struct csi_s {
+	/** Object definitions */
+	objDef_t ods[MAX_OBJDEFS];
+	int numODs;
 
-	RACE_ROBOT,				/**< Robot */
+	/** Inventory definitions */
+	invDef_t ids[MAX_INVDEFS];
+	int numIDs;
 
-	RACE_TAMAN,				/**< Alien: taman race */
-	RACE_ORTNOK,			/**< Alien: ortnok race */
-	RACE_BLOODSPIDER,		/**< Alien: bloodspider race */
-	RACE_SHEVAAR			/**< Alien: shevaar race */
-} racetypes_t;
+	/** Special container ids */
+	containerIndex_t idRight, idLeft, idExtension;
+	containerIndex_t idHeadgear, idBackpack, idBelt, idHolster;
+	containerIndex_t idArmour, idFloor, idEquip;
 
-typedef struct teamDef_s {
-	int idx;			/**< The index in the teamDef array. */
-	char id[MAX_VAR];	/**< id from script file. */
-	char name[MAX_VAR];	/**< Translatable name. */
-	char tech[MAX_VAR];	/**< technology_t id from research.ufo */
+	/** Damage type ids */
+	int damNormal, damBlast, damFire;
+	int damShock;	/**< Flashbang-type 'damage' (i.e. Blinding). */
 
-	linkedList_t *names[NAME_NUM_TYPES];	/**< Names list per gender. */
-	int numNames[NAME_NUM_TYPES];	/**< Amount of names in this list for all different genders. */
+	/** Damage type ids */
+	int damLaser, damPlasma, damParticle;
+	int damStunGas;		/**< Stun gas attack (only effective against organic targets).
+						 * @todo Maybe even make a differentiation between aliens/humans here? */
+	int damStunElectro;	/**< Electro-Shock attack (effective against organic and robotic targets). */
 
-	linkedList_t *models[NAME_LAST];	/**< Models list per gender. */
-	int numModels[NAME_LAST];	/**< Amount of models in this list for all different genders. */
+	/** Equipment definitions */
+	equipDef_t eds[MAX_EQUIPDEFS];
+	int numEDs;
 
-	linkedList_t *sounds[SND_MAX][NAME_LAST];	/**< Sounds list per gender and per sound type. */
-	int numSounds[SND_MAX][NAME_LAST];	/**< Amount of sounds in this list for all different genders and soundtypes. */
+	/** Damage types */
+	damageType_t dts[MAX_DAMAGETYPES];
+	int numDTs;
 
-	racetypes_t race;	/**< What is the race of this team?*/
-	qboolean robot;         /**< Is this a robotic team? */
+	/** team definitions */
+	teamDef_t teamDef[MAX_TEAMDEFS];
+	int numTeamDefs;
 
-	qboolean armour;	/**< Does this team use armour. */
-	qboolean weapons;	/**< Does this team use weapons. */
-	struct objDef_s *onlyWeapon;	/**< ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
-	 						 * The default value is NONE for every 'normal' actor - but e.g. bloodspiders only have
-							 * the ability to melee attack their victims. They get a weapon assigned with several
-							 * bloodspider melee attack firedefitions */
+	/** the current assigned teams for this mission */
+	const teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
+	int numAlienTeams;
 
-	actorSizeEnum_t size;	/**< What size is this unit on the field (1=1x1 or 2=2x2)? */
-	char hitParticle[MAX_VAR]; /**< Particle id of what particle effect should be spawned if a unit of this type is hit. */
-	char deathTextureName[MAX_VAR];	/**< texture name for death of any member of this team */
-} teamDef_t;
+	/** character templates */
+	chrTemplate_t chrTemplates[MAX_CHARACTER_TEMPLATES];
+	int numChrTemplates;
+
+	ugv_t ugvs[MAX_UGV];
+	int numUGV;
+} csi_t;
+
+extern csi_t csi;
 
 /** @brief Reject messages that are send to the client from the game module */
 #define REJ_PASSWORD_REQUIRED_OR_INCORRECT "Password required or incorrect."

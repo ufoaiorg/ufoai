@@ -103,50 +103,135 @@ static unsigned long tileMask (const char chr)
 	Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'", chr);
 }
 
+static const mTileSet_t *SV_GetMapTileSet (const mapInfo_t *map, const char *tileSetName)
+{
+	int i;
+
+	for (i = 0; i < map->numTileSets; i++)
+		if (!strcmp(tileSetName, map->mTileSets[i].id))
+			return &map->mTileSets[i];
+
+	return NULL;
+}
+
+static inline const mTile_t *SV_GetMapTile (const mapInfo_t *map, const char *tileName)
+{
+	int i;
+
+	for (i = 0; i < map->numTiles; i++)
+		if (!strcmp(tileName, map->mTile[i].id))
+			return &map->mTile[i];
+
+	return NULL;
+}
+
 /**
- * @brief Parsed a tile definition out of the ump-files
+ * @brief Parsed a tileset definition out of the ump-files
  * @sa SV_ParseAssembly
  * @sa SV_AssembleMap
- * @note Parsed data are stored into *target, which must already be allocated.
  */
-static int SV_ParseMapTile (const char *filename, const char **text, mTile_t *target)
+static qboolean SV_ParseMapTileSet (const char *filename, const char **text, mapInfo_t *map, qboolean inherit)
 {
-	const char *errhead = "SV_ParseMapTile: Unexpected end of file (";
+	const char *errhead = "SV_ParseMapTileSet: Unexpected end of file (";
 	const char *token;
-	char *chr;
-	int x, y, i;
+	mTileSet_t *target = &map->mTileSets[map->numTileSets];
 
-	/* get tile name */
+	memset(target, 0, sizeof(*target));
+
+	/* get tileset name */
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return 0;
-	memset(target, 0, sizeof(*target));
+		return qfalse;
+
 	Q_strncpyz(target->id, token, sizeof(target->id));
 
 	/* start parsing the block */
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return 0;
+		return qfalse;
+	if (*token != '{') {
+		Com_Printf("SV_ParseMapTileSet: Expected '{' for tileset '%s' (%s)\n", target->id, filename);
+		return qfalse;
+	}
+
+	do {
+		token = Com_EParse(text, errhead, filename);
+		if (!*text)
+			return qfalse;
+		if (token[0] != '}') {
+			char *tileTarget = target->tiles[target->numTiles];
+			const size_t size = sizeof(target->tiles[target->numTiles]);
+			if (inherit) {
+				if (token[0] == '+')
+					token++;
+
+				Com_sprintf(tileTarget, size, "%s%s", map->inheritBasePath, token);
+			} else {
+				Q_strncpyz(tileTarget, token, size);
+			}
+
+			if (SV_GetMapTile(map, tileTarget) != NULL)
+				target->numTiles++;
+			else
+				Com_Error(ERR_DROP, "Did not find tile '%s' from tileset '%s'", tileTarget, target->id);
+		}
+	} while (token[0] != '}');
+
+	map->numTileSets++;
+	return qfalse;
+}
+
+/**
+ * @brief Parsed a tile definition out of the ump-files
+ * @sa SV_ParseAssembly
+ * @sa SV_AssembleMap
+ */
+static qboolean SV_ParseMapTile (const char *filename, const char **text, mapInfo_t *map, qboolean inherit)
+{
+	const char *errhead = "SV_ParseMapTile: Unexpected end of file (";
+	const char *token;
+	int x, y, i;
+	mTile_t *target = &map->mTile[map->numTiles];
+
+	/* get tile name */
+	token = Com_EParse(text, errhead, filename);
+	if (!*text)
+		return qfalse;
+
+	memset(target, 0, sizeof(*target));
+
+	if (inherit) {
+		if (token[0] == '+')
+			token++;
+		Com_sprintf(target->id, sizeof(target->id), "%s%s", map->inheritBasePath, token);
+	} else {
+		Q_strncpyz(target->id, token, sizeof(target->id));
+	}
+
+	/* start parsing the block */
+	token = Com_EParse(text, errhead, filename);
+	if (!*text)
+		return qfalse;
 	if (*token != '{') {
 		Com_Printf("SV_ParseMapTile: Expected '{' for tile '%s' (%s)\n", target->id, filename);
-		return 0;
+		return qfalse;
 	}
 
 	/* get width and height */
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return 0;
+		return qfalse;
 	target->w = atoi(token);
 
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return 0;
+		return qfalse;
 	target->h = atoi(token);
 
 	if (target->w > MAX_TILESIZE || target->h > MAX_TILESIZE) {
 		Com_Printf("SV_ParseMapTile: Bad tile size [%i %i] (%s) (max. [%i %i])\n", target->w, target->h, filename, MAX_TILESIZE, MAX_TILESIZE);
 		*text = strchr(*text, '}');
-		return 0;
+		return qfalse;
 	}
 
 	/* get tile specs */
@@ -159,7 +244,7 @@ static int SV_ParseMapTile (const char *filename, const char **text, mTile_t *ta
 				return 0;
 			}
 			target->spec[y][x] = 0UL;
-			for (i = 0; token[i]; i++, chr++) {
+			for (i = 0; token[i]; i++) {
 				target->spec[y][x] |= tileMask(token[i]);
 			}
 		}
@@ -171,9 +256,65 @@ static int SV_ParseMapTile (const char *filename, const char **text, mTile_t *ta
 		Com_Printf("SV_ParseMapTile: Bad tile desc in '%s' - too many entries for size\n", target->id);
 
 	/* successfully parsed - this tile counts */
-	return 1;
+	return qtrue;
 }
 
+/**
+ * @brief Tries to extract a tile name from a cvar - the cvar value must start with a '+'
+ * @param a the assembly
+ * @param token The cvar name
+ * @param filename The ump filename
+ * @param text The text buffer
+ * @param errhead Error header
+ * @return @c NULL if file has invalid format, @c the tilename of the cvar otherwise.
+ */
+static const char *SV_GetCvarToken (const mAssembly_t *a, const char* token, const char *filename, const char **text, const char *errhead)
+{
+	const cvar_t *cvar;
+
+	Com_DPrintf(DEBUG_SERVER, "SV_GetCvarToken: cvar replacement: %s\n", token);
+
+	cvar = Cvar_FindVar(token);
+
+	token = Com_EParse(text, errhead, filename);
+	if (!text || token[0] == '}')
+		return NULL;
+
+	if (cvar == NULL)
+		return token;
+
+	Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement value: %s\n", cvar->string);
+	if (cvar->string[0] != '+') {
+		Com_Printf("SV_ParseAssembly: warning - cvar '%s' value doesn't seam to be a valid tile id '%s' - set to default '%s'\n",
+				cvar->name, cvar->string, token);
+		Cvar_Set(cvar->name, token);
+		if (token[0] != '+')
+			Com_Error(ERR_DROP, "SV_ParseAssembly: wrong tile id in assembly '%s'", a->id);
+
+		return token;
+	}
+	return cvar->string;
+}
+
+static inline const char *SV_GetTileFromTileSet (const mapInfo_t *map, const char *filename, const char **text, const mAssembly_t *a)
+{
+	const char *errhead = "SV_GetTileFromTileSet: Unexpected end of file (";
+	const mTileSet_t *tileSet;
+	int random;
+	const char *token;
+
+	/* get tileset id */
+	token = Com_EParse(text, errhead, filename);
+	if (!text)
+		Com_Error(ERR_DROP, "SV_GetTileFromTileSet: illegal tileset syntax in assembly '%s' in %s", a->id, filename);
+
+	tileSet = SV_GetMapTileSet(map, token);
+	if (tileSet == NULL)
+		Com_Error(ERR_DROP, "SV_GetTileFromTileSet: Could not find tileset %s 	in %s (assembly %s)", token, filename, a->id);
+
+	random = rand() % tileSet->numTiles;
+	return tileSet->tiles[random];
+}
 
 /**
  * @brief Parses an assembly block
@@ -186,19 +327,19 @@ static int SV_ParseMapTile (const char *filename, const char **text, mTile_t *ta
  * @note: format of size: "size x y"
  * @note: format of fix: "fix [tilename] x y"
  * @note: format of tile: "[tilename] min max"
- * @return 1 if it was parsed, 0 if not.
+ * @return @c true if it was parsed, @c false if not.
  */
-static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **text, mAssembly_t *a)
+static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **text, mAssembly_t *a)
 {
 	const char *errhead = "SV_ParseAssembly: Unexpected end of file (";
-	const char *token, *cvarValue;
-	char cvarName[MAX_VAR];
-	int i, x, y;
+	const char *token;
+	int x, y;
+	const mTile_t *tile;
 
 	/* get assembly name */
 	token = Com_EParse(text, errhead, filename);
 	if (!*text)
-		return 0;
+		return qfalse;
 
 	/* init */
 	memset(a, 0, sizeof(*a));
@@ -218,7 +359,7 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 		if (!text || *token == '}')
 			break;
 
-		if (!strncmp(token, "title", 5)) {
+		if (!strcmp(token, "title")) {
 			/* get map title */
 			token = Com_EParse(text, errhead, filename);
 			if (!text)
@@ -226,7 +367,7 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 
 			Q_strncpyz(a->title, token, sizeof(a->title));
 			continue;
-		} else if (!strncmp(token, "multiplayer", 11)) {
+		} else if (!strcmp(token, "multiplayer")) {
 			/* get map title */
 			token = Com_EParse(text, errhead, filename);
 			if (!text)
@@ -235,17 +376,17 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 			/* a multiplayer only tile - forced to be exactly once in the map when
 			 * we are playing a multiplayer match */
 			if (sv_maxclients->integer >= 2) {
-				for (i = 0; i < map->numTiles; i++)
-					if (!strcmp(token, map->mTile[i].id)) {
-						a->min[i] = 1;
-						a->max[i] = 1;
-						break;
-					}
-				if (i == map->numTiles)
+				const mTile_t *t = SV_GetMapTile(map, token);
+				if (t != NULL) {
+					const ptrdiff_t i = t - map->mTile;
+					a->min[i] = 1;
+					a->max[i] = 1;
+				} else {
 					Com_Error(ERR_DROP, "Could not find multiplayer tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
+				}
 			}
 			continue;
-		} else if (!strncmp(token, "size", 4)) {
+		} else if (!strcmp(token, "size")) {
 			/* get map size */
 			token = Com_EParse(text, errhead, filename);
 			if (!text)
@@ -254,7 +395,7 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 			sscanf(token, "%i %i", &a->width, &a->height);
 			a->size = a->width * a->height;
 			continue;
-		} else if (!strncmp(token, "grid", 4)) {
+		} else if (!strcmp(token, "grid")) {
 			/* get map size */
 			token = Com_EParse(text, errhead, filename);
 			if (!text)
@@ -262,83 +403,83 @@ static int SV_ParseAssembly (mapInfo_t *map, const char *filename, const char **
 
 			sscanf(token, "%i %i", &a->dx, &a->dy);
 			continue;
+		/* chose a tile from a tileset */
+		} else if (!strcmp(token, "tileset")) {
+			token = SV_GetTileFromTileSet(map, filename, text, a);
 		/* fix tilename "x y" */
-		} else if (!strncmp(token, "fix", 3)) {
+		} else if (!strcmp(token, "fix")) {
+			const mTile_t *t;
+
 			/* get tile */
 			token = Com_EParse(text, errhead, filename);
 			if (!text)
 				break;
 
-			for (i = 0; i < map->numTiles; i++)
-				if (!strcmp(token, map->mTile[i].id)) {
-					if (a->numFixed >= MAX_FIXEDTILES)
-						Com_Error(ERR_DROP, "SV_ParseAssembly: Too many fixed tiles in assembly '%s'\n", a->id);
-
-					/* get coordinates */
-					token = Com_EParse(text, errhead, filename);
-					if (!text)
-						Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s - could not get coordinates for fixed tile", filename);
-
-					sscanf(token, "%i %i", &x, &y);
-					if (x < 0 || x >= MAX_RANDOM_MAP_WIDTH) {
-						Com_Error(ERR_DROP, "SV_ParseAssembly: Error, invalid fixed coordinates given for x (%i) boundaries are: [0:%i].",
-								x, MAX_RANDOM_MAP_WIDTH - 1);
-					} else if (y < 0 || y >= MAX_RANDOM_MAP_HEIGHT) {
-						Com_Error(ERR_DROP, "SV_ParseAssembly: Error, invalid fixed coordinates given for y (%i) - boundaries are: [0:%i].",
-								y, MAX_RANDOM_MAP_HEIGHT - 1);
-					}
-					a->fX[a->numFixed] = x;
-					a->fY[a->numFixed] = y;
-					a->fT[a->numFixed] = i;
-					a->numFixed++;
+			if (token[0] == '*') {
+				token = SV_GetCvarToken(a, token + 1, filename, text, errhead);
+				if (token == NULL)
 					break;
+			} else if (!strcmp(token, "tileset")) {
+				token = SV_GetTileFromTileSet(map, filename, text, a);
+			}
+
+			t = SV_GetMapTile(map, token);
+			if (t != NULL) {
+				const ptrdiff_t i = t - map->mTile;
+				if (a->numFixed >= MAX_FIXEDTILES)
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Too many fixed tiles in assembly '%s'", a->id);
+
+				/* get coordinates */
+				token = Com_EParse(text, errhead, filename);
+				if (!text)
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s - could not get coordinates for fixed tile", filename);
+
+				sscanf(token, "%i %i", &x, &y);
+				if (x < 0 || x >= MAX_RANDOM_MAP_WIDTH) {
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error, invalid fixed coordinates given for x (%i) boundaries are: [0:%i].",
+							x, MAX_RANDOM_MAP_WIDTH - 1);
+				} else if (y < 0 || y >= MAX_RANDOM_MAP_HEIGHT) {
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error, invalid fixed coordinates given for y (%i) - boundaries are: [0:%i].",
+							y, MAX_RANDOM_MAP_HEIGHT - 1);
 				}
-			if (i == map->numTiles)
+				a->fX[a->numFixed] = x;
+				a->fY[a->numFixed] = y;
+				a->fT[a->numFixed] = i;
+				a->numFixed++;
+			} else
 				Com_Error(ERR_DROP, "Could not find fixed tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
 			continue;
 		/* <format>*cvarname <defaultvalue> "min max"</format> */
-		} else if (*token == '*') {
-			/* '*' is: replace by cvar value */
-			token++; /* strip '*' */
-			Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement: %s\n", token);
-			Q_strncpyz(cvarName, token, sizeof(cvarName));
-			token = Com_EParse(text, errhead, filename);
-			if (!text || *token == '}')
+		} else if (token[0] == '*') {
+			token = SV_GetCvarToken(a, token + 1, filename, text, errhead);
+			if (token == NULL)
 				break;
-			cvarValue = Cvar_GetString(cvarName);
-			Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement value: %s\n", cvarValue);
-			if (*cvarValue != '+') {
-				Com_Printf("SV_ParseAssembly: warning - cvar '%s' value doesn't seam to be a valid tile id '%s' - set to default '%s'\n", cvarName, cvarValue, token);
-				Cvar_Set(cvarName, token);
-				if (*token != '+')
-					Com_Error(ERR_DROP, "SV_ParseAssembly: wrong tile id in assembly '%s'", a->id);
-			} else
-				token = cvarValue;
 		}
 
-		for (i = 0; i < map->numTiles; i++)
-			if (!strcmp(token, map->mTile[i].id)) {
-				/* get min and max tile number */
-				token = Com_EParse(text, errhead, filename);
-				if (!text || *token == '}')
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (invalid syntax for tile %s)", filename, map->mTile[i].id);
+		tile = SV_GetMapTile(map, token);
+		if (tile != NULL) {
+			const ptrdiff_t i = tile - map->mTile;
+			/* get min and max tile number */
+			token = Com_EParse(text, errhead, filename);
+			if (!text || *token == '}')
+				Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (invalid syntax for tile %s)", filename, tile->id);
 
-				if (!strstr(token, " "))
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min max value of tile %s)", filename, map->mTile[i].id);
+			if (!strstr(token, " "))
+				Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min max value of tile %s)", filename, tile->id);
 
-				sscanf(token, "%i %i", &x, &y);
-				a->min[i] = x;
-				a->max[i] = y;
-				if (a->min[i] > a->max[i])
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min is bigger than max for tile %s)", filename, map->mTile[i].id);
-				if (a->max[i] <= 0)
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (max is <= 0 for tile %s)", filename, map->mTile[i].id);
-				break;
-			}
-		if (i == map->numTiles)
+			sscanf(token, "%i %i", &x, &y);
+			a->min[i] = x;
+			a->max[i] = y;
+			if (a->min[i] > a->max[i])
+				Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min is bigger than max for tile %s)", filename, tile->id);
+			if (a->max[i] <= 0)
+				Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (max is <= 0 for tile %s)", filename, tile->id);
+		} else {
 			Com_Error(ERR_DROP, "Could not find tile: '%s' in assembly '%s' (%s)", token, a->id, filename);
+		}
 	} while (text);
-	return 1;
+
+	return qtrue;
 }
 
 
@@ -631,7 +772,7 @@ static void SV_RemoveTile (mapInfo_t *map, int* idx, int* pos)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static qboolean SV_AddRandomTile (mapInfo_t *map, int* idx, int* pos)
+static qboolean SV_PickRandomTile (mapInfo_t *map, int* idx, int* pos)
 {
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 	const int numToPlace = map->numToPlace;
@@ -649,9 +790,7 @@ static qboolean SV_AddRandomTile (mapInfo_t *map, int* idx, int* pos)
 
 				if ((x % mAsm->dx == 0)
 					&& (y % mAsm->dy == 0)
-					&& SV_FitTile(map, mToPlace[*idx].tile, x, y))
-				{
-					SV_AddTile(map, mToPlace[*idx].tile, x, y, *idx, *pos);
+					&& SV_FitTile(map, mToPlace[*idx].tile, x, y)) {
 					return qtrue;
 				}
 
@@ -687,7 +826,6 @@ static qboolean SV_AddMissingTiles (mapInfo_t *map)
 	int idx[CHECK_ALTERNATIVES_COUNT];
 	int pos[CHECK_ALTERNATIVES_COUNT];
 	int rating[CHECK_ALTERNATIVES_COUNT];
-	const int startPlaced = map->numPlaced;
 	mapInfo_t backup;
 	const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
 	const int mapW = mAsm->width;
@@ -704,14 +842,16 @@ static qboolean SV_AddMissingTiles (mapInfo_t *map)
 
 		/* try some random tiles at random positions */
 		for (i = 0; i < CHECK_ALTERNATIVES_COUNT; i++) {
-			if (!SV_AddRandomTile(map, &idx[i], &pos[i])) {
+			int x, y;
+			if (!SV_PickRandomTile(map, &idx[i], &pos[i])) {
 				/* remove all tiles placed by this function */
-				while (map->numPlaced > startPlaced)
-					memcpy(map, &backup, sizeof(*map));
-					/* SV_RemoveTile(map, NULL, NULL); */
-
+				memcpy(map, &backup, sizeof(*map));
 				return qfalse;
 			}
+
+			x = pos[i] % mapW;
+			y = pos[i] / mapW;
+			SV_AddTile(map, mToPlace[idx[i]].tile, x, y, idx[i], pos[i]);
 
 			if (SV_TestFilled(map))
 				return qtrue;
@@ -855,6 +995,8 @@ static int SV_AssemblyThread (void* data)
 {
 	mapInfo_t *map = (mapInfo_t*) data;
 
+	srand(time(NULL));
+
 	SV_AddMapTiles(map);
 
 	/* the first thread to reach this point, gets the semaphore */
@@ -902,7 +1044,6 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	mapInfo_t *maps[ASSEMBLE_THREADS];
 	int i;
 	static int timeout = 5000;  /* wait for 5 sec initially, double it every time it times out */
-	int now = Sys_Milliseconds();
 	const int threadno = sv_threads->integer < ASSEMBLE_THREADS ? sv_threads->integer : ASSEMBLE_THREADS;
 
 	threadID = 0;
@@ -961,11 +1102,77 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	SDL_DestroySemaphore(mapSem);
 	mapSem = NULL;
 	threadID = 0;
-	now = Sys_Milliseconds() - now;
-
-	Com_Printf("SV_ParallelSearch: Map assembly in %i ms, retries included\n", now);
+	timeout = 5000;
 
 	return 0;
+}
+
+/**
+ * @brief Parses an ump file that contains the random map definition
+ * @param[in] name The basename of the ump file (without extension)
+ * @param[out] map The data structure to store the parsed data in
+ * @param[in] inherit When @c true, this is called to inherit tile definitions
+ * from another ump file (no assemblies)
+ */
+static void SV_ParseUMP (const char *name, mapInfo_t *map, qboolean inherit)
+{
+	char filename[MAX_QPATH];
+	byte *buf;
+	const char *text, *token;
+
+	/* load the map info */
+	Com_sprintf(filename, sizeof(filename), "maps/%s.ump", name);
+	FS_LoadFile(filename, &buf);
+	if (!buf)
+		Com_Error(ERR_DROP, "SV_ParseUMP: Map assembly info '%s' not found", filename);
+
+	/* parse it */
+	text = (const char*)buf;
+	do {
+		token = Com_Parse(&text);
+		if (!text)
+			break;
+
+		if (!strcmp(token, "extends")) {
+			token = Com_Parse(&text);
+			SV_ParseUMP(token, map, qtrue);
+		} else if (!strcmp(token, "base")) {
+			token = Com_Parse(&text);
+			if (inherit)
+				Q_strncpyz(map->inheritBasePath, token, sizeof(map->inheritBasePath));
+			else
+				Q_strncpyz(map->basePath, token, sizeof(map->basePath));
+		} else if (!strcmp(token, "tileset")) {
+			if (map->numTileSets >= MAX_TILESETS)
+				Com_Printf("SV_ParseUMP: Too many map tileset found in (%s)\n", filename);
+			else if (SV_ParseMapTileSet(filename, &text, map, inherit))
+				map->numTileSets++;
+		} else if (!strcmp(token, "tile")) {
+			if (map->numTiles >= MAX_TILETYPES)
+				Com_Printf("SV_ParseUMP: Too many map tile types (%s)\n", filename);
+			else if (SV_ParseMapTile(filename, &text, map, inherit))
+				map->numTiles++;
+		} else if (!strcmp(token, "assembly")) {
+			if (inherit) {
+				FS_SkipBlock(&text);
+			} else {
+				if (map->numAssemblies >= MAX_MAPASSEMBLIES)
+					Com_Printf("SV_ParseUMP: Too many map assemblies (%s)\n", filename);
+				else if (SV_ParseAssembly(map, filename, &text, &map->mAssembly[map->numAssemblies]))
+					map->numAssemblies++;
+			}
+		} else if (token[0] == '{') {
+			Com_Printf("SV_ParseUMP: Skipping unknown block\n");
+			/* ignore unknown block */
+			text = strchr(text, '}') + 1;
+			if (!text)
+				break;
+		} else
+			Com_Printf("SV_ParseUMP: Unknown token '%s' (%s)\n", token, filename);
+	} while (text);
+
+	/* free the file */
+	FS_FreeFile(buf);
 }
 
 /**
@@ -987,74 +1194,25 @@ static int SV_ParallelSearch (mapInfo_t *map)
  */
 mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap, char *asmPos)
 {
-	char filename[MAX_QPATH];
-	char basePath[MAX_QPATH];
-	byte *buf;
-	const char *text, *token;
 	int i;
-	mapInfo_t *map;
 	mAssembly_t *mAsm;
-
-	/* load the map info */
-	Com_sprintf(filename, sizeof(filename), "maps/%s.ump", name);
-	FS_LoadFile(filename, &buf);
-	if (!buf)
-		Com_Error(ERR_DROP, "SV_AssembleMap: Map assembly info '%s' not found", filename);
+	mapInfo_t *map;
 
 	map = Mem_Alloc(sizeof(*map));
 	Q_strncpyz(map->name, name, sizeof(map->name));
 
-	/* parse it */
-	text = (const char*)buf;
-	basePath[0] = 0;
-	do {
-		token = Com_Parse(&text);
-		if (!text)
-			break;
-
-		if (!strcmp(token, "base")) {
-			token = Com_Parse(&text);
-			Q_strncpyz(basePath, token, sizeof(basePath));
-		} else if (!strcmp(token, "tile")) {
-			if (map->numTiles >= MAX_TILETYPES) {
-				Com_Printf("SV_ParseMapTile: Too many map tile types (%s)\n", filename);
-			} else {
-				if (SV_ParseMapTile(filename, &text, &map->mTile[map->numTiles]))
-					map->numTiles++;
-			}
-		}
-		else if (!strcmp(token, "assembly")) {
-			if (map->numAssemblies >= MAX_MAPASSEMBLIES) {
-				Com_Printf("SV_ParseAssembly: Too many map assemblies (%s)\n", filename);
-				Mem_Free(map);
-				return NULL;
-			}
-			if (SV_ParseAssembly(map, filename, &text, &map->mAssembly[map->numAssemblies]))
-				map->numAssemblies++;
-		}
-		else if (!strcmp(token, "{")) {
-			Com_Printf("SV_AssembleMap: Skipping unknown block\n");
-			/* ignore unknown block */
-			text = strchr(text, '}') + 1;
-			if (!text)
-				break;
-		} else
-			Com_Printf("SV_AssembleMap: Unknown token '%s' (%s)\n", token, filename);
-	} while (text);
-
-	/* free the file */
-	FS_FreeFile(buf);
+	SV_ParseUMP(name, map, qfalse);
 
 	/* check for parsed tiles and assemblies */
 	if (!map->numTiles)
-		Com_Error(ERR_DROP, "No map tiles defined (%s)!", filename);
+		Com_Error(ERR_DROP, "No map tiles defined (%s)!", name);
 #ifdef DEBUG
 	else
 		Com_DPrintf(DEBUG_SERVER, "numTiles: %i\n", map->numTiles);
 #endif
 
 	if (!map->numAssemblies)
-		Com_Error(ERR_DROP, "No map assemblies defined (%s)!", filename);
+		Com_Error(ERR_DROP, "No map assemblies defined (%s)!", name);
 #ifdef DEBUG
 	else
 		Com_DPrintf(DEBUG_SERVER, "numAssemblies: %i\n", map->numAssemblies);
@@ -1100,17 +1258,13 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 			return NULL;
 		}
 	} else {
-		int now = Sys_Milliseconds();
 		SV_AddMapTiles(map);
-		now = Sys_Milliseconds() - now;
-		Com_Printf("SV_AssembleMap: Sequential map assembly in %i ms\n", now);
 	}
 
 	/* prepare map and pos strings */
-	if (basePath[0]) {
-		asmMap[0] = '-';
-		Q_strncpyz(&asmMap[1], basePath, MAX_QPATH - 1);
-	}
+	if (map->basePath[0])
+		Com_sprintf(asmMap, sizeof(map->basePath) + 1, "-%s", map->basePath);
+
 	asmPos[0] = 0;
 
 	/* generate the strings */
@@ -1120,9 +1274,9 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 		if (sv_dumpmapassembly->integer)
 			SV_DumpPlaced(map, i);
 
-		if(asmMap[0])
+		if (asmMap[0])
 			Q_strcat(asmMap, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-		if(asmPos[0])
+		if (asmPos[0])
 			Q_strcat(asmPos, " ", MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 
 		Q_strcat(asmMap, va("%s", pl->tile->id), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
@@ -1135,28 +1289,4 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 
 	assert(map);
 	return map;
-}
-
-/**
- * @brief Get the map title for a given map
- * @note the title string must be translated client side
- * @return Never NULL - mapname or maptitle (if defined in assembly)
- */
-const char* SV_GetMapTitle (const mapInfo_t *map, const char* const mapname)
-{
-	assert(mapname);
-
-	if (mapname[0] == '+') {
-		const mAssembly_t *mAsm = &map->mAssembly[map->mAsm];
-		if (mAsm && mAsm->title[0]) {
-			/* return the assembly title itself - must be translated client side */
-			if (mAsm->title[0] == '_')
-				return mAsm->title + 1;
-			else {
-				Com_Printf("The assembly title '%s' is not marked as translatable\n", mAsm->title);
-				return mAsm->title;
-			}
-		}
-	}
-	return mapname;
 }

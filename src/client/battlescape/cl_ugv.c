@@ -23,34 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "cl_ugv.h"
+#include "../client.h"
 #include "cl_actor.h"
 #include "../cl_team.h"
 #include "../cl_game.h"
-
-/**
- * @brief Updates the UGV cvars for the given "character".
- *
- * The models and stats that are displayed in the menu are stored in cvars.
- * These cvars are updated here when you select another character.
- *
- * @param chr Pointer to character_t (may not be null)
- * @sa CL_ActorCvars
- * @sa CL_ActorSelect
- */
-void CL_UGVCvars (const character_t *chr, const char* cvarPrefix)
-{
-	assert(chr);
-
-	GAME_CharacterCvars(chr);
-
-	CL_CharacterSkillAndScoreCvars(chr, cvarPrefix);
-
-	Cvar_Set("mn_lweapon", "");
-	Cvar_Set("mn_rweapon", "");
-	Cvar_Set("mn_vmnd", "0");
-	Cvar_Set("mn_tmnd", va("%s (0)", CL_ActorGetSkillString(chr->score.skills[ABILITY_MIND])));
-}
 
 /**
  * @brief Adds an UGV to the render entities.

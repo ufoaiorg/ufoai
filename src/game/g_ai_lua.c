@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define luaL_dobuffer(L, b, n, s) \
 	(luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
 #define AIL_invalidparameter(n)	\
-	gi.dprintf("AIL: Invalid parameter #%d in '%s'.\n", n, __func__)
+	gi.DPrintf("AIL: Invalid parameter #%d in '%s'.\n", n, __func__)
 
 /*
  * Helper functions
@@ -497,7 +497,7 @@ static int pos3L_goto (lua_State *L)
 
 	/* Calculate move table. */
 	G_MoveCalc(0, AIL_ent, AIL_ent->pos, crouchingState, AIL_ent->TU);
-	gi.MoveStore(gi.pathingMap);
+	gi.MoveStore(&level.pathingMap);
 
 	/* Move. */
 	pos = lua_topos3(L, 1);
@@ -560,13 +560,13 @@ static int AIL_print (lua_State *L)
 				break;
 			}
 		}
-		gi.dprintf("%s%s", (i > 1) ? "\t" : "", s);
+		gi.DPrintf("%s%s", (i > 1) ? "\t" : "", s);
 		lua_pop(L, 1); /* Pop the value */
 		if (meta) /* Meta creates an additional string. */
 			lua_pop(L, 1);
 	}
 
-	gi.dprintf("\n");
+	gi.DPrintf("\n");
 	return 0;
 }
 
@@ -766,8 +766,8 @@ static int AIL_roundsleft (lua_State *L)
  */
 static int AIL_canreload (lua_State *L)
 {
-	lua_pushboolean(L, G_ClientCanReload(AIL_player, AIL_ent, gi.csi->idRight));
-	lua_pushboolean(L, G_ClientCanReload(AIL_player, AIL_ent, gi.csi->idLeft));
+	lua_pushboolean(L, G_ClientCanReload(AIL_ent, gi.csi->idRight));
+	lua_pushboolean(L, G_ClientCanReload(AIL_ent, gi.csi->idLeft));
 	return 2;
 }
 
@@ -823,7 +823,7 @@ static int AIL_positionshoot (lua_State *L)
 
 	/* Calculate move table. */
 	G_MoveCalc(0, ent, ent->pos, crouchingState, ent->TU);
-	gi.MoveStore(gi.pathingMap);
+	gi.MoveStore(&level.pathingMap);
 
 	/* set borders */
 	xl = (int) ent->pos[0] - dist;
@@ -848,7 +848,7 @@ static int AIL_positionshoot (lua_State *L)
 				pos_t tu;
 				/* Can we see the target? */
 				gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, check);
-				tu = gi.MoveLength(gi.pathingMap, to, G_IsCrouched(ent) ? 1 : 0, qtrue);
+				tu = gi.MoveLength(&level.pathingMap, to, G_IsCrouched(ent) ? 1 : 0, qtrue);
 				if (tu > ent->TU || tu == ROUTING_NOT_REACHABLE)
 					continue;
 				/* Better spot (easier to get to). */
@@ -970,7 +970,7 @@ void AIL_ActorThink (player_t * player, edict_t * ent)
 	lua_State *L;
 
 	/* The Lua State we will work with. */
-	L = ent->chr.AI.L;
+	L = ent->AI.L;
 
 	/* Set the global player and edict */
 	AIL_ent = ent;
@@ -979,7 +979,7 @@ void AIL_ActorThink (player_t * player, edict_t * ent)
 	/* Try to run the function. */
 	lua_getglobal(L, "think");
 	if (lua_pcall(L, 0, 0, 0)) { /* error has occured */
-		gi.dprintf("Error while running Lua: %s\n",
+		gi.DPrintf("Error while running Lua: %s\n",
 			lua_isstring(L, -1) ? lua_tostring(L, -1) : "Unknown Error");
 	}
 
@@ -1004,14 +1004,14 @@ int AIL_InitActor (edict_t * ent, char *type, char *subtype)
 	char *fbuf;
 
 	/* Prepare the AI */
-	AI = &ent->chr.AI;
+	AI = &ent->AI;
 	Q_strncpyz(AI->type, type, sizeof(AI->type));
 	Q_strncpyz(AI->subtype, subtype, sizeof(AI->type));
 
 	/* Create the new Lua state */
 	AI->L = luaL_newstate();
 	if (AI->L == NULL) {
-		gi.dprintf("Unable to create Lua state.\n");
+		gi.DPrintf("Unable to create Lua state.\n");
 		return -1;
 	}
 
@@ -1026,11 +1026,11 @@ int AIL_InitActor (edict_t * ent, char *type, char *subtype)
 	Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
 	size = gi.FS_LoadFile(path, (byte **) &fbuf);
 	if (size == 0) {
-		gi.dprintf("Unable to load Lua file '%s'.\n", path);
+		gi.DPrintf("Unable to load Lua file '%s'.\n", path);
 		return -1;
 	}
 	if (luaL_dobuffer(AI->L, fbuf, size, path)) {
-		gi.dprintf("Unable to parse Lua file '%s'\n", path);
+		gi.DPrintf("Unable to parse Lua file '%s'\n", path);
 		gi.FS_FreeFile(fbuf);
 		return -1;
 	}
@@ -1045,8 +1045,7 @@ int AIL_InitActor (edict_t * ent, char *type, char *subtype)
  */
 static void AIL_CleanupActor (edict_t * ent)
 {
-	AI_t *AI;
-	AI = &ent->chr.AI;
+	AI_t *AI = &ent->AI;
 
 	/* Cleanup. */
 	if (AI->L != NULL) {

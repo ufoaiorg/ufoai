@@ -52,8 +52,12 @@ static model_t *r_worldmodel;
 /**
  * @brief Load the lightmap data
  */
-static void R_ModLoadLighting (const lump_t *l, qboolean day)
+static void R_ModLoadLighting (const lump_t *l)
 {
+	/* map has no lightmap */
+	if (l->filelen == 0)
+		return;
+
 	r_worldmodel->bsp.lightdata = Mem_PoolAlloc(l->filelen, vid_lightPool, 0);
 	r_worldmodel->bsp.lightquant = *(const byte *) (mod_base + l->fileofs);
 	memcpy(r_worldmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
@@ -341,9 +345,6 @@ static void R_ModLoadSurfaces (qboolean day, const lump_t *l)
 
 		/* create lightmaps */
 		R_CreateSurfaceLightmap(out);
-
-		/* and flare */
-		R_CreateSurfaceFlare(out);
 
 		out->tile = r_numMapTiles - 1;
 	}
@@ -763,58 +764,61 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 	/* determine the maximum counts for each rendered type in order to
 	 * allocate only what is necessary for the specified model */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
-		if (surf->texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
-			if (surf->texinfo->flags & SURF_WARP)
+		const mBspTexInfo_t *texinfo = surf->texinfo;
+		const material_t *material = &texinfo->image->material;
+		if (texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
+			if (texinfo->flags & SURF_WARP)
 				mod->bsp.blend_warp_surfaces->count++;
 			else
 				mod->bsp.blend_surfaces->count++;
 		} else {
-			if (surf->texinfo->flags & SURF_WARP)
+			if (texinfo->flags & SURF_WARP)
 				mod->bsp.opaque_warp_surfaces->count++;
-			else if (surf->texinfo->flags & SURF_ALPHATEST)
+			else if (texinfo->flags & SURF_ALPHATEST)
 				mod->bsp.alpha_test_surfaces->count++;
 			else
 				mod->bsp.opaque_surfaces->count++;
 		}
 
-		if (surf->texinfo->image->material.flags & STAGE_RENDER)
+		if (material->flags & STAGE_RENDER)
 			mod->bsp.material_surfaces->count++;
 
-		if (surf->texinfo->image->material.flags & STAGE_FLARE)
+		if (material->flags & STAGE_FLARE)
 			mod->bsp.flare_surfaces->count++;
 	}
 
 	/* allocate the surfaces pointers based on the counts */
 	for (i = 0; i < NUM_SURFACES_ARRAYS; i++) {
-		if (mod->bsp.sorted_surfaces[i]->count) {
-			mod->bsp.sorted_surfaces[i]->surfaces = (mBspSurface_t **)Mem_PoolAlloc(
-					sizeof(mBspSurface_t *) * mod->bsp.sorted_surfaces[i]->count, vid_modelPool, 0);
-
-			mod->bsp.sorted_surfaces[i]->count = 0;
+		mBspSurfaces_t *surfaces = mod->bsp.sorted_surfaces[i];
+		if (surfaces->count) {
+			surfaces->surfaces = (mBspSurface_t **)Mem_PoolAlloc(sizeof(*surfaces) * surfaces->count, vid_modelPool, 0);
+			surfaces->count = 0;
 		}
 	}
 
 	/* iterate the surfaces again, populating the allocated arrays based
 	 * on primary render type */
 	for (i = 0, surf = s; i < ns; i++, surf++) {
-		if (surf->texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
-			if (surf->texinfo->flags & SURF_WARP)
+		const mBspTexInfo_t *texinfo = surf->texinfo;
+		const material_t *material = &texinfo->image->material;
+		if (texinfo->flags & (SURF_BLEND33 | SURF_BLEND66)) {
+			if (texinfo->flags & SURF_WARP)
 				R_SurfaceToSurfaces(mod->bsp.blend_warp_surfaces, surf);
 			else
 				R_SurfaceToSurfaces(mod->bsp.blend_surfaces, surf);
 		} else {
-			if (surf->texinfo->flags & SURF_WARP)
+			if (texinfo->flags & SURF_WARP)
 				R_SurfaceToSurfaces(mod->bsp.opaque_warp_surfaces, surf);
-			else if (surf->texinfo->flags & SURF_ALPHATEST)
+			else if (texinfo->flags & SURF_ALPHATEST)
 				R_SurfaceToSurfaces(mod->bsp.alpha_test_surfaces, surf);
 			else
 				R_SurfaceToSurfaces(mod->bsp.opaque_surfaces, surf);
 		}
 
-		if (surf->texinfo->image->material.flags & STAGE_RENDER)
+		if (material->flags & STAGE_RENDER)
 			R_SurfaceToSurfaces(mod->bsp.material_surfaces, surf);
 
-		if (surf->texinfo->image->material.flags & STAGE_FLARE)
+		if (material->flags & STAGE_FLARE)
 			R_SurfaceToSurfaces(mod->bsp.flare_surfaces, surf);
 	}
 
@@ -822,16 +826,16 @@ static void R_LoadSurfacesArrays_ (model_t *mod)
 	R_SortSurfacesArrays(mod);
 }
 
-static void R_LoadSurfacesArrays (model_t *mod)
+static void R_LoadSurfacesArrays (void)
 {
 	int i;
 
-	R_LoadSurfacesArrays_(mod);
+	for (i = 0; i < r_numMapTiles; i++)
+		R_LoadSurfacesArrays_(r_mapTiles[i]);
 
 	for (i = 0; i < r_numModelsInline; i++)
 		R_LoadSurfacesArrays_(&r_modelsInline[i]);
 }
-
 
 /**
  * @sa R_SetParent
@@ -966,7 +970,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	R_ModLoadNormals(&header->lumps[LUMP_NORMALS]);
 	R_ModLoadEdges(&header->lumps[LUMP_EDGES]);
 	R_ModLoadSurfedges(&header->lumps[LUMP_SURFEDGES]);
-	R_ModLoadLighting(&header->lumps[lightingLump], day);
+	R_ModLoadLighting(&header->lumps[lightingLump]);
 	R_ModLoadPlanes(&header->lumps[LUMP_PLANES]);
 	R_ModLoadTexinfo(&header->lumps[LUMP_TEXINFO]);
 	R_ModLoadSurfaces(day, &header->lumps[LUMP_FACES]);
@@ -978,14 +982,19 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 
 	R_LoadBspVertexArrays(r_worldmodel);
 
-	R_LoadSurfacesArrays(r_worldmodel);
-
 	/* in case of random map assembly shift some vectors */
 	if (VectorNotEmpty(shift))
 		R_ModShiftTile();
 
 
 	FS_FreeFile(buffer);
+}
+
+static void R_ModEndLoading (const char *mapName)
+{
+	R_EndBuildingLightmaps();
+	R_LoadMaterials(mapName);
+	R_LoadSurfacesArrays();
 }
 
 /**
@@ -1005,7 +1014,7 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
  * @note This function is called for listen servers, too. This loads the bsp
  * struct for rendering it. The @c CM_LoadMap code only loads the collision
  * and pathfinding stuff.
- * @sa MN_BuildRadarImageList
+ * @sa UI_BuildRadarImageList
  */
 void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const char *mapName)
 {
@@ -1017,12 +1026,6 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 	assert(mapName);
 
 	R_FreeWorldImages();
-
-	if (mapName[0] == '+' || mapName[0] == '.')
-		R_LoadMaterials(mapName + 1);
-	/* already assembled maps via console command? Skip them */
-	else if (mapName[0] != '-')
-		R_LoadMaterials(mapName);
 
 	/* clear any lights leftover in the active list from previous maps */
 	R_ClearActiveLights();
@@ -1038,7 +1041,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 		const char *token = Com_Parse(&tiles);
 		if (!tiles) {
 			/* finish */
-			R_EndBuildingLightmaps();
+			R_ModEndLoading(mapName);
 			return;
 		}
 
@@ -1072,7 +1075,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 		} else {
 			/* load only a single tile, if no positions are specified */
 			R_ModAddMapTile(name, day, 0, 0, 0);
-			R_EndBuildingLightmaps();
+			R_ModEndLoading(mapName);
 			return;
 		}
 	}
@@ -1089,11 +1092,12 @@ void R_ModReloadSurfacesArrays (void)
 
 	for (i = 0; i < r_numMapTiles; i++) {
 		model_t *mod = r_mapTiles[i];
-		for (j = 0; j < NUM_SURFACES_ARRAYS; j++)
+		const size_t size = lengthof(mod->bsp.sorted_surfaces);
+		for (j = 0; j < size; j++)
 			if (mod->bsp.sorted_surfaces[j]) {
 				Mem_Free(mod->bsp.sorted_surfaces[j]);
 				mod->bsp.sorted_surfaces[j] = NULL;
 			}
-		R_LoadSurfacesArrays(mod);
 	}
+	R_LoadSurfacesArrays();
 }

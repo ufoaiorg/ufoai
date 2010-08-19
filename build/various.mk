@@ -1,3 +1,10 @@
+ifeq ($(wildcard .svn),.svn)
+	SVN_REV2=-$(shell LANG=C svn info | awk '$$1 == "Revision:" {print $$2; exit 0}')
+	ifeq ($(SVN_REV2),-)
+		SVN_REV2=
+	endif
+endif
+
 # sync sourceforget.net svn to local svn dir
 LOCAL_SVN_DIR ?= /var/lib/svn
 rsync:
@@ -8,14 +15,10 @@ doxygen-docs:
 	doxygen src/docs/doxyall
 
 # debian packages
-# build this first - install ufoai-tools and then build debdata
-debbinary:
-	debuild binary-arch
+deb-pre:
+	sed 's/-SVNREVISION/$(SVN_REV2)/' debian/changelog.in > debian/changelog
 
-debdata:
-	debuild binary-indep
-
-deb:
+deb: deb-pre
 	debuild binary
 
 pdf-manual:
@@ -31,6 +34,7 @@ help:
 	@echo " * deb          - Builds a debian package"
 	@echo " * lang         - Compiles the language files"
 	@echo " * maps         - Compiles the maps"
+	@echo " * models       - Compiles the model mdx files (faster model loading)"
 	@echo " * pk3          - Generate the pk3 archives for the installers"
 	@echo " * rsync        - Creates a local copy of the whole svn (no checkout)"
 	@echo " * update-po    - Updates the po files with latest source and script files"

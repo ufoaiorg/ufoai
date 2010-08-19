@@ -78,15 +78,15 @@ typedef struct
 	musicStream_t musicStream;
 } ogmCinematic_t;
 
-static ogmCinematic_t ogmCin;
-
 static yuvTable_t ogmCin_yuvTable;
+
+#define OGMCIN (*((ogmCinematic_t*)cin->codecData))
 
 #define OGM_CINEMATIC_BPP 4
 
 #ifdef HAVE_XVID_H
 
-static int CIN_XVID_Init (void)
+static int CIN_XVID_Init (cinematic_t *cin)
 {
 	int ret;
 
@@ -114,12 +114,12 @@ static int CIN_XVID_Init (void)
 
 	ret = xvid_decore(NULL, XVID_DEC_CREATE, &xvid_dec_create, NULL);
 
-	ogmCin.xvidDecodeHandle = xvid_dec_create.handle;
+	OGMCIN.xvidDecodeHandle = xvid_dec_create.handle;
 
 	return ret;
 }
 
-static int CIN_XVID_Decode (unsigned char *input, int inputSize)
+static int CIN_XVID_Decode (cinematic_t *cin, unsigned char *input, int inputSize)
 {
 	int ret;
 
@@ -127,11 +127,11 @@ static int CIN_XVID_Decode (unsigned char *input, int inputSize)
 
 	/* Reset all structures */
 	memset(&xvid_dec_frame, 0, sizeof(xvid_dec_frame_t));
-	memset(&ogmCin.xvidDecodeStats, 0, sizeof(xvid_dec_stats_t));
+	memset(&OGMCIN.xvidDecodeStats, 0, sizeof(xvid_dec_stats_t));
 
 	/* Set version */
 	xvid_dec_frame.version = XVID_VERSION;
-	ogmCin.xvidDecodeStats.version = XVID_VERSION;
+	OGMCIN.xvidDecodeStats.version = XVID_VERSION;
 
 	/* No general flags to set */
 	xvid_dec_frame.general = XVID_LOWDELAY;
@@ -141,24 +141,24 @@ static int CIN_XVID_Decode (unsigned char *input, int inputSize)
 	xvid_dec_frame.length = inputSize;
 
 	/* Output frame structure */
-	xvid_dec_frame.output.plane[0] = ogmCin.outputBuffer;
-	xvid_dec_frame.output.stride[0] = ogmCin.outputWidth * OGM_CINEMATIC_BPP;
-	if (ogmCin.outputBuffer == NULL)
+	xvid_dec_frame.output.plane[0] = OGMCIN.outputBuffer;
+	xvid_dec_frame.output.stride[0] = OGMCIN.outputWidth * OGM_CINEMATIC_BPP;
+	if (OGMCIN.outputBuffer == NULL)
 		xvid_dec_frame.output.csp = XVID_CSP_NULL;
 	else
 		xvid_dec_frame.output.csp = XVID_CSP_RGBA;
 
-	ret = xvid_decore(ogmCin.xvidDecodeHandle, XVID_DEC_DECODE, &xvid_dec_frame, &ogmCin.xvidDecodeStats);
+	ret = xvid_decore(OGMCIN.xvidDecodeHandle, XVID_DEC_DECODE, &xvid_dec_frame, &OGMCIN.xvidDecodeStats);
 
 	return ret;
 }
 
-static int CIN_XVID_Shutdown (void)
+static int CIN_XVID_Shutdown (cinematic_t *cin)
 {
 	int ret = 0;
 
-	if (ogmCin.xvidDecodeHandle)
-		ret = xvid_decore(ogmCin.xvidDecodeHandle, XVID_DEC_DESTROY, NULL, NULL);
+	if (OGMCIN.xvidDecodeHandle)
+		ret = xvid_decore(OGMCIN.xvidDecodeHandle, XVID_DEC_DESTROY, NULL, NULL);
 
 	return ret;
 }
@@ -167,14 +167,14 @@ static int CIN_XVID_Shutdown (void)
 /**
  * @returns !0 -> no data transferred
  */
-static int CIN_OGM_LoadBlockToSync (void)
+static int CIN_OGM_LoadBlockToSync (cinematic_t *cin)
 {
 	int r = -1;
 
-	if (ogmCin.ogmFile.f || ogmCin.ogmFile.z) {
-		char *buffer = ogg_sync_buffer(&ogmCin.oy, OGG_BUFFER_SIZE);
-		const int bytes = FS_Read(buffer, OGG_BUFFER_SIZE, &ogmCin.ogmFile);
-		ogg_sync_wrote(&ogmCin.oy, bytes);
+	if (OGMCIN.ogmFile.f || OGMCIN.ogmFile.z) {
+		char *buffer = ogg_sync_buffer(&OGMCIN.oy, OGG_BUFFER_SIZE);
+		const int bytes = FS_Read(buffer, OGG_BUFFER_SIZE, &OGMCIN.ogmFile);
+		ogg_sync_wrote(&OGMCIN.oy, bytes);
 
 		r = (bytes == 0);
 	}
@@ -185,7 +185,7 @@ static int CIN_OGM_LoadBlockToSync (void)
 /**
  * @return !0 -> no data transferred (or not for all streams)
  */
-static int CIN_OGM_LoadPagesToStream (void)
+static int CIN_OGM_LoadPagesToStream (cinematic_t *cin)
 {
 	int r = -1;
 	int audioPages = 0;
@@ -194,15 +194,15 @@ static int CIN_OGM_LoadPagesToStream (void)
 	ogg_page og;
 
 	while (!audioPages || !videoPages) {
-		if (ogg_sync_pageout(&ogmCin.oy, &og) != 1)
+		if (ogg_sync_pageout(&OGMCIN.oy, &og) != 1)
 			break;
 
-		if (ogmCin.os_audio.serialno == ogg_page_serialno(&og)) {
-			osptr = &ogmCin.os_audio;
+		if (OGMCIN.os_audio.serialno == ogg_page_serialno(&og)) {
+			osptr = &OGMCIN.os_audio;
 			++audioPages;
 		}
-		if (ogmCin.os_video.serialno == ogg_page_serialno(&og)) {
-			osptr = &ogmCin.os_video;
+		if (OGMCIN.os_video.serialno == ogg_page_serialno(&og)) {
+			osptr = &OGMCIN.os_video;
 			++videoPages;
 		}
 
@@ -223,18 +223,18 @@ static byte rawBuffer[SIZEOF_RAWBUFF];
 /**
  * @return true if audio wants more packets
  */
-static qboolean CIN_OGM_LoadAudioFrame (void)
+static qboolean CIN_OGM_LoadAudioFrame (cinematic_t *cin)
 {
 	ogg_packet op;
 	vorbis_block vb;
 
 	memset(&op, 0, sizeof(op));
 	memset(&vb, 0, sizeof(vb));
-	vorbis_block_init(&ogmCin.vd, &vb);
+	vorbis_block_init(&OGMCIN.vd, &vb);
 
-	while (ogmCin.currentTime > (int) (ogmCin.vd.granulepos * 1000 / ogmCin.vi.rate)) {
+	while (OGMCIN.currentTime > (int) (OGMCIN.vd.granulepos * 1000 / OGMCIN.vi.rate)) {
 		float **pcm;
-		const int samples = vorbis_synthesis_pcmout(&ogmCin.vd, &pcm);
+		const int samples = vorbis_synthesis_pcmout(&OGMCIN.vd, &pcm);
 
 		if (samples > 0) {
 			/* vorbis -> raw */
@@ -242,7 +242,7 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
 			const int channel = 2;
 			int samplesNeeded = sizeof(rawBuffer) / (width * channel);
 			const float *left = pcm[0];
-			const float *right = (ogmCin.vi.channels > 1) ? pcm[1] : pcm[0];
+			const float *right = (OGMCIN.vi.channels > 1) ? pcm[1] : pcm[0];
 			short *ptr = (short*)rawBuffer;
 			int i;
 
@@ -255,15 +255,15 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
 			}
 
 			/* tell libvorbis how many samples we actually consumed */
-			vorbis_synthesis_read(&ogmCin.vd, i);
+			vorbis_synthesis_read(&OGMCIN.vd, i);
 
-			if (!cin.noSound)
-				M_AddToSampleBuffer(&ogmCin.musicStream, ogmCin.vi.rate, i, rawBuffer);
+			if (!cin->noSound)
+				M_AddToSampleBuffer(&OGMCIN.musicStream, OGMCIN.vi.rate, i, rawBuffer);
 		} else {
 			/* op -> vorbis */
-			if (ogg_stream_packetout(&ogmCin.os_audio, &op)) {
+			if (ogg_stream_packetout(&OGMCIN.os_audio, &op)) {
 				if (vorbis_synthesis(&vb, &op) == 0)
-					vorbis_synthesis_blockin(&ogmCin.vd, &vb);
+					vorbis_synthesis_blockin(&OGMCIN.vd, &vb);
 			} else
 				break;
 		}
@@ -271,56 +271,56 @@ static qboolean CIN_OGM_LoadAudioFrame (void)
 
 	vorbis_block_clear(&vb);
 
-	return ogmCin.currentTime > (int)(ogmCin.vd.granulepos * 1000 / ogmCin.vi.rate);
+	return OGMCIN.currentTime > (int)(OGMCIN.vd.granulepos * 1000 / OGMCIN.vi.rate);
 }
 
 /**
- * @return 1 -> loaded a new frame (ogmCin.outputBuffer points to the actual frame), 0 -> no new frame
+ * @return 1 -> loaded a new frame (OGMCIN.outputBuffer points to the actual frame), 0 -> no new frame
  * <0 -> error
  */
 #ifdef HAVE_XVID_H
-static int CIN_XVID_LoadVideoFrame (void)
+static int CIN_XVID_LoadVideoFrame (cinematic_t *cin)
 {
 	int r = 0;
 	ogg_packet op;
 
 	memset(&op, 0, sizeof(op));
 
-	while (!r && (ogg_stream_packetout(&ogmCin.os_video, &op))) {
-		int usedBytes = CIN_XVID_Decode(op.packet, op.bytes);
-		if (ogmCin.xvidDecodeStats.type == XVID_TYPE_VOL) {
-			if (ogmCin.outputWidth != ogmCin.xvidDecodeStats.data.vol.width || ogmCin.outputHeight
-					!= ogmCin.xvidDecodeStats.data.vol.height) {
-				ogmCin.outputWidth = ogmCin.xvidDecodeStats.data.vol.width;
-				ogmCin.outputHeight = ogmCin.xvidDecodeStats.data.vol.height;
-				Com_DPrintf(DEBUG_CLIENT, "[XVID]new resolution %dx%d\n", ogmCin.outputWidth, ogmCin.outputHeight);
+	while (!r && (ogg_stream_packetout(&OGMCIN.os_video, &op))) {
+		int usedBytes = CIN_XVID_Decode(cin, op.packet, op.bytes);
+		if (OGMCIN.xvidDecodeStats.type == XVID_TYPE_VOL) {
+			if (OGMCIN.outputWidth != OGMCIN.xvidDecodeStats.data.vol.width || OGMCIN.outputHeight
+					!= OGMCIN.xvidDecodeStats.data.vol.height) {
+				OGMCIN.outputWidth = OGMCIN.xvidDecodeStats.data.vol.width;
+				OGMCIN.outputHeight = OGMCIN.xvidDecodeStats.data.vol.height;
+				Com_DPrintf(DEBUG_CLIENT, "[XVID]new resolution %dx%d\n", OGMCIN.outputWidth, OGMCIN.outputHeight);
 			}
 
-			if (ogmCin.outputBufferSize < ogmCin.xvidDecodeStats.data.vol.width * ogmCin.xvidDecodeStats.data.vol.height) {
-				ogmCin.outputBufferSize = ogmCin.xvidDecodeStats.data.vol.width * ogmCin.xvidDecodeStats.data.vol.height;
+			if (OGMCIN.outputBufferSize < OGMCIN.xvidDecodeStats.data.vol.width * OGMCIN.xvidDecodeStats.data.vol.height) {
+				OGMCIN.outputBufferSize = OGMCIN.xvidDecodeStats.data.vol.width * OGMCIN.xvidDecodeStats.data.vol.height;
 
 				/* Free old output buffer*/
-				if (ogmCin.outputBuffer)
-					Mem_Free(ogmCin.outputBuffer);
+				if (OGMCIN.outputBuffer)
+					Mem_Free(OGMCIN.outputBuffer);
 
 				/* Allocate the new buffer */
-				ogmCin.outputBuffer = (byte*) Mem_PoolAlloc(ogmCin.outputBufferSize * OGM_CINEMATIC_BPP, cl_genericPool, 0);
-				if (ogmCin.outputBuffer == NULL) {
-					ogmCin.outputBufferSize = 0;
+				OGMCIN.outputBuffer = (byte*) Mem_PoolAlloc(OGMCIN.outputBufferSize * OGM_CINEMATIC_BPP, cl_genericPool, 0);
+				if (OGMCIN.outputBuffer == NULL) {
+					OGMCIN.outputBufferSize = 0;
 					r = -2;
 					break;
 				}
 			}
 
 			/* use the rest of this packet */
-			usedBytes += CIN_XVID_Decode(op.packet + usedBytes, op.bytes - usedBytes);
+			usedBytes += CIN_XVID_Decode(cin, op.packet + usedBytes, op.bytes - usedBytes);
 		}
 
 		/* we got a real output frame ... */
-		if (ogmCin.xvidDecodeStats.type > 0) {
+		if (OGMCIN.xvidDecodeStats.type > 0) {
 			r = 1;
 
-			++ogmCin.videoFrameCount;
+			++OGMCIN.videoFrameCount;
 		}
 	}
 
@@ -380,73 +380,73 @@ static void CIN_THEORA_FrameYUVtoRGB24 (const unsigned char* y, const unsigned c
 	}
 }
 
-static int CIN_THEORA_NextNeededFrame (void)
+static int CIN_THEORA_NextNeededFrame (cinematic_t *cin)
 {
-	return (int) (ogmCin.currentTime * (ogg_int64_t) 10000 / ogmCin.Vtime_unit);
+	return (int) (OGMCIN.currentTime * (ogg_int64_t) 10000 / OGMCIN.Vtime_unit);
 }
 
 /**
- * @return 1 -> loaded a new frame (ogmCin.outputBuffer points to the actual frame)
+ * @return 1 -> loaded a new frame (OGMCIN.outputBuffer points to the actual frame)
  * 0 -> no new frame <0 -> error
  */
-static int CIN_THEORA_LoadVideoFrame (void)
+static int CIN_THEORA_LoadVideoFrame (cinematic_t *cin)
 {
 	int r = 0;
 	ogg_packet op;
 
 	memset(&op, 0, sizeof(op));
 
-	while (!r && (ogg_stream_packetout(&ogmCin.os_video, &op))) {
+	while (!r && (ogg_stream_packetout(&OGMCIN.os_video, &op))) {
 		ogg_int64_t th_frame;
-		theora_decode_packetin(&ogmCin.th_state, &op);
+		theora_decode_packetin(&OGMCIN.th_state, &op);
 
-		th_frame = theora_granule_frame(&ogmCin.th_state, ogmCin.th_state.granulepos);
+		th_frame = theora_granule_frame(&OGMCIN.th_state, OGMCIN.th_state.granulepos);
 
-		if ((ogmCin.videoFrameCount < th_frame && th_frame >= CIN_THEORA_NextNeededFrame()) || !ogmCin.outputBuffer) {
+		if ((OGMCIN.videoFrameCount < th_frame && th_frame >= CIN_THEORA_NextNeededFrame(cin)) || !OGMCIN.outputBuffer) {
 			int yWShift, uvWShift;
 			int yHShift, uvHShift;
 
-			if (theora_decode_YUVout(&ogmCin.th_state, &ogmCin.th_yuvbuffer))
+			if (theora_decode_YUVout(&OGMCIN.th_state, &OGMCIN.th_yuvbuffer))
 				continue;
 
-			if (ogmCin.outputWidth != ogmCin.th_info.width || ogmCin.outputHeight != ogmCin.th_info.height) {
-				ogmCin.outputWidth = ogmCin.th_info.width;
-				ogmCin.outputHeight = ogmCin.th_info.height;
-				Com_DPrintf(DEBUG_CLIENT, "[Theora(ogg)]new resolution %dx%d\n", ogmCin.outputWidth, ogmCin.outputHeight);
+			if (OGMCIN.outputWidth != OGMCIN.th_info.width || OGMCIN.outputHeight != OGMCIN.th_info.height) {
+				OGMCIN.outputWidth = OGMCIN.th_info.width;
+				OGMCIN.outputHeight = OGMCIN.th_info.height;
+				Com_DPrintf(DEBUG_CLIENT, "[Theora(ogg)]new resolution %dx%d\n", OGMCIN.outputWidth, OGMCIN.outputHeight);
 			}
 
-			if (ogmCin.outputBufferSize < ogmCin.th_info.width * ogmCin.th_info.height) {
-				ogmCin.outputBufferSize = ogmCin.th_info.width * ogmCin.th_info.height;
+			if (OGMCIN.outputBufferSize < OGMCIN.th_info.width * OGMCIN.th_info.height) {
+				OGMCIN.outputBufferSize = OGMCIN.th_info.width * OGMCIN.th_info.height;
 
 				/* Free old output buffer*/
-				if (ogmCin.outputBuffer)
-					Mem_Free(ogmCin.outputBuffer);
+				if (OGMCIN.outputBuffer)
+					Mem_Free(OGMCIN.outputBuffer);
 
 				/* Allocate the new buffer */
-				ogmCin.outputBuffer = (byte*) Mem_PoolAlloc(ogmCin.outputBufferSize * OGM_CINEMATIC_BPP, cl_genericPool, 0);
-				if (ogmCin.outputBuffer == NULL) {
-					ogmCin.outputBufferSize = 0;
+				OGMCIN.outputBuffer = (byte*) Mem_PoolAlloc(OGMCIN.outputBufferSize * OGM_CINEMATIC_BPP, cl_genericPool, 0);
+				if (OGMCIN.outputBuffer == NULL) {
+					OGMCIN.outputBufferSize = 0;
 					r = -2;
 					break;
 				}
 			}
 
-			yWShift = CIN_THEORA_FindSizeShift(ogmCin.th_yuvbuffer.y_width, ogmCin.th_info.width);
-			uvWShift = CIN_THEORA_FindSizeShift(ogmCin.th_yuvbuffer.uv_width, ogmCin.th_info.width);
-			yHShift = CIN_THEORA_FindSizeShift(ogmCin.th_yuvbuffer.y_height, ogmCin.th_info.height);
-			uvHShift = CIN_THEORA_FindSizeShift(ogmCin.th_yuvbuffer.uv_height, ogmCin.th_info.height);
+			yWShift = CIN_THEORA_FindSizeShift(OGMCIN.th_yuvbuffer.y_width, OGMCIN.th_info.width);
+			uvWShift = CIN_THEORA_FindSizeShift(OGMCIN.th_yuvbuffer.uv_width, OGMCIN.th_info.width);
+			yHShift = CIN_THEORA_FindSizeShift(OGMCIN.th_yuvbuffer.y_height, OGMCIN.th_info.height);
+			uvHShift = CIN_THEORA_FindSizeShift(OGMCIN.th_yuvbuffer.uv_height, OGMCIN.th_info.height);
 
 			if (yWShift < 0 || uvWShift < 0 || yHShift < 0 || uvHShift < 0) {
 				Com_Printf("[Theora] unexpected resolution in a yuv-frame\n");
 				r = -1;
 			} else {
-				CIN_THEORA_FrameYUVtoRGB24(ogmCin.th_yuvbuffer.y, ogmCin.th_yuvbuffer.u, ogmCin.th_yuvbuffer.v,
-						ogmCin.th_info.width, ogmCin.th_info.height, ogmCin.th_yuvbuffer.y_stride,
-						ogmCin.th_yuvbuffer.uv_stride, yWShift, uvWShift, yHShift, uvHShift,
-						(uint32_t*) ogmCin.outputBuffer);
+				CIN_THEORA_FrameYUVtoRGB24(OGMCIN.th_yuvbuffer.y, OGMCIN.th_yuvbuffer.u, OGMCIN.th_yuvbuffer.v,
+						OGMCIN.th_info.width, OGMCIN.th_info.height, OGMCIN.th_yuvbuffer.y_stride,
+						OGMCIN.th_yuvbuffer.uv_stride, yWShift, uvWShift, yHShift, uvHShift,
+						(uint32_t*) OGMCIN.outputBuffer);
 
 				r = 1;
-				ogmCin.videoFrameCount = th_frame;
+				OGMCIN.videoFrameCount = th_frame;
 			}
 		}
 	}
@@ -456,25 +456,25 @@ static int CIN_THEORA_LoadVideoFrame (void)
 #endif
 
 /**
- * @return 1 -> loaded a new frame (ogmCin.outputBuffer points to the actual frame), 0 -> no new frame
+ * @return 1 -> loaded a new frame (OGMCIN.outputBuffer points to the actual frame), 0 -> no new frame
  * <0 -> error
  */
-static int CIN_OGM_LoadVideoFrame (void)
+static int CIN_OGM_LoadVideoFrame (cinematic_t *cin)
 {
 #ifdef HAVE_XVID_H
-	if (ogmCin.videoStreamIsXvid)
-		return CIN_XVID_LoadVideoFrame();
+	if (OGMCIN.videoStreamIsXvid)
+		return CIN_XVID_LoadVideoFrame(cin);
 #endif
 #ifdef HAVE_THEORA_THEORA_H
-	if (ogmCin.videoStreamIsTheora)
-		return CIN_THEORA_LoadVideoFrame();
+	if (OGMCIN.videoStreamIsTheora)
+		return CIN_THEORA_LoadVideoFrame(cin);
 #endif
 
 	/* if we come to this point, there will be no codec that use the stream content ... */
-	if (ogmCin.os_video.serialno) {
+	if (OGMCIN.os_video.serialno) {
 		ogg_packet op;
 
-		while (ogg_stream_packetout(&ogmCin.os_video, &op))
+		while (ogg_stream_packetout(&OGMCIN.os_video, &op))
 			;
 	}
 
@@ -484,7 +484,7 @@ static int CIN_OGM_LoadVideoFrame (void)
 /**
  * @return true => noDataTransfered
  */
-static qboolean CIN_OGM_LoadFrame (void)
+static qboolean CIN_OGM_LoadFrame (cinematic_t *cin)
 {
 	qboolean anyDataTransferred = qtrue;
 	qboolean needVOutputData = qtrue;
@@ -493,7 +493,7 @@ static qboolean CIN_OGM_LoadFrame (void)
 
 	while (anyDataTransferred && (needVOutputData || audioWantsMoreData)) {
 		anyDataTransferred = qfalse;
-		if (needVOutputData && (status = CIN_OGM_LoadVideoFrame())) {
+		if (needVOutputData && (status = CIN_OGM_LoadVideoFrame(cin))) {
 			needVOutputData = qfalse;
 			if (status > 0)
 				anyDataTransferred = qtrue;
@@ -504,18 +504,18 @@ static qboolean CIN_OGM_LoadFrame (void)
 
 		if (needVOutputData || audioWantsMoreData) {
 			/* try to transfer Pages to the audio- and video-Stream */
-			if (CIN_OGM_LoadPagesToStream())
+			if (CIN_OGM_LoadPagesToStream(cin))
 				/* try to load a datablock from file */
-				anyDataTransferred |= !CIN_OGM_LoadBlockToSync();
+				anyDataTransferred |= !CIN_OGM_LoadBlockToSync(cin);
 			else
 				/* successful loadPagesToStreams() */
 				anyDataTransferred = qtrue;
 		}
 
 		/* load all audio after loading new pages ... */
-		if (ogmCin.videoFrameCount > 1)
+		if (OGMCIN.videoFrameCount > 1)
 			/* wait some videoframes (it's better to have some delay, than a laggy sound) */
-			audioWantsMoreData = CIN_OGM_LoadAudioFrame();
+			audioWantsMoreData = CIN_OGM_LoadAudioFrame(cin);
 	}
 
 	return !anyDataTransferred;
@@ -559,121 +559,124 @@ typedef struct
  * @todo vorbis/theora-header & init in sub-functions
  * @todo "clean" error-returns ...
  */
-int CIN_OGM_PlayCinematic (const char* filename)
+int CIN_OGM_PlayCinematic (cinematic_t *cin, const char* filename)
 {
 	int status;
 	ogg_page og;
 	ogg_packet op;
 	int i;
 
-	if (ogmCin.ogmFile.f || ogmCin.ogmFile.z) {
+	if (cin->codecData && (OGMCIN.ogmFile.f || OGMCIN.ogmFile.z)) {
 		Com_Printf("WARNING: it seams there was already a ogm running, it will be killed to start %s\n", filename);
-		CIN_OGM_StopCinematic();
+		CIN_OGM_StopCinematic(cin);
 	}
 
-	memset(&ogmCin, 0, sizeof(ogmCin));
+	/* alloc memory for decoding of this video */
+	assert(cin->codecData == NULL);
+	cin->codecData = Mem_PoolAlloc(sizeof(OGMCIN), vid_genericPool, 0);
+	memset(cin->codecData, 0, sizeof(ogmCinematic_t));
 
-	if (FS_OpenFile(filename, &ogmCin.ogmFile, FILE_READ) == -1) {
+	if (FS_OpenFile(filename, &OGMCIN.ogmFile, FILE_READ) == -1) {
 		Com_Printf("Can't open ogm-file for reading (%s)\n", filename);
 		return -1;
 	}
 
-	cin.cinematicType = CINEMATIC_TYPE_OGM;
-	ogmCin.startTime = cls.realtime;
+	cin->cinematicType = CINEMATIC_TYPE_OGM;
+	OGMCIN.startTime = CL_Milliseconds();
 
-	ogg_sync_init(&ogmCin.oy); /* Now we can read pages */
+	ogg_sync_init(&OGMCIN.oy); /* Now we can read pages */
 
 	/** @todo FIXME? can serialno be 0 in ogg? (better way to check initialized?) */
 	/** @todo support for more than one audio stream? / detect files with one stream(or without correct ones) */
-	while (!ogmCin.os_audio.serialno || !ogmCin.os_video.serialno) {
-		if (ogg_sync_pageout(&ogmCin.oy, &og) == 1) {
+	while (!OGMCIN.os_audio.serialno || !OGMCIN.os_video.serialno) {
+		if (ogg_sync_pageout(&OGMCIN.oy, &og) == 1) {
 			if (strstr((char*) (og.body + 1), "vorbis")) { /** @todo FIXME? better way to find audio stream */
-				if (ogmCin.os_audio.serialno) {
+				if (OGMCIN.os_audio.serialno) {
 					Com_Printf("more than one audio stream, in ogm-file(%s) ... we will stay at the first one\n",
 							filename);
 				} else {
-					ogg_stream_init(&ogmCin.os_audio, ogg_page_serialno(&og));
-					ogg_stream_pagein(&ogmCin.os_audio, &og);
+					ogg_stream_init(&OGMCIN.os_audio, ogg_page_serialno(&og));
+					ogg_stream_pagein(&OGMCIN.os_audio, &og);
 				}
 			}
 #ifdef HAVE_THEORA_THEORA_H
 			else if (strstr((char*) (og.body + 1), "theora")) {
-				if (ogmCin.os_video.serialno) {
+				if (OGMCIN.os_video.serialno) {
 					Com_Printf("more than one video stream, in ogm-file(%s) ... we will stay at the first one\n",
 							filename);
 				} else {
-					ogmCin.videoStreamIsTheora = qtrue;
-					ogg_stream_init(&ogmCin.os_video, ogg_page_serialno(&og));
-					ogg_stream_pagein(&ogmCin.os_video, &og);
+					OGMCIN.videoStreamIsTheora = qtrue;
+					ogg_stream_init(&OGMCIN.os_video, ogg_page_serialno(&og));
+					ogg_stream_pagein(&OGMCIN.os_video, &og);
 				}
 			}
 #endif
 #ifdef HAVE_XVID_H
 			else if (strstr((char*) (og.body + 1), "video")) { /** @todo better way to find video stream */
-				if (ogmCin.os_video.serialno) {
+				if (OGMCIN.os_video.serialno) {
 					Com_Printf("more than one video stream, in ogm-file(%s) ... we will stay at the first one\n",
 							filename);
 				} else {
 					stream_header_t* sh;
 
-					ogmCin.videoStreamIsXvid = qtrue;
+					OGMCIN.videoStreamIsXvid = qtrue;
 
 					sh = (stream_header_t*) (og.body + 1);
 
-					ogmCin.Vtime_unit = sh->time_unit;
+					OGMCIN.Vtime_unit = sh->time_unit;
 
-					ogg_stream_init(&ogmCin.os_video, ogg_page_serialno(&og));
-					ogg_stream_pagein(&ogmCin.os_video, &og);
+					ogg_stream_init(&OGMCIN.os_video, ogg_page_serialno(&og));
+					ogg_stream_pagein(&OGMCIN.os_video, &og);
 				}
 			}
 #endif
-		} else if (CIN_OGM_LoadBlockToSync())
+		} else if (CIN_OGM_LoadBlockToSync(cin))
 			break;
 	}
 
-	if (ogmCin.videoStreamIsXvid && ogmCin.videoStreamIsTheora) {
+	if (OGMCIN.videoStreamIsXvid && OGMCIN.videoStreamIsTheora) {
 		Com_Printf("Found \"video\"- and \"theora\"-stream, ogm-file (%s)\n", filename);
 		return -2;
 	}
 
-	if (!ogmCin.os_audio.serialno) {
+	if (!OGMCIN.os_audio.serialno) {
 		Com_Printf("Haven't found an audio (vorbis) stream in ogm-file (%s)\n", filename);
 		return -2;
 	}
-	if (!ogmCin.os_video.serialno) {
+	if (!OGMCIN.os_video.serialno) {
 		Com_Printf("Haven't found a video stream in ogm-file (%s)\n", filename);
 		return -3;
 	}
 
 	/* load vorbis header */
-	vorbis_info_init(&ogmCin.vi);
-	vorbis_comment_init(&ogmCin.vc);
+	vorbis_info_init(&OGMCIN.vi);
+	vorbis_comment_init(&OGMCIN.vc);
 	i = 0;
 	while (i < 3) {
-		status = ogg_stream_packetout(&ogmCin.os_audio, &op);
+		status = ogg_stream_packetout(&OGMCIN.os_audio, &op);
 		if (status < 0) {
 			Com_Printf("Corrupt ogg packet while loading vorbis-headers, ogm-file(%s)\n", filename);
 			return -8;
 		}
 		if (status > 0) {
-			status = vorbis_synthesis_headerin(&ogmCin.vi, &ogmCin.vc, &op);
+			status = vorbis_synthesis_headerin(&OGMCIN.vi, &OGMCIN.vc, &op);
 			if (i == 0 && status < 0) {
 				Com_Printf("This Ogg bitstream does not contain Vorbis audio data, ogm-file(%s)\n", filename);
 				return -9;
 			}
 			++i;
-		} else if (CIN_OGM_LoadPagesToStream()) {
-			if (CIN_OGM_LoadBlockToSync()) {
+		} else if (CIN_OGM_LoadPagesToStream(cin)) {
+			if (CIN_OGM_LoadBlockToSync(cin)) {
 				Com_Printf("Couldn't find all vorbis headers before end of ogm-file (%s)\n", filename);
 				return -10;
 			}
 		}
 	}
 
-	vorbis_synthesis_init(&ogmCin.vd, &ogmCin.vi);
+	vorbis_synthesis_init(&OGMCIN.vd, &OGMCIN.vi);
 
 #ifdef HAVE_XVID_H
-	status = CIN_XVID_Init();
+	status = CIN_XVID_Init(cin);
 	if (status) {
 		Com_Printf("[Xvid]Decore INIT problem, return value %d(ogm-file: %s)\n", status, filename);
 		return -4;
@@ -681,28 +684,28 @@ int CIN_OGM_PlayCinematic (const char* filename)
 #endif
 
 #ifdef HAVE_THEORA_THEORA_H
-	if (ogmCin.videoStreamIsTheora) {
-		theora_info_init(&ogmCin.th_info);
-		theora_comment_init(&ogmCin.th_comment);
+	if (OGMCIN.videoStreamIsTheora) {
+		theora_info_init(&OGMCIN.th_info);
+		theora_comment_init(&OGMCIN.th_comment);
 
 		i = 0;
 		while (i < 3) {
-			status = ogg_stream_packetout(&ogmCin.os_video, &op);
+			status = ogg_stream_packetout(&OGMCIN.os_video, &op);
 			if (status < 0) {
 				Com_Printf("Corrupt ogg packet while loading theora-headers, ogm-file(%s)\n", filename);
 
 				return -8;
 			}
 			if (status > 0) {
-				status = theora_decode_header(&ogmCin.th_info, &ogmCin.th_comment, &op);
+				status = theora_decode_header(&OGMCIN.th_info, &OGMCIN.th_comment, &op);
 				if (i == 0 && status != 0) {
 					Com_Printf("This Ogg bitstream does not contain theora data, ogm-file(%s)\n", filename);
 
 					return -9;
 				}
 				++i;
-			} else if (CIN_OGM_LoadPagesToStream()) {
-				if (CIN_OGM_LoadBlockToSync()) {
+			} else if (CIN_OGM_LoadPagesToStream(cin)) {
+				if (CIN_OGM_LoadBlockToSync(cin)) {
 					Com_Printf("Couldn't find all theora headers before end of ogm-file (%s)\n", filename);
 
 					return -10;
@@ -710,15 +713,12 @@ int CIN_OGM_PlayCinematic (const char* filename)
 			}
 		}
 
-		theora_decode_init(&ogmCin.th_state, &ogmCin.th_info);
-		ogmCin.Vtime_unit = ((ogg_int64_t) ogmCin.th_info.fps_denominator * 1000 * 10000 / ogmCin.th_info.fps_numerator);
+		theora_decode_init(&OGMCIN.th_state, &OGMCIN.th_info);
+		OGMCIN.Vtime_unit = ((ogg_int64_t) OGMCIN.th_info.fps_denominator * 1000 * 10000 / OGMCIN.th_info.fps_numerator);
 	}
 #endif
 
-	/* Set to play the cinematic in fullscreen mode */
-	CIN_SetParameters(0, 0, viddef.virtualWidth, viddef.virtualHeight, CIN_STATUS_FULLSCREEN, qfalse);
-
-	M_PlayMusicStream(&ogmCin.musicStream);
+	M_PlayMusicStream(&OGMCIN.musicStream);
 
 	return 0;
 }
@@ -726,63 +726,68 @@ int CIN_OGM_PlayCinematic (const char* filename)
 /**
  * @sa R_UploadData
  */
-static void CIN_OGM_DrawCinematic (void)
+static void CIN_OGM_DrawCinematic (cinematic_t *cin)
 {
 	int texnum;
 
-	assert(cls.playingCinematic != CIN_STATUS_NONE);
+	assert(cin->status != CIN_STATUS_NONE);
 
-	if (!ogmCin.outputBuffer)
+	if (!OGMCIN.outputBuffer)
 		return;
-	texnum = R_UploadData("***cinematic***", ogmCin.outputBuffer, ogmCin.outputWidth, ogmCin.outputHeight);
-	R_DrawTexture(texnum, cin.x, cin.y, cin.w, cin.h);
+	texnum = R_UploadData("***cinematic***", OGMCIN.outputBuffer, OGMCIN.outputWidth, OGMCIN.outputHeight);
+	R_DrawTexture(texnum, cin->x, cin->y, cin->w, cin->h);
 }
 
 /**
  * @return true if the cinematic is still running, false otherwise
  */
-qboolean CIN_OGM_RunCinematic (void)
+qboolean CIN_OGM_RunCinematic (cinematic_t *cin)
 {
-	ogmCin.currentTime = cls.realtime - ogmCin.startTime;
+	OGMCIN.currentTime = CL_Milliseconds() - OGMCIN.startTime;
 
-	while (!ogmCin.videoFrameCount || ogmCin.currentTime + 20 >= (int) (ogmCin.videoFrameCount * ogmCin.Vtime_unit / 10000)) {
-		if (CIN_OGM_LoadFrame())
+	while (!OGMCIN.videoFrameCount || OGMCIN.currentTime + 20 >= (int) (OGMCIN.videoFrameCount * OGMCIN.Vtime_unit / 10000)) {
+		if (CIN_OGM_LoadFrame(cin))
 			return qfalse;
 	}
 
-	CIN_OGM_DrawCinematic();
+	CIN_OGM_DrawCinematic(cin);
 
 	return qtrue;
 }
 
-void CIN_OGM_StopCinematic (void)
+void CIN_OGM_StopCinematic (cinematic_t *cin)
 {
 #ifdef HAVE_XVID_H
-	CIN_XVID_Shutdown();
+	/** @todo is it at the right place? StopCinematic mean we only stop 1 cinematic */
+	CIN_XVID_Shutdown(cin);
 #endif
 
 #ifdef HAVE_THEORA_THEORA_H
-	theora_clear(&ogmCin.th_state);
-	theora_comment_clear(&ogmCin.th_comment);
-	theora_info_clear(&ogmCin.th_info);
+	theora_clear(&OGMCIN.th_state);
+	theora_comment_clear(&OGMCIN.th_comment);
+	theora_info_clear(&OGMCIN.th_info);
 #endif
 
-	M_StopMusicStream(&ogmCin.musicStream);
+	M_StopMusicStream(&OGMCIN.musicStream);
 
-	if (ogmCin.outputBuffer)
-		Mem_Free(ogmCin.outputBuffer);
-	ogmCin.outputBuffer = NULL;
+	if (OGMCIN.outputBuffer)
+		Mem_Free(OGMCIN.outputBuffer);
+	OGMCIN.outputBuffer = NULL;
 
-	vorbis_dsp_clear(&ogmCin.vd);
-	vorbis_comment_clear(&ogmCin.vc);
-	vorbis_info_clear(&ogmCin.vi); /* must be called last (comment from vorbis example code) */
+	vorbis_dsp_clear(&OGMCIN.vd);
+	vorbis_comment_clear(&OGMCIN.vc);
+	vorbis_info_clear(&OGMCIN.vi); /* must be called last (comment from vorbis example code) */
 
-	ogg_stream_clear(&ogmCin.os_audio);
-	ogg_stream_clear(&ogmCin.os_video);
+	ogg_stream_clear(&OGMCIN.os_audio);
+	ogg_stream_clear(&OGMCIN.os_video);
 
-	ogg_sync_clear(&ogmCin.oy);
+	ogg_sync_clear(&OGMCIN.oy);
 
-	FS_CloseFile(&ogmCin.ogmFile);
+	FS_CloseFile(&OGMCIN.ogmFile);
+
+	/* free data allocated for decodage */
+	Mem_Free(cin->codecData);
+	cin->codecData = NULL;
 }
 
 void CIN_OGM_Init (void)
@@ -802,6 +807,4 @@ void CIN_OGM_Init (void)
 		ogmCin_yuvTable.vg[i] = (long)((-t_vg * x) + (1 << 5));
 		ogmCin_yuvTable.yy[i] = (long)((i << 6) | (i >> 2));
 	}
-
-	memset(&ogmCin, 0, sizeof(ogmCin));
 }

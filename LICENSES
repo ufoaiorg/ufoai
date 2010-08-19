@@ -628,38 +628,27 @@ base/models/aliens/hovernet/body01.md2 | GNU General Public License 2.0 | Werner
 base/models/aliens/ortnok/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/ortnok/body01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/body01a.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/ortnok/body01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/body01b.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/ortnok/body01c.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/body01c.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/ortnok/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/head01.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/ortnok/head02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/head02.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/ortnok/head03.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnok/head03.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/armor.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/ortnoklight/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/body.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/ortnoklight/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/head01.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/ortnoklight/head02.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/head02.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/ortnoklight/head03.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnoklight/head03.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/armor.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/ortnokmedium/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/body.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/body01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/ortnokmedium/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -674,7 +663,6 @@ base/models/aliens/shevaar/body01.anm | GNU General Public License 2.0 | Lukas "
 base/models/aliens/shevaar/body01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/body01.tag | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/body01a.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/aliens/shevaar/body01b.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/body01b.png | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/head01.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/shevaar/head01.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -777,7 +765,6 @@ base/models/civilians/female/head04b.jpg | GNU General Public License 2.0 | Luka
 base/models/civilians/female/head04b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/civilians/female/head04c.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/civilians/female/head04c.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/civilians/female/head05a.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/civilians/female/head05a.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/civilians/female/head05a.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/civilians/female/scientist01.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -850,8 +837,6 @@ base/models/geoscape/drop_raptor.md2 | GNU General Public License 2.0 or later |
 base/models/geoscape/drop_raptor.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/inter_dragon.jpg | GNU General Public License 2.0
 base/models/geoscape/inter_dragon.md2 | GNU General Public License 2.0
-base/models/geoscape/inter_raptor.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/geoscape/inter_raptor.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/geoscape/inter_saracen.md2 | GNU General Public License 2.0 |  | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
 base/models/geoscape/inter_saracen.png | GNU General Public License 2.0 |  | Based on original model created by Ryan Span (Winter) and Daniel Holden (Yoshiboy), see base/models/aircrafts/
 base/models/geoscape/inter_starchaser.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -1009,7 +994,6 @@ base/models/objects/boat/engine.md2 | GNU General Public License 2.0
 base/models/objects/cars/4x4/4x4.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4.md2 | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4_t.md2 | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
-base/models/objects/cars/4x4/cars_tires.jpg | GNU General Public License 2.0 or later | Olivier "Kracken" Alloschery
 base/models/objects/cars/buggy/buggy.md2 | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/cars/buggy/buggy.png | GNU General Public License 2.0 or later | Willem Sitters | http://www.md2.sitters-electronics.nl/models2.html
 base/models/objects/cars/car2/car2a.jpg | GNU General Public License 2.0
@@ -1030,7 +1014,6 @@ base/models/objects/cars/golf/car1_dmg.jpg | GNU General Public License 2.0 | Lu
 base/models/objects/cars/golf/car1_red.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/cars/golf/car1_white.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/cars/golf/car1t.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/objects/cars/golf/cars_tires.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/objects/cars/hummer/hummer.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/hummer/hummer.png | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/hummer/hummer_bright.png | GNU General Public License 2.0 or later | Willem "Sitters"
@@ -1047,7 +1030,6 @@ base/models/objects/cars/trailer/boxtrailer.jpg | GNU General Public License 2.0
 base/models/objects/cars/trailer/boxtrailer.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/transporter/transporter.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/cars/transporter/transporter.png | GNU General Public License 2.0 or later | Willem "Sitters"
-base/models/objects/cars/van/cars_tires.jpg | GNU General Public License 2.0
 base/models/objects/cars/van/van1.md2 | GNU General Public License 2.0
 base/models/objects/cars/van/van1_blue.jpg | GNU General Public License 2.0
 base/models/objects/cars/van/van1_brown.jpg | GNU General Public License 2.0
@@ -1980,7 +1962,6 @@ base/models/weapons/pbeamrifle/clip.jpg | GNU General Public License 2.0 | Lukas
 base/models/weapons/pbeamrifle/clip_gm.png | GNU General Public License 2.0 or later | MCR
 base/models/weapons/pbeamrifle/pbeamrifle.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pbeamrifle/pbeamrifle.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/weapons/pbeamrifle/pbeamrifle_big.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pbeamrifle/pbeamrifle_clip.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pbeamrifle/pbeamrifle_clip.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/pistol/pistol.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
@@ -2105,7 +2086,6 @@ base/music/dbsea.ogg | GNU General Public License 2.0 | Draikon
 base/music/defeatfear.ogg | Creative Commons | Andrey Bolshakov | Valery Kipelov
 base/music/greecei.ogg | Public Domain | Golgotha
 base/music/karlmacklin_geoscape.ogg | Creative Commons Attribution 3.0 | Karl Macklin
-base/music/returnrourney.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren alchemist_0@sky.com | http://wiki.creativecommons.org/File:Return_Journey_r02.ogg
 base/music/space.ogg | GNU General Public License 2.0 | Draikon
 base/music/turinItalyM.ogg | Public Domain | Golgotha
 base/music/ufo1.ogg | GNU General Public License 2.0 | Paul Bee
@@ -2140,6 +2120,24 @@ base/pics/armour/ortnok_medium.png | GNU General Public License 2.0
 base/pics/armour/power.png | GNU General Public License 2.0
 base/pics/armour/taman_light.png | GNU General Public License 2.0
 base/pics/armour/taman_medium.png | GNU General Public License 2.0
+base/pics/background/base_bg.jpg | GNU General Public License 2.0 or later
+base/pics/background/conback.jpg | GNU General Public License 2.0
+base/pics/background/equipment_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/irc_bg.jpg | GNU General Public License 2.0 or later
+base/pics/background/loading.png | GNU General Public License 2.0
+base/pics/background/losegame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/lost_bg.png | GNU General Public License 2.0 or later
+base/pics/background/mail_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/mailclient_bg.png | GNU General Public License 2.0 or later
+base/pics/background/main_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/mp_team_edit_bg.png | GNU General Public License 2.0 or later
+base/pics/background/multiplayer_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/options_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/skirmish_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/stats_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/won_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/background/world_bg.png | GNU General Public License 2.0 or later
 base/pics/base/adrop.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl1.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/adropl2.png | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -2168,7 +2166,6 @@ base/pics/base/storage.png | GNU General Public License 2.0 or later | Martin Ge
 base/pics/base/teamroom.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/workshop1.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/base/workshop2.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/conback.jpg | GNU General Public License 2.0
 base/pics/conchars.png | GNU General Public License 2.0 or later
 base/pics/cursors/cursor1.png | GNU General Public License 2.0 or later
 base/pics/cursors/ducked.png | GNU General Public License 2.0 or later
@@ -2313,7 +2310,6 @@ base/pics/icons/ufopedia_equipment.jpg | Creative Commons Attribution-Share Alik
 base/pics/icons/ufopedia_news.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/icons/ufopedia_tech.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/icons/ufopedia_threat.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
-base/pics/loading.png | GNU General Public License 2.0
 base/pics/maps/loading/README | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/africa.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/maps/loading/alienbase.jpg | GNU General Public License 2.0 or later
@@ -2890,7 +2886,6 @@ base/pics/ui/bar_border.png | GNU General Public License 2.0 or later | Wojtek R
 base/pics/ui/bar_health.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
 base/pics/ui/bar_rahmen.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/bar_skill.png | GNU General Public License 2.0 or later | Wojtek Ruszczewski (wrwrwr) | http://sourceforge.net/tracker/index.php?func=detail&aid=1906728&group_id=157793&atid=805244
-base/pics/ui/base_bg.jpg | GNU General Public License 2.0 or later
 base/pics/ui/base_lr.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/base_ul.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/base_ur.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
@@ -2906,27 +2901,17 @@ base/pics/ui/button_pack1.png | GNU General Public License 2.0 or later
 base/pics/ui/button_square.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/checkbox_blue.png | GNU General Public License 2.0 or later
 base/pics/ui/checkbox_green.png | GNU General Public License 2.0 or later
-base/pics/ui/equipment_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/geo_menu.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/pics/ui/geo_menu_mini.png | GNU General Public License 2.0 or later
 base/pics/ui/geo_miniglobe.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_blue.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_green.png | GNU General Public License 2.0 or later
 base/pics/ui/hosp_button_light.png | GNU General Public License 2.0 or later
-base/pics/ui/irc_bg.jpg | GNU General Public License 2.0 or later
-base/pics/ui/losegame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/lost_bg.png | GNU General Public License 2.0 or later
-base/pics/ui/mail_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/mail_button.png | GNU General Public License 2.0 or later
-base/pics/ui/mailclient_bg.png | GNU General Public License 2.0 or later
-base/pics/ui/main_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/map_ll.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/map_lr.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/map_ul.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/map_ur.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/mp_team_edit_bg.png | GNU General Public License 2.0 or later
-base/pics/ui/multiplayer_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/options_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/panel_green.png | GNU General Public License 2.0 or later
 base/pics/ui/panel_green_slim.png | GNU General Public License 2.0 or later
 base/pics/ui/panel_green_tab.png | GNU General Public License 2.0 or later
@@ -2944,16 +2929,11 @@ base/pics/ui/popup_tile.png | GNU General Public License 2.0 or later
 base/pics/ui/radar.png | GNU General Public License 2.0 or later
 base/pics/ui/scrollbar_v_green.png | GNU General Public License 2.0 or later
 base/pics/ui/selectbox.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/selectbox_green.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/skirmish_bg.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
+base/pics/ui/selectbox_blue.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/spinner_blue.png | GNU General Public License 2.0 or later
-base/pics/ui/stats_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
 base/pics/ui/tab.png | GNU General Public License 2.0 or later
 base/pics/ui/transtypebox.png | GNU General Public License 2.0 or later
 base/pics/ui/vertical_bar.png | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/wingame_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/won_bg.jpg | GNU General Public License 2.0 or later |  | Based on original menu artwork by SparX and Rasta
-base/pics/ui/world_bg.png | GNU General Public License 2.0 or later
 base/shaders/atmosphere_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/atmosphere_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/bump_fs.glsl | GNU General Public License 2.0 or later
@@ -2976,52 +2956,6 @@ base/shaders/warp_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/warp_vs.glsl | GNU General Public License 2.0 or later
 base/shaders/world_fs.glsl | GNU General Public License 2.0 or later
 base/shaders/world_vs.glsl | GNU General Public License 2.0 or later
-base/sound/aliens/aliendeath01.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath02.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath03.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath04.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath05.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath06.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath07.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/aliens/aliendeath08.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/sound/aliens/alienhurt01.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/sound/aliens/alienhurt02.ogg | Creative Commons Sampling Plus 1.0 License | Syna-Max | http://www.freesound.org/samplesViewSingle.php?id=61648
-base/sound/aliens/big_angry.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/big_angry2.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/big_angry3.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/birdlike1.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/birdlike2.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/birdlike3.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/burble.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/echovoice1.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/echovoice2.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/echovoice3.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/growl.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/gurgle.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/hiss.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/huge_angry.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/huge_angry2.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/ortnok.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/ortnokcalll01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/ortnokcalll02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/ortnokcalll03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/ortnokhurt01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/ortnokhurt02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/shevaar.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/shevaarcall01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/shevaardeath01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/shevaardeath02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/shevaarhurt01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/shevaarhurt02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/shevaarhurt03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/shevaarhurt04.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/slithering.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/strange_chat.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/aliens/tamancall01.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/tamancall02.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/tamancall03.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/tamancall04.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
-base/sound/aliens/tamancall05.ogg | Creative Commons Attribution-Share Alike 3.0 Unported | Gren | Produced on the NN-XT sampler
 base/sound/ambience/alien_engine.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/bloodspiderwalk.ogg | Creative Commons Attribution 3.0 License | Gren | http://wiki.creativecommons.org/File:BloodSpiderWalk.ogg
 base/sound/ambience/creak.ogg | GNU General Public License 2.0 | Karen Rei Pease
@@ -3083,7 +3017,6 @@ base/sound/footsteps/flesh1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/flesh2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/flesh3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/flesh4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/grass.ogg | GNU General Public License 2.0 |  | Worldforge media repository (Footsteps_on_grass_sasquatch.wav)
 base/sound/footsteps/grass2.ogg | Creative Commons Sampling Plus 1.0
 base/sound/footsteps/hitground2.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
 base/sound/footsteps/hitground3.ogg | GNU General Public License 2.0 |  | Nexuiz's GPLed data
@@ -3112,18 +3045,6 @@ base/sound/footsteps/splash4.ogg | Creative Commons Attribution 2.5 | (c) 2006 S
 base/sound/footsteps/squeak_2.ogg | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
 base/sound/footsteps/squeak_3.ogg | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
 base/sound/footsteps/squeak_4.ogg | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
-base/sound/footsteps/step_1.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_10.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_11.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_12.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_2.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_3.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_4.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_5.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_6.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_7.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_8.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_9.ogg | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
 base/sound/footsteps/stone1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/stone2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/stone3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
@@ -3133,7 +3054,6 @@ base/sound/footsteps/water_in.ogg | Creative Commons Attribution 2.5 | (c) 2006 
 base/sound/footsteps/water_out.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_under.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/wood1.ogg | Creative Commons Sampling Plus 1.0 | swuing | http://freesound.iua.upf.edu/samplesViewSingle.php?id=38876
-base/sound/geoscape/attack.ogg | GNU General Public License 2.0 | BlakeD
 base/sound/geoscape/info.ogg | GNU General Public License 2.0 | BlakeD
 base/sound/geoscape/mail.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/geoscape/newmission.ogg | GNU General Public License 2.0 | Karen Rei Pease
@@ -3171,45 +3091,34 @@ base/sound/soldiers/femalehurt01.ogg | GNU General Public License 2.0 | OpenAren
 base/sound/soldiers/maledeath04.ogg | GNU General Public License 2.0 | Openarena GPLed Data
 base/sound/soldiers/maledeath05.ogg | GNU General Public License 2.0 | Openarena GPLed Data
 base/sound/soldiers/malehurt01.ogg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/sound/weapons/assaultrifle.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/bloodspider.ogg | GNU General Public License 2.0 |  | Nexuiz' GPLed data - weapons/weapon_switch.wav
-base/sound/weapons/bolter2.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/boltercannonade.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/brass1.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
-base/sound/weapons/casings3.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
-base/sound/weapons/chaingun.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/deepexplosion.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/electrolaser.ogg | Public Domain | Vermind
-base/sound/weapons/expire.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
-base/sound/weapons/explode.ogg | GNU General Public License 2.0 or later | Nexuiz | Nexuiz GPLed data
-base/sound/weapons/fireexplosion.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/grenade.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/grenade_launcher.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/grenl_fle_3shot.ogg |  |  | shotgun.wav file
-base/sound/weapons/heavy_laser.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/incendiary_grenade.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/incendiary_rocket.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/weapons/irgoggles.ogg | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
-base/sound/weapons/kerrblade.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/kerrblade_swip.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/knife.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/machinegun.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/machinepistol.ogg | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/medikit.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/microshotgun2.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/pbeam_rocket.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/pbeamcannon_explosive.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/pbeamrifle.ogg |  | Mikolaj Konarski (bandobraz)
-base/sound/weapons/pistol2.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/plasma_big.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/plasma_blade.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/plasma_grenade.ogg | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/weapons/plasmablade.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/riotshotgun.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/smg2.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/smokeexplosion.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/sniperrifle.ogg | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/stun_grenade.ogg | GNU General Public License 2.0 | Karen Rei Pease
+base/textures/pt/fx/fx2_11_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_04_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_04_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_04_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_04_1_3a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_04_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_06_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_06_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_06_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_06_1_3a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_06_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_07_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_07_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_07_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_07_1_3a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_07_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_11_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_13_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_13_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_13_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_13_1_3a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_13_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_17_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_17_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_17_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
+base/textures/pt/sk/usk2_17_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
 base/textures/tex_base/bollard.jpg | GNU General Public License 2.0 | XaverXN
 base/textures/tex_base/d_drkmtl_dpanelb.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/d_drkmtl_dpanelb_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -4527,11 +4436,6 @@ base/textures/tex_pics/tonight1.png | GNU General Public License 2.0 or later | 
 base/textures/tex_pics/tonight_honuda.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_pics/traktor1.jpg | Public Domain | US Federal Government
 base/textures/tex_pics/traktor2.jpg | Creative Commons Attribution-Share Alike 2.0 | Solitude
-base/textures/tex_shop/outlay10.jpg | GNU General Public License 2.0 | XaverXN
-base/textures/tex_shop/outlay4.jpg | GNU General Public License 2.0 | XaverXN
-base/textures/tex_shop/outlay5.jpg | GNU General Public License 2.0 | XaverXN
-base/textures/tex_shop/outlay6.jpg | GNU General Public License 2.0 | XaverXN
-base/textures/tex_shop/outlay7.jpg | GNU General Public License 2.0 | XaverXN
 base/textures/tex_shop/outlay8.jpg | GNU General Public License 2.0 | XaverXN
 base/textures/tex_shop/outlay9.jpg | GNU General Public License 2.0 | XaverXN
 base/textures/tex_shop/rack-pharma2.jpg | GNU General Public License 2.0 | XaverXN
@@ -4700,47 +4604,10 @@ base/textures/tex_trak/wall4d.png | MIT/X11 license (GPL compatible) | Georges "
 base/textures/tex_trak/wall4d_nm.png | MIT/X11 license (GPL compatible) | Georges "TRaK" Grondin | http://trak.mercenariesguild.net/
 base/textures/tex_trak/wall7a.png | MIT/X11 license (GPL compatible) | Georges "TRaK" Grondin | http://trak.mercenariesguild.net/
 base/textures/tex_trak/wall7a_nm.png | MIT/X11 license (GPL compatible) | Georges "TRaK" Grondin | http://trak.mercenariesguild.net/
-base/textures/tex_ua/usk2_04_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_04_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_04_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_04_1_3a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_04_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_06_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_06_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_06_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_06_1_3a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_06_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_07_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_07_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_07_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_07_1_3a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_07_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_11_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_13_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_13_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_13_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_13_1_3a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_13_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_17_1_0a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_17_1_1a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_17_1_2a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ua/usk2_17_1_4a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
 base/textures/tex_ufo/ufo1_01.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo1_01_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo1_02.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo1_02_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo1_02a0.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a1.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a10.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a11.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a2.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a3.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a4.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a5.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a6.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a7.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a8.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo1_02a9.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo1_03.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo1_03_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo1_04.png | GNU General Public License 2.0 | "SparX" Beyeler
@@ -4757,165 +4624,27 @@ base/textures/tex_ufo/ufo2_03.png | GNU General Public License 2.0 | "SparX" Bey
 base/textures/tex_ufo/ufo2_03_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_04.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_04_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_04a0.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a1.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a10.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a11.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a12.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a13.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a14.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a15.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a2.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a3.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a4.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a5.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a6.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a7.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a8.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_04a9.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_05.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_05_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_06.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_06_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_06a0.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a1.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a2.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a3.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a4.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a5.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a6.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a7.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a8.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_06a9.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_07.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_07_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_07a0.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a1.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a10.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a11.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a12.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a13.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a14.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a15.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a2.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a3.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a4.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a5.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a6.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a7.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a8.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_07a9.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_08.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_08_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_09.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_09_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_09a0.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a1.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a10.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a11.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a12.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a13.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a2.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a3.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a4.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a5.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a6.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a7.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a8.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_09a9.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_10.png | GNU General Public License 2.0 or later | MCR | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_10_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_10a0.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a1.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a10.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a11.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a12.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a13.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a2.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a3.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a4.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a5.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a6.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a7.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a8.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
-base/textures/tex_ufo/ufo2_10a9.png | GNU General Public License 2.0 or later | Marcin "MCR" | Based on the gpled work by "SparX" Beyeler
 base/textures/tex_ufo/ufo2_11.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_11_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_12_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_12a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_12a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_12a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_12a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
 base/textures/tex_ufo/ufo2_13_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_13a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_13a9.png | GNU General Public License 2.0 or later | Marcin "MCR"
 base/textures/tex_ufo/ufo2_14.png | GNU General Public License 2.0 | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_14_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_ufo/ufo2_15_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_15a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_15a9.png | GNU General Public License 2.0 or later | Marcin "MCR"
 base/textures/tex_ufo/ufo2_16_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_16a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_16a9.png | GNU General Public License 2.0 or later | Marcin "MCR"
 base/textures/tex_ufo/ufo2_17_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_ufo/ufo2_17a0.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a1.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a10.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a11.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a12.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a13.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a14.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a15.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a2.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a3.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a4.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a5.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a6.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a7.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a8.png | GNU General Public License 2.0 or later | Marcin "MCR"
-base/textures/tex_ufo/ufo2_17a9.png | GNU General Public License 2.0 or later | Marcin "MCR"
 base/textures/tex_ufo/ufo2_medic01.png |  | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_medic02.png |  | "SparX" Beyeler
 base/textures/tex_vehicles/car_e0.png | GNU General Public License 2.0 or later

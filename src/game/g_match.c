@@ -117,17 +117,16 @@ static int G_CharacterGetMaxExperiencePerMission (const abilityskills_t skill)
 	case SKILL_NUM_TYPES: /* This is health. */
 		return 2154;
 	default:
-		gi.error("G_GetMaxExperiencePerMission: invalid skill type\n");
+		gi.Error("G_GetMaxExperiencePerMission: invalid skill type\n");
 	}
 }
 
 /**
  * @brief Updates character skills after a mission.
- * @param[in] chr Pointer to a character_t.
+ * @param[in,out] chr Pointer to the character that should get the skills updated
  * @sa CL_UpdateCharacterStats
  * @sa G_UpdateCharacterScore
  * @sa G_UpdateHitScore
- * @todo Update skill calculation with implant data once implants are implemented
  */
 static void G_UpdateCharacterSkills (character_t *chr)
 {
@@ -164,8 +163,8 @@ static void G_UpdateCharacterSkills (character_t *chr)
 
 /**
  * @brief Triggers the end of the game. Will be executed in the next server (or game) frame.
- * @param team The winning team
- * @param timeGap Second to wait before really ending the game. Useful if you want to allow a last view on the scene
+ * @param[in] team The winning team
+ * @param[in] timeGap Second to wait before really ending the game. Useful if you want to allow a last view on the scene
  */
 void G_MatchEndTrigger (int team, int timeGap)
 {
@@ -176,6 +175,7 @@ void G_MatchEndTrigger (int team, int timeGap)
 
 /**
  * @brief Sends character stats like assigned missions and kills back to client
+ * @param[in] ent The edict to send the data for
  * @note first short is the ucn to allow the client to identify the character
  * @note parsed in GAME_CP_Results
  * @sa GAME_SendCurrentTeamSpawningInfo
@@ -208,6 +208,7 @@ static void G_SendCharacterData (const edict_t* ent)
 
 /**
  * @brief Handles the end of a match
+ * @param[in] team The winning team number
  * @sa G_RunFrame
  * @sa CL_ParseResults
  */
@@ -226,15 +227,11 @@ static void G_MatchSendResults (int team)
 			attacker = ent;
 	}
 
-	/**
-	 * @todo remove this - we can still start a rescue mission if
-	 * there were stunned actors left.
-	 */
-	/* if aliens won, make sure every soldier dies */
+	/* if aliens won, make sure every soldier that is not in the rescue zone dies */
 	if (team == TEAM_ALIEN) {
 		ent = NULL;
 		while ((ent = G_EdictsGetNextLivingActor(ent)))
-			if (ent->team != team) {
+			if (ent->team != team && !G_ActorIsInRescueZone(ent)) {
 				ent->HP = 0;
 				G_ActorDieOrStun(ent, attacker);
 			}
@@ -243,7 +240,8 @@ static void G_MatchSendResults (int team)
 	/* Make everything visible to anyone who can't already see it */
 	ent = NULL;
 	while ((ent = G_EdictsGetNextInUse(ent))) {
-		G_AppearPerishEvent(~G_VisToPM(ent->visflags), qtrue, ent, NULL);
+		const int playerMask = G_VisToPM(ent->visflags);
+		G_AppearPerishEvent(~playerMask, qtrue, ent, NULL);
 		if (G_IsActor(ent))
 			G_SendInventory(~G_TeamToPM(ent->team), ent);
 	}

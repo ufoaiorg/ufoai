@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_nations.h"
 #include "cp_time.h"
@@ -46,6 +46,7 @@ void CP_NationHandleBudget (void)
 	int totalIncome = 0;
 	int totalExpenditure = 0;
 	int initialCredits = ccs.credits;
+	employee_t *employee;
 
 	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
 	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
@@ -54,14 +55,14 @@ void CP_NationHandleBudget (void)
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nation = &ccs.nations[i];
 		const int funding = NAT_GetFunding(nation, 0);
-		int new_scientists = 0, new_soldiers = 0, new_workers = 0;
+		int newScientists = 0, newSoldiers = 0, newWorkers = 0;
 
 		totalIncome += funding;
 
 		for (j = 0; 0.25 + j < (float) nation->maxScientists * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 			/* Create a scientist, but don't auto-hire her. */
 			E_CreateEmployee(EMPL_SCIENTIST, nation, NULL);
-			new_scientists++;
+			newScientists++;
 		}
 
 
@@ -69,86 +70,48 @@ void CP_NationHandleBudget (void)
 			for (j = 0; 0.25 + j < (float) nation->maxSoldiers * nation->stats[0].happiness * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 				/* Create a soldier. */
 				E_CreateEmployee(EMPL_SOLDIER, nation, NULL);
-				new_soldiers++;
+				newSoldiers++;
 			}
 		}
 
 		for (j = 0; 0.25 + j * 2 < (float) nation->maxSoldiers * nation->stats[0].happiness; j++) {
 			/* Create a worker. */
 			E_CreateEmployee(EMPL_WORKER, nation, NULL);
-			new_workers++;
+			newWorkers++;
 		}
 
 		Com_sprintf(message, sizeof(message), _("Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"),
 					funding, ngettext("credit", "credits", funding),
-					new_scientists, ngettext("scientist", "scientists", new_scientists),
-					new_soldiers, ngettext("soldier", "soldiers", new_soldiers),
-					new_workers, ngettext("worker", "workers", new_workers),
+					newScientists, ngettext("scientist", "scientists", newScientists),
+					newSoldiers, ngettext("soldier", "soldiers", newSoldiers),
+					newWorkers, ngettext("worker", "workers", newWorkers),
 					_(nation->name), NAT_GetHappinessString(nation));
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 
-	cost = 0;
-	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
-		if (ccs.employees[EMPL_SOLDIER][i].hired)
-			cost += SALARY_SOLDIER_BASE + ccs.employees[EMPL_SOLDIER][i].chr.score.rank * SALARY_SOLDIER_RANKBONUS;
-	}
-	totalExpenditure += cost;
-
-	Com_sprintf(message, sizeof(message), _("Paid %i credits to soldiers"), cost);
-	/* only this message is played with sound as previous are added for every nation */
-	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qtrue);
-
-	cost = 0;
-	for (i = 0; i < ccs.numEmployees[EMPL_WORKER]; i++) {
-		if (ccs.employees[EMPL_WORKER][i].hired)
-			cost += SALARY_WORKER_BASE + ccs.employees[EMPL_WORKER][i].chr.score.rank * SALARY_WORKER_RANKBONUS;
-	}
-	totalExpenditure += cost;
-
-	Com_sprintf(message, sizeof(message), _("Paid %i credits to workers"), cost);
-	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
-
-	cost = 0;
-	for (i = 0; i < ccs.numEmployees[EMPL_SCIENTIST]; i++) {
-		if (ccs.employees[EMPL_SCIENTIST][i].hired)
-			cost += SALARY_SCIENTIST_BASE + ccs.employees[EMPL_SCIENTIST][i].chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
-	}
-	totalExpenditure += cost;
-
-	Com_sprintf(message, sizeof(message), _("Paid %i credits to scientists"), cost);
-	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
-
-	cost = 0;
-	for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
-		if (ccs.employees[EMPL_PILOT][i].hired)
-			cost += SALARY_PILOT_BASE + ccs.employees[EMPL_PILOT][i].chr.score.rank * SALARY_PILOT_RANKBONUS;
-	}
-	totalExpenditure += cost;
-
-	Com_sprintf(message, sizeof(message), _("Paid %i credits to pilots"), cost);
-	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
-
-	cost = 0;
-	for (i = 0; i < ccs.numEmployees[EMPL_ROBOT]; i++) {
-		if (ccs.employees[EMPL_ROBOT][i].hired)
-			cost += SALARY_ROBOT_BASE + ccs.employees[EMPL_ROBOT][i].chr.score.rank * SALARY_ROBOT_RANKBONUS;
-	}
-	totalExpenditure += cost;
-
-	if (cost != 0) {
-		Com_sprintf(message, sizeof(message), _("Paid %i credits for robots"), cost);
+	for (i = 0; i < MAX_EMPL; i++) {
+		employee = NULL;
+		cost = 0;
+		while ((employee = E_GetNextHired(i, employee))) {
+			cost += CP_GetSalaryBaseEmployee(employee->type)
+					+ employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(employee->type);
+		}
+		totalExpenditure += cost;
+		Com_sprintf(message, sizeof(message), _("Paid %i credits to: %s"), cost, E_GetEmployeeString(i));
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 
 	cost = 0;
 	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(i);
+		base_t *base = B_GetFoundedBaseByIDX(i);
+		aircraft_t *aircraft;
+
 		if (!base)
 			continue;
-		for (j = 0; j < base->numAircraftInBase; j++) {
-			cost += base->aircraft[j].price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
-		}
+
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
+			cost += aircraft->price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
 	}
 	totalExpenditure += cost;
 
@@ -161,19 +124,14 @@ void CP_NationHandleBudget (void)
 		const base_t const *base = B_GetFoundedBaseByIDX(i);
 		if (!base)
 			continue;
-		cost = SALARY_BASE_UPKEEP;	/* base cost */
-		for (j = 0; j < ccs.numBuildings[i]; j++) {
-			if (ccs.buildings[i][j].buildingStatus == B_STATUS_WORKING
-			 || ccs.buildings[i][j].buildingStatus == B_STATUS_CONSTRUCTION_FINISHED)
-				cost += ccs.buildings[i][j].varCosts;
-		}
+		cost = CP_GetSalaryUpKeepBase(base);
 		totalExpenditure += cost;
 
 		Com_sprintf(message, sizeof(message), _("Paid %i credits for upkeep of %s"), cost, base->name);
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 
-	cost = SALARY_ADMIN_INITIAL + ccs.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + ccs.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + ccs.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + ccs.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + ccs.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
+	cost = CP_GetSalaryAdministrative();
 	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
 	totalExpenditure += cost;
 	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);

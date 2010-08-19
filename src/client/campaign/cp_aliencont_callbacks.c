@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../menu/m_main.h"
+#include "../cl_shared.h"
+#include "../ui/ui_main.h"
 #include "cp_campaign.h"
 #include "cp_aliencont.h"
 #include "cp_aliencont_callbacks.h"
@@ -109,7 +109,7 @@ static void AC_ResearchAlien_f (void)
 		Com_Error(ERR_DROP, "aliencontCurrent without tech pointer");
 
 	if (!RS_IsResearched_ptr(tech))
-		MN_PushWindow("research", NULL);
+		UI_PushWindow("research", NULL);
 }
 
 /**
@@ -143,8 +143,8 @@ static void AC_AlienClick (const base_t *base, int num)
 		Cvar_Set("mn_al_alienimage", aliencontCurrent->tech->image);
 		assert(aliencontCurrent->teamDef);
 		Cvar_Set("mn_al_alientype", _(aliencontCurrent->teamDef->name));
-		Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->teamDef->idx, qtrue));
-		Cvar_SetValue("mn_al_dead", AL_CountForMenu(aliencontCurrent->teamDef->idx, qfalse));
+		Cvar_Set("mn_al_alive", va("%i (%i)", aliencontCurrent->amountAlive, AL_CountForMenu(aliencontCurrent->teamDef->idx, qtrue)));
+		Cvar_Set("mn_al_dead",  va("%i (%i)", aliencontCurrent->amountDead, AL_CountForMenu(aliencontCurrent->teamDef->idx, qfalse)));
 	}
 }
 
@@ -184,7 +184,7 @@ static void AC_UpdateMenu (const base_t *base)
 	Cvar_SetValue("mn_al_capacity_max", base->capacities[CAP_ALIENS].max);
 
 	/* Reset list. */
-	MN_ExecuteConfunc("aliencont_clear");
+	UI_ExecuteConfunc("aliencont_clear");
 	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		const aliensCont_t *containment = base->alienscont;
 		for (i = 0, j = 0; i < ccs.numAliensTD; i++) {
@@ -206,9 +206,9 @@ static void AC_UpdateMenu (const base_t *base)
 						} else {
 							Cvar_Set(va("mn_ac_statusstr%i", j), _("Needs autopsy!"));
 							if (!containment[i].amountDead) {
-								MN_ExecuteConfunc("aliencontkill %i", j);
+								UI_ExecuteConfunc("aliencontkill %i", j);
 							} else {
-								MN_ExecuteConfunc("aliencontneedautopsy %i", j);
+								UI_ExecuteConfunc("aliencontneedautopsy %i", j);
 							}
 						}
 						Cvar_SetValue(va("mn_ac_progress%i", j), (1 - tech->time / tech->overallTime) * 100);

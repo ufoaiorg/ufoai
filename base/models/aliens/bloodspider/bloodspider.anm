@@ -15,19 +15,19 @@ cwalk1				0	32	22
 cwalk2				0	32	22
 cwalk3				0	32	22
 
-panic0				33	33	1
+panic0				33	34	1
 
-stand0				33	33	1
-stand1				33	33	1
-stand2				33	33	1
-stand3				33	33	1
-cstand0				33	33	1
-cstand1				33	33	1
-cstand2				33	33	1
-cstand3				33	33	1
+stand0				33	34	1
+stand1				33	34	1
+stand2				33	34	1
+stand3				33	34	1
+cstand0				33	34	1
+cstand1				33	34	1
+cstand2				33	34	1
+cstand3				33	34	1
 
-stand_still			33	33	1
-stand_menu			33	33	1
+stand_still			33	34	1
+stand_menu			33	34	1
 
 shoot_melee			34	55	22
 move_melee			0	32	22

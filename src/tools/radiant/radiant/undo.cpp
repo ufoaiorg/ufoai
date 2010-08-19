@@ -349,6 +349,11 @@ class RadiantUndoSystem: public UndoSystem
 			m_redo_stack.clear();
 			trackersClear();
 		}
+		void clearRedo ()
+		{
+			m_redo_stack.clear();
+			trackersClearRedo();
+		}
 		void trackerAttach (UndoTracker& tracker)
 		{
 			ASSERT_MESSAGE(m_trackers.find(&tracker) == m_trackers.end(), "undo tracker already attached");
@@ -363,6 +368,12 @@ class RadiantUndoSystem: public UndoSystem
 		{
 			for (Trackers::const_iterator i = m_trackers.begin(); i != m_trackers.end(); ++i) {
 				(*i)->clear();
+			}
+		}
+		void trackersClearRedo () const
+		{
+			for (Trackers::const_iterator i = m_trackers.begin(); i != m_trackers.end(); ++i) {
+				(*i)->clearRedo();
 			}
 		}
 		void trackersBegin () const

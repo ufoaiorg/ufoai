@@ -19,14 +19,14 @@ component panel cmpMarketItem
 	spinner bt_buysell
 	{
 		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
+		image		"ui/spinner_blue"
 		pos			"346 0"
 		onChange	{ cmd "mn_buysell <node:parent@num> <lastdiff>; market_click <node:parent@num>;" }
 	}
 	checkbox bt_autosell
 	{
 		current		0
-		image		ui/checkbox_blue
+		image		"ui/checkbox_blue"
 //		pos			"30 180"
 		pos			"0 0"
 		size		"16 16"
@@ -37,13 +37,16 @@ component panel cmpMarketItem
 
 window market extends objectinfo
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		ui/base_bg
+		src		"background/base_bg"
 	}
 
 	cmpBaseHeader baseHeader {
@@ -60,46 +63,48 @@ window market extends objectinfo
 	}
 
 	tab market_navigation {
-		pos		"47 106"
-		size	"938 39"
-		cvar	*cvar:mn_itemtype
-		onChange {
-			cmd "buy_type <cvar:mn_itemtype>;"
+		{
+			pos		"47 106"
+			size	"938 39"
+			cvar	*cvar:mn_itemtype
+			onChange {
+				cmd "buy_type <cvar:mn_itemtype>;"
+			}
 		}
 
-		option description {
+		option primary {
 			label	"_Primary"
 			value	"primary"
 		}
-		option description {
+		option secondary {
 			label	"_Secondary"
 			value	"secondary"
 		}
-		option description {
+		option heavy {
 			label	"_Heavy"
 			value	"heavy"
 		}
-		option description {
+		option misc {
 			label	"_Misc"
 			value	"misc"
 		}
-		option description {
+		option armour {
 			label	"_Armour"
 			value	"armour"
 		}
-		option description {
+		option craftitem {
 			label	"_Craft items"
 			value	"craftitem"
 		}
-		option description {
+		option aircraft {
 			label	"_Aircraft"
 			value	"aircraft"
 		}
-		option description {
+		option dummy {
 			label	"_Other"
 			value	"dummy"
 		}
-		option description {
+		option ugvitem {
 			label	"_UGV items"
 			value	"ugvitem"
 		}
@@ -126,7 +131,7 @@ window market extends objectinfo
 	panel itemlist {
 		pos		"12 160"
 		size	"553 597"
-		image	ui/panel_grey_green_large2
+		image	"ui/panel_grey_green_large2"
 	}
 
 	textlist market
@@ -145,7 +150,7 @@ window market extends objectinfo
 	{
 		dataid		TEXT_MARKET_STORAGE
 		color		"0 .78 0 1"
-		textalign	cr
+		textalign	ALIGN_CR
 		pos			"330 177"
 		rows		"22"
 		size		"40 550"
@@ -158,7 +163,7 @@ window market extends objectinfo
 	{
 		dataid		TEXT_MARKET_MARKET
 		color		"0 .78 0 1"
-		textalign	cr
+		textalign	ALIGN_CR
 		pos			"406 177"
 		rows		"22"
 		size		"40 550"
@@ -171,7 +176,7 @@ window market extends objectinfo
 	{
 		dataid		TEXT_MARKET_PRICES
 		color		"0 .78 0 1"
-		textalign	cr
+		textalign	ALIGN_CR
 		rows		"22"
 		size		"80 550"
 		lineheight	"25"
@@ -185,14 +190,14 @@ window market extends objectinfo
 	 * @param <2> scroll position
 	 */
 	confunc sync_market_scroll {
-		*market@lineselected = <1>
-		*market_storage@lineselected = <1>
-		*market_market@lineselected = <1>
-		*market_prices@lineselected = <1>
-		*market@viewpos = <2>
-		*market_storage@viewpos = <2>
-		*market_market@viewpos = <2>
-		*market_prices@viewpos = <2>
+		*node:root.market@lineselected = <1>
+		*node:root.market_storage@lineselected = <1>
+		*node:root.market_market@lineselected = <1>
+		*node:root.market_prices@lineselected = <1>
+		*node:root.market@viewpos = <2>
+		*node:root.market_storage@viewpos = <2>
+		*node:root.market_market@viewpos = <2>
+		*node:root.market_prices@viewpos = <2>
 	}
 
 	// ==================
@@ -310,7 +315,7 @@ window market extends objectinfo
 			string 		"_Storage (used/all):"
 			pos			"62 50"
 			size		"200 20"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_storage_value
@@ -319,13 +324,13 @@ window market extends objectinfo
 			string 		*cvar:mn_bs_storage
 			pos			"267 50"
 			size		"100 20"
-			font		f_small
+			font		"f_small"
 		}
 	}
 
 	confunc listen_openpedia {
 		cmd "market_click <node:root.market@lineselected>;"
-		cmd "mn_removelistener ufopedia@onClose <path:this>"
+		cmd "mn_removelistener ufopedia@onClose <path:this>;"
 	}
 
 	panel itemdescription {
@@ -345,7 +350,7 @@ window market extends objectinfo
 			string		*cvar:mn_itemname
 			pos			"22 35"
 			size		"365 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
 		string aircraftname
 		{
@@ -353,7 +358,7 @@ window market extends objectinfo
 			string		*cvar:mn_aircraftname
 			pos			"22 35"
 			size		"365 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
 
 		custombutton ufopedia_link
@@ -363,14 +368,14 @@ window market extends objectinfo
 			pos			"370 37"
 			size		"16 16"
 			onClick		{
-				cmd "mn_addlistener ufopedia@onClose <path:root>.listen_openpedia"
+				cmd "mn_addlistener ufopedia@onClose <path:root>.listen_openpedia;"
 				cmd "market_openpedia;"
 			}
 		}
 
 		item itemmodel
 		{
-			model		*cvar:mn_item
+			src			*cvar:mn_item
 			pos			"12 55"
 			size		"385 200"
 			angles		"-10 160 70"
@@ -387,15 +392,15 @@ window market extends objectinfo
 			tabwidth	168
 			font		"f_verysmall"
 			onViewChange {
-				*(abstractscrollbar)itemdescription.description_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
+				*node:root.itemdescription.description_scroll@fullsize = <fullsize>
+				*node:root.itemdescription.description_scroll@current = <viewpos>
 			}
 			onWheel {
-				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
+				*node:root.itemdescription.description_scroll@current = <viewpos>
 			}
 		}
 		vscrollbar description_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"370 257"
 			height		"120"
 			current		0
@@ -403,7 +408,7 @@ window market extends objectinfo
 			fullsize	8
 			hidewhenunused true
 			onChange {
-				*itemdescription.description@viewpos = <current>
+				*node:root.itemdescription.description@viewpos = <current>
 			}
 		}
 
@@ -416,9 +421,9 @@ window market extends objectinfo
 			string	"_With:"
 			pos		"32 390"
 			size	"100 16"
-			font	f_small
+			font	"f_small"
 		}
-	
+
 		custombutton action_dec
 		{
 			pos		"142 390"
@@ -426,14 +431,14 @@ window market extends objectinfo
 			size	"16 16"
 			onClick	{ cmd "mn_decreaseitem;" }
 		}
-	
+
 		string item_name
 		{
 			string	*cvar:mn_linkname
 			pos		"162 390"
 			size	"190 16"
-			textalign	cc
-			font	f_small
+			textalign	ALIGN_CC
+			font	"f_small"
 		}
 
 		custombutton action_inc
@@ -447,15 +452,15 @@ window market extends objectinfo
 		// ==================
 		// firemode
 		// ==================
-	
+
 		string header_firemode
 		{
 			string	"_Firemode:"
 			pos		"32 414"
 			size	"100 16"
-			font	f_small
+			font	"f_small"
 		}
-		
+
 		custombutton firemode_dec
 		{
 			tooltip "_Previous firemode"
@@ -464,16 +469,16 @@ window market extends objectinfo
 			size	"16 16"
 			onClick	{ cmd "mn_decreasefiremode;" }
 		}
-		
+
 		string firemode_name
 		{
 			string	*cvar:mn_firemodename
 			pos		"162 414"
 			size	"190 16"
-			textalign	cc
-			font	f_small
+			textalign	ALIGN_CC
+			font	"f_small"
 		}
-			
+
 		custombutton firemode_inc
 		{
 			tooltip "_Next firemode"
@@ -494,25 +499,25 @@ window market extends objectinfo
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselle {
-		*item<1>.bt_autosell@invis = false
-		*(abstractvalue)item<1>.bt_autosell@current = 1
-		*item<1>.bt_autosell@tooltip = "_Item autosell enabled"
+		*node:root.item<1>.bt_autosell@invis = false
+		*node:root.item<1>.bt_autosell@current = 1
+		*node:root.item<1>.bt_autosell@tooltip = "_Item autosell enabled"
 	}
 	/**
 	 * @brief unchecks an autosell checkbox and makes it visible
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselld {
-		*item<1>.bt_autosell@invis = false
-		*(abstractvalue)item<1>.bt_autosell@current = 0
-		*item<1>.bt_autosell@tooltip = "_Item autosell disabled"
+		*node:root.item<1>.bt_autosell@invis = false
+		*node:root.item<1>.bt_autosell@current = 0
+		*node:root.item<1>.bt_autosell@tooltip = "_Item autosell disabled"
 	}
 	/**
 	 * @brief makes an autosell checkbox invisible
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselli {
-		*item<1>.bt_autosell@invis = true
+		*node:root.item<1>.bt_autosell@invis = true
 	}
 
 	/**
@@ -520,7 +525,7 @@ window market extends objectinfo
 	 * @param[in] <1> row of the item
 	 */
 	confunc buy_selectitem {
-		*market@lineselected = <1>
+		*node:root.market@lineselected = <1>
 	}
 
 	/**
@@ -531,9 +536,9 @@ window market extends objectinfo
 	 * @param[in] <4> max value allowed
 	 */
 	confunc buy_updateitem {
-		*(abstractvalue)item<1>.bt_buysell@current = <2>
-		*(abstractvalue)item<1>.bt_buysell@min = <3>
-		*(abstractvalue)item<1>.bt_buysell@max = <4>
+		*node:root.item<1>.bt_buysell@current = <2>
+		*node:root.item<1>.bt_buysell@min = <3>
+		*node:root.item<1>.bt_buysell@max = <4>
 	}
 
 	/**
@@ -541,14 +546,14 @@ window market extends objectinfo
 	 * @param[in] <1> row of the item
 	 */
 	confunc buy_hide {
-		*item<1>.bt_buysell@invis = true
+		*node:root.item<1>.bt_buysell@invis = true
 	}
 	/**
 	 * @brief shows the buy/sell spinner control
 	 * @param[in] <1> row of the item
 	 */
 	confunc buy_show {
-		*item<1>.bt_buysell@invis = false
+		*node:root.item<1>.bt_buysell@invis = false
 	}
 
 	// ==================
@@ -560,9 +565,9 @@ window market extends objectinfo
 		cmd "buy_type *cvar:mn_itemtype;"
 		*cvar:i = 0
 		while ( *cvar:i < 22 ) {
-			*item<cvar:i>@num = <cvar:i>
+			*node:root.item<cvar:i>@num = <cvar:i>
 			*cvar:i = ( *cvar:i + 1 )
 		}
-	delete *cvar:i
+		delete *cvar:i
 	}
 }

@@ -28,7 +28,7 @@ ShowUninstDetails "nevershow"
 !define MUI_LANGDLL_REGISTRY_KEY "${PRODUCT_UNINST_KEY}"
 !define MUI_LANGDLL_REGISTRY_VALUENAME "NSIS:Language"
 
-!define MUI_WELCOMEFINISHPAGE_BITMAP "ufoai.bmp"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "..\ufoai.bmp"
 
 Var GAMEFLAGS
 Var MAPFLAGS
@@ -104,8 +104,8 @@ SectionGroup /e "Game" SECGROUP01
 
 		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 1 +set snd_init 1" "$INSTDIR\ufo.exe" 0
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME} (safe-mode).lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 1 +set vid_mode 6 +set snd_init 0 + set r_programs 0" "$INSTDIR\ufo.exe" 0
-		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME} (safe-mode windowed).lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 0 +set vid_mode 6 +set snd_init 0 +set r_programs 0" "$INSTDIR\ufo.exe" 0
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME} (safe-mode).lnk" "$INSTDIR\ufo.exe" "+exec safemode.cfg +set vid_fullscreen 1" "$INSTDIR\ufo.exe" 0
+		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME} (safe-mode windowed).lnk" "$INSTDIR\ufo.exe" "+exec safemode.cfg" "$INSTDIR\ufo.exe" 0
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME_DEDICATED}.lnk" "$INSTDIR\ufo_ded.exe" "" "$INSTDIR\ufo_ded.exe" 0
 		CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe"
 		CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
@@ -117,8 +117,8 @@ SectionGroup /e "Mapping" SECGROUP02
 	Section "Mapping Tools" SEC02
 		SetOutPath "$INSTDIR\base\maps"
 			File "..\..\..\base\maps\compile.p*"
-			File /r /x *.svn /x CVS "..\..\..\base\maps\*.map"
-			File /r /x *.svn /x CVS "..\..\..\base\maps\*.ump"
+			File /r /x *.svn "..\..\..\base\maps\*.map"
+			File /r /x *.svn "..\..\..\base\maps\*.ump"
 		SetOutPath "$INSTDIR\tools"
 			File "..\..\..\src\tools\*.ms"
 			File "..\..\..\src\tools\*.pl"
@@ -129,8 +129,8 @@ SectionGroup /e "Mapping" SECGROUP02
 			File "..\..\..\ufo2map.exe"
 		; RADIANT
 		SetOutPath "$INSTDIR\radiant"
-			File /r /x *.svn /x CVS "..\..\..\radiant\*"
-			File /r /x *.svn /x CVS "..\..\dlls\radiant\*"
+			File /r /x *.svn "..\..\..\radiant\*"
+			File /r /x *.svn "..\..\dlls\radiant\*"
 	SectionEnd
 
 	Section "Mapping Tools Shortcuts" SEC02B
@@ -160,20 +160,20 @@ Section "Source Code" SEC03
 		File "..\..\..\build\projects\*.workspace"
 		File "..\..\..\build\projects\*.manifest"
 	SetOutPath "$INSTDIR\src"
-		File /r /x *.svn /x CVS "..\..\..\src\*.h"
-		File /r /x *.svn /x CVS "..\..\..\src\*.c"
-		File /r /x *.svn /x CVS "..\..\..\src\*.def"
-		File /r /x *.svn /x CVS "..\..\..\src\*.rc"
+		File /r /x *.svn "..\..\..\src\*.h"
+		File /r /x *.svn "..\..\..\src\*.c"
+		File /r /x *.svn "..\..\..\src\*.def"
+		File /r /x *.svn "..\..\..\src\*.rc"
 	SetOutPath "$INSTDIR\src\docs"
-		File /r /x *.svn /x CVS "..\..\..\src\docs\*.*"
+		File /r /x *.svn "..\..\..\src\docs\*.*"
 	SetOutPath "$INSTDIR\src\ports"
-		File /r /x *.svn /x CVS "..\..\..\src\ports\*.m"
-		File /r /x *.svn /x CVS "..\..\..\src\ports\*.xbm"
-		File /r /x *.svn /x CVS "..\..\..\src\ports\*.png"
+		File /r /x *.svn "..\..\..\src\ports\*.m"
+		File /r /x *.svn "..\..\..\src\ports\*.xbm"
+		File /r /x *.svn "..\..\..\src\ports\*.png"
 	SetOutPath "$INSTDIR\src\po"
-		File /r /x *.svn /x CVS "..\..\..\src\po\*.*"
+		File /r /x *.svn "..\..\..\src\po\*.*"
 	SetOutPath "$INSTDIR\src\tools"
-		File /r /x *.svn /x CVS "..\..\..\src\tools\*.*"
+		File /r /x *.svn "..\..\..\src\tools\*.*"
 SectionEnd
 
 Section -AdditionalIcons
@@ -200,12 +200,47 @@ SectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC03}  "C-Source code for UFO:Alien Invasion."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
+; taken from gaim installer
+; GetParent
+; input, top of stack  (e.g. C:\Program Files\Poop)
+; output, top of stack (replaces, with e.g. C:\Program Files)
+; modifies no other variables.
+;
+; Usage:
+;   Push "C:\Program Files\Directory\Whatever"
+;   Call GetParent
+;   Pop $R0
+;   ; at this point $R0 will equal "C:\Program Files\Directory"
+;Function GetParent
+;   Exch $0 ; old $0 is on top of stack
+;   Push $1
+;   Push $2
+;   StrCpy $1 -1
+;   loop:
+;     StrCpy $2 $0 1 $1
+;     StrCmp $2 "" exit
+;     StrCmp $2 "\" exit
+;     IntOp $1 $1 - 1
+;   Goto loop
+;   exit:
+;     StrCpy $0 $0 $1
+;     Pop $2
+;     Pop $1
+;     Exch $0 ; put $0 on top of stack, restore $0 to original value
+;FunctionEnd
+
+; TODO http://nsis.sourceforge.net/Validating_$INSTDIR_before_uninstall
 Function .onVerifyInstDir
   IfFileExists $INSTDIR\*.* Invalid Valid
   Invalid:
   StrCmp $INSTDIR "C:" Break ; Ugly hard-coded constraint, but it should help in most cases.
   StrCmp $INSTDIR "C:\" Break ; "
 ;  StrCmp $INSTDIR $PROGRAMFILES Break ; Doesn't work.
+  ; Push $INSTDIR
+  ; for $INSTDIR of e.g. c: or d: GetParent will return ""
+  ; Call GetParent
+  ; Pop $DIR
+  ; StrCmp $DIR "" Break
   Goto Valid
   Break:
   Abort

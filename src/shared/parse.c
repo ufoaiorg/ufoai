@@ -32,10 +32,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static char com_token[4096];
 static qboolean isUnparsedToken;
 static qboolean isQuotedToken;
+static qboolean functionScriptTokenEnabled;
 
 /**
  * @brief Put back the last token into the parser
- * The next call of Com_Parse will return the token send by Com_UnParse.
+ * The next call of Com_Parse will return the same token again
  * @note Only allow to use it one time
  * @note With it, we can't read to file at the same time
  */
@@ -55,6 +56,16 @@ qboolean Com_ParsedTokenIsQuoted (void)
 }
 
 /**
+ * @brief Enable parsing of token '(', ')' and ','
+ * @param enable If true, enable parsing of extra tokens
+ * @sa Com_Parse
+ */
+void Com_EnableFunctionScriptToken (qboolean enable)
+{
+	functionScriptTokenEnabled = enable;
+}
+
+/**
  * @brief Parse a token out of a string
  * @param data_p Pointer to a string which is to be parsed
  * @pre @c data_p is expected to be null-terminated
@@ -67,7 +78,7 @@ qboolean Com_ParsedTokenIsQuoted (void)
  */
 const char *Com_Parse (const char *data_p[])
 {
-	int c;
+	char c;
 	size_t len;
 	const char *data;
 
@@ -122,6 +133,9 @@ skipwhite:
 			if (c == '\\' && data[0] == 'n') {
 				c = '\n';
 				data++;
+			} else if (c == '\\' && data[0] == 't') {
+				c = '\t';
+				data++;
 			/* nested quotation */
 			} else if (c == '\\' && data[0] == '\"') {
 				c = '\"';
@@ -136,26 +150,38 @@ skipwhite:
 				len++;
 			}
 		}
+		com_token[len] = '\0';
+		*data_p = data;
+		return com_token;
+	}
+
+	if ((c == '{' || c == '}') || (functionScriptTokenEnabled && (c == '(' || c == ')' || c == ','))) {
+		data++;
+		com_token[len] = c;
+		com_token[len + 1] = '\0';
+		len++;
+		*data_p = data;
+		return com_token;
 	}
 
 	/* parse a regular word */
 	do {
-		if (c == '\\' && data[1] == 'n') {
-			c = '\n';
-			data++;
-		}
 		if (len < sizeof(com_token)) {
 			com_token[len] = c;
 			len++;
 		}
 		data++;
 		c = *data;
+		if (c == '{' || c == '}')
+			break;
+		if (functionScriptTokenEnabled && (c == '(' || c == ')' || c == ','))
+			break;
 	} while (c > 32);
 
 	if (len == sizeof(com_token)) {
 		len = 0;
 	}
-	com_token[len] = 0;
+	com_token[len] = '\0';
 
 	*data_p = data;
 	return com_token;

@@ -23,25 +23,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../cl_game.h"
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
-#include "../mxml/mxml_ufoai.h"
+#include "../client.h" /* cl_genericPool */
+#include "../cl_game.h" /* GAME_ReloadMode */
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_save.h"
-#include "cp_hospital.h"
-#include "cp_ufo.h"
-#include "cp_alienbase.h"
 #include "cp_time.h"
 #include "save/save.h"
 
 #define SAVEGAME_EXTENSION "savx"
-
-#ifdef DEBUG
-/* raw XML dump */
-#define SAVEDUMP_EXTENSION "sdmp"
-#endif
 
 typedef struct saveFileHeader_s {
 	uint32_t version;			/**< which savegame version */
@@ -70,9 +61,10 @@ static cvar_t* save_compressed;
  * @note error parameter not used actually
  * @sa SAV_GameLoad
  */
-static qboolean SAV_GameActionsAfterLoad (char **error)
+static qboolean SAV_GameActionsAfterLoad (void)
 {
 	B_PostLoadInit();
+	AIR_PostLoadInit();
 
 	/* Make sure the date&time is displayed when loading. */
 	CL_UpdateTime();
@@ -208,7 +200,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	}
 
 	/* doing a subsystem run ;) */
-	GAME_RestartMode(GAME_CAMPAIGN);
+	GAME_ReloadMode();
 	node = mxml_GetNode(topNode, SAVE_ROOTNODE);
 	if (!node) {
 		Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");
@@ -229,7 +221,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	}
 	mxmlDelete(node);
 
-	SAV_GameActionsAfterLoad(error);
+	SAV_GameActionsAfterLoad();
 
 	Com_Printf("File '%s' successfully loaded from %s xml savegame.\n",
 			filename, header.compressed ? "compressed" : "");
@@ -237,7 +229,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 	mxmlDelete(topNode);
 
-	MN_InitStack("geoscape", NULL, qtrue, qtrue);
+	UI_InitStack("geoscape", NULL, qtrue, qtrue);
 	return qtrue;
 }
 
@@ -261,11 +253,8 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	dateLong_t date;
 	char message[30];
 	char timeStampBuffer[32];
-#ifdef DEBUG
-	char savegame_debug[MAX_OSPATH];
-#endif
 
-	if (!GAME_CP_IsRunning()) {
+	if (!CP_IsRunning()) {
 		*error = _("No campaign active.");
 		Com_Printf("Error: No campaign active.\n");
 		return qfalse;
@@ -279,9 +268,6 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 
 	Com_MakeTimestamp(timeStampBuffer, sizeof(timeStampBuffer));
 	Com_sprintf(savegame, sizeof(savegame), "save/%s.%s", filename, SAVEGAME_EXTENSION);
-#ifdef DEBUG
-	Com_sprintf(savegame_debug, sizeof(savegame_debug), "save/%s.%s", filename, SAVEDUMP_EXTENSION);
-#endif
 	topNode = mxmlNewXML("1.0");
 	node = mxml_AddNode(topNode, SAVE_ROOTNODE);
 	/* writing  Header */
@@ -327,14 +313,14 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	mxmlDelete(topNode);
 	Com_Printf("XML Written to buffer (%d Bytes)\n", res);
 
-	bufLen = (uLongf) (24 + 1.02 * requiredBufferLength);
+	if (header.compressed)
+		bufLen = (uLongf) (24 + 1.02 * requiredBufferLength);
+	else
+		bufLen = requiredBufferLength;
+
 	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, 0);
 	memcpy(fbuf, &header, sizeof(header));
 
-#ifdef DEBUG
-	/* In debugmode we will also write a uncompressed {filename}.{SAVEDUMP_EXTENSION} file without header information */
-	res = FS_WriteFile(buf, requiredBufferLength, savegame_debug);
-#endif
 	if (header.compressed) {
 		res = compress(fbuf + sizeof(header), &bufLen, buf, requiredBufferLength + 1);
 		Mem_Free(buf);
@@ -374,7 +360,7 @@ static void SAV_GameSave_f (void)
 		return;
 	}
 
-	if (!GAME_CP_IsRunning()) {
+	if (!CP_IsRunning()) {
 		Com_Printf("No running game - no saving...\n");
 		return;
 	}
@@ -391,7 +377,7 @@ static void SAV_GameSave_f (void)
 			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error saving game."), error);
 		else
 			Com_sprintf(popupText, sizeof(popupText), "%s\n", _("Error saving game."));
-		MN_Popup(_("Note"), popupText);
+		UI_Popup(_("Note"), popupText);
 	}
 }
 
@@ -413,7 +399,7 @@ static void SAV_GameReadGameComment (const int idx)
 		if (!SAV_VerifyHeader(&header))
 			Com_Printf("Savegame header for slot%d is corrupted!\n", idx);
 		else
-			MN_ExecuteConfunc("update_save_game_info %i \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate);
+			UI_ExecuteConfunc("update_save_game_info %i \"%s\" \"%s\" \"%s\"", idx, header.name, header.gameDate, header.realDate);
 
 		FS_CloseFile(&f);
 	}
@@ -434,8 +420,8 @@ static void SAV_GameReadGameComments_f (void)
 
 	if (Cmd_Argc() == 2) {
 		/* checks whether we plan to save without a running game */
-		if (!GAME_CP_IsRunning() && !strncmp(Cmd_Argv(1), "save", 4)) {
-			MN_PopWindow(qfalse);
+		if (!CP_IsRunning() && !strncmp(Cmd_Argv(1), "save", 4)) {
+			UI_PopWindow(qfalse);
 			return;
 		}
 	}
@@ -479,8 +465,8 @@ static void SAV_GameLoad_f (void)
 	if (!SAV_GameLoad(Cmd_Argv(1), &error)) {
 		Cbuf_Execute(); /* wipe outstanding campaign commands */
 		Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
-		MN_Popup(_("Error"), popupText);
-		GAME_SetMode(GAME_NONE);
+		UI_Popup(_("Error"), popupText);
+		Cmd_ExecuteString("game_exit");
 	}
 }
 
@@ -494,21 +480,21 @@ static void SAV_GameContinue_f (void)
 	char *error = NULL;
 
 	if (CL_OnBattlescape()) {
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 		return;
 	}
 
-	if (!GAME_CP_IsRunning()) {
+	if (!CP_IsRunning()) {
 		/* try to load the last saved campaign */
 		if (!SAV_GameLoad(cl_lastsave->string, &error)) {
 			Cbuf_Execute(); /* wipe outstanding campaign commands */
 			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
-			MN_Popup(_("Error"), popupText);
-			GAME_SetMode(GAME_NONE);
+			UI_Popup(_("Error"), popupText);
+			Cmd_ExecuteString("game_exit");
 		}
 	} else {
 		/* just continue the current running game */
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 	}
 }
 
@@ -553,8 +539,6 @@ static void SAV_GameSaveNameCleanup_f (void)
 	if (slotID < 0 || slotID > 7)
 		return;
 
-	Com_sprintf(cvar, sizeof(cvar), "mn_slot%i", slotID);
-
 	FS_OpenFile(va("save/slot%i.%s", slotID, SAVEGAME_EXTENSION), &f, FILE_READ);
 	if (!f.f && !f.z)
 		return;
@@ -562,6 +546,8 @@ static void SAV_GameSaveNameCleanup_f (void)
 	/* read the comment */
 	if (FS_Read(&header, sizeof(header), &f) != sizeof(header))
 		Com_Printf("Warning: Savefile header may be corrupted\n");
+
+	Com_sprintf(cvar, sizeof(cvar), "mn_slot%i", slotID);
 	Cvar_Set(cvar, header.name);
 	FS_CloseFile(&f);
 }
@@ -595,7 +581,7 @@ static void SAV_GameQuickLoadInit_f (void)
 
 	FS_OpenFile(va("save/slotquick.%s", SAVEGAME_EXTENSION), &f, FILE_READ);
 	if (f.f || f.z) {
-		MN_PushWindow("quickload", NULL);
+		UI_PushWindow("quickload", NULL);
 		FS_CloseFile(&f);
 	}
 }
@@ -606,7 +592,7 @@ static void SAV_GameQuickLoadInit_f (void)
  */
 static void SAV_GameQuickSave_f (void)
 {
-	if (!GAME_CP_IsRunning())
+	if (!CP_IsRunning())
 		return;
 
 	if (!SAV_QuickSave())
@@ -631,7 +617,7 @@ static void SAV_GameQuickLoad_f (void)
 	if (!SAV_GameLoad("slotquick", &error)) {
 		Cbuf_Execute(); /* wipe outstanding campaign commands */
 		Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
-		MN_Popup(_("Error"), popupText);
+		UI_Popup(_("Error"), popupText);
 	} else {
 		MS_AddNewMessage(_("Campaign loaded"), _("Quicksave campaign was successfully loaded."), qfalse, MSG_INFO, NULL);
 		Cmd_ExecuteString("check_baseattacks");
@@ -654,6 +640,8 @@ void SAV_Init (void)
 	static saveSubsystems_t ac_subsystemXML = {"aliencont", AC_SaveXML, AC_LoadXML};
 	static saveSubsystems_t pr_subsystemXML = {"production", PR_SaveXML, PR_LoadXML};
 	static saveSubsystems_t air_subsystemXML = {"aircraft", AIR_SaveXML, AIR_LoadXML};
+	static saveSubsystems_t int_subsystemXML = {"interest", CP_SaveInterestsXML, CP_LoadInterestsXML};
+	static saveSubsystems_t mis_subsystemXML = {"mission", CP_SaveMissionsXML, CP_LoadMissionsXML};
 	static saveSubsystems_t ms_subsystemXML = {"messagesystem", MS_SaveXML, MS_LoadXML};
 	static saveSubsystems_t stats_subsystemXML = {"stats", STATS_SaveXML, STATS_LoadXML};
 	static saveSubsystems_t na_subsystemXML = {"nations", NAT_SaveXML, NAT_LoadXML};
@@ -678,6 +666,8 @@ void SAV_Init (void)
 	SAV_AddSubsystem(&e_subsystemXML);
 	SAV_AddSubsystem(&ac_subsystemXML);
 	SAV_AddSubsystem(&air_subsystemXML);
+	SAV_AddSubsystem(&int_subsystemXML);
+	SAV_AddSubsystem(&mis_subsystemXML);
 	SAV_AddSubsystem(&ins_subsystemXML);
 	SAV_AddSubsystem(&us_subsystemXML);
 	SAV_AddSubsystem(&pr_subsystemXML);

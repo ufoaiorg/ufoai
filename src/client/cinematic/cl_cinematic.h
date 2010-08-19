@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #ifndef CLIENT_CL_CINEMATIC_H
+#define CLIENT_CL_CINEMATIC_H
 
 #include "../client.h"
 
@@ -32,33 +33,35 @@ enum {
 	CINEMATIC_TYPE_OGM
 };
 
-typedef struct {
-	char			name[MAX_QPATH];	/**< virtuell filesystem path with file suffix */
+typedef struct cinematic_s {
+	char			name[MAX_QPATH];	/**< virtual filesystem path with file suffix */
 
 	qboolean		replay;	/**< autmatically replay in endless loop */
-	qboolean		inMenu;	/**< is this cinematic shown in a menu node? */
 	int				x, y, w, h; /**< for drawing in the menu maybe */
 
 	qboolean		noSound;	/**< no sound while playing the cinematic */
+	qboolean		fullScreen;	/**< if true, video is displayed in fullscreen */
 
 	int cinematicType;
+
+	int status;					/**< Status of the playing */
+
+	void *codecData;
 } cinematic_t;
 
-extern cinematic_t cin;
+void CIN_StopCinematic(cinematic_t *cin);
+void CIN_PlayCinematic(cinematic_t *cin, const char *name);
+void CIN_SetParameters(cinematic_t *cin, int x, int y, int w, int h, int cinStatus, qboolean noSound);
+void CIN_RunCinematic(cinematic_t *cin);
+void CIN_InitCinematic(cinematic_t *cin);
 
-void CIN_StopCinematic(void);
-void CIN_PlayCinematic(const char *name);
-void CIN_Shutdown(void);
 void CIN_Init(void);
-void CIN_SetParameters(int x, int y, int w, int h, int cinStatus, qboolean noSound);
-void CIN_RunCinematic(void);
+void CIN_Shutdown(void);
 
 typedef enum {
 	CIN_STATUS_NONE,	/**< not playing */
-	CIN_STATUS_FULLSCREEN,	/**< fullscreen cinematic */
-
-	/* don't stop running sounds for these - but the above */
-	CIN_STATUS_MENU		/**< cinematic inside a menu node */
+	CIN_STATUS_PLAYING,
+	CIN_STATUS_PAUSE,
 } cinStatus_t;
 
 #endif /* CLIENT_CL_CINEMATIC_H */

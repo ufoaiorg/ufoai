@@ -28,6 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_ALIENCONT_CAP	32
 
+/** @todo remove harcoded tech */
+#define BREATHINGAPPARATUS_TECH "rs_alien_breathing"
+
 /** cases of alien amount calculation */
 typedef enum {
 	AL_RESEARCH,			/**< When we remove alien(s) because of research topic. */
@@ -42,7 +45,7 @@ typedef struct aliensCont_s {
 	const teamDef_t* teamDef;		/**< Pointer to type (team) of alien race in global csi.teamDef array. */
 	int amountAlive;		/**< Amount of live captured aliens. */
 	int amountDead;		/**< Amount of alien corpses. */
-	technology_t *tech;		/**< Related technology. */
+	technology_t *tech;		/**< Team defintion related technology. */
 } aliensCont_t;
 
 /**

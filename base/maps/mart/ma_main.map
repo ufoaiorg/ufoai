@@ -12321,6 +12321,6 @@
 {
 "classname" "misc_sound"
 "origin" "978 760 40"
-"noise" "sound/ambience/tv_static.iletypes"
+"noise" "sound/ambience/tv_static"
 "angle" "90"
 }

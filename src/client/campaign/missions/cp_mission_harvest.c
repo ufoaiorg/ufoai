@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
+#include "../../cl_shared.h"
 #include "../cp_campaign.h"
 #include "../cp_map.h"
 #include "../cp_ufo.h"
@@ -133,7 +133,7 @@ void CP_HarvestMissionGo (mission_t *mission)
 	mission->stage = STAGE_MISSION_GOTO;
 
 	/* Choose a map */
-	if (CP_ChooseMap(mission, NULL, qfalse)) {
+	if (CP_ChooseMap(mission, NULL)) {
 		int counter;
 		linkedList_t *nationList = NULL;
 		const qboolean nationTest = CP_ChooseNation(mission, &nationList);
@@ -142,6 +142,7 @@ void CP_HarvestMissionGo (mission_t *mission)
 				continue;
 			if (MAP_PositionCloseToBase(mission->pos))
 				continue;
+			mission->posAssigned = qtrue;
 			break;
 		}
 		if (counter >= MAX_POS_LOOP) {
@@ -155,8 +156,6 @@ void CP_HarvestMissionGo (mission_t *mission)
 		CP_MissionRemove(mission);
 		return;
 	}
-
-	mission->mapDef->timesAlreadyUsed++;
 
 	nation = MAP_GetNation(mission->pos);
 	if (nation) {
@@ -199,7 +198,7 @@ void CP_HarvestMissionNextStage (mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create Harvesting mission */
-		CP_MissionCreate(mission);
+		CP_MissionBegin(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* Go to mission */

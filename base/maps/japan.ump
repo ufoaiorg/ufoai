@@ -33,6 +33,9 @@ tile +main
 0      0      0      0      0      0      0      0      0      0
 }
 
+
+///** Craft tiles
+///*** PHALANX tiles
 tile +craft_drop_firebird
 {
 4 5
@@ -63,7 +66,7 @@ af      +b     +b    af
 0      ah23   ah23   0
 }
 
-/// ufos
+///*** UFOs tiles
 
 tile +craft_ufo_scout
 {
@@ -88,7 +91,7 @@ afv34  +a     +a     +a     +a     +a     afv12
 }
 
 
-
+///** Houses
 tile +h1
 {
 4 5
@@ -112,7 +115,7 @@ tile +h3
 {
 4 4
 0      a      v23    0
-h12    +ah    +av    abf12
+h12    +h    +av    abf12
 af      +a     +a     abfv12
 0      abh23   abh23   0
 }
@@ -134,7 +137,17 @@ abvf34   +ahv    abvf12
 0       abv    0
 }
 
-/// fillers:
+tile +h6
+{
+4 4
+0          abh14    abh14    0
+abvf1234   +a       +a       abvf1234
+abvf1234   +a       +a       abvf1234
+0          abv14    abv14    0
+}
+
+///** fillers:
+
 tile +fill1
 {
 3 3
@@ -159,8 +172,15 @@ abfv34  +a      abfv12
 0      ab23      0
 }
 
+tile +fill4
+{
+3 3
+0      abh14      0
+abfv34     +a      abfv12
+0      abh23      0
+}
 
-/// fences:
+///** fences:
 
 // vertical fence with horizontal path and rocks
 tile +f1
@@ -187,7 +207,7 @@ abv34  +fa    abv12
 0      abh23  0
 }
 
-
+///*** gate
 tile +arc
 {
 3 4
@@ -198,7 +218,7 @@ bg     +gf    abh34
 }
 
 
-/// paths:
+///** paths:
 
 // top-right
 tile +p_tr
@@ -255,7 +275,7 @@ abf     +v       abf
 }
 
 
-/// waters:
+///** waters:
 
 // bridge with horizontal path
 tile +bridge
@@ -275,6 +295,17 @@ abfv34    +wa       abfv12
 0         w       0
 }
 
+///** misc tiles
+tile +buddha
+{
+3 4
+0      abh34      0
+ba     +f     abv12
+bg     +gf    abv12
+0      abh23      0
+}
+
+
 
 // ########################################
 // ########### Maps for the game ##########
@@ -292,11 +323,13 @@ assembly small
 size "7 5"
 title "_Small eastern park."
 +arc      "0 1"
+//+buddha   "0 1"
 +h1       "0 1"
 +h2       "0 1"
 +h3       "0 1"
 +h4       "0 1"
 +h5       "0 1"
++h6       "0 1"
 +f1       "0 2"
 +f2       "0 2"
 +f3       "0 2"
@@ -308,9 +341,9 @@ title "_Small eastern park."
 +p_bl     "0 5"
 +p_h      "0 10"
 +p_v      "0 10"
-+fill1    "0 1"
-+fill2    "0 10"
-+fill3    "0 10"
++fill2    "0 5"
++fill3    "0 5"
++fill4    "0 5"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
 }
@@ -325,6 +358,7 @@ title         "_Harvester"
 +h3           "0 1"
 +h4           "0 1"
 +h5           "0 1"
++h6           "0 1"
 +f1           "0 2"
 +f2           "0 2"
 +f3           "0 2"
@@ -337,8 +371,9 @@ title         "_Harvester"
 +p_h          "0 10"
 +p_v          "0 10"
 +fill1        "0 1"
-+fill2        "0 10"
-+fill3        "0 10"
++fill2        "0 5"
++fill3        "0 5"
++fill4        "0 5"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_harvester "1 1"
 }

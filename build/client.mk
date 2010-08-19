@@ -18,7 +18,6 @@ CLIENT_SRCS = \
 	client/cl_team.c \
 	client/cl_tip.c \
 	client/cl_tutorials.c \
-	client/cl_ugv.c \
 	client/cl_video.c \
 	\
 	client/input/cl_input.c \
@@ -125,6 +124,7 @@ CLIENT_SRCS = \
 	client/campaign/cp_research.c \
 	client/campaign/cp_research_callbacks.c \
 	client/campaign/cp_save.c \
+	client/campaign/cp_statistics.c \
 	client/campaign/cp_transfer.c \
 	client/campaign/cp_transfer_callbacks.c \
 	client/campaign/cp_ufo.c \
@@ -133,6 +133,7 @@ CLIENT_SRCS = \
 	client/campaign/cp_uforecovery_callbacks.c \
 	client/campaign/cp_messageoptions.c \
 	client/campaign/cp_messageoptions_callbacks.c \
+	client/campaign/cp_overlay.c \
 	client/campaign/cp_popup.c \
 	client/campaign/cp_fightequip_callbacks.c \
 	\
@@ -150,65 +151,69 @@ CLIENT_SRCS = \
 	client/multiplayer/mp_chatmessages.c \
 	client/multiplayer/mp_team.c \
 	\
-	client/menu/m_actions.c \
-	client/menu/m_components.c \
-	client/menu/m_data.c \
-	client/menu/m_dragndrop.c \
-	client/menu/m_draw.c \
-	client/menu/m_expression.c \
-	client/menu/m_font.c \
-	client/menu/m_icon.c \
-	client/menu/m_input.c \
-	client/menu/m_main.c \
-	client/menu/m_nodes.c \
-	client/menu/m_parse.c \
-	client/menu/m_popup.c \
-	client/menu/m_render.c \
-	client/menu/m_timer.c \
-	client/menu/m_tooltip.c \
-	client/menu/m_windows.c \
-	client/menu/node/m_node_abstractnode.c \
-	client/menu/node/m_node_abstractvalue.c \
-	client/menu/node/m_node_abstractoption.c \
-	client/menu/node/m_node_abstractscrollbar.c \
-	client/menu/node/m_node_abstractscrollable.c \
-	client/menu/node/m_node_bar.c \
-	client/menu/node/m_node_base.c \
-	client/menu/node/m_node_button.c \
-	client/menu/node/m_node_checkbox.c \
-	client/menu/node/m_node_cinematic.c \
-	client/menu/node/m_node_container.c \
-	client/menu/node/m_node_controls.c \
-	client/menu/node/m_node_custombutton.c \
-	client/menu/node/m_node_editor.c \
-	client/menu/node/m_node_ekg.c \
-	client/menu/node/m_node_image.c \
-	client/menu/node/m_node_item.c \
-	client/menu/node/m_node_keybinding.c \
-	client/menu/node/m_node_linechart.c \
-	client/menu/node/m_node_map.c \
-	client/menu/node/m_node_material_editor.c \
-	client/menu/node/m_node_model.c \
-	client/menu/node/m_node_messagelist.c \
-	client/menu/node/m_node_optionlist.c \
-	client/menu/node/m_node_optiontree.c \
-	client/menu/node/m_node_panel.c \
-	client/menu/node/m_node_radar.c \
-	client/menu/node/m_node_radiobutton.c \
-	client/menu/node/m_node_rows.c \
-	client/menu/node/m_node_selectbox.c \
-	client/menu/node/m_node_string.c \
-	client/menu/node/m_node_special.c \
-	client/menu/node/m_node_spinner.c \
-	client/menu/node/m_node_tab.c \
-	client/menu/node/m_node_tbar.c \
-	client/menu/node/m_node_text.c \
-	client/menu/node/m_node_textlist.c \
-	client/menu/node/m_node_textentry.c \
-	client/menu/node/m_node_todo.c \
-	client/menu/node/m_node_vscrollbar.c \
-	client/menu/node/m_node_window.c \
-	client/menu/node/m_node_zone.c \
+	client/ui/ui_actions.c \
+	client/ui/ui_components.c \
+	client/ui/ui_data.c \
+	client/ui/ui_dragndrop.c \
+	client/ui/ui_draw.c \
+	client/ui/ui_expression.c \
+	client/ui/ui_font.c \
+	client/ui/ui_icon.c \
+	client/ui/ui_input.c \
+	client/ui/ui_main.c \
+	client/ui/ui_nodes.c \
+	client/ui/ui_parse.c \
+	client/ui/ui_popup.c \
+	client/ui/ui_render.c \
+	client/ui/ui_sound.c \
+	client/ui/ui_timer.c \
+	client/ui/ui_tooltip.c \
+	client/ui/ui_windows.c \
+	client/ui/node/ui_node_abstractnode.c \
+	client/ui/node/ui_node_abstractvalue.c \
+	client/ui/node/ui_node_abstractoption.c \
+	client/ui/node/ui_node_abstractscrollbar.c \
+	client/ui/node/ui_node_abstractscrollable.c \
+	client/ui/node/ui_node_bar.c \
+	client/ui/node/ui_node_base.c \
+	client/ui/node/ui_node_baseinventory.c \
+	client/ui/node/ui_node_button.c \
+	client/ui/node/ui_node_checkbox.c \
+	client/ui/node/ui_node_video.c \
+	client/ui/node/ui_node_container.c \
+	client/ui/node/ui_node_controls.c \
+	client/ui/node/ui_node_custombutton.c \
+	client/ui/node/ui_node_editor.c \
+	client/ui/node/ui_node_ekg.c \
+	client/ui/node/ui_node_image.c \
+	client/ui/node/ui_node_item.c \
+	client/ui/node/ui_node_keybinding.c \
+	client/ui/node/ui_node_linechart.c \
+	client/ui/node/ui_node_map.c \
+	client/ui/node/ui_node_material_editor.c \
+	client/ui/node/ui_node_model.c \
+	client/ui/node/ui_node_messagelist.c \
+	client/ui/node/ui_node_option.c \
+	client/ui/node/ui_node_optionlist.c \
+	client/ui/node/ui_node_optiontree.c \
+	client/ui/node/ui_node_panel.c \
+	client/ui/node/ui_node_radar.c \
+	client/ui/node/ui_node_radiobutton.c \
+	client/ui/node/ui_node_rows.c \
+	client/ui/node/ui_node_selectbox.c \
+	client/ui/node/ui_node_string.c \
+	client/ui/node/ui_node_special.c \
+	client/ui/node/ui_node_spinner.c \
+	client/ui/node/ui_node_tab.c \
+	client/ui/node/ui_node_tbar.c \
+	client/ui/node/ui_node_text.c \
+	client/ui/node/ui_node_text2.c \
+	client/ui/node/ui_node_textlist.c \
+	client/ui/node/ui_node_textentry.c \
+	client/ui/node/ui_node_todo.c \
+	client/ui/node/ui_node_vscrollbar.c \
+	client/ui/node/ui_node_window.c \
+	client/ui/node/ui_node_zone.c \
 	\
 	client/mxml/mxml-attr.c \
 	client/mxml/mxml-entity.c \
@@ -225,6 +230,8 @@ CLIENT_SRCS = \
 	common/http.c \
 	common/ioapi.c \
 	common/unzip.c \
+	common/bsp.c \
+	common/grid.c \
 	common/cmodel.c \
 	common/common.c \
 	common/cvar.c \
@@ -259,6 +266,7 @@ CLIENT_SRCS = \
 	client/renderer/r_font.c \
 	client/renderer/r_flare.c \
 	client/renderer/r_framebuffer.c \
+	client/renderer/r_geoscape.c \
 	client/renderer/r_image.c \
 	client/renderer/r_light.c \
 	client/renderer/r_lightmap.c \
@@ -275,7 +283,6 @@ CLIENT_SRCS = \
 	client/renderer/r_model_md2.c \
 	client/renderer/r_model_md3.c \
 	client/renderer/r_model_obj.c \
-	client/renderer/r_overlay.c \
 	client/renderer/r_particle.c \
 	client/renderer/r_program.c \
 	client/renderer/r_sdl.c \
@@ -293,6 +300,7 @@ CLIENT_SRCS = \
 	shared/shared.c \
 	\
 	game/q_shared.c \
+	game/chr_shared.c \
 	game/inv_shared.c \
 	game/inventory.c
 

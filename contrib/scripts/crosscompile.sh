@@ -3,7 +3,7 @@
 
 JOBS=1
 MINGW=i686-pc-mingw32
-MINGW_CROSS_ENV=/opt/mingw-env
+MINGW_CROSS_ENV=/opt/mingw-cross-env
 DIR=$(dirname $(readlink -f ${0}))
 cd "${DIR}/../.."
 

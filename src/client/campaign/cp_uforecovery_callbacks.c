@@ -25,14 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_ufo.h"
 #include "cp_uforecovery.h"
 #include "cp_uforecovery_callbacks.h"
 
-#include "../menu/m_main.h"
-#include "../menu/node/m_node_text.h"
+#include "../ui/ui_main.h"
 
 #ifdef DEBUG
 #include "cp_time.h"
@@ -48,7 +47,7 @@ typedef struct ufoRecoveryNation_s {
 
 /**
  * @brief Pointer to compare function
- * @note This function is used by sorting algoritm.
+ * @note This function is used by sorting algorithm.
  */
 typedef int (*COMP_FUNCTION)(ufoRecoveryNation_t *a, ufoRecoveryNation_t *b);
 
@@ -108,11 +107,6 @@ static void UR_DialogInit_f (void)
 	}
 
 	ufoCraft = AIR_GetAircraft(ufoID);
-	/* Do nothing without UFO of this type. */
-	if (!ufoCraft) {
-		Com_Printf("CP_UFORecovered: UFO Type: %s is not a valid craft definition!\n", ufoID);
-		return;
-	}
 
 	/* Put relevant info into missionResults array. */
 	ccs.missionResults.recovery = qtrue;
@@ -168,14 +162,14 @@ static void UR_DialogInitStore_f (void)
 	if (count == 0) {
 		/* No UFO base with proper conditions, show a hint and disable list. */
 		LIST_AddString(&recoveryYardName, _("No free UFO yard available."));
-		MN_ExecuteConfunc("uforecovery_tabselect sell");
-		MN_ExecuteConfunc("btbasesel disable");
+		UI_ExecuteConfunc("uforecovery_tabselect sell");
+		UI_ExecuteConfunc("btbasesel disable");
 	} else {
-		MN_ExecuteConfunc("cp_basesel_select 0");
-		MN_ExecuteConfunc("btbasesel enable");
+		UI_ExecuteConfunc("cp_basesel_select 0");
+		UI_ExecuteConfunc("btbasesel enable");
 	}
-	MN_RegisterLinkedListText(TEXT_UFORECOVERY_UFOYARDS, recoveryYardName);
-	MN_RegisterLinkedListText(TEXT_UFORECOVERY_CAPACITIES, recoveryYardCapacity);
+	UI_RegisterLinkedListText(TEXT_UFORECOVERY_UFOYARDS, recoveryYardName);
+	UI_RegisterLinkedListText(TEXT_UFORECOVERY_CAPACITIES, recoveryYardCapacity);
 }
 
 /**
@@ -233,19 +227,19 @@ static void UR_DialogStartStore_f (void)
 static void UR_DialogFillNations (void)
 {
 	int i;
-	char row[MAX_SMALLMENUTEXTLEN];
 	linkedList_t *nationList = NULL;
 
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = ufoRecovery.UFONations[i].nation;
 		if (nation) {
+			char row[512];
 			Com_sprintf(row, lengthof(row), "%s\t\t\t%i\t\t%s", _(nation->name),
 				ufoRecovery.UFONations[i].price, NAT_GetHappinessString(nation));
 			LIST_AddString(&nationList, row);
 		}
 	}
 
-	MN_RegisterLinkedListText(TEXT_UFORECOVERY_NATIONS, nationList);
+	UI_RegisterLinkedListText(TEXT_UFORECOVERY_NATIONS, nationList);
 }
 
 /**
@@ -288,9 +282,12 @@ static int UR_CompareByPrice (ufoRecoveryNation_t *a, ufoRecoveryNation_t *b)
  */
 static int UR_CompareByHappiness (ufoRecoveryNation_t *a, ufoRecoveryNation_t *b)
 {
-	if (a->nation->stats[0].happiness > b->nation->stats[0].happiness)
+	const nationInfo_t *statsA = &a->nation->stats[0];
+	const nationInfo_t *statsB = &b->nation->stats[0];
+
+	if (statsA->happiness > statsB->happiness)
 		return 1;
-	if (a->nation->stats[0].happiness < b->nation->stats[0].happiness)
+	if (statsA->happiness < statsB->happiness)
 		return -1;
 	return 0;
 }
@@ -378,7 +375,7 @@ static void UR_DialogInitSell_f (void)
 	}
 	UR_SortNations(UR_GetSortFunctionByColumn(ufoRecovery.sortedColumn), ufoRecovery.sortDescending);
 	UR_DialogFillNations();
-	MN_ExecuteConfunc("btnatsel disable");
+	UI_ExecuteConfunc("btnatsel disable");
 }
 
 /**
@@ -443,7 +440,7 @@ static void UR_DialogSortByColumn_f (void)
 		/* changed line selection corresponding to current nation */
 		index = UR_DialogGetCurrentNationIndex();
 		if (index != -1)
-			MN_ExecuteConfunc("cp_nationsel_select %d", index);
+			UI_ExecuteConfunc("cp_nationsel_select %d", index);
 	}
 }
 
@@ -474,7 +471,7 @@ static void UR_DialogSelectSellNation_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
 
 	Cvar_Set("mission_recoverynation", _(nation->name));
-	MN_ExecuteConfunc("btnatsel enable");
+	UI_ExecuteConfunc("btnatsel enable");
 }
 
 /**
@@ -639,8 +636,6 @@ void UR_InitCallbacks (void)
 	Cmd_AddCommand("debug_storeufo", US_StoreUFO_f, "Debug function to Add UFO to Hangars.");
 	Cmd_AddCommand("debug_removestoredufo", US_RemoveStoredUFO_f, "Debug function to Remove UFO from Hangars.");
 #endif
-
-	Cvar_Set("mn_uforecovery_actualufo", "");
 }
 
 void UR_ShutdownCallbacks (void)
@@ -657,6 +652,4 @@ void UR_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("debug_storeufo");
 	Cmd_RemoveCommand("debug_removestoredufo");
 #endif
-
-	Cvar_Delete("mn_uforecovery_actualufo");
 }

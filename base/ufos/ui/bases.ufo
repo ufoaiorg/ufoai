@@ -20,7 +20,7 @@ component cmpDefBaseHeader cmpBaseviewHeader
 		tooltip		"_Name of this base"
 		pos			"60 30"
 		size		"500 32"
-		font		f_big
+		font		"f_big"
 		onChange {
 			// stores the value of the cvar in the base structure
 			cmd	"base_changename"
@@ -44,7 +44,7 @@ component cmpDefBaseHeader cmpBaseviewHeader
 		padding 0
 		onClick
 		{
-			call *node:(textentry)parent.name@edit
+			call *node:parent.name@edit
 		}
 	}
 
@@ -75,35 +75,37 @@ component cmpDefBaseHeader cmpBaseviewHeader
 
 	component button cmpBaseButton
 	{
-		image		ui/button_green_small
+		image		"ui/button_green_small"
 		size		"230 56"
 		color		"0 0.8 0 1"
 		selectcolor "1 1 1 1"
-		font		f_menu
+		font		"f_menu"
 	}
 
 window bases
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
 
 	// ==================
 	// background
 	// ==================
 
-	pic back_ul
+	image back_ul
 	{
-		image		ui/base_ul
+		src		"ui/base_ul"
 		pos			"0 0"
 	}
 
-	pic back_ur
+	image back_ur
 	{
-		image		ui/base_ur
+		src		"ui/base_ur"
 		pos			"512 0"
 	}
 
-	pic back_lr
+	image back_lr
 	{
-		image		ui/base_lr
+		src		"ui/base_lr"
 		pos			"512 256"
 	}
 
@@ -198,10 +200,10 @@ window bases
 		onClick		{ cmd "mn_push basesummary;" }
 	}
 }
-	confunc update_basebutton 
+	confunc update_basebutton
 	{
-		*base_buttons.<1>@disabled = <2>
-		*base_buttons.<1>@tooltip = <3>
+		*node:root.base_buttons.<1>@disabled = <2>
+		*node:root.base_buttons.<1>@tooltip = <3>
 	}
 
 	func onInit

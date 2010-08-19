@@ -34,10 +34,37 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 
 #define MAX_MAPPARTICLES	1024
+#define MAX_TIMEDPARTICLES 16
 
 static cvar_t *cl_particleweather;
 
+/** @brief map particles */
+typedef struct mapParticle_s {
+	char ptl[MAX_VAR];
+	const char *info;
+	vec3_t origin;
+	vec2_t wait;
+	int nextTime;
+	int levelflags;
+} mapParticle_t;
+
+typedef struct timedParticle_s {
+	char ptl[MAX_VAR];
+	vec3_t origin;
+	vec3_t s;	/**< current position */
+	vec3_t a;	/**< acceleration vector */
+	vec3_t v;	/**< velocity vector */
+	ptl_t *parent;
+	qboolean children;	/**< spawn as children of @c parent */
+	int levelFlags;
+	int max;	/**< the amount of particles to spawn */
+	int n;		/**< the amount of particles already spawned */
+	int dt;		/**< the time delta between of the n particle spawns */
+	int lastTime;	/**< the last time a particle from this queue was spawned */
+} timedParticle_t;
+
 static mapParticle_t mapParticles[MAX_MAPPARTICLES];
+static timedParticle_t timedParticles[MAX_TIMEDPARTICLES];
 
 #define	V_VECS		((1 << V_FLOAT) | (1 << V_POS) | (1 << V_VECTOR) | (1 << V_COLOR))
 #define PTL_ONLY_ONE_TYPE		(1<<31)
@@ -86,7 +113,7 @@ typedef enum pc_s {
 	PC_V2, PC_V3, PC_V4,
 
 	PC_KILL,
-	PC_SPAWN, PC_NSPAWN, PC_CHILD,
+	PC_SPAWN, PC_NSPAWN, PC_TNSPAWN, PC_CHILD,
 
 	PC_NUM_PTLCMDS
 } pc_t;
@@ -103,7 +130,7 @@ static const char *pc_strings[PC_NUM_PTLCMDS] = {
 	"v2", "v3", "v4",
 
 	"kill",
-	"spawn", "nspawn", "child"
+	"spawn", "nspawn", "tnspawn", "child"
 };
 CASSERT(lengthof(pc_strings) == PC_NUM_PTLCMDS);
 
@@ -119,7 +146,7 @@ static const int pc_types[PC_NUM_PTLCMDS] = {
 	0, 0, 0,
 
 	0,
-	PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING
+	PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING
 };
 CASSERT(lengthof(pc_types) == PC_NUM_PTLCMDS);
 
@@ -173,13 +200,6 @@ static const value_t pps[] = {
 	{NULL, 0, 0, 0}
 };
 
-/** @brief particle art type */
-typedef enum artType_s {
-	ART_PIC,
-	ART_MODEL
-} artType_t;
-
-
 /* =========================================================== */
 
 #define		MAX_PTLDEFS		256
@@ -195,7 +215,7 @@ static int numPtlCmds;
 
 /** @todo check pcmdData overflow */
 static byte pcmdData[MAX_PCMD_DATA];
-static byte *pcmdPos;
+static byte *pcmdPos = pcmdData;
 
 static const int RSTACK = -(MAX_PCMD_DATA);
 
@@ -206,6 +226,41 @@ static byte cmdStack[MAX_STACK_DATA];
 static void *stackPtr[MAX_STACK_DEPTH];
 static byte stackType[MAX_STACK_DEPTH];
 
+/**
+ * @brief Will spawn a @c n particles @c deltaTime ms after the parent was spawned
+ * @param[in] name The id of the particle (see ptl_*.ufo script files in base/ufos)
+ * @param[in] parent The parent particle
+ * @param[in] children Spawn as children
+ * @param[in] deltaTime The time to wait until this particle should get spawned
+ * @param[in] n The amount of particles to spawn (each after deltaTime of its predecessor)
+ */
+static void CL_ParticleSpawnTimed (const char *name, ptl_t *parent, qboolean children, int deltaTime, int n)
+{
+	const size_t length = lengthof(timedParticles);
+	int i;
+
+	if (n <= 0)
+		Com_Error(ERR_DROP, "Timed particle should spawn particles");
+
+	if (deltaTime <= 0)
+		Com_Error(ERR_DROP, "Delta time for timed particle is invalid");
+
+	for (i = 0; i < length; i++) {
+		timedParticle_t *tp = &timedParticles[i];
+		if (tp->n == tp->max) {
+			/* found a free slot */
+			Q_strncpyz(tp->ptl, name, sizeof(tp->ptl));
+			tp->levelFlags = parent->levelFlags;
+			tp->dt = deltaTime;
+			tp->n = 0;
+			tp->children = children;
+			tp->max = n;
+			tp->parent = parent;
+			return;
+		}
+	}
+	Com_Printf("Could not spawn timed particles due to overflow\n");
+}
 
 /**
  * @brief Spawns the map particle
@@ -325,7 +380,6 @@ void PTL_InitStartup (void)
 	numPtlDefs = 0;
 
 	r_numParticlesArt = 0;
-	pcmdPos = pcmdData;
 }
 
 /**
@@ -576,6 +630,31 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 				Com_Printf("PC_SPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
 			break;
 
+		case PC_TNSPAWN:
+			/* check for stack underflow */
+			if (stackIdx < 2)
+				Com_Error(ERR_DROP, "CL_ParticleFunction: stack underflow");
+
+			/* pop elements off the stack */
+			/* amount of timed particles */
+			type = stackType[--stackIdx];
+			if (type != V_INT)
+				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for tnspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
+			n = *(int *) stackPtr[stackIdx];
+
+			/* delta time */
+			type = stackType[--stackIdx];
+			if (type != V_INT)
+				Com_Error(ERR_DROP, "CL_ParticleFunction: bad type '%s' int required for tnspawn (particle %s)", vt_names[stackType[stackIdx]], p->ctrl->name);
+			i = *(int *) stackPtr[stackIdx];
+
+			/** @todo make the children boolean configurable */
+			CL_ParticleSpawnTimed((const char *) cmdData, p, qtrue, i, n);
+
+			e -= 2 * sizeof(int);
+
+			break;
+
 		case PC_NSPAWN:
 			/* check for stack underflow */
 			if (stackIdx == 0)
@@ -612,7 +691,6 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 		}
 	}
 }
-
 
 /**
  * @brief Spawn a new particle to the map
@@ -655,7 +733,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 		if (r_numParticles < MAX_PTLS)
 			r_numParticles++;
 		else {
-			Com_Printf("Too many particles (don't add %s) - exceeded %i\n", name, MAX_PTLS);
+			Com_DPrintf(DEBUG_CLIENT, "Too many particles (don't add %s) - exceeded %i\n", name, MAX_PTLS);
 			return NULL;
 		}
 	}
@@ -694,6 +772,11 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 
 	/* run init function */
 	CL_ParticleFunction(p, pd->init);
+	if (p->inuse && !p->tps && !p->life) {
+		Com_DPrintf(DEBUG_CLIENT, "Particle %s does not have a tps nor a life set - this is only valid for projectile particles\n",
+				name);
+		p->tps = 1;
+	}
 
 	return p;
 }
@@ -732,7 +815,14 @@ void CL_ParticleFree (ptl_t *p)
 	}
 }
 
-static void CL_Fading (vec4_t color, byte fade, float frac, qboolean onlyAlpha)
+/**
+ * @brief Color fade function.
+ * @param[in,out] color The color vector to fade.
+ * @param[in] fade The type of the fade.
+ * @param[in] frac The fraction to fade the color with.
+ * @param[in] onlyAlpha Only fade the alpha channel of the given RGBA color.
+ */
+static void CL_Fading (vec4_t color, fade_t fade, float frac, qboolean onlyAlpha)
 {
 	int i;
 
@@ -757,8 +847,9 @@ static void CL_Fading (vec4_t color, byte fade, float frac, qboolean onlyAlpha)
 			for (i = onlyAlpha ? 3 : 0; i < 4; i++)
 				color[i] *= (1.0 - frac) * 2;
 		break;
-	default:
-		/* shouldn't happen */
+	case FADE_NONE:
+		break;
+	case FADE_LAST:
 		break;
 	}
 }
@@ -850,14 +941,15 @@ static void CL_ParticleRun2 (ptl_t *p)
 	/* fading */
 	if (p->thinkFade || p->frameFade) {
 		const qboolean onlyAlpha = (p->blend == BLEND_BLEND);
-		if (!onlyAlpha) {
+		if (!onlyAlpha)
 			Vector4Set(p->color, 1.0f, 1.0f, 1.0f, 1.0f);
-		} else
+		else
 			p->color[3] = 1.0;
-			if (p->thinkFade)
-				CL_Fading(p->color, p->thinkFade, p->lastThink * p->tps, p->blend == BLEND_BLEND);
-			if (p->frameFade)
-				CL_Fading(p->color, p->frameFade, p->lastFrame * p->fps, p->blend == BLEND_BLEND);
+
+		if (p->thinkFade)
+			CL_Fading(p->color, p->thinkFade, p->lastThink * p->tps, onlyAlpha);
+		if (p->frameFade)
+			CL_Fading(p->color, p->frameFade, p->lastFrame * p->fps, onlyAlpha);
 	}
 
 	/* this is useful for particles like weather effects that are on top of
@@ -920,6 +1012,44 @@ static void CL_ParticleRun2 (ptl_t *p)
 }
 
 /**
+ * @brief Called every frame and checks whether a timed particle should be spawned
+ */
+static void CL_ParticleRunTimed (void)
+{
+	int i;
+	const size_t length = lengthof(timedParticles);
+
+	for (i = 0; i < length; i++) {
+		timedParticle_t *tp = &timedParticles[i];
+		if (!tp->parent || !tp->parent->inuse)
+			continue;
+		if (tp->n >= tp->max)
+			continue;
+		if (CL_Milliseconds() - tp->lastTime < tp->dt)
+			continue;
+		{
+			ptl_t *p;
+			if (!tp->n) {
+				/* first spawn? - then copy the parent values. We have to
+				 * do this here and now earlier because projectile particles
+				 * get these values set after spawn. */
+				VectorCopy(tp->parent->s, tp->s);
+				VectorCopy(tp->parent->v, tp->v);
+				VectorCopy(tp->parent->a, tp->a);
+			}
+			tp->n++;
+			tp->lastTime = CL_Milliseconds();
+			p = CL_ParticleSpawn(tp->ptl, tp->levelFlags, tp->s, tp->v, tp->a);
+			if (p && tp->children) {
+				p->next = tp->parent->children;
+				p->parent = tp->parent;
+				tp->parent->children = p;
+			}
+		}
+	}
+}
+
+/**
  * @brief General system for particle running during the game.
  * @sa CL_Frame
  */
@@ -931,11 +1061,12 @@ void CL_ParticleRun (void)
 	if (cls.state != ca_active)
 		return;
 
+	CL_ParticleRunTimed();
+
 	for (i = 0, p = r_particles; i < r_numParticles; i++, p++)
 		if (p->inuse)
 			CL_ParticleRun2(p);
 }
-
 
 /**
  * @brief Parses particle used on maps.
@@ -958,17 +1089,17 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 		if (token[0] == '}')
 			break;
 		if (!es)
-			Com_Error(ERR_DROP, "ED_ParseEntity: EOF without closing brace");
+			Com_Error(ERR_DROP, "CL_ParseMapParticle: EOF without closing brace");
 
 		Q_strncpyz(keyname, token, sizeof(keyname));
 
 		/* parse value */
 		token = Com_Parse(&es);
 		if (!es)
-			Com_Error(ERR_DROP, "ED_ParseEntity: EOF without closing brace");
+			Com_Error(ERR_DROP, "CL_ParseMapParticle: EOF without closing brace");
 
 		if (token[0] == '}')
-			Com_Error(ERR_DROP, "ED_ParseEntity: closing brace without data");
+			Com_Error(ERR_DROP, "CL_ParseMapParticle: closing brace without data");
 
 		if (!afterwards && keyname[0] != '-')
 			continue;
@@ -1321,6 +1452,35 @@ static void PTL_DebugSpawnMarker_f (void)
 	CL_ParticleSpawn("debug_marker", 0, worldOrigin, NULL, NULL);
 }
 
+static void PTL_DebugList_f (void)
+{
+	int i;
+
+	Com_Printf("%i particles\n", r_numParticles);
+	for (i = 0; i < r_numParticles; i++) {
+		const ptl_t *p = &r_particles[i];
+		const ptlDef_t *def = p->ctrl;
+		const value_t *pp = pps;
+		if (!p->inuse)
+			continue;
+		Com_Printf("particle %i\n", i);
+		Com_Printf(" name: %s\n", def->name);
+		for (pp = pps; pp->string; pp++) {
+			const char* value = "";
+			if (!strcmp(pp->string, "image") && p->pic) {
+				value = p->pic->name;
+			} else if (!strcmp(pp->string, "model") && p->model) {
+				value = p->model->name;
+			} else if (!strcmp(pp->string, "program") && p->program) {
+				value = p->program->name;
+			} else {
+				value = Com_ValueToStr(p, pp->type, pp->ofs);
+			}
+			Com_Printf(" %s: %s\n", pp->string, value);
+		}
+	}
+}
+
 /**
  * @brief Initializes cvars and commands
  */
@@ -1328,4 +1488,5 @@ void CL_InitParticles (void)
 {
 	cl_particleweather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");
 	Cmd_AddCommand("debug_spawnmarker", PTL_DebugSpawnMarker_f, "Spawn a marker particle in the world at a given location");
+	Cmd_AddCommand("debug_particlelist", PTL_DebugList_f, NULL);
 }

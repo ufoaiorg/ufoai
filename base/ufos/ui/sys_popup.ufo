@@ -15,7 +15,7 @@ window popup
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		*cvar:mn_sys_popup_title
 	}
 
@@ -28,30 +28,30 @@ window popup
 		tabwidth	100
 		rows		8
 		onViewChange	{
-			*(abstractscrollbar)popup_text_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)popup_text_scroll@current = <viewpos>
-			*(abstractscrollbar)popup_text_scroll@viewsize = <viewsize>
+			*node:root.popup_text_scroll@fullsize = <fullsize>
+			*node:root.popup_text_scroll@current = <viewpos>
+			*node:root.popup_text_scroll@viewsize = <viewsize>
 		}
 	}
 
 	vscrollbar popup_text_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"457 58"
 		height		"128"
 		current		0
 		viewsize	8
 		fullsize	8
 		hidewhenunused true
-		onChange	{ *popup_text@viewpos = <current> }
+		onChange	{ *node:root.popup_text@viewpos = <current> }
 	}
 	button button_ok
 	{
 		string		"_OK"
 		tooltip		"_Close this dialogue"
-		image		ui/button_green_small
+		image		"ui/button_green_small"
 		pos			"260 180"
 		width		"200"
-		font		f_menu
+		font		"f_menu"
 		color		"0 0.5 0 1"
 		onClick		{ cmd "mn_close popup;" }
 	}
@@ -68,7 +68,7 @@ window popup_list
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		*cvar:mn_sys_popup_title
 	}
 
@@ -90,20 +90,20 @@ window popup_list
 		tabwidth	100
 		rows		6
 		onViewChange	{
-			*(abstractscrollbar)popup_list_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)popup_list_scroll@current = <viewpos>
-			*(abstractscrollbar)popup_list_scroll@viewsize = <viewsize>
+			*node:root.popup_list_scroll@fullsize = <fullsize>
+			*node:root.popup_list_scroll@current = <viewpos>
+			*node:root.popup_list_scroll@viewsize = <viewsize>
 		}
 	}
 	vscrollbar popup_list_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"457 96"
 		height		"96"
 		current		0
 		viewsize	6
 		fullsize	6
 		hidewhenunused true
-		onChange	{ *popup_list@viewpos = <current> }
+		onChange	{ *node:root.popup_list@viewpos = <current> }
 	}
 
 	cmpPopupButton bt_ok
@@ -126,7 +126,7 @@ window popup_button
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		*cvar:mn_sys_popup_title
 	}
 
@@ -139,21 +139,21 @@ window popup_button
 		tabwidth	100
 		rows		8
 		onViewChange	{
-			*(abstractscrollbar)popup_text_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)popup_text_scroll@current = <viewpos>
-			*(abstractscrollbar)popup_text_scroll@viewsize = <viewsize>
+			*node:root.popup_text_scroll@fullsize = <fullsize>
+			*node:root.popup_text_scroll@current = <viewpos>
+			*node:root.popup_text_scroll@viewsize = <viewsize>
 		}
 	}
 
 	vscrollbar popup_text_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"457 58"
 		height		"128"
 		current		0
 		viewsize	8
 		fullsize	8
 		hidewhenunused true
-		onChange	{ *popup_text@viewpos = <current> }
+		onChange	{ *node:root.popup_text@viewpos = <current> }
 	}
 
 	cmpPopupButton popup_button_1

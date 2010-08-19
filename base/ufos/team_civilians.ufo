@@ -57,6 +57,9 @@ team latin
 			deathsound	civilians/civmaledeath02a
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 team states
@@ -103,6 +106,7 @@ team states
 			civilians/male body01 head01 1
 			civilians/male body01 head01 2
 			civilians/male body01 head03 2
+			// civilians/male boy01 boy_head01 0
 		}
 	}
 
@@ -120,6 +124,9 @@ team states
 			deathsound	civilians/maledeath02
 			deathsound	civilians/maledeath03
 		}
+	}
+	templates {
+		soldier_civil
 	}
 }
 
@@ -165,6 +172,7 @@ team europe
 			civilians/male body01 head01 0
 			civilians/male body01 head01 1
 			civilians/male body01 head01 2
+			// civilians/male boy01 boy_head01 0
 		}
 	}
 
@@ -182,6 +190,9 @@ team europe
 			deathsound	civilians/maledeath02
 			deathsound	civilians/maledeath03
 		}
+	}
+	templates {
+		soldier_civil
 	}
 }
 
@@ -226,6 +237,9 @@ team asia
 			deathsound	civilians/maledeath02
 			deathsound	civilians/maledeath03
 		}
+	}
+	templates {
+		soldier_civil
 	}
 }
 
@@ -272,6 +286,9 @@ team middle
 			deathsound	civilians/maledeath03
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 team africa
@@ -316,6 +333,9 @@ team africa
 			deathsound	civilians/maledeath03
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 team russia
@@ -342,6 +362,7 @@ team russia
 
 		male {
 			civilians/male body02 head02 0
+			// civilians/male boy01 boy_head01 0
 		}
 	}
 
@@ -359,6 +380,9 @@ team russia
 			deathsound	civilians/maledeath02
 			deathsound	civilians/maledeath03
 		}
+	}
+	templates {
+		soldier_civil
 	}
 }
 
@@ -404,6 +428,9 @@ team oceania
 			deathsound	civilians/maledeath03
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 //========================================================================
@@ -443,6 +470,9 @@ team armysoldier
 			deathsound	civilians/maledeath02
 			deathsound	civilians/maledeath03
 		}
+	}
+	templates {
+		soldier_common
 	}
 }
 
@@ -484,6 +514,9 @@ team scientist
 			deathsound	civilians/maledeath03
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 team worker
@@ -521,6 +554,9 @@ team worker
 			deathsound	civilians/maledeath03
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 team miner
@@ -556,5 +592,8 @@ team miner
 			deathsound	civilians/maledeath02
 			deathsound	civilians/maledeath03
 		}
+	}
+	templates {
+		soldier_civil
 	}
 }

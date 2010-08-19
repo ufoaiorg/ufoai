@@ -23,10 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
-#include "../menu/m_nodes.h"
+#include "../cl_shared.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
 #include "cp_map.h"
@@ -87,7 +86,7 @@ static popup_intercept_t popupIntercept;	/**< Data about popup_intercept */
 /** Reservation-popup info */
 static int popupNum;							/**< Number of entries in the popup list */
 static linkedList_t* popupListData = NULL;		/**< Further datas needed when popup is clicked */
-static menuNode_t* popupListNode = NULL;		/**< Node used for popup */
+static uiNode_t* popupListNode = NULL;		/**< Node used for popup */
 
 static int INVALID_BASE = -1;
 
@@ -105,13 +104,11 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 {
 	int baseIdx, homebase, numAvailableBases = 0;
 	baseCapacities_t capacity;
-	buildingType_t buildingType;
 	linkedList_t* popupListText = NULL;
 
 	assert(aircraft);
 
 	capacity = AIR_GetCapacityByAircraftWeight(aircraft);
-	buildingType = B_GetBuildingTypeByCapacity(capacity);
 
 	LIST_Delete(&popupListData);
 
@@ -147,10 +144,10 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 
 	if (alwaysDisplay || numAvailableBases > 0) {
 		CL_GameTimeStop();
-		popupListNode = MN_PopupList(_("Change homebase of aircraft"), _("Base\tStatus"), popupListText, "change_homebase <lineselected>;");
+		popupListNode = UI_PopupList(_("Change homebase of aircraft"), _("Base\tStatus"), popupListText, "change_homebase <lineselected>;");
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
 		popupListNode->selectedColor[3] = 1.0;
-		MN_TextNodeSelectLine(popupListNode, homebase);
+		UI_TextNodeSelectLine(popupListNode, homebase);
 		MAP_SelectAircraft(aircraft);
 		return qtrue;
 	}
@@ -204,7 +201,7 @@ static void CL_PopupChangeHomebase_f (void)
 
 	AIR_MoveAircraftIntoNewHomebase(ccs.selectedAircraft, base);
 
-	MN_PopWindow(qfalse);
+	UI_PopWindow(qfalse);
 	CL_DisplayHomebasePopup(ccs.selectedAircraft, qtrue);
 }
 
@@ -224,7 +221,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 	popupAircraft.aircraft = aircraft;
 	popupAircraft.numItems = 0;
 	memset(popupAircraft.textPopup, 0, sizeof(popupAircraft.textPopup));
-	MN_RegisterText(TEXT_POPUP, popupAircraft.textPopup);
+	UI_RegisterText(TEXT_POPUP, popupAircraft.textPopup);
 
 	/* Set static datas in popup_aircraft */
 	popupAircraft.itemsAction[popupAircraft.numItems++] = POPUP_AIRCRAFT_ACTION_BACKTOBASE;
@@ -235,7 +232,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 	Q_strcat(popupAircraft.textPopup, _("Change homebase\n"), POPUP_AIRCRAFT_MAX_TEXT);
 
 	/* Set missions in popup_aircraft */
-	if (aircraft->teamSize > 0) {
+	if (AIR_GetTeamSize(aircraft) > 0) {
 		const linkedList_t *list = ccs.missions;
 		for (; list; list = list->next) {
 			mission_t *tempMission = (mission_t *)list->data;
@@ -252,7 +249,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 	}
 
 	/* Display popup_aircraft menu */
-	MN_PushWindow("popup_aircraft", NULL);
+	UI_PushWindow("popup_aircraft", NULL);
 }
 
 /**
@@ -274,7 +271,7 @@ static void CL_PopupAircraftClick_f (void)
 	if (num < 0 || num >= popupAircraft.numItems)
 		return;
 
-	MN_PopWindow(qfalse); /* Close popup */
+	UI_PopWindow(qfalse); /* Close popup */
 
 	/* Get aircraft associated with the popup_aircraft */
 	aircraft = popupAircraft.aircraft;
@@ -327,22 +324,23 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 	popupIntercept.numAircraft = 0;
 	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		int i;
+		aircraft_t *aircraft;
 
 		if (!base)
 			continue;
 
 		/* Check aircraft in base */
-		for (i = 0; i < base->numAircraftInBase; i++) {
-			aircraft_t *aircraft = &base->aircraft[i];
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
+			const int teamSize = AIR_GetTeamSize(aircraft);
 			/* if aircraft is empty we can't send it on a ground mission */
-			if (aircraft->teamSize > 0 && AIR_CanIntercept(aircraft)) {
+			if (teamSize > 0 && AIR_CanIntercept(aircraft)) {
 				char aircraftListText[256] = "";
 				const float distance = GetDistanceOnGlobe(aircraft->pos, mission->pos);
 				const char *statusName = AIR_AircraftStatusToName(aircraft);
 				const char *time = CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED]);
 				Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s (%i/%i)\t%s\t%s\t%s"), aircraft->name,
-					aircraft->teamSize, aircraft->maxTeamSize, statusName, base->name, time);
+						teamSize, aircraft->maxTeamSize, statusName, base->name, time);
 				LIST_AddString(&aircraftList, aircraftListText);
 				assert(aircraft->homebase == base);
 				popupIntercept.aircraft[popupIntercept.numAircraft] = aircraft;
@@ -357,15 +355,15 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 	}	/* bases */
 
 	if (popupIntercept.numAircraft)
-		MN_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, aircraftList);
+		UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, aircraftList);
 	else
-		MN_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no tactical teams assigned to available craft."));
+		UI_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no tactical teams assigned to available craft."));
 
 	/* Stop time */
 	CL_GameTimeStop();
 
 	/* Display the popup */
-	MN_PushWindow("popup_mission", NULL);
+	UI_PushWindow("popup_mission", NULL);
 }
 
 
@@ -390,7 +388,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 	popupIntercept.numAircraft = 0;
 	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		int i;
+		aircraft_t *aircraft;
 
 		if (!base)
 			continue;
@@ -401,8 +399,8 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 			LIST_AddString(&baseList, va("^B%s", base->name));
 
 		/* Check aircraft in base */
-		for (i = 0; i < base->numAircraftInBase; i++) {
-			aircraft_t *aircraft = &base->aircraft[i];
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (AIR_CanIntercept(aircraft)) {
 				char aircraftListText[256] = "";
 				/* don't show aircraft with no weapons or no ammo, or crafts that
@@ -421,7 +419,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 				}
 
 				Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s%s (%i/%i)\t%s\t%s"), enoughFuelMarker, aircraft->name,
-					aircraft->teamSize,	aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name);
+						AIR_GetTeamSize(aircraft), aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name);
 				LIST_AddString(&aircraftList, aircraftListText);
 				assert(aircraft->homebase == base);
 				popupIntercept.aircraft[popupIntercept.numAircraft] = aircraft;
@@ -436,9 +434,9 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 	}	/* bases */
 
 	if (popupIntercept.numAircraft)
-		MN_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, aircraftList);
+		UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, aircraftList);
 	else
-		MN_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no weapon or ammo equipped."));
+		UI_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no weapon or ammo equipped."));
 
 	for (installationIdx = 0; installationIdx < ccs.numInstallations; installationIdx++) {
 		const installation_t const *installation = INS_GetFoundedInstallationByIDX(installationIdx);
@@ -452,15 +450,15 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 	}
 
 	if (baseList)
-		MN_RegisterLinkedListText(TEXT_BASE_LIST, baseList);
+		UI_RegisterLinkedListText(TEXT_BASE_LIST, baseList);
 	else
-		MN_RegisterText(TEXT_BASE_LIST, _("No defence system operational or no weapon or ammo equipped."));
+		UI_RegisterText(TEXT_BASE_LIST, _("No defence system operational or no weapon or ammo equipped."));
 
 	/* Stop time */
 	CL_GameTimeStop();
 
 	/* Display the popup */
-	MN_PushWindow("popup_intercept", NULL);
+	UI_PushWindow("popup_intercept", NULL);
 }
 
 /**
@@ -479,7 +477,7 @@ static aircraft_t* CL_PopupInterceptGetAircraft_f (void)
 	if (num < 0 || num >= popupIntercept.numAircraft)
 		return NULL;
 
-	MN_PopWindow(qfalse);
+	UI_PopWindow(qfalse);
 	if (!popupIntercept.aircraft[num])
 		return NULL;
 	return popupIntercept.aircraft[num];
@@ -503,7 +501,7 @@ static void CL_PopupInterceptClick_f (void)
 	base = aircraft->homebase;
 	if (!B_GetBuildingStatus(base, B_COMMAND)) {
 		/** @todo are these newlines really needed? at least the first should be handled by the menu code */
-		MN_Popup(_("Notice"), _("No Command Centre operational in homebase\nof this aircraft.\n\nAircraft cannot start.\n"));
+		UI_Popup(_("Notice"), _("No Command Centre operational in homebase\nof this aircraft.\n\nAircraft cannot start.\n"));
 		return;
 	}
 
@@ -531,7 +529,7 @@ static void CL_PopupInterceptRClick_f (void)
 	AIR_AircraftSelect(aircraft);
 	MAP_ResetAction();
 	B_SelectBase(aircraft->homebase);
-	MN_PushWindow("aircraft", NULL);
+	UI_PushWindow("aircraft", NULL);
 }
 
 /**
@@ -608,7 +606,7 @@ static void CL_PopupInterceptBaseClick_f (void)
 			base->lasers[i].target = ccs.selectedUFO;
 	}
 
-	MN_PopWindow(qfalse);
+	UI_PopWindow(qfalse);
 }
 
 /**
@@ -632,11 +630,11 @@ void CL_PopupInit (void)
 }
 
 /**
- * @brief Wrapper around @c MN_Popup which also stops the time
+ * @brief Wrapper around @c UI_Popup which also stops the time
  */
 void CP_PopupList (const char *title, const char *text)
 {
 	CL_GameTimeStop();
 
-	MN_Popup(title, text);
+	UI_Popup(title, text);
 }

@@ -6,32 +6,34 @@
  * Big green button used in all main menu UI
  * We should only use it into the main UI (outside game)
  */
-component button cmpMenuButton {
+component button cmpMenuButton
+{
 	size "256 64"
-	image	ui/button_green_big
-	font	f_menubig
+	image	"ui/button_green_big"
+	font	"f_menubig"
 	color	"0 0.5 0 1"
 	selectcolor "1 1 1 1"
 }
 
 /**
  * Bar with border, label and value.
- * Used to show stats of the actor. 
+ * Used to show stats of the actor.
  * This version is used in menu "employees" and "mp_team"
  */
 
-component panel cmpDefNamedTbar {
+component panel cmpDefNamedTbar
+{
 	{
 		size	"450 32"
 	}
-	pic			bdr { 
+	image			bdr {
 		pos "25 18"
-		image ui/bar_border 
+		src "ui/bar_border"
 	}
 	tbar		bar {
 		pos "27 18"
 		texl "3 0"
-		image ui/bar_attribute
+		image "ui/bar_attribute"
 		size "250 16"
 		max 100
 	}
@@ -43,7 +45,7 @@ component panel cmpDefNamedTbar {
 	string	val {
 		pos "190 0"
 		size "130 20"
-		textalign ur
+		textalign ALIGN_UR
 	}
 }
 
@@ -51,54 +53,56 @@ component panel cmpDefNamedTbar {
  * screenshot of the map. Used in skirmish and mp.
  */
 
-component pic cmpMapPic {
-	texl		"0 0"
-	texh		"128 96"
-	onWheelUp	{ cmd "mn_prevmap;" }
-	onWheelDown	{ cmd "mn_nextmap;" }
-	onClick		{ cmd "mn_nextmap;" }
+component image cmpMapImage
+{
+	texl			"0 0"
+	texh			"128 96"
+	onWheelUp		{ cmd "mn_prevmap;" }
+	onWheelDown		{ cmd "mn_nextmap;" }
+	onClick			{ cmd "mn_nextmap;" }
 	onRClick		{ cmd "mn_prevmap;" }
 }
 
 component panel cmpMapSlot
 {
 	{
-	size "315 35"
+		size "315 35"
 	}
-		textentry slot_map
-		{
-			image		ui/button_green_verysmall
-			color 		"0 .78 0 1"
-			string		*cvar:mn_svmapname
-			selectcolor	"1 1 1 1"
-			textalign	cl
-			padding		8
-			font		"f_verysmall"
-			pos			"32 0"
-			size		"256 34"
-			disabled	true
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-		}
+		
+	textentry slot_map
+	{
+		image		"ui/button_green_verysmall"
+		color 		"0 .78 0 1"
+		string		*cvar:mn_svmapname
+		selectcolor	"1 1 1 1"
+		textalign	ALIGN_CL
+		padding		8
+		font		"f_verysmall"
+		pos			"32 0"
+		size		"256 34"
+		disabled	true
+		onWheelUp	{ cmd "mn_prevmap;" }
+		onWheelDown	{ cmd "mn_nextmap;" }
+	}
 
-		custombutton prev_map
-		{
-			pos			"0 0"
-			size		"35 35"
-			icon		prev
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-			onClick		{ cmd "mn_prevmap;" }
-		}
-		custombutton next_map
-		{
-			pos			"285 0"
-			size		"35 35"
-			icon		next
-			onWheelUp	{ cmd "mn_prevmap;" }
-			onWheelDown	{ cmd "mn_nextmap;" }
-			onClick		{ cmd "mn_nextmap;" }
-		}
+	custombutton prev_map
+	{
+		pos			"0 0"
+		size		"35 35"
+		icon		prev
+		onWheelUp	{ cmd "mn_prevmap;" }
+		onWheelDown	{ cmd "mn_nextmap;" }
+		onClick		{ cmd "mn_prevmap;" }
+	}
+	custombutton next_map
+	{
+		pos			"285 0"
+		size		"35 35"
+		icon		next
+		onWheelUp	{ cmd "mn_prevmap;" }
+		onWheelDown	{ cmd "mn_nextmap;" }
+		onClick		{ cmd "mn_nextmap;" }
+	}
 }
 
 
@@ -106,17 +110,17 @@ component panel cmpMapSlot
  * Header for the base. Used in all baseview screens
  */
 component panel cmpDefBaseHeader {
-{
-pos "0 0"
-size "1024 90"
-}
+	{
+		pos "0 0"
+		size "1024 90"
+	}
 
 	string txt_credits_caption
 	{
 		string		"_CREDITS"
 		pos			"675 30"
 		size		"100 30"
-		font		f_big
+		font		"f_big"
 	}
 
 	string txt_credits
@@ -125,13 +129,13 @@ size "1024 90"
 		string		*cvar:mn_credits
 		pos			"780 30"
 		size		"130 30"
-		font		f_big
-		textalign	ur
+		font		"f_big"
+		textalign	ALIGN_UR
 	}
 	custombutton bt_back
 	{
 		tooltip		"_Back to baseview"
-		image		ui/button_background
+		image		"ui/button_background"
 		pos			"950 20"
 		size		"59 55"
 		texl		"1 1"
@@ -142,18 +146,19 @@ size "1024 90"
 
 component cmpDefBaseHeader cmpBaseHeader
 {
-{
-	pos "0 0"
-}
+	{
+		pos "0 0"
+	}
+
 	string base_name
 	{
 		string		*cvar:mn_base_title
 		tooltip		"_Name of this base"
 		pos			"60 30"
 		size		"500 32"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
-		font		f_big
+		font		"f_big"
 	}
 }
 
@@ -162,18 +167,95 @@ component cmpDefBaseHeader cmpBaseHeader
  */
 component button cmpPopupButton
 {
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-		font		f_menu
-		image		ui/button_green_small
-		size		"176 32"
+	color		"0 0.5 0 1"
+	selectcolor	"1 1 1 1"
+	font		"f_menu"
+	image		"ui/button_green_small"
+	size		"176 32"
 }
 
 /**
  * Cancel button on popups
-*/
+ */
 component cmpPopupButton cmpCancelButton
 {
 	string		"_Cancel"
 	tooltip		"_Close this dialogue"
+}
+
+component panel cmpMapPanel
+{
+	{ }
+
+	// ===================
+	// PREVIEW
+	// ===================
+
+	string preview_label
+	{
+		string		"_Preview:"
+		pos			"10 0"
+		size		"256 20"
+	}
+
+	cmpMapImage mappic
+	{
+		image		*cvar:mn_mappic
+		pos			"20 30"
+	}
+	cmpMapImage mappic2
+	{
+		image		*cvar:mn_mappic2
+		pos			"155 30"
+	}
+	cmpMapImage mappic3
+	{
+		image		*cvar:mn_mappic3
+		pos			"290 30"
+	}
+
+	// ===================
+	// MAP
+	// ===================
+	string map_label
+	{
+		string		"_Map Name:"
+		pos			"10 155"
+		size		"256 20"
+	}
+	cmpMapSlot mapSlot
+	{
+		{
+			pos "140 150"
+		}
+	}
+
+	// =============================
+	// DAY/NIGHT STRING & SELECTBOX
+	// =============================
+	string daynight_str
+	{
+		string		"_Daytime Version:"
+		pos			"10 200"
+		size		"280 20"
+	}
+	selectbox daynight_box
+	{
+		{
+			tooltip		"_Select whether you want to play at day- or nighttime."
+			cvar		*cvar:mn_serverday
+			pos			"240 200"
+			size		"200 20"
+		}
+		option night
+		{
+			label	"_Night"
+			value	"0"
+		}
+		option day
+		{
+			label	"_Day"
+			value	"1"
+		}
+	}
 }

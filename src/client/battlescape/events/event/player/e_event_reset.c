@@ -23,10 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../../../client.h"
-#include "../../../../menu/m_main.h"
+#include "../../../../ui/ui_main.h"
 #include "../../../../cl_game.h"
 #include "../../../cl_localentity.h"
-#include "../../../cl_actor.h"
+#include "../../../cl_actor.h" /* CL_ActorSelect */
 #include "e_event_reset.h"
 
 /**
@@ -45,13 +45,13 @@ void CL_Reset (const eventRegister_t *self, struct dbuffer *msg)
 
 	/** @todo this can and should be done earlier - it's not the correct place here for doing this */
 	if (GAME_IsMultiplayer()) {
-		MN_InitStack(mn_hud->string, "multiplayerInGame", qtrue, qtrue);
+		UI_InitStack(mn_hud->string, "multiplayerInGame", qtrue, qtrue);
 	}
 
 	CL_CompleteRecalcRouting();
 
 	if (cls.team == cl.actTeam)
-		MN_ExecuteConfunc("startround");
+		UI_ExecuteConfunc("startround");
 	else
 		Com_Printf("You lost the coin-toss for first-turn\n");
 }

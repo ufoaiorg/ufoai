@@ -28,9 +28,11 @@ prop () {
 				*.m       | \
 				*.menu    | \
 				*.ms      | \
+				*.mtl     | \
 				*.map     | \
 				*.mat     | \
 				*.mk      | \
+				*.obj     | \
 				*.pl      | \
 				*.po      | \
 				*.pot     | \

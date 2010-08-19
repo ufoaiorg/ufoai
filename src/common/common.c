@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common.h"
 #include "../server/server.h"
 #include "../shared/parse.h"
+#include "../ports/system.h"
 #include <setjmp.h>
 
 #define	MAXPRINTMSG	4096
@@ -94,6 +95,191 @@ struct timer {
 	event_func *func;
 	void *data;
 };
+
+/*
+==============================================================================
+TARGETING FUNCTIONS
+==============================================================================
+*/
+
+/**
+ * @note Grenade Aiming Maths
+ * --------------------------------------------------------------
+ *
+ * There are two possibilities when aiming: either we can reach the target at
+ * maximum speed or we can't. If we can reach it we would like to reach it with
+ * as flat a trajectory as possible. To do this we calculate the angle to hit the
+ * target with the projectile traveling at the maximum allowed velocity.
+ *
+ * However, if we can't reach it then we'd like the aiming curve to use the smallest
+ * possible velocity that would have reached the target.
+ *
+ * let d  = horizontal distance to target
+ *     h  = vertical distance to target
+ *     g  = gravity
+ *     v  = launch velocity
+ *     vx = horizontal component of launch velocity
+ *     vy = vertical component of launch velocity
+ *     alpha = launch angle
+ *     t  = time
+ *
+ * Then using the laws of linear motion and some trig
+ *
+ * d = vx * t
+ * h = vy * t - 1/2 * g * t^2
+ * vx = v * cos(alpha)
+ * vy = v * sin(alpha)
+ *
+ * and some trig identities
+ *
+ * 2*cos^2(x) = 1 + cos(2*x)
+ * 2*sin(x)*cos(x) = sin(2*x)
+ * a*cos(x) + b*sin(x) = sqrt(a^2 + b^2) * cos(x - atan2(b,a))
+ *
+ * it is possible to show that:
+ *
+ * alpha = 0.5 * (atan2(d, -h) - theta)
+ *
+ * where
+ *               /    2       2  \
+ *              |    v h + g d    |
+ *              |  -------------- |
+ * theta = acos |        ________ |
+ *              |   2   / 2    2  |
+ *               \ v  \/ h  + d  /
+ *
+ *
+ * Thus we can calculate the desired aiming angle for any given velocity.
+ *
+ * With some more rearrangement we can show:
+ *
+ *               ________________________
+ *              /           2
+ *             /         g d
+ *  v =       / ------------------------
+ *           /   ________
+ *          /   / 2    2
+ *        \/  \/ h  + d   cos(theta) - h
+ *
+ * Which we can also write as:
+ *                _________________
+ *               /        a
+ * f(theta) =   / ----------------
+ *            \/  b cos(theta) - c
+ *
+ * where
+ *  a = g*d^2
+ *  b = sqrt(h*h+d*d)
+ *  c = h
+ *
+ * We can imagine a graph of launch velocity versus launch angle. When the angle is near 0 degrees (i.e. totally flat)
+ * more and more velocity is needed. Similarly as the angle gets closer and closer to 90 degrees.
+ *
+ * Somewhere in the middle is the minimum velocity that we could possibly hit the target with and the 'optimum' angle
+ * to fire at. Note that when h = 0 the optimum angle is 45 degrees. We want to find the minimum velocity so we need
+ * to take the derivative of f (which I suggest doing with an algebra system!).
+ *
+ * f'(theta) =  a * b * sin(theta) / junk
+ *
+ * the `junk` is unimportant because we're just going to set f'(theta) = 0 and multiply it out anyway.
+ *
+ * 0 = a * b * sin(theta)
+ *
+ * Neither a nor b can be 0 as long as d does not equal 0 (which is a degenerate case). Thus if we solve for theta
+ * we get 'sin(theta) = 0', thus 'theta = 0'. If we recall that:
+ *
+ *  alpha = 0.5 * (atan2(d, -h) - theta)
+ *
+ * then we get our 'optimum' firing angle alpha as
+ *
+ * alpha = 1/2 * atan2(d, -h)
+ *
+ * and if we substitute back into our equation for v and we get
+ *
+ *               _______________
+ *              /        2
+ *             /      g d
+ *  vmin =    / ---------------
+ *           /   ________
+ *          /   / 2    2
+ *        \/  \/ h  + d   - h
+ *
+ * as the minimum launch velocity for that angle.
+ *
+ * @brief Calculates parabola-type shot.
+ * @param[in] from Starting position for calculations.
+ * @param[in] at Ending position for calculations.
+ * @param[in] speed Launch velocity.
+ * @param[in] launched Set to true for grenade launchers.
+ * @param[in] rolled Set to true for "roll" type shoot.
+ * @param[in,out] v0 The velocity vector
+ * @todo refactor and move me
+ * @todo Com_GrenadeTarget() is called from CL_TargetingGrenade() with speed
+ * param as (fireDef_s) fd->range (gi.GrenadeTarget, too), while it is being used here for speed
+ * calculations - a bug or just misleading documentation?
+ * @sa CL_TargetingGrenade
+ */
+float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0)
+{
+	const float rollAngle = 3.0; /* angle to throw at for rolling, in degrees. */
+	vec3_t delta;
+	float d, h, g, v, alpha, theta, vx, vy;
+	float k, gd2, len;
+
+	/* calculate target distance and height */
+	h = at[2] - from[2];
+	VectorSubtract(at, from, delta);
+	delta[2] = 0;
+	d = VectorLength(delta);
+
+	/* check that it's not degenerate */
+	if (d == 0) {
+		return 0;
+	}
+
+	/* precalculate some useful values */
+	g = GRAVITY;
+	gd2 = g * d * d;
+	len = sqrt(h * h + d * d);
+
+	/* are we rolling? */
+	if (rolled) {
+		alpha = rollAngle * torad;
+		theta = atan2(d, -h) - 2 * alpha;
+		k = gd2 / (len * cos(theta) - h);
+		if (k <= 0)	/* impossible shot at any velocity */
+			return 0;
+		v = sqrt(k);
+	} else {
+		/* firstly try with the maximum speed possible */
+		v = speed;
+		k = (v * v * h + gd2) / (v * v * len);
+
+		/* check whether the shot's possible */
+		if (launched && k >= -1 && k <= 1) {
+			/* it is possible, so calculate the angle */
+			alpha = 0.5 * (atan2(d, -h) - acos(k));
+		} else {
+			/* calculate the minimum possible velocity that would make it possible */
+			alpha = 0.5 * atan2(d, -h);
+			v = sqrt(gd2 / (len - h));
+		}
+	}
+
+	/* calculate velocities */
+	vx = v * cos(alpha);
+	vy = v * sin(alpha);
+	VectorNormalize(delta);
+	VectorScale(delta, vx, v0);
+	v0[2] = vy;
+
+	/* prevent any rounding errors */
+	VectorNormalize(v0);
+	VectorScale(v0, v - DIST_EPSILON, v0);
+
+	/* return time */
+	return d / vx;
+}
 
 /*
 ============================================================================
@@ -174,9 +360,7 @@ void Com_vPrintf (const char *fmt, va_list ap)
 		return;
 	}
 
-#ifndef DEDICATED_ONLY
 	Con_Print(msg);
-#endif
 
 	/* also echo to debugging console */
 	Sys_ConsoleOutput(msg);
@@ -229,9 +413,10 @@ void Com_Printf (const char* const fmt, ...)
 void Com_DPrintf (int level, const char *fmt, ...)
 {
 	/* don't confuse non-developers with techie stuff... */
-	if (!developer || !(developer->integer & level))
+	if (!developer)
 		return;
-	else {
+
+	if (developer->integer == 1 || (developer->integer & level)) {
 		va_list ap;
 
 		va_start(ap, fmt);
@@ -269,10 +454,10 @@ void Com_Error (int code, const char *fmt, ...)
 		Com_Printf("********************\n");
 		Com_Printf("ERROR: %s\n", msg);
 		Com_Printf("********************\n");
+		Sys_Backtrace();
 		SV_Shutdown("Server crashed.", qfalse);
 		CL_Drop();
 		recursive = qfalse;
-		Sys_Backtrace();
 		Com_Drop();
 	default:
 		Com_Printf("%s\n", msg);
@@ -415,7 +600,7 @@ void Com_InitArgv (int argc, const char **argv)
  * @brief Expands strings with cvar values that are dereferenced by a '*cvar'
  * @note There is an overflow check for cvars that also contain a '*cvar'
  * @sa Cmd_TokenizeString
- * @sa MN_GetReferenceString
+ * @sa UI_GetReferenceString
  */
 const char *Com_MacroExpandString (const char *text)
 {
@@ -860,6 +1045,9 @@ void Qcommon_Init (int argc, const char **argv)
 	Cbuf_AddEarlyCommands(qtrue);
 	Cbuf_Execute();
 
+	Com_SetRenderModified(qfalse);
+	Com_SetUserinfoModified(qfalse);
+
 	/* init commands and vars */
 	Cmd_AddCommand("saveconfig", Com_WriteConfig_f, "Write the configuration to file");
 	Cmd_AddCommand("gametypelist", Com_GameTypeList_f, "List all available multiplayer game types");
@@ -931,9 +1119,7 @@ void Qcommon_Init (int argc, const char **argv)
 		SCR_EndLoadingPlaque();
 	}
 
-#ifndef DEDICATED_ONLY
 	CL_InitAfter();
-#endif
 
 	/* Check memory integrity */
 	Mem_CheckGlobalIntegrity();
@@ -1174,16 +1360,6 @@ void Qcommon_Frame (void)
 	 * IO is ready (but always try at least once, to make sure IO
 	 * doesn't stall) */
 	do {
-		/** @todo This shouldn't exist - move into SV_Frame? */
-		if (sv_dedicated && sv_dedicated->integer) {
-			const char *s;
-			do {
-				s = Sys_ConsoleInput();
-				if (s)
-					Cbuf_AddText(va("%s\n", s));
-			} while (s);
-		}
-
 		time_to_next = event_queue ? (event_queue->when - Sys_Milliseconds()) : 1000;
 		if (time_to_next < 0)
 			time_to_next = 0;

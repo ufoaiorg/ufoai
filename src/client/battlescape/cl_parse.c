@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_parse.h"
 #include "cl_hud.h"
 #include "../cl_game.h"
-#include "../menu/m_main.h"
+#include "../ui/ui_main.h"
 #include "events/e_parse.h"
 #include "../multiplayer/mp_chatmessages.h"
 
@@ -63,7 +63,7 @@ SERVER CONNECTING MESSAGES
  */
 static void CL_ParseServerData (struct dbuffer *msg)
 {
-	char *str;
+	char str[1024];
 	int i;
 
 	Com_DPrintf(DEBUG_CLIENT, "Serverdata packet received.\n");
@@ -80,7 +80,7 @@ static void CL_ParseServerData (struct dbuffer *msg)
 	cl.pnum = NET_ReadShort(msg);
 
 	/* get the full level name */
-	str = NET_ReadString(msg);
+	NET_ReadString(msg, str, sizeof(str));
 
 	Com_DPrintf(DEBUG_CLIENT, "serverdata: pnum %d, level %s\n", cl.pnum, str);
 
@@ -125,14 +125,14 @@ const char *CL_PlayerGetName (int player)
 static void CL_ParseConfigString (struct dbuffer *msg)
 {
 	int i;
-	const char *s;
+	char s[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 
 	/* which configstring? */
 	i = NET_ReadShort(msg);
 	if (i < 0 || i >= MAX_CONFIGSTRINGS)
 		Com_Error(ERR_DROP, "configstring > MAX_CONFIGSTRINGS");
 	/* value */
-	s = NET_ReadString(msg);
+	NET_ReadString(msg, s, sizeof(s));
 
 	Com_DPrintf(DEBUG_CLIENT, "configstring %d: %s\n", i, s);
 
@@ -178,10 +178,10 @@ ACTION MESSAGES
 static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 {
 	vec3_t origin;
-	const char *sound;
+	char sound[MAX_QPATH];
 	s_sample_t *sample;
 
-	sound = NET_ReadString(msg);
+	NET_ReadString(msg, sound, sizeof(sound));
 	NET_ReadPos(msg, origin);
 
 	if (sound[strlen(sound) - 1] == '+') {
@@ -215,7 +215,7 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
  */
 void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 {
-	const char *s;
+	char s[4096];
 	int i;
 
 	/* parse the message */
@@ -231,30 +231,30 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 		break;
 
 	case svc_disconnect:
-		s = NET_ReadString(msg);
+		NET_ReadString(msg, s, sizeof(s));
 		Com_Printf("%s\n", s);
 		CL_Drop();	/* ensure the right menu cvars are set */
 		break;
 
 	case svc_reconnect:
-		s = NET_ReadString(msg);
+		NET_ReadString(msg, s, sizeof(s));
 		Com_Printf("%s\n", s);
 		CL_Disconnect();
 		CL_SetClientState(ca_connecting);
 		/* otherwise we would time out */
-		cls.connectTime = cls.realtime - 1500;
+		cls.connectTime = CL_Milliseconds() - 1500;
 		break;
 
 	case svc_print:
 		i = NET_ReadByte(msg);
-		s = NET_ReadString(msg);
+		NET_ReadString(msg, s, sizeof(s));
 		switch (i) {
 		case PRINT_CHAT:
 			S_StartLocalSample("misc/talk", SND_VOLUME_DEFAULT);
 			MP_AddChatMessage(s);
 			/* skip format strings */
 			if (s[0] == '^')
-				s += 2;
+				memmove(s, &s[2], sizeof(s) - 2);
 			/* also print to console */
 			break;
 		case PRINT_HUD:
@@ -271,7 +271,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 		break;
 
 	case svc_stufftext:
-		s = NET_ReadString(msg);
+		NET_ReadString(msg, s, sizeof(s));
 		Com_DPrintf(DEBUG_CLIENT, "stufftext: %s\n", s);
 		Cbuf_AddText(s);
 		break;

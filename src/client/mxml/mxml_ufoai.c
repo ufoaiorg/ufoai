@@ -33,7 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void mxml_AddString (mxml_node_t *parent, const char *name, const char *value)
 {
-	mxmlElementSetAttr(parent, name, value);
+	if (value)
+		mxmlElementSetAttr(parent, name, value);
 }
 
 /**

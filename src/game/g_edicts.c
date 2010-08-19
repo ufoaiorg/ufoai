@@ -81,7 +81,7 @@ qboolean G_EdictsIsValidNum (const int num)
 edict_t* G_EdictsGetByNum (const int num)
 {
 	if (!G_EdictsIsValidNum(num)) {
-		gi.dprintf("Invalid edict num %i\n", num);
+		gi.DPrintf("Invalid edict num %i\n", num);
 		return NULL;
 	}
 

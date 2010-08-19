@@ -142,7 +142,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 		 * try to hide behind the door when there is an alien */
 		break;
 	default:
-		gi.dprintf("Invalid team in AI_CheckUsingDoor: %i for ent type: %i\n",
+		gi.DPrintf("Invalid team in AI_CheckUsingDoor: %i for ent type: %i\n",
 			ent->team, ent->type);
 		break;
 	}
@@ -181,10 +181,10 @@ static qboolean AI_CheckCrouch (const edict_t *ent)
 /**
  * @brief Checks whether the given alien should try to hide because there are enemies close
  * enough to shoot the alien.
- * @param ent The alien edict that should (maybe) hide
+ * @param[in] ent The alien edict that should (maybe) hide
  * @return @c true if hide is needed or @c false if the alien thinks that it is not needed
  */
-static qboolean AI_HideNeeded (edict_t *ent)
+static qboolean AI_HideNeeded (const edict_t *ent)
 {
 	/* only brave aliens are trying to stay on the field if no dangerous actor is visible */
 	if (ent->morale > mor_brave->integer) {
@@ -219,34 +219,53 @@ static qboolean AI_HideNeeded (edict_t *ent)
 				}
 			}
 		}
+		return qfalse;
 	}
-	return qfalse;
+	return qtrue;
 }
 
+/**
+ * @brief Returns useable item from the given inventory list. That means that
+ * the 'weapon' has ammunition left or must not be reloaded.
+ * @param ic The inventory to search a useable weapon in.
+ * @return Ready to fire weapon.
+ */
+static inline const item_t* AI_GetItemFromInventory (const invList_t *ic)
+{
+	if (ic != NULL) {
+		const item_t *item = &ic->item;
+		if (item->m && item->t->weapon && (!item->t->reload || item->a > 0))
+			return item;
+	}
+	return NULL;
+}
+
+/**
+ * Returns the item of the currently chosen shoot type of the ai actor.
+ * @param shootType The current selected shoot type
+ * @param ent The ai actor
+ * @return The item that was selected for the given shoot type. This might be @c NULL if
+ * no item was found.
+ */
 const item_t *AI_GetItemForShootType (shoot_types_t shootType, const edict_t *ent)
 {
 	/* optimization: reaction fire is automatic */
 	if (IS_SHOT_REACTION(shootType))
 		return NULL;
 
-	if (IS_SHOT_RIGHT(shootType) && RIGHT(ent)
-		&& RIGHT(ent)->item.m
-		&& RIGHT(ent)->item.t->weapon
-		&& (!RIGHT(ent)->item.t->reload
-			|| RIGHT(ent)->item.a > 0)) {
-		return &RIGHT(ent)->item;
-	} else if (IS_SHOT_LEFT(shootType) && LEFT(ent)
-		&& LEFT(ent)->item.m
-		&& LEFT(ent)->item.t->weapon
-		&& (!LEFT(ent)->item.t->reload
-			|| LEFT(ent)->item.a > 0)) {
-		return &LEFT(ent)->item;
-	} else {
-		Com_DPrintf(DEBUG_GAME, "AI_FighterCalcBestAction: todo - grenade/knife toss from inventory using empty hand\n");
-		/** @todo grenade/knife toss from inventory using empty hand */
-		/** @todo evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
+	/* check that the current selected shoot type also has a valid item in its
+	 * corresponding hand slot of the inventory. */
+	if (IS_SHOT_RIGHT(shootType)) {
+		const invList_t *ic = RIGHT(ent);
+		return AI_GetItemFromInventory(ic);
+	} else if (IS_SHOT_LEFT(shootType)) {
+		const invList_t *ic = LEFT(ent);
+		return AI_GetItemFromInventory(ic);
+	} else if (IS_SHOT_HEADGEAR(shootType)) {
 		return NULL;
 	}
+
+	return NULL;
 }
 
 /**
@@ -384,6 +403,128 @@ qboolean AI_FindHerdLocation (edict_t *ent, const pos3_t from, const vec3_t targ
 }
 
 /**
+ * @todo This feature causes the 'aliens shoot at walls'-bug.
+ * I considered adding a visibility check, but that wouldn't prevent aliens
+ * from shooting at the breakable parts of their own ship.
+ * So I disabled it for now. Duke, 23.10.09
+ */
+static edict_t *AI_SearchDestroyableObject (const edict_t *ent, const fireDef_t *fd)
+{
+#if 0
+	/* search best none human target */
+	edict_t *check = NULL;
+	float dist;
+
+	while ((check = G_EdictsGetNextInUse(check))) {
+		if (G_IsBreakable(check)) {
+			float vis;
+
+			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
+				continue;
+
+			/* check whether target is visible enough */
+			vis = G_ActorVis(ent->origin, check, qtrue);
+			if (vis < ACTOR_VIS_0)
+				continue;
+
+			/* take the first best breakable or door and try to shoot it */
+			return check;
+		}
+	}
+#endif
+	return NULL;
+}
+
+/**
+ * @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance
+ */
+static void AI_SearchBestTarget (aiAction_t *aia, const edict_t *ent, edict_t *check, const item_t *item, shoot_types_t shootType, int tu, float *maxDmg, int *bestTime, const fireDef_t *fdArray)
+{
+	const objDef_t *ad;
+	qboolean visChecked = qfalse;	/* only check visibily once for an actor */
+	fireDefIndex_t fdIdx;
+	float dist;
+
+	for (fdIdx = 0; fdIdx < item->m->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+		const fireDef_t *fd = &fdArray[fdIdx];
+		const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
+			GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
+		/* how many shoots can this actor do */
+		const int shots = tu / fd->time;
+		if (shots) {
+			float dmg;
+			float vis = ACTOR_VIS_0;
+			if (!AI_FighterCheckShoot(ent, check, fd, &dist))
+				continue;
+
+			/* check how good the target is visible */
+			if (!visChecked) {	/* only do this once per actor ! */
+				vis = G_ActorVis(ent->origin, check, qtrue);
+				visChecked = qtrue;
+			}
+			if (vis == ACTOR_VIS_0)
+				continue;
+
+			/* calculate expected damage */
+			dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
+			if (nspread && dist > nspread)
+				dmg *= nspread / dist;
+
+			/* take into account armour */
+			if (CONTAINER(check, gi.csi->idArmour)) {
+				ad = CONTAINER(check, gi.csi->idArmour)->item.t;
+				dmg *= 1.0 - ad->protection[ad->dmgtype] * 0.01;
+			}
+
+			if (dmg > check->HP && G_IsReaction(check))
+				/* reaction shooters eradication bonus */
+				dmg = check->HP + GUETE_KILL + GUETE_REACTION_ERADICATION;
+			else if (dmg > check->HP)
+				/* standard kill bonus */
+				dmg = check->HP + GUETE_KILL;
+
+			/* ammo is limited and shooting gives away your position */
+			if ((dmg < 25.0 && vis < 0.2) /* too hard to hit */
+				|| (dmg < 10.0 && vis < 0.6) /* uber-armour */
+				|| dmg < 0.1) /* at point blank hit even with a stick */
+				continue;
+
+			/* civilian malus */
+			if (G_IsCivilian(check) && !G_IsInsane(ent))
+				dmg *= GUETE_CIV_FACTOR;
+
+			/* add random effects */
+			if (dmg > 0)
+				dmg += GUETE_RANDOM * frand();
+
+			/* check if most damage can be done here */
+			if (dmg > *maxDmg) {
+				*maxDmg = dmg;
+				*bestTime = fd->time * shots;
+				aia->shootType = shootType;
+				aia->shots = shots;
+				aia->target = check;
+				aia->fd = fd;
+			}
+
+			if (!aia->target) {
+				aia->target = AI_SearchDestroyableObject(ent, fd);
+				if (aia->target) {
+					/* don't take vis into account, don't multiply with amount of shots
+					 * others (human victims) should be preferred, that's why we don't
+					 * want a too high value here */
+					*maxDmg = (fd->damage[0] + fd->spldmg[0]);
+					*bestTime = fd->time * shots;
+					aia->shootType = shootType;
+					aia->shots = shots;
+					aia->fd = fd;
+				}
+			}
+		}
+	}
+}
+
+/**
  * @sa AI_ActorThink
  * @todo fill z_align values
  * @todo optimize this
@@ -394,13 +535,11 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	int tu;
 	pos_t move;
 	shoot_types_t shootType;
-	float dist, minDist;
-	float bestActionPoints, dmg, maxDmg, bestTime = -1, vis;
-	const objDef_t *ad;
+	float minDist;
+	float bestActionPoints, maxDmg;
+	int bestTime = -1;
 
-	bestActionPoints = 0.0;
-	memset(aia, 0, sizeof(*aia));
-	move = gi.MoveLength(gi.pathingMap, to,
+	move = gi.MoveLength(&level.pathingMap, to,
 			G_IsCrouched(ent) ? 1 : 0, qtrue);
 	tu = ent->TU - move;
 
@@ -408,16 +547,18 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	if (tu < 0 || move == ROUTING_NOT_REACHABLE)
 		return AI_ACTION_NOTHING_FOUND;
 
+	bestActionPoints = 0.0;
+	memset(aia, 0, sizeof(*aia));
+
 	/* set basic parameters */
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
 
+	maxDmg = 0.0;
 	/* search best target */
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (ent != check && (check->team != ent->team || G_IsInsane(ent))) {
-			qboolean visChecked = qfalse;	/* only check visibily once for an actor */
-
 			/* don't shoot civilians in mp */
 			if (G_IsCivilian(check) && sv_maxclients->integer > 1 && !G_IsInsane(ent))
 				continue;
@@ -426,7 +567,6 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			maxDmg = 0.0;
 			for (shootType = ST_RIGHT; shootType < ST_NUM_SHOOT_TYPES; shootType++) {
 				const item_t *item;
-				fireDefIndex_t fdIdx;
 				const fireDef_t *fdArray;
 
 				item = AI_GetItemForShootType(shootType, ent);
@@ -437,102 +577,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 				if (fdArray == NULL)
 					continue;
 
-				/** @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance */
-				for (fdIdx = 0; fdIdx < item->m->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
-					const fireDef_t *fd = &fdArray[fdIdx];
-					const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
-						GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
-					/* how many shoots can this actor do */
-					const int shots = tu / fd->time;
-					if (shots) {
-						if (!AI_FighterCheckShoot(ent, check, fd, &dist))
-							continue;
-
-						/* check how good the target is visible */
-						if (!visChecked) {	/* only do this once per actor ! */
-							vis = G_ActorVis(ent->origin, check, qtrue);
-							visChecked = qtrue;
-						}
-						if (vis == ACTOR_VIS_0)
-							continue;
-
-						/* calculate expected damage */
-						dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
-						if (nspread && dist > nspread)
-							dmg *= nspread / dist;
-
-						/* take into account armour */
-						if (CONTAINER(check, gi.csi->idArmour)) {
-							ad = CONTAINER(check, gi.csi->idArmour)->item.t;
-							dmg *= 1.0 - ad->protection[ad->dmgtype] * 0.01;
-						}
-
-						if (dmg > check->HP && G_IsReaction(check))
-							/* reaction shooters eradication bonus */
-							dmg = check->HP + GUETE_KILL + GUETE_REACTION_ERADICATION;
-						else if (dmg > check->HP)
-							/* standard kill bonus */
-							dmg = check->HP + GUETE_KILL;
-
-						/* ammo is limited and shooting gives away your position */
-						if ((dmg < 25.0 && vis < 0.2) /* too hard to hit */
-							|| (dmg < 10.0 && vis < 0.6) /* uber-armour */
-							|| dmg < 0.1) /* at point blank hit even with a stick */
-							continue;
-
-						/* civilian malus */
-						if (G_IsCivilian(check) && !G_IsInsane(ent))
-							dmg *= GUETE_CIV_FACTOR;
-
-						/* add random effects */
-						dmg += GUETE_RANDOM * frand();
-
-						/* check if most damage can be done here */
-						if (dmg > maxDmg) {
-							maxDmg = dmg;
-							bestTime = fd->time * shots;
-							aia->shootType = shootType;
-							aia->shots = shots;
-							aia->target = check;
-							aia->fd = fd;
-						}
-					}
-#if 0
-				/**
-				 * @todo This feature causes the 'aliens shoot at walls'-bug.
-				 * I considered adding a visibility check, but that wouldn't prevent aliens
-				 * from shooting at the breakable parts of their own ship.
-				 * So I disabled it for now. Duke, 23.10.09
-				 */
-				if (!aia->target) {
-					/* search best none human target */
-					check = NULL;
-					while ((check = G_EdictsGetNextInUse(check))) {
-						if (G_IsBreakable(check)) {
-							if (!AI_FighterCheckShoot(ent, check, fd, &dist))
-								continue;
-
-							/* check whether target is visible enough */
-							vis = G_ActorVis(ent->origin, check, qtrue);
-							if (vis < ACTOR_VIS_0)
-								continue;
-
-							/* don't take vis into account, don't multiply with amout of shots
-							 * others (human victims) should be prefered, that's why we don't
-							 * want a too high value here */
-							maxDmg = (fd->damage[0] + fd->spldmg[0]);
-							aia->mode = shootType;
-							aia->shots = shots;
-							aia->target = check;
-							aia->fd = fd;
-							bestTime = fd->time * shots;
-							/* take the first best breakable or door and try to shoot it */
-							break;
-						}
-					}
-				}
-#endif
-				}
+				AI_SearchBestTarget(aia, ent, check, item, shootType, tu, &maxDmg, &bestTime, fdArray);
 			}
 		} /* firedefs */
 	}
@@ -546,7 +591,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	if (!G_IsRaged(ent)) {
 		const int hidingTeam = AI_GetHidingTeam(ent);
 		/* hide */
-		if (AI_HideNeeded(ent) || !(G_TestVis(hidingTeam, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
+		if (!AI_HideNeeded(ent) || !(G_TestVis(hidingTeam, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
 			/* is a hiding spot */
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
@@ -578,9 +623,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	check = NULL;
 	while ((check = G_EdictsGetNextLivingActor(check))) {
 		if (check->team != ent->team) {
-			dist = VectorDist(ent->origin, check->origin);
-			if (dist < minDist)
-				minDist = dist;
+			const float dist = VectorDist(ent->origin, check->origin);
+			minDist = min(dist, minDist);
 		}
 	}
 	bestActionPoints += GUETE_CLOSE_IN * (1.0 - minDist / CLOSE_IN_DIST);
@@ -614,7 +658,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	VectorCopy(to, aia->stop);
 	G_EdictSetOrigin(ent, to);
 
-	move = gi.MoveLength(gi.pathingMap, to, crouchingState, qtrue);
+	move = gi.MoveLength(&level.pathingMap, to, crouchingState, qtrue);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -627,7 +671,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 		if (!G_IsPaniced(ent) && teamDef->weapons)
 			return AI_FighterCalcBestAction(ent, to, aia);
 	} else
-		gi.dprintf("AI_CivilianCalcBestAction: Error - civilian team with no teamdef\n");
+		gi.DPrintf("AI_CivilianCalcBestAction: Error - civilian team with no teamdef\n");
 
 	/* run away */
 	minDist = minDistCivilian = minDistFighter = RUN_AWAY_DIST * UNIT_SIZE;
@@ -735,7 +779,7 @@ static int AI_CheckForMissionTargets (const player_t* player, edict_t *ent, aiAc
 			/* the lower the count value - the nearer the final target */
 			if (checkPoint->count < ent->count) {
 				if (VectorDist(ent->origin, checkPoint->origin) <= WAYPOINT_CIV_DIST) {
-					const pos_t move = gi.MoveLength(gi.pathingMap, checkPoint->pos, crouchingState, qtrue);
+					const pos_t move = gi.MoveLength(&level.pathingMap, checkPoint->pos, crouchingState, qtrue);
 					i++;
 					if (move == ROUTING_NOT_REACHABLE)
 						continue;
@@ -793,7 +837,7 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	/* calculate move table */
 	G_MoveCalc(0, ent, ent->pos, crouchingState, ent->TU);
 	Com_DPrintf(DEBUG_ENGINE, "AI_PrepBestAction: Called MoveMark.\n");
-	gi.MoveStore(gi.pathingMap);
+	gi.MoveStore(&level.pathingMap);
 
 	/* set borders */
 	dist = (ent->TU + 1) / 2;
@@ -812,7 +856,7 @@ static aiAction_t AI_PrepBestAction (const player_t *player, edict_t * ent)
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++) {
-				const pos_t move = gi.MoveLength(gi.pathingMap, to, crouchingState, qtrue);
+				const pos_t move = gi.MoveLength(&level.pathingMap, to, crouchingState, qtrue);
 				if (move != ROUTING_NOT_REACHABLE && move <= ent->TU) {
 					if (G_IsCivilian(ent) || G_IsPaniced(ent))
 						bestActionPoints = AI_CivilianCalcBestAction(ent, to, &aia);
@@ -887,7 +931,7 @@ void AI_TurnIntoDirection (edict_t *ent, const pos3_t pos)
 
 	G_MoveCalc(ent->team, ent, pos, crouchingState, ent->TU);
 
-	dv = gi.MoveNext(gi.pathingMap, pos, crouchingState);
+	dv = gi.MoveNext(&level.pathingMap, pos, crouchingState);
 	if (dv != ROUTING_UNREACHABLE) {
 		const byte dir = getDVdir(dv);
 		/* Only attempt to turn if the direction is not a vertical only action */
@@ -901,7 +945,7 @@ void AI_TurnIntoDirection (edict_t *ent, const pos3_t pos)
  */
 static void AI_TryToReloadWeapon (edict_t *ent, containerIndex_t containerID)
 {
-	if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent, containerID)) {
+	if (G_ClientCanReload(ent, containerID)) {
 		G_ActorReload(ent, INVDEF(containerID));
 	} else {
 		G_ActorInvMove(ent, INVDEF(containerID), CONTAINER(ent, containerID), INVDEF(gi.csi->idFloor), NONE, NONE, qtrue);
@@ -932,7 +976,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	/* if both hands are empty, attempt to get a weapon out of backpack or the
 	 * floor (if TUs permit) */
 	if (!LEFT(ent) && !RIGHT(ent))
-		G_ClientGetWeaponFromInventory(player, ent);
+		G_ClientGetWeaponFromInventory(ent);
 
 	bestAia = AI_PrepBestAction(player, ent);
 
@@ -1020,9 +1064,8 @@ void AI_Run (void)
 /**
  * @brief Initializes the actor's stats like morals, strength and so on.
  * @param ent Actor to set the stats for.
- * @param[in] team Team to which actor belongs.
  */
-static void AI_SetStats (edict_t * ent, int team)
+static void AI_SetStats (edict_t * ent)
 {
 	CHRSH_CharGenAbilitySkills(&ent->chr, sv_maxclients->integer >= 2);
 
@@ -1055,26 +1098,25 @@ static void AI_SetCharacterValues (edict_t * ent, int team)
 	}
 	gi.GetCharacterValues(teamDefintion, &ent->chr);
 	if (!ent->chr.teamDef)
-		gi.error("Could not set teamDef for character: '%s'", teamDefintion);
+		gi.Error("Could not set teamDef for character: '%s'", teamDefintion);
 }
 
 
 /**
  * @brief Sets the actor's equipment.
  * @param ent Actor to give equipment to.
- * @param[in] team Team to which the actor belongs.
  * @param[in] ed Equipment definition for the new actor.
  */
-static void AI_SetEquipment (edict_t * ent, int team, const equipDef_t * ed)
+static void AI_SetEquipment (edict_t * ent, const equipDef_t * ed)
 {
 	/* Pack equipment. */
 	if (ent->chr.teamDef->weapons)
-		game.i.EquipActor(&game.i, &ent->chr.i, ed, &ent->chr);
+		game.i.EquipActor(&game.i, &ent->chr.i, ed, ent->chr.teamDef);
 	else if (ent->chr.teamDef)
 		/* actor cannot handle equipment but no weapons */
-		game.i.EquipActorMelee(&game.i, &ent->chr.i, &ent->chr);
+		game.i.EquipActorMelee(&game.i, &ent->chr.i, ent->chr.teamDef);
 	else
-		gi.dprintf("AI_InitPlayer: actor with no equipment\n");
+		gi.DPrintf("AI_InitPlayer: actor with no equipment\n");
 }
 
 
@@ -1092,11 +1134,11 @@ static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDe
 	AI_SetCharacterValues(ent, team);
 
 	/* Calculate stats. */
-	AI_SetStats(ent, team);
+	AI_SetStats(ent);
 
 	/* Give equipment. */
 	if (ed != NULL)
-		AI_SetEquipment(ent, team, ed);
+		AI_SetEquipment(ent, ed);
 
 	/* after equipping the actor we can also get the model indices */
 	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
@@ -1112,7 +1154,7 @@ static void AI_InitPlayer (const player_t * player, edict_t * ent, const equipDe
 	else if (team == TEAM_ALIEN)
 		AIL_InitActor(ent, "alien", "default");
 	else
-		gi.dprintf("AI_InitPlayer: unknown team AI\n");
+		gi.DPrintf("AI_InitPlayer: unknown team AI\n");
 }
 
 /**
@@ -1144,7 +1186,7 @@ static void G_SpawnAIPlayer (const player_t * player, int numSpawn)
 	for (i = 0; i < numSpawn; i++) {
 		edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(player, ACTOR_SIZE_NORMAL);
 		if (!ent) {
-			gi.dprintf("Not enough spawn points for team %i\n", team);
+			gi.DPrintf("Not enough spawn points for team %i\n", team);
 			break;
 		}
 
@@ -1170,7 +1212,7 @@ player_t *AI_CreatePlayer (int team)
 	int i;
 
 	if (!sv_ai->integer) {
-		gi.dprintf("AI deactivated - set sv_ai cvar to 1 to activate it\n");
+		gi.DPrintf("AI deactivated - set sv_ai cvar to 1 to activate it\n");
 		return NULL;
 	}
 
@@ -1188,7 +1230,7 @@ player_t *AI_CreatePlayer (int team)
 				G_SpawnAIPlayer(p, ai_numaliens->integer);
 			else
 				G_SpawnAIPlayer(p, ai_numactors->integer);
-			gi.dprintf("Created AI player (team %i)\n", p->pers.team);
+			gi.DPrintf("Created AI player (team %i)\n", p->pers.team);
 			return p;
 		}
 

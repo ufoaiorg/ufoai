@@ -3,10 +3,15 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
-"light_day" "85"
+"light_day" "240"
 "angles_day" "-85 100"
 "ambient_day" "0.25 0.25 0.25"
 "color_day" "0.15 0.15 0.15"
+"randomspawn" "1"
+"ambient_night" "0.2 0.2 0.25"
+"angles_night" "-85 100"
+"color_night" "0.55 0.55 0.95"
+"light_night" "45"
 // brush 0
 {
 ( 640 256 68 ) ( 640 192 68 ) ( 576 256 68 ) tex_streets/2ln 0 0 0 0.25 0.25 65024 0 0
@@ -485,4 +490,9 @@
 ( 415 64 64 ) ( 352 64 68 ) ( 415 64 69 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
 ( 352 192 64 ) ( 352 192 68 ) ( 352 64 68 ) tex_common/nodraw 0 0 0 0.25 0.25 65024 0 0
 }
+}
+// entity 1
+{
+"classname" "info_civilian_start"
+"origin" "560 176 92"
 }

@@ -24,25 +24,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
-#include "battlescape/cl_localentity.h"
 #include "cl_game.h"
 #include "cl_team.h"
 #include "campaign/cp_campaign.h"
 #include "campaign/cp_missions.h"
 #include "campaign/cp_mission_triggers.h"
 #include "campaign/cp_team.h"
-#include "menu/m_main.h"
-#include "menu/m_nodes.h"
-#include "menu/node/m_node_model.h"
-#include "menu/node/m_node_text.h"
-
-/**
- * @brief Checks whether a campaign mode game is running
- */
-qboolean GAME_CP_IsRunning (void)
-{
-	return ccs.curCampaign != NULL;
-}
+#include "ui/ui_main.h"
+#include "ui/ui_nodes.h"
+#include "ui/node/ui_node_model.h"
+#include "ui/node/ui_node_text.h"
 
 /**
  * @sa GAME_CP_MissionAutoCheck_f
@@ -149,23 +140,27 @@ static char campaignDesc[MAXCAMPAIGNTEXT];
 static void GAME_CP_GetCampaigns_f (void)
 {
 	int i;
-
 	linkedList_t *campaignList = NULL;
+
 	*campaignDesc = '\0';
+
 	for (i = 0; i < ccs.numCampaigns; i++) {
-		if (ccs.campaigns[i].visible)
-			LIST_AddString(&campaignList, va("%s", _(ccs.campaigns[i].name)));
+		const campaign_t *c = &ccs.campaigns[i];
+		if (c->visible)
+			LIST_AddString(&campaignList, va("%s", _(c->name)));
 	}
 	/* default campaign */
-	MN_RegisterText(TEXT_STANDARD, campaignDesc);
-	MN_RegisterLinkedListText(TEXT_CAMPAIGN_LIST, campaignList);
+	UI_RegisterText(TEXT_STANDARD, campaignDesc);
+	UI_RegisterLinkedListText(TEXT_CAMPAIGN_LIST, campaignList);
 
 	/* select main as default */
-	for (i = 0; i < ccs.numCampaigns; i++)
-		if (!strcmp(ccs.campaigns[i].id, "main")) {
+	for (i = 0; i < ccs.numCampaigns; i++) {
+		const campaign_t *c = &ccs.campaigns[i];
+		if (!strcmp(c->id, "main")) {
 			Cmd_ExecuteString(va("campaignlist_click %i", i));
 			return;
 		}
+	}
 	Cmd_ExecuteString("campaignlist_click 0");
 }
 
@@ -176,7 +171,7 @@ static void GAME_CP_CampaignListClick_f (void)
 {
 	int num;
 	const char *racetype;
-	menuNode_t *campaignlist;
+	uiNode_t *campaignlist;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <campaign list index>\n", Cmd_Argv(0));
@@ -212,11 +207,11 @@ static void GAME_CP_CampaignListClick_f (void)
 			ccs.campaigns[num].credits, CP_ToDifficultyName(ccs.campaigns[num].difficulty),
 			(int)(round(ccs.campaigns[num].minhappiness * 100.0f)), ccs.campaigns[num].negativeCreditsUntilLost,
 			_(ccs.campaigns[num].text));
-	MN_RegisterText(TEXT_STANDARD, campaignDesc);
+	UI_RegisterText(TEXT_STANDARD, campaignDesc);
 
 	/* Highlight currently selected entry */
-	campaignlist = MN_GetNodeByPath("campaigns.campaignlist");
-	MN_TextNodeSelectLine(campaignlist, num);
+	campaignlist = UI_GetNodeByPath("campaigns.campaignlist");
+	UI_TextNodeSelectLine(campaignlist, num);
 }
 
 /**
@@ -315,14 +310,14 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 
 	CP_InitMissionResults(winner == cls.team);
 
-	MN_InitStack("geoscape", "campaign_main", qtrue, qtrue);
+	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
 	CP_ExecuteMissionTrigger(ccs.selectedMission, winner == cls.team);
 
 	if (winner == cls.team) {
-		MN_PushWindow("won", NULL);
+		UI_PushWindow("won", NULL);
 	} else
-		MN_PushWindow("lost", NULL);
+		UI_PushWindow("lost", NULL);
 
 	CL_Disconnect();
 	SV_Shutdown("Mission end", qfalse);
@@ -332,39 +327,38 @@ qboolean GAME_CP_Spawn (void)
 {
 	aircraft_t *aircraft = ccs.missionAircraft;
 	base_t *base;
-	int i;
+	linkedList_t* l;
 
 	if (!aircraft)
 		return qfalse;
 
-	/* convert aircraft team to chr_list */
-	for (i = 0, cl.chrList.num = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[i]) {
-			cl.chrList.chr[cl.chrList.num] = &aircraft->acTeam[i]->chr;
-			cl.chrList.num++;
-		}
+	/* convert aircraft team to character list */
+	for (l = aircraft->acTeam; l != NULL; l = l->next) {
+		employee_t *employee = (employee_t *)l->data;
+		cl.chrList.chr[cl.chrList.num] = &employee->chr;
+		cl.chrList.num++;
 	}
 
-	base = CP_GetMissionBase();
+	base = aircraft->homebase;
 
 	/* clean temp inventory */
 	CL_CleanTempInventory(base);
 
 	/* activate hud */
-	MN_InitStack(mn_hud->string, NULL, qfalse, qtrue);
+	UI_InitStack(mn_hud->string, NULL, qfalse, qtrue);
 
 	return qtrue;
 }
 
 const mapDef_t* GAME_CP_MapInfo (int step)
 {
-	return &csi.mds[cls.currentSelectedMap];
+	return Com_GetMapDefByIDX(cls.currentSelectedMap);
 }
 
 qboolean GAME_CP_ItemIsUseable (const objDef_t *od)
 {
-	assert(od);
-	return RS_IsResearched_ptr(od->tech);
+	const technology_t *tech = RS_GetTechForItem(od);
+	return RS_IsResearched_ptr(tech);
 }
 
 int GAME_CP_GetTeam (void)
@@ -376,10 +370,7 @@ int GAME_CP_GetTeam (void)
 qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 {
 	if (!ccs.teamDefTechs[teamDef->idx])
-		ccs.teamDefTechs[teamDef->idx] = RS_GetTechByID(teamDef->tech);
-
-	if (!ccs.teamDefTechs[teamDef->idx])
-		Com_Error(ERR_DROP, "Could not find tech for teamdef '%s'", teamDef->tech);
+		Com_Error(ERR_DROP, "Could not find tech for teamdef '%s'", teamDef->id);
 
 	return RS_IsResearched_ptr(ccs.teamDefTechs[teamDef->idx]);
 }
@@ -387,7 +378,7 @@ qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 void GAME_CP_Drop (void)
 {
 	/** @todo maybe create a savegame? */
-	MN_InitStack("geoscape", "campaign_main", qtrue, qtrue);
+	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
 	SV_Shutdown("Mission end", qfalse);
 	CL_Disconnect();
@@ -399,12 +390,8 @@ void GAME_CP_Frame (void)
 	if (cls.keyDest == key_console)
 		return;
 
-	if (GAME_CP_IsRunning()) {
-		if (!strcmp("geoscape", MN_GetActiveWindowName())) {
-			/* advance time */
-			CL_CampaignRun();
-		}
-	}
+	/* advance time */
+	CL_CampaignRun();
 }
 
 /**
@@ -415,14 +402,13 @@ void GAME_CP_Frame (void)
  * @param[out] menuModel The menu model pointer.
  * @return The model path for the item. Never @c NULL.
  */
-const char* GAME_CP_GetModelForItem (const objDef_t *od, menuModel_t** menuModel)
+const char* GAME_CP_GetModelForItem (const objDef_t *od)
 {
-	if (od->tech && od->tech->mdl) {
-		if (menuModel != NULL)
-			*menuModel = MN_GetMenuModel(od->tech->mdl);
+	const technology_t *tech = RS_GetTechForItem(od);
+	if (tech->mdl) {
 		/* the model from the tech structure has higher priority, because the item model itself
 		 * is mainly for the battlescape or the geoscape - only use that as a fallback */
-		return od->tech->mdl;
+		return tech->mdl;
 	}
 	return NULL;
 }
@@ -440,7 +426,7 @@ void GAME_CP_InitializeBattlescape (const chrList_t *team)
 	NET_WriteByte(msg, team->num);
 
 	for (i = 0; i < team->num; i++) {
-		character_t *chr = team->chr[i];
+		const character_t *chr = team->chr[i];
 		NET_WriteShort(msg, chr->ucn);
 		NET_WriteShort(msg, chr->state);
 	}
@@ -473,18 +459,18 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
 }
 
-void GAME_CP_DisplayItemInfo (menuNode_t *node, const char *string)
+void GAME_CP_DisplayItemInfo (uiNode_t *node, const char *string)
 {
 	const aircraft_t *aircraft = AIR_GetAircraftSilent(string);
 	if (aircraft) {
 		assert(aircraft->tech);
-		MN_DrawModelNode(node, aircraft->tech->mdl);
+		UI_DrawModelNode(node, aircraft->tech->mdl);
 	} else {
 		const technology_t *tech = RS_GetTechByProvided(string);
 		if (tech)
-			MN_DrawModelNode(node, tech->mdl);
+			UI_DrawModelNode(node, tech->mdl);
 		else
-			Com_Printf("MN_ItemNodeDraw: Unknown item: '%s'\n", string);
+			Com_Printf("UI_ItemNodeDraw: Unknown item: '%s'\n", string);
 	}
 }
 

@@ -26,11 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_GAME_CAMPAIGN_H
 #define CL_GAME_CAMPAIGN_H
 
-#include "menu/m_nodes.h"
+#include "ui/ui_nodes.h"
 
-qboolean GAME_CP_IsRunning(void);
-
-void GAME_CP_DisplayItemInfo(menuNode_t *node, const char *string);
+void GAME_CP_DisplayItemInfo(uiNode_t *node, const char *string);
 const mapDef_t* GAME_CP_MapInfo(int step);
 void GAME_CP_InitStartup(void);
 void GAME_CP_Shutdown(void);
@@ -44,6 +42,6 @@ qboolean GAME_CP_TeamIsKnown(const teamDef_t *teamDef);
 void GAME_CP_Drop(void);
 void GAME_CP_InitializeBattlescape(const chrList_t *team);
 void GAME_CP_Frame(void);
-const char* GAME_CP_GetModelForItem(const objDef_t *od, struct menuModel_s** menuModel);
+const char* GAME_CP_GetModelForItem(const objDef_t *od);
 
 #endif

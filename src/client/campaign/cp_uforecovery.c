@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../menu/m_main.h"
+#include "../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_ufo.h"
 #include "cp_map.h"
@@ -354,21 +353,16 @@ qboolean US_LoadXML (mxml_node_t *p)
 		storedUFO_t *ufo;
 		float condition = mxml_GetFloat(snode, SAVE_UFORECOVERY_CONDITION, 1.0f);
 		const char *statusId = mxml_GetString(snode, SAVE_UFORECOVERY_STATUS);
-		storedUFOStatus_t status;
+		int status;
 
 		mxml_GetDate(snode, SAVE_UFORECOVERY_DATE, &arrive.day, &arrive.sec);
-
-		if (!ufoTemplate) {
-			Com_Printf("Invalid ufo type\n");
-			continue;
-		}
 
 		if (!inst) {
 			Com_Printf("UFO has no/invalid installation assigned\n");
 			continue;
 		}
 
-		if (!Com_GetConstIntFromNamespace(SAVE_STOREDUFOSTATUS_NAMESPACE, statusId, (int*) &status)) {
+		if (!Com_GetConstIntFromNamespace(SAVE_STOREDUFOSTATUS_NAMESPACE, statusId, &status)) {
 			Com_Printf("Invalid storedUFOStatus '%s'\n", statusId);
 			continue;
 		}

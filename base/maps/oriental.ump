@@ -205,6 +205,18 @@ a      +a     +a     a
 0      a      a      0
 }
 
+// ufo fighter
+tile +craft_ufo_fighter
+{
+4 5
+
+0      a      a      0
+a      +a     +a     a
+a      +a     +a     a
+a      +a     +a     a
+0      a      a      0
+}
+
 // crashed ufo fighter
 
 tile +craft_crash_fighter

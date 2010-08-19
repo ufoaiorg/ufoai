@@ -23,9 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../client.h" /* cls */
 #include "../cl_team.h"
-#include "../menu/m_main.h"
 #include "cp_campaign.h"
 #include "cp_team.h"
 
@@ -87,11 +86,12 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	/* Search for any complete clips. */
 	/** @todo We may want to change this to use the type->ammo[] info. */
 	for (i = 0; i < csi.numODs; i++) {
-		if (INVSH_LoadableInWeapon(&csi.ods[i], type)) {
+		objDef_t *od = INVSH_GetItemByIDX(i);
+		if (INVSH_LoadableInWeapon(od, type)) {
 			if (ed->numItems[i] > 0) {
 				ed->numItems[i]--;
 				item.a = type->ammo;
-				item.m = &csi.ods[i];
+				item.m = od;
 				return item;
 			}
 		}
@@ -115,7 +115,8 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	/** @todo We may want to change this to use the type->ammo[] info. */
 	item.a = NONE_AMMO;
 	for (i = 0; i < csi.numODs; i++) {
-		if (INVSH_LoadableInWeapon(&csi.ods[i], type) && ed->numItemsLoose[i] > item.a) {
+		objDef_t *od = INVSH_GetItemByIDX(i);
+		if (INVSH_LoadableInWeapon(od, type) && ed->numItemsLoose[i] > item.a) {
 			if (item.a > 0) {
 				/* We previously found some ammo, but we've now found other
 				 * loose ammo of a different (but appropriate) type with
@@ -129,7 +130,7 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
 			/* Found some loose ammo to load the weapon with */
 			item.a = ed->numItemsLoose[i];
 			ed->numItemsLoose[i] = 0;
-			item.m = &csi.ods[i];
+			item.m = od;
 		}
 	}
 	return item;
@@ -151,49 +152,45 @@ static item_t CP_AddWeaponAmmo (equipDef_t * ed, item_t item)
  */
 void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 {
-	int p;
 	containerIndex_t container;
+	linkedList_t* l;
 
 	assert(aircraft);
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_CleanupAircraftCrew:aircraft idx: %i, team size: %i\n",
-		aircraft->idx, aircraft->teamSize);
+		aircraft->idx, AIR_GetTeamSize(aircraft));
 
 	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
-	for (p = 0; p < aircraft->maxTeamSize; p++) {
-		if (aircraft->acTeam[p]) {
-			character_t *chr = &aircraft->acTeam[p]->chr;
-			assert(chr);
+	for (l = aircraft->acTeam; l != NULL; l = l->next) {
+		employee_t *employee = (employee_t *)l->data;
+		character_t *chr = &employee->chr;
 
-			/* This is an UGV */
-			if (aircraft->acTeam[p]->ugv) {
-				/* Check if there is a weapon and add it if there isn't. */
-				if (!RIGHT(chr) || !RIGHT(chr)->item.t)
-					cls.i.EquipActorRobot(&cls.i, &chr->i, chr, INVSH_GetItemByID(aircraft->acTeam[p]->ugv->weapon));
-			}
+		/* This is an UGV */
+		if (employee->ugv) {
+			/* Check if there is a weapon and add it if there isn't. */
+			if (!RIGHT(chr) || !RIGHT(chr)->item.t)
+				cls.i.EquipActorRobot(&cls.i, &chr->i, INVSH_GetItemByID(employee->ugv->weapon));
 		}
 	}
 
 	for (container = 0; container < csi.numIDs; container++) {
-		for (p = 0; p < aircraft->maxTeamSize; p++) {
-			if (aircraft->acTeam[p]) {
-				invList_t *ic, *next;
-				character_t *chr = &aircraft->acTeam[p]->chr;
-				assert(chr);
+		for (l = aircraft->acTeam; l != NULL; l = l->next) {
+			employee_t *employee = (employee_t *)l->data;
+			invList_t *ic, *next;
+			character_t *chr = &employee->chr;
 #if 0
-				/* ignore items linked from any temp container */
-				if (INVDEF(container)->temp)
-					continue;
+			/* ignore items linked from any temp container */
+			if (INVDEF(container)->temp)
+				continue;
 #endif
-				for (ic = CONTAINER(chr, container); ic; ic = next) {
-					next = ic->next;
-					if (ed->numItems[ic->item.t->idx] > 0) {
-						ic->item = CP_AddWeaponAmmo(ed, ic->item);
-					} else {
-						/* Drop ammo used for reloading and sold carried weapons. */
-						if (!cls.i.RemoveFromInventory(&cls.i, &chr->i, INVDEF(container), ic))
-							Com_Error(ERR_DROP, "Could not remove item from inventory");
-					}
+			for (ic = CONTAINER(chr, container); ic; ic = next) {
+				next = ic->next;
+				if (ed->numItems[ic->item.t->idx] > 0) {
+					ic->item = CP_AddWeaponAmmo(ed, ic->item);
+				} else {
+					/* Drop ammo used for reloading and sold carried weapons. */
+					if (!cls.i.RemoveFromInventory(&cls.i, &chr->i, INVDEF(container), ic))
+						Com_Error(ERR_DROP, "Could not remove item from inventory");
 				}
 			}
 		}
@@ -234,50 +231,53 @@ void CL_CleanTempInventory (base_t* base)
 int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType)
 {
 	int i;
+	size_t size;
+	linkedList_t* l;
+	int numOnAircraft;
 
 	assert(aircraft);
 
-	Cvar_Set("mn_hired", va(_("%i of %i"), aircraft->teamSize, aircraft->maxTeamSize));
-	Cvar_Set("mn_hirable_count", va("%i", aircraft->maxTeamSize - aircraft->teamSize));
-	Cvar_Set("mn_hired_count", va("%i", aircraft->teamSize));
+	numOnAircraft = AIR_GetTeamSize(aircraft);
+	Cvar_Set("mn_hired", va(_("%i of %i"), numOnAircraft, aircraft->maxTeamSize));
+	Cvar_Set("mn_hirable_count", va("%i", aircraft->maxTeamSize - numOnAircraft));
+	Cvar_Set("mn_hired_count", va("%i", numOnAircraft));
 	Cvar_Set("mn_pilotassigned", va("%i", aircraft->pilot != NULL));
 
 	if (aircraft->pilot) {
-		Cvar_ForceSet("mn_pilot_name", aircraft->pilot->chr.name);
-		Cvar_ForceSet("mn_pilot_body", CHRSH_CharGetBody(&aircraft->pilot->chr));
-		Cvar_ForceSet("mn_pilot_head", CHRSH_CharGetHead(&aircraft->pilot->chr));
-		Cvar_ForceSet("mn_pilot_skin", va("%i", aircraft->pilot->chr.skin));
+		Cvar_Set("mn_pilot_name", aircraft->pilot->chr.name);
+		Cvar_Set("mn_pilot_body", CHRSH_CharGetBody(&aircraft->pilot->chr));
+		Cvar_Set("mn_pilot_head", CHRSH_CharGetHead(&aircraft->pilot->chr));
+		Cvar_Set("mn_pilot_skin", va("%i", aircraft->pilot->chr.skin));
 	} else {
-		Cvar_ForceSet("mn_pilot_name", "");
-		Cvar_ForceSet("mn_pilot_body", "");
-		Cvar_ForceSet("mn_pilot_head", "");
-		Cvar_ForceSet("mn_pilot_skin", "");
+		Cvar_Set("mn_pilot_name", "");
+		Cvar_Set("mn_pilot_body", "");
+		Cvar_Set("mn_pilot_head", "");
+		Cvar_Set("mn_pilot_skin", "");
 	}
+
+	size = lengthof(chrDisplayList.chr);
 
 	/* update chrDisplayList list (this is the one that is currently displayed) */
 	chrDisplayList.num = 0;
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		employee_t *empl = aircraft->acTeam[i];
-		assert(chrDisplayList.num < MAX_ACTIVETEAM);
-		if (!empl)
-			continue; /* Skip unused team-slot. */
-
+	for (l = aircraft->acTeam; l != NULL; l = l->next) {
+		employee_t *empl = (employee_t *)l->data;
 		if (empl->type != employeeType)
 			continue;
 
+		assert(chrDisplayList.num < size);
 		chrDisplayList.chr[chrDisplayList.num] = &empl->chr;
 
 		/* Sanity check(s) */
 		if (!chrDisplayList.chr[chrDisplayList.num])
 			Com_Error(ERR_DROP, "CL_UpdateActorAircraftVar: Could not get employee character with idx: %i", chrDisplayList.num);
 		Com_DPrintf(DEBUG_CLIENT, "add %s to chrDisplayList (pos: %i)\n", chrDisplayList.chr[chrDisplayList.num]->name, chrDisplayList.num);
-		Cvar_ForceSet(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
+		Cvar_Set(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
 
 		/* Update number of displayed team-members. */
 		chrDisplayList.num++;
 	}
 
-	for (i = chrDisplayList.num; i < MAX_ACTIVETEAM; i++)
+	for (i = chrDisplayList.num; i < size; i++)
 		chrDisplayList.chr[i] = NULL;	/* Just in case */
 
 	return chrDisplayList.num;

@@ -7,7 +7,7 @@ window unittest_option
 {
 	{
 		pos "100 100"
-		size "440 340"
+		size "700 340"
 		dragbutton	true
 		closebutton	true
 		string		"_Unittest option"
@@ -26,13 +26,14 @@ window unittest_option
 	}
 
 	tab tabReferenciel {
-		pos		"10 60"
-		size	"400 40"
-		cvar	*cvar:mn_unittest_option
-		onChange {
-			cmd "echo \"tabReferenciel <cvar:mn_unittest_option>\";"
+		{
+			pos		"10 60"
+			size	"680 40"
+			cvar	*cvar:mn_unittest_option
+			onChange {
+				cmd "echo \"tabReferenciel <cvar:mn_unittest_option>\";"
+			}
 		}
-
 		option normal {
 			label	"Normal"
 			value	"normal"
@@ -51,11 +52,13 @@ window unittest_option
 
 
 	tab tabTest {
-		pos		"10 100"
-		size	"400 40"
-		cvar	*cvar:mn_unittest_option2
-		onChange {
-			cmd "echo \"tabReferenciel <cvar:mn_unittest_option>\";"
+		{
+			pos		"10 100"
+			size	"680 40"
+			cvar	*cvar:mn_unittest_option2
+			onChange {
+				cmd "echo \"tabReferenciel <cvar:mn_unittest_option2>\";"
+			}
 		}
 
 		option normal {
@@ -78,26 +81,50 @@ window unittest_option
 		selectcolor "1 1 1 1"
 		string "Update tab"
 		onClick {
-			cmd "mn_updateoption <path:root>.tabTest disabled disable"
-			cmd "mn_updateoption <path:root>.tabTest hidden hide"
+			*node:parent.tabTest.disabled@disabled = true
+			*node:parent.tabTest.hidden@invis = true
+		}
+	}
+
+	button addTab {
+		pos		"20 170"
+		size	"150 15"
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string "Add new option"
+		onClick {
+			call *node:parent.tabTest@createchild ( "option<cvar:nb>" , "option" )
+			*node:parent.tabTest.option<cvar:nb>@value = ( *cvar:nb + 20 )
+			*node:parent.tabTest.option<cvar:nb>@label = "Option <cvar:nb>"
+			*cvar:nb = ( *cvar:nb + 1 )
 		}
 	}
 
 	button resetTab {
-		pos		"20 170"
+		pos		"20 190"
 		size	"150 15"
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string "Reset tab"
 		onClick {
-			cmd "mn_updateoption <path:root>.tabTest disabled enable"
-			cmd "mn_updateoption <path:root>.tabTest hidden display"
+			// reset static options
+			*node:parent.tabTest.disabled@disabled = false
+			*node:parent.tabTest.hidden@invis = false
+			// it only remove dynamic child
+			call *node:parent.tabTest@removeAllChild
+			// reset the counter
+			*cvar:nb = 0
 		}
 	}
 
+	func onInit {
+		*cvar:nb = 0
+	}
+
 	func onClose {
-		cmd "del mn_unittest_option"
-		cmd "del mn_unittest_option2"
+		delete *cvar:mn_unittest_option
+		delete *cvar:mn_unittest_option2
+		delete *cvar:nb
 	}
 
 }

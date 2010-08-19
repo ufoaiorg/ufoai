@@ -25,35 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
 #include "cp_map.h"
 #include "cp_ufo.h"
 #include "cp_missions.h"
 #include "save/save_airfight.h"
-
-#if 0
-/**
- * @brief Run bullets on geoscape.
- * @param[in] projectile Pointer to the projectile corresponding to this bullet.
- * @param[in] ortogonalVector vector perpendicular to the movement of the projectile.
- * @param[in] movement how much each bullet should move toward its target.
- */
-static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogonalVector, float movement)
-{
-	int i;
-	vec3_t startPoint, finalPoint;
-
-	assert(projectile->bullets);
-
-	for (i = 0; i < BULLETS_PER_SHOT; i++) {
-		PolarToVec(projectile->bulletPos[i], startPoint);
-		RotatePointAroundVector(finalPoint, ortogonalVector, startPoint, movement);
-		VecToPolar(finalPoint, projectile->bulletPos[i]);
-	}
-}
-#endif
 
 /**
  * @brief Remove a projectile from ccs.projectiles
@@ -468,15 +446,19 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		/* notify UFOs that a phalanx aircraft has been destroyed */
 		UFO_NotifyPhalanxAircraftRemoved(aircraft);
 
-		/* Destroy the aircraft and everything onboard - the aircraft pointer
-		 * is no longer valid after this point */
-		AIR_DestroyAircraft(aircraft);
+		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN)))
+			CP_SpawnRescueMission(aircraft, shooter);
+		else {
+			/* Destroy the aircraft and everything onboard - the aircraft pointer
+			 * is no longer valid after this point */
+			AIR_DestroyAircraft(aircraft);
+		}
 
 		/* Make UFO proceed with its mission, if it has not been already destroyed */
 		if (shooter)
 			CP_UFOProceedMission(shooter);
 
-		MS_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_UFOSPOTTED, NULL);
+		MS_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_DEATH, NULL);
 	}
 }
 
@@ -604,7 +586,6 @@ static void AIRFIGHT_GetNextPointInPath (const float *movement, const vec2_t ori
 	AIRFIGHT_GetNextPointInPathFromVector(movement, originalPoint, orthogonalVector, finalPoint);
 }
 
-
 /**
  * @brief Update values of projectiles.
  * @param[in] dt Time elapsed since last call of this function.
@@ -647,7 +628,6 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 			VectorCopy(finalPoint, projectile->pos[0]);
 			VectorCopy(projectedPoint, projectile->projectedPos[0]);
 		}
-
 	}
 }
 
@@ -663,27 +643,29 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 	float distance;
 
 	for (i = 0; i < maxWeapons; i++) {
+		aircraft_t *target = weapons[i].target;
+		aircraftSlot_t *slot = &(weapons[i].slot);
 		/* if no target, can't shoot */
-		if (!weapons[i].target)
+		if (!target)
 			continue;
 
 		/* If the weapon is not ready in base, can't shoot. */
-		if (weapons[i].slot.installationTime > 0)
+		if (slot->installationTime > 0)
 			continue;
 
 		/* if weapon is reloading, can't shoot */
-		if (weapons[i].slot.delayNextShot > 0)
+		if (slot->delayNextShot > 0)
 			continue;
 
 		/* check that the ufo is still visible */
-		if (!UFO_IsUFOSeenOnGeoscape(weapons[i].target)) {
+		if (!UFO_IsUFOSeenOnGeoscape(target)) {
 			weapons[i].target = NULL;
 			continue;
 		}
 
 		/* Check if we can still fire on this target. */
-		distance = GetDistanceOnGlobe(base->pos, weapons[i].target->pos);
-		test = AIRFIGHT_CheckWeapon(&(weapons[i].slot), distance);
+		distance = GetDistanceOnGlobe(base->pos, target->pos);
+		test = AIRFIGHT_CheckWeapon(slot, distance);
 		/* weapon unable to shoot, reset target */
 		if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
 			weapons[i].target = NULL;
@@ -693,14 +675,14 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 		else if (test == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT)
 			continue;
 		/* target is too far, wait to see if UFO comes closer */
-		else if (distance > weapons[i].slot.ammo->craftitem.stats[AIR_STATS_WRANGE])
+		else if (distance > slot->ammo->craftitem.stats[AIR_STATS_WRANGE])
 			continue;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(base, NULL, NULL, weapons[i].target, &weapons[i].slot)) {
-			weapons[i].slot.delayNextShot = weapons[i].slot.ammo->craftitem.weaponDelay;
+		if (AIRFIGHT_AddProjectile(base, NULL, NULL, target, slot)) {
+			slot->delayNextShot = slot->ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
-			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot))
+			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, target, slot))
 				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], qfalse);
 		}
 	}
@@ -718,27 +700,29 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 	float distance;
 
 	for (i = 0; i < maxWeapons; i++) {
+		aircraft_t *target = weapons[i].target;
+		aircraftSlot_t *slot = &(weapons[i].slot);
 		/* if no target, can't shoot */
-		if (!weapons[i].target)
+		if (!target)
 			continue;
 
 		/* If the weapon is not ready in base, can't shoot. */
-		if (weapons[i].slot.installationTime > 0)
+		if (slot->installationTime > 0)
 			continue;
 
 		/* if weapon is reloading, can't shoot */
-		if (weapons[i].slot.delayNextShot > 0)
+		if (slot->delayNextShot > 0)
 			continue;
 
 		/* check that the ufo is still visible */
-		if (!UFO_IsUFOSeenOnGeoscape(weapons[i].target)) {
+		if (!UFO_IsUFOSeenOnGeoscape(target)) {
 			weapons[i].target = NULL;
 			continue;
 		}
 
 		/* Check if we can still fire on this target. */
-		distance = GetDistanceOnGlobe(installation->pos, weapons[i].target->pos);
-		test = AIRFIGHT_CheckWeapon(&(weapons[i].slot), distance);
+		distance = GetDistanceOnGlobe(installation->pos, target->pos);
+		test = AIRFIGHT_CheckWeapon(slot, distance);
 		/* weapon unable to shoot, reset target */
 		if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
 			weapons[i].target = NULL;
@@ -748,14 +732,14 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 		else if (test == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT)
 			continue;
 		/* target is too far, wait to see if UFO comes closer */
-		else if (distance > weapons[i].slot.ammo->craftitem.stats[AIR_STATS_WRANGE])
+		else if (distance > slot->ammo->craftitem.stats[AIR_STATS_WRANGE])
 			continue;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(NULL, installation, NULL, weapons[i].target, &weapons[i].slot)) {
-			weapons[i].slot.delayNextShot = weapons[i].slot.ammo->craftitem.weaponDelay;
+		if (AIRFIGHT_AddProjectile(NULL, installation, NULL, target, slot)) {
+			slot->delayNextShot = slot->ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
-			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot))
+			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, target, slot))
 				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], qfalse);
 		}
 	}
@@ -778,18 +762,23 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
 
 		if (base->baseStatus == BASE_UNDER_ATTACK)
 			continue;
+
 		for (idx = 0; idx < base->numBatteries; idx++) {
-			if (base->batteries[idx].slot.delayNextShot > 0)
-				base->batteries[idx].slot.delayNextShot -= dt;
-			if (base->batteries[idx].slot.ammoLeft <= 0)
-				AII_ReloadWeapon(&base->batteries[idx].slot);
+			baseWeapon_t *battery = &base->batteries[idx];
+			aircraftSlot_t *slot = &battery->slot;
+			if (slot->delayNextShot > 0)
+				slot->delayNextShot -= dt;
+			if (slot->ammoLeft <= 0)
+				AII_ReloadWeapon(slot);
 		}
 
 		for (idx = 0; idx < base->numLasers; idx++) {
-			if (base->lasers[idx].slot.delayNextShot > 0)
-				base->lasers[idx].slot.delayNextShot -= dt;
-			if (base->lasers[idx].slot.ammoLeft <= 0)
-				AII_ReloadWeapon(&base->lasers[idx].slot);
+			baseWeapon_t *battery = &base->lasers[idx];
+			aircraftSlot_t *slot = &battery->slot;
+			if (slot->delayNextShot > 0)
+				slot->delayNextShot -= dt;
+			if (slot->ammoLeft <= 0)
+				AII_ReloadWeapon(slot);
 		}
 
 		if (AII_BaseCanShoot(base)) {
@@ -806,16 +795,16 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
 		if (!installation)
 			continue;
 
-		assert(installation);
-
 		if (installation->installationTemplate->maxBatteries <= 0)
 			continue;
 
 		for (idx = 0; idx < installation->installationTemplate->maxBatteries; idx++) {
-			if (installation->batteries[idx].slot.delayNextShot > 0)
-				installation->batteries[idx].slot.delayNextShot -= dt;
-			if (installation->batteries[idx].slot.ammoLeft <= 0)
-				AII_ReloadWeapon(&installation->batteries[idx].slot);
+			baseWeapon_t *battery = &installation->batteries[idx];
+			aircraftSlot_t *slot = &battery->slot;
+			if (slot->delayNextShot > 0)
+				slot->delayNextShot -= dt;
+			if (slot->ammoLeft <= 0)
+				AII_ReloadWeapon(slot);
 		}
 
 		if (AII_InstallationCanShoot(installation)) {
@@ -930,7 +919,7 @@ qboolean AIRFIGHT_LoadXML (mxml_node_t *parent)
 }
 
 /**
- * @sa MN_InitStartup
+ * @sa UI_InitStartup
  */
 void AIRFIGHT_InitStartup (void)
 {

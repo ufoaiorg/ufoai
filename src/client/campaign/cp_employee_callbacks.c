@@ -1,7 +1,6 @@
 /**
  * @file cp_employee_callbacks.c
  * @brief Header file for menu callback functions used for hire/employee menu
- * @todo Remove direct access to nodes
  */
 
 /*
@@ -23,19 +22,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-#include "../client.h"
-#include "../cl_game.h"
-#include "../menu/m_main.h"
-#include "../menu/m_data.h"
-#include "../menu/m_draw.h"
-#include "../battlescape/cl_localentity.h"	/**< cl_actor.h needs this */
-#include "../battlescape/cl_actor.h"
+#include "../cl_shared.h"
+#include "../cl_team.h" /* CL_UpdateCharacterValues */
+#include "../ui/ui_main.h"
+#include "../ui/ui_data.h"
+#include "../ui/ui_draw.h"
 #include "cp_campaign.h"
 #include "cp_employee_callbacks.h"
 #include "cp_employee.h"
 
 
-/** Currently selected employee. @sa cl_employee.h */
+/** Currently selected employee. */
 static employee_t *selectedEmployee = NULL;
 /* Holds the current active employee category */
 static int employeeCategory = 0;
@@ -77,12 +74,13 @@ static void E_EmployeeSelect (employee_t *employee)
 
 	selectedEmployee = employee;
 	if (selectedEmployee) {
+		const character_t *chr = &selectedEmployee->chr;
 		/* mn_employee_hired is needed to allow renaming */
-		Cvar_SetValue("mn_employee_hired", selectedEmployee->hired ? 1 : 0);
-		Cvar_SetValue("mn_ucn", selectedEmployee->chr.ucn);
+		Cvar_SetValue("mn_employee_hired", E_IsHired(selectedEmployee) ? 1 : 0);
+		Cvar_SetValue("mn_ucn", chr->ucn);
 
 		/* set info cvars */
-		CL_ActorCvars(&(selectedEmployee->chr), "mn_");
+		CL_UpdateCharacterValues(chr, "mn_");
 	}
 }
 
@@ -92,7 +90,7 @@ static void E_EmployeeSelect (employee_t *employee)
  */
 static void E_EmployeeListScroll_f (void)
 {
-	int i, j, cnt = 0;
+	int j, cnt = 0;
 	employee_t* employee;
 	base_t *base = B_GetCurrentSelectedBase();
 
@@ -105,9 +103,10 @@ static void E_EmployeeListScroll_f (void)
 	employeeScrollPos = atoi(Cmd_Argv(1));
 	j = employeeScrollPos;
 
-	for (i = 0, employee = &(ccs.employees[employeeCategory][0]); i < ccs.numEmployees[employeeCategory]; i++, employee++) {
+	employee = NULL;
+	while ((employee = E_GetNext(employeeCategory, employee))) {
 		/* don't show employees of other bases */
-		if (employee->baseHired != base && employee->hired)
+		if (E_IsHired(employee) && !E_IsInBase(employee, base))
 			continue;
 
 		/* drop the first j entries */
@@ -116,13 +115,10 @@ static void E_EmployeeListScroll_f (void)
 			continue;
 		}
 		/* change the buttons */
-		if (employee->hired) {
-			if (employee->baseHired == base)
-				MN_ExecuteConfunc("employeeadd %i", cnt);
-			else
-				MN_ExecuteConfunc("employeedisable %i", cnt);
-		} else
-			MN_ExecuteConfunc("employeedel %i", cnt);
+		if (E_IsHired(employee))
+			UI_ExecuteConfunc("employeeadd %i", cnt);
+		else
+			UI_ExecuteConfunc("employeedel %i", cnt);
 
 		cnt++;
 
@@ -132,11 +128,11 @@ static void E_EmployeeListScroll_f (void)
 	}
 
 	for (;cnt < maxEmployeesPerPage; cnt++) {
-		Cvar_ForceSet(va("mn_name%i", cnt), "");
-		MN_ExecuteConfunc("employeedisable %i", cnt);
+		Cvar_Set(va("mn_name%i", cnt), "");
+		UI_ExecuteConfunc("employeedisable %i", cnt);
 	}
 
-	MN_ExecuteConfunc("hire_fix_scroll %i", employeeScrollPos);
+	UI_ExecuteConfunc("hire_fix_scroll %i", employeeScrollPos);
 }
 
 /**
@@ -145,7 +141,6 @@ static void E_EmployeeListScroll_f (void)
  */
 static void E_EmployeeList_f (void)
 {
-	int j;
 	employee_t* employee;
 	int hiredEmployeeIdx;
 	linkedList_t *employeeListName;
@@ -173,19 +168,19 @@ static void E_EmployeeList_f (void)
 
 	LIST_Delete(&employeeList);
 	/* make sure, that we are using the linked list */
-	MN_ResetData(TEXT_LIST);
+	UI_ResetData(TEXT_LIST);
 	employeeListName = NULL;
 
-	/** @todo Use CL_GetTeamList and reduce code duplication */
-	for (j = 0, employee = ccs.employees[employeeCategory]; j < ccs.numEmployees[employeeCategory]; j++, employee++) {
+	employee = NULL;
+	while ((employee = E_GetNext(employeeCategory, employee))) {
 		/* don't show employees of other bases */
-		if (employee->baseHired != base && employee->hired)
+		if (E_IsHired(employee) && !E_IsInBase(employee, base))
 			continue;
 		LIST_AddPointer(&employeeListName, employee->chr.name);
 		LIST_AddPointer(&employeeList, employee);
 		employeesInCurrentList++;
 	}
-	MN_RegisterLinkedListText(TEXT_LIST, employeeListName);
+	UI_RegisterLinkedListText(TEXT_LIST, employeeListName);
 
 	/* If the list is empty OR we are in pilots/scientists/workers-mode: don't show the model&stats. */
 	/** @note
@@ -212,8 +207,8 @@ static void E_EmployeeList_f (void)
 	E_EmployeeSelect(employee);
 
 	/* update scroll */
-	MN_ExecuteConfunc("hire_update_number %i", employeesInCurrentList);
-	MN_ExecuteConfunc("employee_scroll 0");
+	UI_ExecuteConfunc("hire_update_number %i", employeesInCurrentList);
+	UI_ExecuteConfunc("employee_scroll 0");
 }
 
 
@@ -224,7 +219,6 @@ static void E_EmployeeList_f (void)
 static void E_ChangeName_f (void)
 {
 	employee_t *employee = E_GetEmployeeFromChrUCN(Cvar_GetInteger("mn_ucn"));
-
 	if (employee)
 		Q_strncpyz(employee->chr.name, Cvar_GetString("mn_name"), sizeof(employee->chr.name));
 }
@@ -236,13 +230,8 @@ static void E_ChangeName_f (void)
  */
 int E_GenerateHiredEmployeesList (const base_t *base)
 {
-	const employeeType_t employeeType =
-		ccs.displayHeavyEquipmentList
-			? EMPL_ROBOT
-			: EMPL_SOLDIER;
-
 	assert(base);
-	employeesInCurrentList = E_GetHiredEmployees(base, employeeType, &employeeList);
+	employeesInCurrentList = E_GetHiredEmployees(base, EMPL_SOLDIER, &employeeList);
 	return employeesInCurrentList;
 }
 
@@ -280,9 +269,9 @@ static void E_EmployeeDelete_f (void)
 	if (!employee)
 		return;
 
-	if (employee->hired) {
+	if (E_IsHired(employee)) {
 		if (!E_UnhireEmployee(employee)) {
-			MN_DisplayNotice(_("Could not fire employee"), 2000, "employees");
+			UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			return;
 		}
@@ -333,19 +322,19 @@ static void E_EmployeeHire_f (void)
 	if (!employee)
 		return;
 
-	if (employee->hired) {
+	if (E_IsHired(employee)) {
 		if (!E_UnhireEmployee(employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
-			MN_DisplayNotice(_("Could not fire employee"), 2000, "employees");
+			UI_DisplayNotice(_("Could not fire employee"), 2000, "employees");
 		} else
-			MN_ExecuteConfunc("employeedel %i", button);
+			UI_ExecuteConfunc("employeedel %i", button);
 	} else {
 		if (!E_HireEmployee(base, employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't hire employee\n");
-			MN_DisplayNotice(_("Could not hire employee"), 2000, "employees");
-			MN_ExecuteConfunc("employeedel %i", button);
+			UI_DisplayNotice(_("Could not hire employee"), 2000, "employees");
+			UI_ExecuteConfunc("employeedel %i", button);
 		} else
-			MN_ExecuteConfunc("employeeadd %i", button);
+			UI_ExecuteConfunc("employeeadd %i", button);
 	}
 	E_EmployeeSelect(employee);
 

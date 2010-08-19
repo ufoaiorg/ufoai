@@ -280,10 +280,9 @@ static void light_draw (const AABB& aabb_light, RenderStateFlags state)
 
 		glEnd();
 	} else {
-		typedef unsigned int index_t;
-		const index_t indices[24] = { 0, 2, 3, 0, 3, 4, 0, 4, 5, 0, 5, 2, 1, 2, 5, 1, 5, 4, 1, 4, 3, 1, 3, 2 };
+		const unsigned int indices[] = { 0, 2, 3, 0, 3, 4, 0, 4, 5, 0, 5, 2, 1, 2, 5, 1, 5, 4, 1, 4, 3, 1, 3, 2 };
 		glVertexPointer(3, GL_FLOAT, 0, points);
-		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(index_t), RenderIndexTypeID, indices);
+		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(indices[0]), RenderIndexTypeID, indices);
 	}
 }
 

@@ -24,7 +24,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "CUnit/Basic.h"
+#include "test_shared.h"
 #include "../common/common.h"
+#include "../shared/utf8.h"
+#include "../shared/shared.h"
+#include "../ports/system.h"
 #include "test_generic.h"
 
 /**
@@ -33,19 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int UFO_InitSuiteGeneric (void)
 {
-	com_aliasSysPool = Mem_CreatePool("Common: Alias system");
-	com_cmdSysPool = Mem_CreatePool("Common: Command system");
-	com_cmodelSysPool = Mem_CreatePool("Common: Collision model");
-	com_cvarSysPool = Mem_CreatePool("Common: Cvar system");
-	com_fileSysPool = Mem_CreatePool("Common: File system");
-	com_genericPool = Mem_CreatePool("Generic");
-
-	Mem_Init();
-	Cmd_Init();
-	Cvar_Init();
-	FS_InitFilesystem(qtrue);
-	Swap_Init();
-
+	TEST_Init();
 	return 0;
 }
 
@@ -55,10 +47,7 @@ static int UFO_InitSuiteGeneric (void)
  */
 static int UFO_CleanSuiteGeneric (void)
 {
-	FS_Shutdown();
-	Cmd_Shutdown();
-	Cvar_Shutdown();
-	Mem_Shutdown();
+	TEST_Shutdown();
 	return 0;
 }
 
@@ -170,6 +159,118 @@ static void testLinkedList (void)
 	CU_ASSERT_EQUAL(LIST_Count(list), 0);
 }
 
+static void testStringCopiers (void)
+{
+	const char src[] = "Командующий, я чрезвычайно рад доложить, что наш проект ОПЭВ был завершён успешно. Я прикрепил к письму "
+			"изображения и схемы прототипа лазерного оружия, в котором реализовано непрерывное волновое излучение достаточной "
+			"мощности в портативном корпусе. Практическое решение лежало не в тщетных попытках увеличения ёмкости аккумуляторной "
+			"батареи, а в использовании радикальных технологий миниатюризации с целью облегчения и уменьшения размеров существующих "
+			"лазеров с химической накачкой. Они использовались довольно долгое время, будучи частью экспериментальных военных "
+			"программ с конца XX века, но их применение всегда сталкивалось с множеством проблем. Модели химических лазеров с "
+			"реальными военными перспективами были слишком большими и громоздкими для использования в бою пехотой. До сих пор их "
+			"расположение было ограничено выбором между лазерными орудиями на сухопутном шасси и батареями морского базирования. "
+			"Боевое применение заключалось в основном для целей противоракетной обороны (ПРО). Тем не менее, теперь мы в ФАЛАНКС "
+			"создали компактное лазерное орудие. Вопреки своему малому размеру, оно полностью способно управлять фтор-дейтериевой "
+			"реакцией и её токсическими продуктами распада без опасности поражения личного состава. Разрешите мне дать вам краткое "
+			"описание принципа его работы. Внутри камеры сгорания этилен окисляется в пламени трифторида азота. В ходе этой реакции "
+			"выделяются свободные радикалы фтора, которые затем приводятся в контакт с газообразной смесью гелия и дейтерия. Дейтерий "
+			"вступает в реакцию с фтором, что приводит к образованию энергетически возбуждённых молекул фторида дейтерия. Они "
+			"подвергаются стимулированной эмиссии в оптическом резонаторе оружия, генерируя лазерный луч. Серия интеллектуальных "
+			"линз фокусирует и направляет луч в точку прицеливания, и даже вносит коррекцию, с учётом небольших перемещений стрелка "
+			"и/или цели. Излишки газообразного дейтерия направляются через сконструированную нами систему фильтров высокого давления, "
+			"которые задерживают все токсичные и радиоактивные молекулы перед выбросом отработанных паров в атмосферу. Фильтр требует "
+			"замены после каждой боевой операции, но разработанная нами система делает этот процесс простым и безболезненным. Если "
+			"система фильтров будет так или иначе повреждена в ходе операции, оружие немедленно заблокируется, чтобы избежать "
+			"поражения бойца и окружающих. Лазер работает в среднем инфракрасном диапазоне, так что он генерирует невидимый глазом "
+			"луч, который однако можно видеть в инфракрасных очках. К сожалению, прототип, который мы создали, ещё не готов к "
+			"широкомасштабному производству в качестве оружия пехоты, так как требуется оптимизация и балансировка для его "
+			"использования человеком, но инновационные разработки, сделанные нами, могут так же применяться в орудийных системах "
+			"боевых машин, и, возможно, даже в авиационных орудиях. Я отправил вам на электронную почту несколько новых концепций с "
+			"принципиальными идеями, предложенными моим отделом. Сообщите, когда вы сочтёте нужным, чтоб мы начали работу над ними, "
+			"командующий. —ком. Наварре ";
+
+	long time;
+	const int copies = 10000;
+	char dest[8192];
+	int i;
+	
+	TEST_Printf("\n");
+	time = Sys_Milliseconds();
+	for (i = 0; i < copies; ++i) {
+		Q_strncpyz(dest, src, sizeof(dest));
+	}
+	time = Sys_Milliseconds() - time;
+	TEST_Printf("%d copies with Q_strncpyz: %ld ms\n", copies, time);
+
+	time = Sys_Milliseconds();
+	for (i = 0; i < copies; ++i) {
+		UTF8_strncpyz(dest, src, sizeof(dest));
+	}
+	time = Sys_Milliseconds() - time;
+	TEST_Printf("%d copies with UTF8_strncpyz: %ld ms\n", copies, time);
+
+	time = Sys_Milliseconds();
+	for (i = 0; i < copies; ++i) {
+		Com_sprintf(dest, sizeof(dest), "%s", src);
+	}
+	time = Sys_Milliseconds() - time;
+	TEST_Printf("%d copies with Com_sprintf: %ld ms\n", copies, time);
+
+	/* Com_sprintf */
+
+	/* empty string */
+	Com_sprintf(dest, 1, "aab%c%c", 0xd0, 0x80);
+	CU_ASSERT_EQUAL(dest[0], '\0');
+
+	/* trimmed non utf8 */
+	Com_sprintf(dest, 4, "aab%c%c", 0xd0, 0x80);
+	CU_ASSERT_EQUAL(dest[2], 'b');
+	CU_ASSERT_EQUAL(dest[3], '\0');
+
+	/* trimmed utf8 char */
+	Com_sprintf(dest, 5, "aab%c%c", 0xd0, 0x80);
+	CU_ASSERT_EQUAL(dest[2], 'b');
+	CU_ASSERT_EQUAL(dest[3], '\0');
+
+	/* untrimmed utf8 char */
+	Com_sprintf(dest, 6, "aab%c%c", 0xd0, 0x80);
+	CU_ASSERT_EQUAL((unsigned char) dest[3], 0xd0);
+	CU_ASSERT_EQUAL((unsigned char) dest[4], 0x80);
+	CU_ASSERT_EQUAL(dest[5], '\0');
+
+	/* 2 consecutive utf8 char */
+	Com_sprintf(dest, 7, "aab\xD0\x80\xD0\x80");
+	CU_ASSERT_NOT_EQUAL(dest[3], '\0');
+	CU_ASSERT_EQUAL(dest[5], '\0');
+
+	/* UTF8_strncpyz */
+
+	/* empty string */
+	UTF8_strncpyz(dest, "aab\xD0\x80", 1);
+	CU_ASSERT_EQUAL(dest[0], '\0');
+
+	/* trimmed non utf8 */
+	UTF8_strncpyz(dest, "aab\xD0\x80", 4);
+	CU_ASSERT_EQUAL(dest[2], 'b');
+	CU_ASSERT_EQUAL(dest[3], '\0');
+
+	/* trimmed utf8 char */
+	UTF8_strncpyz(dest, "aab\xD0\x80", 5);
+	CU_ASSERT_EQUAL(dest[2], 'b');
+	CU_ASSERT_EQUAL(dest[3], '\0');
+
+	/* untrimmed utf8 char */
+	UTF8_strncpyz(dest, "aab\xD0\x80", 6);
+	CU_ASSERT_EQUAL((unsigned char) dest[3], 0xd0);
+	CU_ASSERT_EQUAL((unsigned char) dest[4], 0x80);
+	CU_ASSERT_EQUAL(dest[5], '\0');
+
+	/* 2 consecutive utf8 char */
+	UTF8_strncpyz(dest, "aab\xD0\x80\xD0\x80", 7);
+	CU_ASSERT_NOT_EQUAL(dest[3], '\0');
+	CU_ASSERT_EQUAL(dest[5], '\0');
+}
+
 int UFO_AddGenericTests (void)
 {
 	/* add a suite to the registry */
@@ -183,6 +284,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testLinkedList) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testStringCopiers) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
+#include "../../cl_shared.h"
 #include "../cp_campaign.h"
 #include "../cp_missions.h"
 #include "../cp_time.h"
@@ -108,7 +108,7 @@ void CP_XVIMissionNextStage (mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create XVI Spreading mission */
-		CP_MissionCreate(mission);
+		CP_MissionBegin(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* Go to mission */

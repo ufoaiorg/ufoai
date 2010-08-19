@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_localentity.h"
 #include "e_event_actorthrow.h"
 
-static qboolean firstShot;
-
 int CL_ActorDoThrowTime (const eventRegister_t *self, struct dbuffer *msg, const int dt)
 {
 	const int t = NET_ReadShort(msg);
@@ -62,10 +60,8 @@ void CL_ActorDoThrow (const eventRegister_t *self, struct dbuffer *msg)
 	LE_AddGrenade(fd, flags, muzzle, v0, dtime, NULL);
 
 	/* start the sound */
-	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED)) {
+	if (fd->fireSound[0] && !(flags & SF_BOUNCED)) {
 		s_sample_t *sample = S_LoadSample(fd->fireSound);
 		S_PlaySample(muzzle, sample, SOUND_ATTN_IDLE, SND_VOLUME_DEFAULT);
 	}
-
-	firstShot = qfalse;
 }

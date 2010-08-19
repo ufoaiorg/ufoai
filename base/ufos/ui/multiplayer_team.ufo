@@ -2,21 +2,31 @@
 // MULTIPLAYER TEAM CREATION MENU
 // ==============================
 
+component checkbox mpTeamCheckbox
+{
+	image		"ui/checkbox_green"
+	size		"20 20"
+	onChange	{ cmd "mp_toggleactor <num> <current>;" }
+}
+
 window mp_team_edit extends objectinfo
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	ui/mp_team_edit_bg
+		src	"background/mp_team_edit_bg"
 	}
 
 	string s_backpack
 	{
 		pos "852 25"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Backpack"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -25,7 +35,7 @@ window mp_team_edit extends objectinfo
 	string s_left
 	{
 		pos "852 150"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Left Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -34,7 +44,7 @@ window mp_team_edit extends objectinfo
 	string s_right
 	{
 		pos "530 150"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Right Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -43,7 +53,7 @@ window mp_team_edit extends objectinfo
 	string s_extension
 	{
 		pos "530 76"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Extension"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -52,7 +62,7 @@ window mp_team_edit extends objectinfo
 	string s_headgear
 	{
 		pos "620 76"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Headgear"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -61,7 +71,7 @@ window mp_team_edit extends objectinfo
 	string s_holster
 	{
 		pos "852 245"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Holster"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -70,7 +80,7 @@ window mp_team_edit extends objectinfo
 	string s_belt
 	{
 		pos "530 245"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Belt"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -80,82 +90,52 @@ window mp_team_edit extends objectinfo
 	// checkbox list
 	// ==================
 
-	todo checkboxes_todo
+	mpTeamCheckbox bt_actor0
 	{
-		pos			"40 23"
-		string		"These checkboxes should mark the soldiers you want in your team - this is not yet working"
-	}
-
-	checkbox bt_actor0
-	{
-		current 0
-		image ui/checkbox_green
+		num 0
 		pos	"60 23"
-		size "20 20"
-		onChange { }
 	}
 
-	checkbox bt_actor1
+	mpTeamCheckbox bt_actor1
 	{
-		current 0
-		image ui/checkbox_green
+		num 1
 		pos	"60 64"
-		size "20 20"
-		onChange { }
 	}
 
-	checkbox bt_actor2
+	mpTeamCheckbox bt_actor2
 	{
-		current 0
-		image ui/checkbox_green
+		num 2
 		pos	"60 105"
-		size "20 20"
-		onChange { }
 	}
 
-	checkbox bt_actor3
+	mpTeamCheckbox bt_actor3
 	{
-		current 0
-		image ui/checkbox_green
+		num 3
 		pos	"60 146"
-		size "20 20"
-		onChange { }
 	}
 
-	checkbox bt_actor4
+	mpTeamCheckbox bt_actor4
 	{
-		current 0
-		image ui/checkbox_green
+		num 4
 		pos	"60 187"
-		size "20 20"
-		onChange { }
 	}
 
-	checkbox bt_actor5
+	mpTeamCheckbox bt_actor5
 	{
-		current 0
-		image ui/checkbox_green
+		num 5
 		pos	"60 228"
-		size "20 20"
-		onChange { }
 	}
 
-	checkbox bt_actor6
+	mpTeamCheckbox bt_actor6
 	{
-		current 0
-		image ui/checkbox_green
+		num 6
 		pos	"60 269"
-		size "20 20"
-		onChange { }
 	}
 
-	checkbox bt_actor7
+	mpTeamCheckbox bt_actor7
 	{
-		current 0
-		image ui/checkbox_green
+		num 7
 		pos	"60 310"
-		size "20 20"
-		onChange { }
 	}
 
 	// ==================
@@ -166,26 +146,57 @@ window mp_team_edit extends objectinfo
 	 * @param[in] <1> number of soldier in the list
 	 */
 	confunc mp_soldier_unselect {
-		*txt_actor<1>@color = "0 .78 0 1"
+		*node:root.txt_actor<1>@color = "0 .78 0 1"
 	}
 
 	/**
 	 * @param[in] <1> number of soldier in the list
 	 */
 	confunc mp_soldier_select {
-		*txt_actor<1>@color = "1 1 1 1"
+		*node:root.txt_actor<1>@color = "1 1 1 1"
+	}
+
+	/**
+	 * @param[in] <1> amount of soldiers in the list
+	 */
+	confunc mp_checkboxes_update {
+		*cvar:tmp = <1>
+		*cvar:i = 0
+		while ( *cvar:i < 8 ) {
+			if ( *cvar:i >= *cvar:tmp ) {
+				*node:root.bt_actor<cvar:i>@invis = true
+			} else {
+				*node:root.bt_actor<cvar:i>@invis = false
+			}
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
+		delete *cvar:tmp
+	}
+
+	func mp_checkboxes_set
+	{
+		*cvar:i = 0
+		while ( *cvar:i < 8 ) {
+			if ( *node:root.bt_actor<cvar:i>@current != 1 ) {
+				call *node:root.bt_actor<cvar:i>@toggle
+			}
+			cmd "mp_toggleactor <cvar:i> 1;"
+			*cvar:i = ( *cvar:i + 1 )
+		}
+		delete *cvar:i
 	}
 
 	func mp_names_clear
 	{
-		*txt_actor0@color = "0 .78 0 1"
-		*txt_actor1@color = "0 .78 0 1"
-		*txt_actor2@color = "0 .78 0 1"
-		*txt_actor3@color = "0 .78 0 1"
-		*txt_actor4@color = "0 .78 0 1"
-		*txt_actor5@color = "0 .78 0 1"
-		*txt_actor6@color = "0 .78 0 1"
-		*txt_actor7@color = "0 .78 0 1"
+		*node:root.txt_actor0@color = "0 .78 0 1"
+		*node:root.txt_actor1@color = "0 .78 0 1"
+		*node:root.txt_actor2@color = "0 .78 0 1"
+		*node:root.txt_actor3@color = "0 .78 0 1"
+		*node:root.txt_actor4@color = "0 .78 0 1"
+		*node:root.txt_actor5@color = "0 .78 0 1"
+		*node:root.txt_actor6@color = "0 .78 0 1"
+		*node:root.txt_actor7@color = "0 .78 0 1"
 	}
 
 	string txt_actor0
@@ -193,7 +204,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name0
 		pos		"90 13"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 0;" }
 	}
 	string txt_actor1
@@ -201,7 +212,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name1
 		pos		"90 54"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 1;" }
 	}
 	string txt_actor2
@@ -209,7 +220,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name2
 		pos		"90 95"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 2;" }
 	}
 	string txt_actor3
@@ -217,7 +228,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name3
 		pos		"90 136"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 3;" }
 	}
 	string txt_actor4
@@ -225,7 +236,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name4
 		pos		"90 177"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 4;" }
 	}
 	string txt_actor5
@@ -233,7 +244,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name5
 		pos		"90 218"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 5;" }
 	}
 	string txt_actor6
@@ -241,7 +252,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name6
 		pos		"90 259"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 6;" }
 	}
 	string txt_actor7
@@ -249,7 +260,7 @@ window mp_team_edit extends objectinfo
 		string	*cvar:mn_name7
 		pos		"90 300"
 		size	"270 40"
-		textalign cl
+		textalign ALIGN_CL
 		onClick { cmd "mp_team_select 7;" }
 	}
 
@@ -259,34 +270,39 @@ window mp_team_edit extends objectinfo
 
 	confunc mp_update_item_list {
 		if ( *cvar:mn_equiptype == 0 ) {
-			*(container)equip@filter = FILTER_S_PRIMARY
-			*(container)equip_ammo@filter = FILTER_S_PRIMARY
+			*node:root.equip@filter = FILTER_S_PRIMARY
+			*node:root.equip_ammo@filter = FILTER_S_PRIMARY
 		}
 		elif ( *cvar:mn_equiptype == 1 ) {
-			*(container)equip@filter = FILTER_S_SECONDARY
-			*(container)equip_ammo@filter = FILTER_S_SECONDARY
+			*node:root.equip@filter = FILTER_S_SECONDARY
+			*node:root.equip_ammo@filter = FILTER_S_SECONDARY
 		}
 		elif ( *cvar:mn_equiptype == 2 ) {
-			*(container)equip@filter = FILTER_S_HEAVY
-			*(container)equip_ammo@filter = FILTER_S_HEAVY
+			*node:root.equip@filter = FILTER_S_HEAVY
+			*node:root.equip_ammo@filter = FILTER_S_HEAVY
 		}
 		elif ( *cvar:mn_equiptype == 3 ) {
-			*(container)equip@filter = FILTER_S_MISC
-			*(container)equip_ammo@filter = FILTER_S_MISC
+			*node:root.equip@filter = FILTER_S_MISC
+			*node:root.equip_ammo@filter = FILTER_S_MISC
 		}
 		elif ( *cvar:mn_equiptype == 4 ) {
-			*(container)equip@filter = FILTER_S_ARMOUR
-			*(container)equip_ammo@filter = FILTER_S_ARMOUR
+			*node:root.equip@filter = FILTER_S_ARMOUR
+			*node:root.equip_ammo@filter = FILTER_S_ARMOUR
 		}
-		*(container)equip@scrollpos = 0
-		*(container)equip_ammo@scrollpos = 0
+		*node:root.equip@scrollpos = 0
+		*node:root.equip_ammo@scrollpos = 0
 	}
 
 	tab equip_type
 	{
-		pos		"400 365"
-		size	"505 40"
-		cvar	*cvar:mn_equiptype
+		{
+			pos		"400 365"
+			size	"505 40"
+			cvar	*cvar:mn_equiptype
+			onChange {
+				cmd "mp_update_item_list;"
+			}
+		}
 		option primary {
 			label	"_Primary"
 			value	"0"
@@ -307,9 +323,6 @@ window mp_team_edit extends objectinfo
 			label	"_Armour"
 			value	"4"
 		}
-		onChange {
-			cmd "mp_update_item_list;"
-		}
 	}
 
 	// ==================
@@ -327,18 +340,18 @@ window mp_team_edit extends objectinfo
 			string	*cvar:mn_itemname
 			pos		"10 6"
 			size	"330 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
-	
+
 		item itemmodel
 		{
 			pos 		"0 30"
 			size 		"350 100"
-			model		*cvar:mn_item
+			src			*cvar:mn_item
 			angles		"-10 160 70"
 			autoscale	true
 		}
-	
+
 		text description
 		{
 			pos			"10 140"
@@ -348,15 +361,15 @@ window mp_team_edit extends objectinfo
 			rows		"7"
 			dataid		TEXT_ITEMDESCRIPTION
 			onViewChange {
-				*(abstractscrollbar)itemdescription.description_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
+				*node:root.itemdescription.description_scroll@fullsize = <fullsize>
+				*node:root.itemdescription.description_scroll@current = <viewpos>
 			}
 			onWheel {
-				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
+				*node:root.itemdescription.description_scroll@current = <viewpos>
 			}
 		}
 		vscrollbar description_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"325 140"
 			height		"150"
 			current		0
@@ -364,7 +377,7 @@ window mp_team_edit extends objectinfo
 			fullsize	7
 			hidewhenunused true
 			onChange {
-				*itemdescription.description@viewpos = <current>
+				*node:root.itemdescription.description@viewpos = <current>
 			}
 		}
 
@@ -377,9 +390,9 @@ window mp_team_edit extends objectinfo
 			string	"_With:"
 			pos		"10 290"
 			size	"100 16"
-			font	f_small
+			font	"f_small"
 		}
-	
+
 		custombutton action_dec
 		{
 			pos		"120 290"
@@ -387,14 +400,14 @@ window mp_team_edit extends objectinfo
 			size	"16 16"
 			onClick	{ cmd "mn_decreaseitem;" }
 		}
-	
+
 		string item_name
 		{
 			string	*cvar:mn_linkname
 			pos		"140 290"
 			size	"190 16"
-			textalign	cc
-			font	f_small
+			textalign	ALIGN_CC
+			font	"f_small"
 		}
 
 		custombutton action_inc
@@ -408,15 +421,15 @@ window mp_team_edit extends objectinfo
 		// ==================
 		// firemode
 		// ==================
-	
+
 		string header_firemode
 		{
 			string	"_Firemode:"
 			pos		"10 314"
 			size	"100 16"
-			font	f_small
+			font	"f_small"
 		}
-		
+
 		custombutton firemode_dec
 		{
 			tooltip "_Previous firemode"
@@ -425,16 +438,16 @@ window mp_team_edit extends objectinfo
 			size	"16 16"
 			onClick	{ cmd "mn_decreasefiremode;" }
 		}
-		
+
 		string firemode_name
 		{
 			string	*cvar:mn_firemodename
 			pos		"140 314"
 			size	"190 16"
-			textalign	cc
-			font	f_small
+			textalign	ALIGN_CC
+			font	"f_small"
 		}
-			
+
 		custombutton firemode_inc
 		{
 			tooltip "_Next firemode"
@@ -545,8 +558,8 @@ window mp_team_edit extends objectinfo
 	func mp_weapon_stats
 	{
 		if ( *cvar:mn_itemname ne "" ) {
-			*itemdescription@invis = false
-			*actor_statpanel@invis = true
+			*node:root.itemdescription@invis = false
+			*node:root.actor_statpanel@invis = true
 		} else {
 			// switch back to actor view
 			*cvar:mn_infotype = 0
@@ -556,14 +569,23 @@ window mp_team_edit extends objectinfo
 	// @todo merge with confunc actor_stats?
 	func mp_actor_stats
 	{
-		*itemdescription@invis = true
-		*actor_statpanel@invis = false
+		*node:root.itemdescription@invis = true
+		*node:root.actor_statpanel@invis = false
 	}
 
 	tab info {
-		pos		"20 365"
-		size	"355 40"
-		cvar	*cvar:mn_infotype
+		{
+			pos		"20 365"
+			size	"355 40"
+			cvar	*cvar:mn_infotype
+			onChange {
+				if ( *cvar:mn_infotype == 0 ) {
+					call *node:root.mp_actor_stats
+				} elif ( *cvar:mn_infotype == 1 ) {
+					call *node:root.mp_weapon_stats
+				}
+			}
+		}
 		option abilities {
 			label	"_Actor Abilities"
 			value	"0"
@@ -571,13 +593,6 @@ window mp_team_edit extends objectinfo
 		option weaponinfo {
 			label	"_Object Info"
 			value	"1"
-		}
-		onChange {
-			if ( *cvar:mn_infotype == 0 ) {
-				call *node:root.mp_actor_stats
-			} elif ( *cvar:mn_infotype == 1 ) {
-				call *node:root.mp_weapon_stats
-			}
 		}
 	}
 
@@ -595,12 +610,12 @@ window mp_team_edit extends objectinfo
 	model body
 	{
 		{
-			model	*cvar:mn_body
+			src		*cvar:mn_body
 			skin	*cvar:mn_skin
 			anim	"stand_menu"
 			angles	"0 70 90"
 			scale	"5 5 5"
-	
+
 			pos		"676 69"
 			size	"197 258"
 			origin	"0 -30 0"
@@ -608,7 +623,7 @@ window mp_team_edit extends objectinfo
 
 		model head
 		{
-			model	*cvar:mn_head
+			src		*cvar:mn_head
 			skin	*cvar:mn_skin
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"
@@ -620,11 +635,9 @@ window mp_team_edit extends objectinfo
 	 * @sa team_initskin
 	 */
 	selectbox skins {
-		image	"ui/selectbox_green"
 		pos		"660 290"
 		size	"120 40"
 		cvar	*cvar:mn_skin
-		color	"0.6 0.6 0.6 0.3"
 		onChange { cmd "team_changeskin;" }
 		dataid	OPTION_MULTIPLAYER_SKINS
 	}
@@ -649,7 +662,7 @@ window mp_team_edit extends objectinfo
 		onSelect { cmd "object_update <lastselectedid>;" }
 	}
 
-	container equip		{
+	baseinventory equip		{
 		pos						"422 415"
 		size					"207 317"
 		displayweapon			true
@@ -657,41 +670,41 @@ window mp_team_edit extends objectinfo
 		displayunavailableitem	true
 		columns					1
 		onViewChange {
-			*(abstractscrollbar)equip_scroll@current = <scrollpos>
-			*(abstractscrollbar)equip_scroll@viewsize = <viewsize>
-			*(abstractscrollbar)equip_scroll@fullsize = <fullsize>
+			*node:root.equip_scroll@current = <scrollpos>
+			*node:root.equip_scroll@viewsize = <viewsize>
+			*node:root.equip_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}
 
-	container equip_ammo	{
+	baseinventory equip_ammo	{
 		pos				"702 418"
 		size			"207 317"
 		displayammo		true
 		columns			2
 		onViewChange {
-			*(abstractscrollbar)equip_ammo_scroll@current = <scrollpos>
-			*(abstractscrollbar)equip_ammo_scroll@viewsize = <viewsize>
-			*(abstractscrollbar)equip_ammo_scroll@fullsize = <fullsize>
+			*node:root.equip_ammo_scroll@current = <scrollpos>
+			*node:root.equip_ammo_scroll@viewsize = <viewsize>
+			*node:root.equip_ammo_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}
 
 	vscrollbar equip_scroll {
-		image	ui/scrollbar_v_green
+		image	"ui/scrollbar_v_green"
 		pos "629 405"	height	"339"
 		hidewhenunused true
 		onChange {
-			*equip@scrollpos = <current>
+			*node:root.equip@scrollpos = <current>
 		}
 	}
 
 	vscrollbar equip_ammo_scroll {
-		image	ui/scrollbar_v_green
+		image	"ui/scrollbar_v_green"
 		pos "892 405"	height	"339"
 		hidewhenunused true
 		onChange {
-			*equip_ammo@scrollpos = <current>
+			*node:root.equip_ammo@scrollpos = <current>
 		}
 	}
 
@@ -702,7 +715,7 @@ window mp_team_edit extends objectinfo
 	custombutton bt_go
 	{
 		tooltip	"_Done"
-		image	ui/button_background
+		image	"ui/button_background"
 		texl	"192 0"	size "64 37"
 		pos		"940 720"
 		icon return
@@ -713,8 +726,14 @@ window mp_team_edit extends objectinfo
 	{
 		call *node:root.mp_names_clear
 		call *node:root.mp_actor_stats
+		call *node:root.mp_checkboxes_set
 		cmd "set mn_infotype 0;set mn_equiptype 0;"
 		cmd "team_initskin;mp_update_item_list;mp_team_select 0;mp_team_update;"
+	}
+
+	func onClose
+	{
+		cmd "mp_saveteamstate;"
 	}
 }
 
@@ -742,15 +761,15 @@ window mp_team extends abstract_multiplayer
 		 */
 		confunc set_slotname {
 			cmd "set mn_slot<1> \"<3> (<2>)\";"
-			*content.slot_team<1>@disabled = false
+			*node:root.content.slot_team<1>@disabled = false
 		}
 
 		button slot_team0
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -762,10 +781,10 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team1
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -777,10 +796,10 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team2
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -792,10 +811,10 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team3
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -807,10 +826,10 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team4
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -822,10 +841,10 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team5
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -837,10 +856,10 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team6
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -852,10 +871,10 @@ window mp_team extends abstract_multiplayer
 
 		button slot_team7
 		{
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			disabled	true
@@ -875,8 +894,8 @@ window mp_team extends abstract_multiplayer
 			size "256 40"
 			tooltip	"_Generate a new random team"
 			onClick	{ cmd "mp_autoteam;mn_push mp_team_edit;" }
-			image	ui/button_green_small
-			font	f_menusmall
+			image	"ui/button_green_small"
+			font	"f_menusmall"
 			color	"0 0.5 0 1"
 			selectcolor "1 1 1 1"
 			string	"_New"
@@ -888,8 +907,8 @@ window mp_team extends abstract_multiplayer
 			size "256 40"
 			tooltip	"_Save the current team"
 			onClick	{ cmd "mn_push mp_team_save_popup;" }
-			image	ui/button_green_small
-			font	f_menusmall
+			image	"ui/button_green_small"
+			font	"f_menusmall"
 			color	"0 0.5 0 1"
 			selectcolor "1 1 1 1"
 			string	"_Save"
@@ -898,30 +917,21 @@ window mp_team extends abstract_multiplayer
 		string team_str
 		{
 			string	"_Team:"
-			pos	"85 570"
+			pos	"85 540"
 		}
 
 		selectbox team_box
 		{
-			image	"ui/selectbox_green"
-			pos		"200 570"
-			size	"125 20"
-			color	"0.6 0.6 0.6 0.3"
-			cvar	*cvar:cl_team
-			option low_value {
-				label	"_Human"
-				value	"1"
-			}
-			option medium_value {
-				label	"_Alien"
-				value	"7"
-			}
+			pos		"200 540"
+			size	"200 20"
+			cvar	*cvar:cl_teamdef
+			dataid	OPTION_TEAMDEFS
 		}
 	}
 
 	func onInit
 	{
-		cmd	"team_comments;"
+		cmd	"team_comments;define cl_teamdef phalanx;"
 	}
 }
 
@@ -940,7 +950,7 @@ window mp_team_save_popup
 		dragbutton	true
 		closebutton	true
 		modal		true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Save your team"
 	}
 
@@ -951,10 +961,10 @@ window mp_team_save_popup
 
 	textentry slot_team0
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 130"
@@ -965,10 +975,10 @@ window mp_team_save_popup
 
 	textentry slot_team1
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 165"
@@ -979,10 +989,10 @@ window mp_team_save_popup
 
 	textentry slot_team2
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 200"
@@ -993,10 +1003,10 @@ window mp_team_save_popup
 
 	textentry slot_team3
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 235"
@@ -1007,10 +1017,10 @@ window mp_team_save_popup
 
 	textentry slot_team4
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 270"
@@ -1021,10 +1031,10 @@ window mp_team_save_popup
 
 	textentry slot_team5
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 305"
@@ -1035,10 +1045,10 @@ window mp_team_save_popup
 
 	textentry slot_team6
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 340"
@@ -1049,10 +1059,10 @@ window mp_team_save_popup
 
 	textentry slot_team7
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"50 375"

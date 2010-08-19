@@ -6,50 +6,25 @@ window basedefence extends objectinfo
 		dragbutton	true
 		closebutton	true
 		modal		true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Equip Defence Weapons"
 	}
 
-	/**
-	 * @brief sets available defencetypes
-	 */
-	confunc set_defencetypes {
-		*cvar:mn_cvartmp = "<1>"
-		if ( *cvar:mn_cvartmp eq "enable" ) {
-			cmd "mn_updateoption <path:root>.defencetype missile enable;"
-			cmd "mn_updateoption <path:root>.defencetype missile display;"
-		} elif ( *cvar:mn_cvartmp eq "disable" ) {
-			cmd "mn_updateoption <path:root>.defencetype missile disable;"
-			cmd "mn_updateoption <path:root>.defencetype missile display;"
-		} elif ( *cvar:mn_cvartmp eq "na" ) {
-			cmd "mn_updateoption <path:root>.defencetype missile hide;"
-		}
-		*cvar:mn_cvartmp = "<2>"
-		if ( *cvar:mn_cvartmp eq "enable" ) {
-			cmd "mn_updateoption <path:root>.defencetype laser enable;"
-			cmd "mn_updateoption <path:root>.defencetype laser display;"
-		} elif ( *cvar:mn_cvartmp eq "disable" ) {
-			cmd "mn_updateoption <path:root>.defencetype laser disable;"
-			cmd "mn_updateoption <path:root>.defencetype laser display;"
-		} elif ( *cvar:mn_cvartmp eq "na" ) {
-			cmd "mn_updateoption <path:root>.defencetype laser hide;"
-		}
-		cmd "del mn_cvartmp;"
-	}
-
 	tab defencetype {
-		pos		"17 75"
-		size	"791 38"
-		cvar	*cvar:mn_bdef_type
-		onChange {
-			if ( *cvar:mn_bdef_type ne "info" ) {
-				*infopanel@invis = true
-				*equippanel@invis = false
-			} else {
-				*infopanel@invis = false
-				*equippanel@invis = true
+		{
+			pos		"17 75"
+			size	"791 38"
+			cvar	*cvar:mn_bdef_type
+			onChange {
+				if ( *cvar:mn_bdef_type ne "info" ) {
+					*node:root.infopanel@invis = true
+					*node:root.equippanel@invis = false
+				} else {
+					*node:root.infopanel@invis = false
+					*node:root.equippanel@invis = true
+				}
+				cmd "basedef_updatemenu <cvar:mn_bdef_type>;"
 			}
-			cmd "basedef_updatemenu <cvar:mn_bdef_type>;"
 		}
 		option info {
 			label	"_Information"
@@ -66,25 +41,52 @@ window basedefence extends objectinfo
 		}
 	}
 
+	/**
+	 * @brief sets available defencetypes
+	 */
+	confunc set_defencetypes {
+		*cvar:mn_cvartmp = "<1>"
+		if ( *cvar:mn_cvartmp eq "enable" ) {
+			*node:root.defencetype.missile@disabled = false
+			*node:root.defencetype.missile@invis = false
+		} elif ( *cvar:mn_cvartmp eq "disable" ) {
+			*node:root.defencetype.missile@disabled = true
+			*node:root.defencetype.missile@invis = false
+		} elif ( *cvar:mn_cvartmp eq "na" ) {
+			*node:root.defencetype.missile@invis = true
+		}
+		*cvar:mn_cvartmp = "<2>"
+		if ( *cvar:mn_cvartmp eq "enable" ) {
+			*node:root.defencetype.laser@disabled = false
+			*node:root.defencetype.laser@invis = false
+		} elif ( *cvar:mn_cvartmp eq "disable" ) {
+			*node:root.defencetype.laser@disabled = true
+			*node:root.defencetype.laser@invis = false
+		} elif ( *cvar:mn_cvartmp eq "na" ) {
+			*node:root.defencetype.laser@invis = true
+		}
+		cmd "del mn_cvartmp;"
+	}
+
 	panel equippanel {
 		{
 			pos			"15 115"
 			size		"794 305"
 			invis		true
 		}
-	
+
 		/* @todo: We should check if the slot is empty but can't do from here */
 		confunc update_buttons {
-			if ( *node:(text)parent.slots.slotlist@lineselected < 0 ) {
+			if ( *node:parent.slots.slotlist@lineselected < 0 ) {
 				*node:parent.bt_add@disabled = true
 				*node:parent.bt_remove@disabled = true
-			} elif ( *node:(text)parent.slots.slotlist@lineselected >= *node:(text)parent.slots.slotlist@lines ) {
+			} elif ( *node:parent.slots.slotlist@lineselected >= *node:parent.slots.slotlist@lines ) {
 				*node:parent.bt_add@disabled = true
 				*node:parent.bt_remove@disabled = true
-			} elif ( *node:(text)parent.store.storelist@lineselected < 0 ) {
+			} elif ( *node:parent.store.storelist@lineselected < 0 ) {
 				*node:parent.bt_add@disabled = true
 				*node:parent.bt_remove@disabled = false
-			} elif ( *node:(text)parent.store.storelist@lineselected >= *node:(text)parent.store.storelist@lines ) {
+			} elif ( *node:parent.store.storelist@lineselected >= *node:parent.store.storelist@lines ) {
 				*node:parent.bt_add@disabled = true
 				*node:parent.bt_remove@disabled = false
 			} else {
@@ -98,13 +100,13 @@ window basedefence extends objectinfo
 				pos		"5 5"
 				size	"435 115"
 			}
-			
+
 			string slotlist_title
 			{
 				string		"_Weapon slots"
 				pos			"5 5"
 				size		"400 25"
-				font		f_small_bold
+				font		"f_small_bold"
 			}
 			rows slotback {
 				pos			"5 30"
@@ -125,20 +127,20 @@ window basedefence extends objectinfo
 				selectcolor	"1 1 1 1"
 				rows		"4"
 				mousefx		true
-				longlines	prettychop
+				longlines	LONGLINES_PRETTYCHOP
 				onClick		{
 					call *node:root.equippanel.update_buttons
 					cmd "basedef_selectitem <cvar:mn_bdef_type> <lineselected> -1;"
 				}
 				onViewChange {
-					*node:(abstractscrollbar)parent.slotlist_scroll@fullsize = <fullsize>
-					*node:(abstractscrollbar)parent.slotlist_scroll@current = <viewpos>
-					*node:(abstractscrollbar)parent.slotlist_scroll@viewsize = <viewsize>
+					*node:parent.slotlist_scroll@fullsize = <fullsize>
+					*node:parent.slotlist_scroll@current = <viewpos>
+					*node:parent.slotlist_scroll@viewsize = <viewsize>
 				}
 			}
 			vscrollbar slotlist_scroll
 			{
-				image		ui/scrollbar_v_green
+				image		"ui/scrollbar_v_green"
 				pos			"410 30"
 				height		"80"
 				current		0
@@ -154,11 +156,11 @@ window basedefence extends objectinfo
 			icon		varrow_swap
 			string		"_Add"
 			tooltip		"_Equip the selected slot with this weapon"
-			image		ui/button_green_small
+			image		"ui/button_green_small"
 			pos			"10 130"
 			size		"200 32"
 			onClick		{
-				cmd "basedef_additem <cvar:mn_bdef_type> <node:parent.slots.slotlist@lineselected> <node:parent.store.storelist@lineselected>;"
+				cmd "basedef_additem <cvar:mn_bdef_type> <node:parent.slots.slotlist@lineselected>;"
 			}
 		}
 		button bt_remove
@@ -166,7 +168,7 @@ window basedefence extends objectinfo
 			icon		varrow_top_bottom
 			string		"_Remove"
 			tooltip		"_Remove weapon from the selected slot"
-			image		ui/button_green_small
+			image		"ui/button_green_small"
 			pos			"230 130"
 			size		"200 32"
 			onClick		{
@@ -185,7 +187,7 @@ window basedefence extends objectinfo
 				string		"_Stores"
 				pos			"5 5"
 				size		"400 25"
-				font		f_small_bold
+				font		"f_small_bold"
 			}
 			rows storeback {
 				pos			"5 30"
@@ -208,14 +210,14 @@ window basedefence extends objectinfo
 					cmd "basedef_selectitem <cvar:mn_bdef_type> -1 <lineselected>;"
 				}
 				onViewChange {
-					*node:(abstractscrollbar)parent.storelist_scroll@fullsize = <fullsize>
-					*node:(abstractscrollbar)parent.storelist_scroll@current = <viewpos>
-					*node:(abstractscrollbar)parent.storelist_scroll@viewsize = <viewsize>
+					*node:parent.storelist_scroll@fullsize = <fullsize>
+					*node:parent.storelist_scroll@current = <viewpos>
+					*node:parent.storelist_scroll@viewsize = <viewsize>
 				}
 			}
 			vscrollbar storelist_scroll
 			{
-				image		ui/scrollbar_v_green
+				image		"ui/scrollbar_v_green"
 				pos			"410 30"
 				height		"80"
 				current		0
@@ -230,28 +232,28 @@ window basedefence extends objectinfo
 			{
 				pos		"455 5"
 				size	"334 285"
-				image	ui/panel_green
+				image	"ui/panel_green"
 			}
-	
+
 			string description_title
 			{
 				string		"_Selected Item"
 				pos			"10 5"
 				size		"314 25"
-				textalign	uc
-				font		f_small_bold
+				textalign	ALIGN_UC
+				font		"f_small_bold"
 			}
 			string item_name
 			{
 				string		*cvar:mn_itemname
 				pos			"10 25"
 				size		"314 25"
-				textalign	uc
+				textalign	ALIGN_UC
 			}
-	
+
 			model item_model
 			{
-				model		*cvar:mn_upmodel_top
+				src			*cvar:mn_upmodel_top
 				angles		"-10 160 70"
 				pos			"10 50"
 				size		"314 140"
@@ -266,14 +268,14 @@ window basedefence extends objectinfo
 				color		"0.60 0.60 0.60 1"
 				selectcolor	"1 1 1 1"
 				onViewChange {
-					*node:(abstractscrollbar)parent.description_scroll@fullsize = <fullsize>
-					*node:(abstractscrollbar)parent.description_scroll@current = <viewpos>
-					*node:(abstractscrollbar)parent.description_scroll@viewsize = <viewsize>
+					*node:parent.description_scroll@fullsize = <fullsize>
+					*node:parent.description_scroll@current = <viewpos>
+					*node:parent.description_scroll@viewsize = <viewsize>
 				}
 			}
 			vscrollbar description_scroll
 			{
-				image		ui/scrollbar_v_green
+				image		"ui/scrollbar_v_green"
 				pos			"304 195"
 				height		"80"
 				current		0
@@ -296,25 +298,25 @@ window basedefence extends objectinfo
 			string		"_Surface to Air defences"
 			pos			"50 30"
 			size		"570 35"
-			font		f_normal_bold
+			font		"f_normal_bold"
 		}
 
 		string name_title
 		{
-			string		"Name:"
+			string		"_Name:"
 			pos			"50 95"
 			size		"250 25"
-			font		f_small_bold
+			font		"f_small_bold"
 		}
 		textentry name
 		{
 			string		*cvar:mn_installation_title
 			pos			"310 90"
 			size		"256 34"
-			image		ui/button_green_verysmall
+			image		"ui/button_green_verysmall"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
-			textalign	cl
+			textalign	ALIGN_CL
 			padding		8
 			font		"f_verysmall"
 			onChange	{ }
@@ -346,7 +348,7 @@ window basedefence extends objectinfo
 			pos			"310 175"
 			size		"100 20"
 		}
-		
+
 		string autofire_title
 		{
 			string		"_Autofire"
@@ -355,7 +357,7 @@ window basedefence extends objectinfo
 		}
 		checkbox autofire
 		{
-			image		ui/checkbox_green
+			image		"ui/checkbox_green"
 			pos			"310 200"
 			size		"20 20"
 			current		0
@@ -368,8 +370,8 @@ window basedefence extends objectinfo
 			string		"_Destroy"
 			tooltip		"_Destroy installation"
 			color		"0 0.5 0 1"
-			font		f_menu
-			image		ui/button_green_small
+			font		"f_menu"
+			image		"ui/button_green_small"
 			pos			"50 250"
 			size		"200 32"
 			onClick		{ cmd "mn_pop; mn_installation_destroy;" }
@@ -378,13 +380,13 @@ window basedefence extends objectinfo
 		{
 			string		"_Close"
 			color		"0 0.5 0 1"
-			font		f_menu
-			image		ui/button_green_small
+			font		"f_menu"
+			image		"ui/button_green_small"
 			pos			"549 250"
 			size		"200 32"
 			onClick		{ cmd "mn_pop;" }
 		}
-		
+
 	}
 
 	confunc setautofire	{
@@ -396,7 +398,7 @@ window basedefence extends objectinfo
 			*node:root.infopanel.autofire@current = <cvar:tmp>
 			*node:root.infopanel.autofire@disabled = false
 		}
-		delete *cvar:tmp	
+		delete *cvar:tmp
 	}
 
 	func onInit {

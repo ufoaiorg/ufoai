@@ -6,7 +6,7 @@ component checkbox cmpSelect
 {
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		ui/checkbox_green
+		image		"ui/checkbox_green"
 		size		"20 20"
 		onChange	{ cmd "employee_hire <num>;" }
 		onRClick		{ cmd "employee_delete <num>;" }
@@ -14,13 +14,16 @@ component checkbox cmpSelect
 
 window employees
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		ui/base_bg
+		src		"background/base_bg"
 	}
 
 	// ==================
@@ -44,7 +47,7 @@ window employees
 	panel list_border {
 		pos		"13 155"
 		size	"393 605"
-		image	ui/panel_grey_green_large2
+		image	"ui/panel_grey_green_large2"
 	}
 
 	/**
@@ -52,8 +55,8 @@ window employees
 	 */
 	confunc employeedel
 	{
-		*(abstractvalue)bt_employee<1>@current = 0
-		*bt_employee<1>@invis = false
+		*node:root.bt_employee<1>@current = 0
+		*node:root.bt_employee<1>@invis = false
 	}
 
 	/**
@@ -61,8 +64,8 @@ window employees
 	 */
 	confunc employeeadd
 	{
-		*(abstractvalue)bt_employee<1>@current = 1
-		*bt_employee<1>@invis = false
+		*node:root.bt_employee<1>@current = 1
+		*node:root.bt_employee<1>@invis = false
 	}
 
 	/**
@@ -70,7 +73,7 @@ window employees
 	 */
 	confunc employeedisable
 	{
-		*bt_employee<1>@invis = true
+		*node:root.bt_employee<1>@invis = true
 	}
 
 	cmpSelect bt_employee0
@@ -167,12 +170,12 @@ window employees
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc hire_update_number {
-		*(abstractscrollbar)scroll@fullsize = <1>
+		*node:root.scroll@fullsize = <1>
 	}
 
 	confunc hire_fix_scroll {
-		*(abstractscrollbar)scroll@current = <1>
-		*(rows)list_background@current = <1>
+		*node:root.scroll@current = <1>
+		*node:root.list_background@current = <1>
 	}
 
 	textlist employee_list
@@ -185,25 +188,25 @@ window employees
 		rows		"15"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		onClick			{ cmd "employee_select <lineselected>" }
+		onClick			{ cmd "employee_select <lineselected>;" }
 		onViewChange	{
-			*(abstractscrollbar)scroll@fullsize = <fullsize>
-			*(abstractscrollbar)scroll@current = <viewpos>
-			*(abstractscrollbar)scroll@viewsize = <viewsize>
+			*node:root.scroll@fullsize = <fullsize>
+			*node:root.scroll@current = <viewpos>
+			*node:root.scroll@viewsize = <viewsize>
 			cmd "employee_scroll <viewpos>;"
 		}
 	}
 
 	vscrollbar scroll
 	{
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"368 175"
 		height		"560"
 		current		0
 		viewsize	15
 		fullsize	50
 		onChange	{
-			*employee_list@viewpos = <current>
+			*node:root.employee_list@viewpos = <current>
 			cmd "employee_scroll <current>;"
 		}
 	}
@@ -216,7 +219,7 @@ window employees
 		{
 			pos		"451 300"
 			size	"448 60"
-			image	ui/panel_grey_green
+			image	"ui/panel_grey_green"
 		}
 	}
 
@@ -244,14 +247,14 @@ window employees
 		{
 			pos		"451 364"
 			size	"561 388"
-			image	ui/panel_grey_green
+			image	"ui/panel_grey_green"
 		}
 	}
 
-	pic	rank_img
+	image	rank_img
 	{
 		visiblewhen "*cvar:mn_show_employee >= 1"
-		image		*cvar:mn_chrrank_img
+		src		*cvar:mn_chrrank_img
 		pos			"473 387"
 	}
 
@@ -259,7 +262,7 @@ window employees
 	{
 		{
 			visiblewhen "*cvar:mn_show_employee >= 1"
-			model		*cvar:mn_body
+			src			*cvar:mn_body
 			skin		*cvar:mn_skin
 			anim		"stand2"
 			angles		"0 70 90"
@@ -272,7 +275,7 @@ window employees
 		model head
 		{
 			visiblewhen "*cvar:mn_show_employee >= 1"
-			model		*cvar:mn_head
+			src			*cvar:mn_head
 			skin		*cvar:mn_skin
 			tag			"tag_head"
 			scale		"1.0 1.0 1.0"
@@ -379,16 +382,16 @@ window employees
 			{
 				pos "5 283"
 			}
-			tbar bar   { current *cvar:mn_vhp max *cvar:mn_vhpmax image ui/bar_health }
+			tbar bar   { current *cvar:mn_vhp max *cvar:mn_vhpmax image "ui/bar_health" }
 			string lbl { string "_Health:" }
 			string val { string *cvar:mn_thp }
 		}
 
 		string	missions_lbl { pos "5 318" size "180 20" string "_Missions Performed:" }
-		string	missions_val { pos "190 318" size "130 20" string *cvar:mn_chrmis textalign ur }
+		string	missions_val { pos "190 318" size "130 20" string *cvar:mn_chrmis textalign ALIGN_UR }
 
 		string	kills_lbl { pos "5 338" size "180 20" string "_Enemies Killed:" }
-		string	kills_val { pos "190 338" size "130 20" string *cvar:mn_chrkillalien textalign ur }
+		string	kills_val { pos "190 338" size "130 20" string *cvar:mn_chrkillalien textalign ALIGN_UR }
 	}
 
 	// ==================
@@ -406,13 +409,13 @@ window employees
 			string	"_Occupation"
 			pos		"20 48"
 			size	"150 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
 		string number_people {
 			string	*cvar:mn_hirepeople
 			pos		"20 68"
 			size	"150 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
 
 		custombutton icon_soldier {
@@ -424,7 +427,7 @@ window employees
 			string	*cvar:mn_hiresoldiers
 			pos		"190 68"
 			size	"42 20"
-			textalign	ur
+			textalign	ALIGN_UR
 		}
 
 		custombutton icon_pilot {
@@ -436,7 +439,7 @@ window employees
 			string	*cvar:mn_hirepilots
 			pos		"250 68"
 			size	"42 20"
-			textalign	ur
+			textalign	ALIGN_UR
 		}
 
 		custombutton icon_worker {
@@ -448,7 +451,7 @@ window employees
 			string	*cvar:mn_hireworkers
 			pos		"310 68"
 			size	"42 20"
-			textalign	ur
+			textalign	ALIGN_UR
 		}
 
 		custombutton icon_scientist {
@@ -460,7 +463,7 @@ window employees
 			string	*cvar:mn_hirescientists
 			pos		"370 68"
 			size	"42 20"
-			textalign	ur
+			textalign	ALIGN_UR
 		}
 	}
 
@@ -475,16 +478,17 @@ window employees
 	}
 
 	tab empl_switch {
-		cvar		*cvar:mn_hiretype
-		pos			"47 106"
-		size		"938 39"
-		onChange {
-			cmd "employee_init <cvar:mn_hiretype>;"
-			*node:root.employee_list@lineselected = 0
-			*node:root.employee_list@viewpos = 0
-			*node:root.scroll@current = 0
+		{
+			cvar		*cvar:mn_hiretype
+			pos			"47 106"
+			size		"938 39"
+			onChange {
+				cmd "employee_init <cvar:mn_hiretype>;"
+				*node:root.employee_list@lineselected = 0
+				*node:root.employee_list@viewpos = 0
+				*node:root.scroll@current = 0
+			}
 		}
-
 		option soldier {
 			label	"_Soldiers"
 			value	"0"
@@ -525,7 +529,7 @@ window employees
 		*node:root.scroll@current = 0
 		cmd "employee_init 0;"
 		*cvar:mn_hiretype = 0
-		cmd "employee_update_count"
+		cmd "employee_update_count;"
 	}
 
 	func onClose

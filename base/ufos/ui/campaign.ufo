@@ -4,13 +4,16 @@
 
 window campaigns
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	ui/options_bg
+		src	"background/options_bg"
 	}
 
 	string version
@@ -23,7 +26,7 @@ window campaigns
 	{
 		string	"_Campaigns"
 		pos	"640 80"
-		font	f_big
+		font	"f_big"
 	}
 
 	// ==================
@@ -66,26 +69,26 @@ window campaigns
 		size	"400 120"
 		lineheight	"20"
 		dataid		TEXT_CAMPAIGN_LIST
-		onClick	{ cmd "campaignlist_click <lineselected>" }
+		onClick	{ cmd "campaignlist_click <lineselected>;" }
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
 		rows	"6"
 		onViewChange	{
-			*(abstractscrollbar)campaignlist_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)campaignlist_scroll@current = <viewpos>
-			*(abstractscrollbar)campaignlist_scroll@viewsize = <viewsize>
+			*node:root.campaignlist_scroll@fullsize = <fullsize>
+			*node:root.campaignlist_scroll@current = <viewpos>
+			*node:root.campaignlist_scroll@viewsize = <viewsize>
 		}
 	}
 
 	vscrollbar campaignlist_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"905 140"
 		height		"120"
 		current		0
 		viewsize	6
 		fullsize	6
 		hidewhenunused true
-		onChange	{ *campaignlist@viewpos = <current> }
+		onChange	{ *node:root.campaignlist@viewpos = <current> }
 	}
 
 	text campaign_desc
@@ -96,14 +99,14 @@ window campaigns
 		lineheight	20
 		rows		18
 		onViewChange {
-			*(abstractscrollbar)campaign_desc_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)campaign_desc_scroll@current = <viewpos>
-			*(abstractscrollbar)campaign_desc_scroll@viewsize = <viewsize>
+			*node:root.campaign_desc_scroll@fullsize = <fullsize>
+			*node:root.campaign_desc_scroll@current = <viewpos>
+			*node:root.campaign_desc_scroll@viewsize = <viewsize>
 		}
 	}
 
 	vscrollbar campaign_desc_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"923 320"
 		height		360
 		current		0
@@ -111,7 +114,7 @@ window campaigns
 		fullsize	19
 		hidewhenunused true
 		onChange	{
-			*campaign_desc@viewpos = <current>
+			*node:root.campaign_desc@viewpos = <current>
 		}
 	}
 
@@ -123,13 +126,16 @@ window campaigns
 
 window campaign_main
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		ui/main_bg
+		src		"background/main_bg"
 	}
 
 	string version
@@ -189,7 +195,7 @@ window quickload
 		string		"_Reload campaign"
 		pos			"264 262"
 		size		"496 247"
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		dragbutton	true
 		closebutton	true
 	}
@@ -199,7 +205,7 @@ window quickload
 		string		"_Are you sure that you really want to reload the last automatically saved campaign state?"
 		pos			"26 58"
 		size		"440 104"
-		longlines	wrap
+		longlines	LONGLINES_WRAP
 	}
 
 	cmpPopupButton button_go
@@ -217,13 +223,16 @@ window quickload
 
 window load
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		ui/main_bg
+		src		"background/main_bg"
 	}
 
 	string version
@@ -238,8 +247,8 @@ window load
 		string		"_Load"
 		pos			"610 170"
 		size		"310 30"
-		textalign	uc
-		font		f_big
+		textalign	ALIGN_UC
+		font		"f_big"
 	}
 
 	// ==================
@@ -249,104 +258,104 @@ window load
 	button slot0
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 200"
 		size		"256 32"
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot0; game_timestop;" }
 	}
 	button slot1
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 235"
 		size		"256 34"
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot1; game_timestop;" }
 	}
 	button slot2
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 270"
 		size		"256 34"
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot2; game_timestop;" }
 	}
 	button slot3
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 305"
 		size		"256 34"
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot3; game_timestop;" }
 	}
 	button slot4
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 340"
 		size		"256 34"
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot4; game_timestop;" }
 	}
 	button slot5
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 375"
 		size		"256 34"
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot5; game_timestop;" }
 	}
 	button slot6
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 410"
 		size		"256 34"
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot6; game_timestop;" }
 	}
 	button slot7
 	{
 		string		""
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		pos			"640 445"
 		size		"256 34"
 		font		"f_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		onClick		{ cmd "game_load slot7; game_timestop;" }
 	}
@@ -363,7 +372,7 @@ window load
 	 */
 	confunc update_save_game_info {
 		cmd "set mn_slot<1> \"<2> - <3>\";"
-		*node:root.slot<1>@string = *cvar:mn_slot<1>	
+		*node:root.slot<1>@string = *cvar:mn_slot<1>
 		*node:load.slot<1>@tooltip = "<4>"
 		*node:save.slot<1>@tooltip = "<4>"
 	}
@@ -387,13 +396,16 @@ window load
 
 window save
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		ui/main_bg
+		src		"background/main_bg"
 	}
 
 	string version
@@ -408,8 +420,8 @@ window save
 		string		"_Save"
 		pos			"610 170"
 		size		"310 30"
-		textalign	uc
-		font		f_big
+		textalign	ALIGN_UC
+		font		"f_big"
 	}
 
 	// ==================
@@ -421,10 +433,10 @@ window save
 		string		*cvar:mn_slot0
 		pos			"640 200"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 0;" }
@@ -437,10 +449,10 @@ window save
 		string		*cvar:mn_slot1
 		pos			"640 235"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 1;" }
@@ -453,10 +465,10 @@ window save
 		string		*cvar:mn_slot2
 		pos			"640 270"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 2;" }
@@ -469,10 +481,10 @@ window save
 		string		*cvar:mn_slot3
 		pos			"640 305"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 3;" }
@@ -485,10 +497,10 @@ window save
 		string		*cvar:mn_slot4
 		pos			"640 340"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 4;" }
@@ -501,10 +513,10 @@ window save
 		string		*cvar:mn_slot5
 		pos			"640 375"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 5;" }
@@ -517,10 +529,10 @@ window save
 		string		*cvar:mn_slot6
 		pos			"640 410"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 6;" }
@@ -533,10 +545,10 @@ window save
 		string		*cvar:mn_slot7
 		pos			"640 445"
 		size		"256 34"
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		onClick		{ cmd "game_savenamecleanup 7;" }
@@ -568,9 +580,12 @@ window save
 
 window lostgame
 {
-	pic background
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
+	image background
 	{
-		image		ui/losegame_bg
+		src		"background/losegame_bg"
 	}
 
 	string title
@@ -579,7 +594,7 @@ window lostgame
 		pos			"12 20"
 		size		"1000 35"
 		font		"f_menubig"
-		textalign	uc
+		textalign	ALIGN_UC
 		color		"0 0.8 0 1"
 	}
 
@@ -589,7 +604,7 @@ window lostgame
 		pos			"814 750"
 		size		"200 20"
 		font		"f_verysmall"
-		textalign	ur
+		textalign	ALIGN_UR
 		color		"0 0.8 0 0.9"
 		ghost		true
 	}
@@ -609,21 +624,21 @@ window lostgame
 		dataid	TEXT_STANDARD
 		color		"0 0.8 0 0.9"
 		bgcolor		"0.2 0.2 0.2 0.4"
-		textalign	uc
+		textalign	ALIGN_UC
 		pos			"30 600"
 		size		"960 140"
 		lineheight	"20"
 		font		"f_normal"
 		onClick		{ call *node:parent.leave@click }
 		onViewChange	{
-			*(abstractscrollbar)reason_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)reason_scroll@current = <viewpos>
-			*(abstractscrollbar)reason_scroll@viewsize = <viewsize>
+			*node:root.reason_scroll@fullsize = <fullsize>
+			*node:root.reason_scroll@current = <viewpos>
+			*node:root.reason_scroll@viewsize = <viewsize>
 		}
 	}
 
 	vscrollbar reason_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"992 600"
 		height		"140"
 		current		0
@@ -631,7 +646,7 @@ window lostgame
 		fullsize	12
 		hidewhenunused true
 		onClick		{ call *node:parent.leave@click }
-		onChange	{ *reason@viewpos = <current> }
+		onChange	{ *node:root.reason@viewpos = <current> }
 	}
 }
 
@@ -641,9 +656,12 @@ window lostgame
 
 window endgame
 {
-	pic background
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
+	image background
 	{
-		image		ui/wingame_bg
+		src		"background/wingame_bg"
 	}
 
 	string title
@@ -652,7 +670,7 @@ window endgame
 		pos			"12 20"
 		size		"1000 35"
 		font		"f_menubig"
-		textalign	uc
+		textalign	ALIGN_UC
 		color		"0 0.8 0 1"
 	}
 
@@ -662,7 +680,7 @@ window endgame
 		pos			"814 750"
 		size		"200 20"
 		font		"f_verysmall"
-		textalign	ur
+		textalign	ALIGN_UR
 		color		"0 0.8 0 0.9"
 		ghost		true
 		onClick {
@@ -684,21 +702,21 @@ window endgame
 		dataid		TEXT_STANDARD
 		color		"0 0.8 0 0.9"
 		bgcolor		"0.2 0.2 0.2 0.4"
-		textalign	uc
+		textalign	ALIGN_UC
 		pos			"30 500"
 		size		"960 240"
 		lineheight	"20"
 		font		"f_normal"
 		onClick		{ call *node:parent.leave@click }
 		onViewChange	{
-			*(abstractscrollbar)reason_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)reason_scroll@current = <viewpos>
-			*(abstractscrollbar)reason_scroll@viewsize = <viewsize>
+			*node:root.reason_scroll@fullsize = <fullsize>
+			*node:root.reason_scroll@current = <viewpos>
+			*node:root.reason_scroll@viewsize = <viewsize>
 		}
 	}
 
 	vscrollbar reason_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"992 500"
 		height		"240"
 		current		0
@@ -706,11 +724,10 @@ window endgame
 		fullsize	12
 		hidewhenunused true
 		onClick		{ call *node:parent.leave@click }
-		onChange	{ *reason@viewpos = <current> }
+		onChange	{ *node:root.reason@viewpos = <current> }
 	}
 
 	func onInit {
-		cmd "cinematic end;"
 	}
 }
 

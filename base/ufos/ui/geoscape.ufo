@@ -9,12 +9,12 @@ component panel cmpGeoscapeDocklet {
 		align	LAYOUTALIGN_TOP
 	}
 
-	pic bg {
-		image			"geoscape/docklet_bg"
+	image bg {
+		src			"geoscape/docklet_bg"
 		size			"280 60"
 		onMouseEnter	{ *node:this@image = "geoscape/docklet_bg_hovered" }
 		onMouseLeave	{ *node:this@image = "geoscape/docklet_bg" }
-		onClick			{ cmd "map_selectobject <node:parent.type@string> <node:parent.id@string>" }
+		onClick			{ cmd "map_selectobject <node:parent.type@string> <node:parent.id@string>;" }
 	}
 
 	model siteModel {
@@ -79,7 +79,7 @@ window geoscape
 		call *node:root.messages.dock@createChild ( "<1><2>" , "cmpGeoscapeDocklet" )
 		*node:root.messages.dock.<1><2>.type@string = <1>
 		*node:root.messages.dock.<1><2>.id@string = <2>
-		*node:(model)root.messages.dock.<1><2>.siteModel@model = <4>
+		*node:root.messages.dock.<1><2>.siteModel@src = <4>
 		*node:root.messages.dock.<1><2>.message@string = <5>
 	}
 
@@ -125,9 +125,9 @@ window geoscape
 			align	LAYOUTALIGN_RIGHT
 		}
 
-		pic back
+		image back
 		{
-			image		ui/geo_menu
+			src		"ui/geo_menu"
 			pos			"0 0"
 		}
 
@@ -159,7 +159,7 @@ window geoscape
 			string		*cvar:mn_mapdaytime
 			pos			"31 304"
 			size		"195 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
 
 		text description
@@ -171,14 +171,14 @@ window geoscape
 			tabwidth	70
 			rows		8
 			onViewChange {
-				*node:(abstractscrollbar)parent.description_scroll@fullsize = <fullsize>
-				*node:(abstractscrollbar)parent.description_scroll@current = <viewpos>
-				*node:(abstractscrollbar)parent.description_scroll@viewsize = <viewsize>
+				*node:parent.description_scroll@fullsize = <fullsize>
+				*node:parent.description_scroll@current = <viewpos>
+				*node:parent.description_scroll@viewsize = <viewsize>
 			}
 		}
 
 		vscrollbar description_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"205 151"
 			height		"144"
 			current		0
@@ -199,9 +199,9 @@ window geoscape
 			string		"*cvar:mn_mapdate *cvar:mn_maptime"
 			pos			"31 30"
 			size		"195 20"
-			textalign	uc
+			textalign	ALIGN_UC
 			color		"1 1 1 1"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_credits_caption
@@ -209,7 +209,7 @@ window geoscape
 			string		"_CREDITS"
 			pos			"40 54"
 			size		"75 25"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_credits
@@ -218,8 +218,8 @@ window geoscape
 			tooltip		"_Organisation capital"
 			pos			"112 54"
 			size		"100 25"
-			font		f_small
-			textalign	ur
+			font		"f_small"
+			textalign	ALIGN_UR
 		}
 
 		panel time_panel {
@@ -338,7 +338,7 @@ window geoscape
 				string		*cvar:mn_timelapse
 				pos			"31 32"
 				size		"195 20"
-				textalign	uc
+				textalign	ALIGN_UC
 				color		"0 .78 0 1"
 			}
 
@@ -352,11 +352,11 @@ window geoscape
 				size	"164 164"
 			}
 
-			pic background {
+			image background {
 				pos		"0 0"
 				size	"164 164"
 				texh	"164 164"
-				image	ui/geo_miniglobe
+				src	"ui/geo_miniglobe"
 			}
 
 			zone panel_scroll_up
@@ -423,11 +423,11 @@ window geoscape
 			string		"_Message settings"
 			tooltip		"_Change message and pause settings"
 			color		"0 0.5 0 1"
-			font	 	f_small
+			font	 	"f_small"
 			pos			"41 560"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
-			image		ui/button_geoscape
+			image		"ui/button_geoscape"
 
 			onClick		{ cmd "mn_push messageoptions;" }
 		}
@@ -439,11 +439,11 @@ window geoscape
 			string		"_Mailclient"
 			tooltip		"_INBOX (with unread mails)"
 			color		"1 1 1 1"
-			font	 	f_small
+			font	 	"f_small"
 			pos			"41 595"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
-			image		ui/button_geoscape
+			image		"ui/button_geoscape"
 
 			onClick		{ cmd "mn_push mailclient;" }
 		}
@@ -455,11 +455,11 @@ window geoscape
 			string		"_Mailclient"
 			tooltip		"_INBOX"
 			color		"0 0.5 0 1"
-			font	 	f_small
+			font	 	"f_small"
 			pos			"41 595"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
-			image		ui/button_geoscape
+			image		"ui/button_geoscape"
 
 			onClick		{ cmd "mn_push mailclient;" }
 		}
@@ -471,9 +471,9 @@ window geoscape
 			pos			"41 630"
 			size		"175 34"
 			color		"0 0.5 0 1"
-			font	 	f_small
+			font	 	"f_small"
 			selectcolor	"1 1 1 1"
-			image		ui/button_geoscape
+			image		"ui/button_geoscape"
 
 			onClick		{ cmd "mn_push stats;" }
 		}
@@ -485,9 +485,9 @@ window geoscape
 			pos			"41 665"
 			size		"175 34"
 			color		"0 0.5 0 1"
-			font	 	f_small
+			font	 	"f_small"
 			selectcolor	"1 1 1 1"
-			image		ui/button_geoscape
+			image		"ui/button_geoscape"
 
 			onClick		{ cmd "mn_push ufopedia;" }
 		}
@@ -499,9 +499,9 @@ window geoscape
 			color		"0 0.5 0 1"
 			pos			"41 700"
 			size		"175 34"
-			font	 	f_small
+			font	 	"f_small"
 			selectcolor	"1 1 1 1"
-			image		ui/button_geoscape
+			image		"ui/button_geoscape"
 
 			onClick		{ cmd "mn_push popup_newinstallation_type;" }
 		}
@@ -510,10 +510,10 @@ window geoscape
 		// small buttons
 		// ==================
 
-		pic bt_show_overlay
+		image bt_show_overlay
 		{
 			tooltip		"_Highlight nation borders"
-			image		icons/geo_nations_highlight
+			src		"icons/geo_nations_highlight"
 			pos			"40 515"
 			texl		"0 0"
 			texh		"32 32"
@@ -522,10 +522,10 @@ window geoscape
 			onMouseEnter			{ *node:this@texl = "32 0" *node:this@texh = "64 32" }
 		}
 
-		pic bt_show_radar
+		image bt_show_radar
 		{
 			tooltip		"_Show radar range"
-			image		icons/geo_radar
+			src		"icons/geo_radar"
 			pos			"70 515"
 			texl		"0 0"
 			texh		"32 32"
@@ -534,11 +534,11 @@ window geoscape
 			onMouseEnter			{ *node:this@texl = "32 0" *node:this@texh = "64 32" }
 		}
 
-		pic bt_show_xvi
+		image bt_show_xvi
 		{
 			visiblewhen "*cvar:mn_xvimap == 1"
 			tooltip		"_Show XVI map"
-			image		icons/geo_xvi
+			src		"icons/geo_xvi"
 			pos			"100 515"
 			texl		"0 0"
 			texh		"32 32"
@@ -550,8 +550,8 @@ window geoscape
 		custombutton bt_mapcenter
 		{
 			tooltip		"_Center objects on the map"
-			image		ui/button_background
-			icon		geo_center
+			image		"ui/button_background"
+			icon		"geo_center"
 			pos			"145 520"
 			size		"28 25"
 			texl		"193 38"
@@ -561,8 +561,8 @@ window geoscape
 		custombutton bt_menu
 		{
 			tooltip		"_Go to Options"
-			image		ui/button_background
-			icon		geo_option
+			image		"ui/button_background"
+			icon		"geo_option"
 			pos			"190 520"
 			size		"28 25"
 			texl		"193 38"
@@ -582,7 +582,7 @@ window geoscape
 			ghost	true
 			size	"1024 768"
 		}
-			
+
 		panel rightMargin {
 			align	LAYOUTALIGN_RIGHT
 			size	"256 30"
@@ -600,7 +600,7 @@ window geoscape
 			vscrollbar scroll {
 				align		LAYOUTALIGN_RIGHT
 				invis		true
-				image		ui/scrollbar_v_green
+				image		"ui/scrollbar_v_green"
 				bgcolor		"0 0 0 .5"
 				pos			"749 0"
 				height		"768"
@@ -609,7 +609,7 @@ window geoscape
 				fullsize	50
 				hidewhenunused true
 				onChange	{
-					*node:(messagelist)parent.message@viewpos = <current>
+					*node:parent.message@viewpos = <current>
 				}
 			}
 
@@ -630,9 +630,9 @@ window geoscape
 					}
 				}
 				onViewChange {
-					*node:(abstractscrollbar)parent.scroll@fullsize = <fullsize>
-					*node:(abstractscrollbar)parent.scroll@current = <viewpos>
-					*node:(abstractscrollbar)parent.scroll@viewsize = <viewsize>
+					*node:parent.scroll@fullsize = <fullsize>
+					*node:parent.scroll@current = <viewpos>
+					*node:parent.scroll@viewsize = <viewsize>
 				}
 			}
 		}
@@ -647,7 +647,7 @@ window geoscape
 				padding			10
 				layoutmargin	10
 			}
-	
+
 			panel bottomMargin {
 				align		LAYOUTALIGN_BOTTOM
 				size		"280 30"
@@ -679,7 +679,7 @@ window popup_intercept_ready
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Ready"
 		modal		true
 	}
@@ -689,7 +689,7 @@ window popup_intercept_ready
 		string		"_Aircraft reached desired location - what to do?"
 		pos			"26 58"
 		size		"450 40"
-		longlines	wrap
+		longlines	LONGLINES_WRAP
 	}
 
 	cmpCancelButton bt_cancel
@@ -720,9 +720,9 @@ window popup_intercept_ready
 	confunc popup_intercept_ready_update
 	{
 		if ( *cvar:cp_mission_autogo_available == 1 ) {
-			*bt_auto_go@disabled = false
+			*node:root.bt_auto_go@disabled = false
 		} else {
-			*bt_auto_go@disabled = true
+			*node:root.bt_auto_go@disabled = true
 		}
 	}
 
@@ -744,7 +744,7 @@ window popup_baseattack
 		dragbutton	true
 		modal		true				// we can't click out
 		preventtypingescape true		// we can't use ESC
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Base is under attack"
 	}
 
@@ -844,7 +844,7 @@ window popup_baseattack
 				cmd "pwr_down;"
 			}
 			if ( *node:root.equip@current > 0 ) {
-				cmd "mn_addlistener equipment@onClose <path:root>.listen_automission"
+				cmd "mn_addlistener equipment@onClose <path:root>.listen_automission;"
 				cmd "mn_push equipment;"
 			} else {
 				cmd "cp_mission_autogo;"
@@ -854,8 +854,8 @@ window popup_baseattack
 
 	func listen_mission
 	{
-		cmd "game_go"
-		cmd "mn_removelistener equipment@onClose <path:this>"
+		cmd "game_go;"
+		cmd "mn_removelistener equipment@onClose <path:this>;"
 	}
 	cmpPopupButton bt_go
 	{
@@ -873,7 +873,7 @@ window popup_baseattack
 				cmd "pwr_down;"
 			}
 			if ( *node:root.equip@current > 0 ) {
-				cmd "mn_addlistener equipment@onClose <path:root>.listen_mission"
+				cmd "mn_addlistener equipment@onClose <path:root>.listen_mission;"
 				cmd "mn_push equipment;"
 			} else {
 				cmd "game_go;"
@@ -896,7 +896,7 @@ window popup_transferbaselist
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Select base to transfer to"
 	}
 
@@ -915,7 +915,7 @@ window popup_transferbaselist
 		lineheight	16
 		tabwidth	100
 		rows		7
-		onClick		{ cmd "trans_baselist_click <lineselected>" }
+		onClick		{ cmd "trans_baselist_click <lineselected>;" }
 		onRClick	{ cmd "mn_pop; aircraft_return;" }
 	}
 
@@ -936,7 +936,7 @@ window popup_newbase
 		size		"496 247"
 		dragbutton	true
 		modal		true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_New base"
 	}
 
@@ -951,7 +951,7 @@ window popup_newbase
 		string		*cvar:mn_base_title
 		pos			"46 73"
 		size		"420 25"
-		font		f_big
+		font		"f_big"
 	}
 
 	button bt_nameedit
@@ -975,53 +975,7 @@ window popup_newbase
 		string		*cvar:mn_base_cost
 		pos			"26 113"
 		size		"200 25"
-		font		f_big
-	}
-
-	func chk_checkboxes {
-		if ( *node:(checkbox)root.start_building@current > 0 ) {
-			*start_employees@disabled = false
-		} else {
-			*(abstractvalue)start_employees@current = 0
-			*start_employees@disabled = true
-		}
-	}
-
-	// START WITH BUILDINGS
-	checkbox start_building
-	{
-		tooltip		"_Buildings already built in the initial base"
-		current		*cvar:cl_start_buildings
-		pos			"246 98"
-		image		"ui/checkbox_blue"
-		size		"20 18"
-		onChange 	{ call *node:root.chk_checkboxes }
-	}
-	string start_buildings_str
-	{
-		string		"_Start with buildings"
-		pos			"270 98"
-		size		"180 20"
-		textalign	ul
-		onClick		{ call *node:root.start_building@toggle }
-	}
-
-	// START WITH EMPLOYEES
-	checkbox start_employees
-	{
-		tooltip		"_Employees already hired at campaign start"
-		current		*cvar:cp_start_employees
-		pos			"246 123"
-		size		"20 18"
-		image		"ui/checkbox_blue"
-	}
-	string start_employees_str
-	{
-		string		"_Start with employees"
-		pos			"270 123"
-		size		"180 20"
-		textalign	ul
-		onClick		{ call *node:root.start_employees@toggle }
+		font		"f_big"
 	}
 
 	cmpCancelButton bt_cancel
@@ -1040,22 +994,6 @@ window popup_newbase
 			cmd "mn_pop;mn_base_build;"
 		}
 	}
-
-	func onInit
-	{
-		if ( *cvar:mn_base_count <= 0 ) {
-			*start_employees_str@invis = false
-			*start_employees@invis = false
-			*start_buildings_str@invis = false
-			*start_building@invis = false
-			call *node:root.chk_checkboxes
-		} else {
-			*start_employees_str@invis = true
-			*start_employees@invis = true
-			*start_buildings_str@invis = true
-			*start_building@invis = true
-		}
-	}
 }
 
 // ==================
@@ -1068,7 +1006,7 @@ window popup_newinstallation_type
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_New installation"
 	}
 
@@ -1077,34 +1015,34 @@ window popup_newinstallation_type
 		string		"_Type"
 		pos			"86 50"
 		size		"140 20"
-		font		f_normal
+		font		"f_normal"
 	}
 	string buildtime_label
 	{
 		string		"_Build Time"
 		pos			"226 50"
 		size		"130 20"
-		textalign	ur
-		font		f_normal
+		textalign	ALIGN_UR
+		font		"f_normal"
 	}
 	string cost_label
 	{
 		string		"_Cost"
 		pos			"356 50"
 		size		"100 20"
-		textalign	ur
-		font		f_normal
+		textalign	ALIGN_UR
+		font		"f_normal"
 	}
 
-	pic bt_highlight
+	image bt_highlight
 	{
-		image		"ui/popup_button_hl"
+		src		"ui/popup_button_hl"
 		invis		true
 	}
 
-	pic radar_icon
+	image radar_icon
 	{
-		image		"geoscape/radar"
+		src		"geoscape/radar"
 		pos			"46 78"
 	}
 	string radar_type
@@ -1112,30 +1050,30 @@ window popup_newinstallation_type
 		string		"_Radar tower"
 		pos			"86 78"
 		size		"170 18"
-		font		f_small
+		font		"f_small"
 	}
 	string radar_buildtime
 	{
 		string		*cvar:mn_installation_radartower_buildtime
 		pos			"256 78"
 		size		"100 20"
-		textalign	ur
-		font		f_small
+		textalign	ALIGN_UR
+		font		"f_small"
 	}
 	string radar_cost
 	{
 		string		*cvar:mn_installation_radartower_cost
 		pos			"356 78"
 		size		"100 20"
-		textalign	ur
-		font		f_small
+		textalign	ALIGN_UR
+		font		"f_small"
 	}
 	zone click_radar
 	{
 		pos			"30 78"
 		size		"440 20"
-		onMouseEnter			{ *bt_highlight@invis = false *bt_highlight@pos = "26 76" }
-		onMouseLeave			{ *bt_highlight@invis = true }
+		onMouseEnter			{ *node:root.bt_highlight@invis = false *node:root.bt_highlight@pos = "26 76" }
+		onMouseLeave			{ *node:root.bt_highlight@invis = true }
 		onClick		{
 			*cvar:mn_installation_type = "radartower"
 			*cvar:mn_installation_timetobuild = *cvar:mn_installation_radartower_buildtime
@@ -1144,9 +1082,9 @@ window popup_newinstallation_type
 		}
 	}
 
-	pic sam_icon
+	image sam_icon
 	{
-		image		"geoscape/defence"
+		src		"geoscape/defence"
 		pos			"46 98"
 	}
 	string sam_type
@@ -1154,30 +1092,30 @@ window popup_newinstallation_type
 		string		"_SAM Site"
 		pos			"86 98"
 		size		"170 18"
-		font		f_small
+		font		"f_small"
 	}
 	string sam_buildtime
 	{
 		string		*cvar:mn_installation_samsite_buildtime
 		pos			"256 98"
 		size		"100 20"
-		textalign	ur
-		font		f_small
+		textalign	ALIGN_UR
+		font		"f_small"
 	}
 	string sam_cost
 	{
 		string		*cvar:mn_installation_samsite_cost
 		pos			"356 98"
 		size		"100 20"
-		textalign	ur
-		font		f_small
+		textalign	ALIGN_UR
+		font		"f_small"
 	}
 	zone click_sam
 	{
 		pos			"30 98"
 		size		"440 20"
-		onMouseEnter			{ *bt_highlight@invis = false *bt_highlight@pos = "26 96" }
-		onMouseLeave			{ *bt_highlight@invis = true }
+		onMouseEnter			{ *node:root.bt_highlight@invis = false *node:root.bt_highlight@pos = "26 96" }
+		onMouseLeave			{ *node:root.bt_highlight@invis = true }
 		onClick		{
 			*cvar:mn_installation_type = "samsite"
 			*cvar:mn_installation_timetobuild = *cvar:mn_installation_samsite_buildtime
@@ -1186,9 +1124,9 @@ window popup_newinstallation_type
 		}
 	}
 
-	pic ufoyard_icon
+	image ufoyard_icon
 	{
-		image		"geoscape/ufoyard"
+		src		"geoscape/ufoyard"
 		pos			"46 118"
 	}
 	string ufoyard_type
@@ -1196,30 +1134,30 @@ window popup_newinstallation_type
 		string		"_UFO Yard"
 		pos			"86 118"
 		size		"170 18"
-		font		f_small
+		font		"f_small"
 	}
 	string ufoyard_buildtime
 	{
 		string		*cvar:mn_installation_ufoyard_buildtime
 		pos			"256 118"
 		size		"100 20"
-		textalign	ur
-		font		f_small
+		textalign	ALIGN_UR
+		font		"f_small"
 	}
 	string ufoyard_cost
 	{
 		string		*cvar:mn_installation_ufoyard_cost
 		pos			"356 118"
 		size		"100 20"
-		textalign	ur
-		font		f_small
+		textalign	ALIGN_UR
+		font		"f_small"
 	}
 	zone click_ufoyard
 	{
 		pos			"30 118"
 		size		"440 20"
-		onMouseEnter			{ *bt_highlight@invis = false *bt_highlight@pos = "26 116" }
-		onMouseLeave			{ *bt_highlight@invis = true }
+		onMouseEnter			{ *node:root.bt_highlight@invis = false *node:root.bt_highlight@pos = "26 116" }
+		onMouseLeave			{ *node:root.bt_highlight@invis = true }
 		onClick		{
 			*cvar:mn_installation_type = "ufoyard"
 			*cvar:mn_installation_timetobuild = *cvar:mn_installation_ufoyard_buildtime
@@ -1232,9 +1170,9 @@ window popup_newinstallation_type
 	// Create a base
 	//
 
-	pic base_icon
+	image base_icon
 	{
-		image		"geoscape/base"
+		src		"geoscape/base"
 		pos			"46 138"
 	}
 
@@ -1243,7 +1181,7 @@ window popup_newinstallation_type
 		string		"_Base"
 		pos			"86 138"
 		size		"170 18"
-		font		f_small
+		font		"f_small"
 	}
 
 	string base_buildtime
@@ -1251,23 +1189,23 @@ window popup_newinstallation_type
 		string		"_0 day"
 		pos			"256 138"
 		size		"100 20"
-		textalign	ur
-		font		f_small
+		textalign	ALIGN_UR
+		font		"f_small"
 	}
 	string base_cost
 	{
 		string		*cvar:mn_base_cost
 		pos			"356 138"
 		size		"100 20"
-		textalign	ur
-		font		f_small
+		textalign	ALIGN_UR
+		font		"f_small"
 	}
 	zone click_base
 	{
 		pos			"30 138"
 		size		"440 20"
-		onMouseEnter			{ *bt_highlight@invis = false *bt_highlight@pos = "26 136" }
-		onMouseLeave			{ *bt_highlight@invis = true }
+		onMouseEnter			{ *node:root.bt_highlight@invis = false *node:root.bt_highlight@pos = "26 136" }
+		onMouseLeave			{ *node:root.bt_highlight@invis = true }
 		onClick		{ cmd "mn_pop; mn_base_select -1;" }
 	}
 
@@ -1302,46 +1240,46 @@ window popup_newinstallation_type
 
 	func onInit {
 		if ( *cvar:mn_base_count >= *cvar:mn_base_max ) {
-			*click_base@invis = true
-			*disabled_base@invis = false
-			*base_type@disabled = true
-			*base_buildtime@disabled = true
-			*base_cost@disabled = true
+			*node:root.click_base@invis = true
+			*node:root.disabled_base@invis = false
+			*node:root.base_type@disabled = true
+			*node:root.base_buildtime@disabled = true
+			*node:root.base_cost@disabled = true
 		} else {
-			*click_base@invis = false
-			*disabled_base@invis = true
-			*base_type@disabled = false
-			*base_buildtime@disabled = false
-			*base_cost@disabled = false
+			*node:root.click_base@invis = false
+			*node:root.disabled_base@invis = true
+			*node:root.base_type@disabled = false
+			*node:root.base_buildtime@disabled = false
+			*node:root.base_cost@disabled = false
 		}
 		if ( *cvar:mn_installation_count >= *cvar:mn_installation_max ) {
-			*click_ufoyard@invis = true
-			*disabled_installation@invis = false
-			*ufoyard_type@disabled = true
-			*ufoyard_buildtime@disabled = true
-			*ufoyard_cost@disabled = true
-			*click_sam@invis = true
-			*sam_type@disabled = true
-			*sam_buildtime@disabled = true
-			*sam_cost@disabled = true
-			*click_radar@invis = true
-			*radar_type@disabled = true
-			*radar_buildtime@disabled = true
-			*radar_cost@disabled = true
+			*node:root.click_ufoyard@invis = true
+			*node:root.disabled_installation@invis = false
+			*node:root.ufoyard_type@disabled = true
+			*node:root.ufoyard_buildtime@disabled = true
+			*node:root.ufoyard_cost@disabled = true
+			*node:root.click_sam@invis = true
+			*node:root.sam_type@disabled = true
+			*node:root.sam_buildtime@disabled = true
+			*node:root.sam_cost@disabled = true
+			*node:root.click_radar@invis = true
+			*node:root.radar_type@disabled = true
+			*node:root.radar_buildtime@disabled = true
+			*node:root.radar_cost@disabled = true
 		} else {
-			*click_ufoyard@invis = false
-			*disabled_installation@invis = true
-			*ufoyard_type@disabled = false
-			*ufoyard_buildtime@disabled = false
-			*ufoyard_cost@disabled = false
-			*click_sam@invis = false
-			*sam_type@disabled = false
-			*sam_buildtime@disabled = false
-			*sam_cost@disabled = false
-			*click_radar@invis = false
-			*radar_type@disabled = false
-			*radar_buildtime@disabled = false
-			*radar_cost@disabled = false
+			*node:root.click_ufoyard@invis = false
+			*node:root.disabled_installation@invis = true
+			*node:root.ufoyard_type@disabled = false
+			*node:root.ufoyard_buildtime@disabled = false
+			*node:root.ufoyard_cost@disabled = false
+			*node:root.click_sam@invis = false
+			*node:root.sam_type@disabled = false
+			*node:root.sam_buildtime@disabled = false
+			*node:root.sam_cost@disabled = false
+			*node:root.click_radar@invis = false
+			*node:root.radar_type@disabled = false
+			*node:root.radar_buildtime@disabled = false
+			*node:root.radar_cost@disabled = false
 		}
 	}
 
@@ -1355,14 +1293,14 @@ window popup_newinstallation
 		dragbutton	true
 		closebutton	true
 		modal		true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 	}
 
 	string title
 	{
 		pos			"26 18"
 		size		"420 25"
-		font		f_big
+		font		"f_big"
 	}
 
 	string name_label
@@ -1370,7 +1308,7 @@ window popup_newinstallation
 		string		"_Name:"
 		pos			"25 60"
 		size		"120 25"
-		textalign	cl
+		textalign	ALIGN_CL
 	}
 	textentry name
 	{
@@ -1379,7 +1317,7 @@ window popup_newinstallation
 		size		"330 25"
 		border		3
 		bordercolor	"0 0.5 0 1"
-		font		f_normal
+		font		"f_normal"
 	}
 
 	string cost_label
@@ -1414,14 +1352,14 @@ window popup_newinstallation
 		size		"350 80"
 		lineheight	20
 		onViewChange {
-			*node:(abstractscrollbar)parent.description_scroll@fullsize = <fullsize>
-			*node:(abstractscrollbar)parent.description_scroll@current = <viewpos>
-			*node:(abstractscrollbar)parent.description_scroll@viewsize = <viewsize>
+			*node:parent.description_scroll@fullsize = <fullsize>
+			*node:parent.description_scroll@current = <viewpos>
+			*node:parent.description_scroll@viewsize = <viewsize>
 		}
 	}
 	vscrollbar description_scroll
 	{
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"470 140"
 		height		"80"
 		current		0
@@ -1460,7 +1398,7 @@ window popup_newinstallation
 		} elif ( *cvar:mn_installation_type eq "ufoyard" ) {
 			*node:root.title@string = "_New UFO yard"
 			*node:root.cost@string = *cvar:mn_installation_ufoyard_cost
-		}		
+		}
 	}
 }
 
@@ -1470,7 +1408,7 @@ window popup_installationstatus
 		pos			"264 262"
 		size		"496 220"
 		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Installation Status"
 	}
 
@@ -1479,7 +1417,7 @@ window popup_installationstatus
 		string		"_Name:"
 		pos			"25 60"
 		size		"120 25"
-		textalign	cl
+		textalign	ALIGN_CL
 	}
 	textentry name
 	{
@@ -1488,7 +1426,7 @@ window popup_installationstatus
 		size		"310 25"
 		border		3
 		bordercolor	"0 0.5 0 1"
-		font		f_normal
+		font		"f_normal"
 		onChange	{ cmd "mn_installation_changename;" }
 	}
 
@@ -1547,7 +1485,7 @@ window popup_installationstatus
 			*node:root.buildtime@invis = false
 			/** @todo Radar and UFO Yard has no manage menu yet */
 			/* *node:root.bt_enter@invis = false */
-			 
+
 		}
 	}
 }
@@ -1563,14 +1501,19 @@ window popup_intercept
 		pos			"124 192"
 		size		"548 459"
 		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Anti-UFO defence"
 	}
 
 	tab defence_navigation {
-		pos		"18 55"
-		size	"515 40"
-		cvar	*cvar:mn_defencetab
+		{
+			pos		"18 55"
+			size	"515 40"
+			cvar	*cvar:mn_defencetab
+			onChange {
+				cmd "popup_intercept_update;"
+			}
+		}
 		option aircraft {
 			label	"_Aircraft interception"
 			value	"0"
@@ -1578,9 +1521,6 @@ window popup_intercept
 		option sam {
 			label	"_SAM defence"
 			value	"1"
-		}
-		onChange {
-			cmd "popup_intercept_update;"
 		}
 	}
 
@@ -1622,18 +1562,18 @@ window popup_intercept
 			tabwidth	150
 			mousefx		true
 			rows		"13"
-			longlines	prettychop
+			longlines	LONGLINES_PRETTYCHOP
 			onViewChange {
-				*(abstractscrollbar)aircraft.ships_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)aircraft.ships_scroll@current = <viewpos>
-				*(abstractscrollbar)aircraft.ships_scroll@viewsize = <viewsize>
+				*node:root.aircraft.ships_scroll@fullsize = <fullsize>
+				*node:root.aircraft.ships_scroll@current = <viewpos>
+				*node:root.aircraft.ships_scroll@viewsize = <viewsize>
 			}
-			onClick		{ cmd "ships_click <lineselected>" }
-			onRClick	{ cmd "ships_rclick <lineselected>" }
+			onClick		{ cmd "ships_click <lineselected>;" }
+			onRClick	{ cmd "ships_rclick <lineselected>;" }
 		}
 
 		vscrollbar ships_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"470 29"
 			height		"260"
 			current		0
@@ -1670,15 +1610,15 @@ window popup_intercept
 			mousefx		true
 			rows		"13"
 			onViewChange {
-				*(abstractscrollbar)sam.bases_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)sam.bases_scroll@current = <viewpos>
-				*(abstractscrollbar)sam.bases_scroll@viewsize = <viewsize>
+				*node:root.sam.bases_scroll@fullsize = <fullsize>
+				*node:root.sam.bases_scroll@current = <viewpos>
+				*node:root.sam.bases_scroll@viewsize = <viewsize>
 			}
-			onClick	{ cmd "bases_click <lineselected>" }
+			onClick	{ cmd "bases_click <lineselected>;" }
 		}
 
 		vscrollbar bases_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"470 29"
 			height		"260"
 			current		0
@@ -1710,11 +1650,11 @@ window popup_intercept
 
 	func onInit {
 		*cvar:mn_defencetab = 0
-		cmd "popup_intercept_update"
+		cmd "popup_intercept_update;"
 	}
 
 	func onClose {
-		cmd "del mn_defencetab"
+		cmd "del mn_defencetab;"
 	}
 }
 
@@ -1729,7 +1669,7 @@ window popup_mission
 		pos			"124 192"
 		size		"777 402"
 		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Select aircraft"
 	}
 
@@ -1771,8 +1711,8 @@ window popup_mission
 		tabwidth	190
 		mousefx		true
 		rows	"13"
-		onClick		{ cmd "ships_click <lineselected>" }
-		onRClick	{ cmd "ships_rclick <lineselected>" }
+		onClick		{ cmd "ships_click <lineselected>;" }
+		onRClick	{ cmd "ships_rclick <lineselected>;" }
 	}
 
 	cmpCancelButton bt_cancel
@@ -1793,7 +1733,7 @@ window popup_multi_selection
 		size		"496 247"
 		dragbutton	true
 		modal		true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Select item"
 	}
 
@@ -1802,7 +1742,7 @@ window popup_multi_selection
 		string		"_Type:"
 		pos			"26 48"
 		size		"150 20"
-		font		f_normal
+		font		"f_normal"
 	}
 
 	string name_label
@@ -1810,7 +1750,7 @@ window popup_multi_selection
 		string		"_Name:"
 		pos			"176 48"
 		size		"150 20"
-		font		f_normal
+		font		"f_normal"
 	}
 
 	text multi_select
@@ -1822,15 +1762,15 @@ window popup_multi_selection
 		tabwidth	150
 		rows		5
 		mousefx		true
-		onClick		{ cmd "multi_select_click <lineselected>" }
+		onClick		{ cmd "multi_select_click <lineselected>;" }
 		onViewChange	{
-			*(abstractscrollbar)multi_select_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)multi_select_scroll@current = <viewpos>
-			*(abstractscrollbar)multi_select_scroll@viewsize = <viewsize>
+			*node:root.multi_select_scroll@fullsize = <fullsize>
+			*node:root.multi_select_scroll@current = <viewpos>
+			*node:root.multi_select_scroll@viewsize = <viewsize>
 		}
 	}
 	vscrollbar multi_select_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"446 78"
 		height		"100"
 		current		0
@@ -1838,7 +1778,7 @@ window popup_multi_selection
 		fullsize	8
 		hidewhenunused true
 		onChange	{
-			*multi_select@viewpos = <current>
+			*node:root.multi_select@viewpos = <current>
 		}
 	}
 
@@ -1860,7 +1800,7 @@ window popup_aircraft
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Aircraft"
 	}
 
@@ -1869,7 +1809,7 @@ window popup_aircraft
 		string		"_Action:"
 		pos			"26 48"
 		size		"150 25"
-		font		f_normal
+		font		"f_normal"
 	}
 
 	string description_label
@@ -1877,7 +1817,7 @@ window popup_aircraft
 		string		"_Description:"
 		pos			"176 48"
 		size		"200 25"
-		font		f_normal
+		font		"f_normal"
 	}
 
 	text popup_aircraft_action
@@ -1889,15 +1829,15 @@ window popup_aircraft
 		tabwidth	150
 		rows		5
 		mousefx		true
-		onClick		{ cmd "popup_aircraft_action_click <lineselected>" }
+		onClick		{ cmd "popup_aircraft_action_click <lineselected>;" }
 		onViewChange	{
-			*(abstractscrollbar)popup_aircraft_action_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)popup_aircraft_action_scroll@current = <viewpos>
-			*(abstractscrollbar)popup_aircraft_action_scroll@viewsize = <viewsize>
+			*node:root.popup_aircraft_action_scroll@fullsize = <fullsize>
+			*node:root.popup_aircraft_action_scroll@current = <viewpos>
+			*node:root.popup_aircraft_action_scroll@viewsize = <viewsize>
 		}
 	}
 	vscrollbar popup_aircraft_action_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"446 78"
 		height		"100"
 		current		0
@@ -1905,7 +1845,7 @@ window popup_aircraft
 		fullsize	8
 		hidewhenunused true
 		onChange	{
-			*popup_aircraft_action@viewpos = <current>
+			*node:root.popup_aircraft_action@viewpos = <current>
 		}
 	}
 
@@ -1928,7 +1868,7 @@ window geoscape_options {
 		size		"350 300"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Geoscape options"
 	}
 
@@ -1945,16 +1885,16 @@ window geoscape_options {
 		}
 
 		selectbox value {
-			pos			"250 0"
-			size		"55 20"
-			cvar		*cvar:cl_3dmap
-			image		"ui/selectbox_green"
-			color		"0.6 0.6 0.6 0.3"
-			option 2d {
+			{
+				pos			"250 0"
+				size		"55 20"
+				cvar		*cvar:cl_3dmap
+			}
+			option mode2d {
 				label	"_2D"
 				value	"0"
 			}
-			option 3d {
+			option mode3d {
 				label	"_3D"
 				value	"1"
 			}
@@ -1968,7 +1908,7 @@ window geoscape_options {
 		}
 		checkbox value
 		{
-			current		*cvar:r_geoscape_overlay_fooooo
+			current		*cvar:cl_geoscape_overlay_fooooo
 			pos			"0 0"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -1993,7 +1933,7 @@ window geoscape_options {
 		}
 		checkbox value
 		{
-			current		*cvar:r_geoscape_overlay_fooooo
+			current		*cvar:cl_geoscape_overlay_fooooo
 			pos			"0 0"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -2014,7 +1954,7 @@ window geoscape_options {
 		}
 		checkbox value
 		{
-			current		*cvar:r_geoscape_overlay_fooooo
+			current		*cvar:cl_geoscape_overlay_fooooo
 			pos			"0 0"
 			size		"20 18"
 			image		"ui/checkbox_blue"
@@ -2028,6 +1968,6 @@ window geoscape_options {
 	}
 
 	func onInit {
-		*cvar:r_geoscape_overlay_fooooo = 0
+		*cvar:cl_geoscape_overlay_fooooo = 0
 	}
 }

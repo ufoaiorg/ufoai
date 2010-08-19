@@ -2,9 +2,9 @@
 // ALIEN CONTAINMENU MENU
 // ======================
 
-component pic cmpAlienContainment {
+component image cmpAlienContainment {
 	{
-		image		ui/hosp_button_green
+		src				"ui/hosp_button_green"
 		onClick			{ cmd "aliencont_click <num>;" }
 		onRClick		{ cmd "aliencont_pedia <num>;" }
 	}
@@ -49,13 +49,16 @@ component pic cmpAlienContainment {
 
 window aliencont
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		ui/base_bg
+		src		"background/base_bg"
 	}
 
 	// ==================
@@ -70,11 +73,11 @@ window aliencont
 	// ==================
 
 	confunc aliencont_killb {
-		*bt_alc_killaliens@disabled = false
+		*node:root.bt_alc_killaliens@disabled = false
 	}
 
 	confunc aliencont_killg {
-		*bt_alc_killaliens@disabled = true
+		*node:root.bt_alc_killaliens@disabled = true
 	}
 
 	// ==================
@@ -85,10 +88,10 @@ window aliencont
 	{
 		*cvar:i = 0
 		while ( *cvar:i < 12 ) {
-			*ac.ac<cvar:i>@image = ui/hosp_button_green
-			*(button)ac.ac<cvar:i>.icon@icon = "alien_unused"
-			*ac.ac<cvar:i>.kill_zone@invis = true
-			*ac.ac<cvar:i>.autopsy_zone@invis = true
+			*node:root.ac.ac<cvar:i>@image = "ui/hosp_button_green"
+			*node:root.ac.ac<cvar:i>.icon@icon = "alien_unused"
+			*node:root.ac.ac<cvar:i>.kill_zone@invis = true
+			*node:root.ac.ac<cvar:i>.autopsy_zone@invis = true
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i
@@ -98,13 +101,13 @@ window aliencont
 	 * @param[in] <1> index of the field
 	 */
 	confunc aliencontneedautopsy {
-		*ac.ac<1>@image = ui/hosp_button_light
-		*(button)ac.ac<1>.icon@icon = "alien_surgery"
-		*ac.ac<1>.icon@tooltip = "_Start autopsy"
+		*node:root.ac.ac<1>@image = "ui/hosp_button_light"
+		*node:root.ac.ac<1>.icon@icon = "alien_surgery"
+		*node:root.ac.ac<1>.icon@tooltip = "_Start autopsy"
 
 		/* hide kill */
-		*ac.ac<1>.kill_zone@invis = true
-		*ac.ac<1>.autopsy_zone@invis = false
+		*node:root.ac.ac<1>.kill_zone@invis = true
+		*node:root.ac.ac<1>.autopsy_zone@invis = false
 	}
 
 	/**
@@ -112,20 +115,20 @@ window aliencont
 	 */
 	confunc aliencontkill
 	{
-		*(button)ac.ac<1>.icon@icon = "alien_kill"
-		*ac.ac<1>.icon@tooltip = "_Kill this alien"
-		*ac.ac<1>@image = ui/hosp_button_light
+		*node:root.ac.ac<1>.icon@icon = "alien_kill"
+		*node:root.ac.ac<1>.icon@tooltip = "_Kill this alien"
+		*node:root.ac.ac<1>@image = "ui/hosp_button_light"
 
 		/* hide_autopsy */
-		*ac.ac<1>.kill_zone@invis = false
-		*ac.ac<1>.autopsy_zone@invis = true
+		*node:root.ac.ac<1>.kill_zone@invis = false
+		*node:root.ac.ac<1>.autopsy_zone@invis = true
 	}
 
 	panel ac {
 		{
 			pos "11 92"
 			size "670 606"
-			image	ui/panel_grey_green_large
+			image	"ui/panel_grey_green_large"
 		}
 
 		cmpAlienContainment ac0 {
@@ -258,7 +261,7 @@ window aliencont
 		{
 			pos		"730 90"
 			size	"280 520"
-			image	ui/panel_grey_green_large
+			image	"ui/panel_grey_green_large"
 		}
 
 		string race
@@ -266,13 +269,13 @@ window aliencont
 			string		*cvar:mn_al_alientype
 			pos			"20 424"
 			size		"240 20"
-			font		f_small
-			textalign	cc
+			font		"f_small"
+			textalign	ALIGN_CC
 		}
 
-		pic image
+		image image
 		{
-			image			*cvar:mn_al_alienimage
+			src			*cvar:mn_al_alienimage
 			pos				"21 23"
 			size			"239 397"
 			preventratio	true
@@ -289,18 +292,19 @@ window aliencont
 		string txt_alc_alive
 		{
 			string		"_Alive:"
-			pos			"45 445"
+			pos			"25 445"
 			size		"100 20"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_alc_alive_v
 		{
 			string		*cvar:mn_al_alive
-			pos			"165 445"
-			size		"50 20"
-			font		f_small
-			textalign	ur
+			tooltip		"_amount on this base (all)"
+			pos			"130 445"
+			size		"125 20"
+			font		"f_small"
+			textalign	ALIGN_UR
 		}
 
 		// ==================
@@ -310,18 +314,19 @@ window aliencont
 		string txt_alc_dead
 		{
 			string		"_Dead:"
-			pos			"45 470"
+			pos			"25 470"
 			size		"100 20"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_alc_dead_v
 		{
 			string		*cvar:mn_al_dead
-			pos			"165 470"
-			size		"50 20"
-			font		f_small
-			textalign	ur
+			tooltip		"_amount on this base (all)"
+			pos			"130 470"
+			size		"125 20"
+			font		"f_small"
+			textalign	ALIGN_UR
 		}
 	}
 
@@ -333,7 +338,7 @@ window aliencont
 		{
 			pos		"728 626"
 			size	"280 134"
-			image	ui/panel_grey_green_large
+			image	"ui/panel_grey_green_large"
 		}
 
 		// ==================
@@ -345,7 +350,7 @@ window aliencont
 			string		"_Base info"
 			pos			"23 25"
 			size		"200 20"
-			font		f_small_bold
+			font		"f_small_bold"
 		}
 
 		// ==================
@@ -357,7 +362,7 @@ window aliencont
 			string		"_Base capacity:"
 			pos			"45 49"
 			size		"150 20"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_alc_limit_v
@@ -365,7 +370,7 @@ window aliencont
 			string		"*cvar:mn_al_capacity / *cvar:mn_al_capacity_max"
 			pos			"45 69"
 			size		"150 20"
-			font		f_small
+			font		"f_small"
 		}
 	}
 

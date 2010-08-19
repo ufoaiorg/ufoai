@@ -340,6 +340,18 @@ ac     +a     +a     +a     ac
 }
 
 // ---------------------------------
+tile +craft_ufo_fighter
+{
+4 5
+
+0      ab      ab      0
+ac     +a      +a      ac
+ac     +a      +a      ac
+ac     +b      +a      ac
+0      ab      ab      0
+}
+
+// ---------------------------------
 tile +craft_ufo_scout
 {
 4 5

@@ -86,68 +86,6 @@ void Sys_Init (void)
 #endif
 }
 
-/*
-========================================================================
-GAME DLL
-========================================================================
-*/
-
-static HINSTANCE game_library;
-
-void Sys_UnloadGame (void)
-{
-	if (!FreeLibrary(game_library))
-		Com_Error(ERR_FATAL, "FreeLibrary failed for game library");
-	game_library = NULL;
-}
-
-/**
- * @brief Loads the game dll
- */
-game_export_t *Sys_GetGameAPI (game_import_t *parms)
-{
-#ifndef HARD_LINKED_GAME
-	void *(*GetGameAPI) (void *);
-	char name[MAX_OSPATH];
-	const char *path;
-#endif
-
-	if (game_library)
-		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
-
-#ifndef HARD_LINKED_GAME
-	/* run through the search paths */
-	path = NULL;
-	while (1) {
-		path = FS_NextPath(path);
-		if (!path)
-			break;		/* couldn't find one anywhere */
-		Com_sprintf(name, sizeof(name), "%s/game.dll", path);
-		game_library = LoadLibrary(name);
-		if (game_library) {
-			Com_DPrintf(DEBUG_SYSTEM, "LoadLibrary (%s)\n", name);
-			break;
-		} else {
-			Com_DPrintf(DEBUG_SYSTEM, "LoadLibrary (%s) failed\n", name);
-		}
-	}
-
-	if (!game_library) {
-		Com_Printf("Could not find any valid game lib\n");
-		return NULL;
-	}
-
-	GetGameAPI = (void *)GetProcAddress(game_library, "GetGameAPI");
-	if (!GetGameAPI) {
-		Sys_UnloadGame();
-		Com_Printf("Could not load game lib '%s'\n", name);
-		return NULL;
-	}
-#endif
-
-	return GetGameAPI(parms);
-}
-
 /**
  * @brief Switch to one processor usage for windows system with more than
  * one processor
@@ -245,59 +183,6 @@ const char *Sys_GetLocale (void)
 	else
 		/* Setting to en will always work in every windows. */
 		return "en";
-}
-
-/**
- * @sa Sys_FreeLibrary
- * @sa Sys_GetProcAddress
- */
-void *Sys_LoadLibrary (const char *name, int flags)
-{
-	char path[MAX_OSPATH];
-	HMODULE lib;
-
-	/* first try cpu string */
-	Com_sprintf(path, sizeof(path), "%s_"CPUSTRING"."SHARED_EXT, name);
-	lib = LoadLibrary(path);
-	if (lib)
-		return lib;
-
-	/* now the general lib */
-	Com_sprintf(path, sizeof(path), "%s."SHARED_EXT, name);
-	lib = LoadLibrary(path);
-	if (lib)
-		return lib;
-
-#ifdef PKGLIBDIR
-	Com_sprintf(path, sizeof(path), PKGLIBDIR"%s."SHARED_EXT, name);
-	lib = LoadLibrary(path);
-	if (lib)
-		return lib;
-#endif
-
-	Com_Printf("Could not load %s\n", name);
-	return NULL;
-}
-
-/**
- * @sa Sys_LoadLibrary
- */
-void Sys_FreeLibrary (void *libHandle)
-{
-	if (!libHandle)
-		Com_Error(ERR_DROP, "Sys_FreeLibrary: No valid handle given");
-	if (!FreeLibrary((HMODULE)libHandle))
-		Com_Error(ERR_DROP, "Sys_FreeLibrary: dlclose() failed");
-}
-
-/**
- * @sa Sys_LoadLibrary
- */
-void *Sys_GetProcAddress (void *libHandle, const char *procName)
-{
-	if (!libHandle)
-		Com_Error(ERR_DROP, "Sys_GetProcAddress: No valid libHandle given");
-	return GetProcAddress((HMODULE)libHandle, procName);
 }
 
 static void ParseCommandLine (LPSTR lpCmdLine)

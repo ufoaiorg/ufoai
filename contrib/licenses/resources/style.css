@@ -1,0 +1,42 @@
+
+body {
+	color: #ffffff;
+	background-color: #262626;
+	font-family: verdana, helvetica, arial, sans-serif;
+	margin: 0; padding: 0;
+}
+
+html > body {
+	font-size: 8.5pt;
+}
+
+a {
+	color: #ffd800;
+	background-color: transparent;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #ffffff;
+	background-color: transparent;
+	text-decoration: none;
+}
+
+li {
+	margin-bottom: 8px;
+}
+
+.author {
+}
+
+.thumb {
+	vertical-align:top;
+	margin-right: 1em;
+	border: 1px solid #FFFFFF;
+	background-image: url('grid.png');
+}
+
+.badlicense {
+	color:red;
+}
+

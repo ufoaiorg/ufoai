@@ -373,7 +373,7 @@ sequence credits
 	2dobj kracken_name { speed "0 0" }
 	2dobj geever_name
 	{
-		text	"_Fehervari Tamas (geever)"
+		text	"_Tamas Fehervari (geever)"
 		pos		"1100 125"
 		align	ur
 		color	"1 1 1 0"
@@ -730,7 +730,7 @@ sequence credits
 	}
 	2dobj copyright
 	{
-		text	"_Copyright 2004-2009 by UFO: AI Team"
+		text	"_Copyright 2004-2010 by UFO: AI Team"
 		pos		"512 736"	align	uc
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}

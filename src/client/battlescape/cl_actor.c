@@ -23,21 +23,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../client.h"
 #include "cl_actor.h"
 #include "../cl_game.h"
 #include "cl_hud.h"
 #include "cl_parse.h"
 #include "cl_particle.h"
 #include "../cl_team.h"
-#include "cl_ugv.h"
 #include "cl_view.h"
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
-#include "../menu/node/m_node_container.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
+#include "../ui/node/ui_node_container.h"
 #include "../renderer/r_entity.h"
 #include "../renderer/r_mesh_anim.h"
 #include "../sound/s_main.h"
 #include "../../common/routing.h"
+#include "../../common/grid.h"
 
 /** @brief Confirm actions in tactical mode - valid values are 0, 1 and 2 */
 static cvar_t *confirm_actions;
@@ -145,7 +146,7 @@ int CL_ActorMoveMode (const le_t *le, int length)
 	assert(le);
 	if (LE_IsCrouched(le)) {
 		if (cl_autostand->integer) { /* Is the player using autostand? */
-			if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
+			if (SHOULD_USE_AUTOSTAND(length)) {
 				return WALKTYPE_AUTOSTAND_BEING_USED;
 			} else {
 				return WALKTYPE_AUTOSTAND_BUT_NOT_FAR_ENOUGH;
@@ -156,40 +157,6 @@ int CL_ActorMoveMode (const le_t *le, int length)
 	} else {
 		return WALKTYPE_WALKING;
 	}
-}
-
-/**
- * @brief Updates the character cvars for the given character.
- *
- * The models and stats that are displayed in the menu are stored in cvars.
- * These cvars are updated here when you select another character.
- *
- * @param chr Pointer to character_t (may not be null)
- * @sa CL_UGVCvars
- * @sa CL_ActorSelect
- */
-void CL_ActorCvars (const character_t * chr, const char* cvarPrefix)
-{
-	invList_t *weapon;
-	assert(chr);
-
-	/* visible equipment */
-	weapon = RIGHT(chr);
-	if (weapon) {
-		assert(weapon->item.t >= &csi.ods[0] && weapon->item.t < &csi.ods[MAX_OBJDEFS]);
-		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), weapon->item.t->model);
-	} else
-		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), "");
-	weapon = LEFT(chr);
-	if (weapon) {
-		assert(weapon->item.t >= &csi.ods[0] && weapon->item.t < &csi.ods[MAX_OBJDEFS]);
-		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), weapon->item.t->model);
-	} else
-		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), "");
-
-	GAME_CharacterCvars(chr);
-
-	CL_CharacterSkillAndScoreCvars(chr, cvarPrefix);
 }
 
 /**
@@ -324,7 +291,6 @@ int CL_ActorUsableTUs (const le_t * le)
  * @param[in] le The actor to change it for.
  * @param[in] type The reservation type to be changed (i.e be replaced).
  * @param[in] tus How many TUs to set.
- * @todo Make the "type" into enum
  */
 void CL_ActorReserveTUs (const le_t * le, const reservation_types_t type, const int tus)
 {
@@ -363,13 +329,14 @@ ACTOR SELECTION AND TEAM LIST
 void CL_ActorAddToTeamList (le_t * le)
 {
 	int actorIdx;
+	const size_t size = lengthof(cl.teamList);
 
 	/* test team */
 	if (!le || le->team != cls.team || le->pnum != cl.pnum || LE_IsDead(le))
 		return;
 
 	/* check list length */
-	if (cl.numTeamList >= MAX_TEAMLIST)
+	if (cl.numTeamList >= size)
 		return;
 
 	/* check list for that actor */
@@ -380,7 +347,7 @@ void CL_ActorAddToTeamList (le_t * le)
 		actorIdx = cl.numTeamList;
 		le->pathMap = Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
 		cl.teamList[cl.numTeamList] = le;
-		MN_ExecuteConfunc("hudenable %i", cl.numTeamList);
+		UI_ExecuteConfunc("hudenable %i", cl.numTeamList);
 		cl.numTeamList++;
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
@@ -413,7 +380,7 @@ void CL_ActorRemoveFromTeamList (le_t * le)
 			CL_ActorCleanup(le);
 
 			/* disable hud button */
-			MN_ExecuteConfunc("huddisable %i", i);
+			UI_ExecuteConfunc("huddisable %i", i);
 
 			/* remove from list */
 			cl.teamList[i] = NULL;
@@ -435,7 +402,7 @@ void CL_ActorRemoveFromTeamList (le_t * le)
 
 /**
  * @brief Selects an actor.
- * @param le Pointer to local entity struct. If this is @c NULL the menuInventory that is linked from the actors
+ * @param le Pointer to local entity struct. If this is @c NULL the ui_inventory that is linked from the actors
  * @sa CL_UGVCvars
  * @sa CL_ActorCvars
  */
@@ -449,7 +416,7 @@ qboolean CL_ActorSelect (le_t * le)
 		if (selActor)
 			selActor->selected = qfalse;
 		selActor = NULL;
-		menuInventory = NULL;
+		ui_inventory = NULL;
 		return qfalse;
 	}
 
@@ -470,7 +437,7 @@ qboolean CL_ActorSelect (le_t * le)
 	mousePosTargettingAlign = 0;
 	selActor = le;
 	selActor->selected = qtrue;
-	menuInventory = &selActor->i;
+	ui_inventory = &selActor->i;
 
 	actorIdx = CL_ActorGetNumber(le);
 	if (actorIdx == -1)
@@ -483,16 +450,7 @@ qboolean CL_ActorSelect (le_t * le)
 	if (!chr)
 		Com_Error(ERR_DROP, "No character given for local entity");
 
-	switch (le->fieldSize) {
-	case ACTOR_SIZE_NORMAL:
-		CL_ActorCvars(chr, "mn_");
-		break;
-	case ACTOR_SIZE_2x2:
-		CL_UGVCvars(chr, "mn_");
-		break;
-	default:
-		Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize");
-	}
+	CL_UpdateCharacterValues(chr, "mn_");
 
 	CL_ActorConditionalMoveCalc(le);
 
@@ -574,13 +532,13 @@ ACTOR MOVEMENT AND SHOOTING
  * @note Pointer to le->pos or edict->pos followed by le->fieldSize or edict->fieldSize
  * @see CL_BuildForbiddenList
  */
-pos_t *fb_list[MAX_FORBIDDENLIST];
+static pos_t *forbiddenList[MAX_FORBIDDENLIST];
 /**
  * @brief Current length of fb_list.
  * @note all byte pointers in the fb_list list (pos + fieldSize)
  * @see fb_list
  */
-int fb_length;
+static int forbiddenListLength;
 
 /**
  * @brief Builds a list of locations that cannot be moved to (client side).
@@ -594,20 +552,20 @@ static void CL_BuildForbiddenList (void)
 {
 	le_t *le = NULL;
 
-	fb_length = 0;
+	forbiddenListLength = 0;
 
 	while ((le = LE_GetNextInUse(le))) {
 		if (le->invis)
 			continue;
 		/* Dead ugv will stop walking, too. */
 		if (le->type == ET_ACTOR2x2 || LE_IsLivingAndVisibleActor(le)) {
-			fb_list[fb_length++] = le->pos;
-			fb_list[fb_length++] = (byte*)&le->fieldSize;
+			forbiddenList[forbiddenListLength++] = le->pos;
+			forbiddenList[forbiddenListLength++] = (byte*)&le->fieldSize;
 		}
 	}
 
 #ifdef PARANOID
-	if (fb_length > MAX_FORBIDDENLIST)
+	if (forbiddenListLength > MAX_FORBIDDENLIST)
 		Com_Error(ERR_DROP, "CL_BuildForbiddenList: list too long");
 #endif
 }
@@ -633,7 +591,7 @@ static void CL_DisplayBlockedPaths_f (void)
 		case ET_ACTOR2x2:
 			/* draw blocking cursor at le->pos */
 			if (!LE_IsDead(le))
-				Grid_PosToVec(clMap, le->fieldSize, le->pos, s);
+				Grid_PosToVec(cl.clMap, le->fieldSize, le->pos, s);
 			break;
 		case ET_DOOR:
 		case ET_BREAKABLE:
@@ -674,7 +632,7 @@ void CL_ActorConditionalMoveCalc (le_t *le)
 	CL_BuildForbiddenList();
 	if (le && le->selected) {
 		const byte crouchingState = LE_IsCrouched(le) ? 1 : 0;
-		Grid_MoveCalc(clMap, le->fieldSize, le->pathMap, le->pos, crouchingState, MAX_ROUTE, fb_list, fb_length);
+		Grid_MoveCalc(cl.clMap, le->fieldSize, le->pathMap, le->pos, crouchingState, MAX_ROUTE, forbiddenList, forbiddenListLength);
 		CL_ActorResetMoveLength(le);
 	}
 }
@@ -752,7 +710,7 @@ static qboolean CL_ActorTraceMove (const pos3_t to)
 
 	crouchingState = LE_IsCrouched(selActor) ? 1 : 0;
 
-	Grid_PosToVec(clMap, selActor->fieldSize, to, oldVec);
+	Grid_PosToVec(cl.clMap, selActor->fieldSize, to, oldVec);
 	VectorCopy(to, pos);
 
 	Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
@@ -769,7 +727,7 @@ static qboolean CL_ActorTraceMove (const pos3_t to)
 		length = CL_ActorMoveLength(selActor, pos);
 		PosSubDV(pos, crouchingState, dv); /* We are going backwards to the origin. */
 		Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouchingState, dv);
-		Grid_PosToVec(clMap, selActor->fieldSize, pos, vec);
+		Grid_PosToVec(cl.clMap, selActor->fieldSize, pos, vec);
 		if (length > CL_ActorUsableTUs(selActor))
 			CL_ParticleSpawn("longRangeTracer", 0, vec, oldVec, NULL);
 		else if (crouchingState)
@@ -1131,7 +1089,7 @@ static void CL_ActorMoveMouse (void)
 	 * The 2nd part of the if is an attempt to display it anyway when we eg. climb a hill.
 	 * But there are too many situations inside buildings that match the criteria (eg. actorclip around chair).
 	 * So disabled for now.*/
-	if (mousePos[2] > cl_worldlevel->integer/* && !RT_AllCellsBelowAreFilled(clMap, fieldSize, pos)*/)
+	if (mousePos[2] > cl_worldlevel->integer/* && !RT_AllCellsBelowAreFilled(cl.clMap, fieldSize, pos)*/)
 		return;
 
 	if (selActor->actorMode == M_PEND_MOVE) {
@@ -1159,7 +1117,6 @@ static void CL_ActorMoveMouse (void)
 
 /**
  * @brief Selects an actor using the mouse.
- * @todo Comment on the cl.actorMode stuff.
  * @sa CL_ActorStartMove
  */
 void CL_ActorSelectMouse (void)
@@ -1261,7 +1218,7 @@ static le_t* CL_ActorSearchAtGridPos (const pos3_t pos)
 		if (LE_IsLivingAndVisibleActor(le))
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
-				if (VectorCompare(le->pos, mousePos))
+				if (VectorCompare(le->pos, pos))
 					return le;
 				break;
 			case ACTOR_SIZE_2x2: {
@@ -1270,10 +1227,10 @@ static le_t* CL_ActorSearchAtGridPos (const pos3_t pos)
 				VectorSet(actor2x2[0], le->pos[0] + 1, le->pos[1],     le->pos[2]);
 				VectorSet(actor2x2[1], le->pos[0],     le->pos[1] + 1, le->pos[2]);
 				VectorSet(actor2x2[2], le->pos[0] + 1, le->pos[1] + 1, le->pos[2]);
-				if (VectorCompare(le->pos, mousePos)
-				|| VectorCompare(actor2x2[0], mousePos)
-				|| VectorCompare(actor2x2[1], mousePos)
-				|| VectorCompare(actor2x2[2], mousePos))
+				if (VectorCompare(le->pos, pos)
+				|| VectorCompare(actor2x2[0], pos)
+				|| VectorCompare(actor2x2[1], pos)
+				|| VectorCompare(actor2x2[2], pos))
 					return le;
 				break;
 			}
@@ -1297,7 +1254,7 @@ qboolean CL_ActorMouseTrace (void)
 	const float projectionDistance = 2048.0f;
 	float nDotP2minusP1;
 	vec3_t forward, right, up, stop;
-	vec3_t from, end, dir;
+	vec3_t from, end;
 	vec3_t mapNormal, P3, P2minusP1, P3minusP1;
 	vec3_t pA, pB, pC;
 	pos3_t testPos;
@@ -1352,6 +1309,8 @@ qboolean CL_ActorMouseTrace (void)
 	/* calculate intersection directly if angle is not parallel to the map plane */
 	if (nDotP2minusP1 > 0.01 || nDotP2minusP1 < -0.01) {
 		float u;
+		vec3_t dir;
+
 		VectorSubtract(P3, from, P3minusP1);
 		u = DotProduct(mapNormal, P3minusP1) / nDotP2minusP1;
 		VectorScale(P2minusP1, (vec_t)u, dir);
@@ -1378,10 +1337,10 @@ qboolean CL_ActorMouseTrace (void)
 	/** @todo Shouldn't we check the return value of CM_TestLineDM here - maybe
 	 * we don't have to do the second Grid_Fall call at all and can safe a lot
 	 * of traces */
-	restingLevel = Grid_Fall(clMap, ACTOR_GET_FIELDSIZE(selActor), testPos);
+	restingLevel = Grid_Fall(cl.clMap, ACTOR_GET_FIELDSIZE(selActor), testPos);
 	CM_TestLineDMWithEnt(pA, pB, pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	VecToPos(pC, testPos);
-	restingLevel = min(restingLevel, Grid_Fall(clMap, ACTOR_GET_FIELDSIZE(selActor), testPos));
+	restingLevel = min(restingLevel, Grid_Fall(cl.clMap, ACTOR_GET_FIELDSIZE(selActor), testPos));
 
 	/* if grid below intersection level, start a trace from the intersection */
 	if (restingLevel < cl_worldlevel->integer) {
@@ -1389,7 +1348,7 @@ qboolean CL_ActorMouseTrace (void)
 		from[2] -= CURSOR_OFFSET;
 		CM_TestLineDMWithEnt(from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 		VecToPos(end, testPos);
-		restingLevel = Grid_Fall(clMap, ACTOR_GET_FIELDSIZE(selActor), testPos);
+		restingLevel = Grid_Fall(cl.clMap, ACTOR_GET_FIELDSIZE(selActor), testPos);
 	}
 
 	/* test if the selected grid is out of the world */
@@ -1598,10 +1557,8 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 		? target->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
-	/** @todo Adjust the toPos to the actor in case the actor is 2x2 */
-
-	Grid_PosToVec(clMap, fromActorSize, fromPos, start);
-	Grid_PosToVec(clMap, toActorSize, toPos, end);
+	Grid_PosToVec(cl.clMap, fromActorSize, fromPos, start);
+	Grid_PosToVec(cl.clMap, toActorSize, toPos, end);
 	if (mousePosTargettingAlign)
 		end[2] -= mousePosTargettingAlign;
 
@@ -1682,11 +1639,9 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		? target->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
-	/** @todo Adjust the toPos to the actor in case the actor is 2x2 */
-
 	/* get vectors, paint cross */
-	Grid_PosToVec(clMap, fromActorSize, fromPos, from);
-	Grid_PosToVec(clMap, toActorSize, toPos, at);
+	Grid_PosToVec(cl.clMap, fromActorSize, fromPos, from);
+	Grid_PosToVec(cl.clMap, toActorSize, toPos, at);
 	from[2] += selActor->fd->shotOrg[1];
 
 	/* prefer to aim grenades at the ground */
@@ -1741,7 +1696,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		CL_ParticleSpawn("cross", 0, cross, NULL, NULL);
 
 	if (selActor->fd->splrad) {
-		Grid_PosToVec(clMap, toActorSize, toPos, at);
+		Grid_PosToVec(cl.clMap, toActorSize, toPos, at);
 		CL_TargetingRadius(at, selActor->fd->splrad);
 	}
 }
@@ -1771,7 +1726,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	memset(&ent, 0, sizeof(ent));
 	ent.flags = RF_BOX;
 
-	Grid_PosToVec(clMap, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
+	Grid_PosToVec(cl.clMap, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
 
 	/* Paint the green box if move is possible ...
 	 * OR paint a dark blue one if move is impossible or the
@@ -1798,13 +1753,13 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 			default:
 				if (LE_IsAlien(mouseActor)) {
 					if (GAME_TeamIsKnown(mouseActor->teamDef))
-						MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _(mouseActor->teamDef->name));
+						UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _(mouseActor->teamDef->name));
 					else
-						MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _("Unknown alien race"));
+						UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _("Unknown alien race"));
 				} else {
 					/* multiplayer names */
 					/* see CL_ParseClientinfo */
-					MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, CL_PlayerGetName(mouseActor->pnum));
+					UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, CL_PlayerGetName(mouseActor->pnum));
 				}
 				/* Aliens (and players not in our team [multiplayer]) are red */
 				VectorSet(ent.color, 1, 0, 0); /* Red */
@@ -1813,12 +1768,12 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 		} else {
 			/* coop multiplayer games */
 			if (mouseActor->pnum != cl.pnum) {
-				MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, CL_PlayerGetName(mouseActor->pnum));
+				UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, CL_PlayerGetName(mouseActor->pnum));
 			} else {
 				/* we know the names of our own actors */
 				character_t* chr = CL_ActorGetChr(mouseActor);
 				assert(chr);
-				MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, chr->name);
+				UI_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, chr->name);
 			}
 			/* Paint a light blue box if on our team */
 			VectorSet(ent.color, 0.2, 0.3, 1); /* Light Blue */
@@ -1929,7 +1884,7 @@ void CL_AddTargeting (void)
 		 * The 2nd part of the if is an attempt to display it anyway when we eg. climb a hill.
 		 * But there are too many situations inside buildings that match the criteria (eg. actorclip around chair).
 		 * So disabled for now.*/
-		if (mousePos[2] > cl_worldlevel->integer/* && !RT_AllCellsBelowAreFilled(clMap, fieldSize, pos)*/)
+		if (mousePos[2] > cl_worldlevel->integer/* && !RT_AllCellsBelowAreFilled(cl.clMap, fieldSize, pos)*/)
 			return;
 
 		/* Display Move-cursor. */
@@ -1993,10 +1948,10 @@ static void CL_AddPathingBox (pos3_t pos)
 		memset(&ent, 0, sizeof(ent));
 		ent.flags = RF_PATH;
 
-		Grid_PosToVec(clMap, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
+		Grid_PosToVec(cl.clMap, ACTOR_GET_FIELDSIZE(selActor), pos, ent.origin);
 		VectorSubtract(ent.origin, boxShift, ent.origin);
 
-		base = Grid_Floor(clMap, ACTOR_GET_FIELDSIZE(selActor), pos);
+		base = Grid_Floor(cl.clMap, ACTOR_GET_FIELDSIZE(selActor), pos);
 
 		/* Paint the box green if it is reachable,
 		 * yellow if it can be entered but is too far,
@@ -2083,7 +2038,7 @@ void CL_DisplayFloorArrows (void)
 {
 	vec3_t base, start;
 
-	Grid_PosToVec(clMap, ACTOR_GET_FIELDSIZE(selActor), truePos, base);
+	Grid_PosToVec(cl.clMap, ACTOR_GET_FIELDSIZE(selActor), truePos, base);
 	VectorCopy(base, start);
 	base[2] -= QUANT;
 	start[2] += QUANT;
@@ -2097,7 +2052,7 @@ void CL_DisplayObstructionArrows (void)
 {
 	vec3_t base, start;
 
-	Grid_PosToVec(clMap, ACTOR_GET_FIELDSIZE(selActor), truePos, base);
+	Grid_PosToVec(cl.clMap, ACTOR_GET_FIELDSIZE(selActor), truePos, base);
 	VectorCopy(base, start);
 	CL_AddArrow(base, start, 0.0, 0.0, 0.0);
 }
@@ -2117,7 +2072,7 @@ static void CL_DumpMoveMark_f (void)
 	developer->integer |= DEBUG_PATHING;
 
 	CL_BuildForbiddenList();
-	Grid_MoveCalc(clMap, ACTOR_GET_FIELDSIZE(selActor), selActor->pathMap, truePos, crouchingState, MAX_ROUTE, fb_list, fb_length);
+	Grid_MoveCalc(cl.clMap, ACTOR_GET_FIELDSIZE(selActor), selActor->pathMap, truePos, crouchingState, MAX_ROUTE, forbiddenList, forbiddenListLength);
 
 	developer->integer ^= DEBUG_PATHING;
 
@@ -2160,23 +2115,23 @@ static void CL_DumpTUs_f (void)
 static void CL_DebugPathDisplay (actorSizeEnum_t actorSize, int x, int y, int z)
 {
 	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
-		RT_FLOOR(clMap, actorSize, x, y, z),
-		RT_CEILING(clMap, actorSize, x, y, z) );
+		RT_FLOOR(cl.clMap, actorSize, x, y, z),
+		RT_CEILING(cl.clMap, actorSize, x, y, z) );
 	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
-		RT_CONN_PX(clMap, actorSize, x, y, z),		/* dir = 0 */
-		RT_CONN_NX(clMap, actorSize, x, y, z),		/* 1 */
-		RT_CONN_PY(clMap, actorSize, x, y, z),		/* 2 */
-		RT_CONN_NY(clMap, actorSize, x, y, z) );	/* 3 */
+		RT_CONN_PX(cl.clMap, actorSize, x, y, z),		/* dir = 0 */
+		RT_CONN_NX(cl.clMap, actorSize, x, y, z),		/* 1 */
+		RT_CONN_PY(cl.clMap, actorSize, x, y, z),		/* 2 */
+		RT_CONN_NY(cl.clMap, actorSize, x, y, z) );	/* 3 */
 	Com_Printf("connections diago: (PX_PY=%i, NX_NY=%i, NX_PY=%i, PX_NY=%i))\n",
-		RT_CONN_PX_PY(clMap, actorSize, x, y, z),	/* dir = 4 */
-		RT_CONN_NX_NY(clMap, actorSize, x, y, z),	/* 5 */
-		RT_CONN_NX_PY(clMap, actorSize, x, y, z),	/* 6 */
-		RT_CONN_PX_NY(clMap, actorSize, x, y, z) );	/* 7 */
+		RT_CONN_PX_PY(cl.clMap, actorSize, x, y, z),	/* dir = 4 */
+		RT_CONN_NX_NY(cl.clMap, actorSize, x, y, z),	/* 5 */
+		RT_CONN_NX_PY(cl.clMap, actorSize, x, y, z),	/* 6 */
+		RT_CONN_PX_NY(cl.clMap, actorSize, x, y, z) );	/* 7 */
 	Com_Printf("stepup ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
-		RT_STEPUP_PX(clMap, actorSize, x, y, z),		/* dir = 0 */
-		RT_STEPUP_NX(clMap, actorSize, x, y, z),		/* 1 */
-		RT_STEPUP_PY(clMap, actorSize, x, y, z),		/* 2 */
-		RT_STEPUP_NY(clMap, actorSize, x, y, z) );		/* 3 */
+		RT_STEPUP_PX(cl.clMap, actorSize, x, y, z),		/* dir = 0 */
+		RT_STEPUP_NX(cl.clMap, actorSize, x, y, z),		/* 1 */
+		RT_STEPUP_PY(cl.clMap, actorSize, x, y, z),		/* 2 */
+		RT_STEPUP_NY(cl.clMap, actorSize, x, y, z) );		/* 3 */
 }
 
 static void CL_DebugPath_f (void)
@@ -2192,45 +2147,6 @@ static void CL_DebugPath_f (void)
 		return;
 
 	CL_DebugPathDisplay(actorSize, x, y, z);
-
-#if 0
-	vec3_t from,to;
-	PosToVec(selActor->pos,from);
-	PosToVec(mousePos,to);
-	Com_Printf("TestLine from actor to cursor.\n");
-	if (!TR_TestLine(from, to, TL_FLAG_REGULAR_LEVELS))
-		Com_Printf("succeeded.\n");
-	else
-		Com_Printf("failed.\n");
-#endif
-#if 0
-	pos3_t c1;
-	pos3_t c2;
-	c1[0] = 132;
-	c1[1] = 122;
-	c1[2] = 1;
-	c2[0] = 137;
-	c2[1] = 128;
-	c2[2] = 3;
-	Grid_RecalcBoxRouting(clMap, c1, c2);
-	Com_Printf("RecalcBoxRouting done.\n");
-#endif
-#if 0
-	Com_Printf("performing RT_UpdateConnection() in dir: %i\n", dir);
-	RT_UpdateConnectionColumn(clMap, actorSize, x, y, dir);
-	CL_DebugPathDisplay(actorSize, x, y, z);
-#endif
-#if 0
-/*	int new_z = RT_CheckCell(clMap, actorSize, x, y, z); */
-	int new_z = RT_CheckCell(clMap, actorSize, 138, 146, 5);
-	Com_Printf("check returns: Z=%i\n", new_z);
-#endif
-#if 0
-	priorityQueue_t pqueue;
-	PQueueInitialise(&pqueue, 1024);
-	Grid_MoveMark(clMap, actorSize, selActor->pathMap, mousePos, 0, dir, &pqueue);
-	PQueueFree(&pqueue);
-#endif
 }
 #endif
 
@@ -2262,26 +2178,23 @@ static void CL_ActorEquipmentSelect_f (void)
 
 	chr = chrDisplayList.chr[num];
 	/* update menu inventory */
-	if (menuInventory && menuInventory != &chr->i) {
-		CONTAINER(chr, csi.idEquip) = menuInventory->c[csi.idEquip];
+	if (ui_inventory && ui_inventory != &chr->i) {
+		CONTAINER(chr, csi.idEquip) = ui_inventory->c[csi.idEquip];
 		/* set 'old' idEquip to NULL */
-		menuInventory->c[csi.idEquip] = NULL;
+		ui_inventory->c[csi.idEquip] = NULL;
 	}
-	menuInventory = &chr->i;
+	ui_inventory = &chr->i;
 
 	/* deselect current selected soldier and select the new one */
-	MN_ExecuteConfunc("equipdeselect %i", cl_selected->integer);
-	MN_ExecuteConfunc("equipselect %i", num);
+	UI_ExecuteConfunc("equipdeselect %i", cl_selected->integer);
+	UI_ExecuteConfunc("equipselect %i", num);
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
 	Cvar_SetValue("mn_ucn", chrDisplayList.chr[num]->ucn);
 
 	/* set info cvars */
-	if (chr->teamDef->race == RACE_ROBOT)
-		CL_UGVCvars(chr, "mn_");
-	else
-		CL_ActorCvars(chr, "mn_");
+	CL_UpdateCharacterValues(chr, "mn_");
 }
 
 /**
@@ -2311,11 +2224,8 @@ static void CL_ActorUpdate_f (void)
 
 	/* We are in the base or multiplayer inventory */
 	if (num < chrDisplayList.num) {
-		assert(chrDisplayList.chr[num]);
-		if (chrDisplayList.chr[num]->teamDef->race == RACE_ROBOT)
-			CL_UGVCvars(chrDisplayList.chr[num], "mn_");
-		else
-			CL_ActorCvars(chrDisplayList.chr[num], "mn_");
+		const character_t *chr = chrDisplayList.chr[num];
+		CL_UpdateCharacterValues(chr, "mn_");
 	}
 }
 

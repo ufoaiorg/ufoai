@@ -7,54 +7,419 @@
 	}
 }
 
+/* ufo2: (Harvester, Corrupter, Bomber) */
+
+/* ufo2_01: Outside Hull clean */
+{
+	material tex_ufo/ufo2_01
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 1.0
+	{
+		lightmap
+	}
+}
+
+/* ufo2_02: Inside Wall like ufo2_03 without reliefs */
+{
+	material tex_ufo/ufo2_02
+	bump 1.0
+	hardness 0.8
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+/* ufo2_03: Inside Wall & Outside Hull (Harvester only) with reliefs */
+{
+	material tex_ufo/ufo2_03
+	bump 1.0
+	hardness 0.8
+	parallax 1.0
+	specular 5.0
+	{
+		lightmap
+	}
+}
+
+/* ufo2_04: Small Panel with 2 big & 1 small button */
 {
 	material tex_ufo/ufo2_04
+	bump 1.0
+	hardness 0.8
+	parallax 1.0
+	specular 5.0
+	/* Stone Plate */
 	{
-		texture tex_ufo/ufo2_04a0
-		anim 16 10.0
+		texture pt/sk/usk2_04_1_3a0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around small button */
+	{
+		texture pt/b/b2_04_0_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around big button #1 */
+	{
+		texture pt/b/b2_04_1_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around big button #2 */
+	{
+		texture pt/b/b2_04_2_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Big button #1 */
+	{
+		texture pt/b/b2_04_1a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Big button #2 */
+	{
+		texture pt/b/b2_04_2a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Small button alternating animation (blue) */
+	{
+		texture pt/b/b2_04_0b0
+		anima 9 12
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	{
 		lightmap
 	}
 }
 
+/* ufo2_05: Floor (Harvester, Corrupter, Bomber) */
+{
+	material tex_ufo/ufo2_05
+	bump 1.0
+	hardness 3.0
+	parallax 1.0
+	specular 1.0
+	/* Brighter & greener version of itself skin slowly pulsating with floor */
+	{
+		texture pt/sk/usk2_05_0_0c0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		pulse 0.1
+		lightmap
+	}
+	{
+		envmap 0
+		lightmap
+	}
+}
+
+/* ufo2_06: Big Panel with 4 big & several small buttons */
 {
 	material tex_ufo/ufo2_06
+	bump 1.0
+	hardness 1.0
+	parallax 1.0
+	specular 1.0
+	/* Stone Plate */
 	{
-		texture tex_ufo/ufo2_06a0
-		anim 10 3.0
+		texture pt/sk/usk2_06_1_3a0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		lightmap
 	}
+	/* Skin around 3 small buttons (position top left) */
+	{
+		texture pt/b/b2_06_0_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around 2 middle buttons (positions top left & bottom left) */
+	{
+		texture pt/b/b2_06_1_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around 2 middle buttons #2 (positions top left & bottom right) */
+	{
+		texture pt/b/b2_06_2_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around sixpack of buttons (position top) */
+	{
+		texture pt/b/b2_06_3_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around doublepack of buttons (position bottom) */
+	{
+		texture pt/b/b2_06_4_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around big button #1 (position top left) */
+	{
+		texture pt/b/b2_06_5_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around big button #2 (position top middle) */
+	{
+		texture pt/b/b2_06_6_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around big button #3 (position top right) */
+	{
+		texture pt/b/b2_06_7_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around big button #4 (position bottom left) */
+	{
+		texture pt/b/b2_06_8_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+
+	/* 3 small buttons (top left) animation (green)*/
+	{
+		texture pt/b/b2_06_0c0
+		anim 13 11.6
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* 2 middle buttons (top left & bottom left) alternating animation (yellow)*/
+	{
+		texture pt/b/b2_06_1c0
+		anima 6 9.9
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* 2 middle buttons #2 (top left & bottom right) alternating animation (dark blue-lime green) */
+	{
+		texture pt/b/b2_06_2c0
+		anima 6 12
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Sixpack of buttons (top) randomized animation (red-green) */
+	{
+		texture pt/b/b2_06_3c0
+		animr 12 3.5
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Doublepack of buttons (bottom) alternating animation (orange) */
+	{
+		texture pt/b/b2_06_4c0
+		anima 6 8.9
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Big button #1 (position top left) */
+	{
+		texture pt/b/b2_06_5a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Big button #2 (position top middle) */
+	{
+		texture pt/b/b2_06_6a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Big button #3 (position top right) */
+	{
+		texture pt/b/b2_06_7a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Big button #4 (position bottom right) */
+	{
+		texture pt/b/b2_06_8a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	{
+		lightmap
+	}
+
 }
 
+/* ufo2_07: Panel with 4 Big Buttons */
 {
 	material tex_ufo/ufo2_07
+	bump 1.0
+	hardness 0.8
+	parallax 1.0
+	specular 5.0
+	/* Stone Plate */
 	{
-		texture tex_ufo/ufo2_07a0
-		anim 16 5.0
+		texture pt/sk/usk2_07_1_3a0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around big button top left */
+	{
+		texture pt/b/b2_07_0_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around big button left */
+	{
+		texture pt/b/b2_07_1_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around big button top right */
+	{
+		texture pt/b/b2_07_2_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Skin around big button right */
+	{
+		texture pt/b/b2_07_3_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Big button top left animation */
+	{
+		texture pt/b/b2_07_0b0
+		anim 16 3
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Big button left alternating animation */
+	{
+		texture pt/b/b2_07_1b0
+		anima 9 6
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Medium button top right alternating animation */
+	{
+		texture pt/b/b2_07_2b0
+		anima 9 13
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Big button right alternating animation */
+	{
+		texture pt/b/b2_07_3b0
+		anima 9 11
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	{
 		lightmap
 	}
 }
 
+/* ufo2_08: Outside Hull with reliefs */
+{
+	material tex_ufo/ufo2_08
+	bump 1.5
+	hardness 0.2
+	parallax 1.0
+	specular 1.5
+	{
+		lightmap
+	}
+}
+
+/* ufo2_09: Fat Green, mostly used outside */
 {
 	material tex_ufo/ufo2_09
+	bump 1.5
+	hardness 0.2
+	parallax 1.0
+	specular 1.5
+	/* fx Animation (green/yellow) */	
 	{
-		texture tex_ufo/ufo2_09a0
-		anim 14 15.0
+		texture pt/fx/fx2_09_1a0
+		anim 14 19.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		lightmap
 	}
 }
 
+/* ufo2_10: K.I.T.T. (best to be synchronized with ufo2_09) */
 {
 	material tex_ufo/ufo2_10
+	bump 1.5
+	hardness 0.2
+	parallax 1.0
+	specular 1.5
+	/* fx Animation (green/yellow) */	
 	{
-		texture tex_ufo/ufo2_10a0
-		anim 14 15.0
+		texture pt/fx/fx2_10_1a0
+		anim 14 19.0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		lightmap
 	}
 }
 
+/* ufo2_12: Engines & Powersource (Corrupter & Bomber) */
+{
+	material tex_ufo/ufo2_12
+	bump 2.0
+	hardness 0.2
+	parallax 1.5
+	specular 1.5
+	/* fx Animation (green/yellow animation #2) */
+	{
+		texture pt/fx/fx2_12_1a0
+		anim 16 18.5
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Additional flare (green) */
+	{
+		flare 2
+		color 0.1 0.6 0.0
+		scale.s 0.6
+	}
+}
 
+/* ufo2_17: Small widescreen monitor with buttons (Corrupter, Bomber) */
+{
+	material tex_ufo/ufo2_17
+	bump 1.0
+	hardness 0.8
+	parallax 1.0
+	specular 5.0
+	/* Buttons skin */
+	{
+		texture pt/sk/usk2_17_1_2a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* Clear screen */ 
+	{
+		texture pt/cs/s2_17_0_sk0a0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		lightmap
+	}
+	/* 3 small buttons animation (top right) */
+	{
+		texture pt/b/b2_17_0b0
+		anim 16 2.5
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		pulse 0.5
+	}
+	/* 3 small buttons animation (bottom left) */
+	{
+		texture pt/b/b2_17_1b0
+		anim 16 10.0
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		pulse 2.0
+	}
+	/* 7 small buttons alternating animation (bottom right) */
+	{
+		texture pt/b/b2_17_2b0
+		anima 9 6.3
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	/* Screen overlay animation (green text) */
+	{
+		texture pt/so/so2_17_0_b0
+		anim 16 4.5
+		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+	{
+		lightmap
+	}
+}

@@ -25,16 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_PARTICLE_H
 #define CLIENT_CL_PARTICLE_H
 
-/** @brief map particles */
-typedef struct mapParticle_s {
-	char ptl[MAX_VAR];
-	const char *info;
-	vec3_t origin;
-	vec2_t wait;
-	int nextTime;
-	int levelflags;
-} mapParticle_t;
-
 void CL_AddMapParticle(const char *particle, const vec3_t origin, const vec2_t wait, const char *info, int levelflags);
 void CL_ParticleCheckRounds(void);
 void CL_ParticleFree(ptl_t *p);

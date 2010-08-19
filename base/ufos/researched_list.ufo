@@ -36,9 +36,11 @@ researched rslist_phalanx
 	rs_weapon_pistol_ammo
 	rs_weapon_rpg
 	rs_weapon_rpg_ammo
+	rs_weapon_rpg_incendiary_ammo
 	rs_weapon_fraggren
 	rs_weapon_smokegren
 	rs_weapon_combatknife
+	rs_weapon_flashbang
 	rs_weapon_grenl
 	rs_weapon_grenl_ammo
 	rs_weapon_grenl_fle_ammo

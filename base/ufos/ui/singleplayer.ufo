@@ -4,13 +4,16 @@
 
 window singleplayer
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		ui/main_bg
+		src		"background/main_bg"
 	}
 
 	string version
@@ -52,13 +55,16 @@ window singleplayer
 
 window singleplayermission
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		ui/main_bg
+		src		"background/main_bg"
 	}
 
 	string version

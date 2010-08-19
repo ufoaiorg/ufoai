@@ -31,6 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void S_FreeChannel(int c);
 void S_SpatializeChannel(const s_channel_t *ch);
-void S_LoopSample(const vec3_t org, s_sample_t *sample, float volume);
+void S_LoopSample(const vec3_t org, s_sample_t *sample, float volume, float attenuation);
 
 #endif

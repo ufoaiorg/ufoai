@@ -3,13 +3,13 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
-"light_day" "85"
+"light_day" "240"
 "angles_day" "-85 100"
 "ambient_day" "0.25 0.25 0.25"
 "color_day" "0.15 0.15 0.15"
 "angles_night" "-85 100"
 "color_night" "0.55 0.55 0.95"
-"ambient_night" "0.15 0.15 0.19"
+"ambient_night" "0.2 0.2 0.25"
 "light_night" "45"
 // brush 0
 {
@@ -2064,4 +2064,101 @@
 "classname" "info_human_start"
 "origin" "560 304 92"
 "angle" "180"
+}
+// entity 11
+{
+"classname" "info_civilian_start"
+"origin" "304 592 92"
+}
+// entity 12
+{
+"classname" "info_civilian_start"
+"origin" "176 144 92"
+"angle" "-90"
+}
+// entity 13
+{
+"classname" "info_player_start"
+"origin" "560 560 92"
+"angle" "180"
+"team" "2"
+}
+// entity 14
+{
+"classname" "info_player_start"
+"origin" "528 432 92"
+"angle" "180"
+"team" "2"
+}
+// entity 15
+{
+"classname" "info_player_start"
+"origin" "528 304 92"
+"angle" "180"
+"team" "2"
+}
+// entity 16
+{
+"classname" "info_player_start"
+"origin" "528 176 92"
+"angle" "180"
+"team" "2"
+}
+// entity 17
+{
+"classname" "info_player_start"
+"origin" "560 112 92"
+"angle" "180"
+"team" "2"
+}
+// entity 18
+{
+"classname" "info_player_start"
+"origin" "528 16 92"
+"angle" "180"
+"team" "2"
+}
+// entity 19
+{
+"classname" "info_player_start"
+"origin" "592 720 92"
+"angle" "180"
+"team" "2"
+}
+// entity 20
+{
+"classname" "info_player_start"
+"origin" "592 656 92"
+"angle" "180"
+"team" "2"
+}
+// entity 21
+{
+"classname" "trigger_rescue"
+"team" "1"
+// brush 0
+{
+( 704 224 128 ) ( 576 224 128 ) ( 704 384 128 ) tex_common/trigger 0 0 0 0.25 0.25
+( 704 224 160 ) ( 704 384 160 ) ( 704 224 64 ) tex_common/trigger 0 0 0 0.25 0.25
+( 704 224 128 ) ( 704 224 32 ) ( 576 224 128 ) tex_common/trigger 0 0 0 0.25 0.25
+( 576 384 64 ) ( 576 224 64 ) ( 704 384 64 ) tex_common/trigger 0 0 0 0.25 0.25
+( 576 384 64 ) ( 576 384 160 ) ( 576 224 64 ) tex_common/trigger 0 0 0 0.25 0.25
+( 576 416 64 ) ( 704 416 64 ) ( 576 416 160 ) tex_common/trigger 0 0 0 0.25 0.25
+}
+}
+// entity 22
+{
+"classname" "misc_sound"
+"origin" "384 256 96"
+"noise" "ambience/city_abnd_ufoai_atm"
+"volume" "0.2"
+"attenuation" "0.1"
+}
+// entity 23
+{
+"classname" "misc_sound"
+"origin" "384 32 96"
+"noise" "ambience/city_abnd_ufoai_atm"
+"volume" "0.5"
+"attenuation" "0.1"
 }

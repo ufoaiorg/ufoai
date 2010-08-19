@@ -30,6 +30,8 @@ void CL_ViewUpdateRenderData(void);
 void CL_ViewCenterAtGridPosition(const pos3_t pos);
 void CL_ViewCalcFieldOfViewX(void);
 void CL_ViewLoadMedia(void);
+void CL_ViewInit(void);
+void CL_ViewPrecacheModels(void);
 
 extern cvar_t *cl_isometric;
 

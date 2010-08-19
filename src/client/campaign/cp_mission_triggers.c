@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../menu/m_main.h"
+#include "../cl_shared.h"
+#include "../ui/ui_main.h" /* TEXT_STANDARD */
 #include "cp_campaign.h"
 #include "cp_map.h"
 #include "cp_missions.h"
@@ -72,12 +72,13 @@ static void CP_AddItemAsCollected_f (void)
 
 	/* i = item index */
 	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *item = &csi.ods[i];
+		const objDef_t *item = INVSH_GetItemByIDX(i);
 		if (!strcmp(id, item->id)) {
-			ccs.bases[baseID].storage.numItems[i]++;
+			technology_t *tech = RS_GetTechForItem(item);
+			base_t *base = B_GetBaseByIDX(baseID);
+			base->storage.numItems[i]++;
 			Com_DPrintf(DEBUG_CLIENT, "add item: '%s'\n", item->id);
-			assert(item->tech);
-			RS_MarkCollected(item->tech);
+			RS_MarkCollected(tech);
 		}
 	}
 }
@@ -118,7 +119,7 @@ static void CP_ChangeNationHappiness_f (void)
  */
 static void CP_EndGame_f (void)
 {
-	MN_RegisterText(TEXT_STANDARD, _("Congratulations! You have reached the end of the UFO:AI campaign.\n"
+	UI_RegisterText(TEXT_STANDARD, _("Congratulations! You have reached the end of the UFO:AI campaign.\n"
 		"However, this is not the end of the road. The game remains in development.\n"
 		"The campaign will be expanded with new missions, new enemies, "
 		"new UFOs, new player controllable craft and more research.\n\n"
@@ -181,7 +182,7 @@ void CP_ExecuteMissionTrigger (mission_t *m, qboolean won)
 			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", m->onwin);
 			Cmd_ExecuteString(m->onwin);
 		}
-		if (m->mapDef && m->mapDef->onwin[0] != '\0') {
+		if (m->mapDef && m->mapDef->onwin != NULL) {
 			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", m->mapDef->onwin);
 			Cmd_ExecuteString(m->mapDef->onwin);
 		}
@@ -190,7 +191,7 @@ void CP_ExecuteMissionTrigger (mission_t *m, qboolean won)
 			Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", m->onlose);
 			Cmd_ExecuteString(m->onlose);
 		}
-		if (m->mapDef && m->mapDef->onlose[0] != '\0') {
+		if (m->mapDef && m->mapDef->onlose != NULL) {
 			Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", m->mapDef->onlose);
 			Cmd_ExecuteString(m->mapDef->onlose);
 		}

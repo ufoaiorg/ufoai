@@ -23,10 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../menu/m_main.h"
-#include "../menu/m_data.h"
-#include "../menu/node/m_node_text.h"
+#include "../cl_shared.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_data.h"
 #include "cp_campaign.h"
 #include "cp_messageoptions.h"
 #include "cp_messageoptions_callbacks.h"
@@ -43,28 +42,28 @@ messageSettings_t backupMessageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding b
  */
 static void MSO_InitList (void)
 {
-	menuOption_t *messageSetting = NULL;
-	menuOption_t *lastCategory = NULL;
+	uiNode_t *messageSetting = NULL;
+	uiNode_t *lastCategory = NULL;
 	int idx;
 
 	/* option already allocated, nothing to do */
-	if (MN_GetOption(TEXT_MESSAGEOPTIONS) != NULL)
+	if (UI_GetOption(TEXT_MESSAGEOPTIONS) != NULL)
 		return;
 
-	MN_ResetData(TEXT_MESSAGEOPTIONS);
+	UI_ResetData(TEXT_MESSAGEOPTIONS);
 	for (idx = 0; idx < ccs.numMsgCategoryEntries; idx++) {
 		const msgCategoryEntry_t *entry = &ccs.msgCategoryEntries[idx];
 		const char *id = va("%d", idx);
 
 		if (entry->isCategory) {
-			lastCategory = MN_AddOption(&messageSetting, id, entry->notifyType, id);
+			lastCategory = UI_AddOption(&messageSetting, id, va("_%s", entry->notifyType), id);
 		} else {
 			if (!lastCategory)
 				Sys_Error("MSO_InitList: The first entry must be a category");
-			MN_AddOption(&lastCategory->firstChild, id, entry->notifyType, id);
+			UI_AddOption(&lastCategory->firstChild, id, va("_%s", entry->notifyType), id);
 		}
 	}
-	MN_RegisterOption(TEXT_MESSAGEOPTIONS, messageSetting);
+	UI_RegisterOption(TEXT_MESSAGEOPTIONS, messageSetting);
 	MSO_SetMenuState(MSO_MSTATE_PREPARED, qfalse, qtrue);
 }
 
@@ -75,40 +74,40 @@ static void MSO_InitList (void)
 static void MSO_UpdateVisibleButtons (void)
 {
 	int visible;/* current line */
-	menuOptionIterator_t iterator;
-	menuOption_t *messageSetting = MN_GetOption(TEXT_MESSAGEOPTIONS);
+	uiOptionIterator_t iterator;
+	uiNode_t *messageSetting = UI_GetOption(TEXT_MESSAGEOPTIONS);
 
-	MN_InitOptionIteratorAtIndex(messageList_scroll, messageSetting, &iterator);
+	UI_InitOptionIteratorAtIndex(messageList_scroll, messageSetting, &iterator);
 
 	/* update visible button lines based on current displayed values */
 	for (visible = 0; visible < messageList_size; visible++) {
-		const menuOption_t *option = iterator.option;
+		const uiNode_t *option = iterator.option;
 		int idx;
 		msgCategoryEntry_t *entry;
 
 		if (!option)
 			break;
-		idx = atoi(option->value);
+		idx = atoi(OPTIONEXTRADATACONST(option).value);
 
 		entry = &ccs.msgCategoryEntries[idx];
 		if (!entry)
 			break;
 		if (entry->isCategory) {
 			/* category is visible anyway*/
-			MN_ExecuteConfunc("ms_disable %i", visible);
+			UI_ExecuteConfunc("ms_disable %i", visible);
 
 		} else {
 			assert(entry->category);
-			MN_ExecuteConfunc("ms_enable %i", visible);
-			MN_ExecuteConfunc("ms_btnstate %i %i %i %i", visible, entry->settings->doPause,
+			UI_ExecuteConfunc("ms_enable %i", visible);
+			UI_ExecuteConfunc("ms_btnstate %i %i %i %i", visible, entry->settings->doPause,
 				entry->settings->doNotify, entry->settings->doSound);
 		}
 
-		MN_OptionIteratorNextOption(&iterator);
+		UI_OptionIteratorNextOption(&iterator);
 	}
 
 	for (; visible < messageList_size; visible++)
-		MN_ExecuteConfunc("ms_disable %i", visible);
+		UI_ExecuteConfunc("ms_disable %i", visible);
 }
 
 /**
@@ -153,20 +152,20 @@ static void MSO_Toggle_f (void)
 	if (Cmd_Argc() != 3)
 		Com_Printf("Usage: %s <listId> <pause|notify|sound>\n", Cmd_Argv(0));
 	else {
-		menuOptionIterator_t iterator;
+		uiOptionIterator_t iterator;
 		const int listIndex = atoi(Cmd_Argv(1));
 		int idx;
 		const msgCategoryEntry_t *selectedEntry;
 		int optionType;
 		qboolean activate;
 		notify_t type;
-		menuOption_t *messageSetting = MN_GetOption(TEXT_MESSAGEOPTIONS);
+		uiNode_t *messageSetting = UI_GetOption(TEXT_MESSAGEOPTIONS);
 
-		MN_InitOptionIteratorAtIndex(messageList_scroll + listIndex, messageSetting, &iterator);
+		UI_InitOptionIteratorAtIndex(messageList_scroll + listIndex, messageSetting, &iterator);
 		if (!iterator.option)
 			return;
 
-		idx = atoi(iterator.option->value);
+		idx = atoi(OPTIONEXTRADATA(iterator.option).value);
 		selectedEntry = &ccs.msgCategoryEntries[idx];
 		if (!selectedEntry)
 			return;
@@ -261,5 +260,5 @@ void MSO_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("msgoptions_init");
 	Cmd_RemoveCommand("msgoptions_backup");
 	Cmd_RemoveCommand("msgoptions_restore");
-	MN_ResetData(TEXT_MESSAGEOPTIONS);
+	UI_ResetData(TEXT_MESSAGEOPTIONS);
 }

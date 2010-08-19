@@ -1,0 +1,263 @@
+ufoai (2.4-SVNREVISION) intrepid; urgency=low
+
+  [ Martin Gerhardy ]
+  * Changed version schema
+
+ -- Martin Gerhardy <martin.gerhardy@gmail.com>  Tue, 10 Aug 2010 09:20:00 -0100
+
+ufoai (2.4~~svn29925) intrepid; urgency=low
+
+  [ Martin Gerhardy ]
+  * Version bump to 2.4
+
+ -- Martin Gerhardy <martin.gerhardy@gmail.com>  Fri, 14 May 2009 19:18:00 -0100
+
+ufoai (2.3~~svn22894) intrepid; urgency=low
+
+  [ Martin Gerhardy ]
+  * Fixed configure call
+  * Fixed game.so loading
+
+ -- Martin Gerhardy <martin.gerhardy@gmail.com>  Wed, 22 Feb 2009 14:21:00 -0100
+
+ufoai (2.3~~svn22876) intrepid; urgency=low
+
+  [ Martin Gerhardy ]
+  * Menu entries and desktop files
+  * Updated icons
+
+ -- Martin Gerhardy <martin.gerhardy@gmail.com>  Wed, 22 Feb 2009 12:01:00 -0100
+
+ufoai (2.3~~svn22761) intrepid; urgency=low
+
+  [ Martin Gerhardy ]
+  * Added homepage and link to svn
+  * Fixed configure flag
+
+ -- Martin Gerhardy <martin.gerhardy@gmail.com>  Wed, 18 Feb 2009 19:49:00 -0100
+
+ufoai (2.3~~svn21498) intrepid; urgency=low
+
+  [ Martin Gerhardy ]
+  * Added section games to control
+  * Added some mode build dependencies and dependencies
+
+ -- Martin Gerhardy <martin.gerhardy@gmail.com>  Sat, 03 Jan 2009 23:19:00 -0600
+
+ufoai (2.3~~svn20849) intrepid; urgency=low
+
+  [ Arthur Haney ]
+  * Nightly compile for Dec 16 2008
+  * Added radiant to debian/rules, now radiant binary is included
+  * Added dependencies for ufoai-radiant and ufoai
+
+ -- Arthur Haney <spyro@spyrius.com>  Tue, 16 Dec 2008 08:50:00 -0600
+
+ufoai (2.3~~svn20836) intrepid; urgency=low
+
+  [ Arthur Haney ]
+  * Nightly compile for Dec 15 2008
+  * Fixed radiant by moving to /usr/share/games/ufoai/radiant
+
+ -- Arthur Haney <spyro@spyrius.com>  Mon, 15 Dec 2008 23:00:00 +0000
+
+ufoai (2.3~~svn20826) intrepid; urgency=low
+
+  [ Arthur Haney ]
+  * Moved translations files into /usr/lib/games/ufoai
+
+ -- Arthur Haney <spyro@spyrius.com>  Wed, 19 Sep 2007 22:09:13 +0100
+
+ufoai (2.3~~svn20746) intrepid; urgency=low
+
+  [ Arthur Haney ]
+  * Initial build
+  * Added basedirname back into .install files
+  * Added radiant into files
+
+ -- Arthur Haney <spyro@spyrius.com>  Wed, 19 Sep 2007 22:09:13 +0100
+
+ufoai (2.3~~svn14428) unstable; urgency=low
+
+  [ Martin Gerhardy ]
+  * Removed snd_* (SDL sound is merged into the ufo binary)
+  * Removed openal
+
+  [ Florian Ludwig ]
+  * Fix versioning of dependencies on ufo-data
+  * Use libcurl4-dev not 3
+  * Dump version to 2.3~~svn
+  * Disable curses console for the server
+  * Fix copyright files
+
+  [ Teemu Ikonen ]
+  * Upgrade standards-version to 3.7.3
+  * Upgrade debhelper compat to 6
+  * Rename ufoai-data-music to ufoai-music, install just ogg-files
+    instead of packing into pk3
+  * Split maps, scripts and config files from ufoai-data to
+    ufoai-server-data
+  * Allow installing of game.so elsewhere than the game data
+  * Add ufoai-common package containing game.so
+  * ufoai-data: include translations, install to /usr/share/games/ufoai/
+  * Add dh_installdocs to binary-indep target, remove debian/copyright
+    files from .install files
+  * Add icons to client and dedicated server
+  * Add a .desktop file to the client from package at getdeb.net
+  * Add launcher script, .desktop and .menu files to ufoai-server
+  * Add dependency to ttf-thai-tlwg to ufoai-data
+  * Build and install the pdf manual, add build-dep to
+    texlive-latex-recommended
+  * Add ufoai-data.doc-base for the manual
+  * ufoai-tools: Install ufo2map to /usr/games/, install blender
+    script to a correct directory in Debian
+  * Add build-dep to quilt
+  * rules:
+      + add get-orig-source target to fetch source from upstream svn
+      + add genpatches target to generate patch stack from git branches
+      + add debtar target to pack the debian-dir to a wig and pen
+        style debian.tar.gz
+      + add patch and unpatch targets calling quilt
+  * copyright: add copyright years, correct FSF address,
+    add author and licensing info on packaging
+
+ -- Florian Ludwig <dino@phidev.org>  Sun, 03 Feb 2008 20:49:10 +0100
+
+ufoai (2.2~~svn11864) unstable; urgency=low
+
+  * Removed vid_glx and vid_sdl (only SDL is used now, and that's merged
+    into the ufo binary)
+  * Removed X11 dependencies, only use SDL
+  * Updated the ufo start script (no more vid_ref cvar needed, gl_driver
+    [resp. r_driver] should not be needed anymore, too)
+  * Removed svn version hack
+  * Added 0media.pk3 (also contains the ttf font files)
+  * Removed qdata binary
+  * Fixed target path for pk3 files
+
+ -- Martin Gerhardy <martin.gerhardy@gmail.com>  Wed, 19 Sep 2007 22:09:13 +0100
+
+ufoai (2.2~~svn11853) unstable; urgency=low
+
+  * Explicitely disable openal support as advised by dev-team.
+  * Build in ./BUILD/, not ./build/ which is already used for something
+    else.
+  * Made installation of maps more robust and more portable.
+  * Enable curses console for the server.
+  * Include ufomaster in package ufoai-server.
+  * Include qdata and md2tag_export.py in package ufoai-tools.
+  * Moved sound and video modules into their own binary packages.
+  * Ship packed data files (except fonts, since we use the system ones,
+    and shaders, which are packed with them upstream, and are not worth a
+    pack).
+  * Merge ufoai-data-maps into ufoai-data.
+
+ -- Yann Dirson <dirson@debian.org>  Wed, 25 Apr 2007 00:44:13 +0200
+
+ufoai (2.1~~svn) unstable; urgency=low
+
+  * Use new single-package layout, with autoconf-based build system.
+  * Added build-dependency on libarts1-dev.
+
+ -- Yann Dirson <dirson@debian.org>  Sun,  5 Nov 2006 17:01:29 +0100
+
+ufoai (2.0~rc5+svn) unstable; urgency=low
+
+  * SVN snapshot.
+  * Depend on newer data package.
+  * Drop update-ufoai-campaign script (and thus ufoai-common package), no
+    longer applying to current code.
+  * Build map-building tool, in new ufoai-tools package.
+  * Build standalone server, in new ufoai-server package.
+  * Automatically update package version to use SVN revision number when
+    run from a SVN working copy.
+  * Simplified /usr/games/ufo script much, now that ~/.ufoai is used by the
+    game itself.
+
+ -- Yann Dirson <dirson@debian.org>  Tue, 25 Jul 2006 23:44:20 +0200
+
+ufoai (0.0.040218-0.8) unstable; urgency=low
+
+  * Have DEB_BUILD_OPTIONS exported, so that the binaries really do not
+    get stripped.
+
+ -- Yann Dirson <dirson@debian.org>  Tue, 20 Apr 2004 11:32:05 +0200
+
+ufoai (0.0.040218-0.7) unstable; urgency=low
+
+  * Made Sys_GetGameAPI() to look for game.so instead of a lib with an
+    arch-dependant name, thus allowing building on more archs than just
+    i386 and alpha.  Updated all Makefiles with this name while I was at
+    it.
+  * Make so that update-ufoai-campaign properly removes the generated
+    campaign when no snippets are found, instead of failing when removing
+    the last data package.
+
+ -- Yann Dirson <dirson@debian.org>  Mon, 19 Apr 2004 20:35:32 +0200
+
+ufoai (0.0.040218-0.6) unstable; urgency=low
+
+  * Added update-ufoai-campaign script, in new ufoai-common package.
+
+ -- Yann Dirson <dirson@debian.org>  Mon, 19 Apr 2004 00:27:34 +0200
+
+ufoai (0.0.040218-0.5) unstable; urgency=low
+
+  * Set DEB_BUILD_OPTIONS=nostrip so that people can give useful info on
+    coredumps.
+  * Ensure gl_ref/gl_rmain.c::R_Init() returns 0 when reaching end of
+    function, fixing the problem where people reported the OpenGL renderer
+    did not init where there was no error reported - fix from upstream
+    found at http://ufo.myexp.de/phpBB2/viewtopic.php?t=327
+  * Use libGL.so.1 as default driver, not libGL.so, so that people do not
+    need a libgl-dev package installed.
+
+ -- Yann Dirson <dirson@debian.org>  Sun, 18 Apr 2004 20:34:25 +0200
+
+ufoai (0.0.040218-0.4) unstable; urgency=low
+
+  * Added a MIN_ZOOM parameter in client/cl_input.c, and set it to 0.5
+    instead of the 1.0 default, so that we can have a better view of the
+    terrain even at small screen resolutions.  Also changed
+    client/cl_view.c for the limit (for some reason the limits in the 2
+    files are out of sync).
+  * Improved wrapper script to allow users to replace symlinks with
+    modified copies of system files and dirs (eg. to change keybindings).
+  * Make wrapper script pass command-line arguments to ufo binary.
+  * Do not force drivers to use on each ufo invocation, just if the config
+    file has not been written yet, and no special args are given on
+    command-line.
+
+ -- Yann Dirson <dirson@debian.org>  Sat, 17 Apr 2004 23:28:22 +0200
+
+ufoai (0.0.040218-0.3) UNRELEASED; urgency=low
+
+  * Fixed typo in wrapper script.
+
+ -- Yann Dirson <dirson@debian.org>  Sat, 17 Apr 2004 00:20:16 +0200
+
+ufoai (0.0.040218-0.2) UNRELEASED; urgency=low
+
+  * Enhanced the wrapper script to setup a ~/.ufoai/ suitable for running
+    the game, so that config and games can be saved.
+  * Depend on new version of ufoai-data, which does not ship the system
+    save/ directory any more.
+  * Enhanced the package description.
+  * Create in the docdir a "docs" symlink to the ufoai-data docdir, where
+    the docs are located.
+
+ -- Yann Dirson <dirson@debian.org>  Fri, 16 Apr 2004 22:14:43 +0200
+
+ufoai (0.0.040218-0.1) UNRELEASED; urgency=low
+
+  * Remove the dependency on quake2, since the game appears to work
+    without it.
+
+ -- Yann Dirson <dirson@debian.org>  Thu, 15 Apr 2004 08:57:24 +0200
+
+ufoai (0.0.040218-0) UNRELEASED; urgency=low
+
+  * Initial Release.
+
+ -- Yann Dirson <dirson@debian.org>  Thu, 15 Apr 2004 00:23:30 +0200
+

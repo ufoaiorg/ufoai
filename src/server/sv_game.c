@@ -27,15 +27,25 @@
  */
 
 #include "server.h"
-#include <SDL_thread.h>
+#include "../common/grid.h"
+#include "../ports/system.h"
+#include <SDL.h>
 
 game_export_t *ge;
-/** this is true when there was an event - and false if the event reached the end */
-static qboolean pfe_pending = qfalse;
-/** player mask of the current event */
-static int pfe_mask, pfe_type;
-static struct dbuffer *pfe_msg;
+
+typedef struct pending_event_s {
+	/** this is true when there was an event - and false if the event reached the end */
+	qboolean pending;
+	/** player mask of the current event */
+	int playerMask;
+	int type;
+	struct dbuffer *buf;
+} pending_event_t;
+
+static pending_event_t pe;
 struct dbuffer *sv_msg = NULL;
+static SDL_Thread *thread;
+static void *gameLibrary;
 
 /**
  * @brief Debug print to server console
@@ -83,6 +93,41 @@ static void SV_error (const char *fmt, ...)
 	va_end(argptr);
 
 	Com_Error(ERR_DROP, "Game Error: %s", msg);
+}
+
+static int SV_FindIndex (const char *name, int start, int max, qboolean create)
+{
+	int i;
+
+	if (!name || !name[0])
+		return 0;
+
+	for (i = 1; i < max && sv.configstrings[start + i][0]; i++)
+		if (!strcmp(sv.configstrings[start + i], name))
+			return i;
+
+	if (!create)
+		return 0;
+
+	if (i == max)
+		Com_Error(ERR_DROP, "*Index: overflow '%s' start: %i, max: %i", name, start, max);
+
+	Q_strncpyz(sv.configstrings[start + i], name, sizeof(sv.configstrings[i]));
+
+	if (Com_ServerState() != ss_loading) {	/* send the update to everyone */
+		struct dbuffer *msg = new_dbuffer();
+		NET_WriteByte(msg, svc_configstring);
+		NET_WriteShort(msg, start + i);
+		NET_WriteString(msg, name);
+		SV_Multicast(~0, msg);
+	}
+
+	return i;
+}
+
+static int SV_ModelIndex (const char *name)
+{
+	return SV_FindIndex(name, CS_MODELS, MAX_MODELS, qtrue);
 }
 
 /**
@@ -150,64 +195,66 @@ static void SV_Configstring (int index, const char *fmt, ...)
 
 static void SV_WriteChar (char c)
 {
-	NET_WriteChar(pfe_msg, c);
+	NET_WriteChar(pe.buf, c);
 }
 
 static void SV_WriteByte (byte c)
 {
-	NET_WriteByte(pfe_msg, c);
+	NET_WriteByte(pe.buf, c);
 }
 
 /**
  * @brief Use this if the value might change and you need the position in the buffer
+ * @note If someone aborts or adds an event, this pointer is of course no longer valid
  */
 static byte* SV_WriteDummyByte (byte c)
 {
-	byte *pos = (byte*) pfe_msg->end;
-	NET_WriteByte(pfe_msg, c);
+	byte *pos = (byte*) pe.buf->end;
+	NET_WriteByte(pe.buf, c);
+	assert(pos != NULL);
 	return pos;
 }
 
 static void SV_WriteShort (int c)
 {
-	NET_WriteShort(pfe_msg, c);
+	NET_WriteShort(pe.buf, c);
 }
 
 static void SV_WriteLong (int c)
 {
-	NET_WriteLong(pfe_msg, c);
+	NET_WriteLong(pe.buf, c);
 }
 
 static void SV_WriteString (const char *s)
 {
-	NET_WriteString(pfe_msg, s);
+	NET_WriteString(pe.buf, s);
 }
 
 static void SV_WritePos (const vec3_t pos)
 {
-	NET_WritePos(pfe_msg, pos);
+	NET_WritePos(pe.buf, pos);
 }
 
 static void SV_WriteGPos (const pos3_t pos)
 {
-	NET_WriteGPos(pfe_msg, pos);
+	NET_WriteGPos(pe.buf, pos);
 }
 
 static void SV_WriteDir (const vec3_t dir)
 {
-	NET_WriteDir(pfe_msg, dir);
+	NET_WriteDir(pe.buf, dir);
 }
 
 static void SV_WriteAngle (float f)
 {
-	NET_WriteAngle(pfe_msg, f);
+	NET_WriteAngle(pe.buf, f);
 }
 
 static void SV_WriteFormat (const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	NET_vWriteFormat(pfe_msg, format, ap);
+	NET_vWriteFormat(pe.buf, format, ap);
 	va_end(ap);
 }
 
@@ -231,9 +278,9 @@ static int SV_ReadLong (void)
 	return NET_ReadLong(sv_msg);
 }
 
-static char *SV_ReadString (void)
+static int SV_ReadString (char *str, size_t length)
 {
-	return NET_ReadString(sv_msg);
+	return NET_ReadString(sv_msg, str, length);
 }
 
 static void SV_ReadPos (vec3_t pos)
@@ -271,6 +318,7 @@ static void SV_ReadFormat (const char *format, ...)
 	assert(format);
 	if (!*format) /* PA_NULL */
 		return;
+
 	va_start(ap, format);
 	NET_vReadFormat(sv_msg, format, ap);
 	va_end(ap);
@@ -281,12 +329,12 @@ static void SV_ReadFormat (const char *format, ...)
  */
 static void SV_AbortEvents (void)
 {
-	if (!pfe_pending)
+	if (!pe.pending)
 		return;
 
-	pfe_pending = qfalse;
-	free_dbuffer(pfe_msg);
-	pfe_msg = NULL;
+	pe.pending = qfalse;
+	free_dbuffer(pe.buf);
+	pe.buf = NULL;
 }
 
 /**
@@ -294,14 +342,14 @@ static void SV_AbortEvents (void)
  */
 static void SV_EndEvents (void)
 {
-	if (!pfe_pending)
+	if (!pe.pending)
 		return;
 
-	NET_WriteByte(pfe_msg, EV_NULL);
-	SV_Multicast(pfe_mask, pfe_msg);
-	pfe_pending = qfalse;
+	NET_WriteByte(pe.buf, EV_NULL);
+	SV_Multicast(pe.playerMask, pe.buf);
+	pe.pending = qfalse;
 	/* freed in SV_Multicast */
-	pfe_msg = NULL;
+	pe.buf = NULL;
 }
 
 /**
@@ -310,19 +358,21 @@ static void SV_EndEvents (void)
  */
 static void SV_AddEvent (unsigned int mask, int eType)
 {
+	Com_DPrintf(DEBUG_EVENTSYS, "Event type: %i (mask %i)\n", eType, mask);
+
 	/* finish the last event */
-	if (pfe_pending)
+	if (pe.pending)
 		SV_EndEvents();
 
 	/* start the new event */
-	pfe_pending = qtrue;
-	pfe_mask = mask;
-	pfe_type = eType;
-	pfe_msg = new_dbuffer();
+	pe.pending = qtrue;
+	pe.playerMask = mask;
+	pe.type = eType;
+	pe.buf = new_dbuffer();
 
 	/* write header */
-	NET_WriteByte(pfe_msg, svc_event);
-	NET_WriteByte(pfe_msg, eType);
+	NET_WriteByte(pe.buf, svc_event);
+	NET_WriteByte(pe.buf, eType);
 }
 
 /**
@@ -330,10 +380,10 @@ static void SV_AddEvent (unsigned int mask, int eType)
  */
 static int SV_GetEvent (void)
 {
-	if (!pfe_pending)
+	if (!pe.pending)
 		return -1;
 
-	return pfe_type;
+	return pe.type;
 }
 
 /**
@@ -355,15 +405,87 @@ static void SV_MemFree (void *ptr, const char *file, int line)
 /**
  * @brief Makes sure the game DLL does not use client, or signed tags
  */
-static void SV_FreeTags (int tagNum)
+static void SV_FreeTags (int tagNum, const char *file, int line)
 {
 	if (tagNum < 0)
 		tagNum *= -1;
 
-	_Mem_FreeTag(sv_gameSysPool, tagNum, "GAME DLL", 0);
+	_Mem_FreeTag(sv_gameSysPool, tagNum, file, line);
 }
 
-static SDL_Thread *thread;
+static void SV_UnloadGame (void)
+{
+#ifndef GAME_HARD_LINKED
+	if (gameLibrary)
+		SDL_UnloadObject(gameLibrary);
+#endif
+	gameLibrary = NULL;
+}
+
+#ifndef HARD_LINKED_GAME
+static qboolean SV_LoadGame (const char *path)
+{
+	char name[MAX_OSPATH];
+
+	Com_sprintf(name, sizeof(name), "%s/game_"CPUSTRING".%s", path, SHARED_EXT);
+	gameLibrary = SDL_LoadObject(name);
+	if (!gameLibrary) {
+		Com_sprintf(name, sizeof(name), "%s/game.%s", path, SHARED_EXT);
+		gameLibrary = SDL_LoadObject(name);
+	}
+
+	if (gameLibrary) {
+		Com_Printf("found at '%s'\n", path);
+		return qtrue;
+	} else {
+		Com_Printf("not found at '%s'\n", path);
+		Com_DPrintf(DEBUG_SYSTEM, "%s\n", SDL_GetError());
+		return qfalse;
+	}
+}
+#endif
+
+/**
+ * @brief Loads the game shared library and calls the api init function
+ */
+static game_export_t *SV_GetGameAPI (game_import_t *parms)
+{
+#ifndef HARD_LINKED_GAME
+	void *(*GetGameAPI) (void *);
+
+	const char *path;
+#endif
+
+	if (gameLibrary)
+		Com_Error(ERR_FATAL, "SV_GetGameAPI without SV_UnloadGame");
+
+#ifndef HARD_LINKED_GAME
+	Com_Printf("------- Loading game.%s -------\n", SHARED_EXT);
+
+#ifdef PKGLIBDIR
+	SV_LoadGame(PKGLIBDIR);
+#endif
+
+	/* now run through the search paths */
+	path = NULL;
+	while (!gameLibrary) {
+		path = FS_NextPath(path);
+		if (!path)
+			/* couldn't find one anywhere */
+			return NULL;
+		else if (SV_LoadGame(path))
+			break;
+	}
+
+	GetGameAPI = (void *)SDL_LoadFunction(gameLibrary, "GetGameAPI");
+	if (!GetGameAPI) {
+		SV_UnloadGame();
+		return NULL;
+	}
+#endif
+
+	return GetGameAPI(parms);
+}
 
 /**
  * @brief Called when either the entire server is being killed, or it is changing to a different game directory.
@@ -383,7 +505,7 @@ void SV_ShutdownGameProgs (void)
 	thread = NULL;
 
 	ge->Shutdown();
-	Sys_UnloadGame();
+	SV_UnloadGame();
 
 	size = Mem_PoolSize(sv_gameSysPool);
 	if (size > 0) {
@@ -415,7 +537,11 @@ int SV_RunGameFrameThread (void *data)
  */
 void SV_RunGameFrame (void)
 {
+	SDL_mutexP(svs.serverMutex);
+
 	sv.endgame = ge->RunFrame();
+
+	SDL_mutexV(svs.serverMutex);
 }
 
 /**
@@ -432,11 +558,11 @@ void SV_InitGameProgs (void)
 
 	/* load a new game dll */
 	import.BroadcastPrintf = SV_BroadcastPrintf;
-	import.dprintf = SV_dprintf;
+	import.DPrintf = SV_dprintf;
 	import.PlayerPrintf = SV_PlayerPrintf;
-	import.error = SV_error;
+	import.Error = SV_error;
 
-	import.trace = SV_Trace;
+	import.Trace = SV_Trace;
 	import.LinkEdict = SV_LinkEdict;
 	import.UnlinkEdict = SV_UnlinkEdict;
 	import.BoxEdicts = SV_AreaEdicts;
@@ -454,7 +580,7 @@ void SV_InitGameProgs (void)
 	import.GetTUsForDirection = Grid_GetTUsForDirection;
 	import.GridFall = Grid_Fall;
 	import.GridPosToVec = Grid_PosToVec;
-	import.GridRecalcRouting = Grid_RecalcRouting;
+	import.GridRecalcRouting = CM_RecalcRouting;
 	import.GridDumpDVTable = Grid_DumpDVTable;
 
 	import.ModelIndex = SV_ModelIndex;
@@ -529,11 +655,9 @@ void SV_InitGameProgs (void)
 	import.csi = &csi;
 
 	/* import the server routing table */
-	import.routingMap = (void *) &svMap;
-	/* import the server pathing table */
-	import.pathingMap = (void *) &svPathMap;
+	import.routingMap = (void *) &sv.svMap;
 
-	ge = Sys_GetGameAPI(&import);
+	ge = SV_GetGameAPI(&import);
 
 	if (!ge)
 		Com_Error(ERR_DROP, "failed to load game library");

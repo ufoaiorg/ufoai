@@ -23,15 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../cl_game.h"
-#include "../cl_team.h"
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
-#include "../menu/node/m_node_container.h"
-#include "../renderer/r_draw.h"
-#include "../renderer/r_overlay.h"
+#include "../client.h" /* cls, cl */
+#include "../ui/ui_main.h"
 #include "cp_campaign.h"
+#include "cp_overlay.h"
 #include "cp_mapfightequip.h"
 #include "cp_hospital.h"
 #include "cp_hospital_callbacks.h"
@@ -42,12 +37,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_popup.h"
 #include "cp_map.h"
 #include "cp_ufo.h"
-#include "cp_installation.h"
 #include "cp_installation_callbacks.h"
 #include "cp_alien_interest.h"
 #include "cp_missions.h"
 #include "cp_mission_triggers.h"
 #include "cp_nations.h"
+#include "cp_statistics.h"
 #include "cp_time.h"
 #include "cp_xvi.h"
 #include "cp_aircraft_callbacks.h"
@@ -64,6 +59,7 @@ struct memPool_s *cp_campaignPool;		/**< reset on every game restart */
 ccs_t ccs;
 cvar_t *cp_campaign;
 cvar_t *cp_start_employees;
+cvar_t *cp_missiontest;
 
 typedef struct {
 	int ucn;
@@ -85,80 +81,86 @@ typedef struct {
  */
 void CP_ParseCharacterData (struct dbuffer *msg)
 {
-	static updateCharacter_t updateCharacterArray[MAX_WHOLETEAM];
-	static int num = 0;
-	int i, j;
-	character_t* chr;
+	static linkedList_t *updateCharacters = NULL;
 
 	if (!msg) {
-		for (i = 0; i < num; i++) {
-			employee_t *employee = E_GetEmployeeFromChrUCN(updateCharacterArray[i].ucn);
+		const linkedList_t *l = updateCharacters;
+		while (l) {
+			const updateCharacter_t *c = (updateCharacter_t*)l->data;
+			employee_t *employee = E_GetEmployeeFromChrUCN(c->ucn);
+			character_t* chr;
+
+			l = l->next;
+
 			if (!employee) {
-				Com_Printf("Warning: Could not get character with ucn: %i.\n", updateCharacterArray[i].ucn);
+				Com_Printf("Warning: Could not get character with ucn: %i.\n", c->ucn);
 				continue;
 			}
 			chr = &employee->chr;
-			chr->HP = updateCharacterArray[i].HP;
-			chr->STUN = updateCharacterArray[i].STUN;
-			chr->morale = updateCharacterArray[i].morale;
+			chr->HP = c->HP;
+			chr->STUN = c->STUN;
+			chr->morale = c->morale;
 
 			/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-			memcpy(chr->score.experience, updateCharacterArray[i].chrscore.experience, sizeof(chr->score.experience));
-			memcpy(chr->score.skills, updateCharacterArray[i].chrscore.skills, sizeof(chr->score.skills));
-			memcpy(chr->score.kills, updateCharacterArray[i].chrscore.kills, sizeof(chr->score.kills));
-			memcpy(chr->score.stuns, updateCharacterArray[i].chrscore.stuns, sizeof(chr->score.stuns));
-			chr->score.assignedMissions = updateCharacterArray[i].chrscore.assignedMissions;
+			memcpy(chr->score.experience, c->chrscore.experience, sizeof(chr->score.experience));
+			memcpy(chr->score.skills, c->chrscore.skills, sizeof(chr->score.skills));
+			memcpy(chr->score.kills, c->chrscore.kills, sizeof(chr->score.kills));
+			memcpy(chr->score.stuns, c->chrscore.stuns, sizeof(chr->score.stuns));
+			chr->score.assignedMissions = c->chrscore.assignedMissions;
 		}
-		num = 0;
+		LIST_Delete(&updateCharacters);
 	} else {
-		/* invalidate ucn in the array first */
-		for (i = 0; i < MAX_WHOLETEAM; i++) {
-			updateCharacterArray[i].ucn = -1;
-		}
-		/* number of soldiers */
-		num = NET_ReadByte(msg);
-		if (num > MAX_WHOLETEAM)
-			Com_Error(ERR_DROP, "CP_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
-		else if (num < 0)
+		int i, j;
+		const int num = NET_ReadByte(msg);
+
+		if (num < 0)
 			Com_Error(ERR_DROP, "CP_ParseCharacterData: NET_ReadShort error (%i)\n", num);
 
-		for (i = 0; i < num; i++) {
-			/* updateCharacter_t */
-			updateCharacterArray[i].ucn = NET_ReadShort(msg);
-			updateCharacterArray[i].HP = NET_ReadShort(msg);
-			updateCharacterArray[i].STUN = NET_ReadByte(msg);
-			updateCharacterArray[i].morale = NET_ReadByte(msg);
+		LIST_Delete(&updateCharacters);
 
-			/** Scores @sa inv_shared.h:chrScoreGlobal_t */
+		for (i = 0; i < num; i++) {
+			updateCharacter_t c;
+			memset(&c, 0, sizeof(c));
+			c.ucn = NET_ReadShort(msg);
+			c.HP = NET_ReadShort(msg);
+			c.STUN = NET_ReadByte(msg);
+			c.morale = NET_ReadByte(msg);
+
 			for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-				updateCharacterArray[i].chrscore.experience[j] = NET_ReadLong(msg);
+				c.chrscore.experience[j] = NET_ReadLong(msg);
 			for (j = 0; j < SKILL_NUM_TYPES; j++)
-				updateCharacterArray[i].chrscore.skills[j] = NET_ReadByte(msg);
+				c.chrscore.skills[j] = NET_ReadByte(msg);
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
-				updateCharacterArray[i].chrscore.kills[j] = NET_ReadShort(msg);
+				c.chrscore.kills[j] = NET_ReadShort(msg);
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
-				updateCharacterArray[i].chrscore.stuns[j] = NET_ReadShort(msg);
-			updateCharacterArray[i].chrscore.assignedMissions = NET_ReadShort(msg);
+				c.chrscore.stuns[j] = NET_ReadShort(msg);
+			c.chrscore.assignedMissions = NET_ReadShort(msg);
+			LIST_Add(&updateCharacters, (const byte*)&c, sizeof(c));
 		}
 	}
+}
+
+/**
+ * @brief Checks whether a campaign mode game is running
+ */
+qboolean CP_IsRunning (void)
+{
+	return ccs.curCampaign != NULL;
 }
 
 /**
  * @brief Check if a map may be selected for mission.
  * @param[in] mission Pointer to the mission where mapDef should be added
  * @param[in] pos position of the mission (NULL if the position will be chosen afterwards)
- * @param[in] mapIdx idx of the map in csi.mds[]
+ * @param[in] mapIdx idx of the map in the mapdef array
  * @param[in] ufoCrashed Search the mission definition for crash ufo id if true
  * @return qfalse if map is not selectable
  */
-static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t pos, qboolean ufoCrashed)
+static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t pos)
 {
 	mapDef_t *md;
 
-	assert(mapIdx >= 0);
-	assert(mapIdx < csi.numMDs);
-
-	md = &csi.mds[mapIdx];
+	md = Com_GetMapDefByIDX(mapIdx);
 	if (md->storyRelated)
 		return qfalse;
 
@@ -169,18 +171,21 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t
 		/* a mission without UFO should not use a map with UFO */
 		if (md->ufos)
 			return qfalse;
-	} else {
+	} else if (md->ufos) {
 		/* A mission with UFO should use a map with UFO
 		 * first check that list is not empty */
-		if (!md->ufos)
+		const ufoType_t type = mission->ufo->ufotype;
+		const char *ufoID;
+
+		if (mission->crashed)
+			ufoID = Com_UFOCrashedTypeToShortName(type);
+		else
+			ufoID = Com_UFOTypeToShortName(type);
+
+		if (!LIST_ContainsString(md->ufos, ufoID))
 			return qfalse;
-		if (ufoCrashed) {
-			if (!LIST_ContainsString(md->ufos, Com_UFOCrashedTypeToShortName(mission->ufo->ufotype)))
-				return qfalse;
-		} else {
-			if (!LIST_ContainsString(md->ufos, Com_UFOTypeToShortName(mission->ufo->ufotype)))
-				return qfalse;
-		}
+	} else {
+		return qfalse;
 	}
 
 	return qtrue;
@@ -193,7 +198,7 @@ static qboolean CP_MapIsSelectable (mission_t *mission, int mapIdx, const vec2_t
  * @param[in] ufoCrashed true if the ufo is crashed
  * @return qfalse if could not set mission
  */
-qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed)
+qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos)
 {
 	int i;
 	int maxHits = 1;	/**< Total number of maps fulfilling mission conditions. */
@@ -201,20 +206,21 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed
 	int minMissionAppearance = 9999;
 	int randomNum;
 
-	mission->mapDef = NULL;
+	if (mission->mapDef)
+		return qtrue;
 
 	/* Set maxHits and hits. */
 	while (maxHits) {
 		maxHits = 0;
-		for (i = 0; i < csi.numMDs; i++) {
+		for (i = 0; i < cls.numMDs; i++) {
 			mapDef_t *md;
 
 			/* Check if mission fulfill conditions */
-			if (!CP_MapIsSelectable(mission, i, pos, ufoCrashed))
+			if (!CP_MapIsSelectable(mission, i, pos))
 				continue;
 
 			maxHits++;
-			md = &csi.mds[i];
+			md = Com_GetMapDefByIDX(i);
 			if (md->timesAlreadyUsed < minMissionAppearance) {
 				/* at least one fulfilling mission as been used less time than minMissionAppearance:
 				 * restart the loop with this number of time.
@@ -226,7 +232,7 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed
 				hits++;
 		}
 
-		if (i >= csi.numMDs) {
+		if (i >= cls.numMDs) {
 			/* We scanned all maps in memory without finding a map used less than minMissionAppearance: exit while loop */
 			break;
 		}
@@ -234,9 +240,17 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed
 
 	if (!maxHits) {
 		/* no map fulfill the conditions */
-		if (ufoCrashed) {
+		if (mission->category == INTERESTCATEGORY_RESCUE) {
+			/* default map for rescue mission is the rescue random map assembly */
+			mission->mapDef = Com_GetMapDefinitionByID("rescue");
+			mission->mapDef->timesAlreadyUsed++;
+			if (!mission->mapDef)
+				Com_Error(ERR_DROP, "Could not find mapdef rescue");
+			return qtrue;
+		} else if (mission->crashed) {
 			/* default map for crashsite mission is the crashsite random map assembly */
 			mission->mapDef = Com_GetMapDefinitionByID("ufocrash");
+			mission->mapDef->timesAlreadyUsed++;
 			if (!mission->mapDef)
 				Com_Error(ERR_DROP, "Could not find mapdef ufocrash");
 			return qtrue;
@@ -253,22 +267,19 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed
 		}
 	}
 
-	/* If we reached this point, that means that at least 1 map fulfills the conditions of the mission */
-	assert(hits);
-	assert(hits < csi.numMDs);
-
-	/* set number of mission to select randomly between 0 and hits - 1 */
+	/* If we reached this point, that means that at least 1 map fulfills the conditions of the mission
+	 * set number of mission to select randomly between 0 and hits - 1 */
 	randomNum = rand() % hits;
 
 	/* Select mission mission number 'randomnumber' that fulfills the conditions */
-	for (i = 0; i < csi.numMDs; i++) {
+	for (i = 0; i < cls.numMDs; i++) {
 		mapDef_t *md;
 
 		/* Check if mission fulfill conditions */
-		if (!CP_MapIsSelectable(mission, i, pos, ufoCrashed))
+		if (!CP_MapIsSelectable(mission, i, pos))
 			continue;
 
-		md = &csi.mds[i];
+		md = Com_GetMapDefByIDX(i);
 		if (md->timesAlreadyUsed > minMissionAppearance)
 			continue;
 
@@ -282,10 +293,12 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed
 	}
 
 	/* A mission must have been selected */
-	assert(i < csi.numMDs);
-
-	mission->mapDef = &csi.mds[i];
-	Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
+	mission->mapDef = Com_GetMapDefByIDX(i);
+	mission->mapDef->timesAlreadyUsed++;
+	if (cp_missiontest->integer)
+		Com_Printf("Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
+	else
+		Com_DPrintf(DEBUG_CLIENT, "Selected map '%s' (among %i possible maps)\n", mission->mapDef->id, hits);
 
 	return qtrue;
 }
@@ -295,12 +308,12 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed
  */
 void CP_EndCampaign (qboolean won)
 {
-	GAME_SetMode(GAME_NONE);
+	Cmd_ExecuteString("game_exit");
 
 	if (won)
-		MN_InitStack("endgame", NULL, qtrue, qtrue);
+		UI_InitStack("endgame", NULL, qtrue, qtrue);
 	else
-		MN_InitStack("lostgame", NULL, qtrue, qtrue);
+		UI_InitStack("lostgame", NULL, qtrue, qtrue);
 
 	Com_Drop();
 }
@@ -314,8 +327,11 @@ void CP_CheckLostCondition (void)
 	/* fraction of nation that can be below min happiness before the game is lost */
 	const float nationBelowLimitPercentage = 0.5f;
 
+	if (cp_missiontest->integer)
+		return;
+
 	if (!endCampaign && ccs.credits < -ccs.curCampaign->negativeCreditsUntilLost) {
-		MN_RegisterText(TEXT_STANDARD, _("You've gone too far into debt."));
+		UI_RegisterText(TEXT_STANDARD, _("You've gone too far into debt."));
 		endCampaign = qtrue;
 	}
 
@@ -323,13 +339,13 @@ void CP_CheckLostCondition (void)
 	 * until he has set up a base again, the aliens might have invaded the whole
 	 * world ;) - i mean, removing the credits check here. */
 	if (!ccs.numBases && ccs.credits < ccs.curCampaign->basecost - ccs.curCampaign->negativeCreditsUntilLost) {
-		MN_RegisterText(TEXT_STANDARD, _("You've lost your bases and don't have enough money to build new ones."));
+		UI_RegisterText(TEXT_STANDARD, _("You've lost your bases and don't have enough money to build new ones."));
 		endCampaign = qtrue;
 	}
 
 	if (!endCampaign) {
 		if (CP_GetAverageXVIRate() > ccs.curCampaign->maxAllowedXVIRateUntilLost) {
-			MN_RegisterText(TEXT_STANDARD, _("You have failed in your charter to protect Earth."
+			UI_RegisterText(TEXT_STANDARD, _("You have failed in your charter to protect Earth."
 				" Our home and our people have fallen to the alien infection. Only a handful"
 				" of people on Earth remain human, and the remaining few no longer have a"
 				" chance to stem the tide. Your command is no more; PHALANX is no longer"
@@ -347,7 +363,7 @@ void CP_CheckLostCondition (void)
 			}
 			if (nationBelowLimit >= nationBelowLimitPercentage * ccs.numNations) {
 				/* lost the game */
-				MN_RegisterText(TEXT_STANDARD, _("Under your command, PHALANX operations have"
+				UI_RegisterText(TEXT_STANDARD, _("Under your command, PHALANX operations have"
 					" consistently failed to protect nations."
 					" The UN, highly unsatisfied with your performance, has decided to remove"
 					" you from command and subsequently disbands the PHALANX project as an"
@@ -585,6 +601,11 @@ static void CL_CampaignFunctionPeriodicCall (int dt, qboolean updateRadarOverlay
 	UFO_CampaignCheckEvents();
 }
 
+qboolean CP_OnGeoscape (void)
+{
+	return !strcmp("geoscape", UI_GetActiveWindowName());
+}
+
 /**
  * @brief delay between actions that must be executed independently of time scale
  * @sa RADAR_CheckUFOSensored
@@ -595,7 +616,7 @@ const int DETECTION_INTERVAL = (SECONDS_PER_HOUR / 2);
 
 /**
  * @brief Called every frame when we are in geoscape view
- * @note Called for node types MN_MAP and MN_3DMAP
+ * @note Called for node types UI_MAP and UI_3DMAP
  * @sa CP_NationHandleBudget
  * @sa B_UpdateBaseData
  * @sa CL_CampaignRunAircraft
@@ -604,6 +625,12 @@ void CL_CampaignRun (void)
 {
 	const int currentinterval = (int)floor(ccs.date.sec) % DETECTION_INTERVAL;
 	int checks, dt, i;
+
+	if (!CP_IsRunning())
+		return;
+
+	if (!CP_OnGeoscape())
+		return;
 
 	/* advance time */
 	ccs.timer += cls.frametime * ccs.gameTimeScale;
@@ -723,149 +750,6 @@ void CL_UpdateCredits (int credits)
 	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
 }
 
-#define MAX_STATS_BUFFER 2048
-/**
- * @brief Shows the current stats from stats_t stats
- */
-static void CL_StatsUpdate_f (void)
-{
-	char *pos;
-	static char statsBuffer[MAX_STATS_BUFFER];
-	int hired[MAX_EMPL];
-	int i, j, costs = 0, sum = 0, totalfunds = 0;
-
-	/* delete buffer */
-	memset(statsBuffer, 0, sizeof(statsBuffer));
-	memset(hired, 0, sizeof(hired));
-
-	pos = statsBuffer;
-
-	/* missions */
-	MN_RegisterText(TEXT_STATS_MISSION, pos);
-	Com_sprintf(pos, MAX_STATS_BUFFER, _("Won:\t%i\nLost:\t%i\n\n"), ccs.campaignStats.missionsWon, ccs.campaignStats.missionsLost);
-
-	/* bases */
-	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_BASES, pos);
-	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
-			ccs.campaignStats.basesBuilt, ccs.numBases, ccs.campaignStats.basesAttacked),
-
-	/* installations */
-	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_INSTALLATIONS, pos);
-	for (i = 0; i < ccs.numInstallations; i++) {
-		const installation_t *inst = &ccs.installations[i];
-		Q_strcat(pos, va("%s\n", inst->name), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-	}
-
-	/* nations */
-	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_NATIONS, pos);
-	for (i = 0; i < ccs.numNations; i++) {
-		Q_strcat(pos, va(_("%s\t%s\n"), _(ccs.nations[i].name), NAT_GetHappinessString(&ccs.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-		totalfunds += NAT_GetFunding(&ccs.nations[i], 0);
-	}
-	Q_strcat(pos, va(_("\nFunding this month:\t%d"), totalfunds), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-
-	/* costs */
-	for (i = 0; i < ccs.numEmployees[EMPL_SCIENTIST]; i++) {
-		if (ccs.employees[EMPL_SCIENTIST][i].hired) {
-			costs += SALARY_SCIENTIST_BASE + ccs.employees[EMPL_SCIENTIST][i].chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
-			hired[EMPL_SCIENTIST]++;
-		}
-	}
-	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
-		if (ccs.employees[EMPL_SOLDIER][i].hired) {
-			costs += SALARY_SOLDIER_BASE + ccs.employees[EMPL_SOLDIER][i].chr.score.rank * SALARY_SOLDIER_RANKBONUS;
-			hired[EMPL_SOLDIER]++;
-		}
-	}
-	for (i = 0; i < ccs.numEmployees[EMPL_WORKER]; i++) {
-		if (ccs.employees[EMPL_WORKER][i].hired) {
-			costs += SALARY_WORKER_BASE + ccs.employees[EMPL_WORKER][i].chr.score.rank * SALARY_WORKER_RANKBONUS;
-			hired[EMPL_WORKER]++;
-		}
-	}
-	for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
-		if (ccs.employees[EMPL_PILOT][i].hired) {
-			costs += SALARY_PILOT_BASE + ccs.employees[EMPL_PILOT][i].chr.score.rank * SALARY_PILOT_RANKBONUS;
-			hired[EMPL_PILOT]++;
-		}
-	}
-	for (i = 0; i < ccs.numEmployees[EMPL_ROBOT]; i++) {
-		if (ccs.employees[EMPL_ROBOT][i].hired) {
-			costs += SALARY_ROBOT_BASE + ccs.employees[EMPL_ROBOT][i].chr.score.rank * SALARY_ROBOT_RANKBONUS;
-			hired[EMPL_ROBOT]++;
-		}
-	}
-
-	/* employees - this is between the two costs parts to count the hired employees */
-	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_EMPLOYEES, pos);
-	for (i = 0; i < MAX_EMPL; i++) {
-		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-	}
-
-	/* costs - second part */
-	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_STATS_COSTS, pos);
-	Q_strcat(pos, va(_("Employees:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-	sum += costs;
-
-	costs = 0;
-	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
-
-		for (j = 0; j < base->numAircraftInBase; j++) {
-			costs += base->aircraft[j].price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
-		}
-	}
-	Q_strcat(pos, va(_("Aircraft:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-	sum += costs;
-
-	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
-		costs = SALARY_BASE_UPKEEP;	/* base cost */
-		for (j = 0; j < ccs.numBuildings[i]; j++) {
-			costs += ccs.buildings[i][j].varCosts;
-		}
-		Q_strcat(pos, va(_("Base (%s):\t%i c\n"), base->name, costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-		sum += costs;
-	}
-
-	costs = SALARY_ADMIN_INITIAL + ccs.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + ccs.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + ccs.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + ccs.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + ccs.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
-	Q_strcat(pos, va(_("Administrative costs:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-	sum += costs;
-
-	if (ccs.credits < 0) {
-		const float interest = ccs.credits * SALARY_DEBT_INTEREST;
-
-		costs = (int)ceil(interest);
-		Q_strcat(pos, va(_("Debt:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-		sum += costs;
-	}
-	Q_strcat(pos, va(_("\n\t-------\nSum:\t%i c\n"), sum), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-
-	/* campaign */
-	pos += (strlen(pos) + 1);
-	MN_RegisterText(TEXT_GENERIC, pos);
-	Q_strcat(pos, va(_("Max. allowed debts: %ic\n"), ccs.curCampaign->negativeCreditsUntilLost),
-		(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-
-	/* only show the xvi spread data when it's available */
-	if (CP_IsXVIResearched()) {
-		Q_strcat(pos, va(_("Max. allowed eXtraterrestial Viral Infection: %i%%\n"
-			"Current eXtraterrestial Viral Infection: %i%%"),
-			ccs.curCampaign->maxAllowedXVIRateUntilLost,
-			CP_GetAverageXVIRate()),
-			(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
-	}
-}
-
 /**
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
@@ -874,11 +758,9 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 {
 	mxml_node_t *campaignNode;
 	mxml_node_t *mapNode;
-	mxml_node_t *missions;
-	mxml_node_t *interests;
 	const char *name;
 	campaign_t *campaign;
-	int i;
+	mxml_node_t *mapDefStat;
 
 	campaignNode = mxml_GetNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 	if (!campaignNode) {
@@ -923,61 +805,38 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	ccs.zoom = mxml_GetFloat(mapNode, SAVE_CAMPAIGN_ZOOM, 0.0);
 	/* restore the overlay.
 	* do not use Cvar_SetValue, because this function check if value->string are equal to skip calculation
-	* and we never set r_geoscape_overlay->string in game: r_geoscape_overlay won't be updated if the loaded
-	* value is 0 (and that's a problem if you're loading a game when r_geoscape_overlay is set to another value */
-	r_geoscape_overlay->integer = mxml_GetInt(mapNode, SAVE_CAMPAIGN_R_GEOSCAPE_OVERLAY, 0);
+	* and we never set r_geoscape_overlay->string in game: cl_geoscape_overlay won't be updated if the loaded
+	* value is 0 (and that's a problem if you're loading a game when cl_geoscape_overlay is set to another value */
+	cl_geoscape_overlay->integer = mxml_GetInt(mapNode, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, 0);
 	radarOverlayWasSet = mxml_GetBool(mapNode, SAVE_CAMPAIGN_RADAROVERLAYWASSET, qfalse);
  	ccs.XVIShowMap = mxml_GetBool(mapNode, SAVE_CAMPAIGN_XVISHOWMAP, qfalse);
-
-	/* read interest values */
-	interests = mxml_GetNode(parent, SAVE_CAMPAIGN_INTERESTS);
-	if (!interests) {
-		Com_Printf("Did not find interests entry in xml!\n");
-		return qfalse;
-	}
-	if (!CP_LoadInterestsXML(interests))
-		return qfalse;
-
 	CP_UpdateXVIMapButton();
 
-	/* read missions */
-	missions = mxml_GetNode(parent, SAVE_CAMPAIGN_MISSIONS);
-	if (!missions) {
-		Com_Printf("Did not find missions entry in xml!\n");
-		return qfalse;
-	}
-	if (!CP_LoadMissionsXML(missions))
+	mapDefStat = mxml_GetNode(campaignNode, SAVE_CAMPAIGN_MAPDEFSTAT);
+	if (mapDefStat && !CP_LoadMapDefStatXML(mapDefStat))
 		return qfalse;
 
-	/* and now fix the mission pointers for e.g. ufocrash sites
-	* this is needed because the base load function which loads the aircraft
-	* doesn't know anything (at that stage) about the new missions that were
-	* add in this load function */
-	for (i = 0; i < MAX_BASES; i++) {
-		int j;
-		base_t *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
+	mxmlDelete(campaignNode);
+	return qtrue;
+}
 
-		for (j = 0; j < base->numAircraftInBase; j++) {
-			if (base->aircraft[j].status == AIR_MISSION) {
-				assert(base->aircraft[j].missionID);
-				base->aircraft[j].mission = CP_GetMissionByID(base->aircraft[j].missionID);
+/**
+ * @brief Save mapDef statistics
+ * @param[out] parent XML Node structure, where we write the information to
+ */
+static qboolean CP_SaveMapDefStatXML (mxml_node_t *parent)
+{
+	int i;
 
-				/* not found */
-				if (!base->aircraft[j].mission) {
-					Com_Printf("Could not link mission '%s' in aircraft\n", base->aircraft[j].missionID);
-					Mem_Free(base->aircraft[j].missionID);
-					base->aircraft[j].missionID = NULL;
-					return qfalse;
-				}
-				Mem_Free(base->aircraft[j].missionID);
-				base->aircraft[j].missionID = NULL;
-			}
+	for (i = 0; i < cls.numMDs; i++) {
+		const mapDef_t const* map = Com_GetMapDefByIDX(i);
+		if (map->timesAlreadyUsed > 0) {
+			mxml_node_t *node = mxml_AddNode(parent, SAVE_CAMPAIGN_MAPDEF);
+			mxml_AddString(node, SAVE_CAMPAIGN_MAPDEF_ID, map->id);
+			mxml_AddInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, map->timesAlreadyUsed);
 		}
 	}
 
-	mxmlDelete(campaignNode);
 	return qtrue;
 }
 
@@ -988,9 +847,8 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 qboolean CP_SaveXML (mxml_node_t *parent)
 {
 	mxml_node_t *campaign;
-	mxml_node_t *missions;
-	mxml_node_t *interests;
 	mxml_node_t *map;
+	mxml_node_t *mapDefStat;
 
 	campaign = mxml_AddNode(parent, SAVE_CAMPAIGN_CAMPAIGN);
 
@@ -1010,18 +868,12 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	mxml_AddFloat(map, SAVE_CAMPAIGN_ANGLES0, ccs.angles[0]);
 	mxml_AddFloat(map, SAVE_CAMPAIGN_ANGLES1, ccs.angles[1]);
 	mxml_AddFloat(map, SAVE_CAMPAIGN_ZOOM, ccs.zoom);
-	mxml_AddShort(map, SAVE_CAMPAIGN_R_GEOSCAPE_OVERLAY, r_geoscape_overlay->integer);
+	mxml_AddShort(map, SAVE_CAMPAIGN_CL_GEOSCAPE_OVERLAY, cl_geoscape_overlay->integer);
 	mxml_AddBool(map, SAVE_CAMPAIGN_RADAROVERLAYWASSET, radarOverlayWasSet);
 	mxml_AddBool(map, SAVE_CAMPAIGN_XVISHOWMAP, ccs.XVIShowMap);
 
-	/* Interests */
-	interests = mxml_AddNode(parent, SAVE_CAMPAIGN_INTERESTS);
-	if (!CP_SaveInterestsXML(interests))
-		return qfalse;
-
-	/* store missions */
-	missions = mxml_AddNode(parent, SAVE_CAMPAIGN_MISSIONS);
-	if (!CP_SaveMissionsXML(missions))
+	mapDefStat = mxml_AddNode(campaign, SAVE_CAMPAIGN_MAPDEFSTAT);
+	if (!CP_SaveMapDefStatXML(mapDefStat))
 		return qfalse;
 
 	return qtrue;
@@ -1102,17 +954,19 @@ void CP_StartSelectedMission (void)
 	aircraft_t *aircraft;
 	base_t *base;
 
-	if (!ccs.missionAircraft)
+	if (!ccs.missionAircraft) {
+		Com_Printf("CP_StartSelectedMission: No mission aircraft\n");
 		return;
+	}
 
 	aircraft = ccs.missionAircraft;
-	base = CP_GetMissionBase();
+	base = aircraft->homebase;
 
 	if (!ccs.selectedMission)
 		ccs.selectedMission = aircraft->mission;
 
 	if (!ccs.selectedMission) {
-		Com_DPrintf(DEBUG_CLIENT, "No ccs.selectedMission\n");
+		Com_Printf("CP_StartSelectedMission: No mission selected\n");
 		return;
 	}
 
@@ -1123,11 +977,11 @@ void CP_StartSelectedMission (void)
 
 	/* Various sanity checks. */
 	if (!mis->active) {
-		Com_DPrintf(DEBUG_CLIENT, "CP_StartSelectedMission: Dropship not near landing zone: mis->active: %i\n", mis->active);
+		Com_Printf("CP_StartSelectedMission: Dropship not near landing zone: mis->active: %i\n", mis->active);
 		return;
 	}
-	if (aircraft->teamSize <= 0) {
-		Com_DPrintf(DEBUG_CLIENT, "CP_StartSelectedMission: No team in dropship. teamSize=%i\n", aircraft->teamSize);
+	if (AIR_GetTeamSize(aircraft) == 0) {
+		Com_Printf("CP_StartSelectedMission: No team in dropship.\n");
 		return;
 	}
 
@@ -1135,7 +989,7 @@ void CP_StartSelectedMission (void)
 	SV_Shutdown("Server quit.", qfalse);
 	CL_Disconnect();
 
-	CP_CreateBattleParameters(mis);
+	CP_CreateBattleParameters(mis, &ccs.battleParameters);
 	CP_SetMissionVars(mis);
 	/* Set the states of mission Cvars to proper values. */
 	Cvar_SetValue("mission_uforecovered", 0);
@@ -1145,18 +999,6 @@ void CP_StartSelectedMission (void)
 	ccs.eMission = base->storage; /* copied, including arrays inside! */
 	CL_CleanTempInventory(base);
 	CL_CleanupAircraftCrew(aircraft, &ccs.eMission);
-
-	/* temporarily print a msg while we are hunting the 'No space in inventory' bug.
-	 * Mattn, plz don't apply coding guidlines yet. This is WIP;) Duke, 26.03.10 */
-	{
-		int i = 0;
-		invList_t* slot = cls.i.invUnused;
-		while (slot) {
-			slot = slot->next;
-			i++;
-		}
-		Com_Printf("Free inventory slots: %i\n",i);
-	}
 	CP_StartMissionMap(mis);
 }
 
@@ -1180,19 +1022,19 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 		case INTERESTCATEGORY_TERROR_ATTACK:
 			/* very hard to win this */
 			/** @todo change the formular here to reflect the above comment */
-			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * aircraft->teamSize - ccs.battleParameters.aliens);
+			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * AIR_GetTeamSize(aircraft) - ccs.battleParameters.aliens);
 			break;
 		case INTERESTCATEGORY_XVI:
 			/* not that hard to win this, they want to spread xvi - no real terror mission */
 			/** @todo change the formular here to reflect the above comment */
-			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * aircraft->teamSize - ccs.battleParameters.aliens);
+			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * AIR_GetTeamSize(aircraft) - ccs.battleParameters.aliens);
 			break;
 		default:
 			/** @todo change the formular here to reflect the above comments */
-			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * aircraft->teamSize - ccs.battleParameters.aliens);
+			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * AIR_GetTeamSize(aircraft) - ccs.battleParameters.aliens);
 			break;
 		}
-		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i -- probability to win: %.02f\n", ccs.battleParameters.aliens, aircraft->teamSize, winProbability);
+		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i -- probability to win: %.02f\n", ccs.battleParameters.aliens, AIR_GetTeamSize(aircraft), winProbability);
 
 		return winProbability;
 	} else {
@@ -1218,7 +1060,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 					/* if the soldier was ever on a mission */
 					if (score->assignedMissions) {
 						const rank_t *rank = CL_GetRankByIdx(score->rank);
-						/* @sa G_CharacterGetMaxExperiencePerMission */
+						/** @sa G_CharacterGetMaxExperiencePerMission */
 						if (score->experience[SKILL_CLOSE] > 70) { /** @todo fix this value */
 							increaseWinProbability *= rank->factor;
 						}
@@ -1235,7 +1077,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 					const character_t *chr = &employee->chr;
 					const chrScoreGlobal_t *score = &chr->score;
 					const rank_t *rank = CL_GetRankByIdx(score->rank);
-					/* @sa G_CharacterGetMaxExperiencePerMission */
+					/** @sa G_CharacterGetMaxExperiencePerMission */
 					if (score->experience[SKILL_CLOSE] > 70) { /** @todo fix this value */
 						increaseWinProbability *= rank->factor;
 					}
@@ -1276,13 +1118,15 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft)
 	MS_AddNewMessage(_("Notice"), _("Collected dead alien bodies"), qfalse, MSG_STANDARD, NULL);
 
 	while (aliens > 0) {
-		for (i = 0; i < ccs.battleParameters.alienTeamGroup->numAlienTeams; i++) {
-			const teamDef_t *teamDef = ccs.battleParameters.alienTeamGroup->alienTeams[i];
+		battleParam_t *param = &ccs.battleParameters;
+		for (i = 0; i < param->alienTeamGroup->numAlienTeams; i++) {
+			const alienTeamGroup_t *group = param->alienTeamGroup;
+			const teamDef_t *teamDef = group->alienTeams[i];
 			const int addDeadAlienAmount = aliens > 1 ? rand() % aliens : aliens;
 			if (!addDeadAlienAmount)
 				continue;
 			assert(i < MAX_CARGO);
-			assert(ccs.battleParameters.alienTeamGroup->alienTeams[i]);
+			assert(group->alienTeams[i]);
 			AL_AddAlienTypeToAircraftCargo(aircraft, teamDef, addDeadAlienAmount, qtrue);
 			aliens -= addDeadAlienAmount;
 			if (!aliens)
@@ -1298,93 +1142,77 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft)
  * @sa CP_MissionEnd
  * @sa AL_CollectingAliens
  */
-void CL_GameAutoGo (mission_t *mis)
+void CL_GameAutoGo (mission_t *mission)
 {
 	qboolean won;
 	float winProbability;
+	base_t *base;
 	/* maybe ccs.interceptAircraft is changed in some functions we call here
 	 * so store a local pointer to guarantee that we access the right aircraft
 	 * note that ccs.interceptAircraft is a fake aircraft for base attack missions */
 	aircraft_t *aircraft = ccs.interceptAircraft;
 
-	assert(mis);
+	assert(mission);
 
-	CP_CreateBattleParameters(mis);
+	CP_CreateBattleParameters(mission, &ccs.battleParameters);
 
 	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo: No update after automission\n");
 		return;
 	}
 
-	if (mis->stage != STAGE_BASE_ATTACK) {
-		if (!mis->active) {
+	base = aircraft->homebase;
+
+	if (mission->stage != STAGE_BASE_ATTACK) {
+		if (!mission->active) {
 			MS_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
 			return;
-		} else if (mis->mapDef->storyRelated) {
+		} else if (mission->mapDef->storyRelated) {
 			Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
 			/* ensure, that the automatic button is no longer visible */
 			Cvar_Set("cp_mission_autogo_available", "0");
 			return;
 		}
 
-		winProbability = CP_GetWinProbabilty(mis, NULL, aircraft);
+		winProbability = CP_GetWinProbabilty(mission, NULL, aircraft);
 	} else {
-		winProbability = CP_GetWinProbabilty(mis, (base_t *)mis->data, NULL);
+		winProbability = CP_GetWinProbabilty(mission, (base_t *)mission->data, NULL);
 	}
 
-	MN_PopWindow(qfalse);
+	UI_PopWindow(qfalse);
 
 	won = frand() < winProbability;
 
 	/* update nation opinions */
-	CL_HandleNationData(won, ccs.selectedMission);
+	CL_HandleNationData(won, mission);
 
 	CP_CheckLostCondition();
 
 	CL_AutoMissionAlienCollect(aircraft);
 
 	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(ccs.selectedMission, won);
+	CP_ExecuteMissionTrigger(mission, won);
 
 	/* if a UFO has been recovered, send it to a base */
 	if (won && ccs.missionResults.recovery) {
 		/** @todo set other counts, use the counts above */
-		ccs.missionResults.aliensKilled = ccs.battleParameters.aliens;
-		ccs.missionResults.aliensStunned = 0;
-		ccs.missionResults.aliensSurvived = 0;
-		ccs.missionResults.civiliansKilled = 0;
-		ccs.missionResults.civiliansKilledFriendlyFire = 0;
-		ccs.missionResults.civiliansSurvived = ccs.battleParameters.civilians;
-		ccs.missionResults.ownKilled = 0;
-		ccs.missionResults.ownKilledFriendlyFire = 0;
-		ccs.missionResults.ownStunned = 0;
-		ccs.missionResults.ownSurvived = aircraft->teamSize;
+		missionResults_t *results = &ccs.missionResults;
+		results->aliensKilled = ccs.battleParameters.aliens;
+		results->aliensStunned = 0;
+		results->aliensSurvived = 0;
+		results->civiliansKilled = 0;
+		results->civiliansKilledFriendlyFire = 0;
+		results->civiliansSurvived = ccs.battleParameters.civilians;
+		results->ownKilled = 0;
+		results->ownKilledFriendlyFire = 0;
+		results->ownStunned = 0;
+		results->ownSurvived = AIR_GetTeamSize(aircraft);
 		CP_InitMissionResults(won);
 		Cvar_SetValue("mn_autogo", 1);
-		MN_PushWindow("won", NULL);
+		UI_PushWindow("won", NULL);
 	}
 
-	/* handle base attack mission */
-	if (ccs.selectedMission->stage == STAGE_BASE_ATTACK) {
-		const base_t *base = (base_t*)ccs.selectedMission->data;
-		assert(base);
-
-		if (won) {
-			/* fake an aircraft return to collect goods and aliens */
-			B_AircraftReturnedToHomeBase(ccs.interceptAircraft);
-
-			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Defence of base: %s successful!"), base->name);
-			MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-			CP_BaseAttackMissionIsFailure(ccs.selectedMission);
-			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
-		} else {
-			CP_BaseAttackMissionDestroyBase(ccs.selectedMission);
-		}
-	} else {
-		AIR_AircraftReturnToBase(ccs.interceptAircraft);
-		if (won)
-			CP_MissionIsOver(ccs.selectedMission);
-	}
+	CP_MissionEndActions(mission, aircraft, won);
 
 	if (won)
 		MS_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
@@ -1401,9 +1229,9 @@ void CL_GameAutoGo (mission_t *mis)
  */
 void CP_InitMissionResults (qboolean won)
 {
-	static char resultText[MAX_SMALLMENUTEXTLEN];
+	static char resultText[1024];
 	/* init result text */
-	MN_RegisterText(TEXT_STANDARD, resultText);
+	UI_RegisterText(TEXT_STANDARD, resultText);
 
 	/* needs to be cleared and then append to it */
 	Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), ccs.missionResults.aliensKilled);
@@ -1454,13 +1282,12 @@ static qboolean CL_ShouldUpdateSoldierRank (const rank_t *rank, const character_
 /**
  * @brief Update employees stats after mission.
  * @param[in] base The base where the team lives.
- * @param[in] won Determines whether we won the mission or not.
  * @param[in] aircraft The aircraft used for the mission.
  * @note Soldier promotion is being done here.
  */
-void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *aircraft)
+void CL_UpdateCharacterStats (const base_t *base, const aircraft_t *aircraft)
 {
-	int i, j;
+	employee_t *employee = NULL;
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: base: '%s' numTeamList: %i\n",
 		base->name, cl.numTeamList);
@@ -1468,17 +1295,9 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 	assert(aircraft);
 
 	/* only soldiers have stats and ranks, ugvs not */
-	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++)
-		if (AIR_IsEmployeeInAircraft(&ccs.employees[EMPL_SOLDIER][i], aircraft)) {
-			character_t *chr = &ccs.employees[EMPL_SOLDIER][i].chr;
-			assert(chr);
-			if (!ccs.employees[EMPL_SOLDIER][i].hired) {
-				Com_Error(ERR_DROP, "Employee %s is reported as being on the aircraft (%s), but he is not hired (%i/%i)",
-					chr->name, aircraft->id, i, ccs.numEmployees[EMPL_SOLDIER]);
-			}
-			assert(ccs.employees[EMPL_SOLDIER][i].baseHired == aircraft->homebase);
-
-			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: searching for soldier: %i\n", i);
+	while ((employee = E_GetNextFromBase(EMPL_SOLDIER, employee, aircraft->homebase))) {
+		if (AIR_IsEmployeeInAircraft(employee, aircraft)) {
+			character_t *chr = &employee->chr;
 
 			/* Remember the number of assigned mission for this character. */
 			chr->score.assignedMissions++;
@@ -1490,6 +1309,7 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 			/* Check if the soldier meets the requirements for a higher rank
 			 * and do a promotion. */
 			if (ccs.numRanks >= 2) {
+				int j;
 				for (j = ccs.numRanks - 1; j > chr->score.rank; j--) {
 					const rank_t *rank = CL_GetRankByIdx(j);
 					if (CL_ShouldUpdateSoldierRank(rank, chr)) {
@@ -1504,6 +1324,7 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 				}
 			}
 		}
+	}
 	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: Done\n");
 }
 
@@ -1530,14 +1351,12 @@ static void CL_DebugAllItems_f (void)
 	base = B_GetBaseByIDX(i);
 
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *obj = &csi.ods[i];
+		objDef_t *obj = INVSH_GetItemByIDX(i);
 		if (!obj->weapon && !obj->numWeapons)
 			continue;
 		B_UpdateStorageAndCapacity(base, obj, 1, qfalse, qtrue);
 		if (base->storage.numItems[i] > 0) {
-			technology_t *tech = obj->tech;
-			if (!tech)
-				Sys_Error("CL_DebugAllItems_f: No tech for %s / %s\n", obj->id, obj->name);
+			technology_t *tech = RS_GetTechForItem(obj);
 			RS_MarkCollected(tech);
 		}
 	}
@@ -1565,9 +1384,7 @@ static void CL_DebugShowItems_f (void)
 	base = B_GetBaseByIDX(i);
 
 	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *obj = &csi.ods[i];
-		if (!obj->tech)
-			Sys_Error("CL_DebugAllItems_f: No tech for %s\n", obj->id);
+		const objDef_t *obj = INVSH_GetItemByIDX(i);
 		Com_Printf("%i. %s: %i\n", i, obj->id, base->storage.numItems[i]);
 	}
 }
@@ -1604,14 +1421,6 @@ static void CL_DebugNewEmployees_f (void)
 	for (j = 0; j < 5; j++)
 		/* Create a worker. */
 		E_CreateEmployee(EMPL_WORKER, nation, NULL);
-
-	for (j = 0; j < 5; j++)
-		/* Create a ares ugv. */
-		E_CreateEmployee(EMPL_ROBOT, nation, CL_GetUGVByID("ugv_ares_w"));
-
-	for (j = 0; j < 5; j++)
-		/* Create a phoenix ugv. */
-		E_CreateEmployee(EMPL_ROBOT, nation, CL_GetUGVByID("ugv_phoenix"));
 }
 #endif
 
@@ -1731,14 +1540,16 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 
+	CP_InitOverlay();
+
 	CP_XVIInit();
 
-	MN_InitStack("geoscape", "campaign_main", qtrue, qtrue);
+	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
 	if (load) {
 		/** @todo this should be called in this function for new campaigns too but as researched items
-			not yet set, it can't. It's called in B_SetUpFirstBase for new campaigns */
-		BS_InitMarket(load);
+		 * not yet set, it can't. It's called in B_SetUpFirstBase for new campaigns */
+		BS_InitMarket();
 		return;
 	}
 
@@ -1768,7 +1579,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	/* Initialize XVI overlay */
 	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
-	R_InitializeXVIOverlay(NULL);
+	CP_InitializeXVIOverlay(NULL);
 
 	/* create a base as first step */
 	B_SelectBase(NULL);
@@ -1785,12 +1596,14 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 void CP_CampaignExit (void)
 {
-	if (GAME_CP_IsRunning()) {
-		r_geoscape_overlay->integer = 0;
+	if (CP_IsRunning()) {
+		cl_geoscape_overlay->integer = 0;
 		/* singleplayer commands are no longer available */
 		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
 		CP_RemoveCampaignCommands();
 	}
+
+	CP_ShutdownOverlay();
 }
 
 /**
@@ -1843,6 +1656,11 @@ void CL_ResetSinglePlayerData (void)
 		if (CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
 			ccs.alienTeams[ccs.numAliensTD++] = &csi.teamDef[i];
 	}
+	/* Clear mapDef usage staistics */
+	for (i = 0; i < cls.numMDs; i++) {
+		mapDef_t *md = Com_GetMapDefByIDX(i);
+		md->timesAlreadyUsed = 0;
+	}
 }
 
 #ifdef DEBUG
@@ -1851,17 +1669,17 @@ void CL_ResetSinglePlayerData (void)
  */
 static void CL_DebugChangeCharacterStats_f (void)
 {
-	int i, j;
+	int j;
 	base_t *base = B_GetCurrentSelectedBase();
+	employee_t *employee = NULL;
 
 	if (!base)
 		return;
 
-	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
-		employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
+	while ((employee = E_GetNext(EMPL_SOLDIER, employee))) {
 		character_t *chr;
 
-		if (!employee->hired && employee->baseHired != base)
+		if (!E_IsInBase(employee, base))
 			continue;
 
 		chr = &(employee->chr);
@@ -1871,63 +1689,10 @@ static void CL_DebugChangeCharacterStats_f (void)
 			chr->score.kills[j]++;
 	}
 	if (base->aircraftCurrent)
-		CL_UpdateCharacterStats(base, 1, base->aircraftCurrent);
+		CL_UpdateCharacterStats(base, base->aircraftCurrent);
 }
 
-/**
- * @brief Show campaign stats in console
- */
-static void CP_CampaignStats_f (void)
-{
-	campaign_t *campaign = ccs.curCampaign;
-
-	if (!GAME_CP_IsRunning()) {
-		Com_Printf("No campaign active\n");
-		return;
-	}
-
-	Com_Printf("Campaign id: %s\n", campaign->id);
-	Com_Printf("..research list: %s\n", campaign->researched);
-	Com_Printf("..equipment: %s\n", campaign->equipment);
-	Com_Printf("..team: %i\n", campaign->team);
-
-	Com_Printf("..salaries:\n");
-	Com_Printf("...soldier_base: %i\n", SALARY_SOLDIER_BASE);
-	Com_Printf("...soldier_rankbonus: %i\n", SALARY_SOLDIER_RANKBONUS);
-	Com_Printf("...worker_base: %i\n", SALARY_WORKER_BASE);
-	Com_Printf("...worker_rankbonus: %i\n", SALARY_WORKER_RANKBONUS);
-	Com_Printf("...scientist_base: %i\n", SALARY_SCIENTIST_BASE);
-	Com_Printf("...scientist_rankbonus: %i\n", SALARY_SCIENTIST_RANKBONUS);
-	Com_Printf("...pilot_base: %i\n", SALARY_PILOT_BASE);
-	Com_Printf("...pilot_rankbonus: %i\n", SALARY_PILOT_RANKBONUS);
-	Com_Printf("...robot_base: %i\n", SALARY_ROBOT_BASE);
-	Com_Printf("...robot_rankbonus: %i\n", SALARY_ROBOT_RANKBONUS);
-	Com_Printf("...aircraft_factor: %i\n", SALARY_AIRCRAFT_FACTOR);
-	Com_Printf("...aircraft_divisor: %i\n", SALARY_AIRCRAFT_DIVISOR);
-	Com_Printf("...base_upkeep: %i\n", SALARY_BASE_UPKEEP);
-	Com_Printf("...admin_initial: %i\n", SALARY_ADMIN_INITIAL);
-	Com_Printf("...admin_soldier: %i\n", SALARY_ADMIN_SOLDIER);
-	Com_Printf("...admin_worker: %i\n", SALARY_ADMIN_WORKER);
-	Com_Printf("...admin_scientist: %i\n", SALARY_ADMIN_SCIENTIST);
-	Com_Printf("...admin_pilot: %i\n", SALARY_ADMIN_PILOT);
-	Com_Printf("...admin_robot: %i\n", SALARY_ADMIN_ROBOT);
-	Com_Printf("...debt_interest: %.5f\n", SALARY_DEBT_INTEREST);
-}
 #endif /* DEBUG */
-
-/**
- * @brief Returns "homebase" of the mission.
- * @note see struct client_static_s
- * @note This might be @c NULL for skirmish and multiplayer
- */
-base_t *CP_GetMissionBase (void)
-{
-	if (!ccs.missionAircraft)
-		Com_Error(ERR_DROP, "CP_GetMissionBase: No mission aircraft given");
-	if (!ccs.missionAircraft->homebase)
-		Com_Error(ERR_DROP, "CP_GetMissionBase: Mission aircraft has no homebase set");
-	return ccs.missionAircraft->homebase;
-}
 
 /**
  * @brief Determines a random position on geoscape
@@ -2039,6 +1804,44 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 	return qtrue;
 }
 
+int CP_GetSalaryAdministrative (void)
+{
+	int i, costs = SALARY_ADMIN_INITIAL;
+	for (i = 0; i < MAX_EMPL; i++)
+		costs += ccs.numEmployees[i] * CP_GetSalaryAdminEmployee(i);
+	return costs;
+}
+
+int CP_GetSalaryBaseEmployee (employeeType_t type)
+{
+	const salary_t *salary = &ccs.salaries[ccs.curCampaign->idx];
+	return salary->base[type];
+}
+
+int CP_GetSalaryAdminEmployee (employeeType_t type)
+{
+	const salary_t *salary = &ccs.salaries[ccs.curCampaign->idx];
+	return salary->admin[type];
+}
+
+int CP_GetSalaryRankBonusEmployee (employeeType_t type)
+{
+	const salary_t *salary = &ccs.salaries[ccs.curCampaign->idx];
+	return salary->rankBonus[type];
+}
+
+int CP_GetSalaryUpKeepBase (const base_t *base)
+{
+	int cost = SALARY_BASE_UPKEEP;	/* base cost */
+	building_t *building = NULL;
+	while ((building = B_GetNextBuilding(base, building))) {
+		if (building->buildingStatus == B_STATUS_WORKING
+		 || building->buildingStatus == B_STATUS_CONSTRUCTION_FINISHED)
+			cost += building->varCosts;
+	}
+	return cost;
+}
+
 /** @todo remove me and move all the included stuff to proper places */
 void CP_InitStartup (void)
 {
@@ -2049,9 +1852,10 @@ void CP_InitStartup (void)
 	/* commands */
 #ifdef DEBUG
 	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
-	Cmd_AddCommand("debug_listcampaign", CP_CampaignStats_f, "Print campaign stats to game console");
 #endif
 	Cmd_AddCommand("check_baseattacks", CP_CheckBaseAttacks_f, "Check if baseattack mission available and start it.");
+
+	cp_missiontest = Cvar_Get("cp_missiontest", "0", 0, "This will never stop the time on geoscape and print information about spawned missions");
 
 	CP_MissionsInit();
 	MS_MessageInit();
@@ -2070,5 +1874,5 @@ void CP_InitStartup (void)
 	AB_InitStartup();
 	AIRFIGHT_InitStartup();
 	NAT_InitStartup();
+	STATS_InitStartup();
 }
-

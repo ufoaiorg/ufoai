@@ -23,9 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../cl_ugv.h"
-#include "../menu/m_main.h"
+#include "../cl_shared.h"
 #include "../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_rank.h"
@@ -55,6 +53,8 @@ static int CL_GetAlienMissionTypeByID (const char *type)
 		return INTERESTCATEGORY_HARVEST;
 	else if (!strcmp(type, "alienbase"))
 		return INTERESTCATEGORY_ALIENBASE;
+	else if (!strcmp(type, "rescue"))
+		return INTERESTCATEGORY_RESCUE;
 	else {
 		Com_Printf("CL_GetAlienMissionTypeByID: unknown alien mission category '%s'\n", type);
 		return INTERESTCATEGORY_NONE;
@@ -308,26 +308,26 @@ static void CL_ParseResearchableCampaignStates (const char *name, const char **t
 /* =========================================================== */
 
 static const value_t salary_vals[] = {
-	{"soldier_base", V_INT, offsetof(salary_t, soldier_base), MEMBER_SIZEOF(salary_t, soldier_base)},
-	{"soldier_rankbonus", V_INT, offsetof(salary_t, soldier_rankbonus), MEMBER_SIZEOF(salary_t, soldier_rankbonus)},
-	{"worker_base", V_INT, offsetof(salary_t, worker_base), MEMBER_SIZEOF(salary_t, worker_base)},
-	{"worker_rankbonus", V_INT, offsetof(salary_t, worker_rankbonus), MEMBER_SIZEOF(salary_t, worker_rankbonus)},
-	{"scientist_base", V_INT, offsetof(salary_t, scientist_base), MEMBER_SIZEOF(salary_t, scientist_base)},
-	{"scientist_rankbonus", V_INT, offsetof(salary_t, scientist_rankbonus), MEMBER_SIZEOF(salary_t, scientist_rankbonus)},
-	{"pilot_base", V_INT, offsetof(salary_t, pilot_base), MEMBER_SIZEOF(salary_t, pilot_base)},
-	{"pilot_rankbonus", V_INT, offsetof(salary_t, pilot_rankbonus), MEMBER_SIZEOF(salary_t, pilot_rankbonus)},
-	{"robot_base", V_INT, offsetof(salary_t, robot_base), MEMBER_SIZEOF(salary_t, robot_base)},
-	{"robot_rankbonus", V_INT, offsetof(salary_t, robot_rankbonus), MEMBER_SIZEOF(salary_t, robot_rankbonus)},
-	{"aircraft_factor", V_INT, offsetof(salary_t, aircraft_factor), MEMBER_SIZEOF(salary_t, aircraft_factor)},
-	{"aircraft_divisor", V_INT, offsetof(salary_t, aircraft_divisor), MEMBER_SIZEOF(salary_t, aircraft_divisor)},
-	{"base_upkeep", V_INT, offsetof(salary_t, base_upkeep), MEMBER_SIZEOF(salary_t, base_upkeep)},
-	{"admin_initial", V_INT, offsetof(salary_t, admin_initial), MEMBER_SIZEOF(salary_t, admin_initial)},
-	{"admin_soldier", V_INT, offsetof(salary_t, admin_soldier), MEMBER_SIZEOF(salary_t, admin_soldier)},
-	{"admin_worker", V_INT, offsetof(salary_t, admin_worker), MEMBER_SIZEOF(salary_t, admin_worker)},
-	{"admin_scientist", V_INT, offsetof(salary_t, admin_scientist), MEMBER_SIZEOF(salary_t, admin_scientist)},
-	{"admin_pilot", V_INT, offsetof(salary_t, admin_pilot), MEMBER_SIZEOF(salary_t, admin_pilot)},
-	{"admin_robot", V_INT, offsetof(salary_t, admin_robot), MEMBER_SIZEOF(salary_t, admin_robot)},
-	{"debt_interest", V_FLOAT, offsetof(salary_t, debt_interest), MEMBER_SIZEOF(salary_t, debt_interest)},
+	{"soldier_base", V_INT, offsetof(salary_t, base[EMPL_SOLDIER]), MEMBER_SIZEOF(salary_t, base[EMPL_SOLDIER])},
+	{"soldier_rankbonus", V_INT, offsetof(salary_t, rankBonus[EMPL_SOLDIER]), MEMBER_SIZEOF(salary_t, rankBonus[EMPL_SOLDIER])},
+	{"worker_base", V_INT, offsetof(salary_t, base[EMPL_WORKER]), MEMBER_SIZEOF(salary_t, base[EMPL_WORKER])},
+	{"worker_rankbonus", V_INT, offsetof(salary_t, rankBonus[EMPL_WORKER]), MEMBER_SIZEOF(salary_t, rankBonus[EMPL_WORKER])},
+	{"scientist_base", V_INT, offsetof(salary_t, base[EMPL_SCIENTIST]), MEMBER_SIZEOF(salary_t, base[EMPL_SCIENTIST])},
+	{"scientist_rankbonus", V_INT, offsetof(salary_t, rankBonus[EMPL_SCIENTIST]), MEMBER_SIZEOF(salary_t, rankBonus[EMPL_SCIENTIST])},
+	{"pilot_base", V_INT, offsetof(salary_t, base[EMPL_PILOT]), MEMBER_SIZEOF(salary_t, base[EMPL_PILOT])},
+	{"pilot_rankbonus", V_INT, offsetof(salary_t, rankBonus[EMPL_PILOT]), MEMBER_SIZEOF(salary_t, rankBonus[EMPL_PILOT])},
+	{"robot_base", V_INT, offsetof(salary_t, base[EMPL_ROBOT]), MEMBER_SIZEOF(salary_t, base[EMPL_ROBOT])},
+	{"robot_rankbonus", V_INT, offsetof(salary_t, rankBonus[EMPL_ROBOT]), MEMBER_SIZEOF(salary_t, rankBonus[EMPL_ROBOT])},
+	{"aircraft_factor", V_INT, offsetof(salary_t, aircraftFactor), MEMBER_SIZEOF(salary_t, aircraftFactor)},
+	{"aircraft_divisor", V_INT, offsetof(salary_t, aircraftDivisor), MEMBER_SIZEOF(salary_t, aircraftDivisor)},
+	{"base_upkeep", V_INT, offsetof(salary_t, baseUpkeep), MEMBER_SIZEOF(salary_t, baseUpkeep)},
+	{"admin_initial", V_INT, offsetof(salary_t, adminInitial), MEMBER_SIZEOF(salary_t, adminInitial)},
+	{"admin_soldier", V_INT, offsetof(salary_t, admin[EMPL_SOLDIER]), MEMBER_SIZEOF(salary_t, admin[EMPL_SOLDIER])},
+	{"admin_worker", V_INT, offsetof(salary_t, admin[EMPL_WORKER]), MEMBER_SIZEOF(salary_t, admin[EMPL_WORKER])},
+	{"admin_scientist", V_INT, offsetof(salary_t, admin[EMPL_SCIENTIST]), MEMBER_SIZEOF(salary_t, admin[EMPL_SCIENTIST])},
+	{"admin_pilot", V_INT, offsetof(salary_t, admin[EMPL_PILOT]), MEMBER_SIZEOF(salary_t, admin[EMPL_PILOT])},
+	{"admin_robot", V_INT, offsetof(salary_t, admin[EMPL_ROBOT]), MEMBER_SIZEOF(salary_t, admin[EMPL_ROBOT])},
+	{"debt_interest", V_FLOAT, offsetof(salary_t, debtInterest), MEMBER_SIZEOF(salary_t, debtInterest)},
 	{NULL, 0, 0, 0}
 };
 
@@ -460,26 +460,26 @@ void CL_ParseCampaign (const char *name, const char **text)
 
 	/* some default values */
 	s = &ccs.salaries[cp->idx];
-	s->soldier_base = 3000;
-	s->soldier_rankbonus = 500;
-	s->worker_base = 3000;
-	s->worker_rankbonus = 500;
-	s->scientist_base = 3000;
-	s->scientist_rankbonus = 500;
-	s->pilot_base = 3000;
-	s->pilot_rankbonus = 500;
-	s->robot_base = 7500;
-	s->robot_rankbonus = 1500;
-	s->aircraft_factor = 1;
-	s->aircraft_divisor = 25;
-	s->base_upkeep = 20000;
-	s->admin_initial = 1000;
-	s->admin_soldier = 75;
-	s->admin_worker = 75;
-	s->admin_scientist = 75;
-	s->admin_pilot = 75;
-	s->admin_robot = 150;
-	s->debt_interest = 0.005;
+	s->base[EMPL_SOLDIER] = 3000;
+	s->rankBonus[EMPL_SOLDIER] = 500;
+	s->base[EMPL_WORKER] = 3000;
+	s->rankBonus[EMPL_WORKER] = 500;
+	s->base[EMPL_SCIENTIST] = 3000;
+	s->rankBonus[EMPL_SCIENTIST] = 500;
+	s->base[EMPL_PILOT] = 3000;
+	s->rankBonus[EMPL_PILOT] = 500;
+	s->base[EMPL_ROBOT] = 7500;
+	s->rankBonus[EMPL_ROBOT] = 1500;
+	s->aircraftFactor = 1;
+	s->aircraftDivisor = 25;
+	s->baseUpkeep = 20000;
+	s->adminInitial = 1000;
+	s->admin[EMPL_SOLDIER] = 75;
+	s->admin[EMPL_WORKER] = 75;
+	s->admin[EMPL_SCIENTIST] = 75;
+	s->admin[EMPL_PILOT] = 75;
+	s->admin[EMPL_ROBOT] = 150;
+	s->debtInterest = 0.005;
 
 	do {
 		token = Com_EParse(text, errhead, name);
@@ -716,7 +716,7 @@ static qboolean CP_ItemsSanityCheck (void)
 	qboolean result = qtrue;
 
 	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *item = &csi.ods[i];
+		const objDef_t *item = INVSH_GetItemByIDX(i);
 
 		/* Warn if item has no size set. */
 		if (item->size <= 0 && B_ItemIsStoredInBaseStorage(item)) {
@@ -757,7 +757,6 @@ static const sanity_functions_t sanity_functions[] = {
 	{RS_ScriptSanityCheck, "tech"},
 	{AIR_ScriptSanityCheck, "aircraft"},
 	{CP_ItemsSanityCheck, "items"},
-	{INV_EquipmentDefSanityCheck, "items"},
 	{NAT_ScriptSanityCheck, "nations"},
 
 	{NULL, NULL}
@@ -790,6 +789,7 @@ void CL_ScriptSanityCheck (void)
 void CL_ReadSinglePlayerData (void)
 {
 	const char *type, *name, *text;
+	int i;
 
 	/* pre-stage parsing */
 	FS_BuildFileList("ufos/*.ufo");
@@ -809,6 +809,14 @@ void CL_ReadSinglePlayerData (void)
 	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		CL_ParseScriptSecond(type, name, &text);
+
+	for (i = 0; i < csi.numTeamDefs; i++) {
+		const teamDef_t *teamDef = &csi.teamDef[i];
+		ccs.teamDefTechs[teamDef->idx] = RS_GetTechByID(teamDef->tech);
+		if (ccs.teamDefTechs == NULL)
+			Com_Error(ERR_DROP, "Could not find a tech for teamdef %s", teamDef->id);
+	}
+
 
 	Com_Printf("Campaign data loaded - size "UFO_SIZE_T" bytes\n", sizeof(ccs));
 	Com_Printf("...techs: %i\n", ccs.numTechnologies);

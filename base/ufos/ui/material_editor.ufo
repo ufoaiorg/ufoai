@@ -8,7 +8,7 @@ window material_editor {
 		size "600 580"
 		dragbutton	true
 		closebutton true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Material editor"
 	}
 
@@ -20,9 +20,9 @@ window material_editor {
 		selectcolor "1 1 1 1"
 
 		onViewChange {
-			*(abstractscrollbar)editor_scroll@current = <viewpos>
-			*(abstractscrollbar)editor_scroll@viewsize = <viewsize>
-			*(abstractscrollbar)editor_scroll@fullsize = <fullsize>
+			*node:root.editor_scroll@current = <viewpos>
+			*node:root.editor_scroll@viewsize = <viewsize>
+			*node:root.editor_scroll@fullsize = <fullsize>
 		}
 		onChange {
 			*cvar:me_image_id = <num>
@@ -30,12 +30,12 @@ window material_editor {
 	}
 
 	vscrollbar editor_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"250 55"
 		height		210
 		hidewhenunused true
 		onChange	{
-			*editor@viewpos = <current>
+			*node:root.editor@viewpos = <current>
 		}
 	}
 
@@ -54,7 +54,7 @@ window material_editor {
 	 * @param<5> value for specular
 	 */
 	confunc hideshaders {
-		*shader_attributes@invis = <1>
+		*node:root.shader_attributes@invis = <1>
 		*cvar:me_bump = <2>
 		*cvar:me_hardness = <3>
 		*cvar:me_parallax = <4>
@@ -73,9 +73,9 @@ window material_editor {
 			size		"80 20"
 			font		"f_verysmall"
 		}
-		pic hardness_rahmen
+		image hardness_rahmen
 		{
-			image		ui/bar_rahmen
+			src		"ui/bar_rahmen"
 			pos			"90 5"
 			size		"108 16"
 		}
@@ -96,9 +96,9 @@ window material_editor {
 			size		"80 20"
 			font		"f_verysmall"
 		}
-		pic bump_rahmen
+		image bump_rahmen
 		{
-			image		ui/bar_rahmen
+			src		"ui/bar_rahmen"
 			pos			"90 25"
 			size		"108 16"
 		}
@@ -119,9 +119,9 @@ window material_editor {
 			size		"80 20"
 			font		"f_verysmall"
 		}
-		pic specular_rahmen
+		image specular_rahmen
 		{
-			image		ui/bar_rahmen
+			src		"ui/bar_rahmen"
 			pos			"90 45"
 			size		"108 16"
 		}
@@ -142,9 +142,9 @@ window material_editor {
 			size		"80 20"
 			font		"f_verysmall"
 		}
-		pic parallax_rahmen
+		image parallax_rahmen
 		{
-			image		ui/bar_rahmen
+			src		"ui/bar_rahmen"
 			pos			"90 65"
 			size		"108 16"
 		}
@@ -160,11 +160,11 @@ window material_editor {
 	}
 
 	func hidestageattributestabs {
-		*stage_attributes.stage_attributes_scale@invis = true
-		*stage_attributes.stage_attributes_scroll@invis = true
-		*stage_attributes.stage_attributes_pulse@invis = true
-		*stage_attributes.stage_attributes_stretch@invis = true
-		*stage_attributes.stage_attributes_rotate@invis = true
+		*node:root.stage_attributes.stage_attributes_scale@invis = true
+		*node:root.stage_attributes.stage_attributes_scroll@invis = true
+		*node:root.stage_attributes.stage_attributes_pulse@invis = true
+		*node:root.stage_attributes.stage_attributes_stretch@invis = true
+		*node:root.stage_attributes.stage_attributes_rotate@invis = true
 	}
 
 	/**
@@ -173,11 +173,11 @@ window material_editor {
 	 */
 	confunc hidestages {
 		*cvar:me_tmp = <1>
-		*stage_attributes@invis = <1>
+		*node:root.stage_attributes@invis = <1>
 		call *node:root.hidestageattributestabs
 		if ( *cvar:me_tmp == false ) {
 			*cvar:me_stagetype = <2>
-			*stage_attributes.stage_attributes_<cvar:me_stagetype>@invis = false
+			*node:root.stage_attributes.stage_attributes_<cvar:me_stagetype>@invis = false
 		}
 
 		cmd "del me_tmp;"
@@ -220,20 +220,20 @@ window material_editor {
 				cmd "mn_materialeditor_selectstage <cvar:me_image_id> <lineselected>;"
 			}
 			onViewChange {
-				*(abstractscrollbar)stages.stage_scroll@current = <viewpos>
-				*(abstractscrollbar)stages.stage_scroll@viewsize = <viewsize>
-				*(abstractscrollbar)stages.stage_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)stages.stage_scroll@height = <height>
+				*node:root.stages.stage_scroll@current = <viewpos>
+				*node:root.stages.stage_scroll@viewsize = <viewsize>
+				*node:root.stages.stage_scroll@fullsize = <fullsize>
+				*node:root.stages.stage_scroll@height = <height>
 			}
 		}
 
 		vscrollbar stage_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"165 0"
 			height		90
 			hidewhenunused true
 			onChange	{
-				*stages.stages@viewpos = <current>
+				*node:root.stages.stages@viewpos = <current>
 			}
 		}
 
@@ -241,8 +241,8 @@ window material_editor {
 			string		"_+"
 			pos			"0 100"
 			size		"40 28"
-			image		ui/button_green_verysmall
-			font		f_verysmall
+			image		"ui/button_green_verysmall"
+			font		"f_verysmall"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			onClick	{ cmd "mn_materialeditor_newstage <cvar:me_image_id>;" }
@@ -252,8 +252,8 @@ window material_editor {
 			string		"_-"
 			pos			"50 100"
 			size		"40 28"
-			image		ui/button_green_verysmall
-			font		f_verysmall
+			image		"ui/button_green_verysmall"
+			font		"f_verysmall"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			onClick	{ cmd "mn_materialeditor_removestage <cvar:me_image_id> <cvar:me_stage_id>;" }
@@ -283,10 +283,10 @@ window material_editor {
 			textentry scale_s
 			{
 				string		*cvar:me_scale_s
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 5"
@@ -307,10 +307,10 @@ window material_editor {
 			textentry scale_t
 			{
 				string		*cvar:me_scale_t
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 35"
@@ -338,10 +338,10 @@ window material_editor {
 			textentry scroll_ds
 			{
 				string		*cvar:me_scroll_ds
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 5"
@@ -362,10 +362,10 @@ window material_editor {
 			textentry scroll_dt
 			{
 				string		*cvar:me_scroll_dt
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 35"
@@ -386,10 +386,10 @@ window material_editor {
 			textentry scroll_s
 			{
 				string		*cvar:me_scroll_s
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 65"
@@ -410,10 +410,10 @@ window material_editor {
 			textentry scroll_t
 			{
 				string		*cvar:me_scroll_t
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 95"
@@ -441,10 +441,10 @@ window material_editor {
 			textentry pulse_hz
 			{
 				string		*cvar:me_pulse_hz
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 5"
@@ -465,10 +465,10 @@ window material_editor {
 			textentry pulse_dhz
 			{
 				string		*cvar:me_pulse_dhz
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 35"
@@ -496,10 +496,10 @@ window material_editor {
 			textentry stretch_hz
 			{
 				string		*cvar:me_stretch_hz
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 5"
@@ -520,10 +520,10 @@ window material_editor {
 			textentry stretch_dhz
 			{
 				string		*cvar:me_stretch_dhz
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 35"
@@ -544,10 +544,10 @@ window material_editor {
 			textentry stretch_amp
 			{
 				string		*cvar:me_stretch_amp
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 65"
@@ -568,10 +568,10 @@ window material_editor {
 			textentry stretch_damp
 			{
 				string		*cvar:me_stretch_damp
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 95"
@@ -599,10 +599,10 @@ window material_editor {
 			textentry rotate_hz
 			{
 				string		*cvar:me_rotate_hz
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 5"
@@ -623,10 +623,10 @@ window material_editor {
 			textentry rotate_deg
 			{
 				string		*cvar:me_rotate_deg
-				image		ui/button_green_verysmall
+				image		"ui/button_green_verysmall"
 				color 		"0 .78 0 1"
 				selectcolor	"1 1 1 1"
-				textalign	cl
+				textalign	ALIGN_CL
 				padding		6
 				font		"f_verysmall"
 				pos			"105 35"
@@ -639,14 +639,16 @@ window material_editor {
 
 		tab stage_type
 		{
-			pos		"0 0"
-			size	"280 40"
-			cvar	*cvar:me_stagetype
-			font	"f_verysmall"
+			{
+				pos		"0 0"
+				size	"280 40"
+				cvar	*cvar:me_stagetype
+				font	"f_verysmall"
 
-			onChange {
-				call *node:root.hidestageattributestabs
-				*stage_attributes.stage_attributes_<cvar:me_stagetype>@invis = false
+				onChange {
+					call *node:root.hidestageattributestabs
+					*node:root.stage_attributes.stage_attributes_<cvar:me_stagetype>@invis = false
+				}
 			}
 
 			option stretch {

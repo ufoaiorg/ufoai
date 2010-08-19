@@ -1,0 +1,35 @@
+/* land_li_yellow: big yellow light with additional flare effect (used outside) */
+{
+	material tex_lights/land_li_yellow
+	{
+		texture tex_lights/land_li_yellow
+	}
+	{
+		texture pt/fx/rfx_lali_orange_k
+		pulse 0.03
+		rotate 0.2
+	}
+	{
+		flare 2
+		color 1.0 1.0 0.7
+	}
+}
+
+/* land_li_yellow2: small yellow light with additional flare effect (used for the torches inside the catacombs) */
+{
+	material tex_lights/land_li_yellow2
+	{
+		texture pt/fx/rfx_lali_yellow2_sp2
+		rotate 10
+	}
+	{
+		texture pt/fx/rfx_lali_red_sp2
+		rotate 15
+		pulse 5
+	}
+	{
+		flare 2
+		scale.s 3.0
+		color 1.0 1.0 0.8
+	}
+}

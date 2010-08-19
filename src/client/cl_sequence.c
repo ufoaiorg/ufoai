@@ -32,9 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "renderer/r_draw.h"
 #include "renderer/r_mesh_anim.h"
 #include "../shared/parse.h"
-#include "menu/m_main.h"
-#include "menu/m_nodes.h"
-#include "menu/m_render.h"
+#include "ui/ui_main.h"
+#include "ui/ui_nodes.h"
+#include "ui/ui_render.h"
 
 #define MAX_DATA_LENGTH 2048
 
@@ -244,7 +244,7 @@ static seq2D_t *CL_SequenceFind2D (const char *name)
  * @sa CL_Sequence2D
  * @sa CL_ViewRender
  * @sa CL_SequenceEnd_f
- * @sa MN_PopWindow
+ * @sa UI_PopWindow
  * @sa CL_SequenceFindEnt
  */
 void CL_SequenceRender (void)
@@ -268,7 +268,7 @@ void CL_SequenceRender (void)
 		/* test for finish */
 		if (seqCmd >= seqEndCmd) {
 			CL_SequenceEnd_f();
-			MN_PopWindow(qfalse);
+			UI_PopWindow(qfalse);
 			return;
 		}
 
@@ -330,7 +330,7 @@ void CL_Sequence2D (void)
 	pos[0] = (viddef.virtualWidth - VID_NORM_WIDTH) / 2;
 	pos[1] = (viddef.virtualHeight - VID_NORM_HEIGHT) / 2;
 	pos[2] = 0;
-	MN_Transform(pos, NULL, NULL);
+	UI_Transform(pos, NULL, NULL);
 
 	/* add texts */
 	for (i = 0, s2d = seq2Ds; i < numSeq2Ds; i++, s2d++)
@@ -378,12 +378,12 @@ void CL_Sequence2D (void)
 				int maxWidth = (int) s2d->size[0];
 				if (maxWidth <= 0)
 					maxWidth = VID_NORM_WIDTH;
-				height += MN_DrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], s2d->pos[1], maxWidth, (int) s2d->size[1], -1 /** @todo use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+				height += UI_DrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], maxWidth, -1 /** @todo use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse, LONGLINES_WRAP);
 			}
 		}
 	R_Color(NULL);
 
-	MN_Transform(NULL, NULL, NULL);
+	UI_Transform(NULL, NULL, NULL);
 }
 
 /**
@@ -405,7 +405,7 @@ static void CL_SequenceStart_f (void)
 	sequence_t *sp;
 	const char *name, *menuName;
 	int i;
-	const menuNode_t* menu;
+	const uiNode_t* menu;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <name> [<menu>]\n", Cmd_Argv(0));
@@ -425,7 +425,7 @@ static void CL_SequenceStart_f (void)
 	/* display the sequence menu */
 	/* the default is in menu_main.ufo - menu sequence */
 	menuName = Cmd_Argc() < 3 ? mn_sequence->string : Cmd_Argv(2);
-	menu = MN_PushWindow(menuName, NULL);
+	menu = UI_PushWindow(menuName, NULL);
 	if (!menu) {
 		Com_Printf("CL_SequenceStart_f: can't display menu '%s'\n", menuName);
 		return;
@@ -510,7 +510,7 @@ static const value_t seq2D_vals[] = {
 /**
  * @brief Wait until someone clicks with the mouse
  * @return 0 if you wait for the click
- * @return 1 if the click occured
+ * @return 1 if the click occurred
  */
 static int SEQ_Click (const char *name, const char *data)
 {

@@ -26,10 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef GAME_INV_SHARED_H
 #define GAME_INV_SHARED_H
 
-#include "q_shared.h"
-#include "lua/lua.h"
-#include "../common/filesys.h"
+struct csi_s;
 
+/** @todo doesn't belong here, but AIRCRAFTTYPE_MAX is needed for the equipment definitions */
 typedef enum {
 	DROPSHIP_FIREBIRD,
 	DROPSHIP_HERAKLES,
@@ -47,11 +46,9 @@ typedef enum {
 /* this is the absolute max for now */
 #define MAX_OBJDEFS		128		/* Remember to adapt the "NONE" define (and similar) if this gets changed. */
 #define MAX_MAPDEFS		128
-#define MAX_UGV			8
 #define MAX_WEAPONS_PER_OBJDEF 4
 #define MAX_AMMOS_PER_OBJDEF 4
 #define MAX_FIREDEFS_PER_WEAPON 8
-#define MAX_DAMAGETYPES 64
 #define WEAPON_BALANCE 0.5f
 #define SKILL_BALANCE 1.0f
 #define INJURY_BALANCE 0.2f
@@ -84,8 +81,8 @@ typedef struct fireDef_s {
 	char fireSound[MAX_VAR];	/**< the sound when a recruits fires */
 	char impactSound[MAX_VAR];	/**< the sound that is played on impact */
 	char hitBodySound[MAX_VAR];	/**< the sound that is played on hitting a body */
-	int fireAttenuation;		/**< attenuation of firing (less louder over distance), see S_PlaySample() */
-	int impactAttenuation;		/**< attenuation of impact (less louder over distance), see S_PlaySample() */
+	float fireAttenuation;		/**< attenuation of firing (less louder over distance), see S_PlaySample() */
+	float impactAttenuation;		/**< attenuation of impact (less louder over distance), see S_PlaySample() */
 	char bounceSound[MAX_VAR];	/**< bouncing sound */
 
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
@@ -106,7 +103,7 @@ typedef struct fireDef_s {
 	byte dmgweight;			/**< used in G_Damage() to apply damagetype effects - redundant with obj->dmgtype */
 	float speed;			/**< projectile-related; zero value means unlimited speed (most of the cases).
 					     for that unlimited speed we use special particle (which cannot work with speed non-zero valued. */
-	vec2_t shotOrg;			/**< not set for any firedefinition, but called in CL_TargetingGrenade() and G_GetShotOrigin() */
+	vec2_t shotOrg;			/**< This can shift a muzzle vertically (first value) and horizontally (second value) for the trace that is done on the server side. */
 	vec2_t spread;			/**< used for accuracy calculations (G_ShootGrenade(), G_ShootSingle()) */
 	int delay;			/**< applied on grenades and grenade launcher. If no delay is set, a touch with an actor will lead to
 						 * an explosion or a hit of the projectile. If a delay is set, the (e.g. grenade) may bounce away again. */
@@ -154,6 +151,7 @@ typedef struct fireDef_s {
 /**
  * @brief All different types of craft items.
  * @note must begin with weapons and end with ammos
+ * @todo move into campaign only structure
  */
 typedef enum {
 	/* weapons */
@@ -181,6 +179,7 @@ typedef enum {
  * @note This is a list of all aircraft parameters that depends on aircraft items.
  * those values doesn't change with shield or weapon assigned to aircraft
  * @note AIR_STATS_WRANGE must be the last parameter (see AII_UpdateAircraftStats)
+ * @todo move into campaign only structure
  */
 typedef enum {
 	AIR_STATS_SPEED,	/**< Aircraft cruising speed. */
@@ -201,6 +200,7 @@ typedef enum {
  * @brief Aircraft items.
  * @note This is a part of objDef, only filled for aircraft items (weapons, shield, electronics).
  * @sa objDef_t
+ * @todo move into campaign only structure
  */
 typedef struct craftitem_s {
 	aircraftItemType_t type;		/**< The type of the aircraft item. */
@@ -213,6 +213,8 @@ typedef struct craftitem_s {
 	qboolean beam;				/**< create (laser/partivle) beam particles for the projectiles */
 	vec4_t beamColor;
 } craftitem_t;
+
+#define MAX_DAMAGETYPES 64
 
 /**
  * @brief Defines all attributes of objects used in the inventory.
@@ -227,35 +229,23 @@ typedef struct objDef_s {
 	char image[MAX_VAR];		/**< Object image file - relative to game dir. */
 	char type[MAX_VAR];		/**< melee, rifle, ammo, armour. e.g. used in the ufopedia */
 	char armourPath[MAX_VAR];
-	char extends_item[MAX_VAR];
 	uint32_t shape;			/**< The shape in inventory. */
 
-	byte sx, sy;			/**< Size in x and y direction. */
 	float scale;			/**< scale value for images? and models */
 	vec3_t center;			/**< origin for models */
-	char animationIndex;	/**< The animation index for the character with the weapon. */
 	qboolean weapon;		/**< This item is a weapon or ammo. */
 	qboolean holdTwoHanded;		/**< The soldier needs both hands to hold this object. */
 	qboolean fireTwoHanded;		/**< The soldier needs both hands to fire using object. */
 	qboolean extension;		/**< This is an extension. (may not be headgear, too). */
 	qboolean headgear;		/**< This is a headgear. (may not be extension, too). */
 	qboolean thrown;		/**< This item can be thrown. */
-
-	int price;			/**< Price for this item. */
-	int size;			/**< Size of an item, used in storage capacities. */
-
 	qboolean isVirtual;	/**< virtual equipment don't show up in menus, if it's an ammo no item needed for reload */
-	/** Item type used to check against buytypes.
-	 * @sa type=="armour", type=="ammo"			equals "isAmmo"
-	 * @sa obj.craftitem.type == MAX_ACITEMS	equals "isCraftitem" */
 	qboolean isPrimary;
 	qboolean isSecondary;
 	qboolean isHeavy;
 	qboolean isMisc;
 	qboolean isUGVitem;
 	qboolean isDummy;
-
-	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 
 	/* Weapon specific. */
 	int ammo;			/**< This value is set for weapon and it says how many bullets currently loaded clip would
@@ -283,15 +273,21 @@ typedef struct objDef_s {
 	int numWeapons;		/**< Number of weapons this ammo can be used in.
 						 * Maximum value for fireDef_t.weapFdsIdx <= MAX_WEAPONS_PER_OBJDEF. */
 
-	struct technology_s *tech;	/**< Technology link to item. */
 
 	/* Armour specific */
 	short protection[MAX_DAMAGETYPES];	/**< Protection values for each armour and every damage type. */
 	short ratings[MAX_DAMAGETYPES];		/**< Rating values for each armour and every damage type to display in the menus. */
 
-	/* Aircraft specific */
 	byte dmgtype;
+	byte sx, sy;			/**< Size in x and y direction. */
+	char animationIndex;	/**< The animation index for the character with the weapon. */
+
+	/**** @todo move into campaign only structure ****/
+	/* Aircraft specific */
 	craftitem_t craftitem;
+	int price;			/**< Price for this item. */
+	int size;			/**< Size of an item, used in storage capacities. */
+	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 } objDef_t;
 
 /**
@@ -326,7 +322,6 @@ typedef struct invDef_s {
 } invDef_t;
 
 #define MAX_CONTAINERS	MAX_INVDEFS
-#define MAX_INVLIST		1024
 
 /**
  * @brief item definition
@@ -365,7 +360,6 @@ typedef struct equipDef_s {
 	int numItems[MAX_OBJDEFS];	/**< Number of item for each item type (see equipment_missions.ufo for more info) */
 	byte numItemsLoose[MAX_OBJDEFS];	/**< currently only used for weapon ammo */
 	int numAircraft[AIRCRAFTTYPE_MAX];
-	int numUGVs[MAX_UGV];
 	int minInterest;		/**< Minimum overall interest to use this equipment definition (only for alien) */
 	int maxInterest;		/**< Maximum overall interest to use this equipment definition (only for alien) */
 } equipDef_t;
@@ -376,94 +370,10 @@ typedef struct equipDef_s {
 #define MAX_CULTURES 8
 #define MAX_POPULATIONS 8
 
-typedef struct mapDef_s {
-	/* general */
-	char *id;				/**< script file id */
-	char *map;				/**< bsp or ump base filename (without extension and day or night char) */
-	char *param;			/**< in case of ump file, the assembly to use */
-	char *description;		/**< the description to show in the menus */
-	char *size;				/**< small, medium, big */
-
-	/* multiplayer */
-	qboolean multiplayer;	/**< is this map multiplayer ready at all */
-	int teams;				/**< multiplayer teams */
-	linkedList_t *gameTypes;	/**< gametype strings this map is useable for */
-
-	/* singleplayer */
-	int maxAliens;				/**< Number of spawning points on the map */
-	qboolean hurtAliens;		/**< hurt the aliens on spawning them - e.g. for ufocrash missions */
-
-	linkedList_t *terrains;		/**< terrain strings this map is useable for */
-	linkedList_t *populations;	/**< population strings this map is useable for */
-	linkedList_t *cultures;		/**< culture strings this map is useable for */
-	qboolean storyRelated;		/**< Is this a mission story related? */
-	int timesAlreadyUsed;		/**< Number of times the map has already been used */
-	linkedList_t *ufos;			/**< Type of allowed UFOs on the map */
-	linkedList_t *aircraft;		/**< Type of allowed aircraft on the map */
-
-	/** @note Don't end with ; - the trigger commands get the base index as
-	 * parameter - see CP_ExecuteMissionTrigger - If you don't need the base index
-	 * in your trigger command, you can seperate more commands with ; of course */
-	char onwin[MAX_VAR];		/**< trigger command after you've won a battle */
-	char onlose[MAX_VAR];		/**< trigger command after you've lost a battle */
-} mapDef_t;
-
 typedef struct damageType_s {
 	char id[MAX_VAR];
 	qboolean showInMenu;	/**< true for values that contains a translatable id */
 } damageType_t;
-
-/**
- * @brief The csi structure is the client-server-information structure
- * which contains all the UFO info needed by the server and the client.
- * @sa ccs_t
- * @note Most of this comes from the script files
- */
-typedef struct csi_s {
-	/** Object definitions */
-	objDef_t ods[MAX_OBJDEFS];
-	int numODs;
-
-	/** Inventory definitions */
-	invDef_t ids[MAX_INVDEFS];
-	int numIDs;
-
-	/** Map definitions */
-	mapDef_t mds[MAX_MAPDEFS];
-	int numMDs;
-	mapDef_t *currentMD;	/**< currently selected mapdef */
-
-	/** Special container ids */
-	containerIndex_t idRight, idLeft, idExtension;
-	containerIndex_t idHeadgear, idBackpack, idBelt, idHolster;
-	containerIndex_t idArmour, idFloor, idEquip;
-
-	/** Damage type ids */
-	int damNormal, damBlast, damFire;
-	int damShock;	/**< Flashbang-type 'damage' (i.e. Blinding). */
-
-	/** Damage type ids */
-	int damLaser, damPlasma, damParticle;
-	int damStunGas;		/**< Stun gas attack (only effective against organic targets).
-						 * @todo Maybe even make a differentiation between aliens/humans here? */
-	int damStunElectro;	/**< Electro-Shock attack (effective against organic and robotic targets). */
-
-	/** Equipment definitions */
-	equipDef_t eds[MAX_EQUIPDEFS];
-	int numEDs;
-
-	/** Damage types */
-	damageType_t dts[MAX_DAMAGETYPES];
-	int numDTs;
-
-	/** team definitions */
-	teamDef_t teamDef[MAX_TEAMDEFS];
-	int numTeamDefs;
-
-	/** the current assigned teams for this mission */
-	const teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
-	int numAlienTeams;
-} csi_t;
 
 /** @todo remove this and use the container id - not every unit must have two hands */
 typedef enum {
@@ -484,193 +394,12 @@ qboolean INV_IsLeftDef(const invDef_t* invDef);
 qboolean INV_IsEquipDef(const invDef_t* invDef);
 qboolean INV_IsArmourDef(const invDef_t* invDef);
 
-typedef enum {
-	KILLED_ENEMIES,		/**< Killed enemies */
-	KILLED_CIVILIANS,	/**< Civilians, animals */
-	KILLED_TEAM,		/**< Friendly fire, own team, partner-teams. */
-
-	KILLED_NUM_TYPES
-} killtypes_t;
-
-/** @note Changing order/entries also changes network-transmission and savegames! */
-typedef enum {
-	ABILITY_POWER,
-	ABILITY_SPEED,
-	ABILITY_ACCURACY,
-	ABILITY_MIND,
-
-	SKILL_CLOSE,
-	SKILL_HEAVY,
-	SKILL_ASSAULT,
-	SKILL_SNIPER,
-	SKILL_EXPLOSIVE,
-	SKILL_NUM_TYPES
-} abilityskills_t;
-
-#define ABILITY_NUM_TYPES SKILL_CLOSE
-
-/**
- * @brief Structure of all stats collected in a mission.
- * @note More general Info: http://ufoai.ninex.info/wiki/index.php/Proposals/Attribute_Increase
- * @note Mostly collected in g_client.c and not used anywhere else (at least that's the plan ;)).
- * The result is parsed into chrScoreGlobal_t which is stored in savegames.
- * @note BTAxis about "hit" count:
- * "But yeah, what we want is a counter per skill. This counter should start at 0
- * every battle, and then be increased by 1 everytime:
- * - a direct fire weapon hits (or deals damage, same thing) the actor the weapon
- *   was fired at. If it wasn't fired at an actor, nothing should happen.
- * - a splash weapon deals damage to any enemy actor. If multiple actors are hit,
- *   increase the counter multiple times."
- */
-typedef struct chrScoreMission_s {
-
-	/* Movement counts. */
-	int movedNormal;
-	int movedCrouched;
-
-	/* Kills & stuns */
-	/** @todo use existing code */
-	int kills[KILLED_NUM_TYPES];	/**< Count of kills (aliens, civilians, teammates) */
-	int stuns[KILLED_NUM_TYPES];	/**< Count of stuns(aliens, civilians, teammates) */
-
-	/* Hits/Misses */
-	int fired[SKILL_NUM_TYPES];				/**< Count of fired "firemodes" (i.e. the count of how many times the soldier started shooting) */
-	int firedTUs[SKILL_NUM_TYPES];				/**< Count of TUs used for the fired "firemodes". (direct hits only)*/
-	qboolean firedHit[KILLED_NUM_TYPES];	/** Temporarily used for shot-stats calculations and status-tracking. Not used in stats.*/
-	int hits[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of hits (aliens, civilians or, teammates) per skill.
-													 * It is a sub-count of "fired".
-													 * It's planned to be increased by 1 for each series of shots that dealt _some_ damage. */
-	int firedSplash[SKILL_NUM_TYPES];	/**< Count of fired splash "firemodes". */
-	int firedSplashTUs[SKILL_NUM_TYPES];				/**< Count of TUs used for the fired "firemodes" (splash damage only). */
-	qboolean firedSplashHit[KILLED_NUM_TYPES];	/** Same as firedHit but for Splash damage. */
-	int hitsSplash[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of splash hits. */
-	int hitsSplashDamage[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of dealt splash damage (aliens, civilians or, teammates).
-														 		 * This is counted in overall damage (healthpoint).*/
-	/** @todo Check HEALING of others. */
-	int skillKills[SKILL_NUM_TYPES];	/**< Number of kills related to each skill. */
-
-	int heal;	/**< How many hitpoints has this soldier received trough healing in battlescape. */
-} chrScoreMission_t;
-
-/**
- * @brief Structure of all stats collected for an actor over time.
- * @note More general Info: http://ufoai.ninex.info/wiki/index.php/Proposals/Attribute_Increase
- * @note This information is stored in savegames (in contract to chrScoreMission_t).
- * @note WARNING: if you change something here you'll have to make sure all the network and savegame stuff is updated as well!
- * Additionally you have to check the size of the network-transfer in G_SendCharacterData and GAME_CP_Results
- */
-typedef struct chrScoreGlobal_s {
-	int experience[SKILL_NUM_TYPES + 1]; /**< Array of experience values for all skills, and health. @todo What are the mins and maxs for these values */
-
-	int skills[SKILL_NUM_TYPES];		/**< Array of skills and abilities. This is the total value. */
-	int initialSkills[SKILL_NUM_TYPES + 1];		/**< Array of initial skills and abilities. This is the value generated at character generation time. */
-
-	/* Kills & Stuns */
-	int kills[KILLED_NUM_TYPES];	/**< Count of kills (aliens, civilians, teammates) */
-	int stuns[KILLED_NUM_TYPES];	/**< Count of stuns(aliens, civilians, teammates) */
-
-	int assignedMissions;		/**< Number of missions this soldier was assigned to. */
-
-	int rank;					/**< Index of rank (in ccs.ranks). */
-} chrScoreGlobal_t;
-
-typedef struct chrFiremodeSettings_s {
-	actorHands_t hand;	/**< Stores the used hand */
-	fireDefIndex_t fmIdx;	/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
-	const objDef_t *weapon;
-} chrFiremodeSettings_t;
-
-/**
- * @brief How many TUs (and of what type) did a player reserve for a unit?
- * @sa CL_ActorUsableTUs
- * @sa CL_ActorReservedTUs
- * @sa CL_ActorReserveTUs
- */
-typedef struct chrReservations_s {
-	/* Reaction fire reservation (for current round and next enemy round) */
-	int reaction;	/**< Did the player activate RF with a usable firemode?
-					 * (And at the same time storing the TU-costs of this firemode) */
-
-	/* Crouch reservation (for current round)	*/
-	int crouch;	/**< Did the player reserve TUs for crouching (or standing up)? Depends exclusively on TU_CROUCH. */
-
-	/* Shot reservation (for current round) */
-	int shot;	/**< If non-zero we reserved a shot in this turn. */
-	chrFiremodeSettings_t shotSettings;	/**< Stores what type of firemode & weapon
-										 * (and hand) was used for "shot" reservation. */
-} chrReservations_t;
-
-typedef enum {
-	RES_REACTION,
-	RES_CROUCH,
-	RES_SHOT,
-	RES_ALL,
-	RES_ALL_ACTIVE,
-	RES_TYPES /**< Max. */
-} reservation_types_t;
-
-/** @brief Artificial intelligence of a character
- * @todo doesn't belong here  */
-typedef struct AI_s {
-	char type[MAX_QPATH];	/**< Lua file used by the AI. */
-	char subtype[MAX_VAR];	/**< Subtype to be used by AI. */
-	lua_State* L;			/**< The lua state used by the AI. */
-} AI_t;
-
-/** @brief Describes a character with all its attributes
- * @todo doesn't belong here */
-typedef struct character_s {
-	int ucn;					/**< unique character number */
-	char name[MAX_VAR];			/**< Character name (as in: soldier name). */
-	char path[MAX_VAR];
-	char body[MAX_VAR];
-	char head[MAX_VAR];
-	int skin;					/**< Index of skin. */
-
-	int HP;						/**< Health points (current ones). */
-	int minHP;					/**< Minimum hp during combat */
-	int maxHP;					/**< Maximum health points (as in: 100% == fully healed). */
-	int STUN;
-	int morale;
-
-	int state;					/**< a character can request some initial states when the team is spawned (like reaction fire) */
-
-	chrScoreGlobal_t score;		/**< Array of scores/stats the soldier/unit collected over time. */
-	chrScoreMission_t *scoreMission;		/**< Array of scores/stats the soldier/unit collected in a mission - only used in battlescape (server side). Otherwise it's NULL. */
-
-	/** @sa memcpy in Grid_CheckForbidden */
-	actorSizeEnum_t fieldSize;				/**< @sa ACTOR_SIZE_**** */
-
-	inventory_t i;			/**< Inventory definition. */
-
-	teamDef_t *teamDef;			/**< Pointer to team definition. */
-	int gender;				/**< Gender index. */
-	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
-	chrFiremodeSettings_t RFmode;	/** < Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
-
-	AI_t AI; /**< The character's artificial intelligence */
-} character_t;
-
-#define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == (HAND) && (fm)->fmIdx == (fdIdx))
-#define SANE_FIREMODE(fm)	(((fm)->hand > ACTOR_HAND_NOT_SET && (fm)->fmIdx >= 0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON))
-
-#define INV_IsArmour(od)	(!strcmp((od)->type, "armour"))
-#define INV_IsAmmo(od)		(!strcmp((od)->type, "ammo"))
-
-/* ================================ */
-/*  CHARACTER GENERATING FUNCTIONS  */
-/* ================================ */
-
-void CHRSH_CharGenAbilitySkills(character_t * chr, qboolean multiplayer) __attribute__((nonnull));
-const char *CHRSH_CharGetBody(const character_t* const chr) __attribute__((nonnull));
-const char *CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnull));
-qboolean CHRSH_IsTeamDefAlien(const teamDef_t* const td) __attribute__((nonnull));
-
 /* ================================ */
 /*  INVENTORY MANAGEMENT FUNCTIONS  */
 /* ================================ */
 
-void INVSH_InitCSI(csi_t * import) __attribute__((nonnull));
+invList_t* INVSH_HasArmour(const inventory_t *inv);
+void INVSH_InitCSI(struct csi_s * import) __attribute__((nonnull));
 int INVSH_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const invDef_t * container, const int x, const int y, const invList_t *ignoredItem);
 qboolean INVSH_CompareItem(item_t *item1, item_t *item2);
 void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
@@ -684,9 +413,14 @@ objDef_t *INVSH_GetItemByID(const char *id);
 objDef_t *INVSH_GetItemByIDX(int index);
 objDef_t *INVSH_GetItemByIDSilent(const char *id);
 qboolean INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
-qboolean INVSH_UseableForTeam(const objDef_t *od, const int team);
 
 invDef_t *INVSH_GetInventoryDefinitionByID(const char *id);
+
+#define THIS_FIREMODE(fm, HAND, fdIdx)	((fm)->hand == (HAND) && (fm)->fmIdx == (fdIdx))
+#define SANE_FIREMODE(fm)	(((fm)->hand > ACTOR_HAND_NOT_SET && (fm)->fmIdx >= 0 && (fm)->fmIdx < MAX_FIREDEFS_PER_WEAPON))
+
+#define INV_IsArmour(od)	(!strcmp((od)->type, "armour"))
+#define INV_IsAmmo(od)		(!strcmp((od)->type, "ammo"))
 
 /* =============================== */
 /*  FIREMODE MANAGEMENT FUNCTIONS  */

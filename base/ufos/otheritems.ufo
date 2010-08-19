@@ -56,7 +56,7 @@ item bloodspider_weapon
 			projtl		null
 			impact		null
 			hitbody		null
-			firesnd		weapons/bloodspider
+			firesnd		aliens/bloodspider/attack
 			speed		0
 			range		2
 			shots		1 //FIXME

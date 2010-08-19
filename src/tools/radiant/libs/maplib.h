@@ -100,6 +100,10 @@ class UndoFileChangeTracker: public UndoTracker, public MapFile
 			m_changed();
 			//print();
 		}
+		void clearRedo (void)
+		{
+			// do nothing special
+		}
 		void begin ()
 		{
 			m_pending = Pending(&UndoFileChangeTracker::pushOperation);

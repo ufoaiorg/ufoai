@@ -61,6 +61,7 @@ typedef struct {
 	int light;
 	int spawnflags;
 	float volume;
+	float attenuation;
 	float angle;
 	int maxteams;
 
@@ -74,8 +75,9 @@ static const value_t localEntityValues[] = {
 	{"maxteams", V_INT, offsetof(localEntityParse_t, maxteams), MEMBER_SIZEOF(localEntityParse_t, maxteams)},
 	{"spawnflags", V_INT, offsetof(localEntityParse_t, spawnflags), MEMBER_SIZEOF(localEntityParse_t, spawnflags)},
 	{"maxlevel", V_INT, offsetof(localEntityParse_t, maxLevel), MEMBER_SIZEOF(localEntityParse_t, maxLevel)},
+	{"attenuation", V_FLOAT, offsetof(localEntityParse_t, attenuation), MEMBER_SIZEOF(localEntityParse_t, attenuation)},
 	{"volume", V_FLOAT, offsetof(localEntityParse_t, volume), MEMBER_SIZEOF(localEntityParse_t, volume)},
-	{"frame", V_FLOAT, offsetof(localEntityParse_t, frame), MEMBER_SIZEOF(localEntityParse_t, frame)},
+	{"frame", V_INT, offsetof(localEntityParse_t, frame), MEMBER_SIZEOF(localEntityParse_t, frame)},
 	{"angle", V_FLOAT, offsetof(localEntityParse_t, angle), MEMBER_SIZEOF(localEntityParse_t, angle)},
 	{"wait", V_POS, offsetof(localEntityParse_t, wait), MEMBER_SIZEOF(localEntityParse_t, wait)},
 	{"angles", V_VECTOR, offsetof(localEntityParse_t, angles), MEMBER_SIZEOF(localEntityParse_t, angles)},
@@ -149,8 +151,8 @@ void CL_SpawnParseEntitystring (void)
 	const char *es = CM_EntityString();
 	int entnum = 0, maxLevel;
 
-	if (cl.mapMaxLevelBase > 0 && cl.mapMaxLevelBase < PATHFINDING_HEIGHT)
-		maxLevel = cl.mapMaxLevelBase;
+	if (cl.mapMaxLevel > 0 && cl.mapMaxLevel < PATHFINDING_HEIGHT)
+		maxLevel = cl.mapMaxLevel;
 	else
 		maxLevel = PATHFINDING_HEIGHT;
 
@@ -158,8 +160,6 @@ void CL_SpawnParseEntitystring (void)
 	if (cl.numMapParticles || cl.numLMs)
 		return;
 
-	/* clear active light list before adding lights for the new map */
-	R_ClearActiveLights();
 	memset(&sun, 0, sizeof(sun));
 	memset(&sun2, 0, sizeof(sun2));
 
@@ -187,6 +187,7 @@ void CL_SpawnParseEntitystring (void)
 		entData.entStringPos = es;
 		entData.entnum = entnum;
 		entData.maxMultiplayerTeams = TEAM_MAX_HUMAN;
+		entData.attenuation = SOUND_ATTN_IDLE;
 
 		/* go through all the dictionary pairs */
 		while (1) {
@@ -356,7 +357,7 @@ static void SP_misc_sound (const localEntityParse_t *entData)
 {
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
 	if (!(dayLightmap && (entData->spawnflags & (1 << SPAWNFLAG_NO_DAY))))
-		LE_AddAmbientSound(entData->noise, entData->origin, (entData->spawnflags & 0xFF), entData->volume);
+		LE_AddAmbientSound(entData->noise, entData->origin, (entData->spawnflags & 0xFF), entData->volume, entData->attenuation);
 }
 
 /**

@@ -36,19 +36,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_screen.h"
 #include "cl_console.h"
-#include "cinematic/cl_cinematic.h"
 #include "battlescape/cl_localentity.h"
 #include "battlescape/cl_actor.h"
 #include "battlescape/cl_view.h"
 #include "battlescape/cl_hud.h"
 #include "renderer/r_main.h"
 #include "renderer/r_draw.h"
-#include "menu/m_main.h"
-#include "menu/m_draw.h"
-#include "menu/m_nodes.h"
-#include "menu/m_windows.h"
-#include "menu/m_dragndrop.h"
-#include "menu/m_render.h"
+#include "ui/ui_main.h"
+#include "ui/ui_draw.h"
+#include "ui/ui_nodes.h"
+#include "ui/ui_windows.h"
+#include "ui/ui_dragndrop.h"
+#include "ui/ui_render.h"
+#include "../ports/system.h"
 
 static float scr_con_current;			/* aproaches scr_conlines at scr_conspeed */
 static float scr_conlines;				/* 0.0 to 1.0 lines of console to display */
@@ -79,7 +79,7 @@ static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFon
 			string++;
 		}
 	} else
-		MN_DrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, viddef.virtualWidth, viddef.virtualHeight, 12, string, 0, 0, NULL, qfalse, 0);
+		UI_DrawString("f_verysmall", ALIGN_UL, x, y, 0, viddef.virtualWidth, 12, string, 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -108,14 +108,14 @@ void SCR_DrawPrecacheScreen (qboolean string)
 
 	R_BeginFrame();
 
-	image = R_FindImage("pics/loading", it_pic);
+	image = R_FindImage("pics/background/loading", it_pic);
 	if (image)
 		R_DrawImage(viddef.virtualWidth / 2 - image->width / 2, viddef.virtualHeight / 2 - image->height / 2, image);
 	if (string) {
 		/* Not used with gettext because it would make removing it too easy. */
-		MN_DrawString("f_menubig", ALIGN_UC,
+		UI_DrawString("f_menubig", ALIGN_UC,
 			(int)(viddef.virtualWidth / 2), 30,
-			0, 1, viddef.virtualWidth, viddef.virtualHeight, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse, 0);
+			0, viddef.virtualWidth, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse, 0);
 	}
 	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, (int)cls.loadingPercent);
 
@@ -163,12 +163,11 @@ static const image_t* SCR_SetLoadingBackground (const char *mapString)
 static void SCR_DrawDownloading (void)
 {
 	const char *dlmsg = va(_("Downloading [%s]"), cls.downloadName);
-	MN_DrawString("f_menubig", ALIGN_UC,
+	UI_DrawString("f_menubig", ALIGN_UC,
 		(int)(viddef.virtualWidth / 2),
 		(int)(viddef.virtualHeight / 2 - 60),
 		(int)(viddef.virtualWidth / 2),
-		(int)(viddef.virtualHeight / 2 - 60),
-		viddef.virtualWidth, viddef.virtualHeight, 50, dlmsg, 1, 0, NULL, qfalse, 0);
+		viddef.virtualWidth, 50, dlmsg, 1, 0, NULL, qfalse, 0);
 
 	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, (int)cls.downloadPercent);
 }
@@ -202,20 +201,18 @@ static void SCR_DrawLoading (void)
 
 	if (cl.configstrings[CS_TILES][0]) {
 		mapmsg = va(_("Loading Map [%s]"), _(cl.configstrings[CS_MAPTITLE]));
-		MN_DrawString("f_menubig", ALIGN_UC,
+		UI_DrawString("f_menubig", ALIGN_UC,
 			(int)(viddef.virtualWidth / 2),
 			(int)(viddef.virtualHeight / 2 - 60),
 			(int)(viddef.virtualWidth / 2),
-			(int)(viddef.virtualHeight / 2 - 60),
-			viddef.virtualWidth, viddef.virtualHeight, 50, mapmsg, 1, 0, NULL, qfalse, 0);
+			viddef.virtualWidth, 50, mapmsg, 1, 0, NULL, qfalse, 0);
 	}
 
-	MN_DrawString("f_menu", ALIGN_UC,
+	UI_DrawString("f_menu", ALIGN_UC,
 		(int)(viddef.virtualWidth / 2),
 		(int)(viddef.virtualHeight / 2),
 		(int)(viddef.virtualWidth / 2),
-		(int)(viddef.virtualHeight / 2),
-		viddef.virtualWidth, viddef.virtualHeight, 50, cls.loadingMessages, 1, 0, NULL, qfalse, 0);
+		viddef.virtualWidth, 50, cls.loadingMessages, 1, 0, NULL, qfalse, 0);
 
 	SCR_DrawLoadingBar((int)(viddef.virtualWidth / 2) - 300, viddef.virtualHeight - 30, 600, 20, (int)cls.loadingPercent);
 }
@@ -251,7 +248,7 @@ static void SCR_DrawCursor (void)
 	if (scr_showcursor->integer == 0)
 		return;
 
-	if (!scr_cursor->integer || cls.playingCinematic == CIN_STATUS_FULLSCREEN)
+	if (!scr_cursor->integer)
 		return;
 
 	if (scr_cursor->modified) {
@@ -262,7 +259,7 @@ static void SCR_DrawCursor (void)
 	if (!cursorImage[0])
 		return;
 
-	if (!MN_DNDIsDragging()) {
+	if (!UI_DNDIsDragging()) {
 		const char *pic;
 		image_t *image;
 
@@ -279,7 +276,7 @@ static void SCR_DrawCursor (void)
 			HUD_UpdateCursor();
 		}
 	} else {
-		MN_DrawCursor();
+		UI_DrawCursor();
 	}
 }
 
@@ -352,7 +349,7 @@ void SCR_BeginLoadingPlaque (void)
 	screenDrawLoading = 1;
 
 	SCR_UpdateScreen();
-	cls.disableScreen = cls.realtime;
+	cls.disableScreen = CL_Milliseconds();
 }
 
 /**
@@ -404,7 +401,7 @@ static void SCR_TimeRefresh_f (void)
 
 /**
  * @brief This is called every frame, and can also be called explicitly to flush text to the screen
- * @sa MN_Draw
+ * @sa UI_Draw
  * @sa CL_ViewRender
  * @sa SCR_DrawConsole
  * @sa SCR_DrawCursor
@@ -414,7 +411,7 @@ void SCR_UpdateScreen (void)
 	/* if the screen is disabled (loading plaque is up, or vid mode changing)
 	 * do nothing at all */
 	if (cls.disableScreen) {
-		if (cls.realtime - cls.disableScreen > 120000 && refdef.ready) {
+		if (CL_Milliseconds() - cls.disableScreen > 120000 && refdef.ready) {
 			cls.disableScreen = 0;
 			Com_Printf("Loading plaque timed out.\n");
 			return;
@@ -433,17 +430,11 @@ void SCR_UpdateScreen (void)
 	if (screenDrawLoading)
 		SCR_DrawLoading();
 	else {
-		MN_GetActiveRenderRect(&viddef.x, &viddef.y, &viddef.viewWidth, &viddef.viewHeight);
-
-		if (cls.playingCinematic == CIN_STATUS_FULLSCREEN) {
-			CIN_RunCinematic();
-		} else {
-			/* draw scene */
-			CL_ViewRender();
-
-			/* draw the menus on top of the render view (for hud and so on) */
-			MN_Draw();
-		}
+		UI_GetActiveRenderRect(&viddef.x, &viddef.y, &viddef.viewWidth, &viddef.viewHeight);
+		/* draw scene */
+		CL_ViewRender();
+		/* draw the menus on top of the render view (for hud and so on) */
+		UI_Draw();
 
 		SCR_DrawConsole();
 

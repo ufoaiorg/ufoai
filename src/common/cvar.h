@@ -1,6 +1,6 @@
 /**
  * @file cvar.h
- * @brief Cvar header file
+ * @brief Cvar (console variable) header file
  *
  * cvar_t variables are used to hold scalar or string variables that can be changed or displayed at the console or prog code as well as accessed directly
  * in C code.
@@ -32,49 +32,106 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifndef COMMON_CVAR
+#define COMMON_CVAR
+
+#define CVAR_ARCHIVE    1       /**< set to cause it to be saved to vars.rc */
+#define CVAR_USERINFO   2       /**< added to userinfo  when changed */
+#define CVAR_SERVERINFO 4       /**< added to serverinfo when changed */
+#define CVAR_NOSET      8       /**< don't allow change from console at all, but can be set from the command line */
+#define CVAR_LATCH      16      /**< save changes until server restart */
+#define CVAR_DEVELOPER  32      /**< set from commandline (not from within the game) and hide from console */
+#define CVAR_CHEAT      64      /**< clamp to the default value when cheats are off */
+#define CVAR_R_IMAGES   128     /**< effects image filtering */
+#define CVAR_R_CONTEXT    256     /**< vid shutdown if such a cvar was modified */
+#define CVAR_R_PROGRAMS 512		/**< if changed, shaders are restarted */
+
+#define CVAR_R_MASK (CVAR_R_IMAGES | CVAR_R_CONTEXT | CVAR_R_PROGRAMS)
+
+/**
+ * @brief Callback for the listener
+ * @param cvarName The name of the cvar that was changed.
+ * @param oldValue The old value of the cvar - this is never @c NULL, but can be empty.
+ * @param newValue The new value of the cvar - this is never @c NULL, but can be empty.
+ */
+typedef void (*cvarChangeListenerFunc_t) (const char *cvarName, const char *oldValue, const char *newValue);
+
+typedef struct cvarListener_s {
+	cvarChangeListenerFunc_t exec;
+	struct cvarListener_s *next;
+} cvarChangeListener_t;
+
+/**
+ * @brief This is a cvar defintion. Cvars can be user modified and used in our menus e.g.
+ * @note nothing outside the Cvar_*() functions should modify these fields!
+ */
+typedef struct cvar_s {
+	char *name;				/**< cvar name */
+	char *string;			/**< value as string */
+	char *latchedString;	/**< for CVAR_LATCH vars */
+	char *defaultString;	/**< default string set on first init - only set for CVAR_CHEAT */
+	char *oldString;		/**< value of the cvar before we changed it */
+	char *description;		/**< cvar description */
+	int flags;				/**< cvar flags CVAR_ARCHIVE|CVAR_NOSET.... */
+	qboolean modified;		/**< set each time the cvar is changed */
+	float value;			/**< value as float */
+	int integer;			/**< value as integer */
+	qboolean (*check) (struct cvar_s* cvar);	/**< cvar check function */
+	cvarChangeListener_t *changeListener;
+	struct cvar_s *next;
+	struct cvar_s *prev;
+	struct cvar_s *hash_next;
+} cvar_t;
+
+typedef struct cvarList_s {
+	const char *name;
+	const char *value;
+	cvar_t *var;
+} cvarList_t;
+
 /**
  * @brief creates the variable if it doesn't exist, or returns the existing one
  * if it exists, the value will not be changed, but flags will be ORed in
  * that allows variables to be unarchived without needing bitflags
  */
-cvar_t *Cvar_Get(const char *var_name, const char *value, int flags, const char* desc);
+cvar_t *Cvar_Get(const char *varName, const char *value, int flags, const char* desc);
 
 /**
  * @brief will create the variable if it doesn't exist
  */
-cvar_t *Cvar_Set(const char *var_name, const char *value);
+cvar_t *Cvar_Set(const char *varName, const char *value);
 
 /**
  * @brief will set the variable even if NOSET or LATCH
  */
-cvar_t *Cvar_ForceSet(const char *var_name, const char *value);
+cvar_t *Cvar_ForceSet(const char *varName, const char *value);
 
-cvar_t *Cvar_FullSet(const char *var_name, const char *value, int flags);
+cvar_t *Cvar_FullSet(const char *varName, const char *value, int flags);
 
 /**
  * @brief expands value to a string and calls Cvar_Set
  */
-void Cvar_SetValue(const char *var_name, float value);
+void Cvar_SetValue(const char *varName, float value);
 
 /**
  * @brief returns 0 if not defined or non numeric
  */
-int Cvar_GetInteger(const char *var_name);
+int Cvar_GetInteger(const char *varName);
 
 /**
  * @brief returns 0.0 if not defined or non numeric
  */
-float Cvar_GetValue(const char *var_name);
+float Cvar_GetValue(const char *varName);
 
 /**
  * @brief returns an empty string if not defined
  */
-const char *Cvar_GetString(const char *var_name);
+const char *Cvar_GetString(const char *varName);
 
 /**
  * @brief returns an empty string if not defined
  */
-const char *Cvar_VariableStringOld(const char *var_name);
+const char *Cvar_VariableStringOld(const char *varName);
 
 /**
  * @brief attempts to match a partial variable name for command line completion
@@ -120,7 +177,7 @@ qboolean Cvar_AssertString(cvar_t * cvar, char **array, int arraySize);
 /**
  * @brief Sets the check functions for a cvar (e.g. Cvar_Assert)
  */
-qboolean Cvar_SetCheckFunction(const char *var_name, qboolean (*check) (cvar_t* cvar));
+qboolean Cvar_SetCheckFunction(const char *varName, qboolean (*check) (cvar_t* cvar));
 
 /**
  * @brief Registers a listener that is executed each time a cvar changed its value.
@@ -144,12 +201,12 @@ void Cvar_FixCheatVars(void);
 /**
  * @brief Function to remove the cvar and free the space
  */
-qboolean Cvar_Delete(const char *var_name);
+qboolean Cvar_Delete(const char *varName);
 
 /**
  * @brief Searches for a cvar given by parameter
  */
-cvar_t *Cvar_FindVar(const char *var_name);
+cvar_t *Cvar_FindVar(const char *varName);
 
 /**
  * @brief Checks whether there are pending cvars for the given flags
@@ -171,3 +228,6 @@ void Cvar_ClearVars(int flags);
 #ifdef DEBUG
 void Cvar_PrintDebugCvars(void);
 #endif
+
+#endif
+

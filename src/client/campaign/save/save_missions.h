@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef SAVE_MISSIONS_H
 #define SAVE_MISSIONS_H
 
+#define SAVE_MISSIONS "missions"
 #define SAVE_MISSIONS_MISSION "mission"
 #define SAVE_MISSIONS_MISSION_IDX "IDX"
 #define SAVE_MISSIONS_ID "id"
@@ -47,6 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_MISSIONS_FINALDATE "finalDate"
 #define SAVE_MISSIONS_POS "pos"
 #define SAVE_MISSIONS_UFO "UFO"
+#define SAVE_MISSIONS_CRASHED_AIRCRAFT "crashedAircraft"
 #define SAVE_MISSIONS_ONGEOSCAPE "onGeoscape"
 
 #define SAVE_MISSIONSTAGE_NAMESPACE "saveMissionStage"

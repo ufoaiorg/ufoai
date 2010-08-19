@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "CUnit/Basic.h"
 #include "test_routing.h"
+#include "test_shared.h"
 
 #include "../common/common.h"
 #include "../common/routing.h"
@@ -36,25 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int UFO_InitSuiteRouting (void)
 {
-	unsigned int checksum = 0;
-
-	com_aliasSysPool = Mem_CreatePool("Common: Alias system");
-	com_cmdSysPool = Mem_CreatePool("Common: Command system");
-	com_cmodelSysPool = Mem_CreatePool("Common: Collision model");
-	com_cvarSysPool = Mem_CreatePool("Common: Cvar system");
-	com_fileSysPool = Mem_CreatePool("Common: File system");
-	com_genericPool = Mem_CreatePool("Generic");
-
-	Mem_Init();
-	Cmd_Init();
-	Cvar_Init();
-	FS_InitFilesystem(qtrue);
-	Swap_Init();
-
-	/**
-	 * @todo use a special testmap
-	 */
-	CM_LoadMap("fueldump", qtrue, "", &checksum);
+	TEST_Init();
 	return 0;
 }
 
@@ -64,18 +47,20 @@ static int UFO_InitSuiteRouting (void)
  */
 static int UFO_CleanSuiteRouting (void)
 {
-	FS_Shutdown();
-	Cmd_Shutdown();
-	Cvar_Shutdown();
-	Mem_Shutdown();
+	TEST_Shutdown();
 	return 0;
 }
 
+static routing_t map[ACTOR_MAX_SIZE];
+
 static void testConnection (void)
 {
+	unsigned int checksum = 0;
 	/**
+	 * @todo use a special testmap
 	 * @todo implement the test
 	 */
+	CM_LoadMap("fueldump", qtrue, "", &checksum, map, lengthof(map));
 }
 
 int UFO_AddRoutingTests (void)

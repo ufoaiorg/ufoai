@@ -32,7 +32,7 @@ window genradarhud extends ahud
 	// ==================
 
 	confunc gen_radarmap {
-		cmd "mn_push genradarhud"
+		cmd "mn_push genradarhud;"
 	}
 
 	panel mapborder {
@@ -51,14 +51,14 @@ window genradarhud extends ahud
 		{
 			pos			"5 5"
 			size		"250 30"
-			image		ui/button_green_small
-			font		f_small
+			image		"ui/button_green_small"
+			font		"f_small"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			string		"_Reinit"
 			onClick {
-				*mapborder@invis = true
-				cmd "r_isometric 1;centercamera;camsetangles 90 90;camsetzoom 0.5;"
+				*node:root.mapborder@invis = true
+				cmd "r_isometric 1;r_screenshot_format png;centercamera;camsetangles 90 90;camsetzoom 0.5;"
 			}
 		}
 
@@ -66,15 +66,15 @@ window genradarhud extends ahud
 		{
 			pos			"5 40"
 			size		"250 30"
-			image		ui/button_green_small
-			font		f_small
+			image		"ui/button_green_small"
+			font		"f_small"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			string		"_Preview"
 			onClick {
-				*control@invis = true
-				*mapborder@invis = true
-				cmd "mn_genpreviewradarmap"
+				*node:root.control@invis = true
+				*node:root.mapborder@invis = true
+				cmd "mn_genpreviewradarmap;"
 			}
 		}
 
@@ -82,14 +82,14 @@ window genradarhud extends ahud
 		{
 			pos			"5 75"
 			size		"250 30"
-			image		ui/button_green_small
-			font		f_small
+			image		"ui/button_green_small"
+			font		"f_small"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			string		"_Gen this level"
 			onClick {
-				*mapborder@invis = true
-				cmd "mn_genradarmap"
+				*node:root.mapborder@invis = true
+				cmd "mn_genradarmap;"
 			}
 		}
 
@@ -97,40 +97,40 @@ window genradarhud extends ahud
 		{
 			pos			"5 110"
 			size		"250 30"
-			image		ui/button_green_small
-			font		f_small
+			image		"ui/button_green_small"
+			font		"f_small"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			string		"_Gen all levels"
 			onClick {
 				*cvar:scr_showcursor = 0
-				*control@invis = true
-				*mapborder@invis = true
-				cmd "mn_genallradarmap"
+				*node:root.control@invis = true
+				*node:root.mapborder@invis = true
+				cmd "mn_genallradarmap;"
 			}
 		}
 	}
 
 	confunc	mn_radarhud_setmapborder
 	{
-		*mapborder@left = ( <1> - 10 )
-		*mapborder@top = ( <2> - 10 )
-		*mapborder@width = ( <3> + 20 )
-		*mapborder@height = ( <4> + 20 )
-		*mapborder@invis = false
-		*control@invis = false
+		*node:root.mapborder@left = ( <1> - 10 )
+		*node:root.mapborder@top = ( <2> - 10 )
+		*node:root.mapborder@width = ( <3> + 20 )
+		*node:root.mapborder@height = ( <4> + 20 )
+		*node:root.mapborder@invis = false
+		*node:root.control@invis = false
 	}
 
 	confunc	mn_radarhud_reinit
 	{
-		*control@invis = false
-		*mapborder@invis = false
+		*node:root.control@invis = false
+		*node:root.mapborder@invis = false
 		*cvar:scr_showcursor = 1
 	}
 
 	func onInit {
-		cmd "mn_radarhud_reinit"
-		cmd "echo Run the game in 1024x1024:"
+		cmd "mn_radarhud_reinit;"
+		cmd "echo Run the game in 1024x1024:;"
 		cmd "echo ufo +set vid_mode -1 +set vid_width 1024 +set vid_height 1024;"
 		cmd "r_isometric 1;centercamera;camsetangles 90 90;camsetzoom 0.5;"
 		*cvar:cl_showactors = 0

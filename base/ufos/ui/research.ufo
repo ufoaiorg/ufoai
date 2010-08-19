@@ -20,7 +20,7 @@ component panel cmpResearchItem {
 		pos			"20 0"
 		size		"365 25"
 		color		"0 .78 0 1"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 		onClick		{ cmd "research_select <node:parent@num>;" }
 	}
 
@@ -28,19 +28,19 @@ component panel cmpResearchItem {
 		pos			"405 0"
 		size		"40 20"
 		color		"0 .78 0 1"
-		textalign	ur
+		textalign	ALIGN_UR
 	}
 
 	string txt_rsstatus	{
 		pos			"480 0"
 		size		"60 20"
 		color		"0 .78 0 1"
-		textalign	ur
+		textalign	ALIGN_UR
 	}
 
 	spinner bt_rs_change {
 		tooltip		"_Add and remove scientist"
-		image		ui/spinner_blue
+		image		"ui/spinner_blue"
 		pos			"450 0"
 		min			0
 		current		10000
@@ -56,13 +56,16 @@ component panel cmpResearchItem {
 
 window research
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	ui/base_bg
+		src	"background/base_bg"
 	}
 
 	cmpBaseHeader baseHeader {
@@ -79,13 +82,13 @@ window research
 	panel techlist {
 		pos			"29 93"
 		size		"587 597"
-		image		ui/panel_grey_green_large2
+		image		"ui/panel_grey_green_large2"
 	}
 
 	panel infopanel {
 		pos			"645 93"
 		size		"353 660"
-		image		ui/panel_grey_green_large
+		image		"ui/panel_grey_green_large"
 	}
 
 	// ==================
@@ -95,7 +98,7 @@ window research
 	custombutton bt_start
 	{
 		tooltip		"_Start research"
-		image		ui/button_background
+		image		"ui/button_background"
 		icon		research_start
 		pos			"725 674"
 		size		"59 55"
@@ -106,7 +109,7 @@ window research
 	custombutton bt_stop
 	{
 		tooltip		"_Stop research"
-		image		ui/button_background
+		image		"ui/button_background"
 		icon		research_stop
 		pos			"795 674"
 		size		"59 55"
@@ -117,7 +120,7 @@ window research
 	custombutton bt_pedia
 	{
 		tooltip		"_Show research proposal"
-		image		ui/button_background
+		image		"ui/button_background"
 		icon		mail
 		pos			"865 674"
 		size		"59 55"
@@ -143,8 +146,8 @@ window research
 	 * @param[in] <4> max value allowed
 	 */
 	confunc research_updateitem {
-		*(abstractvalue)item<1>.bt_rs_change@current = <2>
-		*(abstractvalue)item<1>.bt_rs_change@max = <3>
+		*node:root.item<1>.bt_rs_change@current = <2>
+		*node:root.item<1>.bt_rs_change@max = <3>
 	}
 
 	/**
@@ -152,71 +155,71 @@ window research
 	 * @param[in] <1> Item row
 	 */
 	confunc research_hide {
-		*item<1>.txt_item@invis = true
-		*item<1>.img_status@invis = true
-		*item<1>.bt_rs_change@invis = true
-		*item<1>.txt_assigned@invis = true
-		*item<1>.txt_rsstatus@invis = true
+		*node:root.item<1>.txt_item@invis = true
+		*node:root.item<1>.img_status@invis = true
+		*node:root.item<1>.bt_rs_change@invis = true
+		*node:root.item<1>.txt_assigned@invis = true
+		*node:root.item<1>.txt_rsstatus@invis = true
 	}
 
 	confunc research_research {
-		*item<1>.txt_item@invis = false
-		*item<1>.txt_item@left = 20
-		*item<1>.txt_item@color = "0 .78 0 1"
-		*item<1>.img_status@invis = false
-		*item<1>.bt_rs_change@invis = false
-		*item<1>.txt_assigned@invis = false
-		*item<1>.txt_rsstatus@invis = false
-	}  
+		*node:root.item<1>.txt_item@invis = false
+		*node:root.item<1>.txt_item@left = 20
+		*node:root.item<1>.txt_item@color = "0 .78 0 1"
+		*node:root.item<1>.img_status@invis = false
+		*node:root.item<1>.bt_rs_change@invis = false
+		*node:root.item<1>.txt_assigned@invis = false
+		*node:root.item<1>.txt_rsstatus@invis = false
+	}
 
 	confunc research_outterresearch {
-		*item<1>.txt_item@invis = false
-		*item<1>.txt_item@left = 20
-		*item<1>.txt_item@color = "0 .78 0 1"
-		*item<1>.img_status@invis = false
-		*item<1>.bt_rs_change@invis = true
-		*item<1>.txt_assigned@invis = false
-		*item<1>.txt_rsstatus@invis = false
+		*node:root.item<1>.txt_item@invis = false
+		*node:root.item<1>.txt_item@left = 20
+		*node:root.item<1>.txt_item@color = "0 .78 0 1"
+		*node:root.item<1>.img_status@invis = false
+		*node:root.item<1>.bt_rs_change@invis = true
+		*node:root.item<1>.txt_assigned@invis = false
+		*node:root.item<1>.txt_rsstatus@invis = false
 	}
 
 	confunc research_basetitle {
-		*item<1>.txt_item@invis = false
-		*item<1>.txt_item@left = 0
-		*item<1>.txt_item@color = "1 1 1 1"
-		*item<1>.img_status@invis = true
-		*item<1>.bt_rs_change@invis = true
-		*item<1>.txt_assigned@invis = true
-		*item<1>.txt_rsstatus@invis = true
+		*node:root.item<1>.txt_item@invis = false
+		*node:root.item<1>.txt_item@left = 0
+		*node:root.item<1>.txt_item@color = "1 1 1 1"
+		*node:root.item<1>.img_status@invis = true
+		*node:root.item<1>.bt_rs_change@invis = true
+		*node:root.item<1>.txt_assigned@invis = true
+		*node:root.item<1>.txt_rsstatus@invis = true
 	}
 
 	confunc research_baseinfo {
-		*item<1>.txt_item@invis = false
-		*item<1>.txt_item@color = "0.7 0.7 0.7 1"
-		*item<1>.txt_item@left = 20
-		*item<1>.img_status@invis = true
-		*item<1>.bt_rs_change@invis = true
-		*item<1>.txt_assigned@invis = false
-		*item<1>.txt_rsstatus@invis = true
+		*node:root.item<1>.txt_item@invis = false
+		*node:root.item<1>.txt_item@color = "0.7 0.7 0.7 1"
+		*node:root.item<1>.txt_item@left = 20
+		*node:root.item<1>.img_status@invis = true
+		*node:root.item<1>.bt_rs_change@invis = true
+		*node:root.item<1>.txt_assigned@invis = false
+		*node:root.item<1>.txt_rsstatus@invis = true
 	}
 
 	confunc research_unresearchableitemtitle {
-		*item<1>.txt_item@invis = false
-		*item<1>.txt_item@color = "1 1 1 1"
-		*item<1>.txt_item@left = 0
-		*item<1>.img_status@invis = true
-		*item<1>.bt_rs_change@invis = true
-		*item<1>.txt_assigned@invis = true
-		*item<1>.txt_rsstatus@invis = true
+		*node:root.item<1>.txt_item@invis = false
+		*node:root.item<1>.txt_item@color = "1 1 1 1"
+		*node:root.item<1>.txt_item@left = 0
+		*node:root.item<1>.img_status@invis = true
+		*node:root.item<1>.bt_rs_change@invis = true
+		*node:root.item<1>.txt_assigned@invis = true
+		*node:root.item<1>.txt_rsstatus@invis = true
 	}
 
 	confunc research_unresearchableitem {
-		*item<1>.txt_item@invis = false
-		*item<1>.txt_item@color = "0 .78 0 1"
-		*item<1>.txt_item@left = 20
-		*item<1>.img_status@invis = true
-		*item<1>.bt_rs_change@invis = true
-		*item<1>.txt_assigned@invis = true
-		*item<1>.txt_rsstatus@invis = true
+		*node:root.item<1>.txt_item@invis = false
+		*node:root.item<1>.txt_item@color = "0 .78 0 1"
+		*node:root.item<1>.txt_item@left = 20
+		*node:root.item<1>.img_status@invis = true
+		*node:root.item<1>.bt_rs_change@invis = true
+		*node:root.item<1>.txt_assigned@invis = true
+		*node:root.item<1>.txt_rsstatus@invis = true
 	}
 
 	/**
@@ -224,43 +227,43 @@ window research
 	 * @param[in] <1> Item row
 	 */
 	confunc research_show {
-		*item<1>.img_status@invis = false
-		*item<1>.bt_rs_change@invis = false
+		*node:root.item<1>.img_status@invis = false
+		*node:root.item<1>.bt_rs_change@invis = false
 	}
 
 	/**
 	 * @param[in] <1> Item row
 	 */
 	confunc research_selected {
-		*item<1>.txt_item@color = ".3 1 0 1"
+		*node:root.item<1>.txt_item@color = ".3 1 0 1"
 	}
 
 	/**
 	 * @param[in] <1> Item row
 	 */
 	confunc research_changebasetooltype {
-		*item<1>.txt_item@tooltip = "_Switch to another base"
+		*node:root.item<1>.txt_item@tooltip = "_Switch to another base"
 	}
 
 	/**
 	 * @param[in] <1> Item row
 	 */
 	confunc research_normal {
-		*(button)item<1>.img_status@icon = "bordered_magnifying_glass"
+		*node:root.item<1>.img_status@icon = "bordered_magnifying_glass"
 	}
 
 	/**
 	 * @param[in] <1> Item row
 	 */
 	confunc research_running {
-		*(button)item<1>.img_status@icon	= "bordered_magnifying_glass"
+		*node:root.item<1>.img_status@icon	= "bordered_magnifying_glass"
 	}
 
 	/**
 	 * @param[in] <1> Item row
 	 */
 	confunc research_paused {
-		*(button)item<1>.img_status@icon	= "bordered_sleep"
+		*node:root.item<1>.img_status@icon	= "bordered_sleep"
 	}
 
 	/**
@@ -272,7 +275,7 @@ window research
 		cmd "mn_pop;mn_pop;mn_base_select <1>;mn_push research;"
 		cmd "research_select <2>;"
 	}
-	
+
 	cmpResearchItem item0 {
 		pos "50 113"
 	}
@@ -368,7 +371,7 @@ window research
 		string		"_Base Info"
 		pos			"675 115"
 		size		"290 18"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 	}
 
 	// Free labs in the selected base
@@ -377,7 +380,7 @@ window research
 		string		*cvar:mn_research_labs
 		pos			"685 135"
 		size		"290 18"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 		color		"0 .78 0 1"
 	}
 
@@ -387,7 +390,7 @@ window research
 		string		*cvar:mn_research_scis
 		pos			"685 155"
 		size		"290 18"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 		color		"0 .78 0 1"
 	}
 
@@ -400,7 +403,7 @@ window research
 		string		*cvar:mn_research_selname
 		pos			"675 190"
 		size		"300 18"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 	}
 
 //	pic image_top
@@ -417,7 +420,7 @@ window research
 		tooltip		*cvar:mn_research_selstatus_long
 		pos			"685 210"
 		color		"0 .78 0 1"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 		size		"290 24"
 	}
 
@@ -437,11 +440,11 @@ window research
 		color		"0 .78 0 1"
 		size		"290 18"
 	}
-	pic progress_img
+	image progress_img
 	{
 		visiblewhen	"*cvar:mn_research_seltimebar != 0"
 		pos			"684 657"
-		image		ui/bar_rahmen
+		src		"ui/bar_rahmen"
 	}
 	bar progress_bar
 	{
@@ -461,11 +464,11 @@ window research
 	{
 		*cvar:i = 0
 		while ( *cvar:i < 22 ) {
-			*item<cvar:i>@num = <cvar:i>
-			*item<cvar:i>.img_status@tooltip = *cvar:mn_researchstatus<cvar:i>
-			*item<cvar:i>.txt_item@string = *cvar:mn_researchitem<cvar:i>
-			*item<cvar:i>.txt_assigned@string = *cvar:mn_researchassigned<cvar:i>
-			*item<cvar:i>.txt_rsstatus@string = *cvar:mn_rsstatus<cvar:i>
+			*node:root.item<cvar:i>@num = <cvar:i>
+			*node:root.item<cvar:i>.img_status@tooltip = *cvar:mn_researchstatus<cvar:i>
+			*node:root.item<cvar:i>.txt_item@string = *cvar:mn_researchitem<cvar:i>
+			*node:root.item<cvar:i>.txt_assigned@string = *cvar:mn_researchassigned<cvar:i>
+			*node:root.item<cvar:i>.txt_rsstatus@string = *cvar:mn_rsstatus<cvar:i>
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i

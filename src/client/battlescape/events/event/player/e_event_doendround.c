@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../../../client.h"
-#include "../../../../menu/m_main.h"
+#include "../../../../ui/ui_main.h"
 #include "../../../cl_localentity.h"
 #include "../../../cl_actor.h"
 #include "../../../cl_particle.h"
@@ -40,7 +40,7 @@ void CL_DoEndRound (const eventRegister_t *self, struct dbuffer *msg)
 {
 	/* hud changes */
 	if (cls.team == cl.actTeam)
-		MN_ExecuteConfunc("endround");
+		UI_ExecuteConfunc("endround");
 
 	refdef.rendererFlags &= ~RDF_IRGOGGLES;
 
@@ -53,7 +53,7 @@ void CL_DoEndRound (const eventRegister_t *self, struct dbuffer *msg)
 	if (cls.team == cl.actTeam) {
 		/* check whether a particle has to go */
 		CL_ParticleCheckRounds();
-		MN_ExecuteConfunc("startround");
+		UI_ExecuteConfunc("startround");
 		HUD_DisplayMessage(_("Your round started!\n"));
 		S_StartLocalSample("misc/roundstart", SND_VOLUME_DEFAULT);
 		CL_ActorConditionalMoveCalc(selActor);

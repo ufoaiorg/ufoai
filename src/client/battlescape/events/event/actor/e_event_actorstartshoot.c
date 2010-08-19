@@ -49,20 +49,12 @@ int CL_ActorStartShootTime (const eventRegister_t *self, struct dbuffer *msg, co
  */
 void CL_ActorStartShoot (const eventRegister_t *self, struct dbuffer *msg)
 {
-	const fireDef_t *fd;
 	le_t *le;
 	pos3_t from, target;
 	int entnum;
-	int objIdx;
-	objDef_t *obj;
-	weaponFireDefIndex_t weapFdsIdx;
-	fireDefIndex_t fdIdx;
 	shoot_types_t shootType;
 
-	NET_ReadFormat(msg, self->formatString, &entnum, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &from, &target);
-
-	obj = INVSH_GetItemByIDX(objIdx);
-	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
+	NET_ReadFormat(msg, self->formatString, &entnum, &shootType, &from, &target);
 
 	/* shooting actor */
 	le = LE_Get(entnum);

@@ -11,7 +11,7 @@ window objectinfo
 	{ }
 
 	/* HACK these are needed for node order :( */
-	pic  background { }
+	image  background { }
 	panel content { }
 
 	/*

@@ -31,7 +31,5 @@ qboolean HOS_HealCharacter(character_t* chr, qboolean hospital);
 qboolean HOS_HealEmployee(employee_t* employee);
 void HOS_HealAll(const base_t* const base);
 void HOS_HospitalRun(void);
-qboolean HOS_Save(sizebuf_t *sb, void* data);
-qboolean HOS_Load(sizebuf_t *sb, void* data);
 
 #endif

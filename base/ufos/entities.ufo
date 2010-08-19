@@ -20,7 +20,7 @@
  * is parsed.
  *
  * note that 255 for spawnflags means levelflags 1-8 are all set.
- * 
+ *
  * range block entries can be a list of discrete options, "0 45 90 135" or continuous "0.0 - 1.0"
  * a key may have different numbers of range entries: zero, one or a number equal to the number of elements in the vector.
  * only numeric types may have a range defined.
@@ -43,14 +43,15 @@ entity info_player_start {
 	}
 
 	type {
+		team	"UNSIGNED V_INT"
 		origin	"V_FLOAT 3"
 		angle	"V_INT"
 	}
 
 	range {
 		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
+		team	"1 2 3 4 5 6 7"
 	}
-
 }
 
 entity info_human_start {
@@ -75,7 +76,6 @@ entity info_human_start {
 	range {
 		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
 	}
-
 }
 
 entity info_alien_start {
@@ -100,7 +100,6 @@ entity info_alien_start {
 	range {
 		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
 	}
-
 }
 
 entity info_2x2_start {
@@ -111,7 +110,7 @@ entity info_2x2_start {
 
 	optional {
 		team	"The number of the team for this player starting point. Only for multiplayer teams."
-		angle	"The direction that the actor faces at the start 0, 90, 180 or 270"
+		angle	"The direction that the actor faces at the start"
 	}
 
 	mandatory {
@@ -119,14 +118,15 @@ entity info_2x2_start {
 	}
 
 	type {
+		team	"UNSIGNED V_INT"
 		origin	"V_FLOAT 3"
 		angle	"V_INT"
 	}
 
 	range {
 		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
+		team	"0 1 2 3 4 5 6 7"
 	}
-
 }
 
 entity info_civilian_start {
@@ -140,7 +140,7 @@ entity info_civilian_start {
 	}
 
 	optional {
-		angle	"The direction that the actor faces at the start 0, 90, 180 or 270"
+		angle	"The direction that the actor faces at the start"
 	}
 
 	type {
@@ -376,6 +376,7 @@ entity worldspawn {
 		angles_day	"-90 - 90"
 		angles_day	"0 - 360"
 		ambient_day	"0.0 - 1.0"
+		maxlevel	"1 2 3 4 5 6 7 8"
 	}
 }
 
@@ -392,17 +393,23 @@ entity misc_sound {
 
 	optional {
 		volume	"Relative volume - value between 0.0 and 1.0"
+		attenuation	"3.0 is only audible when the sound source is very close to the camera, 0.0 is audible everywhere."
+	}
+
+	range {
+		attenuation	"0.0 - 3.0"
+		volume	"0.0 - 1.0"
 	}
 
 	type {
 		origin	"V_FLOAT 3"
 		volume	"V_FLOAT"
+		attenuation	"V_FLOAT"
 	}
 
 	default {
 		spawnflags	"255"
 	}
-
 }
 
 entity misc_mission {
@@ -483,7 +490,6 @@ entity func_door {
 	}
 }
 
-
 entity func_group {
 	description	"Only for editor and terrain convenience."
 
@@ -549,6 +555,26 @@ entity trigger_touch {
 
 	mandatory {
 		target	"Target entity - target entity must have targetname set (to the value given here)"
+	}
+}
+
+entity trigger_rescue {
+	description	"Any entity that touches this will get rescued when the mission is aborted."
+
+	optional {
+		particle	"Display a particle"
+	}
+
+	mandatory {
+		team	"The team number that this trigger serves as a rescue zone"
+	}
+
+	type {
+		team	"UNSIGNED V_INT"
+	}
+
+	range {
+		team	"0 1 2 3 4 5 6 7"
 	}
 }
 

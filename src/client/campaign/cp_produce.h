@@ -26,11 +26,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CP_PRODUCE
 #define CLIENT_CP_PRODUCE
 
-#include "../cl_inventory.h"
-
 /** @brief Maximum number of productions queued in any one base. */
 #define MAX_PRODUCTIONS		256
 #define MAX_PRODUCTIONS_PER_WORKSHOP 5
+/** Maximum number of produced items. */
+#define MAX_PRODUCTION_AMOUNT 500
+
+/** Size of a UGV in hangar capacity */
+#define UGV_SIZE 300
 
 extern const int PRODUCE_FACTOR;
 extern const int PRODUCE_DIVISOR;
@@ -58,10 +61,8 @@ typedef struct production_s
 							 * 0 if production is not started, 1 if production is over */
 	qboolean spaceMessage;	/**< Used in No Free Space message adding. */
 	qboolean creditMessage;	/**< Used in No Credits message adding. */
+	/** @todo remove production flag */
 	qboolean production;	/**< True if this is real production, false when disassembling. */
-	qboolean itemsCached;	/**< If true the items required for production (of _one_ objID item) have been removed from production.
-				 * They need to be added to the storage again if this queue is stopped or removed.
-				 * The item-numbers from the requirement need to be multiplied with 'amount' in order to get the overall number of cached items. */
 } production_t;
 
 /**
@@ -74,15 +75,29 @@ typedef struct production_queue_s
 	production_t	items[MAX_PRODUCTIONS];	/**< Actual production items (in order). */
 } production_queue_t;
 
-void PR_ProductionRun(void);
 void PR_ProductionInit(void);
-void PR_UpdateProductionCap(struct base_s *base);
+void PR_ProductionRun(void);
+
 qboolean PR_ItemIsProduceable(const objDef_t const *item);
+
+base_t *PR_ProductionBase(production_t *production);
+base_t *PR_ProductionQueueBase (const production_queue_t const *queue);
+
+int PR_IncreaseProduction(production_t *prod, int amount);
+int PR_DecreaseProduction(production_t *prod, int amount);
+
+void PR_UpdateProductionCap(struct base_s *base);
+
+void PR_UpdateRequiredItemsInBasestorage(base_t *base, int amount, const requirements_t const *reqs);
+int PR_RequirementsMet(int amount, const requirements_t const *reqs, base_t *base);
+
+float PR_CalculateProductionPercentDone(const base_t *base, const technology_t *tech, const struct storedUFO_s *const storedUFO);
+
+production_t *PR_QueueNew(base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, struct storedUFO_s *ufo, signed int amount);
 void PR_QueueMove(production_queue_t *queue, int index, int dir);
 void PR_QueueDelete(base_t *base, production_queue_t *queue, int index);
 void PR_QueueNext(base_t *base);
-void PR_UpdateRequiredItemsInBasestorage(base_t *base, int amount, requirements_t *reqs);
-float PR_CalculateProductionPercentDone(const base_t *base, const technology_t *tech, const struct storedUFO_s *const storedUFO);
-base_t *PR_ProductionBase(production_t *production);
+int PR_QueueFreeSpace(const production_queue_t const *queue);
 
 #endif /* CLIENT_CP_PRODUCE */
+

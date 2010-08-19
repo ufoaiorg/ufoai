@@ -185,11 +185,11 @@ window unittest_function extends unittest_function_interface
 		}
 
 		if ( *cvar:error == 0 ) {
-			*testCommon7@color = "0 1 0 1"
-			*testCommon7@tooltip = ""
+			*node:root.testCommon7@color = "0 1 0 1"
+			*node:root.testCommon7@tooltip = ""
 		} else {
-			*testCommon7@color = "1 0 0 1"
-			*testCommon7@tooltip = *cvar:errorMessage
+			*node:root.testCommon7@color = "1 0 0 1"
+			*node:root.testCommon7@tooltip = *cvar:errorMessage
 		}
 	}
 
@@ -201,56 +201,56 @@ window unittest_function extends unittest_function_interface
 
 		call *node:root.test1
 		if ( *cvar:error == 0 ) {
-			*testCommon1@color = "0 1 0 1"
-			*testCommon1@tooltip = ""
+			*node:root.testCommon1@color = "0 1 0 1"
+			*node:root.testCommon1@tooltip = ""
 		} else {
-			*testCommon1@color = "1 0 0 1"
-			*testCommon1@tooltip = *cvar:errorMessage
+			*node:root.testCommon1@color = "1 0 0 1"
+			*node:root.testCommon1@tooltip = *cvar:errorMessage
 		}
 
 		call *node:root.test2 ( 1 )
 		if ( *cvar:error == 0 ) {
-			*testCommon2@color = "0 1 0 1"
-			*testCommon2@tooltip = ""
+			*node:root.testCommon2@color = "0 1 0 1"
+			*node:root.testCommon2@tooltip = ""
 		} else {
-			*testCommon2@color = "1 0 0 1"
-			*testCommon2@tooltip = *cvar:errorMessage
+			*node:root.testCommon2@color = "1 0 0 1"
+			*node:root.testCommon2@tooltip = *cvar:errorMessage
 		}
 
 		call *node:root.test3 ( ( 1 + 1 ) )
 		if ( *cvar:error == 0 ) {
-			*testCommon3@color = "0 1 0 1"
-			*testCommon3@tooltip = ""
+			*node:root.testCommon3@color = "0 1 0 1"
+			*node:root.testCommon3@tooltip = ""
 		} else {
-			*testCommon3@color = "1 0 0 1"
-			*testCommon3@tooltip = *cvar:errorMessage
+			*node:root.testCommon3@color = "1 0 0 1"
+			*node:root.testCommon3@tooltip = *cvar:errorMessage
 		}
 
 		call *node:root.test4 ( 10 , ( 1 + 1 ) , "foo" )
 		if ( *cvar:error == 0 ) {
-			*testCommon4@color = "0 1 0 1"
-			*testCommon4@tooltip = ""
+			*node:root.testCommon4@color = "0 1 0 1"
+			*node:root.testCommon4@tooltip = ""
 		} else {
-			*testCommon4@color = "1 0 0 1"
-			*testCommon4@tooltip = *cvar:errorMessage
+			*node:root.testCommon4@color = "1 0 0 1"
+			*node:root.testCommon4@tooltip = *cvar:errorMessage
 		}
 
 		call *node:root.test5 ( "level1" )
 		if ( *cvar:error == 0 ) {
-			*testCommon5@color = "0 1 0 1"
-			*testCommon5@tooltip = ""
+			*node:root.testCommon5@color = "0 1 0 1"
+			*node:root.testCommon5@tooltip = ""
 		} else {
-			*testCommon5@color = "1 0 0 1"
-			*testCommon5@tooltip = *cvar:errorMessage
+			*node:root.testCommon5@color = "1 0 0 1"
+			*node:root.testCommon5@tooltip = *cvar:errorMessage
 		}
 
 		call *node:root.test6 ( "foo3" )
 		if ( *cvar:error == 0 ) {
-			*testCommon6@color = "0 1 0 1"
-			*testCommon6@tooltip = ""
+			*node:root.testCommon6@color = "0 1 0 1"
+			*node:root.testCommon6@tooltip = ""
 		} else {
-			*testCommon6@color = "1 0 0 1"
-			*testCommon6@tooltip = *cvar:errorMessage
+			*node:root.testCommon6@color = "1 0 0 1"
+			*node:root.testCommon6@tooltip = *cvar:errorMessage
 		}
 		
 		cmd "test7 foo 1 2"

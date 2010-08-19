@@ -72,7 +72,6 @@ typedef enum {
 	V_RELABS,				/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
 	V_CLIENT_HUNK,			/**< only for client side data - not handled in Com_EParseValue */
 	V_CLIENT_HUNK_STRING,	/**< same as for V_CLIENT_HUNK */
-	V_LONGLINES = 25,
 	V_TEAM,					/**< team string to int mapper */
 	V_RACE,
 	V_UFO,					/**< @brief Valid ufo types
@@ -143,19 +142,9 @@ typedef enum {
 	FADE_OUT,
 	FADE_SIN,
 	FADE_SAW,
-	FADE_BLEND,
 
 	FADE_LAST
 } fade_t;
-
-typedef enum {
-	LONGLINES_WRAP,
-	LONGLINES_CHOP,
-	LONGLINES_PRETTYCHOP,
-
-	LONGLINES_LAST
-} longlines_t;
-
 
 /**
  * @brief All different types of UFOs.
@@ -199,6 +188,8 @@ typedef enum {
 #ifdef DEBUG
 int Com_EParseValueDebug(void *base, const char *token, valueTypes_t type, int ofs, size_t size, const char* file, int line);
 int Com_SetValueDebug(void *base, const void *set, valueTypes_t type, int ofs, size_t size, const char* file, int line);
+#define Com_SetValue(base, set, type, ofs, size) Com_SetValueDebug(base, set, type, ofs, size, __FILE__, __LINE__)
+#define Com_EParseValue(base, token, type, ofs, size) Com_EParseValueDebug(base, token, type, ofs, size, __FILE__, __LINE__)
 #else
 int Com_EParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size);
 int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t size);
@@ -239,20 +230,6 @@ typedef struct constListEntry_s {
 	int value;
 } constListEntry_t;
 
-const char *Com_GiveName(int gender, teamDef_t *td);
-const char *Com_GiveModel(int type, int gender, const teamDef_t *td);
-void Com_GetCharacterValues(const char *teamDefition, character_t * chr);
-const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);
-const char *Com_GetRandomMapAssemblyNameForCraft(const char *craftID);
-ufoType_t Com_UFOShortNameToID(const char *token);
-const char* Com_UFOTypeToShortName(ufoType_t type);
-const char* Com_UFOCrashedTypeToShortName(ufoType_t type);
-const char* Com_DropShipTypeToShortName(humanAircraftType_t type);
-humanAircraftType_t Com_DropShipShortNameToID(const char *token);
-teamDef_t* Com_GetTeamDefinitionByID(const char *team);
-mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
-void Com_ParseScripts(qboolean onlyServer);
-const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
 qboolean Com_GetConstInt(const char *name, int *value);
 qboolean Com_GetConstIntFromNamespace(const char *space, const char *variable, int *value);
 const char* Com_GetConstVariable(const char *space, int value);
@@ -260,6 +237,24 @@ qboolean Com_UnregisterConstVariable(const char *name);
 void Com_RegisterConstInt(const char *name, int value);
 void Com_RegisterConstList(const constListEntry_t constList[]);
 qboolean Com_UnregisterConstList(const constListEntry_t constList[]);
+
+void Com_ParseScripts(qboolean onlyServer);
+const char *Com_EParse(const char **text, const char *errhead, const char *errinfo);
+const char *Com_GetRandomMapAssemblyNameForCraft(const char *craftID);
+ufoType_t Com_UFOShortNameToID(const char *token);
+const char* Com_UFOTypeToShortName(ufoType_t type);
+const char* Com_UFOCrashedTypeToShortName(ufoType_t type);
+
+#include "../game/q_shared.h"
+
+ugv_t *Com_GetUGVByIDSilent(const char *ugvID);
+ugv_t *Com_GetUGVByID(const char *ugvID);
+const char* Com_DropShipTypeToShortName(humanAircraftType_t type);
+humanAircraftType_t Com_DropShipShortNameToID(const char *token);
+void Com_GetCharacterValues(const char *teamDefition, character_t * chr);
+const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);
+teamDef_t* Com_GetTeamDefinitionByID(const char *team);
+const chrTemplate_t* Com_GetCharacterTemplateByID(const char *chrTemplate);
 
 #endif /* SCRIPTS_H */
 

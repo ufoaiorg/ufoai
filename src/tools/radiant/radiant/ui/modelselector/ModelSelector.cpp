@@ -54,9 +54,10 @@ namespace ui
 		gtk_window_set_position(GTK_WINDOW(_widget), GTK_WIN_POS_CENTER_ON_PARENT);
 
 		// Set the default size of the window
-		GdkScreen* scr = gtk_window_get_screen(GTK_WINDOW(_widget));
-		gint w = gdk_screen_get_width(scr);
-		gint h = gdk_screen_get_height(scr);
+		GtkWindow* mainWindow = GlobalRadiant().getMainWindow();
+		gint w;
+		gint h;
+		gtk_window_get_size(mainWindow,&w,&h);
 
 		gtk_window_set_default_size(GTK_WINDOW(_widget), gint(w * 0.75), gint(h * 0.8));
 

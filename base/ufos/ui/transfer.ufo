@@ -3,13 +3,16 @@
 // ==================
 window transfer
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		ui/base_bg
+		src		"background/base_bg"
 	}
 
 	cmpBaseHeader baseHeader {
@@ -26,34 +29,36 @@ window transfer
 	}
 
 	tab trans_navigation {
-		pos		"47 106"
-		size	"938 39"
-		cvar	*cvar:mn_itemtype
-		onChange	{
-			cmd "trans_type <cvar:mn_itemtype>;"
-			if ( *cvar:mn_itemtype eq "item" ) {
-				*cvar:mn_itemtype_name = "_Equipment"
-			} elif ( *cvar:mn_itemtype eq "employee" ) {
-				*cvar:mn_itemtype_name = "_Employees"
-			} elif ( *cvar:mn_itemtype eq "alien" ) {
-				*cvar:mn_itemtype_name = "_Aliens"
-			} elif ( *cvar:mn_itemtype eq "aircraft" ) {
-				*cvar:mn_itemtype_name = "_Aircraft"
+		{
+			pos		"47 106"
+			size	"938 39"
+			cvar	*cvar:mn_itemtype
+			onChange	{
+				cmd "trans_type <cvar:mn_itemtype>;"
+				if ( *cvar:mn_itemtype eq "item" ) {
+					*cvar:mn_itemtype_name = "_Equipment"
+				} elif ( *cvar:mn_itemtype eq "employee" ) {
+					*cvar:mn_itemtype_name = "_Employees"
+				} elif ( *cvar:mn_itemtype eq "alien" ) {
+					*cvar:mn_itemtype_name = "_Aliens"
+				} elif ( *cvar:mn_itemtype eq "aircraft" ) {
+					*cvar:mn_itemtype_name = "_Aircraft"
+				}
 			}
 		}
-		option description {
+		option item {
 			label	"_Equipment"
 			value	"item"
 		}
-		option description {
+		option employee {
 			label	"_Employees"
 			value	"employee"
 		}
-		option description {
+		option alien {
 			label	"_Aliens"
 			value	"alien"
 		}
-		option description {
+		option aircraft {
 			label	"_Aircraft"
 			value	"aircraft"
 		}
@@ -67,7 +72,7 @@ window transfer
 		{
 			pos			"12 160"
 			size		"552 582"
-			image		ui/panel_grey_green_large2
+			image		"ui/panel_grey_green_large2"
 		}
 
 		rows lines {
@@ -83,15 +88,15 @@ window transfer
 			string		*cvar:mn_itemtype_name
 			pos			"25 18"
 			size		"250 25"
-			font		f_small_bold
+			font		"f_small_bold"
 		}
 		string title_amount
 		{
 			string		"_Amount/Transfer"
 			pos			"300 18"
 			size		"200 25"
-			textalign	uc
-			font		f_small_bold
+			textalign	ALIGN_UC
+			font		"f_small_bold"
 		}
 
 		textlist trans_list
@@ -106,11 +111,11 @@ window transfer
 				}
 			}
 			onViewChange	{
-				*(textlist)itemlist.trans_list_amount@viewpos = <viewpos>
-				*(textlist)itemlist.trans_list_transfered@viewpos = <viewpos>
-				*(abstractscrollbar)itemlist.trans_list_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)itemlist.trans_list_scroll@current = <viewpos>
-				*(abstractscrollbar)itemlist.trans_list_scroll@viewsize = <viewsize>
+				*node:root.itemlist.trans_list_amount@viewpos = <viewpos>
+				*node:root.itemlist.trans_list_transfered@viewpos = <viewpos>
+				*node:root.itemlist.trans_list_scroll@fullsize = <fullsize>
+				*node:root.itemlist.trans_list_scroll@current = <viewpos>
+				*node:root.itemlist.trans_list_scroll@viewsize = <viewsize>
 				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
 			}
 		}
@@ -121,13 +126,13 @@ window transfer
 			pos			"350 41"
 			size		"50 525"
 			lineheight	"25"
-			textalign	"cr"
+			textalign	ALIGN_CR
 			onViewChange	{
-				*(textlist)itemlist.trans_list@viewpos = <viewpos>
-				*(textlist)itemlist.trans_list_transfered@viewpos = <viewpos>
-				*(abstractscrollbar)itemlist.trans_list_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)itemlist.trans_list_scroll@current = <viewpos>
-				*(abstractscrollbar)itemlist.trans_list_scroll@viewsize = <viewsize>
+				*node:root.itemlist.trans_list@viewpos = <viewpos>
+				*node:root.itemlist.trans_list_transfered@viewpos = <viewpos>
+				*node:root.itemlist.trans_list_scroll@fullsize = <fullsize>
+				*node:root.itemlist.trans_list_scroll@current = <viewpos>
+				*node:root.itemlist.trans_list_scroll@viewsize = <viewsize>
 				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
 			}
 		}
@@ -138,27 +143,27 @@ window transfer
 			pos			"425 41"
 			size		"50 525"
 			lineheight	"25"
-			textalign	"cr"
+			textalign	ALIGN_CR
 			onViewChange	{
-				*(textlist)itemlist.trans_list@viewpos = <viewpos>
-				*(textlist)itemlist.trans_list_amount@viewpos = <viewpos>
-				*(abstractscrollbar)itemlist.trans_list_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)itemlist.trans_list_scroll@current = <viewpos>
-				*(abstractscrollbar)itemlist.trans_list_scroll@viewsize = <viewsize>
+				*node:root.itemlist.trans_list@viewpos = <viewpos>
+				*node:root.itemlist.trans_list_amount@viewpos = <viewpos>
+				*node:root.itemlist.trans_list_scroll@fullsize = <fullsize>
+				*node:root.itemlist.trans_list_scroll@current = <viewpos>
+				*node:root.itemlist.trans_list_scroll@viewsize = <viewsize>
 				cmd "trans_list_scroll <cvar:mn_itemtype> <viewpos>;"
 			}
 		}
 
 		vscrollbar trans_list_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"510 43"
 			height		"521"
 			hidewhenunused	true
 			onChange	{
-				*itemlist.trans_list_scroll@current = <current>
-				*itemlist.trans_list@viewpos = <current>
-				*itemlist.trans_list_amount@viewpos = <current>
-				*itemlist.trans_list_transfered@viewpos = <current>
+				*node:root.itemlist.trans_list_scroll@current = <current>
+				*node:root.itemlist.trans_list@viewpos = <current>
+				*node:root.itemlist.trans_list_amount@viewpos = <current>
+				*node:root.itemlist.trans_list_transfered@viewpos = <current>
 				cmd "trans_list_scroll <cvar:mn_itemtype> <current>;"
 			}
 		}
@@ -166,7 +171,7 @@ window transfer
 		spinner t_spinner0
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 43"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -177,7 +182,7 @@ window transfer
 		spinner t_spinner1
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 68"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -188,7 +193,7 @@ window transfer
 		spinner t_spinner2
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 93"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -199,7 +204,7 @@ window transfer
 		spinner t_spinner3
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 118"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -211,7 +216,7 @@ window transfer
 		spinner t_spinner4
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 143"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -222,7 +227,7 @@ window transfer
 		spinner t_spinner5
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 168"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -233,7 +238,7 @@ window transfer
 		spinner t_spinner6
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 193"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -244,7 +249,7 @@ window transfer
 		spinner t_spinner7
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 218"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -255,7 +260,7 @@ window transfer
 		spinner t_spinner8
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 243"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -266,7 +271,7 @@ window transfer
 		spinner t_spinner9
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 268"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -277,7 +282,7 @@ window transfer
 		spinner t_spinner10
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 293"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -288,7 +293,7 @@ window transfer
 		spinner t_spinner11
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 318"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -300,7 +305,7 @@ window transfer
 		spinner t_spinner12
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 343"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -311,7 +316,7 @@ window transfer
 		spinner t_spinner13
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 368"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -322,7 +327,7 @@ window transfer
 		spinner t_spinner14
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 393"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -333,7 +338,7 @@ window transfer
 		spinner t_spinner15
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 418"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -344,7 +349,7 @@ window transfer
 		spinner t_spinner16
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 443"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -355,7 +360,7 @@ window transfer
 		spinner t_spinner17
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 468"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -366,7 +371,7 @@ window transfer
 		spinner t_spinner18
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 493"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -377,7 +382,7 @@ window transfer
 		spinner t_spinner19
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 518"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -388,7 +393,7 @@ window transfer
 		spinner t_spinner20
 		{
 			tooltip		"_Add/Remove item to transfer cargo"
-			image		ui/spinner_blue
+			image		"ui/spinner_blue"
 			pos			"485 543"
 			onChange	{
 				*cvar:tline = <node:parent.trans_list@viewpos>
@@ -410,11 +415,11 @@ window transfer
 			*cvar:loop_max = 21
 		}
 		while ( *cvar:i < *cvar:loop_max ) {
-			*itemlist.t_spinner<cvar:i>@invis = false
+			*node:root.itemlist.t_spinner<cvar:i>@invis = false
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		while ( *cvar:i < 21 ) {
-			*itemlist.t_spinner<cvar:i>@invis = true
+			*node:root.itemlist.t_spinner<cvar:i>@invis = true
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	}
@@ -426,9 +431,9 @@ window transfer
 	 * @param[in] <4> max value allowed
 	 */
 	confunc trans_updatespinners {
-		*(abstractvalue)itemlist.t_spinner<1>@current = <2>
-		*(abstractvalue)itemlist.t_spinner<1>@min = <3>
-		*(abstractvalue)itemlist.t_spinner<1>@max = <4>
+		*node:root.itemlist.t_spinner<1>@current = <2>
+		*node:root.itemlist.t_spinner<1>@min = <3>
+		*node:root.itemlist.t_spinner<1>@max = <4>
 	}
 
 	/**
@@ -438,7 +443,7 @@ window transfer
 		{
 			pos		"580 440"
 			size	"420 257"
-			image	ui/panel_grey_green_large2
+			image	"ui/panel_grey_green_large2"
 		}
 
 		rows lines_transfer_cargolist {
@@ -461,10 +466,10 @@ window transfer
 				}
 			}
 			onViewChange	{
-				*(textlist)transfer_cargolist.trans_cargolist_amount@viewpos = <viewpos>
-				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
-				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
+				*node:root.transfer_cargolist.trans_cargolist_amount@viewpos = <viewpos>
+				*node:root.transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
+				*node:root.transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
+				*node:root.transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
 			}
 		}
 
@@ -474,23 +479,23 @@ window transfer
 			pos			"320 16"
 			size		"50 225"
 			lineheight	"25"
-			textalign	"cr"
+			textalign	ALIGN_CR
 			onViewChange	{
-				*(textlist)transfer_cargolist.trans_cargolist@viewpos = <viewpos>
-				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
-				*(abstractscrollbar)transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
+				*node:root.transfer_cargolist.trans_cargolist@viewpos = <viewpos>
+				*node:root.transfer_cargolist.trans_cargolist_scroll@fullsize = <fullsize>
+				*node:root.transfer_cargolist.trans_cargolist_scroll@current = <viewpos>
+				*node:root.transfer_cargolist.trans_cargolist_scroll@viewsize = <viewsize>
 			}
 		}
 
 		vscrollbar trans_cargolist_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"380 18"
 			height		"221"
 			hidewhenunused	true
 			onChange	{
-				*transfer_cargolist.trans_cargolist@viewpos = <current>
-				*transfer_cargolist.trans_cargolist_amount@viewpos = <current>
+				*node:root.transfer_cargolist.trans_cargolist@viewpos = <current>
+				*node:root.transfer_cargolist.trans_cargolist_amount@viewpos = <current>
 			}
 		}
 	}
@@ -508,7 +513,7 @@ window transfer
 		{
 			pos		"580 160"
 			size	"420 260"
-			image	ui/panel_grey_green_large
+			image	"ui/panel_grey_green_large"
 		}
 
 		string s_current_base
@@ -516,18 +521,16 @@ window transfer
 			string		"_Destination base"
 			pos			"64 22"
 			size		"288 20"
-			textalign	uc
+			textalign	ALIGN_UC
 			color		"0.7 0.7 0.7 1"
-			font		f_small
+			font		"f_small"
 		}
 
 		selectbox destination_base
 		{
 			cvar		*cvar:mn_trans_base_id
-			image		"ui/selectbox_green"
 			pos			"64 50"
 			size		"288 20"
-			color		"0.6 0.6 0.6 0.3"
 			dataid		OPTION_BASELIST
 			onChange {
 				cmd "trans_selectbase <cvar:mn_trans_base_id>;"
@@ -542,19 +545,19 @@ window transfer
 			size		"360 160"
 			lineheight	"20"
 			onViewChange	{
-				*(abstractscrollbar)infopanel.t_baseinfo_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)infopanel.t_baseinfo_scroll@current = <viewpos>
-				*(abstractscrollbar)infopanel.t_baseinfo_scroll@viewsize = <viewsize>
+				*node:root.infopanel.t_baseinfo_scroll@fullsize = <fullsize>
+				*node:root.infopanel.t_baseinfo_scroll@current = <viewpos>
+				*node:root.infopanel.t_baseinfo_scroll@viewsize = <viewsize>
 			}
 		}
 
 		vscrollbar t_baseinfo_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"380 80"
 			height		"160"
 			hidewhenunused	true
 			onChange	{
-				*infopanel.t_baseinfo@viewpos = <current>
+				*node:root.infopanel.t_baseinfo@viewpos = <current>
 			}
 		}
 	}
@@ -565,10 +568,10 @@ window transfer
 	}
 
 	confunc trans_resetscroll {
-		*itemlist.trans_list_scroll@current = 0 
-		*itemlist.trans_list@viewpos = 0
-		*itemlist.trans_list_amount@viewpos = 0
-		*itemlist.trans_list_transfered@viewpos = 0
+		*node:root.itemlist.trans_list_scroll@current = 0
+		*node:root.itemlist.trans_list@viewpos = 0
+		*node:root.itemlist.trans_list_amount@viewpos = 0
+		*node:root.itemlist.trans_list_transfered@viewpos = 0
 		cmd "trans_list_scroll <cvar:mn_itemtype> <itemlist.trans_list@viewpos>;"
 	}
 
@@ -580,12 +583,12 @@ window transfer
 	{
 		string		"_Transfer"
 		tooltip		"_Start the transfer"
-		image		ui/button_blue
+		image		"ui/button_blue"
 		pos			"650 711"
 		size		"128 52"
 		color		"1 1 1 0.6"
 		selectcolor	"1 1 1 0.6"
-		font		f_normal
+		font		"f_normal"
 		onClick		{ cmd "trans_start;" }
 	}
 
@@ -593,12 +596,12 @@ window transfer
 	{
 		string		"_Cancel"
 		tooltip		"_Empty the aircraft storage"
-		image		ui/button_blue
+		image		"ui/button_blue"
 		pos			"790 711"
 		size		"128 52"
 		color		"1 1 1 0.6"
 		selectcolor	"1 1 1 1"
-		font		f_normal
+		font		"f_normal"
 		onClick		{ cmd "trans_emptyairstorage;" }
 	}
 

@@ -55,6 +55,32 @@ edict_t *G_GetFloorItems (edict_t * ent)
 }
 
 /**
+ * @brief Removes one particular item from a given container
+ * @param itemID The id of the item to remove
+ * @param ent The edict that holds the inventory to remove the item from
+ * @param container The container in the inventory of the edict to remove the searched item from.
+ * @return @c true if the removal was successful, @c false otherwise.
+ */
+qboolean G_InventoryRemoveItemByID (const char *itemID, edict_t *ent, containerIndex_t container)
+{
+	invList_t *ic = CONTAINER(ent, container);
+	while (ic) {
+		objDef_t *item = ic->item.t;
+		if (item != NULL && !strcmp(item->id, itemID)) {
+			/* remove the virtual item to update the inventory lists */
+			if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
+				gi.Error("Could not remove item '%s' from inventory %i",
+						ic->item.t->id, container);
+			G_EventInventoryDelete(ent, G_VisToPM(ent->visflags), INVDEF(container), ic->x, ic->y);
+			return qtrue;
+		}
+		ic = ic->next;
+	}
+
+	return qfalse;
+}
+
+/**
  * @brief Checks whether the given container contains items that should be
  * dropped to the floor
  * @param[in,out] ent The entity to check the inventory containers for
@@ -76,7 +102,7 @@ static qboolean G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t cont
 				invList_t *next = ic->next;
 				/* remove the virtual item to update the inventory lists */
 				if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
-					gi.error("Could not remove virtual item '%s' from inventory %i",
+					gi.Error("Could not remove virtual item '%s' from inventory %i",
 							ic->item.t->id, container);
 				ic = next;
 			} else {
@@ -91,9 +117,85 @@ static qboolean G_InventoryDropToFloorCheck (edict_t* ent, containerIndex_t cont
 	return qfalse;
 }
 
+/**
+ * @brief Adds a new item to an existing or new floor container edict at the given grid location
+ * @param pos The grid location to spawn the item on the floor
+ * @param itemID The item to spawn
+ */
+qboolean G_AddItemToFloor (const pos3_t pos, const char *itemID)
+{
+	edict_t *floor;
+	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
+	objDef_t *od = INVSH_GetItemByIDSilent(itemID);
+	if (!od) {
+		gi.DPrintf("Could not find item '%s'\n", itemID);
+		return qfalse;
+	}
+
+	/* Also sets FLOOR(ent) to correct value. */
+	floor = G_GetFloorItemsFromPos(pos);
+	/* nothing on the ground yet? */
+	if (!floor)
+		floor = G_SpawnFloor(pos);
+
+	item.t = od;
+	return game.i.TryAddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor));
+}
+
 /** @brief Move items to adjacent locations if the containers on the current
  * floor edict are full */
 /* #define ADJACENT */
+
+#ifdef ADJACENT
+static qboolean G_InventoryPlaceItemAdjacent (edict_t *ent)
+{
+	vec2_t oldPos; /* if we have to place it to adjacent  */
+	edict_t *floorAdjacent;
+	int i;
+
+	Vector2Copy(ent->pos, oldPos);
+	floorAdjacent = NULL;
+
+	for (i = 0; i < DIRECTIONS; i++) {
+		/** @todo Check whether movement is possible here - otherwise don't use this field */
+		/* extend pos with the direction vectors */
+		Vector2Set(ent->pos, ent->pos[0] + dvecs[i][0], ent->pos[0] + dvecs[i][1]);
+		/* now try to get a floor entity for that new location */
+		floorAdjacent = G_GetFloorItems(ent);
+		if (!floorAdjacent) {
+			floorAdjacent = G_SpawnFloor(ent->pos);
+		} else {
+			/* destroy this edict (send this event to all clients that see the edict) */
+			G_EventPerish(floorAdjacent);
+			floorAdjacent->visflags = 0;
+		}
+
+		INVSH_FindSpace(&floorAdjacent->i, &ic->item, INVDEF(gi.csi->idFloor), &x, &y, ic);
+		if (x != NONE) {
+			ic->x = x;
+			ic->y = y;
+			ic->next = FLOOR(floorAdjacent);
+			FLOOR(floorAdjacent) = ic;
+			break;
+		}
+		/* restore original pos */
+		Vector2Copy(oldPos, ent->pos);
+	}
+
+	/* added to adjacent pos? */
+	if (i < DIRECTIONS) {
+		/* restore original pos - if no free space, this was done
+		 * already in the for loop */
+		Vector2Copy(oldPos, ent->pos);
+		return qfalse;
+	}
+
+	if (floorAdjacent)
+		G_CheckVis(floorAdjacent, qtrue);
+
+	return qtrue;
+}
+#endif
 
 /**
  * @brief Move the whole given inventory to the floor and destroy the items that do not fit there.
@@ -106,10 +208,6 @@ void G_InventoryToFloor (edict_t *ent)
 	containerIndex_t container;
 	edict_t *floor;
 	item_t item;
-#ifdef ADJACENT
-	edict_t *floorAdjacent;
-	int i;
-#endif
 
 	/* check for items */
 	for (container = 0; container < gi.csi->numIDs; container++) {
@@ -148,9 +246,6 @@ void G_InventoryToFloor (edict_t *ent)
 
 		/* now cycle through all items for the container of the character (or the entity) */
 		for (ic = CONTAINER(ent, container); ic; ic = next) {
-#ifdef ADJACENT
-			vec2_t oldPos; /* if we have to place it to adjacent  */
-#endif
 			/* Save the next inv-list before it gets overwritten below.
 			 * Do not put this in the "for" statement,
 			 * unless you want an endless loop. ;) */
@@ -160,45 +255,13 @@ void G_InventoryToFloor (edict_t *ent)
 			/* only floor can summarize, so everything on the actor must have amount=1 */
 			assert(item.amount == 1);
 			if (!game.i.RemoveFromInventory(&game.i, &ent->chr.i, INVDEF(container), ic))
-				gi.error("Could not remove item '%s' from inventory %i of entity %i",
+				gi.Error("Could not remove item '%s' from inventory %i of entity %i",
 						ic->item.t->id, container, ent->number);
 			if (game.i.AddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor), NONE, NONE, 1) == NULL)
-				gi.error("Could not add item '%s' from inventory %i of entity %i to floor container",
+				gi.Error("Could not add item '%s' from inventory %i of entity %i to floor container",
 						ic->item.t->id, container, ent->number);
 #ifdef ADJACENT
-				Vector2Copy(ent->pos, oldPos);
-				for (i = 0; i < DIRECTIONS; i++) {
-					/** @todo Check whether movement is possible here - otherwise don't use this field */
-					/* extend pos with the direction vectors */
-					Vector2Set(ent->pos, ent->pos[0] + dvecs[i][0], ent->pos[0] + dvecs[i][1]);
-					/* now try to get a floor entity for that new location */
-					floorAdjacent = G_GetFloorItems(ent);
-					if (!floorAdjacent) {
-						floorAdjacent = G_SpawnFloor(ent->pos);
-					} else {
-						/* destroy this edict (send this event to all clients that see the edict) */
-						G_EventPerish(floorAdjacent);
-						floorAdjacent->visflags = 0;
-					}
-
-					INVSH_FindSpace(&floorAdjacent->i, &ic->item, INVDEF(gi.csi->idFloor], &x, &y, ic);
-					if (x != NONE) {
-						ic->x = x;
-						ic->y = y;
-						ic->next = FLOOR(floorAdjacent);
-						FLOOR(floorAdjacent) = ic;
-						break;
-					}
-					/* restore original pos */
-					Vector2Copy(oldPos, ent->pos);
-				}
-				/* added to adjacent pos? */
-				if (i < DIRECTIONS) {
-					/* restore original pos - if no free space, this was done
-					 * already in the for loop */
-					Vector2Copy(oldPos, ent->pos);
-					continue;
-				}
+			G_InventoryPlaceItemAdjacent(ent);
 #endif
 		}
 		/* destroy link */
@@ -209,10 +272,6 @@ void G_InventoryToFloor (edict_t *ent)
 
 	/* send item info to the clients */
 	G_CheckVis(floor, qtrue);
-#ifdef ADJACENT
-	if (floorAdjacent)
-		G_CheckVis(floorAdjacent, qtrue);
-#endif
 }
 
 /**
@@ -232,12 +291,12 @@ void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
 	gi.ReadFormat("sbsbbbbs", &t, &item->a, &m, &containerID, x, y, &item->rotated, &item->amount);
 
 	if (t < 0 || t >= gi.csi->numODs)
-		gi.error("Item index out of bounds: %i", t);
+		gi.Error("Item index out of bounds: %i", t);
 	item->t = &gi.csi->ods[t];
 
 	if (m != NONE) {
 		if (m < 0 || m >= gi.csi->numODs)
-			gi.error("Ammo index out of bounds: %i", m);
+			gi.Error("Ammo index out of bounds: %i", m);
 		item->m = &gi.csi->ods[m];
 	} else {
 		item->m = NULL;
@@ -246,7 +305,7 @@ void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
 	if (containerID >= 0 && containerID < gi.csi->numIDs)
 		*container = INVDEF(containerID);
 	else
-		gi.error("container id is out of bounds: %i", containerID);
+		gi.Error("container id is out of bounds: %i", containerID);
 }
 
 /**

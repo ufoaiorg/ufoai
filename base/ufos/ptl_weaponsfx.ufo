@@ -6,16 +6,62 @@
 // BOLTER EFFECTS
 // ==================
 
+//(old bolter effect)
+//particle bolter
+//{
+//	init
+//	{
+//		image  sfx/bolter
+//		blend  add
+//		style  beam
+//		thinkfade  out
+//		size	"0 2"
+//		tps    4.0
+//	}
+//	think { kill }
+//}
+
 particle bolter
 {
 	init
 	{
-		image  sfx/bolter
+		image  sfx/bolt
+		tps    60
+		style  axis
 		blend  add
-		style  beam
+		offset "0 -16 0"
+		size   "30 15"
+	}
+	think
+	{
+		spawn bolter_trail 
+	}
+}
+
+particle bolter_trail
+{
+	init
+	{
+		image  sfx/muzzleplasmaspiral
+		blend  add
+		style  axis
 		thinkfade  out
-		size	"0 2"
-		tps    4.0
+		angles "90 0 0"
+		v      "0 0 0"
+		tps    3
+	}
+	run
+	{
+
+		push   pos "40 40"		
+		mul    *t				
+		add    pos "10 10"		
+		pop    *size			
+
+		push   *color	
+		mul    float .2	
+		pop    *color	
+
 	}
 	think { kill }
 }
@@ -82,18 +128,83 @@ particle bolterFragment
 // BULLET EFFECTS
 // ==================
 
+//(old bullet effect)
+//particle bullet
+//{
+//	init
+//	{
+//		image  sfx/bullet
+//		blend  add
+//		style  beam
+//		thinkfade  out
+//		size	"0 2"
+//		tps    4.0
+//	}
+//	think { kill }
+//}
+
+
 particle bullet
 {
 	init
 	{
-		image  sfx/bullet
+		image  sfx/bullet1
+		tps    190
+		style  axis
 		blend  add
-		style  beam
-		thinkfade  out
-		size	"0 2"
-		tps    4.0
+		offset "0 -16 0"
+		size   "70 30"
+		child  muzzle_rifle
 	}
-	think { kill }
+	think
+	{
+		push   pos "15 10"		
+		mul    *t				
+		add    pos "40 40"		
+		pop    *size			
+	}
+}
+
+particle bullet-shotgun
+{
+	init
+	{
+		image  sfx/bullet1
+		tps    190
+		style  axis
+		blend  add
+		offset "0 -16 0"
+		size   "70 30"
+	}
+	think
+	{
+		push   pos "15 10"		
+		mul    *t				
+		add    pos "40 40"		
+		pop    *size			
+	}
+}
+
+
+particle bullet_sniper
+{
+	init
+	{
+		image  sfx/bullet1
+		tps    190
+		style  axis
+		blend  add
+		offset "0 -16 0"
+		size   "70 30"
+		child  muzzle_sniper
+	}
+	think
+	{
+		push   pos "40 10"		
+		mul    *t				
+		add    pos "80 40"		
+		pop    *size			
+	}
 }
 
 particle bulletImpact
@@ -155,7 +266,6 @@ particle bulletFragment
 	// this is spawned from an impact particle - need to be explicitly killed
 	think { kill }
 }
-
 
 // ==================
 // FLAMETHROWER EFFECTS
@@ -341,7 +451,7 @@ particle laserFrizzledImpact
 	init { kill }
 }
 
-particle laserFrizzledBeam 
+particle laserFrizzledBeam
 {
 	init
 	{
@@ -356,19 +466,85 @@ particle laserFrizzledBeam
 	think { kill }
 }
 
+particle laserBeamSmall
+{
+	init
+	{
+		image  sfx/laserbeam_b
+		blend  add
+		style  beam
+		thinkfade  out
+		tps    1
+		size	"0 7"
+		child  muzzle_laser
+	}
+	think { kill }
+}
+
+particle laserPulseSmall
+{
+	init
+	{
+		image  sfx/laserpulsesmall
+		tps    190
+		style  axis
+		blend  add
+		size   "20 10"
+		child  muzzle_laser
+	}
+}
+
+
+particle laserBeam
+{
+	init
+	{
+		image  sfx/laserbeam_b
+		blend  add
+		style  beam
+		thinkfade  out
+		tps    0.7
+		size	"0 9"
+		child  muzzle_laser
+	}
+	think { kill }
+}
+
 particle laserPulse
 {
 	init
 	{
-		image  sfx/laserbeam
+		image  sfx/laserpulse
+		tps    190
+		style  axis
 		blend  add
-		style  beam
-		thinkfade  sin
-		tps    6.0
-		size	"0 2.2"
+		offset "0 -16 0"
+		size   "50 10"
+		child  muzzle_laser
+		tps    0.8
 	}
-	think { kill }
+	think
+	{
+		push   pos "50 10"		
+		mul    *t				
+		add    pos "30 0"		
+		pop    *size			
+	}
 }
+
+// particle laserPulse
+// {
+//	init
+//	{
+//		image  sfx/laserbeam
+//		blend  add
+//		style  beam
+//		thinkfade  sin
+//		tps    6.0
+//		size	"0 2.2"
+//	}
+//	think { kill }
+// }
 
 particle laserPulseWhite
 {
@@ -532,6 +708,7 @@ particle plasmaMiniPulse
 		style  axis
 		child  plasmaMiniPulseBall
 		offset "0 -16 0"
+		spawn muzzle_plasma
 	}
 	run
 	{
@@ -540,32 +717,32 @@ particle plasmaMiniPulse
 		mul  float 16.0
 		sin  #
 		mul  #
-		add  pos "32 12"
+		add  pos "54 30"
 		pop  *size
 	}
 }
 
 particle plasmaPulse
-{
-	init
-	{
-		image  sfx/plasmapulse
-		blend  add
-		style  axis
-		child  plasmaPulseBall
-		offset "0 -26 0"
-	}
-	run
-	{
-		push pos "1 1"
-		push *t
-		mul  float 16.0
+ {
+ 	init
+ 	{
+ 		image  sfx/plasmapulse
+ 		blend  add
+ 		style  axis
+ 		offset "0 0 0"
+		spawn muzzle_plasma
+ 	}
+ 	run
+ 	{
+ 		push pos "1 1"
+ 		push *t
+ 		mul  float 16.0
 		sin  #
-		mul  #
-		add  pos "64 12"
-		pop  *size
+ 		mul  #
+ 		add  pos "90 30"
+ 		pop  *size
 	}
-}
+ }
 
 particle plasmaMiniPulseBall
 {
@@ -642,52 +819,178 @@ particle plasmaBall
 	}
 }
 
+particle plasmaBallCore
+{
+ 	init
+ 	{
+ 		frame			0
+ 		endframe		9
+ 		image			+sfx/plasmashot_
+		blend			blend
+		style			facing
+		framefade		none
+		size			"200 200"
+		fps				24.0
+ 		push			*v
+		mul				float 30.0
+		add				*s
+		pop				*s
+		v				"0 0 0"
+		tps 				0.1
+	}
+ 	think { kill }
+}
+
 particle plasmaBigBall
+{
+ 	init
+ 	{
+ 		image  sfx/plasmaball-core
+ 		blend  add
+ 		style  facing
+ 		offset "0 0 0"
+		tps    60
+		child plasmaBallCore
+		spawn muzzle_plasma
+ 	}
+ 	think
+ 	{
+		spawn plasmaBallTrail
+ 		push pos "1 1"
+ 		push *t
+ 		mul  float 16.0
+		sin  #
+ 		mul  #
+ 		add  pos "40 40"
+ 		pop  *size
+	}
+}
+
+particle plasmaBallTrail
 {
 	init
 	{
-		image	sfx/plasmaball
-		blend	add
-		style	facing
-		lightcolor "0.3 1.0 3.0"
-		lightintensity 0.2
+		image  sfx/plasmaball-core
+		blend  add
+		style  axis
+		thinkfade  out
+		angles "90 0 0"
+		v      "0 0 0"
+		size   "30 30"
+		tps    4
 	}
 	run
 	{
-		push	pos	"1.5 1.5"
-		push	*t
-		mul	float	6.0
-		sin	#
-		mul	#
-		add	pos	"12 12"
-		pop	*size
+
+		push   *color	
+		mul    float .2	
+		pop    *color	
+
 	}
+	think { kill }
 }
+
+// particle plasmaBigBall
+// {
+// 	init
+// 	{
+// 		image	sfx/plasmaball
+// 		blend	add
+// 		style	facing
+// 		lightcolor "0.3 1.0 3.0"
+// 		lightintensity 0.2
+// 	}
+// 	run
+// 	{
+// 		push	pos	"1.5 1.5"
+// 		push	*t
+// 		mul	float	6.0
+// 		sin	#
+// 		mul	#
+// 		add	pos	"12 12"
+// 		pop	*size
+// 	}
+// }
+
 
 particle plasmaImpactCharged
 {
 	init
 	{
-		push   int 10
-		nspawn plasmaParticleCharged
-		image  sfx/plasmaball
-		blend  add
-		style  rotated
-		thinkfade  out
-		tps    2.0
-	}
-	run
-	{
-		push pos "10 10"
-		push *t
-		mul  float 10.0
-		sin  #
-		mul  #
-		add  pos "30 30"
-		pop  *size
+		frame			0
+		endframe		4
+		image			+sfx/plasmaimpact_
+		blend			blend
+		style			facing
+		framefade		none
+		fps				15.0
+		tps				3
+		v				"0 0 0"
+		offset				"0 10 0"
+		size				"55 55"
+		child				plasmaImpactgGlow
 	}
 	think { kill }
 }
+
+particle plasmaImpactChargedAnim_2
+{
+	init
+	{
+		frame			0
+		endframe		4
+		image			+sfx/plasmaimpact_
+		blend			blend
+		style			axis
+		framefade		none
+		fps				15.0
+		tps				3
+		v				"0 0 0"
+		offset				"0 10 0"
+		size				"55 55"
+	}
+	think { kill }
+}
+
+particle plasmaImpactgGlow
+{
+	init
+	{
+		image  sfx/corona_b
+		blend  add
+		style  facing
+		thinkfade  out
+		life   2
+		size   "25 25"
+	}
+	think { kill }
+}
+
+
+// particle plasmaImpactCharged
+// {
+// 	init
+// 	{
+// 		push   int 10
+// 		nspawn plasmaParticleCharged
+// 		image  sfx/plasmaball
+// 		blend  add
+// 		style  rotated
+// 		thinkfade  out
+// 		tps    2.0
+// 	}
+// 	run
+// 	{
+// 		push pos "10 10"
+// 		push *t
+// 		mul  float 10.0
+// 		sin  #
+// 		mul  #
+// 		add  pos "30 30"
+// 		pop  *size
+// 	}
+// 	think { kill }
+// }
 
 particle plasmaParticleCharged
 {
@@ -719,14 +1022,15 @@ particle plasmaContinuous
 		image  sfx/plasmabeam
 		blend  add
 		style  beam
-		tps    10.0
+		tps    2.0
 		lightcolor "0.3 1.0 3.0"
 		lightintensity 0.1
+		scroll_s -2.5
 	}
 	run
 	{
-		rand float 2.0
-		add  float 1.0
+		rand float 5.0
+		add  float 3.0
 		pop  *size.2
 	}
 	think { kill }
@@ -784,9 +1088,8 @@ particle plasmaBigExplosion
 {
 	init
 	{
-		spawn  explosion_1
-		spawn  explosion_2
-		push   int 10
+		spawn  plasma_explosion
+		push   int 25
 		nspawn plasmaBigSplash
 		kill
 	}
@@ -879,17 +1182,18 @@ particle pbeamMiniBeam
 {
 	init
 	{
-		image  sfx/greenplasbeam
+		image  sfx/particlebeam
 		blend  add
 		style  beam
-		tps    30.0
+		tps    10.0
 		lightcolor "0.5 0.9 0.5"
 		lightintensity 0.1
+		spawn muzzle_ptl
 	}
 	run
 	{
-		rand float 2.0
-		add  float 1.0
+		rand float 3.0
+		add  float 4.0
 		pop  *size.2
 	}
 	think { kill }
@@ -899,21 +1203,22 @@ particle pbeamBeam
 {
 	init
 	{
-		image  sfx/greenplasbeam
+		image  sfx/particlebeam
 		blend  add
 		style  beam
 		thinkfade  sin
 		tps    10.0
 		lightcolor "0.5 0.9 0.5"
 		lightintensity -0.2
+		spawn muzzle_ptl
 	}
 	run
 	{
 		push *t
-		mul  float 7.0
+		mul  float 8.0
 		sin  #
-		mul  float 1.0
-		add  float 2.0
+		mul  float 3.0
+		add  float 6.0
 		pop  *size.2
 	}
 	think { kill }
@@ -923,21 +1228,22 @@ particle pbeamBigBeam
 {
 	init
 	{
-		image  sfx/greenplasbeam
+		image  sfx/particlebeam
 		blend  add
 		style  beam
 		thinkfade  sin
 		tps    2.0
 		lightcolor "0.5 0.9 0.5"
 		lightintensity 0.2
+		spawn muzzle_ptl
 	}
 	run
 	{
 		push *t
-		mul  float 3.0
+		mul  float 15.0
 		sin  #
-		mul  float 2.0
-		add  float 3.0
+		mul  float 5.0
+		add  float 8.0
 		pop  *size.2
 	}
 	think { kill }
@@ -1080,6 +1386,11 @@ particle grenl_ammo
 		model  weapons/grenl/grenl_clip2
 		color  ".5 .5 .5 1"
 		skin	"0"
+		tps    40.0
+	}
+	think
+	{
+		spawn glSmoke
 	}
 }
 
@@ -1090,6 +1401,11 @@ particle grenl_fle_ammo
 		model  weapons/grenl/grenl_clip2
 		skin	"1"
 		color  ".5 .5 .5 1"
+		tps    40.0
+	}
+	think
+	{
+		spawn glSmoke
 	}
 }
 
@@ -1100,6 +1416,11 @@ particle grenl_ic_ammo
 		model  weapons/grenl/grenl_clip2
 		skin	"2"
 		color  ".5 .5 .5 1"
+		tps    40.0
+	}
+	think
+	{
+		spawn glSmoke
 	}
 }
 
@@ -1110,7 +1431,48 @@ particle grenl_plasma_ammo
 		model  weapons/grenl/grenl_clip2
 		skin	"3"
 		color  ".5 .5 .5 1"
+		tps    40.0
 	}
+	think
+	{
+		spawn glSmoke
+	}
+}
+
+particle glSmoke
+{
+	init
+	{
+		image  sfx/smoke
+		blend  add
+		style  facing
+		thinkfade  out
+		tps    0.8
+		color  ".5 .5 .5 1"
+		v      "0 0 5"			// let the smoketrail get higher as time advances
+		a      "0 0 0"
+
+		// change the position a little bit randomly
+		crand  vector "3 3 3"	
+		add    *s				
+		pop    *s				
+	}
+	// run is executed more often as think (every frame - and think execution depends on the tps value)
+	run
+	{
+		// change the size of the smoketrail (make it bigger as time advances)
+		push   pos "15 15"		// push the vector onto the stack
+		mul    *t				// multiply stack value with the time value from the particle
+		add    pos "10 10"		// add another position 2d vector to the current stack value
+		pop    *size			// write the vector back into the particle size value
+
+		// change the color of the smoketrail (more more transparent as time advances)
+		push   *color	// get the color onto the stack
+		mul    float .5	// scalar multiple with 0.5 (to make it more transparent)
+		pop    *color	// write the stack value back into particle structure color and remove from stack
+
+	}
+	think { kill }
 }
 
 // ==================
@@ -1227,19 +1589,41 @@ particle frag_explosion
 		nspawn grenadeFragment
 		lightcolor "0.4 0.4 1.0"
 		lightintensity 0.1
-		lightsustain 1.0
+		// lightsustain 1.0
 		kill
 	}
 }
-
 particle flash_explosion
 {
-	init
-	{
-		spawn	flash
-		kill
+ 	init
+ 	{
+ 		frame			0
+ 		endframe		18
+ 		image			+sfx/flashbang_a
+		blend			blend
+		style			facing
+		framefade		none
+		size			"100 100"
+		fps				26.0
+		tps				1.4
+ 		push			*v
+		mul				float 30.0
+		add				*s
+		pop				*s
+		spawn				flash
+		v				"0 0 0"
 	}
+ 	think { kill }
 }
+
+// particle flash_explosion
+// {
+//	init
+//	{
+//		spawn	flash
+//		kill
+//	}
+// }
 
 particle grenadeFragment
 {
@@ -1405,3 +1789,337 @@ particle incz
 		spawn Firez
 	}
 }
+
+// ==================
+// Muzzle Flashes
+// ==================
+particle muzzle_rifle
+{
+	init
+	{
+		spawn  muzzle_round
+		spawn  muzzle_glow
+		spawn  muzzle_side
+		push   int 2
+		lightcolor "0.4 0.4 1.0"
+		lightintensity 0.1
+		kill
+	}
+}
+
+particle muzzle_round
+{
+	init
+	{
+		image  sfx/uexp_01
+		blend  add
+		style  facing
+		thinkfade  out
+		life   0.07
+		tps    1
+		size   "10 10"
+	}
+	think { kill }
+}
+
+particle muzzle_glow
+{
+	init
+	{
+		image  sfx/corona_y
+		blend  add
+		style  facing
+		thinkfade  out
+		life   0.07
+		tps    1
+		size   "15 15"
+	}
+	think { kill }
+}
+
+particle muzzle_side
+{
+	init
+	{
+		image  sfx/muzzlebulletside
+		blend  add
+		style  axis 
+//		angles "50 0 0"
+		thinkfade  out
+		life   0.07
+		tps    1
+		size   "40 10"
+		offset "0 7 0"
+	}
+	think { kill }
+}
+
+particle muzzle_sniper
+{
+	init
+	{
+		spawn  muzzle_sniper_1
+		spawn  muzzle_sniper_glow
+		lightcolor "0.4 0.4 1.0"
+		lightintensity 0.1
+		kill
+	}
+}
+
+particle muzzle_sniper_1
+{
+	init
+	{
+		image  sfx/uexp_01
+		blend  add
+		style  facing
+		thinkfade  out
+		life   0.1
+		tps    1
+		size   "20 20"
+		offset "5 0 0"
+	}
+	run
+	{
+
+		crand  vector "1 0 0"
+		add    *s				
+		pop    *s				
+
+	}
+	think { kill }
+}
+
+particle muzzle_sniper_glow
+{
+	init
+	{
+		image  sfx/corona_y
+		blend  add
+		style  facing
+		thinkfade  out
+		life   0.1
+		tps    1
+		size   "30 30"
+		offset "5 0 0"
+	}
+	run
+	{
+
+		crand  vector "1 1 1"	
+		add    *s				
+		pop    *s				
+
+	}
+	think { kill }
+}
+
+particle muzzle_laser
+{
+	init
+	{
+		spawn  muzzle_laser_round
+		push   int 2
+		spawn  muzzle_laser_side
+		push   int 2
+		lightcolor "0.4 0.4 1.0"
+		lightintensity 0.1
+		kill
+	}
+}
+
+particle muzzle_laser_round
+{
+	init
+	{
+		image  sfx/lasermuzzle
+		blend  add
+		style  facing
+		thinkfade  out
+		life   0.07
+		tps    1
+		size   "30 30"
+		offset "0 0 0"
+		v      "0 0 0"
+	}
+	run
+	{
+
+		crand  vector "1 0 0"	
+		add    *s				
+		pop    *s				
+
+	}
+	think { kill }
+}
+
+particle muzzle_laser_side
+{
+	init
+	{
+		image  sfx/muzzlelaserside
+		blend  add
+		style  rotated
+		angles "0 0 0"
+		thinkfade  out
+		life   0.07
+		tps    1
+		size   "40 10"
+		offset "0 9 0"
+		v      "0 0 0"
+	}
+	think { kill }
+}
+
+particle muzzle_plasma
+{
+	init
+	{
+		spawn  muzzle_plasma_round
+		push   int 2
+		spawn  muzzle_plasma_side
+		push   int 2
+		spawn  muzzle_plasma_spiral
+		push   int 2
+		lightcolor "0.4 0.4 1.0"
+		lightintensity 0.1
+		kill
+	}
+}
+
+particle muzzle_plasma_round
+{
+	init
+	{
+		image  sfx/plasmaimpact_01
+		blend  add
+		style  facing
+		thinkfade  out
+		life   0.07
+		tps    1
+		size   "30 30"
+		offset "0 0 0"
+		v      "0 0 0"
+	}
+	run
+	{
+
+		crand  vector "1 0 0"	
+		add    *s				
+		pop    *s				
+
+	}
+	think { kill }
+}
+
+particle muzzle_plasma_side
+{
+	init
+	{
+		image  sfx/muzzleplasmaside
+		blend  add
+		style  rotated
+		angles "0 0 0"
+		thinkfade  out
+		life   0.07
+		tps    1
+		size   "40 10"
+		offset "0 9 0"
+		v      "0 0 0"
+	}
+	think { kill }
+}
+
+particle muzzle_plasma_spiral
+{
+	init
+	{
+		image  sfx/muzzleplasmaspiral
+		blend  add
+		style  rotated
+		thinkfade  out
+		tps    4
+		offset "0 0 0"
+		v      "0 0 0"
+		angles "0 90 0"
+	}
+	run
+	{
+
+		push   pos "40 40"		
+		mul    *t				
+		add    pos "10 10"		
+		pop    *size			
+
+		push   *color	
+		mul    float .7	
+		pop    *color	
+
+	}
+	think { kill }
+}
+
+
+particle muzzle_ptl
+{
+	init
+	{
+		spawn  muzzle_ptl_side
+		push   int 2
+		spawn  muzzle_ptl_cross
+		push   int 2
+		lightcolor "0.4 0.4 1.0"
+		lightintensity 0.1
+		kill
+	}
+}
+
+
+particle muzzle_ptl_side
+{
+	init
+	{
+		image  sfx/muzzleptlside
+		blend  add
+		style  rotated
+		angles "0 0 0"
+		thinkfade  out
+		life   0.07
+		tps    1
+		size   "40 10"
+		offset "0 9 0"
+		v      "0 0 0"
+	}
+	think { kill }
+}
+
+particle muzzle_ptl_cross
+{
+	init
+	{
+		image  sfx/ptlmuzzle
+		blend  add
+		style  rotated
+		thinkfade  out
+		tps    4
+		offset "0 0 0"
+		v      "0 0 0"
+		angles "0 90 0"
+	}
+	run
+	{
+
+		push   pos "0 0"		
+		mul    *t				
+		sub    pos "20 20"		
+		pop    *size			
+
+		push   *color	
+		mul    float .7	
+		pop    *color	
+
+	}
+	think { kill }
+}
+
+

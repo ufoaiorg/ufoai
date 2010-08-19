@@ -852,7 +852,7 @@ void R_DrawEntities (void)
 	for (i = 0; i < refdef.numEntities; i++) {
 		entity_t *e = &r_entities[i];
 
-		/* frustum cull check - but not while we are in e.g. sequence mode */
+		/* frustum cull check */
 		if (R_CullEntity(e))
 			continue;
 
@@ -876,8 +876,7 @@ void R_DrawEntities (void)
 			case mod_alias_md3:
 			case mod_obj:
 				skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
-				/** @todo activate this once #2890118 is fixed */
-				if (skin == NULL/* || skin->texnum == 0*/)
+				if (skin == NULL || skin->texnum == 0)
 					Com_Error(ERR_DROP, "Model '%s' has no skin assigned", e->model->name);
 				if (skin->has_alpha || e->flags & RF_TRANSLUCENT)
 					chain = &r_blend_mesh_entities;
@@ -885,7 +884,8 @@ void R_DrawEntities (void)
 					chain = &r_opaque_mesh_entities;
 				break;
 			default:
-				Com_Error(ERR_DROP, "Unknown model type in R_DrawEntities entity chain: %i", e->model->type);
+				Com_Error(ERR_DROP, "Unknown model type in R_DrawEntities entity chain: %i (%s)",
+						e->model->type, e->model->name);
 				break;
 			}
 		}

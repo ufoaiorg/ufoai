@@ -176,7 +176,7 @@ typedef enum {
 } msg_mode_t;
 
 typedef enum {
-	KEYSPACE_MENU,
+	KEYSPACE_UI,
 	KEYSPACE_GAME,
 	KEYSPACE_BATTLE,
 

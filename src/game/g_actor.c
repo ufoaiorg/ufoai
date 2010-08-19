@@ -40,7 +40,6 @@ qboolean G_IsLivingActor (const edict_t *ent)
  * changed due to the rotation) after the usage
  * @param actor The actor that is using the door
  * @param door The door that should be opened/closed
- * @todo Check other actors that might be close to the door, too
  */
 void G_ActorUseDoor (edict_t *actor, edict_t *door)
 {
@@ -51,9 +50,36 @@ void G_ActorUseDoor (edict_t *actor, edict_t *door)
 	while ((closeActor = G_FindRadius(closeActor, door->origin, UNIT_SIZE * 3, ET_ACTOR))) {
 		/* check whether the door is still reachable (this might have
 		 * changed due to the rotation) or whether an actor can reach it now */
-		if (!G_TouchTriggers(closeActor))
-			G_ActorSetClientAction(closeActor, NULL);
+		G_TouchTriggers(closeActor);
 	}
+}
+
+/**
+ * @brief Checks whether the given actor is currently standing in a rescue zone
+ * @param[in] actor The actor to check
+ * @return @c true if the actor is standing in a rescue zone, @c false otherwise.
+ */
+qboolean G_ActorIsInRescueZone (const edict_t* actor)
+{
+	return actor->inRescueZone;
+}
+
+/**
+ * @brief Set the rescue zone data
+ * @param[out] actor The actor to set the rescue zone flag for
+ * @param[in] inRescueZone @c true if the actor is in the rescue zone, @c false otherwise
+ */
+void G_ActorSetInRescueZone (edict_t* actor, qboolean inRescueZone)
+{
+	if (inRescueZone == G_ActorIsInRescueZone(actor))
+		return;
+
+	if (inRescueZone)
+		G_ClientPrintf(G_PLAYER_FROM_ENT(actor), PRINT_HUD, _("Soldier entered the rescue zone\n"));
+	else
+		G_ClientPrintf(G_PLAYER_FROM_ENT(actor), PRINT_HUD, _("Soldier left the rescue zone\n"));
+
+	actor->inRescueZone = inRescueZone;
 }
 
 /**
@@ -144,7 +170,7 @@ void G_ActorReserveTUs (edict_t *ent, int resReaction, int resShot, int resCrouc
  * @param[in] team The team to get the actor with the ucn from
  * @return The actor edict if found, otherwise @c NULL
  */
-edict_t *G_GetActorByUCN (const int ucn, const int team)
+edict_t *G_ActorGetByUCN (const int ucn, const int team)
 {
 	edict_t *ent = NULL;
 
@@ -254,8 +280,9 @@ void G_ActorSetMaxs (edict_t* ent)
  */
 void G_ActorGiveTimeUnits (edict_t *ent)
 {
+	const int tus = G_IsDazed(ent) ? 0 : GET_TU(ent->chr.score.skills[ABILITY_SPEED]);
+	G_ActorSetTU(ent, tus);
 	G_RemoveDazed(ent);
-	G_ActorSetTU(ent, GET_TU(ent->chr.score.skills[ABILITY_SPEED]));
 }
 
 void G_ActorSetTU (edict_t *ent, int tus)
@@ -307,7 +334,7 @@ void G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 
 	level.num_alive[ent->team]--;
 	/* send death */
-	G_EventActorDie(ent, attacker);
+	G_EventActorDie(ent);
 
 	/* handle inventory - drop everything to floor edict (but not the armour) */
 	G_InventoryToFloor(ent);
@@ -364,7 +391,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 
 	/* Check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
-	if (checkaction && !G_ActionCheck(player, ent, 1))
+	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 1))
 		return;
 
 	/* "get floor ready" - searching for existing floor-edict */
@@ -375,7 +402,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		newFloor = qtrue;
 	} else if (INV_IsFloorDef(from) && !floor) {
 		/* We are moving from the floor, but no existing edict for this floor-tile found -> this should never be the case. */
-		gi.dprintf("G_ClientInvMove: No source-floor found.\n");
+		gi.DPrintf("G_ClientInvMove: No source-floor found.\n");
 		return;
 	} else {
 		/* There already exists an edict for this floor-tile. */

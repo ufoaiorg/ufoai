@@ -8,5 +8,8 @@ PAK_FILES = 0pics.pk3	\
 			0ufos.pk3	\
 			0materials.pk3	\
 			0base.pk3	\
+			0textures.pk3	\
 			0shaders.pk3	\
 			0videos.pk3
+
+PAK_PATHS = $(addprefix base/, $(PAK_FILES))

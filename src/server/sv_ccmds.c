@@ -159,8 +159,15 @@ static void SV_Map_f (void)
 	if (!strcmp(Cmd_Argv(0), "devmap")) {
 		Com_Printf("deactivate ai - make sure to reset sv_ai after maptesting\n");
 		Cvar_SetValue("sv_ai", 0);
+		Cvar_SetValue("sv_cheats", 1);
 		Cvar_SetValue("sv_send_edicts", 1);
 		Cvar_SetValue("g_notus", 1);
+		Cvar_SetValue("g_nospawn", 1);
+	} else {
+		Cvar_SetValue("sv_ai", 1);
+		Cvar_SetValue("sv_send_edicts", 0);
+		Cvar_SetValue("g_notus", 0);
+		Cvar_SetValue("g_nospawn", 0);
 	}
 
 	if (!strcmp(Cmd_Argv(1), "day")) {
@@ -356,8 +363,11 @@ static void SV_ServerCommand_f (void)
 		Com_Printf("No game loaded.\n");
 		return;
 	}
+	SDL_mutexP(svs.serverMutex);
 
 	ge->ServerCommand();
+
+	SDL_mutexV(svs.serverMutex);
 }
 
 /*=========================================================== */
@@ -565,6 +575,35 @@ static void SV_PrintConfigStrings_f (void)
 	}
 }
 
+#ifdef DEBUG
+/** @todo this does not belong here */
+#include "../common/routing.h"
+
+/**
+ * @brief  Dumps contents of the entire server map to console for inspection.
+ * @sa CL_InitLocal
+ */
+static void Grid_DumpWholeServerMap_f (void)
+{
+	int i;
+
+	for (i = 0; i < ACTOR_MAX_SIZE; i++)
+		RT_DumpWholeMap(&sv.svMap[i]);
+}
+
+/**
+ * @brief  Dumps contents of the entire server routing table to CSV file.
+ * @sa CL_InitLocal
+ */
+static void Grid_DumpServerRoutes_f (void)
+{
+	ipos3_t wpMins, wpMaxs;
+	VecToPos(mapMin, wpMins);
+	VecToPos(mapMax, wpMaxs);
+	RT_WriteCSVFiles(sv.svMap, "ufoaiserver", wpMins, wpMaxs);
+}
+#endif
+
 /**
  * @sa SV_Init
  */
@@ -592,6 +631,11 @@ void SV_InitOperatorCommands (void)
 
 #ifdef DEDICATED_ONLY
 	Cmd_AddCommand("say", SV_ConSay_f, "Broadcasts server messages to all connected players");
+#endif
+
+#ifdef DEBUG
+	Cmd_AddCommand("debug_sgrid", Grid_DumpWholeServerMap_f, "Shows the whole server side pathfinding grid of the current loaded map");
+	Cmd_AddCommand("debug_sroute", Grid_DumpServerRoutes_f, "Shows the whole server side pathfinding grid of the current loaded map");
 #endif
 
 	Cmd_AddCommand("killserver", SV_KillServer_f, "Shuts the server down - and disconnect all clients");

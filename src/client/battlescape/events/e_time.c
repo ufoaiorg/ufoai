@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_time.h"
 #include "e_main.h"
 
+/** @todo remove the old event timing */
 #define OLDEVENTTIME
 
 #ifdef OLDEVENTTIME
@@ -45,7 +46,7 @@ static qboolean parsedDeath;	/**< extra delay caused by death - @sa @c impactTim
  * @param[in,out] msg The message buffer that can be modified to get the event time
  * @param[in] dt Delta time in msec since the last event was parsed
  */
-int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
+int CL_GetEventTime (const event_t eType, struct dbuffer *msg, const int dt)
 {
 	const eventRegister_t *eventData = CL_GetEvent(eType);
 
@@ -178,7 +179,7 @@ int CL_GetEventTime (const int eType, struct dbuffer *msg, const int dt)
 			vec3_t muzzle, impact;
 
 			/* read data */
-			NET_ReadFormat(msg, eventData->formatString, &dummy, &dummy, &objIdx, &weap_fds_idx, &fd_idx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
+			NET_ReadFormat(msg, eventData->formatString, &dummy, &dummy, &dummy, &objIdx, &weap_fds_idx, &fd_idx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
 
 			obj = INVSH_GetItemByIDX(objIdx);
 			fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);

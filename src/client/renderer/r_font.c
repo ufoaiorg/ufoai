@@ -494,7 +494,8 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
 	chunksUsed = R_FontMakeChunks(f, text, maxWidth, method, &lines, &aborted);
 
 	wrap = &wrapCache[numWraps];
-	Q_strncpyz(wrap->text, text, sizeof(wrap->text));
+	strncpy(wrap->text, text, sizeof(wrap->text));
+	wrap->text[MAX_CACHE_STRING - 1] = '\0';
 	wrap->font = f;
 	wrap->maxWidth = maxWidth;
 	wrap->method = method;
@@ -559,6 +560,7 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	SDL_Rect rect = {0, 0, 0, 0};
 	char buf[BUF_SIZE];
 	static const SDL_Color color = {255, 255, 255, 0};	/* The 4th value is unused */
+	const int samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	Uint32 rmask = 0xff000000;
@@ -613,7 +615,7 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	/* use a fixed texture number allocation scheme */
 	chunk->texnum = TEXNUM_FONTS + (chunk - chunkCache);
 	R_BindTexture(chunk->texnum);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_BGRA, GL_UNSIGNED_BYTE, openGLSurface->pixels);
+	glTexImage2D(GL_TEXTURE_2D, 0, samples, w, h, 0, GL_BGRA, GL_UNSIGNED_BYTE, openGLSurface->pixels);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	Vector2Set(chunk->texsize, w, h);
@@ -670,7 +672,7 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
  * and VID_NORM_HEIGHT
  * @todo This could be replaced with a set of much simpler interfaces.
  */
-int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int absY, int maxWidth,
+int R_FontDrawString (const char *fontId, int align, int x, int y, int absX, int maxWidth,
 		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, longlines_t method)
 {
 	const font_t *font = R_GetFont(fontId);

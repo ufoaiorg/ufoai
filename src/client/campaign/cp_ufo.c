@@ -23,10 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../renderer/r_draw.h"
+#include "../cl_shared.h"
 #include "cp_campaign.h"
-#include "cp_popup.h"
 #include "cp_map.h"
 #include "cp_ufo.h"
 #include "cp_aircraft.h"
@@ -127,10 +125,13 @@ const char* UFO_AircraftToIDOnGeoscape (const aircraft_t *ufocraft)
  */
 const char* UFO_MissionResultToString (void)
 {
+	const char *ufoName = Com_UFOTypeToShortName(ccs.missionResults.ufotype);
+	const aircraft_t *aircraft = AIR_GetAircraft(ufoName);
+	const char *geoscapeName = UFO_AircraftToIDOnGeoscape(aircraft);
 	if (ccs.missionResults.crashsite)
-		return va(_("\nSecured crashed %s (%.0f%%)\n"), UFO_AircraftToIDOnGeoscape(AIR_GetAircraft(Com_UFOTypeToShortName(ccs.missionResults.ufotype))), ccs.missionResults.ufoCondition * 100);
+		return va(_("\nSecured crashed %s (%.0f%%)\n"), geoscapeName, ccs.missionResults.ufoCondition * 100);
 	else
-		return va(_("\nSecured landed %s\n"), UFO_AircraftToIDOnGeoscape(AIR_GetAircraft(Com_UFOTypeToShortName(ccs.missionResults.ufotype))));
+		return va(_("\nSecured landed %s\n"), geoscapeName);
 }
 
 /**
@@ -375,12 +376,14 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 
 	ufo->status = AIR_TRANSIT;
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+
 		if (!base)
 			continue;
-		/* check if the ufo can attack an aircraft
-		 * reverse order - because aircraft can be destroyed in here */
-		for (phalanxAircraft = base->aircraft + base->numAircraftInBase - 1; phalanxAircraft >= base->aircraft; phalanxAircraft--) {
+
+		/* check if the ufo can attack an aircraft */
+		phalanxAircraft = NULL;
+		while ((phalanxAircraft = AIR_GetNextFromBase(base, phalanxAircraft)) != NULL) {
 			/* check that aircraft is flying */
 			if (AIR_IsAircraftOnGeoscape(phalanxAircraft)) {
 				/* get the distance from ufo to aircraft */
@@ -473,16 +476,16 @@ void UFO_CheckShootBack (aircraft_t *ufo, aircraft_t* phalanxAircraft)
 
 /**
  * @brief Make the UFOs run
- * @param[in] dt time delta
+ * @param[in] deltaTime The time passed since last call
  */
-void UFO_CampaignRunUFOs (int dt)
+void UFO_CampaignRunUFOs (int deltaTime)
 {
 	int ufoIdx, k;
 
-	assert(dt >= 0);
+	assert(deltaTime >= 0);
 
-	/* dt may be 0 if a UFO has been detection occured (see CL_CampaignRun) */
-	if (!dt)
+	/* deltaTime may be 0 if a UFO has been detection occurred */
+	if (!deltaTime)
 		return;
 
 	/* now the ufos are flying around, too - cycle backward - ufo might be destroyed */
@@ -496,7 +499,7 @@ void UFO_CampaignRunUFOs (int dt)
 		assert(ufo->mission);
 
 		/* reached target and not following a phalanx aircraft? then we need a new destination */
-		if (AIR_AircraftMakeMove(dt, ufo) && ufo->status != AIR_UFO) {
+		if (AIR_AircraftMakeMove(deltaTime, ufo) && ufo->status != AIR_UFO) {
 			float *end;
 			end = ufo->route.point[ufo->route.numPoints - 1];
 			Vector2Copy(end, ufo->pos);
@@ -523,8 +526,9 @@ void UFO_CampaignRunUFOs (int dt)
 
 		/* Update delay to launch next projectile */
 		for (k = 0; k < ufo->maxWeapons; k++) {
-			if (ufo->weapons[k].delayNextShot > 0)
-				ufo->weapons[k].delayNextShot -= dt;
+			aircraftSlot_t *slot = &ufo->weapons[k];
+			if (slot->delayNextShot > 0)
+				slot->delayNextShot -= deltaTime;
 		}
 	}
 }
@@ -598,11 +602,11 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 		return NULL;
 	}
 
-	for (newUFONum = 0; newUFONum < ccs.numAircraftTemplates; newUFONum++)
-		if (ccs.aircraftTemplates[newUFONum].type == AIRCRAFT_UFO
-		 && ufoType == ccs.aircraftTemplates[newUFONum].ufotype
-		 && !ccs.aircraftTemplates[newUFONum].notOnGeoscape)
+	for (newUFONum = 0; newUFONum < ccs.numAircraftTemplates; newUFONum++) {
+		const aircraft_t *tpl = &ccs.aircraftTemplates[newUFONum];
+		if (tpl->type == AIRCRAFT_UFO && ufoType == tpl->ufotype && !tpl->notOnGeoscape)
 			break;
+	}
 
 	if (newUFONum == ccs.numAircraftTemplates) {
 		Com_DPrintf(DEBUG_CLIENT, "Could not add ufo type %i to geoscape\n", ufoType);
@@ -683,7 +687,7 @@ void UFO_DetectNewUFO (aircraft_t *ufocraft)
 	ufocraft->lastSpotted = ccs.date;
 
 	/* If this is the first UFO on geoscape, activate radar */
-	if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
+	if (!MAP_IsRadarOverlayActivated())
 		MAP_SetOverlay("radar");
 
 	MAP_UpdateGeoscapeDock();
@@ -734,7 +738,8 @@ qboolean UFO_CampaignCheckEvents (void)
 			}
 
 			/* Check if UFO is detected by an aircraft */
-			for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--) {
+			aircraft = NULL;
+			while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 				if (!AIR_IsAircraftOnGeoscape(aircraft))
 					continue;
 				/* maybe the ufo is already detected, don't reset it */
@@ -827,7 +832,7 @@ qboolean UFO_IsUFOSeenOnGeoscape (const aircraft_t const *ufo)
 }
 
 /**
- * @sa MN_InitStartup
+ * @sa UI_InitStartup
  */
 void UFO_InitStartup (void)
 {

@@ -31,7 +31,7 @@
 #define COMMON_UFOTYPES_H
 
 #include <stddef.h>
-#include <inttypes.h>
+#include <stdint.h>
 
 typedef float float32_t;
 typedef double double64_t;

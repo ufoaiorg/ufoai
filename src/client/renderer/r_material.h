@@ -47,6 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define STAGE_ANIM				(1 << 14)
 #define STAGE_DIRTMAP			(1 << 15)
 #define STAGE_FLARE				(1 << 16)
+#define STAGE_GLOWMAPLINK		(1 << 17)
 
 /* set on stages eligible for static, dynamic, and per-pixel lighting */
 #define STAGE_LIGHTING		(1 << 30)
@@ -113,7 +114,10 @@ typedef struct tape_s {
 typedef enum {
 	ANIM_NORMAL,	/**< loops the animation from frame [0, n-1] */
 	ANIM_ALTERNATE,	/**< amount of frames should be uneven [0, n-1, 1] */
-	ANIM_BACKWARDS	/**< plays the animation in reverse order. Loops from [n-1, 0] */
+	ANIM_BACKWARDS,	/**< plays the animation in reverse order. Loops from [n-1, 0] */
+	ANIM_RANDOM,		/**< plays the animation in random order. */
+	ANIM_RANDOMFORCE,	/**< plays the animation in random order, but enforces that the following frame
+						 * is not the same as the current one. */
 } animLoop_t;
 
 typedef struct anim_s {

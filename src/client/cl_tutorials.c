@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_tutorials.h"
-#include "menu/m_main.h"
+#include "ui/ui_main.h"
 #include "../shared/parse.h"
 
 typedef struct tutorial_s {
@@ -45,7 +45,7 @@ static void TUT_GetTutorials_f (void)
 		const tutorial_t *t = &tutorials[i];
 		LIST_AddString(&tutorialList, va("%s", _(t->name)));
 	}
-	MN_RegisterLinkedListText(TEXT_LIST, tutorialList);
+	UI_RegisterLinkedListText(TEXT_LIST, tutorialList);
 }
 
 static void TUT_List_f (void)

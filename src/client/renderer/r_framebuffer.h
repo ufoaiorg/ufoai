@@ -24,7 +24,6 @@
 #ifndef R_FRAMEBUFFER_H_
 #define R_FRAMEBUFFER_H_
 
-
 #include "r_viewport.h"
 #include "r_state.h"
 

@@ -119,20 +119,20 @@ static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 
 	self->owner = G_FindTargetEntity(self->target);
 	if (!self->owner) {
-		gi.dprintf("Target '%s' wasn't found for trigger_touch\n", self->target);
+		gi.DPrintf("Target '%s' wasn't found for %s\n", self->target, self->classname);
 		G_FreeEdict(self);
 		return qfalse;
 	}
 
 	if (!self->owner->use) {
-		gi.dprintf("Owner of trigger_touch doesn't have a use function\n");
+		gi.DPrintf("Owner of %s doesn't have a use function\n", self->classname);
 		G_FreeEdict(self);
 		return qfalse;
 	}
 
 	self->owner->use(self->owner, activator);
 
-	return qtrue;
+	return qfalse;
 }
 
 /**
@@ -146,7 +146,7 @@ void SP_trigger_touch (edict_t *ent)
 	ent->type = ET_TRIGGER_TOUCH;
 
 	if (!ent->target) {
-		gi.dprintf("No target given for trigger_touch\n");
+		gi.DPrintf("No target given for %s\n", ent->classname);
 		G_FreeEdict(ent);
 		return;
 	}
@@ -155,6 +155,50 @@ void SP_trigger_touch (edict_t *ent)
 	gi.SetModel(ent, ent->model);
 
 	ent->touch = Touch_TouchTrigger;
+	ent->child = NULL;
+
+	gi.LinkEdict(ent);
+}
+
+/**
+ * @brief Rescue trigger
+ * @sa SP_trigger_resuce
+ */
+static qboolean Touch_RescueTrigger (edict_t *self, edict_t *activator)
+{
+	/* these actors should really not be able to trigger this - they don't move anymore */
+	assert(!G_IsDead(activator));
+	assert(!G_IsDead(activator));
+
+	if (self->team == activator->team)
+		G_ActorSetInRescueZone(activator, qtrue);
+
+	return qfalse;
+}
+
+static void Reset_RescueTrigger (edict_t *self, edict_t *activator)
+{
+	if (self->team == activator->team)
+		G_ActorSetInRescueZone(activator, qfalse);
+}
+
+/**
+ * @brief Rescue trigger to mark an actor to be in the rescue
+ * zone. Aborting a game would not kill the actors inside this
+ * trigger area.
+ * @note Called once for every step
+ * @sa Touch_RescueTrigger
+ */
+void SP_trigger_rescue (edict_t *ent)
+{
+	ent->classname = "trigger_rescue";
+	ent->type = ET_TRIGGER_RESCUE;
+
+	ent->solid = SOLID_TRIGGER;
+	gi.SetModel(ent, ent->model);
+
+	ent->touch = Touch_RescueTrigger;
+	ent->reset = Reset_RescueTrigger;
 	ent->child = NULL;
 
 	gi.LinkEdict(ent);

@@ -4,18 +4,18 @@ window keybinding {
 		size		"547 580"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Key bindings"
 		noticepos	"20 60"
 	}
 
 	keybinding push
 	{
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		string		*binding:mn_push
 		tooltip		"_Name of this base"
 		pos			"30 90"
 		size		"300 32"
-		font		f_small
+		font		"f_small"
 	}
 }

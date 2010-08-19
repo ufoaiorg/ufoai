@@ -84,7 +84,7 @@ static void G_Morale (int type, const edict_t * victim, const edict_t * attacker
 			switch (type) {
 			case ML_WOUND:
 			case ML_DEATH:
-				/* morale damage is damage dependant */
+				/* morale damage depends on the damage */
 				mod = mob_wound->value * param;
 				/* death hurts morale even more than just damage */
 				if (type == ML_DEATH)
@@ -100,7 +100,7 @@ static void G_Morale (int type, const edict_t * victim, const edict_t * attacker
 					else
 						mod *= mof_enemy->value;
 				}
-				/* seeing a civi die is more "acceptable" */
+				/* seeing a civilian die is more "acceptable" */
 				if (G_IsCivilian(victim))
 					mod *= mof_civilian->value;
 				/* if an ally (or in singleplayermode, as human, a civilian) got shot, lower the morale, don't heighten it. */
@@ -110,7 +110,7 @@ static void G_Morale (int type, const edict_t * victim, const edict_t * attacker
 				mod *= mor_default->value + pow(0.5, VectorDist(ent->origin, victim->origin) / mor_distance->value)
 					* mor_victim->value + pow(0.5, VectorDist(ent->origin, attacker->origin) / mor_distance->value)
 					* mor_attacker->value;
-				/* morale damage is dependant on the number of living allies */
+				/* morale damage depends on the number of living allies */
 				mod *= (1 - mon_teamfactor->value)
 					+ mon_teamfactor->value * (level.num_spawned[victim->team] + 1)
 					/ (level.num_alive[victim->team] + 1);
@@ -119,7 +119,7 @@ static void G_Morale (int type, const edict_t * victim, const edict_t * attacker
 					mod *= mor_pain->value;
 				break;
 			default:
-				gi.dprintf("Undefined morale modifier type %i\n", type);
+				gi.DPrintf("Undefined morale modifier type %i\n", type);
 				mod = 0;
 			}
 			/* clamp new morale */
@@ -179,50 +179,41 @@ static void G_UpdateShotMock (shot_mock_t *mock, const edict_t *shooter, const e
  */
 static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, const edict_t *target)
 {
+	chrScoreMission_t *scoreMission;
+	chrScoreGlobal_t *scoreGlobal;
+	killtypes_t type;
+
 	if (!attacker || !fd || !target)
 		return;
 
+	scoreGlobal = &attacker->chr.score;
+	scoreMission = attacker->chr.scoreMission;
 	/* only phalanx soldiers have this */
-	if (attacker->chr.scoreMission == NULL)
+	if (!scoreMission)
 		return;
 
 	switch (target->team) {
 	case TEAM_ALIEN:
-		if (target->HP <= 0) {
-			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->kills[KILLED_ENEMIES]++;
-			attacker->chr.score.kills[KILLED_ENEMIES]++;
-		} else {
-			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->stuns[KILLED_ENEMIES]++;
-			attacker->chr.score.stuns[KILLED_ENEMIES]++;
-		}
-
-		/** @todo Add check for valid values of fd->weaponSkill */
-		if (attacker->chr.scoreMission)
-			attacker->chr.scoreMission->skillKills[fd->weaponSkill]++;
+		type = KILLED_ENEMIES;
+		assert(fd->weaponSkill >= 0);
+		assert(fd->weaponSkill < lengthof(scoreMission->skillKills));
+		scoreMission->skillKills[fd->weaponSkill]++;
 		break;
 	case TEAM_CIVILIAN:
-		if (target->HP <= 0) {
-			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->kills[KILLED_CIVILIANS]++;
-			attacker->chr.score.kills[KILLED_CIVILIANS]++;
-		} else {
-			attacker->chr.scoreMission->stuns[KILLED_CIVILIANS]++;
-			attacker->chr.score.stuns[KILLED_CIVILIANS]++;
-		}
+		type = KILLED_CIVILIANS;
 		break;
 	case TEAM_PHALANX:
-		if (target->HP <= 0) {
-			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->kills[KILLED_TEAM]++;
-			attacker->chr.score.kills[KILLED_TEAM]++;
-		} else {
-			if (attacker->chr.scoreMission)
-				attacker->chr.scoreMission->stuns[KILLED_TEAM]++;
-			attacker->chr.score.stuns[KILLED_TEAM]++;
-		}
+		type = KILLED_TEAM;
 		break;
+	default:
+		return;
+	}
+	if (target->HP <= 0) {
+		scoreMission->kills[type]++;
+		scoreGlobal->kills[type]++;
+	} else {
+		scoreMission->stuns[type]++;
+		scoreGlobal->stuns[type]++;
 	}
 }
 
@@ -235,63 +226,53 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
  */
 static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const fireDef_t * fd, const int splashDamage)
 {
+	chrScoreMission_t *score;
+	killtypes_t type;
+
 	if (!attacker || !target || !fd)
 		return;
 
+	score = attacker->chr.scoreMission;
 	/* Abort if no player team. */
-	if (!attacker->chr.scoreMission)
+	if (!score)
 		return;
 
+	switch (target->team) {
+		case TEAM_CIVILIAN:
+			type = KILLED_CIVILIANS;
+			break;
+		case TEAM_ALIEN:
+			type = KILLED_ENEMIES;
+			break;
+		default:
+			return;
+	}
+
 	if (!splashDamage) {
-		if (attacker->team == target->team && !attacker->chr.scoreMission->firedHit[KILLED_TEAM]) {
+		if (attacker->team == target->team && !score->firedHit[KILLED_TEAM]) {
 			/* Increase friendly fire counter. */
-			attacker->chr.scoreMission->hits[fd->weaponSkill][KILLED_TEAM]++;
-			attacker->chr.scoreMission->firedHit[KILLED_TEAM] = qtrue;
+			score->hits[fd->weaponSkill][KILLED_TEAM]++;
+			score->firedHit[KILLED_TEAM] = qtrue;
 		}
 
-		switch (target->team) {
-			case TEAM_CIVILIAN:
-				if (!attacker->chr.scoreMission->firedHit[KILLED_CIVILIANS]) {
-					attacker->chr.scoreMission->hits[fd->weaponSkill][KILLED_CIVILIANS]++;
-					attacker->chr.scoreMission->firedHit[KILLED_CIVILIANS] = qtrue;
-				}
-				break;
-			case TEAM_ALIEN:
-				if (!attacker->chr.scoreMission->firedHit[KILLED_ENEMIES]) {
-					attacker->chr.scoreMission->hits[fd->weaponSkill][KILLED_ENEMIES]++;
-					attacker->chr.scoreMission->firedHit[KILLED_ENEMIES] = qtrue;
-				}
-				break;
-			default:
-				return;
+		if (!score->firedHit[type]) {
+			score->hits[fd->weaponSkill][type]++;
+			score->firedHit[type] = qtrue;
 		}
 	} else {
 		if (attacker->team == target->team) {
 			/* Increase friendly fire counter. */
-			attacker->chr.scoreMission->hitsSplashDamage[fd->weaponSkill][KILLED_TEAM] += splashDamage;
-			if (!attacker->chr.scoreMission->firedSplashHit[KILLED_TEAM]) {
-				attacker->chr.scoreMission->hitsSplash[fd->weaponSkill][KILLED_TEAM]++;
-				attacker->chr.scoreMission->firedSplashHit[KILLED_TEAM] = qtrue;
+			score->hitsSplashDamage[fd->weaponSkill][KILLED_TEAM] += splashDamage;
+			if (!score->firedSplashHit[KILLED_TEAM]) {
+				score->hitsSplash[fd->weaponSkill][KILLED_TEAM]++;
+				score->firedSplashHit[KILLED_TEAM] = qtrue;
 			}
 		}
 
-		switch (target->team) {
-			case TEAM_CIVILIAN:
-				attacker->chr.scoreMission->hitsSplashDamage[fd->weaponSkill][KILLED_CIVILIANS] += splashDamage;
-				if (!attacker->chr.scoreMission->firedSplashHit[KILLED_CIVILIANS]) {
-					attacker->chr.scoreMission->hitsSplash[fd->weaponSkill][KILLED_CIVILIANS]++;
-					attacker->chr.scoreMission->firedSplashHit[KILLED_CIVILIANS] = qtrue;
-				}
-				break;
-			case TEAM_ALIEN:
-				attacker->chr.scoreMission->hitsSplashDamage[fd->weaponSkill][KILLED_ENEMIES] += splashDamage;
-				if (!attacker->chr.scoreMission->firedSplashHit[KILLED_ENEMIES]) {
-					attacker->chr.scoreMission->hitsSplash[fd->weaponSkill][KILLED_ENEMIES]++;
-					attacker->chr.scoreMission->firedSplashHit[KILLED_ENEMIES] = qtrue;
-				}
-				break;
-			default:
-				return;
+		score->hitsSplashDamage[fd->weaponSkill][type] += splashDamage;
+		if (!score->firedSplashHit[type]) {
+			score->hitsSplash[fd->weaponSkill][type]++;
+			score->firedSplashHit[type] = qtrue;
 		}
 	}
 }
@@ -346,18 +327,16 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 
 	/* only actors after this point - and they must have a teamdef */
 	assert(target->chr.teamDef);
-	isRobot = target->chr.teamDef->robot;
+	isRobot = CHRSH_IsTeamDefRobot(target->chr.teamDef);
 
 	/* Apply armour effects. */
 	if (damage > 0) {
+		const int nd = target->chr.teamDef->resistance[fd->dmgweight];
 		if (CONTAINER(target, gi.csi->idArmour)) {
 			const objDef_t *ad = CONTAINER(target, gi.csi->idArmour)->item.t;
-			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: %i",
-				target->chr.name, damage, fd->dmgweight, ad->protection[fd->dmgweight]);
-			damage = max(1, damage - ad->protection[fd->dmgweight]);
+			damage = max(1, damage - ad->protection[fd->dmgweight] - nd);
 		} else {
-			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: 0",
-				target->chr.name, damage, fd->dmgweight);
+			damage = max(1, damage - nd);
 		}
 	} else if (damage < 0) {
 		/* Robots can't be healed. */
@@ -387,11 +366,15 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 			if (!isRobot) /* Can't stun robots with gas */
 				target->STUN += damage;
 		} else if (shock) {
-			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
+			/* Only do this if it's not one from our own team ... they should have known that there was a flashbang coming. */
 			if (!isRobot && target->team != attacker->team) {
 				/** @todo there should be a possible protection, too */
+				/* dazed entity wont reaction fire */
+				G_RemoveReaction(target);
+				G_ActorReserveTUs(target, 0, target->chr.reservedTus.shot, target->chr.reservedTus.crouch);
 				/* flashbangs kill TUs */
 				G_ActorSetTU(target, 0);
+				G_SendStats(target);
 				/* entity is dazed */
 				G_SetDazed(target);
 				G_ClientPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!\n"));
@@ -540,7 +523,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 	if (tr && G_FireAffectedSurface(tr->surface, fd)) {
 		/* move a little away from the impact vector */
 		VectorMA(impact, 1, tr->plane.normal, impact);
-		G_ParticleSpawn(impact, tr->contentFlags >> 8, "burning");
+		G_SpawnParticle(impact, tr->contentFlags >> 8, "burning");
 	}
 }
 
@@ -670,9 +653,11 @@ static void G_ShootGrenade (const player_t *player, edict_t *ent, const fireDef_
 				VectorCopy(tr.endpos, newPos);
 
 			/* calculate additional visibility */
-			for (i = 0; i < MAX_TEAMS; i++)
-				if (player->pers.team != level.activeTeam && G_TeamPointVis(i, newPos))
-					mask |= 1 << i;
+			if (!mock) {
+				for (i = 0; i < MAX_TEAMS; i++)
+					if (player->pers.team != level.activeTeam && G_TeamPointVis(i, newPos))
+						mask |= 1 << i;
+			}
 
 			/* enough bouncing around or we have hit an actor */
 			if (VectorLength(curV) < GRENADE_STOPSPEED || time > 4.0 || bounce > fd->bounce
@@ -727,6 +712,7 @@ static void G_ShootGrenade (const player_t *player, edict_t *ent, const fireDef_
 	}
 }
 
+#ifdef DEBUG
 /**
  * @brief Displays the results of a trace. Used to see if a bullet hit something.
  * @param[in] start The starting loaction of the trace.
@@ -767,6 +753,7 @@ static void DumpAllEntities (void)
 		i++;
 	}
 }
+#endif
 
 /**
  * @brief Fires straight shots.
@@ -810,7 +797,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	}
 
 	/* Calc direction of the shot. */
-	gi.GridPosToVec(gi.routingMap, ent->fieldSize, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used only temporary here)*/
+	gi.GridPosToVec(gi.routingMap, ent->fieldSize, at, impact);	/* Get the position of the targeted grid-cell. ('impact' is used only temporary here)*/
 	impact[2] -= z_align;
 	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
@@ -873,13 +860,14 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		 * but rather the 'endofrange' location, see below for another use.*/
 		VectorMA(cur_loc, range, dir, impact);
 
-		DumpAllEntities();
-
 		/* Do the trace from current position of the projectile
 		 * to the end_of_range location.*/
 		tr = G_Trace(tracefrom, impact, ent, MASK_SHOT);
 
+#ifdef DEBUG
+		DumpAllEntities();
 		DumpTrace(tracefrom, tr);
+#endif
 
 		/* maybe we start the trace from within a brush (e.g. in case of throughWall) */
 		if (tr.startsolid)
@@ -906,7 +894,8 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		if (!mock) {
 			/* send shot */
-			G_EventShoot(ent, mask, fd, shootType, flags, &tr, tracefrom, impact);
+			const qboolean firstShot = (i == 0);
+			G_EventShoot(ent, mask, fd, firstShot, shootType, flags, &tr, tracefrom, impact);
 
 			/* send shot sound to the others */
 			G_EventShootHidden(mask, fd, qfalse);
@@ -915,7 +904,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 				vec3_t origin;
 				/* sent particle to all players */
 				VectorMA(impact, 1, tr.plane.normal, origin);
-				G_ParticleSpawn(origin, tr.contentFlags >> 8, "fire");
+				G_SpawnParticle(origin, tr.contentFlags >> 8, "fire");
 			}
 		}
 
@@ -1007,17 +996,16 @@ static void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const 
  * @param[in,out] container Container with weapon being used. It is 0 when calling this function.
  * @param[in,out] fd Firemode being used. It is NULL when calling this function.
  * @return qtrue if function is able to check and set everything correctly.
- * @todo This function should be renamed, GetShotFromType is very misleading here.
  * @sa G_ClientShoot
  */
-static qboolean G_GetShotFromType (edict_t *ent, shoot_types_t shootType, fireDefIndex_t firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
+static qboolean G_PrepareShot (edict_t *ent, shoot_types_t shootType, fireDefIndex_t firemode, item_t **weapon, containerIndex_t *container, const fireDef_t **fd)
 {
 	const fireDef_t *fdArray;
 	objDef_t *od;
 	item_t *item;
 
 	if (shootType >= ST_NUM_SHOOT_TYPES)
-		gi.error("G_GetShotFromType: unknown shoot type %i.\n", shootType);
+		gi.Error("G_GetShotFromType: unknown shoot type %i.\n", shootType);
 
 	if (IS_SHOT_HEADGEAR(shootType)) {
 		if (!HEADGEAR(ent))
@@ -1064,7 +1052,10 @@ static qboolean G_GetShotFromType (edict_t *ent, shoot_types_t shootType, fireDe
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] allowReaction Set to qtrue to check whether this has forced any reaction fire, otherwise qfalse.
  * @return qtrue if everything went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
- * @param[in] z_align This value may change the target z height
+ * @param[in] z_align This value may change the target z height - often @c GROUND_DELTA is used to calculate
+ * the alignment. This can be used for splash damage weapons. It's often useful to target the ground close to the
+ * victim. That way you don't need a 100 percent chance to hit your target. Even if you don't hit it, the splash
+ * damage might reduce the health of your target.
  */
 qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, shoot_types_t shootType,
 		fireDefIndex_t firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
@@ -1084,7 +1075,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	weapon = NULL;
 	fd = NULL;
 	container = 0;
-	if (!G_GetShotFromType(ent, shootType, firemode, &weapon, &container, &fd)) {
+	if (!G_PrepareShot(ent, shootType, firemode, &weapon, &container, &fd)) {
 		if (!weapon && !quiet)
 			G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not activatable!\n"));
 		return qfalse;
@@ -1093,9 +1084,15 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	ammo = weapon->a;
 	reactionLeftover = IS_SHOT_REACTION(shootType) ? player->reactionLeftover : 0;
 
-	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, fd->time + reactionLeftover))
-		return qfalse;
+	/* check if action is possible
+	 * if allowReaction is false, it is a shot from reaction fire, so don't check the active team */
+	if (allowReaction) {
+		if (!G_ActionCheckForCurrentTeam(player, ent, fd->time + reactionLeftover))
+			return qfalse;
+	} else {
+		if (!G_ActionCheckWithoutTeam(player, ent, fd->time + reactionLeftover))
+			return qfalse;
+	}
 
 	/* Don't allow to shoot yourself */
 	if (!fd->irgoggles && G_EdictPosIsSameAs(ent, at))
@@ -1201,14 +1198,14 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 
 		/* check whether this has forced any reaction fire */
 		if (allowReaction) {
-			G_ReactionFirePreShot(ent);
+			G_ReactionFirePreShot(ent, fd->time);
 			if (G_IsDead(ent))
 				/* dead men can't shoot */
 				return qfalse;
 		}
 
 		/* start shoot */
-		G_EventStartShoot(ent, mask, fd, shootType, at);
+		G_EventStartShoot(ent, mask, shootType, at);
 
 		/* send shot sound to the others */
 		G_EventShootHidden(mask, fd, qtrue);

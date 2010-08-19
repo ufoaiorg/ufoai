@@ -455,7 +455,7 @@ aircraft craft_ufo_fighter
 	param {
 		speed		8
 		maxspeed	14
-		shield		0
+		shield		2
 		ecm			90
 		damage		160
 		accuracy	80
@@ -485,7 +485,7 @@ aircraft craft_ufo_harvester
 	param {
 		speed		10
 		maxspeed	18
-		shield		3
+		shield		4
 		ecm			100
 		damage		300
 		accuracy	100
@@ -566,7 +566,7 @@ aircraft craft_ufo_corrupter
 	param {
 		speed		13
 		maxspeed	17
-		shield		4
+		shield		5
 		ecm			100
 		damage		500
 		accuracy	80
@@ -601,7 +601,7 @@ aircraft craft_ufo_supply
 	param {
 		speed		8
 		maxspeed	16
-		shield		5
+		shield		0
 		ecm			80
 		damage		250
 		accuracy	50
@@ -623,7 +623,7 @@ aircraft craft_ufo_ripper
 	param {
 		speed		10
 		maxspeed	14
-		shield		3
+		shield		6
 		ecm			100
 		damage		600
 		accuracy	80
@@ -669,7 +669,7 @@ aircraft craft_ufo_bomber
 	param {
 		speed		18
 		maxspeed	27
-		shield		7
+		shield		8
 		ecm			100
 		damage		900
 		accuracy	80
@@ -970,7 +970,7 @@ craftitem craft_shield_polymer
 	size				40 // light
 	model				"aircraft/craft_arm_poly/polymer"
 
-	shield		+2
+	shield		+4
 	speed		0.9
 	maxspeed	0.9
 }
@@ -984,7 +984,7 @@ craftitem craft_shield_plating
 	size				50 // light
 	model				"aircraft/craft_arm_plate/plating"
 
-	shield		+4
+	shield		+8
 	speed		0.8
 	maxspeed	0.8
 }

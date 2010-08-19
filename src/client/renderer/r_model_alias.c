@@ -208,7 +208,7 @@ static void R_ModCalcNormalsAndTangents (mAliasMesh_t *mesh, int framenum, const
 }
 
 /**
- * @brief Tries to load a mdx file that contains the normals and the tangets for a model.
+ * @brief Tries to load a mdx file that contains the normals and the tangents for a model.
  * @sa R_ModCalcNormalsAndTangents
  * @sa R_ModCalcUniqueNormalsAndTangents
  * @param mod The model to load the mdx file for
@@ -222,6 +222,7 @@ qboolean R_ModLoadMDX (model_t *mod)
 		byte *buffer = NULL, *buf;
 		const int32_t *intbuf;
 		int32_t numIndexes;
+		uint32_t version;
 		int sharedTris[MAX_ALIAS_VERTS];
 
 		Com_StripExtension(mod->name, mdxFileName, sizeof(mdxFileName));
@@ -234,9 +235,10 @@ qboolean R_ModLoadMDX (model_t *mod)
 		if (strncmp((const char *) buf, IDMDXHEADER, strlen(IDMDXHEADER)))
 			Com_Error(ERR_DROP, "No mdx file buffer given");
 		buffer += strlen(IDMDXHEADER) * sizeof(char);
-		if (*(uint32_t*) buffer != MDX_VERSION)
-			Com_Error(ERR_DROP, "Invalid version of the mdx file, expected %i, found %i", MDX_VERSION,
-					*(uint32_t*) buffer);
+		version = LittleLong(*(uint32_t*) buffer);
+		if (version != MDX_VERSION)
+			Com_Error(ERR_DROP, "Invalid version of the mdx file, expected %i, found %i",
+					MDX_VERSION, version);
 		buffer += sizeof(uint32_t);
 
 		intbuf = (const int32_t *) buffer;
@@ -372,8 +374,8 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 			if (j == i)
 				continue;
 
-			/* only average normals if verticies have the same position
-			 * and the normals aren't too far appart to start with */
+			/* only average normals if vertices have the same position
+			 * and the normals aren't too far apart to start with */
 			if (VectorEqual(vertexes[indexArray[i]].point, vertexes[indexArray[j]].point)
 					&& DotProduct(triangleNormals[idx], triangleNormals[idx2]) > smoothness) {
 				/* average the normals */
@@ -381,7 +383,7 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 
 				/* if the tangents match as well, average them too.
 				 * Note that having matching normals without matching tangents happens
-				 * when the order of verticies in two triangles sharing the vertex
+				 * when the order of vertices in two triangles sharing the vertex
 				 * in question is different.  This happens quite frequently if the
 				 * modeler does not go out of their way to avoid it. */
 
@@ -400,11 +402,11 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 		VectorNormalize(tmpBitangents[i]);
 	}
 
-	/* assume all verticies are unique until proven otherwise */
+	/* assume all vertices are unique until proven otherwise */
 	for (i = 0; i < numIndexes; i++)
 		indRemap[i] = -1;
 
-	/* merge verticies that have become identical */
+	/* merge vertices that have become identical */
 	for (i = 0; i < numIndexes; i++) {
 		vec3_t n, b, t, v;
 		if (indRemap[i] != -1)

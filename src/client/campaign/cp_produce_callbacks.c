@@ -23,18 +23,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
+#include "../cl_shared.h"
+#include "../cl_inventory.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_market.h"
 #include "cp_ufo.h"
 #include "cp_produce.h"
 #include "cp_produce_callbacks.h"
-
-
-/** Maximum number of produced/disassembled items. */
-#define MAX_PRODUCTION_AMOUNT 500
 
 /**
  * Holds the current active production category/filter type.
@@ -65,134 +62,6 @@ static void PR_ClearSelected (void)
 	selectedAircraft = NULL;
 	selectedItem = NULL;
 	selectedDisassembly = NULL;
-}
-
-/**
- * @brief Checks if the production requirements are met for a defined amount.
- * @param[in] amount How many items are planned to be produced.
- * @param[in] reqs The production requirements of the item that is to be produced.
- * @param[in] base Pointer to base.
- * @return 0: If nothing can be produced. 1+: If anything can be produced. 'amount': Maximum.
- */
-static int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
-{
-	int a, i;
-	int producibleAmount = 0;
-
-	for (a = 0; a < amount; a++) {
-		qboolean producible = qtrue;
-		for (i = 0; i < reqs->numLinks; i++) {
-			const requirement_t *req = &reqs->links[i];
-			if (req->type == RS_LINK_ITEM) {
-				/* The same code is used in "RS_RequirementsMet" */
-				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s\n", req->id);
-				if (B_ItemInBase(req->link, base) < req->amount) {
-					producible = qfalse;
-				}
-			}
-			if (req->type == RS_LINK_UFO) {
-				/* The same code is used in "RS_RequirementsMet" */
-				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s\n", req->id);
-				if (US_UFOsInStorage(req->link, NULL) < req->amount)
-					producible = qfalse;
-			}
-		}
-		if (producible)
-			producibleAmount++;
-		else
-			break;
-	}
-	return producibleAmount;
-}
-
-/**
- * @brief Add a new item to the bottom of the production queue.
- * @param[in] base Pointer to base, where the queue is.
- * @param[in] queue Pointer to the queue.
- * @param[in] item Item to add.
- * @param[in] aircraftTemplate aircraft to add.
- * @param[in] ufo The UFO in case of a disassemly.
- * @param[in] amount Desired amount to produce.
- */
-static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, storedUFO_t *ufo, signed int amount)
-{
-	int numWorkshops = 0;
-	production_t *prod;
-	const technology_t *tech;
-
-	assert((item && !aircraftTemplate && !ufo) || (!item && aircraftTemplate && !ufo) || (!item && !aircraftTemplate && ufo));
-	assert(base);
-
-	if (queue->numItems >= MAX_PRODUCTIONS)
-		return NULL;
-
-	if (E_CountHired(base, EMPL_WORKER) <= 0) {
-		MN_Popup(_("Not enough workers"), _("You cannot queue productions without workers hired in this base.\n\nHire workers."));
-		return NULL;
-	}
-
-	numWorkshops = max(B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP), 0);
-
-	if (queue->numItems >= numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP) {
-		MN_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
-		return NULL;
-	}
-
-	/* Initialize */
-	prod = &queue->items[queue->numItems];
-	memset(prod, 0, sizeof(*prod));
-
-	/* self-reference. */
-	prod->idx = queue->numItems;
-
-	if (item)
-		tech = item->tech;
-	else if (aircraftTemplate)
-		tech = aircraftTemplate->tech;
-	else
-		tech = ufo->ufoTemplate->tech;
-
-	/* We cannot queue new aircraft if no free hangar space. */
-	if (aircraftTemplate) {
-		if (!B_GetBuildingStatus(base, B_COMMAND)) {
-			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
-			return NULL;
-		} else if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
-			return NULL;
-		}
-		/** @todo we should also count aircraft that are already in the queue list */
-		if (AIR_CalculateHangarStorage(aircraftTemplate, base, 0) <= 0) {
-			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
-			return NULL;
-		}
-	}
-
-	prod->item = item;
-	prod->aircraft = aircraftTemplate;
-	prod->ufo = ufo;
-
-	if (ufo) {
-		/* Disassembling. */
-		prod->production = qfalse;
-		prod->amount = 1;
-
-		ufo->disassembly = prod;
-		prod->percentDone = 0.0f;
-	} else {
-		/* Production. */
-		prod->production = qtrue;
-		prod->amount = amount;
-
-		/* Don't try to add to queue an item which is not producible. */
-		if (tech->produceTime < 0)
-			return NULL;
-		else
-			prod->percentDone = 0.0f;
-	}
-
-	queue->numItems++;
-	return prod;
 }
 
 /**
@@ -302,13 +171,13 @@ static void PR_UpdateProductionList (const base_t* base)
 	} else {
 		objDef_t *od;
 		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+			const technology_t *tech;
 			if (od->isVirtual)
 				continue;
-			assert(od->tech);
-			/* We will not show items with producetime = -1 - these are not producible.
-			 * We can produce what was researched before. */
-			if (od->name[0] != '\0' && od->tech->produceTime > 0 && RS_IsResearched_ptr(od->tech)
-			 && INV_ItemMatchesFilter(od, produceCategory)) {
+			tech = RS_GetTechForItem(od);
+			/* We will not show items that are not producible.
+			 * We can only produce what was researched before. */
+			if (RS_IsResearched_ptr(tech) && PR_ItemIsProduceable(od) && INV_ItemMatchesFilter(od, produceCategory)) {
 				LIST_AddPointer(&productionItemList, od);
 
 				LIST_AddString(&productionList, va("%s", _(od->name)));
@@ -319,11 +188,11 @@ static void PR_UpdateProductionList (const base_t* base)
 	}
 
 	/* bind the menu text to our static char array */
-	MN_RegisterLinkedListText(TEXT_PRODUCTION_LIST, productionList);
+	UI_RegisterLinkedListText(TEXT_PRODUCTION_LIST, productionList);
 	/* bind the amount of available items */
-	MN_RegisterLinkedListText(TEXT_PRODUCTION_AMOUNT, productionAmount);
+	UI_RegisterLinkedListText(TEXT_PRODUCTION_AMOUNT, productionAmount);
 	/* bind the amount of queued items */
-	MN_RegisterLinkedListText(TEXT_PRODUCTION_QUEUED, productionQueued);
+	UI_RegisterLinkedListText(TEXT_PRODUCTION_QUEUED, productionQueued);
 }
 
 /**
@@ -336,22 +205,19 @@ static void PR_UpdateProductionList (const base_t* base)
 static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, const float percentDone)
 {
 	static char productionInfo[512];
-	int time;
-	float prodPerHour;
 
 	assert(base);
 	assert(od);
-	assert(od->tech);
 
 	/* Don't try to display an item which is not producible. */
-	if (od->tech->produceTime < 0) {
+	if (!PR_ItemIsProduceable(od)) {
 		Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
 		Cvar_Set("mn_item", "");
 	} else {
-		prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, NULL);
+		const technology_t *tech = RS_GetTechForItem(od);
+		const float prodPerHour = PR_CalculateProductionPercentDone(base, tech, NULL);
 		/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
-		assert(prodPerHour > 0);
-		time = ceil((1.0f - percentDone) / prodPerHour);
+		const int time = ceil((1.0f - percentDone) / prodPerHour);
 
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(od->name));
 		Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
@@ -360,7 +226,7 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, const
 		Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size), sizeof(productionInfo));
 		Cvar_Set("mn_item", od->id);
 	}
-	MN_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
+	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 }
 
 /**
@@ -401,7 +267,7 @@ static void PR_DisassemblyInfo (const base_t *base, const storedUFO_t *ufo, floa
 
 		Q_strcat(productionInfo, va("  %s (%i)\n", _(compOd->name), amount), sizeof(productionInfo));
 	}
-	MN_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
+	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	Cvar_Set("mn_item", ufo->id);
 }
 
@@ -427,7 +293,7 @@ static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTempl
 		sizeof(productionInfo));
 	assert(aircraftTemplate->tech);
 	Q_strcat(productionInfo, va(_("Production time\t%ih\n"), time), sizeof(productionInfo));
-	MN_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
+	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	Cvar_Set("mn_item", aircraftTemplate->id);
 }
 
@@ -442,30 +308,30 @@ static void PR_ProductionInfo (const base_t *base)
 {
 	if (selectedProduction) {
 		production_t *prod = selectedProduction;
-		MN_ExecuteConfunc("prod_taskselected");
+		UI_ExecuteConfunc("prod_taskselected");
 		if (prod->aircraft) {
 			PR_AircraftInfo(base, prod->aircraft, prod->percentDone);
-			MN_ExecuteConfunc("amountsetter enable");
+			UI_ExecuteConfunc("amountsetter enable");
 		} else if (prod->item) {
 			PR_ItemProductionInfo(base, prod->item, prod->percentDone);
-			MN_ExecuteConfunc("amountsetter enable");
+			UI_ExecuteConfunc("amountsetter enable");
 		} else if (prod->ufo) {
 			PR_DisassemblyInfo(base, prod->ufo, prod->percentDone);
-			MN_ExecuteConfunc("amountsetter disable");
+			UI_ExecuteConfunc("amountsetter disable");
 		} else {
 			Com_Error(ERR_DROP, "PR_ProductionInfo: Selected production is not item nor aircraft nor ufo.\n");
 		}
 		Cvar_SetValue("mn_production_amount", selectedProduction->amount);
 	} else {
 		if (!(selectedAircraft || selectedItem || selectedDisassembly)) {
-			MN_ExecuteConfunc("prod_nothingselected");
+			UI_ExecuteConfunc("prod_nothingselected");
 			if (produceCategory == FILTER_AIRCRAFT)
-				MN_RegisterText(TEXT_PRODUCTION_INFO, _("No aircraft selected."));
+				UI_RegisterText(TEXT_PRODUCTION_INFO, _("No aircraft selected."));
 			else
-				MN_RegisterText(TEXT_PRODUCTION_INFO, _("No item selected"));
+				UI_RegisterText(TEXT_PRODUCTION_INFO, _("No item selected"));
 			Cvar_Set("mn_item", "");
 		} else {
-			MN_ExecuteConfunc("prod_availableselected");
+			UI_ExecuteConfunc("prod_availableselected");
 			if (selectedAircraft) {
 				PR_AircraftInfo(base, selectedAircraft, 0.0);
 			} else if (selectedItem) {
@@ -510,10 +376,12 @@ static void PR_ProductionListRightClick_f (void)
 			UP_OpenWith(selectedProduction->aircraft->tech->id);
 		} else if (selectedProduction->item) {
 			const objDef_t *od = selectedProduction->item;
-			assert(od->tech);
-			UP_OpenWith(od->tech->id);
+			const technology_t *tech = RS_GetTechForItem(od);
+			UP_OpenWith(tech->id);
 		} else if (selectedProduction->ufo) {
-			UP_OpenWith(selectedProduction->ufo->ufoTemplate->tech->id);
+			const aircraft_t *ufoTemplate = selectedProduction->ufo->ufoTemplate;
+			const technology_t *tech = ufoTemplate->tech;
+			UP_OpenWith(tech->id);
 		}
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
@@ -533,21 +401,13 @@ static void PR_ProductionListRightClick_f (void)
 			}
 		} else {
 			objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
-#ifdef DEBUG
-			if (!od) {
-				Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListRightClick_f: No item found at the list-position %i!\n", idx);
-				return;
-			}
-
-			if (!od->tech)
-				Sys_Error("PR_ProductionListRightClick_f: No tech pointer for object '%s'\n", od->id);
-#endif
+			const technology_t *tech = RS_GetTechForItem(od);
 
 			/* Open up UFOpaedia for this entry. */
-			if (RS_IsResearched_ptr(od->tech) && INV_ItemMatchesFilter(od, produceCategory)) {
+			if (RS_IsResearched_ptr(tech) && INV_ItemMatchesFilter(od, produceCategory)) {
 				PR_ClearSelected();
 				selectedItem = od;
-				UP_OpenWith(od->tech->id);
+				UP_OpenWith(tech->id);
 				return;
 			}
 		}
@@ -616,18 +476,10 @@ static void PR_ProductionListClick_f (void)
 			}
 		} else {
 			objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
-			if (!od) {
-				Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: No item found at the list-position %i!\n", idx);
-				return;
-			}
+			const technology_t *tech = RS_GetTechForItem(od);
 
-			if (!od->tech)
-				Com_Error(ERR_DROP, "PR_ProductionListClick_f: No tech pointer for object '%s'", od->id);
 			/* We can only produce items that fulfill the following conditions... */
-			if (RS_IsResearched_ptr(od->tech) && od->tech->produceTime >= 0			/* Item is producible */
-			 && INV_ItemMatchesFilter(od, produceCategory)) {	/* Item is in the current inventory-category */
-				assert(od->name[0] != '\0');
-
+			if (RS_IsResearched_ptr(tech) && PR_ItemIsProduceable(od) && INV_ItemMatchesFilter(od, produceCategory)) {
 				PR_ClearSelected();
 				selectedItem = od;
 				PR_ProductionInfo(base);
@@ -681,7 +533,7 @@ static void PR_ProductionType_f (void)
 	}
 	/* update selection index if first entry of actual list was chosen */
 	if (!selectedProduction)
-		MN_ExecuteConfunc("prod_selectline %i", ccs.productions[base->idx].numItems + QUEUE_SPACERS);
+		UI_ExecuteConfunc("prod_selectline %i", ccs.productions[base->idx].numItems + QUEUE_SPACERS);
 
 	/* Update displayed info about selected entry (if any). */
 	PR_ProductionInfo(base);
@@ -727,10 +579,13 @@ static void PR_ProductionList_f (void)
  */
 static void PR_ProductionIncrease_f (void)
 {
-	int amount = 1;
 	production_queue_t *queue;
 	production_t *prod;
 	base_t *base = B_GetCurrentSelectedBase();
+	technology_t *tech = NULL;
+	int amount = 1;
+	int producibleAmount;
+	static char productionPopup[UI_MAX_SMALLTEXTLEN];
 
 	if (!base)
 		return;
@@ -745,107 +600,105 @@ static void PR_ProductionIncrease_f (void)
 
 	if (selectedProduction) {
 		prod = selectedProduction;
-		if (prod->production) {		/* Production. */
-			if (prod->aircraft) {
-				/* Don't allow to queue more aircraft if there is no free space. */
-				if (AIR_CalculateHangarStorage(prod->aircraft, base, 0) <= 0) {
-					MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
-					return;
-				}
-			}
 
-			/* Check if we can add more items. */
-			if (prod->amount + amount > MAX_PRODUCTION_AMOUNT) {
-				if (MAX_PRODUCTION_AMOUNT - prod->amount >= 0) {
-					/* Add as many items as allowed. */
-					prod->amount = MAX_PRODUCTION_AMOUNT;
-				} else {
-					return;
-				}
-			} else {
-				prod->amount += amount;
-			}
-		} else {	/* Disassembling. */
-			/* We can disassembly UFOs only one-by-one. */
+		/* We can disassembly UFOs only one-by-one. */
+		if (prod->ufo)
 			return;
-		}
-	} else {
-		if (!selectedDisassembly) {
-			if (selectedAircraft && AIR_CalculateHangarStorage(selectedAircraft, base, 0) <= 0) {
-				MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
+
+		if (prod->aircraft) {
+			/* Don't allow to queue more aircraft if there is no free space. */
+			if (AIR_CalculateHangarStorage(prod->aircraft, base, 0) <= 0) {
+				UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
+				Cvar_SetValue("mn_production_amount", prod->amount);
 				return;
 			}
-			/* Production. (only one of the "selected" pointers can be non-NULL) */
-			prod = PR_QueueNew(base, queue, selectedItem, selectedAircraft, NULL, amount);
-		} else {
-			/* We can disassemble UFOs only one-by-one. */
-			prod = PR_QueueNew(base, queue, NULL, NULL, selectedDisassembly, 1);	/* Disassembling. */
 		}
 
-		/** prod is NULL when queue limit is reached
-		 * @todo this popup hides any previous popup, like popup created in PR_QueueNew */
-		if (!prod) {
-			/* Oops! Too many items! */
-			MN_Popup(_("Queue full!"), _("You cannot queue any more items!"));
+		/* amount limit per one production */
+		if (prod->amount + amount > MAX_PRODUCTION_AMOUNT) {
+			amount = max(0, MAX_PRODUCTION_AMOUNT - prod->amount);
+		}
+		if (amount == 0) {
+			Cvar_SetValue("mn_production_amount", prod->amount);
 			return;
-		} else
-			MN_ExecuteConfunc("prod_selectline %i", prod->idx);
-
+		}
 
 		if (prod->item) {
-			/* Get technology of the item in the selected queue-entry. */
-			const objDef_t *od = prod->item;
-			int producibleAmount = amount;
-			if (od->tech)
-				producibleAmount = PR_RequirementsMet(amount, &od->tech->requireForProduction, base);
-
-			if (producibleAmount > 0) {	/* Check if production requirements have been (even partially) met. */
-				if (od->tech) {
-					/* Remove the additionally required items (multiplied by 'producibleAmount') from base-storage.*/
-					PR_UpdateRequiredItemsInBasestorage(base, -amount, &od->tech->requireForProduction);
-					prod->itemsCached = qtrue;
-				}
-
-				if (producibleAmount < amount) {
-					/** @todo make the numbers work here. */
-					MN_Popup(_("Not enough material!"), va(_("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."),
-						amount, producibleAmount));
-				}
-
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production of %s started"), _(od->name));
-				MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
-
-				/* Now we select the item we just created. */
-				PR_ClearSelected();
-				selectedProduction = &queue->items[queue->numItems - 1];
-			} else { /* requirements are not met => producibleAmount <= 0 */
-				/** @todo better messages needed */
-				MN_Popup(_("Not enough material!"), _("You don't have enough of the needed material to produce this item."));
-				/** @todo
-				 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
-				 *     This info should also be displayed in the item-info.
-				 *  -) can can (if possible) change the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).*/
-			}
+			tech = RS_GetTechForItem(prod->item);
 		} else if (prod->aircraft) {
-			const aircraft_t *aircraftTemplate = prod->aircraft;
-			assert(aircraftTemplate);
-			assert(aircraftTemplate == aircraftTemplate->tpl);
-
-			Com_DPrintf(DEBUG_CLIENT, "Increasing production for '%s'\n", aircraftTemplate->id);
-			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production of %s started"), _(aircraftTemplate->name));
-			MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, NULL);
-			/* Now we select the item we just created. */
-			PR_ClearSelected();
-			selectedProduction = &queue->items[queue->numItems - 1];
-		} else { /* Disassembly */
-			storedUFO_t *ufo = prod->ufo;
-
-			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Disassembling of %s started"), UFO_TypeToName(ufo->ufoTemplate->ufotype));
-			MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, ufo->ufoTemplate->tech);
-
-			PR_ClearSelected();
-			selectedProduction = &queue->items[queue->numItems - 1];
+			tech = prod->aircraft->tech;
 		}
+		assert(tech);
+
+		producibleAmount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
+		if (producibleAmount == 0) {
+			UI_Popup(_("Not enough materials"), _("You don't have the materials needed for producing more of this item.\n"));
+			Cvar_SetValue("mn_production_amount", prod->amount);
+			return;
+		} else if (amount != producibleAmount) {
+			Com_sprintf(productionPopup, lengthof(productionPopup), _("You don't have enough material to produce all (%i) additional items. Only %i could be added."), amount, producibleAmount);
+			UI_Popup(_("Not enough material!"), productionPopup);
+		}
+
+		PR_IncreaseProduction(prod, producibleAmount);
+		Cvar_SetValue("mn_production_amount", prod->amount);
+	} else {
+		const char *name = NULL;
+
+		/* no free production slot */
+		if (PR_QueueFreeSpace(queue) <= 0) {
+			UI_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
+			return;
+		}
+
+		if (selectedItem) {
+			tech = RS_GetTechForItem(selectedItem);
+			name = selectedItem->name;
+		} else if (selectedAircraft) {
+			tech = selectedAircraft->tech;
+			name = selectedAircraft->name;
+		} else if (selectedDisassembly) {
+			assert(selectedDisassembly->ufoTemplate);
+			tech = selectedDisassembly->ufoTemplate->tech;
+			name = selectedDisassembly->ufoTemplate->name;
+			amount = 1;
+		}
+		assert(tech);
+		assert(name);
+
+		producibleAmount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
+		if (producibleAmount == 0) {
+			UI_Popup(_("Not enough materials"), _("You don't have the materials needed for producing this item.\n"));
+			return;
+		} else if (amount != producibleAmount) {
+			Com_sprintf(productionPopup, lengthof(productionPopup), _("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."), amount, producibleAmount);
+			UI_Popup(_("Not enough material!"), productionPopup);
+		}
+		/** @todo
+		 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
+		 *     This info should also be displayed in the item-info.
+		 *  -) can can (if possible) change the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).*/
+
+		if (selectedAircraft && AIR_CalculateHangarStorage(selectedAircraft, base, 0) <= 0) {
+			UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
+			return;
+		}
+
+		/* add production */
+		prod = PR_QueueNew(base, queue, selectedItem, selectedAircraft, selectedDisassembly, producibleAmount);
+
+		/** @todo this popup hides any previous popup, like popup created in PR_QueueNew */
+		if (!prod)
+			return;
+
+		/* Now we select the item we just created. */
+		UI_ExecuteConfunc("prod_selectline %i", prod->idx);
+		PR_ClearSelected();
+		selectedProduction = &queue->items[queue->numItems - 1];
+
+		/* messages */
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production of %s started"), _(name));
+		MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, tech);
 	}
 
 	PR_ProductionInfo(base);
@@ -871,10 +724,10 @@ static void PR_ProductionStop_f (void)
 
 	if (queue->numItems == 0) {
 		selectedProduction = NULL;
-		MN_ExecuteConfunc("prod_selectline -1");
+		UI_ExecuteConfunc("prod_selectline -1");
 	} else if (prodIDX >= queue->numItems) {
 		selectedProduction = &queue->items[queue->numItems - 1];
-		MN_ExecuteConfunc("prod_selectline %i", prodIDX);
+		UI_ExecuteConfunc("prod_selectline %i", prodIDX);
 	}
 
 	PR_ProductionInfo(base);
@@ -886,29 +739,25 @@ static void PR_ProductionStop_f (void)
  */
 static void PR_ProductionDecrease_f (void)
 {
-	int amount = 1, amountTemp = 0;
-	production_queue_t *queue;
-	production_t *prod;
+	int amount = 1;
 	base_t *base = B_GetCurrentSelectedBase();
+	production_t *prod = selectedProduction;
 
 	if (Cmd_Argc() == 2)
 		amount = atoi(Cmd_Argv(1));
 
-	if (!base || !selectedProduction)
+	if (!prod)
 		return;
 
-	queue = &ccs.productions[base->idx];
-	prod = selectedProduction;
-	if (prod->amount >= amount)
-		amountTemp = amount;
-	else
-		amountTemp = prod->amount;
-
-	prod->amount -= amountTemp;
-
-	if (prod->amount <= 0) {
+	if (prod->amount <= amount) {
 		PR_ProductionStop_f();
-	} else {
+		return;
+	}
+
+	/** @todo add (confirmaton) popup in case storage cannot take all the items we add back to it */
+	PR_DecreaseProduction(prod, amount);
+
+	if (base) {
 		PR_ProductionInfo(base);
 		PR_UpdateProductionList(base);
 	}
@@ -956,7 +805,7 @@ static void PR_ProductionUp_f (void)
 	PR_QueueMove(queue, selectedProduction->idx, -1);
 
 	selectedProduction = &queue->items[selectedProduction->idx - 1];
-	MN_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
+	UI_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
 	PR_UpdateProductionList(base);
 }
 
@@ -979,7 +828,7 @@ static void PR_ProductionDown_f (void)
 	PR_QueueMove(queue, selectedProduction->idx, 1);
 
 	selectedProduction = &queue->items[selectedProduction->idx + 1];
-	MN_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
+	UI_ExecuteConfunc("prod_selectline %i", selectedProduction->idx);
 	PR_UpdateProductionList(base);
 }
 

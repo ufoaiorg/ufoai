@@ -24,10 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../mxml/mxml_ufoai.h"
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
+#include "../cl_shared.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
+#include "../cl_inventory.h" /* INV_GetEquipmentDefinitionByID */
 #include "cp_campaign.h"
 #include "cp_market.h"
 #include "cp_market_callbacks.h"
@@ -151,7 +151,7 @@ qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
 	/* make sure that numItems is > 0 (can be negative because capacities.cur may be greater than
 	 * capacities.max if storage is disabled or if alien items have been collected on mission */
 	if (numItems <= 0) {
-		MN_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
+		UI_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
 		return qfalse;
 	}
 
@@ -166,7 +166,7 @@ qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
  * @brief Update storage, the market, and the player's credits
  * @note Don't update capacity here because we can sell items directly from aircraft (already removed from storage).
  */
-void BS_ProcessCraftItemSale (const base_t *base, const objDef_t *craftitem, const int numItems)
+void BS_ProcessCraftItemSale (const objDef_t *craftitem, const int numItems)
 {
 	if (craftitem) {
 		BS_AddItemToMarket(craftitem, numItems);
@@ -186,25 +186,27 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 	mxml_node_t *node;
 	/* store market */
 	node = mxml_AddNode(parent, SAVE_MARKET_MARKET);
-	for (i = 0; i < MAX_OBJDEFS; i++) {
-		if (csi.ods[i].id[0] != '\0' && BS_IsOnMarket(&csi.ods[i])) {
+	for (i = 0; i < csi.numODs; i++) {
+		const objDef_t *od = INVSH_GetItemByIDX(i);
+		if (BS_IsOnMarket(od)) {
 			mxml_node_t * snode = mxml_AddNode(node, SAVE_MARKET_ITEM);
-			mxml_AddString(snode, SAVE_MARKET_ID, csi.ods[i].id);
+			mxml_AddString(snode, SAVE_MARKET_ID, od->id);
 			mxml_AddIntValue(snode, SAVE_MARKET_NUM, ccs.eMarket.numItems[i]);
 			mxml_AddIntValue(snode, SAVE_MARKET_BID, ccs.eMarket.bidItems[i]);
 			mxml_AddIntValue(snode, SAVE_MARKET_ASK, ccs.eMarket.askItems[i]);
 			mxml_AddDoubleValue(snode, SAVE_MARKET_EVO, ccs.eMarket.currentEvolutionItems[i]);
-			mxml_AddBoolValue(snode, SAVE_MARKET_AUTOSELL, ccs.autosell[i]);
+			mxml_AddBoolValue(snode, SAVE_MARKET_AUTOSELL, ccs.eMarket.autosell[i]);
 		}
 	}
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
-		if ((ccs.eMarket.bidAircraft[i] > 0) || (ccs.eMarket.askAircraft > 0)) {
+		market_t *market = &ccs.eMarket;
+		if (market->bidAircraft[i] > 0 || market->askAircraft[i] > 0) {
 			mxml_node_t * snode = mxml_AddNode(node, SAVE_MARKET_AIRCRAFT);
 			mxml_AddString(snode, SAVE_MARKET_ID, Com_DropShipTypeToShortName(i));
-			mxml_AddIntValue(snode, SAVE_MARKET_NUM, ccs.eMarket.numAircraft[i]);
-			mxml_AddIntValue(snode, SAVE_MARKET_BID, ccs.eMarket.bidAircraft[i]);
-			mxml_AddIntValue(snode, SAVE_MARKET_ASK, ccs.eMarket.askAircraft[i]);
-			mxml_AddDoubleValue(snode, SAVE_MARKET_EVO, ccs.eMarket.currentEvolutionAircraft[i]);
+			mxml_AddIntValue(snode, SAVE_MARKET_NUM, market->numAircraft[i]);
+			mxml_AddIntValue(snode, SAVE_MARKET_BID, market->bidAircraft[i]);
+			mxml_AddIntValue(snode, SAVE_MARKET_ASK, market->askAircraft[i]);
+			mxml_AddDoubleValue(snode, SAVE_MARKET_EVO, market->currentEvolutionAircraft[i]);
 		}
 	}
 	return qtrue;
@@ -237,7 +239,7 @@ qboolean BS_LoadXML (mxml_node_t *parent)
 		ccs.eMarket.bidItems[od->idx] = mxml_GetInt(snode, SAVE_MARKET_BID, 0);
 		ccs.eMarket.askItems[od->idx] = mxml_GetInt(snode, SAVE_MARKET_ASK, 0);
 		ccs.eMarket.currentEvolutionItems[od->idx] = mxml_GetDouble(snode, SAVE_MARKET_EVO, 0.0);
-		ccs.autosell[od->idx] = mxml_GetBool(snode, SAVE_MARKET_AUTOSELL, qfalse);
+		ccs.eMarket.autosell[od->idx] = mxml_GetBool(snode, SAVE_MARKET_AUTOSELL, qfalse);
 	}
 	for (snode = mxml_GetNode(node, SAVE_MARKET_AIRCRAFT); snode; snode = mxml_GetNextNode(snode, node, SAVE_MARKET_AIRCRAFT)) {
 		const char *s = mxml_GetString(snode, SAVE_MARKET_ID);
@@ -259,53 +261,53 @@ qboolean BS_LoadXML (mxml_node_t *parent)
  * @sa BS_Load (Market load function)
  * @param[in] load Is this an attempt to init the market for a savegame?
  */
-void BS_InitMarket (qboolean load)
+void BS_InitMarket (void)
 {
 	int i;
 	campaign_t *campaign = ccs.curCampaign;
+	market_t *market = &ccs.eMarket;
 
 	/* find the relevant markets */
 	campaign->marketDef = INV_GetEquipmentDefinitionByID(campaign->market);
-	if (!campaign->marketDef)
-		Com_Error(ERR_DROP, "BS_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
-				campaign->market, campaign->id);
 	campaign->asymptoticMarketDef = INV_GetEquipmentDefinitionByID(campaign->asymptoticMarket);
-	if (!ccs.curCampaign->asymptoticMarketDef)
-		Com_Error(ERR_DROP, "BS_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
-				campaign->asymptoticMarket, campaign->id);
 
 	for (i = 0; i < csi.numODs; i++) {
-		if (ccs.eMarket.askItems[i] == 0) {
-			ccs.eMarket.askItems[i] = csi.ods[i].price;
-			ccs.eMarket.bidItems[i] = floor(ccs.eMarket.askItems[i] * BID_FACTOR);
+		const objDef_t *od = INVSH_GetItemByIDX(i);
+		if (market->askItems[i] == 0) {
+			market->askItems[i] = od->price;
+			market->bidItems[i] = floor(market->askItems[i] * BID_FACTOR);
 		}
 
-		if (!ccs.curCampaign->marketDef->numItems[i])
+		if (campaign->marketDef->numItems[i] <= 0)
 			continue;
 
-		if (!RS_IsResearched_ptr(csi.ods[i].tech) && campaign->marketDef->numItems[i] > 0)
-			Com_Error(ERR_DROP, "BS_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s", csi.ods[i].id, campaign->id);
-		else
+		if (RS_IsResearched_ptr(RS_GetTechForItem(od))) {
 			/* the other relevant values were already set above */
-			ccs.eMarket.numItems[i] = campaign->marketDef->numItems[i];
+			market->numItems[i] = campaign->marketDef->numItems[i];
+		} else {
+			Com_Printf("BS_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n",
+					od->id, campaign->id);
+		}
 	}
 
 	for (i = 0; i < AIRCRAFTTYPE_MAX; i++) {
 		const char* name = Com_DropShipTypeToShortName(i);
 		const aircraft_t *aircraft = AIR_GetAircraft(name);
-		if (ccs.eMarket.askAircraft[i] == 0) {
-			ccs.eMarket.askAircraft[i] = aircraft->price;
-			ccs.eMarket.bidAircraft[i] = floor(ccs.eMarket.askAircraft[i] * BID_FACTOR);
+		if (market->askAircraft[i] == 0) {
+			market->askAircraft[i] = aircraft->price;
+			market->bidAircraft[i] = floor(market->askAircraft[i] * BID_FACTOR);
 		}
 
-		if (!ccs.curCampaign->marketDef->numAircraft[i])
+		if (campaign->marketDef->numAircraft[i] <= 0)
 			continue;
 
-		if (!RS_IsResearched_ptr(aircraft->tech) && campaign->marketDef->numAircraft[i] > 0)
-			Com_Error(ERR_DROP, "BS_InitMarket: Could not add aircraft %s to the market - not marked as researched in campaign %s", aircraft->id, campaign->id);
-		else
+		if (RS_IsResearched_ptr(aircraft->tech)) {
 			/* the other relevant values were already set above */
-			ccs.eMarket.numAircraft[i] = campaign->marketDef->numAircraft[i];
+			market->numAircraft[i] = campaign->marketDef->numAircraft[i];
+		} else {
+			Com_Printf("BS_InitMarket: Could not add aircraft %s to the market - not marked as researched in campaign %s\n",
+					aircraft->id, campaign->id);
+		}
 	}
 }
 
@@ -328,11 +330,9 @@ void CL_CampaignRunMarket (void)
 	assert(campaign->asymptoticMarketDef);
 
 	for (i = 0; i < csi.numODs; i++) {
-		const technology_t *tech = csi.ods[i].tech;
+		const objDef_t *od = INVSH_GetItemByIDX(i);
+		const technology_t *tech = RS_GetTechForItem(od);
 		int asymptoticNumber;
-
-		if (!tech)
-			Com_Error(ERR_DROP, "No tech that provides '%s'\n", csi.ods[i].id);
 
 		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->numItems[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
 			/* if items are researched for more than RESEARCH_LIMIT_DELAY or was on the initial market,
@@ -351,9 +351,9 @@ void CL_CampaignRunMarket (void)
 		if (fabs(ccs.eMarket.currentEvolutionItems[i]) >= 1.0f) {
 			const int num = (int)(ccs.eMarket.currentEvolutionItems[i]);
 			if (num >= 0)
-				BS_AddItemToMarket(&csi.ods[i], num);
+				BS_AddItemToMarket(od, num);
 			else
-				BS_RemoveItemFromMarket(&csi.ods[i], -num);
+				BS_RemoveItemFromMarket(od, -num);
 			ccs.eMarket.currentEvolutionItems[i] -= num;
 		}
 	}
@@ -364,9 +364,6 @@ void CL_CampaignRunMarket (void)
 		const aircraft_t* aircraft = AIR_GetAircraft(aircraftID);
 		const technology_t *tech = aircraft->tech;
 		int asymptoticNumber;
-
-		if (!tech)
-			Com_Error(ERR_DROP, "No tech that provides '%s'\n", aircraftID);
 
 		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->numAircraft[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
 			/* if aircraft is researched for more than RESEARCH_LIMIT_DELAY or was on the initial market,

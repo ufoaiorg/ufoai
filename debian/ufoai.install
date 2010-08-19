@@ -2,3 +2,4 @@ ufo                  /usr/lib/games/ufoai/
 debian/ufo           /usr/games/
 debian/ufoai.xpm     /usr/share/pixmaps
 debian/ufoai.desktop /usr/share/applications
+debian/ufoai-safe.desktop /usr/share/applications

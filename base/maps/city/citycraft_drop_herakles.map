@@ -3,13 +3,13 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
-"light_day" "85"
+"light_day" "240"
 "angles_day" "-85 100"
 "ambient_day" "0.25 0.25 0.25"
 "color_day" "0.15 0.15 0.15"
 "angles_night" "-85 100"
 "color_night" "0.55 0.55 0.95"
-"ambient_night" "0.15 0.15 0.19"
+"ambient_night" "0.2 0.2 0.25"
 "light_night" "45"
 // brush 0
 {
@@ -443,12 +443,12 @@
 }
 // brush 47
 {
-( 512 256 96 ) ( 512 224 96 ) ( 480 256 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
-( 512 256 96 ) ( 480 256 96 ) ( 512 256 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
-( 512 256 96 ) ( 512 256 64 ) ( 512 224 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
-( 480 224 64 ) ( 512 224 64 ) ( 480 256 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
-( 480 224 64 ) ( 480 224 96 ) ( 512 224 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
-( 480 224 64 ) ( 480 256 64 ) ( 480 224 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 512 512 96 ) ( 512 480 96 ) ( 480 512 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 512 768 96 ) ( 480 768 96 ) ( 512 768 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 512 512 96 ) ( 512 512 64 ) ( 512 480 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 480 480 64 ) ( 512 480 64 ) ( 480 512 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 480 480 64 ) ( 480 480 96 ) ( 512 480 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 480 480 64 ) ( 480 512 64 ) ( 480 480 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
 }
 // brush 48
 {
@@ -1195,21 +1195,21 @@
 }
 // brush 129
 {
-( 224 88 104 ) ( 66 581 104 ) ( 224 581 104 ) tex_common/nodraw 0 62 0 1 1 65024 128 0
+( 224 88 102 ) ( 66 581 102 ) ( 224 581 102 ) tex_common/nodraw 0 62 0 1 1 65024 128 0
 ( 224 88 80 ) ( 224 581 104 ) ( 224 651 80 ) tex_common/nodraw 0 0 0 1 1 65024 128 0
 ( -128 -64 80 ) ( 384 -64 80 ) ( -128 704 80 ) tex_common/nodraw 0 0 0 1 1 65024 128 0
 ( 146 88 80 ) ( 146 88 100 ) ( 148 88 80 ) tex_common/nodraw 0 0 0 1 1 65024 128 0
 ( 66 88 80 ) ( 66 581 104 ) ( 66 88 104 ) tex_common/nodraw 0 0 0 1 1 65024 128 0
-( 66 651 80 ) ( 224 581 104 ) ( 66 581 104 ) tex_common/nodraw 0 26 0 1 1 65024 128 0
+( 66 651 78 ) ( 224 581 102 ) ( 66 581 102 ) tex_common/nodraw 0 26 0 1 1 65024 128 0
 }
 // brush 130
 {
-( 224 88 104 ) ( 66 582 104 ) ( 224 582 104 ) tex_common/actorclip 0 60 0 1 1 130560 0 0
+( 224 88 102 ) ( 66 582 102 ) ( 224 582 102 ) tex_common/actorclip 0 60 0 1 1 130560 0 0
 ( 224 88 80 ) ( 224 582 104 ) ( 224 652 80 ) tex_common/actorclip 0 0 0 1 1 130560 0 0
 ( -128 -64 80 ) ( 384 -64 80 ) ( -128 704 80 ) tex_common/actorclip 0 0 0 1 1 130560 0 0
 ( 146 88 80 ) ( 146 88 100 ) ( 148 88 80 ) tex_common/actorclip 0 0 0 1 1 130560 0 0
 ( 66 88 80 ) ( 66 582 104 ) ( 66 88 104 ) tex_common/actorclip 0 0 0 1 1 130560 0 0
-( 66 652 80 ) ( 224 582 104 ) ( 66 582 104 ) tex_common/actorclip 0 22 0 1 1 130560 0 0
+( 66 652 78 ) ( 224 582 102 ) ( 66 582 102 ) tex_common/actorclip 0 22 0 1 1 130560 0 0
 }
 // brush 131
 {
@@ -1397,6 +1397,15 @@
 ( 192 256 112 ) ( 192 256 144 ) ( 224 256 112 ) tex_common/actorclip 0 0 0 1 1 130560 0 0
 ( 192 256 112 ) ( 192 448 112 ) ( 192 256 144 ) tex_common/actorclip 0 0 0 1 1 130560 0 0
 }
+// brush 151
+{
+( 512 256 96 ) ( 512 224 96 ) ( 480 256 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 512 448 96 ) ( 480 448 96 ) ( 512 448 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 512 256 96 ) ( 512 256 64 ) ( 512 224 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 480 224 64 ) ( 512 224 64 ) ( 480 256 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 480 224 64 ) ( 480 224 96 ) ( 512 224 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 480 224 64 ) ( 480 256 64 ) ( 480 224 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+}
 }
 // entity 1
 {
@@ -1409,49 +1418,49 @@
 // entity 2
 {
 "classname" "info_human_start"
-"origin" "112 528 131"
+"origin" "112 528 126"
 "angle" "90"
 }
 // entity 3
 {
 "classname" "info_human_start"
-"origin" "176 528 131"
+"origin" "176 528 126"
 "angle" "90"
 }
 // entity 4
 {
 "classname" "info_human_start"
-"origin" "112 464 131"
+"origin" "112 464 126"
 "angle" "90"
 }
 // entity 5
 {
 "classname" "info_human_start"
-"origin" "176 464 131"
+"origin" "176 464 126"
 "angle" "90"
 }
 // entity 6
 {
 "classname" "info_human_start"
-"origin" "112 400 131"
+"origin" "112 400 126"
 "angle" "90"
 }
 // entity 7
 {
 "classname" "info_human_start"
-"origin" "176 400 131"
+"origin" "176 400 126"
 "angle" "90"
 }
 // entity 8
 {
 "classname" "info_human_start"
-"origin" "112 336 131"
+"origin" "112 336 126"
 "angle" "90"
 }
 // entity 9
 {
 "classname" "info_human_start"
-"origin" "176 336 131"
+"origin" "176 336 126"
 "angle" "90"
 }
 // entity 10
@@ -1493,4 +1502,81 @@
 "origin" "146 314 124"
 "spawnflags" "254"
 "angles" "0 90 0"
+}
+// entity 15
+{
+"classname" "info_player_start"
+"origin" "336 336 92"
+"angle" "180"
+"team" "2"
+}
+// entity 16
+{
+"classname" "info_player_start"
+"origin" "336 240 92"
+"angle" "180"
+"team" "2"
+}
+// entity 17
+{
+"classname" "info_player_start"
+"origin" "336 144 92"
+"angle" "180"
+"team" "2"
+}
+// entity 18
+{
+"classname" "info_player_start"
+"origin" "336 432 92"
+"angle" "180"
+"team" "2"
+}
+// entity 19
+{
+"classname" "info_player_start"
+"origin" "560 368 92"
+"angle" "180"
+"team" "2"
+}
+// entity 20
+{
+"classname" "info_player_start"
+"origin" "560 272 92"
+"angle" "180"
+"team" "2"
+}
+// entity 21
+{
+"classname" "info_player_start"
+"origin" "560 176 92"
+"angle" "180"
+"team" "2"
+}
+// entity 22
+{
+"classname" "info_player_start"
+"origin" "560 80 92"
+"angle" "180"
+"team" "2"
+}
+// entity 23
+{
+"classname" "trigger_rescue"
+"team" "1"
+// brush 0
+{
+( 224 352 160 ) ( 96 352 160 ) ( 224 512 160 ) tex_common/trigger 0 0 0 0.25 0.25
+( 224 352 192 ) ( 224 512 192 ) ( 224 352 96 ) tex_common/trigger 0 0 0 0.25 0.25
+( 192 96 160 ) ( 192 96 64 ) ( 64 96 160 ) tex_common/trigger 0 0 0 0.25 0.25
+( 96 512 96 ) ( 96 352 96 ) ( 224 512 96 ) tex_common/trigger 0 0 0 0.25 0.25
+( 64 512 96 ) ( 64 512 192 ) ( 64 352 96 ) tex_common/trigger 0 0 0 0.25 0.25
+( 96 608 96 ) ( 224 608 96 ) ( 96 608 192 ) tex_common/trigger 0 0 0 0.25 0.25
+}
+}
+// entity 24
+{
+"classname" "misc_sound"
+"origin" "472 368 80"
+"noise" "ambience/city_abnd_ufoai_atm"
+"volume" "0.5"
 }

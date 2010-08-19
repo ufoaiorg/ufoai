@@ -24,6 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../common/common.h"
+#include "../system.h"
+#include <unistd.h>
 
 #ifdef HAVE_CURSES
 #include "unix_curses.h"
@@ -68,7 +70,7 @@ const char *Sys_ConsoleInput (void)
 		return NULL;
 
 	FD_ZERO(&fdset);
-	FD_SET(0, &fdset); /* stdin */
+	FD_SET(STDIN_FILENO, &fdset); /* stdin */
 	timeout.tv_sec = 0;
 	timeout.tv_usec = 0;
 	if (select(1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(STDIN_FILENO, &fdset))
@@ -93,31 +95,9 @@ void Sys_ConsoleOutput (const char *string)
 #ifdef HAVE_CURSES
 	Curses_Output(string);
 #else
-	char text[2048];
-	int i, j;
-
-	i = j = 0;
-
 	/* skip color char */
-	if (*string == 1)
+	if (!strncmp(string, COLORED_GREEN, strlen(COLORED_GREEN)))
 		string++;
-
-	/* strip high bits */
-	while (string[j]) {
-		text[i] = string[j] & SCHAR_MAX;
-
-		/* strip low bits */
-		if (text[i] >= 32 || text[i] == '\n' || text[i] == '\t')
-			i++;
-
-		j++;
-
-		if (i == sizeof(text) - 2) {
-			text[i++] = '\n';
-			break;
-		}
-	}
-	text[i] = 0;
 
 	fputs(string, stdout);
 #endif /* HAVE_CURSES */

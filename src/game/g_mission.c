@@ -110,7 +110,7 @@ qboolean G_MissionUse (edict_t *self, edict_t *activator)
 {
 	edict_t *target = G_FindTargetEntity(self->target);
 	if (!target) {
-		gi.dprintf("Target '%s' wasn't found for misc_mission\n", self->target);
+		gi.DPrintf("Target '%s' wasn't found for misc_mission\n", self->target);
 		G_FreeEdict(self);
 		return qfalse;
 	}
@@ -136,6 +136,7 @@ void G_MissionThink (edict_t *self)
 {
 	edict_t *chain = self->groupMaster;
 	edict_t *ent;
+	int team;
 
 	if (!G_MatchIsRunning())
 		return;
@@ -143,7 +144,7 @@ void G_MissionThink (edict_t *self)
 	/* when every player has joined the match - spawn the mission target
 	 * particle (if given) to mark the trigger */
 	if (self->particle) {
-		G_ParticleSpawn(self->origin, self->spawnflags, self->particle);
+		G_SpawnParticle(self->origin, self->spawnflags, self->particle);
 
 		/* This is automatically freed on map shutdown */
 		self->particle = NULL;
@@ -191,12 +192,33 @@ void G_MissionThink (edict_t *self)
 	if (self->use)
 		self->use(self, NULL);
 
+	/* store team before the edict is released */
+	team = self->team;
+
 	chain = self->groupMaster;
 	if (!chain)
 		chain = self;
 	while (chain) {
-		/** @todo also remove the item on the floor - if any */
-		/*const invList_t *ic = FLOOR(chain);*/
+		if (chain->item != NULL) {
+			edict_t *item = G_GetEdictFromPos(chain->pos, ET_ITEM);
+			if (item != NULL) {
+				if (!G_InventoryRemoveItemByID(chain->item, item, gi.csi->idFloor)) {
+					Com_Printf("Could not remove item '%s' from floor edict %i\n",
+							chain->item, item->number);
+				} else {
+					G_AppearPerishEvent(G_VisToPM(item->visflags), qfalse, item, NULL);
+				}
+			}
+		}
+		if (chain->particle != NULL) {
+			/** @todo not yet working - particle stays active */
+			edict_t *particle = G_GetEdictFromPos(chain->pos, ET_PARTICLE);
+			if (particle != NULL) {
+				G_AppearPerishEvent(PM_ALL, qfalse, particle, NULL);
+				G_FreeEdict(particle);
+			}
+		}
+
 		ent = chain->groupChain;
 		/* free the trigger */
 		if (chain->child)
@@ -205,12 +227,13 @@ void G_MissionThink (edict_t *self)
 		G_FreeEdict(chain);
 		chain = ent;
 	}
+	self = NULL;
 
 	/* still active mission edicts left */
 	ent = NULL;
 	while ((ent = G_EdictsGetNextInUse(ent)))
-		if (ent->type == ET_MISSION && ent->team == self->team)
+		if (ent->type == ET_MISSION && ent->team == team)
 			return;
 
-	G_MatchEndTrigger(self->team, 10);
+	G_MatchEndTrigger(team, 10);
 }

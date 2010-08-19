@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
+#include "../../cl_shared.h"
 #include "../cp_campaign.h"
 #include "../cp_alienbase.h"
 #include "../cp_map.h"
@@ -211,11 +211,12 @@ static void CP_BuildBaseSubvertGovernment (mission_t *mission)
 
 	mission->stage = STAGE_SUBVERT_GOV;
 
+	/* mission appear on geoscape, player can go there */
+	CP_MissionAddToGeoscape(mission, qfalse);
+
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minMissionDelay, missionDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array (may reappear)*/
 	CP_UFORemoveFromGeoscape(mission, qfalse);
-	/* mission appear on geoscape, player can go there */
-	CP_MissionAddToGeoscape(mission, qfalse);
 }
 
 /**
@@ -261,7 +262,7 @@ void CP_BuildBaseMissionNextStage (mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create mission */
-		CP_MissionCreate(mission);
+		CP_MissionBegin(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* Choose type of mission */

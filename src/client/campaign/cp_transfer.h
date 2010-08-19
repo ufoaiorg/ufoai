@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_TRANSFERS	16
 #define TRANS_LIST_EMPTY_SLOT -1
 
+struct transferData_s;
+
 enum {
 	CARGO_TYPE_INVALID = 0,
 	CARGO_TYPE_ITEM,
@@ -49,15 +51,16 @@ enum {
 
 /** @brief Transfer informations (they are being stored in ccs.transfers[MAX_TRANSFERS]. */
 typedef struct transfer_s {
-	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item [csi.ods[idx]]. */
-	int alienAmount[MAX_TEAMDEFS][TRANS_ALIEN_MAX];		/**< Alien cargo, [0] alive, [1] dead. */
-	struct employee_s *employeeArray[MAX_EMPL][MAX_EMPLOYEES];	/**< List of personel transfering. */
-
-	int aircraftArray[MAX_AIRCRAFT];		/**< Aircraft being transferred. aircraftIdx */
+	qboolean active;				/**< True if this transfer is under processing. */
 	base_t *destBase;				/**< Pointer to destination base. May not be NULL if active is true. */
 	base_t *srcBase;				/**< Pointer to source base. May be NULL if transfer comes from a mission (alien body recovery). */
 	date_t event;					/**< When the transfer finish process should start. */
-	qboolean active;				/**< True if this transfer is under processing. */
+
+	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item. */
+	int alienAmount[MAX_TEAMDEFS][TRANS_ALIEN_MAX];		/**< Alien cargo, [0] alive, [1] dead. */
+	struct employee_s *employeeArray[MAX_EMPL][MAX_EMPLOYEES];	/**< List of personal transferring. */
+	int aircraftArray[MAX_AIRCRAFT];		/**< Aircraft being transferred. aircraftIdx */
+
 	qboolean hasItems;				/**< Transfer of items. */
 	qboolean hasEmployees;			/**< Transfer of employees. */
 	qboolean hasAliens;				/**< Transfer of aliens. */
@@ -70,10 +73,14 @@ typedef struct transferCargo_s {
 	int itemidx;			/**< Index of item in cargo. */
 } transferCargo_t;
 
-void TR_TransferAircraftMenu(aircraft_t* aircraft);
 void TR_TransferCheck(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 
 void TR_InitStartup(void);
+
+void TR_TransferStart(base_t *srcBase, struct transferData_s *transData);
+void TR_TransferAlienAfterMissionStart(const base_t *base, aircraft_t *transferAircraft);
+
+transfer_t* TR_GetNext(transfer_t *lastTransfer);
 
 #endif /* CLIENT_CL_TRANSFER_H */

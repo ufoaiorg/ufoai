@@ -74,7 +74,7 @@ typedef struct le_s {
 
 	fireDefIndex_t currentSelectedFiremode;
 
-	actorModes_t actorMode;		/**< current selected action for the selected actor */
+	actorModes_t actorMode;		/**< current selected action for this actor */
 	/** for double-click movement and confirmations ... */
 	pos3_t mousePendPos;
 	/**
@@ -113,6 +113,7 @@ typedef struct le_s {
 
 	/** sound effects */
 	struct s_sample_s* sample;
+	float attenuation;		/**< attenuation value for local entity sounds */
 	float volume;			/**< loop sound volume - 0.0f-1.0f */
 
 	/** gfx */
@@ -181,8 +182,7 @@ extern cvar_t *cl_leshowinvis;
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
 void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, le_t *leVictim);
 void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt, le_t* leVictim);
-void LE_AddAmbientSound(const char *sound, const vec3_t origin, int levelflags, float volume);
-le_t *LE_GetClosestActor(const vec3_t origin);
+void LE_AddAmbientSound(const char *sound, const vec3_t origin, int levelflags, float volume, float attenuation);
 int LE_ActorGetStepTime(const le_t *le, const pos3_t pos, const pos3_t oldPos, const int dir, const int sped);
 
 #define LE_IsStunned(le)	(((le)->state & STATE_STUN) & ~STATE_DEAD)

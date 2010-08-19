@@ -63,6 +63,7 @@ class UndoSaveStateTracker: public UndoTracker
 		{
 		}
 		void clear ();
+		void clearRedo ();
 		void begin ();
 		void undo ();
 		void redo ();

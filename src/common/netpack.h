@@ -28,7 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _COMMON_NETPACK_H
 #define _COMMON_NETPACK_H
 
-#include "dbuffer.h"
+#define NUMVERTEXNORMALS	162
+extern const vec3_t bytedirs[NUMVERTEXNORMALS];
 
 void NET_WriteChar(struct dbuffer *buf, char c);
 void NET_WriteByte(struct dbuffer *buf, byte c);
@@ -45,8 +46,7 @@ void NET_WriteAngle16(struct dbuffer *buf, float f);
 void NET_WriteDir(struct dbuffer *buf, const vec3_t vector);
 void NET_vWriteFormat(struct dbuffer *buf, const char *format, va_list ap);
 void NET_WriteFormat(struct dbuffer *buf, const char *format, ...);
-void NET_VPrintf(struct dbuffer *buf, const char *format, va_list ap);
-void NET_Printf(struct dbuffer *buf, const char *format, ...) __attribute__((format(printf,2,3)));
+void NET_VPrintf(struct dbuffer *buf, const char *format, va_list ap, char *str, size_t length);
 
 /* This frees the buf argument */
 void NET_WriteMsg(struct net_stream *s, struct dbuffer *buf);
@@ -61,9 +61,8 @@ int NET_ReadByte(struct dbuffer *buf);
 int NET_ReadShort(struct dbuffer *buf);
 int NET_PeekShort(const struct dbuffer *buf);
 int NET_ReadLong(struct dbuffer *buf);
-char *NET_ReadString(struct dbuffer *buf);
-char *NET_ReadStringLine(struct dbuffer *buf);
-char *NET_ReadStringRaw(struct dbuffer *buf);
+int NET_ReadString(struct dbuffer *buf, char *string, size_t length);
+int NET_ReadStringLine(struct dbuffer *buf, char *string, size_t length);
 
 float NET_ReadCoord(struct dbuffer *buf);
 void NET_ReadPos(struct dbuffer *buf, vec3_t pos);

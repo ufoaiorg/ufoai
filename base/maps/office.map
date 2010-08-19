@@ -18126,7 +18126,7 @@
 {
 "classname" "misc_sound"
 "origin" "-32 336 16"
-"noise" "sound/ambience/tv_newswav.iletypes"
+"noise" "sound/ambience/earth-news"
 }
 // entity 312
 {

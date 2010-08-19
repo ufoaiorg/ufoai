@@ -4,13 +4,16 @@
 
 window main
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	ui/main_bg
+		src	"background/main_bg"
 	}
 
 	string version
@@ -36,25 +39,25 @@ window main
 			onClick	{ cmd "mn_push singleplayer;" }
 			string	"_Single-player"
 		}
-	
+
 		cmpMenuButton button_multiplayer
 		{
 			onClick	{ cmd "mn_push_multiplayer;" }
 			string	"_Multiplayer"
 		}
-	
+
 		cmpMenuButton button_options
 		{
 			onClick	{ cmd "mn_push options;" }
 			string	"_Options"
 		}
-	
+
 		cmpMenuButton button_tut
 		{
 			onClick	{ cmd "mn_push tutorials;" }
 			string	"_Tutorials"
 		}
-	
+
 		cmpMenuButton button_credits
 		{
 			onClick	{ cmd "seq_start credits;" }
@@ -73,6 +76,10 @@ window main
 	{
 		cmd "music_change main;"
 		cmd "mn_push_child popup_tipoftheday main;check_cvars;"
+		if ( *cvar:cl_introshown != 1 ) {
+			cmd "mn_push intro;"
+			*cvar:cl_introshown = 1
+		}
 	}
 }
 
@@ -87,7 +94,7 @@ window checkcvars
 		size		"777 402"
 		dragbutton	true
 		modal		true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Initial settings"
 	}
 
@@ -112,10 +119,10 @@ window checkcvars
 	textentry slot_name
 	{
 		string		*cvar:cl_name
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"170 82"
@@ -138,9 +145,9 @@ window checkcvars
 		pos			"41 198"
 		size		"150 20"
 	}
-	pic effects_rahmen
+	image effects_rahmen
 	{
-		image		ui/bar_rahmen
+		src		"ui/bar_rahmen"
 		pos			"161 203"
 	}
 	bar effects_bar
@@ -157,9 +164,9 @@ window checkcvars
 		pos			"41 223"
 		size		"150 20"
 	}
-	pic music_rahmen
+	image music_rahmen
 	{
-		image		ui/bar_rahmen
+		src		"ui/bar_rahmen"
 		pos			"161 228"
 	}
 	bar music_bar
@@ -197,21 +204,21 @@ window checkcvars
 		selectcolor	"1 1 1 1"
 		dataid		OPTION_LANGUAGES
 		onViewChange {
-			*(vscrollbar)select_language_scroll@current = <viewpos>
-			*(vscrollbar)select_language_scroll@fullsize = <fullsize>
-			*(vscrollbar)select_language_scroll@viewsize = <viewsize>
+			*node:root.select_language_scroll@current = <viewpos>
+			*node:root.select_language_scroll@fullsize = <fullsize>
+			*node:root.select_language_scroll@viewsize = <viewsize>
 		}
 	}
 
 	vscrollbar select_language_scroll {
-		image			ui/scrollbar_v_green
+		image			"ui/scrollbar_v_green"
 		pos				"692 78"
 		height			"226"
 		current			0
 		viewsize		8
 		fullsize		21
 		onChange {
-			*select_language@viewpos = <current>
+			*node:root.select_language@viewpos = <current>
 		}
 	}
 
@@ -232,7 +239,7 @@ window checkcvars
 		string		"_OK"
 		tooltip		"_Save settings"
 		pos			"566 338"
-		onClick		{ cmd "mn_pop; saveconfigcfg;" }
+		onClick		{ cmd "mn_pop; saveconfig config.cfg;" }
 	}
 
 	// check again - maybe the user has forgotton something
@@ -251,7 +258,7 @@ window popup_tipoftheday
 		pos			"38 456"
 		size		"496 247"
 		dragbutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Tip of the day"
 	}
 
@@ -268,7 +275,7 @@ window popup_tipoftheday
 		string		"_Show tip of the day"
 		pos			"58 194"
 		size		"200 25"
-		font		f_small
+		font		"f_small"
 		onClick		{
 			call *node:root.activate@toggle
 		}
@@ -288,27 +295,37 @@ window popup_tipoftheday
 	{
 		string		"_Next"
 		tooltip		"_Next tip"
-		image		ui/button_green_small
+		image		"ui/button_green_small"
 		width		"176"
 		pos			"266 188"
-		font		f_menu
+		font		"f_menu"
 		color		"0 0.5 0 1"
-		onClick		{ cmd "tipoftheday;" }
+		onClick		{ 
+			if ( *cvar:cl_showTipOfTheDay == 1 ) {
+				cmd "tipoftheday;"
+			} else {
+				cmd "mn_close popup_tipoftheday;"
+			}
+		}
 	}
 
 	confunc check_nexttip
 	{
 		if ( *cvar:cl_showTipOfTheDay == 1 ) {
-			*bt_next@string = "_Next"
-			*bt_next@tooltip = "_Next tip"
+			*node:root.bt_next@string = "_Next"
+			*node:root.bt_next@tooltip = "_Next tip"
 		} else {
-			*bt_next@string = "_Close"
-			*bt_next@tooltip = "_Close window"
+			*node:root.bt_next@string = "_Close"
+			*node:root.bt_next@tooltip = "_Close window"
 		}
 	}
 
 	func onInit
 	{
-		cmd "tipoftheday random; check_nexttip;"
+		if ( *cvar:cl_showTipOfTheDay == 1 ) {
+			cmd "tipoftheday random; check_nexttip;"
+		} else {
+			cmd "mn_close popup_tipoftheday;"
+		}
 	}
 }

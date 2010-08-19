@@ -24,10 +24,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../cl_shared.h"
 #include "../cl_team.h"
-#include "../menu/m_main.h"
-#include "../mxml/mxml_ufoai.h"
+#include "../ui/ui_main.h"
 #include "cp_campaign.h"
 #include "cp_hospital.h"
 
@@ -71,14 +70,11 @@ qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
  */
 void HOS_HospitalRun (void)
 {
-	int type, i;
+	int type;
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		for (i = 0; i < ccs.numEmployees[type]; i++) {
-			employee_t *employee = &ccs.employees[type][i];
-			if (!employee->baseHired || !employee->hired)
-				continue;
-
+		employee_t *employee = NULL;
+		while ((employee = E_GetNextHired(type, employee))) {
 			if (B_GetBuildingStatus(employee->baseHired, B_HOSPITAL))
 				HOS_HealCharacter(&(employee->chr), qtrue);
 			else
@@ -106,15 +102,16 @@ qboolean HOS_HealEmployee (employee_t* employee)
  */
 void HOS_HealAll (const base_t* const base)
 {
-	int i, type;
+	int type;
 
 	assert(base);
 
-	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < ccs.numEmployees[type]; i++) {
-			if (E_IsInBase(&ccs.employees[type][i], base))
-				HOS_HealEmployee(&ccs.employees[type][i]);
+	for (type = 0; type < MAX_EMPL; type++) {
+		employee_t *employee = NULL;
+		while ((employee = E_GetNextFromBase(type, employee, base))) {
+			HOS_HealEmployee(employee);
 		}
+	}
 }
 
 
@@ -124,21 +121,18 @@ void HOS_HealAll (const base_t* const base)
  */
 static void HOS_HealAll_f (void)
 {
-	int i, type;
-	employee_t* employee;
+	int type;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
 
-	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < ccs.numEmployees[type]; i++) {
-			employee = &ccs.employees[type][i];
-			/* only those employees, that are in the current base */
-			if (!E_IsInBase(employee, base))
-				continue;
+	for (type = 0; type < MAX_EMPL; type++) {
+		employee_t *employee = NULL;
+		while ((employee = E_GetNextFromBase(type, employee, base))) {
 			employee->chr.HP = employee->chr.maxHP;
 		}
+	}
 }
 
 /**
@@ -146,8 +140,7 @@ static void HOS_HealAll_f (void)
  */
 static void HOS_HurtAll_f (void)
 {
-	int i, type, amount;
-	employee_t* employee;
+	int type, amount;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -158,14 +151,15 @@ static void HOS_HurtAll_f (void)
 	else
 		amount = 1;
 
-	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < ccs.numEmployees[type]; i++) {
-			employee = &ccs.employees[type][i];
+	for (type = 0; type < MAX_EMPL; type++) {
+		employee_t *employee = NULL;
+		while ((employee = E_GetNext(type, employee))) {
 			/* only those employees, that are in the current base */
 			if (!E_IsInBase(employee, base))
 				continue;
 			employee->chr.HP = max(0, employee->chr.HP - amount);
 		}
+	}
 }
 #endif
 
@@ -173,7 +167,7 @@ static void HOS_HurtAll_f (void)
 /**
  * @brief Initial stuff for hospitals
  * Bind some of the functions in this file to console-commands that you can call ingame.
- * Called from MN_InitStartup resp. CL_InitLocal
+ * Called from UI_InitStartup resp. CL_InitLocal
  */
 void HOS_InitStartup (void)
 {
@@ -185,16 +179,6 @@ void HOS_InitStartup (void)
 
 /**
  * @brief Saving function for hospital related data
- * @sa HOS_Load
- * @sa SAV_GameSave
- */
-qboolean HOS_Save (sizebuf_t *sb, void* data)
-{
-	/* nothing to save here */
-	return qtrue;
-}
-/**
- * @brief Saving function for hospital related data
  * @sa HOS_LoadXML
  * @sa SAV_GameSaveXML
  */
@@ -204,15 +188,6 @@ qboolean HOS_SaveXML (mxml_node_t *p)
 	return qtrue;
 }
 
-/**
- * @brief Saving function for hospital related data
- * @sa HOS_Save
- * @sa SAV_GameLoad
- */
-qboolean HOS_Load (sizebuf_t *sb, void* data)
-{
-	return qtrue;
-}
 /**
  * @brief Saving function for hospital related data
  * @sa HOS_SaveXML

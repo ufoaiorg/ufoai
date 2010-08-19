@@ -32,6 +32,7 @@ typedef struct market_s {
 	int bidItems[MAX_OBJDEFS];					/**< price of item for selling */
 	int askItems[MAX_OBJDEFS];					/**< price of item for buying */
 	double currentEvolutionItems[MAX_OBJDEFS];	/**< evolution of the market */
+	qboolean autosell[MAX_OBJDEFS];				/**< True if item has autosell enabled */
 	int numAircraft[AIRCRAFTTYPE_MAX];			/**< number of Aircraft on the market */
 	int bidAircraft[AIRCRAFTTYPE_MAX];			/**< price of Aircraft for selling */
 	int askAircraft[AIRCRAFTTYPE_MAX];			/**< price of Aircraft for buying */
@@ -49,10 +50,10 @@ int BS_GetItemSellingPrice(const objDef_t *od);
 int BS_GetItemBuyingPrice(const objDef_t *od);
 
 qboolean BS_CheckAndDoBuyItem(base_t* base, const objDef_t *item, int number);
-void BS_ProcessCraftItemSale(const base_t *base, const objDef_t *craftitem, const int numItems);
+void BS_ProcessCraftItemSale(const objDef_t *craftitem, const int numItems);
 
 qboolean BS_IsOnMarket(const objDef_t const* item);
-void BS_InitMarket(qboolean load);
+void BS_InitMarket(void);
 void CL_CampaignRunMarket(void);
 
 #endif /* CLIENT_CL_MARKET_H */

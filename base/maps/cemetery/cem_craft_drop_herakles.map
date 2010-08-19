@@ -1412,3 +1412,17 @@
 "spawnflags" "255"
 "angles" "0 -180 0"
 }
+// entity 27
+{
+"classname" "trigger_rescue"
+"team" "1"
+// brush 0
+{
+( 288 160 96 ) ( 160 160 96 ) ( 288 320 96 ) tex_common/trigger 0 0 0 0.25 0.25
+( 640 128 96 ) ( 640 288 96 ) ( 640 128 0 ) tex_common/trigger 0 0 0 0.25 0.25
+( 288 160 64 ) ( 288 160 -32 ) ( 160 160 64 ) tex_common/trigger 0 0 0 0.25 0.25
+( 160 320 0 ) ( 160 160 0 ) ( 288 320 0 ) tex_common/trigger 0 0 0 0.25 0.25
+( 160 320 0 ) ( 160 320 96 ) ( 160 160 0 ) tex_common/trigger 0 0 0 0.25 0.25
+( 160 320 0 ) ( 288 320 0 ) ( 160 320 96 ) tex_common/trigger 0 0 0 0.25 0.25
+}
+}

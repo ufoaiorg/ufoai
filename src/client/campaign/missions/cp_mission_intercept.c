@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
+#include "../../cl_shared.h"
 #include "../cp_campaign.h"
 #include "../cp_ufo.h"
 #include "../cp_missions.h"
@@ -239,7 +239,7 @@ void CP_InterceptNextStage (mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create Intercept mission */
-		CP_MissionCreate(mission);
+		CP_MissionBegin(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* UFO start looking for target */

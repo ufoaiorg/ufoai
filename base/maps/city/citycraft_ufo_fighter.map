@@ -3,10 +3,15 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
-"light_day" "85"
+"light_day" "240"
 "angles_day" "-85 100"
 "ambient_day" "0.25 0.25 0.25"
 "color_day" "0.15 0.15 0.15"
+"ambient_night" "0.2 0.2 0.25"
+"angles_night" "-85 100"
+"color_night" "0.55 0.55 0.95"
+"light_night" "45"
+"randomspawn" "1"
 // brush 0
 {
 ( 8 512 72 ) ( 24 24 72 ) ( 8 0 72 ) tex_buildings/con_trim 0 0 180 0.25 0.25 65024 0 0
@@ -2996,4 +3001,58 @@
 "classname" "info_alien_start"
 "origin" "272 752 92"
 "angle" "90"
+}
+// entity 34
+{
+"classname" "info_player_start"
+"origin" "688 784 96"
+"team" "1"
+}
+// entity 35
+{
+"classname" "info_player_start"
+"origin" "784 624 96"
+"team" "1"
+}
+// entity 36
+{
+"classname" "info_player_start"
+"origin" "752 400 96"
+"angle" "-90"
+"team" "1"
+}
+// entity 37
+{
+"classname" "info_player_start"
+"origin" "528 240 92"
+"angle" "-90"
+"team" "1"
+}
+// entity 38
+{
+"classname" "info_player_start"
+"origin" "464 304 92"
+"angle" "-90"
+"team" "1"
+}
+// entity 39
+{
+"classname" "info_player_start"
+"origin" "336 336 96"
+"angle" "-90"
+"team" "1"
+}
+// entity 40
+{
+"classname" "info_player_start"
+"origin" "208 496 92"
+"angle" "-90"
+"team" "1"
+}
+// entity 41
+{
+"classname" "info_player_start"
+"origin" "240 688 96"
+"angle" "90"
+"team" "1"
 }

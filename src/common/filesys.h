@@ -112,6 +112,13 @@ FILESYSTEM
 extern char *fs_maps[MAX_MAPS];
 extern int fs_numInstalledMaps;
 
+/* directory searching */
+#define SFF_ARCH    0x01
+#define SFF_HIDDEN  0x02
+#define SFF_RDONLY  0x04
+#define SFF_SUBDIR  0x08
+#define SFF_SYSTEM  0x10
+
 int FS_FileLength(qFILE * f);
 int FS_Seek(qFILE * f, long offset, int origin);
 int FS_WriteFile(const void *buffer, size_t len, const char *filename);
@@ -143,12 +150,7 @@ int FS_LoadFile(const char *path, byte **buffer);
 /* a null buffer will just return the file length without loading */
 /* a -1 length is not present */
 
-#ifdef DEBUG
-#define FS_Read(buffer, len, f) FS_ReadDebug(buffer, len, f, __FILE__, __LINE__)
-int FS_ReadDebug(void *buffer, int len, qFILE * f, const char* file, int line);
-#else
 int FS_Read(void *buffer, int len, qFILE * f);
-#endif
 /* properly handles partial reads */
 
 void FS_FreeFile(void *buffer);

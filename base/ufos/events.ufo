@@ -4,11 +4,11 @@
 
 // rs_alien_base_discovered_event is trigger from code as it relies on an alienbase being discovered
 // and this is not scriptable right now.
-events main 
+events main
 {
 	rs_alien_xvi_event	400
 	rs_enemy_on_earth_event	450
-}	
+}
 
 // ==============================================
 // MAIL DEFINITIONS - for notification emails about various events.
@@ -48,7 +48,7 @@ mail alienbreathing
 	icon icons/mail_un
 }
 
-// FIXME: Use these and remove the MN_AddNewMessage stuff for these
+// FIXME: Use these and remove the UI_AddNewMessage stuff for these
 mail ufo_crashed_report
 {
 	to "_mail_to_base_commander"

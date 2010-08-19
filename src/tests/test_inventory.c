@@ -25,16 +25,34 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "CUnit/Basic.h"
 #include "test_inventory.h"
+#include "test_shared.h"
 #include "../common/common.h"
 #include "../game/inventory.h"
 
-static invList_t invList[MAX_INVLIST];
 static inventoryInterface_t i;
+static const int TAG_INVENTORY = 5546;
+
+static void FreeInventory (void *data)
+{
+	Mem_Free(data);
+}
+
+static void *AllocInventoryMemory (size_t size)
+{
+	return Mem_PoolAlloc(size, com_genericPool, TAG_INVENTORY);
+}
+
+static void FreeAllInventory (void)
+{
+	Mem_FreeTag(com_genericPool, TAG_INVENTORY);
+}
+
+static const inventoryImport_t inventoryImport = { FreeInventory, FreeAllInventory, AllocInventoryMemory };
 
 static inline void ResetInventoryList (void)
 {
-	memset(&invList, 0, sizeof(invList));
-	INV_InitInventory(&i, &csi, invList, lengthof(invList));
+	INV_DestroyInventory(&i);
+	INV_InitInventory("test", &i, &csi, &inventoryImport);
 }
 
 /**
@@ -43,17 +61,8 @@ static inline void ResetInventoryList (void)
  */
 static int UFO_InitSuiteInventory (void)
 {
-	com_aliasSysPool = Mem_CreatePool("Common: Alias system");
-	com_cmdSysPool = Mem_CreatePool("Common: Command system");
-	com_cmodelSysPool = Mem_CreatePool("Common: Collision model");
-	com_cvarSysPool = Mem_CreatePool("Common: Cvar system");
-	com_fileSysPool = Mem_CreatePool("Common: File system");
-	com_genericPool = Mem_CreatePool("Generic");
+	TEST_Init();
 
-	Mem_Init();
-	Cmd_Init();
-	Cvar_Init();
-	FS_InitFilesystem(qtrue);
 	Com_ParseScripts(qfalse);
 
 	return 0;
@@ -65,10 +74,7 @@ static int UFO_InitSuiteInventory (void)
  */
 static int UFO_CleanSuiteInventory (void)
 {
-	FS_Shutdown();
-	Cmd_Shutdown();
-	Cvar_Shutdown();
-	Mem_Shutdown();
+	TEST_Shutdown();
 	return 0;
 }
 
@@ -220,7 +226,7 @@ static void testItemMassActions (void)
 	CU_ASSERT_PTR_NOT_NULL_FATAL(container);
 
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *od = &csi.ods[i];
+		objDef_t *od = INVSH_GetItemByIDX(i);
 		int j;
 		/* every item should be placable on the ground container and there should really be enough space */
 		addedItem = testAddSingle(&inv, od, container);

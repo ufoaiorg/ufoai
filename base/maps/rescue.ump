@@ -1,0 +1,8 @@
+// *********************************
+// RESCUE MISSION THEME
+// *********************************
+
+base rescue/r_
+
+extends ufocrash
+

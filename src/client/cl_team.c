@@ -29,10 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_localentity.h"
 #include "battlescape/cl_actor.h"
 #include "cl_inventory.h"
-#include "cl_ugv.h"
 #include "battlescape/events/e_parse.h"
-#include "menu/m_main.h"
-#include "menu/m_nodes.h"
+#include "ui/ui_data.h"
+#include "ui/ui_nodes.h"
 #include "battlescape/events/e_main.h"
 #include "campaign/save/save_character.h"
 #include "campaign/save/save_inventory.h"
@@ -64,7 +63,7 @@ static const char* CL_GetTeamSkinName (int id)
 	Com_Error(ERR_DROP, "CL_GetTeamSkinName: Unknown skin id %i - max is %i", id, NUM_TEAMSKINS - 1);
 }
 
-void CL_CharacterSkillAndScoreCvars (const character_t *chr, const char* cvarPrefix)
+static void CL_CharacterSkillAndScoreCvars (const character_t *chr, const char* cvarPrefix)
 {
 	Cvar_ForceSet(va("%s%s", cvarPrefix, "name"), chr->name);
 	Cvar_ForceSet(va("%s%s", cvarPrefix, "body"), CHRSH_CharGetBody(chr));
@@ -106,6 +105,66 @@ void CL_CharacterSkillAndScoreCvars (const character_t *chr, const char* cvarPre
 }
 
 /**
+ * @brief Updates the character cvars for the given character.
+ *
+ * The models and stats that are displayed in the menu are stored in cvars.
+ * These cvars are updated here when you select another character.
+ *
+ * @param[in] chr Pointer to character_t (may not be null)
+ * @param[in] cvarPrefix
+ * @sa CL_UGVCvars
+ * @sa CL_ActorSelect
+ */
+static void CL_ActorCvars (const character_t * chr, const char* cvarPrefix)
+{
+	invList_t *weapon;
+	assert(chr);
+
+	/* visible equipment */
+	weapon = RIGHT(chr);
+	if (weapon)
+		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), weapon->item.t->model);
+	else
+		Cvar_Set(va("%s%s", cvarPrefix, "rweapon"), "");
+	weapon = LEFT(chr);
+	if (weapon)
+		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), weapon->item.t->model);
+	else
+		Cvar_Set(va("%s%s", cvarPrefix, "lweapon"), "");
+}
+
+/**
+ * @brief Updates the UGV cvars for the given "character".
+ *
+ * The models and stats that are displayed in the menu are stored in cvars.
+ * These cvars are updated here when you select another character.
+ *
+ * @param[in] chr Pointer to character_t (may not be null)
+ * @param[in] cvarPrefix
+ * @sa CL_ActorCvars
+ * @sa CL_ActorSelect
+ */
+static void CL_UGVCvars (const character_t *chr)
+{
+	Cvar_Set("mn_lweapon", "");
+	Cvar_Set("mn_rweapon", "");
+	Cvar_Set("mn_vmnd", "0");
+	Cvar_Set("mn_tmnd", va("%s (0)", CL_ActorGetSkillString(chr->score.skills[ABILITY_MIND])));
+}
+
+void CL_UpdateCharacterValues (const character_t *chr, const char *cvarPrefix)
+{
+	CL_CharacterSkillAndScoreCvars(chr, cvarPrefix);
+
+	if (chr->teamDef->race == RACE_ROBOT)
+		CL_UGVCvars(chr);
+	else
+		CL_ActorCvars(chr, cvarPrefix);
+
+	GAME_CharacterCvars(chr);
+}
+
+/**
  * @brief saves a character to a given xml node
  * @param[in] p The node to which we should save the character
  * @param[in] chr The charcter we should save
@@ -115,6 +174,7 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t* chr)
 	mxml_node_t *sScore;
 	mxml_node_t *sInventory;
 	int k;
+	const chrScoreGlobal_t *score;
 
 	assert(chr);
 	Com_RegisterConstList(saveCharacterConstants);
@@ -124,7 +184,7 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t* chr)
 	mxml_AddString(p, SAVE_CHARACTER_PATH, chr->path);
 	mxml_AddString(p, SAVE_CHARACTER_HEAD, chr->head);
 	mxml_AddInt(p, SAVE_CHARACTER_SKIN, chr->skin);
-	mxml_AddInt(p, SAVE_CHARACTER_TEAMDEFIDX, chr->teamDef->idx);
+	mxml_AddString(p, SAVE_CHARACTER_TEAMDEF, chr->teamDef->id);
 	mxml_AddInt(p, SAVE_CHARACTER_GENDER, chr->gender);
 	mxml_AddInt(p, SAVE_CHARACTER_UCN, chr->ucn);
 	mxml_AddInt(p, SAVE_CHARACTER_MAXHP, chr->maxHP);
@@ -134,32 +194,39 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t* chr)
 	mxml_AddInt(p, SAVE_CHARACTER_FIELDSIZE, chr->fieldSize);
 	mxml_AddIntValue(p, SAVE_CHARACTER_STATE, chr->state);
 
+	score = &chr->score;
+
 	sScore = mxml_AddNode(p, SAVE_CHARACTER_SCORES);
 	/* Store skills */
-	for (k = 0; k < SKILL_NUM_TYPES + 1; k++) {
-		if ((k < SKILL_NUM_TYPES && chr->score.skills[k])
-		 || chr->score.experience[k] || chr->score.initialSkills[k]) {
-			mxml_node_t *sSkill = mxml_AddNode(sScore, SAVE_CHARACTER_SKILLS);;
+	for (k = 0; k <= SKILL_NUM_TYPES; k++) {
+		if (score->experience[k] || score->initialSkills[k]
+		 || (k < SKILL_NUM_TYPES && score->skills[k])) {
+			mxml_node_t *sSkill = mxml_AddNode(sScore, SAVE_CHARACTER_SKILLS);
+			const int initial = score->initialSkills[k];
+			const int experience = score->experience[k];
 
 			mxml_AddString(sSkill, SAVE_CHARACTER_SKILLTYPE, Com_GetConstVariable(SAVE_CHARACTER_SKILLTYPE_NAMESPACE, k));
-			mxml_AddIntValue(sSkill, SAVE_CHARACTER_INITSKILL, chr->score.initialSkills[k]);
-			mxml_AddIntValue(sSkill, SAVE_CHARACTER_EXPERIENCE, chr->score.experience[k]);
-			if (k < SKILL_NUM_TYPES)
-				mxml_AddIntValue(sSkill, SAVE_CHARACTER_SKILLIMPROVE, chr->score.skills[k] - chr->score.initialSkills[k]);
+			mxml_AddIntValue(sSkill, SAVE_CHARACTER_INITSKILL, initial);
+			mxml_AddIntValue(sSkill, SAVE_CHARACTER_EXPERIENCE, experience);
+			if (k < SKILL_NUM_TYPES) {
+				const int skills = *(score->skills + k);
+				const int improve = skills - initial;
+				mxml_AddIntValue(sSkill, SAVE_CHARACTER_SKILLIMPROVE, improve);
+			}
 		}
 	}
 	/* Store kills */
 	for (k = 0; k < KILLED_NUM_TYPES; k++) {
 		mxml_node_t *sKill;
-		if (chr->score.kills[k] || chr->score.stuns[k]) {
+		if (score->kills[k] || score->stuns[k]) {
 			sKill = mxml_AddNode(sScore, SAVE_CHARACTER_KILLS);
 			mxml_AddString(sKill, SAVE_CHARACTER_KILLTYPE, Com_GetConstVariable(SAVE_CHARACTER_KILLTYPE_NAMESPACE, k));
-			mxml_AddIntValue(sKill, SAVE_CHARACTER_KILLED, chr->score.kills[k]);
-			mxml_AddIntValue(sKill, SAVE_CHARACTER_STUNNED, chr->score.stuns[k]);
+			mxml_AddIntValue(sKill, SAVE_CHARACTER_KILLED, score->kills[k]);
+			mxml_AddIntValue(sKill, SAVE_CHARACTER_STUNNED, score->stuns[k]);
 		}
 	}
-	mxml_AddIntValue(sScore, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, chr->score.assignedMissions);
-	mxml_AddInt(sScore, SAVE_CHARACTER_SCORE_RANK, chr->score.rank);
+	mxml_AddIntValue(sScore, SAVE_CHARACTER_SCORE_ASSIGNEDMISSIONS, score->assignedMissions);
+	mxml_AddInt(sScore, SAVE_CHARACTER_SCORE_RANK, score->rank);
 
 	/* Store inventories */
 	sInventory = mxml_AddNode(p, SAVE_INVENTORY_INVENTORY);
@@ -176,7 +243,7 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t* chr)
  */
 qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 {
-	int td;
+	const char *s;
 	mxml_node_t *sScore;
 	mxml_node_t *sSkill;
 	mxml_node_t *sKill;
@@ -199,18 +266,11 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 	chr->fieldSize = mxml_GetInt(p, SAVE_CHARACTER_FIELDSIZE, 1);
 	chr->state = mxml_GetInt(p, SAVE_CHARACTER_STATE, 0);
 
-	chr->teamDef = NULL;
-	/* Team-definition index */
-	td = mxml_GetInt(p, SAVE_CHARACTER_TEAMDEFIDX, -1);
-
-	if (td != -1) {
-		assert(csi.numTeamDefs);
-		if (td >= csi.numTeamDefs) {
-			Com_Printf("Invalid TeamDefIDX %i for %s (ucn: %i)\n", td, chr->name, chr->ucn);
-			return qfalse;
-		}
-		chr->teamDef = &csi.teamDef[td];
-	}
+	/* Team-definition */
+	s = mxml_GetString(p, SAVE_CHARACTER_TEAMDEF);
+	chr->teamDef = Com_GetTeamDefinitionByID(s);
+	if (!chr->teamDef)
+		return qfalse;
 
 	Com_RegisterConstList(saveCharacterConstants);
 
@@ -390,8 +450,6 @@ void CL_LoadInventoryXML (mxml_node_t *p, inventory_t *i)
  * @brief Generates the skills and inventory for a character and for a 2x2 unit
  * @param[in] chr The employee to create character data for.
  * @param[in] teamDefName Which team to use for creation.
- * @todo fix the assignment of ucn??
- * @todo fix the WholeTeam stuff
  */
 void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 {
@@ -417,27 +475,27 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 static void CL_InitSkin_f (void)
 {
 	/* create singleplayer skins */
-	if (MN_GetOption(OPTION_SINGLEPLAYER_SKINS) == NULL) {
-		menuOption_t *skins = NULL;
+	if (UI_GetOption(OPTION_SINGLEPLAYER_SKINS) == NULL) {
+		uiNode_t *skins = NULL;
 		assert(NUM_TEAMSKINS_SINGLEPLAYER >= 4);	/*< the current code create 4 skins */
-		MN_AddOption(&skins, "urban", N_("Urban"), "0");
-		MN_AddOption(&skins, "jungle", N_("Jungle"), "1");
-		MN_AddOption(&skins, "desert", N_("Desert"), "2");
-		MN_AddOption(&skins, "arctic", N_("Arctic"), "3");
-		MN_RegisterOption(OPTION_SINGLEPLAYER_SKINS, skins);
+		UI_AddOption(&skins, "urban", N_("Urban"), "0");
+		UI_AddOption(&skins, "jungle", N_("Jungle"), "1");
+		UI_AddOption(&skins, "desert", N_("Desert"), "2");
+		UI_AddOption(&skins, "arctic", N_("Arctic"), "3");
+		UI_RegisterOption(OPTION_SINGLEPLAYER_SKINS, skins);
 	}
 
 	/* create multiplayer skins */
-	if (MN_GetOption(OPTION_MULTIPLAYER_SKINS) == NULL) {
-		menuOption_t *skins = NULL;
+	if (UI_GetOption(OPTION_MULTIPLAYER_SKINS) == NULL) {
+		uiNode_t *skins = NULL;
 		assert(NUM_TEAMSKINS >= 6);		/*< the current code create 6 skins */
-		MN_AddOption(&skins, "urban", N_("Urban"), "0");
-		MN_AddOption(&skins, "jungle", N_("Jungle"), "1");
-		MN_AddOption(&skins, "desert", N_("Desert"), "2");
-		MN_AddOption(&skins, "arctic", N_("Arctic"), "3");
-		MN_AddOption(&skins, "multionly_yellow", N_("Yellow"), "4");
-		MN_AddOption(&skins, "multionly_cccp", N_("CCCP"), "5");
-		MN_RegisterOption(OPTION_MULTIPLAYER_SKINS, skins);
+		UI_AddOption(&skins, "urban", N_("Urban"), "0");
+		UI_AddOption(&skins, "jungle", N_("Jungle"), "1");
+		UI_AddOption(&skins, "desert", N_("Desert"), "2");
+		UI_AddOption(&skins, "arctic", N_("Arctic"), "3");
+		UI_AddOption(&skins, "multionly_yellow", N_("Yellow"), "4");
+		UI_AddOption(&skins, "multionly_cccp", N_("CCCP"), "5");
+		UI_RegisterOption(OPTION_MULTIPLAYER_SKINS, skins);
 	}
 }
 
@@ -490,54 +548,9 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 	}
 }
 
-/**
- * @brief Update the GUI with the selected item
- * @todo Doesn't belong into cl_team.c
- * @todo function is used for multiplayer, too - should be splitted
- * @todo function does not belong into the team code
- */
-static void CL_UpdateObject_f (void)
-{
-	int num;
-	const objDef_t *obj;
-	qboolean changeTab;
-
-	/* check syntax */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <objectid> <mustwechangetab>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (Cmd_Argc() == 3)
-		changeTab = atoi(Cmd_Argv(2)) >= 1;
-	else
-		changeTab = qtrue;
-
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= csi.numODs) {
-		Com_Printf("Id %i out of range 0..%i\n", num, csi.numODs);
-		return;
-	}
-	obj = &csi.ods[num];
-
-	/* update item description */
-	INV_ItemDescription(obj);
-
-	/* update tab */
-	if (changeTab) {
-		const cvar_t *var = Cvar_FindVar("mn_equiptype");
-		const int filter = INV_GetFilterFromItem(obj);
-		if (var && var->integer != filter) {
-			Cvar_SetValue("mn_equiptype", filter);
-			MN_ExecuteConfunc("update_item_list");
-		}
-	}
-}
-
 void TEAM_InitStartup (void)
 {
 	Cmd_AddCommand("team_initskin", CL_InitSkin_f, "Init skin according to the game mode");
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, "Change the skin of the soldier");
 	Cmd_AddCommand("team_changeskinteam", CL_ChangeSkinForWholeTeam_f, "Change the skin for the whole current team");
-	Cmd_AddCommand("object_update", CL_UpdateObject_f, _("Update the GUI with the selected item"));
 }

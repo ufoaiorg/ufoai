@@ -45,6 +45,9 @@ static void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, containerIndex
 
 	item->t = INVSH_GetItemByIDX(t);
 	item->m = INVSH_GetItemByIDX(m);
+
+	if (!item->t)
+		Com_Error(ERR_DROP, "no weapon given for item");
 }
 
 /**
@@ -73,7 +76,8 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 			Com_Error(ERR_DROP, "InvAdd for ET_ITEM but target container is not the floor but %i", container);
 
 		if (cls.i.AddToInventory(&cls.i, &le->i, item, INVDEF(container), x, y, item.amount) == NULL)
-			Com_Error(ERR_DROP, "InvAdd failed - could not add item to container %i", container);
+			Com_Error(ERR_DROP, "InvAdd failed - could not add %i item(s) of %s to container %i",
+					item.amount, item.t->id, container);
 
 		if (container == csi.idRight)
 			le->right = item.t->idx;

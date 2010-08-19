@@ -20,6 +20,8 @@
 	material tex_material/wood001
 	specular 0.2
 }
+
+/ * water: environment-mapped water */
 {
 	material tex_nature/water
 	specular 2.0
@@ -28,18 +30,32 @@
 	}
 }
 
-{
-	material tex_lights/land_li_yellow
-	{
-		flare 2
-		color 0.7 0.7 0.5
-	}
-}
-
+/* c_red: small red light pulsing with rotating orange light, additional flare effect (used on the whole dam)*/
 {
 	material tex_material/c_red
 	{
-		flare 0
-		color 1 0.5 0.5
+		texture pt/fx/rfx_lali_red_ko
+		rotate 0.1
+		glowscale 0.8
+	}
+	{
+		flare 5
+		scale.s 2.9
+		color 1.0 0.2 0.1
+	}
+}
+
+/* land_li_yellow: small orange rotating light, additional flare effect (used around the landing pad)*/
+{
+	material tex_lights/land_li_yellow
+	{
+		texture pt/fx/rfx_lali_yellow_ko
+		rotate 0.2
+		glowscale 0.85
+	}
+	{
+		flare 2
+		scale.s 1.2
+		color 1.0 1.0 0.6
 	}
 }

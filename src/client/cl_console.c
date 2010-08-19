@@ -340,7 +340,7 @@ void Con_Print (const char *txt)
 			Con_Linefeed();
 			/* mark time for transparent overlay */
 			if (con.currentLine >= 0)
-				con.times[con.currentLine % NUM_CON_TIMES] = cls.realtime;
+				con.times[con.currentLine % NUM_CON_TIMES] = CL_Milliseconds();
 		}
 
 		switch (c) {
@@ -396,7 +396,7 @@ static void Con_DrawInput (void)
 	y = strlen(text);
 
 	/* add the cursor frame */
-	if ((int)(cls.realtime >> 8) & 1) {
+	if ((int)(CL_Milliseconds() >> 8) & 1) {
 		text[keyLinePos] = CONSOLE_CURSOR_CHAR | CONSOLE_COLORED_TEXT_MASK;
 		if (keyLinePos == y)
 			y++;
@@ -436,7 +436,7 @@ void Con_DrawNotify (void)
 		time = con.times[i % NUM_CON_TIMES];
 		if (time == 0)
 			continue;
-		time = cls.realtime - time;
+		time = CL_Milliseconds() - time;
 		if (time > con_notifytime->integer * 1000)
 			continue;
 		text = con.text + (i % con.totalLines) * con.lineWidth;
@@ -472,7 +472,7 @@ void Con_DrawNotify (void)
 			R_DrawChar(l + ((x + skip) << con_fontShift), v, s[x]);
 			x++;
 		}
-		R_DrawChar(l + ((x + skip) << con_fontShift), v, 10 + ((cls.realtime >> 8) & 1));
+		R_DrawChar(l + ((x + skip) << con_fontShift), v, 10 + ((CL_Milliseconds() >> 8) & 1));
 		v += con_fontHeight;
 	}
 }
@@ -497,7 +497,7 @@ void Con_DrawConsole (float frac)
 
 	/* draw the background */
 	if (con_background->integer)
-		R_DrawStretchImage(0, viddef.virtualHeight * (frac - 1) , viddef.virtualWidth, viddef.virtualHeight, R_FindImage("pics/conback", it_pic));
+		R_DrawStretchImage(0, viddef.virtualHeight * (frac - 1) , viddef.virtualWidth, viddef.virtualHeight, R_FindImage("pics/background/conback", it_pic));
 
 	Com_sprintf(consoleMessage, sizeof(consoleMessage), "Hit esc to close - v%s", UFO_VERSION);
 	{

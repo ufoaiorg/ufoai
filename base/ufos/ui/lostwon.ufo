@@ -4,13 +4,16 @@
 
 window won
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	ui/won_bg
+		src	"background/won_bg"
 	}
 
 	// ==================
@@ -30,19 +33,6 @@ window won
 	// ==================
 	// buttons
 	// ==================
-
-//	button bt_tryagain
-//	{
-//		string		"_Try again"
-//		tooltip		"_Retry this mission"
-//		image		"ui/button_blue"
-//		pos			"480 700"
-//		size		"128 53"
-//		color		"1 1 1 0.8"
-//		selectcolor "1 1 1 1"
-//		font		"f_big"
-//		onClick		{ cmd "set cp_mission_tryagain 1;mn_pop;" }
-//	}
 
 	button bt_continue
 	{
@@ -66,11 +56,6 @@ window won
 
 	func onInit
 	{
-		if ( *cvar:mn_autogo == 1 ) {
-			*node:root.bt_tryagain@invis = true
-		} else {
-			*node:root.bt_tryagain@invis = false
-		}
 		cmd "snd_music ufo2;"
 	}
 
@@ -86,13 +71,16 @@ window won
 
 window lost
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	ui/lost_bg
+		src	"background/lost_bg"
 	}
 
 	// ==================
@@ -161,16 +149,18 @@ window uforecovery
 		dragbutton	true
 		modal		true
 		preventtypingescape true		// we can't use ESC
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_UFO recovery"
 	}
 
 	tab uforecovery_navigation {
-		pos		"17 125"
-		size	"667 38"
-		cvar	*cvar:mn_uforecovery_tab
-		onChange {
-			cmd "uforecovery_tabselect <cvar:mn_uforecovery_tab> ;"
+		{
+			pos		"17 125"
+			size	"667 38"
+			cvar	*cvar:mn_uforecovery_tab
+			onChange {
+				cmd "uforecovery_tabselect <cvar:mn_uforecovery_tab> ;"
+			}
 		}
 		option store {
 			label	"_Store UFO"
@@ -187,8 +177,8 @@ window uforecovery
 		string		*cvar:mn_uforecovery_actualufo
 		pos			"30 70"
 		size		"610 40"
-		font		f_small
-		textalign	ul
+		font		"f_small"
+		textalign	ALIGN_UL
 	}
 
 	//
@@ -220,7 +210,7 @@ window uforecovery
 			pos			"325 30"
 			size		"290 20"
 			font		"f_small_bold"
-			textalign	ur
+			textalign	ALIGN_UR
 		}
 
 		textlist ur_ufoyards
@@ -234,13 +224,13 @@ window uforecovery
 			tabwidth	100
 			rows		"8"
 			onClick		{
-				*(textlist)store_panel.ur_capacities@lineselected = <lineselected>
+				*node:root.store_panel.ur_capacities@lineselected = <lineselected>
 			}
 			onViewChange	{
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@current = <viewpos>
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@viewsize = <viewsize>
-				*(textlist)store_panel.ur_capacities@viewpos = <viewpos>
+				*node:root.store_panel.ur_ufoyards_scroll@fullsize = <fullsize>
+				*node:root.store_panel.ur_ufoyards_scroll@current = <viewpos>
+				*node:root.store_panel.ur_ufoyards_scroll@viewsize = <viewsize>
+				*node:root.store_panel.ur_capacities@viewpos = <viewpos>
 			}
 		}
 		textlist ur_capacities
@@ -252,19 +242,19 @@ window uforecovery
 			selectcolor	"1 1 1 1"
 			lineheight	16
 			rows		"8"
-			textalign	ur
+			textalign	ALIGN_UR
 			onClick		{
-				*(textlist)store_panel.ur_ufoyards@lineselected = <lineselected>
+				*node:root.store_panel.ur_ufoyards@lineselected = <lineselected>
 			}
 			onViewChange	{
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@current = <viewpos>
-				*(abstractscrollbar)store_panel.ur_ufoyards_scroll@viewsize = <viewsize>
-				*store_panel.ur_ufoyards@viewpos = <viewpos>
+				*node:root.store_panel.ur_ufoyards_scroll@fullsize = <fullsize>
+				*node:root.store_panel.ur_ufoyards_scroll@current = <viewpos>
+				*node:root.store_panel.ur_ufoyards_scroll@viewsize = <viewsize>
+				*node:root.store_panel.ur_ufoyards@viewpos = <viewpos>
 			}
 		}
 		vscrollbar ur_ufoyards_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"620 50"
 			height		"128"
 			current		0
@@ -272,8 +262,8 @@ window uforecovery
 			fullsize	8
 			hidewhenunused true
 			onChange	{
-				*store_panel.ur_ufoyards@viewpos = <current>
-				*store_panel.ur_capacities@viewpos = <current>
+				*node:root.store_panel.ur_ufoyards@viewpos = <current>
+				*node:root.store_panel.ur_capacities@viewpos = <current>
 			}
 		}
 
@@ -302,7 +292,7 @@ window uforecovery
 			tooltip		"_Sort nations by name"
 			pos			"25 30"
 			size		"250 20"
-			font		f_small_bold
+			font		"f_small_bold"
 			color		"0 0.5 0 1"
 			onClick		{ cmd "cp_uforecovery_sort nation;" }
 		}
@@ -313,7 +303,7 @@ window uforecovery
 			tooltip		"_Sort nations by price"
 			pos			"275 30"
 			size		"125 20"
-			font		f_small_bold
+			font		"f_small_bold"
 			color		"0 0.5 0 1"
 			onClick		{ cmd "cp_uforecovery_sort price;" }
 		}
@@ -324,7 +314,7 @@ window uforecovery
 			tooltip		"_Sort nations by relation"
 			pos			"450 30"
 			size		"175 20"
-			font		f_small_bold
+			font		"f_small_bold"
 			color		"0 0.5 0 1"
 			onClick		{ cmd "cp_uforecovery_sort happiness;" }
 		}
@@ -349,23 +339,23 @@ window uforecovery
 			selectcolor	"1 1 1 1"
 			rows		"8"
 			mousefx		true
-			longlines	prettychop
-			onClick		{ cmd "cp_uforecovery_nationlist_click <lineselected>" }
+			longlines	LONGLINES_PRETTYCHOP
+			onClick		{ cmd "cp_uforecovery_nationlist_click <lineselected>;" }
 			onViewChange	{
-				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@current = <viewpos>
-				*(abstractscrollbar)sell_panel.cp_ur_nationlist_scroll@viewsize = <viewsize>
+				*node:root.sell_panel.cp_ur_nationlist_scroll@fullsize = <fullsize>
+				*node:root.sell_panel.cp_ur_nationlist_scroll@current = <viewpos>
+				*node:root.sell_panel.cp_ur_nationlist_scroll@viewsize = <viewsize>
 			}
 		}
 		vscrollbar cp_ur_nationlist_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"620 50"
 			height		"128"
 			current		0
 			viewsize	8
 			fullsize	8
 			hidewhenunused true
-			onChange	{ *sell_panel.cp_uforecovery_nationlist@viewpos = <current> }
+			onChange	{ *node:root.sell_panel.cp_uforecovery_nationlist@viewpos = <current> }
 		}
 
 		string selected_nation_str
@@ -397,49 +387,49 @@ window uforecovery
 	confunc uforecovery_tabselect {
 		*cvar:mn_uforecovery_tab = <1>
 		if ( *cvar:mn_uforecovery_tab eq "store" ) {
-			*store_panel@invis = false
-			*sell_panel@invis = true
+			*node:root.store_panel@invis = false
+			*node:root.sell_panel@invis = true
 		}
 		if ( *cvar:mn_uforecovery_tab eq "sell" ) {
-			*sell_panel@invis = false
-			*store_panel@invis = true
+			*node:root.sell_panel@invis = false
+			*node:root.store_panel@invis = true
 		}
 	}
 
 	confunc btnatsel {
 		*cvar:tmp = "<1>"
 		if ( *cvar:tmp eq "enable" ) {
-			*sell_panel.bt_natsel@disabled = false
+			*node:root.sell_panel.bt_natsel@disabled = false
 		} else {
-			*sell_panel.bt_natsel@disabled = true
+			*node:root.sell_panel.bt_natsel@disabled = true
 		}
 		delete *cvar:tmp
 	}
 
 	confunc cp_nationsel_select {
-		*sell_panel.cp_uforecovery_nationlist@lineselected = <1>
+		*node:root.sell_panel.cp_uforecovery_nationlist@lineselected = <1>
 	}
 
 	confunc btbasesel {
 		*cvar:tmp = "<1>"
 		if ( *cvar:tmp eq "enable" ) {
-			*store_panel.bt_basesel@disabled = false
+			*node:root.store_panel.bt_basesel@disabled = false
 		} else {
-			*store_panel.bt_basesel@disabled = true
+			*node:root.store_panel.bt_basesel@disabled = true
 		}
 		delete *cvar:tmp
 	}
 
 	confunc cp_basesel_select {
-		*store_panel.ur_ufoyards@lineselected = <1>
-		*store_panel.ur_capacities@lineselected = <1>
+		*node:root.store_panel.ur_ufoyards@lineselected = <1>
+		*node:root.store_panel.ur_capacities@lineselected = <1>
 	}
 
 	func onInit {
 		cmd "uforecovery_tabselect store"
-		*store_panel.ur_ufoyards@lineselected = -1
-		*store_panel.ur_capacities@lineselected = -1
-		*sell_panel.cp_uforecovery_nationlist@lineselected = -1
+		*node:root.store_panel.ur_ufoyards@lineselected = -1
+		*node:root.store_panel.ur_capacities@lineselected = -1
+		*node:root.sell_panel.cp_uforecovery_nationlist@lineselected = -1
 		*cvar:mission_recoverynation = ""
 
 		if ( *cvar:mission_uforecovered == 0 ) {

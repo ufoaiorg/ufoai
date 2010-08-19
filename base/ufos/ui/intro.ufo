@@ -1,0 +1,26 @@
+// ==================
+// SEQUENCE MENU
+// ==================
+
+window intro
+{
+	video theintro
+	{
+		size		"1024 768"
+		src			"intro"
+		onClick		{
+			cmd "mn_pop;"
+		}
+	}
+
+	func onInit {
+		cmd "music_stop;"
+		*cvar:intro_old_scr_showcursor = *cvar:scr_showcursor
+		*cvar:scr_showcursor = 0
+	}
+
+	func onClose {
+		*cvar:scr_showcursor = *cvar:intro_old_scr_showcursor
+		delete *cvar:intro_old_scr_showcursor
+	}
+}

@@ -6,6 +6,8 @@ SERVER_SRCS += \
 	common/http.c \
 	common/ioapi.c \
 	common/unzip.c \
+	common/bsp.c \
+	common/grid.c \
 	common/cmodel.c \
 	common/common.c \
 	common/cvar.c \
@@ -38,9 +40,11 @@ SERVER_SRCS += \
 	shared/mathlib.c \
 	shared/parse.c \
 	shared/shared.c \
+	shared/utf8.c \
 	\
 	game/q_shared.c \
-	game/inv_shared.c
+	game/inv_shared.c \
+	game/chr_shared.c
 
 ifeq ($(HARD_LINKED_GAME),1)
 	SERVER_SRCS+=$(GAME_SRCS) \

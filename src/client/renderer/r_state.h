@@ -38,7 +38,7 @@ struct r_framebuffer_s;
 
 /* vertex arrays are used for many things */
 #define MAX_GL_ARRAY_LENGTH 0x40000
-extern const float default_texcoords[];
+extern const vec2_t default_texcoords[4];
 
 /** @brief texunits maintain multitexture state */
 typedef struct gltexunit_s {

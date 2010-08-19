@@ -48,9 +48,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../battlescape/cl_view.h"
 #include "../battlescape/cl_parse.h"
 #include "../battlescape/cl_hud.h"
-#include "../menu/m_main.h"
-#include "../menu/m_input.h"
-#include "../menu/node/m_node_abstractnode.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_input.h"
+#include "../ui/node/ui_node_abstractnode.h"
 
 #include "../../common/tracing.h"
 
@@ -130,7 +130,7 @@ static void IN_KeyDown (kbutton_t * b)
 	c = Cmd_Argv(2);
 	b->downtime = atoi(c);
 	if (!b->downtime)
-		b->downtime = cls.realtime - 100;
+		b->downtime = CL_Milliseconds() - 100;
 
 	/* down */
 	b->state = 1;
@@ -288,16 +288,16 @@ static void CL_LevelDown_f (void)
 
 static void CL_ZoomInQuant_f (void)
 {
-	if (mouseSpace == MS_MENU)
-		MN_MouseWheel(qfalse, mousePosX, mousePosY);
+	if (mouseSpace == MS_UI)
+		UI_MouseWheel(qfalse, mousePosX, mousePosY);
 	else
 		CL_CameraZoomIn();
 }
 
 static void CL_ZoomOutQuant_f (void)
 {
-	if (mouseSpace == MS_MENU)
-		MN_MouseWheel(qtrue, mousePosX, mousePosY);
+	if (mouseSpace == MS_UI)
+		UI_MouseWheel(qtrue, mousePosX, mousePosY);
 	else
 		CL_CameraZoomOut();
 }
@@ -314,7 +314,7 @@ static void CL_SelectDown_f (void)
 
 static void CL_SelectUp_f (void)
 {
-	if (mouseSpace == MS_MENU)
+	if (mouseSpace == MS_UI)
 		return;
 	mouseSpace = MS_NULL;
 }
@@ -331,7 +331,7 @@ static void CL_ActionDown_f (void)
 
 static void CL_ActionUp_f (void)
 {
-	if (mouseSpace == MS_MENU)
+	if (mouseSpace == MS_UI)
 		return;
 	mouseSpace = MS_NULL;
 }
@@ -341,7 +341,7 @@ static void CL_ActionUp_f (void)
  */
 static void CL_TurnDown_f (void)
 {
-	if (mouseSpace == MS_MENU)
+	if (mouseSpace == MS_UI)
 		return;
 	if (mouseSpace == MS_WORLD)
 		CL_ActorTurnMouse();
@@ -349,7 +349,7 @@ static void CL_TurnDown_f (void)
 
 static void CL_TurnUp_f (void)
 {
-	if (mouseSpace == MS_MENU)
+	if (mouseSpace == MS_UI)
 		return;
 	mouseSpace = MS_NULL;
 }
@@ -359,9 +359,9 @@ static void CL_TurnUp_f (void)
  */
 static void CL_HudRadarDown_f (void)
 {
-	if (!MN_IsWindowOnStack(mn_hud->string))
+	if (!UI_IsWindowOnStack(mn_hud->string))
 		return;
-	MN_PushWindow("radarmenu", NULL);
+	UI_PushWindow("radarmenu", NULL);
 }
 
 /**
@@ -369,9 +369,9 @@ static void CL_HudRadarDown_f (void)
  */
 static void CL_HudRadarUp_f (void)
 {
-	if (!MN_IsWindowOnStack(mn_hud->string))
+	if (!UI_IsWindowOnStack(mn_hud->string))
 		return;
-	MN_CloseWindow("radarmenu");
+	UI_CloseWindow("radarmenu");
 }
 
 /**
@@ -379,8 +379,8 @@ static void CL_HudRadarUp_f (void)
  */
 static void CL_RightClickDown_f (void)
 {
-	if (mouseSpace == MS_MENU) {
-		MN_MouseDown(mousePosX, mousePosY, K_MOUSE2);
+	if (mouseSpace == MS_UI) {
+		UI_MouseDown(mousePosX, mousePosY, K_MOUSE2);
 	}
 }
 
@@ -389,8 +389,8 @@ static void CL_RightClickDown_f (void)
  */
 static void CL_RightClickUp_f (void)
 {
-	if (mouseSpace == MS_MENU) {
-		MN_MouseUp(mousePosX, mousePosY, K_MOUSE2);
+	if (mouseSpace == MS_UI) {
+		UI_MouseUp(mousePosX, mousePosY, K_MOUSE2);
 	}
 }
 
@@ -399,8 +399,8 @@ static void CL_RightClickUp_f (void)
  */
 static void CL_MiddleClickDown_f (void)
 {
-	if (mouseSpace == MS_MENU) {
-		MN_MouseDown(mousePosX, mousePosY, K_MOUSE3);
+	if (mouseSpace == MS_UI) {
+		UI_MouseDown(mousePosX, mousePosY, K_MOUSE3);
 	}
 }
 
@@ -409,8 +409,8 @@ static void CL_MiddleClickDown_f (void)
  */
 static void CL_MiddleClickUp_f (void)
 {
-	if (mouseSpace == MS_MENU) {
-		MN_MouseUp(mousePosX, mousePosY, K_MOUSE3);
+	if (mouseSpace == MS_UI) {
+		UI_MouseUp(mousePosX, mousePosY, K_MOUSE3);
 	}
 }
 
@@ -419,8 +419,8 @@ static void CL_MiddleClickUp_f (void)
  */
 static void CL_LeftClickDown_f (void)
 {
-	if (mouseSpace == MS_MENU) {
-		MN_MouseDown(mousePosX, mousePosY, K_MOUSE1);
+	if (mouseSpace == MS_UI) {
+		UI_MouseDown(mousePosX, mousePosY, K_MOUSE1);
 	}
 }
 
@@ -429,8 +429,8 @@ static void CL_LeftClickDown_f (void)
  */
 static void CL_LeftClickUp_f (void)
 {
-	if (mouseSpace == MS_MENU) {
-		MN_MouseUp(mousePosX, mousePosY, K_MOUSE1);
+	if (mouseSpace == MS_UI) {
+		UI_MouseUp(mousePosX, mousePosY, K_MOUSE1);
 	}
 }
 
@@ -477,7 +477,7 @@ float CL_GetKeyMouseState (int dir)
 
 /**
  * @brief Called every frame to parse the input
- * @note The geoscape zooming code is in MN_MouseWheel too
+ * @note The geoscape zooming code is in UI_MouseWheel too
  * @sa CL_Frame
  */
 static void IN_Parse (void)
@@ -485,8 +485,8 @@ static void IN_Parse (void)
 	mouseSpace = MS_NULL;
 
 	/* standard menu and world mouse handling */
-	if (MN_IsPointOnWindow()) {
-		mouseSpace = MS_MENU;
+	if (UI_IsPointOnWindow()) {
+		mouseSpace = MS_UI;
 		return;
 	}
 
@@ -737,10 +737,7 @@ static void IN_TranslateKey (SDL_keysym *keysym, unsigned int *ascii, unsigned s
 		Com_Printf("unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *ascii, *ascii);
 }
 
-/**
- * @todo rename this function
- */
-static inline void EVENT_ENQUEUE (unsigned int keyNum, unsigned short keyUnicode, qboolean keyDown)
+void IN_EventEnqueue (unsigned int keyNum, unsigned short keyUnicode, qboolean keyDown)
 {
 	if (keyNum > 0) {
 		if (in_debug->integer)
@@ -750,11 +747,6 @@ static inline void EVENT_ENQUEUE (unsigned int keyNum, unsigned short keyUnicode
 		keyq[keyq_head].key = (keyNum);
 		keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1);
 	}
-}
-
-void IN_EventEnqueue (unsigned int key, unsigned short unicode, qboolean down)
-{
-	EVENT_ENQUEUE(key, unicode, down);
 }
 
 /**
@@ -836,7 +828,7 @@ void IN_Frame (void)
 				mouse_buttonstate = K_AUX1 + (event.button.button - 8) % 16;
 				break;
 			}
-			EVENT_ENQUEUE(mouse_buttonstate, 0, (event.type == SDL_MOUSEBUTTONDOWN));
+			IN_EventEnqueue(mouse_buttonstate, 0, (event.type == SDL_MOUSEBUTTONDOWN));
 			break;
 
 		case SDL_MOUSEMOTION:
@@ -876,7 +868,7 @@ void IN_Frame (void)
 			}
 
 			IN_TranslateKey(&event.key.keysym, &key, &unicode);
-			EVENT_ENQUEUE(key, unicode, qtrue);
+			IN_EventEnqueue(key, unicode, qtrue);
 			break;
 
 		case SDL_VIDEOEXPOSE:
@@ -885,13 +877,13 @@ void IN_Frame (void)
 		case SDL_KEYUP:
 			IN_PrintKey(&event, 0);
 			IN_TranslateKey(&event.key.keysym, &key, &unicode);
-			EVENT_ENQUEUE(key, unicode, qfalse);
+			IN_EventEnqueue(key, unicode, qfalse);
 			break;
 
 		case SDL_ACTIVEEVENT:
 			/* make sure menu no more capture input when the game window lose the focus */
 			if (event.active.state == SDL_APPINPUTFOCUS && event.active.gain == 0)
-				MN_ReleaseInput();
+				UI_ReleaseInput();
 			break;
 
 		case SDL_QUIT:
@@ -965,7 +957,7 @@ void IN_Init (void)
 void IN_SendKeyEvents (void)
 {
 	while (keyq_head != keyq_tail) {
-		Key_Event(keyq[keyq_tail].key, keyq[keyq_tail].unicode, keyq[keyq_tail].down, cls.realtime);
+		Key_Event(keyq[keyq_tail].key, keyq[keyq_tail].unicode, keyq[keyq_tail].down, CL_Milliseconds());
 		keyq_tail = (keyq_tail + 1) & (MAX_KEYQ - 1);
 	}
 }

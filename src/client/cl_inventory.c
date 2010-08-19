@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] name An id taken from scripts.
  * @return Found @c equipDef_t or @c NULL if no equipment definition found.
  */
-equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
+const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 {
 	int i;
 
@@ -46,8 +46,7 @@ equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 		if (!strcmp(name, csi.eds[i].name))
 			return &csi.eds[i];
 
-	Com_DPrintf(DEBUG_CLIENT, "INV_GetEquipmentDefinitionByID: equipment %s not found.\n", name);
-	return NULL;
+	Com_Error(ERR_DROP, "Could not find equipment %s", name);
 }
 
 /**
@@ -162,10 +161,10 @@ static void INV_InventoryList_f (void)
 
 /**
  * @brief Make sure equipment definitions used to generate teams are proper.
- * @note Check that the sum of all proabilities is smaller or equal to 100 for a weapon type.
+ * @note Check that the sum of all probabilities is smaller or equal to 100 for a weapon type.
  * @sa INVSH_EquipActor
  */
-qboolean INV_EquipmentDefSanityCheck (void)
+static qboolean INV_EquipmentDefSanityCheck (void)
 {
 	int i, j;
 	int sum;
@@ -180,7 +179,7 @@ qboolean INV_EquipmentDefSanityCheck (void)
 		/* Check primary */
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
-			const objDef_t const *obj = &csi.ods[j];
+			const objDef_t const *obj = INVSH_GetItemByIDX(j);
 			if (obj->weapon && obj->fireTwoHanded
 			 && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY)))
 				sum += ed->numItems[j];
@@ -193,7 +192,7 @@ qboolean INV_EquipmentDefSanityCheck (void)
 		/* Check secondary */
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
-			const objDef_t const *obj = &csi.ods[j];
+			const objDef_t const *obj = INVSH_GetItemByIDX(j);
 			if (obj->weapon && obj->reload && !obj->deplete && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY))
 				sum += ed->numItems[j];
 		}
@@ -205,7 +204,7 @@ qboolean INV_EquipmentDefSanityCheck (void)
 		/* Check armour */
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
-			const objDef_t const *obj = &csi.ods[j];
+			const objDef_t const *obj = INVSH_GetItemByIDX(j);
 			if (INV_ItemMatchesFilter(obj, FILTER_S_ARMOUR))
 				sum += ed->numItems[j];
 		}
@@ -335,16 +334,16 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 invList_t *INVSH_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType)
 {
 	invList_t *ic;
-	/** @todo is this function doing any reasonable stuff if the item is a null pointer?
-	 * if not, we can return null without walking through the whole container */
+
+	if (item == NULL)
+		return NULL;
+
 	for (ic = i->c[container->id]; ic; ic = ic->next) {
 		/* Search only in the items that could get displayed. */
 		if (ic && ic->item.t && (INV_ItemMatchesFilter(ic->item.t, filterType) || filterType == MAX_FILTERTYPES)) {
-			if (item) {
-				/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */
-				if (item == ic->item.t)
-					return ic;
-			}
+			/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */
+			if (item == ic->item.t)
+				return ic;
 		}
 	}
 
@@ -409,5 +408,7 @@ void INV_InitStartup (void)
 	Cmd_AddCommand("debug_listinventory", INV_InventoryList_f, "Print the current inventory to the game console");
 #endif
 	INV_InitCallbacks();
+
+	INV_EquipmentDefSanityCheck();
 }
 

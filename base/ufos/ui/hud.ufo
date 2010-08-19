@@ -11,7 +11,7 @@ window hud extends ahud
 		timeout		10000
 	}
 
-	func showinventory 
+	func showinventory
 	{
 		cmd "mn_push hudinv;"
 	}
@@ -40,9 +40,9 @@ window hud extends ahud
 			excluderect	{ pos "32 350" size "8 8" }
 		}
 
-		pic bar_floor
+		image bar_floor
 		{
-			image	hud/bar_floor
+			src	"hud/bar_floor"
 			pos		"0 0"
 			size	"40 363"
 			texh	"40 363"
@@ -143,8 +143,8 @@ window hud extends ahud
 	 * @param <2> status: 0 not available, 1 available, 2 selected
 	 */
 	confunc updateLevelStatus {
-		if ( <2> == 0 ) { *floor.bt<1>@disabled = true }
-		elif ( <2> >= 1 ) { *floor.bt<1>@disabled = false }
+		if ( <2> == 0 ) { *node:root.floor.bt<1>@disabled = true }
+		elif ( <2> >= 1 ) { *node:root.floor.bt<1>@disabled = false }
 	}
 
 	// ==================
@@ -161,9 +161,9 @@ window hud extends ahud
 			align	LAYOUTALIGN_TOPLEFT
 		}
 
-		pic background
+		image background
 		{
-			image	hud/bar_head
+			src	"hud/bar_head"
 			pos		"0 0"
 			size	"504 104"
 			texh	"504 104"
@@ -172,7 +172,7 @@ window hud extends ahud
 
 		model head
 		{
-			model	*cvar:mn_head
+			src		*cvar:mn_head
 			skin	*cvar:mn_skin
 			angles	"0 60 90"
 			autoscale	true
@@ -192,7 +192,7 @@ window hud extends ahud
 	/**
 	 * TODO remove bt_actor7 tooltip from script and C code
 	 * TODO update hovered actor content
-	 * 
+	 *
 	 */
 	panel popup_soldier_hovered {
 		{
@@ -202,6 +202,24 @@ window hud extends ahud
 			invis	true
 		}
 
+		image cursor
+		{
+			src			"hud/popup_cursor"
+			pos				"106 56"
+			size 			"47 24"
+			texh 			"47 24"
+		}
+
+		/**
+		 * @param <1> number of the soldier from 0..7
+		 */
+		func select
+		{
+			cmd "hud_getactorcvar <1> mn_hovered_;"
+			*node:parent.cursor@left = ( 141 + ( 30 * <1> ) )
+			*node:root.popup_soldier_hovered@invis = false
+		}
+
 		panel bg {
 			{
 				pos		"0 80"
@@ -209,9 +227,9 @@ window hud extends ahud
 				image	"ui/panel_rounded_green"
 			}
 
-			pic right_bg
+			image right_bg
 			{
-				image			hud/weapon_box
+				src			"hud/weapon_box"
 				pos				"106 103"
 				size 			"150 80"
 				texh 			"150 80"
@@ -222,13 +240,13 @@ window hud extends ahud
 				pos				"106 103"
 				size 			"150 80"
 				scale			"3.5 3.5 3.5"
-				model			*cvar:mn_hovered_rweapon_item
+				src				*cvar:mn_hovered_rweapon_item
 				containerLike	true
 			}
-	
-			pic left_bg
+
+			image left_bg
 			{
-				image			hud/weapon_box
+				src			"hud/weapon_box"
 				pos				"285 103"
 				size 			"150 80"
 				texh 			"150 80"
@@ -239,20 +257,20 @@ window hud extends ahud
 				pos				"285 103"
 				size 			"150 80"
 				scale			"3.5 3.5 3.5"
-				model			*cvar:mn_hovered_lweapon_item
+				src				*cvar:mn_hovered_lweapon_item
 				containerLike	true
 			}
-	
-			pic head_bg
+
+			image head_bg
 			{
-				image		hud/head_box
+				src		"hud/head_box"
 				pos			"20 16"
 				size 		"87 79"
 			}
 
 			model head
 			{
-				model		*cvar:mn_hovered_head
+				src			*cvar:mn_hovered_head
 				skin		*cvar:mn_hovered_skin
 				angles		"0 60 90"
 				autoscale	true
@@ -273,7 +291,7 @@ window hud extends ahud
 				string		*cvar:mn_hovered_tu
 				pos			"105 35"
 				size		"40 20"
-				textalign	ur
+				textalign	ALIGN_UR
 			}
 
 			bar timeall
@@ -305,13 +323,13 @@ window hud extends ahud
 				max			*cvar:mn_hovered_tumax
 				readonly	true
 			}
-	
+
 			string hp
 			{
 				string		*cvar:mn_hovered_hp
 				pos			"105 50"
 				size		"40 20"
-				textalign	ur
+				textalign	ALIGN_UR
 			}
 
 			bar health
@@ -333,15 +351,15 @@ window hud extends ahud
 				max			*cvar:mn_hovered_hpmax
 				readonly	true
 			}
-	
+
 			string moral_text
 			{
 				string		*cvar:mn_hovered_morale
 				pos			"105 65"
 				size		"40 20"
-				textalign	ur
+				textalign	ALIGN_UR
 			}
-	
+
 			bar morale
 			{
 				pos			"150 70"
@@ -364,112 +382,120 @@ window hud extends ahud
 			/** @note excluderect should be for the background, but like that we can move all the panel with the editor */
 			excluderect { pos	"264 17"	size	"44 40" }
 			excluderect { pos	"308 28"	size	"193 28" }
-			onMouseLeave { *node:root.popup_soldier_hovered@invis = true }
 		}
 
-		pic background
+		image background
 		{
-			image	hud/bar_teammember
+			src	"hud/bar_teammember"
 			pos		"0 0"
 			size	"275 56"
 			texh	"275 56"
 			ghost	true
 		}
 
-		radiobutton bt_actor0
-		{
-			pos			"29 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		0
-			cvar		*cvar:selected_soldier
-			icon		number_1
-			onClick		{ cmd "actor_select 0;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 0 mn_hovered_;" }
-		}
+		panel buttonList {
+			{
+				pos "29 10"
+				size "275 35"
+				onMouseLeave { *node:root.popup_soldier_hovered@invis = true }
+			}
 
-		radiobutton bt_actor1
-		{
-			pos			"59 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		1
-			cvar		*cvar:selected_soldier
-			icon		number_2
-			onClick		{ cmd "actor_select 1;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 1 mn_hovered_;" }
-		}
+			radiobutton bt_actor0
+			{
+				pos			"0 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		0
+				cvar		*cvar:selected_soldier
+				icon		number_1
+				onClick		{ cmd "actor_select 0;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 0 ) }
+			}
 
-		radiobutton bt_actor2
-		{
-			pos			"89 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		2
-			cvar		*cvar:selected_soldier
-			icon		number_3
-			onClick		{ cmd "actor_select 2;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 2 mn_hovered_;" }
-		}
+			radiobutton bt_actor1
+			{
+				pos			"29 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		1
+				cvar		*cvar:selected_soldier
+				icon		number_2
+				onClick		{ cmd "actor_select 1;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 1 ) }
+			}
 
-		radiobutton bt_actor3
-		{
-			pos			"119 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		3
-			cvar		*cvar:selected_soldier
-			icon		number_4
-			onClick		{ cmd "actor_select 3;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 3 mn_hovered_;" }
-		}
+			radiobutton bt_actor2
+			{
+				pos			"59 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		2
+				cvar		*cvar:selected_soldier
+				icon		number_3
+				onClick		{ cmd "actor_select 2;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 2 ) }
+			}
 
-		radiobutton bt_actor4
-		{
-			pos			"149 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		4
-			cvar		*cvar:selected_soldier
-			icon		number_5
-			onClick		{ cmd "actor_select 4;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 4 mn_hovered_;" }
-		}
+			radiobutton bt_actor3
+			{
+				pos			"89 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		3
+				cvar		*cvar:selected_soldier
+				icon		number_4
+				onClick		{ cmd "actor_select 3;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 3 ) }
+			}
 
-		radiobutton bt_actor5
-		{
-			pos			"179 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		5
-			cvar		*cvar:selected_soldier
-			icon		number_6
-			onClick		{ cmd "actor_select 5;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 5 mn_hovered_;" }
-		}
+			radiobutton bt_actor4
+			{
+				pos			"119 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		4
+				cvar		*cvar:selected_soldier
+				icon		number_5
+				onClick		{ cmd "actor_select 4;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 4 ) }
+			}
 
-		radiobutton bt_actor6
-		{
-			pos			"209 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		6
-			cvar		*cvar:selected_soldier
-			icon		number_7
-			onClick		{ cmd "actor_select 6;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 6 mn_hovered_;" }
-		}
+			radiobutton bt_actor5
+			{
+				pos			"149 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		5
+				cvar		*cvar:selected_soldier
+				icon		number_6
+				onClick		{ cmd "actor_select 5;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 5 ) }
+			}
 
-		radiobutton bt_actor7
-		{
-			pos			"239 10"
-			size		"27 35"
-			image		"ui/button_background2"
-			value		7
-			cvar		*cvar:selected_soldier
-			icon		number_8
-			onClick		{ cmd "actor_select 7;" }
-			onMouseEnter { *node:root.popup_soldier_hovered@invis = false cmd "hud_getactorcvar 7 mn_hovered_;" }
+			radiobutton bt_actor6
+			{
+				pos			"179 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		6
+				cvar		*cvar:selected_soldier
+				icon		number_7
+				onClick		{ cmd "actor_select 6;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 6 ) }
+			}
+
+			radiobutton bt_actor7
+			{
+				pos			"209 0"
+				size		"27 35"
+				image		"ui/button_background2"
+				value		7
+				cvar		*cvar:selected_soldier
+				icon		number_8
+				onClick		{ cmd "actor_select 7;" }
+				onMouseEnter { call *node:root.popup_soldier_hovered.select ( 7 ) }
+			}
+
 		}
 	}
 
@@ -480,9 +506,9 @@ window hud extends ahud
 			align	LAYOUTALIGN_TOPRIGHT
 		}
 
-		pic bar_nextround
+		image bar_nextround
 		{
-			image	hud/bar_nextround
+			src	"hud/bar_nextround"
 			pos		"0 0"
 			size	"216 56"
 			texh	"216 56"
@@ -492,7 +518,7 @@ window hud extends ahud
 		custombutton bt_nextround
 		{
 			tooltip	"_Finish round"
-			image	ui/button_background
+			image	"ui/button_background"
 			pos		"142 10"
 			size	"64 37"
 			texl	"192 0"
@@ -506,7 +532,7 @@ window hud extends ahud
 			tooltip	"_Click to cycle through spotted enemies"
 			pos		"8 11"
 			size	"48 34"
-			textalign	cc
+			textalign	ALIGN_CC
 			onClick	{ cmd "nextalien;" }
 		}
 	}
@@ -524,16 +550,16 @@ window hud extends ahud
 			align	LAYOUTALIGN_BOTTOMLEFT
 		}
 
-		pic background
+		image background
 		{
-			image	hud/bar_leftweapon
+			src	"hud/bar_leftweapon"
 			pos		"0 0"
 			size	"256 152"
 			texh	"256 152"
 			ghost	true
 		}
 
-		pic bt_pfire
+		image bt_pfire
 		{
 			tooltip	"_Primary fire mode"
 			pos		"174 34"
@@ -543,10 +569,10 @@ window hud extends ahud
 			onClick	{ cmd "hud_listfiremodes r;mn_push_dropdown firemode_right.anchor ll hud.right.bt_pfire ul;" }
 		}
 
-		pic bt_reload
+		image bt_reload
 		{
 			tooltip	*cvar:mn_reloadright_tt
-			image	hud/buttons2g
+			src	"hud/buttons2g"
 			pos		"103 104"
 			texl	"0 38"
 			texh	"64 74"
@@ -561,7 +587,7 @@ window hud extends ahud
 			string	*cvar:mn_ammoright
 			pos		"17 112"
 			size	"65 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
 
 		container right
@@ -569,10 +595,10 @@ window hud extends ahud
 			pos		"26 32"
 		}
 
-		pic hud_bt_use_headgear
+		image hud_bt_use_headgear
 		{
 			tooltip	"_Use headgear"
-			image	hud/buttons2g
+			src	"hud/buttons2g"
 			pos		"180 104"
 			texl	"64 0"
 			texh	"128 37"
@@ -590,16 +616,16 @@ window hud extends ahud
 			excluderect { pos	"0 0"	size	"80 24" }
 		}
 
-		pic background
+		image background
 		{
-			image	hud/bar_rightweapon
+			src	"hud/bar_rightweapon"
 			pos		"0 0"
 			size	"256 152"
 			texh	"256 152"
 			ghost	true
 		}
 
-		pic bt_pfire
+		image bt_pfire
 		{
 			tooltip	"_Use Item"
 			pos		"8 34"
@@ -609,10 +635,10 @@ window hud extends ahud
 			onClick	{ cmd "hud_listfiremodes l;mn_push_dropdown firemode_left.anchor lr hud.left.bt_pfire ur;" }
 		}
 
-		pic bt_reload
+		image bt_reload
 		{
 			tooltip	*cvar:mn_reloadleft_tt
-			image	hud/buttons2g
+			src	"hud/buttons2g"
 			pos		"89 104"
 			texl	"0 38"
 			texh	"64 74"
@@ -627,7 +653,7 @@ window hud extends ahud
 			string	*cvar:mn_ammoleft
 			pos		"171 112"
 			size	"65 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
 
 		container left
@@ -635,11 +661,11 @@ window hud extends ahud
 			pos		"108 32"
 		}
 
-		pic bt_duck
+		image bt_duck
 		{
 			tooltip	*cvar:mn_crouchstand_tt
 
-			image	hud/buttons2g
+			src	"hud/buttons2g"
 			pos		"8 107"
 			texl	"0 75"
 			texh	"52 112"
@@ -671,19 +697,19 @@ window hud extends ahud
 			excluderect { pos	"0 0"	size	"73 9" }
 		}
 
-		pic background
+		image background
 		{
-			image	hud/bar_infoscreen
+			src	"hud/bar_infoscreen"
 			pos		"0 0"
 			size	"457 119"
 			texh	"457 119"
 			ghost	true
 		}
 
-		pic bt_shot_reservation
+		image bt_shot_reservation
 		{
 			tooltip	*cvar:mn_shot_reservation_tt
-			image hud/button_reserve_shot
+			src "hud/button_reserve_shot"
 			pos		"11 32"
 			texl	"64 32"	// Inital pic - will be overwritten once the game's completely started.
 			texh	"115 64"
@@ -692,9 +718,9 @@ window hud extends ahud
 			onRClick	{ cmd "hud_shotreservationpopup 0;" }
 		}
 
-		pic bt_reaction_s
+		image bt_reaction_s
 		{
-			image	hud/button_guard
+			src	"hud/button_guard"
 			pos		"11 74"
 			texl	"0 32"	// Inital pic - will be overwritten once the game's compeletly started.
 			texh	"31 63"
@@ -707,7 +733,7 @@ window hud extends ahud
 			string	*cvar:mn_tu
 			pos		"82 11"
 			size	"40 20"
-			textalign	ur
+			textalign	ALIGN_UR
 		}
 
 		string hp
@@ -715,7 +741,7 @@ window hud extends ahud
 			string	*cvar:mn_hp
 			pos		"82 25"
 			size	"40 20"
-			textalign	ur
+			textalign	ALIGN_UR
 		}
 
 		//todo: make this into a "zone" node (which currently doesn't seem to support tooltips) See also menu_althud.
@@ -781,7 +807,7 @@ window hud extends ahud
 			string	*cvar:mn_morale
 			pos		"82 38"
 			size	"40 20"
-			textalign	ur
+			textalign	ALIGN_UR
 		}
 
 		bar morale
@@ -818,19 +844,19 @@ window hud extends ahud
 			excluderect { pos	"0 223"	size	"16 16" }
 		}
 
-		pic background
+		image background
 		{
-			image	hud/bar_popup
+			src	"hud/bar_popup"
 			pos		"0 0"
 			size	"47 335"
 			texh	"47 335"
 			ghost	true
 		}
 
-		pic bt_game
+		image bt_game
 		{
 			tooltip	"_Options"
-			image	hud/buttons1
+			src	"hud/buttons1"
 			mousefx true
 			pos		"6 10"
 			texl	"165 0"
@@ -838,10 +864,10 @@ window hud extends ahud
 			onClick	{ cmd "mn_pop;" }
 		}
 
-		pic bt_physdata
+		image bt_physdata
 		{
 			tooltip	"_Physical stats of this soldier"
-			image	hud/buttons1
+			src	"hud/buttons1"
 			mousefx true
 			pos		"6 137"
 			texl	"202 0"
@@ -849,10 +875,10 @@ window hud extends ahud
 			onClick	{ cmd "mn_push hudphysdat;" }
 		}
 
-		pic bt_inventory
+		image bt_inventory
 		{
 			tooltip	"_Inventory"
-			image	hud/buttons1
+			src	"hud/buttons1"
 			mousefx true
 			pos		"6 247"
 			texl	"128 0"
@@ -871,7 +897,7 @@ window hud extends ahud
 		dataid		TEXT_CHAT_WINDOW
 		pos			"130 70"
 		size		"690 48"
-		font		f_verysmall
+		font		"f_verysmall"
 		rows		"3"
 		lineheight	"16"
 		padding		5
@@ -889,61 +915,61 @@ window hud extends ahud
 			align	LAYOUTALIGN_RIGHT
 		}
 
-		pic bar_chat_bg
+		image bar_chat_bg
 		{
-			image		hud/bar_chat
+			src		"hud/bar_chat"
 			pos			"192 0"
 			size		"64 64"
 		}
-		pic bar_chat_all
+		image bar_chat_all
 		{
 			visiblewhen	"*cvar:mn_showchatbuttons == 1"
 
 			tooltip		"_Chat"
-			image		hud/button_chat
+			src		"hud/button_chat"
 			pos			"176 12"
 			size		"32 32"
 			texl		"0 0"
 			texh		"32 32"
 			onClick		{ cmd "messagesay;" }
 		}
-		pic bar_chat_team
+		image bar_chat_team
 		{
 			visiblewhen	"*cvar:mn_showchatbuttons == 1"
 			tooltip		"_Teamchat"
-			image		hud/button_chat
+			src		"hud/button_chat"
 			pos			"138 12"
 			size		"32 32"
 			texl		"32 0"
 			texh		"64 32"
 			onClick		{ cmd "messagesayteam;" }
 		}
-		pic bar_chat_show
+		image bar_chat_show
 		{
 			visiblewhen	"*cvar:mn_showchatbuttons == 1"
 			tooltip		"_Show chat history"
-			image		hud/button_chat
+			src		"hud/button_chat"
 			pos			"100 12"
 			size		"32 32"
 			texl		"64 0"
 			texh		"96 32"
 			onMouseLeave			{
-				*chatscreen@size = "690 48"
-				*chatscreen@rows = "3"
+				*node:root.chatscreen@size = "690 48"
+				*node:root.chatscreen@rows = "3"
 				*node:root@timeout = 10000
 			}
 			onMouseEnter			{
-				*chatscreen@size = "690 400"
-				*chatscreen@rows = "25"
+				*node:root.chatscreen@size = "690 400"
+				*node:root.chatscreen@rows = "25"
 				*node:root@timeout = 0
-				*chatscreen@invis = false
+				*node:root.chatscreen@invis = false
 			}
 		}
 
-		pic button_chat
+		image button_chat
 		{
 			tooltip		"_Chat messages"
-			image		hud/event_log
+			src		"hud/event_log"
 			pos			"217 6"
 			texl		"0 0"
 			texh		"32 36"
@@ -957,12 +983,12 @@ window hud extends ahud
 			}
 			onClick		{
 				if ( *cvar:mn_showchatbuttons != 0 ) {
-					*node:parent.bar_chat_bg@image = hud/bar_chat
+					*node:parent.bar_chat_bg@src = "hud/bar_chat"
 					*node:parent.bar_chat_bg@pos = "192 0"
 					*node:parent.bar_chat_bg@size = "64 64"
 					*cvar:mn_showchatbuttons = 0
 				} else {
-					*node:parent.bar_chat_bg@image = hud/bar_chat_choice
+					*node:parent.bar_chat_bg@src = "hud/bar_chat_choice"
 					*node:parent.bar_chat_bg@pos = "0 0"
 					*node:parent.bar_chat_bg@size = "256 64"
 					*cvar:mn_showchatbuttons = 1
@@ -973,53 +999,54 @@ window hud extends ahud
 
 	func onEvent
 	{
-		*chatscreen@invis = true
+		*node:root.chatscreen@invis = true
 	}
-	
+
 	// ==================
 	// override ahud confunc
 	// ==================
 
 	confunc crouch_checkbox_disable {
-		*left.bt_crouch_reservation@disabled = true
+		*node:root.left.bt_crouch_reservation@disabled = true
 	}
 	confunc crouch_checkbox_clear	{
-		*left.bt_crouch_reservation@disabled = false
-		*(checkbox)left.bt_crouch_reservation@current = 0
+		*node:root.left.bt_crouch_reservation@disabled = false
+		*node:root.left.bt_crouch_reservation@current = 0
 	}
 	confunc crouch_checkbox_check	{
-		*left.bt_crouch_reservation@disabled = false
-		*(checkbox)left.bt_crouch_reservation@current = 1
+		*node:root.left.bt_crouch_reservation@disabled = false
+		*node:root.left.bt_crouch_reservation@current = 1
 	}
 
 	confunc hudselect {
 		*cvar:selected_soldier = <1>
 	}
 	confunc hudenable {
-		*team_selection.bt_actor<1>@disabled = false
+		*node:root.team_selection.buttonList.bt_actor<1>@disabled = false
 	}
 	confunc huddisable {
-		*team_selection.bt_actor<1>@disabled = true
+		*node:root.team_selection.buttonList.bt_actor<1>@disabled = true
+		cmd "updateactorvalues <1> \"\" \"0\" \"1\" \"0\" \"1\" \"0\" \"1\" \"0\" \"\";"
 	}
 
 	// CROUCH/STAND UP BUTTON
-	confunc deselect_stand { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2 }
-	confunc deselect_crouch { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2 }
-	confunc disable_stand { *left.bt_duck@texl = "52 75" *left.bt_duck@texh = "104 112" *left.bt_duck@image = hud/buttons2g }
-	confunc disable_crouch { *left.bt_duck@texl = "0 75" *left.bt_duck@texh = "52 112" *left.bt_duck@image = hud/buttons2g }
+	confunc deselect_stand { *node:root.left.bt_duck@texl = "52 75" *node:root.left.bt_duck@texh = "104 112" *node:root.left.bt_duck@image = "hud/buttons2" }
+	confunc deselect_crouch { *node:root.left.bt_duck@texl = "0 75" *node:root.left.bt_duck@texh = "52 112" *node:root.left.bt_duck@image = "hud/buttons2" }
+	confunc disable_stand { *node:root.left.bt_duck@texl = "52 75" *node:root.left.bt_duck@texh = "104 112" *node:root.left.bt_duck@image = "hud/buttons2g" }
+	confunc disable_crouch { *node:root.left.bt_duck@texl = "0 75" *node:root.left.bt_duck@texh = "52 112" *node:root.left.bt_duck@image = "hud/buttons2g" }
 
-	confunc deselect_primaryleft { *left.bt_pfire@image = hud/buttons1 }
-	confunc deselect_primaryright { *right.bt_pfire@image = hud/buttons1 }
-	confunc deselect_reloadleft { *left.bt_reload@image = hud/buttons2 }
-	confunc deselect_reloadright { *right.bt_reload@image = hud/buttons2 }
+	confunc deselect_primaryleft { *node:root.left.bt_pfire@image = "hud/buttons1" }
+	confunc deselect_primaryright { *node:root.right.bt_pfire@image = "hud/buttons1" }
+	confunc deselect_reloadleft { *node:root.left.bt_reload@image = "hud/buttons2" }
+	confunc deselect_reloadright { *node:root.right.bt_reload@image = "hud/buttons2" }
 
-	confunc disable_primaryleft { *left.bt_pfire@image = hud/buttons1g }
-	confunc disable_primaryright { *right.bt_pfire@image = hud/buttons1g }
-	confunc disable_reloadleft { *left.bt_reload@image = hud/buttons2g }
-	confunc disable_reloadright { *right.bt_reload@image = hud/buttons2g }
+	confunc disable_primaryleft { *node:root.left.bt_pfire@image = "hud/buttons1g" }
+	confunc disable_primaryright { *node:root.right.bt_pfire@image = "hud/buttons1g" }
+	confunc disable_reloadleft { *node:root.left.bt_reload@image = "hud/buttons2g" }
+	confunc disable_reloadright { *node:root.right.bt_reload@image = "hud/buttons2g" }
 
-	confunc deselect_headgear { *right.hud_bt_use_headgear@image = hud/buttons2 }
-	confunc disable_headgear { *right.hud_bt_use_headgear@image = hud/buttons2g }
+	confunc deselect_headgear { *node:root.right.hud_bt_use_headgear@image = "hud/buttons2" }
+	confunc disable_headgear { *node:root.right.hud_bt_use_headgear@image = "hud/buttons2g" }
 
 	// ==================
 	// round events
@@ -1027,76 +1054,76 @@ window hud extends ahud
 
 	confunc startround
 	{
-		*next.bt_nextround@disabled = false
+		*node:root.next.bt_nextround@disabled = false
 	}
 
 	confunc endround
 	{
-		*next.bt_nextround@disabled = true
+		*node:root.next.bt_nextround@disabled = true
 	}
 
 	// "RESERVATION FOR SHOT" BUTTON
 	confunc reserve_shot_clear
 	{
 		*cvar:mn_shot_reservation_tt = "_Reserve TUs for shooting."
-		*info.bt_shot_reservation@texl	= "0 0"
-		*info.bt_shot_reservation@texh	= "51 32"
+		*node:root.info.bt_shot_reservation@texl	= "0 0"
+		*node:root.info.bt_shot_reservation@texh	= "51 32"
 	}
 	confunc reserve_shot_check
 	{
-		*info.bt_shot_reservation@texl	= "0 32"
-		*info.bt_shot_reservation@texh	= "51 64"
+		*node:root.info.bt_shot_reservation@texl	= "0 32"
+		*node:root.info.bt_shot_reservation@texh	= "51 64"
 	}
 	confunc reserve_shot_disable
 	{
-		*info.bt_shot_reservation@texl	= "64 32"
-		*info.bt_shot_reservation@texh	= "115 64"
+		*node:root.info.bt_shot_reservation@texl	= "64 32"
+		*node:root.info.bt_shot_reservation@texh	= "115 64"
 	}
 
 	// REACTION MODE BUTTON
 	confunc startreactionmany
 	{
-		*info.bt_reaction_s@texl	= "0 96"
-		*info.bt_reaction_s@texh	= "31 127"
-		*info.bt_reaction_s@tooltip = "_Multiple-shot reaction fire"
+		*node:root.info.bt_reaction_s@texl	= "0 96"
+		*node:root.info.bt_reaction_s@texh	= "31 127"
+		*node:root.info.bt_reaction_s@tooltip = "_Multiple-shot reaction fire"
 	}
 	confunc startreactionmany_impos
 	{
-		*info.bt_reaction_s@texl	= "32 96"
-		*info.bt_reaction_s@texh	= "63 127"
-		*info.bt_reaction_s@tooltip = "_Multiple-shot reaction fire (Not possible)"
+		*node:root.info.bt_reaction_s@texl	= "32 96"
+		*node:root.info.bt_reaction_s@texh	= "63 127"
+		*node:root.info.bt_reaction_s@tooltip = "_Multiple-shot reaction fire (Not possible)"
 	}
 	confunc startreactiononce
 	{
-		*info.bt_reaction_s@texl	= "0 64"
-		*info.bt_reaction_s@texh	= "31 95"
-		*info.bt_reaction_s@tooltip = "_One-shot reaction fire"
+		*node:root.info.bt_reaction_s@texl	= "0 64"
+		*node:root.info.bt_reaction_s@texh	= "31 95"
+		*node:root.info.bt_reaction_s@tooltip = "_One-shot reaction fire"
 	}
 	confunc startreactiononce_impos
 	{
-		*info.bt_reaction_s@texl	= "32 64"
-		*info.bt_reaction_s@texh	= "63 95"
-		*info.bt_reaction_s@tooltip = "_One-shot reaction fire (Not possible)"
+		*node:root.info.bt_reaction_s@texl	= "32 64"
+		*node:root.info.bt_reaction_s@texh	= "63 95"
+		*node:root.info.bt_reaction_s@tooltip = "_One-shot reaction fire (Not possible)"
 	}
 	confunc deselect_reaction
 	{
-		*info.bt_reaction_s@texl	= "0 32"
-		*info.bt_reaction_s@texh	= "31 63"
-		*info.bt_reaction_s@tooltip = "_No reaction fire"
+		*node:root.info.bt_reaction_s@texl	= "0 32"
+		*node:root.info.bt_reaction_s@texh	= "31 63"
+		*node:root.info.bt_reaction_s@tooltip = "_No reaction fire"
 	}
-	confunc disable_reaction 
+	confunc disable_reaction
 	{
-		*info.bt_reaction_s@texl	= "0 0"
-		*info.bt_reaction_s@texh	= "31 31"
+		*node:root.info.bt_reaction_s@texl	= "0 0"
+		*node:root.info.bt_reaction_s@texh	= "31 31"
 	}
-	
+
 	// ==================
 	// init function
 	// ==================
 
 	func onInit
 	{
-		*chatscreen@invis = true
+		*node:root.chatscreen@invis = true
 		cmd "music_change battlescape;"
 		cmd "set mn_showchatbuttons 0;"
 	}

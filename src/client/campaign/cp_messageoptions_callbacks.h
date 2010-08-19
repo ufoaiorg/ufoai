@@ -23,8 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../shared/ufotypes.h"
-
 #ifndef CLIENT_CL_MESSAGEOPTIONS_CALLBACKS_H
 #define CLIENT_CL_MESSAGEOPTIONS_CALLBACKS_H
 

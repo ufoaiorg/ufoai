@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "s_main.h"
 #include "s_music.h"
 #include "../../shared/parse.h"
+#include "../../ports/system.h"
 
 enum {
 	MUSIC_MAIN,
@@ -41,6 +42,9 @@ typedef struct music_s {
 	char nextTrack[MAX_QPATH];
 	Mix_Music *data;
 	byte *buffer;
+	qboolean playingStream; /**< if this is set no action to M_Start and M_Stop might happen, otherwise we might run
+							 * into a deadlock. This is due to the installed hook function for music mixing that is used
+							 * whenever we stream the music on our own */
 } music_t;
 
 #define MUSIC_MAX_ENTRIES 64
@@ -104,6 +108,10 @@ void M_ParseMusic (const char *name, const char **text)
  */
 void M_Stop (void)
 {
+	/* we should not even have a buffer nor data set - but ... just to be sure */
+	if (music.playingStream)
+		return;
+
 	if (music.data != NULL) {
 		Mix_HaltMusic();
 		Mix_FreeMusic(music.data);
@@ -135,6 +143,9 @@ static void M_Start (const char *file)
 		return;
 	}
 
+	if (music.playingStream)
+		return;
+
 	Com_StripExtension(file, name, sizeof(name));
 	len = strlen(name);
 	if (len + 4 >= MAX_QPATH) {
@@ -147,7 +158,7 @@ static void M_Start (const char *file)
 		return;
 
 	/* we are still playing some background track - fade it out */
-	if (Mix_PlayingMusic()) {
+	if (music.data && Mix_PlayingMusic()) {
 		if (!Mix_FadeOutMusic(1500))
 			M_Stop();
 		Q_strncpyz(music.nextTrack, name, sizeof(music.nextTrack));
@@ -164,6 +175,11 @@ static void M_Start (const char *file)
 	}
 
 	rw = SDL_RWFromMem(musicBuf, size);
+	if (!rw) {
+		Com_Printf("M_Start: Could not load music: 'music/%s'\n", name);
+		FS_FreeFile(musicBuf);
+		return;
+	}
 	music.data = Mix_LoadMUS_RW(rw);
 	if (!music.data) {
 		Com_Printf("M_Start: Could not load music: 'music/%s' (%s)\n", name, Mix_GetError());
@@ -312,7 +328,7 @@ void M_Frame (void)
 		Mix_VolumeMusic(snd_music_volume->integer);
 		snd_music_volume->modified = qfalse;
 	}
-	if (music.nextTrack[0] != '\0') {
+	if (!music.playingStream && music.nextTrack[0] != '\0') {
 		if (!Mix_PlayingMusic()) {
 			M_Stop(); /* free the allocated memory */
 			M_Start(music.nextTrack);
@@ -416,13 +432,17 @@ void M_AddToSampleBuffer (musicStream_t *userdata, int rate, int samples, const 
 
 void M_PlayMusicStream (musicStream_t *userdata)
 {
+	M_Stop();
+
 	userdata->playing = qtrue;
+	music.playingStream = qtrue;
 	Mix_HookMusic((void (*)(void*, Uint8*, int)) M_MusicStreamCallback, userdata);
 }
 
 void M_StopMusicStream (musicStream_t *userdata)
 {
 	userdata->playing = qfalse;
+	music.playingStream = qfalse;
 	Mix_HookMusic(NULL, NULL);
 }
 

@@ -28,8 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_viewpoint.h"
 
 /* useful for particles, pics, etc.. */
-const float default_texcoords[] = {
-	0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0
+const vec2_t default_texcoords[4] = {
+	{0.0, 0.0}, {1.0, 0.0}, {1.0, 1.0}, {0.0, 1.0}
 };
 
 /**
@@ -332,6 +332,9 @@ void R_EnableDynamicLights (r_light_t *l, qboolean enable)
 
 	r_state.dynamic_lighting_enabled = qtrue;
 	r_state.active_light = l;
+
+	if (r_state.glowmap_enabled)
+		R_ProgramParameter1f("GLOWSCALE", 1.0);
 
 	R_EnableAttribute("TANGENTS");
 

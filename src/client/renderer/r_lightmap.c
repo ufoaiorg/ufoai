@@ -33,6 +33,7 @@ lightmaps_t r_lightmaps;
 
 static void R_UploadLightmapBlock (void)
 {
+	const int samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 	if (r_lightmaps.lightmap_texnum == MAX_GL_LIGHTMAPS) {
 		Com_Printf("R_UploadLightmapBlock: MAX_GL_LIGHTMAPS reached.\n");
 		return;
@@ -43,7 +44,7 @@ static void R_UploadLightmapBlock (void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, r_lightmaps.size, r_lightmaps.size,
+	glTexImage2D(GL_TEXTURE_2D, 0, samples, r_lightmaps.size, r_lightmaps.size,
 		0, GL_RGB, GL_UNSIGNED_BYTE, r_lightmaps.sample_buffer);
 
 	R_CheckError();
@@ -60,7 +61,7 @@ static void R_UploadLightmapBlock (void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, r_lightmaps.size, r_lightmaps.size,
+	glTexImage2D(GL_TEXTURE_2D, 0, samples, r_lightmaps.size, r_lightmaps.size,
 		0, GL_RGB, GL_UNSIGNED_BYTE, r_lightmaps.direction_buffer);
 
 	r_lightmaps.deluxemap_texnum++;

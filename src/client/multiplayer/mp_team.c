@@ -23,20 +23,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../cl_shared.h"
 #include "../cl_game.h"
 #include "../cl_inventory.h"
 #include "../cl_team.h"
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
-#include "../menu/node/m_node_container.h"	/**< menuInventory */
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
+#include "../ui/node/ui_node_container.h"	/**< ui_inventory */
 #include "mp_team.h"
 #include "save_multiplayer.h"
 
 #define MPTEAM_SAVE_FILE_VERSION 4
 
 static inventory_t mp_inventory;
-character_t multiplayerCharacters[MAX_MULTIPLAYER_CHARACTERS];
+
+static qboolean characterActive[MAX_ACTIVETEAM];
 
 typedef struct mpSaveFileHeader_s {
 	uint32_t version; /**< which savegame version */
@@ -44,6 +45,65 @@ typedef struct mpSaveFileHeader_s {
 	char name[32]; /**< savefile name */
 	uint32_t xmlSize; /** needed, if we store compressed */
 } mpSaveFileHeader_t;
+
+static void MP_UpdateActiveTeamList (void)
+{
+	int i;
+
+	memset(characterActive, 0, sizeof(characterActive));
+	for (i = 0; i < chrDisplayList.num; i++)
+		characterActive[i] = qtrue;
+
+	UI_ExecuteConfunc("mp_checkboxes_update %i", chrDisplayList.num);
+}
+
+void MP_AutoTeam_f (void)
+{
+	GAME_MP_AutoTeam();
+
+	MP_UpdateActiveTeamList();
+}
+
+/**
+ * @brief This will activate/deactivate the actor for the team
+ * @sa GAME_MP_SaveTeamState_f
+ */
+void MP_ToggleActorForTeam_f (void)
+{
+	int num;
+	int value;
+
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <num> <value>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+	value = atoi(Cmd_Argv(2));
+	if (num < 0 || num >= chrDisplayList.num)
+		value = 0;
+
+	characterActive[num] = (value != 0);
+}
+
+/**
+ * @brief Will remove those actors that should not be used in the team
+ * @sa GAME_MP_ToggleActorForTeam_f
+ */
+void MP_SaveTeamState_f (void)
+{
+	int i, num;
+
+	num = 0;
+	for (i = 0; i < chrDisplayList.num; i++) {
+		chrDisplayList.chr[num]->ucn -= (i -num);
+		if (characterActive[i]) {
+			assert(chrDisplayList.chr[i] != NULL);
+			chrDisplayList.chr[num++] = chrDisplayList.chr[i];
+		}
+	}
+	chrDisplayList.num = num;
+}
 
 /**
  * @brief Reads tha comments from team files
@@ -63,17 +123,17 @@ void MP_MultiplayerTeamSlotComments_f (void)
 			if (FS_Read(&header, clen, &f) != clen) {
 				Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 				FS_CloseFile(&f);
-				Cvar_ForceSet(va("mn_slot%i", i), "");
+				Cvar_Set(va("mn_slot%i", i), "");
 				continue;
 			}
 			FS_CloseFile(&f);
 			if (LittleLong(header.version) == MPTEAM_SAVE_FILE_VERSION) {
-				MN_ExecuteConfunc("set_slotname %i %i \"%s\"", i, LittleLong(header.soldiercount), header.name);
+				UI_ExecuteConfunc("set_slotname %i %i \"%s\"", i, LittleLong(header.soldiercount), header.name);
 			} else {
-				Cvar_ForceSet(va("mn_slot%i", i), "");
+				Cvar_Set(va("mn_slot%i", i), "");
 			}
 		} else {
-			Cvar_ForceSet(va("mn_slot%i", i), "");
+			Cvar_Set(va("mn_slot%i", i), "");
 		}
 	}
 }
@@ -105,13 +165,22 @@ static void MP_LoadTeamMultiplayerInfo (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n;
+	const size_t size = GAME_GetCharacterArraySize();
+
+	GAME_ResetCharacters();
+	memset(characterActive, 0, sizeof(characterActive));
 
 	/* header */
-	for (i = 0, n = mxml_GetNode(p, SAVE_MULTIPLAYER_CHARACTER); n && i < MAX_MULTIPLAYER_CHARACTERS; i++, n = mxml_GetNextNode(n, p, SAVE_MULTIPLAYER_CHARACTER)) {
-		CL_LoadCharacterXML(n, &multiplayerCharacters[i]);
-		chrDisplayList.chr[i] = &multiplayerCharacters[i];
+	for (i = 0, n = mxml_GetNode(p, SAVE_MULTIPLAYER_CHARACTER); n && i < size; i++, n = mxml_GetNextNode(n, p, SAVE_MULTIPLAYER_CHARACTER)) {
+		character_t *chr = GAME_GetCharacter(i);
+		CL_LoadCharacterXML(n, chr);
+		assert(i < lengthof(chrDisplayList.chr));
+		chrDisplayList.chr[i] = chr;
 	}
 	chrDisplayList.num = i;
+
+	MP_UpdateActiveTeamList();
+
 	Com_DPrintf(DEBUG_CLIENT, "Loaded %i teammembers\n", chrDisplayList.num);
 }
 
@@ -122,7 +191,6 @@ static void MP_LoadTeamMultiplayerInfo (mxml_node_t *p)
  */
 static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 {
-	int res;
 	int requiredBufferLength;
 	byte *buf, *fbuf;
 	mpSaveFileHeader_t header;
@@ -143,11 +211,12 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 
 	snode = mxml_AddNode(node, SAVE_MULTIPLAYER_EQUIPMENT);
 	for (i = 0; i < csi.numODs; i++) {
-		if (ed->numItems[i] || ed->numItemsLoose[i]) {
+		const objDef_t *od = INVSH_GetItemByIDX(i);
+		if (ed->numItems[od->idx] || ed->numItemsLoose[od->idx]) {
 			mxml_node_t *ssnode = mxml_AddNode(snode, SAVE_MULTIPLAYER_ITEM);
-			mxml_AddString(ssnode, SAVE_MULTIPLAYER_ID, csi.ods[i].id);
-			mxml_AddIntValue(ssnode, SAVE_MULTIPLAYER_NUM, ed->numItems[i]);
-			mxml_AddIntValue(ssnode, SAVE_MULTIPLAYER_NUMLOOSE, ed->numItemsLoose[i]);
+			mxml_AddString(ssnode, SAVE_MULTIPLAYER_ID, od->id);
+			mxml_AddIntValue(ssnode, SAVE_MULTIPLAYER_NUM, ed->numItems[od->idx]);
+			mxml_AddIntValue(ssnode, SAVE_MULTIPLAYER_NUMLOOSE, ed->numItemsLoose[od->idx]);
 		}
 	}
 	requiredBufferLength = mxmlSaveString(topNode, dummy, 2, MXML_NO_CALLBACK);
@@ -160,7 +229,7 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
 		return qfalse;
 	}
-	res = mxmlSaveString(topNode, (char*)buf, requiredBufferLength + 1, MXML_NO_CALLBACK);
+	mxmlSaveString(topNode, (char*)buf, requiredBufferLength + 1, MXML_NO_CALLBACK);
 	mxmlDelete(topNode);
 
 	fbuf = (byte *) Mem_PoolAlloc(requiredBufferLength + 1 + sizeof(header), cl_genericPool, 0);
@@ -169,7 +238,7 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 	Mem_Free(buf);
 
 	/* last step - write data */
-	res = FS_WriteFile(fbuf, requiredBufferLength + 1 + sizeof(header), filename);
+	FS_WriteFile(fbuf, requiredBufferLength + 1 + sizeof(header), filename);
 	Mem_Free(fbuf);
 
 	return qtrue;
@@ -181,7 +250,7 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 void MP_SaveTeamMultiplayer_f (void)
 {
 	if (!chrDisplayList.num) {
-		MN_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
+		UI_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
 		return;
 	} else {
 		char filename[MAX_OSPATH];
@@ -202,7 +271,7 @@ void MP_SaveTeamMultiplayer_f (void)
 		/* save */
 		Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", index);
 		if (!MP_SaveTeamMultiplayer(filename, name))
-			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
+			UI_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 	}
 }
 
@@ -301,7 +370,7 @@ static qboolean MP_LoadTeamMultiplayer (const char *filename)
 	return qtrue;
 }
 
-qboolean MP_LoadDefaultTeamMultiplayer(void)
+qboolean MP_LoadDefaultTeamMultiplayer (void)
 {
 	return MP_LoadTeamMultiplayer("save/team0.mpt");
 }
@@ -323,10 +392,7 @@ void MP_LoadTeamMultiplayer_f (void)
 
 	/* first try to load the xml file, if this does not succeed, try the old file */
 	Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", index);
-	if (!MP_LoadTeamMultiplayer(filename))
-		Com_Printf("Could not load team '%s'.\n", filename);
-	else
-		Com_Printf("Team '%s' loaded.\n", filename);
+	MP_LoadTeamMultiplayer(filename);
 }
 
 /**
@@ -345,15 +411,11 @@ static void MP_GetEquipment (void)
 
 	/* search equipment definition */
 	edFromScript = INV_GetEquipmentDefinitionByID(equipmentName);
-	if (edFromScript == NULL) {
-		Com_Printf("Equipment '%s' not found!\n", equipmentName);
-		return;
-	}
 
 	if (chrDisplayList.num > 0)
-		menuInventory = &chrDisplayList.chr[0]->i;
+		ui_inventory = &chrDisplayList.chr[0]->i;
 	else
-		menuInventory = NULL;
+		ui_inventory = NULL;
 
 	ed = GAME_GetEquipmentDefinition();
 	*ed = *edFromScript;
@@ -361,7 +423,7 @@ static void MP_GetEquipment (void)
 	/* we don't want to lose anything from ed - so we copy it and screw the copied stuff afterwards */
 	unused = *edFromScript;
 	/* manage inventory */
-	MN_ContainerNodeUpdateEquipment(&mp_inventory, &unused);
+	UI_ContainerNodeUpdateEquipment(&mp_inventory, &unused);
 }
 
 /**
@@ -371,19 +433,20 @@ static void MP_GetEquipment (void)
 void MP_UpdateMenuParameters_f (void)
 {
 	int i;
+	const size_t size = lengthof(chrDisplayList.chr);
 
 	/* reset description */
 	Cvar_Set("mn_itemname", "");
 	Cvar_Set("mn_item", "");
-	MN_ResetData(TEXT_STANDARD);
+	UI_ResetData(TEXT_STANDARD);
 
-	for (i = 0; i < MAX_MULTIPLAYER_CHARACTERS; i++) {
+	for (i = 0; i < size; i++) {
 		const char *name;
 		if (i < chrDisplayList.num)
 			name = chrDisplayList.chr[i]->name;
 		else
 			name = "";
-		Cvar_ForceSet(va("mn_name%i", i), name);
+		Cvar_Set(va("mn_name%i", i), name);
 	}
 
 	MP_GetEquipment();
@@ -404,7 +467,7 @@ void MP_TeamSelect_f (void)
 	if (num < 0 || num >= chrDisplayList.num)
 		return;
 
-	MN_ExecuteConfunc("mp_soldier_select %i", num);
-	MN_ExecuteConfunc("mp_soldier_unselect %i", old);
+	UI_ExecuteConfunc("mp_soldier_select %i", num);
+	UI_ExecuteConfunc("mp_soldier_unselect %i", old);
 	Cmd_ExecuteString(va("actor_select_equip %i", num));
 }

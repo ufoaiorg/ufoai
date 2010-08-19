@@ -5,21 +5,6 @@
 //	Please see team_humans.ufo
 //========================================================================
 
-// ==================
-// TEAM DESCRIPTIONS
-// weapons	Team may carry and use weapons
-// armour	Team may carry armour
-// race		Race of the team (see CL_GetAlienRaceByID() for available values). Default value is phalanx race.
-// robot	Team is a robot team
-// tech		Tech id to link
-// name		Translatable team name
-// size		Actorsize
-// ==================
-// Things to come:
-// footsteps	Append this to the footstep sound of the terrain to get
-//				the team specific footsteps
-// ==================
-
 team taman
 {
 	name			"_Taman"
@@ -94,17 +79,50 @@ team taman
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/echovoice1
-			hurtsound aliens/echovoice2
-			hurtsound aliens/echovoice3
-			hurtsound aliens/tamancall01
-			hurtsound aliens/tamancall02
-			hurtsound aliens/tamancall03
-			hurtsound aliens/tamancall04
-			hurtsound aliens/tamancall05
-			deathsound aliens/aliendeath01
-			deathsound aliens/aliendeath03
+			hurtsound aliens/taman/hurt1
+			hurtsound aliens/taman/hurt2
+			hurtsound aliens/taman/hurt3
+			deathsound aliens/taman/die1
+			deathsound aliens/taman/die2
 		}
+	}
+
+	//TODO: Balance values
+	resistance {
+		normal_light 6
+		normal_spray 3
+		normal_medium 5
+		normal_heavy 4
+
+		normal_steelblade 1
+		normal_monomolecularblade 0
+
+		blast -12
+
+		fire_light 10
+		fire_medium 8
+		fire_heavy 6
+		fire_flamer 2
+
+		shock -8
+
+		laser_light 10
+		laser_medium 8
+		laser_heavy 6
+
+		plasma_light 8
+		plasma_medium 6
+		plasma_heavy 5
+
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
+
+		stun_electro 0
+		stun_gas 0
+	}
+	templates {
+		soldier_taman
 	}
 }
 
@@ -175,17 +193,50 @@ team ortnok
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/alienhurt01
-			hurtsound aliens/big_angry
-			hurtsound aliens/big_angry2
-			hurtsound aliens/big_angry3
-			hurtsound aliens/ortnokhurt01
-			hurtsound aliens/ortnokhurt02
-			hurtsound aliens/ortnokcall01
-			hurtsound aliens/ortnokcall02
-			hurtsound aliens/ortnokcall03
-			deathsound aliens/ortnok
+			hurtsound aliens/ortnok/hurt1
+			hurtsound aliens/ortnok/hurt2
+			hurtsound aliens/ortnok/hurt3
+			deathsound aliens/ortnok/die1
+			deathsound aliens/ortnok/die2
 		}
+	}
+
+	//TODO: Balance values
+	resistance {
+		normal_light 10
+		normal_spray 5
+		normal_medium 5
+		normal_heavy 4
+
+		normal_steelblade 8
+		normal_monomolecularblade 4
+
+		blast 10
+
+		fire_light -5
+		fire_medium -4
+		fire_heavy -3
+		fire_flamer 0
+
+		shock 0
+
+		laser_light 14
+		laser_medium 12
+		laser_heavy 10
+
+		plasma_light 0
+		plasma_medium 0
+		plasma_heavy 0
+
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
+
+		stun_electro 0
+		stun_gas 0
+	}
+	templates {
+		soldier_ortnok
 	}
 }
 
@@ -245,17 +296,50 @@ team shevaar
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/shevaarhurt01
-			hurtsound aliens/shevaarhurt02
-			hurtsound aliens/shevaarhurt03
-			hurtsound aliens/shevaarhurt04
-			hurtsound aliens/gurgle
-			hurtsound aliens/shevaarcall01
-			deathsound aliens/slithering
-			deathsound aliens/shevaar
-			deathsound aliens/shevaardeath01
-			deathsound aliens/shevaardeath02
+			hurtsound aliens/shevaar/hurt1
+			hurtsound aliens/shevaar/hurt2
+			hurtsound aliens/shevaar/hurt3
+			deathsound aliens/shevaar/die1
+			deathsound aliens/shevaar/die2
 		}
+	}
+
+	//TODO: Balance values
+	resistance {
+		normal_light 8
+		normal_spray 4
+		normal_medium 6
+		normal_heavy 5
+
+		normal_steelblade 6
+		normal_monomolecularblade 3
+
+		blast 10
+
+		fire_light -7
+		fire_medium -6
+		fire_heavy -5
+		fire_flamer -1
+
+		shock 0
+
+		laser_light -6
+		laser_medium -5
+		laser_heavy -4
+
+		plasma_light -8
+		plasma_medium -6
+		plasma_heavy -5
+
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
+
+		stun_electro 3
+		stun_gas -6
+	}
+	templates {
+		soldier_shevaar
 	}
 }
 
@@ -264,7 +348,6 @@ team bloodspider
 	name		"_Bloodspider"
 	tech		"rs_alien_bloodspider_autopsy"
 	race		bloodspider
-	robot		true
 	armour		false
 	weapons		false
 	onlyWeapon	bloodspider_weapon
@@ -289,8 +372,49 @@ team bloodspider
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/hiss
-			deathsound aliens/hiss
+			hurtsound aliens/bloodspider/hurt1
+			hurtsound aliens/bloodspider/hurt2
+			hurtsound aliens/bloodspider/hurt3
+			deathsound aliens/bloodspider/die1
+			deathsound aliens/bloodspider/die2
 		}
+	}
+
+	//TODO: Balance values
+	resistance {
+		normal_light 12
+		normal_spray 6
+		normal_medium 7
+		normal_heavy 6
+
+		normal_steelblade 10
+		normal_monomolecularblade 5
+
+		blast -16
+
+		fire_light 10
+		fire_medium 8
+		fire_heavy 6
+		fire_flamer 2
+
+		shock 999
+
+		laser_light 14
+		laser_medium 12
+		laser_heavy 10
+
+		plasma_light 12
+		plasma_medium 9
+		plasma_heavy 7
+
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
+
+		stun_electro 6
+		stun_gas 999
+	}
+	templates {
+		soldier_blood
 	}
 }

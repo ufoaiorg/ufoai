@@ -110,16 +110,30 @@ tile +craft_ufo_supply
 	0		fg		f		f		fh		0
 }
 
-// UFO Fighter (an open park tile including street on its left side)
+// UFO Harvester (an open park tile including street on its left side)
 tile +craft_ufo_harvester
 {
 	7 6
 	0	il		fg		f		f		fh		0
-	jkb	a		+j		+j		+j		+j		a
-	jkb	a		+j		+j		+j		+j		a
-	jkb	a		+j		+j		+j		+j		a
-	jkb	a		+j		+j		+j		+j		a
+	jkb	+a		+j		+j		+j		+j		a
+	jkb	+a		+j		+j		+j		+j		a
+	jkb	+a		+j		+j		+j		+j		a
+	jkb	+a		+j		+j		+j		+j		a
 	0	il		fg		f		f		fh		0
+}
+
+// UFO Corrupter (an open park tile including street on its left side and street with rail on its right side)
+tile +craft_ufo_harvester
+{
+	10 8
+	0	a	j	j	j	j	ea	e	ea	0
+	fh	+il	+fg	+f	+f	+fh	+i	+i	+i	fg
+	jkb	+a	+j	+j	+j	+j	+da	+d	+da	k
+	jkb	+a	+j	+j	+j	+j	+ca	+c	+ca	k
+	jkb	+a	+j	+j	+j	+j	+ca	+c	+ca	k
+	jkb	+a	+j	+j	+j	+j	+ea	+e	+ea	k
+	fh	+il	+fg	+f	+f	+fh	+i	+i	+i	fg
+	0	a	j	j	j	j	ea	e	ea	0
 }
 
 // --------------------
@@ -168,7 +182,7 @@ tile +str_cross
 		s		+tba	+b		+tba	s
 		0		i		i		i		0
 	}
-	
+
 	// Vertical street with rail line (borders intersection at top)
 	// Includes the big billboard machine
 	tile +strv_rail_top2a
@@ -178,7 +192,7 @@ tile +str_cross
 		j		+da		+d		+da		k
 		0		c		c		c		0
 	}
-	
+
 	// Vertical street with rail line (borders intersection at top)
 	tile +strv_rail_top2b
 	{
@@ -187,7 +201,7 @@ tile +str_cross
 		j		+da		+d		+da		k
 		0		c		c		c		0
 	}
-	
+
 	// Vertical street with rail line (borders intersection at bottom)
 	tile +strv_rail_btm2a
 	{
@@ -196,7 +210,7 @@ tile +str_cross
 		j		+ea		+e		+ea		k
 		0		i		i		i		0
 	}
-		
+
 	// Vertical street with rail line (doesn't border intersection)
 	tile +strv_rail_2a
 	{
@@ -208,7 +222,7 @@ tile +str_cross
 
 // ---------------------
 // Horizontal Street Tiles
-		
+
 	// Horizontal street base tile (straight lines painted)
 	tile +strh_1a
 	{
@@ -217,7 +231,7 @@ tile +str_cross
 		ilfg		+f		ilfh
 		0		jk		0
 	}
-	
+
 	// Horizontal street with crosswalk on left side
 	tile +strh_cwl_1a
 	{
@@ -226,7 +240,7 @@ tile +str_cross
 		il		+g		fl
 		0		jk		0
 	}
-		
+
 	// Horizontal street with crosswalk on right side
 	tile +strh_cwr_1a
 	{
@@ -235,7 +249,7 @@ tile +str_cross
 		fl		+h		il
 		0		jk		0
 	}
-	
+
 
 // -------------------
 // Corner Street Tiles
@@ -301,8 +315,8 @@ tile +str_cross
 		a		+k		+k		+k		+k		a
 		0		fg		f		f		fh		0
 	}
-	
-	
+
+
 // Assembly definitions
 // --------------------
 
@@ -310,7 +324,7 @@ tile +str_cross
 assembly small
 {
 	size "8 11"
-	
+
 	// Far left street going all the way up
 	fix +str_cross "0 0"
 	fix +strv_1a "0 1"
@@ -342,7 +356,7 @@ assembly small
 	// Right streets with rail/dropship going all the way up
 	fix +str_rail_cross "5 0"
 	fix +strv_rail_btm2a "5 1"
-	fix +craft_drop_firebird "5 2"
+	fix *rm_drop +craft_drop_firebird "5 2"
 	fix +str_rail_cross "5 5"
 	fix +strv_rail_btm2a "5 6"
 	fix +strv_rail_2a "5 7"
@@ -351,7 +365,7 @@ assembly small
 	fix +str_rail_cross "5 10"
 
 	// Park with ufo crafts
-	fix +craft_ufo_scout "1 6"
+	fix *rm_ufo +craft_ufo_scout "1 6"
 
 	// Top street
 	fix +strh_cwl_1a "1 10"
@@ -364,7 +378,7 @@ assembly small
 assembly medium
 {
 	size "8 11"
-	
+
 	// Far left street with the top vertical streets cut out
 	// because the harvester uses them
 	fix +str_cross "0 0"
@@ -393,7 +407,7 @@ assembly medium
 	// Right streets with rail/dropship going all the way up
 	fix +str_rail_cross "5 0"
 	fix +strv_rail_btm2a "5 1"
-	fix +craft_drop_firebird "5 2"
+	fix *rm_drop +craft_drop_firebird "5 2"
 	fix +str_rail_cross "5 5"
 	fix +strv_rail_btm2a "5 6"
 	fix +strv_rail_2a "5 7"
@@ -402,7 +416,7 @@ assembly medium
 	fix +str_rail_cross "5 10"
 
 	// Park with harvester (takes up vertical street on left)
-	fix +craft_ufo_harvester "0 6"
+	fix *rm_ufo +craft_ufo_harvester "0 6"
 
 	// Top street
 	fix +strh_cwl_1a "1 10"
@@ -413,65 +427,6 @@ assembly medium
 
 
 /*
-	
-assembly garage
-{
-	size "8 6"
-	fix +str_cross "0 0"
-	fix +strv_1a "0 1"
-	fix +strv_1a "0 2"
-	fix +strv_1a "0 3"
-	fix +strv_1a "0 4"
-	fix +str_cross "0 5"
-
-	fix +strh_cwl_1a "1 0"
-	fix +strh_1a "2 0"
-	fix +strh_1a "3 0"
-	fix +strh_cwr_1a "4 0"
-
-	fix +bldl_4x4_2a "1 1"
-
-	fix +strh_cwl_1a "1 5"
-	fix +strh_1a "2 5"
-	fix +strh_1a "3 5"
-	fix +strh_cwr_1a "4 5"
-
-	fix +str_rail_cross "5 0"
-	fix +strv_rail_btm2a "5 1"
-	fix +craft_drop_firebird "5 2"
-	fix +str_rail_cross "5 5"
-}
-*/
-
-/*
-assembly test
-{
-	size "8 6"
-	fix +str_cross "0 0"
-	fix +str_cross "0 5"
-
-	fix +strh_cwl_1a "1 0"
-	fix +strh_1a "2 0"
-	fix +strh_1a "3 0"
-	fix +strh_cwr_1a "4 0"
-
-	fix +craft_ufo_harvester "0 1"
-
-	fix +strh_cwl_1a "1 5"
-	fix +strh_1a "2 5"
-	fix +strh_1a "3 5"
-	fix +strh_cwr_1a "4 5"
-
-	fix +str_rail_cross "5 0"
-	fix +strv_rail_btm2a "5 1"
-	fix +craft_drop_firebird "5 2"
-	fix +str_rail_cross "5 5"
-}
-*/
-
-/*
-	*rm_drop +craft_drop_firebird "1 1"
-
 assembly full_grid
 {
 	size "11 9"

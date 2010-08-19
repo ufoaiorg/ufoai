@@ -3,15 +3,18 @@
 // ===================
 window aircraft_equip extends iaircraft
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic equipment_background {
+	image equipment_background {
 		pos		"575 460"
 		size	"432 293"
 		texh	"432 293"
-		image	"ui/airequip_element"
+		src	"ui/airequip_element"
 	}
 
 	// ==================
@@ -26,16 +29,16 @@ window aircraft_equip extends iaircraft
 	 */
 	confunc airequip_select {
 		if ( <1> eq "zone1" ) {
-			*airequip_zone_select1@image  = "ui/airequip_selected_element"
-			*airequip_zone_select2@image  = ""
+			*node:root.airequip_zone_select1@image  = "ui/airequip_selected_element"
+			*node:root.airequip_zone_select2@image  = ""
 			*cvar:mn_aircraft_item_selected = -1
-			*itemlist@image = "ui/panel_grey_green"
+			*node:root.itemlist@image = "ui/panel_grey_green"
 			cmd "airequip_zone_select 1;"
 		} elif ( <1> eq "zone2" ) {
-			*airequip_zone_select1@image  = ""
-			*airequip_zone_select2@image  = "ui/airequip_selected_element"
+			*node:root.airequip_zone_select1@image  = ""
+			*node:root.airequip_zone_select2@image  = "ui/airequip_selected_element"
 			*cvar:mn_aircraft_item_selected = -1
-			*itemlist@image = "ui/panel_grey_green"
+			*node:root.itemlist@image = "ui/panel_grey_green"
 			cmd "airequip_zone_select 2;"
 		} elif ( <1> eq "slot" ) {
 			*cvar:tmp = ""
@@ -46,14 +49,14 @@ window aircraft_equip extends iaircraft
 			} else {
 				*cvar:tmp = "zone2"
 			}
-			cmd "airequip_slot_select <2> <cvar:tmp>"
+			cmd "airequip_slot_select <2> <cvar:tmp>;"
 			delete *cvar:tmp
 		} elif ( <1> eq "item" ) {
-			*airequip_zone_select1@image  = ""
-			*airequip_zone_select2@image  = ""
-			*itemlist@image = "ui/panel_grey_white"
+			*node:root.airequip_zone_select1@image  = ""
+			*node:root.airequip_zone_select2@image  = ""
+			*node:root.itemlist@image = "ui/panel_grey_white"
 			*cvar:mn_aircraft_item_selected = <2>
-			cmd "airequip_list_click <2>" 
+			cmd "airequip_list_click <2>;"
 		}
 	}
 
@@ -63,7 +66,7 @@ window aircraft_equip extends iaircraft
 
 	model aircraftequip
 	{
-		model	"*cvar:mn_aircraft_model"
+		src		*cvar:mn_aircraft_model
 		pos		"482 106"
 		size	"522 259"
 		angles	"0 0 180"
@@ -79,14 +82,14 @@ window aircraft_equip extends iaircraft
 			size	"252 319"
 			image	"ui/panel_grey_green"
 		}
-		
+
 		string airequip_selected
 		{
 			string		"_Selected item:"
 			pos			"14 20"
 			size		"224 25"
-			font		f_big
-			textalign	cc
+			font		"f_big"
+			textalign	ALIGN_CC
 		}
 
 		string airequip_item_name
@@ -94,12 +97,12 @@ window aircraft_equip extends iaircraft
 			string		"*cvar:mn_itemname"
 			pos			"14 56"
 			size		"225 20"
-			textalign	cc
+			textalign	ALIGN_CC
 		}
 
 		model mdl_top
 		{
-			model	"*cvar:mn_upmodel_top"
+			src	"*cvar:mn_upmodel_top"
 			autoscale	true
 			pos		"14 76"
 			size	"225 96"
@@ -114,14 +117,14 @@ window aircraft_equip extends iaircraft
 			tabwidth	130
 			font		"f_verysmall"
 			onViewChange {
-				*node:(abstractscrollbar)parent.description_scroll@fullsize = <fullsize>
-				*node:(abstractscrollbar)parent.description_scroll@viewsize = <viewsize>
-				*node:(abstractscrollbar)parent.description_scroll@current = <viewpos>
+				*node:parent.description_scroll@fullsize = <fullsize>
+				*node:parent.description_scroll@viewsize = <viewsize>
+				*node:parent.description_scroll@current = <viewpos>
 			}
 		}
 
 		vscrollbar description_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"218 182"
 			height		"85"
 			hidewhenunused	true
@@ -133,21 +136,21 @@ window aircraft_equip extends iaircraft
 		string warning
 		{
 			string		*cvar:mn_aircraft_item_warning
-			image		ui/button_green_small
+			image		"ui/button_green_small"
 			pos			"19 269"
 			size		"215 32"
 			padding		0
-			textalign	uc
-			font		f_small
+			textalign	ALIGN_UC
+			font		"f_small"
 			color		"1 0 0 1"
 			onClick		{ cmd "mn_close popup;" }
-			longlines	wrap
+			longlines	LONGLINES_WRAP
 		}
-	
+
 		button button_add
 		{
 			string		"_Equip this item"
-			image		ui/button_green_small
+			image		"ui/button_green_small"
 			pos			"26 271"
 			size		"200 25"
 			color		"0 0.5 0 1"
@@ -160,16 +163,16 @@ window aircraft_equip extends iaircraft
 				}
 			}
 		}
-		
+
 		button button_remove
 		{
 			string		"_Remove this item"
-			image		ui/button_green_small
+			image		"ui/button_green_small"
 			pos			"26 271"
 			size		"200 25"
 			onClick		{
 				cmd "airequip_remove_item 1;"
-				cmd "airequip_select item -1"
+				cmd "airequip_select item -1;"
 			}
 			color		"0 0.5 0 1"
 		}
@@ -190,17 +193,23 @@ window aircraft_equip extends iaircraft
 			string		"_Available equipment:"
 			pos			"14 20"
 			size		"264 25"
-			font		f_big
-			textalign	cc
+			font		"f_big"
+			textalign	ALIGN_CC
 		}
 
 		selectbox craftitemtypeselector
 		{
-			cvar		*cvar:mn_equip_itemtype
-			image		"ui/selectbox_green"
-			pos			"29 56"
-			size		"235 20"
-			color		"0.6 0.6 0.6 0.3"
+			{
+				cvar		*cvar:mn_equip_itemtype
+				image		"ui/selectbox_green"
+				pos			"29 56"
+				size		"235 20"
+				onChange {
+					cmd "airequip_selectcategory <cvar:mn_equip_itemtype>;"
+					cmd "airequip_select item -1;"
+				}
+			}
+
 			option weapons {
 				label	"_Weapons"
 				value	"weapon"
@@ -217,10 +226,6 @@ window aircraft_equip extends iaircraft
 				label	"_Items"
 				value	"item"
 			}
-			onChange {
-				cmd "airequip_selectcategory <cvar:mn_equip_itemtype>"
-				cmd "airequip_select item -1" 
-			}
 		}
 
 		optionlist airequip_list
@@ -233,13 +238,13 @@ window aircraft_equip extends iaircraft
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			onChange		{
-				cmd "airequip_select item <cvar:mn_aircraft_item_selected>"
+				cmd "airequip_select item <cvar:mn_aircraft_item_selected>;"
 			}
 			onViewChange {
-				*node:(abstractscrollbar)parent.airequip_list_scroll@fullsize = <fullsize>
-				*node:(abstractscrollbar)parent.airequip_list_scroll@viewsize = <viewsize>
-				*node:(abstractscrollbar)parent.airequip_list_scroll@current = <viewpos>
-				*node:(textlist)parent.airequip_list_amount@viewpos = <viewpos>
+				*node:parent.airequip_list_scroll@fullsize = <fullsize>
+				*node:parent.airequip_list_scroll@viewsize = <viewsize>
+				*node:parent.airequip_list_scroll@current = <viewpos>
+				*node:parent.airequip_list_amount@viewpos = <viewpos>
 			}
 		}
 
@@ -249,20 +254,20 @@ window aircraft_equip extends iaircraft
 			ghost		true
 			pos			"234 87"
 			size		"25 215"
-			textalign	cr
+			textalign	ALIGN_CR
 			lineheight	"20"
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			onViewChange {
-				*node:(abstractscrollbar)parent.airequip_list_scroll@fullsize = <fullsize>
-				*node:(abstractscrollbar)parent.airequip_list_scroll@viewsize = <viewsize>
-				*node:(abstractscrollbar)parent.airequip_list_scroll@current = <viewpos>
-				*node:(textlist)parent.airequip_list@viewpos = <viewpos>
+				*node:parent.airequip_list_scroll@fullsize = <fullsize>
+				*node:parent.airequip_list_scroll@viewsize = <viewsize>
+				*node:parent.airequip_list_scroll@current = <viewpos>
+				*node:parent.airequip_list@viewpos = <viewpos>
 			}
 		}
 
 		vscrollbar airequip_list_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"259 87"
 			height		"215"
 			hidewhenunused	true
@@ -275,21 +280,21 @@ window aircraft_equip extends iaircraft
 
 	confunc aircraft_equip_unselectlist {
 		*cvar:mn_aircraft_item_selected = -1
-		*node:(textlist)itemlist.airequip_list_amount@lineselected = -1
+		*node:itemlist.airequip_list_amount@lineselected = -1
 	}
 
 	// ==================
 	// Zones
 	// ==================
 
-	pic airequip_zone_select1
+	image airequip_zone_select1
 	{
 		tooltip	"_Select this zone"
 		pos			"654 485"
-		image		ui/airequip_selected_element
+		src		"ui/airequip_selected_element"
 		texl		"0 83"
 		texh		"458 190"
-		onClick		{ cmd "airequip_select zone1" }
+		onClick		{ cmd "airequip_select zone1;" }
 	}
 
 	text airequip_text_zone1
@@ -302,14 +307,14 @@ window aircraft_equip extends iaircraft
 		ghost		true
 	}
 
-	pic airequip_zone_select2
+	image airequip_zone_select2
 	{
 		tooltip		"_Select this zone"
-		image		ui/airequip_selected_element
+		src		"ui/airequip_selected_element"
 		pos			"654 648"
 		texl		"0 0"
 		texh		"458 82"
-		onClick	{ cmd "airequip_select zone2" }
+		onClick	{ cmd "airequip_select zone2;" }
 	}
 
 	text airequip_text_zone2
@@ -327,9 +332,9 @@ window aircraft_equip extends iaircraft
 		string		"_Current item in slot"
 		pos			"670 495"
 		size		"275 20"
-		font		f_small
+		font		"f_small"
 		color		"0 .78 0 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		ghost		true
 	}
 
@@ -338,9 +343,9 @@ window aircraft_equip extends iaircraft
 		string		"_Ammo fitting this weapon"
 		pos			"670 659"
 		size		"275 20"
-		font		f_small
+		font		"f_small"
 		color		"0 .78 0 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		ghost		true
 	}
 
@@ -348,10 +353,10 @@ window aircraft_equip extends iaircraft
 	// slots
 	// ==================
 
-	pic airequip_slot0
+	image airequip_slot0
 	{
 		tooltip		"_Select this slot"
-		image		ui/button_square
+		src		"ui/button_square"
 		mousefx		true
 		pos			"909 121"
 		texl		"0 0"
@@ -360,17 +365,17 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot0
 	{
-		model		"*cvar:mn_aircraft_item_model_slot0"
+		src		"*cvar:mn_aircraft_item_model_slot0"
 		pos			"911 123"
 		size		"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
-	pic airequip_slot1
+	image airequip_slot1
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square
+		src		"ui/button_square"
 		mousefx	true
 		pos		"909 201"
 		texl	"0 0"
@@ -379,17 +384,17 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot1
 	{
-		model	"*cvar:mn_aircraft_item_model_slot1"
+		src	"*cvar:mn_aircraft_item_model_slot1"
 		pos		"911 203"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
-	pic airequip_slot2
+	image airequip_slot2
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square
+		src		"ui/button_square"
 		mousefx	true
 		pos		"909 281"
 		texl	"0 0"
@@ -398,17 +403,17 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot2
 	{
-		model	"*cvar:mn_aircraft_item_model_slot2"
+		src	"*cvar:mn_aircraft_item_model_slot2"
 		pos		"911 283"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
-	pic airequip_slot3
+	image airequip_slot3
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square
+		src		"ui/button_square"
 		mousefx	true
 		pos		"709 121"
 		texl	"0 0"
@@ -417,17 +422,17 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot3
 	{
-		model	"*cvar:mn_aircraft_item_model_slot3"
+		src	"*cvar:mn_aircraft_item_model_slot3"
 		pos		"711 123"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
-	pic airequip_slot4
+	image airequip_slot4
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square
+		src		"ui/button_square"
 		mousefx	true
 		pos		"709 281"
 		texl	"0 0"
@@ -436,17 +441,17 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot4
 	{
-		model	"*cvar:mn_aircraft_item_model_slot4"
+		src	"*cvar:mn_aircraft_item_model_slot4"
 		pos		"711 283"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
-	pic airequip_slot5
+	image airequip_slot5
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square
+		src		"ui/button_square"
 		mousefx	true
 		pos		"509 121"
 		texl	"0 0"
@@ -455,17 +460,17 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot5
 	{
-		model	"*cvar:mn_aircraft_item_model_slot5"
+		src	"*cvar:mn_aircraft_item_model_slot5"
 		pos		"511 123"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
-	pic airequip_slot6
+	image airequip_slot6
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square
+		src		"ui/button_square"
 		mousefx	true
 		pos		"509 201"
 		texl	"0 0"
@@ -474,17 +479,17 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot6
 	{
-		model	"*cvar:mn_aircraft_item_model_slot6"
+		src	"*cvar:mn_aircraft_item_model_slot6"
 		pos		"511 203"
 		size	"60 60"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
-	pic airequip_slot7
+	image airequip_slot7
 	{
 		tooltip	"_Select this slot"
-		image		ui/button_square
+		src		"ui/button_square"
 		mousefx	true
 		pos		"509 281"
 		texl	"0 0"
@@ -493,7 +498,7 @@ window aircraft_equip extends iaircraft
 	}
 	model airequip_model_slot7
 	{
-		model	"*cvar:mn_aircraft_item_model_slot7"
+		src	"*cvar:mn_aircraft_item_model_slot7"
 		pos		"511 283"
 		size	"60 60"
 		autoscale	true
@@ -504,22 +509,30 @@ window aircraft_equip extends iaircraft
 	// functions
 	// ==================
 
-	confunc airequip_zone2_off
+	/**
+	 * @param <1> color
+	 */
+	confunc airequip_zone2_color
 	{
-		*airequip_header2@invis = true
-		*airequip_text_zone2@invis = true
-		*airequip_zone_select2@invis = true
-		*equipment_background@texh = "432 160"
-		*equipment_background@size = "432 160"
+		*node:root.airequip_text_zone2@color = "<1>"
 	}
 	
+	confunc airequip_zone2_off
+	{
+		*node:root.airequip_header2@invis = true
+		*node:root.airequip_text_zone2@invis = true
+		*node:root.airequip_zone_select2@invis = true
+		*node:root.equipment_background@texh = "432 160"
+		*node:root.equipment_background@size = "432 160"
+	}
+
 	confunc airequip_zone2_on
 	{
-		*airequip_header2@invis = false
-		*airequip_text_zone2@invis = false
-		*airequip_zone_select2@invis = false
-		*equipment_background@texh = "432 293"
-		*equipment_background@size = "432 293"
+		*node:root.airequip_header2@invis = false
+		*node:root.airequip_text_zone2@invis = false
+		*node:root.airequip_zone_select2@invis = false
+		*node:root.equipment_background@texh = "432 293"
+		*node:root.equipment_background@size = "432 293"
 	}
 
 	confunc airequip_installable_item
@@ -554,19 +567,23 @@ window aircraft_equip extends iaircraft
 		*node:parent.item.button_remove@invis = true
 	}
 
+	/**
+	 * @param <1> slot index
+	 * @param <2> status
+	 */
 	confunc airequip_display_slot
 	{
 		*cvar:status = <2>
 		if ( *cvar:status == 2 ) {
-			*(pic)airequip_slot<1>@invis = false
-			*(pic)airequip_slot<1>@texl = "64 0"
-			*(pic)airequip_slot<1>@texh = "128 64"
+			*node:root.airequip_slot<1>@invis = false
+			*node:root.airequip_slot<1>@texl = "64 0"
+			*node:root.airequip_slot<1>@texh = "128 64"
 		} elif ( *cvar:status == 1 ) {
-			*(pic)airequip_slot<1>@invis = false
-			*(pic)airequip_slot<1>@texl = "0 0"
-			*(pic)airequip_slot<1>@texh = "64 64"
+			*node:root.airequip_slot<1>@invis = false
+			*node:root.airequip_slot<1>@texl = "0 0"
+			*node:root.airequip_slot<1>@texh = "64 64"
 		} else {
-			*(pic)airequip_slot<1>@invis = true
+			*node:root.airequip_slot<1>@invis = true
 		}
 		delete *cvar:status
 	}
@@ -580,9 +597,9 @@ window aircraft_equip extends iaircraft
 	 */
 	confunc aircraft_change
 	{
-		*aircraft_list@lineselected = <1>
+		*node:root.aircraft_list@lineselected = <1>
 		cmd "airequip_updatemenu;"
-		cmd "airequip_select zone1"
+		cmd "airequip_select zone1;"
 		// absent from base, go back to the main GUI
 		if ( *cvar:mn_equipsoldierstate == 1 ) {
 			cmd "mn_pop; mn_push aircraft;"
@@ -594,7 +611,7 @@ window aircraft_equip extends iaircraft
 		// default is weapons @sa aircraftItemType_t (inv_shared.h)
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		cmd "airequip_updatemenu 2;"
-		cmd "airequip_select zone1"
+		cmd "airequip_select zone1;"
 		*cvar:mn_itemname = ""
 		*cvar:mn_upmodel_top = ""
 		*cvar:mn_aircraft_item_selected = -1

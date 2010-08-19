@@ -25,20 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_BATTLESCAPE_H_
 #define CL_BATTLESCAPE_H_
 
-/** @todo There should be better places for these two macros */
-/* if you increase this, you also have to change the aircraft buy/sell menu scripts */
-#define MAX_ACTIVETEAM	8
-#define MAX_TEAMLIST	8
-
 typedef struct {
 	char name[MAX_VAR];
 	char cinfo[MAX_VAR];
 } clientinfo_t;
-
-typedef struct chr_list_s {
-	character_t* chr[MAX_ACTIVETEAM];
-	int num;	/* Number of entries */
-} chrList_t;
 
 /**
  * @brief This is the structure that should be used for data that is needed for tactical missions only.
@@ -50,7 +40,7 @@ typedef struct client_state_s {
 								 * is rendering at.  always <= cls.realtime */
 	camera_t cam;
 
-	le_t *teamList[MAX_TEAMLIST];
+	le_t *teamList[MAX_ACTIVETEAM];
 	int numTeamList;
 	int numAliensSpotted;
 
@@ -71,8 +61,8 @@ typedef struct client_state_s {
 	clientinfo_t clientinfo[MAX_CLIENTS]; /**< client info of all connected clients */
 
 	int mapMaxLevel;
-	int mapMaxLevelBase;
 
+	/** @todo make this private to the particle code */
 	int numMapParticles;
 
 	int numLMs;
@@ -86,6 +76,8 @@ typedef struct client_state_s {
 	qboolean spawned;		/**< soldiers already spawned? This is only true if we are already on battlescape but
 							 * our team is not yet spawned */
 
+	routing_t clMap[ACTOR_MAX_SIZE];	/**< client routing table */
+
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
 } client_state_t;
 
@@ -95,5 +87,10 @@ qboolean CL_OnBattlescape(void);
 qboolean CL_BattlescapeRunning(void);
 int CL_GetHitProbability(const le_t* actor);
 qboolean CL_OutsideMap(const vec3_t impact, const float delta);
+
+#ifdef DEBUG
+void Grid_DumpWholeClientMap_f(void);
+void Grid_DumpClientRoutes_f(void);
+#endif
 
 #endif /* CL_BATTLESCAPE_H_ */

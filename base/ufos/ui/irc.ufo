@@ -5,13 +5,16 @@
 // don't change this name!
 window irc
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		ui/irc_bg
+		src		"background/irc_bg"
 	}
 
 	string title
@@ -19,26 +22,26 @@ window irc
 		string		"_Lobby"
 		pos			"45 17"
 		size		"933 35"
-		textalign	cc
-		font		f_big
+		textalign	ALIGN_CC
+		font		"f_big"
 	}
 
 	button button_disconnect
 	{
 		string		"_Disconnect"
 		tooltip		"_Close menu and disconnect"
-		image		ui/button_blue
+		image		"ui/button_blue"
 		pos			"780 720"
 		size		"160 37"
 		selectcolor "1 1 1 1"
-		font		f_normal
+		font		"f_normal"
 		onClick		{ cmd "irc_disconnect; mn_pop;" }
 	}
 
 	custombutton button_exit
 	{
 		tooltip		"_Close menu but stay connected"
-		image		ui/button_background
+		image		"ui/button_background"
 		texl		"192 0"
 		pos			"950 720"
 		size		"64 37"
@@ -51,8 +54,8 @@ window irc
 		string		"_Users"
 		pos			"735 80"
 		size		"270 20"
-		textalign	uc
-		font		f_small
+		textalign	ALIGN_UC
+		font		"f_small"
 	}
 
 	textlist irc_userlist
@@ -62,24 +65,24 @@ window irc
 		lineheight	22
 		dataid		TEXT_IRCUSERS
 		rows		"27"
-		onClick		{ cmd "irc_userlist_click <lineselected>" }
-		onRClick	{ cmd "irc_userlist_rclick <lineselected>" }
+		onClick		{ cmd "irc_userlist_click <lineselected>;" }
+		onRClick	{ cmd "irc_userlist_rclick <lineselected>;" }
 		onViewChange {
-			*(abstractscrollbar)irc_userlist_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)irc_userlist_scroll@current = <viewpos>
-			*(abstractscrollbar)irc_userlist_scroll@viewsize = <viewsize>
+			*node:root.irc_userlist_scroll@fullsize = <fullsize>
+			*node:root.irc_userlist_scroll@current = <viewpos>
+			*node:root.irc_userlist_scroll@viewsize = <viewsize>
 		}
 	}
 
 	vscrollbar irc_userlist_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"980 100"
 		height		"594"
 		current		0
 		viewsize	27
 		fullsize	27
 		hidewhenunused	true
-		onChange		{ *irc_userlist@viewpos = <current> }
+		onChange		{ *node:root.irc_userlist@viewpos = <current> }
 	}
 
 	text irc_data
@@ -90,20 +93,20 @@ window irc
 		lineheight  "22"
 		dataid		TEXT_IRCCONTENT
 		onViewChange {
-			*(abstractscrollbar)irc_data_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)irc_data_scroll@current = <viewpos>
-			*(abstractscrollbar)irc_data_scroll@viewsize = <viewsize>
+			*node:root.irc_data_scroll@fullsize = <fullsize>
+			*node:root.irc_data_scroll@current = <viewpos>
+			*node:root.irc_data_scroll@viewsize = <viewsize>
 		}
 	}
 
 	vscrollbar irc_data_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"701 168"
 		height		"528"
 		current		0
 		viewsize	24
 		fullsize	24
-		onChange	{ *irc_data@viewpos = <current> }
+		onChange	{ *node:root.irc_data@viewpos = <current> }
 	}
 
 	string irc_server_string
@@ -111,8 +114,8 @@ window irc
 		string		*cvar:irc_server
 		pos			"412 44"
 		size		"200 16"
-		textalign	uc
-		font		f_verysmall
+		textalign	ALIGN_UC
+		font		"f_verysmall"
 	}
 
 	string irc_server_topic
@@ -120,8 +123,8 @@ window irc
 		string		*cvar:irc_topic
 		pos			"84 80"
 		size		"512 16"
-		textalign	uc
-		font		f_verysmall
+		textalign	ALIGN_UC
+		font		"f_verysmall"
 	}
 
 	string irc_server_channel
@@ -129,17 +132,17 @@ window irc
 		string		*cvar:irc_channel
 		pos			"730 44"
 		size		"240 16"
-		textalign	uc
-		font		f_verysmall
+		textalign	ALIGN_UC
+		font		"f_verysmall"
 	}
 
 	textentry slot_irc_send_buffer
 	{
 		string		*cvar:irc_send_buffer
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color 		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"30 710"
@@ -180,7 +183,7 @@ window irc_changename
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Name is already in use"
 	}
 
@@ -189,7 +192,7 @@ window irc_changename
 		string		"_Your name is already in use or is invalid."
 		pos			"26 58"
 		size		"446 64"
-		longlines	wrap
+		longlines	LONGLINES_WRAP
 	}
 
 	// ===================
@@ -205,10 +208,10 @@ window irc_changename
 	textentry slot_name
 	{
 		string		*cvar:cl_name
-		image		ui/button_green_verysmall
+		image		"ui/button_green_verysmall"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		8
 		font		"f_verysmall"
 		pos			"170 122"
@@ -239,7 +242,7 @@ window irc_popup
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Not connected"
 	}
 
@@ -248,7 +251,7 @@ window irc_popup
 		string		"_You are not connected to the lobby. Do you want to connect?"
 		pos			"26 58"
 		size		"446 128"
-		longlines	wrap
+		longlines	LONGLINES_WRAP
 	}
 
 	cmpPopupButton bt_ok

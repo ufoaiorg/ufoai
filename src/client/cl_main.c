@@ -47,23 +47,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_inventory.h"
 #include "cl_menu.h"
 #include "cl_http.h"
-#include "cl_ugv.h"
 #include "input/cl_joystick.h"
 #include "cinematic/cl_cinematic.h"
 #include "sound/s_music.h"
 #include "sound/s_sample.h"
 #include "renderer/r_main.h"
 #include "renderer/r_particle.h"
-#include "menu/m_main.h"
-#include "menu/m_popup.h"
-#include "menu/m_main.h"
-#include "menu/m_font.h"
-#include "menu/m_nodes.h"
-#include "menu/m_parse.h"
+#include "ui/ui_main.h"
+#include "ui/ui_popup.h"
+#include "ui/ui_main.h"
+#include "ui/ui_font.h"
+#include "ui/ui_nodes.h"
+#include "ui/ui_parse.h"
 #include "multiplayer/mp_callbacks.h"
 #include "multiplayer/mp_serverlist.h"
 #include "multiplayer/mp_team.h"
 #include "../shared/infostring.h"
+#include "../shared/parse.h"
+#include "../ports/system.h"
 
 cvar_t *cl_fps;
 cvar_t *cl_leshowinvis;
@@ -73,7 +74,6 @@ cvar_t *cl_lastsave;
 
 static cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) */
 
-static cvar_t *cl_precache;
 static cvar_t *cl_introshown;
 
 /* userinfo */
@@ -206,7 +206,7 @@ static void CL_Connect (void)
 
 	if (cls.netStream) {
 		NET_OOB_Printf(cls.netStream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
-		cls.connectTime = cls.realtime;
+		cls.connectTime = CL_Milliseconds();
 	} else {
 		if (cls.servername[0]) {
 			assert(cls.serverport[0]);
@@ -250,9 +250,6 @@ void CL_Disconnect (void)
 {
 	struct dbuffer *msg;
 
-	/* If playing a cinematic, stop it */
-	CIN_StopCinematic();
-
 	if (cls.state == ca_disconnected)
 		return;
 
@@ -277,6 +274,7 @@ void CL_Disconnect (void)
 
 	CL_SetClientState(ca_disconnected);
 	CL_ClearBattlescapeEvents();
+	GAME_EndBattlescape();
 }
 
 /* it's dangerous to activate this */
@@ -333,11 +331,11 @@ static void CL_Packet_f (void)
  */
 static void CL_ConnectionlessPacket (struct dbuffer *msg)
 {
-	const char *s;
+	char s[1024];
 	const char *c;
 	int i;
 
-	s = NET_ReadStringLine(msg);
+	NET_ReadStringLine(msg, s, sizeof(s));
 
 	Cmd_TokenizeString(s, qfalse);
 
@@ -373,10 +371,12 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		if (!NET_StreamIsLoopback(cls.netStream)) {
 			Com_Printf("Command packet from remote host. Ignored.\n");
 			return;
+		} else {
+			char str[1024];
+			NET_ReadString(msg, str, sizeof(str));
+			Cbuf_AddText(str);
+			Cbuf_AddText("\n");
 		}
-		s = NET_ReadString(msg);
-		Cbuf_AddText(s);
-		Cbuf_AddText("\n");
 		return;
 	}
 
@@ -400,11 +400,12 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 
 	/* print */
 	if (!strncmp(c, "print", 5)) {
-		s = NET_ReadString(msg);
+		char str[1024];
+		NET_ReadString(msg, str, sizeof(str));
 		/* special reject messages needs proper handling */
 		if (strstr(s, REJ_PASSWORD_REQUIRED_OR_INCORRECT))
-			MN_PushWindow("serverpassword", NULL);
-		MN_Popup(_("Notice"), _(s));
+			UI_PushWindow("serverpassword", NULL);
+		UI_Popup(_("Notice"), _(str));
 		return;
 	}
 
@@ -501,22 +502,22 @@ void CL_RequestNextDownload (void)
 			scriptChecksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
 		FS_GetFileData(NULL);
 
-		CM_LoadMap(cl.configstrings[CS_TILES], day, cl.configstrings[CS_POSITIONS], &mapChecksum);
+		CM_LoadMap(cl.configstrings[CS_TILES], day, cl.configstrings[CS_POSITIONS], &mapChecksum, cl.clMap, lengthof(cl.clMap));
 		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM]
 		 || !*cl.configstrings[CS_UFOCHECKSUM] || !*cl.configstrings[CS_OBJECTAMOUNT]) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers"), UFO_VERSION);
-			MN_Popup(_("Error"), popupText);
+			UI_Popup(_("Error"), popupText);
 			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers", UFO_VERSION);
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
 		} else if (mapChecksum != atoi(cl.configstrings[CS_MAPCHECKSUM])) {
-			MN_Popup(_("Error"), _("Local map version differs from server"));
+			UI_Popup(_("Error"), _("Local map version differs from server"));
 			Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%s'",
 				mapChecksum, cl.configstrings[CS_MAPCHECKSUM]);
 			return;
 		/* amount of objects from script files doensn't match */
 		} else if (csi.numODs != atoi(cl.configstrings[CS_OBJECTAMOUNT])) {
-			MN_Popup(_("Error"), _("Script files are not the same"));
+			UI_Popup(_("Error"), _("Script files are not the same"));
 			Com_Error(ERR_DISCONNECT, "Script files are not the same");
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
@@ -524,10 +525,13 @@ void CL_RequestNextDownload (void)
 			Com_Printf("You are using modified ufo script files - might produce problems\n");
 		} else if (strncmp(UFO_VERSION, cl.configstrings[CS_VERSION], sizeof(UFO_VERSION))) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers (%s)"), UFO_VERSION, cl.configstrings[CS_VERSION]);
-			MN_Popup(_("Error"), popupText);
+			UI_Popup(_("Error"), popupText);
 			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers (%s)", UFO_VERSION, cl.configstrings[CS_VERSION]);
 			return;
 		}
+	} else {
+		/* Copy the client map from the server */
+		memcpy(&cl.clMap, SV_GetRoutingMap(), sizeof(cl.clMap));
 	}
 
 	CL_ViewLoadMedia();
@@ -542,14 +546,13 @@ void CL_RequestNextDownload (void)
 		NET_WriteMsg(cls.netStream, msg);
 	}
 
-	cls.waitingForStart = cls.realtime;
+	cls.waitingForStart = CL_Milliseconds();
 }
 
 
 /**
  * @brief The server will send this command right before allowing the client into the server
  * @sa CL_StartGame
- * @todo recheck the checksum server side
  * @sa SV_Configstrings_f
  */
 static void CL_Precache_f (void)
@@ -559,92 +562,10 @@ static void CL_Precache_f (void)
 	CL_RequestNextDownload();
 }
 
-/**
- * @brief Precache all menu models for faster access
- * @sa CL_PrecacheModels
- * @todo Does not precache armoured models
- */
-static void CL_PrecacheCharacterModels (void)
-{
-	teamDef_t *td;
-	int i, j, num;
-	char model[MAX_QPATH];
-	const char *path;
-	float loading = cls.loadingPercent;
-	linkedList_t *list;
-	const float percent = 55.0f;
-
-	/* search the name */
-	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
-		for (j = NAME_NEUTRAL; j < NAME_LAST; j++) {
-			/* no models for this gender */
-			if (!td->numModels[j])
-				continue;
-			/* search one of the model definitions */
-			list = td->models[j];
-			assert(list);
-			for (num = 0; num < td->numModels[j]; num++) {
-				assert(list);
-				path = (const char*)list->data;
-				list = list->next;
-				/* register body */
-				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
-				if (!R_RegisterModelShort(model))
-					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
-				list = list->next;
-				/* register head */
-				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
-				if (!R_RegisterModelShort(model))
-					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
-
-				/* skip skin */
-				list = list->next;
-
-				/* new path */
-				list = list->next;
-
-				cls.loadingPercent += percent / (td->numModels[j] * csi.numTeamDefs * NAME_LAST);
-				SCR_DrawPrecacheScreen(qtrue);
-			}
-		}
-	/* some genders may not have models - ensure that we do the wanted percent step */
-	cls.loadingPercent = loading + percent;
-}
-
-/**
- * @brief Precaches all models at game startup - for faster access
- * @todo In case of vid restart due to changed settings the @c vid_genericPool is
- * wiped away, too. So the models has to be reloaded with every map change
- */
-static void CL_PrecacheModels (void)
-{
-	int i;
-	float percent = 40.0f;
-
-	if (cl_precache->integer)
-		CL_PrecacheCharacterModels(); /* 55% */
-	else
-		percent = 95.0f;
-
-	for (i = 0; i < csi.numODs; i++) {
-		if (csi.ods[i].type[0] == '\0' || csi.ods[i].isDummy)
-			continue;
-
-		if (csi.ods[i].model[0] != '\0') {
-			cls.modelPool[i] = R_RegisterModelShort(csi.ods[i].model);
-			if (cls.modelPool[i])
-				Com_DPrintf(DEBUG_CLIENT, "CL_PrecacheModels: Registered object model: '%s' (%i)\n", csi.ods[i].model, i);
-		}
-		cls.loadingPercent += percent / csi.numODs;
-		SCR_DrawPrecacheScreen(qtrue);
-	}
-}
-
-static menuOption_t* vidModesOptions = NULL;
-
 static void CL_SetRatioFilter_f (void)
 {
-	menuOption_t* option = vidModesOptions;
+	uiNode_t* firstOption = UI_GetOption(OPTION_VIDEO_RESOLUTIONS);
+	uiNode_t* option = firstOption;
 	float requestedRation = atof(Cmd_Argv(1));
 	qboolean all = qfalse;
 	qboolean custom = qfalse;
@@ -667,7 +588,7 @@ static void CL_SetRatioFilter_f (void)
 		int height;
 		float ratio;
 		qboolean visible = qfalse;
-		int result = sscanf(option->label, "%i x %i", &width, &height);
+		int result = sscanf(OPTIONEXTRADATA(option).label, "%i x %i", &width, &height);
 		if (result != 2)
 			Com_Error(ERR_FATAL, "CL_SetRatioFilter_f: Impossible to decode resolution label.\n");
 		ratio = (float)width / (float)height;
@@ -685,7 +606,167 @@ static void CL_SetRatioFilter_f (void)
 	}
 
 	/* the content change */
-	MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, vidModesOptions);
+	UI_RegisterOption(OPTION_VIDEO_RESOLUTIONS, firstOption);
+}
+
+static void CL_VideoInitMenu (void)
+{
+	uiNode_t* option = UI_GetOption(OPTION_VIDEO_RESOLUTIONS);
+	if (option == NULL) {
+		int i;
+		for (i = 0; i < VID_GetModeNums(); i++) {
+			vidmode_t vidmode;
+			if (VID_GetModeInfo(i, &vidmode))
+				UI_AddOption(&option, va("r%ix%i", vidmode.width, vidmode.height), va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
+		}
+		UI_RegisterOption(OPTION_VIDEO_RESOLUTIONS, option);
+	}
+}
+
+static void CL_TeamDefInitMenu (void)
+{
+	uiNode_t* option = UI_GetOption(OPTION_TEAMDEFS);
+	if (option == NULL) {
+		int i;
+		for (i = 0; i < csi.numTeamDefs; i++) {
+			teamDef_t *td = &csi.teamDef[i];
+			if (td->race != RACE_CIVILIAN)
+				UI_AddOption(&option, td->id, _(td->name), td->id);
+		}
+		UI_RegisterOption(OPTION_TEAMDEFS, option);
+	}
+}
+
+/** @brief valid mapdef descriptors */
+static const value_t mapdef_vals[] = {
+	{"description", V_TRANSLATION_STRING, offsetof(mapDef_t, description), 0},
+	{"map", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, map), 0},
+	{"param", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, param), 0},
+	{"size", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, size), 0},
+
+	{"maxaliens", V_INT, offsetof(mapDef_t, maxAliens), MEMBER_SIZEOF(mapDef_t, maxAliens)},
+	{"storyrelated", V_BOOL, offsetof(mapDef_t, storyRelated), MEMBER_SIZEOF(mapDef_t, storyRelated)},
+	{"hurtaliens", V_BOOL, offsetof(mapDef_t, hurtAliens), MEMBER_SIZEOF(mapDef_t, hurtAliens)},
+
+	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
+	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},
+
+	{"onwin", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, onwin), 0},
+	{"onlose", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, onlose), 0},
+
+	{NULL, 0, 0, 0}
+};
+
+static void CL_ParseMapDefinition (const char *name, const char **text)
+{
+	const char *errhead = "Com_ParseMapDefinition: unexpected end of file (mapdef ";
+	mapDef_t *md;
+	const value_t *vp;
+	const char *token;
+
+	/* get it's body */
+	token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	md = Com_GetMapDefByIDX(cls.numMDs);
+	cls.numMDs++;
+	if (cls.numMDs >= lengthof(cls.mds))
+		Sys_Error("Com_ParseMapDefinition: Max mapdef hit");
+
+	memset(md, 0, sizeof(*md));
+	md->id = Mem_PoolStrDup(name, com_genericPool, 0);
+
+	do {
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		for (vp = mapdef_vals; vp->string; vp++)
+			if (!strcmp(token, vp->string)) {
+				/* found a definition */
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					return;
+
+				switch (vp->type) {
+				default:
+					Com_EParseValue(md, token, vp->type, vp->ofs, vp->size);
+					break;
+				case V_TRANSLATION_STRING:
+					if (*token == '_')
+						token++;
+				/* fall through */
+				case V_CLIENT_HUNK_STRING:
+					Mem_PoolStrDupTo(token, (char**) ((char*)md + (int)vp->ofs), com_genericPool, 0);
+					break;
+				}
+				break;
+			}
+
+		if (!vp->string) {
+			linkedList_t **list;
+			if (!strcmp(token, "ufos")) {
+				list = &md->ufos;
+			} else if (!strcmp(token, "aircraft")) {
+				list = &md->aircraft;
+			} else if (!strcmp(token, "terrains")) {
+				list = &md->terrains;
+			} else if (!strcmp(token, "populations")) {
+				list = &md->populations;
+			} else if (!strcmp(token, "cultures")) {
+				list = &md->cultures;
+			} else if (!strcmp(token, "gametypes")) {
+				list = &md->gameTypes;
+			} else {
+				Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
+				continue;
+			}
+			token = Com_EParse(text, errhead, name);
+			if (!*text || *token != '{') {
+				Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" has ufos, gametypes, terrains, populations or cultures block with no opening brace\n", name);
+				break;
+			}
+			do {
+				token = Com_EParse(text, errhead, name);
+				if (!*text || *token == '}')
+					break;
+				LIST_AddString(list, token);
+			} while (*text);
+		}
+	} while (*text);
+
+	if (!md->map) {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no map\n", name);
+		cls.numMDs--;
+	}
+
+	if (!md->description) {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no description\n", name);
+		cls.numMDs--;
+	}
+}
+
+/**
+ * @sa FS_MapDefSort
+ */
+static int Com_MapDefSort (const void *mapDef1, const void *mapDef2)
+{
+	const char *map1 = ((const mapDef_t *)mapDef1)->map;
+	const char *map2 = ((const mapDef_t *)mapDef2)->map;
+
+	/* skip special map chars for rma and base attack */
+	if (map1[0] == '+' || map1[0] == '.')
+		map1++;
+	if (map2[0] == '+' || map2[0] == '.')
+		map2++;
+
+	return Q_StringSort(map1, map2);
 }
 
 /**
@@ -694,50 +775,21 @@ static void CL_SetRatioFilter_f (void)
  */
 void CL_InitAfter (void)
 {
-	int i;
-
 	/* start the music track already while precaching data */
 	S_Frame();
 	S_LoadSamples();
 
-	cls.loadingPercent = 2.0f;
-
-	/* precache loading screen */
-	SCR_DrawPrecacheScreen(qtrue);
-
-	/* init irc commands and cvars */
-	Irc_Init();
-
-	cls.loadingPercent = 5.0f;
-	SCR_DrawPrecacheScreen(qtrue);
-
 	/* preload all models for faster access */
-	CL_PrecacheModels(); /* 95% */
+	CL_ViewPrecacheModels(); /* 95% */
 
-	cls.loadingPercent = 100.0f;
-	SCR_DrawPrecacheScreen(qtrue);
-
-	if (vidModesOptions == NULL) {
-		for (i = 0; i < VID_GetModeNums(); i++) {
-			vidmode_t vidmode;
-			if (VID_GetModeInfo(i, &vidmode))
-				MN_AddOption(&vidModesOptions, "", va("%i x %i", vidmode.width, vidmode.height), va("%i", i));
-		}
-		MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, vidModesOptions);
-	}
-
+	CL_TeamDefInitMenu();
+	CL_VideoInitMenu();
 	IN_JoystickInitMenu();
 
 	CL_LanguageInit();
 
-	/* now make sure that all the precached models are stored until we quit the game
-	 * otherwise they would be freed with every map change */
-	R_SwitchModelMemPoolTag();
-
-	if (!cl_introshown->integer) {
-		Cbuf_AddText("cinematic intro;");
-		Cvar_Set("cl_introshown", "1");
-	}
+	/* sort the mapdef array */
+	qsort(cls.mds, cls.numMDs, sizeof(mapDef_t), Com_MapDefSort);
 }
 
 /**
@@ -756,13 +808,13 @@ void CL_InitAfter (void)
 void CL_ParseClientData (const char *type, const char *name, const char **text)
 {
 	if (!strcmp(type, "font"))
-		MN_ParseFont(name, text);
+		UI_ParseFont(name, text);
 	else if (!strcmp(type, "tutorial"))
 		TUT_ParseTutorials(name, text);
 	else if (!strcmp(type, "menu_model"))
-		MN_ParseMenuModel(name, text);
+		UI_ParseUIModel(name, text);
 	else if (!strcmp(type, "icon"))
-		MN_ParseIcon(name, text);
+		UI_ParseIcon(name, text);
 	else if (!strcmp(type, "particle"))
 		CL_ParseParticle(name, text);
 	else if (!strcmp(type, "sequence"))
@@ -773,12 +825,12 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 		CL_ParseTipsOfTheDay(name, text);
 	else if (!strcmp(type, "language"))
 		CL_ParseLanguages(name, text);
-	else if (!strcmp(type, "ugv"))
-		CL_ParseUGVs(name, text);
 	else if (!strcmp(type, "window"))
-		MN_ParseWindow(type, name, text);
+		UI_ParseWindow(type, name, text);
 	else if (!strcmp(type, "component"))
-		MN_ParseComponent(type, text);
+		UI_ParseComponent(type, text);
+	else if (!strcmp(type, "mapdef"))
+		CL_ParseMapDefinition(name, text);
 }
 
 /** @brief Cvars for initial check (popup at first start) */
@@ -800,7 +852,7 @@ static void CL_CheckCvars_f (void)
 			checkcvar[i].var = Cvar_Get(checkcvar[i].name, "", 0, NULL);
 		if (checkcvar[i].var->string[0] == '\0') {
 			Com_Printf("%s has no value\n", checkcvar[i].var->name);
-			MN_PushWindow("checkcvars", NULL);
+			UI_PushWindow("checkcvars", NULL);
 			break;
 		}
 		i++;
@@ -833,7 +885,6 @@ static void CL_InitLocal (void)
 	cls.realtime = Sys_Milliseconds();
 
 	/* register our variables */
-	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
 	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_log_battlescape_events = Cvar_Get("cl_log_battlescape_events", "1", 0, "Log all battlescape events to events.log");
@@ -882,9 +933,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("players", NULL, "List of team and player name");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_cgrid", Grid_DumpWholeClientMap_f, "Shows the whole client side pathfinding grid of the current loaded map");
-	Cmd_AddCommand("debug_sgrid", Grid_DumpWholeServerMap_f, "Shows the whole server side pathfinding grid of the current loaded map");
 	Cmd_AddCommand("debug_croute", Grid_DumpClientRoutes_f, "Shows the whole client side pathfinding grid of the current loaded map");
-	Cmd_AddCommand("debug_sroute", Grid_DumpServerRoutes_f, "Shows the whole server side pathfinding grid of the current loaded map");
 	Cmd_AddCommand("debug_listle", LE_List_f, "Shows a list of current know local entities with type and status");
 	Cmd_AddCommand("debug_listlm", LM_List_f, "Shows a list of current know local models");
 	/* forward commands again */
@@ -960,19 +1009,19 @@ static void CL_SendCommand (void)
 		}
 		break;
 	case ca_connecting:
-		if (cls.realtime - cls.connectTime > cl_connecttimeout->integer) {
+		if (CL_Milliseconds() - cls.connectTime > cl_connecttimeout->integer) {
 			if (GAME_IsMultiplayer())
 				Com_Error(ERR_DROP, "Server is not reachable");
 		}
 		break;
 	case ca_connected:
 		if (cls.waitingForStart) {
-			if (cls.realtime - cls.waitingForStart > cl_connecttimeout->integer) {
+			if (CL_Milliseconds() - cls.waitingForStart > cl_connecttimeout->integer) {
 				Com_Error(ERR_DROP, "Server aborted connection - the server didn't response in %is. You can try to increase the cvar cl_connecttimeout",
 						cl_connecttimeout->integer / 1000);
 			} else {
 				Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
-					"%s (%i)", _("Awaiting game start"), (cls.realtime - cls.waitingForStart) / 1000);
+					"%s (%i)", _("Awaiting game start"), (CL_Milliseconds() - cls.waitingForStart) / 1000);
 				SCR_UpdateScreen();
 			}
 		}
@@ -1091,6 +1140,13 @@ void CL_SlowFrame (int now, void *data)
 	HUD_Update();
 }
 
+static void CL_InitMemPools (void)
+{
+	cl_genericPool = Mem_CreatePool("Client: Generic");
+	cl_soundSysPool = Mem_CreatePool("Client: Sound system");
+	cl_ircSysPool = Mem_CreatePool("Client: IRC system");
+}
+
 /**
  * @sa CL_Shutdown
  * @sa CL_InitAfter
@@ -1121,9 +1177,7 @@ void CL_Init (void)
 	/* load language file */
 	textdomain(TEXT_DOMAIN);
 
-	cl_genericPool = Mem_CreatePool("Client: Generic");
-	cl_soundSysPool = Mem_CreatePool("Client: Sound system");
-	cl_ircSysPool = Mem_CreatePool("Client: IRC system");
+	CL_InitMemPools();
 
 	/* all archived variables will now be loaded */
 	Con_Init();
@@ -1132,12 +1186,12 @@ void CL_Init (void)
 
 	VID_Init();
 	S_Init();
-
 	SCR_Init();
 
-	SCR_DrawPrecacheScreen(qfalse);
-
 	CL_InitLocal();
+
+	Irc_Init();
+	CL_ViewInit();
 
 	CL_InitParticles();
 
@@ -1147,6 +1201,10 @@ void CL_Init (void)
 	Mem_TouchGlobal();
 }
 
+int CL_Milliseconds (void)
+{
+	return cls.realtime;
+}
 
 /**
  * @brief Saves configuration file and shuts the client systems down
@@ -1172,7 +1230,7 @@ void CL_Shutdown (void)
 	Key_WriteBindings("keys.cfg");
 	S_Shutdown();
 	R_Shutdown();
-	MN_Shutdown();
+	UI_Shutdown();
 	CIN_Shutdown();
 	FS_Shutdown();
 }

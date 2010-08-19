@@ -16,19 +16,22 @@ component baselayout cmpBase
 
 window basesummary
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	ui/base_bg
+		src	"background/base_bg"
 	}
 
 	func reset_color {
 		*cvar:i = 0
 		while ( *cvar:i < 8 ) {
-			*basenavigation.base<cvar:i>@bgcolor = "1 1 1 0.4"
+			*node:root.basenavigation.base<cvar:i>@bgcolor = "1 1 1 0.4"
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	delete *cvar:i
@@ -36,7 +39,7 @@ window basesummary
 
 	confunc basesummary_change_color {
 		call *node:root.reset_color
-		*basenavigation.base<1>@bgcolor = "1 1 1 0.7"
+		*node:root.basenavigation.base<1>@bgcolor = "1 1 1 0.7"
 	}
 
 	panel basenavigation {
@@ -113,7 +116,7 @@ window basesummary
 	panel base_summary_bg {
 		pos	"12 103"
 		size	"551 655"
-		image	ui/panel_grey_green_large
+		image	"ui/panel_grey_green_large"
 	}
 
 	text txt_base_summary
@@ -123,25 +126,25 @@ window basesummary
 		size		"485 608"
 		lineheight	16
 		tabwidth	42
-		font		f_small
+		font		"f_small"
 		rows		"38"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 		onViewChange	{
-			*(abstractscrollbar)base_summary_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)base_summary_scroll@current = <viewpos>
-			*(abstractscrollbar)base_summary_scroll@viewsize = <viewsize>
+			*node:root.base_summary_scroll@fullsize = <fullsize>
+			*node:root.base_summary_scroll@current = <viewpos>
+			*node:root.base_summary_scroll@viewsize = <viewsize>
 		}
 	}
 
 	vscrollbar base_summary_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"525 124"
 		height		"608"
 		current		0
 		viewsize	38
 		fullsize	38
 		hidewhenunused true
-		onChange	{ *txt_base_summary@viewpos = <current> }
+		onChange	{ *node:root.txt_base_summary@viewpos = <current> }
 	}
 
 	// ==================
@@ -151,34 +154,34 @@ window basesummary
 	panel info_bg {
 		pos	"588 337"
 		size	"408 423"
-		image	ui/panel_grey_green_large
+		image	"ui/panel_grey_green_large"
 	}
 
 	text txt_info
 	{
 		pos			"615 362"
 		size		"330 370"
-		font		f_small
+		font		"f_small"
 		lineheight		16
 		tabwidth	50
 		rows		"23"
 		dataid			TEXT_STANDARD
 		onViewChange	{
-			*(abstractscrollbar)info_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)info_scroll@current = <viewpos>
-			*(abstractscrollbar)info_scroll@viewsize = <viewsize>
+			*node:root.info_scroll@fullsize = <fullsize>
+			*node:root.info_scroll@current = <viewpos>
+			*node:root.info_scroll@viewsize = <viewsize>
 		}
 	}
 
 	vscrollbar info_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"950 362"
 		height		"370"
 		current		0
 		viewsize	38
 		fullsize	38
 		hidewhenunused true
-		onChange	{ *txt_info@viewpos = <current> }
+		onChange	{ *node:root.txt_info@viewpos = <current> }
 	}
 
 	// ==================

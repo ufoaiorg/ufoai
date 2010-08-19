@@ -29,10 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
-#include "../mxml/mxml_ufoai.h"
+#include "../cl_shared.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
 #include "../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_research.h"
@@ -150,40 +149,40 @@ void RS_MarkOneResearchable (technology_t* tech)
 /**
  * @brief Checks if all requirements of a tech have been met so that it becomes researchable.
  * @note If there are NO requirements defined at all it will always return true.
- * @param[in] required_AND Pointer to a list of AND-related requirements.
- * @param[in] required_OR Pointer to a list of OR-related requirements.
+ * @param[in] requiredAND Pointer to a list of AND-related requirements.
+ * @param[in] requiredOR Pointer to a list of OR-related requirements.
  * @param[in] base In what base to check the "collected" items etc..
- * @return Returns qtrue if all requirements are satisfied otherwise qfalse.
+ * @return @c true if all requirements are satisfied otherwise @cfalse.
  * @todo Add support for the "delay" value.
  */
-qboolean RS_RequirementsMet (const requirements_t *required_AND, const requirements_t *required_OR, const struct base_s *base)
+qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requirements_t *requiredOR, const base_t *base)
 {
 	int i;
-	qboolean met_AND = qfalse;
-	qboolean met_OR = qfalse;
+	qboolean metAND = qfalse;
+	qboolean metOR = qfalse;
 
-	if (!required_AND && !required_OR) {
+	if (!requiredAND && !requiredOR) {
 		Com_Printf("RS_RequirementsMet: No requirement list(s) given as parameter.\n");
 		return qfalse;
 	}
 
 	/* If there are no requirements defined at all we have 'met' them by default. */
-	if (required_AND->numLinks == 0 && required_OR->numLinks == 0) {
+	if (requiredAND->numLinks == 0 && requiredOR->numLinks == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: No requirements set for this tech. They are 'met'.\n");
 		return qtrue;
 	}
 
-	if (required_AND->numLinks) {
-		met_AND = qtrue;
-		for (i = 0; i < required_AND->numLinks; i++) {
-			const requirement_t *req = &required_AND->links[i];
+	if (requiredAND->numLinks) {
+		metAND = qtrue;
+		for (i = 0; i < requiredAND->numLinks; i++) {
+			const requirement_t *req = &requiredAND->links[i];
 			switch (req->type) {
 			case RS_LINK_TECH:
 				assert(req->link);
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDtech: %s / %i\n", req->id, ((technology_t*)req->link)->idx);
 				if (!RS_IsResearched_ptr(req->link)) {
 					Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: this tech not researched ----> %s \n", req->id);
-					met_AND = qfalse;
+					metAND = qfalse;
 				}
 				break;
 			case RS_LINK_TECH_NOT:
@@ -191,7 +190,7 @@ qboolean RS_RequirementsMet (const requirements_t *required_AND, const requireme
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDtech NOT: %s / %i\n", req->id, ((technology_t*)req->link)->idx);
 				if (RS_IsResearched_ptr(req->link)) {
 					Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: this tech researched but it  must not be ----> %s \n", req->id);
-					met_AND = qfalse;
+					metAND = qfalse;
 				}
 				break;
 			case RS_LINK_ITEM:
@@ -200,48 +199,52 @@ qboolean RS_RequirementsMet (const requirements_t *required_AND, const requireme
 				/* The same code is used in "PR_RequirementsMet" */
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDitem: %s / %i\n", req->id, ((objDef_t*)req->link)->idx);
 				if (B_ItemInBase(req->link, base) < req->amount)
-					met_AND = qfalse;
+					metAND = qfalse;
 				break;
 			case RS_LINK_ALIEN_DEAD:
 			case RS_LINK_ALIEN:
 				assert(req->link);
 				assert(base);
 				if (AL_GetAlienAmount(req->link, req->type, base) < req->amount)
-					met_AND = qfalse;
+					metAND = qfalse;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
 				if (AL_CountAll() < req->amount)
-					met_AND = qfalse;
+					metAND = qfalse;
 				break;
 			case RS_LINK_UFO:
 				assert(req->link);
 				if (US_UFOsInStorage(req->link, NULL) < req->amount)
-					met_AND = qfalse;
+					metAND = qfalse;
+				break;
+			case RS_LINK_ANTIMATTER:
+				if (B_AntimatterInBase(base) < req->amount)
+					metAND = qfalse;
 				break;
 			default:
 				break;
 			}
 
-			if (!met_AND)
+			if (!metAND)
 				break;
 		}
 	}
 
-	if (required_OR->numLinks)
-		for (i = 0; i < required_OR->numLinks; i++) {
-			const requirement_t *req = &required_OR->links[i];
+	if (requiredOR->numLinks)
+		for (i = 0; i < requiredOR->numLinks; i++) {
+			const requirement_t *req = &requiredOR->links[i];
 			switch (req->type) {
 			case RS_LINK_TECH:
 				assert(req->link);
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORtech: %s / %i\n", req->id, ((technology_t*)req->link)->idx);
 				if (RS_IsResearched_ptr(req->link))
-					met_OR = qtrue;
+					metOR = qtrue;
 				break;
 			case RS_LINK_TECH_NOT:
 				assert(req->link);
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORtech: NOT %s / %i\n", req->id, ((technology_t*)req->link)->idx);
 				if (!RS_IsResearched_ptr(req->link))
-					met_OR = qtrue;
+					metOR = qtrue;
 				break;
 			case RS_LINK_ITEM:
 				assert(req->link);
@@ -249,34 +252,37 @@ qboolean RS_RequirementsMet (const requirements_t *required_AND, const requireme
 				/* The same code is used in "PR_RequirementsMet" */
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORitem: %s / %i\n", req->id, ((objDef_t*)req->link)->idx);
 				if (B_ItemInBase(req->link, base) >= req->amount)
-					met_OR = qtrue;
+					metOR = qtrue;
 				break;
 			case RS_LINK_ALIEN:
 			case RS_LINK_ALIEN_DEAD:
 				assert(req->link);
 				assert(base);
 				if (AL_GetAlienAmount(req->link, req->type, base) >= req->amount)
-					met_OR = qtrue;
+					metOR = qtrue;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
 				if (AL_CountAll() >= req->amount)
-					met_OR = qtrue;
+					metOR = qtrue;
 				break;
 			case RS_LINK_UFO:
 				assert(req->link);
 				if (US_UFOsInStorage(req->link, NULL) >= req->amount)
-					met_OR = qtrue;
+					metOR = qtrue;
 				break;
+			case RS_LINK_ANTIMATTER:
+				if (B_AntimatterInBase(base) >= req->amount)
+					metOR = qtrue;
 			default:
 				break;
 			}
 
-			if (met_OR)
+			if (metOR)
 				break;
 		}
-	Com_DPrintf(DEBUG_CLIENT, "met_AND is %i, met_OR is %i\n", met_AND, met_OR);
+	Com_DPrintf(DEBUG_CLIENT, "met_AND is %i, met_OR is %i\n", metAND, metOR);
 
-	return (met_AND || met_OR);
+	return (metAND || metOR);
 }
 
 /**
@@ -480,6 +486,17 @@ void RS_RequiredLinksAssign (void)
 	LIST_Delete(&redirectedTechs);
 }
 
+technology_t* RS_GetTechForItem (const objDef_t *item)
+{
+	if (item == NULL)
+		Com_Error(ERR_DROP, "RS_GetTechForItem: No item given");
+	if (item->idx < 0 || item->idx > lengthof(ccs.objDefTechs))
+		Com_Error(ERR_DROP, "RS_GetTechForItem: Buffer overflow");
+	if (ccs.objDefTechs[item->idx] == NULL)
+		Com_Error(ERR_DROP, "RS_GetTechForItem: No technology for item %s", item->id);
+	return ccs.objDefTechs[item->idx];
+}
+
 /**
  * @brief Gets all needed names/file-paths/etc... for each technology entry.
  * Should be executed after the parsing of _all_ the ufo files and e.g. the
@@ -498,9 +515,8 @@ void RS_InitTree (qboolean load)
 
 	/* Add links to technologies. */
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		tech = RS_GetTechByProvided(od->id);
-		od->tech = tech;
-		if (!od->tech)
+		ccs.objDefTechs[od->idx] = RS_GetTechByProvided(od->id);
+		if (!ccs.objDefTechs[od->idx])
 			Com_Error(ERR_DROP, "RS_InitTree: Could not find a valid tech for item %s", od->id);
 	}
 
@@ -536,7 +552,7 @@ void RS_InitTree (qboolean load)
 		case RS_ARMOUR:
 			found = qfalse;
 			for (j = 0; j < csi.numODs; j++) {	/* j = item index */
-				objDef_t *item = &csi.ods[j];
+				objDef_t *item = INVSH_GetItemByIDX(j);
 
 				/* This item has been 'provided' -> get the correct data. */
 				if (!strcmp(tech->provides, item->id)) {
@@ -633,14 +649,14 @@ void RS_InitTree (qboolean load)
 	if (load) {
 		/* when you load a savegame right after starting UFO, the aircraft in bases
 		 * and installations don't have any tech assigned */
-		int k;
-
 		for (j = 0; j < ccs.numBases; j++) {
 			base_t *b = B_GetFoundedBaseByIDX(j);
+			aircraft_t *aircraft;
 			if (!b)
 				continue;
-			for (k = 0; k < b->numAircraftInBase; k++) {
-				aircraft_t *aircraft = &b->aircraft[k];
+
+			aircraft = NULL;
+			while ((aircraft = AIR_GetNextFromBase(b, aircraft)) != NULL) {
 				/* if you already played before loading the game, tech are already defined for templates */
 				if (!aircraft->tech)
 					aircraft->tech = RS_GetTechByProvided(aircraft->id);
@@ -702,11 +718,11 @@ void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
 				/* Assign the sci to the lab and set number of used lab-space. */
 				employee->building = building;
 			} else {
-				MN_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
+				UI_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
 				return;
 			}
 		} else {
-			MN_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
+			UI_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
 			return;
 		}
 
@@ -724,7 +740,6 @@ void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
  */
 void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 {
-	base_t *base;
 	assert(tech);
 
 	/* no need to remove anything, but we can do some check */
@@ -733,9 +748,6 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 		assert(tech->statusResearch == RS_PAUSED);
 		return;
 	}
-
-	assert(tech->base);
-	base = tech->base;
 
 	if (!employee)
 		employee = E_GetAssignedEmployee(tech->base, EMPL_SCIENTIST);
@@ -931,6 +943,8 @@ static const char *RS_TechReqToName (requirement_t *req)
 		return "global alien count";
 	case RS_LINK_UFO:
 		return ((aircraft_t*)req->link)->id;
+	case RS_LINK_ANTIMATTER:
+		return "antimatter";
 	default:
 		return "unknown";
 	}
@@ -954,6 +968,8 @@ static const char *RS_TechLinkTypeToName (requirementType_t type)
 		return "alienglobal";
 	case RS_LINK_UFO:
 		return "ufo";
+	case RS_LINK_ANTIMATTER:
+		return "antimatter";
 	default:
 		return "unknown";
 	}
@@ -1025,7 +1041,7 @@ static void RS_TechnologyList_f (void)
 /**
  * @brief Mark everything as researched
  * @sa CL_Connect_f
- * @sa MN_StartServer
+ * @sa UI_StartServer
  */
 static void RS_DebugMarkResearchedAll (void)
 {
@@ -1103,7 +1119,7 @@ static void RS_DebugFinishResearches_f (void)
 /**
  * @brief This is more or less the initial
  * Bind some of the functions in this file to console-commands that you can call ingame.
- * Called from MN_InitStartup resp. CL_InitLocal
+ * Called from UI_InitStartup resp. CL_InitLocal
  */
 void RS_InitStartup (void)
 {
@@ -1224,7 +1240,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	tech->hashNext = techHash[hash];
 	/* set the techHash pointer to the current tech */
 	/* if there were already others in techHash at position hash, they are now
-	 * accessable via tech->next - loop until tech->next is null (the first tech
+	 * accessible via tech->next - loop until tech->next is null (the first tech
 	 * at that position)
 	 */
 	techHash[hash] = tech;
@@ -1423,6 +1439,17 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							token = Com_Parse(text);
 							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
 							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-ufo - %s - %i\n", requiredTemp->links[requiredTemp->numLinks].id, requiredTemp->links[requiredTemp->numLinks].amount);
+							requiredTemp->numLinks++;
+						}
+					} else if (!strcmp(token, "antimatter")) {
+						/* Defines what ufos need to be collected for this item to be researchable. */
+						if (requiredTemp->numLinks < MAX_TECHLINKS) {
+							/* Set requirement-type. */
+							requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_ANTIMATTER;
+							/* Set requirement-amount of item. */
+							token = Com_Parse(text);
+							requiredTemp->links[requiredTemp->numLinks].amount = atoi(token);
+							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-antimatter - %i\n", requiredTemp->links[requiredTemp->numLinks].amount);
 							requiredTemp->numLinks++;
 						}
 					} else {

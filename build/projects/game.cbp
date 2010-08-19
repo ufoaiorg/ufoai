@@ -157,6 +157,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\game\inv_shared.h" />
+		<Unit filename="..\..\src\game\chr_shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\chr_shared.h" />
 		<Unit filename="..\..\src\game\inventory.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -269,6 +273,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\shared.h" />
+		<Unit filename="..\..\src\shared\utf8.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\utf8.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -63,15 +63,9 @@ void S_SpatializeChannel (const s_channel_t *ch)
 	vec3_t origin, delta;
 	float dist, angle;
 	const int c = (int)((ptrdiff_t)(ch - s_env.channels));
-	const le_t *actor;
 
 	VectorCopy(ch->org, origin);
-
-	actor = LE_GetClosestActor(origin);
-	if (actor)
-		VectorSubtract(origin, actor->origin, delta);
-	else
-		VectorSubtract(origin, cl.cam.camorg, delta);
+	VectorSubtract(origin, cl.cam.camorg, delta);
 
 	dist = VectorNormalize(delta) * DISTANCE_SCALE * ch->atten;
 
@@ -101,6 +95,7 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
 {
 	s_channel_t *ch;
 	int i;
+	float volume;
 
 	if (!s_env.initialized)
 		return;
@@ -109,13 +104,13 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
 		return;
 
 	/* if the last mix of this particular sample is less than half a second ago, skip it */
-	if (sample->lastPlayed > cls.realtime - s_env.sampleRepeatRate)
+	if (sample->lastPlayed > CL_Milliseconds() - s_env.sampleRepeatRate)
 		return;
 
 	if ((i = S_AllocChannel()) == -1)
 		return;
 
-	sample->lastPlayed = cls.realtime;
+	sample->lastPlayed = CL_Milliseconds();
 	ch = &s_env.channels[i];
 
 	ch->atten = atten;
@@ -126,14 +121,17 @@ void S_PlaySample (const vec3_t origin, s_sample_t* sample, float atten, float r
 		S_SpatializeChannel(ch);
 	}
 
-	Mix_VolumeChunk(ch->sample->chunk, snd_volume->value * relVolume * MIX_MAX_VOLUME);
+	volume = snd_volume->value * relVolume * MIX_MAX_VOLUME;
+	Com_DPrintf(DEBUG_SOUND, "%i: Playing sample '%s' at volume %f at channel %i\n",
+			CL_Milliseconds(), sample->name, volume, i);
+	Mix_VolumeChunk(ch->sample->chunk, volume);
 	Mix_PlayChannel(i, ch->sample->chunk, 0);
 }
 
 /**
  * @brief Adds a loop sample for e.g. ambient sounds
  */
-void S_LoopSample (const vec3_t org, s_sample_t *sample, float volume)
+void S_LoopSample (const vec3_t org, s_sample_t *sample, float volume, float attenuation)
 {
 	s_channel_t *ch;
 	int i;
@@ -164,10 +162,10 @@ void S_LoopSample (const vec3_t org, s_sample_t *sample, float volume)
 
 		ch = &s_env.channels[i];
 
-		sample->lastPlayed = cls.realtime;
+		sample->lastPlayed = CL_Milliseconds();
 		VectorCopy(org, ch->org);
 		ch->count = 1;
-		ch->atten = SOUND_ATTN_IDLE;
+		ch->atten = attenuation;
 		ch->sample = sample;
 
 		Mix_PlayChannel(i, ch->sample->chunk, 0);

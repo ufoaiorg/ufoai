@@ -27,9 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_irc.h"
-#include "menu/m_main.h"
-#include "menu/m_nodes.h"
-#include "menu/m_popup.h"
+#include "ui/ui_main.h"
+#include "ui/ui_nodes.h"
+#include "ui/ui_popup.h"
 #include "multiplayer/mp_chatmessages.h"
 
 #ifdef _WIN32
@@ -352,7 +352,7 @@ static qboolean Irc_Proto_Connect (const char *host, const char *port)
 		irc_bucket.first_msg = NULL;
 		irc_bucket.message_size = 0;
 		irc_bucket.character_size = 0;
-		irc_bucket.last_refill = cls.realtime;
+		irc_bucket.last_refill = CL_Milliseconds();
 		irc_bucket.character_token = (double)irc_characterBucketBurst->value;
 	}
 	return status;
@@ -645,10 +645,10 @@ static qboolean Irc_AppendToBuffer (const char* const msg, ...)
 	if (irc_logConsole->integer)
 		Com_Printf("IRC: %s\n", appendString);
 
-	MN_RegisterText(TEXT_IRCCONTENT, irc_buffer);
-	MN_TextScrollEnd("irc.irc_data");
+	UI_RegisterText(TEXT_IRCCONTENT, irc_buffer);
+	UI_TextScrollEnd("irc.irc_data");
 
-	if (irc_showIfNotInMenu->integer && strcmp(MN_GetActiveWindowName(), "irc")) {
+	if (irc_showIfNotInMenu->integer && strcmp(UI_GetActiveWindowName(), "irc")) {
 		S_StartLocalSample("misc/talk", SND_VOLUME_DEFAULT);
 		MP_AddChatMessage(appendString);
 		return qtrue;
@@ -958,9 +958,9 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			*port++ = '\0';
 
 			/** get the ip and port into the menu */
-			MN_ExecuteConfunc("multiplayer_invite_server_info %s %s", serverIPAndPort, port);
+			UI_ExecuteConfunc("multiplayer_invite_server_info %s %s", serverIPAndPort, port);
 
-			MN_PushWindow("multiplayer_invite", NULL);
+			UI_PushWindow("multiplayer_invite", NULL);
 		} else if (!Irc_AppendToBuffer("<%s> %s", nick, trailing)) {
 			/* check whether this is no message to the channel - but to the user */
 			if (params && strcmp(params, irc_defaultChannel->string)) {
@@ -969,14 +969,14 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			} else if (strstr(trailing, irc_nick->string)) {
 				S_StartLocalSample("misc/lobbyprivmsg", SND_VOLUME_DEFAULT);
 				MP_AddChatMessage(va("<%s> %s\n", nick, trailing));
-				if (strcmp(MN_GetActiveWindowName(), "irc") && strcmp(MN_GetActiveWindowName(), mn_hud->string)) {
+				if (strcmp(UI_GetActiveWindowName(), "irc") && strcmp(UI_GetActiveWindowName(), mn_hud->string)) {
 					/* we are not in hud mode, nor in the lobby menu, use a popup */
-					MN_PushWindow("chat_popup", NULL);
+					UI_PushWindow("chat_popup", NULL);
 				}
 			}
 		}
 
-		if (MN_GetActiveWindow() && strcmp(MN_GetActiveWindowName(), "irc")) {
+		if (UI_GetActiveWindow() && strcmp(UI_GetActiveWindowName(), "irc")) {
 			Com_Printf(COLORED_GREEN "<%s@lobby> %s\n", nick, trailing);
 		}
 	}
@@ -1113,7 +1113,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 		case ERR_ERRONEUSNICKNAME:
 		case ERR_NICKCOLLISION:
 			Irc_AppendToBuffer("%s : %s", msg->params, msg->trailing);
-			MN_PushWindow("irc_changename", NULL);
+			UI_PushWindow("irc_changename", NULL);
 			break;
 		/* error codes */
 		case ERR_NOSUCHSERVER:
@@ -1205,7 +1205,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 		else if (!strncmp(cmd.id.string, "ERROR", 5)) {
 			Irc_Logic_Disconnect(msg->trailing);
 			Q_strncpyz(popupText, msg->trailing, sizeof(popupText));
-			MN_Popup(_("Error"), popupText);
+			UI_Popup(_("Error"), popupText);
 		} else
 			Irc_AppendToBuffer("%s", msg->trailing);
 		break;
@@ -1358,7 +1358,7 @@ static void Irc_Proto_RefillBucket (void)
 	/* calculate token refill */
 	const double characterBucketSize = irc_characterBucketSize->value;
 	const double characterBucketRate = irc_characterBucketRate->value;
-	const int ms = cls.realtime;
+	const int ms = CL_Milliseconds();
 	const int ms_delta = ms - irc_bucket.last_refill;
 	const double char_delta = (ms_delta * characterBucketRate) / 1000;
 	const double char_new = irc_bucket.character_token + char_delta;
@@ -1437,7 +1437,7 @@ static void Irc_Logic_ReadMessages (void)
 				Irc_Proto_ProcessServerMsg(&msg);
 		} else {
 			/* failure */
-			MN_Popup(_("Error"), _("Server closed connection"));
+			UI_Popup(_("Error"), _("Server closed connection"));
 			Irc_Logic_Disconnect("Server closed connection");
 		}
 	} while (msg_complete);
@@ -1469,7 +1469,7 @@ static void Irc_Logic_Disconnect (const char *reason)
 		chan = NULL;
 		Cvar_ForceSet("irc_defaultChannel", "");
 		Cvar_ForceSet("irc_topic", "Connecting (please wait)...");
-		MN_ResetData(TEXT_IRCUSERS);
+		UI_ResetData(TEXT_IRCUSERS);
 		Irc_Input_Deactivate_f();
 	} else
 		Com_Printf("Irc_Disconnect: not connected\n");
@@ -1788,7 +1788,7 @@ static void Irc_Client_Names_f (void)
 			while (i--)
 				LIST_AddString(&irc_names_buffer, irc_userListOrdered[i]);
 		}
-		MN_RegisterLinkedListText(TEXT_IRCUSERS, irc_names_buffer);
+		UI_RegisterLinkedListText(TEXT_IRCUSERS, irc_names_buffer);
 	} else
 		Com_Printf("Not joined\n");
 }
@@ -1827,7 +1827,7 @@ static void Irc_Client_Invite_f (void)
 	}
 
 	if (!chan) {
-		MN_PushWindow("irc_popup", NULL);
+		UI_PushWindow("irc_popup", NULL);
 		return;
 	}
 
@@ -1934,13 +1934,13 @@ static void Irc_UserRightClick_f (void)
  */
 static void Irc_Input_Activate_f (void)
 {
-	/* in case of a failure we need this in MN_PopWindow */
+	/* in case of a failure we need this in UI_PopWindow */
 	if (irc_connected && irc_defaultChannel->string[0] != '\0') {
-		MN_RegisterText(TEXT_IRCCONTENT, irc_buffer);
+		UI_RegisterText(TEXT_IRCCONTENT, irc_buffer);
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "Irc_Input_Activate: Warning - IRC not connected\n");
-		MN_PopWindow(qfalse);
-		MN_PushWindow("irc_popup", NULL);
+		UI_PopWindow(qfalse);
+		UI_PushWindow("irc_popup", NULL);
 		/* cancel any active editing */
 		return;
 	}
@@ -1953,7 +1953,7 @@ static void Irc_Input_Deactivate_f (void)
 {
 	irc_send_buffer->modified = qfalse;
 
-	MN_ResetData(TEXT_IRCCONTENT);
+	UI_ResetData(TEXT_IRCCONTENT);
 }
 
 /*

@@ -4,20 +4,23 @@
 
 window tutorials
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	ui/main_bg
+		src	"background/main_bg"
 	}
 
 	string headline
 	{
 		string  "_Tutorials"
 		pos             "630 170"
-		font f_big
+		font "f_big"
 	}
 
 	cmpMenuButton button_back
@@ -34,23 +37,23 @@ window tutorials
 		size		"240 280"
 		lineheight	"20"
 		rows		"14"
-		onClick		{ cmd "tutoriallist_click <lineselected>" }
+		onClick		{ cmd "tutoriallist_click <lineselected>;" }
 		onViewChange	{
-			*(abstractscrollbar)tutoriallist_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)tutoriallist_scroll@current = <viewpos>
-			*(abstractscrollbar)tutoriallist_scroll@viewsize = <viewsize>
+			*node:root.tutoriallist_scroll@fullsize = <fullsize>
+			*node:root.tutoriallist_scroll@current = <viewpos>
+			*node:root.tutoriallist_scroll@viewsize = <viewsize>
 		}
 	}
 
 	vscrollbar tutoriallist_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"885 220"
 		height		"280"
 		current		0
 		viewsize	14
 		fullsize	14
 		hidewhenunused true
-		onChange	{ *tutoriallist@viewpos = <current> }
+		onChange	{ *node:root.tutoriallist@viewpos = <current> }
 	}
 
 	func onInit

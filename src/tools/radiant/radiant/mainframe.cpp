@@ -2661,6 +2661,15 @@ void UndoSaveStateTracker::clear (void)
 }
 
 /**
+ * Reset redo states
+ */
+void UndoSaveStateTracker::clearRedo (void)
+{
+	m_redoSteps = 0;
+	UpdateSensitiveStates();
+}
+
+/**
  * Redo a step, one more undo is available
  */
 void UndoSaveStateTracker::redo (void)

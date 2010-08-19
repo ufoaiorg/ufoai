@@ -25,10 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_UGV_H_
 #define CL_UGV_H_
 
-#include "../client.h"
-#include "cl_localentity.h"
-
 qboolean CL_AddUGV(le_t * le, entity_t * ent);
-void CL_UGVCvars(const character_t *chr, const char* cvarPrefix);
 
 #endif /* CL_UGV_H_ */

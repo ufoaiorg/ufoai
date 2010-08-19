@@ -25,12 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../menu/m_main.h"
-#include "../menu/node/m_node_text.h"
+#include "../cl_shared.h"
+#include "../ui/ui_main.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
-#include "cp_fightequip_callbacks.h"
 #include "cp_ufo.h"
 #include "cp_map.h"
 #include "save/save_fightequip.h"
@@ -51,10 +49,11 @@ technology_t **AII_GetCraftitemTechsByType (int type)
 	int i, j = 0;
 
 	for (i = 0; i < csi.numODs; i++) {
-		objDef_t *aircraftitem = &csi.ods[i];
+		const objDef_t *aircraftitem = INVSH_GetItemByIDX(i);
 		if (aircraftitem->craftitem.type == type) {
+			technology_t *tech = RS_GetTechForItem(aircraftitem);
 			assert(j < MAX_TECHNOLOGIES);
-			techList[j] = aircraftitem->tech;
+			techList[j] = tech;
 			j++;
 		}
 		/* j+1 because last item has to be NULL */
@@ -169,11 +168,11 @@ qboolean AIM_SelectableCraftItem (const aircraftSlot_t *slot, const technology_t
  */
 qboolean AIM_PilotAssignedAircraft (const base_t* base, const employee_t* pilot)
 {
-	int i;
 	qboolean found = qfalse;
+	aircraft_t *aircraft;
 
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		const aircraft_t *aircraft = &base->aircraft[i];
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 		if (aircraft->pilot == pilot) {
 			found = qtrue;
 			break;
@@ -406,7 +405,7 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
  */
 void AII_UpdateInstallationDelay (void)
 {
-	int i, j, k;
+	int j, k;
 
 	for (j = 0; j < MAX_INSTALLATIONS; j++) {
 		installation_t *installation = INS_GetFoundedInstallationByIDX(j);
@@ -431,7 +430,8 @@ void AII_UpdateInstallationDelay (void)
 			AII_UpdateOneInstallationDelay(base, NULL, NULL, &base->lasers[k].slot);
 
 		/* Update each aircraft */
-		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (aircraft->homebase) {
 				assert(aircraft->homebase == base);
 				if (AIR_IsAircraftInBase(aircraft)) {
@@ -447,6 +447,7 @@ void AII_UpdateInstallationDelay (void)
 					AII_UpdateOneInstallationDelay(base, NULL, aircraft, &aircraft->shield);
 				}
 			}
+		}
 	}
 }
 
@@ -478,8 +479,8 @@ void AII_AutoAddAmmo (aircraftSlot_t *slot)
 	for (k = 0; k < item->numAmmos; k++) {
 		const objDef_t *ammo = item->ammos[k];
 		if (ammo) {
-			const technology_t *ammoTech = ammo->tech;
-			if (ammoTech && AIM_SelectableCraftItem(slot, ammoTech)) {
+			const technology_t *ammoTech = RS_GetTechForItem(ammo);
+			if (AIM_SelectableCraftItem(slot, ammoTech)) {
 				base_t* base;
 				if (ammo->isVirtual)
 					base = NULL;
@@ -1083,17 +1084,15 @@ float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t *slot, int maxSlot)
  */
 void AII_RepairAircraft (void)
 {
-	int baseIDX, aircraftIDX;
+	int baseIDX;
 	const int REPAIR_PER_HOUR = 1;	/**< Number of damage points repaired per hour */
 
 	for (baseIDX = 0; baseIDX < MAX_BASES; baseIDX++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIDX);
-		if (!base)
-			continue;
+		aircraft_t *aircraft;
 
-		for (aircraftIDX = 0; aircraftIDX < base->numAircraftInBase; aircraftIDX++) {
-			aircraft_t *aircraft = &base->aircraft[aircraftIDX];
-
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (!AIR_IsAircraftInBase(aircraft))
 				continue;
 			aircraft->damage = min(aircraft->damage + REPAIR_PER_HOUR, aircraft->stats[AIR_STATS_DAMAGE]);
@@ -1367,31 +1366,6 @@ const char* AII_WeightToName (itemWeight_t weight)
 		return _("Unknown weight");
 		break;
 	}
-}
-
-/**
- * @brief resets aircraftSlots' backreference pointers for aircraft
- * @param[in] aircraft Pointer to the aircraft
- */
-void AII_CorrectAircraftSlotPointers (aircraft_t *aircraft)
-{
-	int i;
-
-	assert(aircraft);
-
-	for (i = 0; i < aircraft->maxWeapons; i++) {
-		aircraft->weapons[i].aircraft = aircraft;
-		aircraft->weapons[i].base = NULL;
-		aircraft->weapons[i].installation = NULL;
-	}
-	for (i = 0; i < aircraft->maxElectronics; i++) {
-		aircraft->electronics[i].aircraft = aircraft;
-		aircraft->electronics[i].base = NULL;
-		aircraft->electronics[i].installation = NULL;
-	}
-	aircraft->shield.aircraft = aircraft;
-	aircraft->shield.base = NULL;
-	aircraft->shield.installation = NULL;
 }
 
 /**

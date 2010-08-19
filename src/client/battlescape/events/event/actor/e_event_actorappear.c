@@ -24,11 +24,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../../client.h"
 #include "../../../cl_localentity.h"
+#include "../../../cl_ugv.h"
 #include "../../../cl_actor.h"
 #include "../../../cl_hud.h"
 #include "../../../../cl_game.h"
 #include "../../../cl_particle.h"
 #include "e_event_actorappear.h"
+#include "../../../../../common/grid.h"
 
 int CL_ActorAppearTime (const eventRegister_t *self, struct dbuffer *msg, const int dt)
 {
@@ -124,7 +126,7 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 	le->modelnum2 = modelnum2;
 	le->model1 = cl.model_draw[modelnum1];
 	le->model2 = cl.model_draw[modelnum2];
-	Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
+	Grid_PosToVec(cl.clMap, le->fieldSize, le->pos, le->origin);
 	le->angles[YAW] = directionAngles[le->dir];
 
 	le->contents = CONTENTS_ACTOR;

@@ -23,15 +23,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../cl_game.h"
-#include "../menu/m_main.h"
+#include "../cl_shared.h"
+#include "../ui/ui_main.h"
 #include "cp_campaign.h"
 #include "cp_installation_callbacks.h"
 #include "cp_installation.h"
 #include "cp_map.h"
-#include "../menu/m_popup.h"
-#include "../renderer/r_draw.h"
+#include "../ui/ui_popup.h" /* popupText */
 
  /**
  * @brief Sets the title of the installation to a cvar to prepare the rename menu.
@@ -52,9 +50,9 @@ static void INS_SetInstallationTitle (void)
 
 	Cvar_Set("mn_installation_title", insName);
 	if (!insTemp || !insTemp->description || !strlen(insTemp->description))
-		MN_ResetData(TEXT_BUILDING_INFO);
+		UI_ResetData(TEXT_BUILDING_INFO);
 	else
-		MN_RegisterText(TEXT_BUILDING_INFO, _(insTemp->description));
+		UI_RegisterText(TEXT_BUILDING_INFO, _(insTemp->description));
 }
 
 /**
@@ -76,7 +74,7 @@ void INS_SelectInstallation (installation_t *installation)
 			ccs.mapAction = MA_NEWINSTALLATION;
 
 			/* show radar overlay (if not already displayed) */
-			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
+			if (!MAP_IsRadarOverlayActivated())
 				MAP_SetOverlay("radar");
 
 			INS_SetInstallationTitle();
@@ -92,7 +90,7 @@ void INS_SelectInstallation (installation_t *installation)
 			Cvar_Set("mn_installation_timetobuild", va(ngettext("%d day", "%d days", timetobuild), timetobuild));
 		}
 		INS_SetCurrentSelectedInstallation(installation);
-		MN_PushWindow("popup_installationstatus", NULL);
+		UI_PushWindow("popup_installationstatus", NULL);
 	}
 }
 
@@ -147,13 +145,12 @@ static void INS_BuildInstallation_f (void)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s"), installation->name);
 		MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDSTART, _("Installation building"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 	} else {
-		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+		if (MAP_IsRadarOverlayActivated())
 			MAP_SetOverlay("radar");
 		if (ccs.mapAction == MA_NEWINSTALLATION)
 			ccs.mapAction = MA_NONE;
 
-		Q_strncpyz(popupText, _("Not enough credits to set up a new installation."), sizeof(popupText));
-		MN_Popup(_("Notice"), popupText);
+		UI_Popup(_("Notice"), _("Not enough credits to set up a new installation."));
 	}
 }
 
@@ -219,7 +216,7 @@ static void INS_DestroyInstallation_f (void)
 		char command[MAX_VAR];
 
 		Com_sprintf(command, sizeof(command), "mn_installation_destroy %d 1; mn_pop;", installation->idx);
-		MN_PopupButton(_("Destroy Installation"), _("Do you really want to destroy this installation?"),
+		UI_PopupButton(_("Destroy Installation"), _("Do you really want to destroy this installation?"),
 			command, _("Destroy"), _("Destroy installation"),
 			"mn_pop;", _("Cancel"), _("Forget it"),
 			NULL, NULL, NULL);

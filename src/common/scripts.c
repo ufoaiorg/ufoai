@@ -333,7 +333,6 @@ const char *const vt_names[] = {
 	"relabs",
 	"client_hunk",
 	"client_hunk_string",
-	"longlines",	/* 25 */
 	"team",
 	"race",
 	"ufo",
@@ -358,14 +357,9 @@ const char *const style_names[] = {
 CASSERT(lengthof(style_names) == STYLE_LAST);
 
 const char *const fade_names[] = {
-	"none", "in", "out", "sin", "saw", "blend"
+	"none", "in", "out", "sin", "saw"
 };
 CASSERT(lengthof(fade_names) == FADE_LAST);
-
-const char *const longlines_names[] = {
-	"wrap", "chop", "prettychop"
-};
-CASSERT(lengthof(longlines_names) == LONGLINES_LAST);
 
 /** @brief target sizes for buffer */
 static const size_t vt_sizes[] = {
@@ -394,7 +388,6 @@ static const size_t vt_sizes[] = {
 	sizeof(float),	/* V_RELABS */
 	0,	/* V_CLIENT_HUNK */
 	0,	/* V_CLIENT_HUNK_STRING */
-	sizeof(byte), 	/* V_LONGLINES */
 	sizeof(int),		/* V_TEAM */
 	sizeof(int),		/* V_RACE */
 	sizeof(int),		/* V_UFO */
@@ -418,10 +411,10 @@ static const size_t vt_aligns[] = {
 	sizeof(char),	/* V_STRING */
 	sizeof(char),	/* V_TRANSLATION_STRING */
 	sizeof(char),	/* V_LONGSTRING */
-	sizeof(byte),	/* V_ALIGN */
-	sizeof(byte),	/* V_BLEND */
-	sizeof(byte),	/* V_STYLE */
-	sizeof(byte),	/* V_FADE */
+	sizeof(align_t),/* V_ALIGN */
+	sizeof(blend_t),/* V_BLEND */
+	sizeof(style_t),/* V_STYLE */
+	sizeof(fade_t),	/* V_FADE */
 	sizeof(int),	/* V_SHAPE_SMALL */
 	sizeof(uint32_t),	/* V_SHAPE_BIG */
 	sizeof(byte),	/* V_DMGTYPE */
@@ -430,7 +423,6 @@ static const size_t vt_aligns[] = {
 	sizeof(float),	/* V_RELABS */
 	0,	/* V_CLIENT_HUNK */
 	sizeof(char),	/* V_CLIENT_HUNK_STRING */
-	sizeof(byte), 	/* V_LONGLINES */
 	sizeof(int),		/* V_TEAM */
 	sizeof(int),		/* V_RACE */
 	sizeof(int),		/* V_UFO */
@@ -522,7 +514,15 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	case V_CHAR:
-		*(char *) b = *token;
+		if (token[0] == '\0') {
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Char expected, but end of string found");
+			return RESULT_ERROR;
+		}
+		if (token[1] != '\0') {
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal end of string. '\\0' explected but 0x%x found", token[1]);
+			return RESULT_ERROR;
+		}
+		*(char *) b = token[0];
 		*writtenBytes = sizeof(char);
 		break;
 
@@ -723,10 +723,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			if (!strcmp(token, align_names[num]))
 				break;
 		if (num == ALIGN_LAST)
-			*b = 0;
+			*(align_t *)b = 0;
 		else
-			*b = num;
-		*writtenBytes = sizeof(byte);
+			*(align_t *)b = num;
+		*writtenBytes = sizeof(align_t);
 		break;
 
 	case V_BLEND:
@@ -734,10 +734,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			if (!strcmp(token, blend_names[num]))
 				break;
 		if (num == BLEND_LAST)
-			*b = 0;
+			*(blend_t *)b = 0;
 		else
-			*b = num;
-		*writtenBytes = sizeof(byte);
+			*(blend_t *)b = num;
+		*writtenBytes = sizeof(blend_t);
 		break;
 
 	case V_STYLE:
@@ -745,10 +745,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			if (!strcmp(token, style_names[num]))
 				break;
 		if (num == STYLE_LAST)
-			*b = 0;
+			*(style_t *)b = 0;
 		else
-			*b = num;
-		*writtenBytes = sizeof(byte);
+			*(style_t *)b = num;
+		*writtenBytes = sizeof(style_t);
 		break;
 
 	case V_FADE:
@@ -756,10 +756,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			if (!strcmp(token, fade_names[num]))
 				break;
 		if (num == FADE_LAST)
-			*b = 0;
+			*(fade_t *)b = 0;
 		else
-			*b = num;
-		*writtenBytes = sizeof(byte);
+			*(fade_t *)b = num;
+		*writtenBytes = sizeof(fade_t);
 		break;
 
 	case V_SHAPE_SMALL:
@@ -841,17 +841,6 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(float *) b = atof(token);
 		}
 		*writtenBytes = sizeof(float);
-		break;
-
-	case V_LONGLINES:
-		for (num = 0; num < LONGLINES_LAST; num++)
-			if (!strcmp(token, longlines_names[num]))
-				break;
-		if (num == LONGLINES_LAST)
-			*b = 0;
-		else
-			*b = num;
-		*writtenBytes = sizeof(byte);
 		break;
 
 	default:
@@ -1114,11 +1103,20 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		return len;
 
 	case V_ALIGN:
+		*(align_t *)b = *(const align_t *) set;
+		return sizeof(align_t);
+
 	case V_BLEND:
+		*(blend_t *)b = *(const blend_t *) set;
+		return sizeof(blend_t);
+
 	case V_STYLE:
+		*(style_t *)b = *(const style_t *) set;
+		return sizeof(style_t);
+
 	case V_FADE:
-		*b = *(const byte *) set;
-		return 1;
+		*(fade_t *)b = *(const fade_t *) set;
+		return sizeof(fade_t);
 
 	case V_SHAPE_SMALL:
 		*(int *) b = *(const int *) set;
@@ -1320,7 +1318,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 			return (const char *) b;
 
 	case V_ALIGN:
-		assert(*(const int *)b < ALIGN_LAST);
+		assert(*(const align_t *)b < ALIGN_LAST);
 		Q_strncpyz(valuestr, align_names[*(const align_t *)b], sizeof(valuestr));
 		return valuestr;
 
@@ -1345,8 +1343,8 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 
 	case V_DMGWEIGHT:
 	case V_DMGTYPE:
-		assert(*(const int *)b < MAX_DAMAGETYPES);
-		return csi.dts[*(const int *)b].id;
+		assert(*(const byte *)b < MAX_DAMAGETYPES);
+		return csi.dts[*(const byte *)b].id;
 
 	case V_DATE:
 		Com_sprintf(valuestr, sizeof(valuestr), "%i %i %i", ((const date_t *) b)->day / DAYS_PER_YEAR, ((const date_t *) b)->day % DAYS_PER_YEAR, ((const date_t *) b)->sec);
@@ -1376,12 +1374,17 @@ OBJECT DEFINITION INTERPRETER
 ==============================================================================
 */
 
-static const char *const skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
+static const char *const skillNames[SKILL_NUM_TYPES + 1] = {
+	"strength",
+	"speed",
+	"accuracy",
+	"mind",
 	"close",
 	"heavy",
 	"assault",
 	"sniper",
-	"explosive"
+	"explosive",
+	"health"
 };
 
 /** @brief The order here must be the same as in od_vals */
@@ -1412,7 +1415,6 @@ static const value_t od_vals[] = {
 	{"weapon", V_BOOL, offsetof(objDef_t, weapon), MEMBER_SIZEOF(objDef_t, weapon)},
 	{"holdtwohanded", V_BOOL, offsetof(objDef_t, holdTwoHanded), MEMBER_SIZEOF(objDef_t, holdTwoHanded)},
 	{"firetwohanded", V_BOOL, offsetof(objDef_t, fireTwoHanded), MEMBER_SIZEOF(objDef_t, fireTwoHanded)},
-	{"extends_item", V_STRING, offsetof(objDef_t, extends_item), 0},
 	{"extension", V_BOOL, offsetof(objDef_t, extension), MEMBER_SIZEOF(objDef_t, extension)},
 	{"headgear", V_BOOL, offsetof(objDef_t, headgear), MEMBER_SIZEOF(objDef_t, headgear)},
 	{"thrown", V_BOOL, offsetof(objDef_t, thrown), MEMBER_SIZEOF(objDef_t, thrown)},
@@ -1465,8 +1467,8 @@ static const value_t fdps[] = {
 	{"impsnd", V_STRING, offsetof(fireDef_t, impactSound), 0},
 	{"bodysnd", V_STRING, offsetof(fireDef_t, hitBodySound), 0},
 	{"bncsnd", V_STRING, offsetof(fireDef_t, bounceSound), 0},
-	{"fireattenuation", V_INT, offsetof(fireDef_t, fireAttenuation), MEMBER_SIZEOF(fireDef_t, fireAttenuation)},
-	{"impactattenuation", V_INT, offsetof(fireDef_t, impactAttenuation), MEMBER_SIZEOF(fireDef_t, impactAttenuation)},
+	{"fireattenuation", V_FLOAT, offsetof(fireDef_t, fireAttenuation), MEMBER_SIZEOF(fireDef_t, fireAttenuation)},
+	{"impactattenuation", V_FLOAT, offsetof(fireDef_t, impactAttenuation), MEMBER_SIZEOF(fireDef_t, impactAttenuation)},
 	{"throughwall", V_INT, offsetof(fireDef_t, throughWall), MEMBER_SIZEOF(fireDef_t, throughWall)},
 	{"sndonce", V_BOOL, offsetof(fireDef_t, soundOnce), MEMBER_SIZEOF(fireDef_t, soundOnce)},
 	{"gravity", V_BOOL, offsetof(fireDef_t, gravity), MEMBER_SIZEOF(fireDef_t, gravity)},
@@ -1532,7 +1534,7 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 					return;
 
 				for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++)
-					if (!Q_strcasecmp(skillNames[skill - ABILITY_NUM_TYPES], token)) {
+					if (!strcmp(skillNames[skill], token)) {
 						fd->weaponSkill = skill;
 						break;
 					}
@@ -1565,13 +1567,14 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 
 
 /**
- * @brief Parses the armour definitions from script files. The protection and rating values
+ * @brief Parses the armour definitions or the team resistance values from script files. The
+ * protection and rating values.
  * @note The rating values are just for menu displaying
  * @sa Com_ParseItem
  */
-static void Com_ParseArmour (const char *name, const char **text, short *ad, qboolean rating)
+static void Com_ParseArmourOrResistance (const char *name, const char **text, short *ad, qboolean rating)
 {
-	const char *errhead = "Com_ParseArmour: unexpected end of file";
+	const char *errhead = "Com_ParseArmourOrResistance: unexpected end of file";
 	const char *token;
 	int i;
 
@@ -1579,7 +1582,7 @@ static void Com_ParseArmour (const char *name, const char **text, short *ad, qbo
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseArmour: armour definition \"%s\" without body ignored\n", name);
+		Com_Printf("Com_ParseArmourOrResistance: armour definition \"%s\" without body ignored\n", name);
 		return;
 	}
 
@@ -1590,20 +1593,23 @@ static void Com_ParseArmour (const char *name, const char **text, short *ad, qbo
 		if (*token == '}')
 			return;
 
-		for (i = 0; i < csi.numDTs; i++)
-			if (!strncmp(token, csi.dts[i].id, MAX_VAR)) {
+		for (i = 0; i < csi.numDTs; i++) {
+			damageType_t *dt = &csi.dts[i];
+			if (!strcmp(token, dt->id)) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				if (rating && !csi.dts[i].showInMenu)
-					Sys_Error("Com_ParseArmour: You try to set a rating value for a none menu displayed damage type '%s'", csi.dts[i].id);
+				if (rating && !dt->showInMenu)
+					Sys_Error("Com_ParseArmourOrResistance: You try to set a rating value for a none menu displayed damage type '%s'",
+							dt->id);
 				/* protection or rating values */
 				ad[i] = atoi(token);
 				break;
 			}
+		}
 
 		if (i >= csi.numDTs)
-			Com_Printf("Com_ParseArmour: unknown damage type \"%s\" ignored (in %s)\n", token, name);
+			Com_Printf("Com_ParseArmourOrResistance: unknown damage type \"%s\" ignored (in %s)\n", token, name);
 	} while (*text);
 }
 
@@ -1636,7 +1642,7 @@ static linkedList_t *parseItemWeapons = NULL;
  * @brief Parses weapon, equipment, craft items and armour
  * @sa Com_ParseArmour
  */
-static void Com_ParseItem (const char *name, const char **text, qboolean craftitem)
+static void Com_ParseItem (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseItem: unexpected end of file (weapon ";
 	const value_t *val;
@@ -1646,16 +1652,13 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	weaponFireDefIndex_t weapFdsIdx;
 
 	/* search for items with same name */
-	for (i = 0; i < csi.numODs; i++)
-		if (!strncmp(name, csi.ods[i].name, sizeof(csi.ods[i].name)))
-			break;
-
-	if (i < csi.numODs) {
+	od = INVSH_GetItemByIDSilent(name);
+	if (od != NULL) {
 		Com_Printf("Com_ParseItem: weapon def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
-	if (i >= MAX_OBJDEFS)
+	if (csi.numODs >= MAX_OBJDEFS)
 		Sys_Error("Com_ParseItem: MAX_OBJDEFS exceeded\n");
 
 	Com_DPrintf(DEBUG_SHARED, "...found item: '%s' (%i)\n", name, csi.numODs);
@@ -1667,6 +1670,8 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	od->craftitem.type = MAX_ACITEMS; /**< default is no craftitem */
 
 	Q_strncpyz(od->id, name, sizeof(od->id));
+	if (od->id[0] == '\0')
+		Sys_Error("Com_ParseItem: no id given\n");
 
 	od->idx = csi.numODs - 1;
 
@@ -1751,10 +1756,10 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 						}
 						break;
 					case OD_PROTECTION:
-						Com_ParseArmour(name, text, od->protection, qfalse);
+						Com_ParseArmourOrResistance(name, text, od->protection, qfalse);
 						break;
 					case OD_RATINGS:
-						Com_ParseArmour(name, text, od->ratings, qtrue);
+						Com_ParseArmourOrResistance(name, text, od->ratings, qtrue);
 						break;
 					default:
 						break;
@@ -1959,7 +1964,7 @@ const char *const name_strings[NAME_NUM_TYPES] = {
 	"male_lastname"
 };
 
-/** @brief Valid equipement definition values from script files. */
+/** @brief Valid equipment definition values from script files. */
 static const value_t equipment_definition_vals[] = {
 	{"mininterest", V_INT, offsetof(equipDef_t, minInterest), 0},
 	{"maxinterest", V_INT, offsetof(equipDef_t, maxInterest), 0},
@@ -2059,11 +2064,6 @@ static void Com_ParseEquipment (const char *name, const char **text)
 						type, name);
 				if (n)
 					ed->numAircraft[type] = n;
-			} else if (!strcmp(token, "ugv")) {
-				token = Com_EParse(text, errhead, name);
-				if (!*text || *token == '}')
-					Sys_Error("Invalid ugv token in equipment definition: %s", ed->name);
-				/** @todo parse ugv */
 			} else {
 				Sys_Error("unknown token in equipment in definition %s: '%s'", ed->name, token);
 			}
@@ -2080,12 +2080,11 @@ NAME AND TEAM DEFINITION INTERPRETER
 
 /**
  * @param[in] gender 1 (female) or 2 (male)
- * @param[in] td The team defintion to get the name from
+ * @param[in] td The team definition to get the name from
  * @sa Com_GetCharacterValues
  */
-const char *Com_GiveName (int gender, teamDef_t *td)
+static const char *Com_GiveName (int gender, const teamDef_t *td)
 {
-	static char returnName[MAX_VAR];
 	int j, name = 0;
 	linkedList_t* list;
 
@@ -2112,8 +2111,7 @@ const char *Com_GiveName (int gender, teamDef_t *td)
 	}
 
 	/* store the name */
-	Q_strncpyz(returnName, (const char*)list->data, sizeof(returnName));
-	return returnName;
+	return (const char*)list->data;
 }
 
 /**
@@ -2122,7 +2120,7 @@ const char *Com_GiveName (int gender, teamDef_t *td)
  * @param[in] td The team definition
  * @sa Com_GetCharacterValues
  */
-const char *Com_GiveModel (int type, int gender, const teamDef_t *td)
+static const char *Com_GiveModel (int type, int gender, const teamDef_t *td)
 {
 	int j;
 
@@ -2496,7 +2494,6 @@ static const value_t teamDefValues[] = {
 	{"hit_particle", V_STRING, offsetof(teamDef_t, hitParticle), 0}, /**< What particle effect should be spawned if a unit of this type is hit? */
 	{"death_texture", V_STRING, offsetof(teamDef_t, deathTextureName), 0},
 	{"race", V_RACE, offsetof(teamDef_t, race), MEMBER_SIZEOF(teamDef_t, race)},
-	{"robot", V_BOOL, offsetof(teamDef_t, robot), MEMBER_SIZEOF(teamDef_t, robot)}, /**< Is this a robotic unit? */
 
 	{NULL, 0, 0, 0}
 };
@@ -2576,12 +2573,39 @@ static void Com_ParseTeam (const char *name, const char **text)
 					td->onlyWeapon = od;
 				else
 					Sys_Error("Com_ParseTeam: Could not get item definition for '%s'", token);
+			} else if (!strcmp(token, "templates")) {
+				token = Com_EParse(text, errhead, name);
+				if (!*text || *token != '{')
+					Com_Printf("Com_ParseTeam: template list without body ignored in team def \"%s\" \n", name);
+				else {
+					do {
+						token = Com_EParse(text, errhead, name);
+						if (*token == '}')
+							break;
+						for (i = 0; i < td->numTemplates; i++) {
+							if (!strcmp(token, td->characterTemplates[i]->id)) {
+								Com_Printf("Com_ParseTeam: template %s used more than once in team def %s second ignored", token, name);
+								break;
+							}
+						}
+						if (i >= td->numTemplates) {
+							const chrTemplate_t *ct = Com_GetCharacterTemplateByID(token);
+							if (ct)
+								td->characterTemplates[td->numTemplates++] = ct;
+							else
+								Sys_Error("Com_ParseTeam: Could not get character template for '%s' in %s", token, name);
+						} else
+							break;
+					} while (*text);
+				}
 			} else if (!strcmp(token, "models"))
 				Com_ParseActorModels(name, text, td);
 			else if (!strcmp(token, "names"))
 				Com_ParseActorNames(name, text, td);
 			else if (!strcmp(token, "actorsounds"))
 				Com_ParseActorSounds(name, text, td);
+			else if (!strcmp(token, "resistance"))
+				Com_ParseArmourOrResistance(name, text, td->resistance, qfalse);
 			else
 				Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, name);
 		}
@@ -2592,6 +2616,154 @@ static void Com_ParseTeam (const char *name, const char **text)
 		Q_strncpyz(td->deathTextureName, va("pics/sfx/blood_%i", i), sizeof(td->deathTextureName));
 		Com_DPrintf(DEBUG_CLIENT, "Using random blood for teamdef: '%s' (%i)\n", td->id, i);
 	}
+}
+
+/**
+ * @brief Returns the chrTemplate pointer for the given id - or NULL if not found in the chrTemplates
+ * array
+ * @param[in] team The character template id (given in ufo-script files)
+ */
+const chrTemplate_t* Com_GetCharacterTemplateByID (const char *chrTemplate)
+{
+	int i;
+
+	/* get character template */
+	for (i = 0; i < csi.numChrTemplates; i++)
+		if (!strcmp(chrTemplate, csi.chrTemplates[i].id))
+			return &csi.chrTemplates[i];
+
+	Com_Printf("Com_GetCharacterTemplateByID: could not find character template: '%s'\n", chrTemplate);
+	return NULL;
+}
+
+static const value_t ugvValues[] = {
+	{"tu", V_INT, offsetof(ugv_t, tu), MEMBER_SIZEOF(ugv_t, tu)},
+	{"weapon", V_STRING, offsetof(ugv_t, weapon), 0},
+	{"armour", V_STRING, offsetof(ugv_t, armour), 0},
+	{"actors", V_STRING, offsetof(ugv_t, actors), 0},
+	{"price", V_INT, offsetof(ugv_t, price), 0},
+
+	{NULL, 0, 0, 0}
+};
+
+/**
+ * @brief Parse 2x2 units (e.g. UGVs)
+ * @sa CL_ParseClientData
+ */
+static void Com_ParseUGVs (const char *name, const char **text)
+{
+	const char *errhead = "Com_ParseUGVs: unexpected end of file (ugv ";
+	const char *token;
+	const value_t *v;
+	ugv_t *ugv;
+	int i;
+
+	/* get name list body body */
+	token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseUGVs: ugv \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	for (i = 0; i < csi.numUGV; i++) {
+		if (!strcmp(name, csi.ugvs[i].id)) {
+			Com_Printf("Com_ParseUGVs: ugv \"%s\" with same name already loaded\n", name);
+			return;
+		}
+	}
+
+	/* parse ugv */
+	if (csi.numUGV >= MAX_UGV) {
+		Com_Printf("Com_ParseUGVs: Too many UGV descriptions, '%s' ignored.\n", name);
+		return;
+	}
+
+	ugv = &csi.ugvs[csi.numUGV];
+	memset(ugv, 0, sizeof(*ugv));
+	ugv->id = Mem_PoolStrDup(name, com_genericPool, 0);
+	ugv->idx = csi.numUGV;
+	csi.numUGV++;
+
+	do {
+		/* get the name type */
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+		for (v = ugvValues; v->string; v++)
+			if (!strncmp(token, v->string, sizeof(v->string))) {
+				/* found a definition */
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				Com_EParseValue(ugv, token, v->type, v->ofs, v->size);
+				break;
+			}
+			if (!v->string)
+				Com_Printf("Com_ParseUGVs: unknown token \"%s\" ignored (ugv %s)\n", token, name);
+	} while (*text);
+}
+
+/**
+ * @brief Parses character templates from scripts
+ */
+static void Com_ParseCharacterTemplate (const char *name, const char **text)
+{
+	const char *errhead = "Com_ParseCharacterTemplate: unexpected end of file";
+	const char *token;
+	chrTemplate_t *ct;
+	int i;
+
+	for (i = 0; i < csi.numChrTemplates; i++)
+		if (!strcmp(name, csi.chrTemplates[i].id)) {
+			Com_Printf("Com_ParseCharacterTemplate: Template with same name found, second ignored '%s'\n", name);
+			return;
+		}
+
+	if (i >= MAX_CHARACTER_TEMPLATES)
+		Sys_Error("Com_ParseCharacterTemplate: too many character templates\n");
+
+	/* initialize the character template */
+	ct = &csi.chrTemplates[csi.numChrTemplates++];
+	memset(ct, 0, sizeof(*ct));
+
+	Q_strncpyz(ct->id, name, sizeof(ct->id));
+
+	token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseCharacterTemplate: character template \"%s\" without body ignored\n", name);
+		csi.numChrTemplates--;
+		return;
+	}
+
+	do {
+		token = Com_EParse(text, errhead, name);
+		if (!*text || *token == '}')
+			return;
+
+		for (i = 0; i < SKILL_NUM_TYPES + 1; i++)
+			if (!strcmp(token, skillNames[i])) {
+				/* found a definition */
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					return;
+
+				Com_EParseValue(ct->skills[i], token, V_INT2, 0, sizeof(ct->skills[i]));
+				break;
+			}
+		if (i >= SKILL_NUM_TYPES + 1) {
+			if (!strcmp(token, "rate")) {
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				ct->rate = atof(token);
+			} else
+				Com_Printf("Com_ParseCharacterTemplate: unknown token \"%s\" ignored (template %s)\n", token, name);
+		}
+	} while (*text);
 }
 
 /*
@@ -2613,7 +2785,7 @@ static const value_t terrainTypeValues[] = {
 };
 
 /**
- * @brief Searches the terrain defintion if given
+ * @brief Searches the terrain definition if given
  * @param[in] textureName The terrain definition id from script files
  * which is the texture name relative to base/textures
  */
@@ -2835,28 +3007,28 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 			if (csi.dts[csi.numDTs].showInMenu) {
 				Com_DPrintf(DEBUG_CLIENT, "Com_ParseDamageTypes: dmgtype/dmgweight %s\n", token);
 				/* Special IDs */
-				if (!strncmp(token, "normal", 6))
+				if (!strcmp(token, "normal"))
 					csi.damNormal = csi.numDTs;
-				else if (!strncmp(token, "blast", 5))
+				else if (!strcmp(token, "blast"))
 					csi.damBlast = csi.numDTs;
-				else if (!strncmp(token, "fire", 4))
+				else if (!strcmp(token, "fire"))
 					csi.damFire = csi.numDTs;
-				else if (!strncmp(token, "shock", 5))
+				else if (!strcmp(token, "shock"))
 					csi.damShock = csi.numDTs;
-				else if (!strncmp(token, "laser", 5))
+				else if (!strcmp(token, "laser"))
 					csi.damLaser = csi.numDTs;
-				else if (!strncmp(token, "plasma", 6))
+				else if (!strcmp(token, "plasma"))
 					csi.damPlasma = csi.numDTs;
-				else if (!strncmp(token, "particle", 7))
+				else if (!strcmp(token, "particlebeam"))
 					csi.damParticle = csi.numDTs;
-				else if (!strncmp(token, "stun_electro", 12))
+				else if (!strcmp(token, "stun_electro"))
 					csi.damStunElectro = csi.numDTs;
-				else if (!strncmp(token, "stun_gas", 8))
+				else if (!strcmp(token, "stun_gas"))
 					csi.damStunGas = csi.numDTs;
 				else
 					Com_Printf("Unknown dmgtype: '%s'\n", token);
 			} else {
-				Com_DPrintf(DEBUG_CLIENT, "Com_ParseDamageTypes: dmyweight %s\n", token);
+				Com_DPrintf(DEBUG_CLIENT, "Com_ParseDamageTypes: dmgweight %s\n", token);
 			}
 
 			csi.numDTs++;
@@ -2944,6 +3116,42 @@ const char* Com_UFOCrashedTypeToShortName (ufoType_t type)
 }
 
 /**
+ * @brief Searches an UGV definition by a given script id and returns the pointer to the global data
+ * @param[in] ugvID The script id of the UGV definition you are looking for
+ * @return ugv_t pointer or NULL if not found.
+ * @note This function gives no warning on null name or if no ugv found
+ */
+ugv_t *Com_GetUGVByIDSilent (const char *ugvID)
+{
+	int i;
+
+	if (!ugvID)
+		return NULL;
+	for (i = 0; i < csi.numUGV; i++) {
+		if (!strcmp(csi.ugvs[i].id, ugvID)) {
+			return &csi.ugvs[i];
+		}
+	}
+	return NULL;
+}
+
+/**
+ * @brief Searches an UGV definition by a given script id and returns the pointer to the global data
+ * @param[in] ugvID The script id of the UGV definition you are looking for
+ * @return ugv_t pointer or NULL if not found.
+ */
+ugv_t *Com_GetUGVByID (const char *ugvID)
+{
+	ugv_t *ugv = Com_GetUGVByIDSilent(ugvID);
+
+	if (!ugvID)
+		Com_Printf("Com_GetUGVByID Called with NULL ugvID!\n");
+	else if (!ugv)
+		Com_Printf("Com_GetUGVByID: No ugv_t entry found for id '%s' in %i entries.\n", ugvID, csi.numUGV);
+	return ugv;
+}
+
+/**
  * @brief Creates links to other items (i.e. ammo<->weapons)
  */
 static void Com_AddObjectLinks (void)
@@ -2991,161 +3199,16 @@ static void Com_AddObjectLinks (void)
 		if (od->numWeapons == 0 && (od->weapon || od->craftitem.type <= AC_ITEM_WEAPON)) {
 			/* this is a weapon, an aircraft weapon, or a base defence system */
 			for (n = 0; n < csi.numODs; n++) {
-				for (m = 0; m < csi.ods[n].numWeapons; m++) {
-					if (csi.ods[n].weapons[m] == &csi.ods[i]) {
+				objDef_t *weapon = INVSH_GetItemByIDX(n);
+				for (m = 0; m < weapon->numWeapons; m++) {
+					if (weapon->weapons[m] == od) {
 						assert(od->numAmmos <= MAX_AMMOS_PER_OBJDEF);
-						od->ammos[od->numAmmos++] = &csi.ods[n];
+						od->ammos[od->numAmmos++] = weapon;
 					}
 				}
 			}
 		}
 	}
-}
-
-mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
-{
-	int i;
-
-	assert(mapDefID);
-
-	for (i = 0; i < csi.numMDs; i++) {
-		if (!strcmp(csi.mds[i].id, mapDefID))
-			return &csi.mds[i];
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "Com_GetMapDefinition: Could not find mapdef with id: '%s'\n", mapDefID);
-	return NULL;
-}
-
-/** @brief valid mapdef descriptors */
-static const value_t mapdef_vals[] = {
-	{"description", V_TRANSLATION_STRING, offsetof(mapDef_t, description), 0},
-	{"map", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, map), 0},
-	{"param", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, param), 0},
-	{"size", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, size), 0},
-
-	{"maxaliens", V_INT, offsetof(mapDef_t, maxAliens), MEMBER_SIZEOF(mapDef_t, maxAliens)},
-	{"storyrelated", V_BOOL, offsetof(mapDef_t, storyRelated), MEMBER_SIZEOF(mapDef_t, storyRelated)},
-	{"hurtaliens", V_BOOL, offsetof(mapDef_t, hurtAliens), MEMBER_SIZEOF(mapDef_t, hurtAliens)},
-
-	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
-	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},
-
-	{"onwin", V_STRING, offsetof(mapDef_t, onwin), 0},
-	{"onlose", V_STRING, offsetof(mapDef_t, onlose), 0},
-
-	{NULL, 0, 0, 0}
-};
-
-static void Com_ParseMapDefinition (const char *name, const char **text)
-{
-	const char *errhead = "Com_ParseMapDefinition: unexpected end of file (mapdef ";
-	mapDef_t *md;
-	const value_t *vp;
-	const char *token;
-
-	/* get it's body */
-	token = Com_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" without body ignored\n", name);
-		return;
-	}
-
-	md = &csi.mds[csi.numMDs++];
-	if (csi.numMDs >= MAX_MAPDEFS)
-		Sys_Error("Com_ParseMapDefinition: Max mapdef hit");
-
-	memset(md, 0, sizeof(*md));
-	md->id = Mem_PoolStrDup(name, com_genericPool, 0);
-
-	do {
-		token = Com_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		for (vp = mapdef_vals; vp->string; vp++)
-			if (!strcmp(token, vp->string)) {
-				/* found a definition */
-				token = Com_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				switch (vp->type) {
-				default:
-					Com_EParseValue(md, token, vp->type, vp->ofs, vp->size);
-					break;
-				case V_TRANSLATION_STRING:
-					if (*token == '_')
-						token++;
-				/* fall through */
-				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)md + (int)vp->ofs), com_genericPool, 0);
-					break;
-				}
-				break;
-			}
-
-		if (!vp->string) {
-			linkedList_t **list;
-			if (!strcmp(token, "ufos")) {
-				list = &md->ufos;
-			} else if (!strcmp(token, "aircraft")) {
-				list = &md->aircraft;
-			} else if (!strcmp(token, "terrains")) {
-				list = &md->terrains;
-			} else if (!strcmp(token, "populations")) {
-				list = &md->populations;
-			} else if (!strcmp(token, "cultures")) {
-				list = &md->cultures;
-			} else if (!strcmp(token, "gametypes")) {
-				list = &md->gameTypes;
-			} else {
-				Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
-				continue;
-			}
-			token = Com_EParse(text, errhead, name);
-			if (!*text || *token != '{') {
-				Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" has ufos, gametypes, terrains, populations or cultures block with no opening brace\n", name);
-				break;
-			}
-			do {
-				token = Com_EParse(text, errhead, name);
-				if (!*text || *token == '}')
-					break;
-				LIST_AddString(list, token);
-			} while (*text);
-		}
-	} while (*text);
-
-	if (!md->map) {
-		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no map\n", name);
-		csi.numMDs--;
-	}
-
-	if (!md->description) {
-		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no description\n", name);
-		csi.numMDs--;
-	}
-}
-
-/**
- * @sa FS_MapDefSort
- */
-static int Com_MapDefSort (const void *mapDef1, const void *mapDef2)
-{
-	const char *map1 = ((const mapDef_t *)mapDef1)->map;
-	const char *map2 = ((const mapDef_t *)mapDef2)->map;
-
-	/* skip special map chars for rma and base attack */
-	if (map1[0] == '+' || map1[0] == '.')
-		map1++;
-	if (map2[0] == '+' || map2[0] == '.')
-		map2++;
-
-	return Q_StringSort(map1, map2);
 }
 
 /**
@@ -3183,16 +3246,16 @@ void Com_ParseScripts (qboolean onlyServer)
 
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
 		/* server/client scripts */
-		if (!strcmp(type, "item"))
-			Com_ParseItem(name, &text, qfalse);
-		else if (!strcmp(type, "mapdef"))
-			Com_ParseMapDefinition(name, &text);
-		else if (!strcmp(type, "craftitem"))
-			Com_ParseItem(name, &text, qtrue);
+		if (!strcmp(type, "item") || !strcmp(type, "craftitem"))
+			Com_ParseItem(name, &text);
 		else if (!strcmp(type, "inventory"))
 			Com_ParseInventory(name, &text);
 		else if (!strcmp(type, "terrain"))
 			Com_ParseTerrain(name, &text);
+		else if (!strcmp(type, "ugv"))
+			Com_ParseUGVs(name, &text);
+		else if (!strcmp(type, "chrtemplate"))
+			Com_ParseCharacterTemplate(name, &text);
 		else if (!onlyServer)
 			CL_ParseClientData(type, name, &text);
 	}
@@ -3223,13 +3286,9 @@ void Com_ParseScripts (qboolean onlyServer)
 			CL_ParseClientData(type, name, &text);
 	}
 
-	/* sort the mapdef array */
-	qsort(csi.mds, csi.numMDs, sizeof(mapDef_t), Com_MapDefSort);
-
 	Com_Printf("Shared Client/Server Info loaded\n");
 	Com_Printf("...%3i items parsed\n", csi.numODs);
 	Com_Printf("...%3i damage types parsed\n", csi.numDTs);
-	Com_Printf("...%3i map definitions parsed\n", csi.numMDs);
 	Com_Printf("...%3i equipment definitions parsed\n", csi.numEDs);
 	Com_Printf("...%3i inventory definitions parsed\n", csi.numIDs);
 	Com_Printf("...%3i team definitions parsed\n", csi.numTeamDefs);

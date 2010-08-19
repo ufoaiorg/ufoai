@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_LOCAL_H
 #define R_LOCAL_H
 
+#include "../../common/common.h"
 #include "../cl_renderer.h"
 #include "../cl_video.h"
 
@@ -53,8 +54,6 @@ void R_SetSurfaceBumpMappingParameters(const mBspSurface_t *surf, const image_t 
 
 extern cvar_t *r_brightness;
 extern cvar_t *r_contrast;
-extern cvar_t *r_invert;
-extern cvar_t *r_monochrome;
 extern cvar_t *r_saturation;
 
 extern cvar_t *r_drawworld;
@@ -76,9 +75,6 @@ extern cvar_t *r_drawbuffer;
 extern cvar_t *r_driver;
 extern cvar_t *r_swapinterval;
 extern cvar_t *r_multisample;
-extern cvar_t *r_texturemode;
-extern cvar_t *r_texturealphamode;
-extern cvar_t *r_texturesolidmode;
 extern cvar_t *r_threads;
 extern cvar_t *r_wire;
 extern cvar_t *r_vertexbuffers;
@@ -186,6 +182,7 @@ typedef struct {
 	int maxDrawBuffers;
 	int maxRenderbufferSize;
 	int maxColorAttachments;
+	int maxVertexTextureImageUnits;
 
 	char lodDir[8];
 

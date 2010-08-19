@@ -30,10 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_screen.h"
-#include "../cinematic/cl_cinematic.h"
 #include "../cl_console.h"
-#include "../menu/m_input.h"
-#include "../menu/m_nodes.h"
+#include "../ui/ui_input.h"
+#include "../ui/ui_nodes.h"
 #include "../../shared/utf8.h"
 
 char keyLines[MAXKEYLINES][MAXCMDLINE];
@@ -441,7 +440,7 @@ static void Key_Console (int key, int unicode)
  * @brief Handles input when cls.keyDest == key_message
  * @note Used for chatting and cvar editing via menu
  * @sa Key_Event
- * @sa MN_LeftClick
+ * @sa UI_LeftClick
  */
 static void Key_Message (int key)
 {
@@ -577,7 +576,7 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
 	char **keySpace = NULL;
 
 	switch (space) {
-	case KEYSPACE_MENU:
+	case KEYSPACE_UI:
 		keySpace = menuKeyBindings;
 		break;
 	case KEYSPACE_GAME:
@@ -617,7 +616,7 @@ void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t space)
 
 	Com_DPrintf(DEBUG_CLIENT, "Binding for '%s' for space ", binding);
 	switch (space) {
-	case KEYSPACE_MENU:
+	case KEYSPACE_UI:
 		keySpace = &menuKeyBindings[keynum];
 		Com_DPrintf(DEBUG_CLIENT, "menu\n");
 		break;
@@ -665,7 +664,7 @@ static void Key_Unbind_f (void)
 	}
 
 	if (!strcmp(Cmd_Argv(0), "unbindmenu"))
-		Key_SetBinding(b, "", KEYSPACE_MENU);
+		Key_SetBinding(b, "", KEYSPACE_UI);
 	else if (!strcmp(Cmd_Argv(0), "unbindbattle"))
 		Key_SetBinding(b, "", KEYSPACE_BATTLE);
 	else
@@ -683,7 +682,7 @@ static void Key_Unbindall_f (void)
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keyBindings[i]) {
 			if (!strcmp(Cmd_Argv(0), "unbindallmenu"))
-				Key_SetBinding(i, "", KEYSPACE_MENU);
+				Key_SetBinding(i, "", KEYSPACE_UI);
 			else
 				Key_SetBinding(i, "", KEYSPACE_GAME);
 		}
@@ -727,9 +726,9 @@ static void Key_Bind_f (void)
 	}
 
 	if (!strcmp(Cmd_Argv(0), "bindui"))
-		MN_SetKeyBinding(cmd, b);
+		UI_SetKeyBinding(cmd, b);
 	else if (!strcmp(Cmd_Argv(0), "bindmenu"))
-		Key_SetBinding(b, cmd, KEYSPACE_MENU);
+		Key_SetBinding(b, cmd, KEYSPACE_UI);
 	else if (!strcmp(Cmd_Argv(0), "bindbattle"))
 		Key_SetBinding(b, cmd, KEYSPACE_BATTLE);
 	else
@@ -781,15 +780,15 @@ void Key_WriteBindings (const char* filename)
 			cnt++;
 		}
 
-	for (i = 0; i < MN_GetKeyBindingCount(); i++) {
+	for (i = 0; i < UI_GetKeyBindingCount(); i++) {
 		const char *path;
-		menuKeyBinding_t*binding = MN_GetKeyBindingByIndex (i);
+		uiKeyBinding_t*binding = UI_GetKeyBindingByIndex (i);
 		if (binding->node == NULL)
 			continue;
 		if (binding->property == NULL)
-			path = va("%s", MN_GetPath(binding->node));
+			path = va("%s", UI_GetPath(binding->node));
 		else
-			path = va("%s@%s", MN_GetPath(binding->node), binding->property->string);
+			path = va("%s@%s", UI_GetPath(binding->node), binding->property->string);
 
 		if (FS_Printf(&f, "bindui %s \"%s\"\n", Key_KeynumToString(binding->key), path) < 0)
 			deleteFile = qtrue;
@@ -910,7 +909,7 @@ void Key_SetDest (int keyDest)
 	cls.keyDest = keyDest;
 	if (cls.keyDest == key_console) {
 		/* make sure the menu no more capture inputs */
-		MN_ReleaseInput();
+		UI_ReleaseInput();
 	}
 }
 
@@ -928,12 +927,9 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		return;
 
 	/* any key (except F1-F12) during the sequence mode will bring up the menu */
-	if (key == K_ESCAPE)
-		if (down && cls.playingCinematic == CIN_STATUS_FULLSCREEN)
-			CIN_StopCinematic();
 
 	if (cls.keyDest == key_game && down) {
-		if (MN_KeyPressed(key, unicode))
+		if (UI_KeyPressed(key, unicode))
 			return;
 	}
 
@@ -990,9 +986,9 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		 * present as bare keys on other keyboards. Smooth over the difference
 		 * here by using the translated value if there is a binding for it. */
 		const char *kb = NULL;
-		if (mouseSpace == MS_MENU && unicode >= 32 && unicode < 127)
+		if (mouseSpace == MS_UI && unicode >= 32 && unicode < 127)
 			kb = menuKeyBindings[unicode];
-		if (!kb && mouseSpace == MS_MENU)
+		if (!kb && mouseSpace == MS_UI)
 			kb = menuKeyBindings[key];
 		if (!kb && unicode >= 32 && unicode < 127)
 			kb = keyBindings[unicode];

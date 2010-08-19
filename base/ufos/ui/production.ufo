@@ -3,13 +3,16 @@
 // ==================
 window production
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image		ui/base_bg
+		src		"background/base_bg"
 	}
 	cmpBaseHeader baseHeader {
 	}
@@ -39,19 +42,21 @@ window production
 	}
 
 	tab market_navigation {
-		pos		"47 106"
-		size	"938 39"
-		cvar	*cvar:mn_itemtype
-		onChange {
-			cmd "prod_type <cvar:mn_itemtype>;"
-			call *node:root.prod_stores
+		{
+			pos		"47 106"
+			size	"938 39"
+			cvar	*cvar:mn_itemtype
+			onChange {
+				cmd "prod_type <cvar:mn_itemtype>;"
+				call *node:root.prod_stores
+			}
 		}
 
-		option description {
+		option primary {
 			label	"_Primary"
 			value	"primary"
 		}
-		option description {
+		option secondary {
 			label	"_Secondary"
 			value	"secondary"
 		}
@@ -59,31 +64,31 @@ window production
 			label	"_Heavy"
 			value	"heavy"
 		}
-		option description {
+		option misc {
 			label	"_Misc"
 			value	"misc"
 		}
-		option description {
+		option armour {
 			label	"_Armour"
 			value	"armour"
 		}
-		option description {
+		option craftitem {
 			label	"_Craft items"
 			value	"craftitem"
 		}
-		option description {
+		option aircraft {
 			label	"_Aircraft"
 			value	"aircraft"
 		}
-		option description {
+		option ugvitem {
 			label	"_UGV items"
 			value	"ugvitem"
 		}
-		option description {
+		option dummy {
 			label	"_Other"
 			value	"dummy"
 		}
-		option description {
+		option disassembly {
 			label	"_Disassembly"
 			value	"disassembly"
 		}
@@ -116,7 +121,7 @@ window production
 	panel itemlist {
 		pos		"12 160"
 		size	"553 597"
-		image	ui/panel_grey_green_large2
+		image	"ui/panel_grey_green_large2"
 	}
 
 	// ==================
@@ -127,7 +132,7 @@ window production
 		{
 			pos		"580 160"
 			size	"420 145"
-			image	ui/panel_grey_green_large
+			image	"ui/panel_grey_green_large"
 		}
 
 		// ==================
@@ -139,7 +144,7 @@ window production
 			string		"_Workers (ready/all):"
 			pos			"30 25"
 			size		"250 20"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_prod_workers
@@ -147,8 +152,8 @@ window production
 			string		*cvar:mn_production_workers
 			pos			"295 25"
 			size		"100 20"
-			textalign	ur
-			font		f_small
+			textalign	ALIGN_UR
+			font		"f_small"
 		}
 
 		// ==================
@@ -160,7 +165,7 @@ window production
 			string		"_Workshop capacity:"
 			pos			"30 50"
 			size		"250 20"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_prod_basecap
@@ -168,8 +173,8 @@ window production
 			string		*cvar:mn_production_basecap
 			pos			"295 50"
 			size		"100 20"
-			textalign	ur
-			font		f_small
+			textalign	ALIGN_UR
+			font		"f_small"
 		}
 
 		// ==================
@@ -181,7 +186,7 @@ window production
 			string		"_Storage capacity:"
 			pos			"30 75"
 			size		"250 20"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_prod_storage
@@ -189,8 +194,8 @@ window production
 			string		*cvar:mn_production_storage
 			pos			"295 75"
 			size		"100 20"
-			textalign	ur
-			font		f_small
+			textalign	ALIGN_UR
+			font		"f_small"
 		}
 
 		// ==================
@@ -202,7 +207,7 @@ window production
 			string		"_Production limit:"
 			pos			"30 100"
 			size		"250 20"
-			font		f_small
+			font		"f_small"
 		}
 
 		string txt_prod_limit
@@ -210,8 +215,8 @@ window production
 			string		*cvar:mn_production_limit
 			pos			"295 100"
 			size		"100 20"
-			textalign	ur
-			font		f_small
+			textalign	ALIGN_UR
+			font		"f_small"
 		}
 	}
 
@@ -227,23 +232,23 @@ window production
 		lineheight	"25"
 		pos			"55 180"
 		size		"265 550"
-		longlines	prettychop
+		longlines	LONGLINES_PRETTYCHOP
 		onClick		{
-			*node:(text)root.prodlist_amount@lineselected = <node:this@lineselected>
-			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
+			*node:root.prodlist_amount@lineselected = <node:this@lineselected>
+			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_click <lineselected>;"
 		}
 		onRClick	{
-			*node:(text)root.prodlist_amount@lineselected = <node:this@lineselected>
-			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
+			*node:root.prodlist_amount@lineselected = <node:this@lineselected>
+			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_rclick <lineselected>;"
 		}
 		onViewChange	{
-			*(abstractscrollbar)prodlist_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)prodlist_scroll@current = <viewpos>
-			*(abstractscrollbar)prodlist_scroll@viewsize = <viewsize>
-			*(textlist)prodlist_amount@viewpos = <viewpos>
-			*(textlist)prodlist_queued@viewpos = <viewpos>
+			*node:root.prodlist_scroll@fullsize = <fullsize>
+			*node:root.prodlist_scroll@current = <viewpos>
+			*node:root.prodlist_scroll@viewsize = <viewsize>
+			*node:root.prodlist_amount@viewpos = <viewpos>
+			*node:root.prodlist_queued@viewpos = <viewpos>
 		}
 	}
 
@@ -251,27 +256,27 @@ window production
 	{
 		dataid		TEXT_PRODUCTION_AMOUNT
 		color		"0 .78 0 1"
-		textalign	cr
+		textalign	ALIGN_CR
 		pos			"330 180"
 		rows		"22"
 		size		"40 550"
 		lineheight	"25"
 		onClick		{
-			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
-			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
+			*node:root.prodlist@lineselected = <node:this@lineselected>
+			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_click <lineselected>;"
 		}
 		onRClick	{
-			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
-			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
+			*node:root.prodlist@lineselected = <node:this@lineselected>
+			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_rclick <lineselected>;"
 		}
 		onViewChange	{
-			*(abstractscrollbar)prodlist_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)prodlist_scroll@current = <viewpos>
-			*(abstractscrollbar)prodlist_scroll@viewsize = <viewsize>
-			*prodlist@viewpos = <viewpos>
-			*(textlist)prodlist_queued@viewpos = <viewpos>
+			*node:root.prodlist_scroll@fullsize = <fullsize>
+			*node:root.prodlist_scroll@current = <viewpos>
+			*node:root.prodlist_scroll@viewsize = <viewsize>
+			*node:root.prodlist@viewpos = <viewpos>
+			*node:root.prodlist_queued@viewpos = <viewpos>
 		}
 	}
 
@@ -284,35 +289,35 @@ window production
 		lineheight	"25"
 		rows		"22"
 		onClick		{
-			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
-			*node:(text)root.prodlist_amount@lineselected = <node:this@lineselected>
+			*node:root.prodlist@lineselected = <node:this@lineselected>
+			*node:root.prodlist_amount@lineselected = <node:this@lineselected>
 			cmd "prodlist_click <lineselected>;"
 		}
 		onRClick	{
-			*node:(text)root.prodlist@lineselected = <node:this@lineselected>
-			*node:(text)root.prodlist_queued@lineselected = <node:this@lineselected>
+			*node:root.prodlist@lineselected = <node:this@lineselected>
+			*node:root.prodlist_queued@lineselected = <node:this@lineselected>
 			cmd "prodlist_rclick <lineselected>;"
 		}
 		onViewChange	{
-			*(abstractscrollbar)prodlist_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)prodlist_scroll@current = <viewpos>
-			*(abstractscrollbar)prodlist_scroll@viewsize = <viewsize>
-			*prodlist_amount@viewpos = <viewpos>
-			*prodlist@viewpos = <viewpos>
+			*node:root.prodlist_scroll@fullsize = <fullsize>
+			*node:root.prodlist_scroll@current = <viewpos>
+			*node:root.prodlist_scroll@viewsize = <viewsize>
+			*node:root.prodlist_amount@viewpos = <viewpos>
+			*node:root.prodlist@viewpos = <viewpos>
 		}
 	}
 
 	vscrollbar prodlist_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"428 180"
 		height		"550"
 		current		0
 		viewsize	30
 		fullsize	30
 		onChange	{
-			*prodlist@viewpos = <current>
-			*prodlist_amount@viewpos = <current>
-			*prodlist_queued@viewpos = <current>
+			*node:root.prodlist@viewpos = <current>
+			*node:root.prodlist_amount@viewpos = <current>
+			*node:root.prodlist_queued@viewpos = <current>
 		}
 	}
 
@@ -329,12 +334,12 @@ window production
 		{
 			pos		"580 310"
 			size	"420 447"
-			image	ui/panel_grey_green_large
+			image	"ui/panel_grey_green_large"
 		}
 
 		item itemmodel
 		{
-			model		*cvar:mn_item
+			src			*cvar:mn_item
 			pos			"56 23"
 			size		"336 140"
 			angles		"-10 160 70"
@@ -353,8 +358,8 @@ window production
 		pos			"730 505"
 		size		"40 20"
 		color		"0 .78 0 1"
-		font		f_small
-		textalign	ur
+		font		"f_small"
+		textalign	ALIGN_UR
 	}
 
 	string label_1 {
@@ -362,8 +367,8 @@ window production
 		pos			"786 505"
 		size		"24 20"
 		color		"0 .78 0 1"
-		font		f_small
-		textalign	ur
+		font		"f_small"
+		textalign	ALIGN_UR
 	}
 
 	string label_10 {
@@ -371,13 +376,13 @@ window production
 		pos			"824 505"
 		size		"36 20"
 		color		"0 .78 0 1"
-		font		f_small
-		textalign	ur
+		font		"f_small"
+		textalign	ALIGN_UR
 	}
 
 	spinner prod_change {
 		tooltip		"_Change the production amount"
-		image		ui/spinner_blue
+		image		"ui/spinner_blue"
 		pos			"810 505"
 		min			1
 		current		*cvar:mn_production_amount
@@ -388,7 +393,7 @@ window production
 
 	spinner prod_change_10 {
 		tooltip		"_Change the production amount"
-		image		ui/spinner_blue
+		image		"ui/spinner_blue"
 		pos			"860 505"
 		min			1
 		current		*cvar:mn_production_amount
@@ -400,10 +405,10 @@ window production
 	button prod_new
 	{
 		string		"_Start this production"
-		image		ui/button_green_small
+		image		"ui/button_green_small"
 		pos			"670 480"
 		size		"250 32"
-		font		f_small
+		font		"f_small"
 		color		"0 .78 0 1"
 		onClick		{ cmd "prod_inc;" }
 	}
@@ -447,15 +452,15 @@ window production
 	 */
 	confunc prod_nothingselected
 	{
-		*prod_stop@invis = true
-		*prod_down@invis = true
-		*prod_up@invis = true
-		*prod_change@invis = true
-		*prod_change_10@invis = true
-		*prod_new@invis = true
-		*prod_amount@invis = true
-		*label_1@invis = true
-		*label_10@invis = true
+		*node:root.prod_stop@invis = true
+		*node:root.prod_down@invis = true
+		*node:root.prod_up@invis = true
+		*node:root.prod_change@invis = true
+		*node:root.prod_change_10@invis = true
+		*node:root.prod_new@invis = true
+		*node:root.prod_amount@invis = true
+		*node:root.label_1@invis = true
+		*node:root.label_10@invis = true
 	}
 
 	/**
@@ -463,15 +468,15 @@ window production
 	 */
 	confunc prod_availableselected
 	{
-		*prod_stop@invis = true
-		*prod_down@invis = true
-		*prod_up@invis = true
-		*prod_change@invis = true
-		*prod_change_10@invis = true
-		*prod_amount@invis = true
-		*prod_new@invis = false
-		*label_1@invis = true
-		*label_10@invis = true
+		*node:root.prod_stop@invis = true
+		*node:root.prod_down@invis = true
+		*node:root.prod_up@invis = true
+		*node:root.prod_change@invis = true
+		*node:root.prod_change_10@invis = true
+		*node:root.prod_amount@invis = true
+		*node:root.prod_new@invis = false
+		*node:root.label_1@invis = true
+		*node:root.label_10@invis = true
 	}
 
 	/**
@@ -479,15 +484,15 @@ window production
 	 */
 	confunc prod_taskselected
 	{
-		*prod_stop@invis = false
-		*prod_down@invis = false
-		*prod_up@invis = false
-		*prod_change@invis = false
-		*prod_change_10@invis = false
-		*prod_amount@invis = false
-		*prod_new@invis = true
-		*label_1@invis = false
-		*label_10@invis = false
+		*node:root.prod_stop@invis = false
+		*node:root.prod_down@invis = false
+		*node:root.prod_up@invis = false
+		*node:root.prod_change@invis = false
+		*node:root.prod_change_10@invis = false
+		*node:root.prod_amount@invis = false
+		*node:root.prod_new@invis = true
+		*node:root.label_1@invis = false
+		*node:root.label_10@invis = false
 	}
 
 	// ==================
@@ -503,21 +508,21 @@ window production
 		tabwidth	260
 		rows		"10"
 		onViewChange	{
-			*(abstractscrollbar)description_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)description_scroll@current = <viewpos>
-			*(abstractscrollbar)description_scroll@viewsize = <viewsize>
+			*node:root.description_scroll@fullsize = <fullsize>
+			*node:root.description_scroll@current = <viewpos>
+			*node:root.description_scroll@viewsize = <viewsize>
 		}
 	}
 
 	vscrollbar description_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"960 528"
 		height		"100"
 		current		0
 		viewsize	10
 		fullsize	10
 		hidewhenunused true
-		onChange	{ *description@viewpos = <current> }
+		onChange	{ *node:root.description@viewpos = <current> }
 	}
 
 	// ==================
@@ -527,11 +532,11 @@ window production
 	confunc amountsetter {
 		*cvar:tmp = "<1>"
 		if ( *cvar:tmp eq "disable" ) {
-			*prod_change@disabled = true
-			*prod_change_10@disabled = true
+			*node:root.prod_change@disabled = true
+			*node:root.prod_change_10@disabled = true
 		} else {
-			*prod_change@disabled = false
-			*prod_change_10@disabled = false
+			*node:root.prod_change@disabled = false
+			*node:root.prod_change_10@disabled = false
 		}
 		delete *cvar:tmp
 	}

@@ -73,6 +73,7 @@ static const spawn_t spawns[] = {
 	{"func_rotating", SP_func_rotating},
 	{"trigger_hurt", SP_trigger_hurt},
 	{"trigger_touch", SP_trigger_touch},
+	{"trigger_rescue", SP_trigger_rescue},
 	{"misc_message", SP_misc_message},
 
 	{NULL, NULL}
@@ -241,17 +242,17 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 		if (c[0] == '}')
 			break;
 		if (!data)
-			gi.error("ED_ParseEntity: EOF without closing brace");
+			gi.Error("ED_ParseEntity: EOF without closing brace");
 
 		Q_strncpyz(keyname, c, sizeof(keyname));
 
 		/* parse value */
 		c = Com_Parse(&data);
 		if (!data)
-			gi.error("ED_ParseEntity: EOF without closing brace");
+			gi.Error("ED_ParseEntity: EOF without closing brace");
 
 		if (c[0] == '}')
-			gi.error("ED_ParseEntity: closing brace without data");
+			gi.Error("ED_ParseEntity: closing brace without data");
 
 		init = qtrue;
 
@@ -314,7 +315,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 	edict_t *ent;
 	int entnum;
 
-	gi.FreeTags(TAG_LEVEL);
+	G_FreeTags(TAG_LEVEL);
 
 	memset(&level, 0, sizeof(level));
 	G_EdictsReset();
@@ -327,6 +328,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 	ent = NULL;
 	level.activeTeam = TEAM_NO_ACTIVE;
 	level.actualRound = 1;
+	level.hurtAliens = sv_hurtaliens->integer;
 	ai_waypointList = NULL;
 
 	/* parse ents */
@@ -337,7 +339,7 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 		if (!entities)
 			break;
 		if (token[0] != '{')
-			gi.error("ED_LoadFromFile: found %s when expecting {", token);
+			gi.Error("ED_LoadFromFile: found %s when expecting {", token);
 
 		if (!ent)
 			ent = G_EdictsGetFirst();
@@ -362,13 +364,15 @@ void G_SpawnEntities (const char *mapname, qboolean day, const char *entities)
 	/* spawn ai players, if needed */
 	if (level.num_spawnpoints[TEAM_CIVILIAN]) {
 		if (AI_CreatePlayer(TEAM_CIVILIAN) == NULL)
-			gi.dprintf("Could not create civilian\n");
+			gi.DPrintf("Could not create civilian\n");
 	}
 
 	if ((sv_maxclients->integer == 1 || ai_numactors->integer) && level.num_spawnpoints[TEAM_ALIEN]) {
 		if (AI_CreatePlayer(TEAM_ALIEN) == NULL)
-			gi.dprintf("Could not create alien\n");
+			gi.DPrintf("Could not create alien\n");
 	}
+
+	Com_Printf("Used inventory slots after ai spawn: %i\n", game.i.GetUsedSlots(&game.i));
 
 	G_FindEdictGroups();
 }
@@ -398,7 +402,7 @@ edict_t *G_Spawn (void)
 	edict_t *ent = G_EdictsGetNewEdict();
 
 	if (!ent)
-		gi.error("G_Spawn: no free edicts");
+		gi.Error("G_Spawn: no free edicts");
 
 	G_InitEdict(ent);
 	return ent;
@@ -427,7 +431,7 @@ edict_t *G_SpawnFloor (const pos3_t pos)
  * This is only for particles that are spawned during a match - not for map particles.
  * @return A particle edict
  */
-edict_t *G_ParticleSpawn (const vec3_t origin, int spawnflags, const char *particle)
+edict_t *G_SpawnParticle (const vec3_t origin, int spawnflags, const char *particle)
 {
 	edict_t *ent = G_Spawn();
 	ent->classname = "particle";
@@ -462,7 +466,7 @@ static void G_ActorSpawn (edict_t *ent)
 
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
-		gi.dprintf("G_ActorSpawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
+		gi.DPrintf("G_ActorSpawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 
 	G_EdictCalcOrigin(ent);
 
@@ -494,7 +498,7 @@ static void G_Actor2x2Spawn (edict_t *ent)
 		ent->pos[2] = PATHFINDING_HEIGHT - 1;
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
-		gi.dprintf("G_Actor2x2Spawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
+		gi.DPrintf("G_Actor2x2Spawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 	G_EdictCalcOrigin(ent);
 
 	/* link it for collision detection */
@@ -600,7 +604,7 @@ static void SP_alien_start (edict_t *ent)
 	ent->STUN = 0;
 	ent->HP = MAX_HP;
 	/* hurt aliens in ufo crash missions (5%: almost dead, 15%: wounded, 30%: stunned)  */
-	if (gi.csi->currentMD && gi.csi->currentMD->hurtAliens) {
+	if (level.hurtAliens) {
 		const float random = frand();
 		if (random <= .05f) {
 			ent->STUN = 50;
@@ -684,7 +688,7 @@ static void SP_misc_mission (edict_t *ent)
 
 	if (!ent->HP && !ent->time && !ent->target) {
 		G_FreeEdict(ent);
-		gi.dprintf("misc_mission given with no objective\n");
+		gi.DPrintf("misc_mission given with no objective\n");
 		return;
 	}
 
@@ -788,11 +792,11 @@ static void SP_misc_model (edict_t *ent)
 				G_BuildForbiddenListForEntity(ent);
 				gi.LinkEdict(ent);
 			} else {
-				gi.dprintf("Could not get mins/maxs for model '%s'\n", ent->model);
+				gi.DPrintf("Could not get mins/maxs for model '%s'\n", ent->model);
 				G_FreeEdict(ent);
 			}
 		} else {
-			gi.dprintf("server_solid misc_model with no model given\n");
+			gi.DPrintf("server_solid misc_model with no model given\n");
 			G_FreeEdict(ent);
 		}
 	} else {
@@ -806,31 +810,13 @@ static void SP_misc_model (edict_t *ent)
  */
 static void SP_misc_item (edict_t *ent)
 {
-	edict_t *floor;
-	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
-	objDef_t *od;
-
 	if (!ent->item) {
-		gi.dprintf("No item defined in misc_item\n");
+		gi.DPrintf("No item defined in misc_item\n");
 		G_FreeEdict(ent);
 		return;
 	}
 
-	od = INVSH_GetItemByIDSilent(ent->item);
-	if (!od) {
-		gi.dprintf("Could not find item '%s' for misc_item\n", ent->item);
-		G_FreeEdict(ent);
-		return;
-	}
-
-	/* Also sets FLOOR(ent) to correct value. */
-	floor = G_GetFloorItems(ent);
-	/* nothing on the ground yet? */
-	if (!floor)
-		floor = G_SpawnFloor(ent->pos);
-
-	item.t = od;
-	game.i.TryAddToInventory(&game.i, &floor->chr.i, item, INVDEF(gi.csi->idFloor));
+	G_AddItemToFloor(ent->pos, ent->item);
 
 	/* now we can free the original edict */
 	G_FreeEdict(ent);
@@ -863,7 +849,7 @@ static void SP_misc_message (edict_t *ent)
 	}
 
 	if (ent->message[0] != '_')
-		gi.dprintf("No translation marker for misc_message set\n");
+		gi.DPrintf("No translation marker for misc_message set\n");
 	ent->use = Message_Use;
 	ent->classname = "misc_message";
 	ent->type = ET_MESSAGE;
@@ -906,10 +892,6 @@ static void SP_worldspawn (edict_t *ent)
 		gi.ConfigString(CS_MAXSOLDIERSPERTEAM, "%i", sv_maxsoldiersperteam->integer);
 		gi.ConfigString(CS_MAXSOLDIERSPERPLAYER, "%i", sv_maxsoldiersperplayer->integer);
 		gi.ConfigString(CS_ENABLEMORALE, "%i", sv_enablemorale->integer);
-		if (gi.csi->currentMD) {
-			gi.ConfigString(CS_MAXTEAMS, "%i", gi.csi->currentMD->teams);
-			gi.Cvar_Set("sv_maxteams", va("%i", gi.csi->currentMD->teams));
-		} else
-			gi.ConfigString(CS_MAXTEAMS, "%s", sv_maxteams->string);
+		gi.ConfigString(CS_MAXTEAMS, "%s", sv_maxteams->string);
 	}
 }

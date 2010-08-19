@@ -44,7 +44,7 @@ window messageoptions
 		dragbutton	true
 		closebutton	true
 		modal		true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Pause/message settings"
 	}
 
@@ -68,7 +68,7 @@ window messageoptions
 		string		"_Notify types:"
 		pos			"30 60"
 		size		"300 25"
-		font		f_small_bold
+		font		"f_small_bold"
 	}
 
 	button header_notify
@@ -123,22 +123,22 @@ window messageoptions
 		pos			"30 90"
 		size		"325 325"
 		onViewChange {
-			*(abstractscrollbar)messagetypes_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)messagetypes_scroll@current = <viewpos>
-			*(abstractscrollbar)messagetypes_scroll@viewsize = <viewsize>
+			*node:root.messagetypes_scroll@fullsize = <fullsize>
+			*node:root.messagetypes_scroll@current = <viewpos>
+			*node:root.messagetypes_scroll@viewsize = <viewsize>
 			cmd "msgoptions_scroll <viewpos>;"
 		}
 	}
 
 	vscrollbar messagetypes_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"455 90"
 		height		"325"
 		current		0
 		viewsize	13
 		fullsize	13
 		onChange	{
-			*messagetypes@viewpos = <current>
+			*node:root.messagetypes@viewpos = <current>
 			cmd "msgoptions_scroll <current>;"
 		}
 	}
@@ -149,27 +149,27 @@ window messageoptions
 
 	cmpMessageOptions option0 {
 		pos		"360 94"
-		num		0	
+		num		0
 	}
 
 	cmpMessageOptions option1 {
 		pos		"360 119"
-		num		1	
+		num		1
 	}
 
 	cmpMessageOptions option2 {
 		pos		"360 144"
-		num		2	
+		num		2
 	}
 
 	cmpMessageOptions option3 {
 		pos		"360 169"
-		num		3	
+		num		3
 	}
 
 	cmpMessageOptions option4 {
 		pos		"360 194"
-		num		4	
+		num		4
 	}
 
 	cmpMessageOptions option5 {
@@ -179,22 +179,22 @@ window messageoptions
 
 	cmpMessageOptions option6 {
 		pos		"360 244"
-		num		6	
+		num		6
 	}
 
 	cmpMessageOptions option7 {
 		pos		"360 269"
-		num		7	
+		num		7
 	}
 
 	cmpMessageOptions option8 {
 		pos		"360 294"
-		num		8	
+		num		8
 	}
 
 	cmpMessageOptions option9 {
 		pos		"360 319"
-		num		9	
+		num		9
 	}
 
 	cmpMessageOptions option10 {
@@ -230,15 +230,15 @@ window messageoptions
 	confunc ms_btnstate {
 		*cvar:tmp = "<3>"
 		if ( *cvar:tmp == 0 ) {
-			*node:(checkbox)parent.option<1>.pause@disabled = true
-			*node:(checkbox)parent.option<1>.sound@disabled = true
+			*node:parent.option<1>.pause@disabled = true
+			*node:parent.option<1>.sound@disabled = true
 		} else {
-			*node:(checkbox)parent.option<1>.pause@disabled = false
-			*node:(checkbox)parent.option<1>.sound@disabled = false
+			*node:parent.option<1>.pause@disabled = false
+			*node:parent.option<1>.sound@disabled = false
 		}
-		*node:(checkbox)parent.option<1>.pause@current = <2>
-		*node:(checkbox)parent.option<1>.notify@current = <3>
-		*node:(checkbox)parent.option<1>.sound@current = <4>
+		*node:parent.option<1>.pause@current = <2>
+		*node:parent.option<1>.notify@current = <3>
+		*node:parent.option<1>.sound@current = <4>
 		delete *cvar:tmp
 	}
 
@@ -250,14 +250,14 @@ window messageoptions
 	 * @param[in] <1> row into the current view
 	 */
 	confunc ms_enable {
-		*option<1>@invis = false
+		*node:root.option<1>@invis = false
 	}
 
 	/**
 	 * @param[in] <1> row into the current view
 	 */
 	confunc ms_disable {
-		*option<1>@invis = true
+		*node:root.option<1>@invis = true
 	}
 
 	func onInit

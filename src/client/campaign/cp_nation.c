@@ -25,11 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_screen.h"
-#include "../menu/m_main.h"
-#include "../menu/m_nodes.h"
-#include "../menu/node/m_node_linechart.h"
-#include "../mxml/mxml_ufoai.h"
+#include "../cl_shared.h"
+#include "../ui/ui_main.h"
+#include "../ui/node/ui_node_linechart.h"
 #include "../../shared/parse.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
@@ -96,7 +94,8 @@ void NAT_UpdateHappinessForAllNations (void)
 				happinessFactor = HAPPINESS_ALIEN_MISSION_LOSS;
 				break;
 			default:
-				/* mission is not active on earth, skip this mission */
+				/* mission is not active on earth or does not have any influence
+				 * on the nation happiness, skip this mission */
 				continue;
 			}
 
@@ -481,8 +480,8 @@ qboolean NAT_ScriptSanityCheck (void)
 
 		numTypes = CP_TerrorMissionAvailableUFOs(NULL, ufoTypes);
 
-		for (mapIdx = 0; mapIdx < csi.numMDs; mapIdx++) {
-			const mapDef_t const *md = &csi.mds[mapIdx];
+		for (mapIdx = 0; mapIdx < cls.numMDs; mapIdx++) {
+			const mapDef_t const *md = Com_GetMapDefByIDX(mapIdx);
 
 			if (md->storyRelated)
 				continue;
@@ -522,9 +521,7 @@ qboolean NAT_ScriptSanityCheck (void)
 			MAP_PrintParameterStringByPos(pos);
 		}
 	}
-#ifdef DEBUG
-	Com_Printf("NAT_ScriptSanityCheck Errors: %i\n", error);
-#endif
+
 	return !error;
 }
 
@@ -547,7 +544,7 @@ static void CP_NationStatsClick_f (void)
 	if (num < 0 || num >= ccs.numNations)
 		return;
 
-	MN_PushWindow("nations", NULL);
+	UI_PushWindow("nations", NULL);
 	Cbuf_AddText(va("nation_select %i;", num));
 }
 
@@ -611,7 +608,7 @@ static lineStrip_t fundingLineStrip[MAX_NATIONS];
  * @param[in] color If this is -1 draw the line for the current selected nation
  * @todo Somehow the display of the months isn't really correct right now (straight line :-/)
  */
-static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, lineStrip_t *funding, int maxFunding, int color)
+static void CL_NationDrawStats (const nation_t *nation, uiNode_t *node, lineStrip_t *funding, int maxFunding, int color)
 {
 	int width, height, dx;
 	int m;
@@ -676,13 +673,13 @@ static void CL_NationStatsUpdate_f (void)
 {
 	int i;
 	int funding, maxFunding;
-	menuNode_t *colorNode;
-	menuNode_t *graphNode;
+	uiNode_t *colorNode;
+	uiNode_t *graphNode;
 	int dy = 10;
 
 	usedColPtslists = 0;
 
-	colorNode = MN_GetNodeByPath("nations.nation_graph_colors");
+	colorNode = UI_GetNodeByPath("nations.nation_graph_colors");
 	if (colorNode) {
 		dy = (int)(colorNode->size[1] / MAX_NATIONS);
 	}
@@ -696,9 +693,9 @@ static void CL_NationStatsUpdate_f (void)
 		funding = NAT_GetFunding(&(ccs.nations[i]), 0);
 
 		if (selectedNation == i) {
-			MN_ExecuteConfunc("nation_marksel %i", i);
+			UI_ExecuteConfunc("nation_marksel %i", i);
 		} else {
-			MN_ExecuteConfunc("nation_markdesel %i", i);
+			UI_ExecuteConfunc("nation_markdesel %i", i);
 		}
 		Cvar_Set(va("mn_nat_name%i",i), _(ccs.nations[i].name));
 		Cvar_Set(va("mn_nat_fund%i",i), va("%i", funding));
@@ -722,17 +719,17 @@ static void CL_NationStatsUpdate_f (void)
 		}
 	}
 
-	MN_RegisterLineStrip(LINESTRIP_COLOR, &colorLineStrip[0]);
+	UI_RegisterLineStrip(LINESTRIP_COLOR, &colorLineStrip[0]);
 
 	/* Hide unused nation-entries. */
 	for (i = ccs.numNations; i < MAX_NATIONS; i++) {
-		MN_ExecuteConfunc("nation_hide %i", i);
+		UI_ExecuteConfunc("nation_hide %i", i);
 	}
 
 	/** @todo Display summary of nation info */
 
 	/* Display graph of nations-values so far. */
-	graphNode = MN_GetNodeByPath("nations.nation_graph_funding");
+	graphNode = UI_GetNodeByPath("nations.nation_graph_funding");
 	if (graphNode) {
 		usedFundPtslist = 0;
 
@@ -751,7 +748,7 @@ static void CL_NationStatsUpdate_f (void)
 			}
 		}
 
-		MN_RegisterLineStrip(LINESTRIP_FUNDING, &fundingLineStrip[0]);
+		UI_RegisterLineStrip(LINESTRIP_FUNDING, &fundingLineStrip[0]);
 	}
 }
 

@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef WIN_LOCAL_H
 #define WIN_LOCAL_H
 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <shlobj.h>
 
@@ -36,5 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 extern HINSTANCE global_hInstance;
+
+#include "../system.h"
 
 #endif /* WIN_LOCAL_H */

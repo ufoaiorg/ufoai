@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_view.h"
 #include "renderer/r_main.h"
 #include "renderer/r_sdl.h"
-#include "menu/m_font.h"
+#include "ui/ui_main.h"
 #include "cl_game.h"
 
 viddef_t viddef;	/* global video state; used by other modules */
@@ -111,11 +111,16 @@ void VID_Restart_f (void)
 {
 	refdef.ready = qfalse;
 
+	Com_Printf("renderer restart\n");
+
 	R_Shutdown();
 	R_Init();
-	MN_InitFonts();
+	UI_Reinit();
+	/** @todo only reload the skins, not all models */
+	CL_ViewPrecacheModels();
 
-	CL_ViewLoadMedia();
+	/** @todo going back into the map isn't working as long as GAME_ReloadMode is called */
+	/*CL_ViewLoadMedia();*/
 	GAME_ReloadMode();
 }
 

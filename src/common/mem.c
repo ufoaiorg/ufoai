@@ -35,46 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static SDL_mutex *z_lock;
 
-typedef struct memBlockFoot_s {
-	uint32_t sentinel;				/**< For memory integrity checking */
-} memBlockFoot_t;
-
-typedef struct memBlock_s {
-	struct memBlock_s *next;
-
-	uint32_t topSentinel;			/**< For memory integrity checking */
-
-	struct memPool_s *pool;			/**< Owner pool */
-	int tagNum;						/**< For group free */
-	size_t size;					/**< Size of allocation including this header */
-
-	const char *allocFile;			/**< File the memory was allocated in */
-	int allocLine;					/**< Line the memory was allocated at */
-
-	void *memPointer;				/**< pointer to allocated memory */
-	size_t memSize;					/**< Size minus the header */
-
-	memBlockFoot_t *footer;			/**< Allocated in the space AFTER the block to check for overflow */
-
-	uint32_t botSentinel;			/**< For memory integrity checking */
-} memBlock_t;
-
 #define MEM_MAX_POOLCOUNT	32
-#define MEM_MAX_POOLNAME	64
-#define MEM_HASH			11
-
-typedef struct memPool_s {
-	char name[MEM_MAX_POOLNAME];	/**< Name of pool */
-	qboolean inUse;					/**< Slot in use? */
-
-	memBlock_t *blocks[MEM_HASH];	/**< Allocated blocks */
-
-	uint32_t blockCount;			/**< Total allocated blocks */
-	uint32_t byteCount;				/**< Total allocated bytes */
-
-	const char *createFile;			/**< File this pool was created on */
-	int createLine;					/**< Line this pool was created on */
-} memPool_t;
 
 static memPool_t m_poolList[MEM_MAX_POOLCOUNT];
 static uint32_t m_numPools;
@@ -303,16 +264,13 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tag
 	memBlock_t *mem;
 
 	/* Check pool */
-	if (!pool) {
-		Com_Printf("Mem_Alloc: Error - no pool given\n" "alloc: %s:#%i\n", fileName, fileLine);
-		return NULL;
-	}
+	if (!pool)
+		Sys_Error("Mem_Alloc: Error - no pool given\n" "alloc: %s:#%i\n", fileName, fileLine);
 
 	/* Check size */
-	if (size <= 0) {
-		Com_Printf("Mem_Alloc: Attempted allocation of '"UFO_SIZE_T"' memory ignored\n" "alloc: %s:#%i\n", size, fileName, fileLine);
-		return NULL;
-	}
+	if (size <= 0)
+		Sys_Error("Mem_Alloc: Attempted allocation of '"UFO_SIZE_T"' memory ignored\n" "alloc: %s:#%i\n", size, fileName, fileLine);
+
 	if (size > 0x40000000)
 		Sys_Error("Mem_Alloc: Attempted allocation of '"UFO_SIZE_T"' bytes!\n" "alloc: %s:#%i\n", size, fileName, fileLine);
 
@@ -450,7 +408,7 @@ char *_Mem_PoolStrDup (const char *in, struct memPool_s *pool, const int tagNum,
 {
 	char *out;
 
-	out = _Mem_Alloc((size_t)(strlen (in) + 1), qtrue, pool, tagNum, fileName, fileLine);
+	out = _Mem_Alloc((size_t)(strlen(in) + 1), qtrue, pool, tagNum, fileName, fileLine);
 	strcpy(out, in);
 
 	return out;

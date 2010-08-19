@@ -295,7 +295,6 @@ void Entity_connectSelected ()
 
 static bool Entity_create (const std::string& name, const Vector3& origin)
 {
-	UndoableCommand undo("entityCreate -class " + name);
 
 	EntityClass* entityClass = GlobalEntityClassManager().findOrInsert(name, true);
 
@@ -313,6 +312,7 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 	if (!(entityClass->fixedsize || isModel) && !brushesSelected) {
 		throw EntityCreationException(std::string("Unable to create entity \"") + name + "\", no brushes selected");
 	}
+	UndoableCommand undo("entityCreate -class " + name);
 
 	AABB workzone(aabb_for_minmax(Select_getWorkZone().min, Select_getWorkZone().max));
 
@@ -403,20 +403,18 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 
 void Entity_createFromSelection (const std::string& name, const Vector3& origin)
 {
-	UndoableCommand undo("entityCreate -class " + name);
 
-	bool revert = false;
 	try {
-		revert = Entity_create(name, origin);
+		bool revert = Entity_create(name, origin);
+		if (revert) {
+			GlobalUndoSystem().undo();
+			GlobalUndoSystem().clearRedo();
+			GlobalSceneGraph().sceneChanged();
+		}
 	} catch (EntityCreationException e) {
-		revert = true;
 		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), e.what());
 	}
 
-	if (revert) {
-		GlobalUndoSystem().undo();
-		GlobalSceneGraph().sceneChanged();
-	}
 }
 
 bool DoNormalisedColor (Vector3& color)

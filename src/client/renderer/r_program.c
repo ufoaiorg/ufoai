@@ -63,9 +63,9 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 
 	if (!r_state.active_program) {
 #ifdef DEBUG
-		Com_Printf("R_ProgramVariable: \"%s\" - No program bound. (%s: line %d)\n", name, file, line);
+		Com_DPrintf(DEBUG_RENDERER, "R_ProgramVariable: \"%s\" - No program bound. (%s: line %d)\n", name, file, line);
 #else
-		Com_Printf("R_ProgramVariable: No program bound.\n");
+		Com_DPrintf(DEBUG_RENDERER, "R_ProgramVariable: \"%s\" - No program bound.\n", name);
 #endif
 		return NULL;
 	}
@@ -332,6 +332,7 @@ static size_t R_InitializeShader (const char *name, char *out, size_t len)
 		hwHack = "#ifndef NVIDIA\n#define NVIDIA\n#endif\n";
 		break;
 	case GLHW_GENERIC:
+	case GLHW_MESA:
 		hwHack = NULL;
 		break;
 	default:
@@ -921,6 +922,8 @@ void R_InitPrograms (void)
  */
 void R_RestartPrograms_f (void)
 {
+	Com_Printf("glsl restart\n");
+
 	R_ShutdownPrograms();
 	R_InitPrograms();
 }

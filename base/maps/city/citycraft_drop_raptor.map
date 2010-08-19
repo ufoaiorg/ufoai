@@ -3,13 +3,13 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
-"light_day" "85"
+"light_day" "240"
 "angles_day" "-85 100"
 "ambient_day" "0.25 0.25 0.25"
 "color_day" "0.15 0.15 0.15"
 "angles_night" "-85 100"
 "color_night" "0.55 0.55 0.95"
-"ambient_night" "0.15 0.15 0.19"
+"ambient_night" "0.2 0.2 0.25"
 "light_night" "45"
 // brush 0
 {
@@ -443,12 +443,12 @@
 }
 // brush 47
 {
-( 512 256 96 ) ( 512 224 96 ) ( 480 256 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
-( 512 256 96 ) ( 480 256 96 ) ( 512 256 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
-( 512 256 96 ) ( 512 256 64 ) ( 512 224 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
-( 480 224 64 ) ( 512 224 64 ) ( 480 256 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
-( 480 224 64 ) ( 480 224 96 ) ( 512 224 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
-( 480 224 64 ) ( 480 256 64 ) ( 480 224 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 512 576 96 ) ( 512 544 96 ) ( 480 576 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 512 768 96 ) ( 480 768 96 ) ( 512 768 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 512 576 96 ) ( 512 576 64 ) ( 512 544 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 480 544 64 ) ( 512 544 64 ) ( 480 576 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 480 480 64 ) ( 480 480 96 ) ( 512 480 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 480 544 64 ) ( 480 576 64 ) ( 480 544 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
 }
 // brush 48
 {
@@ -1949,6 +1949,15 @@
 ( 541 341 132 ) ( 552 341 132 ) ( 541 341 146 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
 ( 508 321 2 ) ( 498 341 2 ) ( 508 321 130 ) tex_common/actorclip 0 0 0 1 1 65536 0 0
 }
+// brush 195
+{
+( 512 256 96 ) ( 512 224 96 ) ( 480 256 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 512 448 96 ) ( 480 448 96 ) ( 512 448 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 512 256 96 ) ( 512 256 64 ) ( 512 224 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 480 224 64 ) ( 512 224 64 ) ( 480 256 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 480 224 64 ) ( 480 224 96 ) ( 512 224 64 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+( 480 224 64 ) ( 480 256 64 ) ( 480 224 96 ) tex_common/actorclip 0 0 0 0.25 0.25 65024 0 0
+}
 }
 // entity 1
 {
@@ -2043,4 +2052,74 @@
 "classname" "info_human_start"
 "origin" "240 240 92"
 "angle" "180"
+}
+// entity 16
+{
+"classname" "info_player_start"
+"origin" "336 112 92"
+"angle" "90"
+"team" "2"
+}
+// entity 17
+{
+"classname" "info_player_start"
+"origin" "240 112 92"
+"angle" "90"
+"team" "2"
+}
+// entity 18
+{
+"classname" "info_player_start"
+"origin" "560 208 92"
+"angle" "180"
+"team" "2"
+}
+// entity 19
+{
+"classname" "info_player_start"
+"origin" "560 144 92"
+"angle" "180"
+"team" "2"
+}
+// entity 20
+{
+"classname" "info_player_start"
+"origin" "560 80 92"
+"angle" "180"
+"team" "2"
+}
+// entity 21
+{
+"classname" "info_player_start"
+"origin" "304 80 92"
+"angle" "90"
+"team" "2"
+}
+// entity 22
+{
+"classname" "info_player_start"
+"origin" "432 112 92"
+"angle" "90"
+"team" "2"
+}
+// entity 23
+{
+"classname" "info_player_start"
+"origin" "176 80 92"
+"angle" "90"
+"team" "2"
+}
+// entity 24
+{
+"classname" "trigger_rescue"
+"team" "1"
+// brush 0
+{
+( 384 416 128 ) ( 256 416 128 ) ( 384 576 128 ) tex_common/trigger 0 0 0 0.25 0.25
+( 384 416 160 ) ( 384 576 160 ) ( 384 416 64 ) tex_common/trigger 0 0 0 0.25 0.25
+( 288 128 128 ) ( 288 128 32 ) ( 160 128 128 ) tex_common/trigger 0 0 0 0.25 0.25
+( 256 576 64 ) ( 256 416 64 ) ( 384 576 64 ) tex_common/trigger 0 0 0 0.25 0.25
+( 160 288 64 ) ( 160 288 160 ) ( 160 128 64 ) tex_common/trigger 0 0 0 0.25 0.25
+( 256 576 64 ) ( 384 576 64 ) ( 256 576 160 ) tex_common/trigger 0 0 0 0.25 0.25
+}
 }

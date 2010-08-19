@@ -37,6 +37,7 @@ extern "C" {
 const char *Com_Parse(const char **data_p);
 void Com_UnParseLastToken(void);
 qboolean Com_ParsedTokenIsQuoted(void);
+void Com_EnableFunctionScriptToken(qboolean enable);
 
 #ifdef __cplusplus
 }

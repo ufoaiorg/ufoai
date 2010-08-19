@@ -23,10 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../cl_shared.h"
 #include "../cl_game.h"
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
 #include "../../shared/infostring.h"
 #include "../../shared/parse.h"
 #include "mp_serverlist.h"
@@ -113,10 +113,12 @@ static void CL_PingServerCallback (struct net_stream *s)
 	struct dbuffer *buf = NET_ReadMsg(s);
 	serverList_t *server = NET_StreamGetData(s);
 	const int cmd = NET_ReadByte(buf);
-	const char *str = NET_ReadStringLine(buf);
+	char str[512];
+
+	NET_ReadStringLine(buf, str, sizeof(str));
 
 	if (cmd == clc_oob && strncmp(str, "info", 4) == 0) {
-		str = NET_ReadString(buf);
+		NET_ReadString(buf, str, sizeof(str));
 		if (CL_ProcessPingReply(server, str)) {
 			if (CL_ShowServer(server)) {
 				char string[MAX_INFO_STRING];
@@ -201,29 +203,29 @@ static void CL_AddServerToList (const char *node, const char *service)
  */
 void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 {
-	char *s = NET_ReadString(msg);
+	char str[4096];
 	int cnt = 0;
 	linkedList_t *userList = NULL;
 	linkedList_t *userTeam = NULL;
 
-	if (!s) {
-		MN_ResetData(TEXT_MULTIPLAYER_USERLIST);
-		MN_ResetData(TEXT_MULTIPLAYER_USERTEAM);
-		MN_ExecuteConfunc("multiplayer_playerNumber 0");
+	if (NET_ReadString(msg, str, sizeof(str)) == 0) {
+		UI_ResetData(TEXT_MULTIPLAYER_USERLIST);
+		UI_ResetData(TEXT_MULTIPLAYER_USERTEAM);
+		UI_ExecuteConfunc("multiplayer_playerNumber 0");
 		Com_DPrintf(DEBUG_CLIENT, "CL_ParseTeamInfoMessage: No teaminfo string\n");
 		return;
 	}
 
 	memset(&teamData, 0, sizeof(teamData));
 
-	teamData.maxteams = Info_IntegerForKey(s, "sv_maxteams");
-	teamData.maxPlayersPerTeam = Info_IntegerForKey(s, "sv_maxplayersperteam");
+	teamData.maxteams = Info_IntegerForKey(str, "sv_maxteams");
+	teamData.maxPlayersPerTeam = Info_IntegerForKey(str, "sv_maxplayersperteam");
 
 	/* for each lines */
-	while ((s = NET_ReadString(msg)) != NULL && s[0] != '\0') {
-		const int team = Info_IntegerForKey(s, "cl_team");
-		const int isReady = Info_IntegerForKey(s, "cl_ready");
-		const char *user = Info_ValueForKey(s, "cl_name");
+	while (NET_ReadString(msg, str, sizeof(str)) > 0) {
+		const int team = Info_IntegerForKey(str, "cl_team");
+		const int isReady = Info_IntegerForKey(str, "cl_ready");
+		const char *user = Info_ValueForKey(str, "cl_name");
 
 		if (team > 0 && team < MAX_TEAMS)
 			teamData.teamCount[team]++;
@@ -235,18 +237,14 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 		else
 			LIST_AddString(&userTeam, _("No team"));
 
-		MN_ExecuteConfunc("multiplayer_playerIsReady %i %i", cnt, isReady);
+		UI_ExecuteConfunc("multiplayer_playerIsReady %i %i", cnt, isReady);
 
-		/* next line */
-		s = strstr(s, "\n");
-		if (s)
-			s++;
 		cnt++;
 	}
 
-	MN_RegisterLinkedListText(TEXT_MULTIPLAYER_USERLIST, userList);
-	MN_RegisterLinkedListText(TEXT_MULTIPLAYER_USERTEAM, userTeam);
-	MN_ExecuteConfunc("multiplayer_playerNumber %i", cnt);
+	UI_RegisterLinkedListText(TEXT_MULTIPLAYER_USERLIST, userList);
+	UI_RegisterLinkedListText(TEXT_MULTIPLAYER_USERTEAM, userTeam);
+	UI_ExecuteConfunc("multiplayer_playerNumber %i", cnt);
 
 	/* no players are connected ATM */
 	if (!cnt) {
@@ -275,31 +273,31 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 	const char *value;
 	int team;
 	const char *token;
-	const char *s = NET_ReadString(msg);
+	char str[MAX_INFO_STRING];
 	char buf[256];
-	if (!s)
-		return;
+
+	NET_ReadString(msg, str, sizeof(str));
 
 	/* check for server status response message */
-	value = Info_ValueForKey(s, "sv_dedicated");
+	value = Info_ValueForKey(str, "sv_dedicated");
 	if (*value) {
 		/* server info cvars and users are seperated via newline */
-		const char *users = strstr(s, "\n");
+		const char *users = strstr(str, "\n");
 		if (!users) {
-			Com_Printf(COLORED_GREEN "%s\n", s);
+			Com_Printf(COLORED_GREEN "%s\n", str);
 			return;
 		}
-		Com_DPrintf(DEBUG_CLIENT, "%s\n", s); /* status string */
+		Com_DPrintf(DEBUG_CLIENT, "%s\n", str); /* status string */
 
 		Cvar_Set("mn_mappic", "maps/shots/default.jpg");
-		if (*Info_ValueForKey(s, "sv_needpass") == '1')
+		if (*Info_ValueForKey(str, "sv_needpass") == '1')
 			Cvar_Set("mn_server_need_password", "1");
 		else
 			Cvar_Set("mn_server_need_password", "0");
 
 		Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), hostname);
 		Cvar_Set("mn_server_ip", hostname);
-		value = Info_ValueForKey(s, "sv_mapname");
+		value = Info_ValueForKey(str, "sv_mapname");
 		assert(value);
 		Cvar_Set("mn_svmapname", value);
 		Q_strncpyz(buf, value, sizeof(buf));
@@ -313,22 +311,22 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 			/* store it relative to pics/ dir - not relative to game dir */
 			Cvar_Set("mn_mappic", va("maps/shots/%s", token));
 		}
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Servername:\t%s\n"), Info_ValueForKey(s, "sv_hostname"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Moralestates:\t%s\n"), _(Info_BoolForKey(s, "sv_enablemorale")));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gametype:\t%s\n"), Info_ValueForKey(s, "sv_gametype"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gameversion:\t%s\n"), Info_ValueForKey(s, "ver"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Dedicated server:\t%s\n"), _(Info_BoolForKey(s, "sv_dedicated")));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Operating system:\t%s\n"), Info_ValueForKey(s, "sys_os"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Network protocol:\t%s\n"), Info_ValueForKey(s, "sv_protocol"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Roundtime:\t%s\n"), Info_ValueForKey(s, "sv_roundtimelimit"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Teamplay:\t%s\n"), _(Info_BoolForKey(s, "sv_teamplay")));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. players per team:\t%s\n"), Info_ValueForKey(s, "sv_maxplayersperteam"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. teams allowed in this map:\t%s\n"), Info_ValueForKey(s, "sv_maxteams"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. clients:\t%s\n"), Info_ValueForKey(s, "sv_maxclients"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per player:\t%s\n"), Info_ValueForKey(s, "sv_maxsoldiersperplayer"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per team:\t%s\n"), Info_ValueForKey(s, "sv_maxsoldiersperteam"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Password protected:\t%s\n"), _(Info_BoolForKey(s, "sv_needpass")));
-		MN_RegisterText(TEXT_STANDARD, serverInfoText);
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Servername:\t%s\n"), Info_ValueForKey(str, "sv_hostname"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Moralestates:\t%s\n"), _(Info_BoolForKey(str, "sv_enablemorale")));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gametype:\t%s\n"), Info_ValueForKey(str, "sv_gametype"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gameversion:\t%s\n"), Info_ValueForKey(str, "ver"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Dedicated server:\t%s\n"), _(Info_BoolForKey(str, "sv_dedicated")));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Operating system:\t%s\n"), Info_ValueForKey(str, "sys_os"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Network protocol:\t%s\n"), Info_ValueForKey(str, "sv_protocol"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Roundtime:\t%s\n"), Info_ValueForKey(str, "sv_roundtimelimit"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Teamplay:\t%s\n"), _(Info_BoolForKey(str, "sv_teamplay")));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. players per team:\t%s\n"), Info_ValueForKey(str, "sv_maxplayersperteam"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. teams allowed in this map:\t%s\n"), Info_ValueForKey(str, "sv_maxteams"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. clients:\t%s\n"), Info_ValueForKey(str, "sv_maxclients"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per player:\t%s\n"), Info_ValueForKey(str, "sv_maxsoldiersperplayer"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per team:\t%s\n"), Info_ValueForKey(str, "sv_maxsoldiersperteam"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Password protected:\t%s\n"), _(Info_BoolForKey(str, "sv_needpass")));
+		UI_RegisterText(TEXT_STANDARD, serverInfoText);
 		userInfoText[0] = '\0';
 		do {
 			token = Com_Parse(&users);
@@ -340,10 +338,10 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 				break;
 			Com_sprintf(userInfoText + strlen(userInfoText), sizeof(userInfoText) - strlen(userInfoText), "%s\t%i\n", token, team);
 		} while (1);
-		MN_RegisterText(TEXT_LIST, userInfoText);
-		MN_PushWindow("serverinfo", NULL);
+		UI_RegisterText(TEXT_LIST, userInfoText);
+		UI_PushWindow("serverinfo", NULL);
 	} else
-		Com_Printf(COLORED_GREEN "%s", s);
+		Com_Printf(COLORED_GREEN "%s", str);
 }
 
 /**
@@ -355,7 +353,8 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 	struct dbuffer *buf = NET_ReadMsg(s);
 	if (buf) {
 		const int cmd = NET_ReadByte(buf);
-		const char *str = NET_ReadStringLine(buf);
+		char str[8];
+		NET_ReadStringLine(buf, str, sizeof(str));
 
 		if (cmd == clc_oob && !strcmp(str, "print")) {
 			char hostname[256];
@@ -467,7 +466,7 @@ static void CL_BookmarkAdd_f (void)
 		}
 	}
 	/* bookmarks are full - overwrite the first entry */
-	MN_Popup(_("Notice"), _("All bookmark slots are used - please removed unused entries and repeat this step"));
+	UI_Popup(_("Notice"), _("All bookmark slots are used - please removed unused entries and repeat this step"));
 }
 
 /**
@@ -520,7 +519,7 @@ static void CL_ServerListClick_f (void)
 	}
 	num = atoi(Cmd_Argv(1));
 
-	MN_RegisterText(TEXT_STANDARD, serverInfoText);
+	UI_RegisterText(TEXT_STANDARD, serverInfoText);
 	if (num >= 0 && num < serverListLength)
 		for (i = 0; i < serverListLength; i++)
 			if (serverList[i].pinged && serverList[i].serverListPos == num) {
@@ -561,7 +560,7 @@ void CL_PingServers_f (void)
 		serverListLength = 0;
 		memset(serverList, 0, sizeof(serverList));
 	} else {
-		MN_RegisterText(TEXT_LIST, serverText);
+		UI_RegisterText(TEXT_LIST, serverText);
 		return;
 	}
 
@@ -573,16 +572,16 @@ void CL_PingServers_f (void)
 		const char buf[] = "discover";
 		NET_DatagramBroadcast(cls.netDatagramSocket, buf, sizeof(buf), PORT_SERVER);
 	}
-	MN_RegisterText(TEXT_LIST, serverText);
+	UI_RegisterText(TEXT_LIST, serverText);
 
 	/* don't query the masterservers with every call */
 	if (serversAlreadyQueried) {
-		if (lastServerQuery + SERVERQUERYTIMEOUT > cls.realtime)
+		if (lastServerQuery + SERVERQUERYTIMEOUT > CL_Milliseconds())
 			return;
 	} else
 		serversAlreadyQueried = qtrue;
 
-	lastServerQuery = cls.realtime;
+	lastServerQuery = CL_Milliseconds();
 
 	/* query master server? */
 	if (Cmd_Argc() == 2 && strcmp(Cmd_Argv(1), "local")) {

@@ -111,10 +111,10 @@ item laser_ammo
 		{
 			name		"_Wave Fire"
 			skill		close
-			projtl		laserPulse
+			projtl		laserBeamSmall
 			impact		laserImpact
 			hitbody		laserImpact
-			firesnd		weapons/laser
+			firesnd		weapons/laser-small
 			speed		0
 			spread		"0.75 0.75"
 			crouch		0.9
@@ -130,10 +130,12 @@ item laser_ammo
 		{
 			name				"_Pulsed Fire"
 			skill				close
-			projtl				laserPulse
+			projtl				laserBeamSmall
 			impact				laserImpact
 			hitbody				laserImpact
-			firesnd				weapons/laser
+			firesnd				weapons/laser-small
+			impsnd				impact/laser-impact
+			bodysnd 			impact/laser-bodyimpact
 			delaybetweenshots	6
 			speed				0
 			spread				"0.75 0.75"
@@ -154,10 +156,12 @@ item laser_ammo
 		{
 			name		"_Wave Fire"
 			skill		assault
-			projtl		laserPulse
+			projtl		laserBeam
 			impact		laserImpact
 			hitbody		laserImpact
-			firesnd		weapons/laser
+			firesnd		weapons/laser-medium
+			impsnd		impact/laser-impact
+			bodysnd 	impact/laser-bodyimpact
 			speed		0
 			spread		"0.5 0.5"
 			crouch		0.8
@@ -173,11 +177,13 @@ item laser_ammo
 		{
 			name				"_Pulsed Fire"
 			skill				assault
-			projtl				laserPulse
+			projtl				laserBeam
 			impact				laserImpact
 			hitbody				laserImpact
-			firesnd				weapons/laser
-			delaybetweenshots	        6
+			firesnd				weapons/laser-small
+			impsnd				impact/laser-impact
+			bodysnd 			impact/laser-bodyimpact
+			delaybetweenshots	6
 			speed				0
 			spread				"0.5 0.5"
 			crouch				0.8
@@ -200,7 +206,7 @@ item laser_ammo
 			projtl		laserOverload
 			impact		laserImpact
 			hitbody		laserImpact
-			firesnd		weapons/heavy_laser
+			firesnd		weapons/laser-huge
 			speed		0
 			spread		"0.5 0.5"
 			crouch		0.7
@@ -216,11 +222,13 @@ item laser_ammo
 		{
 			name				"_Pulsed Fire"
 			skill				heavy
-			projtl				laserPulse
+			projtl				laserBeam
 			impact				laserImpact
 			hitbody				laserImpact
-			firesnd				weapons/laser
-			delaybetweenshots	        6
+			firesnd				weapons/laser-large
+			impsnd				impact/laser-impact
+			bodysnd 			impact/laser-bodyimpact
+			delaybetweenshots	6
 			speed				0
 			spread				"0.5 0.5"
 			crouch				0.7
@@ -233,7 +241,7 @@ item laser_ammo
 			reaction			true
 		}
 	}
-	
+
 	weapon_mod electrolaser
 	{
 		firedef
@@ -243,7 +251,7 @@ item laser_ammo
 			projtl		laserFrizzledBeam
 			impact		laserFrizzledImpact
 			hitbody		laserFrizzledImpact
-			firesnd		weapons/electrolaser
+			firesnd		weapons/electro-taser
 			speed		0
 			spread		"0.8 0.8"
 			crouch		0.8

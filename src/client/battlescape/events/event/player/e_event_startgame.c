@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "../../../../client.h"
-#include "../../../../menu/m_main.h"
+#include "../../../../ui/ui_main.h"
 #include "../../../cl_view.h"
 #include "../../../cl_hud.h"
 #include "../../../../cl_game.h"
@@ -64,13 +64,7 @@ void CL_StartGame (const eventRegister_t *self, struct dbuffer *msg)
 	/* activate the renderer */
 	CL_SetClientState(ca_active);
 
-	/* back to the console */
-	if (GAME_IsMultiplayer()) {
-		MN_ExecuteConfunc("multiplayer_setTeamplay %i", isTeamPlay);
-		MN_InitStack("multiplayer_wait", NULL, qtrue, qtrue);
-	} else {
-		MN_InitStack(mn_hud->string, NULL, qtrue, qtrue);
-	}
+	GAME_StartBattlescape(isTeamPlay);
 
 	/* get rid of loading plaque */
 	SCR_EndLoadingPlaque();

@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_REF_H
 #define CLIENT_REF_H
 
-#include "../common/common.h"
-#include "renderer/r_material.h"
 #include "renderer/r_image.h"
 #include "renderer/r_model.h"
 #include "renderer/r_program.h"
@@ -63,7 +61,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768
 
-#define MAX_PTL_ART		512
+#define MAX_PTL_ART		1024
 #define MAX_PTLS		2048
 
 /** @brief coronas are soft, alpha-blended, rounded polys */
@@ -116,32 +114,42 @@ typedef struct ptlCmd_s {
 } ptlCmd_t;
 
 typedef struct ptlDef_s {
-	char name[MAX_VAR];
-	ptlCmd_t *init, *run, *think, *round, *physics;
+	char name[MAX_VAR];	/**< script id of the particle */
+	ptlCmd_t *init; /**< only called at particle spawn time */
+	ptlCmd_t *run;	/**< called every frame */
+	ptlCmd_t *think;	/**< depends on the tps value of the particle */
+	ptlCmd_t *round;	/**< called for each ended round */
+	ptlCmd_t *physics;	/**< called when the particle origin hits something solid */
 } ptlDef_t;
 
+/** @brief particle art type */
+typedef enum artType_s {
+	ART_PIC,
+	ART_MODEL
+} artType_t;
+
 typedef struct ptlArt_s {
-	byte type;
-	byte frame;
-	char name[MAX_VAR];
-	int skin;
+	char name[MAX_VAR];	/**< the path of the particle art */
+	int frame;
+	int skin;		/**< the skin of the model */
 	union {
 		const image_t *image;
 		model_t *model;
 	} art;
+	artType_t type;	/**< the type of the particle art */
 } ptlArt_t;
 
 typedef struct ptl_s {
 	qboolean inuse;			/**< particle active? */
 	qboolean invis;			/**< is this particle invisible */
 
-	r_program_t *program;
+	r_program_t *program;	/**< this glsl program is bound before the particle is executed */
 
 	ptlArt_t *pic;			/**< Picture link. */
 	ptlArt_t *model;		/**< Model link. */
 
-	byte blend;				/**< blend mode */
-	byte style;				/**< style mode */
+	blend_t blend;				/**< blend mode */
+	style_t style;				/**< style mode */
 	vec2_t size;
 	vec3_t scale;
 	vec4_t color;
@@ -162,14 +170,14 @@ typedef struct ptl_s {
 	struct ptl_s* parent;   /**< pointer to parent */
 
 	/* private */
-	ptlDef_t *ctrl;
+	ptlDef_t *ctrl;		/**< pointer to the particle definition */
 	int startTime;
 	int frame, endFrame;
 	float fps;	/**< how many frames per second (animate) */
 	float lastFrame;	/**< time (in seconds) when the think function was last executed (perhaps this can be used to delay or speed up particle actions). */
 	float tps; /**< think per second - call the think function tps times each second, the first call at 1/tps seconds */
 	float lastThink;
-	byte thinkFade, frameFade;
+	fade_t thinkFade, frameFade;
 	float t;	/**< time that the particle has been active already */
 	float dt;	/**< time increment for rendering this particle (delta time) */
 	float life;	/**< specifies how long a particle will be active (seconds) */
@@ -225,6 +233,14 @@ typedef enum {
 	THREAD_RENDERER
 } threadstate_t;
 
+typedef enum {
+	LONGLINES_WRAP,
+	LONGLINES_CHOP,
+	LONGLINES_PRETTYCHOP,
+
+	LONGLINES_LAST
+} longlines_t;
+
 typedef struct renderer_threadstate_s {
 	SDL_Thread *thread;
 	threadstate_t state;
@@ -250,6 +266,6 @@ void R_FontRegister(const char *name, int size, const char *path, const char *st
 void R_FontSetTruncationMarker(const char *marker);
 
 void R_FontTextSize(const char *fontId, const char *text, int maxWidth, longlines_t method, int *width, int *height, int *lines, qboolean *isTruncated);
-int R_FontDrawString(const char *fontId, int align, int x, int y, int absX, int absY, int maxWidth, int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, longlines_t method);
+int R_FontDrawString(const char *fontId, int align, int x, int y, int absX, int maxWidth, int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, longlines_t method);
 
 #endif /* CLIENT_REF_H */

@@ -38,20 +38,6 @@
   </option>
  </component>
 
- <component arch="x86_64" name="x86_64" version="@VERSION@">
-  <option arch="x86_64" install="true">
-   64 bit binaries
-   <binary arch="any" libc="any" binpath="bin/ufoai" symlink="ufoai"
-          icon="ufo.xpm" name="UFO: Alien Invasion 64-bit" menu="Games" desc="UFO: Alien Invasion" play="gui">
-    ufoai
-   </binary>
-   <files>
-    ufo-x86_64.tar.bz2
-    ufo.xpm
-   </files>
-  </option>
- </component>
-
  <component if="|(x86,x86_64)" name="i386" version="@VERSION@">
   <option arch="any" install="true">
    32 bit binaries

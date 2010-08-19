@@ -21,12 +21,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-#include "../client.h"
+#include "../cl_shared.h"
 #include "../sound/s_sample.h"
-#include "../menu/m_main.h"
-#include "../menu/m_nodes.h"
-#include "../menu/m_popup.h"
-#include "../mxml/mxml_ufoai.h"
+#include "../sound/s_main.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_popup.h"
 #include "cp_messages.h"
@@ -63,7 +62,7 @@ static void MS_TimestampedText (char *text, message_t *message, size_t textsize)
  * @sa CL_EventAddMail_f
  * @note this method forwards to @c MS_AddNewMessageSound with @code playSound = qtrue @endcode
  */
-message_t *MS_AddNewMessage (const char *title, const char *text, qboolean popup, messageType_t type, void *pedia)
+message_t *MS_AddNewMessage (const char *title, const char *text, qboolean popup, messageType_t type, technology_t *pedia)
 {
 	return MS_AddNewMessageSound(title, text, popup, type, pedia, qtrue);
 }
@@ -81,7 +80,7 @@ message_t *MS_AddNewMessage (const char *title, const char *text, qboolean popup
  * @sa UP_OpenMail_f
  * @sa CL_EventAddMail_f
  */
-message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean popup, messageType_t type, void *pedia, qboolean playSound)
+message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean popup, messageType_t type, technology_t *pedia, qboolean playSound)
 {
 	message_t *mess;
 	const char *sound = NULL;
@@ -138,9 +137,11 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 		sound = "geoscape/ufospotted";
 		break;
 	case MSG_BASEATTACK:
-		sound = "geoscape/attack";
+		sound = "geoscape/basealert";
 		break;
 	case MSG_TERRORSITE:
+		sound = "geoscape/alien-activity";
+		break;
 	case MSG_CRASHSITE:
 		sound = "geoscape/newmission";
 		break;
@@ -211,7 +212,7 @@ qboolean MS_SaveXML (mxml_node_t *p)
  * @brief Load callback for messages
  * @param[in] p XML Node structure, where we get the information from
  * @sa MS_SaveXML
- * @sa MN_AddNewMessageSound
+ * @sa UI_AddNewMessageSound
  */
 qboolean MS_LoadXML (mxml_node_t *p)
 {

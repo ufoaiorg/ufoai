@@ -273,16 +273,12 @@ void Com_DefaultExtension (char *path, size_t len, const char *extension)
  */
 void Com_FilePath (const char *in, char *out)
 {
-	const char *s;
-
-	s = in + strlen(in) - 1;
+	const char *s = in + strlen(in) - 1;
 
 	while (s != in && *s != '/')
 		s--;
 
-	/** @todo Q_strncpyz */
-	strncpy(out, in, s - in);
-	out[s - in] = 0;
+	Q_strncpyz(out, in, s - in + 1);
 }
 
 /**
@@ -369,24 +365,22 @@ char *Q_strlwr (char *str)
 #ifndef HAVE_STRNCASECMP
 int Q_strncasecmp (const char *s1, const char *s2, size_t n)
 {
-	int c1, c2;
-
-	do {
-		c1 = *s1++;
-		c2 = *s2++;
-
-		if (!n--)
-			return 0;			/* strings are equal until end point */
+	while (n-- != 0) {
+		int c1 = *s1++;
+		int c2 = *s2++;
 
 		if (c1 != c2) {
-			if (c1 >= 'a' && c1 <= 'z')
-				c1 -= ('a' - 'A');
-			if (c2 >= 'a' && c2 <= 'z')
-				c2 -= ('a' - 'A');
+			if ('a' <= c1 && c1 <= 'z')
+				c1 += 'a' - 'A';
+			if ('a' <= c2 && c2 <= 'z')
+				c2 += 'a' - 'A';
 			if (c1 != c2)
-				return -1;		/* strings not equal */
+				return (unsigned char)c1 - (unsigned char)c2; /* strings not equal */
 		}
-	} while (c1);
+
+		if (c1 == '\0')
+			break;
+	}
 
 	return 0;					/* strings are equal */
 }
@@ -412,29 +406,7 @@ void Q_strncpyz (char *dest, const char *src, size_t destsize)
 	if (destsize < 1)
 		Sys_Error("Q_strncpyz: destsize < 1 (%s, %i)", file, line);
 #endif
-
-	/* space for \0 terminating */
-	while (*src && destsize - 1) {
-		*dest = *src++;
-		/* check for UTF8 multibyte sequences */
-		if ((*dest & 0xf0) >= 0xf0 && destsize <= 4)
-			break;
-		if ((*dest & 0xe0) >= 0xe0 && destsize <= 3)
-			break;
-		if ((*dest & 0xc0) >= 0xc0 && destsize <= 2)
-			break;
-		destsize--;
-		dest++;
-	}
-#ifdef PARANOID
-	if (*src)
-		Com_Printf("Buffer too small: %s: %i (%s)\n", file, line, src);
-	/* the rest is filled with null */
-	memset(dest, 0, destsize);
-#else
-	/* terminate the string */
-	*dest = '\0';
-#endif
+	UTF8_strncpyz(dest, src, destsize);
 }
 
 /**
@@ -455,6 +427,10 @@ void Q_strcat (char *dest, const char *src, size_t destsize)
 }
 
 /**
+ * @brief copies formatted string with buffer-size checking
+ * @param[out] dest Destination buffer
+ * @param[in] size Size of the destination buffer
+ * @param[in] fmt Stringformat (like printf)
  * @return false if overflowed - true otherwise
  */
 qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
@@ -469,17 +445,30 @@ qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 	len = Q_vsnprintf(dest, size, fmt, ap);
 	va_end(ap);
 
+	if (len <= size - 1)
+		return qtrue;
+
+	/* number of char */
+	len = size - 1;
+
 	/* check for UTF8 multibyte sequences */
-	if (dest[len - 1] > 0x80) {
+	if (len > 0 && (unsigned char) dest[len - 1] >= 0x80) {
 		int i = len - 1;
-		while ((i > 0) && dest[i] <= 0xc0)
+		while ((i > 0) && ((unsigned char) dest[i] & 0xc0) == 0x80)
 			i--;
-		if (UTF8_char_len(dest[i]) + i - 1 > len)
-			len = i + 1;
-		dest[len] = '\0';
+		if (UTF8_char_len(dest[i]) + i > len) {
+			dest[i] = '\0';
+		}
+#ifdef DEBUG
+		else {
+			/* the '\0' is already at the right place */
+			len = i + UTF8_char_len(dest[i]);
+			assert(dest[len] == '\0');
+		}
+#endif
 	}
 
-	return 0 <= len && (size_t)len < size;
+	return qfalse;
 }
 
 /**

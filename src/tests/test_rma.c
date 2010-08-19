@@ -24,9 +24,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "CUnit/Basic.h"
 #include "test_rma.h"
+#include "test_shared.h"
+#include "../server/sv_rma.h"
+#include "../ports/system.h"
 
-#include "../server/sv_rma.c"
-#include "../server/sv_init.c"
+cvar_t *sv_dumpmapassembly;
+cvar_t *sv_threads;
 
 /**
  * The suite initialization function.
@@ -34,18 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int UFO_InitSuiteRandomMapAssembly (void)
 {
-	com_aliasSysPool = Mem_CreatePool("Common: Alias system");
-	com_cmdSysPool = Mem_CreatePool("Common: Command system");
-	com_cmodelSysPool = Mem_CreatePool("Common: Collision model");
-	com_cvarSysPool = Mem_CreatePool("Common: Cvar system");
-	com_fileSysPool = Mem_CreatePool("Common: File system");
-	com_genericPool = Mem_CreatePool("Generic");
-
-	Mem_Init();
-	Cmd_Init();
-	Cvar_Init();
-	FS_InitFilesystem(qtrue);
-	Swap_Init();
+	TEST_Init();
 
 	sv_dumpmapassembly = Cvar_Get("sv_dumpassembly", "0", 0, NULL);
 
@@ -58,10 +50,7 @@ static int UFO_InitSuiteRandomMapAssembly (void)
  */
 static int UFO_CleanSuiteRandomMapAssembly (void)
 {
-	FS_Shutdown();
-	Cmd_Shutdown();
-	Cvar_Shutdown();
-	Mem_Shutdown();
+	TEST_Shutdown();
 	return 0;
 }
 
@@ -93,7 +82,7 @@ static void testMassAssemblyTimeout (void)
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
-		printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
+		TEST_Printf("%i: %i %li\n", i, randomMap->numPlaced, time);
 		if (randomMap)
 			Mem_Free(randomMap);
 	}
@@ -113,7 +102,7 @@ static void testMassAssemblyParallel (void)
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
-		printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
+		TEST_Printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
 		if (randomMap)
 			Mem_Free(randomMap);
 	}
@@ -135,7 +124,7 @@ static void testMassAssemblySequential (void)
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
-		printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
+		TEST_Printf("%i: %i %li\n", i, randomMap->numPlaced, time);
 		if (randomMap)
 			Mem_Free(randomMap);
 	}

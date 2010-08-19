@@ -498,7 +498,7 @@ static int materialsCnt = 0;
 /**
  * @brief Generates material files in case the settings can be guessed from map file
  */
-static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, mapbrush_t *b, side_t *s)
+static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, side_t *s)
 {
 	qFILE f;
 	qboolean terrainByTexture = qfalse;
@@ -724,7 +724,7 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 		/* generate a list of textures that should have footsteps when walking on them */
 		if (mt > 0 && side->surfaceFlags & SURF_FOOTSTEP)
 			GenerateFootstepList(filename, mt);
-		GenerateMaterialFile(filename, mt, b, side);
+		GenerateMaterialFile(filename, mt, side);
 
 		/* find the plane number */
 		planenum = PlaneFromPoints(b, planepts[0], planepts[1], planepts[2]);

@@ -24,6 +24,7 @@
  */
 
 #include "common.h"
+#include <SDL_thread.h>
 
 /* This should fit neatly in one page */
 #define DBUFFER_ELEMENT_SIZE 4000
@@ -48,12 +49,16 @@ static struct dbuffer_element *free_element_list = NULL;
 static int free_dbuffers = 0, allocated_dbuffers = 0;
 static struct dbuffer *free_dbuffer_list = NULL;
 
+static SDL_mutex *dbuf_lock;
+
 /**
  * @sa free_element
  */
 static struct dbuffer_element * allocate_element (void)
 {
 	struct dbuffer_element *e;
+
+	SDL_mutexP(dbuf_lock);
 
 	if (free_elements == 0) {
 		struct dbuffer_element *newBuf = Mem_PoolAlloc(sizeof(struct dbuffer_element), com_genericPool, 0);
@@ -71,6 +76,9 @@ static struct dbuffer_element * allocate_element (void)
 	e->space = DBUFFER_ELEMENT_SIZE;
 	e->len = 0;
 	e->next = NULL;
+
+	SDL_mutexV(dbuf_lock);
+
 	return e;
 }
 
@@ -79,6 +87,8 @@ static struct dbuffer_element * allocate_element (void)
  */
 static void free_element (struct dbuffer_element *e)
 {
+	SDL_mutexP(dbuf_lock);
+
 	e->next = free_element_list;
 	free_element_list = e;
 	free_elements++;
@@ -89,6 +99,8 @@ static void free_element (struct dbuffer_element *e)
 		free_elements--;
 		allocated_elements--;
 	}
+
+	SDL_mutexV(dbuf_lock);
 }
 
 /**
@@ -99,6 +111,9 @@ static void free_element (struct dbuffer_element *e)
 struct dbuffer * new_dbuffer (void)
 {
 	struct dbuffer *buf;
+
+	SDL_mutexP(dbuf_lock);
+
 	if (free_dbuffers == 0) {
 		struct dbuffer *newBuf = Mem_PoolAlloc(sizeof(struct dbuffer), com_genericPool, 0);
 		newBuf->next_free = free_dbuffer_list;
@@ -112,6 +127,8 @@ struct dbuffer * new_dbuffer (void)
 	free_dbuffer_list = free_dbuffer_list->next_free;
 	assert(free_dbuffers > 0);
 	free_dbuffers--;
+
+	SDL_mutexV(dbuf_lock);
 
 	buf->len = 0;
 	buf->space = DBUFFER_ELEMENT_SIZE;
@@ -136,6 +153,8 @@ void free_dbuffer (struct dbuffer *buf)
 		free_element(e);
 	}
 
+	SDL_mutexP(dbuf_lock);
+
 	buf->next_free = free_dbuffer_list;
 	free_dbuffer_list = buf;
 	free_dbuffers++;
@@ -148,6 +167,8 @@ void free_dbuffer (struct dbuffer *buf)
 		free_dbuffers--;
 		allocated_dbuffers--;
 	}
+
+	SDL_mutexV(dbuf_lock);
 }
 
 /**
@@ -346,6 +367,9 @@ size_t dbuffer_get_at (const struct dbuffer *buf, size_t offset, char *data, siz
 		p = &e->data[0];
 	}
 
+	if (e == NULL || e->len <= 0)
+		return 0;
+
 	while (len > 0 && e && e->len > 0) {
 		size_t l = e->len - offset;
 		if (len < l)
@@ -476,35 +500,12 @@ size_t dbuffer_extract (struct dbuffer *buf, char *data, size_t len)
 	return extracted;
 }
 
-/**
- * @brief Locate the first occurance of a character in a dbuffer
- * @param[in] buf dbuffer to search
- * @param[in] c character to search for
- * @return the offset of the first occurance of the character from the
- * start of the buffer, or -1 if the character does not occur in the
- * buffer
- */
-ssize_t dbuffer_find_char (const struct dbuffer *buf, int c)
+void dbuffer_init (void)
 {
-	ssize_t pos = 0;
-	const struct dbuffer_element *e;
+	dbuf_lock = SDL_CreateMutex();
+}
 
-	if (!buf)
-		return -1;
-
-	e = buf->head;
-	while (e) {
-		const char *p, *start;
-		if (e == buf->head)
-			start = buf->start;
-		else
-			start = e->data;
-		if ((p = memchr(start, c, e->len))) {
-			pos += p - start;
-			return pos;
-		}
-		pos += e->len;
-		e = e->next;
-	}
-	return -1;
+void dbuffer_shutdown (void)
+{
+	SDL_DestroyMutex(dbuf_lock);
 }

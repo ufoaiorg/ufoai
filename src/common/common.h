@@ -26,9 +26,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _COMMON_DEFINED
 #define _COMMON_DEFINED
 
-#include "../game/q_shared.h"
-#include "../game/inventory.h"
-#include "../game/game.h"
+#include "../shared/ufotypes.h"
+#include "../shared/byte.h"
+#include "../shared/shared.h"
+#include "../shared/mathlib.h"
+#include "../shared/defines.h"
+#include "../shared/typedefs.h"
+#include "tracing.h"
+#include "cvar.h"
 #include "mem.h"
 #include "http.h"
 
@@ -162,12 +167,14 @@ enum clc_ops_e {
 #define SOUND_ATTN_STATIC 3.0f /**< dimish very rapidly with distance */
 #define SOUND_ATTN_MAX SOUND_ATTN_STATIC
 
+#include "../ports/system.h"
 #include "cmd.h"
 #include "cvar.h"
 #include "cmodel.h"
 #include "filesys.h"
 #include "scripts.h"
 #include "net.h"
+#include "dbuffer.h"
 #include "netpack.h"
 
 /*
@@ -215,8 +222,6 @@ extern cvar_t* sys_priority;
 extern cvar_t* sys_affinity;
 extern cvar_t* sys_os;
 
-extern csi_t csi;
-
 /* Time information. */
 /**
  * @brief Engine-side time information in the game.
@@ -239,6 +244,8 @@ typedef struct date_s {
 #define SECONDS_PER_HOUR	3600	/**< (60 * 60) */
 #define SECONDS_PER_MINUTE	60		/**< (60) */
 #define MINUTES_PER_HOUR	60		/**< (60) */
+
+#define MAXCMDLINE 256
 
 #define MAX_CVARLISTINGAMETYPE 16
 typedef struct cvarlist_s {
@@ -263,10 +270,8 @@ void Qcommon_Frame(void);
 void Qcommon_Shutdown(void);
 void Com_SetGameType(void);
 
-#define NUMVERTEXNORMALS	162
-extern const vec3_t bytedirs[NUMVERTEXNORMALS];
+float Com_GrenadeTarget(const vec3_t from, const vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
 
-/** this is in the client code, but can be used for debugging from server */
 void Con_Print(const char *txt);
 
 /* Event timing */
@@ -281,40 +286,6 @@ void CL_FilterEventQueue(event_filter *filter);
 
 /*
 ==============================================================
-NON-PORTABLE SYSTEM SERVICES
-==============================================================
-*/
-
-void Sys_Init(void);
-void Sys_NormPath(char *path);
-void Sys_Sleep(int milliseconds);
-const char *Sys_GetCurrentUser(void);
-int Sys_Setenv(const char *name, const char *value);
-void Sys_InitSignals(void);
-const char *Sys_SetLocale(const char *localeID);
-const char *Sys_GetLocale(void);
-
-void Sys_UnloadGame(void);
-/** loads the game dll and calls the api init function */
-game_export_t *Sys_GetGameAPI(game_import_t * parms);
-
-#define MAXCMDLINE 256
-const char *Sys_ConsoleInput(void);
-void Sys_ConsoleOutput(const char *string);
-void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
-void Sys_Quit(void);
-char *Sys_GetHomeDirectory(void);
-
-void Sys_ConsoleShutdown(void);
-void Sys_ConsoleInit(void);
-void Sys_ShowConsole(qboolean show);
-
-void *Sys_LoadLibrary(const char *name, int flags);
-void Sys_FreeLibrary(void *libHandle);
-void *Sys_GetProcAddress(void *libHandle, const char *procName);
-
-/*
-==============================================================
 CLIENT / SERVER SYSTEMS
 ==============================================================
 */
@@ -322,6 +293,7 @@ CLIENT / SERVER SYSTEMS
 void CL_Init(void);
 void CL_Drop(void);
 void CL_Shutdown(void);
+int CL_Milliseconds(void);
 void CL_Frame(int now, void *data);
 void CL_SlowFrame(int now, void *data);
 void CL_ParseClientData(const char *type, const char *name, const char **text);
@@ -334,15 +306,16 @@ void SV_Clear(void);
 void SV_Shutdown(const char *finalmsg, qboolean reconnect);
 void SV_ShutdownWhenEmpty(void);
 void SV_Frame(int now, void *);
+const routing_t** SV_GetRoutingMap(void);
 
 /*============================================================================ */
 
-extern struct memPool_s *com_aliasSysPool;
-extern struct memPool_s *com_cmdSysPool;
-extern struct memPool_s *com_cmodelSysPool;
-extern struct memPool_s *com_cvarSysPool;
-extern struct memPool_s *com_fileSysPool;
-extern struct memPool_s *com_genericPool;
+extern memPool_t *com_aliasSysPool;
+extern memPool_t *com_cmdSysPool;
+extern memPool_t *com_cmodelSysPool;
+extern memPool_t *com_cvarSysPool;
+extern memPool_t *com_fileSysPool;
+extern memPool_t *com_genericPool;
 
 /*============================================================================ */
 

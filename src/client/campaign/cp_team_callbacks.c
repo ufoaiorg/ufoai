@@ -23,14 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../battlescape/cl_localentity.h"	/**< cl_actor.h needs this */
-#include "../battlescape/cl_actor.h"
-#include "../battlescape/cl_ugv.h"
+#include "../cl_shared.h"
 #include "../cl_team.h"
-#include "../cl_ugv.h"
-#include "../menu/m_main.h"
-#include "../menu/node/m_node_container.h"	/**< menuInventory */
+#include "../ui/ui_main.h"
+#include "../ui/node/ui_node_container.h"	/**< ui_inventory */
 
 #include "cp_campaign.h"
 #include "cp_team.h"
@@ -53,6 +49,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 	linkedList_t *emplList;
 	int id;
 	base_t *base = B_GetCurrentSelectedBase();
+	const int selected = Cvar_GetInteger("cl_selected");
 
 	/* Check if we are allowed to be here.
 	 * We are only allowed to be here if we already set up a base. */
@@ -82,7 +79,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 		const int guiId = id - beginIndex;
 		containerIndex_t container;
 
-		assert(employee->hired);
+		assert(E_IsHired(employee));
 		assert(!employee->transfer);
 
 		/* id lower than viewable item */
@@ -99,7 +96,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 		}
 
 		/* Set name of the employee. */
-		Cvar_ForceSet(va("mn_ename%i", guiId), employee->chr.name);
+		Cvar_Set(va("mn_ename%i", guiId), employee->chr.name);
 
 		/* Search all aircraft except the current one. */
 		otherShip = AIR_IsEmployeeInAircraft(employee, NULL);
@@ -107,11 +104,11 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 
 		/* Update status */
 		if (alreadyInOtherShip)
-			MN_ExecuteConfunc("aircraft_%s_usedelsewhere %i", nodeTag, guiId);
+			UI_ExecuteConfunc("aircraft_%s_usedelsewhere %i", nodeTag, guiId);
 		else if (AIR_IsEmployeeInAircraft(employee, aircraft))
-			MN_ExecuteConfunc("aircraft_%s_assigned %i", nodeTag, guiId);
+			UI_ExecuteConfunc("aircraft_%s_assigned %i", nodeTag, guiId);
 		else
-			MN_ExecuteConfunc("aircraft_%s_unassigned %i", nodeTag, guiId);
+			UI_ExecuteConfunc("aircraft_%s_unassigned %i", nodeTag, guiId);
 
 		/* Check if the employee has something equipped. */
 		for (container = 0; container < csi.numIDs; container++) {
@@ -119,23 +116,23 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 				break;
 		}
 		if (container < csi.numIDs)
-			MN_ExecuteConfunc("aircraft_%s_holdsequip %i", nodeTag, guiId);
+			UI_ExecuteConfunc("aircraft_%s_holdsequip %i", nodeTag, guiId);
 		else
-			MN_ExecuteConfunc("aircraft_%s_holdsnoequip %i", nodeTag, guiId);
+			UI_ExecuteConfunc("aircraft_%s_holdsnoequip %i", nodeTag, guiId);
 
-		if (cl_selected->integer == id)
-			MN_ExecuteConfunc("aircraft_%s_selected %i", nodeTag, guiId);
+		if (selected == id)
+			UI_ExecuteConfunc("aircraft_%s_selected %i", nodeTag, guiId);
 
 		emplList = emplList->next;
 		id++;
 	}
 
-	MN_ExecuteConfunc("aircraft_%s_list_size %i", nodeTag, id);
+	UI_ExecuteConfunc("aircraft_%s_list_size %i", nodeTag, id);
 
 	for (; id - beginIndex < drawableListSize; id++) {
 		const int guiId = id - beginIndex;
-		MN_ExecuteConfunc("aircraft_%s_unusedslot %i", nodeTag, guiId);
-		Cvar_ForceSet(va("mn_name%i", guiId), "");
+		UI_ExecuteConfunc("aircraft_%s_unusedslot %i", nodeTag, guiId);
+		Cvar_Set(va("mn_name%i", guiId), "");
 	}
 
 	return qtrue;
@@ -162,7 +159,7 @@ static void CL_UpdateSoldierList_f (void)
 
 	result = CL_UpdateEmployeeList(EMPL_SOLDIER, "soldier", beginIndex, drawableListSize);
 	if (!result)
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 }
 
 /**
@@ -185,7 +182,7 @@ static void CL_UpdatePilotList_f (void)
 
 	result = CL_UpdateEmployeeList(EMPL_PILOT, "pilot", beginIndex, drawableListSize);
 	if (!result)
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 }
 
 /**
@@ -198,8 +195,9 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 {
 	equipDef_t unused;
 	int p;
-	aircraft_t *aircraft;
+	aircraft_t *aircraft, *aircraftInBase;
 	base_t *base = B_GetCurrentSelectedBase();
+	size_t size;
 
 	if (!base)
 		return;
@@ -209,8 +207,8 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 		return;
 
 	/* no soldiers are assigned to the current aircraft. */
-	if (!aircraft->teamSize) {
-		MN_PopWindow(qfalse);
+	if (AIR_GetTeamSize(aircraft) == 0) {
+		UI_PopWindow(qfalse);
 		return;
 	}
 
@@ -219,23 +217,25 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	/** @todo Skip EMPL_ROBOT (i.e. ugvs) for now . */
 	p = CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 	if (p > 0)
-		menuInventory = &chrDisplayList.chr[0]->i;
+		ui_inventory = &chrDisplayList.chr[0]->i;
 	else
-		menuInventory = NULL;
+		ui_inventory = NULL;
 
-	for (; p < MAX_ACTIVETEAM; p++)
-		MN_ExecuteConfunc("equipdisable %i", p);
+	size = MAX_ACTIVETEAM;
+	for (; p < size; p++)
+		UI_ExecuteConfunc("equipdisable %i", p);
 
 	/* manage inventory */
 	unused = aircraft->homebase->storage; /* copied, including arrays inside! */
 
 	/* clean up aircraft crew for upcoming mission */
 	CL_CleanTempInventory(aircraft->homebase);
-	for (p = 0; p < aircraft->homebase->numAircraftInBase; p++) {
-		CL_CleanupAircraftCrew(&aircraft->homebase->aircraft[p], &unused);
-	}
 
-	MN_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
+	aircraftInBase = NULL;
+	while ((aircraftInBase = AIR_GetNextFromBase(aircraft->homebase, aircraftInBase)) != NULL)
+		CL_CleanupAircraftCrew(aircraftInBase, &unused);
+
+	UI_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
 }
 
 /**
@@ -284,9 +284,8 @@ static void CL_AssignPilot_f (void)
 
 	CL_UpdateActorAircraftVar(aircraft, employeeType);
 
-	MN_ExecuteConfunc("aircraft_status_change");
+	UI_ExecuteConfunc("aircraft_status_change");
 	Cmd_ExecuteString(va("pilot_select %i %i", num - relativeId, relativeId));
-
 }
 
 /**
@@ -299,10 +298,7 @@ static void CL_AssignSoldier_f (void)
 	aircraft_t *aircraft;
 	int relativeId = 0;
 	int num;
-	const employeeType_t employeeType =
-		ccs.displayHeavyEquipmentList
-			? EMPL_ROBOT
-			: EMPL_SOLDIER;
+	const employeeType_t employeeType = EMPL_SOLDIER;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2 || Cmd_Argc() > 3) {
@@ -328,7 +324,7 @@ static void CL_AssignSoldier_f (void)
 	AIM_AddEmployeeFromMenu(aircraft, num);
 	CL_UpdateActorAircraftVar(aircraft, employeeType);
 
-	MN_ExecuteConfunc("aircraft_status_change");
+	UI_ExecuteConfunc("aircraft_status_change");
 	Cbuf_AddText(va("team_select %i %i\n", num - relativeId, relativeId));
 }
 
@@ -355,8 +351,7 @@ static void CL_ActorPilotSelect_f (void)
 
 	num = atoi(Cmd_Argv(1)) + relativeId;
 	if (num >= E_CountHired(base, employeeType)) {
-		MN_ExecuteConfunc("reset_character_cvars");
-		//CL_ResertCharacterCvars();
+		UI_ExecuteConfunc("reset_character_cvars");
 		return;
 	}
 
@@ -365,15 +360,13 @@ static void CL_ActorPilotSelect_f (void)
 		Com_Error(ERR_DROP, "CL_ActorPilotSelect_f: No employee at list-pos %i (base: %i)", num, base->idx);
 
 	chr = &employee->chr;
-	if (!chr)
-		Com_Error(ERR_DROP, "CL_ActorPilotSelect_f: No hired character at list-pos %i (base: %i)", num, base->idx);
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
 	/* set info cvars */
-	CL_ActorCvars(chr, "mn_");
-	MN_ExecuteConfunc("update_pilot_list %i %i", soldierListSize, soldierListPos);
+	CL_UpdateCharacterValues(chr, "mn_");
+	UI_ExecuteConfunc("update_pilot_list %i %i", soldierListSize, soldierListPos);
 }
 
 static void CL_ActorTeamSelect_f (void)
@@ -382,8 +375,6 @@ static void CL_ActorTeamSelect_f (void)
 	character_t *chr;
 	int num;
 	int relativeId = 0;
-	const employeeType_t employeeType = ccs.displayHeavyEquipmentList
-			? EMPL_ROBOT : EMPL_SOLDIER;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -399,9 +390,8 @@ static void CL_ActorTeamSelect_f (void)
 		relativeId = atoi(Cmd_Argv(2));
 
 	num = atoi(Cmd_Argv(1)) + relativeId;
-	if (num >= E_CountHired(base, employeeType)) {
-		MN_ExecuteConfunc("reset_character_cvars");
-//		CL_ResertCharacterCvars();
+	if (num >= E_CountHired(base, EMPL_SOLDIER)) {
+		UI_ExecuteConfunc("reset_character_cvars");
 		return;
 	}
 
@@ -410,29 +400,24 @@ static void CL_ActorTeamSelect_f (void)
 		Com_Error(ERR_DROP, "CL_ActorTeamSelect_f: No employee at list-pos %i (base: %i)", num, base->idx);
 
 	chr = &employee->chr;
-	if (!chr)
-		Com_Error(ERR_DROP, "CL_ActorTeamSelect_f: No hired character at list-pos %i (base: %i)", num, base->idx);
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
 	/* set info cvars */
-	if (chr->teamDef->race == RACE_ROBOT)
-		CL_UGVCvars(chr, "mn_");
-	else
-		CL_ActorCvars(chr, "mn_");
-	MN_ExecuteConfunc("update_soldier_list %i %i", soldierListSize, soldierListPos);
+	CL_UpdateCharacterValues(chr, "mn_");
+	UI_ExecuteConfunc("update_soldier_list %i %i", soldierListSize, soldierListPos);
 }
 
 #ifdef DEBUG
 static void CL_TeamListDebug_f (void)
 {
-	int i;
 	base_t *base;
 	aircraft_t *aircraft;
+	linkedList_t *l;
 
-	base = CP_GetMissionBase();
 	aircraft = ccs.missionAircraft;
+	base = aircraft->homebase;
 
 	if (!base) {
 		Com_Printf("Build and select a base first\n");
@@ -444,12 +429,11 @@ static void CL_TeamListDebug_f (void)
 		return;
 	}
 
-	Com_Printf("%i members in the current team", aircraft->teamSize);
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[i]) {
-			const character_t *chr = &aircraft->acTeam[i]->chr;
-			Com_Printf("ucn %i - employee->idx: %i\n", chr->ucn, aircraft->acTeam[i]->idx);
-		}
+	Com_Printf("%i members in the current team", AIR_GetTeamSize(aircraft));
+	for (l = aircraft->acTeam; l != NULL; l = l->next) {
+		const employee_t *employee = (const employee_t *)l->data;
+		const character_t *chr = &employee->chr;
+		Com_Printf("ucn %i - employee->idx: %i\n", chr->ucn, employee->idx);
 	}
 }
 #endif

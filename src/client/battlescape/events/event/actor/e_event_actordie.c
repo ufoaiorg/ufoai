@@ -36,14 +36,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 {
-	le_t *le, *attackerLE;
-	int entnum, attackerEntnum, state;
+	le_t *le;
+	int entnum, state;
 
-	NET_ReadFormat(msg, self->formatString, &entnum, &attackerEntnum, &state);
+	NET_ReadFormat(msg, self->formatString, &entnum, &state);
 
 	/* get les */
 	le = LE_Get(entnum);
-	attackerLE = LE_Get(attackerEntnum);
 
 	if (!le)
 		LE_NotFoundError(entnum);

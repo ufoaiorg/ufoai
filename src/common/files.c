@@ -29,9 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "common.h"
+#include "../ports/system.h"
 #include "../shared/defines.h"
 #include "../shared/typedefs.h"
 #include "../shared/parse.h"
+#include <unistd.h>
 
 /** counter for opened files - used to check against missing close calls */
 static int fs_openedFiles;
@@ -320,11 +322,7 @@ int FS_CheckFile (const char *fmt, ...)
  * @sa FS_LoadFile
  * @sa FS_OpenFile
  */
-#ifdef DEBUG
-int FS_ReadDebug (void *buffer, int len, qFILE * f, const char* file, int line)
-#else
 int FS_Read (void *buffer, int len, qFILE * f)
-#endif
 {
 	int block, remaining;
 	int read;
@@ -872,7 +870,7 @@ static listBlock_t *fs_blocklist = NULL;
  * @note also checks for duplicates
  * @sa FS_BuildFileList
  */
-static void _AddToListBlock (linkedList_t** fl, listBlock_t* block, listBlock_t* tblock, const char* name, qboolean stripPath)
+static void _AddToListBlock (linkedList_t** fl, const char* name, qboolean stripPath)
 {
 	const char *f;
 	const linkedList_t *entry;
@@ -978,7 +976,7 @@ int FS_BuildFileList (const char *fileList)
 					}
 
 					if (add)
-						_AddToListBlock(&block->files, block, tblock, pak->files[i].name, qtrue);
+						_AddToListBlock(&block->files, pak->files[i].name, qtrue);
 				}
 			}
 		} else if (strstr(files, "**")) {
@@ -990,12 +988,14 @@ int FS_BuildFileList (const char *fileList)
 			Q_strncpyz(findname, files, sizeof(findname));
 			FS_NormPath(findname);
 			findname[l] = '\0';
+			if (l > 0 && findname[l - 1] == '/')
+				findname[l - 1] = '\0';
 
 			Sys_ListFilteredFiles(search->filename, findname, name, &list);
 
 			loopList = list;
 			while (loopList) {
-				_AddToListBlock(&block->files, block, tblock, (const char *)loopList->data, qfalse);
+				_AddToListBlock(&block->files, (const char *)loopList->data, qfalse);
 				loopList = loopList->next;
 			}
 
@@ -1010,7 +1010,7 @@ int FS_BuildFileList (const char *fileList)
 			filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (filenames != NULL) {
 				for (i = 0; i < nfiles - 1; i++) {
-					_AddToListBlock(&block->files, block, tblock, filenames[i], qtrue);
+					_AddToListBlock(&block->files, filenames[i], qtrue);
 					Mem_Free(filenames[i]);
 				}
 				Mem_Free(filenames);

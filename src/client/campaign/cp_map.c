@@ -23,16 +23,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../cl_screen.h"
-#include "../renderer/r_draw.h"
+#include "../client.h" /* cls */
+#include "../renderer/r_image.h"
 #include "../renderer/r_framebuffer.h"
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
-#include "../menu/m_font.h"
-#include "../menu/m_nodes.h"
-#include "../menu/m_render.h"
-#include "../menu/node/m_node_abstractnode.h"
+#include "../renderer/r_draw.h"
+#include "../renderer/r_geoscape.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_font.h" /* UI_GetFontFromNode */
+#include "../ui/ui_render.h" /* UI_DrawString */
+#include "../ui/node/ui_node_abstractnode.h" /* UI_GetNodeAbsPos */
+#include "../ui/node/ui_node_map.h" /* paddingRight */
+#include "cp_overlay.h"
 #include "cp_campaign.h"
 #include "cp_popup.h"
 #include "cp_mapfightequip.h"
@@ -46,6 +47,12 @@ cvar_t *cl_3dmap;				/**< 3D geoscape or flat geoscape */
 static cvar_t *cl_3dmapAmbient;
 cvar_t *cl_mapzoommax;
 cvar_t *cl_mapzoommin;
+cvar_t *cl_geoscape_overlay;
+
+extern image_t *r_dayandnightTexture;
+extern image_t *r_radarTexture;
+extern image_t *r_xviTexture;
+
 #ifdef DEBUG
 static cvar_t *debug_showInterest;
 #endif
@@ -114,15 +121,16 @@ STATIC DEFINITION
 */
 
 /* Functions */
-static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, const vec2_t pos, int x, int y);
-static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
-static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
+static qboolean MAP_IsMapPositionSelected(const uiNode_t* node, const vec2_t pos, int x, int y);
+static void MAP3D_ScreenToMap(const uiNode_t* node, int x, int y, vec2_t pos);
+static void MAP_ScreenToMap(const uiNode_t* node, int x, int y, vec2_t pos);
 
 /* static variables */
 static char textStandard[2048];		/**< Buffer to display standard text in geoscape */
 static int centerOnEventIdx;		/**< Current Event centered on 3D geoscape */
 
 /* Colors */
+static const vec4_t green = {0.0f, 1.0f, 0.0f, 0.8f};
 static const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 static const vec4_t red = {1.0f, 0.0f, 0.0f, 0.8f};
 
@@ -190,7 +198,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		selected = 0;
 	} else {
 		/* Call from a geoscape popup menu (popup_multi_selection) */
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 		selected = atoi(Cmd_Argv(1));
 		multiSelection = qtrue;
 	}
@@ -271,7 +279,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 /**
  * @brief Click on the map/geoscape
  */
-void MAP_MapClick (menuNode_t* node, int x, int y)
+void MAP_MapClick (uiNode_t* node, int x, int y)
 {
 	aircraft_t *aircraft;
 	int i;
@@ -295,7 +303,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 
 			if (ccs.numBases < MAX_BASES) {
 				Cmd_ExecuteString("mn_set_base_title");
-				MN_PushWindow("popup_newbase", NULL);
+				UI_PushWindow("popup_newbase", NULL);
 			}
 			return;
 		}
@@ -306,13 +314,13 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 
 			if (ccs.numInstallations < MAX_INSTALLATIONS) {
 				CL_GameTimeStop();
-				MN_PushWindow("popup_newinstallation", NULL);
+				UI_PushWindow("popup_newinstallation", NULL);
 			}
 			return;
 		}
 		break;
 	case MA_UFORADAR:
-		MN_PushWindow("popup_intercept_ufo", NULL);
+		UI_PushWindow("popup_intercept_ufo", NULL);
 		break;
 	default:
 		break;
@@ -337,14 +345,17 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 	/* Get selected bases */
 	for (i = 0; i < MAX_BASES && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++) {
 		const base_t *base = B_GetFoundedBaseByIDX(i);
+		aircraft_t *aircraft;
+
 		if (!base)
 			continue;
-		if (MAP_IsMapPositionSelected(node, ccs.bases[i].pos, x, y))
+
+		if (MAP_IsMapPositionSelected(node, base->pos, x, y))
 			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_BASE, i, _("Base"), base->name);
 
-		/* Get selected aircraft wich belong to the base */
-		aircraft = ccs.bases[i].aircraft + base->numAircraftInBase - 1;
-		for (; aircraft >= base->aircraft; aircraft--)
+		/* Get selected aircraft which belong to the base */
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 			if (AIR_IsAircraftOnGeoscape(aircraft) && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), aircraft->name);
 	}
@@ -354,7 +365,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		const installation_t *installation = INS_GetFoundedInstallationByIDX(i);
 		if (!installation)
 			continue;
-		if (MAP_IsMapPositionSelected(node, ccs.installations[i].pos, x, y))
+		if (MAP_IsMapPositionSelected(node, installation->pos, x, y))
 			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_INSTALLATION, i, _("Installation"), installation->name);
 	}
 
@@ -373,9 +384,9 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		Cmd_ExecuteString("multi_select_click");
 	} else if (multiSelect.nbSelect > 1) {
 		/* Display popup for multi selection */
-		MN_RegisterText(TEXT_MULTISELECTION, multiSelect.popupText);
+		UI_RegisterText(TEXT_MULTISELECTION, multiSelect.popupText);
 		CL_GameTimeStop();
-		MN_PushWindow("popup_multi_selection", NULL);
+		UI_PushWindow("popup_multi_selection", NULL);
 	} else {
 		/* Nothing selected */
 		if (!ccs.selectedAircraft)
@@ -399,17 +410,17 @@ GEOSCAPE DRAWING AND COORDINATES
  * @brief maximum distance (in pixel) to get a valid mouse click
  * @note this is for a 1024 * 768 screen
  */
-#define MN_MAP_DIST_SELECTION 15
+#define UI_MAP_DIST_SELECTION 15
 /**
  * @brief Tell if the specified position is considered clicked
  */
-static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, const vec2_t pos, int x, int y)
+static qboolean MAP_IsMapPositionSelected (const uiNode_t* node, const vec2_t pos, int x, int y)
 {
 	int msx, msy;
 
 	if (MAP_AllMapToScreen(node, pos, &msx, &msy, NULL))
-		if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION
-		 && y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
+		if (x >= msx - UI_MAP_DIST_SELECTION && x <= msx + UI_MAP_DIST_SELECTION
+		 && y >= msy - UI_MAP_DIST_SELECTION && y <= msy + UI_MAP_DIST_SELECTION)
 			return qtrue;
 
 	return qfalse;
@@ -436,7 +447,7 @@ const float STANDARD_3D_ZOOM = 40.0f;
  * @return qtrue if the point is visible, qfalse else (if it's outside the node or on the wrong side of earth).
  * @note In the function, we do the opposite of MAP3D_ScreenToMap
  */
-static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z)
+static qboolean MAP_3DMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
 {
 	vec2_t mid;
 	vec3_t v, v1, rotationAxis;
@@ -484,7 +495,7 @@ static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
  * node. Otherwise returns qfalse.
  * @sa MAP_3DMapToScreen
  */
-qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y)
+qboolean MAP_MapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y)
 {
 	float sx;
 
@@ -518,7 +529,7 @@ qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int 
  * @sa MAP_MapToScreen
  * @sa MAP_3DMapToScreen
  */
-qboolean MAP_AllMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z)
+qboolean MAP_AllMapToScreen (const uiNode_t* node, const vec2_t pos, int *x, int *y, int *z)
 {
 	if (cl_3dmap->integer)
 		return MAP_3DMapToScreen(node, pos, x, y, z);
@@ -537,7 +548,7 @@ qboolean MAP_AllMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, i
  * @param[in] model The name of the model of the marker.
  * @param[in] skin Number of modelskin to draw on marker
  */
-void MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
+void MAP_Draw3DMarkerIfVisible (const uiNode_t* node, const vec2_t pos, float theta, const char *model, int skin)
 {
 	if (cl_3dmap->integer) {
 		R_Draw3DMapMarkers(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], ccs.angles, pos, theta, GLOBE_RADIUS, model, skin);
@@ -560,7 +571,7 @@ void MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float 
  * @param[in] y Y coordinate on the screen that was clicked to
  * @param[out] pos vec2_t was filled with longitude and latitude
  */
-static void MAP_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
+static void MAP_ScreenToMap (const uiNode_t* node, int x, int y, vec2_t pos)
 {
 	pos[0] = (((ccs.mapPos[0] - x) / ccs.mapSize[0] + 0.5) / ccs.zoom - (ccs.center[0] - 0.5)) * 360.0;
 	pos[1] = (((ccs.mapPos[1] - y) / ccs.mapSize[1] + 0.5) / ccs.zoom - (ccs.center[1] - 0.5)) * 180.0;
@@ -579,7 +590,7 @@ static void MAP_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
  * @param[out] pos vec2_t was filled with longitude and latitude
  * @sa MAP_3DMapToScreen
  */
-static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
+static void MAP3D_ScreenToMap (const uiNode_t* node, int x, int y, vec2_t pos)
 {
 	vec2_t mid;
 	vec3_t v, v1, rotationAxis;
@@ -718,7 +729,7 @@ void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
  * @param[in] line The path which is to be drawn
  * @sa MAP_MapCalcLine
  */
-static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
+static void MAP_MapDrawLine (const uiNode_t* node, const mapline_t* line)
 {
 	const vec4_t color = {1, 0.5, 0.5, 1};
 	screenPoint_t pts[LINE_MAXPTS];
@@ -767,7 +778,7 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
  * @param[in] line The path which is to be drawn
  * @sa MAP_MapCalcLine
  */
-static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
+static void MAP_3DMapDrawLine (const uiNode_t* node, const mapline_t* line)
 {
 	const vec4_t color = {1, 0.5, 0.5, 1};
 	screenPoint_t pts[LINE_MAXPTS];
@@ -799,7 +810,7 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
  * @param[in] color The color for drawing
  * @sa RADAR_DrawCoverage
  */
-void MAP_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t center, const float angle, const vec4_t color)
+void MAP_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t center, const float angle, const vec4_t color)
 {
 	int i, xCircle, yCircle;
 	screenPoint_t pts[CIRCLE_DRAW_POINTS + 1];
@@ -1113,7 +1124,6 @@ static void MAP_SelectObject_f (void)
  */
 static void MAP_GetGeoscapeAngle (float *vector)
 {
-	int i;
 	int baseIdx;
 	int counter = 0;
 	int maxEventIdx;
@@ -1124,9 +1134,10 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	maxEventIdx = numMissions + ccs.numBases + ccs.numInstallations - 1;
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
-		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
+		aircraft_t *aircraft;
+
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (AIR_IsAircraftOnGeoscape(aircraft))
 				maxEventIdx++;
 		}
@@ -1201,10 +1212,9 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	/* Cycle through aircraft (only those present on geoscape) */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
 
-		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				if (centerOnEventIdx == counter) {
 					MAP_ConvertObjectPositionToGeoscapePosition(vector, aircraft->pos);
@@ -1241,7 +1251,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
  */
 void MAP_CenterOnPoint_f (void)
 {
-	if (strcmp(MN_GetActiveWindowName(), "geoscape"))
+	if (strcmp(UI_GetActiveWindowName(), "geoscape"))
 		return;
 
 	centerOnEventIdx++;
@@ -1311,8 +1321,8 @@ static void MAP3D_SmoothRotate (void)
 
 /**
  * @brief stop smooth translation on geoscape
- * @sa MN_RightClick
- * @sa MN_MouseWheel
+ * @sa UI_RightClick
+ * @sa UI_MouseWheel
  */
 void MAP_StopSmoothMovement (void)
 {
@@ -1353,10 +1363,9 @@ static void MAP_SmoothTranslate (void)
  * @param[in] pos
  * @sa MAP_DrawMap
  */
-static void MAP_DrawBullets (const menuNode_t* node, const vec3_t pos)
+static void MAP_DrawBullets (const uiNode_t* node, const vec3_t pos)
 {
 	int x, y;
-	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 
 	if (MAP_AllMapToScreen(node, pos, &x, &y, NULL))
 		R_DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, yellow);
@@ -1370,7 +1379,7 @@ static void MAP_DrawBullets (const menuNode_t* node, const vec3_t pos)
  * @param[in] color color of the beam
  * @sa MAP_DrawMap
  */
-static void MAP_DrawBeam (const menuNode_t* node, const vec3_t start, const vec3_t end, const vec4_t color)
+static void MAP_DrawBeam (const uiNode_t* node, const vec3_t start, const vec3_t end, const vec4_t color)
 {
 	int points[4];
 
@@ -1391,7 +1400,7 @@ static void MAP_DrawBeam (const menuNode_t* node, const vec3_t start, const vec3
  * @param[in] node The menu node which will be used for drawing markers.
  * @param[in] ms Pointer to the mission to draw.
  */
-static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
+static void MAP_DrawMapOneMission (const uiNode_t* node, const mission_t *ms)
 {
 	int x, y;
 
@@ -1425,7 +1434,7 @@ static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
 		R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 	}
 
-	MN_DrawString("f_verysmall", ALIGN_UL, x + 10, y, 0, 0, 0, 0, 0,  _(ms->location), 0, 0, NULL, qfalse, 0);
+	UI_DrawString("f_verysmall", ALIGN_UL, x + 10, y, 0, 0, 0,  _(ms->location), 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -1436,7 +1445,7 @@ static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
  * @param[in] font Default font.
  * @pre installation is not NULL.
  */
-static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installation_t *installation,
+static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation_t *installation,
 	qboolean oneUFOVisible, const char* font)
 {
 	const installationTemplate_t *tpl = installation->installationTemplate;
@@ -1454,7 +1463,7 @@ static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installati
 	}
 
 	/* Draw installation radar (only the "wire" style part) */
-	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+	if (MAP_IsRadarOverlayActivated())
 		RADAR_DrawInMap(node, &installation->radar, installation->pos);
 
 	/* Draw installation */
@@ -1468,7 +1477,7 @@ static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installati
 
 	/* Draw installation names */
 	if (MAP_AllMapToScreen(node, installation->pos, &x, &y, NULL))
-		MN_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, 0, 0, installation->name, 0, 0, NULL, qfalse, 0);
+		UI_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, installation->name, 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -1478,7 +1487,7 @@ static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installati
  * @param[in] oneUFOVisible Is there at least one UFO visible on the geoscape?
  * @param[in] font Default font.
  */
-static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
+static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
 	qboolean oneUFOVisible, const char* font)
 {
 	int i, x, y;
@@ -1502,7 +1511,7 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
 	}
 
 	/* Draw base radar (only the "wire" style part) */
-	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+	if (MAP_IsRadarOverlayActivated())
 		RADAR_DrawInMap(node, &base->radar, base->pos);
 
 	/* Draw base */
@@ -1524,7 +1533,41 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
 
 	/* Draw base names */
 	if (MAP_AllMapToScreen(node, base->pos, &x, &y, NULL))
-		MN_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, 0, 0, base->name, 0, 0, NULL, qfalse, 0);
+		UI_DrawString(font, ALIGN_UL, x, y + 10, 0, 0, 0, base->name, 0, 0, NULL, qfalse, 0);
+}
+
+/**
+ * @brief Draws health bar for an aircraft (either phalanx or ufo)
+ * @param[in] node Pointer to the meunode to draw in
+ * @param[in] aircraft Pointer to the aircraft to draw for
+ * @note if max health (AIR_STATS_DAMAGE) <= 0 no healthbar drawn
+ */
+static void MAP_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *aircraft) {
+	const vec4_t bordercolor = {1, 1, 1, 1};
+	const int width = 8 * ccs.zoom;
+	const int height = 1 * ccs.zoom * 0.9;
+	vec4_t color;
+	int centerX;
+	int centerY;
+
+	if (!aircraft)
+		return;
+	if (aircraft->stats[AIR_STATS_DAMAGE] <= 0)
+		return;
+
+	if (((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE]) <= .33) {
+		Vector4Copy(red, color);
+	} else if (((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE]) <= .75) {
+		Vector4Copy(yellow, color);
+	} else {
+		Vector4Copy(green, color);
+	}
+
+	MAP_AllMapToScreen(node, aircraft->pos, &centerX, &centerY, NULL);
+
+	R_DrawFill(centerX - width / 2 , centerY - 5 * ccs.zoom, round(width * ((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE])), height, color);
+	R_DrawRect(centerX - width / 2, centerY - 5 * ccs.zoom, width, height, bordercolor, 1.0, 1);
+
 }
 
 /**
@@ -1533,13 +1576,12 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
  * @param[in] aircraft Pointer to the aircraft to draw.
  * @param[in] oneUFOVisible Is there at least one UFO visible on the geoscape?
  */
-static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *aircraft, qboolean oneUFOVisible)
+static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *aircraft, qboolean oneUFOVisible)
 {
-	int x, y;
 	float angle;
 
 	/* Draw aircraft radar (only the "wire" style part) */
-	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+	if (MAP_IsRadarOverlayActivated())
 		RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);
 
 	/* Draw only the bigger weapon range on geoscape: more detail will be given on airfight map */
@@ -1570,15 +1612,20 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 	/* Draw a circle around selected aircraft */
 	if (aircraft == ccs.selectedAircraft) {
 		const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION];
+		int x;
+		int y;
+
 		if (cl_3dmap->integer)
 			MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
-		else
+		else {
+			MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL);
 			R_DrawImage(x - image->width / 2, y - image->height / 2, image);
+		}
 
 		/* Draw a circle around ufo purchased by selected aircraft */
 		if (aircraft->status == AIR_UFO && MAP_AllMapToScreen(node, aircraft->aircraftTarget->pos, &x, &y, NULL)) {
 			if (cl_3dmap->integer)
-				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
+				MAP_MapDrawEquidistantPoints(node, aircraft->aircraftTarget->pos, SELECT_CIRCLE_RADIUS, yellow);
 			else
 				R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 		}
@@ -1587,6 +1634,10 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
 	/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
 	MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 	VectorCopy(aircraft->pos, aircraft->oldDrawPos);
+
+	/** @todo we should only show healthbar if aircraft is fighting but it's a slow algo */
+	if (oneUFOVisible || Cvar_GetInteger("debug_showcrafthealth") >= 1)
+		MAP_DrawAircraftHealthBar(node, aircraft);
 }
 
 /**
@@ -1638,7 +1689,7 @@ static const char *MAP_GetAircraftText (char *buffer, size_t size, const aircraf
 {
 	if (aircraft->status == AIR_UFO) {
 		const float distance = GetDistanceOnGlobe(aircraft->pos, aircraft->aircraftTarget->pos);
-		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, aircraft->teamSize, aircraft->maxTeamSize);
+		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, AIR_GetTeamSize(aircraft), aircraft->maxTeamSize);
 		Q_strcat(buffer, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), size);
 		Q_strcat(buffer, va(_("Distance to target:\t\t%.0f\n"), distance), size);
 		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
@@ -1646,7 +1697,7 @@ static const char *MAP_GetAircraftText (char *buffer, size_t size, const aircraf
 			CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), size);
 		Q_strcat(buffer, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / aircraft->stats[AIR_STATS_SPEED])), size);
 	} else {
-		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, aircraft->teamSize, aircraft->maxTeamSize);
+		Com_sprintf(buffer, size, _("Name:\t%s (%i/%i)\n"), aircraft->name, AIR_GetTeamSize(aircraft), aircraft->maxTeamSize);
 		Q_strcat(buffer, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(aircraft)), size);
 		Q_strcat(buffer, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), size);
 		Q_strcat(buffer, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
@@ -1683,16 +1734,16 @@ void MAP_UpdateGeoscapeDock (void)
 {
 	const linkedList_t *list;
 	int ufoIDX;
-	char buf[MAX_SMALLMENUTEXTLEN];
+	char buf[512];
 
-	MN_ExecuteConfunc("clean_geoscape_object");
+	UI_ExecuteConfunc("clean_geoscape_object");
 
 	/* draw mission pics */
 	for (list = ccs.missions; list; list = list->next) {
 		const mission_t *ms = (mission_t *)list->data;
 		if (!ms->onGeoscape)
 			continue;
-		MN_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
+		UI_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
 				ms->idx, ms->location, MAP_GetMissionModel(ms), MAP_GetShortMissionText(buf, sizeof(buf), ms));
 	}
 
@@ -1702,7 +1753,7 @@ void MAP_UpdateGeoscapeDock (void)
 		if (!UFO_IsUFOSeenOnGeoscape(ufo))
 			continue;
 
-		MN_ExecuteConfunc("add_geoscape_object ufo %i %i %s \"%s\"",
+		UI_ExecuteConfunc("add_geoscape_object ufo %i %i %s \"%s\"",
 				ufoIDX, ufoIDX, ufo->model, MAP_GetUFOText(buf, sizeof(buf), ufo));
 	}
 }
@@ -1716,7 +1767,7 @@ void MAP_UpdateGeoscapeDock (void)
  * going to change when you rotate earth around itself and time is stopped eg.).
  * @sa MAP_DrawMap
  */
-static void MAP_DrawMapMarkers (const menuNode_t* node)
+static void MAP_DrawMapMarkers (const uiNode_t* node)
 {
 	const linkedList_t *list;
 	int x, y, i, baseIdx, installationIdx, aircraftIdx, idx;
@@ -1726,7 +1777,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	qboolean showXVI = qfalse;
 	qboolean oneUFOVisible = qfalse;
 	static char buffer[512] = "";
-	float closestInterceptorDistance = -1.0f;
 	int maxInterpolationPoints;
 
 	assert(node);
@@ -1734,7 +1784,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	/* font color on geoscape */
 	R_Color(node->color);
 	/* default font */
-	font = MN_GetFontFromNode(node);
+	font = UI_GetFontFromNode(node);
 
 	/* check if at least 1 UFO is visible */
 	for (aircraftIdx = 0; aircraftIdx < ccs.numUFOs; aircraftIdx++) {
@@ -1762,19 +1812,18 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		MAP_DrawMapOneInstallation(node, installation, oneUFOVisible, font);
 	}
 
-	closestInterceptorDistance = -1.0f;
-
 	/* draw bases */
  	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		aircraft_t *aircraft;
 		if (!base)
 			continue;
 
 		MAP_DrawMapOneBase(node, base, oneUFOVisible, font);
 
 		/* draw all aircraft of base */
-		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-			aircraft_t *aircraft = &base->aircraft[aircraftIdx];
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (AIR_IsAircraftOnGeoscape(aircraft))
 				MAP_DrawMapOnePhalanxAircraft(node, aircraft, oneUFOVisible);
 		}
@@ -1812,6 +1861,11 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			}
 			MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 			VectorCopy(aircraft->pos, aircraft->oldDrawPos);
+
+			/** @todo we should only show healthbar if aircraft is fighting but it's a slow algo */
+			if (RS_IsResearched_ptr(aircraft->tech)
+			 || Cvar_GetInteger("debug_showcrafthealth") >= 1)
+				MAP_DrawAircraftHealthBar(node, aircraft);
 		}
 	}
 
@@ -1820,7 +1874,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	else
 		maxInterpolationPoints = 0;
 
-	/** draws projectiles */
+	/* draws projectiles */
 	for (idx = 0; idx < ccs.numProjectiles; idx++) {
 		aircraftProjectile_t *projectile = &ccs.projectiles[idx];
 		vec3_t drawPos = {0, 0, 0};
@@ -1870,14 +1924,14 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	/* Draw nation names */
 	for (i = 0; i < ccs.numNations; i++) {
 		if (MAP_AllMapToScreen(node, ccs.nations[i].pos, &x, &y, NULL))
-			MN_DrawString("f_verysmall", ALIGN_UC, x , y, 0, 0, 0, 0, 0, _(ccs.nations[i].name), 0, 0, NULL, qfalse, 0);
+			UI_DrawString("f_verysmall", ALIGN_UC, x , y, 0, 0, 0, _(ccs.nations[i].name), 0, 0, NULL, qfalse, 0);
 		if (showXVI)
 			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(ccs.nations[i].name), ccs.nations[i].stats[0].xviInfection), sizeof(buffer));
 	}
 	if (showXVI)
-		MN_RegisterText(TEXT_XVI, buffer);
+		UI_RegisterText(TEXT_XVI, buffer);
 	else
-		MN_ResetData(TEXT_XVI);
+		UI_ResetData(TEXT_XVI);
 
 	R_Color(NULL);
 }
@@ -1887,17 +1941,17 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
  * @param[in] node The map menu node
  * @sa MAP_DrawMapMarkers
  */
-void MAP_DrawMap (const menuNode_t* node)
+void MAP_DrawMap (const uiNode_t* node)
 {
 	vec2_t pos;
 
 	/* store these values in ccs struct to be able to handle this even in the input code */
-	MN_GetNodeAbsPos(node, pos);
+	UI_GetNodeAbsPos(node, pos);
 	Vector2Copy(pos, ccs.mapPos);
 	Vector2Copy(node->size, ccs.mapSize);
 	if (cl_3dmap->integer) {
 		/* remove the left padding */
-		ccs.mapSize[0] -= node->extraData1;
+		ccs.mapSize[0] -= UI_MAPEXTRADATACONST(node).paddingRight;
 	}
 
 	/* Draw the map and markers */
@@ -1917,45 +1971,55 @@ void MAP_DrawMap (const menuNode_t* node)
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
 		R_Draw3DGlobe(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1],
-				ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, ccs.curCampaign->map, disableSolarRender, cl_3dmapAmbient->value);
+				ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, ccs.curCampaign->map, disableSolarRender,
+				cl_3dmapAmbient->value, MAP_IsNationOverlayActivated(), MAP_IsXVIOverlayActivated(),
+				MAP_IsRadarOverlayActivated(), r_xviTexture, r_radarTexture);
 
 		MAP_DrawMapMarkers(node);
 
 		R_DrawBloom();
 		R_EnableRenderbuffer(qfalse);
 	} else {
+		/* the last q value for the 2d geoscape night overlay */
+		static float lastQ = 0.0f;
+
 		/* the sun is not always in the plane of the equator on earth - calculate the angle the sun is at */
 		const float q = (ccs.date.day % DAYS_PER_YEAR + (float)(ccs.date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
 		if (smoothRotation)
 			MAP_SmoothTranslate();
-		R_DrawFlatGeoscape(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], (float) ccs.date.sec / SECONDS_PER_DAY, q,
-			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, ccs.curCampaign->map);
+		if (lastQ != q) {
+			CP_CalcAndUploadDayAndNightTexture(q);
+			lastQ = q;
+		}
+		R_DrawFlatGeoscape(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], (float) ccs.date.sec / SECONDS_PER_DAY,
+			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, ccs.curCampaign->map, MAP_IsNationOverlayActivated(),
+			MAP_IsXVIOverlayActivated(), MAP_IsRadarOverlayActivated(), r_dayandnightTexture, r_xviTexture, r_radarTexture);
 		MAP_DrawMapMarkers(node);
 	}
 
 	/* display text */
-	MN_ResetData(TEXT_STANDARD);
+	UI_ResetData(TEXT_STANDARD);
 	switch (ccs.mapAction) {
 	case MA_NEWBASE:
-		MN_RegisterText(TEXT_STANDARD, _("Select the desired location of the new base on the map.\n"));
+		UI_RegisterText(TEXT_STANDARD, _("Select the desired location of the new base on the map.\n"));
 		return;
 	case MA_NEWINSTALLATION:
-		MN_RegisterText(TEXT_STANDARD, _("Select the desired location of the new installation on the map.\n"));
+		UI_RegisterText(TEXT_STANDARD, _("Select the desired location of the new installation on the map.\n"));
 		return;
 	case MA_BASEATTACK:
 		if (ccs.selectedMission)
 			break;
-		MN_RegisterText(TEXT_STANDARD, _("Aliens are attacking our base at this very moment.\n"));
+		UI_RegisterText(TEXT_STANDARD, _("Aliens are attacking our base at this very moment.\n"));
 		return;
 	case MA_INTERCEPT:
 		if (ccs.selectedMission)
 			break;
-		MN_RegisterText(TEXT_STANDARD, _("Select ufo or mission on map\n"));
+		UI_RegisterText(TEXT_STANDARD, _("Select ufo or mission on map\n"));
 		return;
 	case MA_UFORADAR:
 		if (ccs.selectedMission)
 			break;
-		MN_RegisterText(TEXT_STANDARD, _("UFO in radar range\n"));
+		UI_RegisterText(TEXT_STANDARD, _("UFO in radar range\n"));
 		return;
 	case MA_NONE:
 		break;
@@ -1963,26 +2027,26 @@ void MAP_DrawMap (const menuNode_t* node)
 
 	/* Nothing is displayed yet */
 	if (ccs.selectedMission) {
-		MN_RegisterText(TEXT_STANDARD, MAP_GetMissionText(textStandard, sizeof(textStandard), ccs.selectedMission));
+		UI_RegisterText(TEXT_STANDARD, MAP_GetMissionText(textStandard, sizeof(textStandard), ccs.selectedMission));
 	} else if (ccs.selectedAircraft) {
 		const aircraft_t *aircraft = ccs.selectedAircraft;
 		if (AIR_IsAircraftInBase(aircraft)) {
-			MN_RegisterText(TEXT_STANDARD, NULL);
+			UI_RegisterText(TEXT_STANDARD, NULL);
 			MAP_ResetAction();
 			return;
 		}
-		MN_RegisterText(TEXT_STANDARD, MAP_GetAircraftText(textStandard, sizeof(textStandard), ccs.selectedAircraft));
+		UI_RegisterText(TEXT_STANDARD, MAP_GetAircraftText(textStandard, sizeof(textStandard), ccs.selectedAircraft));
 	} else if (ccs.selectedUFO) {
-		MN_RegisterText(TEXT_STANDARD, MAP_GetUFOText(textStandard, sizeof(textStandard), ccs.selectedUFO));
+		UI_RegisterText(TEXT_STANDARD, MAP_GetUFOText(textStandard, sizeof(textStandard), ccs.selectedUFO));
 	} else {
 #ifdef DEBUG
 		if (debug_showInterest->integer) {
 			static char t[64];
 			Com_sprintf(t, lengthof(t), "Interest level: %i\n", ccs.overallInterest);
-			MN_RegisterText(TEXT_STANDARD, t);
+			UI_RegisterText(TEXT_STANDARD, t);
 		} else
 #endif
-		MN_RegisterText(TEXT_STANDARD, "");
+		UI_RegisterText(TEXT_STANDARD, "");
 	}
 }
 
@@ -2070,16 +2134,11 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
  * @param[in] aircraft Pointer to the aircraft has been removed
  * @param[in] destroyed True if the UFO has been destroyed, false if it's been only set invisible (landed)
  */
-void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft, qboolean destroyed)
+void MAP_NotifyAircraftRemoved (const aircraft_t* aircraft)
 {
-	if (!ccs.selectedAircraft)
-		return;
-
 	/* Unselect the current selected ufo if its the same */
 	if (ccs.selectedAircraft == aircraft || ccs.interceptAircraft == aircraft)
 		MAP_ResetAction();
-	else if (destroyed && (ccs.selectedAircraft->homebase == aircraft->homebase) && ccs.selectedAircraft > aircraft)
-		ccs.selectedAircraft--;
 }
 
 /**
@@ -2612,10 +2671,10 @@ void MAP_Scroll_f (void)
 void MAP_SetOverlay (const char *overlayID)
 {
 	if (!strcmp(overlayID, "nations")) {
-		if (r_geoscape_overlay->integer & OVERLAY_NATION)
-			r_geoscape_overlay->integer ^= OVERLAY_NATION;
+		if (MAP_IsNationOverlayActivated())
+			cl_geoscape_overlay->integer ^= OVERLAY_NATION;
 		else
-			r_geoscape_overlay->integer |= OVERLAY_NATION;
+			cl_geoscape_overlay->integer |= OVERLAY_NATION;
 	}
 
 	/* do nothing while the first base/installation is not build */
@@ -2623,15 +2682,15 @@ void MAP_SetOverlay (const char *overlayID)
 		return;
 
 	if (!strcmp(overlayID, "xvi")) {
-		if (r_geoscape_overlay->integer & OVERLAY_XVI)
-			r_geoscape_overlay->integer ^= OVERLAY_XVI;
+		if (cl_geoscape_overlay->integer & OVERLAY_XVI)
+			cl_geoscape_overlay->integer ^= OVERLAY_XVI;
 		else
-			r_geoscape_overlay->integer |= OVERLAY_XVI;
+			cl_geoscape_overlay->integer |= OVERLAY_XVI;
 	} else if (!strcmp(overlayID, "radar")) {
-		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
-			r_geoscape_overlay->integer ^= OVERLAY_RADAR;
+		if (MAP_IsRadarOverlayActivated())
+			cl_geoscape_overlay->integer ^= OVERLAY_RADAR;
 		else {
-			r_geoscape_overlay->integer |= OVERLAY_RADAR;
+			cl_geoscape_overlay->integer |= OVERLAY_RADAR;
 			RADAR_UpdateWholeRadarOverlay();
 		}
 	}
@@ -2654,7 +2713,7 @@ static void MAP_SetOverlay_f (void)
 
 	/* save last decision player took on radar display, in order to be able to restore it later */
 	if (!strcmp(arg, "radar"))
-		radarOverlayWasSet = (r_geoscape_overlay->integer & OVERLAY_RADAR);
+		radarOverlayWasSet = MAP_IsRadarOverlayActivated();
 }
 
 /**
@@ -2664,19 +2723,19 @@ static void MAP_SetOverlay_f (void)
 void MAP_DeactivateOverlay (const char *overlayID)
 {
 	if (!strcmp(overlayID, "nations")) {
-		if (r_geoscape_overlay->integer & OVERLAY_NATION)
+		if (MAP_IsNationOverlayActivated())
 			MAP_SetOverlay("nations");
 		else
 			return;
 	}
 
 	if (!strcmp(overlayID, "xvi")) {
-		if (r_geoscape_overlay->integer & OVERLAY_XVI)
+		if (MAP_IsXVIOverlayActivated())
 			MAP_SetOverlay("xvi");
 		else
 			return;
 	} else if (!strcmp(overlayID, "radar")) {
-		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+		if (MAP_IsRadarOverlayActivated())
 			MAP_SetOverlay("radar");
 		else
 			return;
@@ -2699,6 +2758,21 @@ static void MAP_DeactivateOverlay_f (void)
 	MAP_DeactivateOverlay(arg);
 }
 
+qboolean MAP_IsRadarOverlayActivated (void)
+{
+	return cl_geoscape_overlay->integer & OVERLAY_RADAR;
+}
+
+qboolean MAP_IsNationOverlayActivated (void)
+{
+	return cl_geoscape_overlay->integer & OVERLAY_NATION;
+}
+
+qboolean MAP_IsXVIOverlayActivated (void)
+{
+	return cl_geoscape_overlay->integer & OVERLAY_XVI;
+}
+
 /**
  * @brief Initialise MAP/Geoscape
  */
@@ -2712,6 +2786,7 @@ void MAP_InitStartup (void)
 	Cmd_AddCommand("map_selectobject", MAP_SelectObject_f, "Select an object an center on it");
 	Cmd_AddCommand("mn_mapaction_reset", MAP_ResetAction, NULL);
 
+	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, "Geoscape overlays - Bitmask");
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
 	cl_3dmapAmbient = Cvar_Get("cl_3dmapAmbient", "0", CVAR_ARCHIVE, "3D geoscape ambient lighting factor");
 	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");

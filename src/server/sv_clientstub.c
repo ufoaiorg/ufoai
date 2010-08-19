@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../common/common.h"
+#include "../ports/system.h"
 
 static void Key_Bind_Null_f (void)
 {
@@ -35,7 +36,15 @@ void CL_Init (void)
 {
 }
 
+void CL_InitAfter (void)
+{
+}
+
 void CL_Drop (void)
+{
+}
+
+void Con_Print (const char *txt)
 {
 }
 
@@ -44,6 +53,10 @@ void CL_Shutdown (void)
 }
 
 void CL_Frame (int now, void *data)
+{
+}
+
+void CL_SlowFrame (int now, void *data)
 {
 }
 
@@ -65,6 +78,11 @@ void SCR_BeginLoadingPlaque (void)
 
 void SCR_EndLoadingPlaque (void)
 {
+}
+
+int CL_Milliseconds (void)
+{
+	return Sys_Milliseconds();
 }
 
 void Key_Init (void)

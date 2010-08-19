@@ -50,8 +50,8 @@ typedef struct cmd_alias_s {
 
 static cmd_alias_t *cmd_alias;
 static cmd_alias_t *cmd_alias_hash[ALIAS_HASH_SIZE];
-
-static qboolean cmd_closed;
+static qboolean cmdWait;
+static qboolean cmdClosed;
 
 #define	ALIAS_LOOP_COUNT	16
 static int alias_count;				/* for detecting runaway loops */
@@ -63,8 +63,8 @@ static int alias_count;				/* for detecting runaway loops */
  */
 static void Cmd_Open_f (void)
 {
-	Com_DPrintf(DEBUG_ENGINE, "Cmd_Close_f: command buffer opened again\n");
-	cmd_closed = qfalse;
+	Com_DPrintf(DEBUG_COMMANDS, "Cmd_Close_f: command buffer opened again\n");
+	cmdClosed = qfalse;
 }
 
 /**
@@ -75,7 +75,17 @@ static void Cmd_Open_f (void)
 static void Cmd_Close_f (void)
 {
 	Com_DPrintf(DEBUG_COMMANDS, "Cmd_Close_f: command buffer closed\n");
-	cmd_closed = qtrue;
+	cmdClosed = qtrue;
+}
+
+/**
+ * @brief Causes execution of the remainder of the command buffer to be delayed until
+ * next frame. This allows commands like:
+ * bind g "impulse 5; +attack; wait; -attack; impulse 2"
+ */
+static void Cmd_Wait_f (void)
+{
+	cmdWait = qtrue;
 }
 
 /*
@@ -105,7 +115,7 @@ void Cbuf_AddText (const char *text)
 {
 	int l;
 
-	if (cmd_closed) {
+	if (cmdClosed) {
 		text = strstr(text, "cmdopen");
 		if (text == NULL) {
 			Com_DPrintf(DEBUG_COMMANDS, "Cbuf_AddText: currently closed\n");
@@ -228,6 +238,13 @@ void Cbuf_Execute (void)
 
 		/* execute the command line */
 		Cmd_ExecuteString(line);
+
+		if (cmdWait) {
+			/* skip out while text still remains in buffer, leaving it
+			 * for next frame */
+			cmdWait = qfalse;
+			break;
+		}
 	}
 }
 
@@ -1115,6 +1132,7 @@ void Cmd_Init (void)
 	Cmd_AddCommand("exec", Cmd_Exec_f, "Execute a script file");
 	Cmd_AddParamCompleteFunction("exec", Cmd_CompleteExecCommand);
 	Cmd_AddCommand("echo", Cmd_Echo_f, "Print to game console");
+	Cmd_AddCommand("wait", Cmd_Wait_f, NULL);
 	Cmd_AddCommand("alias", Cmd_Alias_f, "Creates a new command that executes a command string");
 	Cmd_AddCommand("aliasa", Cmd_Alias_f, "Creates a new, persistent command that executes a command string");
 	Cmd_AddCommand("cmdclose", Cmd_Close_f, "Close the command buffer");

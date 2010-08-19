@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_IMAGE_H
 #define R_IMAGE_H
 
+#include "r_material.h"
 /*
 skins will be outline flood filled and mip mapped
 pics and sprites with alpha will be outline flood filled
@@ -61,7 +62,6 @@ typedef struct image_s {
 	imagetype_t type;
 	int width, height;					/**< source image dimensions */
 	int upload_width, upload_height;	/**< dimensions after power of two and picmip */
-	struct mBspSurface_s *texturechain;	/**< for sort-by-texture world drawing */
 	unsigned int texnum;				/**< gl texture binding */
 	qboolean has_alpha;
 	material_t material;
@@ -95,7 +95,7 @@ void R_InitImages(void);
 void R_ShutdownImages(void);
 void R_FreeWorldImages(void);
 void R_ImageClearMaterials(void);
-void R_CalcAndUploadDayAndNightTexture(float q);
+void R_UploadAlpha(const image_t *image, const byte *alphaData);
 void R_FilterTexture(byte *in, int width, int height, imagetype_t type, int bpp);
 void R_TextureMode(const char *string);
 void R_TextureAlphaMode(const char *string);
@@ -104,12 +104,8 @@ void R_TextureSolidMode(const char *string);
 void R_FreeImage(image_t *image);
 
 image_t *R_LoadImageData(const char *name, byte * pic, int width, int height, imagetype_t type);
-#ifdef DEBUG
-image_t *R_FindImageDebug(const char *pname, imagetype_t type, const char *file, int line);
-#define R_FindImage(pname,type) R_FindImageDebug(pname, type, __FILE__, __LINE__ )
-#else
+image_t *R_GetImage(const char *name);
 image_t *R_FindImage(const char *pname, imagetype_t type);
-#endif
 
 qboolean R_ImageExists(const char *pname);
 
@@ -122,6 +118,5 @@ extern image_t *r_flaretextures[NUM_FLARETEXTURES];
 extern image_t *shadow;	/**< draw this when actor is alive */
 extern image_t *r_noTexture;
 extern image_t *r_warpTexture;
-extern image_t *r_dayandnightTexture;
 
 #endif

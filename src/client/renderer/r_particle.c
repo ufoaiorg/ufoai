@@ -312,6 +312,8 @@ void R_DrawParticles (void)
 			case STYLE_CIRCLE:
 				R_DrawPtlCircle(p);
 				break;
+			default:
+				break;
 			}
 			if (p->pic)
 				R_DrawSprite(p);

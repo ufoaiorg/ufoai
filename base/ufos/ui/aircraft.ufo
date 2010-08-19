@@ -12,7 +12,7 @@ component panel cmpActorSelect {
 		tooltip	"_Add/remove this soldier"
 		pos	"242 10"
 		current 0
-		image ui/checkbox_green
+		image "ui/checkbox_green"
 		size "20 20"
 		invis	true
 		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
@@ -24,7 +24,7 @@ component panel cmpActorSelect {
 		string	*cvar:mn_ename<node:parent@num>
 		pos		"22 0"
 		size	"190 35"
-		textalign cl
+		textalign ALIGN_CL
 		invis	true
 		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
 		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4;" } // 4: click on bottom
@@ -36,12 +36,15 @@ component panel cmpActorSelect {
  */
 window iaircraft
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background	{
-		image	ui/base_bg
+	image background {
+		src	"background/base_bg"
 	}
 
 	panel model_background {
@@ -76,11 +79,13 @@ window iaircraft
 	}
 
 	tab aircraft_navigation {
-		pos		"47 396"
-		size	"938 39"
-		cvar	*cvar:mn_aircrafttab
-		onChange {
-			cmd "mn_pop; mn_push <cvar:mn_aircrafttab>;"
+		{
+			pos		"47 396"
+			size	"938 39"
+			cvar	*cvar:mn_aircrafttab
+			onChange {
+				cmd "mn_pop; mn_push <cvar:mn_aircrafttab>;"
+			}
 		}
 
 		option description {
@@ -129,9 +134,9 @@ window iaircraft
 		color	"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		onViewChange {
-			*(abstractscrollbar)aircraft_list_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)aircraft_list_scroll@viewsize = <viewsize>
-			*(abstractscrollbar)aircraft_list_scroll@current = <viewpos>
+			*node:root.aircraft_list_scroll@fullsize = <fullsize>
+			*node:root.aircraft_list_scroll@viewsize = <viewsize>
+			*node:root.aircraft_list_scroll@current = <viewpos>
 		}
 		onClick {
 			cmd "mn_select_aircraft <lineselected>"	// @note the node autocomplet the command with the selected line
@@ -139,7 +144,7 @@ window iaircraft
 	}
 
 	vscrollbar aircraft_list_scroll {
-		image			ui/scrollbar_v_green
+		image			"ui/scrollbar_v_green"
 		pos				"413 151"
 		height			"220"
 		current			0
@@ -147,7 +152,7 @@ window iaircraft
 		fullsize		19
 		hidewhenunused	true
 		onChange {
-			*aircraft_list@viewpos = <current>
+			*node:root.aircraft_list@viewpos = <current>
 		}
 	}
 
@@ -156,7 +161,7 @@ window iaircraft
 		string		*cvar:mn_aircraftname
 		pos			"46 114"
 		size		"317 21"
-		font		f_normal_bold
+		font		"f_normal_bold"
 		onChange	{ cmd "aircraft_namechange; mn_pop; mn_push aircraft;" }
 	}
 

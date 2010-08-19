@@ -242,7 +242,7 @@ static r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextur
 
 void R_InitFBObjects (void)
 {
-	GLenum filters[2];
+	unsigned int filters[2];
 	float scales[DOWNSAMPLE_PASSES];
 	int i;
 
@@ -353,7 +353,8 @@ void R_ShutdownFBObjects (void)
 
 
 /**
- * @brief Delete any existing framebuffers, then re-initialize them using up-to-date information */
+ * @brief Delete any existing framebuffers, then re-initialize them using up-to-date information 
+ */
 void R_RestartFBObjects (void)
 {
 	if (!frameBufferObjectsInitialized)
@@ -450,7 +451,7 @@ void R_DrawBuffers (int n)
 	R_BindColorAttachments(n, colorAttachments);
 }
 
-void R_BindColorAttachments (int n, GLenum *attachments)
+void R_BindColorAttachments (int n, unsigned int *attachments)
 {
 	if (!frameBufferObjectsInitialized)
 		return;

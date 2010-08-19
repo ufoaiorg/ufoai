@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "r_error.h"
-#include "r_overlay.h"
+#include "r_geoscape.h"
 #include "../../shared/images.h"
 
 #define MAX_IMAGEHASH 256
@@ -215,35 +215,8 @@ void R_FilterTexture (byte *in, int width, int height, imagetype_t type, int bpp
 	const float contrast = r_contrast->value;
 	const float saturation = r_saturation->value;
 	vec3_t intensity, luminosity, temp;
-	int j, mask;
+	int j;
 	float max, d;
-
-	enum filter_flags_t {
-		FILTER_NONE       = 0,
-		FILTER_MONOCHROME = 1U << 0,
-		FILTER_INVERT     = 1U << 1
-	} filter;
-
-	/* monochrome/invert */
-	switch (type) {
-	case it_world:
-	case it_effect:
-	case it_material:
-		mask = 1;
-		break;
-	case it_lightmap:
-		mask = 2;
-		break;
-	default:
-		mask = 0;
-		break;
-	}
-
-	filter = FILTER_NONE;
-	if (r_monochrome->integer & mask)
-		filter |= FILTER_MONOCHROME;
-	if (r_invert->integer & mask)
-		filter |= FILTER_INVERT;
 
 	VectorSet(luminosity, 0.2125, 0.7154, 0.0721);
 
@@ -293,15 +266,6 @@ void R_FilterTexture (byte *in, int width, int height, imagetype_t type, int bpp
 
 			p[j] = (byte)temp[j];
 		}
-
-		if (filter & FILTER_MONOCHROME)
-			p[0] = p[1] = p[2] = (p[0] + p[1] + p[2]) / 3;
-
-		if (filter & FILTER_INVERT) {
-			p[0] = 255 - p[0];
-			p[1] = 255 - p[1];
-			p[2] = 255 - p[2];
-		}
 	}
 }
 
@@ -341,21 +305,34 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 {
 	unsigned *scaled;
 	int scaledWidth, scaledHeight;
-	int samples;
+	int samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 	int i, c;
 	byte *scan;
-	qboolean mipmap = (image->type != it_pic && image->type != it_chars);
-	qboolean clamp = (image->type == it_pic);
+	const qboolean mipmap = (image->type != it_pic && image->type != it_chars);
+	const qboolean clamp = (image->type == it_pic);
+
+	/* scan the texture for any non-255 alpha */
+	c = width * height;
+	/* set scan to the first alpha byte */
+	for (i = 0, scan = ((byte *) data) + 3; i < c; i++, scan += 4) {
+		if (*scan != 255) {
+			samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
+			break;
+		}
+	}
 
 	R_GetScaledTextureSize(width, height, &scaledWidth, &scaledHeight);
+
+	image->has_alpha = (samples == r_config.gl_alpha_format || samples == r_config.gl_compressed_alpha_format);
+	image->upload_width = scaledWidth;	/* after power of 2 and scales */
+	image->upload_height = scaledHeight;
 
 	/* some images need very little attention (pics, fonts, etc..) */
 	if (!mipmap && scaledWidth == width && scaledHeight == height) {
 		/* no mipmapping for these images - just use GL_NEAREST here to not waste memory */
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		return;
 	}
 
@@ -369,21 +346,6 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	/* and filter */
 	if (image->type == it_effect || image->type == it_world || image->type == it_material || image->type == it_skin)
 		R_FilterTexture((byte*)scaled, scaledWidth, scaledHeight, image->type, 4);
-
-	/* scan the texture for any non-255 alpha */
-	c = scaledWidth * scaledHeight;
-	samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
-	/* set scan to the first alpha byte */
-	for (i = 0, scan = ((byte *) scaled) + 3; i < c; i++, scan += 4) {
-		if (*scan != 255) {
-			samples = r_config.gl_compressed_alpha_format ? r_config.gl_compressed_alpha_format : r_config.gl_alpha_format;
-			break;
-		}
-	}
-
-	image->has_alpha = (samples == r_config.gl_alpha_format || samples == r_config.gl_compressed_alpha_format);
-	image->upload_width = scaledWidth;	/* after power of 2 and scales */
-	image->upload_height = scaledHeight;
 
 	/* and mipmapped */
 	if (mipmap) {
@@ -460,59 +422,17 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 	Mem_Free(out);
 }
 
-#define DAN_WIDTH	512
-#define DAN_HEIGHT	256
-
-#define DAWN		0.03
-
-/** this is the data that is used with r_dayandnightTexture */
-static byte r_dayandnightAlpha[DAN_WIDTH * DAN_HEIGHT];
-/** this is the mask that is used to display day/night on (2d-)geoscape */
-image_t *r_dayandnightTexture;
-
-/**
- * @brief Applies alpha values to the night overlay image for 2d geoscape
- * @param[in] q The angle the sun is standing against the equator on earth
- */
-void R_CalcAndUploadDayAndNightTexture (float q)
+void R_UploadAlpha (const image_t *image, const byte *alphaData)
 {
-	int x, y;
-	const float dphi = (float) 2 * M_PI / DAN_WIDTH;
-	const float da = M_PI / 2 * (HIGH_LAT - LOW_LAT) / DAN_HEIGHT;
-	const float sin_q = sin(q);
-	const float cos_q = cos(q);
-	float sin_phi[DAN_WIDTH], cos_phi[DAN_WIDTH];
-	byte *px;
-
-	for (x = 0; x < DAN_WIDTH; x++) {
-		const float phi = x * dphi - q;
-		sin_phi[x] = sin(phi);
-		cos_phi[x] = cos(phi);
-	}
-
-	/* calculate */
-	px = r_dayandnightAlpha;
-	for (y = 0; y < DAN_HEIGHT; y++) {
-		const float a = sin(M_PI / 2 * HIGH_LAT - y * da);
-		const float root = sqrt(1 - a * a);
-		for (x = 0; x < DAN_WIDTH; x++) {
-			const float pos = sin_phi[x] * root * sin_q - (a * SIN_ALPHA + cos_phi[x] * root * COS_ALPHA) * cos_q;
-
-			if (pos >= DAWN)
-				*px++ = 255;
-			else if (pos <= -DAWN)
-				*px++ = 0;
-			else
-				*px++ = (byte) (128.0 * (pos / DAWN + 1));
-		}
-	}
+	R_BindTexture(image->texnum);
 
 	/* upload alpha map into the r_dayandnighttexture */
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, DAN_WIDTH, DAN_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, r_dayandnightAlpha);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, image->width, image->height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, alphaData);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, r_config.gl_filter_max);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, r_config.gl_filter_max);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	R_CheckError();
+	if (image->type == it_wrappic)
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 }
 
 static inline void R_DeleteImage (image_t *image)
@@ -540,7 +460,7 @@ static inline void R_DeleteImage (image_t *image)
 	memset(image, 0, sizeof(*image));
 }
 
-static inline image_t *R_GetImage (const char *name)
+image_t *R_GetImage (const char *name)
 {
 	image_t *image;
 	const unsigned hash = Com_HashKey(name, MAX_IMAGEHASH);
@@ -632,11 +552,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
  * @sa R_LoadJPG
  * @sa R_LoadPNG
  */
-#ifdef DEBUG
-image_t *R_FindImageDebug (const char *pname, imagetype_t type, const char *file, int line)
-#else
 image_t *R_FindImage (const char *pname, imagetype_t type)
-#endif
 {
 	char lname[MAX_QPATH];
 	image_t *image;
@@ -711,9 +627,15 @@ void R_FreeImage (image_t *image)
 	if (!image || !image->texnum)
 		return;
 
-	/* also free a normalmap if there is one */
+	/* also free the several maps if they are loaded */
 	if (image->normalmap)
 		R_DeleteImage(image->normalmap);
+	if (image->glowmap)
+		R_DeleteImage(image->glowmap);
+	if (image->roughnessmap)
+		R_DeleteImage(image->roughnessmap);
+	if (image->specularmap)
+		R_DeleteImage(image->specularmap);
 	R_DeleteImage(image);
 }
 
@@ -751,10 +673,6 @@ void R_InitImages (void)
 
 	r_numImages = 0;
 
-	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
-	if (r_dayandnightTexture == r_noTexture)
-		Com_Error(ERR_FATAL, "Could not create daynight image for the geoscape");
-
 	for (i = 0; i < MAX_ENVMAPTEXTURES; i++) {
 		r_envmaptextures[i] = R_FindImage(va("pics/envmaps/envmap_%i", i), it_effect);
 		if (r_envmaptextures[i] == r_noTexture)
@@ -766,8 +684,6 @@ void R_InitImages (void)
 		if (r_flaretextures[i] == r_noTexture)
 			Com_Error(ERR_FATAL, "Could not load lens flare %i", i);
 	}
-
-	R_InitOverlay();
 }
 
 /**
@@ -785,8 +701,6 @@ void R_ShutdownImages (void)
 		R_DeleteImage(image);
 	}
 	memset(imageHash, 0, sizeof(imageHash));
-
-	R_ShutdownOverlay();
 }
 
 
@@ -796,42 +710,41 @@ typedef struct {
 } glTextureMode_t;
 
 static const glTextureMode_t gl_texture_modes[] = {
-	{"GL_NEAREST", GL_NEAREST, GL_NEAREST},
-	{"GL_LINEAR", GL_LINEAR, GL_LINEAR},
-	{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST},
-	{"GL_LINEAR_MIPMAP_NEAREST", GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR},
-	{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR, GL_NEAREST},
-	{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR}
+	{"GL_NEAREST", GL_NEAREST, GL_NEAREST}, /* no filtering, no mipmaps */
+	{"GL_LINEAR", GL_LINEAR, GL_LINEAR}, /* bilinear filtering, no mipmaps */
+	{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST}, /* no filtering, mipmaps */
+	{"GL_LINEAR_MIPMAP_NEAREST", GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR}, /* bilinear filtering, mipmaps */
+	{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR, GL_NEAREST}, /* trilinear filtering, mipmaps */
+	{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR} /* bilinear filtering, trilinear filtering, mipmaps */
 };
-#define NUM_R_MODES (sizeof(gl_texture_modes) / sizeof(glTextureMode_t))
 
 void R_TextureMode (const char *string)
 {
-	int i, texturemode;
+	int i;
 	image_t *image;
+	const size_t size = lengthof(gl_texture_modes);
+	const glTextureMode_t *mode;
 
-	for (i = 0; i < NUM_R_MODES; i++) {
-		if (!Q_strcasecmp(gl_texture_modes[i].name, string))
+	mode = NULL;
+	for (i = 0; i < size; i++) {
+		mode = &gl_texture_modes[i];
+		if (!Q_strcasecmp(mode->name, string))
 			break;
 	}
 
-	if (i == NUM_R_MODES) {
+	if (mode == NULL) {
 		Com_Printf("bad filter name\n");
 		return;
 	}
 
-	texturemode = i;
-
 	for (i = 0, image = r_images; i < r_numImages; i++, image++) {
 		if (image->type == it_chars || image->type == it_pic || image->type == it_wrappic)
-			continue;
+			continue; /* no mipmaps */
 
 		R_BindTexture(image->texnum);
-		if (r_config.anisotropic)
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
-		R_CheckError();
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_texture_modes[texturemode].minimize);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_texture_modes[texturemode].maximize);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mode->minimize);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mode->maximize);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_config.maxAnisotropic);
 		R_CheckError();
 	}
 }
@@ -842,61 +755,69 @@ typedef struct {
 } gltmode_t;
 
 static const gltmode_t gl_alpha_modes[] = {
-	{"default", 4},
 	{"GL_RGBA", GL_RGBA},
 	{"GL_RGBA8", GL_RGBA8},
 	{"GL_RGB5_A1", GL_RGB5_A1},
 	{"GL_RGBA4", GL_RGBA4},
 	{"GL_RGBA2", GL_RGBA2},
+	{"GL_LUMINANCE4_ALPHA4", GL_LUMINANCE4_ALPHA4},
+	{"GL_LUMINANCE6_ALPHA2", GL_LUMINANCE6_ALPHA2},
+	{"GL_LUMINANCE8_ALPHA8", GL_LUMINANCE8_ALPHA8},
+	{"GL_LUMINANCE12_ALPHA4", GL_LUMINANCE12_ALPHA4},
+	{"GL_LUMINANCE12_ALPHA12", GL_LUMINANCE12_ALPHA12},
+	{"GL_LUMINANCE16_ALPHA16", GL_LUMINANCE16_ALPHA16}
 };
 
-#define NUM_R_ALPHA_MODES (sizeof(gl_alpha_modes) / sizeof(gltmode_t))
 
 void R_TextureAlphaMode (const char *string)
 {
 	int i;
+	const size_t size = lengthof(gl_alpha_modes);
 
-	for (i = 0; i < NUM_R_ALPHA_MODES; i++) {
-		if (!Q_strcasecmp(gl_alpha_modes[i].name, string))
-			break;
+	for (i = 0; i < size; i++) {
+		const gltmode_t *mode = &gl_alpha_modes[i];
+		if (!Q_strcasecmp(mode->name, string)) {
+			r_config.gl_alpha_format = mode->mode;
+			return;
+		}
 	}
 
-	if (i == NUM_R_ALPHA_MODES) {
-		Com_Printf("bad alpha texture mode name\n");
-		return;
-	}
-
-	r_config.gl_alpha_format = gl_alpha_modes[i].mode;
+	Com_Printf("bad alpha texture mode name (%s)\n", string);
 }
 
 static const gltmode_t gl_solid_modes[] = {
-	{"default", 3},
 	{"GL_RGB", GL_RGB},
 	{"GL_RGB8", GL_RGB8},
 	{"GL_RGB5", GL_RGB5},
 	{"GL_RGB4", GL_RGB4},
 	{"GL_R3_G3_B2", GL_R3_G3_B2},
-#ifdef GL_RGB2_EXT
 	{"GL_RGB2", GL_RGB2_EXT},
-#endif
+	{"GL_RGB4", GL_RGB4_EXT},
+	{"GL_RGB5", GL_RGB5_EXT},
+	{"GL_RGB8", GL_RGB8_EXT},
+	{"GL_RGB10", GL_RGB10_EXT},
+	{"GL_RGB12", GL_RGB12_EXT},
+	{"GL_RGB16", GL_RGB16_EXT},
+	{"GL_LUMINANCE", GL_LUMINANCE},
+	{"GL_LUMINANCE4", GL_LUMINANCE4},
+	{"GL_LUMINANCE8", GL_LUMINANCE8},
+	{"GL_LUMINANCE12", GL_LUMINANCE12},
+	{"GL_LUMINANCE16", GL_LUMINANCE16}
 };
-
-#define NUM_R_SOLID_MODES (sizeof(gl_solid_modes) / sizeof(gltmode_t))
 
 void R_TextureSolidMode (const char *string)
 {
 	int i;
+	const size_t size = lengthof(gl_solid_modes);
 
-	for (i = 0; i < NUM_R_SOLID_MODES; i++) {
-		if (!Q_strcasecmp(gl_solid_modes[i].name, string))
-			break;
+	for (i = 0; i < size; i++) {
+		const gltmode_t *mode = &gl_solid_modes[i];
+		if (!Q_strcasecmp(mode->name, string)) {
+			r_config.gl_solid_format = mode->mode;
+			return;
+		}
 	}
 
-	if (i == NUM_R_SOLID_MODES) {
-		Com_Printf("bad solid texture mode name\n");
-		return;
-	}
-
-	r_config.gl_solid_format = gl_solid_modes[i].mode;
+	Com_Printf("bad solid texture mode name (%s)\n", string);
 }
 

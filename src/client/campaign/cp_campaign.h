@@ -26,13 +26,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_CAMPAIGN_H
 #define CLIENT_CL_CAMPAIGN_H
 
-extern struct memPool_s *cp_campaignPool;
+extern memPool_t *cp_campaignPool;
 
 struct aircraft_s;
 struct installation_s;
 struct employee_s;
-struct menuNode_s; /**< @todo remove this once the menuNode_t usage is cleaned up */
-struct storedUFO_s;
+struct ugv_s;
+struct uiNode_s; /**< @todo remove this once the uiNode_t usage is cleaned up */
+
+#define MAX_CAMPAIGNS	16
 
 #define MAX_ASSEMBLIES	16
 
@@ -43,7 +45,9 @@ struct storedUFO_s;
 #include "cp_save.h"
 #include "cp_parse.h"
 #include "cp_event.h"
+#include "cp_ufopedia.h"
 #include "cp_research.h"
+#include "cp_radar.h"
 #include "cp_aircraft.h"
 #include "cp_base.h"
 #include "cp_employee.h"
@@ -56,6 +60,7 @@ struct storedUFO_s;
 #include "cp_messageoptions.h"
 #include "cp_alienbase.h"
 #include "cp_market.h"
+#include "cp_statistics.h"
 
 /* check for water */
 /* blue value is 64 */
@@ -132,6 +137,7 @@ typedef enum interestCategory_s {
 	INTERESTCATEGORY_ALIENBASE,		/**< Alien base already built on earth
 									 * @note This is not a mission alien can undertake, but the result of
 									 * INTERESTCATEGORY_BUILDING */
+	INTERESTCATEGORY_RESCUE,
 
 	INTERESTCATEGORY_MAX
 } interestCategory_t;
@@ -285,8 +291,8 @@ typedef struct campaign_s {
 	char equipment[MAX_VAR];	/**< name of the equipment list to use on campaign start */
 	char market[MAX_VAR];		/**< name of the market list containing initial items on market */
 	char asymptoticMarket[MAX_VAR];		/**< name of the market list containing items on market at the end of the game */
-	equipDef_t *marketDef;		/**< market definition for this campaign (how many items on the market) containing initial items */
-	equipDef_t *asymptoticMarketDef;	/**< market definition for this campaign (how many items on the market) containing finale items */
+	const equipDef_t *marketDef;		/**< market definition for this campaign (how many items on the market) containing initial items */
+	const equipDef_t *asymptoticMarketDef;	/**< market definition for this campaign (how many items on the market) containing finale items */
 	char text[MAX_VAR];			/**< placeholder for gettext stuff */
 	char map[MAX_VAR];			/**< geoscape map */
 	int soldiers;				/**< start with x soldiers */
@@ -309,48 +315,27 @@ typedef struct campaign_s {
 
 /** salary values for a campaign */
 typedef struct salary_s {
-	int soldier_base;
-	int soldier_rankbonus;
-	int worker_base;
-	int worker_rankbonus;
-	int scientist_base;
-	int scientist_rankbonus;
-	int pilot_base;
-	int pilot_rankbonus;
-	int robot_base;
-	int robot_rankbonus;
-	int aircraft_factor;
-	int aircraft_divisor;
-	int base_upkeep;
-	int admin_initial;
-	int admin_soldier;
-	int admin_worker;
-	int admin_scientist;
-	int admin_pilot;
-	int admin_robot;
-	float debt_interest;
+	int base[MAX_EMPL];
+	int rankBonus[MAX_EMPL];
+	int admin[MAX_EMPL];
+	int aircraftFactor;
+	int aircraftDivisor;
+	int baseUpkeep;
+	int adminInitial;
+	float debtInterest;
 } salary_t;
 
-#define SALARY_SOLDIER_BASE ccs.salaries[ccs.curCampaign->idx].soldier_base
-#define SALARY_SOLDIER_RANKBONUS ccs.salaries[ccs.curCampaign->idx].soldier_rankbonus
-#define SALARY_WORKER_BASE ccs.salaries[ccs.curCampaign->idx].worker_base
-#define SALARY_WORKER_RANKBONUS ccs.salaries[ccs.curCampaign->idx].worker_rankbonus
-#define SALARY_SCIENTIST_BASE ccs.salaries[ccs.curCampaign->idx].scientist_base
-#define SALARY_SCIENTIST_RANKBONUS ccs.salaries[ccs.curCampaign->idx].scientist_rankbonus
-#define SALARY_PILOT_BASE ccs.salaries[ccs.curCampaign->idx].pilot_base
-#define SALARY_PILOT_RANKBONUS ccs.salaries[ccs.curCampaign->idx].pilot_rankbonus
-#define SALARY_ROBOT_BASE ccs.salaries[ccs.curCampaign->idx].robot_base
-#define SALARY_ROBOT_RANKBONUS ccs.salaries[ccs.curCampaign->idx].robot_rankbonus
-#define SALARY_AIRCRAFT_FACTOR ccs.salaries[ccs.curCampaign->idx].aircraft_factor
-#define SALARY_AIRCRAFT_DIVISOR ccs.salaries[ccs.curCampaign->idx].aircraft_divisor
-#define SALARY_BASE_UPKEEP ccs.salaries[ccs.curCampaign->idx].base_upkeep
-#define SALARY_ADMIN_INITIAL ccs.salaries[ccs.curCampaign->idx].admin_initial
-#define SALARY_ADMIN_SOLDIER ccs.salaries[ccs.curCampaign->idx].admin_soldier
-#define SALARY_ADMIN_WORKER ccs.salaries[ccs.curCampaign->idx].admin_worker
-#define SALARY_ADMIN_SCIENTIST ccs.salaries[ccs.curCampaign->idx].admin_scientist
-#define SALARY_ADMIN_PILOT ccs.salaries[ccs.curCampaign->idx].admin_pilot
-#define SALARY_ADMIN_ROBOT ccs.salaries[ccs.curCampaign->idx].admin_robot
-#define SALARY_DEBT_INTEREST ccs.salaries[ccs.curCampaign->idx].debt_interest
+#define SALARY_AIRCRAFT_FACTOR ccs.salaries[ccs.curCampaign->idx].aircraftFactor
+#define SALARY_AIRCRAFT_DIVISOR ccs.salaries[ccs.curCampaign->idx].aircraftDivisor
+#define SALARY_BASE_UPKEEP ccs.salaries[ccs.curCampaign->idx].baseUpkeep
+#define SALARY_ADMIN_INITIAL ccs.salaries[ccs.curCampaign->idx].adminInitial
+#define SALARY_DEBT_INTEREST ccs.salaries[ccs.curCampaign->idx].debtInterest
+
+int CP_GetSalaryBaseEmployee(employeeType_t type);
+int CP_GetSalaryAdminEmployee(employeeType_t type);
+int CP_GetSalaryRankBonusEmployee(employeeType_t type);
+int CP_GetSalaryAdministrative(void);
+int CP_GetSalaryUpKeepBase(const base_t *base);
 
 /** possible geoscape actions */
 typedef enum mapAction_s {
@@ -394,9 +379,6 @@ typedef struct ccs_s {
 	vec2_t center;			/**< latitude and longitude of the point we're looking at on earth */
 	float zoom;				/**< zoom used when looking at earth */
 
-	/** governs zero build time for first base if empty base option chosen */
-	int instant_build;
-
 	aircraft_t *interceptAircraft;		/**< selected aircraft for interceptions */
 	/** @todo make this a union? */
 	mission_t *selectedMission;			/**< Currently selected mission on geoscape */
@@ -413,11 +395,9 @@ typedef struct ccs_s {
 
 	/* how fast the game is running */
 	int gameTimeScale;
+	int gameLapse;
 
 	aircraft_t *missionAircraft;	/**< aircraft pointer for mission handling */
-
-	/* True if this objDef_t has autosell enabled. */
-	qboolean autosell[MAX_OBJDEFS];
 
 	/* already paid in this month? */
 	qboolean paid;
@@ -517,8 +497,6 @@ typedef struct ccs_s {
 
 	/* == production == */
 	/* we will allow only one active production at the same time for each base */
-	/* NOTE The facility to produce equipment should have the once-flag set */
-	/** @todo more_than_one is true in the scripts for the workshop - is the above NOTE comment still valid? */
 	production_queue_t productions[MAX_BASES];
 
 	/* == Aircraft == */
@@ -543,6 +521,9 @@ typedef struct ccs_s {
 	/* cache for techdef technologies */
 	technology_t *teamDefTechs[MAX_TEAMDEFS];
 
+	/* cache for item technologies */
+	technology_t *objDefTechs[MAX_OBJDEFS];
+
 	campaign_t *curCampaign;			/**< Current running campaign */
 	stats_t campaignStats;
 	missionResults_t missionResults;
@@ -553,10 +534,6 @@ typedef struct ccs_s {
 
 	aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
 	int numAircraftTemplates;		/**< Number of aircraft templates. */
-
-	/** Used in team assignment screen to tell if we are assigning soldiers or heavy equipment (ugvs/tanks) */
-	/** @todo remove this. it has nothing with ccs, it should be handled by menuscripts/cvars */
-	qboolean displayHeavyEquipmentList;
 } ccs_t;
 
 /**
@@ -574,9 +551,14 @@ typedef struct dateLong_s {
 	byte sec;	/**< Second of the minute. */
 } dateLong_t;
 
+typedef struct {
+	int x, y;
+} screenPoint_t;
+
 extern ccs_t ccs;
 extern const int DETECTION_INTERVAL;
 extern cvar_t *cp_campaign;
+extern cvar_t *cp_missiontest;
 extern cvar_t *cp_start_employees;
 
 void CP_ParseCharacterData(struct dbuffer *msg);
@@ -604,6 +586,7 @@ void CL_GameAutoGo(mission_t *mission);
 void CP_InitMissionResults(qboolean won);
 void CP_CampaignInit(campaign_t *campaign, qboolean load);
 void CP_CampaignExit(void);
+qboolean CP_OnGeoscape(void);
 
 /* Mission related functions */
 int CP_CountMission(void);
@@ -615,14 +598,13 @@ qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 
 void CP_UFOProceedMission(aircraft_t *ufocraft);
-
-base_t *CP_GetMissionBase(void);
+qboolean CP_IsRunning(void);
 
 mission_t *CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
-qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos, qboolean ufoCrashed);
+qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos);
 void CP_StartSelectedMission(void);
 void CL_HandleNationData(qboolean won, mission_t * mis);
 void CP_CheckLostCondition(void);
-void CL_UpdateCharacterStats(const base_t *base, int won, const aircraft_t *aircraft);
+void CL_UpdateCharacterStats(const base_t *base, const aircraft_t *aircraft);
 
 #endif /* CLIENT_CL_CAMPAIGN_H */

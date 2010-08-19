@@ -443,3 +443,29 @@
 "origin" "48 144 48"
 "team" "1"
 }
+// entity 36
+{
+"classname" "info_2x2_start"
+"origin" "32 64 28"
+"team" "1"
+}
+// entity 37
+{
+"classname" "info_2x2_start"
+"origin" "448 640 28"
+"team" "1"
+}
+// entity 38
+{
+"classname" "trigger_rescue"
+"team" "1"
+// brush 0
+{
+( 352 544 80 ) ( 352 416 80 ) ( 192 544 80 ) tex_common/trigger 0 0 0 0.25 0.25
+( 352 608 96 ) ( 192 608 96 ) ( 352 608 0 ) tex_common/trigger 0 0 0 0.25 0.25
+( 352 544 64 ) ( 352 544 -32 ) ( 352 416 64 ) tex_common/trigger -0 0 0 0.25 0.25
+( 192 416 0 ) ( 352 416 0 ) ( 192 544 0 ) tex_common/trigger -0 0 0 0.25 0.25
+( 192 96 0 ) ( 192 96 96 ) ( 352 96 0 ) tex_common/trigger 0 0 0 0.25 0.25
+( 192 416 0 ) ( 192 544 0 ) ( 192 416 96 ) tex_common/trigger -0 0 0 0.25 0.25
+}
+}

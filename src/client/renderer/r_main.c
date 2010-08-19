@@ -30,12 +30,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_light.h"
 #include "r_lightmap.h"
 #include "r_main.h"
-#include "r_overlay.h"
+#include "r_geoscape.h"
 #include "r_misc.h"
 #include "r_error.h"
 #include "../../common/tracing.h"
-#include "../menu/m_windows.h"
-#include "../battlescape/cl_localentity.h"
+#include "../ui/ui_windows.h"
+#include "../../ports/system.h"
 
 rendererData_t refdef;
 
@@ -50,8 +50,6 @@ static cvar_t *r_maxtexres;
 
 cvar_t *r_brightness;
 cvar_t *r_contrast;
-cvar_t *r_invert;
-cvar_t *r_monochrome;
 cvar_t *r_saturation;
 cvar_t *r_drawentities;
 cvar_t *r_drawworld;
@@ -65,6 +63,9 @@ cvar_t *r_ext_texture_compression;
 static cvar_t *r_ext_s3tc_compression;
 static cvar_t *r_ext_nonpoweroftwo;
 static cvar_t *r_intel_hack;
+static cvar_t *r_texturemode;
+static cvar_t *r_texturealphamode;
+static cvar_t *r_texturesolidmode;
 cvar_t *r_materials;
 cvar_t *r_checkerror;
 cvar_t *r_drawbuffer;
@@ -74,9 +75,6 @@ cvar_t *r_soften;
 cvar_t *r_modulate;
 cvar_t *r_swapinterval;
 cvar_t *r_multisample;
-cvar_t *r_texturemode;
-cvar_t *r_texturealphamode;
-cvar_t *r_texturesolidmode;
 cvar_t *r_wire;
 cvar_t *r_showbox;
 cvar_t *r_threads;
@@ -88,7 +86,6 @@ cvar_t *r_programs;
 cvar_t *r_framebuffers;
 cvar_t *r_postprocess;
 cvar_t *r_maxlightmap;
-cvar_t *r_geoscape_overlay;
 cvar_t *r_shownormals;
 cvar_t *r_bumpmap;
 cvar_t *r_specular;
@@ -768,14 +765,13 @@ static void R_RegisterSystemVars (void)
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 	r_threads = Cvar_Get("r_threads", "0", CVAR_ARCHIVE, "Activate threads for the renderer");
 
-	r_geoscape_overlay = Cvar_Get("r_geoscape_overlay", "0", 0, "Geoscape overlays - Bitmask");
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
 	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE | CVAR_R_IMAGES, "The maximum texture resolution UFO should use");
-	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
-	r_texturealphamode = Cvar_Get("r_texturealphamode", "default", CVAR_ARCHIVE, NULL);
-	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
+	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, "change the filtering and mipmapping for textures");
+	r_texturealphamode = Cvar_Get("r_texturealphamode", "GL_RGBA", CVAR_ARCHIVE, NULL);
+	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "GL_RGB", CVAR_ARCHIVE, NULL);
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "1=Shows model bounding box, 2=show also the brushes bounding boxes");
 	r_debug_lightmaps = Cvar_Get("r_debug_lightmaps", "0", CVAR_R_PROGRAMS, "Draw only the lightmap");
@@ -826,8 +822,6 @@ static void R_RegisterImageVars (void)
 	r_brightness = Cvar_Get("r_brightness", "1.0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Brightness for images");
 	r_contrast = Cvar_Get("r_contrast", "1.5", CVAR_ARCHIVE | CVAR_R_IMAGES, "Contrast for images");
 	r_saturation = Cvar_Get("r_saturation", "1.0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Saturation for images");
-	r_monochrome = Cvar_Get("r_monochrome", "0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Monochrome world - Bitmask - 1, 2");
-	r_invert = Cvar_Get("r_invert", "0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Invert images - Bitmask - 1, 2");
 	if (r_config.hardwareType == GLHW_NVIDIA)
 		r_modulate = Cvar_Get("r_modulate", "1.0", CVAR_ARCHIVE | CVAR_R_IMAGES, "Scale lightmap values");
 	else
@@ -895,7 +889,7 @@ qboolean R_SetMode (void)
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
 	R_UpdateVidDef(&vidmode);
-	MN_InvalidateStack();
+	UI_InvalidateStack();
 
 	Cvar_SetValue("vid_width", viddef.width);
 	Cvar_SetValue("vid_height", viddef.height);
@@ -922,7 +916,7 @@ qboolean R_SetMode (void)
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
 	R_UpdateVidDef(&vidmode);
-	MN_InvalidateStack();
+	UI_InvalidateStack();
 	return result;
 }
 
@@ -933,6 +927,7 @@ qboolean R_SetMode (void)
 static qboolean R_InitExtensions (void)
 {
 	GLenum err;
+	int tmpInteger;
 
 	/* multitexture */
 	qglActiveTexture = NULL;
@@ -1023,6 +1018,7 @@ static qboolean R_InitExtensions (void)
 			Com_Printf("ignoring GL_ARB_texture_non_power_of_two\n");
 		}
 	} else {
+		/** @todo does opengl 2.0 and later really expose the above extension? the npot support is a must since 2.0 */
 		r_config.nonPowerOfTwo = qfalse;
 	}
 
@@ -1155,10 +1151,13 @@ static qboolean R_InitExtensions (void)
 	/* reset gl error state */
 	R_CheckError();
 
+	glGetIntegerv(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB, &r_config.maxVertexTextureImageUnits);
+	Com_Printf("max supported vertex texture units: %i\n", r_config.maxVertexTextureImageUnits);
+
 	glGetIntegerv(GL_MAX_LIGHTS, &r_config.maxLights);
 	Com_Printf("max supported lights: %i\n", r_config.maxLights);
 
-	r_dynamic_lights = Cvar_Get("r_dynamic_lights", "4", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Sets max number of GL lightsources to use in shaders");
+	r_dynamic_lights = Cvar_Get("r_dynamic_lights", "1", CVAR_ARCHIVE | CVAR_R_PROGRAMS, "Sets max number of GL lightsources to use in shaders");
 	r_dynamic_lights->modified = qfalse;
 	Cvar_SetCheckFunction("r_dynamic_lights", R_CvarCheckDynamicLights);
 
@@ -1189,6 +1188,11 @@ static qboolean R_InitExtensions (void)
 	glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS, &r_config.maxUniforms);
 	Com_Printf("max shader uniforms: %i\n", r_config.maxUniforms);
 
+	glGetIntegerv(GL_MAX_VARYING_FLOATS, &tmpInteger);
+	Com_Printf("max varying floats: %i\n", tmpInteger);
+
+	glGetIntegerv(GL_MAX_VERTEX_UNIFORM_COMPONENTS, &tmpInteger);
+	Com_Printf("max vertex uniform components: %i\n", tmpInteger);
 
 	/* reset gl error state */
 	R_CheckError();
@@ -1294,6 +1298,10 @@ static inline void R_VerifyDriver (void)
 {
 #ifdef _WIN32
 	if (!Q_strcasecmp((const char*)glGetString(GL_RENDERER), "gdi generic"))
+		Com_Error(ERR_FATAL, "No hardware acceleration detected.\n"
+			"Update your graphic card drivers.");
+#else
+	if (!Q_strcasecmp((const char*)glGetString(GL_RENDERER), "Software Rasterizer"))
 		Com_Error(ERR_FATAL, "No hardware acceleration detected.\n"
 			"Update your graphic card drivers.");
 #endif

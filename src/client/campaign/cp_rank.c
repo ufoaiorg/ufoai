@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
+#include "../cl_shared.h"
 #include "../../shared/parse.h"
 #include "cp_rank.h"
 #include "cp_campaign.h"
@@ -52,7 +52,7 @@ int CL_GetRankIdx (const char* rankID)
  */
 rank_t *CL_GetRankByIdx (const int index)
 {
-	if ((index < 0) || (index >= ccs.numRanks))
+	if (index < 0 || index >= ccs.numRanks)
 		return NULL;
 
 	return &ccs.ranks[index];

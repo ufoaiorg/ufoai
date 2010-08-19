@@ -180,8 +180,6 @@ std::size_t Sys_Print (int level, const char* buf, std::size_t length)
 			GtkTextIter iter;
 			gtk_text_buffer_get_end_iter(buffer, &iter);
 
-			static GtkTextMark* end = gtk_text_buffer_create_mark(buffer, "end", &iter, FALSE);
-
 			const GdkColor yellow = { 0, 0xb0ff, 0xb0ff, 0x0000 };
 			const GdkColor red = { 0, 0xffff, 0x0000, 0x0000 };
 			const GdkColor black = { 0, 0x0000, 0x0000, 0x0000 };
@@ -214,15 +212,6 @@ std::size_t Sys_Print (int level, const char* buf, std::size_t length)
 					buffered << ConvertLocaleToUTF8(StringRange(buf, buf + length));
 				} else {
 					textBuffer << StringRange(buf, buf + length);
-				}
-			}
-
-			// update console widget immediatly if we're doing something time-consuming
-			if (contains_newline) {
-				gtk_text_view_scroll_mark_onscreen(GTK_TEXT_VIEW(g_console), end);
-
-				if (!ScreenUpdates_Enabled() && GTK_WIDGET_REALIZED(g_console)) {
-					ScreenUpdates_process();
 				}
 			}
 		}

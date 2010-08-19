@@ -26,14 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../battlescape/cl_localentity.h"
-#include "../mxml/mxml_ufoai.h"
 #include "cp_campaign.h"
 #include "cp_aliencont_callbacks.h"
 #include "save/save_aliencont.h"
-
-/** @todo remove harcoded tech */
-#define BREATHINGAPPARATUS_TECH "rs_alien_breathing"
 
 /**
  * Collecting aliens functions for aircraft
@@ -111,19 +106,21 @@ void AL_FillInContainment (base_t *base)
 	containment = base->alienscont;
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
-		if (!CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
+		const teamDef_t *td = &csi.teamDef[i];
+		if (!CHRSH_IsTeamDefAlien(td))
 			continue;
 		if (counter >= MAX_ALIENCONT_CAP)
 			Com_Error(ERR_DROP, "Overflow in AL_FillInContainment");
-		containment[counter].teamDef = &csi.teamDef[i];	/* Link to global race index. */
-		containment[counter].amountAlive = 0;
-		containment[counter].amountDead = 0;
+		containment->teamDef = td;	/* Link to global race index. */
+		containment->amountAlive = 0;
+		containment->amountDead = 0;
 		/* for sanity checking */
-		containment[counter].tech = RS_GetTechByID(csi.teamDef[i].tech);
-		if (!containment[counter].tech)
-			Com_Error(ERR_DROP, "Could not find a valid tech for '%s'\n", containment[i].teamDef->name);
+		containment->tech = ccs.teamDefTechs[td->idx];
+		if (!containment->tech)
+			Com_Error(ERR_DROP, "Could not find a valid tech for '%s'\n", td->name);
+		Com_DPrintf(DEBUG_CLIENT, "AL_FillInContainment: type: %s tech-index: %i\n", td->name, containment->tech->idx);
+		containment++;
 		counter++;
-		Com_DPrintf(DEBUG_CLIENT, "AL_FillInContainment: type: %s tech-index: %i\n", containment[i].teamDef->name, containment[i].tech->idx);
 	}
 	base->capacities[CAP_ALIENS].cur = 0;
 }
@@ -188,13 +185,17 @@ void AL_AddAliens (aircraft_t *aircraft)
 	toBase = aircraft->homebase;
 	assert(toBase);
 
+	cargo = AL_GetAircraftAlienCargo(aircraft);
+	alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
+
+	if (alienCargoTypes == 0)
+		return;
+	
 	if (!B_GetBuildingStatus(toBase, B_ALIEN_CONTAINMENT)) {
 		MS_AddNewMessage(_("Notice"), _("You cannot process aliens yet. Alien Containment not ready in this base."), qfalse, MSG_STANDARD, NULL);
 		return;
 	}
 
-	cargo = AL_GetAircraftAlienCargo(aircraft);
-	alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
 	breathingTech = RS_GetTechByID(BREATHINGAPPARATUS_TECH);
 	if (!breathingTech)
 		Com_Error(ERR_DROP, "AL_AddAliens: Could not get breathing apparatus tech definition");
@@ -214,7 +215,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 				AII_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amountDead);
 				if (cargo[i].amountAlive <= 0)
 					continue;
-				if (!alienBreathing && !cargo[i].teamDef->robot) {
+				if (!alienBreathing && !CHRSH_IsTeamDefRobot(cargo[i].teamDef)) {
 					/* We can not store living (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
 					toBase->alienscont[j].amountDead += cargo[i].amountAlive;
 					/* Add breathing apparatuses as well */
@@ -372,7 +373,7 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
  * @todo use this function more often - the containment[j].amountDead and containment[j].amountAlive counter
  * are used all over the code
  */
-static void AL_AddAliens2 (base_t *base, const teamDef_t *alienType, int amount, const qboolean dead)
+static void AL_AddAliens2 (base_t *base, const teamDef_t *alienType, const qboolean dead)
 {
 	int j;
 	aliensCont_t *containment;
@@ -675,13 +676,13 @@ static void AC_AddOne_f (void)
 	}
 
 	/* call the function that actually changes the persistent datastructure */
-	AL_AddAliens2(base, alienType, 1, !updateAlive);
+	AL_AddAliens2(base, alienType, !updateAlive);
 }
 #endif
 
 /**
  * @brief Defines commands and cvars for the alien containment menu(s).
- * @sa MN_InitStartup
+ * @sa UI_InitStartup
  */
 void AC_InitStartup (void)
 {

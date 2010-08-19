@@ -3,7 +3,10 @@
 // ==================
 
 component cmpDefNamedTbar cmpPhysNamedTbar {
-	pic			bdr { 
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
+	image bdr {
 		pos "3 18"
 	}
 	tbar		bar {
@@ -26,9 +29,9 @@ window physdata
 	// background
 	// ==================
 
-	pic bar_physdata
+	image bar_physdata
 	{
-		image		hud/bar_phys
+		src		"hud/bar_phys"
 		pos			"0 0"
 	}
 
@@ -51,7 +54,7 @@ window physdata
 	model actor
 	{
 		{
-			model		*cvar:mn_body
+			src			*cvar:mn_body
 			skin		*cvar:mn_skin
 			anim		"stand2"
 			angles		"0 70 90"
@@ -62,7 +65,7 @@ window physdata
 
 		model head
 		{
-			model		*cvar:mn_head
+			src			*cvar:mn_head
 			skin		*cvar:mn_skin
 			tag			"tag_head"
 		}
@@ -162,11 +165,11 @@ window physdata
 		string		*cvar:mn_hp
 		pos			"415 373"
 		size		"50 20"
-		textalign	uc
+		textalign	ALIGN_UC
 	}
 	ekg hp
 	{
-		image		hud/phys_ekg
+		image		"hud/phys_ekg"
 		pos			"78 369"
 		size		"324 32"
 	}
@@ -176,11 +179,11 @@ window physdata
 		string		*cvar:mn_morale
 		pos			"415 413"
 		size		"50 20"
-		textalign	uc
+		textalign	ALIGN_UC
 	}
 	ekg morale
 	{
-		image		hud/phys_mor
+		image		"hud/phys_mor"
 		pos			"78 408"
 		size		"324 32"
 		scrollspeed	0.12
@@ -193,7 +196,7 @@ window physdata
 
 	custombutton button_exit
 	{
-		image		ui/button_background
+		image		"ui/button_background"
 		pos			"428 458"
 		size		"64 37"
 		icon		return

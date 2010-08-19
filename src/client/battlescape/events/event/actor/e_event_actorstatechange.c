@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../../../client.h"
-#include "../../../../menu/m_main.h"
+#include "../../../../ui/ui_main.h"
 #include "../../../cl_localentity.h"
 #include "../../../cl_actor.h"
 #include "e_event_actorstatechange.h"
@@ -78,13 +78,13 @@ void CL_ActorStateChange (const eventRegister_t *self, struct dbuffer *msg)
 	chr->state = (le->state & STATE_REACTION);
 
 	if (!(le->state & STATE_REACTION)) {
-		MN_ExecuteConfunc("disable_reaction");
+		UI_ExecuteConfunc("disable_reaction");
 	} else {
 		/* change reaction button state */
 		if (le->state & STATE_REACTION_MANY)
-			MN_ExecuteConfunc("startreactionmany");
+			UI_ExecuteConfunc("startreactionmany");
 		else if (le->state & STATE_REACTION_ONCE)
-			MN_ExecuteConfunc("startreactiononce");
+			UI_ExecuteConfunc("startreactiononce");
 	}
 
 	/* state change may have affected move length */

@@ -25,12 +25,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../common/common.h"
 
+#ifndef logf
+#define logf(x) ((float)log((double)(x)))
+#endif
+
 const vec2_t vec2_origin = { 0, 0 };
 const vec3_t vec3_origin = { 0, 0, 0 };
 const vec4_t vec4_origin = { 0, 0, 0, 0 };
 
 /** @brief cos 45 degree */
-#define RT2 0.707107
+#define RT2 0.70710678118654752440084436210485
 
 /**
  * @note DIRECTIONS
@@ -156,6 +160,7 @@ float GetDistanceOnGlobe (const vec2_t pos1, const vec2_t pos2)
 	float distance;
 
 	distance = cos(latitude1) * cos(latitude2) * cos(deltaLongitude) + sin(latitude1) * sin(latitude2);
+	distance = min(max(-1, distance), 1);
 	distance = acos(distance) * todeg;
 
 	return distance;

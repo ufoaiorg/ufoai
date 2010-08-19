@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "bsp.h"
-#include "../../game/q_shared.h"
+#include "../../shared/shared.h"
 #include "../../common/tracing.h"
 #include "../../common/routing.h"
 
@@ -38,7 +38,8 @@ static const vec3_t move_vec[4] = {
 	{         0, -UNIT_SIZE, 0} };
 
 /** routing data structures */
-static routing_t Nmap[ACTOR_MAX_SIZE]; /* A routing_t per size */
+#define ACTOR_MAX_SIZE 2
+static routing_t Nmap[ACTOR_MAX_SIZE]; /**< A routing_t per size */
 
 /** @brief world min and max values converted from vec to pos */
 static ipos3_t wpMins, wpMaxs;
@@ -66,7 +67,7 @@ static int CheckUnit (unsigned int unitnum)
 
 	/* Com_Printf("%i %i %i %i\n", x, y, z, size); */
 	/* Call the common CheckUnit function */
-	new_z = RT_CheckCell(Nmap, actorSize + 1, x, y, z);
+	new_z = RT_CheckCell(Nmap, actorSize + 1, x, y, z, NULL);
 
 	/* Com_Printf("z:%i nz:%i\n", z, new_z); */
 
@@ -112,7 +113,7 @@ static void CheckConnectionsThread (unsigned int unitnum)
 
 	Verb_Printf(VERB_EXTRA, "%i %i %i %i (%i, %i, %i) (%i, %i, %i)\n", x, y, dir, actorSize, wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]);
 
-	RT_UpdateConnectionColumn(Nmap, actorSize + 1, x, y, dir);
+	RT_UpdateConnectionColumn(Nmap, actorSize + 1, x, y, dir, NULL);
 
 	/* Com_Printf("z:%i nz:%i\n", z, new_z); */
 }

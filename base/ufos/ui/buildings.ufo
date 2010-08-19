@@ -4,25 +4,28 @@
 
 window buildings
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic back_ul
+	image back_ul
 	{
-		image		ui/base_ul
+		src		"ui/base_ul"
 		pos			"0 0"
 	}
 
-	pic back_ur
+	image back_ur
 	{
-		image		ui/base_ur
+		src		"ui/base_ur"
 		pos			"512 0"
 	}
 
-	pic back_lr
+	image back_lr
 	{
-		image		ui/base_lr
+		src		"ui/base_lr"
 		pos			"512 256"
 	}
 
@@ -44,19 +47,19 @@ window buildings
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		rows		"19"
-		longlines	prettychop
-		onClick		{ cmd "buildings_click <lineselected>" }
+		longlines	LONGLINES_PRETTYCHOP
+		onClick		{ cmd "buildings_click <lineselected>;" }
 		onViewChange {
-			*(abstractscrollbar)buildings_scroll@fullsize = <fullsize>
-			*(abstractscrollbar)buildings_scroll@current = <viewpos>
+			*node:root.buildings_scroll@fullsize = <fullsize>
+			*node:root.buildings_scroll@current = <viewpos>
 		}
 		onWheel {
-			*(abstractscrollbar)buildings_scroll@current = <viewpos>
+			*node:root.buildings_scroll@current = <viewpos>
 		}
 	}
 
 	vscrollbar buildings_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"976 120"
 		height		"570"
 		current		0
@@ -71,7 +74,7 @@ window buildings
 	checkbox building_preview
 	{
 		tooltip		"_Open/close Building preview window"
-		image		ui/checkbox_green
+		image		"ui/checkbox_green"
 		pos			"770 700"
 		size		"20 20"
 		current		1
@@ -94,7 +97,7 @@ window buildings
 
 	confunc mn_buildings_reset
 	{
-		*buildings@lineselected	= -1
+		*node:root.buildings@lineselected	= -1
 		*cvar:mn_building_name	= "_Select building"
 		*cvar:mn_building_image	= ""
 		*cvar:mn_building_info	= ""
@@ -109,7 +112,7 @@ window buildings
 		if ( *node:root.building_preview@current == 1 ) {
 			cmd "mn_push_child popup_buildingpreview buildings;"
 		}
-		
+
 	}
 
 	func onClose
@@ -126,7 +129,7 @@ window popup_buildingpreview
 		size		"526 237"
 		dragbutton	true
 		closebutton	true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Building preview"
 	}
 
@@ -134,9 +137,9 @@ window popup_buildingpreview
 	// content
 	// ==================
 
-	pic building_pic
+	image building_pic
 	{
-		image		*cvar:mn_building_image
+		src		*cvar:mn_building_image
 		pos			"350 58"
 		size		"150 154"
 		bgcolor		"0 0.08 0 1"
@@ -147,7 +150,7 @@ window popup_buildingpreview
 		string		*cvar:mn_building_name
 		pos			"30 58"
 		size		"300 25"
-		font		f_normal
+		font		"f_normal"
 	}
 
 	string status_building
@@ -155,7 +158,7 @@ window popup_buildingpreview
 		string		*cvar:mn_building_status
 		pos			"30 190"
 		size		"260 20"
-		font		f_small
+		font		"f_small"
 	}
 
 	/* text using tabbed text */

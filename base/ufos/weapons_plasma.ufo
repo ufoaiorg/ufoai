@@ -43,8 +43,10 @@ item plaspistol_ammo
 			projtl				plasmaMiniPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma_s
-			speed				1800
+			firesnd				weapons/plasma-small
+			impsnd				impact/plasma-impact
+			bodysnd 			impact/plasma-bodyimpact
+			speed				1500
 			spread				"1.5 1.5"
 			crouch				0.8
 			range				40
@@ -63,8 +65,10 @@ item plaspistol_ammo
 			projtl				plasmaMiniPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma_s
-			speed				1800
+			firesnd				weapons/plasma-small
+			impsnd				impact/plasma-impact
+			bodysnd 			impact/plasma-bodyimpact
+			speed				1500
 			spread				"1.2 1.2"
 			crouch				0.8
 			range				40
@@ -83,8 +87,10 @@ item plaspistol_ammo
 			projtl				plasmaMiniPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma_s
-			speed				1800
+			firesnd				weapons/plasma-small
+			impsnd				impact/plasma-impact
+			bodysnd 			impact/plasma-bodyimpact
+			speed				1500
 			spread				"1.9 1.9"
 			crouch				0.8
 			range				40
@@ -144,8 +150,10 @@ item plasrifle_ammo
 			projtl				plasmaPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma_s
-			speed				1700
+			firesnd				weapons/plasma-medium
+			impsnd				impact/plasma-impact
+			bodysnd 			impact/plasma-bodyimpact
+			speed				1300
 			spread				"1.7 1.7"
 			crouch				0.8
 			range				70
@@ -164,8 +172,10 @@ item plasrifle_ammo
 			projtl				plasmaPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma_s
-			speed				1700
+			firesnd				weapons/plasma-medium
+			impsnd				impact/plasma-impact
+			bodysnd 			impact/plasma-bodyimpact
+			speed				1300
 			spread				"1 1"
 			crouch				0.8
 			range				70
@@ -184,8 +194,10 @@ item plasrifle_ammo
 			projtl				plasmaPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma_s
-			speed				1700
+			firesnd				weapons/plasma-medium
+			impsnd				impact/plasma-impact
+			bodysnd 			impact/plasma-bodyimpact
+			speed				1300
 			spread				"1.9 1.9"
 			crouch				0.7
 			range				70
@@ -204,7 +216,9 @@ item plasrifle_ammo
 			projtl				plasmaPulse
 			impact				plasmaImpactCharged
 			hitbody				plasmaImpactCharged
-			firesnd				weapons/plasma_s
+			firesnd				weapons/plasma-medium
+			impsnd				impact/plasma-impact
+			bodysnd 			impact/plasma-bodyimpact
 			speed				1700
 			spread				"2.7 2.7"
 			crouch				0.6
@@ -269,7 +283,9 @@ item plasblaster_ammo
 			projtl				plasmaContinuous
 			impact				plasmaImpact
 			hitbody				plasmaImpact
-			firesnd				weapons/plasma_big
+			firesnd				weapons/plasma-large
+			impsnd				impact/plasma-impact
+			bodysnd 			impact/plasma-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"2.2 2.2"
@@ -290,8 +306,10 @@ item plasblaster_ammo
 			projtl				plasmaBigBall
 			impact				plasmaBigImpact
 			hitbody				plasmaBigImpact
-			firesnd				weapons/plasma_s
-			speed				2000
+			firesnd				weapons/plasma-huge
+			impsnd				impact/plasmaball-impact
+			bodysnd 			impact/plasmaball-impact
+			speed				600
 			spread				"2 2"
 			crouch 				0.6
 			range				70
@@ -312,7 +330,9 @@ item plasblaster_ammo
 			projtl				plasmaContinuous
 			impact				plasmaImpact
 			hitbody				plasmaImpact
-			firesnd				weapons/plasma_big
+			firesnd				weapons/plasma-large
+			impsnd				impact/plasma-impact
+			bodysnd 			impact/plasma-bodyimpact
 			sndonce				true
 			speed				0
 			spread				"2.7 2.7"

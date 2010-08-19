@@ -23,14 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#if defined _WIN32
-#	include	<windows.h>
-#endif
-
 #include "../../shared/ufotypes.h"
 #include "../../common/mem.h"
 #include "../../shared/shared.h"
-#include "../../game/q_shared.h"
 #include "../../common/filesys.h"
 #include "../../common/qfiles.h"
 #include "../../shared/typedefs.h"
@@ -134,11 +129,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	return image;
 }
 
-#ifdef DEBUG
-image_t *R_FindImageDebug (const char *pname, imagetype_t type, const char *file, int line)
-#else
 image_t *R_FindImage (const char *pname, imagetype_t type)
-#endif
 {
 	char lname[MAX_QPATH];
 	image_t *image;

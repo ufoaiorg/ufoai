@@ -23,9 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../cl_game.h"
-#include "../menu/m_main.h"
+#include "../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_time.h"
 
@@ -50,9 +48,6 @@ static const gameLapse_t lapse[NUM_TIMELAPSE] = {
 };
 CASSERT(lengthof(lapse) == NUM_TIMELAPSE);
 
-/** @todo move into ccs_t - and also save this? needed? */
-static int gameLapse;
-
 /**
  * @brief Updates date/time and timescale (=timelapse) on the geoscape menu
  * @sa SAV_GameLoad
@@ -64,10 +59,10 @@ void CL_UpdateTime (void)
 	CL_DateConvertLong(&ccs.date, &date);
 
 	/* Update the timelapse text */
-	if (gameLapse >= 0 && gameLapse < NUM_TIMELAPSE) {
-		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
-		ccs.gameTimeScale = lapse[gameLapse].scale;
-		Cvar_SetValue("mn_timelapse_id", gameLapse);
+	if (ccs.gameLapse >= 0 && ccs.gameLapse < NUM_TIMELAPSE) {
+		Cvar_Set("mn_timelapse", _(lapse[ccs.gameLapse].name));
+		ccs.gameTimeScale = lapse[ccs.gameLapse].scale;
+		Cvar_SetValue("mn_timelapse_id", ccs.gameLapse);
 	}
 
 	/* Update the date */
@@ -85,8 +80,8 @@ void CL_UpdateTime (void)
 void CL_GameTimeStop (void)
 {
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (!CL_OnBattlescape())
-		gameLapse = 0;
+	if (!cp_missiontest->integer && CP_OnGeoscape())
+		ccs.gameLapse = 0;
 
 	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
 	CL_UpdateTime();
@@ -97,7 +92,7 @@ void CL_GameTimeStop (void)
  */
 qboolean CL_IsTimeStopped (void)
 {
-	return !gameLapse;
+	return !ccs.gameLapse;
 }
 
 /**
@@ -105,14 +100,12 @@ qboolean CL_IsTimeStopped (void)
  */
 static qboolean CL_AllowTimeScale (void)
 {
-	const char *menuName = MN_GetActiveWindowName();
-
 	/* check the stats value - already build bases might have been destroyed
 	 * so the ccs.numBases values is pointless here */
 	if (!ccs.campaignStats.basesBuilt)
 		return qfalse;
 
-	return !strncmp(menuName, "geoscape", 3) || !strncmp(menuName, "airfight", 8);
+	return CP_OnGeoscape();
 }
 
 /**
@@ -122,8 +115,8 @@ void CL_GameTimeSlow (void)
 {
 	/* don't allow time scale in tactical mode - only on the geoscape */
 	if (CL_AllowTimeScale()) {
-		if (gameLapse > 0)
-			gameLapse--;
+		if (ccs.gameLapse > 0)
+			ccs.gameLapse--;
 		/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
 		CL_UpdateTime();
 	}
@@ -136,8 +129,8 @@ void CL_GameTimeFast (void)
 {
 	/* don't allow time scale in tactical mode - only on the geoscape */
 	if (CL_AllowTimeScale()) {
-		if (gameLapse < NUM_TIMELAPSE)
-			gameLapse++;
+		if (ccs.gameLapse < NUM_TIMELAPSE)
+			ccs.gameLapse++;
 		/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
 		CL_UpdateTime();
 	}
@@ -149,7 +142,7 @@ void CL_GameTimeFast (void)
  */
 static void CL_SetGameTime (int gameLapseValue)
 {
-	if (gameLapseValue == gameLapse)
+	if (gameLapseValue == ccs.gameLapse)
 		return;
 
 	/* check the stats value - already build bases might have been destroyed
@@ -160,7 +153,7 @@ static void CL_SetGameTime (int gameLapseValue)
 	if (gameLapseValue < 0 || gameLapseValue >= NUM_TIMELAPSE)
 		return;
 
-	gameLapse = gameLapseValue;
+	ccs.gameLapse = gameLapseValue;
 
 	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
 	CL_UpdateTime();

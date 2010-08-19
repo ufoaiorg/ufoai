@@ -118,6 +118,8 @@ static void SV_New_f (void)
  */
 static void SV_Begin_f (void)
 {
+	qboolean began;
+
 	Com_DPrintf(DEBUG_SERVER, "Begin() from %s\n", sv_client->name);
 
 	/* could be abused to respawn or cause spam/other mod-specific problems */
@@ -128,7 +130,11 @@ static void SV_Begin_f (void)
 	}
 
 	/* call the game begin function */
-	if (!ge->ClientBegin(sv_player)) {
+	SDL_mutexP(svs.serverMutex);
+	began = ge->ClientBegin(sv_player);
+	SDL_mutexV(svs.serverMutex);
+
+	if (!began) {
 		SV_DropClient(sv_client, "'begin' failed\n");
 		return;
 	}
@@ -149,7 +155,9 @@ static void SV_Spawn_f (void)
 		return;
 	}
 
+	SDL_mutexP(svs.serverMutex);
 	ge->ClientSpawn(sv_player);
+	SDL_mutexV(svs.serverMutex);
 	SV_SetClientState(sv_client, cs_spawned);
 
 	Cbuf_InsertFromDefer();
@@ -213,7 +221,9 @@ static void SV_ExecuteUserCommand (const char *s)
 
 	if (Com_ServerState() == ss_game) {
 		Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: client command: %s\n", s);
+		SDL_mutexP(svs.serverMutex);
 		ge->ClientCommand(sv_player);
+		SDL_mutexV(svs.serverMutex);
 	}
 }
 
@@ -238,17 +248,18 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		break;
 
 	case clc_userinfo:
-		Q_strncpyz(cl->userinfo, NET_ReadString(msg), sizeof(cl->userinfo));
+		NET_ReadString(msg, cl->userinfo, sizeof(cl->userinfo));
 		Com_DPrintf(DEBUG_SERVER, "userinfo from client: %s\n", cl->userinfo);
 		SV_UserinfoChanged(cl);
 		break;
 
 	case clc_stringcmd:
 	{
-		const char *s = NET_ReadString(msg);
+		char str[1024];
+		NET_ReadString(msg, str, sizeof(str));
 
-		Com_DPrintf(DEBUG_SERVER, "stringcmd from client: %s\n", s);
-		SV_ExecuteUserCommand(s);
+		Com_DPrintf(DEBUG_SERVER, "stringcmd from client: %s\n", str);
+		SV_ExecuteUserCommand(str);
 
 		if (cl->state == cs_free)
 			return;			/* disconnect command */
@@ -258,14 +269,18 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 	case clc_action:
 		/* client actions are handled by the game module */
 		sv_msg = msg;
+		SDL_mutexP(svs.serverMutex);
 		ge->ClientAction(sv_player);
+		SDL_mutexV(svs.serverMutex);
 		sv_msg = NULL;
 		break;
 
 	case clc_endround:
 		/* player wants to end round */
 		sv_msg = msg;
+		SDL_mutexP(svs.serverMutex);
 		ge->ClientEndRound(sv_player);
+		SDL_mutexV(svs.serverMutex);
 		sv_msg = NULL;
 		break;
 
@@ -273,7 +288,9 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		/* player sends team info */
 		/* actors spawn accordingly */
 		sv_msg = msg;
+		SDL_mutexP(svs.serverMutex);
 		ge->ClientTeamInfo(sv_player);
+		SDL_mutexV(svs.serverMutex);
 		sv_msg = NULL;
 		break;
 
@@ -281,7 +298,9 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		/* player sends team info */
 		/* actors spawn accordingly */
 		sv_msg = msg;
+		SDL_mutexP(svs.serverMutex);
 		ge->ClientInitActorStates(sv_player);
+		SDL_mutexV(svs.serverMutex);
 		sv_msg = NULL;
 		break;
 	}

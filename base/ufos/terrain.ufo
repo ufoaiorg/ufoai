@@ -237,16 +237,16 @@ terrain tex_material/wood001 {
 
 // wooden floor (big wood squares)
 terrain tex_buildings/floor001 {
-	footstepsound "footsteps/step_8"
+	footstepsound "footsteps/wood1"
 }
 
 // parquet floor
 terrain tex_buildings/floor002 {
-	footstepsound "footsteps/step_8"
+	footstepsound "footsteps/wood1"
 }
 
 terrain tex_misc/wood_palet {
-	footstepsound "footsteps/step_8"
+	footstepsound "footsteps/wood1"
 }
 
 // bright laminate floor
@@ -511,27 +511,27 @@ terrain tex_furniture/textil001 {
 
 // linoleum floor
 terrain tex_buildings/floor015 {
-	footstepsound "footsteps/linoleum"
+	footstepsound "footsteps/stone1"
 }
 
 // linoleum floor
 terrain tex_buildings/floor019 {
-	footstepsound "footsteps/linoleum"
+	footstepsound "footsteps/stone1"
 }
 
 // PCV-type floor
 terrain tex_buildings/floor016 {
-	footstepsound "footsteps/step_3"
+	footstepsound "footsteps/stone1"
 }
 
 //PCV-type floor
 terrain tex_base/lab_floor001 {
-	footstepsound "footsteps/step_3"
+	footstepsound "footsteps/stone1"
 }
 
 // PCV-type floor
 terrain tex_buildings/floor017 {
-	footstepsound "footsteps/step_3"
+	footstepsound "footsteps/stone1"
 }
 
 terrain tex_material/metall009 {

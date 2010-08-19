@@ -36,12 +36,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CL_ParticleSpawnEvent (const eventRegister_t *self, struct dbuffer *msg)
 {
-	char *particle;
+	char particle[MAX_VAR];
 	int levelflags;
 	vec3_t s, v, a;
 
 	/* read data */
-	NET_ReadFormat(msg, self->formatString, &levelflags, &s, &v, &a, &particle);
+	NET_ReadFormat(msg, self->formatString, &levelflags, &s, &v, &a, particle, sizeof(particle));
 
 	CL_ParticleSpawn(particle, levelflags, s, v, a);
 }

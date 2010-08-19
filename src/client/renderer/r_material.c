@@ -77,14 +77,24 @@ static void R_UpdateMaterial (material_t *m)
 					frame = s->anim.num_frames - 1;
 					frame -= s->anim.dframe % s->anim.num_frames;
 					break;
+				case ANIM_RANDOM:
+					frame = rand() % s->anim.num_frames;
+					break;
+				case ANIM_RANDOMFORCE:
+					frame = rand() % s->anim.num_frames;
+					if (s->image == s->anim.images[frame])
+						frame = (frame + 1) % s->anim.num_frames;
+					break;
 				}
+				assert(frame >= 0);
+				assert(frame < s->anim.num_frames);
 				s->image = s->anim.images[frame];
 			}
 		}
 	}
 }
 
-static void R_StageGlow (const mBspSurface_t *surf, const materialStage_t *stage)
+static void R_StageGlow (const materialStage_t *stage)
 {
 	if (stage->image->glowmap) {
 		R_EnableGlowMap(stage->image->glowmap, qtrue);
@@ -272,7 +282,7 @@ static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialSta
 	/* and optionally the lightmap */
 	R_StageLighting(surf, stage);
 
-	R_StageGlow(surf, stage);
+	R_StageGlow(stage);
 
 	/* load the texture matrix for rotations, stretches, etc.. */
 	R_StageTextureMatrix(surf, stage);
@@ -527,6 +537,28 @@ static GLenum R_ConstByName (const char *c)
 	return GL_ZERO;
 }
 
+static void R_CreateMaterialData_ (model_t *mod)
+{
+	int i;
+
+	for (i = 0; i < mod->bsp.numsurfaces; i++) {
+		mBspSurface_t *surf = &mod->bsp.surfaces[i];
+		/* create flare */
+		R_CreateSurfaceFlare(surf);
+	}
+}
+
+static void R_CreateMaterialData (void)
+{
+	int i;
+
+	for (i = 0; i < r_numMapTiles; i++)
+		R_CreateMaterialData_(r_mapTiles[i]);
+
+	for (i = 0; i < r_numModelsInline; i++)
+		R_CreateMaterialData_(&r_modelsInline[i]);
+}
+
 static int R_LoadAnimImages (materialStage_t *s)
 {
 	char name[MAX_QPATH];
@@ -537,7 +569,7 @@ static int R_LoadAnimImages (materialStage_t *s)
 		return -1;
 	}
 
-	strncpy(name, s->image->name, sizeof(name));
+	Q_strncpyz(name, s->image->name, sizeof(name));
 	j = strlen(name);
 
 	if (name[j - 1] != '0') {
@@ -554,10 +586,16 @@ static int R_LoadAnimImages (materialStage_t *s)
 	/* now load the rest */
 	for (i = 1; i < s->anim.num_frames; i++) {
 		const char *c = va("%s%d", name, i);
-		s->anim.images[i] = R_FindImage(c, it_material);
-		if (s->anim.images[i] == r_noTexture) {
+		image_t *image = R_FindImage(c, it_material);
+		s->anim.images[i] = image;
+		if (image == r_noTexture) {
 			Com_Printf("R_LoadAnimImages: Failed to resolve texture: %s\n", c);
 			return -1;
+		}
+		if (s->flags & STAGE_GLOWMAPLINK) {
+			if (image->glowmap)
+				Com_Printf("R_LoadAnimImages: overriding already existing glowmap for %s\n", image->name);
+			image->glowmap = image;
 		}
 	}
 
@@ -803,6 +841,12 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			case 'b':
 				s->anim.type = ANIM_BACKWARDS;
 				break;
+			case 'r':
+				s->anim.type = ANIM_RANDOM;
+				break;
+			case 'f':
+				s->anim.type = ANIM_RANDOMFORCE;
+				break;
 			default:
 				s->anim.type = ANIM_NORMAL;
 				break;
@@ -828,6 +872,11 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			/* the frame images are loaded once the stage is parsed completely */
 
 			s->flags |= STAGE_ANIM;
+			continue;
+		}
+
+		if (!strcmp(c, "glowmaplink")) {
+			s->flags |= STAGE_GLOWMAPLINK;
 			continue;
 		}
 
@@ -909,15 +958,19 @@ void R_LoadMaterials (const char *map)
 	image_t *image;
 	material_t *m;
 	materialStage_t *s, *ss;
-	int i;
 
 	/* clear previously loaded materials */
 	R_ImageClearMaterials();
 
+	if (map[0] == '+' || map[0] == '-')
+		map++;
+	else if (map[0] == '-')
+		return;
+
 	/* load the materials file for parsing */
 	Com_sprintf(path, sizeof(path), "materials/%s.mat", Com_SkipPath(map));
 
-	if ((i = FS_LoadFile(path, &fileBuffer)) < 1) {
+	if (FS_LoadFile(path, &fileBuffer) < 1) {
 		Com_DPrintf(DEBUG_RENDERER, "Couldn't load %s\n", path);
 		return;
 	} else {
@@ -943,11 +996,9 @@ void R_LoadMaterials (const char *map)
 
 		if (!strcmp(c, "material")) {
 			c = Com_Parse(&buffer);
-			image = R_FindImage(va("textures/%s", c), it_world);
-			if (image == r_noTexture) {
-				Com_Printf("R_LoadMaterials: Failed to resolve texture: %s\n", c);
-				image = NULL;
-			}
+			image = R_GetImage(va("textures/%s", c));
+			if (image == NULL)
+				Com_DPrintf(DEBUG_RENDERER, "R_LoadMaterials: skip texture: %s - not used in the map\n", c);
 
 			continue;
 		}
@@ -964,6 +1015,16 @@ void R_LoadMaterials (const char *map)
 			if (image->normalmap == r_noTexture){
 				Com_Printf("R_LoadMaterials: Failed to resolve normalmap: %s\n", c);
 				image->normalmap = NULL;
+			}
+		}
+
+		if (!strcmp(c, "glowmap")){
+			c = Com_Parse(&buffer);
+			image->glowmap = R_FindImage(va("textures/%s", c), it_glowmap);
+
+			if (image->glowmap == r_noTexture){
+				Com_Printf("R_LoadMaterials: Failed to resolve glowmap: %s\n", c);
+				image->glowmap = NULL;
 			}
 		}
 
@@ -1054,4 +1115,6 @@ void R_LoadMaterials (const char *map)
 	}
 
 	FS_FreeFile(fileBuffer);
+
+	R_CreateMaterialData();
 }

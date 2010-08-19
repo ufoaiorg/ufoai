@@ -32,8 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/defines.h"
 #include "../shared/typedefs.h"
 #include "../common/tracing.h"
+#include "../common/cvar.h"
 
-#define	GAME_API_VERSION	7
+#define	GAME_API_VERSION	8
 
 /** @brief edict->solid values */
 typedef enum {
@@ -44,12 +45,6 @@ typedef enum {
 } solid_t;
 
 /*=============================================================== */
-
-/** @brief link_t is only used for entity area links now */
-typedef struct link_s {
-	struct link_s *prev, *next;
-} link_t;
-
 
 typedef struct edict_s edict_t;
 typedef struct player_s player_t;
@@ -70,17 +65,15 @@ struct player_s {
 /** @note don't change the order - also see edict_s in g_local.h */
 struct edict_s {
 	qboolean inuse;
-	int linkcount;
+	int linkcount;		/**< count the amount of server side links - if a link was called,
+						 * something on the position or the size of the entity was changed */
 
-	int number;
+	int number;			/**< the number in the global edict array */
 
-	vec3_t origin;
-	vec3_t angles;
+	vec3_t origin;		/**< the position in the world */
+	vec3_t angles;		/**< the rotation in the world (pitch, yaw, roll) */
 
-	/** @todo move these fields to a server private sv_entity_t */
-	link_t area;				/**< linked to a division node or leaf */
-
-	/** tracing info */
+	/** tracing info SOLID_BSP, SOLID_BBOX, ... */
 	solid_t solid;
 
 	vec3_t mins, maxs; /**< position of min and max points - relative to origin */
@@ -108,14 +101,13 @@ typedef struct {
 	int seed; /**< random seed */
 	csi_t *csi;
 	routing_t *routingMap;	/**< server side routing table */
-	pathing_t *pathingMap;
 
 	/* special messages */
 
 	/** sends message to all players */
 	void (IMPORT *BroadcastPrintf) (int printlevel, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
 	/** print output to server console */
-	void (IMPORT *dprintf) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+	void (IMPORT *DPrintf) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 	/** sends message to only one player (don't use this to send messages to an AI player struct) */
 	void (IMPORT *PlayerPrintf) (const player_t * player, int printlevel, const char *fmt, va_list ap);
 
@@ -127,7 +119,7 @@ typedef struct {
 	void (IMPORT *ConfigString) (int num, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
 
 	/** @note The error message should not have a newline - it's added inside of this function */
-	void (IMPORT *error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
+	void (IMPORT *Error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
 
 	/** the *index functions create configstrings and some internal server state */
 	int (IMPORT *ModelIndex) (const char *name);
@@ -142,7 +134,7 @@ typedef struct {
 	 * via contentmask (MASK_*). Mins and maxs set the box which will do the tracing - if NULL then a line is used instead
 	 * @return the trace data
 	 */
-	trace_t (IMPORT *trace) (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, const edict_t * passent, int contentmask);
+	trace_t (IMPORT *Trace) (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, const edict_t * passent, int contentmask);
 
 	int (IMPORT *PointContents) (vec3_t point);
 	const char* (IMPORT *GetFootstepSound) (const char* texture);
@@ -152,8 +144,9 @@ typedef struct {
 	/** links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
 	void (IMPORT *LinkEdict) (edict_t * ent);
-	void (IMPORT *UnlinkEdict) (edict_t * ent);	/* call before removing an interactive edict */
-	int (IMPORT *BoxEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount, int areatype);
+	/** call before removing an interactive edict */
+	void (IMPORT *UnlinkEdict) (edict_t * ent);
+	int (IMPORT *BoxEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount);
 	int (IMPORT *TouchEdicts) (const vec3_t mins, const vec3_t maxs, edict_t **list, int maxcount, edict_t *skip);
 
 	/** @brief fast version of a line trace but without including entities */
@@ -203,7 +196,7 @@ typedef struct {
 	int (IMPORT *ReadByte) (void);
 	int (IMPORT *ReadShort) (void);
 	int (IMPORT *ReadLong) (void);
-	char *(IMPORT *ReadString) (void);
+	int (IMPORT *ReadString) (char *str, size_t length);
 	void (IMPORT *ReadPos) (vec3_t pos);
 	void (IMPORT *ReadGPos) (pos3_t pos);
 	void (IMPORT *ReadDir) (vec3_t vector);
@@ -223,12 +216,12 @@ typedef struct {
 	/* managed memory allocation */
 	void *(IMPORT *TagMalloc) (int size, int tag, const char *file, int line);
 	void (IMPORT *TagFree) (void *block, const char *file, int line);
-	void (IMPORT *FreeTags) (int tag);
+	void (IMPORT *FreeTags) (int tag, const char *file, int line);
 
 	/* console variable interaction */
-	cvar_t *(IMPORT *Cvar_Get) (const char *var_name, const char *value, int flags, const char* desc);
-	cvar_t *(IMPORT *Cvar_Set) (const char *var_name, const char *value);
-	const char *(IMPORT *Cvar_String) (const char *var_name);
+	cvar_t *(IMPORT *Cvar_Get) (const char *varName, const char *value, int flags, const char* desc);
+	cvar_t *(IMPORT *Cvar_Set) (const char *varName, const char *value);
+	const char *(IMPORT *Cvar_String) (const char *varName);
 
 	/* ClientCommand and ServerCommand parameter access */
 	int (IMPORT *Cmd_Argc) (void);

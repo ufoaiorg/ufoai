@@ -68,6 +68,25 @@ const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* s
 	return NULL;
 }
 
+
+/**
+ * @brief Searches for the first occurrence of a given string
+ * @return the linkedList_t pointer if the string is found, otherwise @c NULL
+ * @note if data is @c NULL, the function returns @c NULL
+ */
+linkedList_t* LIST_GetPointer (linkedList_t* list, const void* data)
+{
+	assert(list);
+
+	while ((data != NULL) && (list != NULL)) {
+		if (list->data == data)
+			return list;
+		list = list->next;
+	}
+
+	return NULL;
+}
+
 /**
  * @brief Adds an string to a new or to an already existing linked list. The string is copied here.
  * @sa LIST_Add
@@ -193,6 +212,52 @@ void LIST_Delete (linkedList_t **list)
 }
 
 /**
+ * @brief Linked list iterator
+ * @param list The linked list to iterate over
+ * @param lastData The last data entry
+ */
+void *LIST_GetNext (linkedList_t *list, void *lastData)
+{
+	linkedList_t *entry;
+
+	if (LIST_IsEmpty(list))
+		return NULL;
+
+	if (lastData == NULL)
+		return list->data;
+
+	entry = LIST_GetPointer(list, lastData);
+	assert(entry);
+
+	if (entry->next)
+		return entry->next->data;
+
+	return NULL;
+}
+
+/**
+ * @sa LIST_Add
+ * @sa LIST_Remove
+ */
+qboolean LIST_RemovePointer (linkedList_t **list, const void *data)
+{
+	linkedList_t *l = LIST_GetPointer(*list, data);
+	if (l != NULL)
+		LIST_Remove(list, l);
+	return l != NULL;
+}
+
+/**
+ * @brief Checks whether the given list is empty
+ * @param[in] list The linked list to check
+ * @return @c true if empty, @c false otherwise
+ */
+qboolean LIST_IsEmpty (const linkedList_t *list)
+{
+	return list == NULL;
+}
+
+/**
  * @sa LIST_Add
  * @sa LIST_Remove
  */
@@ -206,6 +271,22 @@ int LIST_Count (const linkedList_t *list)
 		l = l->next;
 	}
 	return count;
+}
+
+/**
+ * @brief Returns the last entry in the linked list
+ * @param[in] list Linked list to get the entry from.
+ */
+void *LIST_GetLast (linkedList_t *list)
+{
+	while (list) {
+		linkedList_t *next = list->next;
+		if (next == NULL)
+			return (void *)list->data;
+		list = next;
+	}
+
+	return NULL;
 }
 
 /**

@@ -23,9 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
-#include "../../menu/m_main.h"
-#include "../../menu/m_popup.h"
+#include "../../cl_shared.h"
+#include "../../ui/ui_main.h"
+#include "../../ui/ui_popup.h"
 #include "../cp_campaign.h"
 #include "../cp_map.h"
 #include "../cp_ufo.h"
@@ -69,7 +69,7 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 
 	/* we really don't want to use the fake aircraft anywhere */
 	if (base)
-		base->aircraftCurrent = &base->aircraft[0];
+		base->aircraftCurrent = AIR_GetNextFromBase(base, NULL);
 	ccs.missionAircraft = NULL;
 
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
@@ -144,7 +144,6 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
  */
 void CP_BaseAttackStartMission (mission_t *mission)
 {
-	int i;
 	base_t *base = (base_t *)mission->data;
 	linkedList_t *hiredSoldiersInBase = NULL, *pos;
 
@@ -185,13 +184,21 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	ccs.mapAction = MA_BASEATTACK;
 	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", ccs.selectedMission->id, ccs.selectedMission->pos[0], ccs.selectedMission->pos[1]);
 
+	/** @todo EMPL_ROBOT */
+	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiersInBase);
+
 	/* Fill the fake aircraft */
 	memset(&baseAttackFakeAircraft, 0, sizeof(baseAttackFakeAircraft));
 	baseAttackFakeAircraft.homebase = base;
-	VectorCopy(base->pos, baseAttackFakeAircraft.pos);				/* needed for transfer of alien corpses */
-	/** @todo EMPL_ROBOT */
-	baseAttackFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;			/* needed to spawn soldiers on map */
-	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiersInBase);
+	/* needed for transfer of alien corpses */
+	VectorCopy(base->pos, baseAttackFakeAircraft.pos);
+#if 0
+	/** @todo active this once more than 8 soldiers are working */
+	/* needed to spawn soldiers on map */
+	baseAttackFakeAircraft.maxTeamSize = LIST_Count(hiredSoldiersInBase);
+#else
+	baseAttackFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;
+#endif
 
 	if (!hiredSoldiersInBase) {
 		Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no soldiers: it can't defend itself. Destroy base.\n", base->name);
@@ -199,22 +206,35 @@ void CP_BaseAttackStartMission (mission_t *mission)
 		return;
 	}
 
-	for (i = 0, pos = hiredSoldiersInBase; i < MAX_ACTIVETEAM && pos; i++, pos = pos->next)
+	for (pos = hiredSoldiersInBase; pos != NULL; pos = pos->next) {
+		if (E_IsAwayFromBase((employee_t *)pos->data))
+			continue;
 		AIR_AddToAircraftTeam(&baseAttackFakeAircraft, (employee_t *)pos->data);
+	}
+	if (AIR_GetTeamSize(&baseAttackFakeAircraft) == 0) {
+		Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no soldiers at home: it can't defend itself. Destroy base.\n", base->name);
+		CP_BaseAttackMissionDestroyBase(mission);
+		return;
+	}
+#if 0
+	/** @todo active this once more than 8 soldiers are working */
+	/* all soldiers in the base should get used */
+	baseAttackFakeAircraft.maxTeamSize = AIR_GetTeamSize(&baseAttackFakeAircraft);
+#endif
 
 	LIST_Delete(&hiredSoldiersInBase);
 	base->aircraftCurrent = &baseAttackFakeAircraft;
 	ccs.missionAircraft = &baseAttackFakeAircraft;
 	/** @todo remove me - this is not needed because we are using the base->aircraftCurrent
-	 * pointer for resolving the aircraft*/
+	 * pointer for resolving the aircraft - only CL_GameAutoGo needs this */
 	ccs.interceptAircraft = &baseAttackFakeAircraft;	/* needed for updating soldier stats sa CL_UpdateCharacterStats*/
 	B_SetCurrentSelectedBase(base);						/* needed for equipment menu */
 
 	Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack! What to do ?"), base->name);
-	MN_RegisterText(TEXT_POPUP, popupText);
+	UI_RegisterText(TEXT_POPUP, popupText);
 
 	CL_GameTimeStop();
-	MN_PushWindow("popup_baseattack", NULL);
+	UI_PushWindow("popup_baseattack", NULL);
 }
 
 
@@ -354,7 +374,7 @@ void CP_BaseAttackMissionNextStage (mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create mission */
-		CP_MissionCreate(mission);
+		CP_MissionBegin(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* Choose a base to attack and go to this base */

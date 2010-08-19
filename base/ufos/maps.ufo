@@ -8,7 +8,7 @@
 // * urban, suburban, village, rural, nopopulation
 // See also http://ufoai.ninex.info/wiki/index.php/Mapping/Terrain_Types
 //
-// Empty block means 'any' value 
+// Empty block means 'any' value
 //
 //
 // Triggers:
@@ -34,6 +34,7 @@
 // * craft_drop_firebird
 // * craft_drop_herakles
 // * craft_drop_raptor
+// * craft_drop_dragon
 
 ////////////////////////
 // INDUSTRIAL RANDOM MAPS
@@ -42,14 +43,14 @@
 mapdef oilpipes_small
 {
 	map			"+industrial"
-	param		small
+	param		"small"
 	description	"_Industrial theme."
 	size		"small"
 	teams		4
 	multiplayer	false
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -84,14 +85,14 @@ mapdef oilpipes_small
 mapdef oilpipes_large
 {
 	map			"+industrial"
-	param		large
+	param		"large"
 	description	"_Industrial theme."
 	size		"large"
 	teams		4
 	multiplayer	false
 	maxaliens	12
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -131,13 +132,13 @@ mapdef oilpipes_large
 mapdef or_small
 {
 	map			"+oriental"
-	param		small
+	param		"small"
 	multiplayer	false
 	description	"_A suburban district of an oriental area."
 	size		"small"
 	maxaliens	8
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -171,13 +172,13 @@ mapdef or_small
 mapdef or_medium
 {
 	map			"+oriental"
-	param		medium
+	param		"medium"
 	multiplayer	false
 	description	"_A suburban district of an oriental area."
 	size		"small"
 	maxaliens	8
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -211,14 +212,14 @@ mapdef or_medium
 mapdef or_medium_crash
 {
 	map			"+oriental"
-	param		medium_crash
+	param		"medium_crash"
 	multiplayer	false
 	hurtaliens true
 	description	"_Crashed UFO in oriental suburban district."
 	size		"small"
 	maxaliens	8
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -252,13 +253,13 @@ mapdef or_medium_crash
 mapdef or_big
 {
 	map			"+oriental"
-	param		big
+	param		"big"
 	multiplayer	false
 	description	"_A suburban district of an oriental area."
 	size		"small"
 	maxaliens	14
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -295,14 +296,14 @@ mapdef or_big
 mapdef farm_small
 {
 	map			"+farm"
-	param		small
+	param		"small"
 	description	"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 	size		"small"
 	teams		4
 	multiplayer	false
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -337,14 +338,14 @@ mapdef farm_small
 mapdef farm_medium
 {
 	map			"+farm"
-	param		medium
+	param		"medium"
 	description	"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 	size		"medium"
 	teams		4
 	multiplayer	false
 	maxaliens	14
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -376,14 +377,14 @@ mapdef farm_medium
 mapdef farm_large
 {
 	map			"+farm"
-	param		large
+	param		"large"
 	description	"_A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 	size		"large"
 	teams		4
 	multiplayer	false
 	maxaliens	25
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -424,12 +425,12 @@ mapdef farm_large
 mapdef frozen_alienlandingindustrial
 {
 	map			"+frozen"
-	param		alienlandingindustrial
+	param		"alienlandingindustrial"
 	multiplayer	false
 	description	"_An industrial area in a cold region."
 	maxaliens	14
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -467,12 +468,12 @@ mapdef frozen_alienlandingindustrial
 mapdef frozen_small
 {
 	map			"+frozen"
-	param		small
+	param		"small"
 	multiplayer	false
 	description	"_An underpopulated area in a cold region."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -506,12 +507,12 @@ mapdef frozen_small
 mapdef frozen_alienlandingnature
 {
 	map			"+frozen"
-	param		alienlandingnature
+	param		"alienlandingnature"
 	multiplayer	false
 	description	"_An industrial area in a cold region."
 	maxaliens	8
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -548,12 +549,12 @@ mapdef frozen_alienlandingnature
 mapdef frozen_industrial
 {
 	map			"+frozen"
-	param		industrial
+	param		"industrial"
 	multiplayer	false
 	description	"_An industrial area in a cold region."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -588,7 +589,7 @@ mapdef frozen_industrial
 mapdef alienlandingindustrial_fix
 {
 	map			"+frozen"
-	param		industrial_static
+	param		"industrial_static"
 	description	"_An industrial compound."
 	multiplayer	true
 	teams		2
@@ -601,9 +602,9 @@ mapdef alienlandingindustrial_fix
 		coop3
 		coop4
 	}
-	maxaliens   10
+	maxaliens	10
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -643,22 +644,12 @@ mapdef alienlandingindustrial_fix
 mapdef cemetery_main
 {
 	map				"+cemetery"
-	param			main
+	param			"main"
 	description		"_Cemetery terror mission."
-	multiplayer		true
-	teams			2
-	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
-		coop2
-		coop3
-		coop4
-	}
+	multiplayer		false
 	maxaliens		6 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -696,11 +687,11 @@ mapdef tropic_river
 {
 	map			"+tropic"
 	description	"_A river runs through this piece of jungle."
-	param		river
+	param		"river"
 	multiplayer	false
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -736,12 +727,12 @@ mapdef tropic_river_crash
 {
 	map			"+tropic"
 	description	"_A river runs through this piece of jungle."
-	param		river_crash
+	param		"river_crash"
 	hurtaliens true
 	multiplayer	false
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -777,11 +768,11 @@ mapdef tropic_drug
 {
 	map			"+tropic"
 	description	"_A cleared stretch of land in the middle of the jungle."
-	param		drug
+	param		"drug"
 	multiplayer	false
 	maxaliens	14
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -818,12 +809,12 @@ mapdef tropic_drug_crash
 {
 	map			"+tropic"
 	description	"_A cleared stretch of land in the middle of the jungle."
-	param		drug_crash
+	param		"drug_crash"
 	multiplayer	false
 	maxaliens	14
 	hurtaliens true
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -859,11 +850,11 @@ mapdef tropic_bigufo
 {
 	map			"+tropic"
 	description	"_A cleared stretch of land in the middle of the jungle."
-	param		bigufo
+	param		"bigufo"
 	multiplayer	false
 	maxaliens	25
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -901,13 +892,13 @@ mapdef tropic_bigufo
 mapdef vil_lille
 {
 	map			"+village"
-	param		ufo_small
+	param		"ufo_small"
 	multiplayer	false
 	size "small"
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -917,6 +908,7 @@ mapdef vil_lille
 	ufos
 	{
 		craft_ufo_scout
+		craft_ufo_fighter
 	}
 
 	terrains
@@ -941,12 +933,12 @@ mapdef vil_lille
 mapdef vil_commercial
 {
 	map			"+village"
-	param		commercial
+	param		"commercial"
 	multiplayer	false
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	16
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -955,6 +947,8 @@ mapdef vil_commercial
 
 	ufos
 	{
+		craft_ufo_scout
+		craft_ufo_fighter
 		craft_ufo_harvester
 	}
 
@@ -982,12 +976,12 @@ mapdef vil_commercial
 mapdef vil_residential
 {
 	map			"+village"
-	param		residential
+	param		"residential"
 	multiplayer	false
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -997,6 +991,8 @@ mapdef vil_residential
 	ufos
 	{
 		craft_ufo_scout
+		craft_ufo_fighter
+		craft_ufo_harvester
 	}
 
 	terrains
@@ -1022,21 +1018,24 @@ mapdef vil_residential
 mapdef vil_big
 {
 	map			"+village"
-	param		big
+	param		"big"
 	multiplayer	false
 	description	"_A peaceful neighbourhood on the outskirts of a centre of population."
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
 		craft_drop_herakles
 	}
 
-//	ufos
-//	{
-//	}
+	ufos
+	{
+		craft_ufo_scout
+		craft_ufo_fighter
+		craft_ufo_harvester
+	}
 
 	terrains
 	{
@@ -1061,13 +1060,13 @@ mapdef vil_big
 mapdef forest_small
 {
 	map			"+forest"
-	param		small
+	param		"small"
 	multiplayer	false
 	description	"_Aliens are up to no good in this sparsely populated forest region."
 	size		"small"
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -1101,14 +1100,14 @@ mapdef forest_small
 mapdef forest_small_crash
 {
 	map			"+forest"
-	param		small_crash
+	param		"small_crash"
 	multiplayer	false
 	hurtaliens true
 	description	"_UFO crashed in this sparsely populated forest region."
 	size		"small"
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -1142,13 +1141,13 @@ mapdef forest_small_crash
 mapdef forest_large
 {
 	map			"+forest"
-	param		large
+	param		"large"
 	multiplayer	false
 	description	"_Aliens are up to no good in this sparsely populated forest region."
 	size		"large"
 	maxaliens	15
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -1182,14 +1181,14 @@ mapdef forest_large
 mapdef forest_large_crash
 {
 	map			"+forest"
-	param		large_crash
+	param		"large_crash"
 	multiplayer	false
 	description	"_Aliens are up to no good in this sparsely populated forest region."
 	size		"large"
 	maxaliens	15
 	hurtaliens true
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -1223,13 +1222,13 @@ mapdef forest_large_crash
 mapdef country_large
 {
 	map			"+country"
-	param		large
+	param		"large"
 	multiplayer	false
 	description	"_Some houses in desert"
 	size		"large"
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -1265,13 +1264,13 @@ mapdef country_large
 mapdef country_street
 {
 	map			"+country"
-	param		street
+	param		"street"
 	multiplayer	false
 	description	"_Some houses in desert"
 	size		"large"
 	maxaliens	15
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -1307,7 +1306,7 @@ mapdef country_street
 /////////////
 mapdef excavation
 {
-	map			excavation
+	map			"excavation"
 	description	"_An excavation site that has fallen under alien attack."
 	multiplayer	true
 	teams		2
@@ -1324,7 +1323,7 @@ mapdef excavation
 	}
 
 
-	aircraft 
+	aircraft
 	{
 	// any
 	}
@@ -1354,7 +1353,7 @@ mapdef excavation
 
 mapdef estate
 {
-	map				estate
+	map				"estate"
 	description		"_An estate owned by rich and influential people."
 	multiplayer		true
 	teams			2
@@ -1370,7 +1369,7 @@ mapdef estate
 
 	maxaliens		12 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -1398,7 +1397,7 @@ mapdef estate
 
 mapdef england
 {
-	map			england
+	map			"england"
 	description		"_A small village in England."
 	multiplayer		true
 	teams			2
@@ -1414,7 +1413,7 @@ mapdef england
 
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -1444,7 +1443,7 @@ mapdef england
 
 mapdef italy
 {
-	map			+italy
+	map			"+italy"
 	description	"_A small office in a mountainous region."
 	teams		2
 	multiplayer	true
@@ -1460,7 +1459,7 @@ mapdef italy
 
 	maxaliens		22 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1492,7 +1491,7 @@ mapdef italy
 
 mapdef mart
 {
-	map			+mart
+	map			"+mart"
 	description	"_A kind of communal gathering centre annex foraging facility, known as a supermarket."
 	multiplayer	true
 	teams		2
@@ -1508,7 +1507,7 @@ mapdef mart
 
 	maxaliens		16 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1542,7 +1541,7 @@ mapdef mart
 
 mapdef mine
 {
-	map			mine
+	map			"mine"
 	description	"_An old mine."
 	multiplayer	true
 	teams		3
@@ -1559,7 +1558,7 @@ mapdef mine
 	}
 	maxaliens	15 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -1590,7 +1589,7 @@ mapdef mine
 
 mapdef transport
 {
-	map			+transport
+	map			"+transport"
 	description	"_An industrial area, used for loading and unloading goods."
 	multiplayer	true
 	teams		2
@@ -1605,7 +1604,7 @@ mapdef transport
 	}
 	maxaliens	19 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1636,7 +1635,7 @@ mapdef transport
 
 mapdef bunker
 {
-	map			bunker
+	map			"bunker"
 	description	"_A bunker used in a previous conflict."
 	multiplayer	true
 	teams		2
@@ -1651,7 +1650,7 @@ mapdef bunker
 	}
 	maxaliens	8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -1682,7 +1681,7 @@ mapdef bunker
 
 mapdef dam
 {
-	map			dam
+	map			"dam"
 	description	"_A hydroelectricity dam that is threatened by the alien invaders."
 	multiplayer	true
 	teams		2
@@ -1697,7 +1696,7 @@ mapdef dam
 	}
 	maxaliens	10 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -1726,9 +1725,9 @@ mapdef dam
 
 mapdef japan
 {
-	map			+japan
+	map			"+japan"
 	description	"_A classic eastern suburban area."
-	param		default
+	param		"default"
 	teams		2
 	multiplayer	true
 	teams		2
@@ -1743,7 +1742,7 @@ mapdef japan
 	}
 	maxaliens	16 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1775,8 +1774,8 @@ mapdef japan
 
 mapdef japan_small
 {
-	map			+japan
-	param		small
+	map			"+japan"
+	param		"small"
 	description	"_A classic eastern suburban area."
 	teams		2
 	multiplayer	false
@@ -1792,7 +1791,7 @@ mapdef japan_small
 	}
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1825,8 +1824,8 @@ mapdef japan_small
 
 mapdef japan_big
 {
-	map			+japan
-	param		big
+	map			"+japan"
+	param		"big"
 	description	"_A classic eastern suburban area."
 	teams		2
 	multiplayer	false
@@ -1842,7 +1841,7 @@ mapdef japan_big
 	}
 	maxaliens	16
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1875,7 +1874,7 @@ mapdef japan_big
 
 mapdef spedition
 {
-	map			+spedition
+	map			"+spedition"
 	description	"_A small industrial area."
 	multiplayer	true
 	teams		2
@@ -1890,7 +1889,7 @@ mapdef spedition
 	}
 	maxaliens	7 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1921,7 +1920,7 @@ mapdef spedition
 
 mapdef stadium
 {
-	map				+stadium
+	map				"+stadium"
 	description		"_A stadium used for various recreational events."
 	multiplayer		true
 	teams			2
@@ -1937,7 +1936,7 @@ mapdef stadium
 
 	maxaliens		5 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -1985,7 +1984,7 @@ mapdef druglord
 	}
 	maxaliens		11 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -2016,7 +2015,7 @@ mapdef druglord
 
 mapdef eaglenest
 {
-	map				+eaglenest
+	map				"+eaglenest"
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -2031,7 +2030,7 @@ mapdef eaglenest
 	maxaliens		9 //TODO: This is an arbitrary value right now.
 	description		"_A small estate in the mountains"
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -2065,7 +2064,7 @@ mapdef eaglenest
 
 mapdef scout_crash
 {
-	map				scout_crash
+	map				"scout_crash"
 	multiplayer		true
 	hurtaliens	true
 	teams			2
@@ -2081,7 +2080,7 @@ mapdef scout_crash
 	maxaliens		4
 	description		"_A crashed Scout UFO"
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2113,7 +2112,7 @@ mapdef scout_crash
 
 mapdef farm
 {
-	map				farm
+	map				"farm"
 	description		"_A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 	size			"medium"
 	teams			2
@@ -2129,7 +2128,7 @@ mapdef farm
 	}
 	maxaliens		6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2160,7 +2159,7 @@ mapdef farm
 
 mapdef ferry
 {
-	map				ferry
+	map				"ferry"
 	description		"_A ferry."
 	size			"medium"
 	teams			4
@@ -2176,7 +2175,7 @@ mapdef ferry
 	}
 	maxaliens		12 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2193,7 +2192,7 @@ mapdef ferry
 	cultures
 	{
 		eastern
-		western 
+		western
 		oriental
 	}
 
@@ -2208,7 +2207,7 @@ mapdef ferry
 
 mapdef rivertown
 {
-	map				rivertown
+	map				"rivertown"
 	description		"_A rather old-fashioned suburban district."
 	multiplayer		true
 	teams			4
@@ -2227,7 +2226,7 @@ mapdef rivertown
 	}
 	maxaliens		16 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2272,7 +2271,7 @@ mapdef city_disco
 	}
 	maxaliens		6 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_raptor
@@ -2319,7 +2318,7 @@ mapdef city_train
 	}
 	maxaliens		6 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -2367,7 +2366,7 @@ mapdef gasstation
 	}
 	maxaliens		4 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -2401,7 +2400,7 @@ mapdef gasstation
 
 mapdef oriental
 {
-	map				oriental
+	map				"oriental"
 	description		"_An urban district in an oriental region."
 	multiplayer		true
 	teams			2
@@ -2416,7 +2415,7 @@ mapdef oriental
 	}
 	maxaliens		16 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2445,7 +2444,7 @@ mapdef oriental
 
 mapdef oriental_mosque
 {
-	map				oriental_mosque
+	map				"oriental_mosque"
 	description		"_An urban district in an oriental region."
 	multiplayer		true
 	teams			2
@@ -2460,7 +2459,7 @@ mapdef oriental_mosque
 	}
 	maxaliens		16 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2489,7 +2488,7 @@ mapdef oriental_mosque
 
 mapdef pipes_const
 {
-	map				pipes_const
+	map				"pipes_const"
 	description		"_Underground pipe construction site."
 	multiplayer		true
 	teams			3
@@ -2536,7 +2535,7 @@ mapdef pipes_const
 
 mapdef subway
 {
-	map				subway
+	map				"subway"
 	description		"_A subway station in a suburban part of town."
 	multiplayer		true
 	teams			2
@@ -2551,7 +2550,7 @@ mapdef subway
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2582,7 +2581,7 @@ mapdef subway
 
 mapdef tower
 {
-	map				tower
+	map				"tower"
 	description		"_An office complex in the centre of town."
 	multiplayer		true
 	teams			3
@@ -2599,7 +2598,7 @@ mapdef tower
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2630,7 +2629,7 @@ mapdef tower
 
 mapdef village
 {
-	map				village
+	map				"village"
 	description		"_A suburban district."
 	multiplayer		true
 	teams			2
@@ -2645,7 +2644,7 @@ mapdef village
 	}
 	maxaliens		11 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2690,7 +2689,7 @@ mapdef military_convoy
 	}
 	maxaliens		11 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -2722,7 +2721,7 @@ mapdef military_convoy
 
 mapdef fighter_crash
 {
-	map				fighter_crash
+	map				"fighter_crash"
 	description		"_A small UFO has crashed in this mining region."
 	multiplayer		true
 	teams			2
@@ -2739,7 +2738,7 @@ mapdef fighter_crash
 		coop4
 	}
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2788,7 +2787,7 @@ mapdef bridge
 	maxaliens		6
 	hurtaliens	true
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -2835,7 +2834,7 @@ mapdef construction
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -2867,7 +2866,7 @@ mapdef construction
 
 mapdef harbour
 {
-	map				harbour
+	map				"harbour"
 	description		"_A local harbour."
 	multiplayer		true
 	teams			2
@@ -2882,7 +2881,7 @@ mapdef harbour
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2912,7 +2911,7 @@ mapdef harbour
 
 mapdef office
 {
-	map				office
+	map				"office"
 	description		"_An office complex on the outskirts of town."
 	multiplayer		true
 	teams			2
@@ -2927,7 +2926,7 @@ mapdef office
 	}
 	maxaliens		18 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -2957,7 +2956,7 @@ mapdef office
 
 mapdef resort
 {
-	map				resort
+	map				"resort"
 	description		"_A luxurious vacation resort."
 	multiplayer		true
 	teams			2
@@ -2972,7 +2971,7 @@ mapdef resort
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -3003,7 +3002,7 @@ mapdef resort
 mapdef africa_small
 {
 	map				"+africa"
-	param     small
+	param			"small"
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -3018,7 +3017,7 @@ mapdef africa_small
 	description		"_A suburb that has been visited by UFO."
 	maxaliens		6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3055,7 +3054,7 @@ mapdef africa_small
 mapdef africa_large
 {
 	map				"+africa"
-	param			large
+	param			"large"
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -3070,7 +3069,7 @@ mapdef africa_large
 	description		"_A suburb that has received a visit from a Harvester."
 	maxaliens		16
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3106,7 +3105,7 @@ mapdef africa_large
 mapdef harvester_crash
 {
 	map				"+desert"
-	param			harvester_crash
+	param			"harvester_crash"
 	multiplayer		true
 	teams			2
 	hurtaliens		true
@@ -3122,7 +3121,7 @@ mapdef harvester_crash
 	description		"_An alien Harvester has crashed in the wastelands."
 	maxaliens		14
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3153,7 +3152,7 @@ mapdef harvester_crash
 
 mapdef lake_ice
 {
-	map				lake_ice
+	map				"lake_ice"
 	multiplayer		true
 	teams			2
 	gametypes {
@@ -3168,7 +3167,7 @@ mapdef lake_ice
 	description		"_A small settlement in winter."
 	maxaliens		16 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -3196,7 +3195,7 @@ mapdef lake_ice
 
 mapdef lake_ice_big
 {
-	map				lake_ice_big
+	map				"lake_ice_big"
 	multiplayer		true
 	teams			3
 	description		"_A small settlement in winter."
@@ -3211,8 +3210,8 @@ mapdef lake_ice_big
 		coop3
 		coop4
 	}
-	
-	aircraft 
+
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -3257,7 +3256,7 @@ mapdef shelter
 	}
 	maxaliens		21 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -3304,7 +3303,7 @@ mapdef bomber_city
 	}
 	maxaliens		30
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3353,7 +3352,7 @@ mapdef community_centre
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3386,7 +3385,7 @@ mapdef community_centre
 
 mapdef laboratory
 {
-	map				+laboratory
+	map				"+laboratory"
 	description		"_A laboratory where they examined found UFO wreck tiles."
 	multiplayer		true
 	teams			3
@@ -3401,7 +3400,7 @@ mapdef laboratory
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3434,27 +3433,19 @@ mapdef laboratory
 	}
 }
 
-mapdef wip_city_rma_sml
+mapdef city_rma_small
 {
-	map		+city
-	param		small
+	map			"+city"
+	param		"small"
 	description	"_Big city"
-	teams		4
-	multiplayer	false
+	teams		2
+	multiplayer	true
 	maxaliens	8
 	gametypes {
 		1on1
-		1on1on1
-		2on2
-		2on2on2
-		3on3
-		3on3on3
-		coop2
-		coop3
-		coop4
 	}
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3484,27 +3475,16 @@ mapdef wip_city_rma_sml
 	}
 }
 
-mapdef wip_city_rma_med
+mapdef city_rma_medium
 {
-	map		+city
-	param		medium
+	map			"+city"
+	param		"medium"
 	description	"_Big city"
-	teams		4
+	teams		2
 	multiplayer	false
 	maxaliens	8
-	gametypes {
-		1on1
-		1on1on1
-		2on2
-		2on2on2
-		3on3
-		3on3on3
-		coop2
-		coop3
-		coop4
-	}
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3534,7 +3514,7 @@ mapdef wip_city_rma_med
 
 mapdef fueldump
 {
-	map				fueldump
+	map				"fueldump"
 	description		"_A fuel depot the aliens try to destroy."
 	multiplayer		true
 	teams			2
@@ -3546,7 +3526,7 @@ mapdef fueldump
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -3573,7 +3553,7 @@ mapdef fueldump
 
 mapdef wilderness
 {
-	map				wilderness
+	map				"wilderness"
 	description		"_Wilderness terror mission."
 	multiplayer		true
 	teams			2
@@ -3586,7 +3566,7 @@ mapdef wilderness
 	}
 	maxaliens		8 //TODO: This is an arbitrary value right now.
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 	}
@@ -3612,6 +3592,51 @@ mapdef wilderness
 	}
 }
 
+mapdef hills_harvester
+{
+	map			"+hills"
+	param		harvester
+	description	"_UFO landed in hills area."
+	size		"small"
+	teams		4
+	multiplayer	false
+	maxaliens	6
+
+	aircraft 
+	{
+		craft_drop_firebird
+//		craft_drop_raptor
+//		craft_drop_herakles
+	}
+
+	ufos
+	{
+//		craft_ufo_scout
+//		craft_ufo_fighter
+		craft_ufo_harvester
+	}
+
+	terrains
+	{
+		desert
+		cold
+		mountain
+		grass
+	}
+
+	cultures
+	{
+	}
+
+	populations
+	{
+		urban
+		suburban
+		village
+	}
+}
+
+
 ///////////////////////
 // UFOCRASH RANDOM MAPS
 ///////////////////////
@@ -3633,8 +3658,39 @@ mapdef ufocrash
 		craft_crash_supply
 		craft_crash_bomber
 	}
-	
-	aircraft 
+
+	aircraft
+	{
+		craft_drop_firebird
+		craft_drop_herakles
+		craft_drop_dragon
+		craft_drop_raptor
+	}
+}
+
+///////////////////////
+// RESCUE RANDOM MAPS
+///////////////////////
+
+mapdef rescue
+{
+	map				"+rescue"
+	multiplayer		false
+	description		"_Rescue mission."
+	storyrelated		true
+	maxaliens		30
+	hurtaliens		true
+	ufos
+	{
+		craft_ufo_scout
+		craft_ufo_fighter
+		craft_ufo_corrupter
+		craft_ufo_harvester
+		craft_ufo_supply
+		craft_ufo_bomber
+	}
+
+	aircraft
 	{
 		craft_drop_firebird
 		craft_drop_herakles
@@ -3666,6 +3722,7 @@ mapdef baseattack
 {
 	map			".baseattack"
 	multiplayer	false
+	storyrelated	true
 	description	"_Base is under attack."
 	maxaliens	16
 }

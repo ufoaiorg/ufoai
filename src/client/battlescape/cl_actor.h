@@ -25,9 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_ACTOR_H
 #define CLIENT_CL_ACTOR_H
 
-#include "../client.h"
-#include "cl_localentity.h"
-
 /* vertical cursor offset */
 #define CURSOR_OFFSET UNIT_HEIGHT * 0.4
 /* distance from vertical center of grid-point to head when standing */
@@ -51,14 +48,10 @@ extern pos3_t mousePos;
 
 #define ACTOR_GET_FIELDSIZE(actor) ((actor != NULL) ? (actor)->fieldSize : ACTOR_SIZE_NORMAL)
 
-extern pos_t *fb_list[MAX_FORBIDDENLIST];
-extern int fb_length;
-
 void MSG_Write_PA(player_action_t player_action, int num, ...);
 
 void ACTOR_InitStartup(void);
 
-void CL_ActorCvars(const character_t *chr, const char* cvarPrefix);
 const char *CL_ActorGetSkillString(const int skill);
 
 int CL_ActorCheckAction(const le_t *le);

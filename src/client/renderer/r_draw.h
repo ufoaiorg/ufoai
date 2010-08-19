@@ -29,17 +29,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void R_DrawImage(float x, float y, const image_t *image);
 void R_DrawStretchImage(float x, float y, int w, int h, const image_t *image);
-const image_t *R_DrawImageArray(const float texcoords[8], const short verts[8], const image_t *image);
+const image_t *R_DrawImageArray(const vec2_t texcoords[4], const vec2_t verts[4], const image_t *image);
 void R_DrawChar(int x, int y, int c);
 void R_DrawChars(void);
 void R_DrawFill(int x, int y, int w, int h, const vec4_t color);
 void R_DrawRect(int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern);
-void R_Draw3DGlobe(int x, int y, int w, int h, int day, int second, const vec3_t rotate, float zoom, const char *map, qboolean disableSolarRender, float ambient);
-void R_Draw2DMapMarkers(const vec2_t screenPos, float direction, const char *model, int skin);
-void R_Draw3DMapMarkers(int x, int y, int w, int h, const vec3_t rotate, const vec2_t pos, float direction, float earthRadius, const char *model, int skin);
 int R_UploadData(const char *name, byte *frame, int width, int height);
 void R_DrawTexture(int texnum, int x, int y, int w, int h);
-void R_DrawFlatGeoscape(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);
 void R_DrawLineStrip(int points, int *verts);
 void R_DrawLineLoop(int points, int *verts);
 void R_DrawLine(int *verts, float thickness);
@@ -53,11 +49,5 @@ void R_DrawBoundingBox(const vec3_t mins, const vec3_t maxs);
 
 void R_DrawBloom(void);
 void R_Blur(r_framebuffer_t *source, r_framebuffer_t *dest, int texnum, int dir);
-
-extern cvar_t *r_geoscape_overlay;
-
-#define OVERLAY_NATION		(1<<0)
-#define OVERLAY_XVI			(1<<1)
-#define OVERLAY_RADAR		(1<<2)
 
 #endif

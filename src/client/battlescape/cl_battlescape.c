@@ -31,7 +31,7 @@ client_state_t cl;
 /**
  * @brief Check whether we already have actors spawned on the battlefield
  * @sa CL_OnBattlescape
- * @return true when we are in battlefield and have soldiers spawned (game is running)
+ * @return @c true when we are in battlefield and have soldiers spawned (game is running)
  */
 qboolean CL_BattlescapeRunning (void)
 {
@@ -260,3 +260,32 @@ qboolean CL_OutsideMap (const vec3_t position, const float delta)
 	/* still inside the map borders */
 	return qfalse;
 }
+
+#ifdef DEBUG
+/** @todo this does not belong here */
+#include "../../common/routing.h"
+
+/**
+ * @brief Dumps contents of the entire client map to console for inspection.
+ * @sa CL_InitLocal
+ */
+void Grid_DumpWholeClientMap_f (void)
+{
+	int i;
+
+	for (i = 0; i < ACTOR_MAX_SIZE; i++)
+		RT_DumpWholeMap(&cl.clMap[i]);
+}
+
+/**
+ * @brief Dumps contents of the entire client routing table to CSV file.
+ * @sa CL_InitLocal
+ */
+void Grid_DumpClientRoutes_f (void)
+{
+	ipos3_t wpMins, wpMaxs;
+	VecToPos(mapMin, wpMins);
+	VecToPos(mapMax, wpMaxs);
+	RT_WriteCSVFiles(cl.clMap, "ufoaiclient", wpMins, wpMaxs);
+}
+#endif

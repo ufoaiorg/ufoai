@@ -25,9 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_AIRCRAFT_H
 #define CLIENT_CL_AIRCRAFT_H
 
-#include "../client.h"
-#include "cp_radar.h"
-
 #define MAX_CARGO		32
 #define MAX_AIRCRAFT	64
 #define LINE_MAXSEG 64
@@ -158,6 +155,7 @@ typedef enum aircraftStatus_s {
 	AIR_DROP,			/**< ready to drop down */
 	AIR_INTERCEPT,		/**< ready to intercept */
 	AIR_TRANSFER,		/**< being transfered */
+	AIR_CRASHED,		/**< crashed */
 	AIR_RETURNING		/**< returning to homebase */
 } aircraftStatus_t;
 
@@ -182,7 +180,6 @@ typedef struct aircraft_s {
 	int price;			/**< Price of this aircraft type at game start, it's evolving on the market. */
 	int fuel;			/**< Current fuel amount. */
 	int damage;			/**< Current Hit Point of the aircraft */
-	int maxTeamSize;	/**< Max amount of soldiers onboard. @todo How do we handle 2x2 units here? @note Limited to MAX_ACTIVETEAM */
 	int size;			/**< Size of the aircraft used in capacity calculations. */
 	vec3_t pos;			/**< Current position on the geoscape. */
 	vec3_t direction;	/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */
@@ -195,8 +192,8 @@ typedef struct aircraft_s {
 	int hangar;			/**< This is the baseCapacities_t enum value which says in which hangar this aircraft
 						 * is being parked in (CAP_AIRCRAFT_SMALL/CAP_AIRCRAFT_BIG). */
 
-	int teamSize;				/**< How many soldiers/units are on board (i.e. in the craft-team). */
-	struct employee_s *acTeam[MAX_ACTIVETEAM];			/**< List of employees. i.e. current team for this aircraft. @todo Make this a linked list? */
+	int maxTeamSize;	/**< Max amount of soldiers onboard. */
+	linkedList_t *acTeam;			/**< List of employees. i.e. current team for this aircraft */
 
 	struct employee_s *pilot;			/**< Current Pilot assigned to the aircraft. */
 
@@ -215,11 +212,10 @@ typedef struct aircraft_s {
 
 	struct mission_s* mission;	/**< The mission the aircraft is moving to if this is a PHALANX aircraft
 								 * The mission the UFO is involved if this is a UFO */
-	char *missionID;			/**< if this is a crashsite, we need the string here
-								 * this is needed because we won't find the ufocrash mission
-								 * in the parsed missions in @c ccs.missions until we loaded the campaign */
+	char *missionID;			/**< aircraft loaded before missions, we need this temporary as reference 
+								 * AIR_PostLoadInitMissions resolves the pointers after game loaded and frees this */
 	struct aircraft_s *aircraftTarget;		/**< Target of the aircraft (ufo or phalanx) */
-	radar_t	radar;				/**< Radar to track ufos */
+	struct radar_s radar;				/**< Radar to track ufos */
 	int stats[AIR_STATS_MAX];	/**< aircraft parameters for speed, damage and so on
 								 * @note As this is an int, wrange is multiplied by 1000 */
 
@@ -247,8 +243,11 @@ void AIR_ListAircraftSamples_f(void);
 void AIR_ListCraftIndexes_f(void);
 #endif
 
+aircraft_t *AIR_Add(struct base_s *base, const aircraft_t *aircraftTemplate);
+qboolean AIR_Delete(struct base_s *base, const aircraft_t *aircraft);
+qboolean AIR_BaseHasAircraft(const struct base_s *base);
+aircraft_t* AIR_GetNextFromBase(const struct base_s *base, aircraft_t *lastAircraft);
 int AIR_GetAircraftIDXInBase(const aircraft_t* aircraft);
-aircraft_t *AIR_GetAircraftFromBaseByIDX(struct base_s *base, int index);
 aircraft_t *AIR_GetAircraftFromBaseByIDXSafe(struct base_s *base, int index);
 const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);
 qboolean AIR_IsAircraftInBase(const aircraft_t *aircraft);
@@ -262,6 +261,7 @@ void AIR_ResetAircraftTeam(aircraft_t *aircraft);
 qboolean AIR_AddToAircraftTeam(aircraft_t *aircraft, struct employee_s* employee);
 qboolean AIR_RemoveFromAircraftTeam(aircraft_t *aircraft, const struct employee_s* employee);
 qboolean AIR_IsInAircraftTeam(const aircraft_t *aircraft, const struct employee_s* employee);
+int AIR_GetTeamSize(const aircraft_t *aircraft);
 
 void CL_CampaignRunAircraft(int dt, qboolean updateRadarOverlay);
 aircraft_t *AIR_GetAircraftSilent(const char *name);

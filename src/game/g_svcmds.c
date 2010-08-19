@@ -135,7 +135,7 @@ static void SVCmd_AddIP_f (void)
 	int i;
 
 	if (gi.Cmd_Argc() < 3) {
-		gi.dprintf("Usage: %s <ip-mask>\n", gi.Cmd_Argv(1));
+		gi.DPrintf("Usage: %s <ip-mask>\n", gi.Cmd_Argv(1));
 		return;
 	}
 
@@ -144,7 +144,7 @@ static void SVCmd_AddIP_f (void)
 			break;				/* free spot */
 	if (i == numipfilters) {
 		if (numipfilters == MAX_IPFILTERS) {
-			gi.dprintf("IP filter list is full\n");
+			gi.DPrintf("IP filter list is full\n");
 			return;
 		}
 		numipfilters++;
@@ -163,7 +163,7 @@ static void SVCmd_RemoveIP_f (void)
 	int i, j;
 
 	if (gi.Cmd_Argc() < 3) {
-		gi.dprintf("Usage: %s <ip-mask>\n", gi.Cmd_Argv(1));
+		gi.DPrintf("Usage: %s <ip-mask>\n", gi.Cmd_Argv(1));
 		return;
 	}
 
@@ -175,10 +175,10 @@ static void SVCmd_RemoveIP_f (void)
 			for (j = i + 1; j < numipfilters; j++)
 				ipfilters[j - 1] = ipfilters[j];
 			numipfilters--;
-			gi.dprintf("Removed.\n");
+			gi.DPrintf("Removed.\n");
 			return;
 		}
-	gi.dprintf("Didn't find %s.\n", gi.Cmd_Argv(2));
+	gi.DPrintf("Didn't find %s.\n", gi.Cmd_Argv(2));
 }
 
 /**
@@ -189,10 +189,10 @@ static void SVCmd_ListIP_f (void)
 	int i;
 	byte b[4];
 
-	gi.dprintf("Filter list:\n");
+	gi.DPrintf("Filter list:\n");
 	for (i = 0; i < numipfilters; i++) {
 		*(unsigned *) b = ipfilters[i].compare;
-		gi.dprintf("%3i.%3i.%3i.%3i\n", b[0], b[1], b[2], b[3]);
+		gi.DPrintf("%3i.%3i.%3i.%3i\n", b[0], b[1], b[2], b[3]);
 	}
 }
 
@@ -208,11 +208,11 @@ static void SVCmd_WriteIP_f (void)
 
 	Com_sprintf(name, sizeof(name), "%s/listip.cfg", gi.FS_Gamedir());
 
-	gi.dprintf("Writing %s.\n", name);
+	gi.DPrintf("Writing %s.\n", name);
 
 	f = fopen(name, "wb");
 	if (!f) {
-		gi.dprintf("Couldn't open %s\n", name);
+		gi.DPrintf("Couldn't open %s\n", name);
 		return;
 	}
 
@@ -236,15 +236,15 @@ static void SVCmd_AI_Add_f (void)
 	int team;
 
 	if (gi.Cmd_Argc() < 3) {
-		gi.dprintf("Usage: %s <teamnum>\n", gi.Cmd_Argv(1));
+		gi.DPrintf("Usage: %s <teamnum>\n", gi.Cmd_Argv(1));
 		return;
 	}
 	team = atoi(gi.Cmd_Argv(2));
 	if (team > TEAM_CIVILIAN && team < MAX_TEAMS) {
 		if (!AI_CreatePlayer(team))
-			gi.dprintf("Couldn't create AI player.\n");
+			gi.DPrintf("Couldn't create AI player.\n");
 	} else
-		gi.dprintf("Bad team number.\n");
+		gi.DPrintf("Bad team number.\n");
 }
 
 
@@ -258,14 +258,14 @@ static void SVCmd_Win_f (void)
 	int team;
 
 	if (gi.Cmd_Argc() < 3) {
-		gi.dprintf("Usage: %s <teamnum>\n", gi.Cmd_Argv(1));
+		gi.DPrintf("Usage: %s <teamnum>\n", gi.Cmd_Argv(1));
 		return;
 	}
 	team = atoi(gi.Cmd_Argv(2));
 	if (team > TEAM_CIVILIAN && team < MAX_TEAMS)
 		G_MatchEndTrigger(team, 0);
 	else
-		gi.dprintf("Bad team number.\n");
+		gi.DPrintf("Bad team number.\n");
 }
 
 #ifdef DEBUG
@@ -278,7 +278,25 @@ static void SVCmd_ShowAll_f (void)
 		G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, ent, NULL);
 		ent->visflags |= ~ent->visflags;
 	}
-	gi.dprintf("All items and creatures revealed to all sides\n");
+	gi.DPrintf("All items and creatures revealed to all sides\n");
+}
+
+static void SVCmd_AddItem_f (void)
+{
+	const int team = TEAM_DEFAULT;
+	edict_t *ent = G_EdictsGetNextLivingActorOfTeam(NULL, team);
+
+	if (gi.Cmd_Argc() < 3) {
+		gi.DPrintf("Usage: %s <item-id>\n", gi.Cmd_Argv(1));
+		return;
+	}
+
+	if (!ent) {
+		gi.DPrintf("Could not add item, no living members of team %i left\n", team);
+		return;
+	}
+
+	G_AddItemToFloor(ent->pos, gi.Cmd_Argv(2));
 }
 
 /**
@@ -304,7 +322,7 @@ static void SVCmd_ActorInvList_f (void)
  * of the parameters
  * @sa serverCommandList
  */
-void ServerCommand (void)
+void G_ServerCommand (void)
 {
 	const char *cmd;
 
@@ -324,9 +342,11 @@ void ServerCommand (void)
 #ifdef DEBUG
 	else if (Q_strcasecmp(cmd, "debug_showall") == 0)
 		SVCmd_ShowAll_f();
+	else if (Q_strcasecmp(cmd, "debug_additem") == 0)
+		SVCmd_AddItem_f();
 	else if (Q_strcasecmp(cmd, "debug_actorinvlist") == 0)
 		SVCmd_ActorInvList_f();
 #endif
 	else
-		gi.dprintf("Unknown server command \"%s\"\n", cmd);
+		gi.DPrintf("Unknown server command \"%s\"\n", cmd);
 }

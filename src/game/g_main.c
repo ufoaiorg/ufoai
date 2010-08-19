@@ -51,13 +51,14 @@ FILE *logstatsfile;
 
 cvar_t *sv_filterban;
 
-cvar_t *sv_cheats;
+static cvar_t *sv_cheats;
 
 cvar_t *sv_maxteams;
 
 cvar_t *sv_ai;
 cvar_t *sv_teamplay;
 cvar_t *sv_maxclients;
+cvar_t *sv_hurtaliens;
 cvar_t *sv_shot_origin;
 static cvar_t *sv_send_edicts;
 
@@ -108,6 +109,7 @@ cvar_t *g_aidebug;
 cvar_t *g_drawtraces;
 cvar_t *g_nodamage;
 cvar_t *g_notu;
+cvar_t *g_nospawn;
 cvar_t *g_actorspeed;
 cvar_t *flood_msgs;
 cvar_t *flood_persecond;
@@ -115,7 +117,25 @@ cvar_t *flood_waitdelay;
 
 cvar_t *difficulty;
 
-static invList_t invChain[MAX_INVLIST];
+static const int TAG_INVENTORY = 2389;
+
+static void G_FreeInventory (void *data)
+{
+	G_MemFree(data);
+}
+
+static void *G_AllocInventoryMemory (size_t size)
+{
+	return G_TagMalloc(size, TAG_INVENTORY);
+}
+
+static void G_FreeAllInventory (void)
+{
+	G_FreeTags(TAG_INVENTORY);
+}
+
+static const inventoryImport_t inventoryImport = { G_FreeInventory, G_FreeAllInventory, G_AllocInventoryMemory };
+
 
 /**
  * @brief This will be called when the game library is first loaded
@@ -123,7 +143,7 @@ static invList_t invChain[MAX_INVLIST];
  */
 static void G_Init (void)
 {
-	gi.dprintf("==== InitGame ====\n");
+	gi.DPrintf("==== InitGame ====\n");
 
 	/* noset vars */
 	sv_dedicated = gi.Cvar_Get("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
@@ -160,6 +180,7 @@ static void G_Init (void)
 	sv_maxclients = gi.Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 	sv_shot_origin = gi.Cvar_Get("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
 	sv_send_edicts = gi.Cvar_Get("sv_send_edicts", "0", CVAR_ARCHIVE | CVAR_CHEAT, "Send server side edicts for client display like triggers");
+	sv_hurtaliens = gi.Cvar_Get("sv_hurtaliens", "0", CVAR_SERVERINFO, "Spawn hurt aliens");
 
 	ai_alien = gi.Cvar_Get("ai_alien", "ortnok", 0, "Alien team");
 	ai_civilian = gi.Cvar_Get("ai_civilian", "europe", 0, "Civilian team");
@@ -207,6 +228,7 @@ static void G_Init (void)
 	g_nodamage = gi.Cvar_Get("g_nodamage", "0", CVAR_DEVELOPER|CVAR_CHEAT, "No damage in developer mode");
 	g_notu = gi.Cvar_Get("g_notu", "0", CVAR_DEVELOPER|CVAR_CHEAT, "No TU costs while moving around (e.g. for map testing)");
 	g_actorspeed = gi.Cvar_Get("g_actorspeed", "1.0", CVAR_ARCHIVE|CVAR_SERVERINFO, "Moving speed of the actor");
+	g_nospawn = gi.Cvar_Get("g_nospawn", "0", CVAR_DEVELOPER|CVAR_CHEAT, "Do not spawn a soldier");
 
 	/* flood control */
 	flood_msgs = gi.Cvar_Get("flood_msgs", "4", 0, NULL);
@@ -232,11 +254,12 @@ static void G_Init (void)
 
 	/* init csi and inventory */
 	INVSH_InitCSI(gi.csi);
-	INV_InitInventory(&game.i, gi.csi, invChain, lengthof(invChain));
+	INV_InitInventory("game", &game.i, gi.csi, &inventoryImport);
 
-	logstatsfile = NULL;
 	if (logstats->integer)
 		logstatsfile = fopen(va("%s/stats.log", gi.FS_Gamedir()), "a");
+	else
+		logstatsfile = NULL;
 
 	AIL_Init();
 }
@@ -247,7 +270,7 @@ static void G_Init (void)
  */
 static void G_Shutdown (void)
 {
-	gi.dprintf("==== ShutdownGame ====\n");
+	gi.DPrintf("==== ShutdownGame ====\n");
 
 	AIL_Shutdown();
 
@@ -255,8 +278,10 @@ static void G_Shutdown (void)
 		fclose(logstatsfile);
 	logstatsfile = NULL;
 
-	gi.FreeTags(TAG_LEVEL);
-	gi.FreeTags(TAG_GAME);
+	G_FreeTags(TAG_LEVEL);
+	G_FreeTags(TAG_GAME);
+
+	Com_Printf("Free inventory slots in game on shutdown: %i\n", game.i.GetUsedSlots(&game.i));
 }
 
 
@@ -291,7 +316,7 @@ game_export_t *GetGameAPI (game_import_t * import)
 
 	globals.RunFrame = G_RunFrame;
 
-	globals.ServerCommand = ServerCommand;
+	globals.ServerCommand = G_ServerCommand;
 
 	globals.edict_size = sizeof(edict_t);
 	globals.player_size = sizeof(player_t);
@@ -310,7 +335,7 @@ void Sys_Error (const char *error, ...)
 	Q_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
 
-	gi.error("%s", text);
+	gi.Error("%s", text);
 }
 
 void Com_Printf (const char *msg, ...)
@@ -322,7 +347,7 @@ void Com_Printf (const char *msg, ...)
 	Q_vsnprintf(text, sizeof(text), msg, argptr);
 	va_end(argptr);
 
-	gi.dprintf("%s", text);
+	gi.DPrintf("%s", text);
 }
 
 void Com_DPrintf (int level, const char *msg, ...)
@@ -341,7 +366,7 @@ void Com_DPrintf (int level, const char *msg, ...)
 	Q_vsnprintf(text, sizeof(text), msg, argptr);
 	va_end(argptr);
 
-	gi.dprintf("%s", text);
+	gi.DPrintf("%s", text);
 }
 #endif
 
@@ -365,13 +390,8 @@ static void G_SendBoundingBoxes (void)
 {
 	if (sv_send_edicts->integer) {
 		edict_t *ent = G_EdictsGetFirst();	/* skip the world */
-		while ((ent = G_EdictsGetNextInUse(ent))) {
-			gi.AddEvent(PM_ALL, EV_ADD_EDICT);
-			gi.WriteByte(ent->type);
-			gi.WriteShort(ent->number);
-			gi.WritePos(ent->absmin);
-			gi.WritePos(ent->absmax);
-		}
+		while ((ent = G_EdictsGetNextInUse(ent)))
+			G_EventSendEdict(ent);
 	}
 }
 
@@ -386,6 +406,12 @@ qboolean G_RunFrame (void)
 	level.framenum++;
 	/* server is running at 10 fps */
 	level.time = level.framenum * SERVER_FRAME_SECONDS;
+
+	/* this doesn't belong here, but it works */
+	if (!level.routed) {
+		level.routed = qtrue;
+		G_CompleteRecalcRouting();
+	}
 
 	/* still waiting for other players */
 	if (!G_MatchIsRunning()) {
@@ -402,7 +428,7 @@ qboolean G_RunFrame (void)
 			level.roundstartTime = level.time;
 			/* don't allow smaller values here */
 			if (sv_roundtimelimit->integer < 30 && sv_roundtimelimit->integer > 0) {
-				gi.dprintf("The minimum value for sv_roundtimelimit is 30\n");
+				gi.DPrintf("The minimum value for sv_roundtimelimit is 30\n");
 				gi.Cvar_Set("sv_roundtimelimit", "30");
 			}
 			sv_roundtimelimit->modified = qfalse;

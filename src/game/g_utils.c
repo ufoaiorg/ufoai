@@ -221,7 +221,7 @@ qboolean G_TestLine (const vec3_t start, const vec3_t end)
 trace_t G_Trace (const vec3_t start, const vec3_t end, const edict_t * passent, int contentmask)
 {
 	G_TraceDraw(start, end);
-	return gi.trace(start, NULL, NULL, end, passent, contentmask);
+	return gi.Trace(start, NULL, NULL, end, passent, contentmask);
 }
 
 /**
@@ -241,7 +241,7 @@ const char* G_GetPlayerName (int pnum)
  */
 void G_PrintStats (const char *buffer)
 {
-	gi.dprintf("[STATS] %s\n", buffer);
+	gi.DPrintf("[STATS] %s\n", buffer);
 	if (logstatsfile) {
 		struct tm *t;
 		char tbuf[32];
@@ -249,6 +249,9 @@ void G_PrintStats (const char *buffer)
 
 		time(&aclock);
 		t = localtime(&aclock);
+
+		Com_sprintf(tbuf, sizeof(tbuf), "%4i/%02i/%02i %02i:%02i:%02i", t->tm_year + 1900,
+				t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
 
 		fprintf(logstatsfile, "[STATS] %s - %s\n", tbuf, buffer);
 	}
@@ -450,6 +453,30 @@ void G_CompleteRecalcRouting (void)
 }
 
 /**
+ * @brief Call the reset function for those triggers that are no longer touched (left the trigger zone)
+ * @param ent
+ * @param touched
+ * @param num
+ */
+static void G_ResetTriggers (edict_t *ent, edict_t **touched, int num)
+{
+	edict_t *trigger = NULL;
+	while ((trigger = G_EdictsGetNextInUse(trigger))) {
+		if (trigger->solid == SOLID_TRIGGER) {
+			if (trigger->reset != NULL) {
+				int i;
+				for (i = 0; i < num; i++) {
+					if (touched[i] == ent)
+						break;
+				}
+				if (i == num)
+					trigger->reset(trigger, ent);
+			}
+		}
+	}
+}
+
+/**
  * @brief Check the world against triggers for the current entity
  * @param[in,out] ent The entity that maybe touches others
  */
@@ -461,13 +488,15 @@ int G_TouchTriggers (edict_t *ent)
 	if (!G_IsLivingActor(ent))
 		return 0;
 
-	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, AREA_TRIGGERS);
+	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS);
+
+	G_ResetTriggers(ent, touch, num);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
 		edict_t *hit = touch[i];
-		if (!hit->inuse)
+		if (hit->solid != SOLID_TRIGGER)
 			continue;
 		if (!hit->touch)
 			continue;
@@ -486,13 +515,15 @@ void G_TouchSolids (edict_t *ent)
 	int i, num;
 	edict_t *touch[MAX_EDICTS];
 
-	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS, AREA_SOLID);
+	num = gi.BoxEdicts(ent->absmin, ent->absmax, touch, MAX_EDICTS);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
 		edict_t* hit = touch[i];
 		if (!hit->inuse)
+			continue;
+		if (hit->solid == SOLID_TRIGGER)
 			continue;
 		if (ent->touch)
 			ent->touch(ent, hit);
@@ -523,11 +554,9 @@ void G_TouchEdicts (edict_t *ent, float extend)
 	Com_DPrintf(DEBUG_GAME, "G_TouchEdicts: Entities touching %s: %i (%f extent).\n", entName, num, extend);
 
 	/* be careful, it is possible to have an entity in this
-	 * list removed before we get to it(killtriggered) */
+	 * list removed before we get to it (killtriggered) */
 	for (i = 0; i < num; i++) {
 		edict_t* hit = touch[i];
-        const char *hitName = (hit->model) ? hit->model : hit->chr.name;
-        Com_DPrintf(DEBUG_GAME, "G_TouchEdicts: %s touching %s.\n", entName, hitName);
 		if (!hit->inuse)
 			continue;
 		if (ent->touch)

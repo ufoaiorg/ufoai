@@ -55,12 +55,11 @@ void G_EventActorTurn (const edict_t* ent)
  * @param ent The actor that is dying
  * @param attacker The attacker that was responsible for this event
  */
-void G_EventActorDie (const edict_t* ent, const edict_t* attacker)
+void G_EventActorDie (const edict_t* ent)
 {
 	/* send death */
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_DIE);
 	gi.WriteShort(ent->number);
-	gi.WriteShort(attacker ? attacker->number : SKIP_LOCAL_ENTITY);
 	gi.WriteShort(ent->state);
 }
 
@@ -157,17 +156,13 @@ void G_EventInventoryAmmo (const edict_t* ent, const objDef_t* ammo, int amount,
  * @brief Start the shooting event
  * @param ent The entity that starts the shooting
  * @param visMask the vis mask of the teams to determine the clients from this event is send to
- * @param fd The firedefinition to use for the shoot
  * @param shootType The type of the shoot
  * @param at The grid position to target to
  */
-void G_EventStartShoot (const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, const pos3_t at)
+void G_EventStartShoot (const edict_t* ent, int visMask, shoot_types_t shootType, const pos3_t at)
 {
 	gi.AddEvent(G_VisToPM(visMask), EV_ACTOR_START_SHOOT);
 	gi.WriteShort(ent->number);
-	gi.WriteShort(fd->obj->idx);
-	gi.WriteByte(fd->weapFdsIdx);
-	gi.WriteByte(fd->fdIdx);
 	gi.WriteByte(shootType);
 	gi.WriteGPos(ent->pos);
 	gi.WriteGPos(at);
@@ -193,13 +188,14 @@ void G_EventShootHidden (int visMask, const fireDef_t* fd, qboolean firstShoot)
  * @param ent The entity that is doing the shooting
  * @param visMask the vis mask to determine the clients from this event is send to
  * @param fd The firedefinition to use for the shoot
+ * @param firstShoot Is this the first shoot
  * @param shootType The type of the shoot
  * @param flags Define some flags in a bitmask: @c SF_BODY, @c SF_IMPACT, @c SF_BOUNCING and @c SF_BOUNCING
  * @param trace The trace what was used to determine whether this shot has hit something
  * @param from The position the entity shoots from
  * @param impact The impact world vector for the shot
  */
-void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
+void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, qboolean firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact)
 {
 	const edict_t *targetEdict = trace->ent;
 
@@ -209,6 +205,7 @@ void G_EventShoot (const edict_t* ent, int visMask, const fireDef_t* fd, shoot_t
 		gi.WriteShort(targetEdict->number);
 	else
 		gi.WriteShort(SKIP_LOCAL_ENTITY);
+	gi.WriteByte(firstShoot ? 1 : 0);
 	gi.WriteShort(fd->obj->idx);
 	gi.WriteByte(fd->weapFdsIdx);
 	gi.WriteByte(fd->fdIdx);
@@ -268,7 +265,7 @@ void G_EventActorFall (const edict_t* ent)
 /**
  * @brief Informs the client that an interaction with the world is possible
  * @note It's assumed that the clientAction is already set
- * @param ent The edict that can execute the action (an actor)
+ * @param[in] ent The edict that can execute the action (an actor)
  */
 void G_EventSetClientAction (const edict_t *ent)
 {
@@ -341,4 +338,17 @@ void G_EventThrow (int visMask, const fireDef_t *fd, float dt, byte flags, const
 	gi.WriteByte(flags);
 	gi.WritePos(position);
 	gi.WritePos(velocity);
+}
+
+/**
+ * @brief Send the bounding box info to the client.
+ * @param[in] ent The edict to send the bounding box for
+ */
+void G_EventSendEdict (const edict_t *ent)
+{
+	gi.AddEvent(PM_ALL, EV_ADD_EDICT);
+	gi.WriteByte(ent->type);
+	gi.WriteShort(ent->number);
+	gi.WritePos(ent->absmin);
+	gi.WritePos(ent->absmax);
 }

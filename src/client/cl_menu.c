@@ -25,35 +25,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_menu.h"
-#include "menu/m_main.h"
-#include "menu/m_nodes.h"
-#include "menu/m_popup.h"
-#include "menu/node/m_node_abstractnode.h"
+#include "ui/ui_main.h"
+#include "ui/ui_nodes.h"
+#include "ui/ui_popup.h"
+#include "ui/node/ui_node_abstractnode.h"
+
+static inline void CLMN_AddBindings (linkedList_t **list, char **bindings)
+{
+	int i;
+	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
+		if (bindings[i] && bindings[i][0] != '\0')
+			LIST_AddString(list, va("%s\t%s", Key_KeynumToString(i), Cmd_GetCommandDesc(bindings[i])));
+}
 
 /**
  * @brief Prints a list of tab and newline separated string to keylist char array that hold the key and the command desc
- * @todo Use a linked list here, no static buffer
  */
 static void CLMN_InitKeyList_f (void)
 {
-	static char keylist[2048];
-	int i;
+	linkedList_t *list = NULL;
 
-	keylist[0] = '\0';
+	CLMN_AddBindings(&list, keyBindings);
+	CLMN_AddBindings(&list, menuKeyBindings);
+	CLMN_AddBindings(&list, battleKeyBindings);
 
-	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
-		if (keyBindings[i] && keyBindings[i][0])
-			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(keyBindings[i])), sizeof(keylist));
-
-	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
-		if (menuKeyBindings[i] && menuKeyBindings[i][0])
-			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(menuKeyBindings[i])), sizeof(keylist));
-
-	for (i = 0; i < K_LAST_KEY; i++)
-		if (battleKeyBindings[i] && battleKeyBindings[i][0])
-			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(battleKeyBindings[i])), sizeof(keylist));
-
-	MN_RegisterText(TEXT_LIST, keylist);
+	UI_RegisterLinkedListText(TEXT_LIST, list);
 }
 
 /**
@@ -67,5 +63,5 @@ void CLMN_InitStartup (void)
 	/* print the keyBindings to mn.menuText */
 	Cmd_AddCommand("mn_init_keylist", CLMN_InitKeyList_f, NULL);
 
-	MN_Init();
+	UI_Init();
 }

@@ -25,10 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_inventory.h"
 #include "cl_inventory_callbacks.h"
-#include "menu/m_main.h"
-#include "menu/m_nodes.h"
+#include "ui/ui_main.h"
+#include "ui/ui_nodes.h"
 #include "cl_game.h"
-#include "menu/node/m_node_text.h"
+#include "ui/ui_popup.h"
 
 static const objDef_t *currentDisplayedObject;
 static int itemIndex;
@@ -64,7 +64,7 @@ static const char* CL_WeaponSkillToName (int weaponSkill)
  */
 void INV_ItemDescription (const objDef_t *od)
 {
-	static char itemText[MAX_SMALLMENUTEXTLEN];
+	static char itemText[UI_MAX_SMALLTEXTLEN];
 	int i;
 	int count;
 
@@ -73,9 +73,9 @@ void INV_ItemDescription (const objDef_t *od)
 	if (!od) {	/* If nothing selected return */
 		Cvar_Set("mn_itemname", "");
 		Cvar_Set("mn_item", "");
-		MN_ResetData(TEXT_ITEMDESCRIPTION);
+		UI_ResetData(TEXT_ITEMDESCRIPTION);
 		itemIndex = fireModeIndex = 0;
-		MN_ExecuteConfunc("itemdesc_view 0 0;");
+		UI_ExecuteConfunc("itemdesc_view 0 0;");
 		return;
 	}
 
@@ -136,7 +136,7 @@ void INV_ItemDescription (const objDef_t *od)
 					continue;
 				Q_strcat(itemText, va(_("%s\t%i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(itemText));
 			}
-		} else if ((od->weapon && (od->numAmmos || od->numFiredefs > 0)) || INV_IsAmmo(od)) {
+		} else if ((od->weapon && od->numAmmos) || INV_IsAmmo(od)) {
 			const objDef_t *odAmmo;
 			int weaponIndex;
 
@@ -192,12 +192,12 @@ void INV_ItemDescription (const objDef_t *od)
 			}
 		}
 
-		MN_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
-		MN_ExecuteConfunc("itemdesc_view %i %i;", count, numFiredefs);
+		UI_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
+		UI_ExecuteConfunc("itemdesc_view %i %i;", count, numFiredefs);
 	} else {
 		Com_sprintf(itemText, sizeof(itemText), _("Unknown - not useable"));
-		MN_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
-		MN_ExecuteConfunc("itemdesc_view 0 0;");
+		UI_RegisterText(TEXT_ITEMDESCRIPTION, itemText);
+		UI_ExecuteConfunc("itemdesc_view 0 0;");
 	}
 }
 
@@ -292,10 +292,52 @@ static void INV_DecreaseItem_f (void)
 	INV_ItemDescription(od);
 }
 
+/**
+ * @brief Update the GUI with the selected item
+ */
+static void INV_UpdateObject_f (void)
+{
+	int num;
+	const objDef_t *obj;
+	qboolean changeTab;
+
+	/* check syntax */
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <objectid> <mustwechangetab>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (Cmd_Argc() == 3)
+		changeTab = atoi(Cmd_Argv(2)) >= 1;
+	else
+		changeTab = qtrue;
+
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= csi.numODs) {
+		Com_Printf("Id %i out of range 0..%i\n", num, csi.numODs);
+		return;
+	}
+	obj = INVSH_GetItemByIDX(num);
+
+	/* update item description */
+	INV_ItemDescription(obj);
+
+	/* update tab */
+	if (changeTab) {
+		const cvar_t *var = Cvar_FindVar("mn_equiptype");
+		const int filter = INV_GetFilterFromItem(obj);
+		if (var && var->integer != filter) {
+			Cvar_SetValue("mn_equiptype", filter);
+			UI_ExecuteConfunc("update_item_list");
+		}
+	}
+}
+
 void INV_InitCallbacks (void)
 {
 	Cmd_AddCommand("mn_increasefiremode", INV_IncreaseFiremode_f, "Increases the number of the firemode to display");
 	Cmd_AddCommand("mn_decreasefiremode", INV_DecreaseFiremode_f, "Decreases the number of the firemode to display");
 	Cmd_AddCommand("mn_increaseitem", INV_IncreaseItem_f, "Increases the number of the weapon or the ammo to display");
 	Cmd_AddCommand("mn_decreaseitem", INV_DecreaseItem_f, "Decreases the number of the weapon or the ammo to display");
+	Cmd_AddCommand("object_update", INV_UpdateObject_f, _("Update the GUI with the selected item"));
 }

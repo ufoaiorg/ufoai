@@ -36,8 +36,4 @@ void SCR_EndLoadingPlaque(void);
 void SCR_RunConsole(void);
 void SCR_DrawPrecacheScreen(qboolean string);
 
-typedef struct {
-	int x, y;
-} screenPoint_t;
-
 #endif /* CLIENT_SCREEN_H */

@@ -26,11 +26,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-
 #include "common.h"
 #include <errno.h>
 #include <string.h>
 #include <fcntl.h>
+#include <unistd.h>
+
+#ifdef _WIN32
+#include "../ports/system.h"
+#endif
 
 #define MAX_STREAMS 56
 #define MAX_DATAGRAM_SOCKETS 7
@@ -307,6 +311,8 @@ void NET_Init (void)
 	signal(SIGPIPE, SIG_IGN);
 #endif
 
+	dbuffer_init();
+
 	net_ipv4 = Cvar_Get("net_ipv4", "1", CVAR_ARCHIVE, "Only use ipv4");
 	Cmd_AddCommand("net_showstreams", NET_ShowStreams_f, "Show opened streams");
 }
@@ -319,6 +325,7 @@ void NET_Shutdown (void)
 #ifdef _WIN32
 	WSACleanup();
 #endif
+	dbuffer_shutdown();
 }
 
 /**

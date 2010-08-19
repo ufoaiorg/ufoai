@@ -24,11 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
+#include "../cl_shared.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
 #include "cp_campaign.h"
-#include "cp_research.h"
 #include "cp_research_callbacks.h"
 
 typedef enum {
@@ -54,10 +53,10 @@ typedef struct {
  */
 static guiResearchElement_t researchList2[MAX_RESEARCHLIST + MAX_BASES + MAX_BASES];
 
-/* The number of entries in the above list. */
+/** The number of entries in the above list. */
 static int researchListLength;
 
-/* The currently selected entry in the above list. */
+/** The currently selected entry in the above list. */
 static int researchListPos;
 
 /**
@@ -73,9 +72,7 @@ static void RS_UpdateInfo (const base_t* base)
 	Cvar_Set("mn_research_imagetop", "");
 	Cvar_Set("mn_researchitemname", "");
 	Cvar_Set("mn_researchitem", "");
-	Cvar_Set("mn_researchweapon", "");	/**< @todo Do we even need/use mn_researchweapon and mn_researchammo (now or in the future?) */
-	Cvar_Set("mn_researchammo", "");
-	MN_ResetData(TEXT_STANDARD);
+	UI_ResetData(TEXT_STANDARD);
 
 	if (researchListLength <= 0 || researchListPos >= researchListLength)
 		return;
@@ -171,15 +168,15 @@ static void RS_UpdateResearchStatus (int row)
 	switch (element->tech->statusResearch) {
 	case RS_RUNNING:
 		/* Color the item with 'research running'-color. */
-		MN_ExecuteConfunc("research_running %i", row);
+		UI_ExecuteConfunc("research_running %i", row);
 		break;
 	case RS_PAUSED:
 		/* Color the item with 'research paused'-color. */
-		MN_ExecuteConfunc("research_paused %i", row);
+		UI_ExecuteConfunc("research_paused %i", row);
 		break;
 	case RS_NONE:
 		/* Color the item with 'research normal'-color. */
-		MN_ExecuteConfunc("research_normal %i", row);
+		UI_ExecuteConfunc("research_normal %i", row);
 		break;
 	case RS_FINISH:
 	default:
@@ -217,7 +214,7 @@ static void RS_InitGUI (base_t* base, qboolean update)
 
 		switch (element->type) {
 		case RSGUI_NOTHING:
-			MN_ExecuteConfunc("research_hide %i", i);
+			UI_ExecuteConfunc("research_hide %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), "");
 			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
@@ -225,11 +222,11 @@ static void RS_InitGUI (base_t* base, qboolean update)
 			{
 				const int value = element->tech->scientists;
 				const int max = available[element->base->idx] + element->tech->scientists;
-				MN_ExecuteConfunc("research_research %i", i);
+				UI_ExecuteConfunc("research_research %i", i);
 				if (!update) {
 					Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 				}
-				MN_ExecuteConfunc("research_updateitem %i %i %i", i, value, max);
+				UI_ExecuteConfunc("research_updateitem %i %i %i", i, value, max);
 				/* How many scis are assigned to this tech. */
 				Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
 				if (element->tech->overallTime) {
@@ -253,19 +250,19 @@ static void RS_InitGUI (base_t* base, qboolean update)
 			}
 			break;
 		case RSGUI_BASETITLE:
-			MN_ExecuteConfunc("research_basetitle %i", i);
+			UI_ExecuteConfunc("research_basetitle %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), element->base->name);
 			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_BASEINFO:
-			MN_ExecuteConfunc("research_baseinfo %i", i);
+			UI_ExecuteConfunc("research_baseinfo %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _("Unassigned scientists"));
 			/* How many scis are unassigned */
 			Cvar_SetValue(va("mn_researchassigned%i", i), available[element->base->idx]);
 			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_RESEARCHOUT:
-			MN_ExecuteConfunc("research_outterresearch %i", i);
+			UI_ExecuteConfunc("research_outterresearch %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
@@ -289,22 +286,22 @@ static void RS_InitGUI (base_t* base, qboolean update)
 			RS_UpdateResearchStatus(i);
 			break;
 		case RSGUI_MISSINGITEM:
-			MN_ExecuteConfunc("research_missingitem %i", i);
+			UI_ExecuteConfunc("research_missingitem %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_MISSINGITEMTITLE:
-			MN_ExecuteConfunc("research_missingitemtitle %i", i);
+			UI_ExecuteConfunc("research_missingitemtitle %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _("Missing an artifact"));
 			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_UNRESEARCHABLEITEM:
-			MN_ExecuteConfunc("research_unresearchableitem %i", i);
+			UI_ExecuteConfunc("research_unresearchableitem %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_UNRESEARCHABLEITEMTITLE:
-			MN_ExecuteConfunc("research_unresearchableitemtitle %i", i);
+			UI_ExecuteConfunc("research_unresearchableitemtitle %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _("Unresearchable collected items"));
 			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
@@ -316,7 +313,7 @@ static void RS_InitGUI (base_t* base, qboolean update)
 	/* Set rest of the list-entries to have no text at all. */
 	if (!update) {
 		for (; i < MAX_RESEARCHDISPLAY; i++) {
-			MN_ExecuteConfunc("research_hide %i", i);
+			UI_ExecuteConfunc("research_hide %i", i);
 		}
 	}
 
@@ -327,7 +324,7 @@ static void RS_InitGUI (base_t* base, qboolean update)
 			const int t = researchList2[researchListPos].type;
 			/* is it a tech row */
 			if (t == RSGUI_RESEARCH || t == RSGUI_RESEARCHOUT || t == RSGUI_UNRESEARCHABLEITEM) {
-				MN_ExecuteConfunc("research_selected %i", researchListPos);
+				UI_ExecuteConfunc("research_selected %i", researchListPos);
 			}
 		}
 	}
@@ -356,7 +353,7 @@ static void CL_ResearchSelect_f (void)
 
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= researchListLength) {
-		MN_ResetData(TEXT_STANDARD);
+		UI_ResetData(TEXT_STANDARD);
 		return;
 	}
 
@@ -366,7 +363,7 @@ static void CL_ResearchSelect_f (void)
 	if (type == RSGUI_BASETITLE) {
 		base_t *b = researchList2[num].base;
 		if (b != NULL && b != base) {
-			MN_ExecuteConfunc("research_changebase %i %i", b->idx, researchListPos);
+			UI_ExecuteConfunc("research_changebase %i %i", b->idx, researchListPos);
 			return;
 		}
 	}
@@ -563,13 +560,13 @@ static void RS_ResearchStart_f (void)
 				RS_MaxOutResearch(base, tech);
 			}else {
 				/* Research already running in another base. */
-				MN_Popup(_("Notice"), _("This item is currently under research in another base."));
+				UI_Popup(_("Notice"), _("This item is currently under research in another base."));
 			}
 			break;
 		case RS_PAUSED:
 		case RS_NONE:
 			if (tech->statusResearch == RS_PAUSED) {
-				/* MN_Popup(_("Notice"), _("The research on this item continues.")); Removed because it isn't really needed.*/
+				/* UI_Popup(_("Notice"), _("The research on this item continues.")); Removed because it isn't really needed.*/
 				Com_Printf("RS_ResearchStart_f: The research on this item continues.\n");
 			}
 			/* Add as many scientists as possible to this tech. */
@@ -581,13 +578,13 @@ static void RS_ResearchStart_f (void)
 			break;
 		case RS_FINISH:
 			/* Should never be executed. */
-			MN_Popup(_("Notice"), _("The research on this item is complete."));
+			UI_Popup(_("Notice"), _("The research on this item is complete."));
 			break;
 		default:
 			break;
 		}
 	} else
-		MN_Popup(_("Notice"), _("The research on this item is not yet possible.\nYou need to research the technologies it's based on first."));
+		UI_Popup(_("Notice"), _("The research on this item is not yet possible.\nYou need to research the technologies it's based on first."));
 
 	RS_InitGUI(base, qtrue);
 }
@@ -626,7 +623,7 @@ static void RS_ResearchStop_f (void)
 		/* tech->statusResearch = RS_RUNNING; */
 		break;
 	case RS_FINISH:
-		MN_Popup(_("Notice"), _("The research on this item is complete."));
+		UI_Popup(_("Notice"), _("The research on this item is complete."));
 		break;
 	case RS_NONE:
 		Com_Printf("Can't pause research. Research not started.\n");
@@ -656,7 +653,7 @@ static void RS_ShowPedia_f (void)
 	if (tech->preDescription.numDescriptions > 0) {
 		UP_OpenCopyWith(tech->id);
 	} else {
-		MN_Popup(_("Notice"), _("No research proposal available for this project."));
+		UI_Popup(_("Notice"), _("No research proposal available for this project."));
 	}
 }
 
@@ -669,19 +666,11 @@ static void RS_InitGUIData (base_t* base)
 {
 	int i, j;
 	int row;
-	int available[MAX_BASES];
 	qboolean first;
 
 	assert(base);
 
 	RS_MarkResearchable(qfalse, base);
-
-	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *b = B_GetFoundedBaseByIDX(i);
-		if (!b)
-			continue;
-		available[i] = E_CountUnassigned(b, EMPL_SCIENTIST);
-	}
 
 	/* update tech of the base */
 	row = 0;
@@ -807,7 +796,7 @@ static void RS_InitGUIData (base_t* base)
  * otherwise leave the research menu again
  * @note if there is a base but no lab a popup appears
  * @sa RS_UpdateData
- * @sa MN_ResearchInit_f
+ * @sa UI_ResearchInit_f
  */
 static void CL_ResearchType_f (void)
 {
@@ -822,11 +811,11 @@ static void CL_ResearchType_f (void)
 	/* Nothing to research here. */
 	/** @todo wrong computation: researchListLength doesn't say if there are research on this base */
 	if (!researchListLength) {
-		MN_PopWindow(qfalse);
-		MN_Popup(_("Notice"), _("Nothing to research"));
+		UI_PopWindow(qfalse);
+		UI_Popup(_("Notice"), _("Nothing to research"));
 	} else if (!B_GetBuildingStatus(base, B_LAB)) {
-		MN_PopWindow(qfalse);
-		MN_Popup(_("Notice"), _("Build a laboratory first"));
+		UI_PopWindow(qfalse);
+		UI_Popup(_("Notice"), _("Build a laboratory first"));
 	}
 }
 /**
@@ -834,7 +823,7 @@ static void CL_ResearchType_f (void)
  * @note Should be called whenever the research menu gets active
  * @sa CL_ResearchType_f
  */
-static void MN_ResearchInit_f (void)
+static void UI_ResearchInit_f (void)
 {
 	base_t *base = B_GetCurrentSelectedBase();
 
@@ -847,7 +836,7 @@ static void MN_ResearchInit_f (void)
 
 void RS_InitCallbacks (void)
 {
-	Cmd_AddCommand("research_init", MN_ResearchInit_f, "Research menu init function binding");
+	Cmd_AddCommand("research_init", UI_ResearchInit_f, "Research menu init function binding");
 	Cmd_AddCommand("research_select", CL_ResearchSelect_f, "Update current selection with the one that has been clicked");
 	Cmd_AddCommand("research_update", RS_UpdateData_f, NULL);
 	Cmd_AddCommand("research_type", CL_ResearchType_f, "Switch between different research types");

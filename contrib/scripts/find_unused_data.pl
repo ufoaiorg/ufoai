@@ -65,10 +65,10 @@ sub get_textures {
 }
 
 sub get_models {
-	my @models = read_dir2("base/models/objects", ".md2");
-	push (@models, read_dir2("base/models/objects", ".md3"));
-	push (@models, read_dir2("base/models/objects", ".dpm"));
-	push (@models, read_dir2("base/models/objects", ".obj"));
+	my @models = read_dir2("base/models", ".md2");
+	push (@models, read_dir2("base/models", ".md3"));
+	push (@models, read_dir2("base/models", ".dpm"));
+	push (@models, read_dir2("base/models", ".obj"));
 	return @models;
 }
 
@@ -141,7 +141,13 @@ sub check_models() {
 		}
 
 		foreach my $ufo (@ufos) {
-			if (check_content($ufo, $model)) {
+			if ($model =~ /^soldiers\// || $model =~ /^pilots\// || $model =~ /^civilians\// || $model =~ /^aliens\//) {
+				# TODO:
+				print "TODO $model\n";
+				$used = 1;
+				last;
+			}
+			elsif (check_content($ufo, $model)) {
 				print "$model is used in an ufo script file\n";
 				$used = 1;
 				last;

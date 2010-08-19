@@ -32,10 +32,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "q_shared.h"
 #include "inventory.h"
 #include "../shared/infostring.h"
+#include "lua/lua.h"
 
 /** no gettext support for game lib - but we must be able to mark the strings */
-# define _(String) String
-# define ngettext(x, y, cnt) x
+#define _(String) String
+#define ngettext(x, y, cnt) x
 
 /** @note define GAME_INCLUDE so that game.h does not define the
  * short, server-visible player_t and edict_t structures,
@@ -83,6 +84,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ACTOR_VIS_10	0.1
 #define ACTOR_VIS_0		0.0
 
+#define G_FreeTags(tag) gi.FreeTags((tag), __FILE__, __LINE__)
 #define G_TagMalloc(size, tag) gi.TagMalloc((size), (tag), __FILE__, __LINE__)
 #define G_MemFree(ptr) gi.TagFree((ptr), __FILE__, __LINE__)
 
@@ -109,8 +111,8 @@ typedef struct {
 	char mapname[MAX_QPATH];	/**< the server name (base1, etc) */
 	char nextmap[MAX_QPATH];	/**< @todo Spawn the new map after the current one was ended */
 	qboolean routed;
-	int maxteams; /**< the max team amount for multiplayer games for the current map */
 	qboolean day;
+	qboolean hurtAliens;
 
 	/* intermission state */
 	float intermissionTime;		/**< the seconds to wait until the game will be closed.
@@ -123,8 +125,9 @@ typedef struct {
 	int numplayers;
 	int activeTeam;
 	int nextEndRound;
-
 	int actualRound;	/**< the current running round counter */
+
+	pathing_t pathingMap;	/**< This is where the data for TUS used to move and actor locations go */
 
 	int randomSpawn;	/**< can be set via worldspawn to force random spawn point order for each team */
 
@@ -226,9 +229,9 @@ extern cvar_t *sv_filterban;
 
 extern cvar_t *sv_maxvelocity;
 
-extern cvar_t *sv_cheats;
 extern cvar_t *sv_maxclients;
 extern cvar_t *sv_shot_origin;
+extern cvar_t *sv_hurtaliens;
 extern cvar_t *sv_maxplayersperteam;
 extern cvar_t *sv_maxsoldiersperteam;
 extern cvar_t *sv_maxsoldiersperplayer;
@@ -286,6 +289,7 @@ extern cvar_t *g_aidebug;
 extern cvar_t *g_drawtraces;
 extern cvar_t *g_nodamage;
 extern cvar_t *g_notu;
+extern cvar_t *g_nospawn;
 extern cvar_t *g_actorspeed;
 
 extern cvar_t *flood_msgs;
@@ -305,6 +309,7 @@ void G_SendPlayerStats(const player_t *player);
 void G_WriteItem(const item_t *item, const invDef_t *container, int x, int y);
 void G_ReadItem(item_t *item, invDef_t **container, int *x, int *y);
 void G_InventoryToFloor(edict_t *ent);
+qboolean G_AddItemToFloor(const pos3_t pos, const char *itemID);
 edict_t *G_GetFloorItemsFromPos(const pos3_t pos);
 
 /* g_morale */
@@ -340,7 +345,7 @@ int G_TouchTriggers(edict_t *ent);
 void G_TouchSolids(edict_t *ent);
 void G_TouchEdicts(edict_t *ent, float extend);
 edict_t *G_Spawn(void);
-edict_t *G_ParticleSpawn(const vec3_t origin, int spawnflags, const char *particle);
+edict_t *G_SpawnParticle(const vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent, edict_t* activator);
 edict_t *G_GetEdictFromPos(const pos3_t pos, const entity_type_t type);
@@ -350,7 +355,7 @@ qboolean G_TestLineWithEnts(const vec3_t start, const vec3_t end);
 qboolean G_TestLine(const vec3_t start, const vec3_t end);
 
 /* g_reaction.c */
-void G_ReactionFirePreShot(const edict_t *target);
+void G_ReactionFirePreShot(const edict_t *target, const int fdTime);
 void G_ReactionFirePostShot(edict_t *target);
 void G_ReactionFireReset(int team);
 qboolean G_ReactionFireCanBeEnabled(const edict_t *ent);
@@ -367,16 +372,16 @@ void G_GenerateEntList(const char *entList[MAX_EDICTS]);
 void G_EventSpawnSound(const edict_t* ent, const vec3_t origin, const char *sound);
 void G_EventActorTurn(const edict_t* ent);
 void G_EventActorFall(const edict_t* ent);
-void G_EventActorDie(const edict_t* ent, const edict_t* attacker);
+void G_EventActorDie(const edict_t* ent);
 void G_EventActorSendReservations(const edict_t *ent);
 void G_EventInventoryDelete(const edict_t* ent, int playerMask, const invDef_t* invDef, int x, int y);
 void G_EventInventoryAdd(const edict_t* ent, int playerMask, int itemAmount);
 void G_EventPerish(const edict_t* ent);
 void G_EventDestroyEdict(const edict_t* ent);
 void G_EventInventoryAmmo(const edict_t* ent, const objDef_t* ammo, int amount, shoot_types_t shootType);
-void G_EventStartShoot(const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, const pos3_t at);
+void G_EventStartShoot(const edict_t* ent, int visMask, shoot_types_t shootType, const pos3_t at);
 void G_EventShootHidden(int visMask, const fireDef_t* fd, qboolean firstShoot);
-void G_EventShoot(const edict_t* ent, int visMask, const fireDef_t* fd, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact);
+void G_EventShoot(const edict_t* ent, int visMask, const fireDef_t* fd, qboolean firstShoot, shoot_types_t shootType, int flags, const trace_t* trace, const vec3_t from, const vec3_t impact);
 void G_EventSetClientAction(const edict_t *ent);
 void G_EventResetClientAction(const edict_t* ent);
 void G_EventActorStats(const edict_t* ent);
@@ -385,6 +390,7 @@ void G_EventInventoryReload(const edict_t* ent, int playerMask, const item_t* it
 void G_EventThrow(int visMask, const fireDef_t *fd, float dt, byte flags, const vec3_t position, const vec3_t velocity);
 void G_EventReactionFireChange(const edict_t* ent);
 void G_EventParticleSpawn(int playerMask, const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
+void G_EventSendEdict(const edict_t *ent);
 
 /* g_vis.c */
 #define VIS_APPEAR	1
@@ -408,23 +414,26 @@ void G_EventParticleSpawn(int playerMask, const char *name, int levelFlags, cons
 
 #define MAX_DVTAB 32
 
-void G_FlushSteps(void);
 edict_t* G_ClientGetFreeSpawnPointForActorSize(const player_t *player, const actorSizeEnum_t actorSize);
 qboolean G_ClientUseEdict(const player_t *player, edict_t *actor, edict_t *door);
-qboolean G_ActionCheck(const player_t *player, edict_t *ent, int TU);
+qboolean G_ActionCheckForCurrentTeam(const player_t *player, edict_t *ent, int TU);
+qboolean G_ActionCheckWithoutTeam(const player_t *player, edict_t *ent, int TU);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
 edict_t *G_SpawnFloor(const pos3_t pos);
 int G_CheckVisTeam(const int team, edict_t *check, qboolean perish, edict_t *ent);
 int G_CheckVisTeamAll(const int team, qboolean perish, edict_t *ent);
 edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
+qboolean G_InventoryRemoveItemByID(const char *itemID, edict_t *ent, containerIndex_t index);
 void G_SendState(unsigned int playerMask, const edict_t *ent);
 void G_SetTeamForPlayer(player_t* player, const int team);
 void G_CenterView(const edict_t *ent);
 
+qboolean G_ActorIsInRescueZone(const edict_t* actor);
+void G_ActorSetInRescueZone(edict_t* actor, qboolean inRescueZone);
 void G_ActorUseDoor(edict_t *actor, edict_t *door);
 qboolean G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
 void G_ActorSetClientAction(edict_t *actor, edict_t *ent);
-edict_t *G_GetActorByUCN(const int ucn, const int team);
+edict_t *G_ActorGetByUCN(const int ucn, const int team);
 void G_CheckForceEndRound(void);
 void G_ActorDieOrStun(edict_t *ent, edict_t *attacker);
 void G_ActorSetMaxs(edict_t* ent);
@@ -449,8 +458,8 @@ qboolean G_ClientConnect(player_t * player, char *userinfo, size_t userinfoSize)
 void G_ClientDisconnect(player_t * player);
 
 void G_ActorReload(edict_t* ent, const invDef_t *invDef);
-qboolean G_ClientCanReload(player_t *player, edict_t *ent, containerIndex_t containerID);
-void G_ClientGetWeaponFromInventory(player_t *player, edict_t *ent);
+qboolean G_ClientCanReload(edict_t *ent, containerIndex_t containerID);
+void G_ClientGetWeaponFromInventory(edict_t *ent);
 void G_ClientMove(const player_t * player, int visTeam, edict_t* ent, const pos3_t to);
 void G_ActorFall(edict_t *ent);
 void G_MoveCalc(int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance);
@@ -495,7 +504,7 @@ player_t *AI_CreatePlayer(int team);
 qboolean AI_CheckUsingDoor(const edict_t *ent, const edict_t *door);
 
 /* g_svcmds.c */
-void ServerCommand(void);
+void G_ServerCommand(void);
 qboolean SV_FilterPacket(const char *from);
 
 /* g_match.c */
@@ -508,6 +517,7 @@ qboolean G_MatchDoEnd(void);
 edict_t* G_TriggerSpawn(edict_t *owner);
 void SP_trigger_hurt(edict_t *ent);
 void SP_trigger_touch(edict_t *ent);
+void SP_trigger_rescue(edict_t *ent);
 
 /* g_func.c */
 void SP_func_rotating(edict_t *ent);
@@ -609,6 +619,13 @@ struct player_s {
  */
 #define FL_TRIGGERED	0x00000100
 
+/** @brief Artificial intelligence of a character */
+typedef struct AI_s {
+	char type[MAX_QPATH];	/**< Lua file used by the AI. */
+	char subtype[MAX_VAR];	/**< Subtype to be used by AI. */
+	lua_State* L;			/**< The lua state used by the AI. */
+} AI_t;
+
 /**
  * @brief Everything that is not in the bsp tree is an edict, the spawnpoints,
  * the actors, the misc_models, the weapons and so on.
@@ -623,10 +640,7 @@ struct edict_s {
 	vec3_t origin;		/**< the position in the world */
 	vec3_t angles;		/**< the rotation in the world (pitch, yaw, roll) */
 
-	/** @todo move these fields to a server private sv_entity_t */
-	link_t area;				/**< linked to a division node or leaf */
-
-	/* tracing info SOLID_BSP, SOLID_BBOX, ... */
+	/** tracing info SOLID_BSP, SOLID_BBOX, ... */
 	solid_t solid;
 
 	vec3_t mins, maxs; /**< position of min and max points - relative to origin */
@@ -635,7 +649,7 @@ struct edict_s {
 
 	edict_t *child;	/**< e.g. the trigger for this edict */
 	edict_t *owner;	/**< e.g. the door model in case of func_door */
-	/*
+	/**
 	 * type of objects the entity will not pass through
 	 * can be any of MASK_* or CONTENTS_*
 	 */
@@ -684,9 +698,11 @@ struct edict_s {
 								 * if you open one */
 
 	/** delayed reaction fire */
-	edict_t *reactionTarget;	/**< the current moving actor - only set when this actor has reaction fire enabled */
+	const edict_t *reactionTarget;	/**< the current moving actor - only set when this actor has reaction fire enabled */
 	float reactionTUs;	/**< time that an opponent has left until the attacker can react */
 	qboolean reactionNoDraw;
+	qboolean inRescueZone;	/**< the actor is standing in a rescue zone if this is true - this means that
+							 * when the mission is aborted the actor will not die */
 
 	/** client actions - interact with the world */
 	edict_t *clientAction;
@@ -719,6 +735,8 @@ struct edict_s {
 	/** function to call when triggered - this function should only return true when there is
 	 * a client action associated with it */
 	qboolean (*touch)(edict_t * self, edict_t * activator);
+	/** reset function that is called before the touch triggers are called */
+	void (*reset)(edict_t * self, edict_t * activator);
 	float nextthink;
 	void (*think)(edict_t *self);
 	/** general use function that is called when the triggered client action is executed
@@ -739,6 +757,8 @@ struct edict_s {
 	edict_t *groupChain;
 	edict_t *groupMaster;	/**< first entry in the list */
 	int flags;		/**< FL_* */
+
+	AI_t AI; /**< The character's artificial intelligence */
 
 	pos3_t *forbiddenListPos; /**< this is used for e.g. misc_models with the solid flag set - this will
 								* hold a list of grid positions that are blocked by the aabb of the model */

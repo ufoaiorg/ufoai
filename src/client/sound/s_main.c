@@ -103,7 +103,7 @@ void S_Frame (void)
 				}
 
 				if (j == MAX_CHANNELS)
-					S_LoopSample(le->origin, le->sample, le->volume);
+					S_LoopSample(le->origin, le->sample, le->volume, le->attenuation);
 			}
 		}
 	}
@@ -141,45 +141,35 @@ static void S_Restart_f (void)
 	S_LoadSamples();
 }
 
-/** @todo This should be removed and read from the dir tree instead */
-static const char *soundFileSubDirs[] = {
-	"aliens", "ambience", "civilians", "doors", "footsteps", "geoscape", "misc", "soldiers", "weapons", NULL
-};
-
-
 static int S_CompleteSounds (const char *partial, const char **match)
 {
 	const char *filename;
 	int matches = 0;
 	char *localMatch[MAX_COMPLETE];
 	size_t len = strlen(partial);
-	const char **dirList = soundFileSubDirs;
 	const char *soundExtensions[] = SAMPLE_TYPES;
 	const char **extension = soundExtensions;
 	int returnValue;
 
 	/* check for partial matches */
-	while (*dirList) {
-		while (*extension) {
-			char pattern[MAX_OSPATH];
-			Com_sprintf(pattern, sizeof(pattern), "sound/%s/*.%s", *dirList, *extension);
-			FS_BuildFileList(pattern);
-			while ((filename = FS_NextFileFromFileList(pattern)) != NULL) {
-				char fileWithPath[MAX_OSPATH];
-				Com_sprintf(fileWithPath, sizeof(fileWithPath), "%s/%s", *dirList, filename);
-				if (!len) {
-					Com_Printf("%s\n", fileWithPath);
-				} else if (!strncmp(partial, fileWithPath, len)) {
-					Com_Printf("%s\n", fileWithPath);
-					localMatch[matches++] = strdup(fileWithPath);
-					if (matches >= MAX_COMPLETE)
-						break;
-				}
+	while (*extension) {
+		char pattern[MAX_OSPATH];
+		Com_sprintf(pattern, sizeof(pattern), "sound/**.%s", *extension);
+		FS_BuildFileList(pattern);
+		while ((filename = FS_NextFileFromFileList(pattern)) != NULL) {
+			char fileWithPath[MAX_OSPATH];
+			Com_sprintf(fileWithPath, sizeof(fileWithPath), "%s", filename + 6);
+			if (!len) {
+				Com_Printf("%s\n", fileWithPath);
+			} else if (!strncmp(partial, fileWithPath, len)) {
+				Com_Printf("%s\n", fileWithPath);
+				localMatch[matches++] = strdup(fileWithPath);
+				if (matches >= MAX_COMPLETE)
+					break;
 			}
-			FS_NextFileFromFileList(NULL);
-			extension++;
 		}
-		dirList++;
+		FS_NextFileFromFileList(NULL);
+		extension++;
 	}
 
 	returnValue = Cmd_GenericCompleteFunction(len, match, matches, (const char **)localMatch);
@@ -212,7 +202,7 @@ void S_Init (void)
 		return;
 	}
 
-	snd_distance_scale = Cvar_Get("snd_distance_scale", "0.8", 0, "Sound distance scale");
+	snd_distance_scale = Cvar_Get("snd_distance_scale", "0.5", 0, "Sound distance scale");
 	snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
 	/* set volumes to be changed so they are applied again for next sound/music playing */
@@ -222,13 +212,8 @@ void S_Init (void)
 	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file. Pass path relative to base/sound without file extension");
 	Cmd_AddParamCompleteFunction("snd_play", S_CompleteSounds);
 
-	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
+	if (SDL_WasInit(SDL_INIT_AUDIO) == 0) {
 		if (SDL_Init(SDL_INIT_AUDIO) < 0) {
-			Com_Printf("S_Init: %s.\n", SDL_GetError());
-			return;
-		}
-	} else if (SDL_WasInit(SDL_INIT_AUDIO) == 0) {
-		if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0) {
 			Com_Printf("S_Init: %s.\n", SDL_GetError());
 			return;
 		}

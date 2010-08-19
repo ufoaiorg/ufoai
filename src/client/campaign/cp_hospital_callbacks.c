@@ -22,11 +22,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../battlescape/cl_localentity.h"	/**< cl_actor.h needs this */
-#include "../battlescape/cl_actor.h"	/**< for CL_ActorCvars() */
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
+#include "../cl_shared.h"
+#include "../cl_team.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_hospital.h"
 #include "cp_hospital_callbacks.h"
@@ -54,7 +53,7 @@ static void HOS_UpdateMenu (void)
 {
 	char name[128];
 	char rank[128];
-	int i, j, type;
+	int j, type;
 	int entry;
 	base_t *base = B_GetCurrentSelectedBase();
 
@@ -62,14 +61,11 @@ static void HOS_UpdateMenu (void)
 		return;
 
 	/* Reset list. */
-	MN_ExecuteConfunc("hospital_clear");
+	UI_ExecuteConfunc("hospital_clear");
 
 	for (type = 0, j = 0, entry = 0; type < MAX_EMPL; type++) {
-		for (i = 0; i < ccs.numEmployees[type]; i++) {
-			employee_t *employee = &ccs.employees[type][i];
-			/* Only show those employees, that are in the current base. */
-			if (!E_IsInBase(employee, base))
-				continue;
+		employee_t *employee = NULL;
+		while ((employee = E_GetNextFromBase(type, employee, base))) {
 			/* Don't show soldiers who are gone in mission */
 			if (E_IsAwayFromBase(employee))
 				continue;
@@ -89,12 +85,12 @@ static void HOS_UpdateMenu (void)
 				Com_DPrintf(DEBUG_CLIENT, "%s idx: %i entry: %i\n", name, employee->idx, entry);
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))
-					MN_ExecuteConfunc("hospitalserious %i", entry);
+					UI_ExecuteConfunc("hospitalserious %i", entry);
 				/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
 				else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85))
-					MN_ExecuteConfunc("hospitalmedium %i", entry);
+					UI_ExecuteConfunc("hospitalmedium %i", entry);
 				else
-					MN_ExecuteConfunc("hospitallight %i", entry);
+					UI_ExecuteConfunc("hospitallight %i", entry);
 
 				/* Display name in the correct list-entry. */
 				Cvar_Set(va("mn_hos_item%i", entry), name);
@@ -117,7 +113,7 @@ static void HOS_UpdateMenu (void)
 		Cvar_Set(va("mn_hos_rank%i", entry), "");
 		Cvar_Set(va("mn_hos_hp%i", entry), "0");
 		Cvar_Set(va("mn_hos_hpmax%i", entry), "1");
-		MN_ExecuteConfunc("hospitalunused %i", entry);
+		UI_ExecuteConfunc("hospitalunused %i", entry);
 	}
 }
 
@@ -133,7 +129,7 @@ static void HOS_Init_f (void)
 		return;
 
 	if (!B_GetBuildingStatus(base, B_HOSPITAL)) {
-		MN_PopWindow(qfalse);
+		UI_PopWindow(qfalse);
 		return;
 	}
 
@@ -170,7 +166,7 @@ static void HOS_ListDown_f (void)
  */
 static void HOS_ListClick_f (void)
 {
-	int num, type, i;
+	int num, type;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base) {
@@ -186,13 +182,13 @@ static void HOS_ListClick_f (void)
 	/* which employee? */
 	num = atoi(Cmd_Argv(1)) + hospitalFirstEntry;
 
-	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < ccs.numEmployees[type]; i++) {
-			employee_t *employee = &ccs.employees[type][i];
-			/* only those employees, that are in the current base */
-			if (!E_IsInBase(employee, base) || employee->chr.HP >= employee->chr.maxHP)
+	for (type = 0; type < MAX_EMPL; type++) {
+		employee_t *employee = NULL;
+		while ((employee = E_GetNextFromBase(type, employee, base))) {
+			/* only those that need healing */
+			if (employee->chr.HP >= employee->chr.maxHP)
 				continue;
-			/* Don't select soldiers who are gone in mission */
+			/* Don't select soldiers that are gone to a mission */
 			if (E_IsAwayFromBase(employee))
 				continue;
 			if (!num) {
@@ -204,13 +200,12 @@ static void HOS_ListClick_f (void)
 			}
 			num--;
 		}
+	}
 
 	/* open the hospital menu for this employee */
 	if (type != MAX_EMPL)
-		MN_PushWindow("hospital_employee", NULL);
+		UI_PushWindow("hospital_employee", NULL);
 }
-
-static char employeeDesc[512];
 
 /**
  * @brief This is the init function for the hospital_employee menu
@@ -224,13 +219,10 @@ static void HOS_EmployeeInit_f (void)
 		return;
 	}
 
-	/** @todo */
-	MN_RegisterText(TEXT_STANDARD, employeeDesc);
-	*employeeDesc = '\0';
+	UI_ResetData(TEXT_STANDARD);
 
 	c = &currentEmployeeInHospital->chr;
-	assert(c);
-	CL_ActorCvars(c, "mn_");
+	CL_UpdateCharacterValues(c, "mn_");
 
 	Cvar_SetValue("mn_hp", c->HP);
 	Cvar_SetValue("mn_hpmax", c->maxHP);

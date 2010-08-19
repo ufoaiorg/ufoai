@@ -12,9 +12,7 @@
 //	name
 //		The name of the team (translatable)
 //	race
-//
-//	robot
-//		Boolean - team is for robots
+//      Race of the team
 //	armour
 //		Boolean - team can carry armour
 //	weapons
@@ -45,6 +43,10 @@
 //		Possible sound-events are:
 //			hurtsound
 //			deathsound
+//	resistance {}
+//			Defines the dmgtypes from the weapon definitions and the resistance against such a damage
+//	templates {}
+//			List of character templates for this team (see templates.ufo)
 //========================================================================
 
 //========================================================================
@@ -563,6 +565,16 @@ team phalanx
 			deathsound	soldiers/maledeath05
 		}
 	}
+	templates {
+		soldier_common
+		soldier_close
+		soldier_heavy
+		soldier_assault
+		soldier_sniper
+		soldier_blast
+		soldier_elite
+		soldier_mp // For multiplayer characters ONLY!
+	}
 }
 
 // ======================
@@ -574,6 +586,9 @@ team phalanx_scientist
 	size 1
 	hit_particle blood
 	name	"_Scientist"
+	weapons	false
+	armour	false
+	race	civilian
 
 	names {
 		male {
@@ -919,6 +934,9 @@ team phalanx_scientist
 			deathsound	soldiers/maledeath05
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 // ======================
@@ -930,6 +948,7 @@ team phalanx_pilot
 	size 1
 	hit_particle blood
 	name	"_Pilot"
+	armour	false
 
 	names {
 		male {
@@ -1277,6 +1296,9 @@ team phalanx_pilot
 			deathsound	soldiers/maledeath05
 		}
 	}
+	templates {
+		soldier_common
+	}
 }
 
 // ======================
@@ -1288,6 +1310,9 @@ team phalanx_worker
 	size 1
 	hit_particle blood
 	name	"_Worker"
+	weapons	false
+	armour	false
+	race	civilian
 
 	names {
 		male {
@@ -1631,6 +1656,9 @@ team phalanx_worker
 			deathsound	soldiers/maledeath05
 		}
 	}
+	templates {
+		soldier_civil
+	}
 }
 
 // ======================
@@ -1641,7 +1669,6 @@ team phalanx_ugv_phoenix
 {
 	size	2
 	race	robot
-	robot	true
 	//hit_particle none
 	name	"_Phoenix UGV"
 
@@ -1659,6 +1686,44 @@ team phalanx_ugv_phoenix
 			soldiers/ugv_phoenix phoenix phoenix_turret 0
 		}
 	}
+
+	//TODO: Balance values they are the same than bloodspider
+	resistance {
+		normal_light 12
+		normal_spray 6
+		normal_medium 7
+		normal_heavy 6
+
+		normal_steelblade 10
+		normal_monomolecularblade 5
+
+		blast -16
+
+		fire_light 10
+		fire_medium 8
+		fire_heavy 6
+		fire_flamer 2
+
+		shock 999
+
+		laser_light 14
+		laser_medium 12
+		laser_heavy 10
+
+		plasma_light 12
+		plasma_medium 9
+		plasma_heavy 7
+
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
+
+		stun_electro 6
+		stun_gas 999
+	}
+	templates {
+		soldier_robot
+	}
 }
 
 // wheeled ares ugv
@@ -1666,7 +1731,6 @@ team phalanx_ugv_ares_w
 {
 	size	2
 	race	robot
-	robot	true
 	//hit_particle none
 	name	"_Ares W (UGV)"
 
@@ -1683,5 +1747,43 @@ team phalanx_ugv_ares_w
 		neutral {
 			soldiers/ugv_ares ares_w ares_w_turret 0
 		}
+	}
+
+	//TODO: Balance values they are the same than bloodspider
+	resistance {
+		normal_light 12
+		normal_spray 6
+		normal_medium 7
+		normal_heavy 6
+
+		normal_steelblade 10
+		normal_monomolecularblade 5
+
+		blast -16
+
+		fire_light 10
+		fire_medium 8
+		fire_heavy 6
+		fire_flamer 2
+
+		shock 999
+
+		laser_light 14
+		laser_medium 12
+		laser_heavy 10
+
+		plasma_light 12
+		plasma_medium 9
+		plasma_heavy 7
+
+		particlebeam_light 0
+		particlebeam_medium 0
+		particlebeam_heavy 0
+
+		stun_electro 6
+		stun_gas 999
+	}
+	templates {
+		soldier_robot
 	}
 }

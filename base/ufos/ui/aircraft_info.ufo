@@ -19,7 +19,7 @@ window aircraft extends iaircraft
 	// ==================
 	model aircraft
 	{
-		model		*cvar:mn_aircraft_model
+		src			*cvar:mn_aircraft_model
 		pos			"478 107"
 		size		"529 260"
 		origin		"-45 25 0"
@@ -32,7 +32,7 @@ window aircraft extends iaircraft
 		string		*cvar:mn_aircraftname
 		pos			"505 480"
 		size		"317 21"
-		textalign	ul
+		textalign	ALIGN_UL
 		padding		0
 	}
 
@@ -41,13 +41,13 @@ window aircraft extends iaircraft
 		string		*cvar:mn_aircraftstatus
 		pos			"770 510"
 		size		"229 20"
-		textalign	ul
+		textalign	ALIGN_UL
 	}
 
 	custombutton aircraft_return
 	{
 		pos			"726 510"
-		image		ui/button_pack1
+		image		"ui/button_pack1"
 		size		"16 16"
 	}
 
@@ -62,7 +62,7 @@ window aircraft extends iaircraft
 		string		"_Team Members:"
 		pos			"502 544"
 		size		"498 20"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		0
 	}
 
@@ -71,7 +71,7 @@ window aircraft extends iaircraft
 		string		*cvar:mn_hired
 		pos			"722 544"
 		size		"110 20"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding		0
 	}
 
@@ -88,30 +88,30 @@ window aircraft extends iaircraft
 	confunc aircraft_checkbuttons
 	{
 		if ( *cvar:mn_aircraftinbase > 0 ) {
-			*aircraft_navigation@disabled = false
+			*node:root.aircraft_navigation@disabled = false
 
-			*aircraft_return@tooltip = "_Start Aircraft"
-			*aircraft_return@onClick = { cmd "aircraft_start;" }
-			*aircraft_return@texl = "0 32"
+			*node:root.aircraft_return@tooltip = "_Start Aircraft"
+			*node:root.aircraft_return@onClick = { cmd "aircraft_start;" }
+			*node:root.aircraft_return@texl = "0 32"
 		} else {
-			*aircraft_navigation@disabled = true
+			*node:root.aircraft_navigation@disabled = true
 
-			*aircraft_return@tooltip = "_Call back"
-			*aircraft_return@onClick = { cmd "aircraft_return;" }
-			*aircraft_return@texl = "0 0"
+			*node:root.aircraft_return@tooltip = "_Call back"
+			*node:root.aircraft_return@onClick = { cmd "aircraft_return;" }
+			*node:root.aircraft_return@texl = "0 0"
 		}
 
 		// absent from base
 		if ( *cvar:mn_equipsoldierstate == 1 ) {
-			*aircraft_navigation@disabled = true
+			*node:root.aircraft_navigation@disabled = true
 		}
 		// no soldiers
 		elif ( *cvar:mn_equipsoldierstate == 2 ) {
-			*aircraft_navigation@disabled = false
+			*node:root.aircraft_navigation@disabled = false
 		}
 		// normal
 		elif ( *cvar:mn_equipsoldierstate == 3 ) {
-			*aircraft_navigation@disabled = false
+			*node:root.aircraft_navigation@disabled = false
 		}
 	}
 
@@ -121,7 +121,7 @@ window aircraft extends iaircraft
 	confunc aircraft_change
 	{
 		call *node:root.aircraft_checkbuttons
-		*aircraft_list@lineselected = <1>
+		*node:root.aircraft_list@lineselected = <1>
 	}
 
 	func onInit

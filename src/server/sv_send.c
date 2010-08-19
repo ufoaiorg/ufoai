@@ -40,12 +40,13 @@ EVENT MESSAGES
 void SV_ClientCommand (client_t *client, const char *fmt, ...)
 {
 	va_list ap;
+	char str[1024];
 	struct dbuffer *msg = new_dbuffer();
 
 	NET_WriteByte(msg, svc_stufftext);
 
 	va_start(ap, fmt);
-	NET_VPrintf(msg, fmt, ap);
+	NET_VPrintf(msg, fmt, ap, str, sizeof(str));
 	va_end(ap);
 
 	NET_WriteMsg(client->stream, msg);
@@ -58,6 +59,7 @@ void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
 {
 	va_list argptr;
 	struct dbuffer *msg;
+	char str[1024];
 
 	if (level > cl->messagelevel)
 		return;
@@ -67,7 +69,7 @@ void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
 	NET_WriteByte(msg, level);
 
 	va_start(argptr, fmt);
-	NET_VPrintf(msg, fmt, argptr);
+	NET_VPrintf(msg, fmt, argptr, str, sizeof(str));
 	va_end(argptr);
 
 	NET_WriteMsg(cl->stream, msg);
@@ -81,6 +83,7 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 	va_list argptr;
 	struct dbuffer *msg;
 	client_t *cl;
+	char str[1024];
 	int i;
 
 	msg = new_dbuffer();
@@ -88,7 +91,7 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 	NET_WriteByte(msg, level);
 
 	va_start(argptr, fmt);
-	NET_VPrintf(msg, fmt, argptr);
+	NET_VPrintf(msg, fmt, argptr, str, sizeof(str));
 	va_end(argptr);
 
 	/* echo to console */

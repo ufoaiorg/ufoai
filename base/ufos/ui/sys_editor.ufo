@@ -8,9 +8,9 @@ window editor {
 		size "200 300"
 		dragbutton	true
 		closebutton true
-		image		ui/popup_alpha_tile
+		image		"ui/popup_alpha_tile"
 		string		"_Node editor"
-		font		f_menusmall
+		font		"f_menusmall"
 	}
 
 	editor editor {
@@ -25,38 +25,38 @@ window editor {
 			layout			LAYOUT_PACK
 			layoutMargin	3
 		}
-	
+
 		button start_capture_mode {
 			tooltip		"_Capture a node"
 			icon		"system_capture"
 			align		LAYOUTALIGN_LEFT
 			size		"35 35"
-			image		ui/button_green_small
-			font		f_verysmall
+			image		"ui/button_green_small"
+			font		"f_verysmall"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			onClick	{ call *node:root.editor@start }
 		}
-	
+
 		button select_parent {
 			tooltip		"_Select parent node"
 			icon		"system_parent"
 			align		LAYOUTALIGN_LEFT
 			size		"35 35"
-			image		ui/button_green_small
-			font		f_verysmall
+			image		"ui/button_green_small"
+			font		"f_verysmall"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			onClick	{ call *node:root.editor@selectparent }
 		}
-	
+
 		button select_firstchild {
 			tooltip		"_Select first child node"
 			icon		"system_child"
 			align		LAYOUTALIGN_LEFT
 			size		"35 35"
-			image		ui/button_green_small
-			font		f_verysmall
+			image		"ui/button_green_small"
+			font		"f_verysmall"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			onClick	{ call *node:root.editor@selectfirstchild }
@@ -67,8 +67,8 @@ window editor {
 			icon		"system_next"
 			align		LAYOUTALIGN_LEFT
 			size		"35 35"
-			image		ui/button_green_small
-			font		f_verysmall
+			image		"ui/button_green_small"
+			font		"f_verysmall"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
 			onClick	{ call *node:root.editor@selectnext }
@@ -80,39 +80,39 @@ window editor {
 		tooltip		"_Extract the window of the last/current selected node"
 		pos			"25 95"
 		size		"150 35"
-		image		ui/button_green_small
-		font		f_verysmall
+		image		"ui/button_green_small"
+		font		"f_verysmall"
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		onClick	{ cmd "mn_extract <cvar:mn_sys_editor_window>" }
+		onClick	{ cmd "mn_extract <cvar:mn_sys_editor_window>;" }
 	}
 
 	string current_window_title {
 		pos	"25 140"
 		size "150 20"
-		string "_Current window:"		
-		font		f_verysmall
+		string "_Current window:"
+		font		"f_verysmall"
 	}
 
 	string current_window {
 		pos	"30 160"
 		size "150 20"
-		string *cvar:mn_sys_editor_window		
-		font		f_verysmall
+		string *cvar:mn_sys_editor_window
+		font		"f_verysmall"
 	}
 
 	string current_node_title {
 		pos	"25 180"
 		size "150 20"
-		string "_Current node:"		
-		font		f_verysmall
+		string "_Current node:"
+		font		"f_verysmall"
 	}
 
 	string current_node {
 		pos	"30 200"
 		size "150 20"
-		string *cvar:mn_sys_editor_node		
-		font		f_verysmall
+		string *cvar:mn_sys_editor_node
+		font		"f_verysmall"
 	}
 
 	func onInit {
@@ -122,8 +122,8 @@ window editor {
 	}
 
 	func onClose {
-		cmd "del mn_sys_editor_node"
-		cmd "del mn_sys_editor_window"
+		cmd "del mn_sys_editor_node;"
+		cmd "del mn_sys_editor_window;"
 		call *node:root.editor@stop
 	}
 }

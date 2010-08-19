@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
+#include "../../cl_shared.h"
 #include "../cp_campaign.h"
 #include "../cp_map.h"
 #include "../cp_ufo.h"
@@ -132,7 +132,7 @@ static void CP_TerrorMissionGo (mission_t *mission)
 		if (MAP_PositionCloseToBase(city->pos))
 			continue;
 
-		if (!CP_ChooseMap(mission, city->pos, qfalse))
+		if (!CP_ChooseMap(mission, city->pos))
 			continue;
 
 		if (CP_TerrorInCity(city))
@@ -148,8 +148,6 @@ static void CP_TerrorMissionGo (mission_t *mission)
 		CP_MissionRemove(mission);
 		return;
 	}
-
-	mission->mapDef->timesAlreadyUsed++;
 
 	nation = MAP_GetNation(mission->pos);
 
@@ -193,7 +191,7 @@ void CP_TerrorMissionNextStage (mission_t *mission)
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
 		/* Create Terror attack mission */
-		CP_MissionCreate(mission);
+		CP_MissionBegin(mission);
 		break;
 	case STAGE_COME_FROM_ORBIT:
 		/* Go to mission */

@@ -6,7 +6,7 @@ component cmpDefNamedTbar cmpNamedTbar {
 	{
 		size	"450 20"
 	}
-	pic			bdr { 
+	image	bdr {
 		pos "165 2"
 	}
 	tbar		bar {
@@ -22,9 +22,9 @@ component panel cmpNamedBar {
 	{
 		size	"450 20"
 	}
-	pic			bdr { 
+	image			bdr {
 		pos "165 2"
-		image ui/bar_border 
+		src "ui/bar_border"
 	}
 	bar		currbar {
 		pos "167 7"
@@ -46,7 +46,7 @@ component panel cmpNamedBar {
 	string	val {
 		pos "265 0"
 		size "150 20"
-		textalign ur
+		textalign ALIGN_UR
 	}
 }
 
@@ -105,7 +105,7 @@ window team extends iaircraft
 	// ==================
 	model aircraft
 	{
-		model		*cvar:mn_aircraft_model
+		src			*cvar:mn_aircraft_model
 		pos			"478 107"
 		size		"529 260"
 		origin		"-45 25 0"
@@ -125,14 +125,14 @@ window team extends iaircraft
 		string		*cvar:mn_hired
 		pos			"619 107"
 		size		"62 20"
-		textalign	ur
+		textalign	ALIGN_UR
 	}
 
 	func listen_close_equipment
 	{
-		cmd "team_select <cvar:cl_selected2>"
-		cmd "del cl_selected2"
-		cmd "mn_removelistener equipment@onClose <path:this>"
+		cmd "team_select <cvar:cl_selected2>;"
+		cmd "del cl_selected2;"
+		cmd "mn_removelistener equipment@onClose <path:this>;"
 	}
 
 	button bt_equipsoldiers
@@ -140,7 +140,7 @@ window team extends iaircraft
 		string "_Equip soldiers"
 		pos		"483 129"
 		size	"198 43"
-		image	ui/button_blue
+		image	"ui/button_blue"
 		onClick	{
 			*cvar:cl_selected2 = <cvar:cl_selected>
 			cmd "mn_addlistener equipment@onClose <path:root>.listen_close_equipment;"
@@ -163,30 +163,30 @@ window team extends iaircraft
 	 */
 	confunc aircraft_soldier_usedelsewhere
 	{
-		*actor_select<1>.txt_actor@color = ".50 .50 .50 1"
-		*(checkbox)actor_select<1>.check_actor@current = 0
-		*(checkbox)actor_select<1>.check_actor@tooltip = "_Soldier is assigned to another craft"
-		*actor_select<1>.check_actor@disabled = true
-		*actor_select<1>.check_actor@invis = false
-		*actor_select<1>.txt_actor@invis = false
-		*(pic)actor_select<1>.bt_equip@invis = false
+		*node:root.actor_select<1>.txt_actor@color = ".50 .50 .50 1"
+		*node:root.actor_select<1>.check_actor@current = 0
+		*node:root.actor_select<1>.check_actor@tooltip = "_Soldier is assigned to another craft"
+		*node:root.actor_select<1>.check_actor@disabled = true
+		*node:root.actor_select<1>.check_actor@invis = false
+		*node:root.actor_select<1>.txt_actor@invis = false
+		*node:root.actor_select<1>.bt_equip@invis = false
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_unassigned {
-		*actor_select<1>.txt_actor@color = "0 .78 0 1"
-		*actor_select<1>.check_actor@disabled = false
-		*(checkbox)actor_select<1>.check_actor@current = 0
-		*actor_select<1>.check_actor@invis = false
-		*actor_select<1>.txt_actor@invis = false
-		*(pic)actor_select<1>.bt_equip@invis = false
+		*node:root.actor_select<1>.txt_actor@color = "0 .78 0 1"
+		*node:root.actor_select<1>.check_actor@disabled = false
+		*node:root.actor_select<1>.check_actor@current = 0
+		*node:root.actor_select<1>.check_actor@invis = false
+		*node:root.actor_select<1>.txt_actor@invis = false
+		*node:root.actor_select<1>.bt_equip@invis = false
 		if ( *cvar:mn_hirable_count == 0 ) {
-			*(checkbox)actor_select<1>.check_actor@disabled = true
-			*(checkbox)actor_select<1>.check_actor@tooltip = "_No more soldiers can be assigned to this craft"
+			*node:root.actor_select<1>.check_actor@disabled = true
+			*node:root.actor_select<1>.check_actor@tooltip = "_No more soldiers can be assigned to this craft"
 		} else {
-			*(checkbox)actor_select<1>.check_actor@tooltip = "_Assign soldier to this craft"
+			*node:root.actor_select<1>.check_actor@tooltip = "_Assign soldier to this craft"
 		}
 	}
 
@@ -194,52 +194,52 @@ window team extends iaircraft
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_assigned {
-		*actor_select<1>.txt_actor@color = "0 .78 0 1"
-		*actor_select<1>.check_actor@disabled = false
-		*(checkbox)actor_select<1>.check_actor@current = 1
-		*(checkbox)actor_select<1>.check_actor@tooltip = "_Remove soldier from this craft"
-		*actor_select<1>.check_actor@invis = false
-		*actor_select<1>.txt_actor@invis = false
-		*(pic)actor_select<1>.bt_equip@invis = false
+		*node:root.actor_select<1>.txt_actor@color = "0 .78 0 1"
+		*node:root.actor_select<1>.check_actor@disabled = false
+		*node:root.actor_select<1>.check_actor@current = 1
+		*node:root.actor_select<1>.check_actor@tooltip = "_Remove soldier from this craft"
+		*node:root.actor_select<1>.check_actor@invis = false
+		*node:root.actor_select<1>.txt_actor@invis = false
+		*node:root.actor_select<1>.bt_equip@invis = false
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_holdsequip {
-		*(pic)actor_select<1>.bt_equip@tooltip = "_Soldier carries equipment"
-		*(pic)actor_select<1>.bt_equip@icon = "soldier_holdequipment"
+		*node:root.actor_select<1>.bt_equip@tooltip = "_Soldier carries equipment"
+		*node:root.actor_select<1>.bt_equip@icon = "soldier_holdequipment"
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_holdsnoequip {
-		*(pic)actor_select<1>.bt_equip@tooltip = "_Soldier carries no equipment"
-		*(pic)actor_select<1>.bt_equip@icon = "soldier_noequipment"
+		*node:root.actor_select<1>.bt_equip@tooltip = "_Soldier carries no equipment"
+		*node:root.actor_select<1>.bt_equip@icon = "soldier_noequipment"
 	}
 
 	/**
 	 * @param[in] <1> id of employee in the list
 	 */
 	confunc aircraft_soldier_unusedslot {
-		*(pic)actor_select<1>.bt_equip@invis = true
-		*actor_select<1>.check_actor@invis = true
-		*actor_select<1>.txt_actor@invis = true
+		*node:root.actor_select<1>.bt_equip@invis = true
+		*node:root.actor_select<1>.check_actor@invis = true
+		*node:root.actor_select<1>.txt_actor@invis = true
 	}
 
 	/**
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc aircraft_soldier_list_size {
-		*(abstractscrollbar)scroll_employees@fullsize = <1>
+		*node:root.scroll_employees@fullsize = <1>
 	}
 
 	/**
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc aircraft_soldier_selected {
-		*actor_select<1>.txt_actor@color = "1 1 1 1"
+		*node:root.actor_select<1>.txt_actor@color = "1 1 1 1"
 	}
 
 	cmpSoldierSelect actor_select0 {
@@ -281,13 +281,13 @@ window team extends iaircraft
 	}
 	vscrollbar scroll_employees
 	{
-		image	ui/scrollbar_v_green
+		image	"ui/scrollbar_v_green"
 		pos "310 463"	height	"282"
 		current 0
 		viewsize 8
 		fullsize 50
 		onChange {
-			cmd "update_soldier_list 8 <current>"
+			cmd "update_soldier_list 8 <current>;"
 			*cvar:mn_relative_id = <current>
 		}
 	}
@@ -310,16 +310,16 @@ window team extends iaircraft
 		image	"ui/panel_green"
 	}
 
-	pic	rank_img {
+	image	rank_img {
 		pos "8 10"
 		size "50 50"
-		image *cvar:mn_chrrank_img
+		src *cvar:mn_chrrank_img
 	}
 
 	model body
 	{
 		{
-			model	*cvar:mn_body
+			src		*cvar:mn_body
 			skin	*cvar:mn_skin
 			anim	"stand2"
 			angles	"0 70 90"
@@ -331,21 +331,21 @@ window team extends iaircraft
 
 		model head
 		{
-			model	*cvar:mn_head
+			src		*cvar:mn_head
 			skin	*cvar:mn_skin
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"
 		}
-	
+
 		model right_rweapon
 		{
-			model	*cvar:mn_rweapon
+			src		*cvar:mn_rweapon
 			tag		"tag_rweapon"
 		}
-	
+
 		model right_lweapon
 		{
-			model	*cvar:mn_lweapon
+			src		*cvar:mn_lweapon
 			tag		"tag_lweapon"
 		}
 	}
@@ -355,11 +355,13 @@ window team extends iaircraft
 	}
 
 	tab actor_stat {
-		pos		"212 12"
-		size	"432 39"
-		cvar	*cvar:mn_actor_stat
-		onChange {
-			cmd "select_actor_stat <cvar:mn_actor_stat>;"
+		{
+			pos		"212 12"
+			size	"432 39"
+			cvar	*cvar:mn_actor_stat
+			onChange {
+				cmd "select_actor_stat <cvar:mn_actor_stat>;"
+			}
 		}
 		option phys {
 			label	"_Physical stats"
@@ -370,7 +372,6 @@ window team extends iaircraft
 			value	"stats_missions"
 		}
 	}
-
 
 	panel stats_phys {
 	{
@@ -471,7 +472,7 @@ window team extends iaircraft
 		tbar bar   {
 			current *cvar:mn_vhp
 			max *cvar:mn_vhpmax
-			image ui/bar_health
+			image "ui/bar_health"
 			}
 		string lbl { string "_Health:" }
 		string val { string *cvar:mn_thp }
@@ -487,27 +488,27 @@ window team extends iaircraft
 		invis true
 	}
 
-	pic	rank_img {
+	image	rank_img {
 		pos "195 30"
 		size "50 50"
-		image *cvar:mn_chrrank_img
+		src *cvar:mn_chrrank_img
 	}
 
-	string	rank_lbl { pos "10 85" size "420 20" string *cvar:mn_chrrank textalign uc font f_normal_bold }
+	string	rank_lbl { pos "10 85" size "420 20" string *cvar:mn_chrrank textalign ALIGN_UC font "f_normal_bold" }
 
 	string	missions_lbl { pos "12 150" size "200 20" string "_Missions performed:" }
-	string	missions_val { pos "212 150" size "150 20" string *cvar:mn_chrmis textalign ur }
+	string	missions_val { pos "212 150" size "150 20" string *cvar:mn_chrmis textalign ALIGN_UR }
 
 	string	kills_lbl { pos "12 170" size "200 20" string "_Enemies killed:" }
-	string	kills_val { pos "212 170" size "150 20" string *cvar:mn_chrkillalien textalign ur }
+	string	kills_val { pos "212 170" size "150 20" string *cvar:mn_chrkillalien textalign ALIGN_UR }
 
 	string	civ_lbl { pos "12 190" size "200 20" string "_Civilians killed:" }
-	string	civ_val { pos "212 190" size "150 20" string *cvar:mn_chrkillcivilian textalign ur }
+	string	civ_val { pos "212 190" size "150 20" string *cvar:mn_chrkillcivilian textalign ALIGN_UR }
 
 	string	team_lbl { pos "12 210" size "200 20" string "_Our team killed:" }
-	string	team_val { pos "212 210" size "150 20" string *cvar:mn_chrkillteam textalign ur }
+	string	team_val { pos "212 210" size "150 20" string *cvar:mn_chrkillteam textalign ALIGN_UR }
 
-	}  
+	}
 
 	}
 
@@ -517,12 +518,12 @@ window team extends iaircraft
 	// additional stuff
 	// ==================
 	confunc toggle_show_heavybutton {
-		*bt_switch_list@tooltip	= "_Assign tanks"
-		*bt_switch_list@icon	= uvc
+		//*node:root.bt_switch_list@tooltip	= "_Assign tanks"
+		//*node:root.bt_switch_list@icon	= uvc
 	}
 	confunc toggle_show_soldiersbutton {
-		*bt_switch_list@tooltip	= "_Assign soldiers"
-		*bt_switch_list@icon	= soldier
+		//*node:root.bt_switch_list@tooltip	= "_Assign soldiers"
+		//*node:root.bt_switch_list@icon	= soldier
 	}
 
 	/**
@@ -530,15 +531,15 @@ window team extends iaircraft
 	 */
 	confunc select_actor_stat {
 		if ( <1> eq "stats_phys" ) {
-			*actor_background.stats_phys@invis = false
-			*actor_background.stats_missions@invis = true
+			*node:root.actor_background.stats_phys@invis = false
+			*node:root.actor_background.stats_missions@invis = true
 		}
 		elif ( <1> eq "stats_missions" ) {
-			*actor_background.stats_phys@invis = true
-			*actor_background.stats_missions@invis = false
+			*node:root.actor_background.stats_phys@invis = true
+			*node:root.actor_background.stats_missions@invis = false
 		}
 
-	
+
 	}
 
 	/**
@@ -547,11 +548,11 @@ window team extends iaircraft
 	confunc aircraft_status_change
 	{
 		if ( *cvar:mn_hired_count > 0 ) {
-			*bt_equipsoldiers@disabled = false
-			*bt_equipsoldiers@tooltip = "_Equip soldiers"
+			*node:root.bt_equipsoldiers@disabled = false
+			*node:root.bt_equipsoldiers@tooltip = "_Equip soldiers"
 		} else {
-			*bt_equipsoldiers@disabled = true
-			*bt_equipsoldiers@tooltip = "_No soldiers assigned"
+			*node:root.bt_equipsoldiers@disabled = true
+			*node:root.bt_equipsoldiers@tooltip = "_No soldiers assigned"
 		}
 	}
 
@@ -561,8 +562,8 @@ window team extends iaircraft
 	confunc aircraft_change
 	{
 		cmd "update_soldier_list 8 0;team_select 0;set mn_show_employee 1;"
-		*scroll_employees@current = 0
-		*aircraft_list@lineselected = <1>
+		*node:root.scroll_employees@current = 0
+		*node:root.aircraft_list@lineselected = <1>
 		// absent from base, go back to the main GUI
 		if ( *cvar:mn_equipsoldierstate == 1 ) {
 			cmd "mn_pop;mn_push aircraft;"
@@ -575,13 +576,13 @@ window team extends iaircraft
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		*cvar:i = 0
 		while ( *cvar:i < 8 ) {
-			*actor_select<cvar:i>@num = <cvar:i>
-			*actor_select<cvar:i>.txt_actor@string = *cvar:mn_ename<cvar:i>
+			*node:root.actor_select<cvar:i>@num = <cvar:i>
+			*node:root.actor_select<cvar:i>.txt_actor@string = *cvar:mn_ename<cvar:i>
 			*cvar:i = ( *cvar:i + 1 )
 		}
 		delete *cvar:i
 
-		*scroll_employees@current = 0
+		*node:root.scroll_employees@current = 0
 		*cvar:mn_relative_id = 0
 		cmd "update_soldier_list 8 0;team_select 0;set mn_show_employee 1;"
 		cmd "aircraft_status_change"

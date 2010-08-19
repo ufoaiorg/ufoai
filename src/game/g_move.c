@@ -75,7 +75,7 @@ static void G_BuildForbiddenList (int team, const edict_t *movingActor)
 	}
 
 	if (forbiddenListLength > MAX_FORBIDDENLIST)
-		gi.error("G_BuildForbiddenList: list too long\n");
+		gi.Error("G_BuildForbiddenList: list too long\n");
 }
 
 /**
@@ -92,7 +92,7 @@ static void G_BuildForbiddenList (int team, const edict_t *movingActor)
  */
 void G_MoveCalc (int team, const edict_t *movingActor, const pos3_t from, byte crouchingState, int distance)
 {
-	G_MoveCalcLocal(gi.pathingMap, team, movingActor, from, crouchingState, distance);
+	G_MoveCalcLocal(&level.pathingMap, team, movingActor, from, crouchingState, distance);
 }
 
 /**
@@ -205,7 +205,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	byte crouchingState;
 
 	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, TU_MOVE_STRAIGHT))
+	if (!G_ActionCheckForCurrentTeam(player, ent, TU_MOVE_STRAIGHT))
 		return;
 
 	crouchingState = G_IsCrouched(ent) ? 1 : 0;
@@ -213,7 +213,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 
 	/* calculate move table */
 	G_MoveCalc(visTeam, ent, ent->pos, crouchingState, ent->TU);
-	length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
+	length = gi.MoveLength(&level.pathingMap, to, crouchingState, qfalse);
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
 	if (length && length >= ROUTING_NOT_REACHABLE)
@@ -222,7 +222,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	/* Autostand: check if the actor is crouched and player wants autostanding...*/
 	if (crouchingState && player->autostand) {
 		/* ...and if this is a long walk... */
-		if ((float) (2 * TU_CROUCH) < (float) length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
+		if (SHOULD_USE_AUTOSTAND(length)) {
 			/* ...make them stand first. If the player really wants them to walk a long
 			 * way crouched, he can move the actor in several stages.
 			 * Uses the threshold at which standing, moving and crouching again takes
@@ -231,7 +231,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			crouchingState = G_IsCrouched(ent) ? 1 : 0;
 			if (!crouchingState) {
 				G_MoveCalc(visTeam, ent, ent->pos, crouchingState, ent->TU);
-				length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
+				length = gi.MoveLength(&level.pathingMap, to, crouchingState, qfalse);
 				autoCrouchRequired = qtrue;
 			}
 		}
@@ -246,7 +246,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 	numdv = 0;
 	initTU = ent->TU;
 
-	while ((dv = gi.MoveNext(gi.pathingMap, pos, crouchingState))
+	while ((dv = gi.MoveNext(&level.pathingMap, pos, crouchingState))
 			!= ROUTING_UNREACHABLE) {
 		const int oldZ = pos[2];
 		/* dv indicates the direction traveled to get to the new cell and the original cell height. */
@@ -257,6 +257,9 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 		if (numdv >= lengthof(dvtab))
 			break;
 	}
+
+	/* make sure to end any other pending events - we rely on EV_ACTOR_MOVE not being active anymore */
+	gi.EndEvents();
 
 	/* everything ok, found valid route? */
 	if (VectorCompare(pos, ent->pos)) {
@@ -359,7 +362,7 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 					gi.WriteDummyByte(0); /* y */
 					gi.WriteDummyByte(0); /* z */
 				} else if (!stepAmount) {
-					gi.dprintf("Event %i activate and no stepAmount pointer set\n", gi.GetEvent());
+					gi.DPrintf("Event %i activate and no stepAmount pointer set\n", gi.GetEvent());
 					break;
 				}
 
@@ -401,8 +404,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 					triggers = qtrue;
 					if (!clientAction)
 						status |= VIS_STOP;
-				} else if (clientAction) {
-					G_ActorSetClientAction(ent, NULL);
 				}
 				/* state has changed - maybe we walked on a trigger_hurt */
 				if (oldState != ent->state)
@@ -451,13 +452,6 @@ void G_ClientMove (const player_t * player, int visTeam, edict_t* ent, const pos
 			G_ActorSetTU(ent, max(0, initTU - usedTUs));
 
 		G_SendStats(ent);
-
-		/* only if triggers are touched - there was a client
-		 * action set and there were steps made */
-		if (!triggers && ent->clientAction) {
-			/* no triggers, no client action */
-			G_ActorSetClientAction(ent, NULL);
-		}
 
 		/* end the move */
 		G_GetFloorItems(ent);

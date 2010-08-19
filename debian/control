@@ -3,14 +3,15 @@ Section: games
 Priority: optional
 Maintainer: Yann Dirson <dirson@debian.org>
 Build-Depends: debhelper (>= 5.0.0), libpng-dev, libjpeg-dev,
- libgl-dev, libsdl-dev, libsdl-ttf2.0-dev, libsdl-mixer1.2-dev,
+ libgl1-mesa-dev, libsdl-dev, libsdl-ttf2.0-dev, libsdl-mixer1.2-dev,
  libcurl3-openssl-dev | libcurl4-openssl-dev | libcurl4-gnutls-dev,
  texlive-latex-recommended, texlive-latex-extra, zip,
  libgtk2.0-dev (>=2.4.0), libxml2-dev, libgtkglext1-dev,
- libtheora-dev | libxvidcore4-dev, libpng-dev, libjpeg-dev,
+ libtheora-dev | libxvidcore4-dev, dpatch,
  libglib2.0-dev, zlib1g-dev, gettext, libncurses5-dev,
  pkg-config, libopenal-dev, libgtksourceview2.0-dev,
  libsdl-image1.2-dev, python
+Build-Conflicts: nvidia-glx, nvidia-current
 Standards-Version: 3.7.3
 Homepage: http://ufoai.sf.net
 Vcs-Svn: https://ufoai.svn.sourceforge.net/svnroot/ufoai/ufoai/trunk
@@ -31,6 +32,19 @@ Description: UFO: Alien Invasion - build your team and stop the aliens
  .
  The tactical part of the game uses OpenGL, and is based on the Quake2
  engine. A multiplayer mode is also available.
+
+Package: ufoai-dbg
+Architecture: any
+Priority: extra
+Section: debug
+Depends: ufoai (= ${binary:Version})
+Description: UFO: Alien Invasion, debug data
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ This package contains debug information for the ufoai
+ package. Its purpose is to allow debuggers to produce backtraces with
+ names, making it easier to interpret core dumps. The data is
+ installed in /usr/lib/debug.
 
 Package: ufoai-server
 Section: games
@@ -60,7 +74,6 @@ Package: ufoai-server-data
 Section: games
 Priority: optional
 Architecture: all
-Depends:
 Recommends: ufoai-server
 Description: Server data for UFO: Alien Invasion
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
@@ -73,7 +86,7 @@ Section: games
 Priority: optional
 Architecture: all
 Depends: ufoai-server-data (= ${source:Version}), ttf-freefont, ttf-dejavu, ttf-thai-tlwg,
- ttf-wqy-zenhei, ttf-unfonts
+ ttf-wqy-zenhei, ttf-unfonts-core, ttf-unfonts-extra
 Recommends: ufoai
 Description: Data for UFO: Alien Invasion
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.

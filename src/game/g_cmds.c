@@ -116,7 +116,7 @@ static void G_Say_f (player_t *player, qboolean arg0, qboolean team)
 	Q_strcat(text, "\n", sizeof(text));
 
 	if (sv_dedicated->integer)
-		gi.dprintf("%s", text);
+		gi.DPrintf("%s", text);
 
 	for (j = 0; j < game.sv_maxplayersperteam; j++) {
 		if (!game.players[j].inuse)
@@ -199,7 +199,7 @@ static void G_ListMissionScore_f (void)
 	if (gi.Cmd_Argc() == 2) {
 		team = atoi(gi.Cmd_Argv(1));
 	} else {
-		gi.dprintf("Usage: %s <teamnumber>\n", gi.Cmd_Argv(0));
+		gi.DPrintf("Usage: %s <teamnumber>\n", gi.Cmd_Argv(0));
 		return;
 	}
 
@@ -209,73 +209,73 @@ static void G_ListMissionScore_f (void)
 
 		assert(ent->chr.scoreMission);
 
-		gi.dprintf("Soldier: %s\n", ent->chr.name);
+		gi.DPrintf("Soldier: %s\n", ent->chr.name);
 
 		/* ===================== */
-		gi.dprintf("  Move: Normal=%i Crouched=%i\n", ent->chr.scoreMission->movedNormal, ent->chr.scoreMission->movedCrouched);
+		gi.DPrintf("  Move: Normal=%i Crouched=%i\n", ent->chr.scoreMission->movedNormal, ent->chr.scoreMission->movedCrouched);
 
-		gi.dprintf("  Kills:");
+		gi.DPrintf("  Kills:");
 		for (i = 0; i < KILLED_NUM_TYPES; i++) {
-			gi.dprintf(" %i", ent->chr.scoreMission->kills[i]);
+			gi.DPrintf(" %i", ent->chr.scoreMission->kills[i]);
 		}
-		gi.dprintf("\n");
+		gi.DPrintf("\n");
 
-		gi.dprintf("  Stuns:");
+		gi.DPrintf("  Stuns:");
 		for (i = 0; i < KILLED_NUM_TYPES; i++) {
-			gi.dprintf(" %i", ent->chr.scoreMission->stuns[i]);
+			gi.DPrintf(" %i", ent->chr.scoreMission->stuns[i]);
 		}
-		gi.dprintf("\n");
+		gi.DPrintf("\n");
 
 		/* ===================== */
-		gi.dprintf("  Fired:");
+		gi.DPrintf("  Fired:");
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
-			gi.dprintf(" %i", ent->chr.scoreMission->fired[i]);
+			gi.DPrintf(" %i", ent->chr.scoreMission->fired[i]);
 		}
-		gi.dprintf("\n");
+		gi.DPrintf("\n");
 
-		gi.dprintf("  Hits:\n");
+		gi.DPrintf("  Hits:\n");
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
-			gi.dprintf("    Skill%i: ",i);
+			gi.DPrintf("    Skill%i: ",i);
 			for (j = 0; j < KILLED_NUM_TYPES; j++) {
-				gi.dprintf(" %i", ent->chr.scoreMission->hits[i][j]);
+				gi.DPrintf(" %i", ent->chr.scoreMission->hits[i][j]);
 			}
-			gi.dprintf("\n");
+			gi.DPrintf("\n");
 		}
 
 		/* ===================== */
-		gi.dprintf("  Fired Splash:");
+		gi.DPrintf("  Fired Splash:");
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
-			gi.dprintf(" %i", ent->chr.scoreMission->firedSplash[i]);
+			gi.DPrintf(" %i", ent->chr.scoreMission->firedSplash[i]);
 		}
-		gi.dprintf("\n");
+		gi.DPrintf("\n");
 
-		gi.dprintf("  Hits Splash:\n");
+		gi.DPrintf("  Hits Splash:\n");
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
-			gi.dprintf("    Skill%i: ",i);
+			gi.DPrintf("    Skill%i: ",i);
 			for (j = 0; j < KILLED_NUM_TYPES; j++) {
-				gi.dprintf(" %i", ent->chr.scoreMission->hitsSplash[i][j]);
+				gi.DPrintf(" %i", ent->chr.scoreMission->hitsSplash[i][j]);
 			}
-			gi.dprintf("\n");
+			gi.DPrintf("\n");
 		}
 
-		gi.dprintf("  Splash Damage:\n");
+		gi.DPrintf("  Splash Damage:\n");
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
-			gi.dprintf("    Skill%i: ",i);
+			gi.DPrintf("    Skill%i: ",i);
 			for (j = 0; j < KILLED_NUM_TYPES; j++) {
-				gi.dprintf(" %i", ent->chr.scoreMission->hitsSplashDamage[i][j]);
+				gi.DPrintf(" %i", ent->chr.scoreMission->hitsSplashDamage[i][j]);
 			}
-			gi.dprintf("\n");
+			gi.DPrintf("\n");
 		}
 
 		/* ===================== */
-		gi.dprintf("  Kills per skill:");
+		gi.DPrintf("  Kills per skill:");
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
-			gi.dprintf(" %i", ent->chr.scoreMission->skillKills[i]);
+			gi.DPrintf(" %i", ent->chr.scoreMission->skillKills[i]);
 		}
-		gi.dprintf("\n");
+		gi.DPrintf("\n");
 
 		/* ===================== */
-		gi.dprintf("  Heal (received): %i\n", ent->chr.scoreMission->heal);
+		gi.DPrintf("  Heal (received): %i\n", ent->chr.scoreMission->heal);
 	}
 }
 
@@ -286,10 +286,10 @@ void G_InvList_f (const player_t *player)
 {
 	edict_t *ent = NULL;
 
-	gi.dprintf("Print inventory for '%s'\n", player->pers.netname);
+	gi.DPrintf("Print inventory for '%s'\n", player->pers.netname);
 	while ((ent = G_EdictsGetNextLivingActorOfTeam(ent, player->pers.team))) {
 		containerIndex_t container;
-		gi.dprintf("actor: '%s'\n", ent->chr.name);
+		gi.DPrintf("actor: '%s'\n", ent->chr.name);
 
 		for (container = 0; container < gi.csi->numIDs; container++) {
 			const invList_t *ic = CONTAINER(ent, container);
@@ -314,7 +314,7 @@ static void G_TouchEdict_f (void)
 	int i;
 
 	if (gi.Cmd_Argc() < 2) {
-		gi.dprintf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
+		gi.DPrintf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
 		return;
 	}
 
@@ -324,7 +324,7 @@ static void G_TouchEdict_f (void)
 
 	e = G_EdictsGetByNum(i);
 	if (!e->touch) {
-		gi.dprintf("No touch function for entity %s\n", e->classname);
+		gi.DPrintf("No touch function for entity %s\n", e->classname);
 		return;
 	}
 
@@ -332,7 +332,7 @@ static void G_TouchEdict_f (void)
 	if (!ent)
 		return;	/* didn't find any */
 
-	gi.dprintf("Call touch function for %s\n", e->classname);
+	gi.DPrintf("Call touch function for %s\n", e->classname);
 	e->touch(e, ent);
 }
 
@@ -342,23 +342,23 @@ static void G_UseEdict_f (void)
 	int i;
 
 	if (gi.Cmd_Argc() < 2) {
-		gi.dprintf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
+		gi.DPrintf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
 		return;
 	}
 
 	i = atoi(gi.Cmd_Argv(1));
 	if (!G_EdictsIsValidNum(i)) {
-		gi.dprintf("No entity with number %i\n", i);
+		gi.DPrintf("No entity with number %i\n", i);
 		return;
 	}
 
 	e = G_EdictsGetByNum(i);
 	if (!e->use) {
-		gi.dprintf("No use function for entity %s\n", e->classname);
+		gi.DPrintf("No use function for entity %s\n", e->classname);
 		return;
 	}
 
-	gi.dprintf("Call use function for %s\n", e->classname);
+	gi.DPrintf("Call use function for %s\n", e->classname);
 	e->use(e, NULL);
 }
 
@@ -368,7 +368,7 @@ static void G_DestroyEdict_f (void)
 	int i;
 
 	if (gi.Cmd_Argc() < 2) {
-		gi.dprintf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
+		gi.DPrintf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
 		return;
 	}
 
@@ -378,11 +378,11 @@ static void G_DestroyEdict_f (void)
 
 	e = G_EdictsGetByNum(i);
 	if (!e->destroy) {
-		gi.dprintf("No destroy function for entity %s\n", e->classname);
+		gi.DPrintf("No destroy function for entity %s\n", e->classname);
 		return;
 	}
 
-	gi.dprintf("Call destroy function for %s\n", e->classname);
+	gi.DPrintf("Call destroy function for %s\n", e->classname);
 	e->destroy(e);
 }
 

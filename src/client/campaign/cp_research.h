@@ -26,16 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_RESEARCH
 #define CLIENT_CL_RESEARCH
 
-#include "cp_ufopedia.h"
-#include "../cl_ugv.h"
-
-#define MAX_CAMPAIGNS	16
-
 #define MAX_RESEARCHDISPLAY 22	/**< Number of the available string (in the list) in the research menu */
 #define MAX_RESEARCHLIST 32
 #define MAX_TECHNOLOGIES 256	/**< Maximum number of technologies overall. */
-#define MAX_TECHLINKS 16	/**< Maximum number of requirements in a technology (i.e in requireAND and requireOR).
-				 *   Needs to be synced with MAX_TECHLINKS in q_shared.h */
+#define MAX_TECHLINKS 16	/**< Maximum number of requirements in a technology (i.e in requireAND and requireOR). */
 #define MAX_DESCRIPTIONS 8	/**< Maximum number of descriptions (per tech and description-type). */
 
 #define TECH_INVALID -1	/**< The value for an "undef" tech-index. */
@@ -72,6 +66,7 @@ typedef enum requirementType_s {
 	RS_LINK_ALIEN_DEAD,
 	RS_LINK_ALIEN_GLOBAL,
 	RS_LINK_UFO,
+	RS_LINK_ANTIMATTER,
 	MAX_RS_LINKTYPES
 } requirementType_t;
 
@@ -152,7 +147,7 @@ typedef struct technology_s {
 	researchType_t type;		/**< Defines what type this tech-entry is an where to search for other information "tech", "weapon" etc... see research.ufo for more */
 
 	struct technology_s *redirect;	/**< Set this to the entry that is supposed to get displayed instead of this one.
-									 * Mopstly used for e.g ammo that doesn't need its own description but rather the one for the weapon. */
+									 * Mostly used for e.g ammo that doesn't need its own description but rather the one for the weapon. */
 
 	requirements_t requireAND;	/**< A list of requirements that ALL need to be met (= AND-related) See struct above. */
 	requirements_t requireOR;	/**< A list of requirements where ANY need to be met (= OR-related) See struct above. */
@@ -175,7 +170,7 @@ typedef struct technology_s {
 	struct base_s	*base;	/**< The base this tech is researched in. */
 	int scientists;			/**< How many scientists (from "base") are researching this tech. */
 
-	char *image;			/**< Image to display in the Ufopedia and other menues for this tech.
+	char *image;			/**< Image to display in the Ufopedia and other menus for this tech.
 							 * If not set in the .ufo file this is auto-set in RS_InitTree.
 							 * @sa cl_research.c: RS_InitTree */
 	char *mdl;				/**< Same as "image" but it's a 3d model.. */
@@ -195,7 +190,7 @@ typedef struct technology_s {
 	markResearched_t markResearched;	/**< Mark as researched at parsing state - but i only know the date if we already started a campaign. */
 
 	/* Pedia info */
-	pediaChapter_t *upChapter;					/**< UFOpaedia chapter as stored in research.ufo. */
+	struct pediaChapter_s *upChapter;					/**< UFOpaedia chapter as stored in research.ufo. */
 	struct technology_s *upPrev;	/**< Previous tech in pedia. */
 	struct technology_s *upNext;	/**< Next tech in pedia. */
 
@@ -214,6 +209,7 @@ qboolean RS_IsResearched_idx(int techIdx);
 qboolean RS_IsResearched_ptr(const technology_t *tech);
 int RS_Collected_(const technology_t * tech);
 
+technology_t* RS_GetTechForItem(const objDef_t *item);
 void RS_AddObjectTechs(void);
 void RS_RequiredLinksAssign(void);
 void RS_InitTree(qboolean load);
@@ -240,8 +236,8 @@ qboolean RS_ScriptSanityCheck(void);
 
 /* UFOpaedia function - but needs technology_t */
 void UP_AircraftDescription(const technology_t* t);
-void UP_UGVDescription(const ugv_t *ugvType);
+void UP_UGVDescription(const struct ugv_s *ugvType);
 
-qboolean RS_RequirementsMet(const requirements_t *required_AND, const requirements_t *required_OR, const struct base_s *base);
+qboolean RS_RequirementsMet(const requirements_t *requiredAND, const requirements_t *requiredOR, const struct base_s *base);
 
 #endif /* CLIENT_CL_RESEARCH_H */

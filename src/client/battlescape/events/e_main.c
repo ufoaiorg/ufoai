@@ -70,7 +70,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static qboolean CL_CheckDefault (const eventRegister_t *self, const struct dbuffer *msg)
 {
 	const int number = NET_PeekShort(msg);
-	qboolean result = LE_IsLocked(number);
+	const qboolean result = LE_IsLocked(number);
 	if (result)
 		Com_DPrintf(DEBUG_EVENTSYS, "CL_CheckDefault: Delaying event on entnum %i.\n", number);
 	return (!result);
@@ -103,12 +103,12 @@ const eventRegister_t events[] = {
 	{E(EV_ACTOR_MOVE), "!sbbs", CL_ActorDoMove, CL_ActorDoMoveTime, CL_CheckDefault}, /* Don't use this format string - see CL_ActorDoMove for more info */
 	{E(EV_ACTOR_REACTIONFIRECHANGE), "sbbs", CL_ActorReactionFireChange, NULL, NULL},
 
-	{E(EV_ACTOR_START_SHOOT), "ssbbbgg", CL_ActorStartShoot, NULL, NULL},
-	{E(EV_ACTOR_SHOOT), "sssbbbbbppb", CL_ActorDoShoot, CL_ActorDoShootTime, NULL}, /**< @sa NET_WriteDir */
+	{E(EV_ACTOR_START_SHOOT), "sbgg", CL_ActorStartShoot, NULL, NULL},
+	{E(EV_ACTOR_SHOOT), "ssbsbbbbbppb", CL_ActorDoShoot, CL_ActorDoShootTime, NULL}, /**< @sa NET_WriteDir */
 	{E(EV_ACTOR_SHOOT_HIDDEN), "bsbb", CL_ActorShootHidden, CL_ActorShootHiddenTime, NULL},
 	{E(EV_ACTOR_THROW), "ssbbbpp", CL_ActorDoThrow, CL_ActorDoThrowTime, NULL},
 
-	{E(EV_ACTOR_DIE), "sss", CL_ActorDie, NULL, CL_CheckDefault},
+	{E(EV_ACTOR_DIE), "ss", CL_ActorDie, NULL, CL_CheckDefault},
 	{E(EV_ACTOR_STATS), "!sbsbb", CL_ActorStats, NULL, NULL},
 	{E(EV_ACTOR_STATECHANGE), "ss", CL_ActorStateChange, NULL, NULL},
 	{E(EV_ACTOR_RESERVATIONCHANGE), "ssss", CL_ActorReservationChange, NULL, NULL},
@@ -133,11 +133,11 @@ const eventRegister_t events[] = {
 };
 CASSERT(lengthof(events) == EV_NUM_EVENTS);
 
-const eventRegister_t *CL_GetEvent (const int eType)
+const eventRegister_t *CL_GetEvent (const event_t eType)
 {
-	int i;
+	event_t i;
 
-	for (i = 0; i < EV_NUM_EVENTS; i++) {
+	for (i = EV_NULL; i < EV_NUM_EVENTS; i++) {
 		if (events[i].type == eType)
 			return &events[i];
 	}

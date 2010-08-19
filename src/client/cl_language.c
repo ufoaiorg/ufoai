@@ -26,10 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_language.h"
 #include "../shared/parse.h"
+#include "../ports/system.h"
 
-#include "menu/m_main.h"
-#include "menu/m_font.h"
-#include "menu/node/m_node_abstractoption.h"
+#include "ui/ui_main.h"
+#include "ui/ui_font.h"
+#include "ui/node/ui_node_abstractoption.h"
 
 /**
  * @brief List of all mappings for a locale
@@ -219,7 +220,7 @@ void CL_LanguageInit (void)
 {
 	int i;
 	language_t* language;
-	menuOption_t *languageOption = NULL;
+	uiNode_t *languageOption = NULL;
 	char systemLanguage[MAX_VAR];
 
 	if (s_language->string[0] != '\0') {
@@ -249,13 +250,13 @@ void CL_LanguageInit (void)
 
 		/* Test the locale first, add to list if setting given locale possible. */
 		if (CL_LanguageTest(language->localeID) || !strcmp(language->localeID, "none")) {
-			MN_AddOption(&languageOption, "", language->localeString, language->localeID);
+			UI_AddOption(&languageOption, "", language->localeString, language->localeID);
 		}
 	}
 
 	/* sort the list, and register it to the menu */
-	MN_SortOptions(&languageOption);
-	MN_RegisterOption(OPTION_LANGUAGES, languageOption);
+	UI_SortOptions(&languageOption);
+	UI_RegisterOption(OPTION_LANGUAGES, languageOption);
 
 	/* Set to the locale remembered previously. */
 	CL_LanguageTryToSet(systemLanguage);
@@ -268,7 +269,7 @@ static void CL_NewLanguage (void)
 {
 	R_FontShutdown();
 	R_FontInit();
-	MN_InitFonts();
+	UI_InitFonts();
 	R_FontSetTruncationMarker(_("..."));
 }
 

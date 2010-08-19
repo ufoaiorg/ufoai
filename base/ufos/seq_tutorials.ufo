@@ -37,7 +37,7 @@ sequence tut_gameplay
 		align	uc
 		color	"0 0.6 0 1"
 		speed	"0 10"
-		font	f_big
+		font	"f_big"
 	}
 	2dobj gameplay_continue_txt
 	{
@@ -45,7 +45,7 @@ sequence tut_gameplay
 		pos		"512 750"
 		align	uc
 		color	"0 0.6 0 1"
-		font	f_small
+		font	"f_small"
 	}
 	wait 4
 	2dobj gameplay_welcome { speed "0 0" }
@@ -58,7 +58,7 @@ sequence tut_gameplay
 		pos		"512 100"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 1
 
@@ -96,7 +96,7 @@ sequence tut_gameplay
 		pos		"512 125"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 2
 	2dobj gameplay_pic2a
@@ -133,7 +133,7 @@ sequence tut_gameplay
 		pos		"512 150"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 1
 	2dobj gameplay_pic3a
@@ -152,7 +152,7 @@ sequence tut_gameplay
 		pos		"512 175"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 1
 	2dobj gameplay_pic4a
@@ -189,7 +189,7 @@ sequence tut_gameplay
 		pos		"512 200"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 2
 	2dobj gameplay_pic5a
@@ -227,7 +227,7 @@ sequence tut_gameplay
 		pos		"512 225"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 2
 	2dobj gameplay_pic6a
@@ -255,7 +255,7 @@ sequence tut_gameplay
 		pos		"512 250"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 2
 	2dobj gameplay_pic7a
@@ -274,7 +274,7 @@ sequence tut_gameplay
 		pos		"512 275"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 2
 	2dobj gameplay_pic8a
@@ -299,7 +299,7 @@ sequence tut_gameplay
 		pos	"512 550"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 300
 
@@ -345,7 +345,7 @@ sequence tut_tacticalmission
 		align	uc
 		color	"0 0.6 0 1"
 		speed	"0 40"
-		font	f_big
+		font	"f_big"
 	}
 	wait 4
 	2dobj tactical_welcome { speed	"0 0" }
@@ -387,7 +387,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem level_hover
@@ -399,7 +399,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem switch_level_text2
@@ -420,7 +420,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem current_soldier_hover
@@ -442,7 +442,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem soldier_hover
@@ -454,7 +454,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem switch_soldier_text2
@@ -475,7 +475,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem stats_hover
@@ -497,7 +497,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem bars_hover
@@ -519,7 +519,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem inventory_hover
@@ -548,7 +548,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem weapon_hover1
@@ -571,7 +571,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem ammo_hover
@@ -601,7 +601,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem reload_hover
@@ -631,7 +631,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem primary_attack_hover
@@ -661,7 +661,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem secondary_attack_hover
@@ -684,7 +684,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem reaction_hover
@@ -706,7 +706,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem crouch_hover
@@ -728,7 +728,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem visible_aliens_hover
@@ -750,7 +750,7 @@ sequence tut_tacticalmission
 		pos	"512 370"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem end_round_hover
@@ -787,7 +787,7 @@ sequence tut_skirmish
 		align	uc
 		color	"0 0.6 0 1"
 		speed	"0 40"
-		font	f_big
+		font	"f_big"
 	}
 	wait 4
 	2dobj skirmish_welcome { speed "0 0" }
@@ -797,7 +797,7 @@ sequence tut_skirmish
 		pos	"512 250"
 		align	lc
 		color	"0 0.6 0 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 2
 	rem skirmish_welcome
@@ -837,7 +837,7 @@ sequence tut_skirmish
 		size	"290 250"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem equipment_text
@@ -850,7 +850,7 @@ sequence tut_skirmish
 		align	ul
 		bgcolor	"1 0 0 0.6"
 	}
- 
+
 	2dobj day_text
 	{
 		text	"_Day or night version of map to play"
@@ -858,7 +858,7 @@ sequence tut_skirmish
 		size	"290 250"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem day_hover
@@ -871,7 +871,7 @@ sequence tut_skirmish
 		align	ul
 		bgcolor	"1 0 0 0.6"
 	}
- 
+
 	2dobj aliens_text
 	{
 		text	"_How many aliens will fight versus you"
@@ -879,7 +879,7 @@ sequence tut_skirmish
 		size	"290 250"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem aliens_hover
@@ -892,7 +892,7 @@ sequence tut_skirmish
 		align	ul
 		bgcolor	"1 0 0 0.6"
 	}
- 
+
 	2dobj team_text
 	{
 		text	"_Select your team"
@@ -900,7 +900,7 @@ sequence tut_skirmish
 		size	"290 250"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem team_hover
@@ -913,7 +913,7 @@ sequence tut_skirmish
 		align	ul
 		bgcolor	"1 0 0 0.6"
 	}
- 
+
 	2dobj _text
 	{
 		text	"_Select UFO to secure \n(if possible for current map)"
@@ -921,7 +921,7 @@ sequence tut_skirmish
 		size	"290 250"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem _hover
@@ -934,7 +934,7 @@ sequence tut_skirmish
 		align	ul
 		bgcolor	"1 0 0 0.6"
 	}
- 
+
 	2dobj _text
 	{
 		text	"_Select dropship\n(if possible for current map)"
@@ -942,7 +942,7 @@ sequence tut_skirmish
 		size	"290 250"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem _hover
@@ -955,7 +955,7 @@ sequence tut_skirmish
 		align	ul
 		bgcolor	"1 0 0 0.6"
 	}
- 
+
 	2dobj _text
 	{
 		text	"_Select map to play"
@@ -963,7 +963,7 @@ sequence tut_skirmish
 		size	"290 250"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem _hover
@@ -976,7 +976,7 @@ sequence tut_skirmish
 		size	"290 50"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 2
 	2dobj _hover
@@ -993,7 +993,7 @@ sequence tut_skirmish
 		size	"290 200"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 3
 	rem _hover
@@ -1005,7 +1005,7 @@ sequence tut_skirmish
 		size	"290 50"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 2
 	rem and_text
@@ -1024,7 +1024,7 @@ sequence tut_skirmish
 		size	"290 150"
 		align	uc
 		color	"1 1 1 1"
-		font	f_big
+		font	"f_big"
 	}
 	wait 5
 	rem or_text
@@ -1058,16 +1058,16 @@ sequence tut_multiplayer
 		pos	"512 10"
 		align	uc
 		color	"1 1 1 1"
-		font	f_normal
+		font	"f_normal"
 	}
-	
+
 	2dobj lobby_text
 	{
 		text	"_You should connect to the lobby and wait for invitations or start your own server"
 		pos	"512 40"
 		align	uc
 		color	"1 1 1 1"
-		font	f_normal
+		font	"f_normal"
 	}
 
 	2dobj lobby2_text
@@ -1076,7 +1076,7 @@ sequence tut_multiplayer
 		pos	"512 70"
 		align	uc
 		color	"1 1 1 1"
-		font	f_normal
+		font	"f_normal"
 	}
 
 	2dobj timeout_text
@@ -1085,11 +1085,11 @@ sequence tut_multiplayer
 		pos	"512 100"
 		align	uc
 		color	"1 1 1 1"
-		font	f_normal
+		font	"f_normal"
 	}
 
 	wait 20
-	
+
 	rem timeout_text
 	rem lobby_text
 	rem lobby2_text

@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 DTD:
 
-<!ELEMENT savegame (bases research campaign market employees* alienCont UFOs projectiles
+<!ELEMENT savegame (bases research campaign interests missions market employees* alienCont UFOs projectiles
 	installations storedUFOs production messages stats nations transfers alienBases 
 	XVI messageOptions)>
 <!ATTLIST savegame

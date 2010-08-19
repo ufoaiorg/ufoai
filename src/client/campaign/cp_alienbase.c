@@ -23,8 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../mxml/mxml_ufoai.h"
+#include "../cl_shared.h"
 #include "cp_campaign.h"
 #include "cp_alienbase.h"
 #include "cp_map.h"
@@ -234,13 +233,11 @@ void AB_UpdateStealthForAllBase (void)
 	int baseIdx;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
-		int aircraftIdx;
-		if (!base)
-			continue;
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		aircraft_t *aircraft;
 
-		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
-			const aircraft_t const *aircraft = &base->aircraft[aircraftIdx];
+		aircraft = NULL;
+		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			alienBase_t* alienBase;
 
 			/* Only aircraft on geoscape can detect alien bases */
@@ -370,7 +367,7 @@ static void AB_AlienBaseList_f (void)
 #endif
 
 /**
- * @sa MN_InitStartup
+ * @sa UI_InitStartup
  */
 void AB_InitStartup (void)
 {

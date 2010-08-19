@@ -14,7 +14,7 @@ component panel myAllocatedPanel {
 	spinner changeValue
 	{
 		tooltip		"_Buy and sell item"
-		image		ui/spinner_blue
+		image		"ui/spinner_blue"
 		pos			"40 0"
 		min			0
 		max			10
@@ -45,14 +45,14 @@ window unittest_nodeallocation
 		size		"300 350"
 		bgcolor		"0.3 0.3 0.3 1"
 		onViewChange {
-			*node:(abstractscrollbar)root.dyn_scroll@fullsize = <fullsize>
-			*node:(abstractscrollbar)root.dyn_scroll@current = <viewpos>
-			*node:(abstractscrollbar)root.dyn_scroll@viewsize = <viewsize>
+			*node:root.dyn_scroll@fullsize = <fullsize>
+			*node:root.dyn_scroll@current = <viewpos>
+			*node:root.dyn_scroll@viewsize = <viewsize>
 		}
 	}
 
 	vscrollbar dyn_scroll {
-		image		ui/scrollbar_v_green
+		image		"ui/scrollbar_v_green"
 		pos			"310 140"
 		height		"350"
 		onChange		{ *node:root.dyn@viewpos = <current> }
@@ -64,11 +64,11 @@ window unittest_nodeallocation
 		string "create"
 		onClick {
 			call *node:root.dyn@createchild ( "foo<cvar:nb>" , "string" )
-			*node:(string)root.dyn.foo<cvar:nb>@top = ( *cvar:nb * 20 )
-			*node:(string)root.dyn.foo<cvar:nb>@width = 100
-			*node:(string)root.dyn.foo<cvar:nb>@height = 20
-			*node:(string)root.dyn.foo<cvar:nb>@string = "foo<cvar:nb>"
-			*node:(string)root.dyn.foo<cvar:nb>@onClick = {
+			*node:root.dyn.foo<cvar:nb>@top = ( *cvar:nb * 20 )
+			*node:root.dyn.foo<cvar:nb>@width = 100
+			*node:root.dyn.foo<cvar:nb>@height = 20
+			*node:root.dyn.foo<cvar:nb>@string = "foo<cvar:nb>"
+			*node:root.dyn.foo<cvar:nb>@onClick = {
 				*node:this@num = ( ( *node:this@num + 1 ) % 4 )
 				if ( *node:this@num == 0 ) {
 					*node:this@color = "1 1 1 1"
@@ -82,10 +82,10 @@ window unittest_nodeallocation
 			}
 
 			call *node:root.dyn@createchild ( "panel<cvar:nb>" , "myAllocatedPanel" )
-			*node:(panel)root.dyn.panel<cvar:nb>@top = ( *cvar:nb * 20 )
-			*node:(panel)root.dyn.panel<cvar:nb>@left = 100
+			*node:root.dyn.panel<cvar:nb>@top = ( *cvar:nb * 20 )
+			*node:root.dyn.panel<cvar:nb>@left = 100
 			*cvar:foo<cvar:nb> = 1
-			call *node:(panel)root.dyn.panel<cvar:nb>.initCvar ( "foo<cvar:nb>" )
+			call *node:root.dyn.panel<cvar:nb>.initCvar ( "foo<cvar:nb>" )
 
 			*cvar:nb = ( *cvar:nb + 1 )
 		}

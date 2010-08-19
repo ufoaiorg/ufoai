@@ -14,7 +14,7 @@ window model_test
 {
 	model mdl
 	{
-		model	*cvar:mn_model
+		src		*cvar:mn_model
 		origin	"0 0 0"
 		scale	"1 1 1"
 		angles	"0 0 0"

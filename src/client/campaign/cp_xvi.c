@@ -23,10 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../renderer/r_overlay.h"
-#include "../mxml/mxml_ufoai.h"
+#include "../cl_shared.h"
 #include "cp_campaign.h"
+#include "cp_overlay.h"
 #include "cp_map.h"
 #include "cp_xvi.h"
 #include "save/save_xvi.h"
@@ -58,7 +57,7 @@ void CP_SpreadXVIAtPos (const vec2_t pos)
 	if (!CP_IsXVIResearched())
 		return;
 
-	R_ChangeXVILevel(pos, XVI_FACTOR);
+	CP_ChangeXVILevel(pos, XVI_FACTOR);
 
 	xviNationInfectionNeedsUpdate = qtrue;
 }
@@ -76,7 +75,7 @@ void CP_ReduceXVIEverywhere (void)
 	if (ccs.date.day % XVI_DECREASE_DAYS)
 		return;
 
-	R_DecreaseXVILevelEverywhere();
+	CP_DecreaseXVILevelEverywhere();
 
 	xviNationInfectionNeedsUpdate = qtrue;
 }
@@ -115,7 +114,7 @@ void CP_UpdateNationXVIInfection (void)
 	for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++)
 		xviInfection[nationIdx] = 0;
 
-	R_GetXVIMapDimensions(&width, &height);
+	CP_GetXVIMapDimensions(&width, &height);
 	heightPerDegree = height / 180.0f;
 	widthPerDegree = width / 360.0f;
 	normalizingArea = width * height / AREA_FACTOR;
@@ -141,7 +140,7 @@ void CP_UpdateNationXVIInfection (void)
 				nation = MAP_GetNation(currentPos);
 			}
 			if (nation) {
-				const int xviLevel = R_GetXVILevel(x, y);
+				const int xviLevel = CP_GetXVILevel(x, y);
 				if (xviLevel > 0)
 					sum[nation->idx] += xviLevel;
 			}
@@ -233,7 +232,7 @@ qboolean XVI_SaveXML (mxml_node_t *p)
 	int height;
 	mxml_node_t *n;
 
-	R_GetXVIMapDimensions(&width, &height);
+	CP_GetXVIMapDimensions(&width, &height);
 
 	n = mxml_AddNode(p, SAVE_XVI_XVI);
 	mxml_AddInt(n, SAVE_XVI_WIDTH, width);
@@ -242,7 +241,7 @@ qboolean XVI_SaveXML (mxml_node_t *p)
 	for (y = 0; y < height; y++) {
 		int x;
 		for (x = 0; x < width; x++) {
-			const int xviLevel = R_GetXVILevel(x, y);
+			const int xviLevel = CP_GetXVILevel(x, y);
 			/* That saves many bytes in the savegame */
 			if (xviLevel > 0) {
 				mxml_node_t *s = mxml_AddNode(n, SAVE_XVI_ENTRY);
@@ -268,7 +267,7 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 	mxml_node_t *n = mxml_GetNode(p, SAVE_XVI_XVI);
 	/* If there is no XVI, it will not be loaded */
 	if (!n) {
-		R_InitializeXVIOverlay(NULL);
+		CP_InitializeXVIOverlay(NULL);
 		return qtrue;
 	}
 
@@ -281,7 +280,7 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 		const int level = mxml_GetInt(s, SAVE_XVI_LEVEL, 0);
 
 		if (x >= 0 && x < width && y >= 0 && y <= height)
-			R_SetXVILevel(x, y, level);
+			CP_SetXVILevel(x, y, level);
 	}
 	return qtrue;
 }

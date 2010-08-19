@@ -95,7 +95,6 @@ qboolean AIM_SelectableCraftItem(const aircraftSlot_t *slot, const technology_t 
 aircraftSlot_t *BDEF_GetBaseSlotByIDX(base_t *base, aircraftItemType_t type, int idx);
 aircraftSlot_t *BDEF_GetInstallationSlotByIDX(installation_t *installation, aircraftItemType_t type, int idx);
 aircraftSlot_t *AII_GetAircraftSlotByIDX(aircraft_t *aircraft, aircraftItemType_t type, int idx);
-void AII_CorrectAircraftSlotPointers(aircraft_t *aircraft);
 
 qboolean AII_ReloadWeapon(aircraftSlot_t *slot);
 void AII_ReloadAircraftWeapons(aircraft_t *aircraft);

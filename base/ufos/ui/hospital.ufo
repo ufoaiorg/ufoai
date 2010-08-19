@@ -3,7 +3,10 @@
 // ==================
 
 component cmpDefNamedTbar cmpHospitalNamedTbar {
-	pic			bdr { 
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
+	image	bdr {
 		pos "17 18"
 	}
 	tbar		bar {
@@ -18,12 +21,12 @@ component panel cmpHospitalPanel {
 	{
 	size "300 85"
 	}
-	pic button {
-		image ui/hosp_button_green
+	image button {
+		src "ui/hosp_button_green"
 		pos "0 0"
 	}
 
-	pic icon	{ visiblewhen "exists *cvar:mn_hos_item<node:parent@num>"		image icons/health_unused 	pos "248  11" }
+	image icon	{ visiblewhen "exists *cvar:mn_hos_item<node:parent@num>"		src "icons/health_unused" 	pos "248  11" }
 
 	string item	{ pos "15 10"	color "1 1 1 1"	size "220 16" }
 
@@ -41,13 +44,16 @@ component panel cmpHospitalPanel {
 
 window hospital
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	ui/base_bg
+		src	"background/base_bg"
 	}
 
 	// ==================
@@ -60,9 +66,9 @@ window hospital
 		string	*cvar:mn_base_title
 		pos	"60 30"
 		size "500 32"
-		textalign	cl
+		textalign	ALIGN_CL
 		padding	8
-		font	f_big
+		font	"f_big"
 	}
 
 	string txt_credits_caption
@@ -70,7 +76,7 @@ window hospital
 		string		"_CREDITS"
 		pos			"675 30"
 		size		"100 30"
-		font		f_big
+		font		"f_big"
 	}
 
 	string txt_credits
@@ -79,16 +85,17 @@ window hospital
 		string		*cvar:mn_credits
 		pos			"780 30"
 		size		"130 30"
-		font		f_big
-		textalign	ur
+		font		"f_big"
+		textalign	ALIGN_UR
 	}
 
 	custombutton bt_continue
 	{
 		tooltip	"_Back to baseview"
-		image	ui/button_background
-		texl	"1 1"	size	"59 55"
+		image	"ui/button_background"
+		texl	"1 1"
 		pos		"950 20"
+		size	"59 55"
 		icon	"return"
 		onClick	{ cmd "mn_pop;" }
 	}
@@ -101,32 +108,32 @@ window hospital
 	{
 		*cvar:i = 0
 		while ( *cvar:i < 20 ) {
-			*hos<cvar:i>.button@image = ui/hosp_button_green
-			*hos<cvar:i>.click_button@tooltip = "_Unused"
+			*node:root.hos<cvar:i>.button@src = "ui/hosp_button_green"
+			*node:root.hos<cvar:i>.click_button@tooltip = "_Unused"
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	delete *cvar:i
 	}
 
 	confunc hospitalserious	{
-		*hos<1>.icon@image				= icons/health_critical
-		*hos<1>.button@image			= ui/hosp_button_light
-		*hos<1>.click_button@tooltip	= "_Heavily wounded"
+		*node:root.hos<1>.icon@src				= "icons/health_critical"
+		*node:root.hos<1>.button@src			= "ui/hosp_button_light"
+		*node:root.hos<1>.click_button@tooltip	= "_Heavily wounded"
 	}
 	confunc hospitalmedium	{
-		*hos<1>.icon@image				= icons/health_medium
-		*hos<1>.button@image			= ui/hosp_button_light
-		*hos<1>.click_button@tooltip	= "_Medium wounds"
+		*node:root.hos<1>.icon@src				= "icons/health_medium"
+		*node:root.hos<1>.button@src			= "ui/hosp_button_light"
+		*node:root.hos<1>.click_button@tooltip	= "_Medium wounds"
 	}
 	confunc hospitallight	{
-		*hos<1>.icon@image				= icons/health_normal
-		*hos<1>.button@image			= ui/hosp_button_light
-		*hos<1>.click_button@tooltip	= "_Slightly wounded"
+		*node:root.hos<1>.icon@src				= "icons/health_normal"
+		*node:root.hos<1>.button@src			= "ui/hosp_button_light"
+		*node:root.hos<1>.click_button@tooltip	= "_Slightly wounded"
 	}
 	confunc hospitalunused	{
-		*hos<1>.icon@image				= icons/health_unused
-		*hos<1>.button@image			= ui/hosp_button_green
-		*hos<1>.click_button@tooltip	= "_Unused"
+		*node:root.hos<1>.icon@src				= "icons/health_unused"
+		*node:root.hos<1>.button@src			= "ui/hosp_button_green"
+		*node:root.hos<1>.click_button@tooltip	= "_Unused"
 	}
 
 	zone hos_scroll_zone
@@ -143,10 +150,10 @@ window hospital
 		}
 		bar health  {
 			current *cvar:mn_hos_hp0
-			max *cvar:mn_hos_hpmax0 
+			max *cvar:mn_hos_hpmax0
 		}
 	}
-	
+
 	cmpHospitalPanel hos1 {
 		{
 			pos "345 95"
@@ -156,7 +163,7 @@ window hospital
 			max *cvar:mn_hos_hpmax1
 		}
 	}
-	
+
 	cmpHospitalPanel hos2 {
 		{
 			pos "665 95"
@@ -166,7 +173,7 @@ window hospital
 			max *cvar:mn_hos_hpmax2
 		}
 	}
-	
+
 	cmpHospitalPanel hos3 {
 		{
 			pos "25 190"
@@ -176,7 +183,7 @@ window hospital
 			max *cvar:mn_hos_hpmax3
 		}
 	}
-	
+
 	cmpHospitalPanel hos4 {
 		{
 			pos "345 190"
@@ -186,7 +193,7 @@ window hospital
 			max *cvar:mn_hos_hpmax4
 		}
 	}
-	
+
 	cmpHospitalPanel hos5 {
 		{
 			pos "665 190"
@@ -196,7 +203,7 @@ window hospital
 			max *cvar:mn_hos_hpmax5
 		}
 	}
-	
+
 	cmpHospitalPanel hos6 {
 		{
 			pos "25 285"
@@ -206,7 +213,7 @@ window hospital
 			max *cvar:mn_hos_hpmax6
 		}
 	}
-	
+
 	cmpHospitalPanel hos7 {
 		{
 			pos "345 285"
@@ -376,11 +383,11 @@ window hospital
 		cmd "hosp_init;"
 		*cvar:i = 0
 		while ( *cvar:i < 20 ) {
-			*hos<cvar:i>@num = <cvar:i>
-			*hos<cvar:i>.item@string = *cvar:mn_hos_item<cvar:i>
-			*hos<cvar:i>.rank@string = *cvar:mn_hos_rank<cvar:i>
-//			*hos<cvar:i>.health@current = *cvar:mn_hos_hp<cvar:i>
-//			*hos<cvar:i>.health@max = *cvar:mn_hos_hpmax<cvar:i>
+			*node:root.hos<cvar:i>@num = <cvar:i>
+			*node:root.hos<cvar:i>.item@string = *cvar:mn_hos_item<cvar:i>
+			*node:root.hos<cvar:i>.rank@string = *cvar:mn_hos_rank<cvar:i>
+//			*node:root.hos<cvar:i>.health@current = *cvar:mn_hos_hp<cvar:i>
+//			*node:root.hos<cvar:i>.health@max = *cvar:mn_hos_hpmax<cvar:i>
 			*cvar:i = ( *cvar:i + 1 )
 		}
 	delete *cvar:i
@@ -393,13 +400,16 @@ window hospital
 // ======================
 window hospital_employee
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	ui/base_bg
+		src	"background/base_bg"
 	}
 
 	// ==================
@@ -416,7 +426,7 @@ window hospital_employee
 	panel actorinfo {
 		pos		"457 101"
 		size	"555 471"
-		image	ui/panel_grey_green_large
+		image	"ui/panel_grey_green_large"
 	}
 
 	string txt_name
@@ -429,7 +439,7 @@ window hospital_employee
 	model body
 	{
 		{
-			model	*cvar:mn_body
+			src		*cvar:mn_body
 			skin	*cvar:mn_skin
 			anim	"stand2"
 			angles	"0 70 90"
@@ -438,18 +448,18 @@ window hospital_employee
 			size	"200 350"
 			origin	"0 -35 0"
 		}
-		
+
 		model head
 		{
-			model	*cvar:mn_head
+			src		*cvar:mn_head
 			skin	*cvar:mn_skin
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"
 		}
 	}
 
-	pic	rank_img { pos "475 470" image *cvar:mn_chrrank_img }
-	string	rank_lbl { pos "475 175" size "200 20" string *cvar:mn_chrrank longlines prettychop }
+	image	rank_img { pos "475 470" src *cvar:mn_chrrank_img }
+	string	rank_lbl { pos "475 175" size "200 20" string *cvar:mn_chrrank longlines LONGLINES_PRETTYCHOP }
 
 	cmpHospitalNamedTbar pwr {
 		{
@@ -496,7 +506,7 @@ window hospital_employee
 		string val { string *cvar:mn_tcls }
 	}
 
-	cmpHospitalNamedTbar  {
+	cmpHospitalNamedTbar hvy {
 		{
 			pos "690 342"
 		}
@@ -536,9 +546,24 @@ window hospital_employee
 		{
 			pos "690 476"
 		}
-		tbar bar   { current *cvar:mn_hp max *cvar:mn_hpmax image ui/bar_health }
-		string lbl { string "_Health:" font f_normal longlines prettychop }
-		string val { string *cvar:mn_hp  font f_normal longlines prettychop }
+		tbar bar   
+		{ 
+			current *cvar:mn_hp 
+			max *cvar:mn_hpmax 
+			image "ui/bar_health" 
+		}
+		string lbl 
+		{
+			string "_Health:" 
+			font "f_normal" 
+			longlines LONGLINES_PRETTYCHOP
+		}
+		string val 
+		{ 
+			string *cvar:mn_hp  
+			font "f_normal" 
+			longlines LONGLINES_PRETTYCHOP 
+		}
 	}
 
 	// ==================
@@ -548,17 +573,17 @@ window hospital_employee
 	panel buttonpanel {
 		pos		"26 101"
 		size	"276 471"
-		image	ui/panel_grey_green_large
+		image	"ui/panel_grey_green_large"
 	}
 
 	button button_hosp_bionic_start
 	{
 		string		"_Implants"
 		color		"0 0.8 0 1"
-		image		ui/button_green_small
+		image		"ui/button_green_small"
 		pos			"60 270"
 		size		"207 48"
-		font		f_menu
+		font		"f_menu"
 		tooltip		"_Not implemented"
 		disabled	true
 	}

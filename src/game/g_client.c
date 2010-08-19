@@ -198,12 +198,15 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
 			gi.WriteByte(min(MAX_SKILL, GET_MORALE(check->chr.score.skills[ABILITY_MIND])));
 			gi.WriteShort(check->chr.maxHP);
 
-			if (playerMask & G_TeamToPM(check->team)) {
-				gi.AddEvent(playerMask & G_TeamToPM(check->team), EV_ACTOR_STATECHANGE);
-				gi.WriteShort(check->number);
-				gi.WriteShort(check->state);
+			{
+				const int mask = G_TeamToPM(check->team) & playerMask;
+				if (mask) {
+					gi.AddEvent(mask, EV_ACTOR_STATECHANGE);
+					gi.WriteShort(check->number);
+					gi.WriteShort(check->state);
+					G_SendInventory(mask, check);
+				}
 			}
-			G_SendInventory(G_TeamToPM(check->team) & playerMask, check);
 			break;
 
 		case ET_ITEM:
@@ -218,7 +221,7 @@ void G_AppearPerishEvent (unsigned int playerMask, qboolean appear, edict_t *che
 
 		default:
 			if (G_IsVisibleOnBattlefield(check))
-				gi.error("Missing edict type %i in G_AppearPerishEvent", check->type);
+				gi.Error("Missing edict type %i in G_AppearPerishEvent", check->type);
 			break;
 		}
 	} else if (G_IsVisibleOnBattlefield(check)) {
@@ -287,6 +290,7 @@ int G_GetActiveTeam (void)
 	return level.activeTeam;
 }
 
+
 /**
  * @brief Checks whether the requested action is possible
  * @param[in] player Which player (human player) is trying to do the action
@@ -294,17 +298,11 @@ int G_GetActiveTeam (void)
  * @param[in] TU The time units to check against the ones ent has.
  * the action with
  */
-qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU)
+static qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU)
 {
 	/* don't check for a player - but maybe a server action */
 	if (!player)
 		return qtrue;
-
-	/* a generic tester if an action could be possible */
-	if (level.activeTeam != player->pers.team) {
-		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - this isn't your round!\n"));
-		return qfalse;
-	}
 
 	if (!ent || !ent->inuse) {
 		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - object not present!\n"));
@@ -345,6 +343,41 @@ qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU)
 }
 
 /**
+ * @brief Checks whether the requested action is possible for the current active team
+ * @param[in] player Which player (human player) is trying to do the action
+ * @param[in] ent Which of his units is trying to do the action.
+ * @param[in] TU The time units to check against the ones ent has.
+ * the action with
+ */
+qboolean G_ActionCheckForCurrentTeam (const player_t *player, edict_t *ent, int TU)
+{
+	/* don't check for a player - but maybe a server action */
+	if (!player)
+		return qtrue;
+
+	/* a generic tester if an action could be possible */
+	if (level.activeTeam != player->pers.team) {
+		G_ClientPrintf(player, PRINT_HUD, _("Can't perform action - this isn't your round!\n"));
+		return qfalse;
+	}
+
+	return G_ActionCheck(player, ent, TU);
+}
+
+/**
+ * @brief Checks whether the requested action is possible
+ * @param[in] player Which player (human player) is trying to do the action
+ * @param[in] ent Which of his units is trying to do the action.
+ * @param[in] TU The time units to check against the ones ent has.
+ * the action with
+ * @sa G_ActionCheck
+ */
+qboolean G_ActionCheckWithoutTeam (const player_t *player, edict_t *ent, int TU)
+{
+	return G_ActionCheck(player, ent, TU);
+}
+
+/**
  * @brief Sends the actual actor turn event over the netchannel
  */
 static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
@@ -352,7 +385,7 @@ static void G_ClientTurn (player_t * player, edict_t* ent, byte dv)
 	const int dir = getDVdir(dv);
 
 	/* check if action is possible */
-	if (!G_ActionCheck(player, ent, TU_TURN))
+	if (!G_ActionCheckForCurrentTeam(player, ent, TU_TURN))
 		return;
 
 	/* check if we're already facing that direction */
@@ -403,13 +436,13 @@ static void G_ClientStateChangeUpdate (edict_t *ent)
  * @param[in] ent the edict to perform the state change for
  * @param[in] reqState The bit-map of the requested state change
  * @param[in] checkaction only activate the events - network stuff is handled in the calling function
- * don't even use the G_ActionCheck function
+ * don't even use the G_ActionCheckForCurrentTeam function
  * @note Use checkaction true only for e.g. spawning values
  */
 void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qboolean checkaction)
 {
 	/* Check if any action is possible. */
-	if (checkaction && !G_ActionCheck(player, ent, 0))
+	if (checkaction && !G_ActionCheckForCurrentTeam(player, ent, 0))
 		return;
 
 	if (!reqState)
@@ -418,7 +451,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 	switch (reqState) {
 	case STATE_CROUCHED: /* Toggle between crouch/stand. */
 		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
-		if (!checkaction || G_ActionCheck(player, ent, TU_CROUCH)) {
+		if (!checkaction || G_ActionCheckForCurrentTeam(player, ent, TU_CROUCH)) {
 			G_ToggleCrouched(ent);
 			G_ActorUseTU(ent, TU_CROUCH);
 			G_ActorSetMaxs(ent);
@@ -451,7 +484,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
 		}
 		break;
 	default:
-		gi.dprintf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
+		gi.DPrintf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
 		return;
 	}
 
@@ -466,7 +499,7 @@ void G_ClientStateChange (const player_t* player, edict_t* ent, int reqState, qb
  * @brief Returns true if actor can reload weapon
  * @sa AI_ActorThink
  */
-qboolean G_ClientCanReload (player_t *player, edict_t *ent, containerIndex_t containerID)
+qboolean G_ClientCanReload (edict_t *ent, containerIndex_t containerID)
 {
 	invList_t *ic;
 	containerIndex_t container;
@@ -497,7 +530,7 @@ qboolean G_ClientCanReload (player_t *player, edict_t *ent, containerIndex_t con
  * is standing on a given point.
  * @sa AI_ActorThink
  */
-void G_ClientGetWeaponFromInventory (player_t *player, edict_t *ent)
+void G_ClientGetWeaponFromInventory (edict_t *ent)
 {
 	invList_t *ic;
 	invList_t *icFinal;
@@ -553,7 +586,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, edict_t *ent)
 qboolean G_ClientUseEdict (const player_t *player, edict_t *actor, edict_t *edict)
 {
 	/* check whether the actor has sufficient TUs to 'use' this edicts */
-	if (!G_ActionCheck(player, actor, edict->TU))
+	if (!G_ActionCheckForCurrentTeam(player, actor, edict->TU))
 		return qfalse;
 
 	if (!G_UseEdict(edict, actor))
@@ -585,6 +618,7 @@ int G_ClientAction (player_t * player)
 	actorHands_t hand, fmIdx, objIdx;
 	int resCrouch, resShot;
 	edict_t *ent;
+	const char *format;
 
 	/* read the header */
 	action = gi.ReadByte();
@@ -594,42 +628,44 @@ int G_ClientAction (player_t * player)
 	if (ent == NULL)
 		return action;
 
+	format = pa_format[action];
+
 	switch (action) {
 	case PA_NULL:
 		/* do nothing on a null action */
 		break;
 
 	case PA_TURN:
-		gi.ReadFormat(pa_format[PA_TURN], &i);
+		gi.ReadFormat(format, &i);
 		G_ClientTurn(player, ent, (byte) i);
 		break;
 
 	case PA_MOVE:
-		gi.ReadFormat(pa_format[PA_MOVE], &pos);
+		gi.ReadFormat(format, &pos);
 		G_ClientMove(player, player->pers.team, ent, pos);
 		break;
 
 	case PA_STATE:
-		gi.ReadFormat(pa_format[PA_STATE], &i);
+		gi.ReadFormat(format, &i);
 		G_ClientStateChange(player, ent, i, qtrue);
 		break;
 
 	case PA_SHOOT:
-		gi.ReadFormat(pa_format[PA_SHOOT], &pos, &i, &firemode, &from);
+		gi.ReadFormat(format, &pos, &i, &firemode, &from);
 		G_ClientShoot(player, ent, pos, i, firemode, NULL, qtrue, from);
 		break;
 
 	case PA_INVMOVE:
-		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
+		gi.ReadFormat(format, &from, &fx, &fy, &to, &tx, &ty);
 
 		if (from < 0 || from >= gi.csi->numIDs || to < 0 || to >= gi.csi->numIDs) {
-			gi.dprintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
+			gi.DPrintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
 		} else {
 			invDef_t *fromPtr = INVDEF(from);
 			invDef_t *toPtr = INVDEF(to);
 			invList_t *fromItem = INVSH_SearchInInventory(&ent->chr.i, fromPtr, fx, fy);
 			if (!fromItem)
-				gi.error("Could not find item in inventory of ent %i (type %i) at %i:%i",
+				gi.Error("Could not find item in inventory of ent %i (type %i) at %i:%i",
 						ent->number, ent->type, fx, fy);
 			G_ActorInvMove(ent, fromPtr, fromItem, toPtr, tx, ty, qtrue);
 		}
@@ -640,7 +676,7 @@ int G_ClientAction (player_t * player)
 			edict_t *door;
 
 			/* read the door the client wants to open */
-			gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
+			gi.ReadFormat(format, &i);
 
 			/* get the door edict */
 			door = G_EdictsGetByNum(i);
@@ -657,18 +693,18 @@ int G_ClientAction (player_t * player)
 		break;
 
 	case PA_REACT_SELECT:
-		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fmIdx, &objIdx);
+		gi.ReadFormat(format, &hand, &fmIdx, &objIdx);
 		G_ReactionFireUpdate(ent, fmIdx, hand, INVSH_GetItemByIDX(objIdx));
 		break;
 
 	case PA_RESERVE_STATE:
-		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resShot, &resCrouch);
+		gi.ReadFormat(format, &resShot, &resCrouch);
 
 		G_ActorReserveTUs(ent, ent->chr.reservedTus.reaction, resShot, resCrouch);
 		break;
 
 	default:
-		gi.error("G_ClientAction: Unknown action!\n");
+		gi.Error("G_ClientAction: Unknown action!\n");
 	}
 	return action;
 }
@@ -709,12 +745,12 @@ static void G_GetTeam (player_t * player)
 		}
 		/* we need at least 2 different team spawnpoints for multiplayer in a death match game */
 		if (spawnSpots < 2)
-			gi.error("G_GetTeam: Not enough spawn spots in map!");
+			gi.Error("G_GetTeam: Not enough spawn spots in map!");
 
 		/* assign random valid team number */
 		randomSpot = rand() % spawnSpots;
 		G_SetTeamForPlayer(player, spawnCheck[randomSpot]);
-		gi.dprintf("You have been randomly assigned to team %i\n", player->pers.team);
+		gi.DPrintf("You have been randomly assigned to team %i\n", player->pers.team);
 		return;
 	}
 
@@ -723,19 +759,19 @@ static void G_GetTeam (player_t * player)
 		G_SetTeamForPlayer(player, TEAM_PHALANX);
 	else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
-		gi.dprintf("Get a team for teamplay for %s\n", player->pers.netname);
+		gi.DPrintf("Get a team for teamplay for %s\n", player->pers.netname);
 		i = G_ClientGetTeamNumPref(player);
 		/* civilians are at team zero */
 		if (i > TEAM_CIVILIAN && sv_maxteams->integer >= i) {
 			G_SetTeamForPlayer(player, i);
 			gi.BroadcastPrintf(PRINT_CONSOLE, "serverconsole: %s has chosen team %i\n", player->pers.netname, i);
 		} else {
-			gi.dprintf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
+			gi.DPrintf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
 			G_SetTeamForPlayer(player, TEAM_DEFAULT);
 		}
 	} else {
 		/* search team */
-		gi.dprintf("Getting a multiplayer team for %s\n", player->pers.netname);
+		gi.DPrintf("Getting a multiplayer team for %s\n", player->pers.netname);
 		for (i = TEAM_CIVILIAN + 1; i < MAX_TEAMS; i++) {
 			if (level.num_spawnpoints[i]) {
 				qboolean teamAvailable = qtrue;
@@ -764,7 +800,7 @@ static void G_GetTeam (player_t * player)
 			Com_DPrintf(DEBUG_GAME, "Assigning %s to team %i\n", player->pers.netname, i);
 			G_SetTeamForPlayer(player, i);
 		} else {
-			gi.dprintf("No free team - disconnecting '%s'\n", player->pers.netname);
+			gi.DPrintf("No free team - disconnecting '%s'\n", player->pers.netname);
 			G_ClientDisconnect(player);
 		}
 	}
@@ -776,9 +812,13 @@ void G_SetTeamForPlayer (player_t* player, const int team)
 	assert(team >= TEAM_NO_ACTIVE && team < MAX_TEAMS);
 	player->pers.team = team;
 
-	if (team >= 0 && team < MAX_TEAMS) {
-		if (!level.num_spawnpoints[team])
-			gi.error("No spawnpoints for team %i", team);
+	/* if we started in dev mode, we maybe don't have a
+	 * starting position in this map */
+	if (!g_nospawn->integer) {
+		if (team >= 0 && team < MAX_TEAMS) {
+			if (!level.num_spawnpoints[team])
+				gi.Error("No spawnpoints for team %i", team);
+		}
 	}
 
 	if (!G_IsAIPlayer(player))
@@ -949,7 +989,7 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 			ent->morale = 100;
 		}
 	} else {
-		gi.error("G_ClientGetFreeSpawnPointForActorSize: unknown fieldSize for actor edict (actorSize: %i)\n",
+		gi.Error("G_ClientGetFreeSpawnPointForActorSize: unknown fieldSize for actor edict (actorSize: %i)\n",
 				actorSize);
 	}
 
@@ -961,6 +1001,7 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 	ent->pnum = player->num;
 	ent->chr.fieldSize = actorSize;
 	ent->fieldSize = ent->chr.fieldSize;
+	ent->flags |= FL_DESTROYABLE;
 
 	gi.LinkEdict(ent);
 
@@ -969,11 +1010,14 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 		ent->nextthink = 1;
 	}
 
-	if (ent->spawnflags & STATE_DEAD) {
-		ent->HP = 0;
+	if (ent->spawnflags & STATE_STUN) {
+		if (ent->spawnflags & STATE_DEAD)
+			ent->HP = 0;
 		ent->think = G_ThinkActorDieAfterSpawn;
 		ent->nextthink = 1;
 	}
+
+	G_TouchTriggers(ent);
 
 	return ent;
 }
@@ -993,7 +1037,7 @@ static void G_ClientReadInventory (edict_t *ent)
 		int x, y;
 		G_ReadItem(&item, &container, &x, &y);
 		if (game.i.AddToInventory(&game.i, &ent->chr.i, item, container, x, y, 1) == NULL)
-			gi.error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
+			gi.Error("G_ClientReadInventory failed, could not add item '%s' to container %i (x:%i,y:%i)",
 					item.t->id, container->id, x, y);
 	}
 }
@@ -1009,10 +1053,10 @@ static void G_ClientReadCharacter (edict_t *ent)
 
 	/* model */
 	ent->chr.ucn = gi.ReadShort();
-	Q_strncpyz(ent->chr.name, gi.ReadString(), sizeof(ent->chr.name));
-	Q_strncpyz(ent->chr.path, gi.ReadString(), sizeof(ent->chr.path));
-	Q_strncpyz(ent->chr.body, gi.ReadString(), sizeof(ent->chr.body));
-	Q_strncpyz(ent->chr.head, gi.ReadString(), sizeof(ent->chr.head));
+	gi.ReadString(ent->chr.name, sizeof(ent->chr.name));
+	gi.ReadString(ent->chr.path, sizeof(ent->chr.path));
+	gi.ReadString(ent->chr.body, sizeof(ent->chr.body));
+	gi.ReadString(ent->chr.head, sizeof(ent->chr.head));
 	ent->chr.skin = gi.ReadByte();
 
 	ent->chr.HP = gi.ReadShort();
@@ -1020,7 +1064,7 @@ static void G_ClientReadCharacter (edict_t *ent)
 	ent->chr.maxHP = gi.ReadShort();
 	teamDefIdx = gi.ReadByte();
 	if (teamDefIdx < 0 || teamDefIdx >= MAX_TEAMDEFS)
-		gi.error("Invalid team definition index given: %i", teamDefIdx);
+		gi.Error("Invalid team definition index given: %i", teamDefIdx);
 	ent->chr.teamDef = &gi.csi->teamDef[teamDefIdx];
 
 	ent->chr.gender = gi.ReadByte();
@@ -1094,9 +1138,9 @@ void G_ClientInitActorStates (const player_t * player)
 	for (i = 0; i < length; i++) {
 		const int ucn = gi.ReadShort();
 		int saveTU;
-		edict_t *ent = G_GetActorByUCN(ucn, player->pers.team);
+		edict_t *ent = G_ActorGetByUCN(ucn, player->pers.team);
 		if (!ent)
-			gi.error("Could not find character on team %i with unique character number %i", player->pers.team, ucn);
+			gi.Error("Could not find character on team %i with unique character number %i", player->pers.team, ucn);
 
 		/* these state changes are not consuming any TUs */
 		saveTU = ent->TU;
@@ -1138,6 +1182,8 @@ void G_ClientTeamInfo (const player_t * player)
 			G_ClientSkipActorInfo();
 		}
 	}
+
+	Com_Printf("Free inventory slots client %s spawn: %i\n", player->pers.netname, game.i.GetUsedSlots(&game.i));
 }
 
 /**
@@ -1187,12 +1233,6 @@ static void G_ClientSendEdictsAndBrushModels (const player_t *player)
  */
 qboolean G_ClientBegin (player_t* player)
 {
-	/* this doesn't belong here, but it works */
-	if (!level.routed) {
-		level.routed = qtrue;
-		G_CompleteRecalcRouting();
-	}
-
 	player->began = qtrue;
 	level.numplayers++;
 

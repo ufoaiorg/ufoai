@@ -1,11 +1,14 @@
+-- http://hg.icculus.org/icculus/mojosetup/raw-file/tip/docs.txt
+
 local TOTAL_INSTALL_SIZE = @TOTAL_INSTALL_SIZE@;
 local _ = MojoSetup.translate
 
 Setup.Package
 {
-	id = "ufoai",
+	id = "ufoai-@VERSION@",
 	description = "UFO: Alien Invasion",
-	version = "2.4",
+	version = "@VERSION@",
+	splash = "ufoai.bmp",
 
 	recommended_destinations =
 	{
@@ -16,10 +19,16 @@ Setup.Package
 		"/usr/local"
 	},
 
+	Setup.Readme
+	{
+		description = _("README"),
+		source = "README"
+	},
+
 	Setup.Eula
 	{
 		description = _("End User License Agreement"),
-		source = _("COPYING")
+		source = "COPYING"
 	},
 
 	Setup.Option
@@ -27,23 +36,19 @@ Setup.Package
 		value = true,
 		required = true,
 		disabled = false,
-		bytes = TOTAL_INSTALL_SIZE,
+		bytes = @TOTAL_INSTALL_SIZE@,
 		description = _("UFO: Alien Invasion"),
 		Setup.File {},  -- Just copies the whole thing.
-	},
-	Setup.Option
-	{
-		value = true,
-		required = false,
-		disabled = true,
-		bytes = 2202009,
-		description = _("Install GtkRadiant"),
-
-		Setup.File
+		Setup.DesktopMenuItem 
 		{
-			source = "http://mattn.ninex.info/download/gtkradiant.tar.bz2"
-		}
-	}
+			name = "UFO: Alien Invasion @VERSION@",
+			genericname = "UFO: AI",
+			icon = "ufoai.xpm",
+			commandline = "%0/ufoai",
+			category = "Game",
+		
+		},
+	},
 }
 
 -- end of config.lua ...

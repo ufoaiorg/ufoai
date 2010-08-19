@@ -29,12 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../sound/s_mix.h"
 #include "cl_particle.h"
 #include "cl_actor.h"
-#include "cl_ugv.h"
 #include "cl_parse.h"
 #include "cl_hud.h"
 #include "../renderer/r_mesh_anim.h"
 #include "../renderer/r_local.h"
 #include "../../common/tracing.h"
+#include "../../common/grid.h"
 
 cvar_t *cl_le_debug;
 
@@ -69,7 +69,7 @@ void CL_CompleteRecalcRouting (void)
 		 * An unused model is NOT included in the inline list, so it doesn't get
 		 * traced against. */
 		if (le->model1 && le->inlineModelName[0] == '*')
-			Grid_RecalcRouting(clMap, le->inlineModelName, cl.leInlineModelList);
+			CM_RecalcRouting(cl.clMap, le->inlineModelName, cl.leInlineModelList);
 }
 
 /**
@@ -83,7 +83,7 @@ void CL_RecalcRouting (const le_t* le)
 	 * An unused model is NOT included in the inline list, so it doesn't get
 	 * traced against. */
 	if (le->model1 && le->inlineModelName[0] == '*')
-		Grid_RecalcRouting(clMap, le->inlineModelName, cl.leInlineModelList);
+		CM_RecalcRouting(cl.clMap, le->inlineModelName, cl.leInlineModelList);
 
 	CL_ActorConditionalMoveCalc(selActor);
 }
@@ -229,7 +229,8 @@ void LM_Register (void)
 		if (lm->animname[0]) {
 			R_AnimChange(&lm->as, lm->model, lm->animname);
 			if (!lm->as.change)
-				Com_Printf("LM_Register: Could not change anim of model '%s'\n", lm->animname);
+				Com_Printf("LM_Register: Could not change anim of %s to '%s'\n",
+						lm->name, lm->animname);
 		}
 		if (!lm->model)
 			lm->inuse = qfalse;
@@ -387,15 +388,16 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 		if (left == NONE)
 			type = "item";
 		else {
+			type = INVSH_GetItemByIDX(left)->type;
 			/* left hand grenades look OK with default anim; others don't */
-			if (strcmp(csi.ods[left].type, "grenade"))
+			if (strcmp(type, "grenade"))
 				akimbo = qtrue;
-			type = csi.ods[left].type;
 		}
 	} else {
-		animationIndex = csi.ods[right].animationIndex;
-		type = csi.ods[right].type;
-		if (left != NONE && !strcmp(csi.ods[right].type, "pistol") && !strcmp(csi.ods[left].type, "pistol"))
+		const objDef_t *od = INVSH_GetItemByIDX(right);
+		animationIndex = od->animationIndex;
+		type = od->type;
+		if (left != NONE && !strcmp(od->type, "pistol") && !strcmp(INVSH_GetItemByIDX(left)->type, "pistol"))
 			akimbo = qtrue;
 	}
 
@@ -502,35 +504,6 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 }
 
 /**
- * @brief Searches the closest actor to the given world vector
- * @param[in] origin World position to get the closest actor to
- * @note Only your own team is searched
- */
-le_t* LE_GetClosestActor (const vec3_t origin)
-{
-	int dist = 999999;
-	le_t *actor = NULL, *le = NULL;
-	vec3_t leOrigin;
-
-	while ((le = LE_GetNextInUse(le))) {
-		int tmp;
-		if (le->pnum != cl.pnum)
-			continue;
-		/* visible because it's our team - so we just check for living actor here */
-		if (!LE_IsLivingActor(le))
-			continue;
-		VectorSubtract(origin, le->origin, leOrigin);
-		tmp = VectorLength(leOrigin);
-		if (tmp < dist) {
-			actor = le;
-			dist = tmp;
-		}
-	}
-
-	return actor;
-}
-
-/**
  * sqrt(2) for diagonal movement
  */
 int LE_ActorGetStepTime (const le_t *le, const pos3_t pos, const pos3_t oldPos, const int dir, const int speed)
@@ -540,8 +513,8 @@ int LE_ActorGetStepTime (const le_t *le, const pos3_t pos, const pos3_t oldPos, 
 	} else {
 		vec3_t start, dest;
 		/* This needs to account for the distance of the fall. */
-		Grid_PosToVec(clMap, le->fieldSize, oldPos, start);
-		Grid_PosToVec(clMap, le->fieldSize, pos, dest);
+		Grid_PosToVec(cl.clMap, le->fieldSize, oldPos, start);
+		Grid_PosToVec(cl.clMap, le->fieldSize, pos, dest);
 		/* 1/1000th of a second per model unit in height change */
 		return (start[2] - dest[2]);
 	}
@@ -649,7 +622,7 @@ static void LET_PathMove (le_t * le)
 	/* move ahead */
 	while (cl.time >= le->endTime) {
 		/* Ensure that we are displayed where we are supposed to be, in case the last frame came too quickly. */
-		Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
+		Grid_PosToVec(cl.clMap, le->fieldSize, le->pos, le->origin);
 
 		/* Record the last position of movement calculations. */
 		VectorCopy(le->pos, le->oldPos);
@@ -663,8 +636,8 @@ static void LET_PathMove (le_t * le)
 	}
 
 	/* interpolate the position */
-	Grid_PosToVec(clMap, le->fieldSize, le->oldPos, start);
-	Grid_PosToVec(clMap, le->fieldSize, le->pos, dest);
+	Grid_PosToVec(cl.clMap, le->fieldSize, le->oldPos, start);
+	Grid_PosToVec(cl.clMap, le->fieldSize, le->pos, dest);
 	VectorSubtract(dest, start, delta);
 
 	frac = (float) (cl.time - le->startTime) / (float) (le->endTime - le->startTime);
@@ -764,13 +737,14 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 		VectorMA(muzzle, 0.5, delta, le->ptl->s);
 		if (flags & (SF_IMPACT | SF_BODY) || (fd->splrad && !fd->bounce)) {
 			ptl_t *ptl = NULL;
+			const float *dir = bytedirs[le->dir];
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0]) {
 					s_sample_t *sample = S_LoadSample(fd->hitBodySound);
 					S_PlaySample(le->origin, sample, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
 				if (fd->hitBody[0])
-					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, bytedirs[le->dir], NULL);
+					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, dir, NULL);
 
 				/* Spawn blood particles (if defined) if actor(-body) was hit. Even if actor is dead. */
 				/** @todo Special particles for stun attack (mind you that there is
@@ -786,10 +760,10 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 					S_PlaySample(le->origin, sample, le->fd->impactAttenuation, SND_VOLUME_WEAPONS);
 				}
 				if (fd->impact[0])
-					ptl = CL_ParticleSpawn(fd->impact, 0, impact, bytedirs[le->dir], NULL);
+					ptl = CL_ParticleSpawn(fd->impact, 0, impact, dir, NULL);
 			}
 			if (ptl)
-				VecToAngles(bytedirs[le->dir], ptl->angles);
+				VecToAngles(dir, ptl->angles);
 		}
 		return;
 	}
@@ -868,7 +842,7 @@ void LE_PlaceItem (le_t *le)
 		if (!le->model1)
 			Com_Error(ERR_DROP, "Model for item %s is not precached in the cls.model_weapons array",
 				biggest->id);
-		Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
+		Grid_PosToVec(cl.clMap, le->fieldSize, le->pos, le->origin);
 		VectorSubtract(le->origin, biggest->center, le->origin);
 		le->angles[ROLL] = 90;
 		/*le->angles[YAW] = 10*(int)(le->origin[0] + le->origin[1] + le->origin[2]) % 360; */
@@ -958,7 +932,7 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 
 void LET_BrushModel (le_t *le)
 {
-	/** @todo what is le->speed for a brush model? */
+	/* the speed is e.g. used to determine how fast a rotation will be */
 	if (cl.time - le->thinkDelay < le->speed[0]) {
 		le->thinkDelay = cl.time;
 		return;
@@ -986,7 +960,7 @@ void LMT_Init (localModel_t* localModel)
  * @brief Adds ambient sounds from misc_sound entities
  * @sa CL_SpawnParseEntitystring
  */
-void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags, float volume)
+void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags, float volume, float attenuation)
 {
 	le_t* le;
 	s_sample_t* sample;
@@ -1008,6 +982,7 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags,
 	VectorCopy(origin, le->origin);
 	le->invis = !cl_leshowinvis->integer;
 	le->levelflags = levelflags;
+	le->attenuation = attenuation;
 
 	if (volume < 0.0f || volume > 1.0f) {
 		le->volume = SND_VOLUME_DEFAULT;
@@ -1495,7 +1470,8 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 
 		VectorCopy(le->origin, origin);
 
-		trace = CM_HintedTransformedBoxTrace(tile, clip->start, clip->end, clip->mins, clip->maxs, headnode, clip->contentmask, 0, origin, angles, shift, 1.0);
+		trace = CM_HintedTransformedBoxTrace(tile, clip->start, clip->end, clip->mins, clip->maxs,
+				headnode, clip->contentmask, 0, origin, angles, shift, 1.0);
 
 		if (trace.fraction < clip->trace.fraction) {
 			qboolean oldStart;

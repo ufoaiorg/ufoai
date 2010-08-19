@@ -25,33 +25,46 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_team.h"
-#include "../menu/m_main.h"
-#include "../menu/m_popup.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
 #include "mp_callbacks.h"
 #include "mp_serverlist.h"
 #include "mp_team.h"
 
 teamData_t teamData;
 static cvar_t *rcon_client_password;
+static cvar_t *rcon_address;
 static cvar_t *info_password;
 
 void CL_Connect_f (void)
 {
-	const char *server;
-	const char *serverport;
+	char server[MAX_VAR];
+	char serverport[16];
 
 	if (!selectedServer && Cmd_Argc() != 2 && Cmd_Argc() != 3) {
 		Com_Printf("Usage: %s <server> [<port>]\n", Cmd_Argv(0));
 		return;
 	}
 
+	if (Cmd_Argc() == 2) {
+		Q_strncpyz(server, Cmd_Argv(1), sizeof(server));
+		Q_strncpyz(serverport, DOUBLEQUOTE(PORT_SERVER), sizeof(serverport));
+	} else if (Cmd_Argc() == 3) {
+		Q_strncpyz(server, Cmd_Argv(1), sizeof(server));
+		Q_strncpyz(serverport, Cmd_Argv(2), sizeof(serverport));
+	} else {
+		assert(selectedServer);
+		Q_strncpyz(server, selectedServer->node, sizeof(server));
+		Q_strncpyz(serverport, selectedServer->service, sizeof(serverport));
+	}
+
 	if (!chrDisplayList.num && !MP_LoadDefaultTeamMultiplayer()) {
-		MN_Popup(_("Error"), _("Assemble a team first"));
+		UI_Popup(_("Error"), _("Assemble a team first"));
 		return;
 	}
 
 	if (Cvar_GetInteger("mn_server_need_password")) {
-		MN_PushWindow("serverpassword", NULL);
+		UI_PushWindow("serverpassword", NULL);
 		return;
 	}
 
@@ -59,23 +72,29 @@ void CL_Connect_f (void)
 	SV_Shutdown("Server quit.", qfalse);
 	CL_Disconnect();
 
-	if (Cmd_Argc() == 2) {
-		server = Cmd_Argv(1);
-		serverport = DOUBLEQUOTE(PORT_SERVER);
-	} else if (Cmd_Argc() == 3) {
-		server = Cmd_Argv(1);
-		serverport = Cmd_Argv(2);
-	} else {
-		assert(selectedServer);
-		server = selectedServer->node;
-		serverport = selectedServer->service;
-	}
 	Q_strncpyz(cls.servername, server, sizeof(cls.servername));
 	Q_strncpyz(cls.serverport, serverport, sizeof(cls.serverport));
 
 	CL_SetClientState(ca_connecting);
 
-	MN_InitStack(NULL, "multiplayerInGame", qfalse, qfalse);
+	UI_InitStack(NULL, "multiplayerInGame", qfalse, qfalse);
+}
+
+static void CL_RconCallback (struct net_stream *s)
+{
+	struct dbuffer *buf = NET_ReadMsg(s);
+	if (buf) {
+		const int cmd = NET_ReadByte(buf);
+		char str[8];
+		NET_ReadStringLine(buf, str, sizeof(str));
+
+		if (cmd == clc_oob && !strcmp(str, "print")) {
+			char str[2048];
+			NET_ReadString(buf, str, sizeof(str));
+			Com_Printf("%s\n", str);
+		}
+	}
+	NET_StreamFree(s);
 }
 
 /**
@@ -96,15 +115,28 @@ void CL_Rcon_f (void)
 		return;
 	}
 
-	if (cls.state < ca_connected) {
-		Com_Printf("You are not connected to any server\n");
-		return;
-	}
-
 	Com_sprintf(message, sizeof(message), "rcon %s %s",
 		rcon_client_password->string, Cmd_Args());
 
-	NET_OOB_Printf(cls.netStream, "%s", message);
+	if (cls.state >= ca_connected) {
+		NET_OOB_Printf(cls.netStream, "%s", message);
+	} else if (rcon_address->string) {
+		const char *port;
+		struct net_stream *s;
+
+		if (strstr(rcon_address->string, ":"))
+			port = strstr(rcon_address->string, ":") + 1;
+		else
+			port = DOUBLEQUOTE(PORT_SERVER);
+
+		s = NET_Connect(rcon_address->string, port);
+		if (s) {
+			NET_OOB_Printf(s, "%s", message);
+			NET_StreamSetCallback(s, &CL_RconCallback);
+		}
+	} else {
+		Com_Printf("You are not connected to any server\n");
+	}
 }
 
 /**
@@ -133,7 +165,7 @@ void CL_Reconnect_f (void)
 			CL_Disconnect();
 		}
 
-		cls.connectTime = cls.realtime - 1500;
+		cls.connectTime = CL_Milliseconds() - 1500;
 
 		CL_SetClientState(ca_connecting);
 		Com_Printf("reconnecting...\n");
@@ -149,15 +181,15 @@ void CL_Reconnect_f (void)
 static void CL_SelectTeam_Init_f (void)
 {
 	/* reset menu text */
-	MN_ResetData(TEXT_STANDARD);
+	UI_ResetData(TEXT_STANDARD);
 
 	if (Com_ServerState())
-		Cvar_ForceSet("cl_admin", "1");
+		Cvar_Set("cl_admin", "1");
 	else
-		Cvar_ForceSet("cl_admin", "0");
+		Cvar_Set("cl_admin", "0");
 
 	NET_OOB_Printf(cls.netStream, "teaminfo %i", PROTOCOL_VERSION);
-	MN_RegisterText(TEXT_STANDARD, _("Select a free team or your coop team"));
+	UI_RegisterText(TEXT_STANDARD, _("Select a free team or your coop team"));
 }
 
 /**
@@ -166,13 +198,8 @@ static void CL_SelectTeam_Init_f (void)
  */
 static void CL_TeamNum_f (void)
 {
-	int max = 4;
 	int i = cl_teamnum->integer;
 	static char buf[MAX_STRING_CHARS];
-	const int maxteamnum = Cvar_GetInteger("mn_maxteams");
-
-	if (maxteamnum > 0)
-		max = maxteamnum;
 
 	cl_teamnum->modified = qfalse;
 
@@ -186,10 +213,10 @@ static void CL_TeamNum_f (void)
 			if (teamData.maxPlayersPerTeam > teamData.teamCount[i]) {
 				Cvar_SetValue("cl_teamnum", i);
 				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
-				MN_RegisterText(TEXT_STANDARD, buf);
+				UI_RegisterText(TEXT_STANDARD, buf);
 				break;
 			} else {
-				MN_RegisterText(TEXT_STANDARD, _("Team is already in use"));
+				UI_RegisterText(TEXT_STANDARD, _("Team is already in use"));
 				Com_DPrintf(DEBUG_CLIENT, "team %i is already in use: %i (max: %i)\n",
 					i, teamData.teamCount[i], teamData.maxPlayersPerTeam);
 			}
@@ -199,10 +226,10 @@ static void CL_TeamNum_f (void)
 			if (teamData.maxPlayersPerTeam > teamData.teamCount[i]) {
 				Cvar_SetValue("cl_teamnum", i);
 				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
-				MN_RegisterText(TEXT_STANDARD, buf);
+				UI_RegisterText(TEXT_STANDARD, buf);
 				break;
 			} else {
-				MN_RegisterText(TEXT_STANDARD, _("Team is already in use"));
+				UI_RegisterText(TEXT_STANDARD, _("Team is already in use"));
 				Com_DPrintf(DEBUG_CLIENT, "team %i is already in use: %i (max: %i)\n",
 					i, teamData.teamCount[i], teamData.maxPlayersPerTeam);
 			}
@@ -211,7 +238,7 @@ static void CL_TeamNum_f (void)
 
 #if 0
 	if (!teamnum->modified)
-		MN_RegisterText(TEXT_STANDARD, _("Invalid or full team"));
+		UI_RegisterText(TEXT_STANDARD, _("Invalid or full team"));
 #endif
 	CL_SelectTeam_Init_f();
 }
@@ -255,6 +282,7 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 void MP_CallbacksInit (void)
 {
 	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
+	rcon_address = Cvar_Get("rcon_address", "", 0, "Address of the host you would like to control via rcon");
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
 	Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
 	Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the prefered teamnum");
@@ -271,6 +299,9 @@ void MP_CallbacksInit (void)
 	Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
 	Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
 	Cmd_AddParamCompleteFunction("rcon", CL_CompleteNetworkAddress);
+	Cmd_AddCommand("mp_toggleactor", MP_ToggleActorForTeam_f, NULL);
+	Cmd_AddCommand("mp_saveteamstate", MP_SaveTeamState_f, NULL);
+	Cmd_AddCommand("mp_autoteam", MP_AutoTeam_f, "Assign initial multiplayer equipment to soldiers");
 }
 
 void MP_CallbacksShutdown (void)
@@ -288,4 +319,7 @@ void MP_CallbacksShutdown (void)
 	Cmd_RemoveCommand("disconnect");
 	Cmd_RemoveCommand("connect");
 	Cmd_RemoveCommand("reconnect");
+	Cmd_RemoveCommand("mp_toggleactor");
+	Cmd_RemoveCommand("mp_saveteamstate");
+	Cmd_RemoveCommand("mp_autoteam");
 }

@@ -26,9 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_INVENTORY_H
 #define CLIENT_CL_INVENTORY_H
 
-/** Size of a UGV in hangar capacity */
-#define UGV_SIZE 300
-
 /**
  * @brief A list of filter types in the market and production view.
  * @note Run-time only, please do not use this in savegame/structures and the like.
@@ -63,7 +60,7 @@ typedef enum {
 qboolean INV_MoveItem(inventory_t* inv, const invDef_t * toContainer, int px, int py, const invDef_t * fromContainer, invList_t *fItem);
 void INV_LoadWeapon(invList_t *weapon, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer);
 qboolean INV_UnloadWeapon(invList_t *weapon, inventory_t *inv, const invDef_t *container);
-equipDef_t *INV_GetEquipmentDefinitionByID(const char *name);
+const equipDef_t *INV_GetEquipmentDefinitionByID(const char *name);
 void INV_InitStartup(void);
 itemFilterTypes_t INV_GetFilterFromItem(const objDef_t *obj);
 const char *INV_GetFilterType(const int id);
@@ -71,6 +68,5 @@ itemFilterTypes_t INV_GetFilterTypeID(const char * filterTypeID);
 qboolean INV_ItemMatchesFilter(const objDef_t *obj, const itemFilterTypes_t filterType);
 invList_t *INVSH_SearchInInventoryWithFilter(const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType) __attribute__((nonnull(1)));
 void INV_ItemDescription(const objDef_t *od);
-qboolean INV_EquipmentDefSanityCheck(void);
 
 #endif /* CLIENT_CL_INVENTORY_H */

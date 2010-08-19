@@ -18,7 +18,7 @@ originated:
 #ifndef __PQUEUE_H
 #define __PQUEUE_H
 
-#include "../game/q_shared.h"
+#include "../shared/shared.h"
 
 /** @defgroup pqueue Priority Queue (priorityQueue_t)
  * @ingroup datastructure

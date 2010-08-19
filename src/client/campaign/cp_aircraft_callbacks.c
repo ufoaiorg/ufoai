@@ -23,17 +23,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../cl_team.h" /* for CL_UpdateActorAircraftVar */
-#include "../menu/m_main.h"
-#include "../menu/m_nodes.h"
-#include "../menu/m_popup.h"
+#include "../cl_shared.h"
+#include "../ui/ui_main.h"
+#include "../ui/ui_popup.h"
 #include "cp_campaign.h"
 #include "cp_map.h"
 #include "cp_aircraft_callbacks.h"
 #include "cp_aircraft.h"
 #include "cp_team.h"
-#include "cp_mapfightequip.h" /* for AII_GetSlotItems */
+#include "cp_mapfightequip.h"
 
 /**
  * @brief Script function for AIR_AircraftReturnToBase
@@ -78,46 +76,6 @@ static void AIM_SelectAircraft_f (void)
 }
 
 /**
- * @brief Switch to next aircraft in base.
- * @sa AIR_AircraftSelect
- * @sa AIM_PrevAircraft_f
- */
-static void AIM_NextAircraft_f (void)
-{
-	base_t *base = B_GetCurrentSelectedBase();
-
-	if (!base || base->numAircraftInBase <= 0)
-		return;
-
-	if (!base->aircraftCurrent || base->aircraftCurrent == &base->aircraft[base->numAircraftInBase - 1])
-		base->aircraftCurrent = &base->aircraft[0];
-	else
-		base->aircraftCurrent++;
-
-	AIR_AircraftSelect(base->aircraftCurrent);
-}
-
-/**
- * @brief Switch to previous aircraft in base.
- * @sa AIR_AircraftSelect
- * @sa AIM_NextAircraft_f
- */
-static void AIM_PrevAircraft_f (void)
-{
-	base_t *base = B_GetCurrentSelectedBase();
-
-	if (!base || base->numAircraftInBase <= 0)
-		return;
-
-	if (!base->aircraftCurrent || base->aircraftCurrent == &base->aircraft[0])
-		base->aircraftCurrent = &base->aircraft[base->numAircraftInBase - 1];
-	else
-		base->aircraftCurrent--;
-
-	AIR_AircraftSelect(base->aircraftCurrent);
-}
-
-/**
  * @brief Starts an aircraft or stops the current mission and let the aircraft idle around.
  */
 static void AIM_AircraftStart_f (void)
@@ -135,7 +93,7 @@ static void AIM_AircraftStart_f (void)
 
 	/* Aircraft cannot start without Command Centre operational. */
 	if (!B_GetBuildingStatus(base, B_COMMAND)) {
-		MN_Popup(_("Notice"), _("No operational Command Centre in this base.\n\nAircraft can not start.\n"));
+		UI_Popup(_("Notice"), _("No operational Command Centre in this base.\n\nAircraft can not start.\n"));
 		return;
 	}
 
@@ -143,7 +101,7 @@ static void AIM_AircraftStart_f (void)
 
 	/* Aircraft cannot start without a pilot. */
 	if (!aircraft->pilot) {
-		MN_Popup(_("Notice"), _("There is no pilot assigned to this aircraft.\n\nAircraft can not start.\n"));
+		UI_Popup(_("Notice"), _("There is no pilot assigned to this aircraft.\n\nAircraft can not start.\n"));
 		return;
 	}
 
@@ -156,8 +114,8 @@ static void AIM_AircraftStart_f (void)
 
 	MAP_SelectAircraft(aircraft);
 	/* Return to geoscape. */
-	MN_PopWindow(qfalse);
-	MN_PopWindow(qfalse);
+	UI_PopWindow(qfalse);
+	UI_PopWindow(qfalse);
 }
 
 #define SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE 1
@@ -229,6 +187,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 {
 	static char aircraftInfo[256];
 	base_t *base;
+	aircraft_t *aircraftInBase;
 	int id;
 
 	if (aircraft != NULL)
@@ -236,8 +195,8 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	else
 		base = NULL;
 
-	if (!base || !base->numAircraftInBase) {
-		MN_ResetData(TEXT_AIRCRAFT_INFO);
+	if (!AIR_BaseHasAircraft(base)) {
+		UI_ResetData(TEXT_AIRCRAFT_INFO);
 		return;
 	}
 
@@ -263,22 +222,25 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Q_strcat(aircraftInfo, va(_("Armour:\t%i on 1\n"), AIR_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Electronics:\t%i on %i"), AIR_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
 
-	MN_RegisterText(TEXT_AIRCRAFT_INFO, aircraftInfo);
+	UI_RegisterText(TEXT_AIRCRAFT_INFO, aircraftInfo);
 
 	/* compute the ID and... */
-	for (id = 0; id < base->numAircraftInBase; id++) {
-		if (aircraft == &base->aircraft[id])
+	aircraftInBase = NULL;
+	id = 0;
+	while ((aircraftInBase = AIR_GetNextFromBase(base, aircraftInBase)) != NULL) {
+		if (aircraft == aircraftInBase)
 			break;
+		id++;
 	}
 
 	/* the aircraft must really be in this base */
-	assert(id != base->numAircraftInBase);
+	assert(id != LIST_Count(base->aircraft));
 
 	base->aircraftCurrent = aircraft;
 	Cvar_SetValue("mn_aircraft_id", id);
 
 	/* ...update the GUI */
-	MN_ExecuteConfunc("aircraft_change %i", id);
+	UI_ExecuteConfunc("aircraft_change %i", id);
 }
 
 /**
@@ -287,18 +249,14 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 static void AIR_AircraftUpdateList_f (void)
 {
 	linkedList_t *list = NULL;
-	int i;
 	base_t *base = B_GetCurrentSelectedBase();
+	aircraft_t *aircraft;
 
-	if (!base)
-		return;
-
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		const aircraft_t * aircraft = &base->aircraft[i];
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 		LIST_AddString(&list, aircraft->name);
-	}
 
-	MN_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);
+	UI_RegisterLinkedListText(TEXT_AIRCRAFT_LIST, list);
 }
 
 /**
@@ -326,8 +284,6 @@ void AIR_InitCallbacks (void)
 	/* menu aircraft */
 	Cmd_AddCommand("aircraft_start", AIM_AircraftStart_f, NULL);
 	/* menu aircraft_equip, aircraft */
-	Cmd_AddCommand("mn_next_aircraft", AIM_NextAircraft_f, NULL);
-	Cmd_AddCommand("mn_prev_aircraft", AIM_PrevAircraft_f, NULL);
 	Cmd_AddCommand("mn_select_aircraft", AIM_SelectAircraft_f, NULL);
 	/* menu aircraft, popup_transferbaselist */
 	Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase");
@@ -340,8 +296,6 @@ void AIR_ShutdownCallbacks (void)
 {
 	Cmd_RemoveCommand("aircraft_namechange");
 	Cmd_RemoveCommand("aircraft_start");
-	Cmd_RemoveCommand("mn_next_aircraft");
-	Cmd_RemoveCommand("mn_prev_aircraft");
 	Cmd_RemoveCommand("mn_select_aircraft");
 	Cmd_RemoveCommand("aircraft_return");
 	Cmd_RemoveCommand("aircraft_update_list");

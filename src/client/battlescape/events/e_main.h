@@ -32,7 +32,7 @@ typedef struct eventRegister_s {
 	/**
 	 * @brief The type of this event
 	 */
-	const int type;
+	const event_t type;
 	/**
 	 * @brief the name of this event (e.g. for logs)
 	 */
@@ -63,6 +63,6 @@ typedef struct eventRegister_s {
 	qboolean (*eventCheck)(const struct eventRegister_s *self, const struct dbuffer *msg);
 } eventRegister_t;
 
-const eventRegister_t *CL_GetEvent(const int eType);
+const eventRegister_t *CL_GetEvent(const event_t eType);
 
 #endif

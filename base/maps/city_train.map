@@ -5714,9 +5714,10 @@
 // entity 3
 {
 "classname" "misc_model"
-"origin" "-201 -128 35"
+"origin" "-200 -128 35"
 "model" "models/objects/cars/van/van1t.md2"
 "spawnflags" "255"
+"skin" "1"
 "angles" "90 0 90"
 }
 // entity 4
@@ -5901,6 +5902,7 @@
 "model" "models/objects/cars/golf/car1t.md2"
 "spawnflags" "254"
 "angle" "-180"
+"skin" "1"
 }
 // entity 32
 {
@@ -5921,7 +5923,7 @@
 // entity 34
 {
 "classname" "misc_model"
-"origin" "-188 503 36"
+"origin" "-195 504 36"
 "model" "models/objects/cars/van/van1t.md2"
 "spawnflags" "255"
 }
@@ -13237,7 +13239,7 @@
 {
 "classname" "misc_sound"
 "origin" "876 -116 98"
-"noise" "sound/ambience/tv_newswav.iletypes"
+"noise" "sound/ambience/earth-news"
 "spawnflags" "6"
 }
 // entity 196

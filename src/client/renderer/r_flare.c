@@ -42,7 +42,7 @@ void R_CreateSurfaceFlare (mBspSurface_t *surf)
 	surf->flare->radius = VectorLength(span);
 
 	s = m->stages; /* resolve the flare stage */
-	while (s) {
+	for (;;) {
 		if (s->flags & STAGE_FLARE)
 			break;
 		s = s->next;

@@ -2,21 +2,39 @@
 // EQUIPMENT MENU
 // ==================
 
+component radiobutton buttonActorEquip
+{
+	size	"27 35"
+	image	"ui/button_background2"
+	cvar	*cvar:selected_actor
+	onChange { cmd "actor_select_equip <value>;" }
+	tooltip	"_Equip this soldier"
+}
+
+component string txtActorEquip
+{
+	size	"270 40"
+	textalign ALIGN_CL
+}
+
 window equipment extends objectinfo
 {
+	/** @todo Remove me */
+	{ } // empty properties to fix parsing problem with "image" token (behaviour or property?)
+
 	// ==================
 	// background
 	// ==================
 
-	pic background
+	image background
 	{
-		image	ui/equipment_bg
+		src	"background/equipment_bg"
 	}
 
 	string s_backpack
 	{
 		pos "852 25"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Backpack"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -25,7 +43,7 @@ window equipment extends objectinfo
 	string s_left
 	{
 		pos "852 150"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Left Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -34,7 +52,7 @@ window equipment extends objectinfo
 	string s_right
 	{
 		pos "530 150"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Right Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -43,7 +61,7 @@ window equipment extends objectinfo
 	string s_extension
 	{
 		pos "530 76"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Extension"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -52,7 +70,7 @@ window equipment extends objectinfo
 	string s_headgear
 	{
 		pos "620 76"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Headgear"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -61,7 +79,7 @@ window equipment extends objectinfo
 	string s_holster
 	{
 		pos "852 245"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Holster"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -70,7 +88,7 @@ window equipment extends objectinfo
 	string s_belt
 	{
 		pos "530 245"
-		textalign uc
+		textalign ALIGN_UC
 		string	"_Belt"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -82,190 +100,134 @@ window equipment extends objectinfo
 
 	func names_clear
 	{
-		*txt_actor0@color = "0 .78 0 1"
-		*txt_actor1@color = "0 .78 0 1"
-		*txt_actor2@color = "0 .78 0 1"
-		*txt_actor3@color = "0 .78 0 1"
-		*txt_actor4@color = "0 .78 0 1"
-		*txt_actor5@color = "0 .78 0 1"
-		*txt_actor6@color = "0 .78 0 1"
-		*txt_actor7@color = "0 .78 0 1"
+		*node:root.txt_actor0@color = "0 .78 0 1"
+		*node:root.txt_actor1@color = "0 .78 0 1"
+		*node:root.txt_actor2@color = "0 .78 0 1"
+		*node:root.txt_actor3@color = "0 .78 0 1"
+		*node:root.txt_actor4@color = "0 .78 0 1"
+		*node:root.txt_actor5@color = "0 .78 0 1"
+		*node:root.txt_actor6@color = "0 .78 0 1"
+		*node:root.txt_actor7@color = "0 .78 0 1"
 	}
 
 	confunc equipdeselect {
-		*bt_actor<1>@disabled = false
-		*txt_actor<1>@color = "0 .78 0 1"
+		*node:root.bt_actor<1>@disabled = false
+		*node:root.txt_actor<1>@color = "0 .78 0 1"
 	}
 
 	confunc equipselect {
-		*bt_actor<1>@disabled = false
+		*node:root.bt_actor<1>@disabled = false
 		*cvar:selected_actor = <1>
-		*txt_actor<1>@color = "1 1 1 1"
+		*node:root.txt_actor<1>@color = "1 1 1 1"
 	}
 
 	confunc equipdisable {
-		*bt_actor<1>@disabled = true
+		*node:root.bt_actor<1>@disabled = true
 		*cvar:mn_name<1> = ""
 	}
 
-	radiobutton bt_actor0
+	buttonActorEquip bt_actor0
 	{
 		pos		"10 14"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	0
-		cvar	*cvar:selected_actor
 		icon	number_1
-		onChange { cmd "actor_select_equip 0;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	radiobutton bt_actor1
+	buttonActorEquip bt_actor1
 	{
 		pos		"10 55"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	1
-		cvar	*cvar:selected_actor
 		icon	number_2
-		onChange { cmd "actor_select_equip 1;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	radiobutton bt_actor2
+	buttonActorEquip bt_actor2
 	{
 		pos		"10 96"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	2
-		cvar	*cvar:selected_actor
 		icon	number_3
-		onChange { cmd "actor_select_equip 2;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	radiobutton bt_actor3
+	buttonActorEquip bt_actor3
 	{
 		pos		"10 137"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	3
-		cvar	*cvar:selected_actor
 		icon	number_4
-		onChange { cmd "actor_select_equip 3;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	radiobutton bt_actor4
+	buttonActorEquip bt_actor4
 	{
 		pos		"10 178"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	4
-		cvar	*cvar:selected_actor
 		icon	number_5
-		onChange { cmd "actor_select_equip 4;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	radiobutton bt_actor5
+	buttonActorEquip bt_actor5
 	{
 		pos		"10 219"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	5
-		cvar	*cvar:selected_actor
 		icon	number_6
-		onChange { cmd "actor_select_equip 5;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	radiobutton bt_actor6
+	buttonActorEquip bt_actor6
 	{
 		pos		"10 260"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	6
-		cvar	*cvar:selected_actor
 		icon	number_7
-		onChange { cmd "actor_select_equip 6;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	radiobutton bt_actor7
+	buttonActorEquip bt_actor7
 	{
 		pos		"10 301"
-		size	"27 35"
-		image	"ui/button_background2"
 		value	7
-		cvar	*cvar:selected_actor
 		icon	number_8
-		onChange { cmd "actor_select_equip 7;" }
-		tooltip	"_Equip this soldier"
 	}
 
-	string txt_actor0
+	txtActorEquip txt_actor0
 	{
 		string	*cvar:mn_name0
 		pos		"60 13"
-		size	"270 40"
-		textalign cl
 		onClick { cmd "actor_select_equip 0;" }
 	}
-	string txt_actor1
+	txtActorEquip txt_actor1
 	{
 		string	*cvar:mn_name1
 		pos		"60 54"
-		size	"270 40"
-		textalign cl
 		onClick { cmd "actor_select_equip 1;" }
 	}
-	string txt_actor2
+	txtActorEquip txt_actor2
 	{
 		string	*cvar:mn_name2
 		pos		"60 95"
-		size	"270 40"
-		textalign cl
 		onClick { cmd "actor_select_equip 2;" }
 	}
-	string txt_actor3
+	txtActorEquip txt_actor3
 	{
 		string	*cvar:mn_name3
 		pos		"60 136"
-		size	"270 40"
-		textalign cl
 		onClick { cmd "actor_select_equip 3;" }
 	}
-	string txt_actor4
+	txtActorEquip txt_actor4
 	{
 		string	*cvar:mn_name4
 		pos		"60 177"
-		size	"270 40"
-		textalign cl
 		onClick { cmd "actor_select_equip 4;" }
 	}
-	string txt_actor5
+	txtActorEquip txt_actor5
 	{
 		string	*cvar:mn_name5
 		pos		"60 218"
-		size	"270 40"
-		textalign cl
 		onClick { cmd "actor_select_equip 5;" }
 	}
-	string txt_actor6
+	txtActorEquip txt_actor6
 	{
 		string	*cvar:mn_name6
 		pos		"60 259"
-		size	"270 40"
-		textalign cl
 		onClick { cmd "actor_select_equip 6;" }
 	}
-	string txt_actor7
+	txtActorEquip txt_actor7
 	{
 		string	*cvar:mn_name7
 		pos		"60 300"
-		size	"270 40"
-		textalign cl
 		onClick { cmd "actor_select_equip 7;" }
 	}
 
@@ -275,36 +237,38 @@ window equipment extends objectinfo
 
 	confunc update_item_list {
 		if ( *cvar:mn_equiptype == 0 ) {
-			*(container)equip@filter = FILTER_S_PRIMARY
-			*(container)equip_ammo@filter = FILTER_S_PRIMARY
+			*node:root.equip@filter = FILTER_S_PRIMARY
+			*node:root.equip_ammo@filter = FILTER_S_PRIMARY
 		}
 		elif ( *cvar:mn_equiptype == 1 ) {
-			*(container)equip@filter = FILTER_S_SECONDARY
-			*(container)equip_ammo@filter = FILTER_S_SECONDARY
+			*node:root.equip@filter = FILTER_S_SECONDARY
+			*node:root.equip_ammo@filter = FILTER_S_SECONDARY
 		}
 		elif ( *cvar:mn_equiptype == 2 ) {
-			*(container)equip@filter = FILTER_S_HEAVY
-			*(container)equip_ammo@filter = FILTER_S_HEAVY
+			*node:root.equip@filter = FILTER_S_HEAVY
+			*node:root.equip_ammo@filter = FILTER_S_HEAVY
 		}
 		elif ( *cvar:mn_equiptype == 3 ) {
-			*(container)equip@filter = FILTER_S_MISC
-			*(container)equip_ammo@filter = FILTER_S_MISC
+			*node:root.equip@filter = FILTER_S_MISC
+			*node:root.equip_ammo@filter = FILTER_S_MISC
 		}
 		elif ( *cvar:mn_equiptype == 4 ) {
-			*(container)equip@filter = FILTER_S_ARMOUR
-			*(container)equip_ammo@filter = FILTER_S_ARMOUR
+			*node:root.equip@filter = FILTER_S_ARMOUR
+			*node:root.equip_ammo@filter = FILTER_S_ARMOUR
 		}
-		*(container)equip@scrollpos = 0
-		*(container)equip_ammo@scrollpos = 0
+		*node:root.equip@scrollpos = 0
+		*node:root.equip_ammo@scrollpos = 0
 	}
 
 	tab equip_type
 	{
-		pos		"400 365"
-		size	"505 40"
-		cvar	*cvar:mn_equiptype
-		onChange {
-			cmd	"update_item_list;"
+		{
+			pos		"400 365"
+			size	"505 40"
+			cvar	*cvar:mn_equiptype
+			onChange {
+				cmd	"update_item_list;"
+			}
 		}
 
 		option primary {
@@ -344,18 +308,18 @@ window equipment extends objectinfo
 			string	*cvar:mn_itemname
 			pos		"10 6"
 			size	"330 20"
-			textalign	uc
+			textalign	ALIGN_UC
 		}
-	
+
 		item itemmodel
 		{
 			pos 		"0 30"
 			size 		"350 100"
-			model		*cvar:mn_item
+			src			*cvar:mn_item
 			angles		"-10 160 70"
 			autoscale	true
 		}
-	
+
 		text description
 		{
 			pos			"10 140"
@@ -365,15 +329,15 @@ window equipment extends objectinfo
 			rows		"7"
 			dataid		TEXT_ITEMDESCRIPTION
 			onViewChange {
-				*(abstractscrollbar)itemdescription.description_scroll@fullsize = <fullsize>
-				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
+				*node:root.itemdescription.description_scroll@fullsize = <fullsize>
+				*node:root.itemdescription.description_scroll@current = <viewpos>
 			}
 			onWheel {
-				*(abstractscrollbar)itemdescription.description_scroll@current = <viewpos>
+				*node:root.itemdescription.description_scroll@current = <viewpos>
 			}
 		}
 		vscrollbar description_scroll {
-			image		ui/scrollbar_v_green
+			image		"ui/scrollbar_v_green"
 			pos			"325 140"
 			height		"150"
 			current		0
@@ -381,7 +345,7 @@ window equipment extends objectinfo
 			fullsize	7
 			hidewhenunused true
 			onChange {
-				*itemdescription.description@viewpos = <current>
+				*node:root.itemdescription.description@viewpos = <current>
 			}
 		}
 
@@ -394,9 +358,9 @@ window equipment extends objectinfo
 			string	"_With:"
 			pos		"10 290"
 			size	"100 16"
-			font	f_small
+			font	"f_small"
 		}
-	
+
 		custombutton action_dec
 		{
 			pos		"120 290"
@@ -404,14 +368,14 @@ window equipment extends objectinfo
 			size	"16 16"
 			onClick	{ cmd "mn_decreaseitem;" }
 		}
-	
+
 		string item_name
 		{
 			string	*cvar:mn_linkname
 			pos		"140 290"
 			size	"190 16"
-			textalign	cc
-			font	f_small
+			textalign	ALIGN_CC
+			font	"f_small"
 		}
 
 		custombutton action_inc
@@ -425,15 +389,15 @@ window equipment extends objectinfo
 		// ==================
 		// firemode
 		// ==================
-	
+
 		string header_firemode
 		{
 			string	"_Firemode:"
 			pos		"10 314"
 			size	"100 16"
-			font	f_small
+			font	"f_small"
 		}
-		
+
 		custombutton firemode_dec
 		{
 			tooltip "_Previous firemode"
@@ -442,16 +406,16 @@ window equipment extends objectinfo
 			size	"16 16"
 			onClick	{ cmd "mn_decreasefiremode;" }
 		}
-		
+
 		string firemode_name
 		{
 			string	*cvar:mn_firemodename
 			pos		"140 314"
 			size	"190 16"
-			textalign	cc
-			font	f_small
+			textalign	ALIGN_CC
+			font	"f_small"
 		}
-			
+
 		custombutton firemode_inc
 		{
 			tooltip "_Next firemode"
@@ -561,8 +525,8 @@ window equipment extends objectinfo
 	func weapon_stats
 	{
 		if ( *cvar:mn_itemname ne "" ) {
-			*itemdescription@invis = false
-			*actor_statpanel@invis = true
+			*node:root.itemdescription@invis = false
+			*node:root.actor_statpanel@invis = true
 		} else {
 			// switch back to actor view
 			*cvar:mn_infotype = 0
@@ -572,14 +536,23 @@ window equipment extends objectinfo
 	// @todo merge with confunc mp_actor_stats?
 	func actor_stats
 	{
-		*itemdescription@invis = true
-		*actor_statpanel@invis = false
+		*node:root.itemdescription@invis = true
+		*node:root.actor_statpanel@invis = false
 	}
 
 	tab info {
-		pos		"20 365"
-		size	"355 40"
-		cvar	*cvar:mn_infotype
+		{
+			pos		"20 365"
+			size	"355 40"
+			cvar	*cvar:mn_infotype
+			onChange {
+				if ( *cvar:mn_infotype eq 0 ) {
+					call *node:root.actor_stats
+				} elif ( *cvar:mn_infotype eq 1 ) {
+					call *node:root.weapon_stats
+				}
+			}
+		}
 		option abilities {
 			label	"_Actor Abilities"
 			value	"0"
@@ -587,13 +560,6 @@ window equipment extends objectinfo
 		option weaponinfo {
 			label	"_Object Info"
 			value	"1"
-		}
-		onChange {
-			if ( *cvar:mn_infotype eq 0 ) {
-				call *node:root.actor_stats
-			} elif ( *cvar:mn_infotype eq 1 ) {
-				call *node:root.weapon_stats
-			}
 		}
 	}
 
@@ -625,12 +591,12 @@ window equipment extends objectinfo
 	model body
 	{
 		{
-			model	*cvar:mn_body
+			src		*cvar:mn_body
 			skin	*cvar:mn_skin
 			anim	"stand_menu"
 			angles	"0 70 90"
 			scale	"5 5 5"
-	
+
 			pos		"676 69"
 			size	"197 258"
 			origin	"0 -30 0"
@@ -638,7 +604,7 @@ window equipment extends objectinfo
 
 		model head
 		{
-			model	*cvar:mn_head
+			src		*cvar:mn_head
 			skin	*cvar:mn_skin
 			tag		"tag_head"
 			scale	"1.0 1.0 1.0"
@@ -650,11 +616,9 @@ window equipment extends objectinfo
 	 * @sa team_initskin
 	 */
 	selectbox skins {
-		image	"ui/selectbox_green"
 		pos		"660 290"
 		size	"120 40"
 		cvar	*cvar:mn_skin
-		color	"0.6 0.6 0.6 0.3"
 		onChange { cmd "team_changeskin;" }
 		dataid	OPTION_SINGLEPLAYER_SKINS
 	}
@@ -678,7 +642,7 @@ window equipment extends objectinfo
 		onSelect { cmd "object_update <lastselectedid>;" }
 	}
 
-	container equip		{
+	baseinventory equip		{
 		pos						"422 415"
 		size					"207 317"
 		displayweapon			true
@@ -686,41 +650,41 @@ window equipment extends objectinfo
 		displayunavailableitem	true
 		columns					1
 		onViewChange {
-			*(abstractscrollbar)equip_scroll@current = <scrollpos>
-			*(abstractscrollbar)equip_scroll@viewsize = <viewsize>
-			*(abstractscrollbar)equip_scroll@fullsize = <fullsize>
+			*node:root.equip_scroll@current = <scrollpos>
+			*node:root.equip_scroll@viewsize = <viewsize>
+			*node:root.equip_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}
 
-	container equip_ammo	{
+	baseinventory equip_ammo	{
 		pos				"702 418"
 		size			"207 317"
 		displayammo		true
 		columns			2
 		onViewChange {
-			*(abstractscrollbar)equip_ammo_scroll@current = <scrollpos>
-			*(abstractscrollbar)equip_ammo_scroll@viewsize = <viewsize>
-			*(abstractscrollbar)equip_ammo_scroll@fullsize = <fullsize>
+			*node:root.equip_ammo_scroll@current = <scrollpos>
+			*node:root.equip_ammo_scroll@viewsize = <viewsize>
+			*node:root.equip_ammo_scroll@fullsize = <fullsize>
 		}
 		onSelect { cmd "object_update <lastselectedid> 0;" }
 	}
 
 	vscrollbar equip_scroll {
-		image	ui/scrollbar_v_green
+		image	"ui/scrollbar_v_green"
 		pos "629 405"	height	"339"
 		hidewhenunused true
 		onChange {
-			*equip@scrollpos = <current>
+			*node:root.equip@scrollpos = <current>
 		}
 	}
 
 	vscrollbar equip_ammo_scroll {
-		image	ui/scrollbar_v_green
+		image	"ui/scrollbar_v_green"
 		pos "892 405"	height	"339"
 		hidewhenunused true
 		onChange {
-			*equip_ammo@scrollpos = <current>
+			*node:root.equip_ammo@scrollpos = <current>
 		}
 	}
 
@@ -731,7 +695,7 @@ window equipment extends objectinfo
 	custombutton bt_go
 	{
 		tooltip	"_Done"
-		image	ui/button_background
+		image	"ui/button_background"
 		texl	"192 0"	size "64 37"
 		pos		"940 720"
 		icon return
@@ -751,7 +715,7 @@ window equipment extends objectinfo
 		call *node:root.names_clear
 		call *node:root.actor_stats
 		*cvar:mn_infotype = 0
-		*cvar:mn_equiptype = 0		
+		*cvar:mn_equiptype = 0
 		*cvar:mn_linkname = ""
 		*cvar:mn_itemname = ""
 		cmd "team_initskin;team_updateequip;update_item_list;actor_select_equip 0;"

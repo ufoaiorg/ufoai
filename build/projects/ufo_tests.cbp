@@ -141,7 +141,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-DCOMPILE_UFO" />
-			<Add option="-DDEDICATED_ONLY" />
+			<Add option="-DCOMPILE_UNITTESTS" />
 			<Add option="-ggdb" />
 			<Add option="-O0" />
 		</Compiler>
@@ -152,6 +152,12 @@
 			<Add library="SDL" />
 		</Linker>
 		<Unit filename="..\..\src\common\cmd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/common/bsp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/common/grid.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\cmodel.c">
@@ -208,7 +214,13 @@
 		<Unit filename="..\..\src\common\unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\menu\m_timer.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\game\inv_shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\game\chr_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\game\inventory.c">
@@ -265,6 +277,12 @@
 		<Unit filename="..\..\src\server\sv_user.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\server\sv_rma.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\server\sv_init.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\server\sv_world.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -286,6 +304,9 @@
 		<Unit filename="..\..\src\shared\shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\shared\utf8.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\tests\test_all.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -300,10 +321,22 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_rma.h" />
+		<Unit filename="..\..\src\tests\test_ui.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_ui.h" />
+		<Unit filename="..\..\src\tests\test_shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_shared.h" />
 		<Unit filename="..\..\src\tests\test_routing.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_routing.h" />
+		<Unit filename="..\..\src\tests\test_campaign.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_campaign.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

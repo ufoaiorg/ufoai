@@ -991,3 +991,29 @@
 "origin" "144 208 48"
 "team" "1"
 }
+// entity 36
+{
+"classname" "info_2x2_start"
+"origin" "384 224 28"
+"team" "1"
+}
+// entity 37
+{
+"classname" "info_2x2_start"
+"origin" "64 224 28"
+"team" "1"
+}
+// entity 38
+{
+"classname" "trigger_rescue"
+"team" "1"
+// brush 0
+{
+( 320 176 64 ) ( 192 176 64 ) ( 320 336 64 ) tex_common/trigger -0 -0 0 0.25 0.25
+( 336 464 96 ) ( 336 624 96 ) ( 336 464 0 ) tex_common/trigger 0 0 0 0.25 0.25
+( 320 176 64 ) ( 320 176 -32 ) ( 192 176 64 ) tex_common/trigger 0 0 0 0.25 0.25
+( 192 336 0 ) ( 192 176 0 ) ( 320 336 0 ) tex_common/trigger -0 -0 0 0.25 0.25
+( 160 336 0 ) ( 160 336 96 ) ( 160 176 0 ) tex_common/trigger -0 0 0 0.25 0.25
+( 176 624 0 ) ( 304 624 0 ) ( 176 624 96 ) tex_common/trigger 0 0 0 0.25 0.25
+}
+}

@@ -96,6 +96,9 @@ static void CL_ActorGetMuzzle (const le_t* actor, vec3_t muzzle, shoot_types_t s
 	const objDef_t* od;
 	const invList_t *invlistWeapon;
 
+	if (actor == NULL)
+		return;
+
 	if (IS_SHOT_RIGHT(shootType)) {
 		tag = "tag_rweapon";
 		invlistWeapon = RIGHT(actor);
@@ -151,6 +154,7 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	vec3_t muzzle, impact;
 	int flags, normal, shooterEntnum, victimEntnum;
 	int objIdx;
+	int first;
 	const objDef_t *obj;
 	weaponFireDefIndex_t weapFdsIdx;
 	fireDefIndex_t fdIdx;
@@ -158,7 +162,7 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	shoot_types_t shootType;
 
 	/* read data */
-	NET_ReadFormat(msg, self->formatString, &shooterEntnum, &victimEntnum, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &normal);
+	NET_ReadFormat(msg, self->formatString, &shooterEntnum, &victimEntnum, &first, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &normal);
 
 	if (victimEntnum != SKIP_LOCAL_ENTITY) {
 		leVictim = LE_Get(victimEntnum);
@@ -181,8 +185,7 @@ void CL_ActorDoShoot (const eventRegister_t *self, struct dbuffer *msg)
 	LE_AddProjectile(fd, flags, muzzle, impact, normal, leVictim);
 
 	/* start the sound */
-	/** @todo handle fd->soundOnce */
-	if (fd->fireSound[0] && !(flags & SF_BOUNCED))
+	if ((first || !fd->soundOnce) && fd->fireSound[0] && !(flags & SF_BOUNCED))
 		S_PlaySample(muzzle, S_LoadSample(fd->fireSound), fd->fireAttenuation, SND_VOLUME_WEAPONS);
 
 	if (fd->irgoggles)

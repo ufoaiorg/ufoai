@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_tip.h"
-#include "menu/m_main.h"
+#include "ui/ui_main.h"
 #include "../shared/parse.h"
 
 typedef struct tipOfTheDay_s {
@@ -43,7 +43,7 @@ static cvar_t* cl_showTipOfTheDay;	/**< tip of the day can be deactivated */
 /**
  * @brief Popup with tip of the day messages
  * @note Only call this from the menu definition (click action or init node)
- * because this function calls also MN_PopWindow if cl_showTipOfTheDay is false
+ * because this function calls also UI_PopWindow if no tips are parsed.
  */
 static void CL_GetTipOfTheDay_f (void)
 {
@@ -53,14 +53,8 @@ static void CL_GetTipOfTheDay_f (void)
 
 	/** @todo not his role, remove it when its possible */
 	if (!tipCount) {
-		MN_CloseWindow("popup_tipoftheday");
+		UI_CloseWindow("popup_tipoftheday");
 		Com_Printf("No tips parsed\n");
-		return;
-	}
-
-	/** @todo not his role, and wrong behaviour, remove it when its possible */
-	if (!cl_showTipOfTheDay->integer) {
-		MN_CloseWindow("popup_tipoftheday");
 		return;
 	}
 
@@ -78,7 +72,7 @@ static void CL_GetTipOfTheDay_f (void)
 		rnd--;
 	}
 
-	MN_RegisterText(TEXT_TIPOFTHEDAY, tip->tipString);
+	UI_RegisterText(TEXT_TIPOFTHEDAY, tip->tipString);
 }
 
 /**

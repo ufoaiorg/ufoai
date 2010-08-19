@@ -31,9 +31,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../common/common.h"
 #include "../shared/infostring.h"
+#include "../game/game.h"
+#include <SDL_thread.h>
 
-extern struct memPool_s *sv_gameSysPool;	/**< the mempool for the game lib */
-extern struct memPool_s *sv_genericPool;
+extern memPool_t *sv_gameSysPool;	/**< the mempool for the game lib */
+extern memPool_t *sv_genericPool;
 
 /*============================================================================= */
 
@@ -57,6 +59,8 @@ typedef struct {
 
 	qboolean endgame;
 	qboolean started;			/**< set when the match has started - no further connections are allowed in this case */
+
+	routing_t svMap[ACTOR_MAX_SIZE];	/**< server routing table */
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 } server_t;
@@ -105,6 +109,7 @@ typedef struct {
 	client_t *clients;			/**< [sv_maxclients->value]; */
 	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
 								 * Set to a huge negative value to send immmediately */
+	SDL_mutex *serverMutex;
 } server_static_t;
 
 /**
@@ -140,8 +145,6 @@ extern struct dbuffer *sv_msg;
 void SV_DropClient(client_t *drop, const char *message);
 
 int SV_CountPlayers(void);
-
-int SV_ModelIndex(const char *name);
 
 void SV_InitOperatorCommands(void);
 
@@ -184,7 +187,7 @@ void SV_ClearWorld(void);
 
 void SV_UnlinkEdict(edict_t * ent);
 void SV_LinkEdict(edict_t * ent);
-int SV_AreaEdicts(const vec3_t mins, const vec3_t maxs, edict_t ** list, int maxcount, int areatype);
+int SV_AreaEdicts(const vec3_t mins, const vec3_t maxs, edict_t ** list, int maxcount);
 int SV_TouchEdicts(const vec3_t mins, const vec3_t maxs, edict_t **list, int maxCount, edict_t *skip);
 
 /*=================================================================== */

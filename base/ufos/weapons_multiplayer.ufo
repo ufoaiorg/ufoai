@@ -50,8 +50,11 @@ item chaingun_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/chaingun
-			speed				0
+			firesnd				weapons/bullet-chaingun-5x
+			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
+			sndonce				true
+			speed				3000
 			spread				"0.5 2"
 			crouch				1.3
 			range				60
@@ -71,8 +74,11 @@ item chaingun_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/chaingun
-			speed				0
+			firesnd				weapons/bullet-chaingun-40x
+			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
+			sndonce				true
+			speed				3000
 			spread				"1.5 3"
 			crouch				1.3
 			range				60
@@ -91,8 +97,11 @@ item chaingun_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/chaingun
-			speed				0
+			firesnd				weapons/bullet-chaingun-40x
+			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
+			sndonce				true
+			speed				3000
 			spread				"1.5 7.5"
 			crouch				1.3
 			range				60
@@ -151,12 +160,14 @@ item shotgun_ammo
 		{
 			name				"_Single Shot"
 			skill				close
-			projtl				null
+			projtl				bullet-shotgun
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/riotshotgun
+			firesnd				weapons/bullet-shotgun
+			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
-			speed				0
+			speed				3000
 			spread				"1.8 1.8"
 			crouch				1.0
 			range				60
@@ -173,12 +184,14 @@ item shotgun_ammo
 		{
 			name				"_Double Shot"
 			skill				close
-			projtl				null
+			projtl				bullet-shotgun
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/riotshotgun
+			firesnd				weapons/bullet-shotgun
+			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
 			sndonce				true
-			speed				0
+			speed				3000
 			spread				"2.8 2.8"
 			crouch				1.0
 			range				60
@@ -264,8 +277,11 @@ item xaw95_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/chaingun
-			speed				0
+			firesnd				weapons/bullet-chaingun-10x
+			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
+			sndonce				true
+			speed				3000
 			spread				"0.5 2"
 			crouch				1.3
 			range				80
@@ -285,8 +301,11 @@ item xaw95_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/chaingun
-			speed				0
+			firesnd				weapons/bullet-chaingun-50x
+			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
+			sndonce				true
+			speed				3000
 			spread				"1.5 3"
 			crouch				1.3
 			range				80
@@ -305,8 +324,11 @@ item xaw95_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/chaingun
-			speed				0
+			firesnd				weapons/bullet-chaingun-50x
+			impsnd				impact/bullet-impact
+			bodysnd 			impact/bullet-bodyimpact
+			sndonce				true
+			speed				3000
 			spread				"1.5 7.5"
 			crouch				1.3
 			range				80

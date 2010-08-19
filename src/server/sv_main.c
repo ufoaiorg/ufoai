@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "server.h"
 #include "../shared/parse.h"
-#include <SDL_thread.h>
+#include "../ports/system.h"
 
 /** current client */
 client_t *sv_client;
@@ -56,8 +56,8 @@ static qboolean killserver;		/**< will initiate shutdown once abandon is set */
 mapcycle_t *mapcycleList;
 int mapcycleCount;
 
-struct memPool_s *sv_gameSysPool;
-struct memPool_s *sv_genericPool;
+memPool_t *sv_gameSysPool;
+memPool_t *sv_genericPool;
 
 /*============================================================================ */
 
@@ -79,7 +79,9 @@ void SV_DropClient (client_t * drop, const char *message)
 	if (drop->state == cs_spawned || drop->state == cs_spawning) {
 		/* call the prog function for removing a client */
 		/* this will remove the body, among other things */
+		SDL_mutexP(svs.serverMutex);
 		ge->ClientDisconnect(drop->player);
+		SDL_mutexV(svs.serverMutex);
 	}
 
 	NET_StreamFinished(drop->stream);
@@ -232,6 +234,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	player_t *player;
 	int playernum;
 	int version;
+	qboolean connected;
 	char buf[256];
 	const char *peername = NET_StreamPeerToName(stream, buf, sizeof(buf), qfalse);
 
@@ -293,8 +296,12 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	cl->player = player;
 	cl->player->num = playernum;
 
+	SDL_mutexP(svs.serverMutex);
+	connected = ge->ClientConnect(player, userinfo, sizeof(userinfo));
+	SDL_mutexV(svs.serverMutex);
+
 	/* get the game a chance to reject this connection or modify the userinfo */
-	if (!ge->ClientConnect(player, userinfo, sizeof(userinfo))) {
+	if (!connected) {
 		const char *rejmsg = Info_ValueForKey(userinfo, "rejmsg");
 		if (rejmsg[0] != '\0') {
 			NET_OOB_Printf(stream, "print\n%s\nConnection refused.\n", rejmsg);
@@ -392,10 +399,11 @@ static void SVC_RemoteCommand (struct net_stream *stream)
  */
 static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *msg)
 {
-	const char *s, *c;
+	const char *c;
+	char s[512];
 	char buf[256];
 
-	s = NET_ReadStringLine(msg);
+	NET_ReadStringLine(msg, s, sizeof(s));
 
 	Cmd_TokenizeString(s, qfalse);
 
@@ -757,6 +765,15 @@ void SV_Frame (int now, void *data)
 		sv_gametype->modified = qfalse;
 	}
 
+	if (sv_dedicated->integer) {
+		const char *s;
+		do {
+			s = Sys_ConsoleInput();
+			if (s)
+				Cbuf_AddText(va("%s\n", s));
+		} while (s);
+	}
+
 	/* if server is not active, do nothing */
 	if (!svs.initialized)
 		return;
@@ -816,7 +833,9 @@ void SV_UserinfoChanged (client_t * cl)
 	unsigned int i;
 
 	/* call prog code to allow overrides */
+	SDL_mutexP(svs.serverMutex);
 	ge->ClientUserinfoChanged(cl->player, cl->userinfo);
+	SDL_mutexV(svs.serverMutex);
 
 	/* name for C code */
 	strncpy(cl->name, Info_ValueForKey(cl->userinfo, "cl_name"), sizeof(cl->name) - 1);
@@ -830,6 +849,17 @@ void SV_UserinfoChanged (client_t * cl)
 		cl->messagelevel = atoi(val);
 
 	Com_DPrintf(DEBUG_SERVER, "SV_UserinfoChanged: Changed userinfo for player %s\n", cl->name);
+}
+
+static qboolean SV_CheckMaxSoldiersPerPlayer (cvar_t* cvar)
+{
+	const int max = MAX_ACTIVETEAM;
+	return Cvar_AssertValue(cvar, 1, max, qtrue);
+}
+
+const routing_t** SV_GetRoutingMap (void)
+{
+	return (const routing_t **) &sv.svMap;
 }
 
 /**
@@ -856,10 +886,11 @@ void SV_Init (void)
 	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
 	sv_maxsoldiersperteam = Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see sv_maxsoldiersperplayer and sv_teamplay)");
 	sv_maxsoldiersperplayer = Cvar_Get("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can controll (see maxsoldiers and sv_teamplay)");
+	Cvar_SetCheckFunction("sv_maxsoldiersperplayer", SV_CheckMaxSoldiersPerPlayer);
 
 	sv_dumpmapassembly = Cvar_Get("sv_dumpmapassembly", "0", CVAR_ARCHIVE, "Dump map assembly information to game console");
 
-	sv_threads = Cvar_Get("sv_threads", "0", CVAR_LATCH | CVAR_ARCHIVE, "Run the server threaded");
+	sv_threads = Cvar_Get("sv_threads", "1", CVAR_LATCH | CVAR_ARCHIVE, "Run the server threaded");
 	sv_public = Cvar_Get("sv_public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
 
@@ -939,6 +970,9 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	/* free server static data */
 	if (svs.clients)
 		Mem_Free(svs.clients);
+
+	if (svs.serverMutex != NULL)
+		SDL_DestroyMutex(svs.serverMutex);
 
 	memset(&svs, 0, sizeof(svs));
 

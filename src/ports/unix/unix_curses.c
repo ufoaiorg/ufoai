@@ -26,10 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/common.h"
 
 #ifdef HAVE_CURSES
-
-#include <ncurses.h>
 #include "unix_curses.h"
+#endif
+
+#ifdef HAVE_CURSES
+#include <ncurses.h>
 #include "../../server/server.h"
+#include "../system.h"
 
 #define CURSES_HISTORYSIZE 64
 #define CURSES_SIZE 32768

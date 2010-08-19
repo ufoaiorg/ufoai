@@ -1,322 +1,388 @@
-// ==================
+// ==============
 // SKIRMISH MENU
-// ==================
+// ==============
 
 window skirmish
 {
-	// ==================
-	// background
-	// ==================
-
-	pic background
+	/** @todo Remove me */
+	{ } 
+	// empty properties to fix parsing problem with "image" token (behaviour or property?)
+	// ===========
+	// BACKGROUND
+	// ===========
+	image background
 	{
-		image		ui/skirmish_bg
+		src		"background/skirmish_bg"
 	}
-
+	// ============
+	// BACK BUTTON
+	// ============	
 	cmpMenuButton button_back
 	{
 		string		"_Back"
 		pos			"90 200"
-		onClick		{ cmd "mn_pop;" }
+		onClick
+		{
+			cmd "mn_pop;"
+		}
 	}
-
-	// ====================
-	// start game button
-	// ====================
+	// ==================
+	// START GAME BUTTON
+	// ==================
 	cmpMenuButton button_start
 	{
-		string		"_Start game"
+		string		"_Start Game"
 		pos			"90 80"
-		onClick		{ cmd "sk_start;" }
+		onClick		
+		{
+			cmd "sk_start;"
+		}
 	}
-
+	// ==============================
+	// SKIRMISH GAME SETTINGS STRING
+	// ==============================
 	string settings
 	{
-		string		"_Skirmish game settings"
+		string		"_Skirmish Game Settings"
 		pos			"500 80"
 		size		"450 30"
-		font		f_big
+		font		"f_big"
 	}
-
-	// ===================
-	// EQUIPMENT
-	// ===================
-	string equipment_alien
-	{
-		string		"_Equipment AI"
-		pos			"500 120"
-		size		"450 20"
-	}
-
-	textentry slot_alien_equipment
-	{
-		string		*cvar:ai_equipment
-		image		ui/button_green_verysmall
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		pos			"500 140"
-		size		"256 34"
-		disabled	true
-		onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
-		onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
-	}
-	custombutton prev_alien_equipment
-	{
-		pos			"468 140"
-		size		"35 35"
-		icon		prev
-		onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
-		onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
-		onClick		{ cmd "sk_prevequip ai_equipment;" }
-	}
-	custombutton next_alien_equipment
-	{
-		pos			"753 140"
-		size		"35 35"
-		icon		next
-		onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
-		onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
-		onClick		{ cmd "sk_nextequip ai_equipment;" }
-	}
-	
-	string equipment
-	{
-		string		"_Equipment"
-		pos			"500 190"
-		size		"450 20"
-	}
-
-	textentry slot_equipment
-	{
-		string		*cvar:cl_equip
-		image		ui/button_green_verysmall
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		pos			"500 210"
-		size		"256 34"
-		disabled	true
-		onWheelUp	{ cmd "sk_prevequip cl_equip;" }
-		onWheelDown	{ cmd "sk_nextequip cl_equip;" }
-	}
-	custombutton prev_equipment
-	{
-		pos			"468 210"
-		size		"35 35"
-		icon		prev
-		onWheelUp	{ cmd "sk_prevequip cl_equip;" }
-		onWheelDown	{ cmd "sk_nextequip cl_equip;" }
-		onClick		{ cmd "sk_prevequip cl_equip;" }
-	}
-	custombutton next_equipment
-	{
-		pos			"753 210"
-		size		"35 35"
-		icon		next
-		onWheelUp	{ cmd "sk_prevequip cl_equip;" }
-		onWheelDown	{ cmd "sk_nextequip cl_equip;" }
-		onClick		{ cmd "sk_nextequip cl_equip;" }
-	}
-
-	// ===================
-	// AI_NUMACTORS
-	// ===================
-	string ai_numactors_str
-	{
-		string		"_Max. AI actors:"
-		pos			"500 275"
-		size		"200 20"
-		tooltip		"_Max AI actors for this game"
-	}
-	string ai_numactors_value
-	{
-		string		*cvar:ai_numaliens
-		pos			"810 275"
-		size		"50 20"
-		textalign	cc
-	}
-	spinner ai_numactors_change
-	{
-		current		*cvar:ai_numaliens
-		image		ui/spinner_blue
-		pos			"868 274"
-		min			1
-		max			30
-		delta		1
-	}
-
-	// =====================
-	// MAXSOLDIER PER PLAYER
-	// =====================
-	string maxsoldierperplayer_str
-	{
-		string		"_Max. soldiers:"
-		tooltip		"_Sets the amount of soldiers"
-		pos			"500 250"
-		size		"300 20"
-	}
-	string maxsoldierperplayer_value
-	{
-		string		*cvar:sv_maxsoldiersperplayer
-		pos			"810 250"
-		size		"50 20"
-		textalign	uc
-	}
-	spinner maxsoldierperplayer_change
-	{
-		current		*cvar:sv_maxsoldiersperplayer
-		image		ui/spinner_blue
-		pos			"868 249"
-		min			1
-		max			8
-		delta		1
-	}
-
-	// ===================
-	// TEAM
-	// ===================	
-
-	string team_str
-	{
-		string		"_Team:"
-		pos			"500 300"
-		size		"200 20"
-		tooltip		"_Select which side you want to play with"
-	}
-
-	selectbox team_box
-	{
-		image	"ui/selectbox_green"
-		pos		"730 300"
-		size	"200 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	*cvar:cl_team
-		option low_value {
-			label	"_Human"
-			value	"1"
-		}
-		option medium_value {
-			label	"_Alien"
-			value	"7"
-		}
-	}
-
-	// ===================
-	// UFOS
-	// ===================	
-	
-	/**
-	 * @param<1> boolean to hide or show
-	 */
-	confunc skirmish_hide_ufos {
-		*ufos_str@invis = <1>
-		*ufos_box@invis = <1>
-	}
-
-	string ufos_str
-	{
-		string		"_UFO:"
-		pos			"500 325"
-		size		"200 20"
-		tooltip		"_Select the ufo that should be used"
-	}
-
-	selectbox ufos_box
-	{
-		image	"ui/selectbox_green"
-		pos		"730 325"
-		size	"200 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	*cvar:rm_ufo
-		dataid	OPTION_UFOS
-	}
-	
-	// ===================
-	// DROPSHIPS
-	// ===================	
-
-	/**
-	 * @param<1> boolean to hide or show
-	 */
-	confunc skirmish_hide_dropships {
-		*dropships_str@invis = <1>
-		*dropships_box@invis = <1>
-	}
-
-	string dropships_str
-	{
-		string		"_Dropship:"
-		pos			"500 350"
-		size		"200 20"
-		tooltip		"_Select the dropship that should be used"
-	}
-
-	selectbox dropships_box
-	{
-		image	"ui/selectbox_green"
-		pos		"730 350"
-		size	"200 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	*cvar:rm_drop
-		dataid	OPTION_DROPSHIPS
-	}
-
-	// ===================
-	// DAY + NIGHT
-	// ===================
-	string current_map
-	{
-		string		"_Day version:"
-		pos			"525 510"
-		size		"450 20"
-	}
-	
-	checkbox daynight_value
-	{
-		current		*cvar:mn_serverday
-		pos			"500 510"
-		image		"ui/checkbox_blue"
-		size		"20 18"
-	}
-
-	// ===================
-	// MAP
-	// ===================
-	cmpMapSlot mapSlot 
+	// ============================
+	// MAP/OPTIONS NAVIGATION TABS
+	// ============================
+	tab create_navigation
 	{
 		{
-			pos			"468 530"
+			pos	"462 150"
+			size	"500 40"
+			cvar	*cvar:mn_skirmish_config_tab
+			onChange
+			{
+				call *node:root.sk_update_config_navigation
+			}
+		}
+		option map
+		{
+			label	"_Map"
+			value	"1"
+		}
+		option options
+		{
+			label	"_Options"
+			value	"2"
 		}
 	}
-
-	cmpMapPic mappic
+	// ========
+	// MAP TAB
+	// ========
+	cmpMapPanel panel_map
 	{
-		image		*cvar:mn_mappic
-		pos			"500 400"
+		{
+			pos		"495 210"
+			size	"475 370"
+		}
+		// ====================
+		// UFO(S) SELECTBOX
+		// ====================
+		string ufos_str
+		{
+			string		"_UFO:"
+			pos			"10 245"
+			size		"200 20"
+			tooltip		"_Select the UFO that should be used (only possible if available for that map)."
+		}
+		selectbox ufos_box
+		{
+			image	"ui/selectbox_green"
+			pos		"240 245"
+			size	"200 20"
+			color	"0.6 0.6 0.6 0.3"
+			cvar	*cvar:rm_ufo
+			dataid	OPTION_UFOS
+		}
+		// ======================
+		// DROPSHIP(S) SELECTBOX
+		// ======================
+		string dropships_str
+		{
+			string		"_Dropship:"
+			pos			"10 295"
+			size		"200 20"
+			tooltip		"_Select the dropship that should be used (only possible if available for that map)."
+		}
+		selectbox dropships_box
+		{
+			image	"ui/selectbox_green"
+			pos		"240 295"
+			size	"200 20"
+			color	"0.6 0.6 0.6 0.3"
+			cvar	*cvar:rm_drop
+			dataid	OPTION_DROPSHIPS
+		}
+		// =============================
+		// DAY/NIGHT STRING & SELECTBOX
+		// =============================
+		string daynight_str
+		{
+			string		"_Daytime Version:"
+			pos			"10 200"
+			size		"280 20"
+		}
+		selectbox daynight_box
+		{
+			{
+				tooltip		"_Select whether you want to play @ day- or nighttime."
+				cvar		*cvar:mn_serverday
+				image		"ui/selectbox_green"
+				pos			"240 200"
+				size		"200 20"
+				color		"0.6 0.6 0.6 0.3"
+			}
+			option night
+			{
+				label	"_Night"
+				value	"0"
+			}
+			option day
+			{
+				label	"_Day"
+				value	"1"
+			}
+		}
 	}
-	cmpMapPic mappic2
+	// ============
+	// OPTIONS TAB
+	// ============
+	panel panel_options
 	{
-		image		*cvar:mn_mappic2
-		pos			"650 400"
+		{
+			pos		"495 210"
+			size	"475 370"
+		}
+		// ==========================================
+		// EQUIPMENT AI STRINGS, TEXTENTRY & BUTTONS
+		// ==========================================
+		string equipment_alien
+		{
+			string		"_Equipment AI Team."
+			pos			"10 0"
+			size		"450 20"
+		}
+		textentry slot_alien_equipment
+		{
+			string		*cvar:ai_equipment
+			image		"ui/button_green_verysmall"
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	ALIGN_CL
+			padding		8
+			font		"f_verysmall"
+			pos			"35 30"
+			size		"256 34"
+			disabled	true
+			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
+			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
+		}
+		custombutton prev_alien_equipment
+		{
+			pos			"0 30"
+			size		"35 35"
+			icon		prev
+			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
+			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
+			onClick		{ cmd "sk_prevequip ai_equipment;" }
+		}
+		custombutton next_alien_equipment
+		{
+			pos			"285 30"
+			size		"35 35"
+			icon		next
+			onWheelUp	{ cmd "sk_prevequip ai_equipment;" }
+			onWheelDown	{ cmd "sk_nextequip ai_equipment;" }
+			onClick		{ cmd "sk_nextequip ai_equipment;" }
+		}
+		// ==============================================
+		// EQUIPMENT PLAYER STRINGS, TEXTENTRY & BUTTONS
+		// ==============================================
+		string equipment
+		{
+			string		"_Equipment of your team."
+			pos			"10 75"
+			size		"450 20"
+		}
+		textentry slot_equipment
+		{
+			string		*cvar:cl_equip
+			image		"ui/button_green_verysmall"
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	ALIGN_CL
+			padding		8
+			font		"f_verysmall"
+			pos			"35 105"
+			size		"256 34"
+			disabled	true
+			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
+			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
+		}
+		custombutton prev_equipment
+		{
+			pos			"0 105"
+			size		"35 35"
+			icon		prev
+			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
+			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
+			onClick		{ cmd "sk_prevequip cl_equip;" }
+		}
+		custombutton next_equipment
+		{
+			pos			"285 105"
+			size		"35 35"
+			icon		next
+			onWheelUp	{ cmd "sk_prevequip cl_equip;" }
+			onWheelDown	{ cmd "sk_nextequip cl_equip;" }
+			onClick		{ cmd "sk_nextequip cl_equip;" }
+		}
+		// ======================================
+		// NUMBER OF AI ACTORS STRINGS & SPINNER
+		// ======================================
+		string ai_numactors_str
+		{
+			string		"_Max. AI actors:"
+			pos			"10 150"
+			size		"200 20"
+			tooltip		"_The maximum of AI actors for this game."
+		}
+		string ai_numactors_value
+		{
+			string		*cvar:ai_numaliens
+			pos			"310 150"
+			size		"50 20"
+			textalign	ALIGN_CC
+		}
+		spinner ai_numactors_change
+		{
+			current		*cvar:ai_numaliens
+			image		"ui/spinner_blue"
+			pos			"368 149"
+			min			1
+			max			30
+			delta		1
+		}
+		// ===========================================
+		// MAXSOLDIER(S) PER PLAYER STRINGS & SPINNER
+		// ===========================================
+		string maxsoldierperplayer_str
+		{
+			string		"_Max. Soldiers:"
+			tooltip		"_Sets the maximum amount of soldiers."
+			pos			"10 175"
+			size		"300 20"
+		}
+		string maxsoldierperplayer_value
+		{
+			string		*cvar:sv_maxsoldiersperplayer
+			pos			"310 175"
+			size		"50 20"
+			textalign	ALIGN_UC
+		}
+		spinner maxsoldierperplayer_change
+		{
+			current		*cvar:sv_maxsoldiersperplayer
+			image		"ui/spinner_blue"
+			pos			"368 174"
+			min			1
+			max			8
+			delta		1
+		}
+		// =======================
+		// UGVS STRINGS & SPINNER
+		// =======================
+		string numugvs_str
+		{
+			string		"_UGVs:"
+			pos			"10 200"
+			size		"200 20"
+			tooltip		"_UGVs for this game - only valid if enough free soldier slots are available."
+		}
+		string numugvs_value
+		{
+			string		*cvar:cl_ugvs
+			pos			"310 200"
+			size		"50 20"
+			textalign	ALIGN_CC
+		}
+		spinner numugvs_change
+		{
+			current		*cvar:cl_ugvs
+			image		"ui/spinner_blue"
+			pos			"368 199"
+			min			0
+			max			2
+			delta		1
+		}
+		// ========================
+		// TEAM STRING & SELECTBOX
+		// ========================
+		string team_str
+		{
+			string		"_Team:"
+			pos			"10 245"
+			size		"200 20"
+			tooltip		"_Select which side you want to play with."
+		}
+		selectbox team_box
+		{
+			image	"ui/selectbox_green"
+			pos		"230 245"
+			size	"200 20"
+			color	"0.6 0.6 0.6 0.3"
+			cvar	*cvar:cl_teamdef
+			dataid	OPTION_TEAMDEFS
+		}
 	}
-	cmpMapPic mappic3
+	// ============
+	// INTERACTION
+	// ============
+	/**
+	 * @param<1> boolean to hide or show
+	 */
+	confunc skirmish_hide_dropships 
 	{
-		image		*cvar:mn_mappic3
-		pos			"800 400"
+		*node:root.panel_map.dropships_str@invis = <1>
+		*node:root.panel_map.dropships_box@invis = <1>
 	}
-
-	// ===================
+	/**
+	 * @param<1> boolean to hide or show
+	 */
+	confunc skirmish_hide_ufos 
+	{
+		*node:root.panel_map.ufos_str@invis = <1>
+		*node:root.panel_map.ufos_box@invis = <1>
+	}
+	func sk_update_config_navigation 
+	{
+		*node:root.panel_map@invis = true
+		*node:root.panel_options@invis = true
+		if ( *cvar:mn_skirmish_config_tab == 1 ) 
+		{
+			*node:root.panel_map@invis = false
+		}
+		elif ( *cvar:mn_skirmish_config_tab == 2 ) 
+		{
+			*node:root.panel_options@invis = false
+		}
+	}
+	// =====
 	// INIT
-	// ===================
+	// =====
 	func onInit
 	{
 		// TODO: Allow changing the difficulty via menu
 		cmd	"game_setmode;set ai_numaliens 8;set ai_equipment multiplayer_alien;set difficulty 0;"
-		cmd "set mn_serverday 1;mn_getmaps;"
+		cmd "set mn_serverday 1;mn_getmaps;define cl_ugvs 0;define cl_teamdef phalanx;"
+		*cvar:mn_skirmish_config_tab = 1
+		call *node:root.sk_update_config_navigation
 	}
 }

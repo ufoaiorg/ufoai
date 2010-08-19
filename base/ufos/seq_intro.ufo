@@ -4,7 +4,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	precache pics
 	{
-		ui/options_bg
+		"background/options_bg"
 		phalanx_badge
 		geoscape/map_earth_night
 		geoscape/mission
@@ -15,8 +15,8 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	2dobj i_menufade
 	{
-		image	pics/ui/options_bg
-		fade "0 0 0 -1"		
+		image	pics/background/options_bg
+		fade "0 0 0 -1"
 	}
 	wait 3
 	rem i_menufade
@@ -34,7 +34,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	2dobj i_sentence1
 	{
 		text	"_intro_sentence1"
-		pos		"512 100"		
+		pos		"512 100"
 		align	uc
 		color	"0.2 1 0.5 0"
 		fade	"0 0 0 0.5"
@@ -46,7 +46,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	2dobj i_sentence2
 	{
 		text	"_intro_sentence2"
-		pos		"512 120"		
+		pos		"512 120"
 		align	uc
 		color	"0.2 1 0.5 0"
 		fade	"0 0 0 0.5"
@@ -58,7 +58,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	2dobj i_sentence3
 	{
 		text	"_intro_sentence3"
-		pos		"512 140"		
+		pos		"512 140"
 		align	uc
 		color	"0.2 1 0.5 0"
 		fade	"0 0 0 0.5"
@@ -85,7 +85,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	rem i_sentence1
 	rem i_sentence2
 	rem i_sentence3
-	
+
 
 	cmd "snd_music AlexSullencity;"
 	wait 2
@@ -113,7 +113,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	2dobj i_xmumbai
 	{
-		fade "0 0 0 -0.1"		
+		fade "0 0 0 -0.1"
 	}
 
 	wait 14 // now 35
@@ -127,14 +127,14 @@ sequence intro // Last change 25-07-2009 by Vio
 		speed	"0 0"
 		relative	true
 	}
-	
+
 	wait 8 // 7 lines
 
-	2dobj i_xbonn // timed with Sullencity sirens 
+	2dobj i_xbonn // timed with Sullencity sirens
 	{
 		image	pics/geoscape/mission
 		pos	"163 169"
-		fade "0 0 0 -0.05"		
+		fade "0 0 0 -0.05"
 	}
 
 	wait 4.5
@@ -143,7 +143,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	{
 		image	pics/geoscape/mission
 		pos	"276 603"
-		fade "0 0 0 -0.05"		
+		fade "0 0 0 -0.05"
 	}
 
 	wait 9
@@ -152,7 +152,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	{
 		image	pics/geoscape/mission
 		pos	"688 376"
-		fade "0 0 0 -0.05"		
+		fade "0 0 0 -0.05"
 	}
 
 	wait 13.5 // now 35
@@ -188,7 +188,7 @@ sequence intro // Last change 25-07-2009 by Vio
 		color	"0.2 1 0.5 0"
 		fade "0 0 0 0.5"
 		speed	"0 0"
-		relative	true		
+		relative	true
 	}
 	wait 13 // 2.5 lines
 
@@ -260,7 +260,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	wait 1
 
 	rem i_background
-	
+
 	wait 4
 
 	2dobj i_phalanxlogo
@@ -270,7 +270,7 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	cmd "snd_music van_geoscape;"
 	wait 4
-	
+
 	rem i_phalanxlogo
 }
 
