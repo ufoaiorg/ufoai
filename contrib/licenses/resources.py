@@ -70,21 +70,24 @@ class Resource(object):
         return str((self.license, self.copyright, self.source, self.revision))
 
 # TODO compute a map with 'short' name
-# TODO we must cache basedir used in computeResources, else it cant work for more than one basedir
 class Resources(object):
     "Manage a set of resources"
 
     def __init__(self):
-        self.resources = None
+        self.resources = {}
+        self.computedBaseDir = set()
 
-    # @todo can we "propget" more than 1 property? faster
+    # TODO can we "propget" more than 1 property? faster
+    # TODO using getResource here is a little stupid
     def computeResources(self, dir):
         "Read resources and metadatas for all versionned file of a dir"
 
-        if self.resources == None:
-            self.resources = {}
+        if dir in self.computedBaseDir:
+            return
 
-        print "Parse revisions..."
+        self.computedBaseDir.add(dir)
+
+        print "Parse '%s' revisions..." % dir
         xml = get('svn info %s --xml -R' % dir, False)
         dom = parseString(xml)
         entries = dom.firstChild.getElementsByTagName('entry')
@@ -93,7 +96,7 @@ class Resources(object):
             meta = self.getResource(path)
             meta.revision = int(e.getAttribute("revision"))
 
-        print "Parse licenses..."
+        print "Parse '%s' licenses..." % dir
         xml = get('svn pg svn:license %s --xml -R' % dir, False)
         dom = parseString(xml)
         entries = dom.firstChild.getElementsByTagName('target')
@@ -104,7 +107,7 @@ class Resources(object):
             meta = self.getResource(path)
             meta.license = property.firstChild.nodeValue
 
-        print "Parse copyright..."
+        print "Parse '%s' copyright..." % dir
         xml = get('svn pg svn:copyright %s --xml -R' % dir, False)
         dom = parseString(xml)
         entries = dom.firstChild.getElementsByTagName('target')
@@ -115,7 +118,7 @@ class Resources(object):
             meta = self.getResource(path)
             meta.copyright = property.firstChild.nodeValue
 
-        print "Parse sources..."
+        print "Parse '%s' sources..." % dir
         xml = get('svn pg svn:source %s --xml -R' % dir, False)
         dom = parseString(xml)
         entries = dom.firstChild.getElementsByTagName('target')
@@ -129,15 +132,16 @@ class Resources(object):
     def getResource(self, fileName):
         "Get a resource from a name without extension"
 
-        if self.resources == None:
+        # Must we load the basedir?
+        if not (fileName in self.resources):
             basedir = fileName.split('/')
             basedir = basedir[0]
             self.computeResources(basedir)
 
-        ## get metadata from cache
+        # Get metadata from cache
         if fileName in self.resources:
             meta = self.resources[fileName]
-        ## gen new structure
+        # Gen object for non versioned file
         else:
             meta = Resource(fileName)
             self.resources[fileName] = meta
