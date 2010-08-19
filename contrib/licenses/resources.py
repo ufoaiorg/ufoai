@@ -50,6 +50,9 @@ def get_used_tex(m):
             used.append(tex)
     return used
 
+def get_used_resources_from_ufo_script(scriptFileName):
+    "Return file name from base/ used by the script"
+    return set([])
 
 class Resource(object):
     "Identify a file resource and links with other resources"
@@ -62,6 +65,8 @@ class Resource(object):
         self.revision = None
         self.usedByMaps = set([])
         self.useTextures = set([])
+        self.usedByScripts = set([])
+        self.useResources = set([])
 
     def isImage(self):
         return self.fileName.endswith('.jpg') or self.fileName.endswith('.tga') or self.fileName.endswith('.png')
@@ -158,6 +163,24 @@ class Resources(object):
         if os.path.exists(fileName + ".tga"):
             return self.getResource(fileName + ".tga")
         return None
+
+    def computeResourceUsageInUFOScripts(self):
+        "Read UFO scripts and create relations with other resources"
+
+        for i in os.walk('base/ufos'):
+            for ufoname in i[2]:
+                if not ufoname.endswith('.ufo'):
+                    continue
+                ufoname = i[0] + '/' + ufoname
+                uforesource = self.getResource(ufoname)
+
+                for name in get_used_resources_from_ufo_script(ufoname):
+                    resource = self.getResource(name)
+                    if resource == None:
+                        print "Warning: \"" + name + "\" from UFO script \"" + ufoname + "\" does not exist"
+                        continue
+                    resource.usedByScripts.add(uforesource)
+                    uforesource.useResources.add(resource)
 
     def computeTextureUsageInMaps(self):
         "Read maps and create relations with other resources"

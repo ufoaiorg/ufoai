@@ -536,6 +536,7 @@ def main():
 
     # map-texture relations
     RESOURCES.computeTextureUsageInMaps()
+    RESOURCES.computeResourceUsageInUFOScripts()
 
     analyse = Analysis('base')
     analyse.write(output_path)
