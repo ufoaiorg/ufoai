@@ -49,13 +49,12 @@ void PQueueInitialise (priorityQueue_t *pq, uint32_t maxElements)
 void PQueuePush (priorityQueue_t *pq, pos4_t item, priorityQueueRating_t r)
 {
 	uint32_t i, j;
-	priorityQueueElement_t * elements = pq->elements;
 	uint32_t currentSize = pq->currentSize;
 
 	if (currentSize == pq->maxSize) {
 		int new_size;
 		new_size = pq->maxSize * 2;
-		pq->elements = elements = (priorityQueueElement_t *)realloc(elements, sizeof(priorityQueueElement_t) * (new_size + 1));
+		pq->elements = (priorityQueueElement_t *)realloc(pq->elements, sizeof(*pq->elements) * (new_size + 1));
 		pq->maxSize = new_size;
 	}
 
@@ -68,16 +67,16 @@ void PQueuePush (priorityQueue_t *pq, pos4_t item, priorityQueueRating_t r)
 	 * note that we also can sort so that the minimum elements bubble up so we need to loops
 	 * with the comparison operator flipped... */
 
-	while (i > PQ_FIRST_ENTRY && (elements[PQ_PARENT_INDEX(i)].rating > r)) {
-		elements[i] = elements[PQ_PARENT_INDEX(i)];
+	while (i > PQ_FIRST_ENTRY && pq->elements[PQ_PARENT_INDEX(i)].rating > r) {
+		pq->elements[i] = pq->elements[PQ_PARENT_INDEX(i)];
 		i = PQ_PARENT_INDEX(i);
 	}
 
 	/* then add the element at the space we created. */
 	for (j = 0; j < 4; j++)
-		elements[i].item[j] = item[j];
+		pq->elements[i].item[j] = item[j];
 
-	elements[i].rating = r;
+	pq->elements[i].rating = r;
 
 	pq->currentSize = currentSize;
 }
