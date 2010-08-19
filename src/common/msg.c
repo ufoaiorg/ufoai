@@ -43,7 +43,7 @@ static void *SZ_GetSpace (sizebuf_t * buf, int length)
 	void *data;
 
 	if (buf->cursize + length > buf->maxsize)
-		Com_Error(ERR_FATAL, "SZ_GetSpace: overflow without allowoverflow set");
+		Com_Error(ERR_FATAL, "SZ_GetSpace: overflow");
 
 	data = buf->data + buf->cursize;
 	buf->cursize += length;

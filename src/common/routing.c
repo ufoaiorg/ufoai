@@ -47,16 +47,16 @@ qboolean debugTrace = qfalse;
 /* Width of the box required to stand in a cell by an actor's feet.  */
 #define halfMicrostepSize (PATHFINDING_MICROSTEP_SIZE / 2 - DIST_EPSILON)
 /* This is a template for the extents of the box used by an actor's feet. */
-const box_t footBox = {{-halfMicrostepSize, -halfMicrostepSize, 0},
+static const box_t footBox = {{-halfMicrostepSize, -halfMicrostepSize, 0},
 						{ halfMicrostepSize,  halfMicrostepSize, 0}};
 
 /* Width of the box required to stand in a cell by an actor's torso.  */
 #define half1x1Width (UNIT_SIZE * 1 / 2 - WALL_SIZE - DIST_EPSILON)
 #define half2x2Width (UNIT_SIZE * 2 / 2 - WALL_SIZE - DIST_EPSILON)
 /* These are templates for the extents of the box used by an actor's torso. */
-const box_t actor1x1Box = {{-half1x1Width, -half1x1Width, 0},
+static const box_t actor1x1Box = {{-half1x1Width, -half1x1Width, 0},
 							{ half1x1Width,  half1x1Width, 0}};
-const box_t actor2x2Box = {{-half2x2Width, -half2x2Width, 0},
+static const box_t actor2x2Box = {{-half2x2Width, -half2x2Width, 0},
 							{ half2x2Width,  half2x2Width, 0}};
 
 /*
