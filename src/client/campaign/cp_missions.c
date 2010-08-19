@@ -110,7 +110,7 @@ void CP_StartMissionMap (mission_t* mission)
 	/* base attack maps starts with a dot */
 	if (mission->mapDef->map[0] == '.') {
 		base_t *base = (base_t*)mission->data;
-		
+
 		if (mission->category != INTERESTCATEGORY_BASE_ATTACK)
 			Com_Printf("Baseattack map on non-baseattack mission! (id=%s, category=%d)\n", mission->id, mission->category);
 		/* assemble a random base */
@@ -1649,6 +1649,11 @@ static int CP_SelectNewMissionType (void)
 static const int DELAY_BETWEEN_MISSION_SPAWNING = 3;
 
 /**
+* @brief The minimum amount of missions per mission cycle.
+* @note some of the missions can be non-occurrence missions. */
+static const int MINIMUM_MISSIONS_PER_CYCLE = 3;
+
+/**
  * @brief Spawn new missions.
  * @sa CL_CampaignRun
  * @note daily called
@@ -1660,11 +1665,9 @@ void CP_SpawnNewMissions (void)
 	ccs.lastMissionSpawnedDelay++;
 
 	if (ccs.lastMissionSpawnedDelay > DELAY_BETWEEN_MISSION_SPAWNING) {
-		/* How many missions will be spawned until next cycle ? */
-		const int newMissionNum = (int) (pow(ccs.overallInterest / 10.0f, 0.6));
+		/* Select the amount of missions that will be spawned in the next cycle. */
+		const int newMissionNum = max(MINIMUM_MISSIONS_PER_CYCLE, (int) (pow(ccs.overallInterest / 10.0f, 0.6)));
 #if 0
-		/* select new number randomly, weighted by interest and difficulty level */
-		const int newMissionNum = (int) (pow(ccs.overallInterest / 10.0f, 0.6) * frand() * 0.05 * (ccs.curCampaign->difficulty + 16));
 		Com_Printf("interest = %d, val=%f, new missions = %d\n", ccs.overallInterest, (pow(ccs.overallInterest / 10.0f, 0.6)), newMissionNum);
 #endif
 		for (i = 0; i < newMissionNum; i++) {
