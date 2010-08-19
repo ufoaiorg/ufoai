@@ -30,9 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/parse.h"
 #include "../ports/system.h"
 
-/** current client */
-client_t *sv_client;
-
 /** password for remote server commands */
 static cvar_t *rcon_password;
 static cvar_t *sv_http_downloadserver;
@@ -290,7 +287,6 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	/* build a new connection - accept the new client
 	 * this is the only place a client_t is ever initialized */
 	memset(cl, 0, sizeof(*cl));
-	sv_client = cl;
 	playernum = cl - svs.clients;
 	player = PLAYER_NUM(playernum);
 	cl->player = player;

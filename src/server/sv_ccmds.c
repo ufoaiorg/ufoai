@@ -65,34 +65,29 @@ void SV_SetMaster_f (void)
 }
 
 /**
- * @brief Sets sv_client and sv_player to the player with idnum Cmd_Argv(1)
+ * @brief searches a player by id or name
+ * @param[in] s Either the numeric id of the player, or the player name
+ * @return the client structure
  */
-static qboolean SV_SetPlayer (void)
+static client_t* SV_GetPlayerClientStructure (const char *s)
 {
 	client_t *cl;
 	int i;
-	const char *s;
-
-	if (Cmd_Argc() < 2)
-		return qfalse;
-
-	s = Cmd_Argv(1);
 
 	/* numeric values are just slot numbers */
 	if (s[0] >= '0' && s[0] <= '9') {
 		const int idnum = atoi(Cmd_Argv(1));
 		if (idnum < 0 || idnum >= sv_maxclients->integer) {
 			Com_Printf("Bad client slot: %i\n", idnum);
-			return qfalse;
+			return NULL;
 		}
 
-		sv_client = &svs.clients[idnum];
-		sv_player = sv_client->player;
-		if (sv_client->state == cs_free) {
+		cl = &svs.clients[idnum];
+		if (cl->state == cs_free) {
 			Com_Printf("Client %i is not active\n", idnum);
-			return qfalse;
+			return NULL;
 		}
-		return qtrue;
+		return cl;
 	}
 
 	/* check for a name match */
@@ -100,14 +95,12 @@ static qboolean SV_SetPlayer (void)
 		if (cl->state == cs_free)
 			continue;
 		if (!strcmp(cl->name, s)) {
-			sv_client = cl;
-			sv_player = sv_client->player;
-			return qtrue;
+			return cl;
 		}
 	}
 
 	Com_Printf("Userid %s is not on the server\n", s);
-	return qfalse;
+	return NULL;
 }
 
 /**
@@ -200,6 +193,8 @@ static void SV_Map_f (void)
  */
 static void SV_Kick_f (void)
 {
+	client_t *cl;
+
 	if (!svs.initialized) {
 		Com_Printf("No server running.\n");
 		return;
@@ -210,13 +205,14 @@ static void SV_Kick_f (void)
 		return;
 	}
 
-	if (!SV_SetPlayer())
+	cl = SV_GetPlayerClientStructure(Cmd_Argv(1));
+	if (cl == NULL)
 		return;
 
-	SV_BroadcastPrintf(PRINT_CONSOLE, "%s was kicked\n", sv_client->name);
+	SV_BroadcastPrintf(PRINT_CONSOLE, "%s was kicked\n", cl->name);
 	/* print directly, because the dropped client won't get the
 	 * SV_BroadcastPrintf message */
-	SV_DropClient(sv_client, "You were kicked from the game\n");
+	SV_DropClient(cl, "You were kicked from the game\n");
 }
 
 /**
@@ -326,6 +322,8 @@ static void SV_Serverinfo_f (void)
  */
 static void SV_UserInfo_f (void)
 {
+	client_t *cl;
+
 	if (!svs.initialized) {
 		Com_Printf("No server running.\n");
 		return;
@@ -336,12 +334,13 @@ static void SV_UserInfo_f (void)
 		return;
 	}
 
-	if (!SV_SetPlayer())
+	cl = SV_GetPlayerClientStructure(Cmd_Argv(1));
+	if (cl == NULL)
 		return;
 
 	Com_Printf("userinfo\n");
 	Com_Printf("--------\n");
-	Info_Print(sv_client->userinfo);
+	Info_Print(cl->userinfo);
 }
 
 /**

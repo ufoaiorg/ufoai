@@ -28,8 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "server.h"
 
-player_t *sv_player;
-
 /**
  * @brief Set the client state
  * @sa client_state_t
@@ -44,8 +42,6 @@ void SV_SetClientState (client_t* client, int state)
 /*
 ============================================================
 USER STRINGCMD EXECUTION
-
-sv_client and sv_player will be valid.
 ============================================================
 */
 
@@ -56,29 +52,29 @@ sv_client and sv_player will be valid.
  * @sa CL_Reconnect_f
  * @sa CL_ConnectionlessPacket
  */
-static void SV_New_f (void)
+static void SV_New_f (client_t *cl)
 {
 	int playernum;
 
-	Com_DPrintf(DEBUG_SERVER, "New() from %s\n", sv_client->name);
+	Com_DPrintf(DEBUG_SERVER, "New() from %s\n", cl->name);
 
-	if (sv_client->state != cs_connected) {
-		if (sv_client->state == cs_spawning) {
+	if (cl->state != cs_connected) {
+		if (cl->state == cs_spawning) {
 			/* client typed 'reconnect/new' while connecting. */
 			Com_Printf("SV_New_f: client typed 'reconnect/new' while connecting\n");
-			SV_ClientCommand(sv_client, "\ndisconnect\nreconnect\n");
-			SV_DropClient(sv_client, "");
+			SV_ClientCommand(cl, "\ndisconnect\nreconnect\n");
+			SV_DropClient(cl, "");
 		} else
-			Com_DPrintf(DEBUG_SERVER, "WARNING: Illegal 'new' from %s, client state %d. This shouldn't happen...\n", sv_client->name, sv_client->state);
+			Com_DPrintf(DEBUG_SERVER, "WARNING: Illegal 'new' from %s, client state %d. This shouldn't happen...\n", cl->name, cl->state);
 		return;
 	}
 
 	/* client state to prevent multiple new from causing high cpu / overflows. */
-	SV_SetClientState(sv_client, cs_spawning);
+	SV_SetClientState(cl, cs_spawning);
 
 	/* serverdata needs to go over for all types of servers
 	 * to make sure the protocol is right, and to set the gamedir */
-	playernum = sv_client - svs.clients;
+	playernum = cl - svs.clients;
 
 	/* send the serverdata */
 	{
@@ -91,7 +87,7 @@ static void SV_New_f (void)
 		/* send full levelname */
 		NET_WriteString(msg, sv.configstrings[CS_NAME]);
 
-		NET_WriteMsg(sv_client->stream, msg);
+		NET_WriteMsg(cl->stream, msg);
 	}
 
 	/* game server */
@@ -105,40 +101,40 @@ static void SV_New_f (void)
 				NET_WriteShort(msg, i);
 				NET_WriteString(msg, sv.configstrings[i]);
 				/* enqueue and free msg */
-				NET_WriteMsg(sv_client->stream, msg);
+				NET_WriteMsg(cl->stream, msg);
 			}
 		}
 	}
 
-	SV_ClientCommand(sv_client, "precache\n");
+	SV_ClientCommand(cl, "precache\n");
 }
 
 /**
  * @sa SV_Spawn_f
  */
-static void SV_Begin_f (void)
+static void SV_Begin_f (client_t *cl)
 {
 	qboolean began;
 
-	Com_DPrintf(DEBUG_SERVER, "Begin() from %s\n", sv_client->name);
+	Com_DPrintf(DEBUG_SERVER, "Begin() from %s\n", cl->name);
 
 	/* could be abused to respawn or cause spam/other mod-specific problems */
-	if (sv_client->state != cs_spawning) {
-		Com_Printf("EXPLOIT: Illegal 'begin' from %s (already spawned), client dropped.\n", sv_client->name);
-		SV_DropClient(sv_client, "Illegal begin\n");
+	if (cl->state != cs_spawning) {
+		Com_Printf("EXPLOIT: Illegal 'begin' from %s (already spawned), client dropped.\n", cl->name);
+		SV_DropClient(cl, "Illegal begin\n");
 		return;
 	}
 
 	/* call the game begin function */
 	SDL_mutexP(svs.serverMutex);
-	began = ge->ClientBegin(sv_player);
+	began = ge->ClientBegin(cl->player);
 	SDL_mutexV(svs.serverMutex);
 
 	if (!began) {
-		SV_DropClient(sv_client, "'begin' failed\n");
+		SV_DropClient(cl, "'begin' failed\n");
 		return;
 	}
-	SV_SetClientState(sv_client, cs_began);
+	SV_SetClientState(cl, cs_began);
 
 	Cbuf_InsertFromDefer();
 }
@@ -146,19 +142,19 @@ static void SV_Begin_f (void)
 /**
  * @sa SV_Begin_f
  */
-static void SV_Spawn_f (void)
+static void SV_Spawn_f (client_t *cl)
 {
-	Com_DPrintf(DEBUG_SERVER, "Spawn() from %s\n", sv_client->name);
+	Com_DPrintf(DEBUG_SERVER, "Spawn() from %s\n", cl->name);
 
-	if (sv_client->state != cs_began) {
-		SV_DropClient(sv_client, "Invalid state\n");
+	if (cl->state != cs_began) {
+		SV_DropClient(cl, "Invalid state\n");
 		return;
 	}
 
 	SDL_mutexP(svs.serverMutex);
-	ge->ClientSpawn(sv_player);
+	ge->ClientSpawn(cl->player);
 	SDL_mutexV(svs.serverMutex);
-	SV_SetClientState(sv_client, cs_spawned);
+	SV_SetClientState(cl, cs_spawned);
 
 	Cbuf_InsertFromDefer();
 }
@@ -168,16 +164,16 @@ static void SV_Spawn_f (void)
 /**
  * @brief The client is going to disconnect, so remove the connection immediately
  */
-static void SV_Disconnect_f (void)
+static void SV_Disconnect_f (client_t *cl)
 {
-	SV_DropClient(sv_client, "Disconnect\n");
+	SV_DropClient(cl, "Disconnect\n");
 }
 
 
 /**
  * @brief Dumps the serverinfo info string
  */
-static void SV_ShowServerinfo_f (void)
+static void SV_ShowServerinfo_f (client_t *cl)
 {
 	Info_Print(Cvar_Serverinfo());
 }
@@ -185,7 +181,7 @@ static void SV_ShowServerinfo_f (void)
 
 typedef struct {
 	const char *name;
-	void (*func) (void);
+	void (*func) (client_t *client);
 } ucmd_t;
 
 static const ucmd_t ucmds[] = {
@@ -205,24 +201,23 @@ static const ucmd_t ucmds[] = {
 /**
  * @sa SV_ExecuteClientMessage
  */
-static void SV_ExecuteUserCommand (const char *s)
+static void SV_ExecuteUserCommand (client_t * cl, const char *s)
 {
 	const ucmd_t *u;
 
 	Cmd_TokenizeString(s, qfalse);
-	sv_player = sv_client->player;
 
 	for (u = ucmds; u->name; u++)
 		if (!strcmp(Cmd_Argv(0), u->name)) {
 			Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: %s\n", s);
-			u->func();
+			u->func(cl);
 			return;
 		}
 
 	if (Com_ServerState() == ss_game) {
 		Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: client command: %s\n", s);
 		SDL_mutexP(svs.serverMutex);
-		ge->ClientCommand(sv_player);
+		ge->ClientCommand(cl->player);
 		SDL_mutexV(svs.serverMutex);
 	}
 }
@@ -232,9 +227,6 @@ static void SV_ExecuteUserCommand (const char *s)
  */
 void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 {
-	sv_client = cl;
-	sv_player = sv_client->player;
-
 	if (cmd == -1)
 		return;
 
@@ -259,7 +251,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		NET_ReadString(msg, str, sizeof(str));
 
 		Com_DPrintf(DEBUG_SERVER, "stringcmd from client: %s\n", str);
-		SV_ExecuteUserCommand(str);
+		SV_ExecuteUserCommand(cl, str);
 
 		if (cl->state == cs_free)
 			return;			/* disconnect command */
@@ -270,7 +262,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		/* client actions are handled by the game module */
 		sv_msg = msg;
 		SDL_mutexP(svs.serverMutex);
-		ge->ClientAction(sv_player);
+		ge->ClientAction(cl->player);
 		SDL_mutexV(svs.serverMutex);
 		sv_msg = NULL;
 		break;
@@ -279,7 +271,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		/* player wants to end round */
 		sv_msg = msg;
 		SDL_mutexP(svs.serverMutex);
-		ge->ClientEndRound(sv_player);
+		ge->ClientEndRound(cl->player);
 		SDL_mutexV(svs.serverMutex);
 		sv_msg = NULL;
 		break;
@@ -289,7 +281,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		/* actors spawn accordingly */
 		sv_msg = msg;
 		SDL_mutexP(svs.serverMutex);
-		ge->ClientTeamInfo(sv_player);
+		ge->ClientTeamInfo(cl->player);
 		SDL_mutexV(svs.serverMutex);
 		sv_msg = NULL;
 		break;
@@ -299,7 +291,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		/* actors spawn accordingly */
 		sv_msg = msg;
 		SDL_mutexP(svs.serverMutex);
-		ge->ClientInitActorStates(sv_player);
+		ge->ClientInitActorStates(cl->player);
 		SDL_mutexV(svs.serverMutex);
 		sv_msg = NULL;
 		break;

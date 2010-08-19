@@ -135,8 +135,6 @@ extern cvar_t *sv_public;			/**< should heartbeats be sent? (only for public ser
 extern cvar_t *sv_dumpmapassembly;
 extern cvar_t *sv_threads;	/**< run the game lib threaded */
 
-extern client_t *sv_client;
-extern player_t *sv_player;
 extern struct dbuffer *sv_msg;
 
 /*=========================================================== */
