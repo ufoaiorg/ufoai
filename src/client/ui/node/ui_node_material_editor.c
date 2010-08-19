@@ -265,7 +265,6 @@ static void UI_MaterialEditorStagesToName (const materialStage_t *stage, char *b
  */
 static void UI_MaterialEditorUpdate (image_t *image, materialStage_t *materialStage)
 {
-	int i;
 	linkedList_t *materialStagesList = NULL;
 
 	if (image->normalmap == NULL)
@@ -282,6 +281,7 @@ static void UI_MaterialEditorUpdate (image_t *image, materialStage_t *materialSt
 	if (!image->material.num_stages) {
 		UI_ExecuteConfunc("hidestages true");
 	} else {
+		int i;
 		if (materialStage) {
 			const char *stageType = Cvar_GetString("me_stagetype");
 			if (stageType[0] == '\0')

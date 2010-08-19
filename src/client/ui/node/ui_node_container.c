@@ -271,7 +271,6 @@ void UI_DrawItem (uiNode_t *node, const vec3_t org, const item_t *item, int x, i
  */
 static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
 {
-	int i;
 	objDef_t *weapon;
 
 	assert(item.t);
@@ -298,6 +297,7 @@ static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
 		} else if (item.t->numWeapons) {
 			/* Check if this is a non-weapon and non-ammo item */
 			if (!(item.t->numWeapons == 1 && item.t->weapons[0] == item.t)) {
+				int i;
 				/* If it's ammo get the weapon names it can be used in */
 				Q_strcat(tooltipText, _("Usable in:\n"), stringMaxLength);
 				for (i = 0; i < item.t->numWeapons; i++) {
@@ -403,7 +403,6 @@ static void UI_ContainerNodeLoaded (uiNode_t* const node)
 {
 	const char *name;
 	invDef_t *container;
-	int i, j;
 
 	/** @todo find a better way to add more equip node, without this hack */
 	name = node->name;
@@ -419,8 +418,9 @@ static void UI_ContainerNodeLoaded (uiNode_t* const node)
 	if (UI_IsScrollContainerNode(node)) {
 		/* No need to compute the size, the script provide it */
 	} else {
+		int i, j;
 		/* Start on the last bit of the shape mask. */
-		for (i = 31; i >= 0; i--) {
+		for (i = SHAPE_BIG_MAX_WIDTH - 1; i >= 0; i--) {
 			for (j = 0; j < SHAPE_BIG_MAX_HEIGHT; j++)
 				if (container->shape[j] & (1 << i))
 					break;
@@ -455,7 +455,6 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
 {
 	vec4_t color;
 	vec3_t pos;
-	qboolean disabled = qfalse;
 
 	UI_GetNodeAbsPos(node, pos);
 	pos[0] += node->size[0] / 2.0;
@@ -479,6 +478,7 @@ static void UI_ContainerNodeDrawSingle (uiNode_t *node, objDef_t *highlightType)
 			}
 		}
 	} else if (ui_inventory->c[EXTRADATA(node).container->id]) {
+		qboolean disabled = qfalse;
 		const item_t *item;
 
 		if (ui_inventory->c[csi.idRight]) {

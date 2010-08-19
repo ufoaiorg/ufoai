@@ -103,9 +103,9 @@ static const value_t properties[] = {
 
 static void UI_AbstractOptionDoLayout (uiNode_t *node) {
 	uiNode_t *option = node->firstChild;
-	int count = 0;
 
 	if (EXTRADATA(node).dataId == 0) {
+		int count = 0;
 		while(option && option->behaviour == ui_optionBehaviour) {
 			UI_Validate(option);
 			if (!option->invis)

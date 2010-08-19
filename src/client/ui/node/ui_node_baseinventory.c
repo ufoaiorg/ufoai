@@ -223,7 +223,6 @@ static void UI_BaseInventoryNodeUpdateScroll (uiNode_t* node)
  */
 static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxLength)
 {
-	int i;
 	objDef_t *weapon;
 
 	assert(item.t);
@@ -250,6 +249,7 @@ static void UI_GetItemTooltip (item_t item, char *tooltipText, size_t stringMaxL
 		} else if (item.t->numWeapons) {
 			/* Check if this is a non-weapon and non-ammo item */
 			if (!(item.t->numWeapons == 1 && item.t->weapons[0] == item.t)) {
+				int i;
 				/* If it's ammo get the weapon names it can be used in */
 				Q_strcat(tooltipText, _("Usable in:\n"), stringMaxLength);
 				for (i = 0; i < item.t->numWeapons; i++) {
