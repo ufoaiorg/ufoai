@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 # -*- coding: utf-8; tab-width: 4; indent-tabs-mode: nil -*-
 
 # Copyright (C) 2006 - Florian Ludwig <dino@phidev.org>
