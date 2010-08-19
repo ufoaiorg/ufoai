@@ -160,7 +160,7 @@ window basedefence extends objectinfo
 			pos			"10 130"
 			size		"200 32"
 			onClick		{
-				cmd "basedef_additem <cvar:mn_bdef_type> <node:parent.slots.slotlist@lineselected> <node:parent.store.storelist@lineselected>;"
+				cmd "basedef_additem <cvar:mn_bdef_type> <node:parent.slots.slotlist@lineselected>;"
 			}
 		}
 		button bt_remove
