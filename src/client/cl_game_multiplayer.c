@@ -126,7 +126,6 @@ static void GAME_MP_UpdateGametype_f (void)
  */
 static void GAME_MP_ChangeGametype_f (void)
 {
-	int i, newType;
 	const mapDef_t *md;
 	const char *newGameTypeID = NULL;
 	qboolean next = qtrue;
@@ -175,9 +174,11 @@ static void GAME_MP_ChangeGametype_f (void)
 		if (!list)
 			newGameTypeID = (const char *)md->gameTypes->data;
 	} else {
+		int i;
 		for (i = 0; i < numGTs; i++) {
 			const gametype_t *gt = &gts[i];
 			if (!strcmp(gt->id, sv_gametype->string)) {
+				int newType;
 				if (next) {
 					newType = (i + 1);
 					if (newType >= numGTs)
@@ -304,9 +305,9 @@ void GAME_MP_InitStartup (void)
 
 	/* restore old sv_maxsoldiersperplayer and sv_maxsoldiersperteam
 	 * cvars if values were previously set */
-	if (strlen(max_s))
+	if (max_s[0] != '\0')
 		Cvar_Set("sv_maxsoldiersperteam", max_s);
-	if (strlen(max_spp))
+	if (max_spp[0] != '\0')
 		Cvar_Set("sv_maxsoldiersperplayer", max_spp);
 }
 

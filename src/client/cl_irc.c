@@ -1450,7 +1450,7 @@ static void Irc_Logic_Connect (const char *server, const char *port)
 		const char * const pass = irc_password->string;
 		const char * const user = irc_user->string;
 		irc_connected = qtrue;
-		if (strlen(pass))
+		if (pass[0] != '\0')
 			Irc_Proto_Password(pass);
 		Irc_Proto_Nick(irc_nick->string);
 		Irc_Proto_User(user, qtrue, user);
@@ -1771,11 +1771,10 @@ static char irc_userListOrdered[IRC_MAX_USERLIST][MAX_VAR];
 
 static void Irc_Client_Names_f (void)
 {
-	int i;
-
 	irc_user_t* user;
 	if (chan) {
 		linkedList_t *irc_names_buffer = NULL;
+		int i;
 		user = chan->user;
 		for (i = 0; i < chan->users; i++) {
 			if (i >= IRC_MAX_USERLIST)

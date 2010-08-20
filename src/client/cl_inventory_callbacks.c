@@ -138,9 +138,9 @@ void INV_ItemDescription (const objDef_t *od)
 			}
 		} else if ((od->weapon && od->numAmmos) || INV_IsAmmo(od)) {
 			const objDef_t *odAmmo;
-			int weaponIndex;
 
 			if (count > 0) {
+				int weaponIndex;
 				if (od->weapon) {
 					Com_sprintf(itemText, sizeof(itemText), _("%s weapon\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 					if (od->ammo > 0)

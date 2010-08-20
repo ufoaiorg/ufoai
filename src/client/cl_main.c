@@ -333,7 +333,6 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 {
 	char s[1024];
 	const char *c;
-	int i;
 
 	NET_ReadStringLine(msg, s, sizeof(s));
 
@@ -345,6 +344,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 
 	/* server connection */
 	if (!strncmp(c, "client_connect", 13)) {
+		int i;
 		for (i = 1; i < Cmd_Argc(); i++) {
 			const char *p = Cmd_Argv(i);
 			if (!strncmp(p, "dlserver=", 9)) {
@@ -466,7 +466,6 @@ static void CL_SpawnSoldiers_f (void)
  */
 void CL_RequestNextDownload (void)
 {
-	unsigned scriptChecksum = 0;
 	const char *buf;
 
 	if (cls.state != ca_connected) {
@@ -481,7 +480,8 @@ void CL_RequestNextDownload (void)
 	/* for singleplayer game this is already loaded in our local server
 	 * and if we are the server we don't have to reload the map here, too */
 	if (!Com_ServerState()) {
-		qboolean day = atoi(cl.configstrings[CS_LIGHTMAP]);
+		const qboolean day = atoi(cl.configstrings[CS_LIGHTMAP]);
+		unsigned scriptChecksum = 0;
 
 		/* activate the map loading screen for multiplayer, too */
 		SCR_BeginLoadingPlaque();
