@@ -852,7 +852,7 @@ static qboolean SV_CheckMaxSoldiersPerPlayer (cvar_t* cvar)
 	return Cvar_AssertValue(cvar, 1, max, qtrue);
 }
 
-const mapData_t* SV_GetMapData (void)
+mapData_t* SV_GetMapData (void)
 {
 	return &sv.mapData;
 }

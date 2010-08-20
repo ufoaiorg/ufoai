@@ -126,7 +126,7 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 	le->modelnum2 = modelnum2;
 	le->model1 = cl.model_draw[modelnum1];
 	le->model2 = cl.model_draw[modelnum2];
-	Grid_PosToVec(cl.mapData.map, le->fieldSize, le->pos, le->origin);
+	Grid_PosToVec(cl.mapData->map, le->fieldSize, le->pos, le->origin);
 	le->angles[YAW] = directionAngles[le->dir];
 
 	le->contents = CONTENTS_ACTOR;

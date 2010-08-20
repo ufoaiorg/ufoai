@@ -474,7 +474,9 @@ void CL_RequestNextDownload (void)
 		return;
 	}
 
+	/* Use the map data from the server */
 	cl.mapTiles = SV_GetMapTiles();
+	cl.mapData = SV_GetMapData();
 
 	/* for singleplayer game this is already loaded in our local server
 	 * and if we are the server we don't have to reload the map here, too */
@@ -503,7 +505,7 @@ void CL_RequestNextDownload (void)
 			scriptChecksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
 		FS_GetFileData(NULL);
 
-		CM_LoadMap(cl.configstrings[CS_TILES], day, cl.configstrings[CS_POSITIONS], &cl.mapData, cl.mapTiles);
+		CM_LoadMap(cl.configstrings[CS_TILES], day, cl.configstrings[CS_POSITIONS], cl.mapData, cl.mapTiles);
 		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM]
 		 || !*cl.configstrings[CS_UFOCHECKSUM] || !*cl.configstrings[CS_OBJECTAMOUNT]) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers"), UFO_VERSION);
@@ -511,10 +513,10 @@ void CL_RequestNextDownload (void)
 			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers", UFO_VERSION);
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
-		} else if (cl.mapData.mapChecksum != atoi(cl.configstrings[CS_MAPCHECKSUM])) {
+		} else if (cl.mapData->mapChecksum != atoi(cl.configstrings[CS_MAPCHECKSUM])) {
 			UI_Popup(_("Error"), _("Local map version differs from server"));
 			Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%s'",
-				cl.mapData.mapChecksum, cl.configstrings[CS_MAPCHECKSUM]);
+				cl.mapData->mapChecksum, cl.configstrings[CS_MAPCHECKSUM]);
 			return;
 		/* amount of objects from script files doensn't match */
 		} else if (csi.numODs != atoi(cl.configstrings[CS_OBJECTAMOUNT])) {
@@ -530,9 +532,6 @@ void CL_RequestNextDownload (void)
 			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers (%s)", UFO_VERSION, cl.configstrings[CS_VERSION]);
 			return;
 		}
-	} else {
-		/* Copy the client map from the server */
-		memcpy(&cl.mapData, SV_GetMapData(), sizeof(cl.mapData));
 	}
 
 	CL_ViewLoadMedia();
