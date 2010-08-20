@@ -271,7 +271,7 @@ static void Curses_DrawConsole (void)
 {
 	const int w = stdwin->_maxx;
 	const int h = stdwin->_maxy;
-	int x, y, firstLine, lastLine;
+	int x, y, firstLine;
 	const char *pos;
 
 	if (w < 3 && h < 3)
@@ -284,7 +284,6 @@ static void Curses_DrawConsole (void)
 	pos = curses_text;
 
 	firstLine = max(0, curses_lastline - curses_scroll - h);
-	lastLine = curses_lastline - curses_scroll;
 
 	while (*pos) {
 		if (*pos == 1) {

@@ -96,7 +96,6 @@ void Sys_SetAffinityAndPriority (void)
 	/* 1 - use core #0
 	 * 2 - use core #1
 	 * 3 - use cores #0 and #1 */
-	DWORD_PTR procAffinity = 0;
 	HANDLE proc = GetCurrentProcess();
 
 	if (sys_priority->modified) {
@@ -124,6 +123,7 @@ void Sys_SetAffinityAndPriority (void)
 	}
 
 	if (sys_affinity->modified) {
+		DWORD_PTR procAffinity = 0;
 		GetSystemInfo(&sysInfo);
 		Com_Printf("Found %i processors\n", (int)sysInfo.dwNumberOfProcessors);
 		sys_affinity->modified = qfalse;
