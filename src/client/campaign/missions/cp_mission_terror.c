@@ -117,7 +117,6 @@ static const mission_t* CP_TerrorInCity (const city_t *city)
  */
 static void CP_TerrorMissionGo (mission_t *mission)
 {
-	const nation_t *nation;
 	int counter;
 
 	mission->stage = STAGE_MISSION_GOTO;
@@ -148,8 +147,6 @@ static void CP_TerrorMissionGo (mission_t *mission)
 		CP_MissionRemove(mission);
 		return;
 	}
-
-	nation = MAP_GetNation(mission->pos);
 
 	if (mission->ufo) {
 		CP_MissionDisableTimeLimit(mission);
