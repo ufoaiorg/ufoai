@@ -3070,8 +3070,6 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
  */
 const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const aircraft_t* aircraft)
 {
-	int i;
-
 	if (!employee)
 		return NULL;
 
@@ -3080,6 +3078,7 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const ai
 
 	/* If no aircraft is given we search if he is in _any_ aircraft and return true if that's the case. */
 	if (!aircraft) {
+		int i;
 		for (i = 0; i < ccs.numAircraft; i++) {
 			const aircraft_t *aircraftByIDX = AIR_AircraftGetFromIDX(i);
 			if (aircraftByIDX && AIR_IsEmployeeInAircraft(employee, aircraftByIDX))

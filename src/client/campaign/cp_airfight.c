@@ -304,7 +304,6 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraf
 void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 {
 	int slotIdx;
-	float probability;
 
 	/* some asserts */
 	assert(shooter);
@@ -319,9 +318,9 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 
 		/* shoot */
 		if (AIRFIGHT_AddProjectile(NULL, NULL, shooter, target, &(shooter->weapons[slotIdx]))) {
-			shooter->weapons[slotIdx].delayNextShot = ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
-			probability = frand();
+			const float probability = frand();
+			shooter->weapons[slotIdx].delayNextShot = ammo->craftitem.weaponDelay;
 			if (probability > AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx))
 				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], qfalse);
 

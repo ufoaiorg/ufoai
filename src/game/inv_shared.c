@@ -153,7 +153,6 @@ static qboolean INVSH_CheckShapeCollision (const uint32_t *shape, const uint32_t
  */
 static qboolean INVSH_CheckToInventory_shape (const inventory_t * const i, const invDef_t * container, const uint32_t itemShape, const int x, const int y, const invList_t *ignoredItem)
 {
-	int j;
 	invList_t *ic;
 	static uint32_t mask[SHAPE_BIG_MAX_HEIGHT];
 
@@ -167,6 +166,7 @@ static qboolean INVSH_CheckToInventory_shape (const inventory_t * const i, const
 		return qfalse;
 
 	if (!cacheCheckToInventory) {
+		int j;
 		/* extract shape info */
 		for (j = 0; j < SHAPE_BIG_MAX_HEIGHT; j++)
 			mask[j] = ~container->shape[j];

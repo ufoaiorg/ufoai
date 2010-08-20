@@ -539,7 +539,6 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 {
 	objDef_t *ammo = NULL;
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
-	int i;
 	qboolean allowLeft;
 	qboolean packed;
 	int ammoMult = 1;
@@ -563,6 +562,7 @@ static int I_PackAmmoAndWeapon (inventoryInterface_t *self, inventory_t* const i
 			/* find some suitable ammo for the weapon (we will have at least one if there are ammos for this
 			 * weapon in equipment definition) */
 			int totalAvailableAmmo = 0;
+			int i;
 			for (i = 0; i < self->csi->numODs; i++) {
 				objDef_t *obj = INVSH_GetItemByIDX(i);
 				if (ed->numItems[i] && INVSH_LoadableInWeapon(obj, weapon)) {
@@ -713,17 +713,19 @@ typedef enum {
  */
 static void I_EquipActor (inventoryInterface_t* self, inventory_t* const inv, const equipDef_t *ed, const teamDef_t* td)
 {
-	int i, sum;
+	int i;
 	const int numEquip = lengthof(ed->numItems);
-	int hasWeapon = 0, repeat = 0;
-	int missedPrimary = 0; /**< If actor has a primary weapon, this is zero. Otherwise, this is the probability * 100
-							* that the actor had to get a primary weapon (used to compensate the lack of primary weapon) */
-	equipPrimaryWeaponType_t primary = WEAPON_NO_PRIMARY;
+	int repeat = 0;
 	const float AKIMBO_CHANCE = 0.3; 	/**< if you got a one-handed secondary weapon (and no primary weapon),
 											 this is the chance to get another one (between 0 and 1) */
 
 	if (td->weapons) {
+		equipPrimaryWeaponType_t primary = WEAPON_NO_PRIMARY;
+		int sum;
+		int missedPrimary = 0; /**< If actor has a primary weapon, this is zero. Otherwise, this is the probability * 100
+								* that the actor had to get a primary weapon (used to compensate the lack of primary weapon) */
 		objDef_t *primaryWeapon = NULL;
+		int hasWeapon = 0;
 		/* Primary weapons */
 		const int maxWeaponIdx = min(self->csi->numODs - 1, numEquip - 1);
 		int randNumber = rand() % 100;
