@@ -80,13 +80,85 @@ static qboolean CM_LineMissesModel (const vec3_t start, const vec3_t stop, const
 	return qfalse;
 }
 
+
 /**
- * @brief Wrapper for TR_TransformedBoxTrace that accepts a tile number,
- * @sa TR_TransformedBoxTrace
+ * @param[in] start trace start vector
+ * @param[in] end trace end vector
+ * @param[in] mins box mins
+ * @param[in] maxs box maxs
+ * @param[in] tile Tile to check (normally 0 - except in assembled maps)
+ * @param[in] headnode if < 0 we are in a leaf node
+ * @param[in] brushmask brushes the trace should stop at (see MASK_*)
+ * @param[in] brushreject brushes the trace should ignore (see MASK_*)
+ * @param[in] origin center for rotating objects
+ * @param[in] angles current rotation status (in degrees) for rotating objects
+ * @param[in] rmaShift how much the object was shifted by the RMA process (needed for doors)
+ * @param[in] fraction The furthest distance needed to trace before we stop.
+ * @brief Handles offseting and rotation of the end points for moving and rotating entities
+ * @sa CM_BoxTrace
  */
-trace_t CM_HintedTransformedBoxTrace (const int tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
+trace_t CM_HintedTransformedBoxTrace (const int tileIdx, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
 {
-	return TR_HintedTransformedBoxTrace(&mapTiles[tile], start, end, mins, maxs, headnode, brushmask, brushrejects, origin, angles, rmaShift, fraction);
+	trace_t trace;
+	vec3_t start_l, end_l;
+	vec3_t a;
+	vec3_t forward, right, up;
+	vec3_t temp;
+	qboolean rotated;
+	mapTile_t *tile = &mapTiles[tileIdx];
+
+	/* subtract origin offset */
+	VectorSubtract(start, origin, start_l);
+	VectorSubtract(end, origin, end_l);
+
+	/* rotate start and end into the models frame of reference */
+	if (headnode != tile->box_headnode && VectorNotEmpty(angles)) {
+		rotated = qtrue;
+	} else {
+		rotated = qfalse;
+	}
+
+	if (rotated) {
+		AngleVectors(angles, forward, right, up);
+
+		VectorCopy(start_l, temp);
+		start_l[0] = DotProduct(temp, forward);
+		start_l[1] = -DotProduct(temp, right);
+		start_l[2] = DotProduct(temp, up);
+
+		VectorCopy(end_l, temp);
+		end_l[0] = DotProduct(temp, forward);
+		end_l[1] = -DotProduct(temp, right);
+		end_l[2] = DotProduct(temp, up);
+	}
+
+	/* When tracing through a model, we want to use the nodes, planes etc. as calculated by ufo2map.
+	 * But nodes and planes have been shifted in case of an RMA. At least for doors we need to undo the shift. */
+	if (VectorNotEmpty(origin)) {					/* only doors seem to have their origin set */
+		VectorAdd(start_l, rmaShift, start_l);		/* undo the shift */
+		VectorAdd(end_l, rmaShift, end_l);
+	}
+
+	/* sweep the box through the model */
+	trace = TR_BoxTrace(tile, start_l, end_l, mins, maxs, headnode, brushmask, brushrejects, fraction);
+	trace.mapTile = tile->idx;
+	assert(trace.mapTile >= 0);
+	assert(trace.mapTile < numTiles);
+
+	if (rotated && trace.fraction != 1.0) {
+		/** @todo figure out how to do this with existing angles */
+		VectorNegate(angles, a);
+		AngleVectors(a, forward, right, up);
+
+		VectorCopy(trace.plane.normal, temp);
+		trace.plane.normal[0] = DotProduct(temp, forward);
+		trace.plane.normal[1] = -DotProduct(temp, right);
+		trace.plane.normal[2] = DotProduct(temp, up);
+	}
+
+	VectorInterpolation(start, end, trace.fraction, trace.endpos);
+
+	return trace;
 }
 
 /**
@@ -125,7 +197,7 @@ int CM_HeadnodeForBox (int tileIdx, const vec3_t mins, const vec3_t maxs)
  * @param[in] levelmask
  * @sa TR_TestLine
  * @sa CM_InlineModel
- * @sa TR_TransformedBoxTrace
+ * @sa CM_TransformedBoxTrace
  * @return qtrue - hit something
  * @return qfalse - hit nothing
  */
@@ -176,7 +248,7 @@ static qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int
  * @param[out] end The position where the line hits a object or the stop position if nothing is in the line
  * @param[in] levelmask
  * @sa TR_TestLineDM
- * @sa TR_TransformedBoxTrace
+ * @sa CM_TransformedBoxTrace
  */
 static qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist)
 {

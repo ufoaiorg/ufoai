@@ -106,15 +106,14 @@ int TR_BoxOnPlaneSide(const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE 
 
 void TR_BuildTracingNode_r(TR_TILE_TYPE *tile, int node, int level);
 
-trace_t TR_HintedTransformedBoxTrace(TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction);
-#define TR_TransformedBoxTrace(tile, start, end, mins, maxs, headnode, brushmask, brushreject, origin, angles) TR_HintedTransformedBoxTrace(tile, start, end, mins, maxs, headnode, brushmask, brushreject, origin, angles, vec3_origin, 1.0f);
-
 #ifdef COMPILE_MAP
 trace_t TR_SingleTileBoxTrace(const vec3_t start, const vec3_t end, const box_t* traceBox, const int levelmask, const int brushmask, const int brushreject);
 qboolean TR_TestLineSingleTile(const vec3_t start, const vec3_t stop, int *headhint);
 #else
 trace_t TR_CompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject);
 #endif
+
+trace_t TR_BoxTrace(TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const float fraction);
 
 qboolean TR_TestLine(const vec3_t start, const vec3_t stop, const int levelmask);
 qboolean TR_TestLineDM(const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);
