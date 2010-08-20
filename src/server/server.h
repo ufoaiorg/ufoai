@@ -156,7 +156,7 @@ typedef struct {
 								 * Set to a huge negative value to send immmediately */
 	SDL_mutex *serverMutex;
 	SDL_Thread *gameThread;
-
+	void *gameLibrary;
 	game_export_t *ge;
 } server_static_t;
 

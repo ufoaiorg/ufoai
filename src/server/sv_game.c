@@ -31,8 +31,6 @@
 #include "../ports/system.h"
 #include <SDL.h>
 
-static void *gameLibrary;
-
 /**
  * @brief Debug print to server console
  */
@@ -401,10 +399,12 @@ static void SV_FreeTags (int tagNum, const char *file, int line)
 static void SV_UnloadGame (void)
 {
 #ifndef GAME_HARD_LINKED
-	if (gameLibrary)
-		SDL_UnloadObject(gameLibrary);
+	if (svs.gameLibrary) {
+		Com_Printf("Unload the game library\n");
+		SDL_UnloadObject(svs.gameLibrary);
+	}
 #endif
-	gameLibrary = NULL;
+	svs.gameLibrary = NULL;
 }
 
 #ifndef HARD_LINKED_GAME
@@ -413,13 +413,13 @@ static qboolean SV_LoadGame (const char *path)
 	char name[MAX_OSPATH];
 
 	Com_sprintf(name, sizeof(name), "%s/game_"CPUSTRING".%s", path, SHARED_EXT);
-	gameLibrary = SDL_LoadObject(name);
-	if (!gameLibrary) {
+	svs.gameLibrary = SDL_LoadObject(name);
+	if (!svs.gameLibrary) {
 		Com_sprintf(name, sizeof(name), "%s/game.%s", path, SHARED_EXT);
-		gameLibrary = SDL_LoadObject(name);
+		svs.gameLibrary = SDL_LoadObject(name);
 	}
 
-	if (gameLibrary) {
+	if (svs.gameLibrary) {
 		Com_Printf("found at '%s'\n", path);
 		return qtrue;
 	} else {
@@ -441,7 +441,7 @@ static game_export_t *SV_GetGameAPI (game_import_t *parms)
 	const char *path;
 #endif
 
-	if (gameLibrary)
+	if (svs.gameLibrary)
 		Com_Error(ERR_FATAL, "SV_GetGameAPI without SV_UnloadGame");
 
 #ifndef HARD_LINKED_GAME
@@ -453,7 +453,7 @@ static game_export_t *SV_GetGameAPI (game_import_t *parms)
 
 	/* now run through the search paths */
 	path = NULL;
-	while (!gameLibrary) {
+	while (!svs.gameLibrary) {
 		path = FS_NextPath(path);
 		if (!path)
 			/* couldn't find one anywhere */
@@ -462,7 +462,7 @@ static game_export_t *SV_GetGameAPI (game_import_t *parms)
 			break;
 	}
 
-	GetGameAPI = (void *)SDL_LoadFunction(gameLibrary, "GetGameAPI");
+	GetGameAPI = (void *)SDL_LoadFunction(svs.gameLibrary, "GetGameAPI");
 	if (!GetGameAPI) {
 		SV_UnloadGame();
 		return NULL;
@@ -491,12 +491,14 @@ void SV_ShutdownGameProgs (void)
 	}
 
 	svs.ge->Shutdown();
-	SV_UnloadGame();
 
 	size = Mem_PoolSize(sv_gameSysPool);
 	if (size > 0) {
 		Com_Printf("WARNING: Game memory leak (%u bytes)\n", size);
+		Cmd_ExecuteString(va("mem_stats %s", sv_gameSysPool->name));
 	}
+
+	SV_UnloadGame();
 
 	svs.ge = NULL;
 }
@@ -539,7 +541,7 @@ void SV_InitGameProgs (void)
 	game_import_t import;
 
 	/* unload anything we have now */
-	SV_ShutdownGameProgs();
+	/*SV_ShutdownGameProgs();*/
 
 	/* load a new game dll */
 	import.BroadcastPrintf = SV_BroadcastPrintf;
