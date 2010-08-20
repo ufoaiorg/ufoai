@@ -114,8 +114,6 @@ void TR_BuildTracingNode_r(TR_TILE_TYPE *tile, int node, int level);
 
 #ifdef COMPILE_MAP
 trace_t TR_SingleTileBoxTrace(mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const box_t* traceBox, const int levelmask, const int brushmask, const int brushreject);
-#else
-trace_t TR_CompleteBoxTrace(mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject);
 #endif
 int TR_TestLine_r(TR_TILE_TYPE *tile, int node, const vec3_t start, const vec3_t stop);
 trace_t TR_BoxTrace(TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const float fraction);

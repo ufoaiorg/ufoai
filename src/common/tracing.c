@@ -155,7 +155,7 @@ void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, int node, int level)
 			TR_BuildTracingNode_r(tile, n->children[i], level);
 		}
 	} else {
-		/* Make a lookup table for TR_CompleteBoxTrace */
+		/* Make a lookup table */
 		tile->cheads[tile->numcheads].cnode = node;
 		tile->cheads[tile->numcheads].level = level;
 		tile->numcheads++;
@@ -956,7 +956,6 @@ static void TR_RecursiveHullCheck (boxtrace_t *traceData, int num, float p1f, fl
  * @param[in] brushmask brushes the trace should stop at (see MASK_*)
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  * @param[in] fraction The furthest distance needed to trace before we stop.
- * @sa TR_CompleteBoxTrace
  * @sa TR_RecursiveHullCheck
  * @sa TR_BoxLeafnums_headnode
  */
@@ -1114,68 +1113,6 @@ trace_t TR_SingleTileBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const v
 	/* Trace the whole line against the first tile. */
 	tr = TR_TileBoxTrace(&mapTiles->mapTiles[0], start, end, traceBox->mins, traceBox->maxs, levelmask, brushmask, brushreject);
 	tr.mapTile = 0;
-	return tr;
-}
-
-#else
-
-/**
- * @param[in] start trace start vector
- * @param[in] end trace end vector
- * @param[in] mins box mins
- * @param[in] maxs box maxs
- * @param[in] levelmask Selects which submodels get scanned.
- * @param[in] brushmask brushes the trace should stop at (see MASK_*)
- * @param[in] brushreject brushes the trace should ignore (see MASK_*)
- * @brief Traces all submodels in all tiles.  Used by ufo and ufo_ded.
- */
-trace_t TR_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int levelmask, const int brushmask, const int brushreject)
-{
-	trace_t newtr, tr;
-	int tile, i;
-	vec3_t smin, smax, emin, emax, wpmins, wpmaxs;
-	const vec3_t offset = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
-
-	memset(&tr, 0, sizeof(tr));
-	tr.fraction = 2.0f;
-
-	/* Prep the mins and maxs */
-	for (i = 0; i < 3; i++) {
-		smin[i] = start[i] + min(mins[i], maxs[i]);
-		smax[i] = start[i] + max(mins[i], maxs[i]);
-		emin[i] = end[i] + min(mins[i], maxs[i]);
-		emax[i] = end[i] + max(mins[i], maxs[i]);
-	}
-
-	/* trace against all loaded map tiles */
-	for (tile = 0; tile < mapTiles->numTiles; tile++) {
-		TR_TILE_TYPE *myTile = &mapTiles->mapTiles[tile];
-		PosToVec(myTile->wpMins, wpmins);
-		VectorSubtract(wpmins, offset, wpmins);
-		PosToVec(myTile->wpMaxs, wpmaxs);
-		VectorAdd(wpmaxs, offset, wpmaxs);
-		/* If the trace is completely outside of the tile, then skip it. */
-		if (smax[0] < wpmins[0] && emax[0] < wpmins[0])
-			continue;
-		if (smax[1] < wpmins[1] && emax[1] < wpmins[1])
-			continue;
-		if (smax[2] < wpmins[2] && emax[2] < wpmins[2])
-			continue;
-		if (smin[0] > wpmaxs[0] && emin[0] > wpmaxs[0])
-			continue;
-		if (smin[1] > wpmaxs[1] && emin[1] > wpmaxs[1])
-			continue;
-		if (smin[2] > wpmaxs[2] && emin[2] > wpmaxs[2])
-			continue;
-		newtr = TR_TileBoxTrace(myTile, start, end, mins, maxs, levelmask, brushmask, brushreject);
-		newtr.mapTile = tile;
-
-		/* memorize the trace with the minimal fraction */
-		if (newtr.fraction == 0.0)
-			return newtr;
-		if (newtr.fraction < tr.fraction)
-			tr = newtr;
-	}
 	return tr;
 }
 #endif

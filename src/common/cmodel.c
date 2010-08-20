@@ -292,6 +292,67 @@ qboolean CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_
 }
 
 /**
+ * @param[in] start trace start vector
+ * @param[in] end trace end vector
+ * @param[in] mins box mins
+ * @param[in] maxs box maxs
+ * @param[in] levelmask Selects which submodels get scanned.
+ * @param[in] brushmask brushes the trace should stop at (see MASK_*)
+ * @param[in] brushreject brushes the trace should ignore (see MASK_*)
+ * @brief Traces all submodels in all tiles.  Used by ufo and ufo_ded.
+ */
+trace_t CM_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject)
+{
+	trace_t newtr, tr;
+	int tile, i;
+	vec3_t smin, smax, emin, emax, wpmins, wpmaxs;
+	const vec3_t offset = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
+
+	memset(&tr, 0, sizeof(tr));
+	tr.fraction = 2.0f;
+
+	/* Prep the mins and maxs */
+	for (i = 0; i < 3; i++) {
+		smin[i] = start[i] + min(mins[i], maxs[i]);
+		smax[i] = start[i] + max(mins[i], maxs[i]);
+		emin[i] = end[i] + min(mins[i], maxs[i]);
+		emax[i] = end[i] + max(mins[i], maxs[i]);
+	}
+
+	/* trace against all loaded map tiles */
+	for (tile = 0; tile < mapTiles->numTiles; tile++) {
+		mapTile_t *myTile = &mapTiles->mapTiles[tile];
+		PosToVec(myTile->wpMins, wpmins);
+		VectorSubtract(wpmins, offset, wpmins);
+		PosToVec(myTile->wpMaxs, wpmaxs);
+		VectorAdd(wpmaxs, offset, wpmaxs);
+		/* If the trace is completely outside of the tile, then skip it. */
+		if (smax[0] < wpmins[0] && emax[0] < wpmins[0])
+			continue;
+		if (smax[1] < wpmins[1] && emax[1] < wpmins[1])
+			continue;
+		if (smax[2] < wpmins[2] && emax[2] < wpmins[2])
+			continue;
+		if (smin[0] > wpmaxs[0] && emin[0] > wpmaxs[0])
+			continue;
+		if (smin[1] > wpmaxs[1] && emin[1] > wpmaxs[1])
+			continue;
+		if (smin[2] > wpmaxs[2] && emin[2] > wpmaxs[2])
+			continue;
+		newtr = TR_TileBoxTrace(myTile, start, end, mins, maxs, levelmask, brushmask, brushreject);
+		newtr.mapTile = tile;
+
+		/* memorize the trace with the minimal fraction */
+		if (newtr.fraction == 0.0)
+			return newtr;
+		if (newtr.fraction < tr.fraction)
+			tr = newtr;
+	}
+	return tr;
+}
+
+
+/**
  * @brief Performs box traces against the world and all inline models, gives the hit position back
  * @param[in] start The position to start the trace.
  * @param[in] end The position where the trace ends.
@@ -301,7 +362,7 @@ qboolean CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_
  * @param[in] brushreject Any brush detected with any of these contents will be ignored.
  * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  * @return a trace_t with the information of the closest brush intersected.
- * @sa TR_CompleteBoxTrace
+ * @sa CM_CompleteBoxTrace
  * @sa CM_HintedTransformedBoxTrace
  */
 trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const box_t* traceBox, int levelmask, int brushmask, int brushreject, const char **list)
@@ -311,7 +372,7 @@ trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const 
 	vec3_t bmins, bmaxs;
 
 	/* trace against world first */
-	trace = TR_CompleteBoxTrace(mapTiles, start, end, traceBox->mins, traceBox->maxs, levelmask, brushmask, brushreject);
+	trace = CM_CompleteBoxTrace(mapTiles, start, end, traceBox->mins, traceBox->maxs, levelmask, brushmask, brushreject);
 	if (!list || trace.fraction == 0.0)
 		return trace;
 

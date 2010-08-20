@@ -486,12 +486,12 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
  * @note Useful to determine whether an actor is e.g. inside of a water brush
  * @sa CM_TestInLeaf
  * @sa CM_TestBoxInBrush
- * @sa TR_CompleteBoxTrace
+ * @sa CM_CompleteBoxTrace
  */
 int SV_PointContents (vec3_t p)
 {
 	/* clip to all world levels */
-	trace_t trace = TR_CompleteBoxTrace(&sv.mapTiles, p, p, vec3_origin, vec3_origin, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
+	trace_t trace = CM_CompleteBoxTrace(&sv.mapTiles, p, p, vec3_origin, vec3_origin, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
 	if (trace.fraction == 0)
 		return trace.contentFlags;		/* blocked by the world */
 	return 0;
@@ -555,7 +555,7 @@ trace_t SV_Trace (const vec3_t start, const vec3_t mins, const vec3_t maxs, cons
 	memset(&clip, 0, sizeof(clip));
 
 	/* clip to world - 0x1FF = all levels */
-	clip.trace = TR_CompleteBoxTrace(&sv.mapTiles, start, end, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
+	clip.trace = CM_CompleteBoxTrace(&sv.mapTiles, start, end, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
 	/** @todo There is more than one world in case of a map assembly - use
 	 * @c clip.trace.mapTile to get the correct one */
 	clip.trace.ent = svs.ge->edicts; /* the first edict is the world */

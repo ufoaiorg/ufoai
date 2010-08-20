@@ -327,7 +327,7 @@ typedef struct {
 	int thead[LEVEL_MAX];
 	int theadlevel[LEVEL_MAX];
 
-    /* Used by CM_CompleteBoxTrace */
+    /* Used by TR_TileBoxTrace */
 	int numcheads;
 	cBspHead_t cheads[MAX_MAP_NODES];
 
