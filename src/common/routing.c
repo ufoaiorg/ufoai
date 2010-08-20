@@ -89,12 +89,12 @@ static inline void RT_PlaceInit (const routing_t *map, const actorSizeEnum_t act
 	p->usable = (relCeiling && p->floor > -1 && p->ceiling - p->floor >= PATHFINDING_MIN_OPENING) ? qtrue : qfalse;
 }
 
-static inline qboolean RT_PlaceIsUsable (place_t* p)
+static inline qboolean RT_PlaceIsUsable (const place_t* p)
 {
 	return p->usable;
 }
 
-static inline qboolean RT_PlaceDoesIntersectEnough (place_t* p, place_t* other)
+static inline qboolean RT_PlaceDoesIntersectEnough (const place_t* p, const place_t* other)
 {
 	return (min(p->ceiling, other->ceiling) - max(p->floor, other->floor) >= PATHFINDING_MIN_OPENING);
 }
@@ -103,7 +103,7 @@ static inline qboolean RT_PlaceDoesIntersectEnough (place_t* p, place_t* other)
  * in front of a stairway and has a floor at eg.1 and a ceiling at eg.16.
  * The other place has the beginning of the stairway, so the floor is at eg. 6
  * and the ceiling is that of the higher level, eg.32.*/
-static inline int RT_PlaceIsShifted (place_t* p, place_t* other)
+static inline int RT_PlaceIsShifted (const place_t* p, const place_t* other)
 {
 	if (!RT_PlaceIsUsable(p) || !RT_PlaceIsUsable(other))
 		return 0;
