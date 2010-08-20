@@ -42,13 +42,8 @@ int numTiles = 0;
 /** @note For multi-check avoidance. */
 static int checkcount;
 
-static int leaf_count, leaf_maxcount;
-static int *leaf_list;
-static int leaf_topnode;
-
 /** @note This is used to create the thead trees in MakeTracingNodes. */
 tnode_t *tnode_p;
-
 
 /*
 ===============================================================================
@@ -589,12 +584,18 @@ int TR_HeadnodeForBox (mapTile_t *tile, const vec3_t mins, const vec3_t maxs)
 	return tile->box_headnode;
 }
 
+typedef struct leaf_check_s {
+	int leaf_count, leaf_maxcount;
+	int *leaf_list;
+	int leaf_topnode;
+} leaf_check_t;
+
 /**
  * @brief Fills in a list of all the leafs touched
  * call with topnode set to the headnode, returns with topnode
  * set to the first node that splits the box
  */
-static void TR_BoxLeafnums_r (boxtrace_t *traceData, int nodenum)
+static void TR_BoxLeafnums_r (boxtrace_t *traceData, int nodenum, leaf_check_t *lc)
 {
 	TR_PLANE_TYPE *plane;
 	TR_NODE_TYPE *node;
@@ -603,11 +604,11 @@ static void TR_BoxLeafnums_r (boxtrace_t *traceData, int nodenum)
 
 	while (1) {
 		if (nodenum <= LEAFNODE) {
-			if (leaf_count >= leaf_maxcount) {
+			if (lc->leaf_count >= lc->leaf_maxcount) {
 /*				Com_Printf("CM_BoxLeafnums_r: overflow\n"); */
 				return;
 			}
-			leaf_list[leaf_count++] = -1 - nodenum;
+			lc->leaf_list[lc->leaf_count++] = -1 - nodenum;
 			return;
 		}
 
@@ -625,9 +626,9 @@ static void TR_BoxLeafnums_r (boxtrace_t *traceData, int nodenum)
 		else if (s == PSIDE_BACK)
 			nodenum = node->children[1];
 		else {					/* go down both */
-			if (leaf_topnode == LEAFNODE)
-				leaf_topnode = nodenum;
-			TR_BoxLeafnums_r(traceData, node->children[0]);
+			if (lc->leaf_topnode == LEAFNODE)
+				lc->leaf_topnode = nodenum;
+			TR_BoxLeafnums_r(traceData, node->children[0], lc);
 			nodenum = node->children[1];
 		}
 	}
@@ -639,19 +640,19 @@ static void TR_BoxLeafnums_r (boxtrace_t *traceData, int nodenum)
  */
 static int TR_BoxLeafnums_headnode (boxtrace_t *traceData, int *list, int listsize, int headnode, int *topnode)
 {
-	leaf_list = list;
-	leaf_count = 0;
-	leaf_maxcount = listsize;
-
-	leaf_topnode = LEAFNODE;
+	leaf_check_t lc;
+	lc.leaf_list = list;
+	lc.leaf_count = 0;
+	lc.leaf_maxcount = listsize;
+	lc.leaf_topnode = LEAFNODE;
 
 	assert(headnode < traceData->tile->numnodes + 6); /* +6 => bbox */
-	TR_BoxLeafnums_r(traceData, headnode);
+	TR_BoxLeafnums_r(traceData, headnode, &lc);
 
 	if (topnode)
-		*topnode = leaf_topnode;
+		*topnode = lc.leaf_topnode;
 
-	return leaf_count;
+	return lc.leaf_count;
 }
 
 
