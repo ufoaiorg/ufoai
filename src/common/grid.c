@@ -798,7 +798,7 @@ void Grid_PosToVec (const routing_t *map, const actorSizeEnum_t actorSize, const
  * @param[in] min The lower extents of the box to recalc routing for
  * @param[in] max The upper extents of the box to recalc routing for
  */
-void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max, const char **list)
+void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const pos3_t min, const pos3_t max, const char **list)
 {
 	int x, y, z, actorSize, dir;
 
@@ -818,7 +818,7 @@ void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max, 
 			for (x = max(min[0] - actorSize + 1, 0); x < maxX; x++) {
 				/** @note RT_CheckCell goes from top (7) to bottom (0) */
 				for (z = max[2]; z >= 0; z--) {
-					const int newZ = RT_CheckCell(map, actorSize, x, y, z, list);
+					const int newZ = RT_CheckCell(mapTiles, map, actorSize, x, y, z, list);
 					assert(newZ <= z);
 					z = newZ;
 				}
@@ -846,7 +846,7 @@ void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max, 
 					if ((dir & 1) && x != minX && x != maxX && y != minY && y != maxY)
 						continue;
 #endif
-					RT_UpdateConnectionColumn(map, actorSize, x, y, dir, list);
+					RT_UpdateConnectionColumn(mapTiles, map, actorSize, x, y, dir, list);
 				}
 			}
 		}
@@ -864,9 +864,9 @@ void Grid_RecalcBoxRouting (routing_t *map, const pos3_t min, const pos3_t max, 
  * @param[in] map The routing map (either server or client map)
  * @param[in] name Name of the inline model to compute the mins/maxs for
  */
-void Grid_RecalcRouting (routing_t *map, const char *name, const char **list)
+void Grid_RecalcRouting (mapTiles_t *mapTiles, routing_t *map, const char *name, const char **list)
 {
-	cBspModel_t *model;
+	const cBspModel_t *model;
 	pos3_t min, max;
 	unsigned int i;
 	double start, end;
@@ -878,7 +878,7 @@ void Grid_RecalcRouting (routing_t *map, const char *name, const char **list)
 		Com_Printf("Called Grid_RecalcRouting with no inline model\n");
 		return;
 	}
-	model = CM_InlineModel(name);
+	model = CM_InlineModel(mapTiles, name);
 	if (!model) {
 		Com_Printf("Called Grid_RecalcRouting with invalid inline model name '%s'\n", name);
 		return;
@@ -932,7 +932,7 @@ void Grid_RecalcRouting (routing_t *map, const char *name, const char **list)
 		min[i] = max(min[i] - 1, 0);
 
 	/* We now have the dimensions, call the generic rerouting function. */
-	Grid_RecalcBoxRouting(map, min, max, list);
+	Grid_RecalcBoxRouting(mapTiles, map, min, max, list);
 
 	end = time(NULL);
 	Com_DPrintf(DEBUG_ROUTING, "Retracing for model %s between (%i, %i, %i) and (%i, %i %i) in %5.1fs\n",

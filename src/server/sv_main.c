@@ -857,6 +857,11 @@ const mapData_t* SV_GetMapData (void)
 	return &sv.mapData;
 }
 
+const mapTiles_t* SV_GetMapTiles (void)
+{
+	return &sv.mapTiles;
+}
+
 /**
  * @brief Only called once at startup, not for each game
  */

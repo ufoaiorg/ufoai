@@ -31,6 +31,7 @@ int entity_num;
  * @note used as a shortcut so the tile being processed does not need to be repeatedly passed between functions.
  */
 dMapTile_t *curTile;
+mapTiles_t mapTiles;
 
 /**
  * @sa ProcessModels

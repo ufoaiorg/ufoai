@@ -63,7 +63,7 @@ static int CheckUnit (unsigned int unitnum)
 
 	/* Com_Printf("%i %i %i %i\n", x, y, z, size); */
 	/* Call the common CheckUnit function */
-	new_z = RT_CheckCell(Nmap, actorSize + 1, x, y, z, NULL);
+	new_z = RT_CheckCell(&mapTiles, Nmap, actorSize + 1, x, y, z, NULL);
 
 	/* Com_Printf("z:%i nz:%i\n", z, new_z); */
 
@@ -109,7 +109,7 @@ static void CheckConnectionsThread (unsigned int unitnum)
 
 	Verb_Printf(VERB_EXTRA, "%i %i %i %i (%i, %i, %i) (%i, %i, %i)\n", x, y, dir, actorSize, wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]);
 
-	RT_UpdateConnectionColumn(Nmap, actorSize + 1, x, y, dir, NULL);
+	RT_UpdateConnectionColumn(&mapTiles, Nmap, actorSize + 1, x, y, dir, NULL);
 
 	/* Com_Printf("z:%i nz:%i\n", z, new_z); */
 }
@@ -145,7 +145,7 @@ void DoRouting (void)
 	memset(Nmap, 0, sizeof(Nmap));
 
 	/* get world bounds for optimizing */
-	RT_GetMapSize(mins, maxs);
+	RT_GetMapSize(&mapTiles, mins, maxs);
 	/* Com_Printf("Vectors: (%f, %f, %f) to (%f, %f, %f)\n", mins[0], mins[1], mins[2], maxs[0], maxs[1], maxs[2]); */
 	VecToPos(mins, wpMins);
 	VecToPos(maxs, wpMaxs);

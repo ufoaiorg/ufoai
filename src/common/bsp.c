@@ -80,7 +80,7 @@ static void CMod_LoadSubmodels (mapTile_t *tile, const byte *base, const lump_t 
 			out->maxs[j] = LittleFloat(in->maxs[j]) + 1 + shift[j];
 		}
 		out->headnode = LittleLong(in->headnode);
-		out->tile = numTiles; /* backlink to the loaded map tile */
+		out->tile = tile->idx; /* backlink to the loaded map tile */
 	}
 }
 
@@ -563,7 +563,7 @@ static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *b
 				}
 				/* Update the reroute table */
 				if (!mapData->reroute[size][y][x]) {
-					mapData->reroute[size][y][x] = numTiles + 1;
+					mapData->reroute[size][y][x] = tile->idx + 1;
 				} else {
 					mapData->reroute[size][y][x] = ROUTING_NOT_REACHABLE;
 				}
@@ -580,11 +580,10 @@ static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *b
  * @note Transforms coordinates and stuff for assembled maps
  * @param[in] l descriptor of the data block we are working on
  * @param[in] shift The shifting vector in case this is a map assemble
- * @param[in] tileIndex Used to make targetname and target unique over all
  * loaded map tiles.
  * @sa CM_AddMapTile
  */
-static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const byte *base, const lump_t * l, const vec3_t shift, int tileIndex)
+static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const byte *base, const lump_t * l, const vec3_t shift)
 {
 	const char *token;
 	const char *es;
@@ -654,7 +653,7 @@ static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const by
 				num += mapData->numInline;
 				Q_strcat(mapData->mapEntityString, va("%s *%i ", keyname, num), MAX_MAP_ENTSTRING);
 			} else if (!strcmp(keyname, "targetname") || !strcmp(keyname, "target")) {
-				Q_strcat(mapData->mapEntityString, va("%s \"%s-%i\" ", keyname, token, tileIndex), MAX_MAP_ENTSTRING);
+				Q_strcat(mapData->mapEntityString, va("%s \"%s-%i\" ", keyname, token, tile->idx), MAX_MAP_ENTSTRING);
 			} else {
 				/* just store key and value */
 				Q_strcat(mapData->mapEntityString, va("%s \"%s\" ", keyname, token), MAX_MAP_ENTSTRING);
@@ -689,7 +688,7 @@ static void CM_InitBoxHull (mapTile_t *tile)
 	tile->box_headnode = tile->numnodes;
 	tile->box_planes = &tile->planes[tile->numplanes];
 	/* sanity check if you only use one maptile => no map assembly */
-	if (numTiles == 1 && (tile->numnodes + 6 > MAX_MAP_NODES
+	if (tile->idx == 1 && (tile->numnodes + 6 > MAX_MAP_NODES
 		|| tile->numbrushes + 1 > MAX_MAP_BRUSHES
 		|| tile->numleafbrushes + 1 > MAX_MAP_LEAFBRUSHES
 		|| tile->numbrushsides + 6 > MAX_MAP_BRUSHSIDES
@@ -756,7 +755,7 @@ static void CM_InitBoxHull (mapTile_t *tile)
  * @sa CM_LoadMap
  * @sa R_ModAddMapTile
  */
-static void CM_AddMapTile (const char *name, qboolean day, int sX, int sY, byte sZ, mapData_t *mapData)
+static void CM_AddMapTile (const char *name, qboolean day, int sX, int sY, byte sZ, mapData_t *mapData, mapTiles_t *mapTiles)
 {
 	char filename[MAX_QPATH];
 	unsigned checksum;
@@ -794,12 +793,12 @@ static void CM_AddMapTile (const char *name, qboolean day, int sX, int sY, byte 
 	base = (const byte *) buf;
 
 	/* init */
-	if (numTiles >= MAX_MAPTILES)
-		Com_Error(ERR_FATAL, "CM_AddMapTile: too many tiles loaded %i", numTiles);
+	if (mapTiles->numTiles >= MAX_MAPTILES)
+		Com_Error(ERR_FATAL, "CM_AddMapTile: too many tiles loaded %i", mapTiles->numTiles);
 
-	tile = &mapTiles[numTiles];
+	tile = &(mapTiles->mapTiles[mapTiles->numTiles]);
 	memset(tile, 0, sizeof(*tile));
-	tile->idx = numTiles;
+	tile->idx = mapTiles->numTiles;
 	Q_strncpyz(tile->name, name, sizeof(tile->name));
 
 	/* pathfinding and the like must be shifted on the worldplane when we
@@ -815,7 +814,7 @@ static void CM_AddMapTile (const char *name, qboolean day, int sX, int sY, byte 
 	CMod_LoadBrushSides(tile, base, &header.lumps[LUMP_BRUSHSIDES]);
 	CMod_LoadSubmodels(tile, base, &header.lumps[LUMP_MODELS], shift);
 	CMod_LoadNodes(tile, base, &header.lumps[LUMP_NODES], shift);
-	CMod_LoadEntityString(tile, mapData, base, &header.lumps[LUMP_ENTITIES], shift, numTiles);
+	CMod_LoadEntityString(tile, mapData, base, &header.lumps[LUMP_ENTITIES], shift);
 	if (day)
 		CMod_LoadLighting(tile, base, &header.lumps[LUMP_LIGHTING_DAY]);
 	else
@@ -829,18 +828,18 @@ static void CM_AddMapTile (const char *name, qboolean day, int sX, int sY, byte 
 	CMod_LoadRouting(tile, mapData, base, name, &header.lumps[LUMP_ROUTING], sX, sY, sZ);
 
 	/* now increase the amount of loaded tiles */
-	numTiles++;
+	mapTiles->numTiles++;
 
 	/* Now find the map bounds with the updated numTiles. */
 	/* calculate new border after merge */
-	RT_GetMapSize(mapData->mapMin, mapData->mapMax);
+	RT_GetMapSize(mapTiles, mapData->mapMin, mapData->mapMax);
 
 	FS_FreeFile(buf);
 
 	mapData->mapChecksum += checksum;
 }
 
-static void CMod_RerouteMap (mapData_t *mapData)
+static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 {
 	actorSizeEnum_t size;
 	int x, y, z, dir;
@@ -871,7 +870,7 @@ static void CMod_RerouteMap (mapData_t *mapData)
 				if (mapData->reroute[size][y][x] == ROUTING_NOT_REACHABLE) {
 					/* Com_Printf("Tracing floor (%i %i s:%i)\n", x, y, size); */
 					for (z = maxs[2]; z >= mins[2]; z--) {
-						const int newZ = RT_CheckCell(mapData->map, size + 1, x, y, z, NULL);
+						const int newZ = RT_CheckCell(mapTiles, mapData->map, size + 1, x, y, z, NULL);
 						assert(newZ <= z);
 						z = newZ;
 					}
@@ -906,7 +905,7 @@ static void CMod_RerouteMap (mapData_t *mapData)
 							/** @note This update MUST go from the bottom (0) to the top (7) of the model.
 							 * RT_UpdateConnection expects it and breaks otherwise. */
 							/* Com_Printf("Tracing passage (%i %i s:%i d:%i)\n", x, y, size, dir); */
-							RT_UpdateConnectionColumn(mapData->map, size + 1, x, y, dir, NULL);
+							RT_UpdateConnectionColumn(mapTiles, mapData->map, size + 1, x, y, dir, NULL);
 						}
 					}
 				}
@@ -929,22 +928,21 @@ static void CMod_RerouteMap (mapData_t *mapData)
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
  */
-void CM_LoadMap (const char *tiles, qboolean day, const char *pos, mapData_t *mapData)
+void CM_LoadMap (const char *tiles, qboolean day, const char *pos, mapData_t *mapData, mapTiles_t *mapTiles)
 {
 	const char *token;
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
-	const size_t size = sizeof(*mapData);
 	int i;
 
 	Mem_FreePool(com_cmodelSysPool);
 
 	/* init */
-	numTiles = 0;
 	base[0] = 0;
 
-	/* Reset the mapdata */
-	memset(mapData, 0, size);
+	/* Reset the map related data */
+	memset(mapData, 0, sizeof(*mapData));
+	memset(mapTiles, 0, sizeof(*mapTiles));
 
 	if (pos && *pos)
 		Com_Printf("CM_LoadMap: \"%s\" \"%s\"\n", tiles, pos);
@@ -954,7 +952,7 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, mapData_t *ma
 		/* get tile name */
 		token = Com_Parse(&tiles);
 		if (!tiles) {
-			CMod_RerouteMap(mapData);
+			CMod_RerouteMap(mapTiles, mapData);
 			return;
 		}
 
@@ -986,10 +984,10 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, mapData_t *ma
 				Com_Error(ERR_DROP, "CM_LoadMap: invalid y position given: %i\n", sh[1]);
 			if (sh[2] >= PATHFINDING_HEIGHT)
 				Com_Error(ERR_DROP, "CM_LoadMap: invalid z position given: %i\n", sh[2]);
-			CM_AddMapTile(name, day, sh[0], sh[1], sh[2], mapData);
+			CM_AddMapTile(name, day, sh[0], sh[1], sh[2], mapData, mapTiles);
 		} else {
 			/* load only a single tile, if no positions are specified */
-			CM_AddMapTile(name, day, 0, 0, 0, mapData);
+			CM_AddMapTile(name, day, 0, 0, 0, mapData, mapTiles);
 			return;
 		}
 	}
@@ -1003,7 +1001,7 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, mapData_t *ma
  * @param[in] name The modelnumber (e.g. "*2") for inline brush models [bmodels]
  * @note Inline bmodels are e.g. the brushes that are assoziated with a func_breakable or func_door
  */
-cBspModel_t *CM_InlineModel (const char *name)
+cBspModel_t *CM_InlineModel (mapTiles_t *mapTiles, const char *name)
 {
 	int i, num;
 
@@ -1016,14 +1014,14 @@ cBspModel_t *CM_InlineModel (const char *name)
 		Com_Error(ERR_DROP, "CM_InlineModel: bad number %i - max inline models are %i", num, MAX_MODELS);
 
 	/* search all the loaded tiles for the given inline model */
-	for (i = 0; i < numTiles; i++) {
-		const int models = mapTiles[i].nummodels - NUM_REGULAR_MODELS;
+	for (i = 0; i < mapTiles->numTiles; i++) {
+		const int models = mapTiles->mapTiles[i].nummodels - NUM_REGULAR_MODELS;
 		assert(models >= 0);
 
 		if (num >= models)
 			num -= models;
 		else
-			return &mapTiles[i].models[NUM_REGULAR_MODELS + num];
+			return &(mapTiles->mapTiles[i].models[NUM_REGULAR_MODELS + num]);
 	}
 
 	Com_Error(ERR_DROP, "CM_InlineModel: Error cannot find model '%s'\n", name);
@@ -1038,13 +1036,10 @@ cBspModel_t *CM_InlineModel (const char *name)
  * @sa LE_DoorAction
  * @sa G_ClientUseEdict
  */
-void CM_SetInlineModelOrientation (const char *name, const vec3_t origin, const vec3_t angles)
+void CM_SetInlineModelOrientation (mapTiles_t *mapTiles, const char *name, const vec3_t origin, const vec3_t angles)
 {
-	cBspModel_t *model;
-	model = CM_InlineModel(name);
+	cBspModel_t *model = CM_InlineModel(mapTiles, name);
 	assert(model);
 	VectorCopy(origin, model->origin);
 	VectorCopy(angles, model->angles);
 }
-
-

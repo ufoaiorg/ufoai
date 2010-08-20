@@ -223,9 +223,9 @@ void LoadBSPFile (const char *filename)
 	int i, size;
 
 	/* Create this shortcut to mapTiles[0] */
-	curTile = &mapTiles[0];
+	curTile = &mapTiles.mapTiles[0];
 	/* Set the number of tiles to 1. */
-	numTiles = 1;
+	mapTiles.numTiles = 1;
 
 	/* load the file header */
 	size = FS_LoadFile(filename, (byte **)&header);

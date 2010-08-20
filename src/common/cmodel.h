@@ -23,27 +23,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifndef _COMMON_CMODEL_H
+#define _COMMON_CMODEL_H
+
 /*==============================================================
 CMODEL
 ==============================================================*/
 #include "../common/qfiles.h"
 #include "pqueue.h"
 
-void CM_LoadMap(const char *tiles, qboolean day, const char *pos, mapData_t *mapData);
-cBspModel_t *CM_InlineModel(const char *name);
-void CM_SetInlineModelOrientation(const char *name, const vec3_t origin, const vec3_t angles);
+void CM_LoadMap(const char *tiles, qboolean day, const char *pos, mapData_t *mapData, mapTiles_t *mapTiles);
+cBspModel_t *CM_InlineModel(mapTiles_t *mapTiles, const char *name);
+void CM_SetInlineModelOrientation(mapTiles_t *mapTiles, const char *name, const vec3_t origin, const vec3_t angles);
 
 /*==============================================================
 CMODEL BOX TRACING
 ==============================================================*/
 
 /** creates a clipping hull for an arbitrary box */
-int CM_HeadnodeForBox(int tile, const vec3_t mins, const vec3_t maxs);
+int CM_HeadnodeForBox(mapTile_t *tile, const vec3_t mins, const vec3_t maxs);
 trace_t CM_CompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, int brushrejects, const vec3_t origin, const vec3_t angles);
-trace_t CM_HintedTransformedBoxTrace(const int tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction);
+trace_t CM_HintedTransformedBoxTrace(mapTile_t *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction);
 #define CM_TransformedBoxTrace(tile, start, end, mins, maxs, headnode, brushmask, brushreject, origin, angles) CM_HintedTransformedBoxTrace(tile, start, end, mins, maxs, headnode, brushmask, brushreject, origin, angles, vec3_origin, 1.0f);
-qboolean CM_TestLineWithEnt(const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
-qboolean CM_TestLineDMWithEnt(const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist);
-trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const box_t* traceBox, int levelmask, int brushmask, int brushreject, const char **list);
-void CM_RecalcRouting(routing_t *map, const char *name, const char **list);
-
+trace_t CM_EntCompleteBoxTrace(mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const box_t* traceBox, int levelmask, int brushmask, int brushreject, const char **list);
+qboolean CM_EntTestLineDM(mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist);
+qboolean CM_EntTestLine(mapTiles_t *mapTiles, const const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist);
+#endif

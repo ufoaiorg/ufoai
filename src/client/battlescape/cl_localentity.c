@@ -68,7 +68,7 @@ void CL_CompleteRecalcRouting (void)
 		 * An unused model is NOT included in the inline list, so it doesn't get
 		 * traced against. */
 		if (le->model1 && le->inlineModelName[0] == '*')
-			CM_RecalcRouting(cl.mapData.map, le->inlineModelName, cl.leInlineModelList);
+			Grid_RecalcRouting(&cl.mapTiles, cl.mapData.map, le->inlineModelName, cl.leInlineModelList);
 }
 
 /**
@@ -82,7 +82,7 @@ void CL_RecalcRouting (const le_t* le)
 	 * An unused model is NOT included in the inline list, so it doesn't get
 	 * traced against. */
 	if (le->model1 && le->inlineModelName[0] == '*')
-		CM_RecalcRouting(cl.mapData.map, le->inlineModelName, cl.leInlineModelList);
+		Grid_RecalcRouting(&cl.mapTiles, cl.mapData.map, le->inlineModelName, cl.leInlineModelList);
 
 	CL_ActorConditionalMoveCalc(selActor);
 }
@@ -1422,7 +1422,7 @@ static int CL_HullForEntity (const le_t *le, int *tile, vec3_t rmaShift, vec3_t 
 {
 	/* special case for bmodels */
 	if (le->contents & CONTENTS_SOLID) {
-		cBspModel_t *model = cl.model_clip[le->modelnum1];
+		const cBspModel_t *model = cl.model_clip[le->modelnum1];
 		/* special value for bmodel */
 		assert(le->modelnum1 < MAX_MODELS);
 		if (!model)
@@ -1436,7 +1436,7 @@ static int CL_HullForEntity (const le_t *le, int *tile, vec3_t rmaShift, vec3_t 
 		*tile = 0;
 		VectorCopy(vec3_origin, angles);
 		VectorCopy(vec3_origin, rmaShift);
-		return CM_HeadnodeForBox(*tile, le->mins, le->maxs);
+		return CM_HeadnodeForBox(&cl.mapTiles.mapTiles[*tile], le->mins, le->maxs);
 	}
 }
 
@@ -1469,7 +1469,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 
 		VectorCopy(le->origin, origin);
 
-		trace = CM_HintedTransformedBoxTrace(tile, clip->start, clip->end, clip->mins, clip->maxs,
+		trace = CM_HintedTransformedBoxTrace(&cl.mapTiles.mapTiles[tile], clip->start, clip->end, clip->mins, clip->maxs,
 				headnode, clip->contentmask, 0, origin, angles, shift, 1.0);
 
 		if (trace.fraction < clip->trace.fraction) {
@@ -1539,7 +1539,7 @@ trace_t CL_Trace (const vec3_t start, const vec3_t end, const vec3_t mins, const
 	moveclip_t clip;
 
 	/* clip to world */
-	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, (1 << (worldLevel + 1)) - 1, contentmask, 0);
+	clip.trace = TR_CompleteBoxTrace(&cl.mapTiles, start, end, mins, maxs, (1 << (worldLevel + 1)) - 1, contentmask, 0);
 	clip.trace.le = NULL;
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */

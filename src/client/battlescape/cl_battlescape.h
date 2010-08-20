@@ -54,7 +54,7 @@ typedef struct client_state_s {
 
 	/** locally derived information from server state */
 	model_t *model_draw[MAX_MODELS];
-	struct cBspModel_s *model_clip[MAX_MODELS];
+	const struct cBspModel_s *model_clip[MAX_MODELS];
 
 	qboolean radarInited;		/**< every radar image (for every level [1-8]) is loaded */
 
@@ -77,6 +77,8 @@ typedef struct client_state_s {
 							 * our team is not yet spawned */
 
 	mapData_t mapData;
+
+	mapTiles_t mapTiles;
 
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
 } client_state_t;

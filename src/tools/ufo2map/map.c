@@ -1139,9 +1139,9 @@ void LoadMapFile (const char *filename)
 
 	num_entities = 0;
 	/* Create this shortcut to mapTiles[0] */
-	curTile = &mapTiles[0];
+	curTile = &mapTiles.mapTiles[0];
 	/* Set the number of tiles to 1. This is fix for ufo2map right now. */
-	numTiles = 1;
+	mapTiles.numTiles = 1;
 
 	while (ParseMapEntity(filename));
 

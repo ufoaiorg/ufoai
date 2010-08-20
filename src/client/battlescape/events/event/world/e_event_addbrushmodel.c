@@ -38,7 +38,7 @@ void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 	le_t *le;
 	int entnum, modelnum1, levelflags, speed;
 	entity_type_t type;
-	cBspModel_t *model;
+	const cBspModel_t *model;
 	int angle;
 	vec3_t origin, angles;
 
@@ -81,7 +81,7 @@ void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 	VectorCopy(model->maxs, le->maxs);
 	/* This is to help the entity collision code out */
 	/* Copy entity origin and angles to model*/
-	CM_SetInlineModelOrientation(le->inlineModelName, le->origin, le->angles);
+	CM_SetInlineModelOrientation(&cl.mapTiles, le->inlineModelName, le->origin, le->angles);
 
 	/* to allow tracing against this le */
 	le->contents = CONTENTS_SOLID;

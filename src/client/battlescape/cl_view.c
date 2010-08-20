@@ -88,7 +88,7 @@ void CL_ViewLoadMedia (void)
 		cl.model_draw[i] = R_RegisterModelShort(cl.configstrings[CS_MODELS + i]);
 		/* initialize clipping for bmodels */
 		if (name[0] == '*')
-			cl.model_clip[i] = CM_InlineModel(cl.configstrings[CS_MODELS + i]);
+			cl.model_clip[i] = CM_InlineModel(&cl.mapTiles, cl.configstrings[CS_MODELS + i]);
 		else
 			cl.model_clip[i] = NULL;
 		if (!cl.model_draw[i])

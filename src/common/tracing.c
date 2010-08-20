@@ -30,14 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common.h"
 #include "mem.h"
 
-/** @note loaded map tiles with this assembly.  ufo2map has exactly 1.
- * @todo not thread safe  */
-TR_TILE_TYPE mapTiles[MAX_MAPTILES];
-
-/** @note number of loaded map tiles (map assembly)
- * @todo not thread safe  */
-int numTiles = 0;
-
 /** @note For multi-check avoidance.
  * @todo not thread safe */
 static int checkcount;
@@ -190,7 +182,7 @@ LINE TRACING - TEST FOR BRUSH PRESENCE
  * @sa TR_TestLineDist_r
  * @sa CM_TestLine
  */
-static int TR_TestLine_r (TR_TILE_TYPE *tile, int node, const vec3_t start, const vec3_t stop)
+int TR_TestLine_r (TR_TILE_TYPE *tile, int node, const vec3_t start, const vec3_t stop)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -283,51 +275,6 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
 	return qfalse;
 }
 
-#ifdef COMPILE_MAP
-/**
- * @brief Checks traces against a single-tile map, optimized for ufo2map. This trace is only for visible levels.
- * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
- * @sa TR_TestLine
- * @sa GatherSampleLight
- * @return qfalse if not blocked
- */
-qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int *headhint)
-{
-	int i;
-	static int shared_lastthead = 0;
-	int lastthead = *headhint;
-
-	if (!lastthead) {
-		lastthead = shared_lastthead;
-		*headhint = lastthead;
-	}
-
-	assert(numTiles == 1);
-
-	/* ufo2map does many traces to the same endpoint.
-	 * Often an occluding node will be found in the same thead
-	 * as the last trace, so test that one first. */
-	if (mapTiles[0].theadlevel[lastthead] <= LEVEL_LASTLIGHTBLOCKING
-		&& TR_TestLine_r(&mapTiles[0], mapTiles[0].thead[lastthead], start, stop))
-		return qtrue;
-
-	for (i = 0; i < mapTiles[0].numtheads; i++) {
-		const int level = mapTiles[0].theadlevel[i];
-		if (i == lastthead)
-			continue;
-		if (level > LEVEL_LASTLIGHTBLOCKING)
-			continue;
-		if (TR_TestLine_r(&mapTiles[0], mapTiles[0].thead[i], start, stop)) {
-			shared_lastthead = *headhint = i;
-			return qtrue;
-		}
-	}
-	return qfalse;
-}
-#endif
-
-
 /**
  * @brief Checks traces against the world
  * @param[in] start The position to start the trace.
@@ -337,12 +284,12 @@ qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int *head
  * @sa TR_TestLine_r
  * @return qfalse if not blocked
  */
-qboolean TR_TestLine (const vec3_t start, const vec3_t stop, const int levelmask)
+qboolean TR_TestLine (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask)
 {
 	int tile;
 
-	for (tile = 0; tile < numTiles; tile++) {
-		if (TR_TileTestLine(&mapTiles[tile], start, stop, levelmask))
+	for (tile = 0; tile < mapTiles->numTiles; tile++) {
+		if (TR_TileTestLine(&mapTiles->mapTiles[tile], start, stop, levelmask))
 			return qtrue;
 	}
 	return qfalse;
@@ -489,7 +436,7 @@ static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const
  * @sa CL_ActorMouseTrace
  * @return qfalse if no connection between start and stop - 1 otherwise
  */
-qboolean TR_TestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask)
+qboolean TR_TestLineDM (mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask)
 {
 	int tile;
 	vec3_t t_end;
@@ -497,8 +444,8 @@ qboolean TR_TestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, const
 	VectorCopy(stop, end);
 	VectorCopy(stop, t_end);
 
-	for (tile = 0; tile < numTiles; tile++) {
-		if (TR_TileTestLineDM(&mapTiles[tile], start, stop, t_end, levelmask)) {
+	for (tile = 0; tile < mapTiles->numTiles; tile++) {
+		if (TR_TileTestLineDM(&mapTiles->mapTiles[tile], start, stop, t_end, levelmask)) {
 			if (VectorNearer(t_end, end, start))
 				VectorCopy(t_end, end);
 		}
@@ -1161,11 +1108,11 @@ static trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const 
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  * @brief Traces all submodels in the first tile.  Used by ufo2map.
  */
-trace_t TR_SingleTileBoxTrace (const vec3_t start, const vec3_t end, const box_t* traceBox, const int levelmask, const int brushmask, const int brushreject)
+trace_t TR_SingleTileBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const box_t* traceBox, const int levelmask, const int brushmask, const int brushreject)
 {
 	trace_t tr;
 	/* Trace the whole line against the first tile. */
-	tr = TR_TileBoxTrace(&mapTiles[0], start, end, traceBox->mins, traceBox->maxs, levelmask, brushmask, brushreject);
+	tr = TR_TileBoxTrace(&mapTiles->mapTiles[0], start, end, traceBox->mins, traceBox->maxs, levelmask, brushmask, brushreject);
 	tr.mapTile = 0;
 	return tr;
 }
@@ -1182,7 +1129,7 @@ trace_t TR_SingleTileBoxTrace (const vec3_t start, const vec3_t end, const box_t
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  * @brief Traces all submodels in all tiles.  Used by ufo and ufo_ded.
  */
-trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int levelmask, const int brushmask, const int brushreject)
+trace_t TR_CompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int levelmask, const int brushmask, const int brushreject)
 {
 	trace_t newtr, tr;
 	int tile, i;
@@ -1201,8 +1148,8 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 	}
 
 	/* trace against all loaded map tiles */
-	for (tile = 0; tile < numTiles; tile++) {
-		TR_TILE_TYPE *myTile = &mapTiles[tile];
+	for (tile = 0; tile < mapTiles->numTiles; tile++) {
+		TR_TILE_TYPE *myTile = &mapTiles->mapTiles[tile];
 		PosToVec(myTile->wpMins, wpmins);
 		VectorSubtract(wpmins, offset, wpmins);
 		PosToVec(myTile->wpMaxs, wpmaxs);

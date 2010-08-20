@@ -97,7 +97,7 @@ static qboolean CM_LineMissesModel (const vec3_t start, const vec3_t stop, const
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
  */
-trace_t CM_HintedTransformedBoxTrace (const int tileIdx, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
+trace_t CM_HintedTransformedBoxTrace (mapTile_t *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction)
 {
 	trace_t trace;
 	vec3_t start_l, end_l;
@@ -105,7 +105,6 @@ trace_t CM_HintedTransformedBoxTrace (const int tileIdx, const vec3_t start, con
 	vec3_t forward, right, up;
 	vec3_t temp;
 	qboolean rotated;
-	mapTile_t *tile = &mapTiles[tileIdx];
 
 	/* subtract origin offset */
 	VectorSubtract(start, origin, start_l);
@@ -142,8 +141,6 @@ trace_t CM_HintedTransformedBoxTrace (const int tileIdx, const vec3_t start, con
 	/* sweep the box through the model */
 	trace = TR_BoxTrace(tile, start_l, end_l, mins, maxs, headnode, brushmask, brushrejects, fraction);
 	trace.mapTile = tile->idx;
-	assert(trace.mapTile >= 0);
-	assert(trace.mapTile < numTiles);
 
 	if (rotated && trace.fraction != 1.0) {
 		/** @todo figure out how to do this with existing angles */
@@ -165,12 +162,8 @@ trace_t CM_HintedTransformedBoxTrace (const int tileIdx, const vec3_t start, con
  * @brief To keep everything totally uniform, bounding boxes are turned into small
  * BSP trees instead of being compared directly.
  */
-int CM_HeadnodeForBox (int tileIdx, const vec3_t mins, const vec3_t maxs)
+int CM_HeadnodeForBox (mapTile_t *tile, const vec3_t mins, const vec3_t maxs)
 {
-	mapTile_t *tile = &mapTiles[tileIdx];
-
-	assert(tileIdx < numTiles && tileIdx >= 0);
-
 	tile->box_planes[0].dist = maxs[0];
 	tile->box_planes[1].dist = -maxs[0];
 	tile->box_planes[2].dist = mins[0];
@@ -201,14 +194,13 @@ int CM_HeadnodeForBox (int tileIdx, const vec3_t mins, const vec3_t maxs)
  * @return qtrue - hit something
  * @return qfalse - hit nothing
  */
-static qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
+qboolean CM_EntTestLine (mapTiles_t *mapTiles, const const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
 {
 	trace_t trace;
-	cBspModel_t *model;
 	const char **name;
 
 	/* trace against world first */
-	if (TR_TestLine(start, stop, levelmask))
+	if (TR_TestLine(mapTiles, start, stop, levelmask))
 		/* We hit the world, so we didn't make it anyway... */
 		return qtrue;
 
@@ -217,19 +209,20 @@ static qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int
 		return qfalse;
 
 	for (name = entlist; *name; name++) {
+		const cBspModel_t *model;
 		/* check whether this is really an inline model */
 		if (*name[0] != '*')
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s'", *name);
-		model = CM_InlineModel(*name);
+		model = CM_InlineModel(mapTiles, *name);
 		assert(model);
-		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
+		if (model->headnode >= mapTiles->mapTiles[model->tile].numnodes + 6)
 			continue;
 
 		/* check if we can safely exclude that the trace can hit the model */
 		if (CM_LineMissesModel(start, stop, model))
 			continue;
 
-		trace = CM_HintedTransformedBoxTrace(model->tile, start, stop, vec3_origin, vec3_origin,
+		trace = CM_HintedTransformedBoxTrace(&mapTiles->mapTiles[model->tile], start, stop, vec3_origin, vec3_origin,
 				model->headnode, MASK_VISIBILILITY, 0, model->origin, model->angles, model->shift, 1.0);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
@@ -250,36 +243,36 @@ static qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int
  * @sa TR_TestLineDM
  * @sa CM_TransformedBoxTrace
  */
-static qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist)
+qboolean CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist)
 {
 	trace_t trace;
-	cBspModel_t *model;
 	const char **name;
 	int blocked;
 	float fraction = 2.0f;
 
 	/* trace against world first */
-	blocked = TR_TestLineDM(start, stop, end, levelmask);
+	blocked = TR_TestLineDM(mapTiles, start, stop, end, levelmask);
 	if (!entlist)
 		return blocked;
 
 	for (name = entlist; *name; name++) {
+		const cBspModel_t *model;
 		/* check whether this is really an inline model */
 		if (*name[0] != '*') {
 			/* Let's see what the data looks like... */
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s' (inlines: %p, name: %p)",
 					*name, entlist, name);
 		}
-		model = CM_InlineModel(*name);
+		model = CM_InlineModel(mapTiles, *name);
 		assert(model);
-		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
+		if (model->headnode >= mapTiles->mapTiles[model->tile].numnodes + 6)
 			continue;
 
 		/* check if we can safely exclude that the trace can hit the model */
 		if (CM_LineMissesModel(start, stop, model))
 			continue;
 
-		trace = CM_HintedTransformedBoxTrace(model->tile, start, end, vec3_origin, vec3_origin,
+		trace = CM_HintedTransformedBoxTrace(&mapTiles->mapTiles[model->tile], start, end, vec3_origin, vec3_origin,
 				model->headnode, MASK_ALL, 0, model->origin, model->angles, vec3_origin, fraction);
 		/* if we started the trace in a wall */
 		if (trace.startsolid) {
@@ -311,15 +304,14 @@ static qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t 
  * @sa TR_CompleteBoxTrace
  * @sa CM_HintedTransformedBoxTrace
  */
-trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_t* traceBox, int levelmask, int brushmask, int brushreject, const char **list)
+trace_t CM_EntCompleteBoxTrace (mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const box_t* traceBox, int levelmask, int brushmask, int brushreject, const char **list)
 {
 	trace_t trace, newtr;
-	cBspModel_t *model;
 	const char **name;
 	vec3_t bmins, bmaxs;
 
 	/* trace against world first */
-	trace = TR_CompleteBoxTrace(start, end, traceBox->mins, traceBox->maxs, levelmask, brushmask, brushreject);
+	trace = TR_CompleteBoxTrace(mapTiles, start, end, traceBox->mins, traceBox->maxs, levelmask, brushmask, brushreject);
 	if (!list || trace.fraction == 0.0)
 		return trace;
 
@@ -333,13 +325,14 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_
 
 	for (name = list; *name; name++) {
 		vec3_t amins, amaxs;
+		const cBspModel_t *model;
 
 		/* check whether this is really an inline model */
 		if (*name[0] != '*')
 			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s'", *name);
-		model = CM_InlineModel(*name);
+		model = CM_InlineModel(mapTiles, *name);
 		assert(model);
-		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
+		if (model->headnode >= mapTiles->mapTiles[model->tile].numnodes + 6)
 			continue;
 
 		/* Quickly calculate the bounds of this model to see if they can overlap. */
@@ -354,7 +347,7 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_
 		 || bmaxs[2] < amins[2])
 			continue;
 
-		newtr = CM_HintedTransformedBoxTrace(model->tile, start, end, traceBox->mins, traceBox->maxs,
+		newtr = CM_HintedTransformedBoxTrace(&mapTiles->mapTiles[model->tile], start, end, traceBox->mins, traceBox->maxs,
 				model->headnode, brushmask, brushreject, model->origin, model->angles, model->shift, trace.fraction);
 
 		/* memorize the trace with the minimal fraction */
@@ -364,56 +357,4 @@ trace_t CM_EntCompleteBoxTrace (const vec3_t start, const vec3_t end, const box_
 			trace = newtr;
 	}
 	return trace;
-}
-
-/**
- * @brief This function recalculates the routing surrounding the entity name.
- * @sa CM_InlineModel
- * @sa CM_CheckUnit
- * @sa CM_UpdateConnection
- * @sa CMod_LoadSubmodels
- * @sa Grid_RecalcBoxRouting
- * @param[in] map The routing map (either server or client map)
- * @param[in] name Name of the inline model to compute the mins/maxs for
- * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
- */
-void CM_RecalcRouting (routing_t *map, const char *name, const char **list)
-{
-	Grid_RecalcRouting(map, name, list);
-}
-
-
-/**
- * @brief Checks traces against the world and all inline models
- * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
- * @param[in] levelmask
- * @param[in] entlist of entities that might be on this line
- * @sa CM_EntTestLine
- * @return qtrue - hit something
- * @return qfalse - hit nothing
- */
-qboolean CM_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
-{
-	/* do the line test */
-	const qboolean hit = CM_EntTestLine(start, stop, levelmask, entlist);
-	return hit;
-}
-
-/**
- * @brief Checks traces against the world and all inline models
- * @param[in] start The position to start the trace.
- * @param[in] stop The position where the trace ends.
- * @param[out] end The position where the trace hits something
- * @param[in] levelmask The bsp level that is used for tracing in (see @c TL_FLAG_*)
- * @param[in] entlist of entities that might be on this line
- * @sa CM_EntTestLineDM
- * @return qtrue - hit something
- * @return qfalse - hit nothing
- */
-qboolean CM_TestLineDMWithEnt (const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask, const char **entlist)
-{
-	/* do the line test */
-	const qboolean hit = CM_EntTestLineDM(start, stop, end, levelmask, entlist);
-	return hit;
 }

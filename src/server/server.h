@@ -103,6 +103,8 @@ typedef struct {
 
 	mapData_t mapData;
 
+	mapTiles_t mapTiles;
+
 	sv_model_t svModels[MAX_MOD_KNOWN];
 	unsigned int numSVModels;
 	sv_edict_t edicts[MAX_EDICTS];

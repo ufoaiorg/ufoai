@@ -117,7 +117,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 			sv.configstrings[CS_POSITIONS][0] = 0;
 	}
 
-	CM_LoadMap(map, day, pos, &sv.mapData);
+	CM_LoadMap(map, day, pos, &sv.mapData, &sv.mapTiles);
 
 	Com_Printf("checksum for the map '%s': %u\n", server, sv.mapData.mapChecksum);
 	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", sv.mapData.mapChecksum);
@@ -148,7 +148,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 
 	/* fix this! */
 	for (i = 1; i <= sv.mapData.numInline; i++)
-		sv.models[i] = CM_InlineModel(va("*%i", i));
+		sv.models[i] = CM_InlineModel(&sv.mapTiles, va("*%i", i));
 
 	/* precache and static commands can be issued during map initialization */
 	Com_SetServerState(ss_loading);

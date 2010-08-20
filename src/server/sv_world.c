@@ -402,7 +402,7 @@ static int SV_HullForEntity (const edict_t *ent, int *tile, vec3_t rmaShift)
 	/* create a temp hull from bounding box sizes */
 	*tile = 0;
 	VectorCopy(vec3_origin, rmaShift);
-	return CM_HeadnodeForBox(*tile, ent->mins, ent->maxs);
+	return CM_HeadnodeForBox(&sv.mapTiles.mapTiles[*tile], ent->mins, ent->maxs);
 }
 
 
@@ -417,8 +417,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 	edict_t *touchlist[MAX_EDICTS];
 	trace_t trace;
 	const float *angles;
-	int tile = 0, headnode = 0;
-
+	int headnode = 0;
 	const int num = SV_AreaEdicts(clip->boxmins, clip->boxmaxs, touchlist, MAX_EDICTS);
 
 	/* be careful, it is possible to have an entity in this
@@ -426,6 +425,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 	for (i = 0; i < num; i++) {
 		vec3_t rmaShift;
 		edict_t *touch = touchlist[i];
+		int tile = 0;
 
 		if (touch->solid == SOLID_NOT || touch->solid == SOLID_TRIGGER)
 			continue;
@@ -453,7 +453,8 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 			angles = touch->angles;
 
 		assert(headnode < MAX_MAP_NODES);
-		trace = CM_HintedTransformedBoxTrace(tile, clip->start, clip->end, clip->mins, clip->maxs, headnode, clip->contentmask, 0, touch->origin, angles, rmaShift, 1.0);
+		trace = CM_HintedTransformedBoxTrace(&sv.mapTiles.mapTiles[tile], clip->start, clip->end, clip->mins, clip->maxs, headnode,
+				clip->contentmask, 0, touch->origin, angles, rmaShift, 1.0);
 
 #ifdef PARANOID
 		Com_DPrintf(DEBUG_SERVER, "SV_ClipMoveToEntities: %i %i: (%i %i %i) (%i %i %i) (%i %i %i)\n", touch->number, touch->modelindex,
@@ -490,7 +491,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 int SV_PointContents (vec3_t p)
 {
 	/* clip to all world levels */
-	trace_t trace = TR_CompleteBoxTrace(p, p, vec3_origin, vec3_origin, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
+	trace_t trace = TR_CompleteBoxTrace(&sv.mapTiles, p, p, vec3_origin, vec3_origin, TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0);
 	if (trace.fraction == 0)
 		return trace.contentFlags;		/* blocked by the world */
 	return 0;
@@ -554,7 +555,7 @@ trace_t SV_Trace (const vec3_t start, const vec3_t mins, const vec3_t maxs, cons
 	memset(&clip, 0, sizeof(clip));
 
 	/* clip to world - 0x1FF = all levels */
-	clip.trace = TR_CompleteBoxTrace(start, end, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
+	clip.trace = TR_CompleteBoxTrace(&sv.mapTiles, start, end, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
 	/** @todo There is more than one world in case of a map assembly - use
 	 * @c clip.trace.mapTile to get the correct one */
 	clip.trace.ent = svs.ge->edicts; /* the first edict is the world */
@@ -730,7 +731,7 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 
 	if (i == sv.numSVModels) {
 		if (sv.numSVModels == MAX_MOD_KNOWN)
-			Com_Error(ERR_DROP, "sv_numModels == MAX_MOD_KNOWN");
+			Com_Error(ERR_DROP, "sv.numSVModels == MAX_MOD_KNOWN");
 		sv.numSVModels++;
 	}
 

@@ -309,9 +309,9 @@ void EmitBrushes (void)
 void BeginBSPFile (void)
 {
 	/* Create this shortcut to mapTiles[0] */
-	curTile = &mapTiles[0];
+	curTile = &mapTiles.mapTiles[0];
 	/* Set the number of tiles to 1. */
-	numTiles = 1;
+	mapTiles.numTiles = 1;
 
 	/* these values may actually be initialized
 	 * if the file existed when loaded, so clear them explicitly */

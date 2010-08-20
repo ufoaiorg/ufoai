@@ -60,7 +60,7 @@ GLOBAL TYPES
 #define TRACING_ALL_VISIBLE_LEVELS 0x1FF
 
 /** a trace is returned when a box is swept through the world */
-typedef struct trace_s{
+typedef struct trace_s {
 	qboolean allsolid;			/**< if true, plane is not valid */
 	qboolean startsolid;		/**< if true, the initial point was in a solid area */
 	float fraction;				/**< distance traveled, 1.0 = didn't hit anything, 0.0 Inside of a brush */
@@ -94,12 +94,18 @@ typedef struct box_s {
 	vec3_t mins, maxs;
 } box_t;
 
+typedef struct {
+	/** @note loaded map tiles with this assembly.  ufo2map has exactly 1. */
+	TR_TILE_TYPE mapTiles[MAX_MAPTILES];
+
+	/** @note number of loaded map tiles (map assembly) */
+	int numTiles;
+} mapTiles_t;
+
 /*==============================================================
 BOX AND LINE TRACING
 ==============================================================*/
 
-extern TR_TILE_TYPE mapTiles[MAX_MAPTILES];
-extern int numTiles;
 extern tnode_t *tnode_p;
 
 int TR_BoxOnPlaneSide(const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE *plane);
@@ -107,15 +113,14 @@ int TR_BoxOnPlaneSide(const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE 
 void TR_BuildTracingNode_r(TR_TILE_TYPE *tile, int node, int level);
 
 #ifdef COMPILE_MAP
-trace_t TR_SingleTileBoxTrace(const vec3_t start, const vec3_t end, const box_t* traceBox, const int levelmask, const int brushmask, const int brushreject);
-qboolean TR_TestLineSingleTile(const vec3_t start, const vec3_t stop, int *headhint);
+trace_t TR_SingleTileBoxTrace(mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const box_t* traceBox, const int levelmask, const int brushmask, const int brushreject);
 #else
-trace_t TR_CompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject);
+trace_t TR_CompleteBoxTrace(mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject);
 #endif
-
+int TR_TestLine_r(TR_TILE_TYPE *tile, int node, const vec3_t start, const vec3_t stop);
 trace_t TR_BoxTrace(TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const float fraction);
 
-qboolean TR_TestLine(const vec3_t start, const vec3_t stop, const int levelmask);
-qboolean TR_TestLineDM(const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);
+qboolean TR_TestLine(mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask);
+qboolean TR_TestLineDM(mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);
 
 #endif /* COMMON_TRACING_H */

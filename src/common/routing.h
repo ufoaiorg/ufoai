@@ -29,12 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 GLOBAL TYPES
 ==============================================================*/
 #if defined(COMPILE_MAP)
-  #define RT_COMPLETEBOXTRACE_SIZE(s,e,b,list)		TR_SingleTileBoxTrace((s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0)
-  #define RT_COMPLETEBOXTRACE_PASSAGE(s,e,b,list)	TR_SingleTileBoxTrace((s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE)
+  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles,s,e,b,list)		TR_SingleTileBoxTrace((mapTiles), (s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0)
+  #define RT_COMPLETEBOXTRACE_PASSAGE(mapTiles,s,e,b,list)	TR_SingleTileBoxTrace((mapTiles), (s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE)
 
 #elif defined(COMPILE_UFO)
-  #define RT_COMPLETEBOXTRACE_SIZE(s,e,b,list)		CM_EntCompleteBoxTrace((s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0, (list))
-  #define RT_COMPLETEBOXTRACE_PASSAGE(s,e,b,list)	CM_EntCompleteBoxTrace((s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE, (list))
+  #define RT_COMPLETEBOXTRACE_SIZE(mapTiles,s,e,b,list)		CM_EntCompleteBoxTrace((mapTiles), (s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_ALL, 0, (list))
+  #define RT_COMPLETEBOXTRACE_PASSAGE(mapTiles,s,e,b,list)	CM_EntCompleteBoxTrace((mapTiles), (s),(e),(b),TRACING_ALL_VISIBLE_LEVELS, MASK_IMPASSABLE, MASK_PASSABLE, (list))
 
 #else
   #error Either COMPILE_MAP or COMPILE_UFO must be defined in order for tracing.c to work.
@@ -132,10 +132,10 @@ GAME RELATED TRACING
 */
 
 
-int RT_CheckCell(routing_t * map, const int actorSize, const int x, const int y, const int z, const char **list);
-void RT_UpdateConnectionColumn(routing_t * map, const int actorSize, const int x, const int y, const int dir, const char **list);
+int RT_CheckCell(mapTiles_t *mapTiles, routing_t * map, const int actorSize, const int x, const int y, const int z, const char **list);
+void RT_UpdateConnectionColumn(mapTiles_t *mapTiles, routing_t * map, const int actorSize, const int x, const int y, const int dir, const char **list);
 qboolean RT_AllCellsBelowAreFilled(const routing_t * map, const int actorSize, const pos3_t pos);
-void RT_GetMapSize(vec3_t map_min, vec3_t map_max);
+void RT_GetMapSize(mapTiles_t *mapTiles, vec3_t map_min, vec3_t map_max);
 
 
 /*
@@ -145,6 +145,6 @@ DEBUGGING CODE
 */
 
 #ifdef DEBUG
-void RT_DumpWholeMap(const routing_t *map);
+void RT_DumpWholeMap(mapTiles_t *mapTiles, const routing_t *map);
 #endif
 void RT_WriteCSVFiles(const routing_t *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs);

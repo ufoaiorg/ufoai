@@ -501,7 +501,7 @@ void CL_RequestNextDownload (void)
 			scriptChecksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
 		FS_GetFileData(NULL);
 
-		CM_LoadMap(cl.configstrings[CS_TILES], day, cl.configstrings[CS_POSITIONS], &cl.mapData);
+		CM_LoadMap(cl.configstrings[CS_TILES], day, cl.configstrings[CS_POSITIONS], &cl.mapData, &cl.mapTiles);
 		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM]
 		 || !*cl.configstrings[CS_UFOCHECKSUM] || !*cl.configstrings[CS_OBJECTAMOUNT]) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers"), UFO_VERSION);
@@ -531,6 +531,7 @@ void CL_RequestNextDownload (void)
 	} else {
 		/* Copy the client map from the server */
 		memcpy(&cl.mapData, SV_GetMapData(), sizeof(cl.mapData));
+		memcpy(&cl.mapTiles, SV_GetMapTiles(), sizeof(cl.mapTiles));
 	}
 
 	CL_ViewLoadMedia();

@@ -127,13 +127,13 @@ static void SV_SetModel (edict_t * ent, const char *name)
 
 	/* if it is an inline model, get the size information for it */
 	if (name[0] == '*') {
-		const cBspModel_t *mod = CM_InlineModel(name);
+		const cBspModel_t *mod = CM_InlineModel(&sv.mapTiles, name);
 		/* Copy model mins and maxs to entity */
 		VectorCopy(mod->mins, ent->mins);
 		VectorCopy(mod->maxs, ent->maxs);
 		/* This is to help the entity collision code out */
 		/* Copy entity origin and angles to model*/
-		CM_SetInlineModelOrientation(name, ent->origin, ent->angles);
+		CM_SetInlineModelOrientation(&sv.mapTiles, name, ent->origin, ent->angles);
 	}
 }
 
@@ -398,7 +398,24 @@ static void SV_FreeTags (int tagNum, const char *file, int line)
 
 static qboolean SV_TestLine (const vec3_t start, const vec3_t stop, const int levelmask)
 {
-	return TR_TestLine(start, stop, levelmask);
+	return TR_TestLine(&sv.mapTiles, start, stop, levelmask);
+}
+
+static qboolean SV_TestLineWithEnt (const vec3_t start, const vec3_t stop, const int levelmask, const char **entlist)
+{
+	/* do the line test */
+	const qboolean hit = CM_EntTestLine(&sv.mapTiles, start, stop, levelmask, entlist);
+	return hit;
+}
+
+static void SV_RecalcRouting (routing_t *map, const char *name, const char **list)
+{
+	Grid_RecalcRouting(&sv.mapTiles, map, name, list);
+}
+
+static void SV_SetInlineModelOrientation (const char *name, const vec3_t origin, const vec3_t angles)
+{
+	CM_SetInlineModelOrientation(&sv.mapTiles, name, origin, angles);
 }
 
 static void SV_UnloadGame (void)
@@ -561,7 +578,7 @@ void SV_InitGameProgs (void)
 	import.TouchEdicts = SV_TouchEdicts;
 
 	import.TestLine = SV_TestLine;
-	import.TestLineWithEnt = CM_TestLineWithEnt;
+	import.TestLineWithEnt = SV_TestLineWithEnt;
 	import.GrenadeTarget = Com_GrenadeTarget;
 
 	import.MoveCalc = Grid_MoveCalc;
@@ -572,11 +589,11 @@ void SV_InitGameProgs (void)
 	import.GetTUsForDirection = Grid_GetTUsForDirection;
 	import.GridFall = Grid_Fall;
 	import.GridPosToVec = Grid_PosToVec;
-	import.GridRecalcRouting = CM_RecalcRouting;
+	import.GridRecalcRouting = SV_RecalcRouting;
 
 	import.ModelIndex = SV_ModelIndex;
 
-	import.SetInlineModelOrientation = CM_SetInlineModelOrientation;
+	import.SetInlineModelOrientation = SV_SetInlineModelOrientation;
 
 	import.SetModel = SV_SetModel;
 

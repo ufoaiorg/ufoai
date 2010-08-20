@@ -460,6 +460,48 @@ void BuildLights (void)
 }
 
 /**
+ * @brief Checks traces against a single-tile map, optimized for ufo2map. This trace is only for visible levels.
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
+ * @sa TR_TestLine
+ * @sa GatherSampleLight
+ * @return qfalse if not blocked
+ */
+static qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int *headhint)
+{
+	int i;
+	static int shared_lastthead = 0;
+	int lastthead = *headhint;
+
+	if (!lastthead) {
+		lastthead = shared_lastthead;
+		*headhint = lastthead;
+	}
+
+	assert(mapTiles.numTiles == 1);
+
+	/* ufo2map does many traces to the same endpoint.
+	 * Often an occluding node will be found in the same thead
+	 * as the last trace, so test that one first. */
+	if (curTile->theadlevel[lastthead] <= LEVEL_LASTLIGHTBLOCKING
+		&& TR_TestLine_r(curTile, curTile->thead[lastthead], start, stop))
+		return qtrue;
+
+	for (i = 0; i < curTile->numtheads; i++) {
+		const int level = curTile->theadlevel[i];
+		if (i == lastthead)
+			continue;
+		if (level > LEVEL_LASTLIGHTBLOCKING)
+			continue;
+		if (TR_TestLine_r(curTile, curTile->thead[i], start, stop)) {
+			shared_lastthead = *headhint = i;
+			return qtrue;
+		}
+	}
+	return qfalse;
+}
+
+/**
  * @brief A follow-up to GatherSampleLight, simply trace along the sun normal, adding sunlight
  */
 static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale, int *headhint)

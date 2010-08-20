@@ -50,6 +50,7 @@ static int UFO_CleanSuiteRouting (void)
 }
 
 static mapData_t mapData;
+static mapTiles_t mapTiles;
 
 static void testConnection (void)
 {
@@ -57,8 +58,8 @@ static void testConnection (void)
 	 * @todo use a special testmap
 	 * @todo implement the test
 	 */
-	CM_LoadMap("fueldump", qtrue, "", &mapData);
-	CM_LoadMap("fueldump", qtrue, "", &mapData);
+	CM_LoadMap("fueldump", qtrue, "", &mapData, &mapTiles);
+	CM_LoadMap("fueldump", qtrue, "", &mapData, &mapTiles);
 }
 
 int UFO_AddRoutingTests (void)
