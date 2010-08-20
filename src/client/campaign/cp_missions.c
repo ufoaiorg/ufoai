@@ -1652,12 +1652,11 @@ static int CP_SelectNewMissionType (void)
  */
 void CP_SpawnNewMissions (void)
 {
-	int newMissionNum, i;
-	float nonOccurrence;
-
 	ccs.lastMissionSpawnedDelay++;
 
 	if (ccs.lastMissionSpawnedDelay > DELAY_BETWEEN_MISSION_SPAWNING) {
+		float nonOccurrence;
+		int newMissionNum, i;
 		/* Select the amount of missions that will be spawned in the next cycle. */
 
 		/* Each mission has a certain probability to not occur. This provides some randomness to the mission density.
@@ -1675,9 +1674,10 @@ void CP_SpawnNewMissions (void)
 		newMissionNum = (int) (MAXIMUM_MISSIONS_PER_CYCLE + (MINIMUM_MISSIONS_PER_CYCLE - MAXIMUM_MISSIONS_PER_CYCLE) * pow(((ccs.overallInterest - FINAL_OVERALL_INTEREST) / (INITIAL_OVERALL_INTEREST - FINAL_OVERALL_INTEREST)), 2));
 		Com_DPrintf(DEBUG_CLIENT, "interest = %d, new missions = %d\n", ccs.overallInterest, newMissionNum);
 		for (i = 0; i < newMissionNum; i++) {
-			const int type = CP_SelectNewMissionType();
-			if (frand() > nonOccurrence)
+			if (frand() > nonOccurrence) {
+				const int type = CP_SelectNewMissionType();
 				CP_CreateNewMission(type, qfalse);
+			}
 		}
 
 		ccs.lastMissionSpawnedDelay -= DELAY_BETWEEN_MISSION_SPAWNING;
