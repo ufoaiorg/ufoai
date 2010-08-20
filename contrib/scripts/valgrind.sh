@@ -75,7 +75,7 @@ then
 		$VALGRIND_OPTIONS \
 		$APP
 else
-	if [ $TOOL == "memcheck" ]
+	if [ $TOOL = "memcheck" ]
 	then
 		if [ -z "$SUP" ]
 		then
