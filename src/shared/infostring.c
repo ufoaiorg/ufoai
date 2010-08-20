@@ -200,7 +200,7 @@ void Info_SetValueForKey (char *s, const size_t size, const char *key, const cha
 	}
 
 	Info_RemoveKey(s, key);
-	if (!value || !strlen(value))
+	if (!value || value[0] == '\0')
 		return;
 
 	Com_sprintf(newi, sizeof(newi), "\\%s\\%s", key, value);
