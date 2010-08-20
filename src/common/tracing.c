@@ -42,9 +42,6 @@ int numTiles = 0;
 /** @note For multi-check avoidance. */
 static int checkcount;
 
-/** @note used to hold the point on a line that an obstacle is encountered. */
-static vec3_t tr_end;
-
 static int leaf_count, leaf_maxcount;
 static int *leaf_list;
 static int leaf_topnode;
@@ -368,10 +365,11 @@ LINE TRACING - TEST FOR BRUSH LOCATION
  * @param[in] node Node index
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
+ * @param[in,out] tr_end used to hold the point on a line that an obstacle is encountered.
  * @sa TR_TestLine_r
  * @sa TR_TestLineDM
  */
-static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int node, const vec3_t start, const vec3_t stop)
+static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int node, const vec3_t start, const vec3_t stop, vec3_t tr_end)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -397,10 +395,10 @@ static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int node, const vec3_t start, 
 		back = stop[tnode->type] - tnode->dist;
 		break;
 	case PLANE_NONE:
-		r = TR_TestLineDist_r(tile, tnode->children[0], start, stop);
+		r = TR_TestLineDist_r(tile, tnode->children[0], start, stop, tr_end);
 		if (r)
 			VectorCopy(tr_end, mid);
-		side = TR_TestLineDist_r(tile, tnode->children[1], start, stop);
+		side = TR_TestLineDist_r(tile, tnode->children[1], start, stop, tr_end);
 		if (side && r) {
 			if (VectorNearer(mid, tr_end, start)) {
 				VectorCopy(mid, tr_end);
@@ -423,10 +421,10 @@ static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int node, const vec3_t start, 
 	}
 
 	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
-		return TR_TestLineDist_r(tile, tnode->children[0], start, stop);
+		return TR_TestLineDist_r(tile, tnode->children[0], start, stop, tr_end);
 
 	if (front < ON_EPSILON && back < ON_EPSILON)
-		return TR_TestLineDist_r(tile, tnode->children[1], start, stop);
+		return TR_TestLineDist_r(tile, tnode->children[1], start, stop, tr_end);
 
 	side = front < 0;
 
@@ -434,10 +432,10 @@ static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int node, const vec3_t start, 
 
 	VectorInterpolation(start, stop, frac, mid);
 
-	r = TR_TestLineDist_r(tile, tnode->children[side], start, mid);
+	r = TR_TestLineDist_r(tile, tnode->children[side], start, mid, tr_end);
 	if (r)
 		return r;
-	return TR_TestLineDist_r(tile, tnode->children[!side], mid, stop);
+	return TR_TestLineDist_r(tile, tnode->children[!side], mid, stop, tr_end);
 }
 
 /**
@@ -456,6 +454,7 @@ static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const
 #ifdef COMPILE_MAP
 	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
 #endif
+	vec3_t tr_end;
 	int i;
 
 	VectorCopy(stop, end);
@@ -472,7 +471,7 @@ static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const
 		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
 			continue;
 #endif
-		if (TR_TestLineDist_r(tile, tile->thead[i], start, stop))
+		if (TR_TestLineDist_r(tile, tile->thead[i], start, stop, tr_end))
 			if (VectorNearer(tr_end, end, start))
 				VectorCopy(tr_end, end);
 	}
