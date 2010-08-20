@@ -924,10 +924,9 @@ static void CMod_RerouteMap (mapData_t *mapData)
  * @param[in] day Use the day (@c true) or the night (@c false) version of the map
  * @param[in] pos In case you gave more than one tile (Random map assembly [rma]) you also
  * have to provide the positions where those tiles should be placed at.
- * @param[out] mapchecksum The checksum of the bsp file to check for in multiplayer games
+ * @param[out] mapData The loaded data is stored here.
  * @sa CM_AddMapTile
  * @sa R_ModBeginLoading
- * @note Make sure that mapchecksum was set to 0 before you call this function
  */
 void CM_LoadMap (const char *tiles, qboolean day, const char *pos, mapData_t *mapData)
 {
@@ -940,6 +939,7 @@ void CM_LoadMap (const char *tiles, qboolean day, const char *pos, mapData_t *ma
 	Mem_FreePool(com_cmodelSysPool);
 
 	/* init */
+	numTiles = 0;
 	base[0] = 0;
 
 	/* Reset the mapdata */

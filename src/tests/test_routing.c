@@ -58,6 +58,7 @@ static void testConnection (void)
 	 * @todo implement the test
 	 */
 	CM_LoadMap("fueldump", qtrue, "", &mapData);
+	CM_LoadMap("fueldump", qtrue, "", &mapData);
 }
 
 int UFO_AddRoutingTests (void)
