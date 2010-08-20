@@ -86,6 +86,7 @@ typedef struct chead_s {
  */
 typedef struct {
 	char name[MAX_QPATH];
+	int idx;
 
 	int numbrushsides;
 	cBspBrushSide_t *brushsides;

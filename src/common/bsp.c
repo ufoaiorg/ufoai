@@ -799,6 +799,7 @@ static void CM_AddMapTile (const char *name, qboolean day, int sX, int sY, byte 
 
 	tile = &mapTiles[numTiles];
 	memset(tile, 0, sizeof(*tile));
+	tile->idx = numTiles;
 	Q_strncpyz(tile->name, name, sizeof(tile->name));
 
 	/* pathfinding and the like must be shifted on the worldplane when we

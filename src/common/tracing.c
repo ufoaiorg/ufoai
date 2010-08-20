@@ -556,31 +556,6 @@ int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE
 	return side;
 }
 
-
-
-/**
- * @brief To keep everything totally uniform, bounding boxes are turned into small
- * BSP trees instead of being compared directly.
- */
-int TR_HeadnodeForBox (mapTile_t *tile, const vec3_t mins, const vec3_t maxs)
-{
-	tile->box_planes[0].dist = maxs[0];
-	tile->box_planes[1].dist = -maxs[0];
-	tile->box_planes[2].dist = mins[0];
-	tile->box_planes[3].dist = -mins[0];
-	tile->box_planes[4].dist = maxs[1];
-	tile->box_planes[5].dist = -maxs[1];
-	tile->box_planes[6].dist = mins[1];
-	tile->box_planes[7].dist = -mins[1];
-	tile->box_planes[8].dist = maxs[2];
-	tile->box_planes[9].dist = -maxs[2];
-	tile->box_planes[10].dist = mins[2];
-	tile->box_planes[11].dist = -mins[2];
-
-	assert(tile->box_headnode < MAX_MAP_NODES);
-	return tile->box_headnode;
-}
-
 typedef struct leaf_check_s {
 	int leaf_count, leaf_maxcount;
 	int *leaf_list;
@@ -1187,9 +1162,11 @@ trace_t TR_HintedTransformedBoxTrace (TR_TILE_TYPE *tile, const vec3_t start, co
 
 	/* sweep the box through the model */
 	trace = TR_BoxTrace(tile, start_l, end_l, mins, maxs, headnode, brushmask, brushreject, fraction);
-	trace.mapTile = (ptrdiff_t)(tile - mapTiles);
+#ifdef COMPILE_UFO
+	trace.mapTile = tile->idx;
 	assert(trace.mapTile >= 0);
 	assert(trace.mapTile < numTiles);
+#endif
 
 	if (rotated && trace.fraction != 1.0) {
 		/** @todo figure out how to do this with existing angles */
