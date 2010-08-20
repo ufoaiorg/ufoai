@@ -674,7 +674,9 @@ static void TR_ClipBoxToBrush (boxtrace_t *traceData, cBspBrush_t *brush, TR_LEA
 	vec3_t ofs;
 	float d1, d2;
 	qboolean getout, startout;
-	TR_BRUSHSIDE_TYPE *leadside;
+#ifdef COMPILE_UFO
+	TR_BRUSHSIDE_TYPE *leadside = NULL;
+#endif
 	TR_TILE_TYPE *myTile = traceData->tile;
 
 	enterfrac = -1.0;
@@ -686,7 +688,6 @@ static void TR_ClipBoxToBrush (boxtrace_t *traceData, cBspBrush_t *brush, TR_LEA
 
 	getout = qfalse;
 	startout = qfalse;
-	leadside = NULL;
 	clipplanenum = 0;
 
 	for (i = 0; i < brush->numsides; i++) {
@@ -735,8 +736,9 @@ static void TR_ClipBoxToBrush (boxtrace_t *traceData, cBspBrush_t *brush, TR_LEA
 				clipplane = plane;
 #ifdef COMPILE_MAP
 				clipplanenum = side->planenum;
-#endif
+#else
 				leadside = side;
+#endif
 			}
 		} else {				/* leave */
 			const float f = (d1 + DIST_EPSILON) / (d1 - d2);
@@ -1038,7 +1040,6 @@ static void TR_RecursiveHullCheck (boxtrace_t *traceData, int num, float p1f, fl
  */
 static trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const float fraction)
 {
-	int i;
 	vec3_t offset, amins, amaxs, astart, aend;
 	boxtrace_t traceData;
 
@@ -1083,6 +1084,7 @@ static trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t
 		int leafs[MAX_LEAFS];
 		int numleafs;
 		int topnode;
+		int i;
 
 		VectorAdd(astart, amaxs, traceData.absmaxs);
 		VectorAdd(astart, amins, traceData.absmins);

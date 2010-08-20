@@ -1214,7 +1214,6 @@ static int RT_TraceOnePassage (const routing_t * map, const actorSizeEnum_t acto
 	int hi; /**< absolute ceiling of the passage found. */
 	const int z = from->cell[2];
 	int az; /**< z height of the actor after moving in this direction. */
-	int bonusSize;
 	const int lower = max(from->floor, to->floor);
 	const int upper = min(from->ceiling, to->ceiling);
 	const int ax = to->cell[0];
@@ -1240,7 +1239,7 @@ static int RT_TraceOnePassage (const routing_t * map, const actorSizeEnum_t acto
 			int stairway = RT_PlaceIsShifted(from,to);
 			/* This returns the total opening height, as the
 			 * microtrace may reveal more passage height from the foot space. */
-			bonusSize = RT_MicroTrace(map, actorSize, from, ax, ay, az, stairway, opening, list);
+			const int bonusSize = RT_MicroTrace(map, actorSize, from, ax, ay, az, stairway, opening, list);
 			opening->base -= bonusSize;
 			opening->size = hi - opening->base;	/* re-calculate */
 		} else {
