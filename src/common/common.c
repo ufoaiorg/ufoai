@@ -223,7 +223,7 @@ float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, qboole
 {
 	const float rollAngle = 3.0; /* angle to throw at for rolling, in degrees. */
 	vec3_t delta;
-	float d, h, g, v, alpha, theta, vx, vy;
+	float d, h, g, v, alpha, vx, vy;
 	float k, gd2, len;
 
 	/* calculate target distance and height */
@@ -244,6 +244,7 @@ float Com_GrenadeTarget (const vec3_t from, const vec3_t at, float speed, qboole
 
 	/* are we rolling? */
 	if (rolled) {
+		float theta;
 		alpha = rollAngle * torad;
 		theta = atan2(d, -h) - 2 * alpha;
 		k = gd2 / (len * cos(theta) - h);
@@ -697,7 +698,6 @@ const char *Com_MacroExpandString (const char *text)
 qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize, int *pos, int offset)
 {
 	const char *cmd = NULL, *cvar = NULL, *use = NULL;
-	int cntCmd = 0, cntCvar = 0, cntParams = 0;
 	char cmdLine[MAXCMDLINE] = "";
 	char cmdBase[MAXCMDLINE] = "";
 	qboolean append = qtrue;
@@ -719,6 +719,7 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 	/* don't try to search a command or cvar if we are already in the
 	 * parameter stage */
 	if (strstr(s, " ")) {
+		int cntParams;
 		Q_strncpyz(cmdLine, s, sizeof(cmdLine));
 		/* remove the last whitespace */
 		cmdLine[strlen(cmdLine) - 1] = '\0';
@@ -749,8 +750,9 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 			return qfalse;
 	} else {
 		/* Cmd_GenericCompleteFunction uses one static buffer for output, so backup one completion here if available */
-		static char cmdBackup[MAX_QPATH] ;
-		cntCmd = Cmd_CompleteCommand(s, &cmd);
+		static char cmdBackup[MAX_QPATH];
+		int cntCvar;
+		int cntCmd = Cmd_CompleteCommand(s, &cmd);
 		if (cmd)
 			Q_strncpyz(cmdBackup, cmd, sizeof(cmdBackup));
 		cntCvar = Cvar_CompleteVariable(s, &cvar);

@@ -227,8 +227,6 @@ static int FS_OpenFileSingle (const char *filename, qFILE * file, filemode_t mod
  */
 int FS_Seek (qFILE * f, long offset, int origin)
 {
-	int _origin;
-
 	if (f->z) {
 		byte buffer[PK3_SEEK_BUFFER_SIZE];
 		int remainder = offset;
@@ -255,6 +253,7 @@ int FS_Seek (qFILE * f, long offset, int origin)
 			Sys_Error("Bad origin in FS_Seek");
 		}
 	} else if (f->f) {
+		int _origin;
 		switch (origin) {
 		case FS_SEEK_CUR:
 			_origin = SEEK_CUR;
@@ -423,7 +422,7 @@ void FS_FreeFile (void *buffer)
  */
 static pack_t *FS_LoadPackFile (const char *packfile)
 {
-	unsigned int i, len, err;
+	unsigned int len;
 	packfile_t *newfiles;
 	pack_t *pack;
 	unz_file_info file_info;
@@ -434,6 +433,8 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 	len = strlen(packfile);
 
 	if (!strncmp(packfile + len - 4, ".pk3", 4) || !strncmp(packfile + len - 4, ".zip", 4)) {
+		int i;
+		unsigned int err;
 		uf = unzOpen(packfile);
 		err = unzGetGlobalInfo(uf, &gi);
 
@@ -453,7 +454,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 			unzGoToNextFile(uf);
 		}
 
-		pack = Mem_PoolAlloc(sizeof(pack_t), com_fileSysPool, 0);
+		pack = Mem_PoolAlloc(sizeof(*pack), com_fileSysPool, 0);
 		Q_strncpyz(pack->filename, packfile, sizeof(pack->filename));
 		pack->handle.z = uf;
 		pack->handle.f = NULL;
@@ -461,7 +462,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 		unzGoToFirstFile(uf);
 
 		/* Allocate space for array of packfile structures (filename, offset, length) */
-		newfiles = Mem_PoolAlloc(i * sizeof(packfile_t), com_fileSysPool, 0);
+		newfiles = Mem_PoolAlloc(i * sizeof(*newfiles), com_fileSysPool, 0);
 
 		for (i = 0; i < gi.number_entry; i++) {
 			err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
@@ -477,7 +478,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 		pack->files = newfiles;
 
 		/* Sort our list alphabetically - also rearrange the unsigned long values */
-		qsort((void *)pack->files, i, sizeof(packfile_t), Q_StringSort);
+		qsort((void *)pack->files, i, sizeof(*newfiles), Q_StringSort);
 
 		Com_Printf("Added packfile %s (%li files)\n", packfile, gi.number_entry);
 		return pack;
