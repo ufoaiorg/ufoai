@@ -572,7 +572,7 @@ static void BS_BuyType_f (void)
  */
 static void BS_BuyAircraft_f (void)
 {
-	int num, freeSpace;
+	int num;
 	const aircraft_t *aircraftTemplate;
 	base_t *base = B_GetCurrentSelectedBase();
 
@@ -589,6 +589,7 @@ static void BS_BuyAircraft_f (void)
 		return;
 
 	if (buyCat == FILTER_AIRCRAFT) {
+		int freeSpace;
 		/* We cannot buy aircraft if there is no power in our base. */
 		if (!B_GetBuildingStatus(base, B_POWER)) {
 			UI_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
@@ -634,9 +635,6 @@ static void BS_BuyAircraft_f (void)
 static void BS_SellAircraft_f (void)
 {
 	int num;
-	qboolean found = qfalse;
-	qboolean teamNote = qfalse;
-	qboolean aircraftOutNote = qfalse;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2) {
@@ -652,6 +650,9 @@ static void BS_SellAircraft_f (void)
 		return;
 
 	if (buyCat == FILTER_AIRCRAFT) {
+		qboolean aircraftOutNote = qfalse;
+		qboolean teamNote = qfalse;
+		qboolean found = qfalse;
 		aircraft_t *aircraft;
 		const aircraft_t *aircraftTemplate = buyList.l[num].aircraft;
 		if (!aircraftTemplate)
@@ -747,11 +748,11 @@ static void BS_BuyItem_f (void)
 	if (buyCat == FILTER_UGVITEM && buyList.l[num + buyList.scroll].ugv) {
 		/* The list entry is an actual ugv/robot */
 		const ugv_t *ugv = buyList.l[num + buyList.scroll].ugv;
-		qboolean ugvWeaponBuyable;
 
 		UP_UGVDescription(ugv);
 
 		if (ccs.credits >= ugv->price && E_CountUnhiredRobotsByType(ugv) > 0) {
+			qboolean ugvWeaponBuyable;
 			/* Check if we have a weapon for this ugv in the market and there is enough storage-room for it. */
 			const objDef_t *ugvWeapon = INVSH_GetItemByID(ugv->weapon);
 			if (!ugvWeapon)

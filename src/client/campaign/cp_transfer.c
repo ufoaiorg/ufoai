@@ -67,8 +67,6 @@ transfer_t* TR_GetNext (transfer_t *lastTransfer)
  */
 static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qboolean success)
 {
-	int i, j;
-
 	assert(transfer);
 
 	if (transfer->hasItems && success) {	/* Items. */
@@ -77,6 +75,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 			MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			/* Items cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
 		} else {
+			int i;
 			for (i = 0; i < csi.numODs; i++) {
 				const objDef_t *od = INVSH_GetItemByIDX(i);
 				if (transfer->itemAmount[od->idx] > 0) {
@@ -91,11 +90,13 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 
 	if (transfer->hasEmployees && transfer->srcBase) {	/* Employees. (cannot come from a mission) */
 		if (!success || !B_GetBuildingStatus(destination, B_QUARTERS)) {	/* Employees will be unhired. */
+			int i;
 			if (success) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Living Quarters, employees got unhired!"), destination->name);
 				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			}
 			for (i = 0; i < MAX_EMPL; i++) {
+				int j;
 				for (j = 0; j < ccs.numEmployees[i]; j++) {
 					if (transfer->employeeArray[i][j]) {
 						employee_t *employee = transfer->employeeArray[i][j];
@@ -109,7 +110,9 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 				}
 			}
 		} else {
+			int i;
 			for (i = 0; i < MAX_EMPL; i++) {
+				int j;
 				for (j = 0; j < ccs.numEmployees[i]; j++) {
 					if (transfer->employeeArray[i][j]) {
 						employee_t *employee = transfer->employeeArray[i][j];
@@ -132,6 +135,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 			MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			/* Aliens cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
 		} else {
+			int i;
 			for (i = 0; i < ccs.numAliensTD; i++) {
 				if (transfer->alienAmount[i][TRANS_ALIEN_ALIVE] > 0) {
 					AL_ChangeAliveAlienNumber(destination, &(destination->alienscont[i]), transfer->alienAmount[i][TRANS_ALIEN_ALIVE]);
@@ -147,6 +151,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 	 * aircraftArray should contain pointers to aircraftTemplates to avoid this problem, and be removed from
 	 * source base as soon as transfer starts */
 	if (transfer->hasAircraft && success && transfer->srcBase) {	/* Aircraft. Cannot come from mission */
+		int i;
 		for (i = 0; i < ccs.numAircraft; i++) {
 			if (transfer->aircraftArray[i] > TRANS_LIST_EMPTY_SLOT) {
 				aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);

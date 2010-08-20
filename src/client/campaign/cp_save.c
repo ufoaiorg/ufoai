@@ -416,8 +416,6 @@ static void SAV_GameReadGameComment (const int idx)
  */
 static void SAV_GameReadGameComments_f (void)
 {
-	int i;
-
 	if (Cmd_Argc() == 2) {
 		/* checks whether we plan to save without a running game */
 		if (!CP_IsRunning() && !strncmp(Cmd_Argv(1), "save", 4)) {
@@ -430,6 +428,7 @@ static void SAV_GameReadGameComments_f (void)
 		int idx = atoi(Cmd_Argv(1));
 		SAV_GameReadGameComment(idx);
 	} else {
+		int i;
 		/* read all game comments */
 		for (i = 0; i < 8; i++) {
 			SAV_GameReadGameComment(i);

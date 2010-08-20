@@ -348,7 +348,7 @@ float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
  * @todo If a building is still under construction, it will be assembled as a finished part.
  * Otherwise we need mapparts for all the maps under construction.
  */
-qboolean B_AssembleMap (base_t *base)
+qboolean B_AssembleMap (const base_t *base)
 {
 	int row, col;
 	char maps[2048];
@@ -369,7 +369,7 @@ qboolean B_AssembleMap (base_t *base)
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
 			if (base->map[row][col].building) {
-				building_t *entry = base->map[row][col].building;
+				const building_t *entry = base->map[row][col].building;
 
 				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one
 				 * this is why we check the used flag and continue if it was set already */

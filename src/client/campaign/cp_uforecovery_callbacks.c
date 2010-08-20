@@ -64,7 +64,6 @@ typedef enum {
 
 /** @sa ufoRecoveries_t */
 typedef struct ufoRecovery_s {
-	installation_t *installation;					/**< selected ufoyard for current selected ufo recovery */
 	const aircraft_t *ufoTemplate;					/**< the ufo type of the current ufo recovery */
 	nation_t *nation;								/**< selected nation to sell to for current ufo recovery */
 	qboolean recoveryDone;							/**< recoveryDone? Then the buttons are disabled */

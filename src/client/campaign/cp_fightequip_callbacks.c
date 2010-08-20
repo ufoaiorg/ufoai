@@ -565,7 +565,6 @@ static void AIM_UpdateItemDescription (qboolean fromList, qboolean fromSlot)
  */
 static void AIM_AircraftEquipMenuUpdate_f (void)
 {
-	int type;
 	if (Cmd_Argc() != 2) {
 		if (airequipID == -1) {
 			Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
@@ -573,7 +572,7 @@ static void AIM_AircraftEquipMenuUpdate_f (void)
 		}
 		AIM_CheckAirequipID();
 	} else {
-		type = atoi(Cmd_Argv(1));
+		const int type = atoi(Cmd_Argv(1));
 		switch (type) {
 		case AC_ITEM_ELECTRONICS:
 		case AC_ITEM_SHIELD:

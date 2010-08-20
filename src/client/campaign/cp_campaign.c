@@ -623,9 +623,6 @@ const int DETECTION_INTERVAL = (SECONDS_PER_HOUR / 2);
  */
 void CL_CampaignRun (void)
 {
-	const int currentinterval = (int)floor(ccs.date.sec) % DETECTION_INTERVAL;
-	int checks, dt, i;
-
 	if (!CP_IsRunning())
 		return;
 
@@ -634,15 +631,16 @@ void CL_CampaignRun (void)
 
 	/* advance time */
 	ccs.timer += cls.frametime * ccs.gameTimeScale;
-	checks = currentinterval + (int)floor(ccs.timer);
-	checks = (int)(checks / DETECTION_INTERVAL);
-	dt = DETECTION_INTERVAL - currentinterval;
 
 	if (ccs.timer >= 1.0) {
 		/* calculate new date */
 		int currenthour;
 		int currentmin;
+		int i;
+		const int currentinterval = (int)floor(ccs.date.sec) % DETECTION_INTERVAL;
+		int dt = DETECTION_INTERVAL - currentinterval;
 		dateLong_t date;
+		const int checks = (currentinterval + (int)floor(ccs.timer)) / DETECTION_INTERVAL;
 
 		currenthour = (int)floor(ccs.date.sec / SECONDS_PER_HOUR);
 		currentmin = (int)floor(ccs.date.sec / SECONDS_PER_MINUTE);

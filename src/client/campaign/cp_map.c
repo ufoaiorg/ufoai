@@ -872,8 +872,7 @@ void MAP_MapDrawEquidistantPoints (const uiNode_t* node, const vec2_t center, co
 static float MAP_AngleOfPath3D (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
 {
 	float angle = 0.0f;
-	vec3_t start3D, end3D, north3D, ortToDest, ortToPole, v, rotationAxis;
-	float dist;
+	vec3_t start3D, end3D, north3D, ortToDest, ortToPole, v;
 	const vec2_t northPole = {0.0f, 90.0f};	/**< Position of the north pole (used to know where is the 'up' side */
 
 	PolarToVec(start, start3D);
@@ -897,9 +896,11 @@ static float MAP_AngleOfPath3D (const vec3_t start, const vec2_t end, vec3_t dir
 	 */
 	/* smooth change of direction if the model is not idle */
 	if (direction) {
+		float dist;
 		VectorSubtract(ortToDest, direction, v);
 		dist = VectorLength(v);
 		if (dist > 0.01) {
+			vec3_t rotationAxis;
 			CrossProduct(direction, ortToDest, rotationAxis);
 			VectorNormalize(rotationAxis);
 			RotatePointAroundVector(v, rotationAxis, direction, 5.0);
@@ -934,7 +935,6 @@ static float MAP_AngleOfPath2D (const vec3_t start, const vec2_t end, vec3_t dir
 {
 	float angle = 0.0f;
 	vec3_t start3D, end3D, tangentVector, v, rotationAxis;
-	float dist;
 
 	/* calculate the vector tangent to movement */
 	PolarToVec(start, start3D);
@@ -951,6 +951,7 @@ static float MAP_AngleOfPath2D (const vec3_t start, const vec2_t end, vec3_t dir
 
 	/* smooth change of direction if the model is not idle */
 	if (direction) {
+		float dist;
 		VectorSubtract(tangentVector, direction, v);
 		dist = VectorLength(v);
 		if (dist > 0.01) {
@@ -1278,17 +1279,16 @@ static void MAP3D_SmoothRotate (void)
 
 	if (smoothDeltaLength > smoothDeltaZoom) {
 		/* when we rotate (and zoom) */
-		float rotationSpeed;
 		const float diffAngle = VectorLength(diff);
 		const float epsilon = 0.1f;
 		if (diffAngle > epsilon) {
+			float rotationSpeed;
 			/* Append the old speed to the new speed if this is the first half of a new rotation, but never exceed the max speed.
 			 * This allows the globe to rotate at maximum speed when the button is held down. */
 			if (diffAngle / smoothDeltaLength > 0.5)
 				rotationSpeed = min(diffAngle, curRotationSpeed + sin(3.05f * diffAngle / smoothDeltaLength) * diffAngle * 0.5);
-			else {
+			else
 				rotationSpeed = sin(3.05f * diffAngle / smoothDeltaLength) * diffAngle;
-			}
 			curRotationSpeed = rotationSpeed;
 			VectorScale(diff, smoothAcceleration / diffAngle * rotationSpeed, diff);
 			VectorAdd(ccs.angles, diff, ccs.angles);
@@ -1449,10 +1449,11 @@ static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation
 	qboolean oneUFOVisible, const char* font)
 {
 	const installationTemplate_t *tpl = installation->installationTemplate;
-	int i, x, y;
+	int x, y;
 
 	/* Draw weapon range if at least one UFO is visible */
 	if (oneUFOVisible && AII_InstallationCanShoot(installation)) {
+		int i;
 		for (i = 0; i < tpl->maxBatteries; i++) {
 			const aircraftSlot_t const *slot = &installation->batteries[i].slot;
 			if (slot->item && slot->ammoLeft != 0 && slot->installationTime == 0) {
@@ -1490,10 +1491,11 @@ static void MAP_DrawMapOneInstallation (const uiNode_t* node, const installation
 static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
 	qboolean oneUFOVisible, const char* font)
 {
-	int i, x, y;
+	int x, y;
 
 	/* Draw weapon range if at least one UFO is visible */
 	if (oneUFOVisible && AII_BaseCanShoot(base)) {
+		int i;
 		for (i = 0; i < base->numBatteries; i++) {
 			const aircraftSlot_t const *slot = &base->batteries[i].slot;
 			if (slot->item && slot->ammoLeft != 0 && slot->installationTime == 0) {

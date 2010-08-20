@@ -289,7 +289,7 @@ base_t *B_GetFirstUnfoundedBase(void);
 base_t *B_GetCurrentSelectedBase(void);
 void B_SetCurrentSelectedBase(const base_t *base);
 
-qboolean B_AssembleMap(base_t *base);
+qboolean B_AssembleMap(const base_t *base);
 
 /* building functions */
 buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);

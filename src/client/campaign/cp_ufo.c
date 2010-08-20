@@ -4,24 +4,24 @@
  */
 
 /*
-Copyright (C) 2002-2010 UFO: Alien Invasion.
+ Copyright (C) 2002-2010 UFO: Alien Invasion.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-See the GNU General Public License for more details.
+ See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-*/
+ */
 
 #include "../cl_shared.h"
 #include "cp_campaign.h"
@@ -31,12 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_mapfightequip.h"
 
 static const float MAX_DETECTING_RANGE = 25.0f; /**< range to detect and fire at phalanx aircraft */
-
-typedef struct ufoTypeList_s {
-	const char *id;		/**< script id string */
-	const char *crashedId;		/**< script id string */
-	int ufoType;		/**< ufoType_t values */
-} ufoTypeList_t;
 
 /**
  * @brief returns the UFO on the geoscape with a certain index
@@ -239,8 +233,8 @@ static void UFO_UpdateAlienInterestForOneBase (const aircraft_t const *ufo, base
 {
 	float probability;
 	float distance;
-	const float decreasingDistance = 10.0f;	/**< above this distance, probability to detect base will
-												decrease by @c decreasingFactor */
+	const float decreasingDistance = 10.0f; /**< above this distance, probability to detect base will
+	 decrease by @c decreasingFactor */
 	const float decreasingFactor = 5.0f;
 
 	/* ufo can't find base if it's too far */
@@ -281,8 +275,8 @@ static void UFO_UpdateAlienInterestForOneInstallation (const aircraft_t const *u
 {
 	float probability;
 	float distance;
-	const float decreasingDistance = 10.0f;	/**< above this distance, probability to detect base will
-												decrease by @c decreasingFactor */
+	const float decreasingDistance = 10.0f; /**< above this distance, probability to detect base will
+	 decrease by @c decreasingFactor */
 	const float decreasingFactor = 5.0f;
 
 	/* ufo can't find base if it's too far */
@@ -396,7 +390,8 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 					distance = dist;
 					if (UFO_SendPursuingAircraft(ufo, phalanxAircraft) && UFO_IsUFOSeenOnGeoscape(ufo)) {
 						/* stop time and notify */
-						MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), phalanxAircraft->name), qfalse, MSG_STANDARD, NULL);
+						MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), phalanxAircraft->name), qfalse,
+								MSG_STANDARD, NULL);
 						/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
 					}
 				}
@@ -559,7 +554,7 @@ static void UFO_ListOnGeoscape_f (void)
 	for (ufo = ccs.ufos; ufo < ccs.ufos + ccs.numUFOs; ufo++) {
 		Com_Printf("..%s (%s) - status: %i - pos: %.0f:%0.f\n", ufo->name, ufo->id, ufo->status, ufo->pos[0], ufo->pos[1]);
 		Com_Printf("...route length: %i (current: %i), time: %i, distance: %.2f, speed: %i\n",
-			ufo->route.numPoints, ufo->point, ufo->time, ufo->route.distance, ufo->stats[AIR_STATS_SPEED]);
+				ufo->route.numPoints, ufo->point, ufo->time, ufo->route.distance, ufo->stats[AIR_STATS_SPEED]);
 		Com_Printf("...linked to mission '%s'\n", ufo->mission ? ufo->mission->id : "no mission");
 		Com_Printf("... UFO is %s and %s\n", ufo->landed ? "landed" : "flying", ufo->detected ? "detected" : "undetected");
 		Com_Printf("... damage: %i\n", ufo->damage);
@@ -568,10 +563,10 @@ static void UFO_ListOnGeoscape_f (void)
 			aircraftSlot_t const* const w = &ufo->weapons[k];
 			if (w->item) {
 				char const* const state = w->ammo && w->ammoLeft > 0 ?
-					"(loaded)" : "(unloaded)";
+				"(loaded)" : "(unloaded)";
 				Com_Printf("%s %s / ", w->item->id, state);
 			} else
-				Com_Printf("empty / ");
+			Com_Printf("empty / ");
 		}
 		Com_Printf("\n");
 	}
@@ -631,14 +626,14 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 
 	/* Initialise ufo data */
 	UFO_SetRandomPos(ufo);
-	AII_ReloadAircraftWeapons(ufo);					/* Load its weapons */
+	AII_ReloadAircraftWeapons(ufo); /* Load its weapons */
 	ufo->landed = qfalse;
-	ufo->detected = qfalse;					/* Not visible in radars (just for now) */
+	ufo->detected = qfalse; /* Not visible in radars (just for now) */
 	ufo->mission = mission;
 	if (destination)
 		UFO_SendToDestination(ufo, destination);
 	else
-		UFO_SetRandomDest(ufo);				/* Random destination */
+		UFO_SetRandomDest(ufo); /* Random destination */
 
 	return ufo;
 }
@@ -652,7 +647,7 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 {
 	/* Remove ufo from ufos list */
-	const ptrdiff_t num = (ptrdiff_t)(ufo - ccs.ufos);
+	const ptrdiff_t num = (ptrdiff_t) (ufo - ccs.ufos);
 
 	Com_DPrintf(DEBUG_CLIENT, "Remove ufo from geoscape: '%s'\n", ufo->id);
 
@@ -662,11 +657,11 @@ void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 #ifdef DEBUG
 /**
  * @brief Remove a UFO from the geoscape
-  */
+ */
 static void UFO_RemoveFromGeoscape_f (void)
 {
 	if (ccs.numUFOs > 0)
-		UFO_RemoveFromGeoscape(ccs.ufos);
+	UFO_RemoveFromGeoscape(ccs.ufos);
 }
 #endif
 
@@ -776,11 +771,13 @@ qboolean UFO_CampaignCheckEvents (void)
 				/* if UFO is aiming a PHALANX aircraft, warn player */
 				if (ufo->aircraftTarget) {
 					/* stop time and notify */
-					MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), ufo->aircraftTarget->name), qfalse, MSG_STANDARD, NULL);
+					MSO_CheckAddNewMessage(NT_UFO_ATTACKING, _("Notice"), va(_("A UFO is flying toward %s"), ufo->aircraftTarget->name), qfalse,
+							MSG_STANDARD, NULL);
 					/** @todo present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets
 					 * @sa UFO_SearchAircraftTarget */
 				} else {
-					MSO_CheckAddNewMessage(NT_UFO_SPOTTED, _("Notice"), va(_("Our radar detected a new UFO near %s"), detectedBy), qfalse, MSG_UFOSPOTTED, NULL);
+					MSO_CheckAddNewMessage(NT_UFO_SPOTTED, _("Notice"), va(_("Our radar detected a new UFO near %s"), detectedBy), qfalse,
+							MSG_UFOSPOTTED, NULL);
 				}
 				newDetection = qtrue;
 				UFO_DetectNewUFO(ufo);
@@ -804,7 +801,7 @@ qboolean UFO_CampaignCheckEvents (void)
  * @brief Notify to UFOs that a Phalanx aircraft has been destroyed.
  * @param[in] aircraft Pointer to the Phalanx aircraft that has been removed.
  */
-void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t *const aircraft)
+void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t * const aircraft)
 {
 	int ufoIdx;
 
@@ -826,7 +823,7 @@ qboolean UFO_IsUFOSeenOnGeoscape (const aircraft_t const *ufo)
 {
 #ifdef DEBUG
 	if (ufo->notOnGeoscape)
-		Com_Error(ERR_DROP, "UFO_IsUFOSeenOnGeoscape: ufo %s can't be used on geoscape", ufo->id);
+	Com_Error(ERR_DROP, "UFO_IsUFOSeenOnGeoscape: ufo %s can't be used on geoscape", ufo->id);
 #endif
 	return (!ufo->landed && ufo->detected);
 }

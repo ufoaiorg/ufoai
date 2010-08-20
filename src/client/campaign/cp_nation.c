@@ -672,7 +672,7 @@ static lineStrip_t colorLineStrip[MAX_NATIONS];
 static void CL_NationStatsUpdate_f (void)
 {
 	int i;
-	int funding, maxFunding;
+	int funding;
 	uiNode_t *colorNode;
 	uiNode_t *graphNode;
 	int dy = 10;
@@ -731,9 +731,8 @@ static void CL_NationStatsUpdate_f (void)
 	/* Display graph of nations-values so far. */
 	graphNode = UI_GetNodeByPath("nations.nation_graph_funding");
 	if (graphNode) {
+		const int maxFunding = CL_NationsMaxFunding();
 		usedFundPtslist = 0;
-
-		maxFunding = CL_NationsMaxFunding();
 		for (i = 0; i < ccs.numNations; i++) {
 			/* init the structure */
 			lineStrip_t *funding = &fundingLineStrip[i];

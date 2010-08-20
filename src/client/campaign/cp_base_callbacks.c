@@ -168,17 +168,18 @@ static void B_SetBaseTitle_f (void)
 {
 	if (ccs.numBases < MAX_BASES) {
 		char baseName[MAX_VAR];
-		int i = 2;
-		int j;
 
-		if (ccs.numBases > 0)
+		if (ccs.numBases > 0) {
+			int j;
+			int i = 2;
 			do {
 				j = 0;
 				Com_sprintf(baseName, lengthof(baseName), _("Base #%i"), i);
 				while (j <= ccs.numBases && strcmp(baseName, ccs.bases[j++].name));
 			} while (i++ <= ccs.numBases && j <= ccs.numBases);
-		else
+		} else {
 			Q_strncpyz(baseName, _("Home"), lengthof(baseName));
+		}
 
 		Cvar_Set("mn_base_title", baseName);
 	} else {
@@ -529,16 +530,13 @@ static void B_BuildingStatus_f (void)
  */
 static void B_AssembleMap_f (void)
 {
-	int baseID = 0;
-	base_t* base = B_GetCurrentSelectedBase();
+	const base_t* base;
 
-	if (Cmd_Argc() < 2)
+	if (Cmd_Argc() < 2) {
 		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID>\n", Cmd_Argv(0));
-	else {
-		if (baseID < 0 || baseID >= ccs.numBases) {
-			Com_DPrintf(DEBUG_CLIENT, "Invalid baseID: %i\n", baseID);
-			return;
-		}
+		base = B_GetCurrentSelectedBase();
+	} else {
+		const int baseID = atoi(Cmd_Argv(1));
 		base = B_GetBaseByIDX(baseID);
 	}
 

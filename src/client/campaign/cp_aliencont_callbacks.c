@@ -174,7 +174,6 @@ static void AC_AlienClick_f (void)
  */
 static void AC_UpdateMenu (const base_t *base)
 {
-	int i, j;
 
 	Cvar_Set("mn_al_alientype", "");
 	Cvar_Set("mn_al_alienimage", "");
@@ -187,6 +186,7 @@ static void AC_UpdateMenu (const base_t *base)
 	UI_ExecuteConfunc("aliencont_clear");
 	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		const aliensCont_t *containment = base->alienscont;
+		int i, j;
 		for (i = 0, j = 0; i < ccs.numAliensTD; i++) {
 			if (j < MAX_AC_MENU_ENTRIES) {
 				if (containment[i].teamDef) {
@@ -281,7 +281,7 @@ static void AC_KillAll_f (void)
  */
 static void AC_KillOne_f (void)
 {
-	int num, i, step;
+	int num;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	/* Can be called from everywhere. */
@@ -302,6 +302,7 @@ static void AC_KillOne_f (void)
 
 	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		aliensCont_t *containment = base->alienscont;
+		int i, step;
 		for (i = 0, step = 0; i < ccs.numAliensTD; i++) {
 			if (!containment[i].amountAlive && !containment[i].amountDead)
 				continue;

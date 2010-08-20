@@ -183,7 +183,6 @@ static const char* CL_AircraftSizeToName (int aircraftSize)
  */
 static void UP_DisplayTechTree (const technology_t* t)
 {
-	int i;
 	linkedList_t *upTechtree;
 	const requirements_t *required;
 
@@ -192,7 +191,8 @@ static void UP_DisplayTechTree (const technology_t* t)
 
 	if (required->numLinks <= 0)
 		LIST_AddString(&upTechtree, _("No requirements"));
-	else
+	else {
+		int i;
 		for (i = 0; i < required->numLinks; i++) {
 			const requirement_t *req = &required->links[i];
 			if (req->type == RS_LINK_TECH) {
@@ -208,6 +208,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 				LIST_AddString(&upTechtree, _(techRequired->name));
 			}
 		}
+	}
 
 	/* and now register the buffer */
 	Cvar_Set("mn_uprequirement", "1");
@@ -565,8 +566,6 @@ static void UP_DrawAssociatedAmmo (const technology_t* tech)
  */
 static void UP_Article (technology_t* tech, eventMail_t *mail)
 {
-	int i;
-
 	UP_ChangeDisplay(UFOPEDIA_ARTICLE);
 
 	if (tech) {
@@ -607,6 +606,7 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		/* Reset itemdescription */
 		UI_ExecuteConfunc("itemdesc_view 0 0;");
 		if (RS_IsResearched_ptr(tech)) {
+			int i;
 			Cvar_Set("mn_uptitle", va("%s: %s %s", _("UFOpaedia"), _(tech->name), _("(complete)")));
 			/* If researched -> display research text */
 			UI_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->description)));
