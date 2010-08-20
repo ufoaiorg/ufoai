@@ -850,7 +850,6 @@ void VecToPolar (const vec3_t v, vec2_t a)
  */
 void VecToAngles (const vec3_t value1, vec3_t angles)
 {
-	float forward;
 	float yaw, pitch;
 
 	if (value1[1] == 0 && value1[0] == 0) {
@@ -860,6 +859,7 @@ void VecToAngles (const vec3_t value1, vec3_t angles)
 		else
 			pitch = 270;
 	} else {
+		const float forward = sqrt(value1[0] * value1[0] + value1[1] * value1[1]);
 		if (value1[0])
 			yaw = (int) (atan2(value1[1], value1[0]) * todeg);
 		else if (value1[1] > 0)
@@ -869,7 +869,6 @@ void VecToAngles (const vec3_t value1, vec3_t angles)
 		if (yaw < 0)
 			yaw += 360;
 
-		forward = sqrt(value1[0] * value1[0] + value1[1] * value1[1]);
 		pitch = (int) (atan2(value1[2], forward) * todeg);
 		if (pitch < 0)
 			pitch += 360;

@@ -466,8 +466,9 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 	/* need a copy, as parsedToken is held in a static buffer in the
 	 * Com_Parse function */
 	ED_TEST_RETURN_ERROR((strlen(parsedToken) + 1) > sizeof(tokBuf),
-		"ED_ParseType: type string too long for buffer for key %s",kd->name);
+		"ED_ParseType: type string too long for buffer for key %s", kd->name);
 	strncpy(tokBuf, parsedToken, sizeof(tokBuf));
+	tokBuf[sizeof(tokBuf) - 1] = '\0';
 	buf_p = tokBuf;
 
 	partToken = Com_Parse(&buf_p);
@@ -479,7 +480,7 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 		partToken = Com_Parse(&buf_p);
 	}
 
-	if (strlen(partToken)) {
+	if (partToken[0] != '\0') {
 		type = ED_Type2Constant(partToken);
 		ED_PASS_ERROR(type);
 	} else {/* default is string */
@@ -683,7 +684,8 @@ static int ED_ParseEntities (const char **data_p)
 				if (toggle) { /* store key name til after next token is parsed */
 					if ('\0' == parsedToken[0])
 						ED_RETURN_ERROR("key name null string, \"\", or missing closing brace");
-					strncpy(lastTokenBuf, parsedToken, ED_MAX_TOKEN_LEN);
+					strncpy(lastTokenBuf, parsedToken, sizeof(lastTokenBuf));
+					lastTokenBuf[sizeof(lastTokenBuf) - 1] = '\0';
 				} else { /* store key-value pair in buffer until whole entity is parsed */
 					ED_PASS_ERROR(ED_PairParsed(keyDefBuf, &keyIndex, lastTokenBuf, parsedToken, mode));
 				}

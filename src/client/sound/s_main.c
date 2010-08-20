@@ -234,7 +234,7 @@ void S_Init (void)
 	}
 
 	if (SDL_AudioDriverName(drivername, sizeof(drivername)) == NULL)
-		strncpy(drivername, "(UNKNOWN)", sizeof(drivername) - 1);
+		Q_strncpyz(drivername, "(UNKNOWN)", sizeof(drivername));
 	Com_Printf("... driver: '%s'\n", drivername);
 
 	if (Mix_AllocateChannels(MAX_CHANNELS) != MAX_CHANNELS) {

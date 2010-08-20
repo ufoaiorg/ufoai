@@ -255,7 +255,7 @@ void CL_SetHTTPServer (const char *URL)
 	abortDownloads = HTTPDL_ABORT_NONE;
 	handleCount = pendingCount = 0;
 
-	strncpy(cls.downloadServer, URL, sizeof(cls.downloadServer) - 1);
+	Q_strncpyz(cls.downloadServer, URL, sizeof(cls.downloadServer));
 }
 
 void CL_ResetPrecacheCheck(void);

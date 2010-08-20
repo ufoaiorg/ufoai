@@ -733,7 +733,7 @@ qboolean UFO_CampaignCheckEvents (void)
 				detected = qtrue;
 				if (minDistance < 0 || minDistance > distance) {
 					minDistance = distance;
-					strncpy(detectedBy, base->name, sizeof(detectedBy));
+					Q_strncpyz(detectedBy, base->name, sizeof(detectedBy));
 				}
 			}
 
