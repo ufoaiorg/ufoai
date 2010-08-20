@@ -30,9 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common.h"
 #include "mem.h"
 
-/* static */
-static cBspSurface_t nullsurface;
-
 /** @note loaded map tiles with this assembly.  ufo2map has exactly 1.*/
 TR_TILE_TYPE mapTiles[MAX_MAPTILES];
 
@@ -1055,7 +1052,7 @@ static trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t
 	/* fill in a default trace */
 	memset(&traceData.trace, 0, sizeof(traceData.trace));
 	traceData.trace.fraction = min(fraction, 1.0f); /* Use 1 or fraction, whichever is lower. */
-	traceData.trace.surface = &(nullsurface);
+	traceData.trace.surface = NULL;
 
 	if (!tile->numnodes)		/* map not loaded */
 		return traceData.trace;
