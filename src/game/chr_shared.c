@@ -54,7 +54,6 @@ qboolean CHRSH_IsTeamDefRobot (const teamDef_t* const td)
 void CHRSH_CharGenAbilitySkills (character_t * chr, qboolean multiplayer)
 {
 	int i;
-	float sumRate = 0, curRate = 0;
 	const int (*chrTemplate)[2];
 	const teamDef_t *td;
 	const chrTemplate_t *ct;
@@ -73,12 +72,14 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, qboolean multiplayer)
 			Sys_Error("CHRSH_CharGenAbilitySkills: No multiplayer character template found (soldier_mp)");
 	} else if (td->characterTemplates[0]) {
 		if (td->numTemplates > 1) {
+			int sumRate = 0;
 			for (i = 0; i < td->numTemplates; i++) {
 				ct = td->characterTemplates[i];
 				sumRate += ct->rate;
 			}
 			if (sumRate) {
 				const float soldierRoll = frand();
+				int curRate = 0;
 				for (ct = td->characterTemplates[0]; ct->id; ct++) {
 					curRate += ct->rate;
 					if (curRate && soldierRoll <= (curRate / sumRate))
