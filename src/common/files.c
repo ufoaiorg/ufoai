@@ -423,20 +423,18 @@ void FS_FreeFile (void *buffer)
 static pack_t *FS_LoadPackFile (const char *packfile)
 {
 	unsigned int len;
-	packfile_t *newfiles;
-	pack_t *pack;
-	unz_file_info file_info;
-	unzFile uf;
-	unz_global_info gi;
-	char filename_inzip[MAX_QPATH];
 
 	len = strlen(packfile);
 
 	if (!strncmp(packfile + len - 4, ".pk3", 4) || !strncmp(packfile + len - 4, ".zip", 4)) {
 		int i;
-		unsigned int err;
-		uf = unzOpen(packfile);
-		err = unzGetGlobalInfo(uf, &gi);
+		pack_t *pack;
+		packfile_t *newfiles;
+		unz_file_info file_info;
+		unz_global_info gi;
+		unzFile uf = unzOpen(packfile);
+		unsigned int err = unzGetGlobalInfo(uf, &gi);
+		char filenameInZip[MAX_QPATH];
 
 		if (err != UNZ_OK) {
 			Com_Printf("Could not load '%s'\n", packfile);
@@ -446,11 +444,11 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 		len = 0;
 		unzGoToFirstFile(uf);
 		for (i = 0; i < gi.number_entry; i++) {
-			err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
+			err = unzGetCurrentFileInfo(uf, &file_info, filenameInZip, sizeof(filenameInZip), NULL, 0, NULL, 0);
 			if (err != UNZ_OK) {
 				break;
 			}
-			len += strlen(filename_inzip) + 1;
+			len += strlen(filenameInZip) + 1;
 			unzGoToNextFile(uf);
 		}
 
@@ -465,13 +463,13 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 		newfiles = Mem_PoolAlloc(i * sizeof(*newfiles), com_fileSysPool, 0);
 
 		for (i = 0; i < gi.number_entry; i++) {
-			err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
+			err = unzGetCurrentFileInfo(uf, &file_info, filenameInZip, sizeof(filenameInZip), NULL, 0, NULL, 0);
 			if (err != UNZ_OK)
 				break;
-			Q_strlwr(filename_inzip);
+			Q_strlwr(filenameInZip);
 
 			unzGetCurrentFileInfoPosition(uf, &newfiles[i].filepos);
-			Q_strncpyz(newfiles[i].name, filename_inzip, sizeof(newfiles[i].name));
+			Q_strncpyz(newfiles[i].name, filenameInZip, sizeof(newfiles[i].name));
 			newfiles[i].filelen = file_info.compressed_size;
 			unzGoToNextFile(uf);
 		}
