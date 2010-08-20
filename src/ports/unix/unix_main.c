@@ -120,6 +120,15 @@ void Sys_Quit (void)
 
 void Sys_Sleep (int milliseconds)
 {
+#if 0
+	struct timespec sleep, remaining;
+	sleep.tv_sec = (long) milliseconds / 1000;
+	sleep.tv_nsec = 1000000 * (milliseconds - (long) milliseconds);
+	while (nanosleep(&sleep, &remaining) < 0 && errno == EINTR)
+		/* If nanosleep has been interrupted by a signal, adjust the
+		 * sleeping period and return to sleep.  */
+		sleep = remaining;
+#endif
 	if (milliseconds < 1)
 		milliseconds = 1;
 	usleep(milliseconds * 1000);
@@ -301,7 +310,7 @@ void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char
 	struct dirent *d;
 	struct stat st;
 
-	if (strlen(subdirs)) {
+	if (subdirs[0] != '\0') {
 		Com_sprintf(search, sizeof(search), "%s/%s", basedir, subdirs);
 	} else {
 		Com_sprintf(search, sizeof(search), "%s", basedir);
@@ -317,7 +326,7 @@ void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char
 
 		if (st.st_mode & S_IFDIR) {
 			if (Q_strcasecmp(d->d_name, ".") && Q_strcasecmp(d->d_name, "..")) {
-				if (strlen(subdirs)) {
+				if (subdirs[0] != '\0') {
 					Com_sprintf(newsubdirs, sizeof(newsubdirs), "%s/%s", subdirs, d->d_name);
 				} else {
 					Com_sprintf(newsubdirs, sizeof(newsubdirs), "%s", d->d_name);
