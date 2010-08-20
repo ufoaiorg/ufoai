@@ -45,7 +45,7 @@ MAP LOADING
  * @sa R_ModLoadSubmodels
  * @sa CM_InlineModel
  */
-static void CMod_LoadSubmodels (TR_TILE_TYPE *tile, const byte *base, const lump_t * l, const vec3_t shift)
+static void CMod_LoadSubmodels (mapTile_t *tile, const byte *base, const lump_t * l, const vec3_t shift)
 {
 	const dBspModel_t *in;
 	cBspModel_t *out;
@@ -89,7 +89,7 @@ static void CMod_LoadSubmodels (TR_TILE_TYPE *tile, const byte *base, const lump
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadSurfaces (TR_TILE_TYPE *tile, const byte *base, const lump_t * l)
+static void CMod_LoadSurfaces (mapTile_t *tile, const byte *base, const lump_t * l)
 {
 	const dBspTexinfo_t *in;
 	cBspSurface_t *out;
@@ -128,7 +128,7 @@ static void CMod_LoadSurfaces (TR_TILE_TYPE *tile, const byte *base, const lump_
  * @sa CM_AddMapTile
  * @sa TR_BuildTracingNode_r
  */
-static void CMod_LoadNodes (TR_TILE_TYPE *tile, const byte *base, const lump_t * l, const vec3_t shift)
+static void CMod_LoadNodes (mapTile_t *tile, const byte *base, const lump_t * l, const vec3_t shift)
 {
 	const dBspNode_t *in;
 	int child;
@@ -178,7 +178,7 @@ static void CMod_LoadNodes (TR_TILE_TYPE *tile, const byte *base, const lump_t *
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushes (TR_TILE_TYPE *tile, const byte *base, const lump_t * l)
+static void CMod_LoadBrushes (mapTile_t *tile, const byte *base, const lump_t * l)
 {
 	const dBspBrush_t *in;
 	cBspBrush_t *out;
@@ -213,7 +213,7 @@ static void CMod_LoadBrushes (TR_TILE_TYPE *tile, const byte *base, const lump_t
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafs (TR_TILE_TYPE *tile, const byte *base, const lump_t * l)
+static void CMod_LoadLeafs (mapTile_t *tile, const byte *base, const lump_t * l)
 {
 	int i;
 	cBspLeaf_t *out;
@@ -266,7 +266,7 @@ static void CMod_LoadLeafs (TR_TILE_TYPE *tile, const byte *base, const lump_t *
  * @sa CM_AddMapTile
  * @sa R_ModLoadPlanes
  */
-static void CMod_LoadPlanes (TR_TILE_TYPE *tile, const byte *base, const lump_t * l, const vec3_t shift)
+static void CMod_LoadPlanes (mapTile_t *tile, const byte *base, const lump_t * l, const vec3_t shift)
 {
 	int i, j;
 	cBspPlane_t *out;
@@ -310,7 +310,7 @@ static void CMod_LoadPlanes (TR_TILE_TYPE *tile, const byte *base, const lump_t 
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafBrushes (TR_TILE_TYPE *tile, const byte *base, const lump_t * l)
+static void CMod_LoadLeafBrushes (mapTile_t *tile, const byte *base, const lump_t * l)
 {
 	int i;
 	unsigned short *out;
@@ -346,7 +346,7 @@ static void CMod_LoadLeafBrushes (TR_TILE_TYPE *tile, const byte *base, const lu
  * @param[in] l descriptor of the data block we are working on
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushSides (TR_TILE_TYPE *tile, const byte *base, const lump_t * l)
+static void CMod_LoadBrushSides (mapTile_t *tile, const byte *base, const lump_t * l)
 {
 	int i;
 	cBspBrushSide_t *out;
@@ -431,7 +431,7 @@ TRACING NODES
  * @note tile->tnodes is expected to have enough memory malloc'ed for the function to work.
  * @sa BuildTracingNode_r
  */
-static void CM_MakeTracingNodes (TR_TILE_TYPE *tile)
+static void CM_MakeTracingNodes (mapTile_t *tile)
 {
 	int i;
 
@@ -466,7 +466,7 @@ static void CM_MakeTracingNodes (TR_TILE_TYPE *tile)
  * @sa CM_AddMapTile
  * @todo TEST z-level routing
  */
-static void CMod_LoadRouting (TR_TILE_TYPE *tile, mapData_t *mapData, const byte *base, const char *name, const lump_t * l, int sX, int sY, int sZ)
+static void CMod_LoadRouting (mapTile_t *tile, mapData_t *mapData, const byte *base, const char *name, const lump_t * l, int sX, int sY, int sZ)
 {
 	/** @todo this eats a lot of memory - load directory into mapData->map */
 	static routing_t tempMap[ACTOR_MAX_SIZE];
@@ -584,7 +584,7 @@ static void CMod_LoadRouting (TR_TILE_TYPE *tile, mapData_t *mapData, const byte
  * loaded map tiles.
  * @sa CM_AddMapTile
  */
-static void CMod_LoadEntityString (TR_TILE_TYPE *tile, mapData_t *mapData, const byte *base, const lump_t * l, const vec3_t shift, int tileIndex)
+static void CMod_LoadEntityString (mapTile_t *tile, mapData_t *mapData, const byte *base, const lump_t * l, const vec3_t shift, int tileIndex)
 {
 	const char *token;
 	const char *es;
@@ -670,7 +670,7 @@ static void CMod_LoadEntityString (TR_TILE_TYPE *tile, mapData_t *mapData, const
  * @brief Loads the lightmap for server side visibility lookup
  * @todo Implement this
  */
-static void CMod_LoadLighting (TR_TILE_TYPE *tile, const byte *base, const lump_t * l)
+static void CMod_LoadLighting (mapTile_t *tile, const byte *base, const lump_t * l)
 {
 #if 0
 	tile->lightdata = Mem_PoolAlloc(l->filelen, com_cmodelSysPool, 0);
@@ -682,7 +682,7 @@ static void CMod_LoadLighting (TR_TILE_TYPE *tile, const byte *base, const lump_
  * @brief Set up the planes and nodes so that the six floats of a bounding
  * box can just be stored out and get a proper clipping hull structure.
  */
-static void CM_InitBoxHull (TR_TILE_TYPE *tile)
+static void CM_InitBoxHull (mapTile_t *tile)
 {
 	int i;
 
@@ -767,7 +767,7 @@ static void CM_AddMapTile (const char *name, qboolean day, int sX, int sY, byte 
 	/* use for random map assembly for shifting origins and so on */
 	vec3_t shift;
 	const byte *base;
-	TR_TILE_TYPE *tile;
+	mapTile_t *tile;
 
 	Com_DPrintf(DEBUG_ENGINE, "CM_AddMapTile: %s at %i,%i,%i\n", name, sX, sY, sZ);
 	assert(name);
