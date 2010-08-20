@@ -166,7 +166,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 	int nx, ny, nz;
 	int dx, dy, dz;
 	byte l, ol;
-	int passageHeight, actorStepupHeight;
+	int passageHeight;
 
 	/** @todo flier should return true if the actor can fly. */
 	const qboolean flier = qfalse; /**< This can be keyed into whether an actor can fly or not to allow flying */
@@ -336,7 +336,7 @@ static void Grid_MoveMark (const routing_t *map, const pos3_t exclude, const act
 		int heightChange;
 
 		/** @todo actor_stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
-		actorStepupHeight = PATHFINDING_MAX_STEPUP;
+		int actorStepupHeight = PATHFINDING_MAX_STEPUP;
 
 		/* This is the standard passage height for all units trying to move horizontally. */
 		RT_CONN_TEST(map, actorSize, x, y, z, coreDir);

@@ -760,7 +760,7 @@ static int RT_FindOpeningCeilingFrac (const vec3_t start, const vec3_t end, cons
 static int RT_FindOpeningFloor (const vec3_t start, const vec3_t end, const actorSizeEnum_t actorSize, const int startingHeight, const int floorLimit, const char **list)
 {
 	/* Look for additional space below init_bottom, down to lowest_bottom. */
-	int midfloor, midfloor2;
+	int midfloor;
 
 	if (start[0] == end[0] || start[1] == end[1]) {
 		/* For orthogonal dirs, find the height at the midpoint. */
@@ -768,6 +768,8 @@ static int RT_FindOpeningFloor (const vec3_t start, const vec3_t end, const acto
 		if (debugTrace)
 			Com_Printf("midfloor:%i.\n", midfloor);
 	} else {
+		int midfloor2;
+
 		/* If this is diagonal, trace the 1/3 and 2/3 points instead. */
 		/* 1/3 point */
 		midfloor = RT_FindOpeningFloorFrac(start, end, actorSize, 0.33, startingHeight, list);
@@ -797,7 +799,7 @@ static int RT_FindOpeningFloor (const vec3_t start, const vec3_t end, const acto
  */
 static int RT_FindOpeningCeiling (const vec3_t start, const vec3_t end, const actorSizeEnum_t actorSize, const int startingHeight, const int ceilLimit, const char **list)
 {
-	int midceil, midceil2;
+	int midceil;
 
 	if (start[0] == end[0] || start[1] == end[1]) {
 		/* For orthogonal dirs, find the height at the midpoint. */
@@ -805,6 +807,8 @@ static int RT_FindOpeningCeiling (const vec3_t start, const vec3_t end, const ac
 		if (debugTrace)
 			Com_Printf("midceil:%i.\n", midceil);
 	} else {
+		int midceil2;
+
 		/* If this is diagonal, trace the 1/3 and 2/3 points instead. */
 		/* 1/3 point */
 		midceil = RT_FindOpeningCeilingFrac(start, end, actorSize, 0.33, startingHeight, list);
@@ -868,14 +872,12 @@ static int RT_CalcNewZ (const routing_t * map, const actorSizeEnum_t actorSize, 
  */
 static int RT_TraceOpening (const routing_t * map, const actorSizeEnum_t actorSize, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *lo_val, int *hi_val, const char **list)
 {
-	trace_t tr;
-	int temp_z;
-
-	tr = RT_ObstructedTrace(start, end, actorSize, hi, lo, list);
+	trace_t tr = RT_ObstructedTrace(start, end, actorSize, hi, lo, list);
 	if (tr.fraction >= 1.0) {
 		lo = RT_FindOpeningFloor(start, end, actorSize, lo, bottom, list);
 		hi = RT_FindOpeningCeiling(start, end, actorSize, hi, top, list);
 		if (hi - lo >= PATHFINDING_MIN_OPENING) {
+			int temp_z;
 			if (lo == -1) {
 				if (debugTrace)
 					Com_Printf("Bailing- no floor in destination cell.\n");
