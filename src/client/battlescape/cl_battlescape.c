@@ -112,6 +112,11 @@ static float CL_LookupErrorFunction (float z)
 	return lookup[iint] + (z - ifloat / 10.0f) * lookupdiff[iint];
 }
 
+static inline qboolean CL_TestLine (const vec3_t start, const vec3_t stop, const int levelmask)
+{
+	return TR_TestLine(start, stop, levelmask);
+}
+
 /**
  * @brief Calculates chance to hit if the actor has a fire mode activated.
  * @param[in] actor The local entity of the actor to calculate the hit probability for.
@@ -193,40 +198,40 @@ int CL_GetHitProbability (const le_t* actor)
 	target[1] += perpY;
 	perpY *= 2;
 	target[2] += 6 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
+	if (!CL_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] += perpX;
 	target[1] += perpY;
 	target[2] -= 6 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
+	if (!CL_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] += perpX;
 	target[1] += perpY;
 	target[2] += 4 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
+	if (!CL_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[2] += 4 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
+	if (!CL_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] -= perpX * 3;
 	target[1] -= perpY * 3;
 	target[2] -= 12 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
+	if (!CL_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] -= perpX;
 	target[1] -= perpY;
 	target[2] += 6 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
+	if (!CL_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] -= perpX;
 	target[1] -= perpY;
 	target[2] -= 4 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
+	if (!CL_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] -= perpX;
 	target[1] -= perpY;
 	target[2] += 10 * height;
-	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
+	if (!CL_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 
 	return 100 * (hitchance * (0.125) * n);

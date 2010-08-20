@@ -30,16 +30,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common.h"
 #include "mem.h"
 
-/** @note loaded map tiles with this assembly.  ufo2map has exactly 1.*/
+/** @note loaded map tiles with this assembly.  ufo2map has exactly 1.
+ * @todo not thread safe  */
 TR_TILE_TYPE mapTiles[MAX_MAPTILES];
 
-/** @note number of loaded map tiles (map assembly) */
+/** @note number of loaded map tiles (map assembly)
+ * @todo not thread safe  */
 int numTiles = 0;
 
-/** @note For multi-check avoidance. */
+/** @note For multi-check avoidance.
+ * @todo not thread safe */
 static int checkcount;
 
-/** @note This is used to create the thead trees in MakeTracingNodes. */
+/** @note This is used to create the thead trees in MakeTracingNodes.
+ * @todo not thread safe */
 tnode_t *tnode_p;
 
 /*

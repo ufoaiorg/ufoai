@@ -396,6 +396,11 @@ static void SV_FreeTags (int tagNum, const char *file, int line)
 	_Mem_FreeTag(sv_gameSysPool, tagNum, file, line);
 }
 
+static qboolean SV_TestLine (const vec3_t start, const vec3_t stop, const int levelmask)
+{
+	return TR_TestLine(start, stop, levelmask);
+}
+
 static void SV_UnloadGame (void)
 {
 #ifndef GAME_HARD_LINKED
@@ -555,7 +560,7 @@ void SV_InitGameProgs (void)
 	import.BoxEdicts = SV_AreaEdicts;
 	import.TouchEdicts = SV_TouchEdicts;
 
-	import.TestLine = TR_TestLine;
+	import.TestLine = SV_TestLine;
 	import.TestLineWithEnt = CM_TestLineWithEnt;
 	import.GrenadeTarget = Com_GrenadeTarget;
 
