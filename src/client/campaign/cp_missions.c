@@ -1663,7 +1663,7 @@ void CP_SpawnNewMissions (void)
 		 * However, once the campaign passes a certain point, this effect rapidly diminishes. This means that by the
 		 * end of the game, ALL missions will spawn, quickly overrunning the player. */
 		if (ccs.overallInterest > FINAL_OVERALL_INTEREST)
-			nonOccurrence = NON_OCCURRENCE_PROBABILITY / pow(((ccs.overallInterest - FINAL_OVERALL_INTEREST / 10) + 1), 2);
+			nonOccurrence = NON_OCCURRENCE_PROBABILITY / pow(((ccs.overallInterest - FINAL_OVERALL_INTEREST / 30) + 1), 2);
 		else
 			nonOccurrence = NON_OCCURRENCE_PROBABILITY;
 
