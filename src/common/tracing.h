@@ -120,5 +120,6 @@ trace_t TR_BoxTrace(TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, co
 
 qboolean TR_TestLine(mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask);
 qboolean TR_TestLineDM(mapTiles_t* mapTiles, const vec3_t start, const vec3_t stop, vec3_t end, const int levelmask);
+trace_t TR_TileBoxTrace(TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int levelmask, const int brushmask, const int brushreject);
 
 #endif /* COMMON_TRACING_H */

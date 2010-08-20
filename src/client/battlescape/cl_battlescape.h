@@ -78,7 +78,7 @@ typedef struct client_state_s {
 
 	mapData_t mapData;
 
-	mapTiles_t mapTiles;
+	mapTiles_t *mapTiles;
 
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
 } client_state_t;

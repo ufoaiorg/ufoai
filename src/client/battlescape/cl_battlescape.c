@@ -114,7 +114,7 @@ static float CL_LookupErrorFunction (float z)
 
 static inline qboolean CL_TestLine (const vec3_t start, const vec3_t stop, const int levelmask)
 {
-	return TR_TestLine(&cl.mapTiles, start, stop, levelmask);
+	return TR_TestLine(cl.mapTiles, start, stop, levelmask);
 }
 
 /**
@@ -279,7 +279,7 @@ void Grid_DumpWholeClientMap_f (void)
 	int i;
 
 	for (i = 0; i < ACTOR_MAX_SIZE; i++)
-		RT_DumpWholeMap(&cl.mapTiles, &cl.mapData.map[i]);
+		RT_DumpWholeMap(cl.mapTiles, &cl.mapData.map[i]);
 }
 
 /**

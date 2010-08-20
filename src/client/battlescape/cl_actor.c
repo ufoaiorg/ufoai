@@ -1305,7 +1305,7 @@ qboolean CL_ActorMouseTrace (void)
 		VectorScale(P2minusP1, (vec_t)u, dir);
 		VectorAdd(from, dir, end);
 	} else { /* otherwise do a full trace */
-		CM_EntTestLineDM(&cl.mapTiles, from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
+		CM_EntTestLineDM(cl.mapTiles, from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	}
 
 	VecToPos(end, testPos);
@@ -1327,7 +1327,7 @@ qboolean CL_ActorMouseTrace (void)
 	 * we don't have to do the second Grid_Fall call at all and can safe a lot
 	 * of traces */
 	restingLevel = Grid_Fall(cl.mapData.map, ACTOR_GET_FIELDSIZE(selActor), testPos);
-	CM_EntTestLineDM(&cl.mapTiles, pA, pB, pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
+	CM_EntTestLineDM(cl.mapTiles, pA, pB, pC, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 	VecToPos(pC, testPos);
 	restingLevel = min(restingLevel, Grid_Fall(cl.mapData.map, ACTOR_GET_FIELDSIZE(selActor), testPos));
 
@@ -1335,7 +1335,7 @@ qboolean CL_ActorMouseTrace (void)
 	if (restingLevel < cl_worldlevel->integer) {
 		VectorCopy(end, from);
 		from[2] -= CURSOR_OFFSET;
-		CM_EntTestLineDM(&cl.mapTiles, from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
+		CM_EntTestLineDM(cl.mapTiles, from, stop, end, TL_FLAG_ACTORCLIP, cl.leInlineModelList);
 		VecToPos(end, testPos);
 		restingLevel = Grid_Fall(cl.mapData.map, ACTOR_GET_FIELDSIZE(selActor), testPos);
 	}

@@ -307,7 +307,7 @@ void SV_Shutdown(const char *finalmsg, qboolean reconnect);
 void SV_ShutdownWhenEmpty(void);
 void SV_Frame(int now, void *);
 const mapData_t* SV_GetMapData(void);
-const mapTiles_t* SV_GetMapTiles(void);
+mapTiles_t* SV_GetMapTiles(void);
 
 /*============================================================================ */
 

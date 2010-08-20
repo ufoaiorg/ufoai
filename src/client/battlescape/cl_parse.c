@@ -154,7 +154,7 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 			cl.model_draw[i - CS_MODELS] = R_RegisterModelShort(cl.configstrings[i]);
 			/* inline models are marked with * as first char followed by the number */
 			if (cl.configstrings[i][0] == '*')
-				cl.model_clip[i - CS_MODELS] = CM_InlineModel(&cl.mapTiles, cl.configstrings[i]);
+				cl.model_clip[i - CS_MODELS] = CM_InlineModel(cl.mapTiles, cl.configstrings[i]);
 			else
 				cl.model_clip[i - CS_MODELS] = NULL;
 		}

@@ -49,6 +49,6 @@ void CL_DoorClose (const eventRegister_t *self, struct dbuffer *msg)
 
 	Com_DPrintf(DEBUG_CLIENT, "Client processed door movement.\n");
 
-	CM_SetInlineModelOrientation(&cl.mapTiles, le->inlineModelName, le->origin, le->angles);
+	CM_SetInlineModelOrientation(cl.mapTiles, le->inlineModelName, le->origin, le->angles);
 	CL_RecalcRouting(le);
 }

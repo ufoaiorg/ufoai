@@ -320,7 +320,7 @@ void R_Trace (vec3_t start, vec3_t end, float size, int contentmask)
 	VectorSet(mins, -size, -size, -size);
 	VectorSet(maxs, size, size, size);
 
-	//refdef.trace = TR_CompleteBoxTrace(&cl.mapTiles, start, end, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
+	refdef.trace = CM_CompleteBoxTrace(refdef.mapTiles, start, end, mins, maxs, TRACING_ALL_VISIBLE_LEVELS, contentmask, 0);
 	refdef.traceEntity = NULL;
 
 	frac = refdef.trace.fraction;
@@ -333,8 +333,8 @@ void R_Trace (vec3_t start, vec3_t end, float size, int contentmask)
 		if (!m || m->type != mod_bsp_submodel)
 			continue;
 
-		//tr = CM_TransformedBoxTrace(&cl.mapTiles.mapTiles[m->bsp.maptile], start, end, mins, maxs, m->bsp.firstnode,
-			//	contentmask, 0, ent->origin, ent->angles);
+		tr = CM_TransformedBoxTrace(&(refdef.mapTiles->mapTiles[m->bsp.maptile]), start, end, mins, maxs, m->bsp.firstnode,
+				contentmask, 0, ent->origin, ent->angles);
 
 		if (tr.fraction < frac) {
 			refdef.trace = tr;

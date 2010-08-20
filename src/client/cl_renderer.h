@@ -218,6 +218,8 @@ typedef struct {
 	trace_t trace;				/**< occlusion testing */
 	struct entity_s *traceEntity;
 
+	mapTiles_t *mapTiles;
+
 	const char *mapZone;		/**< used to replace textures in base assembly */
 } rendererData_t;
 
