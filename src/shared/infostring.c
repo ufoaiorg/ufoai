@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] key The key you want to extract the value for
  * @sa Info_SetValueForKey
  * @return The value or empty string - never NULL
+ * @todo Not thread safe
  */
 const char *Info_ValueForKey (const char *s, const char *key)
 {
