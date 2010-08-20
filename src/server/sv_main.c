@@ -250,10 +250,9 @@ static void SVC_DirectConnect (struct net_stream *stream)
 		return;
 	}
 
-	strncpy(userinfo, Cmd_Argv(2), sizeof(userinfo) - 1);
-	userinfo[sizeof(userinfo) - 1] = 0;
+	Q_strncpyz(userinfo, Cmd_Argv(2), sizeof(userinfo));
 
-	if (!strlen(userinfo)) {  /* catch empty userinfo */
+	if (userinfo[0] == '\0') {  /* catch empty userinfo */
 		Com_Printf("Empty userinfo from %s\n", peername);
 		NET_OOB_Printf(stream, "print\nConnection refused.\n");
 		return;
@@ -449,7 +448,6 @@ void SV_ReadPacket (struct net_stream *s)
  */
 void SV_NextMapcycle (void)
 {
-	int i;
 	const char *map = NULL, *gameType = NULL;
 	qboolean day = qtrue;
 	char *base;
@@ -460,6 +458,7 @@ void SV_NextMapcycle (void)
 
 	mapcycle = mapcycleList;
 	if (sv.name[0]) {
+		int i;
 		Com_Printf("current map: %s\n", sv.name);
 		for (i = 0; i < mapcycleCount; i++) {
 			/* random maps may have a theme - but that's not stored in sv.name
@@ -841,7 +840,7 @@ void SV_UserinfoChanged (client_t * cl)
 
 	/* msg command */
 	val = Info_ValueForKey(cl->userinfo, "cl_msg");
-	if (strlen(val))
+	if (val[0] != '\0')
 		cl->messagelevel = atoi(val);
 
 	Com_DPrintf(DEBUG_SERVER, "SV_UserinfoChanged: Changed userinfo for player %s\n", cl->name);
