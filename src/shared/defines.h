@@ -160,7 +160,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #if defined(COMPILE_MAP)
   #define MAX_MAPTILES	1
 #elif defined(COMPILE_UFO)
-  #define MAX_MAPTILES	256
+  #define MAX_MAPTILES	64
 #endif
 
 #define MAX_MOD_KNOWN   512
