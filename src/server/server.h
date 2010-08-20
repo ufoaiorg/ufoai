@@ -155,6 +155,8 @@ typedef struct {
 	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
 								 * Set to a huge negative value to send immmediately */
 	SDL_mutex *serverMutex;
+	SDL_Thread *gameThread;
+
 	game_export_t *ge;
 } server_static_t;
 

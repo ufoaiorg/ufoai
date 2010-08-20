@@ -31,7 +31,6 @@
 #include "../ports/system.h"
 #include <SDL.h>
 
-static SDL_Thread *gameThread;
 static void *gameLibrary;
 
 /**
@@ -485,10 +484,11 @@ void SV_ShutdownGameProgs (void)
 	if (!svs.ge)
 		return;
 
-	if (gameThread)
-		SDL_KillThread(gameThread);
-
-	gameThread = NULL;
+	if (svs.gameThread) {
+		Com_Printf("Shutdown the game thread\n");
+		SDL_KillThread(svs.gameThread);
+		svs.gameThread = NULL;
+	}
 
 	svs.ge->Shutdown();
 	SV_UnloadGame();
@@ -651,5 +651,5 @@ void SV_InitGameProgs (void)
 	svs.ge->Init();
 
 	if (sv_threads->integer)
-		gameThread = SDL_CreateThread(SV_RunGameFrameThread, NULL);
+		svs.gameThread = SDL_CreateThread(SV_RunGameFrameThread, NULL);
 }
