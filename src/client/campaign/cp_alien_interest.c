@@ -29,21 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_interest.h"
 
 /**
- * @brief Typical value of the overall alien interest at the end of the game.
- */
-static const int FINAL_OVERALL_INTEREST = 1000;
-
-/**
  * @brief The amount of time (in hours) it takes for the interest to increase by 1. Is later affected by difficulty.
  */
 static const int HOURS_PER_ONE_INTEREST = 22;
-
-/**
- * @brief The probability that any new alien mission will be a non-occurrence mission.
- * @sa CL_ChangeIndividualInterest
- * @sa CP_SelectNewMissionType
- */
-static const float NON_OCCURRENCE_PROBABILITY = 0.3f;
 
 /**
  * @brief Initialize alien interest values and mission cycle
@@ -56,12 +44,11 @@ void CL_ResetAlienInterest (void)
 
 	ccs.lastInterestIncreaseDelay = 0;
 	ccs.lastMissionSpawnedDelay = 0;
-	ccs.overallInterest = 20;
+	ccs.overallInterest = INITIAL_OVERALL_INTEREST;
 
 	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
 		ccs.interest[i] = 0;
-	ccs.interest[INTERESTCATEGORY_NONE] = 6;
-	ccs.interest[INTERESTCATEGORY_RECON] = 20;
+	ccs.interest[INTERESTCATEGORY_RECON] = INITIAL_OVERALL_INTEREST;
 }
 
 /**
@@ -102,15 +89,6 @@ void CL_ChangeIndividualInterest (float percentage, interestCategory_t category)
 			ccs.interest[category] = 0;
 		}
 	}
-
-	/* Set new non-occurence value. The aim is to have roughly a steady number
-	 * of none occurrence during the game, in order to include some randomness.
-	 * If overall alien interest becomes higher than FINAL_OVERALL_INTEREST,
-	 * then the none occurence goes to zero, to make more pressure on the player */
-	if (ccs.overallInterest < FINAL_OVERALL_INTEREST)
-		ccs.interest[INTERESTCATEGORY_NONE] = (int) (NON_OCCURRENCE_PROBABILITY * ccs.overallInterest);
-	else
-		ccs.interest[INTERESTCATEGORY_NONE] = (int) (NON_OCCURRENCE_PROBABILITY * FINAL_OVERALL_INTEREST * exp((ccs.overallInterest - FINAL_OVERALL_INTEREST) / 30));
 }
 
 /**

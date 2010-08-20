@@ -106,6 +106,29 @@ struct uiNode_s; /**< @todo remove this once the uiNode_t usage is cleaned up */
 #define BID_FACTOR 0.9
 #define MAX_PROJECTILESONGEOSCAPE 32
 
+/**
+ * @brief Determines the interest interval for a single campaign
+ */
+#define INITIAL_OVERALL_INTEREST 			20
+#define FINAL_OVERALL_INTEREST 				1000
+
+/**
+ * @brief The length of a single mission spawn cycle
+ */
+#define DELAY_BETWEEN_MISSION_SPAWNING 		3
+
+/**
+ * @brief The minimum and maximum amount of missions per mission cycle.
+ * @note some of the missions can be non-occurrence missions.
+ */
+#define MINIMUM_MISSIONS_PER_CYCLE 			5
+#define MAXIMUM_MISSIONS_PER_CYCLE 			40
+
+/**
+ * @brief The probability that any new alien mission will be a non-occurrence mission.
+ */
+#define NON_OCCURRENCE_PROBABILITY 			0.6
+
 /** possible map types */
 typedef enum mapType_s {
 	MAPTYPE_TERRAIN,

@@ -1645,14 +1645,6 @@ static int CP_SelectNewMissionType (void)
 	return i - 1;
 }
 
-/** @brief Number of days between events are spawned */
-static const int DELAY_BETWEEN_MISSION_SPAWNING = 3;
-
-/**
-* @brief The minimum amount of missions per mission cycle.
-* @note some of the missions can be non-occurrence missions. */
-static const int MINIMUM_MISSIONS_PER_CYCLE = 3;
-
 /**
  * @brief Spawn new missions.
  * @sa CL_CampaignRun
@@ -1660,19 +1652,32 @@ static const int MINIMUM_MISSIONS_PER_CYCLE = 3;
  */
 void CP_SpawnNewMissions (void)
 {
-	int i;
+	int newMissionNum, i;
+	float nonOccurrence;
 
 	ccs.lastMissionSpawnedDelay++;
 
 	if (ccs.lastMissionSpawnedDelay > DELAY_BETWEEN_MISSION_SPAWNING) {
 		/* Select the amount of missions that will be spawned in the next cycle. */
-		const int newMissionNum = max(MINIMUM_MISSIONS_PER_CYCLE, (int) (pow(ccs.overallInterest / 10.0f, 0.6)));
-#if 0
-		Com_Printf("interest = %d, val=%f, new missions = %d\n", ccs.overallInterest, (pow(ccs.overallInterest / 10.0f, 0.6)), newMissionNum);
-#endif
+
+		/* Each mission has a certain probability to not occur. This provides some randomness to the mission density.
+		 * However, once the campaign passes a certain point, this effect rapidly diminishes. This means that by the
+		 * end of the game, ALL missions will spawn, quickly overrunning the player. */
+		if (ccs.overallInterest > FINAL_OVERALL_INTEREST)
+			nonOccurrence = NON_OCCURRENCE_PROBABILITY / pow(((ccs.overallInterest - FINAL_OVERALL_INTEREST / 10) + 1), 2);
+		else
+			nonOccurrence = NON_OCCURRENCE_PROBABILITY;
+
+		/* Calculate the amount of missions to be spawned this cycle.
+		 * Note: This is a function over css.overallInterest. It looks like this:
+		 * http://www.wolframalpha.com/input/?i=Plot%5B40%2B%285-40%29%2A%28%28x-1000%29%2F%2820-1000%29%29%5E2%2C+%7Bx%2C+0%2C+1100%7D%5D
+		 */
+		newMissionNum = (int) (MAXIMUM_MISSIONS_PER_CYCLE + (MINIMUM_MISSIONS_PER_CYCLE - MAXIMUM_MISSIONS_PER_CYCLE) * pow(((ccs.overallInterest - FINAL_OVERALL_INTEREST) / (INITIAL_OVERALL_INTEREST - FINAL_OVERALL_INTEREST)), 2));
+		Com_DPrintf(DEBUG_CLIENT, "interest = %d, new missions = %d\n", ccs.overallInterest, newMissionNum);
 		for (i = 0; i < newMissionNum; i++) {
 			const int type = CP_SelectNewMissionType();
-			CP_CreateNewMission(type, qfalse);
+			if (frand() > nonOccurrence)
+				CP_CreateNewMission(type, qfalse);
 		}
 
 		ccs.lastMissionSpawnedDelay -= DELAY_BETWEEN_MISSION_SPAWNING;
