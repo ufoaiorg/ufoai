@@ -93,8 +93,12 @@ trace_t CM_HintedTransformedBoxTrace (const int tile, const vec3_t start, const 
  * @brief To keep everything totally uniform, bounding boxes are turned into small
  * BSP trees instead of being compared directly.
  */
-static int TR_HeadnodeForBox (mapTile_t *tile, const vec3_t mins, const vec3_t maxs)
+int CM_HeadnodeForBox (int tileIdx, const vec3_t mins, const vec3_t maxs)
 {
+	mapTile_t *tile = &mapTiles[tileIdx];
+
+	assert(tileIdx < numTiles && tileIdx >= 0);
+
 	tile->box_planes[0].dist = maxs[0];
 	tile->box_planes[1].dist = -maxs[0];
 	tile->box_planes[2].dist = mins[0];
@@ -110,16 +114,6 @@ static int TR_HeadnodeForBox (mapTile_t *tile, const vec3_t mins, const vec3_t m
 
 	assert(tile->box_headnode < MAX_MAP_NODES);
 	return tile->box_headnode;
-}
-
-/**
- * @brief To keep everything totally uniform, bounding boxes are turned into small
- * BSP trees instead of being compared directly.
- */
-int CM_HeadnodeForBox (int tile, const vec3_t mins, const vec3_t maxs)
-{
-	assert(tile < numTiles && tile >= 0);
-	return TR_HeadnodeForBox(&mapTiles[tile], mins, maxs);
 }
 
 /* TRACING FUNCTIONS */
