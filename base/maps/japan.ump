@@ -159,9 +159,9 @@ abfv34     +a      abfv12
 tile +fill2
 {
 3 3
-0      abh14      0
-abfv34     +a      abfv12
-0      ab23      0
+0      abh14  0
+abfv34 +a     abfv12
+0      abh23   0
 }
 
 tile +fill3
@@ -169,7 +169,7 @@ tile +fill3
 3 3
 0      abh14      0
 abfv34  +a      abfv12
-0      ab23      0
+0      abh23      0
 }
 
 tile +fill4
@@ -205,6 +205,14 @@ tile +f3
 0      f      0
 abv34  +fa    abv12
 0      abh23  0
+}
+
+tile +f4
+{
+3 3
+0      f      0
+ba34   +f    abv12
+0      f      0
 }
 
 ///*** gate
@@ -305,7 +313,17 @@ bg     +gf    abv12
 0      abh23      0
 }
 
+///** tilesets
+tileset fillers {
++fill2
++fill3
++fill4
+}
 
+tileset fences {
++f2
++f4
+}
 
 // ########################################
 // ########### Maps for the game ##########
@@ -341,9 +359,7 @@ title "_Small eastern park."
 +p_bl     "0 5"
 +p_h      "0 10"
 +p_v      "0 10"
-+fill2    "0 5"
-+fill3    "0 5"
-+fill4    "0 5"
+tileset fillers "0 10"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
 }
@@ -371,9 +387,7 @@ title         "_Harvester"
 +p_h          "0 10"
 +p_v          "0 10"
 +fill1        "0 1"
-+fill2        "0 5"
-+fill3        "0 5"
-+fill4        "0 5"
+tileset fillers      "0 12"
 *rm_drop +craft_drop_firebird "1 1"
 *rm_ufo +craft_ufo_harvester "1 1"
 }
