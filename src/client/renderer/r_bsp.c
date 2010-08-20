@@ -93,13 +93,13 @@ qboolean R_CullSphere (const vec3_t centre, const float radius, const unsigned i
 qboolean R_CullBspModel (const entity_t *e)
 {
 	vec3_t mins, maxs;
-	int i;
 
 	/* no surfaces */
 	if (!e->model->bsp.nummodelsurfaces)
 		return qtrue;
 
 	if (e->isOriginBrushModel) {
+		int i;
 		for (i = 0; i < 3; i++) {
 			mins[i] = e->origin[i] - e->model->radius;
 			maxs[i] = e->origin[i] + e->model->radius;

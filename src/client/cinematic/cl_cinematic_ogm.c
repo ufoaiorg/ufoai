@@ -521,6 +521,7 @@ static qboolean CIN_OGM_LoadFrame (cinematic_t *cin)
 	return !anyDataTransferred;
 }
 
+#ifdef HAVE_XVID_H
 /** @brief from VLC ogg.c (http://trac.videolan.org/vlc/browser/modules/demux/ogg.c) */
 typedef struct
 {
@@ -536,7 +537,6 @@ typedef struct
 
 	ogg_int32_t buffersize;
 	ogg_int16_t bits_per_sample;
-
 	union
 	{
 		struct
@@ -553,6 +553,7 @@ typedef struct
 		} stream_header_audio;
 	} sh;
 } stream_header_t;
+#endif
 
 /**
  * @return 0 -> no problem

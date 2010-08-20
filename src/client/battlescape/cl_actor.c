@@ -1244,7 +1244,7 @@ qboolean CL_ActorMouseTrace (void)
 	float nDotP2minusP1;
 	vec3_t forward, right, up, stop;
 	vec3_t from, end;
-	vec3_t mapNormal, P3, P2minusP1, P3minusP1;
+	vec3_t mapNormal, P3, P2minusP1;
 	vec3_t pA, pB, pC;
 	pos3_t testPos;
 
@@ -1298,7 +1298,7 @@ qboolean CL_ActorMouseTrace (void)
 	/* calculate intersection directly if angle is not parallel to the map plane */
 	if (nDotP2minusP1 > 0.01 || nDotP2minusP1 < -0.01) {
 		float u;
-		vec3_t dir;
+		vec3_t dir, P3minusP1;
 
 		VectorSubtract(P3, from, P3minusP1);
 		u = DotProduct(mapNormal, P3minusP1) / nDotP2minusP1;
@@ -1524,7 +1524,6 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	vec3_t start, end;
 	vec3_t dir, mid, temp;
 	trace_t tr;
-	float d;
 	qboolean crossNo;
 	le_t *le = NULL;
 	le_t *target = NULL;
@@ -1575,7 +1574,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	tr = CL_Trace(temp, mid, vec3_origin, vec3_origin, selActor, target, MASK_SHOT, cl.mapMaxLevel - 1);
 
 	if (tr.fraction < 1.0) {
-		d = VectorDist(temp, mid);
+		const float d = VectorDist(temp, mid);
 		VectorMA(start, tr.fraction * d, dir, mid);
 		crossNo = qtrue;
 	}

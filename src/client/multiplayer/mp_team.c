@@ -265,7 +265,7 @@ void MP_SaveTeamMultiplayer_f (void)
 		index = atoi(Cmd_Argv(1));
 
 		name = Cvar_GetString(va("mn_slot%i", index));
-		if (!strlen(name))
+		if (name[0] == '\0')
 			name = _("NewTeam");
 
 		/* save */

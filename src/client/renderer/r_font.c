@@ -740,15 +740,16 @@ void R_FontInit (void)
 
 void R_FontRegister (const char *name, int size, const char *path, const char *style)
 {
-	int renderstyle = 0;		/* NORMAL is standard */
-	int i;
+	int renderstyle = TTF_STYLE_NORMAL;		/* NORMAL is standard */
 
-	if (style && style[0] != '\0')
+	if (style && style[0] != '\0') {
+		int i;
 		for (i = 0; i < NUM_FONT_STYLES; i++)
 			if (!Q_strcasecmp(fontStyle[i].name, style)) {
 				renderstyle = fontStyle[i].renderStyle;
 				break;
 			}
+	}
 
 	R_FontAnalyze(name, path, renderstyle, size);
 }

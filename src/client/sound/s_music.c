@@ -212,7 +212,6 @@ static void M_RandomTrack_f (void)
 {
 	const char *filename;
 	char findname[MAX_OSPATH];
-	int randomID;
 	const char *musicTrack;
 
 	if (!s_env.initialized)
@@ -220,7 +219,7 @@ static void M_RandomTrack_f (void)
 
 	musicTrackCount = FS_BuildFileList("music/*.ogg");
 	if (musicTrackCount) {
-		randomID = rand() % musicTrackCount;
+		int randomID = rand() % musicTrackCount;
 		Com_DPrintf(DEBUG_SOUND, "M_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
 
 		while ((filename = FS_NextFileFromFileList("music/*.ogg")) != NULL) {

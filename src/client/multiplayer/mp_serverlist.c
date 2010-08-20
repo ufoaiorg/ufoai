@@ -271,7 +271,6 @@ static char userInfoText[256];
 void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 {
 	const char *value;
-	int team;
 	const char *token;
 	char str[MAX_INFO_STRING];
 	char buf[256];
@@ -329,6 +328,7 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 		UI_RegisterText(TEXT_STANDARD, serverInfoText);
 		userInfoText[0] = '\0';
 		do {
+			int team;
 			token = Com_Parse(&users);
 			if (!users)
 				break;
@@ -511,7 +511,7 @@ static void CL_ServerInfo_f (void)
  */
 static void CL_ServerListClick_f (void)
 {
-	int num, i;
+	int num;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
@@ -520,7 +520,8 @@ static void CL_ServerListClick_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	UI_RegisterText(TEXT_STANDARD, serverInfoText);
-	if (num >= 0 && num < serverListLength)
+	if (num >= 0 && num < serverListLength) {
+		int i;
 		for (i = 0; i < serverListLength; i++)
 			if (serverList[i].pinged && serverList[i].serverListPos == num) {
 				/* found the server - grab the infos for this server */
@@ -528,6 +529,7 @@ static void CL_ServerListClick_f (void)
 				Cbuf_AddText(va("server_info %s %s;", serverList[i].node, serverList[i].service));
 				return;
 			}
+	}
 }
 
 /** this is true if pingservers was already executed */
@@ -543,12 +545,11 @@ static int lastServerQuery = 0;
  */
 void CL_PingServers_f (void)
 {
-	int i;
-
 	selectedServer = NULL;
 
 	/* refresh the list */
 	if (Cmd_Argc() == 2) {
+		int i;
 		/* reset current list */
 		serverText[0] = 0;
 		serversAlreadyQueried = qfalse;
