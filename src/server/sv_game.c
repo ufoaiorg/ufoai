@@ -130,8 +130,7 @@ static void SV_SetModel (edict_t * ent, const char *name)
 
 	/* if it is an inline model, get the size information for it */
 	if (name[0] == '*') {
-		cBspModel_t *mod = CM_InlineModel(name);
-		assert(mod);
+		const cBspModel_t *mod = CM_InlineModel(name);
 		/* Copy model mins and maxs to entity */
 		VectorCopy(mod->mins, ent->mins);
 		VectorCopy(mod->maxs, ent->maxs);
@@ -540,8 +539,7 @@ void SV_InitGameProgs (void)
 	game_import_t import;
 
 	/* unload anything we have now */
-	if (svs.ge)
-		SV_ShutdownGameProgs();
+	SV_ShutdownGameProgs();
 
 	/* load a new game dll */
 	import.BroadcastPrintf = SV_BroadcastPrintf;

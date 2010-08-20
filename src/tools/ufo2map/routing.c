@@ -26,10 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "bsp.h"
-#include "../../shared/shared.h"
-#include "../../common/tracing.h"
 #include "../../common/routing.h"
-
 
 static const vec3_t move_vec[4] = {
 	{ UNIT_SIZE,          0, 0},

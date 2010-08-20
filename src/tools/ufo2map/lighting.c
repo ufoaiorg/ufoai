@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "lighting.h"
 #include "map.h"
 #include "bsp.h"
-#include "../../common/tracing.h"
 
 void LightWorld (void)
 {

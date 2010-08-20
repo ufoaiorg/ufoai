@@ -466,7 +466,6 @@ static void CL_SpawnSoldiers_f (void)
  */
 void CL_RequestNextDownload (void)
 {
-	unsigned mapChecksum = 0;
 	unsigned scriptChecksum = 0;
 	const char *buf;
 
@@ -502,7 +501,7 @@ void CL_RequestNextDownload (void)
 			scriptChecksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
 		FS_GetFileData(NULL);
 
-		CM_LoadMap(cl.configstrings[CS_TILES], day, cl.configstrings[CS_POSITIONS], &mapChecksum, &cl.mapData);
+		CM_LoadMap(cl.configstrings[CS_TILES], day, cl.configstrings[CS_POSITIONS], &cl.mapData);
 		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM]
 		 || !*cl.configstrings[CS_UFOCHECKSUM] || !*cl.configstrings[CS_OBJECTAMOUNT]) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers"), UFO_VERSION);
@@ -510,10 +509,10 @@ void CL_RequestNextDownload (void)
 			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers", UFO_VERSION);
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
-		} else if (mapChecksum != atoi(cl.configstrings[CS_MAPCHECKSUM])) {
+		} else if (cl.mapData.mapChecksum != atoi(cl.configstrings[CS_MAPCHECKSUM])) {
 			UI_Popup(_("Error"), _("Local map version differs from server"));
 			Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%s'",
-				mapChecksum, cl.configstrings[CS_MAPCHECKSUM]);
+				cl.mapData.mapChecksum, cl.configstrings[CS_MAPCHECKSUM]);
 			return;
 		/* amount of objects from script files doensn't match */
 		} else if (csi.numODs != atoi(cl.configstrings[CS_OBJECTAMOUNT])) {

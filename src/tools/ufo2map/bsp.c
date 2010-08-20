@@ -28,6 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 int entity_num;
 
 /**
+ * @note used as a shortcut so the tile being processed does not need to be repeatedly passed between functions.
+ */
+TR_TILE_TYPE *curTile;
+
+/**
  * @sa ProcessModels
  */
 static void ProcessWorldModel (void)

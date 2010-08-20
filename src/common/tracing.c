@@ -33,31 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* static */
 static cBspSurface_t nullsurface;
 
-/**
- * @note used as a shortcut so the tile being processed does not need to be repeatedly passed between functions.
- * @sa TR_MakeTracingNode (tracing.c)
- * @sa TR_BuildTracingNode_r (tracing.c)
- * @sa TR_TestLine_r (tracing.c)
- * @sa TR_TestLineDist_r (tracing.c)
- * @sa TR_TestLineMask (tracing.c)
- * @sa TR_InitBoxHull (tracing.c)
- * @sa TR_TestLineDM (tracing.c)
- * @sa CMod_LoadSubmodels (cmodel.c)
- * @sa CMod_LoadSurfaces (cmodel.c)
- * @sa CMod_LoadNodes (cmodel.c)
- * @sa CMod_LoadBrushes (cmodel.c)
- * @sa CMod_LoadLeafs (cmodel.c)
- * @sa CMod_LoadPlanes (cmodel.c)
- * @sa CMod_LoadLeafBrushes (cmodel.c)
- * @sa CMod_LoadBrushSides (cmodel.c)
- * @sa CM_MakeTracingNodes (cmodel.c)
- * @sa CM_InitBoxHull (cmodel.c)
- * @sa CM_CompleteBoxTrace (cmodel.c)
- * @sa CMod_LoadRouting (cmodel.c)
- * @sa CM_AddMapTile (cmodel.c)
- */
-TR_TILE_TYPE *curTile;
-
 /** @note loaded map tiles with this assembly.  ufo2map has exactly 1.*/
 TR_TILE_TYPE mapTiles[MAX_MAPTILES];
 
@@ -87,7 +62,7 @@ TRACING NODES
 /**
  * @brief Converts the disk node structure into the efficient tracing structure for LineTraces
  */
-static void TR_MakeTracingNode (int nodenum)
+static void TR_MakeTracingNode (TR_TILE_TYPE *tile, int nodenum)
 {
 	tnode_t *t;				/* the tracing node to build */
 	TR_PLANE_TYPE *plane;
@@ -96,11 +71,11 @@ static void TR_MakeTracingNode (int nodenum)
 
 	t = tnode_p++;
 
-	node = curTile->nodes + nodenum;
+	node = tile->nodes + nodenum;
 #ifdef COMPILE_UFO
 	plane = node->plane;
 #else
-	plane = curTile->planes + node->planenum;
+	plane = tile->planes + node->planenum;
 #endif
 
 	t->type = plane->type;
@@ -110,19 +85,19 @@ static void TR_MakeTracingNode (int nodenum)
 	for (i = 0; i < 2; i++) {
 		if (node->children[i] < 0) {	/* is it a leaf ? */
 			const int index = -(node->children[i]) - 1;
-			const TR_LEAF_TYPE *leaf = &curTile->leafs[index];
+			const TR_LEAF_TYPE *leaf = &tile->leafs[index];
 			const int contentFlags = leaf->contentFlags & ~(1 << 31);
 			if ((contentFlags & (CONTENTS_SOLID | MASK_CLIP)) && !(contentFlags & CONTENTS_PASSABLE))
 				t->children[i] = -node->children[i] | (1 << 31);	/* mark as 'blocking' */
 			else
 				t->children[i] = (1 << 31);				/* mark as 'empty leaf' */
 		} else {										/* not a leaf */
-			t->children[i] = tnode_p - curTile->tnodes;
-			if (t->children[i] > curTile->numnodes) {
+			t->children[i] = tnode_p - tile->tnodes;
+			if (t->children[i] > tile->numnodes) {
 				Com_Printf("Exceeded allocated memory for tracing structure (%i > %i)\n",
-						t->children[i], curTile->numnodes);
+						t->children[i], tile->numnodes);
 			}
-			TR_MakeTracingNode(node->children[i]);		/* recurse further down the tree */
+			TR_MakeTracingNode(tile, node->children[i]);		/* recurse further down the tree */
 		}
 	}
 }
@@ -131,25 +106,25 @@ static void TR_MakeTracingNode (int nodenum)
  * @sa CMod_LoadNodes
  * @sa R_ModLoadNodes
  */
-void TR_BuildTracingNode_r (int node, int level)
+void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, int node, int level)
 {
-	assert(node < curTile->numnodes + 6); /* +6 => bbox */
+	assert(node < tile->numnodes + 6); /* +6 => bbox */
 
 	/**
 	 *  We are checking for a leaf in the tracing node.  For ufo2map, planenum == PLANENUMLEAF.
 	 *  For the game, plane will be NULL.
 	 */
 #ifdef COMPILE_UFO
-	if (!curTile->nodes[node].plane) {
+	if (!tile->nodes[node].plane) {
 #else
-	if (curTile->nodes[node].planenum == PLANENUM_LEAF) {
+	if (tile->nodes[node].planenum == PLANENUM_LEAF) {
 #endif
 		TR_NODE_TYPE *n;
 		tnode_t *t;
 		vec3_t c0maxs, c1mins;
 		int i;
 
-		n = &curTile->nodes[node];
+		n = &tile->nodes[node];
 
 		/* alloc new node */
 		t = tnode_p++;
@@ -162,15 +137,15 @@ void TR_BuildTracingNode_r (int node, int level)
 			Sys_Error("Unexpected leaf");
 #endif
 
-		VectorCopy(curTile->nodes[n->children[0]].maxs, c0maxs);
-		VectorCopy(curTile->nodes[n->children[1]].mins, c1mins);
+		VectorCopy(tile->nodes[n->children[0]].maxs, c0maxs);
+		VectorCopy(tile->nodes[n->children[1]].mins, c1mins);
 
 #if 0
 		Com_Printf("(%i %i : %i %i) (%i %i : %i %i)\n",
-			(int)curTile->nodes[n->children[0]].mins[0], (int)curTile->nodes[n->children[0]].mins[1],
-			(int)curTile->nodes[n->children[0]].maxs[0], (int)curTile->nodes[n->children[0]].maxs[1],
-			(int)curTile->nodes[n->children[1]].mins[0], (int)curTile->nodes[n->children[1]].mins[1],
-			(int)curTile->nodes[n->children[1]].maxs[0], (int)curTile->nodes[n->children[1]].maxs[1]);
+			(int)tile->nodes[n->children[0]].mins[0], (int)tile->nodes[n->children[0]].mins[1],
+			(int)tile->nodes[n->children[0]].maxs[0], (int)tile->nodes[n->children[0]].maxs[1],
+			(int)tile->nodes[n->children[1]].mins[0], (int)tile->nodes[n->children[1]].mins[1],
+			(int)tile->nodes[n->children[1]].maxs[0], (int)tile->nodes[n->children[1]].maxs[1]);
 #endif
 
 		for (i = 0; i < 2; i++)
@@ -180,10 +155,10 @@ void TR_BuildTracingNode_r (int node, int level)
 				VectorSet(t->normal, i, (i ^ 1), 0);
 				t->dist = (c0maxs[i] + c1mins[i]) / 2;
 
-				t->children[1] = tnode_p - curTile->tnodes;
-				TR_BuildTracingNode_r(n->children[0], level);
-				t->children[0] = tnode_p - curTile->tnodes;
-				TR_BuildTracingNode_r(n->children[1], level);
+				t->children[1] = tnode_p - tile->tnodes;
+				TR_BuildTracingNode_r(tile, n->children[0], level);
+				t->children[0] = tnode_p - tile->tnodes;
+				TR_BuildTracingNode_r(tile, n->children[1], level);
 				return;
 			}
 
@@ -191,17 +166,17 @@ void TR_BuildTracingNode_r (int node, int level)
 		t->type = PLANE_NONE;
 
 		for (i = 0; i < 2; i++) {
-			t->children[i] = tnode_p - curTile->tnodes;
-			TR_BuildTracingNode_r(n->children[i], level);
+			t->children[i] = tnode_p - tile->tnodes;
+			TR_BuildTracingNode_r(tile, n->children[i], level);
 		}
 	} else {
 		/* Make a lookup table for TR_CompleteBoxTrace */
-		curTile->cheads[curTile->numcheads].cnode = node;
-		curTile->cheads[curTile->numcheads].level = level;
-		curTile->numcheads++;
-		assert(curTile->numcheads <= MAX_MAP_NODES);
+		tile->cheads[tile->numcheads].cnode = node;
+		tile->cheads[tile->numcheads].level = level;
+		tile->numcheads++;
+		assert(tile->numcheads <= MAX_MAP_NODES);
 		/* Make the tracing node. */
-		TR_MakeTracingNode(node);
+		TR_MakeTracingNode(tile, node);
 	}
 }
 

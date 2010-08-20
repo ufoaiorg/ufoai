@@ -61,7 +61,7 @@ void MakeTracingNodes (int levels)
 		curTile->theadlevel[curTile->numtheads] = i;
 		curTile->numtheads++;
 		assert(curTile->numtheads < LEVEL_MAX);
-		TR_BuildTracingNode_r(curTile->models[i].headnode, i);
+		TR_BuildTracingNode_r(curTile, curTile->models[i].headnode, i);
 	}
 }
 

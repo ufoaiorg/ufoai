@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "lighting.h"
-#include "../../common/tracing.h"
+#include "bsp.h"
 
 #define	sun_angles			config.sun_angles[config.compile_for_day]
 #define	sun_normal			config.sun_normal[config.compile_for_day]

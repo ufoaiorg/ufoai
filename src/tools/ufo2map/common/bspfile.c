@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "shared.h"
 #include "bspfile.h"
 #include "scriplib.h"
-#include "../../../common/tracing.h"
-
+#include "../bsp.h"
 
 /**
  * @brief Compress the routing data of a map

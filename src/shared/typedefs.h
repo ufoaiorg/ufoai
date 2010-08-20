@@ -195,6 +195,8 @@ typedef struct mapData_s {
 	/** @note holds the number of inline entities, e.g. ET_DOOR */
 	int numInline;
 
+	unsigned mapChecksum;
+
 	/** @brief Used to track where rerouting needs to occur.
 	 * @todo not threadsafe */
 	byte reroute[ACTOR_MAX_SIZE][PATHFINDING_WIDTH][PATHFINDING_WIDTH];

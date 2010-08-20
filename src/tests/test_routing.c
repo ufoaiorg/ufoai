@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "test_shared.h"
 
 #include "../common/common.h"
-#include "../common/routing.h"
-#include "../common/tracing.h"
 #include "../common/cmodel.h"
 
 /**
@@ -55,12 +53,11 @@ static mapData_t mapData;
 
 static void testConnection (void)
 {
-	unsigned int checksum = 0;
 	/**
 	 * @todo use a special testmap
 	 * @todo implement the test
 	 */
-	CM_LoadMap("fueldump", qtrue, "", &checksum, &mapData);
+	CM_LoadMap("fueldump", qtrue, "", &mapData);
 }
 
 int UFO_AddRoutingTests (void)

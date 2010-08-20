@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../common/tracing.h"
 
+extern TR_TILE_TYPE *curTile;
+
 typedef struct bspbrush_s {
 	struct bspbrush_s	*next;
 	vec3_t	mins, maxs;

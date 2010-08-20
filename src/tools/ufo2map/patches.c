@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "lighting.h"
-#include "../../common/tracing.h"
+#include "bsp.h"
 #include "../../shared/images.h"
 
 static vec3_t texture_reflectivity[MAX_MAP_TEXINFO];

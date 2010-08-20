@@ -93,7 +93,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	if (param)
 		Q_strncpyz(sv.assembly, param, sizeof(sv.assembly));
 	else
-		*sv.assembly = '\0';
+		sv.assembly[0] = '\0';
 
 	/* leave slots at start for clients only */
 	for (i = 0; i < sv_maxclients->integer; i++) {
@@ -117,10 +117,10 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 			sv.configstrings[CS_POSITIONS][0] = 0;
 	}
 
-	CM_LoadMap(map, day, pos, &checksum, &sv.mapData);
+	CM_LoadMap(map, day, pos, &sv.mapData);
 
-	Com_Printf("checksum for the map '%s': %u\n", server, checksum);
-	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", checksum);
+	Com_Printf("checksum for the map '%s': %u\n", server, sv.mapData.mapChecksum);
+	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", sv.mapData.mapChecksum);
 
 	checksum = 0;
 	while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)

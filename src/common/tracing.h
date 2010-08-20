@@ -98,7 +98,6 @@ typedef struct box_s {
 BOX AND LINE TRACING
 ==============================================================*/
 
-extern TR_TILE_TYPE *curTile;
 extern TR_TILE_TYPE mapTiles[MAX_MAPTILES];
 extern int numTiles;
 extern tnode_t *tnode_p;
@@ -106,7 +105,7 @@ extern tnode_t *tnode_p;
 int TR_BoxOnPlaneSide(const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE *plane);
 int TR_HeadnodeForBox(mapTile_t *tile, const vec3_t mins, const vec3_t maxs);
 
-void TR_BuildTracingNode_r(int node, int level);
+void TR_BuildTracingNode_r(TR_TILE_TYPE *tile, int node, int level);
 
 trace_t TR_HintedTransformedBoxTrace(TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const vec3_t origin, const vec3_t angles, const vec3_t rmaShift, const float fraction);
 #define TR_TransformedBoxTrace(tile, start, end, mins, maxs, headnode, brushmask, brushreject, origin, angles) TR_HintedTransformedBoxTrace(tile, start, end, mins, maxs, headnode, brushmask, brushreject, origin, angles, vec3_origin, 1.0f);
