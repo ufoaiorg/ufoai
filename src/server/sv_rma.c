@@ -351,7 +351,7 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 
 	token = Com_EParse(text, errhead, filename);
 	if (!*text || *token != '{')
-		Com_Error(ERR_DROP, "Invalid assembly definition '%s' - invalid token '%s'", a->id, token);
+		Com_Error(ERR_DROP, "Invalid assembly definition '%s' - invalid token '%s' (%s)", a->id, token, filename);
 
 	do {
 		/* get tile name */
@@ -427,7 +427,7 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 			if (t != NULL) {
 				const ptrdiff_t i = t - map->mTile;
 				if (a->numFixed >= MAX_FIXEDTILES)
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Too many fixed tiles in assembly '%s'", a->id);
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Too many fixed tiles in assembly '%s' (%s)", a->id, filename);
 
 				/* get coordinates */
 				token = Com_EParse(text, errhead, filename);
@@ -436,11 +436,11 @@ static qboolean SV_ParseAssembly (mapInfo_t *map, const char *filename, const ch
 
 				sscanf(token, "%i %i", &x, &y);
 				if (x < 0 || x >= MAX_RANDOM_MAP_WIDTH) {
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error, invalid fixed coordinates given for x (%i) boundaries are: [0:%i].",
-							x, MAX_RANDOM_MAP_WIDTH - 1);
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error, invalid fixed coordinates given for x (%i) boundaries are: [0:%i] (%s).",
+							x, MAX_RANDOM_MAP_WIDTH - 1, filename);
 				} else if (y < 0 || y >= MAX_RANDOM_MAP_HEIGHT) {
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error, invalid fixed coordinates given for y (%i) - boundaries are: [0:%i].",
-							y, MAX_RANDOM_MAP_HEIGHT - 1);
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error, invalid fixed coordinates given for y (%i) - boundaries are: [0:%i] (%s).",
+							y, MAX_RANDOM_MAP_HEIGHT - 1, filename);
 				}
 				a->fX[a->numFixed] = x;
 				a->fY[a->numFixed] = y;
