@@ -326,7 +326,7 @@ static void G_ActorRevitalise (edict_t *ent)
 
 void G_ActorCheckRevitalise (edict_t *ent)
 {
-	if (ent->STUN < ent->HP) {
+	if (G_IsStunned(ent) && ent->STUN < ent->HP) {
 		G_ActorRevitalise(ent);
 		G_EventActorRevitalise(ent);
 		G_SendStats(ent);
