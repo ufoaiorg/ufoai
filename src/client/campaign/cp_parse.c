@@ -194,7 +194,6 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 
 /**
  * @brief This function parses a list of items that should be set to researched = true after campaign start
- * @todo Implement the use of this function
  */
 static void CL_ParseResearchedCampaignItems (const char *name, const char **text)
 {
