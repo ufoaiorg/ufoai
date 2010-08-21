@@ -294,6 +294,8 @@ def gen(args):
 
 
 def main(argv=None):
+    print "map-get version " + __version__
+
     global displayDownloadStatus
     global displayAlreadyUpToDate
     commands = {'upgrade': upgrade,
