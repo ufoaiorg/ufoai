@@ -6575,6 +6575,10 @@ base/textures/tex_ufo/ufo2_medic01.png |  | "SparX" Beyeler
 base/textures/tex_ufo/ufo2_medic02.png |  | "SparX" Beyeler
 base/textures/tex_vehicles/car_e0.png | GNU General Public License 2.0 or later
 base/textures/tex_vehicles/car_e1.png | GNU General Public License 2.0 or later
+base/textures/tex_vehicles/gabstap_c.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_vehicles/gabstap_c_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_vehicles/gabstap_d.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_vehicles/gabstap_d_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_vehicles/tire_001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/tire_tread001.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_vehicles/train_a.png | GNU General Public License 2.0 or later | Martin Gerhardy | data_source/images/train_a.xcf
