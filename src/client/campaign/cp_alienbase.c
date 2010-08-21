@@ -124,9 +124,7 @@ void AB_DestroyBase (alienBase_t *base)
  */
 alienBase_t* AB_GetNext (alienBase_t *lastBase)
 {
-	if (ccs.alienBases)
-		return (alienBase_t*)LIST_GetNext(ccs.alienBases, lastBase);
-	return NULL;
+	return (alienBase_t*)LIST_GetNext(ccs.alienBases, lastBase);
 }
 
 /**
