@@ -372,7 +372,7 @@ void UI_Draw (void)
 	}
 
 	/* draw a special notice */
-	if (CL_Milliseconds() < noticeTime)
+	if (noticeWindow != NULL && CL_Milliseconds() < noticeTime)
 		UI_DrawNotice();
 
 	/* unactive notice */
