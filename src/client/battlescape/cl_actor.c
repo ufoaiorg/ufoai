@@ -335,15 +335,16 @@ void CL_ActorAddToTeamList (le_t * le)
 	if (!le || le->team != cls.team || le->pnum != cl.pnum || LE_IsDead(le))
 		return;
 
-	/* check list length */
-	if (cl.numTeamList >= size)
-		return;
-
 	/* check list for that actor */
 	actorIdx = CL_ActorGetNumber(le);
 
 	/* add it */
 	if (actorIdx == -1) {
+		/* check list length */
+		if (cl.numTeamList >= size) {
+			Com_Printf("Too many actors on the teamlist\n");
+			return;
+		}
 		actorIdx = cl.numTeamList;
 		le->pathMap = Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
 		cl.teamList[cl.numTeamList] = le;
@@ -351,6 +352,8 @@ void CL_ActorAddToTeamList (le_t * le)
 		cl.numTeamList++;
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
+	} else {
+		UI_ExecuteConfunc("hudenable %i", actorIdx);
 	}
 }
 
@@ -381,6 +384,10 @@ void CL_ActorRemoveFromTeamList (le_t * le)
 				CL_ActorCleanup(le);
 				/* remove from list */
 				cl.teamList[i] = NULL;
+			} else {
+				/** @todo why the heck is that needed? the inventory was already dropped to floor. */
+				le->left = le->right = le->extension = le->headgear = NONE;
+				cls.i.DestroyInventory(&cls.i, &le->i);
 			}
 
 			/* disable hud button */
@@ -1406,7 +1413,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 		return qfalse;
 
 	/* add the weapons to the actor's hands */
-	if (!LE_IsDead(le)) {
+	if (LE_IsLivingActor(le)) {
 		const qboolean addLeftHandWeapon = CL_AddActorWeapon(le->left);
 		const qboolean addRightHandWeapon = CL_AddActorWeapon(le->right);
 		/* add left hand weapon */

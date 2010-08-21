@@ -361,7 +361,7 @@ void G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 	/* send death */
 	G_EventActorDie(ent);
 
-	/* handle inventory - drop everything to floor edict (but not the armour) */
+	/* handle inventory - drop everything but the armour to the floor */
 	G_InventoryToFloor(ent);
 
 	/* check if the player appears/perishes, seen from other teams */
@@ -373,6 +373,9 @@ void G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 
 	/* calc new vis for this player */
 	G_CheckVisTeamAll(ent->team, qfalse, attacker);
+
+	/* unlink the floor container */
+	FLOOR(ent) = NULL;
 }
 
 /**
