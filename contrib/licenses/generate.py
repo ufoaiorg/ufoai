@@ -101,7 +101,7 @@ def fileNameFilter(fname):
 
 def generateGraph(d):
     data = {}
-    print 'Ploting'
+    print 'Ploting "%s"' % d
     times = []
 
     if not os.path.exists('licenses/history%s' % d):
