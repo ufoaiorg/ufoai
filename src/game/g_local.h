@@ -592,7 +592,6 @@ struct player_s {
 	/* known to server */
 	qboolean inuse;
 	int num;
-	int ping;
 	qboolean isReady;			/**< the player agreed to start the party */
 
 	/* private to game */
