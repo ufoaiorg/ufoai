@@ -52,8 +52,6 @@ void S_FreeChannel (int c)
 	memset(&s_env.channels[c], 0, sizeof(s_env.channels[0]));
 }
 
-#define DISTANCE_SCALE snd_distance_scale->value
-
 /**
  * @brief Set distance and stereo panning for the specified channel.
  * @param[in] ch The channel to perform the spatialization for.
@@ -67,7 +65,7 @@ void S_SpatializeChannel (const s_channel_t *ch)
 	VectorCopy(ch->org, origin);
 	VectorSubtract(origin, cl.cam.camorg, delta);
 
-	dist = VectorNormalize(delta) * DISTANCE_SCALE * ch->atten;
+	dist = VectorNormalize(delta) * snd_distance_scale->value * ch->atten;
 
 	if (dist > 255.0)  /* clamp to max */
 		dist = 255.0;

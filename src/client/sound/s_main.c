@@ -202,7 +202,7 @@ void S_Init (void)
 		return;
 	}
 
-	snd_distance_scale = Cvar_Get("snd_distance_scale", "0.5", 0, "Sound distance scale");
+	snd_distance_scale = Cvar_Get("snd_distance_scale", "0.1", 0, "Sound distance scale");
 	snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
 	/* set volumes to be changed so they are applied again for next sound/music playing */
