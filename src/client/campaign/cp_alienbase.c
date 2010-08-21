@@ -377,7 +377,7 @@ void AB_InitStartup (void)
  */
 qboolean AB_LoadXML (mxml_node_t *p)
 {
-	int i; /*< this is for old saves now only */
+	int i; /**< @todo this is for old saves now only */
 	mxml_node_t *n, *s;
 
 	n = mxml_GetNode(p, SAVE_ALIENBASE_ALIENBASES);
