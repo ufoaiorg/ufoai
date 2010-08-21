@@ -109,7 +109,7 @@ typedef struct seq2D_s {
 	vec2_t pos, speed;
 	vec2_t size, enlarge;
 	vec4_t color, fade, bgcolor;
-	byte align;
+	align_t align;
 	qboolean relativePos;	/**< useful for translations when sentence length may differ */
 } seq2D_t;
 

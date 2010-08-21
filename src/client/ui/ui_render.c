@@ -249,10 +249,10 @@ void UI_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, int
  * @todo test the code for multiline?
  * @todo fix problem with truncation (maybe problem into UI_DrawString)
  */
-int UI_DrawStringInBox (const char *fontID, int align, int x, int y, int width, int height, const char *text, longlines_t method)
+int UI_DrawStringInBox (const char *fontID, align_t align, int x, int y, int width, int height, const char *text, longlines_t method)
 {
-	const int horizontalAlign = align % 3; /* left, center, right */
-	const int verticalAlign = align / 3;  /* top, center, bottom */
+	const align_t horizontalAlign = align % 3; /* left, center, right */
+	const align_t verticalAlign = align / 3;  /* top, center, bottom */
 
 	/* position of the text for UI_DrawString */
 	const int xx = x + ((width * horizontalAlign) >> 1);
@@ -261,11 +261,11 @@ int UI_DrawStringInBox (const char *fontID, int align, int x, int y, int width, 
 	return UI_DrawString(fontID, align, xx, yy, xx, width, 0, text, 0, 0, NULL, qfalse, method);
 }
 
-int UI_DrawString (const char *fontID, int align, int x, int y, int absX, int maxWidth,
+int UI_DrawString (const char *fontID, align_t align, int x, int y, int absX, int maxWidth,
 		int lineHeight, const char *c, int boxHeight, int scrollPos, int *curLine, qboolean increaseLine, longlines_t method)
 {
 	const uiFont_t *font = UI_GetFontByID(fontID);
-	const int verticalAlign = align / 3;  /* top, center, bottom */
+	const align_t verticalAlign = align / 3;  /* top, center, bottom */
 	int lines;
 
 	if (!font)

@@ -286,7 +286,7 @@ static void UI_PushDropDownWindow_f (void)
 	vec2_t source;
 	vec2_t destination;
 	uiNode_t *node;
-	byte pointPosition;
+	align_t pointPosition;
 	size_t writtenBytes;
 	int result;
 

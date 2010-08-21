@@ -49,7 +49,7 @@ void UI_NodeSetSize(uiNode_t* node, vec2_t size);
 void UI_GetNodeAbsPos(const struct uiNode_s* node, vec2_t pos);
 void UI_NodeAbsoluteToRelativePos(const struct uiNode_s* node, int *x, int *y);
 void UI_NodeRelativeToAbsolutePoint(const uiNode_t* node, vec2_t pos);
-void UI_NodeGetPoint(const uiNode_t* node, vec2_t pos, byte pointDirection);
+void UI_NodeGetPoint(const uiNode_t* node, vec2_t pos, align_t pointDirection);
 
 /* navigation */
 struct uiNode_s *UI_GetNode(const struct uiNode_s* const node, const char *name);

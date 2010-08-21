@@ -35,8 +35,8 @@ const image_t *UI_DrawNormImageByName(float x, float y, float w, float h, float 
 
 void UI_DrawPanel(const vec2_t pos, const vec2_t size, const char *texture, int texX, int texY, const int panelDef[6]);
 void UI_DrawFill(int x, int y, int w, int h, const vec4_t color);
-int UI_DrawStringInBox(const char *fontID, int align, int x, int y, int width, int height, const char *text, longlines_t method);
-int UI_DrawString(const char *fontID, int align, int x, int y, int absX, int maxWidth, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine, longlines_t method);
+int UI_DrawStringInBox(const char *fontID, align_t align, int x, int y, int width, int height, const char *text, longlines_t method);
+int UI_DrawString(const char *fontID, align_t align, int x, int y, int absX, int maxWidth, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine, longlines_t method);
 void UI_Transform(const vec3_t transform, const vec3_t rotate, const vec3_t scale);
 
 #endif

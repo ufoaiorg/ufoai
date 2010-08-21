@@ -376,10 +376,10 @@ static const size_t vt_sizes[] = {
 	0,	/* V_STRING */
 	0,	/* V_TRANSLATION_STRING */
 	0,	/* V_LONGSTRING */
-	sizeof(byte),	/* V_ALIGN */
-	sizeof(byte),	/* V_BLEND */
-	sizeof(byte),	/* V_STYLE */
-	sizeof(byte),	/* V_FADE */
+	sizeof(align_t),	/* V_ALIGN */
+	sizeof(blend_t),	/* V_BLEND */
+	sizeof(style_t),	/* V_STYLE */
+	sizeof(fade_t),	/* V_FADE */
 	sizeof(int),	/* V_SHAPE_SMALL */
 	0,	/* V_SHAPE_BIG */
 	sizeof(byte),	/* V_DMGTYPE */
@@ -448,7 +448,7 @@ const char* Com_GetLastParseError (void)
  */
 void* Com_AlignPtr (void *memory, valueTypes_t type)
 {
-	const int align = vt_aligns[type];
+	const size_t align = vt_aligns[type];
 	assert(memory != NULL);
 	if (align == V_NULL)
 		Sys_Error("Com_AlignPtr: can't align V_NULL");

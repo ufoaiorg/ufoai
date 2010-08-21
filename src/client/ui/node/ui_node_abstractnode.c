@@ -68,7 +68,7 @@ qboolean UI_NodeInstanceOfPointer (const uiNode_t *node, const uiBehaviour_t* be
  * @param [in] pointDirection
  * @note For example we can request the right-bottom corner with ALIGN_LR (low, right)
  */
-void UI_NodeGetPoint (const uiNode_t* node, vec2_t pos, byte pointDirection)
+void UI_NodeGetPoint (const uiNode_t* node, vec2_t pos, align_t pointDirection)
 {
 	switch (pointDirection % 3) {
 	case 0:	/* left */
