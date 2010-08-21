@@ -106,6 +106,7 @@ def download(uri):
 def ufo2map_hash():
     """create an md5sum from the source and the binary of ufo2map."""
     # TODO fight against / handle svn:eol-style=native
+    # FIXME a hash on ufo2map binary mean nothing
     src = md5()
     files = []
     for i in os.walk('src/tools/ufo2map'):
@@ -162,7 +163,7 @@ def upgrade(arg):
             continue
 
 
-        if md5sum(mappath) != maps[i][1]:
+        if md5sum(mappath, True) != maps[i][1]:
             print '%s version mismatch' % i
             missmatch+= 1
             continue
@@ -251,33 +252,32 @@ def gen(args):
             if not i.endswith('.map'):
                 continue
 
-            mfile = os.path.join(dirname, i)
-            bfile = mfile[:-4] + '.bsp'
-            if not os.path.exists(bfile):
-                print "Warning: Cant find .bsp for %s" % mfile
+            mapfile = os.path.join(dirname, i)
+            bspfile = mapfile[:-4] + '.bsp'
+            if not os.path.exists(bspfile):
+                print "Warning: Cant find .bsp for %s" % mapfile
                 continue
 
-            pmd5 = md5sum(mfile)
-            mmd5 = md5sum(mfile, True)
-            bmd5 = md5sum(bfile, True)
+            maphash = md5sum(mapfile)
+            bsphash = md5sum(bspfile, True)
 
-            if not bfile in old or bmd5 != old[bfile]:
-                print '%s - updating' % bfile
+            if not bspfile in old or bsphash != old[bspfile]:
+                print '%s - updating' % bspfile
                 maps_compiled+= 1
-                if os.path.exists(os.path.join(dst, bfile)):
-                    os.unlink(os.path.join(dst, bfile))
+                if os.path.exists(os.path.join(dst, bspfile)):
+                    os.unlink(os.path.join(dst, bspfile))
 
                 # make sure destination directory exists
-                dst_dir = os.path.split(os.path.join(dst, bfile))[0]
+                dst_dir = os.path.split(os.path.join(dst, bspfile))[0]
                 if not os.path.exists(dst_dir):
                     os.makedirs(dst_dir)
 
-                data = open(bfile).read()
-                GzipFile(os.path.join(dst, bfile) + '.gz', 'w').write(data)
+                data = open(bspfile).read()
+                GzipFile(os.path.join(dst, bspfile) + '.gz', 'w').write(data)
             else:
-                print '%s - already up to date' % bfile
+                print '%s - already up to date' % bspfile
 
-            maps.write(' '.join((bfile, bmd5, pmd5, mmd5)) + '\n')
+            maps.write(' '.join((bspfile, bsphash, maphash)) + '\n')
     print ' %s maps compiled' % maps_compiled
     return maps_compiled
 
