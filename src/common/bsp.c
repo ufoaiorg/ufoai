@@ -434,9 +434,9 @@ TRACING NODES
 static void CM_MakeTracingNodes (mapTile_t *tile)
 {
 	int i;
+	tnode_t *tnode;
 
-	tile->tnodes = Mem_PoolAlloc((tile->numnodes + 6) * sizeof(tnode_t), com_cmodelSysPool, 0);
-	tnode_p = tile->tnodes;
+	tnode = tile->tnodes = Mem_PoolAlloc((tile->numnodes + 6) * sizeof(*tnode), com_cmodelSysPool, 0);
 
 	tile->numtheads = 0;
 	tile->numcheads = 0;
@@ -445,7 +445,7 @@ static void CM_MakeTracingNodes (mapTile_t *tile)
 		if (tile->models[i].headnode == LEAFNODE || tile->models[i].headnode >= tile->numnodes + 6)
 			continue;
 
-		tile->thead[tile->numtheads] = tnode_p - tile->tnodes;
+		tile->thead[tile->numtheads] = tnode - tile->tnodes;
 		tile->theadlevel[tile->numtheads] = i;
 		tile->numtheads++;
 		assert(tile->numtheads < LEVEL_MAX);
@@ -453,7 +453,7 @@ static void CM_MakeTracingNodes (mapTile_t *tile)
 		/* If this level (i) is the last visible level or earlier, then trace it.
 		 * Otherwise don't; we have separate checks for entities. */
 		if (i < NUM_REGULAR_MODELS)
-			TR_BuildTracingNode_r(tile, tile->models[i].headnode, i);
+			TR_BuildTracingNode_r(tile, &tnode, tile->models[i].headnode, i);
 	}
 }
 

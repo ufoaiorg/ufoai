@@ -66,9 +66,10 @@ void PopInfo (void)
  * @param[in] n The node nums
  * @sa R_ModLoadNodes
  */
-static int BuildNodeChildren (const int n[3])
+static int32_t BuildNodeChildren (const int n[3])
 {
-	int node = LEAFNODE, i;
+	int32_t node = LEAFNODE;
+	int i;
 
 	for (i = 0; i < 3; i++) {
 		dBspNode_t *newnode;
@@ -129,12 +130,12 @@ static int BuildNodeChildren (const int n[3])
  * @sa ProcessLevel
  * @return The node num
  */
-static int ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const vec3_t cmaxs)
+static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const vec3_t cmaxs)
 {
 	bspbrush_t *list;
 	tree_t *tree;
 	vec3_t diff, bmins, bmaxs;
-	int nn[3];
+	int32_t nn[3];
 	node_t *node;
 
 	/* calculate bounds, stop if no brushes are available */

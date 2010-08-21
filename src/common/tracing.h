@@ -106,16 +106,14 @@ typedef struct {
 BOX AND LINE TRACING
 ==============================================================*/
 
-extern tnode_t *tnode_p;
-
 int TR_BoxOnPlaneSide(const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE *plane);
 
-void TR_BuildTracingNode_r(TR_TILE_TYPE *tile, int node, int level);
+void TR_BuildTracingNode_r(TR_TILE_TYPE *tile, tnode_t **tnode, int32_t node, int level);
 
 #ifdef COMPILE_MAP
 trace_t TR_SingleTileBoxTrace(mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const box_t* traceBox, const int levelmask, const int brushmask, const int brushreject);
 #endif
-int TR_TestLine_r(TR_TILE_TYPE *tile, int node, const vec3_t start, const vec3_t stop);
+int TR_TestLine_r(TR_TILE_TYPE *tile, int32_t node, const vec3_t start, const vec3_t stop);
 trace_t TR_BoxTrace(TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const float fraction);
 
 qboolean TR_TestLine(mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask);

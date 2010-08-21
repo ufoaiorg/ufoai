@@ -34,10 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @todo not thread safe */
 static int checkcount;
 
-/** @note This is used to create the thead trees in MakeTracingNodes.
- * @todo not thread safe */
-tnode_t *tnode_p;
-
 /*
 ===============================================================================
 TRACING NODES
@@ -47,14 +43,14 @@ TRACING NODES
 /**
  * @brief Converts the disk node structure into the efficient tracing structure for LineTraces
  */
-static void TR_MakeTracingNode (TR_TILE_TYPE *tile, int nodenum)
+static void TR_MakeTracingNode (TR_TILE_TYPE *tile, tnode_t ** tnode, int32_t nodenum)
 {
 	tnode_t *t;				/* the tracing node to build */
 	TR_PLANE_TYPE *plane;
 	int i;
 	TR_NODE_TYPE *node;		/* the node we are investigating */
 
-	t = tnode_p++;
+	t = (*tnode)++;
 
 	node = tile->nodes + nodenum;
 #ifdef COMPILE_UFO
@@ -77,12 +73,12 @@ static void TR_MakeTracingNode (TR_TILE_TYPE *tile, int nodenum)
 			else
 				t->children[i] = (1 << 31);				/* mark as 'empty leaf' */
 		} else {										/* not a leaf */
-			t->children[i] = tnode_p - tile->tnodes;
+			t->children[i] = *tnode - tile->tnodes;
 			if (t->children[i] > tile->numnodes) {
 				Com_Printf("Exceeded allocated memory for tracing structure (%i > %i)\n",
 						t->children[i], tile->numnodes);
 			}
-			TR_MakeTracingNode(tile, node->children[i]);		/* recurse further down the tree */
+			TR_MakeTracingNode(tile, tnode, node->children[i]);		/* recurse further down the tree */
 		}
 	}
 }
@@ -91,7 +87,7 @@ static void TR_MakeTracingNode (TR_TILE_TYPE *tile, int nodenum)
  * @sa CMod_LoadNodes
  * @sa R_ModLoadNodes
  */
-void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, int node, int level)
+void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, tnode_t ** tnode, int32_t node, int level)
 {
 	assert(node < tile->numnodes + 6); /* +6 => bbox */
 
@@ -112,7 +108,7 @@ void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, int node, int level)
 		n = &tile->nodes[node];
 
 		/* alloc new node */
-		t = tnode_p++;
+		t = (*tnode)++;
 
 		/* no leafs here */
 		if (n->children[0] < 0 || n->children[1] < 0)
@@ -140,10 +136,10 @@ void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, int node, int level)
 				VectorSet(t->normal, i, (i ^ 1), 0);
 				t->dist = (c0maxs[i] + c1mins[i]) / 2;
 
-				t->children[1] = tnode_p - tile->tnodes;
-				TR_BuildTracingNode_r(tile, n->children[0], level);
-				t->children[0] = tnode_p - tile->tnodes;
-				TR_BuildTracingNode_r(tile, n->children[1], level);
+				t->children[1] = *tnode - tile->tnodes;
+				TR_BuildTracingNode_r(tile, tnode, n->children[0], level);
+				t->children[0] = *tnode - tile->tnodes;
+				TR_BuildTracingNode_r(tile, tnode, n->children[1], level);
 				return;
 			}
 
@@ -151,8 +147,8 @@ void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, int node, int level)
 		t->type = PLANE_NONE;
 
 		for (i = 0; i < 2; i++) {
-			t->children[i] = tnode_p - tile->tnodes;
-			TR_BuildTracingNode_r(tile, n->children[i], level);
+			t->children[i] = *tnode - tile->tnodes;
+			TR_BuildTracingNode_r(tile, tnode, n->children[i], level);
 		}
 	} else {
 		/* Make a lookup table */
@@ -161,7 +157,7 @@ void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, int node, int level)
 		tile->numcheads++;
 		assert(tile->numcheads <= MAX_MAP_NODES);
 		/* Make the tracing node. */
-		TR_MakeTracingNode(tile, node);
+		TR_MakeTracingNode(tile, tnode, node);
 	}
 }
 
@@ -182,7 +178,7 @@ LINE TRACING - TEST FOR BRUSH PRESENCE
  * @sa TR_TestLineDist_r
  * @sa CM_TestLine
  */
-int TR_TestLine_r (TR_TILE_TYPE *tile, int node, const vec3_t start, const vec3_t stop)
+int TR_TestLine_r (TR_TILE_TYPE *tile, int32_t node, const vec3_t start, const vec3_t stop)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -312,7 +308,7 @@ LINE TRACING - TEST FOR BRUSH LOCATION
  * @sa TR_TestLine_r
  * @sa TR_TestLineDM
  */
-static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int node, const vec3_t start, const vec3_t stop, vec3_t tr_end)
+static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int32_t node, const vec3_t start, const vec3_t stop, vec3_t tr_end)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -509,8 +505,8 @@ int TR_BoxOnPlaneSide (const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE
 
 typedef struct leaf_check_s {
 	int leaf_count, leaf_maxcount;
-	int *leaf_list;
-	int leaf_topnode;
+	int32_t *leaf_list;
+	int32_t leaf_topnode;
 } leaf_check_t;
 
 /**
@@ -518,7 +514,7 @@ typedef struct leaf_check_s {
  * call with topnode set to the headnode, returns with topnode
  * set to the first node that splits the box
  */
-static void TR_BoxLeafnums_r (boxtrace_t *traceData, int nodenum, leaf_check_t *lc)
+static void TR_BoxLeafnums_r (boxtrace_t *traceData, int32_t nodenum, leaf_check_t *lc)
 {
 	TR_PLANE_TYPE *plane;
 	TR_NODE_TYPE *node;
@@ -561,7 +557,7 @@ static void TR_BoxLeafnums_r (boxtrace_t *traceData, int nodenum, leaf_check_t *
  * @param[in] traceData both parameters and results of the trace
  * @param[in] headnode if < 0 we are in a leaf node
  */
-static int TR_BoxLeafnums_headnode (boxtrace_t *traceData, int *list, int listsize, int headnode, int *topnode)
+static int TR_BoxLeafnums_headnode (boxtrace_t *traceData, int32_t *list, int listsize, int32_t headnode, int32_t *topnode)
 {
 	leaf_check_t lc;
 	lc.leaf_list = list;
@@ -789,7 +785,7 @@ static void TR_TraceToLeaf (boxtrace_t *traceData, int leafnum)
 /**
  * @sa CM_TestBoxInBrush
  */
-static void TR_TestInLeaf (boxtrace_t *traceData, int leafnum)
+static void TR_TestInLeaf (boxtrace_t *traceData, int32_t leafnum)
 {
 	int k;
 	const TR_LEAF_TYPE *leaf;
@@ -1002,9 +998,9 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
 
 	/* check for position test special case */
 	if (VectorCompare(astart, aend)) {
-		int leafs[MAX_LEAFS];
+		int32_t leafs[MAX_LEAFS];
 		int numleafs;
-		int topnode;
+		int32_t topnode;
 		int i;
 
 		VectorAdd(astart, amaxs, traceData.absmaxs);

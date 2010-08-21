@@ -162,7 +162,7 @@ trace_t CM_HintedTransformedBoxTrace (mapTile_t *tile, const vec3_t start, const
  * @brief To keep everything totally uniform, bounding boxes are turned into small
  * BSP trees instead of being compared directly.
  */
-int CM_HeadnodeForBox (mapTile_t *tile, const vec3_t mins, const vec3_t maxs)
+int32_t CM_HeadnodeForBox (mapTile_t *tile, const vec3_t mins, const vec3_t maxs)
 {
 	tile->box_planes[0].dist = maxs[0];
 	tile->box_planes[1].dist = -maxs[0];

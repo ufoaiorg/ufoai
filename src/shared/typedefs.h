@@ -26,7 +26,7 @@ typedef struct cBspPlane_s {
 typedef struct cBspModel_s {
 	vec3_t mins, maxs;
 	vec3_t origin, angles, shift;		/**< used to orient doors and rotating entities */
-	int headnode;
+	int32_t headnode;
 	/** @note Not used by ufo2map */
 	int tile;					/**< which tile in assembly */
 	/** @note Used only by ufo2map */
@@ -44,7 +44,7 @@ typedef struct cBspSurface_s {
 typedef struct cBspNode_s {
 	cBspPlane_t *plane;
 	vec3_t mins, maxs;
-	int children[2];			/**< negative numbers are leafs */
+	int32_t children[2];			/**< negative numbers are leafs */
 } cBspNode_t;
 
 typedef struct cBspBrushSide_s {
@@ -72,7 +72,7 @@ typedef struct tnode_s {
 	int type;
 	vec3_t normal;
 	float dist;
-	int children[2];
+	int32_t children[2];
 	int pad;
 } tnode_t;
 
@@ -122,7 +122,7 @@ typedef struct {
 	/* line tracing */
 	tnode_t *tnodes;
 	int numtheads;
-	int thead[LEVEL_MAX];
+	intptr_t thead[LEVEL_MAX];
 	int theadlevel[LEVEL_MAX];
 
 	int numcheads;
@@ -231,7 +231,7 @@ typedef struct pathing_s {
 typedef struct {
 	vec3_t mins, maxs;
 	vec3_t origin;			/**< for sounds or lights */
-	int headnode;
+	int32_t headnode;
 	int firstface, numfaces;	/**< submodels just draw faces without walking the bsp tree */
 } dBspModel_t;
 
@@ -254,7 +254,7 @@ typedef struct {
 
 typedef struct {
 	int planenum;				/**< index into the planes array */
-	int children[2];			/**< negative numbers are -(leafs + 1), not nodes */
+	int32_t children[2];		/**< negative numbers are -(leafs + 1), not nodes */
 	short mins[3];				/**< for frustum culling */
 	short maxs[3];				/**< for frustum culling */
 	unsigned short firstface;	/**< index into the faces array */

@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void MakeTracingNodes (int levels)
 {
 	size_t size;
+	tnode_t *tnode;
 	int i;
 
 	/* Release any memory we have for existing tnodes, just in case. */
@@ -49,7 +50,7 @@ void MakeTracingNodes (int levels)
 	size = (size + 31) &~ 31;
 	/* allocate memory for the tnodes structure */
 	curTile->tnodes = Mem_Alloc(size);
-	tnode_p = curTile->tnodes;
+	tnode = curTile->tnodes;
 	curTile->numtheads = 0;
 
 	for (i = 0; i < levels; i++) {
@@ -57,11 +58,11 @@ void MakeTracingNodes (int levels)
 			continue;
 		if (curTile->models[i].headnode < 0)	/* empty models have headnode -1 */
 			continue;
-		curTile->thead[curTile->numtheads] = tnode_p - curTile->tnodes;
+		curTile->thead[curTile->numtheads] = tnode - curTile->tnodes;
 		curTile->theadlevel[curTile->numtheads] = i;
 		curTile->numtheads++;
 		assert(curTile->numtheads < LEVEL_MAX);
-		TR_BuildTracingNode_r(curTile, curTile->models[i].headnode, i);
+		TR_BuildTracingNode_r(curTile, &tnode, curTile->models[i].headnode, i);
 	}
 }
 
