@@ -123,21 +123,32 @@ def ufo2map_hash():
     debug('ufo2map_hash: %s %s' % (bin, src))
     return [bin, src]
 
+class Object:
+    pass
 
 def upgrade(arg):
     """Download the list of maps."""
     global displayAlreadyUpToDate
     maps = {}
     print 'getting list of available maps'
-    for i in download(URI + '/Maps').split('\n'):
-        i = i.split(' ')
-        try:
-            maps[i[0]] = (i[1], i[2])
-        except:
-            pass
+    for l in download(URI + '/Maps').split('\n'):
+        i = l.split(' ')
+        if len(i) == 3:
+            o = Object()
+            if i[0] == 'ufo2map':
+                o.binhash = i[1]
+                o.srchash = i[2]
+            else:
+                o.bsphash = i[1]
+                o.maphash = i[2]
+            maps[i[0]] = o
+        else:
+            print 'Line "%s" corrupted' % l
+
+    binhash, srchash = ufo2map_hash()
 
     # check ufo2map's _source_ md5
-    if 'ufo2map' in maps and maps['ufo2map'][1] == ufo2map_hash()[1]:
+    if 'ufo2map' in maps and maps['ufo2map'].srchash == srchash:
         print 'ufo2map version ok'
     elif 'ufo2map' not in maps:
         print 'Mirror corrupted, please try later. If problem persists contact admin.'
@@ -163,12 +174,12 @@ def upgrade(arg):
             continue
 
 
-        if md5sum(mappath, True) != maps[i][1]:
+        if md5sum(mappath, True) != maps[i].maphash:
             print '%s version mismatch' % i
             missmatch+= 1
             continue
 
-        if not os.path.exists(bsppath) or md5sum(bsppath, True) != maps[i][0]:
+        if not os.path.exists(bsppath) or md5sum(bsppath, True) != maps[i].bsphash:
             fd, name = mkstemp()
             os.write(fd, download('%s/%s.gz' %(URI, i)))
             os.close(fd)
