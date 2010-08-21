@@ -290,7 +290,7 @@ static void UI_DrawNotice (void)
 	const vec4_t noticeBG = { 1.0f, 0.0f, 0.0f, 0.2f };
 	const vec4_t noticeColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 	int height = 0, width = 0;
-	const int maxWidth = 320;
+	const int maxWidth = 500;
 	const char *font = "f_normal";
 	int lines = 5;
 	int dx; /**< Delta-x position. Relative to original x position. */
@@ -302,7 +302,7 @@ static void UI_DrawNotice (void)
 		x = noticePosition[0];
 		y = noticePosition[1];
 	} else {
-		x = 500;
+		x = VID_NORM_WIDTH / 2;
 		y = 110;
 	}
 
@@ -320,9 +320,9 @@ static void UI_DrawNotice (void)
 	else
 		dx = 0;
 
-	UI_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, noticeBG);
+	UI_DrawFill((x - 2 + dx) - ((width + 2) / 2), (y - 2) - ((height + 2) / 2), width + 4, height + 4, noticeBG);
 	R_Color(noticeColor);
-	UI_DrawString(font, 0, x + 1 + dx, y + 1, x + 1, maxWidth, 0, noticeText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
+	UI_DrawString(font, ALIGN_CC, x + 1 + dx, y + 1, x + 1, maxWidth, 0, noticeText, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 	R_Color(NULL);
 }
 
@@ -365,15 +365,15 @@ void UI_Draw (void)
 
 		UI_DrawNode(window);
 
-		/* draw a special notice */
-		if (window == noticeWindow && CL_Milliseconds() < noticeTime)
-			UI_DrawNotice();
-
 		/* draw a node over the window */
 		if (drawOverNode && drawOverNode->behaviour->drawOverWindow) {
 			drawOverNode->behaviour->drawOverWindow(drawOverNode);
 		}
 	}
+
+	/* draw a special notice */
+	if (CL_Milliseconds() < noticeTime)
+		UI_DrawNotice();
 
 	/* unactive notice */
 	if (noticeWindow != NULL && CL_Milliseconds() >= noticeTime)

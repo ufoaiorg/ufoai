@@ -7,7 +7,7 @@ window hud extends ahud
 	{
 		fill		true
 		starlayout	true
-		noticepos	"400 100"
+		noticepos	"512 50"
 		timeout		10000
 	}
 

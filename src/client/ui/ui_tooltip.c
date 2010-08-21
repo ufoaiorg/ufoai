@@ -62,7 +62,7 @@ int UI_DrawTooltip (const char *string, int x, int y, int maxWidth)
 
 	UI_DrawFill(x - 1, y - 1, width + 4, height + 4, tooltipBG);
 	R_Color(tooltipColor);
-	UI_DrawString(font, 0, x + 1, y + 1, x + 1, maxWidth, 0, string, 0, 0, NULL, qfalse, LONGLINES_WRAP);
+	UI_DrawString(font, ALIGN_UL, x + 1, y + 1, x + 1, maxWidth, 0, string, 0, 0, NULL, qfalse, LONGLINES_WRAP);
 	R_Color(NULL);
 
 	return width;

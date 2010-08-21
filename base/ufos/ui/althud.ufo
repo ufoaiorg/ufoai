@@ -5,7 +5,7 @@
 window althud extends ahud
 {
 	{
-		noticepos	"400 100"
+		noticepos	"512 20"
 		timeout	10000
 		starlayout	true
 		fill		true
