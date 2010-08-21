@@ -114,6 +114,22 @@ void G_MoveCalcLocal (pathing_t *pt, int team, const edict_t *movingActor, const
 }
 
 /**
+ * @brief Searches an actor on the given grid position
+ * @param pos The position to search an actor on
+ * @return The actor or @c NULL if no actor is standing on that grid position
+ */
+edict_t *G_GetActorFromPos (const pos3_t pos)
+{
+	edict_t *actor = G_GetEdictFromPos(pos, ET_ACTOR);
+	if (actor == NULL)
+		actor = G_GetEdictFromPos(pos, ET_ACTOR2x2);
+	if (actor == NULL)
+		actor = G_GetEdictFromPos(pos, ET_ACTORHIDDEN);
+
+	return actor;
+}
+
+/**
  * @brief Let an actor fall down if e.g. the func_breakable the actor was standing on was destroyed.
  * @param[in,out] ent The actor that should fall down
  * @todo Handle cases where the grid position the actor would fall to is occupied by another actor already.

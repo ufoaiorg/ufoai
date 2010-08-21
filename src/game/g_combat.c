@@ -551,24 +551,25 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
  */
 static void G_SpawnItemOnFloor (const pos3_t pos, const item_t *item)
 {
-	edict_t *floor, *actor = NULL;
+	edict_t *floor;
 
 	floor = G_GetFloorItemsFromPos(pos);
 	if (floor == NULL) {
 		floor = G_SpawnFloor(pos);
 
-		/* link the floor container to the actor standing on the given position */
-		while ((actor = G_EdictsGetNextActor(actor)))
-			if (G_EdictPosIsSameAs(actor, pos)) {
-				FLOOR(actor) = FLOOR(floor);
-				break;
-			}
-		if (!game.i.TryAddToInventory(&game.i, &floor->chr.i, *item, INVDEF(gi.csi->idFloor)))
+		if (!game.i.TryAddToInventory(&game.i, &floor->chr.i, *item, INVDEF(gi.csi->idFloor))) {
 			G_FreeEdict(floor);
-		else
+		} else {
+			edict_t *actor = G_GetActorFromPos(pos);
+
 			/* send the inventory */
 			G_CheckVis(floor, qtrue);
+
+			if (actor != NULL)
+				G_GetFloorItems(actor);
+		}
 	} else {
+		Com_Printf("Floor already exists\n");
 		if (game.i.TryAddToInventory(&game.i, &floor->chr.i, *item, INVDEF(gi.csi->idFloor))) {
 			/* make it invisible to send the inventory in the below vis check */
 			G_EventPerish(floor);

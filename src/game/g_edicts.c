@@ -195,7 +195,7 @@ edict_t* G_EdictsGetNextLivingActorOfTeam (edict_t* lastEnt, const int team)
 }
 
 /**
- * @brief Iterate through the actor entities (even the dead!)
+ * @brief Iterate through the actor entities (even the dead! - but skips the invisible)
  * @param lastEnt The entity found in the previous iteration; if NULL, we start at the beginning
  */
 edict_t* G_EdictsGetNextActor (edict_t* lastEnt)
