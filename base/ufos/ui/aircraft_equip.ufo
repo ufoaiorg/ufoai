@@ -201,7 +201,6 @@ window aircraft_equip extends iaircraft
 		{
 			{
 				cvar		*cvar:mn_equip_itemtype
-				image		"ui/selectbox_green"
 				pos			"29 56"
 				size		"235 20"
 				onChange {

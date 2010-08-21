@@ -94,7 +94,6 @@ window skirmish
 		}
 		selectbox ufos_box
 		{
-			image	"ui/selectbox_green"
 			pos		"240 245"
 			size	"200 20"
 			color	"0.6 0.6 0.6 0.3"
@@ -113,7 +112,6 @@ window skirmish
 		}
 		selectbox dropships_box
 		{
-			image	"ui/selectbox_green"
 			pos		"240 295"
 			size	"200 20"
 			color	"0.6 0.6 0.6 0.3"
@@ -134,7 +132,6 @@ window skirmish
 			{
 				tooltip		"_Select whether you want to play @ day- or nighttime."
 				cvar		*cvar:mn_serverday
-				image		"ui/selectbox_green"
 				pos			"240 200"
 				size		"200 20"
 				color		"0.6 0.6 0.6 0.3"
@@ -334,7 +331,6 @@ window skirmish
 		}
 		selectbox team_box
 		{
-			image	"ui/selectbox_green"
 			pos		"230 245"
 			size	"200 20"
 			color	"0.6 0.6 0.6 0.3"
