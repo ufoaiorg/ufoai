@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 qboolean G_IsLivingActor (const edict_t *ent)
 {
-	return G_IsActor(ent) && !G_IsDead(ent);
+	return G_IsActor(ent) && (G_IsStunned(ent) || !G_IsDead(ent));
 }
 
 /**
@@ -267,6 +267,8 @@ void G_ActorSetMaxs (edict_t* ent)
 {
 	if (G_IsCrouched(ent))
 		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_CROUCH);
+	else if (G_IsDead(ent))
+		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD);
 	else
 		VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND);
 
@@ -297,24 +299,38 @@ void G_ActorUseTU (edict_t *ent, int tus)
 
 static void G_ActorStun (edict_t * ent, const edict_t *attacker)
 {
-	/**< @todo Is there a reason this is reset? We _may_ need that in the future somehow.
-	 * @sa CL_ActorDie */
-	ent->STUN = 0;
+	/* no other state should be set here */
 	ent->state = STATE_STUN;
 	if (attacker != NULL)
 		level.num_stuns[attacker->team][ent->team]++;
 }
 
+void G_ActorRevitalise (edict_t *ent)
+{
+	if (G_IsStunned(ent)) {
+		G_RemoveStunned(ent);
+		/** @todo have a look at the morale value of
+		 * the ent and maybe get into rage or panic? */
+		level.num_alive[ent->team]++;
+
+		G_GetFloorItems(ent);
+	}
+	G_ActorSetMaxs(ent);
+
+	/* check if the player appears/perishes, seen from other teams */
+	G_CheckVis(ent, qtrue);
+
+	/* calc new vis for this player */
+	G_CheckVisTeamAll(ent->team, qfalse, ent);
+}
+
 static void G_ActorDie (edict_t * ent, const edict_t *attacker)
 {
-	assert(ent);
-
-	Com_DPrintf(DEBUG_GAME, "G_ActorDie: kill actor on team %i\n", ent->team);
+	G_RemoveStunned(ent);
 	G_SetState(ent, 1 + rand() % MAX_DEATH);
 	if (attacker != NULL)
 		level.num_kills[attacker->team][ent->team]++;
-	VectorSet(ent->maxs, PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD);
-	gi.LinkEdict(ent);
+	G_ActorSetMaxs(ent);
 }
 
 /**

@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "event/actor/e_event_actorreactionfirechange.h"
 #include "event/actor/e_event_actorresetclientaction.h"
 #include "event/actor/e_event_actorreservationchange.h"
+#include "event/actor/e_event_actorrevitalised.h"
 #include "event/inventory/e_event_invadd.h"
 #include "event/inventory/e_event_invdel.h"
 #include "event/inventory/e_event_invammo.h"
@@ -109,6 +110,7 @@ const eventRegister_t events[] = {
 	{E(EV_ACTOR_THROW), "ssbbbpp", CL_ActorDoThrow, CL_ActorDoThrowTime, NULL},
 
 	{E(EV_ACTOR_DIE), "ss", CL_ActorDie, NULL, CL_CheckDefault},
+	{E(EV_ACTOR_REVITALISED), "ss", CL_ActorRevitalised, NULL, CL_CheckDefault},
 	{E(EV_ACTOR_STATS), "!sbsbb", CL_ActorStats, NULL, NULL},
 	{E(EV_ACTOR_STATECHANGE), "ss", CL_ActorStateChange, NULL, NULL},
 	{E(EV_ACTOR_RESERVATIONCHANGE), "ssss", CL_ActorReservationChange, NULL, NULL},

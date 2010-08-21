@@ -52,6 +52,7 @@ CLIENT_SRCS = \
 	client/battlescape/events/event/actor/e_event_actorresetclientaction.c \
 	client/battlescape/events/event/actor/e_event_actorreservationchange.c \
 	client/battlescape/events/event/actor/e_event_actorreactionfirechange.c \
+	client/battlescape/events/event/actor/e_event_actorrevitalised.c \
 	client/battlescape/events/event/actor/e_event_actorshoot.c \
 	client/battlescape/events/event/actor/e_event_actorshoothidden.c \
 	client/battlescape/events/event/actor/e_event_actorstartshoot.c \

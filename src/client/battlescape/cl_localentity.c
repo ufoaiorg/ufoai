@@ -193,7 +193,7 @@ qboolean LE_IsActor (const le_t *le)
 qboolean LE_IsLivingActor (const le_t *le)
 {
 	assert(le);
-	return LE_IsActor(le) && !LE_IsDead(le);
+	return LE_IsActor(le) && (LE_IsStunned(le) || !LE_IsDead(le));
 }
 
 /**
@@ -492,7 +492,7 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 	 * drawn at the ground (if needed - maybe the origin is already ground aligned)*/
 	if (t->particle) {
 		/* check whether actor is visible */
-		if (LE_IsLivingAndVisibleActor(le))
+		if (!LE_IsStunned(le) && LE_IsLivingAndVisibleActor(le))
 			CL_ParticleSpawn(t->particle, 0, origin, NULL, NULL);
 	}
 	if (t->footStepSound) {

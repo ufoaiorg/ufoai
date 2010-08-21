@@ -377,13 +377,15 @@ void CL_ActorRemoveFromTeamList (le_t * le)
 
 	for (i = 0; i < cl.numTeamList; i++) {
 		if (cl.teamList[i] == le) {
-			CL_ActorCleanup(le);
+			if (!LE_IsStunned(le)) {
+				CL_ActorCleanup(le);
+				/* remove from list */
+				cl.teamList[i] = NULL;
+			}
 
 			/* disable hud button */
 			UI_ExecuteConfunc("huddisable %i", i);
 
-			/* remove from list */
-			cl.teamList[i] = NULL;
 			break;
 		}
 	}
@@ -558,7 +560,7 @@ static void CL_BuildForbiddenList (void)
 		if (le->invis)
 			continue;
 		/* Dead ugv will stop walking, too. */
-		if (le->type == ET_ACTOR2x2 || LE_IsLivingAndVisibleActor(le)) {
+		if (le->type == ET_ACTOR2x2 || (!LE_IsStunned(le) && LE_IsLivingAndVisibleActor(le))) {
 			forbiddenList[forbiddenListLength++] = le->pos;
 			forbiddenList[forbiddenListLength++] = (byte*)&le->fieldSize;
 		}
@@ -1196,15 +1198,16 @@ MOUSE SCANNING
 /**
  * @brief Searches an actor at the given position.
  * @param[in] pos The grid position to search an actor at
+ * @param[in] includingStunned Also search for stunned actors if @c true.
  */
-static le_t* CL_ActorSearchAtGridPos (const pos3_t pos)
+static le_t* CL_ActorSearchAtGridPos (const pos3_t pos, qboolean includingStunned)
 {
 	le_t *le;
 
 	/* search for an actor on this field */
 	le = NULL;
 	while ((le = LE_GetNextInUse(le))) {
-		if (LE_IsLivingAndVisibleActor(le))
+		if (LE_IsLivingAndVisibleActor(le) && (includingStunned || !LE_IsStunned(le)))
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
 				if (VectorCompare(le->pos, pos))
@@ -1352,7 +1355,7 @@ qboolean CL_ActorMouseTrace (void)
 	testPos[2] = restingLevel;
 	VectorCopy(testPos, mousePos);
 
-	mouseActor = CL_ActorSearchAtGridPos(mousePos);
+	mouseActor = CL_ActorSearchAtGridPos(mousePos, qfalse);
 
 	/* calculate move length */
 	if (selActor && !VectorCompare(mousePos, mouseLastPos)) {
@@ -1525,7 +1528,6 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 	vec3_t dir, mid, temp;
 	trace_t tr;
 	qboolean crossNo;
-	le_t *le = NULL;
 	le_t *target = NULL;
 	actorSizeEnum_t toActorSize;
 
@@ -1533,12 +1535,7 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 		return;
 
 	/* search for an actor at target */
-	while ((le = LE_GetNextInUse(le))) {
-		if (LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
-			target = le;
-			break;
-		}
-	}
+	target = CL_ActorSearchAtGridPos(toPos, qtrue);
 
 	/* Determine the target's size. */
 	toActorSize = target
@@ -1607,7 +1604,6 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 	trace_t tr;
 	qboolean obstructed = qfalse;
 	int i;
-	le_t *le = NULL;
 	le_t *target = NULL;
 	actorSizeEnum_t toActorSize;
 
@@ -1615,12 +1611,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 		return;
 
 	/* search for an actor at target */
-	while ((le = LE_GetNextInUse(le))) {
-		if (LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
-			target = le;
-			break;
-		}
-	}
+	target = CL_ActorSearchAtGridPos(toPos, qtrue);
 
 	/* Determine the target's size. */
 	toActorSize = target
@@ -2322,7 +2313,7 @@ static void CL_NextAlien_f (void)
 		if (++i >= cl.numLEs)
 			i = 0;
 		le = &cl.LEs[i];
-		if (le->inuse && !le->invis && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
+		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			lastAlien = i;
 			CL_ViewCenterAtGridPosition(le->pos);
@@ -2370,7 +2361,7 @@ static void CL_ActorConfirmAction_f (void)
 	if (time - cl.time < 1000) {
 		le_t *le = NULL;
 		while ((le = LE_GetNextInUse(le))) {
-			if (LE_IsLivingActor(le) && le->team == cls.team)
+			if (LE_IsLivingActor(le) && !LE_IsStunned(le) && le->team == cls.team)
 				CL_ActorConfirmAction(le);
 		}
 	} else {

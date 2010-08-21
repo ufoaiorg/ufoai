@@ -68,7 +68,7 @@ void CL_ActorStartShoot (const eventRegister_t *self, struct dbuffer *msg)
 		/* it's OK, the actor is not visible */
 		return;
 
-	if (!LE_IsLivingActor(le)) {
+	if (!LE_IsLivingActor(le) || LE_IsStunned(le)) {
 		Com_Printf("CL_ActorStartShoot: LE (%i) not a living actor (type: %i)\n", entnum, le->type);
 		return;
 	}

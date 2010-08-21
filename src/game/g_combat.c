@@ -290,13 +290,12 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
  */
 static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t *attacker, shot_mock_t *mock)
 {
-	const qboolean stunEl = (fd->dmgweight == gi.csi->damStunElectro);
+	const qboolean stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
 	const qboolean stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
 	const qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
 	qboolean isRobot;
 
 	assert(target);
-	assert(G_IsActor(target) || G_IsBrushModel(target));
 
 	/* Breakables */
 	if (G_IsBrushModel(target)) {
@@ -322,7 +321,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	}
 
 	/* Actors don't die again. */
-	if (G_IsDead(target))
+	if (!G_IsLivingActor(target))
 		return;
 
 	/* only actors after this point - and they must have a teamdef */
@@ -390,6 +389,14 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 
 				/** @todo Also increase the morale a little bit when
 				 * soldier gets healing and morale is lower than max possible? */
+				if (G_IsStunned(target)) {
+					/* reduce STUN */
+					target->STUN += damage;
+					if (target->STUN < target->HP) {
+						G_ActorRevitalise(target);
+						G_EventActorRevitalise(target);
+					}
+				}
 			} else {
 				/* Real damage was dealt. */
 

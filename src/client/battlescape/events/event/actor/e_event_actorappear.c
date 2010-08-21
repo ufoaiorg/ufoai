@@ -138,12 +138,11 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 
 	LE_SetThink(le, LET_StartIdle);
 
-	/* count spotted aliens */
+	/* count spotted aliens (also stunned) */
 	if (LE_IsLivingActor(le) && le->team != cls.team && le->team != TEAM_CIVILIAN)
 		cl.numAliensSpotted++;
 
-	assert(cls.state == ca_active);
-	if (!LE_IsDead(le)) {
+	if (LE_IsLivingActor(le)) {
 		/* center view (if wanted) */
 		if (cl.actTeam != cls.team)
 			LE_CenterView(le);

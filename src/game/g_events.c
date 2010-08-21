@@ -52,13 +52,22 @@ void G_EventActorTurn (const edict_t* ent)
 
 /**
  * @brief Announce the actor die event for the clients that are seeing the actor
- * @param ent The actor that is dying
- * @param attacker The attacker that was responsible for this event
+ * @param[in] ent The actor that is dying
  */
 void G_EventActorDie (const edict_t* ent)
 {
-	/* send death */
 	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_DIE);
+	gi.WriteShort(ent->number);
+	gi.WriteShort(ent->state);
+}
+
+/**
+ * @brief Announce the actor die event for the clients that are seeing the actor
+ * @param[in] ent The actor that was healed and woke up again
+ */
+void G_EventActorRevitalise (const edict_t* ent)
+{
+	gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_REVITALISED);
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->state);
 }

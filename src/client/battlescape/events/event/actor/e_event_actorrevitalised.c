@@ -1,5 +1,5 @@
 /**
- * @file e_event_actordie.c
+ * @file e_event_actorrevitalised.c
  */
 
 /*
@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../cl_actor.h"
 #include "../../../cl_hud.h"
 #include "../../../../renderer/r_mesh_anim.h"
-#include "e_event_actordie.h"
+#include "e_event_actorrevitalised.h"
 
 /**
  * @brief Kills an actor (all that is needed is the local entity state set to STATE_DEAD).
@@ -34,9 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] msg The netchannel message
  * @param[in] self Pointer to the event structure that is currently executed
  */
-void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
+void CL_ActorRevitalised (const eventRegister_t *self, struct dbuffer *msg)
 {
-	le_t *le;
+	le_t *le, *floor;
 	int entnum, state;
 
 	NET_ReadFormat(msg, self->formatString, &entnum, &state);
@@ -47,75 +47,52 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 	if (!le)
 		LE_NotFoundError(entnum);
 
-	if (!LE_IsLivingActor(le))
-		Com_Error(ERR_DROP, "CL_ActorDie: Can't kill, LE is not an actor (type: %i)", le->type);
-
-	if (!LE_IsStunned(le) && LE_IsDead(le))
-		Com_Error(ERR_DROP, "CL_ActorDie: Can't kill, actor already dead");
+	if (!LE_IsStunned(le) && !LE_IsLivingActor(le))
+		Com_Error(ERR_DROP, "CL_ActorRevitalised: Can't revitalise, LE is not a dead or stunned actor");
 
 	LE_Lock(le);
-	/* count spotted aliens */
-	if (le->team != cls.team && le->team != TEAM_CIVILIAN)
-		cl.numAliensSpotted--;
 
-	/* set relevant vars */
-	FLOOR(le) = NULL;
+	/* link any floor container into the actor temp floor container */
+	floor = LE_Find(ET_ITEM, le->pos);
+	if (floor)
+		FLOOR(le) = FLOOR(floor);
 
 	le->state = state;
 
 	/* play animation */
-	LE_SetThink(le, NULL);
-	if (!le->invis)
-		R_AnimChange(&le->as, le->model1, va("death%i", LE_GetAnimationIndexForDeath(le)));
-	R_AnimAppend(&le->as, le->model1, va("dead%i", LE_GetAnimationIndexForDeath(le)));
+	LE_SetThink(le, LET_StartIdle);
 
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team) {
 		const character_t *chr = CL_ActorGetChr(le);
 		if (chr) {
 			char tmpbuf[128];
-			if (LE_IsStunned(le)) {
-				Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was stunned\n"), chr->name);
-			} else {
-				Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was killed\n"), chr->name);
-			}
+			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was revitalised\n"), chr->name);
 			HUD_DisplayMessage(tmpbuf);
 		}
 	} else {
 		switch (le->team) {
 		case (TEAM_CIVILIAN):
-			if (LE_IsStunned(le))
-				HUD_DisplayMessage(_("A civilian was stunned.\n"));
-			else
-				HUD_DisplayMessage(_("A civilian was killed.\n"));
+			HUD_DisplayMessage(_("A civilian was revitalised.\n"));
 			break;
 		case (TEAM_ALIEN):
-			if (LE_IsStunned(le))
-				HUD_DisplayMessage(_("An alien was stunned.\n"));
-			else
-				HUD_DisplayMessage(_("An alien was killed.\n"));
+			HUD_DisplayMessage(_("An alien was revitalised.\n"));
 			break;
 		case (TEAM_PHALANX):
-			if (LE_IsStunned(le))
-				HUD_DisplayMessage(_("A soldier was stunned.\n"));
-			else
-				HUD_DisplayMessage(_("A soldier was killed.\n"));
+			HUD_DisplayMessage(_("A soldier was revitalised.\n"));
 			break;
 		default:
-			if (LE_IsStunned(le))
-				HUD_DisplayMessage(va(_("A member of team %i was stunned.\n"), le->team));
-			else
-				HUD_DisplayMessage(va(_("A member of team %i was killed.\n"), le->team));
+			HUD_DisplayMessage(va(_("A member of team %i was revitalised.\n"), le->team));
 			break;
 		}
 	}
 
-	CL_ActorPlaySound(le, SND_DEATH);
+	VectorCopy(player_maxs, le->maxs);
 
-	VectorCopy(player_dead_maxs, le->maxs);
-	CL_ActorRemoveFromTeamList(le);
+	/* add team members to the actor list */
+	CL_ActorAddToTeamList(le);
 
-	/* update pathing as we maybe can walk onto the dead actor now */
+	/* update pathing as we maybe not can walk onto this actor anymore */
 	CL_ActorConditionalMoveCalc(selActor);
 	LE_Unlock(le);
 }

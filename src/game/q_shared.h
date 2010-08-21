@@ -107,6 +107,7 @@ typedef enum {
 	EV_ACTOR_THROW,
 
 	EV_ACTOR_DIE,
+	EV_ACTOR_REVITALISED,
 	EV_ACTOR_STATS,
 	EV_ACTOR_STATECHANGE,	/**< set an actor to crouched or reaction fire */
 	EV_ACTOR_RESERVATIONCHANGE,

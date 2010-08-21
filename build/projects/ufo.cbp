@@ -372,6 +372,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorstats.h" />
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorrevitalised.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorrevitalised.h" />
 		<Unit filename="../../src/client/battlescape/events/event/actor/e_event_actorthrow.c">
 			<Option compilerVar="CC" />
 		</Unit>
