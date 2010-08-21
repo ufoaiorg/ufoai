@@ -6,7 +6,7 @@ window keybinding {
 		closebutton	true
 		image		"ui/popup_alpha_tile"
 		string		"_Key bindings"
-		noticepos	"20 60"
+		noticepos	"512 60"
 	}
 
 	keybinding push
