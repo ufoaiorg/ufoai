@@ -302,6 +302,7 @@ typedef struct stats_s {
 	int moneyResearch;
 	int moneyWeapons;
 	int ufosDetected;
+	int alienBasesBuilt;
 } stats_t;
 
 /** campaign definition */
@@ -450,8 +451,8 @@ typedef struct ccs_s {
 	/* used for unique aircraft ids */
 	int numAircraft;
 
-	alienBase_t alienBases[MAX_ALIEN_BASES];		/**< Alien bases spawned in game */
-	int numAlienBases;							/**< Number of alien bases in game */
+	/* == Alien bases == */
+	linkedList_t *alienBases;
 
 	/* == Nations == */
 	nation_t nations[MAX_NATIONS];

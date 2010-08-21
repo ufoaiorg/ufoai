@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_ALIENBASE_H
 #define CLIENT_CL_ALIENBASE_H
 
-#define MAX_ALIEN_BASES		8
-
 /** @brief Alien Base */
 typedef struct alienBase_s {
 	int idx;				/**< idx of base in alienBases[] */
@@ -36,17 +34,22 @@ typedef struct alienBase_s {
 						 * and base is known if stealth < 0 */
 } alienBase_t;
 
+alienBase_t* AB_GetNext(alienBase_t *lastBase);
+alienBase_t* AB_GetByIDX(int baseIDX);
+
+#define AB_Exists() (AB_GetNext(NULL) != NULL)
+
 void AB_SetAlienBasePosition(vec2_t pos);
 alienBase_t* AB_BuildBase(const vec2_t pos);
 void AB_DestroyBase(alienBase_t *base);
-alienBase_t* AB_GetBase(int baseIDX, qboolean checkIdx);
 void AB_UpdateStealthForAllBase(void);
 void AB_BaseSearchedByNations(void);
 qboolean AB_CheckSupplyMissionPossible(void);
 alienBase_t* AB_ChooseBaseToSupply(void);
 void AB_SupplyBase(alienBase_t *base, qboolean decreaseStealth);
 int AB_GetAlienBaseNumber(void);
-void AB_InitStartup(void);
 void CP_SpawnAlienBaseMission(alienBase_t *alienBase);
+
+void AB_InitStartup(void);
 
 #endif	/* CLIENT_CL_ALIENBASE_H */

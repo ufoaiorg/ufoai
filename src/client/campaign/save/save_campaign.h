@@ -62,6 +62,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CAMPAIGN_MONEYRESEARCH "moneyResearch"
 #define SAVE_CAMPAIGN_MONEYWEAPONS "moneyWeapons"
 #define SAVE_CAMPAIGN_UFOSDETECTED "UFOsDetected"
+#define SAVE_CAMPAIGN_ALIENBASESBUILT "alienBasesBuilt"
 
 #define SAVE_CAMPAIGN_MAPDEFSTAT "mapDefStat"
 #define SAVE_CAMPAIGN_MAPDEF "mapDef"
@@ -118,6 +119,7 @@ DTD:
 	monexBases					CDATA	'0'
 	moneyWeapons				CDATA	'0'
 	UFOsDetected				CDATA	'0'
+	alienBasesBuilt				CDATA	'0'
 >
 
 <!ELEMENT mapDefStat mapDef*>

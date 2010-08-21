@@ -2093,9 +2093,8 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 		case INTERESTCATEGORY_SUPPLY:
 			{
 				int baseIDX = mxml_GetInt(node, SAVE_MISSIONS_ALIENBASEINDEX, BYTES_NONE);
-				/* don't check baseidx value here: alien bases are not loaded yet */
 				if (baseIDX != BYTES_NONE) {
-					alienBase_t *alienBase = AB_GetBase(baseIDX, qfalse);
+					alienBase_t *alienBase = AB_GetByIDX(baseIDX);
 					mission.data = (void *) alienBase;
 				}
 				if (!mission.data && !CP_BasemissionIsSubvertingGovernmentMission(&mission) && (mission.stage >= STAGE_BUILD_BASE)) {

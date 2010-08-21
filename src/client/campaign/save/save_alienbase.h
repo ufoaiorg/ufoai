@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define SAVE_ALIENBASE_ALIENBASES "alienBases"
 #define SAVE_ALIENBASE_BASE "base"
+#define SAVE_ALIENBASE_IDX "idx"
 #define SAVE_ALIENBASE_POS "pos"
 #define SAVE_ALIENBASE_SUPPLY "supply"
 #define SAVE_ALIENBASE_STEALTH "stealth"
@@ -40,6 +41,7 @@ DTD:
 
 <!ELEMENT base pos>
 <!ATTLIST base
+	idx			CDATA		#REQUIRED
 	supply		CDATA		'0'
 	stealth		CDATA		'0.0'
 >

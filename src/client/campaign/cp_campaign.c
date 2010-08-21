@@ -903,6 +903,7 @@ qboolean STATS_SaveXML (mxml_node_t *parent)
 	mxml_AddIntValue(stats, SAVE_CAMPAIGN_MONEYRESEARCH, ccs.campaignStats.moneyResearch);
 	mxml_AddIntValue(stats, SAVE_CAMPAIGN_MONEYWEAPONS, ccs.campaignStats.moneyWeapons);
 	mxml_AddIntValue(stats, SAVE_CAMPAIGN_UFOSDETECTED, ccs.campaignStats.ufosDetected);
+	mxml_AddIntValue(stats, SAVE_CAMPAIGN_ALIENBASESBUILT, ccs.campaignStats.alienBasesBuilt);
 	return qtrue;
 }
 
@@ -935,6 +936,10 @@ qboolean STATS_LoadXML (mxml_node_t *parent)
 	ccs.campaignStats.moneyResearch = mxml_GetInt(stats, SAVE_CAMPAIGN_MONEYRESEARCH, 0);
 	ccs.campaignStats.moneyWeapons = mxml_GetInt(stats, SAVE_CAMPAIGN_MONEYWEAPONS, 0);
 	ccs.campaignStats.ufosDetected = mxml_GetInt(stats, SAVE_CAMPAIGN_UFOSDETECTED, 0);
+	ccs.campaignStats.alienBasesBuilt = mxml_GetInt(stats, SAVE_CAMPAIGN_ALIENBASESBUILT, 0);
+	/* fallback for savegame compatibility */
+	if (ccs.campaignStats.alienBasesBuilt == 0)
+		ccs.campaignStats.alienBasesBuilt = AB_GetAlienBaseNumber();
 	/* freeing the memory below this node */
 	mxmlDelete(stats);
 	return qtrue;
