@@ -305,7 +305,7 @@ static void G_ActorStun (edict_t * ent, const edict_t *attacker)
 		level.num_stuns[attacker->team][ent->team]++;
 }
 
-void G_ActorRevitalise (edict_t *ent)
+static void G_ActorRevitalise (edict_t *ent)
 {
 	if (G_IsStunned(ent)) {
 		G_RemoveStunned(ent);
@@ -322,6 +322,15 @@ void G_ActorRevitalise (edict_t *ent)
 
 	/* calc new vis for this player */
 	G_CheckVisTeamAll(ent->team, qfalse, ent);
+}
+
+void G_ActorCheckRevitalise (edict_t *ent)
+{
+	if (ent->STUN < ent->HP) {
+		G_ActorRevitalise(ent);
+		G_EventActorRevitalise(ent);
+		G_SendStats(ent);
+	}
 }
 
 static void G_ActorDie (edict_t * ent, const edict_t *attacker)

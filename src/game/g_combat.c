@@ -392,10 +392,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 				if (G_IsStunned(target)) {
 					/* reduce STUN */
 					target->STUN += damage;
-					if (target->STUN < target->HP) {
-						G_ActorRevitalise(target);
-						G_EventActorRevitalise(target);
-					}
+					G_ActorCheckRevitalise(target);
 				}
 			} else {
 				/* Real damage was dealt. */

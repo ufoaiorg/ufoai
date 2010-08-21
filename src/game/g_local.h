@@ -324,7 +324,7 @@ void G_ActorReserveTUs(edict_t *ent, int resReaction, int resShot, int resCrouch
 int G_ActorGetTUForReactionFire(const edict_t *ent);
 int G_ActorUsableTUs(const edict_t *ent);
 int G_ActorGetReservedTUs(const edict_t *ent);
-void G_ActorRevitalise(edict_t *ent);
+void G_ActorCheckRevitalise(edict_t *ent);
 
 /* g_mission.c */
 qboolean G_MissionTouch(edict_t *self, edict_t *activator);

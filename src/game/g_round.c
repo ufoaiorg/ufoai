@@ -97,8 +97,6 @@ static int G_PlayerSoldiersCount (const player_t* player)
  * @brief Regenerate the "STUN" value of each (partly) stunned team member.
  * @note The values are @b not sent via network. This is done in
  * @c G_GiveTimeUnits. It @b has to be called afterwards.
- * Fully stunned team members are not considered here (yet) - they remain
- * fully stunned (i.e. on the floor).
  * @param[in] team The index of the team to update the values for.
  * @sa G_GiveTimeUnits
  * @todo Make this depend on the character-attributes. http://lists.cifrid.net/pipermail/ufoai/2008-February/000346.html
@@ -114,6 +112,8 @@ static void G_UpdateStunState (int team)
 				ent->STUN = 0;
 			else
 				ent->STUN -= regen;
+
+			G_ActorCheckRevitalise(ent);
 		}
 	}
 }
