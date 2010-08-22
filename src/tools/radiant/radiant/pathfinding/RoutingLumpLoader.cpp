@@ -11,6 +11,7 @@
 #include "../../../game/q_shared.h"
 #include "../../../common/qfiles.h"
 #define COMPILE_MAP
+typedef int mapTiles_t;
 #include "../../../common/routing.h"
 
 namespace routing
