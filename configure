@@ -6141,6 +6141,12 @@ fi
 	else
 		HAVE_SDL_mixer=no
 	fi
+
+	OLD_CFLAGS=$CPPFLAGS
+	OLD_LDFLAGS=$LDFLAGS
+	CPPFLAGS=$SDL_CFLAGS
+	LDFLAGS=$SDL_LIBS
+
 	if test "x$HAVE_SDL_mixer" = "xno" ; then
 		LIBS=
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing Mix_OpenAudio" >&5
@@ -6205,11 +6211,6 @@ fi
 		fi
 		SDL_mixer_LIBS=$LIBS
 	fi
-
-	OLD_CFLAGS=$CPPFLAGS
-	OLD_LDFLAGS=$LDFLAGS
-	CPPFLAGS=$SDL_CFLAGS
-	LDFLAGS=$SDL_LIBS
 
 	LIBS=
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing TTF_Init" >&5

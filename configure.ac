@@ -522,6 +522,12 @@ then
 	else
 		HAVE_SDL_mixer=no
 	fi
+
+	OLD_CFLAGS=$CPPFLAGS
+	OLD_LDFLAGS=$LDFLAGS
+	CPPFLAGS=$SDL_CFLAGS
+	LDFLAGS=$SDL_LIBS
+
 	if test "x$HAVE_SDL_mixer" = "xno" ; then
 		LIBS=
 		AC_SEARCH_LIBS([Mix_OpenAudio],[SDL_mixer])
@@ -531,11 +537,6 @@ then
 		fi
 		SDL_mixer_LIBS=$LIBS
 	fi
-
-	OLD_CFLAGS=$CPPFLAGS
-	OLD_LDFLAGS=$LDFLAGS
-	CPPFLAGS=$SDL_CFLAGS
-	LDFLAGS=$SDL_LIBS
 
 	LIBS=
 	AC_SEARCH_LIBS([TTF_Init],[SDL_ttf],[],[],[-lfreetype -lz])
