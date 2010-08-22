@@ -2080,7 +2080,6 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 		case INTERESTCATEGORY_RESCUE:
 			{
 				const int aircraftIdx = mxml_GetInt(node, SAVE_MISSIONS_CRASHED_AIRCRAFT, -1);
-				/** @todo aircraft are not yet loaded */
 				mission.data = (void *) AIR_AircraftGetFromIDX(aircraftIdx);
 				if (mission.data == NULL) {
 					Com_Printf("Error while loading rescue mission (missionidx %i, aircraftidx: %i, category: %i, stage: %i)\n",
