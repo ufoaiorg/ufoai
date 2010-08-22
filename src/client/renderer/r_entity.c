@@ -505,6 +505,19 @@ static qboolean R_CullEntity (entity_t *e)
 }
 
 /**
+ * @brief Compare two entities according to their distance
+ * @param[in] ent1 The first entity
+ * @param[in] ent2 The second entity
+ * @return An integer less than, equal to, or greater than zero if ent1 is
+ * found, respectively, to be less than, to match, or be greater than ent2
+ * @note sort function pointer for qsort
+ */
+static int R_SortEntities (const void *ent1, const void *ent2)
+{
+	return ((const entity_t*)ent1)->distanceFromViewOrigin > ((const entity_t*)ent2)->distanceFromViewOrigin;
+}
+
+/**
  * @brief Primary entry point for drawing all entities.
  * @sa R_RenderFrame
  */
@@ -521,6 +534,8 @@ void R_DrawEntities (void)
 
 	r_bsp_entities = r_opaque_mesh_entities = r_special_entities =
 		r_blend_mesh_entities = r_null_entities = NULL;
+
+	qsort(r_entities, refdef.numEntities, sizeof(entity_t), R_SortEntities);
 
 	for (i = 0; i < refdef.numEntities; i++) {
 		entity_t *e = &r_entities[i];
@@ -609,6 +624,10 @@ int R_AddEntity (const entity_t *ent)
 	if (ent->model && ent->model->type == mod_bsp)
 		return -1;
 
-	r_entities[refdef.numEntities++] = *ent;
+	r_entities[refdef.numEntities] = *ent;
+	r_entities[refdef.numEntities].distanceFromViewOrigin = VectorDist(ent->origin, refdef.viewOrigin);
+
+	refdef.numEntities++;
+
 	return refdef.numEntities - 1;
 }

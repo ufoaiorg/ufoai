@@ -67,6 +67,7 @@ typedef struct entity_s {
 	int skinnum;
 	float alpha;				/**< ignore if RF_TRANSLUCENT isn't set */
 	int flags;
+	float distanceFromViewOrigin;
 
 	qboolean isOriginBrushModel;	/**< true for bmodels that have an origin set */
 

@@ -58,12 +58,11 @@ void S_FreeChannel (int c)
  */
 void S_SpatializeChannel (const s_channel_t *ch)
 {
-	vec3_t origin, delta;
+	vec3_t delta;
 	float dist, angle;
 	const int c = (int)((ptrdiff_t)(ch - s_env.channels));
 
-	VectorCopy(ch->org, origin);
-	VectorSubtract(origin, cl.cam.camorg, delta);
+	VectorSubtract(ch->org, cl.cam.camorg, delta);
 
 	dist = VectorNormalize(delta) * snd_distance_scale->value * ch->atten;
 
