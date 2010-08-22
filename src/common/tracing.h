@@ -69,7 +69,7 @@ typedef struct trace_s {
 	cBspSurface_t *surface;	    /**< surface hit */
 	int planenum;				/**< index of the plane hit, used for map debugging */
 	int contentFlags;			/**< contents on other side of surface hit */
-	int leafnum;
+	int32_t leafnum;
 	int mapTile;				/**< the map tile we hit something */
 	struct le_s *le;			/**< not set by CM_*() functions */
 	struct edict_s *ent;		/**< not set by CM_*() functions */
@@ -108,12 +108,12 @@ BOX AND LINE TRACING
 
 int TR_BoxOnPlaneSide(const vec3_t mins, const vec3_t maxs, const TR_PLANE_TYPE *plane);
 
-void TR_BuildTracingNode_r(TR_TILE_TYPE *tile, tnode_t **tnode, int32_t node, int level);
+void TR_BuildTracingNode_r(TR_TILE_TYPE *tile, tnode_t **tnode, int32_t nodenum, int level);
 
 #ifdef COMPILE_MAP
 trace_t TR_SingleTileBoxTrace(mapTiles_t *mapTiles, const vec3_t start, const vec3_t end, const box_t* traceBox, const int levelmask, const int brushmask, const int brushreject);
 #endif
-int TR_TestLine_r(TR_TILE_TYPE *tile, int32_t node, const vec3_t start, const vec3_t stop);
+int TR_TestLine_r(TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, const vec3_t stop);
 trace_t TR_BoxTrace(TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const float fraction);
 
 qboolean TR_TestLine(mapTiles_t *mapTiles, const vec3_t start, const vec3_t stop, const int levelmask);

@@ -65,9 +65,9 @@ static void TR_MakeTracingNode (TR_TILE_TYPE *tile, tnode_t ** tnode, int32_t no
 
 	for (i = 0; i < 2; i++) {
 		if (node->children[i] < 0) {	/* is it a leaf ? */
-			const int index = -(node->children[i]) - 1;
-			const TR_LEAF_TYPE *leaf = &tile->leafs[index];
-			const int contentFlags = leaf->contentFlags & ~(1 << 31);
+			const int32_t leafnum = -(node->children[i]) - 1;
+			const TR_LEAF_TYPE *leaf = &tile->leafs[leafnum];
+			const uint32_t contentFlags = leaf->contentFlags & ~(1 << 31);
 			if ((contentFlags & (CONTENTS_SOLID | MASK_CLIP)) && !(contentFlags & CONTENTS_PASSABLE))
 				t->children[i] = -node->children[i] | (1 << 31);	/* mark as 'blocking' */
 			else
@@ -87,25 +87,25 @@ static void TR_MakeTracingNode (TR_TILE_TYPE *tile, tnode_t ** tnode, int32_t no
  * @sa CMod_LoadNodes
  * @sa R_ModLoadNodes
  */
-void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, tnode_t ** tnode, int32_t node, int level)
+void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, tnode_t ** tnode, int32_t nodenum, int level)
 {
-	assert(node < tile->numnodes + 6); /* +6 => bbox */
+	assert(nodenum < tile->numnodes + 6); /* +6 => bbox */
 
 	/**
 	 *  We are checking for a leaf in the tracing node.  For ufo2map, planenum == PLANENUMLEAF.
 	 *  For the game, plane will be NULL.
 	 */
 #ifdef COMPILE_UFO
-	if (!tile->nodes[node].plane) {
+	if (!tile->nodes[nodenum].plane) {
 #else
-	if (tile->nodes[node].planenum == PLANENUM_LEAF) {
+	if (tile->nodes[nodenum].planenum == PLANENUM_LEAF) {
 #endif
 		TR_NODE_TYPE *n;
 		tnode_t *t;
 		vec3_t c0maxs, c1mins;
 		int i;
 
-		n = &tile->nodes[node];
+		n = &tile->nodes[nodenum];
 
 		/* alloc new node */
 		t = (*tnode)++;
@@ -152,12 +152,12 @@ void TR_BuildTracingNode_r (TR_TILE_TYPE *tile, tnode_t ** tnode, int32_t node, 
 		}
 	} else {
 		/* Make a lookup table */
-		tile->cheads[tile->numcheads].cnode = node;
+		tile->cheads[tile->numcheads].cnode = nodenum;
 		tile->cheads[tile->numcheads].level = level;
 		tile->numcheads++;
 		assert(tile->numcheads <= MAX_MAP_NODES);
 		/* Make the tracing node. */
-		TR_MakeTracingNode(tile, tnode, node);
+		TR_MakeTracingNode(tile, tnode, nodenum);
 	}
 }
 
@@ -171,14 +171,14 @@ LINE TRACING - TEST FOR BRUSH PRESENCE
 
 /**
  * @param[in] tile The map tile containing the structures to be traced.
- * @param[in] node Node index
+ * @param[in] nodenum Node index
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @return zero if the line is not blocked, else a positive value
  * @sa TR_TestLineDist_r
  * @sa CM_TestLine
  */
-int TR_TestLine_r (TR_TILE_TYPE *tile, int32_t node, const vec3_t start, const vec3_t stop)
+int TR_TestLine_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, const vec3_t stop)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -186,10 +186,10 @@ int TR_TestLine_r (TR_TILE_TYPE *tile, int32_t node, const vec3_t start, const v
 
 	/* negative numbers indicate leaf nodes. Empty leaf nodes are marked as (1 << 31).
 	 * Turning off that bit makes us return 0 or the positive node number to indicate blocking. */
-	if (node & (1 << 31))
-		return node & ~(1 << 31);
+	if (nodenum & (1 << 31))
+		return nodenum & ~(1 << 31);
 
-	tnode = &tile->tnodes[node];
+	tnode = &tile->tnodes[nodenum];
 	assert(tnode);
 	switch (tnode->type) {
 	case PLANE_X:
@@ -301,14 +301,14 @@ LINE TRACING - TEST FOR BRUSH LOCATION
 
 /**
  * @param[in] tile The map tile containing the structures to be traced.
- * @param[in] node Node index
+ * @param[in] nodenum Node index
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @param[in,out] tr_end used to hold the point on a line that an obstacle is encountered.
  * @sa TR_TestLine_r
  * @sa TR_TestLineDM
  */
-static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int32_t node, const vec3_t start, const vec3_t stop, vec3_t tr_end)
+static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int32_t nodenum, const vec3_t start, const vec3_t stop, vec3_t tr_end)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -317,14 +317,14 @@ static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int32_t node, const vec3_t sta
 	int side;
 	int r;
 
-	if (node & (1 << 31)) {
-		r = node & ~(1 << 31);
+	if (nodenum & (1 << 31)) {
+		r = nodenum & ~(1 << 31);
 		if (r)
 			VectorCopy(start, tr_end);
 		return r;				/* leaf node */
 	}
 
-	tnode = &tile->tnodes[node];
+	tnode = &tile->tnodes[nodenum];
 	assert(tnode);
 	switch (tnode->type) {
 	case PLANE_X:
@@ -749,7 +749,7 @@ static void TR_TestBoxInBrush (boxtrace_t *traceData, cBspBrush_t * brush)
  *  is intersected by the line drawn in TR_RecursiveHullCheck or is within the bounding box set in trace_mins and
  *  trace_maxs with the origin on the line.
  */
-static void TR_TraceToLeaf (boxtrace_t *traceData, int leafnum)
+static void TR_TraceToLeaf (boxtrace_t *traceData, int32_t leafnum)
 {
 	int k;
 	TR_LEAF_TYPE *leaf;
@@ -818,7 +818,7 @@ static void TR_TestInLeaf (boxtrace_t *traceData, int32_t leafnum)
 
 /**
  * @param[in] traceData both parameters and results of the trace
- * @param[in] num the node index that we are looking in for a hit
+ * @param[in] nodenum the node index that we are looking in for a hit
  * @param[in] p1f based on the original line, the fraction traveled to reach the start vector
  * @param[in] p2f based on the original line, the fraction traveled to reach the end vector
  * @param[in] p1 start vector
@@ -833,7 +833,7 @@ static void TR_TestInLeaf (boxtrace_t *traceData, int32_t leafnum)
  *  using trace_extents.  Trace_extents is specifically how far from the line a bsp node needs
  *  to be in order to be included or excluded in the search.
  */
-static void TR_RecursiveHullCheck (boxtrace_t *traceData, int num, float p1f, float p2f, const vec3_t p1, const vec3_t p2)
+static void TR_RecursiveHullCheck (boxtrace_t *traceData, int32_t nodenum, float p1f, float p2f, const vec3_t p1, const vec3_t p2)
 {
 	TR_NODE_TYPE *node;
 	TR_PLANE_TYPE *plane;
@@ -848,16 +848,16 @@ static void TR_RecursiveHullCheck (boxtrace_t *traceData, int num, float p1f, fl
 		return;					/* already hit something nearer */
 
 	/* if < 0, we are in a leaf node */
-	if (num <= LEAFNODE) {
-		TR_TraceToLeaf(traceData, LEAFNODE - num);
+	if (nodenum <= LEAFNODE) {
+		TR_TraceToLeaf(traceData, LEAFNODE - nodenum);
 		return;
 	}
 
-	assert(num < MAX_MAP_NODES);
+	assert(nodenum < MAX_MAP_NODES);
 
 	/* find the point distances to the seperating plane
 	 * and the offset for the size of the box */
-	node = myTile->nodes + num;
+	node = myTile->nodes + nodenum;
 
 #ifdef COMPILE_UFO
 	plane = node->plane;
