@@ -1,0 +1,70 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 1026 1024 6 ) ( 1026 0 6 ) ( 2 1024 6 ) tex_terrain/dummy -0 0 0 0.25 0.25 65280 0 0
+( 1024 1024 256 ) ( 0 1024 256 ) ( 1024 1024 0 ) tex_common/nodraw -0 0 0 0.25 0.25
+( 1024 1024 256 ) ( 1024 1024 0 ) ( 1024 0 256 ) tex_common/nodraw -0 0 0 0.25 0.25
+( 0 0 0 ) ( 1024 0 0 ) ( 0 1024 0 ) tex_common/nodraw -0 0 0 0.25 0.25
+( 0 0 0 ) ( 0 0 256 ) ( 1024 0 0 ) tex_common/nodraw -0 0 0 0.25 0.25
+( 0 0 0 ) ( 0 1024 0 ) ( 0 0 256 ) tex_common/nodraw -0 0 0 0.25 0.25
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "512 584 0"
+"model" "models/objects/aircraft/crash_inter_starchaser/part1.md2"
+"skin" "0"
+}
+// entity 2
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "384 488 0"
+"model" "models/objects/aircraft/crash_inter_starchaser/part2.md2"
+"skin" "0"
+}
+// entity 3
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "360 288 0"
+"model" "models/objects/aircraft/crash_inter_starchaser/part3.md2"
+"skin" "0"
+}
+// entity 4
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "200 464 0"
+"model" "models/objects/aircraft/crash_inter_starchaser/part4.md2"
+"skin" "0"
+}
+// entity 5
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "680 904 0"
+"model" "models/objects/aircraft/crash_inter_starchaser/part5.md2"
+"skin" "0"
+}
+// entity 6
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "312 680 0"
+"model" "models/objects/aircraft/crash_inter_starchaser/part6.md2"
+"skin" "0"
+}
+// entity 7
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "256 584 0"
+"model" "models/objects/aircraft/crash_inter_starchaser/part7.md2"
+"skin" "0"
+}

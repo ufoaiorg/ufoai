@@ -1,0 +1,38 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 1026 1024 6 ) ( 1026 0 6 ) ( 2 1024 6 ) tex_terrain/dummy -0 0 0 0.25 0.25 65280 0 0
+( 1024 1024 256 ) ( 0 1024 256 ) ( 1024 1024 0 ) tex_common/nodraw -0 0 0 0.25 0.25
+( 1024 1024 256 ) ( 1024 1024 0 ) ( 1024 0 256 ) tex_common/nodraw -0 0 0 0.25 0.25
+( 0 0 0 ) ( 1024 0 0 ) ( 0 1024 0 ) tex_common/nodraw -0 0 0 0.25 0.25
+( 0 0 0 ) ( 0 0 256 ) ( 1024 0 0 ) tex_common/nodraw -0 0 0 0.25 0.25
+( 0 0 0 ) ( 0 1024 0 ) ( 0 0 256 ) tex_common/nodraw -0 0 0 0.25 0.25
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "432 552 0"
+"model" "models/objects/aircraft/crash_inter_dragon/part1.md2"
+"skin" "0"
+}
+// entity 2
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "232 680 0"
+"model" "models/objects/aircraft/crash_inter_dragon/part2.md2"
+"skin" "0"
+}
+// entity 3
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "256 288 0"
+"model" "models/objects/aircraft/crash_inter_dragon/part3.md2"
+"skin" "0"
+}
