@@ -188,17 +188,17 @@ void DoAbout (void)
 							list = tmp;
 						}
 					}
-					if (!strstr(list, "jpeg")) {
+					if (list && !strstr(list, "jpeg")) {
 						gchar *tmp =  g_strconcat(list, "\n<b>No JPEG support</b>\n", (void *)0);
 						g_free(list);
 						list = tmp;
 					}
-					if (!strstr(list, "png")) {
+					if (list && !strstr(list, "png")) {
 						gchar *tmp =  g_strconcat(list, "\n<b>No PNG support</b>\n", (void *)0);
 						g_free(list);
 						list = tmp;
 					}
-					if (!strstr(list, "tga")) {
+					if (list && !strstr(list, "tga")) {
 						gchar *tmp =  g_strconcat(list, "\n<b>No TGA support</b>\n", (void *)0);
 						g_free(list);
 						list = tmp;
@@ -206,7 +206,7 @@ void DoAbout (void)
 					g_slist_free(formats);
 
 					GtkLabel* label = GTK_LABEL(gtk_label_new((const gchar*) 0));
-					gtk_label_set_markup(label, list);
+					gtk_label_set_markup(label, list ? list : "");
 					gtk_widget_show(GTK_WIDGET(label));
 					gtk_table_attach(table, GTK_WIDGET(label), 1, 2, 3, 4,
 									(GtkAttachOptions) (GTK_FILL),
