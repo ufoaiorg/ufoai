@@ -1075,6 +1075,14 @@ base/models/objects/aircraft/crash_inter_saracen/part4.md2 | GNU General Public 
 base/models/objects/aircraft/crash_inter_saracen/part5.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/crash_inter_saracen/part6.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/crash_inter_saracen/saracen.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/aircraft/crash_inter_starchaser/part1.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/aircraft/crash_inter_starchaser/part2.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/aircraft/crash_inter_starchaser/part3.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/aircraft/crash_inter_starchaser/part4.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/aircraft/crash_inter_starchaser/part5.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/aircraft/crash_inter_starchaser/part6.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/aircraft/crash_inter_starchaser/part7.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/aircraft/crash_inter_starchaser/starchaser.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/fighter/fighter.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/fighter/fighter.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/aircraft/heli/heli.jpg | GNU General Public License 2.0 | Cem Cimrin | heli_uvw.tga
