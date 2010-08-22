@@ -1848,7 +1848,7 @@ particle Smokez
 {
 	init
 	{
-		image  sfx/plasmaball2
+		image  sfx/plasmaball
 		blend  add
 		style  facing
 		thinkfade  saw
@@ -1878,7 +1878,7 @@ particle Firez
 {
 	init
 	{
-		image  sfx/plasmaball2
+		image  sfx/plasmaball
 		blend  add
 		style  facing
 		thinkfade  out
