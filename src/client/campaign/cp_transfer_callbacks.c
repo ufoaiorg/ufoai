@@ -53,10 +53,10 @@ static const int MAX_TRANSLIST_MENU_ENTRIES = 21;
  * @brief Counts the stunned aliens in the cargo of the aircraft.
  * @param[in] transferAircraft with the stunned aliens.
  */
-static int TR_CountStunnedAliensInCargo (aircraft_t *transferAircraft)
+static int TR_CountStunnedAliensInCargo (const aircraft_t *transferAircraft)
 {
 	int stunnedAliens = 0;
-	aliensTmp_t *cargo = AL_GetAircraftAlienCargo(transferAircraft);
+	const aliensTmp_t *cargo = AL_GetAircraftAlienCargo(transferAircraft);
 
 	if (cargo) {
 		int i;
@@ -114,9 +114,10 @@ static void TR_TransferAliensFromMission_f (void)
 		return;
 	}
 
-	aircraft = AIR_AircraftGetFromIDX(atoi(Cmd_Argv(1)));
-
+	i = atoi(Cmd_Argv(1));
+	aircraft = AIR_AircraftGetFromIDX(i);
 	if (!aircraft) {
+		Com_Printf("Usage: No aircraft with index %i\n", i);
 		return;
 	}
 
