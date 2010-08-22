@@ -284,27 +284,6 @@ typedef struct missionResults_s {
 	int civiliansSurvived;
 } missionResults_t;
 
-typedef struct stats_s {
-	int missions;				/**< all missions (used for unique mission idx generation) */
-	int missionsWon;
-	int missionsLost;
-	int basesBuilt;
-	int basesAttacked;
-	int installationsBuild;
-	int interceptions;
-	int soldiersLost;
-	int soldiersNew;			/**< new recruits */
-	int killedAliens;
-	int rescuedCivilians;
-	int researchedTechnologies;
-	int moneyInterceptions;
-	int moneyBases;
-	int moneyResearch;
-	int moneyWeapons;
-	int ufosDetected;
-	int alienBasesBuilt;
-} stats_t;
-
 /** campaign definition */
 typedef struct campaign_s {
 	int idx;					/**< own index in global campaign array */

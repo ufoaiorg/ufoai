@@ -26,8 +26,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_STATISTICS_H
 #define CP_STATISTICS_H
 
+typedef struct stats_s {
+	int missions;				/**< all missions (used for unique idx generation) */
+	int missionsWon;
+	int missionsLost;
+	int basesBuilt;
+	int basesAttacked;
+	int installationsBuild;
+	int interceptions;
+	int soldiersLost;
+	int soldiersNew;			/**< new recruits */
+	int killedAliens;
+	int rescuedCivilians;
+	int researchedTechnologies;
+	int moneyInterceptions;
+	int moneyBases;
+	int moneyResearch;
+	int moneyWeapons;
+	int ufosDetected;
+	int alienBasesBuilt;		/**< all alien bases (used for unique idx generation) */
+} stats_t;
+
 void CL_StatsUpdate_f(void);
 qboolean CP_LoadMapDefStatXML(mxml_node_t *parent);
 void STATS_InitStartup(void);
 
 #endif
+

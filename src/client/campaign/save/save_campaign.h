@@ -45,25 +45,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_CAMPAIGN_RADAROVERLAYWASSET "radarOverlayWasSet"
 #define SAVE_CAMPAIGN_XVISHOWMAP "XVIShowmap"
 
-#define SAVE_CAMPAIGN_STATS "stats"
-#define SAVE_CAMPAIGN_MISSIONS "missions"
-#define SAVE_CAMPAIGN_MISSIONSWON "missionsWon"
-#define SAVE_CAMPAIGN_MISSIONSLOST "missionsLost"
-#define SAVE_CAMPAIGN_BASESBUILT "basesBuilt"
-#define SAVE_CAMPAIGN_BASESATTACKED "basesAttacked"
-#define SAVE_CAMPAIGN_INTERCEPTIONS "interceptions"
-#define SAVE_CAMPAIGN_SOLDIERSLOST "soldiersLost"
-#define SAVE_CAMPAIGN_SOLDIERSNEW "soldiersNew"
-#define SAVE_CAMPAIGN_KILLEDALIENS "killedAliens"
-#define SAVE_CAMPAIGN_RESCUEDCIVILIANS "rescuedCivilians"
-#define SAVE_CAMPAIGN_RESEARCHEDTECHNOLOGIES "researchedTechnologies"
-#define SAVE_CAMPAIGN_MONEYINTERCEPTIONS "moneyInterceptions"
-#define SAVE_CAMPAIGN_MONEYBASES "moneyBases"
-#define SAVE_CAMPAIGN_MONEYRESEARCH "moneyResearch"
-#define SAVE_CAMPAIGN_MONEYWEAPONS "moneyWeapons"
-#define SAVE_CAMPAIGN_UFOSDETECTED "UFOsDetected"
-#define SAVE_CAMPAIGN_ALIENBASESBUILT "alienBasesBuilt"
-
 #define SAVE_CAMPAIGN_MAPDEFSTAT "mapDefStat"
 #define SAVE_CAMPAIGN_MAPDEF "mapDef"
 #define SAVE_CAMPAIGN_MAPDEF_ID "id"
@@ -100,26 +81,6 @@ DTD:
 <!ATTLIST date
 	day							CDATA	'0'
 	sec							CDATA	'0'
->
-
-<!ELEMENT stats EMPTY>
-<!ATTLIST stats
-	missions					CDATA	'0'
-	missionsWon					CDATA	'0'
-	missionsLost				CDATA	'0'
-	basesBuilt					CDATA	'0'
-	basesAttacked				CDATA	'0'
-	interceptions				CDATA	'0'
-	soldiersLost				CDATA	'0'
-	soldiersNew					CDATA	'0'
-	killedAliens				CDATA	'0'
-	rescuedCivilians			CDATA	'0'
-	researchedTechnologies		CDATA	'0'
-	moneyInterceptions			CDATA	'0'
-	monexBases					CDATA	'0'
-	moneyWeapons				CDATA	'0'
-	UFOsDetected				CDATA	'0'
-	alienBasesBuilt				CDATA	'0'
 >
 
 <!ELEMENT mapDefStat mapDef*>
