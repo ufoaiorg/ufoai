@@ -839,8 +839,8 @@ base/models/aliens/tamanmedium/head01_gm.png | GNU General Public License 2.0 | 
 base/models/aliens/tamanmedium/head02.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/head03.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/aliens/tamanmedium/head04.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
-base/models/animals/cow/cow.jpg |  | hullbr3ach
-base/models/animals/cow/cow.md2 |  | hullbr3ach
+base/models/animals/cow/cow.jpg | 
+base/models/animals/cow/cow.md2 | 
 base/models/animals/crocodile/croc.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/animals/crocodile/croc.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/animals/dog/dog.md2 | GNU General Public License 2.0 or later | Willem Sitters
@@ -849,8 +849,8 @@ base/models/animals/dog/dog_death.png | GNU General Public License 2.0 or later 
 base/models/animals/fish2/fish.anm | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/animals/fish2/fish.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/animals/fish2/fish.png | GNU General Public License 2.0 or later | Willem Sitters
-base/models/animals/penguin/penguin.jpg |  | hullbr3ach
-base/models/animals/penguin/penguin.md2 |  | hullbr3ach
+base/models/animals/penguin/penguin.jpg | 
+base/models/animals/penguin/penguin.md2 | 
 base/models/animals/rat/rat.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/animals/rat/rat.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/characters/al_kuhar.jpg | GNU General Public License 2.0 or later | Willem Sitters
