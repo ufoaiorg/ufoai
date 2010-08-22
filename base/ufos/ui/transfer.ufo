@@ -620,3 +620,45 @@ window transfer
 		cmd "trans_close;"
 	}
 }
+
+// ===============================
+// POPUP TRANSFER BASE SELECT LIST
+// ===============================
+window popup_transferbaselist
+{
+	{
+		pos			"264 262"
+		size		"496 247"
+		dragbutton	true
+		image		"ui/popup_alpha_tile"
+		string		"_Select base to transfer to"
+	}
+
+	string info
+	{
+		string		"_Choose a base to host alien bodies:"
+		pos			"26 54"
+		size		"450 20"
+	}
+
+	optionlist trans_baselist
+	{
+		cvar		*cvar:tr_base
+		dataid		OPTION_BASELIST
+		pos			"26 74"
+		size		"450 112"
+		onChange	{ cmd "trans_baselist_click <cvar:tr_base>;" }
+		onRClick	{ cmd "mn_pop; aircraft_return;" }
+	}
+
+	cmpCancelButton bt_cancel
+	{
+		pos			"266 188"
+		onClick		{ cmd "mn_pop; aircraft_return;" }
+	}
+
+	func onInit {
+		*cvar:tr_base = -1
+	}
+}
+

@@ -1156,10 +1156,22 @@ void CP_MissionIsOverByUFO (aircraft_t *ufocraft)
 }
 
 /**
- *
- * @param[in,out] mission
- * @param[in,out] aircraft
- * @param[in] won
+ * @brief Checks whether aliens can be stored on a base or should be transfered to another
+ * @param[in] base Pointer to the base to check if alien contaiment exists and have enough space
+ * @param[in] missionResults Pointer to the mission result struct to get captured alien numbers
+ */
+static inline qboolean CP_TransferOfAliensToOtherBaseNeeded (const base_t *base, const missionResults_t *missionResults)
+{
+	assert(missionResults);
+	return (missionResults->aliensStunned > 0 && !AL_CheckAliveFreeSpace(base, NULL, missionResults->aliensStunned))
+		|| (missionResults->aliensKilled > 0 && !AC_ContainmentAllowed(base));
+}
+
+/**
+ * @brief Actions to be done after mission finished
+ * @param[in,out] mission Pointer to the finished mission
+ * @param[in,out] aircraft Pointer to the dropship done the mission
+ * @param[in] won Boolean flag if thew mission was successful (from PHALANX's PoV)
  */
 void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, qboolean won)
 {
@@ -1253,7 +1265,9 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - num %i\n", numberOfSoldiers);
 
 	/* Check for alien containment in aircraft homebase. */
-	if (AL_GetAircraftAlienCargoTypes(aircraft) && B_FreeCapacity(base, CAP_ALIENS) <= 0) {
+	/** @todo this shouldn't be here. Ideally we should check for alien/store space when aircraft arrived
+		home and start a player controlled transfer */
+	if (CP_TransferOfAliensToOtherBaseNeeded(base, &ccs.missionResults)) {
 		/* We have captured/killed aliens, but the homebase of this aircraft does not have free alien containment space.
 		 * Popup aircraft transfer dialog to choose a better base. */
 		Cmd_ExecuteString(va("trans_aliens %i", aircraft->idx));

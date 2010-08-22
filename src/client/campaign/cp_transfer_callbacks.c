@@ -50,41 +50,47 @@ static const int MAX_TR_FACTORS = 500;
 static const int MAX_TRANSLIST_MENU_ENTRIES = 21;
 
 /**
+ * @brief Counts the stunned aliens in the cargo of the aircraft.
+ * @param[in] transferAircraft with the stunned aliens.
+ */
+static int TR_CountStunnedAliensInCargo (aircraft_t *transferAircraft)
+{
+	int stunnedAliens = 0;
+	aliensTmp_t *cargo = AL_GetAircraftAlienCargo(transferAircraft);
+
+	if (cargo) {
+		int i;
+		for (i = 0; i < MAX_CARGO; i++)
+			stunnedAliens += cargo[i].amountAlive;
+	}
+	return stunnedAliens;
+}
+
+/**
  * @brief Action to realize when clicking on Transfer Menu.
  * @note This menu is used when a dropship ending a mission collected alien bodies, but there's no alien cont. in home base
- * @sa TR_TransferAircraftMenu
+ * @sa TR_TransferAliensFromMission_f
  */
 static void TR_TransferBaseListClick_f (void)
 {
-	int num, baseIdx;
+	int num;
+	base_t *base;
+
+	assert(td.transferStartAircraft);
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <base list index>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <base index>\n", Cmd_Argv(0));
 		return;
 	}
 
 	num = atoi(Cmd_Argv(1));
-
-	/* skip base not displayed (see TR_TransferAircraftMenu) */
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
-
-		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
-			continue;
-
-		num--;
-		if (num <= 0) {
-			TR_TransferAlienAfterMissionStart(base, td.transferStartAircraft);
-			break;
-		}
-	}
-
-	if (baseIdx == MAX_BASES) {
+	base = B_GetFoundedBaseByIDX(num);
+	if (!base) {
 		Com_Printf("TR_TransferBaseListClick_f: baseIdx %i doesn't exist.\n", num);
 		return;
 	}
+
+	TR_TransferAlienAfterMissionStart(base, td.transferStartAircraft);
 }
 
 /**
@@ -93,43 +99,69 @@ static void TR_TransferBaseListClick_f (void)
  */
 static void TR_TransferAliensFromMission_f (void)
 {
+#if 0
+	const vec4_t green = {0.0f, 1.0f, 0.0f, 0.8f};
+	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
+	const vec4_t red = {1.0f, 0.0f, 0.0f, 0.8f};
+#endif
 	int i;
 	aircraft_t *aircraft;
-	linkedList_t *transfer = NULL;
+	int stunnedAliens;
+	uiNode_t *baseList = NULL;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <aircraft index>\n", Cmd_Argv(0));
 		return;
 	}
+
 	aircraft = AIR_AircraftGetFromIDX(atoi(Cmd_Argv(1)));
 
 	if (!aircraft) {
 		return;
 	}
 
+	stunnedAliens = TR_CountStunnedAliensInCargo(aircraft);
+
 	/* store the aircraft to be able to remove alien bodies */
 	td.transferStartAircraft = aircraft;
 
-	/* make sure that all tests here are the same than in TR_TransferBaseListClick_f */
 	for (i = 0; i < ccs.numBases; i++) {
-		const base_t *base = B_GetFoundedBaseByIDX(i);
+		base_t *base = B_GetFoundedBaseByIDX(i);
 		const char* string;
+		uiNode_t *option;
 		int freeSpace;
 
 		if (!base)
 			continue;
-
-		freeSpace = B_FreeCapacity(base, CAP_ALIENS);
-		/* don't display bases without free Alien Containment capacity */
-		if (freeSpace <= 0)
+		if (!AC_ContainmentAllowed(base))
 			continue;
+		freeSpace = B_FreeCapacity(base, CAP_ALIENS);
 
 		string = va(ngettext("(can host %i live alien)", "(can host %i live aliens)", freeSpace), freeSpace);
 		string = va("%s %s", base->name, string);
-		LIST_AddString(&transfer, string);
+		option = UI_AddOption(&baseList, va("base%i", base->idx), string, va("%i", base->idx));
+#if 0
+		/** @todo ui code doesn't support this yet... */
+		if (freeSpace >= stunnedAliens) {
+			Vector4Copy(green, option->color);
+			option->tooltip = _("Has free space for all captured aliens.");
+		} else if (freeSpace > 0) {
+			Vector4Copy(yellow, option->color);
+			option->tooltip = _("Has free space for some captured aliens, others will die.");
+		} else {
+			Vector4Copy(red, option->color);
+			option->tooltip = _("Doesn't have free space captured aliens, only dead ones can be stored.");
+		}
+#endif
 	}
-	UI_RegisterLinkedListText(TEXT_LIST, transfer);
-	UI_PushWindow("popup_transferbaselist", NULL);
+
+	if (baseList != NULL){
+		UI_RegisterOption(OPTION_BASELIST, baseList);
+		UI_PushWindow("popup_transferbaselist", NULL);
+	} else {
+		/** @todo send a message (?) */
+		Com_Printf("TR_TransferAliensFromMission_f: No base with alien containment available.\n");
+	}
 }
 
 /**

@@ -887,45 +887,6 @@ window popup_baseattack
 	}
 }
 
-// ===============================
-// POPUP TRANSFER BASE SELECT LIST
-// ===============================
-window popup_transferbaselist
-{
-	{
-		pos			"264 262"
-		size		"496 247"
-		dragbutton	true
-		image		"ui/popup_alpha_tile"
-		string		"_Select base to transfer to"
-	}
-
-	string info
-	{
-		string		"_Choose a base to host alien bodies:"
-		pos			"26 54"
-		size		"450 20"
-	}
-
-	textlist trans_baselist
-	{
-		dataid		TEXT_LIST
-		pos			"26 74"
-		size		"450 112"
-		lineheight	16
-		tabwidth	100
-		rows		7
-		onClick		{ cmd "trans_baselist_click <lineselected>;" }
-		onRClick	{ cmd "mn_pop; aircraft_return;" }
-	}
-
-	cmpCancelButton bt_cancel
-	{
-		pos			"266 188"
-		onClick		{ cmd "mn_pop;aircraft_return;" }
-	}
-}
-
 // ==================
 // POPUP NEW BASE
 // ==================
