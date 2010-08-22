@@ -514,7 +514,7 @@ static qboolean R_CullEntity (entity_t *e)
  */
 static int R_SortEntities (const void *ent1, const void *ent2)
 {
-	return ((const entity_t*)ent1)->distanceFromViewOrigin > ((const entity_t*)ent2)->distanceFromViewOrigin;
+	return ((const entity_t*)ent1)->distanceFromViewOrigin - ((const entity_t*)ent2)->distanceFromViewOrigin;
 }
 
 /**
