@@ -1043,6 +1043,19 @@ particle debug-marker
 	}
 }
 
+particle stunnedactor
+{
+	init
+	{
+		image  sfx/friend
+		blend  blend
+		style  rotated
+		angles	"0 90 0"
+		size	"16 16"
+		life   0.0001
+	}
+}
+
 particle cross_no
 {
 	init

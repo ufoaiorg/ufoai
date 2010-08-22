@@ -1412,8 +1412,10 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	if (!cl_showactors->integer)
 		return qfalse;
 
-	/* add the weapons to the actor's hands */
-	if (LE_IsLivingActor(le)) {
+	if (LE_IsStunned(le)) {
+		CL_ParticleSpawn("stunnedactor", 0, le->origin, NULL, NULL);
+	} else if (!LE_IsDead(le)) {
+		/* add the weapons to the actor's hands */
 		const qboolean addLeftHandWeapon = CL_AddActorWeapon(le->left);
 		const qboolean addRightHandWeapon = CL_AddActorWeapon(le->right);
 		/* add left hand weapon */
