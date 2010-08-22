@@ -133,7 +133,7 @@ team ortnok
 	race			ortnok
 	size			1
 	//hit_particle	none
-	death_texture	pics/sfx/blood_green_0
+	death_texture	pics/sfx/blood/blood_green_0
 
 	names {
 		neutral {
@@ -353,7 +353,7 @@ team bloodspider
 	onlyWeapon	bloodspider_weapon
 	size		1
 	//hit_particle	none
-	death_texture	pics/sfx/blood_oil_2
+	death_texture	pics/sfx/blood/blood_oil_2
 
 	names {
 		neutral {

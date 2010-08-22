@@ -3096,55 +3096,45 @@ base/pics/ranks/rank_medic.jpg | Creative Commons Attribution-Share Alike 3.0 | 
 base/pics/ranks/rank_pc.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/ranks/rank_scientist.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/ranks/rank_worker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/sfx/b_flame1.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/b_flame2.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/b_flame3.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/b_flame4.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/b_flame5.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/b_flame6.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/b_flame7.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/b_flame8.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/b_flameball.jpg | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/blood.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/sfx/blood/blood_green_0.png | GNU General Public License 2.0 | MCR
+base/pics/sfx/blood/blood_oil_2.png | GNU General Public License 2.0 | MCR
+base/pics/sfx/blood/bloodsplatter_a0.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_a1.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_a2.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_a3.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_b0.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_b1.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_b2.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_b3.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_c0.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_c1.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_c2.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_c3.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_d00.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_d01.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_d02.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/blood/bloodsplatter_d03.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/blood_0.png | GNU General Public License 2.0 | MCR
 base/pics/sfx/blood_1.png | GNU General Public License 2.0 | MCR
 base/pics/sfx/blood_2.png | GNU General Public License 2.0 | MCR
 base/pics/sfx/blood_cyan_0.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/pics/sfx/blood_cyan_1.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/pics/sfx/blood_cyan_2.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/pics/sfx/blood_green_0.png | GNU General Public License 2.0 | MCR
 base/pics/sfx/blood_green_1.png | GNU General Public License 2.0 | MCR
 base/pics/sfx/blood_green_2.png | GNU General Public License 2.0 | MCR
 base/pics/sfx/blood_oil_0.png | GNU General Public License 2.0 | MCR
 base/pics/sfx/blood_oil_1.png | GNU General Public License 2.0 | MCR
-base/pics/sfx/blood_oil_2.png | GNU General Public License 2.0 | MCR
 base/pics/sfx/blood_purple_0.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/pics/sfx/blood_purple_1.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/pics/sfx/blood_purple_2.png | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/pics/sfx/bloodsplatter_a0.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_a1.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_a2.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_a3.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_b0.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_b1.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_b2.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_b3.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_c0.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_c1.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_c2.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_c3.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_d00.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_d01.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_d02.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/bloodsplatter_d03.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/blueflare.jpg | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/bms2fl_rglow.png | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/bolt.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/bubble.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/sfx/bullet1.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/corona.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/corona4.png |  | raz0r
-base/pics/sfx/corona_b.jpg |  |  | corona.jpg
-base/pics/sfx/corona_y.jpg |  |  | corona.jpg
+base/pics/sfx/corona_b.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/corona_y.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/cross.png | GNU General Public License 2.0 or later | MCR
 base/pics/sfx/cross_no.png | GNU General Public License 2.0 or later | MCR
 base/pics/sfx/debris.png | GNU General Public License 2.0 | MCR
@@ -3153,37 +3143,59 @@ base/pics/sfx/debris3.png | GNU General Public License 2.0 | MCR
 base/pics/sfx/electricgrade3.jpg | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/electricslime.jpg | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/exhaust.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/sfx/explosion1_a00.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a01.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a02.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a03.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a04.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a05.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a06.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a07.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a08.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a09.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a10.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a11.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a12.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a13.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a14.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a15.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a16.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a17.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a18.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a19.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a20.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a21.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a22.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a23.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a24.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a25.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosion1_a26.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/explosions1.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/explosions2.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/explosions3.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/explosions4.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/explosions/explosion.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/explosions/explosion1_a00.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a01.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a02.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a03.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a04.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a05.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a06.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a07.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a08.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a09.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a10.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a11.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a12.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a13.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a14.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a15.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a16.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a17.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a18.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a19.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a20.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a21.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a22.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a23.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a24.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a25.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosion1_a26.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/explosions1.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/explosions/explosions2.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/explosions/explosions3.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/explosions/explosions4.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/explosions/flashbang_a00.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a01.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a02.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a03.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a04.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a05.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a06.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a07.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a08.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a09.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a10.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a11.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a12.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a13.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a14.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a15.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a16.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a17.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/flashbang_a18.png | GNU General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/explosions/greenplas_00.png |  | Mikolaj Konarski (bandobraz)
+base/pics/sfx/explosions/greenplas_07.png |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/fireball.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/flame1.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/flame2.png | GNU General Public License 2.0 | OpenArena
@@ -3195,67 +3207,18 @@ base/pics/sfx/flame7.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/flame8.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/flare_blue.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/flare_red.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/flashbang.jpg |  | tomshackell
-base/pics/sfx/flashbang_a00.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a01.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a02.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a03.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a04.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a05.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a06.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a07.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a08.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a09.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a10.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a11.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a12.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a13.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a14.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a15.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a16.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a17.png | GNU General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/flashbang_a18.png | GNU General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/foe.png | Public Domain | Patrick Raynor
 base/pics/sfx/friend.png | Public Domain | Patrick Raynor
 base/pics/sfx/greenball.png |  | Mikolaj Konarski (bandobraz)
-base/pics/sfx/greenplas_00.png |  | Mikolaj Konarski (bandobraz)
-base/pics/sfx/greenplas_07.png |  | Mikolaj Konarski (bandobraz)
 base/pics/sfx/greenplasbeam.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/pics/sfx/greenplasmaball.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/heal.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/pics/sfx/laserbeam.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/sfx/laserbeam_b.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
-base/pics/sfx/laserbeam_white.png | GNU General Public License 2.0 or later | Martin Gerhardy
-base/pics/sfx/lasermuzzle.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_00
 base/pics/sfx/lightningscroll.png | GNU General Public License 2.0 | OpenArena
 base/pics/sfx/lightningscroll2.jpg | GNU General Public License 2.0 | OpenArena
-base/pics/sfx/muzzlebulletside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/pics/sfx/muzzlelaserside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/pics/sfx/muzzleplasmaside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/pics/sfx/muzzleplasmaspiral.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
-base/pics/sfx/muzzleptlside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
-base/pics/sfx/particlebeam.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
-base/pics/sfx/plasmaball-core.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
 base/pics/sfx/plasmaball.png | GNU General Public License 2.0 | OpenArena | OpenArena
-base/pics/sfx/plasmabeam.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
-base/pics/sfx/plasmaimpact_00.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmaimpact_01.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmaimpact_02.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmaimpact_03.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmaimpact_04.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmapulse.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_00
-base/pics/sfx/plasmashot_00.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmashot_01.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmashot_02.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmashot_03.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmashot_04.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmashot_05.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmashot_06.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmashot_07.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmashot_08.png | General Public License 2.0 | Lord Havoc;MCR
-base/pics/sfx/plasmashot_09.png | General Public License 2.0 | Lord Havoc;MCR
 base/pics/sfx/powerup_flare3.jpg | Public Domain |  | Public Domain Golgotha
-base/pics/sfx/ptlmuzzle.png | GNU General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
-base/pics/sfx/rocketfire.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/rain.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/shadow.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/smoke.png | GNU General Public License 2.0 |  | OpenAreana
 base/pics/sfx/smoke_00.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
 base/pics/sfx/smoke_01.png | Creative Commons Attribution-Share Alike 3.0 | Patrick Raynor
@@ -3267,7 +3230,41 @@ base/pics/sfx/smoke_puff2.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/smoke_puff3.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/smoke_puff4.jpg | Public Domain |  | Public Domain Golgotha
 base/pics/sfx/smoke_puff5.jpg | Public Domain |  | Public Domain Golgotha
+base/pics/sfx/spark.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/sfx/tesla1.jpg | GNU General Public License 2.0 | OpenArena
+base/pics/sfx/weapons/bolt.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/weapons/bullet.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/weapons/bullet1.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/weapons/laserbeam.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/weapons/laserbeam_b.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/weapons/laserbeam_white.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/weapons/lasermuzzle.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_00
+base/pics/sfx/weapons/muzzlebulletside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/weapons/muzzlelaserside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/weapons/muzzleplasmaside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/weapons/muzzleplasmaspiral.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/weapons/muzzleptl.png | GNU General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/weapons/muzzleptlside.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/sfx/weapons/particlebeam.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/weapons/plasmaball-core.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/weapons/plasmabeam.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_01
+base/pics/sfx/weapons/plasmaimpact_00.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/plasmaimpact_01.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/plasmaimpact_02.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/plasmaimpact_03.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/plasmaimpact_04.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/plasmapulse.png | General Public License 2.0 | Lord Havoc;MCR | plasmaimpact_00
+base/pics/sfx/weapons/plasmashot_00.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/plasmashot_01.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/plasmashot_02.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/plasmashot_03.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/plasmashot_04.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/plasmashot_05.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/plasmashot_06.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/plasmashot_07.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/plasmashot_08.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/plasmashot_09.png | General Public License 2.0 | Lord Havoc;MCR
+base/pics/sfx/weapons/rocketfire.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/techs/alien_base.jpg | Creative Commons Attribution-Share Alike 2.0 | Joshua "Josh" Combs
 base/pics/techs/alien_breathing.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/techs/alien_communication.jpg | Creative Commons Attribution-Share Alike 2.0 | Joshua "Josh" Combs

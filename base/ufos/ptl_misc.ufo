@@ -277,7 +277,7 @@ particle pexplosionVolumetric
 {
 	init
 	{
-		image  sfx/greenplas_02
+		image  sfx/greenplasmaball
 		blend  blend
 		style  facing
 		thinkfade  out
@@ -356,7 +356,7 @@ particle explosionFlame
 {
 	init
 	{
-		image  sfx/explosions2
+		image  sfx/explosions/explosions2
 		blend  add
 		style  facing
 		thinkfade  out
@@ -384,7 +384,7 @@ particle explosionVolumetric
 {
 	init
 	{
-		image  sfx/uexp_04
+		image  sfx/explosions/explosion
 		blend  blend
 		style  facing
 		thinkfade  out
@@ -447,12 +447,12 @@ particle flash
 {
 	init
 	{
-		image		sfx/flashbang
+		image		sfx/explosions/flashbang
 		blend		add
 		style		facing
 		framefade	out
 		size		"250 250"
-		tps			10
+		tps		10
 		v			"0 0 0"
 		life		0.5
 	}
@@ -616,7 +616,7 @@ particle greensmokebig
 	{
 		frame		6
 		endframe	7
-		image		+sfx/greenplas_
+		image		+sfx/explosions/greenplas_
 		blend		blend
 		style		facing
 		thinkfade		out
@@ -881,7 +881,7 @@ particle blood
  	{
  		frame			0
  		endframe		3
- 		image			+sfx/bloodsplatter_d
+ 		image			+sfx/blood/bloodsplatter_d
 		blend			blend
 		style			facing
 		framefade		none
@@ -897,7 +897,7 @@ particle blood
 //{
 //	init
 //	{
-//		image  sfx/blood
+//		image  sfx/blood/blood
 //		blend  blend
 //		style  facing
 //		thinkfade  out
@@ -1106,7 +1106,7 @@ particle shortCircuit
 {
 	init
 	{
-		image		sfx/flashbang
+		image		sfx/explosions/flashbang
 		blend		add
 		style		facing
 		framefade	out

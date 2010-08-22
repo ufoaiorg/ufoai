@@ -11,7 +11,7 @@
 //{
 //	init
 //	{
-//		image  sfx/bolter
+//		image  sfx/weapons/bolt
 //		blend  add
 //		style  beam
 //		thinkfade  out
@@ -25,7 +25,7 @@ particle bolter
 {
 	init
 	{
-		image  sfx/bolt
+		image  sfx/weapons/bolt
 		tps    60
 		style  axis
 		blend  add
@@ -42,7 +42,7 @@ particle bolter_trail
 {
 	init
 	{
-		image  sfx/muzzleplasmaspiral
+		image  sfx/weapons/muzzleplasmaspiral
 		blend  add
 		style  axis
 		thinkfade  out
@@ -148,7 +148,7 @@ particle bullet
 {
 	init
 	{
-		image  sfx/bullet1
+		image  sfx/weapons/bullet1
 		tps    190
 		style  axis
 		blend  add
@@ -169,7 +169,7 @@ particle bullet-shotgun
 {
 	init
 	{
-		image  sfx/bullet1
+		image  sfx/weapons/bullet1
 		tps    190
 		style  axis
 		blend  add
@@ -190,7 +190,7 @@ particle bullet_sniper
 {
 	init
 	{
-		image  sfx/bullet1
+		image  sfx/weapons/bullet1
 		tps    190
 		style  axis
 		blend  add
@@ -379,7 +379,7 @@ particle rocketFire
 {
 	init
 	{
-		image  sfx/rocketfire
+		image  sfx/weapons/rocketfire
 		blend  add
 		style  facing
 		thinkfade  out
@@ -528,7 +528,7 @@ particle laserBeamSmall
 {
 	init
 	{
-		image  sfx/laserbeam_b
+		image  sfx/weapons/laserbeam_b
 		blend  add
 		style  beam
 		thinkfade  out
@@ -557,7 +557,7 @@ particle laserBeam
 {
 	init
 	{
-		image  sfx/laserbeam_b
+		image  sfx/weapons/laserbeam_b
 		blend  add
 		style  beam
 		thinkfade  out
@@ -594,7 +594,7 @@ particle laserPulse
 // {
 //	init
 //	{
-//		image  sfx/laserbeam
+//		image  sfx/weapons/laserbeam_b
 //		blend  add
 //		style  beam
 //		thinkfade  sin
@@ -608,7 +608,7 @@ particle laserPulseWhite
 {
 	init
 	{
-		image  sfx/laserbeam_white
+		image  sfx/weapons/laserbeam_white
 		blend  add
 		style  beam
 		thinkfade  sin
@@ -622,7 +622,7 @@ particle laserOverload
 {
 	init
 	{
-		image  sfx/bullet
+		image  sfx/weapons/bullet
 		blend  add
 		style  beam
 		thinkfade  sin
@@ -761,7 +761,7 @@ particle plasmaMiniPulse
 {
 	init
 	{
-		image  sfx/plasmapulse
+		image  sfx/weapons/plasmapulse
 		blend  add
 		style  axis
 		child  plasmaMiniPulseBall
@@ -784,7 +784,7 @@ particle plasmaPulse
  {
  	init
  	{
- 		image  sfx/plasmapulse
+ 		image  sfx/weapons/plasmapulse
  		blend  add
  		style  axis
  		offset "0 0 0"
@@ -884,7 +884,7 @@ particle plasmaBallCore
  	{
  		frame			0
  		endframe		9
- 		image			+sfx/plasmashot_
+ 		image			+sfx/weapons/plasmashot_
 		blend			blend
 		style			facing
 		framefade		none
@@ -904,7 +904,7 @@ particle plasmaBigBall
 {
  	init
  	{
- 		image  sfx/plasmaball-core
+ 		image  sfx/weapons/plasmaball-core
  		blend  add
  		style  facing
  		offset "0 0 0"
@@ -929,7 +929,7 @@ particle plasmaBallTrail
 {
 	init
 	{
-		image  sfx/plasmaball-core
+		image  sfx/weapons/plasmaball-core
 		blend  add
 		style  axis
 		thinkfade  out
@@ -978,7 +978,7 @@ particle plasmaImpactCharged
 	{
 		frame			0
 		endframe		4
-		image			+sfx/plasmaimpact_
+		image			+sfx/weapons/plasmaimpact_
 		blend			blend
 		style			facing
 		framefade		none
@@ -998,7 +998,7 @@ particle plasmaImpactChargedAnim_2
 	{
 		frame			0
 		endframe		4
-		image			+sfx/plasmaimpact_
+		image			+sfx/weapons/plasmaimpact_
 		blend			blend
 		style			axis
 		framefade		none
@@ -1078,7 +1078,7 @@ particle plasmaContinuous
 {
 	init
 	{
-		image  sfx/plasmabeam
+		image  sfx/weapons/plasmabeam
 		blend  add
 		style  beam
 		tps    2.0
@@ -1262,7 +1262,7 @@ particle partTail
 {
 	init
 	{
-		image  sfx/ptlmuzzle
+		image  sfx/weapons/muzzleptl
 		blend  add
 		style  facing
 		thinkfade  out
@@ -1314,7 +1314,7 @@ particle pbeamMiniBeam
 {
 	init
 	{
-		image  sfx/particlebeam
+		image  sfx/weapons/particlebeam
 		blend  add
 		style  beam
 		tps    10.0
@@ -1335,7 +1335,7 @@ particle pbeamBeam
 {
 	init
 	{
-		image  sfx/particlebeam
+		image  sfx/weapons/particlebeam
 		blend  add
 		style  beam
 		thinkfade  sin
@@ -1361,7 +1361,7 @@ particle pbeamBigBeam
 {
 	init
 	{
-		image  sfx/particlebeam
+		image  sfx/weapons/particlebeam
 		blend  add
 		style  beam
 		thinkfade  sin
@@ -1437,7 +1437,7 @@ particle pbeamExplosion_1
 	{
 		frame 1
 		endframe 7
-		image +sfx/greenplas_
+		image +sfx/explosions/greenplas_
 		blend blend
 		style facing
 		framefade in
@@ -1456,7 +1456,7 @@ particle pbeamExplosion_2
 	{
 		frame 0
 		endframe 7
-		image +sfx/greenplas_
+		image +sfx/explosions/greenplas_
 		blend blend
 		style facing
 		framefade out
@@ -1732,7 +1732,7 @@ particle flash_explosion
  	{
  		frame			0
  		endframe		18
- 		image			+sfx/flashbang_a
+ 		image			+sfx/explosions/flashbang_a
 		blend			blend
 		style			facing
 		framefade		none
@@ -1944,7 +1944,7 @@ particle muzzle_round
 {
 	init
 	{
-		image  sfx/uexp_01
+		image  sfx/explosions/explosion
 		blend  add
 		style  facing
 		thinkfade  out
@@ -1974,7 +1974,7 @@ particle muzzle_side
 {
 	init
 	{
-		image  sfx/muzzlebulletside
+		image  sfx/weapons/muzzlebulletside
 		blend  add
 		style  axis 
 //		angles "50 0 0"
@@ -2003,7 +2003,7 @@ particle muzzle_sniper_1
 {
 	init
 	{
-		image  sfx/uexp_01
+		image  sfx/explosions/explosion
 		blend  add
 		style  facing
 		thinkfade  out
@@ -2065,7 +2065,7 @@ particle muzzle_laser_round
 {
 	init
 	{
-		image  sfx/lasermuzzle
+		image  sfx/weapons/lasermuzzle
 		blend  add
 		style  facing
 		thinkfade  out
@@ -2090,7 +2090,7 @@ particle muzzle_laser_side
 {
 	init
 	{
-		image  sfx/muzzlelaserside
+		image  sfx/weapons/muzzlelaserside
 		blend  add
 		style  rotated
 		angles "0 0 0"
@@ -2124,7 +2124,7 @@ particle muzzle_plasma_round
 {
 	init
 	{
-		image  sfx/plasmaimpact_01
+		image  sfx/weapons/plasmaimpact_01
 		blend  add
 		style  facing
 		thinkfade  out
@@ -2149,7 +2149,7 @@ particle muzzle_plasma_side
 {
 	init
 	{
-		image  sfx/muzzleplasmaside
+		image  sfx/weapons/muzzleplasmaside
 		blend  add
 		style  rotated
 		angles "0 0 0"
@@ -2167,7 +2167,7 @@ particle muzzle_plasma_spiral
 {
 	init
 	{
-		image  sfx/muzzleplasmaspiral
+		image  sfx/weapons/muzzleplasmaspiral
 		blend  add
 		style  rotated
 		thinkfade  out
@@ -2212,7 +2212,7 @@ particle muzzle_ptl_side
 {
 	init
 	{
-		image  sfx/muzzleptlside
+		image  sfx/weapons/muzzleptlside
 		blend  add
 		style  rotated
 		angles "0 0 0"
@@ -2230,7 +2230,7 @@ particle muzzle_ptl_cross
 {
 	init
 	{
-		image  sfx/ptlmuzzle
+		image  sfx/weapons/muzzleptl
 		blend  add
 		style  rotated
 		thinkfade  out
