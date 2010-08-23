@@ -633,9 +633,9 @@ static void CL_NationDrawStats (const nation_t *nation, uiNode_t *node, lineStri
 	/** @todo Sort this in reverse? -> Having current month on the right side? */
 	for (m = 0; m < MONTHS_PER_YEAR; m++) {
 		if (nation->stats[m].inuse) {
-			const int funding = NAT_GetFunding(nation, m);
+			const int fund = NAT_GetFunding(nation, m);
 			fundingPts[usedFundPtslist][m].x = (m * dx);
-			fundingPts[usedFundPtslist][m].y = height - dy * (funding - minFunding);
+			fundingPts[usedFundPtslist][m].y = height - dy * (fund - minFunding);
 			ptsNumber++;
 		} else {
 			break;
@@ -672,7 +672,6 @@ static lineStrip_t colorLineStrip[MAX_NATIONS];
 static void CL_NationStatsUpdate_f (void)
 {
 	int i;
-	int funding;
 	uiNode_t *colorNode;
 	uiNode_t *graphNode;
 	int dy = 10;
@@ -685,19 +684,21 @@ static void CL_NationStatsUpdate_f (void)
 	}
 
 	for (i = 0; i < ccs.numNations; i++) {
+		nation_t *nation = &ccs.nations[i];
 		lineStrip_t *color = &colorLineStrip[i];
+		const int funding = NAT_GetFunding(nation, 0);
+
 		memset(color, 0, sizeof(*color));
+
 		if (i > 0)
 			colorLineStrip[i - 1].next = color;
-
-		funding = NAT_GetFunding(&(ccs.nations[i]), 0);
 
 		if (selectedNation == i) {
 			UI_ExecuteConfunc("nation_marksel %i", i);
 		} else {
 			UI_ExecuteConfunc("nation_markdesel %i", i);
 		}
-		Cvar_Set(va("mn_nat_name%i",i), _(ccs.nations[i].name));
+		Cvar_Set(va("mn_nat_name%i",i), _(nation->name));
 		Cvar_Set(va("mn_nat_fund%i",i), va("%i", funding));
 
 		if (colorNode) {
@@ -734,16 +735,19 @@ static void CL_NationStatsUpdate_f (void)
 		const int maxFunding = CL_NationsMaxFunding();
 		usedFundPtslist = 0;
 		for (i = 0; i < ccs.numNations; i++) {
-			/* init the structure */
+			nation_t *nation = &ccs.nations[i];
 			lineStrip_t *funding = &fundingLineStrip[i];
+
+			/* init the structure */
 			memset(funding, 0, sizeof(funding));
+
 			if (i > 0)
 				fundingLineStrip[i - 1].next = funding;
 
 			if (i == selectedNation) {
-				CL_NationDrawStats(&ccs.nations[i], graphNode, funding, maxFunding, -1);
+				CL_NationDrawStats(nation, graphNode, funding, maxFunding, -1);
 			} else {
-				CL_NationDrawStats(&ccs.nations[i], graphNode, funding, maxFunding, i);
+				CL_NationDrawStats(nation, graphNode, funding, maxFunding, i);
 			}
 		}
 

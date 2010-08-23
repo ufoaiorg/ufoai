@@ -33,7 +33,7 @@ static int airequipID = -1;				/**< value of aircraftItemType_t that defines wha
 
 static int airequipSelectedZone = ZONE_NONE;		/**< Selected zone in equip menu */
 static int airequipSelectedSlot = ZONE_NONE;			/**< Selected slot in equip menu */
-static technology_t *aimSelectedTechnology = NULL;		/**< Selected technolgy in equip menu */
+static technology_t *aimSelectedTechnology = NULL;		/**< Selected technology in equip menu */
 
 /**
  * @brief Check airequipID value and set the correct values for aircraft items
@@ -82,12 +82,12 @@ static void AIM_CheckAirequipSelectedSlot (const aircraft_t *aircraft)
  * @note also used by BDEF_ functions
  * @return Pointer to the slot corresponding to airequipID
  */
-aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft, const int airequipID)
+aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft, aircraftItemType_t type)
 {
 	aircraftSlot_t *slot;
 
 	AIM_CheckAirequipSelectedSlot(aircraft);
-	switch (airequipID) {
+	switch (type) {
 	case AC_ITEM_SHIELD:
 		slot = &aircraft->shield;
 		break;
@@ -99,7 +99,7 @@ aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft, const int airequip
 		slot = aircraft->weapons + airequipSelectedSlot;
 		break;
 	default:
-		Com_Printf("AII_SelectAircraftSlot: Unknown airequipID: %i\n", airequipID);
+		Com_Printf("AII_SelectAircraftSlot: Unknown airequipID: %i\n", type);
 		return NULL;
 	}
 
@@ -114,7 +114,7 @@ static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 {
 	assert(slot);
 
-	if (airequipSelectedZone == ZONE_AMMO && (airequipID < AC_ITEM_AMMO) && (airequipID > AC_ITEM_WEAPON)) {
+	if (airequipSelectedZone == ZONE_AMMO && airequipID < AC_ITEM_AMMO && airequipID > AC_ITEM_WEAPON) {
 		/* you can select ammo only for weapons and ammo */
 		airequipSelectedZone = ZONE_MAIN;
 	}
@@ -148,7 +148,7 @@ static inline const char *AIM_AircraftItemtypeName (const int equiptype)
 /**
  * @return @c true if the technology is available and matches the filter
  */
-static qboolean AIM_CrafttypeFilter (const base_t *base, int filterType, const technology_t *tech)
+static qboolean AIM_CrafttypeFilter (const base_t *base, aircraftItemType_t filterType, const technology_t *tech)
 {
 	objDef_t *item;
 	if (!base)
@@ -234,15 +234,16 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
  */
 static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 {
-	int i, j;
-	const aircraftSlot_t *slot;
-	int max;
+	itemPos_t i;
 
 	/* initialise model cvars */
-	for (i = 0; i < 8; i++)
+	for (i = 0; i < AIR_POSITIONS_MAX; i++)
 		Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
 
 	for (i = 0; i < AIR_POSITIONS_MAX; i++) {
+		const aircraftSlot_t *slot;
+		int max, j;
+
 		/* Default value */
 		UI_ExecuteConfunc("airequip_display_slot %i 0", i);
 
@@ -599,7 +600,8 @@ static void AIM_AircraftEquipMenuUpdate_f (void)
  */
 static void AIM_AircraftEquipSlotSelect_f (void)
 {
-	int i, pos;
+	int i;
+	itemPos_t pos;
 	aircraft_t *aircraft;
 	base_t *base = B_GetCurrentSelectedBase();
 	int updateZone = 0;
