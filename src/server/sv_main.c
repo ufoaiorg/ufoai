@@ -92,6 +92,37 @@ char *SV_SetConfigStringInteger (int index, int value)
 }
 
 /**
+ * @brief Iterates through clients
+ * @param[in] lastClient Pointer of the client to iterate from. call with NULL to get the first one.
+ */
+client_t* SV_GetNextClient (client_t *lastClient)
+{
+	client_t *endOfClients = &svs.clients[sv_maxclients->integer];
+	client_t* client;
+
+	if (!sv_maxclients->integer)
+		return NULL;
+
+	if (!lastClient)
+		return svs.clients;
+	assert(lastClient >= svs.clients);
+	assert(lastClient < endOfClients);
+
+	client = lastClient;
+
+	client++;
+	if (client >= endOfClients)
+		return NULL;
+	else
+		return client;
+}
+
+client_t *SV_GetClient (int index)
+{
+	return &svs.clients[index];
+}
+
+/**
  * @brief Called when the player is totally leaving the server, either willingly
  * or unwillingly. This is NOT called if the entire server is quitting
  * or crashing.
@@ -122,9 +153,9 @@ void SV_DropClient (client_t * drop, const char *message)
 
 	if (abandon) {
 		int count = 0;
-		int i;
-		for (i = 0; i < sv_maxclients->integer; i++)
-			if (svs.clients[i].state >= cs_connected)
+		client_t *cl = NULL;
+		while ((cl = SV_GetNextClient(cl)) != NULL)
+			if (cl->state >= cs_connected)
 				count++;
 		if (count == 0)
 			killserver = qtrue;
@@ -143,7 +174,6 @@ CONNECTIONLESS COMMANDS
  */
 static void SVC_TeamInfo (struct net_stream *s)
 {
-	int i;
 	client_t *cl;
 	struct dbuffer *msg = new_dbuffer();
 	char infoGlobal[MAX_INFO_STRING];
@@ -156,20 +186,18 @@ static void SVC_TeamInfo (struct net_stream *s)
 	Info_SetValueForKey(infoGlobal, sizeof(infoGlobal), "sv_maxplayersperteam", Cvar_GetString("sv_maxplayersperteam"));
 	NET_WriteString(msg, infoGlobal);
 
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
+	cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		if (cl->state >= cs_connected) {
 			char infoPlayer[MAX_INFO_STRING];
 			/* show players that already have a team with their teamnum */
 			int teamId = svs.ge->ClientGetTeamNum(cl->player);
 			if (!teamId)
 				teamId = TEAM_NO_ACTIVE;
-			Com_DPrintf(DEBUG_SERVER, "SVC_TeamInfo: connected client: %i %s\n", i, cl->name);
 			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_team", teamId);
 			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_ready", svs.ge->ClientIsReady(cl->player));
 			Info_SetValueForKey(infoPlayer, sizeof(infoPlayer), "cl_name", cl->name);
 			NET_WriteString(msg, infoPlayer);
-		} else {
-			Com_DPrintf(DEBUG_SERVER, "SVC_TeamInfo: unconnected client: %i %s\n", i, cl->name);
 		}
 	}
 
@@ -184,8 +212,8 @@ static void SVC_TeamInfo (struct net_stream *s)
  */
 static void SVC_Status (struct net_stream *s)
 {
+	client_t *cl;
 	char player[1024];
-	int i;
 	struct dbuffer *msg = new_dbuffer();
 	NET_WriteByte(msg, clc_oob);
 	NET_WriteRawString(msg, "print\n");
@@ -193,8 +221,8 @@ static void SVC_Status (struct net_stream *s)
 	NET_WriteRawString(msg, Cvar_Serverinfo());
 	NET_WriteRawString(msg, "\n");
 
-	for (i = 0; i < sv_maxclients->integer; i++) {
-		const client_t *cl = &svs.clients[i];
+	cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		if (cl->state > cs_free) {
 			Com_sprintf(player, sizeof(player), "%i \"%s\"\n", svs.ge->ClientGetTeamNum(cl->player), cl->name);
 			NET_WriteRawString(msg, player);
@@ -228,12 +256,13 @@ static void SVC_Info (struct net_stream *s)
 		Com_sprintf(string, sizeof(string), "%s: wrong version (client: %i, host: %i)\n", sv_hostname->string, version, PROTOCOL_VERSION);
 		NET_OOB_Printf(s, "print\n%s", string);
 	} else {
+		client_t *cl;
 		char infostring[MAX_INFO_STRING];
-		int i;
 		int count = 0;
 
-		for (i = 0; i < sv_maxclients->integer; i++)
-			if (svs.clients[i].state >= cs_spawning)
+		cl = NULL;
+		while ((cl = SV_GetNextClient(cl)) != NULL)
+			if (cl->state >= cs_spawning)
 				count++;
 
 		infostring[0] = '\0';
@@ -258,7 +287,6 @@ static void SVC_Info (struct net_stream *s)
 static void SVC_DirectConnect (struct net_stream *stream)
 {
 	char userinfo[MAX_INFO_STRING];
-	int i;
 	client_t *cl;
 	player_t *player;
 	int playernum;
@@ -306,10 +334,11 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	Info_SetValueForKey(userinfo, sizeof(userinfo), "ip", peername);
 
 	/* find a client slot */
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
+	cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL)
 		if (cl->state == cs_free)
 			break;
-	if (i == sv_maxclients->integer) {
+	if (cl == NULL) {
 		NET_OOB_Printf(stream, "print\nServer is full.\n");
 		Com_Printf("Rejected a connection - server is full.\n");
 		return;
@@ -318,7 +347,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	/* build a new connection - accept the new client
 	 * this is the only place a client_t is ever initialized */
 	memset(cl, 0, sizeof(*cl));
-	playernum = cl - svs.clients;
+	playernum = cl - SV_GetClient(0);
 	player = PLAYER_NUM(playernum);
 	cl->player = player;
 	cl->player->num = playernum;
@@ -532,7 +561,6 @@ static void Master_Heartbeat (void)
  */
 static void SV_CheckGameStart (void)
 {
-	int i;
 	client_t *cl;
 
 	/* already started? */
@@ -540,20 +568,23 @@ static void SV_CheckGameStart (void)
 		return;
 
 	if (sv_maxclients->integer > 1) {
-		for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
+		cl = NULL;
+		while ((cl = SV_GetNextClient(cl)) != NULL) {
 			/* all players must be connected and all of them must have set
 			 * the ready flag */
 			if (cl->state != cs_began || !cl->player->isReady)
 				return;
-	} else if (svs.clients[0].state != cs_began) {
+		}
+	} else if (SV_GetClient(0)->state != cs_began) {
 		/* in single player mode we must have received the 'begin' */
 		return;
 	}
 
 	sv.started = qtrue;
 
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
-		if (cl && cl->state != cs_free)
+	cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL)
+		if (cl->state != cs_free)
 			SV_ClientCommand(cl, "spawnsoldiers\n");
 }
 
@@ -717,7 +748,6 @@ void SV_Init (void)
  */
 static void SV_FinalMessage (const char *message, qboolean reconnect)
 {
-	int i;
 	client_t *cl;
 	struct dbuffer *msg = new_dbuffer();
 
@@ -727,7 +757,8 @@ static void SV_FinalMessage (const char *message, qboolean reconnect)
 		NET_WriteByte(msg, svc_disconnect);
 	NET_WriteString(msg, message);
 
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
+	cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL)
 		if (cl->state >= cs_connected) {
 			NET_WriteConstMsg(cl->stream, msg);
 			NET_StreamFinished(cl->stream);
@@ -815,14 +846,14 @@ void SV_ShutdownWhenEmpty (void)
  */
 int SV_CountPlayers (void)
 {
-	int i;
 	int count = 0;
 	client_t *cl;
 
 	if (!svs.initialized)
 		return 0;
 
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
+	cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		if (cl->state != cs_spawned)
 			continue;
 

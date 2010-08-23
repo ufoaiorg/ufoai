@@ -72,6 +72,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	char * map = SV_GetConfigString(CS_TILES);
 	char * pos = SV_GetConfigString(CS_POSITIONS);
 	mapInfo_t *randomMap = NULL;
+	client_t *cl;
 
 	assert(server[0] != '\0');
 
@@ -95,10 +96,11 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 		sv.assembly[0] = '\0';
 
 	/* leave slots at start for clients only */
-	for (i = 0; i < sv_maxclients->integer; i++) {
+	cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		/* needs to reconnect */
-		if (svs.clients[i].state >= cs_spawning)
-			SV_SetClientState(&svs.clients[i], cs_connected);
+		if (cl->state >= cs_spawning)
+			SV_SetClientState(cl, cs_connected);
 	}
 
 	/* assemble and load the map */

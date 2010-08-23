@@ -54,8 +54,6 @@ USER STRINGCMD EXECUTION
  */
 static void SV_New_f (client_t *cl)
 {
-	int playernum;
-
 	Com_DPrintf(DEBUG_SERVER, "New() from %s\n", cl->name);
 
 	if (cl->state != cs_connected) {
@@ -74,10 +72,10 @@ static void SV_New_f (client_t *cl)
 
 	/* serverdata needs to go over for all types of servers
 	 * to make sure the protocol is right, and to set the gamedir */
-	playernum = cl - svs.clients;
 
 	/* send the serverdata */
 	{
+		const int playernum = cl - SV_GetClient(0);
 		struct dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, svc_serverdata);
 		NET_WriteLong(msg, PROTOCOL_VERSION);

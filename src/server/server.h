@@ -173,6 +173,8 @@ char *SV_GetConfigString(int index);
 int SV_GetConfigStringInteger(int index);
 char *SV_SetConfigString(int index, const char *value);
 char *SV_SetConfigStringInteger(int index, int value);
+client_t* SV_GetNextClient(client_t *lastClient);
+client_t *SV_GetClient(int index);
 
 /* sv_mapcycle.c */
 void SV_MapcycleInit(void);

@@ -84,7 +84,6 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 	struct dbuffer *msg;
 	client_t *cl;
 	char str[1024];
-	int i;
 
 	msg = new_dbuffer();
 	NET_WriteByte(msg, svc_print);
@@ -97,6 +96,7 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 	/* echo to console */
 	if (sv_dedicated->integer) {
 		char copy[1024];
+		int i;
 		const int length = sizeof(copy) - 1;
 
 		va_start(argptr, fmt);
@@ -110,7 +110,8 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 		Com_Printf("%s", copy);
 	}
 
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
+	cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		if (level > cl->messagelevel)
 			continue;
 		if (cl->state < cs_connected)
@@ -128,18 +129,21 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
  */
 void SV_Multicast (int mask, struct dbuffer *msg)
 {
-	client_t *c;
+	client_t *cl;
 	int j;
 
 	/* send the data to all relevant clients */
-	for (j = 0, c = svs.clients; j < sv_maxclients->integer; j++, c++) {
-		if (c->state < cs_connected)
+	cl = NULL;
+	j = 0;
+	while ((cl = SV_GetNextClient(cl)) != NULL) {
+		j++;
+		if (cl->state < cs_connected)
 			continue;
 		if (!(mask & (1 << j)))
 			continue;
 
 		/* write the message */
-		NET_WriteConstMsg(c->stream, msg);
+		NET_WriteConstMsg(cl->stream, msg);
 	}
 
 	free_dbuffer(msg);

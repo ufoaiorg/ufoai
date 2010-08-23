@@ -71,31 +71,27 @@ void SV_SetMaster_f (void)
  */
 static client_t* SV_GetPlayerClientStructure (const char *s)
 {
-	client_t *cl;
-	int i;
-
 	/* numeric values are just slot numbers */
 	if (s[0] >= '0' && s[0] <= '9') {
-		const int idnum = atoi(Cmd_Argv(1));
-		if (idnum < 0 || idnum >= sv_maxclients->integer) {
-			Com_Printf("Bad client slot: %i\n", idnum);
-			return NULL;
-		}
-
-		cl = &svs.clients[idnum];
+		int idnum = atoi(Cmd_Argv(1));
+		client_t *cl = NULL;
+		/* check for a name match */
+		while ((cl = SV_GetNextClient(cl)) != NULL && idnum > 0)
+			idnum--;
 		if (cl->state == cs_free) {
 			Com_Printf("Client %i is not active\n", idnum);
 			return NULL;
 		}
 		return cl;
-	}
-
-	/* check for a name match */
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
-		if (cl->state == cs_free)
-			continue;
-		if (!strcmp(cl->name, s)) {
-			return cl;
+	} else {
+		client_t *cl = NULL;
+		/* check for a name match */
+		while ((cl = SV_GetNextClient(cl)) != NULL) {
+			if (cl->state == cs_free)
+				continue;
+			if (!strcmp(cl->name, s)) {
+				return cl;
+			}
 		}
 	}
 
@@ -221,10 +217,8 @@ static void SV_Kick_f (void)
  */
 static void SV_StartGame_f (void)
 {
-	client_t* cl;
-	int i;
-
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
+	client_t* cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL)
 		if (cl->state != cs_free)
 			cl->player->isReady = qtrue;
 }
@@ -249,9 +243,14 @@ static void SV_Status_f (void)
 
 	Com_Printf("num status  name            address              \n");
 	Com_Printf("--- ------- --------------- ---------------------\n");
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
+
+	cl = NULL;
+	i = 0;
+	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		char        state_buf[16];
 		char const* state;
+
+		i++;
 
 		if (cl->state == cs_free)
 			continue;
