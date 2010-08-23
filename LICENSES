@@ -5632,6 +5632,8 @@ base/textures/tex_material/conc02.png | GNU General Public License 2.0 or later 
 base/textures/tex_material/conc02_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/concholes01_g.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/green_gray.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_material/metal001.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_material/metal001_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metal012.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_material/metal012_nm.png | GNU General Public License 2.0 or later | Nate Wright
