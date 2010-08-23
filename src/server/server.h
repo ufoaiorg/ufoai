@@ -73,7 +73,18 @@ typedef struct pending_event_s {
 	struct dbuffer *buf;
 } pending_event_t;
 
-/*============================================================================= */
+typedef struct {
+	qboolean initialized;		/**< sv_init has completed */
+	int realtime;				/**< always increasing, no clamping, etc */
+	struct datagram_socket *netDatagramSocket;
+	struct client_s *clients;			/**< [sv_maxclients->value]; */
+	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
+								 * Set to a huge negative value to send immmediately */
+	SDL_mutex *serverMutex;
+	SDL_Thread *gameThread;
+	void *gameLibrary;
+	game_export_t *ge;
+} serverInstanceStatic_t;
 
 typedef enum {
 	ss_dead,					/**< no map loaded */
@@ -110,7 +121,7 @@ typedef struct {
 	sv_edict_t edicts[MAX_EDICTS];
 	worldSector_t worldSectors[AREA_NODES];
 	unsigned int numWorldSectors;
-} server_t;
+} serverInstanceGame_t;
 
 #define EDICT_NUM(n) ((edict_t *)((byte *)svs.ge->edicts + svs.ge->edict_size * (n)))
 #define NUM_FOR_EDICT(e) (((byte *)(e) - (byte *)svs.ge->edicts) / svs.ge->edict_size)
@@ -127,6 +138,13 @@ typedef enum {
 	cs_spawned					/**< client is fully in game and soldiers were spawned */
 } client_state_t;
 
+/**
+ * a client can leave the server in one of four ways:
+ * @li dropping properly by quitting or disconnecting
+ * @li timing out if no valid messages are received
+ * @li getting kicked off by the server operator
+ * @li a program error, like an overflowed reliable buffer
+ */
 typedef struct client_s {
 	client_state_t state;
 	char userinfo[MAX_INFO_STRING];
@@ -138,41 +156,13 @@ typedef struct client_s {
 	struct net_stream *stream;
 } client_t;
 
-/**
- * a client can leave the server in one of four ways:
- * @li dropping properly by quitting or disconnecting
- * @li timing out if no valid messages are received
- * @li getting kicked off by the server operator
- * @li a program error, like an overflowed reliable buffer
- */
-
-/*============================================================================= */
-
-
-typedef struct {
-	qboolean initialized;		/**< sv_init has completed */
-	int realtime;				/**< always increasing, no clamping, etc */
-	struct datagram_socket *netDatagramSocket;
-	client_t *clients;			/**< [sv_maxclients->value]; */
-	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
-								 * Set to a huge negative value to send immmediately */
-	SDL_mutex *serverMutex;
-	SDL_Thread *gameThread;
-	void *gameLibrary;
-	game_export_t *ge;
-} server_static_t;
-
-/*============================================================================= */
-
-extern server_static_t svs;		/**< persistant server info */
-extern server_t sv;				/**< local server */
+extern serverInstanceStatic_t svs;		/**< persistant server instance info */
+extern serverInstanceGame_t sv;			/**< server data per game/map */
 
 extern cvar_t *sv_mapname;
 extern cvar_t *sv_public;			/**< should heartbeats be sent? (only for public servers) */
 extern cvar_t *sv_dumpmapassembly;
 extern cvar_t *sv_threads;	/**< run the game lib threaded */
-
-/*=========================================================== */
 
 /* sv_main.c */
 void SV_DropClient(client_t *drop, const char *message);

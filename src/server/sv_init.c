@@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "sv_rma.h"
 #include "../shared/parse.h"
 
-server_static_t svs;			/* persistant server info */
-server_t sv;					/* local server */
+serverInstanceStatic_t svs;			/* persistant server info */
+serverInstanceGame_t sv;					/* local server */
 
 /**
  * @brief Get the map title for a given map
