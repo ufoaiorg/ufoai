@@ -1339,6 +1339,49 @@ window options
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
+			
+			button video_low 
+			{
+				tooltip	"_Switch to low video settings"
+				pos		"32 200"
+				size	"120 40"
+				string	"_Low"
+				image	"ui/button_green_small"
+				color	"0 0.5 0 1"
+				selectcolor "1 1 1 1"
+				onClick 
+				{
+					cmd "exec video-low.cfg;"
+				}
+			}
+			button video_medium 
+			{
+				tooltip	"_Switch to medium video settings"
+				pos		"162 200"
+				size	"120 40"
+				string	"_Medium"
+				image	"ui/button_green_small"
+				color	"0 0.5 0 1"
+				selectcolor "1 1 1 1"
+				onClick 
+				{
+					cmd "exec video-medium.cfg;"
+				}
+			}
+			button video_high 
+			{
+				tooltip	"_Switch to very high video settings"
+				pos		"292 200"
+				size	"120 40"
+				string	"_High"
+				image	"ui/button_green_small"
+				color	"0 0.5 0 1"
+				selectcolor "1 1 1 1"
+				onClick 
+				{
+					cmd "exec video-high.cfg;"
+				}
+			}
 		}
 	}
 
