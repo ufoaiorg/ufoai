@@ -452,7 +452,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 			unzGoToNextFile(uf);
 		}
 
-		pack = Mem_PoolAlloc(sizeof(*pack), com_fileSysPool, 0);
+		pack = (pack_t *)Mem_PoolAlloc(sizeof(*pack), com_fileSysPool, 0);
 		Q_strncpyz(pack->filename, packfile, sizeof(pack->filename));
 		pack->handle.z = uf;
 		pack->handle.f = NULL;
@@ -460,7 +460,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 		unzGoToFirstFile(uf);
 
 		/* Allocate space for array of packfile structures (filename, offset, length) */
-		newfiles = Mem_PoolAlloc(i * sizeof(*newfiles), com_fileSysPool, 0);
+		newfiles = (packfile_t *)Mem_PoolAlloc(i * sizeof(*newfiles), com_fileSysPool, 0);
 
 		for (i = 0; i < gi.number_entry; i++) {
 			err = unzGetCurrentFileInfo(uf, &file_info, filenameInZip, sizeof(filenameInZip), NULL, 0, NULL, 0);
@@ -500,7 +500,6 @@ static const char *pakFileExt[] = {
 static void FS_AddGameDirectory (const char *dir)
 {
 	searchpath_t *search;
-	pack_t *pak;
 	char **dirnames = NULL;
 	int ndirs = 0, i;
 	char pakfile_list[MAX_PACKFILES][MAX_OSPATH];
@@ -542,18 +541,18 @@ static void FS_AddGameDirectory (const char *dir)
 	qsort((void *)pakfile_list, pakfile_count, MAX_OSPATH, Q_StringSort);
 
 	for (i = 0; i < pakfile_count; i++) {
-		pak = FS_LoadPackFile(pakfile_list[i]);
+		pack_t *pak = FS_LoadPackFile(pakfile_list[i]);
 		if (!pak)
 			continue;
 
-		search = Mem_PoolAlloc(sizeof(searchpath_t), com_fileSysPool, 0);
+		search = (searchpath_t *)Mem_PoolAlloc(sizeof(*search), com_fileSysPool, 0);
 		search->pack = pak;
 		search->next = fs_searchpaths;
 		fs_searchpaths = search;
 	}
 
 	/* add the directory to the search path */
-	search = Mem_PoolAlloc(sizeof(searchpath_t), com_fileSysPool, 0);
+	search = (searchpath_t *)Mem_PoolAlloc(sizeof(*search), com_fileSysPool, 0);
 	Q_strncpyz(search->filename, dir, sizeof(search->filename));
 	search->next = fs_searchpaths;
 	fs_searchpaths = search;
@@ -720,7 +719,7 @@ static void FS_Link_f (void)
 	}
 
 	/* create a new link */
-	l = Mem_PoolAlloc(sizeof(*l), com_fileSysPool, 0);
+	l = (filelink_t *)Mem_PoolAlloc(sizeof(*l), com_fileSysPool, 0);
 	l->next = fs_links;
 	fs_links = l;
 	l->from = Mem_PoolStrDup(Cmd_Argv(1), com_fileSysPool, 0);
@@ -931,7 +930,7 @@ int FS_BuildFileList (const char *fileList)
 	}
 
 	/* allocate a new block and link it into the list */
-	block = Mem_PoolAlloc(sizeof(*block), com_fileSysPool, 0);
+	block = (listBlock_t *)Mem_PoolAlloc(sizeof(*block), com_fileSysPool, 0);
 	block->next = fs_blocklist;
 	fs_blocklist = block;
 
