@@ -504,6 +504,7 @@ static qboolean R_CullEntity (entity_t *e)
 		return R_CullMeshModel(e);
 }
 
+#if 0
 /**
  * @brief Compare two entities according to their distance
  * @param[in] ent1 The first entity
@@ -511,11 +512,13 @@ static qboolean R_CullEntity (entity_t *e)
  * @return An integer less than, equal to, or greater than zero if ent1 is
  * found, respectively, to be less than, to match, or be greater than ent2
  * @note sort function pointer for qsort
+ * @todo This isn't working - see bug #3051433
  */
 static int R_SortEntities (const void *ent1, const void *ent2)
 {
 	return ((const entity_t*)ent1)->distanceFromViewOrigin - ((const entity_t*)ent2)->distanceFromViewOrigin;
 }
+#endif
 
 /**
  * @brief Primary entry point for drawing all entities.
@@ -535,7 +538,9 @@ void R_DrawEntities (void)
 	r_bsp_entities = r_opaque_mesh_entities = r_special_entities =
 		r_blend_mesh_entities = r_null_entities = NULL;
 
+#if 0
 	qsort(r_entities, refdef.numEntities, sizeof(entity_t), R_SortEntities);
+#endif
 
 	for (i = 0; i < refdef.numEntities; i++) {
 		entity_t *e = &r_entities[i];
