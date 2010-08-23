@@ -99,11 +99,9 @@ static void TR_TransferBaseListClick_f (void)
  */
 static void TR_TransferAliensFromMission_f (void)
 {
-#if 0
 	const vec4_t green = {0.0f, 1.0f, 0.0f, 0.8f};
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 	const vec4_t red = {1.0f, 0.0f, 0.0f, 0.8f};
-#endif
 	int i;
 	aircraft_t *aircraft;
 	int stunnedAliens;
@@ -141,19 +139,18 @@ static void TR_TransferAliensFromMission_f (void)
 		string = va(ngettext("(can host %i live alien)", "(can host %i live aliens)", freeSpace), freeSpace);
 		string = va("%s %s", base->name, string);
 		option = UI_AddOption(&baseList, va("base%i", base->idx), string, va("%i", base->idx));
-#if 0
-		/** @todo ui code doesn't support this yet... */
+
+		/** @todo tooltip assigining wrong here, also ui doesn't yet support tooltip on options */
 		if (freeSpace >= stunnedAliens) {
 			Vector4Copy(green, option->color);
-			option->tooltip = _("Has free space for all captured aliens.");
+			/* option->tooltip = _("Has free space for all captured aliens."); */
 		} else if (freeSpace > 0) {
 			Vector4Copy(yellow, option->color);
-			option->tooltip = _("Has free space for some captured aliens, others will die.");
+			/* option->tooltip = _("Has free space for some captured aliens, others will die."); */
 		} else {
 			Vector4Copy(red, option->color);
-			option->tooltip = _("Doesn't have free space captured aliens, only dead ones can be stored.");
+			/* option->tooltip = _("Doesn't have free space captured aliens, only dead ones can be stored."); */
 		}
-#endif
 	}
 
 	if (baseList != NULL){

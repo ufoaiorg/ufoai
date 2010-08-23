@@ -171,10 +171,12 @@ static void UI_OptionTreeNodeDraw (uiNode_t *node)
 		/* text color */
 		if (!strcmp(OPTIONEXTRADATA(option).value, ref)) {
 			textColor = node->selectedColor;
-		} else if (node->disabled) {
+		} else if (node->disabled || option->disabled) {
 			textColor = disabledColor;
-		} else {
+		} else if (option->color[3] == 0.0f) {
 			textColor = node->color;
+		} else {
+			textColor = option->color;
 		}
 
 		/* print the option label */

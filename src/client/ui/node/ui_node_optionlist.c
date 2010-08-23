@@ -121,8 +121,10 @@ static void UI_OptionListNodeDraw (uiNode_t *node)
 			textColor = node->selectedColor;
 		} else if (node->disabled || option->disabled) {
 			textColor = disabledColor;
-		} else {
+		} else if (option->color[3] == 0.0f) {
 			textColor = node->color;
+		} else {
+			textColor = option->color;
 		}
 
 		if (OPTIONEXTRADATA(option).icon) {
