@@ -183,8 +183,9 @@ static void SV_WriteByte (byte c)
  */
 static byte* SV_WriteDummyByte (byte c)
 {
-	byte *pos = (byte*) sv.pendingEvent.buf->end;
-	NET_WriteByte(sv.pendingEvent.buf, c);
+	pending_event_t *p = &sv.pendingEvent;
+	byte *pos = (byte*) p->buf->end;
+	NET_WriteByte(p->buf, c);
 	assert(pos != NULL);
 	return pos;
 }
@@ -303,12 +304,14 @@ static void SV_ReadFormat (const char *format, ...)
  */
 static void SV_AbortEvents (void)
 {
-	if (!sv.pendingEvent.pending)
+	pending_event_t *p = &sv.pendingEvent;
+
+	if (!p->pending)
 		return;
 
-	sv.pendingEvent.pending = qfalse;
-	free_dbuffer(sv.pendingEvent.buf);
-	sv.pendingEvent.buf = NULL;
+	p->pending = qfalse;
+	free_dbuffer(p->buf);
+	p->buf = NULL;
 }
 
 /**
@@ -316,14 +319,16 @@ static void SV_AbortEvents (void)
  */
 static void SV_EndEvents (void)
 {
-	if (!sv.pendingEvent.pending)
+	pending_event_t *p = &sv.pendingEvent;
+
+	if (!p->pending)
 		return;
 
-	NET_WriteByte(sv.pendingEvent.buf, EV_NULL);
-	SV_Multicast(sv.pendingEvent.playerMask, sv.pendingEvent.buf);
-	sv.pendingEvent.pending = qfalse;
+	NET_WriteByte(p->buf, EV_NULL);
+	SV_Multicast(p->playerMask, p->buf);
+	p->pending = qfalse;
 	/* freed in SV_Multicast */
-	sv.pendingEvent.buf = NULL;
+	p->buf = NULL;
 }
 
 /**
@@ -332,21 +337,22 @@ static void SV_EndEvents (void)
  */
 static void SV_AddEvent (unsigned int mask, int eType)
 {
+	pending_event_t *p = &sv.pendingEvent;
 	Com_DPrintf(DEBUG_EVENTSYS, "Event type: %i (mask %i)\n", eType, mask);
 
 	/* finish the last event */
-	if (sv.pendingEvent.pending)
+	if (p->pending)
 		SV_EndEvents();
 
 	/* start the new event */
-	sv.pendingEvent.pending = qtrue;
-	sv.pendingEvent.playerMask = mask;
-	sv.pendingEvent.type = eType;
-	sv.pendingEvent.buf = new_dbuffer();
+	p->pending = qtrue;
+	p->playerMask = mask;
+	p->type = eType;
+	p->buf = new_dbuffer();
 
 	/* write header */
-	NET_WriteByte(sv.pendingEvent.buf, svc_event);
-	NET_WriteByte(sv.pendingEvent.buf, eType);
+	NET_WriteByte(p->buf, svc_event);
+	NET_WriteByte(p->buf, eType);
 }
 
 /**
@@ -354,10 +360,11 @@ static void SV_AddEvent (unsigned int mask, int eType)
  */
 static int SV_GetEvent (void)
 {
-	if (!sv.pendingEvent.pending)
+	const pending_event_t *p = &sv.pendingEvent;
+	if (!p->pending)
 		return -1;
 
-	return sv.pendingEvent.type;
+	return p->type;
 }
 
 /**
