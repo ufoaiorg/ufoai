@@ -920,3 +920,43 @@
 "volume" "0.1"
 "attenuation" "0.1"
 }
+// entity 16
+{
+"classname" "info_human_start"
+"origin" "720 336 28"
+}
+// entity 17
+{
+"classname" "info_human_start"
+"origin" "688 240 28"
+}
+// entity 18
+{
+"classname" "info_human_start"
+"origin" "720 272 28"
+}
+// entity 19
+{
+"classname" "info_human_start"
+"origin" "752 240 28"
+}
+// entity 20
+{
+"classname" "info_human_start"
+"origin" "752 304 28"
+}
+// entity 21
+{
+"classname" "info_human_start"
+"origin" "752 368 28"
+}
+// entity 22
+{
+"classname" "info_human_start"
+"origin" "752 432 28"
+}
+// entity 23
+{
+"classname" "info_human_start"
+"origin" "720 208 28"
+}
