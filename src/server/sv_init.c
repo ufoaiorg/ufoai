@@ -59,108 +59,6 @@ static const char* SV_GetMapTitle (const mapInfo_t *map, const char* const mapna
 }
 
 /**
- * @brief Change the server to a new map, taking all connected clients along with it.
- * @sa SV_AssembleMap
- * @sa CM_LoadMap
- * @sa Com_SetServerState
- */
-static void SV_SpawnServer (qboolean day, const char *server, const char *param)
-{
-	int i;
-	unsigned checksum = 0;
-	const char *buf = NULL;
-	char * map = SV_GetConfigString(CS_TILES);
-	char * pos = SV_GetConfigString(CS_POSITIONS);
-	mapInfo_t *randomMap = NULL;
-	client_t *cl;
-
-	assert(server[0] != '\0');
-
-	Com_DPrintf(DEBUG_SERVER, "SpawnServer: %s\n", server);
-
-	/* save name for levels that don't set message */
-	SV_SetConfigString(CS_NAME, server);
-	SV_SetConfigString(CS_LIGHTMAP, day);
-
-	Q_strncpyz(sv.name, server, sizeof(sv.name));
-
-	/* set serverinfo variable */
-	sv_mapname = Cvar_FullSet("sv_mapname", sv.name, CVAR_SERVERINFO | CVAR_NOSET);
-
-	/* notify the client in case of a listening server */
-	SCR_BeginLoadingPlaque();
-
-	if (param)
-		Q_strncpyz(sv.assembly, param, sizeof(sv.assembly));
-	else
-		sv.assembly[0] = '\0';
-
-	/* leave slots at start for clients only */
-	cl = NULL;
-	while ((cl = SV_GetNextClient(cl)) != NULL) {
-		/* needs to reconnect */
-		if (cl->state >= cs_spawning)
-			SV_SetClientState(cl, cs_connected);
-	}
-
-	/* assemble and load the map */
-	if (server[0] == '+') {
-		randomMap = SV_AssembleMap(server + 1, param, map, pos);
-		if (!randomMap) {
-			Com_Printf("Could not load assembly for map '%s'\n", server);
-			return;
-		}
-	} else {
-		SV_SetConfigString(CS_TILES, server);
-		SV_SetConfigString(CS_POSITIONS, param ? param : "");
-	}
-
-	CM_LoadMap(map, day, pos, &sv.mapData, &sv.mapTiles);
-
-	Com_Printf("checksum for the map '%s': %u\n", server, sv.mapData.mapChecksum);
-	SV_SetConfigString(CS_MAPCHECKSUM, sv.mapData.mapChecksum);
-
-	checksum = 0;
-	while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
-		checksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
-	FS_GetFileData(NULL);
-	Com_Printf("ufo script checksum %u\n", checksum);
-	SV_SetConfigString(CS_UFOCHECKSUM, checksum);
-	SV_SetConfigString(CS_OBJECTAMOUNT, csi.numODs);
-	SV_SetConfigString(CS_VERSION, UFO_VERSION);
-	SV_SetConfigString(CS_MAPTITLE, SV_GetMapTitle(randomMap, server));
-	if (!strncmp(SV_GetConfigString(CS_MAPTITLE), "b/", 2)) {
-		/* For base attack, cl.configstrings[CS_MAPTITLE] contains too many chars */
-		SV_SetConfigString(CS_MAPTITLE, "Base attack");
-		SV_SetConfigString(CS_NAME, ".baseattack");
-	}
-
-	/* clear random-map assembly data */
-	Mem_Free(randomMap);
-	randomMap = NULL;
-
-	/* clear physics interaction links */
-	SV_ClearWorld();
-
-	/* fix this! */
-	for (i = 1; i <= sv.mapData.numInline; i++)
-		sv.models[i] = CM_InlineModel(&sv.mapTiles, va("*%i", i));
-
-	/* precache and static commands can be issued during map initialization */
-	Com_SetServerState(ss_loading);
-
-	SDL_mutexP(svs.serverMutex);
-	/* load and spawn all other entities */
-	svs.ge->SpawnEntities(sv.name, SV_GetConfigStringInteger(CS_LIGHTMAP), sv.mapData.mapEntityString);
-	SDL_mutexV(svs.serverMutex);
-
-	/* all precaches are complete */
-	Com_SetServerState(ss_game);
-
-	Com_Printf("-------------------------------------\n");
-}
-
-/**
  * @sa CL_ServerListDiscoveryCallback
  */
 static void SV_DiscoveryCallback (struct datagram_socket *s, const char *buf, int len, struct sockaddr *from)
@@ -202,17 +100,23 @@ static void SV_InitGame (void)
 		SV_SetMaster_f();
 }
 
-
 /**
- * @brief Loads the map
- * @note the full syntax is:
- * @code map [day|night] [+]<map> [<assembly>] @endcode
- * @sa SV_SpawnServer
- * @sa SV_Map_f
- * @param[in] day Use the day version of the map (only lightmap)
+ * @brief Change the server to a new map, taking all connected clients along with it.
+ * @note the full syntax is: @code map [day|night] [+]<map> [<assembly>] @endcode
+ * @sa SV_AssembleMap
+ * @sa CM_LoadMap
+ * @sa Com_SetServerState
  */
 void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 {
+	int i;
+	unsigned checksum = 0;
+	const char *buf = NULL;
+	char * map = SV_GetConfigString(CS_TILES);
+	char * pos = SV_GetConfigString(CS_POSITIONS);
+	mapInfo_t *randomMap = NULL;
+	client_t *cl;
+
 	/* any partially connected client will be restarted */
 	Com_SetServerState(ss_restart);
 
@@ -220,10 +124,94 @@ void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 	SV_InitGame();
 
 	if (!svs.initialized) {
-		Com_Printf("Could not spawn the map\n");
+		Com_Printf("Could not spawn the server\n");
 		return;
 	}
 
-	SV_SpawnServer(day, levelstring, assembly);
+	assert(levelstring[0] != '\0');
+
+	Com_DPrintf(DEBUG_SERVER, "SpawnServer: %s\n", levelstring);
+
+	/* save name for levels that don't set message */
+	SV_SetConfigString(CS_NAME, levelstring);
+	SV_SetConfigString(CS_LIGHTMAP, day);
+
+	Q_strncpyz(sv.name, levelstring, sizeof(sv.name));
+
+	/* set serverinfo variable */
+	sv_mapname = Cvar_FullSet("sv_mapname", sv.name, CVAR_SERVERINFO | CVAR_NOSET);
+
+	/* notify the client in case of a listening server */
+	SCR_BeginLoadingPlaque();
+
+	if (assembly)
+		Q_strncpyz(sv.assembly, assembly, sizeof(sv.assembly));
+	else
+		sv.assembly[0] = '\0';
+
+	/* leave slots at start for clients only */
+	cl = NULL;
+	while ((cl = SV_GetNextClient(cl)) != NULL) {
+		/* needs to reconnect */
+		if (cl->state >= cs_spawning)
+			SV_SetClientState(cl, cs_connected);
+	}
+
+	/* assemble and load the map */
+	if (levelstring[0] == '+') {
+		randomMap = SV_AssembleMap(levelstring + 1, assembly, map, pos);
+		if (!randomMap) {
+			Com_Printf("Could not load assembly for map '%s'\n", levelstring);
+			return;
+		}
+	} else {
+		SV_SetConfigString(CS_TILES, levelstring);
+		SV_SetConfigString(CS_POSITIONS, assembly ? assembly : "");
+	}
+
+	CM_LoadMap(map, day, pos, &sv.mapData, &sv.mapTiles);
+
+	Com_Printf("checksum for the map '%s': %u\n", levelstring, sv.mapData.mapChecksum);
+	SV_SetConfigString(CS_MAPCHECKSUM, sv.mapData.mapChecksum);
+
+	checksum = 0;
+	while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
+		checksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
+	FS_GetFileData(NULL);
+	Com_Printf("ufo script checksum %u\n", checksum);
+	SV_SetConfigString(CS_UFOCHECKSUM, checksum);
+	SV_SetConfigString(CS_OBJECTAMOUNT, csi.numODs);
+	SV_SetConfigString(CS_VERSION, UFO_VERSION);
+	SV_SetConfigString(CS_MAPTITLE, SV_GetMapTitle(randomMap, levelstring));
+	if (!strncmp(SV_GetConfigString(CS_MAPTITLE), "b/", 2)) {
+		/* For base attack, cl.configstrings[CS_MAPTITLE] contains too many chars */
+		SV_SetConfigString(CS_MAPTITLE, "Base attack");
+		SV_SetConfigString(CS_NAME, ".baseattack");
+	}
+
+	/* clear random-map assembly data */
+	Mem_Free(randomMap);
+	randomMap = NULL;
+
+	/* clear physics interaction links */
+	SV_ClearWorld();
+
+	/* fix this! */
+	for (i = 1; i <= sv.mapData.numInline; i++)
+		sv.models[i] = CM_InlineModel(&sv.mapTiles, va("*%i", i));
+
+	/* precache and static commands can be issued during map initialization */
+	Com_SetServerState(ss_loading);
+
+	SDL_mutexP(svs.serverMutex);
+	/* load and spawn all other entities */
+	svs.ge->SpawnEntities(sv.name, SV_GetConfigStringInteger(CS_LIGHTMAP), sv.mapData.mapEntityString);
+	SDL_mutexV(svs.serverMutex);
+
+	/* all precaches are complete */
+	Com_SetServerState(ss_game);
+
+	Com_Printf("-------------------------------------\n");
+
 	Cbuf_CopyToDefer();
 }
