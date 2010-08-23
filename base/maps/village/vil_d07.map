@@ -4,44 +4,6 @@
 "classname" "worldspawn"
 // brush 0
 {
-( 192 100 28 ) ( 192 64 28 ) ( 192 64 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 224 64 28 ) ( 224 100 28 ) ( 224 100 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 192 64 28 ) ( 226 64 28 ) ( 226 64 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 226 96 28 ) ( 192 96 28 ) ( 192 96 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 256 256 0 ) ( 0 256 0 ) ( 0 0 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 192 64 36 ) ( 192 100 36 ) ( 226 100 36 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-}
-// brush 1
-{
-( 71 101 4 ) ( 91 114 4 ) ( 81 131 4 ) tex_common/nodraw 60 58 0 0.5 0.5 65280 128 0
-( 198 63 18 ) ( 198 93 18 ) ( 224 93 18 ) tex_common/nodraw 60 58 0 0.5 0.5 65280 128 0
-( 215 86 4 ) ( 215 86 22 ) ( 200 81 22 ) tex_common/nodraw 60 0 0 0.5 0.5 65280 128 0
-( 207 64 22 ) ( 207 64 4 ) ( 200 82 22 ) tex_common/nodraw 6 0 0 0.5 0.5 65280 128 0
-( 222 69 22 ) ( 222 69 4 ) ( 207 64 22 ) tex_common/nodraw 60 0 0 0.5 0.5 65280 128 0
-( 222 68 4 ) ( 222 68 22 ) ( 215 86 22 ) tex_common/nodraw 8 0 0 0.5 0.5 65280 128 0
-}
-// brush 2
-{
-( 72 128 28 ) ( 72 104 28 ) ( 72 104 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 88 104 28 ) ( 88 128 28 ) ( 88 128 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 72 104 28 ) ( 88 104 28 ) ( 88 104 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 88 128 28 ) ( 72 128 28 ) ( 72 128 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 256 256 0 ) ( 0 256 0 ) ( 0 0 0 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-( 72 104 28 ) ( 72 128 28 ) ( 88 128 28 ) tex_common/actorclip 0 0 0 0.5 0.5 65536 0 0
-}
-// brush 3
-{
-( 83 109 28 ) ( 83 109 4 ) ( 74 109 4 ) tex_common/nodraw -7 0 0 0.583008 0.5 65280 128 0
-( 74 122 28 ) ( 74 122 4 ) ( 83 122 4 ) tex_common/nodraw -13 0 0 0.519367 0.5 65280 128 0
-( 71 101 4 ) ( 91 114 4 ) ( 81 131 4 ) tex_common/nodraw -3 8 32 0.500015 0.499996 65280 128 0
-( 81 131 22 ) ( 91 114 22 ) ( 71 101 22 ) tex_common/nodraw 61 8 32 0.500015 0.499996 65280 128 0
-( 74 122 4 ) ( 74 122 28 ) ( 71 116 4 ) tex_common/nodraw 2 0 0 0.582993 0.5 65280 128 0
-( 83 122 28 ) ( 83 122 4 ) ( 87 116 4 ) tex_common/nodraw -4 0 0 0.424034 0.5 65280 128 0
-( 83 109 4 ) ( 83 109 28 ) ( 87 116 4 ) tex_common/nodraw -1 0 0 0.519363 0.5 65280 128 0
-( 74 109 28 ) ( 74 109 4 ) ( 71 116 4 ) tex_common/nodraw -6 0 0 0.424023 0.5 65280 128 0
-}
-// brush 4
-{
 ( 0 256 4 ) ( 0 0 4 ) ( 0 0 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 256 0 4 ) ( 256 256 4 ) ( 256 256 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 0 0 4 ) ( 256 0 4 ) ( 256 0 -4 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
@@ -53,15 +15,21 @@
 // entity 1
 {
 "classname" "misc_model"
+"origin" "196 64 8"
+"model" "models/objects/vegi/tropic/tropic02.md2"
 "spawnflags" "255"
-"model" "models/objects/furniture/trashcan/trashcan.md2"
-"origin" "76 116 1.375"
 }
 // entity 2
 {
 "classname" "misc_model"
-"origin" "206 84 10.625"
-"angles" "-0 15 90"
-"model" "models/objects/furniture/trashcan/trashcan.md2"
+"origin" "68 62 8"
+"model" "models/objects/vegi/tropic/tropic02.md2"
+"spawnflags" "255"
+}
+// entity 3
+{
+"classname" "misc_model"
+"origin" "130 128 8"
+"model" "models/objects/vegi/tropic/tropic02.md2"
 "spawnflags" "255"
 }
