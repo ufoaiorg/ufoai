@@ -5089,6 +5089,7 @@ base/textures/tex_base/wires01.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_base/wires02.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_base/wires1.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_base/wires2.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_building |  | hullbr3ach
 base/textures/tex_buildings/9basetrim01.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9darktrim02b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9floorbasic01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -5152,6 +5153,8 @@ base/textures/tex_buildings/concrete021.jpg | GNU General Public License 2.0 | W
 base/textures/tex_buildings/concrete022.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete022_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/concrete023.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete1.jpg |  | hullbr3ach
+base/textures/tex_buildings/concrete2.jpg |  | hullbr3ach
 base/textures/tex_buildings/crate_drtyow.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/crate_drtyow_sign.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/d_tech_dw2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -5213,6 +5216,7 @@ base/textures/tex_buildings/floor025.png | GNU General Public License 2.0 or lat
 base/textures/tex_buildings/floor025_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/floor_gray.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_buildings/floor_gray_nm.png | GNU General Public License 2.0
+base/textures/tex_buildings/ground_dirt1.tga |  | hullbr3ach
 base/textures/tex_buildings/ind05_pipe.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/ind05_pipe_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/ind05a.png | GNU General Public License 2.0 or later | Nate Wright
@@ -5352,6 +5356,10 @@ base/textures/tex_buildings/wall038.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_buildings/wall039.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/wall040.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/wall5_4.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/wall_dirt1.tga |  | hullbr3ach
+base/textures/tex_buildings/wall_dirt2.tga |  | hullbr3ach
+base/textures/tex_buildings/wall_dirt3.tga |  | hullbr3ach
+base/textures/tex_buildings/wall_dirt4.tga |  | hullbr3ach
 base/textures/tex_buildings/wall_ind01.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_ind01_cons.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_ind01_cons_nm.png | GNU General Public License 2.0 or later | Nate Wright
@@ -5372,6 +5380,7 @@ base/textures/tex_buildings/wall_ind04_cons_nm.png | GNU General Public License 
 base/textures/tex_buildings/wall_ind04_nm.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_ind05.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_buildings/wall_ind05_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_buildings/wall_stone_dirt.tga |  | hullbr3ach
 base/textures/tex_buildings/wall_wood_001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/window001_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_buildings/window012_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
