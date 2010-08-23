@@ -1001,8 +1001,8 @@ base/models/geoscape/inter_stingray.md2 | GNU General Public License 2.0 or late
 base/models/geoscape/inter_stingray.png | GNU General Public License 2.0 or later | Willem Sitters | Based on original model created by David Townsend (Psawhn), see base/models/aircrafts/
 base/models/geoscape/missile.md2 | GNU General Public License 2.0
 base/models/geoscape/missile.png | GNU General Public License 2.0
-base/models/geoscape/missile_aa51.md2 |  | Manuel "ghosta" Gschrey
-base/models/geoscape/missile_aa51.png |  | Manuel "ghosta" Gschrey
+base/models/geoscape/missile_aa51.md2 | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
+base/models/geoscape/missile_aa51.png | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/models/geoscape/missile_sparrow.jpg | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | base/models/aircraft/craft_weapon_sparrow/
 base/models/geoscape/missile_sparrow.md2 | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | base/models/aircraft/craft_weapon_sparrow/
 base/models/geoscape/missile_tr20.md2 | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
