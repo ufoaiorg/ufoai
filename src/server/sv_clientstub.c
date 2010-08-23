@@ -28,10 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/common.h"
 #include "../ports/system.h"
 
-static void Key_Bind_Null_f (void)
-{
-}
-
 void CL_Init (void)
 {
 }
@@ -87,5 +83,5 @@ int CL_Milliseconds (void)
 
 void Key_Init (void)
 {
-	Cmd_AddCommand("bind", Key_Bind_Null_f, NULL);
+	Cmd_AddCommand("bind", Cmd_Dummy_f, NULL);
 }
