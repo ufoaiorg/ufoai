@@ -34,7 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../game/game.h"
 #include <SDL_thread.h>
 
-extern memPool_t *sv_gameSysPool;	/**< the mempool for the game lib */
 extern memPool_t *sv_genericPool;
 
 typedef struct sv_edict_s {
@@ -120,6 +119,8 @@ typedef struct {
 	sv_edict_t edicts[MAX_EDICTS];
 	worldSector_t worldSectors[AREA_NODES];
 	unsigned int numWorldSectors;
+
+	memPool_t *gameSysPool;	/**< the mempool for the game lib */
 } serverInstanceGame_t;
 
 #define EDICT_NUM(n) ((edict_t *)((byte *)svs.ge->edicts + svs.ge->edict_size * (n)))

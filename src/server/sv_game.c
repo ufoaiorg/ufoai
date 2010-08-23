@@ -376,7 +376,7 @@ static void *SV_TagAlloc (int size, int tagNum, const char *file, int line)
 	if (tagNum < 0)
 		tagNum *= -1;
 
-	return _Mem_Alloc(size, qtrue, sv_gameSysPool, tagNum, file, line);
+	return _Mem_Alloc(size, qtrue, sv.gameSysPool, tagNum, file, line);
 }
 
 static void SV_MemFree (void *ptr, const char *file, int line)
@@ -392,7 +392,7 @@ static void SV_FreeTags (int tagNum, const char *file, int line)
 	if (tagNum < 0)
 		tagNum *= -1;
 
-	_Mem_FreeTag(sv_gameSysPool, tagNum, file, line);
+	_Mem_FreeTag(sv.gameSysPool, tagNum, file, line);
 }
 
 static qboolean SV_TestLine (const vec3_t start, const vec3_t stop, const int levelmask)
@@ -513,11 +513,14 @@ void SV_ShutdownGameProgs (void)
 
 	svs.ge->Shutdown();
 
-	size = Mem_PoolSize(sv_gameSysPool);
+	size = Mem_PoolSize(sv.gameSysPool);
 	if (size > 0) {
 		Com_Printf("WARNING: Game memory leak (%u bytes)\n", size);
-		Cmd_ExecuteString(va("mem_stats %s", sv_gameSysPool->name));
+		Cmd_ExecuteString(va("mem_stats %s", sv.gameSysPool->name));
 	}
+
+	Mem_DeletePool(sv.gameSysPool);
+	sv.gameSysPool = NULL;
 
 	SV_UnloadGame();
 
@@ -670,6 +673,8 @@ void SV_InitGameProgs (void)
 		Com_Error(ERR_DROP, "failed to load game library");
 	if (svs.ge->apiversion != GAME_API_VERSION)
 		Com_Error(ERR_DROP, "game is version %i, not %i", svs.ge->apiversion, GAME_API_VERSION);
+
+	sv.gameSysPool = Mem_CreatePool("Server: Game system");
 
 	svs.ge->Init();
 

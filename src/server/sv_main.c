@@ -49,7 +49,6 @@ cvar_t *sv_mapname;
 static qboolean abandon;		/**< shutdown server when all clients disconnect and don't accept new connections */
 static qboolean killserver;		/**< will initiate shutdown once abandon is set */
 
-memPool_t *sv_gameSysPool;
 memPool_t *sv_genericPool;
 
 char *SV_GetConfigString (int index)
@@ -708,7 +707,6 @@ void SV_Init (void)
 {
 	Com_Printf("\n------ server initialization -------\n");
 
-	sv_gameSysPool = Mem_CreatePool("Server: Game system");
 	sv_genericPool = Mem_CreatePool("Server: Generic");
 
 	memset(&svs, 0, sizeof(svs));
@@ -805,9 +803,11 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	NET_DatagramSocketClose(svs.netDatagramSocket);
 	SV_Stop();
 
-	for (i = 0; i < sv.numSVModels; i++)
-		if (sv.svModels[i].name)
-			Mem_Free(sv.svModels[i].name);
+	for (i = 0; i < sv.numSVModels; i++) {
+		sv_model_t *model = &sv.svModels[i];
+		if (model->name)
+			Mem_Free(model->name);
+	}
 
 	/* free current level */
 	memset(&sv, 0, sizeof(sv));
