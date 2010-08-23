@@ -162,19 +162,6 @@ typedef struct {
 	game_export_t *ge;
 } server_static_t;
 
-/**
- * @brief map cycle list element
-*/
-typedef struct mapcycle_s {
-	char *map;			/**< map name */
-	char *type;			/**< gametype to play on this map */
-	qboolean day;		/**< load the day version */
-	struct mapcycle_s* next;	/**< pointer to the next map in cycle */
-} mapcycle_t;
-
-extern mapcycle_t *mapcycleList;	/**< map cycle linked list */
-extern int mapcycleCount;		/**< number of maps in the cycle */
-
 /*============================================================================= */
 
 extern server_static_t svs;		/**< persistant server info */
@@ -189,18 +176,15 @@ extern cvar_t *sv_threads;	/**< run the game lib threaded */
 
 /* sv_main.c */
 void SV_DropClient(client_t *drop, const char *message);
-
 int SV_CountPlayers(void);
-
 void SV_InitOperatorCommands(void);
-
 void SV_UserinfoChanged(client_t *cl);
+void SV_ReadPacket(struct net_stream *s);
 
+/* sv_mapcycle.c */
+void SV_MapcycleInit(void);
 void SV_NextMapcycle(void);
 void SV_MapcycleClear(void);
-void SV_MapcycleAdd(const char* mapName, qboolean day, const char* gameType);
-
-void SV_ReadPacket(struct net_stream *s);
 
 /* sv_init.c */
 void SV_Map(qboolean day, const char *levelstring, const char *assembly);
@@ -218,6 +202,7 @@ void SV_SetClientState(client_t* client, int state);
 /* sv_ccmds.c */
 void SV_SetMaster_f(void);
 void SV_Heartbeat_f(void);
+qboolean SV_CheckMap(const char *map, const char *assembly);
 
 /* sv_game.c */
 int SV_RunGameFrameThread(void *data);

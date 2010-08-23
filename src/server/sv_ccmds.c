@@ -106,7 +106,7 @@ static client_t* SV_GetPlayerClientStructure (const char *s)
 /**
  * @brief Checks whether a map exists
  */
-static qboolean SV_CheckMap (const char *map, const char *assembly)
+qboolean SV_CheckMap (const char *map, const char *assembly)
 {
 	char expanded[MAX_QPATH];
 
@@ -454,49 +454,6 @@ static void SV_ListMaps_f (void)
 	Com_Printf("-----\n %i installed maps\n+name means random map assembly", fs_numInstalledMaps + 1);
 }
 
-static void SV_MapcycleList_f (void)
-{
-	int i;
-	const mapcycle_t* mapcycle;
-
-	mapcycle = mapcycleList;
-	Com_Printf("current mapcycle has %i entries\n", mapcycleCount);
-	for (i = 0; i < mapcycleCount; i++) {
-		Com_Printf(" %s (%s)\n", mapcycle->map, mapcycle->type);
-		mapcycle = mapcycle->next;
-	}
-}
-
-static void SV_MapcycleAdd_f (void)
-{
-	if (Cmd_Argc() == 4) {
-		const char *map = Cmd_Argv(1);
-		const char *day = Cmd_Argv(2);
-		const char *gametype = Cmd_Argv(3);
-		if (!SV_CheckMap(map, NULL)) {
-			Com_Printf("map '%s' isn't a valid map\n", map);
-			return;
-		}
-		Com_Printf("adding map '%s' with gametype '%s' to mapcycle (to add this permanently edit your mapcycle.txt)\n", map, gametype);
-		if (!strcmp(day, "day"))
-			SV_MapcycleAdd(map, qtrue, gametype);
-		else
-			SV_MapcycleAdd(map, qfalse, gametype);
-	} else {
-		Com_Printf("Usage: %s <mapname> <day|night> <gametype>\n", Cmd_Argv(0));
-		Com_Printf(" ...to get a list of valid maps type 'maplist'\n"
-			" ...to get a list of valid gametypes 'gametypelist'\n");
-	}
-}
-
-static void SV_MapcycleNext_f (void)
-{
-	if (mapcycleCount > 0)
-		SV_NextMapcycle();
-	else
-		Com_Printf("no mapcycle.txt\n");
-}
-
 /**
  * @brief List for SV_CompleteServerCommand
  * @sa ServerCommand
@@ -622,11 +579,6 @@ void SV_InitOperatorCommands (void)
 	Cmd_AddCommand("maplist", SV_ListMaps_f, "List of all available maps");
 
 	Cmd_AddCommand("setmaster", SV_SetMaster_f, "Send ping command to masterserver (see cvar masterserver_url)");
-	Cmd_AddCommand("mapcyclelist", SV_MapcycleList_f, "Print the current mapcycle");
-	Cmd_AddCommand("mapcyclenext", SV_MapcycleNext_f, "Start the next map from the cycle");
-	Cmd_AddCommand("mapcycleclear", SV_MapcycleClear, "Delete the current mapcycle");
-	Cmd_AddCommand("mapcycleadd", SV_MapcycleAdd_f, "Add new maps to the mapcycle");
-	Cmd_AddParamCompleteFunction("mapcycleadd", SV_CompleteMapCommand);
 
 #ifdef DEDICATED_ONLY
 	Cmd_AddCommand("say", SV_ConSay_f, "Broadcasts server messages to all connected players");

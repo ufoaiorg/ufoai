@@ -271,6 +271,9 @@
 		<Unit filename="..\..\src\server\sv_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/server/sv_mapcycle.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\server\sv_send.c">
 			<Option compilerVar="CC" />
 		</Unit>
