@@ -46,9 +46,6 @@ cvar_t *sv_threads;
 cvar_t *sv_public;
 cvar_t *sv_mapname;
 
-static qboolean abandon;		/**< shutdown server when all clients disconnect and don't accept new connections */
-static qboolean killserver;		/**< will initiate shutdown once abandon is set */
-
 memPool_t *sv_genericPool;
 
 char *SV_GetConfigString (int index)
@@ -150,14 +147,14 @@ void SV_DropClient (client_t * drop, const char *message)
 	SV_SetClientState(drop, cs_free);
 	drop->name[0] = 0;
 
-	if (abandon) {
+	if (svs.abandon) {
 		int count = 0;
 		client_t *cl = NULL;
 		while ((cl = SV_GetNextClient(cl)) != NULL)
 			if (cl->state >= cs_connected)
 				count++;
 		if (count == 0)
-			killserver = qtrue;
+			svs.killserver = qtrue;
 	}
 }
 
@@ -629,11 +626,8 @@ void SV_Frame (int now, void *data)
 	Master_Heartbeat();
 
 	/* server is empty - so shutdown */
-	if (abandon && killserver) {
-		abandon = qfalse;
-		killserver = qfalse;
+	if (svs.abandon && svs.killserver)
 		SV_Shutdown("Server disconnected.", qfalse);
-	}
 }
 
 /**
@@ -835,7 +829,7 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
  */
 void SV_ShutdownWhenEmpty (void)
 {
-	abandon = qtrue;
+	svs.abandon = qtrue;
 	/* pretend server is already dead, otherwise clients may try and reconnect */
 	Com_SetServerState(ss_dead);
 }

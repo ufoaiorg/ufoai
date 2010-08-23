@@ -376,10 +376,11 @@ qboolean R_CullMeshModel (entity_t *e)
 		const int size = lengthof(r_locals.frustum);
 
 		for (j = 0; j < size; j++) {
+			const cBspPlane_t *bspPlane = &r_locals.frustum[j];
 			/* get the distance between the frustum normal vector and the
 			 * current vector of the bounding box */
-			const float f = DotProduct(r_locals.frustum[j].normal, bbox[i]);
-			if ((f - r_locals.frustum[j].dist) < 0)
+			const float f = DotProduct(bspPlane->normal, bbox[i]);
+			if (f - bspPlane->dist < 0)
 				mask |= (1 << j);
 		}
 

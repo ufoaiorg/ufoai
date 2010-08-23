@@ -79,6 +79,8 @@ typedef struct {
 	struct client_s *clients;			/**< [sv_maxclients->value]; */
 	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
 								 * Set to a huge negative value to send immmediately */
+	qboolean abandon;		/**< shutdown server when all clients disconnect and don't accept new connections */
+	qboolean killserver;		/**< will initiate shutdown once abandon is set */
 	SDL_mutex *serverMutex;
 	SDL_Thread *gameThread;
 	void *gameLibrary;
