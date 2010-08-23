@@ -336,7 +336,7 @@ static size_t R_InitializeShader (const char *name, char *out, size_t len)
 	return i;
 }
 
-static size_t R_PreprocessShader (const char *name, const char *in, char *out, size_t len)
+static size_t R_PreprocessShader (const char *name, const char *in, char *out, int len)
 {
 	byte *buffer;
 	size_t i = 0;
@@ -382,8 +382,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 
 				len--;
 				if (len < 0) {
-					Com_Error(ERR_DROP, "R_PreprocessShader: "
-							"Overflow: %s", name);
+					Com_Error(ERR_DROP, "R_PreprocessShader: Overflow: %s", name);
 				}
 
 				if ((f && !elseclause) || (!f && elseclause)) {
@@ -436,8 +435,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, s
 			}
 
 			if (!*in) {
-				Com_Error(ERR_DROP, "R_PreprocessShader: "
-						"Unterminated conditional: %s", name);
+				Com_Error(ERR_DROP, "R_PreprocessShader: Unterminated conditional: %s", name);
 			}
 		}
 
