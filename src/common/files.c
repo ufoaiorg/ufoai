@@ -589,7 +589,7 @@ char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
 	nfiles++; /* add space for a guard */
 	*numfiles = nfiles;
 
-	list = Mem_PoolAlloc(sizeof(char*) * nfiles, com_fileSysPool, 0);
+	list = (char **)Mem_PoolAlloc(sizeof(char*) * nfiles, com_fileSysPool, 0);
 	memset(tempList, 0, sizeof(tempList));
 
 	s = Sys_FindFirst(findname, musthave, canthave);
@@ -1628,7 +1628,7 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 	len = ftell(f);
 	fseek(f, 0, SEEK_SET);
 
-	buf = Mem_PoolAlloc(len, com_fileSysPool, 0);
+	buf = (byte *)Mem_PoolAlloc(len, com_fileSysPool, 0);
 	if (fread(buf, 1, len, f) != len)
 		Sys_Error("Short read in FS_CopyFile");
 	fclose(f);

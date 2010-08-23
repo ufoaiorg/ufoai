@@ -454,7 +454,7 @@ void NET_vReadFormat (struct dbuffer *buf, const char *format, va_list ap)
 				const int n = NET_ReadShort(buf);
 
 				*va_arg(ap, int *) = n;
-				p = va_arg(ap, void *);
+				p = va_arg(ap, byte *);
 
 				for (i = 0; i < n; i++)
 					*p++ = NET_ReadByte(buf);
