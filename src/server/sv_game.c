@@ -154,18 +154,7 @@ static void SV_Configstring (int index, const char *fmt, ...)
 	Q_vsnprintf(val, sizeof(val), fmt, argptr);
 	va_end(argptr);
 
-	/* change the string in sv
-	 * there may be overflows in i==CS_TILES - but thats ok
-	 * see definition of configstrings and MAX_TILESTRINGS */
-	switch (index) {
-	case CS_TILES:
-	case CS_POSITIONS:
-		Q_strncpyz(sv.configstrings[index], val, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-		break;
-	default:
-		SV_SetConfigString(index, val);
-		break;
-	}
+	SV_SetConfigString(index, val);
 
 	if (Com_ServerState() != ss_loading) { /* send the update to everyone */
 		struct dbuffer *msg = new_dbuffer();

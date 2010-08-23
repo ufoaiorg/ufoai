@@ -72,7 +72,14 @@ char *SV_SetConfigString (int index, const char *value)
 		Com_Error(ERR_FATAL, "Invalid config string index given");
 	if (value == NULL)
 		Com_Error(ERR_FATAL, "Invalid value for config string %i index given", index);
-	Q_strncpyz(sv.configstrings[index], value, sizeof(sv.configstrings[index]));
+
+	/* change the string in sv
+	 * there may be overflows in i==CS_TILES - but thats ok
+	 * see definition of configstrings and MAX_TILESTRINGS */
+	if (index == CS_TILES || index == CS_POSITIONS)
+		Q_strncpyz(sv.configstrings[index], value, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+	else
+		Q_strncpyz(sv.configstrings[index], value, sizeof(sv.configstrings[index]));
 	return sv.configstrings[index];
 }
 
