@@ -81,12 +81,7 @@ struct edict_s {
 
 	edict_t *child;	/**< e.g. the trigger for this edict */
 	edict_t *owner;	/**< e.g. the door model in case of func_door */
-	/**
-	 * type of objects the entity will not pass through
-	 * can be any of MASK_* or CONTENTS_*
-	 */
-	int clipmask;
-	int modelindex;
+	int modelindex;	/**< inline model index */
 };
 
 
