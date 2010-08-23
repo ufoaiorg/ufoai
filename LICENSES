@@ -1005,7 +1005,8 @@ base/models/geoscape/missile_aa51.md2 | GNU General Public License 2.0 or later 
 base/models/geoscape/missile_aa51.png | GNU General Public License 2.0 or later | Manuel "ghosta" Gschrey
 base/models/geoscape/missile_sparrow.jpg | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | base/models/aircraft/craft_weapon_sparrow/
 base/models/geoscape/missile_sparrow.md2 | GNU General Public License 2.0 or later | Tejay "TimberDragon" Penfold | base/models/aircraft/craft_weapon_sparrow/
-base/models/geoscape/missile_tr20.md2 | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/models/geoscape/missile_tr20.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/geoscape/missile_tr20.png | GNU General Public License 2.0 or later
 base/models/geoscape/mission.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/mission.png | GNU General Public License 2.0 or later | TimberDragon
 base/models/geoscape/radar.md2 | GNU General Public License 2.0 or later | Willem Sitters
