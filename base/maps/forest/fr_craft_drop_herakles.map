@@ -392,6 +392,6 @@
 "classname" "misc_sound"
 "origin" "384 128 32"
 "noise" "ambience/ufo_night_atm"
-"volume" "0.1"
+"volume" "0.01"
 "attenuation" "0.1"
 }

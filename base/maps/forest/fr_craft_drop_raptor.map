@@ -917,7 +917,7 @@
 "classname" "misc_sound"
 "origin" "416 320 32"
 "noise" "ambience/ufo_night_atm"
-"volume" "0.1"
+"volume" "0.05"
 "attenuation" "0.1"
 }
 // entity 16
