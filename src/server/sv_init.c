@@ -69,8 +69,8 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	int i;
 	unsigned checksum = 0;
 	const char *buf = NULL;
-	char * map = sv.configstrings[CS_TILES];
-	char * pos = sv.configstrings[CS_POSITIONS];
+	char * map = SV_GetConfigString(CS_TILES);
+	char * pos = SV_GetConfigString(CS_POSITIONS);
 	mapInfo_t *randomMap = NULL;
 
 	assert(server[0] != '\0');
@@ -78,9 +78,8 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	Com_DPrintf(DEBUG_SERVER, "SpawnServer: %s\n", server);
 
 	/* save name for levels that don't set message */
-	Q_strncpyz(sv.configstrings[CS_NAME], server, MAX_TOKEN_CHARS);
-	Com_sprintf(sv.configstrings[CS_LIGHTMAP], MAX_TOKEN_CHARS, "%i", day);
-	sv.day = day;
+	SV_SetConfigString(CS_NAME, server);
+	SV_SetConfigStringInteger(CS_LIGHTMAP, day);
 
 	Q_strncpyz(sv.name, server, sizeof(sv.name));
 
@@ -114,29 +113,27 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 		if (param)
 			Q_strncpyz(sv.configstrings[CS_POSITIONS], param, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 		else
-			sv.configstrings[CS_POSITIONS][0] = 0;
+			SV_SetConfigString(CS_POSITIONS, "");
 	}
 
 	CM_LoadMap(map, day, pos, &sv.mapData, &sv.mapTiles);
 
 	Com_Printf("checksum for the map '%s': %u\n", server, sv.mapData.mapChecksum);
-	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", sv.mapData.mapChecksum);
+	SV_SetConfigStringInteger(CS_MAPCHECKSUM, sv.mapData.mapChecksum);
 
 	checksum = 0;
 	while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
 		checksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
 	FS_GetFileData(NULL);
 	Com_Printf("ufo script checksum %u\n", checksum);
-	Com_sprintf(sv.configstrings[CS_UFOCHECKSUM], sizeof(sv.configstrings[CS_UFOCHECKSUM]), "%i", checksum);
-	Com_sprintf(sv.configstrings[CS_OBJECTAMOUNT], sizeof(sv.configstrings[CS_OBJECTAMOUNT]), "%i", csi.numODs);
-
-	Com_sprintf(sv.configstrings[CS_VERSION], sizeof(sv.configstrings[CS_VERSION]), "%s", UFO_VERSION);
-
-	Com_sprintf(sv.configstrings[CS_MAPTITLE], sizeof(sv.configstrings[CS_MAPTITLE]), "%s", SV_GetMapTitle(randomMap, server));
-	if (!strncmp(sv.configstrings[CS_MAPTITLE], "b/", 2)) {
+	SV_SetConfigStringInteger(CS_UFOCHECKSUM, checksum);
+	SV_SetConfigStringInteger(CS_OBJECTAMOUNT, csi.numODs);
+	SV_SetConfigString(CS_VERSION, UFO_VERSION);
+	SV_SetConfigString(CS_MAPTITLE, SV_GetMapTitle(randomMap, server));
+	if (!strncmp(SV_GetConfigString(CS_MAPTITLE), "b/", 2)) {
 		/* For base attack, cl.configstrings[CS_MAPTITLE] contains too many chars */
-		Com_sprintf(sv.configstrings[CS_MAPTITLE], sizeof(sv.configstrings[CS_MAPTITLE]), "Base attack");
-		Com_sprintf(sv.configstrings[CS_NAME], sizeof(sv.configstrings[CS_NAME]), ".baseattack");
+		SV_SetConfigString(CS_MAPTITLE, "Base attack");
+		SV_SetConfigString(CS_NAME, ".baseattack");
 	}
 
 	/* clear random-map assembly data */
@@ -155,7 +152,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 
 	SDL_mutexP(svs.serverMutex);
 	/* load and spawn all other entities */
-	svs.ge->SpawnEntities(sv.name, sv.day, sv.mapData.mapEntityString);
+	svs.ge->SpawnEntities(sv.name, SV_GetConfigStringInteger(CS_LIGHTMAP), sv.mapData.mapEntityString);
 	SDL_mutexV(svs.serverMutex);
 
 	/* all precaches are complete */

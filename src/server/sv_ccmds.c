@@ -244,7 +244,7 @@ static void SV_Status_f (void)
 		Com_Printf("No server running.\n");
 		return;
 	}
-	Com_Printf("map              : %s (%s)\n", sv.name, (sv.day ? "day" : "night"));
+	Com_Printf("map              : %s (%s)\n", sv.name, (SV_GetConfigStringInteger(CS_LIGHTMAP) ? "day" : "night"));
 	Com_Printf("active team      : %i\n", svs.ge->ClientGetActiveTeam());
 
 	Com_Printf("num status  name            address              \n");
@@ -525,9 +525,10 @@ static void SV_PrintConfigStrings_f (void)
 	int i;
 
 	for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
-		if (sv.configstrings[i][0] == '\0')
+		const char *configString = SV_GetConfigString(i);
+		if (configString[0] == '\0')
 			continue;
-		Com_Printf("sv.configstrings[%3i]: %s\n", i, sv.configstrings[i]);
+		Com_Printf("configstring[%3i]: %s\n", i, configString);
 	}
 }
 

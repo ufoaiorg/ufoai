@@ -100,7 +100,6 @@ typedef struct {
 	server_state_t state;		/**< precache commands are only valid during load */
 
 	char name[MAX_QPATH];		/**< map name */
-	qboolean day;				/**< day version loaded */
 	char assembly[MAX_QPATH];		/**< random map assembly name */
 	struct cBspModel_s *models[MAX_MODELS];
 
@@ -170,6 +169,10 @@ int SV_CountPlayers(void);
 void SV_InitOperatorCommands(void);
 void SV_UserinfoChanged(client_t *cl);
 void SV_ReadPacket(struct net_stream *s);
+char *SV_GetConfigString(int index);
+int SV_GetConfigStringInteger(int index);
+char *SV_SetConfigString(int index, const char *value);
+char *SV_SetConfigStringInteger(int index, int value);
 
 /* sv_mapcycle.c */
 void SV_MapcycleInit(void);

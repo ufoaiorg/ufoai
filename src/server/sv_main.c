@@ -52,8 +52,37 @@ static qboolean killserver;		/**< will initiate shutdown once abandon is set */
 memPool_t *sv_gameSysPool;
 memPool_t *sv_genericPool;
 
-/*============================================================================ */
+char *SV_GetConfigString (int index)
+{
+	if (index < 0 || index >= MAX_CONFIGSTRINGS)
+		Com_Error(ERR_FATAL, "Invalid config string index given");
+	return sv.configstrings[index];
+}
 
+int SV_GetConfigStringInteger (int index)
+{
+	if (index < 0 || index >= MAX_CONFIGSTRINGS)
+		Com_Error(ERR_FATAL, "Invalid config string index given");
+	return atoi(sv.configstrings[index]);
+}
+
+char *SV_SetConfigString (int index, const char *value)
+{
+	if (index < 0 || index >= MAX_CONFIGSTRINGS)
+		Com_Error(ERR_FATAL, "Invalid config string index given");
+	if (value == NULL)
+		Com_Error(ERR_FATAL, "Invalid value for config string %i index given", index);
+	Q_strncpyz(sv.configstrings[index], value, sizeof(sv.configstrings[index]));
+	return sv.configstrings[index];
+}
+
+char *SV_SetConfigStringInteger (int index, int value)
+{
+	if (index < 0 || index >= MAX_CONFIGSTRINGS)
+		Com_Error(ERR_FATAL, "Invalid config string index given");
+	Com_sprintf(sv.configstrings[index], sizeof(sv.configstrings[index]), "%i", value);
+	return sv.configstrings[index];
+}
 
 /**
  * @brief Called when the player is totally leaving the server, either willingly

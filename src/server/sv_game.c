@@ -86,9 +86,11 @@ static int SV_FindIndex (const char *name, int start, int max, qboolean create)
 	if (!name || !name[0])
 		return 0;
 
-	for (i = 1; i < max && sv.configstrings[start + i][0]; i++)
-		if (!strcmp(sv.configstrings[start + i], name))
+	for (i = 1; i < max && SV_GetConfigString(start + i)[0] != '\0'; i++) {
+		const char *configString = SV_GetConfigString(start + i);
+		if (!strcmp(configString, name))
 			return i;
+	}
 
 	if (!create)
 		return 0;
@@ -96,7 +98,7 @@ static int SV_FindIndex (const char *name, int start, int max, qboolean create)
 	if (i == max)
 		Com_Error(ERR_DROP, "*Index: overflow '%s' start: %i, max: %i", name, start, max);
 
-	Q_strncpyz(sv.configstrings[start + i], name, sizeof(sv.configstrings[i]));
+	SV_SetConfigString(start + i, name);
 
 	if (Com_ServerState() != ss_loading) {	/* send the update to everyone */
 		struct dbuffer *msg = new_dbuffer();
@@ -161,7 +163,7 @@ static void SV_Configstring (int index, const char *fmt, ...)
 		Q_strncpyz(sv.configstrings[index], val, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 		break;
 	default:
-		Q_strncpyz(sv.configstrings[index], val, MAX_TOKEN_CHARS);
+		SV_SetConfigString(index, val);
 		break;
 	}
 
