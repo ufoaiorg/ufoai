@@ -80,7 +80,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 
 	/* save name for levels that don't set message */
 	SV_SetConfigString(CS_NAME, server);
-	SV_SetConfigStringInteger(CS_LIGHTMAP, day);
+	SV_SetConfigString(CS_LIGHTMAP, day);
 
 	Q_strncpyz(sv.name, server, sizeof(sv.name));
 
@@ -118,15 +118,15 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	CM_LoadMap(map, day, pos, &sv.mapData, &sv.mapTiles);
 
 	Com_Printf("checksum for the map '%s': %u\n", server, sv.mapData.mapChecksum);
-	SV_SetConfigStringInteger(CS_MAPCHECKSUM, sv.mapData.mapChecksum);
+	SV_SetConfigString(CS_MAPCHECKSUM, sv.mapData.mapChecksum);
 
 	checksum = 0;
 	while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
 		checksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
 	FS_GetFileData(NULL);
 	Com_Printf("ufo script checksum %u\n", checksum);
-	SV_SetConfigStringInteger(CS_UFOCHECKSUM, checksum);
-	SV_SetConfigStringInteger(CS_OBJECTAMOUNT, csi.numODs);
+	SV_SetConfigString(CS_UFOCHECKSUM, checksum);
+	SV_SetConfigString(CS_OBJECTAMOUNT, csi.numODs);
 	SV_SetConfigString(CS_VERSION, UFO_VERSION);
 	SV_SetConfigString(CS_MAPTITLE, SV_GetMapTitle(randomMap, server));
 	if (!strncmp(SV_GetConfigString(CS_MAPTITLE), "b/", 2)) {

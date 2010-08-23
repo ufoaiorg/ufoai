@@ -62,12 +62,27 @@ int SV_GetConfigStringInteger (int index)
 	return atoi(sv.configstrings[index]);
 }
 
-char *SV_SetConfigString (int index, const char *value)
+char *SV_SetConfigString (int index, ...)
 {
+	va_list ap;
+	const char *value;
+
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
 		Com_Error(ERR_FATAL, "Invalid config string index given");
-	if (value == NULL)
-		Com_Error(ERR_FATAL, "Invalid value for config string %i index given", index);
+
+	va_start(ap, index);
+
+	switch (index) {
+	case CS_LIGHTMAP:
+	case CS_MAPCHECKSUM:
+	case CS_UFOCHECKSUM:
+	case CS_OBJECTAMOUNT:
+		value = va("%i", va_arg(ap, int));
+		break;
+	default:
+		value = va_arg(ap, char *);
+		break;
+	}
 
 	/* change the string in sv
 	 * there may be overflows in i==CS_TILES - but thats ok
@@ -76,14 +91,9 @@ char *SV_SetConfigString (int index, const char *value)
 		Q_strncpyz(sv.configstrings[index], value, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 	else
 		Q_strncpyz(sv.configstrings[index], value, sizeof(sv.configstrings[index]));
-	return sv.configstrings[index];
-}
 
-char *SV_SetConfigStringInteger (int index, int value)
-{
-	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_FATAL, "Invalid config string index given");
-	Com_sprintf(sv.configstrings[index], sizeof(sv.configstrings[index]), "%i", value);
+	va_end(ap);
+
 	return sv.configstrings[index];
 }
 

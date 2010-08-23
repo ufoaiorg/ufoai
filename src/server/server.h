@@ -174,8 +174,9 @@ void SV_UserinfoChanged(client_t *cl);
 void SV_ReadPacket(struct net_stream *s);
 char *SV_GetConfigString(int index);
 int SV_GetConfigStringInteger(int index);
-char *SV_SetConfigString(int index, const char *value);
-char *SV_SetConfigStringInteger(int index, int value);
+char *SV_SetConfigString(int index, ...);
+/* ensure that always two parameters are used */
+#define SV_SetConfigString(index, value) SV_SetConfigString(index, value)
 client_t* SV_GetNextClient(client_t *lastClient);
 client_t *SV_GetClient(int index);
 
