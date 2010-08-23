@@ -39,7 +39,7 @@ TESTS_SRCS = \
 	server/sv_init.c \
 	server/sv_game.c \
 	server/sv_main.c \
-	server/sv_mapcyle.c \
+	server/sv_mapcycle.c \
 	server/sv_rma.c \
 	server/sv_send.c \
 	server/sv_user.c \
