@@ -134,7 +134,7 @@ void SV_Multicast (int mask, struct dbuffer *msg)
 
 	/* send the data to all relevant clients */
 	cl = NULL;
-	j = 0;
+	j = -1;
 	while ((cl = SV_GetNextClient(cl)) != NULL) {
 		j++;
 		if (cl->state < cs_connected)
