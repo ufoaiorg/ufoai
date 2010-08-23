@@ -993,7 +993,7 @@ static void Irc_Client_CmdRplNamreply (const char *params, const char *trailing)
 	if (!chan)
 		return;
 
-	parseBuf = Mem_PoolAlloc(len * sizeof(char), cl_ircSysPool, 0);
+	parseBuf = (char *)Mem_PoolAlloc(len * sizeof(char), cl_ircSysPool, 0);
 	if (!parseBuf)
 		return;
 

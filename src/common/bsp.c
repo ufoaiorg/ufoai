@@ -54,7 +54,7 @@ static void CMod_LoadSubmodels (mapTile_t *tile, const byte *base, const lump_t 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: No lump given");
 
-	in = (const void *) (base + l->fileofs);
+	in = (const dBspModel_t *) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T")", l->filelen, sizeof(*in));
 	count = l->filelen / sizeof(*in);
@@ -65,7 +65,7 @@ static void CMod_LoadSubmodels (mapTile_t *tile, const byte *base, const lump_t 
 	if (count > MAX_MAP_MODELS)
 		Com_Error(ERR_DROP, "Map has too many models: %i", count);
 
-	out = Mem_PoolAlloc((count + 6) * sizeof(*out), com_cmodelSysPool, 0);
+	out = (cBspModel_t *)Mem_PoolAlloc((count + 6) * sizeof(*out), com_cmodelSysPool, 0);
 	tile->models = out;
 	tile->nummodels = count;
 
@@ -98,7 +98,7 @@ static void CMod_LoadSurfaces (mapTile_t *tile, const byte *base, const lump_t *
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: No lump given");
 
-	in = (const void *) (base + l->fileofs);
+	in = (const dBspTexinfo_t *) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -109,7 +109,7 @@ static void CMod_LoadSurfaces (mapTile_t *tile, const byte *base, const lump_t *
 	if (count > MAX_MAP_TEXINFO)
 		Com_Error(ERR_DROP, "Map has too many surfaces");
 
-	out = Mem_PoolAlloc(count * sizeof(*out), com_cmodelSysPool, 0);
+	out = (cBspSurface_t *)Mem_PoolAlloc(count * sizeof(*out), com_cmodelSysPool, 0);
 
 	tile->surfaces = out;
 	tile->numtexinfo = count;
@@ -138,7 +138,7 @@ static void CMod_LoadNodes (mapTile_t *tile, const byte *base, const lump_t * l,
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadNodes: No lump given");
 
-	in = (const void *) (base + l->fileofs);
+	in = (const dBspNode_t *) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -150,7 +150,7 @@ static void CMod_LoadNodes (mapTile_t *tile, const byte *base, const lump_t * l,
 		Com_Error(ERR_DROP, "Map has too many nodes");
 
 	/* add some for the box */
-	out = Mem_PoolAlloc((count + 6) * sizeof(*out), com_cmodelSysPool, 0);
+	out = (cBspNode_t *)Mem_PoolAlloc((count + 6) * sizeof(*out), com_cmodelSysPool, 0);
 
 	tile->numnodes = count;
 	tile->nodes = out;
@@ -187,7 +187,7 @@ static void CMod_LoadBrushes (mapTile_t *tile, const byte *base, const lump_t * 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: No lump given");
 
-	in = (const void *) (base + l->fileofs);
+	in = (const dBspBrush_t *) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -197,7 +197,7 @@ static void CMod_LoadBrushes (mapTile_t *tile, const byte *base, const lump_t * 
 		Com_Error(ERR_DROP, "Map has too many brushes");
 
 	/* add some for the box */
-	out = Mem_PoolAlloc((count + 1) * sizeof(*out), com_cmodelSysPool, 0);
+	out = (cBspBrush_t *)Mem_PoolAlloc((count + 1) * sizeof(*out), com_cmodelSysPool, 0);
 
 	tile->numbrushes = count;
 	tile->brushes = out;
@@ -223,7 +223,7 @@ static void CMod_LoadLeafs (mapTile_t *tile, const byte *base, const lump_t * l)
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: No lump given");
 
-	in = (const void *) (base + l->fileofs);
+	in = (const dBspLeaf_t *) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -236,7 +236,7 @@ static void CMod_LoadLeafs (mapTile_t *tile, const byte *base, const lump_t * l)
 		Com_Error(ERR_DROP, "Map has too many leafs");
 
 	/* add some for the box */
-	out = Mem_PoolAlloc((count + 1) * sizeof(*out), com_cmodelSysPool, 0);
+	out = (cBspLeaf_t *)Mem_PoolAlloc((count + 1) * sizeof(*out), com_cmodelSysPool, 0);
 
 	tile->numleafs = count;
 	tile->leafs = out;
@@ -276,7 +276,7 @@ static void CMod_LoadPlanes (mapTile_t *tile, const byte *base, const lump_t * l
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: No lump given");
 
-	in = (const void *) (base + l->fileofs);
+	in = (const dBspPlane_t *) (base + l->fileofs);
 	if (l->filelen % sizeof(*in))
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(*in);
@@ -289,7 +289,7 @@ static void CMod_LoadPlanes (mapTile_t *tile, const byte *base, const lump_t * l
 		Com_Error(ERR_DROP, "Map has too many planes");
 
 	/* add some for the box */
-	out = Mem_PoolAlloc((count + 12) * sizeof(*out), com_cmodelSysPool, 0);
+	out = (cBspPlane_t *)Mem_PoolAlloc((count + 12) * sizeof(*out), com_cmodelSysPool, 0);
 
 	tile->numplanes = count;
 	tile->planes = out;
@@ -356,7 +356,7 @@ static void CMod_LoadBrushSides (mapTile_t *tile, const byte *base, const lump_t
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: No lump given");
 
-	in = (const void *) (base + l->fileofs);
+	in = (const dBspBrushSide_t *) (base + l->fileofs);
 	if (l->filelen % sizeof(dBspBrushSide_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dBspBrushSide_t);
@@ -367,7 +367,7 @@ static void CMod_LoadBrushSides (mapTile_t *tile, const byte *base, const lump_t
 		Com_Error(ERR_DROP, "Map has too many brushsides");
 
 	/* add some for the box */
-	out = Mem_PoolAlloc((count + 6) * sizeof(*out), com_cmodelSysPool, 0);
+	out = (cBspBrushSide_t *)Mem_PoolAlloc((count + 6) * sizeof(*out), com_cmodelSysPool, 0);
 
 	tile->numbrushsides = count;
 	tile->brushsides = out;
@@ -436,7 +436,7 @@ static void CM_MakeTracingNodes (mapTile_t *tile)
 	int i;
 	tnode_t *tnode;
 
-	tnode = tile->tnodes = Mem_PoolAlloc((tile->numnodes + 6) * sizeof(*tnode), com_cmodelSysPool, 0);
+	tnode = tile->tnodes = (tnode_t *)Mem_PoolAlloc((tile->numnodes + 6) * sizeof(*tnode), com_cmodelSysPool, 0);
 
 	tile->numtheads = 0;
 	tile->numcheads = 0;

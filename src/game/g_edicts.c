@@ -37,7 +37,7 @@ static edict_t *g_edicts;
  */
 edict_t* G_EdictsInit (void)
 {
-	g_edicts = G_TagMalloc(game.sv_maxentities * sizeof(g_edicts[0]), TAG_GAME);
+	g_edicts = (edict_t *)G_TagMalloc(game.sv_maxentities * sizeof(g_edicts[0]), TAG_GAME);
 	return g_edicts;
 }
 

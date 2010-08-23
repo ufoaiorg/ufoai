@@ -248,7 +248,7 @@ static void G_Init (void)
 	/* initialize all players for this game */
 	/* game.sv_maxplayersperteam for human controlled players
 	 * + game.sv_maxplayer for ai */
-	game.players = G_TagMalloc(game.sv_maxplayersperteam * 2 * sizeof(game.players[0]), TAG_GAME);
+	game.players = (player_t *)G_TagMalloc(game.sv_maxplayersperteam * 2 * sizeof(game.players[0]), TAG_GAME);
 	globals.players = game.players;
 	globals.maxplayersperteam = game.sv_maxplayersperteam;
 

@@ -50,7 +50,7 @@ aircraft_t* AIR_GetNextFromBase (const base_t *b, aircraft_t *lastAircraft)
 {
 	if (b) {
 		aircraft_t *aircraft = lastAircraft;
-		while ((aircraft = LIST_GetNext(b->aircraft, aircraft)) != NULL) {
+		while ((aircraft = (aircraft_t *)LIST_GetNext(b->aircraft, (void*)aircraft)) != NULL) {
 			if (aircraft->status != AIR_CRASHED)
 				return aircraft;
 		}
@@ -760,7 +760,7 @@ static void AII_SetAircraftInSlots (aircraft_t *aircraft)
  */
 aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
 {
-	aircraft_t *aircraft = (aircraft_t *)LIST_Add(&base->aircraft, (const void *)aircraftTemplate, sizeof(*aircraftTemplate))->data;
+	aircraft_t *aircraft = (aircraft_t *)LIST_Add(&base->aircraft, (const byte *)aircraftTemplate, sizeof(*aircraftTemplate))->data;
 	aircraft->homebase = base;
 	return aircraft;
 }

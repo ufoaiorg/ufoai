@@ -304,9 +304,8 @@ int Q_FloatSort (const void *float1, const void *float2)
  */
 int Q_StringSort (const void *string1, const void *string2)
 {
-	const char *s1, *s2;
-	s1 = string1;
-	s2 = string2;
+	const char *s1 = (const char *)string1;
+	const char *s2 = (const char *)string2;
 	if (*s1 < *s2)
 		return -1;
 	else if (*s1 == *s2) {

@@ -952,101 +952,101 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		return sizeof(char);
 
 	case V_TEAM:
-		if (!strcmp(set, "civilian"))
+		if (!strcmp((const char *)set, "civilian"))
 			*(int *) b = TEAM_CIVILIAN;
-		else if (!strcmp(set, "phalanx"))
+		else if (!strcmp((const char *)set, "phalanx"))
 			*(int *) b = TEAM_PHALANX;
-		else if (!strcmp(set, "alien"))
+		else if (!strcmp((const char *)set, "alien"))
 			*(int *) b = TEAM_ALIEN;
 		else
 			Sys_Error("Unknown team given: '%s'", (const char *)set);
 		return sizeof(int);
 
 	case V_RACE:
-		if (!strcmp(set, "phalanx"))
+		if (!strcmp((const char *)set, "phalanx"))
 			*(int *) b = RACE_PHALANX_HUMAN;
-		else if (!strcmp(set, "civilian"))
+		else if (!strcmp((const char *)set, "civilian"))
 			*(int *) b = RACE_CIVILIAN;
-		else if (!strcmp(set, "robot"))
+		else if (!strcmp((const char *)set, "robot"))
 			*(int *) b = RACE_ROBOT;
-		else if (!strcmp(set, "taman"))
+		else if (!strcmp((const char *)set, "taman"))
 			*(int *) b = RACE_TAMAN;
-		else if (!strcmp(set, "ortnok"))
+		else if (!strcmp((const char *)set, "ortnok"))
 			*(int *) b = RACE_ORTNOK;
-		else if (!strcmp(set, "bloodspider"))
+		else if (!strcmp((const char *)set, "bloodspider"))
 			*(int *) b = RACE_BLOODSPIDER;
-		else if (!strcmp(set, "shevaar"))
+		else if (!strcmp((const char *)set, "shevaar"))
 			*(int *) b = RACE_SHEVAAR;
 		else
 			Sys_Error("Unknown race type: '%s'", (const char *)set);
 		return sizeof(int);
 
 	case V_AIRCRAFTTYPE:
-		if (!strcmp(set, "craft_drop_firebird"))
+		if (!strcmp((const char *)set, "craft_drop_firebird"))
 			*(int *) b = DROPSHIP_FIREBIRD;
-		else if (!strcmp(set, "craft_drop_herakles"))
+		else if (!strcmp((const char *)set, "craft_drop_herakles"))
 			*(int *) b = DROPSHIP_HERAKLES;
-		else if (!strcmp(set, "craft_drop_raptor"))
+		else if (!strcmp((const char *)set, "craft_drop_raptor"))
 			*(int *) b = DROPSHIP_RAPTOR;
-		else if (!strcmp(set, "craft_inter_stiletto"))
+		else if (!strcmp((const char *)set, "craft_inter_stiletto"))
 			*(int *) b = INTERCEPTOR_STILETTO;
-		else if (!strcmp(set, "craft_inter_saracen"))
+		else if (!strcmp((const char *)set, "craft_inter_saracen"))
 			*(int *) b = INTERCEPTOR_SARACEN;
-		else if (!strcmp(set, "craft_inter_dragon"))
+		else if (!strcmp((const char *)set, "craft_inter_dragon"))
 			*(int *) b = INTERCEPTOR_DRAGON;
-		else if (!strcmp(set, "craft_inter_starchaser"))
+		else if (!strcmp((const char *)set, "craft_inter_starchaser"))
 			*(int *) b = INTERCEPTOR_STARCHASER;
-		else if (!strcmp(set, "craft_inter_stingray"))
+		else if (!strcmp((const char *)set, "craft_inter_stingray"))
 			*(int *) b = INTERCEPTOR_STINGRAY;
 		else
 			Sys_Error("Unknown aircrafttype type: '%s'", (const char *)set);
 		return sizeof(int);
 
 	case V_UFO:
-		if (!strcmp(set, "craft_ufo_bomber"))
+		if (!strcmp((const char *)set, "craft_ufo_bomber"))
 			*(int *) b = UFO_BOMBER;
-		else if (!strcmp(set, "craft_ufo_carrier"))
+		else if (!strcmp((const char *)set, "craft_ufo_carrier"))
 			*(int *) b = UFO_CARRIER;
-		else if (!strcmp(set, "craft_ufo_corrupter"))
+		else if (!strcmp((const char *)set, "craft_ufo_corrupter"))
 			*(int *) b = UFO_CORRUPTER;
-		else if (!strcmp(set, "craft_ufo_fighter"))
+		else if (!strcmp((const char *)set, "craft_ufo_fighter"))
 			*(int *) b = UFO_FIGHTER;
-		else if (!strcmp(set, "craft_ufo_harvester"))
+		else if (!strcmp((const char *)set, "craft_ufo_harvester"))
 			*(int *) b = UFO_HARVESTER;
-		else if (!strcmp(set, "craft_ufo_scout"))
+		else if (!strcmp((const char *)set, "craft_ufo_scout"))
 			*(int *) b = UFO_SCOUT;
-		else if (!strcmp(set, "craft_ufo_supply"))
+		else if (!strcmp((const char *)set, "craft_ufo_supply"))
 			*(int *) b = UFO_SUPPLY;
-		else if (!strcmp(set, "craft_ufo_gunboat"))
+		else if (!strcmp((const char *)set, "craft_ufo_gunboat"))
 			*(int *) b = UFO_GUNBOAT;
-		else if (!strcmp(set, "craft_ufo_ripper"))
+		else if (!strcmp((const char *)set, "craft_ufo_ripper"))
 			*(int *) b = UFO_RIPPER;
-		else if (!strcmp(set, "craft_ufo_mothership"))
+		else if (!strcmp((const char *)set, "craft_ufo_mothership"))
 			*(int *) b = UFO_MOTHERSHIP;
 		else
 			Sys_Error("Unknown ufo type: '%s'", (const char *)set);
 		return sizeof(int);
 
 	case V_UFOCRASHED:
-		if (!strcmp(set, "craft_crash_bomber"))
+		if (!strcmp((const char *)set, "craft_crash_bomber"))
 			*(int *) b = UFO_BOMBER;
-		else if (!strcmp(set, "craft_crash_carrier"))
+		else if (!strcmp((const char *)set, "craft_crash_carrier"))
 			*(int *) b = UFO_CARRIER;
-		else if (!strcmp(set, "craft_crash_corrupter"))
+		else if (!strcmp((const char *)set, "craft_crash_corrupter"))
 			*(int *) b = UFO_CORRUPTER;
-		else if (!strcmp(set, "craft_crash_fighter"))
+		else if (!strcmp((const char *)set, "craft_crash_fighter"))
 			*(int *) b = UFO_FIGHTER;
-		else if (!strcmp(set, "craft_crash_harvester"))
+		else if (!strcmp((const char *)set, "craft_crash_harvester"))
 			*(int *) b = UFO_HARVESTER;
-		else if (!strcmp(set, "craft_crash_scout"))
+		else if (!strcmp((const char *)set, "craft_crash_scout"))
 			*(int *) b = UFO_SCOUT;
-		else if (!strcmp(set, "craft_crash_supply"))
+		else if (!strcmp((const char *)set, "craft_crash_supply"))
 			*(int *) b = UFO_SUPPLY;
-		else if (!strcmp(set, "craft_crash_gunboat"))
+		else if (!strcmp((const char *)set, "craft_crash_gunboat"))
 			*(int *) b = UFO_GUNBOAT;
-		else if (!strcmp(set, "craft_crash_ripper"))
+		else if (!strcmp((const char *)set, "craft_crash_ripper"))
 			*(int *) b = UFO_RIPPER;
-		else if (!strcmp(set, "craft_crash_mothership"))
+		else if (!strcmp((const char *)set, "craft_crash_mothership"))
 			*(int *) b = UFO_MOTHERSHIP;
 		else
 			Sys_Error("Unknown ufo type: '%s'", (const char *)set);

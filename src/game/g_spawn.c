@@ -163,7 +163,7 @@ static char *ED_NewString (const char *string)
 	int i;
 	const size_t l = strlen(string) + 1;
 
-	newb = G_TagMalloc(l, TAG_LEVEL);
+	newb = (char*)G_TagMalloc(l, TAG_LEVEL);
 	new_p = newb;
 
 	for (i = 0; i < l; i++) {
@@ -759,7 +759,7 @@ static void G_BuildForbiddenListForEntity (edict_t *ent)
 	yDelta = max(1, maxs[1] - mins[1]);
 
 	size = xDelta * yDelta;
-	ent->forbiddenListPos = G_TagMalloc(size * sizeof(pos3_t), TAG_LEVEL);
+	ent->forbiddenListPos = (pos3_t *)G_TagMalloc(size * sizeof(pos3_t), TAG_LEVEL);
 	ent->forbiddenListSize = size;
 
 	for (i = 0; i < xDelta; i++) {
