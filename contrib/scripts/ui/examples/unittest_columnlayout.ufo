@@ -1,0 +1,181 @@
+window unittest_columnlayout
+{
+	{
+		pos "100 100"
+		size "370 610"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest columnlayout"
+		bgcolor		"0 0 0 1"
+		timeout		1000
+	}
+
+	panel options {
+		{
+			pos "10 500"
+			size "320 120"
+			layout LAYOUT_COLUMN
+			layoutMargin	2
+			layoutColumns	4
+			onViewChange {
+				*node:root.foo_scroll@fullsize = <fullsize>
+				*node:root.foo_scroll@current = <viewpos>
+				*node:root.foo_scroll@viewsize = <viewsize>
+			}
+		}
+
+		string column {
+			pos "10 530"
+			string "Column:"
+			size "100 20"
+		}
+		
+		button column1 {
+			string "1"
+			pos "100 530"
+			size "30 20"
+			bgcolor	"1 1 1 0.5"
+			onClick {
+				*node:root.foo@layoutColumns = 1
+			}
+		}
+		
+		button column2 {
+			string "2"
+			pos "140 530"
+			size "40 20"
+			bgcolor	"1 1 1 0.5"
+			onClick {
+				*node:root.foo@layoutColumns = 2
+			}
+		}
+		
+		button column3 {
+			string "3"
+			pos "180 530"
+			size "50 20"
+			bgcolor	"1 1 1 0.5"
+			onClick {
+				*node:root.foo@layoutColumns = 3
+			}
+		}
+	
+		string margin {
+			pos "10 560"
+			string "Margin:"
+			size "100 20"
+		}
+		
+		button margin1 {
+			string "5"
+			pos "100 560"
+			size "30 20"
+			bgcolor	"1 1 1 0.5"
+			onClick {
+				*node:root.foo@layoutMargin = 5
+			}
+		}
+		
+		button margin2 {
+			string "10"
+			pos "140 560"
+			size "40 20"
+			bgcolor	"1 1 1 0.5"
+			onClick {
+				*node:root.foo@layoutMargin = 10
+			}
+		}
+		
+		button margin3 {
+			string "15"
+			pos "180 560"
+			size "50 20"
+			bgcolor	"1 1 1 0.5"
+			onClick {
+				*node:root.foo@layoutMargin = 15
+			}
+		}
+	
+		string padding {
+			pos "10 590"
+			string "Padding:"
+			size "100 20"
+		}
+		
+		button padding1 {
+			string "0"
+			pos "100 590"
+			size "30 20"
+			bgcolor	"1 1 1 0.5"
+			onClick {
+				*node:root.foo@padding = 0
+			}
+		}
+		
+		button padding2 {
+			string "5"
+			pos "140 590"
+			size "40 20"
+			bgcolor	"1 1 1 0.5"
+			onClick {
+				*node:root.foo@padding = 5
+			}
+		}
+		
+		button padding3 {
+			string "10"
+			pos "180 590"
+			size "50 20"
+			bgcolor	"1 1 1 0.5"
+			onClick {
+				*node:root.foo@padding = 10
+			}
+		}
+	}
+
+	panel foo {
+		{
+			pos "10 60"
+			size "320 430"
+			layout LAYOUT_COLUMN
+			layoutMargin	5
+			layoutColumns	3
+
+			onViewChange {
+				*node:root.foo_scroll@fullsize = <fullsize>
+				*node:root.foo_scroll@current = <viewpos>
+				*node:root.foo_scroll@viewsize = <viewsize>
+			}
+		}
+
+		panel c00 { size "100 25" bgcolor	"1 0 0 0.5" }
+		panel c01 { size "100 25" bgcolor	"0 1 0 0.5" }
+		panel c02 { size "100 25" bgcolor	"0 0 1 0.5" }
+		panel c03 { size "100 25" bgcolor	"1 1 0 0.5" }
+		panel c04 { size "100 25" bgcolor	"1 0 1 0.5" }
+		panel c05 { size "100 25" bgcolor	"0 1 1 0.5" }
+		panel c06 { size "100 25" bgcolor	"1 0 0 0.5" }
+		panel c07 { size "100 25" bgcolor	"0 1 0 0.5" }
+		panel c08 { size "100 25" bgcolor	"0 0 1 0.5" }
+		panel c09 { size "100 25" bgcolor	"1 1 0 0.5" }
+	
+		panel c10 { size "100 25" bgcolor	"1 0 0 0.5" }
+		panel c11 { size "100 25" bgcolor	"0 1 0 0.5" }
+		panel c12 { size "100 25" bgcolor	"0 0 1 0.5" }
+		panel c13 { size "100 25" bgcolor	"1 1 0 0.5" }
+		panel c14 { size "100 25" bgcolor	"1 0 1 0.5" }
+		panel c15 { size "100 25" bgcolor	"0 1 1 0.5" }
+		panel c16 { size "100 25" bgcolor	"1 0 0 0.5" }
+		panel c17 { size "100 25" bgcolor	"0 1 0 0.5" }
+		panel c18 { size "100 25" bgcolor	"0 0 1 0.5" }
+		panel c19 { size "100 25" bgcolor	"1 1 0 0.5" }
+	}
+	
+	vscrollbar foo_scroll {
+		image		"ui/scrollbar_v_green"
+		pos			"340 60"
+		height		"430"
+		onChange		{ *node:root.foo@viewpos = <current> }
+	}
+
+}

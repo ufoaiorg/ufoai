@@ -37,6 +37,7 @@ typedef enum {
 	LAYOUT_PACK,
 	LAYOUT_STAR,
 	LAYOUT_CLIENT,
+	LAYOUT_COLUMN,
 
 	LAYOUT_MAX,
 	LAYOUT_ENSURE_32BIT = 0x7FFFFFFF
@@ -49,6 +50,7 @@ typedef struct {
 	abstractScrollableExtraData_t super;
 	panelLayout_t layout;	/**< The layout manager the panel is using to render all its children */
 	int layoutMargin;		/**< The margin between all children nodes of the panel */
+	int layoutColumns;		/**< The number of columns (only used by LAYOUT_COLUMN)  */
 } panelExtraData_t;
 
 void UI_RegisterPanelNode(struct uiBehaviour_s *behaviour);

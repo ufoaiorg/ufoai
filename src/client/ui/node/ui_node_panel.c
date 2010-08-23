@@ -37,6 +37,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MID_SIZE 1
 #define MARGE 3
 
+static const value_t *propertyLayoutMargin;
+static const value_t *propertyLayoutColumns;
+static const value_t *propertyPadding;
+
 static const uiBehaviour_t const *localBehaviour;
 
 /**
@@ -348,6 +352,78 @@ static void UI_ClientLayout (uiNode_t *node)
 		UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
 }
 
+/**
+ * @brief Do column layout. A grid layout according to a fixed number of column.
+ * Check to first row to see the needed size of columns, and the height. All rows
+ * will use the same row.
+ * @todo Use child@align to align each nodes inside respective cell.
+ * @image http://ufoai.ninex.info/wiki/images/Layout_column.png
+ */
+static void UI_ColumnLayout (uiNode_t *node)
+{
+	int columnPos[EXTRADATA(node).layoutColumns];
+	int columnSize[EXTRADATA(node).layoutColumns];
+	int rowHeight = 0;
+	int i;
+	int y;
+	uiNode_t *child;
+
+	if (EXTRADATA(node).layoutColumns <= 0) {
+		Com_Printf("UI_ColumnLayout: Column number must be positive (%s). Layout ignored.", UI_GetPath(node));
+		return;
+	}
+
+	/* check the first row */
+	child = node->firstChild;
+	for (i = 0; i < EXTRADATA(node).layoutColumns; i++) {
+		if (child == NULL)
+			break;
+		columnSize[i] = child->size[0];
+		if (child->size[1] > rowHeight) {
+			rowHeight = child->size[1];
+		}
+		child = child->next;
+	}
+
+	/* compute column position */
+	columnPos[0] = node->padding;
+	for (i = 1; i < EXTRADATA(node).layoutColumns; i++) {
+		columnPos[i] = columnPos[i - 1] + columnSize[i - 1] + EXTRADATA(node).layoutMargin;
+	}
+
+	/* fix child position */
+	i = 0;
+	y = -1;
+	for (child = node->firstChild; child; child = child->next) {
+		const int column = i % EXTRADATA(node).layoutColumns;
+		if (column == 0) {
+			if (y < 0) {
+				y = node->padding;
+			} else {
+				y += rowHeight + EXTRADATA(node).layoutMargin;
+			}
+		}
+		child->pos[0] = columnPos[column];
+		child->pos[1] = y;
+		/*UI_NodeSetSize(child, node->size);*/
+		child->behaviour->doLayout(child);
+		i++;
+	}
+
+	/* fix scroll */
+	{
+		const int column = EXTRADATA(node).layoutColumns;
+		int width = columnPos[column - 1] + columnSize[column - 1] + node->padding;
+		int height = y + rowHeight + node->padding;
+		qboolean updated;
+
+		updated = UI_SetScroll(&EXTRADATA(node).super.scrollX, -1, node->size[0], width);
+		updated = UI_SetScroll(&EXTRADATA(node).super.scrollY, -1, node->size[1], height) || updated;
+		if (updated && EXTRADATA(node).super.onViewChange)
+			UI_ExecuteEventActions(node, EXTRADATA(node).super.onViewChange);
+	}
+}
+
 static void UI_PanelNodeDoLayout (uiNode_t *node)
 {
 	if (!node->invalidated)
@@ -370,6 +446,9 @@ static void UI_PanelNodeDoLayout (uiNode_t *node)
 		break;
 	case LAYOUT_CLIENT:
 		UI_ClientLayout(node);
+		break;
+	case LAYOUT_COLUMN:
+		UI_ColumnLayout(node);
 		break;
 	default:
 		Com_Printf("UI_PanelNodeDoLayout: layout '%d' unsupported.", EXTRADATA(node).layout);
@@ -397,6 +476,19 @@ static void UI_PanelNodeGetClientPosition (uiNode_t *node, vec2_t position)
 	position[1] = -EXTRADATA(node).super.scrollY.viewPos;
 }
 
+static void UI_PanelPropertyChanged (uiNode_t *node, const value_t *property)
+{
+	if (propertyPadding == NULL) {
+		propertyPadding = UI_GetPropertyFromBehaviour(node->behaviour, "padding");
+	}
+
+	if (property == propertyLayoutColumns ||property == propertyLayoutMargin || property == propertyPadding) {
+		UI_Invalidate(node);
+		return;
+	}
+	localBehaviour->super->propertyChanged(node, property);
+}
+
 /**
  * @brief Valid properties for a panel node
  */
@@ -419,6 +511,10 @@ static const value_t properties[] = {
 	 * Margin use to layout children (margin between children)
 	 */
 	{"layoutMargin", V_INT, UI_EXTRADATA_OFFSETOF(panelExtraData_t, layoutMargin), MEMBER_SIZEOF(panelExtraData_t, layoutMargin)},
+	/**
+	 * Number of column use to layout children (used with LAYOUT_COLUMN)
+	 */
+	{"layoutColumns", V_INT, UI_EXTRADATA_OFFSETOF(panelExtraData_t, layoutColumns), MEMBER_SIZEOF(panelExtraData_t, layoutColumns)},
 
 	{NULL, V_NULL, 0, 0}
 };
@@ -434,6 +530,11 @@ void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
 	behaviour->loaded = UI_PanelNodeLoaded;
 	behaviour->doLayout = UI_PanelNodeDoLayout;
 	behaviour->getClientPosition = UI_PanelNodeGetClientPosition;
+	behaviour->propertyChanged = UI_PanelPropertyChanged;
+
+	/* @todo find a good place for this kind of initialization */
+	propertyLayoutColumns = UI_GetPropertyFromBehaviour(behaviour, "layoutColumns");
+	propertyLayoutMargin = UI_GetPropertyFromBehaviour(behaviour, "layoutMargin");
 
 	Com_RegisterConstInt("LAYOUTALIGN_TOPLEFT", LAYOUTALIGN_TOPLEFT);
 	Com_RegisterConstInt("LAYOUTALIGN_TOP", LAYOUTALIGN_TOP);
@@ -451,4 +552,5 @@ void UI_RegisterPanelNode (uiBehaviour_t *behaviour)
 	Com_RegisterConstInt("LAYOUT_PACK", LAYOUT_PACK);
 	Com_RegisterConstInt("LAYOUT_STAR", LAYOUT_STAR);
 	Com_RegisterConstInt("LAYOUT_CLIENT", LAYOUT_CLIENT);
+	Com_RegisterConstInt("LAYOUT_COLUMN", LAYOUT_COLUMN);
 }
