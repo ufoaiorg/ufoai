@@ -272,7 +272,6 @@ qboolean UI_InitRawActionValue (uiAction_t* action, uiNode_t *node, const value_
 		ui_global.curadata += Com_EParseValue(ui_global.curadata, string, property->type & V_BASETYPEMASK, 0, property->size);
 		return qtrue;
 	}
-	return qfalse;
 }
 
 /**

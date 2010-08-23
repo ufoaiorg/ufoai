@@ -128,7 +128,7 @@ skipwhite:
 	if (c == '\"') {
 		isQuotedToken = qtrue;
 		data++;
-		while (1) {
+		for (;;) {
 			c = *data++;
 			if (c == '\\' && data[0] == 'n') {
 				c = '\n';
@@ -141,10 +141,13 @@ skipwhite:
 				c = '\"';
 				data++;
 			} else if (c == '\"' || !c) {
-				com_token[len] = 0;
+				com_token[len] = '\0';
 				*data_p = data;
 				return com_token;
+			} else if (c == '\0') {
+				break;
 			}
+
 			if (len < sizeof(com_token)) {
 				com_token[len] = c;
 				len++;

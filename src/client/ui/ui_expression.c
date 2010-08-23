@@ -272,7 +272,6 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 		}
 		default:
 			Com_Error(ERR_FATAL, "UI_GetFloatFromExpression: (EA_OPERATOR_UNARY) Invalid expression type %i", expression->type);
-			return qfalse;
 		}
 
 	}
@@ -394,7 +393,6 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 		}
 		default:
 			Com_Error(ERR_FATAL, "UI_GetFloatFromExpression: (EA_OPERATOR_UNARY) Invalid expression type %i", expression->type);
-			return qfalse;
 		}
 
 	case EA_OPERATOR_BOOLEAN2BOOLEAN:
@@ -493,7 +491,6 @@ qboolean UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContex
 			return UI_GetFloatFromExpression(expression, context) != 0;
 		default:
 			Com_Error(ERR_FATAL, "UI_GetBooleanFromExpression: (EA_OPERATOR_UNARY) Invalid expression type %i", expression->type);
-			return qfalse;
 		}
 
 	case EA_OPERATOR_STRING2BOOLEAN:
