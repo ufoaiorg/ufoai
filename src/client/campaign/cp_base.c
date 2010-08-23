@@ -222,7 +222,6 @@ buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 qboolean B_GetBuildingStatus (const base_t* const base, const buildingType_t buildingType)
 {
 	assert(base);
-	assert(buildingType >= 0);
 
 	if (buildingType == B_MISC)
 		return qtrue;
@@ -245,7 +244,6 @@ qboolean B_GetBuildingStatus (const base_t* const base, const buildingType_t bui
 void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType, qboolean newStatus)
 {
 	assert(base);
-	assert(buildingType >= 0);
 
 	if (buildingType == B_MISC)
 		Com_Printf("B_SetBuildingStatus: No status is associated to B_MISC type of building.\n");
@@ -1597,7 +1595,7 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
 		return -1;
 	}
 
-	if (buildingType >= MAX_BUILDING_TYPE || buildingType < 0) {
+	if (buildingType >= MAX_BUILDING_TYPE) {
 		Com_Printf("B_GetNumberOfBuildingsInBaseByBuildingType: no sane building-type given!\n");
 		return -1;
 	}

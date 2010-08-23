@@ -618,7 +618,6 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 	if (!base)
 		return;
 
-	assert(type >= 0);
 	assert(type < MAX_EMPL);
 
 	employee = NULL;
@@ -1175,7 +1174,7 @@ void E_InitialEmployees (void)
  */
 static void E_ListHired_f (void)
 {
-	int emplType;
+	employeeType_t emplType;
 
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 		employee_t *employee = NULL;
