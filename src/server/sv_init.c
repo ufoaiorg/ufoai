@@ -109,11 +109,8 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 			return;
 		}
 	} else {
-		Q_strncpyz(sv.configstrings[CS_TILES], server, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-		if (param)
-			Q_strncpyz(sv.configstrings[CS_POSITIONS], param, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-		else
-			SV_SetConfigString(CS_POSITIONS, "");
+		SV_SetConfigString(CS_TILES, server);
+		SV_SetConfigString(CS_POSITIONS, param ? param : "");
 	}
 
 	CM_LoadMap(map, day, pos, &sv.mapData, &sv.mapTiles);
