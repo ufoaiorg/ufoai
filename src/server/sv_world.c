@@ -91,7 +91,7 @@ void SV_ClearWorld (void)
 
 static inline sv_edict_t* SV_GetServerDataForEdict (const edict_t *ent)
 {
-	if (!ent || ent->number < 0 || ent->number >= MAX_EDICTS)
+	if (!ent || ent->number < 0 || ent->number >= lengthof(sv.edicts))
 		Com_Error(ERR_DROP, "SV_GetServerDataForEdict: bad game ent");
 
 	return &sv.edicts[ent->number];

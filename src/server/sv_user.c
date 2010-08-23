@@ -83,7 +83,7 @@ static void SV_New_f (client_t *cl)
 		NET_WriteShort(msg, playernum);
 
 		/* send full levelname */
-		NET_WriteString(msg, sv.configstrings[CS_NAME]);
+		NET_WriteString(msg, SV_GetConfigString(CS_NAME));
 
 		NET_WriteMsg(cl->stream, msg);
 	}
@@ -92,12 +92,13 @@ static void SV_New_f (client_t *cl)
 	if (Com_ServerState() == ss_game) {
 		int i;
 		for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
-			if (sv.configstrings[i][0] != '\0') {
+			const char *configString = SV_GetConfigString(i);
+			if (configString[0] != '\0') {
 				struct dbuffer *msg = new_dbuffer();
-				Com_DPrintf(DEBUG_SERVER, "sending configstring %d: %s\n", i, sv.configstrings[i]);
+				Com_DPrintf(DEBUG_SERVER, "sending configstring %d: %s\n", i, configString);
 				NET_WriteByte(msg, svc_configstring);
 				NET_WriteShort(msg, i);
-				NET_WriteString(msg, sv.configstrings[i]);
+				NET_WriteString(msg, configString);
 				/* enqueue and free msg */
 				NET_WriteMsg(cl->stream, msg);
 			}
