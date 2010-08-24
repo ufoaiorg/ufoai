@@ -285,8 +285,6 @@ static const align_t starlayoutmap[] = {
 	ALIGN_LR,
 };
 
-#define ALIGN_FILL	10
-
 /**
  * @brief Do a star layout with child according to there num
  * @note 1=top-left 2=top-middle 3=top-right
