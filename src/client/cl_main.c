@@ -524,7 +524,20 @@ void CL_RequestNextDownload (void)
 	 * and if we are the server we don't have to reload the map here, too */
 	if (!Com_ServerState()) {
 		const int day = CL_GetConfigStringInteger(CS_LIGHTMAP);
-		unsigned scriptChecksum = 0;
+
+		/* checksum doesn't match with the one the server gave us via configstring */
+		if (strcmp(UFO_VERSION, CL_GetConfigString(CS_VERSION))) {
+			const char *version = CL_GetConfigString(CS_VERSION);
+			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the server version (%s)"), UFO_VERSION, version);
+			UI_Popup(_("Error"), popupText);
+			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the server version (%s)", UFO_VERSION, version);
+			return;
+		/* amount of objects from script files doesn't match */
+		} else if (csi.numODs != CL_GetConfigStringInteger(CS_OBJECTAMOUNT)) {
+			UI_Popup(_("Error"), _("Script files are not the same"));
+			Com_Error(ERR_DISCONNECT, "Script files are not the same");
+			return;
+		}
 
 		/* activate the map loading screen for multiplayer, too */
 		SCR_BeginLoadingPlaque();
@@ -540,31 +553,14 @@ void CL_RequestNextDownload (void)
 		if (CL_PendingHTTPDownloads())
 			return;
 
+		if (Com_GetScriptChecksum() != CL_GetConfigStringInteger(CS_UFOCHECKSUM))
+			Com_Printf("You are using modified ufo script files - might produce problems\n");
+
 		CM_LoadMap(CL_GetConfigString(CS_TILES), day, CL_GetConfigString(CS_POSITIONS), cl.mapData, cl.mapTiles);
-		if (!*CL_GetConfigString(CS_VERSION) || !CL_GetConfigStringInteger(CS_MAPCHECKSUM)
-		 || !CL_GetConfigStringInteger(CS_UFOCHECKSUM) || !CL_GetConfigStringInteger(CS_OBJECTAMOUNT)) {
-			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers"), UFO_VERSION);
-			UI_Popup(_("Error"), popupText);
-			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers", UFO_VERSION);
-			return;
-		/* checksum doesn't match with the one the server gave us via configstring */
-		} else if (cl.mapData->mapChecksum != CL_GetConfigStringInteger(CS_MAPCHECKSUM)) {
+		if (cl.mapData->mapChecksum != CL_GetConfigStringInteger(CS_MAPCHECKSUM)) {
 			UI_Popup(_("Error"), _("Local map version differs from server"));
 			Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%i'",
 				cl.mapData->mapChecksum, CL_GetConfigStringInteger(CS_MAPCHECKSUM));
-			return;
-		/* amount of objects from script files doesn't match */
-		} else if (csi.numODs != CL_GetConfigStringInteger(CS_OBJECTAMOUNT)) {
-			UI_Popup(_("Error"), _("Script files are not the same"));
-			Com_Error(ERR_DISCONNECT, "Script files are not the same");
-			return;
-		/* checksum doesn't match with the one the server gave us via configstring */
-		} else if (Com_GetScriptChecksum() != CL_GetConfigStringInteger(CS_UFOCHECKSUM)) {
-			Com_Printf("You are using modified ufo script files - might produce problems\n");
-		} else if (strcmp(UFO_VERSION, CL_GetConfigString(CS_VERSION))) {
-			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers (%s)"), UFO_VERSION, CL_GetConfigString(CS_VERSION));
-			UI_Popup(_("Error"), popupText);
-			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers (%s)", UFO_VERSION, CL_GetConfigString(CS_VERSION));
 			return;
 		}
 	}
