@@ -483,20 +483,13 @@
 }
 // entity 8
 {
-"classname" "misc_model"
-"origin" "429 427 92"
-"model" "models/objects/furniture/computer/computer.md2"
-"spawnflags" "2"
-}
-// entity 9
-{
 "classname" "light"
 "origin" "383 367 112"
 "_color" "0 1 0.1"
 "light" "125"
 "spawnflags" "1"
 }
-// entity 10
+// entity 9
 {
 "classname" "light"
 "light" "75"
@@ -504,7 +497,7 @@
 "origin" "323 193 102"
 "spawnflags" "1"
 }
-// entity 11
+// entity 10
 {
 "classname" "light"
 "origin" "383 83 112"
@@ -512,7 +505,7 @@
 "light" "125"
 "spawnflags" "1"
 }
-// entity 12
+// entity 11
 {
 "classname" "light"
 "origin" "383 147 112"
@@ -520,7 +513,7 @@
 "light" "125"
 "spawnflags" "1"
 }
-// entity 13
+// entity 12
 {
 "classname" "light"
 "light" "75"
@@ -528,7 +521,7 @@
 "origin" "323 97 102"
 "spawnflags" "1"
 }
-// entity 14
+// entity 13
 {
 "classname" "light"
 "origin" "159 431 112"
@@ -536,7 +529,7 @@
 "light" "125"
 "spawnflags" "1"
 }
-// entity 15
+// entity 14
 {
 "classname" "light"
 "origin" "383 303 112"
@@ -544,7 +537,7 @@
 "light" "125"
 "spawnflags" "1"
 }
-// entity 16
+// entity 15
 {
 "classname" "light"
 "origin" "260 258 123"
@@ -552,14 +545,14 @@
 "_color" "1 1 0.95"
 "spawnflags" "1"
 }
-// entity 17
+// entity 16
 {
 "classname" "misc_model"
 "origin" "235 160 92"
 "model" "models/aircraft/craft_item_astro/craft_item_astrogation.md2"
 "spawnflags" "2"
 }
-// entity 18
+// entity 17
 {
 "classname" "misc_model"
 "origin" "469 192 92"
@@ -567,7 +560,7 @@
 "angle" "-180"
 "spawnflags" "2"
 }
-// entity 19
+// entity 18
 {
 "classname" "misc_model"
 "origin" "469 96 92"
@@ -575,7 +568,7 @@
 "angle" "-180"
 "spawnflags" "2"
 }
-// entity 20
+// entity 19
 {
 "classname" "light"
 "origin" "383 207 112"
@@ -583,7 +576,7 @@
 "light" "125"
 "spawnflags" "1"
 }
-// entity 21
+// entity 20
 {
 "classname" "func_group"
 // brush 0
@@ -632,7 +625,7 @@
 ( 129 415 94 ) ( 129 415 96 ) ( 131 417 96 ) tex_common/nodraw 0 0 0 0.5 0.5 512 128 0
 }
 }
-// entity 22
+// entity 21
 {
 "classname" "func_group"
 // brush 0
@@ -699,7 +692,7 @@
 ( 32 472 68 ) ( 32 472 90 ) ( 56 472 90 ) tex_material/metall002 56.72107 0 0 -0.469845 0.5 65024 0 0
 }
 }
-// entity 23
+// entity 22
 {
 "classname" "func_group"
 // brush 0
@@ -766,7 +759,7 @@
 ( 30 322 88 ) ( 30 322 90 ) ( 34 322 90 ) tex_material/metall002 56.72107 0 0 -0.469845 0.5 512 0 0
 }
 }
-// entity 24
+// entity 23
 {
 "classname" "func_group"
 // brush 0
@@ -833,7 +826,7 @@
 ( 194 352 68 ) ( 194 352 90 ) ( 194 354 90 ) tex_material/metall002 55 0 0 0.469845 0.5 512 0 0
 }
 }
-// entity 25
+// entity 24
 {
 "classname" "func_group"
 // brush 0
@@ -900,7 +893,7 @@
 ( 286 326 88 ) ( 286 326 90 ) ( 286 330 90 ) tex_material/metall002 55 0 0 0.469845 0.5 512 0 0
 }
 }
-// entity 26
+// entity 25
 {
 "classname" "func_group"
 // brush 0
@@ -967,7 +960,7 @@
 ( 254 132 88 ) ( 254 132 90 ) ( 250 132 90 ) tex_material/metall002 2.617035 0 0 -0.469845 0.5 512 0 0
 }
 }
-// entity 27
+// entity 26
 {
 "classname" "func_group"
 // brush 0
@@ -1034,7 +1027,7 @@
 ( 452 124 68 ) ( 452 124 90 ) ( 476 124 90 ) tex_material/metall002 40.25062 0 0 0.469845 0.5 65024 0 0
 }
 }
-// entity 28
+// entity 27
 {
 "classname" "func_group"
 // brush 0
@@ -1101,7 +1094,7 @@
 ( 452 220 68 ) ( 452 220 90 ) ( 476 220 90 ) tex_material/metall002 40.25062 0 0 0.469845 0.5 65024 0 0
 }
 }
-// entity 29
+// entity 28
 {
 "classname" "func_group"
 // brush 0
@@ -1222,7 +1215,7 @@
 ( 355 69 94 ) ( 355 69 96 ) ( 355 97 96 ) tex_material/metall002 55 0 0 0.469845 0.5 512 0 0
 }
 }
-// entity 30
+// entity 29
 {
 "classname" "func_group"
 // brush 0
@@ -1271,7 +1264,7 @@
 ( 351 351 94 ) ( 351 351 98 ) ( 415 351 98 ) tex_material/c_gray050 0 4 0 0.5 0.5 512 0 0
 }
 }
-// entity 31
+// entity 30
 {
 "classname" "func_group"
 // brush 0
@@ -1320,7 +1313,7 @@
 ( 353 287 94 ) ( 353 287 96 ) ( 355 289 96 ) tex_common/nodraw 0 0 0 0.5 0.5 512 128 0
 }
 }
-// entity 32
+// entity 31
 {
 "classname" "func_group"
 // brush 0
@@ -1369,7 +1362,7 @@
 ( 351 191 94 ) ( 351 191 98 ) ( 415 191 98 ) tex_material/c_gray050 0 4 0 0.5 0.5 512 0 0
 }
 }
-// entity 33
+// entity 32
 {
 "classname" "func_group"
 // brush 0
@@ -1418,7 +1411,7 @@
 ( 351 131 94 ) ( 351 131 98 ) ( 415 131 98 ) tex_material/c_gray050 0 4 0 0.5 0.5 512 0 0
 }
 }
-// entity 34
+// entity 33
 {
 "classname" "func_group"
 // brush 0
@@ -1467,7 +1460,7 @@
 ( 411 97 96 ) ( 411 97 94 ) ( 355 97 94 ) tex_material/c_gray050 0 0 0 0.5 0.5 512 0 0
 }
 }
-// entity 35
+// entity 34
 {
 "classname" "func_group"
 // brush 0
@@ -1525,7 +1518,7 @@
 ( 317 65 122 ) ( 321 65 122 ) ( 317 65 76 ) tex_material/c_gray050 28 8 0 0.5 0.5 512 0 0
 }
 }
-// entity 36
+// entity 35
 {
 "classname" "func_group"
 // brush 0
