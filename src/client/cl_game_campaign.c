@@ -367,8 +367,16 @@ int GAME_CP_GetTeam (void)
 	return ccs.curCampaign->team;
 }
 
+/**
+ * @brief Checks whether the team is known at this stage already
+ * @param[in] teamDef The team definition of the alien team
+ * @return @c true if known, @c false otherwise.
+ */
 qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 {
+	if (!CHRSH_IsTeamDefAlien(teamDef))
+		return qtrue;
+
 	if (!ccs.teamDefTechs[teamDef->idx])
 		Com_Error(ERR_DROP, "Could not find tech for teamdef '%s'", teamDef->id);
 

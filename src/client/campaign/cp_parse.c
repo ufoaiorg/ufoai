@@ -811,6 +811,9 @@ void CL_ReadSinglePlayerData (void)
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		const teamDef_t *teamDef = &csi.teamDef[i];
+		if (!CHRSH_IsTeamDefAlien(teamDef))
+			continue;
+
 		ccs.teamDefTechs[teamDef->idx] = RS_GetTechByID(teamDef->tech);
 		if (ccs.teamDefTechs[teamDef->idx] == NULL)
 			Com_Error(ERR_DROP, "Could not find a tech for teamdef %s", teamDef->id);
