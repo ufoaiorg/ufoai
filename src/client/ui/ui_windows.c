@@ -286,7 +286,7 @@ static void UI_PushDropDownWindow_f (void)
 	vec2_t source;
 	vec2_t destination;
 	uiNode_t *node;
-	align_t pointPosition;
+	int direction;
 	size_t writtenBytes;
 	int result;
 
@@ -301,12 +301,12 @@ static void UI_PushDropDownWindow_f (void)
 		Com_Printf("UI_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
-	result = Com_ParseValue(&pointPosition, Cmd_Argv(2), V_ALIGN, 0, sizeof(pointPosition), &writtenBytes);
+	result = Com_ParseValue(&direction, Cmd_Argv(2), V_INT, 0, sizeof(direction), &writtenBytes);
 	if (result != RESULT_OK) {
-		Com_Printf("UI_PushDropDownWindow_f: '%s' in not a V_ALIGN\n", Cmd_Argv(2));
+		Com_Printf("UI_PushDropDownWindow_f: '%s' in not a V_INT\n", Cmd_Argv(2));
 		return;
 	}
-	UI_NodeGetPoint(node, source, pointPosition);
+	UI_NodeGetPoint(node, source, direction);
 	UI_NodeRelativeToAbsolutePoint(node, source);
 
 	/* get the destination anchor */
@@ -320,12 +320,12 @@ static void UI_PushDropDownWindow_f (void)
 			Com_Printf("UI_PushDropDownWindow_f: Node '%s' doesn't exist\n", Cmd_Argv(3));
 			return;
 		}
-		result = Com_ParseValue(&pointPosition, Cmd_Argv(4), V_ALIGN, 0, sizeof(pointPosition), &writtenBytes);
+		result = Com_ParseValue(&direction, Cmd_Argv(4), V_INT, 0, sizeof(direction), &writtenBytes);
 		if (result != RESULT_OK) {
-			Com_Printf("UI_PushDropDownWindow_f: '%s' in not a V_ALIGN\n", Cmd_Argv(4));
+			Com_Printf("UI_PushDropDownWindow_f: '%s' in not a V_INT\n", Cmd_Argv(4));
 			return;
 		}
-		UI_NodeGetPoint(node, destination, pointPosition);
+		UI_NodeGetPoint(node, destination, direction);
 		UI_NodeRelativeToAbsolutePoint(node, destination);
 	}
 

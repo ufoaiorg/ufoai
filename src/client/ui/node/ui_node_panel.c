@@ -63,29 +63,6 @@ static void UI_PanelNodeDraw (uiNode_t *node)
 		UI_DrawPanel(pos, node->size, image, 0, 0, panelTemplate);
 }
 
-typedef enum {
-	LAYOUTALIGN_NONE = 0,
-
-	/* common alignment */
-	/** @note there is +1 because STAR layout do some fast computation */
-	/** @note remove this +1 if possible, and use the struct auto numeration */
-	LAYOUTALIGN_TOPLEFT = ALIGN_UL + 1,
-	LAYOUTALIGN_TOP = ALIGN_UC + 1,
-	LAYOUTALIGN_TOPRIGHT = ALIGN_UR + 1,
-	LAYOUTALIGN_LEFT = ALIGN_CL + 1,
-	LAYOUTALIGN_MIDDLE = ALIGN_CC + 1,
-	LAYOUTALIGN_RIGHT = ALIGN_CR + 1,
-	LAYOUTALIGN_BOTTOMLEFT = ALIGN_LL + 1,
-	LAYOUTALIGN_BOTTOM = ALIGN_LC + 1,
-	LAYOUTALIGN_BOTTOMRIGHT = ALIGN_LR + 1,
-
-	/* pack and star layout manager only */
-	LAYOUTALIGN_FILL,
-
-	LAYOUTALIGN_MAX,
-	LAYOUTALIGN_ENSURE_32BIT = 0x7FFFFFFF
-} layoutAlign_t;
-
 /**
  * @brief Create a top-down flow layout with child of the node.
  * Child position is automatically set, child height don't change
@@ -271,21 +248,6 @@ static void UI_PackLayout (uiNode_t *node, int margin)
 }
 
 /**
- * @brief map for star layout from num to align
- */
-static const align_t starlayoutmap[] = {
-	ALIGN_UL,
-	ALIGN_UC,
-	ALIGN_UR,
-	ALIGN_CL,
-	ALIGN_CC,
-	ALIGN_CR,
-	ALIGN_LL,
-	ALIGN_LC,
-	ALIGN_LR,
-};
-
-/**
  * @brief Do a star layout with child according to there num
  * @note 1=top-left 2=top-middle 3=top-right
  * 4=middle-left 5=middle-middle 6=middle-right
@@ -299,9 +261,8 @@ void UI_StarLayout (uiNode_t *node)
 	for (child = node->firstChild; child; child = child->next) {
 		vec2_t source;
 		vec2_t destination;
-		align_t align;
 
-		if (child->align <= 0 || child->align > 10)
+		if (child->align <= 0)
 			continue;
 
 		if (child->align == LAYOUTALIGN_FILL) {
@@ -312,10 +273,9 @@ void UI_StarLayout (uiNode_t *node)
 			continue;
 		}
 
-		align = starlayoutmap[child->align - 1];
-		UI_NodeGetPoint(node, destination, align);
+		UI_NodeGetPoint(node, destination, child->align);
 		UI_NodeRelativeToAbsolutePoint(node, destination);
-		UI_NodeGetPoint(child, source, align);
+		UI_NodeGetPoint(child, source, child->align);
 		UI_NodeRelativeToAbsolutePoint(child, source);
 		child->pos[0] += destination[0] - source[0];
 		child->pos[1] += destination[1] - source[1];

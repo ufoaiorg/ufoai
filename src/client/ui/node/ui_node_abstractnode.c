@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "ui_node_abstractnode.h"
+#include "ui_node_panel.h"
 #include "../ui_parse.h"
 #include "../ui_main.h"
 #include "../ui_components.h"
@@ -65,38 +66,43 @@ qboolean UI_NodeInstanceOfPointer (const uiNode_t *node, const uiBehaviour_t* be
  * @brief return a relative position of a point into a node.
  * @param [in] node Requested node
  * @param [out] pos Result position
- * @param [in] pointDirection
- * @note For example we can request the right-bottom corner with ALIGN_LR (low, right)
+ * @param [in] direction
+ * @note For example we can request the right-bottom corner with LAYOUTALIGN_BOTTOMRIGHT
  */
-void UI_NodeGetPoint (const uiNode_t* node, vec2_t pos, align_t pointDirection)
+void UI_NodeGetPoint (const uiNode_t* node, vec2_t pos, int direction)
 {
-	switch (pointDirection % 3) {
-	case 0:	/* left */
+	switch (UI_GET_HORIZONTAL_ALIGN(direction)) {
+	case LAYOUTALIGN_H_LEFT:
 		pos[0] = 0;
 		break;
-	case 1:	/* middle */
+	case LAYOUTALIGN_H_MIDDLE:
 		pos[0] = (int)(node->size[0] / 2);
 		break;
-	case 2:	/* right */
+	case LAYOUTALIGN_H_RIGHT:
 		pos[0] = node->size[0];
 		break;
 	default:
-		assert(qfalse);
+		Com_Printf("UI_NodeGetPoint: Align '%d' (0x%X) is not a common alignment", direction, direction);
+		pos[0] = 0;
+		pos[1] = 0;
+		return;
 	}
 
-	/* vertical (0 is upper) */
-	switch ((pointDirection % 9) / 3) {
-	case 0:	/* top */
+	switch (UI_GET_VERTICAL_ALIGN(direction)) {
+	case LAYOUTALIGN_V_TOP:
 		pos[1] = 0;
 		break;
-	case 1: /* middle */
+	case LAYOUTALIGN_V_MIDDLE:
 		pos[1] = (int)(node->size[1] / 2);
 		break;
-	case 2: /* bottom */
+	case LAYOUTALIGN_V_BOTTOM:
 		pos[1] = node->size[1];
 		break;
 	default:
-		assert(qfalse);
+		Com_Printf("UI_NodeGetPoint: Align '%d' (0x%X) is not a common alignment", direction, direction);
+		pos[0] = 0;
+		pos[1] = 0;
+		return;
 	}
 }
 
