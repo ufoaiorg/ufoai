@@ -610,6 +610,7 @@ base/models/aircraft/craft_weapon_antim/launcher_a.md2 | GNU General Public Lice
 base/models/aircraft/craft_weapon_antim/launcher_h.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_antim/launcher_h.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_launcher/alien_launcher.jpg | GNU General Public License 2.0 or later | Willem Sitters
+base/models/aircraft/craft_weapon_launcher/alien_launcher.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_launcher/alien_launcher2.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_launcher/alien_launcher2.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/aircraft/craft_weapon_particle/pbw.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
@@ -982,6 +983,7 @@ base/models/geoscape/base.md2 | GNU General Public License 2.0 or later | Willem
 base/models/geoscape/base.png | GNU General Public License 2.0 or later | TimberDragon
 base/models/geoscape/base2.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/base2.png | GNU General Public License 2.0 or later | Willem Sitters
+base/models/geoscape/baseattack.png | GNU General Public License 2.0 or later
 base/models/geoscape/crash.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/crash.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/geoscape/drop_firebird.jpg | GNU General Public License 2.0 |  | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
@@ -1839,6 +1841,7 @@ base/models/soldiers/femalemedium/head04a.md2 | GNU General Public License 2.0 |
 base/models/soldiers/femalemedium/head04b.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/femalepower/body.md2 | Creative Commons Attribution-Share Alike 3.0
 base/models/soldiers/femalepower/body.png | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
+base/models/soldiers/femalepower/body.tag | GNU General Public License 2.0 or later
 base/models/soldiers/femalepower/body_arctic.png | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/femalepower/body_cccp.png | Creative Commons Attribution-Share Alike 3.0
 base/models/soldiers/femalepower/body_desert.png | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
