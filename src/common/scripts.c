@@ -3293,3 +3293,15 @@ void Com_ParseScripts (qboolean onlyServer)
 	Com_Printf("...%3i inventory definitions parsed\n", csi.numIDs);
 	Com_Printf("...%3i team definitions parsed\n", csi.numTeamDefs);
 }
+
+int Com_GetScriptChecksum (void)
+{
+	int checksum = 0;
+	const char *buf;
+
+	while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
+		checksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
+	FS_GetFileData(NULL);
+
+	return checksum;
+}

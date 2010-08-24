@@ -111,7 +111,6 @@ void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 {
 	int i;
 	unsigned checksum = 0;
-	const char *buf = NULL;
 	char * map = SV_GetConfigString(CS_TILES);
 	char * pos = SV_GetConfigString(CS_POSITIONS);
 	mapInfo_t *randomMap = NULL;
@@ -174,10 +173,8 @@ void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 	Com_Printf("checksum for the map '%s': %u\n", levelstring, sv.mapData.mapChecksum);
 	SV_SetConfigString(CS_MAPCHECKSUM, sv.mapData.mapChecksum);
 
-	checksum = 0;
-	while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
-		checksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
-	FS_GetFileData(NULL);
+	checksum = Com_GetScriptChecksum();
+
 	Com_Printf("ufo script checksum %u\n", checksum);
 	SV_SetConfigString(CS_UFOCHECKSUM, checksum);
 	SV_SetConfigString(CS_OBJECTAMOUNT, csi.numODs);

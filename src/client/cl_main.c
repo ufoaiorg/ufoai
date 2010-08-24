@@ -525,7 +525,6 @@ void CL_RequestNextDownload (void)
 	if (!Com_ServerState()) {
 		const int day = CL_GetConfigStringInteger(CS_LIGHTMAP);
 		unsigned scriptChecksum = 0;
-		const char *buf;
 
 		/* activate the map loading screen for multiplayer, too */
 		SCR_BeginLoadingPlaque();
@@ -540,10 +539,6 @@ void CL_RequestNextDownload (void)
 		/* map might still be downloading? */
 		if (CL_PendingHTTPDownloads())
 			return;
-
-		while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
-			scriptChecksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
-		FS_GetFileData(NULL);
 
 		CM_LoadMap(CL_GetConfigString(CS_TILES), day, CL_GetConfigString(CS_POSITIONS), cl.mapData, cl.mapTiles);
 		if (!*CL_GetConfigString(CS_VERSION) || !CL_GetConfigStringInteger(CS_MAPCHECKSUM)
@@ -564,7 +559,7 @@ void CL_RequestNextDownload (void)
 			Com_Error(ERR_DISCONNECT, "Script files are not the same");
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
-		} else if (scriptChecksum != CL_GetConfigStringInteger(CS_UFOCHECKSUM)) {
+		} else if (Com_GetScriptChecksum() != CL_GetConfigStringInteger(CS_UFOCHECKSUM)) {
 			Com_Printf("You are using modified ufo script files - might produce problems\n");
 		} else if (strcmp(UFO_VERSION, CL_GetConfigString(CS_VERSION))) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers (%s)"), UFO_VERSION, CL_GetConfigString(CS_VERSION));
