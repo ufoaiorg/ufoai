@@ -511,8 +511,6 @@ static qboolean CL_DownloadMap (const char *map)
  */
 void CL_RequestNextDownload (void)
 {
-	const char *buf;
-
 	if (cls.state != ca_connected) {
 		Com_Printf("CL_RequestNextDownload: Not connected (%i)\n", cls.state);
 		return;
@@ -527,6 +525,7 @@ void CL_RequestNextDownload (void)
 	if (!Com_ServerState()) {
 		const qboolean day = atoi(cl.configstrings[CS_LIGHTMAP]);
 		unsigned scriptChecksum = 0;
+		const char *buf;
 
 		/* activate the map loading screen for multiplayer, too */
 		SCR_BeginLoadingPlaque();
@@ -559,7 +558,7 @@ void CL_RequestNextDownload (void)
 			Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%s'",
 				cl.mapData->mapChecksum, cl.configstrings[CS_MAPCHECKSUM]);
 			return;
-		/* amount of objects from script files doensn't match */
+		/* amount of objects from script files doesn't match */
 		} else if (csi.numODs != atoi(cl.configstrings[CS_OBJECTAMOUNT])) {
 			UI_Popup(_("Error"), _("Script files are not the same"));
 			Com_Error(ERR_DISCONNECT, "Script files are not the same");
