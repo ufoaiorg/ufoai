@@ -85,8 +85,6 @@ cvar_t *cl_team;
 
 client_static_t cls;
 
-static int downloadCounter;
-
 struct memPool_s *cl_genericPool;	/**< permanent client data - menu, fonts */
 struct memPool_s *cl_ircSysPool;	/**< irc pool */
 struct memPool_s *cl_soundSysPool;
@@ -534,10 +532,10 @@ void CL_RequestNextDownload (void)
 		SCR_BeginLoadingPlaque();
 
 		/* check download */
-		if (downloadCounter != -1) { /* confirm map */
+		if (cls.downloadMaps) { /* confirm map */
 			if (CL_DownloadMap(cl.configstrings[CS_NAME]))
 				return;
-			downloadCounter = -1;
+			cls.downloadMaps = qfalse;
 		}
 
 		/* map might still be downloading? */
@@ -600,7 +598,7 @@ void CL_RequestNextDownload (void)
  */
 static void CL_Precache_f (void)
 {
-	downloadCounter = 0;
+	cls.downloadMaps = qtrue;
 
 	CL_RequestNextDownload();
 }

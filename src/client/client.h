@@ -92,6 +92,7 @@ typedef struct client_static_s {
 	size_t downloadPosition;
 	int downloadPercent;
 
+	qboolean downloadMaps;
 	dlqueue_t downloadQueue;	/**< queue of paths we need */
 	dlhandle_t HTTPHandles[4];	/**< actual download handles */
 	char downloadServer[512];	/**< base url prefix to download from */
