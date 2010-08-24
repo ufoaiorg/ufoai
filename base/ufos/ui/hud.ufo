@@ -566,7 +566,7 @@ window hud extends ahud
 			texl	"0 76"
 			texh	"75 128"
 			mousefx	true
-			onClick	{ cmd "hud_listfiremodes r;mn_push_dropdown firemode_right.anchor ll hud.right.bt_pfire ul;" }
+			onClick	{ cmd "hud_listfiremodes r;mn_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud.right.bt_pfire LAYOUTALIGN_TOPLEFT;" }
 		}
 
 		image bt_reload
@@ -632,7 +632,7 @@ window hud extends ahud
 			texl	"0 76"
 			texh	"75 128"
 			mousefx	true
-			onClick	{ cmd "hud_listfiremodes l;mn_push_dropdown firemode_left.anchor lr hud.left.bt_pfire ur;" }
+			onClick	{ cmd "hud_listfiremodes l;mn_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMRIGHT hud.left.bt_pfire LAYOUTALIGN_TOPRIGHT;" }
 		}
 
 		image bt_reload
