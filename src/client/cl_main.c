@@ -530,13 +530,13 @@ static qboolean CL_CanMultiplayerStart (void)
 	/* check download */
 	if (cls.downloadMaps) { /* confirm map */
 		if (CL_DownloadMap(CL_GetConfigString(CS_NAME)))
-			return qtrue;
+			return qfalse;
 		cls.downloadMaps = qfalse;
 	}
 
 	/* map might still be downloading? */
 	if (CL_PendingHTTPDownloads())
-		return qtrue;
+		return qfalse;
 
 	if (Com_GetScriptChecksum() != CL_GetConfigStringInteger(CS_UFOCHECKSUM))
 		Com_Printf("You are using modified ufo script files - might produce problems\n");
@@ -549,7 +549,7 @@ static qboolean CL_CanMultiplayerStart (void)
 			cl.mapData->mapChecksum, CL_GetConfigStringInteger(CS_MAPCHECKSUM));
 	}
 
-	return qfalse;
+	return qtrue;
 }
 
 /**
