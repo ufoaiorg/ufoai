@@ -429,13 +429,8 @@ static void CL_CheckAndQueueDownload (char *path)
 	if (length >= MAX_QPATH)
 		return;
 
-	ext = strrchr(path, '.');
-	if (!ext)
-		return;
-
-	ext++;
-
-	if (!ext[0])
+	ext = Com_GetExtension(path);
+	if (ext == NULL)
 		return;
 
 	Q_strlwr(ext);
@@ -464,7 +459,7 @@ static void CL_CheckAndQueueDownload (char *path)
 	} else
 		gameLocal = qfalse;
 
-	if (strstr(path, "..") || !isvalidchar(path[0]) || !isvalidchar(path[length-1]) || strstr(path, "//") ||
+	if (strstr(path, "..") || !isvalidchar(path[0]) || !isvalidchar(path[length - 1]) || strstr(path, "//") ||
 		strchr(path, '\\') || (!pak && !strchr(path, '/')) || (pak && strchr(path, '/'))) {
 		Com_Printf("WARNING: Illegal path '%s' in filelist.\n", path);
 		return;
@@ -473,11 +468,11 @@ static void CL_CheckAndQueueDownload (char *path)
 	/* by definition pk3s are game-local */
 	if (gameLocal || pak) {
 		qboolean exists;
-		FILE *f;
-		char gamePath[MAX_OSPATH];
 
 		/* search the user homedir to find the pk3 file */
 		if (pak) {
+			char gamePath[MAX_OSPATH];
+			FILE *f;
 			Com_sprintf(gamePath, sizeof(gamePath), "%s/%s", FS_Gamedir(), path);
 			f = fopen(gamePath, "rb");
 			if (!f)
