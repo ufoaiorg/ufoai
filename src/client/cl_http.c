@@ -335,6 +335,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 		const char *extension = Com_GetExtension(ufoPath);
 		if (extension != NULL && !Q_strcasecmp(extension, "bsp")) {
 			char listPath[MAX_OSPATH];
+			const size_t len = strlen(ufoPath);
 			Com_sprintf(listPath, sizeof(listPath), BASEDIRNAME"/%.*s.filelist", (int)(len - 4), ufoPath);
 			CL_QueueHTTPDownload(listPath);
 		}
@@ -354,7 +355,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
  */
 qboolean CL_PendingHTTPDownloads (void)
 {
-	if (!cls.downloadServer[0])
+	if (cls.downloadServer[0] == '\0')
 		return qfalse;
 
 	return pendingCount + handleCount;
@@ -418,7 +419,7 @@ qboolean CL_CheckOrDownloadFile (const char *filename)
 static void CL_CheckAndQueueDownload (char *path)
 {
 	size_t		length;
-	char		*ext;
+	const char	*ext;
 	qboolean	pak;
 	qboolean	gameLocal;
 
@@ -432,8 +433,6 @@ static void CL_CheckAndQueueDownload (char *path)
 	ext = Com_GetExtension(path);
 	if (ext == NULL)
 		return;
-
-	Q_strlwr(ext);
 
 	if (!strcmp(ext, "pk3")) {
 		Com_Printf("NOTICE: Filelist is requesting a .pk3 file (%s)\n", path);
