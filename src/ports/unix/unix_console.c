@@ -275,14 +275,12 @@ const char *Sys_ConsoleInput (void)
 {
 	/* we use this when sending back commands */
 	static char text[256];
-	int avail;
-	char key;
-	consoleHistory_t *history;
-	size_t size;
 
 	if (ttyConsoleActivated) {
-		avail = read(STDIN_FILENO, &key, 1);
+		char key;
+		int avail = read(STDIN_FILENO, &key, 1);
 		if (avail != -1) {
+			size_t size;
 			/* we have something
 			 * backspace?
 			 * NOTE TTimo testing a lot of values .. seems it's the only way to get it to work everywhere */
@@ -295,7 +293,7 @@ const char *Sys_ConsoleInput (void)
 				return NULL;
 			}
 			/* check if this is a control char */
-			if ((key) && (key) < ' ') {
+			if (key && key < ' ') {
 				if (key == '\n') {
 					/* push it in history */
 					Sys_TTYConsoleHistoryAdd(&ttyConsoleHistory);
@@ -319,6 +317,7 @@ const char *Sys_ConsoleInput (void)
 				if (avail != -1) {
 					/* VT 100 keys */
 					if (key == '[' || key == 'O') {
+						consoleHistory_t *history;
 						avail = read(STDIN_FILENO, &key, 1);
 						if (avail != -1) {
 							switch (key) {
