@@ -45,15 +45,6 @@
 ( 98 210 24 ) ( 98 210 32 ) ( 118 210 24 ) tex_common/nodraw 0 0 0 1 1 0 128 0
 ( 105 208 24 ) ( 105 216 24 ) ( 105 208 32 ) tex_common/nodraw 1 0 0 1 1 0 128 0
 }
-// brush 4
-{
-( 129 163 32 ) ( 64 192 37 ) ( 129 192 37 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 129 192 6 ) ( 129 192 37 ) ( 64 192 37 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 129 163 6 ) ( 129 192 37 ) ( 129 192 6 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 64 163 6 ) ( 129 163 6 ) ( 64 192 6 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 64 163 6 ) ( 64 163 32 ) ( 129 163 6 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-( 64 192 6 ) ( 64 192 37 ) ( 64 163 6 ) tex_common/nodraw 0 0 0 1 1 0 128 0
-}
 }
 // entity 1
 {
@@ -75,12 +66,5 @@
 "classname" "misc_model"
 "origin" "113 212 5"
 "model" "models/objects/city/waste/bag.md2"
-"spawnflags" "255"
-}
-// entity 4
-{
-"classname" "misc_model"
-"origin" "96 177 21"
-"model" "models/objects/city/trash/trash.md2"
 "spawnflags" "255"
 }
