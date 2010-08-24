@@ -280,7 +280,7 @@ static void UI_InitRadar (const uiNode_t *node)
 	vec2_t max;
 
 	UI_FreeRadarImages();
-	UI_BuildRadarImageList(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
+	UI_BuildRadarImageList(CL_GetConfigString(CS_TILES), CL_GetConfigString(CS_POSITIONS));
 
 	UI_GetNodeAbsPos(node, nodepos);
 	radar.x = nodepos[0] + node->size[0] / 2;

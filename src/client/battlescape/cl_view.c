@@ -49,19 +49,18 @@ void CL_ViewLoadMedia (void)
 {
 	le_t *le;
 	int i, max;
-	char name[32];
 
 	CL_ViewUpdateRenderData();
 
-	if (!cl.configstrings[CS_TILES][0])
+	if (CL_GetConfigString(CS_TILES)[0] == '\0')
 		return;					/* no map loaded */
 
-	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("loading %s"), _(cl.configstrings[CS_MAPTITLE]));
+	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("loading %s"), _(CL_GetConfigString(CS_MAPTITLE)));
 	cls.loadingPercent = 0;
 
 	/* register models, pics, and skins */
 	SCR_UpdateScreen();
-	R_ModBeginLoading(cl.configstrings[CS_TILES], atoi(cl.configstrings[CS_LIGHTMAP]), cl.configstrings[CS_POSITIONS], cl.configstrings[CS_NAME]);
+	R_ModBeginLoading(CL_GetConfigString(CS_TILES), CL_GetConfigStringInteger(CS_LIGHTMAP), CL_GetConfigString(CS_POSITIONS), CL_GetConfigString(CS_NAME));
 	CL_SpawnParseEntitystring();
 
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("loading models..."));
@@ -71,13 +70,13 @@ void CL_ViewLoadMedia (void)
 	LM_Register();
 	CL_ParticleRegisterArt();
 
-	for (i = 1, max = 0; i < MAX_MODELS && cl.configstrings[CS_MODELS + i][0]; i++)
+	for (i = 1, max = 0; i < MAX_MODELS && CL_GetConfigString(CS_MODELS + i)[0] != '\0'; i++)
 		max++;
 
 	max += csi.numODs;
 
-	for (i = 1; i < MAX_MODELS && cl.configstrings[CS_MODELS + i][0]; i++) {
-		Q_strncpyz(name, cl.configstrings[CS_MODELS + i], sizeof(name));
+	for (i = 1; i < MAX_MODELS && CL_GetConfigString(CS_MODELS + i)[0] != '\0'; i++) {
+		const char *name = CL_GetConfigString(CS_MODELS + i);
 		/* skip inline bmodels */
 		if (name[0] != '*') {
 			Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
@@ -85,14 +84,14 @@ void CL_ViewLoadMedia (void)
 		}
 		SCR_UpdateScreen();
 		IN_SendKeyEvents();	/* pump message loop */
-		cl.model_draw[i] = R_RegisterModelShort(cl.configstrings[CS_MODELS + i]);
+		cl.model_draw[i] = R_RegisterModelShort(name);
 		/* initialize clipping for bmodels */
 		if (name[0] == '*')
-			cl.model_clip[i] = CM_InlineModel(cl.mapTiles, cl.configstrings[CS_MODELS + i]);
+			cl.model_clip[i] = CM_InlineModel(cl.mapTiles, name);
 		else
 			cl.model_clip[i] = NULL;
 		if (!cl.model_draw[i])
-			Com_Error(ERR_DROP, "Could not load model '%s'\n", cl.configstrings[CS_MODELS + i]);
+			Com_Error(ERR_DROP, "Could not load model '%s'\n", name);
 
 		cls.loadingPercent += 100.0f / (float)max;
 	}

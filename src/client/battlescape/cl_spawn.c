@@ -218,7 +218,7 @@ void CL_SpawnParseEntitystring (void)
 
 static void SP_worldspawn (const localEntityParse_t *entData)
 {
-	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
+	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
 	int i;
 
 	/* maximum level */
@@ -308,14 +308,14 @@ static void SP_misc_model (const localEntityParse_t *entData)
 
 static void SP_misc_particle (const localEntityParse_t *entData)
 {
-	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
+	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
 	if (!(dayLightmap && (entData->spawnflags & (1 << SPAWNFLAG_NO_DAY))))
 		CL_AddMapParticle(entData->particle, entData->origin, entData->wait, entData->entStringPos, (entData->spawnflags & 0xFF));
 }
 
 static void SP_misc_sound (const localEntityParse_t *entData)
 {
-	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
+	const int dayLightmap = CL_GetConfigStringInteger(CS_LIGHTMAP);
 	if (!(dayLightmap && (entData->spawnflags & (1 << SPAWNFLAG_NO_DAY))))
 		LE_AddAmbientSound(entData->noise, entData->origin, (entData->spawnflags & 0xFF), entData->volume, entData->attenuation);
 }

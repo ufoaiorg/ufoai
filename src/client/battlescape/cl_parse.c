@@ -116,7 +116,7 @@ const char *CL_PlayerGetName (int player)
 	assert(player >= 0);
 	assert(player < MAX_CLIENTS);
 
-	return cl.configstrings[CS_PLAYERNAMES + player];
+	return CL_GetConfigString(CS_PLAYERNAMES + player);
 }
 
 /**
@@ -136,25 +136,15 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 
 	Com_DPrintf(DEBUG_CLIENT, "configstring %d: %s\n", i, s);
 
-	/* there may be overflows in i==CS_TILES - but thats ok */
-	/* see definition of configstrings and MAX_TILESTRINGS */
-	switch (i) {
-	case CS_TILES:
-	case CS_POSITIONS:
-		Q_strncpyz(cl.configstrings[i], s, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-		break;
-	default:
-		Q_strncpyz(cl.configstrings[i], s, MAX_TOKEN_CHARS);
-		break;
-	}
+	CL_SetConfigString(i, s);
 
 	/* do something appropriate */
 	if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
 		if (refdef.ready) {
-			cl.model_draw[i - CS_MODELS] = R_RegisterModelShort(cl.configstrings[i]);
+			cl.model_draw[i - CS_MODELS] = R_RegisterModelShort(s);
 			/* inline models are marked with * as first char followed by the number */
-			if (cl.configstrings[i][0] == '*')
-				cl.model_clip[i - CS_MODELS] = CM_InlineModel(cl.mapTiles, cl.configstrings[i]);
+			if (s[0] == '*')
+				cl.model_clip[i - CS_MODELS] = CM_InlineModel(cl.mapTiles, s);
 			else
 				cl.model_clip[i - CS_MODELS] = NULL;
 		}

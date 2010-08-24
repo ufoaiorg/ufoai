@@ -495,7 +495,7 @@ static qboolean CL_DownloadMap (const char *map)
 	} else {
 		startedDownload = !CL_CheckOrDownloadFile(va("maps/%s.ump", map + 1));
 		if (!startedDownload) {
-			const char *tiles = cl.configstrings[CS_TILES];
+			const char *tiles = CL_GetConfigString(CS_TILES);
 			startedDownload = CL_DownloadUMPMap(tiles);
 		}
 	}
@@ -523,7 +523,7 @@ void CL_RequestNextDownload (void)
 	/* for singleplayer game this is already loaded in our local server
 	 * and if we are the server we don't have to reload the map here, too */
 	if (!Com_ServerState()) {
-		const qboolean day = atoi(cl.configstrings[CS_LIGHTMAP]);
+		const int day = CL_GetConfigStringInteger(CS_LIGHTMAP);
 		unsigned scriptChecksum = 0;
 		const char *buf;
 
@@ -532,7 +532,7 @@ void CL_RequestNextDownload (void)
 
 		/* check download */
 		if (cls.downloadMaps) { /* confirm map */
-			if (CL_DownloadMap(cl.configstrings[CS_NAME]))
+			if (CL_DownloadMap(CL_GetConfigString(CS_NAME)))
 				return;
 			cls.downloadMaps = qfalse;
 		}
@@ -545,31 +545,31 @@ void CL_RequestNextDownload (void)
 			scriptChecksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
 		FS_GetFileData(NULL);
 
-		CM_LoadMap(cl.configstrings[CS_TILES], day, cl.configstrings[CS_POSITIONS], cl.mapData, cl.mapTiles);
-		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM]
-		 || !*cl.configstrings[CS_UFOCHECKSUM] || !*cl.configstrings[CS_OBJECTAMOUNT]) {
+		CM_LoadMap(CL_GetConfigString(CS_TILES), day, CL_GetConfigString(CS_POSITIONS), cl.mapData, cl.mapTiles);
+		if (!*CL_GetConfigString(CS_VERSION) || !CL_GetConfigStringInteger(CS_MAPCHECKSUM)
+		 || !CL_GetConfigStringInteger(CS_UFOCHECKSUM) || !CL_GetConfigStringInteger(CS_OBJECTAMOUNT)) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers"), UFO_VERSION);
 			UI_Popup(_("Error"), popupText);
 			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers", UFO_VERSION);
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
-		} else if (cl.mapData->mapChecksum != atoi(cl.configstrings[CS_MAPCHECKSUM])) {
+		} else if (cl.mapData->mapChecksum != CL_GetConfigStringInteger(CS_MAPCHECKSUM)) {
 			UI_Popup(_("Error"), _("Local map version differs from server"));
-			Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%s'",
-				cl.mapData->mapChecksum, cl.configstrings[CS_MAPCHECKSUM]);
+			Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%i'",
+				cl.mapData->mapChecksum, CL_GetConfigStringInteger(CS_MAPCHECKSUM));
 			return;
 		/* amount of objects from script files doesn't match */
-		} else if (csi.numODs != atoi(cl.configstrings[CS_OBJECTAMOUNT])) {
+		} else if (csi.numODs != CL_GetConfigStringInteger(CS_OBJECTAMOUNT)) {
 			UI_Popup(_("Error"), _("Script files are not the same"));
 			Com_Error(ERR_DISCONNECT, "Script files are not the same");
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
-		} else if (atoi(cl.configstrings[CS_UFOCHECKSUM]) && scriptChecksum != atoi(cl.configstrings[CS_UFOCHECKSUM])) {
+		} else if (scriptChecksum != CL_GetConfigStringInteger(CS_UFOCHECKSUM)) {
 			Com_Printf("You are using modified ufo script files - might produce problems\n");
-		} else if (strcmp(UFO_VERSION, cl.configstrings[CS_VERSION])) {
-			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers (%s)"), UFO_VERSION, cl.configstrings[CS_VERSION]);
+		} else if (strcmp(UFO_VERSION, CL_GetConfigString(CS_VERSION))) {
+			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers (%s)"), UFO_VERSION, CL_GetConfigString(CS_VERSION));
 			UI_Popup(_("Error"), popupText);
-			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers (%s)", UFO_VERSION, cl.configstrings[CS_VERSION]);
+			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers (%s)", UFO_VERSION, CL_GetConfigString(CS_VERSION));
 			return;
 		}
 	}
@@ -908,9 +908,9 @@ static void CL_ShowConfigstrings_f (void)
 	int i;
 
 	for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
-		if (cl.configstrings[i][0] == '\0')
+		if (CL_GetConfigString(i)[0] == '\0')
 			continue;
-		Com_Printf("cl.configstrings[%3i]: %s\n", i, cl.configstrings[i]);
+		Com_Printf("CL_GetConfigString(%3i]: %s\n", i, CL_GetConfigString(i));
 	}
 }
 

@@ -294,3 +294,52 @@ void Grid_DumpClientRoutes_f (void)
 	RT_WriteCSVFiles(cl.mapData->map, "ufoaiclient", wpMins, wpMaxs);
 }
 #endif
+
+char *CL_GetConfigString (int index)
+{
+	if (index < 0 || index >= MAX_CONFIGSTRINGS)
+		Com_Error(ERR_FATAL, "Invalid config string index given");
+	return cl.configstrings[index];
+}
+
+int CL_GetConfigStringInteger (int index)
+{
+	if (index < 0 || index >= MAX_CONFIGSTRINGS)
+		Com_Error(ERR_FATAL, "Invalid config string index given");
+	return atoi(cl.configstrings[index]);
+}
+
+char *CL_SetConfigString (int index, ...)
+{
+	va_list ap;
+	const char *value;
+
+	if (index < 0 || index >= MAX_CONFIGSTRINGS)
+		Com_Error(ERR_FATAL, "Invalid config string index given");
+
+	va_start(ap, index);
+
+	switch (index) {
+	case CS_LIGHTMAP:
+	case CS_MAPCHECKSUM:
+	case CS_UFOCHECKSUM:
+	case CS_OBJECTAMOUNT:
+		value = va("%i", va_arg(ap, int));
+		break;
+	default:
+		value = va_arg(ap, char *);
+		break;
+	}
+
+	/* change the string in cl
+	 * there may be overflows in i==CS_TILES - but thats ok
+	 * see definition of configstrings and MAX_TILESTRINGS */
+	if (index == CS_TILES || index == CS_POSITIONS)
+		Q_strncpyz(cl.configstrings[index], value, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+	else
+		Q_strncpyz(cl.configstrings[index], value, sizeof(cl.configstrings[index]));
+
+	va_end(ap);
+
+	return cl.configstrings[index];
+}

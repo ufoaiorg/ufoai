@@ -82,7 +82,7 @@ static void CL_LogEvent (const eventRegister_t *eventData)
 
 		Com_MakeTimestamp(tbuf, sizeof(tbuf));
 
-		FS_Printf(&f, "%s - %s: %10i %s\n", tbuf, cl.configstrings[CS_MAPTITLE], cl.time, eventData->name);
+		FS_Printf(&f, "%s - %s: %10i %s\n", tbuf, CL_GetConfigString(CS_MAPTITLE), cl.time, eventData->name);
 		FS_CloseFile(&f);
 	}
 }

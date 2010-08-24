@@ -193,14 +193,14 @@ static void SCR_DrawLoading (void)
 	}
 
 	if (!loadingPic)
-		loadingPic = SCR_SetLoadingBackground(cl.configstrings[CS_MAPTITLE]);
+		loadingPic = SCR_SetLoadingBackground(CL_GetConfigString(CS_MAPTITLE));
 
 	/* center loading screen */
 	R_DrawImage(viddef.virtualWidth / 2 - loadingPic->width / 2, viddef.virtualHeight / 2 - loadingPic->height / 2, loadingPic);
 	R_Color(color);
 
-	if (cl.configstrings[CS_TILES][0]) {
-		mapmsg = va(_("Loading Map [%s]"), _(cl.configstrings[CS_MAPTITLE]));
+	if (CL_GetConfigString(CS_TILES)[0] != '\0') {
+		mapmsg = va(_("Loading Map [%s]"), _(CL_GetConfigString(CS_MAPTITLE)));
 		UI_DrawString("f_menubig", ALIGN_UC,
 			(int)(viddef.virtualWidth / 2),
 			(int)(viddef.virtualHeight / 2 - 60),

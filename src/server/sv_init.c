@@ -184,7 +184,7 @@ void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 	SV_SetConfigString(CS_VERSION, UFO_VERSION);
 	SV_SetConfigString(CS_MAPTITLE, SV_GetMapTitle(randomMap, levelstring));
 	if (!strncmp(SV_GetConfigString(CS_MAPTITLE), "b/", 2)) {
-		/* For base attack, cl.configstrings[CS_MAPTITLE] contains too many chars */
+		/* For base attack, CS_MAPTITLE contains too many chars */
 		SV_SetConfigString(CS_MAPTITLE, "Base attack");
 		SV_SetConfigString(CS_NAME, ".baseattack");
 	}
