@@ -124,11 +124,9 @@ const char *CL_PlayerGetName (int player)
  */
 static void CL_ParseConfigString (struct dbuffer *msg)
 {
-	int i;
 	char s[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
-
 	/* which configstring? */
-	i = NET_ReadShort(msg);
+	const int i = NET_ReadShort(msg);
 	if (i < 0 || i >= MAX_CONFIGSTRINGS)
 		Com_Error(ERR_DROP, "configstring > MAX_CONFIGSTRINGS");
 	/* value */
@@ -141,15 +139,17 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 	/* do something appropriate */
 	if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
 		if (refdef.ready) {
-			cl.model_draw[i - CS_MODELS] = R_RegisterModelShort(s);
+			const int index = i - CS_MODELS;
+			cl.model_draw[index] = R_RegisterModelShort(s);
 			/* inline models are marked with * as first char followed by the number */
 			if (s[0] == '*')
-				cl.model_clip[i - CS_MODELS] = CM_InlineModel(cl.mapTiles, s);
+				cl.model_clip[index] = CM_InlineModel(cl.mapTiles, s);
 			else
-				cl.model_clip[i - CS_MODELS] = NULL;
+				cl.model_clip[index] = NULL;
 		}
 	} else if (i >= CS_PLAYERNAMES && i < CS_PLAYERNAMES + MAX_CLIENTS) {
-		CL_ParseClientinfo(i - CS_PLAYERNAMES);
+		const int index = i - CS_PLAYERNAMES;
+		CL_ParseClientinfo(index);
 	}
 }
 
