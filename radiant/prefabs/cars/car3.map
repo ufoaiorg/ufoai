@@ -1,0 +1,110 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( 96 32 64 ) ( 96 -32 64 ) ( -64 32 64 ) tex_common/actorclip 0 0 0 0.25 0.25
+( 96 32 32 ) ( -64 32 32 ) ( 96 32 0 ) tex_common/actorclip 0 0 0 0.25 0.25
+( 96 32 32 ) ( 96 32 0 ) ( 96 -32 32 ) tex_common/actorclip 0 0 0 0.25 0.25
+( -64 -32 0 ) ( 96 -32 0 ) ( -64 32 0 ) tex_common/actorclip 0 0 0 0.25 0.25
+( -64 -32 0 ) ( -64 -32 32 ) ( 96 -32 0 ) tex_common/actorclip 0 0 0 0.25 0.25
+( -64 -32 0 ) ( -64 32 0 ) ( -64 -32 32 ) tex_common/actorclip 0 0 0 0.25 0.25
+}
+// brush 1
+{
+( -40 34 36 ) ( -69 34 10 ) ( 48 34 34 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( 100.875 34 10 ) ( -69 34 10 ) ( -69 -34 10 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( 100.875 -34 10 ) ( -69 -34 10 ) ( 98.875 -34 22.125 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( -64 -34 34 ) ( -69 -34 10 ) ( -69 34 10 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( -64 64 34 ) ( -40 64 36 ) ( -64 -64 34 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -40 64 36 ) ( 48 64 34 ) ( -40 -64 36 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( 48 64 34 ) ( 87 64 28 ) ( 48 -64 34 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( 87 64 28 ) ( 99 64 22 ) ( 87 -64 28 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( 99 32 21 ) ( 101 32 9 ) ( 101 -32 9 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -64 -34 34 ) ( -64 -29 36 ) ( 64 -34 34 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -64 28 36 ) ( -64 32 34 ) ( 64 28 36 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -64 32 34 ) ( -64 34 26 ) ( 64 32 34 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( 101 -17 -64 ) ( 89 -34 -64 ) ( 101 -17 64 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( 56 34 -64 ) ( 90 31 -64 ) ( 56 34 64 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( 90 31 -64 ) ( 101 16 -64 ) ( 90 31 64 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -69 5 -64 ) ( -67 16 -64 ) ( -69 5 64 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -67 16 -64 ) ( -60 31 -64 ) ( -67 16 64 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -60 31 -64 ) ( -24 34 -64 ) ( -60 31 64 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -66 -20 -64 ) ( -69 -6 -64 ) ( -66 -20 64 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -60 -34 -64 ) ( -67 -19 -64 ) ( -60 -34 64 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+}
+// brush 2
+{
+( -66 34 23 ) ( -66 -34 23 ) ( -70 34 23 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( -66 17 23 ) ( -70 17 23 ) ( -66 17 14 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( -66 34 23 ) ( -66 34 14 ) ( -66 -34 23 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( -70 -34 14 ) ( -66 -34 14 ) ( -70 34 14 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( -69 -15 14 ) ( -69 -15 23 ) ( -65 -15 14 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( -68 64 14 ) ( -70 64 23 ) ( -68 -64 14 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+}
+// brush 3
+{
+( 47 17 48 ) ( 47 -15 48 ) ( 19 17 48 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( 47 28 42 ) ( 19 28 42 ) ( 47 28 34 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( 19 -29 34 ) ( 19 -29 42 ) ( 47 -29 34 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( -40 64 36 ) ( -14 64 48 ) ( -40 -64 36 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -5 64 48 ) ( 28 64 45 ) ( -5 -64 48 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( 28 64 45 ) ( 47 64 34 ) ( 28 -64 45 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( 47 64 34 ) ( -40 64 36 ) ( 47 -64 34 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -64 -29 36 ) ( -64 -21 48 ) ( 64 -29 36 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -64 19 48 ) ( -64 28 36 ) ( 64 19 48 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+}
+// brush 4
+{
+( -16 33 10 ) ( -16 23 10 ) ( -47 33 10 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( -15 31 30 ) ( -46 31 30 ) ( -15 31 4 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( -46 23 4 ) ( -46 23 30 ) ( -15 23 4 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( -39 121 7 ) ( -40 121 10 ) ( -39 -7 7 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -30 121 4 ) ( -35 121 5 ) ( -30 -7 4 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -35 121 5 ) ( -39 121 7 ) ( -35 -7 5 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -21 121 10 ) ( -23 121 7 ) ( -21 -7 10 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -23 121 7 ) ( -26 121 5 ) ( -23 -7 7 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -26 121 5 ) ( -30 121 4 ) ( -26 -7 5 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+}
+// brush 5
+{
+( -16 -24 10 ) ( -16 -34 10 ) ( -47 -24 10 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( -15 -26 30 ) ( -46 -26 30 ) ( -15 -26 4 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( -46 -34 4 ) ( -46 -34 30 ) ( -15 -34 4 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( -39 64 7 ) ( -40 64 10 ) ( -39 -64 7 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -30 64 4 ) ( -35 64 5 ) ( -30 -64 4 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -35 64 5 ) ( -39 64 7 ) ( -35 -64 5 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -21 64 10 ) ( -23 64 7 ) ( -21 -64 10 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -23 64 7 ) ( -26 64 5 ) ( -23 -64 7 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( -26 64 5 ) ( -30 64 4 ) ( -26 -64 5 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+}
+// brush 6
+{
+( 70 31 10 ) ( 70 23 10 ) ( 48 31 10 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( 70 31 10 ) ( 48 31 10 ) ( 70 31 4 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( 48 23 5 ) ( 48 23 11 ) ( 70 23 5 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( 59 121 5 ) ( 54 121 6 ) ( 59 -7 5 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( 54 121 6 ) ( 49 121 10 ) ( 54 -7 6 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( 69 121 10 ) ( 64 121 6 ) ( 69 -7 10 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( 64 121 6 ) ( 59 121 5 ) ( 64 -7 6 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+}
+// brush 7
+{
+( 70 -26 10 ) ( 70 -34 10 ) ( 48 -26 10 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( 70 -26 10 ) ( 48 -26 10 ) ( 70 -26 4 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( 48 -34 5 ) ( 48 -34 11 ) ( 70 -34 5 ) tex_common/weaponclip 0 0 0 0.25 0.25
+( 59 64 5 ) ( 54 64 6 ) ( 59 -64 5 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( 54 64 6 ) ( 49 64 10 ) ( 54 -64 6 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( 69 64 10 ) ( 64 64 6 ) ( 69 -64 10 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+( 64 64 6 ) ( 59 64 5 ) ( 64 -64 6 ) tex_common/weaponclip 0 0 0 0.25 0.25 0 0 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"model" "models/objects/cars/car4/car.md2"
+"skin" "0"
+"origin" "10 0 4"
+}
