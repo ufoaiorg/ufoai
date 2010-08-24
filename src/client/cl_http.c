@@ -49,7 +49,7 @@ static CURLM	*multi = NULL;
 static int		handleCount = 0;
 static int		pendingCount = 0;
 static int		abortDownloads = HTTPDL_ABORT_NONE;
-static qboolean	downloading_pak = qfalse;
+static qboolean	downloadingPK3 = qfalse;
 
 static void StripHighBits (char *string)
 {
@@ -86,7 +86,7 @@ static int CL_HTTP_Progress (void *clientp, double dltotal, double dlnow, double
 
 	/* don't care which download shows as long as something does :) */
 	if (!abortDownloads) {
-		strcpy(cls.downloadName, dl->queueEntry->ufoPath);
+		Q_strncpyz(cls.downloadName, dl->queueEntry->ufoPath, sizeof(cls.downloadName));
 		cls.downloadPosition = dl->position;
 
 		if (dltotal)
@@ -143,14 +143,13 @@ static void CL_EscapeHTTPPath (const char *filePath, char *escaped)
  */
 static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 {
-	size_t len;
 	char tempFile[MAX_OSPATH];
 	char escapedFilePath[MAX_QPATH * 4];
+	const char *extension = Com_GetExtension(entry->ufoPath);
 
 	/* yet another hack to accomodate filelists, how i wish i could push :(
 	 * NULL file handle indicates filelist. */
-	len = strlen(entry->ufoPath);
-	if (len > 9 && !strcmp(entry->ufoPath + len - 9, ".filelist")) {
+	if (extension != NULL && !strcmp(extension, "filelist")) {
 		dl->file = NULL;
 		CL_EscapeHTTPPath(entry->ufoPath, escapedFilePath);
 	} else {
@@ -308,7 +307,6 @@ static dlhandle_t *CL_GetFreeDLHandle (void)
  */
 qboolean CL_QueueHTTPDownload (const char *ufoPath)
 {
-	size_t len;
 	dlqueue_t *q;
 
 	/* no http server (or we got booted) */
@@ -333,13 +331,13 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 	Q_strncpyz(q->ufoPath, ufoPath, sizeof(q->ufoPath));
 
 	/* special case for map file lists */
-	len = strlen(ufoPath);
-	if (cl_http_filelists->integer && len > 4 && !Q_strcasecmp(ufoPath + len - 4, ".bsp")) {
-		char listPath[MAX_OSPATH];
-		char filePath[MAX_OSPATH];
-
-		Com_sprintf(filePath, sizeof(filePath), BASEDIRNAME"/%.*s.filelist", (int)(len - 4), ufoPath);
-		CL_QueueHTTPDownload(listPath);
+	if (cl_http_filelists->integer) {
+		const char *extension = Com_GetExtension(ufoPath);
+		if (extension != NULL && !Q_strcasecmp(extension, "bsp")) {
+			char listPath[MAX_OSPATH];
+			Com_sprintf(listPath, sizeof(listPath), BASEDIRNAME"/%.*s.filelist", (int)(len - 4), ufoPath);
+			CL_QueueHTTPDownload(listPath);
+		}
 	}
 
 	/* if a download entry has made it this far, CL_FinishHTTPDownload is guaranteed to be called. */
@@ -359,21 +357,7 @@ qboolean CL_PendingHTTPDownloads (void)
 	if (!cls.downloadServer[0])
 		return qfalse;
 
-#if 1
 	return pendingCount + handleCount;
-#else
-	dlqueue_t	*q;
-
-	q = &cls.downloadQueue;
-
-	while (q->next) {
-		q = q->next;
-		if (q->state != DLQ_STATE_DONE)
-			return qtrue;
-	}
-
-	return qfalse;
-#endif
 }
 
 /**
@@ -682,58 +666,57 @@ static void CL_FinishHTTPDownload (void)
 		result = msg->data.result;
 
 		switch (result) {
-			/* for some reason curl returns CURLE_OK for a 404... */
-			case CURLE_HTTP_RETURNED_ERROR:
-			case CURLE_OK:
+		/* for some reason curl returns CURLE_OK for a 404... */
+		case CURLE_HTTP_RETURNED_ERROR:
+		case CURLE_OK:
+			curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &responseCode);
+			if (responseCode == 404) {
+				const char *extension = Com_GetExtension(dl->queueEntry->ufoPath);
+				if (extension != NULL && !strcmp(extension, "pk3"))
+					downloadingPK3 = qfalse;
 
-				curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &responseCode);
-				if (responseCode == 404) {
-					const size_t len = strlen(dl->queueEntry->ufoPath);
-					if (len >= 4 && !strcmp(dl->queueEntry->ufoPath + len - 4, ".pk3"))
-						downloading_pak = qfalse;
-
-					if (isFile)
-						FS_RemoveFile(dl->filePath);
-					Com_Printf("HTTP(%s): 404 File Not Found [%d remaining files]\n", dl->queueEntry->ufoPath, pendingCount);
-					curl_easy_getinfo(curl, CURLINFO_SIZE_DOWNLOAD, &fileSize);
-					if (fileSize > 512) {
-						/* ick */
-						isFile = qfalse;
-						result = CURLE_FILESIZE_EXCEEDED;
-						Com_Printf("Oversized 404 body received (%d bytes), aborting HTTP downloading.\n", (int)fileSize);
-					} else {
-						curl_multi_remove_handle(multi, dl->curl);
-						continue;
-					}
-				} else if (responseCode == 200) {
-					if (!isFile && !abortDownloads)
-						CL_ParseFileList(dl);
-					break;
-				}
-
-				/* every other code is treated as fatal, fallthrough here */
-
-			/* fatal error, disable http */
-			case CURLE_COULDNT_RESOLVE_HOST:
-			case CURLE_COULDNT_CONNECT:
-			case CURLE_COULDNT_RESOLVE_PROXY:
 				if (isFile)
 					FS_RemoveFile(dl->filePath);
-				Com_Printf("Fatal HTTP error: %s\n", curl_easy_strerror(result));
-				curl_multi_remove_handle(multi, dl->curl);
-				if (abortDownloads)
+				Com_Printf("HTTP(%s): 404 File Not Found [%d remaining files]\n", dl->queueEntry->ufoPath, pendingCount);
+				curl_easy_getinfo(curl, CURLINFO_SIZE_DOWNLOAD, &fileSize);
+				if (fileSize > 512) {
+					/* ick */
+					isFile = qfalse;
+					result = CURLE_FILESIZE_EXCEEDED;
+					Com_Printf("Oversized 404 body received (%d bytes), aborting HTTP downloading.\n", (int)fileSize);
+				} else {
+					curl_multi_remove_handle(multi, dl->curl);
 					continue;
-				CL_CancelHTTPDownloads(qtrue);
+				}
+			} else if (responseCode == 200) {
+				if (!isFile && !abortDownloads)
+					CL_ParseFileList(dl);
+				break;
+			}
+
+			/* every other code is treated as fatal, fallthrough here */
+
+		/* fatal error, disable http */
+		case CURLE_COULDNT_RESOLVE_HOST:
+		case CURLE_COULDNT_CONNECT:
+		case CURLE_COULDNT_RESOLVE_PROXY:
+			if (isFile)
+				FS_RemoveFile(dl->filePath);
+			Com_Printf("Fatal HTTP error: %s\n", curl_easy_strerror(result));
+			curl_multi_remove_handle(multi, dl->curl);
+			if (abortDownloads)
 				continue;
-			default:
-				i = strlen(dl->queueEntry->ufoPath);
-				if (!strcmp(dl->queueEntry->ufoPath + i - 4, ".pk3"))
-					downloading_pak = qfalse;
-				if (isFile)
-					FS_RemoveFile(dl->filePath);
-				Com_Printf("HTTP download failed: %s\n", curl_easy_strerror(result));
-				curl_multi_remove_handle(multi, dl->curl);
-				continue;
+			CL_CancelHTTPDownloads(qtrue);
+			continue;
+		default:
+			i = strlen(dl->queueEntry->ufoPath);
+			if (!strcmp(dl->queueEntry->ufoPath + i - 4, ".pk3"))
+				downloadingPK3 = qfalse;
+			if (isFile)
+				FS_RemoveFile(dl->filePath);
+			Com_Printf("HTTP download failed: %s\n", curl_easy_strerror(result));
+			curl_multi_remove_handle(multi, dl->curl);
+			continue;
 		}
 
 		if (isFile) {
@@ -748,7 +731,7 @@ static void CL_FinishHTTPDownload (void)
 			if (!strcmp(tempName + i - 4, ".pk3")) {
 				FS_RestartFilesystem();
 				CL_ReVerifyHTTPQueue();
-				downloading_pak = qfalse;
+				downloadingPK3 = qfalse;
 			}
 		}
 
@@ -800,7 +783,7 @@ static void CL_StartNextHTTPDownload (void)
 			/* ugly hack for pk3 file single downloading */
 			len = strlen(q->ufoPath);
 			if (len > 4 && !Q_strcasecmp(q->ufoPath + len - 4, ".pk3"))
-				downloading_pak = qtrue;
+				downloadingPK3 = qtrue;
 
 			break;
 		}
@@ -824,7 +807,7 @@ void CL_RunHTTPDownloads (void)
 
 	/* not enough downloads running, queue some more! */
 	if (pendingCount && abortDownloads == HTTPDL_ABORT_NONE &&
-		!downloading_pak && handleCount < cl_http_max_connections->integer)
+		!downloadingPK3 && handleCount < cl_http_max_connections->integer)
 		CL_StartNextHTTPDownload();
 
 	do {
@@ -845,7 +828,7 @@ void CL_RunHTTPDownloads (void)
 
 	/* not enough downloads running, queue some more! */
 	if (pendingCount && abortDownloads == HTTPDL_ABORT_NONE &&
-		!downloading_pak && handleCount < cl_http_max_connections->integer)
+		!downloadingPK3 && handleCount < cl_http_max_connections->integer)
 		CL_StartNextHTTPDownload();
 }
 
