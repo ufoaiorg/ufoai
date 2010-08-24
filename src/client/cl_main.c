@@ -524,13 +524,13 @@ void CL_RequestNextDownload (void)
 	 * and if we are the server we don't have to reload the map here, too */
 	if (!Com_ServerState()) {
 		const int day = CL_GetConfigStringInteger(CS_LIGHTMAP);
+		const char *serverVersion = CL_GetConfigString(CS_VERSION);
 
 		/* checksum doesn't match with the one the server gave us via configstring */
-		if (strcmp(UFO_VERSION, CL_GetConfigString(CS_VERSION))) {
-			const char *version = CL_GetConfigString(CS_VERSION);
-			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the server version (%s)"), UFO_VERSION, version);
+		if (strcmp(UFO_VERSION, serverVersion)) {
+			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the server version (%s)"), UFO_VERSION, serverVersion);
 			UI_Popup(_("Error"), popupText);
-			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the server version (%s)", UFO_VERSION, version);
+			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the server version (%s)", UFO_VERSION, serverVersion);
 			return;
 		/* amount of objects from script files doesn't match */
 		} else if (csi.numODs != CL_GetConfigStringInteger(CS_OBJECTAMOUNT)) {
