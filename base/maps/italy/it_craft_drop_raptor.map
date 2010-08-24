@@ -881,7 +881,7 @@
 // entity 14
 {
 "classname" "info_human_start"
-"origin" "400 496 28"
+"origin" "208 144 28"
 "angle" "90"
 }
 // entity 15
@@ -1290,4 +1290,28 @@
 ( 160 480 0 ) ( 160 480 96 ) ( 160 320 0 ) tex_common/trigger 0 0 0 0.25 0.25
 ( 192 480 0 ) ( 320 480 0 ) ( 192 480 96 ) tex_common/trigger 0 0 0 0.25 0.25
 }
+}
+// entity 30
+{
+"classname" "info_human_start"
+"origin" "400 496 28"
+"angle" "90"
+}
+// entity 31
+{
+"classname" "info_human_start"
+"origin" "176 400 28"
+"angle" "-90"
+}
+// entity 32
+{
+"classname" "info_human_start"
+"origin" "208 464 28"
+"angle" "-90"
+}
+// entity 33
+{
+"classname" "info_human_start"
+"origin" "176 176 28"
+"angle" "90"
 }

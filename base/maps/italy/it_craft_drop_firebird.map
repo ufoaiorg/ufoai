@@ -426,8 +426,8 @@
 // entity 14
 {
 "classname" "info_human_start"
-"origin" "400 496 28"
-"angle" "90"
+"origin" "240 368 28"
+"angle" "-90"
 }
 // entity 15
 {
@@ -809,4 +809,16 @@
 ( 384 384 0 ) ( 384 384 96 ) ( 384 224 0 ) tex_common/trigger 0 0 0 0.25 0.25
 ( 352 352 0 ) ( 480 352 0 ) ( 352 352 96 ) tex_common/trigger 0 0 0 0.25 0.25
 }
+}
+// entity 26
+{
+"classname" "info_human_start"
+"origin" "176 336 28"
+"angle" "-90"
+}
+// entity 27
+{
+"classname" "info_human_start"
+"origin" "144 400 28"
+"angle" "-90"
 }
