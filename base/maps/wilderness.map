@@ -6449,37 +6449,11 @@
 "spawnflags" "255"
 "angles" "-5.24274 -73.1886 16.827"
 }
-// entity 30
-{
-"classname" "misc_model"
-"origin" "1593 5 19"
-"model" "models/animals/fish/fish.md2"
-"spawnflags" "255"
-"anim" "swim"
-"angle" "0 -180 0"
-}
 // entity 31
 {
 "classname" "misc_model"
 "origin" "1148 -103 22"
 "model" "models/animals/fish2/fish.md2"
-"spawnflags" "255"
-"anim" "swim"
-"angles" "0 -90 0"
-}
-// entity 32
-{
-"classname" "misc_model"
-"origin" "167 91 19"
-"model" "models/animals/fish/fish.md2"
-"spawnflags" "255"
-"anim" "swim"
-}
-// entity 33
-{
-"classname" "misc_model"
-"origin" "667 281 19"
-"model" "models/animals/fish/fish.md2"
 "spawnflags" "255"
 "anim" "swim"
 "angles" "0 -90 0"
