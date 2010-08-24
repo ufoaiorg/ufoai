@@ -85,7 +85,7 @@ cvar_t *cl_team;
 
 client_static_t cls;
 
-static int precache_check;
+static int downloadCounter;
 
 struct memPool_s *cl_genericPool;	/**< permanent client data - menu, fonts */
 struct memPool_s *cl_ircSysPool;	/**< irc pool */
@@ -458,6 +458,53 @@ static void CL_SpawnSoldiers_f (void)
 	GAME_SpawnSoldiers();
 }
 
+static qboolean CL_DownloadUMPMap (const char *tiles)
+{
+	char name[MAX_VAR];
+	char base[MAX_QPATH];
+	qboolean startedDownload = qfalse;
+
+	/* load tiles */
+	while (tiles) {
+		/* get tile name */
+		const char *token = Com_Parse(&tiles);
+		if (!tiles)
+			return startedDownload;
+
+		/* get base path */
+		if (token[0] == '-') {
+			Q_strncpyz(base, token + 1, sizeof(base));
+			continue;
+		}
+
+		/* get tile name */
+		if (token[0] == '+')
+			Com_sprintf(name, sizeof(name), "%s%s", base, token + 1);
+		else
+			Q_strncpyz(name, token, sizeof(name));
+
+		startedDownload |= !CL_CheckOrDownloadFile(va("maps/%s.bsp", name));
+	}
+
+	return startedDownload;
+}
+
+static qboolean CL_DownloadMap (const char *map)
+{
+	qboolean startedDownload;
+	if (map[0] != '+') {
+		startedDownload = !CL_CheckOrDownloadFile(va("maps/%s.bsp", map));
+	} else {
+		startedDownload = !CL_CheckOrDownloadFile(va("maps/%s.ump", map + 1));
+		if (!startedDownload) {
+			const char *tiles = cl.configstrings[CS_TILES];
+			startedDownload = CL_DownloadUMPMap(tiles);
+		}
+	}
+
+	return startedDownload;
+}
+
 /**
  * @brief
  * @note Called after precache was sent from the server
@@ -487,14 +534,10 @@ void CL_RequestNextDownload (void)
 		SCR_BeginLoadingPlaque();
 
 		/* check download */
-		if (precache_check == CS_MODELS) { /* confirm map */
-			if (cl.configstrings[CS_NAME][0] != '+') {
-				if (!CL_CheckOrDownloadFile(va("maps/%s.bsp", cl.configstrings[CS_NAME])))
-					return; /* started a download */
-			} else {
-				/** @todo request ump bsp files */
-			}
-			precache_check = CS_MODELS + 1;
+		if (downloadCounter != -1) { /* confirm map */
+			if (CL_DownloadMap(cl.configstrings[CS_NAME]))
+				return;
+			downloadCounter = -1;
 		}
 
 		/* map might still be downloading? */
@@ -557,7 +600,7 @@ void CL_RequestNextDownload (void)
  */
 static void CL_Precache_f (void)
 {
-	precache_check = CS_MODELS;
+	downloadCounter = 0;
 
 	CL_RequestNextDownload();
 }
