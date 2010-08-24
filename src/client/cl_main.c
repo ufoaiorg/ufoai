@@ -504,6 +504,55 @@ static qboolean CL_DownloadMap (const char *map)
 }
 
 /**
+ * @return @c true if are a compatible client and nothing else must be downloaded or no downloads are still running,
+ * @c false if the start of the match must get a little bit postponed (running downloads).
+ * @note throws ERR_DISCONNECT if we are not compatible to the server
+ */
+static qboolean CL_CanMultiplayerStart (void)
+{
+	const int day = CL_GetConfigStringInteger(CS_LIGHTMAP);
+	const char *serverVersion = CL_GetConfigString(CS_VERSION);
+
+	/* checksum doesn't match with the one the server gave us via configstring */
+	if (strcmp(UFO_VERSION, serverVersion)) {
+		Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the server version (%s)"), UFO_VERSION, serverVersion);
+		UI_Popup(_("Error"), popupText);
+		Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the server version (%s)", UFO_VERSION, serverVersion);
+	/* amount of objects from script files doesn't match */
+	} else if (csi.numODs != CL_GetConfigStringInteger(CS_OBJECTAMOUNT)) {
+		UI_Popup(_("Error"), _("Script files are not the same"));
+		Com_Error(ERR_DISCONNECT, "Script files are not the same");
+	}
+
+	/* activate the map loading screen for multiplayer, too */
+	SCR_BeginLoadingPlaque();
+
+	/* check download */
+	if (cls.downloadMaps) { /* confirm map */
+		if (CL_DownloadMap(CL_GetConfigString(CS_NAME)))
+			return qtrue;
+		cls.downloadMaps = qfalse;
+	}
+
+	/* map might still be downloading? */
+	if (CL_PendingHTTPDownloads())
+		return qtrue;
+
+	if (Com_GetScriptChecksum() != CL_GetConfigStringInteger(CS_UFOCHECKSUM))
+		Com_Printf("You are using modified ufo script files - might produce problems\n");
+
+	CM_LoadMap(CL_GetConfigString(CS_TILES), day, CL_GetConfigString(CS_POSITIONS), cl.mapData, cl.mapTiles);
+
+	if (cl.mapData->mapChecksum != CL_GetConfigStringInteger(CS_MAPCHECKSUM)) {
+		UI_Popup(_("Error"), _("Local map version differs from server"));
+		Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%i'",
+			cl.mapData->mapChecksum, CL_GetConfigStringInteger(CS_MAPCHECKSUM));
+	}
+
+	return qfalse;
+}
+
+/**
  * @brief
  * @note Called after precache was sent from the server
  * @sa SV_Configstrings_f
@@ -520,50 +569,10 @@ void CL_RequestNextDownload (void)
 	cl.mapTiles = SV_GetMapTiles();
 	cl.mapData = SV_GetMapData();
 
-	/* for singleplayer game this is already loaded in our local server
-	 * and if we are the server we don't have to reload the map here, too */
-	if (!Com_ServerState()) {
-		const int day = CL_GetConfigStringInteger(CS_LIGHTMAP);
-		const char *serverVersion = CL_GetConfigString(CS_VERSION);
-
-		/* checksum doesn't match with the one the server gave us via configstring */
-		if (strcmp(UFO_VERSION, serverVersion)) {
-			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the server version (%s)"), UFO_VERSION, serverVersion);
-			UI_Popup(_("Error"), popupText);
-			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the server version (%s)", UFO_VERSION, serverVersion);
-			return;
-		/* amount of objects from script files doesn't match */
-		} else if (csi.numODs != CL_GetConfigStringInteger(CS_OBJECTAMOUNT)) {
-			UI_Popup(_("Error"), _("Script files are not the same"));
-			Com_Error(ERR_DISCONNECT, "Script files are not the same");
-			return;
-		}
-
-		/* activate the map loading screen for multiplayer, too */
-		SCR_BeginLoadingPlaque();
-
-		/* check download */
-		if (cls.downloadMaps) { /* confirm map */
-			if (CL_DownloadMap(CL_GetConfigString(CS_NAME)))
-				return;
-			cls.downloadMaps = qfalse;
-		}
-
-		/* map might still be downloading? */
-		if (CL_PendingHTTPDownloads())
-			return;
-
-		if (Com_GetScriptChecksum() != CL_GetConfigStringInteger(CS_UFOCHECKSUM))
-			Com_Printf("You are using modified ufo script files - might produce problems\n");
-
-		CM_LoadMap(CL_GetConfigString(CS_TILES), day, CL_GetConfigString(CS_POSITIONS), cl.mapData, cl.mapTiles);
-		if (cl.mapData->mapChecksum != CL_GetConfigStringInteger(CS_MAPCHECKSUM)) {
-			UI_Popup(_("Error"), _("Local map version differs from server"));
-			Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%i'",
-				cl.mapData->mapChecksum, CL_GetConfigStringInteger(CS_MAPCHECKSUM));
-			return;
-		}
-	}
+	/* as a multiplayer client we have to load the map here and
+	 * check the compatibility with the server */
+	if (!Com_ServerState() && !CL_CanMultiplayerStart())
+		return;
 
 	CL_ViewLoadMedia();
 
