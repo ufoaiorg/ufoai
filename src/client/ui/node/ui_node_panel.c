@@ -262,7 +262,7 @@ void UI_StarLayout (uiNode_t *node)
 		vec2_t source;
 		vec2_t destination;
 
-		if (child->align <= 0)
+		if (child->align <= LAYOUTALIGN_NONE)
 			continue;
 
 		if (child->align == LAYOUTALIGN_FILL) {
@@ -270,15 +270,14 @@ void UI_StarLayout (uiNode_t *node)
 			child->pos[1] = 0;
 			UI_NodeSetSize(child, node->size);
 			child->behaviour->doLayout(child);
-			continue;
+		} else if (child->align < LAYOUTALIGN_SPECIAL) {
+			UI_NodeGetPoint(node, destination, child->align);
+			UI_NodeRelativeToAbsolutePoint(node, destination);
+			UI_NodeGetPoint(child, source, child->align);
+			UI_NodeRelativeToAbsolutePoint(child, source);
+			child->pos[0] += destination[0] - source[0];
+			child->pos[1] += destination[1] - source[1];
 		}
-
-		UI_NodeGetPoint(node, destination, child->align);
-		UI_NodeRelativeToAbsolutePoint(node, destination);
-		UI_NodeGetPoint(child, source, child->align);
-		UI_NodeRelativeToAbsolutePoint(child, source);
-		child->pos[0] += destination[0] - source[0];
-		child->pos[1] += destination[1] - source[1];
 	}
 }
 
