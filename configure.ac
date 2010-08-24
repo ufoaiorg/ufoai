@@ -50,10 +50,6 @@ AC_ARG_WITH(xml2_config,
 	[AS_HELP_STRING([--with-xml2-config=FILE],[using the given xml2-config @<:@default=xml2-config@:>@])],
 	[], [with_xml2_config=xml2-config])
 
-AC_ARG_WITH(curses,
-	[AS_HELP_STRING([--with-curses], [compile with curses console support @<:@default=check@:>@])],
-	[], [with_curses=check])
-
 AC_ARG_WITH(msys,
 	[AS_HELP_STRING([--with-msys], [compile with msys support @<:@default=check@:>@])],
 	[], [with_msys=check])
@@ -671,30 +667,6 @@ then
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 # end of client only checks
 fi
-	
-#---------------------------------------------------------------------------------------------
-# Check for curses
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-if test "$with_curses" = "check" || test "$with_curses" = "yes"
-then
-	AC_SEARCH_LIBS([newwin], [curses])
-	if test "$ac_cv_search_newwin" != "no"
-	then
-		AC_SUBST([HAVE_CURSES],1)
-		AC_DEFINE([HAVE_CURSES],[1],[Have curses library])
-	elif test "$with_curses" = "yes"
-	then
-		AC_MSG_ERROR([--with-curses specified but could not find curses lib])
-	else
-		AC_SUBST([HAVE_CURSES],0)
-		AC_MSG_NOTICE([Without curses])
-	fi
-else
-	AC_MSG_NOTICE([Without curses])
-fi
-SERVER_LIBS="$SERVER_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for msys

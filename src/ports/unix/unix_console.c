@@ -31,10 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <fcntl.h>
 #include <sys/time.h>
 
-#ifdef HAVE_CURSES
-#include "unix_curses.h"
-#endif /* HAVE_CURSES */
-
 typedef struct {
 	int		cursor;
 	char	buffer[256];
@@ -203,9 +199,6 @@ void Sys_ShowConsole (qboolean show)
  */
 void Sys_ConsoleShutdown (void)
 {
-#ifdef HAVE_CURSES
-	Curses_Shutdown();
-#endif
 	if (ttyConsoleActivated) {
 		Sys_TTYDeleteCharacter(); /* Delete "]" */
 		tcsetattr(STDIN_FILENO, TCSADRAIN, &TTY_tc);
@@ -232,9 +225,6 @@ static qboolean Sys_IsATTY (void)
  */
 void Sys_ConsoleInit (void)
 {
-#ifdef HAVE_CURSES
-	Curses_Init();
-#else
 	struct termios tc;
 
 	/* If the process is backgrounded (running non interactively)
@@ -279,14 +269,10 @@ void Sys_ConsoleInit (void)
 	tc.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &tc);
 	ttyConsoleActivated = qtrue;
-#endif /* HAVE_CURSES */
 }
 
 const char *Sys_ConsoleInput (void)
 {
-#ifdef HAVE_CURSES
-	return Curses_Input();
-#else
 	/* we use this when sending back commands */
 	static char text[256];
 	int avail;
@@ -405,7 +391,6 @@ const char *Sys_ConsoleInput (void)
 		return text;
 	}
 	return NULL;
-#endif /* HAVE_CURSES */
 }
 
 /**
@@ -415,9 +400,6 @@ const char *Sys_ConsoleInput (void)
  */
 void Sys_ConsoleOutput (const char *string)
 {
-#ifdef HAVE_CURSES
-	Curses_Output(string);
-#else
 	Sys_ShowConsole(qfalse);
 
 	/* skip color char */
@@ -427,5 +409,4 @@ void Sys_ConsoleOutput (const char *string)
 	fputs(string, stdout);
 
 	Sys_ShowConsole(qtrue);
-#endif /* HAVE_CURSES */
 }

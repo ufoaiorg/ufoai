@@ -622,7 +622,6 @@ OPENAL_CFLAGS
 RADIANT_LIBS
 RADIANT_CFLAGS
 MSYS
-HAVE_CURSES
 HAVE_THEORA_THEORA_H
 THEORA_LIBS
 THEORA_CFLAGS
@@ -721,7 +720,6 @@ enable_option_checking
 with_sdl_config
 with_curl_config
 with_xml2_config
-with_curses
 with_msys
 with_opengl_framework
 with_openal_framework
@@ -1404,7 +1402,6 @@ Optional Packages:
   --with-sdl-config=FILE  using the given sdl-config [default=sdl-config]
   --with-curl-config=FILE using the given curl-config [default=curl-config]
   --with-xml2-config=FILE using the given xml2-config [default=xml2-config]
-  --with-curses           compile with curses console support [default=check]
   --with-msys             compile with msys support [default=check]
   --with-opengl-framework compile with given opengl framework
                           [default=/System/Library/Frameworks/OpenGL.framework]
@@ -2692,15 +2689,6 @@ if test "${with_xml2_config+set}" = set; then :
   withval=$with_xml2_config;
 else
   with_xml2_config=xml2-config
-fi
-
-
-
-# Check whether --with-curses was given.
-if test "${with_curses+set}" = set; then :
-  withval=$with_curses;
-else
-  with_curses=check
 fi
 
 
@@ -6878,91 +6866,6 @@ $as_echo "#define GL_H_WITHOUT_GL_DIR 1" >>confdefs.h
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 # end of client only checks
 fi
-
-#---------------------------------------------------------------------------------------------
-# Check for curses
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-if test "$with_curses" = "check" || test "$with_curses" = "yes"
-then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing newwin" >&5
-$as_echo_n "checking for library containing newwin... " >&6; }
-if test "${ac_cv_search_newwin+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_func_search_save_LIBS=$LIBS
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char newwin ();
-int
-main ()
-{
-return newwin ();
-  ;
-  return 0;
-}
-_ACEOF
-for ac_lib in '' curses; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_search_newwin=$ac_res
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext
-  if test "${ac_cv_search_newwin+set}" = set; then :
-  break
-fi
-done
-if test "${ac_cv_search_newwin+set}" = set; then :
-
-else
-  ac_cv_search_newwin=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_newwin" >&5
-$as_echo "$ac_cv_search_newwin" >&6; }
-ac_res=$ac_cv_search_newwin
-if test "$ac_res" != no; then :
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-	if test "$ac_cv_search_newwin" != "no"
-	then
-		HAVE_CURSES=1
-
-
-$as_echo "#define HAVE_CURSES 1" >>confdefs.h
-
-	elif test "$with_curses" = "yes"
-	then
-		as_fn_error "--with-curses specified but could not find curses lib" "$LINENO" 5
-	else
-		HAVE_CURSES=0
-
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: Without curses" >&5
-$as_echo "$as_me: Without curses" >&6;}
-	fi
-else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: Without curses" >&5
-$as_echo "$as_me: Without curses" >&6;}
-fi
-SERVER_LIBS="$SERVER_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for msys

@@ -37,7 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../common/common.h"
 #include "../system.h"
-#include "unix_curses.h"
 
 #ifdef HAVE_EXECINFO_H
 #include <execinfo.h>
@@ -407,11 +406,6 @@ static void Sys_Signal (int s)
 		Com_Printf("Received signal %d, quitting..\n", s);
 		Sys_Quit();
 		break;
-#ifdef HAVE_CURSES
-	case SIGWINCH:
-		Curses_Resize();
-		break;
-#endif
 	default:
 		Sys_Backtrace();
 		Sys_Error("Received signal %d.\n", s);
@@ -423,9 +417,6 @@ static void Sys_Signal (int s)
 void Sys_InitSignals (void)
 {
 #if USE_SIGNALS
-#ifdef HAVE_CURSES
-	signal(SIGWINCH, Sys_Signal);
-#endif
 	signal(SIGHUP, Sys_Signal);
 	signal(SIGINT, Sys_Signal);
 	signal(SIGQUIT, Sys_Signal);

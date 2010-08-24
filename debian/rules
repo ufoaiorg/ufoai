@@ -36,8 +36,7 @@ ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
 	MAKEFLAGS += -j$(NUMJOBS)
 endif
 
-CONFIGUREFLAGS += --with-curses=no \
-	--datadir=/usr/share/games \
+CONFIGUREFLAGS += --datadir=/usr/share/games \
 	--libdir=/usr/lib/games \
 	--prefix=/usr
 

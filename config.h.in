@@ -12,9 +12,6 @@
 /* Define to 1 if you have the <AL/al.h> header file. */
 #undef HAVE_AL_AL_H
 
-/* Have curses library */
-#undef HAVE_CURSES
-
 /* Define to 1 if you have the <execinfo.h> header file. */
 #undef HAVE_EXECINFO_H
 

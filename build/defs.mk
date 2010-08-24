@@ -5,9 +5,9 @@ GENERIC_FLAGS+=-Wall
 CPPFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS) -DUSE_SIGNALS=$(USE_SIGNALS)
 CFLAGS+=-DHAVE_CONFIG_H -DUSE_SIGNALS=$(USE_SIGNALS) $(GENERIC_FLAGS) -pipe -Winline \
 	-Wcast-qual -Wcast-align -Wdeclaration-after-statement -Wmissing-prototypes \
-	-Wmissing-declarations -std=c99
+	-Wmissing-declarations -std=c99 -Wpointer-arith
 #	-Wunreachable-code -Wlogical-op -Wc++-compat
-#	-Wpointer-arith -Wcast-align -Wunsafe-loop-optimizations \
+#	-Wunsafe-loop-optimizations \
 #	-Wimplicit-int -Wpacked -Wparentheses -Wpadded \
 #	-Wunused -Wunused-function -Wunused-label -Wunused-value -Wunused-variable \
 #	-fstack-protector-all -Wstack-protector \
