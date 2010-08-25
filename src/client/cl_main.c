@@ -908,9 +908,10 @@ static void CL_ShowConfigstrings_f (void)
 	int i;
 
 	for (i = 0; i < MAX_CONFIGSTRINGS; i++) {
-		if (CL_GetConfigString(i)[0] == '\0')
+		const char *configString = CL_GetConfigString(i);
+		if (configString[0] == '\0')
 			continue;
-		Com_Printf("CL_GetConfigString(%3i]: %s\n", i, CL_GetConfigString(i));
+		Com_Printf("configstring[%3i]: %s\n", i, configString);
 	}
 }
 
