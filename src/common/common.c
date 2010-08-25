@@ -1068,6 +1068,8 @@ void Qcommon_Init (int argc, const char **argv)
 	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 #ifdef DEDICATED_ONLY
 	sv_dedicated = Cvar_Get("sv_dedicated", "1", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
+	/* don't allow to override this from commandline of config */
+	Cvar_ForceSet("sv_dedicated", "1");
 #else
 	sv_dedicated = Cvar_Get("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 
