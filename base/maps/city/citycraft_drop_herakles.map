@@ -3,13 +3,13 @@
 {
 "classname" "worldspawn"
 "maxlevel" "8"
-"light_day" "85"
+"light_day" "240"
 "angles_day" "-85 100"
 "ambient_day" "0.25 0.25 0.25"
 "color_day" "0.15 0.15 0.15"
 "angles_night" "-85 100"
 "color_night" "0.55 0.55 0.95"
-"ambient_night" "0.15 0.15 0.19"
+"ambient_night" "0.2 0.2 0.25"
 "light_night" "45"
 // brush 0
 {
@@ -1558,4 +1558,18 @@
 "origin" "560 80 92"
 "angle" "180"
 "team" "2"
+}
+// entity 23
+{
+"classname" "trigger_rescue"
+"team" "1"
+// brush 0
+{
+( 224 352 160 ) ( 96 352 160 ) ( 224 512 160 ) tex_common/trigger 0 0 0 0.25 0.25
+( 224 352 192 ) ( 224 512 192 ) ( 224 352 96 ) tex_common/trigger 0 0 0 0.25 0.25
+( 192 96 160 ) ( 192 96 64 ) ( 64 96 160 ) tex_common/trigger 0 0 0 0.25 0.25
+( 96 512 96 ) ( 96 352 96 ) ( 224 512 96 ) tex_common/trigger 0 0 0 0.25 0.25
+( 64 512 96 ) ( 64 512 192 ) ( 64 352 96 ) tex_common/trigger 0 0 0 0.25 0.25
+( 96 608 96 ) ( 224 608 96 ) ( 96 608 192 ) tex_common/trigger 0 0 0 0.25 0.25
+}
 }
