@@ -91,7 +91,7 @@ int CL_GetHitProbability(const le_t* actor);
 qboolean CL_OutsideMap(const vec3_t impact, const float delta);
 char *CL_GetConfigString(int index);
 int CL_GetConfigStringInteger(int index);
-char *CL_SetConfigString(int index, const char *value);
+char *CL_SetConfigString(int index, struct dbuffer *msg);
 #ifdef DEBUG
 void Grid_DumpWholeClientMap_f(void);
 void Grid_DumpClientRoutes_f(void);

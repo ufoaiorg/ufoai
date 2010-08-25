@@ -298,29 +298,29 @@ void Grid_DumpClientRoutes_f (void)
 char *CL_GetConfigString (int index)
 {
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_FATAL, "Invalid config string index given");
+		Com_Error(ERR_DROP, "Invalid config string index given");
 	return cl.configstrings[index];
 }
 
 int CL_GetConfigStringInteger (int index)
 {
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_FATAL, "Invalid config string index given");
+		Com_Error(ERR_DROP, "Invalid config string index given");
 	return atoi(cl.configstrings[index]);
 }
 
-char *CL_SetConfigString (int index, const char *value)
+char *CL_SetConfigString (int index, struct dbuffer *msg)
 {
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_FATAL, "Invalid config string index given");
+		Com_Error(ERR_DROP, "Invalid config string index given");
 
 	/* change the string in cl
 	 * there may be overflows in i==CS_TILES - but thats ok
 	 * see definition of configstrings and MAX_TILESTRINGS */
 	if (index == CS_TILES || index == CS_POSITIONS)
-		Q_strncpyz(cl.configstrings[index], value, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		NET_ReadString(msg, cl.configstrings[index], MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 	else
-		Q_strncpyz(cl.configstrings[index], value, sizeof(cl.configstrings[index]));
+		NET_ReadString(msg, cl.configstrings[index], sizeof(cl.configstrings[index]));
 
 	return cl.configstrings[index];
 }

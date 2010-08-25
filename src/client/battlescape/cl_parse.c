@@ -124,17 +124,10 @@ const char *CL_PlayerGetName (int player)
  */
 static void CL_ParseConfigString (struct dbuffer *msg)
 {
-	char s[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
-	/* which configstring? */
 	const int i = NET_ReadShort(msg);
-	if (i < 0 || i >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_DROP, "configstring > MAX_CONFIGSTRINGS");
-	/* value */
-	NET_ReadString(msg, s, sizeof(s));
+	const char *s = CL_SetConfigString(i, msg);
 
 	Com_DPrintf(DEBUG_CLIENT, "configstring %d: %s\n", i, s);
-
-	CL_SetConfigString(i, s);
 
 	/* do something appropriate */
 	if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
