@@ -49,6 +49,13 @@ typedef struct mapline_s {
 	vec2_t point[LINE_MAXPTS]; /**< array of 2D points that make up this path */
 } mapline_t;
 
+/** @brief All different types of aircraft. */
+typedef enum {
+	AIRCRAFT_TRANSPORTER,
+	AIRCRAFT_INTERCEPTOR,
+	AIRCRAFT_UFO
+} aircraftType_t;
+
 #define MAX_HUMAN_AIRCRAFT_TYPE AIRCRAFT_INTERCEPTOR
 
 /** @brief All different size of aircraft. */

@@ -392,7 +392,7 @@ static const size_t vt_sizes[] = {
 	sizeof(int),		/* V_RACE */
 	sizeof(ufoType_t),	/* V_UFO */
 	sizeof(ufoType_t),	/* V_UFOCRASHED */
-	sizeof(aircraftType_t)		/* V_AIRCRAFTTYPE */
+	sizeof(humanAircraftType_t)		/* V_AIRCRAFTTYPE */
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
@@ -427,7 +427,7 @@ static const size_t vt_aligns[] = {
 	sizeof(int),		/* V_RACE */
 	sizeof(ufoType_t),	/* V_UFO */
 	sizeof(ufoType_t),	/* V_UFOCRASHED */
-	sizeof(aircraftType_t)		/* V_AIRCRAFTTYPE */
+	sizeof(humanAircraftType_t)		/* V_AIRCRAFTTYPE */
 };
 CASSERT(lengthof(vt_aligns) == V_NUM_TYPES);
 
@@ -560,24 +560,24 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_AIRCRAFTTYPE:
 		if (!strcmp(token, "craft_drop_firebird"))
-			*(aircraftType_t *) b = DROPSHIP_FIREBIRD;
+			*(humanAircraftType_t *) b = DROPSHIP_FIREBIRD;
 		else if (!strcmp(token, "craft_drop_herakles"))
-			*(aircraftType_t *) b = DROPSHIP_HERAKLES;
+			*(humanAircraftType_t *) b = DROPSHIP_HERAKLES;
 		else if (!strcmp(token, "craft_drop_raptor"))
-			*(aircraftType_t *) b = DROPSHIP_RAPTOR;
+			*(humanAircraftType_t *) b = DROPSHIP_RAPTOR;
 		else if (!strcmp(token, "craft_inter_stiletto"))
-			*(aircraftType_t *) b = INTERCEPTOR_STILETTO;
+			*(humanAircraftType_t *) b = INTERCEPTOR_STILETTO;
 		else if (!strcmp(token, "craft_inter_saracen"))
-			*(aircraftType_t *) b = INTERCEPTOR_SARACEN;
+			*(humanAircraftType_t *) b = INTERCEPTOR_SARACEN;
 		else if (!strcmp(token, "craft_inter_dragon"))
-			*(aircraftType_t *) b = INTERCEPTOR_DRAGON;
+			*(humanAircraftType_t *) b = INTERCEPTOR_DRAGON;
 		else if (!strcmp(token, "craft_inter_starchaser"))
-			*(aircraftType_t *) b = INTERCEPTOR_STARCHASER;
+			*(humanAircraftType_t *) b = INTERCEPTOR_STARCHASER;
 		else if (!strcmp(token, "craft_inter_stingray"))
-			*(aircraftType_t *) b = INTERCEPTOR_STINGRAY;
+			*(humanAircraftType_t *) b = INTERCEPTOR_STINGRAY;
 		else
 			Sys_Error("Unknown aircrafttype type: '%s'", token);
-		*writtenBytes = sizeof(aircraftType_t);
+		*writtenBytes = sizeof(humanAircraftType_t);
 		break;
 
 	case V_UFO:
@@ -1208,7 +1208,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		}
 
 	case V_AIRCRAFTTYPE:
-		switch (*(const int *) b) {
+		switch (*(const humanAircraftType_t *) b) {
 		case DROPSHIP_FIREBIRD:
 			return "craft_drop_firebird";
 		case DROPSHIP_HERAKLES:
@@ -1226,11 +1226,11 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		case INTERCEPTOR_STINGRAY:
 			return "craft_inter_stingray";
 		default:
-			Sys_Error("Unknown aircrafttype type: '%i'", *(const int *) b);
+			Sys_Error("Unknown aircrafttype type: '%i'", *(const humanAircraftType_t *) b);
 		}
 
 	case V_UFO:
-		switch (*(const int *) b) {
+		switch (*(const ufoType_t *) b) {
 		case UFO_BOMBER:
 			return "craft_ufo_bomber";
 		case UFO_CARRIER:
@@ -1252,11 +1252,11 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		case UFO_MOTHERSHIP:
 			return "craft_ufo_mothership";
 		default:
-			Sys_Error("Unknown ufo type: '%i'", *(const int *) b);
+			Sys_Error("Unknown ufo type: '%i'", *(const ufoType_t *) b);
 		}
 
 	case V_UFOCRASHED:
-		switch (*(const int *) b) {
+		switch (*(const ufoType_t *) b) {
 		case UFO_BOMBER:
 			return "craft_crash_bomber";
 		case UFO_CARRIER:
@@ -1278,7 +1278,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		case UFO_MOTHERSHIP:
 			return "craft_crash_mothership";
 		default:
-			Sys_Error("Unknown crashed ufo type: '%i'", *(const int *) b);
+			Sys_Error("Unknown crashed ufo type: '%i'", *(const ufoType_t *) b);
 		}
 
 	case V_INT:
@@ -3068,7 +3068,7 @@ const char *Com_GetRandomMapAssemblyNameForCraft (const char *craftID)
  */
 humanAircraftType_t Com_DropShipShortNameToID (const char *token)
 {
-	int aircraftType;
+	humanAircraftType_t aircraftType;
 	size_t dummy;
 	Com_ParseValue(&aircraftType, token, V_AIRCRAFTTYPE, 0, sizeof(aircraftType), &dummy);
 	return aircraftType;
