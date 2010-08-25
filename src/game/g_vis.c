@@ -295,7 +295,7 @@ int G_CheckVisPlayer (player_t* player, qboolean perish)
  * @note If something appears, the needed information for those clients that are affected
  * are also send in @c G_AppearPerishEvent
  */
-int G_CheckVisTeam (const int team, edict_t *check, qboolean perish, edict_t *ent)
+int G_CheckVisTeam (const int team, edict_t *check, qboolean perish, const edict_t *ent)
 {
 	int status = 0;
 
@@ -311,7 +311,7 @@ int G_CheckVisTeam (const int team, edict_t *check, qboolean perish, edict_t *en
 /**
  * @brief Do @c G_CheckVisTeam for all entities
  */
-int G_CheckVisTeamAll (const int team, qboolean perish, edict_t *ent)
+int G_CheckVisTeamAll (const int team, qboolean perish, const edict_t *ent)
 {
 	edict_t *chk = NULL;
 	int status = 0;

@@ -422,8 +422,8 @@ qboolean G_ActionCheckForCurrentTeam(const player_t *player, edict_t *ent, int T
 qboolean G_ActionCheckWithoutTeam(const player_t *player, edict_t *ent, int TU);
 void G_SendStats(edict_t *ent) __attribute__((nonnull));
 edict_t *G_SpawnFloor(const pos3_t pos);
-int G_CheckVisTeam(const int team, edict_t *check, qboolean perish, edict_t *ent);
-int G_CheckVisTeamAll(const int team, qboolean perish, edict_t *ent);
+int G_CheckVisTeam(const int team, edict_t *check, qboolean perish, const edict_t *ent);
+int G_CheckVisTeamAll(const int team, qboolean perish, const edict_t *ent);
 edict_t *G_GetFloorItems(edict_t *ent) __attribute__((nonnull));
 qboolean G_InventoryRemoveItemByID(const char *itemID, edict_t *ent, containerIndex_t index);
 void G_SendState(unsigned int playerMask, const edict_t *ent);
