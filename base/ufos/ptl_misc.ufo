@@ -987,31 +987,7 @@ particle blocked_field
 {
 	init
 	{
-		image  sfx/foe
-		blend  blend
-		style  facing
-		size   "24 24"
-		life   0.0001
-	}
-}
-
-particle actor_friend
-{
-	init
-	{
-		image  sfx/friend
-		blend  blend
-		style  facing
-		size   "24 24"
-		life   0.0001
-	}
-}
-
-particle actor_foe
-{
-	init
-	{
-		image  sfx/foe
+		image  sfx/cross
 		blend  blend
 		style  facing
 		size   "24 24"
@@ -1047,7 +1023,7 @@ particle stunnedactor
 {
 	init
 	{
-		image  sfx/friend
+		image  sfx/stunned
 		blend  blend
 		style  rotated
 		angles	"0 90 0"
