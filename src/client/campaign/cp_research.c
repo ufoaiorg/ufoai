@@ -759,8 +759,7 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 		/* Remove the scientist from the lab and set number of used lab-space. */
 		employee->building = NULL; /* See also E_RemoveEmployeeFromBuildingOrAircraft */
 	} else {
-		/* No assigned scientists found - serious inconsistency. */
-		/** @todo add proper handling of this case. */
+		Com_Error(ERR_DROP, "No assigned scientists found - serious inconsistency.");
 	}
 
 	assert(tech->scientists >= 0);
