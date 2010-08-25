@@ -60,13 +60,14 @@ const technology_t* UFO_GetTechnologyFromType (const ufoType_t type)
  * @param type The UFO type to get the template for
  * @return The aircraft template of the UFO - always returns a value
  */
-aircraft_t* UFO_GetByType (const ufoType_t type)
+const aircraft_t* UFO_GetByType (const ufoType_t type)
 {
 	int i;
 
 	for (i = 0; i < ccs.numAircraftTemplates; i++) {
-		if (ccs.aircraftTemplates[i].ufotype == type)
-			return &ccs.aircraftTemplates[i];
+		aircraft_t *ufo = &ccs.aircraftTemplates[i];
+		if (ufo->ufotype == type)
+			return ufo;
 	}
 
 	Com_Error(ERR_DROP, "No ufo with type %i found", type);
