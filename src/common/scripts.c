@@ -389,7 +389,7 @@ static const size_t vt_sizes[] = {
 	0,	/* V_CLIENT_HUNK */
 	0,	/* V_CLIENT_HUNK_STRING */
 	sizeof(int),		/* V_TEAM */
-	sizeof(int),		/* V_RACE */
+	sizeof(racetypes_t),		/* V_RACE */
 	sizeof(ufoType_t),	/* V_UFO */
 	sizeof(ufoType_t),	/* V_UFOCRASHED */
 	sizeof(humanAircraftType_t)		/* V_AIRCRAFTTYPE */
@@ -424,7 +424,7 @@ static const size_t vt_aligns[] = {
 	0,	/* V_CLIENT_HUNK */
 	sizeof(char),	/* V_CLIENT_HUNK_STRING */
 	sizeof(int),		/* V_TEAM */
-	sizeof(int),		/* V_RACE */
+	sizeof(racetypes_t),		/* V_RACE */
 	sizeof(ufoType_t),	/* V_UFO */
 	sizeof(ufoType_t),	/* V_UFOCRASHED */
 	sizeof(humanAircraftType_t)		/* V_AIRCRAFTTYPE */
@@ -540,22 +540,22 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_RACE:
 		if (!strcmp(token, "phalanx"))
-			*(int *) b = RACE_PHALANX_HUMAN;
+			*(racetypes_t *) b = RACE_PHALANX_HUMAN;
 		else if (!strcmp(token, "civilian"))
-			*(int *) b = RACE_CIVILIAN;
+			*(racetypes_t *) b = RACE_CIVILIAN;
 		else if (!strcmp(token, "robot"))
-			*(int *) b = RACE_ROBOT;
+			*(racetypes_t *) b = RACE_ROBOT;
 		else if (!strcmp(token, "taman"))
-			*(int *) b = RACE_TAMAN;
+			*(racetypes_t *) b = RACE_TAMAN;
 		else if (!strcmp(token, "ortnok"))
-			*(int *) b = RACE_ORTNOK;
+			*(racetypes_t *) b = RACE_ORTNOK;
 		else if (!strcmp(token, "bloodspider"))
-			*(int *) b = RACE_BLOODSPIDER;
+			*(racetypes_t *) b = RACE_BLOODSPIDER;
 		else if (!strcmp(token, "shevaar"))
-			*(int *) b = RACE_SHEVAAR;
+			*(racetypes_t *) b = RACE_SHEVAAR;
 		else
 			Sys_Error("Unknown race type: '%s'", token);
-		*writtenBytes = sizeof(int);
+		*writtenBytes = sizeof(racetypes_t);
 		break;
 
 	case V_AIRCRAFTTYPE:
@@ -1188,7 +1188,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		}
 
 	case V_RACE:
-		switch (*(const int *) b) {
+		switch (*(const racetypes_t *) b) {
 		case RACE_PHALANX_HUMAN:
 			return "phalanx";
 		case RACE_CIVILIAN:
@@ -1204,7 +1204,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		case RACE_SHEVAAR:
 			return "shevaar";
 		default:
-			Sys_Error("Unknown race type: '%i'", *(const int *) b);
+			Sys_Error("Unknown race type: '%i'", *(const racetypes_t *) b);
 		}
 
 	case V_AIRCRAFTTYPE:
