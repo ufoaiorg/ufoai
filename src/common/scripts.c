@@ -1047,7 +1047,7 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		else if (!strcmp((const char *)set, "craft_crash_ripper"))
 			*(ufoType_t *) b = UFO_RIPPER;
 		else if (!strcmp((const char *)set, "craft_crash_mothership"))
-			*(ufoType_t) b = UFO_MOTHERSHIP;
+			*(ufoType_t *) b = UFO_MOTHERSHIP;
 		else
 			Sys_Error("Unknown ufo type: '%s'", (const char *)set);
 		return sizeof(ufoType_t);
