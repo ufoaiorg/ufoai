@@ -39,7 +39,6 @@ static const char *com_argv[MAX_NUM_ARGVS + 1];
 
 static jmp_buf abortframe; /* an ERR_DROP occured, exit the entire frame */
 
-cvar_t *s_language;
 cvar_t *developer;
 cvar_t *http_proxy;
 cvar_t *http_timeout;
@@ -47,6 +46,7 @@ static cvar_t *logfile_active; /* 1 = buffer log, 2 = flush after each print */
 cvar_t *sv_dedicated;
 #ifndef DEDICATED_ONLY
 static cvar_t *cl_maxfps;
+cvar_t *s_language;
 #endif
 cvar_t *sv_gametype;
 cvar_t *masterserver_url;
