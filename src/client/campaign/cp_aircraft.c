@@ -425,8 +425,6 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
  * @brief Translates the aircraft status id to a translatable string
  * @param[in] aircraft Aircraft to translate the status of
  * @return Translation string of given status.
- * @note Called in: CL_AircraftList_f(), AIR_ListAircraft_f(), AIR_AircraftSelect(),
- * @note MAP_DrawMap(), CL_DisplayPopupIntercept()
  */
 const char *AIR_AircraftStatusToName (const aircraft_t * aircraft)
 {
@@ -2648,7 +2646,7 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 	const char *statusId;
 	/* vars, if aircraft wasn't found */
 	int tmpInt;
-	int l;
+	int l, status;
 	const char *s = mxml_GetString(p, SAVE_AIRCRAFT_ID);
 	const aircraft_t *crafttype = AIR_GetAircraft(s);
 
@@ -2661,12 +2659,13 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 	Com_RegisterConstList(saveAircraftConstants);
 
 	statusId = mxml_GetString(p, SAVE_AIRCRAFT_STATUS);
-	if (!Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTATUS_NAMESPACE, statusId, (int*) &craft->status)) {
-		Com_Printf("Invaild aircraft status '%s'\n", statusId);
+	if (!Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTATUS_NAMESPACE, statusId, &status)) {
+		Com_Printf("Invalid aircraft status '%s'\n", statusId);
 		Com_UnregisterConstList(saveAircraftConstants);
 		return qfalse;
 	}
 
+	craft->status = status;
 	craft->fuel = mxml_GetInt(p, SAVE_AIRCRAFT_FUEL, 0);
 	craft->damage = mxml_GetInt(p, SAVE_AIRCRAFT_DAMAGE, 0);
 	mxml_GetPos3(p, SAVE_AIRCRAFT_POS, craft->pos);
