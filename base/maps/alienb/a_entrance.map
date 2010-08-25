@@ -3033,11 +3033,13 @@
 {
 "classname" "info_2x2_start"
 "origin" "160 608 220"
+"team" "1"
 }
 // entity 21
 {
 "classname" "info_2x2_start"
 "origin" "352 416 220"
+"team" "1"
 }
 // entity 22
 {

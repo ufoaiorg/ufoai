@@ -863,11 +863,13 @@
 {
 "classname" "info_2x2_start"
 "origin" "544 384 32"
+"team" "1"
 }
 // entity 10
 {
 "classname" "info_2x2_start"
 "origin" "288 416 32"
+"team" "1"
 "angle" "180"
 }
 // entity 11

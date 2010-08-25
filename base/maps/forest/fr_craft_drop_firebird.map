@@ -421,11 +421,13 @@
 "classname" "info_2x2_start"
 "origin" "64 224 30"
 "angle" "180"
+"team" "1"
 }
 // entity 10
 {
 "classname" "info_2x2_start"
 "origin" "704 256 30"
+"team" "1"
 }
 // entity 11
 {

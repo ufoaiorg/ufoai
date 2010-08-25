@@ -782,6 +782,7 @@
 {
 "classname" "info_2x2_start"
 "origin" "672 96 32"
+"team" "1"
 }
 // entity 2
 {

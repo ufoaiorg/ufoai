@@ -1082,11 +1082,13 @@
 {
 "classname" "info_2x2_start"
 "origin" "704 224 32"
+"team" "1"
 }
 // entity 24
 {
 "classname" "info_2x2_start"
 "origin" "512 96 32"
+"team" "1"
 "angle" "180"
 }
 // entity 25
