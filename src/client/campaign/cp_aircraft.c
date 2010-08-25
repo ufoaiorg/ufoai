@@ -506,7 +506,7 @@ qboolean AIR_IsAircraftOnGeoscape (const aircraft_t * aircraft)
 		return qfalse;
 	}
 
-	Com_Error(ERR_DROP, "Unknown aircraft status");
+	Com_Error(ERR_FATAL, "Unknown aircraft status %i", aircraft->status);
 }
 
 /**
