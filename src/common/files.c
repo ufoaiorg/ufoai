@@ -422,11 +422,9 @@ void FS_FreeFile (void *buffer)
  */
 static pack_t *FS_LoadPackFile (const char *packfile)
 {
-	unsigned int len;
+	const char *extension = Com_GetExtension(packfile);
 
-	len = strlen(packfile);
-
-	if (!strncmp(packfile + len - 4, ".pk3", 4) || !strncmp(packfile + len - 4, ".zip", 4)) {
+	if (!strcmp(extension, "pk3") || !strcmp(extension, "zip")) {
 		int i;
 		pack_t *pack;
 		packfile_t *newfiles;
@@ -441,14 +439,12 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 			return NULL;
 		}
 
-		len = 0;
 		unzGoToFirstFile(uf);
 		for (i = 0; i < gi.number_entry; i++) {
 			err = unzGetCurrentFileInfo(uf, &file_info, filenameInZip, sizeof(filenameInZip), NULL, 0, NULL, 0);
 			if (err != UNZ_OK) {
 				break;
 			}
-			len += strlen(filenameInZip) + 1;
 			unzGoToNextFile(uf);
 		}
 
@@ -482,7 +478,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 		return pack;
 	} else {
 		/* Unrecognized file type! */
-		Com_Printf("Pack file type %s unrecognized\n", packfile + len - 4);
+		Com_Printf("Pack file type %s unrecognized\n", extension);
 		return NULL;
 	}
 }
