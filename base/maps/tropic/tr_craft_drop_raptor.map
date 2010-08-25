@@ -239,8 +239,8 @@
 ( 192 168 0 ) ( 0 168 0 ) ( 0 0 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 0 0
 ( 0 0 4 ) ( 0 168 4 ) ( 192 168 4 ) tex_nature/jungle002 0 0 0 0.5 0.5 65280 0 0
 ( 512 -24 8 ) ( 512 144 8 ) ( 512 144 0 ) tex_nature/jungle002 0 0 0 0.5 0.5 65280 0 0
-( 512 768 8 ) ( 240 768 8 ) ( 240 768 0 ) tex_nature/jungle002 0 0 0 0.5 0.5 65280 0 0
-( 0 168 8 ) ( 0 0 8 ) ( 0 0 0 ) tex_nature/jungle002 0 0 0 0.5 0.5 65280 0 0
+( 512 768 8 ) ( 240 768 8 ) ( 240 768 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
+( 0 168 8 ) ( 0 0 8 ) ( 0 0 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 ( 0 0 8 ) ( 152 0 8 ) ( 152 0 0 ) tex_common/nodraw 0 0 0 0.5 0.5 65280 128 0
 }
 // brush 30
@@ -1538,4 +1538,97 @@
 "noise" "ambience/ufo_night_atm"
 "volume" "0.1"
 "attenuation" "0.1"
+}
+// entity 52
+{
+"classname" "info_human_start"
+"origin" "304 208 32"
+}
+// entity 53
+{
+"classname" "info_human_start"
+"angle" "-45"
+"origin" "496 272 32"
+}
+// entity 54
+{
+"classname" "info_human_start"
+"angle" "45"
+"origin" "688 528 32"
+}
+// entity 55
+{
+"classname" "info_human_start"
+"origin" "208 688 32"
+"angle" "45"
+}
+// entity 56
+{
+"classname" "info_human_start"
+"origin" "368 208 32"
+"angle" "45"
+}
+// entity 57
+{
+"classname" "info_human_start"
+"origin" "208 176 32"
+"angle" "-135"
+}
+// entity 58
+{
+"classname" "info_human_start"
+"angle" "-135"
+"origin" "80 688 32"
+}
+// entity 59
+{
+"classname" "info_human_start"
+"angle" "-135"
+"origin" "688 432 32"
+}
+// entity 60
+{
+"classname" "info_human_start"
+"angle" "-135"
+"origin" "272 688 32"
+}
+// entity 61
+{
+"classname" "info_human_start"
+"angle" "-135"
+"origin" "560 304 32"
+}
+// entity 62
+{
+"classname" "info_human_start"
+"angle" "-90"
+"origin" "272 144 32"
+}
+// entity 63
+{
+"classname" "info_human_start"
+"origin" "48 656 32"
+"angle" "180"
+}
+// entity 64
+{
+"classname" "info_human_start"
+"angle" "180"
+"origin" "464 752 32"
+}
+// entity 65
+{
+"classname" "info_human_start"
+"angle" "180"
+"origin" "464 240 32"
+}
+// entity 66
+{
+"classname" "info_human_start"
+"origin" "656 560 32"
+}
+// entity 67
+{
+"classname" "info_human_start"
+"origin" "272 752 32"
 }
