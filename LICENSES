@@ -329,6 +329,7 @@ base/maps/hills/road_1v3.map | GNU General Public License 2.0 or later | Kostia 
 base/maps/hills/road_1v4.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/hills/road_1v5.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/hills/road_1v6.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
+base/maps/hills/road_1v7.map | GNU General Public License 2.0 or later
 base/maps/hills/road_2h1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/hills/road_2h2.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
 base/maps/hills/road_2v1.map | GNU General Public License 2.0 or later | Kostia "Kildor" Romanov
@@ -383,6 +384,7 @@ base/maps/japan/ja_craft_ufo_scout.map | GNU General Public License 2.0 or later
 base/maps/japan/ja_f1.map | GNU General Public License 2.0 or later
 base/maps/japan/ja_f2.map | GNU General Public License 2.0 or later
 base/maps/japan/ja_f3.map | GNU General Public License 2.0 or later
+base/maps/japan/ja_f4.map | GNU General Public License 2.0 or later
 base/maps/japan/ja_fill1.map | GNU General Public License 2.0 or later
 base/maps/japan/ja_fill2.map | GNU General Public License 2.0 or later
 base/maps/japan/ja_fill3.map | GNU General Public License 2.0 or later
@@ -449,7 +451,7 @@ base/maps/oriental/or_trees_a.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_trees_b.map | GNU General Public License 2.0 or later
 base/maps/oriental/or_well.map | GNU General Public License 2.0 or later
 base/maps/oriental_mosque.map | GNU General Public License 2.0 or later | "SparX" Beyeler
-base/maps/pipes_const.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/pipes_const.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/rescue/drop_firebird.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/rescue/drop_raptor.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/rescue/inter_dragon.map | GNU General Public License 2.0 or later | Martin Gerhardy
