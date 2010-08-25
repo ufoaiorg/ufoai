@@ -83,6 +83,10 @@ void Sys_Error (const char *error, ...)
 
 	Sys_Backtrace();
 
+#ifdef COMPILE_UFO
+	Sys_ConsoleShutdown();
+#endif
+
 	/* change stdin to non blocking */
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
@@ -113,7 +117,7 @@ void Sys_Quit (void)
 	Mem_Shutdown();
 #endif
 
-	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL, 0) & ~FNDELAY);
 	exit(0);
 }
 

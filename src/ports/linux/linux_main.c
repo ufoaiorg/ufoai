@@ -48,7 +48,7 @@ int main (int argc, const char **argv)
 	Sys_ConsoleInit();
 	Qcommon_Init(argc, argv);
 
-	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
+	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL, 0) | FNDELAY);
 
 	while (1)
 		Qcommon_Frame();

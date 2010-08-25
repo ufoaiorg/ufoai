@@ -1134,10 +1134,10 @@ void Qcommon_Init (int argc, const char **argv)
 	if (!sv_dedicated->integer) {
 		Schedule_Timer(cl_maxfps, &CL_Frame, NULL);
 		Schedule_Timer(Cvar_Get("cl_slowfreq", "10", 0, NULL), &CL_SlowFrame, NULL);
-	}
 
-	/* now hide the console */
-	Sys_ShowConsole(qfalse);
+		/* now hide the console */
+		Sys_ShowConsole(qfalse);
+	}
 #endif
 
 	Schedule_Timer(Cvar_Get("sv_freq", "10", CVAR_NOSET, NULL), &SV_Frame, NULL);
