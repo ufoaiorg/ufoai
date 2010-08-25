@@ -13018,12 +13018,14 @@
 "classname" "info_2x2_start"
 "origin" "1056 -384 104"
 "angle" "90"
+"team" "1"
 }
 // entity 153
 {
 "classname" "info_2x2_start"
 "origin" "960 -512 104"
 "angle" "135"
+"team" "1"
 }
 // entity 154
 {
