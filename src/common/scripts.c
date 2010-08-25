@@ -390,9 +390,9 @@ static const size_t vt_sizes[] = {
 	0,	/* V_CLIENT_HUNK_STRING */
 	sizeof(int),		/* V_TEAM */
 	sizeof(int),		/* V_RACE */
-	sizeof(int),		/* V_UFO */
-	sizeof(int),		/* V_UFOCRASHED */
-	sizeof(int)		/* V_AIRCRAFTTYPE */
+	sizeof(ufoType_t),	/* V_UFO */
+	sizeof(ufoType_t),	/* V_UFOCRASHED */
+	sizeof(aircraftType_t)		/* V_AIRCRAFTTYPE */
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
@@ -425,9 +425,9 @@ static const size_t vt_aligns[] = {
 	sizeof(char),	/* V_CLIENT_HUNK_STRING */
 	sizeof(int),		/* V_TEAM */
 	sizeof(int),		/* V_RACE */
-	sizeof(int),		/* V_UFO */
-	sizeof(int),		/* V_UFOCRASHED */
-	sizeof(int)		/* V_AIRCRAFTTYPE */
+	sizeof(ufoType_t),	/* V_UFO */
+	sizeof(ufoType_t),	/* V_UFOCRASHED */
+	sizeof(aircraftType_t)		/* V_AIRCRAFTTYPE */
 };
 CASSERT(lengthof(vt_aligns) == V_NUM_TYPES);
 
@@ -560,76 +560,76 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_AIRCRAFTTYPE:
 		if (!strcmp(token, "craft_drop_firebird"))
-			*(int *) b = DROPSHIP_FIREBIRD;
+			*(aircraftType_t *) b = DROPSHIP_FIREBIRD;
 		else if (!strcmp(token, "craft_drop_herakles"))
-			*(int *) b = DROPSHIP_HERAKLES;
+			*(aircraftType_t *) b = DROPSHIP_HERAKLES;
 		else if (!strcmp(token, "craft_drop_raptor"))
-			*(int *) b = DROPSHIP_RAPTOR;
+			*(aircraftType_t *) b = DROPSHIP_RAPTOR;
 		else if (!strcmp(token, "craft_inter_stiletto"))
-			*(int *) b = INTERCEPTOR_STILETTO;
+			*(aircraftType_t *) b = INTERCEPTOR_STILETTO;
 		else if (!strcmp(token, "craft_inter_saracen"))
-			*(int *) b = INTERCEPTOR_SARACEN;
+			*(aircraftType_t *) b = INTERCEPTOR_SARACEN;
 		else if (!strcmp(token, "craft_inter_dragon"))
-			*(int *) b = INTERCEPTOR_DRAGON;
+			*(aircraftType_t *) b = INTERCEPTOR_DRAGON;
 		else if (!strcmp(token, "craft_inter_starchaser"))
-			*(int *) b = INTERCEPTOR_STARCHASER;
+			*(aircraftType_t *) b = INTERCEPTOR_STARCHASER;
 		else if (!strcmp(token, "craft_inter_stingray"))
-			*(int *) b = INTERCEPTOR_STINGRAY;
+			*(aircraftType_t *) b = INTERCEPTOR_STINGRAY;
 		else
 			Sys_Error("Unknown aircrafttype type: '%s'", token);
-		*writtenBytes = sizeof(int);
+		*writtenBytes = sizeof(aircraftType_t);
 		break;
 
 	case V_UFO:
 		if (!strcmp(token, "craft_ufo_bomber"))
-			*(int *) b = UFO_BOMBER;
+			*(ufoType_t *) b = UFO_BOMBER;
 		else if (!strcmp(token, "craft_ufo_carrier"))
-			*(int *) b = UFO_CARRIER;
+			*(ufoType_t *) b = UFO_CARRIER;
 		else if (!strcmp(token, "craft_ufo_corrupter"))
-			*(int *) b = UFO_CORRUPTER;
+			*(ufoType_t *) b = UFO_CORRUPTER;
 		else if (!strcmp(token, "craft_ufo_fighter"))
-			*(int *) b = UFO_FIGHTER;
+			*(ufoType_t *) b = UFO_FIGHTER;
 		else if (!strcmp(token, "craft_ufo_harvester"))
-			*(int *) b = UFO_HARVESTER;
+			*(ufoType_t *) b = UFO_HARVESTER;
 		else if (!strcmp(token, "craft_ufo_scout"))
-			*(int *) b = UFO_SCOUT;
+			*(ufoType_t *) b = UFO_SCOUT;
 		else if (!strcmp(token, "craft_ufo_supply"))
-			*(int *) b = UFO_SUPPLY;
+			*(ufoType_t *) b = UFO_SUPPLY;
 		else if (!strcmp(token, "craft_ufo_gunboat"))
-			*(int *) b = UFO_GUNBOAT;
+			*(ufoType_t *) b = UFO_GUNBOAT;
 		else if (!strcmp(token, "craft_ufo_ripper"))
-			*(int *) b = UFO_RIPPER;
+			*(ufoType_t *) b = UFO_RIPPER;
 		else if (!strcmp(token, "craft_ufo_mothership"))
-			*(int *) b = UFO_MOTHERSHIP;
+			*(ufoType_t *) b = UFO_MOTHERSHIP;
 		else
 			Sys_Error("Unknown ufo type: '%s'", token);
-		*writtenBytes = sizeof(int);
+		*writtenBytes = sizeof(ufoType_t);
 		break;
 
 	case V_UFOCRASHED:
 		if (!strcmp(token, "craft_crash_bomber"))
-			*(int *) b = UFO_BOMBER;
+			*(ufoType_t *) b = UFO_BOMBER;
 		else if (!strcmp(token, "craft_crash_carrier"))
-			*(int *) b = UFO_CARRIER;
+			*(ufoType_t *) b = UFO_CARRIER;
 		else if (!strcmp(token, "craft_crash_corrupter"))
-			*(int *) b = UFO_CORRUPTER;
+			*(ufoType_t *) b = UFO_CORRUPTER;
 		else if (!strcmp(token, "craft_crash_fighter"))
-			*(int *) b = UFO_FIGHTER;
+			*(ufoType_t *) b = UFO_FIGHTER;
 		else if (!strcmp(token, "craft_crash_harvester"))
-			*(int *) b = UFO_HARVESTER;
+			*(ufoType_t *) b = UFO_HARVESTER;
 		else if (!strcmp(token, "craft_crash_scout"))
-			*(int *) b = UFO_SCOUT;
+			*(ufoType_t *) b = UFO_SCOUT;
 		else if (!strcmp(token, "craft_crash_supply"))
-			*(int *) b = UFO_SUPPLY;
+			*(ufoType_t *) b = UFO_SUPPLY;
 		else if (!strcmp(token, "craft_crash_gunboat"))
-			*(int *) b = UFO_GUNBOAT;
+			*(ufoType_t *) b = UFO_GUNBOAT;
 		else if (!strcmp(token, "craft_crash_ripper"))
-			*(int *) b = UFO_RIPPER;
+			*(ufoType_t *) b = UFO_RIPPER;
 		else if (!strcmp(token, "craft_crash_mothership"))
-			*(int *) b = UFO_MOTHERSHIP;
+			*(ufoType_t *) b = UFO_MOTHERSHIP;
 		else
 			Sys_Error("Unknown ufo type: '%s'", token);
-		*writtenBytes = sizeof(int);
+		*writtenBytes = sizeof(ufoType_t);
 		break;
 
 	case V_INT:
@@ -3090,7 +3090,7 @@ const char* Com_DropShipTypeToShortName (humanAircraftType_t type)
  */
 ufoType_t Com_UFOShortNameToID (const char *token)
 {
-	int ufoType;
+	ufoType_t ufoType;
 	size_t dummy;
 	Com_ParseValue(&ufoType, token, V_UFO, 0, sizeof(ufoType), &dummy);
 	return ufoType;

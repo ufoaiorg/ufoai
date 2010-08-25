@@ -49,13 +49,6 @@ typedef struct mapline_s {
 	vec2_t point[LINE_MAXPTS]; /**< array of 2D points that make up this path */
 } mapline_t;
 
-/** @brief All different types of aircraft. */
-typedef enum {
-	AIRCRAFT_TRANSPORTER,
-	AIRCRAFT_INTERCEPTOR,
-	AIRCRAFT_UFO
-} aircraftType_t;
-
 #define MAX_HUMAN_AIRCRAFT_TYPE AIRCRAFT_INTERCEPTOR
 
 /** @brief All different size of aircraft. */
@@ -212,7 +205,7 @@ typedef struct aircraft_s {
 
 	struct mission_s* mission;	/**< The mission the aircraft is moving to if this is a PHALANX aircraft
 								 * The mission the UFO is involved if this is a UFO */
-	char *missionID;			/**< aircraft loaded before missions, we need this temporary as reference 
+	char *missionID;			/**< aircraft loaded before missions, we need this temporary as reference
 								 * AIR_PostLoadInitMissions resolves the pointers after game loaded and frees this */
 	struct aircraft_s *aircraftTarget;		/**< Target of the aircraft (ufo or phalanx) */
 	struct radar_s radar;				/**< Radar to track ufos */

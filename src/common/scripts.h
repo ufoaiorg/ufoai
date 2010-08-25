@@ -164,6 +164,13 @@ typedef enum {
 	UFO_MAX
 } ufoType_t;
 
+/** @brief All different types of aircraft. */
+typedef enum {
+	AIRCRAFT_TRANSPORTER,
+	AIRCRAFT_INTERCEPTOR,
+	AIRCRAFT_UFO
+} aircraftType_t;
+
 extern const char *const align_names[];
 extern const char *const blend_names[];
 extern const char *const style_names[];
