@@ -635,7 +635,7 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *nation, ugv_t *ugvType, const int emplIdx)
+static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *nation, const ugv_t *ugvType, const int emplIdx)
 {
 	employee_t* employee;
 	int curEmployeeIdx;
@@ -739,7 +739,7 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvType)
+employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, const ugv_t *ugvType)
 {
 	/* Runs the create employee function with a -1 index parameter, which means at to end of list. */
 	return E_CreateEmployeeAtIndex(type, nation, ugvType, -1);

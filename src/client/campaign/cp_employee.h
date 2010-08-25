@@ -72,14 +72,14 @@ typedef struct employee_s {
 	character_t chr;			/**< Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked) */
 	employeeType_t type;		/**< back link to employee type in ccs.employees */
 	struct nation_s *nation;	/**< What nation this employee came from. This is NULL if the nation is unknown for some (code-related) reason. */
-	struct ugv_s *ugv;			/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal employees this is NULL. */
+	const struct ugv_s *ugv;			/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal employees this is NULL. */
 } employee_t;
 
 void E_ResetEmployees(void);
 employee_t* E_GetNext(employeeType_t type, employee_t *lastEmployee);
 employee_t* E_GetNextFromBase(employeeType_t type, employee_t *lastEmployee, const base_t *base);
 employee_t* E_GetNextHired(employeeType_t type, employee_t *lastEmployee);
-employee_t* E_CreateEmployee(employeeType_t type, struct nation_s *nation, struct ugv_s *ugvType);
+employee_t* E_CreateEmployee(employeeType_t type, struct nation_s *nation, const struct ugv_s *ugvType);
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);
 qboolean E_HireEmployee(base_t* base, employee_t* employee);
 qboolean E_HireEmployeeByType(base_t* base, employeeType_t type);

@@ -3121,15 +3121,16 @@ const char* Com_UFOCrashedTypeToShortName (ufoType_t type)
  * @return ugv_t pointer or NULL if not found.
  * @note This function gives no warning on null name or if no ugv found
  */
-ugv_t *Com_GetUGVByIDSilent (const char *ugvID)
+const ugv_t *Com_GetUGVByIDSilent (const char *ugvID)
 {
 	int i;
 
 	if (!ugvID)
 		return NULL;
 	for (i = 0; i < csi.numUGV; i++) {
-		if (!strcmp(csi.ugvs[i].id, ugvID)) {
-			return &csi.ugvs[i];
+		const ugv_t *ugv = &csi.ugvs[i];
+		if (!strcmp(ugv->id, ugvID)) {
+			return ugv;
 		}
 	}
 	return NULL;
@@ -3140,9 +3141,9 @@ ugv_t *Com_GetUGVByIDSilent (const char *ugvID)
  * @param[in] ugvID The script id of the UGV definition you are looking for
  * @return ugv_t pointer or NULL if not found.
  */
-ugv_t *Com_GetUGVByID (const char *ugvID)
+const ugv_t *Com_GetUGVByID (const char *ugvID)
 {
-	ugv_t *ugv = Com_GetUGVByIDSilent(ugvID);
+	const ugv_t *ugv = Com_GetUGVByIDSilent(ugvID);
 
 	if (!ugvID)
 		Com_Printf("Com_GetUGVByID Called with NULL ugvID!\n");

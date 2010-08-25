@@ -248,8 +248,8 @@ int Com_GetScriptChecksum(void);
 
 #include "../game/q_shared.h"
 
-ugv_t *Com_GetUGVByIDSilent(const char *ugvID);
-ugv_t *Com_GetUGVByID(const char *ugvID);
+const ugv_t *Com_GetUGVByIDSilent(const char *ugvID);
+const ugv_t *Com_GetUGVByID(const char *ugvID);
 const char* Com_DropShipTypeToShortName(humanAircraftType_t type);
 humanAircraftType_t Com_DropShipShortNameToID(const char *token);
 void Com_GetCharacterValues(const char *teamDefition, character_t * chr);
