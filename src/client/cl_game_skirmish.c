@@ -80,7 +80,7 @@ static void GAME_SK_Start_f (void)
 	if (maxSoldiers <= 0)
 		maxSoldiers = size;
 
-	ugvs = min(Cvar_GetInteger("cl_ugvs"), size - maxSoldiers);
+	ugvs = min(ugvs, size - maxSoldiers);
 
 	assert(cls.currentSelectedMap >= 0);
 	assert(cls.currentSelectedMap < MAX_MAPDEFS);
@@ -91,6 +91,7 @@ static void GAME_SK_Start_f (void)
 
 	GAME_SK_SetMissionParameters(md);
 
+	Com_Printf("Starting skirmish with %i soldiers and %i ugvs\n", maxSoldiers, ugvs);
 	GAME_GenerateTeam(teamDefID, ed, maxSoldiers);
 	for (i = 0; i < ugvs; i++)
 		GAME_AppendTeamMember(i + maxSoldiers, ugvTeamDefID, ed);

@@ -580,6 +580,9 @@ static void SP_2x2_start (edict_t *ent)
 	ent->STUN = 0;
 	ent->HP = MAX_HP;
 
+	if (!ent->team)
+		ent->team = TEAM_PHALANX;
+
 	/* these units are bigger */
 	VectorSet(ent->maxs, PLAYER_WIDTH * 2, PLAYER_WIDTH * 2, PLAYER_STAND);
 	VectorSet(ent->mins, -(PLAYER_WIDTH * 2), -(PLAYER_WIDTH * 2), PLAYER_MIN);

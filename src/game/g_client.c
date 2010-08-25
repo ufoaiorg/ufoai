@@ -1162,24 +1162,25 @@ void G_ClientTeamInfo (const player_t * player)
 	int i;
 
 	for (i = 0; i < length; i++) {
-		edict_t *ent;
 		const actorSizeEnum_t actorFieldSize = gi.ReadByte();
 		/* Search for a spawn point for each entry the client sent */
-		if (player->pers.team != TEAM_NO_ACTIVE && G_ActorSpawnIsAllowed(i, player->pers.team))
-			ent = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
-		else
-			ent = NULL;
-
-		if (ent) {
-			Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player->num, ent->team, ent->fieldSize);
-
-			G_ClientReadCharacter(ent);
-
-			G_ClientReadInventory(ent);
-
-			G_ClientAssignDefaultActorValues(ent);
-		} else {
+		if (player->pers.team == TEAM_NO_ACTIVE || !G_ActorSpawnIsAllowed(i, player->pers.team))
 			G_ClientSkipActorInfo();
+		else {
+			edict_t *ent = G_ClientGetFreeSpawnPointForActorSize(player, actorFieldSize);
+			if (ent) {
+				Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player->num, ent->team, ent->fieldSize);
+
+				G_ClientReadCharacter(ent);
+
+				G_ClientReadInventory(ent);
+
+				G_ClientAssignDefaultActorValues(ent);
+			} else {
+				gi.DPrintf("Not enough spawn points for team %i (actorsize: %i)\n", player->pers.team, actorFieldSize);
+
+				G_ClientSkipActorInfo();
+			}
 		}
 	}
 
