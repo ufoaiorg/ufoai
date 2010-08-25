@@ -1121,7 +1121,8 @@ void Qcommon_Init (int argc, const char **argv)
 		SCR_EndLoadingPlaque();
 	}
 
-	CL_InitAfter();
+	if (!sv_dedicated->integer)
+		CL_InitAfter();
 
 	/* Check memory integrity */
 	Mem_CheckGlobalIntegrity();
