@@ -1,5 +1,5 @@
 {
-	material tex_nature/rock004
+	material tex_nature/pjrock1
 	{
 		texture tex_nature/grass001
 		terrain 0 32
