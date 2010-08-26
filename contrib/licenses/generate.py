@@ -41,7 +41,7 @@ NON_FREE_LICENSES = set([
     "Creative Commons Sampling Plus 1.0"
     ])
 
-# filters for files to ignore
+# filters for files to ignore (lower case)
 FILENAME_FILTERS = (re.compile('.txt$'),
     re.compile('.ufo$'),
     re.compile('.anm$'),
@@ -49,8 +49,8 @@ FILENAME_FILTERS = (re.compile('.txt$'),
     re.compile('.pl$'),
     re.compile('.py$'),
     re.compile('.glsl$'),
-    re.compile('^Makefile'),
-    re.compile('^COPYING'),
+    re.compile('^makefile'),
+    re.compile('copying$'),
     re.compile('.html$'),
     re.compile('.cfg$'),
     re.compile('.lua$'),
