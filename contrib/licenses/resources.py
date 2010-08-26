@@ -182,20 +182,30 @@ class Resources(object):
         "Read maps and create relations with other resources"
 
         print 'Parse texture usage in maps...'
+        files = set([])
         for i in os.walk('base/maps'):
             for mapname in i[2]:
                 if not mapname.endswith('.map'):
                     continue
                 mapname = i[0] + '/' + mapname
-                mapmeta = self.getResource(mapname)
+                files.add(mapname)
+        for i in os.walk('radiant/prefabs'):
+            for mapname in i[2]:
+                if not mapname.endswith('.map'):
+                    continue
+                mapname = i[0] + '/' + mapname
+                files.add(mapname)
 
-                for tex in get_used_tex(mapname):
-                    texname = "base/textures/" + tex
-                    texmeta = self.getResourceByShortImageName(texname)
-                    # texture missing (or wrong python parsing)
-                    if texmeta == None:
-                        print "Warning: \"" + texname + "\" from map \"" + mapname + "\" does not exist"
-                        continue
-                    texmeta.usedByMaps.add(mapmeta)
-                    mapmeta.useTextures.add(texmeta)
+        for mapname in files:
+            mapmeta = self.getResource(mapname)
+
+            for tex in get_used_tex(mapname):
+                texname = "base/textures/" + tex
+                texmeta = self.getResourceByShortImageName(texname)
+                # texture missing (or wrong python parsing)
+                if texmeta == None:
+                    print "Warning: \"" + texname + "\" from map \"" + mapname + "\" does not exist"
+                    continue
+                texmeta.usedByMaps.add(mapmeta)
+                mapmeta.useTextures.add(texmeta)
 
