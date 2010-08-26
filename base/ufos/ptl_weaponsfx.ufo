@@ -291,7 +291,7 @@ particle fireBall
 		pop    *size				// write the value into the size particle structure
 	}
 	// no kill needed - this is a shooting particle and is automatically freed in the local entity code
-	think { thinkfade out }
+	think   { thinkfade out }
 }
 
 particle fireImpact
@@ -346,20 +346,21 @@ particle rocketSmoke
 	init
 	{
 		image  sfx/smoke
-		blend  add
+		blend  invfilter
 		style  facing
 		thinkfade  out
-		tps    0.8
+		tps    0.5
 		color  ".5 .5 .5 1"
-		v      "0 0 5"			// let the smoketrail get higher as time advances
+		v      "0 0 20"			// let the smoketrail get higher as time advances
+		size   "10 10"
 	}
 	// run is executed more often as think (every frame - and think execution depends on the tps value)
 	run
 	{
 		// change the size of the smoketrail (make it bigger as time advances)
-		push   pos "10 10"		// push the vector onto the stack
+		push   pos "20 20"		// push the vector onto the stack
 		mul    *t				// multiply stack value with the time value from the particle
-		add    pos "5 5"		// add another position 2d vector to the current stack value
+		add    pos "1 1"		// add another position 2d vector to the current stack value
 		pop    *size			// write the vector back into the particle size value
 
 		// change the color of the smoketrail (more more transparent as time advances)
@@ -807,7 +808,7 @@ particle plasmaMiniPulseBall
 {
 	init
 	{
-		image  sfx/plasmaimpact_00
+		image  sfx/weapons/plasmaimpact_00
 		blend  add
 		style  facing
 		offset "0 0 0"
@@ -822,7 +823,7 @@ particle plasmaPulseBall
 {
 	init
 	{
-		image  sfx/plasmaimpact_00
+		image  sfx/weapons/plasmaimpact_00
 		blend  add
 		style  facing
 		offset "0 0 0"
@@ -1691,99 +1692,6 @@ particle plasmagren
 		model  weapons/plasmagren/plasmagren
 		color  ".5 .5 .5 1"
 	}
-}
-
-particle smoke_explosion
-{
-	init
-	{
-		v		"0 0 0"
-		tps		25.0
-		spawn	smokebig
-		rounds	2
-	}
-	think
-	{
-		spawn	smokebig
-	}
-	round
-	{
-		tps		50.0
-	}
-}
-
-particle frag_explosion
-{
-	init
-	{
-		spawn  explosion_1
-		spawn  explosion_2
-		push   int 25
-		nspawn grenadeFragment
-		lightcolor "0.4 0.4 1.0"
-		lightintensity 0.1
-		// lightsustain 1.0
-		kill
-	}
-}
-particle flash_explosion
-{
- 	init
- 	{
- 		frame			0
- 		endframe		18
- 		image			+sfx/explosions/flashbang_a
-		blend			blend
-		style			facing
-		framefade		none
-		size			"100 100"
-		fps				26.0
-		tps				1.4
- 		push			*v
-		mul				float 30.0
-		add				*s
-		pop				*s
-		spawn				flash
-		v				"0 0 0"
-	}
- 	think { kill }
-}
-
-// particle flash_explosion
-// {
-//	init
-//	{
-//		spawn	flash
-//		kill
-//	}
-// }
-
-particle grenadeFragment
-{
-	init
-	{
-		image  sfx/spark
-		blend  add
-		style  facing
-		thinkfade  out
-		size   "5 5"
-
-		a      "0 0 -100"
-		crand  vector "160 160 100"
-		add    vector "0 0 100"
-		pop    *v
-
-		crand  vector "15 15 15"
-		add    *s
-		pop    *s
-
-		rand   float 1.2
-		add    float 1.2
-		pop    *tps
-
-		lightcolor "0.3 0.2 0.07"
-	}
-	think { kill }
 }
 
 
