@@ -223,12 +223,6 @@ void Sys_ShowConsole (qboolean show)
 	SendMessage(sys_console.hWndOutput, EM_SCROLLCARET, 0, 0);
 }
 
-
-/*
-=================
-Sys_ConsoleProc
-=================
-*/
 static LONG WINAPI Sys_ConsoleProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg) {

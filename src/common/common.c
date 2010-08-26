@@ -55,7 +55,7 @@ cvar_t* sys_priority;
 cvar_t* sys_affinity;
 cvar_t* sys_os;
 
-static FILE *logfile;
+static qFILE logfile;
 
 struct memPool_s *com_aliasSysPool;
 struct memPool_s *com_cmdSysPool;
@@ -370,31 +370,31 @@ void Com_vPrintf (const char *fmt, va_list ap)
 	if (logfile_active && logfile_active->integer) {
 		char name[MAX_OSPATH];
 
-		if (!logfile) {
-			Com_sprintf(name, sizeof(name), "%s/ufoconsole.log", FS_Gamedir());
+		if (!logfile.f) {
+			const char *name = "ufoconsole.log";
 			if (logfile_active->integer > 2)
-				logfile = fopen(name, "a");
+				FS_OpenFile(name, &logfile, FILE_APPEND);
 			else
-				logfile = fopen(name, "w");
+				FS_OpenFile(name, &logfile, FILE_WRITE);
 		}
-		if (logfile) {
+		if (logfile.f) {
 			/* strip color codes */
 			const char *output = msg;
 
-			if (output[0] < 32)
+			/* skip color char */
+			if (!strncmp(output, COLORED_GREEN, strlen(COLORED_GREEN)))
 				output++;
 
 			if (output[strlen(output) - 1] == '\n') {
 				char timestamp[40];
 				Com_MakeTimestamp(timestamp, sizeof(timestamp));
-
-				fprintf(logfile, "%s %s", timestamp, output);
-			} else {
-				fprintf(logfile, "%s", output);
+				FS_Write(timestamp, strlen(timestamp), &logfile);
 			}
 
+			FS_Write(output, strlen(output), &logfile);
+
 			if (logfile_active->integer > 1)
-				fflush(logfile);	/* force it to save every time */
+				fflush(logfile.f);	/* force it to save every time */
 		}
 	}
 }
@@ -467,10 +467,7 @@ void Com_Error (int code, const char *fmt, ...)
 		/* send an receive net messages a last time */
 		NET_Wait(0);
 
-		if (logfile) {
-			fclose(logfile);
-			logfile = NULL;
-		}
+		FS_CloseFile(&logfile);
 
 		CL_Shutdown();
 		Qcommon_Shutdown();
@@ -501,11 +498,7 @@ void Com_Quit (void)
 
 	/* send an receive net messages a last time */
 	NET_Wait(0);
-	if (logfile) {
-		fclose(logfile);
-		logfile = NULL;
-	}
-
+	FS_CloseFile(&logfile);
 	Sys_Quit();
 }
 

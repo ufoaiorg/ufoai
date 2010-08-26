@@ -399,13 +399,24 @@ const char *Sys_ConsoleInput (void)
  */
 void Sys_ConsoleOutput (const char *string)
 {
+	/* BUG: for some reason, NDELAY also affects stdout (1) when used on stdin (0). */
+	const int origflags = fcntl(STDOUT_FILENO, F_GETFL, 0);
+
 	Sys_ShowConsole(qfalse);
 
 	/* skip color char */
 	if (!strncmp(string, COLORED_GREEN, strlen(COLORED_GREEN)))
 		string++;
 
-	fputs(string, stdout);
+	fcntl(STDOUT_FILENO, F_SETFL, origflags & ~FNDELAY);
+	while (*string) {
+		const ssize_t written = write(STDOUT_FILENO, string, strlen(string));
+		if (written <= 0)
+			break; /* sorry, I cannot do anything about this error - without an output */
+		string += written;
+	}
+	fcntl(STDOUT_FILENO, F_SETFL, origflags);
+
 
 	Sys_ShowConsole(qtrue);
 }
