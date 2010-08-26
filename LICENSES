@@ -6249,6 +6249,7 @@ base/textures/tex_nature/desert006.jpg | GNU General Public License 2.0 |  | htt
 base/textures/tex_nature/desert007.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/desert008.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/dirt.png | GNU General Public License 2.0 | OpenArena
+base/textures/tex_nature/dirt001.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/drymud.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | nexuiz/data/textures/evil3_floors/bdirt.jpg
 base/textures/tex_nature/drymud_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/flower.jpg | GNU General Public License 2.0 or later | Willem Sitters
@@ -6497,6 +6498,9 @@ base/textures/tex_streets/street002.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_streets/street003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street006.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_streets/street008.png | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_streets/street009.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_streets/street010.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street011.jpg | GNU General Public License 2.0 | ghosta
 base/textures/tex_streets/street012.jpg | GNU General Public License 2.0 | ghosta
