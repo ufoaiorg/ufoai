@@ -368,8 +368,6 @@ void Com_vPrintf (const char *fmt, va_list ap)
 
 	/* logfile */
 	if (logfile_active && logfile_active->integer) {
-		char name[MAX_OSPATH];
-
 		if (!logfile.f) {
 			const char *name = "ufoconsole.log";
 			if (logfile_active->integer > 2)
