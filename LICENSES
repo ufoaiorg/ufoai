@@ -6040,7 +6040,6 @@ base/textures/tex_mattn/wood007b.jpg | GNU General Public License 2.0 or later |
 base/textures/tex_mattn/wood008.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood009.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood010.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_mattn/wood011.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood012.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood013.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood014.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -6053,7 +6052,6 @@ base/textures/tex_mattn/wood019.jpg | GNU General Public License 2.0 or later | 
 base/textures/tex_mattn/wood020.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood021.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood022.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
-base/textures/tex_mattn/wood023.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood024.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood024_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_mattn/wood025.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
@@ -6316,6 +6314,8 @@ base/textures/tex_nature/sp_ground.jpg | GNU General Public License 2.0 | OpenAr
 base/textures/tex_nature/tile_teracota.png | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/tree_bark_001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/tree_bark_002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/tree_chopped.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
+base/textures/tex_nature/tree_chopped2.jpg | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/water2.jpg | GNU General Public License 2.0 | OpenArena
 base/textures/tex_nature/water_dark_nm.png | GNU General Public License 2.0 or later | Martin Gerhardy
 base/textures/tex_nature/water_green.jpg | GNU General Public License 2.0 | OpenArena | greenliqu1.jpg
