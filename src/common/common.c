@@ -381,7 +381,7 @@ void Com_vPrintf (const char *fmt, va_list ap)
 
 			/* skip color char */
 			if (!strncmp(output, COLORED_GREEN, strlen(COLORED_GREEN)))
-				output++;
+				output += strlen(COLORED_GREEN);
 
 			if (output[strlen(output) - 1] == '\n') {
 				char timestamp[40];

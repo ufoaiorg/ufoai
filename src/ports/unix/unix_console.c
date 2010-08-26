@@ -406,7 +406,7 @@ void Sys_ConsoleOutput (const char *string)
 
 	/* skip color char */
 	if (!strncmp(string, COLORED_GREEN, strlen(COLORED_GREEN)))
-		string++;
+		string += strlen(COLORED_GREEN);
 
 	fcntl(STDOUT_FILENO, F_SETFL, origflags & ~FNDELAY);
 	while (*string) {
