@@ -1375,7 +1375,8 @@ void Qcommon_Shutdown (void)
 {
 	HTTP_Cleanup();
 
-	Cmd_Shutdown();
 	Cvar_Shutdown();
+	Cmd_Shutdown();
+	FS_Shutdown();
 	Mem_Shutdown();
 }

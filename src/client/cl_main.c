@@ -1273,5 +1273,4 @@ void CL_Shutdown (void)
 	R_Shutdown();
 	UI_Shutdown();
 	CIN_Shutdown();
-	FS_Shutdown();
 }
