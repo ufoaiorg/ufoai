@@ -889,6 +889,12 @@ void IN_Frame (void)
 		case SDL_QUIT:
 			Cmd_ExecuteString("quit");
 			break;
+
+		case SDL_VIDEORESIZE:
+			/* make sure that SDL_SetVideoMode is called again after we changed the size
+			 * otherwise the mouse will make problems */
+			vid_mode->modified = qtrue;
+			break;
 		}
 	}
 }
