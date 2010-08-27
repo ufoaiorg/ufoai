@@ -553,7 +553,6 @@ image_t* R_AliasModelState (const model_t *mod, int *mesh, int *frame, int *oldF
  */
 void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender)
 {
-	int i, j;
 	const mAliasFrame_t *frame, *oldframe;
 	vec3_t move;
 	const float frontlerp = 1.0 - backlerp;
@@ -600,6 +599,7 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 		}
 	} else { /* otherwise, we have to do it on the CPU */
 		const mAliasVertex_t *v, *ov;
+		int i;
 		assert(mesh->num_verts < lengthof(r_mesh_verts));
 		v = &mesh->vertexes[framenum * mesh->num_verts];
 		ov = &mesh->vertexes[oldframenum * mesh->num_verts];
@@ -622,6 +622,7 @@ void R_FillArrayData (mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, in
 
 		/** @todo damn slow - optimize this */
 		for (i = 0; i < mesh->num_tris; i++) {  /* draw the tris */
+			int j;
 			for (j = 0; j < 3; j++) {
 				const int arrayIndex = 3 * i + j;
 				const int meshIndex = mesh->indexes[arrayIndex];

@@ -151,7 +151,7 @@ static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char *line
 	while (qtrue) {
 		const char *c = Com_Parse(&line);
 
-		if (!strlen(c))  /* done */
+		if (c[0] == '\0')  /* done */
 			break;
 
 		if (i == MAX_OBJ_FACE_VERTS)

@@ -412,9 +412,9 @@ void FixTjuncs (node_t *headnode)
 int GetEdge (int v1, int v2, const face_t *f)
 {
 	dBspEdge_t *edge;
-	int i;
 
 	if (!config.noshare) {
+		int i;
 		for (i = firstmodeledge; i < curTile->numedges; i++) {
 			edge = &curTile->edges[i];
 			if (v1 == edge->v[1] && v2 == edge->v[0]

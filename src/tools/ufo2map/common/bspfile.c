@@ -464,13 +464,12 @@ static entity_t* ParseEntity (void)
  */
 void ParseEntities (void)
 {
-	entity_t *ent;
 	int subdivide;
 
 	num_entities = 0;
 	ParseFromMemory(curTile->entdata, curTile->entdatasize);
 
-	while ((ent = ParseEntity()) != NULL) {
+	while (ParseEntity() != NULL) {
 	}
 
 	subdivide = atoi(ValueForKey(&entities[0], "subdivide"));

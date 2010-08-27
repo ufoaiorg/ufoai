@@ -277,7 +277,6 @@ void R_BeginFrame (void)
  */
 void R_RenderFrame (void)
 {
-	int tile;
 
 	R_Setup3D();
 
@@ -286,6 +285,7 @@ void R_RenderFrame (void)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	if (!(refdef.rendererFlags & RDF_NOWORLDMODEL)) {
+		int tile;
 		if (r_threads->integer) {
 			while (r_threadstate.state != THREAD_RENDERER)
 				Sys_Sleep(0);

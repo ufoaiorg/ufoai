@@ -552,7 +552,7 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 	while (qtrue) {
 		const char *c = Com_Parse(buffer);
 
-		if (!strlen(c))
+		if (c[0] == '\0')
 			break;
 
 		if (!strcmp(c, "glowscale")) {
@@ -925,7 +925,7 @@ void R_LoadMaterials (const char *map)
 	while (qtrue) {
 		const char *c = Com_Parse(&buffer);
 
-		if (!strlen(c))
+		if (c[0] == '\0')
 			break;
 
 		if (*c == '{' && !inmaterial) {

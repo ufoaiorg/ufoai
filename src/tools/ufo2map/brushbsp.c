@@ -527,12 +527,11 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 	side_t *bestside;
 	int i, j, pass, numpasses, pnum;
 	int front, back, both, facing, splits;
-	int bsplits, bestsplits, epsilonbrush;
+	int bsplits, epsilonbrush;
 	qboolean hintsplit;
 
 	bestside = NULL;
 	bestvalue = -99999;
-	bestsplits = 0;
 
 	/**
 	 * the search order goes: visible-structural, visible-detail,
@@ -622,7 +621,6 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 				if (value > bestvalue) {
 					bestvalue = value;
 					bestside = side;
-					bestsplits = splits;
 					for (test = brushes; test; test = test->next)
 						test->side = test->testside;
 				}

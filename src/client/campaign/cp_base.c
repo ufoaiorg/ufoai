@@ -717,7 +717,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	const buildingType_t buildingType = building->buildingType;
 	const building_t const *buildingTemplate = building->tpl;	/**< Template of the removed building */
 	const qboolean onDestroyCommand = (building->onDestroy[0] != '\0') && (building->buildingStatus == B_STATUS_WORKING);
-	baseCapacities_t cap = MAX_CAP; /* init but don't set to first value of enum */
 
 	/* Don't allow to destroy an entrance. */
 	if (buildingType == B_ENTRANCE)
@@ -776,7 +775,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 			B_UpdateBaseCapacities(MAX_CAP, base);
 		} else {
 			/* there is still at least one other building of the same type in base: just update capacity */
-			cap = B_GetCapacityFromBuildingType(buildingType);
+			const baseCapacities_t cap = B_GetCapacityFromBuildingType(buildingType);
 			if (cap != MAX_CAP)
 				B_UpdateBaseCapacities(cap, base);
 		}
@@ -1671,7 +1670,6 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 	const value_t *vp;
 	const char *errhead = "B_ParseBuildings: unexpected end of file (names ";
 	const char *token;
-	int i;
 
 	/* get id list body */
 	token = Com_Parse(text);
@@ -1684,6 +1682,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		Com_Error(ERR_DROP, "B_ParseBuildings: too many buildings");
 
 	if (!link) {
+		int i;
 		for (i = 0; i < ccs.numBuildingTemplates; i++) {
 			if (!strcmp(ccs.buildingTemplates[i].id, name)) {
 				Com_Printf("B_ParseBuildings: Second building with same name found (%s) - second ignored\n", name);
@@ -3077,7 +3076,7 @@ int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
 			base->capacities[CAP_ITEMS].cur += (amount * obj->size);
 		base->storage.numItems[obj->idx] += amount;
 	}
-	
+
 	return amount;
 }
 

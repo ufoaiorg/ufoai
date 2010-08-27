@@ -486,7 +486,6 @@ static void R_ModLoadLevelOfDetailData (model_t* mod, qboolean loadNormals)
 void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, qboolean loadNormals)
 {
 	dMD2Model_t *md2;
-	int size;
 	byte *tagbuf = NULL, *animbuf = NULL;
 	size_t l;
 
@@ -514,7 +513,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, qboolean l
 	/* try to load the tag file */
 	if (FS_CheckFile("%s", mod->alias.tagname) != -1) {
 		/* load the tags */
-		size = FS_LoadFile(mod->alias.tagname, &tagbuf);
+		const int size = FS_LoadFile(mod->alias.tagname, &tagbuf);
 		R_ModLoadTags(mod, tagbuf, size);
 		FS_FreeFile(tagbuf);
 	}

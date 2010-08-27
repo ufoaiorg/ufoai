@@ -197,13 +197,13 @@ static const char *mod_extensions[] = {
 model_t *R_RegisterModelShort (const char *name)
 {
 	model_t *mod;
-	int i = 0;
 
 	if (!name || !name[0])
 		return NULL;
 
 	if (name[0] != '*' && (strlen(name) < 4 || name[strlen(name) - 4] != '.')) {
 		char filename[MAX_QPATH];
+		int i = 0;
 
 		while (mod_extensions[i]) {
 			Com_sprintf(filename, sizeof(filename), "models/%s.%s", name, mod_extensions[i]);

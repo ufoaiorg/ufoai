@@ -125,15 +125,12 @@ static void BuildFaceExtents (void)
 static void CalcLightinfoExtents (lightinfo_t *l)
 {
 	const dBspSurface_t *s;
-	float *mins, *maxs;
 	float *stmins, *stmaxs;
 	vec2_t lm_mins, lm_maxs;
 	int i;
 
 	s = l->face;
 
-	mins = face_extents[s - curTile->faces].mins;
-	maxs = face_extents[s - curTile->faces].maxs;
 	stmins = face_extents[s - curTile->faces].stmins;
 	stmaxs = face_extents[s - curTile->faces].stmaxs;
 

@@ -248,7 +248,6 @@ static void UP_BuildingDescription (const technology_t* t)
 void UP_AircraftItemDescription (const objDef_t *item)
 {
 	static char itemText[1024];
-	int i;
 	const technology_t *tech;
 
 	/* Set menu text node content to null. */
@@ -276,6 +275,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 
 	/* set description text */
 	if (RS_IsResearched_ptr(tech)) {
+		int i;
 		if (item->craftitem.type == AC_ITEM_WEAPON)
 			Q_strcat(itemText, va(_("Weight:\t%s\n"), AII_WeightToName(AII_GetItemWeightBySize(item))), sizeof(itemText));
 		else if (item->craftitem.type == AC_ITEM_AMMO) {

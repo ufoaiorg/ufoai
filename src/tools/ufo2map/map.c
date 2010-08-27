@@ -252,14 +252,12 @@ static int PlaneFromPoints (const mapbrush_t *b, const vec3_t p0, const vec3_t p
  */
 static int BrushContents (mapbrush_t *b)
 {
-	int contentFlags, i, trans;
+	int contentFlags, i;
 	const side_t *s;
 
 	s = &b->original_sides[0];
 	contentFlags = s->contentFlags;
-	trans = curTile->texinfo[s->texinfo].surfaceFlags;
 	for (i = 1; i < b->numsides; i++, s++) {
-		trans |= curTile->texinfo[s->texinfo].surfaceFlags;
 		if (s->contentFlags != contentFlags) {
 			Verb_Printf(VERB_EXTRA, "Entity %i, Brush %i: mixed face contents (f: %i, %i)\n"
 				, b->entitynum, b->brushnum, s->contentFlags, contentFlags);
@@ -948,7 +946,6 @@ static qboolean ParseMapEntity (const char *filename)
 {
 	entity_t *mapent;
 	const char *entName;
-	int startbrush, startsides;
 	static int worldspawnCount = 0;
 	int notCheckOrFix = !(config.performMapCheck || config.fixMap);
 
@@ -960,9 +957,6 @@ static qboolean ParseMapEntity (const char *filename)
 
 	if (num_entities == MAX_MAP_ENTITIES)
 		Sys_Error("num_entities == MAX_MAP_ENTITIES (%i)", num_entities);
-
-	startbrush = nummapbrushes;
-	startsides = nummapbrushsides;
 
 	mapent = &entities[num_entities++];
 	memset(mapent, 0, sizeof(*mapent));
@@ -1096,9 +1090,10 @@ void WriteMapFile (const char *filename)
 
 		/* add brushes from func_groups with single members to worldspawn */
 		if (i == 0) {
-			int numToAdd, k;
+			int numToAdd;
 			mapbrush_t **brushesToAdd = Check_ExtraBrushesForWorldspawn(&numToAdd);
 			if (brushesToAdd != NULL) {
+				int k;
 				for (k = 0; k < numToAdd; k++) {
 					if (brushesToAdd[k]->skipWriteBack)
 						continue;

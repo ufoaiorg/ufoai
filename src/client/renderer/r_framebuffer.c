@@ -37,7 +37,7 @@ static const r_framebuffer_t *activeFramebuffer;
 static r_framebuffer_t screenBuffer;
 static GLenum *colorAttachments;
 
-static qboolean renderbuffer_enabled; /*< renderbuffer vs screen as render target*/
+static qboolean renderbuffer_enabled; /**< renderbuffer vs screen as render target*/
 
 static GLuint R_GetFreeFBOTexture (void)
 {

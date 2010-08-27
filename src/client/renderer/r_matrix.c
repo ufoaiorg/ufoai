@@ -753,12 +753,12 @@ void Matrix4x4_CreateScale3 (matrix4x4_t *out, double x, double y, double z)
 void Matrix4x4_CreateFromQuakeEntity (matrix4x4_t *out, double x, double y, double z, double pitch, double yaw,
 		double roll, double scale)
 {
-	double angle, sr, sp, sy, cr, cp, cy;
 
 	if (roll) {
-		angle = yaw * torad;
-		sy = sin(angle);
-		cy = cos(angle);
+		double sr, cr, sp, cp;
+		double angle = yaw * torad;
+		double sy = sin(angle);
+		double cy = cos(angle);
 		angle = pitch * torad;
 		sp = sin(angle);
 		cp = cos(angle);
@@ -801,9 +801,10 @@ void Matrix4x4_CreateFromQuakeEntity (matrix4x4_t *out, double x, double y, doub
 		out->m[3][3] = 1;
 #endif
 	} else if (pitch) {
-		angle = yaw * torad;
-		sy = sin(angle);
-		cy = cos(angle);
+		double sp, cp;
+		double angle = yaw * torad;
+		double sy = sin(angle);
+		double cy = cos(angle);
 		angle = pitch * torad;
 		sp = sin(angle);
 		cp = cos(angle);
@@ -843,9 +844,9 @@ void Matrix4x4_CreateFromQuakeEntity (matrix4x4_t *out, double x, double y, doub
 		out->m[3][3] = 1;
 #endif
 	} else if (yaw) {
-		angle = yaw * torad;
-		sy = sin(angle);
-		cy = cos(angle);
+		const double angle = yaw * torad;
+		const double sy = sin(angle);
+		const double cy = cos(angle);
 #ifdef MATRIX4x4_OPENGLORIENTATION
 		out->m[0][0] = (cy) * scale;
 		out->m[1][0] = (-sy) * scale;
