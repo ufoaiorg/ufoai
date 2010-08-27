@@ -815,6 +815,9 @@ static int Com_MapDefSort (const void *mapDef1, const void *mapDef2)
  */
 void CL_InitAfter (void)
 {
+	if (sv_dedicated->integer)
+		return;
+
 	/* start the music track already while precaching data */
 	S_Frame();
 	S_LoadSamples();
