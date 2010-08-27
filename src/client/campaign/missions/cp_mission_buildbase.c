@@ -54,16 +54,16 @@ void CP_BuildBaseMissionIsSuccess (mission_t *mission)
 {
 	if (CP_BasemissionIsSubvertingGovernmentMission(mission)) {
 		/* This is a subverting government mission */
-		CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_TERROR_ATTACK);
+		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_TERROR_ATTACK);
 	} else {
 		/* An alien base has been built */
 		const alienBase_t *base = (alienBase_t *) mission->data;
 		assert(base);
 		CP_SpreadXVIAtPos(base->pos);
 
-		CL_ChangeIndividualInterest(+0.4f, INTERESTCATEGORY_XVI);
-		CL_ChangeIndividualInterest(+0.4f, INTERESTCATEGORY_SUPPLY);
-		CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_HARVEST);
+		CL_ChangeIndividualInterest(0.4f, INTERESTCATEGORY_XVI);
+		CL_ChangeIndividualInterest(0.4f, INTERESTCATEGORY_SUPPLY);
+		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
 	}
 
 	CP_MissionRemove(mission);
@@ -83,10 +83,9 @@ void CP_BuildBaseMissionIsFailure (mission_t *mission)
 }
 
 /**
- * @brief Build Base mission just started: change interest values.
- * @note This function is intended to avoid the building of several alien bases at the same time
+ * @brief Run when the mission is spawned.
  */
-void CP_BuildBaseMissionStart (mission_t *mission)
+void CP_BuildBaseMissionOnSpawn (void)
 {
 	CL_ChangeIndividualInterest(-0.7f, INTERESTCATEGORY_BUILDING);
 }

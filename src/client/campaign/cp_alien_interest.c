@@ -53,24 +53,24 @@ void CL_ResetAlienInterest (void)
 
 /**
  * @brief Change individual interest value
- * @param[in] percentage Maybe pe > 0 or < 0
+ * @param[in] interestFactor Maybe pe > 0 or < 0
  * @param[in] category Category of interest for aliens that should increase / decrease
  * @note Should be used when a mission is over (success or failure)
  */
-void CL_ChangeIndividualInterest (float percentage, interestCategory_t category)
+void CL_ChangeIndividualInterest (float interestFactor, interestCategory_t category)
 {
 	if (category == INTERESTCATEGORY_MAX) {
 		Com_Printf("CL_ChangeIndividualInterest: Unsupported value of category\n");
 		return;
 	}
 
-	if (percentage > 0.0f) {
-		const int gain = (int) (percentage * ccs.overallInterest);
+	if (interestFactor > 0.0f) {
+		const int gain = (int) (interestFactor * ccs.overallInterest);
 		const int diff = ccs.overallInterest - ccs.interest[category];
 		/* Fraction of individual interest that will be won if
 		 * individal interest becomes higher than overall interest. 0 means no increase */
 		const float slowerIncreaseFraction = 0.5f;
-		/* Value increases: percentage is taken from the overall interest value
+		/* Value increases: interestFactor is taken from the overall interest value
 		 * But it increase slower if the individual interest becomes higher than the overall interest value */
 		if (diff > gain)
 			/* Final value of individual interest is below overall interest */
@@ -82,10 +82,10 @@ void CL_ChangeIndividualInterest (float percentage, interestCategory_t category)
 			/* Final value of individual interest is above overall interest */
 			ccs.interest[category] += (int) (slowerIncreaseFraction * gain);
 	} else {
-		/* Value decreases: percentage is taken from the individual interest value */
-		ccs.interest[category] += (int) (percentage * ccs.interest[category]);
+		/* Value decreases: interestFactor is taken from the individual interest value */
+		ccs.interest[category] += (int) (interestFactor * ccs.interest[category]);
 		if (ccs.interest[category] < 0) {
-			/* this may be reached if percentage is below -1 */
+			/* this may be reached if interestFactor is below -1 */
 			ccs.interest[category] = 0;
 		}
 	}

@@ -47,9 +47,10 @@ static aircraft_t baseAttackFakeAircraft;
  */
 void CP_BaseAttackMissionIsSuccess (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(+0.3f, INTERESTCATEGORY_RECON);
-	CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_TERROR_ATTACK);
-	CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_HARVEST);
+	CL_ChangeIndividualInterest(0.3f, INTERESTCATEGORY_RECON);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
+	CL_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_TERROR_ATTACK);
+	CL_ChangeIndividualInterest(-0.5f, INTERESTCATEGORY_INTERCEPT);
 
 	CP_MissionRemove(mission);
 }
@@ -73,9 +74,7 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 	ccs.missionAircraft = NULL;
 
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
-	/* Restore some alien interest for base attacks that has been removed when
-	 * mission has been created */
-	CL_ChangeIndividualInterest(0.5f, INTERESTCATEGORY_BASE_ATTACK);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_BASE_ATTACK);
 
 	/* reset ccs.selectedMission */
 	MAP_NotifyMissionRemoved(mission);
@@ -84,12 +83,12 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 }
 
 /**
- * @brief Base attack mission just started: change interest values.
- * @note This function is intended to avoid attack on several bases at the same time
+ * @brief Run when the mission is spawned.
  */
-void CP_BaseAttackMissionStart (mission_t *mission)
+void CP_BaseAttackMissionOnSpawn (void)
 {
-	CL_ChangeIndividualInterest(-0.7f, INTERESTCATEGORY_BASE_ATTACK);
+	/* Prevent multiple bases from being attacked. by resetting interest. */
+	CL_ChangeIndividualInterest(-1.0f, INTERESTCATEGORY_BASE_ATTACK);
 }
 
 /**

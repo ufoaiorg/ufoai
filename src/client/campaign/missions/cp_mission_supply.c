@@ -56,7 +56,7 @@ void CP_SupplyMissionIsSuccess (mission_t *mission)
 void CP_SupplyMissionIsFailure (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_SUPPLY);
-	CL_ChangeIndividualInterest(0.3f, INTERESTCATEGORY_INTERCEPT);
+	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
 
 	CP_MissionRemove(mission);

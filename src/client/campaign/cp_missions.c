@@ -1630,12 +1630,13 @@ mission_t *CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 
 	CP_SetMissionName(&mission);
 
-	/* Lower alien interest in base building if a base building mission is
-	 * started to avoid several bases at the same time */
+	/* Handle mission specific, spawn-time routines */
 	if (mission.category == INTERESTCATEGORY_BUILDING)
-		CP_BuildBaseMissionStart(&mission);
+		CP_BuildBaseMissionOnSpawn();
 	else if (mission.category == INTERESTCATEGORY_BASE_ATTACK)
-		CP_BaseAttackMissionStart(&mission);
+		CP_BaseAttackMissionOnSpawn();
+	else if (mission.category == INTERESTCATEGORY_TERROR_ATTACK)
+		CP_TerrorMissionOnSpawn();
 
 	/* Add mission to global array */
 	list = LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
@@ -1683,6 +1684,10 @@ void CP_SpawnNewMissions (void)
 			nonOccurrence = NON_OCCURRENCE_PROBABILITY / pow(((ccs.overallInterest - FINAL_OVERALL_INTEREST / 30) + 1), 2);
 		else
 			nonOccurrence = NON_OCCURRENCE_PROBABILITY;
+
+		/* Increase the alien's interest in supplying their bases for this cycle.
+		 * The more bases, the greater their interest in supplying them. */
+		CL_ChangeIndividualInterest(AB_GetAlienBaseNumber() * 0.1f, INTERESTCATEGORY_SUPPLY);
 
 		/* Calculate the amount of missions to be spawned this cycle.
 		 * Note: This is a function over css.overallInterest. It looks like this:

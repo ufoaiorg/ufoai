@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void CP_TerrorMissionIsSuccess (mission_t *mission)
 {
-	CL_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_TERROR_ATTACK);
+	CL_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_BASE_ATTACK);
 	CL_ChangeIndividualInterest(0.03f, INTERESTCATEGORY_HARVEST);
 
 	CP_MissionRemove(mission);
@@ -56,6 +56,17 @@ void CP_TerrorMissionIsFailure (mission_t *mission)
 
 	CP_MissionRemove(mission);
 }
+
+
+/**
+ * @brief Run when the mission is spawned.
+ */
+void CP_TerrorMissionOnSpawn (void)
+{
+	/* Prevent multiple terror missions per cycle by resetting interest. */
+	CL_ChangeIndividualInterest(-1.0f, INTERESTCATEGORY_TERROR_ATTACK);
+}
+
 
 /**
  * @brief Start Terror attack mission.

@@ -34,6 +34,6 @@ void CP_BuildBaseMissionNextStage(mission_t *mission);
 void CP_BuildBaseMissionIsFailure(mission_t *mission);
 void CP_BuildBaseMissionBaseDestroyed(mission_t *mission);
 void CP_BuildBaseMissionIsSuccess(mission_t *mission);
-void CP_BuildBaseMissionStart(mission_t *mission);
+void CP_BuildBaseMissionOnSpawn(void);
 
 #endif

@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cp_missions.h"
 #include "../cp_time.h"
 #include "../cp_alien_interest.h"
+#include "../cp_xvi.h"
 
 /**
  * @brief Intercept mission is over and is a success: change interest values.
@@ -37,9 +38,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CP_InterceptMissionIsSuccess (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(0.3f, INTERESTCATEGORY_RECON);
-	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_TERROR_ATTACK);
-	CL_ChangeIndividualInterest(-0.05f, INTERESTCATEGORY_INTERCEPT);
+	CL_ChangeIndividualInterest(-0.3f, INTERESTCATEGORY_INTERCEPT);
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
+	if (CP_IsXVIResearched())
+		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_XVI);
 
 	CP_MissionRemove(mission);
 }
@@ -51,7 +53,9 @@ void CP_InterceptMissionIsSuccess (mission_t *mission)
 void CP_InterceptMissionIsFailure (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_INTERCEPT);
-	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_BASE_ATTACK);
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
+	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_TERROR_ATTACK);
 
 	CP_MissionRemove(mission);
 }
