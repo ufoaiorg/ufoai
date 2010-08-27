@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 chrList_t chrDisplayList;
 
 /**
- * Allocate a skin from the cls structure
+ * @brief Allocate a skin from the cls structure
  * @return A customskin structure, only idx is initialized
  */
 customSkin_t* Com_AllocateCustomSkin (void)
@@ -60,7 +60,7 @@ customSkin_t* Com_AllocateCustomSkin (void)
 }
 
 /**
- * Get a customskin from idx
+ * @brief Get a customskin from idx
  * @return A customskin, else NULL
  */
 static customSkin_t* Com_GetCustomSkinByIDS (int idx)
@@ -490,7 +490,6 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
 
 /**
  * @brief Init skins into the GUI
- * @todo We should move it into a script, or into a C struct
  */
 static void CL_InitSkin_f (void)
 {
@@ -522,7 +521,7 @@ static void CL_InitSkin_f (void)
 }
 
 /**
- * Fix customskin idx accoding to game mode
+ * @brief Fix customskin idx accoding to game mode
  */
 static int CL_FixCustomSkinIDX (int idx)
 {
