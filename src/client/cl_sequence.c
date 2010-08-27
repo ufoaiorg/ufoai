@@ -102,9 +102,9 @@ typedef struct seqEnt_s {
 	model_t *model;		/**< the loaded model structure */
 	int skin;			/**< the skin number of the model - starts at 0 for the first one */
 	vec3_t origin;		/**< the origin of the model */
-	vec3_t speed;
-	vec3_t angles;
-	vec3_t omega;
+	vec3_t speed;		/**< advance origin in time with this speed */
+	vec3_t angles;		/**< the rotation of the model */
+	vec3_t omega;		/**< advance angles in time with this omega */
 	vec3_t color;
 	float alpha;
 	char parent[MAX_VAR];	/**< in case this is a child model (should get placed onto a tag of the parent) */
