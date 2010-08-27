@@ -551,6 +551,8 @@ static void CL_ChangeSkin_f (void)
 		newSkin = CL_FixCustomSkinIDX(newSkin);
 
 		if (chrDisplayList.chr[sel]) {
+			/** @todo Get the skin id from the model by using the customskin id */
+			/** @todo Or remove skins from models and convert character_t->skin to string */
 			chrDisplayList.chr[sel]->skin = newSkin;
 
 			Cvar_SetValue("mn_skin", newSkin);
@@ -574,6 +576,8 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 	/** @todo What happens if a model of a team member does not have the selected skin? */
 	for (i = 0; i < chrDisplayList.num; i++) {
 		assert(chrDisplayList.chr[i]);
+		/** @todo Get the skin id from the model by using the customskin id */
+		/** @todo Or remove skins from models and convert character_t->skin to string */
 		chrDisplayList.chr[i]->skin = newSkin;
 	}
 }
