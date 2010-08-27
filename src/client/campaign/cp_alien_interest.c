@@ -29,11 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "save/save_interest.h"
 
 /**
- * @brief The amount of time (in hours) it takes for the interest to increase by 1. Is later affected by difficulty.
- */
-static const int HOURS_PER_ONE_INTEREST = 22;
-
-/**
  * @brief Initialize alien interest values and mission cycle
  * @note Should be used when a new single player campaign starts
  * @sa CP_CampaignInit

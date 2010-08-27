@@ -107,6 +107,11 @@ struct uiNode_s; /**< @todo remove this once the uiNode_t usage is cleaned up */
 #define MAX_PROJECTILESONGEOSCAPE 32
 
 /**
+ * @brief The amount of time (in hours) it takes for the interest to increase by 1. Is later affected by difficulty.
+ */
+#define HOURS_PER_ONE_INTEREST				22
+
+/**
  * @brief Determines the interest interval for a single campaign
  */
 #define INITIAL_OVERALL_INTEREST 			20
