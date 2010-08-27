@@ -93,20 +93,23 @@ typedef struct seqCamera_s {
 	float dzoom;	/**< will change the zoom level over time with this factor */
 } seqCamera_t;
 
+/**
+ * Render entities that represents an (animated) model
+ */
 typedef struct seqEnt_s {
 	qboolean inuse;
 	char name[MAX_VAR];
-	struct model_s *model;
-	int skin;
-	vec3_t origin;
+	model_t *model;		/**< the loaded model structure */
+	int skin;			/**< the skin number of the model - starts at 0 for the first one */
+	vec3_t origin;		/**< the origin of the model */
 	vec3_t speed;
 	vec3_t angles;
 	vec3_t omega;
 	vec3_t color;
 	float alpha;
-	char parent[MAX_VAR];
-	char tag[MAX_VAR];
-	animState_t as;
+	char parent[MAX_VAR];	/**< in case this is a child model (should get placed onto a tag of the parent) */
+	char tag[MAX_VAR];		/**< the tag to place this model onto */
+	animState_t as;			/**< the current animation state */
 	entity_t *ep;
 } seqEnt_t;
 
