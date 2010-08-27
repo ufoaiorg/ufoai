@@ -1598,10 +1598,21 @@ void CL_ResetSinglePlayerData (void)
 {
 	int i;
 
+	/** @todo subsystems should have Init/Shutdown functions like callbacks have and do these cleanups for themselves */
+	/** @note Most of them has InitStartup but not working like the callback init/shutdown ones in pair */
 	LIST_Delete(&ccs.missions);
 	LIST_Delete(&ccs.alienBases);
-	for (i = 0; i < MAX_BASES; i++)
-		LIST_Delete(&ccs.bases[i].aircraft);
+	for (i = 0; i < ccs.numBases; i++) {
+		base_t *base = &ccs.bases[i];
+		aircraft_t *craft = NULL;
+
+		while ((craft = AIR_GetNextFromBase(base, craft))) {
+			LIST_Delete(&craft->acTeam);
+		}
+		LIST_Delete(&base->aircraft);
+	}
+	for (i = 0; i < ccs.numAlienCategories; i++)
+		LIST_Delete(&ccs.alienCategories[i].equipment);
 	LIST_Delete(&ccs.cities);
 	cp_messageStack = NULL;
 
