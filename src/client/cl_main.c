@@ -248,7 +248,7 @@ void CL_Disconnect (void)
 {
 	struct dbuffer *msg;
 
-	if (cls.state == ca_disconnected)
+	if (cls.state < ca_connecting)
 		return;
 
 	/* send a disconnect message to the server */
