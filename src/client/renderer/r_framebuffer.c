@@ -178,13 +178,20 @@ r_framebuffer_t * R_CreateFramebuffer (int width, int height, int ntextures, qbo
 
 	if (!r_state.frameBufferObjectsInitialized) {
 		Com_Printf("Warning: framebuffer creation failed; framebuffers not initialized!\n");
-		return 0;
+		return NULL;
+	}
+
+	if (frameBufferObjectCount >= lengthof(frameBufferObjects)) {
+		Com_Printf("Warning: framebuffer creation failed; already created too many framebuffers!\n");
+		return NULL;
 	}
 
 	buf = &frameBufferObjects[frameBufferObjectCount++];
 
-	if (ntextures > r_config.maxDrawBuffers)
+	if (ntextures > r_config.maxDrawBuffers) {
 		Com_Printf("Couldn't allocate requested number of drawBuffers in R_SetupFramebuffer!\n");
+		ntextures = r_config.maxDrawBuffers;
+	}
 
 	Vector4Clear(buf->clearColor);
 
