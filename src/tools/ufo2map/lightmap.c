@@ -587,7 +587,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 			Sys_Error("Bad l->type");
 		}
 
-		if (light <= 0.0)  /* no light */
+		if (light <= 0.5)  /* almost no light */
 			continue;
 
 		if (TR_TestLineSingleTile(pos, l->origin, headhint))
