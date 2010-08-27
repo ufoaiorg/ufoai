@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_map.h"
 #include "cp_ufo.h"
 #include "cp_alienbase.h"
+#include "cp_alien_interest.h"
 #include "cp_missions.h"
 #include "cp_time.h"
 #include "cp_xvi.h"
