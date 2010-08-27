@@ -46,9 +46,9 @@ typedef struct seqCmd_s {
 } seqCmd_t;
 
 typedef struct sequence_s {
-	char name[MAX_VAR];
-	int start;
-	int length;
+	char name[MAX_VAR];	/**< the name of the sequence (script id) */
+	int start;		/**< the start in the sequence command buffer for this sequence */
+	int length;		/**< the amount of sequence commands */
 } sequence_t;
 
 typedef enum {
@@ -83,10 +83,14 @@ static const char *seqCmdName[] = {
 CASSERT(lengthof(seqCmdName) == SEQ_NUMCMDS);
 
 typedef struct seqCamera_s {
-	vec3_t origin, speed;
-	vec3_t angles, omega;
-	float dist, ddist;
-	float zoom, dzoom;
+	vec3_t origin;
+	vec3_t speed;
+	vec3_t angles;
+	vec3_t omega;
+	float dist;		/**< the distance of the camera */
+	float ddist;	/**< will change the distance over time with this factor */
+	float zoom;		/**< the zoom level of the camera */
+	float dzoom;	/**< will change the zoom level over time with this factor */
 } seqCamera_t;
 
 typedef struct seqEnt_s {
@@ -94,8 +98,10 @@ typedef struct seqEnt_s {
 	char name[MAX_VAR];
 	struct model_s *model;
 	int skin;
-	vec3_t origin, speed;
-	vec3_t angles, omega;
+	vec3_t origin;
+	vec3_t speed;
+	vec3_t angles;
+	vec3_t omega;
 	vec3_t color;
 	float alpha;
 	char parent[MAX_VAR];
@@ -104,16 +110,23 @@ typedef struct seqEnt_s {
 	entity_t *ep;
 } seqEnt_t;
 
+/**
+ * @brief Represents a text object or image object
+ */
 typedef struct seq2D_s {
-	qboolean inuse;
-	char name[MAX_VAR];
-	char *text;	/**< a placeholder for gettext (V_TRANSLATION_STRING) */
-	char font[MAX_VAR];
-	char image[MAX_VAR];
-	vec2_t pos, speed;
-	vec2_t size, enlarge;
-	vec4_t color, fade, bgcolor;
-	align_t align;
+	qboolean inuse;			/**< still in use in this sequence? or already deactivated? */
+	char name[MAX_VAR];		/**< the script id for this object */
+	char *text;				/**< a placeholder for gettext (V_TRANSLATION_STRING) */
+	char font[MAX_VAR];		/**< the font to use in case this is a text object */
+	char image[MAX_VAR];	/**< the image to render */
+	vec2_t pos;			/**< the position of the 2d obj */
+	vec2_t speed;		/**< how fast the 2d obj will change (fade, scale, ...) */
+	vec2_t size;		/**< the size of the 2d obj */
+	vec2_t enlarge;		/**< enlarge in x and y direction */
+	vec4_t color;		/**< 2d obj color */
+	vec4_t fade;		/**< the fade color */
+	vec4_t bgcolor;		/**< background color of the box define by @c pos, @c size */
+	align_t align;		/**< the alignment of the 2d obj */
 	qboolean relativePos;	/**< useful for translations when sentence length may differ */
 } seq2D_t;
 
