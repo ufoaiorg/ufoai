@@ -115,7 +115,7 @@ struct uiNode_s; /**< @todo remove this once the uiNode_t usage is cleaned up */
 /**
  * @brief The length of a single mission spawn cycle
  */
-#define DELAY_BETWEEN_MISSION_SPAWNING 		3
+#define DELAY_BETWEEN_MISSION_SPAWNING 		4
 
 /**
  * @brief The minimum and maximum amount of missions per mission cycle.
@@ -127,7 +127,7 @@ struct uiNode_s; /**< @todo remove this once the uiNode_t usage is cleaned up */
 /**
  * @brief The probability that any new alien mission will be a non-occurrence mission.
  */
-#define NON_OCCURRENCE_PROBABILITY 			0.6
+#define NON_OCCURRENCE_PROBABILITY 			0.65
 
 /** possible map types */
 typedef enum mapType_s {

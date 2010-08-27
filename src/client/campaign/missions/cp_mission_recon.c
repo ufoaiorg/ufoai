@@ -40,7 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void CP_ReconMissionIsSuccess (mission_t *mission)
 {
 	CL_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_RECON);
-	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BASE_ATTACK);
 	CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_HARVEST);
 	if (AB_GetAlienBaseNumber())
 		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_SUPPLY);
