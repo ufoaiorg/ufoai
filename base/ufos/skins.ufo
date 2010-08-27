@@ -33,13 +33,13 @@ customskin arctic {
 	multiplayer		true
 }
 
-customskin multionly_yellow {
+customskin yellow {
 	name			"_Yellow"
 	singleplayer	false
 	multiplayer		true
 }
 
-customskin multionly_cccp {
+customskin cccp {
 	name			"_CCCP"
 	singleplayer	false
 	multiplayer		true
