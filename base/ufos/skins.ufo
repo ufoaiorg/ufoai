@@ -7,6 +7,10 @@
 //	Is the skin is available for singleplayer mode
 // multiplayer boolean
 //	Is the skin is available for multiplayer mode
+//
+// ORDER OF THE SKINS MUST BE THE ORDER
+// OF THE SKINS INSIDE MD2 FILES
+//
 //=======================
 
 customskin urban {
