@@ -1599,6 +1599,10 @@ void CL_ResetSinglePlayerData (void)
 	int i;
 
 	LIST_Delete(&ccs.missions);
+	LIST_Delete(&ccs.alienBases);
+	for (i = 0; i < MAX_BASES; i++)
+		LIST_Delete(&ccs.bases[i].aircraft);
+	LIST_Delete(&ccs.cities);
 	cp_messageStack = NULL;
 
 	/* cleanup dynamic mails */
