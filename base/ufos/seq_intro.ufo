@@ -11,7 +11,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	}
 
 	//fitting music, deactivate for geoscape track
-	cmd "snd_music PsymongN5;"
+	music "PsymongN5"
 
 	2dobj i_menufade
 	{
@@ -87,7 +87,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	rem i_sentence3
 
 
-	cmd "snd_music AlexSullencity;"
+	music "AlexSullencity"
 	wait 2
 
 	2dobj i_xmumbai
@@ -178,7 +178,7 @@ sequence intro // Last change 25-07-2009 by Vio
 	wait 0 //music cutoff adjust
 
 
-	cmd "snd_music space;"
+	music "space"
 	wait 3
 
 	2dobj i_sentence6
@@ -268,7 +268,7 @@ sequence intro // Last change 25-07-2009 by Vio
 		fade "0 0 0 -1"
 	}
 
-	cmd "snd_music van_geoscape;"
+	music "van_geoscape"
 	wait 4
 
 	rem i_phalanxlogo

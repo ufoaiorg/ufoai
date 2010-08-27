@@ -59,6 +59,8 @@ typedef enum {
 	SEQ_CAMERA,
 	SEQ_MODEL,
 	SEQ_2DOBJ,
+	SEQ_MUSIC,
+	SEQ_SOUND,
 	SEQ_REM,
 	SEQ_CMD,
 
@@ -73,6 +75,8 @@ static const char *seqCmdName[] = {
 	"camera",
 	"model",
 	"2dobj",
+	"music",
+	"sound",
 	"rem",
 	"cmd"
 };
@@ -119,6 +123,8 @@ static int SEQ_Precache(const char *name, const char *data);
 static int SEQ_Camera(const char *name, const char *data);
 static int SEQ_Model(const char *name, const char *data);
 static int SEQ_2Dobj(const char *name, const char *data);
+static int SEQ_Music(const char *name, const char *data);
+static int SEQ_Sound(const char *name, const char *data);
 static int SEQ_Remove(const char *name, const char *data);
 static int SEQ_Command(const char *name, const char *data);
 
@@ -130,6 +136,8 @@ static int (*seqCmdFunc[]) (const char *name, const char *data) = {
 	SEQ_Camera,
 	SEQ_Model,
 	SEQ_2Dobj,
+	SEQ_Music,
+	SEQ_Sound,
 	SEQ_Remove,
 	SEQ_Command
 };
@@ -634,6 +642,27 @@ static int SEQ_Model (const char *name, const char *data)
 
 		data += strlen(data) + 1;
 	}
+	return 1;
+}
+
+/**
+ * @brief Changes the music in the sequence
+ * @return 1 - increase the command position of the sequence by one
+ */
+static int SEQ_Music (const char *name, const char *data)
+{
+	Com_Printf("change music to %s\n", name);
+	Cvar_Set("snd_music", name);
+	return 1;
+}
+
+/**
+ * @brief Plays a sound in a sequence
+ * @return 1 - increase the command position of the sequence by one
+ */
+static int SEQ_Sound (const char *name, const char *data)
+{
+	S_StartLocalSample(name, SND_VOLUME_DEFAULT);
 	return 1;
 }
 
