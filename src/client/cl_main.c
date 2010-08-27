@@ -677,6 +677,91 @@ static void CL_TeamDefInitMenu (void)
 	}
 }
 
+/** @brief valid customskin descriptors */
+static const value_t customskin_vals[] = {
+	{"name", V_STRING, offsetof(customSkin_t, name), 0},
+	{"singleplayer", V_BOOL, offsetof(customSkin_t, singleplayer), MEMBER_SIZEOF(customSkin_t, singleplayer)},
+	{"multiplayer", V_BOOL, offsetof(customSkin_t, multiplayer), MEMBER_SIZEOF(customSkin_t, multiplayer)},
+
+	{NULL, 0, 0, 0}
+};
+
+
+static void CL_ParseCustomSkin (const char *name, const char **text)
+{
+	const char *errhead = "CL_ParseCustomSkin: unexpected end of file (customskin ";
+	customSkin_t *skin;
+	const value_t *vp;
+	const char *token;
+
+	/* get it's body */
+	token = Com_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("CL_ParseCustomSkin: customskin \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	skin = Com_AllocateCustomSkin();
+
+	skin->id = Mem_PoolStrDup(name, com_genericPool, 0);
+
+	do {
+		token = Com_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		for (vp = customskin_vals; vp->string; vp++)
+			if (!strcmp(token, vp->string)) {
+				/* found a definition */
+				token = Com_EParse(text, errhead, name);
+				if (!*text)
+					return;
+
+				switch (vp->type) {
+				default:
+					Com_EParseValue(skin, token, vp->type, vp->ofs, vp->size);
+					break;
+				}
+				break;
+			}
+/*
+		if (!vp->string) {
+			linkedList_t **list;
+			if (!strcmp(token, "ufos")) {
+				list = &md->ufos;
+			} else if (!strcmp(token, "aircraft")) {
+				list = &md->aircraft;
+			} else if (!strcmp(token, "terrains")) {
+				list = &md->terrains;
+			} else if (!strcmp(token, "populations")) {
+				list = &md->populations;
+			} else if (!strcmp(token, "cultures")) {
+				list = &md->cultures;
+			} else if (!strcmp(token, "gametypes")) {
+				list = &md->gameTypes;
+			} else {
+				Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
+				continue;
+			}
+			token = Com_EParse(text, errhead, name);
+			if (!*text || *token != '{') {
+				Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" has ufos, gametypes, terrains, populations or cultures block with no opening brace\n", name);
+				break;
+			}
+			do {
+				token = Com_EParse(text, errhead, name);
+				if (!*text || *token == '}')
+					break;
+				LIST_AddString(list, token);
+			} while (*text);
+		}*/
+	} while (*text);
+
+}
+
 /** @brief valid mapdef descriptors */
 static const value_t mapdef_vals[] = {
 	{"description", V_TRANSLATION_STRING, offsetof(mapDef_t, description), 0},
@@ -874,6 +959,8 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 		UI_ParseComponent(type, text);
 	else if (!strcmp(type, "mapdef"))
 		CL_ParseMapDefinition(name, text);
+	else if (!strcmp(type, "customskin"))
+		CL_ParseCustomSkin(name, text);
 }
 
 /** @brief Cvars for initial check (popup at first start) */

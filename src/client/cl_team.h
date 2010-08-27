@@ -27,12 +27,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "mxml/mxml_ufoai.h"
 
-#define MAX_WHOLETEAM	32
-
+#define MAX_WHOLETEAM		32
 #define MAX_TEAMDATASIZE	32768
+#define MAX_CUSTOMSKIN		32
 
-#define NUM_TEAMSKINS	6
-#define NUM_TEAMSKINS_SINGLEPLAYER 4
+typedef struct customSkin_s {
+	/** */
+	int idx;
+
+	/** Unique string identifier */
+	char *id;
+
+	/** Name of the skin, displayed in user interface */
+	char name[MAX_VAR];
+
+	/** If true, this skin is used in singleplayer mode */
+	qboolean singleplayer;
+	/** If true, this skin is used in multiplayer mode */
+	qboolean multiplayer;
+} customSkin_t;
 
 void CL_GenerateCharacter(character_t *chr, const char *teamDefName);
 void CL_UpdateCharacterValues(const character_t *chr, const char *cvarPrefix);
@@ -43,6 +56,8 @@ qboolean CL_LoadCharacterXML(mxml_node_t *p, character_t *chr);
 void CL_SaveInventoryXML(mxml_node_t *p, const inventory_t * i);
 void CL_LoadInventoryXML(mxml_node_t *p, inventory_t * i);
 void TEAM_InitStartup(void);
+
+customSkin_t* Com_AllocateCustomSkin (void);
 
 extern chrList_t chrDisplayList;
 

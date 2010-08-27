@@ -40,27 +40,47 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 chrList_t chrDisplayList;
 
 /**
+ * Allocate a skin from the cls structure
+ * @return A customskin structure, only idx is initialized
+ */
+customSkin_t* Com_AllocateCustomSkin (void)
+{
+	const int index = cls.numCustomSkins;
+	customSkin_t *skin;
+
+	if (cls.numCustomSkins >= lengthof(cls.customSkins))
+		Sys_Error("Com_AllocateCustomSkin: Max customskin hit");
+
+	skin = &cls.customSkins[index];
+	memset(skin, 0, sizeof(*skin));
+	skin->idx = cls.numCustomSkins;
+
+	cls.numCustomSkins++;
+	return skin;
+}
+
+/**
+ * Get a customskin from idx
+ * @return A customskin, else NULL
+ */
+static customSkin_t* Com_GetCustomSkinByIDS (int idx)
+{
+	if (idx >= cls.numCustomSkins)
+		return NULL;
+	return &cls.customSkins[idx];
+}
+
+/**
  * @brief Translate the skin id to skin name
  * @param[in] id The id of the skin
  * @return Translated skin name
  */
 static const char* CL_GetTeamSkinName (int id)
 {
-	switch(id) {
-	case 0:
-		return _("Urban");
-	case 1:
-		return _("Jungle");
-	case 2:
-		return _("Desert");
-	case 3:
-		return _("Arctic");
-	case 4:
-		return _("Yellow");
-	case 5:
-		return _("CCCP");
-	}
-	Com_Error(ERR_DROP, "CL_GetTeamSkinName: Unknown skin id %i - max is %i", id, NUM_TEAMSKINS - 1);
+	customSkin_t *skin = Com_GetCustomSkinByIDS(id);
+	if (skin == NULL)
+		Com_Error(ERR_DROP, "CL_GetTeamSkinName: Unknown skin id %i", id);
+	return skin->name;
 }
 
 static void CL_CharacterSkillAndScoreCvars (const character_t *chr, const char* cvarPrefix)
@@ -474,29 +494,50 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName)
  */
 static void CL_InitSkin_f (void)
 {
-	/* create singleplayer skins */
+	/* create option for singleplayer skins */
 	if (UI_GetOption(OPTION_SINGLEPLAYER_SKINS) == NULL) {
 		uiNode_t *skins = NULL;
-		assert(NUM_TEAMSKINS_SINGLEPLAYER >= 4);	/*< the current code create 4 skins */
-		UI_AddOption(&skins, "urban", N_("Urban"), "0");
-		UI_AddOption(&skins, "jungle", N_("Jungle"), "1");
-		UI_AddOption(&skins, "desert", N_("Desert"), "2");
-		UI_AddOption(&skins, "arctic", N_("Arctic"), "3");
+		int idx = 0;
+		customSkin_t *skin;
+		while ((skin = Com_GetCustomSkinByIDS(idx++))) {
+			if (!skin->singleplayer)
+				continue;
+			UI_AddOption(&skins, skin->id, skin->name, va("%d", skin->idx));
+		}
 		UI_RegisterOption(OPTION_SINGLEPLAYER_SKINS, skins);
 	}
 
-	/* create multiplayer skins */
+	/* create option for multiplayer skins */
 	if (UI_GetOption(OPTION_MULTIPLAYER_SKINS) == NULL) {
 		uiNode_t *skins = NULL;
-		assert(NUM_TEAMSKINS >= 6);		/*< the current code create 6 skins */
-		UI_AddOption(&skins, "urban", N_("Urban"), "0");
-		UI_AddOption(&skins, "jungle", N_("Jungle"), "1");
-		UI_AddOption(&skins, "desert", N_("Desert"), "2");
-		UI_AddOption(&skins, "arctic", N_("Arctic"), "3");
-		UI_AddOption(&skins, "multionly_yellow", N_("Yellow"), "4");
-		UI_AddOption(&skins, "multionly_cccp", N_("CCCP"), "5");
+		int idx = 0;
+		customSkin_t *skin;
+		while ((skin = Com_GetCustomSkinByIDS(idx++))) {
+			if (!skin->multiplayer)
+				continue;
+			UI_AddOption(&skins, skin->id, skin->name, va("%d", skin->idx));
+		}
 		UI_RegisterOption(OPTION_MULTIPLAYER_SKINS, skins);
 	}
+}
+
+/**
+ * Fix customskin idx accoding to game mode
+ */
+static int CL_FixCustomSkinIDX (int idx)
+{
+	customSkin_t *skin = Com_GetCustomSkinByIDS(idx);
+
+	/** TODO we should check somewhere there is at least 1 skin */
+	if (skin == NULL) {
+		idx = 0;
+	} else {
+		if (GAME_IsSingleplayer() && !skin->singleplayer)
+			idx = 0;
+		if (GAME_IsMultiplayer() && !skin->multiplayer)
+			idx = 0;
+	}
+	return idx;
 }
 
 /**
@@ -508,12 +549,7 @@ static void CL_ChangeSkin_f (void)
 
 	if (sel >= 0 && sel < chrDisplayList.num) {
 		int newSkin = Cvar_GetInteger("mn_skin");
-		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
-			newSkin = 0;
-
-		/* don't allow all skins in singleplayer */
-		if (GAME_IsSingleplayer() && newSkin >= NUM_TEAMSKINS_SINGLEPLAYER)
-			newSkin = 0;
+		newSkin = CL_FixCustomSkinIDX(newSkin);
 
 		if (chrDisplayList.chr[sel]) {
 			chrDisplayList.chr[sel]->skin = newSkin;
@@ -533,12 +569,7 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 
 	/* Get selected skin and fall back to default skin if it is not valid. */
 	newSkin = Cvar_GetInteger("mn_skin");
-	if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
-		newSkin = 0;
-
-	/* don't allow all skins in singleplayer */
-	if (GAME_IsSingleplayer() && newSkin >= NUM_TEAMSKINS_SINGLEPLAYER)
-		newSkin = 0;
+	newSkin = CL_FixCustomSkinIDX(newSkin);
 
 	/* Apply new skin to all (shown/displayed) team-members. */
 	/** @todo What happens if a model of a team member does not have the selected skin? */

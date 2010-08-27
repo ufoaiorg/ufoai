@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_shared.h"
 #include "cl_renderer.h"
 #include "cl_video.h"
+#include "cl_team.h"
 #include "sound/s_main.h"
 #include "input/cl_input.h"
 #include "input/cl_keys.h"
@@ -109,6 +110,9 @@ typedef struct client_static_s {
 	int nextUniqueCharacterNumber;
 
 	inventoryInterface_t i;
+
+	customSkin_t customSkins[MAX_CUSTOMSKIN];
+	int numCustomSkins;
 
 	/** Map definitions */
 	mapDef_t mds[MAX_MAPDEFS];

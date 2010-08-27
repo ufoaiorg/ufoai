@@ -1,0 +1,46 @@
+//=======================
+// Custom skin
+//
+// name string
+//	Name of the skin displayed in the user interface
+// singleplayer boolean
+//	Is the skin is available for singleplayer mode
+// multiplayer boolean
+//	Is the skin is available for multiplayer mode
+//=======================
+
+customskin urban {
+	name			"_Urban"
+	singleplayer	true
+	multiplayer		true
+}
+
+customskin jungle {
+	name			"_Jungle"
+	singleplayer	true
+	multiplayer		true
+}
+
+customskin desert {
+	name			"_Desert"
+	singleplayer	true
+	multiplayer		true
+}
+
+customskin arctic {
+	name			"_Arctic"
+	singleplayer	true
+	multiplayer		true
+}
+
+customskin multionly_yellow {
+	name			"_Yellow"
+	singleplayer	false
+	multiplayer		true
+}
+
+customskin multionly_cccp {
+	name			"_CCCP"
+	singleplayer	false
+	multiplayer		true
+}
