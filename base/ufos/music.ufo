@@ -9,29 +9,24 @@ music geoscape
 	karlmacklin_geoscape
 	azrael1
 	Crystan-Geosphere04
+	dbsea
 }
 
 music battlescape
 {
-	David01
-	David02
-	David03
-	David04
-	alBasrahM
-	turinItalyM
+
+//	alBasrahM
+//	turinItalyM
 	ufo1
 	ufo2
-	AlexSullencity
-	AlexFightmare
-	AlexForest
-	Marine01
-	Marine02
-	MarineAlienRaid
-	MarineBacktheAttack
-	MarineFireFight
+//	Marine01
+//	Marine02
+//	MarineAlienRaid
+//	MarineBacktheAttack
+//	MarineFireFight
 	MarineIndustrial
-	MarineStrikingIntoTheUnknown
-	MarineUrbanWarfare
+//	MarineStrikingIntoTheUnknown
+//	MarineUrbanWarfare
 	PsymongN1
 	PsymongN2
 	PsymongN3
@@ -40,7 +35,7 @@ music battlescape
 	PsymongR1
 	PsymongR2
 	PsymongR3
-	PsymongR4
+//	PsymongR4
 	PsymongR5
 	PsymongO1
 	PsymongO2
@@ -52,16 +47,17 @@ music battlescape
 	van_mission2
 	van_mission3
 	van_mission4
-	dawn
-	dbsea
-	greecei
-	space
-	returnjourney
+//	dawn
+//	greecei
+//	space
+//	returnjourney
 	TheThings-Slippycurb
 }
 
 music aircombat
 {
+	David01
+	David02
 	David03
 	David04
 	David05
