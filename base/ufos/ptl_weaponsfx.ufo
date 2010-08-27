@@ -330,6 +330,7 @@ particle rocket
 		model  weapons/rpg/rocket
 		tps    40.0
 		color  ".5 .5 .5 1"
+		spawn rocket_muzzle
 	}
 	think
 	{
@@ -346,7 +347,7 @@ particle rocketSmoke
 	init
 	{
 		image  sfx/smoke
-		blend  invfilter
+		blend  add
 		style  facing
 		thinkfade  out
 		tps    0.5
@@ -360,7 +361,7 @@ particle rocketSmoke
 		// change the size of the smoketrail (make it bigger as time advances)
 		push   pos "20 20"		// push the vector onto the stack
 		mul    *t				// multiply stack value with the time value from the particle
-		add    pos "1 1"		// add another position 2d vector to the current stack value
+		add    pos "4 4"		// add another position 2d vector to the current stack value
 		pop    *size			// write the vector back into the particle size value
 
 		// change the color of the smoketrail (more more transparent as time advances)
@@ -2160,6 +2161,67 @@ particle muzzle_ptl_cross
 		pop    *color	
 
 	}
+	think { kill }
+}
+
+
+particle rocket_muzzle
+{
+	init
+	{
+		image  sfx/smoke
+		blend  add
+		style  facing
+		thinkfade  sin		// fade the think function with a sinus function
+		size   "20 20"		// set the size vector to 20x20
+
+		push   *v			// push velocity vector on the stack
+		mul    float 5.0	// scalar multiple velocity vector
+		kpop   *v			// write it back into the particle structure (but keep it on the stack)
+		add    *s			// add the current position (v + s)
+		pop    *s			// write it back into the particle structure and remove from stack
+		tps    1.0			// think per seconds to 1
+
+		push   int 20		// push 20 to the stack
+		nspawn rocket_muzzle_smoke	// use the 20 from stack and spawn that many particles
+	}
+	run
+	{
+		push *color			// push the color onto the stack
+		mul  float 0.5		// scalar multiply with 0.5
+		pop  *color			// write it back into the particle structure and remove from stack
+	}
+	// this is an impact particle - need to be explicitly killed
+	think { kill }
+}
+
+particle rocket_muzzle_smoke
+{
+	init
+	{
+		image  sfx/smoke
+		blend  add
+		style  facing
+		thinkfade  out		// fade the thinkfunction out
+		size   "15 15"
+
+		push   *v			// get velocity onto the stack
+		rand   float 25.0	// get a random value
+		add    float 5.0	// add a value onto the random value to ensure a minimum velocity
+		mul    #			// multiply the value with the current stack value (velocity)
+		crand  vector "10 10 10" // get a random vector
+		add    #			// Add the value to the current stack value (velocity)
+		pop    *v			// write it back into particle structure and remove it from the stack
+
+		crand  vector "10 10 10"	// get a random value 
+		add    *s			// add the value of s to the current stack value (the random value)
+		pop    *s			// write it into particle structure and remove it from the stack
+
+		rand   float 1.3	// get a random value between 0 and 1.3
+		add    float 1.2	// make sure we have a minimum
+		pop    *tps			// write the into think per second particle structure and remove it from the stack
+	}
+	// this is spawned from an impact particle - need to be explicitly killed
 	think { kill }
 }
 
