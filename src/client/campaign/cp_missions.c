@@ -1438,6 +1438,9 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 	if (aircraft->homebase->aircraftCurrent == aircraft)
 		aircraft->homebase->aircraftCurrent = AIR_GetNextFromBase(aircraft->homebase, NULL);
 
+	/* a crashed aircraft is no longer using capacity of the hangars */
+	AIR_UpdateHangarCapForAll(aircraft->homebase);
+
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minCrashDelay, crashDelay));
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission, qfalse);

@@ -1042,23 +1042,8 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	}
 	AII_RemoveItemFromSlot(NULL, &aircraft->shield, qfalse);
 
-#if 0
-	/** @todo why is that needed? this only produces problems with some multi
-	 * selection popup is currently active that is using those indices (and maybe
-	 * other locations) - @sa MAP_MultiSelectExecuteAction_f */
-	for (i = aircraft->idx + 1; i < ccs.numAircraft; i++) {
-		/* Decrease the global index of aircraft that have a higher index than the deleted one. */
-		aircraft_t *aircraftTemp = AIR_AircraftGetFromIDX(i);
-		if (aircraftTemp) {
-			aircraftTemp->idx--;
-		} else {
-			/* For some reason there was no aircraft found for this index. */
-			Com_DPrintf(DEBUG_CLIENT, "AIR_DeleteAircraft: No aircraft found for this global index: %i\n", i);
-		}
-	}
-#endif
-
-	ccs.numAircraft--;	/**< Decrease the global number of aircraft. */
+	/* Decrease the global number of aircraft. */
+	ccs.numAircraft--;
 
 	if (base->aircraftCurrent == aircraft)
 		base->aircraftCurrent = NULL;
