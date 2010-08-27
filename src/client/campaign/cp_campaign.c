@@ -97,7 +97,7 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 				continue;
 			}
 			chr = &employee->chr;
-			chr->HP = c->HP;
+			chr->HP = min(c->HP, chr->maxHP);
 			chr->STUN = c->STUN;
 			chr->morale = c->morale;
 
