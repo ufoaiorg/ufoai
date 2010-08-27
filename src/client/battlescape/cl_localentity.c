@@ -228,8 +228,8 @@ void LM_Register (void)
 		if (lm->animname[0]) {
 			R_AnimChange(&lm->as, lm->model, lm->animname);
 			if (!lm->as.change)
-				Com_Printf("LM_Register: Could not change anim of model '%s'\n", lm->animname);
-		}
+				Com_Printf("LM_Register: Could not change anim of %s to '%s'\n",
+						lm->name, lm->animname);		}
 		if (!lm->model)
 			lm->inuse = qfalse;
 	}
