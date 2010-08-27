@@ -13,7 +13,7 @@ window sequence
 		cmd "seq_click;"
 	}
 
-	zone onClick
+	zone click
 	{
 		size		"1024 768"
 		onClick		{ call *node:root.next }
