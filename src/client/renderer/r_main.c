@@ -571,9 +571,9 @@ qboolean R_SetMode (void)
 	}
 
 	result = R_InitGraphics(viddef.fullscreen, vidmode.width, vidmode.height);
+	R_UpdateVidDef(&vidmode);
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
-	R_UpdateVidDef(&vidmode);
 	MN_InvalidateStack();
 
 	Cvar_SetValue("vid_width", viddef.width);
@@ -598,9 +598,9 @@ qboolean R_SetMode (void)
 		return qfalse;
 
 	result = R_InitGraphics(viddef.fullscreen, vidmode.width, vidmode.height);
+	R_UpdateVidDef(&vidmode);
 	R_ShutdownFBObjects();
 	R_InitFBObjects();
-	R_UpdateVidDef(&vidmode);
 	MN_InvalidateStack();
 	return result;
 }
