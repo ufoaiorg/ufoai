@@ -880,10 +880,7 @@ static void CMod_RerouteMap (mapTiles_t *mapTiles, mapData_t *mapData)
 	}
 
 	/* Wall pass */
-	/** @todo A temporary hack- if we decrease ACTOR_MAX_SIZE we need to bump the BSPVERSION again.
-	 * I'm just commenting out the CORRECT code for now. */
-	/* for (size = ACTOR_SIZE_INVALID; size < ACTOR_MAX_SIZE; size++) { */
-	for (size = ACTOR_SIZE_INVALID; size < 1; size++) {
+	for (size = ACTOR_SIZE_INVALID; size < ACTOR_MAX_SIZE; size++) {
 		for (y = mins[1]; y <= maxs[1]; y++) {
 			for (x = mins[0]; x <= maxs[0]; x++) {
 				const byte tile = mapData->reroute[size][y][x];

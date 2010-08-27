@@ -159,8 +159,7 @@ void DoRouting (void)
 	RunSingleThreadOn(CheckUnitThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * ACTOR_MAX_SIZE, config.verbosity >= VERB_NORMAL, "UNITCHECK");
 
 	/* scan connections */
-	/** @note The (ACTOR_MAX_SIZE / 2) is so we don't trace for 2x2 actors (yet). */
-	RunSingleThreadOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * (CORE_DIRECTIONS / (1 + RT_IS_BIDIRECTIONAL)) * (ACTOR_MAX_SIZE / 2), config.verbosity >= VERB_NORMAL, "CONNCHECK");
+	RunSingleThreadOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * (CORE_DIRECTIONS / (1 + RT_IS_BIDIRECTIONAL)) * (ACTOR_MAX_SIZE), config.verbosity >= VERB_NORMAL, "CONNCHECK");
 
 	/* Try to shrink the world bounds along the x and y coordinates */
 	for (i = 0; i < 2; i++) {

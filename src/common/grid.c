@@ -807,10 +807,7 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const pos3_t m
 		(int)max[0], (int)max[1], (int)max[2]);
 
 	/* check unit heights */
-	/** @todo A temporary hack- if we decrease ACTOR_MAX_SIZE we need to bump the BSPVERSION again.
-	 * I'm just commenting out the CORRECT code for now. */
-	/*for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {*/
-	for (actorSize = 1; actorSize <= 1; actorSize++) {
+	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
 		const int maxY = max[1] + actorSize;
 		const int maxX = max[0] + actorSize;
 		/* Offset the initial X and Y to compensate for larger actors when needed. */
@@ -827,10 +824,7 @@ void Grid_RecalcBoxRouting (mapTiles_t *mapTiles, routing_t *map, const pos3_t m
 	}
 
 	/* check connections */
-	/** @todo A temporary hack- if we decrease ACTOR_MAX_SIZE we need to bump the BSPVERSION again.
-	 * I'm just commenting out the CORRECT code for now. */
-	/*for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) { */
-	for (actorSize = 1; actorSize <= 1; actorSize++) {
+	for (actorSize = 1; actorSize <= ACTOR_MAX_SIZE; actorSize++) {
 		const int minX = max(min[0] - actorSize, 0);
 		const int minY = max(min[1] - actorSize, 0);
 		const int maxX = min(max[0] + actorSize, PATHFINDING_WIDTH - 1);
