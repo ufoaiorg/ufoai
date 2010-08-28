@@ -16,6 +16,8 @@ import optparse
 # path where exists ufo binary
 UFOAI_ROOT = os.path.realpath(sys.path[0] + '/../..')
 
+INTERACTIVE_REPLY = 'query'
+
 UFO2MAP = 'ufo2map'
 if os.name == 'nt':
     UFO2MAP+= '.exe'
@@ -126,6 +128,15 @@ def ufo2map_hash():
 class Object:
     pass
 
+def ask_boolean_question(question):
+    if INTERACTIVE_REPLY == 'yes':
+        print question, " YES (auto reply)"
+        return True
+    if INTERACTIVE_REPLY == 'no':
+        print question, " NO (auto reply)"
+        return False
+    return raw_input(question).lower() in ('y', '')
+
 def upgrade(arg):
     """Download the list of maps."""
     global displayAlreadyUpToDate
@@ -155,7 +166,7 @@ def upgrade(arg):
         sys.exit(6)
     else:
         print 'WARNING ufo2map version mismatch'
-        if not raw_input('Continue? [Y|n]').lower() in ('y', ''):
+        if not ask_boolean_question('Continue? [Y|n]'):
             sys.exit(3)
     del maps['ufo2map']
 
@@ -294,10 +305,12 @@ def gen(args):
 
 
 def main(argv=None):
-    print "map-get version " + __version__
-
     global displayDownloadStatus
     global displayAlreadyUpToDate
+    global INTERACTIVE_REPLY
+
+    print "map-get version " + __version__
+
     commands = {'upgrade': upgrade,
                 'generate': gen}
 
@@ -305,6 +318,7 @@ def main(argv=None):
     parser.add_option('-v', '--verbose', action='store_true', dest='verbose')
     parser.add_option('', '--no-downloadstatus', action='store_false', dest='displayDownloadStatus')
     parser.add_option('', '--hide-uptodate', action='store_false', dest='displayAlreadyUpToDate')
+    parser.add_option("", "--reply", action="store", default="query", type="string", dest="reply", help='Allow to auto reply interactive questions, REPLY={yes,no,query}')
 
     parser.usage = '%prog [options] command\n\n' \
                    'Commands:\n' \
@@ -316,8 +330,14 @@ def main(argv=None):
 
     logging.basicConfig(level=options.verbose and logging.DEBUG or logging.INFO,
                         format='%(message)s')
+
+    if not (options.reply in ['yes', 'no', 'query']):
+        print 'Wrong param --reply={yes,no,query}'
+        sys.exit(1)
+
     displayDownloadStatus = options.displayDownloadStatus
     displayAlreadyUpToDate = options.displayAlreadyUpToDate
+    INTERACTIVE_REPLY = options.reply
 
     # on windows always just upgrade
     if os.name == 'nt':
