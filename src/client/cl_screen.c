@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_screen.h"
 #include "cl_console.h"
+#include "cl_sequence.h"
 #include "battlescape/cl_localentity.h"
 #include "battlescape/cl_actor.h"
 #include "battlescape/cl_view.h"
@@ -431,8 +432,14 @@ void SCR_UpdateScreen (void)
 		SCR_DrawLoading();
 	else {
 		UI_GetActiveRenderRect(&viddef.x, &viddef.y, &viddef.viewWidth, &viddef.viewHeight);
+
 		/* draw scene */
-		CL_ViewRender();
+		if (cls.state == ca_sequence) {
+			CL_SequenceRender();
+		} else {
+			CL_ViewRender();
+		}
+
 		/* draw the menus on top of the render view (for hud and so on) */
 		UI_Draw();
 
@@ -447,6 +454,7 @@ void SCR_UpdateScreen (void)
 				SCR_DrawString(viddef.width - 20 - con_fontWidth * 14, 80, va("alias: %6i\n", refdef.aliasCount), qtrue);
 		}
 
+		/** @todo Not really need, the menu can do the job */
 		if (cls.state != ca_sequence)
 			SCR_DrawCursor();
 	}

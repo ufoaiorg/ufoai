@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_sequence.h"
 #include "battlescape/cl_localentity.h"
 #include "battlescape/cl_view.h"
+#include "renderer/r_main.h"
 #include "renderer/r_draw.h"
 #include "renderer/r_mesh_anim.h"
 #include "../shared/parse.h"
@@ -196,7 +197,6 @@ static void CL_SequenceEnd_f (void)
 		CL_SetClientState(ca_disconnected);
 }
 
-
 /**
  * @brief Set the camera values for a sequence
  * @sa CL_SequenceRender3D
@@ -271,7 +271,7 @@ static seq2D_t *CL_SequenceFind2D (const char *name)
  * @sa UI_PopWindow
  * @sa CL_SequenceFindEnt
  */
-void CL_SequenceRender3D (void)
+static void CL_SequenceRender3D (void)
 {
 	entity_t ent;
 	seqCmd_t *sc;
@@ -343,7 +343,7 @@ void CL_SequenceRender3D (void)
  * @brief Renders text and images
  * @sa SEQ_InitStartup
  */
-void CL_SequenceRender2D (void)
+static void CL_SequenceRender2D (void)
 {
 	seq2D_t *s2d;
 	int i, j;
@@ -408,6 +408,33 @@ void CL_SequenceRender2D (void)
 	R_Color(NULL);
 
 	UI_Transform(NULL, NULL, NULL);
+}
+
+void CL_SequenceRender (void)
+{
+	refdef.brushCount = 0;
+	refdef.aliasCount = 0;
+
+	if (!viddef.viewWidth || !viddef.viewHeight)
+		return;
+
+	/* still loading */
+	if (!refdef.ready)
+		return;
+
+	refdef.numEntities = 0;
+	refdef.mapTiles = cl.mapTiles;
+
+	CL_SequenceRender3D();
+	refdef.rendererFlags |= RDF_NOWORLDMODEL;
+
+	/* update ref def */
+	CL_ViewUpdateRenderData();
+
+	/* render the world */
+	R_RenderFrame();
+
+	CL_SequenceRender2D();
 }
 
 /**

@@ -34,7 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_actor.h"
 #include "cl_hud.h"
 #include "cl_spawn.h"
-#include "../cl_sequence.h"
 #include "cl_view.h"
 #include "../renderer/r_main.h"
 #include "../renderer/r_entity.h"
@@ -254,44 +253,11 @@ void CL_ViewUpdateRenderData (void)
 	refdef.worldlevel = cl_worldlevel->integer;
 }
 
-
-static void CL_SequenceRender (void)
-{
-	refdef.brushCount = 0;
-	refdef.aliasCount = 0;
-
-	if (!viddef.viewWidth || !viddef.viewHeight)
-		return;
-
-	/* still loading */
-	if (!refdef.ready)
-		return;
-
-	refdef.numEntities = 0;
-	refdef.mapTiles = cl.mapTiles;
-
-	CL_SequenceRender3D();
-	refdef.rendererFlags |= RDF_NOWORLDMODEL;
-
-	/* update ref def */
-	CL_ViewUpdateRenderData();
-
-	/* render the world */
-	R_RenderFrame();
-
-	CL_SequenceRender2D();
-}
-
 /**
  * @sa SCR_UpdateScreen
  */
 void CL_ViewRender (void)
 {
-	if (cls.state == ca_sequence) {
-		CL_SequenceRender();
-		return;
-	}
-
 	refdef.brushCount = 0;
 	refdef.aliasCount = 0;
 

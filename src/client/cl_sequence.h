@@ -25,8 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_SEQUENCE_H
 #define CLIENT_CL_SEQUENCE_H
 
-void CL_SequenceRender3D(void);
-void CL_SequenceRender2D(void);
+void CL_SequenceRender(void);
 void SEQ_InitStartup(void);
 void CL_ParseSequence(const char *name, const char **text);
 
