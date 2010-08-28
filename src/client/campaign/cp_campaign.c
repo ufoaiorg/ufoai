@@ -1606,6 +1606,12 @@ void CL_ResetSinglePlayerData (void)
 		base_t *base = &ccs.bases[i];
 		aircraft_t *craft = NULL;
 
+		/**
+		 * @todo this isn't working per per-base, as get next from base won't give
+		 * every available craft (not every craft must be in a base). Maybe we should
+		 * use the tags for the memory allocation for linked list (like we do for the
+		 * game shared object already, too)
+		 */
 		while ((craft = AIR_GetNextFromBase(base, craft))) {
 			LIST_Delete(&craft->acTeam);
 		}
