@@ -43,10 +43,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief execution function of a command
  * @returns 0 if the same command should be executed again - or 1 to execute the next event
  */
-typedef int (*sequeneHandler_t) (const char *name, const char *data);
+typedef int (*sequenceHandler_t) (const char *name, const char *data);
 
 typedef struct seqCmd_s {
-	sequeneHandler_t handler;
+	sequenceHandler_t handler;
 	char name[MAX_VAR];
 	char data[MAX_DATA_LENGTH];
 } seqCmd_t;
@@ -150,7 +150,7 @@ static int SEQ_Sound(const char *name, const char *data);
 static int SEQ_Remove(const char *name, const char *data);
 static int SEQ_Command(const char *name, const char *data);
 
-static sequeneHandler_t seqCmdFunc[] = {
+static sequenceHandler_t seqCmdFunc[] = {
 	NULL,
 	SEQ_Wait,
 	SEQ_Click,
