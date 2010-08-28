@@ -55,7 +55,7 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 
 	LE_Lock(le);
 	/* count spotted aliens */
-	if (le->team != cls.team && le->team != TEAM_CIVILIAN)
+	if (le->team != cls.team && le->team != TEAM_CIVILIAN && !LE_IsStunned(le))
 		cl.numAliensSpotted--;
 
 	/* set relevant vars */
