@@ -255,15 +255,47 @@ void CL_ViewUpdateRenderData (void)
 }
 
 
+static void CL_SequenceRender (void)
+{
+	refdef.brushCount = 0;
+	refdef.aliasCount = 0;
+
+	if (!viddef.viewWidth || !viddef.viewHeight)
+		return;
+
+	/* still loading */
+	if (!refdef.ready)
+		return;
+
+	refdef.numEntities = 0;
+	refdef.mapTiles = cl.mapTiles;
+
+	CL_SequenceRender3D();
+	refdef.rendererFlags |= RDF_NOWORLDMODEL;
+
+	/* update ref def */
+	CL_ViewUpdateRenderData();
+
+	/* render the world */
+	R_RenderFrame();
+
+	CL_SequenceRender2D();
+}
+
 /**
  * @sa SCR_UpdateScreen
  */
 void CL_ViewRender (void)
 {
+	if (cls.state == ca_sequence) {
+		CL_SequenceRender();
+		return;
+	}
+
 	refdef.brushCount = 0;
 	refdef.aliasCount = 0;
 
-	if (cls.state != ca_active && cls.state != ca_sequence)
+	if (cls.state != ca_active)
 		return;
 
 	if (!viddef.viewWidth || !viddef.viewHeight)
@@ -276,44 +308,33 @@ void CL_ViewRender (void)
 	refdef.numEntities = 0;
 	refdef.mapTiles = cl.mapTiles;
 
-	switch (cls.state) {
-	case ca_sequence:
-		CL_SequenceRender();
-		refdef.rendererFlags |= RDF_NOWORLDMODEL;
-		break;
-	default:
-		/* tell the bsp thread to start */
-		r_threadstate.state = THREAD_BSP;
-		/* make sure we are really rendering the world */
-		refdef.rendererFlags &= ~RDF_NOWORLDMODEL;
-		/* add local models to the renderer chain */
-		LM_AddToScene();
-		/* add local entities to the renderer chain */
-		LE_AddToScene();
-		/* adds pathing data */
-		if (cl_map_debug->integer) {
-			if (cl_map_debug->integer & MAPDEBUG_PATHING)
-				CL_AddPathing();
-			/* adds floor arrows */
-			if (cl_map_debug->integer & MAPDEBUG_CELLS)
-				CL_DisplayFloorArrows();
-			/* adds wall arrows */
-			if (cl_map_debug->integer & MAPDEBUG_WALLS)
-				CL_DisplayObstructionArrows();
-		}
-		/* adds target cursor */
-		CL_AddTargeting();
-		break;
+	/* tell the bsp thread to start */
+	r_threadstate.state = THREAD_BSP;
+	/* make sure we are really rendering the world */
+	refdef.rendererFlags &= ~RDF_NOWORLDMODEL;
+	/* add local models to the renderer chain */
+	LM_AddToScene();
+	/* add local entities to the renderer chain */
+	LE_AddToScene();
+	/* adds pathing data */
+	if (cl_map_debug->integer) {
+		if (cl_map_debug->integer & MAPDEBUG_PATHING)
+			CL_AddPathing();
+		/* adds floor arrows */
+		if (cl_map_debug->integer & MAPDEBUG_CELLS)
+			CL_DisplayFloorArrows();
+		/* adds wall arrows */
+		if (cl_map_debug->integer & MAPDEBUG_WALLS)
+			CL_DisplayObstructionArrows();
 	}
+	/* adds target cursor */
+	CL_AddTargeting();
 
 	/* update ref def */
 	CL_ViewUpdateRenderData();
 
 	/* render the world */
 	R_RenderFrame();
-
-	if (cls.state == ca_sequence)
-		CL_SequenceRender2D();
 }
 
 /**

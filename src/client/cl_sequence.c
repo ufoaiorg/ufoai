@@ -199,7 +199,7 @@ static void CL_SequenceEnd_f (void)
 
 /**
  * @brief Set the camera values for a sequence
- * @sa CL_SequenceRender
+ * @sa CL_SequenceRender3D
  */
 static void CL_SequenceCamera (void)
 {
@@ -271,7 +271,7 @@ static seq2D_t *CL_SequenceFind2D (const char *name)
  * @sa UI_PopWindow
  * @sa CL_SequenceFindEnt
  */
-void CL_SequenceRender (void)
+void CL_SequenceRender3D (void)
 {
 	entity_t ent;
 	seqCmd_t *sc;
