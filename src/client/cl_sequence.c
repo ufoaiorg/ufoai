@@ -39,11 +39,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_DATA_LENGTH 2048
 
+struct sequenceContext_s;
+
 /**
  * @brief execution function of a command
  * @returns 0 if the same command should be executed again - or 1 to execute the next event
  */
-typedef int (*sequenceHandler_t) (const char *name, const char *data);
+typedef int (*sequenceHandler_t) (struct sequenceContext_s *context, const char *name, const char *data);
 
 typedef struct seqCmd_s {
 	sequenceHandler_t handler;
@@ -139,32 +141,6 @@ typedef struct seq2D_s {
 	qboolean relativePos;	/**< useful for translations when sentence length may differ */
 } seq2D_t;
 
-static int SEQ_Click(const char *name, const char *data);
-static int SEQ_Wait(const char *name, const char *data);
-static int SEQ_Precache(const char *name, const char *data);
-static int SEQ_Camera(const char *name, const char *data);
-static int SEQ_Model(const char *name, const char *data);
-static int SEQ_2Dobj(const char *name, const char *data);
-static int SEQ_Music(const char *name, const char *data);
-static int SEQ_Sound(const char *name, const char *data);
-static int SEQ_Remove(const char *name, const char *data);
-static int SEQ_Command(const char *name, const char *data);
-
-static sequenceHandler_t seqCmdFunc[] = {
-	NULL,
-	SEQ_Wait,
-	SEQ_Click,
-	SEQ_Precache,
-	SEQ_Camera,
-	SEQ_Model,
-	SEQ_2Dobj,
-	SEQ_Music,
-	SEQ_Sound,
-	SEQ_Remove,
-	SEQ_Command
-};
-CASSERT(lengthof(seqCmdFunc) == SEQ_NUMCMDS);
-
 #define MAX_SEQCMDS		8192
 #define MAX_SEQUENCES	32
 #define MAX_SEQENTS		128
@@ -208,40 +184,74 @@ typedef struct sequenceContext_s {
 
 } sequenceContext_t;
 
-static sequenceContext_t seq;
+/** @brief valid id names for camera */
+static const value_t seqCamera_vals[] = {
+	{"origin", V_VECTOR, offsetof(seqCamera_t, origin), MEMBER_SIZEOF(seqCamera_t, origin)},
+	{"speed", V_VECTOR, offsetof(seqCamera_t, speed), MEMBER_SIZEOF(seqCamera_t, speed)},
+	{"angles", V_VECTOR, offsetof(seqCamera_t, angles), MEMBER_SIZEOF(seqCamera_t, angles)},
+	{"omega", V_VECTOR, offsetof(seqCamera_t, omega), MEMBER_SIZEOF(seqCamera_t, omega)},
+	{"dist", V_FLOAT, offsetof(seqCamera_t, dist), MEMBER_SIZEOF(seqCamera_t, dist)},
+	{"ddist", V_FLOAT, offsetof(seqCamera_t, ddist), MEMBER_SIZEOF(seqCamera_t, ddist)},
+	{"zoom", V_FLOAT, offsetof(seqCamera_t, zoom), MEMBER_SIZEOF(seqCamera_t, zoom)},
+	{"dzoom", V_FLOAT, offsetof(seqCamera_t, dzoom), MEMBER_SIZEOF(seqCamera_t, dzoom)},
+	{NULL, 0, 0, 0}
+};
 
-/**
- * @brief Sets the client state to ca_disconnected
- * @sa CL_SequenceStart_f
- */
-static void CL_SequenceEnd_f (void)
-{
-	if (cls.state == ca_sequence)
-		CL_SetClientState(ca_disconnected);
-}
+/** @brief valid entity names for a sequence */
+static const value_t seqEnt_vals[] = {
+	{"name", V_STRING, offsetof(seqEnt_t, name), 0},
+	{"skin", V_INT, offsetof(seqEnt_t, skin), MEMBER_SIZEOF(seqEnt_t, skin)},
+	{"alpha", V_FLOAT, offsetof(seqEnt_t, alpha), MEMBER_SIZEOF(seqEnt_t, alpha)},
+	{"origin", V_VECTOR, offsetof(seqEnt_t, origin), MEMBER_SIZEOF(seqEnt_t, origin)},
+	{"speed", V_VECTOR, offsetof(seqEnt_t, speed), MEMBER_SIZEOF(seqEnt_t, speed)},
+	{"angles", V_VECTOR, offsetof(seqEnt_t, angles), MEMBER_SIZEOF(seqEnt_t, angles)},
+	{"omega", V_VECTOR, offsetof(seqEnt_t, omega), MEMBER_SIZEOF(seqEnt_t, omega)},
+	{"color", V_VECTOR, offsetof(seqEnt_t, color), MEMBER_SIZEOF(seqEnt_t, color)},
+	{"parent", V_STRING, offsetof(seqEnt_t, parent), 0},
+	{"tag", V_STRING, offsetof(seqEnt_t, tag), 0},
+	{NULL, 0, 0, 0}
+};
+
+/** @brief valid id names for 2d entity */
+static const value_t seq2D_vals[] = {
+	{"name", V_STRING, offsetof(seq2D_t, name), 0},
+	{"text", V_TRANSLATION_STRING, offsetof(seq2D_t, text), 0},
+	{"font", V_STRING, offsetof(seq2D_t, font), 0},
+	{"image", V_STRING, offsetof(seq2D_t, image), 0},
+	{"pos", V_POS, offsetof(seq2D_t, pos), MEMBER_SIZEOF(seq2D_t, pos)},
+	{"speed", V_POS, offsetof(seq2D_t, speed), MEMBER_SIZEOF(seq2D_t, speed)},
+	{"size", V_POS, offsetof(seq2D_t, size), MEMBER_SIZEOF(seq2D_t, size)},
+	{"enlarge", V_POS, offsetof(seq2D_t, enlarge), MEMBER_SIZEOF(seq2D_t, enlarge)},
+	{"bgcolor", V_COLOR, offsetof(seq2D_t, bgcolor), MEMBER_SIZEOF(seq2D_t, bgcolor)},
+	{"color", V_COLOR, offsetof(seq2D_t, color), MEMBER_SIZEOF(seq2D_t, color)},
+	{"fade", V_COLOR, offsetof(seq2D_t, fade), MEMBER_SIZEOF(seq2D_t, fade)},
+	{"align", V_ALIGN, offsetof(seq2D_t, align), MEMBER_SIZEOF(seq2D_t, align)},
+	{"relative", V_BOOL, offsetof(seq2D_t, relativePos), MEMBER_SIZEOF(seq2D_t, relativePos)},
+	{NULL, 0, 0, 0},
+};
 
 /**
  * @brief Set the camera values for a sequence
  * @sa CL_SequenceRender3D
  */
-static void CL_SequenceCamera (void)
+static void SEQ_SetCamera (sequenceContext_t *context)
 {
 	if (!viddef.viewWidth || !viddef.viewHeight)
 		return;
 
 	/* advance time */
-	VectorMA(seq.camera.origin, cls.frametime, seq.camera.speed, seq.camera.origin);
-	VectorMA(seq.camera.angles, cls.frametime, seq.camera.omega, seq.camera.angles);
-	seq.camera.zoom += cls.frametime * seq.camera.dzoom;
-	seq.camera.dist += cls.frametime * seq.camera.ddist;
+	VectorMA(context->camera.origin, cls.frametime, context->camera.speed, context->camera.origin);
+	VectorMA(context->camera.angles, cls.frametime, context->camera.omega, context->camera.angles);
+	context->camera.zoom += cls.frametime * context->camera.dzoom;
+	context->camera.dist += cls.frametime * context->camera.ddist;
 
 	/* set camera */
-	VectorCopy(seq.camera.origin, cl.cam.origin);
-	VectorCopy(seq.camera.angles, cl.cam.angles);
+	VectorCopy(context->camera.origin, cl.cam.origin);
+	VectorCopy(context->camera.angles, cl.cam.angles);
 
 	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
-	VectorMA(cl.cam.origin, -seq.camera.dist, cl.cam.axis[0], cl.cam.camorg);
-	cl.cam.zoom = max(seq.camera.zoom, MIN_ZOOM);
+	VectorMA(cl.cam.origin, -context->camera.dist, cl.cam.axis[0], cl.cam.camorg);
+	cl.cam.zoom = max(context->camera.zoom, MIN_ZOOM);
 	/* fudge to get isometric and perspective modes looking similar */
 	if (cl_isometric->integer)
 		cl.cam.zoom /= 1.35;
@@ -253,15 +263,15 @@ static void CL_SequenceCamera (void)
  * @brief Finds a given entity in all sequence entities
  * @sa CL_SequenceFind2D
  */
-static seqEnt_t *CL_SequenceFindEnt (const char *name)
+static seqEnt_t *SEQ_FindEnt (sequenceContext_t *context, const char *name)
 {
 	seqEnt_t *se;
 	int i;
 
-	for (i = 0, se = seq.ents; i < seq.numEnts; i++, se++)
+	for (i = 0, se = context->ents; i < context->numEnts; i++, se++)
 		if (se->inuse && !strncmp(se->name, name, MAX_VAR))
 			break;
-	if (i < seq.numEnts)
+	if (i < context->numEnts)
 		return se;
 	else
 		return NULL;
@@ -272,20 +282,19 @@ static seqEnt_t *CL_SequenceFindEnt (const char *name)
  * @brief Finds a given 2d object in the current sequence data
  * @sa CL_SequenceFindEnt
  */
-static seq2D_t *CL_SequenceFind2D (const char *name)
+static seq2D_t *SEQ_Find2D (sequenceContext_t *context, const char *name)
 {
 	seq2D_t *s2d;
 	int i;
 
-	for (i = 0, s2d = seq.obj2Ds; i < seq.numObj2Ds; i++, s2d++)
+	for (i = 0, s2d = context->obj2Ds; i < context->numObj2Ds; i++, s2d++)
 		if (s2d->inuse && !strcmp(s2d->name, name))
 			break;
-	if (i < seq.numObj2Ds)
+	if (i < context->numObj2Ds)
 		return s2d;
 	else
 		return NULL;
 }
-
 
 /**
  * @sa CL_Sequence2D
@@ -294,46 +303,22 @@ static seq2D_t *CL_SequenceFind2D (const char *name)
  * @sa UI_PopWindow
  * @sa CL_SequenceFindEnt
  */
-static void CL_SequenceRender3D (void)
+static void SEQ_Render3D (sequenceContext_t *context)
 {
 	entity_t ent;
-	seqCmd_t *sc;
 	seqEnt_t *se;
 	int i;
 
-	/* we are inside a waiting command */
-	if (seq.time > cl.time) {
-		/* if we clicked a button we end the waiting loop */
-		if (seq.endClickLoop) {
-			seq.time = cl.time;
-			seq.endClickLoop = qfalse;
-		}
-	}
-
-	/* run script */
-	while (seq.time <= cl.time) {
-		/* test for finish */
-		if (seq.currentCmd >= seq.endCmd) {
-			CL_SequenceEnd_f();
-			UI_PopWindow(qfalse);
-			return;
-		}
-
-		/* call handler */
-		sc = &seqCmds[seq.currentCmd];
-		seq.currentCmd += sc->handler(sc->name, sc->data);
-	}
-
 	/* set camera */
-	CL_SequenceCamera();
+	SEQ_SetCamera(context);
 
 	/* render sequence */
-	for (i = 0, se = seq.ents; i < seq.numEnts; i++, se++)
+	for (i = 0, se = context->ents; i < context->numEnts; i++, se++)
 		if (se->inuse) {
 			/* advance in time */
 			VectorMA(se->origin, cls.frametime, se->speed, se->origin);
 			VectorMA(se->angles, cls.frametime, se->omega, se->angles);
-			R_AnimRun(&se->as, se->model, seq.animspeed->integer * cls.frametime);
+			R_AnimRun(&se->as, se->model, context->animspeed->integer * cls.frametime);
 
 			/* add to scene */
 			memset(&ent, 0, sizeof(ent));
@@ -349,7 +334,7 @@ static void CL_SequenceRender3D (void)
 			if (se->parent && se->tag) {
 				seqEnt_t *parent;
 
-				parent = CL_SequenceFindEnt(se->parent);
+				parent = SEQ_FindEnt(context, se->parent);
 				if (parent)
 					ent.tagent = parent->ep;
 				ent.tagname = se->tag;
@@ -366,7 +351,7 @@ static void CL_SequenceRender3D (void)
  * @brief Renders text and images
  * @sa SEQ_InitStartup
  */
-static void CL_SequenceRender2D (void)
+static void SEQ_Render2D (sequenceContext_t *context)
 {
 	seq2D_t *s2d;
 	int i, j;
@@ -380,7 +365,7 @@ static void CL_SequenceRender2D (void)
 	UI_Transform(pos, NULL, NULL);
 
 	/* add texts */
-	for (i = 0, s2d = seq.obj2Ds; i < seq.numObj2Ds; i++, s2d++)
+	for (i = 0, s2d = context->obj2Ds; i < context->numObj2Ds; i++, s2d++)
 		if (s2d->inuse) {
 			if (s2d->relativePos && height > 0) {
 				s2d->pos[1] += height;
@@ -433,59 +418,20 @@ static void CL_SequenceRender2D (void)
 	UI_Transform(NULL, NULL, NULL);
 }
 
-void CL_SequenceRender (void)
-{
-	refdef.brushCount = 0;
-	refdef.aliasCount = 0;
-
-	if (!viddef.viewWidth || !viddef.viewHeight)
-		return;
-
-	/* still loading */
-	if (!refdef.ready)
-		return;
-
-	refdef.numEntities = 0;
-	refdef.mapTiles = cl.mapTiles;
-
-	CL_SequenceRender3D();
-	refdef.rendererFlags |= RDF_NOWORLDMODEL;
-
-	/* update ref def */
-	CL_ViewUpdateRenderData();
-
-	/* render the world */
-	R_RenderFrame();
-
-	CL_SequenceRender2D();
-}
-
 /**
  * @brief Unlock a click event for the current sequence or ends the current sequence if not locked
  * @note Script binding for seq_click
  * @sa menu sequence in menu_main.ufo
  */
-static void CL_SequenceClick_f (void)
+static void SEQ_ClickEvent (sequenceContext_t *context)
 {
-	seq.endClickLoop = qtrue;
+	context->endClickLoop = qtrue;
 }
 
-/**
- * @brief Start a sequence
- * @sa CL_SequenceEnd_f
- */
-static void CL_SequenceStart_f (void)
+static qboolean SEQ_InitSequence (sequenceContext_t *context, const char *name)
 {
 	sequence_t *sp;
-	const char *name, *menuName;
 	int i;
-	const uiNode_t* menu;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <name> [<menu>]\n", Cmd_Argv(0));
-		return;
-	}
-	name = Cmd_Argv(1);
 
 	/* find sequence */
 	for (i = 0, sp = sequences; i < numSequences; i++, sp++)
@@ -493,109 +439,75 @@ static void CL_SequenceStart_f (void)
 			break;
 	if (i >= numSequences) {
 		Com_Printf("Couldn't find sequence '%s'\n", name);
-		return;
+		return qfalse;
 	}
 
-	/* display the sequence menu */
-	/* the default is in menu_main.ufo - menu sequence */
-	menuName = Cmd_Argc() < 3 ? mn_sequence->string : Cmd_Argv(2);
-	menu = UI_PushWindow(menuName, NULL);
-	if (!menu) {
-		Com_Printf("CL_SequenceStart_f: can't display menu '%s'\n", menuName);
-		return;
-	}
+	memset(context, 0, sizeof(*context));
+	context->numEnts = 0;
+	context->numObj2Ds = 0;
+	context->time = cl.time;
+	context->currentCmd = sp->start;
+	context->endCmd = sp->start + sp->length;
+	context->animspeed = Cvar_Get("seq_animspeed", "1000", 0, NULL);
 
-	/* init script parsing */
-	seq.numEnts = 0;
-	seq.numObj2Ds = 0;
-	memset(&seq.camera, 0, sizeof(seq.camera));
-	seq.time = cl.time;
-	seq.currentCmd = sp->start;
-	seq.endCmd = sp->start + sp->length;
-
-	/* If running a local server, kill it */
-	SV_Shutdown("Server quit", qfalse);
-	/* if still connected - disconnect */
-	CL_Disconnect();
-
-	/* init sequence state */
-	CL_SetClientState(ca_sequence);
+	return qtrue;
 }
 
-
-void SEQ_InitStartup (void)
+static void SEQ_StopSequence (sequenceContext_t *context)
 {
-	/* reset counters */
-	memset(&seq, 0, sizeof(seq));
-	seq.animspeed = Cvar_Get("seq_animspeed", "1000", 0, NULL);
-	Cmd_AddCommand("seq_click", CL_SequenceClick_f, NULL);
-	Cmd_AddCommand("seq_start", CL_SequenceStart_f, NULL);
-	Cmd_AddCommand("seq_end", CL_SequenceEnd_f, NULL);
+	context->endClickLoop = qtrue;
 }
 
+/**
+ * @brief Move the sequence to the right position according to the current time
+ * @param context
+ * @return True is the sequence is alive, false if it is the end of the sequence
+ */
+static qboolean SEQ_Execute (sequenceContext_t *context)
+{
+	seqCmd_t *sc;
+
+	/* we are inside a waiting command */
+	if (context->time > cl.time) {
+		/* if we clicked a button we end the waiting loop */
+		if (context->endClickLoop) {
+			context->time = cl.time;
+			context->endClickLoop = qfalse;
+		}
+	}
+
+	/* run script */
+	while (context->time <= cl.time) {
+		/* test for finish */
+		if (context->currentCmd >= context->endCmd) {
+			SEQ_StopSequence(context);
+			return qfalse;
+		}
+
+		/* call handler */
+		sc = &seqCmds[context->currentCmd];
+		context->currentCmd += sc->handler(context, sc->name, sc->data);
+	}
+
+	return qtrue;
+}
 
 /* =========================================================== */
-
-/** @brief valid id names for camera */
-static const value_t seqCamera_vals[] = {
-	{"origin", V_VECTOR, offsetof(seqCamera_t, origin), MEMBER_SIZEOF(seqCamera_t, origin)},
-	{"speed", V_VECTOR, offsetof(seqCamera_t, speed), MEMBER_SIZEOF(seqCamera_t, speed)},
-	{"angles", V_VECTOR, offsetof(seqCamera_t, angles), MEMBER_SIZEOF(seqCamera_t, angles)},
-	{"omega", V_VECTOR, offsetof(seqCamera_t, omega), MEMBER_SIZEOF(seqCamera_t, omega)},
-	{"dist", V_FLOAT, offsetof(seqCamera_t, dist), MEMBER_SIZEOF(seqCamera_t, dist)},
-	{"ddist", V_FLOAT, offsetof(seqCamera_t, ddist), MEMBER_SIZEOF(seqCamera_t, ddist)},
-	{"zoom", V_FLOAT, offsetof(seqCamera_t, zoom), MEMBER_SIZEOF(seqCamera_t, zoom)},
-	{"dzoom", V_FLOAT, offsetof(seqCamera_t, dzoom), MEMBER_SIZEOF(seqCamera_t, dzoom)},
-	{NULL, 0, 0, 0}
-};
-
-/** @brief valid entity names for a sequence */
-static const value_t seqEnt_vals[] = {
-	{"name", V_STRING, offsetof(seqEnt_t, name), 0},
-	{"skin", V_INT, offsetof(seqEnt_t, skin), MEMBER_SIZEOF(seqEnt_t, skin)},
-	{"alpha", V_FLOAT, offsetof(seqEnt_t, alpha), MEMBER_SIZEOF(seqEnt_t, alpha)},
-	{"origin", V_VECTOR, offsetof(seqEnt_t, origin), MEMBER_SIZEOF(seqEnt_t, origin)},
-	{"speed", V_VECTOR, offsetof(seqEnt_t, speed), MEMBER_SIZEOF(seqEnt_t, speed)},
-	{"angles", V_VECTOR, offsetof(seqEnt_t, angles), MEMBER_SIZEOF(seqEnt_t, angles)},
-	{"omega", V_VECTOR, offsetof(seqEnt_t, omega), MEMBER_SIZEOF(seqEnt_t, omega)},
-	{"color", V_VECTOR, offsetof(seqEnt_t, color), MEMBER_SIZEOF(seqEnt_t, color)},
-	{"parent", V_STRING, offsetof(seqEnt_t, parent), 0},
-	{"tag", V_STRING, offsetof(seqEnt_t, tag), 0},
-	{NULL, 0, 0, 0}
-};
-
-/** @brief valid id names for 2d entity */
-static const value_t seq2D_vals[] = {
-	{"name", V_STRING, offsetof(seq2D_t, name), 0},
-	{"text", V_TRANSLATION_STRING, offsetof(seq2D_t, text), 0},
-	{"font", V_STRING, offsetof(seq2D_t, font), 0},
-	{"image", V_STRING, offsetof(seq2D_t, image), 0},
-	{"pos", V_POS, offsetof(seq2D_t, pos), MEMBER_SIZEOF(seq2D_t, pos)},
-	{"speed", V_POS, offsetof(seq2D_t, speed), MEMBER_SIZEOF(seq2D_t, speed)},
-	{"size", V_POS, offsetof(seq2D_t, size), MEMBER_SIZEOF(seq2D_t, size)},
-	{"enlarge", V_POS, offsetof(seq2D_t, enlarge), MEMBER_SIZEOF(seq2D_t, enlarge)},
-	{"bgcolor", V_COLOR, offsetof(seq2D_t, bgcolor), MEMBER_SIZEOF(seq2D_t, bgcolor)},
-	{"color", V_COLOR, offsetof(seq2D_t, color), MEMBER_SIZEOF(seq2D_t, color)},
-	{"fade", V_COLOR, offsetof(seq2D_t, fade), MEMBER_SIZEOF(seq2D_t, fade)},
-	{"align", V_ALIGN, offsetof(seq2D_t, align), MEMBER_SIZEOF(seq2D_t, align)},
-	{"relative", V_BOOL, offsetof(seq2D_t, relativePos), MEMBER_SIZEOF(seq2D_t, relativePos)},
-	{NULL, 0, 0, 0},
-};
 
 /**
  * @brief Wait until someone clicks with the mouse
  * @return 0 if you wait for the click
  * @return 1 if the click occurred
  */
-static int SEQ_Click (const char *name, const char *data)
+static int SEQ_ExecuteClick (sequenceContext_t *context, const char *name, const char *data)
 {
 	/* if a CL_SequenceClick_f event was called */
-	if (seq.endClickLoop) {
-		seq.endClickLoop = qfalse;
+	if (context->endClickLoop) {
+		context->endClickLoop = qfalse;
 		/* increase the command counter by 1 */
 		return 1;
 	}
-	seq.time += 1000;
+	context->time += 1000;
 	/* don't increase the command counter - stay at click command */
 	return 0;
 }
@@ -604,9 +516,9 @@ static int SEQ_Click (const char *name, const char *data)
  * @brief Increase the sequence time
  * @return 1 - increase the command position of the sequence by one
  */
-static int SEQ_Wait (const char *name, const char *data)
+static int SEQ_ExecuteWait (sequenceContext_t *context, const char *name, const char *data)
 {
-	seq.time += 1000 * atof(name);
+	context->time += 1000 * atof(name);
 	return 1;
 }
 
@@ -616,7 +528,7 @@ static int SEQ_Wait (const char *name, const char *data)
  * @sa R_RegisterModelShort
  * @sa R_RegisterImage
  */
-static int SEQ_Precache (const char *name, const char *data)
+static int SEQ_ExecutePrecache (sequenceContext_t *context, const char *name, const char *data)
 {
 	if (!strcmp(name, "models")) {
 		while (*data) {
@@ -638,7 +550,7 @@ static int SEQ_Precache (const char *name, const char *data)
 /**
  * @brief Parse the values for the camera like given in seqCamera
  */
-static int SEQ_Camera (const char *name, const char *data)
+static int SEQ_ExecuteCamera (sequenceContext_t *context, const char *name, const char *data)
 {
 	/* get values */
 	while (*data) {
@@ -646,7 +558,7 @@ static int SEQ_Camera (const char *name, const char *data)
 		for (vp = seqCamera_vals; vp->string; vp++)
 			if (!strcmp(data, vp->string)) {
 				data += strlen(data) + 1;
-				Com_EParseValue(&seq.camera, data, vp->type, vp->ofs, vp->size);
+				Com_EParseValue(&context->camera, data, vp->type, vp->ofs, vp->size);
 				break;
 			}
 		if (!vp->string)
@@ -663,20 +575,20 @@ static int SEQ_Camera (const char *name, const char *data)
  * @sa seqEnt_vals
  * @sa CL_SequenceFindEnt
  */
-static int SEQ_Model (const char *name, const char *data)
+static int SEQ_ExecuteModel (sequenceContext_t *context, const char *name, const char *data)
 {
 	/* get sequence entity */
-	seqEnt_t *se = CL_SequenceFindEnt(name);
+	seqEnt_t *se = SEQ_FindEnt(context, name);
 	if (!se) {
 		int i;
 		/* create new sequence entity */
-		for (i = 0, se = seq.ents; i < seq.numEnts; i++, se++)
+		for (i = 0, se = context->ents; i < context->numEnts; i++, se++)
 			if (!se->inuse)
 				break;
-		if (i >= seq.numEnts) {
-			if (seq.numEnts >= MAX_SEQENTS)
+		if (i >= context->numEnts) {
+			if (context->numEnts >= MAX_SEQENTS)
 				Com_Error(ERR_FATAL, "Too many sequence entities");
-			se = &seq.ents[seq.numEnts++];
+			se = &context->ents[context->numEnts++];
 		}
 		/* allocate */
 		memset(se, 0, sizeof(*se));
@@ -716,7 +628,7 @@ static int SEQ_Model (const char *name, const char *data)
  * @brief Changes the music in the sequence
  * @return 1 - increase the command position of the sequence by one
  */
-static int SEQ_Music (const char *name, const char *data)
+static int SEQ_ExecuteMusic (sequenceContext_t *context, const char *name, const char *data)
 {
 	Com_Printf("change music to %s\n", name);
 	Cvar_Set("snd_music", name);
@@ -727,7 +639,7 @@ static int SEQ_Music (const char *name, const char *data)
  * @brief Plays a sound in a sequence
  * @return 1 - increase the command position of the sequence by one
  */
-static int SEQ_Sound (const char *name, const char *data)
+static int SEQ_ExecuteSound (sequenceContext_t *context, const char *name, const char *data)
 {
 	S_StartLocalSample(name, SND_VOLUME_DEFAULT);
 	return 1;
@@ -739,23 +651,23 @@ static int SEQ_Sound (const char *name, const char *data)
  * @sa seq2D_vals
  * @sa CL_SequenceFind2D
  */
-static int SEQ_2Dobj (const char *name, const char *data)
+static int SEQ_Execute2Dobj (sequenceContext_t *context, const char *name, const char *data)
 {
 	seq2D_t *s2d;
 	const value_t *vp;
 	int i;
 
 	/* get sequence text */
-	s2d = CL_SequenceFind2D(name);
+	s2d = SEQ_Find2D(context, name);
 	if (!s2d) {
 		/* create new sequence text */
-		for (i = 0, s2d = seq.obj2Ds; i < seq.numObj2Ds; i++, s2d++)
+		for (i = 0, s2d = context->obj2Ds; i < context->numObj2Ds; i++, s2d++)
 			if (!s2d->inuse)
 				break;
-		if (i >= seq.numObj2Ds) {
-			if (seq.numObj2Ds >= MAX_SEQ2DS)
+		if (i >= context->numObj2Ds) {
+			if (context->numObj2Ds >= MAX_SEQ2DS)
 				Com_Error(ERR_FATAL, "Too many sequence 2d objects");
-			s2d = &seq.obj2Ds[seq.numObj2Ds++];
+			s2d = &context->obj2Ds[context->numObj2Ds++];
 		}
 		/* allocate */
 		memset(s2d, 0, sizeof(*s2d));
@@ -798,16 +710,16 @@ static int SEQ_2Dobj (const char *name, const char *data)
  * @sa CL_SequenceFind2D
  * @sa CL_SequenceFindEnt
  */
-static int SEQ_Remove (const char *name, const char *data)
+static int SEQ_ExecuteRemove (sequenceContext_t *context, const char *name, const char *data)
 {
 	seqEnt_t *se;
 	seq2D_t *s2d;
 
-	se = CL_SequenceFindEnt(name);
+	se = SEQ_FindEnt(context, name);
 	if (se)
 		se->inuse = qfalse;
 
-	s2d = CL_SequenceFind2D(name);
+	s2d = SEQ_Find2D(context, name);
 	if (s2d) {
 		s2d->inuse = qfalse;
 
@@ -827,12 +739,137 @@ static int SEQ_Remove (const char *name, const char *data)
  * @return 1 - increase the command position of the sequence by one
  * @sa Cbuf_AddText
  */
-static int SEQ_Command (const char *name, const char *data)
+static int SEQ_ExecuteCommand (sequenceContext_t *context, const char *name, const char *data)
 {
 	/* add the command */
 	Cbuf_AddText(name);
 	return 1;
 }
+
+/* =========================================================== */
+
+/**
+ * @note Here to reduce the scope
+ */
+sequenceContext_t seq;
+
+/**
+ * @brief Unlock a click event for the current sequence or ends the current sequence if not locked
+ * @note Script binding for seq_click
+ * @sa menu sequence in menu_main.ufo
+ */
+static void CL_SequenceClick_f (void)
+{
+	SEQ_ClickEvent(&seq);
+}
+
+/**
+ * @brief Start a sequence
+ * @sa CL_SequenceEnd_f
+ */
+static void CL_SequenceStart_f (void)
+{
+	const char *name, *menuName;
+	const uiNode_t* menu;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <name> [<menu>]\n", Cmd_Argv(0));
+		return;
+	}
+	name = Cmd_Argv(1);
+
+	if (!SEQ_InitSequence(&seq, name))
+		return;
+
+	/* display the sequence menu */
+	/* the default is in menu_main.ufo - menu sequence */
+	menuName = Cmd_Argc() < 3 ? mn_sequence->string : Cmd_Argv(2);
+	menu = UI_PushWindow(menuName, NULL);
+	if (!menu) {
+		Com_Printf("CL_SequenceStart_f: can't display menu '%s'\n", menuName);
+		return;
+	}
+
+	/* If running a local server, kill it */
+	SV_Shutdown("Server quit", qfalse);
+	/* if still connected - disconnect */
+	CL_Disconnect();
+
+	/* init sequence state */
+	CL_SetClientState(ca_sequence);
+}
+
+/**
+ * @brief Sets the client state to ca_disconnected
+ * @sa CL_SequenceStart_f
+ */
+static void CL_SequenceEnd_f (void)
+{
+	if (cls.state == ca_sequence)
+		CL_SetClientState(ca_disconnected);
+}
+
+void CL_SequenceRender (void)
+{
+	refdef.brushCount = 0;
+	refdef.aliasCount = 0;
+
+	if (!viddef.viewWidth || !viddef.viewHeight)
+		return;
+
+	/* still loading */
+	if (!refdef.ready)
+		return;
+
+	if (!SEQ_Execute(&seq)) {
+		CL_SequenceEnd_f();
+		UI_PopWindow(qfalse);
+		return;
+	}
+
+	refdef.numEntities = 0;
+	refdef.mapTiles = cl.mapTiles;
+
+	SEQ_Render3D(&seq);
+
+	refdef.rendererFlags |= RDF_NOWORLDMODEL;
+
+	/* update ref def */
+	CL_ViewUpdateRenderData();
+
+	/* render the world */
+	R_RenderFrame();
+
+	SEQ_Render2D(&seq);
+}
+
+void SEQ_InitStartup (void)
+{
+	Cmd_AddCommand("seq_click", CL_SequenceClick_f, NULL);
+	Cmd_AddCommand("seq_start", CL_SequenceStart_f, NULL);
+	Cmd_AddCommand("seq_end", CL_SequenceEnd_f, NULL);
+}
+
+
+/* =========================================================== */
+
+/**
+ * @brief Function to exeute all available commands
+ */
+static sequenceHandler_t seqCmdFunc[] = {
+	NULL,
+	SEQ_ExecuteWait,
+	SEQ_ExecuteClick,
+	SEQ_ExecutePrecache,
+	SEQ_ExecuteCamera,
+	SEQ_ExecuteModel,
+	SEQ_Execute2Dobj,
+	SEQ_ExecuteMusic,
+	SEQ_ExecuteSound,
+	SEQ_ExecuteRemove,
+	SEQ_ExecuteCommand
+};
+CASSERT(lengthof(seqCmdFunc) == SEQ_NUMCMDS);
 
 /**
  * @brief Reads the sequence values from given text-pointer
