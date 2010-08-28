@@ -59,37 +59,6 @@ typedef struct sequence_s {
 	int length;		/**< the amount of sequence commands */
 } sequence_t;
 
-typedef enum {
-	SEQ_END,
-	SEQ_WAIT,
-	SEQ_CLICK,
-	SEQ_PRECACHE,
-	SEQ_CAMERA,
-	SEQ_MODEL,
-	SEQ_2DOBJ,
-	SEQ_MUSIC,
-	SEQ_SOUND,
-	SEQ_REM,
-	SEQ_CMD,
-
-	SEQ_NUMCMDS
-} seqCmdEnum_t;
-
-static const char *seqCmdName[] = {
-	"end",
-	"wait",
-	"click",
-	"precache",
-	"camera",
-	"model",
-	"2dobj",
-	"music",
-	"sound",
-	"rem",
-	"cmd"
-};
-CASSERT(lengthof(seqCmdName) == SEQ_NUMCMDS);
-
 typedef struct seqCamera_s {
 	vec3_t origin;
 	vec3_t speed;
@@ -853,6 +822,22 @@ void SEQ_InitStartup (void)
 
 /* =========================================================== */
 
+static const char *seqCmdName[] = {
+	"end",
+	"wait",
+	"click",
+	"precache",
+	"camera",
+	"model",
+	"2dobj",
+	"music",
+	"sound",
+	"rem",
+	"cmd"
+};
+
+#define SEQ_NUMCMDS lengthof(seqCmdName)
+
 /**
  * @brief Function to exeute all available commands
  */
@@ -869,7 +854,7 @@ static sequenceHandler_t seqCmdFunc[] = {
 	SEQ_ExecuteRemove,
 	SEQ_ExecuteCommand
 };
-CASSERT(lengthof(seqCmdFunc) == SEQ_NUMCMDS);
+CASSERT(lengthof(seqCmdFunc) == lengthof(seqCmdName));
 
 /**
  * @brief Reads the sequence values from given text-pointer
