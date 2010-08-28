@@ -58,6 +58,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/ui_node_radiobutton.h"
 #include "node/ui_node_rows.h"
 #include "node/ui_node_selectbox.h"
+#include "node/ui_node_sequence.h"
 #include "node/ui_node_string.h"
 #include "node/ui_node_special.h"
 #include "node/ui_node_spinner.h"
@@ -116,6 +117,7 @@ static const registerFunction_t registerFunctions[] = {
 	UI_RegisterRadioButtonNode,
 	UI_RegisterRowsNode,
 	UI_RegisterSelectBoxNode,
+	UI_RegisterSequenceNode,
 	UI_RegisterSpecialNode,
 	UI_RegisterSpinnerNode,
 	UI_RegisterStringNode,

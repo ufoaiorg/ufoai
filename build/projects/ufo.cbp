@@ -994,6 +994,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/ui/node/ui_node_selectbox.h" />
+		<Unit filename="../../src/client/ui/node/ui_node_sequence.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/ui/node/ui_node_sequence.h" />
 		<Unit filename="../../src/client/ui/node/ui_node_special.c">
 			<Option compilerVar="CC" />
 		</Unit>

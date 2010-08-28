@@ -202,6 +202,7 @@ CLIENT_SRCS = \
 	client/ui/node/ui_node_radiobutton.c \
 	client/ui/node/ui_node_rows.c \
 	client/ui/node/ui_node_selectbox.c \
+	client/ui/node/ui_node_sequence.c \
 	client/ui/node/ui_node_string.c \
 	client/ui/node/ui_node_special.c \
 	client/ui/node/ui_node_spinner.c \
