@@ -331,8 +331,8 @@ aircraft craft_inter_dragon
 aircraft craft_inter_starchaser
 {
 	param {
-		speed		9
-		maxspeed	14
+		speed		19
+		maxspeed	28
 		shield		7
 		ecm			100
 		damage		700
@@ -377,8 +377,8 @@ aircraft craft_inter_starchaser
 aircraft craft_inter_stingray
 {
 	param {
-		speed		20
-		maxspeed	30
+		speed		25
+		maxspeed	37
 		shield		7
 		ecm			100
 		damage		900
