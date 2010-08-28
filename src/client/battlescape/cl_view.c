@@ -313,7 +313,7 @@ void CL_ViewRender (void)
 	R_RenderFrame();
 
 	if (cls.state == ca_sequence)
-		CL_Sequence2D();
+		CL_SequenceRender2D();
 }
 
 /**

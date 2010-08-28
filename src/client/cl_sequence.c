@@ -343,7 +343,7 @@ void CL_SequenceRender (void)
  * @brief Renders text and images
  * @sa SEQ_InitStartup
  */
-void CL_Sequence2D (void)
+void CL_SequenceRender2D (void)
 {
 	seq2D_t *s2d;
 	int i, j;
