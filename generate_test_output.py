@@ -37,10 +37,15 @@ def main():
     file_name = revision + ".xml"
     shutil.copy (CUNIT_OUTPUT, UNITTESTS_DIR + "/" + file_name)
 
-    index_name = UNITTESTS_DIR + '/index.html'
+    latest_name = UNITTESTS_DIR + '/latest.html'
     content = INDEX_CONTENT % file_name
-    file = open(index_name, "wt")
+    file = open(latest_name, "wt")
     file.write(content)
+    file.close()
+
+    latest_name = UNITTESTS_DIR + '/LATEST'
+    file = open(latest_name, "wt")
+    file.write(file_name)
     file.close()
 
 if __name__ == '__main__':
