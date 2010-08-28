@@ -1619,7 +1619,7 @@ void CL_ResetSinglePlayerData (void)
 	}
 	for (i = 0; i < ccs.numAlienCategories; i++) {
 		alienTeamCategory_t *alienCat = &ccs.alienCategories[i];
-		LIST_Delete(alienCat->equipment);
+		LIST_Delete(&alienCat->equipment);
 	}
 	LIST_Delete(&ccs.cities);
 	cp_messageStack = NULL;
