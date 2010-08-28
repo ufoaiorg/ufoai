@@ -1603,7 +1603,7 @@ void CL_ResetSinglePlayerData (void)
 	LIST_Delete(&ccs.missions);
 	LIST_Delete(&ccs.alienBases);
 	for (i = 0; i < ccs.numBases; i++) {
-		base_t *base = &ccs.bases[i];
+		base_t *base = B_GetBaseByIDX(i);
 		aircraft_t *craft = NULL;
 
 		/**
@@ -1617,8 +1617,10 @@ void CL_ResetSinglePlayerData (void)
 		}
 		LIST_Delete(&base->aircraft);
 	}
-	for (i = 0; i < ccs.numAlienCategories; i++)
-		LIST_Delete(&ccs.alienCategories[i].equipment);
+	for (i = 0; i < ccs.numAlienCategories; i++) {
+		alienTeamCategory_t *alienCat = &ccs.alienCategories[i];
+		LIST_Delete(alienCat->equipment);
+	}
 	LIST_Delete(&ccs.cities);
 	cp_messageStack = NULL;
 
@@ -1636,8 +1638,9 @@ void CL_ResetSinglePlayerData (void)
 
 	/* Collect and count Alien team definitions. */
 	for (i = 0; i < csi.numTeamDefs; i++) {
-		if (CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
-			ccs.alienTeams[ccs.numAliensTD++] = &csi.teamDef[i];
+		teamDef_t *td = &csi.teamDef[i];
+		if (CHRSH_IsTeamDefAlien(td))
+			ccs.alienTeams[ccs.numAliensTD++] = td;
 	}
 	/* Clear mapDef usage staistics */
 	for (i = 0; i < cls.numMDs; i++) {
