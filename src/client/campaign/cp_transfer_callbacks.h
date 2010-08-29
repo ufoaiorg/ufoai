@@ -52,7 +52,7 @@ typedef struct transferData_s {
 	/** @brief Current cargo onboard. */
 	transferCargo_t cargo[MAX_CARGO];
 
-	/** @brief Current item cargo. */
+	/** @brief Current item cargo. Amount of items for each object definition index. */
 	int trItemsTmp[MAX_OBJDEFS];
 
 	/** @brief Current alien cargo. [0] alive [1] dead */

@@ -1411,8 +1411,8 @@ static void TR_TransferList_Scroll_f (void)
 	if (transferType != TRANS_TYPE_ITEM)
 		return;
 
-	if (B_GetBuildingStatus(td.transferBase, B_ANTIMATTER) && (B_AntimatterInBase(srcBase) || td.trItemsTmp[od->idx])) {
-		if ((cnt < viewPos + MAX_TRANSLIST_MENU_ENTRIES) && cnt >= viewPos)
+	if (B_GetBuildingStatus(td.transferBase, B_ANTIMATTER) && (td.trItemsTmp[od->idx] || B_AntimatterInBase(srcBase))) {
+		if (cnt >= viewPos && cnt < viewPos + MAX_TRANSLIST_MENU_ENTRIES)
 			UI_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos,
 					td.trItemsTmp[od->idx], 0, B_AntimatterInBase(srcBase) + td.trItemsTmp[od->idx]);
 		cnt++;
@@ -1421,7 +1421,9 @@ static void TR_TransferList_Scroll_f (void)
 		const objDef_t *od = INVSH_GetItemByIDX(i);
 		if (!B_ItemIsStoredInBaseStorage(od))
 			continue;
-		if ((srcBase->storage.numItems[od->idx] || td.trItemsTmp[od->idx]) && !od->isVirtual) {
+		if (od->isVirtual)
+			continue;
+		if (srcBase->storage.numItems[od->idx] || td.trItemsTmp[od->idx]) {
 			if (cnt >= viewPos + MAX_TRANSLIST_MENU_ENTRIES)
 				break;
 			if (cnt >= viewPos)
@@ -1446,7 +1448,7 @@ void TR_InitCallbacks (void)
 	Cmd_AddCommand("trans_cargolist_click", TR_CargoListSelect_f, "Callback for cargo list node click");
 	Cmd_AddCommand("trans_selectbase", TR_SelectBase_f, "Callback for selecting a base");
 	Cmd_AddCommand("trans_baselist_click", TR_TransferBaseListClick_f, "Callback for choosing base while recovering alien after mission");
-	
+
 	Cmd_AddCommand("trans_aliens", TR_TransferAliensFromMission_f, "Transfer aliens collected at missions");
 }
 
