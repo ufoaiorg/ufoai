@@ -296,7 +296,7 @@ static void SEQ_Render3D (sequenceContext_t *context)
 			ent.as = se->as;
 			ent.alpha = se->alpha;
 
-			VectorCopy(se->origin, ent.origin);
+			R_EntitySetOrigin(&ent, se->origin);
 			VectorCopy(se->origin, ent.oldorigin);
 			VectorCopy(se->angles, ent.angles);
 

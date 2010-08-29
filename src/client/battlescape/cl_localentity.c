@@ -126,7 +126,7 @@ static void LM_AddToSceneOrder (qboolean parents)
 						lm->model->name, lm->id, lm->parent->renderEntityNum);
 			ent.tagname = lm->tagname;
 		} else {
-			VectorCopy(lm->origin, ent.origin);
+			R_EntitySetOrigin(&ent, lm->origin);
 			VectorCopy(lm->origin, ent.oldorigin);
 			VectorCopy(lm->angles, ent.angles);
 
@@ -917,7 +917,7 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		/* These cause the model to render correctly */
 		VectorCopy(ent->mins, le->mins);
 		VectorCopy(ent->maxs, le->maxs);
-		VectorCopy(ent->origin, le->origin);
+		VectorCopy(*R_EntityGetOrigin(ent), le->origin);
 		VectorCopy(ent->angles, le->angles);
 		break;
 	case ET_BREAKABLE:
@@ -1286,7 +1286,7 @@ void LE_AddToScene (void)
 				break;
 			default:
 				/* set entity values */
-				VectorCopy(le->origin, ent.origin);
+				R_EntitySetOrigin(&ent, le->origin);
 				VectorCopy(le->origin, ent.oldorigin);
 				/* store animation values */
 				ent.as = le->as;
@@ -1296,7 +1296,7 @@ void LE_AddToScene (void)
 			if (LE_IsOriginBrush(le)) {
 				ent.isOriginBrushModel = qtrue;
 				VectorCopy(le->angles, ent.angles);
-				VectorCopy(le->origin, ent.origin);
+				R_EntitySetOrigin(&ent, le->origin);
 				VectorCopy(le->origin, ent.oldorigin);
 			}
 
@@ -1305,7 +1305,7 @@ void LE_AddToScene (void)
 			case ACTOR_SIZE_NORMAL:
 			case ACTOR_SIZE_2x2:
 				ModelOffset(le->fieldSize, modelOffset);
-				VectorAdd(ent.origin, modelOffset, ent.origin);
+				R_EntityAddToOrigin(&ent, modelOffset);
 				VectorAdd(ent.oldorigin, modelOffset, ent.oldorigin);
 				break;
 			default:

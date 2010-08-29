@@ -37,7 +37,7 @@ static qboolean CL_AddEdictFunc (le_t *le, entity_t *ent)
 	ent->alpha = 1.0;
 	VectorCopy(le->mins, ent->mins);
 	VectorCopy(le->maxs, ent->maxs);
-	VectorCopy(le->origin, ent->origin);
+	R_EntitySetOrigin(ent, le->origin);
 	return qtrue;
 }
 

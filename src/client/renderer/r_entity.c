@@ -33,6 +33,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static entity_t r_entities[MAX_ENTITIES];
 
+/* getters and setters for origin */
+const vec3_t *R_EntityGetOrigin(const entity_t *ent) { return &ent->origin; }
+void R_EntitySetOrigin(entity_t *ent, const vec3_t ovec) { VectorCopy(ovec, ent->origin); }
+void R_EntityCopyOrigin(entity_t *ent, const entity_t *other) { VectorCopy(other->origin, ent->origin); }
+void R_EntityAddToOrigin(entity_t *ent, const vec3_t offs) { VectorAdd(ent->origin, offs, ent->origin); }
+void R_EntitySubtractFromOrigin(entity_t *ent, const vec3_t offs) { VectorSubtract(ent->origin, offs, ent->origin); }
+
 /**
  * @brief Draws the field marker entity is specified in cl_actor.c CL_AddTargeting
  * @sa CL_AddTargeting
