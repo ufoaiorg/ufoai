@@ -220,7 +220,8 @@ static int CopyLump (int lump, void *dest, int size)
  */
 void LoadBSPFile (const char *filename)
 {
-	int i, size;
+	int size;
+	unsigned int i;
 
 	/* Create this shortcut to mapTiles[0] */
 	curTile = &mapTiles.mapTiles[0];

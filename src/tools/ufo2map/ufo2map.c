@@ -121,6 +121,7 @@ static const usagePair_t usageArray[] = {
 	{" -nowater","skip water brushes in compilation"},
 	{" -noweld",""},
 	{" -onlyents","modify existing bsp file with entities from map file"},
+	{" -exportlightmaps","write lightmaps into tga images"},
 	{" -verboseentities","also be verbose about submodels (entities)"},
 	{"\nMapping options:", NULL},
 	{"\n These options operate on map file only. No bsp file is created.", NULL},
@@ -391,6 +392,9 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i], "-onlyents")) {
 			Verb_Printf(VERB_LESS, "onlyents = true\n");
 			config.onlyents = qtrue;
+		} else if (!strcmp(argv[i], "-exportlightmaps")) {
+			Verb_Printf(VERB_LESS, "exportlightmaps = true\n");
+			config.exportLightmaps = qtrue;
 		} else if (!strcmp(argv[i], "-micro")) {
 			config.microvolume = atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "microvolume = %f\n", config.microvolume);
@@ -672,6 +676,10 @@ int main (int argc, const char **argv)
 		UnparseEntities();
 
 		WriteBSPFile(bspFilename);
+	} else if (config.exportLightmaps) {
+		LoadBSPFile(bspFilename);
+		ExportLightmaps(bspFilename);
+		size = 0;
 	} else if (config.performMapCheck || config.fixMap) {
 		LoadMapFile(mapFilename);
 		/* level flags must be fixed before mixed face contents, or they swamp the
@@ -744,7 +752,7 @@ int main (int argc, const char **argv)
 	Verb_Printf(VERB_LESS, "%5.0f seconds elapsed\n", end - start);
 	begin = start;
 
-	if (!config.onlyents && config.nolighting != LIGHTING_NONE) {
+	if (!config.exportLightmaps && !config.onlyents && config.nolighting != LIGHTING_NONE) {
 		Verb_Printf(VERB_LESS, "----- Lighting ----\n");
 
 		CalcTextureReflectivity();
@@ -768,7 +776,7 @@ int main (int argc, const char **argv)
 
 		Verb_Printf(VERB_LESS, "writing %s\n", bspFilename);
 		size = WriteBSPFile(bspFilename);
-	} else {
+	} else if (!config.exportLightmaps) {
 		/* build per-vertex normals for phong shading */
 		BuildVertexNormals();
 		size = WriteBSPFile(bspFilename);

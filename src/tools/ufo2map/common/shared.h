@@ -68,6 +68,7 @@ typedef struct mapConfig_s {
 	qboolean nodetail;
 	qboolean fulldetail;
 	qboolean onlyents;
+	qboolean exportLightmaps;
 	qboolean nomerge;
 	qboolean nowater;
 	qboolean nocsg;

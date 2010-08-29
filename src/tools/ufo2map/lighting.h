@@ -47,6 +47,7 @@ extern vec3_t face_offset[MAX_MAP_FACES];
 
 void BuildFacelights(unsigned int facenum);
 void FinalLightFace(unsigned int facenum);
+void ExportLightmaps(const char *bspFileName);
 void BuildLights(void);
 
 void BuildPatches(void);

@@ -867,6 +867,77 @@ void BuildFacelights (unsigned int facenum)
 		Mem_Free(l[i].surfpt);
 }
 
+static void WriteTGA24 (const char *filename, const byte * data, int width, int height)
+{
+	int i, c;
+	byte *buffer;
+	qFILE file;
+
+	/* allocate a buffer and set it up */
+	buffer = Mem_Alloc(width * height * 3 + 18);
+	memset(buffer, 0, 18);
+	buffer[2] = 2;
+	buffer[12] = width & 255;
+	buffer[13] = width >> 8;
+	buffer[14] = height & 255;
+	buffer[15] = height >> 8;
+	buffer[16] = 24;
+
+	/* swap rgb to bgr */
+	c = (width * height * 3) + 18;
+	/* we are skipping the direction data here - that's why we go 6 bytes forward, not only 3 */
+	for (i = 18; i < c; i += 6) {
+		buffer[i] = data[i - 18 + 2];	/* blue */
+		buffer[i + 1] = data[i - 18 + 1];	/* green */
+		buffer[i + 2] = data[i - 18 + 0];	/* red */
+	}
+
+	/* write it and free the buffer */
+	if (FS_OpenFile(filename, &file, FILE_WRITE) > 0)
+		Sys_Error("Unable to open %s for writing", filename);
+
+	FS_Write(buffer, c, &file);
+
+	/* close the file */
+	FS_CloseFile(&file);
+	Mem_Free(buffer);
+}
+
+static void ExportLightmap (const char *path, const char *name, qboolean day)
+{
+	char filename[MAX_QPATH];
+	int i;
+	const byte *bspLightBytes = curTile->lightdata[day];
+	const int size = curTile->lightdatasize[day];
+	const int lightmapSize = 128; /** @todo: this isn't correct */
+	const byte *lightmap = bspLightBytes;
+	const int stride = lightmapSize * lightmapSize * 6;
+
+	/** @todo this isn't working yet */
+	/* iterate through the lightmaps */
+	for (i = 0; lightmap < bspLightBytes + size; i++, lightmap += stride) {
+		/* write a tga image out */
+		Com_sprintf(filename, sizeof(filename), "%s/%s_lightmap_%04d%c.tga", path, name, i, day ? 'd' : 'n');
+		Com_Printf("Writing %s\n", filename);
+		WriteTGA24(filename, lightmap, lightmapSize, lightmapSize);
+	}
+}
+
+void ExportLightmaps (const char *bspFileName)
+{
+	char path[MAX_QPATH], lightmapName[MAX_QPATH];
+	const char *fileName = Com_SkipPath(bspFileName);
+
+	Com_FilePath(bspFileName, path);
+	Com_StripExtension(fileName, lightmapName, sizeof(lightmapName));
+
+	/* note it */
+	Com_Printf("--- ExportLightmaps ---\n");
+
+	ExportLightmap(path, lightmapName, qtrue);
+	ExportLightmap(path, lightmapName, qfalse);
+}
+
 static const vec3_t luminosity = {0.2125, 0.7154, 0.0721};
 
 /**
