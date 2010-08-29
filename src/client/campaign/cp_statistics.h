@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CP_STATISTICS_H
 
 typedef struct stats_s {
-	int missions;				/**< all missions (used for unique idx generation) */
+	int missions;				/**< number of all missions ever (used for unique idx generation) */
 	int missionsWon;
 	int missionsLost;
 	int basesBuilt;
@@ -44,13 +44,12 @@ typedef struct stats_s {
 	int moneyResearch;
 	int moneyWeapons;
 	int ufosDetected;
-	int alienBasesBuilt;		/**< all alien bases (used for unique idx generation) */
-	int ufosStored;				/**< all UFOS stored in UFO Yards (used for unique idx generation) */
+	int alienBasesBuilt;		/**< number of all alien bases ever built (used for unique idx generation) */
+	int ufosStored;				/**< number of UFOS ever stored in UFO Yards (used for unique idx generation) */
+	int aircraftHad;			/**< number of PHALANX aircraft ever bought/produced (used for unique idx generation) */
 } stats_t;
 
 void CL_StatsUpdate_f(void);
-qboolean CP_LoadMapDefStatXML(mxml_node_t *parent);
 void STATS_InitStartup(void);
 
 #endif
-

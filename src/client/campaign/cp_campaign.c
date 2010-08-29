@@ -749,6 +749,33 @@ void CL_UpdateCredits (int credits)
 }
 
 /**
+ * @brief Load mapDef statistics
+ * @param[in] parent XML Node structure, where we get the information from
+ */
+static qboolean CP_LoadMapDefStatXML (mxml_node_t *parent)
+{
+	mxml_node_t *node;
+
+	for (node = mxml_GetNode(parent, SAVE_CAMPAIGN_MAPDEF); node; node = mxml_GetNextNode(node, parent, SAVE_CAMPAIGN_MAPDEF)) {
+		const char *s = mxml_GetString(node, SAVE_CAMPAIGN_MAPDEF_ID);
+		mapDef_t *map;
+
+		if (s[0] == '\0') {
+			Com_Printf("Warning: MapDef with no id in xml!\n");
+			continue;
+		}
+		map = Com_GetMapDefinitionByID(s);
+		if (!map) {
+			Com_Printf("Warning: No MapDef with id '%s'!\n", s);
+			continue;
+		}
+		map->timesAlreadyUsed = mxml_GetInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, 0);
+	}
+
+	return qtrue;
+}
+
+/**
  * @brief Load callback for savegames in XML Format
  * @param[in] parent XML Node structure, where we get the information from
  */
@@ -815,33 +842,6 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		return qfalse;
 
 	mxmlDelete(campaignNode);
-	return qtrue;
-}
-
-/**
- * @brief Load mapDef statistics
- * @param[in] parent XML Node structure, where we get the information from
- */
-qboolean CP_LoadMapDefStatXML (mxml_node_t *parent)
-{
-	mxml_node_t *node;
-
-	for (node = mxml_GetNode(parent, SAVE_CAMPAIGN_MAPDEF); node; node = mxml_GetNextNode(node, parent, SAVE_CAMPAIGN_MAPDEF)) {
-		const char *s = mxml_GetString(node, SAVE_CAMPAIGN_MAPDEF_ID);
-		mapDef_t *map;
-
-		if (s[0] == '\0') {
-			Com_Printf("Warning: MapDef with no id in xml!\n");
-			continue;
-		}
-		map = Com_GetMapDefinitionByID(s);
-		if (!map) {
-			Com_Printf("Warning: No MapDef with id '%s'!\n", s);
-			continue;
-		}
-		map->timesAlreadyUsed = mxml_GetInt(node, SAVE_CAMPAIGN_MAPDEF_COUNT, 0);
-	}
-
 	return qtrue;
 }
 

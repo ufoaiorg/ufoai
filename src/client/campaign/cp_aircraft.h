@@ -245,8 +245,11 @@ void AIR_ListCraftIndexes_f(void);
 
 aircraft_t *AIR_Add(struct base_s *base, const aircraft_t *aircraftTemplate);
 qboolean AIR_Delete(struct base_s *base, const aircraft_t *aircraft);
-qboolean AIR_BaseHasAircraft(const struct base_s *base);
+
 aircraft_t* AIR_GetNextFromBase(const struct base_s *base, aircraft_t *lastAircraft);
+aircraft_t* AIR_GetByIDX(int idx);
+
+qboolean AIR_BaseHasAircraft(const struct base_s *base);
 int AIR_GetAircraftIDXInBase(const aircraft_t* aircraft);
 aircraft_t *AIR_GetAircraftFromBaseByIDXSafe(struct base_s *base, int index);
 const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);
@@ -283,19 +286,25 @@ int AIR_CalculateHangarStorage(const aircraft_t *aircraft, const struct base_s *
 int CL_AircraftMenuStatsValues(const int value, const int stat);
 int AIR_CountTypeInBase(const struct base_s *base, aircraftType_t aircraftType);
 const char *AIR_GetAircraftString(aircraftType_t aircraftType);
-void AIR_AutoAddPilotToAircraft(struct base_s* base, struct employee_s* pilot);
-void AIR_RemovePilotFromAssignedAircraft(struct base_s* base, const struct employee_s* pilot);
+
 int AIR_GetAircraftWeaponRanges(const aircraftSlot_t *slot, int maxSlot, float *weaponRanges);
 int AIR_GetCapacityByAircraftWeight(const aircraft_t *aircraft);
+
 const char *AIR_CheckMoveIntoNewHomebase(const aircraft_t *aircraft, const struct base_s* base, const int capacity);
+
 void AII_CollectItem(aircraft_t *aircraft, const objDef_t *item, int amount);
 void AII_CollectingItems(aircraft_t *aircraft, int won);
+
+void AIR_AutoAddPilotToAircraft(struct base_s* base, struct employee_s* pilot);
+void AIR_RemovePilotFromAssignedAircraft(struct base_s* base, const struct employee_s* pilot);
 void AIR_RemoveEmployees(aircraft_t* aircraft);
 qboolean AIR_RemoveEmployee(struct employee_s *employee, aircraft_t* aircraft);
 const aircraft_t *AIR_IsEmployeeInAircraft(const struct employee_s *employee, const aircraft_t* aircraft);
 void AIR_MoveEmployeeInventoryIntoStorage(const aircraft_t *aircraft, equipDef_t *equip);
+
 void AIM_AddEmployeeFromMenu(aircraft_t *aircraft, const int num);
 void AIR_AssignInitial(aircraft_t *aircraft);
+
 qboolean AIR_CanIntercept(const aircraft_t *aircraft);
 
 int AIR_GetOperationRange(const aircraft_t *aircraft);

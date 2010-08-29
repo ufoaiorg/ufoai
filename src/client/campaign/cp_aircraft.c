@@ -760,6 +760,7 @@ aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
 {
 	aircraft_t *aircraft = (aircraft_t *)LIST_Add(&base->aircraft, (const byte *)aircraftTemplate, sizeof(*aircraftTemplate))->data;
 	aircraft->homebase = base;
+	ccs.numAircraft++;
 	return aircraft;
 }
 
@@ -772,6 +773,7 @@ aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
  */
 qboolean AIR_Delete (base_t *base, const aircraft_t *aircraft)
 {
+	ccs.numAircraft--;
 	return LIST_Remove(&base->aircraft, (const void *)aircraft);
 }
 
@@ -789,7 +791,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 	 * we do this because every aircraft can have its own parameters
 	 * now lets use the aircraft array for the base to set some parameters */
 	aircraft_t *aircraft = AIR_Add(base, aircraftTemplate);
-	aircraft->idx = ccs.numAircraft;	/**< set a unique index to this aircraft. */
+	aircraft->idx = ccs.campaignStats.aircraftHad++;	/**< set a unique index to this aircraft. */
 	aircraft->homebase = base;
 	/* Update the values of its stats */
 	AII_UpdateAircraftStats(aircraft);
@@ -813,7 +815,6 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 	Vector2Copy(base->pos, aircraft->pos);
 	RADAR_Initialise(&aircraft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, qfalse);
 
-	ccs.numAircraft++;		/**< Increase the global number of aircraft. */
 	/* Update base capacities. */
 	Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->tpl->idx, aircraft->id, aircraft->size);
 	Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for %s\n", aircraft->id, aircraft->idx, base->name);
@@ -1041,9 +1042,6 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		AII_RemoveItemFromSlot(NULL, aircraft->electronics, qfalse);
 	}
 	AII_RemoveItemFromSlot(NULL, &aircraft->shield, qfalse);
-
-	/* Decrease the global number of aircraft. */
-	ccs.numAircraft--;
 
 	if (base->aircraftCurrent == aircraft)
 		base->aircraftCurrent = NULL;
@@ -1321,22 +1319,16 @@ aircraft_t* AIR_AircraftGetFromIDX (int idx)
 {
 	int baseIdx;
 
-	if (idx == AIRCRAFT_INVALID || idx >= ccs.numAircraft) {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: bad aircraft index: %i\n", idx);
-		return NULL;
-	}
-
 #ifdef PARANOID
 	if (ccs.numBases < 1) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: no base(s) found!\n");
 	}
 #endif
 
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		aircraft_t* aircraft;
+		aircraft_t* aircraft = NULL;
 
-		aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (aircraft->idx == idx) {
 				Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: aircraft idx: %i - base idx: %i (%s)\n",
@@ -2539,7 +2531,6 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 
 	/* save phalanx aircraft */
 	snode = mxml_AddNode(parent, SAVE_AIRCRAFT_PHALANX);
-	mxml_AddIntValue(snode, SAVE_AIRCRAFT_NUMAIRCRAFT, ccs.numAircraft);
 	for (i = 0; i < MAX_BASES; i++) {
 		base_t *base = B_GetFoundedBaseByIDX(i);
 		aircraft_t *aircraft;
@@ -2826,8 +2817,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 
 	/* load phalanx aircraft */
 	snode = mxml_GetNode(parent, SAVE_AIRCRAFT_PHALANX);
-	ccs.numAircraft = mxml_GetInt(snode, SAVE_AIRCRAFT_NUMAIRCRAFT, 0);
-	for (i = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_AIRCRAFT); i < MAX_AIRCRAFT && ssnode;
+	for (i = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_AIRCRAFT); ssnode;
 			ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRCRAFT), i++) {
 		aircraft_t craft;
 		if (!AIR_LoadAircraftXML(ssnode, &craft))
@@ -2835,6 +2825,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 		assert(craft.homebase);
 		AIR_CorrectAircraftSlotPointers(AIR_Add(craft.homebase, &craft));
 	}
+	ccs.numAircraft = i;
 
 	/* load the ufos on geoscape */
 	snode = mxml_GetNode(parent, SAVE_AIRCRAFT_UFOS);
@@ -3027,12 +3018,22 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 	 * the aircraft pointer to it. */
 	if (!aircraft) {
 		int i;
-		for (i = 0; i < ccs.numAircraft; i++) {
-			aircraft_t *acTemp = AIR_AircraftGetFromIDX(i);
-			if (AIR_IsEmployeeInAircraft(employee, acTemp)) {
-				aircraft = acTemp;
-				break;
+
+		for (i = 0; i < ccs.numBases; i++) {
+			base_t *base = B_GetFoundedBaseByIDX(i);
+			aircraft_t *acTemp = NULL;
+
+			if (!base)
+				continue;
+
+			while ((acTemp = AIR_GetNextFromBase(base, acTemp))) { 
+				if (AIR_IsEmployeeInAircraft(employee, acTemp)) {
+					aircraft = acTemp;
+					break;
+				}
 			}
+			if (aircraft)
+				break;
 		}
 		if (!aircraft)
 			return qfalse;
@@ -3063,10 +3064,17 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const ai
 	/* If no aircraft is given we search if he is in _any_ aircraft and return true if that's the case. */
 	if (!aircraft) {
 		int i;
-		for (i = 0; i < ccs.numAircraft; i++) {
-			const aircraft_t *aircraftByIDX = AIR_AircraftGetFromIDX(i);
-			if (aircraftByIDX && AIR_IsEmployeeInAircraft(employee, aircraftByIDX))
-				return aircraftByIDX;
+		for (i = 0; i < ccs.numBases; i++) {
+			base_t *base = B_GetFoundedBaseByIDX(i);
+			aircraft_t *aircraftByIDX = NULL;
+
+			if (!base)
+				continue;
+		
+			while ((aircraftByIDX = AIR_GetNextFromBase(base, aircraftByIDX))) {
+				if (AIR_IsEmployeeInAircraft(employee, aircraftByIDX))
+					return aircraftByIDX;
+			}
 		}
 		return NULL;
 	}
