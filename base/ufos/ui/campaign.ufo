@@ -588,6 +588,11 @@ window lostgame
 		src		"background/losegame_bg"
 	}
 
+	func onInit
+	{
+		cmd "music_stop;snd_music Crystan-LooseGame;"
+	}
+
 	string title
 	{
 		string		"_You've lost the game"
@@ -662,6 +667,11 @@ window endgame
 	image background
 	{
 		src		"background/wingame_bg"
+	}
+
+	func onInit
+	{
+		cmd "music_stop;snd_music Crystan-WinGame;"
 	}
 
 	string title
