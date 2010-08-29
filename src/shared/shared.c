@@ -270,6 +270,7 @@ void Com_DefaultExtension (char *path, size_t len, const char *extension)
 
 /**
  * @brief Returns the path up to, but not including the last /
+ * @todo add a size parameter to prevent buffer overflows
  */
 void Com_FilePath (const char *in, char *out)
 {
