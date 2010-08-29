@@ -111,7 +111,7 @@ void AB_DestroyBase (alienBase_t *base)
 {
 	assert(base);
 
-	LIST_Remove(&ccs.alienBases, (void*)base);
+	LIST_RemovePointer(&ccs.alienBases, (void*)base);
 
 	/* Alien loose all their interest in supply if there's no base to send the supply */
 	if (!AB_Exists())
