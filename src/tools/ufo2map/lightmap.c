@@ -903,23 +903,40 @@ static void WriteTGA24 (const char *filename, const byte * data, int width, int 
 	Mem_Free(buffer);
 }
 
+static void CalcTextureSize (const dBspSurface_t *s, vec2_t texsize, int scale)
+{
+	const float *stmins = face_extents[s - curTile->faces].stmins;
+	const float *stmaxs = face_extents[s - curTile->faces].stmaxs;
+	int i;
+
+	for (i = 0; i < 2; i++) {
+		const float mins = floor(stmins[i] / scale);
+		const float maxs = ceil(stmaxs[i] / scale);
+
+		texsize[i] = maxs - mins;
+	}
+}
+
 static void ExportLightmap (const char *path, const char *name, qboolean day)
 {
 	char filename[MAX_QPATH];
 	int i;
-	const byte *bspLightBytes = curTile->lightdata[day];
-	const int size = curTile->lightdatasize[day];
-	const int lightmapSize = 128; /** @todo: this isn't correct */
-	const byte *lightmap = bspLightBytes;
-	const int stride = lightmapSize * lightmapSize * 6;
+	const int lightmapIndex = day ? 1 : 0;
+	const byte *bspLightBytes = curTile->lightdata[lightmapIndex];
 
-	/** @todo this isn't working yet */
-	/* iterate through the lightmaps */
-	for (i = 0; lightmap < bspLightBytes + size; i++, lightmap += stride) {
-		/* write a tga image out */
-		Com_sprintf(filename, sizeof(filename), "%s/%s_lightmap_%04d%c.tga", path, name, i, day ? 'd' : 'n');
-		Com_Printf("Writing %s\n", filename);
-		WriteTGA24(filename, lightmap, lightmapSize, lightmapSize);
+	for (i = 0; i < curTile->numfaces; i++) {
+		vec2_t texSize;
+		const dBspSurface_t *face = &curTile->faces[i];
+		const byte *lightmap = bspLightBytes + face->lightofs[lightmapIndex];
+		const byte quant = *lightmap++;
+		const int scale = 1 << quant;
+		CalcTextureSize(face, texSize, scale);
+		if (texSize[0] && texSize[1]) {
+			/* write a tga image out */
+			Com_sprintf(filename, sizeof(filename), "%s/%s_lightmap_%04d%c.tga", path, name, i, day ? 'd' : 'n');
+			Com_Printf("Writing %s (%.0fx%.0f)\n", filename, texSize[0], texSize[1]);
+			WriteTGA24(filename, lightmap, texSize[0], texSize[1]);
+		}
 	}
 }
 
@@ -933,6 +950,8 @@ void ExportLightmaps (const char *bspFileName)
 
 	/* note it */
 	Com_Printf("--- ExportLightmaps ---\n");
+
+	BuildFaceExtents();
 
 	ExportLightmap(path, lightmapName, qtrue);
 	ExportLightmap(path, lightmapName, qfalse);
