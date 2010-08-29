@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "CUnit/Basic.h"
 #include "CUnit/Automated.h"
 #include "CUnit/Console.h"
+#include "CUnit/TestDB.h"
 
 typedef int (*testSuite_t) (void);
 
@@ -70,6 +71,70 @@ typedef struct config_s {
 
 static config_t config;
 
+static void Test_List (void)
+{
+	CU_pTestRegistry registry;
+	CU_pSuite suite;
+
+	printf("Suites:\n");
+	registry = CU_get_registry();
+	suite = registry->pSuite;
+	while (suite) {
+		printf("* %s\n", suite->pName);
+		suite = suite->pNext;
+	}
+}
+
+static void Test_RemovePSuite (CU_pSuite suite)
+{
+	if (suite->pNext)
+		suite->pNext->pPrev = suite->pPrev;
+	if (suite->pPrev)
+		suite->pPrev->pNext = suite->pNext;
+	else
+		CU_get_registry()->pSuite = suite->pNext;
+}
+
+static int Test_RemoveSuite (const char *name)
+{
+	CU_pTestRegistry registry;
+	CU_pSuite suite;
+
+	registry = CU_get_registry();
+	suite = registry->pSuite;
+	while (suite) {
+		if (!strcmp(suite->pName, name)) {
+			Test_RemovePSuite(suite);
+			return 0;
+		}
+		suite = suite->pNext;
+	}
+	return 1;
+}
+
+static int Test_RemoveAllSuitesElse (const char *name)
+{
+	int found = 0;
+	CU_pTestRegistry registry;
+	CU_pSuite suite;
+
+	registry = CU_get_registry();
+	suite = registry->pSuite;
+	while (suite) {
+		if (!strcmp(suite->pName, name)) {
+			suite = suite->pNext;
+			found = 1;
+		} else {
+			CU_pSuite remove = suite;
+			suite = suite->pNext;
+			Test_RemovePSuite(remove);
+		}
+	}
+	if (found)
+		return 0;
+	return 1;
+}
+
 static void Test_Parameters (const int argc, const char **argv)
 {
 	int i;
@@ -79,19 +144,38 @@ static void Test_Parameters (const int argc, const char **argv)
 			config.console = 1;
 		} else if (!strcmp(argv[i], "-a") || !strcmp(argv[i], "--automated")) {
 			config.automated = 1;
-		} else if (!strcmp(argv[i], "--disable-rma")) {
-			config.disableRMA = 1;
+		} else if (!strncmp(argv[i], "--disable-", 10)) {
+			const char *name = argv[i] + 10;
+			if (Test_RemoveSuite(name) != 0) {
+				printf("Suite \"%s\" unknown\n", name);
+				printf("Use \"%s -l\" to show the list of suites\n", argv[0]);
+				exit(2);
+			}
+		} else if (!strncmp(argv[i], "--only-", 7)) {
+			const char *name = argv[i] + 7;
+			if (Test_RemoveAllSuitesElse(name) != 0) {
+				printf("Suite \"%s\" unknown\n", name);
+				printf("Use \"%s -l\" to show the list of suites\n", argv[0]);
+				exit(2);
+			}
+		} else if (!strcmp(argv[i], "-l") || !strcmp(argv[i], "--list")) {
+			Test_List();
+			exit(0);
 		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
 			printf("Usage:\n");
-			printf("-h  --help        | show this help screen\n");
-			printf("-c  --console     | run tests in console mode\n");
-			printf("-a  --automated   | run tests in automated mode (create xml file)\n");
-			printf("    --disable-rma | exclude RMA test from the test suite\n");
+			printf("-h  --help          | show this help screen\n");
+			printf("-c  --console       | run tests in console mode\n");
+			printf("-a  --automated     | run tests in automated mode (create xml file)\n");
+			printf("-l  --list          | list suite name available\n");
+			printf("    --disable-SUITE | Disable a suite by name\n");
+			printf("                      SUITE=suite name\n");
+			printf("    --only-SUITE    | Enable an only one suite by name\n");
+			printf("                      SUITE=suite name\n");
 			exit(0);
 		} else {
 			printf("Param \"%s\" unknown\n", argv[i]);
 			printf("Use \"%s -h\" to show the help screen\n", argv[0]);
-			exit(0);
+			exit(2);
 		}
 	}
 }
@@ -109,15 +193,12 @@ int main (int argc, const char **argv)
 	if (CU_initialize_registry() != CUE_SUCCESS)
 		return CU_get_error();
 
-	Test_Parameters(argc, argv);
-
 	for (i = 0; i < NUMBER_OF_TESTS - 1; i++) {
-		/** @todo find a more generic way if it is possible (framework should allow it, by suite name) */
-		if (config.disableRMA != 0 && testSuites[i] == UFO_AddRandomMapAssemblyTests)
-			continue;
 		if (testSuites[i]() != CUE_SUCCESS)
 			return fatalError();
 	}
+
+	Test_Parameters(argc, argv);
 
 	/* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);
