@@ -45,6 +45,7 @@ typedef struct stats_s {
 	int moneyWeapons;
 	int ufosDetected;
 	int alienBasesBuilt;		/**< all alien bases (used for unique idx generation) */
+	int ufosStored;				/**< all UFOS stored in UFO Yards (used for unique idx generation) */
 } stats_t;
 
 void CL_StatsUpdate_f(void);

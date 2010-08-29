@@ -154,7 +154,7 @@ installation_t *INS_GetFirstUnfoundedInstallation (void)
  */
 void INS_DestroyInstallation (installation_t *installation)
 {
-	int i;
+	storedUFO_t *ufo = NULL;
 
 	if (!installation)
 		return;
@@ -164,7 +164,7 @@ void INS_DestroyInstallation (installation_t *installation)
 	/* Disable radar */
 	RADAR_UpdateInstallationRadarCoverage(installation, 0, 0);
 	/* Destroy stored UFOs */
-	if (installation->ufoCapacity.max) {
+	if (installation->ufoCapacity.max > 0) {
 		installation->ufoCapacity.max = 0;
 		US_RemoveUFOsExceedingCapacity(installation);
 	}
@@ -176,11 +176,7 @@ void INS_DestroyInstallation (installation_t *installation)
 
 	REMOVE_ELEM_ADJUST_IDX(ccs.installations, installation->idx, ccs.numInstallations);
 	/* Correct UFO store positions */
-	for (i = 0; i < ccs.numStoredUFOs; i++) {
-		storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
-
-		if (!ufo)
-			continue;
+	while ((ufo = US_GetNext(ufo)) != NULL) {
 		if (ufo->installation >= installation)
 			ufo->installation--;
 	}

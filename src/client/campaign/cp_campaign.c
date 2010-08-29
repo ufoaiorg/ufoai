@@ -1621,6 +1621,7 @@ void CL_ResetSinglePlayerData (void)
 		alienTeamCategory_t *alienCat = &ccs.alienCategories[i];
 		LIST_Delete(&alienCat->equipment);
 	}
+	LIST_Delete(&ccs.storedUFOs);
 	LIST_Delete(&ccs.cities);
 	cp_messageStack = NULL;
 

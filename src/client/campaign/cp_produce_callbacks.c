@@ -119,15 +119,12 @@ static void PR_UpdateProductionList (const base_t* base)
 
 	/* Then go through all object definitions ... */
 	if (produceCategory == FILTER_DISASSEMBLY) {
+		storedUFO_t *ufo = NULL;
 		/** UFOs at UFO stores */
-		for (i = 0; i < ccs.numStoredUFOs; i++) {
-			storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
-
-			if (!ufo)
-				continue;
+		while ((ufo = US_GetNext(ufo)) != NULL) {
 			/* UFO is being transported */
 			if (ufo->status != SUFO_STORED)
-			 	continue;
+				continue;
 			/* UFO not researched */
 			if (!RS_IsResearched_ptr(ufo->ufoTemplate->tech))
 				continue;

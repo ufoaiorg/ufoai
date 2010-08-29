@@ -44,13 +44,9 @@ Backend functions
  */
 void UR_ProcessActive (void)
 {
-	int i;
+	storedUFO_t *ufo = NULL;
 
-	for (i = 0; i < ccs.numStoredUFOs; i++) {
-		storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
-		if (!ufo)
-			continue;
-
+	while ((ufo = US_GetNext(ufo)) != NULL) {
 		assert(ufo->ufoTemplate);
 		assert(ufo->ufoTemplate->tech);
 
@@ -72,27 +68,28 @@ void UR_ProcessActive (void)
 /* ==== UFO Storing stuff ==== */
 
 /**
- * @brief Returns an ufostore place
- * @param[in] idx index of ufostore place
- * @return storedUFO_t Pointer
+ * @brief Iterates through the stored UFOs
+ * @param[in] lastBase Pointer of the UFO to iterate from. call with NULL to get the first one.
  */
-storedUFO_t* US_GetStoredUFOPlaceByIDX (const int idx)
+storedUFO_t* US_GetNext (storedUFO_t *lastUFO)
 {
-	if (idx < 0 || idx >= MAX_STOREDUFOS)
-		return NULL;
-	return &(ccs.storedUFOs[idx]);
+	return (storedUFO_t*)LIST_GetNext(ccs.storedUFOs, lastUFO);
 }
 
 /**
  * @brief Returns a stored ufo
- * @param[in] idx index of ufostore place
+ * @param[in] idx index of the stored UFO
  * @return storedUFO_t Pointer
  */
 storedUFO_t* US_GetStoredUFOByIDX (const int idx)
 {
-	if (idx < 0 || idx >= ccs.numStoredUFOs)
-		return NULL;
-	return &(ccs.storedUFOs[idx]);
+	storedUFO_t *ufo = NULL;
+
+	while ((ufo = US_GetNext(ufo)) != NULL) {
+		if (ufo->idx == idx)
+			return ufo;
+	}
+	return NULL;
 }
 
 /**
@@ -101,11 +98,12 @@ storedUFO_t* US_GetStoredUFOByIDX (const int idx)
  * @param[in,out] installation Pointer to the installation it should be added to
  * @param[in] date Date when UFO is arrives to the storage (recovery || transfer)
  * @param[in] condition Condition of the UFO to store (How much the UFO is damaged)
+ * @param[in] idx UFO's index. Call with negative value for
  * @return storedUFO_t pointer to the newly stored UFO (or NULL if failed)
  */
 storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *installation, date_t date, float condition)
 {
-	storedUFO_t *ufo;
+	storedUFO_t ufo;
 
 	if (!ufoTemplate) {
 		Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: Invalid aircraft (UFO) Template.\n");
@@ -117,43 +115,35 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
 		return NULL;
 	}
 
-	if (ccs.numStoredUFOs >= MAX_STOREDUFOS) {
-		Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: stored UFOs array is full.\n");
-		return NULL;
-	}
-
 	if (installation->ufoCapacity.cur >= installation->ufoCapacity.max) {
 		Com_DPrintf(DEBUG_CLIENT, "US_StoreUFO: Installation is full with UFOs.\n");
 		return NULL;
 	}
 
 	/* we can store it there */
-	ufo = US_GetStoredUFOPlaceByIDX(ccs.numStoredUFOs);		/* Select first empty place */
-	ufo->idx = ccs.numStoredUFOs;
-	Q_strncpyz(ufo->id, ufoTemplate->id, sizeof(ufo->id));
-	ufo->comp = CL_GetComponentsByID(ufo->id);
-	assert(ufo->comp);
+	ufo.idx = ccs.campaignStats.ufosStored++;
+	Q_strncpyz(ufo.id, ufoTemplate->id, sizeof(ufo.id));
+	ufo.comp = CL_GetComponentsByID(ufo.id);
+	assert(ufo.comp);
 
-	ufo->installation = installation;
+	ufo.installation = installation;
 	installation->ufoCapacity.cur++;
 
 	assert(ufoTemplate->tech);
 
-	ufo->ufoTemplate = ufoTemplate;
-	ufo->disassembly = NULL;
+	ufo.ufoTemplate = ufoTemplate;
+	ufo.disassembly = NULL;
 
-	ufo->arrive = date;
+	ufo.arrive = date;
 	if (date.day < ccs.date.day || (date.day == ccs.date.day && date.sec <= ccs.date.sec)) {
-		ufo->status = SUFO_STORED;
-		RS_MarkCollected(ufo->ufoTemplate->tech);
+		ufo.status = SUFO_STORED;
+		RS_MarkCollected(ufo.ufoTemplate->tech);
 	} else {
-		ufo->status = SUFO_RECOVERED;
+		ufo.status = SUFO_RECOVERED;
 	}
-	ufo->condition = min(max(0, condition), 1);
+	ufo.condition = min(max(0, condition), 1);
 
-	ccs.numStoredUFOs++;
-
-	return ufo;
+	return (storedUFO_t *)(LIST_Add(&ccs.storedUFOs, (void*)&ufo, sizeof(ufo)))->data;
 }
 
 /**
@@ -163,7 +153,6 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
 void US_RemoveStoredUFO (storedUFO_t *ufo)
 {
 	int ufoCount;
-	int i;
 
 	assert(ufo);
 
@@ -183,27 +172,12 @@ void US_RemoveStoredUFO (storedUFO_t *ufo)
 	 * also clear collected status */
 	assert(ufo->ufoTemplate);
 	ufoCount = US_UFOsInStorage(ufo->ufoTemplate, NULL);
-	if (ufoCount <= 1 && ufo->ufoTemplate->tech->statusResearch == RS_RUNNING) {
+	if (ufoCount <= 1 && ufo->ufoTemplate->tech->statusResearch == RS_RUNNING)
 		RS_StopResearch(ufo->ufoTemplate->tech);
-		ufo->ufoTemplate->tech->statusCollected = qfalse;
-	}
 
 	/* remove ufo */
 	ufo->installation->ufoCapacity.cur--;
-	REMOVE_ELEM_ADJUST_IDX(ccs.storedUFOs, ufo->idx, ccs.numStoredUFOs);
-
-	/* Adjust UFO pointer of other disassemblies */
-	for (i = 0; i < ccs.numBases; i++) {
-		int j;
-		for (j = 0; j < ccs.productions[i].numItems; j++) {
-			production_t *prod = &(ccs.productions[i].items[j]);
-			if (!prod->ufo)
-				continue;
-
-			if (prod->ufo > ufo)
-				prod->ufo--;
-		}
-	}
+	LIST_RemovePointer(&ccs.storedUFOs, (void*)ufo);
 }
 
 
@@ -216,14 +190,10 @@ void US_RemoveStoredUFO (storedUFO_t *ufo)
  */
 int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *installation)
 {
-	int i;
+	storedUFO_t *ufo = NULL;
 	int count = 0;
 
-	for (i = 0; i < ccs.numStoredUFOs; i++) {
-		const storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
-		if (!ufo)
-			continue;
-
+	while ((ufo = US_GetNext(ufo)) != NULL) {
 		if (ufo->ufoTemplate != ufoTemplate)
 			continue;
 		if (installation && ufo->installation != installation)
@@ -243,25 +213,25 @@ int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *insta
  */
 void US_RemoveUFOsExceedingCapacity (installation_t *installation)
 {
-	int i;
 	const capacities_t *ufoCap;
+	storedUFO_t *lastUfo = NULL;
+	storedUFO_t *ufo = NULL;
 
 	if (!installation)
 		Com_Error(ERR_DROP, "US_RemoveUFOsExceedingCapacity: No installation given!\n");
 
-	ufoCap = &(installation->ufoCapacity);
+	ufoCap = &installation->ufoCapacity;
 
-	/* loop ufos backwards */
-	for (i = ccs.numStoredUFOs - 1; i >= 0; i--) {
-		storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
-
-		assert(ufo);
-
-		if (ufo->installation != installation)
+	while ((ufo = US_GetNext(ufo)) != NULL) {
+		if (ufoCap->cur <= ufoCap->max)
+			break;
+		if (ufo->installation != installation) {
+			lastUfo = ufo;
 			continue;
-
-		if (ufoCap->cur > ufoCap->max)
-			US_RemoveStoredUFO(ufo);
+		}
+		US_RemoveStoredUFO(ufo);
+		/* this ufo is removed from the list, continue iterating from the last */
+		ufo = lastUfo;
 	}
 }
 
@@ -273,23 +243,17 @@ void US_RemoveUFOsExceedingCapacity (installation_t *installation)
  */
 storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t *base)
 {
-	int i;
 	float minDistance = -1;
+	storedUFO_t *ufo = NULL;
 	storedUFO_t *closestUFO = NULL;
 
-	for (i = 0; i < ccs.numStoredUFOs; i++) {
-		storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
+	while ((ufo = US_GetNext(ufo)) != NULL) {
 		float distance = 0;
-
-		if (!ufo)
-			continue;
 
 		if (ufoTemplate && ufo->ufoTemplate != ufoTemplate)
 			continue;
-
 		if (ufo->status != SUFO_STORED)
 		 	continue;
-
 		assert(ufo->installation);
 		if (base)
 			distance = GetDistanceOnGlobe(ufo->installation->pos, base->pos);
@@ -303,6 +267,14 @@ storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t
 }
 
 /**
+ * @brief Returns the number of storedUFOs
+ */
+int US_StoredUFOCount (void)
+{
+	return LIST_Count(ccs.storedUFOs);
+}
+
+/**
  * @brief Save callback for savegames in XML Format
  * @param[out] p XML Node structure, where we write the information to
  * @sa US_LoadXML
@@ -310,14 +282,14 @@ storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t
  */
 qboolean US_SaveXML (mxml_node_t *p)
 {
-	int i;
+	storedUFO_t *ufo = NULL;
 	mxml_node_t *node = mxml_AddNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
 	Com_RegisterConstList(saveStoredUFOConstants);
-	for (i = 0; i < ccs.numStoredUFOs; i++) {
-		const storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
+	while ((ufo = US_GetNext(ufo)) != NULL) {
 		mxml_node_t * snode = mxml_AddNode(node, SAVE_UFORECOVERY_UFO);
 
+		mxml_AddInt(snode, SAVE_UFORECOVERY_UFOIDX, ufo->idx);
 		mxml_AddString(snode, SAVE_UFORECOVERY_UFOID, ufo->id);
 		mxml_AddDate(snode, SAVE_UFORECOVERY_DATE, ufo->arrive.day, ufo->arrive.sec);
 		mxml_AddString(snode, SAVE_UFORECOVERY_STATUS, Com_GetConstVariable(SAVE_STOREDUFOSTATUS_NAMESPACE, ufo->status));
@@ -338,42 +310,60 @@ qboolean US_SaveXML (mxml_node_t *p)
  */
 qboolean US_LoadXML (mxml_node_t *p)
 {
-	int i;
+	int i; /**< @todo this is for old saves now only */
 	mxml_node_t *node, *snode;
 
 	node = mxml_GetNode(p, SAVE_UFORECOVERY_STOREDUFOS);
 
 	Com_RegisterConstList(saveStoredUFOConstants);
-	for (i = 0, snode = mxml_GetNode(node, SAVE_UFORECOVERY_UFO); i < MAX_STOREDUFOS && snode;
-			snode = mxml_GetNextNode(snode, node, SAVE_UFORECOVERY_UFO)) {
+	for (i = 0, snode = mxml_GetNode(node, SAVE_UFORECOVERY_UFO); snode;
+			snode = mxml_GetNextNode(snode, node, SAVE_UFORECOVERY_UFO), i++) {
+		const char *id = mxml_GetString(snode, SAVE_UFORECOVERY_STATUS);
+		storedUFO_t ufo;
+		int statusIDX;
 
-		aircraft_t *ufoTemplate = AIR_GetAircraft(mxml_GetString(snode, SAVE_UFORECOVERY_UFOID));
-		installation_t *inst = INS_GetFoundedInstallationByIDX(mxml_GetInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, MAX_INSTALLATIONS));
-		date_t arrive;
-		storedUFO_t *ufo;
-		float condition = mxml_GetFloat(snode, SAVE_UFORECOVERY_CONDITION, 1.0f);
-		const char *statusId = mxml_GetString(snode, SAVE_UFORECOVERY_STATUS);
-		int status;
-
-		mxml_GetDate(snode, SAVE_UFORECOVERY_DATE, &arrive.day, &arrive.sec);
-
-		if (!inst) {
+		/* ufo->idx */
+		ufo.idx = mxml_GetInt(snode, SAVE_UFORECOVERY_UFOIDX, -1);
+		/* fallback code for compatibility */
+		if (ufo.idx == -1) {
+			Com_Printf("No IDX defined for stored UFO %d. This must be an old save.\n", i);
+			ufo.idx = i;
+		}
+		/* ufo->status */
+		if (!Com_GetConstIntFromNamespace(SAVE_STOREDUFOSTATUS_NAMESPACE, id, &statusIDX)) {
+			Com_Printf("Invalid storedUFOStatus '%s'\n", id);
+			continue;
+		}
+		ufo.status = statusIDX;
+		/* ufo->installation */
+		ufo.installation = INS_GetFoundedInstallationByIDX(mxml_GetInt(snode, SAVE_UFORECOVERY_INSTALLATIONIDX, MAX_INSTALLATIONS));
+		if (!ufo.installation) {
 			Com_Printf("UFO has no/invalid installation assigned\n");
 			continue;
 		}
-
-		if (!Com_GetConstIntFromNamespace(SAVE_STOREDUFOSTATUS_NAMESPACE, statusId, &status)) {
-			Com_Printf("Invalid storedUFOStatus '%s'\n", statusId);
+		if (ufo.installation->ufoCapacity.cur >= ufo.installation->ufoCapacity.max) {
+			Com_Printf("UFO Yard %i if full!\n", ufo.installation->idx);
 			continue;
 		}
-
-		ufo = US_StoreUFO(ufoTemplate, inst, arrive, condition);
-		if (!ufo)
-			Com_Printf("Cannot store ufo %s at installation idx=%i.\n", ufoTemplate->id, inst->idx);
-		else {
-			ufo->status = status;
-			i++;
+		ufo.installation->ufoCapacity.cur++;
+		/* ufo->id */
+		Q_strncpyz(ufo.id, mxml_GetString(snode, SAVE_UFORECOVERY_UFOID), sizeof(ufo.id));
+		/* ufo->ufoTemplate */
+		ufo.ufoTemplate = AIR_GetAircraft(ufo.id);
+		if (!ufo.ufoTemplate) {
+			Com_Printf("UFO has no/invalid aircraftTemplare assigned\n");
+			continue;
 		}
+		ufo.comp = CL_GetComponentsByID(ufo.id);
+		if (!ufo.comp) {
+			Com_Printf("UFO has no/invalid components set\n");
+			continue;
+		}
+		mxml_GetDate(snode, SAVE_UFORECOVERY_DATE, &ufo.arrive.day, &ufo.arrive.sec);
+		ufo.condition = mxml_GetFloat(snode, SAVE_UFORECOVERY_CONDITION, 1.0f);
+		/* disassembly is set by production savesystem later but only for UFOs that are being disassembled */
+		ufo.disassembly = NULL;
+		LIST_Add(&ccs.storedUFOs, (void*)&ufo, sizeof(ufo));
 	}
 	Com_UnregisterConstList(saveStoredUFOConstants);
 	return qtrue;

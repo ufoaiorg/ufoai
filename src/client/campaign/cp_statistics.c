@@ -174,6 +174,7 @@ qboolean STATS_SaveXML (mxml_node_t *parent)
 	mxml_AddIntValue(stats, SAVE_STATS_MONEYWEAPONS, ccs.campaignStats.moneyWeapons);
 	mxml_AddIntValue(stats, SAVE_STATS_UFOSDETECTED, ccs.campaignStats.ufosDetected);
 	mxml_AddIntValue(stats, SAVE_STATS_ALIENBASESBUILT, ccs.campaignStats.alienBasesBuilt);
+	mxml_AddIntValue(stats, SAVE_STATS_UFOSSTORED, ccs.campaignStats.ufosStored);
 	return qtrue;
 }
 
@@ -210,6 +211,10 @@ qboolean STATS_LoadXML (mxml_node_t *parent)
 	/* fallback for savegame compatibility */
 	if (ccs.campaignStats.alienBasesBuilt == 0)
 		ccs.campaignStats.alienBasesBuilt = AB_GetAlienBaseNumber();
+	ccs.campaignStats.ufosStored = mxml_GetInt(stats, SAVE_STATS_UFOSSTORED, 0);
+	/* fallback for savegame compatibility */
+	if (ccs.campaignStats.ufosStored == 0)
+		ccs.campaignStats.ufosStored = US_StoredUFOCount();
 	/* freeing the memory below this node */
 	mxmlDelete(stats);
 	return qtrue;

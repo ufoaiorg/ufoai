@@ -43,6 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_STATS_MONEYWEAPONS "moneyWeapons"
 #define SAVE_STATS_UFOSDETECTED "UFOsDetected"
 #define SAVE_STATS_ALIENBASESBUILT "alienBasesBuilt"
+#define SAVE_STATS_UFOSSTORED "UFOsStored"
 
 #endif
 
@@ -67,6 +68,7 @@ DTD:
 	moneyWeapons				CDATA	'0'
 	UFOsDetected				CDATA	'0'
 	alienBasesBuilt				CDATA	'0'
+	UFOsStored					CDATA	'0'
 >
 
 */

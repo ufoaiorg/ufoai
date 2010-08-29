@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_UFORECOVERY_H
 #define CLIENT_CL_UFORECOVERY_H
 
-#define MAX_STOREDUFOS 128
-
 /* time the recovery takes in days */
 #define RECOVERY_DELAY 2.0f
 
@@ -66,11 +64,18 @@ typedef struct storedUFO_s {
 void UR_ProcessActive(void);
 
 storedUFO_t *US_StoreUFO(const aircraft_t *ufoTemplate, installation_t *installation, date_t date, float condition);
-storedUFO_t *US_GetStoredUFOPlaceByIDX(const int idx);
+storedUFO_t* US_GetNext(storedUFO_t *lastUFO);
 storedUFO_t *US_GetStoredUFOByIDX(const int idx);
 storedUFO_t *US_GetClosestStoredUFO(const aircraft_t *ufoTemplate, const base_t *base);
 void US_RemoveStoredUFO(storedUFO_t *ufo);
 int US_UFOsInStorage(const aircraft_t *ufoTemplate, const installation_t *installation);
+int US_StoredUFOCount(void);
 void US_RemoveUFOsExceedingCapacity(installation_t *installation);
+
+/**
+ * @brief returns if any UFOs are stored in UFO Yards
+ */
+#define US_UFOStored() (US_GetNext(NULL) != NULL)
+
 
 #endif

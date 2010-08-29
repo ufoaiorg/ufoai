@@ -458,9 +458,8 @@ typedef struct ccs_s {
 	int numComponents;
 	components_t components[MAX_ASSEMBLIES];
 
-	/** stored UFOs */
-	storedUFO_t storedUFOs[MAX_STOREDUFOS];
-	int numStoredUFOs;
+	/* == stored UFOs == */
+	linkedList_t *storedUFOs;
 
 	/* Alien Team Definitions. */
 	teamDef_t *alienTeams[MAX_TEAMDEFS];

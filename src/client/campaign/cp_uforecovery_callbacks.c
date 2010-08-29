@@ -532,11 +532,9 @@ static void UR_DialogStartSell_f (void)
  */
 static void US_ListStoredUFOs_f (void)
 {
-	int i;
+	storedUFO_t *ufo = NULL;
 
-	Com_Printf("Number of stored UFOs: %i\n", ccs.numStoredUFOs);
-	for (i = 0; i < ccs.numStoredUFOs; i++) {
-		const storedUFO_t *ufo = US_GetStoredUFOByIDX(i);
+	while ((ufo = US_GetNext(ufo)) != NULL) {
 		const base_t *prodBase = PR_ProductionBase(ufo->disassembly);
 		dateLong_t date;
 
@@ -652,3 +650,4 @@ void UR_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("debug_removestoredufo");
 #endif
 }
+

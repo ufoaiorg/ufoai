@@ -884,8 +884,8 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			if (s1[0] != '\0')
 				pq->items[pq->numItems].item = INVSH_GetItemByID(s1);
 			/* UFO */
-			ufoIDX = mxml_GetInt(ssnode, SAVE_PRODUCE_UFOIDX, MAX_STOREDUFOS);
-			if (ufoIDX != MAX_STOREDUFOS) {
+			ufoIDX = mxml_GetInt(ssnode, SAVE_PRODUCE_UFOIDX, -1);
+			if (ufoIDX != -1) {
 				storedUFO_t *ufo = US_GetStoredUFOByIDX(ufoIDX);
 
 				if (!ufo) {
