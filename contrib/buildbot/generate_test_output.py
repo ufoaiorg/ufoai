@@ -10,6 +10,7 @@ PUBLIC_HTML = "/home/users/mattn/buildbot/public_html"
 if not os.path.exists(PUBLIC_HTML):
     PUBLIC_HTML = "."
 UNITTESTS_DIR = PUBLIC_HTML + "/unittests"
+SCRIPT_DIR = sys.path[0]
 
 INDEX_CONTENT = '<html><head><title>Redirection</title><meta http-equiv="refresh" content="0; URL=%s" /></head><body></body></html>'
 
@@ -26,6 +27,37 @@ def get_svn_revision():
     entry = entries[0]
     return entry.getAttribute("revision")
 
+def apply_xsl(xml_file_name, xsl_file_name):
+    try:
+        from Ft.Lib.Uri import OsPathToUri
+        from Ft.Xml import InputSource
+        from Ft.Xml.Xslt import Processor
+    except:
+        print "python-4suite-xml module is missing."
+        return
+
+    """
+        Apply XSL file transformation to an XML file.
+        Return the new XML content, else None
+    """
+    if not os.path.exists(xsl_file_name):
+        print ('XSL file "%s" not found' % xsl_file_name)
+        return None
+    if not os.path.exists(xml_file_name):
+        print ('XML file "%s" not found' % xml_file_name)
+        return None
+
+    uri = OsPathToUri(xml_file_name)
+    xml_source = InputSource.DefaultFactory.fromUri(uri)
+    uri = OsPathToUri(xsl_file_name)
+    xsl_source = InputSource.DefaultFactory.fromUri(uri)
+
+    transform = Processor.Processor()
+    transform.appendStylesheet(xsl_source)
+    result = transform.run(xml_source)
+    return result
+
+
 def main():
     if not os.path.exists(UNITTESTS_DIR):
         os.mkdir(UNITTESTS_DIR)
@@ -35,7 +67,19 @@ def main():
         sys.exit(1)
 
     file_name = revision + ".xml"
-    shutil.copy (CUNIT_OUTPUT, UNITTESTS_DIR + "/" + file_name)
+    shutil.copy(CUNIT_OUTPUT, UNITTESTS_DIR + "/" + file_name)
+
+    # TODO use /usr/share/CUnit/ it should contain all .dtd .xsl
+    html_file_name = UNITTESTS_DIR + '/' + revision + ".html"
+    shutil.copy(CUNIT_OUTPUT, SCRIPT_DIR + "/" + file_name)
+    content = apply_xsl(SCRIPT_DIR + "/" + file_name, SCRIPT_DIR + "/" + "CUnit-Run.xsl")
+    os.remove(SCRIPT_DIR + "/" + file_name)
+    if content != None:
+        file = open(html_file_name, "wt")
+        file.write(content)
+        file.close()
+    else:
+        print "Warning: HTML output not generated."
 
     latest_name = UNITTESTS_DIR + '/latest.html'
     content = INDEX_CONTENT % file_name
