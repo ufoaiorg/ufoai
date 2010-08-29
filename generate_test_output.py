@@ -33,7 +33,7 @@ def apply_xsl(xml_file_name, xsl_file_name):
         from Ft.Xml import InputSource
         from Ft.Xml.Xslt import Processor
     except:
-        print "python-4suite-xml module is missing."
+        sys.stderr.write("python-4suite-xml module is missing.")
         return
 
     """
@@ -41,10 +41,10 @@ def apply_xsl(xml_file_name, xsl_file_name):
         Return the new XML content, else None
     """
     if not os.path.exists(xsl_file_name):
-        print ('XSL file "%s" not found' % xsl_file_name)
+        sys.stderr.write('XSL file "%s" not found' % xsl_file_name)
         return None
     if not os.path.exists(xml_file_name):
-        print ('XML file "%s" not found' % xml_file_name)
+        sys.stderr.write('XML file "%s" not found' % xml_file_name)
         return None
 
     uri = OsPathToUri(xml_file_name)
@@ -69,6 +69,8 @@ def main():
     xml_file_name = revision + ".xml"
     shutil.copy(CUNIT_OUTPUT, UNITTESTS_DIR + "/" + xml_file_name)
     file_name = xml_file_name
+    print '----link----'
+    print "unittests/" + xml_file_name
 
     # TODO use /usr/share/CUnit/ it should contain all .dtd .xsl
     html_file_name = revision + ".html"
@@ -80,8 +82,10 @@ def main():
         file.write(content)
         file.close()
         file_name = html_file_name
+        print '----html----'
+        print content
     else:
-        print "Warning: HTML output not generated."
+        sys.stderr.write("Warning: HTML output not generated.")
 
     latest_name = UNITTESTS_DIR + '/latest.html'
     content = INDEX_CONTENT % file_name
