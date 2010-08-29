@@ -70,21 +70,32 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 	assert(transfer);
 
 	if (transfer->hasItems && success) {	/* Items. */
-		if (!B_GetBuildingStatus(destination, B_STORAGE)) {
-			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Storage, items are removed!"), destination->name);
-			MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
-			/* Items cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
-		} else {
-			int i;
-			for (i = 0; i < csi.numODs; i++) {
-				const objDef_t *od = INVSH_GetItemByIDX(i);
-				if (transfer->itemAmount[od->idx] > 0) {
-					if (!strcmp(od->id, ANTIMATTER_TECH_ID))
-						B_ManageAntimatter(destination, transfer->itemAmount[od->idx], qtrue);
-					else
-						B_UpdateStorageAndCapacity(destination, od, transfer->itemAmount[od->idx], qfalse, qtrue);
-				}
+		const objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
+		int i;
+
+		/* antimatter */
+		if (transfer->itemAmount[od->idx] > 0) {
+			if (B_GetBuildingStatus(destination, B_ANTIMATTER)) {
+				B_ManageAntimatter(destination, transfer->itemAmount[od->idx], qtrue);
+			} else {
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Antimatter Storage, antimatter are removed!"), destination->name);
+				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			}
+		} 
+		/* items */
+		for (i = 0; i < csi.numODs; i++) {
+			od = INVSH_GetItemByIDX(i);
+
+			if (transfer->itemAmount[od->idx] <= 0)
+				continue;
+			if (!B_ItemIsStoredInBaseStorage(od))
+				continue;
+			if (!B_GetBuildingStatus(destination, B_STORAGE)) {
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Storage, items are removed!"), destination->name);
+				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
+				break;
+			}
+			B_UpdateStorageAndCapacity(destination, od, transfer->itemAmount[od->idx], qfalse, qtrue);
 		}
 	}
 

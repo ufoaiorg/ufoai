@@ -235,19 +235,14 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 	/* Is this antimatter and destination base has enough space in Antimatter Storage? */
 	if (!strcmp(od->id, ANTIMATTER_TECH_ID)) {
 		/* Give some meaningful feedback to the player if the player clicks on an a.m. item but base doesn't have am storage. */
-		if (!B_GetBuildingStatus(destbase, B_ANTIMATTER) && B_GetBuildingStatus(destbase, B_STORAGE)) {
+		if (!B_GetBuildingStatus(destbase, B_ANTIMATTER)) {
 			UI_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
-			return qfalse;
-		} else if (!B_GetBuildingStatus(destbase, B_ANTIMATTER)) {	/* Return if the target base doesn't have antimatter storage or power. */
 			return 0;
 		}
-		amount = min(amount, destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer);
+		amount = min(amount, B_FreeCapacity(destbase, CAP_ANTIMATTER) - amtransfer);
 		if (amount <= 0) {
 			UI_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
 			return 0;
-		} else {
-			/* amount to transfer can't be bigger than what we have */
-			amount = min(amount, destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer);
 		}
 	} else {	/*This is not antimatter */
 		if (!B_GetBuildingStatus(destbase, B_STORAGE))	/* Return if the target base doesn't have storage or power. */
@@ -569,10 +564,27 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 
 	switch (transferType) {
 	case TRANS_TYPE_ITEM:
+		if (B_GetBuildingStatus(destbase, B_ANTIMATTER)) {
+			const objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
+			if (B_AntimatterInBase(srcbase) || td.trItemsTmp[od->idx]) {
+				if (td.trItemsTmp[od->idx] > 0)
+					LIST_AddString(&transferListTransfered, va("%i", td.trItemsTmp[od->idx]));
+				else
+					LIST_AddString(&transferListTransfered, "");
+				Com_sprintf(str, sizeof(str), "%s", _(od->name));
+				LIST_AddString(&transferList, str);
+				LIST_AddString(&transferListAmount, va("%i", B_AntimatterInBase(srcbase)));
+				cnt++;
+			}
+		}
 		if (B_GetBuildingStatus(destbase, B_STORAGE)) {
 			for (i = 0; i < csi.numODs; i++) {
 				const objDef_t *od = INVSH_GetItemByIDX(i);
-				if ((srcbase->storage.numItems[od->idx] || td.trItemsTmp[od->idx]) && !od->isVirtual) {
+				if (!B_ItemIsStoredInBaseStorage(od))
+					continue;
+				if (od->isVirtual)
+					continue;
+				if (td.trItemsTmp[od->idx] || B_ItemInBase(od, srcbase) > 0) {
 					if (td.trItemsTmp[od->idx] > 0)
 						LIST_AddString(&transferListTransfered, va("%i", td.trItemsTmp[od->idx]));
 					else
@@ -588,11 +600,11 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 				LIST_AddString(&transferListAmount, "");
 				LIST_AddString(&transferListTransfered, "");
 			}
-		} else if (B_GetBuildingStatus(destbase, B_POWER)) {
+		} else if (B_GetBuildingStatus(destbase, B_POWER) && cnt == 0) {
 			LIST_AddString(&transferList, _("Transfer is not possible - the base doesn't have a Storage."));
 			LIST_AddString(&transferListAmount, "");
 			LIST_AddString(&transferListTransfered, "");
-		} else {
+		} else if (cnt == 0) {
 			LIST_AddString(&transferList, _("Transfer is not possible - the base does not have power supplies."));
 			LIST_AddString(&transferListAmount, "");
 			LIST_AddString(&transferListTransfered, "");
@@ -854,9 +866,45 @@ static void TR_TransferListSelect_f (void)
 	case TRANS_TYPE_INVALID:	/**< No list was initialized before you call this. */
 		return;
 	case TRANS_TYPE_ITEM:
+		if (B_GetBuildingStatus(td.transferBase, B_ANTIMATTER)) {
+			const objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
+			if (B_AntimatterInBase(base) || td.trItemsTmp[od->idx]) {
+				if (cnt == num) {
+					int amount;
+
+					if (Cmd_Argc() == 3)
+						amount = atoi(Cmd_Argv(2));
+					else
+						amount = TR_GetTransferFactor();
+
+					/* you can't transfer more item than you have */
+					if (amount > 0) {
+						amount = min(amount, B_AntimatterInBase(base));
+						if (amount == 0)
+							return;
+						/* you can only transfer items that destination base can accept */
+						amount = TR_CheckItem(od, td.transferBase, amount);
+					} else if (amount < 0) {
+						amount = max(amount, - td.trItemsTmp[od->idx]);
+					}
+
+					if (amount) {
+						td.trItemsTmp[od->idx] += amount;
+						B_ManageAntimatter(base, amount, qfalse);
+						break;
+					} else
+						return;
+				}
+				cnt++;
+			}
+		}
 		for (i = 0; i < csi.numODs; i++) {
 			const objDef_t *od = INVSH_GetItemByIDX(i);
-			if ((base->storage.numItems[od->idx] || td.trItemsTmp[od->idx]) && !od->isVirtual) {
+			if (!B_ItemIsStoredInBaseStorage(od))
+				continue;
+			if (od->isVirtual)
+				continue;
+			if (td.trItemsTmp[od->idx] || B_ItemInBase(od, base) > 0) {
 				if (cnt == num) {
 					int amount;
 
@@ -878,10 +926,7 @@ static void TR_TransferListSelect_f (void)
 
 					if (amount) {
 						td.trItemsTmp[od->idx] += amount;
-						if (!strcmp(od->id, ANTIMATTER_TECH_ID))
-							B_ManageAntimatter(base, amount, qfalse);
-						else
-							B_UpdateStorageAndCapacity(base, od, -amount, qfalse, qfalse);
+						B_UpdateStorageAndCapacity(base, od, -amount, qfalse, qfalse);
 						break;
 					} else
 						return;
@@ -1349,6 +1394,7 @@ static void TR_TransferList_Scroll_f (void)
 	int transferType;
 	int viewPos;
 	base_t *srcBase = B_GetCurrentSelectedBase();
+	const objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
 
 	if (!srcBase)
 		return;
@@ -1365,8 +1411,16 @@ static void TR_TransferList_Scroll_f (void)
 	if (transferType != TRANS_TYPE_ITEM)
 		return;
 
+	if (B_GetBuildingStatus(td.transferBase, B_ANTIMATTER) && (B_AntimatterInBase(srcBase) || td.trItemsTmp[od->idx])) {
+		if ((cnt < viewPos + MAX_TRANSLIST_MENU_ENTRIES) && cnt >= viewPos)
+			UI_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos,
+					td.trItemsTmp[od->idx], 0, B_AntimatterInBase(srcBase) + td.trItemsTmp[od->idx]);
+		cnt++;
+	}
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
+		if (!B_ItemIsStoredInBaseStorage(od))
+			continue;
 		if ((srcBase->storage.numItems[od->idx] || td.trItemsTmp[od->idx]) && !od->isVirtual) {
 			if (cnt >= viewPos + MAX_TRANSLIST_MENU_ENTRIES)
 				break;
