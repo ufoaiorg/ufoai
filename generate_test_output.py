@@ -76,7 +76,7 @@ def main():
     content = file.read()
     file.close()
     print '----data:unittest-xml----'
-    print content
+    print content.replace("CUnit-Run.xsl", "/unittests/CUnit-Run.xsl")
 
     # TODO use /usr/share/CUnit/ it should contain all .dtd .xsl
     html_file_name = revision + ".html"
