@@ -15,12 +15,12 @@ linkedList_t* LIST_Add(linkedList_t** list, const byte* data, size_t length);
 const linkedList_t* LIST_ContainsString(const linkedList_t* list, const char* string);
 linkedList_t* LIST_GetPointer(linkedList_t* list, const void* data);
 void LIST_Delete(linkedList_t **list);
-void LIST_Remove(linkedList_t **list, linkedList_t *entry);
+void LIST_RemoveEntry(linkedList_t **list, linkedList_t *entry);
 qboolean LIST_IsEmpty(const linkedList_t *list);
 int LIST_Count(const linkedList_t *list);
 void *LIST_GetByIdx(linkedList_t *list, int index);
 void *LIST_GetLast(linkedList_t *list);
-qboolean LIST_RemovePointer(linkedList_t **list, const void *data);
+qboolean LIST_Remove(linkedList_t **list, const void *data);
 void *LIST_GetNext(linkedList_t *list, void *lastData);
 
 #endif /* LIST_H_ */

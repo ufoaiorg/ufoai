@@ -772,7 +772,7 @@ aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
  */
 qboolean AIR_Delete (base_t *base, const aircraft_t *aircraft)
 {
-	return LIST_RemovePointer(&base->aircraft, (const void *)aircraft);
+	return LIST_Remove(&base->aircraft, (const void *)aircraft);
 }
 
 /**
@@ -2227,7 +2227,7 @@ qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *emp
 		const employee_t const *employeeInCraft = (const employee_t *)l->data;
 		/* Search for this exact employee in the aircraft and remove him from the team. */
 		if (employeeInCraft == employee) {
-			LIST_Remove(&aircraft->acTeam, l);
+			LIST_RemoveEntry(&aircraft->acTeam, l);
 			Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveFromAircraftTeam: removed idx '%d' \n",
 				employee->idx);
 			return qtrue;

@@ -155,7 +155,7 @@ static void testLinkedList (void)
 	CU_ASSERT_TRUE(entry2 != NULL);
 	CU_ASSERT_EQUAL((const void*)entry2->data, (const void*)returnedData);
 	CU_ASSERT_STRING_EQUAL(entry2->data, returnedData);
-	LIST_Remove(&list, entry);
+	LIST_RemoveEntry(&list, entry);
 	CU_ASSERT_EQUAL(LIST_Count(list), 0);
 }
 

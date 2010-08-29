@@ -177,7 +177,7 @@ void US_RemoveStoredUFO (storedUFO_t *ufo)
 
 	/* remove ufo */
 	ufo->installation->ufoCapacity.cur--;
-	LIST_RemovePointer(&ccs.storedUFOs, (void*)ufo);
+	LIST_Remove(&ccs.storedUFOs, (void*)ufo);
 }
 
 

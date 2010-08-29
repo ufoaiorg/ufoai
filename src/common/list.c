@@ -15,7 +15,7 @@ extern struct memPool_s *com_genericPool;
 /**
  * @brief Adds an entry to a new or to an already existing linked list
  * @sa LIST_AddString
- * @sa LIST_Remove
+ * @sa LIST_RemoveEntry
  * @return Returns a pointer to the data that has been added, wrapped in a linkedList_t
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
@@ -90,7 +90,7 @@ linkedList_t* LIST_GetPointer (linkedList_t* list, const void* data)
 /**
  * @brief Adds an string to a new or to an already existing linked list. The string is copied here.
  * @sa LIST_Add
- * @sa LIST_Remove
+ * @sa LIST_RemoveEntry
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
 void LIST_AddString (linkedList_t** listDest, const char* data)
@@ -122,7 +122,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
 /**
  * @brief Adds just a pointer to a new or to an already existing linked list
  * @sa LIST_Add
- * @sa LIST_Remove
+ * @sa LIST_RemoveEntry
  * @todo Optimize this to not allocate memory for every entry - but use a hunk
  */
 void LIST_AddPointer (linkedList_t** listDest, void* data)
@@ -160,7 +160,7 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
  * @sa LIST_AddPointer
  * @sa LIST_Delete
  */
-void LIST_Remove (linkedList_t **list, linkedList_t *entry)
+void LIST_RemoveEntry (linkedList_t **list, linkedList_t *entry)
 {
 	linkedList_t* prev, *listPos;
 
@@ -194,7 +194,7 @@ void LIST_Remove (linkedList_t **list, linkedList_t *entry)
 
 /**
  * @sa LIST_Add
- * @sa LIST_Remove
+ * @sa LIST_RemoveEntry
  */
 void LIST_Delete (linkedList_t **list)
 {
@@ -237,13 +237,13 @@ void *LIST_GetNext (linkedList_t *list, void *lastData)
 
 /**
  * @sa LIST_Add
- * @sa LIST_Remove
+ * @sa LIST_RemoveEntry
  */
-qboolean LIST_RemovePointer (linkedList_t **list, const void *data)
+qboolean LIST_Remove (linkedList_t **list, const void *data)
 {
 	linkedList_t *l = LIST_GetPointer(*list, data);
 	if (l != NULL)
-		LIST_Remove(list, l);
+		LIST_RemoveEntry(list, l);
 	return l != NULL;
 }
 
@@ -259,7 +259,7 @@ qboolean LIST_IsEmpty (const linkedList_t *list)
 
 /**
  * @sa LIST_Add
- * @sa LIST_Remove
+ * @sa LIST_RemoveEntry
  */
 int LIST_Count (const linkedList_t *list)
 {

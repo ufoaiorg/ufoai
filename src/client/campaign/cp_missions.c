@@ -944,7 +944,7 @@ void CP_MissionRemove (mission_t *mission)
 	for (; list; list = list->next) {
 		mission_t *removedMission = (mission_t *)list->data;
 		if (removedMission == mission) {
-			LIST_Remove(&ccs.missions, list);
+			LIST_RemoveEntry(&ccs.missions, list);
 			Com_DPrintf(DEBUG_CLIENT, "Mission removed from global array: %i missions left\n", CP_CountMission());
 			return;
 		}
