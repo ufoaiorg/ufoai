@@ -66,18 +66,20 @@ def main():
     if not os.path.exists(CUNIT_OUTPUT):
         sys.exit(1)
 
-    file_name = revision + ".xml"
-    shutil.copy(CUNIT_OUTPUT, UNITTESTS_DIR + "/" + file_name)
+    xml_file_name = revision + ".xml"
+    shutil.copy(CUNIT_OUTPUT, UNITTESTS_DIR + "/" + xml_file_name)
+    file_name = xml_file_name
 
     # TODO use /usr/share/CUnit/ it should contain all .dtd .xsl
-    html_file_name = UNITTESTS_DIR + '/' + revision + ".html"
-    shutil.copy(CUNIT_OUTPUT, SCRIPT_DIR + "/" + file_name)
-    content = apply_xsl(SCRIPT_DIR + "/" + file_name, SCRIPT_DIR + "/" + "CUnit-Run.xsl")
-    os.remove(SCRIPT_DIR + "/" + file_name)
+    html_file_name = revision + ".html"
+    shutil.copy(CUNIT_OUTPUT, SCRIPT_DIR + "/" + xml_file_name)
+    content = apply_xsl(SCRIPT_DIR + "/" + xml_file_name, SCRIPT_DIR + "/" + "CUnit-Run.xsl")
+    os.remove(SCRIPT_DIR + "/" + xml_file_name)
     if content != None:
-        file = open(html_file_name, "wt")
+        file = open(UNITTESTS_DIR + '/' + html_file_name, "wt")
         file.write(content)
         file.close()
+        file_name = html_file_name
     else:
         print "Warning: HTML output not generated."
 
@@ -89,7 +91,7 @@ def main():
 
     latest_name = UNITTESTS_DIR + '/LATEST'
     file = open(latest_name, "wt")
-    file.write(file_name)
+    file.write(xml_file_name)
     file.close()
 
 if __name__ == '__main__':
