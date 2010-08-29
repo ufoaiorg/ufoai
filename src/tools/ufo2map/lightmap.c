@@ -902,6 +902,13 @@ static void WriteTGA24 (const char *filename, const byte * data, int width, int 
 	Mem_Free(buffer);
 }
 
+/**
+ * @brief Calculates the texture width for the lightmap texture. This depends on the surface
+ * mins and maxs and the texture scale
+ * @param[in] s The surface to calculate the lightmap size for
+ * @param[out] texsize The resulting texture size vector. First value is width, second value is height
+ * @param[in] scale The scale (1/scale) of the lightmap texture in relation to the surface texture
+ */
 static void CalcTextureSize (const dBspSurface_t *s, vec2_t texsize, int scale)
 {
 	const float *stmins = face_extents[s - curTile->faces].stmins;
@@ -916,6 +923,12 @@ static void CalcTextureSize (const dBspSurface_t *s, vec2_t texsize, int scale)
 	}
 }
 
+/**
+ * @brief Export all the faces for one particular lightmap (day or night)
+ * @param path The path to write the files into
+ * @param name The name of the map to export the lightmap for
+ * @param day @c true to export the day lightmap data, @c false to export the night lightmap data
+ */
 static void ExportLightmap (const char *path, const char *name, qboolean day)
 {
 	int i;
@@ -944,6 +957,11 @@ static void ExportLightmap (const char *path, const char *name, qboolean day)
 	}
 }
 
+/**
+ * @brief Export the day and night lightmap and direction data for the given map.
+ * @note The bsp file must already be loaded.
+ * @param bspFileName The path of the loaded bsp file.
+ */
 void ExportLightmaps (const char *bspFileName)
 {
 	char path[MAX_QPATH], lightmapName[MAX_QPATH];
