@@ -188,6 +188,7 @@ static void Test_Parameters (const int argc, const char **argv)
 int main (int argc, const char **argv)
 {
 	int i;
+	int failures;
 
 	/* initialize the CUnit test registry */
 	if (CU_initialize_registry() != CUE_SUCCESS)
@@ -200,18 +201,21 @@ int main (int argc, const char **argv)
 
 	Test_Parameters(argc, argv);
 
-	/* Run all tests using the CUnit Basic interface */
-	CU_basic_set_mode(CU_BRM_VERBOSE);
-
 	if (config.console)
 		/* Run all tests using the console interface */
 		CU_console_run_tests();
 	else if (config.automated) {
+		CU_basic_set_mode(CU_BRM_VERBOSE);
 		CU_set_output_filename("ufoai");
 		CU_automated_run_tests();
-	} else
+	} else {
+		/* Run all tests using the CUnit Basic interface */
+		CU_basic_set_mode(CU_BRM_VERBOSE);
 		CU_basic_run_tests();
+	}
 
+	failures = CU_get_number_of_failures();
 	CU_cleanup_registry();
-	return CU_get_error();
+
+	return failures != 0;
 }
