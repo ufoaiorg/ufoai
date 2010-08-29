@@ -12103,7 +12103,7 @@ msgstr "1.00"
 
 #: ../base/ufos/ui/options.ufo:250
 msgid "Default maximum zoom level of the geoscape camera is 6.00."
-msgstr "По умолчанию минимальный уровень масштаба камеры глобуса равен 6.00."
+msgstr "По умолчанию максимальный уровень масштаба камеры глобуса равен 6.00."
 
 #: ../base/ufos/ui/options.ufo:257
 msgid "2.0"
