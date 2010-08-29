@@ -70,7 +70,7 @@ def main():
     shutil.copy(CUNIT_OUTPUT, UNITTESTS_DIR + "/" + xml_file_name)
     file_name = xml_file_name
     print '----link:unittest-xml----'
-    print "unittests/" + xml_file_name
+    print "/unittests/" + xml_file_name
 
     # TODO use /usr/share/CUnit/ it should contain all .dtd .xsl
     html_file_name = revision + ".html"
