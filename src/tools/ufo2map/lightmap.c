@@ -867,7 +867,7 @@ void BuildFacelights (unsigned int facenum)
 		Mem_Free(l[i].surfpt);
 }
 
-static void WriteTGA24 (const char *filename, const byte * data, int width, int height)
+static void WriteTGA24 (const char *filename, const byte * data, int width, int height, int offset)
 {
 	int i, c;
 	byte *buffer;
@@ -885,11 +885,10 @@ static void WriteTGA24 (const char *filename, const byte * data, int width, int 
 
 	/* swap rgb to bgr */
 	c = (width * height * 3) + 18;
-	/* we are skipping the direction data here - that's why we go 6 bytes forward, not only 3 */
 	for (i = 18; i < c; i += 6) {
-		buffer[i] = data[i - 18 + 2];	/* blue */
-		buffer[i + 1] = data[i - 18 + 1];	/* green */
-		buffer[i + 2] = data[i - 18 + 0];	/* red */
+		buffer[i] = data[i - 18 + offset + 2];	/* blue */
+		buffer[i + 1] = data[i - 18 + offset + 1];	/* green */
+		buffer[i + 2] = data[i - 18 + offset + 0];	/* red */
 	}
 
 	/* write it and free the buffer */
@@ -919,23 +918,28 @@ static void CalcTextureSize (const dBspSurface_t *s, vec2_t texsize, int scale)
 
 static void ExportLightmap (const char *path, const char *name, qboolean day)
 {
-	char filename[MAX_QPATH];
 	int i;
 	const int lightmapIndex = day ? 1 : 0;
 	const byte *bspLightBytes = curTile->lightdata[lightmapIndex];
+	const byte quant = *bspLightBytes;
+	const int scale = 1 << quant;
 
 	for (i = 0; i < curTile->numfaces; i++) {
-		vec2_t texSize;
 		const dBspSurface_t *face = &curTile->faces[i];
 		const byte *lightmap = bspLightBytes + face->lightofs[lightmapIndex];
-		const byte quant = *lightmap++;
-		const int scale = 1 << quant;
+		vec2_t texSize;
+
 		CalcTextureSize(face, texSize, scale);
+
+		/* write a tga image out */
 		if (texSize[0] && texSize[1]) {
-			/* write a tga image out */
+			char filename[MAX_QPATH];
 			Com_sprintf(filename, sizeof(filename), "%s/%s_lightmap_%04d%c.tga", path, name, i, day ? 'd' : 'n');
 			Com_Printf("Writing %s (%.0fx%.0f)\n", filename, texSize[0], texSize[1]);
-			WriteTGA24(filename, lightmap, texSize[0], texSize[1]);
+			WriteTGA24(filename, lightmap, texSize[0], texSize[1], 0);
+			Com_sprintf(filename, sizeof(filename), "%s/%s_direction_%04d%c.tga", path, name, i, day ? 'd' : 'n');
+			Com_Printf("Writing %s (%.0fx%.0f)\n", filename, texSize[0], texSize[1]);
+			WriteTGA24(filename, lightmap, texSize[0], texSize[1], 3);
 		}
 	}
 }
