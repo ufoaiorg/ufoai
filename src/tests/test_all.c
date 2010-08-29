@@ -65,6 +65,7 @@ void Sys_Init (void)
 typedef struct config_s {
 	int console;
 	int automated;
+	int disableRMA;
 } config_t;
 
 static config_t config;
@@ -78,11 +79,18 @@ static void Test_Parameters (const int argc, const char **argv)
 			config.console = 1;
 		} else if (!strcmp(argv[i], "-a") || !strcmp(argv[i], "--automated")) {
 			config.automated = 1;
+		} else if (!strcmp(argv[i], "--disable-rma")) {
+			config.disableRMA = 1;
 		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
 			printf("Usage:\n");
-			printf("-h  --help      | show this help screen\n");
-			printf("-c  --console   | run tests in console mode\n");
-			printf("-a  --automated | run tests in automated mode (create xml file)\n");
+			printf("-h  --help        | show this help screen\n");
+			printf("-c  --console     | run tests in console mode\n");
+			printf("-a  --automated   | run tests in automated mode (create xml file)\n");
+			printf("    --disable-rma | exclude RMA test from the test suite\n");
+			exit(0);
+		} else {
+			printf("Param \"%s\" unknown\n", argv[i]);
+			printf("Use \"%s -h\" to show the help screen\n", argv[0]);
 			exit(0);
 		}
 	}
@@ -101,12 +109,15 @@ int main (int argc, const char **argv)
 	if (CU_initialize_registry() != CUE_SUCCESS)
 		return CU_get_error();
 
+	Test_Parameters(argc, argv);
+
 	for (i = 0; i < NUMBER_OF_TESTS - 1; i++) {
+		/** @todo find a more generic way if it is possible (framework should allow it, by suite name) */
+		if (config.disableRMA != 0 && testSuites[i] == UFO_AddRandomMapAssemblyTests)
+			continue;
 		if (testSuites[i]() != CUE_SUCCESS)
 			return fatalError();
 	}
-
-	Test_Parameters(argc, argv);
 
 	/* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);
