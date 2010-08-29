@@ -69,7 +69,7 @@ def main():
     xml_file_name = revision + ".xml"
     shutil.copy(CUNIT_OUTPUT, UNITTESTS_DIR + "/" + xml_file_name)
     file_name = xml_file_name
-    print '----link----'
+    print '----link:unittest-xml----'
     print "unittests/" + xml_file_name
 
     # TODO use /usr/share/CUnit/ it should contain all .dtd .xsl
@@ -82,7 +82,7 @@ def main():
         file.write(content)
         file.close()
         file_name = html_file_name
-        print '----html----'
+        print '----html:unittest-html----'
         print content
     else:
         sys.stderr.write("Warning: HTML output not generated.")
