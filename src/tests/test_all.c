@@ -69,6 +69,8 @@ typedef struct config_s {
 	int disableRMA;
 } config_t;
 
+static const char* resultPrefix = "ufoai";
+
 static config_t config;
 
 static void Test_List (void)
@@ -158,19 +160,23 @@ static void Test_Parameters (const int argc, const char **argv)
 				printf("Use \"%s -l\" to show the list of suites\n", argv[0]);
 				exit(2);
 			}
+		} else if (!strncmp(argv[i], "--output-prefix=", 16)) {
+			resultPrefix = argv[i] + 16;
 		} else if (!strcmp(argv[i], "-l") || !strcmp(argv[i], "--list")) {
 			Test_List();
 			exit(0);
 		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
 			printf("Usage:\n");
-			printf("-h  --help          | show this help screen\n");
-			printf("-c  --console       | run tests in console mode\n");
-			printf("-a  --automated     | run tests in automated mode (create xml file)\n");
-			printf("-l  --list          | list suite name available\n");
-			printf("    --disable-SUITE | Disable a suite by name\n");
-			printf("                      SUITE=suite name\n");
-			printf("    --only-SUITE    | Enable an only one suite by name\n");
-			printf("                      SUITE=suite name\n");
+			printf("-h  --help                 | show this help screen\n");
+			printf("-c  --console              | run tests in console mode\n");
+			printf("-a  --automated            | run tests in automated mode (create xml file)\n");
+			printf("-l  --list                 | list suite name available\n");
+			printf("    --output-prefix=PREFIX | set a prefix for the xml result\n");
+			printf("                           | default value is \"ufoai\"\n");
+			printf("    --disable-SUITE        | Disable a suite by name\n");
+			printf("                           | SUITE=suite name\n");
+			printf("    --only-SUITE           | Enable an only one suite by name\n");
+			printf("                           | SUITE=suite name\n");
 			exit(0);
 		} else {
 			printf("Param \"%s\" unknown\n", argv[i]);
@@ -206,7 +212,7 @@ int main (int argc, const char **argv)
 		CU_console_run_tests();
 	else if (config.automated) {
 		CU_basic_set_mode(CU_BRM_VERBOSE);
-		CU_set_output_filename("ufoai");
+		CU_set_output_filename(resultPrefix);
 		CU_automated_run_tests();
 	} else {
 		/* Run all tests using the CUnit Basic interface */
