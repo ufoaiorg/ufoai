@@ -18,7 +18,10 @@
 
 import subprocess
 import hashlib, os
+import datetime
 from xml.dom.minidom import parseString
+
+CACHING = False
 
 # TODO i dont think a cache here is need cause the Resources is itself a cache
 def get(cmd, cacheable=True):
@@ -73,22 +76,96 @@ class Resource(object):
     def __repr__(self):
         return str((self.license, self.copyright, self.source, self.revision))
 
-# TODO compute a map with 'short' name
 class Resources(object):
-    "Manage a set of resources"
+    """
+        Manage a set of resources
+        TODO compute a map with 'short' name
+    """
 
     def __init__(self):
         self.resources = {}
         self.computedBaseDir = set()
+        self.mode = "svn"
+        if os.path.exists("LICENSES"):
+            self.mode = "git"
 
-    # TODO can we "propget" more than 1 property? faster
-    # TODO using getResource here is a little stupid
     def computeResources(self, dir):
-        "Read resources and metadatas for all versionned file of a dir"
+        if self.mode == "git":
+            self.computeResourcesFromGit(dir)
+        else:
+            self.computeResourcesFromSVN(dir)
+
+    def getRevisionFromDate(self):
+        # TODO extract date from remote repository
+        # Number of day since we switch from SVN to Git + last SVN revision
+        delta = datetime.datetime.now() - datetime.datetime(2010, 8, 28)
+        return 32055 + delta.days
+
+    def computeResourcesFromGit(self, dir):
+        """
+            UFO:AI store properties into a LICENSES file
+        """
+        if "ok" in self.computedBaseDir:
+            return
+        self.computedBaseDir.add("ok")
+
+        file = open("LICENSES", "rt")
+        content = file.read()
+        content = unicode(content, "utf-8")
+        file.close()
+        lines = content.splitlines()
+        
+        # read header
+        header = lines.pop(0)
+        header = header.replace(' ', '').split('|')
+        filenameId = header.index('filename')
+        authorId = header.index('author')
+        licenseId = header.index('license')
+        sourceId = header.index('source')
+
+        # generate a revision from date
+        revision = self.getRevisionFromDate()
+
+        # read content
+        for line in lines:
+            data = line.split('|')
+            filename = data[filenameId].strip()
+
+            if filename in self.resources:
+                resource = self.resources[filename]
+            else:
+                resource = Resource(filename)
+                self.resources[filename] = resource
+            resource.revision = revision
+            try:            
+                v = data[authorId].strip()
+                if v != "":
+                    resource.copyright = v
+            except IndexError:
+                pass
+            try:            
+                v = data[licenseId].strip()
+                if v != "":
+                    resource.license = v
+            except IndexError:
+                pass
+            try:            
+                v = data[sourceId].strip()
+                if v != "":
+                    resource.source = v
+            except IndexError:
+                pass
+            #print resource.fileName, resource.copyright, resource.license, resource.source
+
+    def computeResourcesFromSVN(self, dir):
+        """
+            Read resources and metadatas for all versionned file of a dir
+            TODO can we "propget" more than 1 property? faster
+            TODO using getResource here is a little stupid
+        """
 
         if dir in self.computedBaseDir:
             return
-
         self.computedBaseDir.add(dir)
 
         print "Parse '%s' revisions..." % dir
@@ -144,13 +221,21 @@ class Resources(object):
 
         # Get metadata from cache
         if fileName in self.resources:
-            meta = self.resources[fileName]
+            resource = self.resources[fileName]
         # Gen object for non versioned file
         else:
-            meta = Resource(fileName)
-            self.resources[fileName] = meta
+            resource = Resource(fileName)
+            self.resources[fileName] = resource
+            if self.mode == "git":
+                # FIXME A little hackish to know if it is versioned
+                if os.path.isdir(fileName):
+                    content = get("git log -n1 %s" % fileName)
+                    if "Date:" in content:
+                        resource.revision = self.getRevisionFromDate()
+                else:
+                    resource.revision = self.getRevisionFromDate()
 
-        return meta
+        return resource
 
     def getResourceByShortImageName(self, fileName):
         "Get a resource from a name without extension"

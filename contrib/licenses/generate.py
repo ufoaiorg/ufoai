@@ -27,7 +27,6 @@ from xml.dom.minidom import parseString
 import resources
 
 # config
-CACHING = True
 ABS_URL = None
 EOL = "\n"
 THUMBNAIL = True
@@ -43,20 +42,22 @@ NON_FREE_LICENSES = set([
 
 # filters for files to ignore (lower case)
 FILENAME_FILTERS = (re.compile('.txt$'),
-    re.compile('.ufo$'),
-    re.compile('.anm$'),
-    re.compile('.mat$'),
-    re.compile('.pl$'),
-    re.compile('.py$'),
-    re.compile('.map$'),
-    re.compile('.glsl$'),
+    re.compile('\.ufo$'),
+    re.compile('\.anm$'),
+    re.compile('\.mat$'),
+    re.compile('\.pl$'),
+    re.compile('\.py$'),
+    re.compile('\.map$'),
+    re.compile('\.glsl$'),
+    re.compile('^\.'),
+    re.compile('/\.'),
     re.compile('^makefile'),
     re.compile('copying$'),
-    re.compile('.html$'),
-    re.compile('.cfg$'),
-    re.compile('.lua$'),
-    re.compile('.bsp$'),
-    re.compile('.ump$')
+    re.compile('\.html$'),
+    re.compile('\.cfg$'),
+    re.compile('\.lua$'),
+    re.compile('\.bsp$'),
+    re.compile('\.ump$')
     )
 
 HTML = u"""<html>
@@ -89,10 +90,11 @@ HTML_IMAGE = u"""<br/><table><tr>
 # Util
 ###################################
 
-def fileNameFilter(fname):
+def fileNameFilter(fname, log=True):
     for i in FILENAME_FILTERS:
         if i.search(fname.lower()):
-            print 'Ignoriere: ', fname
+            if log:
+                print 'Ignoriere: ', fname
             return False
     return True
 
@@ -100,12 +102,12 @@ def fileNameFilter(fname):
 # Job
 ###################################
 
-def generateGraph(d):
+def generateGraph(output, d):
     data = {}
     print 'Ploting "%s"' % d
     times = []
 
-    if not os.path.exists('licenses/history%s' % d):
+    if not os.path.exists(output + '/licenses/history%s' % d):
         return False
 
     def test(x):
@@ -114,11 +116,11 @@ def generateGraph(d):
         else:
             return '.' in x
 
-    for time in sorted(os.listdir('licenses/history%s' % d)):
-        if os.path.isdir('licenses/history%s/%s' % (d, time)):
+    for time in sorted(os.listdir(output + '/licenses/history%s' % d)):
+        if os.path.isdir(output + '/licenses/history%s/%s' % (d, time)):
             continue
 
-        this = cPickle.load(open('licenses/history%s/%s' % (d, time)))
+        this = cPickle.load(open(output + '/licenses/history%s/%s' % (d, time)))
         times.append(int(time))
         for i in this:
             if i not in data:
@@ -135,19 +137,19 @@ def generateGraph(d):
     for i in data:
         data[i].sort(key=key)
 
-    basedir = 'licenses/html' + d
+    basedir = output + '/licenses/html' + d
     if not os.path.exists(basedir):
         os.makedirs(basedir)
 
-    plot(d, data, times, "plot.png")
+    plot(output, d, data, times, "plot.png")
     nonfree = {}
     for l in NON_FREE_LICENSES:
         if data.has_key(l):
             nonfree[l] = data[l]
-    plot(d, nonfree, times, "nonfree.png")
+    plot(output, d, nonfree, times, "nonfree.png")
     return True
 
-def plot(d, data, times, imagename):
+def plot(output, d, data, times, imagename):
     cmds = 'set terminal png;\n'
     cmds+= 'set object 1 rect from graph 0, graph 0 to graph 1, graph 1 back;\n'
     cmds+= 'set object 1 rect fc rgb "grey" fillstyle solid 1.0;\n'
@@ -168,7 +170,7 @@ def plot(d, data, times, imagename):
             data[i].append((lastelement[0] + 1, 0))
 
     cmds+= 'set data style linespoints;\n'
-    cmds+= 'set output "licenses/html%s/%s";\n' % (d, imagename)
+    cmds+= 'set output "%s/licenses/html%s/%s";\n' % (output, d, imagename)
     cmds+= 'set xrange [%i to %i];\n' % (min(times), max(times) + 1 + (max(times)-min(times))*0.15)
     cmds+= 'set yrange [0 to %i];\n' % (int(ymax * 1.15))
 
@@ -206,7 +208,7 @@ def clean_up(output_path):
     shutil.rmtree(output_path + '/licenses/html')
     os.mkdir(output_path + '/licenses/html')
     for i in os.listdir('base'):
-        if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
+        if os.path.isdir('base/'+i) and not i.startswith('.'):
             os.mkdir(output_path + '/licenses/html/'+i)
             if not os.path.exists(output_path + '/licenses/history/'+i):
                 os.mkdir(output_path + '/licenses/history/'+i)
@@ -232,8 +234,8 @@ class Analysis(object):
         self.contentByLicense = {}
         self.contentByCopyright = {}
         self.contentBySource = {}
-        meta = RESOURCES.getResource(self.inputDir)
-        self.revision = meta.revision
+        resource = RESOURCES.getResource(self.inputDir)
+        self.revision = resource.revision
         self.count = 0
         self.compute()
 
@@ -247,7 +249,7 @@ class Analysis(object):
         return n
 
     def add(self, fileName):
-        if fileName.startswith('.'):
+        if not fileNameFilter(fileName, log=False):
             return
         if not fileNameFilter(fileName):
             return
@@ -257,7 +259,9 @@ class Analysis(object):
             self.addFile(fileName)
 
     def addSubDir(self, dirName):
-        if not os.path.exists(dirName + '/.svn'):
+        meta = RESOURCES.getResource(dirName)
+        if meta.revision == None:
+            print "RETURN", meta.fileName, meta.revision, RESOURCES.mode
             return
         a = Analysis(dirName, deep = self.deep + 1, base = self.base)
         self.subAnalysis.add(a)
@@ -453,7 +457,7 @@ class Analysis(object):
         cPickle.dump(licenses, open(basedir + '/' + str(self.revision), 'wt'))
         # generate graph
         if PLOT and self.count > 20:
-            if generateGraph(self.getLocalDir()):
+            if generateGraph(output, self.getLocalDir()):
                 content += HTML_IMAGE
 
         licenseSorting = []
