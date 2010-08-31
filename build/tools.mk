@@ -2,7 +2,7 @@
 # ufo2map
 ########################################################################################################
 
-UFO2MAP_CFLAGS+=-DCOMPILE_MAP -ffloat-store
+TOOLS_CFLAGS+=-DCOMPILE_MAP -ffloat-store
 
 UFO2MAP_SRCS = \
 	tools/ufo2map/ufo2map.c \
@@ -46,7 +46,7 @@ UFO2MAP_SRCS = \
 	common/routing.c \
 	common/ioapi.c
 
-UFOMODEL_SRC = \
+UFOMODEL_SRCS = \
 	tools/ufomodel/ufomodel.c \
 	\
 	shared/mathlib.c \
@@ -68,24 +68,22 @@ UFOMODEL_SRC = \
 	client/renderer/r_model_md3.c \
 	client/renderer/r_model_obj.c
 
-ifneq ($(findstring $(TARGET_OS), solaris darwin netbsd freebsd linux-gnu),)
-	UFO2MAP_SRCS+= \
-		ports/unix/unix_main.c
-	UFOMODEL_SRC+= \
-		ports/unix/unix_main.c
-endif
-
 ifeq ($(TARGET_OS),mingw32)
 	UFO2MAP_SRCS+=\
 		ports/windows/win_shared.c
-	UFOMODEL_SRC+=\
+	UFOMODEL_SRCS+=\
 		ports/windows/win_shared.c
+else
+	UFO2MAP_SRCS+= \
+		ports/unix/unix_main.c
+	UFOMODEL_SRCS+= \
+		ports/unix/unix_main.c
 endif
 
 UFO2MAP_OBJS=$(UFO2MAP_SRCS:%.c=$(BUILDDIR)/tools/ufo2map/%.o)
 UFO2MAP_TARGET=ufo2map$(EXE_EXT)
 
-UFOMODEL_OBJS=$(UFOMODEL_SRC:%.c=$(BUILDDIR)/tools/ufomodel/%.o)
+UFOMODEL_OBJS=$(UFOMODEL_SRCS:%.c=$(BUILDDIR)/tools/ufomodel/%.o)
 UFOMODEL_TARGET=ufomodel$(EXE_EXT)
 
 ifeq ($(BUILD_UFO2MAP),1)
@@ -112,8 +110,8 @@ $(UFOMODEL_TARGET): $(UFOMODEL_OBJS)
 # store the float values in buffers, not in cpu registers, maybe slower
 $(BUILDDIR)/tools/ufo2map/%.o: $(SRCDIR)/%.c
 	@echo " * [MAP] $<"; \
-		$(CC) $(CFLAGS) $(UFO2MAP_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		$(CC) $(CFLAGS) $(TOOLS_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 
 $(BUILDDIR)/tools/ufomodel/%.o: $(SRCDIR)/%.c
 	@echo " * [MOD] $<"; \
-		$(CC) $(CFLAGS) $(UFO2MAP_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		$(CC) $(CFLAGS) $(TOOLS_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)

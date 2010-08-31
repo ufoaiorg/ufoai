@@ -64,28 +64,11 @@ ifeq ($(HARD_LINKED_GAME),1)
 	TESTS_SRCS+=$(GAME_SRCS)
 endif
 
-ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
-	TESTS_SRCS += \
-		ports/unix/unix_console.c \
-		ports/unix/unix_main.c
-endif
-
 ifeq ($(TARGET_OS),mingw32)
 	TESTS_SRCS+=\
-		ports/windows/win_console.c \
-		ports/windows/win_shared.c \
-		ports/windows/ufo.rc
-endif
-
-ifeq ($(TARGET_OS),darwin)
+		ports/windows/win_shared.c
+else
 	TESTS_SRCS+=\
-		ports/unix/unix_console.c \
-		ports/unix/unix_main.c
-endif
-
-ifeq ($(TARGET_OS),solaris)
-	TESTS_SRCS += \
-		ports/unix/unix_console.c \
 		ports/unix/unix_main.c
 endif
 
