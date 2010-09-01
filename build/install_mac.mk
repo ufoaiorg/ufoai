@@ -12,8 +12,14 @@ macinstaller: installer-pre create-dmg-ufoai create-dmg-uforadiant
 
 bundle-dirs-ufoai:
 	@mkdir -p $(MAC_INST_DIR)/UFOAI.app/base
+	@mkdir -p $(MAC_INST_DIR)/UFOAI.app/Contents/MacOS
+	@mkdir -p $(MAC_INST_DIR)/UFOAI.app/Contents/Libraries
+	@mkdir -p $(MAC_INST_DIR)/UFOAI.app/Contents/Frameworks
 
 bundle-dirs-uforadiant:
+	@mkdir -p $(MAC_INST_DIR)/UFORadiant.app/Contents/MacOS
+	@mkdir -p $(MAC_INST_DIR)/UFORadiant.app/Contents/Libraries
+	@mkdir -p $(MAC_INST_DIR)/UFORadiant.app/Contents/Frameworks
 
 # =======================
 
@@ -67,7 +73,7 @@ copynotes-uforadiant: package-dir-uforadiant
 
 copylibs-ufoai:
 	@rm -rf $(MAC_INST_DIR)/UFOAI.app/Contents/Frameworks/*.framework
-	@perl $(MAC_INST_DIR)/macfixlibs.pl $(MAC_INST_DIR)/UFOAI.app ufo ufoded ufo2map
+	@perl $(MAC_INST_DIR)/macfixlibs.pl $(MAC_INST_DIR)/UFOAI.app ufo ufoded ufo2map ufomodel
 
 copylibs-uforadiant:
 	@rm -rf $(MAC_INST_DIR)/UFORadiant.app/Contents/Frameworks/*.framework
@@ -77,19 +83,21 @@ copylibs-uforadiant:
 
 copy-package-bundle-ufoai: package-dir-ufoai bundle-ufoai
 	@cp -r $(MAC_INST_DIR)/UFOAI.app $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME)
-	@rm $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME)/UFOAI.app/Contents/Info.plist.in
 
 copy-package-bundle-uforadiant: package-dir-uforadiant bundle-uforadiant
 	@cp -r $(MAC_INST_DIR)/UFORadiant.app $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME)
-	@rm $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME)/UFORadiant.app/Contents/Info.plist.in
 
 # =======================
 
 strip-dev-files-ufoai: copy-package-bundle-ufoai
-	@find $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME) -type d -print | grep '.*svn$$' | xargs rm -rf
+	@find $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME) -type d -print | grep '.*git$$' | xargs rm -rf
+	@find $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME)/UFOAI.app -name ".gitignore" | xargs rm -f
+	@rm $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME)/UFOAI.app/Contents/Info.plist.in
 
 strip-dev-files-uforadiant: copy-package-bundle-uforadiant
-	@find $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME) -type d -print | grep '.*svn$$' | xargs rm -rf
+	@find $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME) -type d -print | grep '.*git$$' | xargs rm -rf
+	@find $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME)/UFORadiant.app -name ".gitignore" | xargs rm -f
+	@rm $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME)/UFORadiant.app/Contents/Info.plist.in
 
 # =======================
 

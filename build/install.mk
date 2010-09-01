@@ -19,7 +19,7 @@ include build/install_mac.mk
 include build/install_mojo.mk
 include build/install_windows.mk
 
-installer-pre: lang maps-sync models pk3
+installer-pre: lang maps models pk3
 
 installer: wininstaller linuxinstaller mojoinstaller
 
