@@ -187,13 +187,14 @@ polyset_t *ASE_GetSurfaceAnimation (int whichSurface)
 			int k;
 
 			for (k = 0; k < 3; k++) {
-				triangle_t *t = ps->triangles[t];
-				aseVertex_t *v = pMesh->vertexes[pMesh->faces[t][k]];
-				VectorSet(t->verts[k], v->x, v->y, v->z);
+				triangle_t *tri = &ps->triangles[t];
+				const int vIdx = pMesh->faces[t][k];
+				aseVertex_t *v = &pMesh->vertexes[vIdx];
+				VectorSet(tri->verts[k], v->x, v->y, v->z);
 
 				if (pMesh->tvertexes && pMesh->tfaces) {
 					aseTVertex_t *tv = &pMesh->tvertexes[pMesh->tfaces[t][k]];
-					Vector2Set(t->texcoords[k], tv->s, tv->t);
+					Vector2Set(tri->texcoords[k], tv->s, tv->t);
 				}
 			}
 		}
@@ -439,7 +440,9 @@ static void ASE_KeyTFACE_LIST (const char *token)
 		b = atoi(s_token);
 
 		f = &pMesh->tfaces[pMesh->currentFace];
-		VectorSet(f, a, b, c);
+		*f[0] = a;
+		*f[1] = b;
+		*f[2] = c;
 
 		pMesh->currentFace++;
 	} else

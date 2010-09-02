@@ -181,7 +181,7 @@ static void SwapBSPFile (void)
 
 	/* dbrushes */
 	for (i = 0; i < curTile->numbrushes; i++) {
-		dBspBrush_t *dbrush = curTile->dbrushes[i];
+		dBspBrush_t *dbrush = &curTile->dbrushes[i];
 		dbrush->firstbrushside = LittleLong(dbrush->firstbrushside);
 		dbrush->numsides = LittleLong(dbrush->numsides);
 		dbrush->contentFlags = LittleLong(dbrush->contentFlags);
@@ -206,9 +206,9 @@ static void SwapBSPFile (void)
 
 static dBspHeader_t *header;
 
-static int CopyLump (int lump, void *dest, int size)
+static int CopyLump (int lumpIdx, void *dest, int size)
 {
-	const lump_t *lump = &header->lumps[lump];
+	const lump_t *lump = &header->lumps[lumpIdx];
 	const int length = lump->filelen;
 	const int ofs = lump->fileofs;
 
@@ -569,7 +569,7 @@ void GetVectorFromString (const char *value, vec3_t vec)
 		/* scanf into doubles, then assign, so it is vec_t size independent */
 		v1 = v2 = v3 = 0;
 		sscanf(value, "%lf %lf %lf", &v1, &v2, &v3);
-		VectorSet(vec[0], v1, v2, v3);
+		VectorSet(vec, v1, v2, v3);
 	} else
 		VectorClear(vec);
 }

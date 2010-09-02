@@ -61,9 +61,9 @@ void FreePortal (portal_t *p)
 /**
  * @brief Returns the single content bit of the strongest visible content present
  */
-int VisibleContents (int contentFlags)
+uint32_t VisibleContents (uint32_t contentFlags)
 {
-	int i;
+	uint32_t i;
 
 	for (i = 1; i <= LAST_VISIBLE_CONTENTS; i <<= 1)
 		if (contentFlags & i)
@@ -404,7 +404,7 @@ void MakeTreePortals (tree_t *tree)
  */
 static void FindPortalSide (portal_t *p)
 {
-	int viscontents;
+	uint32_t viscontents;
 	bspbrush_t *bb;
 	int i, j, planenum;
 	side_t *bestside;

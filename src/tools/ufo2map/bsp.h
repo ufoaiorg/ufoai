@@ -50,7 +50,7 @@ typedef struct bspbrush_s {
 
 typedef struct node_s {
 	/** both leafs and nodes */
-	int				planenum;	/**< -1 = leaf node */
+	int32_t			planenum;	/**< -1 = leaf node */
 	struct node_s	*parent;
 	vec3_t			mins, maxs;	/**< valid after portalization */
 	bspbrush_t		*volume;	/**< one for each leaf/node */
@@ -62,8 +62,8 @@ typedef struct node_s {
 
 	/** leafs only */
 	bspbrush_t		*brushlist;	/**< fragments of all brushes in this leaf */
-	int				contentFlags;	/**< OR of all brush contents */
-	int				area;		/**< for areaportals */
+	int32_t			contentFlags;	/**< OR of all brush contents */
+	int				area;		/**< for areaportals - @todo not used, remove it when we change the bsp version the next time */
 	struct portal_s	*portals;	/**< also on nodes during construction */
 } node_t;
 
@@ -72,8 +72,6 @@ typedef struct {
 	struct node_s		outside_node;
 	vec3_t		mins, maxs;
 } tree_t;
-
-extern int entity_num;
 
 extern plane_t mapplanes[MAX_MAP_PLANES];
 extern int nummapplanes;
@@ -127,7 +125,7 @@ void WriteBSPBrushMap(const char *name, const bspbrush_t *list);
 
 /* portals.c */
 
-int VisibleContents(int contents);
+uint32_t VisibleContents(uint32_t contents);
 void MarkVisibleSides(tree_t *tree, int start, int end);
 void FreePortal(portal_t *p);
 void MakeTreePortals(tree_t *tree);
@@ -170,7 +168,7 @@ extern vec3_t worldMins, worldMaxs;
 
 void PushInfo(void);
 void PopInfo(void);
-void ProcessLevel(unsigned int levelnum);
+void ProcessLevel(unsigned int levelnum, int entityNum);
 void PruneNodes(node_t *node);
 
 /* routing.c */

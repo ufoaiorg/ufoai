@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "map.h"
 #include "bsp.h"
 
-int entity_num;
-
 /**
  * @note used as a shortcut so the tile being processed does not need to be repeatedly passed between functions.
  */
@@ -36,7 +34,7 @@ mapTiles_t mapTiles;
 /**
  * @sa ProcessModels
  */
-static void ProcessWorldModel (void)
+static void ProcessWorldModel (int entityNum)
 {
 	entity_t *e = &entities[0];
 
@@ -49,7 +47,7 @@ static void ProcessWorldModel (void)
 	curTile->nummodels = NUM_REGULAR_MODELS;
 
 	/* process levels */
-	RunSingleThreadOn(ProcessLevel, NUM_REGULAR_MODELS, config.verbosity >= VERB_NORMAL, "LEVEL");
+	RunSingleThreadOn(ProcessLevel, NUM_REGULAR_MODELS, config.verbosity >= VERB_NORMAL, "LEVEL", entityNum);
 
 	/* calculate routing */
 	DoRouting();
@@ -106,6 +104,8 @@ static void ProcessSubModel (int entityNum)
  */
 void ProcessModels (const char *filename)
 {
+	int entity_num;
+
 	BeginBSPFile();
 
 	for (entity_num = 0; entity_num < num_entities; entity_num++) {
@@ -115,7 +115,7 @@ void ProcessModels (const char *filename)
 		Verb_Printf(VERB_EXTRA, "############### model %i ###############\n", curTile->nummodels);
 
 		if (entity_num == 0)
-			ProcessWorldModel();
+			ProcessWorldModel(entity_num);
 		else
 			ProcessSubModel(entity_num);
 

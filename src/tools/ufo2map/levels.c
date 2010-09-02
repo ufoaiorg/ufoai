@@ -130,7 +130,7 @@ static int32_t BuildNodeChildren (const int n[3])
  * @sa ProcessLevel
  * @return The node num
  */
-static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const vec3_t cmaxs)
+static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const vec3_t cmaxs, int entityNum)
 {
 	bspbrush_t *list;
 	tree_t *tree;
@@ -167,12 +167,12 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 
 		nmaxs[n] -= diff[n] / 2;
 /*		Com_Printf("  (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1]); */
-		nn[0] = ConstructLevelNodes_r(levelnum, nmins, nmaxs);
+		nn[0] = ConstructLevelNodes_r(levelnum, nmins, nmaxs, entityNum);
 
 		nmins[n] += diff[n] / 2;
 		nmaxs[n] += diff[n] / 2;
 /*		Com_Printf("    (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1]); */
-		nn[1] = ConstructLevelNodes_r(levelnum, nmins, nmaxs);
+		nn[1] = ConstructLevelNodes_r(levelnum, nmins, nmaxs, entityNum);
 	} else {
 		/* no children */
 		nn[0] = LEAFNODE;
@@ -184,7 +184,7 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 	VectorAdd(bmaxs, v_epsilon, bmaxs);
 
 	/* Call BeginModel only to initialize brush pointers */
-	BeginModel(entity_num);
+	BeginModel(entityNum);
 
 	list = MakeBspBrushList(brush_start, brush_end, levelnum, bmins, bmaxs);
 	if (!list) {
@@ -230,7 +230,7 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
  * @sa ProcessWorldModel
  * @sa ConstructLevelNodes_r
  */
-void ProcessLevel (unsigned int levelnum)
+void ProcessLevel (unsigned int levelnum, int entityNum)
 {
 	vec3_t mins, maxs;
 	dBspModel_t *dm;
@@ -259,7 +259,7 @@ void ProcessLevel (unsigned int levelnum)
 
 	/* Store face number for later use */
 	dm->firstface = curTile->numfaces;
-	dm->headnode = ConstructLevelNodes_r(levelnum, mins, maxs);
+	dm->headnode = ConstructLevelNodes_r(levelnum, mins, maxs, entityNum);
 	/* This here replaces the calls to EndModel */
 	dm->numfaces = curTile->numfaces - dm->firstface;
 

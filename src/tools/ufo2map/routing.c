@@ -156,10 +156,10 @@ void DoRouting (void)
 	assert(wpMins[2] <= wpMaxs[2]);
 
 	/* scan area heights */
-	RunSingleThreadOn(CheckUnitThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * ACTOR_MAX_SIZE, config.verbosity >= VERB_NORMAL, "UNITCHECK");
+	RunSingleThreadOn(CheckUnitThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * ACTOR_MAX_SIZE, config.verbosity >= VERB_NORMAL, "UNITCHECK", 0);
 
 	/* scan connections */
-	RunSingleThreadOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * (CORE_DIRECTIONS / (1 + RT_IS_BIDIRECTIONAL)) * (ACTOR_MAX_SIZE), config.verbosity >= VERB_NORMAL, "CONNCHECK");
+	RunSingleThreadOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * (CORE_DIRECTIONS / (1 + RT_IS_BIDIRECTIONAL)) * (ACTOR_MAX_SIZE), config.verbosity >= VERB_NORMAL, "CONNCHECK", 0);
 
 	/* Try to shrink the world bounds along the x and y coordinates */
 	for (i = 0; i < 2; i++) {
