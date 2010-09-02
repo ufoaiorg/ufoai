@@ -25,9 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_shared.h"
 #include "../cl_team.h"
 #include "../ui/ui_main.h"
-#include "../ui/ui_popup.h"
 #include "cp_campaign.h"
-#include "cp_hospital.h"
 #include "cp_hospital_callbacks.h"
 
 /** @brief This is the current selected employee for the hospital_employee menu. */

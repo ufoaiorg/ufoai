@@ -26,11 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../cl_shared.h"
-#include "../ui/ui_main.h"
 #include "cp_campaign.h"
 #include "cp_mapfightequip.h"
 #include "cp_ufo.h"
-#include "cp_map.h"
 #include "save/save_fightequip.h"
 
 #define UFO_RELOAD_DELAY_MULTIPLIER 2
@@ -43,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note This list is terminated by a NULL pointer.
  * @param[in] type Type of the craft-items to return.
  */
-technology_t **AII_GetCraftitemTechsByType (int type)
+technology_t **AII_GetCraftitemTechsByType (aircraftItemType_t type)
 {
 	static technology_t *techList[MAX_TECHNOLOGIES];
 	int i, j = 0;

@@ -30,10 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_mapfightequip.h"
 #include "cp_aircraft.h"
 #include "cp_missions.h"
-#include "cp_map.h"
-#include "cp_ufo.h"
 #include "cp_installation.h"
-#include "cp_installation_callbacks.h"
 #include "save/save_installation.h"
 
 /**

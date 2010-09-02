@@ -24,8 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../../client.h"
 #include "../../../cl_localentity.h"
-#include "../../../cl_actor.h"
-#include "../../../cl_particle.h"
 #include "../../../../renderer/r_mesh.h"
 #include "../../../../renderer/r_mesh_anim.h"
 #include "e_event_actorshoot.h"

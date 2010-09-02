@@ -25,12 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../cl_shared.h"
-#include "../ui/ui_main.h"
 #include "../ui/ui_popup.h"
 #include "../cl_inventory.h" /* INV_GetEquipmentDefinitionByID */
 #include "cp_campaign.h"
 #include "cp_market.h"
-#include "cp_market_callbacks.h"
 #include "save/save_market.h"
 
 void BS_AddItemToMarket (const objDef_t *od, int amount)
@@ -244,7 +242,7 @@ qboolean BS_LoadXML (mxml_node_t *parent)
 	for (snode = mxml_GetNode(node, SAVE_MARKET_AIRCRAFT); snode; snode = mxml_GetNextNode(snode, node, SAVE_MARKET_AIRCRAFT)) {
 		const char *s = mxml_GetString(snode, SAVE_MARKET_ID);
 		humanAircraftType_t type = Com_DropShipShortNameToID(s);
-		
+
 		ccs.eMarket.numAircraft[type] = mxml_GetInt(snode, SAVE_MARKET_NUM, 0);
 		ccs.eMarket.bidAircraft[type] = mxml_GetInt(snode, SAVE_MARKET_BID, 0);
 		ccs.eMarket.askAircraft[type] = mxml_GetInt(snode, SAVE_MARKET_ASK, 0);

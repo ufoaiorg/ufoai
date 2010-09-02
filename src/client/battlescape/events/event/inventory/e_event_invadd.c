@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../../client.h"
 #include "../../../cl_localentity.h"
-#include "../../../../cl_inventory.h"
 #include "e_event_invadd.h"
 
 /**

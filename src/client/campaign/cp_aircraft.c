@@ -36,7 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_map.h"
 #include "cp_ufo.h"
 #include "cp_alienbase.h"
-#include "cp_team.h"
 #include "cp_time.h"
 #include "cp_missions.h"
 #include "save/save_aircraft.h"
@@ -2933,7 +2932,6 @@ qboolean AIR_CanIntercept (const aircraft_t *aircraft)
 qboolean AIR_ScriptSanityCheck (void)
 {
 	int i, j, k, error = 0;
-	int var;
 	aircraft_t* a;
 
 	for (i = 0, a = ccs.aircraftTemplates; i < ccs.numAircraftTemplates; i++, a++) {
@@ -2956,7 +2954,7 @@ qboolean AIR_ScriptSanityCheck (void)
 		/* check that every slots has a different location for PHALANX aircraft (not needed for UFOs) */
 		if (a->type != AIRCRAFT_UFO) {
 			for (j = 0; j < a->maxWeapons - 1; j++) {
-				var = a->weapons[j].pos;
+				const itemPos_t var = a->weapons[j].pos;
 				for (k = j + 1; k < a->maxWeapons; k++)
 					if (var == a->weapons[k].pos) {
 						error++;
@@ -2964,7 +2962,7 @@ qboolean AIR_ScriptSanityCheck (void)
 					}
 			}
 			for (j = 0; j < a->maxElectronics - 1; j++) {
-				var = a->electronics[j].pos;
+				const itemPos_t var = a->electronics[j].pos;
 				for (k = j + 1; k < a->maxElectronics; k++)
 					if (var == a->electronics[k].pos) {
 						error++;
@@ -3026,7 +3024,7 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 			if (!base)
 				continue;
 
-			while ((acTemp = AIR_GetNextFromBase(base, acTemp))) { 
+			while ((acTemp = AIR_GetNextFromBase(base, acTemp))) {
 				if (AIR_IsEmployeeInAircraft(employee, acTemp)) {
 					aircraft = acTemp;
 					break;
@@ -3070,7 +3068,7 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const ai
 
 			if (!base)
 				continue;
-		
+
 			while ((aircraftByIDX = AIR_GetNextFromBase(base, aircraftByIDX))) {
 				if (AIR_IsEmployeeInAircraft(employee, aircraftByIDX))
 					return aircraftByIDX;

@@ -43,15 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_main.h"
 
 #include "../cl_localentity.h"
-#include "../../cl_screen.h"
-#include "../../cl_game.h"
 #include "../../cl_team.h"
-#include "../cl_particle.h"
-#include "../cl_actor.h"
-#include "../cl_view.h"
-#include "../cl_hud.h"
-#include "../../ui/ui_main.h"
-#include "../../renderer/r_mesh_anim.h"
 
 cvar_t *cl_log_battlescape_events;
 
@@ -191,7 +183,7 @@ void CL_ParseEvent (struct dbuffer *msg)
 		now = qfalse;
 
 	/* check if eType is valid */
-	if (eType < EV_NULL || eType >= EV_NUM_EVENTS)
+	if (eType >= EV_NUM_EVENTS)
 		Com_Error(ERR_DROP, "CL_ParseEvent: invalid event %i", eType);
 
 	eventData = CL_GetEvent(eType);

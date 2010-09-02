@@ -116,7 +116,7 @@ void ThreadLock (void)
 	} else if (lock != NULL && SDL_mutexP(lock) != -1) {
 		/* already locked */
 	} else {
-		Sys_Error("Couldn't lock mutex (%p)!", lock);
+		Sys_Error("Couldn't lock mutex (%p)!", (void*)lock);
 	}
 }
 
@@ -130,7 +130,7 @@ void ThreadUnlock (void)
 	} else if (lock != NULL && SDL_mutexV(lock) != -1) {
 		/* already locked */
 	} else {
-		Sys_Error("Couldn't unlock mutex (%p)!", lock);
+		Sys_Error("Couldn't unlock mutex (%p)!", (void*)lock);
 	}
 }
 
