@@ -24,10 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../common/common.h"
-#include "../../common/msg.h"
 #include "win_local.h"
 #include <fcntl.h>
-#include <float.h>
 #include <direct.h>
 #include <io.h>
 

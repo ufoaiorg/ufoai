@@ -64,24 +64,26 @@ typedef struct mapConfig_s {
 	int nice;
 	qboolean verbose;
 	verbosityLevel_t verbosity;
-	qboolean noprune;
-	qboolean nodetail;
-	qboolean fulldetail;
-	qboolean onlyents;
-	qboolean exportLightmaps;
-	qboolean nomerge;
-	qboolean nowater;
-	qboolean nocsg;
-	qboolean noweld;
-	qboolean noshare;
-	qboolean nosubdiv;
-	qboolean notjunc;
-	qboolean verboseentities;
-	qboolean nobackclip;
+	qboolean noprune;		/**< If not set to true the brushlists of child nodes are combined. The bsp file will get larger
+							 * and the compile time will increase */
+	qboolean nodetail;		/**< do not put any of the detail brushes in the bsp */
+	qboolean fulldetail;	/**< everything with content will get a detail brush */
+	qboolean onlyents;		/**< will only update the entity data without recalculating the pathfinding or the lightmaps */
+	qboolean exportLightmaps;	/**< will export the lightmaps and direction data into tga images */
+	qboolean nomerge;		/**< If set, faces that share the same edge on the same plane are not merged */
+	qboolean nowater;		/**< does not add any CONTENTS_WATER brush to the bsp */
+	qboolean nocsg;			/**< If set, the call to chop the brushes is deactivated - there will be no reduction of intersecting brushes
+							 * with non-intersecting brushes. The resulting bsp file will also be larger with this option turned on. */
+	qboolean noweld;		/**< use vertices from curTile->vertexes array or if false, create vertices from a hash table */
+	qboolean noshare;		/**< If true, keep identical edges in the bsp */
+	qboolean nosubdiv;		/**< If this is set to false faces that are larger than the given chop size will get subdivided */
+	qboolean notjunc;		/**< If true, do not break edges on tjunctions. This will decrease the compile times and should not be used on final compiles */
+	qboolean verboseentities;	/**< prints entity sub model informations to the console */
+	qboolean nobackclip;	/**< does not filter out back clipping brushes - results in larger bsp files */
 	int nolighting;
 	int block_xl, block_xh, block_yl, block_yh;
 	float microvolume; /**< -micro test after CSG */
-	qboolean extrasamples;
+	qboolean extrasamples;	/**< apply sampling to the ligthmap- makes lightmap smoother */
 	qboolean info;
 	qboolean generateFootstepFile;
 	qboolean generateMaterialFile;

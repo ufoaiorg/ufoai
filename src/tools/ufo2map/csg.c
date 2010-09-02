@@ -109,10 +109,11 @@ static int maxplanenums[2];
 
 /**
  * @brief Any planes shared with the box edge will be set to no texinfo
+ * @note not thread safe
  */
 static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t clipmaxs)
 {
-	int i, j, p;
+	int i, j;
 	bspbrush_t *front, *back;
 
 	for (j = 0; j < 2; j++) {
@@ -138,11 +139,12 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t cl
 
 	/* remove any colinear faces */
 	for (i = 0; i < brush->numsides; i++) {
-		p = brush->sides[i].planenum & ~1;
+		side_t *side = &brush->sides[i];
+		const int p = side->planenum & ~1;
 		if (p == maxplanenums[0] || p == maxplanenums[1]
 			|| p == minplanenums[0] || p == minplanenums[1]) {
-			brush->sides[i].texinfo = TEXINFO_NODE;
-			brush->sides[i].visible = qfalse;
+			side->texinfo = TEXINFO_NODE;
+			side->visible = qfalse;
 		}
 	}
 	return brush;
@@ -359,10 +361,11 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 		newbrush->numsides = mb->numsides;
 		memcpy(newbrush->sides, mb->original_sides, numsides * sizeof(side_t));
 		for (j = 0; j < numsides; j++) {
-			if (newbrush->sides[j].winding)
-				newbrush->sides[j].winding = CopyWinding(newbrush->sides[j].winding);
-			if (newbrush->sides[j].surfaceFlags & SURF_HINT)
-				newbrush->sides[j].visible = qtrue; /* hints are always visible */
+			side_t *side = &newbrush->sides[j];
+			if (side->winding)
+				side->winding = CopyWinding(side->winding);
+			if (side->surfaceFlags & SURF_HINT)
+				side->visible = qtrue; /* hints are always visible */
 		}
 		VectorCopy(mb->mins, newbrush->mins);
 		VectorCopy(mb->maxs, newbrush->maxs);

@@ -170,29 +170,30 @@ polyset_t *ASE_GetSurfaceAnimation (int whichSurface)
 
 	numFramesInAnimation = pObject->anim.numFrames;
 
-	psets = Mem_Alloc(sizeof(polyset_t) * numFramesInAnimation);
+	psets = (polyset_t *)Mem_Alloc(sizeof(*psets) * numFramesInAnimation);
 
 	for (f = 0, i = 0; i < numFramesInAnimation; i++) {
 		int t;
 		aseMesh_t *pMesh = &pObject->anim.frames[i];
+		polyset_t *ps = &psets[f];
 
-		strcpy(psets[f].name, pObject->name);
-		strcpy(psets[f].materialname, ase.materials[pObject->materialRef].name);
+		strcpy(ps->name, pObject->name);
+		strcpy(ps->materialname, ase.materials[pObject->materialRef].name);
 
-		psets[f].triangles = calloc(sizeof(triangle_t) * pObject->anim.frames[i].numFaces, 1);
-		psets[f].numtriangles = pObject->anim.frames[i].numFaces;
+		ps->triangles = (triangle_t *)Mem_Alloc(sizeof(*ps->triangles) * pObject->anim.frames[i].numFaces);
+		ps->numtriangles = pObject->anim.frames[i].numFaces;
 
 		for (t = 0; t < pObject->anim.frames[i].numFaces; t++) {
 			int k;
 
 			for (k = 0; k < 3; k++) {
-				psets[f].triangles[t].verts[k][0] = pMesh->vertexes[pMesh->faces[t][k]].x;
-				psets[f].triangles[t].verts[k][1] = pMesh->vertexes[pMesh->faces[t][k]].y;
-				psets[f].triangles[t].verts[k][2] = pMesh->vertexes[pMesh->faces[t][k]].z;
+				triangle_t *t = ps->triangles[t];
+				aseVertex_t *v = pMesh->vertexes[pMesh->faces[t][k]];
+				VectorSet(t->verts[k], v->x, v->y, v->z);
 
 				if (pMesh->tvertexes && pMesh->tfaces) {
-					psets[f].triangles[t].texcoords[k][0] = pMesh->tvertexes[pMesh->tfaces[t][k]].s;
-					psets[f].triangles[t].texcoords[k][1] = pMesh->tvertexes[pMesh->tfaces[t][k]].t;
+					aseTVertex_t *tv = &pMesh->tvertexes[pMesh->tfaces[t][k]];
+					Vector2Set(t->texcoords[k], tv->s, tv->t);
 				}
 			}
 		}
@@ -426,6 +427,7 @@ static void ASE_KeyTFACE_LIST (const char *token)
 
 	if (!strcmp(token, "*MESH_TFACE")) {
 		int a, b, c;
+		aseFace_t *f;
 
 		ASE_GetToken(qfalse);
 
@@ -436,9 +438,8 @@ static void ASE_KeyTFACE_LIST (const char *token)
 		ASE_GetToken(qfalse);
 		b = atoi(s_token);
 
-		pMesh->tfaces[pMesh->currentFace][0] = a;
-		pMesh->tfaces[pMesh->currentFace][1] = b;
-		pMesh->tfaces[pMesh->currentFace][2] = c;
+		f = &pMesh->tfaces[pMesh->currentFace];
+		VectorSet(f, a, b, c);
 
 		pMesh->currentFace++;
 	} else
@@ -506,22 +507,22 @@ static void ASE_KeyMESH (const char *token)
 		pMesh->numTVertexes = atoi(s_token);
 		VERBOSE((".....num tvertexes: %d\n", pMesh->numTVertexes));
 	} else if (!strcmp(token, "*MESH_VERTEX_LIST")) {
-		pMesh->vertexes = calloc(sizeof(aseVertex_t) * pMesh->numVertexes, 1);
+		pMesh->vertexes = Mem_Alloc(sizeof(aseVertex_t) * pMesh->numVertexes);
 		pMesh->currentVertex = 0;
 		VERBOSE((".....parsing MESH_VERTEX_LIST\n"));
 		ASE_ParseBracedBlock(ASE_KeyMESH_VERTEX_LIST);
 	} else if (!strcmp(token, "*MESH_TVERTLIST")) {
 		pMesh->currentVertex = 0;
-		pMesh->tvertexes = calloc(sizeof(aseTVertex_t) * pMesh->numTVertexes, 1);
+		pMesh->tvertexes = Mem_Alloc(sizeof(aseTVertex_t) * pMesh->numTVertexes);
 		VERBOSE((".....parsing MESH_TVERTLIST\n"));
 		ASE_ParseBracedBlock(ASE_KeyMESH_TVERTLIST);
 	} else if (!strcmp(token, "*MESH_FACE_LIST")) {
-		pMesh->faces = calloc(sizeof(aseFace_t) * pMesh->numFaces, 1);
+		pMesh->faces = Mem_Alloc(sizeof(aseFace_t) * pMesh->numFaces);
 		pMesh->currentFace = 0;
 		VERBOSE((".....parsing MESH_FACE_LIST\n"));
 		ASE_ParseBracedBlock(ASE_KeyMESH_FACE_LIST);
 	} else if (!strcmp(token, "*MESH_TFACELIST")) {
-		pMesh->tfaces = calloc(sizeof(aseFace_t) * pMesh->numFaces, 1);
+		pMesh->tfaces = Mem_Alloc(sizeof(aseFace_t) * pMesh->numFaces);
 		pMesh->currentFace = 0;
 		VERBOSE((".....parsing MESH_TFACE_LIST\n"));
 		ASE_ParseBracedBlock(ASE_KeyTFACE_LIST);

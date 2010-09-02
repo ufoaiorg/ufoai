@@ -137,29 +137,31 @@ static void SwapBSPFile (void)
 
 	/* nodes */
 	for (i = 0; i < curTile->numnodes; i++) {
+		dBspNode_t *node = &curTile->nodes[i];
 		/* planenum might be -1 here - special case for pathfinding nodes */
-		curTile->nodes[i].planenum = LittleLong(curTile->nodes[i].planenum);
+		node->planenum = LittleLong(node->planenum);
 		for (j = 0; j < 3; j++) {
-			curTile->nodes[i].mins[j] = LittleShort(curTile->nodes[i].mins[j]);
-			curTile->nodes[i].maxs[j] = LittleShort(curTile->nodes[i].maxs[j]);
+			node->mins[j] = LittleShort(node->mins[j]);
+			node->maxs[j] = LittleShort(node->maxs[j]);
 		}
-		curTile->nodes[i].children[0] = LittleLong(curTile->nodes[i].children[0]);
-		curTile->nodes[i].children[1] = LittleLong(curTile->nodes[i].children[1]);
-		curTile->nodes[i].firstface = LittleShort(curTile->nodes[i].firstface);
-		curTile->nodes[i].numfaces = LittleShort(curTile->nodes[i].numfaces);
+		node->children[0] = LittleLong(node->children[0]);
+		node->children[1] = LittleLong(node->children[1]);
+		node->firstface = LittleShort(node->firstface);
+		node->numfaces = LittleShort(node->numfaces);
 	}
 
 	/* leafs */
 	for (i = 0; i < curTile->numleafs; i++) {
-		curTile->leafs[i].contentFlags = LittleLong(curTile->leafs[i].contentFlags);
-		curTile->leafs[i].area = LittleShort(curTile->leafs[i].area);
+		dBspLeaf_t *leaf = &curTile->leafs[i];
+		leaf->contentFlags = LittleLong(leaf->contentFlags);
+		leaf->area = LittleShort(leaf->area);
 		for (j = 0; j < 3; j++) {
-			curTile->leafs[i].mins[j] = LittleShort(curTile->leafs[i].mins[j]);
-			curTile->leafs[i].maxs[j] = LittleShort(curTile->leafs[i].maxs[j]);
+			leaf->mins[j] = LittleShort(leaf->mins[j]);
+			leaf->maxs[j] = LittleShort(leaf->maxs[j]);
 		}
 
-		curTile->leafs[i].firstleafbrush = LittleShort(curTile->leafs[i].firstleafbrush);
-		curTile->leafs[i].numleafbrushes = LittleShort(curTile->leafs[i].numleafbrushes);
+		leaf->firstleafbrush = LittleShort(leaf->firstleafbrush);
+		leaf->numleafbrushes = LittleShort(leaf->numleafbrushes);
 	}
 
 	/* leafbrushes */
@@ -172,28 +174,32 @@ static void SwapBSPFile (void)
 
 	/* edges */
 	for (i = 0; i < curTile->numedges; i++) {
-		curTile->edges[i].v[0] = LittleShort(curTile->edges[i].v[0]);
-		curTile->edges[i].v[1] = LittleShort(curTile->edges[i].v[1]);
+		dBspEdge_t *edge = &curTile->edges[i];
+		edge->v[0] = LittleShort(edge->v[0]);
+		edge->v[1] = LittleShort(edge->v[1]);
 	}
 
 	/* dbrushes */
 	for (i = 0; i < curTile->numbrushes; i++) {
-		curTile->dbrushes[i].firstbrushside = LittleLong(curTile->dbrushes[i].firstbrushside);
-		curTile->dbrushes[i].numsides = LittleLong(curTile->dbrushes[i].numsides);
-		curTile->dbrushes[i].contentFlags = LittleLong(curTile->dbrushes[i].contentFlags);
+		dBspBrush_t *dbrush = curTile->dbrushes[i];
+		dbrush->firstbrushside = LittleLong(dbrush->firstbrushside);
+		dbrush->numsides = LittleLong(dbrush->numsides);
+		dbrush->contentFlags = LittleLong(dbrush->contentFlags);
 	}
 
 	/* brushes */
 	for (i = 0; i < curTile->numbrushes; i++) {
-		curTile->brushes[i].firstbrushside = LittleLong(curTile->brushes[i].firstbrushside);
-		curTile->brushes[i].numsides = LittleLong(curTile->brushes[i].numsides);
-		curTile->brushes[i].contentFlags = LittleLong(curTile->brushes[i].contentFlags);
+		cBspBrush_t *cbrush = &curTile->brushes[i];
+		cbrush->firstbrushside = LittleLong(cbrush->firstbrushside);
+		cbrush->numsides = LittleLong(cbrush->numsides);
+		cbrush->contentFlags = LittleLong(cbrush->contentFlags);
 	}
 
 	/* brushsides */
 	for (i = 0; i < curTile->numbrushsides; i++) {
-		curTile->brushsides[i].planenum = LittleShort(curTile->brushsides[i].planenum);
-		curTile->brushsides[i].texinfo = LittleShort(curTile->brushsides[i].texinfo);
+		dBspBrushSide_t *brushSide = &curTile->brushsides[i];
+		brushSide->planenum = LittleShort(brushSide->planenum);
+		brushSide->texinfo = LittleShort(brushSide->texinfo);
 	}
 }
 
@@ -202,8 +208,9 @@ static dBspHeader_t *header;
 
 static int CopyLump (int lump, void *dest, int size)
 {
-	const int length = header->lumps[lump].filelen;
-	const int ofs = header->lumps[lump].fileofs;
+	const lump_t *lump = &header->lumps[lump];
+	const int length = lump->filelen;
+	const int ofs = lump->fileofs;
 
 	if (length == 0)
 		return 0;
@@ -264,9 +271,10 @@ void LoadBSPFile (const char *filename)
 	 * copy data from curTile->dbrushes into curTile->cbrushes */
 	memset(curTile->brushes, 0, MAX_MAP_BRUSHES * sizeof(cBspBrush_t));
 	for (i = 0; i < curTile->numbrushes; i++) {
-		curTile->brushes[i].firstbrushside = curTile->dbrushes[i].firstbrushside;
-		curTile->brushes[i].numsides = curTile->dbrushes[i].numsides;
-		curTile->brushes[i].contentFlags = curTile->dbrushes[i].contentFlags;
+		cBspBrush_t *brush = &curTile->brushes[i];
+		brush->firstbrushside = brush->firstbrushside;
+		brush->numsides = brush->numsides;
+		brush->contentFlags = brush->contentFlags;
 	}
 
 	/* everything has been copied out */
@@ -561,9 +569,7 @@ void GetVectorFromString (const char *value, vec3_t vec)
 		/* scanf into doubles, then assign, so it is vec_t size independent */
 		v1 = v2 = v3 = 0;
 		sscanf(value, "%lf %lf %lf", &v1, &v2, &v3);
-		vec[0] = v1;
-		vec[1] = v2;
-		vec[2] = v3;
+		VectorSet(vec[0], v1, v2, v3);
 	} else
 		VectorClear(vec);
 }

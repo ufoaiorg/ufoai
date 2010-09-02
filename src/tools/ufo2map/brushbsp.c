@@ -159,7 +159,7 @@ static void CreateBrushWindings (bspbrush_t *brush)
 			if (i == j)
 				continue;
 			/* back side clipaway */
-			if (brush->sides[j].planenum == (brush->sides[i].planenum ^ 1))
+			if (brush->sides[j].planenum == (side->planenum ^ 1))
 				continue;
 			if (brush->sides[j].bevel)
 				continue;
@@ -335,8 +335,9 @@ bspbrush_t *CopyBrush (const bspbrush_t *brush)
 	memcpy(newbrush, brush, size);
 
 	for (i = 0; i < brush->numsides; i++) {
-		if (brush->sides[i].winding)
-			newbrush->sides[i].winding = CopyWinding(brush->sides[i].winding);
+		side_t *side = &brush->sides[i];
+		if (side->winding)
+			side->winding = CopyWinding(side->winding);
 	}
 
 	return newbrush;
@@ -384,11 +385,12 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 	d_front = d_back = 0;
 
 	for (i = 0; i < brush->numsides; i++) {
-		if (brush->sides[i].texinfo == TEXINFO_NODE)
+		side_t *side = &brush->sides[i];
+		if (side->texinfo == TEXINFO_NODE)
 			continue;		/* on node, don't worry about splits */
-		if (!brush->sides[i].visible)
+		if (!side->visible)
 			continue;		/* we don't care about non-visible */
-		w = brush->sides[i].winding;
+		w = side->winding;
 		if (!w)
 			continue;
 		front = back = 0;
@@ -406,7 +408,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 		}
 		if (front && back) {
 			(*numsplits)++;
-			if (brush->sides[i].surfaceFlags & SURF_HINT)
+			if (side->surfaceFlags & SURF_HINT)
 				*hintsplit = qtrue;
 		}
 	}
@@ -549,7 +551,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 			for (i = 0; i < brush->numsides; i++) {
 				/** @todo This will overflow if numsides is bigger than 6
 				 * @sa bspbrush_t */
-				side_t *side = brush->sides + i;
+				side_t *side = &brush->sides[i];
 				if (side->bevel)
 					continue;	/* never use a bevel as a spliter */
 				if (!side->winding)
@@ -968,13 +970,14 @@ tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 		}
 
 		for (i = 0; i < b->numsides; i++) {
-			if (b->sides[i].bevel)
+			side_t *side = &b->sides[i];
+			if (side->bevel)
 				continue;
-			if (!b->sides[i].winding)
+			if (!side->winding)
 				continue;
-			if (b->sides[i].texinfo == TEXINFO_NODE)
+			if (side->texinfo == TEXINFO_NODE)
 				continue;
-			if (b->sides[i].visible)
+			if (side->visible)
 				c_faces++;
 			else
 				c_nonvisfaces++;

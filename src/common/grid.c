@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "grid.h"
 #include "tracing.h"
 #include "routing.h"
-#include "../shared/parse.h"
 
 /** @note these are the TUs used to intentionally move in a given direction.  Falling not included. */
 static const int TUsUsed[] = {

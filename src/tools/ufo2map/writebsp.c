@@ -380,7 +380,7 @@ void BeginModel (int entityNum)
 	ClearBounds(mins, maxs);
 
 	for (j = start; j < end; j++) {
-		mapbrush_t *b = &mapbrushes[j];
+		const mapbrush_t *b = &mapbrushes[j];
 		/* not a real brush (origin brush) - e.g. func_door */
 		if (!b->numsides)
 			continue;
