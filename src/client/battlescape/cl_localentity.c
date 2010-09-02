@@ -236,10 +236,8 @@ void LM_Register (void)
 	}
 }
 
-void LE_SetThink (le_t *le, void (*think) (le_t *le))
+void LE_SetThink (le_t *le, localEntityThinkFunc_t think)
 {
-	Com_DPrintf(DEBUG_EVENTSYS, "LE_SetThink: Set think function for le %i to %p\n",
-			le->entnum, think);
 	le->think = think;
 }
 
@@ -251,8 +249,9 @@ localModel_t *LM_GetByID (const char *id)
 		return NULL;
 
 	for (i = 0; i < cl.numLMs; i++) {
-		if (!strcmp(cl.LMs[i].id, id))
-			return &cl.LMs[i];
+		localModel_t *lm = &cl.LMs[i];
+		if (!strcmp(lm->id, id))
+			return lm;
 	}
 	return NULL;
 }
@@ -305,8 +304,6 @@ LE thinking
 void LE_ExecuteThink (le_t *le)
 {
 	if (le->inuse && le->think) {
-		Com_DPrintf(DEBUG_EVENTSYS, "LE_ExecuteThink: Execute think function %p for le %i\n",
-					le->think, le->entnum);
 		le->think(le);
 	}
 }
@@ -1215,7 +1212,7 @@ le_t *LE_FindRadius (le_t *from, const vec3_t org, float rad, entity_type_t type
  * @param[in] type Entity type
  * @param[in] pos The grid pos to search for an item of the given type
  */
-le_t *LE_Find (int type, const pos3_t pos)
+le_t *LE_Find (entity_type_t type, const pos3_t pos)
 {
 	le_t *le = NULL;
 

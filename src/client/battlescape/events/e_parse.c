@@ -137,7 +137,7 @@ static void CL_ExecuteBattlescapeEvent (int now, void *data)
 	const eventRegister_t *eventData = CL_GetEvent(event->eType);
 
 	if (event->eType <= EV_START || cls.state == ca_active) {
-		Com_DPrintf(DEBUG_EVENTSYS, "event(dispatching at %d): %s %p\n", now, eventData->name, event);
+		Com_DPrintf(DEBUG_EVENTSYS, "event(dispatching at %d): %s %p\n", now, eventData->name, (void*)event);
 
 		CL_LogEvent(eventData);
 
@@ -146,7 +146,7 @@ static void CL_ExecuteBattlescapeEvent (int now, void *data)
 
 		eventData->eventCallback(eventData, event->msg);
 	} else {
-		Com_DPrintf(DEBUG_EVENTSYS, "event(not executed): %s %p\n", eventData->name, event);
+		Com_DPrintf(DEBUG_EVENTSYS, "event(not executed): %s %p\n", eventData->name, (void*)event);
 	}
 
 	free_dbuffer(event->msg);
@@ -219,6 +219,6 @@ void CL_ParseEvent (struct dbuffer *msg)
 
 		lastFrame = cl.time;
 
-		Com_DPrintf(DEBUG_EVENTSYS, "event(at %d): %s %p\n", when, eventData->name, cur);
+		Com_DPrintf(DEBUG_EVENTSYS, "event(at %d): %s %p\n", when, eventData->name, (void*)cur);
 	}
 }

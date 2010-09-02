@@ -2,17 +2,17 @@
 SRCDIR=src
 
 GENERIC_FLAGS+=-Wall
-CPPFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS) -DUSE_SIGNALS=$(USE_SIGNALS)
-CFLAGS+=-DHAVE_CONFIG_H -DUSE_SIGNALS=$(USE_SIGNALS) $(GENERIC_FLAGS) -pipe -Winline \
+CPPFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS)
+CFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS) -pipe -Winline \
 	-Wcast-qual -Wcast-align -Wdeclaration-after-statement -Wmissing-prototypes \
-	-Wmissing-declarations -std=c99 -Wpointer-arith
-#	-Wunreachable-code -Wlogical-op -Wc++-compat
+	-Wmissing-declarations -std=c99 -Wpointer-arith -Wno-long-long -pedantic
+#	-Wunreachable-code -Wlogical-op -Wc++-compat -Wsign-conversion
 #	-Wunsafe-loop-optimizations \
 #	-Wimplicit-int -Wpacked -Wparentheses -Wpadded \
 #	-Wunused -Wunused-function -Wunused-label -Wunused-value -Wunused-variable \
 #	-fstack-protector-all -Wstack-protector \
 #	-Wfloat-equal -Wconversion -Wbad-function-cast \
-#	-Wshadow -pedantic -combine -fwhole-program -fexcess-precision=fast
+#	-Wshadow -combine -fwhole-program -fexcess-precision=fast
 
 # Common things
 _BUILDDIR=$(strip $(BUILDDIR))

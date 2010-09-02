@@ -45,6 +45,9 @@ typedef enum {
 #define IS_MODE_FIRE_HEADGEAR(x)	((x) == M_FIRE_HEADGEAR)
 #define IS_MODE_FIRE_PENDING(x)		((x) == M_PEND_FIRE_L || (x) == M_PEND_FIRE_R)
 
+typedef qboolean (*localEntitiyAddFunc_t) (struct le_s * le, entity_t * ent);
+typedef void (*localEntityThinkFunc_t) (struct le_s * le);
+
 /** @brief a local entity */
 typedef struct le_s {
 	qboolean inuse;
@@ -98,7 +101,7 @@ typedef struct le_s {
 					 * model2 is head */
 
 	/** is called every frame */
-	void (*think) (struct le_s * le);
+	localEntityThinkFunc_t think;
 	/** number of frames to skip the think function for */
 	int thinkDelay;
 
@@ -135,7 +138,7 @@ typedef struct le_s {
 								 * locations go - only available for human controlled actors */
 
 	/** is called before adding a le to scene */
-	qboolean(*addFunc) (struct le_s * le, entity_t * ent);
+	localEntitiyAddFunc_t addFunc;
 
 	qboolean locked;	/**< true if there is an event going on involving
 						 * this le_t.  Used to limit to one event per le_t struct at any time. */
@@ -204,7 +207,7 @@ void LE_List_f(void);
 void LM_List_f(void);
 #endif
 
-void LE_SetThink(le_t *le, void (*think) (le_t *le));
+void LE_SetThink(le_t *le, localEntityThinkFunc_t think);
 void LE_ExecuteThink(le_t *le);
 void LE_Think(void);
 /* think functions */
@@ -237,7 +240,7 @@ void LE_Unlock(le_t *le);
 qboolean LE_IsLocked(int entnum);
 #define LE_NotFoundError(entnum) _LE_NotFoundError(entnum, __FILE__, __LINE__)
 void _LE_NotFoundError(int entnum, const char *file, const int line) __attribute__((noreturn));
-le_t *LE_Find(int type, const pos3_t pos);
+le_t *LE_Find(entity_type_t type, const pos3_t pos);
 le_t *LE_FindRadius(le_t *from, const vec3_t org, float rad, entity_type_t type);
 le_t *LE_GetFromPos(const pos3_t pos);
 void LE_PlaceItem(le_t *le);

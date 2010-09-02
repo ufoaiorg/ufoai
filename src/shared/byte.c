@@ -86,14 +86,30 @@ static float FloatNoSwap (float f)
 
 void Swap_Init (void)
 {
+	union {
+		byte b[2];
+		unsigned short s;
+	} swaptest;
+
 	Com_Printf("---- endianness initialization -----\n");
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN
-	Com_Printf("found little endian system\n");
-	_BigFloat = FloatSwap;
-	_LittleFloat = FloatNoSwap;
-#else
-	Com_Printf("found big endian system\n");
-	_BigFloat = FloatNoSwap;
-	_LittleFloat = FloatSwap;
+
+	swaptest.b[0] = 1;
+	swaptest.b[1] = 0;
+
+	/* set the byte swapping variables in a portable manner */
+	if (swaptest.s == 1) {
+		Com_Printf("found little endian system\n");
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+		Sys_Error("SDL was compiled in big endian mode");
 #endif
+		_BigFloat = FloatSwap;
+		_LittleFloat = FloatNoSwap;
+	} else {
+		Com_Printf("found big endian system\n");
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+		Sys_Error("SDL was compiled in little endian mode");
+#endif
+		_BigFloat = FloatNoSwap;
+		_LittleFloat = FloatSwap;
+	}
 }

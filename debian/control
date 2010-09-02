@@ -14,7 +14,7 @@ Build-Depends: debhelper (>= 5.0.0), libpng-dev, libjpeg-dev,
 Build-Conflicts: nvidia-glx, nvidia-current
 Standards-Version: 3.7.3
 Homepage: http://ufoai.sf.net
-Vcs-Svn: https://ufoai.svn.sourceforge.net/svnroot/ufoai/ufoai/trunk
+Vcs-Git: git://ufoai.git.sourceforge.net/gitroot/ufoai/ufoai
 
 Package: ufoai
 Section: games

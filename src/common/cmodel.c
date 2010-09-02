@@ -260,7 +260,7 @@ qboolean CM_EntTestLineDM (mapTiles_t *mapTiles, const vec3_t start, const vec3_
 		/* check whether this is really an inline model */
 		if (*name[0] != '*') {
 			/* Let's see what the data looks like... */
-			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s' (inlines: %p, name: %p)",
+			Com_Error(ERR_DROP, "name in the inlineList is no inline model: '%s' (inlines: %p, name: %s)",
 					*name, entlist, name);
 		}
 		model = CM_InlineModel(mapTiles, *name);

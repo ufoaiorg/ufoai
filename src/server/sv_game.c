@@ -457,8 +457,8 @@ static qboolean SV_LoadGame (const char *path)
 static game_export_t *SV_GetGameAPI (game_import_t *parms)
 {
 #ifndef HARD_LINKED_GAME
-	void *(*GetGameAPI) (void *);
-
+	typedef game_export_t *(*game_api_t) (void *);
+	game_api_t GetGameAPI;
 	const char *path;
 #endif
 
@@ -483,7 +483,7 @@ static game_export_t *SV_GetGameAPI (game_import_t *parms)
 			break;
 	}
 
-	GetGameAPI = (void *)SDL_LoadFunction(svs.gameLibrary, "GetGameAPI");
+	GetGameAPI = (game_api_t)SDL_LoadFunction(svs.gameLibrary, "GetGameAPI");
 	if (!GetGameAPI) {
 		SV_UnloadGame();
 		return NULL;

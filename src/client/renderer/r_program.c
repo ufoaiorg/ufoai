@@ -576,7 +576,7 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 	return sh;
 }
 
-r_program_t *R_LoadProgram (const char *name, void *init, void *use)
+r_program_t *R_LoadProgram (const char *name, programInitFunc_t init, programUseFunc_t use)
 {
 	r_program_t *prog;
 	unsigned e;
