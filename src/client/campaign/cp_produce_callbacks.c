@@ -70,7 +70,7 @@ static void PR_ClearSelected (void)
  */
 static void PR_UpdateProductionList (const base_t* base)
 {
-	int i, j, counter;
+	int i;
 	linkedList_t *productionList = NULL;
 	linkedList_t *productionQueued = NULL;
 	linkedList_t *productionAmount = NULL;
@@ -90,13 +90,17 @@ static void PR_UpdateProductionList (const base_t* base)
 			LIST_AddString(&productionQueued, va("%i", prod->amount));
 		} else if (prod->aircraft) {
 			const aircraft_t *aircraftTemplate = prod->aircraft;
+			aircraft_t *aircraftBase;
+			int counter = 0;
+
 			LIST_AddString(&productionList, va("%s", _(aircraftTemplate->name)));
-			for (j = 0, counter = 0; j < ccs.numAircraft; j++) {
-				const aircraft_t *aircraftBase = AIR_AircraftGetFromIDX(j);
-				assert(aircraftBase);
-				if (aircraftBase->homebase == base && aircraftBase->tpl == aircraftTemplate)
+
+			aircraftBase = NULL;
+			while ((aircraftBase = AIR_GetNextFromBase(base, aircraftBase))) {
+				if (aircraftBase->tpl == aircraftTemplate)
 					counter++;
 			}
+
 			LIST_AddString(&productionAmount, va("%i", counter));
 			LIST_AddString(&productionQueued, va("%i", prod->amount));
 		} else if (prod->ufo) {
@@ -152,13 +156,15 @@ static void PR_UpdateProductionList (const base_t* base)
 					aircraftTemplate->ufotype, aircraftTemplate->tech->id, aircraftTemplate->tech->produceTime);
 
 			if (aircraftTemplate->tech->produceTime > 0 && RS_IsResearched_ptr(aircraftTemplate->tech)) {
-				LIST_AddPointer(&productionItemList, aircraftTemplate);
+				aircraft_t *aircraftBase;
+				int counter = 0;
 
+				LIST_AddPointer(&productionItemList, aircraftTemplate);
 				LIST_AddString(&productionList, va("%s", _(aircraftTemplate->name)));
-				for (j = 0, counter = 0; j < ccs.numAircraft; j++) {
-					const aircraft_t *aircraftBase = AIR_AircraftGetFromIDX(j);
-					assert(aircraftBase);
-					if (aircraftBase->homebase == base && aircraftBase->tpl == aircraftTemplate)
+
+				aircraftBase = NULL;
+				while ((aircraftBase = AIR_GetNextFromBase(base, aircraftBase))) {
+					if (aircraftBase->tpl == aircraftTemplate)
 						counter++;
 				}
 				LIST_AddString(&productionAmount, va("%i", counter));

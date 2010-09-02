@@ -430,20 +430,17 @@ void AII_UpdateInstallationDelay (void)
 		/* Update each aircraft */
 		aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-			if (aircraft->homebase) {
-				assert(aircraft->homebase == base);
-				if (AIR_IsAircraftInBase(aircraft)) {
-					/* Update electronics delay */
-					for (k = 0; k < aircraft->maxElectronics; k++)
-						AII_UpdateOneInstallationDelay(base, NULL, aircraft, aircraft->electronics + k);
+			if (AIR_IsAircraftInBase(aircraft)) {
+				/* Update electronics delay */
+				for (k = 0; k < aircraft->maxElectronics; k++)
+					AII_UpdateOneInstallationDelay(base, NULL, aircraft, aircraft->electronics + k);
 
-					/* Update weapons delay */
-					for (k = 0; k < aircraft->maxWeapons; k++)
-						AII_UpdateOneInstallationDelay(base, NULL, aircraft, aircraft->weapons + k);
+				/* Update weapons delay */
+				for (k = 0; k < aircraft->maxWeapons; k++)
+					AII_UpdateOneInstallationDelay(base, NULL, aircraft, aircraft->weapons + k);
 
-					/* Update shield delay */
-					AII_UpdateOneInstallationDelay(base, NULL, aircraft, &aircraft->shield);
-				}
+				/* Update shield delay */
+				AII_UpdateOneInstallationDelay(base, NULL, aircraft, &aircraft->shield);
 			}
 		}
 	}

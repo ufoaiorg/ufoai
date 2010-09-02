@@ -342,7 +342,6 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 				Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s (%i/%i)\t%s\t%s\t%s"), aircraft->name,
 						teamSize, aircraft->maxTeamSize, statusName, base->name, time);
 				LIST_AddString(&aircraftList, aircraftListText);
-				assert(aircraft->homebase == base);
 				popupIntercept.aircraft[popupIntercept.numAircraft] = aircraft;
 				popupIntercept.numAircraft++;
 				if (popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT)
@@ -421,7 +420,6 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 				Com_sprintf(aircraftListText, sizeof(aircraftListText), _("%s%s (%i/%i)\t%s\t%s"), enoughFuelMarker, aircraft->name,
 						AIR_GetTeamSize(aircraft), aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), base->name);
 				LIST_AddString(&aircraftList, aircraftListText);
-				assert(aircraft->homebase == base);
 				popupIntercept.aircraft[popupIntercept.numAircraft] = aircraft;
 				popupIntercept.numAircraft++;
 				if (popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT)

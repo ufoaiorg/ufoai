@@ -50,6 +50,7 @@ aircraft_t* AIR_GetNextFromBase (const base_t *b, aircraft_t *lastAircraft)
 	if (b) {
 		aircraft_t *aircraft = lastAircraft;
 		while ((aircraft = (aircraft_t *)LIST_GetNext(b->aircraft, (void*)aircraft)) != NULL) {
+			assert(aircraft->homebase == b);
 			if (aircraft->status != AIR_CRASHED)
 				return aircraft;
 		}
@@ -2680,7 +2681,7 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 		int idx;
 
 		if (!Com_GetConstIntFromNamespace(SAVE_AIRCRAFTSTAT_NAMESPACE, statId, &idx)) {
-			Com_Printf("Invaild aircraft stat '%s'\n", statId);
+			Com_Printf("Invalid aircraft stat '%s'\n", statId);
 			Com_UnregisterConstList(saveAircraftConstants);
 			return qfalse;
 		}
