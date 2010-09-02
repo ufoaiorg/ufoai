@@ -193,7 +193,7 @@ static void testStringCopiers (void)
 	const int copies = 10000;
 	char dest[8192];
 	int i;
-	
+
 	TEST_Printf("\n");
 	time = Sys_Milliseconds();
 	for (i = 0; i < copies; ++i) {

@@ -335,9 +335,9 @@ bspbrush_t *CopyBrush (const bspbrush_t *brush)
 	memcpy(newbrush, brush, size);
 
 	for (i = 0; i < brush->numsides; i++) {
-		side_t *side = &brush->sides[i];
+		const side_t *side = &brush->sides[i];
 		if (side->winding)
-			side->winding = CopyWinding(side->winding);
+			newbrush->sides[i].winding = CopyWinding(side->winding);
 	}
 
 	return newbrush;
