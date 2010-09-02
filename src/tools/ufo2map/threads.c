@@ -140,7 +140,7 @@ static void RunThreads (void)
 	int i;
 
 	if (threadstate.numthreads == 1) {
-		ThreadWork(0);
+		ThreadWork(NULL);
 		return;
 	}
 
@@ -196,7 +196,7 @@ void RunThreadsOn (void (*func)(unsigned int), int unsigned workcount, qboolean 
 /**
  * @brief Entry point for all thread work requests.
  */
-void RunSingleThreadOn (void (*func)(unsigned int), int unsigned workcount, qboolean progress, const char *id, int userData)
+void RunSingleThreadOn (void (*func)(unsigned int), int unsigned workcount, qboolean progress, const char *id)
 {
 	int saved_numthreads = threadstate.numthreads;
 

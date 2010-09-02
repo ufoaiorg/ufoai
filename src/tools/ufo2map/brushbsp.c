@@ -347,10 +347,9 @@ bspbrush_t *CopyBrush (const bspbrush_t *brush)
 static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 			int *numsplits, qboolean *hintsplit, int *epsilonbrush)
 {
-	int i, j, s;
+	int i, s;
 	plane_t *plane;
 	dBspPlane_t plane2;
-	winding_t *w;
 	vec_t d_front, d_back;
 	int front, back;
 
@@ -385,7 +384,9 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 	d_front = d_back = 0;
 
 	for (i = 0; i < brush->numsides; i++) {
-		side_t *side = &brush->sides[i];
+		const side_t *side = &brush->sides[i];
+		const winding_t *w;
+		int j;
 		if (side->texinfo == TEXINFO_NODE)
 			continue;		/* on node, don't worry about splits */
 		if (!side->visible)

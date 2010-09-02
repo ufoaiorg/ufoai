@@ -782,26 +782,27 @@ void BuildFacelights (unsigned int facenum)
 	scale = 1.0 / numsamples; /* each sample contributes this much */
 
 	for (i = 0; i < numsamples; i++) {
-		l[i].face = face;
-		l[i].facedist = plane->dist;
-		VectorCopy(plane->normal, l[i].facenormal);
+		lightinfo_t *li = &l[i];
+		li->face = face;
+		li->facedist = plane->dist;
+		VectorCopy(plane->normal, li->facenormal);
 		/* negate the normal and dist */
 		if (face->side) {
-			VectorNegate(l[i].facenormal, l[i].facenormal);
-			l[i].facedist = -l[i].facedist;
+			VectorNegate(li->facenormal, li->facenormal);
+			li->facedist = -li->facedist;
 		}
 
 		/* get the origin offset for rotating bmodels */
-		VectorCopy(face_offset[facenum], l[i].modelorg);
+		VectorCopy(face_offset[facenum], li->modelorg);
 
 		/* calculate lightmap texture mins and maxs */
-		CalcLightinfoExtents(&l[i]);
+		CalcLightinfoExtents(li);
 
 		/* and the lightmap texture vectors */
-		CalcLightinfoVectors(&l[i]);
+		CalcLightinfoVectors(li);
 
 		/* now generate all of the sample points */
-		CalcPoints(&l[i], sampleofs[i][0], sampleofs[i][1]);
+		CalcPoints(li, sampleofs[i][0], sampleofs[i][1]);
 	}
 
 	fl = &facelight[config.compile_for_day][facenum];

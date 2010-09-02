@@ -145,7 +145,7 @@ extern memPool_t *com_fileSysPool;
 void ThreadLock(void);
 void ThreadUnlock(void);
 void RunThreadsOn(void (*func)(unsigned int), unsigned int workcount, qboolean progress, const char *id);
-void RunSingleThreadOn(void (*func)(unsigned int), unsigned int workcount, qboolean progress, const char *id, int userData);
+void RunSingleThreadOn(void (*func)(unsigned int), unsigned int workcount, qboolean progress, const char *id);
 
 #define SYS_VRB 0 /* verbose support (on/off) */
 #define SYS_STD 1 /* standard print level */

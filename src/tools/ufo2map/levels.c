@@ -218,6 +218,13 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
 	return BuildNodeChildren(nn);
 }
 
+/** @todo userdata for ProcessLevel thread */
+static int entityNum;
+
+void ProcessLevelEntityNumber (int entityNumber)
+{
+	entityNum = entityNumber;
+}
 
 /**
  * @brief process brushes with that level mask
@@ -230,7 +237,7 @@ static int32_t ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, co
  * @sa ProcessWorldModel
  * @sa ConstructLevelNodes_r
  */
-void ProcessLevel (unsigned int levelnum, int entityNum)
+void ProcessLevel (unsigned int levelnum)
 {
 	vec3_t mins, maxs;
 	dBspModel_t *dm;

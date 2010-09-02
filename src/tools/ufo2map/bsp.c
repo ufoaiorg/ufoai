@@ -34,7 +34,7 @@ mapTiles_t mapTiles;
 /**
  * @sa ProcessModels
  */
-static void ProcessWorldModel (int entityNum)
+static void ProcessWorldModel (int entityNumber)
 {
 	entity_t *e = &entities[0];
 
@@ -46,8 +46,10 @@ static void ProcessWorldModel (int entityNum)
 	/* This is set so the Emit* functions in writebsp.c work correctly. */
 	curTile->nummodels = NUM_REGULAR_MODELS;
 
+	ProcessLevelEntityNumber(entityNumber);
+
 	/* process levels */
-	RunSingleThreadOn(ProcessLevel, NUM_REGULAR_MODELS, config.verbosity >= VERB_NORMAL, "LEVEL", entityNum);
+	RunSingleThreadOn(ProcessLevel, NUM_REGULAR_MODELS, config.verbosity >= VERB_NORMAL, "LEVEL");
 
 	/* calculate routing */
 	DoRouting();
