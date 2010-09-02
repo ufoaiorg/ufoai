@@ -36,8 +36,8 @@ typedef struct cBspModel_s {
 /** @sa dBspTexinfo_t */
 typedef struct cBspSurface_s {
 	char name[MAX_QPATH];	/**< the texture name */
-	int surfaceFlags;		/**< surface flags SURF_* */
-	int value;				/**< currently not used except in loading CMod_LoadSurfaces */
+	uint32_t surfaceFlags;	/**< surface flags SURF_* */
+	uint32_t value;				/**< currently not used except in loading CMod_LoadSurfaces */
 	byte *lightmap;			/**< lightmap samples for server side visibility lookup */
 } cBspSurface_t;
 
@@ -53,13 +53,13 @@ typedef struct cBspBrushSide_s {
 } cBspBrushSide_t;
 
 typedef struct cBspLeaf_s {
-	int contentFlags;
+	uint32_t contentFlags;
 	unsigned short firstleafbrush;
 	unsigned short numleafbrushes;
 } cBspLeaf_t;
 
 typedef struct cBspBrush_s {
-	int contentFlags;			/**< the CONTENTS_* mask */
+	uint32_t contentFlags;			/**< the CONTENTS_* mask */
 	int numsides;				/**< number of sides for this models - start to count from firstbrushside */
 	int firstbrushside;			/**< first brush in the list of this model */
 	int checkcount;				/**< to avoid repeated testings */
@@ -291,7 +291,7 @@ typedef struct {
 
 /** @brief convex region of space in the BSP tree */
 typedef struct {
-	int contentFlags;				/**< OR of all brushes */
+	uint32_t contentFlags;				/**< OR of all brushes */
 
 	short area;
 
@@ -311,7 +311,7 @@ typedef struct {
 typedef struct {
 	int firstbrushside;
 	int numsides;
-	int contentFlags;				/**< OR of all brushes */
+	uint32_t contentFlags;				/**< OR of all brushes */
 } dBspBrush_t;
 
 typedef struct {

@@ -31,12 +31,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/defines.h"
 
 typedef struct brush_texture_s {
-	vec2_t	shift;
-	vec_t	rotate;
-	vec2_t	scale;
-	char	name[MAX_TEXPATH];	/**< texture name - relative to base/textures */
-	int		surfaceFlags;
-	int		value;
+	vec2_t		shift;
+	vec_t		rotate;
+	vec2_t		scale;
+	char		name[MAX_TEXPATH];	/**< texture name - relative to base/textures */
+	uint32_t	surfaceFlags;
+	int			value;
 } brush_texture_t;
 
 /** @brief for storing the vertices of the side of a brush or other polygon */
@@ -58,7 +58,7 @@ typedef struct face_s {
 	struct portal_s	*portal;
 	int				texinfo;
 	int				planenum;
-	int				contentFlags;	/**< faces in different contents can't merge */
+	uint32_t		contentFlags;	/**< faces in different contents can't merge */
 	winding_t		*w;
 	int				numpoints;
 	int				vertexnums[MAXEDGES];
@@ -69,8 +69,8 @@ typedef struct side_s {
 	int			texinfo;
 	struct winding_s	*winding;
 	struct side_s	*original;	/**< bspbrush_t sides will reference the mapbrush_t sides */
-	int			contentFlags;	/**< from miptex */
-	int			surfaceFlags;	/**< from miptex */
+	uint32_t	contentFlags;	/**< from miptex */
+	uint32_t	surfaceFlags;	/**< from miptex */
 	qboolean	visible;		/**< choose visible planes first */
 	qboolean	tested;			/**< this plane already checked as a split */
 	qboolean	bevel;			/**< don't ever use for bsp splitting */
@@ -83,7 +83,7 @@ typedef struct mapbrush_s {
 	int		entitynum;		/**< the entity number in the map - 0 is the world - everything else is a bmodel */
 	int		brushnum;		/**< the brush number in the map */
 
-	int		contentFlags;
+	uint32_t		contentFlags;
 
 	vec3_t	mins, maxs;
 

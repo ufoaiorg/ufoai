@@ -68,7 +68,7 @@ typedef struct trace_s {
 	TR_PLANE_TYPE plane;		/**< surface normal at impact */
 	cBspSurface_t *surface;	    /**< surface hit */
 	int planenum;				/**< index of the plane hit, used for map debugging */
-	int contentFlags;			/**< contents on other side of surface hit */
+	uint32_t contentFlags;		/**< contents on other side of surface hit */
 	int32_t leafnum;
 	int mapTile;				/**< the map tile we hit something */
 	struct le_s *le;			/**< not set by CM_*() functions */
@@ -83,8 +83,8 @@ typedef struct boxtrace_s {
 	vec3_t extents;
 
 	trace_t trace;
-	int contents;
-	int rejects;
+	uint32_t contents;			/**< content flags to match again - MASK_ALL to match everything */
+	uint32_t rejects;			/**< content flags that should be rejected in a trace - ignored when MASK_ALL is given as content flags */
 	qboolean ispoint;			/* optimized case */
 
 	TR_TILE_TYPE *tile;
