@@ -20,12 +20,8 @@ def get(cmd):
     data = p.stdout.read()
     return data
 
-def get_svn_revision():
-    xml = get("svn info --xml")
-    dom = parseString(xml)
-    entries = dom.firstChild.getElementsByTagName('entry')
-    entry = entries[0]
-    return entry.getAttribute("revision")
+def get_repo_revision():
+    return get("git rev-parse HEAD")
 
 def apply_xsl(xml_file_name, xsl_file_name):
     try:
@@ -62,7 +58,7 @@ def main():
     if not os.path.exists(UNITTESTS_DIR):
         os.mkdir(UNITTESTS_DIR)
 
-    revision = get_svn_revision()
+    revision = get_repo_revision()
     if not os.path.exists(CUNIT_OUTPUT):
         sys.exit(1)
 
