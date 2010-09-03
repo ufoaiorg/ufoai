@@ -89,7 +89,7 @@ typedef struct uiNode_s {
 	int textalign;				/**< Alignment to draw text */
 	char* text;					/**< Text we want to display */
 	const char* font;			/**< Font to draw text */
-	void* image;
+	const char* image;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	vec4_t bgcolor;				/**< rgba */
 	vec4_t bordercolor;			/**< rgba - see border and padding */

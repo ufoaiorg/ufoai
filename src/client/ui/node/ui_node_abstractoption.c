@@ -56,21 +56,21 @@ void UI_OptionNodeSortOptions (uiNode_t *node)
 const char *UI_AbstractOptionGetCurrentValue (uiNode_t * node)
 {
 	/* no cvar given? */
-	if (!(EXTRADATA(node).cvar) || !*(char*)(EXTRADATA(node).cvar)) {
+	if (!EXTRADATA(node).cvar || !*EXTRADATA(node).cvar) {
 		Com_Printf("UI_AbstractOptionGetCurrentValue: node '%s' doesn't have a valid cvar assigned\n", UI_GetPath(node));
 		return NULL;
 	}
 
 	/* not a cvar? */
-	if (strncmp((const char *)(EXTRADATA(node).cvar), "*cvar", 5))
+	if (strncmp(EXTRADATA(node).cvar, "*cvar", 5))
 		return NULL;
 
-	return UI_GetReferenceString(node, (EXTRADATA(node).cvar));
+	return UI_GetReferenceString(node, EXTRADATA(node).cvar);
 }
 
 void UI_AbstractOptionSetCurrentValue(uiNode_t * node, const char *value)
 {
-	const char *cvarName = &((const char *)(EXTRADATA(node).cvar))[6];
+	const char *cvarName = &EXTRADATA(node).cvar[6];
 	UI_SetCvar(cvarName, value, 0);
 	if (node->onChange)
 		UI_ExecuteEventActions(node, node->onChange);

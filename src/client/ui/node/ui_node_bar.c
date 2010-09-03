@@ -104,7 +104,7 @@ static void UI_BarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 		y = node->size[1];
 
 	UI_GetNodeAbsPos(node, pos);
-	Q_strncpyz(var, EXTRADATA(node).super.value, sizeof(var));
+	Q_strncpyz(var, (const char *)EXTRADATA(node).super.value, sizeof(var));
 	/* no cvar? */
 	if (!strncmp(var, "*cvar:", 6)) {
 		/* normalize it */

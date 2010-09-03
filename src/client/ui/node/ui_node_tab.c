@@ -322,15 +322,15 @@ static void UI_TabNodeInit (uiNode_t *node)
 		return;
 
 	/* not a cvar? */
-	if (strncmp((char *)(EXTRADATA(node).cvar), "*cvar:", 6) != 0) {
+	if (strncmp(EXTRADATA(node).cvar, "*cvar:", 6) != 0) {
 		/* normalize */
-		Com_Printf("UI_TabNodeInit: node '%s' doesn't have a valid cvar assigned (\"%s\" read)\n", UI_GetPath(node), (char*) (EXTRADATA(node).cvar));
+		Com_Printf("UI_TabNodeInit: node '%s' doesn't have a valid cvar assigned (\"%s\" read)\n", UI_GetPath(node), EXTRADATA(node).cvar);
 		EXTRADATA(node).cvar = NULL;
 		return;
 	}
 
 	/* cvar do not exists? */
-	cvarName = &((const char *)(EXTRADATA(node).cvar))[6];
+	cvarName = &EXTRADATA(node).cvar[6];
 	if (Cvar_FindVar(cvarName) == NULL) {
 		/* search default value, if possible */
 		uiNode_t* option = node->firstChild;

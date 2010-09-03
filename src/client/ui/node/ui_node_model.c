@@ -214,7 +214,7 @@ static void UI_DrawModelNodeWithUIModel (uiNode_t *node, const char *source, mod
 			}
 
 			/* get the animation given by node properties */
-			if (EXTRADATA(node).animation && *(char *) EXTRADATA(node).animation) {
+			if (EXTRADATA(node).animation && *EXTRADATA(node).animation) {
 				ref = UI_GetReferenceString(node, EXTRADATA(node).animation);
 			/* otherwise use the standard animation from UI model definition */
 			} else
@@ -315,13 +315,13 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 	mi.backlerp = 0;
 
 	/* get skin */
-	if (EXTRADATA(node).skin && *(char *) EXTRADATA(node).skin)
+	if (EXTRADATA(node).skin && *EXTRADATA(node).skin)
 		mi.skin = atoi(UI_GetReferenceString(node, EXTRADATA(node).skin));
 	else
 		mi.skin = 0;
 
 	/* do animations */
-	if (EXTRADATA(node).animation && *(char *) EXTRADATA(node).animation) {
+	if (EXTRADATA(node).animation && *EXTRADATA(node).animation) {
 		animState_t *as;
 		const char *ref;
 		ref = UI_GetReferenceString(node, EXTRADATA(node).animation);
@@ -398,7 +398,7 @@ void UI_DrawModelNode (uiNode_t *node, const char *source)
 			mi.name = childSource;
 
 			/* init skin */
-			if (EXTRADATA(child).skin && *(char *) EXTRADATA(child).skin)
+			if (EXTRADATA(child).skin && *EXTRADATA(child).skin)
 				mi.skin = atoi(UI_GetReferenceString(child, EXTRADATA(child).skin));
 			else
 				mi.skin = 0;

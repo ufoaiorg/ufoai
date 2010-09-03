@@ -53,11 +53,11 @@ typedef struct modelExtraData_s {
 	vec3_t angles;
 	vec3_t origin;
 	vec3_t scale;
-	void* skin;
-	void* model;
-	void* tag;					/**< the tag to place the model onto */
+	const char* skin;
+	const char* model;
+	const char* tag;					/**< the tag to place the model onto */
 	animState_t* animationState;		/**< holds then anim state for the current model */
-	void* animation;			/**< Anim string from the *.anm files */
+	const char* animation;			/**< Anim string from the *.anm files */
 	qboolean autoscale;			/**< If true autoscale the model when we drw it */
 	qboolean rotateWithMouse;	/**< If true the user can rotate the model with the mouse */
 	qboolean clipOverflow;		/**< If true (default) model outside the node are clipped */

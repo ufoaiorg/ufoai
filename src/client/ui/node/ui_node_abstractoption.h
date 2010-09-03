@@ -34,7 +34,7 @@ typedef struct {
 	/* link to shared data (can be used if internal data is null) */
 	int dataId;							/**< Shared data id where we can find option */
 	int versionId;						/**< Cached version of the shared data, to check update */
-	void* cvar;							/**< Cvar containing current value */
+	const char* cvar;							/**< Cvar containing current value */
 
 	/* information */
 	int count;							/**< number of elements */

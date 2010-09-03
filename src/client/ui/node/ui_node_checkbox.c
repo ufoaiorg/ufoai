@@ -94,8 +94,8 @@ static void UI_CheckBoxNodeActivate (uiNode_t *node)
 
 	/* save result */
 	EXTRADATA(node).lastdiff = value - last;
-	if (!strncmp(EXTRADATA(node).value, "*cvar:", 6)) {
-		UI_SetCvar(&((char*)EXTRADATA(node).value)[6], NULL, value);
+	if (!strncmp((const char *)EXTRADATA(node).value, "*cvar:", 6)) {
+		UI_SetCvar(&((const char*)EXTRADATA(node).value)[6], NULL, value);
 	} else {
 		*(float*) EXTRADATA(node).value = value;
 	}
