@@ -691,6 +691,7 @@ static void UI_RadarNodeCapturedMouseMove (uiNode_t *node, int x, int y)
 	/* from node to map */
 	pos[0] = cl.mapData->mapMin[0] + x / mapCoefX;
 	pos[1] = cl.mapData->mapMax[1] - y / mapCoefY;
+	pos[2] = 0;
 
 	VectorCopy(pos, cl.cam.origin);
 }

@@ -68,7 +68,7 @@ static char cursorImage[MAX_QPATH];
 /**
  * @sa Font_DrawString
  */
-static inline void SCR_DrawString (int x, int y, const char *string)
+static void SCR_DrawString (int x, int y, const char *string)
 {
 	if (!string || string[0] == '\0')
 		return;
