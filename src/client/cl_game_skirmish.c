@@ -71,11 +71,11 @@ static void GAME_SK_Start_f (void)
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
 	const char *teamDefID = GAME_GetTeamDef();
 	const size_t size = GAME_GetCharacterArraySize();
-	int maxSoldiers = Cvar_GetInteger("sv_maxsoldiersperplayer");
-	int ugvs = Cvar_GetInteger("cl_ugvs");
+	uint32_t maxSoldiers = Cvar_GetInteger("sv_maxsoldiersperplayer");
+	uint32_t ugvs = Cvar_GetInteger("cl_ugvs");
 	/** @todo make the teamdef configurable */
 	const char *ugvTeamDefID = "phalanx_ugv_phoenix";
-	int i;
+	unsigned int i;
 
 	if (maxSoldiers <= 0)
 		maxSoldiers = size;

@@ -78,15 +78,24 @@ const int con_fontHeight = 12;
 const int con_fontWidth = 10;
 const int con_fontShift = 3;
 
+static void Con_Clear (void)
+{
+	unsigned int i;
+	const size_t size = lengthof(con.text);
+
+	for (i = 0; i < size; i++)
+		con.text[i] = (CON_COLOR_WHITE << 8) | ' ';
+}
+
 /**
  * @param txt The character buffer to draw - color encoded
  * @param x The x coordinate on the screen
  * @param y The y coordinate on the screen
  * @param width Characters to draw
  */
-static void Con_DrawText (const short *text, int x, int y, int width)
+static void Con_DrawText (const short *text, int x, int y, size_t width)
 {
-	int xPos;
+	unsigned int xPos;
 	int currentColor = CON_COLOR_WHITE;
 	for (xPos = 0; xPos < width; xPos++) {
 		if (((text[xPos] >> 8) & 7) != currentColor)
@@ -101,7 +110,7 @@ static void Con_DrawText (const short *text, int x, int y, int width)
  * @param y The y coordinate on the screen
  * @param width Characters to draw
  */
-void Con_DrawString (const char *txt, int x, int y, int width)
+void Con_DrawString (const char *txt, int x, int y, unsigned int width)
 {
 	short buf[512], *pos;
 	const size_t size = lengthof(buf);
@@ -165,11 +174,7 @@ static void Con_ToggleChat_f (void)
  */
 static void Con_Clear_f (void)
 {
-	int i;
-	const size_t size = lengthof(con.text);
-
-	for (i = 0; i < size; i++)
-		con.text[i] = (CON_COLOR_WHITE << 8) | ' ';
+	Con_Clear();
 }
 
 /**
@@ -224,7 +229,6 @@ void Con_CheckResize (void)
 	int i, j, oldWidth, oldTotalLines, numLines, numChars;
 	short tbuf[CON_TEXTSIZE];
 	const int width = (viddef.width >> con_fontShift);
-	const size_t size = lengthof(con.text);
 
 	if (width == con.lineWidth)
 		return;
@@ -244,8 +248,7 @@ void Con_CheckResize (void)
 		numChars = con.lineWidth;
 
 	memcpy(tbuf, con.text, sizeof(tbuf));
-	for (i = 0; i < size; i++)
-		con.text[i] = (CON_COLOR_WHITE << 8) | ' ';
+	Con_Clear();
 
 	for (i = 0; i < numLines; i++) {
 		for (j = 0; j < numChars; j++) {
@@ -455,7 +458,7 @@ void Con_Close (void)
 static void Con_DrawInput (void)
 {
 	int y;
-	int i;
+	unsigned int i;
 	short editlinecopy[MAXCMDLINE], *text;
 	const size_t size = lengthof(editlinecopy);
 
@@ -561,12 +564,13 @@ void Con_DrawNotify (void)
 void Con_DrawConsole (float frac)
 {
 	int i, x, y;
-	int rows, row, lines;
+	int rows, row;
+	unsigned int lines;
 	short *text;
 	char consoleMessage[128];
 
 	lines = viddef.height * frac;
-	if (lines <= 0)
+	if (lines == 0)
 		return;
 
 	if (lines > viddef.height)

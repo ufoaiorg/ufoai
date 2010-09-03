@@ -682,7 +682,7 @@ const char *Com_MacroExpandString (const char *text)
  * @param[out] pos The position in the buffer after command completion
  * @param[in] offset The input buffer position to put the completed command to
  */
-qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize, int *pos, int offset)
+qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize, uint32_t *pos, uint32_t offset)
 {
 	const char *cmd = NULL, *cvar = NULL, *use = NULL;
 	char cmdLine[MAXCMDLINE] = "";

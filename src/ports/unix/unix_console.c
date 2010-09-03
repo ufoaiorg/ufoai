@@ -32,8 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/time.h>
 
 typedef struct {
-	int		cursor;
-	char	buffer[256];
+	uint32_t	cursor;
+	char		buffer[256];
 } consoleHistory_t;
 
 static qboolean stdinActive;
@@ -91,7 +91,7 @@ static void Sys_TTYDeleteCharacter (void)
 static void Sys_TTYConsoleHide (void)
 {
 	if (ttyConsoleHistory.cursor > 0) {
-		int i;
+		unsigned int i;
 		for (i = 0; i < ttyConsoleHistory.cursor; i++)
 			Sys_TTYDeleteCharacter();
 	}
@@ -106,7 +106,7 @@ static void Sys_TTYConsoleShow (void)
 {
 	size_t size = write(STDOUT_FILENO, "]", 1);
 	if (ttyConsoleHistory.cursor) {
-		int i;
+		unsigned int i;
 		for (i = 0; i < ttyConsoleHistory.cursor; i++) {
 			size = write(STDOUT_FILENO, ttyConsoleHistory.buffer + i, 1);
 		}

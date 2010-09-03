@@ -348,7 +348,7 @@ const char* Com_MacroExpandString(const char *text);
 void Com_Init(void);
 void Com_InitArgv(int argc, const char **argv);
 
-qboolean Com_ConsoleCompleteCommand(const char *s, char *target, size_t bufSize, int *pos, int offset);
+qboolean Com_ConsoleCompleteCommand(const char *s, char *target, size_t bufSize, uint32_t *pos, uint32_t offset);
 
 void Key_Init(void);
 
