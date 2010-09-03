@@ -30,7 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void UI_RegisterSequenceNode(uiBehaviour_t *behaviour);
 
 typedef struct {
-	// ...
+	/** @todo store here data used by the sequence */
+	int tmp;	/**< remove a warning */
 } sequenceExtraData_t;
 
 #endif
