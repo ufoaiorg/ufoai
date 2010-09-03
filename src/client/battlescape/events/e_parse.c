@@ -196,7 +196,7 @@ void CL_ParseEvent (struct dbuffer *msg)
 		Com_DPrintf(DEBUG_EVENTSYS, "event(now): %s\n", eventData->name);
 		eventData->eventCallback(eventData, msg);
 	} else {
-		evTimes_t *cur = Mem_PoolAlloc(sizeof(*cur), cl_genericPool, 0);
+		evTimes_t *cur = (evTimes_t *)Mem_PoolAlloc(sizeof(*cur), cl_genericPool, 0);
 		static int lastFrame = 0;
 		const int delta = cl.time - lastFrame;
 		int when;

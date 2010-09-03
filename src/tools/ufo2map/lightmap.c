@@ -210,7 +210,7 @@ static void CalcLightinfoVectors (lightinfo_t *l)
 
 	/* total sample count */
 	l->numsurfpt = (l->texsize[0] + 1) * (l->texsize[1] + 1);
-	l->surfpt = Mem_Alloc(l->numsurfpt * sizeof(vec3_t));
+	l->surfpt = (vec3_t *)Mem_Alloc(l->numsurfpt * sizeof(vec3_t));
 	if (!l->surfpt)
 		Sys_Error("Surface too large to light ("UFO_SIZE_T")", l->numsurfpt * sizeof(*l->surfpt));
 }
@@ -300,7 +300,7 @@ void BuildLights (void)
 				continue;
 
 			numlights[config.compile_for_day]++;
-			l = Mem_Alloc(sizeof(*l));
+			l = (light_t *)Mem_Alloc(sizeof(*l));
 
 			VectorCopy(p->origin, l->origin);
 
@@ -334,7 +334,7 @@ void BuildLights (void)
 		}
 
 		numlights[config.compile_for_day]++;
-		l = Mem_Alloc(sizeof(*l));
+		l = (light_t *)Mem_Alloc(sizeof(*l));
 
 		GetVectorForKey(e, "origin", l->origin);
 
@@ -808,15 +808,15 @@ void BuildFacelights (unsigned int facenum)
 	fl = &facelight[config.compile_for_day][facenum];
 	fl->numsamples = l[0].numsurfpt;
 
-	fl->origins = Mem_Alloc(fl->numsamples * sizeof(vec3_t));
+	fl->origins = (float *)Mem_Alloc(fl->numsamples * sizeof(vec3_t));
 	memcpy(fl->origins, l[0].surfpt, fl->numsamples * sizeof(vec3_t));
-	fl->samples = Mem_Alloc(fl->numsamples * sizeof(vec3_t));
-	fl->directions = Mem_Alloc(fl->numsamples * sizeof(vec3_t));
+	fl->samples = (float *)Mem_Alloc(fl->numsamples * sizeof(vec3_t));
+	fl->directions = (float *)Mem_Alloc(fl->numsamples * sizeof(vec3_t));
 
 	center = face_extents[facenum].center;  /* center of the face */
 
 	/* Also setup the hints.  Each hint is specific to each light source, including sunlight. */
-	headhints = Mem_Alloc((numlights[config.compile_for_day] + 1) * sizeof(int));
+	headhints = (int *)Mem_Alloc((numlights[config.compile_for_day] + 1) * sizeof(int));
 
 	/* calculate light for each sample */
 	for (i = 0; i < fl->numsamples; i++) {
@@ -875,7 +875,7 @@ static void WriteTGA24 (const char *filename, const byte * data, int width, int 
 	qFILE file;
 
 	/* allocate a buffer and set it up */
-	buffer = Mem_Alloc(width * height * 3 + 18);
+	buffer = (byte *)Mem_Alloc(width * height * 3 + 18);
 	memset(buffer, 0, 18);
 	buffer[2] = 2;
 	buffer[12] = width & 255;

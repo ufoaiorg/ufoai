@@ -196,7 +196,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 		for (i = 0; i < required->numLinks; i++) {
 			const requirement_t *req = &required->links[i];
 			if (req->type == RS_LINK_TECH) {
-				technology_t *techRequired = req->link;
+				const technology_t *techRequired = (const technology_t *)req->link;
 				if (!techRequired)
 					Com_Error(ERR_DROP, "Could not find the tech for '%s'", req->id);
 
@@ -265,7 +265,6 @@ void UP_AircraftItemDescription (const objDef_t *item)
 
 	tech = RS_GetTechForItem(item);
 	/* select item */
-	assert(item->craftitem.type >= 0);
 	Cvar_Set("mn_item", item->id);
 	Cvar_Set("mn_itemname", _(tech->name));
 	if (tech->mdl)
@@ -893,12 +892,12 @@ static void UP_TechTreeClick_f (void)
 
 	/* skip every tech which have not been displayed in techtree */
 	for (i = 0; i <= num; i++) {
-		if (required_AND->links[i].type != RS_LINK_TECH
-		 && required_AND->links[i].type != RS_LINK_TECH_NOT)
+		const requirement_t *r = &required_AND->links[i];
+		if (r->type != RS_LINK_TECH && r->type != RS_LINK_TECH_NOT)
 			num++;
 	}
 
-	techRequired = required_AND->links[num].link;
+	techRequired = (technology_t *)required_AND->links[num].link;
 	if (!techRequired)
 		Com_Error(ERR_DROP, "Could not find the tech for '%s'", required_AND->links[num].id);
 

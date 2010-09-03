@@ -81,7 +81,7 @@ static void SV_InitGame (void)
 	/* get any latched variable changes (sv_maxclients, etc) */
 	Cvar_UpdateLatchedVars();
 
-	svs.clients = Mem_PoolAlloc(sizeof(client_t) * sv_maxclients->integer, sv_genericPool, 0);
+	svs.clients = (client_t *)Mem_PoolAlloc(sizeof(client_t) * sv_maxclients->integer, sv_genericPool, 0);
 	svs.serverMutex = SDL_CreateMutex();
 
 	/* init network stuff */

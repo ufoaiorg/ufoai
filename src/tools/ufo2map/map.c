@@ -858,7 +858,7 @@ static void MoveBrushesToWorld (entity_t *mapent)
 	if (newbrushes == 0)
 		Sys_Error("Empty func_group - clean your map");
 
-	temp = Mem_Alloc(newbrushes * sizeof(*temp));
+	temp = (mapbrush_t *)Mem_Alloc(newbrushes * sizeof(*temp));
 	memcpy(temp, mapbrushes + mapent->firstbrush, newbrushes * sizeof(*temp));
 
 	/* make space to move the brushes (overlapped copy) */

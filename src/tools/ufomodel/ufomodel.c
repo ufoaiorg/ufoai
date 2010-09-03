@@ -113,7 +113,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	if (len == 0)
 		Com_Error(ERR_DROP, "R_LoadImageData: name is empty");
 
-	image = Mem_PoolAlloc(sizeof(*image), vid_imagePool, 0);
+	image = (image_t *)Mem_PoolAlloc(sizeof(*image), vid_imagePool, 0);
 	image->has_alpha = qfalse;
 	image->type = type;
 	image->width = width;
@@ -142,7 +142,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	Com_StripExtension(pname, lname, sizeof(lname));
 
 	if (Img_LoadImage(lname, &surf)) {
-		image = R_LoadImageData(lname, surf->pixels, surf->w, surf->h, type);
+		image = R_LoadImageData(lname, (byte *)surf->pixels, surf->w, surf->h, type);
 		SDL_FreeSurface(surf);
 	} else {
 		image = NULL;
@@ -192,7 +192,7 @@ static model_t *LoadModel (const char *name)
 		return NULL;
 	}
 
-	mod = Mem_PoolAlloc(sizeof(*mod), vid_modelPool, 0);
+	mod = (model_t *)Mem_PoolAlloc(sizeof(*mod), vid_modelPool, 0);
 	Q_strncpyz(mod->name, name, sizeof(mod->name));
 
 	/* call the appropriate loader */
@@ -468,7 +468,7 @@ static void MD2GLCmdsRemove (const byte *buf, const char *fileName, int bufSize,
 	numGLCmds = LittleLong(md2->num_glcmds);
 
 	if (numGLCmds > 0) {
-		dMD2Model_t *fixedMD2 = Mem_Dup(buf, bufSize);
+		dMD2Model_t *fixedMD2 = (dMD2Model_t *)Mem_Dup(buf, bufSize);
 		const size_t delta = numGLCmds * sizeof(uint32_t);
 		const uint32_t offset = LittleLong(fixedMD2->ofs_glcmds);
 
@@ -528,7 +528,7 @@ static void MD2SkinFix (const byte *buf, const char *fileName, int bufSize, void
 			char pathBuf[MD2_MAX_SKINNAME];
 			const char *fixedPath;
 			if (model == NULL) {
-				model = Mem_Dup(buf, bufSize);
+				model = (byte *)Mem_Dup(buf, bufSize);
 				Com_Printf("model: %s\n", fileName);
 			}
 			fixedMD2 = (dMD2Model_t *)model;
@@ -658,7 +658,7 @@ int main (int argc, char **argv)
 
 	FS_InitFilesystem(qfalse);
 
-	r_noTexture = Mem_PoolAlloc(sizeof(*r_noTexture), vid_imagePool, 0);
+	r_noTexture = (image_t *)Mem_PoolAlloc(sizeof(*r_noTexture), vid_imagePool, 0);
 	Q_strncpyz(r_noTexture->name, "noTexture", sizeof(r_noTexture->name));
 
 	switch (config.action) {

@@ -1517,7 +1517,7 @@ static void Irc_Logic_AddChannelName (irc_channel_t *channel, irc_nick_prefix_t 
 		if (!strncmp(&(user->key[1]), nick, MAX_VAR - 1))
 			return;
 	}
-	user = Mem_PoolAlloc(sizeof(*user), cl_ircSysPool, 0);
+	user = (irc_user_t *)Mem_PoolAlloc(sizeof(*user), cl_ircSysPool, 0);
 	user->next = channel->user;
 	channel->user = user;
 

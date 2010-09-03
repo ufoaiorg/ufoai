@@ -545,8 +545,8 @@ void UI_RegisterModelNode (uiBehaviour_t *behaviour)
 	behaviour->loading = UI_ModelNodeLoading;
 	behaviour->loaded = UI_ModelNodeLoaded;
 	behaviour->clone = UI_ModelNodeClone;
-	behaviour->new = UI_ModelNodeNew;
-	behaviour->delete = UI_ModelNodeDelete;
+	behaviour->newNode = UI_ModelNodeNew;
+	behaviour->deleteNode = UI_ModelNodeDelete;
 	behaviour->capturedMouseMove = UI_ModelNodeCapturedMouseMove;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);

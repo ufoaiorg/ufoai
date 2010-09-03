@@ -278,7 +278,7 @@ static void R_LoadObjSkin (model_t *mod)
 	Com_StripExtension(mod->name, skinPath, sizeof(skinPath));
 
 	mesh->num_skins = 1;
-	mesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t), vid_modelPool, 0);
+	mesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t), vid_modelPool, 0);
 	mesh->skins[0].skin = R_AliasModelGetSkin(mod->name, skinPath);
 	Q_strncpyz(mesh->skins[0].name, mesh->skins[0].skin->name, sizeof(mesh->skins[0].name));
 }
@@ -357,7 +357,7 @@ void R_LoadObjModel (model_t *mod, byte *buffer, int bufSize)
 		AddPointToBounds(v, mod->mins, mod->maxs);
 
 	/* we only have one mesh in obj files */
-	mod->alias.meshes = Mem_PoolAlloc(sizeof(mAliasMesh_t), vid_modelPool, 0);
+	mod->alias.meshes = (mAliasMesh_t *)Mem_PoolAlloc(sizeof(mAliasMesh_t), vid_modelPool, 0);
 
 	/* load the skin */
 	R_LoadObjSkin(mod);

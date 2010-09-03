@@ -414,7 +414,7 @@ epair_t *ParseEpair (void)
 {
 	epair_t	*e;
 
-	e = Mem_Alloc(sizeof(*e));
+	e = (epair_t *)Mem_Alloc(sizeof(*e));
 
 	if (strlen(parsedToken) >= MAX_KEY - 1)
 		Sys_Error("ParseEpar: token too long");
@@ -533,7 +533,7 @@ void SetKeyValue (entity_t *ent, const char *key, const char *value)
 			ep->value = Mem_StrDup(value);
 			return;
 		}
-	ep = Mem_Alloc(sizeof(*ep));
+	ep = (epair_t *)Mem_Alloc(sizeof(*ep));
 	ep->next = ent->epairs;
 	ent->epairs = ep;
 	ep->key = Mem_StrDup(key);

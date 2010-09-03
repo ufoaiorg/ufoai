@@ -115,7 +115,7 @@ void CL_ParseLanguages (const char *name, const char **text)
 				/* end of locale mappings reached */
 				if (!*text || *token == '}')
 					break;
-				mapping = Mem_PoolAlloc(sizeof(*mapping), cl_genericPool, 0);
+				mapping = (localeMapping_t *)Mem_PoolAlloc(sizeof(*mapping), cl_genericPool, 0);
 				mapping->localeMapping = Mem_PoolStrDup(token, cl_genericPool, 0);
 				/* link it in */
 				mapping->next = language->localeMapping;
@@ -127,7 +127,7 @@ void CL_ParseLanguages (const char *name, const char **text)
 				Com_Printf("CL_ParseLanguages: language: '%s' - not marked translatable (%s) - ignore it\n", name, token);
 				continue;
 			}
-			language = Mem_PoolAlloc(sizeof(*language), cl_genericPool, 0);
+			language = (language_t *)Mem_PoolAlloc(sizeof(*language), cl_genericPool, 0);
 			language->localeID = Mem_PoolStrDup(name, cl_genericPool, 0);
 			language->localeString = Mem_PoolStrDup(token + 1, cl_genericPool, 0);
 			language->localeMapping = NULL;

@@ -740,7 +740,7 @@ mxml_new(mxml_node_t *parent,		/* I - Parent node */
   * Allocate memory for the node...
   */
 
-  if ((node = calloc(1, sizeof(mxml_node_t))) == NULL)
+  if ((node = (mxml_node_t *)calloc(1, sizeof(mxml_node_t))) == NULL)
   {
 #if DEBUG > 1
     fputs("    returning NULL\n", stderr);

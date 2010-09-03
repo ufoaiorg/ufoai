@@ -44,7 +44,7 @@ winding_t *AllocWinding (int points)
 		c_peak_windings = c_active_windings > c_peak_windings ? c_active_windings : c_peak_windings;
 	}
 
-	return Mem_Alloc(sizeof(vec3_t) * points + sizeof(int));
+	return (winding_t *)Mem_Alloc(sizeof(vec3_t) * points + sizeof(int));
 }
 
 /**

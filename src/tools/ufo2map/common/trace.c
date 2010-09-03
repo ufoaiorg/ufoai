@@ -49,7 +49,7 @@ void MakeTracingNodes (int levels)
 	/* 32 byte align the structs */
 	size = (size + 31) &~ 31;
 	/* allocate memory for the tnodes structure */
-	curTile->tnodes = Mem_Alloc(size);
+	curTile->tnodes = (tnode_t *)Mem_Alloc(size);
 	tnode = curTile->tnodes;
 	curTile->numtheads = 0;
 

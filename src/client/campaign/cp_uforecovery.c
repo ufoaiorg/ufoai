@@ -143,7 +143,7 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
 	}
 	ufo.condition = min(max(0, condition), 1);
 
-	return (storedUFO_t *)(LIST_Add(&ccs.storedUFOs, (void*)&ufo, sizeof(ufo)))->data;
+	return (storedUFO_t *)(LIST_Add(&ccs.storedUFOs, (const byte *)&ufo, sizeof(ufo)))->data;
 }
 
 /**
@@ -363,7 +363,7 @@ qboolean US_LoadXML (mxml_node_t *p)
 		ufo.condition = mxml_GetFloat(snode, SAVE_UFORECOVERY_CONDITION, 1.0f);
 		/* disassembly is set by production savesystem later but only for UFOs that are being disassembled */
 		ufo.disassembly = NULL;
-		LIST_Add(&ccs.storedUFOs, (void*)&ufo, sizeof(ufo));
+		LIST_Add(&ccs.storedUFOs, (const byte *)&ufo, sizeof(ufo));
 	}
 	Com_UnregisterConstList(saveStoredUFOConstants);
 	return qtrue;

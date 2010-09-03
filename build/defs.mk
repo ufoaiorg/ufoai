@@ -6,7 +6,7 @@ CPPFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS)
 CFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS) -pipe -Winline \
 	-Wcast-qual -Wcast-align -Wdeclaration-after-statement -Wmissing-prototypes \
 	-Wmissing-declarations -std=c99 -Wpointer-arith -Wno-long-long -pedantic \
-	-Wextra -Wno-sign-compare -Wc++-compat
+	-Wextra -Wno-sign-compare -Wno-unused-parameter -Wc++-compat
 #	-Wunreachable-code -Wlogical-op -Wc++-compat -Wsign-conversion
 #	-Wunsafe-loop-optimizations \
 #	-Wimplicit-int -Wpacked -Wparentheses -Wpadded \

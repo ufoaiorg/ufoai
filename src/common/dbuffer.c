@@ -61,7 +61,7 @@ static struct dbuffer_element * allocate_element (void)
 	SDL_mutexP(dbuf_lock);
 
 	if (free_elements == 0) {
-		struct dbuffer_element *newBuf = Mem_PoolAlloc(sizeof(struct dbuffer_element), com_genericPool, 0);
+		struct dbuffer_element *newBuf = (struct dbuffer_element *)Mem_PoolAlloc(sizeof(struct dbuffer_element), com_genericPool, 0);
 		newBuf->next = free_element_list;
 		free_element_list = newBuf;
 		free_elements++;
@@ -115,7 +115,7 @@ struct dbuffer * new_dbuffer (void)
 	SDL_mutexP(dbuf_lock);
 
 	if (free_dbuffers == 0) {
-		struct dbuffer *newBuf = Mem_PoolAlloc(sizeof(struct dbuffer), com_genericPool, 0);
+		struct dbuffer *newBuf = (struct dbuffer *)Mem_PoolAlloc(sizeof(struct dbuffer), com_genericPool, 0);
 		newBuf->next_free = free_dbuffer_list;
 		free_dbuffer_list = newBuf;
 		free_dbuffers++;

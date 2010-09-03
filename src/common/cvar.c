@@ -407,7 +407,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 			return NULL;
 		}
 
-	var = Mem_PoolAlloc(sizeof(*var), com_cvarSysPool, 0);
+	var = (cvar_t *)Mem_PoolAlloc(sizeof(*var), com_cvarSysPool, 0);
 	var->name = Mem_PoolStrDup(var_name, com_cvarSysPool, 0);
 	var->string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 	var->oldString = NULL;
@@ -446,7 +446,7 @@ static void Cvar_ExecuteChangeListener (const cvar_t* cvar)
 
 static cvarChangeListener_t *Cvar_GetChangeListener (cvarChangeListenerFunc_t listenerFunc)
 {
-	cvarChangeListener_t *listener = Mem_PoolAlloc(sizeof(*listener), com_cvarSysPool, 0);
+	cvarChangeListener_t *listener = (cvarChangeListener_t *)Mem_PoolAlloc(sizeof(*listener), com_cvarSysPool, 0);
 	listener->exec = listenerFunc;
 	return listener;
 }

@@ -1139,7 +1139,7 @@ void Qcommon_Init (int argc, const char **argv)
 
 static void tick_timer (int now, void *data)
 {
-	struct timer *timer = data;
+	struct timer *timer = (struct timer *)data;
 	int old_interval = timer->interval;
 
 	/* Compute and store the lateness, updating the total */
@@ -1198,7 +1198,7 @@ static void tick_timer (int now, void *data)
 
 void Schedule_Timer (cvar_t *freq, event_func *func, void *data)
 {
-	struct timer *timer = Mem_PoolAlloc(sizeof(*timer), com_genericPool, 0);
+	struct timer *timer = (struct timer *)Mem_PoolAlloc(sizeof(*timer), com_genericPool, 0);
 	int i;
 	timer->min_freq = freq;
 	timer->interval = 1000 / freq->integer;
@@ -1228,7 +1228,7 @@ void Schedule_Timer (cvar_t *freq, event_func *func, void *data)
  */
 void Schedule_Event (int when, event_func *func, event_check_func *check, event_clean_func *clean, void *data)
 {
-	struct event *event = Mem_PoolAlloc(sizeof(*event), com_genericPool, 0);
+	struct event *event = (struct event *)Mem_PoolAlloc(sizeof(*event), com_genericPool, 0);
 	event->when = when;
 	event->func = func;
 	event->check = check;

@@ -40,7 +40,7 @@ size_t HTTP_Header (void *ptr, size_t size, size_t nmemb, void *stream)
 	else
 		len = sizeof(headerBuff);
 
-	Q_strncpyz(headerBuff, ptr, len);
+	Q_strncpyz(headerBuff, (const char *)ptr, len);
 
 	if (!Q_strncasecmp(headerBuff, "Content-Length: ", 16)) {
 		dlhandle_t *dl;
@@ -68,13 +68,13 @@ size_t HTTP_Recv (void *ptr, size_t size, size_t nmemb, void *stream)
 
 	if (!dl->fileSize) {
 		dl->fileSize = bytes > 131072 ? bytes : 131072;
-		dl->tempBuffer = Mem_Alloc((int)dl->fileSize);
+		dl->tempBuffer = (char *)Mem_Alloc((int)dl->fileSize);
 	} else if (dl->position + bytes >= dl->fileSize - 1) {
 		char *tmp;
 
 		tmp = dl->tempBuffer;
 
-		dl->tempBuffer = Mem_Alloc((int)(dl->fileSize * 2));
+		dl->tempBuffer = (char *)Mem_Alloc((int)(dl->fileSize * 2));
 		memcpy(dl->tempBuffer, tmp, dl->fileSize);
 		Mem_Free(tmp);
 		dl->fileSize *= 2;

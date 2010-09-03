@@ -152,7 +152,7 @@ typedef	struct	mAliasModel_s {
 	void *tagdata;
 } mAliasModel_t;
 
-void R_ModLoadAnims(mAliasModel_t *mod, void *buffer);
+void R_ModLoadAnims(mAliasModel_t *mod, const char *buffer);
 qboolean R_ModLoadMDX(struct model_s *mod);
 void R_ModCalcUniqueNormalsAndTangents(mAliasMesh_t *mesh, int nFrames, float smoothness);
 void R_FillArrayData(mAliasModel_t* mod, mAliasMesh_t *mesh, float backlerp, int framenum, int oldframenum, qboolean prerender);

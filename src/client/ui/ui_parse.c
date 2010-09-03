@@ -797,13 +797,13 @@ static qboolean UI_ParseProperty (void* object, const value_t *property, const c
 
 		switch (property->type) {
 		case V_UI_ACTION:
-			result = UI_ParseEventProperty(object, property, text, token, errhead);
+			result = UI_ParseEventProperty((uiNode_t *)object, property, text, token, errhead);
 			if (!result)
 				return qfalse;
 			break;
 
 		case V_UI_EXCLUDERECT:
-			result = UI_ParseExcludeRect(object, text, token, errhead);
+			result = UI_ParseExcludeRect((uiNode_t *)object, text, token, errhead);
 			if (!result)
 				return qfalse;
 			break;
@@ -1000,8 +1000,8 @@ static qboolean UI_ParseNodeBody (uiNode_t * node, const char **text, const char
 
 			/* and then read all nodes */
 			while ((*token)[0] != '}') {
-				uiNode_t *new = UI_ParseNode(node, text, token, errhead);
-				if (!new)
+				uiNode_t *newNode = UI_ParseNode(node, text, token, errhead);
+				if (!newNode)
 					return qfalse;
 
 				*token = Com_EParse(text, errhead, node->name);
@@ -1014,8 +1014,8 @@ static qboolean UI_ParseNodeBody (uiNode_t * node, const char **text, const char
 		} else {
 			/* we should have a block with nodes only */
 			while ((*token)[0] != '}') {
-				uiNode_t *new = UI_ParseNode(node, text, token, errhead);
-				if (!new)
+				uiNode_t *newNode = UI_ParseNode(node, text, token, errhead);
+				if (!newNode)
 					return qfalse;
 
 				*token = Com_EParse(text, errhead, node->name);

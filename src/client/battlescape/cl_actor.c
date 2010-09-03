@@ -342,7 +342,7 @@ void CL_ActorAddToTeamList (le_t * le)
 			return;
 		}
 		actorIdx = cl.numTeamList;
-		le->pathMap = Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
+		le->pathMap = (pathing_t *)Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
 		cl.teamList[cl.numTeamList] = le;
 		UI_ExecuteConfunc("hudenable %i", cl.numTeamList);
 		cl.numTeamList++;

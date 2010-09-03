@@ -276,7 +276,7 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tag
 
 	/* Add header and round to cacheline */
 	size = (size + sizeof(memBlock_t) + sizeof(memBlockFoot_t) + 31) & ~31;
-	mem = malloc(size);
+	mem = (memBlock_t *)malloc(size);
 	if (!mem)
 		Sys_Error("Mem_Alloc: failed on allocation of '"UFO_SIZE_T"' bytes\n" "alloc: %s:#%i", size, fileName, fileLine);
 
@@ -408,7 +408,7 @@ char *_Mem_PoolStrDup (const char *in, struct memPool_s *pool, const int tagNum,
 {
 	char *out;
 
-	out = _Mem_Alloc((size_t)(strlen(in) + 1), qtrue, pool, tagNum, fileName, fileLine);
+	out = (char *)_Mem_Alloc((size_t)(strlen(in) + 1), qtrue, pool, tagNum, fileName, fileLine);
 	strcpy(out, in);
 
 	return out;

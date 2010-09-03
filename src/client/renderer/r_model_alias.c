@@ -33,7 +33,7 @@ ALIAS MODELS
 ==============================================================================
 */
 
-void R_ModLoadAnims (mAliasModel_t *mod, void *buffer)
+void R_ModLoadAnims (mAliasModel_t *mod, const char *buffer)
 {
 	const char *text, *token;
 	mAliasAnim_t *anim;
@@ -251,9 +251,9 @@ qboolean R_ModLoadMDX (model_t *mod)
 		numIndexes = LittleLong(*intbuf);
 		intbuf++;
 
-		mesh->indexes = Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
-		mesh->revIndexes = Mem_PoolAlloc(sizeof(mIndexList_t) * mesh->num_verts, vid_modelPool, 0);
-		mesh->vertexes = Mem_PoolAlloc(sizeof(mAliasVertex_t) * mod->alias.num_frames * mesh->num_verts, vid_modelPool, 0);
+		mesh->indexes = (int32_t *)Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
+		mesh->revIndexes = (mIndexList_t *)Mem_PoolAlloc(sizeof(mIndexList_t) * mesh->num_verts, vid_modelPool, 0);
+		mesh->vertexes = (mAliasVertex_t *)Mem_PoolAlloc(sizeof(mAliasVertex_t) * mod->alias.num_frames * mesh->num_verts, vid_modelPool, 0);
 
 		/* load index that maps triangle verts to Vertex objects */
 		for (i = 0; i < numIndexes; i++) {
@@ -270,7 +270,7 @@ qboolean R_ModLoadMDX (model_t *mod)
 
 		for (i = 0; i < mesh->num_verts; i++) {
 			mesh->revIndexes[i].length = 0;
-			mesh->revIndexes[i].list = Mem_PoolAlloc(sizeof(int32_t) * sharedTris[i], vid_modelPool, 0);
+			mesh->revIndexes[i].list = (int32_t *)Mem_PoolAlloc(sizeof(int32_t) * sharedTris[i], vid_modelPool, 0);
 		}
 
 		for (i = 0; i < numIndexes; i++)
@@ -308,7 +308,7 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 	int sharedTris[MAX_ALIAS_VERTS];
 	int numVerts = 0;
 
-	newIndexArray = Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
+	newIndexArray = (int32_t *)Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
 
 	/* calculate per-triangle surface normals */
 	for (i = 0, j = 0; i < numIndexes; i += 3, j++) {
@@ -454,15 +454,15 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 		sharedTris[newIndexArray[i]]++;
 
 	/* set up reverse-index that maps Vertex objects to a list of triangle verts */
-	mesh->revIndexes = Mem_PoolAlloc(sizeof(mIndexList_t) * numVerts, vid_modelPool, 0);
+	mesh->revIndexes = (mIndexList_t *)Mem_PoolAlloc(sizeof(mIndexList_t) * numVerts, vid_modelPool, 0);
 	for (i = 0; i < numVerts; i++) {
 		mesh->revIndexes[i].length = 0;
-		mesh->revIndexes[i].list = Mem_PoolAlloc(sizeof(int32_t) * sharedTris[i], vid_modelPool, 0);
+		mesh->revIndexes[i].list = (int32_t *)Mem_PoolAlloc(sizeof(int32_t) * sharedTris[i], vid_modelPool, 0);
 	}
 
 	/* merge identical vertexes, storing only unique ones */
-	newVertexes = Mem_PoolAlloc(sizeof(mAliasVertex_t) * numVerts * nFrames, vid_modelPool, 0);
-	newStcoords = Mem_PoolAlloc(sizeof(mAliasCoord_t) * numVerts, vid_modelPool, 0);
+	newVertexes = (mAliasVertex_t *)Mem_PoolAlloc(sizeof(mAliasVertex_t) * numVerts * nFrames, vid_modelPool, 0);
+	newStcoords = (mAliasCoord_t *)Mem_PoolAlloc(sizeof(mAliasCoord_t) * numVerts, vid_modelPool, 0);
 	for (i = 0; i < numIndexes; i++) {
 		const int idx = indexArray[indRemap[i]];
 		const int idx2 = newIndexArray[i];

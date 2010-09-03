@@ -149,7 +149,7 @@ static void testLinkedList (void)
 	entry = LIST_Add(&list, (const byte*)data, length);
 	CU_ASSERT_EQUAL(LIST_Count(list), 1);
 	CU_ASSERT_TRUE(entry != NULL);
-	returnedData = LIST_GetByIdx(list, 0);
+	returnedData = (const char *)LIST_GetByIdx(list, 0);
 	CU_ASSERT_TRUE(returnedData != NULL);
 	entry2 = LIST_ContainsString(list, returnedData);
 	CU_ASSERT_TRUE(entry2 != NULL);

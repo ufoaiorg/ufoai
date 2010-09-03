@@ -47,7 +47,7 @@ void R_ModelLoadDPMVertsForFrame (model_t *mod, int frame)
 		if (mesh->vertexes)
 			Mem_Free(mesh->vertexes);
 		boneVertex = mesh->bonesVertexes;
-		mesh->vertexes = outVertex = Mem_PoolAlloc(sizeof(mAliasVertex_t) * mesh->num_verts, vid_modelPool, 0);
+		mesh->vertexes = outVertex = (mAliasVertex_t *)Mem_PoolAlloc(sizeof(mAliasVertex_t) * mesh->num_verts, vid_modelPool, 0);
 		for (j = 0; j < mesh->num_verts; j++, outVertex++, boneVertex++) {
 			outVertex->point[0] = boneVertex->origin[0] * boneMatrix->matrix[0][0]
 				 + boneVertex->origin[1] * boneMatrix->matrix[0][1]
@@ -113,13 +113,13 @@ void R_ModLoadAliasDPMModel (model_t *mod, byte *buffer, int bufSize)
 	dpm->ofs_bones = BigLong(dpm->ofs_bones);
 	dpm->ofs_meshs = BigLong(dpm->ofs_meshs);
 	dpm->ofs_frames = BigLong(dpm->ofs_frames);
-	mod->alias.bones = outBones = Mem_PoolAlloc(sizeof(mAliasBone_t) * mod->alias.num_bones, vid_modelPool, 0);
+	mod->alias.bones = outBones = (mAliasBone_t *)Mem_PoolAlloc(sizeof(mAliasBone_t) * mod->alias.num_bones, vid_modelPool, 0);
 	for (i = 0, bone = (dpmbone_t *)((byte *)dpm + dpm->ofs_bones); i < mod->alias.num_bones; i++, bone++, outBones++) {
 		outBones->parent = BigLong(bone->parent);
 		outBones->flags = BigLong(bone->flags);
 	}
 
-	mod->alias.meshes = outMesh = Mem_PoolAlloc(sizeof(mAliasMesh_t) * mod->alias.num_meshes, vid_modelPool, 0);
+	mod->alias.meshes = outMesh = (mAliasMesh_t *)Mem_PoolAlloc(sizeof(mAliasMesh_t) * mod->alias.num_meshes, vid_modelPool, 0);
 	for (i = 0, mesh = (dpmmesh_t *)((byte *)dpm + dpm->ofs_meshs); i < mod->alias.num_meshes; i++, mesh++, outMesh++) {
 		/* offsets are only needed for loading the model */
 		mesh->ofs_verts = BigLong(mesh->ofs_verts);
@@ -131,7 +131,7 @@ void R_ModLoadAliasDPMModel (model_t *mod, byte *buffer, int bufSize)
 		outMesh->num_tris = BigLong(mesh->num_tris);
 
 		/* load skins */
-		outMesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t), vid_modelPool, 0);
+		outMesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t), vid_modelPool, 0);
 		outMesh->skins[0].skin = R_AliasModelGetSkin(mod->name, mesh->shadername);
 		Q_strncpyz(outMesh->skins[0].name, outMesh->skins[0].skin->name, sizeof(outMesh->skins[0].name));
 
@@ -153,7 +153,7 @@ void R_ModLoadAliasDPMModel (model_t *mod, byte *buffer, int bufSize)
 			vert = (dpmvertex_t *)bonevert;
 		}
 
-		outMesh->bonesVertexes = outBoneVertexes = Mem_PoolAlloc(sizeof(mAliasBoneVertex_t) * num, vid_modelPool, 0);
+		outMesh->bonesVertexes = outBoneVertexes = (mAliasBoneVertex_t *)Mem_PoolAlloc(sizeof(mAliasBoneVertex_t) * num, vid_modelPool, 0);
 		for (j = 0, vert = (dpmvertex_t *)((byte *)dpm + mesh->ofs_verts); j < outMesh->num_verts; j++) {
 			for (k = 0, bonevert = (dpmbonevert_t *)(vert + 1); k < vert->numbones; k++, bonevert++, outBoneVertexes++) {
 				VectorCopy(bonevert->origin, outBoneVertexes->origin);
@@ -165,14 +165,14 @@ void R_ModLoadAliasDPMModel (model_t *mod, byte *buffer, int bufSize)
 		}
 
 		/* load texcoords */
-		outMesh->stcoords = Mem_PoolAlloc(sizeof(mAliasCoord_t) * outMesh->num_verts, vid_modelPool, 0);
+		outMesh->stcoords = (mAliasCoord_t *)Mem_PoolAlloc(sizeof(mAliasCoord_t) * outMesh->num_verts, vid_modelPool, 0);
 		for (num = 0, texcoords = (float *)((byte *)dpm + mesh->ofs_texcoords); num < outMesh->num_verts; num++, texcoords += 2) {
 			outMesh->stcoords[j][0] = BigFloat(texcoords[0]);
 			outMesh->stcoords[j][1] = BigFloat(texcoords[1]);
 		}
 
 		/* load indexes for faster array draw access */
-		outMesh->indexes = outIndex = Mem_PoolAlloc(sizeof(int32_t) * outMesh->num_tris * 3, vid_modelPool, 0);
+		outMesh->indexes = outIndex = (int32_t *)Mem_PoolAlloc(sizeof(int32_t) * outMesh->num_tris * 3, vid_modelPool, 0);
 		for (num = 0, index = (int32_t *)((byte *)dpm + mesh->ofs_indices); num < outMesh->num_tris; num++, index += 3) {
 			outIndex[0] = BigLong(index[0]);
 			outIndex[1] = BigLong(index[2]);
@@ -186,7 +186,7 @@ void R_ModLoadAliasDPMModel (model_t *mod, byte *buffer, int bufSize)
 	}
 
 	/* load the frames */
-	mod->alias.frames = outFrame = Mem_PoolAlloc(sizeof(mAliasFrame_t) * mod->alias.num_frames, vid_modelPool, 0);
+	mod->alias.frames = outFrame = (mAliasFrame_t *)Mem_PoolAlloc(sizeof(mAliasFrame_t) * mod->alias.num_frames, vid_modelPool, 0);
 	for (i = 0, frame = (dpmframe_t *)((byte *)dpm + dpm->ofs_frames); i < mod->alias.num_frames; i++, frame++, outFrame++) {
 		outFrame->mins[0] = BigFloat(frame->mins[0]);
 		outFrame->mins[1] = BigFloat(frame->mins[1]);
@@ -196,7 +196,7 @@ void R_ModLoadAliasDPMModel (model_t *mod, byte *buffer, int bufSize)
 		outFrame->maxs[2] = BigFloat(frame->maxs[2]);
 		/*outFrame->yawradius = BigFloat(frame->yawradius);*/
 		outFrame->radius = BigFloat(frame->allradius);
-		outFrame->boneMatrix = outBoneMatrix = Mem_PoolAlloc(sizeof(mAliasBoneMatrix_t) * mod->alias.num_bones, vid_modelPool, 0);
+		outFrame->boneMatrix = outBoneMatrix = (mAliasBoneMatrix_t *)Mem_PoolAlloc(sizeof(mAliasBoneMatrix_t) * mod->alias.num_bones, vid_modelPool, 0);
 		frame->ofs_bonepositions = BigLong(frame->ofs_bonepositions);
 		/* load the bones matrix */
 		for (j = 0, bonepose = (dpmbonepose_t *)((byte *)dpm + frame->ofs_bonepositions); j < mod->alias.num_bones; j++, bonepose++, outBoneMatrix++) {

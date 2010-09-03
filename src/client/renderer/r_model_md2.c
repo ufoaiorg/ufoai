@@ -48,7 +48,7 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 
 	size = LittleLong(pintag->ofs_extractend);
 	mod->alias.tagdata = Mem_PoolAlloc(size, vid_modelPool, 0);
-	pheader = mod->alias.tagdata;
+	pheader = (dMD2tag_t *)mod->alias.tagdata;
 
 	/* byte swap the header fields and sanity check */
 	for (i = 0; i < (int)sizeof(dMD2tag_t) / 4; i++)
@@ -144,7 +144,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 		if (outMesh->num_skins < 0 || outMesh->num_skins >= MD2_MAX_SKINS)
 			Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i", mod->name, outMesh->num_skins);
 
-		outMesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
+		outMesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
 		md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
 		for (i = 0; i < outMesh->num_skins; i++) {
 			outMesh->skins[i].skin = R_AliasModelGetSkin(mod->name, md2Path + i * MD2_MAX_SKINNAME);
@@ -181,7 +181,7 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	/* build list of unique vertices */
 	numIndexes = outMesh->num_tris * 3;
 	numVerts = 0;
-	outMesh->indexes = outIndex = Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
+	outMesh->indexes = outIndex = (int32_t *)Mem_PoolAlloc(sizeof(int32_t) * numIndexes, vid_modelPool, 0);
 
 	for (i = 0; i < numIndexes; i++)
 		indRemap[i] = -1;
@@ -223,15 +223,15 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 		outIndex[i] = outIndex[indRemap[i]];
 	}
 
-	outMesh->stcoords = outCoord = Mem_PoolAlloc(sizeof(mAliasCoord_t) * outMesh->num_verts, vid_modelPool, 0);
+	outMesh->stcoords = outCoord = (mAliasCoord_t *)Mem_PoolAlloc(sizeof(mAliasCoord_t) * outMesh->num_verts, vid_modelPool, 0);
 	for (j = 0; j < numIndexes; j++) {
 		outCoord[outIndex[j]][0] = (float)(((double)LittleShort(pincoord[tempSTIndex[indRemap[j]]].s) + 0.5) * isw);
 		outCoord[outIndex[j]][1] = (float)(((double)LittleShort(pincoord[tempSTIndex[indRemap[j]]].t) + 0.5) * isw);
 	}
 
 	/* load the frames */
-	outFrameTmp = outFrame = Mem_PoolAlloc(sizeof(mAliasFrame_t) * mod->alias.num_frames, vid_modelPool, 0);
-	outMesh->vertexes = outVertex = Mem_PoolAlloc(sizeof(mAliasVertex_t) * mod->alias.num_frames * outMesh->num_verts, vid_modelPool, 0);
+	outFrameTmp = outFrame = (mAliasFrame_t *)Mem_PoolAlloc(sizeof(mAliasFrame_t) * mod->alias.num_frames, vid_modelPool, 0);
+	outMesh->vertexes = outVertex = (mAliasVertex_t *)Mem_PoolAlloc(sizeof(mAliasVertex_t) * mod->alias.num_frames * outMesh->num_verts, vid_modelPool, 0);
 	if (mod->alias.num_meshes == 1)
 		mod->alias.frames = outFrame;
 	else if (mod->alias.num_frames != LittleLong(md2->num_frames))
@@ -318,7 +318,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 		if (outMesh->num_skins < 0 || outMesh->num_skins >= MD2_MAX_SKINS)
 			Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i\n", mod->name, outMesh->num_skins);
 
-		outMesh->skins = Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
+		outMesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
 		md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
 		for (i = 0; i < outMesh->num_skins; i++) {
 			outMesh->skins[i].skin = R_AliasModelGetSkin(mod->name, md2Path + i * MD2_MAX_SKINNAME);
@@ -356,7 +356,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 	numIndexes = outMesh->num_tris * 3;
 	numVerts = outMesh->num_verts;
 
-	outMesh->stcoords = outCoord = Mem_PoolAlloc(sizeof(mAliasCoord_t) * outMesh->num_verts, vid_modelPool, 0);
+	outMesh->stcoords = outCoord = (mAliasCoord_t *)Mem_PoolAlloc(sizeof(mAliasCoord_t) * outMesh->num_verts, vid_modelPool, 0);
 	outIndex = outMesh->indexes;
 	for (j = 0; j < numIndexes; j++) {
 		outCoord[outIndex[j]][0] = (float)(((double)LittleShort(pincoord[tempSTIndex[j]].s) + 0.5) * isw);
@@ -364,7 +364,7 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
 	}
 
 	/* load the frames */
-	outFrameTmp = outFrame = Mem_PoolAlloc(sizeof(mAliasFrame_t) * mod->alias.num_frames, vid_modelPool, 0);
+	outFrameTmp = outFrame = (mAliasFrame_t *)Mem_PoolAlloc(sizeof(mAliasFrame_t) * mod->alias.num_frames, vid_modelPool, 0);
 	outVertex = outMesh->vertexes;
 	if (mod->alias.num_meshes == 1)
 		mod->alias.frames = outFrame;
@@ -423,9 +423,9 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
 	size = sizeof(mAliasMesh_t) * mod->alias.num_meshes;
 
 	if (mod->alias.meshes == NULL)
-		mod->alias.meshes = outMesh = Mem_PoolAlloc(size, vid_modelPool, 0);
+		mod->alias.meshes = outMesh = (mAliasMesh_t *)Mem_PoolAlloc(size, vid_modelPool, 0);
 	else {
-		mod->alias.meshes = Mem_ReAlloc(mod->alias.meshes, size);
+		mod->alias.meshes = (mAliasMesh_t *)Mem_ReAlloc(mod->alias.meshes, size);
 		outMesh = &mod->alias.meshes[mod->alias.num_meshes - 1];
 	}
 
@@ -527,7 +527,7 @@ void R_ModLoadAliasMD2Model (model_t *mod, byte *buffer, int bufSize, qboolean l
 	if (FS_CheckFile("%s", mod->alias.animname) != -1) {
 		/* load the tags */
 		FS_LoadFile(mod->alias.animname, &animbuf);
-		R_ModLoadAnims(&mod->alias, animbuf);
+		R_ModLoadAnims(&mod->alias, (const char *)animbuf);
 		FS_FreeFile(animbuf);
 	}
 

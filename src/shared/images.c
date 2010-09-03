@@ -105,7 +105,7 @@ void R_WritePNG (qFILE *f, byte *buffer, int width, int height)
 
 	png_write_info(png_ptr, info_ptr);
 
-	row_pointers = malloc(height * sizeof(png_bytep));
+	row_pointers = (png_bytep *)malloc(height * sizeof(png_bytep));
 	for (i = 0; i < height; i++)
 		row_pointers[i] = buffer + (height - 1 - i) * 3 * width;
 

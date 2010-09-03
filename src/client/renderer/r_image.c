@@ -152,7 +152,7 @@ void R_LoadImage (const char *name, byte **pic, int *width, int *height)
 		const size_t size = (surf->w * surf->h) * 4;
 		*width = surf->w;
 		*height = surf->h;
-		*pic = Mem_PoolAlloc(size, vid_imagePool, 0);
+		*pic = (byte *)Mem_PoolAlloc(size, vid_imagePool, 0);
 		memcpy(*pic, surf->pixels, size);
 		SDL_FreeSurface(surf);
 	}
@@ -569,7 +569,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 		return image;
 
 	if (Img_LoadImage(lname, &surf)) {
-		image = R_LoadImageData(lname, surf->pixels, surf->w, surf->h, type);
+		image = R_LoadImageData(lname, (byte *)surf->pixels, surf->w, surf->h, type);
 		SDL_FreeSurface(surf);
 		if (image->type == it_world) {
 			image->normalmap = R_FindImage(va("%s_nm", image->name), it_normalmap);

@@ -441,7 +441,7 @@ _mxml_vstrdupf(const char *format,	/* I - Printf-style format string */
   * buffer...
   */
 
-  if ((buffer = calloc(1, bytes + 1)) != NULL)
+  if ((buffer = (char *)calloc(1, bytes + 1)) != NULL)
     vsnprintf(buffer, bytes + 1, format, ap);
 
  /*

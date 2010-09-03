@@ -164,7 +164,7 @@ void UI_DrawIconInBox (const uiIcon_t* icon, uiIconStatus_t status, int posX, in
 	const char* image;
 
 	/** @todo Add warning */
-	if (status < 0 && status >= ICON_STATUS_MAX)
+	if (status >= ICON_STATUS_MAX)
 		return;
 
 	/** @todo merge all this cases */

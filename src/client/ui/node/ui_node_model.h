@@ -56,7 +56,7 @@ typedef struct modelExtraData_s {
 	void* skin;
 	void* model;
 	void* tag;					/**< the tag to place the model onto */
-	void* animationState;		/**< holds then anim state for the current model */
+	animState_t* animationState;		/**< holds then anim state for the current model */
 	void* animation;			/**< Anim string from the *.anm files */
 	qboolean autoscale;			/**< If true autoscale the model when we drw it */
 	qboolean rotateWithMouse;	/**< If true the user can rotate the model with the mouse */

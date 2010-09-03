@@ -74,7 +74,6 @@ technology_t **AII_GetCraftitemTechsByType (aircraftItemType_t type)
 itemWeight_t AII_GetItemWeightBySize (const objDef_t *od)
 {
 	assert(od);
-	assert(od->craftitem.type >= 0);
 
 	if (od->size < 50)
 		return ITEM_LIGHT;

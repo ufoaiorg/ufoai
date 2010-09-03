@@ -178,34 +178,21 @@ qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requiremen
 			const requirement_t *req = &requiredAND->links[i];
 			switch (req->type) {
 			case RS_LINK_TECH:
-				assert(req->link);
-				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDtech: %s / %i\n", req->id, ((technology_t*)req->link)->idx);
-				if (!RS_IsResearched_ptr(req->link)) {
-					Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: this tech not researched ----> %s \n", req->id);
+				if (!RS_IsResearched_ptr((const technology_t *)req->link))
 					metAND = qfalse;
-				}
 				break;
 			case RS_LINK_TECH_NOT:
-				assert(req->link);
-				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDtech NOT: %s / %i\n", req->id, ((technology_t*)req->link)->idx);
-				if (RS_IsResearched_ptr(req->link)) {
-					Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: this tech researched but it  must not be ----> %s \n", req->id);
+				if (RS_IsResearched_ptr((const technology_t *)req->link))
 					metAND = qfalse;
-				}
 				break;
 			case RS_LINK_ITEM:
-				assert(req->link);
-				assert(base);
 				/* The same code is used in "PR_RequirementsMet" */
-				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDitem: %s / %i\n", req->id, ((objDef_t*)req->link)->idx);
-				if (B_ItemInBase(req->link, base) < req->amount)
+				if (B_ItemInBase((const objDef_t *)req->link, base) < req->amount)
 					metAND = qfalse;
 				break;
 			case RS_LINK_ALIEN_DEAD:
 			case RS_LINK_ALIEN:
-				assert(req->link);
-				assert(base);
-				if (AL_GetAlienAmount(req->link, req->type, base) < req->amount)
+				if (AL_GetAlienAmount((const teamDef_t *)req->link, req->type, base) < req->amount)
 					metAND = qfalse;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
@@ -213,8 +200,7 @@ qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requiremen
 					metAND = qfalse;
 				break;
 			case RS_LINK_UFO:
-				assert(req->link);
-				if (US_UFOsInStorage(req->link, NULL) < req->amount)
+				if (US_UFOsInStorage((const aircraft_t *)req->link, NULL) < req->amount)
 					metAND = qfalse;
 				break;
 			case RS_LINK_ANTIMATTER:
@@ -235,30 +221,21 @@ qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requiremen
 			const requirement_t *req = &requiredOR->links[i];
 			switch (req->type) {
 			case RS_LINK_TECH:
-				assert(req->link);
-				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORtech: %s / %i\n", req->id, ((technology_t*)req->link)->idx);
-				if (RS_IsResearched_ptr(req->link))
+				if (RS_IsResearched_ptr((const technology_t *)req->link))
 					metOR = qtrue;
 				break;
 			case RS_LINK_TECH_NOT:
-				assert(req->link);
-				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORtech: NOT %s / %i\n", req->id, ((technology_t*)req->link)->idx);
-				if (!RS_IsResearched_ptr(req->link))
+				if (!RS_IsResearched_ptr((const technology_t *)req->link))
 					metOR = qtrue;
 				break;
 			case RS_LINK_ITEM:
-				assert(req->link);
-				assert(base);
 				/* The same code is used in "PR_RequirementsMet" */
-				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORitem: %s / %i\n", req->id, ((objDef_t*)req->link)->idx);
-				if (B_ItemInBase(req->link, base) >= req->amount)
+				if (B_ItemInBase((const objDef_t *)req->link, base) >= req->amount)
 					metOR = qtrue;
 				break;
 			case RS_LINK_ALIEN:
 			case RS_LINK_ALIEN_DEAD:
-				assert(req->link);
-				assert(base);
-				if (AL_GetAlienAmount(req->link, req->type, base) >= req->amount)
+				if (AL_GetAlienAmount((const teamDef_t *)req->link, req->type, base) >= req->amount)
 					metOR = qtrue;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
@@ -266,8 +243,7 @@ qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requiremen
 					metOR = qtrue;
 				break;
 			case RS_LINK_UFO:
-				assert(req->link);
-				if (US_UFOsInStorage(req->link, NULL) >= req->amount)
+				if (US_UFOsInStorage((const aircraft_t *)req->link, NULL) >= req->amount)
 					metOR = qtrue;
 				break;
 			case RS_LINK_ANTIMATTER:

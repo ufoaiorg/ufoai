@@ -169,8 +169,8 @@ typedef struct uiBehaviour_s {
 	void (*loading)(uiNode_t *node);		/**< called before script initialization, initialized default values */
 	void (*loaded)(uiNode_t *node);		/**< only called one time, when node parsing was finished */
 	void (*clone)(const uiNode_t *source, uiNode_t *clone);			/**< call to initialize a cloned node */
-	void (*new)(uiNode_t *node);			/**< call to initialize a dynamic node */
-	void (*delete)(uiNode_t *node);		/**< call to delete a dynamic node */
+	void (*newNode)(uiNode_t *node);			/**< call to initialize a dynamic node */
+	void (*deleteNode)(uiNode_t *node);		/**< call to delete a dynamic node */
 
 	/* system callback */
 	void (*init)(uiNode_t *node);			/**< call every time we push the parent window */

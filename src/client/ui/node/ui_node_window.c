@@ -101,7 +101,7 @@ qboolean UI_WindowNodeAddIndexedNode (uiNode_t* const node, uiNode_t* const chil
 	}
 
 	if (!a) {
-		a = Mem_PoolAlloc(sizeof(*a), ui_sysPool, 0);
+		a = (node_index_t *)Mem_PoolAlloc(sizeof(*a), ui_sysPool, 0);
 		a->next = EXTRADATA(node).index;
 		a->hash_next = EXTRADATA(node).index_hash[hash];
 		EXTRADATA(node).index_hash[hash] = a;

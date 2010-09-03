@@ -283,7 +283,7 @@ mxmlSaveAllocString(
   * new buffer...
   */
 
-  if ((s = malloc(bytes + 1)) == NULL)
+  if ((s = (char *)malloc(bytes + 1)) == NULL)
     return (NULL);
 
   mxmlSaveString(node, s, bytes + 1, cb);
@@ -649,7 +649,7 @@ mxml_add_char(int  ch,			/* I  - Character to add */
     else
       (*bufsize) += 1024;
 
-    if ((newbuffer = realloc(*buffer, *bufsize)) == NULL)
+    if ((newbuffer = (char *)realloc(*buffer, *bufsize)) == NULL)
     {
       free(*buffer);
 
@@ -1502,7 +1502,7 @@ mxml_load_data(
   * Read elements and other nodes from the file...
   */
 
-  if ((buffer = malloc(64)) == NULL)
+  if ((buffer = (char *)malloc(64)) == NULL)
   {
     mxml_error("Unable to allocate string buffer!");
     return (NULL);
@@ -2129,7 +2129,7 @@ mxml_parse_element(
   * Initialize the name and value buffers...
   */
 
-  if ((name = malloc(64)) == NULL)
+  if ((name = (char *)malloc(64)) == NULL)
   {
     mxml_error("Unable to allocate memory for name!");
     return (EOF);
@@ -2137,7 +2137,7 @@ mxml_parse_element(
 
   namesize = 64;
 
-  if ((value = malloc(64)) == NULL)
+  if ((value = (char *)malloc(64)) == NULL)
   {
     free(name);
     mxml_error("Unable to allocate memory for value!");

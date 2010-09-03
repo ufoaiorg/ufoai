@@ -457,7 +457,7 @@ static qboolean SV_LoadGame (const char *path)
 static game_export_t *SV_GetGameAPI (game_import_t *parms)
 {
 #ifndef HARD_LINKED_GAME
-	typedef game_export_t *(*game_api_t) (void *);
+	typedef game_export_t *(*game_api_t) (game_import_t *);
 	game_api_t GetGameAPI;
 	const char *path;
 #endif

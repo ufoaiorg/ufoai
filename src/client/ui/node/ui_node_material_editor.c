@@ -570,7 +570,7 @@ static void UI_MaterialEditorNewStage_f (void)
 	}
 
 	m = &r_images[id].material;
-	s = Mem_PoolAlloc(sizeof(*s), vid_imagePool, 0);
+	s = (materialStage_t *)Mem_PoolAlloc(sizeof(*s), vid_imagePool, 0);
 	m->num_stages++;
 
 	/* append the stage to the chain */

@@ -116,7 +116,7 @@ static face_t *AllocFace (void)
 {
 	c_faces++;
 
-	return Mem_Alloc(sizeof(face_t));
+	return (face_t *)Mem_Alloc(sizeof(face_t));
 }
 
 static face_t *NewFaceFromFace (const face_t *f)

@@ -116,7 +116,7 @@ void ASE_Load (const char *filename, qboolean verbose)
 	ase.verbose = verbose;
 	ase.len = FS_FileLength(&file);
 
-	ase.curpos = ase.buffer = Mem_Alloc(ase.len);
+	ase.curpos = ase.buffer = (char *)Mem_Alloc(ase.len);
 	if (!ase.curpos)
 		Sys_Error("Could not allocate memory for ase loading");
 
@@ -510,22 +510,22 @@ static void ASE_KeyMESH (const char *token)
 		pMesh->numTVertexes = atoi(s_token);
 		VERBOSE((".....num tvertexes: %d\n", pMesh->numTVertexes));
 	} else if (!strcmp(token, "*MESH_VERTEX_LIST")) {
-		pMesh->vertexes = Mem_Alloc(sizeof(aseVertex_t) * pMesh->numVertexes);
+		pMesh->vertexes = (aseVertex_t *)Mem_Alloc(sizeof(aseVertex_t) * pMesh->numVertexes);
 		pMesh->currentVertex = 0;
 		VERBOSE((".....parsing MESH_VERTEX_LIST\n"));
 		ASE_ParseBracedBlock(ASE_KeyMESH_VERTEX_LIST);
 	} else if (!strcmp(token, "*MESH_TVERTLIST")) {
 		pMesh->currentVertex = 0;
-		pMesh->tvertexes = Mem_Alloc(sizeof(aseTVertex_t) * pMesh->numTVertexes);
+		pMesh->tvertexes = (aseTVertex_t *)Mem_Alloc(sizeof(aseTVertex_t) * pMesh->numTVertexes);
 		VERBOSE((".....parsing MESH_TVERTLIST\n"));
 		ASE_ParseBracedBlock(ASE_KeyMESH_TVERTLIST);
 	} else if (!strcmp(token, "*MESH_FACE_LIST")) {
-		pMesh->faces = Mem_Alloc(sizeof(aseFace_t) * pMesh->numFaces);
+		pMesh->faces = (aseFace_t *)Mem_Alloc(sizeof(aseFace_t) * pMesh->numFaces);
 		pMesh->currentFace = 0;
 		VERBOSE((".....parsing MESH_FACE_LIST\n"));
 		ASE_ParseBracedBlock(ASE_KeyMESH_FACE_LIST);
 	} else if (!strcmp(token, "*MESH_TFACELIST")) {
-		pMesh->tfaces = Mem_Alloc(sizeof(aseFace_t) * pMesh->numFaces);
+		pMesh->tfaces = (aseFace_t *)Mem_Alloc(sizeof(aseFace_t) * pMesh->numFaces);
 		pMesh->currentFace = 0;
 		VERBOSE((".....parsing MESH_TFACE_LIST\n"));
 		ASE_ParseBracedBlock(ASE_KeyTFACE_LIST);

@@ -156,7 +156,7 @@ int PR_RequirementsMet (int amount, const requirements_t const *reqs, base_t *ba
 
 		switch (req->type) {
 		case RS_LINK_ITEM: {
-				const int items = min(amount, B_ItemInBase(req->link, base) / ((req->amount) ? req->amount : 1));
+				const int items = min(amount, B_ItemInBase((const objDef_t *)req->link, base) / ((req->amount) ? req->amount : 1));
 				producibleAmount = min(producibleAmount, items);
 				break;
 			}
@@ -166,10 +166,10 @@ int PR_RequirementsMet (int amount, const requirements_t const *reqs, base_t *ba
 				break;
 			}
 		case RS_LINK_TECH:
-			producibleAmount = (RS_IsResearched_ptr(req->link)) ? producibleAmount : 0;
+			producibleAmount = (RS_IsResearched_ptr((const technology_t *)req->link)) ? producibleAmount : 0;
 			break;
 		case RS_LINK_TECH_NOT:
-			producibleAmount = (RS_IsResearched_ptr(req->link)) ? 0 : producibleAmount;
+			producibleAmount = (RS_IsResearched_ptr((const technology_t *)req->link)) ? 0 : producibleAmount;
 			break;
 		default:
 			break;
@@ -636,7 +636,7 @@ int PR_IncreaseProduction (production_t *prod, int amount)
 
 	prod->amount += amount;
 	PR_UpdateRequiredItemsInBasestorage(base, -amount, &tech->requireForProduction);
-	
+
 	return amount;
 }
 
@@ -680,7 +680,7 @@ int PR_DecreaseProduction (production_t *prod, int amount)
 
 	prod->amount += -amount;
 	PR_UpdateRequiredItemsInBasestorage(base, amount, &tech->requireForProduction);
-	
+
 	return amount;
 }
 

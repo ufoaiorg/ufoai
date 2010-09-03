@@ -286,9 +286,9 @@ mxml_set_attr(mxml_node_t *node,	/* I - Element node */
   */
 
   if (node->value.element.num_attrs == 0)
-    attr = malloc(sizeof(mxml_attr_t));
+    attr = (mxml_attr_t *)malloc(sizeof(mxml_attr_t));
   else
-    attr = realloc(node->value.element.attrs,
+    attr = (mxml_attr_t *)realloc(node->value.element.attrs,
                    (node->value.element.num_attrs + 1) * sizeof(mxml_attr_t));
 
   if (!attr)

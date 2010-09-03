@@ -390,7 +390,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, i
 						int j, z;
 						size_t subLength = 0;
 
-						buffer = Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
+						buffer = (byte *)Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
 
 						in += 7;
 						z = Cvar_GetValue(Com_Parse(&in));
@@ -444,7 +444,7 @@ static size_t R_PreprocessShader (const char *name, const char *in, char *out, i
 			int j, z;
 			size_t subLength = 0;
 
-			buffer = Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
+			buffer = (byte *)Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
 
 			in += 7;
 			z = Cvar_GetValue(Com_Parse(&in));
@@ -520,7 +520,7 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 		return NULL;
 	}
 
-	srcBuf = source = Mem_PoolAlloc(bufLength, vid_imagePool, 0);
+	srcBuf = source = (char *)Mem_PoolAlloc(bufLength, vid_imagePool, 0);
 
 	initializeLength = R_InitializeShader(name, srcBuf, bufLength);
 	srcBuf += initializeLength;

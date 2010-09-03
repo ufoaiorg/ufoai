@@ -323,7 +323,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 			return qtrue;
 	}
 
-	q->next = Mem_Alloc(sizeof(*q));
+	q->next = (dlqueue_t *)Mem_Alloc(sizeof(*q));
 	q = q->next;
 
 	q->next = NULL;

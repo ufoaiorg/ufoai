@@ -161,10 +161,10 @@ static inline void UI_InsertWindowIntoStack (uiNode_t *window, int position)
  * @brief Push a window onto the window stack
  * @param[in] name Name of the window to push onto window stack
  * @param[in] parent Window name to link as parent-child (else NULL)
- * @param[in] delete Delete the window from the window stack before adding it again
+ * @param[in] deleteFromStack Delete the window from the window stack before adding it again
  * @return pointer to uiNode_t
  */
-static uiNode_t* UI_PushWindowDelete (const char *name, const char *parent, qboolean delete)
+static uiNode_t* UI_PushWindowDelete (const char *name, const char *parent, qboolean deleteFromStack)
 {
 	uiNode_t *window;
 
@@ -177,7 +177,7 @@ static uiNode_t* UI_PushWindowDelete (const char *name, const char *parent, qboo
 	}
 
 	/* found the correct add it to stack or bring it on top */
-	if (delete)
+	if (deleteFromStack)
 		UI_DeleteWindowFromStack(window);
 
 	if (ui_global.windowStackPos < UI_MAX_WINDOWSTACK)

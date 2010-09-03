@@ -126,7 +126,8 @@ void FS_CloseFile (qFILE * f)
 	}
 	assert(fs_openedFiles >= 0);
 
-	f->f = f->z = NULL;
+	f->f = NULL;
+	f->z = NULL;
 }
 
 /**

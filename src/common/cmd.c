@@ -150,7 +150,7 @@ void Cbuf_InsertText (const char *text)
 	/* copy off any commands still remaining in the exec buffer */
 	templen = cmd_text.cursize;
 	if (templen) {
-		temp = Mem_Alloc(templen);
+		temp = (char *)Mem_Alloc(templen);
 		memcpy(temp, cmd_text.data, templen);
 		SZ_Clear(&cmd_text);
 	} else
@@ -298,7 +298,7 @@ qboolean Cbuf_AddLateCommands (void)
 	if (!s)
 		return qfalse;
 
-	text = Mem_Alloc(s + 1);
+	text = (char *)Mem_Alloc(s + 1);
 	text[0] = 0;
 	for (i = 1; i < argc; i++) {
 		Q_strcat(text, Com_Argv(i), s);
@@ -307,7 +307,7 @@ qboolean Cbuf_AddLateCommands (void)
 	}
 
 	/* pull out the commands */
-	build = Mem_Alloc(s + 1);
+	build = (char *)Mem_Alloc(s + 1);
 	build[0] = 0;
 
 	for (i = 0; i < s - 1; i++) {
@@ -362,7 +362,7 @@ static void Cmd_Exec_f (void)
 	Com_Printf("executing %s\n", Cmd_Argv(1));
 
 	/* the file doesn't have a trailing 0, so we need to copy it off */
-	f2 = Mem_Alloc(len + 2);
+	f2 = (char *)Mem_Alloc(len + 2);
 	memcpy(f2, f, len);
 	/* make really sure that there is a newline */
 	f2[len] = '\n';
@@ -426,7 +426,7 @@ static void Cmd_Alias_f (void)
 	}
 
 	if (!a) {
-		a = Mem_PoolAlloc(sizeof(*a), com_aliasSysPool, 0);
+		a = (cmd_alias_t *)Mem_PoolAlloc(sizeof(*a), com_aliasSysPool, 0);
 		a->next = cmd_alias;
 		/* cmd_alias_hash should be null on the first run */
 		a->hash_next = cmd_alias_hash[hash];
@@ -594,17 +594,8 @@ void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 
 		/* set cmd_args to everything after the first arg */
 		if (cmd_argc == 1) {
-			size_t l;
-
 			Q_strncpyz(cmd_args, text, sizeof(cmd_args));
-
-			/* strip off any trailing whitespace */
-			l = strlen(cmd_args) - 1;
-			for (; l >= 0; l--)
-				if (cmd_args[l] <= ' ')
-					cmd_args[l] = 0;
-				else
-					break;
+			Com_Chop(cmd_args);
 		}
 
 		com_token = Com_Parse(&text);
@@ -814,7 +805,7 @@ void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc
 		}
 	}
 
-	cmd = Mem_PoolAlloc(sizeof(*cmd), com_cmdSysPool, 0);
+	cmd = (cmd_function_t *)Mem_PoolAlloc(sizeof(*cmd), com_cmdSysPool, 0);
 	cmd->name = cmd_name;
 	cmd->description = desc;
 	cmd->function = function;

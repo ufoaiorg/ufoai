@@ -108,7 +108,7 @@ typedef struct msgCategory_s {
 extern messageSettings_t messageSettings[NT_NUM_NOTIFYTYPE];
 extern const char* nt_strings[NT_NUM_NOTIFYTYPE];
 
-message_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *title, const char *text, qboolean popup, messageType_t type, void *pedia);
+message_t *MSO_CheckAddNewMessage(const notify_t messagecategory, const char *title, const char *text, qboolean popup, messageType_t type, technology_t *pedia);
 void MSO_ParseSettings(const char *name, const char **text);
 void MSO_ParseCategories(const char *name, const char **text);
 void MSO_Set(const int listIndex, const notify_t type, const int optionType, const qboolean activate, const qboolean sendCommands);

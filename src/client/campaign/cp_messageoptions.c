@@ -187,7 +187,7 @@ static void MSO_SetAll_f(void)
  * @return message_t pointer if message was added
  * @sa MS_AddNewMessageSound
  */
-message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *title, const char *text, qboolean popup, messageType_t type, void *pedia)
+message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *title, const char *text, qboolean popup, messageType_t type, technology_t *pedia)
 {
 	message_t *result = NULL;
 

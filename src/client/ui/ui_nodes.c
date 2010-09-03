@@ -378,8 +378,8 @@ uiNode_t* UI_AllocNode (const char* name, const char* type, qboolean isDynamic)
 	uiNode_t* node = UI_AllocNodeWithoutNew (name, type, isDynamic);
 
 	/* allocate memories */
-	if (node->dynamic && node->behaviour->new)
-		node->behaviour->new(node);
+	if (node->dynamic && node->behaviour->newNode)
+		node->behaviour->newNode(node);
 
 	return node;
 }
@@ -577,8 +577,8 @@ void UI_DeleteNode (uiNode_t* node)
 		}
 	}
 
-	if (node->behaviour->delete)
-		node->behaviour->delete(node);
+	if (node->behaviour->deleteNode)
+		node->behaviour->deleteNode(node);
 }
 
 /**
@@ -626,8 +626,8 @@ uiNode_t* UI_CloneNode (const uiNode_t* node, uiNode_t *newWindow, qboolean recu
 	}
 
 	/* allocate memories */
-	if (newNode->dynamic && newNode->behaviour->new)
-		newNode->behaviour->new(newNode);
+	if (newNode->dynamic && newNode->behaviour->newNode)
+		newNode->behaviour->newNode(newNode);
 
 	newNode->behaviour->clone(node, newNode);
 
@@ -651,8 +651,8 @@ static const int virtualFunctions[] = {
 	offsetof(uiBehaviour_t, init),
 	offsetof(uiBehaviour_t, close),
 	offsetof(uiBehaviour_t, clone),
-	offsetof(uiBehaviour_t, new),
-	offsetof(uiBehaviour_t, delete),
+	offsetof(uiBehaviour_t, newNode),
+	offsetof(uiBehaviour_t, deleteNode),
 	offsetof(uiBehaviour_t, activate),
 	offsetof(uiBehaviour_t, doLayout),
 	offsetof(uiBehaviour_t, dndEnter),

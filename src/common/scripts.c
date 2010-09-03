@@ -225,7 +225,7 @@ void Com_RegisterConstInt (const char *name, int value)
 		return;
 	}
 
-	a = Mem_PoolAlloc(sizeof(*a), com_aliasSysPool, 0);
+	a = (com_constNameInt_t *)Mem_PoolAlloc(sizeof(*a), com_aliasSysPool, 0);
 	Q_strncpyz(a->name, variable, sizeof(a->name));
 	if (strcmp(variable, name))
 		a->fullname = Mem_StrDup(name);
@@ -2830,7 +2830,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 		return;
 	}
 
-	t = Mem_PoolAlloc(sizeof(*t), com_genericPool, 0);
+	t = (terrainType_t *)Mem_PoolAlloc(sizeof(*t), com_genericPool, 0);
 	t->texture = Mem_PoolStrDup(name, com_genericPool, 0);
 	hash = Com_HashKey(name, TERRAIN_HASH_SIZE);
 	/* link in terrainTypesHash[hash] should be NULL on the first run */

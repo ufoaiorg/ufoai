@@ -123,8 +123,8 @@ void UI_RegisterAbstractValueNode (uiBehaviour_t *behaviour)
 	behaviour->name = "abstractvalue";
 	behaviour->loaded = UI_AbstractValueLoaded;
 	behaviour->clone = UI_AbstractValueClone;
-	behaviour->new = UI_AbstractValueNew;
-	behaviour->delete = UI_AbstractValueDelete;
+	behaviour->newNode = UI_AbstractValueNew;
+	behaviour->deleteNode = UI_AbstractValueDelete;
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);

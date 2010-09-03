@@ -124,7 +124,7 @@ s_sample_t *S_LoadSample (const char *soundFile)
 		return NULL;		/* couldn't load the sound's data */
 
 	hash = Com_HashKey(name, SAMPLE_HASH_SIZE);
-	sample = Mem_PoolAlloc(sizeof(*sample), cl_soundSysPool, 0);
+	sample = (s_sample_t *)Mem_PoolAlloc(sizeof(*sample), cl_soundSysPool, 0);
 	sample->name = Mem_PoolStrDup(name, cl_soundSysPool, 0);
 	sample->chunk = chunk;
 	sample->hashNext = sampleHash[hash];

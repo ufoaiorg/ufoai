@@ -111,7 +111,7 @@ static inline qboolean CL_ShowServer (const serverList_t *server)
 static void CL_PingServerCallback (struct net_stream *s)
 {
 	struct dbuffer *buf = NET_ReadMsg(s);
-	serverList_t *server = NET_StreamGetData(s);
+	serverList_t *server = (serverList_t *)NET_StreamGetData(s);
 	const int cmd = NET_ReadByte(buf);
 	char str[512];
 
