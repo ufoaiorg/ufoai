@@ -1284,7 +1284,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 				/* set the values */
 				pc->type = j;
 
-				pcmdPos = (byte *)Com_AlignPtr(pcmdPos, pc->type);
+				pcmdPos = Com_AlignPtr(pcmdPos, pc->type);
 				pc->ref = (int) (pcmdPos - pcmdData);
 				pcmdPos += Com_EParseValue(pcmdPos, token, pc->type, 0, 0);
 
@@ -1309,7 +1309,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 				pc->cmd = PC_PUSH;
 				pc->type = pp->type;
 
-				pcmdPos = (byte *)Com_AlignPtr(pcmdPos, pc->type);
+				pcmdPos = Com_AlignPtr(pcmdPos, pc->type);
 				pc->ref = (int) (pcmdPos - pcmdData);
 				pcmdPos += Com_EParseValue(pcmdPos, token, pc->type, 0, 0);
 
