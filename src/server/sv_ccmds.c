@@ -498,7 +498,7 @@ static int SV_CompleteServerCommand (const char *partial, const char **match)
 				break;
 			Com_Printf("[cmd] %s\n", serverCommandList[i]);
 			if (*serverCommandList[i + 1])
-				Com_Printf(COLORED_GREEN "      %s\n", serverCommandList[i + 1]);
+				Com_Printf(S_COLOR_GREEN "      %s\n", serverCommandList[i + 1]);
 		}
 		return i - 1;
 	}
@@ -515,7 +515,7 @@ static int SV_CompleteServerCommand (const char *partial, const char **match)
 		if (!strncmp(partial, serverCommandList[i * 2], len)) {
 			Com_Printf("[cmd] %s\n", serverCommandList[i * 2]);
 			if (*serverCommandList[i * 2 + 1])
-				Com_Printf(COLORED_GREEN "      %s\n", serverCommandList[i * 2 + 1]);
+				Com_Printf(S_COLOR_GREEN "      %s\n", serverCommandList[i * 2 + 1]);
 			localMatch[matches++] = serverCommandList[i * 2];
 			if (matches >= MAX_COMPLETE)
 				break;

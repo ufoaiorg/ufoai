@@ -250,7 +250,7 @@ static void Key_Console (int key, int unicode)
 		Com_Printf("%s\n", keyLines[editLine] + 1);
 		editLine = (editLine + 1) & (MAXKEYLINES - 1);
 		historyLine = editLine;
-		keyLines[editLine][0] = CONSOLE_PROMPT_CHAR | CONSOLE_COLORED_TEXT_MASK;
+		keyLines[editLine][0] = CONSOLE_PROMPT_CHAR;
 		/* maybe MAXKEYLINES was reached - we don't want to spawn 'random' strings
 		 * from history buffer in our console */
 		keyLines[editLine][1] = '\0';
@@ -302,7 +302,7 @@ static void Key_Console (int key, int unicode)
 		} while (historyLine != editLine && !keyLines[historyLine][1]);
 
 		if (historyLine == editLine) {
-			keyLines[editLine][0] = CONSOLE_PROMPT_CHAR | CONSOLE_COLORED_TEXT_MASK;
+			keyLines[editLine][0] = CONSOLE_PROMPT_CHAR;
 			/* fresh edit line */
 			keyLines[editLine][1] = '\0';
 			keyLinePos = 1;
@@ -874,7 +874,7 @@ void Key_Init (void)
 	int i;
 
 	for (i = 0; i < MAXKEYLINES; i++) {
-		keyLines[i][0] = CONSOLE_PROMPT_CHAR | CONSOLE_COLORED_TEXT_MASK;
+		keyLines[i][0] = CONSOLE_PROMPT_CHAR;
 		keyLines[i][1] = 0;
 	}
 	keyLinePos = 1;

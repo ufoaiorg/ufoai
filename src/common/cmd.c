@@ -932,7 +932,7 @@ int Cmd_CompleteCommand (const char *partial, const char **match)
 		if (!strncmp(partial, cmd->name, len)) {
 			Com_Printf("[cmd] %s\n", cmd->name);
 			if (cmd->description)
-				Com_Printf(COLORED_GREEN "      %s\n", cmd->description);
+				Com_Printf(S_COLOR_GREEN "      %s\n", cmd->description);
 			localMatch[matches++] = cmd->name;
 			if (matches >= MAX_COMPLETE)
 				break;
@@ -1036,7 +1036,7 @@ static void Cmd_List_f (void)
 		}
 		Com_Printf("[cmd] %s\n", cmd->name);
 		if (cmd->description)
-			Com_Printf(COLORED_GREEN "      %s\n", cmd->description);
+			Com_Printf(S_COLOR_GREEN "      %s\n", cmd->description);
 	}
 	/* check alias */
 	for (alias = cmd_alias; alias; alias = alias->next, j++) {

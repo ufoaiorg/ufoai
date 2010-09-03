@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_CONSOLE_H
 #define CLIENT_CL_CONSOLE_H
 
-void Con_DrawCharacter(int cx, int line, int num);
+void Con_DrawString(const char *text, int x, int y, int width);
 void Con_Scroll(int scroll);
 void Con_CheckResize(void);
 void Con_Init(void);
@@ -43,7 +43,6 @@ void Con_Close(void);
 void Con_SaveConsoleHistory(void);
 void Con_LoadConsoleHistory(void);
 
-#define CONSOLE_COLORED_TEXT_MASK 128
 #define CONSOLE_PROMPT_CHAR ']'
 
 extern const int con_fontHeight;

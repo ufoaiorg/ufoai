@@ -32,9 +32,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "input/cl_keys.h"
 #include "renderer/r_draw.h"
 
+#define ColorIndex(c)	(((c) - '0') & 0x07)
+
+/* set ABGR color values */
+static const uint32_t g_color_table[] =
+{
+	0xFF000000,
+	0xFF0000FF,
+	0xFF00FF00,
+	0xFF00FFFF,
+	0xFFFF0000,
+	0xFFFFFF00,
+	0xFFFF00FF,
+	0xFFFFFFFF
+};
+
 #define CONSOLE_CHAR_ALIGN 4
 #define NUM_CON_TIMES 8
-#define COLORED_TEXT_MASK 128
 #define CON_TEXTSIZE 32768
 #define CONSOLE_CURSOR_CHAR 11
 #define CONSOLE_HISTORY_FILENAME "history"
@@ -42,7 +56,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct {
 	qboolean initialized;
 
-	char text[CON_TEXTSIZE];
+	short text[CON_TEXTSIZE];
 	int currentLine;			/**< line where next message will be printed */
 	int pos;					/**< offset in current line for next print */
 	int displayLine;			/**< bottom of console displays this line */
@@ -64,13 +78,55 @@ const int con_fontHeight = 12;
 const int con_fontWidth = 10;
 const int con_fontShift = 3;
 
-static void Con_DisplayString (int x, int y, const char *s)
+/**
+ * @param txt The character buffer to draw - color encoded
+ * @param x The x coordinate on the screen
+ * @param y The y coordinate on the screen
+ * @param width Characters to draw
+ */
+static void Con_DrawText (const short *text, int x, int y, int width)
 {
-	while (*s) {
-		R_DrawChar(x, y, *s);
-		x += con_fontWidth;
-		s++;
+	int xPos;
+	int currentColor = CON_COLOR_WHITE;
+	for (xPos = 0; xPos < width; xPos++) {
+		if (((text[xPos] >> 8) & 7) != currentColor)
+			currentColor = (text[xPos] >> 8) & 7;
+		R_DrawChar(x + ((xPos + 1) << con_fontShift), y, text[xPos], g_color_table[currentColor]);
 	}
+}
+
+/**
+ * @param txt The character buffer to draw
+ * @param x The x coordinate on the screen
+ * @param y The y coordinate on the screen
+ * @param width Characters to draw
+ */
+void Con_DrawString (const char *txt, int x, int y, int width)
+{
+	short buf[512], *pos;
+	const size_t size = lengthof(buf);
+	int c;
+	int color;
+
+	if (width > size)
+		Sys_Error("Overflow in Con_DrawString");
+
+	color = CON_COLOR_WHITE;
+	pos = buf;
+
+	while ((c = *txt) != 0) {
+		if (Q_IsColorString(txt) ) {
+			color = ColorIndex(*(txt + 1));
+			txt += 2;
+			continue;
+		}
+
+		*pos = (color << 8) | c;
+
+		txt++;
+		pos++;
+	}
+	Con_DrawText(buf, x, y, width);
 }
 
 static void Key_ClearTyping (void)
@@ -109,7 +165,11 @@ static void Con_ToggleChat_f (void)
  */
 static void Con_Clear_f (void)
 {
-	memset(con.text, ' ', sizeof(con.text));
+	int i;
+	const size_t size = lengthof(con.text);
+
+	for (i = 0; i < size; i++)
+		con.text[i] = (CON_COLOR_WHITE << 8) | ' ';
 }
 
 /**
@@ -162,8 +222,9 @@ static void Con_MessageModeSayTeam_f (void)
 void Con_CheckResize (void)
 {
 	int i, j, oldWidth, oldTotalLines, numLines, numChars;
-	char tbuf[CON_TEXTSIZE];
+	short tbuf[CON_TEXTSIZE];
 	const int width = (viddef.width >> con_fontShift);
+	const size_t size = lengthof(con.text);
 
 	if (width == con.lineWidth)
 		return;
@@ -183,7 +244,8 @@ void Con_CheckResize (void)
 		numChars = con.lineWidth;
 
 	memcpy(tbuf, con.text, sizeof(tbuf));
-	memset(con.text, ' ', sizeof(con.text));
+	for (i = 0; i < size; i++)
+		con.text[i] = (CON_COLOR_WHITE << 8) | ' ';
 
 	for (i = 0; i < numLines; i++) {
 		for (j = 0; j < numChars; j++) {
@@ -281,7 +343,7 @@ void Con_Init (void)
 
 	memset(&con, 0, sizeof(con));
 	con.lineWidth = VID_NORM_WIDTH / con_fontWidth;
-	con.totalLines = sizeof(con.text) / con.lineWidth;
+	con.totalLines = lengthof(con.text) / con.lineWidth;
 	con.initialized = qtrue;
 
 	Com_Printf("Console initialized.\n");
@@ -290,11 +352,15 @@ void Con_Init (void)
 
 static void Con_Linefeed (void)
 {
+	int i;
+
 	con.pos = 0;
 	if (con.displayLine == con.currentLine)
 		con.displayLine++;
 	con.currentLine++;
-	memset(&con.text[(con.currentLine % con.totalLines) * con.lineWidth],' ', con.lineWidth);
+
+	for (i = 0; i < con.lineWidth; i++)
+		con.text[(con.currentLine % con.totalLines) * con.lineWidth + i] = (CON_COLOR_WHITE << 8) | ' ';
 }
 
 /**
@@ -308,18 +374,20 @@ void Con_Print (const char *txt)
 	int y;
 	int c, l;
 	static int cr;
-	int mask;
+	int color;
 
 	if (!con.initialized)
 		return;
 
-	if (txt[0] == 1 || txt[0] == 2) {
-		mask = CONSOLE_COLORED_TEXT_MASK; /* go to colored text */
-		txt++;
-	} else
-		mask = 0;
+	color = CON_COLOR_WHITE;
 
 	while ((c = *txt) != 0) {
+		if (Q_IsColorString(txt) ) {
+			color = ColorIndex(*(txt + 1));
+			txt += 2;
+			continue;
+		}
+
 		/* count word length */
 		for (l = 0; l < con.lineWidth; l++)
 			if (txt[l] <= ' ')
@@ -346,16 +414,18 @@ void Con_Print (const char *txt)
 		switch (c) {
 		case '\n':
 			con.pos = 0;
+			color = CON_COLOR_WHITE;
 			break;
 
 		case '\r':
 			con.pos = 0;
+			color = CON_COLOR_WHITE;
 			cr = 1;
 			break;
 
 		default:	/* display character and advance */
 			y = con.currentLine % con.totalLines;
-			con.text[y * con.lineWidth + con.pos] = c | mask;
+			con.text[y * con.lineWidth + con.pos] = (color << 8) | c;
 			con.pos++;
 			if (con.pos >= con.lineWidth)
 				con.pos = 0;
@@ -386,25 +456,29 @@ static void Con_DrawInput (void)
 {
 	int y;
 	int i;
-	char editlinecopy[MAXCMDLINE], *text;
+	short editlinecopy[MAXCMDLINE], *text;
+	const size_t size = lengthof(editlinecopy);
 
 	if (cls.keyDest != key_console && cls.state == ca_active)
 		return;					/* don't draw anything (always draw if not active) */
 
-	Q_strncpyz(editlinecopy, keyLines[editLine], sizeof(editlinecopy));
+	for (i = 0; i < size; i++) {
+		editlinecopy[i] = (CON_COLOR_WHITE << 8) | keyLines[editLine][i];
+		if (keyLines[editLine][i] != '\0')
+			y++;
+	}
 	text = editlinecopy;
-	y = strlen(text);
 
 	/* add the cursor frame */
 	if ((int)(CL_Milliseconds() >> 8) & 1) {
-		text[keyLinePos] = CONSOLE_CURSOR_CHAR | CONSOLE_COLORED_TEXT_MASK;
+		text[keyLinePos] = (CON_COLOR_WHITE << 8) | CONSOLE_CURSOR_CHAR;
 		if (keyLinePos == y)
 			y++;
 	}
 
 	/* fill out remainder with spaces */
-	for (i = y; i < MAXCMDLINE; i++)
-		text[i] = ' ';
+	for (i = y; i < size; i++)
+		text[i] = (CON_COLOR_WHITE << 8) | ' ';
 
 	/* prestep if horizontally scrolling */
 	if (keyLinePos >= con.lineWidth)
@@ -413,8 +487,7 @@ static void Con_DrawInput (void)
 	/* draw it */
 	y = con.visLines - con_fontHeight;
 
-	for (i = 0; i < con.lineWidth; i++)
-		R_DrawChar((i + 1) << con_fontShift, y - CONSOLE_CHAR_ALIGN, text[i]);
+	Con_DrawText(text, 0, y - CONSOLE_CHAR_ALIGN, con.lineWidth);
 }
 
 
@@ -424,10 +497,11 @@ static void Con_DrawInput (void)
  */
 void Con_DrawNotify (void)
 {
-	const char *text;
+	const short *text;
 	int i, time, skip, x;
 	int v = 60 * viddef.rx;
 	const int l = 120 * viddef.ry;
+	int currentColor = CON_COLOR_WHITE;
 
 	for (i = con.currentLine - NUM_CON_TIMES + 1; i <= con.currentLine; i++) {
 		qboolean draw = qfalse;
@@ -442,9 +516,11 @@ void Con_DrawNotify (void)
 		text = con.text + (i % con.totalLines) * con.lineWidth;
 
 		for (x = 0; x < con.lineWidth; x++) {
+			if (((text[x] >> 8) & 7) != currentColor)
+				currentColor = (text[x] >> 8) & 7;
 			/* only draw chat or check for developer mode */
-			if (developer->integer || text[x] & CONSOLE_COLORED_TEXT_MASK) {
-				R_DrawChar(l + (x << con_fontShift), v, text[x]);
+			if (developer->integer || text[x] & 0xff) {
+				R_DrawChar(l + (x << con_fontShift), v, text[x], g_color_table[currentColor]);
 				draw = qtrue;
 			}
 		}
@@ -455,12 +531,13 @@ void Con_DrawNotify (void)
 	if (cls.keyDest == key_message && (msgMode == MSG_SAY_TEAM || msgMode == MSG_SAY)) {
 		const char *s = msgBuffer;
 		int x;
+		const uint32_t color = g_color_table[CON_COLOR_WHITE];
 
 		if (msgMode == MSG_SAY) {
-			Con_DisplayString(l, v, "say:");
+			Con_DrawString("say:", l, v, con.lineWidth);
 			skip = 4;
 		} else {
-			Con_DisplayString(l, v, "say_team:");
+			Con_DrawString("say_team:", l, v, con.lineWidth);
 			skip = 10;
 		}
 
@@ -469,10 +546,10 @@ void Con_DrawNotify (void)
 
 		x = 0;
 		while (s[x]) {
-			R_DrawChar(l + ((x + skip) << con_fontShift), v, s[x]);
+			R_DrawChar(l + ((x + skip) << con_fontShift), v, s[x], color);
 			x++;
 		}
-		R_DrawChar(l + ((x + skip) << con_fontShift), v, 10 + ((CL_Milliseconds() >> 8) & 1));
+		R_DrawChar(l + ((x + skip) << con_fontShift), v, 10 + ((CL_Milliseconds() >> 8) & 1), color);
 		v += con_fontHeight;
 	}
 }
@@ -485,7 +562,7 @@ void Con_DrawConsole (float frac)
 {
 	int i, x, y;
 	int rows, row, lines;
-	char *text;
+	short *text;
 	char consoleMessage[128];
 
 	lines = viddef.height * frac;
@@ -504,8 +581,10 @@ void Con_DrawConsole (float frac)
 		const int len = strlen(consoleMessage);
 		const int versionX = viddef.width - (len * con_fontWidth) - CONSOLE_CHAR_ALIGN;
 		const int versionY = lines - (con_fontHeight + CONSOLE_CHAR_ALIGN);
+		const uint32_t color = g_color_table[CON_COLOR_WHITE];
+
 		for (x = 0; x < len; x++)
-			R_DrawChar(versionX + x * con_fontWidth, versionY, consoleMessage[x] | CONSOLE_COLORED_TEXT_MASK);
+			R_DrawChar(versionX + x * con_fontWidth, versionY, consoleMessage[x], color);
 	}
 
 	/* draw the text */
@@ -517,9 +596,10 @@ void Con_DrawConsole (float frac)
 
 	/* draw from the bottom up */
 	if (con.displayLine != con.currentLine) {
+		const uint32_t color = g_color_table[CON_COLOR_GREEN];
 		/* draw arrows to show the buffer is backscrolled */
 		for (x = 0; x < con.lineWidth; x += 4)
-			R_DrawChar((x + 1) << con_fontShift, y, '^');
+			R_DrawChar((x + 1) << con_fontShift, y, '^', color);
 
 		y -= con_fontHeight;
 		rows--;
@@ -534,8 +614,7 @@ void Con_DrawConsole (float frac)
 
 		text = con.text + (row % con.totalLines) * con.lineWidth;
 
-		for (x = 0; x < con.lineWidth; x++)
-			R_DrawChar((x + 1) << con_fontShift, y, text[x]);
+		Con_DrawText(text, 0, y, con.lineWidth);
 	}
 
 	/* draw the input prompt, user text, and cursor if desired */

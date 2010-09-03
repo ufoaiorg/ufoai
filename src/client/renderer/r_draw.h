@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void R_DrawImage(float x, float y, const image_t *image);
 void R_DrawStretchImage(float x, float y, int w, int h, const image_t *image);
 const image_t *R_DrawImageArray(const vec2_t texcoords[4], const vec2_t verts[4], const image_t *image);
-void R_DrawChar(int x, int y, int c);
+void R_DrawChar(int x, int y, int c, uint32_t color);
 void R_DrawChars(void);
 void R_DrawFill(int x, int y, int w, int h, const vec4_t color);
 void R_DrawRect(int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern);

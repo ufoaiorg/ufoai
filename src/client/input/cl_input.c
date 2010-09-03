@@ -739,12 +739,12 @@ static void IN_TranslateKey (SDL_keysym *keysym, unsigned int *ascii, unsigned s
 
 void IN_EventEnqueue (unsigned int keyNum, unsigned short keyUnicode, qboolean keyDown)
 {
-	if (keyNum > 0) {
+	if (keyNum > 0 || keyUnicode > 0) {
 		if (in_debug->integer)
 			Com_Printf("Enqueue: %s (%i) (down: %i)\n", Key_KeynumToString(keyNum), keyNum, keyDown);
-		keyq[keyq_head].down = (keyDown);
-		keyq[keyq_head].unicode = (keyUnicode);
-		keyq[keyq_head].key = (keyNum);
+		keyq[keyq_head].down = keyDown;
+		keyq[keyq_head].unicode = keyUnicode;
+		keyq[keyq_head].key = keyNum;
 		keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1);
 	}
 }

@@ -36,6 +36,23 @@ image_t *shadow;
 /* console font */
 static image_t *draw_chars;
 
+#define MAX_CHARS 8192
+
+/** @brief Characters are batched per frame and drawn in one shot
+ * accumulate coordinates and colors as vertex arrays */
+typedef struct char_arrays_s {
+	GLfloat texcoords[MAX_CHARS * 4 * 2];
+	int texcoord_index;
+
+	GLshort verts[MAX_CHARS * 4 * 2];
+	int vert_index;
+
+	GLbyte colors[MAX_CHARS * 4 * 4];
+	int color_index;
+} char_arrays_t;
+
+static char_arrays_t r_char_arrays;
+
 /**
  * @brief Loads some textures and init the 3d globe
  * @sa R_Init
@@ -51,19 +68,12 @@ void R_DrawInitLocal (void)
 		Com_Error(ERR_FATAL, "Could not find conchars image in game pics directory!");
 }
 
-#define MAX_CHARS 8192
-
-/* chars are batched per frame so that they are drawn in one shot */
-static float char_texcoords[MAX_CHARS * 4 * 2];
-static short char_verts[MAX_CHARS * 4 * 2];
-static int char_index = 0;
-
 /**
  * @brief Draws one 8*8 graphics character with 0 being transparent.
  * It can be clipped to the top of the screen to allow the console to be
  * smoothly scrolled off.
  */
-void R_DrawChar (int x, int y, int num)
+void R_DrawChar (int x, int y, int num, uint32_t color)
 {
 	int row, col;
 	float frow, fcol;
@@ -76,7 +86,7 @@ void R_DrawChar (int x, int y, int num)
 	if (y <= -con_fontHeight)
 		return;					/* totally off screen */
 
-	if (char_index >= MAX_CHARS * 8)
+	if (r_char_arrays.vert_index >= lengthof(r_char_arrays.verts))
 		return;
 
 	row = (int) num >> 4;
@@ -86,42 +96,72 @@ void R_DrawChar (int x, int y, int num)
 	frow = row * 0.0625;
 	fcol = col * 0.0625;
 
-	char_texcoords[char_index + 0] = fcol;
-	char_texcoords[char_index + 1] = frow;
-	char_texcoords[char_index + 2] = fcol + 0.0625;
-	char_texcoords[char_index + 3] = frow;
-	char_texcoords[char_index + 4] = fcol + 0.0625;
-	char_texcoords[char_index + 5] = frow + 0.0625;
-	char_texcoords[char_index + 6] = fcol;
-	char_texcoords[char_index + 7] = frow + 0.0625;
+	memcpy(&r_char_arrays.colors[r_char_arrays.color_index +  0], &color, 4);
+	memcpy(&r_char_arrays.colors[r_char_arrays.color_index +  4], &color, 4);
+	memcpy(&r_char_arrays.colors[r_char_arrays.color_index +  8], &color, 4);
+	memcpy(&r_char_arrays.colors[r_char_arrays.color_index + 12], &color, 4);
 
-	char_verts[char_index + 0] = x;
-	char_verts[char_index + 1] = y;
-	char_verts[char_index + 2] = x + con_fontWidth;
-	char_verts[char_index + 3] = y;
-	char_verts[char_index + 4] = x + con_fontWidth;
-	char_verts[char_index + 5] = y + con_fontHeight;
-	char_verts[char_index + 6] = x;
-	char_verts[char_index + 7] = y + con_fontHeight;
+	r_char_arrays.color_index += 16;
 
-	char_index += 8;
+	r_char_arrays.texcoords[r_char_arrays.texcoord_index + 0] = fcol;
+	r_char_arrays.texcoords[r_char_arrays.texcoord_index + 1] = frow;
+
+	r_char_arrays.texcoords[r_char_arrays.texcoord_index + 2] = fcol + 0.0625;
+	r_char_arrays.texcoords[r_char_arrays.texcoord_index + 3] = frow;
+
+	r_char_arrays.texcoords[r_char_arrays.texcoord_index + 4] = fcol + 0.0625;
+	r_char_arrays.texcoords[r_char_arrays.texcoord_index + 5] = frow + 0.0625;
+
+	r_char_arrays.texcoords[r_char_arrays.texcoord_index + 6] = fcol;
+	r_char_arrays.texcoords[r_char_arrays.texcoord_index + 7] = frow + 0.0625;
+
+	r_char_arrays.texcoord_index += 8;
+
+	r_char_arrays.verts[r_char_arrays.vert_index + 0] = x;
+	r_char_arrays.verts[r_char_arrays.vert_index + 1] = y;
+
+	r_char_arrays.verts[r_char_arrays.vert_index + 2] = x + con_fontWidth;
+	r_char_arrays.verts[r_char_arrays.vert_index + 3] = y;
+
+	r_char_arrays.verts[r_char_arrays.vert_index + 4] = x + con_fontWidth;
+	r_char_arrays.verts[r_char_arrays.vert_index + 5] = y + con_fontHeight;
+
+	r_char_arrays.verts[r_char_arrays.vert_index + 6] = x;
+	r_char_arrays.verts[r_char_arrays.vert_index + 7] = y + con_fontHeight;
+
+	r_char_arrays.vert_index += 8;
 }
 
 void R_DrawChars (void)
 {
+	if (!r_char_arrays.vert_index)
+		return;
+
 	R_BindTexture(draw_chars->texnum);
 
+	R_EnableBlend(qtrue);
+	R_EnableColorArray(qtrue);
+
 	/* alter the array pointers */
-	glVertexPointer(2, GL_SHORT, 0, char_verts);
-	glTexCoordPointer(2, GL_FLOAT, 0, char_texcoords);
+	R_BindArray(GL_COLOR_ARRAY, GL_UNSIGNED_BYTE, r_char_arrays.colors);
+	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, r_char_arrays.texcoords);
+	glVertexPointer(2, GL_SHORT, 0, r_char_arrays.verts);
 
-	glDrawArrays(GL_QUADS, 0, char_index / 2);
+	glDrawArrays(GL_QUADS, 0, r_char_arrays.vert_index / 2);
 
-	char_index = 0;
+	r_char_arrays.color_index = 0;
+	r_char_arrays.texcoord_index = 0;
+	r_char_arrays.vert_index = 0;
 
 	/* and restore them */
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
+	R_BindDefaultArray(GL_COLOR_ARRAY);
+
+	R_EnableColorArray(qfalse);
+
+	/* restore draw color */
+	R_Color(NULL);
 }
 
 /**

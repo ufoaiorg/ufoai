@@ -637,7 +637,7 @@ static void Mem_Stats_f (void)
 		for (j = 0; j < MEM_HASH; j++) {
 			for (i = 0, mem = best->blocks[j]; mem; mem = mem->next, i++) {
 				if (i & 1)
-					Com_Printf(COLORED_GREEN);
+					Com_Printf(S_COLOR_GREEN);
 
 				Com_Printf("%5i %5i %20s "UFO_SIZE_T"B\n", i + 1, mem->allocLine, mem->allocFile, mem->size);
 
@@ -663,7 +663,7 @@ static void Mem_Stats_f (void)
 
 		poolNum++;
 		if (poolNum & 1)
-			Com_Printf(COLORED_GREEN);
+			Com_Printf(S_COLOR_GREEN);
 
 		Com_Printf("#%2i %6i %9iB (%6.3fMB) %s\n", poolNum, pool->blockCount, pool->byteCount, pool->byteCount/1048576.0f, pool->name);
 

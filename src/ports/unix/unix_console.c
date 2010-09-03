@@ -403,10 +403,6 @@ void Sys_ConsoleOutput (const char *string)
 
 	Sys_ShowConsole(qfalse);
 
-	/* skip color char */
-	if (!strncmp(string, COLORED_GREEN, strlen(COLORED_GREEN)))
-		string += strlen(COLORED_GREEN);
-
 	fcntl(STDOUT_FILENO, F_SETFL, origflags & ~FNDELAY);
 	while (*string) {
 		const ssize_t written = write(STDOUT_FILENO, string, strlen(string));
@@ -415,7 +411,6 @@ void Sys_ConsoleOutput (const char *string)
 		string += written;
 	}
 	fcntl(STDOUT_FILENO, F_SETFL, origflags);
-
 
 	Sys_ShowConsole(qtrue);
 }

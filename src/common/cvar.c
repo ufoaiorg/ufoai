@@ -292,7 +292,7 @@ int Cvar_CompleteVariable (const char *partial, const char **match)
 #endif
 			Com_Printf("[var] %-20s = \"%s\"\n", cvar->name, cvar->string);
 			if (cvar->description)
-				Com_Printf(COLORED_GREEN "      %s\n", cvar->description);
+				Com_Printf(S_COLOR_GREEN "      %s\n", cvar->description);
 			localMatch[matches++] = cvar->name;
 			if (matches >= MAX_COMPLETE)
 				break;
@@ -946,7 +946,7 @@ static void Cvar_List_f (void)
 			Com_Printf(" ");
 		Com_Printf(" %-20s \"%s\"\n", var->name, var->string);
 		if (var->description)
-			Com_Printf(COLORED_GREEN "        %s\n", var->description);
+			Com_Printf(S_COLOR_GREEN "        %s\n", var->description);
 	}
 	Com_Printf("%i cvars\n", i);
 	Com_Printf("legend:\n"

@@ -190,8 +190,27 @@ MISC
 #define	ERR_DROP	1			/* print to console and disconnect from game */
 #define	ERR_QUIT	2			/* not an error, just a normal exit */
 
-/* text color constant */
-#define	COLORED_GREEN "\1"
+#define Q_COLOR_ESCAPE	'^'
+#define Q_IsColorString(p)	((p) && *(p) == Q_COLOR_ESCAPE && *((p) + 1) && isalnum(*((p) + 1)))
+
+#define S_COLOR_BLACK	"^0"
+#define S_COLOR_RED	"^1"
+#define S_COLOR_GREEN	"^2"
+#define S_COLOR_YELLOW	"^3"
+#define S_COLOR_BLUE	"^4"
+#define S_COLOR_CYAN	"^5"
+#define S_COLOR_MAGENTA	"^6"
+#define S_COLOR_WHITE	"^7"
+
+#define CON_COLOR_BLACK		0
+#define CON_COLOR_RED		1
+#define CON_COLOR_GREEN		2
+#define CON_COLOR_YELLOW	3
+#define CON_COLOR_BLUE		4
+#define CON_COLOR_CYAN		5
+#define CON_COLOR_MAGENTA	6
+#define CON_COLOR_WHITE		7
+#define MAX_COLORS			8
 
 void Com_BeginRedirect(struct net_stream *stream, char *buffer, int buffersize);
 void Com_EndRedirect(void);

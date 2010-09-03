@@ -51,7 +51,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_render.h"
 #include "../ports/system.h"
 
-static float scr_con_current;			/* aproaches scr_conlines at scr_conspeed */
+static float scr_con_current;			/* approaches scr_conlines at scr_conspeed */
 static float scr_conlines;				/* 0.0 to 1.0 lines of console to display */
 
 static qboolean screenInitialized = qfalse;/* ready to draw */
@@ -68,19 +68,12 @@ static char cursorImage[MAX_QPATH];
 /**
  * @sa Font_DrawString
  */
-static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFont)
+static inline void SCR_DrawString (int x, int y, const char *string)
 {
-	if (!string || !*string)
+	if (!string || string[0] == '\0')
 		return;
 
-	if (bitmapFont) {
-		while (string[0] != '\0') {
-			R_DrawChar(x, y, *string);
-			x += con_fontWidth;
-			string++;
-		}
-	} else
-		UI_DrawString("f_verysmall", ALIGN_UL, x, y, 0, viddef.virtualWidth, 12, string, 0, 0, NULL, qfalse, 0);
+	Con_DrawString(string, x, y, strlen(string));
 }
 
 /**
@@ -446,15 +439,15 @@ void SCR_UpdateScreen (void)
 		SCR_DrawConsole();
 
 		if (cl_fps->integer)
-			SCR_DrawString(viddef.width - 20 - con_fontWidth * 10, 0, va("fps: %3.1f", cls.framerate), qtrue);
+			SCR_DrawString(viddef.width - 20 - con_fontWidth * 10, 0, va("fps: %3.1f", cls.framerate));
 		if (scr_rspeed->integer) {
 			if (CL_OnBattlescape())
-				SCR_DrawString(viddef.width - 20 - con_fontWidth * 30, 80, va("brushes: %6i alias: %6i\n", refdef.brushCount, refdef.aliasCount), qtrue);
+				SCR_DrawString(viddef.width - 20 - con_fontWidth * 30, 80, va("brushes: %6i alias: %6i\n", refdef.brushCount, refdef.aliasCount));
 			else
-				SCR_DrawString(viddef.width - 20 - con_fontWidth * 14, 80, va("alias: %6i\n", refdef.aliasCount), qtrue);
+				SCR_DrawString(viddef.width - 20 - con_fontWidth * 14, 80, va("alias: %6i\n", refdef.aliasCount));
 		}
 
-		/** @todo Not really need, the menu can do the job */
+		/** @todo Not really needed, the menu can do the job */
 		if (cls.state != ca_sequence)
 			SCR_DrawCursor();
 	}
