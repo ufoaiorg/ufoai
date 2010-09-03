@@ -117,7 +117,7 @@ class Resources(object):
         
         # read header
         header = lines.pop(0)
-        header = header.replace(' ', '').split('|')
+        header = header.split(' | ')
         filenameId = header.index('filename')
         authorId = header.index('author')
         licenseId = header.index('license')
@@ -128,7 +128,7 @@ class Resources(object):
 
         # read content
         for line in lines:
-            data = line.split('|')
+            data = line.split(' | ')
             filename = data[filenameId].strip()
 
             if filename in self.resources:
