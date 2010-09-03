@@ -483,7 +483,7 @@ static game_export_t *SV_GetGameAPI (game_import_t *parms)
 			break;
 	}
 
-	GetGameAPI = (game_api_t)SDL_LoadFunction(svs.gameLibrary, "GetGameAPI");
+	GetGameAPI = (game_api_t)(uintptr_t)SDL_LoadFunction(svs.gameLibrary, "GetGameAPI");
 	if (!GetGameAPI) {
 		SV_UnloadGame();
 		return NULL;

@@ -602,6 +602,11 @@ qboolean R_SetMode (void)
 	return result;
 }
 
+static inline uintptr_t R_GetProcAddress (const char *functionName)
+{
+	return (uintptr_t)SDL_GL_GetProcAddress(functionName);
+}
+
 /**
  * @brief Check and load all needed and supported opengl extensions
  * @sa R_Init
@@ -670,8 +675,8 @@ static qboolean R_InitExtensions (void)
 
 	/* multitexture */
 	if (strstr(r_config.extensionsString, "GL_ARB_multitexture")) {
-		qglActiveTexture = SDL_GL_GetProcAddress("glActiveTexture");
-		qglClientActiveTexture = SDL_GL_GetProcAddress("glClientActiveTexture");
+		qglActiveTexture = (ActiveTexture_t)R_GetProcAddress("glActiveTexture");
+		qglClientActiveTexture = (ClientActiveTexture_t)R_GetProcAddress("glClientActiveTexture");
 	}
 
 	if (strstr(r_config.extensionsString, "GL_ARB_texture_compression")) {
@@ -720,41 +725,41 @@ static qboolean R_InitExtensions (void)
 
 	/* vertex buffer objects */
 	if (strstr(r_config.extensionsString, "GL_ARB_vertex_buffer_object")) {
-		qglGenBuffers = SDL_GL_GetProcAddress("glGenBuffers");
-		qglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffers");
-		qglBindBuffer = SDL_GL_GetProcAddress("glBindBuffer");
-		qglBufferData = SDL_GL_GetProcAddress("glBufferData");
+		qglGenBuffers = (GenBuffers_t)R_GetProcAddress("glGenBuffers");
+		qglDeleteBuffers = (DeleteBuffers_t)R_GetProcAddress("glDeleteBuffers");
+		qglBindBuffer = (BindBuffer_t)R_GetProcAddress("glBindBuffer");
+		qglBufferData = (BufferData_t)R_GetProcAddress("glBufferData");
 	}
 
 	/* glsl vertex and fragment shaders and programs */
 	if (strstr(r_config.extensionsString, "GL_ARB_fragment_shader")) {
-		qglCreateShader = SDL_GL_GetProcAddress("glCreateShader");
-		qglDeleteShader = SDL_GL_GetProcAddress("glDeleteShader");
-		qglShaderSource = SDL_GL_GetProcAddress("glShaderSource");
-		qglCompileShader = SDL_GL_GetProcAddress("glCompileShader");
-		qglGetShaderiv = SDL_GL_GetProcAddress("glGetShaderiv");
-		qglGetShaderInfoLog = SDL_GL_GetProcAddress("glGetShaderInfoLog");
-		qglCreateProgram = SDL_GL_GetProcAddress("glCreateProgram");
-		qglDeleteProgram = SDL_GL_GetProcAddress("glDeleteProgram");
-		qglAttachShader = SDL_GL_GetProcAddress("glAttachShader");
-		qglDetachShader = SDL_GL_GetProcAddress("glDetachShader");
-		qglLinkProgram = SDL_GL_GetProcAddress("glLinkProgram");
-		qglUseProgram = SDL_GL_GetProcAddress("glUseProgram");
-		qglGetProgramiv = SDL_GL_GetProcAddress("glGetProgramiv");
-		qglGetProgramInfoLog = SDL_GL_GetProcAddress("glGetProgramInfoLog");
-		qglGetUniformLocation = SDL_GL_GetProcAddress("glGetUniformLocation");
-		qglUniform1i = SDL_GL_GetProcAddress("glUniform1i");
-		qglUniform1f = SDL_GL_GetProcAddress("glUniform1f");
-		qglUniform1fv = SDL_GL_GetProcAddress("glUniform1fv");
-		qglUniform2fv = SDL_GL_GetProcAddress("glUniform2fv");
-		qglUniform3fv = SDL_GL_GetProcAddress("glUniform3fv");
-		qglUniform4fv = SDL_GL_GetProcAddress("glUniform4fv");
-		qglGetAttribLocation = SDL_GL_GetProcAddress("glGetAttribLocation");
+		qglCreateShader = (CreateShader_t)R_GetProcAddress("glCreateShader");
+		qglDeleteShader = (DeleteShader_t)R_GetProcAddress("glDeleteShader");
+		qglShaderSource = (ShaderSource_t)R_GetProcAddress("glShaderSource");
+		qglCompileShader = (CompileShader_t)R_GetProcAddress("glCompileShader");
+		qglGetShaderiv = (GetShaderiv_t)R_GetProcAddress("glGetShaderiv");
+		qglGetShaderInfoLog = (GetShaderInfoLog_t)R_GetProcAddress("glGetShaderInfoLog");
+		qglCreateProgram = (CreateProgram_t)R_GetProcAddress("glCreateProgram");
+		qglDeleteProgram = (DeleteProgram_t)R_GetProcAddress("glDeleteProgram");
+		qglAttachShader = (AttachShader_t)R_GetProcAddress("glAttachShader");
+		qglDetachShader = (DetachShader_t)R_GetProcAddress("glDetachShader");
+		qglLinkProgram = (LinkProgram_t)R_GetProcAddress("glLinkProgram");
+		qglUseProgram = (UseProgram_t)R_GetProcAddress("glUseProgram");
+		qglGetProgramiv = (GetProgramiv_t)R_GetProcAddress("glGetProgramiv");
+		qglGetProgramInfoLog = (GetProgramInfoLog_t)R_GetProcAddress("glGetProgramInfoLog");
+		qglGetUniformLocation = (GetUniformLocation_t)R_GetProcAddress("glGetUniformLocation");
+		qglUniform1i = (Uniform1i_t)R_GetProcAddress("glUniform1i");
+		qglUniform1f = (Uniform1f_t)R_GetProcAddress("glUniform1f");
+		qglUniform1fv = (Uniform1fv_t)R_GetProcAddress("glUniform1fv");
+		qglUniform2fv = (Uniform2fv_t)R_GetProcAddress("glUniform2fv");
+		qglUniform3fv = (Uniform3fv_t)R_GetProcAddress("glUniform3fv");
+		qglUniform4fv = (Uniform4fv_t)R_GetProcAddress("glUniform4fv");
+		qglGetAttribLocation = (GetAttribLocation_t)R_GetProcAddress("glGetAttribLocation");
 
 		/* vertex attribute arrays */
-		qglEnableVertexAttribArray = SDL_GL_GetProcAddress("glEnableVertexAttribArray");
-		qglDisableVertexAttribArray = SDL_GL_GetProcAddress("glDisableVertexAttribArray");
-		qglVertexAttribPointer = SDL_GL_GetProcAddress("glVertexAttribPointer");
+		qglEnableVertexAttribArray = (EnableVertexAttribArray_t)R_GetProcAddress("glEnableVertexAttribArray");
+		qglDisableVertexAttribArray = (DisableVertexAttribArray_t)R_GetProcAddress("glDisableVertexAttribArray");
+		qglVertexAttribPointer = (VertexAttribPointer_t)R_GetProcAddress("glVertexAttribPointer");
 	}
 
 	if (strstr(r_config.extensionsString, "GL_ARB_shading_language_100")) {
@@ -766,24 +771,24 @@ static qboolean R_InitExtensions (void)
 	/* framebuffer objects */
 	if (strstr(r_config.extensionsString, "GL_ARB_framebuffer_object")
 	 || strstr(r_config.extensionsString, "GL_EXT_framebuffer_object")) {
-		qglIsRenderbufferEXT = SDL_GL_GetProcAddress("glIsRenderbufferEXT");
-		qglBindRenderbufferEXT = SDL_GL_GetProcAddress("glBindRenderbufferEXT");
-		qglDeleteRenderbuffersEXT = SDL_GL_GetProcAddress("glDeleteRenderbuffersEXT");
-		qglGenRenderbuffersEXT = SDL_GL_GetProcAddress("glGenRenderbuffersEXT");
-		qglRenderbufferStorageEXT = SDL_GL_GetProcAddress("glRenderbufferStorageEXT");
-		qglGetRenderbufferParameterivEXT = SDL_GL_GetProcAddress("glGetRenderbufferParameterivEXT");
-		qglIsFramebufferEXT = SDL_GL_GetProcAddress("glIsFramebufferEXT");
-		qglBindFramebufferEXT = SDL_GL_GetProcAddress("glBindFramebufferEXT");
-		qglDeleteFramebuffersEXT = SDL_GL_GetProcAddress("glDeleteFramebuffersEXT");
-		qglGenFramebuffersEXT = SDL_GL_GetProcAddress("glGenFramebuffersEXT");
-		qglCheckFramebufferStatusEXT = SDL_GL_GetProcAddress("glCheckFramebufferStatusEXT");
-		qglFramebufferTexture1DEXT = SDL_GL_GetProcAddress("glFramebufferTexture1DEXT");
-		qglFramebufferTexture2DEXT = SDL_GL_GetProcAddress("glFramebufferTexture2DEXT");
-		qglFramebufferTexture3DEXT = SDL_GL_GetProcAddress("glFramebufferTexture3DEXT");
-		qglFramebufferRenderbufferEXT = SDL_GL_GetProcAddress("glFramebufferRenderbufferEXT");
-		qglGetFramebufferAttachmentParameterivEXT = SDL_GL_GetProcAddress("glGetFramebufferAttachmentParameterivEXT");
-		qglGenerateMipmapEXT = SDL_GL_GetProcAddress("glGenerateMipmapEXT");
-		qglDrawBuffers = SDL_GL_GetProcAddress("glDrawBuffers");
+		qglIsRenderbufferEXT = (IsRenderbufferEXT_t)R_GetProcAddress("glIsRenderbufferEXT");
+		qglBindRenderbufferEXT = (BindRenderbufferEXT_t)R_GetProcAddress("glBindRenderbufferEXT");
+		qglDeleteRenderbuffersEXT = (DeleteRenderbuffersEXT_t)R_GetProcAddress("glDeleteRenderbuffersEXT");
+		qglGenRenderbuffersEXT = (GenRenderbuffersEXT_t)R_GetProcAddress("glGenRenderbuffersEXT");
+		qglRenderbufferStorageEXT = (RenderbufferStorageEXT_t)R_GetProcAddress("glRenderbufferStorageEXT");
+		qglGetRenderbufferParameterivEXT = (GetRenderbufferParameterivEXT_t)R_GetProcAddress("glGetRenderbufferParameterivEXT");
+		qglIsFramebufferEXT = (IsFramebufferEXT_t)R_GetProcAddress("glIsFramebufferEXT");
+		qglBindFramebufferEXT = (BindFramebufferEXT_t)R_GetProcAddress("glBindFramebufferEXT");
+		qglDeleteFramebuffersEXT = (DeleteFramebuffersEXT_t)R_GetProcAddress("glDeleteFramebuffersEXT");
+		qglGenFramebuffersEXT = (GenFramebuffersEXT_t)R_GetProcAddress("glGenFramebuffersEXT");
+		qglCheckFramebufferStatusEXT = (CheckFramebufferStatusEXT_t)R_GetProcAddress("glCheckFramebufferStatusEXT");
+		qglFramebufferTexture1DEXT = (FramebufferTexture1DEXT_t)R_GetProcAddress("glFramebufferTexture1DEXT");
+		qglFramebufferTexture2DEXT = (FramebufferTexture2DEXT_t)R_GetProcAddress("glFramebufferTexture2DEXT");
+		qglFramebufferTexture3DEXT = (FramebufferTexture3DEXT_t)R_GetProcAddress("glFramebufferTexture3DEXT");
+		qglFramebufferRenderbufferEXT = (FramebufferRenderbufferEXT_t)R_GetProcAddress("glFramebufferRenderbufferEXT");
+		qglGetFramebufferAttachmentParameterivEXT = (GetFramebufferAttachmentParameterivEXT_t)R_GetProcAddress("glGetFramebufferAttachmentParameterivEXT");
+		qglGenerateMipmapEXT = (GenerateMipmapEXT_t)R_GetProcAddress("glGenerateMipmapEXT");
+		qglDrawBuffers = (DrawBuffers_t)R_GetProcAddress("glDrawBuffers");
 
 		if (qglBindFramebufferEXT && qglDeleteRenderbuffersEXT && qglDeleteFramebuffersEXT && qglGenFramebuffersEXT
 		 && qglBindFramebufferEXT && qglFramebufferTexture2DEXT && qglBindRenderbufferEXT && qglRenderbufferStorageEXT
