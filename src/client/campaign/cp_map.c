@@ -281,7 +281,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
  */
 void MAP_MapClick (uiNode_t* node, int x, int y)
 {
-	aircraft_t *aircraft;
+	aircraft_t *ufo;
 	int i;
 	vec2_t pos;
 	const linkedList_t *list;
@@ -370,14 +370,14 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 	}
 
 	/* Get selected ufos */
-	for (aircraft = ccs.ufos + ccs.numUFOs - 1; aircraft >= ccs.ufos; aircraft--)
-		if (UFO_IsUFOSeenOnGeoscape(aircraft)
+	for (ufo = ccs.ufos + ccs.numUFOs - 1; ufo >= ccs.ufos; ufo--)
+		if (UFO_IsUFOSeenOnGeoscape(ufo)
 #ifdef DEBUG
 		|| Cvar_GetInteger("debug_showufos")
 #endif
 		)
-			if (AIR_IsAircraftOnGeoscape(aircraft) && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
-				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, aircraft - ccs.ufos, _("UFO Sighting"), UFO_AircraftToIDOnGeoscape(aircraft));
+			if (AIR_IsAircraftOnGeoscape(ufo) && MAP_IsMapPositionSelected(node, ufo->pos, x, y))
+				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, ufo - ccs.ufos, _("UFO Sighting"), UFO_AircraftToIDOnGeoscape(ufo));
 
 	if (multiSelect.nbSelect == 1) {
 		/* Execute directly action for the only one element selected */
@@ -395,7 +395,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 			/* Move the selected aircraft to the position clicked */
 			MAP_MapCalcLine(ccs.selectedAircraft->pos, pos, &ccs.selectedAircraft->route);
 			ccs.selectedAircraft->status = AIR_TRANSIT;
-			ccs.selectedAircraft->time = aircraft->point = 0;
+			ccs.selectedAircraft->time = ufo->point = 0;
 		}
 	}
 }
@@ -1129,7 +1129,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	int counter = 0;
 	int maxEventIdx;
 	const int numMissions = CP_CountMissionOnGeoscape();
-	aircraft_t *aircraft;
+	aircraft_t *ufo;
 
 	/* If the value of maxEventIdx is too big or to low, restart from begining */
 	maxEventIdx = numMissions + ccs.numBases + ccs.numInstallations - 1;
@@ -1143,8 +1143,8 @@ static void MAP_GetGeoscapeAngle (float *vector)
 				maxEventIdx++;
 		}
 	}
-	for (aircraft = ccs.ufos + ccs.numUFOs - 1; aircraft >= ccs.ufos; aircraft --) {
-		if (UFO_IsUFOSeenOnGeoscape(aircraft))
+	for (ufo = ccs.ufos + ccs.numUFOs - 1; ufo >= ccs.ufos; ufo --) {
+		if (UFO_IsUFOSeenOnGeoscape(ufo))
 			maxEventIdx++;
 	}
 
@@ -1213,6 +1213,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	/* Cycle through aircraft (only those present on geoscape) */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		aircraft_t *aircraft;
 
 		aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
@@ -1228,11 +1229,11 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	}
 
 	/* Cycle through UFO (only those visible on geoscape) */
-	for (aircraft = ccs.ufos + ccs.numUFOs - 1; aircraft >= ccs.ufos; aircraft --) {
-		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
+	for (ufo = ccs.ufos + ccs.numUFOs - 1; ufo >= ccs.ufos; ufo --) {
+		if (UFO_IsUFOSeenOnGeoscape(ufo)) {
 			if (centerOnEventIdx == counter) {
-				MAP_ConvertObjectPositionToGeoscapePosition(vector, aircraft->pos);
-				MAP_SelectUFO(aircraft);
+				MAP_ConvertObjectPositionToGeoscapePosition(vector, ufo->pos);
+				MAP_SelectUFO(ufo);
 				return;
 			}
 			counter++;

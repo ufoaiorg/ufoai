@@ -309,7 +309,7 @@ void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char
 {
 	char search[MAX_OSPATH], newsubdirs[MAX_OSPATH];
 	char filename[MAX_OSPATH];
-	DIR *fdir;
+	DIR *directory;
 	struct dirent *d;
 	struct stat st;
 
@@ -319,10 +319,10 @@ void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char
 		Com_sprintf(search, sizeof(search), "%s", basedir);
 	}
 
-	if ((fdir = opendir(search)) == NULL)
+	if ((directory = opendir(search)) == NULL)
 		return;
 
-	while ((d = readdir(fdir)) != NULL) {
+	while ((d = readdir(directory)) != NULL) {
 		Com_sprintf(filename, sizeof(filename), "%s/%s", search, d->d_name);
 		if (stat(filename, &st) == -1)
 			continue;
@@ -343,7 +343,7 @@ void Sys_ListFilteredFiles (const char *basedir, const char *subdirs, const char
 		LIST_AddString(list, filename);
 	}
 
-	closedir(fdir);
+	closedir(directory);
 }
 
 #ifdef COMPILE_UFO

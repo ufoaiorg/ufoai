@@ -1394,7 +1394,7 @@ static void TR_TransferList_Scroll_f (void)
 	int transferType;
 	int viewPos;
 	base_t *srcBase = B_GetCurrentSelectedBase();
-	const objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
+	const objDef_t *antimatterOD = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
 
 	if (!srcBase)
 		return;
@@ -1411,10 +1411,10 @@ static void TR_TransferList_Scroll_f (void)
 	if (transferType != TRANS_TYPE_ITEM)
 		return;
 
-	if (B_GetBuildingStatus(td.transferBase, B_ANTIMATTER) && (td.trItemsTmp[od->idx] || B_AntimatterInBase(srcBase))) {
+	if (B_GetBuildingStatus(td.transferBase, B_ANTIMATTER) && (td.trItemsTmp[antimatterOD->idx] || B_AntimatterInBase(srcBase))) {
 		if (cnt >= viewPos && cnt < viewPos + MAX_TRANSLIST_MENU_ENTRIES)
 			UI_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos,
-					td.trItemsTmp[od->idx], 0, B_AntimatterInBase(srcBase) + td.trItemsTmp[od->idx]);
+					td.trItemsTmp[antimatterOD->idx], 0, B_AntimatterInBase(srcBase) + td.trItemsTmp[antimatterOD->idx]);
 		cnt++;
 	}
 	for (i = 0; i < csi.numODs; i++) {

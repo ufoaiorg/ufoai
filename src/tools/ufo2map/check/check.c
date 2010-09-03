@@ -188,8 +188,8 @@ static inline qboolean Check_IsPointInsideBrush (const vec3_t point, const mapbr
  */
 static qboolean Check_SurfProp (const int flag, const side_t *s)
 {
-	const ptrdiff_t index = s - brushsides;
-	const brush_texture_t *tex = &side_brushtextures[index];
+	const ptrdiff_t indexSide = s - brushsides;
+	const brush_texture_t *tex = &side_brushtextures[indexSide];
 	switch (flag) {
 	case SURF_NODRAW:
 		return !strcmp(tex->name, "tex_common/nodraw");
@@ -220,8 +220,8 @@ static qboolean Check_SurfProp (const int flag, const side_t *s)
  */
 static qboolean Check_SurfProps (const int flags, const side_t *s)
 {
-	const ptrdiff_t index = s - brushsides;
-	const brush_texture_t *tex = &side_brushtextures[index];
+	const ptrdiff_t indexSide = s - brushsides;
+	const brush_texture_t *tex = &side_brushtextures[indexSide];
 	const char *texname = tex->name;
 	assert(flags & (SURF_NODRAW | MASK_CLIP));
 
@@ -391,10 +391,10 @@ static qboolean Check_SidesTouch (side_t *a, side_t *b)
 
 	for (i = 0; i < 2; i++) {
 		const winding_t *w = s[i]->winding; /* winding from one of the sides */
-		const mapbrush_t *b = s[i ^ 1]->brush; /* the brush that the other side belongs to */
+		const mapbrush_t *brush = s[i ^ 1]->brush; /* the brush that the other side belongs to */
 
 		for (j = 0; j < w->numpoints ; j++) {
-			if (Check_IsPointInsideBrush(w->p[j], b, PIB_INCL_SURF))
+			if (Check_IsPointInsideBrush(w->p[j], brush, PIB_INCL_SURF))
 				return qtrue;
 		}
 	}
@@ -552,7 +552,7 @@ static int Check_EdgePlaneIntersection (const vec3_t vert1, const vec3_t vert2, 
 {
 	vec3_t direction; /* a vector in the direction of the line */
 	vec3_t lineToPlane; /* a line from vert1 on the line to a point on the plane */
-	float sin; /* sine of angle to plane, cosine of angle to normal */
+	float sinVal; /* sine of angle to plane, cosine of angle to normal */
 	float param; /* param in line equation  line = vert1 + param * (vert2 - vert1) */
 	float length; /* length of the edge */
 
@@ -560,14 +560,17 @@ static int Check_EdgePlaneIntersection (const vec3_t vert1, const vec3_t vert2, 
 	length = VectorLength(direction);
 	if (length < DIST_EPSILON)
 		return qfalse;
-	sin = DotProduct(direction, plane->normal) / length;
-	if (fabs(sin) < SIN_EPSILON)
+	sinVal = DotProduct(direction, plane->normal) / length;
+	if (fabs(sinVal) < SIN_EPSILON)
 		return qfalse;
 	VectorSubtract(plane->planeVector[0], vert1, lineToPlane);
 	param = DotProduct(plane->normal, lineToPlane) / DotProduct(plane->normal, direction);
-	VectorMul(param, direction, direction);/*< now direction points from vert1 to intersection */
+
+	/* direction should point from vert1 to intersection */
+	VectorMul(param, direction, direction);
 	VectorAdd(vert1, direction, intersection);
-	param = param * length;/*< param is now the distance along the edge from vert1 */
+	/* param is now the distance along the edge from vert1 */
+	param = param * length;
 	return (param > CH_DIST_EPSILON) && (param < (length - CH_DIST_EPSILON));
 }
 

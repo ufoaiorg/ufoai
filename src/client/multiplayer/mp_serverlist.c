@@ -370,7 +370,7 @@ static SDL_Thread *masterServerQueryThread;
 static int CL_QueryMasterServerThread (void *data)
 {
 	char *responseBuf;
-	const char *serverList;
+	const char *serverListBuf;
 	const char *token;
 	char node[MAX_VAR], service[MAX_VAR];
 	int i, num;
@@ -381,10 +381,10 @@ static int CL_QueryMasterServerThread (void *data)
 		return 1;
 	}
 
-	serverList = responseBuf;
+	serverListBuf = responseBuf;
 
-	Com_DPrintf(DEBUG_CLIENT, "masterserver response: %s\n", serverList);
-	token = Com_Parse(&serverList);
+	Com_DPrintf(DEBUG_CLIENT, "masterserver response: %s\n", serverListBuf);
+	token = Com_Parse(&serverListBuf);
 
 	num = atoi(token);
 	if (num >= MAX_SERVERLIST) {
@@ -393,15 +393,15 @@ static int CL_QueryMasterServerThread (void *data)
 	}
 	for (i = 0; i < num; i++) {
 		/* host */
-		token = Com_Parse(&serverList);
-		if (!*token || !serverList) {
+		token = Com_Parse(&serverListBuf);
+		if (!*token || !serverListBuf) {
 			Com_Printf("Could not finish the masterserver response parsing\n");
 			break;
 		}
 		Q_strncpyz(node, token, sizeof(node));
 		/* port */
-		token = Com_Parse(&serverList);
-		if (!*token || !serverList) {
+		token = Com_Parse(&serverListBuf);
+		if (!*token || !serverListBuf) {
 			Com_Printf("Could not finish the masterserver response parsing\n");
 			break;
 		}

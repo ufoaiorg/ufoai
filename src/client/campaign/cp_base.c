@@ -1206,15 +1206,15 @@ static void B_SetUpFirstBase (base_t* base)
 	/* buy two first aircraft and hire pilots for them. */
 	if (B_GetBuildingStatus(base, B_HANGAR)) {
 		const char *firebird = Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
-		const aircraft_t *aircraft = AIR_GetAircraft(firebird);
+		const aircraft_t *firebirdAircraft = AIR_GetAircraft(firebird);
 		AIR_NewAircraft(base, firebird);
-		CL_UpdateCredits(ccs.credits - aircraft->price);
+		CL_UpdateCredits(ccs.credits - firebirdAircraft->price);
 	}
 	if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 		const char *stiletto = Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
-		const aircraft_t *aircraft = AIR_GetAircraft(stiletto);
+		const aircraft_t *stilettoAircraft = AIR_GetAircraft(stiletto);
 		AIR_NewAircraft(base, stiletto);
-		CL_UpdateCredits(ccs.credits - aircraft->price);
+		CL_UpdateCredits(ccs.credits - stilettoAircraft->price);
 	}
 
 	/* Find the initial equipment definition for current campaign. */
@@ -2898,7 +2898,6 @@ qboolean B_LoadStorageXML (mxml_node_t *parent, equipDef_t *equip)
 qboolean B_LoadXML (mxml_node_t *parent)
 {
 	int i;
-	int j;
 	int buildingIdx;
 	mxml_node_t *bases, *base;
 
@@ -2914,6 +2913,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		int aircraftIdxInBase;
 		base_t *const b = B_GetBaseByIDX(i);
 		const char *str = mxml_GetString(base, SAVE_BASES_BASESTATUS);
+		int j;
 
 		b->idx = B_GetBaseIDX(b);
 		b->founded = qtrue;
@@ -2940,16 +2940,16 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		/* building space*/
 		node = mxml_GetNode(base, SAVE_BASES_BUILDINGSPACE);
 		for (snode = mxml_GetNode(node, SAVE_BASES_BUILDING); snode; snode = mxml_GetNextNode(snode, node, SAVE_BASES_BUILDING)) {
-			const int j = mxml_GetInt(snode, SAVE_BASES_X, 0);
+			const int k = mxml_GetInt(snode, SAVE_BASES_X, 0);
 			const int l = mxml_GetInt(snode, SAVE_BASES_Y, 0);
 			buildingIdx = mxml_GetInt(snode, SAVE_BASES_BUILDINGINDEX, -1);
 
 			if (buildingIdx != -1)
 				/* The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
-				b->map[j][l].building = &ccs.buildings[i][buildingIdx];
+				b->map[k][l].building = &ccs.buildings[i][buildingIdx];
 			else
-				b->map[j][l].building = NULL;
-			b->map[j][l].blocked = mxml_GetBool(snode, SAVE_BASES_BLOCKED, qfalse);
+				b->map[k][l].building = NULL;
+			b->map[k][l].blocked = mxml_GetBool(snode, SAVE_BASES_BLOCKED, qfalse);
 		}
 		/* buildings */
 		node = mxml_GetNode(base, SAVE_BASES_BUILDINGS);

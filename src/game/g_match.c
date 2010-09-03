@@ -35,47 +35,47 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
 {
-	int exp = 0;
+	int experience = 0;
 	abilityskills_t i;
 
 	switch (skill) {
 	case ABILITY_POWER:
-		exp = 46; /** @todo Make a formula for this once strength is used in combat. */
+		experience = 46; /** @todo Make a formula for this once strength is used in combat. */
 		break;
 	case ABILITY_SPEED:
-		exp = chr->scoreMission->movedNormal / 2 + chr->scoreMission->movedCrouched + (chr->scoreMission->firedTUs[skill] + chr->scoreMission->firedSplashTUs[skill]) / 10;
+		experience = chr->scoreMission->movedNormal / 2 + chr->scoreMission->movedCrouched + (chr->scoreMission->firedTUs[skill] + chr->scoreMission->firedSplashTUs[skill]) / 10;
 		break;
 	case ABILITY_ACCURACY:
 		for (i = 0; i < SKILL_NUM_TYPES; i++) {
 			if (i == SKILL_SNIPER)
-				exp += 30 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
+				experience += 30 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
 			else
-				exp += 20 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
+				experience += 20 * (chr->scoreMission->hits[i][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[i][KILLED_ENEMIES]);
 		}
 		break;
 	case ABILITY_MIND:
-		exp = 50 + 200 * chr->scoreMission->kills[KILLED_ENEMIES];
+		experience = 50 + 200 * chr->scoreMission->kills[KILLED_ENEMIES];
 		break;
 	case SKILL_CLOSE:
-		exp = 150 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
+		experience = 150 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
 		break;
 	case SKILL_HEAVY:
-		exp = 200 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
+		experience = 200 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
 		break;
 	case SKILL_ASSAULT:
-		exp = 100 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
+		experience = 100 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
 		break;
 	case SKILL_SNIPER:
-		exp = 200 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
+		experience = 200 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
 		break;
 	case SKILL_EXPLOSIVE:
-		exp = 200 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
+		experience = 200 * (chr->scoreMission->hits[skill][KILLED_ENEMIES] + chr->scoreMission->hitsSplash[skill][KILLED_ENEMIES]);
 		break;
 	default:
 		break;
 	}
 
-	return exp;
+	return experience;
 }
 
 /**

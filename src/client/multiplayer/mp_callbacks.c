@@ -85,13 +85,13 @@ static void CL_RconCallback (struct net_stream *s)
 	struct dbuffer *buf = NET_ReadMsg(s);
 	if (buf) {
 		const int cmd = NET_ReadByte(buf);
-		char str[8];
-		NET_ReadStringLine(buf, str, sizeof(str));
+		char commandBuf[8];
+		NET_ReadStringLine(buf, commandBuf, sizeof(commandBuf));
 
-		if (cmd == clc_oob && !strcmp(str, "print")) {
-			char str[2048];
-			NET_ReadString(buf, str, sizeof(str));
-			Com_Printf("%s\n", str);
+		if (cmd == clc_oob && !strcmp(commandBuf, "print")) {
+			char paramBuf[2048];
+			NET_ReadString(buf, paramBuf, sizeof(paramBuf));
+			Com_Printf("%s\n", paramBuf);
 		}
 	}
 	NET_StreamFree(s);

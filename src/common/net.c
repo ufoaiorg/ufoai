@@ -561,10 +561,10 @@ void NET_Wait (int timeout)
 	loopback_ready = qfalse;
 }
 
-static qboolean NET_SocketSetNonBlocking (int socket)
+static qboolean NET_SocketSetNonBlocking (int socketNum)
 {
 	unsigned long t = 1;
-	if (ioctlsocket(socket, FIONBIO, &t) == -1) {
+	if (ioctlsocket(socketNum, FIONBIO, &t) == -1) {
 		Com_Printf("ioctl FIONBIO failed: %s\n", strerror(errno));
 		return qfalse;
 	}

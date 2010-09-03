@@ -993,7 +993,7 @@ qboolean CL_ActorFireModeActivated (const actorModes_t mode)
  */
 void CL_ActorTurnMouse (void)
 {
-	vec3_t div;
+	vec3_t directionVector;
 	byte dv;
 
 	if (mouseSpace != MS_WORLD)
@@ -1014,8 +1014,8 @@ void CL_ActorTurnMouse (void)
 	}
 
 	/* calculate dv */
-	VectorSubtract(mousePos, selActor->pos, div);
-	dv = AngleToDV((int) (atan2(div[1], div[0]) * todeg));
+	VectorSubtract(mousePos, selActor->pos, directionVector);
+	dv = AngleToDV((int) (atan2(directionVector[1], directionVector[0]) * todeg));
 
 	/* send message to server */
 	MSG_Write_PA(PA_TURN, selActor->entnum, dv);

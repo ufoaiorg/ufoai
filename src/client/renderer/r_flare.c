@@ -75,7 +75,7 @@ void R_DrawFlareSurfaces (mBspSurfaces_t *surfs)
 	int i, j, k, l, m;
 	vec3_t view, verts[4];
 	vec3_t right, up, upright, downright;
-	float cos, dist, scale, alpha;
+	float dot, dist, scale, alpha;
 	qboolean visible;
 
 	if (!r_flares->integer)
@@ -134,11 +134,11 @@ void R_DrawFlareSurfaces (mBspSurfaces_t *surfs)
 		dist = VectorNormalize(view);
 
 		/* fade according to angle */
-		cos = DotProduct(surf->normal, view);
-		if (cos > 0)
+		dot = DotProduct(surf->normal, view);
+		if (dot > 0)
 			continue;
 
-		alpha = 0.1 + -cos * r_flares->value;
+		alpha = 0.1 + -dot * r_flares->value;
 
 		if (alpha > 1.0)
 			alpha = 1.0;
