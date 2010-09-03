@@ -535,12 +535,12 @@ static invList_t *UI_BaseInventoryNodeGetItem (const uiNode_t* const node,
 
 		/* skip items over and bellow the node view */
 		if (outOfNode || currentHeight < EXTRADATACONST(node).scrollCur) {
-			int height;
+			int outHeight;
 			R_FontTextSize("f_verysmall", _(obj->name),
-				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
-			height += obj->sy * C_UNIT + 10;
-			if (height > rowHeight)
-				rowHeight = height;
+				cellWidth - 5, LONGLINES_WRAP, NULL, &outHeight, NULL, NULL);
+			outHeight += obj->sy * C_UNIT + 10;
+			if (outHeight > rowHeight)
+				rowHeight = outHeight;
 
 			if (outOfNode || currentHeight + rowHeight < EXTRADATACONST(node).scrollCur) {
 				if (col == EXTRADATACONST(node).columns - 1) {
