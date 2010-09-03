@@ -27,7 +27,7 @@ mojo_packdata:
 	@cp -f $(INSTALLER_DIR)/ufoai.xpm $(MOJOSETUP_INST_DATADIR)
 	@cp -f $(BINARIES) $(MOJOSETUP_INST_DATADIR)
 	@cp -f $(BINARIES_BASE) $(MOJOSETUP_INST_DATADIR)/base
-	@tar -cvpf $(MOJOSETUP_INST_TMP)/i18n.tar base/i18n/ --exclude .svn --exclude updated*
+	@tar -cvpf $(MOJOSETUP_INST_TMP)/i18n.tar base/i18n/ --exclude updated*
 	@tar -xf $(MOJOSETUP_INST_TMP)/i18n.tar -C $(MOJOSETUP_INST_DATADIR)
 
 # Make a .zip archive of the Base Archive dirs and nuke the originals...

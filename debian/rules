@@ -47,7 +47,7 @@ ORIGTGZ = ufoai_$(MAINVER).orig.tar.gz
 DEBTGZ  = ufoai_$(MAINVER).debian.tar.gz
 
 ../$(ORIGTGZ):
-	svn export $(CURDIR) $(TMPDIR)/$(ORIGDIR)
+	git archive HEAD | tar -x -C $(TMPDIR)/$(ORIGDIR)
 	-rm -rf $(TMPDIR)/$(ORIGDIR)/contrib
 	-rm -rf $(TMPDIR)/$(ORIGDIR)/debian
 	cd $(TMPDIR) ; tar -zcf $(ORIGTGZ) $(ORIGDIR) ; cd $(CURDIR)

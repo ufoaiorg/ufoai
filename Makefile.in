@@ -58,13 +58,10 @@ INSTALL=./install-sh
 
 #######################################################################################################
 
-ifeq ($(wildcard .svn),.svn)
-	SVN_REV:=$(shell LANG=C svnversion .)
-	ifeq ($(SVN_REV),)
-		SVN_REV:=$(shell LANG=C svn info | awk '$$1 == "Revision:" {print $$2; exit 0}')
-	endif
-	ifneq ($(SVN_REV),)
-		CFLAGS+=-DUFO_REVISION=\"$(SVN_REV)\"
+ifeq ($(wildcard .git),.git)
+	GIT_REV:=$(shell LANG=C git rev-parse HEAD)
+	ifneq ($(GIT_REV),)
+		CFLAGS+=-DUFO_REVISION=\"$(GIT_REV)\"
 	endif
 endif
 

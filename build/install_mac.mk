@@ -56,7 +56,7 @@ copydata-ufoai: bundle-dirs-ufoai
 	@cp base/*.pk3 $(MAC_INST_DIR)/UFOAI.app/base
 
 copydata-uforadiant:
-	@svn export --force radiant $(MAC_INST_DIR)/UFORadiant.app
+	@git archive HEAD:radiant/ | tar -x -C $(MAC_INST_DIR)/UFORadiant.app
 	@cp -r radiant/i18n/[^.]* $(MAC_INST_DIR)/UFORadiant.app/i18n
 	@cp -rf radiant/plugins/[^.]*.dylib $(MAC_INST_DIR)/UFORadiant.app/plugins
 
@@ -90,12 +90,10 @@ copy-package-bundle-uforadiant: package-dir-uforadiant bundle-uforadiant
 # =======================
 
 strip-dev-files-ufoai: copy-package-bundle-ufoai
-	@find $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME) -type d -print | grep '.*git$$' | xargs rm -rf
 	@find $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME)/UFOAI.app -name ".gitignore" | xargs rm -f
 	@rm $(MAC_INST_DIR)/$(UFOAI_MAC_PACKAGE_NAME)/UFOAI.app/Contents/Info.plist.in
 
 strip-dev-files-uforadiant: copy-package-bundle-uforadiant
-	@find $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME) -type d -print | grep '.*git$$' | xargs rm -rf
 	@find $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME)/UFORadiant.app -name ".gitignore" | xargs rm -f
 	@rm $(MAC_INST_DIR)/$(UFORADIANT_MAC_PACKAGE_NAME)/UFORadiant.app/Contents/Info.plist.in
 

@@ -14,7 +14,7 @@ LINUX_INST_SIZE=$(shell LANG=C; du -sch $(LINUX_INST_TMPDIR) $(BINARIES) $(BINAR
 linux_packdata:
 	@mkdir -p $(LINUX_INST_TMPDIR)/base
 	@echo tar -cvjp -f $(LINUX_INST_DATADIR)/ufo-x86.tar.bz2 $(BINARIES) $(BINARIES_BASE)
-	@tar -cvjp -f $(LINUX_INST_DATADIR)/i18n.tar.bz2 base/i18n/ --exclude .svn --exclude updated*
+	@tar -cvjp -f $(LINUX_INST_DATADIR)/i18n.tar.bz2 base/i18n/ --exclude updated*
 	@cp base/*.pk3 $(LINUX_INST_TMPDIR)/base
 	@cd $(LINUX_INST_TMPDIR) && tar -cvp -f ../data/data.tar base
 

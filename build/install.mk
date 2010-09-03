@@ -24,7 +24,7 @@ installer-pre: lang maps models pk3
 installer: wininstaller linuxinstaller mojoinstaller
 
 mappack: maps-sync
-	tar -cvjp --exclude-from=build/tar.ex -f ufoai-$(UFOAI_VERSION)-mappack.tar.bz2 base/maps
+	git archive --format=tar --prefix=ufoai-$(UFOAI_VERSION)-mappack/ HEAD:base/maps | bzip2 -9 > ufoai-$(UFOAI_VERSION)-mappack.tar.bz2
 
 dataarchive: pk3
 	tar -cvp -f ufoai-$(UFOAI_VERSION)-data.tar $(PAK_PATHS)
@@ -50,22 +50,7 @@ create-release: mappack dataarchive wininstaller linuxinstaller sourcearchive up
 create-dev: mappack dataarchive wininstaller linuxinstaller sourcearchive
 
 #
-# Generate a tar archive of the sources.
-#
+# Generate a tar archive of the sources. Some stuff is ignored here - see the .gitattributes in the root directory
+# 
 sourcearchive:
-# Create the tarsrc/ufoai-$(VERSION)-source directory in order that the
-# resulting tar archive extracts to one directory.
-	mkdir -p ./tarsrc
-	ln -fsn ../ tarsrc/ufoai-$(UFOAI_VERSION)-source
-# Take a list of files from SVN. Trim SVN's output to include only the filenames
-# and paths. Then feed that list to tar.
-	svn status -v|grep -v "^?"|cut -c 7-|awk '{print $$4}'|sed "s/^/ufoai-$(UFOAI_VERSION)-source\//"> ./tarsrc/filelist
-# Also tell tar to exclude base/ and contrib/ directories.
-	tar -cvjh --no-recursion	\
-		-C ./tarsrc				\
-		--exclude "*base/*"		\
-		--exclude "*contrib*"	\
-		-T ./tarsrc/filelist	\
-		-f ./tarsrc/ufoai-$(UFOAI_VERSION)-source.tar.bz2
-	mv ./tarsrc/ufoai-$(UFOAI_VERSION)-source.tar.bz2 ./
-	rm -rf ./tarsrc
+	git archive --format=tar --prefix=ufoai-$(UFOAI_VERSION)-source/ HEAD | bzip2 -9 > ufoai-$(UFOAI_VERSION)-source.tar.bz2

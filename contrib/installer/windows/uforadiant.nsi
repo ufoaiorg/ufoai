@@ -41,8 +41,8 @@ FunctionEnd
 Section "UFORadiant"
 	SetOverwrite ifnewer
 	SetOutPath "$INSTDIR"
-		File /r /x *.svn /x CVS "..\..\..\radiant\*"
-		File /r /x *.svn /x CVS "..\..\dlls\radiant\*"
+		File /r /x .gitignore "..\..\..\radiant\*"
+		File /r /x .gitignore "..\..\dlls\radiant\*"
 
 		SetOutPath "$INSTDIR"
 		CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"

@@ -331,7 +331,7 @@ fi
 test -d "$archdir" || { echo "Error: $archdir does not exist."; rm -f "$tmpfile"; exit 1; }
 echo About to compress $USIZE KB of data...
 echo Adding files to archive named \"$archname\"...
-(cd "$archdir" && ( tar $TAR_ARGS - . --exclude .svn | eval "$GZIP_CMD" ) >> "$tmpfile") || { echo Aborting: Archive directory not found or temporary file: "$tmpfile" could not be created.; rm -f "$tmpfile"; exit 1; }
+(cd "$archdir" && ( tar $TAR_ARGS - . | eval "$GZIP_CMD" ) >> "$tmpfile") || { echo Aborting: Archive directory not found or temporary file: "$tmpfile" could not be created.; rm -f "$tmpfile"; exit 1; }
 echo >> "$tmpfile" >&- # try to close the archive
 
 fsize=`< "$tmpfile" wc -c | tr -d " "`

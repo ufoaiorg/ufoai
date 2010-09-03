@@ -1,24 +1,21 @@
-ifeq ($(wildcard .svn),.svn)
-	SVN_REV2=-$(shell LANG=C svn info | awk '$$1 == "Revision:" {print $$2; exit 0}')
-	ifeq ($(SVN_REV2),-)
-		SVN_REV2=
+ifeq ($(wildcard .git),.git)
+	GIT_REV2=-$(shell LANG=C git rev-parse HEAD)
+	ifeq ($(GIT_REV2),-)
+		GIT_REV2=
 	endif
 endif
 
-# sync sourceforget.net svn to local svn dir
-LOCAL_SVN_DIR ?= /var/lib/svn
+# sync sourceforget.net git into a local dir
+LOCAL_GIT_DIR ?= ~/ufoai-git.sf
 rsync:
-	rsync -avz ufoai.svn.sourceforge.net::svn/ufoai/* $(LOCAL_SVN_DIR)
+	rsync -av ufoai.git.sourceforge.net::gitroot/ufoai/* $(LOCAL_GIT_DIR)
 
 # generate doxygen docs
 doxygen-docs:
 	doxygen src/docs/doxyall
 
 # debian packages
-deb-pre:
-	sed 's/-SVNREVISION/$(SVN_REV2)/' debian/changelog.in > debian/changelog
-
-deb: deb-pre
+deb:
 	debuild binary
 
 pdf-manual:
@@ -36,7 +33,7 @@ help:
 	@echo " * maps         - Compiles the maps"
 	@echo " * models       - Compiles the model mdx files (faster model loading)"
 	@echo " * pk3          - Generate the pk3 archives for the installers"
-	@echo " * rsync        - Creates a local copy of the whole svn (no checkout)"
+	@echo " * rsync        - Creates a local copy of the whole repository (no checkout)"
 	@echo " * update-po    - Updates the po files with latest source and script files"
 	@echo " -----"
 	@echo " * clean        - Removes binaries, no datafiles (e.g. maps)"
