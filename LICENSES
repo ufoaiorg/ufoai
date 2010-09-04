@@ -6766,7 +6766,6 @@ src/tools/blender/test_matrix.py | GNU General Public License 2.0 | Werner "hoeh
 src/tools/findrep.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 src/tools/map2obj.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 src/tools/md2.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
-src/tools/md2.pl_Parse_Binary_FixedFormat_array_bug_patch_01.diff |  | Werner "hoehrer" Höhrer
 src/tools/md2_tag.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 src/tools/savegametool.pl | GNU General Public License 2.0 | Tamás Fehérvári (geever)
 src/tools/ufo2dot.pl | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
