@@ -810,6 +810,7 @@ static void CL_SequenceClick_f (void)
 	SEQ_SendClickEvent(&seq);
 }
 
+#if 0
 /**
  * @brief Start a sequence
  * @sa CL_SequenceEnd_f
@@ -845,6 +846,7 @@ static void CL_SequenceStart_f (void)
 	/* init sequence state */
 	CL_SetClientState(ca_sequence);
 }
+#endif
 
 /**
  * @brief Sets the client state to ca_disconnected
@@ -852,8 +854,10 @@ static void CL_SequenceStart_f (void)
  */
 static void CL_SequenceEnd_f (void)
 {
-	if (cls.state == ca_sequence)
+	if (cls.state == ca_sequence) {
+		/** @todo Is this thing is really need? In this case, we must update the sequence window */
 		CL_SetClientState(ca_disconnected);
+	}
 }
 
 void CL_SequenceRender (void)
@@ -868,8 +872,10 @@ void CL_SequenceRender (void)
 void SEQ_InitStartup (void)
 {
 	Cmd_AddCommand("seq_click", CL_SequenceClick_f, NULL);
+#if 0
 	Cmd_AddCommand("seq_start", CL_SequenceStart_f, NULL);
 	Cmd_AddCommand("seq_end", CL_SequenceEnd_f, NULL);
+#endif
 }
 
 

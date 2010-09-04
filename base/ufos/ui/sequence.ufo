@@ -2,30 +2,32 @@
 // SEQUENCE MENU
 // ==================
 
+/**
+ * @note We should not use that window, but a specific window for each kind of sequence
+ */
 window sequence
 {
-	zone render
 	{
-		size		"1024 768"
+		starlayout	true
+		fill		true
 	}
 
-	func next {
-		cmd "seq_click;"
-	}
-
-	zone click
+	sequence seq
 	{
-		size		"1024 768"
+		align		LAYOUTALIGN_FILL
 		onClick		{ call *node:root.next }
+		onEnd {
+			cmd "mn_close sequence"
+		}
 	}
 
-	confunc end
-	{
-		cmd			"seq_end;"
+	confunc seq_start {
+		*node:root.seq@src = <1>
+		cmd "mn_push sequence"
 	}
 
-	func onClose
-	{
-		call *node:root.end
+	confunc seq_end {
+		cmd "mn_close sequence"
 	}
+
 }
