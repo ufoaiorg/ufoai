@@ -162,5 +162,3 @@ MojoSetup.localization = {
     ["Setup program is shutting down. You can close this browser now."] = {
     };
 };
-
--- end of localization.lua ...

@@ -441,5 +441,3 @@ function Setup.OptionGroup(tab)
         { "description", nil, mustExist, mustBeString, cantBeEmpty },
     })
 end
-
--- end of mojosetup_init.lua ...

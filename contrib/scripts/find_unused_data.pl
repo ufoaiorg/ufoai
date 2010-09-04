@@ -177,5 +177,3 @@ if ($ACTION eq "models") {
 } else {
 	die "Usage\t$0 [models|textures]\n";
 }
-
-__END__

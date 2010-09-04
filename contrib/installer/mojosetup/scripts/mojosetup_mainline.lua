@@ -1087,5 +1087,3 @@ end
 if not saw_an_installer then
     MojoSetup.fatal(_("Nothing to do!"))
 end
-
--- end of mojosetup_mainline.lua ...
