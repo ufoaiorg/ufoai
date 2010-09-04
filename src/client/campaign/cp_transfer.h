@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_TRANSFER_H
 
 #define MAX_TRANSFERS	16
-#define TRANS_LIST_EMPTY_SLOT -1
 
 struct transferData_s;
 
@@ -59,7 +58,7 @@ typedef struct transfer_s {
 	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item. */
 	int alienAmount[MAX_TEAMDEFS][TRANS_ALIEN_MAX];		/**< Alien cargo, [0] alive, [1] dead. */
 	struct employee_s *employeeArray[MAX_EMPL][MAX_EMPLOYEES];	/**< List of personal transferring. */
-	int aircraftArray[MAX_AIRCRAFT];		/**< Aircraft being transferred. aircraftIdx */
+	linkedList_t *aircraft;
 
 	qboolean hasItems;				/**< Transfer of items. */
 	qboolean hasEmployees;			/**< Transfer of employees. */

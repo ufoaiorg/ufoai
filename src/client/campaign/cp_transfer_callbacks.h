@@ -62,7 +62,7 @@ typedef struct transferData_s {
 	employee_t *trEmployeesTmp[MAX_EMPL][MAX_EMPLOYEES];
 
 	/** @brief Current aircraft for transfer. */
-	int trAircraftsTmp[MAX_AIRCRAFT];
+	linkedList_t *aircraft;
 
 	/** @brief Current cargo type count (updated in TR_CargoList) */
 	int trCargoCountTmp;

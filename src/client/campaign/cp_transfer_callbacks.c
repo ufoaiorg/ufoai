@@ -182,7 +182,7 @@ static void TR_TransferStart_f (void)
 	memset(td.trItemsTmp, 0, sizeof(td.trItemsTmp));
 	memset(td.trAliensTmp, 0, sizeof(td.trAliensTmp));
 	memset(td.trEmployeesTmp, 0, sizeof(td.trEmployeesTmp));
-	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
+	LIST_Delete(&td.aircraft);
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to %s"), td.transferBase->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
@@ -351,19 +351,12 @@ static qboolean TR_CheckAlien (base_t *destbase)
  */
 static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *destbase)
 {
-	int i, hangarStorage, numAircraftTransfer = 0;
+	int hangarStorage;
+	int numAircraftTransfer = 0;
+	aircraft_t *aircraftTemp = NULL;
+
 	assert(aircraft);
 	assert(destbase);
-
-	/* Count weight and number of all aircraft already on the transfer list that goes
-	 * into the same hangar type than aircraft. */
-	for (i = 0; i < ccs.numAircraft; i++)
-		if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
-			const aircraft_t *aircraftTemp = AIR_AircraftGetFromIDX(i);
-			assert(aircraftTemp);
-			if (aircraftTemp->size == aircraft->size)
-				numAircraftTransfer++;
-		}
 
 	/* Hangars in destbase functional? */
 	if (!B_GetBuildingStatus(destbase, B_POWER)) {
@@ -376,13 +369,18 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 		UI_Popup(_("Hangars not ready"), _("Destination base does not have any hangar."));
 		return qfalse;
 	}
+
+	/* Count weight and number of all aircraft already on the transfer list that goes
+	 * into the same hangar type than aircraft. */
+	while ((aircraftTemp = (aircraft_t*)LIST_GetNext(td.aircraft, (void*)aircraftTemp))) {
+		if (aircraftTemp->size == aircraft->size)
+			numAircraftTransfer++;
+	}
 	/* Is there a place for this aircraft in destination base? */
 	hangarStorage = AIR_CalculateHangarStorage(aircraft->tpl, destbase, numAircraftTransfer);
-	if (hangarStorage == 0) {
+	if (hangarStorage <= 0) {
 		UI_Popup(_("Not enough space"), _("Destination base does not have enough space in hangars.\n"));
 		return qfalse;
-	} else if (hangarStorage > 0) {
-		return qtrue;
 	}
 
 	return qtrue;
@@ -399,6 +397,7 @@ static void TR_CargoList (void)
 	linkedList_t *cargoList = NULL;
 	linkedList_t *cargoListAmount = NULL;
 	char str[128];
+	aircraft_t *aircraft = NULL;
 
 	td.trCargoCountTmp = 0;
 	memset(td.cargo, 0, sizeof(td.cargo));
@@ -491,20 +490,16 @@ static void TR_CargoList (void)
 	}
 
 	/* Show all aircraft. */
-	for (i = 0; i < ccs.numAircraft; i++) {
-		if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
-			aircraft_t *aircraft = AIR_AircraftGetFromIDX(td.trAircraftsTmp[i]);
-			assert(aircraft);
-			Com_sprintf(str, lengthof(str), _("Aircraft %s"), aircraft->name);
-			LIST_AddString(&cargoList, str);
-			LIST_AddString(&cargoListAmount, "1");
-			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_AIRCRAFT;
-			td.cargo[td.trCargoCountTmp].itemidx = i;
-			td.trCargoCountTmp++;
-			if (td.trCargoCountTmp >= MAX_CARGO) {
-				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
-				break;
-			}
+	while ((aircraft = (aircraft_t*)LIST_GetNext(td.aircraft, (void*)aircraft))) {
+		Com_sprintf(str, lengthof(str), _("Aircraft %s"), aircraft->name);
+		LIST_AddString(&cargoList, str);
+		LIST_AddString(&cargoListAmount, "1");
+		td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_AIRCRAFT;
+		td.cargo[td.trCargoCountTmp].itemidx = i;
+		td.trCargoCountTmp++;
+		if (td.trCargoCountTmp >= MAX_CARGO) {
+			Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
+			break;
 		}
 	}
 
@@ -519,13 +514,11 @@ static void TR_CargoList (void)
  */
 static qboolean TR_AircraftListSelect (int i)
 {
-	aircraft_t *aircraft;
+	aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
 
-	if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT)	/* Already on transfer list. */
-		return qfalse;
-
-	aircraft = AIR_AircraftGetFromIDX(i);
 	if (!AIR_IsAircraftInBase(aircraft))	/* Aircraft is not in base. */
+		return qfalse;
+	if (LIST_GetPointer(td.aircraft, aircraft))	/* Already on transfer list. */
 		return qfalse;
 
 	return qtrue;
@@ -703,16 +696,15 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 		break;
 	case TRANS_TYPE_AIRCRAFT:
 		if (B_GetBuildingStatus(destbase, B_HANGAR) || B_GetBuildingStatus(destbase, B_SMALL_HANGAR)) {
-			for (i = 0; i < MAX_AIRCRAFT; i++) {
-				aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
-				if (aircraft) {
-					if (aircraft->homebase == srcbase && TR_AircraftListSelect(i)) {
-						Com_sprintf(str, sizeof(str), _("Aircraft %s"), aircraft->name);
-						LIST_AddString(&transferList, str);
-						LIST_AddString(&transferListAmount, "1");
-						LIST_AddString(&transferListTransfered, "");
-						cnt++;
-					}
+			aircraft_t *aircraft = NULL;
+
+			while ((aircraft = AIR_GetNextFromBase(srcbase, aircraft))) {
+				if (TR_AircraftListSelect(aircraft->idx)) {
+					Com_sprintf(str, sizeof(str), _("Aircraft %s"), aircraft->name);
+					LIST_AddString(&transferList, str);
+					LIST_AddString(&transferListAmount, "1");
+					LIST_AddString(&transferListTransfered, "");
+					cnt++;
 				}
 			}
 			if (!cnt) {
@@ -798,7 +790,7 @@ static void TR_TransferListClear_f (void)
 	memset(td.trItemsTmp, 0, sizeof(td.trItemsTmp));
 	memset(td.trAliensTmp, 0, sizeof(td.trAliensTmp));
 	memset(td.trEmployeesTmp, 0, sizeof(td.trEmployeesTmp));
-	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
+	LIST_Delete(&td.aircraft);
 	/* Update cargo list and items list. */
 	TR_CargoList();
 	TR_TransferSelect(base, td.transferBase, td.currentTransferType);
@@ -1003,21 +995,20 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case TRANS_TYPE_AIRCRAFT:
-		if (!B_GetBuildingStatus(td.transferBase, B_HANGAR) && !B_GetBuildingStatus(td.transferBase, B_SMALL_HANGAR))
-			return;
-		for (i = 0; i < MAX_AIRCRAFT; i++) {
-			const aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
-			if (!aircraft)
-				return;
-			if (aircraft->homebase == base && TR_AircraftListSelect(i)) {
-				if (cnt == num) {
-					if (TR_CheckAircraft(aircraft, td.transferBase)) {
-						td.trAircraftsTmp[i] = i;
+		if (B_GetBuildingStatus(td.transferBase, B_HANGAR) || B_GetBuildingStatus(td.transferBase, B_SMALL_HANGAR)) {
+			aircraft_t *aircraft = NULL;
+
+			while ((aircraft = AIR_GetNextFromBase(base, aircraft))) {
+				if (TR_AircraftListSelect(aircraft->idx)) {
+					if (cnt == num) {
+						if (TR_CheckAircraft(aircraft, td.transferBase)) {
+							LIST_AddPointer(&td.aircraft, (void*)aircraft);
 						break;
-					} else
-						return;
+						} else
+							return;
+					}
+					cnt++;
 				}
-				cnt++;
 			}
 		}
 		break;
@@ -1296,24 +1287,26 @@ static void TR_CargoListSelect_f (void)
 		}
 		break;
 	case CARGO_TYPE_AIRCRAFT:
-		for (i = 0; i < MAX_CARGO; i++) {
-			/* Count previous types on the list. */
-			switch (td.cargo[i].type) {
-			case CARGO_TYPE_ITEM:
-			case CARGO_TYPE_EMPLOYEE:
-			case CARGO_TYPE_ALIEN_DEAD:
-			case CARGO_TYPE_ALIEN_ALIVE:
-				entries++;
-			default:
-				break;
+		{
+			aircraft_t *aircraft = NULL;
+
+			for (i = 0; i < MAX_CARGO; i++) {
+				/* Count previous types on the list. */
+				switch (td.cargo[i].type) {
+				case CARGO_TYPE_ITEM:
+				case CARGO_TYPE_EMPLOYEE:
+				case CARGO_TYPE_ALIEN_DEAD:
+				case CARGO_TYPE_ALIEN_ALIVE:
+					entries++;
+				default:
+					break;
+				}
 			}
-		}
-		/* Start increasing cnt from the amount of previous entries. */
-		cnt = entries;
-		for (i = 0; i < ccs.numAircraft; i++) {
-			if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
+			/* Start increasing cnt from the amount of previous entries. */
+			cnt = entries;
+			while ((aircraft = (aircraft_t*)LIST_GetNext(td.aircraft, (void*)aircraft))) {
 				if (cnt == num) {
-					td.trAircraftsTmp[i] = TRANS_LIST_EMPTY_SLOT;
+					LIST_Remove(&td.aircraft, aircraft);
 					break;
 				}
 				cnt++;
@@ -1339,7 +1332,7 @@ static void TR_Init_f (void)
 	/* Clear employees temp array. */
 	memset(td.trEmployeesTmp, 0, sizeof(td.trEmployeesTmp));
 	/* Clear aircraft temp array. */
-	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
+	LIST_Delete(&td.aircraft);
 
 	/* Update destination base list */
 	TR_InitBaseList();
@@ -1381,7 +1374,7 @@ static void TR_TransferClose_f (void)
 	memset(td.trItemsTmp, 0, sizeof(td.trItemsTmp));
 	memset(td.trAliensTmp, 0, sizeof(td.trAliensTmp));
 	memset(td.trEmployeesTmp, 0, sizeof(td.trEmployeesTmp));
-	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
+	LIST_Delete(&td.aircraft);
 }
 
 /**
@@ -1437,7 +1430,7 @@ static void TR_TransferList_Scroll_f (void)
 void TR_InitCallbacks (void)
 {
 	memset(&td, 0, sizeof(td));
-	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
+	LIST_Delete(&td.aircraft);
 	Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");
 	Cmd_AddCommand("trans_list_scroll", TR_TransferList_Scroll_f, "Scrolls the transferlist");
 	Cmd_AddCommand("trans_close", TR_TransferClose_f, "Callback for closing Transfer Menu");

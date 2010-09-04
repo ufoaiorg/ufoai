@@ -56,8 +56,6 @@ linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length
  */
 const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* string)
 {
-	assert(list);
-
 	while ((string != NULL) && (list != NULL)) {
 		if (!strcmp((const char*)list->data, string))
 			return list;
@@ -75,8 +73,6 @@ const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* s
  */
 linkedList_t* LIST_GetPointer (linkedList_t* list, const void* data)
 {
-	assert(list);
-
 	while ((data != NULL) && (list != NULL)) {
 		if (list->data == data)
 			return list;
@@ -161,7 +157,8 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
  */
 void LIST_RemoveEntry (linkedList_t **list, linkedList_t *entry)
 {
-	linkedList_t* prev, *listPos;
+	linkedList_t* prev;
+	linkedList_t* listPos;
 
 	assert(list);
 	assert(entry);

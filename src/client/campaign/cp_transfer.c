@@ -162,23 +162,20 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 	 * aircraftArray should contain pointers to aircraftTemplates to avoid this problem, and be removed from
 	 * source base as soon as transfer starts */
 	if (transfer->hasAircraft && success && transfer->srcBase) {	/* Aircraft. Cannot come from mission */
-		int i;
-		for (i = 0; i < ccs.numAircraft; i++) {
-			if (transfer->aircraftArray[i] > TRANS_LIST_EMPTY_SLOT) {
-				aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
-				assert(aircraft);
+		aircraft_t *aircraft = NULL;
 
-				if (AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) > 0) {
-					/* Move aircraft */
-					AIR_MoveAircraftIntoNewHomebase(aircraft, destination);
-				} else {
-					/* No space, aircraft will be lost. */
-					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have enough free space in hangars. Aircraft is lost!"), destination->name);
-					MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
-					AIR_DeleteAircraft(aircraft);
-				}
+		while ((aircraft = (aircraft_t*)LIST_GetNext(transfer->aircraft, (void*)aircraft))) {
+			if (AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) > 0) {
+				/* Move aircraft */
+				AIR_MoveAircraftIntoNewHomebase(aircraft, destination);
+			} else {
+				/* No space, aircraft will be lost. */
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have enough free space in hangars. Aircraft is lost!"), destination->name);
+				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
+				AIR_DeleteAircraft(aircraft);
 			}
 		}
+		LIST_Delete(&transfer->aircraft);
 	}
 }
 
@@ -316,6 +313,7 @@ void TR_TransferStart (base_t *srcBase, struct transferData_s *transData)
 	float time;
 	int i;
 	int j;
+	aircraft_t *aircraft = NULL;
 
 	if (!transData->transferBase || !srcBase) {
 		Com_Printf("TR_TransferStart_f: No base selected!\n");
@@ -392,17 +390,12 @@ void TR_TransferStart (base_t *srcBase, struct transferData_s *transData)
 			transfer->alienAmount[i][TRANS_ALIEN_DEAD] = transData->trAliensTmp[i][TRANS_ALIEN_DEAD];
 		}
 	}
-	memset(transfer->aircraftArray, TRANS_LIST_EMPTY_SLOT, sizeof(transfer->aircraftArray));
-	for (i = 0; i < ccs.numAircraft; i++) {	/* Aircraft. */
-		if (transData->trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
-			aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
-			aircraft->status = AIR_TRANSFER;
-			AIR_RemoveEmployees(aircraft);
-			transfer->hasAircraft = qtrue;
-			transfer->aircraftArray[i] = i;
-		} else {
-			transfer->aircraftArray[i] = TRANS_LIST_EMPTY_SLOT;
-		}
+	LIST_Delete(&transfer->aircraft);
+	while ((aircraft = (aircraft_t*)LIST_GetNext(transData->aircraft, (void *)aircraft))) {
+		aircraft->status = AIR_TRANSFER;
+		AIR_RemoveEmployees(aircraft);
+		transfer->hasAircraft = qtrue;
+		LIST_AddPointer(&transfer->aircraft, (void*)aircraft);
 	}
 
 	/* Recheck if production/research can be done on srcbase (if there are workers/scientists) */
@@ -419,15 +412,15 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 {
 	transfer_t *transfer = NULL;
 
-	assert(aircraft->idx >= 0 && aircraft->idx < MAX_AIRCRAFT);
+	if (!aircraft)
+		return;
 	while ((transfer = TR_GetNext(transfer))) {
-		int tmp = ccs.numAircraft;
-		/* skip non active transfer */
 		if (!transfer->active)
 			continue;
 		if (!transfer->hasAircraft)
 			continue;
-		REMOVE_ELEM_MEMSET(transfer->aircraftArray, aircraft->idx, tmp, TRANS_LIST_EMPTY_SLOT);
+		if (LIST_Remove(&transfer->aircraft, aircraft))
+			return;
 	}
 }
 
@@ -539,17 +532,13 @@ static void TR_ListTransfers_f (void)
 		}
 		/* Transfered Aircraft */
 		if (transfer->hasAircraft) {
-			int j;
+			aircraft_t *aircraft = NULL;
+
 			Com_Printf("...Transfered Aircraft:\n");
-			for (j = 0; j < ccs.numAircraft; j++) {
-				const aircraft_t *aircraft;
-				if (transfer->aircraftArray[j] == TRANS_LIST_EMPTY_SLOT)
-					continue;
-				aircraft = AIR_AircraftGetFromIDX(transfer->aircraftArray[j]);
-				Com_Printf("......%s [idx: %i]\n", (aircraft) ? aircraft->id : "(null)", j);
+			while ((aircraft = (aircraft_t*)LIST_GetNext(transfer->aircraft, (void*)aircraft))) {
+				Com_Printf("......%s [idx: %i]\n", (aircraft) ? aircraft->id : "(null)", aircraft->idx);
 			}
 		}
-
 	}
 }
 #endif
@@ -626,11 +615,11 @@ qboolean TR_SaveXML (mxml_node_t *p)
 		}
 		/* save aircraft */
 		if (transfer->hasAircraft) {
-			for (j = 0; j < ccs.numAircraft; j++) {
-				if (transfer->aircraftArray[j] > TRANS_LIST_EMPTY_SLOT) {
-					mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
-					mxml_AddInt(ss, SAVE_TRANSFER_ID, j);
-				}
+			aircraft_t *aircraft = NULL;
+
+			while ((aircraft = (aircraft_t*)LIST_GetNext(transfer->aircraft, (void*)aircraft))) {
+				mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
+				mxml_AddInt(ss, SAVE_TRANSFER_ID, aircraft->idx);
 			}
 		}
 	}
@@ -676,7 +665,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		memset(transfer->itemAmount, 0, sizeof(transfer->itemAmount));
 		memset(transfer->alienAmount, 0, sizeof(transfer->alienAmount));
 		memset(transfer->employeeArray, 0, sizeof(transfer->employeeArray));
-		memset(transfer->aircraftArray, TRANS_LIST_EMPTY_SLOT, sizeof(transfer->aircraftArray));
+		LIST_Delete(&transfer->aircraft);
 
 		/* load items */
 		/* If there is at last one element, hasItems is true */
@@ -738,9 +727,10 @@ qboolean TR_LoadXML (mxml_node_t *p)
 			transfer->hasAircraft = qtrue;
 			for (; ss; ss = mxml_GetNextNode(ss, s, SAVE_TRANSFER_AIRCRAFT)) {
 				const int j = mxml_GetInt(ss, SAVE_TRANSFER_ID, -1);
+				aircraft_t *aircraft = AIR_AircraftGetFromIDX(j);
 
-				if (j >= 0 && j < ccs.numAircraft)
-					transfer->aircraftArray[j] = j;
+				if (aircraft)
+					LIST_AddPointer(&transfer->aircraft, (void*)aircraft);
 			}
 		}
 		ccs.numTransfers++;
