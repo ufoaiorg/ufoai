@@ -30,4 +30,14 @@ window sequence
 		cmd "mn_close sequence"
 	}
 
+	func onInit {
+		*cvar:sequence_old_scr_showcursor = *cvar:scr_showcursor
+		*cvar:scr_showcursor = 0
+	}
+
+	func onClose {
+		*cvar:scr_showcursor = *cvar:sequence_old_scr_showcursor
+		delete *cvar:sequence_old_scr_showcursor
+	}
+
 }

@@ -328,7 +328,7 @@ static void SCR_DrawConsole (void)
 	if (scr_con_current > 0.0) {
 		Con_DrawConsole(scr_con_current);
 	} else {
-		if ((cls.keyDest == key_game || cls.keyDest == key_message) && cls.state != ca_sequence)
+		if (cls.keyDest == key_game || cls.keyDest == key_message)
 			Con_DrawNotify(); /* only draw notify in game */
 	}
 }
@@ -426,12 +426,8 @@ void SCR_UpdateScreen (void)
 	else {
 		UI_GetActiveRenderRect(&viddef.x, &viddef.y, &viddef.viewWidth, &viddef.viewHeight);
 
-		/* draw scene */
-		if (cls.state == ca_sequence) {
-			CL_SequenceRender();
-		} else {
-			CL_ViewRender();
-		}
+		/* draw scene, if it is need */
+		CL_ViewRender();
 
 		/* draw the menus on top of the render view (for hud and so on) */
 		UI_Draw();
@@ -447,9 +443,7 @@ void SCR_UpdateScreen (void)
 				SCR_DrawString(viddef.width - 20 - con_fontWidth * 14, 80, va("alias: %6i\n", refdef.aliasCount));
 		}
 
-		/** @todo Not really needed, the menu can do the job */
-		if (cls.state != ca_sequence)
-			SCR_DrawCursor();
+		SCR_DrawCursor();
 	}
 
 	R_DrawChars();  /* draw all chars accumulated above */

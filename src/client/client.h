@@ -44,7 +44,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef enum {
 	ca_uninitialized,
 	ca_disconnected,			/**< not talking to a server */
-	ca_sequence,				/**< rendering a sequence */
 	ca_connecting,				/**< sending request packets to the server */
 	ca_connected,				/**< netchan_t established, waiting for svc_serverdata */
 	ca_active					/**< game views should be displayed */

@@ -1084,7 +1084,6 @@ static void CL_InitLocal (void)
 	TUT_InitStartup();
 	PTL_InitStartup();
 	GAME_InitStartup();
-	SEQ_InitStartup();
 	ACTOR_InitStartup();
 	TEAM_InitStartup();
 	TOTD_InitStartup();
@@ -1173,9 +1172,6 @@ void CL_SetClientState (int state)
 	switch (cls.state) {
 	case ca_uninitialized:
 		Com_Error(ERR_FATAL, "CL_SetClientState: Don't set state ca_uninitialized\n");
-		break;
-	case ca_sequence:
-		refdef.ready = qtrue;
 		break;
 	case ca_active:
 		cls.waitingForStart = 0;

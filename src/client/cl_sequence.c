@@ -494,15 +494,8 @@ qboolean SEQ_Render (sequenceContext_t *context)
 	if (!viddef.viewWidth || !viddef.viewHeight)
 		return qtrue;
 
-#if 0	/* @todo is it really need here? If yes, it need to add something in the UI code, or here */
-	/* still loading */
-	if (!refdef.ready)
-		return qtrue;
-#endif
-
-	if (!SEQ_Execute(context)) {
+	if (!SEQ_Execute(context))
 		return qfalse;
-	}
 
 	refdef.numEntities = 0;
 	refdef.mapTiles = cl.mapTiles;
@@ -800,6 +793,7 @@ static int SEQ_ExecuteCommand (sequenceContext_t *context, const char *name, con
  */
 sequenceContext_t seq;
 
+#if 0
 /**
  * @brief Unlock a click event for the current sequence or ends the current sequence if not locked
  * @note Script binding for seq_click
@@ -809,6 +803,7 @@ static void CL_SequenceClick_f (void)
 {
 	SEQ_SendClickEvent(&seq);
 }
+#endif
 
 #if 0
 /**
@@ -848,6 +843,7 @@ static void CL_SequenceStart_f (void)
 }
 #endif
 
+#if 0
 /**
  * @brief Sets the client state to ca_disconnected
  * @sa CL_SequenceStart_f
@@ -868,16 +864,16 @@ void CL_SequenceRender (void)
 		return;
 	}
 }
+#endif
 
+#if 0
 void SEQ_InitStartup (void)
 {
 	Cmd_AddCommand("seq_click", CL_SequenceClick_f, NULL);
-#if 0
 	Cmd_AddCommand("seq_start", CL_SequenceStart_f, NULL);
 	Cmd_AddCommand("seq_end", CL_SequenceEnd_f, NULL);
-#endif
 }
-
+#endif
 
 /* =========================================================== */
 
