@@ -543,33 +543,6 @@ particle flash
 	think { kill }
 }
 
-particle smoketrail
-{
-	init
-	{
-		image	sfx/fireball
-		blend	add
-		style	facing
-		size	"3 3"
-		crand	vector "20 20 20"
-		add		*s
-		pop		*s
-		push	*v
-		mul		float 80.0
-		add		vector "0 0 90"
-		crand	vector "110 110 110"
-		add		#
-		pop		*v
-		a		"0 0 -250"
-		tps		20.0
-		life	1
-	}
-	think
-	{
-		spawn  smoke
-	}
-}
-
 particle firetrail
 {
 	init
@@ -597,28 +570,6 @@ particle firetrail
 	{
 		spawn burnFlame3
 	}
-}
-
-particle smoke
-{
-	init
-	{
-		image  sfx/smoke
-		blend  invfilter
-		style  facing
-		thinkfade  out
-		tps    0.5
-		v      "0 0 0"
-		a      "0 0 0"
-	}
-	run
-	{
-		push pos "16 16"
-		mul  *t
-		add  pos "8 8"
-		pop  *size
-	}
-	think { kill }
 }
 
 particle flashsmoke
@@ -1313,6 +1264,135 @@ particle healCross
 		add    *s
 		pop    *s
 
+	}
+	run
+	{
+
+		push   *color
+		mul    float .2
+		pop    *color
+
+	}
+	think { kill }
+}
+
+//////////////////////////
+//Explosion Smoke Trails//
+//////////////////////////
+
+particle smoketrail
+{
+	init
+	{
+		image	sfx/fireball
+		blend	add
+		style	facing
+		size	"3 3"
+		crand	vector "20 20 20"
+		add		*s
+		pop		*s
+		push	*v
+		mul		float 80.0
+		add		vector "0 0 90"
+		crand	vector "110 110 110"
+		add		#
+		pop		*v
+		a		"0 0 -250"
+		tps		20.0
+		life	1
+	}
+	think
+	{
+		spawn  smoke
+		spawn  smokeFire
+	}
+}
+
+particle smoke
+{
+	init
+	{
+		image  sfx/smoke
+		blend  invfilter
+		style  facing
+		thinkfade  out
+		tps    0.5
+		color  "1 1 1 1"
+		v      "0 0 0"
+		a      "0 0 0"
+	}
+	run
+	{
+		push pos "16 16"
+		mul  *t
+		add  pos "8 8"
+		pop  *size
+	}
+	think { kill }
+}
+
+particle smokeFire
+{
+	init
+	{
+		image  sfx/weapons/rocketfire
+		blend  add
+		style  facing
+		thinkfade  out
+		v      "0 0 0"
+		a      "0 0 0"
+		size   "25 25"
+		tps    3
+	}
+	run
+	{
+
+		push   *color
+		mul    float .2
+		pop    *color
+
+	}
+	think { kill }
+}
+
+////////////////////////
+
+particle smokePlasmatrail
+{
+	init
+	{
+		style	facing
+		crand	vector "20 20 20"
+		add		*s
+		pop		*s
+		push	*v
+		mul		float 90.0
+		add		vector "0 0 90"
+		crand	vector "110 110 110"
+		add		#
+		pop		*v
+		a		"0 0 -350"
+		tps		20.0
+		life	1
+	}
+	think
+	{
+		spawn  smokePlasmaFire
+	}
+}
+
+particle smokePlasmaFire
+{
+	init
+	{
+		image  sfx/weapons/plasmaball-core
+		blend  add
+		style  facing
+		thinkfade  out
+		v      "0 0 0"
+		a      "0 0 0"
+		size   "25 25"
+		tps    3
 	}
 	run
 	{

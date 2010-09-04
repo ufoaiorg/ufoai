@@ -6,6 +6,9 @@ sequence intro // Last change 25-07-2009 by Vio
 	{
 		"background/options_bg"
 		phalanx_badge
+		phalanx_earth
+		phalanx_lance_left
+		phalanx_lance_right
 		geoscape/map_earth_night
 		geoscape/mission
 	}
@@ -30,6 +33,13 @@ sequence intro // Last change 25-07-2009 by Vio
 		fade "0 0 0 0.2"
 	}
 	wait 5.5
+
+	camera cam1
+	{
+		zoom	2.0
+		angles	"20 240 0"
+		dist	500
+	}
 
 	2dobj i_sentence1
 	{
@@ -215,9 +225,25 @@ sequence intro // Last change 25-07-2009 by Vio
 
 	wait 14 // 3 lines
 
+	2dobj i_phalanx-lance-r
+	{
+		image	pics/phalanx_lance_right
+		pos	"1050 1039"
+		color "1 1 1 0"
+		relative false
+	}
+
+	2dobj i_phalanx-lance-l
+	{
+		image	pics/phalanx_lance_left
+		pos	"-225 1039"
+		color "1 1 1 0"
+		relative false
+	}
+
 	2dobj i_phalanxlogo
 	{
-		image	pics/phalanx_badge_big
+		image	pics/phalanx_earth
 		pos	"384 500"
 		speed "0 -16"
 		color "1 1 1 0"
@@ -259,11 +285,59 @@ sequence intro // Last change 25-07-2009 by Vio
 	}
 	wait 1
 
+	2dobj i_phalanx-lance-r
+	{
+		image	pics/phalanx_lance_right
+		pos	"1020 1039"
+		speed "-400 -500"
+		color "1 1 1 0"
+		fade "0 0 0 1"
+		relative false
+	}
+
+	2dobj i_phalanx-lance-l
+	{
+		image	pics/phalanx_lance_left
+		pos	"-250 1039"
+		speed "400 -500"
+		color "1 1 1 0"
+		fade "0 0 0 1"
+		relative false
+	}
+
 	rem i_background
 
-	wait 4
+	wait 0.4
+
+	sound seq/sword-fly
+
+	wait 1.2
+
+	2dobj i_phalanx-lance-r
+	{
+		speed "0 0"
+	}
+
+	2dobj i_phalanx-lance-l
+	{
+		speed "0 0"
+	}
+
+	sound seq/sword-hit
+
+	wait 2.4
 
 	2dobj i_phalanxlogo
+	{
+		fade "0 0 0 -1"
+	}
+
+	2dobj i_phalanx-lance-l
+	{
+		fade "0 0 0 -1"
+	}
+
+	2dobj i_phalanx-lance-r
 	{
 		fade "0 0 0 -1"
 	}

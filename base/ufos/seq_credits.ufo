@@ -1,6 +1,6 @@
 sequence credits
 {
-	music "ufo1"
+	music "Crystan-Credits"
 	cmd "seq_animspeed 1000;"
 
 	precache models
@@ -47,6 +47,7 @@ sequence credits
 		parent	body1
 		tag		tag_head
 	}
+
 	model body2
 	{
 		model	soldiers/malemedium/body
@@ -59,6 +60,7 @@ sequence credits
 		parent	body2
 		tag		tag_head
 	}
+
 	model body3
 	{
 		model	soldiers/male/body
@@ -72,6 +74,7 @@ sequence credits
 		parent	body3
 		tag		tag_head
 	}
+
 	model body4
 	{
 		model	soldiers/malelight/body
@@ -84,18 +87,21 @@ sequence credits
 		parent	body4
 		tag		tag_head
 	}
+
 	model body5
 	{
 		model	soldiers/malemedium/body
 		anim	stand0
 		origin	"-10 -30 5"
 	}
+
 	model head5
 	{
 		model	soldiers/malemedium/head03a
 		parent	body5
 		tag		tag_head
 	}
+
 	model body6
 	{
 		model	soldiers/male/body
@@ -109,6 +115,7 @@ sequence credits
 		parent	body6
 		tag		tag_head
 	}
+
 	model body7
 	{
 		model	soldiers/male/body
@@ -781,7 +788,13 @@ sequence credits
 		angles	"0 90 0"
 	}
 
-	wait 1.0
+	wait 0.6
+
+	sound seq/alienflyby
+
+	wait 0.4
+
+	sound seq/humanflyby
 
 	model interceptor_hull
 	{
@@ -797,4 +810,5 @@ sequence credits
 	rem ship_wings
 	rem ship_engine1
 	rem ship_engine2
+	music "van_theme"
 }

@@ -1152,6 +1152,8 @@ particle plasmaBigExplosion
 		spawn  plasma_explosion
 		push   int 25
 		nspawn plasmaBigSplash
+		push   int 10
+		nspawn smokePlasmatrail
 		kill
 	}
 }

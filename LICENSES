@@ -2369,6 +2369,8 @@ base/models/weapons/xaw95/xaw95.tag | GNU General Public License 2.0 or later | 
 base/models/weapons/xaw95/xaw95_gm.png | GNU General Public License 2.0 or later | MCR | based on original UFO:AI content
 base/music/AlexFightmare.ogg | GNU General Public License 2.0 | Alex Parker
 base/music/AlexForest.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | contains sounds sourced from thefreesoundproject.com and released under the creative commons sampling plus license (1.0).   These sounds and their authors are:   Odayam sounds (night time).wav - "genghis attenborough"   winter woods junkyard.wav - "offthesky (www.offthesky.com)"
+base/music/Crystan-Battlescape01.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/music/Crystan-Credits.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/music/Crystan-Geosphere04.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/music/Crystan-IntroSad.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/music/Crystan-LooseGame.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
@@ -2886,6 +2888,9 @@ base/pics/nations/states.png | GNU General Public License 2.0 | John W. Bjerk (e
 base/pics/nations/states2.png | GNU General Public License 2.0 | UlteriorMotives
 base/pics/phalanx_badge.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/phalanx_badge_big.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/phalanx_earth.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/phalanx_lance_left.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/pics/phalanx_lance_right.png | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/pics/radars/bunker_1.jpg | GNU General Public License 2.0 or later | UFO:AI Team | Derivative work from UFO:AI
 base/pics/radars/bunker_2.jpg | GNU General Public License 2.0 or later | UFO:AI Team | Derivative work from UFO:AI
 base/pics/radars/bunker_3.jpg | GNU General Public License 2.0 or later | UFO:AI Team | Derivative work from UFO:AI
@@ -3617,6 +3622,10 @@ base/sound/misc/lobbyprivmsg.ogg | Creative Commons Attribution-Share Alike 3.0 
 base/sound/misc/popup.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/misc/roundstart.ogg | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/misc/talk.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/seq/alienflyby.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/seq/humanflyby.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/seq/sword-fly.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/seq/sword-hit.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/soldiers/femaledeath01.ogg | GNU General Public License 2.0 | OpenArena
 base/sound/soldiers/femaledeath02.ogg | GNU General Public License 2.0 | OpenArena
 base/sound/soldiers/femaledeath03.ogg | GNU General Public License 2.0 | OpenArena
