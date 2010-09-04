@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
+#include "../ui_actions.h"
 #include "../ui_draw.h"
 #include "../../renderer/r_misc.h"
 #include "../../client.h"
@@ -42,27 +43,34 @@ static const uiBehaviour_t const *localBehaviour;
 
 static void UI_SequenceNodeDrawOverWindow (uiNode_t *node)
 {
-	if (EXTRADATA(node).context != NULL) {
-		vec2_t pos;
-		R_PushMatrix();
-		UI_GetNodeAbsPos(node, pos);
-		SEQ_SetView(EXTRADATA(node).context, pos, node->size);
-		SEQ_Render(EXTRADATA(node).context);
-		R_PopMatrix();
+	qboolean finished = qfalse;
+	vec2_t pos;
+	R_PushMatrix();
+	UI_GetNodeAbsPos(node, pos);
+	SEQ_SetView(EXTRADATA(node).context, pos, node->size);
+	finished = !SEQ_Render(EXTRADATA(node).context);
+	R_PopMatrix();
+
+	if (finished && EXTRADATA(node).onEnd) {
+		UI_ExecuteEventActions(node, EXTRADATA(node).onEnd);
+		EXTRADATA(node).playing = qtrue;
 	}
 }
 
 static void UI_SequenceNodeDraw (uiNode_t *node)
 {
-	UI_CaptureDrawOver(node);
+	if (EXTRADATA(node).context != NULL && EXTRADATA(node).playing)
+		UI_CaptureDrawOver(node);
 }
 
 static void UI_SequenceNodeInit (uiNode_t *node)
 {
 	if (EXTRADATA(node).context == NULL)
 		EXTRADATA(node).context = SEQ_AllocContext();
-	if (node->image != NULL)
+	if (node->image != NULL) {
 		SEQ_InitContext(EXTRADATA(node).context, node->image);
+		EXTRADATA(node).playing = qtrue;
+	}
 }
 
 static void UI_SequenceNodeClose (uiNode_t *node)
@@ -71,6 +79,7 @@ static void UI_SequenceNodeClose (uiNode_t *node)
 		SEQ_FreeContext(EXTRADATA(node).context);
 		EXTRADATA(node).context = NULL;
 	}
+	EXTRADATA(node).playing = qfalse;
 }
 
 static void UI_SequenceNodeLeftClick (uiNode_t *node, int x, int y)
@@ -96,6 +105,9 @@ static void UI_SequencePropertyChanged (uiNode_t *node, const value_t *property)
 static const value_t properties[] = {
 	/** Source of the video. File name without prefix ./base/videos and without extension */
 	{"src", V_CVAR_OR_STRING, offsetof(uiNode_t, image), 0},
+
+	/** Called when the sequence end */
+	{"onend", V_UI_ACTION, UI_EXTRADATA_OFFSETOF(EXTRADATA_TYPE, onEnd), MEMBER_SIZEOF(EXTRADATA_TYPE, onEnd)},
 
 	{NULL, V_NULL, 0, 0}
 };
