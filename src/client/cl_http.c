@@ -89,7 +89,7 @@ static int CL_HTTP_Progress (void *clientp, double dltotal, double dlnow, double
 		Q_strncpyz(cls.downloadName, dl->queueEntry->ufoPath, sizeof(cls.downloadName));
 		cls.downloadPosition = dl->position;
 
-		if (dltotal)
+		if (dltotal > 0.0)
 			cls.downloadPercent = (int)((dlnow / dltotal) * 100.0f);
 		else
 			cls.downloadPercent = 0;

@@ -1679,7 +1679,7 @@ static void CL_TargetingGrenade (const pos3_t fromPos, actorSizeEnum_t fromActor
 	else
 		CL_ParticleSpawn("cross", 0, cross, NULL, NULL);
 
-	if (selActor->fd->splrad) {
+	if (selActor->fd->splrad > 0.0) {
 		Grid_PosToVec(cl.mapData->map, toActorSize, toPos, at);
 		CL_TargetingRadius(at, selActor->fd->splrad);
 	}

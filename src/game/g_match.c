@@ -365,7 +365,7 @@ void G_MatchEndCheck (void)
  */
 qboolean G_MatchIsRunning (void)
 {
-	if (level.intermissionTime)
+	if (level.intermissionTime > 0.0)
 		return qfalse;
 	return (level.activeTeam != TEAM_NO_ACTIVE);
 }

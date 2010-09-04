@@ -946,7 +946,7 @@ static void ExportLightmap (const char *path, const char *name, qboolean day)
 		CalcTextureSize(face, texSize, scale);
 
 		/* write a tga image out */
-		if (texSize[0] && texSize[1]) {
+		if (Vector2NotEmpty(texSize)) {
 			char filename[MAX_QPATH];
 			Com_sprintf(filename, sizeof(filename), "%s/%s_lightmap_%04d%c.tga", path, name, i, day ? 'd' : 'n');
 			Com_Printf("Writing %s (%.0fx%.0f)\n", filename, texSize[0], texSize[1]);

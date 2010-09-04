@@ -173,9 +173,9 @@ int CL_GetHitProbability (const le_t* actor)
 		Com_Error(ERR_DROP, "No character given for local entity");
 
 	acc = GET_ACC(chr->score.skills[ABILITY_ACCURACY],
-			actor->fd->weaponSkill ? chr->score.skills[actor->fd->weaponSkill] : 0);
+			actor->fd->weaponSkill ? chr->score.skills[actor->fd->weaponSkill] : 0.0);
 
-	crouch = (LE_IsCrouched(actor) && actor->fd->crouch) ? actor->fd->crouch : 1;
+	crouch = (LE_IsCrouched(actor) && actor->fd->crouch) ? actor->fd->crouch : 1.0;
 
 	commonfactor = crouch * torad * distance * GET_INJURY_MULT(chr->score.skills[ABILITY_MIND], actor->HP, actor->maxHP);
 	stdevupdown = (actor->fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * commonfactor;

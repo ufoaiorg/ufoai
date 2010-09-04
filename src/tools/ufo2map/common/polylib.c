@@ -307,7 +307,7 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 			else if (normal[j] == -1)
 				mid[j] = -dist;
 			else
-				mid[j] = p1[j] + dot*(p2[j]-p1[j]);
+				mid[j] = p1[j] + dot * (p2[j]-p1[j]);
 		}
 
 		VectorCopy(mid, f->p[f->numpoints]);

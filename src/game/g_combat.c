@@ -474,7 +474,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 
 	const qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
 
-	assert(fd->splrad);
+	assert(fd->splrad > 0.0);
 
 	while ((check = G_EdictsGetNextInUse(check))) {
 		/* If we use a blinding weapon we skip the target if it's looking
@@ -679,7 +679,7 @@ static void G_ShootGrenade (const player_t *player, edict_t *ent, const fireDef_
 				tr.endpos[2] += 10;
 
 				/* check if this is a stone, ammo clip or grenade */
-				if (fd->splrad) {
+				if (fd->splrad > 0.0) {
 					G_SplashDamage(ent, fd, tr.endpos, mock, &tr);
 				} else if (!mock) {
 					/* spawn the stone on the floor */
@@ -829,7 +829,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	/* Base spread multiplier comes from the firedef's spread values. Soldier skills further modify the spread.
 	 * A good soldier will tighten the spread, a bad one will widen it, for skillBalanceMinimum values between 0 and 1.*/
 	commonfactor = (WEAPON_BALANCE + SKILL_BALANCE * acc) * injurymultiplier;
-	if (G_IsCrouched(ent) && fd->crouch) {
+	if (G_IsCrouched(ent) && fd->crouch > 0.0) {
 		angles[PITCH] += gauss1 * (fd->spread[0] * commonfactor) * fd->crouch;
 		angles[YAW] += gauss2 * (fd->spread[1] * commonfactor) * fd->crouch;
 	} else {
@@ -926,7 +926,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 			}
 
 			/* do splash damage */
-			if (fd->splrad) {
+			if (fd->splrad > 0.0) {
 				VectorMA(impact, sv_shot_origin->value, tr.plane.normal, impact);
 				G_SplashDamage(ent, fd, impact, mock, &tr);
 			}

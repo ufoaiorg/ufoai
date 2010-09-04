@@ -54,7 +54,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void UI_ImageNodeLoaded (uiNode_t *node)
 {
 	/* update the size when its possible */
-	if (node->size[0] == 0 && node->size[1] == 0) {
+	if (Vector2Empty(node->size)) {
 		if (EXTRADATA(node).texl[0] != 0 || EXTRADATA(node).texh[0]) {
 			node->size[0] = EXTRADATA(node).texh[0] - EXTRADATA(node).texl[0];
 			node->size[1] = EXTRADATA(node).texh[1] - EXTRADATA(node).texl[1];
@@ -67,7 +67,7 @@ static void UI_ImageNodeLoaded (uiNode_t *node)
 		}
 	}
 #ifdef DEBUG
-	if (node->size[0] == 0 && node->size[1] == 0) {
+	if (Vector2Empty(node->size)) {
 		if (node->onClick || node->onRightClick || node->onMouseEnter || node->onMouseLeave || node->onWheelUp || node->onWheelDown || node->onWheel || node->onMiddleClick) {
 			Com_DPrintf(DEBUG_CLIENT, "Node '%s' is an active image without size\n", UI_GetPath(node));
 		}

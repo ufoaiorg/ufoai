@@ -202,7 +202,7 @@ void UI_UnHideNode (uiNode_t* node)
  */
 void UI_NodeSetSize (uiNode_t* node, vec2_t size)
 {
-	if (node->size[0] == size[0] && node->size[1] == size[1])
+	if (Vector2Equal(node->size, size))
 		return;
 	node->size[0] = size[0];
 	node->size[1] = size[1];

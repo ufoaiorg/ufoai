@@ -43,11 +43,8 @@ qboolean UI_AbstractScrollableNodeIsSizeChange (uiNode_t *node)
 {
 	assert(UI_NodeInstanceOf(node, "abstractscrollable"));
 
-	if (node->size[0] != EXTRADATA(node).cacheSize[0]
-		|| node->size[1] != EXTRADATA(node).cacheSize[1])
-	{
-		EXTRADATA(node).cacheSize[0] = node->size[0];
-		EXTRADATA(node).cacheSize[1] = node->size[1];
+	if (!VectorEqual(node->size, EXTRADATA(node).cacheSize)) {
+		Vector2Copy(node->size, EXTRADATA(node).cacheSize);
 		return qtrue;
 	}
 	return qfalse;

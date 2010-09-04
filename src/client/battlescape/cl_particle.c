@@ -1135,7 +1135,7 @@ void CL_RunMapParticles (void)
 			CL_ParseMapParticle(ptl, mp->info, qtrue);
 
 			/* prepare next spawning */
-			if (mp->wait[0] || mp->wait[1])
+			if (Vector2NotEmpty(mp->wait))
 				mp->nextTime += mp->wait[0] + mp->wait[1] * frand();
 			else
 				mp->nextTime = 0;

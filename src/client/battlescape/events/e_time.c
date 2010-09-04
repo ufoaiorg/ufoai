@@ -126,7 +126,7 @@ int CL_GetEventTime (const event_t eType, struct dbuffer *msg, const int dt)
 				 * bouncing is not needed here, too (we still don't see it) */
 				impactTime = shootTime;
 				nextTime = shootTime + 1400;
-				if (fd->delayBetweenShots)
+				if (fd->delayBetweenShots > 0.0)
 					shootTime += 1000 / fd->delayBetweenShots;
 			}
 			parsedDeath = qfalse;
@@ -186,7 +186,7 @@ int CL_GetEventTime (const event_t eType, struct dbuffer *msg, const int dt)
 
 			if (!(flags & SF_BOUNCED)) {
 				/* shooting */
-				if (fd->speed && !CL_OutsideMap(impact, UNIT_SIZE * 10)) {
+				if (fd->speed > 0.0 && !CL_OutsideMap(impact, UNIT_SIZE * 10)) {
 					impactTime = shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
 				} else {
 					impactTime = shootTime;
@@ -200,7 +200,7 @@ int CL_GetEventTime (const event_t eType, struct dbuffer *msg, const int dt)
 			} else {
 				/* only a bounced shot */
 				eventTime = impactTime;
-				if (fd->speed) {
+				if (fd->speed > 0.0) {
 					impactTime += 1000 * VectorDist(muzzle, impact) / fd->speed;
 					nextTime = impactTime;
 				}

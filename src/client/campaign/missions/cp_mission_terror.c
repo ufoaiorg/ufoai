@@ -114,8 +114,7 @@ static const mission_t* CP_TerrorInCity (const city_t *city)
 		mission_t *mission = (mission_t *)list->data;
 		if (mission->category == INTERESTCATEGORY_TERROR_ATTACK
 		 && mission->stage <= STAGE_TERROR_MISSION
-		 && mission->pos[0] == city->pos[0]
-		 && mission->pos[1] == city->pos[1])
+		 && Vector2Equal(mission->pos, city->pos))
 			return mission;
 	}
 	return NULL;

@@ -389,7 +389,7 @@ static void CL_ResearchSelect_f (void)
 static void RS_ChangeScientist_f (void)
 {
 	int num;
-	float diff;
+	int diff;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
@@ -404,11 +404,11 @@ static void RS_ChangeScientist_f (void)
 	if (num < 0 || num >= researchListLength)
 		return;
 
-	diff = atof(Cmd_Argv(2));
+	diff = atoi(Cmd_Argv(2));
 	if (diff == 0)
 		return;
 
-	Com_DPrintf(DEBUG_CLIENT, "RS_ChangeScientist_f: num %i, diff %i\n", num, (int) diff);
+	Com_DPrintf(DEBUG_CLIENT, "RS_ChangeScientist_f: num %i, diff %i\n", num, diff);
 	if (diff > 0) {
 		RS_AssignScientist(researchList2[num].tech, base, NULL);
 	} else {
