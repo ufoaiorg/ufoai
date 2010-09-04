@@ -247,7 +247,6 @@ aircraft_t *AIR_Add(struct base_s *base, const aircraft_t *aircraftTemplate);
 qboolean AIR_Delete(struct base_s *base, const aircraft_t *aircraft);
 
 aircraft_t* AIR_GetNextFromBase(const struct base_s *base, aircraft_t *lastAircraft);
-aircraft_t* AIR_GetByIDX(int idx);
 
 qboolean AIR_BaseHasAircraft(const struct base_s *base);
 int AIR_GetAircraftIDXInBase(const aircraft_t* aircraft);
@@ -285,6 +284,7 @@ qboolean AIR_ScriptSanityCheck(void);
 int AIR_CalculateHangarStorage(const aircraft_t *aircraft, const struct base_s *base, int used) __attribute__((nonnull (1, 2)));
 int CL_AircraftMenuStatsValues(const int value, const int stat);
 int AIR_CountTypeInBase(const struct base_s *base, aircraftType_t aircraftType);
+int AIR_CountInBaseByTemplate(const struct base_s *base, const aircraft_t *aircraftTemplate);
 const char *AIR_GetAircraftString(aircraftType_t aircraftType);
 
 int AIR_GetAircraftWeaponRanges(const aircraftSlot_t *slot, int maxSlot, float *weaponRanges);

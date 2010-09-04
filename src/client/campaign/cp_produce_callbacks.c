@@ -90,18 +90,9 @@ static void PR_UpdateProductionList (const base_t* base)
 			LIST_AddString(&productionQueued, va("%i", prod->amount));
 		} else if (prod->aircraft) {
 			const aircraft_t *aircraftTemplate = prod->aircraft;
-			aircraft_t *aircraftBase;
-			int counter = 0;
 
 			LIST_AddString(&productionList, va("%s", _(aircraftTemplate->name)));
-
-			aircraftBase = NULL;
-			while ((aircraftBase = AIR_GetNextFromBase(base, aircraftBase))) {
-				if (aircraftBase->tpl == aircraftTemplate)
-					counter++;
-			}
-
-			LIST_AddString(&productionAmount, va("%i", counter));
+			LIST_AddString(&productionAmount, va("%i", AIR_CountInBaseByTemplate(base, aircraftTemplate)));
 			LIST_AddString(&productionQueued, va("%i", prod->amount));
 		} else if (prod->ufo) {
 			const storedUFO_t *ufo = prod->ufo;
@@ -156,18 +147,9 @@ static void PR_UpdateProductionList (const base_t* base)
 					aircraftTemplate->ufotype, aircraftTemplate->tech->id, aircraftTemplate->tech->produceTime);
 
 			if (aircraftTemplate->tech->produceTime > 0 && RS_IsResearched_ptr(aircraftTemplate->tech)) {
-				aircraft_t *aircraftBase;
-				int counter = 0;
-
 				LIST_AddPointer(&productionItemList, aircraftTemplate);
 				LIST_AddString(&productionList, va("%s", _(aircraftTemplate->name)));
-
-				aircraftBase = NULL;
-				while ((aircraftBase = AIR_GetNextFromBase(base, aircraftBase))) {
-					if (aircraftBase->tpl == aircraftTemplate)
-						counter++;
-				}
-				LIST_AddString(&productionAmount, va("%i", counter));
+				LIST_AddString(&productionAmount, va("%i", AIR_CountInBaseByTemplate(base, aircraftTemplate)));
 				LIST_AddString(&productionQueued, "");
 			}
 		}

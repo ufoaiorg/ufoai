@@ -511,6 +511,7 @@ qboolean AIR_IsAircraftOnGeoscape (const aircraft_t * aircraft)
  * @brief Calculates the amount of aircraft (of the given type) in the selected base
  * @param[in] base The base to count the aircraft in
  * @param[in] aircraftType The type of the aircraft you want
+ * @note that this type is just transporter/interceptor/ufo category
  */
 int AIR_CountTypeInBase (const base_t *base, aircraftType_t aircraftType)
 {
@@ -520,6 +521,24 @@ int AIR_CountTypeInBase (const base_t *base, aircraftType_t aircraftType)
 	aircraft = NULL;
 	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 		if (aircraft->type == aircraftType)
+			count++;
+
+	return count;
+}
+
+/**
+ * @brief Calculates the amount of aircraft (of the given type) in the selected base
+ * @param[in] base The base to count the aircraft in
+ * @param[in] aircraftTemplate The type of the aircraft you want
+ */
+int AIR_CountInBaseByTemplate (const base_t *base, const aircraft_t *aircraftTemplate)
+{
+	int count = 0;
+	aircraft_t *aircraft;
+
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
+		if (aircraft->tpl == aircraftTemplate)
 			count++;
 
 	return count;
