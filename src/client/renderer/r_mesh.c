@@ -424,7 +424,7 @@ static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAli
 
 /**
  * @brief Draw the models in the entity list
- * @note this is only called in ca_active or ca_sequence mode
+ * @note this is only called in ca_active or by sequence rendering code
  * @sa R_DrawEntities
  */
 void R_DrawAliasModel (entity_t *e)

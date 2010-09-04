@@ -1,8 +1,9 @@
 /**
  * @file cl_sequence.c
  * @brief Non-interactive sequence rendering and AVI recording.
- * @note Sequences are rendered on top of a menu node - the default menu
- * is stored in mn_sequence cvar
+ * @note Sequences are rendered inside the UI code with the sequence node.
+ * The default window sequence is used as facility with seq_start and seq_stop
+ * commands
  */
 
 /*

@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 
 /** @todo client code should manage itself this vars */
-cvar_t *mn_sequence;
 cvar_t *mn_hud;
 
 uiGlobal_t ui_global;
@@ -333,8 +332,6 @@ void UI_Init (void)
 	memset(&ui_global, 0, sizeof(ui_global));
 
 	/* add cvars */
-	/** @todo not sure it is a ui var */
-	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "This is the sequence window to render the sequence in");
 	/** @todo should be a client Cvar, not a ui */
 	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE | CVAR_LATCH, "This is the current selected HUD");
 

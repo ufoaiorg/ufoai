@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @todo client code should manage itself this vars */
 struct cvar_s;
-extern struct cvar_s *mn_sequence;
 extern struct cvar_s *mn_hud;
 
 /* initialization */
