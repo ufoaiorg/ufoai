@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-08-17 15:30+0200\n"
-"PO-Revision-Date: 2010-08-27 23:00+0200\n"
+"PO-Revision-Date: 2010-08-31 04:53+0200\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -104,7 +104,7 @@ msgstr "Moninpelikenttä"
 
 #: ../base/maps/frozen.ump:383
 msgid "Multiplayer Deathmatch"
-msgstr "Moninpeli Deathmatch"
+msgstr "Deathmatch-moninpeli "
 
 #: ../base/maps/gasstation.ump:63
 msgid "Gasstation"
@@ -2389,7 +2389,7 @@ msgstr "Varsova"
 
 #: ../base/ufos/cities.ufo:2619
 msgid "Washington"
-msgstr "Washington D.C."
+msgstr "Washington"
 
 #: ../base/ufos/cities.ufo:2625
 msgid "Whitehorse"
@@ -12912,11 +12912,11 @@ msgstr "Valitse mihin aikaan haluat pelata @ päivä- tai yöaikaan."
 
 #: ../base/ufos/ui/skirmish.ufo:168
 msgid "Equipment AI Team."
-msgstr "Varusteet AI Tiimillä"
+msgstr "Varusteet AI Joukkueella"
 
 #: ../base/ufos/ui/skirmish.ufo:210
 msgid "Equipment of your team."
-msgstr "Varusta sinun tiimisi"
+msgstr "Varusta sinun joukkueesi"
 
 #: ../base/ufos/ui/skirmish.ufo:255
 msgid "The maximum of AI actors for this game."
@@ -13097,9 +13097,12 @@ msgstr "Paranna"
 msgid "Throw"
 msgstr "Heitä"
 
+# Valonvahvistin
+# Pimeälasit
+# infrapunalasit -> infrapunakiikarit
 #: ../base/ufos/weapons.ufo:63
 msgid "IR Goggles"
-msgstr "IR-Lasit"
+msgstr "Pimeä-Lasit"
 
 #: ../base/ufos/weapons.ufo:82
 msgid "Scan"
@@ -13948,7 +13951,7 @@ msgstr "Säädä kyykistymiselle varausta."
 
 #: client/battlescape/cl_hud_callbacks.c:291
 msgid "Toggle reaction fire"
-msgstr "Vaihda Reagointitilaa"
+msgstr "Vaihda reagointitilaa"
 
 #: client/battlescape/cl_view.c:59
 #: client/battlescape/cl_view.c:84
@@ -14505,7 +14508,7 @@ msgstr "Ei lentokonetta tässä tukikohdassa - Ensin sinun täytyy ostaa lentoko
 
 #: client/campaign/cp_base.c:2320
 msgid "Antimatter (current/max):"
-msgstr "Antimateriaali (nykyinen/maks)"
+msgstr "Antimateriaali (nykyinen/maks.)"
 
 #: client/campaign/cp_base.c:2466
 #, c-format
@@ -14748,7 +14751,7 @@ msgstr "Komentosi alla, PHALANX toimintasi on johdonmukaisesti epäonnistunut su
 
 #: client/campaign/cp_campaign.c:1118
 msgid "Collected dead alien bodies"
-msgstr "Kerättyjä kuolleiden alieneiden kehoja"
+msgstr "Kerätyt alienin kehot"
 
 #: client/campaign/cp_campaign.c:1168
 msgid "Your dropship is not near the landing zone"
@@ -15336,7 +15339,7 @@ msgid ""
 "   - The UFO:AI development team"
 msgstr ""
 "Onnittelut! Olet päässyt loppuun UFO: Alien Invasion kampanjan.\n"
-"Kuitenkaan, tämä peli ei ole tien päässä. Peliä edelleen kehittetään.\n"
+"Kuitenkaan, tämä peli ei ole tien päässä. Peliä edelleen kehitetään.\n"
 "Kampanjaa on tarkoitus laajentaa uusilla tehtävillä, vihollisilla, ufoilla, aluksilla ja tutkimuksella.\n"
 "\n"
 "Voit auttaa meitä pelin tekemisessä! Käy foorumilla tai IRC-kanavalla löytääksesi meidät\n"
@@ -15550,7 +15553,7 @@ msgstr "%s (%i/%i)\t%s\t%s\t%s"
 
 #: client/campaign/cp_popup.c:362
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
-msgstr "Ei alusta saatavissa, ei lentäjää valittu, tai ei taktisista ryhmää valittu saatavilla olevaan alukseen."
+msgstr "Ei alusta saatavissa, ei lentäjää valittu, tai ei taktisista joukkuetta valittu saatavilla olevaan alukseen."
 
 #: client/campaign/cp_popup.c:423
 #, c-format
@@ -15559,11 +15562,11 @@ msgstr "%s%s (%i/%i)\t%s\t%s"
 
 #: client/campaign/cp_popup.c:441
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
-msgstr "Ei alusta saatavissa, ei lentäjää valittu, tai ei aseita tai ammuksia varustettu."
+msgstr "Ei alusta saatavissa, ei lentäjää valittu. Ei aseita tai ammuksia varustettu."
 
 #: client/campaign/cp_popup.c:457
 msgid "No defence system operational or no weapon or ammo equipped."
-msgstr "Ei puolustusjärjestelmä toiminnassa tai ei aseita tai ammuksia varustettu."
+msgstr "Puolustusjärjestelmä ei ole toiminnassa. Ei aseita tai ammuksia varustettu."
 
 #: client/campaign/cp_popup.c:506
 msgid ""
@@ -15572,8 +15575,8 @@ msgid ""
 "\n"
 "Aircraft cannot start.\n"
 msgstr ""
-"Komentokeskus ei toiminnassa tälle\n"
-" lentokoneelle kotitukikohdassa.\n"
+"Komentokeskus ei ole toiminnassa tälle\n"
+"lentokoneelle kotitukikohdassa.\n"
 "\n"
 "Lentokone ei käynnisty.\n"
 
@@ -15586,7 +15589,7 @@ msgstr ""
 #: client/campaign/cp_transfer_callbacks.c:348
 #: client/campaign/cp_transfer_callbacks.c:351
 msgid "Hangars not ready"
-msgstr "Hallit eivät valmiit"
+msgstr "Hallit eivät ole valmiit"
 
 #: client/campaign/cp_produce.c:252
 msgid ""
@@ -15602,7 +15605,7 @@ msgid ""
 "No hangars in this base.\n"
 msgstr ""
 "Lentokonetta ei voi pistää jonoon.\n"
-"Tässä tukikohdassa ei ole lentokonehallia.\n"
+"Tässä tukikohdassa ei ole Lentokonehallia.\n"
 
 #: client/campaign/cp_produce.c:261
 #: client/campaign/cp_produce_callbacks.c:611
@@ -15612,7 +15615,7 @@ msgid ""
 "No free space in hangars.\n"
 msgstr ""
 "Et voi lisätä jonoon lentokonetta.\n"
-"Ei tyhjää tilaa lentokonehallissa.\n"
+"Ei tyhjää tilaa Lentokonehallissa.\n"
 
 #: client/campaign/cp_produce.c:380
 #, c-format
@@ -15732,7 +15735,7 @@ msgid ""
 "Build more workshops.\n"
 msgstr ""
 "Et voi lisätä jonoon kohteita.\n"
-"Rakenna lisää työpajoja.\n"
+"Rakenna lisää Työpajoja.\n"
 
 #: client/campaign/cp_produce_callbacks.c:671
 msgid "You don't have the materials needed for producing this item.\n"
@@ -15891,14 +15894,14 @@ msgstr "Tämä tavara on tutkittavana toisessa tukikohdassa."
 #: client/campaign/cp_research_callbacks.c:581
 #: client/campaign/cp_research_callbacks.c:626
 msgid "The research on this item is complete."
-msgstr "Tämän tuoteen tutkimus on valmis."
+msgstr "Tämän tuotteen tutkimus on valmis."
 
 #: client/campaign/cp_research_callbacks.c:587
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
 msgstr ""
-"Tämän tuoteen tutkimus ei ole mahdollinen.\n"
+"Tämän tuotteen tutkimus ei ole mahdollinen.\n"
 "Sinun täytyy tutkia tekniikka mihin se ensimmäisenä perustuu."
 
 #: client/campaign/cp_research_callbacks.c:656
@@ -16047,7 +16050,7 @@ msgstr "Hallintokustannukset:\t%i k\n"
 #: client/campaign/cp_statistics.c:129
 #, c-format
 msgid "Debt:\t%i c\n"
-msgstr "Velat:\t%i c\n"
+msgstr "Velka:\t%i c\n"
 
 #: client/campaign/cp_statistics.c:132
 #, c-format
@@ -16178,22 +16181,22 @@ msgstr "%s ei ole Varastoa, tavarat on poistettu!"
 #: client/campaign/cp_transfer.c:287
 #: client/campaign/cp_transfer_callbacks.c:158
 msgid "Transport mission"
-msgstr "Kuljetus tehtävä"
+msgstr "Kuljetustehtävä"
 
 #: client/campaign/cp_transfer.c:95
 #, c-format
 msgid "%s does not have Living Quarters, employees got unhired!"
-msgstr "%s ei ole asuinhuoneistoja, henkilöstöä ei palkattu!"
+msgstr "%s ei ole Asuinhuoneistoja, henkilöstöä ei palkattu!"
 
 #: client/campaign/cp_transfer.c:131
 #, c-format
 msgid "%s does not have Alien Containment, Aliens are removed!"
-msgstr "%s ei ole Alienin säilytystilaa, Alienit ovat poistettu!"
+msgstr "%s ei ole Alienin Säilytystilaa, Alienit ovat poistettu!"
 
 #: client/campaign/cp_transfer.c:160
 #, c-format
 msgid "%s does not have enough free space in hangars. Aircraft is lost!"
-msgstr "%s lentokone halleissa ei ole riittävästi vapaata tilaa. Lentokoneet on menetetty!"
+msgstr "%s Lentokone Halleissa ei ole riittävästi vapaata tilaa. Lentokone menetettiin!"
 
 #: client/campaign/cp_transfer.c:265
 #: client/campaign/cp_transfer_callbacks.c:157
@@ -16231,7 +16234,7 @@ msgid ""
 "Antimatter Storage space to store more antimatter.\n"
 msgstr ""
 "Kohteesi tukikohdassa ei ole tarpeeksi\n"
-"tilaa Antimateriaali Varastossa varastoidaksesi antimateriaa.\n"
+"tilaa Antimateriaali Varastossa antimaterian varastoimiseksi.\n"
 
 #: client/campaign/cp_transfer_callbacks.c:216
 #: client/campaign/cp_transfer_callbacks.c:229
@@ -16289,31 +16292,31 @@ msgid ""
 "in Alien Containment.\n"
 msgstr ""
 "Kohteena olevassa tukikohdassa ei ole tarpeeksi tilaa\n"
-"Alienin säilytystilalle.\n"
+"Alienin Säilytystilalle.\n"
 
 #: client/campaign/cp_transfer_callbacks.c:345
 msgid ""
 "Destination base does not have hangars ready.\n"
 "Provide power supplies.\n"
 msgstr ""
-"Kohteena olevassa tukikohdassa ei ole halli tilaa valmiina.\n"
-"Hanki virtalähde.\n"
+"Kohteena olevassa tukikohdassa ei ole Lentokonehalli tilaa valmiina.\n"
+"Hanki Voimalaitos.\n"
 
 #: client/campaign/cp_transfer_callbacks.c:348
 msgid ""
 "Destination base does not have command centre.\n"
 "Hangars not functional.\n"
 msgstr ""
-"Kohteena olevassa tukikohdassa ei ole komentokeskusta.\n"
-"Hallitilat eivät toimi.\n"
+"Kohteena olevassa tukikohdassa ei ole Komentokeskusta.\n"
+"Lentokonehallit eivät toimi.\n"
 
 #: client/campaign/cp_transfer_callbacks.c:351
 msgid "Destination base does not have any hangar."
-msgstr "Kohteena olevassa tukikohdassa ei ole hallitilaa."
+msgstr "Kohteena olevassa tukikohdassa ei ole Lentokonehallia."
 
 #: client/campaign/cp_transfer_callbacks.c:357
 msgid "Destination base does not have enough space in hangars.\n"
-msgstr "Kohteena olevassa tukikohdassa ei ole tilaa halleille.\n"
+msgstr "Kohteena olevassa tukikohdassa ei ole tilaa Lentokonehalleille.\n"
 
 #: client/campaign/cp_transfer_callbacks.c:406
 #: client/campaign/cp_transfer_callbacks.c:583
@@ -16345,12 +16348,12 @@ msgstr "Varasto on tyhjä."
 
 #: client/campaign/cp_transfer_callbacks.c:562
 msgid "Transfer is not possible - the base doesn't have a Storage."
-msgstr "Siirto ei ole mahdollinen - tukikohdassa ei ole varastoa."
+msgstr "Siirto ei ole mahdollinen - tukikohdassa ei ole Varastoa."
 
 #: client/campaign/cp_transfer_callbacks.c:566
 #: client/campaign/cp_transfer_callbacks.c:656
 msgid "Transfer is not possible - the base does not have power supplies."
-msgstr "Siirto ei ole mahdollinen - Tukikohdassa ei ole voimalaitosta."
+msgstr "Siirto ei ole mahdollinen - Tukikohdassa ei ole Voimalaitosta."
 
 #: client/campaign/cp_transfer_callbacks.c:608
 msgid "Living Quarters empty."
@@ -16358,7 +16361,7 @@ msgstr "Asuinhuoneistot ovat tyhjiä."
 
 #: client/campaign/cp_transfer_callbacks.c:613
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
-msgstr "Siirto ei ole mahdollinen - Tukikohdassa ei ole asuinhuoneistoja."
+msgstr "Siirto ei ole mahdollinen - Tukikohdassa ei ole Asuinhuoneistoja."
 
 #: client/campaign/cp_transfer_callbacks.c:635
 #, c-format
@@ -16367,7 +16370,7 @@ msgstr "Elossa %s"
 
 #: client/campaign/cp_transfer_callbacks.c:647
 msgid "Alien Containment is empty."
-msgstr "Alienin säilytystila on tyhjä."
+msgstr "Alienin Säilytystila on tyhjä."
 
 #: client/campaign/cp_transfer_callbacks.c:652
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
@@ -16379,7 +16382,7 @@ msgstr "Lentokoneita ei ole saatavilla siirtoa varten."
 
 #: client/campaign/cp_transfer_callbacks.c:682
 msgid "Transfer is not possible - the base doesn't have a functional hangar."
-msgstr "Siirto ei ole mahdollinen - Tukikohdassa ei ole toimivaa hallia."
+msgstr "Siirto ei ole mahdollinen - Tukikohdassa ei ole toimivaa Lentokonehallia."
 
 #: client/campaign/cp_transfer_callbacks.c:815
 msgid "No target base selected"
@@ -16391,7 +16394,7 @@ msgstr "Valitse tukikohdan kohde listasta"
 
 #: client/campaign/cp_transfer_callbacks.c:975
 msgid "You can transfer equipment - this base has a Storage.\n"
-msgstr "Voit siirtää varusteita -  tässä tukikohdassa on varasto.\n"
+msgstr "Voit siirtää varusteita -  tässä tukikohdassa on Varasto.\n"
 
 #: client/campaign/cp_transfer_callbacks.c:978
 msgid "No Storage in this base.\n"
@@ -16399,7 +16402,7 @@ msgstr "Tässä tukikohdassa ei ole Varastoa.\n"
 
 #: client/campaign/cp_transfer_callbacks.c:982
 msgid "You can transfer employees - this base has Living Quarters.\n"
-msgstr "Voit siirtää henkilöstöä -  tässä tukikohdassa on asuinhuoneistot.\n"
+msgstr "Voit siirtää henkilöstöä -  tässä tukikohdassa on Asuinhuoneistot.\n"
 
 #: client/campaign/cp_transfer_callbacks.c:984
 msgid "No Living Quarters in this base.\n"
@@ -16411,11 +16414,11 @@ msgstr "Voit siirtää Alieneita -  tässä tukikohdassa on Alienin säilytystil
 
 #: client/campaign/cp_transfer_callbacks.c:990
 msgid "No Alien Containment in this base.\n"
-msgstr "Tässä tukikohdassa ei ole Alienin säilytystilaa.\n"
+msgstr "Tässä tukikohdassa ei ole Alienin Säilytystilaa.\n"
 
 #: client/campaign/cp_transfer_callbacks.c:994
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
-msgstr "Voit siirtää antimateriaa -  tässä tukikohdassa on antimateria varasto.\n"
+msgstr "Voit siirtää antimateriaa -  tässä tukikohdassa on Antimateria Varasto.\n"
 
 #: client/campaign/cp_transfer_callbacks.c:996
 msgid "No Antimatter Storage in this base.\n"
@@ -16423,15 +16426,15 @@ msgstr "Tässä tukikohdassa ei ole Antimaterian säilytystilaa.\n"
 
 #: client/campaign/cp_transfer_callbacks.c:1000
 msgid "You can transfer aircraft - this base has a Hangar.\n"
-msgstr "Voit siirtää lentokoneita -  tässä tukikohdassa on lentokonehalli.\n"
+msgstr "Voit siirtää lentokoneita -  tässä tukikohdassa on Lentokonehalli.\n"
 
 #: client/campaign/cp_transfer_callbacks.c:1002
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
-msgstr "Lentokoneen siirto ei ole mahdollinen - täss tukikohdassa ei ole komentokeskusta.\n"
+msgstr "Lentokoneen siirto ei ole mahdollinen - tässä tukikohdassa ei ole Komentokeskusta.\n"
 
 #: client/campaign/cp_transfer_callbacks.c:1004
 msgid "No Hangar in this base.\n"
-msgstr "Tukikohdassa ei ole lentokonehallia.\n"
+msgstr "Tukikohdassa ei ole Lentokonehallia.\n"
 
 #: client/campaign/cp_transfer_callbacks.c:1008
 msgid "No power supplies in this base.\n"
@@ -16444,7 +16447,7 @@ msgid ""
 "Secured crashed %s (%.0f%%)\n"
 msgstr ""
 "\n"
-"%sn turvallinen syöksy (%.0f%%)\n"
+"Turvallinen syöksy %s (%.0f%%)\n"
 
 #: client/campaign/cp_ufo.c:134
 #, c-format
@@ -16468,7 +16471,7 @@ msgstr "Tutka on havainnut uuden UFOn lähellä %s"
 
 #: client/campaign/cp_ufo.c:788
 msgid "Our radar has lost the tracking on a UFO"
-msgstr "Tutka on menettänyt seurannna ufoon"
+msgstr "Tutka on menettänyt seurannan ufoon"
 
 #: client/campaign/cp_ufopedia.c:142
 msgid "Cruising speed"
@@ -16698,12 +16701,12 @@ msgstr "UFO Talteenotettu"
 #: client/campaign/cp_uforecovery_callbacks.c:499
 #, c-format
 msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
-msgstr "Aiemmin myyty %s, joka toipui %s kansakunnassa %s, ansaittu %i krediittiä."
+msgstr "Aiemmin myyty %s, joka talteenotettiin %s kansakunnassa %s, ansaittu %i."
 
 #: client/campaign/cp_uforecovery_callbacks.c:504
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
-msgstr "%s talteenotettu taistelukentältä. Ufo myyty %s kansakunnalle, saatu %i rahaa."
+msgstr "%s talteenotettu taistelukentältä. Ufo myyty %s kansakunnalle, ansaittu %i."
 
 #: client/campaign/missions/cp_mission_baseattack.c:126
 #, c-format
@@ -16790,7 +16793,7 @@ msgstr "Sinä lopetit kierroksen\n"
 #: client/cl_game_multiplayer.c:63
 #, c-format
 msgid "%s ended his round (team %i)\n"
-msgstr "%s päättyi hänen kierros (joukkue %i)\n"
+msgstr "%s hänen kierros päättyi (joukkue %i)\n"
 
 #: client/cl_game_multiplayer.c:82
 msgid "Set soldiers per player lower than soldiers per team"
@@ -16977,7 +16980,7 @@ msgstr "Tuntematon - ei käytettävissä"
 
 #: client/cl_inventory_callbacks.c:342
 msgid "Update the GUI with the selected item"
-msgstr "Päivitä GUI ja valittu kohde"
+msgstr "Päivitä GUI valitulla kohteella"
 
 #: client/cl_irc.c:1440
 msgid "Server closed connection"
@@ -17051,7 +17054,7 @@ msgstr "Keltainen"
 #: client/cl_team.c:61
 #: client/cl_team.c:497
 msgid "CCCP"
-msgstr "Venäjä"
+msgstr "CCCP"
 
 #: client/input/cl_input.c:908
 msgid "Rotate battlescape camera anti-clockwise"
@@ -17152,7 +17155,7 @@ msgstr "Joukkue on jo olemassa"
 
 #: client/multiplayer/mp_callbacks.c:246
 msgid "Invalid or full team"
-msgstr "Virheellinen tai täysi tiimi"
+msgstr "Virheellinen tai täysi joukkue"
 
 #: client/multiplayer/mp_serverlist.c:236
 #, c-format
@@ -17266,7 +17269,7 @@ msgstr "UusiJoukkue"
 
 #: client/multiplayer/mp_team.c:275
 msgid "Error saving team. Check free disk space!"
-msgstr "Virhe tallennettaessa joukkuetta. Kovalevyllä ei ole tilaa!"
+msgstr "Virhe tallennettaessa joukkuetta. Tarkista kovalevyn tyhjä tila!"
 
 #: client/ui/node/ui_node_base.c:201
 #, c-format
@@ -17285,7 +17288,7 @@ msgstr "ei ole toiminnassa, riippuu"
 #: client/ui/node/ui_node_container.c:296
 #, c-format
 msgid "Ammo: %i\n"
-msgstr "Panokset: %i\n"
+msgstr "Ammukset: %i\n"
 
 #: client/ui/node/ui_node_baseinventory.c:247
 #: client/ui/node/ui_node_container.c:295
@@ -17348,43 +17351,43 @@ msgstr "Sotilas poistui pelastusalueelta\n"
 
 #: game/g_actor.c:437
 msgid "Can't perform action - not enough TUs!\n"
-msgstr "Voi suorittaa toimenpidettä - ei riitä TU!\n"
+msgstr "Ei voida suorittaa toimenpidettä - TU ei riitä!\n"
 
 #: game/g_actor.c:441
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
-msgstr "Voi suorittaa toimenpidettä - ase on jo täysin ladattu samoilla ammuksilla!\n"
+msgstr "Ei voida suorittaa toimenpidettä - ase on jo täysin ladattu samoilla ammuksilla!\n"
 
 #: game/g_client.c:308
 msgid "Can't perform action - object not present!\n"
-msgstr "Voi suorittaa toimenpidettä - objekti ei ole läsnä!\n"
+msgstr "Ei voida suorittaa toimenpidettä - objekti ei ole läsnä!\n"
 
 #: game/g_client.c:313
 msgid "Can't perform action - not an actor!\n"
-msgstr "Voi suorittaa toimenpidettä - ei ole hahmosi!\n"
+msgstr "Ei voida suorittaa toimenpidettä - ei ole hahmosi!\n"
 
 #: game/g_client.c:318
 msgid "Can't perform action - actor is stunned!\n"
-msgstr "Voi suorittaa toimenpidettä - hahmo on tainnoksissa!\n"
+msgstr "Ei voida suorittaa toimenpidettä - hahmo on tainnoksissa!\n"
 
 #: game/g_client.c:323
 msgid "Can't perform action - actor is dead!\n"
-msgstr "Voi suorittaa toimenpidettä - hahmo on kuollut!\n"
+msgstr "Ei voida suorittaa toimenpidettä - hahmo on kuollut!\n"
 
 #: game/g_client.c:328
 msgid "Can't perform action - not on same team!\n"
-msgstr "Voi suorittaa toimenpidettä - ei ole samassa joukkueessa!\n"
+msgstr "Ei voida suorittaa toimenpidettä - ei ole samassa joukkueessa!\n"
 
 #: game/g_client.c:333
 msgid "Can't perform action - no control over allied actors!\n"
-msgstr "Voi suorittaa toimenpidettä - ei kontrollia yli liittoutuneiden hahmojen!\n"
+msgstr "Ei voida suorittaa toimenpidettä - ei kontrollia yli liittoutuneiden hahmojen!\n"
 
 #: game/g_client.c:360
 msgid "Can't perform action - this isn't your round!\n"
-msgstr "Voi suorittaa toimenpidettä - tämä ei ole sinun vuorosi!\n"
+msgstr "Ei voida suorittaa toimenpidettä - tämä ei ole sinun vuorosi!\n"
 
 #: game/g_client.c:463
 msgid "Currently shaken, won't let their guard down.\n"
-msgstr "Tällä hetkellä ravisteltu, eivät anna heidän vartijaa alas.\n"
+msgstr "Järkyttynyt, eivät anna vartijaa alas.\n"
 
 #: game/g_cmds.c:71
 #, c-format
@@ -17418,7 +17421,7 @@ msgstr "Ei voi suorittaa toimintoa - aseella ei voi ampua yhdellä kädellä!\n"
 
 #: game/g_combat.c:1107
 msgid "Can't perform action - no ammo!\n"
-msgstr "Ei voi suorittaa toimintoa - Ei ammuksia!\n"
+msgstr "Ei voi suorittaa toimintoa - ei ammuksia!\n"
 
 #: game/g_combat.c:1115
 msgid "Can't perform action - target out of range!\n"
@@ -17497,6 +17500,7 @@ msgid "15 seconds left until forced round end\n"
 msgstr "15 sekuntia aikaa kierroksen loppuun\n"
 
 #: game/g_round.c:68
+#, fuzzy
 msgid "Current active team hit the max round time\n"
 msgstr "Nykyinen aktiivinen joukkue osui maks. kierroksen aika\n"
 
