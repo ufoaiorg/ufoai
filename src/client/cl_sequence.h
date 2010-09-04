@@ -25,6 +25,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_SEQUENCE_H
 #define CLIENT_CL_SEQUENCE_H
 
+struct sequenceContext_s;
+
+#define pSequenceContext_t struct sequenceContext_s*
+
+pSequenceContext_t SEQ_AllocContext(void);
+void SEQ_FreeContext(pSequenceContext_t context);
+qboolean SEQ_InitContext(pSequenceContext_t context, const char *sequenceName);
+qboolean SEQ_Render(pSequenceContext_t context);
+void SEQ_ClickEvent (pSequenceContext_t context);
+
 void CL_SequenceRender(void);
 void SEQ_InitStartup(void);
 void CL_ParseSequence(const char *name, const char **text);

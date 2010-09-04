@@ -392,12 +392,18 @@ static void SEQ_Render2D (sequenceContext_t *context)
  * @note Script binding for seq_click
  * @sa menu sequence in menu_main.ufo
  */
-static void SEQ_ClickEvent (sequenceContext_t *context)
+void SEQ_ClickEvent (sequenceContext_t *context)
 {
 	context->endClickLoop = qtrue;
 }
 
-static qboolean SEQ_InitSequence (sequenceContext_t *context, const char *name)
+/**
+ * Initialize a sequence context from data of a named script sequence
+ * @param context
+ * @param name
+ * @return True if the sequence is initilized.
+ */
+qboolean SEQ_InitContext (sequenceContext_t *context, const char *name)
 {
 	sequence_t *sp;
 	int i;
@@ -459,6 +465,62 @@ static qboolean SEQ_Execute (sequenceContext_t *context)
 	}
 
 	return qtrue;
+}
+
+/**
+ * Execute and render a sequence
+ * @param context Sequence context
+ * @return True if the sequence is alive.
+ */
+qboolean SEQ_Render (sequenceContext_t *context)
+{
+	refdef.brushCount = 0;
+	refdef.aliasCount = 0;
+
+	if (!viddef.viewWidth || !viddef.viewHeight)
+		return qtrue;
+
+	/* still loading */
+	if (!refdef.ready)
+		return qtrue;
+
+	if (!SEQ_Execute(context)) {
+		return qfalse;
+	}
+
+	refdef.numEntities = 0;
+	refdef.mapTiles = cl.mapTiles;
+
+	SEQ_Render3D(context);
+
+	refdef.rendererFlags |= RDF_NOWORLDMODEL;
+
+	/* update ref def */
+	CL_ViewUpdateRenderData();
+
+	/* render the world */
+	R_RenderFrame();
+
+	SEQ_Render2D(context);
+	return qtrue;
+}
+
+/**
+ * Allocate a sequence context
+ * @return Context
+ */
+sequenceContext_t *SEQ_AllocContext (void) {
+	sequenceContext_t *context;
+	context = (sequenceContext_t *) Mem_Alloc(sizeof(*context));
+	return context;
+}
+
+/**
+ * Free a sequence context
+ * @return Context
+ */
+void SEQ_FreeContext (sequenceContext_t *context) {
+	Mem_Free(context);
 }
 
 /* =========================================================== */
@@ -747,7 +809,7 @@ static void CL_SequenceStart_f (void)
 	}
 	name = Cmd_Argv(1);
 
-	if (!SEQ_InitSequence(&seq, name))
+	if (!SEQ_InitContext(&seq, name))
 		return;
 
 	/* display the sequence menu */
@@ -780,36 +842,11 @@ static void CL_SequenceEnd_f (void)
 
 void CL_SequenceRender (void)
 {
-	refdef.brushCount = 0;
-	refdef.aliasCount = 0;
-
-	if (!viddef.viewWidth || !viddef.viewHeight)
-		return;
-
-	/* still loading */
-	if (!refdef.ready)
-		return;
-
-	if (!SEQ_Execute(&seq)) {
+	if (!SEQ_Render(&seq)) {
 		CL_SequenceEnd_f();
 		UI_PopWindow(qfalse);
 		return;
 	}
-
-	refdef.numEntities = 0;
-	refdef.mapTiles = cl.mapTiles;
-
-	SEQ_Render3D(&seq);
-
-	refdef.rendererFlags |= RDF_NOWORLDMODEL;
-
-	/* update ref def */
-	CL_ViewUpdateRenderData();
-
-	/* render the world */
-	R_RenderFrame();
-
-	SEQ_Render2D(&seq);
 }
 
 void SEQ_InitStartup (void)
