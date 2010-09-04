@@ -13,7 +13,8 @@ my $conn = $irc->newconn(
 	Port		=> shift || '6667',
 	Nick		=> 'UFOAIBot',
 	Ircname		=> 'UFOAIBot',
-	Username	=> 'UFOAIBot'
+	Username	=> 'UFOAIBot',
+	LocalAddr	=> 'ufo.ninex.info'
 );
 
 # We're going to add this to the conn hash so we know what channel we
