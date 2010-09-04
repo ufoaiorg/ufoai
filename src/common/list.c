@@ -5,12 +5,11 @@ LINKED LIST
 ============================================================
 */
 
+#include "common.h"
 #include "list.h"
 #include "mem.h"
 #include <assert.h>
 #include <string.h>
-
-extern struct memPool_s *com_genericPool;
 
 /**
  * @brief Adds an entry to a new or to an already existing linked list
