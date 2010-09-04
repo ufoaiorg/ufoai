@@ -1031,15 +1031,15 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 void AI_Run (void)
 {
 	player_t *player;
-	int i;
 
 	/* don't run this too often to prevent overflows */
 	if (level.framenum % 10)
 		return;
 
-	/* set players to ai players and cycle over all of them */
-	for (i = 0, player = game.players + game.sv_maxplayersperteam; i < game.sv_maxplayersperteam; i++, player++)
-		if (player->inuse && G_IsAIPlayer(player) && level.activeTeam == player->pers.team) {
+	player = NULL;
+	while ((player = G_PlayerGetNextActiveAI(player))) {
+		/* set players to ai players and cycle over all of them */
+		if (G_IsAIPlayer(player) && level.activeTeam == player->pers.team) {
 			/* find next actor to handle */
 			edict_t *ent = player->pers.last;
 
@@ -1059,6 +1059,7 @@ void AI_Run (void)
 			player->pers.last = NULL;
 			return;
 		}
+	}
 }
 
 /**
@@ -1209,7 +1210,6 @@ static void G_SpawnAIPlayer (const player_t * player, int numSpawn)
 player_t *AI_CreatePlayer (int team)
 {
 	player_t *p;
-	int i;
 
 	if (!sv_ai->integer) {
 		gi.DPrintf("AI deactivated - set sv_ai cvar to 1 to activate it\n");
@@ -1217,7 +1217,7 @@ player_t *AI_CreatePlayer (int team)
 	}
 
 	/* set players to ai players and cycle over all of them */
-	for (i = 0, p = game.players + game.sv_maxplayersperteam; i < game.sv_maxplayersperteam; i++, p++)
+	while ((p = G_PlayerGetNextAI(p))) {
 		if (!p->inuse) {
 			memset(p, 0, sizeof(*p));
 			p->inuse = qtrue;
@@ -1233,6 +1233,7 @@ player_t *AI_CreatePlayer (int team)
 			gi.DPrintf("Created AI player (team %i)\n", p->pers.team);
 			return p;
 		}
+	}
 
 	/* nothing free */
 	return NULL;

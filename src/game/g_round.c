@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void G_CheckForceEndRound (void)
 {
 	player_t *p;
-	int i, diff;
+	int diff;
 
 	/* check for roundlimits in multiplayer only */
 	if (!sv_roundtimelimit->integer || sv_maxclients->integer == 1)
@@ -68,11 +68,13 @@ void G_CheckForceEndRound (void)
 	gi.BroadcastPrintf(PRINT_HUD, _("Current active team hit the max round time\n"));
 
 	/* set all team members to ready (only human players) */
-	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++)
-		if (p->inuse && p->pers.team == level.activeTeam) {
+	p = NULL;
+	while ((p = G_PlayerGetNextActiveHuman(p))) {
+		if (p->pers.team == level.activeTeam) {
 			G_ClientEndRound(p);
 			level.nextEndRound = level.framenum;
 		}
+	}
 
 	level.roundstartTime = level.time;
 }
@@ -145,7 +147,6 @@ static void G_GetNextActiveTeam (void)
 void G_ClientEndRound (player_t * player)
 {
 	player_t *p;
-	int i;
 
 	if (!G_IsAIPlayer(player)) {
 		/* inactive players can't end their inactive round :) */
@@ -171,8 +172,13 @@ void G_ClientEndRound (player_t * player)
 			gi.WriteByte(player->pers.team);
 			gi.EndEvents();
 		}
-		for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
-			if (p->inuse && p->pers.team == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(p) > 0)
+		p = NULL;
+		while ((p = G_PlayerGetNextActiveHuman(p)))
+			if (p->pers.team == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(p) > 0)
+				return;
+		p = NULL;
+		while ((p = G_PlayerGetNextActiveAI(p)))
+			if (p->pers.team == level.activeTeam && !p->roundDone && G_PlayerSoldiersCount(p) > 0)
 				return;
 	} else {
 		player->roundDone = qtrue;
@@ -219,7 +225,13 @@ void G_ClientEndRound (player_t * player)
 	gi.EndEvents();
 
 	/* reset ready flag for every player on the current team (even ai players) */
-	for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
-		if (p->inuse && p->pers.team == level.activeTeam)
+	p = NULL;
+	while ((p = G_PlayerGetNextActiveHuman(p)))
+		if (p->pers.team == level.activeTeam)
+			p->roundDone = qfalse;
+
+	p = NULL;
+	while ((p = G_PlayerGetNextActiveAI(p)))
+		if (p->pers.team == level.activeTeam)
 			p->roundDone = qfalse;
 }

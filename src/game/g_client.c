@@ -29,6 +29,90 @@ static chrScoreMission_t scoreMission[MAX_EDICTS];
 static int scoreMissionNum = 0;
 
 /**
+ * @brief Iterate through the list of players
+ * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
+ */
+player_t* G_PlayerGetNextHuman (player_t* lastPlayer)
+{
+	player_t* endOfPlayers = &game.players[game.sv_maxplayersperteam];
+	player_t* player;
+
+	if (!game.sv_maxplayersperteam)
+		return NULL;
+
+	if (!lastPlayer)
+		return game.players;
+	assert(lastPlayer >= game.players);
+	assert(lastPlayer < endOfPlayers);
+
+	player = lastPlayer;
+
+	player++;
+	if (player >= endOfPlayers)
+		return NULL;
+	else
+		return player;
+}
+
+/**
+ * @brief Iterate through the list of players
+ * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
+ */
+player_t* G_PlayerGetNextAI (player_t* lastPlayer)
+{
+	player_t* endOfPlayers = &game.players[game.sv_maxplayersperteam * 2];
+	player_t* player;
+
+	if (!game.sv_maxplayersperteam)
+		return NULL;
+
+	if (!lastPlayer)
+		return &game.players[game.sv_maxplayersperteam];
+	assert(lastPlayer >= game.players);
+	assert(lastPlayer < endOfPlayers);
+
+	player = lastPlayer;
+
+	player++;
+	if (player >= endOfPlayers)
+		return NULL;
+	else
+		return player;
+}
+
+/**
+ * @brief Iterate through the list of players
+ * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
+ */
+player_t* G_PlayerGetNextActiveHuman (player_t* lastPlayer)
+{
+	player_t* player = lastPlayer;
+
+	while ((player = G_PlayerGetNextHuman(player))) {
+		if (player->inuse)
+			return player;
+	}
+
+	return NULL;
+}
+
+/**
+ * @brief Iterate through the list of players
+ * @param lastPlayer The player found in the previous iteration; if NULL, we start at the beginning
+ */
+player_t* G_PlayerGetNextActiveAI (player_t* lastPlayer)
+{
+	player_t* player = lastPlayer;
+
+	while ((player = G_PlayerGetNextAI(player))) {
+		if (player->inuse)
+			return player;
+	}
+
+	return NULL;
+}
+
+/**
  * @brief Generates the player bit mask for a given team
  * @param[in] team The team to create the player bit mask for
  * @note E.g. multiplayer team play can have more than one human player on the
@@ -36,15 +120,19 @@ static int scoreMissionNum = 0;
  */
 unsigned int G_TeamToPM (int team)
 {
-	const player_t *p;
+	player_t *p;
 	unsigned int playerMask, i;
 
 	playerMask = 0;
 
 	/* don't handle the ai players, here */
-	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++)
-		if (p->inuse && team == p->pers.team)
+	p = NULL;
+	i = 0;
+	while ((p = G_PlayerGetNextActiveHuman(p))) {
+		if (team == p->pers.team)
 			playerMask |= (1 << i);
+		i++;
+	}
 
 	return playerMask;
 }
@@ -58,15 +146,19 @@ unsigned int G_TeamToPM (int team)
  */
 unsigned int G_VisToPM (unsigned int vis_mask)
 {
-	const player_t *p;
+	player_t *p;
 	unsigned int playerMask, i;
 
 	playerMask = 0;
 
 	/* don't handle the ai players, here */
-	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++)
-		if (p->inuse && (vis_mask & G_TeamToVisMask(p->pers.team)))
+	i = 0;
+	p = NULL;
+	while ((p = G_PlayerGetNextActiveHuman(p))) {
+		if (vis_mask & G_TeamToVisMask(p->pers.team))
 			playerMask |= (1 << i);
+		i++;
+	}
 
 	return playerMask;
 }
@@ -717,7 +809,6 @@ int G_ClientAction (player_t * player)
 static void G_GetTeam (player_t * player)
 {
 	player_t *p;
-	int i, j;
 	int playersInGame = 0;
 
 	/* player has already a team */
@@ -727,7 +818,8 @@ static void G_GetTeam (player_t * player)
 	}
 
 	/* number of currently connected players (no ai players) */
-	for (j = 0, p = game.players; j < game.sv_maxplayersperteam; j++, p++)
+	p = NULL;
+	while ((p = G_PlayerGetNextActiveHuman(p)))
 		if (p->inuse)
 			playersInGame++;
 
@@ -736,6 +828,7 @@ static void G_GetTeam (player_t * player)
 		int spawnCheck[MAX_TEAMS];
 		int spawnSpots = 0;
 		int randomSpot;
+		int i;
 		/* skip civilian teams */
 		for (i = TEAM_PHALANX; i < MAX_TEAMS; i++) {
 			spawnCheck[i] = 0;
@@ -759,8 +852,8 @@ static void G_GetTeam (player_t * player)
 		G_SetTeamForPlayer(player, TEAM_PHALANX);
 	else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
+		const int i = G_ClientGetTeamNumPref(player);
 		gi.DPrintf("Get a team for teamplay for %s\n", player->pers.netname);
-		i = G_ClientGetTeamNumPref(player);
 		/* civilians are at team zero */
 		if (i > TEAM_CIVILIAN && sv_maxteams->integer >= i) {
 			G_SetTeamForPlayer(player, i);
@@ -770,19 +863,23 @@ static void G_GetTeam (player_t * player)
 			G_SetTeamForPlayer(player, TEAM_DEFAULT);
 		}
 	} else {
+		int i;
 		/* search team */
 		gi.DPrintf("Getting a multiplayer team for %s\n", player->pers.netname);
 		for (i = TEAM_CIVILIAN + 1; i < MAX_TEAMS; i++) {
 			if (level.num_spawnpoints[i]) {
 				qboolean teamAvailable = qtrue;
+
+				p = NULL;
 				/* check if team is in use (only human controlled players) */
-				for (j = 0, p = game.players; j < game.sv_maxplayersperteam; j++, p++)
-					if (p->inuse && p->pers.team == i) {
+				while ((p = G_PlayerGetNextActiveAI(p))) {
+					if (p->pers.team == i) {
 						Com_DPrintf(DEBUG_GAME, "Team %i is already in use\n", i);
 						/* team already in use */
 						teamAvailable = qfalse;
 						break;
 					}
+				}
 				if (teamAvailable)
 					break;
 			}
@@ -791,12 +888,14 @@ static void G_GetTeam (player_t * player)
 		/* set the team */
 		if (i < MAX_TEAMS) {
 			/* remove ai player */
-			for (j = 0, p = game.players + game.sv_maxplayersperteam; j < game.sv_maxplayersperteam; j++, p++)
-				if (p->inuse && p->pers.team == i) {
+			p = NULL;
+			while ((p = G_PlayerGetNextActiveHuman(p))) {
+				if (p->pers.team == i) {
 					gi.BroadcastPrintf(PRINT_CONSOLE, "Removing ai player...");
 					p->inuse = qfalse;
 					break;
 				}
+			}
 			Com_DPrintf(DEBUG_GAME, "Assigning %s to team %i\n", player->pers.netname, i);
 			G_SetTeamForPlayer(player, i);
 		} else {
@@ -859,8 +958,8 @@ qboolean G_ClientIsReady (const player_t * player)
  */
 static void G_GetStartingTeam (const player_t* player)
 {
-	int i, j, teamCount = 0;
-	int playerCount = 0;
+	int teamCount;
+	int playerCount;
 	int knownTeams[MAX_TEAMS];
 	player_t *p;
 
@@ -874,24 +973,27 @@ static void G_GetStartingTeam (const player_t* player)
 	}
 
 	/* count number of currently connected unique teams and players (human controlled players only) */
-	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
-		if (p->inuse) {
-			playerCount++;
-			for (j = 0; j < teamCount; j++) {
-				if (p->pers.team == knownTeams[j])
-					break;
-			}
-			if (j == teamCount)
-				knownTeams[teamCount++] = p->pers.team;
+	p = NULL;
+	teamCount = 0;
+	playerCount = 0;
+	while ((p = G_PlayerGetNextActiveHuman(p))) {
+		int j;
+		playerCount++;
+		for (j = 0; j < teamCount; j++) {
+			if (p->pers.team == knownTeams[j])
+				break;
 		}
+		if (j == teamCount)
+			knownTeams[teamCount++] = p->pers.team;
 	}
 
 	if (teamCount) {
 		const int teamIndex = (int) (frand() * (teamCount - 1) + 0.5);
 		G_PrintStats(va("Starting new game: %s with %i teams", level.mapname, teamCount));
 		level.activeTeam = knownTeams[teamIndex];
-		for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++)
-			if (p->inuse && p->pers.team != level.activeTeam)
+		p = NULL;
+		while ((p = G_PlayerGetNextActiveHuman(p)))
+			if (p->pers.team != level.activeTeam)
 				p->roundDone = qtrue;
 	}
 }

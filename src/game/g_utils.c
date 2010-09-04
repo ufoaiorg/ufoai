@@ -143,15 +143,22 @@ const char* G_GetWeaponNameForFiredef (const fireDef_t *fd)
  * @brief Gets player for given team.
  * @param[in] team The team the player data should be searched for
  * @return The inuse player for the given team or @c NULL when no player found.
+ * @todo What if there are multiple players for a team (multiplayer coop match)
  */
 player_t* G_GetPlayerForTeam (int team)
 {
-	int i;
 	player_t *p;
 
 	/* search corresponding player (even ai players) */
-	for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
-		if (p->inuse && p->pers.team == team)
+	p = NULL;
+	while ((p = G_PlayerGetNextActiveHuman(p)))
+		if (p->pers.team == team)
+			/* found player */
+			return p;
+
+	p = NULL;
+	while ((p = G_PlayerGetNextActiveAI(p)))
+		if (p->pers.team == team)
 			/* found player */
 			return p;
 

@@ -480,6 +480,11 @@ unsigned int G_VisToPM(unsigned int vis_mask);
 void G_SendInventory(unsigned int player_mask, const edict_t * ent);
 unsigned int G_TeamToPM(int team);
 
+player_t* G_PlayerGetNextHuman(player_t* lastPlayer);
+player_t* G_PlayerGetNextActiveHuman(player_t* lastPlayer);
+player_t* G_PlayerGetNextAI(player_t* lastPlayer);
+player_t* G_PlayerGetNextActiveAI(player_t* lastPlayer);
+
 void G_SpawnEntities(const char *mapname, qboolean day, const char *entities);
 qboolean G_RunFrame(void);
 

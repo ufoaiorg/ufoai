@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 #include "e_server.h"
-
+#include "../cl_hud.h"
 /**
  * @brief Finishes the current round of the player in battlescape and starts the round for the next team.
  */
@@ -37,8 +37,10 @@ static void CL_NextRound_f (void)
 		return;
 
 	/* can't end round if we're not active */
-	if (cls.team != cl.actTeam)
+	if (cls.team != cl.actTeam) {
+		HUD_DisplayMessage(_("This isn't your round"));
 		return;
+	}
 
 	/* send endround */
 	msg = new_dbuffer();

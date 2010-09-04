@@ -31,19 +31,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void G_Players_f (const player_t *player)
 {
-	int i;
 	int count = 0;
 	char smallBuf[64];
 	char largeBuf[1280];
+	player_t *p;
 
 	/* print information */
 	largeBuf[0] = 0;
 
-	for (i = 0; i < game.sv_maxplayersperteam; i++) {
-		const player_t *p = &game.players[i];
-		if (!p->inuse)
-			continue;
-
+	p = NULL;
+	while ((p = G_PlayerGetNextActiveHuman(p))) {
 		Com_sprintf(smallBuf, sizeof(smallBuf), "(%i) Team %i %s status: %s\n", p->num,
 				p->pers.team, p->pers.netname, (p->roundDone ? "waiting" : "playing"));
 
@@ -119,11 +116,12 @@ static void G_Say_f (player_t *player, qboolean arg0, qboolean team)
 		gi.DPrintf("%s", text);
 
 	for (j = 0; j < game.sv_maxplayersperteam; j++) {
-		if (!game.players[j].inuse)
+		player_t *player = &game.players[j];
+		if (!player->inuse)
 			continue;
-		if (team && game.players[j].pers.team != player->pers.team)
+		if (team && player->pers.team != player->pers.team)
 			continue;
-		G_ClientPrintf(&game.players[j], PRINT_CHAT, "%s", text);
+		G_ClientPrintf(player, PRINT_CHAT, "%s", text);
 	}
 }
 
