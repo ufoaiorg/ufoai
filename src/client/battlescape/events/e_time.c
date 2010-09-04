@@ -195,7 +195,7 @@ int CL_GetEventTime (const event_t eType, struct dbuffer *msg, const int dt)
 					nextTime = impactTime + 1400;
 				else
 					nextTime = impactTime + 400;
-				if (fd->delayBetweenShots)
+				if (fd->delayBetweenShots > 0.0)
 					shootTime += 1000 / fd->delayBetweenShots;
 			} else {
 				/* only a bounced shot */

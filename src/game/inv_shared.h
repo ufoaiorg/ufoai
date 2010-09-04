@@ -109,7 +109,7 @@ typedef struct fireDef_s {
 						 * an explosion or a hit of the projectile. If a delay is set, the (e.g. grenade) may bounce away again. */
 	int bounce;			/**< amount of max possible bounces, for example grenades */
 	float bounceFac;		/**< used in G_ShootGrenade() to apply VectorScale() effect */
-	float crouch;			/**< used for accuracy calculations (G_ShootGrenade(), G_ShootSingle()) */
+	float crouch;			/**< used for accuracy calculations - must be greater than 0.0 */
 	float range;			/**< range of the weapon ammunition, defined per firemode */
 	int shots;			/**< how many shots this firemode will produce */
 	int ammo;			/**< how many ammo this firemode will use */

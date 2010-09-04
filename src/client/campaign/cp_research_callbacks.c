@@ -111,7 +111,7 @@ static void RS_UpdateInfo (const base_t* base)
 	}
 
 	Cvar_Set("mn_research_selname", _(tech->name));
-	if (tech->overallTime) {
+	if (tech->overallTime > 0.0) {
 		if (tech->time > tech->overallTime) {
 			Com_Printf("RS_UpdateInfo: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", tech->id, tech->time,
 					tech->overallTime);
@@ -229,7 +229,7 @@ static void RS_InitGUI (base_t* base, qboolean update)
 				UI_ExecuteConfunc("research_updateitem %i %i %i", i, value, max);
 				/* How many scis are assigned to this tech. */
 				Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
-				if (element->tech->overallTime) {
+				if (element->tech->overallTime > 0.0) {
 					float percentage;
 					if (element->tech->time > element->tech->overallTime) {
 						Com_Printf("RS_InitGUI: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", element->tech->id, element->tech->time,
@@ -266,7 +266,7 @@ static void RS_InitGUI (base_t* base, qboolean update)
 			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
-			if (element->tech->overallTime) {
+			if (element->tech->overallTime > 0.0) {
 				float percentage;
 				if (element->tech->time > element->tech->overallTime) {
 					Com_Printf("RS_InitGUI: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", element->tech->id, element->tech->time,

@@ -501,7 +501,7 @@ static void UI_ModelNodeLoaded (uiNode_t *node)
 		EXTRADATA(node).oldRefValue = UI_AllocStaticString("", MAX_OLDREFVALUE);
 
 	/* no tag but no size */
-	if (EXTRADATA(node).tag == NULL && Vector2Empty(node->size)) {
+	if (EXTRADATA(node).tag == NULL && (node->size[0] == 0 || node->size[1] == 0)) {
 		Com_Printf("UI_ModelNodeLoaded: Please set a pos and size to the node '%s'. Note: 'origin' is a relative value to the center of the node\n", UI_GetPath(node));
 	}
 }
