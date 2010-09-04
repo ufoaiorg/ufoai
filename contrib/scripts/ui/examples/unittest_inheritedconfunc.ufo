@@ -4,12 +4,12 @@ component panel myCrazyComponent {
 		bgcolor		"0 1 0 0.5"
 		size		"80 50"
 	}
-	
+
 	string text {
 		size		"80 50"
 		string		""
 	}
-	
+
 	// this confunc is only called when his window is into the stack
 	// if no instance of this component is into the stack, nothing is called
 	confunc myCrazyComponentSetter {

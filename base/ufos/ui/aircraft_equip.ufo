@@ -515,7 +515,7 @@ window aircraft_equip extends iaircraft
 	{
 		*node:root.airequip_text_zone2@color = "<1>"
 	}
-	
+
 	confunc airequip_zone2_off
 	{
 		*node:root.airequip_header2@invis = true
@@ -628,4 +628,3 @@ window aircraft_equip extends iaircraft
 		delete *cvar:mn_aircraft_item_selected
 	}
 }
-

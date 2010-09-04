@@ -164,4 +164,3 @@ MojoSetup.localization = {
 };
 
 -- end of localization.lua ...
-

@@ -368,4 +368,3 @@ qboolean US_LoadXML (mxml_node_t *p)
 	Com_UnregisterConstList(saveStoredUFOConstants);
 	return qtrue;
 }
-

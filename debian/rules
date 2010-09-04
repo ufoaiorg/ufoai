@@ -62,7 +62,7 @@ debtar: clean
 
 config.status:
 	dh_testdir
-	./configure $(CONFIGUREFLAGS) 
+	./configure $(CONFIGUREFLAGS)
 
 build-arch: stamps/build-arch
 stamps/build-arch: config.status

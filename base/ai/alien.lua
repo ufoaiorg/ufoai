@@ -69,5 +69,3 @@ function engage( target )
 	ai.crouch()
 	target:face()
 end
-
-

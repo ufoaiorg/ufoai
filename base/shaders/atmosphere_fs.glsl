@@ -18,8 +18,8 @@ uniform vec4 DEFAULTCOLOR;
 const float specularExp = 32.0;
 
 /* Fresnel's equations for reflection and refraction between different density media */
-void fresnelRefract(vec3 L, vec3 N, float n1, float n2, 
-	out vec3 reflection, out vec3 refraction, 
+void fresnelRefract(vec3 L, vec3 N, float n1, float n2,
+	out vec3 reflection, out vec3 refraction,
 	out float reflectance, out float transmittance){
 
 	float eta = n1/n2;

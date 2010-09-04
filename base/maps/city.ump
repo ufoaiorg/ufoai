@@ -159,7 +159,7 @@ tile +str_cross
 }
 
 // ---------------------
-// Vertical Street Tiles	
+// Vertical Street Tiles
 
 	// Vertical street base tile (straight lines painted)
 	tile +strv_1a
@@ -261,7 +261,7 @@ tile +str_cross
 		0		al		0
 		jk		af		fl
 		0		jk		0
-	}	
+	}
 
 // --------------
 // Building Tiles
@@ -278,7 +278,7 @@ tile +str_cross
 		a		+j		+j		+j		+js		t
 		0		fg		f		f		fh		0
 	}
-	
+
 	// 4x4 building tile on right side of main street (ie - storefronts facing left)
 	// Has entrance to subway on bottom-left corner
 	tile +bldr_4x4_1a
@@ -303,7 +303,7 @@ tile +str_cross
 		a		+j		+j		+j		+j		a
 		0		fg		f		f		fh		0
 	}
-	
+
 	// 4x4 park tile on right side of main street (ie - storefronts facing left)
 	tile +bldr_4x4_2a
 	{

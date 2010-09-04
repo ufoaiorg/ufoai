@@ -258,4 +258,3 @@ teamDef_t* Com_GetTeamDefinitionByID(const char *team);
 const chrTemplate_t* Com_GetCharacterTemplateByID(const char *chrTemplate);
 
 #endif /* SCRIPTS_H */
-

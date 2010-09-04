@@ -61,4 +61,3 @@ qboolean R_EnableRenderbuffer(qboolean enable);
 qboolean R_RenderbufferEnabled(void);
 
 #endif /* R_FRAMEBUFFER_H_ */
-

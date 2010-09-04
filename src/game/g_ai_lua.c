@@ -918,14 +918,14 @@ static int AIL_positionherd (lua_State *L)
 {
 	pos3_t save;
 	aiActor_t* target;
-		
+
 	/* check parameter */
 	if (!(lua_gettop(L) && lua_isactor(L, 1))) {
 		AIL_invalidparameter(1);
 		lua_pushboolean(L, 0);
 		return 1;
 	}
-	
+
 	VectorCopy(AIL_ent->pos, save);
 	target = lua_toactor(L, 1);
 	if (AI_FindHerdLocation(AIL_ent, AIL_ent->pos, target->ent->origin, AIL_ent->TU)) {
@@ -945,10 +945,10 @@ static int AIL_distance (lua_State *L)
 {
 	vec_t dist;
 	aiActor_t* target;
-	
+
 	/* check parameter */
 	assert(lua_gettop(L) && lua_isactor(L, 1));
-	
+
 	/* calculate distance */
 	target = lua_toactor(L, 1);
 	dist = VectorDist(AIL_ent->origin, target->ent->origin);

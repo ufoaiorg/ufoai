@@ -1082,4 +1082,3 @@ craftitem baselaser_ammo
 	delay				200
 	size				10 // light
 }
-

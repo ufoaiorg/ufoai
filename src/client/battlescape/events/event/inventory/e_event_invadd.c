@@ -100,4 +100,3 @@ void CL_InvAdd (const eventRegister_t *self, struct dbuffer *msg)
 		break;
 	}
 }
-

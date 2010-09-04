@@ -479,4 +479,3 @@ gint exec_count_operations (const Exec *e)
 	g_debug("exec_count_operations - there are [%d] operations\n", count);
 	return count;
 }
-

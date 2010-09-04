@@ -106,4 +106,3 @@ $conn->add_handler('376', \&on_connect);
 
 # start IRC
 $irc->start();
-

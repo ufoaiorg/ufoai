@@ -59,4 +59,3 @@ void CL_DoEndRound (const eventRegister_t *self, struct dbuffer *msg)
 		CL_ActorConditionalMoveCalc(selActor);
 	}
 }
-

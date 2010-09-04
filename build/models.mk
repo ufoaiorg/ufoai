@@ -1,7 +1,7 @@
 MODELDIR ?= base/models
 
 UFOMODEL = ./ufomodel
-UFOMODEL_PARAMS = -mdx -overwrite -v 
+UFOMODEL_PARAMS = -mdx -overwrite -v
 
 ifeq ($(USEWINDOWSCMD),1)
     MODELS_MD2 := $(shell dir /S/B $(MODELDIR)\*.md2)

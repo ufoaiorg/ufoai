@@ -49,7 +49,7 @@ def apply_xsl_libxslt(xml_file_name, xsl_file_name):
     # optional transform args
     stylesheetArgs = {}
 
-    style_doc = libxml2.parseFile(xsl_file_name) 
+    style_doc = libxml2.parseFile(xsl_file_name)
     style = libxslt.parseStylesheetDoc(style_doc)
 
     doc = libxml2.parseFile(xml_file_name)
@@ -105,5 +105,3 @@ if __name__ == '__main__':
     file = open("./ufoai-Results.html", "wt")
     file.write(content)
     file.close()
-
-

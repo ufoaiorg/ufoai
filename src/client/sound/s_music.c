@@ -444,4 +444,3 @@ void M_StopMusicStream (musicStream_t *userdata)
 	music.playingStream = qfalse;
 	Mix_HookMusic(NULL, NULL);
 }
-

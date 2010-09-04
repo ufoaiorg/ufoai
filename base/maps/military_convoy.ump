@@ -15,15 +15,15 @@ tile +main
 14 11
 
 0      0      0      0      0      0      0      0      0      0      0      0      0      0
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     b      b      0 
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     b      b      0 
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     b      b      0 
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
-0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     b      b      0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     b      b      0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     b      b      0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     +a     0
 0      0      0      0      0      0      0      0      0      0      0      0      0      0
 }
 
@@ -32,9 +32,9 @@ tile +craft_drop_firebird
 4 5
 
 a      a      a      0
-a      +b     +b     0 
-a      +b     +b     0 
-a      +b     +b     0 
+a      +b     +b     0
+a      +b     +b     0
+a      +b     +b     0
 a      a      a      0
 }
 
@@ -43,9 +43,9 @@ tile +craft_drop_herakles
 4 5
 
 a      a      a      0
-a      +b     +b     0 
-a      +b     +b     0 
-a      +b     +b     0 
+a      +b     +b     0
+a      +b     +b     0
+a      +b     +b     0
 a      a      a      0
 }
 
@@ -54,9 +54,9 @@ tile +craft_drop_raptor
 4 5
 
 a      a      a      0
-a      +b     +b     0 
-a      +b     +b     0 
-a      +b     +b     0 
+a      +b     +b     0
+a      +b     +b     0
+a      +b     +b     0
 a      a      a      0
 }
 

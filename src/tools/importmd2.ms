@@ -31,11 +31,11 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 	group "Import:"
 	(
 		checkbox animCheck "Load all frames" checked:false align:#center
-		button importButton "Import MD2..."	
+		button importButton "Import MD2..."
 	)
-	
+
 	local appName = "MD2 Importer"
-	
+
 
 	-- Utilities
 
@@ -46,13 +46,13 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 		messageBox msg title:appName;
 		ok
 	)
-	
+
 	fn FatalError msg=
 	(
 		ShowError msg;
 		throw (appName + ":" + msg)
 	)
-	
+
 	fn Check condition msg =
 	(
 		if not condition do
@@ -62,9 +62,9 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 			FatalError msg
 		)
 	)
-	
+
 	-- Binstream tools
-	
+
 	fn SkipBytes bstream count=
 	(
 		local unknown
@@ -81,7 +81,7 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 			)
 		)
 	)
-	
+
 	fn ReadFixedString bstream fixedLen=
 	(
 		local str = ""
@@ -91,9 +91,9 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 		)
 		str
 	)
-	
+
 	-- String utils
-	
+
 	fn LongToString num=
 	(
 		local str = ""
@@ -105,7 +105,7 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 		)
 		str
 	)
-	
+
 	fn ToWindowsPath pakPath=
 	(
 		local winPath = "\\"
@@ -121,11 +121,11 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 		)
 		winPath
 	)
-	
+
 	--------------------------------------------------------------------
 	-- MD2 Importer
 	--------------------------------------------------------------------
-	
+
 
 	struct MD2_Vertex
 	(
@@ -137,7 +137,7 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 		scale, translate, name,
 		vertListOffset
 	)
-	
+
 	struct MD2_Tri
 	(
 		vertIndices,
@@ -154,7 +154,7 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 		texCoordList,
 		glCmdList,
 		numVerts,
-				
+
 		fn Open filename=
 		(
 			modelFilename = filename
@@ -163,19 +163,19 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 			bstream = fopen filename "rb"
 			ok
 		),
-		
+
 		fn Close=
 		(
 			fclose bstream
 			ok
 		),
-		
+
 		fn ReadSkins offset numSkins=
 		(
 			fseek bstream offset #seek_set
-			
+
 			skinList = #()
-			
+
 			format "Reading % skins..." numSkins
 			for i = 1 to numSkins do
 			(
@@ -184,31 +184,31 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 			)
 			format "OK\n"
 		),
-		
+
 		fn ReadTris offset numTris=
 		(
 			fseek bstream offset #seek_set
-			
+
 			triList = #()
-			
+
 			format "Reading % tris..." numTris
-			
+
 			for i = 1 to numTris do
 			(
 				local v1 = ReadShort bstream #unsigned
 				local v2 = ReadShort bstream #unsigned
 				local v3 = ReadShort bstream #unsigned
-				
+
 				local uv1 = ReadShort bstream #unsigned
 				local uv2 = ReadShort bstream #unsigned
 				local uv3 = ReadShort bstream #unsigned
-				
+
 				append triList (MD2_Tri vertIndices:[v1, v2, v3] texCoordIndices:[uv1,uv2,uv3])
 			)
-			
+
 			format "OK\n"
 		),
-		
+
 		fn ReadFrames offset numFrames=
 		(
 			fseek bstream offset #seek_set
@@ -219,26 +219,26 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 				local sx = ReadFloat bstream
 				local sy = ReadFloat bstream
 				local sz = ReadFloat bstream
-				
+
 				local tx = ReadFloat bstream
 				local ty = ReadFloat bstream
 				local tz = ReadFloat bstream
-				
+
 				local name = ReadFixedString bstream 16
-				
+
 				local newFrame = MD2_Frame scale:[sx, sy, sz] translate:[tx,ty, tz] name:name
 
 				-- Just remember where the verts are
 				newFrame.vertListOffset = ftell bstream
-				
+
 				-- Skip all verts 'cos we'll read 'em later
 				SkipBytes bstream (numVerts * 4)
-					
+
 				append frameList newFrame
 			)
 			format "OK\n"
 		),
-		
+
 		fn ReadTexCoords offset numTexCoords skinWidth skinHeight=
 		(
 			fseek bstream offset #seek_set
@@ -248,29 +248,29 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 			(
 				local s = (ReadShort bstream #unsigned) as float
 				local t = (ReadShort bstream #unsigned) as float
-				append texCoordList [s / skinWidth, -t / skinHeight, 0]	
+				append texCoordList [s / skinWidth, -t / skinHeight, 0]
 			)
 			format "OK\n"
 		),
-	
+
 		fn LoadModel=
 		(
 			fseek bstream 0 #seek_set
-			
+
 			local magic 			= ReadLong bstream #unsigned
-			
+
 			if magic != 0x32504449 then
 			(
 				FatalError "File does not appear to be an MD2 model!"
 			)
-			
+
 			local version			= ReadLong bstream #unsigned
-			
+
 			if version != 0x8 then
 			(
 				FatalError "Unsupported version!"
 			)
-			
+
 			local skinWidth			= ReadLong bstream #unsigned
 			local skinHeight 		= ReadLong bstream #unsigned
 			local frameSize			= ReadLong bstream #unsigned
@@ -286,67 +286,67 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 			local offsetFrames		= ReadLong bstream #unsigned
 			local offsetGLCmds		= ReadLong bstream #unsigned
 			local offsetEnd			= ReadLong bstream #unsigned
-			
+
 			format "Skin size (%, %)\n" skinWidth skinHeight
 			format "Frame size % bytes\n" frameSize
 			format "% skins, % verts, % texcoords, % tris, % glCmds, % frames\n" numSkins numVerts numTexCoords numTris numGLCmds numFrames
-			
+
 			if not animCheck.checked then
 			(
 				numFrames = 1
 			)
-			
+
 			ReadSkins offsetSkins numSkins
 			ReadTexCoords offsetTexCoords numTexCoords skinWidth skinHeight
 			ReadTris offsetTris numTris
 			ReadFrames offsetFrames numFrames
-			
+
 		),
-		
+
 		fn GetVertsForFrame frameNum=
 		(
 			local verts = #()
 			for i = 1 to ((frameList[frameNum]).vertList).count do
 			(
 				local theVert = (frameList[frameNum].vertList[i]).pos
-				
+
 				theVert *= frameList[frameNum].scale
 				theVert += frameList[frameNum].translate
-			
+
 				append verts theVert
 			)
-			verts				
+			verts
 		),
-		
+
 		fn CreateMAXModel=
 		(
 			-- Firstly, create our material
 			local skinMaterial = standardMaterial name:(modelName + ".skin")
 
-			-- Sadly, we can't load PCX files in gmax - so no skins! :(			
+			-- Sadly, we can't load PCX files in gmax - so no skins! :(
 			local verts = #()
 			fseek bstream (frameList[1].vertListOffset) #seek_set
-			
+
 			for i = 1 to numVerts do
 			(
 				local x = ReadByte bstream #unsigned
 				local y = ReadByte bstream #unsigned
 				local z = ReadByte bstream #unsigned
 				local normIndex = ReadByte bstream #unsigned
-				
+
 				local theVert = ([x, y, z] * (frameList[1].scale)) + (frameList[1].translate)
-			
+
 				append verts theVert
 			)
-			
+
 			local tris = #()
 			for i = 1 to triList.count do
 			(
 				local v = triList[i].vertIndices + [1,1,1]
 				append tris [v.z, v.y, v.x]
-				
+
 			)
-			
+
 			local theMesh = mesh name:(modelName + ".md2") vertices:verts faces:tris\
 								material:skinMaterial tverts:texCoordList
 
@@ -361,8 +361,8 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 			-- Set vertices up for animation
 			animateVertex theMesh #all
 			local animVerts = theMesh[4][1]
-											
-			-- Set animation frames			
+
+			-- Set animation frames
 			progressStart "Loading frames"
 			animate on
 			(
@@ -373,7 +373,7 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 					local frameTranslate = frameList[i].translate
 
 					fseek bstream (frameList[i].vertListOffset) #seek_set
-					
+
 					at time i
 					(
 						for j = 1 to numVerts do
@@ -382,7 +382,7 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 							local y = ReadByte bstream #unsigned
 							local z = ReadByte bstream #unsigned
 							local normIndex = ReadByte bstream #unsigned
-							
+
 							animVerts[j].value = ([x, y, z] * frameScale) + frameTranslate
 						)
 					)
@@ -393,16 +393,16 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 				)
 			)
 			progressEnd()
-			
+
 			update theMesh
-			
+
 			-- Set animation slider range and FPS
 			if frameList.count > 1 then
 			(
 				animationRange = interval 1 frameList.count
 			)
 			frameRate = 10.0
-			
+
 			gc()
 		)
 	)
@@ -420,7 +420,7 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 				(
 					local reader = MD2Reader()
 					local fileType = getFileNameType modelFileName
-					
+
 					reader.Open modelFilename
 					reader.LoadModel()
 					reader.CreateMAXModel()
@@ -429,13 +429,11 @@ utility MD2Import "Quake2 MD2 Importer" silentErrors:false
 				--catch
 				(
 					--throw
-					--FatalError "Could 
+					--FatalError "Could
 				)
-				
+
 				max views redraw
 			)
 		)
 	)
 )
-
-

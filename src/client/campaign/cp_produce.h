@@ -100,4 +100,3 @@ void PR_QueueNext(base_t *base);
 int PR_QueueFreeSpace(const production_queue_t const *queue);
 
 #endif /* CLIENT_CP_PRODUCE */
-

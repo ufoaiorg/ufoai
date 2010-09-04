@@ -69,7 +69,7 @@ window unittest_condition
 		pos		"20 240"
 		string	"t10"
 	}
-	
+
 	string stringTitle {
 		pos		"80 40"
 		string	"string"
@@ -232,12 +232,12 @@ window unittest_condition
 		invis		true
 		disabled	false
 	}
-	
+
 	string testNodeFooString {
 		invis		true
 		string		"aaabbb"
 	}
-	
+
 	string testNodeFooString2 {
 		invis		true
 		string		"aaabbbccc"
@@ -251,7 +251,7 @@ window unittest_condition
 			invis		true
 			disabled	false
 		}
-		
+
 		confunc unittest_testRelativeConditions {
 			if ( *node:this.parent@current == 1 ) { *node:root.testNode6@color = "0 1 0 1" }
 			else { *node:root.testNode6@color = "1 0 0 1" }
@@ -265,7 +265,7 @@ window unittest_condition
 			else { *node:root.testNode10@color = "1 0 0 1" }
 		}
 	}
-	
+
 	confunc unittest_testNodeProperty {
 		if ( *node:unittest_condition.testNodeFoo@current == 1 ) { *node:root.testNode1@color = "0 1 0 1" }
 		else { *node:root.testNode1@color = "1 0 0 1" }
@@ -279,8 +279,8 @@ window unittest_condition
 		else { *node:root.testNode5@color = "1 0 0 1" }
 
 		cmd "unittest_testRelativeConditions"
-		cmd "echo node:root.testNodeFooString@string <node:root.testNodeFooString@string>" 
-		cmd "echo node:root.testNodeFooString2@string <node:root.testNodeFooString2@string>" 
+		cmd "echo node:root.testNodeFooString@string <node:root.testNodeFooString@string>"
+		cmd "echo node:root.testNodeFooString2@string <node:root.testNodeFooString2@string>"
 
 		if ( *node:root.testNodeFooString@string eq "aaabbb" ) { *node:root.testNode11@color = "0 1 0 1" }
 		else { *node:root.testNode11@color = "1 0 0 1" }
@@ -290,7 +290,7 @@ window unittest_condition
 		else { *node:root.testNode13@color = "1 0 0 1" }
 		/* @todo test string with space */
 	}
-	
+
 	confunc unittest_testIfControl {
 		/* if condition */
 		if ( 0 == 0 ) { *node:root.testControl1@color = "0 1 0 1" }
@@ -327,7 +327,7 @@ window unittest_condition
 		elif ( 0 == 1 ) { *node:root.testControl5@color = "1 0 0 1" }
 		else { *node:root.testControl5@color = "0 1 0 1" }
 	}
-	
+
 	func onInit {
 		*cvar:test_float0 = "0"
 		*cvar:test_float1 = "1"
@@ -363,7 +363,7 @@ window unittest_condition
 		*cvar:test_string1 = "aaaa"
 		*cvar:test_string2 = "aaaa"
 		*cvar:test_string3 = "bbbbbbbb"
-		
+
 		if ( "0" eq "0" ) { *node:root.testString1@color = "0 1 0 1" }
 		else { *node:root.testString1@color = "1 0 0 1" }
 		if ( "0" eq "1" ) { *node:root.testString2@color = "1 0 0 1" }
@@ -385,9 +385,9 @@ window unittest_condition
 		else { *node:root.testExists3@color = "0 1 0 1" }
 		if ( not exists *cvar:test_not_exists ) { *node:root.testExists4@color = "0 1 0 1" }
 		else { *node:root.testExists4@color = "1 0 0 1" }
-		
+
 		*cvar:test_nodefoo = 1
-		
+
 		cmd "unittest_testNodeProperty"
 		cmd "unittest_testIfControl"
 	}

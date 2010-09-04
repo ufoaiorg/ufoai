@@ -15,10 +15,10 @@ tile +main
 9 6
 
 0      0      0      0      0      0      0      0      0
-0      +a     +a     +a     +a     +a     b      b      0 
-0      +a     +a     +a     +a     +a     b      b      0 
-0      +a     +a     +a     +a     +a     b      b      0 
-0      +a     +a     +a     +a     +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     b      b      0
+0      +a     +a     +a     +a     +a     b      b      0
+0      +a     +a     +a     +a     +a     b      b      0
+0      +a     +a     +a     +a     +a     +a     +a     0
 0      0      0      0      0      0      0      0      0
 }
 

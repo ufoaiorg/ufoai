@@ -59,4 +59,3 @@ void CL_CameraZoomIn(void);
 void CL_CameraZoomOut(void);
 
 #endif
-

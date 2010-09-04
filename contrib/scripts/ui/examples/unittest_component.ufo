@@ -9,7 +9,7 @@ component panel myFunkyPanel {
 		size		"100 100"
 		bgcolor		"0 0 1 0.5"
 	}
-	
+
 	myButton foo1 { pos "0 0" string "Hoooo" }
 
 	myButton foo2 { pos "0 50" string "Haaaa" bgcolor "0 0 1 0.5" }

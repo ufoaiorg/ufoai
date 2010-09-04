@@ -66,7 +66,7 @@
 	hardness 0.7
 	parallax 1.0
 	specular 2.0
-	/* Clear screen */ 
+	/* Clear screen */
 	{
 		texture pt/cs/s1_03_0_sk0a0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
@@ -439,7 +439,7 @@
 	hardness 0.2
 	parallax 1.0
 	specular 1.5
-	/* fx Animation (green/yellow) */	
+	/* fx Animation (green/yellow) */
 	{
 		texture pt/fx/fx2_09_1a0
 		anim 14 24
@@ -454,7 +454,7 @@
 	hardness 0.2
 	parallax 1.0
 	specular 1.5
-	/* fx Animation (green/yellow) */	
+	/* fx Animation (green/yellow) */
 	{
 		texture pt/fx/fx2_10_1a0
 		anim 14 24

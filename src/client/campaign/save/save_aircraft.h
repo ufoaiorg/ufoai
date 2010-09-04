@@ -145,7 +145,7 @@ DTD:
 	detected			CDATA	'false'
 	landed				CDATA	'false'
 	aircraftTarget		CDATA	#IMPLIED
-	
+
 	idx					CDATA	#REQUIRED
 	hangar				CDATA	'0'
 	pilotUCN			CDATA	#IMPLIED
@@ -227,4 +227,3 @@ DTD:
 **Note: projectile is defined in save_airfight.h
 
 */
-

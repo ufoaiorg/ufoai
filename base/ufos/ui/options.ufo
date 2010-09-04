@@ -388,7 +388,7 @@ window options
 			pos			"415 0"
 			size		"608 768"
 		}
-		
+
 		string videosettings
 		{
 			string		"_Video Settings"
@@ -433,8 +433,8 @@ window options
 				value	"other"
 			}
 		}
-		
-		panel options_general_video 
+
+		panel options_general_video
 		{
 			{
 				pos			"45 145"
@@ -451,7 +451,7 @@ window options
 				size		"256 20"
 				color		"1.0 0.75 0 1"
 			}
-	
+
 			// ===========
 			// RESOLUTION
 			// ===========
@@ -756,7 +756,7 @@ window options
 				size		"256 20"
 				color		"1.0 0.75 0 1"
 			}
-	
+
 			// ============================
 			// SHOW FRAMES/SECOND RENDERED
 			// ============================
@@ -776,7 +776,7 @@ window options
 				image		"ui/checkbox_blue"
 			}
 		}
-		
+
 		// =======================
 		// ADVANCED VIDEO OPTIONS
 		// =======================
@@ -788,7 +788,7 @@ window options
 			}
 
 			// =========================
-			// TEXTURE SETTINGS SUBMENU 
+			// TEXTURE SETTINGS SUBMENU
 			// =========================
 			string texture_settings
 			{
@@ -799,7 +799,7 @@ window options
 				color		"1.0 0.75 0 1"
 			}
 			// =======================
-			// TEXTURE RESOLUTION CAP 
+			// TEXTURE RESOLUTION CAP
 			// =======================
 			string texres_str
 			{
@@ -888,7 +888,7 @@ window options
 			}
 
 			// ====================
-			// TEXTURE COMPRESSION 
+			// TEXTURE COMPRESSION
 			// ====================
 			string compression_str
 			{
@@ -906,7 +906,7 @@ window options
 				image		"ui/checkbox_blue"
 			}
 			// ============
-			// TEXTURE LOD 
+			// TEXTURE LOD
 			// ============
 			string lod_str
 			{
@@ -924,7 +924,7 @@ window options
 				image		"ui/checkbox_blue"
 			}
 			// ======================
-			// ANISOTROPIC FILTERING 
+			// ANISOTROPIC FILTERING
 			// ======================
 			string aniso_str
 			{
@@ -953,7 +953,7 @@ window options
 			}
 
 			// ========================
-			// OPENGL SETTINGS SUBMENU 
+			// OPENGL SETTINGS SUBMENU
 			// ========================
 			string opengl_settings
 			{
@@ -964,7 +964,7 @@ window options
 				color		"1.0 0.75 0 1"
 			}
 			// =============
-			// GLSL SHADERS 
+			// GLSL SHADERS
 			// =============
 			string glsl_str
 			{
@@ -982,7 +982,7 @@ window options
 				image		"ui/checkbox_blue"
 			}
 			// ===============
-			// VERTEX BUFFERS 
+			// VERTEX BUFFERS
 			// ===============
 			string vbo_str
 			{
@@ -1000,7 +1000,7 @@ window options
 				image		"ui/checkbox_blue"
 			}
 			// ==================================================================
-			// MULTISAMPLE BUFFERS AND MULTISAMPLE BUFFERS SWAP CONTROL (V-SYNC) 
+			// MULTISAMPLE BUFFERS AND MULTISAMPLE BUFFERS SWAP CONTROL (V-SYNC)
 			// ==================================================================
 			string samplebuf_swapcontrol_str
 			{
@@ -1044,7 +1044,7 @@ window options
 				delta		1
 			}
 			// ==============================
-			// POSTPROCESSING SHADER EFFECTS 
+			// POSTPROCESSING SHADER EFFECTS
 			// ==============================
 			string postprocess_str
 			{
@@ -1062,7 +1062,7 @@ window options
 				image		"ui/checkbox_blue"
 			}
 			// ==================================
-			// LIGHT AND SHADOW SETTINGS SUBMENU 
+			// LIGHT AND SHADOW SETTINGS SUBMENU
 			// ==================================
 			string light_shadow_settings
 			{
@@ -1073,7 +1073,7 @@ window options
 				color		"1.0 0.75 0 1"
 			}
 			// =======================================================
-			// REALTIME LIGHTING AND MAXIMUM NUMBER OF DYNAMIC LIGHTS 
+			// REALTIME LIGHTING AND MAXIMUM NUMBER OF DYNAMIC LIGHTS
 			// =======================================================
 			string light_dynamiclights_str
 			{
@@ -1108,7 +1108,7 @@ window options
 				delta		1
 			}
 			// ====================
-			// NORMAL-/BUMPMAPPING 
+			// NORMAL-/BUMPMAPPING
 			// ====================
 			string bumpmapping_str
 			{
@@ -1126,7 +1126,7 @@ window options
 				image		"ui/checkbox_blue"
 			}
 			// ========
-			// SHADOWS 
+			// SHADOWS
 			// ========
 			string shadows_str
 			{
@@ -1144,7 +1144,7 @@ window options
 				image		"ui/checkbox_blue"
 			}
 			// ===============================
-			// LIGHTMAP RESOLUTION BLOCK SIZE 
+			// LIGHTMAP RESOLUTION BLOCK SIZE
 			// ===============================
 			string lightmapres_str
 			{
@@ -1179,7 +1179,7 @@ window options
 				}
 			}
 			// ===============
-			// LIGHTMAP SCALE 
+			// LIGHTMAP SCALE
 			// ===============
 			string lightmap_str
 			{
@@ -1204,7 +1204,7 @@ window options
 				onClick		{ }
 			}
 			// ========================
-			// GEOSCAPE 3DMAP LIGHTING 
+			// GEOSCAPE 3DMAP LIGHTING
 			// ========================
 			string m3dmapambient_str
 			{
@@ -1230,16 +1230,16 @@ window options
 				onClick		{ }
 			}
 		}
-		
-		panel options_other_video 
+
+		panel options_other_video
 		{
 			{
 				pos			"45 145"
 				size		"498 680"
 			}
-			
+
 			// =======================
-			// OTHER SETTINGS SUBMENU 
+			// OTHER SETTINGS SUBMENU
 			// =======================
 			string othergfx_settings
 			{
@@ -1250,7 +1250,7 @@ window options
 				color		"1.0 0.75 0 1"
 			}
 			// =======
-			// FLARES 
+			// FLARES
 			// =======
 			string flares_str
 			{
@@ -1268,7 +1268,7 @@ window options
 				image		"ui/checkbox_blue"
 			}
 			// ========
-			// CORONAS 
+			// CORONAS
 			// ========
 			string coronas_str
 			{
@@ -1286,7 +1286,7 @@ window options
 				image		"ui/checkbox_blue"
 			}
 			// ====
-			// FOG 
+			// FOG
 			// ====
 			string fog_str
 			{
@@ -1304,7 +1304,7 @@ window options
 				image		"ui/checkbox_blue"
 			}
 			// =========================
-			// WEATHER PARTICLE EFFECTS 
+			// WEATHER PARTICLE EFFECTS
 			// =========================
 			string ptlweather_str
 			{
@@ -1322,7 +1322,7 @@ window options
 				image		"ui/checkbox_blue"
 			}
 			// ================
-			// MATERIAL SYSTEM 
+			// MATERIAL SYSTEM
 			// ================
 			string materialsys_str
 			{
@@ -1339,8 +1339,8 @@ window options
 				size		"20 18"
 				image		"ui/checkbox_blue"
 			}
-			
-			button video_low 
+
+			button video_low
 			{
 				tooltip	"_Switch to low video settings"
 				pos		"32 200"
@@ -1349,12 +1349,12 @@ window options
 				image	"ui/button_green_small"
 				color	"0 0.5 0 1"
 				selectcolor "1 1 1 1"
-				onClick 
+				onClick
 				{
 					cmd "exec video-low.cfg;"
 				}
 			}
-			button video_medium 
+			button video_medium
 			{
 				tooltip	"_Switch to medium video settings"
 				pos		"162 200"
@@ -1363,12 +1363,12 @@ window options
 				image	"ui/button_green_small"
 				color	"0 0.5 0 1"
 				selectcolor "1 1 1 1"
-				onClick 
+				onClick
 				{
 					cmd "exec video-medium.cfg;"
 				}
 			}
-			button video_high 
+			button video_high
 			{
 				tooltip	"_Switch to very high video settings"
 				pos		"292 200"
@@ -1377,7 +1377,7 @@ window options
 				image	"ui/button_green_small"
 				color	"0 0.5 0 1"
 				selectcolor "1 1 1 1"
-				onClick 
+				onClick
 				{
 					cmd "exec video-high.cfg;"
 				}
@@ -2208,7 +2208,7 @@ window options
 	}
 
 	// ==================
-	// SHOW KEY BINDINGS 
+	// SHOW KEY BINDINGS
 	// ==================
 	panel options_keys
 	{
@@ -2272,7 +2272,7 @@ window options
 	}
 }
 // ====================
-// MAINTAIN RESOLUTION 
+// MAINTAIN RESOLUTION
 // ====================
 window popup_maintain_resolution
 {

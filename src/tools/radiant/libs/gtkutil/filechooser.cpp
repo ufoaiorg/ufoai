@@ -427,4 +427,3 @@ namespace gtkutil
 	}
 
 } // namespace gtkutil
-

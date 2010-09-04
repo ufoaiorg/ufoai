@@ -51,7 +51,7 @@ while [ $# -gt 0 ]; do
 		-*)
 			error "invalid option $1"
 			;;
-			
+
 	esac
 done
 

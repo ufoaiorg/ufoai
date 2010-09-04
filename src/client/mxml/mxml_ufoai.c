@@ -534,4 +534,3 @@ mxml_type_t mxml_ufo_type_cb (mxml_node_t *node)
 	else
 		return MXML_TEXT;
 }
-

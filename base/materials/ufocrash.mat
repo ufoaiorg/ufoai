@@ -224,7 +224,7 @@
 	hardness 0.2
 	parallax 1.0
 	specular 1.5
-	/* fx Animation (green/yellow) */	
+	/* fx Animation (green/yellow) */
 	{
 		texture pt/fx/fx2_09_1a0
 		anim 14 4.0
@@ -239,7 +239,7 @@
 	hardness 0.2
 	parallax 1.0
 	specular 1.5
-	/* fx Animation (green/yellow) */	
+	/* fx Animation (green/yellow) */
 	{
 		texture pt/fx/fx2_10_1a0
 		anim 14 4.0
@@ -323,7 +323,7 @@
 /* ufo2_11: Destroyed UFO-Panel (Corrupter-Crash) */
 {
 	material tex_ufo/ufo2_11
-	{		
+	{
 		flare 1
 		color 0.1 0.3 0.0
 	}
@@ -331,4 +331,3 @@
 		lightmap
 	}
 }
-

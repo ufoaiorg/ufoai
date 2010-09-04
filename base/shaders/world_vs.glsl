@@ -21,7 +21,7 @@ varying vec3 eyedir;
 varying vec3 lightDirs[];
 varying vec3 staticLightDir;
 
-varying float fog; 
+varying float fog;
 */
 
 

@@ -77,4 +77,3 @@ window objectinfo
 		delete *cvar:mn_numfiremodes
 	}
 }
-

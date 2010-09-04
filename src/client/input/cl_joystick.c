@@ -339,4 +339,3 @@ void IN_StartupJoystick (void)
 
 	SDL_JoystickEventState(SDL_QUERY);
 }
-

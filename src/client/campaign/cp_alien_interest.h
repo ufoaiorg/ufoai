@@ -30,4 +30,3 @@ void CL_ResetAlienInterest(void);
 void CP_IncreaseAlienInterest(void);
 void CL_ChangeIndividualInterest(float percentage, interestCategory_t category);
 #endif
-

@@ -48,7 +48,7 @@ DTD:
 
 <!ELEMENT projectile (pos* idleTarget attackingAircraft? aimedAircraft?)>
 <!ATTLIST projectile
-	itemid			CDATA	#REQUIRED		
+	itemid			CDATA	#REQUIRED
 	time			CDATA	'0'
 	angle			CDATA	'0.0'
 	bullet			CDATA	'false'
@@ -62,7 +62,7 @@ DTD:
 >
 <!ELEMENT aimedAircraft EMPTY>
 <!ATTLIST aimedAircraft
-	idx				CDATA	#REQUIRED	
+	idx				CDATA	#REQUIRED
 	isUFO			CDATA	'false'
 >
 
@@ -80,4 +80,3 @@ DTD:
 >
 
 */
-

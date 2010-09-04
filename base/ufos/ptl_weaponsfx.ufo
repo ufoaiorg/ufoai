@@ -34,7 +34,7 @@ particle bolter
 	}
 	think
 	{
-		spawn bolter_trail 
+		spawn bolter_trail
 	}
 }
 
@@ -53,14 +53,14 @@ particle bolter_trail
 	run
 	{
 
-		push   pos "40 40"		
-		mul    *t				
-		add    pos "10 10"		
-		pop    *size			
+		push   pos "40 40"
+		mul    *t
+		add    pos "10 10"
+		pop    *size
 
-		push   *color	
-		mul    float .2	
-		pop    *color	
+		push   *color
+		mul    float .2
+		pop    *color
 
 	}
 	think { kill }
@@ -158,10 +158,10 @@ particle bullet
 	}
 	think
 	{
-		push   pos "15 10"		
-		mul    *t				
-		add    pos "40 40"		
-		pop    *size			
+		push   pos "15 10"
+		mul    *t
+		add    pos "40 40"
+		pop    *size
 	}
 }
 
@@ -178,10 +178,10 @@ particle bullet-shotgun
 	}
 	think
 	{
-		push   pos "15 10"		
-		mul    *t				
-		add    pos "40 40"		
-		pop    *size			
+		push   pos "15 10"
+		mul    *t
+		add    pos "40 40"
+		pop    *size
 	}
 }
 
@@ -200,10 +200,10 @@ particle bullet_sniper
 	}
 	think
 	{
-		push   pos "40 10"		
-		mul    *t				
-		add    pos "80 40"		
-		pop    *size			
+		push   pos "40 10"
+		mul    *t
+		add    pos "80 40"
+		pop    *size
 	}
 }
 
@@ -392,14 +392,14 @@ particle rocketFire
 	run
 	{
 
-		push   *color	
-		mul    float .2	
+		push   *color
+		mul    float .2
 		pop    *color
 
 		// change the position a little bit randomly
 		crand  vector "1 1 1"	// push a value between -1 and 1 onto the stack
 		add    *s				// add the current location
-		pop    *s				// write the stack value back into the particle structure location and remove it from the stack	
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
 
 	}
 	think { kill }
@@ -420,14 +420,14 @@ particle rocketFlame
 	run
 	{
 
-		push   *color	
-		mul    float .2	
+		push   *color
+		mul    float .2
 		pop    *color
 
 		// change the position a little bit randomly
 		crand  vector "1 1 1"	// push a value between -1 and 1 onto the stack
 		add    *s				// add the current location
-		pop    *s				// write the stack value back into the particle structure location and remove it from the stack	
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
 
 	}
 	think { kill }
@@ -445,7 +445,7 @@ particle rocketFlame
 // 		thinkfade  out
 // 		tps    1.8
 // 		color  ".5 .5 .5 1"
-// 
+//
 // 		push   *v
 // 		mul    float 0.8
 // 		pop   *v
@@ -459,7 +459,7 @@ particle rocketFlame
 // 		push   *color
 // 		mul    float .5
 // 		pop    *color
-// 
+//
 // 		crand  vector "0.5 0.5 0.5"
 // 		add    *s
 // 		pop    *s
@@ -585,10 +585,10 @@ particle laserPulse
 	}
 	think
 	{
-		push   pos "50 10"		
-		mul    *t				
-		add    pos "30 0"		
-		pop    *size			
+		push   pos "50 10"
+		mul    *t
+		add    pos "30 0"
+		pop    *size
 	}
 }
 
@@ -943,9 +943,9 @@ particle plasmaBallTrail
 	run
 	{
 
-		push   *color	
-		mul    float .2	
-		pop    *color	
+		push   *color
+		mul    float .2
+		pop    *color
 
 	}
 	think { kill }
@@ -1276,14 +1276,14 @@ particle partTail
 	run
 	{
 
-		push   *color	
-		mul    float .2	
+		push   *color
+		mul    float .2
 		pop    *color
 
 		// change the position a little bit randomly
 		crand  vector "1 1 1"	// push a value between -1 and 1 onto the stack
 		add    *s				// add the current location
-		pop    *s				// write the stack value back into the particle structure location and remove it from the stack	
+		pop    *s				// write the stack value back into the particle structure location and remove it from the stack
 
 	}
 	think { kill }
@@ -1304,9 +1304,9 @@ particle partlaserTrail
 	run
 	{
 
-		push   *color	
-		mul    float .2	
-		pop    *color	
+		push   *color
+		mul    float .2
+		pop    *color
 
 	}
 	think { kill }
@@ -1588,9 +1588,9 @@ particle glSmoke
 		a      "0 0 0"
 
 		// change the position a little bit randomly
-		crand  vector "3 3 3"	
-		add    *s				
-		pop    *s				
+		crand  vector "3 3 3"
+		add    *s
+		pop    *s
 	}
 	// run is executed more often as think (every frame - and think execution depends on the tps value)
 	run
@@ -1885,7 +1885,7 @@ particle muzzle_side
 	{
 		image  sfx/weapons/muzzlebulletside
 		blend  add
-		style  axis 
+		style  axis
 //		angles "50 0 0"
 		thinkfade  out
 		life   0.07
@@ -1925,8 +1925,8 @@ particle muzzle_sniper_1
 	{
 
 		crand  vector "1 0 0"
-		add    *s				
-		pop    *s				
+		add    *s
+		pop    *s
 
 	}
 	think { kill }
@@ -1948,9 +1948,9 @@ particle muzzle_sniper_glow
 	run
 	{
 
-		crand  vector "1 1 1"	
-		add    *s				
-		pop    *s				
+		crand  vector "1 1 1"
+		add    *s
+		pop    *s
 
 	}
 	think { kill }
@@ -1987,9 +1987,9 @@ particle muzzle_laser_round
 	run
 	{
 
-		crand  vector "1 0 0"	
-		add    *s				
-		pop    *s				
+		crand  vector "1 0 0"
+		add    *s
+		pop    *s
 
 	}
 	think { kill }
@@ -2046,9 +2046,9 @@ particle muzzle_plasma_round
 	run
 	{
 
-		crand  vector "1 0 0"	
-		add    *s				
-		pop    *s				
+		crand  vector "1 0 0"
+		add    *s
+		pop    *s
 
 	}
 	think { kill }
@@ -2088,14 +2088,14 @@ particle muzzle_plasma_spiral
 	run
 	{
 
-		push   pos "40 40"		
-		mul    *t				
-		add    pos "10 10"		
-		pop    *size			
+		push   pos "40 40"
+		mul    *t
+		add    pos "10 10"
+		pop    *size
 
-		push   *color	
-		mul    float .7	
-		pop    *color	
+		push   *color
+		mul    float .7
+		pop    *color
 
 	}
 	think { kill }
@@ -2151,14 +2151,14 @@ particle muzzle_ptl_cross
 	run
 	{
 
-		push   pos "0 0"		
-		mul    *t				
-		sub    pos "20 20"		
-		pop    *size			
+		push   pos "0 0"
+		mul    *t
+		sub    pos "20 20"
+		pop    *size
 
-		push   *color	
-		mul    float .7	
-		pop    *color	
+		push   *color
+		mul    float .7
+		pop    *color
 
 	}
 	think { kill }
@@ -2213,7 +2213,7 @@ particle rocket_muzzle_smoke
 		add    #			// Add the value to the current stack value (velocity)
 		pop    *v			// write it back into particle structure and remove it from the stack
 
-		crand  vector "10 10 10"	// get a random value 
+		crand  vector "10 10 10"	// get a random value
 		add    *s			// add the value of s to the current stack value (the random value)
 		pop    *s			// write it into particle structure and remove it from the stack
 
@@ -2224,5 +2224,3 @@ particle rocket_muzzle_smoke
 	// this is spawned from an impact particle - need to be explicitly killed
 	think { kill }
 }
-
-

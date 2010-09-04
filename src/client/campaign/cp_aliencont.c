@@ -190,7 +190,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 
 	if (alienCargoTypes == 0)
 		return;
-	
+
 	if (!B_GetBuildingStatus(toBase, B_ALIEN_CONTAINMENT)) {
 		MS_AddNewMessage(_("Notice"), _("You cannot process aliens yet. Alien Containment not ready in this base."), qfalse, MSG_STANDARD, NULL);
 		return;
@@ -721,11 +721,11 @@ qboolean AC_SaveXML (mxml_node_t * parent)
 		mxml_AddInt(node, SAVE_ALIENCONT_BASEIDX, i);
 		for (k = 0; k < MAX_ALIENCONT_CAP && k < ccs.numAliensTD; k++) {
 			mxml_node_t * snode = mxml_AddNode(node, SAVE_ALIENCONT_ALIEN);
-			
+
 			assert(base->alienscont);
 			assert(base->alienscont[k].teamDef);
 			assert(base->alienscont[k].teamDef->id);
-			
+
 			mxml_AddString(snode, SAVE_ALIENCONT_TEAMID, base->alienscont[k].teamDef->id);
 			mxml_AddIntValue(snode, SAVE_ALIENCONT_AMOUNTALIVE, base->alienscont[k].amountAlive);
 			mxml_AddIntValue(snode, SAVE_ALIENCONT_AMOUNTDEAD, base->alienscont[k].amountDead);
@@ -796,4 +796,3 @@ qboolean AC_ContainmentAllowed (const base_t* base)
 		return qfalse;
 	}
 }
-

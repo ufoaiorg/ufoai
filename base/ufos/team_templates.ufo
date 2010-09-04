@@ -5,7 +5,7 @@
 //
 // chrtemplate <template-id> {}
 //	defines a template
-//	rate 
+//	rate
 //		only for phalanx soldiers - chance of selecting this template relative to sum of all rates
 //	strength, speed, accuracy, mind, close, heavy, assault, sniper, explosive, health
 //		min and max values for the atributes

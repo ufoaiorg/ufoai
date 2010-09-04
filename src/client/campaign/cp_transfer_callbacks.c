@@ -1466,4 +1466,3 @@ void TR_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("trans_baselist_click");
 	Cmd_RemoveCommand("trans_aliens");
 }
-

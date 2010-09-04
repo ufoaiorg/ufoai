@@ -56,5 +56,3 @@ class CUnitTest(ShellCommand):
 
 if __name__ == '__main__':
     CUnitTest()
-
-

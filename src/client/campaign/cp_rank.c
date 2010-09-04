@@ -147,4 +147,3 @@ void CL_ParseRanks (const char *name, const char **text)
 	if (!strlen(rank->shortname))
 		Q_strncpyz(rank->shortname, rank->name, sizeof(rank->shortname));
 }
-

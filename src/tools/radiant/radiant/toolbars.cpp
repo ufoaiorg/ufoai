@@ -202,4 +202,3 @@ GtkToolbar* create_main_toolbar_vertical (MainFrame::EViewStyle style)
 
 	return toolbar;
 }
-

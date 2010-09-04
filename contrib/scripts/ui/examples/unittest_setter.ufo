@@ -393,11 +393,11 @@ window unittest_setter
 	func testDelete {
 		*cvar:foo = "aaaa"
 		if ( exists *cvar:foo ) { *node:root.testDelete1@color = "0 1 0 1" }
-		else { *node:root.testDelete1@color = "1 0 0 1" }		
+		else { *node:root.testDelete1@color = "1 0 0 1" }
 		delete *cvar:foo
 		if ( exists *cvar:foo ) { *node:root.testDelete2@color = "1 0 0 1" }
-		else { *node:root.testDelete2@color = "0 1 0 1" }		
-		
+		else { *node:root.testDelete2@color = "0 1 0 1" }
+
 	}
 
 	func onInit {

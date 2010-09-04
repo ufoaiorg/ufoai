@@ -113,4 +113,3 @@ window singleplayermission
 		onClick		{ cmd "game_exit;mn_pop;" }
 	}
 }
-

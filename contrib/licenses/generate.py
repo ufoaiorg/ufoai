@@ -335,7 +335,7 @@ class Analysis(object):
                 content += '<br /><div>Uses: %s </div>' % ', '.join(list)
             else:
                 content += '<br />Note: Map without textures!'
-        
+
         if 'textures/' in meta.fileName and meta.isImage():
             if len(meta.usedByMaps) > 0:
                 list = []
@@ -529,7 +529,7 @@ def main():
     print "Generate thumbnails:\t", THUMBNAIL
     print "Generate plots:\t\t", PLOT
     print "-------------------------"
-    
+
     setup(output_path)
     clean_up(output_path)
 
@@ -549,4 +549,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

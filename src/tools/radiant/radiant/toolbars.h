@@ -29,4 +29,3 @@
 
 GtkToolbar* create_main_toolbar_vertical (MainFrame::EViewStyle style);
 GtkToolbar* create_main_toolbar_horizontal (MainFrame *mainframe);
-

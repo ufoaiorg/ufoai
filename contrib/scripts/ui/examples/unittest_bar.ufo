@@ -32,7 +32,7 @@ window unittest_bar
 	}
 
 	// orientation
-	
+
 	bar left {
 		current *cvar:foo
 		min 	0
@@ -72,7 +72,7 @@ window unittest_bar
 		size "50 50"
 		orientation lc
 	}
-	
+
 	func onInit {
 		*cvar:foo = 50
 	}

@@ -285,4 +285,3 @@ void R_SphereShadeGLSL (const sphere_t *sphere)
 	R_EnableLighting(NULL, qfalse);
 	R_SelectTexture(&texunit_diffuse);
 }
-

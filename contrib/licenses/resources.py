@@ -114,7 +114,7 @@ class Resources(object):
         content = unicode(content, "utf-8")
         file.close()
         lines = content.splitlines()
-        
+
         # read header
         header = lines.pop(0)
         header = header.split(' | ')
@@ -137,19 +137,19 @@ class Resources(object):
                 resource = Resource(filename)
                 self.resources[filename] = resource
             resource.revision = revision
-            try:            
+            try:
                 v = data[authorId].strip()
                 if v != "":
                     resource.copyright = v
             except IndexError:
                 pass
-            try:            
+            try:
                 v = data[licenseId].strip()
                 if v != "":
                     resource.license = v
             except IndexError:
                 pass
-            try:            
+            try:
                 v = data[sourceId].strip()
                 if v != "":
                     resource.source = v
@@ -293,4 +293,3 @@ class Resources(object):
                     continue
                 texmeta.usedByMaps.add(mapmeta)
                 mapmeta.useTextures.add(texmeta)
-

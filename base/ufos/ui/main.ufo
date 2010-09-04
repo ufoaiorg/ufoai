@@ -300,7 +300,7 @@ window popup_tipoftheday
 		pos			"266 188"
 		font		"f_menu"
 		color		"0 0.5 0 1"
-		onClick		{ 
+		onClick		{
 			if ( *cvar:cl_showTipOfTheDay == 1 ) {
 				cmd "tipoftheday;"
 			} else {

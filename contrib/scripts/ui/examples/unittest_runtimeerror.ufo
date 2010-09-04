@@ -34,16 +34,16 @@ window unittest_runtimeerror
 		// property is not a default property and node type is unknown
 		*node:root.foo<cvar:foo1>@min = {  }
 
-		// this properties do not exists, the code must not crash 
+		// this properties do not exists, the code must not crash
 		*node:root.foo<cvar:foo1>@foo__nothing__bar = 1
 		if ( *node:root.foo<cvar:foo1>@foo__nothing__bar == *node:root.foo__nothing__<cvar:foo1>@min ) {
 		}
-		
-		// not possible to parse value as binary 
+
+		// not possible to parse value as binary
 		*node:root.foo<cvar:foo1>@max = 100
 		*node:root.foo<cvar:foo2>@icon = "bordered_magnifying_glass"
 
-		// not possible to type nodes at run time 
+		// not possible to type nodes at run time
 		if ( *node:root.foo<cvar:foo1>@max == *node:root.foo<cvar:foo1>@min ) {
 			cmd "echo ok"
 		}

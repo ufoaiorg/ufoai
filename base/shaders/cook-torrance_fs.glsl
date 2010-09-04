@@ -1,6 +1,6 @@
 /* NOTE: portions based on D3D9 source from Jack Hoxley */
 
-#define ATTENUATE_THRESH 0.05 
+#define ATTENUATE_THRESH 0.05
 
 /**
  * The Cook-Torrance model for light reflection is a physics
@@ -13,7 +13,7 @@
 vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir, in vec3 N, in vec3 V, float NdotV, float R_2, in vec4 roughness, in vec4 specular, in vec4 diffuse){
 
 	/* calculate light attenuation due to distance (do this first so we can return early if possible) */
-	/* @todo this assumes all lights are point sources; it should respect the gl_LightSource 
+	/* @todo this assumes all lights are point sources; it should respect the gl_LightSource
 	 * settings for spot-light sources. */
 	float attenuate = lightSource.constantAttenuation;
 
@@ -26,9 +26,9 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec3 lightDir
 
 	if (attenuate > 0.0 && lightSource.position.w != 0.0){ /* directional sources don't get attenuated */
 		float dist = length((lightSource.position).xyz - point);
-		attenuate = 1.0 / (lightSource.constantAttenuation + 
+		attenuate = 1.0 / (lightSource.constantAttenuation +
 				lightSource.linearAttenuation * dist +
-				lightSource.quadraticAttenuation * dist * dist); 
+				lightSource.quadraticAttenuation * dist * dist);
 	}
 
 	/* if we're out of range, ignore the light; else calculate its contribution */
@@ -130,4 +130,3 @@ vec4 IlluminateFragment(void){
 
 	return vec4(totalColor, diffuse.a);
 }
-

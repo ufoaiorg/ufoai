@@ -35,7 +35,7 @@ void main(void){
 	if (GLOWSCALE > 0.01) {
 		gl_FragData[1] = gl_Color * texture2D(SAMPLER4, coord) * GLOWSCALE;
 	}
-#else 
+#else
 	gl_FragColor = finalColor;
 #endif
 }

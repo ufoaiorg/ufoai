@@ -290,4 +290,3 @@ int UI_DrawString (const char *fontID, align_t align, int x, int y, int absX, in
 
 	return lines * lineHeight;
 }
-

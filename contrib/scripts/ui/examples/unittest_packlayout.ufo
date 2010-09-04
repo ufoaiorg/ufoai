@@ -17,7 +17,7 @@ window unittest_packlayout
 			layout LAYOUT_PACK
 			layoutMargin	5
 		}
-	
+
 		panel red {
 			align LAYOUTALIGN_TOP
 			height 100

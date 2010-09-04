@@ -697,7 +697,7 @@ particle smallcampFire
 		add    *s
 		pop    *s
 		v      "0 0 5"
-		child  burnCorona 
+		child  burnCorona
 	}
 	run
 	{
@@ -725,7 +725,7 @@ particle burnFlame
 		add    *s
 		pop    *s
 		v      "0 0 20"
-		child  burnCorona 
+		child  burnCorona
 	}
 	run
 	{
@@ -755,7 +755,7 @@ particle burnFlamus
 		add    *s
 		pop    *s
 		v      "0 0 40"
-		child  burnCorona 
+		child  burnCorona
 	}
 	run
 	{
@@ -1251,8 +1251,8 @@ particle shortCircuit
 		tps			10
 		v			"0 0 0"
 		life		0.8
-		push   int 10		
-		nspawn bulletFragment	
+		push   int 10
+		nspawn bulletFragment
 	}
 	think { kill }
 }
@@ -1264,24 +1264,24 @@ particle shortCircuitSparks
 		image  sfx/spark
 		blend  add
 		style  facing
-		thinkfade  out		
+		thinkfade  out
 		size   "2 2"
 
-		push   *v			
-		rand   float 28.0	
-		add    float 3.0	
-		mul    #			
-		crand  vector "5 5 5" 
-		add    #			
-		pop    *v			
+		push   *v
+		rand   float 28.0
+		add    float 3.0
+		mul    #
+		crand  vector "5 5 5"
+		add    #
+		pop    *v
 
-		crand  vector "5 5 5"	
-		add    *s			
-		pop    *s			
+		crand  vector "5 5 5"
+		add    *s
+		pop    *s
 
-		rand   float 1.3	
-		add    float 1.2	
-		pop    *tps			
+		rand   float 1.3
+		add    float 1.2
+		pop    *tps
 	}
 	think { kill }
 }
@@ -1309,16 +1309,16 @@ particle healCross
 		a      "0 0 30"
 		offset "0 0 -10"
 
-		crand  vector "17 17 17"	
-		add    *s				
-		pop    *s				
+		crand  vector "17 17 17"
+		add    *s
+		pop    *s
 
 	}
 	run
 	{
 
-		push   *color	
-		mul    float .2	
+		push   *color
+		mul    float .2
 		pop    *color
 
 	}

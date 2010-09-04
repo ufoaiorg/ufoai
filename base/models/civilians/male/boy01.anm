@@ -74,6 +74,6 @@ panic0			114		117		1	// D
 stand_still			2		2		1	// D
 
 
-// "*move_*" is actually an "idle" animation and has nothing to do with moving around. 
+// "*move_*" is actually an "idle" animation and has nothing to do with moving around.
 // 0=items, 1=rifles, 2=pistols, 3=over shoulder or big weapon
 // D=Done (new animation completed, everything else is TODO)

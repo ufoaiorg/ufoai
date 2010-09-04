@@ -43,4 +43,3 @@ size_t UTF8_strlen(const char *str);
 char *UTF8_strncpyz(char *dest, const char *src, size_t limit);
 
 #endif
-

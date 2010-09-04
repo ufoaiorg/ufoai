@@ -155,4 +155,3 @@ qboolean CP_LoadInterestsXML (mxml_node_t *parent)
 	Com_UnregisterConstList(saveInterestConstants);
 	return success;
 }
-

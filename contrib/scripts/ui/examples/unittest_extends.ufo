@@ -15,7 +15,7 @@ window unittest_super {
 		{
 			size "200 200"
 		}
-	
+
 		panel background2
 		{
 			bgcolor	"0.5 0.5 0 1"

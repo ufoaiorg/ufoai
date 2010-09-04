@@ -644,4 +644,3 @@ qboolean INS_LoadXML (mxml_node_t *p)
 
 	return success;
 }
-

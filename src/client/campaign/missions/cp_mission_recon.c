@@ -275,4 +275,3 @@ void CP_ReconMissionNextStage (mission_t *mission)
 		break;
 	}
 }
-

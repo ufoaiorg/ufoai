@@ -926,4 +926,3 @@ void AIRFIGHT_InitStartup (void)
 	Cmd_AddCommand("debug_listprojectile", AIRFIGHT_ProjectileList_f, "Print Projectiles information to game console");
 #endif
 }
-

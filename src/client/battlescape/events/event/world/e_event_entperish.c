@@ -83,4 +83,3 @@ void CL_EntPerish (const eventRegister_t *self, struct dbuffer *msg)
 
 	le->invis = qtrue;
 }
-

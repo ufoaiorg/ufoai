@@ -60,7 +60,7 @@ window unittest_nodeallocation
 
 	button create {
 		pos "10 60"
-		size "150 20"		
+		size "150 20"
 		string "create"
 		onClick {
 			call *node:root.dyn@createchild ( "foo<cvar:nb>" , "string" )
@@ -93,7 +93,7 @@ window unittest_nodeallocation
 
 	button removeOne {
 		pos "10 80"
-		size "150 20"		
+		size "150 20"
 		string "remove one"
 		onClick {
 			if ( *cvar:nb > 0 ) {
@@ -106,7 +106,7 @@ window unittest_nodeallocation
 
 	button removeAll {
 		pos "10 100"
-		size "150 20"		
+		size "150 20"
 		string "remove all"
 		onClick {
 			call *node:root.dyn@removeAllChild

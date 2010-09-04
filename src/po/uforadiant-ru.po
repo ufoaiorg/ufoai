@@ -2714,4 +2714,3 @@ msgstr "Экспортировать регион"
 #: src/tools/radiant/radiant/toolbars.cpp:60
 msgid "Select all Faces of same texture"
 msgstr "Выбрать все грани с такой-же текстурой"
-

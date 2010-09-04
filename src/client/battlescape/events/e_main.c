@@ -146,5 +146,3 @@ const eventRegister_t *CL_GetEvent (const event_t eType)
 
 	Com_Error(ERR_DROP, "Could not get format string for event type %i", eType);
 }
-
-

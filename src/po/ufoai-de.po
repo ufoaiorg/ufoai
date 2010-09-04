@@ -18661,4 +18661,3 @@ msgstr "Laufend"
 #~ msgstr "Kann Waffe in der rechten Hand nicht nachladen (keine Munition)."
 #~ msgid "Not enough TUs for reloading weapon in right hand."
 #~ msgstr "Nicht genügend ZE, um die Waffe in der rechten Hand nachzuladen."
-

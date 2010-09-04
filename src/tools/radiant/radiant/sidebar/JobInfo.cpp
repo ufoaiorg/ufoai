@@ -106,4 +106,3 @@ namespace sidebar
 		g_list_foreach(jobs, updateJobs, _jobList);
 	}
 }
-

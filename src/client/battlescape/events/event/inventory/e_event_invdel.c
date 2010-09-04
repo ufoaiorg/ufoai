@@ -69,4 +69,3 @@ void CL_InvDel (const eventRegister_t *self, struct dbuffer *msg)
 	if (LE_IsItem(le))
 		LE_PlaceItem(le);
 }
-

@@ -440,7 +440,7 @@ TOOLS_CFLAGS="$TOOLS_CFLAGS $libpng_CFLAGS"
 #---------------------------------------------------------------------------------------------
 # Check SDL
 #---------------------------------------------------------------------------------------------
-if test $TARGET_OS != "darwin" 
+if test $TARGET_OS != "darwin"
 then
 	PKG_CHECK_MODULES(SDL, sdl, HAVE_SDL="yes", HAVE_SDL="no")
 	if test "x$HAVE_SDL" = "xno" ; then
@@ -464,7 +464,7 @@ fi
 #---------------------------------------------------------------------------------------------
 # Check SDL_image
 #---------------------------------------------------------------------------------------------
-if test $TARGET_OS != "darwin" 
+if test $TARGET_OS != "darwin"
 then
 	PKG_CHECK_MODULES(SDL_image, SDL_image, HAVE_SDL_image="yes", HAVE_SDL_image="no")
 	if test "x$HAVE_SDL_image" = "xno" ; then
@@ -502,7 +502,7 @@ then
 	#---------------------------------------------------------------------------------------------
 	# Check opengl
 	#---------------------------------------------------------------------------------------------
-	if test $TARGET_OS = "darwin" 
+	if test $TARGET_OS = "darwin"
 	then
 		CLIENT_CFLAGS="$CLIENT_CFLAGS"
 		CLIENT_LIBS="$CLIENT_LIBS -framework OpenGL"
@@ -511,7 +511,7 @@ then
 	#---------------------------------------------------------------------------------------------
 	# Check SDL_mixer and SDL_ttf
 	#---------------------------------------------------------------------------------------------
-	if test $TARGET_OS = "darwin" 
+	if test $TARGET_OS = "darwin"
 	then
 		SDL_mixer_CFLAGS="$SDL_mixer_CFLAGS -I/opt/local/Library/Frameworks/SDL_mixer.framework/Headers"
 		SDL_mixer_LIBS="$SDL_mixer_LIBS -framework SDL_mixer"
@@ -550,7 +550,7 @@ then
 	AC_MSG_NOTICE([SDL_mixer ldflags: $SDL_mixer_LIBS])
 	AC_SUBST([SDL_MIXER_CFLAGS], "$SDL_mixer_CFLAGS")
 	AC_SUBST([SDL_MIXER_LIBS], "$SDL_mixer_LIBS")
-	
+
 	AC_MSG_NOTICE([SDL_ttf cflags: $SDL_ttf_CFLAGS])
 	AC_MSG_NOTICE([SDL_ttf ldflags: $SDL_ttf_LIBS])
 	AC_SUBST([SDL_TTF_CFLAGS], "$SDL_ttf_CFLAGS")
@@ -840,7 +840,7 @@ fi
 # Check for signal handling
 #---------------------------------------------------------------------------------------------
 
-if test $TARGET_OS != "darwin" 
+if test $TARGET_OS != "darwin"
 then
 	if test "$enable_signals" = "no"
 	then
@@ -976,4 +976,3 @@ ${PACKAGE_NAME} ${PACKAGE_VERSION}: Automatic configuration OK.
 
 Type 'make' to build $PROGRAM.  Type 'make install' to install it.
 ])
-

@@ -280,4 +280,3 @@ $(RADIANT_TARGET): $(RADIANT_CPP_OBJS) $(RADIANT_C_OBJS)
 	@echo " * [RAD] ... linking $(LNKFLAGS) ($(RADIANT_LIBS))"; \
 		$(CPP) $(LDFLAGS) -o $@ $(RADIANT_CPP_OBJS) $(RADIANT_C_OBJS) $(RADIANT_LIBS) $(LNKFLAGS) -lz;
 		@echo " * [RAD] ... done"
-

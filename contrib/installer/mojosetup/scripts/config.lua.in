@@ -39,17 +39,16 @@ Setup.Package
 		bytes = @TOTAL_INSTALL_SIZE@,
 		description = _("UFO: Alien Invasion"),
 		Setup.File {},  -- Just copies the whole thing.
-		Setup.DesktopMenuItem 
+		Setup.DesktopMenuItem
 		{
 			name = "UFO: Alien Invasion @VERSION@",
 			genericname = "UFO: AI",
 			icon = "ufoai.xpm",
 			commandline = "%0/ufoai",
 			category = "Game",
-		
+
 		},
 	},
 }
 
 -- end of config.lua ...
-

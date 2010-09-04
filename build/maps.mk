@@ -65,4 +65,3 @@ endif
 
 $(BSPS): %.bsp: %.map
 	$(UFO2MAP) $(UFO2MAPFLAGS) $(<:base/%=%)
-

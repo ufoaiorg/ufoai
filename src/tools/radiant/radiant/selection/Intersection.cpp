@@ -89,4 +89,3 @@ float distance_for_axis (const Vector3& a, const Vector3& b, const Vector3& axis
 {
 	return static_cast<float> (b.dot(axis) - a.dot(axis));
 }
-

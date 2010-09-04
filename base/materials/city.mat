@@ -70,7 +70,7 @@
 }
 
 /* -----------------
-   Commented out until adverts are used	
+   Commented out until adverts are used
 {
 	material tex_misc/advertaa0
 	specular 2.0
@@ -204,12 +204,12 @@
 	material tex_buildings/wall_ind01_cons
 	bump 2.0
 	parallax 2.0
-}	
+}
 {
 	material tex_buildings/wall_ind01_pil
 	bump 2.0
 	parallax 2.0
-}	
+}
 {
 	material tex_buildings/wall_ind02
 	bump 2.0
@@ -222,7 +222,7 @@
 	parallax 2.0
 	specular 2.0
 	hardness 2.0
-}	
+}
 {
 	material tex_buildings/wall_ind03_flat
 	bump 2.0
@@ -250,7 +250,7 @@
 	parallax 2.0
 	specular 0.5
 	hardness 0.5
-}		
+}
 
 ###
 ### LIGHTS
@@ -331,7 +331,7 @@
 	parallax 0.5
 	specular 4.0
 	hardness 4.0
-}	
+}
 
 ###
 ### STREETS

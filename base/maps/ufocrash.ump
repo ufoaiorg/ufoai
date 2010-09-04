@@ -432,4 +432,3 @@ size "7 7"
 *rm_ufo +craft_crash_harvester "1 1"
 *rm_drop +craft_drop_firebird "1 1"
 }
-

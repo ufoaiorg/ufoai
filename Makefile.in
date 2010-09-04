@@ -235,4 +235,3 @@ clean-tests:
 	@rm -f $(TESTS_TARGET) $(TESTS_OBJS)
 
 .PHONY: all all2 clean echo_info $(BUILDDIR)/.dirs
-

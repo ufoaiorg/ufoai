@@ -444,4 +444,3 @@ window uforecovery
 		delete *cvar:mn_uforecovery_actualufo
 	}
 }
-

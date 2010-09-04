@@ -15,11 +15,11 @@ tile +main
 7 7
 
 0      0      0      0      0      0      0
-0      +a     +a     +a     +a     +a     0 
-0      +a     +a     +a     +a     +a     0 
-0      b      b      +a     +a     +a     0 
-0      b      b      +a     +a     +a     0 
-0      b      b      +a     +a     +a     0 
+0      +a     +a     +a     +a     +a     0
+0      +a     +a     +a     +a     +a     0
+0      b      b      +a     +a     +a     0
+0      b      b      +a     +a     +a     0
+0      b      b      +a     +a     +a     0
 0      0      0      0      0      0      0
 }
 
@@ -28,9 +28,9 @@ tile +craft_drop_firebird
 4 5
 
 0      a      a      a
-0      +b     +b     a 
-0      +b     +b     a 
-0      +b     +b     a 
+0      +b     +b     a
+0      +b     +b     a
+0      +b     +b     a
 0      0      0      0
 }
 
@@ -39,9 +39,9 @@ tile +craft_drop_herakles
 4 5
 
 0      a      a      a
-0      +b     +b     a 
-0      +b     +b     a 
-0      +b     +b     a 
+0      +b     +b     a
+0      +b     +b     a
+0      +b     +b     a
 0      0      0      0
 }
 
@@ -50,9 +50,9 @@ tile +craft_drop_raptor
 4 5
 
 0      a      a      a
-0      +b     +b     a 
-0      +b     +b     a 
-0      +b     +b     a 
+0      +b     +b     a
+0      +b     +b     a
+0      +b     +b     a
 0      0      0      0
 }
 

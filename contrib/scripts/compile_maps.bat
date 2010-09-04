@@ -164,7 +164,7 @@ goto :EOF
 		echo              Also downscale the lightmap.
 		echo   /shutdown  shutdown computer when compilation complete
 		echo   /md5       Determine map changes based on a hash sum
-		echo              also determine ufo2map.exe changes based on the re-version number  
+		echo              also determine ufo2map.exe changes based on the re-version number
 		echo              Prevent unnecessary recompile of maps
 		echo              but recompile all maps the very first time
 		echo   path       relative to base\maps.

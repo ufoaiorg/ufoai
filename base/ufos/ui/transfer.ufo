@@ -661,4 +661,3 @@ window popup_transferbaselist
 		*cvar:tr_base = -1
 	}
 }
-

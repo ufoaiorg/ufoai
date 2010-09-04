@@ -5,8 +5,8 @@
 # WIKI data must be pasted into http://ufoai.ninex.info/wiki/index.php/Template:Translation_status/Data
 #
 # Usage
-# move to ./src/po 
-# execute ./postats2.sh . ufoai.pot 
+# move to ./src/po
+# execute ./postats2.sh . ufoai.pot
 #
 
 function usage() {

@@ -93,4 +93,3 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 
 	return qtrue;
 }
-

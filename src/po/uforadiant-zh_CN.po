@@ -2733,4 +2733,3 @@ msgstr "区域"
 #, fuzzy
 msgid "Select all Faces of same texture"
 msgstr ""
-

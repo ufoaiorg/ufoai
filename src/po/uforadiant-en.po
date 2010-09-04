@@ -2721,4 +2721,3 @@ msgstr "Export Region"
 #: src/tools/radiant/radiant/toolbars.cpp:60
 msgid "Select all Faces of same texture"
 msgstr "Select all Faces of same texture"
-

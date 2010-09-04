@@ -85,4 +85,3 @@ void B_PostLoadInit(void);
 void AIR_PostLoadInit(void);
 
 #endif /* CLIENT_CL_SAVE_H */
-

@@ -68,4 +68,3 @@ void CL_StartGame (const eventRegister_t *self, struct dbuffer *msg)
 	/* get rid of loading plaque */
 	SCR_EndLoadingPlaque();
 }
-

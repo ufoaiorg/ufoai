@@ -85,4 +85,3 @@ static int R_CheckErrorDebug (const char *file, int line, const char *function)
 
 	return ret;
 }
-

@@ -143,7 +143,7 @@ def genBehaviourParser(node):
 	getFactory = "IUFOSubParserFactory factory = getNodeSubParserFactory();"
 
 	hideRegistration = '// '
-	if registration:	
+	if registration:
 		hideRegistration = ''
 
 	template = template.replace("###HIDEREGISTRATION###", hideRegistration)

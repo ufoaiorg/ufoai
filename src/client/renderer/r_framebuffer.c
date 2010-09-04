@@ -365,4 +365,3 @@ qboolean R_RenderbufferEnabled (void)
 {
 	return r_state.renderbuffer_enabled;
 }
-

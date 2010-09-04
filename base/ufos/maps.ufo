@@ -3602,7 +3602,7 @@ mapdef hills_harvester
 	multiplayer	false
 	maxaliens	6
 
-	aircraft 
+	aircraft
 	{
 		craft_drop_firebird
 //		craft_drop_raptor

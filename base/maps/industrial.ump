@@ -97,7 +97,7 @@ tile +craft_ufo_supply //A(12)
 g    +u   +u   +u    +u   g
 g    +u   +u   +u    +u   g
 g    +u   +u   +u    +u   g
-0    g    g    g     g    0   
+0    g    g    g     g    0
 }
 
 tile +craft_ufo_harvester
@@ -109,7 +109,7 @@ tile +craft_ufo_harvester
 g    +u   +u   +u    +u   g
 g    +u   +u   +u    +u   g
 g    +u   +u   +u    +u   g
-0    g    g    g     g    0   
+0    g    g    g     g    0
 }
 
 
@@ -220,7 +220,7 @@ tile +fr13_2x1
 {
 4 3
 0    gdu  gdu  0
-gdu  +g   +g   gdu  
+gdu  +g   +g   gdu
 0    gdu  gdu  0
 }
 

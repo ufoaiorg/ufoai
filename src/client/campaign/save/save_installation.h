@@ -75,4 +75,3 @@ DTD:
 **Note: weapon defined in save_bases.h
 
 */
-

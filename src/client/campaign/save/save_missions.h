@@ -93,7 +93,7 @@ DTD:
 			 	baseAttack, building,
 			 	supply, XVI, intercept,
 			 	harvest, alienBase)		#REQUIRED
-	stage		(notActive, comeFromOrbit, 
+	stage		(notActive, comeFromOrbit,
 				reconAir, missionGoTo,
 				reconGround, terrorMission,
 				buildBase, baseAttack,
@@ -102,7 +102,7 @@ DTD:
 				baseDiscovered, harvest,
 				returnToOrbit,
 				missionOver)			#REQUIRED
-	
+
 							CDATA	'0'
 	baseIDX						CDATA	#IMPLIED
 	installationIDX				CDATA	#IMPLIED
@@ -127,4 +127,3 @@ DTD:
 >
 
 */
-

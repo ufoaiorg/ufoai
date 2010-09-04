@@ -31,7 +31,7 @@ vec3 LightContribution(in gl_LightSourceParameters lightSource, in vec4 diffuse,
 			}
 		}
 	}
-	
+
 	return light;
 }
 

@@ -13,4 +13,3 @@ export PATH=${MINGW_CROSS_ENV}/usr/bin:${MINGW_CROSS_ENV}/usr/${MINGW}/bin/:${PA
 ./configure --host=${MINGW} --disable-uforadiant
 
 make -j ${JOBS}
-

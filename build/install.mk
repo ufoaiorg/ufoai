@@ -51,6 +51,6 @@ create-dev: mappack dataarchive wininstaller linuxinstaller sourcearchive
 
 #
 # Generate a tar archive of the sources. Some stuff is ignored here - see the .gitattributes in the root directory
-# 
+#
 sourcearchive:
 	git archive --format=tar --prefix=ufoai-$(UFOAI_VERSION)-source/ HEAD | bzip2 -9 > ufoai-$(UFOAI_VERSION)-source.tar.bz2

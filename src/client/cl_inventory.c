@@ -411,4 +411,3 @@ void INV_InitStartup (void)
 
 	INV_EquipmentDefSanityCheck();
 }
-

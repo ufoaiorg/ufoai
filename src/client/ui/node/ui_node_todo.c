@@ -93,4 +93,3 @@ void UI_RegisterTodoNode (uiBehaviour_t *behaviour)
 	behaviour->loading = UI_TodoNodeLoading;
 	behaviour->loaded = UI_TodoNodeLoaded;
 }
-

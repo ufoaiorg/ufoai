@@ -180,4 +180,3 @@ char *UTF8_strncpyz (char *dest, const char *src, size_t limit)
 
 	return dest;
 }
-

@@ -53,7 +53,7 @@ void main(void){
 	vec3 N = vec3(normalize(texture2D(SAMPLER2, tex).rgb * 2.0 - 1.0).rgb);
 	float NdotL = clamp(dot(N, L), 0.0, 1.0);
 	vec4 reflectColor = diffuseColor * diffuseLight * NdotL;
-	
+
 	/* calculate specular reflections */
 	float RdotL = clamp(dot(reflect(-L, N), V), 0.0, 1.0);
 	float gloss = texture2D(SAMPLER2, tex).a;

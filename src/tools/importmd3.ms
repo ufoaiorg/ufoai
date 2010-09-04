@@ -28,16 +28,16 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 	local g_modelFilename
 	local g_modelName
 	local g_modelPath
-	
+
 	-- Quake3 Image Extensions
 	local g_q3ImageExts = #( ".tga", ".jpg", ".jpeg" )
 
 	local appName = "Quake3 MD3 Import"
-	
+
 	-- Texture Cache
 	local g_textureNames = #()
 	local g_textures = #()
-	
+
 
 	--------------------
 	-- User Interface --
@@ -49,22 +49,22 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		label betaLabel "Public Beta v0.1"
 		HyperLink addy "by Chris Cookson" align:#center address:"mailto:cjcookson@hotmail.com" color:(color 0 0 170) hoverColor:(color 170 0 0)
 	)
-	
+
 	group "Import:"
 	(
 		radiobuttons tagAction "Tags:" labels:#("Ignore", "Load all", "Auto attach") default:1
 		checkbox loadAnimations "Load Animations" checked:true
 		checkbox promptForMissing "Prompt for missing textures" checked:false
-		
+
 		button importButton "Import MD3..."	tooltip:"Import a Quake III .MD3 model"
 	)
-	
+
 	group "Tools:"
 	(
 		button applySkin "Apply Skin..." tooltip:"Apply a .skin file to models in the scene"
 		button createTag "Create New Tag" tooltip:"Create a new tag triangle"
 	)
-	
+
 	-----------------------------------------------------
 	-- Recent file list (sadly I can't save to an INI) --
 	-----------------------------------------------------
@@ -76,7 +76,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		recentFile = fname
 		ok
 	)
-	
+
 	fn GetMostRecentPath=
 	(
 		if recentFile != undefined then
@@ -109,7 +109,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			false
 		)
 	)
-	
+
 	-- Error message box
 	fn ShowError msg=
 	(
@@ -117,14 +117,14 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		messageBox msg title:appName;
 		ok
 	)
-	
+
 	-- Error message box and exception
 	fn FatalError msg=
 	(
 		ShowError msg;
 		throw (appName + ":" + msg)
 	)
-	
+
 	-- Quick check, error if fail
 	fn Check condition msg =
 	(
@@ -135,9 +135,9 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			FatalError msg
 		)
 	)
-	
+
 	-- Binstream tools
-	
+
 	-- Skip over a number of bytes
 	fn SkipBytes bstream count=
 	(
@@ -155,7 +155,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			)
 		)
 	)
-	
+
 	-- Read a string of fixedLen chars
 	fn ReadFixedString bstream fixedLen=
 	(
@@ -173,9 +173,9 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		)
 		str
 	)
-	
+
 	-- String utils
-	
+
 	-- Get the string a long represents
 	fn LongToString num=
 	(
@@ -188,14 +188,14 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		)
 		str
 	)
-	
+
 	-- Convert to lowercase
 	fn ToLowerCase instr=
 	(
 		local outstr = copy instr
 		local upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 		local lower = "abcdefghijklmnopqrstuvwxyz"
-		
+
 		for i =1 to outstr.count do
 		(
 			local pos = findString upper outstr[i]
@@ -203,8 +203,8 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		)
 		outstr
 	)
-	
-	
+
+
 	-- Convert a forward-slash style PK3 path to a windows one
 	fn ToWindowsPath pakPath=
 	(
@@ -221,13 +221,13 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		)
 		winPath
 	)
-	
-	-- Swap a file's extension	
+
+	-- Swap a file's extension
 	fn ChangeExt filename newExt=
 	(
 		(getFilenamePath filename) + (getFilenameFile filename) + newExt
 	)
-	
+
 	-- Get the game data path set by the user, or a default one
 	fn GetDataPath=
 	(
@@ -240,12 +240,12 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			g_defaultGameDataPath
 		)
 	)
-	
+
 	-- Extract the filename of a data file from a PK3 filename
 	fn GetDataPathFilename filename=
 	(
 		local splitPath = filterString filename "\\/"
-		
+
 		if splitPath.count > 0 then
 		(
 			splitPath[splitPath.count]
@@ -255,7 +255,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			""
 		)
 	)
-	
+
 	-------------------
 	-- Texture Cache --
 	-------------------
@@ -266,7 +266,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		g_textureNames = #()
 		g_textures = #()
 	)
-	
+
 	-- Add a texture to the cache and return the loaded bitmaptexture
 	fn AddTextureToCache name fname=
 	(
@@ -279,7 +279,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		)
 		bmpTex
 	)
-		
+
 	-- Find a texture given a PK3 filename
 	fn FindTexture filename=
 	(
@@ -289,28 +289,28 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		(
 			return g_textures[index]
 		)
-	
+
 		-- Not in cache so we'll try searching in the model's directory
 		local localFilename = g_modelPath + (GetDataPathFilename filename)
-		
+
 		-- Thanks to the Discreet/Tempest guys for the for ext... bit!
 		for ext in g_q3ImageExts do
 		(
 			local imgName = ChangeExt localFilename ext
-			
+
 			if DoesFileReallyExist imgName then
 			(
 				return (AddTextureToCache filename imgName)
 			)
 			format "Failed on %\n" imgName
 		)
-		
+
 		-- We're out of luck so ask the user to find it for us!
 		local foundFilename
 		if promptForMissing.checked do
 		(
 			messageBox ("Can't find texture " + filename + "\nPlease click OK and locate it.")
-		
+
 			foundFilename = getOpenFileName caption:("Find Texture " + filename) filename:localFilename \
 						types:"All supported (*.tga;*.jpg;*.jpeg)|*.tga;*.jpg;*.jpeg|All Files (*.*)|*.*|"
 		)
@@ -335,12 +335,12 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 	struct Tokenizer
 	(
 		tokens = #(),
-		
+
 		fn SetString str=
 		(
 			tokens = filterString str "\t ,"
 		),
-		
+
 		fn ReadToken=
 		(
 			if tokens.count > 0 then
@@ -353,21 +353,21 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 				undefined
 			)
 		),
-		
+
 		fn PeekToken=
 		(
 			if tokens.count > 0 then tokens[1] else undefined
 		)
 	)
-	
+
 	struct SkinDef
 	(
 		name,
 		imgFile
 	)
-	
+
 	local g_skinDefs = #()
-	
+
 	-- Strip off the _1, _2 level of detail suffixes
 	function StripLodSuffix str=
 	(
@@ -377,40 +377,40 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		)
 		str
 	)
-	
+
 	function GetDefaultSkinFile=
 	(
 		-- Strip LOD suffix from model name
 		local strippedName = StripLodSuffix g_modelName
-	
+
 		g_modelPath + strippedName + "_default.skin"
 	)
-	
+
 	function LoadSkinFile fname=
 	(
 		try
 		(
 			g_skinDefs = #()
-			
+
 			--format "Attempting to load skin file: %\n" fname
 			local fp = openFile fname mode:"r"
-			
-			if fp == undefined then 
+
+			if fp == undefined then
 			(
 				format "Skin file % not found\n" fname
 				return false
 			)
-			
+
 			local tok = Tokenizer()
-			
+
 			while not (eof fp) do
 			(
 				local curLine = readLine fp
-				
+
 				--format "%\n" curLine
-				
+
 				tok.SetString curLine
-				
+
 				if tok.PeekToken() != undefined then
 				(
 					local surfName = tok.ReadToken()
@@ -421,18 +421,18 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 					--format "Got skindef: (%, %)\n" (newSkinDef.name) (newSkinDef.imgFile)
 				)
 			)
-			
+
 			close fp
 		)
 		catch ()
 		ok
 	)
-	
+
 	function GetSkinForSurface surfName=
 	(
 		--format "Looking for skin for surface %..." surfName
 		surfName = ToLowerCase surfName
-		
+
 		for def in g_skinDefs do
 		(
 			if (def.name == surfName) or (def.name == (StripLodSuffix surfname)) then
@@ -444,13 +444,13 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		--format "Not found\n"
 		undefined
 	)
-	
-	
-	
+
+
+
 	--------------------------------------------------------------------
 	-- MD3 Importer
 	--------------------------------------------------------------------
-	
+
 	-- Surfaces are a group of polys with the same rendering style
 	struct MD3_Surface
 	(
@@ -466,14 +466,14 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		offsetTexCoords,
 		offsetVertices,
 		offsetEnd,
-		
+
 		-- Internal
 		offsetStart,	-- Set when LoadFromStream called
-		
+
 		fn LoadFromStream bstream=
 		(
 			offsetStart = ftell bstream
-			
+
 			ident					= ReadLong bstream #unsigned
 			name					= ReadFixedString bstream 64
 			flags					= ReadLong bstream #unsigned
@@ -487,7 +487,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			offsetVertices			= ReadLong bstream #unsigned
 			offsetEnd				= ReadLong bstream #unsigned
 		),
-		
+
 		fn IsValid=
 		(
 			/*
@@ -498,7 +498,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			*/
 			true
 		),
-		
+
 		fn DebugOut=
 		(
 			format "MD3_Surface\n-----------\n"
@@ -509,12 +509,12 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 				offsetTriangles offsetShaders offsetTexCoords offsetVertices
 		)
 	)
-	
+
 	-- Triangle defined as 3 indices
 	struct MD3_Triangle
 	(
 		indices,
-		
+
 		fn LoadFromStream bstream=
 		(
 			local v1 = ReadLong bstream #unsigned
@@ -523,14 +523,14 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			indices = [v3 + 1, v2 + 1, v1 + 1]
 		)
 	)
-	
+
 
 	-- Vertex definition
 	struct MD3_Vertex
 	(
 		position,
 		normal,
-		
+
 		fn LoadFromStream bstream=
 		(
 			local x = ReadShort bstream #signed
@@ -539,30 +539,30 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			position = [x as float, y as float, z as float] * (1.0 / 64.0)
 			normal = ReadShort bstream #unsigned
 		),
-		
+
 		fn GetNormal=
 		(
 			local unpackAngle = 360.0 / 255.0
-		
+
 			local longitude = ((normal / 256) as float) * unpackAngle
 			local latitude = ((bit.and normal 0xff) as float) * unpackAngle
-			
+
 			local norm = [0,0,0]
 			norm.x = cos( longitude ) * sin( latitude )
 			norm.y = sin( longitude ) * sin( latitude )
 			norm.z = cos( latitude )
-		
+
 			norm
 		),
-		
+
 		fn GetSize= 8
 	)
-	
+
 	-- Texture co-ordinate
 	struct MD3_TexCoord
 	(
 		stu,
-		
+
 		fn LoadFromStream bstream=
 		(
 			local s = ReadFloat bstream
@@ -571,25 +571,25 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			stu = [s, -t, 0.0]
 		)
 	)
-	
+
 	-- Shader definition
 	struct MD3_Shader
 	(
 		name,
 		shaderIndex,	-- Internal to Q3
-		
+
 		fn LoadFromStream bstream=
 		(
 			name = ReadFixedString bstream 64
 			shaderIndex = ReadLong bstream #unsigned
 		),
-		
+
 		fn DebugOut=
 		(
 			format "MD3_Shader: %\n" name
 		)
 	)
-		
+
 	-- Tag
 	struct MD3_Tag
 	(
@@ -599,7 +599,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		axisRow2,
 		axisRow3,
 		tagMatrix,
-		
+
 		fn LoadFromStream bstream=
 		(
 			name = ReadFixedString bstream 64
@@ -619,31 +619,31 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			y = ReadFloat bstream
 			z = ReadFloat bstream
 			axisRow3 = [x, y, z]
-			
+
 			tagMatrix = matrix3 axisRow1 axisRow2 axisRow3 origin
 		),
-		
+
 		fn GetTranslation=
 		(
 			tagMatrix.translationpart
 		),
-		
+
 		fn GetRotation=
 		(
 			tagMatrix.rotationPart
 		),
-		
+
 		fn GetMatrix=
 		(
 			tagMatrix
 		),
-		
+
 		fn DebugOut=
 		(
 			format "MD3_Tag: %, matrix = %\n" name tagMatrix
 		)
-	) 	
-	
+	)
+
 	-- Frame:
 	struct MD3_Frame
 	(
@@ -652,7 +652,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		localOrigin,
 		radius,
 		name,			-- often creator
-		
+
 		fn LoadFromStream bstream=
 		(
 			local x = ReadFloat bstream
@@ -669,9 +669,9 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			localOrigin = [x, y, z]
 			radius = ReadFloat bstream
 			name = ReadFixedString bstream 16
-		)		
+		)
 	)
-	
+
 	-- Header: found at start of file
 	struct MD3_Header
 	(
@@ -688,7 +688,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		offsetTags,
 		offsetSurfaces,
 		offsetEnd,
-		
+
 		fn LoadFromStream bstream=
 		(
 			ident			= ReadLong bstream #unsigned
@@ -721,7 +721,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			)
 			true
 		),
-		
+
 		fn DebugOut=
 		(
 			format "MD3_Header\n----------\n"
@@ -730,49 +730,49 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			format "ofsFrames: %, ofsTags: %, ofsSurfs: %, ofsEnd: %\n" offsetFrames offsetTags offsetSurfaces offsetEnd
 			ok
 		)
-	)	
-	
+	)
+
 
 	-- The main MD3 loader object
 	struct MD3_Loader
 	(
 		bstream,
-		
-		header,	
+
+		header,
 		surfaceList,
 		tags,
 		tagObjects,
-		
+
 		frames,
-		
+
 		skinFile,
-		
+
 		fn Open filename=
 		(
 			g_modelFilename = filename
 			g_modelName = getFilenameFile filename
 			g_modelPath = getFileNamePath filename
 			bstream = fopen filename "rb"
-			
+
 			skinFile = GetDefaultSkinFile()
 			ok
 		),
-		
+
 		fn Close=
 		(
 			fclose bstream
 			ok
 		),
-		
+
 		-- Create a tag object in the form of the standard Quake3 tag triangle
 		fn CreateTagObject md3Tag=
 		(
 			local verts = #([0, 0, 0], [0, -1, 0], [2, 0, 0])
 			local tri = #([1, 2, 3])
 			local tagObject = mesh name:(md3Tag.name) vertices:verts faces:tri pos:(md3Tag.GetTranslation())
-			
+
 			in coordsys local tagObject.rotation = md3Tag.GetRotation()
-			
+
 			tagObject
 		),
 
@@ -783,12 +783,12 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			surface.LoadFromStream bstream
 
 			--surface.DebugOut()
-			
+
 			if not surface.IsValid() then
 			(
 				return false
 			)
-			
+
 			-- Load triangles
 			fseek bstream (surface.offsetStart + surface.offsetTriangles) #seek_set
 
@@ -797,10 +797,10 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			(
 				local curTri = MD3_Triangle()
 				curTri.LoadFromStream bstream
-				
+
 				append modelTris curTri.indices
 			)
-			
+
 			-- Load shaders
 			fseek bstream (surface.offsetStart + surface.offsetShaders) #seek_set
 			local modelShaders = #()
@@ -811,7 +811,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 				append modelShaders curShader.name
 				--curShader.DebugOut()
 			)
-			
+
 			-- Load texture co-ordinates
 			fseek bstream (surface.offsetStart + surface.offsetTexCoords) #seek_set
 			local modelTexCoords = #()
@@ -821,54 +821,54 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 				curTC.LoadFromStream bstream
 				append modelTexCoords curTC.stu
 			)
-			
+
 			-- Create a material
 			local modelMaterial = standardmaterial name:(header.name + " material")
 
 			local skin = GetSkinForSurface surface.name
-			
+
 			if skin == undefined then
 			(
 				skin = modelShaders[1]
 			)
 
 			local diffuseMap = FindTexture skin
-			
+
 			if diffuseMap != undefined then
 			(
 				modelMaterial.maps[2] = diffuseMap
 				modelMaterial.mapEnables[2] = true
 				showTextureMap modelMaterial diffuseMap true
 			)
-			
+
 			-- Create mesh in gmax
 			local gmaxMesh = mesh name:surface.name numVerts:surface.numVertices numFaces:surface.numTriangles \
 									position:[0,0,0] scale:[1,1,1] material:modelMaterial
-			
+
 			-- Add faces
 			setMesh gmaxMesh faces:modelTris
-			
+
 			-- Add per-vertex tex-coords and texture faces
 			setNumTVerts gmaxMesh surface.numVertices
 			for i = 1 to surface.numVertices do
 			(
 				setTVert gmaxMesh i modelTexCoords[i]
 			)
-			
+
 			buildTVFaces gmaxMesh
 			for i = 1 to surface.numTriangles do
 			(
 				setTVFace gmaxMesh i modelTris[i]
 			)
-			
+
 			-- try and help garbage collection
 			modelTexCoords = undefined
 			modelTris = undefined
 			gc()
-			
+
 			-- Jump over to the vertex data
 			fseek bstream (surface.offsetStart + surface.offsetVertices + 0) #seek_set
-			
+
 			local modelNormals = #()
 			for i = 1 to surface.numVertices do
 			(
@@ -877,7 +877,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 				append modelNormals (curVertex.GetNormal())
 				setVert gmaxMesh i (curVertex.position)
 			)
-			
+
 			-- For some reason I have to set normals *after* having set all the verts
 			-- They also don't animate properly, so I've had to disable them :/
 			/*
@@ -887,28 +887,28 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			)
 			modelNormals = #()
 			*/
-			
+
 			if loadAnimations.checked then
 			(
-			
+
 				-- Make vertices animatable
 				animateVertex gmaxMesh #all
-				
+
 				local animVerts = gmaxMesh[4][1]
-				
+
 				-- Construct each subsequent animation frame
 				animate on
 				(
 					local progStr = " (" + (surfaceList.count as string) + "/" + (header.numSurfaces as string) + ")"
 					progressStart ("Loading " + surface.name + progStr + "...")
-				
+
 					try
 					(
 						-- Seek back to start of vertices
 						fseek bstream (surface.offsetStart + surface.offsetVertices) #seek_set
-		
+
 						local curVertex = MD3_Vertex()
-		
+
 						for curFrame = 0 to (surface.numFrames - 1) do
 						(
 							at time curFrame
@@ -919,13 +919,13 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 									animVerts[i].value = curVertex.position
 								)
 							)
-							
+
 							-- Don't update too often (pointless to update more than 100 times anyway)
 							if (mod curFrame 3) == 0 then
 							(
 								progressUpdate (100.0 * curFrame / surface.numFrames)
 							)
-							
+
 							-- Allow the user to cancel if they get bored or panic
 							if getProgressCancel() then
 							(
@@ -940,37 +940,37 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 						progressEnd()
 						throw
 					)
-					
+
 					progressEnd()
 				)
 			)
-			
+
 			update gmaxMesh
-				
+
 			-- Move to end of surface ready for the next one
 			fseek bstream (surface.offsetStart + surface.offsetEnd) #seek_set
-		
+
 			-- Return gmax mesh
-			gmaxMesh		
+			gmaxMesh
 		),
-		
-	
+
+
 		-- Load and construct the entire MD3 model
 		fn LoadModel=
 		(
 			-- Load MD3_Header
 			fseek bstream 0 #seek_set
-			
+
 			header = MD3_Header()
 			header.LoadFromStream bstream
 			--header.DebugOut()
-			
+
 			if not header.IsValid() then
 			(
 				format "Invalid header, aborting.\n"
 				return false;
 			)
-		
+
 			-- Process tags only if we're loading or attaching
 			if tagAction.state != 1 then
 			(
@@ -978,9 +978,9 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 				fseek bstream header.offsetTags #seek_set
 
 				tagObjects = #()
-				
+
 				local relativeTag
-				
+
 				for i = 1 to header.numFrames do
 				(
 					local curTag = MD3_Tag()
@@ -988,14 +988,14 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 					for j = 1 to header.numTags do
 					(
 						curTag.LoadFromStream bstream
-												
+
 						if i == 1 then
 						(
 							local tagObject = CreateTagObject curTag
 							append tagObjects tagObject
-						
+
 							in coordsys world tagObject.transform = curTag.GetMatrix()
-							
+
 							animate on
 							(
 								at time 0
@@ -1016,12 +1016,12 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 						)
 					)
 				)
-			)			
-		
+			)
+
 			-- Load frames
 			fseek bstream header.offsetFrames #seek_set
 			frames = #()
-			
+
 			--format "Loading % frames...\n" header.numFrames
 			local curFrame = MD3_Frame()
 			for i = 1 to header.numFrames do
@@ -1029,13 +1029,13 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 				curFrame.LoadFromStream bstream
 				append frames (copy curFrame)
 			)
-			
+
 			-- Load skin file
 			LoadSkinFile skinFile
-			
+
 			-- Load surfaces
 			surfaceList = #()
-		
+
 			fseek bstream header.offsetSurfaces #seek_set
 
 			for i = 1 to header.numSurfaces do
@@ -1051,13 +1051,13 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 				)
 				append surfaceList newObject
 			)
-			
-			
+
+
 			-- Fixed models drive a load of tags but aren't controlled by one
 			local isFixed = false
 			local rootTag
 			local rootName
-			
+
 			-- Make all surfaces children of the root tag for this model
 			if tagAction.state != 1 then
 			(
@@ -1069,36 +1069,36 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 						rootName = "tag_head"
 						isFixed = false
 					)
-					
+
 					"upper":
 					(
 						rootName = "tag_torso"
 						isFixed = false
 					)
-					
+
 					"lower":
 					(
 						rootName = undefined
 						isFixed = true
 					)
-						
-					
+
+
 					default:
 					(
 						rootName = undefined
 						isFixed = false
 					)
 				)
-				
-				
+
+
 				format "I think the root is %\n" rootName
 				*/
 				rootName = undefined
 				isFixed = false
-				
+
 				if not isFixed then
 				(
-				
+
 					-- Find the root tag in our tag objects
 					for ourTag in tagObjects do
 					(
@@ -1107,7 +1107,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 							rootTag = ourTag
 							exit
 						)
-						
+
 						if rootName == undefined then
 						(
 							-- Grab the tag at the origin - probably the root
@@ -1120,17 +1120,17 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 							)
 						)
 					)
-					
+
 					if rootTag != undefined then
 					(
 						format "Root tag is %\n" rootTag.name
-					
+
 						-- Make surfaces children of the root tag
 						for surf in surfaceList do
 						(
 							attachObjects rootTag surf move:false
 						)
-						
+
 						-- Make other tags children of the root tag
 						for tag in tagObjects do
 						(
@@ -1144,10 +1144,10 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 					(
 						format "Root tag undefined\n"
 					)
-					
+
 				)
 			)
-			
+
 
 			-- Auto attach to a tag in the scene that matches with one in the MD3
 			if tagAction.state == 3 then
@@ -1170,7 +1170,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 				else
 				(
 					local hookedOnto
-				
+
 					-- Make ourselves the child of the corresponding tag in the scene
 					for obj in objects do
 					(
@@ -1188,7 +1188,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 							)
 						)
 					)
-					
+
 					format "Hooked onto = %\n" hookedOnto
 
 					-- Now hook other objects onto us
@@ -1212,10 +1212,10 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 							)
 						)
 					)
-					
+
 				)
 			)
-		
+
 
 			-- Set animation slider range and FPS
 			if header.numFrames > 1 then
@@ -1226,28 +1226,28 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 
 			-- All done, try and clean up
 			ClearTextureCache()
-		
+
 			gc()
 			true
 		)
 	)
-	
-	
+
+
 	-------------------
 	-- Final UI Bits --
 	-------------------
-	
+
 	on importButton pressed do
 	(
 		local md3Filename = getOpenFileName caption:"Import Quake III Model" filename:(GetMostRecentPath()) \
 					types:"Quake III MD3 (*.md3)|*.md3|All Files (*.*)|*.*|"
-		
+
 		if md3Filename != undefined then
 		(
 			if DoesFileReallyExist md3Filename then
 			(
 				AddRecentFile md3Filename
-			
+
 				--try
 				(
 					local loader = MD3_Loader()
@@ -1259,18 +1259,18 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 				--catch
 				--(
 				--)
-				
+
 				max views redraw
 			)
 		)
 	)
-	
+
 	-- Select a skin file and apply it to scene meshes
 	on applySkin pressed do
 	(
 		local skinFilename = getOpenFileName caption:"Select Skin to Apply" filename:(GetMostRecentPath()) \
 					types:"Quake III Skin File (*.skin)|*.skin|All Files (*.*)|*.*|"
-		
+
 		if skinFilename != undefined then
 		(
 			if DoesFileReallyExist skinFilename then
@@ -1278,47 +1278,47 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 				try
 				(
 					LoadSkinFile skinFilename
-					
+
 					-- Apply skin to all appropriate objects
 					for obj in objects do
 					(
 						local skinFile = GetSkinForSurface obj.name
-						
+
 						if skinFile != undefined then
 						(
 							-- Set up approximate paths for object
 							g_modelFilename = skinFilename
 							g_modelName = getFilenameFile skinFilename
 							g_modelPath = getFileNamePath skinFilename
-							
+
 							-- Create new material
-							
+
 							local newMat = standardMaterial name:(getFilenameFile skinFilename)
 							local diffuseMap = FindTexture skinFile
-										
+
 							if diffuseMap != undefined then
 							(
 								newMat.maps[2] = diffuseMap
 								newMat.mapEnables[2] = true
 								showTextureMap newMat diffuseMap true
 							)
-							
+
 							obj.material = newMat
-							
+
 							update obj
 						)
 					)
-					
+
 				)
 				catch
 				(
 				)
-				
+
 				max views redraw
 			)
 		)
 	)
-	
+
 	-- Does exactly what it says :)
 	on createTag pressed do
 	(
@@ -1329,5 +1329,3 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 		max views redraw
 	)
 )
-
-

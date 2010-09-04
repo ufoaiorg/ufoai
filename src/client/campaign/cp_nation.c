@@ -825,4 +825,3 @@ void NAT_InitStartup (void)
 	Cmd_AddCommand("debug_listnations", NAT_NationList_f, "List all nations on the game console");
 #endif
 }
-

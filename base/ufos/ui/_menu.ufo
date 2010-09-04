@@ -68,7 +68,7 @@ component panel cmpMapSlot
 	{
 		size "315 35"
 	}
-		
+
 	textentry slot_map
 	{
 		image		"ui/button_green_verysmall"

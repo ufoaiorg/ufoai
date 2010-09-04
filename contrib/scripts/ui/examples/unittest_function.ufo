@@ -7,7 +7,7 @@
 window unittest_function_interface
 {
 	confunc test7 {
-	
+
 	}
 }
 
@@ -252,7 +252,7 @@ window unittest_function extends unittest_function_interface
 			*node:root.testCommon6@color = "1 0 0 1"
 			*node:root.testCommon6@tooltip = *cvar:errorMessage
 		}
-		
+
 		cmd "test7 foo 1 2"
 	}
 

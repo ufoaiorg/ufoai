@@ -246,4 +246,3 @@ void UMP_constructMenu (GtkMenuItem* menuItem, GtkMenu* menu)
 	map::ump::UMPMenuCreator::getInstance()->setMenuEntry(menuItem, menu);
 	map::ump::UMPMenuCreator::getInstance()->updateMenu();
 }
-

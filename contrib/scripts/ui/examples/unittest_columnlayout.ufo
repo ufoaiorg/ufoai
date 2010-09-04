@@ -29,7 +29,7 @@ window unittest_columnlayout
 			string "Column:"
 			size "100 20"
 		}
-		
+
 		button column1 {
 			string "1"
 			pos "100 530"
@@ -39,7 +39,7 @@ window unittest_columnlayout
 				*node:root.foo@layoutColumns = 1
 			}
 		}
-		
+
 		button column2 {
 			string "2"
 			pos "140 530"
@@ -49,7 +49,7 @@ window unittest_columnlayout
 				*node:root.foo@layoutColumns = 2
 			}
 		}
-		
+
 		button column3 {
 			string "3"
 			pos "180 530"
@@ -59,13 +59,13 @@ window unittest_columnlayout
 				*node:root.foo@layoutColumns = 3
 			}
 		}
-	
+
 		string margin {
 			pos "10 560"
 			string "Margin:"
 			size "100 20"
 		}
-		
+
 		button margin1 {
 			string "5"
 			pos "100 560"
@@ -75,7 +75,7 @@ window unittest_columnlayout
 				*node:root.foo@layoutMargin = 5
 			}
 		}
-		
+
 		button margin2 {
 			string "10"
 			pos "140 560"
@@ -85,7 +85,7 @@ window unittest_columnlayout
 				*node:root.foo@layoutMargin = 10
 			}
 		}
-		
+
 		button margin3 {
 			string "15"
 			pos "180 560"
@@ -95,13 +95,13 @@ window unittest_columnlayout
 				*node:root.foo@layoutMargin = 15
 			}
 		}
-	
+
 		string padding {
 			pos "10 590"
 			string "Padding:"
 			size "100 20"
 		}
-		
+
 		button padding1 {
 			string "0"
 			pos "100 590"
@@ -111,7 +111,7 @@ window unittest_columnlayout
 				*node:root.foo@padding = 0
 			}
 		}
-		
+
 		button padding2 {
 			string "5"
 			pos "140 590"
@@ -121,7 +121,7 @@ window unittest_columnlayout
 				*node:root.foo@padding = 5
 			}
 		}
-		
+
 		button padding3 {
 			string "10"
 			pos "180 590"
@@ -158,7 +158,7 @@ window unittest_columnlayout
 		panel c07 { size "100 25" bgcolor	"0 1 0 0.5" }
 		panel c08 { size "100 25" bgcolor	"0 0 1 0.5" }
 		panel c09 { size "100 25" bgcolor	"1 1 0 0.5" }
-	
+
 		panel c10 { size "100 25" bgcolor	"1 0 0 0.5" }
 		panel c11 { size "100 25" bgcolor	"0 1 0 0.5" }
 		panel c12 { size "100 25" bgcolor	"0 0 1 0.5" }
@@ -170,7 +170,7 @@ window unittest_columnlayout
 		panel c18 { size "100 25" bgcolor	"0 0 1 0.5" }
 		panel c19 { size "100 25" bgcolor	"1 1 0 0.5" }
 	}
-	
+
 	vscrollbar foo_scroll {
 		image		"ui/scrollbar_v_green"
 		pos			"340 60"

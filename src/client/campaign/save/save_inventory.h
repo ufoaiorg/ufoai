@@ -55,4 +55,3 @@ DTD:
 	ammo		CDATA	'0'
 >
 */
-

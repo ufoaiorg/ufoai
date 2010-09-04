@@ -61,4 +61,3 @@ void CL_EntAppear (const eventRegister_t *self, struct dbuffer *msg)
 	VectorCopy(pos, le->pos);
 	Grid_PosToVec(cl.mapData->map, le->fieldSize, le->pos, le->origin);
 }
-

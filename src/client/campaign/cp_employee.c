@@ -1384,4 +1384,3 @@ void E_RemoveInventoryFromStorage (employee_t *employee)
 		}
 	}
 }
-

@@ -38,7 +38,7 @@ void main(void){
 	vec4 finalColor = vec4(0.0);
 
 
-	/* use new dynamic lighing system, including 
+	/* use new dynamic lighing system, including
 	 * the Cook-Torrance specularity model with the Phong
 	 * model as a default if the roughness map isn't enabled */
 	if (DYNAMICLIGHTS > 0) {
@@ -86,8 +86,8 @@ void main(void){
 		vec4 glowcolor = texture2D(SAMPLER4, gl_TexCoord[0].st);
 		gl_FragData[1].rgb = glowcolor.rgb * glowcolor.a * GLOWSCALE;
 		gl_FragData[1].a = 1.0;
-	} 
-#else 
+	}
+#else
 	gl_FragColor = finalColor;
 #endif
 

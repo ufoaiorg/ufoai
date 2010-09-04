@@ -3268,4 +3268,3 @@ void AIR_AssignInitial (aircraft_t *aircraft)
 	for (i = 0; i < num; i++)
 		AIM_AddEmployeeFromMenu(aircraft, i);
 }
-

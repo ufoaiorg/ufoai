@@ -39,4 +39,3 @@ date_t Date_Random(date_t minFrame, date_t maxFrame);
 const char *Date_GetMonthName(int month);
 
 #endif
-

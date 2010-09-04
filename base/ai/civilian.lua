@@ -52,7 +52,7 @@ function think()
 
 					-- check alien closer than civilian
 					if alienDist < civDist then
-						hide(alien:team()) 
+						hide(alien:team())
 					else
 						herd(civ)
 					end
@@ -66,7 +66,7 @@ function think()
 			herd(civ)
 		else
 			if phalanx then
-				herd(phalanx) 
+				herd(phalanx)
 			else
 				ai.crouch(false)
 			end

@@ -650,4 +650,3 @@ void UR_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("debug_removestoredufo");
 #endif
 }
-

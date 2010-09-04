@@ -24,4 +24,3 @@ class NamespaceAPI
 typedef SingletonModule<NamespaceAPI> NamespaceModule;
 typedef Static<NamespaceModule> StaticNamespaceModule;
 StaticRegisterModule staticRegisterDefaultNamespace(StaticNamespaceModule::instance());
-

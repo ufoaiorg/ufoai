@@ -27,7 +27,7 @@ void main(void){
 	vec3 t, b, n;
 	n = normalize(gl_NormalMatrix * gl_Normal);
 	t = normalize(cross(n, vec3(1.0, 0.0, 0.0)));
-	b = normalize(cross(t, n)); 
+	b = normalize(cross(t, n));
 
 	lightVec.x = dot(lightPos.rgb, t);
 	lightVec.y = dot(lightPos.rgb, b);
@@ -43,4 +43,3 @@ void main(void){
 	eyeVec.y = dot(view.xyz, b);
 	eyeVec.z = dot(view.xyz, n);
 }
-

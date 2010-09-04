@@ -25,7 +25,7 @@
 	material tex_nature/desert004
 	{
 		texture   tex_nature/desert001
-		terrain   5.5 8.0	
+		terrain   5.5 8.0
 		lightmap
 	}
 }
@@ -353,7 +353,7 @@
 	hardness 0.2
 	parallax 1.0
 	specular 1.5
-	/* fx Animation (green/yellow) */	
+	/* fx Animation (green/yellow) */
 	{
 		texture pt/fx/fx2_09_1a0
 		anim 14 13
@@ -368,7 +368,7 @@
 	hardness 0.2
 	parallax 1.0
 	specular 1.5
-	/* fx Animation (green/yellow) */	
+	/* fx Animation (green/yellow) */
 	{
 		texture pt/fx/fx2_10_1a0
 		anim 14 13

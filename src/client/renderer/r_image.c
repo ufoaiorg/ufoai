@@ -820,4 +820,3 @@ void R_TextureSolidMode (const char *string)
 
 	Com_Printf("bad solid texture mode name (%s)\n", string);
 }
-

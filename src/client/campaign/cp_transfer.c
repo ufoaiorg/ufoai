@@ -81,7 +81,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Antimatter Storage, antimatter are removed!"), destination->name);
 				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			}
-		} 
+		}
 		/* items */
 		for (i = 0; i < csi.numODs; i++) {
 			od = INVSH_GetItemByIDX(i);
@@ -577,7 +577,7 @@ qboolean TR_SaveXML (mxml_node_t *p)
 			return qfalse;
 		}
 		mxml_AddInt(s, SAVE_TRANSFER_DESTBASE, transfer->destBase->idx);
-		/* scrBase can be NULL if this is alien (mission->base) transport 
+		/* scrBase can be NULL if this is alien (mission->base) transport
 		 * @sa TR_TransferAlienAfterMissionStart */
 		if (transfer->srcBase)
 			mxml_AddInt(s, SAVE_TRANSFER_SRCBASE, transfer->srcBase->idx);
@@ -760,4 +760,3 @@ void TR_InitStartup (void)
 	Cmd_AddCommand("debug_listtransfers", TR_ListTransfers_f, "Lists an/all active transfer(s)");
 #endif
 }
-

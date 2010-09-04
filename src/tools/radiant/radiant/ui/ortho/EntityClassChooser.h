@@ -88,4 +88,3 @@ namespace ui
 }
 
 #endif /*ENTITYCLASSCHOOSER_H_*/
-

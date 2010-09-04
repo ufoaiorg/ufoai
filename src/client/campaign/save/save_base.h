@@ -115,10 +115,10 @@ DTD:
 <!ELEMENT building pos>
 <!ATTLIST building
 	buildingType		CDATA	#REQUIRED
-	buildingPlace		CDATA	
+	buildingPlace		CDATA
 	buildingStatus (
-	
-	
+
+
 	)
 	buildingTimeStart	CDATA	'0'
 	buildingBuildTime	CDATA	'0'
@@ -144,4 +144,3 @@ DTD:
 	numLoose	CDATA		'0'
 >
 */
-

@@ -163,9 +163,9 @@ void R_ClearActiveLights (void)
 }
 
 /** @todo - the updating of the per-entity list of nearest
- * lights doesn't necessarily need to be updated before 
+ * lights doesn't necessarily need to be updated before
  * every frame; if the list is a few frames (or even a few seconds)
- * out of date, it would still probably look just fine. 
+ * out of date, it would still probably look just fine.
  * Ideally, this updating could be done in the background
  * by a separate, low-priority thread that constantly looped
  * through all the entities and updated their light lists,
@@ -186,18 +186,18 @@ void R_ClearActiveLights (void)
  * sorted light list, updating models and textures based on
  * animations or material properties, updating the state
  * of the world based on user input, etc.).  It would require
- * that care to be taken to ensure proper synchronization and 
+ * that care to be taken to ensure proper synchronization and
  * avoid race-conditions, but it would allow us to decouple the
  * framerate of the renderer from the speed at which we can
  * compute all the other stuff which isn't directly linked to
  * the frame-by-frame rendering process (this includes anything
  * that is supposed to change at a fixed rate of time, like
- * animations; we don't want the animation speed to be linked 
- * to the framerate). 
+ * animations; we don't want the animation speed to be linked
+ * to the framerate).
  *
  * Obviously, we would need to maintain compatibility with
  * single-core systems, but multi-core systems are becoming
- * so common that it would make sense to take advantage of 
+ * so common that it would make sense to take advantage of
  * that extra power when it exists.  Additionally, this type
  * of threaded structure can be effective even on a single
  * processor system by allowing us to prioritize things which

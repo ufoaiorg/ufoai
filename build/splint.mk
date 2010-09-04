@@ -8,4 +8,3 @@ SPLINT_SRCS = \
 
 splint:
 	splint $(SPLINT_SRCS) -badflag $(CFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS)
-

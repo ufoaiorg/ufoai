@@ -1440,4 +1440,3 @@ void AII_LoadOneSlotXML (mxml_node_t *node, aircraftSlot_t* slot, qboolean weapo
 	}
 	slot->delayNextShot = mxml_GetInt(node, SAVE_SLOT_DELAYNEXTSHOT, 0);
 }
-

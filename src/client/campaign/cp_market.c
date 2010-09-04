@@ -412,4 +412,3 @@ qboolean BS_BuySellAllowed (const base_t* base)
 		return qfalse;
 	}
 }
-

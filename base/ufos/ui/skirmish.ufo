@@ -5,7 +5,7 @@
 window skirmish
 {
 	/** @todo Remove me */
-	{ } 
+	{ }
 	// empty properties to fix parsing problem with "image" token (behaviour or property?)
 	// ===========
 	// BACKGROUND
@@ -16,7 +16,7 @@ window skirmish
 	}
 	// ============
 	// BACK BUTTON
-	// ============	
+	// ============
 	cmpMenuButton button_back
 	{
 		string		"_Back"
@@ -33,7 +33,7 @@ window skirmish
 	{
 		string		"_Start Game"
 		pos			"90 80"
-		onClick		
+		onClick
 		{
 			cmd "sk_start;"
 		}
@@ -344,7 +344,7 @@ window skirmish
 	/**
 	 * @param<1> boolean to hide or show
 	 */
-	confunc skirmish_hide_dropships 
+	confunc skirmish_hide_dropships
 	{
 		*node:root.panel_map.dropships_str@invis = <1>
 		*node:root.panel_map.dropships_box@invis = <1>
@@ -352,20 +352,20 @@ window skirmish
 	/**
 	 * @param<1> boolean to hide or show
 	 */
-	confunc skirmish_hide_ufos 
+	confunc skirmish_hide_ufos
 	{
 		*node:root.panel_map.ufos_str@invis = <1>
 		*node:root.panel_map.ufos_box@invis = <1>
 	}
-	func sk_update_config_navigation 
+	func sk_update_config_navigation
 	{
 		*node:root.panel_map@invis = true
 		*node:root.panel_options@invis = true
-		if ( *cvar:mn_skirmish_config_tab == 1 ) 
+		if ( *cvar:mn_skirmish_config_tab == 1 )
 		{
 			*node:root.panel_map@invis = false
 		}
-		elif ( *cvar:mn_skirmish_config_tab == 2 ) 
+		elif ( *cvar:mn_skirmish_config_tab == 2 )
 		{
 			*node:root.panel_options@invis = false
 		}

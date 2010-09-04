@@ -12206,7 +12206,7 @@ msgstr "OpenGL multisample puskuri tarjoaa mekanismin reunojenpehmennykseen kaik
 msgid "Multisample Buffers / Swap Interval:"
 msgstr "Multisample puskurit / Vaihda intervallia:"
 
-# Multisamble = 
+# Multisamble =
 # antialiasing = reunanpehmennys
 #: ../base/ufos/ui/options.ufo:1014
 msgid "Choose between 0-4 Multisample Buffers. Higher values will provide better antialiasing and will enhance picture quality."
@@ -18059,4 +18059,3 @@ msgstr "Pelaamassa"
 #~ msgstr "Vieritä alaspäin (oikealla napilla monta riviä)"
 #~ msgid "Available scientists in this base: %i"
 #~ msgstr "Tutkijoita käytettävissä tässä tukikohdassa: %i"
-
