@@ -1217,6 +1217,7 @@ player_t *AI_CreatePlayer (int team)
 	}
 
 	/* set players to ai players and cycle over all of them */
+	p = NULL;
 	while ((p = G_PlayerGetNextAI(p))) {
 		if (!p->inuse) {
 			memset(p, 0, sizeof(*p));

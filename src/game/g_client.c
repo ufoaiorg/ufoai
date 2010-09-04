@@ -68,7 +68,7 @@ player_t* G_PlayerGetNextAI (player_t* lastPlayer)
 
 	if (!lastPlayer)
 		return &game.players[game.sv_maxplayersperteam];
-	assert(lastPlayer >= game.players);
+	assert(lastPlayer >= &game.players[game.sv_maxplayersperteam]);
 	assert(lastPlayer < endOfPlayers);
 
 	player = lastPlayer;

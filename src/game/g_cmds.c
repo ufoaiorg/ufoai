@@ -85,8 +85,8 @@ static qboolean G_CheckFlood (player_t *player)
 
 static void G_Say_f (player_t *player, qboolean arg0, qboolean team)
 {
-	int j;
 	char text[256];
+	player_t *p;
 
 	if (gi.Cmd_Argc() < 2 && !arg0)
 		return;
@@ -115,13 +115,11 @@ static void G_Say_f (player_t *player, qboolean arg0, qboolean team)
 	if (sv_dedicated->integer)
 		gi.DPrintf("%s", text);
 
-	for (j = 0; j < game.sv_maxplayersperteam; j++) {
-		player_t *player = &game.players[j];
-		if (!player->inuse)
+	p = NULL;
+	while ((p = G_PlayerGetNextActiveHuman(p))) {
+		if (team && p->pers.team != player->pers.team)
 			continue;
-		if (team && player->pers.team != player->pers.team)
-			continue;
-		G_ClientPrintf(player, PRINT_CHAT, "%s", text);
+		G_ClientPrintf(p, PRINT_CHAT, "%s", text);
 	}
 }
 
