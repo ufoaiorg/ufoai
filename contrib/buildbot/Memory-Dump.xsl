@@ -5,14 +5,14 @@
 
 	<xsl:template match="MEMORY_DUMP_REPORT">
 		<html>
-	 	 	<head>
-	 	 		<title> CUnit Memory Debugger Dumper - All Allocation/Deallocation Report. </title>
-	 	 	</head>
+			<head>
+				<title> CUnit Memory Debugger Dumper - All Allocation/Deallocation Report. </title>
+			</head>
 
-	 	 	<body bgcolor="e0e0f0">
-	 	 		<xsl:apply-templates/>
-	 	 	</body>
-	 	 </html>
+			<body bgcolor="e0e0f0">
+				<xsl:apply-templates/>
+			</body>
+		</html>
 	</xsl:template>
 
 	<xsl:template match="MD_HEADER">
@@ -35,18 +35,18 @@
 	</xsl:template>
 
 	<xsl:template match="MD_RUN_RECORD">
-    <xsl:param name="ptr" select="MD_POINTER"/>
-    <xsl:for-each select="MD_EVENT_RECORD">
-      <tr>
-        <td> <xsl:value-of select="$ptr"/> </td>
-        <td> <xsl:value-of select="MD_ALLOC_FILE"/> </td>
-        <td> <xsl:value-of select="MD_ALLOC_LINE"/> </td>
-        <td> <xsl:value-of select="MD_DEALLOC_FILE"/> </td>
-        <td> <xsl:value-of select="MD_DEALLOC_LINE"/> </td>
-        <td> <xsl:value-of select="MD_SIZE"/> </td>
-      </tr>
-    </xsl:for-each>
-  </xsl:template>
+		<xsl:param name="ptr" select="MD_POINTER"/>
+		<xsl:for-each select="MD_EVENT_RECORD">
+			<tr>
+				<td> <xsl:value-of select="$ptr"/> </td>
+				<td> <xsl:value-of select="MD_ALLOC_FILE"/> </td>
+				<td> <xsl:value-of select="MD_ALLOC_LINE"/> </td>
+				<td> <xsl:value-of select="MD_DEALLOC_FILE"/> </td>
+				<td> <xsl:value-of select="MD_DEALLOC_LINE"/> </td>
+				<td> <xsl:value-of select="MD_SIZE"/> </td>
+			</tr>
+		</xsl:for-each>
+	</xsl:template>
 
 	<xsl:template match="MD_SUMMARY">
 		<p/>
@@ -71,8 +71,8 @@
 		<p/>
 		<hr align="center" width="90%" color="red" />
 		<h5 align="center">
-	 		<xsl:apply-templates/>
-	 	</h5>
+			<xsl:apply-templates/>
+		</h5>
 	</xsl:template>
 
 </xsl:stylesheet>
