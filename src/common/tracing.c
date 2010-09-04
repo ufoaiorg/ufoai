@@ -996,7 +996,7 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
 	VectorCopy(amaxs, traceData.maxs);
 
 	/* check for position test special case */
-	if (VectorCompare(astart, aend)) {
+	if (VectorEqual(astart, aend)) {
 		int32_t leafs[MAX_LEAFS];
 		int numleafs;
 		int32_t topnode;
@@ -1023,7 +1023,7 @@ trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, c
 	}
 
 	/* check for point special case */
-	if (VectorCompare(amins, vec3_origin) && VectorCompare(amaxs, vec3_origin)) {
+	if (VectorEmpty(amins) && VectorEmpty(amaxs)) {
 		traceData.ispoint = qtrue;
 		VectorClear(traceData.extents);
 	} else {

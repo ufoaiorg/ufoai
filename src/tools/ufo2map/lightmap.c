@@ -296,7 +296,7 @@ void BuildLights (void)
 	for (i = 0; i < MAX_MAP_FACES; i++) {
 		const patch_t *p = face_patches[i];
 		while (p) {  /* iterate subdivided patches */
-			if (VectorCompare(p->light, vec3_origin))
+			if (VectorEmpty(p->light))
 				continue;
 
 			numlights[config.compile_for_day]++;
@@ -837,7 +837,7 @@ void BuildFacelights (unsigned int facenum)
 
 			GatherSampleLight(pos, normal, sample, direction, scale, headhints);
 		}
-		if (!VectorCompare(direction, vec3_origin)) {
+		if (VectorNotEmpty(direction)) {
 			vec3_t dir;
 
 			/* normalize it */
@@ -859,7 +859,7 @@ void BuildFacelights (unsigned int facenum)
 
 	for (i = 0; i < l[0].numsurfpt; i++) {  /* pad them */
 		float *direction = fl->directions + i * 3;
-		if (VectorCompare(direction, vec3_origin))
+		if (VectorEmpty(direction))
 			VectorSet(direction, 0.0, 0.0, 1.0);
 	}
 

@@ -615,8 +615,7 @@ static void R_LoadBspVertexArrays (model_t *mod)
 			mod->bsp.lmtexcoords[coordind + 1] = t;
 
 			/* normal vectors */
-			if (surf->texinfo->flags & SURF_PHONG &&
-					!VectorCompare(vert->normal, vec3_origin))
+			if (surf->texinfo->flags & SURF_PHONG && VectorNotEmpty(vert->normal))
 				normal = vert->normal; /* phong shaded */
 			else
 				normal = surf->normal; /* per plane */

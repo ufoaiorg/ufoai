@@ -66,7 +66,7 @@ typedef struct client_static_s {
 	float framerate;
 
 	/** showing loading plaque between levels if time gets > 30 seconds ahead, break it */
-	float disableScreen;
+	int disableScreen;
 
 	int gametype;		/**< singleplayer or multiplayer */
 

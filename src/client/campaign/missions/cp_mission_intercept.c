@@ -60,6 +60,8 @@ void CP_InterceptMissionIsFailure (mission_t *mission)
 	CP_MissionRemove(mission);
 }
 
+#define	UFO_EPSILON 0.00001f
+
 /**
  * @brief Intercept mission ends: UFO leave earth.
  * @param[in] mission Pointer to the mission
@@ -76,6 +78,7 @@ void CP_InterceptMissionLeave (mission_t *mission, qboolean destroyed)
 
 	/* if the mission was an attack of an installation, destroy it */
 	installation = (installation_t *)mission->data;
+	/** @todo this will never be the same, as mission->pos is a vec2_t and installation->pos is a vec3_t */
 	if (destroyed && installation && installation->founded && VectorCompareEps(mission->pos, installation->pos, UFO_EPSILON)) {
 		INS_DestroyInstallation(installation);
 	}
@@ -107,6 +110,7 @@ static void CP_InterceptAttackInstallation (mission_t *mission)
 	}
 
 	/* Maybe installation has been destroyed, but rebuild somewhere else? */
+	/** @todo this will never be the same, as mission->pos is a vec2_t and installation->pos is a vec3_t */
 	if (!VectorCompareEps(mission->pos, installation->pos, UFO_EPSILON)) {
 		mission->finalDate = ccs.date;
 		return;

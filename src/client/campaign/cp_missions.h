@@ -35,8 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "missions/cp_mission_terror.h"
 #include "missions/cp_mission_xvi.h"
 
-#define	UFO_EPSILON 0.00001f
-
 extern const int MAX_POS_LOOP;
 
 void CP_SetMissionVars(const mission_t *mission);

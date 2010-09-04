@@ -657,7 +657,7 @@ void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 	PolarToVec(start, s);
 	PolarToVec(end, e);
 	/* Procedure below won't work if start is the same than end */
-	if (VectorCompareEps(s, e, UFO_EPSILON)) {
+	if (VectorEqual(s, e)) {
 		line->distance = 0;
 		line->numPoints = 2;
 		Vector2Set(line->point[0], end[0], end[1]);
