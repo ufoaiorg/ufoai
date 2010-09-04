@@ -129,44 +129,44 @@ float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
  * @param[in] check The edict we want to get the visibility for
  * @param[in] flags @c VT_NOFRUSTUM, ...
  */
-float G_Vis (const int team, const edict_t *from, const edict_t *check, int flags)
+qboolean G_Vis (const int team, const edict_t *from, const edict_t *check, int flags)
 {
 	vec3_t eye;
 
 	/* if any of them isn't in use, then they're not visible */
 	if (!from->inuse || !check->inuse)
-		return ACTOR_VIS_0;
+		return qfalse;
 
 	/* only actors and 2x2 units can see anything */
 	if (!G_IsLivingActor(from))
-		return ACTOR_VIS_0;
+		return qfalse;
 
 	/* living team members are always visible */
 	if (team >= 0 && check->team == team && !G_IsDead(check))
-		return ACTOR_VIS_100;
+		return qtrue;
 
 	/* standard team rules */
 	if (team >= 0 && from->team != team)
-		return ACTOR_VIS_0;
+		return qfalse;
 
 	/* inverse team rules */
 	if (team < 0 && (from->team == -team || G_IsCivilian(from) || check->team != -team))
-		return ACTOR_VIS_0;
+		return qfalse;
 
 	/* check for same pos */
 	if (VectorCompare(from->pos, check->pos))
-		return ACTOR_VIS_100;
+		return qtrue;
 
 	if (!G_IsVisibleOnBattlefield(check))
-		return ACTOR_VIS_0;
+		return qfalse;
 
 	/* view distance check */
 	if (VectorDistSqr(from->origin, check->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST)
-		return ACTOR_VIS_0;
+		return qfalse;
 
 	/* view frustum check */
 	if (!(flags & VT_NOFRUSTUM) && !G_FrustumVis(from, check->origin))
-		return ACTOR_VIS_0;
+		return qfalse;
 
 	/* get viewers eye height */
 	VectorCopy(from->origin, eye);
@@ -179,12 +179,12 @@ float G_Vis (const int team, const edict_t *from, const edict_t *check, int flag
 	switch (check->type) {
 	case ET_ACTOR:
 	case ET_ACTOR2x2:
-		return G_ActorVis(eye, check, qfalse);
+		return G_ActorVis(eye, check, qfalse) > ACTOR_VIS_0;
 	case ET_ITEM:
 	case ET_PARTICLE:
 		return !G_LineVis(eye, check->origin);
 	default:
-		return ACTOR_VIS_0;
+		return qfalse;
 	}
 }
 

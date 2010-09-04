@@ -299,7 +299,7 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 		/* generate a split point */
 		p2 = in->p[(i + 1) % in->numpoints];
 
-		dot = dists[i] / (dists[i]-dists[i + 1]);
+		dot = dists[i] / (dists[i] - dists[i + 1]);
 		/* avoid round off error when possible */
 		for (j = 0; j < 3; j++) {
 			if (normal[j] == 1)

@@ -156,6 +156,8 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define VectorLengthSqr(a)      (a[0]*a[0]+a[1]*a[1]+a[2]*a[2])
 #define VectorNotEmpty(a)           (!VectorEmpty((a)))
 #define VectorEmpty(a)           (VectorEqual((a), vec3_origin))
+#define Vector2Empty(a)			 (Vector2Equal((a), vec2_origin))
+#define Vector2NotEmpty(a)		    (!Vector2Empty((a)))
 #define Vector4NotEmpty(a)          (a[0]||a[1]||a[2]||a[3])
 #define LinearInterpolation(a, b, x, y)   (y=a[1] + (((x - a[0]) * (b[1] - a[1])) / (b[0] - a[0])))
 #define VectorScale(in,scale,out) ((out)[0] = (in)[0] * (scale),(out)[1] = (in)[1] * (scale),(out)[2] = (in)[2] * (scale))

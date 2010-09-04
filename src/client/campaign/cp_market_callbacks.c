@@ -873,7 +873,7 @@ static void BS_SellItem_f (void)
 
 static void BS_BuySellItem_f (void)
 {
-	float value;
+	int value;
 
 	if (Cmd_Argc() < 3) {
 		/* num is used in the other callbacks to do the real buy or sell */
@@ -881,7 +881,7 @@ static void BS_BuySellItem_f (void)
 		return;
 	}
 
-	value = atof(Cmd_Argv(2));
+	value = atoi(Cmd_Argv(2));
 	if (value == 0)
 		return;
 

@@ -25,7 +25,7 @@ void R_AddCorona (const vec3_t org, float radius, const vec3_t color)
 {
 	corona_t *c;
 
-	if (!r_coronas->value)
+	if (!r_coronas->integer)
 		return;
 
 	if (refdef.numCoronas == MAX_CORONAS)

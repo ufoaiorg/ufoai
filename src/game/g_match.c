@@ -306,7 +306,7 @@ static void G_MatchSendResults (int team)
 qboolean G_MatchDoEnd (void)
 {
 	/* check for intermission */
-	if (level.intermissionTime && level.time > level.intermissionTime) {
+	if (level.intermissionTime > 0.0 && level.time > level.intermissionTime) {
 		G_PrintStats(va("End of game - Team %i is the winner", level.winningTeam));
 		G_MatchSendResults(level.winningTeam);
 		level.intermissionTime = 0.0;
@@ -327,7 +327,7 @@ void G_MatchEndCheck (void)
 	int activeTeams;
 	int i, last;
 
-	if (level.intermissionTime) /* already decided */
+	if (level.intermissionTime > 0.0) /* already decided */
 		return;
 
 	if (!level.numplayers) {

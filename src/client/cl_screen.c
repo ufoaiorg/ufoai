@@ -310,7 +310,7 @@ static void SCR_DrawConsole (void)
 	if (!viddef.viewWidth || !viddef.viewHeight) {
 		/* active full screen menu */
 		/* draw the console like in game */
-		if (scr_con_current)
+		if (scr_con_current > 0.0)
 			Con_DrawConsole(scr_con_current);
 		/* allow chat in waiting dialoges */
 		if (cls.keyDest == key_message)
@@ -325,7 +325,7 @@ static void SCR_DrawConsole (void)
 	}
 #endif
 
-	if (scr_con_current) {
+	if (scr_con_current > 0.0) {
 		Con_DrawConsole(scr_con_current);
 	} else {
 		if ((cls.keyDest == key_game || cls.keyDest == key_message) && cls.state != ca_sequence)

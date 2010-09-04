@@ -181,7 +181,7 @@ vec_t ColorNormalize (const vec3_t in, vec3_t out)
 		max = in[2];
 
 	/* avoid FPE */
-	if (max == 0.0) {
+	if (equal(max, 0.0)) {
 		VectorClear(out);
 		return 0;
 	}
@@ -223,7 +223,7 @@ vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
 	length = DotProduct(v, v);
 	length = sqrt(length);		/** @todo */
 
-	if (length) {
+	if (length > 0.0) {
 		const float ilength = 1.0 / length;
 		out[0] = v[0] * ilength;
 		out[1] = v[1] * ilength;
@@ -657,7 +657,7 @@ vec_t VectorNormalize (vec3_t v)
 	 * increases when compiled with optimizations.  The value of an assignment is retained for
 	 * the comparison or evaluation, saving time for a function that is called 471342268 times in 2 minutes. */
 
-	if ((length = DotProduct(v, v))) { /**< Assign and compare the result */
+	if ((length = DotProduct(v, v)) > 0.0) { /**< Assign and compare the result */
 		const float ilength = 1.0 / (length = sqrtf(length)); /** @todo */ /**< Assign and use the result */
 		v[0] *= ilength;
 		v[1] *= ilength;
@@ -852,7 +852,8 @@ void VecToAngles (const vec3_t value1, vec3_t angles)
 {
 	float yaw, pitch;
 
-	if (value1[1] == 0 && value1[0] == 0) {
+	/* only check the first two values for being zero */
+	if (Vector2Empty(value1)) {
 		yaw = 0;
 		if (value1[2] > 0)
 			pitch = 90;
@@ -860,7 +861,7 @@ void VecToAngles (const vec3_t value1, vec3_t angles)
 			pitch = 270;
 	} else {
 		const float forward = sqrt(value1[0] * value1[0] + value1[1] * value1[1]);
-		if (value1[0])
+		if (value1[0] > 0.0)
 			yaw = (int) (atan2(value1[1], value1[0]) * todeg);
 		else if (value1[1] > 0)
 			yaw = 90;

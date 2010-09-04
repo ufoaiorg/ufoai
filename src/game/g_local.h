@@ -494,7 +494,7 @@ void G_ClearVisFlags(int team);
 int G_CheckVis(edict_t *check, qboolean perish);
 int G_CheckVisPlayer(player_t* player, qboolean perish);
 int G_TestVis(const int team, edict_t * check, int flags);
-float G_Vis(const int team, const edict_t * from, const edict_t * check, int flags);
+qboolean G_Vis(const int team, const edict_t * from, const edict_t * check, int flags);
 
 /* g_combat.c */
 qboolean G_ClientShoot(const player_t *player, edict_t* ent, const pos3_t at, shoot_types_t shootType, fireDefIndex_t firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);

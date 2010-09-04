@@ -406,7 +406,7 @@ static const value_t windowNodeProperties[] = {
  */
 vec_t *UI_WindowNodeGetNoticePosition(struct uiNode_s *node)
 {
-	if (EXTRADATA(node).noticePos[0] == 0 && EXTRADATA(node).noticePos[1] == 0)
+	if (Vector2Empty(EXTRADATA(node).noticePos))
 		return NULL;
 	return EXTRADATA(node).noticePos;
 }

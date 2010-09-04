@@ -226,7 +226,7 @@ static void UI_DrawNode (uiNode_t *node)
 	 * we can create a 'box' node with this properties,
 	 * but we often don't need it */
 	/* check node size x and y value to check whether they are zero */
-	if (node->size[0] && node->size[1]) {
+	if (Vector2NotEmpty(node->size)) {
 		if (node->bgcolor[3] != 0)
 			UI_DrawFill(pos[0], pos[1], node->size[0], node->size[1], node->bgcolor);
 

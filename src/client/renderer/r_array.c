@@ -60,7 +60,7 @@ static int R_ArraysMask (void)
 	if (r_state.lighting_enabled) {
 		mask |= R_ARRAY_NORMAL;
 
-		if (r_bumpmap->value)
+		if (r_bumpmap->value > 0.0)
 			mask |= R_ARRAY_TANGENT;
 	}
 
@@ -89,7 +89,7 @@ static inline void R_SetVertexArrayState (const model_t* mod, int mask)
 			R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normals);
 
 		/* tangent vectors for bump mapping */
-		if (r_bumpmap->value && r_state.active_program == r_state.world_program)
+		if (r_bumpmap->value > 0.0 && r_state.active_program == r_state.world_program)
 			if (mask & R_ARRAY_TANGENT)
 				R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangents);
 	}
@@ -125,7 +125,7 @@ static inline void R_SetVertexBufferState (const model_t* mod, int mask)
 			R_BindBuffer(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normal_buffer);
 
 		/* tangent vectors for bump mapping */
-		if (r_bumpmap->value && (mask & R_ARRAY_TANGENT))
+		if (r_bumpmap->value > 0.0 && (mask & R_ARRAY_TANGENT))
 			R_BindBuffer(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangent_buffer);
 	}
 
@@ -197,7 +197,7 @@ void R_ResetArrayState (void)
 		R_BindDefaultArray(GL_NORMAL_ARRAY);
 
 		/* tangent vectors for bump mapping */
-		if (r_bumpmap->value && r_state.active_program == r_state.world_program)
+		if (r_bumpmap->value > 0.0 && r_state.active_program == r_state.world_program)
 			R_BindDefaultArray(GL_TANGENT_ARRAY);
 	}
 

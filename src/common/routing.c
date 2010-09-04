@@ -764,7 +764,7 @@ static int RT_FindOpeningFloor (mapTiles_t *mapTiles, const vec3_t start, const 
 	/* Look for additional space below init_bottom, down to lowest_bottom. */
 	int midfloor;
 
-	if (start[0] == end[0] || start[1] == end[1]) {
+	if (Vector2Equal(start, end)) {
 		/* For orthogonal dirs, find the height at the midpoint. */
 		midfloor = RT_FindOpeningFloorFrac(mapTiles, start, end, actorSize, 0.5, startingHeight, list);
 		if (debugTrace)
@@ -803,7 +803,7 @@ static int RT_FindOpeningCeiling (mapTiles_t *mapTiles, const vec3_t start, cons
 {
 	int midceil;
 
-	if (start[0] == end[0] || start[1] == end[1]) {
+	if (Vector2Equal(start, end)) {
 		/* For orthogonal dirs, find the height at the midpoint. */
 		midceil = RT_FindOpeningCeilingFrac(mapTiles, start, end, actorSize, 0.5, startingHeight, list);
 		if (debugTrace)

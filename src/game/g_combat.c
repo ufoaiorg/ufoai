@@ -1128,7 +1128,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	if (!mock && ent->chr.scoreMission) {
 		/* Count this start of the shooting for stats/score. */
 		/** @todo check for direct shot / splash damage shot? */
-		if (fd->splrad) {
+		if (fd->splrad > 0.0) {
 			/* Splash damage */
 			ent->chr.scoreMission->firedSplashTUs[fd->weaponSkill] += fd->time;
 			ent->chr.scoreMission->firedSplash[fd->weaponSkill]++;
