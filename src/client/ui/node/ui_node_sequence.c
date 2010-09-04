@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_nodes.h"
 #include "../ui_parse.h"
 #include "../ui_draw.h"
+#include "../../renderer/r_misc.h"
 #include "../../client.h"
 #include "../../cl_sequence.h"
 #include "ui_node_abstractnode.h"
@@ -34,24 +35,62 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTRADATA(node) UI_EXTRADATA(node, EXTRADATA_TYPE)
 #define EXTRADATACONST(node) UI_EXTRADATACONST(node, EXTRADATA_TYPE)
 
+static const value_t *propertySource;
+
+static const uiBehaviour_t const *localBehaviour;
+
+
 static void UI_SequenceNodeDrawOverWindow (uiNode_t *node)
 {
-	// ...
+	if (EXTRADATA(node).context != NULL) {
+		vec2_t pos;
+		R_PushMatrix();
+		UI_GetNodeAbsPos(node, pos);
+		SEQ_SetView(EXTRADATA(node).context, pos, node->size);
+		SEQ_Render(EXTRADATA(node).context);
+		R_PopMatrix();
+	}
 }
 
 static void UI_SequenceNodeDraw (uiNode_t *node)
 {
-	// ...
+	UI_CaptureDrawOver(node);
 }
 
 static void UI_SequenceNodeInit (uiNode_t *node)
 {
-	// ...
+	if (EXTRADATA(node).context == NULL)
+		EXTRADATA(node).context = SEQ_AllocContext();
+	if (node->image != NULL)
+		SEQ_InitContext(EXTRADATA(node).context, node->image);
 }
 
 static void UI_SequenceNodeClose (uiNode_t *node)
 {
-	// ...
+	if (EXTRADATA(node).context != NULL) {
+		SEQ_FreeContext(EXTRADATA(node).context);
+		EXTRADATA(node).context = NULL;
+	}
+}
+
+static void UI_SequenceNodeLeftClick (uiNode_t *node, int x, int y)
+{
+	if (EXTRADATA(node).context != NULL) {
+		SEQ_SendClickEvent(EXTRADATA(node).context);
+	}
+}
+
+static void UI_SequencePropertyChanged (uiNode_t *node, const value_t *property)
+{
+	if (property == propertySource) {
+		if (node->image != NULL) {
+			UI_SequenceNodeInit(node);
+		} else if (EXTRADATA(node).context != NULL) {
+			UI_SequenceNodeClose(node);
+		}
+		return;
+	}
+	localBehaviour->super->propertyChanged(node, property);
 }
 
 static const value_t properties[] = {
@@ -63,6 +102,7 @@ static const value_t properties[] = {
 
 void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)
 {
+	localBehaviour = behaviour;
 	behaviour->name = "sequence";
 	behaviour->draw = UI_SequenceNodeDraw;
 	behaviour->properties = properties;
@@ -70,4 +110,8 @@ void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)
 	behaviour->close = UI_SequenceNodeClose;
 	behaviour->drawOverWindow = UI_SequenceNodeDrawOverWindow;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
+	behaviour->propertyChanged = UI_SequencePropertyChanged;
+	behaviour->leftClick = UI_SequenceNodeLeftClick;
+
+	propertySource = UI_GetPropertyFromBehaviour(behaviour, "src");
 }

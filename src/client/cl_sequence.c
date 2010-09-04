@@ -392,9 +392,23 @@ static void SEQ_Render2D (sequenceContext_t *context)
  * @note Script binding for seq_click
  * @sa menu sequence in menu_main.ufo
  */
-void SEQ_ClickEvent (sequenceContext_t *context)
+void SEQ_SendClickEvent (sequenceContext_t *context)
 {
 	context->endClickLoop = qtrue;
+}
+
+/**
+ * @brief Define the position of the viewport on the screen
+ * @param context Context
+ * @todo Use context values instead of global values
+ * @todo Anyway, viddef value is not used everywhere in the sequence code... use it to streach the screen?
+ */
+void SEQ_SetView (sequenceContext_t *context, vec2_t pos, vec2_t size)
+{
+	viddef.x = pos[0];
+	viddef.y = pos[1];
+	viddef.viewWidth = size[0];
+	viddef.viewHeight = size[1];
 }
 
 /**
@@ -480,9 +494,11 @@ qboolean SEQ_Render (sequenceContext_t *context)
 	if (!viddef.viewWidth || !viddef.viewHeight)
 		return qtrue;
 
+#if 0	/* @todo is it really need here? If yes, it need to add something in the UI code, or here */
 	/* still loading */
 	if (!refdef.ready)
 		return qtrue;
+#endif
 
 	if (!SEQ_Execute(context)) {
 		return qfalse;
@@ -791,7 +807,7 @@ sequenceContext_t seq;
  */
 static void CL_SequenceClick_f (void)
 {
-	SEQ_ClickEvent(&seq);
+	SEQ_SendClickEvent(&seq);
 }
 
 /**

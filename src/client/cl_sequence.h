@@ -33,7 +33,8 @@ pSequenceContext_t SEQ_AllocContext(void);
 void SEQ_FreeContext(pSequenceContext_t context);
 qboolean SEQ_InitContext(pSequenceContext_t context, const char *sequenceName);
 qboolean SEQ_Render(pSequenceContext_t context);
-void SEQ_ClickEvent (pSequenceContext_t context);
+void SEQ_SendClickEvent(pSequenceContext_t context);
+void SEQ_SetView(pSequenceContext_t context, vec2_t pos, vec2_t size);
 
 void CL_SequenceRender(void);
 void SEQ_InitStartup(void);

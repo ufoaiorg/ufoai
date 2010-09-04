@@ -26,12 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_UI_UI_NODE_SEQUENCE_H
 
 #include "../ui_nodes.h"
+#include "../../cl_sequence.h"
 
 void UI_RegisterSequenceNode(uiBehaviour_t *behaviour);
 
 typedef struct {
-	/** @todo store here data used by the sequence */
-	int tmp;	/**< remove a warning */
+	/** Link to the current sequence context, else NULL */
+	pSequenceContext_t context;
 } sequenceExtraData_t;
 
 #endif
