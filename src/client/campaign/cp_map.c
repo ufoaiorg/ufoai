@@ -1552,6 +1552,7 @@ static void MAP_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *a
 	vec4_t color;
 	int centerX;
 	int centerY;
+	qboolean visible;
 
 	if (!aircraft)
 		return;
@@ -1566,11 +1567,15 @@ static void MAP_DrawAircraftHealthBar (const uiNode_t* node, const aircraft_t *a
 		Vector4Copy(green, color);
 	}
 
-	MAP_AllMapToScreen(node, aircraft->pos, &centerX, &centerY, NULL);
+	if (cl_3dmap->integer)
+		visible = MAP_3DMapToScreen(node, aircraft->pos, &centerX, &centerY, NULL);
+	else
+		visible = MAP_AllMapToScreen(node, aircraft->pos, &centerX, &centerY, NULL);
 
-	R_DrawFill(centerX - width / 2 , centerY - 5 * ccs.zoom, round(width * ((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE])), height, color);
-	R_DrawRect(centerX - width / 2, centerY - 5 * ccs.zoom, width, height, bordercolor, 1.0, 1);
-
+	if (visible) {
+		R_DrawFill(centerX - width / 2 , centerY - 5 * ccs.zoom, round(width * ((float)aircraft->damage / aircraft->stats[AIR_STATS_DAMAGE])), height, color);
+		R_DrawRect(centerX - width / 2, centerY - 5 * ccs.zoom, width, height, bordercolor, 1.0, 1);
+	}
 }
 
 /**
