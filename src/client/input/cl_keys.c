@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/utf8.h"
 
 char keyLines[MAXKEYLINES][MAXCMDLINE];
-int keyLinePos;
+uint32_t keyLinePos;
 
 static int keyInsert = 1;
 

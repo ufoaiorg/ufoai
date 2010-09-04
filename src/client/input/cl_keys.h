@@ -189,7 +189,7 @@ extern int msgMode;
 extern char msgBuffer[MAXCMDLINE];
 extern size_t msgBufferLen;
 extern char keyLines[MAXKEYLINES][MAXCMDLINE];
-extern int keyLinePos;
+extern uint32_t keyLinePos;
 extern int historyLine;
 extern int editLine;
 extern char *keyBindings[K_KEY_SIZE];

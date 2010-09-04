@@ -81,36 +81,36 @@ static qboolean SAV_GameActionsAfterLoad (void)
  */
 static qboolean SAV_VerifyHeader (saveFileHeader_t const * const header)
 {
-	int len;
+	size_t len;
 	/*check the length of the string*/
 	len = strlen(header->name);
-	if (len < 0 || len > sizeof(header->name)) {
-		Com_DPrintf(DEBUG_CLIENT, "Name is %d Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->name));
+	if (len > sizeof(header->name)) {
+		Com_Printf("Name is "UFO_SIZE_T" Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->name));
 		return qfalse;
 	}
 	len = strlen(header->gameVersion);
-	if (len < 0 || len > sizeof(header->gameVersion)) {
-		Com_DPrintf(DEBUG_CLIENT, "gameVersion is %d Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->gameVersion));
+	if (len > sizeof(header->gameVersion)) {
+		Com_Printf("gameVersion is "UFO_SIZE_T" Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->gameVersion));
 		return qfalse;
 	}
 	len = strlen(header->gameDate);
-	if (len < 0 || len > sizeof(header->gameDate)) {
-		Com_DPrintf(DEBUG_CLIENT, "gameDate is %d Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->gameDate));
+	if (len > sizeof(header->gameDate)) {
+		Com_Printf("gameDate is "UFO_SIZE_T" Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->gameDate));
 		return qfalse;
 	}
 	len = strlen(header->realDate);
-	if (len < 0 || len > sizeof(header->realDate)) {
-		Com_DPrintf(DEBUG_CLIENT, "realDate is %d Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->realDate));
+	if (len > sizeof(header->realDate)) {
+		Com_Printf("realDate is "UFO_SIZE_T" Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->realDate));
 		return qfalse;
 	}
 
 	/* saved games should not be bigger than 15MB */
 	if (header->xmlSize > 15 * 1024 * 1024) {
-		Com_DPrintf(DEBUG_CLIENT, "Save size seems to be to large (over 15 MB) %i.\n", header->xmlSize);
+		Com_Printf("Save size seems to be to large (over 15 MB) %i.\n", header->xmlSize);
 		return qfalse;
 	}
 	if (header->version == 0) {
-		Com_DPrintf(DEBUG_CLIENT, "Version is invalid - must be greater than zero\n");
+		Com_Printf("Version is invalid - must be greater than zero\n");
 		return qfalse;
 	}
 	if (header->version > SAVE_FILE_VERSION) {
