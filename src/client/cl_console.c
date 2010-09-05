@@ -96,10 +96,8 @@ static void Con_Clear (void)
 static void Con_DrawText (const short *text, int x, int y, size_t width)
 {
 	unsigned int xPos;
-	int currentColor = CON_COLOR_WHITE;
 	for (xPos = 0; xPos < width; xPos++) {
-		if (((text[xPos] >> 8) & 7) != currentColor)
-			currentColor = (text[xPos] >> 8) & 7;
+		const int currentColor = (text[xPos] >> 8) & 7;
 		R_DrawChar(x + ((xPos + 1) << con_fontShift), y, text[xPos], g_color_table[currentColor]);
 	}
 }
@@ -114,10 +112,10 @@ void Con_DrawString (const char *txt, int x, int y, unsigned int width)
 {
 	short buf[512], *pos;
 	const size_t size = lengthof(buf);
-	int c;
+	char c;
 	int color;
 
-	if (width > size)
+	if (width > size || strlen(txt) > size)
 		Sys_Error("Overflow in Con_DrawString");
 
 	color = CON_COLOR_WHITE;
@@ -501,29 +499,32 @@ static void Con_DrawInput (void)
  */
 void Con_DrawNotify (void)
 {
-	const short *text;
-	int i, time, skip, x;
+	int i;
 	int v = 60 * viddef.rx;
 	const int l = 120 * viddef.ry;
-	int currentColor = CON_COLOR_WHITE;
 
 	for (i = con.currentLine - NUM_CON_TIMES + 1; i <= con.currentLine; i++) {
 		qboolean draw = qfalse;
+		int x, time;
+		const short *text;
+
 		if (i < 0)
 			continue;
+
 		time = con.times[i % NUM_CON_TIMES];
 		if (time == 0)
 			continue;
+
 		time = CL_Milliseconds() - time;
 		if (time > con_notifytime->integer * 1000)
 			continue;
+
 		text = con.text + (i % con.totalLines) * con.lineWidth;
 
 		for (x = 0; x < con.lineWidth; x++) {
-			if (((text[x] >> 8) & 7) != currentColor)
-				currentColor = (text[x] >> 8) & 7;
 			/* only draw chat or check for developer mode */
 			if (developer->integer || text[x] & 0xff) {
+				const int currentColor = (text[x] >> 8) & 7;
 				R_DrawChar(l + (x << con_fontShift), v, text[x], g_color_table[currentColor]);
 				draw = qtrue;
 			}
@@ -534,7 +535,7 @@ void Con_DrawNotify (void)
 
 	if (cls.keyDest == key_message && (msgMode == MSG_SAY_TEAM || msgMode == MSG_SAY)) {
 		const char *s = msgBuffer;
-		int x;
+		int x, skip;
 		const uint32_t color = g_color_table[CON_COLOR_WHITE];
 
 		if (msgMode == MSG_SAY) {
