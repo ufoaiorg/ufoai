@@ -1,6 +1,6 @@
 /*.debhelper
 /*.substvars
-/ufoai
-/ufoai-tools
-/ufoai-server
 /files
+/ufoai
+/ufoai-server
+/ufoai-tools

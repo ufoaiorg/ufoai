@@ -1,4 +1,4 @@
-/.objs
 /*.depend
-/*.layout
 /*.launch
+/*.layout
+/.objs
