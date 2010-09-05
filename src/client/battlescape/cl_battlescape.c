@@ -278,7 +278,7 @@ int CL_CountVisibleEnemies (void)
 	count = 0;
 	le = NULL;
 	while ((le = LE_GetNextInUse(le))) {
-		if (LE_IsLivingActor(le) && le->team != cls.team && le->team != TEAM_CIVILIAN)
+		if (LE_IsLivingAndVisibleActor(le) && le->team != cls.team && le->team != TEAM_CIVILIAN)
 			count++;
 	}
 
