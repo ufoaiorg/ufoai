@@ -3,11 +3,11 @@
 #ifndef CROSSBUILD
 1 RT_MANIFEST DISCARDABLE "ufo.exe.manifest"
 101 ICON DISCARDABLE "ufo.ico"
-112 ICON DISCARDABLE "ufo_ded.ico"
+112 ICON DISCARDABLE "ufoded.ico"
 #else
 1 RT_MANIFEST DISCARDABLE "build/projects/ufo.exe.manifest"
 101 ICON DISCARDABLE "build/projects/ufo.ico"
-112 ICON DISCARDABLE "build/projects/ufo_ded.ico"
+112 ICON DISCARDABLE "build/projects/ufoded.ico"
 #endif
 
 VS_VERSION_INFO VERSIONINFO

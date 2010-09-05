@@ -6,9 +6,9 @@
 		<Project filename="ufo.cbp" active="1">
 			<Depends filename="game.cbp" />
 			<Depends filename="ufo2map.cbp" />
-			<Depends filename="ufo_ded.cbp" />
+			<Depends filename="ufoded.cbp" />
 		</Project>
-		<Project filename="ufo_ded.cbp">
+		<Project filename="ufoded.cbp">
 			<Depends filename="game.cbp" />
 		</Project>
 		<Project filename="radiant.cbp">
