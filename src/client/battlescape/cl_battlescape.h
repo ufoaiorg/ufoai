@@ -42,7 +42,7 @@ typedef struct client_state_s {
 
 	le_t *teamList[MAX_ACTIVETEAM];
 	int numTeamList;
-	int numAliensSpotted;
+	int numEnemiesSpotted;
 
 	qboolean eventsBlocked;		/**< if the client interrupts the event execution, this is true */
 
@@ -89,6 +89,7 @@ qboolean CL_OnBattlescape(void);
 qboolean CL_BattlescapeRunning(void);
 int CL_GetHitProbability(const le_t* actor);
 qboolean CL_OutsideMap(const vec3_t impact, const float delta);
+int CL_CountVisibleEnemies(void);
 char *CL_GetConfigString(int index);
 int CL_GetConfigStringInteger(int index);
 char *CL_SetConfigString(int index, struct dbuffer *msg);

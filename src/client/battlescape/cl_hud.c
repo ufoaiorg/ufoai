@@ -132,7 +132,7 @@ static void HUD_UpdateAllActors (void)
 	int i;
 	const size_t size = lengthof(cl.teamList);
 
-	Cvar_SetValue("mn_numaliensspotted", cl.numAliensSpotted);
+	Cvar_SetValue("mn_numaliensspotted", cl.numEnemiesSpotted);
 	for (i = 0; i < size; i++) {
 		const le_t *le = cl.teamList[i];
 		if (le && !LE_IsDead(le)) {

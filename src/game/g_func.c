@@ -92,7 +92,7 @@ static qboolean Destroy_Breakable (edict_t *self)
 	/* check whether the removal changes the vis mask
 	 * for the teams that were seeing this edict */
 	for (i = 0; i < MAX_TEAMS; i++)
-		if (level.num_alive[i] && self->visflags & i)
+		if (level.num_alive[i] && (self->visflags & i))
 			G_CheckVisTeam(i, self, qfalse, self);
 
 	G_RecalcRouting(self);

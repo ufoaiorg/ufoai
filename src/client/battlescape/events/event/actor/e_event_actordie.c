@@ -54,9 +54,9 @@ void CL_ActorDie (const eventRegister_t *self, struct dbuffer *msg)
 		Com_Error(ERR_DROP, "CL_ActorDie: Can't kill, actor already dead");
 
 	LE_Lock(le);
+
 	/* count spotted aliens */
-	if (le->team != cls.team && le->team != TEAM_CIVILIAN && !LE_IsStunned(le))
-		cl.numAliensSpotted--;
+	cl.numEnemiesSpotted = CL_CountVisibleEnemies();
 
 	/* set relevant vars */
 	FLOOR(le) = NULL;

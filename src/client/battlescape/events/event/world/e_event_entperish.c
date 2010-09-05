@@ -45,7 +45,7 @@ void CL_EntPerish (const eventRegister_t *self, struct dbuffer *msg)
 
 	/* decrease the count of spotted aliens (also stunned) */
 	if (LE_IsLivingAndVisibleActor(le) && le->team != cls.team && le->team != TEAM_CIVILIAN)
-		cl.numAliensSpotted--;
+		cl.numEnemiesSpotted--;
 
 	switch (le->type) {
 	case ET_ITEM:

@@ -266,6 +266,25 @@ qboolean CL_OutsideMap (const vec3_t position, const float delta)
 	return qfalse;
 }
 
+/**
+ * @brief Counts visible enemies on the battlescape
+ * @return The amount of visible enemies (from all the other teams)
+ */
+int CL_CountVisibleEnemies (void)
+{
+	le_t *le;
+	int count;
+
+	count = 0;
+	le = NULL;
+	while ((le = LE_GetNextInUse(le))) {
+		if (LE_IsLivingActor(le) && le->team != cls.team && le->team != TEAM_CIVILIAN)
+			count++;
+	}
+
+	return count;
+}
+
 #ifdef DEBUG
 /** @todo this does not belong here */
 #include "../../common/routing.h"

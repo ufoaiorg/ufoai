@@ -139,13 +139,13 @@ void CL_ActorAppear (const eventRegister_t *self, struct dbuffer *msg)
 	LE_SetThink(le, LET_StartIdle);
 
 	/* count spotted aliens (also stunned) */
-	if (LE_IsLivingActor(le) && le->team != cls.team && le->team != TEAM_CIVILIAN)
-		cl.numAliensSpotted++;
+	cl.numEnemiesSpotted = CL_CountVisibleEnemies();
 
 	if (LE_IsLivingActor(le)) {
-		/* center view (if wanted) */
-		if (cl.actTeam != cls.team)
+		if (cl.actTeam != cls.team) {
+			/* center view (if wanted) */
 			LE_CenterView(le);
+		}
 
 		/* draw line of sight */
 		if (le->team != cls.team) {
