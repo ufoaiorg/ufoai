@@ -283,41 +283,61 @@ static void SEQ_Render3D (sequenceContext_t *context)
 	seqEnt_t *se;
 	int i;
 
+	refdef.brushCount = 0;
+	refdef.aliasCount = 0;
+	refdef.numEntities = 0;
+	refdef.mapTiles = cl.mapTiles;
+
 	/* set camera */
 	SEQ_SetCamera(context);
 
 	/* render sequence */
-	for (i = 0, se = context->ents; i < context->numEnts; i++, se++)
-		if (se->inuse) {
-			/* advance in time */
-			VectorMA(se->origin, cls.frametime, se->speed, se->origin);
-			VectorMA(se->angles, cls.frametime, se->omega, se->angles);
-			R_AnimRun(&se->as, se->model, context->animspeed * cls.frametime);
+	for (i = 0, se = context->ents; i < context->numEnts; i++, se++) {
+		if (!se->inuse)
+			continue;
 
-			/* add to scene */
-			memset(&ent, 0, sizeof(ent));
-			ent.model = se->model;
-			ent.skinnum = se->skin;
-			ent.as = se->as;
-			ent.alpha = se->alpha;
+		/* advance in time */
+		VectorMA(se->origin, cls.frametime, se->speed, se->origin);
+		VectorMA(se->angles, cls.frametime, se->omega, se->angles);
+		R_AnimRun(&se->as, se->model, context->animspeed * cls.frametime);
 
-			R_EntitySetOrigin(&ent, se->origin);
-			VectorCopy(se->origin, ent.oldorigin);
-			VectorCopy(se->angles, ent.angles);
+		/* add to scene */
+		memset(&ent, 0, sizeof(ent));
+		ent.model = se->model;
+		ent.skinnum = se->skin;
+		ent.as = se->as;
+		ent.alpha = se->alpha;
 
-			if (se->parent && se->tag) {
-				seqEnt_t *parent;
+		R_EntitySetOrigin(&ent, se->origin);
+		VectorCopy(se->origin, ent.oldorigin);
+		VectorCopy(se->angles, ent.angles);
 
-				parent = SEQ_FindEnt(context, se->parent);
-				if (parent)
-					ent.tagent = parent->ep;
-				ent.tagname = se->tag;
-			}
+		if (se->parent && se->tag) {
+			seqEnt_t *parent;
 
-			/* add to render list */
-			se->ep = R_GetFreeEntity();
-			R_AddEntity(&ent);
+			parent = SEQ_FindEnt(context, se->parent);
+			if (parent)
+				ent.tagent = parent->ep;
+			ent.tagname = se->tag;
 		}
+
+		/* add to render list */
+		se->ep = R_GetFreeEntity();
+		R_AddEntity(&ent);
+	}
+
+	refdef.rendererFlags |= RDF_NOWORLDMODEL;
+
+	/* use a relative fixed size */
+	viddef.viewWidth = VID_NORM_WIDTH;
+	viddef.viewHeight = VID_NORM_HEIGHT;
+
+	/* update refdef */
+	CL_ViewUpdateRenderData();
+
+	/** @todo Models are not at the right position (relative to the node position). Maybe R_SetupFrustum erase matrix. Not a trivialous task. */
+	/* render the world */
+	R_RenderFrame();
 }
 
 
@@ -330,66 +350,59 @@ static void SEQ_Render2D (sequenceContext_t *context)
 	seq2D_t *s2d;
 	int i, j;
 	int height = 0;
-	vec3_t pos;
-
-	/* center screen */
-	pos[0] = context->pos[0] + (context->size[0] - VID_NORM_WIDTH) / 2;
-	pos[1] = context->pos[1] + (context->size[1] - VID_NORM_HEIGHT) / 2;
-	pos[2] = 0;
-	UI_Transform(pos, NULL, NULL);
 
 	/* add texts */
-	for (i = 0, s2d = context->obj2Ds; i < context->numObj2Ds; i++, s2d++)
-		if (s2d->inuse) {
-			if (s2d->relativePos && height > 0) {
-				s2d->pos[1] += height;
-				s2d->relativePos = qfalse;
-			}
-			/* advance in time */
-			for (j = 0; j < 4; j++) {
-				s2d->color[j] += cls.frametime * s2d->fade[j];
-				if (s2d->color[j] < 0.0)
-					s2d->color[j] = 0.0;
-				else if (s2d->color[j] > 1.0)
-					s2d->color[j] = 1.0;
-			}
-			for (j = 0; j < 2; j++) {
-				s2d->pos[j] += cls.frametime * s2d->speed[j];
-				s2d->size[j] += cls.frametime * s2d->enlarge[j];
-			}
+	for (i = 0, s2d = context->obj2Ds; i < context->numObj2Ds; i++, s2d++) {
+		if (!s2d->inuse)
+			continue;
 
-			/* outside the screen? */
-			/** @todo We need this check - but this does not work */
-			/*if (s2d->pos[1] >= VID_NORM_HEIGHT || s2d->pos[0] >= VID_NORM_WIDTH)
-				continue;*/
-
-			/* render */
-			R_Color(s2d->color);
-
-			/* image can be background */
-			if (s2d->image[0] != '\0') {
-				const image_t *image = R_FindImage(s2d->image, it_pic);
-				R_DrawImage(s2d->pos[0], s2d->pos[1], image);
-			}
-
-			/* bgcolor can be overlay */
-			if (s2d->bgcolor[3] > 0.0)
-				R_DrawFill(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], s2d->bgcolor);
-
-			/* render */
-			R_Color(s2d->color);
-
-			/* gettext placeholder */
-			if (s2d->text) {
-				int maxWidth = (int) s2d->size[0];
-				if (maxWidth <= 0)
-					maxWidth = VID_NORM_WIDTH;
-				height += UI_DrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], maxWidth, -1 /** @todo use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse, LONGLINES_WRAP);
-			}
+		if (s2d->relativePos && height > 0) {
+			s2d->pos[1] += height;
+			s2d->relativePos = qfalse;
 		}
-	R_Color(NULL);
+		/* advance in time */
+		for (j = 0; j < 4; j++) {
+			s2d->color[j] += cls.frametime * s2d->fade[j];
+			if (s2d->color[j] < 0.0)
+				s2d->color[j] = 0.0;
+			else if (s2d->color[j] > 1.0)
+				s2d->color[j] = 1.0;
+		}
+		for (j = 0; j < 2; j++) {
+			s2d->pos[j] += cls.frametime * s2d->speed[j];
+			s2d->size[j] += cls.frametime * s2d->enlarge[j];
+		}
 
-	UI_Transform(NULL, NULL, NULL);
+		/* outside the screen? */
+		/** @todo We need this check - but this does not work */
+		/*if (s2d->pos[1] >= VID_NORM_HEIGHT || s2d->pos[0] >= VID_NORM_WIDTH)
+			continue;*/
+
+		/* render */
+		R_Color(s2d->color);
+
+		/* image can be background */
+		if (s2d->image[0] != '\0') {
+			const image_t *image = R_FindImage(s2d->image, it_pic);
+			R_DrawImage(s2d->pos[0], s2d->pos[1], image);
+		}
+
+		/* bgcolor can be overlay */
+		if (s2d->bgcolor[3] > 0.0)
+			R_DrawFill(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], s2d->bgcolor);
+
+		/* render */
+		R_Color(s2d->color);
+
+		/* gettext placeholder */
+		if (s2d->text) {
+			int maxWidth = (int) s2d->size[0];
+			if (maxWidth <= 0)
+				maxWidth = VID_NORM_WIDTH;
+			height += UI_DrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], maxWidth, -1 /** @todo use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+		}
+	}
+	R_Color(NULL);
 }
 
 /**
@@ -491,8 +504,7 @@ static qboolean SEQ_Execute (sequenceContext_t *context)
  */
 qboolean SEQ_Render (sequenceContext_t *context)
 {
-	refdef.brushCount = 0;
-	refdef.aliasCount = 0;
+	vec3_t pos;
 
 	if (!context->size[0] || !context->size[1])
 		return qtrue;
@@ -500,20 +512,16 @@ qboolean SEQ_Render (sequenceContext_t *context)
 	if (!SEQ_Execute(context))
 		return qfalse;
 
-	refdef.numEntities = 0;
-	refdef.mapTiles = cl.mapTiles;
+	/* center screen */
+	pos[0] = context->pos[0] + (context->size[0] - VID_NORM_WIDTH) / 2;
+	pos[1] = context->pos[1] + (context->size[1] - VID_NORM_HEIGHT) / 2;
+	pos[2] = 0;
+	UI_Transform(pos, NULL, NULL);
 
 	SEQ_Render3D(context);
-
-	refdef.rendererFlags |= RDF_NOWORLDMODEL;
-
-	/* update ref def */
-	CL_ViewUpdateRenderData();
-
-	/* render the world */
-	R_RenderFrame();
-
 	SEQ_Render2D(context);
+
+	UI_Transform(NULL, NULL, NULL);
 	return qtrue;
 }
 
