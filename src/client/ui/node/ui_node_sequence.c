@@ -26,8 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ui_parse.h"
 #include "../ui_actions.h"
 #include "../ui_draw.h"
-#include "../../renderer/r_misc.h"
 #include "../../client.h"
+#include "../../renderer/r_misc.h"
+#include "../../renderer/r_draw.h"
 #include "../../cl_sequence.h"
 #include "ui_node_abstractnode.h"
 #include "ui_node_sequence.h"
@@ -41,26 +42,28 @@ static const value_t *propertySource;
 static const uiBehaviour_t const *localBehaviour;
 
 
-static void UI_SequenceNodeDrawOverWindow (uiNode_t *node)
-{
-	qboolean finished = qfalse;
-	vec2_t pos;
-	R_PushMatrix();
-	UI_GetNodeAbsPos(node, pos);
-	SEQ_SetView(EXTRADATA(node).context, pos, node->size);
-	finished = !SEQ_Render(EXTRADATA(node).context);
-	R_PopMatrix();
-
-	if (finished && EXTRADATA(node).onEnd) {
-		UI_ExecuteEventActions(node, EXTRADATA(node).onEnd);
-		EXTRADATA(node).playing = qtrue;
-	}
-}
-
 static void UI_SequenceNodeDraw (uiNode_t *node)
 {
-	if (EXTRADATA(node).context != NULL && EXTRADATA(node).playing)
-		UI_CaptureDrawOver(node);
+	if (EXTRADATA(node).context != NULL && EXTRADATA(node).playing) {
+		qboolean finished = qfalse;
+		vec2_t pos;
+		UI_GetNodeAbsPos(node, pos);
+
+		R_PushMatrix();
+		R_CleanupDepthBuffer(pos[0], pos[1], node->size[0], node->size[1]);
+		R_PushClipRect(pos[0], pos[1], node->size[0], node->size[1]);
+
+		SEQ_SetView(EXTRADATA(node).context, pos, node->size);
+		finished = !SEQ_Render(EXTRADATA(node).context);
+
+		R_PopClipRect();
+		R_PopMatrix();
+
+		if (finished && EXTRADATA(node).onEnd) {
+			UI_ExecuteEventActions(node, EXTRADATA(node).onEnd);
+			EXTRADATA(node).playing = qtrue;
+		}
+	}
 }
 
 static void UI_SequenceNodeInit (uiNode_t *node)
@@ -120,7 +123,6 @@ void UI_RegisterSequenceNode (uiBehaviour_t* behaviour)
 	behaviour->properties = properties;
 	behaviour->init = UI_SequenceNodeInit;
 	behaviour->close = UI_SequenceNodeClose;
-	behaviour->drawOverWindow = UI_SequenceNodeDrawOverWindow;
 	behaviour->extraDataSize = sizeof(EXTRADATA_TYPE);
 	behaviour->propertyChanged = UI_SequencePropertyChanged;
 	behaviour->leftClick = UI_SequenceNodeLeftClick;
