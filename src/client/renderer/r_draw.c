@@ -162,6 +162,7 @@ void R_DrawChars (void)
 
 	/* restore draw color */
 	R_Color(NULL);
+	R_EnableBlend(qfalse);
 }
 
 /**
