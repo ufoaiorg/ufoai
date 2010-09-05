@@ -42,7 +42,7 @@ struct sequenceContext_s;
 
 /**
  * @brief execution function of a command
- * @returns 0 if the same command should be executed again - or 1 to execute the next event
+ * @return @c 0 if the same command should be executed again - or @c 1 to execute the next event
  */
 typedef int (*sequenceHandler_t) (struct sequenceContext_s *context, const char *name, const char *data);
 
@@ -404,7 +404,6 @@ void SEQ_SendClickEvent (sequenceContext_t *context)
 /**
  * @brief Define the position of the viewport on the screen
  * @param context Context
- * @todo Use context values instead of global values
  */
 void SEQ_SetView (sequenceContext_t *context, vec2_t pos, vec2_t size)
 {
@@ -415,10 +414,10 @@ void SEQ_SetView (sequenceContext_t *context, vec2_t pos, vec2_t size)
 }
 
 /**
- * Initialize a sequence context from data of a named script sequence
+ * @brief Initialize a sequence context from data of a named script sequence
  * @param context
  * @param name
- * @return True if the sequence is initilized.
+ * @return True if the sequence is initialized.
  */
 qboolean SEQ_InitContext (sequenceContext_t *context, const char *name)
 {
@@ -485,7 +484,7 @@ static qboolean SEQ_Execute (sequenceContext_t *context)
 }
 
 /**
- * Execute and render a sequence
+ * @brief Execute and render a sequence
  * @param context Sequence context
  * @return True if the sequence is alive.
  */
@@ -521,7 +520,8 @@ qboolean SEQ_Render (sequenceContext_t *context)
  * Allocate a sequence context
  * @return Context
  */
-sequenceContext_t *SEQ_AllocContext (void) {
+sequenceContext_t *SEQ_AllocContext (void)
+{
 	sequenceContext_t *context;
 	context = (sequenceContext_t *) Mem_Alloc(sizeof(*context));
 	return context;
@@ -531,7 +531,8 @@ sequenceContext_t *SEQ_AllocContext (void) {
  * Free a sequence context
  * @return Context
  */
-void SEQ_FreeContext (sequenceContext_t *context) {
+void SEQ_FreeContext (sequenceContext_t *context)
+{
 	Mem_Free(context);
 }
 
