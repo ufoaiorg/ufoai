@@ -669,11 +669,6 @@ window endgame
 		src		"background/wingame_bg"
 	}
 
-	func onInit
-	{
-		cmd "music_stop;snd_music Crystan-WinGame;"
-	}
-
 	string title
 	{
 		string		"_Thank you for playing UFO:Alien Invasion"
@@ -738,5 +733,6 @@ window endgame
 	}
 
 	func onInit {
+		cmd "music_stop;snd_music Crystan-WinGame;"
 	}
 }
