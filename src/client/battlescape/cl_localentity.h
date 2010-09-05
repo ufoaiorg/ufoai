@@ -122,7 +122,7 @@ typedef struct le_s {
 	/** gfx */
 	animState_t as;	/**< holds things like the current active frame and so on */
 	const char *particleID;
-	int levelflags;	/**< the levels this particle should be visible at */
+	int levelflags;	/**< the levels this local entity should be visible at */
 	ptl_t *ptl;				/**< particle pointer to display */
 	const char *ref1, *ref2;
 	const struct le_s *ref3;
