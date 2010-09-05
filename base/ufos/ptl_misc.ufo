@@ -1131,16 +1131,40 @@ particle debug-marker
 	}
 }
 
+particle spiral1
+{
+	init
+	{
+		model	objects/spiral/spiral_large
+		tps		20
+		omega	"0 100 0"
+	}
+
+	think
+	{
+	}
+}
+
+particle spiral2
+{
+	init
+	{
+		model	objects/spiral/spiral_small
+		tps		0
+		omega	"0 80 0"
+	}
+
+	think
+	{
+	}
+}
+
 particle stunnedactor
 {
 	init
 	{
-		image  sfx/stunned
-		blend  blend
-		style  rotated
-		angles	"0 90 0"
-		size	"16 16"
-		life   0.0001
+		child	spiral1
+		child	spiral2
 	}
 }
 

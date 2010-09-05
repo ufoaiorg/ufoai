@@ -1409,7 +1409,8 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 		return qfalse;
 
 	if (LE_IsStunned(le)) {
-		CL_ParticleSpawn("stunnedactor", 0, le->origin, NULL, NULL);
+		if (!le->ptl)
+			le->ptl = CL_ParticleSpawn("stunnedactor", 0, le->origin, NULL, NULL);
 	} else if (!LE_IsDead(le)) {
 		/* add the weapons to the actor's hands */
 		const qboolean addLeftHandWeapon = CL_AddActorWeapon(le->left);
@@ -1443,6 +1444,15 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			add.tagname = "tag_rweapon";
 
 			R_AddEntity(&add);
+		}
+		if (le->ptl) {
+			CL_ParticleFree(le->ptl);
+			le->ptl = NULL;
+		}
+	} else {
+		if (le->ptl) {
+			CL_ParticleFree(le->ptl);
+			le->ptl = NULL;
 		}
 	}
 

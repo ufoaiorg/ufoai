@@ -1497,6 +1497,9 @@ base/models/objects/samlauncher_big/sam.png | GNU General Public License 2.0 or 
 base/models/objects/samlauncher_big/sam_nm.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/snowman/snowman.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/snowman/snowman.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/objects/spiral/spiral.png | GNU General Public License 2.0 or later | Origin
+base/models/objects/spiral/spiral_large.md2 | GNU General Public License 2.0 or later | Origin
+base/models/objects/spiral/spiral_small.md2 | GNU General Public License 2.0 or later | Origin
 base/models/objects/store/box.md2 | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/store/box.png | GNU General Public License 2.0 or later | Willem Sitters
 base/models/objects/store/pellet.md2 | GNU General Public License 2.0 or later | Willem Sitters
