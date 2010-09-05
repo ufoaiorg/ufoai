@@ -764,10 +764,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/cl_screen.h" />
-		<Unit filename="../../src/client/cl_sequence.c">
+		<Unit filename="../../src/client/cinematic/cl_sequence.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/client/cl_sequence.h" />
+		<Unit filename="../../src/client/cinematic/cl_sequence.h" />
 		<Unit filename="../../src/client/cl_team.c">
 			<Option compilerVar="CC" />
 		</Unit>

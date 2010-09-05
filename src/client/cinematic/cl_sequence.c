@@ -26,17 +26,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
+#include "../client.h"
+#include "../battlescape/cl_localentity.h"
+#include "../battlescape/cl_view.h"
+#include "../renderer/r_main.h"
+#include "../renderer/r_draw.h"
+#include "../renderer/r_mesh_anim.h"
+#include "../../shared/parse.h"
+#include "../ui/ui_render.h"
 #include "cl_sequence.h"
-#include "battlescape/cl_localentity.h"
-#include "battlescape/cl_view.h"
-#include "renderer/r_main.h"
-#include "renderer/r_draw.h"
-#include "renderer/r_mesh_anim.h"
-#include "../shared/parse.h"
-#include "ui/ui_main.h"
-#include "ui/ui_nodes.h"
-#include "ui/ui_render.h"
 
 #define MAX_DATA_LENGTH 2048
 

@@ -14,7 +14,6 @@ CLIENT_SRCS = \
 	client/cl_main.c \
 	client/cl_menu.c \
 	client/cl_screen.c \
-	client/cl_sequence.c \
 	client/cl_team.c \
 	client/cl_tip.c \
 	client/cl_tutorials.c \
@@ -27,6 +26,7 @@ CLIENT_SRCS = \
 	client/cinematic/cl_cinematic.c \
 	client/cinematic/cl_cinematic_roq.c \
 	client/cinematic/cl_cinematic_ogm.c \
+	client/cinematic/cl_sequence.c \
 	\
 	client/battlescape/cl_actor.c \
 	client/battlescape/cl_battlescape.c \
