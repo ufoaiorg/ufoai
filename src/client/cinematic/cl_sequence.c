@@ -141,8 +141,9 @@ typedef struct sequenceContext_s {
 	int currentCmd;
 	/** The number of all sequence commands in the current running sequence */
 	int endCmd;
-	/** Speed of the animation */
-	cvar_t *animspeed;
+
+	/** Speed of the animation. Default is 1000. Number per seconds */
+	int animspeed;
 
 	/** Position of the camera */
 	seqCamera_t camera;
@@ -291,7 +292,7 @@ static void SEQ_Render3D (sequenceContext_t *context)
 			/* advance in time */
 			VectorMA(se->origin, cls.frametime, se->speed, se->origin);
 			VectorMA(se->angles, cls.frametime, se->omega, se->angles);
-			R_AnimRun(&se->as, se->model, context->animspeed->integer * cls.frametime);
+			R_AnimRun(&se->as, se->model, context->animspeed * cls.frametime);
 
 			/* add to scene */
 			memset(&ent, 0, sizeof(ent));
@@ -439,7 +440,7 @@ qboolean SEQ_InitContext (sequenceContext_t *context, const char *name)
 	context->time = cl.time;
 	context->currentCmd = sp->start;
 	context->endCmd = sp->start + sp->length;
-	context->animspeed = Cvar_Get("seq_animspeed", "1000", 0, NULL);
+	context->animspeed = 1000;
 
 	return qtrue;
 }
@@ -563,6 +564,16 @@ static int SEQ_ExecuteClick (sequenceContext_t *context, const char *name, const
 static int SEQ_ExecuteWait (sequenceContext_t *context, const char *name, const char *data)
 {
 	context->time += 1000 * atof(name);
+	return 1;
+}
+
+/**
+ * @brief Set the animation speed, default value is 1000
+ * @return 1 - increase the command position of the sequence by one
+ */
+static int SEQ_ExecuteAnimSpeed (sequenceContext_t *context, const char *name, const char *data)
+{
+	context->animspeed = atoi(name);
 	return 1;
 }
 
@@ -803,6 +814,7 @@ static const char *seqCmdName[] = {
 	"music",
 	"sound",
 	"rem",
+	"animspeed",
 	"cmd"
 };
 
@@ -822,6 +834,7 @@ static sequenceHandler_t seqCmdFunc[] = {
 	SEQ_ExecuteMusic,
 	SEQ_ExecuteSound,
 	SEQ_ExecuteRemove,
+	SEQ_ExecuteAnimSpeed,
 	SEQ_ExecuteCommand
 };
 CASSERT(lengthof(seqCmdFunc) == lengthof(seqCmdName));

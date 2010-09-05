@@ -1,7 +1,7 @@
 sequence credits
 {
 	music "Crystan-Credits"
-	cmd "seq_animspeed 1000;"
+	animspeed 1000
 
 	precache models
 	{

@@ -1,6 +1,6 @@
 sequence intro // Last change 25-07-2009 by Vio
 {
-	cmd "seq_animspeed 100;"
+	animspeed 100
 
 	precache pics
 	{
