@@ -789,11 +789,6 @@ static int SEQ_ExecuteCommand (sequenceContext_t *context, const char *name, con
 
 /* =========================================================== */
 
-/**
- * @note Here to reduce the scope
- */
-sequenceContext_t seq;
-
 #if 0
 /**
  * @brief Unlock a click event for the current sequence or ends the current sequence if not locked
