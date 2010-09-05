@@ -130,6 +130,11 @@ static int numSeqCmds;
 /** Sequence context
  */
 typedef struct sequenceContext_s {
+	/** position of the viewport */
+	vec2_t pos;
+	/** size of the viewport */
+	vec2_t size;
+
 	/** Milliseconds the sequence is already running */
 	int time;
 	/** If the menu node the sequence is rendered in fetches a click this is true */
@@ -206,7 +211,7 @@ static const value_t seq2D_vals[] = {
  */
 static void SEQ_SetCamera (sequenceContext_t *context)
 {
-	if (!viddef.viewWidth || !viddef.viewHeight)
+	if (!context->size[0] || !context->size[1])
 		return;
 
 	/* advance time */
@@ -329,8 +334,8 @@ static void SEQ_Render2D (sequenceContext_t *context)
 	vec3_t pos;
 
 	/* center screen */
-	pos[0] = (viddef.virtualWidth - VID_NORM_WIDTH) / 2;
-	pos[1] = (viddef.virtualHeight - VID_NORM_HEIGHT) / 2;
+	pos[0] = context->pos[0] + (context->size[0] - VID_NORM_WIDTH) / 2;
+	pos[1] = context->pos[1] + (context->size[1] - VID_NORM_HEIGHT) / 2;
 	pos[2] = 0;
 	UI_Transform(pos, NULL, NULL);
 
@@ -402,14 +407,13 @@ void SEQ_SendClickEvent (sequenceContext_t *context)
  * @brief Define the position of the viewport on the screen
  * @param context Context
  * @todo Use context values instead of global values
- * @todo Anyway, viddef value is not used everywhere in the sequence code... use it to streach the screen?
  */
 void SEQ_SetView (sequenceContext_t *context, vec2_t pos, vec2_t size)
 {
-	viddef.x = pos[0];
-	viddef.y = pos[1];
-	viddef.viewWidth = size[0];
-	viddef.viewHeight = size[1];
+	context->pos[0] = pos[0];
+	context->pos[1] = pos[1];
+	context->size[0] = size[0];
+	context->size[1] = size[1];
 }
 
 /**
@@ -492,7 +496,7 @@ qboolean SEQ_Render (sequenceContext_t *context)
 	refdef.brushCount = 0;
 	refdef.aliasCount = 0;
 
-	if (!viddef.viewWidth || !viddef.viewHeight)
+	if (!context->size[0] || !context->size[1])
 		return qtrue;
 
 	if (!SEQ_Execute(context))
