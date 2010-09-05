@@ -2877,9 +2877,10 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 /**
  * @brief Set the mission pointers for all the aircraft after loading a savegame
  */
-static void AIR_PostLoadInitMissions (void)
+static qboolean AIR_PostLoadInitMissions (void)
 {
 	int i;
+	qboolean success = qtrue;
 
 	/* PHALANX aircraft */
 	for (i = 0; i < ccs.numBases; i++) {
@@ -2890,6 +2891,11 @@ static void AIR_PostLoadInitMissions (void)
 			if (!aircraft->missionID || aircraft->missionID[0] == '\0')
 				continue;
 			aircraft->mission = CP_GetMissionByID(aircraft->missionID);
+			if (!aircraft->mission) {
+				Com_Printf("Aircraft %s (idx: %i) is linked to an invalid mission: %s\n", aircraft->name, aircraft->idx, aircraft->missionID);
+				if (aircraft->status == AIR_MISSION)
+					AIR_AircraftReturnToBase(aircraft);
+			}
 			Mem_Free(aircraft->missionID);
 			aircraft->missionID = NULL;
 		}
@@ -2902,18 +2908,24 @@ static void AIR_PostLoadInitMissions (void)
 		if (!aircraft || !aircraft->missionID || aircraft->missionID[0] == '\0')
 			continue;
 		aircraft->mission = CP_GetMissionByID(aircraft->missionID);
+		if (!aircraft->mission) {
+			Com_Printf("UFO %s (idx: %i) is linked to an invalid mission: %s\n", aircraft->name, aircraft->idx, aircraft->missionID);
+			success = qfalse;
+		}
 		Mem_Free(aircraft->missionID);
 		aircraft->missionID = NULL;
 	}
+
+	return success;
 }
 
 /**
  * @brief Actions needs to be done after loading the savegame
  * @sa SAV_GameActionsAfterLoad
  */
-void AIR_PostLoadInit (void)
+qboolean AIR_PostLoadInit (void)
 {
-	AIR_PostLoadInitMissions();
+	return AIR_PostLoadInitMissions();
 }
 
 /**

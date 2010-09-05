@@ -63,8 +63,10 @@ static cvar_t* save_compressed;
  */
 static qboolean SAV_GameActionsAfterLoad (void)
 {
-	B_PostLoadInit();
-	AIR_PostLoadInit();
+	qboolean result = qtrue;
+
+	result = result && B_PostLoadInit();
+	result = result && AIR_PostLoadInit();
 
 	/* Make sure the date&time is displayed when loading. */
 	CL_UpdateTime();
@@ -72,7 +74,7 @@ static qboolean SAV_GameActionsAfterLoad (void)
 	/* Update number of UFO detected by radar */
 	RADAR_SetRadarAfterLoading();
 
-	return qtrue;
+	return result;
 }
 
 /**
@@ -221,7 +223,10 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	}
 	mxmlDelete(node);
 
-	SAV_GameActionsAfterLoad();
+	if (!SAV_GameActionsAfterLoad()) {
+		Com_Printf("Savegame postprocessing returned false - savegame could not be loaded\n");
+		return qfalse;
+	}
 
 	Com_Printf("File '%s' successfully loaded from %s xml savegame.\n",
 			filename, header.compressed ? "compressed" : "");

@@ -81,7 +81,7 @@ qboolean CP_SaveMissionsXML(mxml_node_t *parent);
 qboolean CP_SaveInterestsXML(mxml_node_t *parent);
 qboolean CP_LoadInterestsXML(mxml_node_t *parent);
 
-void B_PostLoadInit(void);
-void AIR_PostLoadInit(void);
+qboolean B_PostLoadInit(void);
+qboolean AIR_PostLoadInit(void);
 
 #endif /* CLIENT_CL_SAVE_H */

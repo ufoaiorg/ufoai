@@ -2847,7 +2847,7 @@ int B_LoadBaseSlotsXML (baseWeapon_t* weapons, int max, mxml_node_t *p)
  * @brief Set the capacity stuff for all the bases after loading a savegame
  * @sa B_PostLoadInit
  */
-static void B_PostLoadInitCapacity (void)
+static qboolean B_PostLoadInitCapacity (void)
 {
 	int baseIdx;
 
@@ -2858,15 +2858,16 @@ static void B_PostLoadInitCapacity (void)
 
 		B_ResetAllStatusAndCapacities(base, qtrue);
 	}
+	return qtrue;
 }
 
 /**
  * @brief Set the capacity stuff for all the bases after loading a savegame
  * @sa SAV_GameActionsAfterLoad
  */
-void B_PostLoadInit (void)
+qboolean  B_PostLoadInit (void)
 {
-	B_PostLoadInitCapacity();
+	return B_PostLoadInitCapacity();
 }
 
 /**
