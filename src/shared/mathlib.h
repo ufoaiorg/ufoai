@@ -112,9 +112,9 @@ extern const byte dvleft[CORE_DIRECTIONS];
 /** @brief Map boundary is +/- MAX_WORLD_WIDTH - to get into the positive area we add the
  * possible max negative value and divide by the size of a grid unit field */
 #define VecToPos(v, p) (                  \
-	p[0] = ((int)v[0] + MAX_WORLD_WIDTH) / UNIT_SIZE,  \
-	p[1] = ((int)v[1] + MAX_WORLD_WIDTH) / UNIT_SIZE,  \
-	p[2] =  min((PATHFINDING_HEIGHT - 1), ((int)v[2] / UNIT_HEIGHT)) \
+	(p)[0] = ((int)(v)[0] + MAX_WORLD_WIDTH) / UNIT_SIZE,  \
+	(p)[1] = ((int)(v)[1] + MAX_WORLD_WIDTH) / UNIT_SIZE,  \
+	(p)[2] =  min((PATHFINDING_HEIGHT - 1), ((int)(v)[2] / UNIT_HEIGHT)) \
 )
 /** @brief Pos boundary size is +/- 128 - to get into the positive area we add
  * the possible max negative value and multiply with the grid unit size to get
@@ -122,22 +122,22 @@ extern const byte dvleft[CORE_DIRECTIONS];
  * by adding the half of the grid unit size to this value
  * @sa PATHFINDING_WIDTH */
 #define PosToVec(p, v) ( \
-	v[0] = ((int)p[0] - GRID_WIDTH) * UNIT_SIZE   + UNIT_SIZE   / 2, \
-	v[1] = ((int)p[1] - GRID_WIDTH) * UNIT_SIZE   + UNIT_SIZE   / 2, \
-	v[2] =  (int)p[2]               * UNIT_HEIGHT + UNIT_HEIGHT / 2  \
+	(v)[0] = ((int)(p)[0] - GRID_WIDTH) * UNIT_SIZE   + UNIT_SIZE   / 2, \
+	(v)[1] = ((int)(p)[1] - GRID_WIDTH) * UNIT_SIZE   + UNIT_SIZE   / 2, \
+	(v)[2] =  (int)(p)[2]               * UNIT_HEIGHT + UNIT_HEIGHT / 2  \
 )
 
 /** @brief Returns the distance between two 3-dimensional vectors */
-#define DotProduct(x,y)         (x[0]*y[0]+x[1]*y[1]+x[2]*y[2])
-#define VectorSubtract(a,b,dest)   (dest[0]=a[0]-b[0],dest[1]=a[1]-b[1],dest[2]=a[2]-b[2])
-#define Vector2Subtract(a,b,dest)   (dest[0]=a[0]-b[0],dest[1]=a[1]-b[1])
-#define VectorAdd(a,b,dest)        (dest[0]=a[0]+b[0],dest[1]=a[1]+b[1],dest[2]=a[2]+b[2])
-#define VectorMul(scalar,b,dest)       (dest[0]=(scalar)*b[0],dest[1]=(scalar)*b[1],dest[2]=(scalar)*b[2])
-#define Vector2Mul(scalar,b,dest)      (c[0]=(scalar)*b[0],dest[1]=(scalar)*b[1])
-#define VectorDiv(in,scalar,out)    VectorScale(in,(1.0f/(scalar)),out)
-#define VectorCopy(src,dest)        (dest[0]=src[0],dest[1]=src[1],dest[2]=src[2])
-#define Vector2Copy(src,dest)       (dest[0]=src[0],dest[1]=src[1])
-#define Vector4Copy(src,dest)       (dest[0]=src[0],dest[1]=src[1],dest[2]=src[2],dest[3]=src[3])
+#define DotProduct(x,y)         ((x)[0]*(y)[0]+(x)[1]*(y)[1]+(x)[2]*(y)[2])
+#define VectorSubtract(a,b,dest)   ((dest)[0]=(a)[0]-(b)[0],(dest)[1]=(a)[1]-(b)[1],(dest)[2]=(a)[2]-(b)[2])
+#define Vector2Subtract(a,b,dest)   ((dest)[0]=(a)[0]-(b)[0],(dest)[1]=(a)[1]-(b)[1])
+#define VectorAdd(a,b,dest)        ((dest)[0]=(a)[0]+(b)[0],(dest)[1]=(a)[1]+(b)[1],(dest)[2]=(a)[2]+(b)[2])
+#define VectorMul(scalar,b,dest)       ((dest)[0]=(scalar)*(b)[0],(dest)[1]=(scalar)*(b)[1],(dest)[2]=(scalar)*(b)[2])
+#define Vector2Mul(scalar,b,dest)      ((c)[0]=(scalar)*(b)[0],(dest)[1]=(scalar)*(b)[1])
+#define VectorDiv(in,scalar,out)    VectorScale((in),(1.0f/(scalar)),(out))
+#define VectorCopy(src,dest)        ((dest)[0]=(src)[0],(dest)[1]=(src)[1],(dest)[2]=(src)[2])
+#define Vector2Copy(src,dest)       ((dest)[0]=(src)[0],(dest)[1]=(src)[1])
+#define Vector4Copy(src,dest)       ((dest)[0]=(src)[0],(dest)[1]=(src)[1],(dest)[2]=(src)[2],(dest)[3]=(src)[3])
 #define Vector2Clear(a)            ((a)[0]=(a)[1]=0)
 #define VectorClear(a)          ((a)[0]=(a)[1]=(a)[2]=0)
 #define Vector4Clear(a)          ((a)[0]=(a)[1]=(a)[2]=(a)[3]=0)
@@ -145,23 +145,23 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define VectorSet(v, x, y, z)   ((v)[0]=(x), (v)[1]=(y), (v)[2]=(z))
 #define VectorSum(a)            ((a)[0]+(a)[1]+(a)[2])
 #define Vector2Set(v, x, y)     ((v)[0]=(x), (v)[1]=(y))
-#define Vector4Set(v, r, g, b, a)   (v[0]=(r), v[1]=(g), v[2]=(b), v[3]=(a))
-#define VectorCompare(a,b)      (a[0]==b[0]?a[1]==b[1]?a[2]==b[2]?1:0:0:0)
-#define VectorEqual(a,b)      (equal(a[0],b[0])?equal(a[1],b[1])?equal(a[2],b[2])?1:0:0:0)
-#define Vector2Compare(a,b)     (a[0]==b[0]?a[1]==b[1]?1:0:0)
-#define Vector2Equal(a,b)      (equal(a[0],b[0])?equal(a[1],b[1])?1:0:0)
-#define VectorDistSqr(a,b)      ((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])+(b[2]-a[2])*(b[2]-a[2]))
-#define VectorDist(a,b)         (sqrt((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])+(b[2]-a[2])*(b[2]-a[2])))
-#define Vector2Dist(a,b)         (sqrt((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])))
-#define VectorLengthSqr(a)      (a[0]*a[0]+a[1]*a[1]+a[2]*a[2])
+#define Vector4Set(v, r, g, b, a)   ((v)[0]=(r), (v)[1]=(g), (v)[2]=(b), (v)[3]=(a))
+#define VectorCompare(a,b)      ((a)[0]==(b)[0]?(a)[1]==(b)[1]?(a)[2]==(b)[2]?1:0:0:0)
+#define VectorEqual(a,b)      (equal((a)[0],(b)[0])?equal((a)[1],(b)[1])?equal((a)[2],(b)[2])?1:0:0:0)
+#define Vector2Compare(a,b)     ((a)[0]==(b)[0]?(a)[1]==(b)[1]?1:0:0)
+#define Vector2Equal(a,b)      (equal((a)[0],(b)[0])?equal((a)[1],(b)[1])?1:0:0)
+#define VectorDistSqr(a,b)      (((b)[0]-(a)[0])*((b)[0]-(a)[0])+((b)[1]-(a)[1])*((b)[1]-(a)[1])+((b)[2]-(a)[2])*((b)[2]-(a)[2]))
+#define VectorDist(a,b)         (sqrt(((b)[0]-(a)[0])*((b)[0]-(a)[0])+((b)[1]-(a)[1])*((b)[1]-(a)[1])+((b)[2]-(a)[2])*((b)[2]-(a)[2])))
+#define Vector2Dist(a,b)         (sqrt(((b)[0]-(a)[0])*((b)[0]-(a)[0])+((b)[1]-(a)[1])*((b)[1]-(a)[1])))
+#define VectorLengthSqr(a)      ((a)[0]*(a)[0]+(a)[1]*(a)[1]+(a)[2]*(a)[2])
 #define VectorNotEmpty(a)           (!VectorEmpty((a)))
 #define VectorEmpty(a)           (VectorEqual((a), vec3_origin))
 #define Vector2Empty(a)			 (Vector2Equal((a), vec2_origin))
 #define Vector2NotEmpty(a)		    (!Vector2Empty((a)))
-#define Vector4NotEmpty(a)          (VectorNotEmpty(a) && !equal(a[3],0.0))
-#define LinearInterpolation(a, b, x, y)   (y=a[1] + (((x - a[0]) * (b[1] - a[1])) / (b[0] - a[0])))
+#define Vector4NotEmpty(a)          (VectorNotEmpty(a) && !equal((a)[3],0.0))
+#define LinearInterpolation(a, b, x, y)   ((y)=(a)[1] + ((((x) - (a)[0]) * ((b)[1] - (a)[1])) / ((b)[0] - (a)[0])))
 #define VectorScale(in,scale,out) ((out)[0] = (in)[0] * (scale),(out)[1] = (in)[1] * (scale),(out)[2] = (in)[2] * (scale))
-#define VectorInterpolation(p1,p2,frac,mid)	(mid[0]=p1[0]+frac*(p2[0]-p1[0]),mid[1]=p1[1]+frac*(p2[1]-p1[1]),mid[2]=p1[2]+frac*(p2[2]-p1[2]))
+#define VectorInterpolation(p1,p2,frac,mid)	((mid)[0]=(p1)[0]+(frac)*((p2)[0]-(p1)[0]),(mid)[1]=(p1)[1]+(frac)*((p2)[1]-(p1)[1]),(mid)[2]=(p1)[2]+(frac)*((p2)[2]-(p1)[2]))
 
 /** @note  This works because the dv value is a byte value.
  *  The lowest three bits now hold the z value and the high five bits hold the direction.
@@ -171,13 +171,13 @@ extern const byte dvleft[CORE_DIRECTIONS];
 #define DV_Z_BIT_SHIFT	3	/**< This is the bit shift needed to store the z component of a DV value */
 #define DV_Z_BIT_MASK	((1 << DV_Z_BIT_SHIFT) - 1)  /**< This is the mask to retreive the z component of a  DV value */
 
-#define makeDV(dir, z)				((dir << DV_Z_BIT_SHIFT) | (z & DV_Z_BIT_MASK))
-#define NewDVZ(dv, z)				((dv & (~DV_Z_BIT_MASK)) | (z & DV_Z_BIT_MASK))
-#define getDVdir(dv)				(dv >> DV_Z_BIT_SHIFT)
-#define getDVz(dv)					(dv & DV_Z_BIT_MASK)
+#define makeDV(dir, z)				(((dir) << DV_Z_BIT_SHIFT) | ((z) & DV_Z_BIT_MASK))
+#define NewDVZ(dv, z)				(((dv) & (~DV_Z_BIT_MASK)) | ((z) & DV_Z_BIT_MASK))
+#define getDVdir(dv)				((dv) >> DV_Z_BIT_SHIFT)
+#define getDVz(dv)					((dv) & DV_Z_BIT_MASK)
 
-#define PosAddDV(p, crouch, dv)     (p[0]+=dvecs[getDVdir(dv)][0], p[1]+=dvecs[getDVdir(dv)][1], p[2]=getDVz(dv), crouch+=dvecs[getDVdir(dv)][3])
-#define PosSubDV(p, crouch, dv)     (p[0]-=dvecs[getDVdir(dv)][0], p[1]-=dvecs[getDVdir(dv)][1], p[2]=getDVz(dv), crouch-=dvecs[getDVdir(dv)][3])
+#define PosAddDV(p, crouch, dv)     ((p)[0]+=dvecs[getDVdir(dv)][0], (p)[1]+=dvecs[getDVdir(dv)][1], (p)[2]=getDVz(dv), (crouch)+=dvecs[getDVdir(dv)][3])
+#define PosSubDV(p, crouch, dv)     ((p)[0]-=dvecs[getDVdir(dv)][0], (p)[1]-=dvecs[getDVdir(dv)][1], (p)[2]=getDVz(dv), (crouch)-=dvecs[getDVdir(dv)][3])
 
 int AngleToDir(int angle);
 #define AngleToDV(x)	(AngleToDir(x) << DV_Z_BIT_SHIFT)
