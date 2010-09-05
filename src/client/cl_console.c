@@ -465,6 +465,7 @@ static void Con_DrawInput (void)
 	if (cls.keyDest != key_console && cls.state == ca_active)
 		return;					/* don't draw anything (always draw if not active) */
 
+	y = 0;
 	for (i = 0; i < size; i++) {
 		editlinecopy[i] = (CON_COLOR_WHITE << 8) | keyLines[editLine][i];
 		if (keyLines[editLine][i] != '\0')
