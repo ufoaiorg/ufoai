@@ -325,7 +325,7 @@ long WriteBSPFile (const char *filename)
 	FS_OpenFile(filename, &bspfile, FILE_WRITE);
 	if (!bspfile.f)
 		Sys_Error("Could not write bsp file");
-	FS_Write(&outheader, sizeof(dBspHeader_t), &bspfile);	/* overwritten later */
+	FS_Write(&outheader, sizeof(outheader), &bspfile);	/* overwritten later */
 
 	AddLump(&bspfile, &outheader, LUMP_PLANES, curTile->planes, curTile->numplanes * sizeof(dBspPlane_t));
 	AddLump(&bspfile, &outheader, LUMP_LEAFS, curTile->leafs, curTile->numleafs * sizeof(dBspLeaf_t));
@@ -418,7 +418,7 @@ epair_t *ParseEpair (void)
 {
 	epair_t	*e;
 
-	e = (epair_t *)Mem_Alloc(sizeof(*e));
+	e = Mem_AllocType(epair_t);
 
 	if (strlen(parsedToken) >= MAX_KEY - 1)
 		Sys_Error("ParseEpar: token too long");
