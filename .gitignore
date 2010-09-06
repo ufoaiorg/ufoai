@@ -4,6 +4,8 @@
 /*.bz2
 /*.dmg
 /Makefile
+/aclocal.m4
+/autom4te.cache/
 /config.h
 /config.log
 /config.status
