@@ -202,25 +202,21 @@ uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 /**
  * @brief Free memory blocks assigned to a specified tag within a pool
  */
-uint32_t _Mem_FreeTag (struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine)
+void _Mem_FreeTag (struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine)
 {
 	memBlock_t *mem, *next;
-	uint32_t size;
 	int j = 0;
 
 	if (!pool)
-		return 0;
+		return;
 
-	size = 0;
 	for (j = 0; j < MEM_HASH; j++) {
 		for (mem = pool->blocks[j]; mem; mem = next) {
 			next = mem->next;
 			if (mem->tagNum == tagNum)
-				size += _Mem_Free(mem->memPointer, fileName, fileLine);
+				_Mem_Free(mem->memPointer, fileName, fileLine);
 		}
 	}
-
-	return size;
 }
 
 
