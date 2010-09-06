@@ -629,7 +629,7 @@ void R_EnableRoughnessMap (const image_t *image, qboolean enable)
  */
 static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 {
-	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) viddef.viewHeight / viddef.viewWidth;
+	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) viddef.height / viddef.width;
 
 	if (r_isometric->integer) {
 		glOrtho(-10 * refdef.fieldOfViewX, 10 * refdef.fieldOfViewX, -10 * refdef.fieldOfViewX * yaspect, 10 * refdef.fieldOfViewX * yaspect, -zFar, zFar);
@@ -649,28 +649,40 @@ static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
  */
 void R_Setup3D (void)
 {
-	int x, x2, y2, y, w, h;
+	/* only for the battlescape rendering */
+	if ((refdef.rendererFlags & RDF_NOWORLDMODEL) == 0) {
+		int x, x2, y2, y, w, h;
 
-	/* set up viewport */
-	x = floor(viddef.x * viddef.width / viddef.width);
-	x2 = ceil((viddef.x + viddef.viewWidth) * viddef.width / viddef.width);
-	y = floor(viddef.height - viddef.y * viddef.height / viddef.height);
-	y2 = ceil(viddef.height - (viddef.y + viddef.viewHeight) * viddef.height / viddef.height);
+		/* set up viewport */
+		x = floor(viddef.x * viddef.width / viddef.width);
+		x2 = ceil((viddef.x + viddef.viewWidth) * viddef.width / viddef.width);
+		y = floor(viddef.height - viddef.y * viddef.height / viddef.height);
+		y2 = ceil(viddef.height - (viddef.y + viddef.viewHeight) * viddef.height / viddef.height);
 
-	w = x2 - x;
-	h = y - y2;
+		w = x2 - x;
+		h = y - y2;
 
-	glViewport(x, y2, w, h);
-	R_CheckError();
+		glViewport(x, y2, w, h);
+		R_CheckError();
+	}
 
 	/* set up projection matrix */
 	glMatrixMode(GL_PROJECTION);
+
 	glLoadIdentity();
+	if ((refdef.rendererFlags & RDF_NOWORLDMODEL) != 0) {
+		/* center image into the viewport */
+		float x = viddef.x + (viddef.viewWidth - VID_NORM_WIDTH) / 2.0;
+		float y = viddef.y + (viddef.viewHeight - VID_NORM_HEIGHT) / 2.0;
+		/* @todo magic coef, i dont know where it come from */
+		x *=  2.0 / (float)VID_NORM_WIDTH;
+		y *=  2.0 / (float)VID_NORM_HEIGHT;
+		glTranslatef(x, -y, 0);
+	}
 	MYgluPerspective(4.0, MAX_WORLD_WIDTH);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
 	glRotatef(-90.0, 1.0, 0.0, 0.0);	/* put Z going up */
 	glRotatef(90.0, 0.0, 0.0, 1.0);	/* put Z going up */
 	glRotatef(-refdef.viewAngles[2], 1.0, 0.0, 0.0);
@@ -701,8 +713,11 @@ extern const float SKYBOX_DEPTH;
  */
 void R_Setup2D (void)
 {
-	/* set 2D virtual screen size */
-	glViewport(0, 0, viddef.width, viddef.height);
+	/* only for the battlescape rendering */
+	if ((refdef.rendererFlags & RDF_NOWORLDMODEL) == 0) {
+		/* set 2D virtual screen size */
+		glViewport(0, 0, viddef.width, viddef.height);
+	}
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
