@@ -96,7 +96,7 @@ typedef struct memPool_s {
 
 /* functions */
 memPool_t *_Mem_CreatePool(const char *name, const char *fileName, const int fileLine) __attribute__ ((malloc));
-uint32_t _Mem_DeletePool(memPool_t *pool, const char *fileName, const int fileLine);
+void _Mem_DeletePool(memPool_t *pool, const char *fileName, const int fileLine);
 
 uint32_t _Mem_Free(void *ptr, const char *fileName, const int fileLine);
 uint32_t _Mem_FreeTag(memPool_t *pool, const int tagNum, const char *fileName, const int fileLine);

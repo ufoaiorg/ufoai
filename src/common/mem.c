@@ -109,21 +109,17 @@ memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fi
  * @sa _Mem_CreatePool
  * @sa _Mem_FreePool
  */
-uint32_t _Mem_DeletePool (struct memPool_s *pool, const char *fileName, const int fileLine)
+void _Mem_DeletePool (struct memPool_s *pool, const char *fileName, const int fileLine)
 {
-	uint32_t size;
-
 	if (!pool)
-		return 0;
+		return;
 
 	/* Release all allocated memory */
-	size = _Mem_FreePool(pool, fileName, fileLine);
+	_Mem_FreePool(pool, fileName, fileLine);
 
 	/* Simple, yes? */
 	pool->inUse = qfalse;
 	pool->name[0] = '\0';
-
-	return size;
 }
 
 
