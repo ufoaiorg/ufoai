@@ -88,12 +88,7 @@ typedef struct entity_s {
 int R_AddEntity(const entity_t *ent);
 entity_t *R_GetFreeEntity(void);
 entity_t *R_GetEntity(int id);
-
-/* getters and setters for origin */
-const vec3_t *R_EntityGetOrigin(const entity_t *ent);
-void R_EntitySetOrigin(entity_t *ent, const vec3_t ovec);
-void R_EntityCopyOrigin(entity_t *ent, const entity_t *other);
-void R_EntityAddToOrigin(entity_t *ent, const vec3_t offs);
-void R_EntitySubtractFromOrigin(entity_t *ent, const vec3_t offs);
+void R_EntitySetOrigin(entity_t *ent, const vec3_t origin);
+void R_EntityAddToOrigin(entity_t *ent, const vec3_t offset);
 
 #endif

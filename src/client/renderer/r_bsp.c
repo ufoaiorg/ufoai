@@ -92,22 +92,21 @@ qboolean R_CullSphere (const vec3_t centre, const float radius, const unsigned i
  */
 qboolean R_CullBspModel (const entity_t *e)
 {
-	vec3_t mins, maxs, entOrigin;
+	vec3_t mins, maxs;
 
 	/* no surfaces */
 	if (!e->model->bsp.nummodelsurfaces)
 		return qtrue;
 
-	VectorCopy(*R_EntityGetOrigin(e), entOrigin);
 	if (e->isOriginBrushModel) {
 		int i;
 		for (i = 0; i < 3; i++) {
-			mins[i] = entOrigin[i] - e->model->radius;
-			maxs[i] = entOrigin[i] + e->model->radius;
+			mins[i] = e->origin[i] - e->model->radius;
+			maxs[i] = e->origin[i] + e->model->radius;
 		}
 	} else {
-		VectorAdd(entOrigin, e->model->mins, mins);
-		VectorAdd(entOrigin, e->model->maxs, maxs);
+		VectorAdd(e->origin, e->model->mins, mins);
+		VectorAdd(e->origin, e->model->maxs, maxs);
 	}
 
 	return R_CullBox(mins, maxs);
@@ -181,23 +180,22 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 void R_DrawBrushModel (const entity_t * e)
 {
 	/* relative to viewpoint */
-	vec3_t modelorg, entOrigin;
+	vec3_t modelorg;
 
-	VectorCopy(*R_EntityGetOrigin(e), entOrigin);
 
 	/* set the relative origin, accounting for rotation if necessary */
-	VectorSubtract(refdef.viewOrigin, entOrigin, modelorg);
+	VectorSubtract(refdef.viewOrigin, e->origin, modelorg);
 	if (VectorNotEmpty(e->angles)) {
 		vec3_t rotationMatrix[3];
 		VectorCreateRotationMatrix(e->angles, rotationMatrix);
 		VectorRotatePoint(modelorg, rotationMatrix);
 	}
 
-	R_ShiftLights(entOrigin);
+	R_ShiftLights(e->origin);
 
 	glPushMatrix();
 
-	glTranslatef(entOrigin[0], entOrigin[1], entOrigin[2]);
+	glTranslatef(e->origin[0], e->origin[1], e->origin[2]);
 	glRotatef(e->angles[YAW], 0, 0, 1);
 	glRotatef(e->angles[PITCH], 0, 1, 0);
 	glRotatef(e->angles[ROLL], 1, 0, 0);

@@ -912,7 +912,7 @@ qboolean LE_BrushModelAction (le_t * le, entity_t * ent)
 		/* These cause the model to render correctly */
 		VectorCopy(ent->mins, le->mins);
 		VectorCopy(ent->maxs, le->maxs);
-		VectorCopy(*R_EntityGetOrigin(ent), le->origin);
+		VectorCopy(ent->origin, le->origin);
 		VectorCopy(ent->angles, le->angles);
 		break;
 	case ET_BREAKABLE:
