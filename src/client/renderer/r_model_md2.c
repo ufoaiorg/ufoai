@@ -407,7 +407,6 @@ static void R_ModLoadAliasMD2MeshIndexed (model_t *mod, const dMD2Model_t *md2, 
  */
 static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int bufSize, qboolean loadNormals)
 {
-	mAliasMesh_t *outMesh;
 	int version;
 	size_t size;
 
@@ -423,10 +422,9 @@ static void R_ModLoadAliasMD2Mesh (model_t *mod, const dMD2Model_t *md2, int buf
 	size = sizeof(mAliasMesh_t) * mod->alias.num_meshes;
 
 	if (mod->alias.meshes == NULL)
-		mod->alias.meshes = outMesh = (mAliasMesh_t *)Mem_PoolAlloc(size, vid_modelPool, 0);
+		mod->alias.meshes = (mAliasMesh_t *)Mem_PoolAlloc(size, vid_modelPool, 0);
 	else {
 		mod->alias.meshes = (mAliasMesh_t *)Mem_ReAlloc(mod->alias.meshes, size);
-		outMesh = &mod->alias.meshes[mod->alias.num_meshes - 1];
 	}
 
 	if (loadNormals) {
