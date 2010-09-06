@@ -329,15 +329,19 @@ static void SEQ_Render3D (sequenceContext_t *context)
 	refdef.rendererFlags |= RDF_NOWORLDMODEL;
 
 	/* use a relative fixed size */
-	viddef.viewWidth = VID_NORM_WIDTH;
-	viddef.viewHeight = VID_NORM_HEIGHT;
+	viddef.x = context->pos[0];
+	viddef.y = context->pos[1];
+	viddef.viewWidth = context->size[0];
+	viddef.viewHeight = context->size[1];
 
 	/* update refdef */
 	CL_ViewUpdateRenderData();
 
 	/** @todo Models are not at the right position (relative to the node position). Maybe R_SetupFrustum erase matrix. Not a trivialous task. */
 	/* render the world */
+	R_PushMatrix();
 	R_RenderFrame();
+	R_PopMatrix();
 }
 
 
