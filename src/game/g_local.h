@@ -437,11 +437,13 @@ qboolean G_IsLivingActor(const edict_t *ent) __attribute__((nonnull));
 void G_ActorSetClientAction(edict_t *actor, edict_t *ent);
 edict_t *G_ActorGetByUCN(const int ucn, const int team);
 void G_CheckForceEndRound(void);
-void G_ActorDieOrStun(edict_t *ent, edict_t *attacker);
+qboolean G_ActorDieOrStun(edict_t *ent, edict_t *attacker);
+int G_ActorCountAlive(int team);
 void G_ActorSetMaxs(edict_t* ent);
 void G_ActorGiveTimeUnits(edict_t *ent);
 void G_ActorSetTU(edict_t *ent, int tus);
 void G_ActorUseTU(edict_t *ent, int tus);
+void G_ActorModifyCounters(const edict_t *attacker, const edict_t *victim, int deltaAlive, int deltaKills, int deltaStuns);
 int G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player);
 void G_ClientTeamInfo(const player_t * player);
@@ -669,6 +671,7 @@ struct edict_s {
 
 	/** only used locally in game, not by server */
 
+	const edict_t *link;		/**< can be used to store another edict that e.g. interacts with the current one */
 	entity_type_t type;
 	int visflags;				/**< bitmask of teams that can see this edict */
 
@@ -679,11 +682,7 @@ struct edict_s {
 
 	int TU;						/**< remaining timeunits for actors or timeunits needed to 'use' this entity */
 	int HP;						/**< remaining healthpoints */
-	int STUN;					/**< The stun damage received in a mission.
-							 * @sa g_combat.c:G_Damage
-							 * @todo How is this handled after mission-end?
-							 * @todo How is this checked to determine the stun-state? (I've found HP<=STUN in g_combat.c:G_Damage)
-							 */
+	int STUN;					/**< The stun damage received in a mission. */
 	int morale;					/**< the current morale value */
 
 	int state;					/**< the player state - dead, shaken.... */

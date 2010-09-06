@@ -413,3 +413,16 @@ equipment multiplayer_initial
 //	item armour_power		2
 	item smokegrenade		3
 }
+
+equipment stun
+{
+	item flamer			8
+	item flamer_ammo	16
+	item assault		8
+	item assault_ammo	16
+	item medikit		2
+	item stunrod		1
+	item stungrenade	1
+	item fraggrenade	12
+	item plasmagrenade	30
+}

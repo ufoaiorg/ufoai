@@ -297,12 +297,76 @@ void G_ActorUseTU (edict_t *ent, int tus)
 	G_ActorSetTU(ent, ent->TU - tus);
 }
 
-static void G_ActorStun (edict_t * ent, const edict_t *attacker)
+static qboolean G_ActorStun (edict_t * ent, const edict_t *attacker)
 {
+	/* already dead or stunned? */
+	if (G_IsDead(ent))
+		return qfalse;
+
 	/* no other state should be set here */
 	ent->state = STATE_STUN;
-	if (attacker != NULL)
-		level.num_stuns[attacker->team][ent->team]++;
+	ent->link = attacker;
+
+	G_ActorModifyCounters(attacker, ent, -1, 0, 1);
+
+	return qtrue;
+}
+
+void G_ActorModifyCounters (const edict_t *attacker, const edict_t *victim, int deltaAlive, int deltaKills, int deltaStuns)
+{
+	const int spawned = level.num_spawned[victim->team];
+	byte *alive = level.num_alive;
+
+	alive[victim->team] += deltaAlive;
+	if (alive[victim->team] > spawned)
+		gi.Error("alive counter out of sync");
+
+	if (attacker != NULL) {
+		if (deltaStuns != 0) {
+			byte *stuns = level.num_stuns[attacker->team];
+			stuns[victim->team] += deltaStuns;
+			if (stuns[victim->team] > spawned)
+				gi.Error("stuns counter out of sync");
+		}
+
+		if (deltaKills != 0) {
+			byte *kills = level.num_kills[attacker->team];
+			kills[victim->team] += deltaKills;
+			if (kills[victim->team] > spawned)
+				gi.Error("kills counter out of sync");
+		}
+	}
+#if 0
+	{
+		int i;
+
+		Com_Printf("num_spawned: %i\n", spawned);
+
+		if (attacker)
+		for (i = 0; i < MAX_TEAMS; i++) {
+			int j;
+
+			if (i == victim->team) {
+				Com_Printf("^2num_alive (team %i): %i\n", i, level.num_alive[i]);
+			} else {
+				Com_Printf("num_alive (team %i): %i\n", i, level.num_alive[i]);
+			}
+
+			for (j = 0; j < MAX_TEAMS; j++) {
+				if (j == victim->team) {
+					Com_Printf("^2num_kills (team %i killed  %i): %i\n", i, j, level.num_kills[i][j]);
+					Com_Printf("^2num_stuns (team %i stunned %i): %i\n", i, j, level.num_stuns[i][j]);
+				} else if (i == attacker->team) {
+					Com_Printf("^3num_kills (team %i killed  %i): %i\n", i, j, level.num_kills[i][j]);
+					Com_Printf("^3num_stuns (team %i stunned %i): %i\n", i, j, level.num_stuns[i][j]);
+				} else {
+					Com_Printf("num_kills (team %i killed  %i): %i\n", i, j, level.num_kills[i][j]);
+					Com_Printf("num_stuns (team %i stunned %i): %i\n", i, j, level.num_stuns[i][j]);
+				}
+			}
+		}
+	}
+#endif
 }
 
 static void G_ActorRevitalise (edict_t *ent)
@@ -311,8 +375,7 @@ static void G_ActorRevitalise (edict_t *ent)
 		G_RemoveStunned(ent);
 		/** @todo have a look at the morale value of
 		 * the ent and maybe get into rage or panic? */
-		level.num_alive[ent->team]++;
-
+		G_ActorModifyCounters(ent->link, ent, 1, 0, -1);
 		G_GetFloorItems(ent);
 	}
 	G_ActorSetMaxs(ent);
@@ -333,13 +396,24 @@ void G_ActorCheckRevitalise (edict_t *ent)
 	}
 }
 
-static void G_ActorDie (edict_t * ent, const edict_t *attacker)
+static qboolean G_ActorDie (edict_t * ent, const edict_t *attacker)
 {
+	const qboolean stunned = G_IsStunned(ent);
+
 	G_RemoveStunned(ent);
+
+	if (G_IsDead(ent))
+		return qfalse;
+
 	G_SetState(ent, 1 + rand() % MAX_DEATH);
-	if (attacker != NULL)
-		level.num_kills[attacker->team][ent->team]++;
 	G_ActorSetMaxs(ent);
+
+	if (stunned)
+		G_ActorModifyCounters(attacker, ent, 0, 1, -1);
+	else
+		G_ActorModifyCounters(attacker, ent, -1, 1, 0);
+
+	return qtrue;
 }
 
 /**
@@ -350,14 +424,21 @@ static void G_ActorDie (edict_t * ent, const edict_t *attacker)
  * @todo Discuss whether stunned actor should really drop everything to floor. Maybe
  * it should drop only what he has in hands? Stunned actor can wake later during mission.
  */
-void G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
+qboolean G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 {
-	if (ent->HP == 0)
-		G_ActorDie(ent, attacker);
-	else
-		G_ActorStun(ent, attacker);
+	qboolean state;
 
-	level.num_alive[ent->team]--;
+	if (ent->HP == 0)
+		state = G_ActorDie(ent, attacker);
+	else
+		state = G_ActorStun(ent, attacker);
+
+	/* no state change performed? */
+	if (!state) {
+		Com_Printf("State wasn't changed\n");
+		return qfalse;
+	}
+
 	/* send death */
 	G_EventActorDie(ent);
 
@@ -376,6 +457,8 @@ void G_ActorDieOrStun (edict_t * ent, edict_t *attacker)
 
 	/* unlink the floor container */
 	FLOOR(ent) = NULL;
+
+	return qtrue;
 }
 
 /**

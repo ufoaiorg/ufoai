@@ -1098,7 +1098,6 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 	if (!ent)
 		return NULL;
 
-	level.num_alive[ent->team]++;
 	level.num_spawned[ent->team]++;
 	ent->pnum = player->num;
 	ent->chr.fieldSize = actorSize;
@@ -1119,6 +1118,7 @@ edict_t* G_ClientGetFreeSpawnPointForActorSize (const player_t *player, const ac
 		ent->nextthink = 1;
 	}
 
+	G_ActorModifyCounters(NULL, ent, 1, 0, 0);
 	G_TouchTriggers(ent);
 
 	return ent;

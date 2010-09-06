@@ -208,12 +208,13 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
 	default:
 		return;
 	}
-	if (target->HP <= 0) {
-		scoreMission->kills[type]++;
-		scoreGlobal->kills[type]++;
-	} else {
+
+	if (G_IsStunned(target)) {
 		scoreMission->stuns[type]++;
 		scoreGlobal->stuns[type]++;
+	} else if (G_IsDead(target)) {
+		scoreMission->kills[type]++;
+		scoreGlobal->kills[type]++;
 	}
 }
 
@@ -411,16 +412,16 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	if (target->HP == 0 || target->HP <= target->STUN) {
 		G_SendStats(target);
 
-		G_PrintActorStats(target, attacker, fd);
+		if (G_ActorDieOrStun(target, attacker)) {
+			G_PrintActorStats(target, attacker, fd);
 
-		G_ActorDieOrStun(target, attacker);
+			/* apply morale changes */
+			if (mor_panic->integer)
+				G_Morale(ML_DEATH, target, attacker, damage);
 
-		/* apply morale changes */
-		if (mor_panic->integer)
-			G_Morale(ML_DEATH, target, attacker, damage);
-
-		/* Update number of killed/stunned actors for this attacker. */
-		G_UpdateCharacterBodycount(attacker, fd, target);
+			/* Update number of killed/stunned actors for this attacker. */
+			G_UpdateCharacterBodycount(attacker, fd, target);
+		}
 	} else {
 		target->chr.minHP = min(target->chr.minHP, target->HP);
 		if (damage > 0) {
