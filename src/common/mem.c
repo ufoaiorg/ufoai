@@ -157,15 +157,14 @@ static void _Mem_CheckSentinels (void *ptr, const char *fileName, const int file
 /**
  * @sa _Mem_FreePool
  */
-uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
+void _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 {
 	memBlock_t *mem;
 	memBlock_t *search;
 	memBlock_t **prev;
-	uint32_t size;
 
 	if (!ptr)
-		return 0;
+		return;
 
 	_Mem_CheckSentinels(ptr, fileName, fileLine);
 
@@ -176,7 +175,6 @@ uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 	/* Decrement counters */
 	mem->pool->blockCount--;
 	mem->pool->byteCount -= mem->size;
-	size = mem->size;
 
 	/* De-link it */
 	prev = &mem->pool->blocks[(uintptr_t)mem % MEM_HASH];
@@ -196,7 +194,6 @@ uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 
 	/* Free it */
 	free(mem);
-	return size;
 }
 
 /**
