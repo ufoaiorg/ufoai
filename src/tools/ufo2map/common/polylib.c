@@ -230,7 +230,6 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 	vec_t dists[MAX_POINTS_ON_WINDING + 4];
 	int sides[MAX_POINTS_ON_WINDING + 4];
 	int counts[3];
-	vec_t dot;
 	int i, j;
 	winding_t *f, *b;
 	int maxpts;
@@ -239,16 +238,14 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 
 	/* determine sides for each point */
 	for (i = 0; i < in->numpoints; i++) {
-		dot = DotProduct(in->p[i], normal);
-		dot -= dist;
+		const vec_t dot = DotProduct(in->p[i], normal) - dist;
 		dists[i] = dot;
 		if (dot > epsilon)
 			sides[i] = SIDE_FRONT;
 		else if (dot < -epsilon)
 			sides[i] = SIDE_BACK;
-		else {
+		else
 			sides[i] = SIDE_ON;
-		}
 		counts[sides[i]]++;
 	}
 	sides[i] = sides[0];
@@ -274,6 +271,7 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 	for (i = 0; i < in->numpoints; i++) {
 		const vec_t *p1 = in->p[i];
 		const vec_t *p2;
+		vec_t dot;
 		vec3_t mid;
 
 		if (sides[i] == SIDE_ON) {
@@ -307,7 +305,7 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 			else if (normal[j] == -1)
 				mid[j] = -dist;
 			else
-				mid[j] = p1[j] + dot * (p2[j]-p1[j]);
+				mid[j] = p1[j] + dot * (p2[j] - p1[j]);
 		}
 
 		VectorCopy(mid, f->p[f->numpoints]);
@@ -329,7 +327,6 @@ void ChopWindingInPlace (winding_t **inout, const vec3_t normal, const vec_t dis
 	vec_t dists[MAX_POINTS_ON_WINDING + 4];
 	int sides[MAX_POINTS_ON_WINDING + 4];
 	int counts[3];
-	vec_t dot;
 	int i, j;
 	vec3_t mid;
 	winding_t *f;
@@ -340,8 +337,7 @@ void ChopWindingInPlace (winding_t **inout, const vec3_t normal, const vec_t dis
 
 	/* determine sides for each point */
 	for (i = 0; i < in->numpoints; i++) {
-		dot = DotProduct(in->p[i], normal);
-		dot -= dist;
+		const vec_t dot = DotProduct(in->p[i], normal) - dist;
 		dists[i] = dot;
 		if (dot > epsilon)
 			sides[i] = SIDE_FRONT;
@@ -371,6 +367,7 @@ void ChopWindingInPlace (winding_t **inout, const vec3_t normal, const vec_t dis
 	for (i = 0; i < in->numpoints; i++) {
 		const vec_t *p1 = in->p[i];
 		const vec_t *p2;
+		vec_t dot;
 
 		if (sides[i] == SIDE_ON) {
 			VectorCopy(p1, f->p[f->numpoints]);

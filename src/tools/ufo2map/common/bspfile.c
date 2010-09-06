@@ -86,7 +86,7 @@ static void SwapBSPFile (void)
 {
 	int i, j, k;
 
-	/* models	 */
+	/* models */
 	for (i = 0; i < curTile->nummodels; i++) {
 		dBspModel_t *d = &curTile->models[i];
 
@@ -103,36 +103,40 @@ static void SwapBSPFile (void)
 
 	/* vertexes */
 	for (i = 0; i < curTile->numvertexes; i++) {
+		dBspVertex_t *vertexes = &curTile->vertexes[i];
 		for (j = 0; j < 3; j++)
-			curTile->vertexes[i].point[j] = LittleFloat(curTile->vertexes[i].point[j]);
+			vertexes->point[j] = LittleFloat(vertexes->point[j]);
 	}
 
 	/* planes */
 	for (i = 0; i < curTile->numplanes; i++) {
+		dBspPlane_t *plane = &curTile->planes[i];
 		for (j = 0; j < 3; j++)
-			curTile->planes[i].normal[j] = LittleFloat(curTile->planes[i].normal[j]);
-		curTile->planes[i].dist = LittleFloat(curTile->planes[i].dist);
-		curTile->planes[i].type = LittleLong(curTile->planes[i].type);
+			plane->normal[j] = LittleFloat(plane->normal[j]);
+		plane->dist = LittleFloat(plane->dist);
+		plane->type = LittleLong(plane->type);
 	}
 
 	/* texinfos */
 	for (i = 0; i < curTile->numtexinfo; i++) {
+		dBspTexinfo_t *texinfo = &curTile->texinfo[i];
 		for (j = 0; j < 2; j++)
 			for (k = 0; k < 4; k++)
-				curTile->texinfo[i].vecs[j][k] = LittleFloat(curTile->texinfo[i].vecs[j][k]);
-		curTile->texinfo[i].surfaceFlags = LittleLong(curTile->texinfo[i].surfaceFlags);
-		curTile->texinfo[i].value = LittleLong(curTile->texinfo[i].value);
+				texinfo->vecs[j][k] = LittleFloat(texinfo->vecs[j][k]);
+		texinfo->surfaceFlags = LittleLong(texinfo->surfaceFlags);
+		texinfo->value = LittleLong(texinfo->value);
 	}
 
 	/* faces */
 	for (i = 0; i < curTile->numfaces; i++) {
-		curTile->faces[i].texinfo = LittleShort(curTile->faces[i].texinfo);
-		curTile->faces[i].planenum = LittleShort(curTile->faces[i].planenum);
-		curTile->faces[i].side = LittleShort(curTile->faces[i].side);
+		dBspSurface_t *face = &curTile->faces[i];
+		face->texinfo = LittleShort(face->texinfo);
+		face->planenum = LittleShort(face->planenum);
+		face->side = LittleShort(face->side);
 		for (j = 0; j < LIGHTMAP_MAX; j++)
-			curTile->faces[i].lightofs[j] = LittleLong(curTile->faces[i].lightofs[j]);
-		curTile->faces[i].firstedge = LittleLong(curTile->faces[i].firstedge);
-		curTile->faces[i].numedges = LittleShort(curTile->faces[i].numedges);
+			face->lightofs[j] = LittleLong(face->lightofs[j]);
+		face->firstedge = LittleLong(face->firstedge);
+		face->numedges = LittleShort(face->numedges);
 	}
 
 	/* nodes */
@@ -206,11 +210,11 @@ static void SwapBSPFile (void)
 
 static dBspHeader_t *header;
 
-static int CopyLump (int lumpIdx, void *dest, int size)
+static uint32_t CopyLump (int lumpIdx, void *dest, size_t size)
 {
 	const lump_t *lump = &header->lumps[lumpIdx];
-	const int length = lump->filelen;
-	const int ofs = lump->fileofs;
+	const uint32_t length = lump->filelen;
+	const uint32_t ofs = lump->fileofs;
 
 	if (length == 0)
 		return 0;

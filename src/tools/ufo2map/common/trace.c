@@ -42,27 +42,25 @@ void MakeTracingNodes (int levels)
 	int i;
 
 	/* Release any memory we have for existing tnodes, just in case. */
-	if (curTile->tnodes)
-		CloseTracingNodes();
+	CloseTracingNodes();
 
-	size = (curTile->numnodes + 1) * sizeof(tnode_t);
-	/* 32 byte align the structs */
-	size = (size + 31) &~ 31;
+	size = (curTile->numnodes + 1) * sizeof(*tnode);
 	/* allocate memory for the tnodes structure */
 	curTile->tnodes = (tnode_t *)Mem_Alloc(size);
 	tnode = curTile->tnodes;
 	curTile->numtheads = 0;
 
 	for (i = 0; i < levels; i++) {
-		if (!curTile->models[i].numfaces && i != LEVEL_LIGHTCLIP && i != LEVEL_ACTORCLIP)
+		const dBspModel_t *model = &curTile->models[i];
+		if (!model->numfaces && i != LEVEL_LIGHTCLIP && i != LEVEL_ACTORCLIP)
 			continue;
-		if (curTile->models[i].headnode < 0)	/* empty models have headnode -1 */
+		if (model->headnode < 0)	/* empty models have headnode -1 */
 			continue;
 		curTile->thead[curTile->numtheads] = tnode - curTile->tnodes;
 		curTile->theadlevel[curTile->numtheads] = i;
 		curTile->numtheads++;
 		assert(curTile->numtheads < LEVEL_MAX);
-		TR_BuildTracingNode_r(curTile, &tnode, curTile->models[i].headnode, i);
+		TR_BuildTracingNode_r(curTile, &tnode, model->headnode, i);
 	}
 }
 
