@@ -229,26 +229,23 @@ uint32_t _Mem_FreeTag (struct memPool_s *pool, const int tagNum, const char *fil
  * @sa _Mem_CreatePool
  * @sa _Mem_DeletePool
  */
-uint32_t _Mem_FreePool (struct memPool_s *pool, const char *fileName, const int fileLine)
+void _Mem_FreePool (struct memPool_s *pool, const char *fileName, const int fileLine)
 {
 	memBlock_t *mem, *next;
-	uint32_t size;
 	int j = 0;
 
 	if (!pool)
-		return 0;
+		return;
 
-	size = 0;
 	for (j = 0; j < MEM_HASH; j++) {
 		for (mem = pool->blocks[j]; mem; mem = next) {
 			next = mem->next;
-			size += _Mem_Free(mem->memPointer, fileName, fileLine);
+			_Mem_Free(mem->memPointer, fileName, fileLine);
 		}
 	}
 
 	assert(pool->blockCount == 0);
 	assert(pool->byteCount == 0);
-	return size;
 }
 
 

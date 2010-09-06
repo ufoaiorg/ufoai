@@ -100,7 +100,7 @@ void _Mem_DeletePool(memPool_t *pool, const char *fileName, const int fileLine);
 
 uint32_t _Mem_Free(void *ptr, const char *fileName, const int fileLine);
 uint32_t _Mem_FreeTag(memPool_t *pool, const int tagNum, const char *fileName, const int fileLine);
-uint32_t _Mem_FreePool(memPool_t *pool, const char *fileName, const int fileLine);
+void _Mem_FreePool(memPool_t *pool, const char *fileName, const int fileLine);
 void* _Mem_Alloc(size_t size, qboolean zeroFill, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine) __attribute__ ((malloc));
 void* _Mem_ReAlloc(void *ptr, size_t size, const char *fileName, const int fileLine);
 
