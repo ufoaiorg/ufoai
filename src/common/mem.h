@@ -121,6 +121,6 @@ void _Mem_TouchGlobal(const char *fileName, const int fileLine);
 void* _Mem_AllocatedInPool(memPool_t *pool, const void *pointer);
 
 void Mem_Init(void);
-uint32_t Mem_Shutdown(void);
+void Mem_Shutdown(void);
 
 #endif
