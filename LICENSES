@@ -1645,6 +1645,8 @@ base/models/pilots/male/body.md2 | GNU General Public License 2.0 or later | Wil
 base/models/pilots/male/body.tag | GNU General Public License 2.0 or later | Willem Sitters
 base/models/pilots/male/head01.jpg | GNU General Public License 2.0 or later | Willem Sitters
 base/models/pilots/male/head01.md2 | GNU General Public License 2.0 or later | Willem Sitters
+base/models/sequence/earth.jpg | Public Domain |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
+base/models/sequence/earth.md2 | GNU General Public License 2.0 or later | Nate Wright
 base/models/soldiers/female/body.anm | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/female/body.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/soldiers/female/body.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
