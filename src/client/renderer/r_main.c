@@ -131,6 +131,10 @@ void R_SetupFrustum (void)
 	/* build the transformation matrix for the given view angles */
 	AngleVectors(refdef.viewAngles, r_locals.forward, r_locals.right, r_locals.up);
 
+#if 0
+	/* if we are not drawing world model, we are on the UI code. It break the default UI SCISSOR */
+	/* Anyway we should merge that code into R_CleanupDepthBuffer (with some rework), it looks better
+
 	/* clear out the portion of the screen that the NOWORLDMODEL defines */
 	if (refdef.rendererFlags & RDF_NOWORLDMODEL) {
 		glEnable(GL_SCISSOR_TEST);
@@ -139,7 +143,7 @@ void R_SetupFrustum (void)
 		R_CheckError();
 		glDisable(GL_SCISSOR_TEST);
 	}
-
+#endif
 	if (r_isometric->integer) {
 		/* 4 planes of a cube */
 		VectorScale(r_locals.right, +1, r_locals.frustum[0].normal);
