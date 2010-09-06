@@ -403,27 +403,6 @@ uint32_t _Mem_PoolSize (struct memPool_s *pool)
 }
 
 
-uint32_t _Mem_TagSize (struct memPool_s *pool, const int tagNum)
-{
-	memBlock_t *mem;
-	uint32_t size;
-	int j = 0;
-
-	if (!pool)
-		return 0;
-
-	size = 0;
-	for (j = 0; j < MEM_HASH; j++) {
-		for (mem = pool->blocks[j]; mem; mem = mem->next) {
-			if (mem->tagNum == tagNum)
-				size += mem->size;
-		}
-	}
-
-	return size;
-}
-
-
 uint32_t _Mem_ChangeTag (struct memPool_s *pool, const int tagFrom, const int tagTo)
 {
 	memBlock_t *mem;

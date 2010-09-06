@@ -85,7 +85,6 @@ typedef struct memPool_s {
 #define Mem_PoolStrDupTo(in,out,pool,tagNum)			_Mem_PoolStrDupTo((in),(out),(pool),(tagNum),__FILE__,__LINE__)
 #define Mem_PoolStrDup(in,pool,tagNum)					_Mem_PoolStrDup((in),(pool),(tagNum),__FILE__,__LINE__)
 #define Mem_PoolSize(pool)								_Mem_PoolSize((pool))
-#define Mem_TagSize(pool,tagNum)						_Mem_TagSize((pool),(tagNum))
 #define Mem_ChangeTag(pool,tagFrom,tagTo)				_Mem_ChangeTag((pool),(tagFrom),(tagTo))
 
 #define Mem_CheckPoolIntegrity(pool)					_Mem_CheckPoolIntegrity((pool),__FILE__,__LINE__)
@@ -108,7 +107,6 @@ char* _Mem_PoolStrDupTo(const char *in, char **out, memPool_t *pool, const int t
 void *_Mem_PoolDup(const void *in, size_t size, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine);
 char* _Mem_PoolStrDup(const char *in, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine) __attribute__ ((malloc));
 uint32_t _Mem_PoolSize(memPool_t *pool);
-uint32_t _Mem_TagSize(memPool_t *pool, const int tagNum);
 uint32_t _Mem_ChangeTag(memPool_t *pool, const int tagFrom, const int tagTo);
 
 void _Mem_CheckPoolIntegrity(memPool_t *pool, const char *fileName, const int fileLine);
