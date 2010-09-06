@@ -104,7 +104,6 @@ void _Mem_FreePool(memPool_t *pool, const char *fileName, const int fileLine);
 void* _Mem_Alloc(size_t size, qboolean zeroFill, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine) __attribute__ ((malloc));
 void* _Mem_ReAlloc(void *ptr, size_t size, const char *fileName, const int fileLine);
 
-size_t Mem_Size(const void *ptr);
 char* _Mem_PoolStrDupTo(const char *in, char **out, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine);
 void *_Mem_PoolDup(const void *in, size_t size, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine);
 char* _Mem_PoolStrDup(const char *in, memPool_t *pool, const int tagNum, const char *fileName, const int fileLine) __attribute__ ((malloc));

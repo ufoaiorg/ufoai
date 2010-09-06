@@ -345,15 +345,6 @@ MISC FUNCTIONS
 ==============================================================================*/
 
 /**
- * @param[in] ptr The ptr to get the allocated size from
- */
-size_t Mem_Size (const void *ptr)
-{
-	const memBlock_t *mem = (const memBlock_t *)((const byte *)ptr - sizeof(memBlock_t));
-	return mem->size;
-}
-
-/**
  * @brief Saves a string to client hunk
  * @param[in] in String to store in the given pool
  * @param[out] out The location where you want the pool pointer to be stored
