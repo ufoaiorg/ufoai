@@ -73,6 +73,7 @@ typedef struct memPool_s {
 #define Mem_Free(ptr)									_Mem_Free((ptr),__FILE__,__LINE__)
 #define Mem_FreeTag(pool,tagNum)						_Mem_FreeTag((pool),(tagNum),__FILE__,__LINE__)
 #define Mem_FreePool(pool)								_Mem_FreePool((pool),__FILE__,__LINE__)
+#define Mem_AllocType(type)								((type*)Mem_Alloc(sizeof(type)))
 #define Mem_Alloc(size)									_Mem_Alloc((size),qtrue,com_genericPool,0,__FILE__,__LINE__)
 #define Mem_AllocExt(size,zeroFill)						_Mem_Alloc((size),(zeroFill),com_genericPool,0,__FILE__,__LINE__)
 #define Mem_PoolAlloc(size,pool,tagNum)					_Mem_Alloc((size),qtrue,(pool),(tagNum),__FILE__,__LINE__)

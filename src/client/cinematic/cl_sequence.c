@@ -532,7 +532,7 @@ qboolean SEQ_Render (sequenceContext_t *context)
 sequenceContext_t *SEQ_AllocContext (void)
 {
 	sequenceContext_t *context;
-	context = (sequenceContext_t *) Mem_Alloc(sizeof(*context));
+	context = Mem_AllocType(sequenceContext_t);
 	return context;
 }
 

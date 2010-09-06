@@ -43,7 +43,7 @@ static portal_t *AllocPortal (void)
 	if (c_active_portals > c_peak_portals)
 		c_peak_portals = c_active_portals;
 
-	return (portal_t *)Mem_Alloc(sizeof(portal_t));
+	return Mem_AllocType(portal_t);
 }
 
 /**

@@ -142,7 +142,7 @@ static void BuildPatch (int fn, winding_t *w)
 	patch_t *patch;
 	dBspPlane_t *plane;
 
-	patch = (patch_t *)Mem_Alloc(sizeof(*patch));
+	patch = Mem_AllocType(patch_t);
 
 	face_patches[fn] = patch;
 
@@ -291,7 +291,7 @@ static void SubdividePatch(patch_t *patch)
 	ClipWindingEpsilon(w, split, dist, ON_EPSILON, &o1, &o2);
 
 	/* create a new patch */
-	newp = (patch_t *)Mem_Alloc(sizeof(*newp));
+	newp = Mem_AllocType(patch_t);
 
 	newp->next = patch->next;
 	patch->next = newp;

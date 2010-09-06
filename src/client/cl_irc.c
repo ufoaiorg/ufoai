@@ -1323,7 +1323,7 @@ static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 	}
 
 	/* create message node */
-	m = (irc_bucket_message_t*) Mem_Alloc(sizeof(*m));
+	m = Mem_AllocType(irc_bucket_message_t);
 	n = irc_bucket.first_msg;
 	if (irc_bucket.message_size + 1 <= messageBucketSize && irc_bucket.character_size + msg_len <= characterBucketSize) {
 		/** @todo strip high bits - or unprintable chars */

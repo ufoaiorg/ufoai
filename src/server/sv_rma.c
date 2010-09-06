@@ -1058,7 +1058,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
 
 	SDL_LockMutex(mapLock);
 	for (i = 0; i < threadno; i++) {
-		maps[i] = (mapInfo_t *)Mem_Alloc(sizeof(*map));
+		maps[i] = Mem_AllocType(mapInfo_t);
 		memcpy(maps[i], map, sizeof(*map));
 		threads[i] = SDL_CreateThread(&SV_AssemblyThread, (void*) maps[i]);
 	}
@@ -1198,7 +1198,7 @@ mapInfo_t* SV_AssembleMap (const char *name, const char *assembly, char *asmMap,
 	mAssembly_t *mAsm;
 	mapInfo_t *map;
 
-	map = (mapInfo_t *)Mem_Alloc(sizeof(*map));
+	map = Mem_AllocType(mapInfo_t);
 	Q_strncpyz(map->name, name, sizeof(map->name));
 
 	SV_ParseUMP(name, map, qfalse);

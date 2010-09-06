@@ -300,7 +300,7 @@ void BuildLights (void)
 				continue;
 
 			numlights[config.compile_for_day]++;
-			l = (light_t *)Mem_Alloc(sizeof(*l));
+			l = Mem_AllocType(light_t);
 
 			VectorCopy(p->origin, l->origin);
 
@@ -334,7 +334,7 @@ void BuildLights (void)
 		}
 
 		numlights[config.compile_for_day]++;
-		l = (light_t *)Mem_Alloc(sizeof(*l));
+		l = Mem_AllocType(light_t);
 
 		GetVectorForKey(e, "origin", l->origin);
 
