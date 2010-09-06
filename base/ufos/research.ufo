@@ -4168,7 +4168,7 @@ tech rs_alien_bloodspider_autopsy
 
 	mdl	"aliens/bloodspider/bloodspider"
 
-	image techs/bloodspider_dead
+	image techs/bloodspider_autopsy
 }
 
 tech rs_weapon_bloodspider
