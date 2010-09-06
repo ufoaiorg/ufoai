@@ -116,6 +116,7 @@ window editor {
 	}
 
 	func onInit {
+		*cvar:scr_showcursor = 1
 		*cvar:mn_sys_editor_node = ""
 		*cvar:mn_sys_editor_window = ""
 		cmd "echo \"Use mn_extract to write your changes to a file\";"
