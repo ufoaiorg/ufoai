@@ -666,7 +666,6 @@ static void Master_Shutdown (void)
  */
 void SV_UserinfoChanged (client_t * cl)
 {
-	const char *val;
 	unsigned int i;
 
 	/* call prog code to allow overrides */
@@ -674,16 +673,14 @@ void SV_UserinfoChanged (client_t * cl)
 	svs.ge->ClientUserinfoChanged(cl->player, cl->userinfo);
 	SDL_mutexV(svs.serverMutex);
 
-	/* name for C code */
-	strncpy(cl->name, Info_ValueForKey(cl->userinfo, "cl_name"), sizeof(cl->name) - 1);
+	/* name of the player */
+	Q_strncpyz(cl->name, Info_ValueForKey(cl->userinfo, "cl_name"), sizeof(cl->name));
 	/* mask off high bit */
 	for (i = 0; i < sizeof(cl->name); i++)
 		cl->name[i] &= 127;
 
 	/* msg command */
-	val = Info_ValueForKey(cl->userinfo, "cl_msg");
-	if (val[0] != '\0')
-		cl->messagelevel = atoi(val);
+	cl->messagelevel = Info_IntegerForKey(cl->userinfo, "cl_msg");
 
 	Com_DPrintf(DEBUG_SERVER, "SV_UserinfoChanged: Changed userinfo for player %s\n", cl->name);
 }

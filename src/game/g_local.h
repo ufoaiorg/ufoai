@@ -453,7 +453,7 @@ void G_ClientPrintf(const player_t * player, int printlevel, const char *fmt, ..
 void G_ResetClientData(void);
 
 void G_ClientCommand(player_t * player);
-void G_ClientUserinfoChanged(player_t * player, char *userinfo);
+void G_ClientUserinfoChanged(player_t * player, const char *userinfo);
 qboolean G_ClientBegin(player_t * player);
 void G_ClientSpawn(player_t * player);
 qboolean G_ClientConnect(player_t * player, char *userinfo, size_t userinfoSize);

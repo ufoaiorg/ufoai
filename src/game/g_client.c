@@ -939,7 +939,7 @@ int G_ClientGetTeamNum (const player_t * player)
 int G_ClientGetTeamNumPref (const player_t * player)
 {
 	assert(player);
-	return atoi(Info_ValueForKey(player->pers.userinfo, "cl_teamnum"));
+	return Info_IntegerForKey(player->pers.userinfo, "cl_teamnum");
 }
 
 /**
@@ -1406,34 +1406,25 @@ void G_ClientSpawn (player_t * player)
  * @brief called whenever the player updates a userinfo variable.
  * @note The game can override any of the settings in place (forcing skins or names, etc) before copying it off.
  */
-void G_ClientUserinfoChanged (player_t * player, char *userinfo)
+void G_ClientUserinfoChanged (player_t * player, const char *userinfo)
 {
-	const char *s;
 	const qboolean alreadyReady = player->isReady;
 
 	/* check for malformed or illegal info strings */
 	if (!Info_Validate(userinfo))
-		Q_strncpyz(userinfo, "\\cl_name\\badinfo", sizeof(userinfo));
+		userinfo = "\\cl_name\\badinfo";
 
 	/* set name */
-	s = Info_ValueForKey(userinfo, "cl_name");
-	Q_strncpyz(player->pers.netname, s, sizeof(player->pers.netname));
-
+	Q_strncpyz(player->pers.netname, Info_ValueForKey(userinfo, "cl_name"), sizeof(player->pers.netname));
 	Q_strncpyz(player->pers.userinfo, userinfo, sizeof(player->pers.userinfo));
-
-	s = Info_ValueForKey(userinfo, "cl_autostand");
-	player->autostand = atoi(s);
-
-	s = Info_ValueForKey(userinfo, "cl_reactionleftover");
-	player->reactionLeftover = atoi(s);
-
-	s = Info_ValueForKey(userinfo, "cl_ready");
-	player->isReady = atoi(s);
+	player->autostand = Info_IntegerForKey(userinfo, "cl_autostand");
+	player->reactionLeftover = Info_IntegerForKey(userinfo, "cl_reactionleftover");
+	player->isReady = Info_IntegerForKey(userinfo, "cl_ready");
 
 	/* send the updated config string */
 	gi.ConfigString(CS_PLAYERNAMES + player->num, "%s", player->pers.netname);
 
-	/* try to update to the prefered team */
+	/* try to update to the preferred team */
 	if (!G_MatchIsRunning()) {
 		/* if the player is marked as ready he can't change his team */
 		if (!alreadyReady || !player->isReady) {

@@ -242,7 +242,7 @@ typedef struct {
 	qboolean (EXPORT *ClientConnect) (player_t * client, char *userinfo, size_t userinfoSize);
 	qboolean (EXPORT *ClientBegin) (player_t * client);
 	void (EXPORT *ClientSpawn) (player_t * client);
-	void (EXPORT *ClientUserinfoChanged) (player_t * client, char *userinfo);
+	void (EXPORT *ClientUserinfoChanged) (player_t * client, const char *userinfo);
 	void (EXPORT *ClientDisconnect) (player_t * client);
 	void (EXPORT *ClientCommand) (player_t * client);
 

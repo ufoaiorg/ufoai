@@ -56,7 +56,7 @@ static qboolean CL_ProcessPingReply (serverList_t *server, const char *msg)
 	if (!msg)
 		return qfalse;
 
-	if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "sv_protocol"))) {
+	if (PROTOCOL_VERSION != Info_IntegerForKey(msg, "sv_protocol")) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ProcessPingReply: Protocol mismatch\n");
 		return qfalse;
 	}
@@ -76,9 +76,9 @@ static qboolean CL_ProcessPingReply (serverList_t *server, const char *msg)
 		sizeof(server->mapname));
 	Q_strncpyz(server->gametype, Info_ValueForKey(msg, "sv_gametype"),
 		sizeof(server->gametype));
-	server->clients = atoi(Info_ValueForKey(msg, "clients"));
-	server->sv_dedicated = atoi(Info_ValueForKey(msg, "sv_dedicated"));
-	server->sv_maxclients = atoi(Info_ValueForKey(msg, "sv_maxclients"));
+	server->clients = Info_IntegerForKey(msg, "clients");
+	server->sv_dedicated = Info_IntegerForKey(msg, "sv_dedicated");
+	server->sv_maxclients = Info_IntegerForKey(msg, "sv_maxclients");
 	return qtrue;
 }
 
