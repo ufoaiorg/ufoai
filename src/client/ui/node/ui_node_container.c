@@ -5,7 +5,6 @@
  * is a soldier slot. For example, the left arm, the bag pack... The second is the base
  * item list. And the last it a floor container used into the battlescape. The node name
  * itself is used to know the container role.
- * @todo Move base container list outside
  * @todo Move container role outside of the node name
  * @todo Link soldier container with a soldier
  * @todo Link base container with a base
@@ -699,44 +698,16 @@ static void UI_ContainerNodeDrawTooltip (uiNode_t *node, int x, int y)
 }
 
 /**
- * @brief Try to autoplace an item at a position
- * when right-click was used in the inventory.
+ * @brief Try to autoplace an item from a container.
  * @param[in] node The context node
- * @param[in] mouseX X mouse coordinates.
- * @param[in] mouseY Y mouse coordinates.
- * @todo None generic function. Not sure we can do it in a generic way
+ * @param[in] ic An item from the node container
+ * @todo We should use an item ID, and get the item inside the function, to avoid wrong uses.
  */
-static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
+void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 {
-	int sel, target;
-#if 0	/* see bellow #1 */
-	int id;
-#endif
-	invList_t *ic;
-	int fromX, fromY;
+	int target;
 	uiNode_t *targetNode;
 	qboolean ammoChanged = qfalse;
-
-	if (!ui_inventory)
-		return;
-
-	/* don't allow this in tactical missions */
-	if (CL_BattlescapeRunning())
-		return;
-
-	sel = cl_selected->integer;
-	if (sel < 0)
-		return;
-
-	assert(EXTRADATA(node).container);
-
-	ic = UI_ContainerNodeGetItemAtPosition(node, mouseX, mouseY, &fromX, &fromY);
-	Com_DPrintf(DEBUG_CLIENT, "UI_ContainerNodeAutoPlace: item %i/%i selected from scrollable container.\n", fromX, fromY);
-	if (!ic)
-		return;
-#if 0	/* see bellow #1 */
-	id = ic->item.t->idx;
-#endif
 
 	/* Right click: automatic item assignment/removal. */
 	if (EXTRADATA(node).container->id != csi.idEquip) {
@@ -854,6 +825,39 @@ static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
 		if (node != ammoNode && ammoNode->onChange)
 			UI_ExecuteEventActions(ammoNode, ammoNode->onChange);
 	}
+}
+
+/**
+ * @brief Try to autoplace an item at a position
+ * when right-click was used in the inventory.
+ * @param[in] node The context node
+ * @param[in] mouseX X mouse coordinates.
+ * @param[in] mouseY Y mouse coordinates.
+ */
+static void UI_ContainerNodeAutoPlace (uiNode_t* node, int mouseX, int mouseY)
+{
+	int sel;
+	invList_t *ic;
+	int fromX, fromY;
+
+	if (!ui_inventory)
+		return;
+
+	/* don't allow this in tactical missions */
+	if (CL_BattlescapeRunning())
+		return;
+
+	sel = cl_selected->integer;
+	if (sel < 0)
+		return;
+
+	assert(EXTRADATA(node).container);
+
+	ic = UI_ContainerNodeGetItemAtPosition(node, mouseX, mouseY, &fromX, &fromY);
+	Com_DPrintf(DEBUG_CLIENT, "UI_ContainerNodeAutoPlace: item %i/%i selected from scrollable container.\n", fromX, fromY);
+	if (!ic)
+		return;
+	UI_ContainerNodeAutoPlaceItem(node, ic);
 
 	/* Update display of scroll buttons. */
 	if (UI_IsScrollContainerNode(node))
