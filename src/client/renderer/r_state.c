@@ -672,11 +672,11 @@ void R_Setup3D (void)
 	glLoadIdentity();
 	if ((refdef.rendererFlags & RDF_NOWORLDMODEL) != 0) {
 		/* center image into the viewport */
-		float x = viddef.x + (viddef.viewWidth - VID_NORM_WIDTH) / 2.0;
-		float y = viddef.y + (viddef.viewHeight - VID_NORM_HEIGHT) / 2.0;
+		float x = viddef.x + (viddef.viewWidth - VID_NORM_WIDTH) / 2.0 - (viddef.virtualWidth - VID_NORM_WIDTH) / 2.0;
+		float y = viddef.y + (viddef.viewHeight - VID_NORM_HEIGHT) / 2.0 - (viddef.virtualHeight - VID_NORM_HEIGHT) / 2.0;
 		/* @todo magic coef, i dont know where it come from */
-		x *=  2.0 / (float)VID_NORM_WIDTH;
-		y *=  2.0 / (float)VID_NORM_HEIGHT;
+		x *=  2.0 / (float) viddef.virtualWidth;
+		y *=  2.0 / (float) viddef.virtualHeight;
 		glTranslatef(x, -y, 0);
 	}
 	MYgluPerspective(4.0, MAX_WORLD_WIDTH);
