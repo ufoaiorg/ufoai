@@ -1,0 +1,18 @@
+
+window example_sequence
+{
+	{
+		pos			"100 100"
+		size		"500 525"
+		dragbutton	true
+		closebutton	true
+		image		"ui/popup_alpha_tile"
+		string		"Example of sequence"
+	}
+
+	sequence view {
+		pos "25 50"
+		size "450 450"
+		src "view"
+	}
+}
