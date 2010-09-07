@@ -318,7 +318,6 @@ uiNode_t *UI_GetContainerNodeByContainerIDX (const uiNode_t* const parent, const
 {
 	const invDef_t* const container = INVDEF(index);
 	uiNode_t *containerNode = UI_GetNode(parent, container->name);
-
 	return containerNode;
 }
 
@@ -813,16 +812,16 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 	}
 
 	/* Run onChange events */
-	targetNode = UI_GetContainerNodeByContainerIDX(node->root, target);
+	targetNode = UI_GetContainerNodeByContainerIDX(node->parent, target);
 	if (node->onChange)
 		UI_ExecuteEventActions(node, node->onChange);
-	if (node != targetNode && targetNode->onChange)
+	if (targetNode != NULL && node != targetNode && targetNode->onChange)
 		UI_ExecuteEventActions(targetNode, targetNode->onChange);
 	/* Also call onChange for equip_ammo if ammo moved
 	Maybe there's a better way to do this? */
 	if (INV_IsAmmo(ic->item.t) || ammoChanged) {
 		uiNode_t *ammoNode = UI_GetNode(node->root, "equip_ammo");
-		if (node != ammoNode && ammoNode->onChange)
+		if (ammoNode != NULL && node != ammoNode && ammoNode->onChange)
 			UI_ExecuteEventActions(ammoNode, ammoNode->onChange);
 	}
 }
