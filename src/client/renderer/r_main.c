@@ -132,8 +132,8 @@ void R_SetupFrustum (void)
 	AngleVectors(refdef.viewAngles, r_locals.forward, r_locals.right, r_locals.up);
 
 #if 0
-	/* if we are not drawing world model, we are on the UI code. It break the default UI SCISSOR */
-	/* Anyway we should merge that code into R_CleanupDepthBuffer (with some rework), it looks better
+	/* if we are not drawing world model, we are on the UI code. It break the default UI SCISSOR
+	 * Anyway we should merge that code into R_CleanupDepthBuffer (with some rework), it looks better */
 
 	/* clear out the portion of the screen that the NOWORLDMODEL defines */
 	if (refdef.rendererFlags & RDF_NOWORLDMODEL) {
