@@ -116,16 +116,22 @@
 	material tex_misc/sign_parkbld
 	specular 2.0
 	hardness 2.0
+	bump 3.0
+	parallax 3.0
+	glowscale 0.1
 }
 # Parking Garage Sign (animated side)
 {
 	material tex_misc/sign_parkblda
 	specular 2.0
 	hardness 2.0
+	bump 3.0
+	parallax 3.0
+	glowscale 2.0
 	{
 		texture tex_misc/sign_parkblda0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		anim 4 8.0
+		anim 8 10.0
 	}
 }
 
