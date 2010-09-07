@@ -156,6 +156,9 @@ static void TextureBrowser_scrollChanged (void* data, gdouble value);
 void TextureBrowser_hideUnusedExport (const BoolImportCallback& importer);
 typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_hideUnusedExport> TextureBrowserHideUnusedExport;
 
+void TextureBrowser_hideInvalidExport (const BoolImportCallback& importer);
+typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_hideInvalidExport> TextureBrowserHideInvalidExport;
+
 void TextureBrowser_showShadersExport (const BoolImportCallback& importer);
 typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_showShadersExport> TextureBrowserShowShadersExport;
 
@@ -176,6 +179,7 @@ class TextureBrowser
 		GtkWidget* m_scr_win_tags;
 
 		ToggleItem m_hideunused_item;
+		ToggleItem m_hideinvalid_item;
 		ToggleItem m_showshaders_item;
 
 		guint m_sizeHandler;
@@ -197,6 +201,7 @@ class TextureBrowser
 		// if true, the texture window will only display in-use shaders
 		// if false, all the shaders in memory are displayed
 		bool m_hideUnused;
+		bool m_hideInvalid;
 		bool m_rmbSelected;
 		// If true, textures are resized to an uniform size when displayed in the texture browser.
 		// If false, textures are displayed in proportion to their pixel size.
@@ -237,12 +242,18 @@ class TextureBrowser
 		}
 
 		TextureBrowser () :
-			m_texture_scroll(0), m_hideunused_item(TextureBrowserHideUnusedExport()), m_showshaders_item(
-					TextureBrowserShowShadersExport()), m_heightChanged(true), m_originInvalid(true),
-					m_scrollAdjustment(TextureBrowser_scrollChanged, this), color_textureback(0.25f, 0.25f, 0.25f),
-					m_mouseWheelScrollIncrement(64), m_textureScale(50), m_showShaders(true), m_showTextureScrollbar(
-							true), m_hideUnused(false), m_rmbSelected(false), m_resizeTextures(true),
-					m_uniformTextureSize(128)
+			m_texture_scroll(0),
+				m_hideunused_item(TextureBrowserHideUnusedExport()),
+				m_hideinvalid_item(TextureBrowserHideInvalidExport()),
+				m_showshaders_item(TextureBrowserShowShadersExport()),
+				m_heightChanged(true), m_originInvalid(true),
+				m_scrollAdjustment(TextureBrowser_scrollChanged, this),
+				color_textureback(0.25f, 0.25f, 0.25f),
+				m_mouseWheelScrollIncrement(64), m_textureScale(50),
+				m_showShaders(true), m_showTextureScrollbar(true),
+				m_hideUnused(false), m_hideInvalid(false),
+				m_rmbSelected(false), m_resizeTextures(true),
+				m_uniformTextureSize(128)
 		{
 		}
 };
@@ -354,7 +365,7 @@ static void Texture_NextPos (TextureBrowser& textureBrowser, TextureLayout& layo
 }
 
 // if texture_showinuse jump over non in-use textures
-static bool Texture_IsShown (IShader* shader, bool show_shaders, bool hideUnused)
+static bool Texture_IsShown (IShader* shader, bool show_shaders, bool hideUnused, bool hideInvalid)
 {
 	if (!shader_equal_prefix(shader->getName(), "textures/"))
 		return false;
@@ -363,6 +374,9 @@ static bool Texture_IsShown (IShader* shader, bool show_shaders, bool hideUnused
 		return false;
 
 	if (hideUnused && !shader->IsInUse())
+		return false;
+
+	if (hideInvalid && !shader->IsValid())
 		return false;
 
 	if (!shader_equal_prefix(shader_get_textureName(shader->getName()), g_TextureBrowser_currentDirectory.c_str()))
@@ -391,7 +405,7 @@ static void TextureBrowser_evaluateHeight (TextureBrowser& textureBrowser)
 		for (GlobalShaderSystem().beginActiveShadersIterator(); !GlobalShaderSystem().endActiveShadersIterator(); GlobalShaderSystem().incrementActiveShadersIterator()) {
 			IShader* shader = GlobalShaderSystem().dereferenceActiveShadersIterator();
 
-			if (!Texture_IsShown(shader, textureBrowser.m_showShaders, textureBrowser.m_hideUnused))
+			if (!Texture_IsShown(shader, textureBrowser.m_showShaders, textureBrowser.m_hideUnused, textureBrowser.m_hideInvalid))
 				continue;
 
 			int x, y;
@@ -506,6 +520,7 @@ static bool texture_name_ignore (const std::string& name)
 }
 
 static void TextureBrowser_SetHideUnused (TextureBrowser& textureBrowser, bool hideUnused);
+static void TextureBrowser_SetHideInvalid (TextureBrowser& textureBrowser, bool hideInvalid);
 
 class TextureCategoryLoadShader
 {
@@ -581,6 +596,7 @@ static void TextureBrowser_ShowDirectory (TextureBrowser& textureBrowser, const 
 
 	// we'll display the newly loaded textures + all the ones already in use
 	TextureBrowser_SetHideUnused(textureBrowser, false);
+	TextureBrowser_SetHideInvalid(textureBrowser, false);
 }
 
 static bool TextureBrowser_hideUnused (void);
@@ -590,6 +606,14 @@ void TextureBrowser_hideUnusedExport (const BoolImportCallback& importer)
 	importer(TextureBrowser_hideUnused());
 }
 typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_hideUnusedExport> TextureBrowserHideUnusedExport;
+
+static bool TextureBrowser_hideInvalid (void);
+
+void TextureBrowser_hideInvalidExport (const BoolImportCallback& importer)
+{
+	importer(TextureBrowser_hideInvalid());
+}
+typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_hideInvalidExport> TextureBrowserHideInvalidExport;
 
 void TextureBrowser_showShadersExport (const BoolImportCallback& importer)
 {
@@ -606,6 +630,20 @@ void TextureBrowser_SetHideUnused (TextureBrowser& textureBrowser, bool hideUnus
 	}
 
 	textureBrowser.m_hideunused_item.update();
+
+	TextureBrowser_heightChanged(textureBrowser);
+	textureBrowser.m_originInvalid = true;
+}
+
+void TextureBrowser_SetHideInvalid (TextureBrowser& textureBrowser, bool hideInvalid)
+{
+	if (hideInvalid) {
+		textureBrowser.m_hideInvalid = true;
+	} else {
+		textureBrowser.m_hideInvalid = false;
+	}
+
+	textureBrowser.m_hideinvalid_item.update();
 
 	TextureBrowser_heightChanged(textureBrowser);
 	textureBrowser.m_originInvalid = true;
@@ -629,7 +667,7 @@ static void TextureBrowser_Focus (TextureBrowser& textureBrowser, const std::str
 	for (GlobalShaderSystem().beginActiveShadersIterator(); !GlobalShaderSystem().endActiveShadersIterator(); GlobalShaderSystem().incrementActiveShadersIterator()) {
 		IShader* shader = GlobalShaderSystem().dereferenceActiveShadersIterator();
 
-		if (!Texture_IsShown(shader, textureBrowser.m_showShaders, textureBrowser.m_hideUnused))
+		if (!Texture_IsShown(shader, textureBrowser.m_showShaders, textureBrowser.m_hideUnused, textureBrowser.m_hideInvalid))
 			continue;
 
 		int x, y;
@@ -667,7 +705,7 @@ static IShader* Texture_At (TextureBrowser& textureBrowser, int mx, int my)
 	for (GlobalShaderSystem().beginActiveShadersIterator(); !GlobalShaderSystem().endActiveShadersIterator(); GlobalShaderSystem().incrementActiveShadersIterator()) {
 		IShader* shader = GlobalShaderSystem().dereferenceActiveShadersIterator();
 
-		if (!Texture_IsShown(shader, textureBrowser.m_showShaders, textureBrowser.m_hideUnused))
+		if (!Texture_IsShown(shader, textureBrowser.m_showShaders, textureBrowser.m_hideUnused, textureBrowser.m_hideInvalid))
 			continue;
 
 		int x, y;
@@ -754,7 +792,7 @@ static void Texture_Draw (TextureBrowser& textureBrowser)
 	for (GlobalShaderSystem().beginActiveShadersIterator(); !GlobalShaderSystem().endActiveShadersIterator(); GlobalShaderSystem().incrementActiveShadersIterator()) {
 		IShader* shader = GlobalShaderSystem().dereferenceActiveShadersIterator();
 
-		if (!Texture_IsShown(shader, textureBrowser.m_showShaders, textureBrowser.m_hideUnused))
+		if (!Texture_IsShown(shader, textureBrowser.m_showShaders, textureBrowser.m_hideUnused, textureBrowser.m_hideInvalid))
 			continue;
 
 		int x, y;
@@ -827,7 +865,7 @@ static void Texture_Draw (TextureBrowser& textureBrowser)
 					glEnd();
 					glEnable(GL_TEXTURE_2D);
 				}
-				if (!shader->IsValid()) {
+				if (!textureBrowser.m_hideInvalid && !shader->IsValid()) {
 					glColor3f(1, 0, 0);
 					glDisable(GL_TEXTURE_2D);
 					glBegin(GL_LINE_LOOP);
@@ -1025,12 +1063,26 @@ static bool TextureBrowser_hideUnused (void)
 	return g_TextureBrowser.m_hideUnused;
 }
 
+static bool TextureBrowser_hideInvalid (void)
+{
+	return g_TextureBrowser.m_hideInvalid;
+}
+
 void TextureBrowser_ToggleHideUnused (void)
 {
 	if (g_TextureBrowser.m_hideUnused) {
 		TextureBrowser_SetHideUnused(g_TextureBrowser, false);
 	} else {
 		TextureBrowser_SetHideUnused(g_TextureBrowser, true);
+	}
+}
+
+void TextureBrowser_ToggleHideInvalid (void)
+{
+	if (g_TextureBrowser.m_hideInvalid) {
+		TextureBrowser_SetHideInvalid(g_TextureBrowser, false);
+	} else {
+		TextureBrowser_SetHideInvalid(g_TextureBrowser, true);
 	}
 }
 
@@ -1120,6 +1172,7 @@ static GtkMenuItem* TextureBrowser_constructViewMenu (GtkMenu* menu)
 		menu_tearoff(menu);
 
 	create_check_menu_item_with_mnemonic(menu, _("Hide _Unused"), "ShowInUse");
+	create_check_menu_item_with_mnemonic(menu, _("Hide Invalid"), "ShowInvalid");
 
 	menu_separator(menu);
 	create_menu_item_with_mnemonic(menu, _("Show All"), "ShowAllTextures");
@@ -1383,6 +1436,8 @@ void TextureBrowser_Construct (void)
 	GlobalCommands_insert("RefreshShaders", FreeCaller<RefreshShaders> ());
 	GlobalToggles_insert("ShowInUse", FreeCaller<TextureBrowser_ToggleHideUnused> (), ToggleItem::AddCallbackCaller(
 			GlobalTextureBrowser().m_hideunused_item), Accelerator('U'));
+	GlobalToggles_insert("ShowInvalid", FreeCaller<TextureBrowser_ToggleHideInvalid> (), ToggleItem::AddCallbackCaller(
+			GlobalTextureBrowser().m_hideinvalid_item));
 	GlobalRadiant().commandInsert("ShowAllTextures", FreeCaller<TextureBrowser_showAll> (), Accelerator('A',
 			(GdkModifierType) GDK_CONTROL_MASK));
 	GlobalCommands_insert("ToggleBackground", FreeCaller<WXY_BackgroundSelect> ());
