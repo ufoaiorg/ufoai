@@ -91,7 +91,7 @@ qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, i
  * @param[in] srcContainer Pointer to inventorydef where to search ammo.
  * @param[in] destContainer Pointer to inventorydef where the weapon is.
  */
-void INV_LoadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
+qboolean INV_LoadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
 {
 	int equipType;
 	invList_t *ic = NULL;
@@ -106,7 +106,9 @@ void INV_LoadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *srcCon
 		i++;
 	}
 	if (ic)
-		INV_MoveItem(inv, destContainer, weapon->x, weapon->y, srcContainer, ic);
+		return INV_MoveItem(inv, destContainer, weapon->x, weapon->y, srcContainer, ic);
+
+	return qfalse;
 }
 
 /**
