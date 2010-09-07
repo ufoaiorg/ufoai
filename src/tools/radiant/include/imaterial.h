@@ -74,6 +74,10 @@ class MaterialShader: public IShader
 
 		void SetInUse (bool inUse);
 
+		bool IsValid () const = 0;
+
+		void SetIsValid (bool bIsValid) = 0;
+
 		// get the shader flags
 		int getFlags () const;
 

@@ -76,6 +76,11 @@ static const std::string g_texturePrefix = "textures/";
 
 static Callback g_ActiveShadersChangedNotify;
 
+// Maps of names to corresponding GtkTreeIter* nodes, for both intermediate
+// paths and explicitly presented paths
+typedef std::map<std::string, bool> LicensesMap;
+static LicensesMap licensesMap;
+
 class ShaderPoolContext
 {
 };
@@ -276,6 +281,17 @@ class CShader: public IShader
 		BlendFunc m_blendFunc;
 
 		bool m_bInUse;
+		bool m_bIsValid;
+
+		bool searchLicense()
+		{
+			// Look up candidate in the map and return true if found
+			LicensesMap::iterator it = licensesMap.find(m_template.m_textureName);
+			if (it != licensesMap.end())
+				return true;
+
+			return false;
+		}
 
 	public:
 		CShader (const ShaderDefinition& definition) :
@@ -321,6 +337,15 @@ class CShader: public IShader
 		const char* getName () const
 		{
 			return m_Name.c_str();
+		}
+		bool IsValid () const
+		{
+			return m_bIsValid;
+		}
+		void SetIsValid (bool bIsValid)
+		{
+			m_bIsValid = bIsValid;
+			g_ActiveShadersChangedNotify();
 		}
 		bool IsInUse () const
 		{
@@ -371,6 +396,8 @@ class CShader: public IShader
 				m_notfound = m_pTexture;
 				m_pTexture = GlobalTexturesCache().capture("textures/tex_common/nodraw");
 			}
+
+			SetIsValid(searchLicense());
 		}
 
 		void unrealise ()
@@ -579,12 +606,55 @@ CShader* Try_Shader_ForName (const char* name)
 	return pShader;
 }
 
+
+void ParseLicensesFile (Tokeniser& tokeniser, const std::string& filename)
+{
+	for(;;) {
+		std::string token = tokeniser.getToken();
+		if (token.empty())
+			break;
+		if (tokeniser.getLine() > 1) {
+			tokeniser.ungetToken();
+			break;
+		}
+	}
+	std::size_t lastLine = 1;
+	for (;;) {
+		std::string token = tokeniser.getToken();
+		if (token.empty())
+			break;
+
+		if (string::contains(token, "base/textures/") && lastLine != tokeniser.getLine()) {
+			licensesMap[os::stripExtension(token.substr(5))] = true;
+			lastLine = tokeniser.getLine();
+		}
+	}
+}
+
+static void LoadLicenses (const std::string& filename)
+{
+	const std::string& appPath = GlobalRadiant().getAppPath();
+	std::string fullpath = appPath + filename;
+
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(fullpath));
+	if (file) {
+		g_message("Parsing licenses file '%s'\n", fullpath.c_str());
+
+		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
+		ParseLicensesFile(*tokeniser, fullpath);
+	} else {
+		g_warning("Unable to read licenses '%s'\n", fullpath.c_str());
+	}
+}
+
 #include "stream/filestream.h"
 
 void Shaders_Load ()
 {
 	LoadShaderFile("shaders/common.shader");
 	LoadShaderFile("shaders/textures.shader");
+	/** @todo add config option */
+	LoadLicenses("../LICENSES");
 }
 
 // will free all GL binded qtextures and shaders

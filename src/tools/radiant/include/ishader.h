@@ -69,6 +69,10 @@ class IShader
 
 		virtual void SetInUse (bool bInUse) = 0;
 
+		virtual bool IsValid () const = 0;
+
+		virtual void SetIsValid (bool bIsValid) = 0;
+
 		/**
 		 * get the editor flags (QER_TRANS)
 		 */

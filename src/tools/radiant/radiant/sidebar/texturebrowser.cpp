@@ -827,6 +827,17 @@ static void Texture_Draw (TextureBrowser& textureBrowser)
 					glEnd();
 					glEnable(GL_TEXTURE_2D);
 				}
+				if (!shader->IsValid()) {
+					glColor3f(1, 0, 0);
+					glDisable(GL_TEXTURE_2D);
+					glBegin(GL_LINE_LOOP);
+					glVertex2i(x - 3, y + 3 - TextureBrowser_fontHeight(textureBrowser));
+					glVertex2i(x - 3, y - nHeight - 3 - TextureBrowser_fontHeight(textureBrowser));
+					glVertex2i(x + 3 + nWidth, y - nHeight - 3 - TextureBrowser_fontHeight(textureBrowser));
+					glVertex2i(x + 3 + nWidth, y + 3 - TextureBrowser_fontHeight(textureBrowser));
+					glEnd();
+					glEnable(GL_TEXTURE_2D);
+				}
 			}
 
 			// Draw the texture
