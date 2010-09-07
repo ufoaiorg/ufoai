@@ -515,6 +515,10 @@ static bool texture_name_ignore (const std::string& name)
 {
 	if (string::contains(name, "_nm"))
 		return true;
+	if (string::contains(name, "_gm"))
+		return true;
+	if (string::contains(name, "_sm"))
+		return true;
 
 	return string::contains(name, "tex_terrain") && !string::contains(name, "dummy");
 }
