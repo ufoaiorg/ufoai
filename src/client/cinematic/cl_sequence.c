@@ -778,7 +778,7 @@ static int SEQ_Execute2Dobj (sequenceContext_t *context, const char *name, const
  * @sa CL_SequenceFind2D
  * @sa CL_SequenceFindEnt
  */
-static int SEQ_ExecuteRemove (sequenceContext_t *context, const char *name, const char *data)
+static int SEQ_ExecuteDelete (sequenceContext_t *context, const char *name, const char *data)
 {
 	seqEnt_t *se;
 	seq2D_t *s2d;
@@ -827,6 +827,7 @@ static const char *seqCmdName[] = {
 	"music",
 	"sound",
 	"rem",
+	"delete",
 	"animspeed",
 	"cmd"
 };
@@ -846,7 +847,8 @@ static sequenceHandler_t seqCmdFunc[] = {
 	SEQ_Execute2Dobj,
 	SEQ_ExecuteMusic,
 	SEQ_ExecuteSound,
-	SEQ_ExecuteRemove,
+	SEQ_ExecuteDelete,
+	SEQ_ExecuteDelete,
 	SEQ_ExecuteAnimSpeed,
 	SEQ_ExecuteCommand
 };
