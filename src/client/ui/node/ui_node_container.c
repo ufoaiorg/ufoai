@@ -820,6 +820,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 	/* Also call onChange for equip_ammo if ammo moved
 	Maybe there's a better way to do this? */
 	if (INV_IsAmmo(ic->item.t) || ammoChanged) {
+		/** @todo hard coded node name, remove it when it is possible */
 		uiNode_t *ammoNode = UI_GetNode(node->root, "equip_ammo");
 		if (ammoNode != NULL && node != ammoNode && ammoNode->onChange)
 			UI_ExecuteEventActions(ammoNode, ammoNode->onChange);
