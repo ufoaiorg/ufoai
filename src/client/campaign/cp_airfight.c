@@ -897,6 +897,7 @@ qboolean AIRFIGHT_LoadXML (mxml_node_t *parent)
 
 		if ((attackingAircraft = mxml_GetNode(node, SAVE_AIRFIGHT_ATTACKINGAIRCRAFT))) {
 			if (mxml_GetBool(attackingAircraft, SAVE_AIRFIGHT_ISUFO, qfalse))
+				/** @todo 0 as default might be incorrect */
 				projectile->attackingAircraft = UFO_GetByIDX(mxml_GetInt(attackingAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, 0));
 			else
 				projectile->attackingAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(attackingAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, AIRCRAFT_INVALID));
@@ -905,6 +906,7 @@ qboolean AIRFIGHT_LoadXML (mxml_node_t *parent)
 		}
 		if ((aimedAircraft = mxml_GetNode(node, SAVE_AIRFIGHT_AIMEDAIRCRAFT))) {
 			if (mxml_GetBool(aimedAircraft, SAVE_AIRFIGHT_ISUFO, qfalse))
+				/** @todo 0 as default might be incorrect */
 				projectile->aimedAircraft = UFO_GetByIDX(mxml_GetInt(aimedAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, 0));
 			else
 				projectile->aimedAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(aimedAircraft, SAVE_AIRFIGHT_AIRCRAFTIDX, AIRCRAFT_INVALID));
