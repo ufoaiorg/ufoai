@@ -68,7 +68,7 @@ HTML = u"""<html>
 
 <body>
 <h1>Licenses in UFO:AI (<!-- TITLE -->)</h1>
-Please note that the information are extracted from the svn tags.<br />
+Please note that the information are extracted from <a href="http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=blob;f=LICENSES">LICENSES</a> file.<br />
 Warning: the statics/graphs might be wrong since it would be to expensive to get information if a enrty was a directory in the past or not.
 <br />
 State as in revision <!-- REVISION -->.
@@ -309,9 +309,9 @@ class Analysis(object):
         # name and links
         content += meta.fileName
         content += ' ('
-        content += '<a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/%s" title="Download">download</a>' % meta.fileName
+        content += '<a href="http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=blob;f=%s" title="Download">download</a>' % meta.fileName
         content += ', '
-        content += '<a href="http://ufoai.svn.sourceforge.net/viewvc/ufoai/ufoai/trunk/%s?view=log" title="History">history</a>' % meta.fileName
+        content += '<a href="http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=history;f=%s" title="History">history</a>' % meta.fileName
         content += ')'
 
         # author

@@ -56,7 +56,7 @@ class Dir(dict):
         return self[this]
 
     def _files_r(self):
-        """Return all files rekursivly"""
+        """Return all files recursivly"""
         re = self.files
         for d in self.dirs:
             re.extend(d.files_r)
@@ -93,25 +93,22 @@ def get_licenses(dir):
 # read data
 import subprocess as sp
 
-def get(prop):
-    p = sp.Popen(['svn', 'propget', 'svn:'+prop, BASE_PATH, '-R'], stdout=sp.PIPE)
-    raw = [i.split(' - ', 1) for i in p.stdout.read().split('\n') if i != '']
+def getLicenseInfo():
+    p = sp.Popen(['cat', BASE_PATH+'/LICENSES'], stdout=sp.PIPE)
+    raw = [i.split(' | ') for i in p.stdout.read().split('\n') if i != '']
 
     for row in raw:
-        if len(row) == 2:
-            fname, value = row
-        else:
-            # more line prop!
-            setattr(fobj, prop, getattr(fobj, prop) + '\n' + row[0])
+        filename, license, author, source = row
+        if not os.path.isfile(filename):
             continue
-        if not os.path.isfile(fname):
-            continue
-        fname = fname[len(BASE_PATH)+1:]
-        fobj = DATA.find(fname)
+        filename = filename[len(BASE_PATH)+1:]
+        fobj = DATA.find(filename)
         if fobj == None:
-            fobj = File(fname)
-            DATA.insert(fname, fobj)
-        setattr(fobj, prop, value.decode('utf-8'))
+            fobj = File(filename)
+            DATA.insert(filename, fobj)
+        setattr(fobj, 'license', license)
+        setattr(fobj, 'copyright', author)
+        setattr(fobj, 'source', source)
 
 
 DATA = Dir()
@@ -152,9 +149,7 @@ def update():
     os.path.walk(BASE_PATH, walk, thumbnail)
 
     # collect data
-    get('license')
-    get('source')
-    get('copyright')
+    getLicenseInfo()
 
     # get files that dont have an svn:* prop
     # "svn ls" is pretty slow, so I collect the file that
