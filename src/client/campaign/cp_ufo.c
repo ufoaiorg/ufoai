@@ -32,6 +32,33 @@
 
 static const float MAX_DETECTING_RANGE = 25.0f; /**< range to detect and fire at phalanx aircraft */
 
+
+/**
+ * @brief Iterates through the UFOs
+ * @param[in] lastUFO Pointer of the aircraft to iterate from. call with NULL to get the first one.
+ */
+aircraft_t* UFO_GetNext (aircraft_t *lastUFO)
+{
+	aircraft_t* endOfUFOs = &ccs.ufos[ccs.numUFOs];
+	aircraft_t* ufo;
+
+	if (!ccs.numUFOs)
+		return NULL;
+
+	if (!lastUFO)
+		return ccs.ufos;
+	assert(lastUFO >= ccs.ufos);
+	assert(lastUFO < endOfUFOs);
+
+	ufo = lastUFO;
+
+	ufo++;
+	if (ufo >= endOfUFOs)
+		return NULL;
+	else
+		return ufo;
+}
+
 /**
  * @brief returns the UFO on the geoscape with a certain index
  * @param[in] idx Index of the UFO
