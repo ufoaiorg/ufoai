@@ -649,21 +649,17 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
  */
 void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingType)
 {
-	baseCapacities_t capacity;
-	aircraft_t *awayAircraft[MAX_AIRCRAFT];
-	int numAwayAircraft, randomNum;
-	aircraft_t *aircraft;
-
-	memset(awayAircraft, 0, sizeof(awayAircraft));
+	baseCapacities_t capacity = B_GetCapacityFromBuildingType(buildingType);
+	linkedList_t *awayAircraft = NULL;
+	int numAwayAircraft;
+	int randomNum;
+	aircraft_t *aircraft = NULL;;
 
 	/* destroy aircraft only if there's not enough hangar (hangar is already destroyed) */
-	capacity = B_GetCapacityFromBuildingType(buildingType);
-	if (base->capacities[capacity].cur <= base->capacities[capacity].max)
+	if (B_FreeCapacity(base, capacity) >= 0)
 		return;
 
-	numAwayAircraft = 0;
 	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
-	aircraft = NULL;
 	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 		const int aircraftSize = aircraft->size;
 		switch (aircraftSize) {
@@ -679,30 +675,30 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 			Com_Error(ERR_DROP, "B_RemoveAircraftExceedingCapacity: Unknown type of aircraft '%i'", aircraftSize);
 		}
 
-		/** @todo move aircraft being transfered to the destBase */
-
 		/* Only aircraft in hangar will be destroyed by hangar destruction */
 		if (!AIR_IsAircraftInBase(aircraft)) {
 			if (AIR_IsAircraftOnGeoscape(aircraft))
-				awayAircraft[numAwayAircraft++] = aircraft;
+				LIST_AddPointer(&awayAircraft, (void*)aircraft);
 			continue;
 		}
 
 		/* Remove aircraft and aircraft items, but do not fire employees */
 		AIR_DeleteAircraft(aircraft);
-		awayAircraft[numAwayAircraft++] = NULL;
+		LIST_Delete(&awayAircraft);
 		return;
 	}
+	numAwayAircraft = LIST_Count(awayAircraft);
 
 	if (!numAwayAircraft)
 		return;
 	/* All aircraft are away from base, pick up one and change it's homebase */
 	randomNum = rand() % numAwayAircraft;
-	if (!CL_DisplayHomebasePopup(awayAircraft[randomNum], qfalse)) {
+	if (!CL_DisplayHomebasePopup((aircraft_t*)LIST_GetByIdx(awayAircraft, randomNum), qfalse)) {
 		/* No base can hold this aircraft */
 		/** @todo Better solution? let it crash due to technical difficulties and spawn a rescue mission? */
-		AIR_DeleteAircraft(awayAircraft[randomNum]);
+		AIR_DeleteAircraft((aircraft_t*)LIST_GetByIdx(awayAircraft, randomNum));
 	}
+	LIST_Delete(&awayAircraft);
 }
 
 /**
@@ -1290,7 +1286,6 @@ void B_SetUpBase (base_t* base, vec2_t pos)
 	base->idx = B_GetBaseIDX(base);
 	base->founded = qtrue;
 	base->baseStatus = BASE_WORKING;
-	LIST_Delete(&base->aircraft);
 
 	/* setup for first base */
 	if (ccs.campaignStats.basesBuilt == 0)
@@ -2224,7 +2219,6 @@ static void B_BaseList_f (void)
 		Com_Printf("Misc  Lab Quar Stor Work Hosp Hang Cont SHgr UHgr SUHg Powr  Cmd AMtr Entr Miss Lasr  Rdr Team\n");
 		for (j = 0; j < MAX_BUILDING_TYPE; j++)
 			Com_Printf("  %i  ", B_GetBuildingStatus(base, j));
-		Com_Printf("\nBase aircraft %i\n", LIST_Count(base->aircraft));
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 			Com_Printf("Base aircraft-team %i\n", AIR_GetTeamSize(aircraft));
 		Com_Printf("Base pos %.02f:%.02f\n", base->pos[0], base->pos[1]);

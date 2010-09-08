@@ -223,9 +223,6 @@ typedef struct base_s {
 	 */
 	qboolean hasBuilding[MAX_BUILDING_TYPE];
 
-	/** All aircraft in this base
-	 * @todo move aircraft out from base structure */
-	linkedList_t *aircraft;
 	aircraft_t *aircraftCurrent;		/**< Currently selected aircraft in _this base_. (i.e. an entry in base_t->aircraft). */
 
 	baseStatus_t baseStatus; /**< the current base status */

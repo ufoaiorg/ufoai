@@ -432,8 +432,8 @@ typedef struct ccs_s {
 	baseTemplate_t baseTemplates[MAX_BASETEMPLATES];
 	int numBaseTemplates;
 
-	/* used for unique aircraft ids */
-	int numAircraft;
+	/* == aircraft == */
+	linkedList_t *aircraft;
 
 	/* == Alien bases == */
 	linkedList_t *alienBases;
@@ -506,7 +506,6 @@ typedef struct ccs_s {
 	/* we will allow only one active production at the same time for each base */
 	production_queue_t productions[MAX_BASES];
 
-	/* == Aircraft == */
 	/* UFOs on geoscape */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
 	int numUFOs;	/**< The current amount of UFOS on the geoscape. */

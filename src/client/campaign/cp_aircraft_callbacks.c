@@ -233,9 +233,6 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 		id++;
 	}
 
-	/* the aircraft must really be in this base */
-	assert(id != LIST_Count(base->aircraft));
-
 	base->aircraftCurrent = aircraft;
 	Cvar_SetValue("mn_aircraft_id", id);
 

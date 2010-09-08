@@ -1597,26 +1597,17 @@ campaign_t* CL_GetCampaign (const char* name)
 void CL_ResetSinglePlayerData (void)
 {
 	int i;
+	aircraft_t *craft = NULL;
 
 	/** @todo subsystems should have Init/Shutdown functions like callbacks have and do these cleanups for themselves */
 	/** @note Most of them has InitStartup but not working like the callback init/shutdown ones in pair */
 	LIST_Delete(&ccs.missions);
 	LIST_Delete(&ccs.alienBases);
-	for (i = 0; i < ccs.numBases; i++) {
-		base_t *base = B_GetBaseByIDX(i);
-		aircraft_t *craft = NULL;
 
-		/**
-		 * @todo this isn't working per per-base, as get next from base won't give
-		 * every available craft (not every craft must be in a base). Maybe we should
-		 * use the tags for the memory allocation for linked list (like we do for the
-		 * game shared object already, too)
-		 */
-		while ((craft = AIR_GetNextFromBase(base, craft))) {
-			LIST_Delete(&craft->acTeam);
-		}
-		LIST_Delete(&base->aircraft);
-	}
+	while ((craft = AIR_GetNext(craft)))
+		LIST_Delete(&craft->acTeam);
+	LIST_Delete(&ccs.aircraft);
+
 	for (i = 0; i < ccs.numAlienCategories; i++) {
 		alienTeamCategory_t *alienCat = &ccs.alienCategories[i];
 		LIST_Delete(&alienCat->equipment);

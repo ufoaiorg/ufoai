@@ -219,7 +219,7 @@ qboolean STATS_LoadXML (mxml_node_t *parent)
 	ccs.campaignStats.aircraftHad = mxml_GetInt(stats, SAVE_STATS_AIRCRAFTHAD, 0);
 	/* fallback for savegame compatibility */
 	if (ccs.campaignStats.aircraftHad == 0)
-		ccs.campaignStats.aircraftHad = ccs.numAircraft;
+		ccs.campaignStats.aircraftHad = LIST_Count(ccs.aircraft);
 	/* freeing the memory below this node */
 	mxmlDelete(stats);
 	return qtrue;

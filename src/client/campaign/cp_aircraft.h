@@ -246,9 +246,11 @@ void AIR_ListCraftIndexes_f(void);
 aircraft_t *AIR_Add(struct base_s *base, const aircraft_t *aircraftTemplate);
 qboolean AIR_Delete(struct base_s *base, const aircraft_t *aircraft);
 
+aircraft_t* AIR_GetNext(aircraft_t *lastAircraft);
 aircraft_t* AIR_GetNextFromBase(const struct base_s *base, aircraft_t *lastAircraft);
 
 qboolean AIR_BaseHasAircraft(const struct base_s *base);
+int AIR_BaseCountAircraft(const struct base_s *base);
 int AIR_GetAircraftIDXInBase(const aircraft_t* aircraft);
 aircraft_t *AIR_GetAircraftFromBaseByIDXSafe(struct base_s *base, int index);
 const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);

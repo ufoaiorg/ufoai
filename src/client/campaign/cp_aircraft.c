@@ -40,6 +40,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_missions.h"
 #include "save/save_aircraft.h"
 
+/**
+ * @brief Iterates through the aircraft
+ * @param[in] lastAircraft Pointer of the aircraft to iterate from. call with NULL to get the first one.
+ */
+aircraft_t* AIR_GetNext (aircraft_t *lastAircraft)
+{
+	return (aircraft_t *)LIST_GetNext(ccs.aircraft, (void*)lastAircraft);
+}
 
 /**
  * @brief Iterates through the aircraft of a base
@@ -49,12 +57,12 @@ aircraft_t* AIR_GetNextFromBase (const base_t *b, aircraft_t *lastAircraft)
 {
 	if (b) {
 		aircraft_t *aircraft = lastAircraft;
-		while ((aircraft = (aircraft_t *)LIST_GetNext(b->aircraft, (void*)aircraft)) != NULL) {
-			assert(aircraft->homebase == b);
+		while ((aircraft = AIR_GetNext(aircraft)) != NULL) {
+			if (aircraft->homebase != b)
+				continue;
 			if (aircraft->status != AIR_CRASHED)
 				return aircraft;
 		}
-		return aircraft;
 	}
 
 	return NULL;
@@ -68,6 +76,21 @@ aircraft_t* AIR_GetNextFromBase (const base_t *b, aircraft_t *lastAircraft)
 qboolean AIR_BaseHasAircraft (const base_t *base)
 {
 	return base != NULL && AIR_GetNextFromBase(base, NULL) != NULL;
+}
+
+/**
+ * @brief Returns the number of aircraft on the given base
+ * @param[in] base The base to check
+ */
+int AIR_BaseCountAircraft (const base_t *base)
+{
+	aircraft_t *aircraft = NULL;
+	int count = 0;
+
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
+		count ++;
+
+	return count;
 }
 
 /**
@@ -170,7 +193,7 @@ void AIR_ListAircraft_f (void)
 		if (!base)
 			continue;
 
-		Com_Printf("Aircraft in %s: %i\n", base->name, LIST_Count(base->aircraft));
+		Com_Printf("Aircraft in %s: %i\n", base->name, AIR_BaseCountAircraft(base));
 
 		aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
@@ -777,9 +800,8 @@ static void AII_SetAircraftInSlots (aircraft_t *aircraft)
  */
 aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
 {
-	aircraft_t *aircraft = (aircraft_t *)LIST_Add(&base->aircraft, (const byte *)aircraftTemplate, sizeof(*aircraftTemplate))->data;
+	aircraft_t *aircraft = (aircraft_t *)LIST_Add(&ccs.aircraft, (const byte *)aircraftTemplate, sizeof(*aircraftTemplate))->data;
 	aircraft->homebase = base;
-	ccs.numAircraft++;
 	return aircraft;
 }
 
@@ -792,8 +814,7 @@ aircraft_t *AIR_Add (base_t *base, const aircraft_t *aircraftTemplate)
  */
 qboolean AIR_Delete (base_t *base, const aircraft_t *aircraft)
 {
-	ccs.numAircraft--;
-	return LIST_Remove(&base->aircraft, (const void *)aircraft);
+	return LIST_Remove(&ccs.aircraft, (const void *)aircraft);
 }
 
 /**
@@ -954,9 +975,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 {
 	base_t *oldBase;
 	baseCapacities_t capacity;
-	aircraft_t *aircraftDest;
 	linkedList_t* l;
-	int i;
 
 	assert(aircraft);
 	assert(base);
@@ -989,35 +1008,22 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	}
 
 	/* Move aircraft to new base */
-	aircraftDest = AIR_Add(base, aircraft);
-	base->capacities[capacity].cur++;
-
-	/* Correct aircraftSlots' backreference */
-	for (i = 0; i < aircraftDest->maxWeapons; i++) {
-		aircraftDest->weapons[i].aircraft = aircraftDest;
-	}
-	for (i = 0; i < aircraftDest->maxElectronics; i++) {
-		aircraftDest->electronics[i].aircraft = aircraftDest;
-	}
-	aircraftDest->shield.aircraft = aircraftDest;
-
-	/* Remove aircraft from old base */
-	AIR_Delete(oldBase, aircraft);
 	oldBase->capacities[capacity].cur--;
+	aircraft->homebase = base;
+	base->capacities[capacity].cur++;
 
 	if (oldBase->aircraftCurrent == aircraft)
 		oldBase->aircraftCurrent = AIR_GetNextFromBase(oldBase, NULL);
-
 	if (!base->aircraftCurrent)
-		base->aircraftCurrent = aircraftDest;
+		base->aircraftCurrent = aircraft;
 
 	/* No need to update global IDX of every aircraft: the global IDX of this aircraft did not change */
 	/* Redirect selectedAircraft */
-	MAP_SelectAircraft(aircraftDest);
+	MAP_SelectAircraft(aircraft);
 
-	if (aircraftDest->status == AIR_RETURNING) {
+	if (aircraft->status == AIR_RETURNING) {
 		/* redirect to the new base */
-		AIR_AircraftReturnToBase(aircraftDest);
+		AIR_AircraftReturnToBase(aircraft);
 	}
 
 	return qtrue;
@@ -2836,15 +2842,14 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 
 	/* load phalanx aircraft */
 	snode = mxml_GetNode(parent, SAVE_AIRCRAFT_PHALANX);
-	for (i = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_AIRCRAFT); ssnode;
-			ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRCRAFT), i++) {
+	for (ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_AIRCRAFT); ssnode;
+			ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRCRAFT)) {
 		aircraft_t craft;
 		if (!AIR_LoadAircraftXML(ssnode, &craft))
 			return qfalse;
 		assert(craft.homebase);
 		AIR_CorrectAircraftSlotPointers(AIR_Add(craft.homebase, &craft));
 	}
-	ccs.numAircraft = i;
 
 	/* load the ufos on geoscape */
 	snode = mxml_GetNode(parent, SAVE_AIRCRAFT_UFOS);
