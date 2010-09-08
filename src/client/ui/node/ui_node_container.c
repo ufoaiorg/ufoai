@@ -742,7 +742,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 		/* ammo or item */
 		} else if (INV_IsAmmo(ic->item.t)) {
 			/* Finally try left and right hand. There is no other place to put it now. */
-			containerIndex_t idxArray[] = { csi.idBelt, csi.idHolster, csi.idBackpack, csi.idLeft, csi.idRight };
+			const containerIndex_t idxArray[] = { csi.idBelt, csi.idHolster, csi.idBackpack, csi.idLeft, csi.idRight };
 			const size_t size = lengthof(idxArray);
 			unsigned int i;
 			for (i = 0; i < size; i++) {
@@ -758,7 +758,7 @@ void UI_ContainerNodeAutoPlaceItem (uiNode_t* node, invList_t *ic)
 			} else {
 				/* left and right are single containers, but this might change - it's cleaner to check
 				 * for available space here, too */
-				containerIndex_t idxArray[] = { csi.idRight, csi.idLeft, csi.idBelt, csi.idHolster, csi.idBackpack };
+				const containerIndex_t idxArray[] = { csi.idRight, csi.idLeft, csi.idBelt, csi.idHolster, csi.idBackpack };
 				const size_t size = lengthof(idxArray);
 				unsigned int i;
 				for (i = 0; i < size; i++) {
@@ -1019,46 +1019,47 @@ static void UI_ContainerNodeDNDLeave (uiNode_t *node)
 static qboolean UI_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDropped)
 {
 	item_t *dragItem = UI_DNDGetItem();
+	const invDef_t *sourceContainer = EXTRADATACONST(source).container;
 
 	/* if the target can't finalize the DND we stop */
 	if (!isDropped) {
 		return qfalse;
 	}
 
+	assert(sourceContainer);
+
 	/* on tactical mission */
 	if (CL_BattlescapeRunning()) {
 		const uiNode_t *target = UI_DNDGetTargetNode();
-		assert(EXTRADATA(source).container);
-		assert(target);
-		assert(EXTRADATACONST(target).container);
-		assert(selActor);
-		CL_ActorInvMove(selActor, EXTRADATA(source).container->id, dragInfoFromX, dragInfoFromY,
+		const invDef_t *targetContainer = EXTRADATACONST(target).container;
+		assert(targetContainer);
+		CL_ActorInvMove(selActor, sourceContainer->id, dragInfoFromX, dragInfoFromY,
 			EXTRADATACONST(target).container->id, dragInfoToX, dragInfoToY);
 	} else {
 		uiNode_t *target = UI_DNDGetTargetNode();
 		if (target) {
 			invList_t *fItem;
+			const invDef_t *targetContainer = EXTRADATACONST(target).container;
+			assert(targetContainer);
 			/** @todo Is filterEquipType needed here?, we can use anyway INVSH_SearchInInventory if we disable dragInfoFromX/Y when we start DND */
 			if (UI_IsScrollContainerNode(source)) {
 				const int equipType = EXTRADATA(source).filterEquipType;
 				fItem = UI_ContainerNodeGetExistingItem(source, dragItem->t, equipType);
 			} else
-				fItem = INVSH_SearchInInventory(ui_inventory, EXTRADATA(source).container, dragInfoFromX, dragInfoFromY);
-
-			/** @todo We must split the move in two. Here, we should not know how to add the item to the target (see dndDrop) */
-			assert(EXTRADATA(target).container);
+				fItem = INVSH_SearchInInventory(ui_inventory, sourceContainer, dragInfoFromX, dragInfoFromY);
 			assert(fItem);
 
+			/** @todo We must split the move in two. Here, we should not know how to add the item to the target (see dndDrop) */
 			/* Remove ammo on removing weapon from a soldier */
 			if (UI_IsScrollContainerNode(target) && fItem->item.m && fItem->item.m != fItem->item.t)
-				INV_UnloadWeapon(fItem, ui_inventory, EXTRADATA(target).container);
+				INV_UnloadWeapon(fItem, ui_inventory, targetContainer);
+
 			/* move the item */
-			INV_MoveItem(ui_inventory,
-				EXTRADATA(target).container, dragInfoToX, dragInfoToY,
-				EXTRADATA(source).container, fItem);
+			INV_MoveItem(ui_inventory, targetContainer, dragInfoToX, dragInfoToY, sourceContainer, fItem);
+
 			/* Add ammo on adding weapon to a soldier  */
 			if (UI_IsScrollContainerNode(source) && fItem->item.t->weapon && !fItem->item.a)
-				INV_LoadWeapon(fItem, ui_inventory, EXTRADATA(source).container, EXTRADATA(target).container);
+				INV_LoadWeapon(fItem, ui_inventory, sourceContainer, targetContainer);
 
 			/* Run onChange events */
 			if (source->onChange)

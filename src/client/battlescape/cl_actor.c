@@ -396,7 +396,8 @@ void CL_ActorRemoveFromTeamList (le_t * le)
 	/* check selection */
 	if (le->selected) {
 		for (i = 0; i < cl.numTeamList; i++) {
-			if (cl.teamList[i] && CL_ActorSelect(cl.teamList[i]))
+			le_t *tl = cl.teamList[i];
+			if (tl && CL_ActorSelect(tl))
 				break;
 		}
 
@@ -926,7 +927,7 @@ void CL_ActorReload (le_t *le, containerIndex_t containerID)
 }
 
 /**
- *
+ * @brief Sends an inventory move event to the server
  * @param le The le that is doing the inventory move (an actor)
  * @param fromContainer The container to fetch the item from
  * @param fromX The x position in the container to get the item from
