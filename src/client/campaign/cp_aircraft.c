@@ -2149,7 +2149,6 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const air
  */
 qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 {
-	const int num = ufo - ccs.ufos;
 	vec2_t dest;
 
 	if (!aircraft)
