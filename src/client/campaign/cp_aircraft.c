@@ -482,8 +482,8 @@ qboolean AIR_IsAircraftInBase (const aircraft_t * aircraft)
  * @brief Checks whether given aircraft is on geoscape.
  * @param[in] aircraft Pointer to an aircraft.
  * @note aircraft may be neither on geoscape, nor in base (like when it's transferred)
- * @return qtrue if given aircraft is on geoscape.
- * @return qfalse if given aircraft is not on geoscape.
+ * @return @c false if given aircraft is not on geoscape, @c true if given aircraft is on geoscape.
+ * @sa UFO_IsUFOSeenOnGeoscape
  */
 qboolean AIR_IsAircraftOnGeoscape (const aircraft_t * aircraft)
 {

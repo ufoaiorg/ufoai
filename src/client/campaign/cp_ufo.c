@@ -59,6 +59,9 @@ aircraft_t* UFO_GetNext (aircraft_t *lastUFO)
 		return ufo;
 }
 
+/**
+ * @sa AIR_IsAircraftOnGeoscape
+ */
 aircraft_t *UFO_GetNextOnGeoscape (aircraft_t *lastUFO)
 {
 	aircraft_t* ufo = lastUFO;
@@ -863,6 +866,7 @@ void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t * const aircraft)
 /**
  * @brief Check if an aircraft should be seen on geoscape.
  * @return true or false wether UFO should be seen or not on geoscape.
+ * @sa AIR_IsAircraftOnGeoscape
  */
 qboolean UFO_IsUFOSeenOnGeoscape (const aircraft_t const *ufo)
 {
