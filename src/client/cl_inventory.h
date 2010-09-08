@@ -58,7 +58,7 @@ typedef enum {
 } itemFilterTypes_t;
 
 qboolean INV_MoveItem(inventory_t* inv, const invDef_t * toContainer, int px, int py, const invDef_t * fromContainer, invList_t *fItem);
-qboolean INV_LoadWeapon(invList_t *weapon, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer);
+qboolean INV_LoadWeapon(const invList_t *weapon, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer);
 qboolean INV_UnloadWeapon(invList_t *weapon, inventory_t *inv, const invDef_t *container);
 const equipDef_t *INV_GetEquipmentDefinitionByID(const char *name);
 void INV_InitStartup(void);
@@ -66,7 +66,7 @@ itemFilterTypes_t INV_GetFilterFromItem(const objDef_t *obj);
 const char *INV_GetFilterType(const int id);
 itemFilterTypes_t INV_GetFilterTypeID(const char * filterTypeID);
 qboolean INV_ItemMatchesFilter(const objDef_t *obj, const itemFilterTypes_t filterType);
-invList_t *INVSH_SearchInInventoryWithFilter(const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType) __attribute__((nonnull(1)));
+invList_t *INVSH_SearchInInventoryWithFilter(const inventory_t* const i, const invDef_t * container, int x, int y, const objDef_t *item,  const itemFilterTypes_t filterType) __attribute__((nonnull(1)));
 void INV_ItemDescription(const objDef_t *od);
 
 #endif /* CLIENT_CL_INVENTORY_H */

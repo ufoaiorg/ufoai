@@ -307,25 +307,28 @@ void R_RenderFrame (void)
 		R_CheckError();
 
 		for (tile = 0; tile < r_numMapTiles; tile++) {
+			const model_t *mapTile = r_mapTiles[tile];
+			const mBspModel_t *bsp = &mapTile->bsp;
+
 			R_EnableFog(qtrue);
 
-			R_DrawOpaqueSurfaces(r_mapTiles[tile]->bsp.opaque_surfaces);
-			R_DrawOpaqueWarpSurfaces(r_mapTiles[tile]->bsp.opaque_warp_surfaces);
+			R_DrawOpaqueSurfaces(bsp->opaque_surfaces);
+			R_DrawOpaqueWarpSurfaces(bsp->opaque_warp_surfaces);
 
-			R_DrawAlphaTestSurfaces(r_mapTiles[tile]->bsp.alpha_test_surfaces);
+			R_DrawAlphaTestSurfaces(bsp->alpha_test_surfaces);
 
 			R_EnableBlend(qtrue);
 
-			R_DrawMaterialSurfaces(r_mapTiles[tile]->bsp.material_surfaces);
+			R_DrawMaterialSurfaces(bsp->material_surfaces);
 
-			R_DrawFlareSurfaces(r_mapTiles[tile]->bsp.flare_surfaces);
+			R_DrawFlareSurfaces(bsp->flare_surfaces);
 
 			R_EnableFog(qfalse);
 
 			R_DrawCoronas();
 
-			R_DrawBlendSurfaces(r_mapTiles[tile]->bsp.blend_surfaces);
-			R_DrawBlendWarpSurfaces(r_mapTiles[tile]->bsp.blend_warp_surfaces);
+			R_DrawBlendSurfaces(bsp->blend_surfaces);
+			R_DrawBlendWarpSurfaces(bsp->blend_warp_surfaces);
 
 			R_EnableBlend(qfalse);
 

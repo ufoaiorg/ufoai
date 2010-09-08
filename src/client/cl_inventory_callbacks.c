@@ -132,9 +132,10 @@ void INV_ItemDescription (const objDef_t *od)
 			Q_strcat(itemText, "\n", sizeof(itemText));
 			Q_strcat(itemText, _("^BDamage type:\tProtection:\n"), sizeof(itemText));
 			for (i = 0; i < csi.numDTs; i++) {
-				if (!csi.dts[i].showInMenu)
+				const damageType_t *dt = &csi.dts[i];
+				if (!dt->showInMenu)
 					continue;
-				Q_strcat(itemText, va(_("%s\t%i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(itemText));
+				Q_strcat(itemText, va(_("%s\t%i\n"), _(dt->id), od->ratings[i]), sizeof(itemText));
 			}
 		} else if ((od->weapon && od->numAmmos) || INV_IsAmmo(od)) {
 			const objDef_t *odAmmo;
@@ -186,9 +187,10 @@ void INV_ItemDescription (const objDef_t *od)
 			/* just an item - only primary definition */
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 			if (od->numWeapons > 0 && od->numFiredefs[0] > 0) {
-				Q_strcat(itemText, va(_("Action:\t%s\n"), _(od->fd[0][0].name)), sizeof(itemText));
-				Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0][0].time), sizeof(itemText));
-				Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0][0].range / UNIT_SIZE), sizeof(itemText));
+				const fireDef_t *fd = &od->fd[0][0];
+				Q_strcat(itemText, va(_("Action:\t%s\n"), _(fd->name)), sizeof(itemText));
+				Q_strcat(itemText, va(_("Time units:\t%i\n"), fd->time), sizeof(itemText));
+				Q_strcat(itemText, va(_("Range:\t%g\n"), fd->range / UNIT_SIZE), sizeof(itemText));
 			}
 		}
 

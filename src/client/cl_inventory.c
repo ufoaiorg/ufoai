@@ -42,9 +42,11 @@ const equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 {
 	int i;
 
-	for (i = 0, csi.eds; i < csi.numEDs; i++)
-		if (!strcmp(name, csi.eds[i].name))
-			return &csi.eds[i];
+	for (i = 0, csi.eds; i < csi.numEDs; i++) {
+		const equipDef_t *ed = &csi.eds[i];
+		if (!strcmp(name, ed->name))
+			return ed;
+	}
 
 	Com_Error(ERR_DROP, "Could not find equipment %s", name);
 }
@@ -91,22 +93,25 @@ qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, i
  * @param[in] srcContainer Pointer to inventorydef where to search ammo.
  * @param[in] destContainer Pointer to inventorydef where the weapon is.
  */
-qboolean INV_LoadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
+qboolean INV_LoadWeapon (const invList_t *weaponList, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
 {
 	int equipType;
 	invList_t *ic = NULL;
 	int i = 0;
+	objDef_t *weapon;
 
-	assert(weapon);
+	assert(weaponList);
 
-	equipType = INV_GetFilterFromItem(weapon->item.t);
+	weapon = weaponList->item.t;
+	equipType = INV_GetFilterFromItem(weapon);
 	/* search an ammo */
-	while (i < weapon->item.t->numAmmos && !ic) {
-		ic = INVSH_SearchInInventoryWithFilter(inv, srcContainer, NONE, NONE, weapon->item.t->ammos[i], equipType);
+	while (i < weapon->numAmmos && !ic) {
+		const objDef_t *ammo = weapon->ammos[i];
+		ic = INVSH_SearchInInventoryWithFilter(inv, srcContainer, NONE, NONE, ammo, equipType);
 		i++;
 	}
 	if (ic)
-		return INV_MoveItem(inv, destContainer, weapon->x, weapon->y, srcContainer, ic);
+		return INV_MoveItem(inv, destContainer, weaponList->x, weaponList->y, srcContainer, ic);
 
 	return qfalse;
 }
@@ -261,7 +266,8 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
 		for (i = 0; i < obj->numWeapons; i++) {
-			if (obj->weapons[i] && obj->weapons[i] != obj && INV_ItemMatchesFilter(obj->weapons[i], filterType))
+			const objDef_t *weapon = obj->weapons[i];
+			if (weapon && weapon != obj && INV_ItemMatchesFilter(weapon, filterType))
 				return qtrue;
 		}
 		break;
@@ -272,7 +278,8 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
 		for (i = 0; i < obj->numWeapons; i++) {
-			if (obj->weapons[i] && obj->weapons[i] != obj && INV_ItemMatchesFilter(obj->weapons[i], filterType))
+			const objDef_t *weapon = obj->weapons[i];
+			if (weapon && weapon != obj && INV_ItemMatchesFilter(weapon, filterType))
 				return qtrue;
 		}
 		break;
@@ -283,7 +290,8 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
 		for (i = 0; i < obj->numWeapons; i++) {
-			if (obj->weapons[i] && obj->weapons[i] != obj && INV_ItemMatchesFilter(obj->weapons[i], filterType))
+			const objDef_t *weapon = obj->weapons[i];
+			if (weapon && weapon != obj && INV_ItemMatchesFilter(weapon, filterType))
 				return qtrue;
 		}
 		break;
@@ -333,7 +341,7 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa INVSH_SearchInInventory
  */
-invList_t *INVSH_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType)
+invList_t *INVSH_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, const objDef_t *item,  const itemFilterTypes_t filterType)
 {
 	invList_t *ic;
 
@@ -386,7 +394,8 @@ itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
 		return FILTER_S_PRIMARY;
 
 	for (i = 0; i < MAX_FILTERTYPES; i++) {
-		if (filterTypeNames[i] && !strcmp(filterTypeNames[i], filterTypeID))
+		const char *fileTypeName = filterTypeNames[i];
+		if (fileTypeName && !strcmp(fileTypeName, filterTypeID))
 			return i;
 	}
 

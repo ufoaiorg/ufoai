@@ -206,7 +206,7 @@ static void CL_Connect (void)
 		NET_OOB_Printf(cls.netStream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
 		cls.connectTime = CL_Milliseconds();
 	} else {
-		if (cls.servername[0]) {
+		if (cls.servername[0] != '\0') {
 			assert(cls.serverport[0]);
 			Com_Printf("Could not connect to %s %s\n", cls.servername, cls.serverport);
 		} else {
@@ -669,7 +669,7 @@ static void CL_TeamDefInitMenu (void)
 	if (option == NULL) {
 		int i;
 		for (i = 0; i < csi.numTeamDefs; i++) {
-			teamDef_t *td = &csi.teamDef[i];
+			const teamDef_t *td = &csi.teamDef[i];
 			if (td->race != RACE_CIVILIAN)
 				UI_AddOption(&option, td->id, _(td->name), td->id);
 		}
@@ -720,46 +720,10 @@ static void CL_ParseCustomSkin (const char *name, const char **text)
 				if (!*text)
 					return;
 
-				switch (vp->type) {
-				default:
-					Com_EParseValue(skin, token, vp->type, vp->ofs, vp->size);
-					break;
-				}
+				Com_EParseValue(skin, token, vp->type, vp->ofs, vp->size);
 				break;
 			}
-/*
-		if (!vp->string) {
-			linkedList_t **list;
-			if (!strcmp(token, "ufos")) {
-				list = &md->ufos;
-			} else if (!strcmp(token, "aircraft")) {
-				list = &md->aircraft;
-			} else if (!strcmp(token, "terrains")) {
-				list = &md->terrains;
-			} else if (!strcmp(token, "populations")) {
-				list = &md->populations;
-			} else if (!strcmp(token, "cultures")) {
-				list = &md->cultures;
-			} else if (!strcmp(token, "gametypes")) {
-				list = &md->gameTypes;
-			} else {
-				Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
-				continue;
-			}
-			token = Com_EParse(text, errhead, name);
-			if (!*text || *token != '{') {
-				Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" has ufos, gametypes, terrains, populations or cultures block with no opening brace\n", name);
-				break;
-			}
-			do {
-				token = Com_EParse(text, errhead, name);
-				if (!*text || *token == '}')
-					break;
-				LIST_AddString(list, token);
-			} while (*text);
-		}*/
 	} while (*text);
-
 }
 
 /** @brief valid mapdef descriptors */
@@ -975,17 +939,16 @@ static cvarList_t checkcvar[] = {
  */
 static void CL_CheckCvars_f (void)
 {
-	int i = 0;
+	cvarList_t *c;
 
-	while (checkcvar[i].name) {
-		if (!checkcvar[i].var)
-			checkcvar[i].var = Cvar_Get(checkcvar[i].name, "", 0, NULL);
-		if (checkcvar[i].var->string[0] == '\0') {
-			Com_Printf("%s has no value\n", checkcvar[i].var->name);
+	for (c = checkcvar; c->name != NULL; c++) {
+		if (!c->var)
+			c->var = Cvar_Get(c->name, "", 0, NULL);
+		if (c->var->string[0] == '\0') {
+			Com_Printf("%s has no value\n", c->var->name);
 			UI_PushWindow("checkcvars", NULL);
 			break;
 		}
-		i++;
 	}
 }
 
