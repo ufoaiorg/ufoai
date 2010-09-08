@@ -445,8 +445,6 @@ void SCR_UpdateScreen (void)
 		SCR_DrawCursor();
 	}
 
-	R_DrawChars();  /* draw all chars accumulated above */
-
 	R_EndFrame();
 }
 

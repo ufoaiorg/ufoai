@@ -361,6 +361,16 @@ void R_RenderFrame (void)
  */
 void R_EndFrame (void)
 {
+	R_EnableBlend(qtrue);
+
+	R_DrawFills();  /* draw all fills accumulated above */
+	R_DrawChars();  /* draw all chars accumulated above */
+
+	/* restore draw color */
+	R_Color(NULL);
+
+	R_EnableBlend(qfalse);
+
 	if (vid_gamma->modified) {
 		if (!vid_ignoregamma->integer) {
 			const float g = vid_gamma->value;

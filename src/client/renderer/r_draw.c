@@ -53,6 +53,19 @@ typedef struct char_arrays_s {
 
 static char_arrays_t r_char_arrays;
 
+#define MAX_FILLS 512
+
+/** @brief fills (alpha-blended quads) are also batched per frame */
+typedef struct fill_arrays_s {
+	GLshort verts[MAX_FILLS * 4 * 2];
+	int vert_index;
+
+	GLbyte colors[MAX_FILLS * 4 * 4];
+	int color_index;
+} fill_arrays_t;
+
+static fill_arrays_t r_fill_arrays;
+
 /**
  * @brief Loads some textures and init the 3d globe
  * @sa R_Init
@@ -139,7 +152,6 @@ void R_DrawChars (void)
 
 	R_BindTexture(draw_chars->texnum);
 
-	R_EnableBlend(qtrue);
 	R_EnableColorArray(qtrue);
 
 	/* alter the array pointers */
@@ -159,10 +171,71 @@ void R_DrawChars (void)
 	R_BindDefaultArray(GL_COLOR_ARRAY);
 
 	R_EnableColorArray(qfalse);
+}
 
-	/* restore draw color */
-	R_Color(NULL);
-	R_EnableBlend(qfalse);
+/**
+ * @brief Fills a box of pixels with a single color
+ */
+void R_DrawFill (int x, int y, int w, int h, const vec4_t color)
+{
+	const float nx = x * viddef.rx;
+	const float ny = y * viddef.ry;
+	const float nw = w * viddef.rx;
+	const float nh = h * viddef.ry;
+	const int r = color[0] * 255.0;
+	const int g = color[1] * 255.0;
+	const int b = color[2] * 255.0;
+	const int a = color[3] * 255.0;
+	const uint32_t c = (r << 0) + (g << 8) + (b << 16) + (a << 24);
+
+	/* duplicate color data to all 4 verts */
+	memcpy(&r_fill_arrays.colors[r_fill_arrays.color_index +  0], &c, 4);
+	memcpy(&r_fill_arrays.colors[r_fill_arrays.color_index +  4], &c, 4);
+	memcpy(&r_fill_arrays.colors[r_fill_arrays.color_index +  8], &c, 4);
+	memcpy(&r_fill_arrays.colors[r_fill_arrays.color_index + 12], &c, 4);
+
+	r_fill_arrays.color_index += 16;
+
+	/* populate verts */
+	r_fill_arrays.verts[r_fill_arrays.vert_index + 0] = nx;
+	r_fill_arrays.verts[r_fill_arrays.vert_index + 1] = ny;
+
+	r_fill_arrays.verts[r_fill_arrays.vert_index + 2] = nx + nw;
+	r_fill_arrays.verts[r_fill_arrays.vert_index + 3] = ny;
+
+	r_fill_arrays.verts[r_fill_arrays.vert_index + 4] = nx + nw;
+	r_fill_arrays.verts[r_fill_arrays.vert_index + 5] = ny + nh;
+
+	r_fill_arrays.verts[r_fill_arrays.vert_index + 6] = nx;
+	r_fill_arrays.verts[r_fill_arrays.vert_index + 7] = ny + nh;
+
+	r_fill_arrays.vert_index += 8;
+}
+
+void R_DrawFills (void)
+{
+	if (!r_fill_arrays.vert_index)
+		return;
+
+	R_EnableTexture(&texunit_diffuse, qfalse);
+
+	R_EnableColorArray(qtrue);
+
+	/* alter the array pointers */
+	R_BindArray(GL_COLOR_ARRAY, GL_UNSIGNED_BYTE, r_fill_arrays.colors);
+	glVertexPointer(2, GL_SHORT, 0, r_fill_arrays.verts);
+
+	glDrawArrays(GL_QUADS, 0, r_fill_arrays.vert_index / 2);
+
+	/* and restore them */
+	R_BindDefaultArray(GL_VERTEX_ARRAY);
+	R_BindDefaultArray(GL_COLOR_ARRAY);
+
+	R_EnableColorArray(qfalse);
+
+	R_EnableTexture(&texunit_diffuse, qtrue);
+
+	r_fill_arrays.vert_index = r_fill_arrays.color_index = 0;
 }
 
 /**
@@ -294,32 +367,6 @@ const image_t *R_DrawImageArray (const vec2_t texcoords[4], const vec2_t verts[4
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
 	return image;
-}
-
-/**
- * @brief Fills a box of pixels with a single color
- */
-void R_DrawFill (int x, int y, int w, int h, const vec4_t color)
-{
-	const float nx = x * viddef.rx;
-	const float ny = y * viddef.ry;
-	const float nw = w * viddef.rx;
-	const float nh = h * viddef.ry;
-
-	R_Color(color);
-
-	glDisable(GL_TEXTURE_2D);
-
-	glBegin(GL_QUADS);
-	glVertex2f(nx, ny);
-	glVertex2f(nx + nw, ny);
-	glVertex2f(nx + nw, ny + nh);
-	glVertex2f(nx, ny + nh);
-	glEnd();
-
-	glEnable(GL_TEXTURE_2D);
-
-	R_Color(NULL);
 }
 
 /**
