@@ -1034,7 +1034,7 @@ static qboolean UI_ContainerNodeDNDFinished (uiNode_t *source, qboolean isDroppe
 		const invDef_t *targetContainer = EXTRADATACONST(target).container;
 		assert(targetContainer);
 		CL_ActorInvMove(selActor, sourceContainer->id, dragInfoFromX, dragInfoFromY,
-			EXTRADATACONST(target).container->id, dragInfoToX, dragInfoToY);
+				targetContainer->id, dragInfoToX, dragInfoToY);
 	} else {
 		uiNode_t *target = UI_DNDGetTargetNode();
 		if (target) {
