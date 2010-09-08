@@ -512,10 +512,8 @@ static void TR_CargoList (void)
  * @param[in] i global idx of the aircraft
  * @return qtrue if the aircraft should be displayed, qfalse else.
  */
-static qboolean TR_AircraftListSelect (int i)
+static qboolean TR_AircraftListSelect (const aircraft_t *aircraft)
 {
-	aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
-
 	if (!AIR_IsAircraftInBase(aircraft))	/* Aircraft is not in base. */
 		return qfalse;
 	if (LIST_GetPointer(td.aircraft, aircraft))	/* Already on transfer list. */
@@ -699,7 +697,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			aircraft_t *aircraft = NULL;
 
 			while ((aircraft = AIR_GetNextFromBase(srcbase, aircraft))) {
-				if (TR_AircraftListSelect(aircraft->idx)) {
+				if (TR_AircraftListSelect(aircraft)) {
 					Com_sprintf(str, sizeof(str), _("Aircraft %s"), aircraft->name);
 					LIST_AddString(&transferList, str);
 					LIST_AddString(&transferListAmount, "1");
@@ -999,7 +997,7 @@ static void TR_TransferListSelect_f (void)
 			aircraft_t *aircraft = NULL;
 
 			while ((aircraft = AIR_GetNextFromBase(base, aircraft))) {
-				if (TR_AircraftListSelect(aircraft->idx)) {
+				if (TR_AircraftListSelect(aircraft)) {
 					if (cnt == num) {
 						if (TR_CheckAircraft(aircraft, td.transferBase)) {
 							LIST_AddPointer(&td.aircraft, (void*)aircraft);
