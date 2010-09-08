@@ -54,5 +54,6 @@ void UFO_NotifyPhalanxAircraftRemoved(const aircraft_t *const aircraft);
 qboolean UFO_IsUFOSeenOnGeoscape(const aircraft_t const *ufo);
 aircraft_t* UFO_GetByIDX(const int idx);
 aircraft_t* UFO_GetNext(aircraft_t *lastUFO);
+aircraft_t *UFO_GetNextOnGeoscape(aircraft_t *lastUFO);
 
 #endif

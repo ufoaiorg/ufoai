@@ -59,6 +59,21 @@ aircraft_t* UFO_GetNext (aircraft_t *lastUFO)
 		return ufo;
 }
 
+aircraft_t *UFO_GetNextOnGeoscape (aircraft_t *lastUFO)
+{
+	aircraft_t* ufo = lastUFO;
+	while ((ufo = UFO_GetNext(ufo)) != NULL) {
+		if (UFO_IsUFOSeenOnGeoscape(ufo)
+#ifdef DEBUG
+		|| Cvar_GetInteger("debug_showufos")
+#endif
+		)
+			return ufo;
+	}
+
+	return NULL;
+}
+
 /**
  * @brief returns the UFO on the geoscape with a certain index
  * @param[in] idx Index of the UFO
@@ -343,10 +358,10 @@ static void UFO_UpdateAlienInterestForOneInstallation (const aircraft_t const *u
  */
 void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 {
-	int ufoIdx;
+	aircraft_t *ufo;
 
-	for (ufoIdx = 0; ufoIdx < ccs.numUFOs; ufoIdx++) {
-		const aircraft_t const *ufo = UFO_GetByIDX(ufoIdx);
+	ufo = NULL;
+	while ((ufo = UFO_GetNext(ufo)) != NULL) {
 		int idx;
 
 		/* landed UFO can't detect any phalanx base or installation */
@@ -723,14 +738,15 @@ void UFO_DetectNewUFO (aircraft_t *ufocraft)
 qboolean UFO_CampaignCheckEvents (void)
 {
 	qboolean newDetection;
-	int baseIdx, installationIdx;
-	aircraft_t *ufo, *aircraft;
+	aircraft_t *ufo;
 
 	newDetection = qfalse;
 
 	/* For each ufo in geoscape */
-	for (ufo = ccs.ufos + ccs.numUFOs - 1; ufo >= ccs.ufos; ufo--) {
+	ufo = NULL;
+	while ((ufo = UFO_GetNext(ufo)) != NULL) {
 		char detectedBy[MAX_VAR] = "";
+		int baseIdx, installationIdx;
 		float minDistance = -1;
 		/* detected tells us whether or not a UFO is detected NOW, whereas ufo->detected tells
 		 * us whether or not the UFO was detected PREVIOUSLY. */
@@ -744,6 +760,7 @@ qboolean UFO_CampaignCheckEvents (void)
 		 * RADAR_CheckUFOSensored registers the UFO in every radars' detection list
 		 * which detect it */
 		for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
+			aircraft_t *aircraft;
 			base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 			if (!base)
 				continue;

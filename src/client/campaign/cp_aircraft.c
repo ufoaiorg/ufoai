@@ -2146,7 +2146,7 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 	const int num = ufo - ccs.ufos;
 	vec2_t dest;
 
-	if (num < 0 || num >= ccs.numUFOs || !aircraft || !ufo)
+	if (!aircraft)
 		return qfalse;
 
 	/* if aircraft was in base */
@@ -2851,7 +2851,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 
 	for (i = 0, ssnode = mxml_GetNode(snode, SAVE_AIRCRAFT_AIRCRAFT); i < MAX_UFOONGEOSCAPE && ssnode;
 			ssnode = mxml_GetNextNode(ssnode, snode, SAVE_AIRCRAFT_AIRCRAFT), i++) {
-		if (!AIR_LoadAircraftXML(ssnode, &ccs.ufos[i]))
+		if (!AIR_LoadAircraftXML(ssnode, UFO_GetByIDX(i)))
 			return qfalse;
 		ccs.numUFOs++;
 	}
@@ -2861,7 +2861,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 	if (!AIRFIGHT_LoadXML(projectiles))
 		return qfalse;
 
-	/* check UFOs */
+	/* check UFOs - backwards */
 	for (i = ccs.numUFOs - 1; i >= 0; i--) {
 		aircraft_t *ufo = UFO_GetByIDX(i);
 		if (ufo->time < 0 || ufo->stats[AIR_STATS_SPEED] <= 0) {
@@ -2881,6 +2881,7 @@ static qboolean AIR_PostLoadInitMissions (void)
 {
 	int i;
 	qboolean success = qtrue;
+	aircraft_t *ufo;
 
 	/* PHALANX aircraft */
 	for (i = 0; i < ccs.numBases; i++) {
@@ -2902,18 +2903,17 @@ static qboolean AIR_PostLoadInitMissions (void)
 	}
 
 	/* UFOs */
-	for (i = 0; i < ccs.numUFOs; i++) {
-		aircraft_t *aircraft = UFO_GetByIDX(i);
-
-		if (!aircraft || !aircraft->missionID || aircraft->missionID[0] == '\0')
+	ufo = NULL;
+	while ((ufo = UFO_GetNext(ufo)) != NULL) {
+		if (!ufo->missionID || ufo->missionID[0] == '\0')
 			continue;
-		aircraft->mission = CP_GetMissionByID(aircraft->missionID);
-		if (!aircraft->mission) {
-			Com_Printf("UFO %s (idx: %i) is linked to an invalid mission: %s\n", aircraft->name, aircraft->idx, aircraft->missionID);
+		ufo->mission = CP_GetMissionByID(ufo->missionID);
+		if (!ufo->mission) {
+			Com_Printf("UFO %s (idx: %i) is linked to an invalid mission: %s\n", ufo->name, ufo->idx, ufo->missionID);
 			success = qfalse;
 		}
-		Mem_Free(aircraft->missionID);
-		aircraft->missionID = NULL;
+		Mem_Free(ufo->missionID);
+		ufo->missionID = NULL;
 	}
 
 	return success;

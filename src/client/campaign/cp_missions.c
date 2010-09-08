@@ -2142,7 +2142,7 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 		if (ufoIdx <= -1 || ufoIdx >= lengthof(ccs.ufos))
 			mission.ufo = NULL;
 		else
-			mission.ufo = &ccs.ufos[ufoIdx];
+			mission.ufo = UFO_GetByIDX(ufoIdx);
 
 		mission.crashed = mxml_GetBool(node, SAVE_MISSIONS_CRASHED, qfalse);
 		mission.onGeoscape = mxml_GetBool(node, SAVE_MISSIONS_ONGEOSCAPE, qfalse);

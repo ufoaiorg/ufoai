@@ -255,7 +255,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		/* Get the ufo selected */
 		if (id < 0 || id >= ccs.numUFOs)
 			return;
-		aircraft = ccs.ufos + id;
+		aircraft = UFO_GetByIDX(id);
 
 		if (aircraft == ccs.selectedUFO) {
 			/* Selection of an already selected ufo */
@@ -370,14 +370,10 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 	}
 
 	/* Get selected ufos */
-	for (ufo = ccs.ufos + ccs.numUFOs - 1; ufo >= ccs.ufos; ufo--)
-		if (UFO_IsUFOSeenOnGeoscape(ufo)
-#ifdef DEBUG
-		|| Cvar_GetInteger("debug_showufos")
-#endif
-		)
-			if (AIR_IsAircraftOnGeoscape(ufo) && MAP_IsMapPositionSelected(node, ufo->pos, x, y))
-				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, ufo - ccs.ufos, _("UFO Sighting"), UFO_AircraftToIDOnGeoscape(ufo));
+	ufo = NULL;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL)
+		if (AIR_IsAircraftOnGeoscape(ufo) && MAP_IsMapPositionSelected(node, ufo->pos, x, y))
+			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, ufo - ccs.ufos, _("UFO Sighting"), UFO_AircraftToIDOnGeoscape(ufo));
 
 	if (multiSelect.nbSelect == 1) {
 		/* Execute directly action for the only one element selected */
@@ -1030,16 +1026,16 @@ static void MAP_GetMissionAngle (float *vector, int id)
  */
 static void MAP_GetUFOAngle (float *vector, int idx)
 {
-	aircraft_t *aircraft;
+	aircraft_t *ufo;
+
 	/* Cycle through UFO (only those visible on geoscape) */
-	for (aircraft = ccs.ufos + ccs.numUFOs - 1; aircraft >= ccs.ufos; aircraft --) {
-		if (aircraft->idx != idx)
+	ufo = NULL;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL) {
+		if (ufo->idx != idx)
 			continue;
-		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
-			MAP_ConvertObjectPositionToGeoscapePosition(vector, aircraft->pos);
-			MAP_SelectUFO(aircraft);
-			return;
-		}
+		MAP_ConvertObjectPositionToGeoscapePosition(vector, ufo->pos);
+		MAP_SelectUFO(ufo);
+		return;
 	}
 }
 
@@ -1143,10 +1139,9 @@ static void MAP_GetGeoscapeAngle (float *vector)
 				maxEventIdx++;
 		}
 	}
-	for (ufo = ccs.ufos + ccs.numUFOs - 1; ufo >= ccs.ufos; ufo --) {
-		if (UFO_IsUFOSeenOnGeoscape(ufo))
-			maxEventIdx++;
-	}
+	ufo = NULL;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL)
+		maxEventIdx++;
 
 	/* if there's nothing to center the view on, just go to 0,0 pos */
 	if (maxEventIdx < 0) {
@@ -1229,15 +1224,14 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	}
 
 	/* Cycle through UFO (only those visible on geoscape) */
-	for (ufo = ccs.ufos + ccs.numUFOs - 1; ufo >= ccs.ufos; ufo --) {
-		if (UFO_IsUFOSeenOnGeoscape(ufo)) {
-			if (centerOnEventIdx == counter) {
-				MAP_ConvertObjectPositionToGeoscapePosition(vector, ufo->pos);
-				MAP_SelectUFO(ufo);
-				return;
-			}
-			counter++;
+	ufo = NULL;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL) {
+		if (centerOnEventIdx == counter) {
+			MAP_ConvertObjectPositionToGeoscapePosition(vector, ufo->pos);
+			MAP_SelectUFO(ufo);
+			return;
 		}
+		counter++;
 	}
 }
 
@@ -1741,8 +1735,8 @@ static const char *MAP_GetUFOText (char *buffer, size_t size, const aircraft_t* 
 void MAP_UpdateGeoscapeDock (void)
 {
 	const linkedList_t *list;
-	int ufoIDX;
 	char buf[512];
+	aircraft_t *ufo;
 
 	UI_ExecuteConfunc("clean_geoscape_object");
 
@@ -1756,11 +1750,9 @@ void MAP_UpdateGeoscapeDock (void)
 	}
 
 	/* draws ufos */
-	for (ufoIDX = 0; ufoIDX < ccs.numUFOs; ufoIDX++) {
-		aircraft_t *ufo = &ccs.ufos[ufoIDX];
-		if (!UFO_IsUFOSeenOnGeoscape(ufo))
-			continue;
-
+	ufo = NULL;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL) {
+		const unsigned int ufoIDX = ufo - ccs.ufos;
 		UI_ExecuteConfunc("add_geoscape_object ufo %i %i %s \"%s\"",
 				ufoIDX, ufoIDX, ufo->model, MAP_GetUFOText(buf, sizeof(buf), ufo));
 	}
@@ -1778,8 +1770,9 @@ void MAP_UpdateGeoscapeDock (void)
 static void MAP_DrawMapMarkers (const uiNode_t* node)
 {
 	const linkedList_t *list;
-	int x, y, i, baseIdx, installationIdx, aircraftIdx, idx;
+	int x, y, i, baseIdx, installationIdx, idx;
 	const char* font;
+	aircraft_t *ufo;
 
 	const vec4_t white = {1.f, 1.f, 1.f, 0.7f};
 	qboolean showXVI = qfalse;
@@ -1795,13 +1788,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	font = UI_GetFontFromNode(node);
 
 	/* check if at least 1 UFO is visible */
-	for (aircraftIdx = 0; aircraftIdx < ccs.numUFOs; aircraftIdx++) {
-		const aircraft_t const *aircraft = &ccs.ufos[aircraftIdx];
-		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
-			oneUFOVisible = qtrue;
-			break;
-		}
-	}
+	oneUFOVisible = UFO_GetNextOnGeoscape(NULL) != NULL;
 
 	/* draw mission pics */
 	Cvar_Set("mn_mapdaytime", "");
@@ -1838,42 +1825,39 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	}
 
 	/* draws ufos */
-	for (aircraftIdx = 0; aircraftIdx < ccs.numUFOs; aircraftIdx++) {
-		aircraft_t *aircraft = &ccs.ufos[aircraftIdx];
+	ufo = NULL;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL) {
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
 		if (Cvar_GetInteger("debug_showufos")) {
 			/* Draw ufo route */
 			if (cl_3dmap->integer)
-				MAP_3DMapDrawLine(node, &aircraft->route);
+				MAP_3DMapDrawLine(node, &ufo->route);
 			else
-				MAP_MapDrawLine(node, &aircraft->route);
+				MAP_MapDrawLine(node, &ufo->route);
 		} else
 #endif
-		if (!oneUFOVisible || !UFO_IsUFOSeenOnGeoscape(aircraft))
-			continue;
-
 		{
-			const float angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
+			const float angle = MAP_AngleOfPath(ufo->pos, ufo->route.point[ufo->route.numPoints - 1], ufo->direction, NULL);
 
 			if (cl_3dmap->integer)
-				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, white);
-			if (aircraft == ccs.selectedUFO) {
+				MAP_MapDrawEquidistantPoints(node, ufo->pos, SELECT_CIRCLE_RADIUS, white);
+			if (ufo == ccs.selectedUFO) {
 				if (cl_3dmap->integer)
-					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
+					MAP_MapDrawEquidistantPoints(node, ufo->pos, SELECT_CIRCLE_RADIUS, yellow);
 				else {
 					const image_t *image = geoscapeImages[GEOSCAPE_IMAGE_MISSION_SELECTED];
-					MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL);
+					MAP_AllMapToScreen(node, ufo->pos, &x, &y, NULL);
 					R_DrawImage(x - image->width / 2, y - image->height / 2, image);
 				}
 			}
-			MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
-			VectorCopy(aircraft->pos, aircraft->oldDrawPos);
+			MAP_Draw3DMarkerIfVisible(node, ufo->pos, angle, ufo->model, 0);
+			VectorCopy(ufo->pos, ufo->oldDrawPos);
 
 			/** @todo we should only show healthbar if aircraft is fighting but it's a slow algo */
-			if (RS_IsResearched_ptr(aircraft->tech)
+			if (RS_IsResearched_ptr(ufo->tech)
 			 || Cvar_GetInteger("debug_showcrafthealth") >= 1)
-				MAP_DrawAircraftHealthBar(node, aircraft);
+				MAP_DrawAircraftHealthBar(node, ufo);
 		}
 	}
 

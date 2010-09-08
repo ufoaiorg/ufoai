@@ -1246,12 +1246,13 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 	float minAttackerDistance = -1;
 	const aircraftSlot_t *slot;
 	int i;
+	aircraft_t *ufo;
 
 	if (maxWeapons <= 0)
 		return;
 
 	slot = &weapons[0].slot;
-	/** Check if it's a Base or an Installation */
+	/* Check if it's a Base or an Installation */
 	if (slot->installation) {
 		inst = slot->installation;
 		base = NULL;
@@ -1261,14 +1262,10 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 	} else
 		Com_Error(ERR_DROP, "BDEF_AutoSelectTarget: slot doesn't belong to any base or installation");
 
-	/** Get closest UFO(s) */
-	for (i = 0; i < ccs.numUFOs; i++) {
-		aircraft_t *ufo = &ccs.ufos[i];
-		float distance;
-
-		if (!UFO_IsUFOSeenOnGeoscape(ufo))
-			continue;
-		distance = GetDistanceOnGlobe(inst ? inst->pos : base->pos, ufo->pos);
+	/* Get closest UFO(s) */
+	ufo = NULL;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL) {
+		const float distance = GetDistanceOnGlobe(inst ? inst->pos : base->pos, ufo->pos);
 		if (minCraftDistance < 0 || minCraftDistance > distance) {
 			minCraftDistance = distance;
 			closestCraft = ufo;
@@ -1281,19 +1278,19 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 		}
 	}
 
-	/** Loop weaponslots */
+	/* Loop weaponslots */
 	for (i = 0; i < maxWeapons; i++) {
 		slot = &weapons[i].slot;
-		/** skip if autofire is disabled */
+		/* skip if autofire is disabled */
 		if (!weapons[i].autofire)
 			continue;
-		/** skip if no weapon or ammo assigned */
+		/* skip if no weapon or ammo assigned */
 		if (!slot->item || !slot->ammo)
 			continue;
-		/** skip if weapon installation not yet finished */
+		/* skip if weapon installation not yet finished */
 		if (slot->installationTime > 0)
 			continue;
-		/** skip if no more ammo left */
+		/* skip if no more ammo left */
 		/** @note it's not really needed but it's cheaper not to check ufos in this case */
 		if (slot->ammoLeft <= 0)
 			continue;

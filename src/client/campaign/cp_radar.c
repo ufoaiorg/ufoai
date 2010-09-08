@@ -571,11 +571,10 @@ qboolean RADAR_CheckUFOSensored (radar_t *radar, const vec2_t posRadar,
  */
 void RADAR_SetRadarAfterLoading (void)
 {
-	int ufoIdx;
+	aircraft_t *ufo;
 
-	for (ufoIdx = 0; ufoIdx < ccs.numUFOs; ufoIdx++) {
-		const aircraft_t const *ufo = UFO_GetByIDX(ufoIdx);
-
+	ufo = NULL;
+	while ((ufo = UFO_GetNext(ufo)) != NULL) {
 		if (!ufo->detected)
 			continue;
 
