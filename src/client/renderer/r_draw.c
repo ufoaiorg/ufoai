@@ -210,6 +210,11 @@ void R_DrawFill (int x, int y, int w, int h, const vec4_t color)
 	r_fill_arrays.verts[r_fill_arrays.vert_index + 7] = ny + nh;
 
 	r_fill_arrays.vert_index += 8;
+
+	/** @todo this shouldn't be here, but only called once at the end of the frame
+	 * but this is needed here because a) we don't want them to get rendered on top of the console
+	 * and b) the ui stuff relies on the order of these renderings */
+	R_DrawFills();
 }
 
 void R_DrawFills (void)

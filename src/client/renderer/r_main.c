@@ -281,7 +281,6 @@ void R_BeginFrame (void)
  */
 void R_RenderFrame (void)
 {
-
 	R_Setup3D();
 
 	/* activate wire mode */
@@ -366,7 +365,6 @@ void R_EndFrame (void)
 {
 	R_EnableBlend(qtrue);
 
-	R_DrawFills();  /* draw all fills accumulated above */
 	R_DrawChars();  /* draw all chars accumulated above */
 
 	/* restore draw color */

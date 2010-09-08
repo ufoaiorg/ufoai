@@ -311,18 +311,11 @@ static void SCR_DrawConsole (void)
 		/* draw the console like in game */
 		if (scr_con_current > 0.0)
 			Con_DrawConsole(scr_con_current);
-		/* allow chat in waiting dialoges */
+		/* allow chat in waiting dialogs */
 		if (cls.keyDest == key_message)
 			Con_DrawNotify(); /* only draw notify in game */
 		return;
 	}
-
-#if 0
-	if (cls.state == ca_connecting || cls.state == ca_connected) {	/* forced full screen console */
-		Con_DrawConsole(1.0);
-		return;
-	}
-#endif
 
 	if (scr_con_current > 0.0) {
 		Con_DrawConsole(scr_con_current);
@@ -428,7 +421,7 @@ void SCR_UpdateScreen (void)
 		/* draw scene, if it is need */
 		CL_ViewRender();
 
-		/* draw the menus on top of the render view (for hud and so on) */
+		/* draw the ui on top of the render view */
 		UI_Draw();
 
 		SCR_DrawConsole();
