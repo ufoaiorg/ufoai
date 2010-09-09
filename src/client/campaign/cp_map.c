@@ -384,14 +384,16 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 		CL_GameTimeStop();
 		UI_PushWindow("popup_multi_selection", NULL);
 	} else {
+		aircraft_t *aircraft = ccs.selectedAircraft;
 		/* Nothing selected */
-		if (!ccs.selectedAircraft)
+		if (!aircraft)
 			MAP_ResetAction();
-		else if (AIR_IsAircraftOnGeoscape(ccs.selectedAircraft) && AIR_AircraftHasEnoughFuel(ccs.selectedAircraft, pos)) {
+		else if (AIR_IsAircraftOnGeoscape(aircraft) && AIR_AircraftHasEnoughFuel(aircraft, pos)) {
 			/* Move the selected aircraft to the position clicked */
-			MAP_MapCalcLine(ccs.selectedAircraft->pos, pos, &ccs.selectedAircraft->route);
-			ccs.selectedAircraft->status = AIR_TRANSIT;
-			ccs.selectedAircraft->time = ufo->point = 0;
+			MAP_MapCalcLine(aircraft->pos, pos, &aircraft->route);
+			aircraft->status = AIR_TRANSIT;
+			aircraft->time = 0;
+			aircraft->point = 0;
 		}
 	}
 }
