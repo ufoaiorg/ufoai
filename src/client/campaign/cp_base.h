@@ -336,7 +336,7 @@ int B_FreeCapacity(const base_t *base, baseCapacities_t cap);
 
 /* menu functions */
 void B_BaseMenuInit(const base_t *base);
-void B_DrawBuilding(base_t* base, building_t* building);
+void B_DrawBuilding(const base_t* base, const building_t* building);
 
 /* antimatter */
 int B_AntimatterInBase(const base_t *base);

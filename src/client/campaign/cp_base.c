@@ -1497,7 +1497,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 /**
  * @brief Draws a building.
  */
-void B_DrawBuilding (base_t* base, building_t* building)
+void B_DrawBuilding (const base_t* base, const building_t* building)
 {
 	static char buildingText[MAX_BUILDING_INFO_TEXT_LENGTH];
 
@@ -3270,7 +3270,7 @@ int B_AntimatterInBase (const base_t *base)
 
 /**
  * @brief Manages antimatter (adding, removing) through Antimatter Storage Facility.
- * @param[in] base Pointer to the base.
+ * @param[in,out] base Pointer to the base.
  * @param[in] amount quantity of antimatter to add/remove (> 0 even if antimatter is removed)
  * @param[in] add True if we are adding antimatter, false when removing.
  * @note This function should be called whenever we add or remove antimatter from Antimatter Storage Facility.

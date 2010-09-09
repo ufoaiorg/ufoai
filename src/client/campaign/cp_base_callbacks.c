@@ -289,7 +289,7 @@ static void B_BaseInit_f (void)
 		else
 			UI_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("Buy or produce at least one aircraft first."));
 	} else {
-			UI_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("No Hangar functional in base."));
+		UI_ExecuteConfunc("update_basebutton aircraft true \"%s\"", _("No Hangar functional in base."));
 	}
 
 	if (BS_BuySellAllowed(base))
