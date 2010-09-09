@@ -578,8 +578,6 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 				const int itemCargoAmount = td.trItemsTmp[od->idx];
 				if (!B_ItemIsStoredInBaseStorage(od))
 					continue;
-				if (od->isVirtual)
-					continue;
 				if (itemCargoAmount || B_ItemInBase(od, srcbase) > 0) {
 					if (itemCargoAmount > 0)
 						LIST_AddString(&transferListTransfered, va("%i", itemCargoAmount));
@@ -1428,14 +1426,12 @@ static void TR_TransferList_Scroll_f (void)
 		const int itemCargoAmount = td.trItemsTmp[od->idx];
 		if (!B_ItemIsStoredInBaseStorage(od))
 			continue;
-		if (od->isVirtual)
-			continue;
-		if (srcBase->storage.numItems[od->idx] || itemCargoAmount) {
+		if (itemCargoAmount || B_ItemInBase(od, srcBase) > 0) {
 			if (cnt >= viewPos + MAX_TRANSLIST_MENU_ENTRIES)
 				break;
 			if (cnt >= viewPos)
 				UI_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos,
-						itemCargoAmount, 0, srcBase->storage.numItems[od->idx] + itemCargoAmount);
+						itemCargoAmount, 0, B_ItemInBase(od, srcBase) + itemCargoAmount);
 			cnt++;
 		}
 	}

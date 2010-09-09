@@ -158,8 +158,8 @@ static inline qboolean BS_GetMinMaxValueByItemID (const base_t *base, int itemNu
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[itemNum + buyList.scroll]);
 		if (!item)
 			return qfalse;
-		*value = base->storage.numItems[item->idx];
-		*max = base->storage.numItems[item->idx] + ccs.eMarket.numItems[item->idx];
+		*value = B_ItemInBase(item, base);
+		*max = B_ItemInBase(item, base) + ccs.eMarket.numItems[item->idx];
 		*min = 0;
 	}
 
@@ -212,7 +212,7 @@ static void BS_MarketScroll_f (void)
 		else {
 			const objDef_t *od = BS_GetObjectDefition(&buyList.l[i]);
 			/* Check whether the item matches the proper filter, storage in current base and market. */
-			if (od && (base->storage.numItems[od->idx] || ccs.eMarket.numItems[od->idx]) && INV_ItemMatchesFilter(od, buyCat)) {
+			if (od && (B_ItemInBase(od, base) > 0 || ccs.eMarket.numItems[od->idx]) && INV_ItemMatchesFilter(od, buyCat)) {
 				UI_ExecuteConfunc("buy_show %i", i - buyList.scroll);
 				BS_UpdateItem(base, i - buyList.scroll);
 				if (ccs.eMarket.autosell[od->idx])
@@ -362,7 +362,7 @@ static void BS_BuyType (const base_t *base)
 			if (!BS_IsOnMarket(od))
 				continue;
 			/* Check whether the item matches the proper filter, storage in current base and market. */
-			if ((base->storage.numItems[i] || ccs.eMarket.numItems[i])
+			if ((B_ItemInBase(od, base) || ccs.eMarket.numItems[i])
 			 && INV_ItemMatchesFilter(od, FILTER_CRAFTITEM)) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
@@ -371,7 +371,7 @@ static void BS_BuyType (const base_t *base)
 					else
 						UI_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
 				}
-				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
+				BS_AddToList(od->name, B_ItemInBase(od, base), ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 				if (j >= MAX_BUYLIST)
 					Com_Error(ERR_DROP, "Increase the MAX_FILTERLIST value to handle that much items\n");
 				buyList.l[j].item = od;
@@ -425,8 +425,8 @@ static void BS_BuyType (const base_t *base)
 				continue;
 
 			/* Check whether the item matches the proper filter, storage in current base and market. */
-			if (INV_ItemMatchesFilter(od, FILTER_UGVITEM) && (base->storage.numItems[i] || ccs.eMarket.numItems[i])) {
-				BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
+			if (INV_ItemMatchesFilter(od, FILTER_UGVITEM) && (B_ItemInBase(od, base) || ccs.eMarket.numItems[i])) {
+				BS_AddToList(od->name, B_ItemInBase(od, base), ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 				/* Set state of Autosell button. */
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
@@ -455,8 +455,8 @@ static void BS_BuyType (const base_t *base)
 				if (!BS_IsOnMarket(od))
 					continue;
 				/* Check whether the item matches the proper filter, storage in current base and market. */
-				if ((base->storage.numItems[i] || ccs.eMarket.numItems[i]) && INV_ItemMatchesFilter(od, buyCat)) {
-					BS_AddToList(od->name, base->storage.numItems[i], ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
+				if ((B_ItemInBase(od, base) || ccs.eMarket.numItems[i]) && INV_ItemMatchesFilter(od, buyCat)) {
+					BS_AddToList(od->name, B_ItemInBase(od, base), ccs.eMarket.numItems[i], BS_GetItemBuyingPrice(od));
 					/* Set state of Autosell button. */
 					if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 						UI_ExecuteConfunc("buy_show %i", j - buyList.scroll);
@@ -842,7 +842,7 @@ static void BS_SellItem_f (void)
 			/** @todo message - Couldn't fire employee. */
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't sell/fire robot/ugv.\n");
 		} else {
-			if (base->storage.numItems[ugvWeapon->idx]) {
+			if (B_ItemInBase(ugvWeapon, base) > 0) {
 				/* If we have a weapon we sell it as well. */
 				B_UpdateStorageAndCapacity(base, ugvWeapon, -1, qfalse, qfalse);
 				BS_AddItemToMarket(ugvWeapon, 1);
@@ -853,7 +853,7 @@ static void BS_SellItem_f (void)
 	} else {
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[num + buyList.scroll]);
 		/* don't sell more items than we have */
-		const int numItems = min(base->storage.numItems[item->idx], BS_GetBuySellFactor());
+		const int numItems = min(B_ItemInBase(item, base), BS_GetBuySellFactor());
 		/* Normal item (or equipment for UGVs/Robots if buyCategory==BUY_HEAVY) */
 		assert(item);
 		currentSelectedMenuEntry = item;

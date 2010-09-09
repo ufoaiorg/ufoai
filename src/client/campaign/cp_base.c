@@ -553,9 +553,9 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
  */
 static void B_UpdateAntimatterCap (base_t *base)
 {
-	objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
+	const objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
 	if (od != NULL)
-		base->capacities[CAP_ANTIMATTER].cur = base->storage.numItems[od->idx];
+		base->capacities[CAP_ANTIMATTER].cur = B_ItemInBase(od, base);
 }
 
 /**
@@ -2609,9 +2609,10 @@ void B_AircraftReturnedToHomeBase (aircraft_t* aircraft)
  */
 qboolean B_BaseHasItem (const base_t *base, const objDef_t *item)
 {
-	assert(base);
-	assert(item);
-	return (item->isVirtual || base->storage.numItems[item->idx] > 0);
+	if (item->isVirtual)
+		return qtrue;
+
+	return B_ItemInBase(item, base) > 0;
 }
 
 /**
@@ -3066,7 +3067,7 @@ int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
 		base->storage.numItems[obj->idx] += amount;
 	} else if (amount < 0) {
 		/* correct amount */
-		amount = max(amount, -base->storage.numItems[obj->idx]);
+		amount = max(amount, -B_ItemInBase(obj, base));
 		if (obj->size > 0)
 			base->capacities[CAP_ITEMS].cur += (amount * obj->size);
 		base->storage.numItems[obj->idx] += amount;
@@ -3186,7 +3187,7 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 			continue;
 
 		/* Don't count item that we don't have in base */
-		if (!base->storage.numItems[i])
+		if (B_ItemInBase(obj, base) <= 0)
 			continue;
 
 		objIdx[num++] = i;
@@ -3212,7 +3213,7 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 			 *	=> destroy all items of this type */
 			const int idx = objIdx[randNumber];
 			objDef_t *od = INVSH_GetItemByIDX(idx);
-			B_UpdateStorageAndCapacity(base, od, -base->storage.numItems[idx], qfalse, qfalse);
+			B_UpdateStorageAndCapacity(base, od, -B_ItemInBase(od, base), qfalse, qfalse);
 		}
 		REMOVE_ELEM(objIdx, randNumber, num);
 
@@ -3241,7 +3242,7 @@ void B_UpdateStorageCap (base_t *base)
 		if (!B_ItemIsStoredInBaseStorage(obj))
 			continue;
 
-		base->capacities[CAP_ITEMS].cur += base->storage.numItems[i] * obj->size;
+		base->capacities[CAP_ITEMS].cur += B_ItemInBase(obj, base) * obj->size;
 	}
 
 	/* UGV takes room in storage capacity */
@@ -3262,7 +3263,7 @@ int B_AntimatterInBase (const base_t *base)
 		Com_Error(ERR_DROP, "Could not find "ANTIMATTER_TECH_ID" object definition");
 
 	assert(base);
-	assert(base->storage.numItems[od->idx] == base->capacities[CAP_ANTIMATTER].cur);
+	assert(B_ItemInBase(od, base) == base->capacities[CAP_ANTIMATTER].cur);
 #endif
 
 	return base->capacities[CAP_ANTIMATTER].cur;

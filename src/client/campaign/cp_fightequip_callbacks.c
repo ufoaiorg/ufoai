@@ -210,11 +210,9 @@ static void AIM_UpdateAircraftItemList (const aircraftSlot_t *slot)
 	currentTech = techList;
 	while (*currentTech) {
 		if (AIM_CrafttypeFilter(base, airequipID, *currentTech)) {
-			int amount;
 			uiNode_t *option;
 			objDef_t *item = INVSH_GetItemByID((*currentTech)->provides);
-			assert(item);
-			amount = base->storage.numItems[item->idx];
+			const int amount = B_ItemInBase(item, base);
 
 			LIST_AddString(&amountList, va("%d", amount));
 			option = UI_AddOption(&AIM_items, (*currentTech)->name, _((*currentTech)->name), va("%d", (*currentTech)->idx));

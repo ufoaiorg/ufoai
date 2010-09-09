@@ -1317,7 +1317,7 @@ static void CL_DebugAllItems_f (void)
 		if (!obj->weapon && !obj->numWeapons)
 			continue;
 		B_UpdateStorageAndCapacity(base, obj, 1, qfalse, qtrue);
-		if (base->storage.numItems[i] > 0) {
+		if (B_ItemInBase(obj, base) > 0) {
 			technology_t *tech = RS_GetTechForItem(obj);
 			RS_MarkCollected(tech);
 		}
@@ -1347,7 +1347,7 @@ static void CL_DebugShowItems_f (void)
 
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *obj = INVSH_GetItemByIDX(i);
-		Com_Printf("%i. %s: %i\n", i, obj->id, base->storage.numItems[i]);
+		Com_Printf("%i. %s: %i\n", i, obj->id, B_ItemInBase(obj, base));
 	}
 }
 

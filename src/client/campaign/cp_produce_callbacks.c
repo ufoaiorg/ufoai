@@ -86,7 +86,7 @@ static void PR_UpdateProductionList (const base_t* base)
 		if (prod->item) {
 			const objDef_t *od = prod->item;
 			LIST_AddString(&productionList, va("%s", _(od->name)));
-			LIST_AddString(&productionAmount, va("%i", base->storage.numItems[prod->item->idx]));
+			LIST_AddString(&productionAmount, va("%i", B_ItemInBase(prod->item, base)));
 			LIST_AddString(&productionQueued, va("%i", prod->amount));
 		} else if (prod->aircraft) {
 			const aircraft_t *aircraftTemplate = prod->aircraft;
@@ -166,7 +166,7 @@ static void PR_UpdateProductionList (const base_t* base)
 				LIST_AddPointer(&productionItemList, od);
 
 				LIST_AddString(&productionList, va("%s", _(od->name)));
-				LIST_AddString(&productionAmount, va("%i", base->storage.numItems[i]));
+				LIST_AddString(&productionAmount, va("%i", B_ItemInBase(od, base)));
 				LIST_AddString(&productionQueued, "");
 			}
 		}
