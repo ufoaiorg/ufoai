@@ -95,7 +95,7 @@ ifeq ($(BUILD_DEDICATED),1)
 endif
 
 # Say how to link the exe
-$(SERVER_TARGET): $(SERVER_OBJS)
+$(SERVER_TARGET): dirs $(SERVER_OBJS)
 	@echo " * [DED] ... linking $(LDFLAGS) ($(SERVER_LIBS) $(SDL_LIBS))"; \
 		$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) $(SERVER_LIBS) $(SDL_LIBS)
 

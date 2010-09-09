@@ -86,7 +86,7 @@ ifneq ($(HARD_LINKED_GAME),1)
 endif
 
 # Say how about to build the target
-$(GAME_TARGET) : $(GAME_OBJS)
+$(GAME_TARGET) : dirs $(GAME_OBJS)
 	@echo " * [GAM] ... linking $(LNKFLAGS) ($(GAME_LIBS))"; \
 		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(GAME_OBJS) $(GAME_LIBS) $(LNKFLAGS)
 

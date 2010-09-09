@@ -88,7 +88,7 @@ ifeq ($(BUILD_TESTS),1)
 endif
 
 # Say how to link the exe
-$(TESTS_TARGET): $(TESTS_OBJS)
+$(TESTS_TARGET): dirs $(TESTS_OBJS)
 	@echo " * [TEST] ... linking $(LNKFLAGS) ($(TESTS_LIBS) $(SERVER_LIBS) $(CLIENT_LIBS) $(SDL_LIBS))"; \
 		$(CC) $(LDFLAGS) -o $@ $(TESTS_OBJS) $(LNKFLAGS) $(TESTS_LIBS) $(SDL_LIBS) $(CLIENT_LIBS) $(SERVER_LIBS)
 

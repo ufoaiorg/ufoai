@@ -354,7 +354,7 @@ ifeq ($(BUILD_CLIENT),1)
 endif
 
 # Say how to link the exe
-$(CLIENT_TARGET): $(CLIENT_OBJS)
+$(CLIENT_TARGET): dirs $(CLIENT_OBJS)
 	@echo " * [UFO] ... linking $(LDFLAGS) ($(CLIENT_LIBS) $(SDL_LIBS))"; \
 		$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJS) $(LNKFLAGS) $(CLIENT_LIBS) $(SDL_LIBS)
 

@@ -97,11 +97,11 @@ ifeq ($(BUILD_UFOMODEL),1)
 endif
 
 # Say how to link the exe
-$(UFO2MAP_TARGET): $(UFO2MAP_OBJS)
+$(UFO2MAP_TARGET): dirs $(UFO2MAP_OBJS)
 	@echo " * [MAP] ... linking $(LNKFLAGS) ($(TOOLS_LIBS) $(SDL_LIBS))"; \
 		$(CC) $(LDFLAGS) -o $@ $(UFO2MAP_OBJS) $(TOOLS_LIBS) $(SDL_LIBS) $(LNKFLAGS)
 
-$(UFOMODEL_TARGET): $(UFOMODEL_OBJS)
+$(UFOMODEL_TARGET): dirs $(UFOMODEL_OBJS)
 	@echo " * [MOD] ... linking $(LNKFLAGS) ($(TOOLS_LIBS) $(SDL_LIBS))"; \
 		$(CC) $(LDFLAGS) -o $@ $(UFOMODEL_OBJS) $(TOOLS_LIBS) $(SDL_LIBS) $(LNKFLAGS)
 

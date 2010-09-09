@@ -82,7 +82,9 @@ all: all2
 
 ALL_DEPS = $(patsubst %.o, %.d, $(ALL_OBJS) $(ALL_RADIANT_OBJS))
 
-all2: Makefile $(BUILDDIR)/.dirs $(TARGETS) echo_info
+dirs: $(BUILDDIR)/.dirs
+
+all2: Makefile dirs $(TARGETS) echo_info
 
 # check that the makefile is up to date
 Makefile: Makefile.in
