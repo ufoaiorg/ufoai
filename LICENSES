@@ -6134,6 +6134,8 @@ base/textures/tex_misc/books006.jpg | Creative Commons Attribution 3.0 Unported 
 base/textures/tex_misc/books007.jpg | Public Domain | Screenland | http://www.archive.org/details/ScreenlandOct.1923
 base/textures/tex_misc/books008.jpg | Public Domain | Hawthorne, Nathaniel, 1804-1864; Sterrett, Virginia Frances, ill | http://www.archive.org/details/tanglewoodtales00hawt
 base/textures/tex_misc/books009.jpg | Public Domain | Jacobs, Joseph, 1854-1916 | http://www.archive.org/details/englishfairytale00jaco
+base/textures/tex_misc/bookshelf.png | GNU General Public License 2.0 | Nate Wright
+base/textures/tex_misc/bookshelf_nm.png | GNU General Public License 2.0 | Nate Wright
 base/textures/tex_misc/box001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -6778,6 +6780,8 @@ contrib/scripts/compile_po.bat |  | Kostia "Kildor" Romanov
 contrib/scripts/update_potfiles_in.bat |  | Kostia "Kildor" Romanov
 radiant/bitmaps/texwindow_uniformsize.png |  | orbweaver (commiter in darkradiant repository) | http://darkradiant.svn.sourceforge.net/viewvc/darkradiant/trunk/darkradiant/install/bitmaps/texwindow_uniformsize.png?view=markup&pathrev=309
 radiant/prefabs/dropships/drop_firebird.map | GNU General Public License 2.0
+radiant/prefabs/household/bookshelf.jpg | GNU General Public License 2.0 | Nate Wright
+radiant/prefabs/household/bookshelf.map | GNU General Public License 2.0 | Nate Wright
 radiant/prefabs/household/living_room/couch_corner.map | GNU General Public License 2.0
 radiant/prefabs/interceptors/inter_saracen.map | GNU General Public License 2.0
 radiant/prefabs/interceptors/inter_stiletto.map | GNU General Public License 2.0
