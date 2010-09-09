@@ -109,8 +109,8 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 			for (i = 0; i < MAX_EMPL; i++) {
 				int j;
 				for (j = 0; j < ccs.numEmployees[i]; j++) {
-					if (transfer->employeeArray[i][j]) {
-						employee_t *employee = transfer->employeeArray[i][j];
+					employee_t *employee = transfer->employeeArray[i][j];
+					if (employee) {
 						employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
 						/* every employee that we have transfered should have a
 						 * base he is hire in - otherwise we couldn't have transfered him */
@@ -125,8 +125,8 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 			for (i = 0; i < MAX_EMPL; i++) {
 				int j;
 				for (j = 0; j < ccs.numEmployees[i]; j++) {
-					if (transfer->employeeArray[i][j]) {
-						employee_t *employee = transfer->employeeArray[i][j];
+					employee_t *employee = transfer->employeeArray[i][j];
+					if (employee) {
 						employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
 						/* every employee that we have transfered should have a
 						 * base he is hire in - otherwise we couldn't have transfered him */

@@ -224,11 +224,12 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 	/* Count size of all items already on the transfer list. */
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *object = INVSH_GetItemByIDX(i);
-		if (td.trItemsTmp[i] > 0) {
+		const int itemCargoAmount = td.trItemsTmp[i];
+		if (itemCargoAmount > 0) {
 			if (!strcmp(object->id, ANTIMATTER_TECH_ID))
-				amtransfer = td.trItemsTmp[i];
+				amtransfer = itemCargoAmount;
 			else
-				intransfer += object->size * td.trItemsTmp[i];
+				intransfer += object->size * itemCargoAmount;
 		}
 	}
 
@@ -406,9 +407,10 @@ static void TR_CargoList (void)
 	/* Show items. */
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
-		if (td.trItemsTmp[i] > 0) {
+		const int itemCargoAmount = td.trItemsTmp[i];
+		if (itemCargoAmount > 0) {
 			LIST_AddString(&cargoList, _(od->name));
-			LIST_AddString(&cargoListAmount, va("%i", td.trItemsTmp[i]));
+			LIST_AddString(&cargoListAmount, va("%i", itemCargoAmount));
 			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_ITEM;
 			td.cargo[td.trCargoCountTmp].itemidx = i;
 			td.trCargoCountTmp++;
@@ -557,32 +559,35 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	case TRANS_TYPE_ITEM:
 		if (B_GetBuildingStatus(destbase, B_ANTIMATTER)) {
 			const objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
-			if (B_AntimatterInBase(srcbase) || td.trItemsTmp[od->idx]) {
-				if (td.trItemsTmp[od->idx] > 0)
-					LIST_AddString(&transferListTransfered, va("%i", td.trItemsTmp[od->idx]));
+			const int itemCargoAmount = td.trItemsTmp[od->idx];
+			const int antiMatterInBase = B_AntimatterInBase(srcbase);
+			if (itemCargoAmount || antiMatterInBase) {
+				if (itemCargoAmount > 0)
+					LIST_AddString(&transferListTransfered, va("%i", itemCargoAmount));
 				else
 					LIST_AddString(&transferListTransfered, "");
 				Com_sprintf(str, sizeof(str), "%s", _(od->name));
 				LIST_AddString(&transferList, str);
-				LIST_AddString(&transferListAmount, va("%i", B_AntimatterInBase(srcbase)));
+				LIST_AddString(&transferListAmount, va("%i", antiMatterInBase));
 				cnt++;
 			}
 		}
 		if (B_GetBuildingStatus(destbase, B_STORAGE)) {
 			for (i = 0; i < csi.numODs; i++) {
 				const objDef_t *od = INVSH_GetItemByIDX(i);
+				const int itemCargoAmount = td.trItemsTmp[od->idx];
 				if (!B_ItemIsStoredInBaseStorage(od))
 					continue;
 				if (od->isVirtual)
 					continue;
-				if (td.trItemsTmp[od->idx] || B_ItemInBase(od, srcbase) > 0) {
-					if (td.trItemsTmp[od->idx] > 0)
-						LIST_AddString(&transferListTransfered, va("%i", td.trItemsTmp[od->idx]));
+				if (itemCargoAmount || B_ItemInBase(od, srcbase) > 0) {
+					if (itemCargoAmount > 0)
+						LIST_AddString(&transferListTransfered, va("%i", itemCargoAmount));
 					else
 						LIST_AddString(&transferListTransfered, "");
 					Com_sprintf(str, sizeof(str), "%s", _(od->name));
 					LIST_AddString(&transferList, str);
-					LIST_AddString(&transferListAmount, va("%i", srcbase->storage.numItems[od->idx]));
+					LIST_AddString(&transferListAmount, va("%i", B_ItemInBase(od, srcbase)));
 					cnt++;
 				}
 			}
@@ -655,7 +660,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 				const aliensCont_t *alienCont = &srcbase->alienscont[i];
 				if (alienCont->teamDef && alienCont->amountDead > 0) {
 					Com_sprintf(str, sizeof(str), _("Corpse of %s"),
-					_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))));
+							_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))));
 					LIST_AddString(&transferList, str);
 					LIST_AddString(&transferListAmount, va("%i", alienCont->amountDead));
 					if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
@@ -666,7 +671,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 				}
 				if (alienCont->teamDef && alienCont->amountAlive > 0) {
 					Com_sprintf(str, sizeof(str), _("Alive %s"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))));
+							_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))));
 					LIST_AddString(&transferList, str);
 					LIST_AddString(&transferListAmount, va("%i", alienCont->amountAlive));
 					if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
@@ -770,18 +775,21 @@ static void TR_TransferListClear_f (void)
 
 	for (i = 0; i < csi.numODs; i++) {	/* Return items. */
 		const objDef_t *od = INVSH_GetItemByIDX(i);
-		if (td.trItemsTmp[od->idx] > 0) {
+		const int itemCargoAmount = td.trItemsTmp[od->idx];
+		if (itemCargoAmount > 0) {
 			if (!strcmp(od->id, ANTIMATTER_TECH_ID))
-				B_ManageAntimatter(base, td.trItemsTmp[od->idx], qtrue);
+				B_ManageAntimatter(base, itemCargoAmount, qtrue);
 			else
-				B_UpdateStorageAndCapacity(base, od, td.trItemsTmp[od->idx], qfalse, qfalse);
+				B_UpdateStorageAndCapacity(base, od, itemCargoAmount, qfalse, qfalse);
 		}
 	}
 	for (i = 0; i < ccs.numAliensTD; i++) {	/* Return aliens. */
-		if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
-			AL_ChangeAliveAlienNumber(base, &(base->alienscont[i]), td.trAliensTmp[i][TRANS_ALIEN_ALIVE]);
-		if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
-			base->alienscont[i].amountDead += td.trAliensTmp[i][TRANS_ALIEN_DEAD];
+		const int alienCargoAmountAlive = td.trAliensTmp[i][TRANS_ALIEN_ALIVE];
+		const int alienCargoAmountDead = td.trAliensTmp[i][TRANS_ALIEN_DEAD];
+		if (alienCargoAmountAlive > 0)
+			AL_ChangeAliveAlienNumber(base, &(base->alienscont[i]), alienCargoAmountAlive);
+		if (alienCargoAmountDead > 0)
+			base->alienscont[i].amountDead += alienCargoAmountDead;
 	}
 
 	/* Clear temporary cargo arrays. */
@@ -858,7 +866,8 @@ static void TR_TransferListSelect_f (void)
 	case TRANS_TYPE_ITEM:
 		if (B_GetBuildingStatus(td.transferBase, B_ANTIMATTER)) {
 			const objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
-			if (B_AntimatterInBase(base) || td.trItemsTmp[od->idx]) {
+			const int itemCargoAmount = td.trItemsTmp[od->idx];
+			if (itemCargoAmount || B_AntimatterInBase(base)) {
 				if (cnt == num) {
 					int amount;
 
@@ -875,7 +884,7 @@ static void TR_TransferListSelect_f (void)
 						/* you can only transfer items that destination base can accept */
 						amount = TR_CheckItem(od, td.transferBase, amount);
 					} else if (amount < 0) {
-						amount = max(amount, - td.trItemsTmp[od->idx]);
+						amount = max(amount, -itemCargoAmount);
 					}
 
 					if (amount) {
@@ -890,11 +899,12 @@ static void TR_TransferListSelect_f (void)
 		}
 		for (i = 0; i < csi.numODs; i++) {
 			const objDef_t *od = INVSH_GetItemByIDX(i);
+			const int itemCargoAmount = td.trItemsTmp[i];
 			if (!B_ItemIsStoredInBaseStorage(od))
 				continue;
 			if (od->isVirtual)
 				continue;
-			if (td.trItemsTmp[od->idx] || B_ItemInBase(od, base) > 0) {
+			if (itemCargoAmount || B_ItemInBase(od, base) > 0) {
 				if (cnt == num) {
 					int amount;
 
@@ -905,13 +915,13 @@ static void TR_TransferListSelect_f (void)
 
 					/* you can't transfer more item than you have */
 					if (amount > 0) {
-						amount = min(amount, base->storage.numItems[od->idx]);
+						amount = min(amount, B_ItemInBase(od, base));
 						if (amount == 0)
 							return;
 						/* you can only transfer items that destination base can accept */
 						amount = TR_CheckItem(od, td.transferBase, amount);
 					} else if (amount < 0) {
-						amount = max(amount, - td.trItemsTmp[od->idx]);
+						amount = max(amount, -itemCargoAmount);
 					}
 
 					if (amount) {
@@ -969,21 +979,24 @@ static void TR_TransferListSelect_f (void)
 		if (!B_GetBuildingStatus(td.transferBase, B_ALIEN_CONTAINMENT))
 			return;
 		for (i = 0; i < ccs.numAliensTD; i++) {
-			if (base->alienscont[i].teamDef && base->alienscont[i].amountDead > 0) {
+			aliensCont_t *aliensCont = &base->alienscont[i];
+			if (!aliensCont->teamDef)
+				continue;
+			if (aliensCont->amountDead > 0) {
 				if (cnt == num) {
 					td.trAliensTmp[i][TRANS_ALIEN_DEAD]++;
 					/* Remove the corpse from Alien Containment. */
-					base->alienscont[i].amountDead--;
+					aliensCont->amountDead--;
 					break;
 				}
 				cnt++;
 			}
-			if (base->alienscont[i].teamDef && base->alienscont[i].amountAlive > 0) {
+			if (aliensCont->amountAlive > 0) {
 				if (cnt == num) {
 					if (TR_CheckAlien(td.transferBase)) {
 						td.trAliensTmp[i][TRANS_ALIEN_ALIVE]++;
 						/* Remove an alien from Alien Containment. */
-						AL_ChangeAliveAlienNumber(base, &(base->alienscont[i]), -1);
+						AL_ChangeAliveAlienNumber(base, aliensCont, -1);
 						break;
 					} else
 						return;
@@ -1149,9 +1162,10 @@ static void TR_CargoListSelect_f (void)
 	case CARGO_TYPE_ITEM:
 		for (i = 0; i < csi.numODs; i++) {
 			const objDef_t *od = INVSH_GetItemByIDX(i);
-			if (td.trItemsTmp[od->idx] > 0) {
+			const int itemCargoAmount = td.trItemsTmp[od->idx];
+			if (itemCargoAmount > 0) {
 				if (cnt == num) {
-					const int amount = min(TR_GetTransferFactor(), td.trItemsTmp[od->idx]);
+					const int amount = min(TR_GetTransferFactor(), itemCargoAmount);
 					/* you can't transfer more item than there are in current transfer */
 					td.trItemsTmp[i] -= amount;
 					if (!strcmp(od->id, ANTIMATTER_TECH_ID))
@@ -1386,6 +1400,7 @@ static void TR_TransferList_Scroll_f (void)
 	int viewPos;
 	base_t *srcBase = B_GetCurrentSelectedBase();
 	const objDef_t *antimatterOD = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
+	const int antimatterCargo = td.trItemsTmp[antimatterOD->idx];
 
 	if (!srcBase)
 		return;
@@ -1402,24 +1417,25 @@ static void TR_TransferList_Scroll_f (void)
 	if (transferType != TRANS_TYPE_ITEM)
 		return;
 
-	if (B_GetBuildingStatus(td.transferBase, B_ANTIMATTER) && (td.trItemsTmp[antimatterOD->idx] || B_AntimatterInBase(srcBase))) {
+	if (B_GetBuildingStatus(td.transferBase, B_ANTIMATTER) && (antimatterCargo || B_AntimatterInBase(srcBase))) {
 		if (cnt >= viewPos && cnt < viewPos + MAX_TRANSLIST_MENU_ENTRIES)
 			UI_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos,
-					td.trItemsTmp[antimatterOD->idx], 0, B_AntimatterInBase(srcBase) + td.trItemsTmp[antimatterOD->idx]);
+					antimatterCargo, 0, B_AntimatterInBase(srcBase) + antimatterCargo);
 		cnt++;
 	}
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);
+		const int itemCargoAmount = td.trItemsTmp[od->idx];
 		if (!B_ItemIsStoredInBaseStorage(od))
 			continue;
 		if (od->isVirtual)
 			continue;
-		if (srcBase->storage.numItems[od->idx] || td.trItemsTmp[od->idx]) {
+		if (srcBase->storage.numItems[od->idx] || itemCargoAmount) {
 			if (cnt >= viewPos + MAX_TRANSLIST_MENU_ENTRIES)
 				break;
 			if (cnt >= viewPos)
 				UI_ExecuteConfunc("trans_updatespinners %i %i %i %i", cnt - viewPos,
-						td.trItemsTmp[od->idx], 0, srcBase->storage.numItems[od->idx] + td.trItemsTmp[od->idx]);
+						itemCargoAmount, 0, srcBase->storage.numItems[od->idx] + itemCargoAmount);
 			cnt++;
 		}
 	}
