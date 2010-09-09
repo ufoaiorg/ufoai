@@ -1155,9 +1155,6 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 		MAP_CheckPositionBoundaries(aircraft->pos);
 	}
 
-	aircraft->hasMoved = qtrue;
-	aircraft->numInterpolationPoints = 0;
-
 	dist = (float) aircraft->stats[AIR_STATS_SPEED] * (aircraft->time + dt) / (float)SECONDS_PER_HOUR;
 
 	/* Now calculate the projected position. This is the position that the aircraft should get on

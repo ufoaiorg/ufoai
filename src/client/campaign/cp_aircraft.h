@@ -184,9 +184,7 @@ typedef struct aircraft_s {
 	vec3_t pos;			/**< Current position on the geoscape. */
 	vec3_t direction;	/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */
 	vec3_t projectedPos;	/**< Projected position of the aircraft (latitude and longitude). */
-	vec3_t oldDrawPos;	/**< The old draw position of the aircraft ( (latitude and longitude). */
-	qboolean hasMoved;       /**< Has the aircraft been moved. */
-	int numInterpolationPoints;	/**< Number of points drawn so far during interpolation. */
+	mapline_t route;
 	int point;			/**< Number of route points that has already been done when aircraft is moving */
 	int time;			/**< Elapsed seconds since aircraft started it's new route */
 	int hangar;			/**< This is the baseCapacities_t enum value which says in which hangar this aircraft
@@ -203,7 +201,6 @@ typedef struct aircraft_s {
 	aircraftSlot_t electronics[MAX_AIRCRAFTSLOT];		/**< Electronics assigned to aircraft */
 	int maxElectronics;				/**< Total number of electronics slots aboard this aircraft  (empty or not) */
 
-	mapline_t route;
 	struct base_s *homebase;			/**< Pointer to homebase for faster access. */
 	itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
 	int itemTypes;						/**< How many types of items we collected. */

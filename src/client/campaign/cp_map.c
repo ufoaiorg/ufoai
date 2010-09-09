@@ -1637,7 +1637,6 @@ static void MAP_DrawMapOnePhalanxAircraft (const uiNode_t* node, aircraft_t *air
 
 	/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
 	MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
-	VectorCopy(aircraft->pos, aircraft->oldDrawPos);
 
 	/** @todo we should only show healthbar if aircraft is fighting but it's a slow algo */
 	if (oneUFOVisible || Cvar_GetInteger("debug_showcrafthealth") >= 1)
@@ -1854,7 +1853,6 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 				}
 			}
 			MAP_Draw3DMarkerIfVisible(node, ufo->pos, angle, ufo->model, 0);
-			VectorCopy(ufo->pos, ufo->oldDrawPos);
 
 			/** @todo we should only show healthbar if aircraft is fighting but it's a slow algo */
 			if (RS_IsResearched_ptr(ufo->tech)
