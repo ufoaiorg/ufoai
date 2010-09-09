@@ -99,14 +99,15 @@ typedef struct seq2D_s {
 	char *text;				/**< a placeholder for gettext (V_TRANSLATION_STRING) */
 	char font[MAX_VAR];		/**< the font to use in case this is a text object */
 	char image[MAX_VAR];	/**< the image to render */
-	vec2_t pos;			/**< the position of the 2d obj */
-	vec2_t speed;		/**< how fast the 2d obj will change (fade, scale, ...) */
-	vec2_t size;		/**< the size of the 2d obj */
-	vec2_t enlarge;		/**< enlarge in x and y direction */
-	vec4_t color;		/**< 2d obj color */
-	vec4_t fade;		/**< the fade color */
-	vec4_t bgcolor;		/**< background color of the box define by @c pos, @c size */
-	align_t align;		/**< the alignment of the 2d obj */
+	vec2_t pos;				/**< the position of the 2d obj */
+	vec2_t speed;			/**< how fast the 2d obj will change (fade, scale, ...) */
+	vec2_t size;			/**< the size of the 2d obj */
+	vec2_t enlarge;			/**< enlarge in x and y direction */
+	vec4_t color;			/**< 2d obj color */
+	vec4_t fade;			/**< the fade color */
+	vec4_t bgcolor;			/**< background color of the box define by @c pos, @c size */
+	align_t align;			/**< the alignment of the 2d obj */
+	qboolean inBackground;	/**< If true, display the objet under the 3D objects */
 	qboolean relativePos;	/**< useful for translations when sentence length may differ */
 } seq2D_t;
 
@@ -201,6 +202,7 @@ static const value_t seq2D_vals[] = {
 	{"color", V_COLOR, offsetof(seq2D_t, color), MEMBER_SIZEOF(seq2D_t, color)},
 	{"fade", V_COLOR, offsetof(seq2D_t, fade), MEMBER_SIZEOF(seq2D_t, fade)},
 	{"align", V_ALIGN, offsetof(seq2D_t, align), MEMBER_SIZEOF(seq2D_t, align)},
+	{"inbackground", V_BOOL, offsetof(seq2D_t, inBackground), MEMBER_SIZEOF(seq2D_t, inBackground)},
 	{"relative", V_BOOL, offsetof(seq2D_t, relativePos), MEMBER_SIZEOF(seq2D_t, relativePos)},
 	{NULL, 0, 0, 0},
 };
@@ -349,8 +351,10 @@ static void SEQ_Render3D (sequenceContext_t *context)
 /**
  * @brief Renders text and images
  * @sa SEQ_InitStartup
+ * @param[in] context Sequence context
+ * @param[in] backgroundObjects if true, draw background objects, else display foreground objects
  */
-static void SEQ_Render2D (sequenceContext_t *context)
+static void SEQ_Render2D (sequenceContext_t *context, qboolean backgroundObjects)
 {
 	seq2D_t *s2d;
 	int i, j;
@@ -359,6 +363,8 @@ static void SEQ_Render2D (sequenceContext_t *context)
 	/* add texts */
 	for (i = 0, s2d = context->obj2Ds; i < context->numObj2Ds; i++, s2d++) {
 		if (!s2d->inuse)
+			continue;
+		if (backgroundObjects != s2d->inBackground)
 			continue;
 
 		if (s2d->relativePos && height > 0) {
@@ -523,8 +529,9 @@ qboolean SEQ_Render (sequenceContext_t *context)
 	pos[2] = 0;
 	UI_Transform(pos, NULL, NULL);
 
+	SEQ_Render2D(context, qtrue);
 	SEQ_Render3D(context);
-	SEQ_Render2D(context);
+	SEQ_Render2D(context, qfalse);
 
 	UI_Transform(NULL, NULL, NULL);
 	return qtrue;
