@@ -261,7 +261,6 @@ class Analysis(object):
     def addSubDir(self, dirName):
         meta = RESOURCES.getResource(dirName)
         if meta.revision == None:
-            print "RETURN", meta.fileName, meta.revision, RESOURCES.mode
             return
         a = Analysis(dirName, deep = self.deep + 1, base = self.base)
         self.subAnalysis.add(a)
@@ -522,6 +521,10 @@ def main():
     #if not ABS_URL:
     #    print "-u is required."
     #    sys.exit(1)
+
+    if os.name == 'nt':
+        print "Force --disable-plots option for Windows users"
+        PLOT = False
 
     print "-------------------------"
     print "Absolute URL:\t\t", ABS_URL
