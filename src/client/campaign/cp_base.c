@@ -2670,9 +2670,10 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		base->capacities[cap].max = 0;
 		/* Get building capacity. */
 		for (i = 0; i < ccs.numBuildingTemplates; i++) {
-			if (ccs.buildingTemplates[i].buildingType == buildingType) {
-				capacity = ccs.buildingTemplates[i].capacity;
-				Com_DPrintf(DEBUG_CLIENT, "Building: %s capacity: %i\n", ccs.buildingTemplates[i].id, capacity);
+			const building_t *b = &ccs.buildingTemplates[i];
+			if (b->buildingType == buildingType) {
+				capacity = b->capacity;
+				Com_DPrintf(DEBUG_CLIENT, "Building: %s capacity: %i\n", b->id, capacity);
 				buildingTemplateIDX = i;
 				break;
 			}
@@ -3052,8 +3053,6 @@ int B_AddToStorage (base_t* base, const objDef_t *obj, int amount)
 	assert(base);
 	assert(obj);
 
-	if (obj->isVirtual)
-		return 0;
 	if (!B_ItemIsStoredInBaseStorage(obj))
 		return 0;
 
