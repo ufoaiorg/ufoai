@@ -44,7 +44,7 @@ item assault_ammo
 			projtl		bullet
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-rifle
+			firesnd		weapons/bullet-rifle-1x
 			impsnd		impact/bullet-impact
 			bodysnd 	impact/bullet-bodyimpact
 			speed		3000
@@ -65,16 +65,17 @@ item assault_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-rifle
+			firesnd				weapons/bullet-rifle-3x
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
+			sndonce				true
 			speed				3000
 			spread				"2.0 2.0"
 			crouch				0.7
 			range				70
 			shots				3
 			ammo				3
-			delaybetweenshots	5
+			delaybetweenshots	10
 			time				12
 			damage				"42 5"
 			dmgweight			normal_medium
@@ -87,9 +88,10 @@ item assault_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-rifle
+			firesnd				weapons/bullet-rifle-8x
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
+			sndonce				true
 			speed				3000
 			spread				"2.5 2.5"
 			crouch				0.6
@@ -108,7 +110,7 @@ item assault_ammo
 			projtl		bullet
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-rifle
+			firesnd		weapons/bullet-rifle-1x
 			impsnd		impact/bullet-impact
 			bodysnd 	impact/bullet-bodyimpact
 			speed		3000
@@ -132,7 +134,7 @@ item assault_ammo
 			projtl		bullet
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-rifle
+			firesnd		weapons/bullet-rifle-1x
 			impsnd		impact/bullet-impact
 			bodysnd 	impact/bullet-bodyimpact
 			speed		3000
@@ -153,7 +155,7 @@ item assault_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-rifle
+			firesnd				weapons/bullet-rifle-1x
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
 			speed				3000
@@ -175,7 +177,7 @@ item assault_ammo
 			projtl				bullet
 			impact				bulletImpact
 			hitbody				null
-			firesnd				weapons/bullet-rifle
+			firesnd				weapons/bullet-rifle-1x
 			impsnd				impact/bullet-impact
 			bodysnd 			impact/bullet-bodyimpact
 			speed				3000
@@ -196,7 +198,7 @@ item assault_ammo
 			projtl		bullet
 			impact		bulletImpact
 			hitbody		null
-			firesnd		weapons/bullet-rifle
+			firesnd		weapons/bullet-rifle-1x
 			impsnd		impact/bullet-impact
 			bodysnd 	impact/bullet-bodyimpact
 			speed		3000
