@@ -107,7 +107,7 @@ typedef struct seq2D_s {
 	vec4_t fade;			/**< the fade color */
 	vec4_t bgcolor;			/**< background color of the box define by @c pos, @c size */
 	align_t align;			/**< the alignment of the 2d obj */
-	qboolean inBackground;	/**< If true, display the objet under the 3D objects */
+	qboolean inBackground;	/**< If true, display the object under the 3D objects */
 	qboolean relativePos;	/**< useful for translations when sentence length may differ */
 } seq2D_t;
 

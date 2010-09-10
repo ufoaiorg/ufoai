@@ -14,8 +14,9 @@ USEWINDOWSCMD=
 
 # MinGW32
 ifeq ($(TARGET_OS),mingw32)
-	CLIENT_LIBS+=-lws2_32 -lwinmm -lopengl32
-	SERVER_LIBS+=-lws2_32 -lwinmm
+	CLIENT_LIBS+=-lws2_32 -lwinmm -lgdi32 -lopengl32
+	SERVER_LIBS+=-lws2_32 -lwinmm -lgdi32
+	TESTS_LIBS+=-lgdi32
 	ifeq ($(PROFILING),1)
 		SERVER_LIBS += -lgmon
 		CLIENT_LIBS += -lgmon
