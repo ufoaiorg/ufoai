@@ -133,6 +133,7 @@ echo_info:
 	@echo "PAK files"
 	@echo "-----------------------"
 	@echo "Type '$(MAKE) pk3' to assemble the pk3 files"
+	@echo "Note: You do NOT need to do this unless building an installer."
 	@echo
 	@echo "Installation"
 	@echo "-----------------------"
