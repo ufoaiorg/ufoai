@@ -121,7 +121,7 @@ typedef struct rlocals_s {
 
 extern rlocals_t r_locals;
 
-qboolean R_CullMeshModel(entity_t *e);
+qboolean R_CullMeshModel(const entity_t *e);
 
 void R_DrawModelParticle(modelInfo_t *mi);
 void R_DrawBrushModel(const entity_t *e);

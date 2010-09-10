@@ -311,6 +311,8 @@ static void R_DrawBspEntities (const entity_t *ents)
 }
 
 /**
+ * @brief Draws the list of entities
+ * @param[in,out] ents The list of entities that are going to get rendered
  * @sa R_DrawEntities
  */
 static void R_DrawMeshEntities (entity_t *ents)

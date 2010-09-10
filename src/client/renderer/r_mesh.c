@@ -186,6 +186,14 @@ void R_ModelAutoScale (const vec2_t boxSize, modelInfo_t *mi, vec3_t scale, vec3
 }
 
 /**
+ * @brief Draws a model in 2d mode (for rendering model data from the ui)
+ * @param[in,out] mi All the needed model information to render the model
+ * @param[in,out] pmi The model information of the parent model. This is used
+ * in those cases, where the model that should get rendered here is placed relativly
+ * to an already existing model in the world.
+ * @param[in] If a parent model is given, a @c tagname is given in most cases, too. It's used
+ * to transform the model location relative to the parent model location again. E.g. a
+ * @c tagname of tag_rweapon will transform the location to the right hand of an actor.
  * @sa R_DrawAliasModel
  */
 void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname)
@@ -274,6 +282,8 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 }
 
 /**
+ * @brief Renders a particle model for the battlescape
+ * @param[in,out] mi The model information that is used to render the particle model.
  * @sa R_DrawPtlModel
  */
 void R_DrawModelParticle (modelInfo_t * mi)
@@ -293,7 +303,6 @@ void R_DrawModelParticle (modelInfo_t * mi)
 
 	R_Color(mi->color);
 
-	/* draw all the triangles */
 	glPushMatrix();
 
 	glTranslatef(mi->origin[0], mi->origin[1], mi->origin[2]);
@@ -321,7 +330,12 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	R_Color(NULL);
 }
 
-qboolean R_CullMeshModel (entity_t *e)
+/**
+ * @brief Checks whether a model is visible in the current scene
+ * @param[in] e The entity to check
+ * @return @c false if visible, @c true if the entity is outside the current view
+ */
+qboolean R_CullMeshModel (const entity_t *e)
 {
 	int i;
 	uint32_t aggregatemask;
@@ -423,8 +437,7 @@ static mAliasMesh_t* R_GetLevelOfDetailForModel (const vec3_t origin, const mAli
 }
 
 /**
- * @brief Draw the models in the entity list
- * @note this is only called in ca_active or by sequence rendering code
+ * @brief Draw a model from the battlescape entity list
  * @sa R_DrawEntities
  */
 void R_DrawAliasModel (entity_t *e)
