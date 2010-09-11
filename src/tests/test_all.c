@@ -223,5 +223,9 @@ int main (int argc, const char **argv)
 	failures = CU_get_number_of_failures();
 	CU_cleanup_registry();
 
+	/* there is a problem on the framework (use git bisect value for IDK) */
+	if (CU_get_error() != 0)
+		return 125;
+
 	return failures != 0;
 }
