@@ -196,7 +196,7 @@ void Con_ClearNotify (void)
 	int i;
 
 	for (i = 0; i < NUM_CON_TIMES; i++)
-		con.times[i] = 0;
+		con.times[i] = 0.0;
 }
 
 static void Con_MessageModeSay_f (void)
@@ -466,8 +466,9 @@ static void Con_DrawInput (void)
 	y = 0;
 	for (i = 0; i < size; i++) {
 		editlinecopy[i] = (CON_COLOR_WHITE << 8) | keyLines[editLine][i];
-		if (keyLines[editLine][i] != '\0')
-			y++;
+		if (keyLines[editLine][i] == '\0')
+			break;
+		y++;
 	}
 	text = editlinecopy;
 
