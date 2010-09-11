@@ -656,6 +656,10 @@ void Mem_Shutdown (void)
 	memPool_t *pool;
 	int i;
 
+	/* first destroy the mutex - once the pools are gone we can do this anymore */
+	TH_MutexDestroy(z_lock);
+	z_lock = NULL;
+
 	/* don't use cvars, debug print or anything else inside of this loop
 	 * the mem you are trying to use here might already be wiped away */
 	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
@@ -663,6 +667,4 @@ void Mem_Shutdown (void)
 			continue;
 		Mem_DeletePool(pool);
 	}
-
-	TH_MutexDestroy(z_lock);
 }

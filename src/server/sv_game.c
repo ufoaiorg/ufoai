@@ -505,9 +505,11 @@ void SV_ShutdownGameProgs (void)
 	if (!svs.ge)
 		return;
 
+	Com_SetServerState(ss_game_shutdown);
+
 	if (svs.gameThread) {
 		Com_Printf("Shutdown the game thread\n");
-		SDL_KillThread(svs.gameThread);
+		SDL_WaitThread(svs.gameThread, NULL);
 		svs.gameThread = NULL;
 	}
 
@@ -552,6 +554,8 @@ void SV_RunGameFrame (void)
 	TH_MutexLock(svs.serverMutex);
 
 	sv.endgame = svs.ge->RunFrame();
+	if (sv.state == ss_game_shutdown)
+		sv.endgame = qtrue;
 
 	TH_MutexUnlock(svs.serverMutex);
 }

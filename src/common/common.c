@@ -1373,5 +1373,6 @@ void Qcommon_Shutdown (void)
 	FS_Shutdown();
 	Cvar_Shutdown();
 	Cmd_Shutdown();
+	NET_Shutdown();
 	Mem_Shutdown();
 }

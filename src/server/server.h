@@ -91,7 +91,8 @@ typedef enum {
 	ss_dead,					/**< no map loaded */
 	ss_restart,					/**< clients should reconnect, the server switched the map */
 	ss_loading,					/**< spawning level edicts */
-	ss_game						/**< actively running */
+	ss_game,					/**< actively running */
+	ss_game_shutdown			/**< tell the game lib to end */
 } server_state_t;
 
 /**

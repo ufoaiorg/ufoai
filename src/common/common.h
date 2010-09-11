@@ -222,7 +222,7 @@ void Com_Quit(void);
 void Com_WriteConfigToFile(const char *filename);
 void Cvar_WriteVariables(qFILE *f);
 
-int Com_ServerState(void);		/* this should have just been a cvar... */
+int Com_ServerState(void);
 void Com_SetServerState(int state);
 
 #include "md4.h"

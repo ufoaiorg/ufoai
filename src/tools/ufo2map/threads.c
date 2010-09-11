@@ -94,9 +94,6 @@ static void ThreadInit (void)
 		Sys_Error("Mutex already created!");
 
 	lock = TH_MutexCreate("ufo2map");
-
-	if (lock == NULL)
-		Sys_Error("Couldn't create mutex!");
 }
 
 static void ThreadRelease (void)
