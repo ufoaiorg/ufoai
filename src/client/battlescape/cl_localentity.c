@@ -30,10 +30,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_actor.h"
 #include "cl_hud.h"
 #include "../renderer/r_mesh_anim.h"
+#include "../renderer/r_draw.h"
 #include "../../common/tracing.h"
 #include "../../common/grid.h"
 
 cvar_t *cl_le_debug;
+cvar_t *cl_trace_debug;
 
 /*===========================================================================
 Local Model (LM) handling
@@ -1531,6 +1533,9 @@ static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const 
 trace_t CL_Trace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const le_t * passle, le_t * passle2, int contentmask, int worldLevel)
 {
 	moveclip_t clip;
+
+	if (cl_trace_debug->integer)
+		R_DrawBoundingBoxBatched(mins, maxs);
 
 	/* clip to world */
 	clip.trace = CM_CompleteBoxTrace(cl.mapTiles, start, end, mins, maxs, (1 << (worldLevel + 1)) - 1, contentmask, 0);

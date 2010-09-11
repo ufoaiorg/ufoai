@@ -53,18 +53,27 @@ typedef struct char_arrays_s {
 
 static char_arrays_t r_char_arrays;
 
-#define MAX_FILLS 512
+#define MAX_BATCH_ENTRIES 512
 
-/** @brief fills (alpha-blended quads) are also batched per frame */
-typedef struct fill_arrays_s {
-	GLshort verts[MAX_FILLS * 4 * 2];
+/** @brief array to store batched vertices and colors per frame */
+typedef struct batch_arrays_s {
+	GLshort verts[MAX_BATCH_ENTRIES * 4 * 2];
 	int vert_index;
 
-	GLbyte colors[MAX_FILLS * 4 * 4];
+	GLbyte colors[MAX_BATCH_ENTRIES * 4 * 4];
 	int color_index;
-} fill_arrays_t;
+} batch_arrays_t;
 
-static fill_arrays_t r_fill_arrays;
+static batch_arrays_t r_fill_arrays;
+
+#define MAX_BBOX_ENTRIES 256
+
+typedef struct bbox_arrays_s {
+	float bboxes[3 * 8 * MAX_BBOX_ENTRIES];
+	int bboxes_index;
+} bbox_arrays_t;
+
+static bbox_arrays_t r_bbox_array;
 
 /**
  * @brief Loads some textures and init the 3d globe
@@ -720,6 +729,66 @@ static void R_ComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec3_t b
 		bbox[i][0] = (i & 1) ? mins[0] : maxs[0];
 		bbox[i][1] = (i & 2) ? mins[1] : maxs[1];
 		bbox[i][2] = (i & 4) ? mins[2] : maxs[2];
+	}
+}
+
+void R_DrawBoundingBoxes (void)
+{
+	int i;
+	const int step = 3 * 8;
+	const int bboxes = r_bbox_array.bboxes_index / step;
+
+	if (!r_bbox_array.bboxes_index)
+		return;
+
+	R_Color(NULL);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	for (i = 0; i < bboxes; i++) {
+		float *bbox = &r_bbox_array.bboxes[i * step];
+		/* Draw top and sides */
+		glBegin(GL_TRIANGLE_STRIP);
+		glVertex3fv(bbox + 2 * step);
+		glVertex3fv(bbox + 1 * step);
+		glVertex3fv(bbox + 0 * step);
+		glVertex3fv(bbox + 1 * step);
+		glVertex3fv(bbox + 4 * step);
+		glVertex3fv(bbox + 5 * step);
+		glVertex3fv(bbox + 1 * step);
+		glVertex3fv(bbox + 7 * step);
+		glVertex3fv(bbox + 3 * step);
+		glVertex3fv(bbox + 2 * step);
+		glVertex3fv(bbox + 7 * step);
+		glVertex3fv(bbox + 6 * step);
+		glVertex3fv(bbox + 2 * step);
+		glVertex3fv(bbox + 4 * step);
+		glVertex3fv(bbox + 0 * step);
+		glEnd();
+
+		/* Draw bottom */
+		glBegin(GL_TRIANGLE_STRIP);
+		glVertex3fv(bbox + 4 * step);
+		glVertex3fv(bbox + 6 * step);
+		glVertex3fv(bbox + 7 * step);
+		glEnd();
+	}
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	r_bbox_array.bboxes_index = 0;
+}
+
+void R_DrawBoundingBoxBatched (const vec3_t mins, const vec3_t maxs)
+{
+	int i;
+	vec3_t bbox[8];
+
+	R_ComputeBoundingBox(mins, maxs, bbox);
+
+	for (i = 0; i < 8; i++) {
+		VectorCopy(bbox[i], &r_bbox_array.bboxes[r_bbox_array.bboxes_index]);
+		r_bbox_array.bboxes_index += 3;
 	}
 }
 

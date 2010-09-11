@@ -194,6 +194,8 @@ typedef struct ptl_s {
 	qboolean stayalive;	/**< used for physics particles that hit the ground */
 	qboolean weather;	/**< used to identify weather particles (can be switched
 						 * off via cvar cl_particleweather) */
+	qboolean hitSolid;	/**< true if a trace (only physic particles) hits something solid */
+	qboolean stick;		/**< true if a particle sticks to the solid the trace hits before (only physic particles) */
 } ptl_t;
 
 typedef struct {

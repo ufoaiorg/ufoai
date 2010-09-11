@@ -941,6 +941,24 @@ void VectorCenterFromMinsMaxs (const vec3_t mins, const vec3_t maxs, vec3_t cent
 }
 
 /**
+ * @brief Calculates a bounding box from a center and a size
+ * @param[in] center The center vector
+ * @param[in] size The size vector to calculate the bbox
+ * @param[out] mins The lower end of the bounding box
+ * @param[out] maxs The upper end of the bounding box
+ */
+void VectorCalcMinsMaxs (const vec3_t center, const vec3_t size, vec3_t mins, vec3_t maxs)
+{
+	int i;
+
+	for (i = 0; i < 3; i++) {
+		const vec_t length = abs(size[i]) / 2;
+		mins[i] = center[i] - length;
+		maxs[i] = center[i] + length;
+	}
+}
+
+/**
  * @brief Sets mins and maxs to their starting points before using AddPointToBounds
  * @sa AddPointToBounds
  */

@@ -997,6 +997,7 @@ static void CL_InitLocal (void)
 
 	cl_map_debug = Cvar_Get("debug_map", "0", 0, "Activate realtime map debugging options - bitmask. Valid values are 0, 1, 3 and 7");
 	cl_le_debug = Cvar_Get("debug_le", "0", 0, "Activates some local entity debug rendering");
+	cl_trace_debug = Cvar_Get("debug_trace", "0", 0, "Activates some client side trace debug rendering");
 	cl_leshowinvis = Cvar_Get("cl_leshowinvis", "0", CVAR_ARCHIVE, "Show invisible local entities as null models");
 
 	/* register our commands */

@@ -188,6 +188,7 @@ static const value_t pps[] = {
 	{"lastframe", V_FLOAT, offsetof(ptl_t, lastFrame), MEMBER_SIZEOF(ptl_t, lastFrame)},
 	{"levelflags", V_INT, offsetof(ptl_t, levelFlags), MEMBER_SIZEOF(ptl_t, levelFlags)},
 	{"physics", V_BOOL, offsetof(ptl_t, physics), MEMBER_SIZEOF(ptl_t, physics)},
+	{"stick", V_BOOL, offsetof(ptl_t, stick), MEMBER_SIZEOF(ptl_t, stick)},
 	{"autohide", V_BOOL, offsetof(ptl_t, autohide), MEMBER_SIZEOF(ptl_t, autohide)},
 	{"stayalive", V_BOOL, offsetof(ptl_t, stayalive), MEMBER_SIZEOF(ptl_t, stayalive)},
 	{"weather", V_BOOL, offsetof(ptl_t, weather), MEMBER_SIZEOF(ptl_t, weather)},
@@ -959,24 +960,38 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 	/* basic 'physics' for particles */
 	if (p->physics) {
-		/** @todo don't do this every frame */
 		trace_t tr;
+		vec3_t mins, maxs, size;
 
-		tr = CL_Trace(p->origin, p->s, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID, cl.mapMaxLevel - 1);
+		/* if the particle hit a solid already and is sticking to the surface, no further
+		 * traces are needed */
+		if (p->hitSolid && p->stick)
+			return;
+
+		VectorSet(size, p->size[0], p->size[1], max(p->size[0], p->size[1]));
+		VectorCalcMinsMaxs(p->origin, size, mins, maxs);
+		tr = CL_Trace(p->origin, p->s, mins, maxs, NULL, NULL, MASK_SOLID, cl.mapMaxLevel - 1);
 
 		/* hit something solid */
 		if (tr.fraction < 1.0 || tr.startsolid) {
+			vec3_t temp;
+
+			p->hitSolid = qtrue;
+
 			/* now execute the physics handler */
 			if (p->ctrl->physics)
 				CL_ParticleFunction(p, p->ctrl->physics);
 			/* let them stay on the ground until they fade out or die */
 			if (!p->stayalive) {
 				CL_ParticleFree(p);
+				return;
 			} else {
-				VectorCopy(vec3_origin, p->v);
+				/* bounce */
+				VectorScale(tr.plane.normal, -DotProduct(tr.plane.normal, p->v), temp);
+				VectorAdd(temp, p->v, temp);
+				VectorAdd(temp, temp, p->v);
 				VectorCopy(tr.endpos, p->s);
 			}
-			return;
 		}
 	}
 

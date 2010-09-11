@@ -180,6 +180,7 @@ static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
 static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD };
 
 extern cvar_t* cl_le_debug;
+extern cvar_t *cl_trace_debug;
 extern cvar_t *cl_leshowinvis;
 
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
