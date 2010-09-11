@@ -65,7 +65,7 @@ typedef struct trace_s {
 	qboolean startsolid;		/**< if true, the initial point was in a solid area */
 	float fraction;				/**< distance traveled, 1.0 = didn't hit anything, 0.0 Inside of a brush */
 	vec3_t endpos;				/**< final position along line */
-	TR_PLANE_TYPE plane;		/**< surface normal at impact */
+	TR_PLANE_TYPE plane;		/**< surface plane at impact - normal is in there */
 	cBspSurface_t *surface;	    /**< surface hit */
 	int planenum;				/**< index of the plane hit, used for map debugging */
 	uint32_t contentFlags;		/**< contents on other side of surface hit */

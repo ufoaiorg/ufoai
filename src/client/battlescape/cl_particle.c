@@ -989,6 +989,9 @@ static void CL_ParticleRun2 (ptl_t *p)
 			R_AddLight(p->s, intensity, p->lightColor);
 	}
 
+	/* set the new origin */
+	VectorCopy(p->s, p->origin);
+
 	p->invis = qfalse;
 }
 
@@ -1125,6 +1128,7 @@ void CL_RunMapParticles (void)
 			/* spawn a new particle */
 			ptl = CL_ParticleSpawn(mp->ptl, mp->levelflags, mp->origin, NULL, NULL);
 			if (!ptl) {
+				Com_Printf(S_COLOR_YELLOW "Could not spawn particle '%s'\n", mp->ptl);
 				mp->nextTime = 0;
 				continue;
 			}

@@ -895,7 +895,6 @@ void LE_AddGrenade (const fireDef_t *fd, int flags, const vec3_t muzzle, const v
 	/* direction - bytedirs index (0,0,1) */
 	le->dir = 5;
 	le->fd = fd;
-	assert(fd);
 	LE_SetThink(le, LET_Projectile);
 	LE_ExecuteThink(le);
 }

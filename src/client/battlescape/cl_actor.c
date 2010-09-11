@@ -1578,12 +1578,16 @@ static void CL_TargetingStraight (const pos3_t fromPos, actorSizeEnum_t fromActo
 
 	VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
 	/* switch up to top level, this is needed to make sure our trace doesn't go through ceilings ... */
+	/** @todo is this really needed for straight targetting? - for grenades, yes, but not for straight no?
+	 * cl_worldlevel->integer should be enough here */
 	tr = CL_Trace(start, temp, vec3_origin, vec3_origin, selActor, NULL, MASK_SHOT, cl.mapMaxLevel - 1);
 	if (tr.le && (tr.le->team == cls.team || LE_IsCivilian(tr.le)) && LE_IsCrouched(tr.le))
 		VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
 	else
 		VectorCopy(start, temp);
 
+	/** @todo is this really needed for straight targetting? - for grenades, yes, but not for straight no?
+	 * cl_worldlevel->integer should be enough here */
 	tr = CL_Trace(temp, mid, vec3_origin, vec3_origin, selActor, target, MASK_SHOT, cl.mapMaxLevel - 1);
 
 	if (tr.fraction < 1.0) {
