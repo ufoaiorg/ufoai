@@ -3,6 +3,10 @@
 ./configure
 make clean
 make all
+if [ ! -f ./ufo ]; then
+	exit 125
+fi
+
 ./ufo
 
 ANSWER=""
