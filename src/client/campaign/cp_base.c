@@ -694,9 +694,16 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 	/* All aircraft are away from base, pick up one and change it's homebase */
 	randomNum = rand() % numAwayAircraft;
 	if (!CL_DisplayHomebasePopup((aircraft_t*)LIST_GetByIdx(awayAircraft, randomNum), qfalse)) {
+		aircraft_t *aircraft = (aircraft_t*)LIST_GetByIdx(awayAircraft, randomNum);
 		/* No base can hold this aircraft */
-		/** @todo Better solution? let it crash due to technical difficulties and spawn a rescue mission? */
-		AIR_DeleteAircraft((aircraft_t*)LIST_GetByIdx(awayAircraft, randomNum));
+		UFO_NotifyPhalanxAircraftRemoved(aircraft);
+		if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN)))
+			CP_SpawnRescueMission(aircraft, NULL);
+		else {
+			/* Destroy the aircraft and everything onboard - the aircraft pointer
+			 * is no longer valid after this point */
+			AIR_DestroyAircraft(aircraft);
+		}
 	}
 	LIST_Delete(&awayAircraft);
 }
@@ -794,12 +801,13 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
  * @brief Will ensure that aircraft on geoscape are not stored
  * in a base that no longer has any hangar left
  * @param base The base that is going to be destroyed
+ * @todo this should be merged into B_RemoveAircraftExceedingCapacity
  */
 static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 {
-	aircraft_t *aircraft;
+	aircraft_t *aircraft = NULL;
+	aircraft_t *prevAircraft = NULL;
 
-	aircraft = NULL;
 	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 		if (AIR_IsAircraftOnGeoscape(aircraft)) {
 			int j;
@@ -810,11 +818,19 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 					break;
 			}
 			if (j == ccs.numBases) {
-				/** @todo What should happen with it if no other base has enough free
-				 * storage for it? Spawn a dropship crash mission if no more fuel? */
-				AIR_DestroyAircraft(aircraft);
+				/* No base can hold this aircraft */
+				UFO_NotifyPhalanxAircraftRemoved(aircraft);
+				if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN))) {
+					CP_SpawnRescueMission(aircraft, NULL);
+				} else {
+					/* Destroy the aircraft and everything onboard - the aircraft pointer
+					 * is no longer valid after this point */
+					AIR_DestroyAircraft(aircraft);
+				}
+				aircraft = prevAircraft;
 			}
 		}
+		prevAircraft = aircraft;
 	}
 }
 
