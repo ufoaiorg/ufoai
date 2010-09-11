@@ -549,11 +549,11 @@ int SV_RunGameFrameThread (void *data)
  */
 void SV_RunGameFrame (void)
 {
-	SDL_mutexP(svs.serverMutex);
+	TH_MutexLock(svs.serverMutex);
 
 	sv.endgame = svs.ge->RunFrame();
 
-	SDL_mutexV(svs.serverMutex);
+	TH_MutexUnlock(svs.serverMutex);
 }
 
 /**

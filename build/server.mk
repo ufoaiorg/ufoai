@@ -39,6 +39,7 @@ SERVER_SRCS += \
 	shared/byte.c \
 	shared/infostring.c \
 	shared/mathlib.c \
+	shared/threads.c \
 	shared/parse.c \
 	shared/shared.c \
 	shared/utf8.c \

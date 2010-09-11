@@ -82,7 +82,7 @@ static void SV_InitGame (void)
 	Cvar_UpdateLatchedVars();
 
 	svs.clients = (client_t *)Mem_PoolAlloc(sizeof(client_t) * sv_maxclients->integer, sv_genericPool, 0);
-	svs.serverMutex = SDL_CreateMutex();
+	svs.serverMutex = TH_MutexCreate("server");
 
 	/* init network stuff */
 	if (sv_maxclients->integer > 1) {
@@ -200,10 +200,10 @@ void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 	/* precache and static commands can be issued during map initialization */
 	Com_SetServerState(ss_loading);
 
-	SDL_mutexP(svs.serverMutex);
+	TH_MutexLock(svs.serverMutex);
 	/* load and spawn all other entities */
 	svs.ge->SpawnEntities(sv.name, SV_GetConfigStringInteger(CS_LIGHTMAP), sv.mapData.mapEntityString);
-	SDL_mutexV(svs.serverMutex);
+	TH_MutexUnlock(svs.serverMutex);
 
 	/* all precaches are complete */
 	Com_SetServerState(ss_game);

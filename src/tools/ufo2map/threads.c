@@ -20,8 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include <SDL_thread.h>
-
+#include "../../shared/threads.h"
 #include "bsp.h"
 
 #define	MAX_THREADS	8
@@ -87,14 +86,14 @@ static int ThreadWork (void *p)
 }
 
 
-static SDL_mutex *lock = NULL;
+static threads_mutex_t *lock = NULL;
 
 static void ThreadInit (void)
 {
 	if (lock != NULL)
 		Sys_Error("Mutex already created!");
 
-	lock = SDL_CreateMutex();
+	lock = TH_MutexCreate("ufo2map");
 
 	if (lock == NULL)
 		Sys_Error("Couldn't create mutex!");
@@ -102,7 +101,7 @@ static void ThreadInit (void)
 
 static void ThreadRelease (void)
 {
-	SDL_DestroyMutex(lock);
+	TH_MutexDestroy(lock);
 	lock = NULL;
 }
 
@@ -113,7 +112,7 @@ void ThreadLock (void)
 {
 	if (threadstate.numthreads == 1) {
 		/* do nothing */
-	} else if (lock != NULL && SDL_mutexP(lock) != -1) {
+	} else if (lock != NULL && TH_MutexLock(lock) != -1) {
 		/* already locked */
 	} else {
 		Sys_Error("Couldn't lock mutex (%p)!", (void*)lock);
@@ -127,7 +126,7 @@ void ThreadUnlock (void)
 {
 	if (threadstate.numthreads == 1) {
 		/* do nothing */
-	} else if (lock != NULL && SDL_mutexV(lock) != -1) {
+	} else if (lock != NULL && TH_MutexUnlock(lock) != -1) {
 		/* already locked */
 	} else {
 		Sys_Error("Couldn't unlock mutex (%p)!", (void*)lock);

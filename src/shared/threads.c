@@ -17,7 +17,7 @@ int _TH_MutexLock (threads_mutex_t *mutex, const char *file, int line)
 	if (mutex != NULL) {
 		const int ret = SDL_LockMutex(mutex->mutex);
 		if (ret == -1)
-			Sys_Error("Error locking mutex '%s' from %s:%i", mutex->name, file, line);
+			Sys_Error("Error locking mutex '%s' from %s:%i (%s)", mutex->name, file, line, SDL_GetError());
 		mutex->file = file;
 		mutex->line = line;
 		return ret;
@@ -34,7 +34,7 @@ int _TH_MutexUnlock (threads_mutex_t *mutex, const char *file, int line)
 	if (mutex != NULL) {
 		const int ret = SDL_UnlockMutex(mutex->mutex);
 		if (ret == -1)
-			Sys_Error("Error unlocking mutex '%s' from %s:%i", mutex->name, file, line);
+			Sys_Error("Error unlocking mutex '%s' from %s:%i (%s)", mutex->name, file, line, SDL_GetError());
 		mutex->file = NULL;
 		mutex->line = -1;
 		return ret;
@@ -48,10 +48,10 @@ int _TH_MutexUnlock (threads_mutex_t *mutex, const char *file, int line)
  */
 threads_mutex_t *TH_MutexCreate (const char *name)
 {
-	threads_mutex_t *mutex = (threads_mutex_t *)malloc(sizeof(*mutex));
+	threads_mutex_t *mutex = (threads_mutex_t *)Mem_Alloc(sizeof(*mutex));
 	mutex->mutex = SDL_CreateMutex();
 	if (mutex->mutex == NULL)
-		Sys_Error("Could not create mutex");
+		Sys_Error("Could not create mutex (%s)", SDL_GetError());
 	mutex->name = name;
 	return mutex;
 }
@@ -60,6 +60,6 @@ void TH_MutexDestroy (threads_mutex_t *mutex)
 {
 	if (mutex) {
 		SDL_DestroyMutex(mutex->mutex);
-		free(mutex);
+		Mem_Free(mutex);
 	}
 }

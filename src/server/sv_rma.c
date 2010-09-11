@@ -32,12 +32,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "server.h"
 #include "sv_rma.h"
 #include "../shared/parse.h"
-#include "SDL_thread.h"
+#include "../shared/threads.h"
 
 #define ASSEMBLE_THREADS 2
 static SDL_sem *mapSem;
 static SDL_cond *mapCond;
-static SDL_mutex *mapLock;
+static threads_mutex_t *mapLock;
 static Uint32 threadID;
 
 /**
@@ -1002,14 +1002,14 @@ static int SV_AssemblyThread (void* data)
 	/* the first thread to reach this point, gets the semaphore */
 	if (SDL_SemTryWait(mapSem) != 0)
 		return -1;
-	SDL_LockMutex(mapLock);
+	TH_MutexLock(mapLock);
 
 	assert(threadID == 0);
 	threadID = SDL_ThreadID();
 
 	/* tell main we're done */
 	SDL_CondSignal(mapCond);
-	SDL_UnlockMutex(mapLock);
+	TH_MutexUnlock(mapLock);
 
 	return 0;
 }
@@ -1051,12 +1051,12 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	mapSem = SDL_CreateSemaphore(1);
 
 	if (mapLock == NULL)
-		mapLock = SDL_CreateMutex();
+		mapLock = TH_MutexCreate("rma");
 
 	if (mapCond == NULL)
 		mapCond = SDL_CreateCond();
 
-	SDL_LockMutex(mapLock);
+	TH_MutexLock(mapLock);
 	for (i = 0; i < threadno; i++) {
 		maps[i] = Mem_AllocType(mapInfo_t);
 		memcpy(maps[i], map, sizeof(*map));
@@ -1064,7 +1064,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	}
 	while (threadID == 0) {
 		/* if nobody is done after 5 sec, restart, double the timeout. */
-		if (SDL_CondWaitTimeout(mapCond, mapLock, timeout) != 0) {
+		if (SDL_CondWaitTimeout(mapCond, mapLock->mutex, timeout) != 0) {
 			Com_Printf("SV_ParallelSearch: timeout at %i ms, restarting\n", timeout);
 			timeout += timeout;
 			/* tell them all to die */
@@ -1088,7 +1088,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
 			assert(threadID != 0);
 		}
 	}
-	SDL_UnlockMutex(mapLock);
+	TH_MutexUnlock(mapLock);
 	for (i = 0; i < threadno; i++) {
 		if (SDL_GetThreadID(threads[i]) == threadID) {
 			memcpy(map, maps[i], sizeof(*map));

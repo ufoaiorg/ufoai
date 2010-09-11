@@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../common/common.h"
 #include "../shared/infostring.h"
+#include "../shared/threads.h"
 #include "../game/game.h"
-#include <SDL_thread.h>
 
 extern memPool_t *sv_genericPool;
 
@@ -81,7 +81,7 @@ typedef struct {
 								 * Set to a huge negative value to send immmediately */
 	qboolean abandon;		/**< shutdown server when all clients disconnect and don't accept new connections */
 	qboolean killserver;		/**< will initiate shutdown once abandon is set */
-	SDL_mutex *serverMutex;
+	threads_mutex_t *serverMutex;
 	SDL_Thread *gameThread;
 	void *gameLibrary;
 	game_export_t *ge;

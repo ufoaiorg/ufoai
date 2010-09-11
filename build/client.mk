@@ -296,6 +296,7 @@ CLIENT_SRCS = \
 	\
 	shared/byte.c \
 	shared/mathlib.c \
+	shared/threads.c \
 	shared/utf8.c \
 	shared/images.c \
 	shared/infostring.c \

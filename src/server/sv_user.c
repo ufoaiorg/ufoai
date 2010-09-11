@@ -125,9 +125,9 @@ static void SV_Begin_f (client_t *cl)
 	}
 
 	/* call the game begin function */
-	SDL_mutexP(svs.serverMutex);
+	TH_MutexLock(svs.serverMutex);
 	began = svs.ge->ClientBegin(cl->player);
-	SDL_mutexV(svs.serverMutex);
+	TH_MutexUnlock(svs.serverMutex);
 
 	if (!began) {
 		SV_DropClient(cl, "'begin' failed\n");
@@ -150,9 +150,9 @@ static void SV_Spawn_f (client_t *cl)
 		return;
 	}
 
-	SDL_mutexP(svs.serverMutex);
+	TH_MutexLock(svs.serverMutex);
 	svs.ge->ClientSpawn(cl->player);
-	SDL_mutexV(svs.serverMutex);
+	TH_MutexUnlock(svs.serverMutex);
 	SV_SetClientState(cl, cs_spawned);
 
 	Cbuf_InsertFromDefer();
@@ -215,9 +215,9 @@ static void SV_ExecuteUserCommand (client_t * cl, const char *s)
 
 	if (Com_ServerState() == ss_game) {
 		Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: client command: %s\n", s);
-		SDL_mutexP(svs.serverMutex);
+		TH_MutexLock(svs.serverMutex);
 		svs.ge->ClientCommand(cl->player);
-		SDL_mutexV(svs.serverMutex);
+		TH_MutexUnlock(svs.serverMutex);
 	}
 }
 
@@ -260,18 +260,18 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 	case clc_action:
 		/* client actions are handled by the game module */
 		sv.messageBuffer = msg;
-		SDL_mutexP(svs.serverMutex);
+		TH_MutexLock(svs.serverMutex);
 		svs.ge->ClientAction(cl->player);
-		SDL_mutexV(svs.serverMutex);
+		TH_MutexUnlock(svs.serverMutex);
 		sv.messageBuffer = NULL;
 		break;
 
 	case clc_endround:
 		/* player wants to end round */
 		sv.messageBuffer = msg;
-		SDL_mutexP(svs.serverMutex);
+		TH_MutexLock(svs.serverMutex);
 		svs.ge->ClientEndRound(cl->player);
-		SDL_mutexV(svs.serverMutex);
+		TH_MutexUnlock(svs.serverMutex);
 		sv.messageBuffer = NULL;
 		break;
 
@@ -279,9 +279,9 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		/* player sends team info */
 		/* actors spawn accordingly */
 		sv.messageBuffer = msg;
-		SDL_mutexP(svs.serverMutex);
+		TH_MutexLock(svs.serverMutex);
 		svs.ge->ClientTeamInfo(cl->player);
-		SDL_mutexV(svs.serverMutex);
+		TH_MutexUnlock(svs.serverMutex);
 		sv.messageBuffer = NULL;
 		break;
 
@@ -289,9 +289,9 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		/* player sends team info */
 		/* actors spawn accordingly */
 		sv.messageBuffer = msg;
-		SDL_mutexP(svs.serverMutex);
+		TH_MutexLock(svs.serverMutex);
 		svs.ge->ClientInitActorStates(cl->player);
-		SDL_mutexV(svs.serverMutex);
+		TH_MutexUnlock(svs.serverMutex);
 		sv.messageBuffer = NULL;
 		break;
 	}

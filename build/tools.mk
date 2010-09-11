@@ -31,6 +31,7 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/common/trace.c \
 	\
 	shared/mathlib.c \
+	shared/threads.c \
 	shared/byte.c \
 	shared/images.c \
 	shared/parse.c \
@@ -50,6 +51,7 @@ UFOMODEL_SRCS = \
 	tools/ufomodel/ufomodel.c \
 	\
 	shared/mathlib.c \
+	shared/threads.c \
 	shared/byte.c \
 	shared/images.c \
 	shared/parse.c \

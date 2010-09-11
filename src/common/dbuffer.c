@@ -24,7 +24,7 @@
  */
 
 #include "common.h"
-#include <SDL_thread.h>
+#include "../shared/threads.h"
 
 /* This should fit neatly in one page */
 #define DBUFFER_ELEMENT_SIZE 4000
@@ -49,7 +49,7 @@ static struct dbuffer_element *free_element_list = NULL;
 static int free_dbuffers = 0, allocated_dbuffers = 0;
 static struct dbuffer *free_dbuffer_list = NULL;
 
-static SDL_mutex *dbuf_lock;
+static threads_mutex_t *dbuf_lock;
 
 /**
  * @sa free_element
@@ -58,7 +58,7 @@ static struct dbuffer_element * allocate_element (void)
 {
 	struct dbuffer_element *e;
 
-	SDL_mutexP(dbuf_lock);
+	TH_MutexLock(dbuf_lock);
 
 	if (free_elements == 0) {
 		struct dbuffer_element *newBuf = (struct dbuffer_element *)Mem_PoolAlloc(sizeof(struct dbuffer_element), com_genericPool, 0);
@@ -77,7 +77,7 @@ static struct dbuffer_element * allocate_element (void)
 	e->len = 0;
 	e->next = NULL;
 
-	SDL_mutexV(dbuf_lock);
+	TH_MutexUnlock(dbuf_lock);
 
 	return e;
 }
@@ -87,7 +87,7 @@ static struct dbuffer_element * allocate_element (void)
  */
 static void free_element (struct dbuffer_element *e)
 {
-	SDL_mutexP(dbuf_lock);
+	TH_MutexLock(dbuf_lock);
 
 	e->next = free_element_list;
 	free_element_list = e;
@@ -100,7 +100,7 @@ static void free_element (struct dbuffer_element *e)
 		allocated_elements--;
 	}
 
-	SDL_mutexV(dbuf_lock);
+	TH_MutexUnlock(dbuf_lock);
 }
 
 /**
@@ -112,7 +112,7 @@ struct dbuffer * new_dbuffer (void)
 {
 	struct dbuffer *buf;
 
-	SDL_mutexP(dbuf_lock);
+	TH_MutexLock(dbuf_lock);
 
 	if (free_dbuffers == 0) {
 		struct dbuffer *newBuf = (struct dbuffer *)Mem_PoolAlloc(sizeof(struct dbuffer), com_genericPool, 0);
@@ -128,7 +128,7 @@ struct dbuffer * new_dbuffer (void)
 	assert(free_dbuffers > 0);
 	free_dbuffers--;
 
-	SDL_mutexV(dbuf_lock);
+	TH_MutexUnlock(dbuf_lock);
 
 	buf->len = 0;
 	buf->space = DBUFFER_ELEMENT_SIZE;
@@ -153,7 +153,7 @@ void free_dbuffer (struct dbuffer *buf)
 		free_element(e);
 	}
 
-	SDL_mutexP(dbuf_lock);
+	TH_MutexLock(dbuf_lock);
 
 	buf->next_free = free_dbuffer_list;
 	free_dbuffer_list = buf;
@@ -168,7 +168,7 @@ void free_dbuffer (struct dbuffer *buf)
 		allocated_dbuffers--;
 	}
 
-	SDL_mutexV(dbuf_lock);
+	TH_MutexUnlock(dbuf_lock);
 }
 
 /**
@@ -502,10 +502,10 @@ size_t dbuffer_extract (struct dbuffer *buf, char *data, size_t len)
 
 void dbuffer_init (void)
 {
-	dbuf_lock = SDL_CreateMutex();
+	dbuf_lock = TH_MutexCreate("dbuffer");
 }
 
 void dbuffer_shutdown (void)
 {
-	SDL_DestroyMutex(dbuf_lock);
+	TH_MutexDestroy(dbuf_lock);
 }
