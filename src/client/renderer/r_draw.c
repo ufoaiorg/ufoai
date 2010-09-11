@@ -188,6 +188,9 @@ void R_DrawFill (int x, int y, int w, int h, const vec4_t color)
 	const int a = color[3] * 255.0;
 	const uint32_t c = (r << 0) + (g << 8) + (b << 16) + (a << 24);
 
+	if (r_fill_arrays.color_index >= lengthof(r_fill_arrays.colors))
+		return;
+
 	/* duplicate color data to all 4 verts */
 	memcpy(&r_fill_arrays.colors[r_fill_arrays.color_index +  0], &c, 4);
 	memcpy(&r_fill_arrays.colors[r_fill_arrays.color_index +  4], &c, 4);
