@@ -58,8 +58,12 @@ static void testConnection (void)
 	 * @todo use a special testmap
 	 * @todo implement the test
 	 */
-	CM_LoadMap("fueldump", qtrue, "", &mapData, &mapTiles);
-	CM_LoadMap("fueldump", qtrue, "", &mapData, &mapTiles);
+	if (FS_FileExists("maps/fueldump.bsp")) {
+		CM_LoadMap("fueldump", qtrue, "", &mapData, &mapTiles);
+		CM_LoadMap("fueldump", qtrue, "", &mapData, &mapTiles);
+	} else {
+		CU_FAIL("Resource \"maps/fueldump.bsp\" for test is missing.");
+	}
 }
 
 int UFO_AddRoutingTests (void)
