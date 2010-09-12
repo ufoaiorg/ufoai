@@ -892,11 +892,8 @@ static void CL_ParticleRun2 (ptl_t *p)
 	if (p->life && p->t >= p->life && !p->parent) {
 		CL_ParticleFree(p);
 		return;
-	/* don't play the weather particles if a user don't want them
-	 * there can be a lot of weather particles - which might slow the computer
-	 * down - so i made them switchable */
-	/** @todo We should ensure, that every other particle is rendered, before we
-	 * add weather particles */
+	/* don't play the weather particles if a user don't want them there can
+	 * be a lot of weather particles - which might slow the computer down */
 	} else if (p->weather && !cl_particleweather->integer) {
 		CL_ParticleFree(p);
 		return;
@@ -908,6 +905,54 @@ static void CL_ParticleRun2 (ptl_t *p)
 		VectorMA(p->s, p->dt, p->v, p->s);
 		VectorMA(p->v, p->dt, p->a, p->v);
 		VectorMA(p->angles, p->dt, p->omega, p->angles);
+	}
+
+	/* basic 'physics' for particles */
+	if (p->physics) {
+		trace_t tr;
+		vec3_t mins, maxs;
+		const float size = max(p->size[0], p->size[1]);
+
+		if (p->hitSolid && p->bounce) {
+			VectorCopy(p->oldV, p->v);
+			VectorNegate(p->a, p->a);
+			p->hitSolid = qfalse;
+		}
+
+		/* if the particle hit a solid already and is sticking to the surface, no further
+		 * traces are needed */
+		if (p->hitSolid && p->stick)
+			return;
+
+		VectorSet(mins, -size, -size, -size);
+		VectorSet(maxs, size, size, size);
+		tr = CL_Trace(p->origin, p->s, mins, maxs, NULL, NULL, MASK_SOLID, cl.mapMaxLevel - 1);
+
+		/* hit something solid */
+		if (tr.fraction < 1.0 || tr.startsolid) {
+			vec3_t temp;
+
+			p->hitSolid = qtrue;
+
+			/* now execute the physics handler */
+			if (p->ctrl->physics)
+				CL_ParticleFunction(p, p->ctrl->physics);
+			/* let them stay on the ground until they fade out or die */
+			if (!p->stayalive) {
+				CL_ParticleFree(p);
+				return;
+			} else if (p->bounce) {
+				/* bounce */
+				VectorCopy(p->v, p->oldV);
+				VectorScale(tr.plane.normal, -DotProduct(tr.plane.normal, p->v), temp);
+				VectorAdd(temp, p->v, temp);
+				VectorAdd(temp, temp, p->v);
+				VectorNegate(p->a, p->a);
+			} else {
+				VectorClear(p->v);
+			}
+			VectorCopy(tr.endpos, p->s);
+		}
 	}
 
 	/* run */
@@ -956,45 +1001,6 @@ static void CL_ParticleRun2 (ptl_t *p)
 		} else if (z < 0) {
 			CL_ParticleFree(p);
 			return;
-		}
-	}
-
-	/* basic 'physics' for particles */
-	if (p->physics) {
-		trace_t tr;
-		vec3_t mins, maxs, size;
-
-		/* if the particle hit a solid already and is sticking to the surface, no further
-		 * traces are needed */
-		if (p->hitSolid && p->stick)
-			return;
-
-		VectorSet(size, p->size[0], p->size[1], max(p->size[0], p->size[1]));
-		VectorCalcMinsMaxs(p->origin, size, mins, maxs);
-		tr = CL_Trace(p->origin, p->s, mins, maxs, NULL, NULL, MASK_SOLID, cl.mapMaxLevel - 1);
-
-		/* hit something solid */
-		if (tr.fraction < 1.0 || tr.startsolid) {
-			vec3_t temp;
-
-			p->hitSolid = qtrue;
-
-			/* now execute the physics handler */
-			if (p->ctrl->physics)
-				CL_ParticleFunction(p, p->ctrl->physics);
-			/* let them stay on the ground until they fade out or die */
-			if (!p->stayalive) {
-				CL_ParticleFree(p);
-				return;
-			} else if (p->bounce) {
-				/* bounce */
-				VectorScale(tr.plane.normal, -DotProduct(tr.plane.normal, p->v), temp);
-				VectorAdd(temp, p->v, temp);
-				VectorAdd(temp, temp, p->v);
-			} else {
-				VectorClear(p->v);
-			}
-			VectorCopy(tr.endpos, p->s);
 		}
 	}
 

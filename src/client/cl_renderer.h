@@ -186,6 +186,7 @@ typedef struct ptl_s {
 	float scrollT;
 	vec3_t a;	/**< acceleration vector */
 	vec3_t v;	/**< velocity vector */
+	vec3_t oldV;	/**< old velocity vector (in case the particle e.g. bounces) */
 	vec3_t omega;	/**< the rotation vector for the particle (newAngles = oldAngles + frametime * omega) */
 	qboolean physics;	/**< basic physics */
 	qboolean autohide;	/**< only draw the particle if the current position is
