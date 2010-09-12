@@ -146,7 +146,6 @@ window ufopedia extends objectinfo
 			font		"f_small"
 			lineheight	18
 			tabwidth	100
-			rows		26
 			onViewChange
 			{
 				*node:parent.ufopedia_scroll@fullsize = <fullsize>
