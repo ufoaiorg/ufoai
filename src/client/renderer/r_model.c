@@ -36,6 +36,9 @@ int r_numMapTiles;
 model_t r_modelsInline[MAX_MOD_KNOWN];
 int r_numModelsInline;
 
+static char *r_actorSkinNames[MAX_ACTORSKINNAME];
+static int r_numActorSkinName;
+
 /**
  * @brief Prints all loaded models
  */
@@ -251,6 +254,67 @@ void R_SwitchModelMemPoolTag (void)
 	}
 
 	Com_Printf("%i static models loaded\n", r_numModels);
+}
+
+/**
+ * @brief Register an actorskin name
+ * @return The id where the actorskin is registred
+ */
+int R_ModAllocateActorSkin (const char* name)
+{
+	if (r_numActorSkinName >= lengthof(r_actorSkinNames))
+		return -1;
+
+	r_actorSkinNames[r_numActorSkinName] = Mem_PoolStrDup(name, com_genericPool, 0);
+
+	r_numActorSkinName++;
+	return r_numActorSkinName;
+}
+
+qboolean R_UseActorSkin (void)
+{
+	return r_numActorSkinName != 0;
+}
+
+static const char* R_GetActorSkin (int id)
+{
+	assert(id >= 0 && id < r_numActorSkinName);
+	return r_actorSkinNames[id];
+}
+
+void R_LoadActorSkinsFromModel (mAliasMesh_t *outMesh, mAliasMesh_t *alias, const char* customName)
+{
+	char pathAndModel[64];
+	image_t *defaultSkin = NULL;
+	int i;
+
+	outMesh->num_skins = r_numActorSkinName;
+	outMesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
+
+	Com_StripExtension(outMesh->name, pathAndModel, sizeof(pathAndModel));
+
+	defaultSkin = R_AliasModelGetSkin(NULL, pathAndModel);
+	if (defaultSkin == r_noTexture && alias != NULL)
+		defaultSkin = alias->skins[0].skin;
+	if (defaultSkin == r_noTexture && customName != NULL) {
+		Com_ReplaceFilename(outMesh->name, customName, pathAndModel, sizeof(pathAndModel));
+		defaultSkin = R_AliasModelGetSkin(NULL, pathAndModel);
+	}
+	if (defaultSkin == r_noTexture)
+		Com_Printf("R_LoadActorSkinsFromModel: No default skin found for model \"%s\"\n", outMesh->name);
+
+	for (i = 0; i < outMesh->num_skins; i++) {
+		if (i == 0) {
+			outMesh->skins[i].skin = defaultSkin;
+		} else {
+			const char *skin = R_GetActorSkin(i);
+			outMesh->skins[i].skin = R_AliasModelGetSkin(NULL, va("%s_%s", pathAndModel, skin));
+			/** @todo should we add warning here? */
+			if (outMesh->skins[i].skin == r_noTexture)
+				outMesh->skins[i].skin = defaultSkin;
+		}
+		Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));
+	}
 }
 
 /**

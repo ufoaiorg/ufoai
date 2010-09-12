@@ -41,33 +41,36 @@ chrList_t chrDisplayList;
 
 /**
  * @brief Allocate a skin from the cls structure
- * @return A customskin structure, only idx is initialized
+ * @return A actorskin structure, only idx is initialized
  */
-customSkin_t* Com_AllocateCustomSkin (void)
+actorSkin_t* Com_AllocateActorSkin (const char *name)
 {
-	const int index = cls.numCustomSkins;
-	customSkin_t *skin;
+	int index;
+	actorSkin_t *skin;
 
-	if (cls.numCustomSkins >= lengthof(cls.customSkins))
-		Sys_Error("Com_AllocateCustomSkin: Max customskin hit");
+	if (cls.numActorSkins >= lengthof(cls.actorSkins))
+		Sys_Error("Com_AllocateActorSkin: Max actorskin hit");
 
-	skin = &cls.customSkins[index];
+	index = R_ModAllocateActorSkin(name);
+	skin = &cls.actorSkins[index];
 	memset(skin, 0, sizeof(*skin));
-	skin->idx = cls.numCustomSkins;
+	skin->idx = index;
 
-	cls.numCustomSkins++;
+	skin->id = Mem_PoolStrDup(name, com_genericPool, 0);
+
+	cls.numActorSkins++;
 	return skin;
 }
 
 /**
- * @brief Get a customskin from idx
- * @return A customskin, else NULL
+ * @brief Get a actorskin from idx
+ * @return A actorskin, else NULL
  */
-static customSkin_t* Com_GetCustomSkinByIDS (int idx)
+static actorSkin_t* Com_GetActorSkinByIDS (int idx)
 {
-	if (idx >= cls.numCustomSkins)
+	if (idx >= cls.numActorSkins)
 		return NULL;
-	return &cls.customSkins[idx];
+	return &cls.actorSkins[idx];
 }
 
 /**
@@ -77,7 +80,7 @@ static customSkin_t* Com_GetCustomSkinByIDS (int idx)
  */
 static const char* CL_GetTeamSkinName (int id)
 {
-	customSkin_t *skin = Com_GetCustomSkinByIDS(id);
+	actorSkin_t *skin = Com_GetActorSkinByIDS(id);
 	if (skin == NULL)
 		Com_Error(ERR_DROP, "CL_GetTeamSkinName: Unknown skin id %i", id);
 	return skin->name;
@@ -497,8 +500,8 @@ static void CL_InitSkin_f (void)
 	if (UI_GetOption(OPTION_SINGLEPLAYER_SKINS) == NULL) {
 		uiNode_t *skins = NULL;
 		int idx = 0;
-		customSkin_t *skin;
-		while ((skin = Com_GetCustomSkinByIDS(idx++))) {
+		actorSkin_t *skin;
+		while ((skin = Com_GetActorSkinByIDS(idx++))) {
 			if (!skin->singleplayer)
 				continue;
 			UI_AddOption(&skins, skin->id, skin->name, va("%d", skin->idx));
@@ -510,8 +513,8 @@ static void CL_InitSkin_f (void)
 	if (UI_GetOption(OPTION_MULTIPLAYER_SKINS) == NULL) {
 		uiNode_t *skins = NULL;
 		int idx = 0;
-		customSkin_t *skin;
-		while ((skin = Com_GetCustomSkinByIDS(idx++))) {
+		actorSkin_t *skin;
+		while ((skin = Com_GetActorSkinByIDS(idx++))) {
 			if (!skin->multiplayer)
 				continue;
 			UI_AddOption(&skins, skin->id, skin->name, va("%d", skin->idx));
@@ -521,11 +524,11 @@ static void CL_InitSkin_f (void)
 }
 
 /**
- * @brief Fix customskin idx accoding to game mode
+ * @brief Fix actorskin idx accoding to game mode
  */
-static int CL_FixCustomSkinIDX (int idx)
+static int CL_FixActorSkinIDX (int idx)
 {
-	customSkin_t *skin = Com_GetCustomSkinByIDS(idx);
+	actorSkin_t *skin = Com_GetActorSkinByIDS(idx);
 
 	/** TODO we should check somewhere there is at least 1 skin */
 	if (skin == NULL) {
@@ -548,10 +551,10 @@ static void CL_ChangeSkin_f (void)
 
 	if (sel >= 0 && sel < chrDisplayList.num) {
 		int newSkin = Cvar_GetInteger("mn_skin");
-		newSkin = CL_FixCustomSkinIDX(newSkin);
+		newSkin = CL_FixActorSkinIDX(newSkin);
 
 		if (chrDisplayList.chr[sel]) {
-			/** @todo Get the skin id from the model by using the customskin id */
+			/** @todo Get the skin id from the model by using the actorskin id */
 			/** @todo Or remove skins from models and convert character_t->skin to string */
 			chrDisplayList.chr[sel]->skin = newSkin;
 
@@ -570,13 +573,13 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 
 	/* Get selected skin and fall back to default skin if it is not valid. */
 	newSkin = Cvar_GetInteger("mn_skin");
-	newSkin = CL_FixCustomSkinIDX(newSkin);
+	newSkin = CL_FixActorSkinIDX(newSkin);
 
 	/* Apply new skin to all (shown/displayed) team-members. */
 	/** @todo What happens if a model of a team member does not have the selected skin? */
 	for (i = 0; i < chrDisplayList.num; i++) {
 		assert(chrDisplayList.chr[i]);
-		/** @todo Get the skin id from the model by using the customskin id */
+		/** @todo Get the skin id from the model by using the actorskin id */
 		/** @todo Or remove skins from models and convert character_t->skin to string */
 		chrDisplayList.chr[i]->skin = newSkin;
 	}

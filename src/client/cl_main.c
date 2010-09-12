@@ -677,20 +677,20 @@ static void CL_TeamDefInitMenu (void)
 	}
 }
 
-/** @brief valid customskin descriptors */
-static const value_t customskin_vals[] = {
-	{"name", V_STRING, offsetof(customSkin_t, name), 0},
-	{"singleplayer", V_BOOL, offsetof(customSkin_t, singleplayer), MEMBER_SIZEOF(customSkin_t, singleplayer)},
-	{"multiplayer", V_BOOL, offsetof(customSkin_t, multiplayer), MEMBER_SIZEOF(customSkin_t, multiplayer)},
+/** @brief valid actorskin descriptors */
+static const value_t actorskin_vals[] = {
+	{"name", V_STRING, offsetof(actorSkin_t, name), 0},
+	{"singleplayer", V_BOOL, offsetof(actorSkin_t, singleplayer), MEMBER_SIZEOF(actorSkin_t, singleplayer)},
+	{"multiplayer", V_BOOL, offsetof(actorSkin_t, multiplayer), MEMBER_SIZEOF(actorSkin_t, multiplayer)},
 
 	{NULL, 0, 0, 0}
 };
 
 
-static void CL_ParseCustomSkin (const char *name, const char **text)
+static void CL_ParseActorSkin (const char *name, const char **text)
 {
-	const char *errhead = "CL_ParseCustomSkin: unexpected end of file (customskin ";
-	customSkin_t *skin;
+	const char *errhead = "CL_ParseActorSkin: unexpected end of file (actorskin ";
+	actorSkin_t *skin;
 	const value_t *vp;
 	const char *token;
 
@@ -698,13 +698,11 @@ static void CL_ParseCustomSkin (const char *name, const char **text)
 	token = Com_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseCustomSkin: customskin \"%s\" without body ignored\n", name);
+		Com_Printf("CL_ParseActorSkin: actorskin \"%s\" without body ignored\n", name);
 		return;
 	}
 
-	skin = Com_AllocateCustomSkin();
-
-	skin->id = Mem_PoolStrDup(name, com_genericPool, 0);
+	skin = Com_AllocateActorSkin(name);
 
 	do {
 		token = Com_EParse(text, errhead, name);
@@ -713,7 +711,7 @@ static void CL_ParseCustomSkin (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		for (vp = customskin_vals; vp->string; vp++)
+		for (vp = actorskin_vals; vp->string; vp++)
 			if (!strcmp(token, vp->string)) {
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
@@ -923,8 +921,8 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 		UI_ParseComponent(type, text);
 	else if (!strcmp(type, "mapdef"))
 		CL_ParseMapDefinition(name, text);
-	else if (!strcmp(type, "customskin"))
-		CL_ParseCustomSkin(name, text);
+	else if (!strcmp(type, "actorskin"))
+		CL_ParseActorSkin(name, text);
 }
 
 /** @brief Cvars for initial check (popup at first start) */

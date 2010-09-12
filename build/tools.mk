@@ -64,6 +64,7 @@ UFOMODEL_SRCS = \
 	common/unzip.c \
 	common/ioapi.c \
 	\
+	client/renderer/r_model.c \
 	client/renderer/r_model_alias.c \
 	client/renderer/r_model_dpm.c \
 	client/renderer/r_model_md2.c \

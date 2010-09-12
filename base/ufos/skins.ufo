@@ -13,37 +13,37 @@
 //
 //=======================
 
-customskin urban {
+actorskin urban {
 	name			"_Urban"
 	singleplayer	true
 	multiplayer		true
 }
 
-customskin jungle {
+actorskin jungle {
 	name			"_Jungle"
 	singleplayer	true
 	multiplayer		true
 }
 
-customskin desert {
+actorskin desert {
 	name			"_Desert"
 	singleplayer	true
 	multiplayer		true
 }
 
-customskin arctic {
+actorskin arctic {
 	name			"_Arctic"
 	singleplayer	true
 	multiplayer		true
 }
 
-customskin yellow {
+actorskin yellow {
 	name			"_Yellow"
 	singleplayer	false
 	multiplayer		true
 }
 
-customskin cccp {
+actorskin cccp {
 	name			"_CCCP"
 	singleplayer	false
 	multiplayer		true

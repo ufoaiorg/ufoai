@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_localentity.h"
 #include "battlescape/cl_battlescape.h"
 #include "../game/inventory.h"
+#include "renderer/r_model.h"
 
 typedef enum {
 	ca_uninitialized,
@@ -110,8 +111,8 @@ typedef struct client_static_s {
 
 	inventoryInterface_t i;
 
-	customSkin_t customSkins[MAX_CUSTOMSKIN];
-	int numCustomSkins;
+	actorSkin_t actorSkins[MAX_ACTORSKINNAME];
+	int numActorSkins;
 
 	/** Map definitions */
 	mapDef_t mds[MAX_MAPDEFS];

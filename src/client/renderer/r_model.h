@@ -63,6 +63,8 @@ typedef struct model_s {
 	mAliasModel_t alias;
 } model_t;
 
+#define MAX_ACTORSKINNAME		32
+
 /*============================================================================ */
 
 void R_ModClearAll(void);
@@ -73,6 +75,9 @@ image_t* R_AliasModelGetSkin(const char *modelFileName, const char *skin);
 void R_DrawAliasModel(entity_t *e);
 void R_ShutdownModels(qboolean complete);
 void R_ModReloadSurfacesArrays(void);
+int R_ModAllocateActorSkin(const char* name);
+void R_LoadActorSkinsFromModel(mAliasMesh_t *outMesh, mAliasMesh_t *alias, const char *customName);
+qboolean R_UseActorSkin(void);
 
 /** @brief The world model(s) */
 extern model_t *r_mapTiles[MAX_MAPTILES];

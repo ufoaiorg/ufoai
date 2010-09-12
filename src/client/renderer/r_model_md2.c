@@ -25,6 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 
+#include "../client.h"
+#include "../cl_team.h"
+
 /*
 ==============================================================================
 MD2 ALIAS MODELS
@@ -108,6 +111,7 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
  */
 static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2, int bufSize, qboolean loadNormals)
 {
+	static const char* actorModelPrefix = "models/soldiers/";
 	int i, j;
 	const dMD2Triangle_t *pintri;
 	const dMD2Coord_t *pincoord;
@@ -139,28 +143,45 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 	outMesh->num_verts = md2Verts;
 
 	if (mod->alias.num_meshes == 1) {
-		/* load the skins */
-		outMesh->num_skins = LittleLong(md2->num_skins);
-		if (outMesh->num_skins < 0 || outMesh->num_skins >= MD2_MAX_SKINS)
-			Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i", mod->name, outMesh->num_skins);
+		if (R_UseActorSkin() && !strncmp(outMesh->name, actorModelPrefix, sizeof(actorModelPrefix))) {
+			md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+			R_LoadActorSkinsFromModel(outMesh, NULL, md2Path);
 
-		outMesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
-		md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
-		for (i = 0; i < outMesh->num_skins; i++) {
-			outMesh->skins[i].skin = R_AliasModelGetSkin(mod->name, md2Path + i * MD2_MAX_SKINNAME);
-			Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));
+			/** @todo Should we check skin image versus this size? */
+			outMesh->skinWidth = LittleLong(md2->skinwidth);
+			outMesh->skinHeight = LittleLong(md2->skinheight);
+
+			if (outMesh->skinHeight <= 0 || outMesh->skinWidth <= 0)
+				Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'",
+						mod->name, outMesh->skinHeight, outMesh->skinWidth);
+		} else {
+			/* load the skins */
+			outMesh->num_skins = LittleLong(md2->num_skins);
+			if (outMesh->num_skins < 0 || outMesh->num_skins >= MD2_MAX_SKINS)
+				Com_Error(ERR_DROP, "Could not load model '%s' - invalid num_skins value: %i", mod->name, outMesh->num_skins);
+
+			outMesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
+			md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
+			for (i = 0; i < outMesh->num_skins; i++) {
+				outMesh->skins[i].skin = R_AliasModelGetSkin(mod->name, md2Path + i * MD2_MAX_SKINNAME);
+				Q_strncpyz(outMesh->skins[i].name, outMesh->skins[i].skin->name, sizeof(outMesh->skins[i].name));
+			}
+
+			outMesh->skinWidth = LittleLong(md2->skinwidth);
+			outMesh->skinHeight = LittleLong(md2->skinheight);
+
+			if (outMesh->skinHeight <= 0 || outMesh->skinWidth <= 0)
+				Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'",
+						mod->name, outMesh->skinHeight, outMesh->skinWidth);
 		}
-
-		outMesh->skinWidth = LittleLong(md2->skinwidth);
-		outMesh->skinHeight = LittleLong(md2->skinheight);
-
-		if (outMesh->skinHeight <= 0 || outMesh->skinWidth <= 0)
-			Com_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'",
-					mod->name, outMesh->skinHeight, outMesh->skinWidth);
 	} else {
-		/* skin data must be the same for the lod meshes */
-		outMesh->num_skins = mod->alias.meshes[0].num_skins;
-		outMesh->skins = mod->alias.meshes[0].skins;
+		if (R_UseActorSkin() && !strncmp(outMesh->name, actorModelPrefix, sizeof(actorModelPrefix))) {
+			R_LoadActorSkinsFromModel(outMesh, &mod->alias.meshes[0], NULL);
+		} else {
+			/* skin data must be the same for the lod meshes */
+			outMesh->num_skins = mod->alias.meshes[0].num_skins;
+			outMesh->skins = mod->alias.meshes[0].skins;
+		}
 		outMesh->skinWidth = mod->alias.meshes[0].skinWidth;
 		outMesh->skinHeight = mod->alias.meshes[0].skinHeight;
 	}
