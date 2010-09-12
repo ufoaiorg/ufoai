@@ -72,6 +72,7 @@ void (APIENTRY *qglUniform2fv)(GLint location, int count, GLfloat *f);
 void (APIENTRY *qglUniform3fv)(GLint location, int count, GLfloat *f);
 void (APIENTRY *qglUniform4fv)(GLint location, int count, GLfloat *f);
 GLint(APIENTRY *qglGetAttribLocation)(GLuint id, const GLchar *name);
+void (APIENTRY *qglUniformMatrix4fv)(GLint location, int count, GLboolean transpose, GLfloat *v);
 
 /* frame buffer objects (fbo) */
 GLboolean (APIENTRY *qglIsRenderbufferEXT) (GLuint);
@@ -133,6 +134,7 @@ typedef void (*Uniform2fv_t)(GLint location, int count, GLfloat *f);
 typedef void (*Uniform3fv_t)(GLint location, int count, GLfloat *f);
 typedef void (*Uniform4fv_t)(GLint location, int count, GLfloat *f);
 typedef GLint (*GetAttribLocation_t)(GLuint id, const GLchar *name);
+typedef void (*UniformMatrix4fv_t)(GLint location, int count, GLboolean transpose, GLfloat *v);
 
 /* frame buffer objects (fbo) */
 typedef GLboolean (*IsRenderbufferEXT_t) (GLuint);

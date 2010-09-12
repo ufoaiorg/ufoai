@@ -661,9 +661,12 @@ static qboolean R_InitExtensions (void)
 	qglGetUniformLocation = NULL;
 	qglUniform1i = NULL;
 	qglUniform1f = NULL;
+	qglUniform1fv = NULL;
 	qglUniform2fv = NULL;
 	qglUniform3fv = NULL;
 	qglUniform4fv = NULL;
+	qglGetAttribLocation = NULL;
+	qglUniformMatrix4fv = NULL;
 
 	/* vertex attribute arrays */
 	qglEnableVertexAttribArray = NULL;
@@ -772,6 +775,7 @@ static qboolean R_InitExtensions (void)
 		qglUniform3fv = (Uniform3fv_t)R_GetProcAddress("glUniform3fv");
 		qglUniform4fv = (Uniform4fv_t)R_GetProcAddress("glUniform4fv");
 		qglGetAttribLocation = (GetAttribLocation_t)R_GetProcAddress("glGetAttribLocation");
+		qglUniformMatrix4fv = (UniformMatrix4fv_t)R_GetProcAddress("glUniformMatrix4fv");
 
 		/* vertex attribute arrays */
 		qglEnableVertexAttribArray = (EnableVertexAttribArray_t)R_GetProcAddress("glEnableVertexAttribArray");

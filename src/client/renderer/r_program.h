@@ -68,35 +68,6 @@ void R_UseProgram(r_program_t *prog);
 void R_ShutdownPrograms(void);
 void R_InitPrograms(void);
 
-/** pass file-line numbers for debugging */
-#ifdef DEBUG
-
-#define R_AttributePointer(x, y, z) R_AttributePointer_Debug(x, y, z, __FILE__, __LINE__)
-#define R_EnableAttribute(x) R_EnableAttribute_Debug(x,  __FILE__, __LINE__)
-#define R_DisableAttribute(x) R_DisableAttribute_Debug(x,  __FILE__, __LINE__)
-
-#define R_ProgramParameter1f(x, y) R_ProgramParameter1f_Debug(x, y, __FILE__, __LINE__)
-#define R_ProgramParameter1fvs(x, y, z) R_ProgramParameter1fvs_Debug(x, y, z, __FILE__, __LINE__)
-#define R_ProgramParameter1i(x, y) R_ProgramParameter1i_Debug(x, y, __FILE__, __LINE__)
-#define R_ProgramParameter2fv(x, y) R_ProgramParameter2fv_Debug(x, y, __FILE__, __LINE__)
-#define R_ProgramParameter2fvs(x, y, z) R_ProgramParameter2fvs_Debug(x, y, z, __FILE__, __LINE__)
-#define R_ProgramParameter3fv(x, y) R_ProgramParameter3fv_Debug(x, y, __FILE__, __LINE__)
-#define R_ProgramParameter4fv(x, y) R_ProgramParameter4fv_Debug(x, y, __FILE__, __LINE__)
-
-void R_AttributePointer_Debug(const char *name, GLuint size, const GLvoid *array , const char *file, int line);
-void R_EnableAttribute_Debug(const char *name , const char *file, int line);
-void R_DisableAttribute_Debug(const char *name , const char *file, int line);
-
-void R_ProgramParameter1f_Debug(const char *name, GLfloat value , const char *file, int line);
-void R_ProgramParameter1fvs_Debug(const char *name, GLint size, GLfloat *value , const char *file, int line);
-void R_ProgramParameter1i_Debug(const char *name, GLint value , const char *file, int line);
-void R_ProgramParameter2fv_Debug(const char *name, GLfloat *value , const char *file, int line);
-void R_ProgramParameter2fvs_Debug(const char *name, GLint size, GLfloat *value , const char *file, int line);
-void R_ProgramParameter3fv_Debug(const char *name, GLfloat *value , const char *file, int line);
-void R_ProgramParameter4fv_Debug(const char *name, GLfloat *value , const char *file, int line);
-
-#else /* don't pass file-line numbers for debugging */
-
 void R_AttributePointer(const char *name, GLuint size, const GLvoid *array);
 void R_EnableAttribute(const char *name);
 void R_DisableAttribute(const char *name);
@@ -108,8 +79,7 @@ void R_ProgramParameter2fv(const char *name, GLfloat *value);
 void R_ProgramParameter2fvs(const char *name, GLint size, GLfloat *value);
 void R_ProgramParameter3fv(const char *name, GLfloat *value);
 void R_ProgramParameter4fv(const char *name, GLfloat *value);
-
-#endif
+void R_ProgramParameterMatrix4fv(const char *name, GLfloat *value);
 
 void R_InitParticleProgram(r_program_t *prog);
 void R_UseParticleProgram(r_program_t *prog);
