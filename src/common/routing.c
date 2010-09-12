@@ -1473,6 +1473,7 @@ static int RT_UpdateConnection (mapTiles_t *mapTiles, routing_t * map, const act
  * @param[in] x The x position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] y The y position in the routing arrays (0 to PATHFINDING_WIDTH - actorSize)
  * @param[in] dir The direction to test for a connection through
+ * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
 void RT_UpdateConnectionColumn (mapTiles_t *mapTiles, routing_t * map, const int actorSize, const int x, const int y, const int dir, const char **list)
 {
