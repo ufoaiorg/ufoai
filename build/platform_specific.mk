@@ -6,7 +6,6 @@
 SHARED_EXT=so
 SHARED_LDFLAGS=-shared
 SHARED_CFLAGS=-fPIC
-JPEG_CFLAGS=
 CFLAGS+=
 LDFLAGS+=
 CFLAGS_M_OPTS=-MD -MT $@ -MP
@@ -17,6 +16,8 @@ ifeq ($(TARGET_OS),mingw32)
 	CLIENT_LIBS+=-lws2_32 -lwinmm -lgdi32 -lopengl32
 	SERVER_LIBS+=-lws2_32 -lwinmm -lgdi32
 	TESTS_LIBS+=-lgdi32
+#	GAME_LIBS+=
+	TOOLS_LIBS+=-lwinmm
 	ifeq ($(PROFILING),1)
 		SERVER_LIBS += -lgmon
 		CLIENT_LIBS += -lgmon
@@ -25,12 +26,9 @@ ifeq ($(TARGET_OS),mingw32)
 	SHARED_EXT=dll
 	SHARED_LDFLAGS=-shared
 	SHARED_CFLAGS=-shared
-	JPEG_CFLAGS=-DDONT_TYPEDEF_INT32
 	CFLAGS+=-DGETTEXT_STATIC
 	# Windows XP is the minimum we need
 	CFLAGS+=-DWINVER=0x501
-#	GAME_LIBS+=
-	TOOLS_LIBS+=-lwinmm
 	# To use Windows CMD
 	ifeq ($(MSYS),1)
 	else
