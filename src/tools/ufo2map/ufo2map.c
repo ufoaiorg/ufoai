@@ -625,13 +625,13 @@ int main (int argc, const char **argv)
 		Sys_Error("At least provide 1 argument: the map filename.");
 	}
 
+	com_genericPool = Mem_CreatePool("ufo2map");
+	com_fileSysPool = Mem_CreatePool("ufo2map filesys");
+
 	Swap_Init();
 	Mem_Init();
 
 	start = time(NULL);
-
-	com_genericPool = Mem_CreatePool("ufo2map");
-	com_fileSysPool = Mem_CreatePool("ufo2map filesys");
 
 	Verb_Printf(VERB_NORMAL, "path: '%s'\n", argv[argc - 1]);
 
