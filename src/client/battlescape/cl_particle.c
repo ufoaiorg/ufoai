@@ -189,6 +189,7 @@ static const value_t pps[] = {
 	{"levelflags", V_INT, offsetof(ptl_t, levelFlags), MEMBER_SIZEOF(ptl_t, levelFlags)},
 	{"physics", V_BOOL, offsetof(ptl_t, physics), MEMBER_SIZEOF(ptl_t, physics)},
 	{"stick", V_BOOL, offsetof(ptl_t, stick), MEMBER_SIZEOF(ptl_t, stick)},
+	{"bounce", V_BOOL, offsetof(ptl_t, bounce), MEMBER_SIZEOF(ptl_t, bounce)},
 	{"autohide", V_BOOL, offsetof(ptl_t, autohide), MEMBER_SIZEOF(ptl_t, autohide)},
 	{"stayalive", V_BOOL, offsetof(ptl_t, stayalive), MEMBER_SIZEOF(ptl_t, stayalive)},
 	{"weather", V_BOOL, offsetof(ptl_t, weather), MEMBER_SIZEOF(ptl_t, weather)},
@@ -985,13 +986,15 @@ static void CL_ParticleRun2 (ptl_t *p)
 			if (!p->stayalive) {
 				CL_ParticleFree(p);
 				return;
-			} else {
+			} else if (p->bounce) {
 				/* bounce */
 				VectorScale(tr.plane.normal, -DotProduct(tr.plane.normal, p->v), temp);
 				VectorAdd(temp, p->v, temp);
 				VectorAdd(temp, temp, p->v);
-				VectorCopy(tr.endpos, p->s);
+			} else {
+				VectorClear(p->v);
 			}
+			VectorCopy(tr.endpos, p->s);
 		}
 	}
 

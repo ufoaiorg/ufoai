@@ -196,6 +196,7 @@ typedef struct ptl_s {
 						 * off via cvar cl_particleweather) */
 	qboolean hitSolid;	/**< true if a trace (only physic particles) hits something solid */
 	qboolean stick;		/**< true if a particle sticks to the solid the trace hits before (only physic particles) */
+	qboolean bounce;	/**< true if the particle should bouce when a solid is hot (only physic particles) */
 } ptl_t;
 
 typedef struct {
