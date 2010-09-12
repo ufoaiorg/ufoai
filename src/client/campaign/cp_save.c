@@ -172,7 +172,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 			"...xml Size: %i, compressed? %c\n",
 			header.version, header.gameVersion, header.xmlSize, header.compressed ? 'y' : 'n');
 	len = header.xmlSize + 50;
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte)*len, cl_genericPool, 0);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * len, cl_genericPool, 0);
 
 	if (header.compressed) {
 		/* uncompress data, skipping comment header */
@@ -319,7 +319,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	Com_Printf("XML Written to buffer (%d Bytes)\n", res);
 
 	if (header.compressed)
-		bufLen = (uLongf) (24 + 1.02 * requiredBufferLength);
+		bufLen = compressBound(requiredBufferLength);
 	else
 		bufLen = requiredBufferLength;
 
