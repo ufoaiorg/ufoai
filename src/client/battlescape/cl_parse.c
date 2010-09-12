@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @note don't change the array size - a NET_ReadByte can
  * return values between 0 and UCHAR_MAX (-1 is not handled here)
  */
-static const char *svc_strings[UCHAR_MAX + 1] =
+static const char *svc_strings[] =
 {
 	"svc_bad",
 
@@ -200,7 +200,7 @@ void CL_ParseServerMessage (svc_ops_t cmd, struct dbuffer *msg)
 	int i;
 
 	/* parse the message */
-	if (cmd == -1)
+	if (cmd < svc_bad || cmd >= svc_oob)
 		return;
 
 	Com_DPrintf(DEBUG_CLIENT, "command: %s\n", svc_strings[cmd]);
