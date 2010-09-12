@@ -860,19 +860,18 @@ particle burning
 {
 	init
 	{
-		push   *v
-		mul    float -15.0
-		add    *s
-		add    vector "0 0 -24"
-		pop    *s
-		v      "0 0 0"
-		life   4.0
-		tps    2.0
-		spawn  burnFlame
+		push   *v					// push the velocity vector onto the stack
+		mul    float -15.0			// multiply the vector on the stack with the given value
+		add    *s					// add the current position to the vector on the stack
+		add    vector "0 0 -24"		// add the given vector to the vector on the stack
+		pop    *s					// write the vector on the stack back into the current position
+		v      "0 0 0"				// no velocity
+		life   4.0					// the max life of this particle
+		tps    2.0					// call the think function x times per second
 	}
 	think
 	{
-		spawn  burnFlame
+		spawn  burnFlame		// spawn the given particle per think call
 	}
 }
 
@@ -880,11 +879,11 @@ particle fire
 {
 	init
 	{
-		tps    15.0
+		tps    15.0				// call the think function x times per second
 	}
 	think
 	{
-		spawn  burnFlame
+		spawn  burnFlame		// spawn the given particle per think call
 	}
 }
 
@@ -910,26 +909,26 @@ particle smoking
 {
 	init
 	{
-		frame 0
-		endframe 3
-		image +sfx/smoke_
-		blend  blend
-		style  facing
-		thinkfade  out
-		rand   float 0.5
-		add    float 0.2
-		pop    *tps
-		crand  vector "8 8 8"
-		add    *s
-		pop    *s
-		v      "0 0 30"
+		frame		0				// the animation should start at image 0
+		endframe	3				// and end at the fourth image
+		image		+sfx/smoke_		// the + indicates animated frames as images
+		blend		blend			// set the blend mode
+		style		facing			// rotates the sprite into the camera direction
+		thinkfade	out				// fades the alpha (because the blend mode is blend)
+		rand		float	0.5		// value between 0 and 0.5
+		add			float	0.2		// add 0.2
+		pop			*tps			// push the random value (>= 0.2) to the tps value
+		crand		vector	"8 8 8"	// random vector
+		add			*s				// add the current position
+		pop			*s				// write value back into s (current position)
+		v			"0 0 30"		// set the velocity to straigth upwards
 	}
 	run
 	{
-		push   pos "20 20"
-		mul    *t
-		add    pos "10 10"
-		pop    *size
+		push		pos	"20 20"		// push to the stack
+		mul			*t				// multiply with the time the particle is already active
+		add			pos	"10 10"		// add some vector to the value on the stack
+		pop			*size			// write the result of the (20,20)*t+(10,10) to the new size value
 	}
 	think { kill }
 }
@@ -938,13 +937,11 @@ particle smoke3
 {
 	init
 	{
-		v      "0 0 0"
-		tps    25.0
-		spawn  smoking
+		tps    15.0			// call the think function x times per second
 	}
 	think
 	{
-		spawn  smoking
+		spawn  smoking		// spawn the given particle per think call
 	}
 }
 
@@ -952,13 +949,11 @@ particle green_smoke
 {
 	init
 	{
-		v      "0 0 0"
-		tps    25.0
-		spawn  greensmokebig
+		tps    25.0				// call the think function x times per second
 	}
 	think
 	{
-		spawn  greensmokebig
+		spawn  greensmokebig	// spawn the given particle per think call
 	}
 }
 
@@ -966,12 +961,12 @@ particle camping_fire
 {
 	init
 	{
-		tps    25.0
+		tps    25.0				// call the think function x times per second
 	}
 	think
 	{
-		spawn  burnFlame
-		spawn  burnFlamus
+		spawn  burnFlame		// spawn the given particle per think call
+		spawn  burnFlamus		// spawn the given particle per think call
 	}
 }
 
@@ -979,11 +974,11 @@ particle crashsite_fire
 {
 	init
 	{
-		tps    20.0
+		tps    20.0				// call the think function x times per second
 	}
 	think
 	{
-		spawn  burnFlame2
+		spawn  burnFlame2		// spawn the given particle per think call
 	}
 }
 
@@ -991,16 +986,16 @@ particle blood
 {
  	init
  	{
- 		frame			0
- 		endframe		3
- 		image			+sfx/blood/bloodsplatter_d
-		blend			blend
-		style			facing
+		frame			0							// the animation should start at image 0
+		endframe		3							// and end at the fourth image
+		image			+sfx/blood/bloodsplatter_d	// the + indicates animated frames as images
+		blend			blend						// set the blend mode
+		style			facing						// rotates the sprite into the camera direction
 		framefade		none
-		size			"30 30"
+		size			"30 30"						// set the size for the images of this particle
 		fps				15.0
-		tps				3
-		v				"0 0 0"
+		tps				3							// call the think function x times per second
+		v				"0 0 0"						// no velocity
 	}
  	think { kill }
 }

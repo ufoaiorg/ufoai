@@ -335,10 +335,9 @@ void CL_ParticleRegisterArt (void)
  * @brief Register art (pics, models) for each particle
  * @note searches the global particle art list and checks whether the pic or model was already loaded
  * @return index of global art array
- * @note We have to use the char* cast here because the image_t and model_t
  * have their names at the beginning of their structs
  */
-static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, byte type)
+static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, artType_t type)
 {
 	ptlArt_t *a;
 	int i;
