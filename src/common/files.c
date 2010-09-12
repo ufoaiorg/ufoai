@@ -69,23 +69,27 @@ void FS_NormPath (char *path)
 }
 
 /**
- * @brief Returns the size of a given file
- * @todo Implement for pk3
+ * @brief Returns the size of a given file or -1 if no file is opened
  */
 int FS_FileLength (qFILE * f)
 {
-	int pos;
-	int end;
+	if (f->f) {
+		const int pos = ftell(f->f);
+		int end;
 
-	if (!f->f)
-		return 0;
+		fseek(f->f, 0, SEEK_END);
+		end = ftell(f->f);
+		fseek(f->f, pos, SEEK_SET);
 
-	pos = ftell(f->f);
-	fseek(f->f, 0, SEEK_END);
-	end = ftell(f->f);
-	fseek(f->f, pos, SEEK_SET);
+		return end;
+	} else if (f->z) {
+		unz_file_info info;
+		if (unzGetCurrentFileInfo(f->z, &info, NULL, 0, NULL, 0, NULL, 0) != UNZ_OK)
+			Sys_Error("Couldn't get size of %s", f->name);
+		return info.uncompressed_size;
+	}
 
-	return end;
+	return -1;
 }
 
 /**
@@ -274,7 +278,7 @@ int FS_Seek (qFILE * f, long offset, int origin)
 }
 
 /**
- * @return filesize
+ * @return the filesize or -1 in case of an error
  * @sa FS_OpenFileSingle
  * @sa FS_LoadFile
  */
