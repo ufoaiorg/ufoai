@@ -133,6 +133,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\mem.h" />
+		<Unit filename="..\..\src\common\threads.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\common\threads.h" />
 		<Unit filename="..\..\src\common\unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
