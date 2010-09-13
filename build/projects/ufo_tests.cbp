@@ -160,7 +160,7 @@
 		<Unit filename="..\..\src\common\cmd.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\common\threads.c">
+		<Unit filename="..\..\src\shared\threads.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\cmodel.c">

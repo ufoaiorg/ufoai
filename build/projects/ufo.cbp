@@ -1272,10 +1272,10 @@
 		<Unit filename="../../src/common/dbuffer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/threads.c">
+		<Unit filename="../../src/shared/threads.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/threads.h" />
+		<Unit filename="../../src/shared/threads.h" />
 		<Unit filename="../../src/common/dbuffer.h" />
 		<Unit filename="../../src/common/doxygen.h" />
 		<Unit filename="../../src/common/files.c">

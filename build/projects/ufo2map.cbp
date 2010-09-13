@@ -119,10 +119,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/common/unzip.h" />
-		<Unit filename="../../src/common/threads.c">
+		<Unit filename="../../src/shared/threads.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/threads.h" />
+		<Unit filename="../../src/shared/threads.h" />
 		<Unit filename="../../src/ports/unix/unix_main.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />

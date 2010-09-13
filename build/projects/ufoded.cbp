@@ -131,10 +131,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/common/http.h" />
-		<Unit filename="../../src/common/threads.c">
+		<Unit filename="../../src/shared/threads.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/threads.h" />
+		<Unit filename="../../src/shared/threads.h" />
 		<Unit filename="../../src/common/ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
