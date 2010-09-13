@@ -267,8 +267,7 @@ int R_ModAllocateActorSkin (const char* name)
 
 	r_actorSkinNames[r_numActorSkinName] = Mem_PoolStrDup(name, com_genericPool, 0);
 
-	r_numActorSkinName++;
-	return r_numActorSkinName;
+	return r_numActorSkinName++;
 }
 
 qboolean R_UseActorSkin (void)
