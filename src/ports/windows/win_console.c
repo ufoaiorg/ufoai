@@ -314,8 +314,8 @@ static LONG WINAPI Sys_ConsoleEditProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 			case VK_TAB:
 				/* command completion */
 				if (GetWindowText(sys_console.hWndInput, sys_console.cmdBuffer, sizeof(sys_console.cmdBuffer))) {
-					int inputpos = 0;
-					if (Com_ConsoleCompleteCommand(sys_console.cmdBuffer, sys_console.cmdBuffer, MAXCMDLINE, &inputpos, 0)) {
+					uint32_t inputpos = 0;
+					if (Com_ConsoleCompleteCommand(sys_console.cmdBuffer, sys_console.cmdBuffer, sizeof(sys_console.cmdBuffer), &inputpos, 0)) {
 						SetWindowText(sys_console.hWndInput, sys_console.cmdBuffer);
 						/* reset again - we don't want to execute yet */
 						sys_console.cmdBuffer[0] = '\0';
