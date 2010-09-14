@@ -56,13 +56,13 @@ typedef struct {
 #define ROQ_ID_CCC 0xC000
 
 typedef struct {
-	unsigned short	id;
-	unsigned int	size;
-	unsigned short	flags;
+	uint16_t id;
+	uint32_t size;
+	uint16_t flags;
 } roqChunk_t;
 
 typedef struct {
-	unsigned int			pixel[4];
+	uint32_t pixel[4];
 } roqQuadVector_t;
 
 typedef struct {
@@ -564,7 +564,12 @@ void CIN_ROQ_PlayCinematic (cinematic_t *cin, const char *fileName)
 	int size;
 	byte header[ROQ_CHUNK_HEADER_SIZE];
 
-	assert(cin->codecData);
+	if (cin->codecData && (ROQCIN.file.f || ROQCIN.file.z)) {
+		Com_Printf("WARNING: it seams there was already a roq running, it will be killed to start %s\n", fileName);
+		CIN_ROQ_StopCinematic(cin);
+	}
+
+	assert(cin->codecData == NULL);
 	cin->codecData = Mem_PoolAlloc(sizeof(ROQCIN), vid_genericPool, 0);
 	memset(&ROQCIN, 0, sizeof(ROQCIN));
 
