@@ -649,13 +649,13 @@ int main (int argc, char **argv)
 		Exit(1);
 	}
 
-	Swap_Init();
-	Mem_Init();
-
 	com_genericPool = Mem_CreatePool("ufomodel");
 	com_fileSysPool = Mem_CreatePool("ufomodel filesys");
 	vid_modelPool = Mem_CreatePool("ufomodel model");
 	vid_imagePool = Mem_CreatePool("ufomodel image");
+
+	Swap_Init();
+	Mem_Init();
 
 	FS_InitFilesystem(qfalse);
 
