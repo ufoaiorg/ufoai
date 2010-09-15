@@ -83,7 +83,9 @@ typedef struct {
 	qboolean killserver;		/**< will initiate shutdown once abandon is set */
 	threads_mutex_t *serverMutex;
 	SDL_Thread *gameThread;
+#ifndef HARD_LINKED_GAME
 	void *gameLibrary;
+#endif
 	game_export_t *ge;
 } serverInstanceStatic_t;
 

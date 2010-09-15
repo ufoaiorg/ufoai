@@ -419,7 +419,7 @@ static void SV_SetInlineModelOrientation (const char *name, const vec3_t origin,
 
 static void SV_UnloadGame (void)
 {
-#ifndef GAME_HARD_LINKED
+#ifndef HARD_LINKED_GAME
 	if (svs.gameLibrary) {
 		Com_Printf("Unload the game library\n");
 		SDL_UnloadObject(svs.gameLibrary);
@@ -460,12 +460,10 @@ static game_export_t *SV_GetGameAPI (game_import_t *parms)
 	typedef game_export_t *(*game_api_t) (game_import_t *);
 	game_api_t GetGameAPI;
 	const char *path;
-#endif
 
 	if (svs.gameLibrary)
 		Com_Error(ERR_FATAL, "SV_GetGameAPI without SV_UnloadGame");
 
-#ifndef HARD_LINKED_GAME
 	Com_Printf("------- Loading game.%s -------\n", SHARED_EXT);
 
 #ifdef PKGLIBDIR
