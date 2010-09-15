@@ -364,13 +364,16 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 				if (ic->item.a >= ic->item.t->ammo) {
 					/* exchange ammo */
 					const item_t item = {NONE_AMMO, NULL, ic->item.m, 0, 0};
+					/* Put current ammo in place of the new ammo unless floor - there can be more than 1 item */
+					const int cacheFromX = INV_IsFloorDef(from) ? NONE : fItem->x;
+					const int cacheFromY = INV_IsFloorDef(from) ? NONE : fItem->y;
 
 					/* Actually remove the ammo from the 'from' container. */
 					if (!self->RemoveFromInventory(self, i, from, fItem))
 						return IA_NONE;
 
-					/* Add the currently used ammo in a free place of the "from" container. */
-					if (self->AddToInventory(self, i, item, from, NONE, NONE, 1) == NULL)
+					/* Add the currently used ammo in place of the new ammo in the "from" container. */
+					if (self->AddToInventory(self, i, item, from, cacheFromX, cacheFromY, 1) == NULL)
 						Sys_Error("Could not reload the weapon - add to inventory failed (%s)", self->name);
 
 					ic->item.m = self->cacheItem.t;

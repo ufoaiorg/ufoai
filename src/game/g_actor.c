@@ -479,11 +479,11 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	player_t *player;
 	edict_t *floor;
 	qboolean newFloor;
-	invList_t *ic;
+	invList_t *ic, *tc;
 	item_t item;
 	int mask;
 	inventory_action_t ia;
-	invList_t fItemBackup;
+	invList_t fItemBackup, tItemBackup;
 	int fx, fy;
 	int originalTU, reservedTU = 0;
 
@@ -494,6 +494,12 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 
 	/* Store the location/item of 'from' BEFORE actually moving items with I_MoveInInventory. */
 	fItemBackup = *fItem;
+
+	/* Store the location of 'to' BEFORE actually moving items with I_MoveInInventory
+	 * so in case we swap ammo the client can be updated correctly */
+	tc = INVSH_SearchInInventory(&ent->chr.i, to, tx, ty);
+	if(tc)
+		tItemBackup = *INVSH_SearchInInventory(&ent->chr.i, to, tx, ty);
 
 	/* Get first used bit in item. */
 	INVSH_GetFirstShapePosition(fItem, &fx, &fy);
@@ -572,7 +578,8 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			if (!INV_IsFloorDef(to)) {
 				G_EventPerish(floor);
 				G_FreeEdict(floor);
-			}
+			} else
+				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy);
 		}
 	} else {
 		G_EventInventoryDelete(ent, G_TeamToPM(ent->team), from, fx, fy);
@@ -597,8 +604,17 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			gi.EndEvents();
 			return;
 		} else { /* ia == IA_RELOAD_SWAP */
-			item = fItemBackup.item;
+			item.a = NONE_AMMO;
+			item.m = NULL;
+			item.t = tItemBackup.item.m;
+			item.rotated = fItemBackup.item.rotated;
+			item.amount = tItemBackup.item.amount;
 			to = from;
+			if (INV_IsFloorDef(to)) {
+				fItemBackup.item = item;
+				fItemBackup.x = NONE;
+				fItemBackup.y = NONE;
+			}
 			tx = fItemBackup.x;
 			ty = fItemBackup.y;
 		}
