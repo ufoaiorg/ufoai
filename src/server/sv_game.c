@@ -425,7 +425,6 @@ static void SV_UnloadGame (void)
 		SDL_UnloadObject(svs.gameLibrary);
 	}
 #endif
-	svs.gameLibrary = NULL;
 }
 
 #ifndef HARD_LINKED_GAME
