@@ -485,7 +485,7 @@ static uiAction_t *UI_ParseActionList (uiNode_t *node, const char **text, const 
 				return NULL;
 
 			/* get the value */
-			action->d.terminal.d1.string = UI_AllocStaticString(*token, 0);
+			action->d.terminal.d1.constString = UI_AllocStaticString(*token, 0);
 			break;
 
 		case EA_ASSIGN:

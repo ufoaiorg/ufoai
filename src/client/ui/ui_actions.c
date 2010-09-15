@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 
 typedef struct {
-	char* token;
+	const char* token;
 	int type;
 	int group;
 } ui_typedActionToken_t;
@@ -345,15 +345,15 @@ static void UI_NodeSetPropertyFromActionValue (uiNode_t *node, const value_t *pr
 	/* @todo we can use a new EA_VALUE type to flag already parsed values, we dont need to do it again and again */
 	/* pre compute value if possible */
 	if (value->type == EA_VALUE_STRING) {
-		const char* string = value->d.terminal.d1.string;
+		const char* string = value->d.terminal.d1.constString;
 		/* @todo here we must catch error in a better way, and using cvar for error code to create unittest automations */
 		UI_InitRawActionValue(value, node, property, string);
 	}
 
 	/* decode RAW value */
 	if (value->type == EA_VALUE_RAW) {
-		void *rawValue = value->d.terminal.d1.data;
-		int rawType = value->d.terminal.d2.integer;
+		const void *rawValue = value->d.terminal.d1.data;
+		const int rawType = value->d.terminal.d2.integer;
 		UI_NodeSetPropertyFromRAW(node, property, rawValue, rawType);
 	}
 	/* else it is an expression */
@@ -389,9 +389,9 @@ static inline void UI_ExecuteSetAction (const uiAction_t* action, const uiCallCo
 		const char* textValue;
 
 		if (left->type == EA_VALUE_CVARNAME)
-			cvarName = left->d.terminal.d1.string;
+			cvarName = left->d.terminal.d1.constString;
 		else
-			cvarName = UI_GenInjectedString(left->d.terminal.d1.string, qfalse, context);
+			cvarName = UI_GenInjectedString(left->d.terminal.d1.constString, qfalse, context);
 
 		textValue = UI_GetStringFromExpression(right, context);
 
@@ -404,9 +404,9 @@ static inline void UI_ExecuteSetAction (const uiAction_t* action, const uiCallCo
 
 	/* search the node */
 	if (left->type == EA_VALUE_PATHPROPERTY)
-		path = left->d.terminal.d1.string;
+		path = left->d.terminal.d1.constString;
 	else if (left->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
-		path = UI_GenInjectedString(left->d.terminal.d1.string, qfalse, context);
+		path = UI_GenInjectedString(left->d.terminal.d1.constString, qfalse, context);
 	else
 		Com_Error(ERR_FATAL, "UI_ExecuteSetAction: Property setter with wrong type '%d'", left->type);
 
@@ -433,9 +433,9 @@ static inline void UI_ExecuteCallAction (const uiAction_t* action, const uiCallC
 	const char* path = left->d.terminal.d1.constString;
 
 	if (left->type == EA_VALUE_PATHPROPERTY || left->type == EA_VALUE_PATHNODE)
-		path = left->d.terminal.d1.string;
+		path = left->d.terminal.d1.constString;
 	else if (left->type == EA_VALUE_PATHPROPERTY_WITHINJECTION || left->type == EA_VALUE_PATHNODE_WITHINJECTION)
-		path = UI_GenInjectedString(left->d.terminal.d1.string, qfalse, context);
+		path = UI_GenInjectedString(left->d.terminal.d1.constString, qfalse, context);
 	UI_ReadNodePath(path, context->source, &callNode, &callProperty);
 
 	if (callNode == NULL) {
@@ -544,8 +544,8 @@ static void UI_ExecuteAction (const uiAction_t* action, uiCallContext_t *context
 
 	case EA_CMD:
 		/* execute a command */
-		if (action->d.terminal.d1.string)
-			Cbuf_AddText(UI_GenInjectedString(action->d.terminal.d1.string, qtrue, context));
+		if (action->d.terminal.d1.constString)
+			Cbuf_AddText(UI_GenInjectedString(action->d.terminal.d1.constString, qtrue, context));
 		break;
 
 	case EA_CALL:
@@ -717,11 +717,11 @@ void UI_FreeStringProperty (void* pointer)
  * @param[in] command A command for the action
  * @return An initialised action
  */
-uiAction_t* UI_AllocStaticCommandAction (char *command)
+uiAction_t* UI_AllocStaticCommandAction (const char *command)
 {
 	uiAction_t* action = UI_AllocStaticAction();
 	action->type = EA_CMD;
-	action->d.terminal.d1.string = command;
+	action->d.terminal.d1.constString = command;
 	return action;
 }
 
@@ -743,7 +743,7 @@ void UI_PoolAllocAction (uiAction_t** action, int type, const void *data)
 	(*action)->type = type;
 	switch (type) {
 	case EA_CMD:
-		(*action)->d.terminal.d1.string = Mem_PoolStrDup((const char *)data, ui_sysPool, 0);
+		(*action)->d.terminal.d1.constString = Mem_PoolStrDup((const char *)data, ui_sysPool, 0);
 		break;
 	default:
 		Com_Error(ERR_FATAL, "Action type %i is not yet implemented", type);

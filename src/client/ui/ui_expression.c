@@ -62,7 +62,7 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 		{
 			uiNode_t *node;
 			const value_t *propertyTmp;
-			const char *path = expression->d.terminal.d1.string;
+			const char *path = expression->d.terminal.d1.constString;
 			if (expression->type == EA_VALUE_PATHNODE_WITHINJECTION)
 				path = UI_GenInjectedString(path, qfalse, context);
 
@@ -82,7 +82,7 @@ uiNode_t* UI_GetNodeFromExpression (uiAction_t *expression, const uiCallContext_
 			{
 				uiNode_t *node;
 				const value_t *propertyTmp;
-				const char *path = expression->d.terminal.d1.string;
+				const char *path = expression->d.terminal.d1.constString;
 				if (expression->type == EA_VALUE_PATHPROPERTY_WITHINJECTION)
 					path = UI_GenInjectedString(path, qfalse, context);
 
@@ -184,7 +184,7 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 		case EA_VALUE_STRING:
 		case EA_VALUE_STRING_WITHINJECTION:
 			{
-				const char* string = expression->d.terminal.d1.string;
+				const char* string = expression->d.terminal.d1.constString;
 				if (expression->type == EA_VALUE_STRING_WITHINJECTION)
 					string = UI_GenInjectedString(string, qfalse, context);
 				return atof(string);
@@ -195,7 +195,7 @@ float UI_GetFloatFromExpression (uiAction_t *expression, const uiCallContext_t *
 		case EA_VALUE_CVARNAME_WITHINJECTION:
 			{
 				cvar_t *cvar = NULL;
-				const char *cvarName = expression->d.terminal.d1.string;
+				const char *cvarName = expression->d.terminal.d1.constString;
 				if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
 					cvarName = UI_GenInjectedString(cvarName, qfalse, context);
 				cvar = Cvar_Get(cvarName, "", 0, "Cvar from UI script expression");
@@ -327,7 +327,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 		case EA_VALUE_STRING:
 		case EA_VALUE_STRING_WITHINJECTION:
 			{
-				const char* string = expression->d.terminal.d1.string;
+				const char* string = expression->d.terminal.d1.constString;
 				if (expression->type == EA_VALUE_STRING_WITHINJECTION)
 					string = UI_GenInjectedString(string, qfalse, context);
 				return string;
@@ -346,7 +346,7 @@ const char* UI_GetStringFromExpression (uiAction_t *expression, const uiCallCont
 		case EA_VALUE_CVARNAME_WITHINJECTION:
 		{
 			cvar_t *cvar = NULL;
-			const char *cvarName = expression->d.terminal.d1.string;
+			const char *cvarName = expression->d.terminal.d1.constString;
 			if (expression->type == EA_VALUE_CVARNAME_WITHINJECTION)
 				cvarName = UI_GenInjectedString(cvarName, qfalse, context);
 			cvar = Cvar_Get(cvarName, "", 0, "Cvar from UI script expression");
@@ -482,7 +482,7 @@ qboolean UI_GetBooleanFromExpression (uiAction_t *expression, const uiCallContex
 				const char* cvarName;
 				assert(e);
 				assert(e->type == EA_VALUE_CVARNAME || e->type == EA_VALUE_CVARNAME_WITHINJECTION);
-				cvarName = e->d.terminal.d1.string;
+				cvarName = e->d.terminal.d1.constString;
 				if (e->type == EA_VALUE_CVARNAME_WITHINJECTION)
 					cvarName = UI_GenInjectedString(cvarName, qfalse, context);
 				return Cvar_FindVar(cvarName) != NULL;
@@ -551,7 +551,7 @@ static uiAction_t *UI_ParseValueExpression (const char **text)
 
 	/* it is a const string (or an injection tag for compatibility) */
 	if (Com_ParsedTokenIsQuoted() || token[0] == '<') {
-		expression->d.terminal.d1.string = UI_AllocStaticString(token, 0);
+		expression->d.terminal.d1.constString = UI_AllocStaticString(token, 0);
 		if (UI_IsInjectedString(token))
 			expression->type = EA_VALUE_STRING_WITHINJECTION;
 		else
@@ -580,7 +580,7 @@ static uiAction_t *UI_ParseValueExpression (const char **text)
 	/* it is a cvarname */
 	if (!strncmp(token, "*cvar:", 6)) {
 		const char* cvarName = token + 6;
-		expression->d.terminal.d1.string = UI_AllocStaticString(cvarName, 0);
+		expression->d.terminal.d1.constString = UI_AllocStaticString(cvarName, 0);
 		if (UI_IsInjectedString(cvarName))
 			expression->type = EA_VALUE_CVARNAME_WITHINJECTION;
 		else
@@ -610,7 +610,7 @@ static uiAction_t *UI_ParseValueExpression (const char **text)
 			Com_Printf("UI_ParseExpression: Old syntax, please prefix '%s' with \"*node:root.\" \n", token);
 			path = va("root.%s", path);
 		}
-		expression->d.terminal.d1.string = UI_AllocStaticString(path, 0);
+		expression->d.terminal.d1.constString = UI_AllocStaticString(path, 0);
 
 		/* get property name */
 		propertyName = strchr(path, '@');

@@ -122,7 +122,6 @@ typedef enum uiActionType_s {
 typedef union {
 	int integer;
 	float number;
-	char* string;
 	const char* constString;
 	void* data;
 	const void* constData;
@@ -225,7 +224,7 @@ int UI_GetActionTokenType(const char* token, int group);
 uiValue_t* UI_GetVariable (const uiCallContext_t *context, int relativeVarId);
 
 void UI_PoolAllocAction(uiAction_t** action, int type, const void *data);
-uiAction_t* UI_AllocStaticCommandAction(char *command);
+uiAction_t* UI_AllocStaticCommandAction(const char *command);
 void UI_InitActions(void);
 void UI_AddListener(struct uiNode_s *node, const value_t *property, struct uiNode_s *functionNode);
 void UI_RemoveListener(struct uiNode_s *node, const value_t *property, struct uiNode_s *functionNode);
