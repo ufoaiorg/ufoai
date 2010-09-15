@@ -324,6 +324,14 @@ language no {
 	}
 }
 
+language tr {
+	"_Turkish"
+	{
+		tr.UTF-8
+		tr.utf8
+	}
+}
+
 language none {
 	"_No language"
 	{
