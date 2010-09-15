@@ -226,7 +226,7 @@ uiValue_t* UI_GetVariable (const uiCallContext_t *context, int relativeVarId);
 void UI_PoolAllocAction(uiAction_t** action, int type, const void *data);
 uiAction_t* UI_AllocStaticCommandAction(const char *command);
 void UI_InitActions(void);
-void UI_AddListener(struct uiNode_s *node, const value_t *property, struct uiNode_s *functionNode);
+void UI_AddListener(struct uiNode_s *node, const value_t *property, const struct uiNode_s *functionNode);
 void UI_RemoveListener(struct uiNode_s *node, const value_t *property, struct uiNode_s *functionNode);
 
 const char* UI_GetParam(const uiCallContext_t *context, int paramID);

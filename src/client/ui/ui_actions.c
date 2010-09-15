@@ -352,7 +352,7 @@ static void UI_NodeSetPropertyFromActionValue (uiNode_t *node, const value_t *pr
 
 	/* decode RAW value */
 	if (value->type == EA_VALUE_RAW) {
-		const void *rawValue = value->d.terminal.d1.data;
+		const void *rawValue = value->d.terminal.d1.constData;
 		const int rawType = value->d.terminal.d2.integer;
 		UI_NodeSetPropertyFromRAW(node, property, rawValue, rawType);
 	}
@@ -756,7 +756,7 @@ void UI_PoolAllocAction (uiAction_t** action, int type, const void *data)
  * @param[in] property The property of the node to add the listener to.
  * @param[in] functionNode The node of the listener callback.
  */
-void UI_AddListener (uiNode_t *node, const value_t *property, uiNode_t *functionNode)
+void UI_AddListener (uiNode_t *node, const value_t *property, const uiNode_t *functionNode)
 {
 	uiAction_t *lastAction;
 	uiAction_t *action;
@@ -779,7 +779,7 @@ void UI_AddListener (uiNode_t *node, const value_t *property, uiNode_t *function
 	action->type = EA_LISTENER;
 	action->d.nonTerminal.left = value;
 	/** @todo It is a hack, we should remove that */
-	action->d.terminal.d2.data = &functionNode->onClick;
+	action->d.terminal.d2.constData = &functionNode->onClick;
 	action->next = NULL;
 
 	/* insert the action */
@@ -843,12 +843,12 @@ void UI_RemoveListener (uiNode_t *node, const value_t *property, uiNode_t *funct
 	lastAction = *(uiAction_t**)((char*)node + property->ofs);
 	if (lastAction) {
 		uiAction_t *tmp = NULL;
-		if (lastAction->type == EA_LISTENER && lastAction->d.terminal.d2.data == data) {
+		if (lastAction->type == EA_LISTENER && lastAction->d.terminal.d2.constData == data) {
 			tmp = lastAction;
 			*(uiAction_t**)((char*)node + property->ofs) = lastAction->next;
 		} else {
 			while (lastAction->next) {
-				if (lastAction->next->type == EA_LISTENER && lastAction->next->d.terminal.d2.data == data)
+				if (lastAction->next->type == EA_LISTENER && lastAction->next->d.terminal.d2.constData == data)
 					break;
 				lastAction = lastAction->next;
 			}

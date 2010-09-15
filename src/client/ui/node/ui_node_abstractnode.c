@@ -327,7 +327,7 @@ void UI_AppendNode (uiNode_t* const node, uiNode_t *newNode)
 	UI_InsertNode(node, node->lastChild, newNode);
 }
 
-void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, void* rawValue, int rawType)
+void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, const void* rawValue, int rawType)
 {
 	void *mem = ((byte *) node + property->ofs);
 
@@ -342,18 +342,18 @@ void UI_NodeSetPropertyFromRAW (uiNode_t* node, const value_t *property, void* r
 		UI_FreeStringProperty(*(void**)mem);
 		switch (property->type & V_BASETYPEMASK) {
 		case V_FLOAT:
-			**(float **) mem = *(float*) rawValue;
+			**(float **) mem = *(const float*) rawValue;
 			break;
 		case V_INT:
-			**(int **) mem = *(int*) rawValue;
+			**(int **) mem = *(const int*) rawValue;
 			break;
 		default:
-			*(byte **) mem = (byte*) rawValue;
+			*(const byte **) mem = (const byte*) rawValue;
 		}
 	} else if (property->type == V_UI_ACTION) {
-		*(uiAction_t**) mem = (uiAction_t*) rawValue;
+		*(const uiAction_t**) mem = (const uiAction_t*) rawValue;
 	} else if (property->type == V_UI_ICONREF) {
-		*(uiIcon_t**) mem = (uiIcon_t*) rawValue;
+		*(const uiIcon_t**) mem = (const uiIcon_t*) rawValue;
 	} else {
 		Com_Error(ERR_FATAL, "UI_NodeSetPropertyFromRAW: Property type '%d' unsupported", property->type);
 	}
