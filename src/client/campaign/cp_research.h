@@ -111,13 +111,13 @@ typedef enum {
  */
 typedef struct techMail_s {
 	char *from;			/**< sender (_mail_from_paul_navarre, _mail_from_dr_connor) */
-	char *to;			/**< recipient (_mail_to_base_commander) */
-	char *subject;		/**< mail subject line - if mail and mail_pre are available
+	const char *to;		/**< recipient (_mail_to_base_commander) */
+	const char *subject;	/**< mail subject line - if mail and mail_pre are available
 								 * this will be filled with Proposal: (mail_pre) and Re: (mail)
 								 * automatically */
-	char *date;			/**< date string, if empty use the date of research */
-	char *icon;			/**< name of an image file to display in the mail client */
-	char *model;		/**< model name of the sender */
+	const char *date;		/**< date string, if empty use the date of research */
+	const char *icon;		/**< name of an image file to display in the mail client */
+	const char *model;		/**< model name of the sender */
 	qboolean read;		/**< already read the mail? */
 } techMail_t;
 

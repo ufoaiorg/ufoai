@@ -226,7 +226,7 @@ const terrainType_t* Com_GetTerrainType(const char *textureName);
  * @sa saveEmployeeConstants[]
  */
 typedef struct constListEntry_s {
-	char *name;
+	const char *name;
 	int value;
 } constListEntry_t;
 

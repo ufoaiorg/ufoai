@@ -43,7 +43,7 @@ int employeesInCurrentList;
 static int soldierListSize = 0;
 static int soldierListPos = 0;
 
-static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTag, int beginIndex, int drawableListSize)
+static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, const char *nodeTag, int beginIndex, int drawableListSize)
 {
 	aircraft_t *aircraft;
 	linkedList_t *emplList;

@@ -996,7 +996,7 @@ void AIL_ActorThink (player_t * player, edict_t * ent)
  * @param[in] subtype Subtype of the AI.
  * @return 0 on success.
  */
-int AIL_InitActor (edict_t * ent, char *type, char *subtype)
+int AIL_InitActor (edict_t * ent, const char *type, const char *subtype)
 {
 	AI_t *AI;
 	int size;
