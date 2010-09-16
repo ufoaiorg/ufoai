@@ -404,6 +404,7 @@ int INVSH_CheckToInventory(const inventory_t* const i, const objDef_t *ob, const
 qboolean INVSH_CompareItem(item_t *item1, item_t *item2);
 void INVSH_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
 qboolean INVSH_ExistsInInventory(const inventory_t* const inv, const invDef_t * container, item_t item);
+invList_t *INVSH_FindInInventory(const inventory_t* const inv, const invDef_t * container, item_t item);
 invList_t *INVSH_SearchInInventory(const inventory_t* const i, const invDef_t * container, const int x, const int y) __attribute__((nonnull(1)));
 void INVSH_FindSpace(const inventory_t* const inv, const item_t *item, const invDef_t * container, int * const px, int * const py, const invList_t *ignoredItem) __attribute__((nonnull(1)));
 qboolean INV_IsCraftItem(const objDef_t *obj);

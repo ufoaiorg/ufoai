@@ -571,7 +571,10 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 		if (FLOOR(ent)) {
 			/* There is still something on the floor. */
 			FLOOR(floor) = FLOOR(ent);
-			G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy);
+			/* Delay this if swapping ammo, otherwise the le will be removed in the client before we can add back
+			 * the current ammo because removeNextFrame is set in LE_PlaceItem() if the floor le has no items */
+			if (ia != IA_RELOAD_SWAP)
+				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy);
 		} else {
 			/* Floor is empty, remove the edict (from server + client) if we are
 			 * not moving to it. */
@@ -611,9 +614,14 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			item.amount = tItemBackup.item.amount;
 			to = from;
 			if (INV_IsFloorDef(to)) {
+				/* I_MoveInInventory placed the swaped ammo in an available space, check where it was placed
+				 * so we can place it at the same place in the client, otherwise since fItem hasn't been removed
+				 * this could end in a different place in the client - will cause an error if trying to use it again */
+				ic = INVSH_FindInInventory(&ent->chr.i, to, item);
+				assert(ic);
 				fItemBackup.item = item;
-				fItemBackup.x = NONE;
-				fItemBackup.y = NONE;
+				fItemBackup.x = ic->x;
+				fItemBackup.y = ic->y;
 			}
 			tx = fItemBackup.x;
 			ty = fItemBackup.y;
@@ -635,6 +643,10 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			 * on the original amount. Otherwise they would end in a different amount of items as the server (+1) */
 			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
 			G_WriteItem(&fItemBackup.item, to, tx, ty);
+			/* Couldn't remove it before because that would remove the le from the client and would cause battlescape to crash
+			 * when trying to add back the swaped ammo above */
+			if (ia == IA_RELOAD_SWAP)
+				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy);
 		}
 	} else {
 		G_EventInventoryAdd(ent, G_TeamToPM(ent->team), 1);
