@@ -1,14 +1,8 @@
 #include <winresrc.h>
 
-#ifndef CROSSBUILD
-1 RT_MANIFEST DISCARDABLE "ufo.exe.manifest"
-101 ICON DISCARDABLE "ufo.ico"
-112 ICON DISCARDABLE "ufoded.ico"
-#else
 1 RT_MANIFEST DISCARDABLE "build/projects/ufo.exe.manifest"
 101 ICON DISCARDABLE "build/projects/ufo.ico"
 112 ICON DISCARDABLE "build/projects/ufoded.ico"
-#endif
 
 VS_VERSION_INFO VERSIONINFO
 FILEVERSION 2,4,0,0

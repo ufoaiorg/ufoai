@@ -1,6 +1,9 @@
-CLIENT_CFLAGS+=-DCOMPILE_UFO
+TARGET             := ufo
 
-CLIENT_SRCS = \
+$(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
+$(TARGET)_CFLAGS   += -DCOMPILE_UFO $(SDL_CFLAGS) $(SDL_TTF_CFLAGS) $(SDL_IMAGE_CFLAGS) $(SDL_MIXER_CFLAGS) $(CURL_CFLAGS) $(THEORA_CFLAGS) $(XVID_CFLAGS) $(VORBIS_CFLAGS)
+$(TARGET)_LDFLAGS  += -lpng -ljpeg $(INTL_LIBS) $(SDL_TTF_LIBS) $(SDL_IMAGE_LIBS) $(SDL_MIXER_LIBS) $(OPENGL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(THEORA_LIBS) $(XVID_LIBS) $(VORBIS_LIBS)
+$(TARGET)_SRCS      = \
 	client/cl_console.c \
 	client/cl_game.c \
 	client/cl_game_campaign.c \
@@ -308,70 +311,46 @@ CLIENT_SRCS = \
 	game/inv_shared.c \
 	game/inventory.c
 
-ifeq ($(HARD_LINKED_GAME),1)
-	CLIENT_SRCS+=$(GAME_SRCS)
-	CLIENT_CFLAGS+=$(GAME_CFLAGS)
-endif
 
-ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
-	CLIENT_SRCS+= \
+ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux),)
+	$(TARGET)_SRCS += \
 		ports/linux/linux_main.c \
 		ports/unix/unix_console.c \
 		ports/unix/unix_main.c
+	$(TARGET)_LDFLAGS +=
 endif
 
 ifeq ($(TARGET_OS),mingw32)
-	CLIENT_SRCS+=\
+	$(TARGET)_SRCS +=\
 		ports/windows/win_console.c \
 		ports/windows/win_shared.c \
 		ports/windows/win_main.c \
 		ports/windows/ufo.rc
+	$(TARGET)_LDFLAGS +=
 endif
 
 ifeq ($(TARGET_OS),darwin)
-	CLIENT_SRCS+= \
+	$(TARGET)_SRCS += \
 		ports/macosx/osx_main.m \
 		ports/unix/unix_console.c \
 		ports/unix/unix_main.c
+	$(TARGET)_LDFLAGS +=
 endif
 
 ifeq ($(TARGET_OS),solaris)
-	CLIENT_SRCS+= \
+	$(TARGET)_SRCS += \
 		ports/solaris/solaris_main.c \
 		ports/unix/unix_console.c \
 		ports/unix/unix_main.c
+	$(TARGET)_LDFLAGS +=
 endif
 
-CLIENT_OBJS= \
-	$(patsubst %.c, $(BUILDDIR)/client/%.o, $(filter %.c, $(CLIENT_SRCS))) \
-	$(patsubst %.m, $(BUILDDIR)/client/%.o, $(filter %.m, $(CLIENT_SRCS))) \
-	$(patsubst %.rc, $(BUILDDIR)/client/%.o, $(filter %.rc, $(CLIENT_SRCS)))
-
-CLIENT_TARGET=ufo$(EXE_EXT)
-
-ifeq ($(BUILD_CLIENT),1)
-	ALL_OBJS+=$(CLIENT_OBJS)
-	TARGETS+=$(CLIENT_TARGET)
+ifeq ($(HARD_LINKED_GAME),1)
+	$(TARGET)_SRCS     += $(game_SRCS)
+else
+	$(TARGET)_DEPS     := game
 endif
 
-# Say how to link the exe
-$(CLIENT_TARGET): dirs $(CLIENT_OBJS)
-	@echo " * [UFO] ... linking $(LDFLAGS) ($(CLIENT_LIBS) $(SDL_LIBS))"; \
-		$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJS) $(LNKFLAGS) $(CLIENT_LIBS) $(SDL_LIBS)
-
-# Say how to build .o files from .c files for this module
-$(BUILDDIR)/client/%.o: $(SRCDIR)/%.c
-	@echo " * [UFO] $<"; \
-		$(CC) $(CFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
-
-# Say how to build .o files from .m files for this module
-$(BUILDDIR)/client/%.o: $(SRCDIR)/%.m
-	@echo " * [UFO] $<"; \
-		$(CC) $(CFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
-
-ifeq ($(TARGET_OS),mingw32)
-# Say how to build .o files from .rc files for this module
-$(BUILDDIR)/client/%.o: $(SRCDIR)/%.rc
-	@echo " * [RC ] $<"; \
-		$(WINDRES) -DCROSSBUILD -i $< -o $@
-endif
+$(TARGET)_OBJS     := $(call ASSEMBLE_OBJECTS,$(TARGET))
+$(TARGET)_CXXFLAGS := $($(TARGET)_CFLAGS)
+$(TARGET)_CCFLAGS  := $($(TARGET)_CFLAGS)

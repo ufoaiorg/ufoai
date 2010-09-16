@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/common.h"
 #include "../system.h"
 
-#ifdef HAVE_EXECINFO_H
+#ifdef HAVE_EXECINFO
 #include <execinfo.h>
 #define MAX_BACKTRACE_SYMBOLS 50
 #endif
@@ -389,14 +389,14 @@ void Sys_Mkdir (const char *thePath)
  */
 void Sys_Backtrace (void)
 {
-#ifdef HAVE_EXECINFO_H
+#ifdef HAVE_EXECINFO
 	void *symbols[MAX_BACKTRACE_SYMBOLS];
 	const int i = backtrace(symbols, MAX_BACKTRACE_SYMBOLS);
 	backtrace_symbols_fd(symbols, i, STDERR_FILENO);
 #endif
 }
 
-#if USE_SIGNALS
+#ifdef USE_SIGNALS
 /**
  * @brief Catch kernel interrupts and dispatch the appropriate exit routine.
  */
@@ -420,7 +420,7 @@ static void Sys_Signal (int s)
 
 void Sys_InitSignals (void)
 {
-#if USE_SIGNALS
+#ifdef USE_SIGNALS
 	signal(SIGHUP, Sys_Signal);
 	signal(SIGINT, Sys_Signal);
 	signal(SIGQUIT, Sys_Signal);

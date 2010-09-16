@@ -13,10 +13,6 @@
 #include "../sound/s_main.h"
 #include "../sound/s_music.h"
 
-#if !defined(HAVE_VORBIS_CODEC_H) || (!defined(HAVE_XVID_H) && !defined(HAVE_THEORA_THEORA_H))
-#error "No ogm support compiled into the binary"
-#endif
-
 #include <ogg/ogg.h>
 #include <vorbis/codec.h>
 

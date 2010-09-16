@@ -3,17 +3,10 @@ MODELDIR ?= base/models
 UFOMODEL = ./ufomodel
 UFOMODEL_PARAMS = -mdx -overwrite -v
 
-ifeq ($(USEWINDOWSCMD),1)
-    MODELS_MD2 := $(shell dir /S/B $(MODELDIR)\*.md2)
-    MODELS_MD3 := $(shell dir /S/B $(MODELDIR)\*.md3)
-    MODELS_OBJ := $(shell dir /S/B $(MODELDIR)\*.obj)
-    MODELS_DPM := $(shell dir /S/B $(MODELDIR)\*.dpm)
-else
-    MODELS_MD2 := $(shell find $(MODELDIR) -name "*.md2")
-    MODELS_MD3 := $(shell find $(MODELDIR) -name "*.md3")
-    MODELS_OBJ := $(shell find $(MODELDIR) -name "*.obj")
-    MODELS_DPM := $(shell find $(MODELDIR) -name "*.dpm")
-endif
+MODELS_MD2 := $(shell find $(MODELDIR) -name "*.md2")
+MODELS_MD3 := $(shell find $(MODELDIR) -name "*.md3")
+MODELS_OBJ := $(shell find $(MODELDIR) -name "*.obj")
+MODELS_DPM := $(shell find $(MODELDIR) -name "*.dpm")
 
 # smoothing normals and tangents
 define get-smooth-value
@@ -35,7 +28,7 @@ MDXS_DPM := $(MODELS_DPM:.dpm=.mdx)
 #MDXS     := $(MDXS_MD2) $(MDXS_MD3) $(MDXS_OBJ) $(MDXS_DPM)
 MDXS     := $(MDXS_MD2) $(MDXS_MD3) $(MDXS_DPM)
 
-models: $(UFOMODEL_TARGET) $(MDXS)
+models: ufomodel $(MDXS)
 
 $(MDXS_MD2): %.mdx: %.md2
 $(MDXS_MD3): %.mdx: %.md3
@@ -47,9 +40,5 @@ $(MDXS):
 
 clean-mdx:
 	@echo "Deleting cached normals and tangents (*.mdx)..."
-ifeq ($(USEWINDOWSCMD),1)
-	@del /S $(MODELDIR)\*.mdx
-else
 	@find $(MODELDIR) -name '*.mdx' -delete
-endif
 	@echo "done"

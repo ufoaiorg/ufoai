@@ -1,4 +1,3 @@
-
 PAK_FILES = 0pics.pk3	\
 			0models.pk3	\
 			0snd.pk3	\

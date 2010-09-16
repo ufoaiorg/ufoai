@@ -31,8 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	LIGHTING_DAY_ONLY		2
 #define	LIGHTING_NIGHT_ONLY	3
 
-#if defined _WIN32
-#	include	<windows.h>
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <sys/resource.h>
 #endif
 
 #include "lighting.h"
@@ -42,16 +44,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "check/checklib.h"
 #include "../../shared/shared.h"
 #include "ufo2map.h"
-
-#ifdef HAVE_SYS_STAT_H
-#include <sys/stat.h>
-#endif
-#ifdef HAVE_SYS_TIME_H
-#include <sys/time.h>
-#endif
-#ifdef HAVE_SYS_RESOURCE_H
-#include <sys/resource.h>
-#endif
 
 mapConfig_t config;
 static char mapFilename[MAX_OSPATH];
@@ -73,15 +65,14 @@ static const usagePair_t usageArray[] = {
 #endif
 	{"\nGeneral options:",NULL},
 	{" -h --help", "print (this) help and exit"},
-#ifndef _WIN32
-	{" -nice <prio>","priority level [unix nice level from -20 to 19 where 19 is the lowest priority]"},
-#else
+#ifdef _WIN32
 	{" -nice <prio>","priority level [0 = HIGH, 1 = NORMAL, 2 = IDLE]"},
+#else
+	{" -nice <prio>","priority level [unix nice level from -20 to 19 where 19 is the lowest priority]"},
 #endif
 	{" -nofootstep","don't generate a footstep file"},
 	{" -tracefile","generate two csv files describing the floors and walls found by the trace functions"},
 	{" -debugfile (TODO)","generate a trace debug file. The client can load the file to highlight map obstructions"},
-	{" -onlynewer","only proceed when the map is newer than the bsp"},
 	{" -stats --statistics","print statistics and quit. may be used with -check or -fix"},
 	{" -v --verbosity <int>","set verbosity. higher <int> gives more output"},
 	{NULL, "if it is required, this should be the first option"},
@@ -174,9 +165,6 @@ static void Usage (void)
 	}
 }
 
-/**
- * @brief
- */
 void Com_Printf (const char *format, ...)
 {
 	char out_buffer[4096];
@@ -324,9 +312,6 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i], "-noshare")) {
 			Verb_Printf(VERB_LESS, "noshare = true\n");
 			config.noshare = qtrue;
-		} else if (!strcmp(argv[i], "-onlynewer")) {
-			Verb_Printf(VERB_LESS, "onlynewer = true\n");
-			config.onlynewer = qtrue;
 		} else if (!strcmp(argv[i], "-notjunc")) {
 			Verb_Printf(VERB_LESS, "notjunc = true\n");
 			config.notjunc = qtrue;
@@ -334,12 +319,7 @@ static void U2M_Parameter (int argc, const char **argv)
 			Verb_Printf(VERB_LESS, "nowater = true\n");
 			config.nowater = qtrue;
 		} else if (!strcmp(argv[i], "-nice")) {
-#ifdef HAVE_SETPRIORITY
-			config.nice = atoi(argv[++i]);
-			Verb_Printf(VERB_LESS, "nice = %i\n", config.nice);
-			if (setpriority(PRIO_PROCESS, 0, config.nice))
-				Verb_Printf(VERB_LESS, "failed to set nice level of %i\n", config.nice);
-#elif defined _WIN32
+#if defined _WIN32
 			HANDLE proc = GetCurrentProcess();
 			config.nice = atoi(argv[++i]);
 			Verb_Printf(VERB_LESS, "nice = %i\n", config.nice);
@@ -359,8 +339,10 @@ static void U2M_Parameter (int argc, const char **argv)
 			}
 			CloseHandle(proc);
 #else
-			Verb_Printf(VERB_LESS, "nice not implemented for this arch\n");
-			i++;
+			config.nice = atoi(argv[++i]);
+			Verb_Printf(VERB_LESS, "nice = %i\n", config.nice);
+			if (setpriority(PRIO_PROCESS, 0, config.nice))
+				Verb_Printf(VERB_LESS, "failed to set nice level of %i\n", config.nice);
 #endif
 		} else if (!strcmp(argv[i], "-noprune")) {
 			Verb_Printf(VERB_LESS, "noprune = true\n");
@@ -532,59 +514,6 @@ static void U2M_SetDefaultConfigValues (void)
 	config.generateDebugTrace = qfalse;
 }
 
-
-#ifdef HAVE_SYS_STAT_H
-static int CheckTimeDiff (const char *map, const char *bsp)
-{
-	char buf[MAX_OSPATH];
-	struct stat mapStat, bspStat;
-
-	snprintf(buf, sizeof(buf), "%s/%s", FS_Gamedir(), map);
-	if (stat(buf, &mapStat) == -1)
-		return 0;
-	snprintf(buf, sizeof(buf), "%s/%s", FS_Gamedir(), bsp);
-	if (stat(buf, &bspStat) == -1)
-		return 0;
-	if (difftime(mapStat.st_mtime, bspStat.st_mtime) < 0)
-		return 1;
-	/* not up-to-date - recompile */
-	return 0;
-}
-#elif defined (_WIN32)
-static int CheckTimeDiff (const char *map, const char *bsp)
-{
-	char buf[MAX_OSPATH];
-	FILETIME ftCreate, ftAccess, ftWriteMap, ftWriteBsp;
-	HANDLE hMapFile, hBspFile;
-	int retval = 0;
-
-	/* open the files */
-	snprintf(buf, sizeof(buf), "%s/%s", FS_Gamedir(), map);
-	hMapFile = CreateFile(buf, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
-	if (hMapFile == INVALID_HANDLE_VALUE)
-		return 0;
-	snprintf(buf, sizeof(buf), "%s/%s", FS_Gamedir(), bsp);
-	hBspFile = CreateFile(buf, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
-	if (hBspFile == INVALID_HANDLE_VALUE){
-		CloseHandle(hMapFile);
-		return 0;
-	}
-
-	/* This is done as two if statements to ensure that ftWriteMap and ftWriteBsp are populated first. */
-	if (GetFileTime(hMapFile, &ftCreate, &ftAccess, &ftWriteMap)
-	 && GetFileTime(hBspFile, &ftCreate, &ftAccess, &ftWriteBsp)) {
-		if (CompareFileTime(&ftWriteMap, &ftWriteBsp) == -1) {
-			retval = 1;
-		}
-	}
-
-	CloseHandle(hMapFile);
-	CloseHandle(hBspFile);
-
-	return retval;
-}
-#endif
-
 /**
  * @brief print name in concise form for lower verbosity levels.
  * verbosity check done before calling this function.
@@ -656,14 +585,6 @@ int main (int argc, const char **argv)
 
 	if (config.verbosity == VERB_MAPNAME && !(config.performMapCheck || config.fixMap))
 		PrintMapName();
-
-#if defined (HAVE_SYS_STAT_H) || defined (_WIN32)
-	if (config.onlynewer && CheckTimeDiff(mapFilename, bspFilename)) {
-		Verb_Printf(VERB_LESS, "bsp file is up-to-date\n");
-		Mem_Shutdown();
-		return 0;
-	}
-#endif
 
 	/* if onlyents just grab the entities and resave */
 	if (config.onlyents) {

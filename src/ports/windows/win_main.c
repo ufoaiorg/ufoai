@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <fcntl.h>
 #include <direct.h>
 #include <io.h>
+#include <mmsystem.h>
 
 qboolean s_win95, s_win2k, s_winxp, s_vista;
 

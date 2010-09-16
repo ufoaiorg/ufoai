@@ -3,13 +3,9 @@
 /*-Results.xml
 /*.bz2
 /*.dmg
-/Makefile
-/aclocal.m4
-/autom4te.cache/
 /config.h
-/config.log
-/config.status
 /debug-*/
+/Makefile.local
 /release-*/
 /testall
 /testall.exe
@@ -22,3 +18,4 @@
 /ufomodel
 /ufomodel.exe
 gmon.out
+/.settings

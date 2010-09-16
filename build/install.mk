@@ -10,7 +10,7 @@ BINARIES = \
 	ufo2map$(EXE_EXT) \
 	ufomodel$(EXE_EXT)
 BINARIES_BASE = \
-	base/game.$(SHARED_EXT)
+	base/game.$(SO_EXT)
 BINARIES_RADIANT = \
 	radiant/uforadiant$(EXE_EXT)
 

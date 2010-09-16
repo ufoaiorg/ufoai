@@ -1,35 +1,34 @@
+UFOAI_POFILES = $(wildcard $(SRCDIR)/po/ufoai-*.po)
+RADIANT_POFILES = $(wildcard $(SRCDIR)/po/uforadiant-*.po)
 
-UFOAI_POFILES = $(wildcard src/po/ufoai-*.po)
-RADIANT_POFILES = $(wildcard src/po/uforadiant-*.po)
+UFOAI_MOFILES = $(patsubst $(SRCDIR)/po/ufoai-%.po, base/i18n/%/LC_MESSAGES/ufoai.mo, $(UFOAI_POFILES))
+RADIANT_MOFILES = $(patsubst $(SRCDIR)/po/uforadiant-%.po, radiant/i18n/%/LC_MESSAGES/uforadiant.mo, $(RADIANT_POFILES))
 
-UFOAI_MOFILES = $(patsubst src/po/ufoai-%.po, base/i18n/%/LC_MESSAGES/ufoai.mo, $(UFOAI_POFILES))
-RADIANT_MOFILES = $(patsubst src/po/uforadiant-%.po, radiant/i18n/%/LC_MESSAGES/uforadiant.mo, $(RADIANT_POFILES))
-
-$(UFOAI_MOFILES) : base/i18n/%/LC_MESSAGES/ufoai.mo : src/po/ufoai-%.po
+$(UFOAI_MOFILES) : base/i18n/%/LC_MESSAGES/ufoai.mo : $(SRCDIR)/po/ufoai-%.po
 	@mkdir -p $(dir $@)
 	msgfmt -c -v -o $@ $^
 
-$(RADIANT_MOFILES) : radiant/i18n/%/LC_MESSAGES/uforadiant.mo : src/po/uforadiant-%.po
+$(RADIANT_MOFILES) : radiant/i18n/%/LC_MESSAGES/uforadiant.mo : $(SRCDIR)/po/uforadiant-%.po
 	@mkdir -p $(dir $@)
 	msgfmt -c -v -o $@ $^
 
 lang: $(UFOAI_MOFILES) $(RADIANT_MOFILES)
 
 update-po: po-check
-	$(MAKE) -C src/po update-po
+	$(MAKE) -C $(SRCDIR)/po update-po
 
 update-po-uforadiant: po-check
-	xgettext -j --keyword="_" --keyword="C_:1c,2" -C -o src/po/uforadiant.pot --omit-header \
-		src/tools/radiant/libs/*.h \
-		src/tools/radiant/libs/*/*.h \
-		src/tools/radiant/libs/*/*.cpp \
-		src/tools/radiant/include/*.h \
-		src/tools/radiant/plugins/*/*.cpp \
-		src/tools/radiant/plugins/*/*.h \
-		src/tools/radiant/radiant/*/*.cpp \
-		src/tools/radiant/radiant/*/*.h \
-		src/tools/radiant/radiant/*.cpp \
-		src/tools/radiant/radiant/*.h
+	xgettext -j --keyword="_" --keyword="C_:1c,2" -C -o $(SRCDIR)/po/uforadiant.pot --omit-header \
+		$(SRCDIR)/tools/radiant/libs/*.h \
+		$(SRCDIR)/tools/radiant/libs/*/*.h \
+		$(SRCDIR)/tools/radiant/libs/*/*.cpp \
+		$(SRCDIR)/tools/radiant/include/*.h \
+		$(SRCDIR)/tools/radiant/plugins/*/*.cpp \
+		$(SRCDIR)/tools/radiant/plugins/*/*.h \
+		$(SRCDIR)/tools/radiant/radiant/*/*.cpp \
+		$(SRCDIR)/tools/radiant/radiant/*/*.h \
+		$(SRCDIR)/tools/radiant/radiant/*.cpp \
+		$(SRCDIR)/tools/radiant/radiant/*.h
 
 # From coreutils.
 # Verify that all source files using _() are listed in po/POTFILES.in.
@@ -57,10 +56,10 @@ po-check:
 
 po-sync:
 	@echo "This will sync all po files with the wiki articles - run update-po before this step"
-	@echo "Gamers don't have to do this - translators should use ./src/po/update_po_from_wiki.sh <lang> directly"
+	@echo "Gamers don't have to do this - translators should use ./$(SRCDIR)/po/update_po_from_wiki.sh <lang> directly"
 	@echo "Hit any key if you are sure you really want to start the sync"
 	@pofiles='$(UFOAI_POFILES)'; \
-	read enter; cd src/po; \
+	read enter; cd $(SRCDIR)/po; \
 	for po in $$pofiles; do \
 	  po=`basename $$po .po`; \
 	  po=`echo $$po | cut -b 7-`; \
@@ -70,7 +69,7 @@ po-sync:
 
 # call this after po-sync and log file checks
 po-move:
-	cd src/po; \
+	cd $(SRCDIR)/po; \
 	for po in `ls updated_*.po`; do \
 	  new=`echo $$po | cut -b 9-`; \
 	  mv $$po ufoai-$$new; \

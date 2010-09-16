@@ -1,13 +1,10 @@
-########################################################################################################
-# radiant
-########################################################################################################
+TARGET             := uforadiant
 
-RADIANT_BASE = tools/radiant
-
-RADIANT_CFLAGS+=-Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include
-RADIANT_LIBS+=-lgthread-2.0 $(OPENAL_LIBS) -lvorbisfile -lvorbis -logg
-
-RADIANT_SRCS_CPP = \
+RADIANT_BASE       := tools/radiant
+$(TARGET)_FILE     := radiant/$(TARGET)$(EXE_EXT)
+$(TARGET)_CFLAGS   += -Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include $(GTK_CFLAGS) $(GLIB_CFLAGS) $(GTK_SOURCEVIEW_CFLAGS) $(GTK_GLEXT_CFLAGS) $(OPENAL_CFLAGS) $(OPENGL_CFLAGS)
+$(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GLIB_LIBS) $(GTK_SOURCEVIEW_LIBS) $(GTK_GLEXT_LIBS) $(OPENAL_LIBS) $(OPENGL_LIBS)
+$(TARGET)_SRCS     := \
 	$(RADIANT_BASE)/radiant/archivezip.cpp \
 	$(RADIANT_BASE)/radiant/colorscheme.cpp \
 	$(RADIANT_BASE)/radiant/commands.cpp \
@@ -205,9 +202,8 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/libs/entity/targetable.cpp \
 	$(RADIANT_BASE)/libs/picomodel/model.cpp \
 	$(RADIANT_BASE)/libs/picomodel/RenderablePicoSurface.cpp \
-	$(RADIANT_BASE)/libs/picomodel/RenderablePicoModel.cpp
-
-RADIANT_SRCS_C = \
+	$(RADIANT_BASE)/libs/picomodel/RenderablePicoModel.cpp \
+	\
 	shared/parse.c \
 	shared/entitiesdef.c \
 	$(RADIANT_BASE)/libs/picomodel/picointernal.c \
@@ -218,65 +214,6 @@ RADIANT_SRCS_C = \
 	$(RADIANT_BASE)/libs/picomodel/pm_obj.c \
 	$(RADIANT_BASE)/libs/picomodel/pm_md2.c
 
-RADIANT_CPP_OBJS=$(RADIANT_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/%.o)
-RADIANT_C_OBJS=$(RADIANT_SRCS_C:%.c=$(BUILDDIR)/tools/radiant_c/%.o)
-RADIANT_TARGET=radiant/uforadiant$(EXE_EXT)
-
-# PLUGINS
-
-RADIANT_PLUGIN_BRUSHEXPORT_SRCS_CPP = \
-	$(RADIANT_BASE)/plugins/brushexport/callbacks.cpp \
-	$(RADIANT_BASE)/plugins/brushexport/export.cpp \
-	$(RADIANT_BASE)/plugins/brushexport/interface.cpp \
-	$(RADIANT_BASE)/plugins/brushexport/plugin.cpp \
-	$(RADIANT_BASE)/plugins/brushexport/support.cpp
-
-RADIANT_PLUGIN_BRUSHEXPORT_CPP_OBJS=$(RADIANT_PLUGIN_BRUSHEXPORT_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/plugins_cpp/%.o)
-RADIANT_PLUGIN_BRUSHEXPORT_TARGET=radiant/plugins/brushexport.$(SHARED_EXT)
-
-ifeq ($(BUILD_UFORADIANT),1)
-
-ALL_RADIANT_OBJS+=$(RADIANT_CPP_OBJS) $(RADIANT_C_OBJS) \
-	$(RADIANT_PLUGIN_BRUSHEXPORT_CPP_OBJS)
-RADIANT_DEPS = $(patsubst %.o, %.d, $(ALL_RADIANT_OBJS))
-
-uforadiant: dirs $(RADIANT_PLUGIN_BRUSHEXPORT_TARGET) \
-	$(RADIANT_TARGET)
-else
-
-uforadiant:
-	@echo "Radiant is not enabled - use './configure --enable-uforadiant'"
-
-clean-uforadiant:
-	@echo "Radiant is not enabled - use './configure --enable-uforadiant'"
-
-ALL_RADIANT_OBJS=""
-
-endif
-
-# Say how to build .o files from .cpp files for this module
-$(BUILDDIR)/tools/radiant_c/%.o: $(SRCDIR)/%.c
-	@echo " * [RAD] $<"; \
-		$(CC) $(CFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
-$(BUILDDIR)/tools/radiant/%.o: $(SRCDIR)/%.cpp
-	@echo " * [RAD] $<"; \
-		$(CPP) $(CPPFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
-
-# Say how to build .o files from .cpp/.c files for this module
-$(BUILDDIR)/tools/radiant/plugins_c/%.o: $(SRCDIR)/%.c
-	@echo " * [RAD] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
-$(BUILDDIR)/tools/radiant/plugins_cpp/%.o: $(SRCDIR)/%.cpp
-	@echo " * [RAD] $<"; \
-		$(CPP) $(CPPFLAGS) $(SHARED_CFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
-
-# and now link the plugins
-$(RADIANT_PLUGIN_BRUSHEXPORT_TARGET) : $(RADIANT_PLUGIN_BRUSHEXPORT_CPP_OBJS)
-	@echo " * [BRS] ... linking $(LNKFLAGS) ($(RADIANT_LIBS))"; \
-		$(CPP) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(RADIANT_PLUGIN_BRUSHEXPORT_CPP_OBJS) $(RADIANT_LIBS) $(LNKFLAGS)
-
-# Say how to link the exe
-$(RADIANT_TARGET): $(RADIANT_CPP_OBJS) $(RADIANT_C_OBJS)
-	@echo " * [RAD] ... linking $(LNKFLAGS) ($(RADIANT_LIBS))"; \
-		$(CPP) $(LDFLAGS) -o $@ $(RADIANT_CPP_OBJS) $(RADIANT_C_OBJS) $(RADIANT_LIBS) $(LNKFLAGS) -lz;
-		@echo " * [RAD] ... done"
+$(TARGET)_OBJS     := $(call ASSEMBLE_OBJECTS,$(TARGET))
+$(TARGET)_CXXFLAGS := $($(TARGET)_CFLAGS)
+$(TARGET)_CCFLAGS  := $($(TARGET)_CFLAGS)

@@ -653,7 +653,7 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 	linkedList_t *awayAircraft = NULL;
 	int numAwayAircraft;
 	int randomNum;
-	aircraft_t *aircraft = NULL;;
+	aircraft_t *aircraft = NULL;
 
 	/* destroy aircraft only if there's not enough hangar (hangar is already destroyed) */
 	if (B_FreeCapacity(base, capacity) >= 0)
