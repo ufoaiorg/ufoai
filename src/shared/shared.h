@@ -106,6 +106,7 @@ int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnul
 
 qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 
+/** @todo is this still the case in most recent mingw versions? */
 #if defined(__MINGW32_VERSION) && defined(__STRICT_ANSI__)
 /* function exists but are not defined */
 _CRTIMP char* __cdecl	strdup (const char*) __MINGW_ATTRIB_MALLOC;
@@ -117,14 +118,10 @@ _CRTIMP int __cdecl	_strnicmp (const char*, const char*, size_t);
 /* portable case sensitive compare */
 #if defined(_WIN32)
 #	define Q_strcasecmp(a, b) _stricmp((a), (b))
+#	define Q_strncasecmp(s1, s2, n) _strnicmp((s1), (s2), (n))
 #else
 #	define Q_strcasecmp(a, b) strcasecmp((a), (b))
-#endif
-
-#ifdef HAVE_STRNCASECMP
-# define Q_strncasecmp(s1, s2, n) strncasecmp(s1, s2, n)
-#else
-int Q_strncasecmp(const char *s1, const char *s2, size_t n) __attribute__((nonnull));
+#	define Q_strncasecmp(s1, s2, n) strncasecmp((s1), (s2), (n))
 #endif
 
 #ifndef DEBUG

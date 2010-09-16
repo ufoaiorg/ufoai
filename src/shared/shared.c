@@ -379,30 +379,6 @@ char *Q_strlwr (char *str)
 	return origs;
 }
 
-#ifndef HAVE_STRNCASECMP
-int Q_strncasecmp (const char *s1, const char *s2, size_t n)
-{
-	while (n-- != 0) {
-		int c1 = *s1++;
-		int c2 = *s2++;
-
-		if (c1 != c2) {
-			if ('a' <= c1 && c1 <= 'z')
-				c1 += 'a' - 'A';
-			if ('a' <= c2 && c2 <= 'z')
-				c2 += 'a' - 'A';
-			if (c1 != c2)
-				return (unsigned char)c1 - (unsigned char)c2; /* strings not equal */
-		}
-
-		if (c1 == '\0')
-			break;
-	}
-
-	return 0;					/* strings are equal */
-}
-#endif /* HAVE_STRNCASECMP */
-
 /**
  * @brief Safe strncpy that ensures a trailing zero
  * @param dest Destination pointer
