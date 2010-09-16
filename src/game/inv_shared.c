@@ -355,6 +355,25 @@ qboolean INVSH_ExistsInInventory (const inventory_t* const inv, const invDef_t *
 }
 
 /**
+ * @brief Searches a specific item in the inventory&container.
+ * @param[in] inv Pointer to the inventory where we will search.
+ * @param[in] container Container in the inventory.
+ * @param[in] item The item to search for.
+ * @return Pointer to the first item of this type found, otherwise @c NULL.
+ */
+invList_t *INVSH_FindInInventory (const inventory_t* const inv, const invDef_t * container, item_t item)
+{
+	invList_t *ic;
+
+	for (ic = inv->c[container->id]; ic; ic = ic->next)
+		if (INVSH_CompareItem(&ic->item, &item)) {
+			return ic;
+		}
+
+	return NULL;
+}
+
+/**
  * @brief Checks whether a given item is an aircraftitem item
  * @note This is done by checking whether it's a craftitem and not
  * marked as a dummy item - the combination of both means, that it's a
