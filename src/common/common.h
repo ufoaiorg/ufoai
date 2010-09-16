@@ -35,7 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "tracing.h"
 #include "cvar.h"
 #include "mem.h"
-#include "http.h"
 
 #define UFO_VERSION "2.4-dev"
 #define GAME_TITLE "UFO:AI"
