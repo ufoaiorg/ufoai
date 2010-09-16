@@ -381,7 +381,7 @@ qboolean UI_NodeSetProperty (uiNode_t* node, const value_t *property, const char
 		return qtrue;
 
 	case V_UI_CVAR:	/* cvar */
-		switch (property->type) {
+		switch ((int)property->type) {
 		case V_CVAR_OR_FLOAT:
 			{
 				float f;
@@ -439,7 +439,7 @@ const char* UI_GetStringFromNodeProperty (const uiNode_t* node, const value_t* p
 	case V_NOT_UI: /* common type */
 		return Com_ValueToStr(node, property->type, property->ofs);
 	case V_UI_CVAR:
-		switch (property->type) {
+		switch ((int)property->type) {
 		case V_CVAR_OR_FLOAT:
 			{
 				const float f = UI_GetReferenceFloat(node, *(const void*const*)b);
