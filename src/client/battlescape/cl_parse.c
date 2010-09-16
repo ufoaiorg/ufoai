@@ -93,7 +93,7 @@ static void CL_ParseServerData (struct dbuffer *msg)
  * multiplayer games
  * @sa CL_AddTargetingBoX
  */
-static void CL_ParseClientinfo (int player)
+static void CL_ParseClientinfo (unsigned int player)
 {
 	clientinfo_t *ci = &cl.clientinfo[player];
 	const char *s = CL_PlayerGetName(player);
@@ -109,9 +109,8 @@ static void CL_ParseClientinfo (int player)
  * @param player The index of the player
  * @return The name of the player
  */
-const char *CL_PlayerGetName (int player)
+const char *CL_PlayerGetName (unsigned int player)
 {
-	assert(player >= 0);
 	assert(player < MAX_CLIENTS);
 
 	return CL_GetConfigString(CS_PLAYERNAMES + player);
@@ -140,7 +139,7 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 				cl.model_clip[index] = NULL;
 		}
 	} else if (i >= CS_PLAYERNAMES && i < CS_PLAYERNAMES + MAX_CLIENTS) {
-		const int index = i - CS_PLAYERNAMES;
+		const unsigned int index = i - CS_PLAYERNAMES;
 		CL_ParseClientinfo(index);
 	}
 }

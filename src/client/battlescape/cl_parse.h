@@ -26,6 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_PARSE_H
 
 void CL_ParseServerMessage(svc_ops_t cmd, struct dbuffer *msg);
-const char *CL_PlayerGetName(int player);
+const char *CL_PlayerGetName(unsigned int player);
 
 #endif
