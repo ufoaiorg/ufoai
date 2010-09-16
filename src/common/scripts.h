@@ -174,7 +174,7 @@ extern const char *const air_slot_type_strings[];
 /** used e.g. in our parsers */
 typedef struct value_s {
 	const char *string;
-	const int type;
+	const valueTypes_t type;
 	const size_t ofs;
 	const size_t size;
 } value_t;
