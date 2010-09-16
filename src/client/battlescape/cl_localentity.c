@@ -1403,6 +1403,29 @@ typedef struct {
 	int contentmask;			/**< search these in your trace - see MASK_* */
 } moveclip_t;
 
+const cBspModel_t *LE_GetClipModel (const le_t *le)
+{
+	const cBspModel_t *model;
+	const unsigned int index = le->modelnum1;
+	if (index > lengthof(cl.model_clip))
+		Com_Error(ERR_DROP, "Clip model index out of bounds");
+	model = cl.model_clip[index];
+	if (!model)
+		Com_Error(ERR_DROP, "LE_GetClipModel: Could not find inline model %ui", index);
+	return model;
+}
+
+model_t *LE_GetDrawModel (unsigned int index)
+{
+	model_t *model;
+	if (index > lengthof(cl.model_draw))
+		Com_Error(ERR_DROP, "Clip model index out of bounds");
+	model = cl.model_draw[index];
+	if (!model)
+		Com_Error(ERR_DROP, "LE_GetDrawModel: Could not find model %ui", index);
+	return model;
+}
+
 /**
  * @brief Returns a headnode that can be used for testing or clipping an
  * object of mins/maxs size.
@@ -1418,9 +1441,8 @@ static int32_t CL_HullForEntity (const le_t *le, int *tile, vec3_t rmaShift, vec
 {
 	/* special case for bmodels */
 	if (le->contents & CONTENTS_SOLID) {
-		const cBspModel_t *model = cl.model_clip[le->modelnum1];
+		const cBspModel_t *model = LE_GetClipModel(le);
 		/* special value for bmodel */
-		assert(le->modelnum1 < MAX_MODELS);
 		if (!model)
 			Com_Error(ERR_DROP, "CL_HullForEntity: Error - le with NULL bmodel (%i)\n", le->type);
 		*tile = model->tile;

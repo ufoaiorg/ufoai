@@ -130,7 +130,8 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 	/* do something appropriate */
 	if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
 		if (refdef.ready) {
-			const int index = i - CS_MODELS;
+			const unsigned int index = i - CS_MODELS;
+			assert(index != 0);
 			cl.model_draw[index] = R_RegisterModelShort(s);
 			/* inline models are marked with * as first char followed by the number */
 			if (s[0] == '*')

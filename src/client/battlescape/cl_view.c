@@ -83,13 +83,14 @@ void CL_ViewLoadMedia (void)
 		SCR_UpdateScreen();
 		IN_SendKeyEvents();	/* pump message loop */
 		cl.model_draw[i] = R_RegisterModelShort(name);
+		if (!cl.model_draw[i])
+			Com_Error(ERR_DROP, "Could not load model '%s'\n", name);
+
 		/* initialize clipping for bmodels */
 		if (name[0] == '*')
 			cl.model_clip[i] = CM_InlineModel(cl.mapTiles, name);
 		else
 			cl.model_clip[i] = NULL;
-		if (!cl.model_draw[i])
-			Com_Error(ERR_DROP, "Could not load model '%s'\n", name);
 
 		cls.loadingPercent += 100.0f / (float)max;
 	}
@@ -97,16 +98,10 @@ void CL_ViewLoadMedia (void)
 	/* update le model references */
 	le = NULL;
 	while ((le = LE_GetNextInUse(le))) {
-		if (le->modelnum1) {
-			le->model1 = cl.model_draw[le->modelnum1];
-			if (!le->model1)
-				Com_Error(ERR_DROP, "No model for %i", le->modelnum1);
-		}
-		if (le->modelnum2) {
-			le->model2 = cl.model_draw[le->modelnum2];
-			if (!le->model2)
-				Com_Error(ERR_DROP, "No model for %i", le->modelnum2);
-		}
+		if (le->modelnum1 > 0)
+			le->model1 = LE_GetDrawModel(le->modelnum1);
+		if (le->modelnum2 > 0)
+			le->model2 = LE_GetDrawModel(le->modelnum2);
 	}
 
 	cls.loadingPercent = 100.0f;

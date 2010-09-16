@@ -689,9 +689,9 @@ struct edict_s {
 
 	int team;					/**< player of which team? */
 	int pnum;					/**< the actual player slot */
-	/** the models (hud) */
-	int body;
-	int head;
+	/** the model indices */
+	unsigned int body;
+	unsigned int head;
 	int frame;					/**< frame of the model to show */
 
 	char *group;				/**< this can be used to trigger a group of entities

@@ -614,7 +614,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			item.amount = tItemBackup.item.amount;
 			to = from;
 			if (INV_IsFloorDef(to)) {
-				/* I_MoveInInventory placed the swaped ammo in an available space, check where it was placed
+				/* I_MoveInInventory placed the swapped ammo in an available space, check where it was placed
 				 * so we can place it at the same place in the client, otherwise since fItem hasn't been removed
 				 * this could end in a different place in the client - will cause an error if trying to use it again */
 				ic = INVSH_FindInInventory(&ent->chr.i, to, item);
@@ -644,7 +644,7 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 			G_EventInventoryAdd(floor, G_VisToPM(floor->visflags), 1);
 			G_WriteItem(&fItemBackup.item, to, tx, ty);
 			/* Couldn't remove it before because that would remove the le from the client and would cause battlescape to crash
-			 * when trying to add back the swaped ammo above */
+			 * when trying to add back the swapped ammo above */
 			if (ia == IA_RELOAD_SWAP)
 				G_EventInventoryDelete(floor, G_VisToPM(floor->visflags), from, fx, fy);
 		}

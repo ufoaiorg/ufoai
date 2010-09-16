@@ -116,7 +116,7 @@ typedef struct {
 	void (IMPORT *Error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
 
 	/** the *index functions create configstrings and some internal server state */
-	int (IMPORT *ModelIndex) (const char *name);
+	unsigned int (IMPORT *ModelIndex) (const char *name);
 
 	/** This updates the inline model's orientation */
 	void (IMPORT *SetInlineModelOrientation) (const char *name, const vec3_t origin, const vec3_t angles);

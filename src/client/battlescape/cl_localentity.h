@@ -93,9 +93,9 @@ typedef struct le_s {
 	vec3_t mins, maxs;
 
 	char inlineModelName[8];	/**< for bmodels */
-	int modelnum1;	/**< the number of the body model in the cl.model_draw array */
-	int modelnum2;	/**< the number of the head model in the cl.model_draw array */
-	int skinnum;	/**< the skin number of the body and head model */
+	unsigned int modelnum1;	/**< the number of the body model in the cl.model_draw array */
+	unsigned int modelnum2;	/**< the number of the head model in the cl.model_draw array */
+	unsigned int skinnum;	/**< the skin number of the body and head model */
 	model_t *model1, *model2;	/**< pointers to the cl.model_draw array
 					 * that holds the models for body and head - model1 is body,
 					 * model2 is head */
@@ -248,6 +248,8 @@ void LE_PlaceItem(le_t *le);
 void LE_Cleanup(void);
 void LE_AddToScene(void);
 void LE_CenterView(const le_t *le);
+const cBspModel_t *LE_GetClipModel(const le_t *le);
+model_t *LE_GetDrawModel(unsigned int modelIndex);
 
 trace_t CL_Trace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const le_t * passle, le_t * passle2, int contentmask, int worldLevel);
 

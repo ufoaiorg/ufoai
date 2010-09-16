@@ -80,7 +80,15 @@ static void SV_error (const char *fmt, ...)
 	Com_Error(ERR_DROP, "Game Error: %s", msg);
 }
 
-static int SV_FindIndex (const char *name, int start, int max, qboolean create)
+/**
+ * @brief Search the index in the config strings relative to a given start
+ * @param name The value of the config string to search the index for
+ * @param start The relative start point for the search
+ * @param max The max. searched entries in the config string before giving up
+ * @param create if @c true the value will get written into the config strings (appended)
+ * @return @c 0 if not found
+ */
+static unsigned int SV_FindIndex (const char *name, int start, int max, qboolean create)
 {
 	int i;
 
@@ -112,7 +120,7 @@ static int SV_FindIndex (const char *name, int start, int max, qboolean create)
 	return i;
 }
 
-static int SV_ModelIndex (const char *name)
+static unsigned int SV_ModelIndex (const char *name)
 {
 	return SV_FindIndex(name, CS_MODELS, MAX_MODELS, qtrue);
 }

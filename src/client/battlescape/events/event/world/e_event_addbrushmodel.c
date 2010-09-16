@@ -69,9 +69,7 @@ void CL_AddBrushModel (const eventRegister_t *self, struct dbuffer *msg)
 	VectorCopy(angles, le->angles);
 
 	Com_sprintf(le->inlineModelName, sizeof(le->inlineModelName), "*%i", le->modelnum1);
-	model = cl.model_clip[le->modelnum1];
-	if (!model)
-		Com_Error(ERR_DROP, "CL_AddBrushModel: Could not find inline model %i", le->modelnum1);
+	model = LE_GetClipModel(le);
 	le->model1 = R_RegisterModelShort(le->inlineModelName);
 	if (!le->model1)
 		Com_Error(ERR_DROP, "CL_AddBrushModel: Could not register inline model %i", le->modelnum1);
