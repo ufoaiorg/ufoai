@@ -76,7 +76,7 @@ void R_DrawAliasModel(entity_t *e);
 void R_ShutdownModels(qboolean complete);
 void R_ModReloadSurfacesArrays(void);
 int R_ModAllocateActorSkin(const char* name);
-void R_LoadActorSkinsFromModel(mAliasMesh_t *outMesh, mAliasMesh_t *alias, const char *customName);
+void R_LoadActorSkinsFromModel(mAliasMesh_t *outMesh, image_t * defaultSkin);
 qboolean R_UseActorSkin(void);
 
 /** @brief The world model(s) */

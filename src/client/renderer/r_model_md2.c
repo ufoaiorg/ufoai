@@ -141,8 +141,10 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 
 	if (mod->alias.num_meshes == 1) {
 		if (R_UseActorSkin() && !strncmp(outMesh->name, actorModelPrefix, sizeof(actorModelPrefix))) {
+			image_t *defaultSkin;
 			md2Path = (const char *) md2 + LittleLong(md2->ofs_skins);
-			R_LoadActorSkinsFromModel(outMesh, NULL, md2Path);
+			defaultSkin = R_AliasModelGetSkin(mod->name, md2Path);
+			R_LoadActorSkinsFromModel(outMesh, defaultSkin);
 
 			/** @todo Should we check skin image versus this size? */
 			outMesh->skinWidth = LittleLong(md2->skinwidth);
@@ -172,13 +174,9 @@ static void R_ModLoadAliasMD2MeshUnindexed (model_t *mod, const dMD2Model_t *md2
 						mod->name, outMesh->skinHeight, outMesh->skinWidth);
 		}
 	} else {
-		if (R_UseActorSkin() && !strncmp(outMesh->name, actorModelPrefix, sizeof(actorModelPrefix))) {
-			R_LoadActorSkinsFromModel(outMesh, &mod->alias.meshes[0], NULL);
-		} else {
-			/* skin data must be the same for the lod meshes */
-			outMesh->num_skins = mod->alias.meshes[0].num_skins;
-			outMesh->skins = mod->alias.meshes[0].skins;
-		}
+		/* skin data must be the same for the lod meshes */
+		outMesh->num_skins = mod->alias.meshes[0].num_skins;
+		outMesh->skins = mod->alias.meshes[0].skins;
 		outMesh->skinWidth = mod->alias.meshes[0].skinWidth;
 		outMesh->skinHeight = mod->alias.meshes[0].skinHeight;
 	}

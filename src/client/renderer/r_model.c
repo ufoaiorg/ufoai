@@ -281,24 +281,19 @@ static const char* R_GetActorSkin (int id)
 	return r_actorSkinNames[id];
 }
 
-void R_LoadActorSkinsFromModel (mAliasMesh_t *outMesh, mAliasMesh_t *alias, const char* customName)
+/**
+ * @brief Load actor skins from a default skin to a a mesh.
+ * @param outMesh Mesh target of skins
+ * @param defaultSkin Default skin of the mesh
+ */
+void R_LoadActorSkinsFromModel (mAliasMesh_t *outMesh, image_t * defaultSkin)
 {
-	char pathAndModel[64];
-	image_t *defaultSkin = NULL;
 	int i;
+	assert(outMesh);
 
 	outMesh->num_skins = r_numActorSkinName;
 	outMesh->skins = (mAliasSkin_t *)Mem_PoolAlloc(sizeof(mAliasSkin_t) * outMesh->num_skins, vid_modelPool, 0);
 
-	Com_StripExtension(outMesh->name, pathAndModel, sizeof(pathAndModel));
-
-	defaultSkin = R_AliasModelGetSkin(NULL, pathAndModel);
-	if (defaultSkin == r_noTexture && alias != NULL)
-		defaultSkin = alias->skins[0].skin;
-	if (defaultSkin == r_noTexture && customName != NULL) {
-		Com_ReplaceFilename(outMesh->name, customName, pathAndModel, sizeof(pathAndModel));
-		defaultSkin = R_AliasModelGetSkin(NULL, pathAndModel);
-	}
 	if (defaultSkin == r_noTexture)
 		Com_Printf("R_LoadActorSkinsFromModel: No default skin found for model \"%s\"\n", outMesh->name);
 
@@ -307,7 +302,7 @@ void R_LoadActorSkinsFromModel (mAliasMesh_t *outMesh, mAliasMesh_t *alias, cons
 			outMesh->skins[i].skin = defaultSkin;
 		} else {
 			const char *skin = R_GetActorSkin(i);
-			outMesh->skins[i].skin = R_AliasModelGetSkin(NULL, va("%s_%s", pathAndModel, skin));
+			outMesh->skins[i].skin = R_AliasModelGetSkin(NULL, va("%s_%s", defaultSkin->name, skin));
 			/** @todo should we add warning here? */
 			if (outMesh->skins[i].skin == r_noTexture)
 				outMesh->skins[i].skin = defaultSkin;

@@ -494,7 +494,6 @@ void R_ModCalcUniqueNormalsAndTangents (mAliasMesh_t *mesh, int nFrames, float s
 	mesh->indexes = newIndexArray;
 }
 
-
 image_t* R_AliasModelGetSkin (const char *modelFileName, const char *skin)
 {
 	if (skin[0] != '.')
