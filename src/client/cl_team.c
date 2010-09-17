@@ -63,6 +63,15 @@ actorSkin_t* Com_AllocateActorSkin (const char *name)
 }
 
 /**
+ * @brief Get number of actorskin registred
+ * @return Number of actorskin registred
+ */
+int Com_GetActorSkinCount (void)
+{
+	return cls.numActorSkins;
+}
+
+/**
  * @brief Get a actorskin from idx
  * @return A actorskin, else NULL
  */

@@ -8,12 +8,14 @@
 // multiplayer boolean
 //	Is the skin is available for multiplayer mode
 //
-// ORDER OF THE SKINS MUST BE THE ORDER
-// OF THE SKINS INSIDE MD2 FILES
-//
 //=======================
 
-actorskin urban {
+/**
+ * Special skin, cause it dont use sufix. Must be read the first
+ * It also must be the first skin defined in .md2 files, other skin from
+ * md2 file are not used.
+ */
+actorskin default {
 	name			"_Urban"
 	singleplayer	true
 	multiplayer		true
