@@ -180,6 +180,65 @@ static void PR_UpdateProductionList (const base_t* base)
 	UI_RegisterLinkedListText(TEXT_PRODUCTION_QUEUED, productionQueued);
 }
 
+static void PR_RequirementsInfo (const base_t const *base, const requirements_t const *reqs) {
+	const vec4_t green = {0.0f, 1.0f, 0.0f, 0.8f};
+	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
+	int i;
+	uiNode_t *req_root = NULL;
+	uiNode_t *req_items = NULL;
+#if 0
+	uiNode_t *req_techs = NULL;
+	uiNode_t *req_technots = NULL;
+#endif
+
+	UI_ResetData(OPTION_PRODUCTION_REQUIREMENTS);
+
+	if (!reqs->numLinks)
+		return;
+
+	for (i = 0; i < reqs->numLinks; i++) {
+		const requirement_t const *req = &reqs->links[i];
+
+		switch (req->type) {
+		case RS_LINK_ITEM: {
+				uiNode_t *node = UI_AddOption(&req_items, ((objDef_t*)req->link)->id, va("%i %s", req->amount, _(((objDef_t*)req->link)->name)), va("%i", i));
+				if (node && B_ItemInBase((objDef_t*)req->link, base) >= req->amount)
+					Vector4Copy(green, node->color);
+				else
+					Vector4Copy(yellow, node->color);
+				break;
+			}
+		case RS_LINK_ANTIMATTER: {
+				technology_t *tech = RS_GetTechByID(ANTIMATTER_TECH_ID);
+				uiNode_t *node;
+
+				assert(tech);
+				node = UI_AddOption(&req_items, ANTIMATTER_TECH_ID, va("%i %s", req->amount, _(tech->name)), va("%i", i));
+				if (node && B_AntimatterInBase(base) >= req->amount)
+					Vector4Copy(green, node->color);
+				else
+					Vector4Copy(yellow, node->color);
+				break;
+			}
+#if 0
+		case RS_LINK_TECH:
+/*			if (node && RS_IsResearched_ptr(req->link)) ... */
+			break;
+		case RS_LINK_TECH_NOT:
+/*			if (node && RS_IsResearched_ptr(req->link)) ... */
+			break;
+#endif
+		default:
+			break;
+		}
+	}
+	if (req_items) {
+		uiNode_t *node = UI_AddOption(&req_root, "items", "_Items", "item");
+		node->firstChild = req_items;
+	}
+	UI_RegisterOption(OPTION_PRODUCTION_REQUIREMENTS, req_root);
+}
+
 /**
  * @brief Prints information about the selected item (no aircraft) in production.
  * @param[in] base Pointer to the base where informations should be printed.
@@ -210,6 +269,9 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, const
 		Q_strcat(productionInfo, va(_("Production time\t%ih\n"), time), sizeof(productionInfo));
 		Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size), sizeof(productionInfo));
 		Cvar_Set("mn_item", od->id);
+
+		PR_RequirementsInfo(base, &tech->requireForProduction);
+		Cmd_ExecuteString(va("show_requirements %i", tech->requireForProduction.numLinks));
 	}
 	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 }
@@ -254,6 +316,7 @@ static void PR_DisassemblyInfo (const base_t *base, const storedUFO_t *ufo, floa
 	}
 	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	Cvar_Set("mn_item", ufo->id);
+	Cmd_ExecuteString("show_requirements 0");
 }
 
 /**
@@ -280,6 +343,8 @@ static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTempl
 	Q_strcat(productionInfo, va(_("Production time\t%ih\n"), time), sizeof(productionInfo));
 	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	Cvar_Set("mn_item", aircraftTemplate->id);
+	PR_RequirementsInfo(base, &aircraftTemplate->tech->requireForProduction);
+	Cmd_ExecuteString(va("show_requirements %i", aircraftTemplate->tech->requireForProduction.numLinks));
 }
 
 /**

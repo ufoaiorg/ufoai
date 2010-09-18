@@ -499,30 +499,96 @@ window production
 	// item description
 	// ==================
 
-	text description
-	{
-		dataid		TEXT_PRODUCTION_INFO
-		pos			"610 528"
-		size		"346 200"
-		lineheight	20
-		tabwidth	260
-		rows		"10"
-		onViewChange	{
-			*node:root.description_scroll@fullsize = <fullsize>
-			*node:root.description_scroll@current = <viewpos>
-			*node:root.description_scroll@viewsize = <viewsize>
+
+	panel requirement {
+		{
+			pos		"610 610"
+			size	"346 120"
+		}
+
+		string label {
+			pos "5 5"
+			size "336 20"
+			font	"f_verysmall"
+			string "_Requirements"
+		}
+
+		optiontree prodreq
+		{
+			cvar		*cvar:ui_prreq
+			dataid		OPTION_PRODUCTION_REQUIREMENTS
+			pos			"5 26"
+			size		"320 92"
+			font		"f_verysmall"
+			color		"0 .78 0 1"
+			selectcolor	"0 .78 0 1"
+			onViewChange	{
+				*node:parent.prodreq_scroll@fullsize = <fullsize>
+				*node:parent.prodreq_scroll@current = <viewpos>
+				*node:parent.prodreq_scroll@viewsize = <viewsize>
+			}
+		}
+
+		vscrollbar prodreq_scroll {
+			image		"ui/scrollbar_v_green"
+			pos			"326 26"
+			height		"92"
+			current		0
+			viewsize	6
+			fullsize	6
+			hidewhenunused true
+			onChange	{ *node:parent.prodreq@viewpos = <current> }
 		}
 	}
 
-	vscrollbar description_scroll {
-		image		"ui/scrollbar_v_green"
-		pos			"960 528"
-		height		"100"
-		current		0
-		viewsize	10
-		fullsize	10
-		hidewhenunused true
-		onChange	{ *node:root.description@viewpos = <current> }
+	panel proddesc {
+		{
+			pos			"610 528"
+			size		"346 80"
+			layout		LAYOUT_BORDER
+		}
+
+		text description
+		{
+			dataid		TEXT_PRODUCTION_INFO
+			align		LAYOUTALIGN_MIDDLE
+			lineheight	20
+			tabwidth	260
+			rows		4
+			onChange
+			{
+				*node:root.proddesc.description_scroll@current = 0
+				*node:root.proddesc.description@viewpos = 0
+			}
+			onViewChange	{
+				*node:root.proddesc.description_scroll@fullsize = <fullsize>
+				*node:root.proddesc.description_scroll@current = <viewpos>
+				*node:root.proddesc.description_scroll@viewsize = <viewsize>
+			}
+		}
+
+		vscrollbar description_scroll {
+			image		"ui/scrollbar_v_green"
+			align		LAYOUTALIGN_RIGHT
+			current		0
+			viewsize	4
+			fullsize	4
+			hidewhenunused true
+			onChange	{ *node:root.proddesc.description@viewpos = <current> }
+		}
+	}
+
+	confunc show_requirements {
+		*cvar:parm = <1>
+
+		if ( *cvar:parm > 0 ) {
+			*node:root.requirement@invis = false
+			*node:root.proddesc@height = 80
+		} else {
+			*node:root.requirement@invis = true
+			*node:root.proddesc@height = 200
+		}
+		delete *cvar:parm
 	}
 
 	// ==================
@@ -545,5 +611,10 @@ window production
 	{
 		cmd "prod_init; prod_type *cvar:mn_itemtype;"
 		call *node:root.prod_stores
+		*cvar:ui_prreq = ""
+	}
+	func onClose
+	{
+		delete *cvar:ui_prreq
 	}
 }
