@@ -889,8 +889,9 @@ static void _AddToListBlock (linkedList_t** fl, listBlock_t* block, listBlock_t*
 		entry = LIST_ContainsString(*fl, f);
 
 	/* add the new file */
-	if (entry == NULL)
-		LIST_AddString(fl, f);
+	if (entry == NULL) {
+		LIST_AddStringSorted(fl, f);
+	}
 }
 
 /**

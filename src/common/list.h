@@ -10,6 +10,7 @@ typedef struct linkedList_s {
 } linkedList_t;
 
 void LIST_AddString(linkedList_t** list, const char* data);
+void LIST_AddStringSorted(linkedList_t** listDest, const char* data);
 void LIST_AddPointer(linkedList_t** listDest, void* data);
 linkedList_t* LIST_Add(linkedList_t** list, const byte* data, size_t length);
 const linkedList_t* LIST_ContainsString(const linkedList_t* list, const char* string);
