@@ -769,6 +769,21 @@ static void FS_Dir_f (void)
 	}
 }
 
+static void FS_List_f (void)
+{
+	char wildcard[1024] = "*.*";
+	const char *filename;
+
+	if (Cmd_Argc() == 2)
+		Q_strncpyz(wildcard, Cmd_Argv(1), sizeof(wildcard));
+
+	Com_Printf("Show files for '%s'\n", wildcard);
+	FS_BuildFileList(wildcard);
+	while ((filename = FS_NextFileFromFileList(wildcard)) != NULL)
+		Com_Printf("%s\n", filename);
+	FS_NextFileFromFileList(NULL);
+}
+
 /**
  * @brief Print all searchpaths
  */
@@ -799,7 +814,8 @@ static void FS_Info_f (void)
 static const cmdList_t fs_commands[] = {
 	{"fs_restart", FS_RestartFilesystem, "Reloads the file subsystem"},
 	{"link", FS_Link_f, "Create file links"},
-	{"dir", FS_Dir_f, "Show the filesystem contents - also supports wildcarding"},
+	{"dir", FS_Dir_f, "Show the filesystem contents per game dir - also supports wildcarding"},
+	{"ls", FS_List_f, "Show the filesystem contents"},
 	{"fs_info", FS_Info_f, "Show information about the virtual filesystem"},
 
 	{NULL, NULL, NULL}
