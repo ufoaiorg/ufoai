@@ -886,8 +886,9 @@ static void _AddToListBlock (linkedList_t** fl, const char* name, qboolean strip
 		entry = LIST_ContainsString(*fl, f);
 
 	/* add the new file */
-	if (entry == NULL)
-		LIST_AddString(fl, f);
+	if (entry == NULL) {
+		LIST_AddStringSorted(fl, f);
+	}
 }
 
 /**

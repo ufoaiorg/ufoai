@@ -159,6 +159,17 @@ static void testLinkedList (void)
 	CU_ASSERT_EQUAL(LIST_Count(list), 0);
 }
 
+static void testLinkedListStringSort (void)
+{
+	linkedList_t *list = NULL;
+
+	LIST_AddStringSorted(&list, "test2");
+	LIST_AddStringSorted(&list, "test1");
+	LIST_AddStringSorted(&list, "test3");
+
+	CU_ASSERT_STRING_EQUAL((const char *)LIST_GetByIdx(list, 0), "test1");
+}
+
 static void testStringCopiers (void)
 {
 	const char src[] = "Командующий, я чрезвычайно рад доложить, что наш проект ОПЭВ был завершён успешно. Я прикрепил к письму "
@@ -276,6 +287,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testLinkedList) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testLinkedListStringSort) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testStringCopiers) == NULL)

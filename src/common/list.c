@@ -82,6 +82,40 @@ linkedList_t* LIST_GetPointer (linkedList_t* list, const void* data)
 	return NULL;
 }
 
+void LIST_AddStringSorted (linkedList_t** listDest, const char* data)
+{
+	assert(listDest);
+	assert(data);
+
+	/* create the list */
+	if (!*listDest)
+		LIST_AddString(listDest, data);
+	else {
+		linkedList_t *list, *tmp;
+
+		list = *listDest;
+		tmp = NULL;
+		while (list) {
+			if (Q_StringSort(data, (const char *)list->data) < 0) {
+				linkedList_t *newEntry = (linkedList_t*)Mem_PoolAlloc(sizeof(*newEntry), com_genericPool, 0);
+				newEntry->data = (byte*)Mem_StrDup(data);
+				newEntry->next = list;
+				if (tmp != NULL)
+					tmp->next = newEntry;
+				else
+					*listDest = newEntry;
+				return;
+			}
+			tmp = list;
+			list = list->next;
+		}
+		assert(tmp);
+		tmp->next = (linkedList_t*)Mem_PoolAlloc(sizeof(**listDest), com_genericPool, 0);
+		tmp->next->data = (byte*)Mem_StrDup(data);
+		tmp->next->next = NULL; /* not really needed - but for better readability */
+	}
+}
+
 /**
  * @brief Adds an string to a new or to an already existing linked list. The string is copied here.
  * @sa LIST_Add
