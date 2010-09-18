@@ -702,7 +702,7 @@ static void CL_ParseActorSkin (const char *name, const char **text)
 		return;
 	}
 
-	/** NOTE: first skin is special cause we dont get the skin with suffix */
+	/* NOTE: first skin is special cause we don't get the skin with suffix */
 	if (Com_GetActorSkinCount() == 0) {
 		if (strcmp(name, "default") != 0) {
 			Com_Error(ERR_DROP, "CL_ParseActorSkin: First actorskin read from script must be \"default\" skin.");

@@ -57,7 +57,7 @@ void CL_LoadInventoryXML(mxml_node_t *p, inventory_t * i);
 void TEAM_InitStartup(void);
 
 actorSkin_t* Com_AllocateActorSkin(const char *name);
-int Com_GetActorSkinCount(void);
+unsigned int Com_GetActorSkinCount(void);
 
 extern chrList_t chrDisplayList;
 

@@ -113,7 +113,7 @@ typedef struct client_static_s {
 	inventoryInterface_t i;
 
 	actorSkin_t actorSkins[MAX_ACTORSKINNAME];
-	int numActorSkins;
+	unsigned int numActorSkins;
 
 	/** Map definitions */
 	mapDef_t mds[MAX_MAPDEFS];

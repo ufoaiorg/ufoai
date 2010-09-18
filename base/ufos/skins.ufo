@@ -11,9 +11,9 @@
 //=======================
 
 /**
- * Special skin, cause it dont use sufix. Must be read the first
- * It also must be the first skin defined in .md2 files, other skin from
- * md2 file are not used.
+ * Special skin, cause it doesn't use a suffix. Must be read as first
+ * It also must be the first skin defined in .md2 files, other skins from
+ * md2 files are not used.
  */
 actorskin default {
 	name			"_Urban"

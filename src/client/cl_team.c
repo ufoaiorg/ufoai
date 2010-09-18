@@ -63,10 +63,10 @@ actorSkin_t* Com_AllocateActorSkin (const char *name)
 }
 
 /**
- * @brief Get number of actorskin registred
- * @return Number of actorskin registred
+ * @brief Get number of registered actorskins
+ * @return Number of registered actorskins
  */
-int Com_GetActorSkinCount (void)
+unsigned int Com_GetActorSkinCount (void)
 {
 	return cls.numActorSkins;
 }
@@ -75,7 +75,7 @@ int Com_GetActorSkinCount (void)
  * @brief Get a actorskin from idx
  * @return A actorskin, else NULL
  */
-static actorSkin_t* Com_GetActorSkinByIDS (int idx)
+static actorSkin_t* Com_GetActorSkinByIDS (unsigned int idx)
 {
 	if (idx >= cls.numActorSkins)
 		return NULL;
@@ -87,7 +87,7 @@ static actorSkin_t* Com_GetActorSkinByIDS (int idx)
  * @param[in] id The id of the skin
  * @return Translated skin name
  */
-static const char* CL_GetTeamSkinName (int id)
+static const char* CL_GetTeamSkinName (unsigned int id)
 {
 	actorSkin_t *skin = Com_GetActorSkinByIDS(id);
 	if (skin == NULL)
