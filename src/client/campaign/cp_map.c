@@ -385,7 +385,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 			/* Move the selected aircraft to the position clicked */
 			MAP_MapCalcLine(ccs.selectedAircraft->pos, pos, &ccs.selectedAircraft->route);
 			ccs.selectedAircraft->status = AIR_TRANSIT;
-			ccs.selectedAircraft->time = aircraft->point = 0;
+			ccs.selectedAircraft->time = ccs.selectedAircraft->point = 0;
 		}
 	}
 }
