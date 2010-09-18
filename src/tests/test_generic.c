@@ -170,6 +170,24 @@ static void testLinkedListStringSort (void)
 	CU_ASSERT_STRING_EQUAL((const char *)LIST_GetByIdx(list, 0), "test1");
 }
 
+static void testFileSystemBuildLists (void)
+{
+	const char *filename, *prev;
+	const char *wildcard = "ufos/**.ufo";
+	const int ufosCnt = FS_BuildFileList(wildcard);
+
+	CU_ASSERT_TRUE(ufosCnt > 1);
+
+	prev = NULL;
+	while ((filename = FS_NextFileFromFileList(wildcard)) != NULL) {
+		if (prev != NULL)
+			CU_ASSERT_EQUAL(Q_StringSort(prev, filename), -1);
+		prev = filename;
+	}
+
+	FS_NextFileFromFileList(NULL);
+}
+
 static void testStringCopiers (void)
 {
 	const char src[] = "Командующий, я чрезвычайно рад доложить, что наш проект ОПЭВ был завершён успешно. Я прикрепил к письму "
@@ -290,6 +308,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testLinkedListStringSort) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testFileSystemBuildLists) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testStringCopiers) == NULL)
