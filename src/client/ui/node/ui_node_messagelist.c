@@ -142,8 +142,11 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 		lines1 = 0;
 
 	/* display the date */
-	if (lastDate == NULL || strcmp(lastDate, message->timestamp) != 0)
+	if (lastDate == NULL || strcmp(lastDate, message->timestamp) != 0) {
+		R_Color(node->color);
 		UI_DrawString(fontID, ALIGN_UL, x, y, x, column1, LINEHEIGHT, message->timestamp, EXTRADATACONST(node).scrollY.viewSize, 0, &lines1, qtrue, LONGLINES_WRAP);
+		R_Color(NULL);
+	}
 
 	x += DATETIME_COLUUI_SIZE + node->padding;
 
@@ -151,11 +154,14 @@ static void UI_MessageDraw (const uiNode_t *node, message_t *message, const char
 	if (lines2 >= 0) {
 		const uiIcon_t *icon;
 		icon = UI_MessageGetIcon(message);
+		R_Color(NULL);
 		UI_DrawIconInBox(icon, ICON_STATUS_NORMAL, x - 25, y + LINEHEIGHT * lines2 - 1, 19, 19);
 	}
 
 	/* draw the message */
+	R_Color(node->color);
 	UI_DrawString(fontID, ALIGN_UL, x, y, x, column2, LINEHEIGHT, message->text, EXTRADATACONST(node).scrollY.viewSize, 0, &lines2, qtrue, LONGLINES_WRAP);
+	R_Color(NULL);
 	*screenLines = max(lines1, lines2);
 	lastDate = message->timestamp;
 }
