@@ -277,11 +277,17 @@ static void UI_MessageDebugUseAllIcons_f (void)
 }
 #endif
 
+static void UI_MessageListNodeLoading (uiNode_t *node)
+{
+	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
+}
+
 void UI_RegisterMessageListNode (uiBehaviour_t *behaviour)
 {
 	behaviour->name = "messagelist";
 	behaviour->extends = "abstractscrollable";
 	behaviour->draw = UI_MessageListNodeDraw;
+	behaviour->loading = UI_MessageListNodeLoading;
 	behaviour->mouseWheel = UI_MessageListNodeMouseWheel;
 #ifdef DEBUG
 	Cmd_AddCommand("debug_mn_message_useallicons", UI_MessageDebugUseAllIcons_f, "Update message to use all icons");
