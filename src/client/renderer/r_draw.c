@@ -253,6 +253,8 @@ void R_DrawFills (void)
 	R_EnableTexture(&texunit_diffuse, qtrue);
 
 	r_fill_arrays.vert_index = r_fill_arrays.color_index = 0;
+
+	R_Color(NULL);
 }
 
 /**
