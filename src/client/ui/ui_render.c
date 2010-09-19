@@ -38,8 +38,8 @@ void UI_DrawFill (int x, int y, int w, int h, const vec4_t color)
 }
 
 /**
- * Pushes a new matrix, normalize to current resolution and move, rotate and scale the
- * matrix to the given values.
+ * @brief Pushes a new matrix, normalize to current resolution and move, rotate and
+ * scale the matrix to the given values.
  * @note Will pop the matrix if @c transform is @c NULL
  * @param transform Translation (if @c NULL the matrix is removed from stack)
  * @param rotate Rotation
