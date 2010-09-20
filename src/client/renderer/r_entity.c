@@ -292,6 +292,8 @@ static void R_DrawEntityEffects (void)
 }
 
 /**
+ * @brief Draws a list of brush model entities (inline models)
+ * @param[in] ents The entity list to render (brush model entities)
  * @sa R_DrawEntities
  * @sa R_DrawBrushModel
  */
