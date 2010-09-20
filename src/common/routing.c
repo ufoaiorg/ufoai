@@ -1378,6 +1378,7 @@ static void RT_TracePassage (mapTiles_t *mapTiles, const routing_t * map, const 
  * @param[in] ay The y of the adjacent cell
  * @param[in] z The z position in the routing arrays (0 to PATHFINDING_HEIGHT - 1)
  * @param[in] dir The direction to test for a connection through
+ * @param[in] list The local models list (a local model has a name starting with * followed by the model number)
  */
 static int RT_UpdateConnection (mapTiles_t *mapTiles, routing_t * map, const actorSizeEnum_t actorSize, const int x, const int y, const int ax, const int ay, const int z, const int dir, const char **list)
 {
