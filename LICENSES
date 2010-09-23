@@ -3517,6 +3517,8 @@ base/sound/doors/door1-close.ogg | Creative Commons Attribution-Share Alike 3.0 
 base/sound/doors/door1-open.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/doors/door2-close.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/doors/door2-open.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/doors/door3-close.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Crystan Hoffmann
+base/sound/doors/door3-open.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Crystan Hoffmann
 base/sound/doors/open_close.ogg | GNU General Public License 2.0 or later | Martin Gerhardy | http://www.pdsounds.org/sounds/tram_doors_open_and_close_hiss_and_beeping
 base/sound/footsteps/carpet1.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/footsteps/carpet2.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
@@ -3673,6 +3675,7 @@ base/sound/weapons/bullet-chaingun-10x.ogg | Creative Commons Attribution-Share 
 base/sound/weapons/bullet-chaingun-40x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-chaingun-50x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-chaingun-5x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/weapons/bullet-flechette.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Crystan Hoffmann
 base/sound/weapons/bullet-gauss.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-heavybolter.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-hmg-20x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
@@ -3687,6 +3690,9 @@ base/sound/weapons/bullet-rifle-8x.ogg | Creative Commons Attribution-Share Alik
 base/sound/weapons/bullet-rifle.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-shotgun.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-shotgunmini.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
+base/sound/weapons/bullet-smg-15x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Crystan Hoffmann
+base/sound/weapons/bullet-smg-1x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Crystan Hoffmann
+base/sound/weapons/bullet-smg-5x.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian Crystan Hoffmann
 base/sound/weapons/bullet-smg.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/bullet-sniper.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
 base/sound/weapons/electro-taser.ogg | Creative Commons Attribution-Share Alike 3.0 | Christian "Crystan" Hoffmann
