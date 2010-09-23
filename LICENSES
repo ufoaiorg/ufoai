@@ -2315,6 +2315,22 @@ base/models/weapons/rpg/rpg.tag | GNU General Public License 2.0 or later | Mart
 base/models/weapons/rpg/rpg_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/rpg/rpg_inc_ammo.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/rpg/rpg_particle_ammo.md2 | GNU General Public License 2.0 | A M D G
+base/models/weapons/rpg2/ammo_ex.png | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/ammo_ex_nm.png | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/ammo_ex_sm.png | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/ammo_inc.png | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/ammo_inc_nm.png | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/ammo_inc_sm.png | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/launcher.png | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/launcher_gm.png | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/launcher_nm.png | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/launcher_sm.png | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/rocket.md2 | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/rocket_inc.md2 | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/rpg.md2 | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/rpg.tag | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/rpg_ammo.md2 | GNU General Public License 3.0 or later | Flying Steel
+base/models/weapons/rpg2/rpg_inc_ammo.md2 | GNU General Public License 3.0 or later | Flying Steel
 base/models/weapons/shotgun/shotgun.jpg | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/shotgun/shotgun.md2 | GNU General Public License 2.0 | Lukas "Rastaman" Beyeler
 base/models/weapons/shotgun/shotgun.tag | GNU General Public License 2.0 or later | Martin Gerhardy
