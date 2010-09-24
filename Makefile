@@ -93,7 +93,7 @@ $(BUILDDIR)/$(1)/%.cpp.o: $(SRCDIR)/%.cpp $(BUILDDIR)/$(1)/.dirs
 
 # TODO: This must depend on something that executes this target again once a new sourcefile
 # in a new directory was added
-$(BUILDDIR)/$(1)/.dirs: config.h
+$(BUILDDIR)/$(1)/.dirs: config.h $(addprefix $(SRCDIR)/,$($(1)_SRCS))
 	$(Q)mkdir -p $(foreach i,$($(1)_OBJS),$(dir $(i)))
 	$(Q)touch $$@
 
