@@ -480,8 +480,9 @@ bool ShaderTemplate::parseUFO (Tokeniser& tokeniser)
 
 		if (depth == 1) {
 			if (token == "trans") {
-				RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, m_fTrans))
-;				m_nFlags |= QER_TRANS;
+				if (!Tokeniser_getFloat(tokeniser, m_fTrans))
+					return false;
+				m_nFlags |= QER_TRANS;
 			} else if (token == "alphafunc") {
 				const std::string alphafunc = tokeniser.getToken();
 
@@ -506,7 +507,8 @@ bool ShaderTemplate::parseUFO (Tokeniser& tokeniser)
 
 				m_nFlags |= QER_ALPHATEST;
 
-				RETURN_FALSE_IF_FAIL(Tokeniser_getFloat(tokeniser, m_AlphaRef));
+				if (!Tokeniser_getFloat(tokeniser, m_AlphaRef))
+					return false;
 			} else if (token == "param") {
 				const std::string surfaceparm = tokeniser.getToken();
 

@@ -163,7 +163,7 @@ MemStream::size_type MemStream::write(const byte_type* buffer, size_type length)
 	if (m_nPosition + length > m_nBufferSize)
 		GrowFile(m_nPosition + length);
 
-	memcpy((unsigned char*)m_pBuffer + m_nPosition, (unsigned char*)buffer, length);
+	memcpy((unsigned char*)m_pBuffer + m_nPosition, (const unsigned char*)buffer, length);
 
 	m_nPosition += size_type(length);
 

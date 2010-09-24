@@ -189,7 +189,7 @@ static int _md2_canload (PM_PARAMS_CANLOAD)
 	md2 = (md2_t*) buffer;
 
 	/* check md2 magic */
-	if (*((int*) md2->magic) != *((int*) MD2_MAGIC))
+	if (*((const int*) md2->magic) != *((const int*) MD2_MAGIC))
 		return PICO_PMV_ERROR_IDENT;
 
 	/* check md2 version */
@@ -232,7 +232,7 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 	md2 = (md2_t*) buffer;
 
 	/* check ident and version */
-	if (*((int*) md2->magic) != *((int*) MD2_MAGIC) || _pico_little_long(md2->version) != MD2_VERSION) {
+	if (*((const int*) md2->magic) != *((const int*) MD2_MAGIC) || _pico_little_long(md2->version) != MD2_VERSION) {
 		/* not an md2 file (todo: set error) */
 		_pico_printf(PICO_ERROR, "%s is not an MD2 File!", fileName);
 		return NULL;

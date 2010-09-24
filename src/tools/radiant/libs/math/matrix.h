@@ -354,7 +354,7 @@ inline bool matrix4_affine_equal (const Matrix4& self, const Matrix4& other)
 
 enum Matrix4Handedness
 {
-	MATRIX4_RIGHTHANDED = 0, MATRIX4_LEFTHANDED = 1,
+	MATRIX4_RIGHTHANDED = 0, MATRIX4_LEFTHANDED = 1
 };
 
 /// \brief Returns MATRIX4_RIGHTHANDED if \p self is right-handed, else returns MATRIX4_LEFTHANDED.

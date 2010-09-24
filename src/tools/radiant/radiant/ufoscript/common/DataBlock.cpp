@@ -31,7 +31,7 @@ namespace scripts
 		return _filename;
 	}
 
-	const std::size_t DataBlock::getLineNumber () const
+	std::size_t DataBlock::getLineNumber () const
 	{
 		return _lineNumber;
 	}

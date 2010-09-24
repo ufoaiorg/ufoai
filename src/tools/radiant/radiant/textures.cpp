@@ -48,7 +48,7 @@ enum ETexturesMode
 	eTextures_LINEAR = 3,
 	eTextures_LINEAR_MIPMAP_NEAREST = 4,
 	eTextures_LINEAR_MIPMAP_LINEAR = 5,
-	eTextures_MAX_ANISOTROPY = 6,
+	eTextures_MAX_ANISOTROPY = 6
 };
 
 enum TextureCompressionFormat
@@ -57,7 +57,7 @@ enum TextureCompressionFormat
 	TEXTURECOMPRESSION_RGBA = 1,
 	TEXTURECOMPRESSION_RGBA_S3TC_DXT1 = 2,
 	TEXTURECOMPRESSION_RGBA_S3TC_DXT3 = 3,
-	TEXTURECOMPRESSION_RGBA_S3TC_DXT5 = 4,
+	TEXTURECOMPRESSION_RGBA_S3TC_DXT5 = 4
 };
 
 struct texture_globals_t

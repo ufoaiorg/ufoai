@@ -44,7 +44,7 @@ public:
 		eSortControlLast = 3071,
 		eSortGUI0 = 3072,
 		eSortGUI1 = 3073,
-		eSortLast = 4096,
+		eSortLast = 4096
 	};
 
 	unsigned int m_state;

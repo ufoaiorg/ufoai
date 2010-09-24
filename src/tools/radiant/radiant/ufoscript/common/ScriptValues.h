@@ -33,12 +33,12 @@ namespace scripts
 				return _id;
 			}
 
-			const std::size_t getOffset () const
+			std::size_t getOffset () const
 			{
 				return _offset;
 			}
 
-			const int getType () const
+			int getType () const
 			{
 				return _type;
 			}

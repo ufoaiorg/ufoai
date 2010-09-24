@@ -62,7 +62,7 @@ enum GridPower
 	GRIDPOWER_32 = 5,
 	GRIDPOWER_64 = 6,
 	GRIDPOWER_128 = 7,
-	GRIDPOWER_256 = 8,
+	GRIDPOWER_256 = 8
 };
 
 typedef const char* GridName;

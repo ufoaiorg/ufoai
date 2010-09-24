@@ -54,7 +54,7 @@ void Camera_setOrigin(CamWnd& camwnd, const Vector3& origin);
 enum {
 	CAMERA_PITCH = 0, // up / down
 	CAMERA_YAW = 1, // left / right
-	CAMERA_ROLL = 2, // fall over
+	CAMERA_ROLL = 2 // fall over
 };
 
 const Vector3& Camera_getAngles(CamWnd& camwnd);

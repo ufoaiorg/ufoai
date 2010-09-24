@@ -105,7 +105,7 @@ class Archive
 
 		enum EMode
 		{
-			eFiles = 0x01, eDirectories = 0x02, eFilesAndDirectories = 0x03,
+			eFiles = 0x01, eDirectories = 0x02, eFilesAndDirectories = 0x03
 		};
 
 		/// \brief Destroys the archive object.

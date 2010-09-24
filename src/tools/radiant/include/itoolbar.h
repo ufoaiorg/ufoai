@@ -31,7 +31,7 @@ public:
 		eSpace,
 		eButton,
 		eToggleButton,
-		eRadioButton,
+		eRadioButton
 	};
 
 	virtual ~IToolbarButton(){}

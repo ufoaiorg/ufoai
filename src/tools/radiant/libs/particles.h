@@ -83,17 +83,17 @@ class ParticleDefinition
 			return _modelName;
 		}
 
-		const int getBlendMode () const
+		int getBlendMode () const
 		{
 			return _blend;
 		}
 
-		const int getWidth () const
+		int getWidth () const
 		{
 			return _width;
 		}
 
-		const int getHeight () const
+		int getHeight () const
 		{
 			return _height;
 		}

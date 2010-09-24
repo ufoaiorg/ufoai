@@ -59,7 +59,7 @@ namespace routing
 				return _origin;
 			}
 
-			const EConnectionState getConnectionState (const EDirection direction) const;
+			EConnectionState getConnectionState (const EDirection direction) const;
 			/**
 			 * @brief setter method for connection state
 			 * @param direction direction to change connection state for
@@ -69,7 +69,7 @@ namespace routing
 			{
 				_connectionStates[direction] = connectionState;
 			}
-			const EAccessState getAccessState (void) const
+			EAccessState getAccessState (void) const
 			{
 				return _accessState;
 			}
@@ -77,7 +77,7 @@ namespace routing
 				_accessState = accessState;
 			}
 
-			const int getLevel (void) const {
+			int getLevel (void) const {
 				return _level;
 			}
 	};

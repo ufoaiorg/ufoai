@@ -53,7 +53,7 @@ class EntityList
 	public:
 		enum EDirty
 		{
-			eDefault, eSelection, eInsertRemove,
+			eDefault, eSelection, eInsertRemove
 		};
 
 		EDirty m_dirty;

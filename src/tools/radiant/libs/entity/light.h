@@ -26,7 +26,7 @@ namespace scene
 {
 	class Node;
 }
-;
+
 class EntityClass;
 
 scene::Node& New_Light (EntityClass* eclass);

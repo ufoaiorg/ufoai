@@ -37,7 +37,7 @@ class Plane3;
 void Scene_BrushSetClipPlane (scene::Graph& graph, const Plane3& plane);
 enum EBrushSplit
 {
-	eFront, eBack, eFrontAndBack,
+	eFront, eBack, eFrontAndBack
 };
 void Scene_BrushSplitByPlane (scene::Graph& graph, const Vector3& p0, const Vector3& p1, const Vector3& p2,
 		const char* shader, EBrushSplit split);

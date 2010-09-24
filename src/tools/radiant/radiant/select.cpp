@@ -423,12 +423,12 @@ void Select_Scale (float x, float y, float z)
 
 enum axis_t
 {
-	eAxisX = 0, eAxisY = 1, eAxisZ = 2,
+	eAxisX = 0, eAxisY = 1, eAxisZ = 2
 };
 
 enum sign_t
 {
-	eSignPositive = 1, eSignNegative = -1,
+	eSignPositive = 1, eSignNegative = -1
 };
 
 inline Matrix4 matrix4_rotation_for_axis90 (axis_t axis, sign_t sign)
@@ -564,19 +564,21 @@ void FindReplaceTextures (const std::string& pFind, const std::string& pReplace,
 
 typedef std::vector<const char*> Classnames;
 
-bool classnames_match_entity (const Classnames& classnames, Entity* entity)
-{
-	for (Classnames::const_iterator i = classnames.begin(); i != classnames.end(); ++i) {
-		if (string_equal(entity->getKeyValue("classname"), *i)) {
-			return true;
-		}
-	}
-	return false;
-}
-
 class EntityFindByClassnameWalker: public scene::Graph::Walker
 {
+	private:
 		const Classnames& m_classnames;
+
+		bool classnames_match_entity (Entity &entity) const
+		{
+			for (Classnames::const_iterator i = m_classnames.begin(); i != m_classnames.end(); ++i) {
+				if (string_equal(entity.getKeyValue("classname"), *i)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
 	public:
 		EntityFindByClassnameWalker (const Classnames& classnames) :
 			m_classnames(classnames)
@@ -585,7 +587,7 @@ class EntityFindByClassnameWalker: public scene::Graph::Walker
 		bool pre (const scene::Path& path, scene::Instance& instance) const
 		{
 			Entity* entity = Node_getEntity(path.top());
-			if (entity != 0 && classnames_match_entity(m_classnames, entity)) {
+			if (entity != 0 && classnames_match_entity(*entity)) {
 				Instance_getSelectable(instance)->setSelected(true);
 			}
 			return true;

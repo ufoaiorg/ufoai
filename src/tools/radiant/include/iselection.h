@@ -60,7 +60,6 @@ namespace scene
 {
 	class Instance;
 }
-;
 
 class InstanceSelectionObserver
 {
@@ -92,20 +91,19 @@ class SelectionSystem
 		{
 			eEntity, /**< entity editing */
 			ePrimitive, /**< brush editing */
-			eComponent,
-		/**< vertex, edge or face editing */
+			eComponent	/**< vertex, edge or face editing */
 		};
 
 		// The possible modes when in "component manipulation mode"
 		enum EComponentMode
 		{
-			eDefault, eVertex, eEdge, eFace,
+			eDefault, eVertex, eEdge, eFace
 		};
 
 		// The possible manipulator modes
 		enum EManipulatorMode
 		{
-			eTranslate, eRotate, eScale, eDrag, eClip,
+			eTranslate, eRotate, eScale, eDrag, eClip
 		};
 
 		virtual ~SelectionSystem ()

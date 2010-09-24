@@ -40,15 +40,15 @@ namespace map
 				{
 					return _tileName;
 				}
-				const int getMinAmount () const
+				int getMinAmount () const
 				{
 					return _min;
 				}
-				const int getMaxAmount () const
+				int getMaxAmount () const
 				{
 					return _max;
 				}
-				const bool isFix () const
+				bool isFix () const
 				{
 					return _fix;
 				}

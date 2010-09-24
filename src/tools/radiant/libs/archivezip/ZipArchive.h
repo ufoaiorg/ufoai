@@ -11,7 +11,7 @@ class ZipRecord
 	public:
 		enum ECompressionMode
 		{
-			eStored, eDeflated,
+			eStored, eDeflated
 		};
 
 		ZipRecord (unsigned int position, unsigned int compressed_size, unsigned int uncompressed_size,

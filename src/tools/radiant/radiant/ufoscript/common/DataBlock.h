@@ -44,7 +44,7 @@ namespace scripts
 
 			const std::string& getFilename() const;
 
-			const std::size_t getLineNumber() const;
+			std::size_t getLineNumber() const;
 	};
 }
 

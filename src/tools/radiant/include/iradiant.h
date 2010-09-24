@@ -41,17 +41,17 @@ typedef struct _GtkWidget GtkWidget;
 
 enum EMessageBoxType
 {
-	eMB_OK, eMB_OKCANCEL, eMB_YESNO, eMB_YESNOCANCEL, eMB_NOYES,
+	eMB_OK, eMB_OKCANCEL, eMB_YESNO, eMB_YESNOCANCEL, eMB_NOYES
 };
 
 enum EMessageBoxIcon
 {
-	eMB_ICONDEFAULT, eMB_ICONERROR, eMB_ICONWARNING, eMB_ICONQUESTION, eMB_ICONASTERISK,
+	eMB_ICONDEFAULT, eMB_ICONERROR, eMB_ICONWARNING, eMB_ICONQUESTION, eMB_ICONASTERISK
 };
 
 enum EMessageBoxReturn
 {
-	eIDOK, eIDCANCEL, eIDYES, eIDNO,
+	eIDOK, eIDCANCEL, eIDYES, eIDNO
 };
 
 // simple Message Box, see above for the 'type' flags

@@ -40,7 +40,7 @@ class Stack: public DefaultAllocator<Type>
 
 		enum
 		{
-			DEFAULT_CAPACITY = 4,
+			DEFAULT_CAPACITY = 4
 		};
 
 		typedef Type* pointer;

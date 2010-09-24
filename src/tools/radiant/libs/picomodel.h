@@ -252,8 +252,8 @@ extern "C"
 	void PicoSetSurfaceSmoothingGroup (picoSurface_t *surface, int num, picoIndex_t smoothingGroup);
 
 	/* getter functions */
-	char *PicoGetModelName (picoModel_t *model);
-	char *PicoGetModelFileName (picoModel_t *model);
+	const char *PicoGetModelName (picoModel_t *model);
+	const char *PicoGetModelFileName (picoModel_t *model);
 	int PicoGetModelFrameNum (picoModel_t *model);
 	int PicoGetModelNumFrames (picoModel_t *model);
 	void *PicoGetModelData (picoModel_t *model);
@@ -264,8 +264,8 @@ extern "C"
 	int PicoGetModelTotalVertexes (picoModel_t *model);
 	int PicoGetModelTotalIndexes (picoModel_t *model);
 
-	char *PicoGetShaderName (picoShader_t *shader);
-	char *PicoGetShaderMapName (picoShader_t *shader);
+	const char *PicoGetShaderName (picoShader_t *shader);
+	const char *PicoGetShaderMapName (picoShader_t *shader);
 	picoByte_t *PicoGetShaderAmbientColor (picoShader_t *shader);
 	picoByte_t *PicoGetShaderDiffuseColor (picoShader_t *shader);
 	picoByte_t *PicoGetShaderSpecularColor (picoShader_t *shader);
@@ -273,9 +273,8 @@ extern "C"
 	float PicoGetShaderShininess (picoShader_t *shader);
 
 	void *PicoGetSurfaceData (picoSurface_t *surface);
-	char *PicoGetSurfaceName (picoSurface_t *surface); /* sea */
+	const char *PicoGetSurfaceName (picoSurface_t *surface); /* sea */
 	picoSurfaceType_t PicoGetSurfaceType (picoSurface_t *surface);
-	char *PicoGetSurfaceName (picoSurface_t *surface);
 	picoShader_t *PicoGetSurfaceShader (picoSurface_t *surface); /* sea */
 
 	int PicoGetSurfaceNumVertexes (picoSurface_t *surface);

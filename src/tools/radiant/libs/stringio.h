@@ -121,8 +121,6 @@ inline bool string_parse_size (const char* string, std::size_t& i)
 	return string_empty(string);
 }
 
-#define RETURN_FALSE_IF_FAIL(expression) if(!expression) return false; else
-
 inline void Tokeniser_unexpectedError (Tokeniser& tokeniser, const std::string& token, const std::string& expected)
 {
 	globalErrorStream() << Unsigned(tokeniser.getLine()) << ":" << Unsigned(tokeniser.getColumn())

@@ -26,14 +26,17 @@
 #include "debugging/debugging.h"
 #include "modulesystem/singletonmodule.h"
 
-Archive* OpenArchive (const std::string& name)
-{
-	return new ZipArchive(name);
-}
-
 class ArchiveZipAPI
 {
+	private:
+
 		_QERArchiveTable m_archivezip;
+
+		static Archive* OpenArchive (const std::string& name)
+		{
+			return new ZipArchive(name);
+		}
+
 	public:
 		typedef _QERArchiveTable Type;
 		STRING_CONSTANT(Name, "pk3");

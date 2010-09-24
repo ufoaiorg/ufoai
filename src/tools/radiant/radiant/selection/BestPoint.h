@@ -7,7 +7,7 @@
 
 enum clipcull_t
 {
-	eClipCullNone, eClipCullCW, eClipCullCCW,
+	eClipCullNone, eClipCullCW, eClipCullCCW
 };
 
 class Segment3D

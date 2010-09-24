@@ -201,7 +201,7 @@ class UniqueVertexBuffer
 		RenderIndex m_prev1;
 		RenderIndex m_prev2;
 
-		const RenderIndex find_or_insert (const Vertex& vertex)
+		RenderIndex find_or_insert (const Vertex& vertex)
 		{
 			RenderIndex index = 0;
 
@@ -624,7 +624,7 @@ enum UnitSphereOctant
 	UNITSPHEREOCTANT_100 = 1 << 0 | 0 << 1 | 0 << 2,
 	UNITSPHEREOCTANT_101 = 1 << 0 | 0 << 1 | 1 << 2,
 	UNITSPHEREOCTANT_110 = 1 << 0 | 1 << 1 | 0 << 2,
-	UNITSPHEREOCTANT_111 = 1 << 0 | 1 << 1 | 1 << 2,
+	UNITSPHEREOCTANT_111 = 1 << 0 | 1 << 1 | 1 << 2
 };
 
 /// \brief Returns the octant for \p normal indicating the sign of the region of unit-sphere space it lies within.
@@ -672,7 +672,7 @@ enum UnitSphereSextant
 	UNITSPHERESEXTANT_YXZ = 2,
 	UNITSPHERESEXTANT_YZX = 3,
 	UNITSPHERESEXTANT_ZXY = 4,
-	UNITSPHERESEXTANT_ZYX = 5,
+	UNITSPHERESEXTANT_ZYX = 5
 };
 
 /// \brief Returns the sextant for \p normal indicating how to sort its components so that x > y > z.

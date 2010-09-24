@@ -56,7 +56,7 @@ public:
 	enum seekdir {
 		beg,
 		cur,
-		end,
+		end
 	};
 
 	virtual ~SeekableStream(){}

@@ -49,10 +49,10 @@ namespace scripts
 		BufferInputStream stream(data->getData());
 		ScriptTokeniser tokeniser(stream, false);
 
-		ScriptValue imageValue = ScriptValue("image", offsetof(scripts::ParticleData, image), V_STRING);
-		scriptValues.addScriptValue(imageValue);
-		ScriptValue modelValue = ScriptValue("model", offsetof(scripts::ParticleData, model), V_STRING);
-		scriptValues.addScriptValue(modelValue);
+//		ScriptValue imageValue = ScriptValue("image", offsetof(scripts::ParticleData, image), V_STRING);
+//		scriptValues.addScriptValue(imageValue);
+//		ScriptValue modelValue = ScriptValue("model", offsetof(scripts::ParticleData, model), V_STRING);
+//		scriptValues.addScriptValue(modelValue);
 
 		for (;;) {
 			std::string token = tokeniser.getToken();

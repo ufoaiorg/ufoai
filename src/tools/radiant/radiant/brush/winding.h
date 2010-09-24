@@ -33,7 +33,7 @@
 
 enum ProjectionAxis
 {
-	eProjectionAxisX = 0, eProjectionAxisY = 1, eProjectionAxisZ = 2,
+	eProjectionAxisX = 0, eProjectionAxisY = 1, eProjectionAxisZ = 2
 };
 
 const float ProjectionAxisEpsilon = static_cast<float> (0.0001);
@@ -75,7 +75,7 @@ inline indexremap_t indexremap_for_projectionaxis (const ProjectionAxis axis)
 
 enum PlaneClassification
 {
-	ePlaneFront = 0, ePlaneBack = 1, ePlaneOn = 2,
+	ePlaneFront = 0, ePlaneBack = 1, ePlaneOn = 2
 };
 
 #define MAX_POINTS_ON_WINDING 64

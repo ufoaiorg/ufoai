@@ -33,12 +33,12 @@ class IShader
 
 		enum EAlphaFunc
 		{
-			eAlways, eEqual, eLess, eGreater, eLEqual, eGEqual,
+			eAlways, eEqual, eLess, eGreater, eLEqual, eGEqual
 		};
 
 		enum ECull
 		{
-			eCullNone, eCullBack,
+			eCullNone, eCullBack
 		};
 
 		virtual ~IShader ()

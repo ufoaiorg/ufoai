@@ -844,21 +844,21 @@ void PicoSetSurfaceSpecial (picoSurface_t *surface, int num, int special)
 	surface->special[num] = special;
 }
 
-char *PicoGetModelName (picoModel_t *model)
+const char *PicoGetModelName (picoModel_t *model)
 {
 	if (model == NULL)
 		return NULL;
 	if (model->name == NULL)
-		return (char*) "";
+		return "";
 	return model->name;
 }
 
-char *PicoGetModelFileName (picoModel_t *model)
+const char *PicoGetModelFileName (picoModel_t *model)
 {
 	if (model == NULL)
 		return NULL;
 	if (model->fileName == NULL)
-		return (char*) "";
+		return "";
 	return model->fileName;
 }
 
@@ -957,21 +957,21 @@ int PicoGetModelTotalIndexes (picoModel_t *model)
 	return count;
 }
 
-char *PicoGetShaderName (picoShader_t *shader)
+const char *PicoGetShaderName (picoShader_t *shader)
 {
 	if (shader == NULL)
 		return NULL;
 	if (shader->name == NULL)
-		return (char*) "";
+		return "";
 	return shader->name;
 }
 
-char *PicoGetShaderMapName (picoShader_t *shader)
+const char *PicoGetShaderMapName (picoShader_t *shader)
 {
 	if (shader == NULL)
 		return NULL;
 	if (shader->mapName == NULL)
-		return (char*) "";
+		return "";
 	return shader->mapName;
 }
 
@@ -1024,12 +1024,12 @@ picoSurfaceType_t PicoGetSurfaceType (picoSurface_t *surface)
 	return surface->type;
 }
 
-char *PicoGetSurfaceName (picoSurface_t *surface)
+const char *PicoGetSurfaceName (picoSurface_t *surface)
 {
 	if (surface == NULL)
 		return NULL;
 	if (surface->name == NULL)
-		return (char*) "";
+		return "";
 	return surface->name;
 }
 

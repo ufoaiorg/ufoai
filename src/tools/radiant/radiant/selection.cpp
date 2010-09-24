@@ -173,11 +173,6 @@ inline double vector3_distance_squared (const Point3D& a, const Point3D& b)
 	return (b - a).getLengthSquared();
 }
 
-double segment_dist_to_point_3d (const Segment3D& segment, const Point3D& point)
-{
-	return vector3_distance_squared(point, segment_closest_point_to_point(segment, point));
-}
-
 inline SelectionIntersection select_point_from_clipped (Vector4& clipped)
 {
 	return SelectionIntersection(clipped[2] / clipped[3], static_cast<float> (Vector3(clipped[0] / clipped[3],
@@ -1069,7 +1064,7 @@ class RadiantSelectionSystem: public SelectionSystem,
 	public:
 		enum EModifier
 		{
-			eManipulator, eToggle, eReplace, eCycle,
+			eManipulator, eToggle, eReplace, eCycle
 		};
 
 		RadiantSelectionSystem () :
@@ -2154,7 +2149,7 @@ class RadiantWindowObserver: public SelectionSystemWindowObserver
 {
 		enum
 		{
-			SELECT_EPSILON = 8,
+			SELECT_EPSILON = 8
 		};
 
 		int m_width;

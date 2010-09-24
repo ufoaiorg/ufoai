@@ -193,7 +193,7 @@ typedef enum {
 						 * for aircraft, the value is in millidegree (because this is an int) */
 	AIR_STATS_ANTIMATTER,	/**< amount of antimatter needed for a full refill. */
 
-	AIR_STATS_MAX,
+	AIR_STATS_MAX
 } aircraftParams_t;
 
 /**

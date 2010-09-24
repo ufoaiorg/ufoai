@@ -29,7 +29,7 @@
 
 enum
 {
-	QER_TRANS = 1 << 0, QER_ALPHATEST = 1 << 1, QER_CLIP = 1 << 2,
+	QER_TRANS = 1 << 0, QER_ALPHATEST = 1 << 1, QER_CLIP = 1 << 2
 };
 
 template<typename Element> class BasicVector3;

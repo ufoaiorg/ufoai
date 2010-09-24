@@ -89,7 +89,7 @@ class XMLStreamWriter : public XMLImporter, public XMLAttrVisitor {
 	public:
 		enum EState {
 			eStartElement,
-			eContent,
+			eContent
 		};
 		state_t()
 				: m_state(eStartElement) {}

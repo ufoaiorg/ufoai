@@ -117,7 +117,7 @@ namespace MouseButton
 {
 	enum
 	{
-		Left = 1 << 0, Right = 1 << 1, Middle = 1 << 2,
+		Left = 1 << 0, Right = 1 << 1, Middle = 1 << 2
 	};
 }
 

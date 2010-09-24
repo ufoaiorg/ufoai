@@ -221,7 +221,7 @@ GtkWindow* MainFrame_getWindow ();
 
 enum EMouseButtonMode
 {
-	ETwoButton = 0, EThreeButton = 1,
+	ETwoButton = 0, EThreeButton = 1
 };
 
 struct GLWindowGlobals

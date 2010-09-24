@@ -1324,7 +1324,7 @@ namespace map
 
 enum ENodeType
 {
-	eNodeUnknown, eNodeMap, eNodeEntity, eNodePrimitive,
+	eNodeUnknown, eNodeMap, eNodeEntity, eNodePrimitive
 };
 
 static inline const char* nodetype_get_name (ENodeType type)
@@ -1338,7 +1338,7 @@ static inline const char* nodetype_get_name (ENodeType type)
 	return "unknown";
 }
 
-ENodeType node_get_nodetype (scene::Node& node)
+static ENodeType node_get_nodetype (scene::Node& node)
 {
 	if (Node_isEntity(node)) {
 		return eNodeEntity;
@@ -1349,17 +1349,17 @@ ENodeType node_get_nodetype (scene::Node& node)
 	return eNodeUnknown;
 }
 
-bool contains_entity (scene::Node& node)
+static bool contains_entity (scene::Node& node)
 {
 	return Node_getTraversable(node) != 0 && !Node_isBrush(node) && !Node_isEntity(node);
 }
 
-bool contains_primitive (scene::Node& node)
+static bool contains_primitive (scene::Node& node)
 {
 	return Node_isEntity(node) && Node_getTraversable(node) != 0 && Node_getEntity(node)->isContainer();
 }
 
-ENodeType node_get_contains (scene::Node& node)
+static ENodeType node_get_contains (scene::Node& node)
 {
 	if (contains_entity(node)) {
 		return eNodeEntity;

@@ -28,7 +28,7 @@ class ScriptTokeniser: public Tokeniser
 {
 		enum CharType
 		{
-			eWhitespace, eCharToken, eNewline, eCharQuote, eCharSolidus, eCharStar, eCharSpecial,
+			eWhitespace, eCharToken, eNewline, eCharQuote, eCharSolidus, eCharStar, eCharSpecial
 		};
 
 		typedef bool (ScriptTokeniser::*Tokenise) (char c);

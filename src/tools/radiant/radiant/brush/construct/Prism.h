@@ -9,7 +9,7 @@ namespace brushconstruct
 	class Prism: public BrushConstructor
 	{
 		private:
-			const int getViewAxis () const
+			int getViewAxis () const
 			{
 				switch (GlobalXYWnd_getCurrentViewType()) {
 				case XY:
@@ -22,7 +22,7 @@ namespace brushconstruct
 				return 2;
 			}
 
-			const float getMaxExtent2D (const Vector3& extents, int axis) const
+			float getMaxExtent2D (const Vector3& extents, int axis) const
 			{
 				switch (axis) {
 				case 0:

@@ -781,7 +781,7 @@ void Scene_Clone_Selected (scene::Graph& graph)
 
 enum ENudgeDirection
 {
-	eNudgeUp = 1, eNudgeDown = 3, eNudgeLeft = 0, eNudgeRight = 2,
+	eNudgeUp = 1, eNudgeDown = 3, eNudgeLeft = 0, eNudgeRight = 2
 };
 
 struct AxisBase
@@ -1209,7 +1209,7 @@ void EverySecondTimer_enable (void)
 	}
 }
 
-void EverySecondTimer_disable (void)
+static void EverySecondTimer_disable (void)
 {
 	if (s_qe_every_second_id != 0) {
 		gtk_timeout_remove(s_qe_every_second_id);
@@ -1217,7 +1217,7 @@ void EverySecondTimer_disable (void)
 	}
 }
 
-gint window_realize_remove_decoration (GtkWidget* widget, gpointer data)
+static gint window_realize_remove_decoration (GtkWidget* widget, gpointer data)
 {
 	gdk_window_set_decorations(widget->window, (GdkWMDecoration) (GDK_DECOR_ALL | GDK_DECOR_MENU | GDK_DECOR_MINIMIZE
 			| GDK_DECOR_MAXIMIZE));

@@ -14,7 +14,7 @@ namespace routing
 		}
 	}
 
-	const EConnectionState RoutingLumpEntry::getConnectionState(const EDirection direction) const {
+	EConnectionState RoutingLumpEntry::getConnectionState(const EDirection direction) const {
 		return _connectionStates[direction];
 	}
 
