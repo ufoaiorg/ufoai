@@ -41,7 +41,7 @@ VORBIS_CFLAGS            ?= $(call PKG_CFLAGS,vorbis)
 VORBIS_LIBS              ?= $(call PKG_LIBS,vorbis)
 INTL_LIBS                ?= -lintl
 XVID_CFLAGS              ?=
-XVID_LIBS                ?=
+XVID_LIBS                ?= -lxvidcore
 
 ufo_LDFLAGS              += -lws2_32 -lwinmm -lgdi32 -lfreetype
 ufoded_LDFLAGS           += -lws2_32 -lwinmm -lgdi32
