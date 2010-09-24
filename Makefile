@@ -21,7 +21,7 @@ TARGETS_TMP := $(sort $(patsubst build/modules/%.mk,%,$(wildcard build/modules/*
 TARGETS     := $(filter-out $(foreach TARGET,$(TARGETS_TMP),$(if $($(TARGET)_DISABLE),$(TARGET),)),$(TARGETS_TMP))
 
 .PHONY: all
-all: info $(TARGETS)
+all: $(TARGETS)
 
 include build/flags.mk
 include build/platforms/$(TARGET_OS).mk
@@ -46,23 +46,24 @@ clean: $(addprefix clean-,$(TARGETS))
 distclean: clean
 	$(Q)rm -f config.h Makefile.local
 
+# TODO: Install the data files, too
 .PHONY: install
 install: $(addprefix install-,$(TARGETS))
 
 config.h: configure
 	$(Q)./configure
 
-# TODO: Install the data files, too
 
 define BUILD_RULE
 ifndef $(1)_DISABLE
 ifndef $(1)_IGNORE
 
-DEPENDENCIES = $($($(1)_OBJS):.o=.d)
+DEPENDENCIES = $($(1)_OBJS:.o=.d)
 -include $(DEPENDENCIES)
 
 # if the target filename differs:
 ifneq ($(1),$($(1)_FILE))
+.PHONY: $(1)
 $(1): $($(1)_FILE)
 endif
 
@@ -109,14 +110,6 @@ endif
 endif
 endef
 $(foreach TARGET,$(TARGETS),$(eval $(call BUILD_RULE,$(TARGET))))
-
-.PHONY: info
-info:
-	@echo 'Platform:     $(HOST_OS)'
-	@echo 'Target:       $(TARGET_OS)'
-	@echo 'Architecture: $(TARGET_ARCH)'
-	@echo 'Compiler:     $(CROSS)$(CC)'
-	@echo 'Targets:      $(TARGETS)'
 
 include build/data.mk
 include build/install.mk
