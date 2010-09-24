@@ -49,7 +49,7 @@ distclean: clean
 .PHONY: install
 install: $(addprefix install-,$(TARGETS))
 
-config.h:
+config.h: configure
 	$(Q)./configure
 
 # TODO: Install the data files, too
