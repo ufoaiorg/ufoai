@@ -5,20 +5,23 @@ UFOAI_MOFILES = $(patsubst $(SRCDIR)/po/ufoai-%.po, base/i18n/%/LC_MESSAGES/ufoa
 RADIANT_MOFILES = $(patsubst $(SRCDIR)/po/uforadiant-%.po, radiant/i18n/%/LC_MESSAGES/uforadiant.mo, $(RADIANT_POFILES))
 
 $(UFOAI_MOFILES) : base/i18n/%/LC_MESSAGES/ufoai.mo : $(SRCDIR)/po/ufoai-%.po
-	@mkdir -p $(dir $@)
-	msgfmt -c -v -o $@ $^
+	$(Q)mkdir -p $(dir $@)
+	$(Q)msgfmt -c -v -o $@ $^
 
 $(RADIANT_MOFILES) : radiant/i18n/%/LC_MESSAGES/uforadiant.mo : $(SRCDIR)/po/uforadiant-%.po
-	@mkdir -p $(dir $@)
-	msgfmt -c -v -o $@ $^
+	$(Q)mkdir -p $(dir $@)
+	$(Q)msgfmt -c -v -o $@ $^
+
+clean-lang:
+	$(Q)rm $(UFOAI_MOFILES) $(RADIANT_MOFILES)
 
 lang: $(UFOAI_MOFILES) $(RADIANT_MOFILES)
 
 update-po: po-check
-	$(MAKE) -C $(SRCDIR)/po update-po
+	$(Q)$(MAKE) -C $(SRCDIR)/po update-po
 
 update-po-uforadiant: po-check
-	xgettext -j --keyword="_" --keyword="C_:1c,2" -C -o $(SRCDIR)/po/uforadiant.pot --omit-header \
+	$(Q)xgettext -j --keyword="_" --keyword="C_:1c,2" -C -o $(SRCDIR)/po/uforadiant.pot --omit-header \
 		$(SRCDIR)/tools/radiant/libs/*.h \
 		$(SRCDIR)/tools/radiant/libs/*/*.h \
 		$(SRCDIR)/tools/radiant/libs/*/*.cpp \
@@ -35,7 +38,7 @@ update-po-uforadiant: po-check
 # The idea is to run this before making pretests, as well as official
 # releases, so that
 po-check:
-	@cd src; \
+	$(Q)cd src; \
 	if test -f ./po/POTFILES.in; then					\
 	  files="./po/OTHER_STRINGS";							\
 	  for file in `find ./client -name '*.[ch]'` `find ./game -name '*.[ch]'`; do \
@@ -52,13 +55,13 @@ po-check:
 	  grep -E -l '\b(N?_|gettext|ngettext *)\([^)"]*("|$$)' $$files		\
 	    | sort -u > ./po/POTFILES.in;						\
 	fi; \
-	cd ..
+	$(Q)cd ..
 
 po-sync:
 	@echo "This will sync all po files with the wiki articles - run update-po before this step"
 	@echo "Gamers don't have to do this - translators should use ./$(SRCDIR)/po/update_po_from_wiki.sh <lang> directly"
 	@echo "Hit any key if you are sure you really want to start the sync"
-	@pofiles='$(UFOAI_POFILES)'; \
+	$(Q)pofiles='$(UFOAI_POFILES)'; \
 	read enter; cd $(SRCDIR)/po; \
 	for po in $$pofiles; do \
 	  po=`basename $$po .po`; \
@@ -69,7 +72,7 @@ po-sync:
 
 # call this after po-sync and log file checks
 po-move:
-	cd $(SRCDIR)/po; \
+	$(Q)cd $(SRCDIR)/po; \
 	for po in `ls updated_*.po`; do \
 	  new=`echo $$po | cut -b 9-`; \
 	  mv $$po ufoai-$$new; \

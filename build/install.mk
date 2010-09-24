@@ -24,26 +24,26 @@ installer-pre: lang maps models pk3
 installer: wininstaller linuxinstaller mojoinstaller
 
 mappack: maps-sync
-	git archive --format=tar --prefix=ufoai-$(UFOAI_VERSION)-mappack/ HEAD:base/maps | bzip2 -9 > ufoai-$(UFOAI_VERSION)-mappack.tar.bz2
+	$(Q)git archive --format=tar --prefix=ufoai-$(UFOAI_VERSION)-mappack/ HEAD:base/maps | bzip2 -9 > ufoai-$(UFOAI_VERSION)-mappack.tar.bz2
 
 dataarchive: pk3
-	tar -cvp -f ufoai-$(UFOAI_VERSION)-data.tar $(PAK_PATHS)
+	$(Q)tar -cvp -f ufoai-$(UFOAI_VERSION)-data.tar $(PAK_PATHS)
 
 USER?=tlh2000,ufoai
 PATH?=/home/frs/project/u/uf/ufoai/"UFO_AI\ 2.x"/$(VERSION)/
 UPLOADHOST?=frs.sourceforge.net
 URL=$(USER)@$(UPLOADHOST):$(PATH)
 upload-sf:
-	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-source.tar.bz2 $(URL)
-	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-mappack.tar.bz2 $(URL)
-	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-linux.run $(URL)
-	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-data.tar $(URL)
-	rsync -avP -e ssh uforadiant-$(UFORADIANT_VERSION)-win32.exe $(URL)
-	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-win32.exe $(URL)
+	$(Q)rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-source.tar.bz2 $(URL)
+	$(Q)rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-mappack.tar.bz2 $(URL)
+	$(Q)rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-linux.run $(URL)
+	$(Q)rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-data.tar $(URL)
+	$(Q)rsync -avP -e ssh uforadiant-$(UFORADIANT_VERSION)-win32.exe $(URL)
+	$(Q)rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-win32.exe $(URL)
 
 upload-sf-mac:
-	rsync -avP -e ssh uforadiant-$(UFORADIANT_VERSION)-macosx-$(TARGET_CPU).dmg $(URL)
-	rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-macosx-$(TARGET_CPU).dmg $(URL)
+	$(Q)rsync -avP -e ssh uforadiant-$(UFORADIANT_VERSION)-macosx-$(TARGET_CPU).dmg $(URL)
+	$(Q)rsync -avP -e ssh ufoai-$(UFOAI_VERSION)-macosx-$(TARGET_CPU).dmg $(URL)
 
 create-release-mac: macinstaller upload-sf-mac
 create-release: mappack dataarchive wininstaller linuxinstaller sourcearchive upload-sf
@@ -53,4 +53,4 @@ create-dev: mappack dataarchive wininstaller linuxinstaller sourcearchive
 # Generate a tar archive of the sources. Some stuff is ignored here - see the .gitattributes in the root directory
 #
 sourcearchive:
-	git archive --format=tar --prefix=ufoai-$(UFOAI_VERSION)-source/ HEAD | bzip2 -9 > ufoai-$(UFOAI_VERSION)-source.tar.bz2
+	$(Q)git archive --format=tar --prefix=ufoai-$(UFOAI_VERSION)-source/ HEAD | bzip2 -9 > ufoai-$(UFOAI_VERSION)-source.tar.bz2

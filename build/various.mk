@@ -8,22 +8,22 @@ endif
 # sync sourceforget.net git into a local dir
 LOCAL_GIT_DIR ?= ~/ufoai-git.sf
 rsync:
-	rsync -av ufoai.git.sourceforge.net::gitroot/ufoai/* $(LOCAL_GIT_DIR)
+	$(Q)rsync -av ufoai.git.sourceforge.net::gitroot/ufoai/* $(LOCAL_GIT_DIR)
 
 # generate doxygen docs
 doxygen-docs:
-	doxygen src/docs/doxyall
+	$(Q)doxygen src/docs/doxyall
 
 # debian packages
 deb:
-	debuild binary
+	$(Q)debuild binary
 
 pdf-manual:
-	$(MAKE) -C src/docs/tex
+	$(Q)$(MAKE) -C src/docs/tex
 
 license-generate:
-	@mkdir -p licenses/html
-	@python contrib/licenses/generate.py -u $(readlink -f licenses/html)/
+	$(Q)mkdir -p licenses/html
+	$(Q)python contrib/licenses/generate.py -u $(readlink -f licenses/html)/
 
 help:
 	@echo "Makefile targets:"

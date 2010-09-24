@@ -40,5 +40,4 @@ $(MDXS):
 
 clean-mdx:
 	@echo "Deleting cached normals and tangents (*.mdx)..."
-	@find $(MODELDIR) -name '*.mdx' -delete
-	@echo "done"
+	$(Q)find $(MODELDIR) -name '*.mdx' -delete

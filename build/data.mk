@@ -10,32 +10,28 @@ PAK_FILES_OUT = $(addprefix $(BASE_DIR)/,$(PAK_FILES))
 pk3: $(PAK_FILES_OUT)
 
 clean-pk3:
-	rm $(PAK_FILES_OUT)
+	$(Q)rm $(PAK_FILES_OUT)
+
+FIND           := find $(addprefix $(BASE_DIR)/,$(1)) -type f -print
+ZIP            := zip
+ZIP_UP_OPTS    := -u9
+ZIP_DEL_OPTS   := -d
+#ZIP            := 7z
+#ZIP_UP_OPTS    := a -tzip -mx=9
+#ZIP_DEL_OPTS   := d -tzip
+#ZIP_LIST       := 7z l $(1) | grep -e :\.*: | tr -s " " | cut -d " " -f 6
 
 ifeq ($(TARGET_OS),mingw32)
-FIND = dir \S \B $(1)
-ZIP = 7za
-ZIP_UP_OPTS = a -tzip -mx=9
-ZIP_DEL_OPTS = d -tzip
-# bonus points if you can get this to work using 7za
-ZIP_LIST =
+ZIP_LIST :=
 else
-FIND = find $(addprefix $(BASE_DIR)/,$(1)) -type f -print
-#ZIP = 7z
-#ZIP_UP_OPTS = a -tzip -mx=9
-#ZIP_DEL_OPTS = d -tzip
-#ZIP_LIST = 7z l $(1) | grep -e :\.*: | tr -s " " | cut -d " " -f 6
-ZIP = zip
-ZIP_UP_OPTS = -u9
-ZIP_DEL_OPTS = -d
-ZIP_LIST = zipinfo -1 $(1)
+ZIP_LIST := zipinfo -1 $(1)
 endif
 
 DEBASE = $(subst $(BASE_DIR_REPLACE)/,$(SPACE),$(1))
 
 $(PAK_FILES_OUT) :
-	cd base; $(ZIP) $(ZIP_UP_OPTS) $(call DEBASE, $@ $?)
-	-$(ZIP) $(ZIP_DEL_OPTS) $@ $(filter-out $(call DEBASE,$^), $(shell $(call ZIP_LIST, $@)))
+	$(Q)cd base; $(ZIP) $(ZIP_UP_OPTS) $(call DEBASE, $@ $?)
+	$(Q)$(ZIP) $(ZIP_DEL_OPTS) $@ $(filter-out $(call DEBASE,$^), $(shell $(call ZIP_LIST, $@)))
 
 $(BASE_DIR)/0pics.pk3 : $(filter %.jpg %.tga %.png, $(shell $(call FIND, pics)))
 
