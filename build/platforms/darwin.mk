@@ -43,10 +43,10 @@ GTK_SOURCEVIEW_CFLAGS    ?= $(call PKG_CFLAGS,gtksourceview-2.0)
 GTK_SOURCEVIEW_LIBS      ?= $(call PKG_LIBS,gtksourceview-2.0)
 GTK_GLEXT_CFLAGS         ?= $(call PKG_CFLAGS,gtkglext-1.0)
 GTK_GLEXT_LIBS           ?= $(call PKG_LIBS,gtkglext-1.0)
+VORBIS_CFLAGS            ?= $(call PKG_CFLAGS,vorbis)
+VORBIS_LIBS              ?= $(call PKG_LIBS,vorbis)
 INTL_LIBS                ?= -lintl
 XVID_CFLAGS              ?=
 XVID_LIBS                ?=
-VORBIS_CFLAGS            ?=
-VORBIS_LIBS              ?=
 
 uforadiant_LDFLAGS       += -headerpad_max_install_names
