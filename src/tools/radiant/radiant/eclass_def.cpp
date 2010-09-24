@@ -151,9 +151,8 @@ static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
 		} else if (!strcmp(keyName, "spawnflags")) {
 			if (keydef.flags & ED_ABSTRACT) {
 				/* there are two keydefs, abstract holds the valid levelflags, the other one default value and type */
-				gchar *flags = g_strdup(keydef.desc);
-				Eclass_ParseFlags(e, (const char **) &flags);
-				g_free(flags);
+				const char *flags = keydef.desc;
+				Eclass_ParseFlags(e, &flags);
 			} else {
 				Eclass_ParseAttribute(e, &keydef);
 			}
