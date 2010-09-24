@@ -67,27 +67,27 @@ ifneq ($(1),$($(1)_FILE))
 $(1): $($(1)_FILE)
 endif
 
-$($(1)_FILE): config.h $(BUILDDIR)/$(1)/.dirs $(foreach DEP,$($(1)_DEPS),$($(DEP)_FILE)) $($(1)_OBJS)
+$($(1)_FILE): $(BUILDDIR)/$(1)/.dirs $(foreach DEP,$($(1)_DEPS),$($(DEP)_FILE)) $($(1)_OBJS)
 	@echo '===> LD [$$@]'
 	$(Q)$(CROSS)$(CC) $(CFLAGS) $($(1)_OBJS) $(LDFLAGS) $($(1)_LDFLAGS) -o $($(1)_FILE)
 
-$(BUILDDIR)/$(1)/%.c.o: $(SRCDIR)/%.c
+$(BUILDDIR)/$(1)/%.c.o: $(SRCDIR)/%.c $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CC [$(1)] $$<'
 	$(Q)$(CROSS)$(CC) $(CCFLAGS) $($(1)_CCFLAGS) -c -o $$@ $$< -MD -MT $$@ -MP
 
-$(BUILDDIR)/$(1)/%.m.o: $(SRCDIR)/%.m
+$(BUILDDIR)/$(1)/%.m.o: $(SRCDIR)/%.m $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CC [$(1)] $$<'
 	$(Q)$(CROSS)$(CC) $(CCFLAGS) $($(1)_CCFLAGS) -c -o $$@ $$< -MD -MT $$@ -MP
 
-$(BUILDDIR)/$(1)/%.rc.o: $(SRCDIR)/%.rc
+$(BUILDDIR)/$(1)/%.rc.o: $(SRCDIR)/%.rc $(BUILDDIR)/$(1)/.dirs
 	@echo '===> WINDRES [$(1)] $$<'
 	$(Q)$(CROSS)$(WINDRES) -i $$< -o $$@
 
-$(BUILDDIR)/$(1)/%.cc.o: $(SRCDIR)/%.cc
+$(BUILDDIR)/$(1)/%.cc.o: $(SRCDIR)/%.cc $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CXX [$(1)] $$<'
 	$(Q)$(CROSS)$(CXX) $(CXXFLAGS) $($(1)_CXXFLAGS) -c -o $$@ $$< -MD -MT $$@ -MP
 
-$(BUILDDIR)/$(1)/%.cpp.o: $(SRCDIR)/%.cpp
+$(BUILDDIR)/$(1)/%.cpp.o: $(SRCDIR)/%.cpp $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CXX [$(1)] $$<'
 	$(Q)$(CROSS)$(CXX) $(CXXFLAGS) $($(1)_CXXFLAGS) -c -o $$@ $$< -MD -MT $$@ -MP
 
