@@ -17,8 +17,8 @@
 							</tool>
 							<tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.308147572" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1116494500" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai-trunk/src/tools/radiant/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai-trunk/src/tools/radiant/libs}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai/src/tools/radiant/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai/src/tools/radiant/libs}&quot;"/>
 									<listOptionValue builtIn="false" value="/usr/include/gtk-2.0"/>
 									<listOptionValue builtIn="false" value="/usr/include/glib-2.0"/>
 									<listOptionValue builtIn="false" value="/usr/include/gtkglext-1.0"/>
@@ -33,8 +33,8 @@
 									<listOptionValue builtIn="false" value="/usr/include/gtk-2.0"/>
 									<listOptionValue builtIn="false" value="/usr/include/glib-2.0"/>
 									<listOptionValue builtIn="false" value="/usr/include/gtkglext-1.0"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai-trunk/src/tools/radiant/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai-trunk/src/tools/radiant/libs}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai/src/tools/radiant/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai/src/tools/radiant/libs}&quot;"/>
 								</option>
 								<option id="org.eclipse.cdt.build.core.settings.holder.symbols.780864098" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__cplusplus=0"/>
@@ -336,7 +336,7 @@
 					<folderInfo id="preference.org.eclipse.cdt.managedbuilder.core.configurationDataProvider.406131790.900038319." name="/" resourcePath="">
 						<toolChain errorParsers="" id="org.eclipse.cdt.build.core.prefbase.toolchain.1909430167" name="No ToolChain" resourceTypeBasedDiscovery="false" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">
 							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF;org.eclipse.cdt.core.GNU_ELF;org.eclipse.cdt.core.Cygwin_PE" id="org.eclipse.cdt.build.core.prefbase.toolchain.1909430167.151420844" name=""/>
-							<builder enableAutoBuild="false" errorParsers="org.eclipse.cdt.core.MakeErrorParser" id="org.eclipse.cdt.build.core.settings.default.builder.1113854829" incrementalBuildTarget="all uforadiant" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="4" superClass="org.eclipse.cdt.build.core.settings.default.builder"/>
+							<builder enableAutoBuild="false" errorParsers="org.eclipse.cdt.core.MakeErrorParser" id="org.eclipse.cdt.build.core.settings.default.builder.1113854829" incrementalBuildTarget="" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="4" superClass="org.eclipse.cdt.build.core.settings.default.builder"/>
 							<tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.libs.937800540" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
 							<tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.1930684067" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.378237875" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths"/>
@@ -344,8 +344,8 @@
 							</tool>
 							<tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.2036662102" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.945967024" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai-trunk/src/tools/radiant/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai-trunk/src/tools/radiant/libs}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai/src/tools/radiant/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai/src/tools/radiant/libs}&quot;"/>
 									<listOptionValue builtIn="false" value="/usr/include/gtk-2.0"/>
 									<listOptionValue builtIn="false" value="/usr/include/glib-2.0"/>
 									<listOptionValue builtIn="false" value="/usr/include/gtkglext-1.0"/>
@@ -360,8 +360,8 @@
 									<listOptionValue builtIn="false" value="/usr/include/gtk-2.0"/>
 									<listOptionValue builtIn="false" value="/usr/include/glib-2.0"/>
 									<listOptionValue builtIn="false" value="/usr/include/gtkglext-1.0"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai-trunk/src/tools/radiant/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai-trunk/src/tools/radiant/libs}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai/src/tools/radiant/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufoai/src/tools/radiant/libs}&quot;"/>
 								</option>
 								<option id="org.eclipse.cdt.build.core.settings.holder.symbols.577671966" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__cplusplus=0"/>
