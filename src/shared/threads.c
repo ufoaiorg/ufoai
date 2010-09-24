@@ -6,7 +6,6 @@
 
 #include "threads.h"
 #include "../common/common.h"
-#include "../common/mem.h"
 
 /**
  * @brief Lock the mutex
@@ -48,7 +47,7 @@ int _TH_MutexUnlock (threads_mutex_t *mutex, const char *file, int line)
  */
 threads_mutex_t *TH_MutexCreate (const char *name)
 {
-	threads_mutex_t *mutex = (threads_mutex_t *)Mem_Alloc(sizeof(*mutex));
+	threads_mutex_t *mutex = (threads_mutex_t *)malloc(sizeof(*mutex));
 	mutex->mutex = SDL_CreateMutex();
 	if (mutex->mutex == NULL)
 		Sys_Error("Could not create mutex (%s)", SDL_GetError());
@@ -60,6 +59,6 @@ void TH_MutexDestroy (threads_mutex_t *mutex)
 {
 	if (mutex) {
 		SDL_DestroyMutex(mutex->mutex);
-		Mem_Free(mutex);
+		free(mutex);
 	}
 }
