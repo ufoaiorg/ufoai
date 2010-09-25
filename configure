@@ -13,7 +13,6 @@ PARANOID=
 PKGDATADIR=
 PKGLIBDIR=
 LOCALEDIR=
-HAVE_EXECINFO=1
 USE_SIGNALS=1
 MODE=
 PREFIX=
@@ -77,7 +76,7 @@ add_to_config_h_quote() {
 
 add_to_config_h() {
 	VALUE=$(get_var $1)
-	if [ -n "$VALUE" ]; then
+	if [ -n "$VALUE" ] && [ "$VALUE" != "no" ]; then
 		add_line_to_config_h "#define $1 $VALUE"
 		[ -n "$2" ] && echo $2
 	else
@@ -91,7 +90,6 @@ config_h() {
 	add_to_config_h DEBUG "Debug build"
 	add_to_config_h PARANOID "Enable paranoid build"
 	add_to_config_h HARD_LINKED_GAME "Enable hard linked game"
-	add_to_config_h HAVE_EXECINFO "Enable backtraces"
 	add_to_config_h USE_SIGNALS "Use signal handler"
 	add_to_config_h_quote PKGDATADIR "Setting custom data directory"
 	add_to_config_h_quote PKGLIBDIR "Setting custom library directory"
@@ -125,13 +123,19 @@ check_header_cc() {
 check_header() {
 	HEADER=$1
 	HAVE=HAVE_$(echo ${HEADER%.*} | sed 's,/,_,g' | tr '[a-z]' '[A-Z]')_H
-	set_var $HAVE $(check_header_cc $1)
-	add_to_config_h $HAVE "Found $1" "Could not find $1" $2
+	VALUE=$(get_var $HAVE)
+	if [ "$VALUE" != "no" ]; then
+		set_var $HAVE $(check_header_cc $1)
+		add_to_config_h $HAVE "Found $1" "Could not find $1" $2
+	else
+		add_to_config_h $HAVE "Found $1" "Disable $1"
+	fi
 }
 
 check_headers() {
 	check_header "xvid.h"
 	check_header "theora/theora.h"
+	check_header "execinfo.h"
 }
 
 usage() {
@@ -142,7 +146,7 @@ usage() {
 	echo " --enable-hardlinkedgame  hard link the server game code"
 	echo " --enable-paranoid        compile in paranoid mode with extra checks"
 	echo " --disable-signals        disable the use of a signal handler"
-	echo " --disable-backtraces     disable backtraces for crashes"
+	echo " --disable-execinfo       disable backtraces for crashes"
 	echo " --prefix=                prefix for directories"
 	echo " --data-dir=              path for the ufoai game data"
 	echo " --lib-dir=               path for the ufoai shared objects"
@@ -203,8 +207,8 @@ while [ $# -gt 0 ]; do
 	--disable-signals)
 		USE_SIGNALS=
 		;;
-	--disable-backtraces)
-		HAVE_EXECINFO=
+	--disable-execinfo)
+		HAVE_EXECINFO_H=no
 		;;
 	--prefix=*)
 		PREFIX=$(get_option $1)
@@ -222,7 +226,8 @@ while [ $# -gt 0 ]; do
 		TARGET_OS=$(get_option $1)
 		;;
 	--disable-*)
-		set_var "$(get_option_disable $1)_DISABLE" "yes"
+		OPTION=$(get_option_disable $1)
+		set_var "${OPTION}_DISABLE" "yes"
 		;;
 	*)
 		echo "invalid option $1"
@@ -236,7 +241,7 @@ if [ "${TARGET_OS}" = "mingw32" ] && [ "${HOST_OS}" != "mingw32" ]; then
 	CROSS="i686-pc-mingw32-"
 fi
 
-[ "${TARGET_OS}" = "mingw32" ] && ( HAVE_EXECINFO= )
+[ "${TARGET_OS}" = "mingw32" ] && ( HAVE_EXECINFO_H=no )
 [ "${TARGET_OS}" = "darwin" ] && ( USE_SIGNALS= )
 
 makefile_local
