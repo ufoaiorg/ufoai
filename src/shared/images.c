@@ -289,42 +289,39 @@ void R_WriteJPG (qFILE *f, byte *buffer, int width, int height, int quality)
  * @brief Loads the specified image from the game filesystem and populates
  * the provided SDL_Surface.
  */
-static qboolean Img_LoadTypedImage (char const* name, char const* type, SDL_Surface **surf)
+static SDL_Surface* Img_LoadTypedImage (char const* name, char const* type)
 {
 	char path[MAX_QPATH];
 	byte *buf;
 	int len;
 	SDL_RWops *rw;
 	SDL_Surface *s;
+	SDL_Surface *surf;
 
 	snprintf(path, sizeof(path), "%s.%s", name, type);
 
 	if ((len = FS_LoadFile(path, &buf)) == -1)
-		return qfalse;
+		return 0;
 
 	if (!(rw = SDL_RWFromMem(buf, len))) {
 		FS_FreeFile(buf);
-		return qfalse;
+		return 0;
 	}
 
-	if (!(*surf = IMG_LoadTyped_RW(rw, 0, (char*)(uintptr_t)type))) {
+	if (!(surf = IMG_LoadTyped_RW(rw, 0, (char*)(uintptr_t)type))) {
 		SDL_FreeRW(rw);
 		FS_FreeFile(buf);
-		return qfalse;
+		return 0;
 	}
 
 	SDL_FreeRW(rw);
 	FS_FreeFile(buf);
 
-	if (!(s = SDL_ConvertSurface(*surf, &format, 0))) {
-		SDL_FreeSurface(*surf);
-		return qfalse;
-	}
+	s = SDL_ConvertSurface(surf, &format, 0);
 
-	SDL_FreeSurface(*surf);
-	*surf = s;
+	SDL_FreeSurface(surf);
 
-	return qtrue;
+	return s;
 }
 
 /**
@@ -340,7 +337,8 @@ qboolean Img_LoadImage (const char *name, SDL_Surface **surf)
 
 	i = 0;
 	while (IMAGE_TYPES[i]) {
-		if (Img_LoadTypedImage(name, IMAGE_TYPES[i++], surf))
+		*surf = Img_LoadTypedImage(name, IMAGE_TYPES[i++]);
+		if (*surf)
 			return qtrue;
 	}
 
