@@ -295,32 +295,20 @@ static SDL_Surface* Img_LoadTypedImage (char const* name, char const* type)
 	byte *buf;
 	int len;
 	SDL_RWops *rw;
-	SDL_Surface *s;
 	SDL_Surface *surf;
+	SDL_Surface *s = 0;
 
 	snprintf(path, sizeof(path), "%s.%s", name, type);
-
-	if ((len = FS_LoadFile(path, &buf)) == -1)
-		return 0;
-
-	if (!(rw = SDL_RWFromMem(buf, len))) {
+	if ((len = FS_LoadFile(path, &buf)) != -1) {
+		if ((rw = SDL_RWFromMem(buf, len))) {
+			if ((surf = IMG_LoadTyped_RW(rw, 0, (char*)(uintptr_t)type))) {
+				s = SDL_ConvertSurface(surf, &format, 0);
+				SDL_FreeSurface(surf);
+			}
+			SDL_FreeRW(rw);
+		}
 		FS_FreeFile(buf);
-		return 0;
 	}
-
-	if (!(surf = IMG_LoadTyped_RW(rw, 0, (char*)(uintptr_t)type))) {
-		SDL_FreeRW(rw);
-		FS_FreeFile(buf);
-		return 0;
-	}
-
-	SDL_FreeRW(rw);
-	FS_FreeFile(buf);
-
-	s = SDL_ConvertSurface(surf, &format, 0);
-
-	SDL_FreeSurface(surf);
-
 	return s;
 }
 
