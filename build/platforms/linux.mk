@@ -5,7 +5,7 @@ SO_CFLAGS                 = -fPIC
 CFLAGS                   += -DSHARED_EXT=\"$(SO_EXT)\"
 CFLAGS                   += -D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE
 
-LDFLAGS                  += -rdynamic
+LDFLAGS                  +=
 
 CURL_CONFIG              ?= curl-config
 CURL_LIBS                ?= $(shell $(CURL_CONFIG) --libs)
