@@ -35,10 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/typedefs.h"
 #include "../../../shared/byte.h"
 
-#ifndef errno
-extern int errno;
-#endif
-
 /*========================================================================
 The .pak files are just a linear collapse of a directory tree
 ========================================================================*/
