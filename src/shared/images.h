@@ -33,7 +33,7 @@
 #include <SDL_image.h>
 
 char const* const* Img_GetImageTypes(void);
-qboolean Img_LoadImage(const char *name, SDL_Surface **surf);
+SDL_Surface* Img_LoadImage(char const* name);
 void R_WriteCompressedTGA(qFILE *f, const byte *buffer, int width, int height);
 void R_WritePNG(qFILE *f, byte *buffer, int width, int height);
 void R_WriteJPG(qFILE *f, byte *buffer, int width, int height, int quality);

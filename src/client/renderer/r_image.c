@@ -148,7 +148,7 @@ void R_LoadImage (const char *name, byte **pic, int *width, int *height)
 
 	Com_StripExtension(name, filenameTemp, sizeof(filenameTemp));
 
-	if (Img_LoadImage(filenameTemp, &surf)) {
+	if ((surf = Img_LoadImage(filenameTemp))) {
 		const size_t size = (surf->w * surf->h) * 4;
 		*width = surf->w;
 		*height = surf->h;
@@ -568,7 +568,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	if (image)
 		return image;
 
-	if (Img_LoadImage(lname, &surf)) {
+	if ((surf = Img_LoadImage(lname))) {
 		image = R_LoadImageData(lname, (byte *)surf->pixels, surf->w, surf->h, type);
 		SDL_FreeSurface(surf);
 		if (image->type == it_world) {

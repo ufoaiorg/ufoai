@@ -60,7 +60,7 @@ void CalcTextureReflectivity (void)
 
 		/* load the image file */
 		Com_sprintf(path, sizeof(path), "textures/%s", curTile->texinfo[i].texture);
-		if (!Img_LoadImage(path, &surf)) {
+		if (!(surf = Img_LoadImage(path))) {
 			Verb_Printf(VERB_NORMAL, "Couldn't load %s\n", path);
 			VectorSet(texture_reflectivity[i], 0.5, 0.5, 0.5);
 			continue;

@@ -331,16 +331,16 @@ static SDL_Surface* Img_LoadTypedImage (char const* name, char const* type)
  * Image formats are tried in the order they appear in TYPES.
  * @note Make sure to free the given @c SDL_Surface after you are done with it.
  */
-qboolean Img_LoadImage (const char *name, SDL_Surface **surf)
+SDL_Surface* Img_LoadImage (char const* name)
 {
 	int i;
 
 	i = 0;
 	while (IMAGE_TYPES[i]) {
-		*surf = Img_LoadTypedImage(name, IMAGE_TYPES[i++]);
-		if (*surf)
-			return qtrue;
+		SDL_Surface* const surf = Img_LoadTypedImage(name, IMAGE_TYPES[i++]);
+		if (surf)
+			return surf;
 	}
 
-	return qfalse;
+	return 0;
 }
