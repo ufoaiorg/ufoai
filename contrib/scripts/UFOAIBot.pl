@@ -1,109 +1,60 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
-use Net::IRC;
+package UFOAIBot;
+
 use strict;
+use warnings;
+use base qw/Bot::BasicBot/;
 
-# create the IRC object
-my $irc = new Net::IRC;
-
-# Create a connection object.  You can have more than one "connection" per
-# IRC object, but we'll just be working with one.
-my $conn = $irc->newconn(
-	Server 		=> shift || 'irc.freenode.org',
-	Port		=> shift || '6667',
-	Nick		=> 'UFOAIBot',
-	Ircname		=> 'UFOAIBot',
-	Username	=> 'UFOAIBot',
-	LocalAddr	=> 'ufo.ninex.info'
+# default connection options
+my %options = (
+	server 		=> shift || 'irc.freenode.org',
+	port		=> shift || '6667',
+	nick		=> 'UFOAIBot',
+	name		=> 'UFOAIBot',
+	username	=> 'UFOAIBot',
+	channels	=> [shift || '#ufoai'],
 );
 
-# We're going to add this to the conn hash so we know what channel we
-# want to operate in.
-$conn->{channel} = shift || '#ufoai';
+sub said {
+	my ($self, $message) = @_;
 
-sub handleCommand($$) {
-	my ($receiver, $text) = @_;
-
-	if ($text =~ /^\!bug\s*#?(\d+)/i) {
-		$conn->privmsg($receiver, "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805242");
-	} elsif ($text =~ /^\!fr\s*#?(\d+)/i) {
-		$conn->privmsg($receiver, "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805245");
-	} elsif ($text =~ /^\!patch\s*#?(\d+)/i) {
-		$conn->privmsg($receiver, "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805244");
-	} elsif ($text =~ /^\!r(?:ev)?\s*#?(\d{1,5})/i) {
-		$conn->privmsg($receiver, "http://sourceforge.net/apps/trac/ufoai/changeset/$1");
-	} elsif ($text =~ /^\!r(?:ev)?\s*#?([0-9a-f]{40})/i) {
-		$conn->privmsg($receiver, "http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=commitdiff;h=$1");
-	} elsif ($text =~ /^\S*\s+\*\s+r(\d+)\s*.*/) {
-		$conn->privmsg($receiver, "http://sourceforge.net/apps/trac/ufoai/changeset/$1");
-	} elsif ($text =~ /^\!ticket\s*#?(\d+)/i) {
-		$conn->privmsg($receiver, "https://sourceforge.net/apps/trac/ufoai/ticket/$1");
-	} elsif ($text =~ /^\!faq\s*#?(\w*)?/i) {
-		$conn->privmsg($receiver, "http://ufoai.ninex.info/wiki/index.php/FAQ#$1");
-	} elsif ($text =~ /^\!todo/i) {
-		$conn->privmsg($receiver, "http://ufoai.ninex.info/wiki/index.php/TODO");
-	} elsif ($text =~ /^\!topic\s*#?(\d+)(?:\s*[\.#\s](\d+))?/i) {
-		$conn->privmsg($receiver, "http://ufoai.ninex.info/forum/index.php?topic=$1".( (defined($2)) ? ".msg$2#msg$2" : "" ) );
-	} else {
-		# unknown command
-		return 0;
-	}
-
-	return 1;
-}
-
-sub on_connect {
-	# shift in our connection object that is passed automatically
-	my $conn = shift;
-
-	# when we connect, join our channel and greet it
-	$conn->join($conn->{channel});
-	$conn->{connected} = 1;
-}
-
-sub on_public {
-	# shift in our connection object that is passed automatically
-	my ($conn, $event) = @_;
-
-	# this is what was said in the event
-	my $text = $event->{args}[0];
-	my $channel = $event->{to}[0];
-
-	handleCommand($channel, $text);
-}
-
-sub on_msg {
-	# shift in our connection object that is passed automatically
-	my ($conn, $event) = @_;
-
-	# this is what was said in the event
-	my $text = $event->{args}[0];
-	my $nick = $event->{nick};
-
-	if ($text =~ /help/) {
-		$conn->privmsg($nick, "UFOAI Channel Bot");
-		$conn->privmsg($nick, "!bug #tracker-id");
-		$conn->privmsg($nick, "!patch #tracker-id");
-		$conn->privmsg($nick, "!fr #tracker-id");
-		$conn->privmsg($nick, "!rev #svn-revision");
-		$conn->privmsg($nick, "!rev #git-hash");
-		$conn->privmsg($nick, "!ticket #trac-ticket-id");
-		$conn->privmsg($nick, "!faq [#section_name]");
-		$conn->privmsg($nick, "!todo");
-		$conn->privmsg($nick, "!topic #forum-topic-id [.message-id]");
-	} else {
-		if (!handleCommand($nick, $text)) {
-			$conn->privmsg($nick, "I'm just a bot - ask me for 'help' to get more information");
-		}
+	if ($message->{'body'} =~ /^\!bug\s*#?(\d+)/i) {
+		return "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805242";
+	} elsif ($message->{'body'} =~ /^\!fr\s*#?(\d+)/i) {
+		return "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805245";
+	} elsif ($message->{'body'} =~ /^\!patch\s*#?(\d+)/i) {
+		return "https://sourceforge.net/tracker/index.php?func=detail&aid=$1&group_id=157793&atid=805244";
+	} elsif ($message->{'body'} =~ /^\!r(?:ev)?\s*#?(\d{1,5})/i) {
+		return "http://sourceforge.net/apps/trac/ufoai/changeset/$1";
+	} elsif ($message->{'body'} =~ /^\!r(?:ev)?\s*#?([0-9a-f]{8,40})/i) {
+		return "http://ufoai.git.sourceforge.net/git/gitweb.cgi?p=ufoai/ufoai;a=commitdiff;h=$1";
+	} elsif ($message->{'body'} =~ /^\!ticket\s*#?(\d+)/i) {
+		return "https://sourceforge.net/apps/trac/ufoai/ticket/$1";
+	} elsif ($message->{'body'} =~ /^\!faq\s*#?(\w*)?/i) {
+		return "http://ufoai.ninex.info/wiki/index.php/FAQ#$1";
+	} elsif ($message->{'body'} =~ /^\!todo/i) {
+		return "http://ufoai.ninex.info/wiki/index.php/TODO";
+	} elsif ($message->{'body'} =~ /^\!topic\s*#?(\d+)(?:\s*[\.#\s](\d+))?/i) {
+		return "http://ufoai.ninex.info/forum/index.php?topic=$1".( (defined($2)) ? ".msg$2#msg$2" : "" ) ;
+	} elsif ($message->{'body'} =~ /^\!/) {
+		return "I'm just a bot - ask me for 'help' to get more information";
 	}
 }
 
-# add event handlers
-$conn->add_handler('public', \&on_public);
-$conn->add_handler('msg', \&on_msg);
+sub help {
+	return
+		"UFOAI Channel Bot\n".
+		"!bug #tracker-id\n".
+		"!patch #tracker-id\n".
+		"!fr #tracker-id\n".
+		"!rev #svn-revision\n".
+		"!rev #git-hash\n".
+		"!ticket #trac-ticket-id\n".
+		"!faq [#section_name]\n".
+		"!todo\n".
+		"!topic #forum-topic-id [.message-id]\n";
+}
 
-# The end of MOTD (message of the day), numbered 376 signifies we've connect
-$conn->add_handler('376', \&on_connect);
+my $bot = UFOAIBot->new(%options)->run();
 
-# start IRC
-$irc->start();
