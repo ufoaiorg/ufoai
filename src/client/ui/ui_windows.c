@@ -826,7 +826,7 @@ void UI_InitWindows (void)
 	Cmd_AddCommand("mn_push", UI_PushWindow_f, "Push a window to the window stack");
 	Cmd_AddParamCompleteFunction("mn_push", UI_CompleteWithWindow);
 	Cmd_AddCommand("mn_push_dropdown", UI_PushDropDownWindow_f, "Push a dropdown window at a position");
-	Cmd_AddCommand("mn_push_child", UI_PushChildWindow_f, "Push a window to the windowstack with a big dependancy to a parent window");
+	Cmd_AddCommand("mn_push_child", UI_PushChildWindow_f, "Push a window to the windowstack with a big dependency to a parent window");
 	Cmd_AddCommand("mn_pop", UI_PopWindow_f, "Pops the current window from the stack");
 	Cmd_AddCommand("mn_close", UI_CloseWindow_f, "Close a window");
 	Cmd_AddCommand("mn_move", UI_SetNewWindowPos_f, "Moves the window to a new position.");

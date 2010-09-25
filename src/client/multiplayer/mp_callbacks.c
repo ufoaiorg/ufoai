@@ -285,8 +285,8 @@ void MP_CallbacksInit (void)
 	rcon_address = Cvar_Get("rcon_address", "", 0, "Address of the host you would like to control via rcon");
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
 	Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
-	Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the prefered teamnum");
-	Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the prefered teamnum");
+	Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the preferred teamnum");
+	Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the preferred teamnum");
 	Cmd_AddCommand("saveteam", MP_SaveTeamMultiplayer_f, "Save a multiplayer team slot");
 	Cmd_AddCommand("loadteam", MP_LoadTeamMultiplayer_f, "Load a multiplayer team slot");
 	Cmd_AddCommand("team_comments", MP_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");

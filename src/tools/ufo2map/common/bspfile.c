@@ -363,7 +363,7 @@ void PrintBSPFileSizes (void)
 	if (!num_entities)
 		ParseEntities();
 
-	Com_Printf("amout type         size in bytes\n");
+	Com_Printf("amount type        size in bytes\n");
 	Com_Printf("================================\n");
 	Com_Printf("%5i models            %7i\n", curTile->nummodels, (int)(curTile->nummodels * sizeof(cBspModel_t)));
 	Com_Printf("%5i brushes           %7i\n", curTile->numbrushes, (int)(curTile->numbrushes * sizeof(dBspBrush_t)));
