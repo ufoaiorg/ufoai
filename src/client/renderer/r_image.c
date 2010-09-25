@@ -607,7 +607,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 
 qboolean R_ImageExists (const char *pname)
 {
-	const char **types = Img_GetImageTypes();
+	char const* const* const types = Img_GetImageTypes();
 	int i;
 
 	for (i = 0; types[i]; i++) {

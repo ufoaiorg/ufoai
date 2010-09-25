@@ -32,7 +32,7 @@
 #include "../common/filesys.h"
 #include <SDL_image.h>
 
-const char** Img_GetImageTypes(void);
+char const* const* Img_GetImageTypes(void);
 qboolean Img_LoadImage(const char *name, SDL_Surface **surf);
 void R_WriteCompressedTGA(qFILE *f, const byte *buffer, int width, int height);
 void R_WritePNG(qFILE *f, byte *buffer, int width, int height);

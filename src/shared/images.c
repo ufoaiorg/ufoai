@@ -34,7 +34,7 @@
 #include <png.h>
 
 /** image formats, tried in this order */
-static char *IMAGE_TYPES[] = { "tga", "png", "jpg", NULL };
+static char const* const IMAGE_TYPES[] = { "tga", "png", "jpg", NULL };
 
 /** default pixel format to which all images are converted */
 static SDL_PixelFormat format = {
@@ -67,9 +67,9 @@ static SDL_PixelFormat format = {
 #define TGA_UNMAP_UNCOMP		2
 #define TGA_UNMAP_COMP			10
 
-const char** Img_GetImageTypes (void)
+char const* const* Img_GetImageTypes (void)
 {
-	return (const char **)IMAGE_TYPES;
+	return IMAGE_TYPES;
 }
 
 /**
@@ -290,7 +290,7 @@ void R_WriteJPG (qFILE *f, byte *buffer, int width, int height, int quality)
  * @brief Loads the specified image from the game filesystem and populates
  * the provided SDL_Surface.
  */
-static qboolean Img_LoadTypedImage (const char *name, char *type, SDL_Surface **surf)
+static qboolean Img_LoadTypedImage (char const* name, char const* type, SDL_Surface **surf)
 {
 	char path[MAX_QPATH];
 	byte *buf;
@@ -308,7 +308,7 @@ static qboolean Img_LoadTypedImage (const char *name, char *type, SDL_Surface **
 		return qfalse;
 	}
 
-	if (!(*surf = IMG_LoadTyped_RW(rw, 0, type))) {
+	if (!(*surf = IMG_LoadTyped_RW(rw, 0, (char*)(uintptr_t)type))) {
 		SDL_FreeRW(rw);
 		FS_FreeFile(buf);
 		return qfalse;
