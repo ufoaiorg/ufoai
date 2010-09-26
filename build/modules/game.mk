@@ -1,7 +1,7 @@
 TARGET             := game
 
 $(TARGET)_CFLAGS   += -DCOMPILE_UFO $(SO_CFLAGS)
-$(TARGET)_LDFLAGS  += $(SO_LDFLAGS)
+$(TARGET)_LDFLAGS  += $(SO_LDFLAGS) -lm
 $(TARGET)_FILE     := base/$(TARGET).$(SO_EXT)
 
 # Lua apicheck adds asserts to make sure stack is sane
