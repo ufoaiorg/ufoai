@@ -112,7 +112,12 @@ makefile_local() {
 
 	echo "Build modules:"
 	for i in $(get_modules); do
-		add_to_makefile_local ${i}_DISABLE "Build $i" "Disable $i"
+		add_to_makefile_local ${i}_DISABLE
+		if [ "$(get_var ${i}_DISABLE)" = "yes" ]; then
+			echo "Disable $i"
+		else
+			echo "Build $i"
+		fi
 	done
 }
 
