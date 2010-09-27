@@ -64,7 +64,7 @@ add_line_to_config_h() {
 
 add_to_config_h_quote() {
 	VALUE=$(get_var $1)
-	if [ -n "$VALUE" ]; then
+	if [ -n "$VALUE" ] && [ "$VALUE" != "no" ]; then
 		add_line_to_config_h "#define $1 \"$VALUE\""
 		[ -n "$2" ] && echo $2
 	else
