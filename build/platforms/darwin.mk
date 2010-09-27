@@ -33,8 +33,10 @@ OPENGL_LIBS              ?= -framework OpenGL
 OPENAL_CFLAGS            ?=
 OPENAL_LIBS              ?= -framework OpenAL
 PKG_CONFIG               ?= pkg-config
+ifdef HAVE_THEORA_THEORA_H
 THEORA_CFLAGS            ?= $(call PKG_CFLAGS,theora) $(call PKG_CFLAGS,vorbis)
 THEORA_LIBS              ?= $(call PKG_LIBS,theora) $(call PKG_LIBS,vorbis)
+endif
 GLIB_CFLAGS              ?= $(call PKG_CFLAGS,glib-2.0)
 GLIB_LIBS                ?= $(call PKG_LIBS,glib-2.0)
 GTK_CFLAGS               ?= $(call PKG_CFLAGS,gtk+-2.0)
@@ -46,7 +48,9 @@ GTK_GLEXT_LIBS           ?= $(call PKG_LIBS,gtkglext-1.0)
 VORBIS_CFLAGS            ?= $(call PKG_CFLAGS,vorbis)
 VORBIS_LIBS              ?= $(call PKG_LIBS,vorbis)
 INTL_LIBS                ?= -lintl
+ifdef HAVE_XVID_H
 XVID_CFLAGS              ?=
-XVID_LIBS                ?=
+XVID_LIBS                ?= -lxvidcore
+endif
 
 uforadiant_LDFLAGS       += -headerpad_max_install_names

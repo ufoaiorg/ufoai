@@ -27,8 +27,10 @@ SDL_MIXER_LIBS           ?= $(call PKG_LIBS,SDL_mixer)
 SDL_MIXER_CFLAGS         ?= $(call PKG_CFLAGS,SDL_mixer)
 OPENAL_CFLAGS            ?= $(call PKG_CFLAGS,openal)
 OPENAL_LIBS              ?= $(call PKG_LIBS,openal)
+ifdef HAVE_THEORA_THEORA_H
 THEORA_CFLAGS            ?= $(call PKG_CFLAGS,theora)
 THEORA_LIBS              ?= $(call PKG_LIBS,theora)
+endif
 GLIB_CFLAGS              ?= $(call PKG_CFLAGS,glib-2.0)
 GLIB_LIBS                ?= $(call PKG_LIBS,glib-2.0)
 GTK_CFLAGS               ?= $(call PKG_CFLAGS,gtk+-2.0) $(call PKG_CFLAGS,libxml-2.0)
@@ -40,8 +42,10 @@ GTK_GLEXT_LIBS           ?= $(call PKG_LIBS,gtkglext-1.0)
 VORBIS_CFLAGS            ?= $(call PKG_CFLAGS,vorbis)
 VORBIS_LIBS              ?= $(call PKG_LIBS,vorbis)
 INTL_LIBS                ?= -lintl
+ifdef HAVE_XVID_H
 XVID_CFLAGS              ?=
 XVID_LIBS                ?= -lxvidcore
+endif
 
 ufo_LDFLAGS              += -lws2_32 -lwinmm -lgdi32 -lfreetype
 ufoded_LDFLAGS           += -lws2_32 -lwinmm -lgdi32

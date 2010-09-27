@@ -24,8 +24,10 @@ OPENGL_CFLAGS            ?= $(call PKG_CFLAGS,gl)
 OPENGL_LIBS              ?= $(call PKG_LIBS,gl)
 OPENAL_CFLAGS            ?= $(call PKG_CFLAGS,openal)
 OPENAL_LIBS              ?= $(call PKG_LIBS,openal)
+ifdef HAVE_THEORA_THEORA_H
 THEORA_CFLAGS            ?= $(call PKG_CFLAGS,theora)
 THEORA_LIBS              ?= $(call PKG_LIBS,theora)
+endif
 GLIB_CFLAGS              ?= $(call PKG_CFLAGS,glib-2.0)
 GLIB_LIBS                ?= $(call PKG_LIBS,glib-2.0)
 GTK_CFLAGS               ?= $(call PKG_CFLAGS,gtk+-2.0)
@@ -37,5 +39,7 @@ GTK_GLEXT_LIBS           ?= $(call PKG_LIBS,gtkglext-1.0)
 VORBIS_CFLAGS            ?= $(call PKG_CFLAGS,vorbis)
 VORBIS_LIBS              ?= $(call PKG_LIBS,vorbis)
 INTL_LIBS                ?=
+ifdef HAVE_XVID_H
 XVID_CFLAGS              ?=
-XVID_LIBS                ?=
+XVID_LIBS                ?= -lxvidcore
+endif

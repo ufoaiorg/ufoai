@@ -134,6 +134,7 @@ check_header() {
 	if [ "$VALUE" != "no" ]; then
 		set_var $HAVE $(check_header_cc $1)
 		add_to_config_h $HAVE "Found $1" "Could not find $1" $2
+		add_to_makefile_local $HAVE
 	else
 		add_to_config_h $HAVE "Found $1" "Disable $1"
 	fi
