@@ -117,7 +117,7 @@ makefile_local() {
 }
 
 check_header_cc() {
-	( echo "#include <${1}>" | ${CC} ${CFLAGS} -o /dev/null -xc -c - 2> /dev/null ) && echo "1" || echo ""
+	( echo "#include <${1}>" | ${CROSS}${CC} ${CFLAGS} -o /dev/null -xc -c - 2> /dev/null ) && echo "1" || echo ""
 }
 
 check_header() {
