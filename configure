@@ -239,9 +239,11 @@ done
 
 if [ "${TARGET_OS}" = "mingw32" ] && [ "${HOST_OS}" != "mingw32" ]; then
 	CROSS="i686-pc-mingw32-"
+	TARGET_ARCH=i386
+	# TODO Add a check for this
+	echo "Cross compiling, make sure that ${CROSS}${CC} is in your path"
 fi
 
-[ "${TARGET_OS}" = "mingw32" ] && ( HAVE_EXECINFO_H=no )
 [ "${TARGET_OS}" = "darwin" ] && ( USE_SIGNALS= )
 
 makefile_local
