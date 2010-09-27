@@ -17,7 +17,8 @@ USE_SIGNALS=1
 MODE=
 PREFIX=
 CROSS=
-CC=${CC:-gcc}
+CC=
+CXX=
 
 HOST_OS=$(uname | sed -e s/_.*// | tr '[:upper:]' '[:lower:]')
 TARGET_OS=${HOST_OS}
@@ -103,8 +104,9 @@ makefile_local() {
 	add_to_makefile_local TARGET_OS "Compile for ${TARGET_OS}"
 	add_to_makefile_local TARGET_ARCH "Compile for ${TARGET_ARCH}"
 	add_to_makefile_local MODE
-	add_to_makefile_local CC
-	add_to_makefile_local CROSS
+	add_to_makefile_local CC "Found cc ${CC}"
+	add_to_makefile_local CXX "Found cxx ${CXX}"
+	add_to_makefile_local CROSS "Using prefix ${CROSS}"
 	add_to_makefile_local_quote PKGDATADIR
 	add_to_makefile_local_quote PKGLIBDIR
 	add_to_makefile_local_quote LOCALEDIR
@@ -141,6 +143,12 @@ check_headers() {
 	check_header "xvid.h"
 	check_header "theora/theora.h"
 	check_header "execinfo.h"
+}
+
+check_compiler() {
+	# TODO Implement compiler check
+	CC=${CC:-gcc}
+	CXX=${CXX:-g++}
 }
 
 usage() {
@@ -251,6 +259,7 @@ fi
 
 [ "${TARGET_OS}" = "darwin" ] && ( USE_SIGNALS= )
 
+check_compiler
 makefile_local
 config_h
 check_headers
