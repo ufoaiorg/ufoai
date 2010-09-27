@@ -1,10 +1,10 @@
 #TODO the manually added linker flag is more a hack than a solution
 define PKG_LIBS
-	`$(PKG_CONFIG) --libs $(1) 2> /dev/null || echo "-l$(1)"`
+`$(PKG_CONFIG) --libs $(1) 2> /dev/null || echo "-l$(1)"`
 endef
 
 define PKG_CFLAGS
-	`$(PKG_CONFIG) --cflags $(1) 2> /dev/null`
+`$(PKG_CONFIG) --cflags $(1) 2> /dev/null`
 endef
 
 
