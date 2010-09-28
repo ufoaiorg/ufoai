@@ -268,6 +268,9 @@ check_headers
 cat > ${MAKEFILE_LOCAL} << EOF
 # -------- Automatically generated -----------
 $makefile_local_data
+
+# allow to specify your own targets
+-include config.mk
 EOF
 
 cat > ${CONFIG_H} << EOF
