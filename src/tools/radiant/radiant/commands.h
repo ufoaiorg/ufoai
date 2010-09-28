@@ -54,5 +54,8 @@ void DoCommandListDlg ();
 
 void LoadCommandMap (const std::string& path);
 void SaveCommandMap (const std::string& path);
+void GlobalShortcuts_foreach (CommandVisitor& visitor);
+void disconnect_accelerator(const std::string&);
+void connect_accelerator(const std::string&);
 
 #endif
