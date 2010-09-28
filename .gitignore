@@ -4,6 +4,7 @@
 /*.bz2
 /*.dmg
 /config.h
+/config.mk
 /debug-*/
 /Makefile.local
 /release-*/
