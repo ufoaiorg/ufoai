@@ -51,7 +51,7 @@ distclean: clean
 install: $(addprefix install-,$(TARGETS))
 
 config.h: configure
-	$(Q)./configure
+	$(Q)./configure $(CONFIGURE_OPTIONS)
 
 
 define BUILD_RULE
@@ -108,6 +108,10 @@ endif
 endif
 endef
 $(foreach TARGET,$(TARGETS),$(eval $(call BUILD_RULE,$(TARGET))))
+
+.PHONY: run-configure
+run-configure:
+	$(Q)./configure $(CONFIGURE_OPTIONS)
 
 include build/data.mk
 include build/install.mk
