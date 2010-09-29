@@ -1,7 +1,7 @@
 TARGET             := ufomodel
 
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_LDFLAGS  += -lpng -ljpeg -lz $(SDL_LIBS) $(SDL_IMAGE_LIBS)
+$(TARGET)_LDFLAGS  += -lpng -ljpeg -lz -lm $(SDL_LIBS) $(SDL_IMAGE_LIBS)
 $(TARGET)_CFLAGS   += -DCOMPILE_MAP $(SDL_CFLAGS) $(SDL_IMAGE_CFLAGS)
 $(TARGET)_SRCS      = \
 	tools/ufomodel/ufomodel.c \
