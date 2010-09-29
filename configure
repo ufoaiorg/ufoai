@@ -420,6 +420,10 @@ while [ $# -gt 0 ]; do
 		check_module $OPTION
 		set_var "${OPTION}_DISABLE" ""
 		;;
+	CC=*)       CC="${1#CC=}";;
+	CXX=*)      CXX="${1#CXX=}";;
+	CFLAGS=*)   CFLAGS="${1#*=}";;
+	LDFLAGS=*)  LDFLAGS="${1#*=}";;
 	*)
 		echo "invalid option $1"
 		exit 1
