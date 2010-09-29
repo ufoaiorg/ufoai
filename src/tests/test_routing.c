@@ -58,7 +58,7 @@ static void testConnection (void)
 	 * @todo use a special testmap
 	 * @todo implement the test
 	 */
-	if (FS_FileExists("maps/fueldump.bsp")) {
+	if (FS_CheckFile("maps/fueldump.bsp")) {
 		CM_LoadMap("fueldump", qtrue, "", &mapData, &mapTiles);
 		CM_LoadMap("fueldump", qtrue, "", &mapData, &mapTiles);
 	} else {
