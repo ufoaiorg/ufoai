@@ -218,22 +218,6 @@ get_var() {
 	eval echo "\${${VAR}}"
 }
 
-get_option() {
-	echo `echo $@ | cut -d '=' -f 2`
-}
-
-get_option_disable() {
-	echo `echo $@ | cut -c 11-`
-}
-
-get_option_enable() {
-	echo `echo $@ | cut -c 10-`
-}
-
-get_option_enable_only() {
-	echo `echo $@ | cut -c 15-`
-}
-
 get_modules() {
 	(cd build/modules; for i in *.mk; do echo "${i%.mk}"; done)
 }
@@ -379,31 +363,31 @@ while [ $# -gt 0 ]; do
 		HAVE_EXECINFO_H=no
 		;;
 	--prefix=*)
-		PREFIX=`get_option $1`
+		PREFIX="${1#*=}"
 		;;
 	--datadir=*)
-		PKGDATADIR=`get_option $1`
+		PKGDATADIR="${1#*=}"
 		;;
 	--libdir=*)
-		PKGLIBDIR=`get_option $1`
+		PKGLIBDIR="${1#*=}"
 		;;
 	--localedir=*)
-		LOCALEDIR=`get_option $1`
+		LOCALEDIR="${1#*=}"
 		;;
 	--bindir=*)
-		PKGBINDIR=`get_option $1`
+		PKGBINDIR="${1#*=}"
 		;;
 	--target-os=*)
-		TARGET_OS=`get_option $1`
+		TARGET_OS="${1#*=}"
 		check_target_os $TARGET_OS
 		;;
 	--disable-*)
-		OPTION=`get_option_disable $1`
+		OPTION="${1#--disable-}"
 		check_module $OPTION
 		set_var "${OPTION}_DISABLE" "yes"
 		;;
 	--enable-only-*)
-		OPTION=`get_option_enable_only $1`
+		OPTION="${1#--enable-only-}"
 		check_module $OPTION
 		for i in `get_modules`; do
 			if [ "$i" = "$OPTION" ]; then
@@ -414,7 +398,7 @@ while [ $# -gt 0 ]; do
 		done
 		;;
 	--enable-*)
-		OPTION=`get_option_enable $1`
+		OPTION="${1#--enable-}"
 		check_module $OPTION
 		set_var "${OPTION}_DISABLE" ""
 		;;
