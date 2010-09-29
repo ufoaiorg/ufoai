@@ -195,9 +195,7 @@ usage() {
 	echo " --disable-signals        disable the use of a signal handler"
 	echo
 	echo " --target-os=             specify the target os"
-	for i in build/platforms/*.mk; do
-		echo "  * `basename $i .mk`"
-	done
+	(cd build/platforms; for i in *.mk; do echo "  * ${i%.mk}"; done)
 	echo
 	echo " --bindir=                path for the ufoai binaries"
 	echo " --datadir=               path for the ufoai game data"
@@ -208,9 +206,7 @@ usage() {
 	echo " --disable-*              specify which target should not get build"
 	echo " --enable-*               specify which target should get build"
 	echo " --enable-only-*          disable every other target"
-	for i in build/modules/*.mk; do
-		echo "  * `basename $i .mk`"
-	done
+	(cd build/modules; for i in *.mk; do echo "  * ${i%.mk}"; done)
 	exit 1
 }
 
@@ -241,9 +237,7 @@ get_option_enable_only() {
 }
 
 get_modules() {
-	for i in build/modules/*.mk; do
-		echo `basename $i .mk`
-	done
+	(cd build/modules; for i in *.mk; do echo "${i%.mk}"; done)
 }
 
 check_path_characters() {
