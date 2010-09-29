@@ -1,6 +1,7 @@
 SO_EXT                    = dylib
 SO_CFLAGS                 = -fPIC -fno-common
 SO_LDFLAGS                = -dynamiclib
+SO_LIBS                  := -ldl
 
 CFLAGS                   += -D_BSD_SOURCE -D_XOPEN_SOURCE
 LDFLAGS                  += -framework IOKit -framework Foundation -framework Cocoa

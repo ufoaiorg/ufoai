@@ -1,6 +1,7 @@
 SO_EXT                    = dll
 SO_LDFLAGS                = -shared
 SO_CFLAGS                 = -shared
+SO_LIBS                  :=
 
 EXE_EXT                   = .exe
 
