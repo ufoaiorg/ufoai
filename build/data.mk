@@ -13,7 +13,7 @@ $(shell find $(BASE_DIR)/$(1) -type f -print)
 endef
 
 define ZIP
-$(shell ([ -x "$$(which 7z)" ] && echo "7z a -tzip -mx=9") || ([ -x "$$(which zip)" ] && echo "zip -u9"))
+$(shell ([ -x "$$(which 7z 2> /dev/null)" ] && echo "7z a -tzip -mx=9") || ([ -x "$$(which zip 2> /dev/null)" ] && echo "zip -u9"))
 endef
 
 %.pk3 :
