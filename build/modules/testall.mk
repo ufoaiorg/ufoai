@@ -2,7 +2,7 @@ TARGET             := testall
 
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
 $(TARGET)_CFLAGS   += -DCOMPILE_UFO -DCOMPILE_UNITTESTS $(SDL_CFLAGS) $(CURL_CFLAGS)
-$(TARGET)_LDFLAGS  += -lcunit $(INTL_LIBS) $(SDL_LIBS) $(CURL_LIBS) -lz
+$(TARGET)_LDFLAGS  += -lcunit $(INTL_LIBS) $(SDL_LIBS) $(CURL_LIBS) -lz -lm
 $(TARGET)_SRCS      = \
 	tests/test_all.c \
 	tests/test_routing.c \
