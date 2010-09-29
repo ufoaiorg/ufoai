@@ -18,6 +18,7 @@ from buildbot import scheduler
 from buildbot.steps.shell import ShellCommand
 
 from string import join, capitalize, lower
+from CUnitTest import CUnitTest
 
 class Package(ShellCommand):
 	name = "package"
@@ -44,6 +45,38 @@ class Package(ShellCommand):
 		self.command = ""
 		self.command += "cd %s && " % self.workdir
 		self.command += "mkdir -p $(dirname %s) && " % self.output
-		self.command += "tar cvjf %s %s && " % (self.output, " ".join(self.files))
+		if self.output.endswith('.zip'):
+			self.command += "zip %s %s && " % (self.output, " ".join(self.files))
+		elif self.output.endswith('.tar.bz2'):
+			self.command += "tar cvjf %s %s && " % (self.output, " ".join(self.files))
+		else:
+			print 'Output extension from "%s" unknown' % self.output
 		self.command += "chmod 644 %s" % self.output
 		ShellCommand.start(self)
+
+class UFOAICUnitTest(CUnitTest):
+	def __init__(self, suite, **kwargs):
+		name = suite
+		result = name + "-Results.xml"
+		CUnitTest.__init__(self,
+			name = "test",
+			description = suite,
+			command = ["./testall", "--automated", "--only-" + suite, "--output-prefix=" + name],
+			flunkOnFailure = True,
+			cunit_result_file=result,
+			**kwargs)
+
+class UFOAICUnitOtherTests(CUnitTest):
+	def __init__(self, suites, **kwargs):
+		name = "other"
+		result = name + "-Results.xml"
+		command = ["./testall", "--automated", "--output-prefix=" + name]
+		for suite in suites:
+			command.append("--disable-" + suite)
+		CUnitTest.__init__(self,
+			name = "test",
+			description = "OtherTests",
+			command = command,
+			flunkOnFailure = True,
+			cunit_result_file = result,
+			**kwargs)
