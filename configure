@@ -144,6 +144,7 @@ check_headers() {
 	check_header "xvid.h"
 	check_header "theora/theora.h"
 	check_header "execinfo.h"
+	check_header "CUnit/Basic.h"
 }
 
 check_compiler() {

@@ -78,6 +78,10 @@ ifeq ($(HARD_LINKED_GAME),1)
 	$(TARGET)_SRCS     += $(game_SRCS)
 endif
 
+ifneq ($(HAVE_CUNIT_BASIC_H), 1)
+	$(TARGET)_IGNORE := yes
+endif
+
 $(TARGET)_OBJS     := $(call ASSEMBLE_OBJECTS,$(TARGET))
 $(TARGET)_CXXFLAGS := $($(TARGET)_CFLAGS)
 $(TARGET)_CCFLAGS  := $($(TARGET)_CFLAGS)
