@@ -792,4 +792,5 @@ void R_RestartPrograms_f (void)
 
 	R_ShutdownPrograms();
 	R_InitPrograms();
+	R_InitFBObjects();
 }

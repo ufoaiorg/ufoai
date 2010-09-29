@@ -115,8 +115,9 @@ typedef	struct mAliasMesh_s {
 #define MAX_ANIMNAME	16
 
 typedef struct mAliasAnim_s {
-	char name[MAX_ANIMNAME];
-	int from, to;
+	char name[MAX_ANIMNAME];	/**< the name of this animation from the anm file */
+	int from;					/**< the frame this animation is starting on */
+	int to;						/**< the frame this animation is ending on */
 	int time;
 } mAliasAnim_t;
 
