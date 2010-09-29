@@ -167,8 +167,8 @@ check_headers() {
 
 check_compiler() {
 	# TODO Implement compiler check
-	CC=${CC:-gcc}
-	CXX=${CXX:-g++}
+	CC=${CC:-cc}
+	CXX=${CXX:-c++}
 
 	if [ "${TARGET_OS}" = "mingw32" ] && [ "${HOST_OS}" != "mingw32" ]; then
 		CROSS="i686-pc-mingw32-"
