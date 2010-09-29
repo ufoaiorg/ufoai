@@ -63,9 +63,9 @@ install-pre: pk3 lang
 	@echo "Locales:   $(LOCALEDIR)"
 	$(Q)$(INSTALL_DIR) $(PKGDATADIR)/base
 	@echo "Install locales"
-	$(Q)LCDIR=$(LOCALDIR); \
+	$(Q)LCDIR=$(LOCALEDIR); \
 	LCDIR=$${LCDIR:-$(PKGDATADIR)/base/i18n}; \
-	for dir in base/i18n/*; do \
+	cd base/i18n/; for dir in *; do \
 		$(INSTALL_DIR) $$LCDIR/$$dir/LC_MESSAGES && \
 		$(INSTALL_DATA) $$dir/LC_MESSAGES/ufoai.mo $$LCDIR/$$dir/LC_MESSAGES/ufoai.mo; \
 	done
