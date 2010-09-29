@@ -137,7 +137,7 @@ const char *CHRSH_CharGetBody (const character_t * const chr)
 	static char returnModel[MAX_VAR];
 
 	/* models of UGVs don't change - because they are already armoured */
-	if (INVSH_HasArmour(&chr->i) && chr->teamDef->race != RACE_ROBOT) {
+	if (INVSH_HasArmour(&chr->i) && !CHRSH_IsTeamDefRobot(chr->teamDef)) {
 		const objDef_t *od = INVSH_HasArmour(&chr->i)->item.t;
 		const char *id = od->armourPath;
 		if (!INV_IsArmour(od))
