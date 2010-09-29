@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/common.h"
 #include "../shared/utf8.h"
 #include "../shared/shared.h"
+#include "../shared/infostring.h"
 #include "../ports/system.h"
 #include "test_generic.h"
 
@@ -188,6 +189,21 @@ static void testFileSystemBuildLists (void)
 	FS_NextFileFromFileList(NULL);
 }
 
+static void testInfoStrings (void)
+{
+	char info[MAX_INFO_STRING] = "";
+
+	Info_SetValueForKey(info, sizeof(info), "name", "test");
+
+	CU_ASSERT_STRING_EQUAL(Info_ValueForKey(info, "name"), "test");
+	CU_ASSERT_STRING_EQUAL(Info_ValueForKey(info, "name2"), "");
+	Info_RemoveKey(info, "name");
+	CU_ASSERT_STRING_EQUAL(Info_ValueForKey(info, "name"), "");
+
+	Info_SetValueForKey(info, sizeof(info), "name", "\\invalid\\value");
+	CU_ASSERT_STRING_EQUAL(Info_ValueForKey(info, "name"), "");
+}
+
 static void testStringCopiers (void)
 {
 	const char src[] = "Командующий, я чрезвычайно рад доложить, что наш проект ОПЭВ был завершён успешно. Я прикрепил к письму "
@@ -311,6 +327,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testFileSystemBuildLists) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testInfoStrings) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testStringCopiers) == NULL)
