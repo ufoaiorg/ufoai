@@ -203,9 +203,9 @@ usage() {
 	echo " --localedir=             path for the ufoai translations"
 	echo " --prefix=                prefix for directories"
 	echo
-	echo " --disable-*              specify which target should not get build"
-	echo " --enable-*               specify which target should get build"
-	echo " --enable-only-*          disable every other target"
+	echo " --disable-*              specify which target should not get built"
+	echo " --enable-*               specify which target should get built"
+	echo " --enable-only-*          disable all other targets"
 	(cd build/modules; for i in *.mk; do echo "  * ${i%.mk}"; done)
 	exit 1
 }
