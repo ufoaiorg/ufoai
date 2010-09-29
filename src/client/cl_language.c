@@ -32,6 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/ui_font.h"
 #include "ui/node/ui_node_abstractoption.h"
 
+static cvar_t *fs_i18ndir;
+
+
 /**
  * @brief List of all mappings for a locale
  */
@@ -151,12 +154,10 @@ static qboolean CL_LanguageTest (const char *localeID)
 	localeMapping_t* mapping;
 #endif
 	char languagePath[MAX_OSPATH];
-	cvar_t *fs_i18ndir;
 
 	assert(localeID);
 
 	/* Find the proper *.mo file. */
-	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
 	if (fs_i18ndir->string[0] != '\0')
 		Q_strncpyz(languagePath, fs_i18ndir->string, sizeof(languagePath));
 	else
@@ -222,6 +223,8 @@ void CL_LanguageInit (void)
 	language_t* language;
 	uiNode_t *languageOption = NULL;
 	char systemLanguage[MAX_VAR];
+
+	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
 
 	if (s_language->string[0] != '\0') {
 		Com_Printf("CL_LanguageInit: language settings are stored in configuration: %s\n", s_language->string);

@@ -270,7 +270,6 @@ fi
 PKGDATADIR=${PKGDATADIR:-${PREFIX}/games/ufoai}
 PKGBINDIR=${PKGBINDIR:-${PREFIX}/bin}
 PKGLIBDIR=${PKGLIBDIR:-${PREFIX}/lib}
-LOCALEDIR=${LOCALEDIR:-${PKGDATADIR}}
 
 check_compiler
 makefile_local

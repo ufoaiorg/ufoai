@@ -54,3 +54,30 @@ create-dev: mappack dataarchive wininstaller linuxinstaller sourcearchive
 #
 sourcearchive:
 	$(Q)git archive --format=tar --prefix=ufoai-$(UFOAI_VERSION)-source/ HEAD | bzip2 -9 > ufoai-$(UFOAI_VERSION)-source.tar.bz2
+
+.PHONY: install-pre
+install-pre: pk3 lang
+	@echo "Binaries:  $(PKGBINDIR)"
+	@echo "Data:      $(PKGDATADIR)"
+	@echo "Libraries: $(PKGLIBDIR)"
+	@echo "Locales:   $(LOCALEDIR)"
+	$(Q)$(INSTALL_DIR) $(PKGDATADIR)/base
+	@echo "Install locales"
+	$(Q)LCDIR=$(LOCALDIR); \
+	LCDIR=$${LCDIR:-$(PKGDATADIR)/base/i18n}; \
+	for dir in base/i18n/*; do \
+		$(INSTALL_DIR) $$LCDIR/$$dir/LC_MESSAGES && \
+		$(INSTALL_DATA) $$dir/LC_MESSAGES/ufoai.mo $$LCDIR/$$dir/LC_MESSAGES/ufoai.mo; \
+	done
+	@echo "#!/bin/sh" > ufo.sh
+	@echo "cd $(PKGDATADIR); ./ufo \$$*; exit \$$?" >> ufo.sh
+	$(Q)$(INSTALL_DIR) $(PKGBINDIR)
+	$(Q)$(INSTALL_SCRIPT) ufo.sh $(PKGBINDIR)/ufo
+	@echo "#!/bin/sh" > ufoded.sh
+	@echo "cd $(PKGDATADIR); ./ufoded \$$*; exit \$$?" >> ufoded.sh
+	$(Q)$(INSTALL_SCRIPT) ufoded.sh $(PKGBINDIR)/ufoded
+	@echo "cd $(PKGDATADIR)/radiant; ./uforadiant \$$*; exit \$$?" >> uforadiant.sh
+	$(Q)$(INSTALL_SCRIPT) uforadiant.sh $(PKGBINDIR)/uforadiant
+	$(Q)rm ufoded.sh ufo.sh uforadiant.sh
+	@echo "Install pk3s"
+	$(Q)$(INSTALL_DATA) base/*.pk3 $(PKGDATADIR)/base

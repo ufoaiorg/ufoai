@@ -53,31 +53,6 @@ clean: $(addprefix clean-,$(TARGETS))
 distclean: clean
 	$(Q)rm -f config.h Makefile.local
 
-.PHONY: install-pre
-install-pre: pk3 lang
-	@echo "Binaries:  $(PKGBINDIR)"
-	@echo "Data:      $(PKGDATADIR)"
-	@echo "Libraries: $(PKGLIBDIR)"
-	@echo "Locales:   $(LOCALEDIR)"
-	$(Q)$(INSTALL_DIR) $(PKGDATADIR)/base
-	@echo "Install locales"
-	$(Q)for dir in base/i18n/*; do \
-		$(INSTALL_DIR) $(LOCALEDIR)/$$dir/LC_MESSAGES && \
-		$(INSTALL_DATA) $$dir/LC_MESSAGES/ufoai.mo $(LOCALEDIR)/$$dir/LC_MESSAGES/ufoai.mo; \
-	done
-	@echo "#!/bin/sh" > ufo.sh
-	@echo "cd $(PKGDATADIR); ./ufo \$$*; exit \$$?" >> ufo.sh
-	$(Q)$(INSTALL_DIR) $(PKGBINDIR)
-	$(Q)$(INSTALL_SCRIPT) ufo.sh $(PKGBINDIR)/ufo
-	@echo "#!/bin/sh" > ufoded.sh
-	@echo "cd $(PKGDATADIR); ./ufoded \$$*; exit \$$?" >> ufoded.sh
-	$(Q)$(INSTALL_SCRIPT) ufoded.sh $(PKGBINDIR)/ufoded
-	@echo "cd $(PKGDATADIR)/radiant; ./uforadiant \$$*; exit \$$?" >> uforadiant.sh
-	$(Q)$(INSTALL_SCRIPT) uforadiant.sh $(PKGBINDIR)/uforadiant
-	$(Q)rm ufoded.sh ufo.sh uforadiant.sh
-	@echo "Install pk3s"
-	$(Q)$(INSTALL_DATA) base/*.pk3 $(PKGDATADIR)/base
-
 .PHONY: install
 install: install-pre $(addprefix install-,$(TARGETS))
 
