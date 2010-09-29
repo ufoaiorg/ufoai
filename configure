@@ -208,14 +208,16 @@ usage() {
 	exit 1
 }
 
+make_var() {
+	echo "$1" | sed 's/-/_/g'
+}
+
 set_var() {
-	VAR=`echo ${1} | sed 's/-/_/g'`
-	eval ${VAR}='${2}'
+	eval $(make_var "$1")=\""$2"\"
 }
 
 get_var() {
-	VAR=`echo ${1} | sed 's/-/_/g'`
-	eval echo "\${${VAR}}"
+	eval echo \${$(make_var "$1")}
 }
 
 get_modules() {
