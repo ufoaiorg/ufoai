@@ -204,6 +204,13 @@ static void testInfoStrings (void)
 	CU_ASSERT_STRING_EQUAL(Info_ValueForKey(info, "name"), "");
 }
 
+static void testCvars (void)
+{
+	Cvar_Get("testGeneric_cvar", "testGeneric_cvarValue", CVAR_NOSET, "No set");
+	Cvar_Set("testGeneric_cvar", "test");
+	CU_ASSERT_STRING_EQUAL(Cvar_GetString("testGeneric_cvar"), "testGeneric_cvarValue");
+}
+
 static void testStringCopiers (void)
 {
 	const char src[] = "Командующий, я чрезвычайно рад доложить, что наш проект ОПЭВ был завершён успешно. Я прикрепил к письму "
@@ -330,6 +337,9 @@ int UFO_AddGenericTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testInfoStrings) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GenericSuite, testCvars) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(GenericSuite, testStringCopiers) == NULL)
