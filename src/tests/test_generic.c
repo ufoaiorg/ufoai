@@ -98,7 +98,7 @@ static void testConstInt (void)
 	CU_ASSERT_EQUAL(out, 2);
 	out = 0;
 	CU_ASSERT_TRUE(Com_GetConstInt("variable2", &out));
-	CU_ASSERT_EQUAL(out, 2);
+	CU_ASSERT_EQUAL(out, 10);
 
 	CU_ASSERT_STRING_EQUAL(Com_GetConstVariable("namespace", 2), "variable2");
 
