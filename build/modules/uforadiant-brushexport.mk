@@ -3,7 +3,7 @@ RADIANT_BASE       := tools/radiant
 
 $(TARGET)_FILE     := radiant/plugins/brushexport.$(SO_EXT)
 $(TARGET)_CFLAGS   += $(SO_CFLAGS) -Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include $(GTK_CFLAGS) $(GLIB_CFLAGS)
-$(TARGET)_LDFLAGS  += $(SO_LDFLAGS) $(GTK_LIBS) $(GLIB_LIBS) -lstdc++
+$(TARGET)_LDFLAGS  += $(SO_LDFLAGS) $(GTK_LIBS) $(GLIB_LIBS) -lstdc++ -lm
 $(TARGET)_SRCS     := \
 	$(RADIANT_BASE)/plugins/brushexport/callbacks.cpp \
 	$(RADIANT_BASE)/plugins/brushexport/export.cpp \
