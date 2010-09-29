@@ -54,7 +54,7 @@ distclean: clean
 	$(Q)rm -f config.h Makefile.local
 
 .PHONY: install-pre
-install-pre: pk3
+install-pre: pk3 lang
 	@echo "Binaries:  $(PKGBINDIR)"
 	@echo "Data:      $(PKGDATADIR)"
 	@echo "Libraries: $(PKGLIBDIR)"
