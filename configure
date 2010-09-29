@@ -10,12 +10,13 @@ DEBUG=1
 UNIVERSAL=
 HARD_LINKED_GAME=
 PARANOID=
+PREFIX=/usr/local
 PKGDATADIR=
+PKGBINDIR=
 PKGLIBDIR=
 LOCALEDIR=
 USE_SIGNALS=1
 MODE=
-PREFIX=
 CROSS=
 CC=
 CXX=
@@ -106,7 +107,8 @@ makefile_local() {
 	add_to_makefile_local MODE
 	add_to_makefile_local CC "Found cc ${CC}"
 	add_to_makefile_local CXX "Found cxx ${CXX}"
-	add_to_makefile_local CROSS "Using prefix ${CROSS}"
+	add_to_makefile_local CROSS "Using tools prefix ${CROSS}"
+	add_to_makefile_local_quote PKGBINDIR
 	add_to_makefile_local_quote PKGDATADIR
 	add_to_makefile_local_quote PKGLIBDIR
 	add_to_makefile_local_quote LOCALEDIR
@@ -163,6 +165,7 @@ usage() {
 	echo " --disable-signals        disable the use of a signal handler"
 	echo " --disable-execinfo       disable backtraces for crashes"
 	echo " --prefix=                prefix for directories"
+	echo " --bin-dir=               path for the ufoai binaries"
 	echo " --data-dir=              path for the ufoai game data"
 	echo " --lib-dir=               path for the ufoai shared objects"
 	echo " --locale-dir=            path for the ufoai translations"
@@ -237,6 +240,9 @@ while [ $# -gt 0 ]; do
 	--locale-dir=*)
 		LOCALEDIR=$(get_option $1)
 		;;
+	--bin-dir=*)
+		PKGBINDIR=$(get_option $1)
+		;;
 	--target-os=*)
 		TARGET_OS=$(get_option $1)
 		;;
@@ -260,6 +266,11 @@ if [ "${TARGET_OS}" = "mingw32" ] && [ "${HOST_OS}" != "mingw32" ]; then
 fi
 
 [ "${TARGET_OS}" = "darwin" ] && ( USE_SIGNALS= )
+
+PKGDATADIR=${PKGDATADIR:-${PREFIX}/games/ufoai}
+PKGBINDIR=${PKGBINDIR:-${PREFIX}/bin}
+PKGLIBDIR=${PKGLIBDIR:-${PREFIX}/lib}
+LOCALEDIR=${LOCALEDIR:-${PKGDATADIR}}
 
 check_compiler
 makefile_local
