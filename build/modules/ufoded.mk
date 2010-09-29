@@ -1,7 +1,7 @@
 TARGET             := ufoded
 
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_LDFLAGS  += $(SDL_LIBS) $(CURL_LIBS) -lz
+$(TARGET)_LDFLAGS  += $(SDL_LIBS) $(CURL_LIBS) -lz -lm
 $(TARGET)_CFLAGS   += -DCOMPILE_UFO -DDEDICATED_ONLY $(SDL_CFLAGS) $(CURL_CFLAGS)
 $(TARGET)_SRCS      = \
 	common/cmd.c \
