@@ -1,6 +1,6 @@
 MODELDIR ?= base/models
 
-UFOMODEL = ./ufomodel
+UFOMODEL = ./$(ufomodel_FILE)
 UFOMODEL_PARAMS = -mdx -overwrite -v
 
 MODELS_MD2 := $(shell find $(MODELDIR) -name "*.md2")
