@@ -91,7 +91,7 @@ $(BUILDDIR)/$(1)/%.cpp.o: $(SRCDIR)/%.cpp $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CXX [$(1)] $$<'
 	$(Q)$(CROSS)$(CXX) $(CXXFLAGS) $($(1)_CXXFLAGS) -c -o $$@ $$< -MD -MT $$@ -MP
 
-$(BUILDDIR)/$(1)/.dirs: config.h $(addprefix $(SRCDIR)/,$($(1)_SRCS))
+$(BUILDDIR)/$(1)/.dirs: config.h
 	$(Q)mkdir -p $(foreach i,$($(1)_OBJS),$(dir $(i)))
 	$(Q)touch $$@
 
