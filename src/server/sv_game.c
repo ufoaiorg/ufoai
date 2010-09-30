@@ -27,6 +27,7 @@
  */
 
 #include "server.h"
+#include <SDL.h>
 #include <SDL_thread.h>
 
 game_export_t *ge;
@@ -36,6 +37,8 @@ static qboolean pfe_pending = qfalse;
 static int pfe_mask, pfe_type;
 static struct dbuffer *pfe_msg;
 struct dbuffer *sv_msg = NULL;
+static SDL_Thread *thread;
+static void *gameLibrary;
 
 /**
  * @brief Debug print to server console
@@ -363,7 +366,67 @@ static void SV_FreeTags (int tagNum)
 	_Mem_FreeTag(sv_gameSysPool, tagNum, "GAME DLL", 0);
 }
 
-static SDL_Thread *thread;
+static void SV_UnloadGame (void)
+{
+#ifndef GAME_HARD_LINKED
+	if (gameLibrary)
+		SDL_UnloadObject(gameLibrary);
+#endif
+	gameLibrary = NULL;
+}
+
+/**
+ * @brief Loads the game shared library and calls the api init function
+ */
+static game_export_t *SV_GetGameAPI (game_import_t *parms)
+{
+#ifndef HARD_LINKED_GAME
+	void *(*GetGameAPI) (void *);
+
+	char name[MAX_OSPATH];
+	const char *path;
+#endif
+
+	if (gameLibrary)
+		Com_Error(ERR_FATAL, "SV_GetGameAPI without Com_UnloadGame");
+
+#ifndef HARD_LINKED_GAME
+	Com_Printf("------- Loading game.%s -------\n", SHARED_EXT);
+
+	/* now run through the search paths */
+	path = NULL;
+	while (!gameLibrary) {
+		path = FS_NextPath(path);
+		if (!path) {
+			Com_Printf("SV_GetGameAPI failed (game."SHARED_EXT")\n");
+			Com_DPrintf(DEBUG_SYSTEM, "%s\n", SDL_GetError());
+			return NULL;		/* couldn't find one anywhere */
+		}
+		Com_sprintf(name, sizeof(name), "%s/game_"CPUSTRING".%s", path, SHARED_EXT);
+		gameLibrary = SDL_LoadObject(name);
+		if (gameLibrary) {
+			Com_Printf("SV_GetGameAPI (%s)\n", name);
+			break;
+		} else {
+			Com_sprintf(name, sizeof(name), "%s/game.%s", path, SHARED_EXT);
+			gameLibrary = SDL_LoadObject(name);
+			if (gameLibrary) {
+				Com_Printf("SV_GetGameAPI (%s)\n", name);
+				break;
+			}
+			Com_DPrintf(DEBUG_SYSTEM, "%s\n", SDL_GetError());
+		}
+	}
+
+	GetGameAPI = (void *)SDL_LoadFunction(gameLibrary, "GetGameAPI");
+	if (!GetGameAPI) {
+		SV_UnloadGame();
+		return NULL;
+	}
+#endif
+
+	return GetGameAPI(parms);
+}
 
 /**
  * @brief Called when either the entire server is being killed, or it is changing to a different game directory.
@@ -383,7 +446,7 @@ void SV_ShutdownGameProgs (void)
 	thread = NULL;
 
 	ge->Shutdown();
-	Sys_UnloadGame();
+	SV_UnloadGame();
 
 	size = Mem_PoolSize(sv_gameSysPool);
 	if (size > 0) {
@@ -533,7 +596,7 @@ void SV_InitGameProgs (void)
 	/* import the server pathing table */
 	import.pathingMap = (void *) &svPathMap;
 
-	ge = Sys_GetGameAPI(&import);
+	ge = SV_GetGameAPI(&import);
 
 	if (!ge)
 		Com_Error(ERR_DROP, "failed to load game library");

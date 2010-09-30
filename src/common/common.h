@@ -294,10 +294,6 @@ void Sys_InitSignals(void);
 const char *Sys_SetLocale(const char *localeID);
 const char *Sys_GetLocale(void);
 
-void Sys_UnloadGame(void);
-/** loads the game dll and calls the api init function */
-game_export_t *Sys_GetGameAPI(game_import_t * parms);
-
 #define MAXCMDLINE 256
 const char *Sys_ConsoleInput(void);
 void Sys_ConsoleOutput(const char *string);

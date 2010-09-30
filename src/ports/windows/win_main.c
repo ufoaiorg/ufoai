@@ -86,64 +86,6 @@ void Sys_Init (void)
 #endif
 }
 
-/*
-========================================================================
-GAME DLL
-========================================================================
-*/
-
-static HINSTANCE game_library;
-
-void Sys_UnloadGame (void)
-{
-	if (!FreeLibrary(game_library))
-		Com_Error(ERR_FATAL, "FreeLibrary failed for game library");
-	game_library = NULL;
-}
-
-/**
- * @brief Loads the game dll
- */
-game_export_t *Sys_GetGameAPI (game_import_t *parms)
-{
-	void *(*GetGameAPI) (void *);
-	char name[MAX_OSPATH];
-	const char *path;
-
-	if (game_library)
-		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
-
-	/* run through the search paths */
-	path = NULL;
-	while (1) {
-		path = FS_NextPath(path);
-		if (!path)
-			break;		/* couldn't find one anywhere */
-		Com_sprintf(name, sizeof(name), "%s/game.dll", path);
-		game_library = LoadLibrary(name);
-		if (game_library) {
-			Com_DPrintf(DEBUG_SYSTEM, "LoadLibrary (%s)\n", name);
-			break;
-		} else {
-			Com_DPrintf(DEBUG_SYSTEM, "LoadLibrary (%s) failed\n", name);
-		}
-	}
-
-	if (!game_library) {
-		Com_Printf("Could not find any valid game lib\n");
-		return NULL;
-	}
-
-	GetGameAPI = (void *)GetProcAddress(game_library, "GetGameAPI");
-	if (!GetGameAPI) {
-		Sys_UnloadGame();
-		Com_Printf("Could not load game lib '%s'\n", name);
-		return NULL;
-	}
-
-	return GetGameAPI(parms);
-}
-
 /**
  * @brief Switch to one processor usage for windows system with more than
  * one processor
