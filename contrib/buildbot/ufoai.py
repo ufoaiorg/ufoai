@@ -42,6 +42,11 @@ class Package(ShellCommand):
 		self.addFactoryArguments(files = self.files)
 
 	def start(self):
+		properties = self.build.getProperties()
+
+		if not properties.has_key("package"):
+			return SKIPPED
+
 		self.command = ""
 		self.command += "cd %s && " % self.workdir
 		self.command += "mkdir -p $(dirname %s) && " % self.output
@@ -49,8 +54,12 @@ class Package(ShellCommand):
 			self.command += "zip %s %s && " % (self.output, " ".join(self.files))
 		elif self.output.endswith('.tar.bz2'):
 			self.command += "tar cvjf %s %s && " % (self.output, " ".join(self.files))
+		elif self.output.endswith('.tar.gz'):
+			self.command += "tar cvzf %s %s && " % (self.output, " ".join(self.files))
 		else:
 			print 'Output extension from "%s" unknown' % self.output
+			return FAILURE
+
 		self.command += "chmod 644 %s" % self.output
 		ShellCommand.start(self)
 
