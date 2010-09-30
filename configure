@@ -108,11 +108,11 @@ makefile_local() {
 	add_to_makefile_local CC "Found cc ${CC}"
 	add_to_makefile_local CXX "Found cxx ${CXX}"
 	add_to_makefile_local CROSS "Using tools prefix ${CROSS}"
-	add_to_makefile_local_quote PKGBINDIR
-	add_to_makefile_local_quote PKGDATADIR
-	add_to_makefile_local_quote PKGLIBDIR
-	add_to_makefile_local_quote LOCALEDIR
-	add_to_makefile_local_quote PREFIX
+	add_to_makefile_local_quote PKGBINDIR "Using bindir ${PKGBINDIR}"
+	add_to_makefile_local_quote PKGDATADIR "Using datadir ${PKGDATADIR}"
+	add_to_makefile_local_quote PKGLIBDIR "Using libdir ${PKGLIBDIR}"
+	add_to_makefile_local_quote LOCALEDIR "Using localedir ${LOCALEDIR}"
+	add_to_makefile_local_quote PREFIX "Using prefix ${PREFIX}"
 
 	echo "Build modules:"
 	for i in $(get_modules); do

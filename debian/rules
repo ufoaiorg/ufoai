@@ -37,7 +37,7 @@ ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
 endif
 
 CONFIGUREFLAGS += --datadir=/usr/share/games \
-	--libdir=/usr/lib/games \
+	--libdir=/usr/lib/games/ufoai/base \
 	--prefix=/usr
 
 MAINVER := $(shell dpkg-parsechangelog | sed -ne 's/^Version: *\([^~-]*\).*/\1/p' )
