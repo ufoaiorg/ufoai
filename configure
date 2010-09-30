@@ -165,10 +165,10 @@ usage() {
 	echo " --disable-signals        disable the use of a signal handler"
 	echo " --disable-execinfo       disable backtraces for crashes"
 	echo " --prefix=                prefix for directories"
-	echo " --bin-dir=               path for the ufoai binaries"
-	echo " --data-dir=              path for the ufoai game data"
-	echo " --lib-dir=               path for the ufoai shared objects"
-	echo " --locale-dir=            path for the ufoai translations"
+	echo " --bindir=                path for the ufoai binaries"
+	echo " --datadir=               path for the ufoai game data"
+	echo " --libdir=                path for the ufoai shared objects"
+	echo " --localedir=             path for the ufoai translations"
 	echo " --target-os=             specify the target os"
 	for i in $(ls build/platforms/*.mk); do
 		echo "  * $(basename $i .mk)"
@@ -231,16 +231,16 @@ while [ $# -gt 0 ]; do
 	--prefix=*)
 		PREFIX=$(get_option $1)
 		;;
-	--data-dir=*)
+	--datadir=*)
 		PKGDATADIR=$(get_option $1)
 		;;
-	--lib-dir=*)
+	--libdir=*)
 		PKGLIBDIR=$(get_option $1)
 		;;
-	--locale-dir=*)
+	--localedir=*)
 		LOCALEDIR=$(get_option $1)
 		;;
-	--bin-dir=*)
+	--bindir=*)
 		PKGBINDIR=$(get_option $1)
 		;;
 	--target-os=*)
