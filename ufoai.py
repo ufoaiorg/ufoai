@@ -2,6 +2,7 @@
 # protocols: irc, etc)
 
 import os, re, shlex, glob
+import ConfigParser
 
 from zope.interface import Interface, implements
 from twisted.internet import protocol, reactor
@@ -19,6 +20,15 @@ from buildbot.steps.shell import ShellCommand
 
 from string import join, capitalize, lower
 from CUnitTest import CUnitTest
+
+def get_config(filename):
+	properties = ConfigParser.SafeConfigParser()
+	try:
+		properties.read(filename)
+	except:
+		# catch error like that else it can display passwords on stdout
+		raise Exception("Can't load %s file" % filename)
+	return properties
 
 class Package(ShellCommand):
 	name = "package"
