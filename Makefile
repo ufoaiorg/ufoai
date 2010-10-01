@@ -56,6 +56,9 @@ distclean: clean
 .PHONY: install
 install: install-pre $(addprefix install-,$(TARGETS))
 
+.PHONY: strip
+strip: $(addprefix strip-,$(TARGETS))
+
 config.h: configure
 	$(Q)./configure $(CONFIGURE_OPTIONS)
 
@@ -105,15 +108,22 @@ clean-$(1):
 	@echo 'Cleaning up $(1)'
 	$(Q)rm -rf $(BUILDDIR)/$(1) $($(1)_FILE)
 
+.PHONY: strip-$(1)
+strip-$(1): $($(1)_FILE)
+	@echo 'Stripping $$<'
+	$(Q)strip $$<
+
 install-$(1): $($(1)_FILE)
-	@echo 'Install $($(1)_FILE)'
-	$(Q)$(INSTALL_DIR) $(PKGDATADIR)/$(shell dirname $($(1)_FILE))
-	$(Q)$(INSTALL_PROGRAM) $($(1)_FILE) $(PKGDATADIR)/$($(1)_FILE)
+	@echo 'Install $$<'
+	$(Q)$(INSTALL_DIR) $(PKGDATADIR)/$(shell dirname $$<)
+	$(Q)$(INSTALL_PROGRAM) $$< $(PKGDATADIR)/$$<
 
 else
 # if this target is ignored, just do nothing
 $(1):
 clean-$(1):
+strip-$(1):
+install-$(1):
 endif
 endif
 endef
