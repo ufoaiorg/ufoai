@@ -1,10 +1,6 @@
 #include <winresrc.h>
 
-#ifndef CROSSBUILD
-101 ICON DISCARDABLE "radiant.ico"
-#else
 101 ICON DISCARDABLE "build/projects/radiant.ico"
-#endif
 
 VS_VERSION_INFO VERSIONINFO
 FILEFLAGSMASK 0x17L
