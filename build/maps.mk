@@ -3,7 +3,7 @@ UFO2MAP            = ./ufo2map
 MAPSRCS           := $(shell find $(MAPSDIR) -name '*.map' \! -name 'tutorial*' \! -name '*autosave*' \! -name 'test*' )
 BSPS              := $(MAPSRCS:.map=.bsp)
 NICE              ?= 19
-UFO2MAPFLAGS      ?= -v 4 -nice -quant 2 $(NICE) -extra
+UFO2MAPFLAGS      ?= -v 4 -nice $(NICE) -quant 2 -extra
 FAST_UFO2MAPFLAGS ?= -v 2 -quant 6 -nice $(NICE)
 ENTS_UFO2MAPFLAGS ?= -v 2 -nice $(NICE) -onlyents
 
