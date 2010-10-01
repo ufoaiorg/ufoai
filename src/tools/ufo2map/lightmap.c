@@ -254,7 +254,6 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 /** @brief buckets for sample accumulation - clipped by the surface */
 typedef struct facelight_s {
 	int numsamples;
-	float *origins;
 	float *samples;		/**< lightmap samples */
 	float *directions;	/**< for specular lighting/bumpmapping */
 } facelight_t;
@@ -807,9 +806,6 @@ void BuildFacelights (unsigned int facenum)
 
 	fl = &facelight[config.compile_for_day][facenum];
 	fl->numsamples = l[0].numsurfpt;
-
-	fl->origins = (float *)Mem_Alloc(fl->numsamples * sizeof(vec3_t));
-	memcpy(fl->origins, l[0].surfpt, fl->numsamples * sizeof(vec3_t));
 	fl->samples = (float *)Mem_Alloc(fl->numsamples * sizeof(vec3_t));
 	fl->directions = (float *)Mem_Alloc(fl->numsamples * sizeof(vec3_t));
 
