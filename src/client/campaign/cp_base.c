@@ -2857,12 +2857,47 @@ static void B_PostLoadInitCapacity (void)
 }
 
 /**
+ * @brief Hack to fix corrupted savegames
+ * @sa bug#3019230: http://sourceforge.net/tracker/?func=detail&aid=3019230&group_id=157793&atid=805242
+ */
+static void B_PostLoadFixBases (void)
+{
+	int i;
+	linkedList_t *missionList = ccs.missions;
+
+	for (i = 0; i < ccs.numBases; i++) {
+		base_t *base = B_GetFoundedBaseByIDX(i);
+
+		if (!base)
+			continue;
+
+		if (base->baseStatus == BASE_UNDER_ATTACK)
+			base->baseStatus = BASE_WORKING;
+	}
+
+	while (missionList) {
+		mission_t *mission = (mission_t *)missionList->data;
+
+		if (mission && (mission->category == INTERESTCATEGORY_BASE_ATTACK)
+		 && (mission->stage == STAGE_BASE_ATTACK)) {
+			base_t *base = (base_t*)mission->data;
+
+			if (base && base->founded)
+				base->baseStatus = BASE_UNDER_ATTACK;
+		}
+
+		missionList = missionList->next;
+	}
+}
+
+/**
  * @brief Set the capacity stuff for all the bases after loading a savegame
  * @sa SAV_GameActionsAfterLoad
  */
 void B_PostLoadInit (void)
 {
 	B_PostLoadInitCapacity();
+	B_PostLoadFixBases();
 }
 
 /**
