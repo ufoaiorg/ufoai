@@ -115,7 +115,7 @@ strip-$(1): $($(1)_FILE)
 
 install-$(1): $($(1)_FILE)
 	@echo 'Install $$<'
-	$(Q)$(INSTALL_DIR) $(PKGDATADIR)/$(shell dirname $$<)
+	$(Q)$(INSTALL_DIR) $(PKGDATADIR)/$(dir $($(1)_FILE))
 	$(Q)$(INSTALL_PROGRAM) $$< $(PKGDATADIR)/$$<
 
 else
