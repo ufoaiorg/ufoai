@@ -4150,12 +4150,6 @@ tech rs_craft_shield_plating
 	require_AND {
 		tech	rs_alien_materials
 	}
-
-	require_for_production
-	{
-	    item alienmaterials 300
-	}
-
 	time		3000
 	producetime	240
 
@@ -4496,11 +4490,6 @@ tech rs_craft_weapon_particle
 //		tech rs_craft_ufo_harvester
 		tech rs_fighter_OR_harvester	// LOGIC tech - see there for more
 		item craft_weapon_particle_beam 1
-	}
-
-	require_for_production
-	{
-	    item alienmaterials 250
 	}
 
 	time		8000
