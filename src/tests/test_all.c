@@ -66,7 +66,6 @@ void Sys_Init (void)
 typedef struct config_s {
 	int console;
 	int automated;
-	int disableRMA;
 } config_t;
 
 static const char* resultPrefix = "ufoai";

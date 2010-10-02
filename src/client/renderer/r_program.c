@@ -462,7 +462,7 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 {
 	r_shader_t *sh;
 	char path[MAX_QPATH], *src[1];
-	unsigned e, len, length[1];
+	unsigned e, length[1];
 	char *source, *srcBuf;
 	byte *buf;
 	int i;
@@ -471,7 +471,7 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 
 	snprintf(path, sizeof(path), "shaders/%s", name);
 
-	if ((len = FS_LoadFile(path, &buf)) == -1) {
+	if (FS_LoadFile(path, &buf) == -1) {
 		Com_DPrintf(DEBUG_RENDERER, "R_LoadShader: Failed to load %s.\n", name);
 		return NULL;
 	}

@@ -394,7 +394,6 @@ uiNode_t* UI_AllocNode (const char* name, const char* type, qboolean isDynamic)
 static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 {
 	uiNode_t *find;
-	int i;
 
 	if (node->invis || node->behaviour->isVirtual || !UI_CheckVisibility(node))
 		return NULL;
@@ -434,6 +433,7 @@ static uiNode_t *UI_GetNodeInTreeAtPosition (uiNode_t *node, int rx, int ry)
 
 	/* disable ghost/excluderect in debug mode 2 */
 	if (UI_DebugMode() != 2) {
+		int i;
 		/* is the node tangible */
 		if (node->ghost)
 			return NULL;
