@@ -641,6 +641,8 @@ static void GLCmdsRemove (void)
 	Com_Printf("Saved "UFO_SIZE_T"bytes after removing all glcmds from the md2 files\n", bytes);
 }
 
+#undef main
+
 int main (int argc, char **argv)
 {
 	Com_Printf("---- ufomodel "VERSION" ----\n");

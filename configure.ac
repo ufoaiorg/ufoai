@@ -58,14 +58,6 @@ AC_ARG_WITH(msys,
 	[AS_HELP_STRING([--with-msys], [compile with msys support @<:@default=check@:>@])],
 	[], [with_msys=check])
 
-AC_ARG_WITH(opengl_framework,
-	[AS_HELP_STRING([--with-opengl-framework], [compile with given opengl framework @<:@default=/System/Library/Frameworks/OpenGL.framework@:>@])],
-	[], [with_opengl_framework=/System/Library/Frameworks/OpenGL.framework])
-
-AC_ARG_WITH(openal_framework,
-	[AS_HELP_STRING([--with-openal-framework], [compile with given openal framework @<:@default=/System/Library/Frameworks/OpenAL.framework@:>@])],
-	[], [with_openal_framework=/System/Library/Frameworks/OpenAL.framework])
-
 AC_ARG_ENABLE(dedicated,
 	[AS_HELP_STRING([--disable-dedicated], [build dedicated server @<:@default=enabled@:>@])],
 	[], [enable_dedicated=yes])
@@ -158,17 +150,13 @@ then
 elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	AC_SUBST([TARGET_OS],[darwin])
-	CLIENT_CFLAGS="$CLIENT_CFLAGS -F$with_opengl_framework"
-
-	# fix this darn SDL stuff....
-	with_sdl_config=/opt/local/bin/sdl-config
 
 	### most mac users will have their additional libs and headers under /opt/local,
 	### check for that, and if present, add to CFLAGS/LDFLAGS (really convenient!)
 	if test -d /opt/local
 	then
-		CFLAGS="$CFLAGS -I/opt/local/include"
-		LDFLAGS="$LDFLAGS -L/opt/local/lib"
+		CFLAGS="$CFLAGS -I/opt/local/include -F/opt/local/Library/Frameworks"
+		LDFLAGS="$LDFLAGS -L/opt/local/lib -F/opt/local/Library/Frameworks"
 	fi
 
 	### Check for universal binaries
@@ -456,21 +444,23 @@ TOOLS_CFLAGS="$TOOLS_CFLAGS $libpng_CFLAGS"
 if test $TARGET_OS != "darwin" 
 then
 	PKG_CHECK_MODULES(SDL, sdl, HAVE_SDL="yes", HAVE_SDL="no")
+	if test "x$HAVE_SDL" = "xno" ; then
+		sdl_config=$with_sdl_config
+		AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
+		if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes" || test -x $sdl_config
+		then
+			SDL_CFLAGS=`$sdl_config --cflags`
+			SDL_LIBS=`$sdl_config --libs`
+		else
+			AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
+		fi
+	fi
 else
-	HAVE_SDL=no
+	SDL_CFLAGS="$SDL_CFLAGS -I/opt/local/Library/Frameworks/SDL.framework/Headers"
+	SDL_LIBS="$SDL_LIBS -framework SDL"
+	HAVE_SDL=yes
 fi
 
-if test "x$HAVE_SDL" = "xno" ; then
-	sdl_config=$with_sdl_config
-	AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
-	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes" || test -x $sdl_config
-	then
-		SDL_CFLAGS=`$sdl_config --cflags`
-		SDL_LIBS=`$sdl_config --libs`
-	else
-		AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
-	fi
-fi
 
 #---------------------------------------------------------------------------------------------
 # Check SDL_image
@@ -478,18 +468,19 @@ fi
 if test $TARGET_OS != "darwin" 
 then
 	PKG_CHECK_MODULES(SDL_image, SDL_image, HAVE_SDL_image="yes", HAVE_SDL_image="no")
-else
-	HAVE_SDL_image=no
-fi
-
-if test "x$HAVE_SDL_image" = "xno" ; then
-	LIBS=
-	AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])
-	if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
-	then
-		AC_MSG_ERROR([You must have the SDL_image development libraries])
+	if test "x$HAVE_SDL_image" = "xno" ; then
+		LIBS=
+		AC_SEARCH_LIBS([IMG_LoadTyped_RW],[SDL_image])
+		if test "$ac_cv_search_IMG_LoadTyped_RW" = "no"
+		then
+			AC_MSG_ERROR([You must have the SDL_image development libraries])
+		fi
+		SDL_image_LIBS=$LIBS
 	fi
-	SDL_image_LIBS=$LIBS
+else
+	SDL_image_CFLAGS="$SDL_image_CFLAGS -I/opt/local/Library/Frameworks/SDL_image.framework/Headers"
+	SDL_image_LIBS="$SDL_image_LIBS -framework SDL_image"
+	HAVE_SDL_image=yes
 fi
 
 AC_MSG_NOTICE([SDL cflags: $SDL_CFLAGS])
@@ -509,40 +500,48 @@ TOOLS_CFLAGS="$TOOLS_CFLAGS $SDL_CFLAGS $SDL_image_CFLAGS"
 
 if test "$enable_client" = "yes"
 then
+	if test $TARGET_OS = "darwin"
+	then
+		CLIENT_CFLAGS="$CLIENT_CFLAGS"
+		CLIENT_LIBS="$CLIENT_LIBS -framework OpenGL"
+	fi
 	#---------------------------------------------------------------------------------------------
 	# Check SDL_mixer
 	#---------------------------------------------------------------------------------------------
-	if test $TARGET_OS != "darwin" 
+	if test $TARGET_OS = "darwin"
 	then
-		PKG_CHECK_MODULES(SDL_mixer, SDL_mixer, HAVE_SDL_mixer="yes", HAVE_SDL_mixer="no")
+		SDL_mixer_CFLAGS="$SDL_mixer_CFLAGS -I/opt/local/Library/Frameworks/SDL_mixer.framework/Headers"
+		SDL_mixer_LIBS="$SDL_mixer_LIBS -framework SDL_mixer"
+		SDL_ttf_CFLAGS="$SDL_ttf_CFLAGS -I/opt/local/Library/Frameworks/SDL_ttf.framework/Headers"
+		SDL_ttf_LIBS="$SDL_ttf_LIBS -framework SDL_ttf"
 	else
-		HAVE_SDL_mixer=no
-	fi
-	if test "x$HAVE_SDL_mixer" = "xno" ; then
-		LIBS=
-		AC_SEARCH_LIBS([Mix_OpenAudio],[SDL_mixer])
-		if test "$ac_cv_search_Mix_OpenAudio" = "no"
-		then
-			AC_MSG_ERROR([You must have the SDL_mixer development libraries])
+		OLD_CFLAGS=$CPPFLAGS
+		OLD_LDFLAGS=$LDFLAGS
+		CPPFLAGS=$SDL_CFLAGS
+		LDFLAGS=$SDL_LIBS
+
+		PKG_CHECK_MODULES(SDL_mixer, SDL_mixer, HAVE_SDL_mixer="yes", HAVE_SDL_mixer="no")
+		if test "x$HAVE_SDL_mixer" = "xno" ; then
+			LIBS=
+			AC_SEARCH_LIBS([Mix_OpenAudio],[SDL_mixer])
+			if test "$ac_cv_search_Mix_OpenAudio" = "no"
+			then
+				AC_MSG_ERROR([You must have the SDL_mixer development libraries])
+			fi
+			SDL_mixer_LIBS=$LIBS
 		fi
-		SDL_mixer_LIBS=$LIBS
+
+		LIBS=
+		AC_SEARCH_LIBS([TTF_Init],[SDL_ttf],[],[],[-lfreetype -lz])
+		if test "$ac_cv_search_TTF_Init" = "no"
+		then
+			AC_MSG_ERROR([You must have the SDL_ttf development libraries])
+		fi
+		SDL_ttf_LIBS=$LIBS
+
+		CPPFLAGS=$OLD_CFLAGS
+		LDFLAGS=$OLD_LDFLAGS
 	fi
-
-	OLD_CFLAGS=$CPPFLAGS
-	OLD_LDFLAGS=$LDFLAGS
-	CPPFLAGS=$SDL_CFLAGS
-	LDFLAGS=$SDL_LIBS
-
-	LIBS=
-	AC_SEARCH_LIBS([TTF_Init],[SDL_ttf],[],[],[-lfreetype -lz])
-	if test "$ac_cv_search_TTF_Init" = "no"
-	then
-		AC_MSG_ERROR([You must have the SDL_ttf development libraries])
-	fi
-	SDL_ttf_LIBS=$LIBS
-
-	CPPFLAGS=$OLD_CFLAGS
-	LDFLAGS=$OLD_LDFLAGS
 
 	AC_MSG_NOTICE([SDL_mixer cflags: $SDL_mixer_CFLAGS])
 	AC_MSG_NOTICE([SDL_mixer ldflags: $SDL_mixer_LIBS])
@@ -666,7 +665,7 @@ then
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 # end of client only checks
 fi
-	
+
 #---------------------------------------------------------------------------------------------
 # Check for curses
 #---------------------------------------------------------------------------------------------
@@ -740,7 +739,7 @@ then
 
 	if test $TARGET_OS == "darwin"
 	then
-		OPENAL_CFLAGS="$OPENAL_CFLAGS -F$with_openal_framework"
+		OPENAL_CFLAGS="$OPENAL_CFLAGS"
 		OPENAL_LIBS="$OPENAL_LIBS -framework OpenAL"
 	else
 		PKG_CHECK_MODULES(OPENAL, openal, HAVE_OPENAL="yes", HAVE_OPENAL="no")
@@ -930,8 +929,11 @@ AC_SUBST([EXE_EXT],"$ac_exe_ext")
 AC_SUBST([CLIENT_LIBS],"$CLIENT_LIBS")
 AC_SUBST([CLIENT_CFLAGS],"$CLIENT_CFLAGS")
 AC_SUBST([SERVER_LIBS],"$SERVER_LIBS")
+AC_SUBST([SERVER_CFLAGS],"$SERVER_CFLAGS")
 AC_SUBST([GAME_LIBS],"$GAME_LIBS")
+AC_SUBST([GAME_CFLAGS],"$GAME_CFLAGS")
 AC_SUBST([TOOLS_LIBS],"$TOOLS_LIBS")
+AC_SUBST([TOOLS_CFLAGS],"$TOOLS_CFLAGS")
 AC_SUBST([RADIANT_LIBS],"$RADIANT_LIBS")
 AC_SUBST([RADIANT_CFLAGS], "$RADIANT_CFLAGS")
 AC_SUBST([OPENAL_LIBS], "$OPENAL_LIBS")
@@ -968,13 +970,17 @@ ${PACKAGE_NAME} ${PACKAGE_VERSION}: Automatic configuration OK.
 
   Compiler flags:
 
+    CC: ................ ${CFLAGS}
     Client: ............ ${CLIENT_CFLAGS}
+    Server: ............ ${SERVER_CFLAGS}
     Tools: ............. ${TOOLS_CFLAGS}
     UFORadiant: ........ ${RADIANT_CFLAGS}
 
   Linker flags:
 
+    LD: ................ ${LDFLAGS}
     Client: ............ ${CLIENT_LIBS}
+    Server: ............ ${SERVER_LIBS}
     Tools: ............. ${TOOLS_LIBS}
     UFORadiant: ........ ${RADIANT_LIBS}
 

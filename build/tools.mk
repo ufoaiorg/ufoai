@@ -2,7 +2,7 @@
 # ufo2map
 ########################################################################################################
 
-UFO2MAP_CFLAGS+=-DCOMPILE_MAP -ffloat-store
+TOOLS_CFLAGS+=-DCOMPILE_MAP -ffloat-store
 
 UFO2MAP_SRCS = \
 	tools/ufo2map/ufo2map.c \
@@ -110,8 +110,8 @@ $(UFOMODEL_TARGET): $(UFOMODEL_OBJS)
 # store the float values in buffers, not in cpu registers, maybe slower
 $(BUILDDIR)/tools/ufo2map/%.o: $(SRCDIR)/%.c
 	@echo " * [MAP] $<"; \
-		$(CC) $(CFLAGS) $(UFO2MAP_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		$(CC) $(CFLAGS) $(TOOLS_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 
 $(BUILDDIR)/tools/ufomodel/%.o: $(SRCDIR)/%.c
 	@echo " * [MOD] $<"; \
-		$(CC) $(CFLAGS) $(UFO2MAP_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		$(CC) $(CFLAGS) $(TOOLS_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)

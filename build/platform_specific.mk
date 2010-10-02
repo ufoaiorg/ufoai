@@ -37,12 +37,11 @@ ifeq ($(TARGET_OS),mingw32)
 	endif
 else
 	LNKFLAGS+=-rdynamic
-	ifneq ($(TARGET_OS),darwin)
-		CLIENT_LIBS+=-lGL
-	else
+	ifeq ($(TARGET_OS),darwin)
 		LDFLAGS+=-framework IOKit -framework Foundation -framework Cocoa
-		CLIENT_LIBS+=-framework OpenGL
 		RADIANT_LIBS+=-headerpad_max_install_names
+	else
+		CLIENT_LIBS+=-lGL
 	endif
 endif
 
@@ -67,7 +66,7 @@ ifeq ($(TARGET_OS),darwin)
 	SHARED_EXT=dylib
 	SHARED_CFLAGS=-fPIC -fno-common
 	SHARED_LDFLAGS=-dynamiclib
-	CFLAGS+= -D_BSD_SOURCE -D_XOPEN_SOURCE
+	CFLAGS+=-D_BSD_SOURCE -D_XOPEN_SOURCE
 	SERVER_LIBS+=
 
 	ifeq ($(TARGET_CPU),universal)
