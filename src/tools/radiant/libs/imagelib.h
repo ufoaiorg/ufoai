@@ -50,7 +50,7 @@ class RGBAImage: public Image
 		}
 		~RGBAImage ()
 		{
-			delete pixels;
+			delete[] pixels;
 		}
 
 		byte* getRGBAPixels () const
