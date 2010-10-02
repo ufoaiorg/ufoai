@@ -198,7 +198,7 @@ static void UR_DialogStartStore_f (void)
 
 		if (installation->ufoCapacity.max <= 0
 		 || installation->ufoCapacity.max <= installation->ufoCapacity.cur)
-		 	continue;
+			continue;
 
 		if (count == idx) {
 			UFOYard = installation;

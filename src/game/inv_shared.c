@@ -300,14 +300,14 @@ static qboolean INVSH_ShapeCheckPosition (const invList_t *ic, const int x, cons
 {
 	assert(ic);
 
- 	/* Check if the position is inside the shape (depending on rotation value) of the item. */
+	/* Check if the position is inside the shape (depending on rotation value) of the item. */
 	if (ic->item.rotated) {
- 		if (((INVSH_ShapeRotate(ic->item.t->shape) >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
- 			return qtrue;
+		if (((INVSH_ShapeRotate(ic->item.t->shape) >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
+			return qtrue;
 	} else {
- 		if (((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
- 			return qtrue;
- 	}
+		if (((ic->item.t->shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
+			return qtrue;
+	}
 
 	/* Position is out of bounds or position not inside item-shape. */
 	return qfalse;
@@ -544,11 +544,11 @@ invDef_t *INVSH_GetInventoryDefinitionByID (const char *id)
 	containerIndex_t i;
 	invDef_t *container;
 
- 	for (i = 0, container = CSI->ids; i < CSI->numIDs; container++, i++)
- 		if (!strcmp(id, container->name))
- 			return container;
+	for (i = 0, container = CSI->ids; i < CSI->numIDs; container++, i++)
+		if (!strcmp(id, container->name))
+			return container;
 
- 	return NULL;
+	return NULL;
 }
 
 /**
@@ -729,7 +729,7 @@ static qboolean INVSH_CheckShapeSmall (const uint32_t shape, const int x, const 
  */
 int INVSH_ShapeSize (const uint32_t shape)
 {
- 	int bitCounter = 0;
+	int bitCounter = 0;
 	int i;
 
 	for (i = 0; i < SHAPE_SMALL_MAX_HEIGHT * SHAPE_SMALL_MAX_WIDTH; i++)

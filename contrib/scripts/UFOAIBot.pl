@@ -57,4 +57,3 @@ sub help {
 }
 
 my $bot = UFOAIBot->new(%options)->run();
-

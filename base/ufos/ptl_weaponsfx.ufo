@@ -783,27 +783,27 @@ particle plasmaMiniPulse
 }
 
 particle plasmaPulse
- {
- 	init
- 	{
- 		image  sfx/weapons/plasmapulse
- 		blend  add
- 		style  axis
- 		offset "0 0 0"
+{
+	init
+	{
+		image  sfx/weapons/plasmapulse
+		blend  add
+		style  axis
+		offset "0 0 0"
 		child plasmaPulseBall
 		spawn muzzle_plasma
- 	}
- 	run
- 	{
- 		push pos "1 1"
- 		push *t
- 		mul  float 16.0
-		sin  #
- 		mul  #
- 		add  pos "90 30"
- 		pop  *size
 	}
- }
+	run
+	{
+		push pos "1 1"
+		push *t
+		mul  float 16.0
+		sin  #
+		mul  #
+		add  pos "90 30"
+		pop  *size
+	}
+}
 
 particle plasmaMiniPulseBall
 {
@@ -882,48 +882,48 @@ particle plasmaBall
 
 particle plasmaBallCore
 {
- 	init
- 	{
- 		frame			0
- 		endframe		9
- 		image			+sfx/weapons/plasmashot_
+	init
+	{
+		frame			0
+		endframe		9
+		image			+sfx/weapons/plasmashot_
 		blend			blend
 		style			facing
 		framefade		none
 		size			"200 200"
 		fps				24.0
- 		push			*v
+		push			*v
 		mul				float 30.0
 		add				*s
 		pop				*s
 		v				"0 0 0"
 		tps 				0.1
 	}
- 	think { kill }
+	think { kill }
 }
 
 particle plasmaBigBall
 {
- 	init
- 	{
- 		image  sfx/weapons/plasmaball-core
- 		blend  add
- 		style  facing
- 		offset "0 0 0"
+	init
+	{
+		image  sfx/weapons/plasmaball-core
+		blend  add
+		style  facing
+		offset "0 0 0"
 		tps    60
 		child plasmaBallCore
 		spawn muzzle_plasma
- 	}
- 	think
- 	{
+	}
+	think
+	{
 		spawn plasmaBallTrail
- 		push pos "1 1"
- 		push *t
- 		mul  float 16.0
+		push pos "1 1"
+		push *t
+		mul  float 16.0
 		sin  #
- 		mul  #
- 		add  pos "40 40"
- 		pop  *size
+		mul  #
+		add  pos "40 40"
+		pop  *size
 	}
 }
 

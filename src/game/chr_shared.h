@@ -95,7 +95,7 @@ typedef struct chrScoreMission_s {
 	qboolean firedSplashHit[KILLED_NUM_TYPES];	/** Same as firedHit but for Splash damage. */
 	int hitsSplash[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of splash hits. */
 	int hitsSplashDamage[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of dealt splash damage (aliens, civilians or, teammates).
-														 		 * This is counted in overall damage (healthpoint).*/
+																 * This is counted in overall damage (healthpoint).*/
 	/** @todo Check HEALING of others. */
 	int skillKills[SKILL_NUM_TYPES];	/**< Number of kills related to each skill. */
 
@@ -235,7 +235,7 @@ typedef struct teamDef_s {
 	qboolean armour;	/**< Does this team use armour. */
 	qboolean weapons;	/**< Does this team use weapons. */
 	struct objDef_s *onlyWeapon;	/**< ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
-	 						 * The default value is NONE for every 'normal' actor - but e.g. bloodspiders only have
+							 * The default value is NONE for every 'normal' actor - but e.g. bloodspiders only have
 							 * the ability to melee attack their victims. They get a weapon assigned with several
 							 * bloodspider melee attack firedefitions */
 

@@ -702,7 +702,7 @@ utility MD3Import "Quake3 MD3 Import" silentErrors:false
 			offsetFrames	= ReadLong bstream #unsigned
 			offsetTags		= ReadLong bstream #unsigned
 			offsetSurfaces	= ReadLong bstream #unsigned
- 			offsetEnd		= ReadLong bstream #unsigned
+			offsetEnd		= ReadLong bstream #unsigned
 		),
 
 		fn IsValid=

@@ -64,26 +64,26 @@
   <!--
     Attributes required by all element representing a syntax or pattern tag.
 
-    - name		the name of the tag (it can appear in the UI)
+    - name      the name of the tag (it can appear in the UI)
 
-    - style		the style used to highlight the tag. Recognized values
-    		are (from gtksourcestylescheme.h):
+    - style     the style used to highlight the tag. Recognized values
+                are (from gtksourcestylescheme.h):
 
-    		- Base-N Integer	used for values with a base
-    					other than 10
-    		- Character		used for single characters
-    		- Comment		used for comments
-    		- Data Type		used for data types
-    		- Function		used for function names
-    		- Decimal		used for decimal values
-    		- Floating Point	used for floating point values
-    		- Keyword		used for keywords
-    		- Preprocessor		used for preprocessor instructions
-    		- String		used for strings
-    		- Specials		used for 'special' things
-    		- Others (DEPRECATED, replaced by "Data Type")
-    		- Others 2		used for 'other' things
-    		- Others 3		used for 'other' things
+                - Base-N Integer        used for values with a base
+                                        other than 10
+                - Character             used for single characters
+                - Comment               used for comments
+                - Data Type             used for data types
+                - Function              used for function names
+                - Decimal               used for decimal values
+                - Floating Point        used for floating point values
+                - Keyword               used for keywords
+                - Preprocessor          used for preprocessor instructions
+                - String                used for strings
+                - Specials              used for 'special' things
+                - Others (DEPRECATED, replaced by "Data Type")
+                - Others 2              used for 'other' things
+                - Others 3              used for 'other' things
 
     The "name" attribute can be prefixed with "_" to be marked for
     translation.
@@ -106,21 +106,21 @@
 
     Required attributes:
 
-    - name		the name of the language (it can appear in menus and
-    		dialog boxes)
+    - name      the name of the language (it can appear in menus and
+                dialog boxes)
 
-    - section	the category the language belongs to (e.g. "Sources",
-    		"Scripts", etc.)
+    - section   the category the language belongs to (e.g. "Sources",
+                "Scripts", etc.)
 
-    - version	version of the .lang file format (1.0)
+    - version   version of the .lang file format (1.0)
 
-    - mimetypes	a list of mime-types that identifies the types of file
-    		that must be highlighted using the .lang file
+    - mimetypes a list of mime-types that identifies the types of file
+                that must be highlighted using the .lang file
 
     Optional attributes:
 
     - translation-domain
-    		the translation domain used by the file
+                the translation domain used by the file
 
     The "name" and "section" attributes can be prefixed with
     "_" to be marked for translation.
@@ -276,23 +276,23 @@
 
     Optional attributes:
 
-    - case-sensitive	whether the keywords are case sensitive
+    - case-sensitive    whether the keywords are case sensitive
 
     - match-empty-string-at-beginning:
-    			whether the empty string (\b) should be matched
-    			at the beginning of the keywords
+                        whether the empty string (\b) should be matched
+                        at the beginning of the keywords
 
     - match-empty-string-at-end
-    			whether the empty string (\b) should be matched
-    			at the end of the keywords
+                        whether the empty string (\b) should be matched
+                        at the end of the keywords
 
-    - beginning-regex	if all keywords start with a regex, you can
-    			specify	it here to avoid doing it for
-    			every single keyword
+    - beginning-regex   if all keywords start with a regex, you can
+                        specify it here to avoid doing it for
+                        every single keyword
 
-    - end-regex		if all keywords end with a regex, you can
-    			specify	it here to avoid doing it for
-    			every single keyword
+    - end-regex         if all keywords end with a regex, you can
+                        specify it here to avoid doing it for
+                        every single keyword
   -->
   <define name="keyword-list">
     <element name="keyword-list">

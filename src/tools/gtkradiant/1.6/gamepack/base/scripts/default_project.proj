@@ -95,4 +95,3 @@ Note : Default project settings are for single player... this can be changed thr
   <key name="bsp_ufo2map: (only ents)" value="! &quot;$TEMPLATEapppathufo2map&quot; -nice 19 -onlyents $"/>
   <key name="bsp_ufo2map: (only ents)" value="! &quot;$TEMPLATEapppathufo2map&quot; -nice 19 -onlyents $"/>
 </project>
-

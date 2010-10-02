@@ -30,4 +30,3 @@ public class ###JAVAID###SubParser extends ###EXTENDSJAVAID###SubParser {
 		###EVENTPROPERTIESREGISTRATION###
 	}
 }
-

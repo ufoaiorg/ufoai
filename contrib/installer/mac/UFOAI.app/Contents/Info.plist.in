@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
- 	<string>UFO: Alien Invasion @UFOAI_VERSION@</string>
+	<string>UFO: Alien Invasion @UFOAI_VERSION@</string>
 	<key>CFBundleExecutable</key>
 	<string>ufo</string>
 	<key>CFBundleGetInfoString</key>

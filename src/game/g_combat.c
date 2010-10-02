@@ -302,7 +302,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	if (G_IsBrushModel(target)) {
 		/* Breakables are immune to stun & shock damage. */
 		if (stunEl || stunGas || shock || mock)
- 			return;
+			return;
 
 		if (damage >= target->HP) {
 			/* don't reset the HP value here, this value is used to distinguish

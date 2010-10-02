@@ -1202,12 +1202,12 @@ int AII_BaseCanShoot (const base_t *base)
 	/* If we can shoot with missile defences */
 	if (B_GetBuildingStatus(base, B_DEFENCE_MISSILE)
 	 && AII_WeaponsCanShoot(base->batteries, base->numBatteries))
-	 	return qtrue;
+		return qtrue;
 
 	/* If we can shoot with beam defences */
 	if (B_GetBuildingStatus(base, B_DEFENCE_LASER)
 	 && AII_WeaponsCanShoot(base->lasers, base->numLasers))
-	 	return qtrue;
+		return qtrue;
 
 	return qfalse;
 }
@@ -1300,13 +1300,13 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
 			if (test != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT
 			 && test != AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT
 			 && (minAttackerDistance <= slot->ammo->craftitem.stats[AIR_STATS_WRANGE]))
-			 	weapons[i].target = closestAttacker;
+				weapons[i].target = closestAttacker;
 		} else if (closestCraft) {
 			const int test = AIRFIGHT_CheckWeapon(slot, minCraftDistance);
 			if (test != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT
 			 && test != AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT
 			 && (minCraftDistance <= slot->ammo->craftitem.stats[AIR_STATS_WRANGE]))
-			 	weapons[i].target = closestCraft;
+				weapons[i].target = closestCraft;
 		}
 	}
 }

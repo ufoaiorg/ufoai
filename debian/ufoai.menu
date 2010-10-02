@@ -2,8 +2,8 @@
 	title="UFO: Alien Invasion" command="/usr/games/ufo" \
 	icon="/usr/share/pixmaps/ufoai.xpm"
 ?package(ufoai):needs="text" section="Games/Strategy" \
- 	title="UFO: Alien Invasion dedicated server" command="/usr/games/ufoded" \
+	title="UFO: Alien Invasion dedicated server" command="/usr/games/ufoded" \
 	icon="/usr/share/pixmaps/ufoded.xpm"
 ?package(ufoai):needs="X11" section="Games/Strategy" \
- 	title="UFO: Alien Invasion (Safe mode)" command="/usr/games/ufo +exec safemode.cfg" \
+	title="UFO: Alien Invasion (Safe mode)" command="/usr/games/ufo +exec safemode.cfg" \
 	icon="/usr/share/pixmaps/ufoai.xpm"

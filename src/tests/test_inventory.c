@@ -315,19 +315,19 @@ static void testItemMassActions (void)
 		addedItem = testAddSingle(&inv, od, container);
 		CU_ASSERT(addedItem == qtrue);
 		for (j = 0; j < od->numAmmos; j++) {
- 			addedItem = testAddSingle(&inv, od->ammos[j], container);
+			addedItem = testAddSingle(&inv, od->ammos[j], container);
 			CU_ASSERT(addedItem == qtrue);
- 			addedItem = testAddSingle(&inv, od->ammos[j], container);
+			addedItem = testAddSingle(&inv, od->ammos[j], container);
 			CU_ASSERT(addedItem == qtrue);
- 			addedItem = testAddSingle(&inv, od->ammos[j], container);
+			addedItem = testAddSingle(&inv, od->ammos[j], container);
 			CU_ASSERT(addedItem == qtrue);
- 			addedItem = testAddSingle(&inv, od->ammos[j], container);
+			addedItem = testAddSingle(&inv, od->ammos[j], container);
 			CU_ASSERT(addedItem == qtrue);
- 			addedItem = testAddSingle(&inv, od->ammos[j], container);
+			addedItem = testAddSingle(&inv, od->ammos[j], container);
 			CU_ASSERT(addedItem == qtrue);
- 			addedItem = testAddSingle(&inv, od->ammos[j], container);
+			addedItem = testAddSingle(&inv, od->ammos[j], container);
 			CU_ASSERT(addedItem == qtrue);
- 		}
+		}
 	}
 }
 

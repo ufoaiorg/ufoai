@@ -1809,7 +1809,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	}
 
 	/* draw bases */
- 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		aircraft_t *aircraft;
 		if (!base)

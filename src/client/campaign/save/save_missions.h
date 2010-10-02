@@ -90,9 +90,9 @@ DTD:
 	onWin						CDATA	#IMPLIED
 	onLose						CDATA	#IMPLIED
 	category	(none, recon, terror,
-			 	baseAttack, building,
-			 	supply, XVI, intercept,
-			 	harvest, alienBase)		#REQUIRED
+				baseAttack, building,
+				supply, XVI, intercept,
+				harvest, alienBase)		#REQUIRED
 	stage		(notActive, comeFromOrbit,
 				reconAir, missionGoTo,
 				reconGround, terrorMission,

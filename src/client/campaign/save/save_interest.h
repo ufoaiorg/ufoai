@@ -66,9 +66,9 @@ DTD:
 <!ELEMENT interest EMPTY>
 <!ATTLIST interest
 	id			(none, recon, terror,
-			 	baseAttack, building,
-			 	supply, XVI, intercept,
-			 	harvest, alienBase)		#REQUIRED
+				baseAttack, building,
+				supply, XVI, intercept,
+				harvest, alienBase)		#REQUIRED
 	value					CDATA		'0'
 >
 

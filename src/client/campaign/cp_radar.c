@@ -414,7 +414,7 @@ void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const 
 	/* Do nothing if this isn't a RadarTower */
 	if (installation->installationTemplate->radarRange <= 0
 	 || installation->installationTemplate->trackingRange <= 0)
-	 	return;
+		return;
 
 	RADAR_Initialise(&installation->radar, radarRange, trackingRadarRange, RADAR_INSTALLATIONLEVEL, qtrue);
 	CP_UpdateMissionVisibleOnGeoscape();

@@ -395,7 +395,7 @@ void INS_UpdateInstallationData (void)
 		 && installation->buildStart
 		 && installation->buildStart + installation->installationTemplate->buildTime <= ccs.date.day) {
 
-		 	INS_FinishInstallation(installation);
+			INS_FinishInstallation(installation);
 
 			Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Construction of installation %s finished."), installation->name);
 			MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDFINISH, _("Installation finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);

@@ -519,7 +519,7 @@ static void G_ClientStateChangeUpdate (edict_t *ent)
 	G_SendStats(ent);
 
 	/* End the event. */
- 	gi.EndEvents();
+	gi.EndEvents();
 }
 
 /**

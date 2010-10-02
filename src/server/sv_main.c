@@ -368,10 +368,10 @@ static void SVC_DirectConnect (struct net_stream *stream)
 		if (rejmsg[0] != '\0') {
 			NET_OOB_Printf(stream, "print\n%s\nConnection refused.\n", rejmsg);
 			Com_Printf("Game rejected a connection from %s. Reason: %s\n", peername, rejmsg);
- 		} else {
+		} else {
 			NET_OOB_Printf(stream, "print\nConnection refused.\n");
 			Com_Printf("Game rejected a connection from %s.\n", peername);
- 		}
+		}
 		return;
 	}
 

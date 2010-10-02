@@ -7,8 +7,8 @@ sub readDir
 	my $status = opendir (DIR, "$dir");
 	my @files = ();
 	unless ( $status ) {
- 		print "Could not read $dir\n";
- 		return ();
+		print "Could not read $dir\n";
+		return ();
 	}
 
 	@files = readdir ( DIR );

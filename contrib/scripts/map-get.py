@@ -67,13 +67,13 @@ def run(cmd, mandatory=True):
 def md5sum(path, binary = False):
     # to be used carefully with big files
     if binary:
-    	return md5(open(path, "rb").read()).hexdigest()
+        return md5(open(path, "rb").read()).hexdigest()
     return md5(open(path).read()).hexdigest()
 
 
 import time
 def download(uri):
-	global displayDownloadStatus
+    global displayDownloadStatus
     request = urllib2.Request(uri)
     import platform
     p = ' '.join([platform.platform()] + list(platform.dist()))
@@ -89,7 +89,7 @@ def download(uri):
     t = 1
     data = f.read(10240)
     if not displayDownloadStatus:
-    	print('downloading ' + uri)
+        print('downloading ' + uri)
     while data:
         re+= data
         if displayDownloadStatus and sys.stdout.isatty:
@@ -101,7 +101,7 @@ def download(uri):
         t = time.time() - t
     f.close()
     if displayDownloadStatus:
-    	sys.stdout.write('\r%s\r' % (' '*len(out)))
+        sys.stdout.write('\r%s\r' % (' '*len(out)))
     return re
 
 

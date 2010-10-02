@@ -199,9 +199,9 @@ int US_UFOsInStorage (const aircraft_t *ufoTemplate, const installation_t *insta
 		if (installation && ufo->installation != installation)
 			continue;
 		if (ufo->status != SUFO_STORED)
-		 	continue;
+			continue;
 
-	 	count++;
+		count++;
 	}
 
 	return count;
@@ -253,7 +253,7 @@ storedUFO_t *US_GetClosestStoredUFO (const aircraft_t *ufoTemplate, const base_t
 		if (ufoTemplate && ufo->ufoTemplate != ufoTemplate)
 			continue;
 		if (ufo->status != SUFO_STORED)
-		 	continue;
+			continue;
 		assert(ufo->installation);
 		if (base)
 			distance = GetDistanceOnGlobe(ufo->installation->pos, base->pos);

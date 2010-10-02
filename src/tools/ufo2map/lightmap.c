@@ -686,7 +686,7 @@ void BuildVertexNormals (void)
 			VectorSubtract(face_extents[vert_faces[j]].maxs, face_extents[vert_faces[j]].mins, delta);
 			scale = VectorLength(delta);
 
- 			if (face->side)
+			if (face->side)
 				VectorScale(plane->normal, -scale, norm);
 			else
 				VectorScale(plane->normal, scale, norm);

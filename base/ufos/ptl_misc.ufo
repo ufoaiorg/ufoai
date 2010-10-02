@@ -254,25 +254,25 @@ particle frag_explosion
 }
 particle flash_explosion
 {
- 	init
- 	{
- 		frame			0
- 		endframe		18
- 		image			+sfx/explosions/flashbang_a
+	init
+	{
+		frame			0
+		endframe		18
+		image			+sfx/explosions/flashbang_a
 		blend			blend
 		style			facing
 		framefade		none
 		size			"100 100"
 		fps				26.0
 		tps				1.4
- 		push			*v
+		push			*v
 		mul				float 30.0
 		add				*s
 		pop				*s
 		spawn				flash
 		v				"0 0 0"
 	}
- 	think { kill }
+	think { kill }
 }
 
 particle grenadeFragment
@@ -984,8 +984,8 @@ particle crashsite_fire
 
 particle blood
 {
- 	init
- 	{
+	init
+	{
 		frame			0							// the animation should start at image 0
 		endframe		3							// and end at the fourth image
 		image			+sfx/blood/bloodsplatter_d	// the + indicates animated frames as images
@@ -997,7 +997,7 @@ particle blood
 		tps				3							// call the think function x times per second
 		v				"0 0 0"						// no velocity
 	}
- 	think { kill }
+	think { kill }
 }
 
 //particle blood

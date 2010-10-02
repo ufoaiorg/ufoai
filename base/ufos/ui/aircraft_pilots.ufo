@@ -211,11 +211,11 @@ window aircraft_pilots extends iaircraft
 	}
 
 	cmpPilotSelect actor_select0 {
-  	pos "38 470"
+		pos "38 470"
 	}
 
 	cmpPilotSelect actor_select1 {
-  	pos "38 505"
+		pos "38 505"
 	}
 
 	cmpPilotSelect actor_select2

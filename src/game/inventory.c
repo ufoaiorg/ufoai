@@ -322,8 +322,8 @@ static int I_MoveInInventory (inventoryInterface_t* self, inventory_t* const i, 
 		invList_t *icTo;
 		/* Store x/y origin coordinates of removed (source) item.
 		 * When we re-add it we can use this. */
-	 	const int cacheFromX = fItem->x;
-	 	const int cacheFromY = fItem->y;
+		const int cacheFromX = fItem->x;
+		const int cacheFromY = fItem->y;
 
 		/* Check if destination/blocking item is the same as source/from item.
 		 * In that case the move is not needed -> abort. */
