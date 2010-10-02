@@ -590,22 +590,6 @@ then
 	fi
 fi
 
-english="standard_campaign_txt"
-download_description $english
-if [[ $? -eq 0 ]]
-then
-	clean_html
-
-	for english in "standard_campaign_txt" "hard_campaign_txt" "veryhard_campaign_txt" "easy_campaign_txt" "veryeasy_campaign_txt" "alien_campaign_txt"
-	do
-		update_one_sentence "1"
-	done
-	if [[ "$debug" = "1" ]]
-	then
-		echo "Checking campaign descriptions : done." >> $log_file
-	fi
-fi
-
 english="mail_aircraft_landed"
 download_description $english
 if [[ $? -eq 0 ]]
