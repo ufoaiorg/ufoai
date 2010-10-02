@@ -30,6 +30,37 @@ def get_config(filename):
 		raise Exception("Can't load %s file" % filename)
 	return properties
 
+class Publish(ShellCommand):
+	name = "publish"
+	haltOnFailure = 1
+	flunkOnFailure = 1
+	description = [ "publishing" ]
+	descriptionDone = [ "publish" ]
+
+	def __init__(self, **kwargs):
+		self.src = kwargs["src"]
+		del kwargs["src"]
+		self.dest = kwargs["dest"]
+		del kwargs["dest"]
+
+		ShellCommand.__init__(self, **kwargs)
+
+		self.addFactoryArguments(src = self.src)
+		self.addFactoryArguments(dest = self.dest)
+
+	def start(self):
+		properties = self.build.getProperties()
+
+		if not properties.has_key("package"):
+			return SKIPPED
+
+		self.command = ""
+		self.command += "rm -f %s && " % self.dest
+		self.command += "mkdir -p $(dirname %s) && " % self.dest
+		self.command += "cp %s %s && " % (self.src, self.dest)
+		self.command += "chmod 644 %s" % self.dest
+		ShellCommand.start(self)
+
 class Package(ShellCommand):
 	name = "package"
 	haltOnFailure = 1
