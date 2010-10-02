@@ -18,41 +18,46 @@
 
 import xslutil
 
-if __name__ == '__main__':
-    # Dummy class, easy to test
-    class ShellCommand:
-        def __init__(self, command, flunkOnFailure):
-            pass
-        pass
-else:
-    from buildbot.steps.shell import ShellCommand
+#if __name__ == '__main__':
+#    # Dummy class, easy to test
+#    class ShellCommand:
+#        def __init__(self, **kwargs):
+#            pass
+#        pass
+#else:
+from buildbot.steps.shell import ShellCommand
 
 
 
 class CUnitTest(ShellCommand):
-    def __init__(self, command, cunit_result_file="-Results.xml", cunit_xsl_file="/usr/share/CUnit/CUnit-Run.xsl", flunkOnFailure=False):
-        ShellCommand.__init__(self, command, flunkOnFailure)
+    def __init__(self, cunit_result_file="-Results.xml", cunit_xsl_file="/usr/share/CUnit/CUnit-Run.xsl", flunkOnFailure=False, **kwargs):
+        print "bbbb"
+        ShellCommand.__init__(self, flunkOnFailure = flunkOnFailure, **kwargs)
+        print "cccc"
         self.cunit_result_file = cunit_result_file
         self.cunit_xsl_file = cunit_xsl_file
-        pass
 
-    def getXML(self):
-        file = open(self.cunit_result_file, "rt")
-        content = file.read()
-        file.close()
-        return content
+#    def getXML(self):
+#        print "aa"
+#        file = open(self.cunit_result_file, "rt")
+#        content = file.read()
+#        file.close()
+#        return content
 
-    def getHTML(self):
-        content = xslutil.apply_xsl(self.cunit_result_file, self.cunit_xsl_file)
-        return content
+#    def getHTML(self):
+#        print "bb"
+#        content = xslutil.apply_xsl(self.cunit_result_file, self.cunit_xsl_file)
+#        return content
 
-    def createSummary(self, log):
-        self.addCompleteLog("log", log)
-        xml = self.getXML()
-        self.addCompleteLog("xml-result", xml)
-        html = self.getHTML()
-        self.addHTMLLog("html-result", html)
+#    def createSummary(self, log):
+#        print "cc"
+#        self.addCompleteLog("log", log)
+#        xml = self.getXML()
+#        self.addCompleteLog("xml-result", xml)
+#        html = self.getHTML()
+#        self.addHTMLLog("html-result", html)
 
 
-if __name__ == '__main__':
-    CUnitTest()
+
+#if __name__ == '__main__':
+#    CUnitTest()

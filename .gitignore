@@ -1,0 +1,11 @@
+/*.pyc
+/*.sqlite*
+/gitpoller.py
+/http.log*
+/Makefile
+/master-*/
+/nightly-*/
+/src-master/
+/twistd.log*
+/twistd.pid*
+/ufoai/

@@ -1,11 +1,12 @@
+# -*- python -*-
+# ex: set syntax=python:
 
 import os
-import ufoaisecret
 
 from twisted.application import service
-from buildbot.slave.bot import BuildSlave
+from buildbot.master import BuildMaster
 
-basedir = r'/home/users/mattn/localslave'
+basedir = r'/home/users/mattn/buildbot'
 rotateLength = 1000000
 maxRotatedFiles = None
 
@@ -14,7 +15,7 @@ if basedir == '.':
     import os.path
     basedir = os.path.abspath(os.path.dirname(__file__))
 
-application = service.Application('buildslave')
+application = service.Application('buildmaster')
 try:
   from twisted.python.logfile import LogFile
   from twisted.python.log import ILogObserver, FileLogObserver
@@ -25,15 +26,9 @@ except ImportError:
   # probably not yet twisted 8.2.0 and beyond, can't set log yet
   pass
 
-buildmaster_host = 'localhost'
-port = 9989
-slavename = 'localslave'
-passwd = ufoaisecret.pwd_localslave
-keepalive = 600
-usepty = True
-umask = None
-maxdelay = 300
+configfile = r'master.cfg'
 
-s = BuildSlave(buildmaster_host, port, slavename, passwd, basedir,
-               keepalive, usepty, umask=umask, maxdelay=maxdelay)
-s.setServiceParent(application)
+m = BuildMaster(basedir, configfile)
+m.setServiceParent(application)
+m.log_rotation.rotateLength = rotateLength
+m.log_rotation.maxRotatedFiles = maxRotatedFiles
