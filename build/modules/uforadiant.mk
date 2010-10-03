@@ -4,7 +4,7 @@ RADIANT_BASE       := tools/radiant
 $(TARGET)_FILE     := radiant/$(TARGET)$(EXE_EXT)
 $(TARGET)_CFLAGS   += -Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include $(GTK_CFLAGS) $(GLIB_CFLAGS) $(GTK_SOURCEVIEW_CFLAGS) $(GTK_GLEXT_CFLAGS) $(OPENAL_CFLAGS) $(OPENGL_CFLAGS) $(XML2_CFLAGS)
 $(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GLIB_LIBS) $(GTK_SOURCEVIEW_LIBS) $(GTK_GLEXT_LIBS) $(OPENAL_LIBS) $(OPENGL_LIBS) $(XML2_LIBS) $(SO_LIBS) -lstdc++ -lm -lz
-$(TARGET)_SRCS     := \
+$(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/archivezip.cpp \
 	$(RADIANT_BASE)/radiant/colorscheme.cpp \
 	$(RADIANT_BASE)/radiant/commands.cpp \
@@ -213,6 +213,10 @@ $(TARGET)_SRCS     := \
 	$(RADIANT_BASE)/libs/picomodel/pm_md3.c \
 	$(RADIANT_BASE)/libs/picomodel/pm_obj.c \
 	$(RADIANT_BASE)/libs/picomodel/pm_md2.c
+
+ifeq ($(TARGET_OS),mingw32)
+	$(TARGET)_SRCS += $(RADIANT_BASE)/radiant/radiant.rc
+endif
 
 $(TARGET)_OBJS     := $(call ASSEMBLE_OBJECTS,$(TARGET))
 $(TARGET)_CXXFLAGS := $($(TARGET)_CFLAGS)
