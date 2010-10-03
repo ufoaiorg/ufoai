@@ -137,7 +137,7 @@ def generateGraph(output, d):
     for i in data:
         data[i].sort(key=key)
 
-    basedir = output + '/licenses/html' + d
+    basedir = output + '/licenses/public_html' + d
     if not os.path.exists(basedir):
         os.makedirs(basedir)
 
@@ -170,7 +170,7 @@ def plot(output, d, data, times, imagename):
             data[i].append((lastelement[0] + 1, 0))
 
     cmds+= 'set data style linespoints;\n'
-    cmds+= 'set output "%s/licenses/html%s/%s";\n' % (output, d, imagename)
+    cmds+= 'set output "%s/licenses/public_html%s/%s";\n' % (output, d, imagename)
     cmds+= 'set xrange [%i to %i];\n' % (min(times), max(times) + 1 + (max(times)-min(times))*0.15)
     cmds+= 'set yrange [0 to %i];\n' % (int(ymax * 1.15))
 
@@ -196,7 +196,7 @@ def setup(output_path):
         print 'creating base directory'
         os.makedirs(output_path + '/licenses')
 
-    for p in ['cache', 'history', 'html']:
+    for p in ['cache', 'history', 'public_html']:
         test_path = '%s/licenses/%s' % (output_path, p)
         if not os.path.exists(test_path):
             print 'creating', os.path.abspath(test_path)
@@ -205,11 +205,11 @@ def setup(output_path):
 def clean_up(output_path):
     """Delete old html files and create needed directories"""
     print 'Clean up'
-    shutil.rmtree(output_path + '/licenses/html')
-    os.mkdir(output_path + '/licenses/html')
+    shutil.rmtree(output_path + '/licenses/public_html')
+    os.mkdir(output_path + '/licenses/public_html')
     for i in os.listdir('base'):
         if os.path.isdir('base/'+i) and not i.startswith('.'):
-            os.mkdir(output_path + '/licenses/html/'+i)
+            os.mkdir(output_path + '/licenses/public_html/'+i)
             if not os.path.exists(output_path + '/licenses/history/'+i):
                 os.mkdir(output_path + '/licenses/history/'+i)
 
@@ -294,7 +294,7 @@ class Analysis(object):
         # preview
         if THUMBNAIL and meta.isImage():
             base = '.thumbnails/%s.png' % meta.fileName.replace(self.base + "/", "", 1)
-            thumbFileName = output + '/licenses/html/' + base
+            thumbFileName = output + '/licenses/public_html/' + base
             thumbURL = ('../' * self.deep) + base
             if not os.path.exists(thumbFileName):
                 thumbdir = thumbFileName.split('/')
@@ -390,13 +390,13 @@ class Analysis(object):
         html = html.replace("<!-- REVISION -->", str(self.revision))
         html = html.encode('utf-8')
         fileName = self.getLicenseFileName(license)
-        basedir = output + '/licenses/html' + self.getLocalDir()
+        basedir = output + '/licenses/public_html' + self.getLocalDir()
         if not os.path.exists(basedir):
             os.makedirs(basedir)
         open(basedir + '/' + fileName, 'w').write(html)
 
     def writeGroups(self, output, name, group):
-        basedir = output + '/licenses/html' + self.getLocalDir()
+        basedir = output + '/licenses/public_html' + self.getLocalDir()
         if not os.path.exists(basedir):
             os.makedirs(basedir)
 
@@ -478,7 +478,7 @@ class Analysis(object):
         html = html.replace("<!-- CONTENT -->", content)
         html = html.replace("<!-- REVISION -->", str(self.revision))
 
-        basedir = output + '/licenses/html' + self.getLocalDir()
+        basedir = output + '/licenses/public_html' + self.getLocalDir()
         if not os.path.exists(basedir):
             os.makedirs(basedir)
         file = open(basedir + '/index.html', 'wt')
@@ -539,7 +539,7 @@ def main():
     files = ["style.css", "grid.png"]
     for f in files:
         print "Copying " + f
-        shutil.copy (sys.path[0] + "/resources/" + f, output_path + "/licenses/html/" + f)
+        shutil.copy (sys.path[0] + "/resources/" + f, output_path + "/licenses/public_html/" + f)
 
     # map-texture relations
     RESOURCES.computeTextureUsageInMaps()
