@@ -2,7 +2,7 @@ WINDOWS_INST_DIR=contrib/installer/windows
 
 wininstaller: installer-pre wininstaller-ufoai wininstaller-uforadiant
 
-wininstaller-ufoai: ufoai ufoded installer-pre
+wininstaller-ufoai: ufo ufoded installer-pre
 	$(Q)$(CROSS)makensis -DPRODUCT_VERSION=$(UFOAI_VERSION)  $(WINDOWS_INST_DIR)/ufoai.nsi
 	$(Q)md5sum $(WINDOWS_INST_DIR)/ufoai-$(UFOAI_VERSION)-win32.exe > $(WINDOWS_INST_DIR)/ufoai-$(UFOAI_VERSION)-win32.md5
 
