@@ -970,104 +970,100 @@ void CP_StartSelectedMission (void)
 }
 
 /**
- * @brief Calculates the win probability for an auto mission
- * @todo This needs work - also take mis->initialIndividualInterest into account?
- * @returns a float value that is between 0 and 1
+ * @brief Calculates the win probability for an auto base attack mission
+ * @return a float value that is between 0 and 1
  * @param[in] mis The mission we are calculating the probability for
- * @param[in] base The base we are trying to defend in case of a base attack mission
- * @param[in] aircraft Your aircraft that has reached the mission location in case
- * this is no base attack mission
+ * @param[in] battleParameters Structure that holds the battle related parameters
  */
-static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, const aircraft_t *aircraft)
+static float CP_GetWinProbabiltyForBaseAttackMission (const mission_t *mis, const battleParam_t* battleParameters, signed int difficulty)
 {
-	float winProbability;
+	const base_t *base = (base_t *) mis->data;
+	linkedList_t *hiredSoldiers = NULL;
+	linkedList_t *ugvs = NULL;
+	const int numSoldiers = E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiers);
+	const int numUGVs = E_GetHiredEmployees(base, EMPL_ROBOT, &ugvs);
 
-	if (mis->stage != STAGE_BASE_ATTACK) {
-		assert(aircraft);
+	assert(base);
 
-		switch (mis->category) {
-		case INTERESTCATEGORY_TERROR_ATTACK:
-			/* very hard to win this */
-			/** @todo change the formular here to reflect the above comment */
-			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * AIR_GetTeamSize(aircraft) - ccs.battleParameters.aliens);
-			break;
-		case INTERESTCATEGORY_XVI:
-			/* not that hard to win this, they want to spread xvi - no real terror mission */
-			/** @todo change the formular here to reflect the above comment */
-			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * AIR_GetTeamSize(aircraft) - ccs.battleParameters.aliens);
-			break;
-		default:
-			/** @todo change the formular here to reflect the above comments */
-			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * AIR_GetTeamSize(aircraft) - ccs.battleParameters.aliens);
-			break;
-		}
-		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i -- probability to win: %.02f\n", ccs.battleParameters.aliens, AIR_GetTeamSize(aircraft), winProbability);
-
-		return winProbability;
-	} else {
-		linkedList_t *hiredSoldiers = NULL;
-		linkedList_t *ugvs = NULL;
+	/* a base defence mission can only be won if there are soldiers that
+	 * defend the attacked base */
+	if (numSoldiers || numUGVs) {
+		float winProbability;
+		float increaseWinProbability = 1.0f;
 		linkedList_t *listPos;
-		const int numSoldiers = E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiers);
-		const int numUGVs = E_GetHiredEmployees(base, EMPL_ROBOT, &ugvs);
-
-		assert(base);
-
-		/* a base defence mission can only be won if there are soldiers that
-		 * defend the attacked base */
-		if (numSoldiers || numUGVs) {
-			float increaseWinProbability = 1.0f;
-			listPos = hiredSoldiers;
-			while (listPos) {
-				const employee_t *employee = (employee_t *)listPos->data;
-				/* don't use an employee that is currently being transfered */
-				if (!E_IsAwayFromBase(employee)) {
-					const character_t *chr = &employee->chr;
-					const chrScoreGlobal_t *score = &chr->score;
-					/* if the soldier was ever on a mission */
-					if (score->assignedMissions) {
-						const rank_t *rank = CL_GetRankByIdx(score->rank);
-						/** @sa G_CharacterGetMaxExperiencePerMission */
-						if (score->experience[SKILL_CLOSE] > 70) { /** @todo fix this value */
-							increaseWinProbability *= rank->factor;
-						}
-					}
-				}
-				listPos = listPos->next;
-			}
-			/* now handle the ugvs */
-			listPos = ugvs;
-			while (listPos) {
-				const employee_t *employee = (employee_t *)listPos->data;
-				/* don't use an employee that is currently being transfered */
-				if (!E_IsAwayFromBase(employee)) {
-					const character_t *chr = &employee->chr;
-					const chrScoreGlobal_t *score = &chr->score;
+		listPos = hiredSoldiers;
+		while (listPos) {
+			const employee_t *employee = (employee_t *)listPos->data;
+			/* don't use an employee that is currently being transfered */
+			if (!E_IsAwayFromBase(employee)) {
+				const character_t *chr = &employee->chr;
+				const chrScoreGlobal_t *score = &chr->score;
+				/* if the soldier was ever on a mission */
+				if (score->assignedMissions) {
 					const rank_t *rank = CL_GetRankByIdx(score->rank);
-					/** @sa G_CharacterGetMaxExperiencePerMission */
-					if (score->experience[SKILL_CLOSE] > 70) { /** @todo fix this value */
+					/** @todo fix this value */
+					if (score->experience[SKILL_CLOSE] > 70) {
 						increaseWinProbability *= rank->factor;
 					}
 				}
-				listPos = listPos->next;
 			}
-
-			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * numSoldiers - ccs.battleParameters.aliens);
-			winProbability += increaseWinProbability;
-
-			Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i - UGVs: %i -- probability to win: %.02f\n",
-				ccs.battleParameters.aliens, numSoldiers, numUGVs, winProbability);
-
-			LIST_Delete(&hiredSoldiers);
-			LIST_Delete(&ugvs);
-
-			return winProbability;
-		} else {
-			/* No soldier to defend the base */
-			Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: 0  -- battle lost\n", ccs.battleParameters.aliens);
-			return 0.0f;
+			listPos = listPos->next;
 		}
+		/* now handle the ugvs */
+		listPos = ugvs;
+		while (listPos) {
+			const employee_t *employee = (employee_t *)listPos->data;
+			/* don't use an employee that is currently being transfered */
+			if (!E_IsAwayFromBase(employee)) {
+				const character_t *chr = &employee->chr;
+				const chrScoreGlobal_t *score = &chr->score;
+				const rank_t *rank = CL_GetRankByIdx(score->rank);
+				/** @todo fix this value */
+				if (score->experience[SKILL_CLOSE] > 70) {
+					increaseWinProbability *= rank->factor;
+				}
+			}
+			listPos = listPos->next;
+		}
+
+		winProbability = exp((0.5 - .15 * difficulty) * numSoldiers - battleParameters->aliens);
+		winProbability += increaseWinProbability;
+
+		LIST_Delete(&hiredSoldiers);
+		LIST_Delete(&ugvs);
+
+		return winProbability;
 	}
+
+	/* No soldier to defend the base */
+	return 0.0f;
+}
+
+/**
+ * @brief Calculates the win probability for an auto mission
+ * @todo This needs work - also take mis->initialIndividualInterest into account?
+ * @return a float value that is between 0 and 1
+ * @param[in] mis The mission we are calculating the probability for
+ * @param[in] aircraft Your aircraft that has reached the mission location
+ * @param[in] battleParameters Structure that holds the battle related parameters
+ */
+static float CP_GetWinProbabilty (const mission_t *mis, const aircraft_t *aircraft, const battleParam_t* battleParameters, signed int difficulty)
+{
+	const int aircraftTeamSize = AIR_GetTeamSize(aircraft);
+	assert(aircraft);
+	assert(mis);
+	assert(battleParameters);
+
+	/** @todo change the formulas here to reflect the comments */
+	if (mis->category == INTERESTCATEGORY_TERROR_ATTACK)
+		/* very hard to win this */
+		return exp((0.5 - .15 * difficulty) * aircraftTeamSize - battleParameters->aliens);
+	else if (mis->category == INTERESTCATEGORY_XVI)
+		/* not that hard to win this, they want to spread xvi - no real terror mission */
+		return exp((0.5 - .15 * difficulty) * aircraftTeamSize - battleParameters->aliens);
+
+	/* normal mission */
+	return exp((0.5 - .15 * difficulty) * aircraftTeamSize - battleParameters->aliens);
 }
 
 /**
@@ -1109,26 +1105,17 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft)
  * @sa CP_MissionEnd
  * @sa AL_CollectingAliens
  */
-void CL_GameAutoGo (mission_t *mission)
+void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft)
 {
 	qboolean won;
 	float winProbability;
-	base_t *base;
-	/* maybe ccs.interceptAircraft is changed in some functions we call here
-	 * so store a local pointer to guarantee that we access the right aircraft
-	 * note that ccs.interceptAircraft is a fake aircraft for base attack missions */
-	aircraft_t *aircraft = ccs.interceptAircraft;
 
 	assert(mission);
 
 	CP_CreateBattleParameters(mission, &ccs.battleParameters);
 
-	if (!aircraft) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo: No update after automission\n");
+	if (!aircraft)
 		return;
-	}
-
-	base = aircraft->homebase;
 
 	if (mission->stage != STAGE_BASE_ATTACK) {
 		if (!mission->active) {
@@ -1141,9 +1128,9 @@ void CL_GameAutoGo (mission_t *mission)
 			return;
 		}
 
-		winProbability = CP_GetWinProbabilty(mission, NULL, aircraft);
+		winProbability = CP_GetWinProbabilty(mission, aircraft, &ccs.battleParameters, ccs.curCampaign->difficulty);
 	} else {
-		winProbability = CP_GetWinProbabilty(mission, (base_t *)mission->data, NULL);
+		winProbability = CP_GetWinProbabiltyForBaseAttackMission(mission, &ccs.battleParameters, ccs.curCampaign->difficulty);
 	}
 
 	UI_PopWindow(qfalse);

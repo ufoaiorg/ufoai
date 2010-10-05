@@ -52,7 +52,7 @@ static void GAME_CP_MissionAutoGo_f (void)
 	}
 
 	/* start the map */
-	CL_GameAutoGo(ccs.selectedMission);
+	CL_GameAutoGo(ccs.selectedMission, ccs.interceptAircraft);
 }
 
 /**

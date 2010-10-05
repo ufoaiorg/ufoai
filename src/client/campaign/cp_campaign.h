@@ -587,7 +587,7 @@ void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);
 qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
 
 campaign_t* CL_GetCampaign(const char *name);
-void CL_GameAutoGo(mission_t *mission);
+void CL_GameAutoGo(mission_t *mission, aircraft_t *aircraft);
 
 void CP_InitMissionResults(qboolean won);
 void CP_CampaignInit(campaign_t *campaign, qboolean load);
