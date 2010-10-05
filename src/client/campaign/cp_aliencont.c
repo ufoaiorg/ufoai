@@ -74,15 +74,16 @@ qboolean AL_AddAlienTypeToAircraftCargo (aircraft_t *aircraft, const teamDef_t *
 	aliensTmp_t *cargo = AL_GetAircraftAlienCargo(aircraft);
 	const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
 	const int index = AL_GetCargoIndexForTeamDefintion(aircraft, teamDef);
+	aliensTmp_t *c = &cargo[index];
 
-	if (!cargo[index].teamDef)
+	if (!c->teamDef)
 		AL_SetAircraftAlienCargoTypes(aircraft, alienCargoTypes + 1);
-	cargo[index].teamDef = teamDef;
+	c->teamDef = teamDef;
 
 	if (dead)
-		cargo[index].amountDead += amount;
+		c->amountDead += amount;
 	else
-		cargo[index].amountAlive += amount;
+		c->amountAlive += amount;
 
 	return qtrue;
 }
