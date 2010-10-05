@@ -814,8 +814,14 @@ qboolean E_DeleteEmployee (employee_t *employee)
 					if ((employee_t *)l->data >= employee)
 						l->data -= sizeof(*employee);
 				}
-				if (employee->type == EMPL_PILOT && AIR_GetPilot(aircraft) >= employee)
-					aircraft->pilot--;
+
+				if (type == EMPL_PILOT) {
+					const employee_t *pilot = AIR_GetPilot(aircraft);
+					if (pilot > employee)
+						aircraft->pilot--;
+					else if (pilot == employee)
+						AIR_SetPilot(aircraft, NULL);
+				}
 			}
 		}
 		for (i = 0, transfer = ccs.transfers; i < ccs.numTransfers; i++, transfer++) {
