@@ -40,6 +40,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_ufo.h"
 #include "save/save_base.h"
 
+#define B_GetBuildingByIDX(baseIdx, buildingIdx) (&ccs.buildings[(baseIdx)][(buildingIdx)])
+#define B_GetBuildingIDX(base, building) ((ptrdiff_t)((building) - ccs.buildings[base->idx]))
+#define B_GetBaseIDX(base) ((ptrdiff_t)((base) - ccs.bases))
+
 vec2_t newBasePos;
 static cvar_t *cp_initial_equipment;
 
@@ -81,7 +85,7 @@ base_t* B_GetFoundedBaseByIDX (int baseIdx)
  */
 building_t* B_GetNextBuilding (const base_t *base, building_t *lastBuilding)
 {
-	building_t *endOfBuildings = &ccs.buildings[base->idx][ccs.numBuildings[base->idx]];
+	building_t *endOfBuildings = B_GetBuildingByIDX(base->idx, ccs.numBuildings[base->idx]);
 	building_t *building;
 
 	if (!ccs.numBuildings[base->idx])
@@ -852,7 +856,7 @@ void B_Destroy (base_t *base)
 
 	/* do a reverse loop as buildings are going to be destroyed */
 	for (buildingIdx = ccs.numBuildings[base->idx] - 1; buildingIdx >= 0; buildingIdx--) {
-		building_t *building = &ccs.buildings[base->idx][buildingIdx];
+		building_t *building = B_GetBuildingByIDX(base->idx, buildingIdx);
 		B_BuildingDestroy(base, building);
 	}
 
@@ -1455,7 +1459,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 
 	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
 		/* new building in base (not a template) */
-		building_t *buildingNew = &ccs.buildings[base->idx][ccs.numBuildings[base->idx]];
+		building_t *buildingNew = B_GetBuildingByIDX(base->idx, ccs.numBuildings[base->idx]);
 
 		/* copy building from template list to base-buildings-list */
 		*buildingNew = *buildingTemplate;
@@ -2178,16 +2182,15 @@ void B_BaseResetStatus (base_t* const base)
 static void B_BuildingList_f (void)
 {
 	int baseIdx, j, k;
-	building_t *building;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 
-		building = &ccs.buildings[base->idx][baseIdx];
 		Com_Printf("\nBase id %i: %s\n", baseIdx, base->name);
 		for (j = 0; j < ccs.numBuildings[baseIdx]; j++) {
+			const building_t *building = B_GetBuildingByIDX(base->idx, j);
 			Com_Printf("...Building: %s #%i - id: %i\n", building->id,
 				B_GetNumberOfBuildingsInBaseByTemplate(base, building->tpl), baseIdx);
 			Com_Printf("...image: %s\n", building->image);
@@ -2379,7 +2382,7 @@ static void B_BuildingConstructionFinished_f (void)
 		return;
 
 	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-		building_t *building = &ccs.buildings[base->idx][i];
+		building_t *building = B_GetBuildingByIDX(base->idx, i);
 
 		if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
@@ -2955,14 +2958,15 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		for (snode = mxml_GetNode(node, SAVE_BASES_BUILDING); snode; snode = mxml_GetNextNode(snode, node, SAVE_BASES_BUILDING)) {
 			const int k = mxml_GetInt(snode, SAVE_BASES_X, 0);
 			const int l = mxml_GetInt(snode, SAVE_BASES_Y, 0);
+			baseBuildingTile_t* tile = &b->map[k][l];
 			buildingIdx = mxml_GetInt(snode, SAVE_BASES_BUILDINGINDEX, -1);
 
 			if (buildingIdx != -1)
 				/* The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
-				b->map[k][l].building = &ccs.buildings[i][buildingIdx];
+				tile->building = B_GetBuildingByIDX(i, buildingIdx);
 			else
-				b->map[k][l].building = NULL;
-			b->map[k][l].blocked = mxml_GetBool(snode, SAVE_BASES_BLOCKED, qfalse);
+				tile->building = NULL;
+			tile->blocked = mxml_GetBool(snode, SAVE_BASES_BLOCKED, qfalse);
 		}
 		/* buildings */
 		node = mxml_GetNode(base, SAVE_BASES_BUILDINGS);
@@ -2989,7 +2993,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 				continue;
 
 			ccs.buildings[i][buildId] = *building;
-			building = &ccs.buildings[i][buildId];
+			building = B_GetBuildingByIDX(i, buildId);
 			building->idx = B_GetBuildingIDX(b, building);
 			if (building->idx != buildId) {
 				Com_Printf("building ID doesn't match\n");

@@ -58,9 +58,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define BASE_TILE_UNITS (BASE_TILE_SIZE / UNIT_SIZE)
 #define BASE_MAX_WORLDLEVEL 6
 
-#define B_GetBaseIDX(base) ((ptrdiff_t)((base) - ccs.bases))
-#define B_GetBuildingIDX(base, building) ((ptrdiff_t)((building) - ccs.buildings[base->idx]))
-
 #define B_IsUnderAttack(base) ((base)->baseStatus == BASE_UNDER_ATTACK)
 
 /**
