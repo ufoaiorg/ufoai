@@ -1119,22 +1119,24 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const battleParam_
 
 	won = frand() < winProbability;
 
-	/* if a UFO has been recovered, send it to a base */
-	if (won && results->recovery) {
-		/** @todo set other counts */
-		results->aliensKilled = battleParameters->aliens;
-		results->aliensStunned = 0;
-		results->aliensSurvived = 0;
-		results->civiliansKilled = 0;
-		results->civiliansKilledFriendlyFire = 0;
-		results->civiliansSurvived = battleParameters->civilians;
-		results->ownKilled = 0;
-		results->ownKilledFriendlyFire = 0;
-		results->ownStunned = 0;
-		results->ownSurvived = AIR_GetTeamSize(aircraft);
-		CP_InitMissionResults(won, results);
+	/** @todo set other counts */
+	results->won = won;
+	results->aliensKilled = battleParameters->aliens;
+	results->aliensStunned = 0;
+	results->aliensSurvived = 0;
+	results->civiliansKilled = 0;
+	results->civiliansKilledFriendlyFire = 0;
+	results->civiliansSurvived = battleParameters->civilians;
+	results->ownKilled = 0;
+	results->ownKilledFriendlyFire = 0;
+	results->ownStunned = 0;
+	results->ownSurvived = AIR_GetTeamSize(aircraft);
+	CP_InitMissionResults(won, results);
+	if (won) {
 		Cvar_SetValue("mn_autogo", 1);
 		UI_PushWindow("won", NULL);
+	} else {
+		UI_PushWindow("lost", NULL);
 	}
 
 	/* update nation opinions */
@@ -1142,6 +1144,7 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const battleParam_
 
 	CP_CheckLostCondition();
 
+	/* if a UFO has been recovered, send it to a base */
 	CL_AutoMissionAlienCollect(aircraft, battleParameters);
 
 	/* onwin and onlose triggers */

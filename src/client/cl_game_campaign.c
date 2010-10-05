@@ -257,6 +257,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	int ownSurvived, ownKilled, ownStunned;
 	int aliensSurvived, aliensKilled, aliensStunned;
 	int civiliansSurvived, civiliansKilled, civiliansStunned;
+	const qboolean won = (winner == cls.team);
 
 	CP_ParseCharacterData(msg);
 
@@ -284,7 +285,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 			}
 	}
 	/* if we won, our stunned are alive */
-	if (winner == cls.team) {
+	if (won) {
 		ownSurvived += ownStunned;
 		ownStunned = 0;
 	} else
@@ -292,19 +293,20 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 		aliensStunned = 0;
 
 	/* we won, and we're not the dirty aliens */
-	if (winner == cls.team)
+	if (won)
 		civiliansSurvived += civiliansStunned;
 	else
 		civiliansKilled += civiliansStunned;
 
 	/* Collect items from the battlefield. */
-	AII_CollectingItems(ccs.missionAircraft, winner == cls.team);
-	if (winner == cls.team)
+	AII_CollectingItems(ccs.missionAircraft, won);
+	if (won)
 		/* Collect aliens from the battlefield. */
 		AL_CollectingAliens(ccs.missionAircraft);
 
 	ccs.aliensKilled += aliensKilled;
 
+	ccs.missionResults.won = won;
 	ccs.missionResults.aliensKilled = aliensKilled;
 	ccs.missionResults.aliensStunned = aliensStunned;
 	ccs.missionResults.aliensSurvived = aliensSurvived;
@@ -316,15 +318,15 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	ccs.missionResults.civiliansKilledFriendlyFire = numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
 	ccs.missionResults.civiliansSurvived = civiliansSurvived;
 
-	CP_InitMissionResults(winner == cls.team, &ccs.missionResults);
+	CP_InitMissionResults(won, &ccs.missionResults);
 
 	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 
-	CP_ExecuteMissionTrigger(ccs.selectedMission, winner == cls.team);
+	CP_ExecuteMissionTrigger(ccs.selectedMission, won);
 
-	if (winner == cls.team) {
+	if (won)
 		UI_PushWindow("won", NULL);
-	} else
+	else
 		UI_PushWindow("lost", NULL);
 
 	CL_Disconnect();
