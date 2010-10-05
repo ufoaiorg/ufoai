@@ -273,9 +273,9 @@ typedef struct battleParam_s {
 typedef struct missionResults_s {
 	int itemTypes;		/**< Types of items gathered from a mission. */
 	int itemAmount;		/**< Amount of items (all) gathered from a mission. */
-	qboolean recovery;	/**< Qtrue if player secured a UFO (landed or crashed). */
+	qboolean recovery;	/**< @c true if player secured a UFO (landed or crashed). */
 	ufoType_t ufotype;	/**< Type of UFO secured during the mission. */
-	qboolean crashsite;	/**< Qtrue if secured UFO was crashed one. */
+	qboolean crashsite;	/**< @c true if secured UFO was crashed one. */
 	float ufoCondition;	/**< How much the UFO is damaged */
 	int aliensKilled;
 	int aliensStunned;
