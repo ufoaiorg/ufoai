@@ -502,7 +502,7 @@ static void AIM_UpdateItemDescription (qboolean fromList, qboolean fromSlot)
 	slot = AII_SelectAircraftSlot(aircraft, airequipID);
 
 	/* update mini ufopedia */
-	/** @todo we should clone the text, and not using the ufopaedia text */
+	/** @todo we should clone the text, and not using the ufopedia text */
 	if (fromList)
 		UP_AircraftItemDescription(INVSH_GetItemByIDSilent(aimSelectedTechnology ? aimSelectedTechnology->provides : NULL));
 	else if (fromSlot) {
