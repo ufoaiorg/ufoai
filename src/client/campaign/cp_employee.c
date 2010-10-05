@@ -635,7 +635,7 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *nation, const ugv_t *ugvType, const int emplIdx)
+static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, const nation_t *nation, const ugv_t *ugvType, const int emplIdx)
 {
 	employee_t* employee;
 	int curEmployeeIdx;
@@ -739,7 +739,7 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, const ugv_t *ugvType)
+employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const ugv_t *ugvType)
 {
 	/* Runs the create employee function with a -1 index parameter, which means at to end of list. */
 	return E_CreateEmployeeAtIndex(type, nation, ugvType, -1);
@@ -929,7 +929,7 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
  */
 void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboolean excludeUnhappyNations)
 {
-	nation_t *happyNations[MAX_NATIONS];
+	const nation_t *happyNations[MAX_NATIONS];
 	int numHappyNations = 0;
 	int idx, nationIdx;
 
@@ -937,8 +937,9 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 	/* get a list of nations,  if excludeHappyNations is qtrue then also exclude
 	 * unhappy nations (unhappy nation: happiness <= 0) from the list */
 	for (idx = 0; idx < ccs.numNations; idx++) {
-		if (ccs.nations[idx].stats[0].happiness > 0 || !excludeUnhappyNations) {
-			happyNations[numHappyNations] = &ccs.nations[idx];
+		const nation_t *nation = &ccs.nations[idx];
+		if (nation->stats[0].happiness > 0 || !excludeUnhappyNations) {
+			happyNations[numHappyNations] = nation;
 			numHappyNations++;
 		}
 	}
@@ -1134,7 +1135,7 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 /**
  * @brief Hack to get a random nation for the initial
  */
-static inline nation_t *E_RandomNation (void)
+static inline const nation_t *E_RandomNation (void)
 {
 	const int nationIndex = rand() % ccs.numNations;
 	return &ccs.nations[nationIndex];
@@ -1162,7 +1163,7 @@ void E_InitialEmployees (void)
 
 	/* Fill the global data employee list with pilots, evenly distributed between nations */
 	for (i = 0; i < MAX_EMPLOYEES; i++) {
-		nation_t *nation = &ccs.nations[++j % ccs.numNations];
+		const nation_t *nation = &ccs.nations[++j % ccs.numNations];
 		if (!E_CreateEmployee(EMPL_PILOT, nation, NULL))
 			break;
 	}
