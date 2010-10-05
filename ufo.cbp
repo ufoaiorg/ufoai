@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="UFO:Alien Invasion" />
+		<Option makefile_is_custom="1" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="ufo">
+				<Option output="ufo" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command="$make -r Q= $target" />
+					<CompileFile command="$make -r Q= $file" />
+					<Clean command="$make -r Q= clean-$target" />
+					<DistClean command="$make -r Q= distclean" />
+				</MakeCommands>
+			</Target>
+			<Target title="ufo2map">
+				<Option output="ufo2map" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command="$make -r Q= $target" />
+					<CompileFile command="$make -r Q= $file" />
+					<Clean command="$make -r Q= clean-$target" />
+					<DistClean command="$make -r Q= distclean" />
+				</MakeCommands>
+			</Target>
+			<Target title="ufomodel">
+				<Option output="ufomodel" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command="$make -r Q= $target" />
+					<CompileFile command="$make -r Q= $file" />
+					<Clean command="$make -r Q= clean-$target" />
+					<DistClean command="$make -r Q= distclean" />
+				</MakeCommands>
+			</Target>
+			<Target title="ufoded">
+				<Option output="ufoded" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command="$make -r Q= $target" />
+					<CompileFile command="$make -r Q= $file" />
+					<Clean command="$make -r Q= clean-$target" />
+					<DistClean command="$make -r Q= distclean" />
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
