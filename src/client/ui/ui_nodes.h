@@ -86,7 +86,7 @@ typedef struct uiNode_s {
 
 	/* other attributes */
 	/** @todo needs cleanup */
-	align_t textalign;				/**< Alignment to draw text */
+	int textalign;				/**< Alignment to draw text */
 	char* text;					/**< Text we want to display */
 	const char* font;			/**< Font to draw text */
 	const char* image;

@@ -59,7 +59,7 @@ qboolean UI_InitRawActionValue(struct uiAction_s* action, struct uiNode_s *node,
 #define V_UI_NODEMETHOD		(V_UI + 0x0400) /**< Property is a function */
 
 /* alias */
-#define V_UI_ALIGN			V_ALIGN
+#define V_UI_ALIGN			V_INT
 
 /* composite special type */
 #define V_CVAR_OR_FLOAT			(V_UI_CVAR + V_FLOAT)
