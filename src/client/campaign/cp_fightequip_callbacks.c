@@ -886,8 +886,7 @@ static void AIM_AircraftEquipMenuClick_f (void)
 
 	/* Which tech? */
 	techIdx = atoi(Cmd_Argv(1));
-
-	aimSelectedTechnology = (techIdx >= 0) ? &ccs.technologies[techIdx] : NULL;
+	aimSelectedTechnology = RS_GetTechByIDX(techIdx);
 	AIM_UpdateItemDescription(qtrue, qfalse);
 }
 
