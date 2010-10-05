@@ -3226,7 +3226,7 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 			employee_t* employee = E_GetHiredRobot(base, 0);
 			/* There should be at least a UGV */
 			assert(employee);
-			E_DeleteEmployee(employee, EMPL_ROBOT);
+			E_DeleteEmployee(employee);
 		} else {
 			/* items are destroyed. We guess that all items of a given type are stored in the same location
 			 *	=> destroy all items of this type */

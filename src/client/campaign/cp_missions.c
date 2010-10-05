@@ -1259,7 +1259,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 			if (chr->HP <= 0) { /** @todo <= -50, etc. (implants) */
 				/* sideeffect: ccs.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
 				Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd: Delete this dead employee: %i (%s)\n", i, chr->name);
-				E_DeleteEmployee(employee, EMPL_SOLDIER);
+				E_DeleteEmployee(employee);
 			}
 		}
 	}
@@ -1430,7 +1430,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 
 	pilot = AIR_GetPilot(aircraft);
 	AIR_RemovePilotFromAssignedAircraft(aircraft->homebase, pilot);
-	E_DeleteEmployee(pilot, EMPL_PILOT);
+	E_DeleteEmployee(pilot);
 
 	aircraft->status = AIR_CRASHED;
 

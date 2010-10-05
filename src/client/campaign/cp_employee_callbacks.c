@@ -276,7 +276,7 @@ static void E_EmployeeDelete_f (void)
 			return;
 		}
 	}
-	E_DeleteEmployee(employee, employee->type);
+	E_DeleteEmployee(employee);
 	Cbuf_AddText(va("employee_init %i\n", employeeCategory));
 }
 

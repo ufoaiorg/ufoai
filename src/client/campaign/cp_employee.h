@@ -73,7 +73,7 @@ employee_t* E_GetNext(employeeType_t type, employee_t *lastEmployee);
 employee_t* E_GetNextFromBase(employeeType_t type, employee_t *lastEmployee, const base_t *base);
 employee_t* E_GetNextHired(employeeType_t type, employee_t *lastEmployee);
 employee_t* E_CreateEmployee(employeeType_t type, const struct nation_s *nation, const struct ugv_s *ugvType);
-qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);
+qboolean E_DeleteEmployee(employee_t *employee);
 qboolean E_HireEmployee(base_t* base, employee_t* employee);
 qboolean E_HireEmployeeByType(base_t* base, employeeType_t type);
 qboolean E_HireRobot(base_t* base, const struct ugv_s *ugvType);

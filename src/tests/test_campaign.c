@@ -103,7 +103,10 @@ static void testCampaign (void)
 	aircraft_t* aircraft = AIR_GetAircraft(firebird);
 	mission_t *mission = CP_CreateNewMission(INTERESTCATEGORY_RECON, qfalse);
 	campaign_t *campaign;
-	employee_t *e;
+	employee_t *pilot, *e1, *e2;
+
+	memset(&result, 0, sizeof(result));
+	memset(&battleParameters, 0, sizeof(battleParameters));
 
 	ResetInventoryList();
 
@@ -114,25 +117,30 @@ static void testCampaign (void)
 	CU_ASSERT_PTR_NOT_NULL(aircraft);
 	CU_ASSERT_PTR_NOT_NULL(mission);
 
-	e = E_CreateEmployee(EMPL_PILOT, NULL, NULL);
-	CU_ASSERT_PTR_NOT_NULL(e);
-	AIR_SetPilot(aircraft, e);
+	pilot = E_CreateEmployee(EMPL_PILOT, NULL, NULL);
+	CU_ASSERT_PTR_NOT_NULL(pilot);
+	AIR_SetPilot(aircraft, pilot);
 
-	e = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
-	AIR_AddToAircraftTeam(aircraft, e);
-	e = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
-	AIR_AddToAircraftTeam(aircraft, e);
+	e1 = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+	AIR_AddToAircraftTeam(aircraft, e1);
+	e2 = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+	AIR_AddToAircraftTeam(aircraft, e2);
 
 	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 2);
 
-	memset(&battleParameters, 0, sizeof(battleParameters));
 	battleParameters.probability = -1.0;
 
 	CL_GameAutoGo(mission, aircraft, &battleParameters, &result);
 
-	TEST_Printf("%f\n", result.winProbability);
 	CU_ASSERT_EQUAL(result.won, battleParameters.probability < result.winProbability);
 	CU_ASSERT_EQUAL(result.won, qtrue);
+
+	E_DeleteEmployee(pilot);
+	E_DeleteEmployee(e1);
+
+	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 1);
+
+	CU_ASSERT_PTR_NULL(AIR_GetPilot(aircraft));
 }
 
 int UFO_AddCampaignTests (void)

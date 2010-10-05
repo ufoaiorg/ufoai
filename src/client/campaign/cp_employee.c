@@ -756,13 +756,16 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
  * the aircraft can point to wrong employees now. This has to be taken into
  * account
  */
-qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
+qboolean E_DeleteEmployee (employee_t *employee)
 {
 	int i;
 	qboolean found = qfalse;
+	employeeType_t type;
 
 	if (!employee)
 		return qfalse;
+
+	type = employee->type;
 
 	/* Fire the employee. This will also:
 	 * 1) remove him from buildings&work
@@ -809,7 +812,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 					 * where the removed employee was before */
 					/** @todo remove this once the employees are a linked list, too */
 					if ((employee_t *)l->data >= employee)
-						l->data -= sizeof(employee_t);
+						l->data -= sizeof(*employee);
 				}
 				if (employee->type == EMPL_PILOT && AIR_GetPilot(aircraft) >= employee)
 					aircraft->pilot--;
@@ -864,7 +867,7 @@ void E_DeleteAllEmployees (base_t* base)
 			employee_t *employee = &ccs.employees[type][i];
 			Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees: %i\n", i);
 			if (E_IsInBase(employee, base)) {
-				E_DeleteEmployee(employee, type);
+				E_DeleteEmployee(employee);
 				Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees:	 Removing empl.\n");
 			} else if (employee->baseHired) {
 				Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees:	 Not removing empl. (other base)\n");
@@ -907,7 +910,7 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
 			if (!E_IsInBase(employee, base))
 				continue;
 
-			E_DeleteEmployee(employee, type);
+			E_DeleteEmployee(employee);
 			if (base->capacities[CAP_EMPLOYEES].cur <= base->capacities[CAP_EMPLOYEES].max)
 				return;
 		}

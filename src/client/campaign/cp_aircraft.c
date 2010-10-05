@@ -1110,12 +1110,12 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 		employee_t *employee = (employee_t *)l->data;
 		l = l->next;
 		E_RemoveInventoryFromStorage(employee);
-		E_DeleteEmployee(employee, employee->type);
+		E_DeleteEmployee(employee);
 	}
 	/* the craft may no longer have any employees assigned */
 	/* remove the pilot */
 	pilot = AIR_GetPilot(aircraft);
-	if (pilot && E_DeleteEmployee(pilot, pilot->type)) {
+	if (pilot && E_DeleteEmployee(pilot)) {
 		AIR_SetPilot(aircraft, NULL);
 	} else {
 		/* This shouldn't ever happen. */
