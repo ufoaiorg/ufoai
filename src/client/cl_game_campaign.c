@@ -51,8 +51,16 @@ static void GAME_CP_MissionAutoGo_f (void)
 		return;
 	}
 
+	if (!ccs.interceptAircraft) {
+		Com_Printf("GAME_CP_MissionAutoGo_f: No intercept aircraft given\n");
+		return;
+	}
+
+	UI_PopWindow(qfalse);
+
 	/* start the map */
-	CL_GameAutoGo(ccs.selectedMission, ccs.interceptAircraft);
+	CP_CreateBattleParameters(ccs.selectedMission, &ccs.battleParameters);
+	CL_GameAutoGo(ccs.selectedMission, ccs.interceptAircraft, &ccs.battleParameters, &ccs.missionResults);
 }
 
 /**
@@ -308,7 +316,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	ccs.missionResults.civiliansKilledFriendlyFire = numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
 	ccs.missionResults.civiliansSurvived = civiliansSurvived;
 
-	CP_InitMissionResults(winner == cls.team);
+	CP_InitMissionResults(winner == cls.team, &ccs.missionResults);
 
 	UI_InitStack("geoscape", "campaign_main", qtrue, qtrue);
 

@@ -392,14 +392,14 @@ void CP_CheckLostCondition (void)
  * @todo Scoring should eventually be expanded to include such elements as
  * infected humans and mission objectives other than xenocide.
  */
-void CL_HandleNationData (qboolean won, mission_t * mis)
+void CL_HandleNationData (qboolean won, mission_t * mis, const nation_t *affectedNation, const missionResults_t *results)
 {
-	int i, isOnEarth = 0;
-	const float civilianSum = (float) (ccs.missionResults.civiliansSurvived + ccs.missionResults.civiliansKilled + ccs.missionResults.civiliansKilledFriendlyFire);
-	const float alienSum = (float) (ccs.missionResults.aliensSurvived + ccs.missionResults.aliensKilled + ccs.missionResults.aliensStunned);
+	int i;
+	const float civilianSum = (float) (results->civiliansSurvived + results->civiliansKilled + results->civiliansKilledFriendlyFire);
+	const float alienSum = (float) (results->aliensSurvived + results->aliensKilled + results->aliensStunned);
 	float performance, performanceAlien, performanceCivilian;
 	float deltaHappiness = 0.0f;
-	float happiness_divisor = 5.0f;
+	float happinessDivisor = 5.0f;
 
 	/** @todo HACK: This should be handled properly, i.e. civilians should only factor into the scoring
 	 * if the mission objective is actually to save civilians. */
@@ -409,13 +409,13 @@ void CL_HandleNationData (qboolean won, mission_t * mis)
 	}
 	else {
 		/* Calculate how well the mission went. */
-		performanceCivilian = (2 * civilianSum - ccs.missionResults.civiliansKilled - 2
-				* ccs.missionResults.civiliansKilledFriendlyFire) * 3 / (2 * civilianSum) - 2;
+		performanceCivilian = (2 * civilianSum - results->civiliansKilled - 2
+				* results->civiliansKilledFriendlyFire) * 3 / (2 * civilianSum) - 2;
 		/** @todo The score for aliens is always negative or zero currently, but this
 		 * should be dependent on the mission objective.
 		 * In a mission that has a special objective, the amount of killed aliens should
 		 * only serve to increase the score, not reduce the penalty. */
-		performanceAlien = ccs.missionResults.aliensKilled + ccs.missionResults.aliensStunned - alienSum;
+		performanceAlien = results->aliensKilled + results->aliensStunned - alienSum;
 		performance = performanceCivilian + performanceAlien;
 	}
 
@@ -430,24 +430,17 @@ void CL_HandleNationData (qboolean won, mission_t * mis)
 		deltaHappiness = HAPPINESS_MAX_MISSION_IMPACT;
 
 	for (i = 0; i < ccs.numNations; i++) {
-		nation_t *nation = &ccs.nations[i];
+		nation_t *nation = NAT_GetNationByIDX(i);
+		float happinessFactor;
 
 		/* update happiness. */
-		if (nation == ccs.battleParameters.nation) {
-			NAT_SetHappiness(nation, nation->stats[0].happiness + performance * deltaHappiness);
-			isOnEarth++;
-		}
-		else {
-			NAT_SetHappiness(nation, nation->stats[0].happiness + performance * deltaHappiness / happiness_divisor);
-		}
-	}
+		if (nation == affectedNation)
+			happinessFactor = deltaHappiness;
+		else
+			happinessFactor = deltaHappiness / happinessDivisor;
 
-	if (!isOnEarth)
-		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n",
-				mis->id, ccs.battleParameters.nation ? ccs.battleParameters.nation->id : "no nation");
-	else if (isOnEarth > 1)
-		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Error, mission '%s' located in many countries '%s'.\n",
-				mis->id, ccs.battleParameters.nation->id);
+		NAT_SetHappiness(nation, nation->stats[0].happiness + performance * happinessFactor);
+	}
 }
 
 /**
@@ -1064,10 +1057,10 @@ static float CP_GetWinProbabilty (const mission_t *mis, const aircraft_t *aircra
  * @brief Collect alien bodies for auto missions
  * @note collect all aliens as dead ones
  */
-static void CL_AutoMissionAlienCollect (aircraft_t *aircraft)
+static void CL_AutoMissionAlienCollect (aircraft_t *aircraft, const battleParam_t *battleParameters)
 {
 	int i;
-	int aliens = ccs.battleParameters.aliens;
+	int aliens = battleParameters->aliens;
 
 	if (!aliens)
 		return;
@@ -1075,15 +1068,14 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft)
 	MS_AddNewMessage(_("Notice"), _("Collected dead alien bodies"), qfalse, MSG_STANDARD, NULL);
 
 	while (aliens > 0) {
-		battleParam_t *param = &ccs.battleParameters;
-		for (i = 0; i < param->alienTeamGroup->numAlienTeams; i++) {
-			const alienTeamGroup_t *group = param->alienTeamGroup;
+		const alienTeamGroup_t *group = battleParameters->alienTeamGroup;
+		for (i = 0; i < group->numAlienTeams; i++) {
 			const teamDef_t *teamDef = group->alienTeams[i];
 			const int addDeadAlienAmount = aliens > 1 ? rand() % aliens : aliens;
 			if (!addDeadAlienAmount)
 				continue;
 			assert(i < MAX_CARGO);
-			assert(group->alienTeams[i]);
+			assert(teamDef);
 			AL_AddAlienTypeToAircraftCargo(aircraft, teamDef, addDeadAlienAmount, qtrue);
 			aliens -= addDeadAlienAmount;
 			if (!aliens)
@@ -1094,22 +1086,20 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft)
 
 /**
  * @brief Handles the auto mission for none storyrelated missions
+ * @param[in,out] mission The mission to auto play
+ * @param[in,out] aircraft The aircraft (or fake aircraft in case of a base attack)
  * @sa GAME_CP_MissionAutoGo_f
  * @sa CL_Drop
  * @sa CP_MissionEnd
  * @sa AL_CollectingAliens
  */
-void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft)
+void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const battleParam_t *battleParameters, missionResults_t *results)
 {
 	qboolean won;
 	float winProbability;
 
 	assert(mission);
-
-	CP_CreateBattleParameters(mission, &ccs.battleParameters);
-
-	if (!aircraft)
-		return;
+	assert(aircraft);
 
 	if (mission->stage != STAGE_BASE_ATTACK) {
 		if (!mission->active) {
@@ -1122,43 +1112,40 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft)
 			return;
 		}
 
-		winProbability = CP_GetWinProbabilty(mission, aircraft, &ccs.battleParameters, ccs.curCampaign->difficulty);
+		winProbability = CP_GetWinProbabilty(mission, aircraft, battleParameters, ccs.curCampaign->difficulty);
 	} else {
-		winProbability = CP_GetWinProbabiltyForBaseAttackMission(mission, &ccs.battleParameters, ccs.curCampaign->difficulty);
+		winProbability = CP_GetWinProbabiltyForBaseAttackMission(mission, battleParameters, ccs.curCampaign->difficulty);
 	}
-
-	UI_PopWindow(qfalse);
 
 	won = frand() < winProbability;
 
-	/* update nation opinions */
-	CL_HandleNationData(won, mission);
-
-	CP_CheckLostCondition();
-
-	CL_AutoMissionAlienCollect(aircraft);
-
-	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(mission, won);
-
 	/* if a UFO has been recovered, send it to a base */
-	if (won && ccs.missionResults.recovery) {
-		/** @todo set other counts, use the counts above */
-		missionResults_t *results = &ccs.missionResults;
-		results->aliensKilled = ccs.battleParameters.aliens;
+	if (won && results->recovery) {
+		/** @todo set other counts */
+		results->aliensKilled = battleParameters->aliens;
 		results->aliensStunned = 0;
 		results->aliensSurvived = 0;
 		results->civiliansKilled = 0;
 		results->civiliansKilledFriendlyFire = 0;
-		results->civiliansSurvived = ccs.battleParameters.civilians;
+		results->civiliansSurvived = battleParameters->civilians;
 		results->ownKilled = 0;
 		results->ownKilledFriendlyFire = 0;
 		results->ownStunned = 0;
 		results->ownSurvived = AIR_GetTeamSize(aircraft);
-		CP_InitMissionResults(won);
+		CP_InitMissionResults(won, results);
 		Cvar_SetValue("mn_autogo", 1);
 		UI_PushWindow("won", NULL);
 	}
+
+	/* update nation opinions */
+	CL_HandleNationData(won, mission, battleParameters->nation, results);
+
+	CP_CheckLostCondition();
+
+	CL_AutoMissionAlienCollect(aircraft, battleParameters);
+
+	/* onwin and onlose triggers */
+	CP_ExecuteMissionTrigger(mission, won);
 
 	CP_MissionEndActions(mission, aircraft, won);
 
@@ -1175,29 +1162,29 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft)
  * @param resultCounts result counts
  * @param won Whether we won the battle
  */
-void CP_InitMissionResults (qboolean won)
+void CP_InitMissionResults (qboolean won, const missionResults_t *missionResults)
 {
 	static char resultText[1024];
 	/* init result text */
 	UI_RegisterText(TEXT_STANDARD, resultText);
 
 	/* needs to be cleared and then append to it */
-	Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), ccs.missionResults.aliensKilled);
-	Q_strcat(resultText, va(_("Aliens captured\t%i\n"), ccs.missionResults.aliensStunned), sizeof(resultText));
-	Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), ccs.missionResults.aliensSurvived), sizeof(resultText));
+	Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), missionResults->aliensKilled);
+	Q_strcat(resultText, va(_("Aliens captured\t%i\n"), missionResults->aliensStunned), sizeof(resultText));
+	Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), missionResults->aliensSurvived), sizeof(resultText));
 	/* team stats */
-	Q_strcat(resultText, va(_("PHALANX soldiers killed by Aliens\t%i\n"), ccs.missionResults.ownKilled), sizeof(resultText));
-	Q_strcat(resultText, va(_("PHALANX soldiers missing in action\t%i\n"), ccs.missionResults.ownStunned), sizeof(resultText));
-	Q_strcat(resultText, va(_("PHALANX friendly fire losses\t%i\n"), ccs.missionResults.ownKilledFriendlyFire), sizeof(resultText));
-	Q_strcat(resultText, va(_("PHALANX survivors\t%i\n\n"), ccs.missionResults.ownSurvived), sizeof(resultText));
+	Q_strcat(resultText, va(_("PHALANX soldiers killed by Aliens\t%i\n"), missionResults->ownKilled), sizeof(resultText));
+	Q_strcat(resultText, va(_("PHALANX soldiers missing in action\t%i\n"), missionResults->ownStunned), sizeof(resultText));
+	Q_strcat(resultText, va(_("PHALANX friendly fire losses\t%i\n"), missionResults->ownKilledFriendlyFire), sizeof(resultText));
+	Q_strcat(resultText, va(_("PHALANX survivors\t%i\n\n"), missionResults->ownSurvived), sizeof(resultText));
 
-	Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), ccs.missionResults.civiliansKilled), sizeof(resultText));
-	Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), ccs.missionResults.civiliansKilledFriendlyFire), sizeof(resultText));
-	Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), ccs.missionResults.civiliansSurvived), sizeof(resultText));
-	Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), ccs.missionResults.itemTypes,
-			ccs.missionResults.itemAmount), sizeof(resultText));
+	Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), missionResults->civiliansKilled), sizeof(resultText));
+	Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), missionResults->civiliansKilledFriendlyFire), sizeof(resultText));
+	Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), missionResults->civiliansSurvived), sizeof(resultText));
+	Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), missionResults->itemTypes,
+			missionResults->itemAmount), sizeof(resultText));
 
-	if (won && ccs.missionResults.recovery)
+	if (won && missionResults->recovery)
 		Q_strcat(resultText, UFO_MissionResultToString(), sizeof(resultText));
 }
 
