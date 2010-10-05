@@ -545,7 +545,7 @@ void UFO_CampaignRunUFOs (int deltaTime)
 			end = ufo->route.point[ufo->route.numPoints - 1];
 			Vector2Copy(end, ufo->pos);
 			MAP_CheckPositionBoundaries(ufo->pos);
-			if (ufo->mission->stage == STAGE_INTERCEPT && ufo->mission->data) {
+			if (ufo->mission->stage == STAGE_INTERCEPT && ufo->mission->data.aircraft) {
 				/* Attacking an installation: fly over this installation */
 				UFO_SetRandomDestAround(ufo, ufo->mission->pos);
 			} else

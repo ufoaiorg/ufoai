@@ -236,7 +236,12 @@ typedef struct mission_s {
 	char id[MAX_VAR];				/**< script id */
 	mapDef_t* mapDef;				/**< mapDef used for this mission */
 	qboolean active;				/**< aircraft at place? */
-	void* data;						/**< may be related to mission type (like pointer to base attacked, or to alien base) */
+	union missionData_t {
+		base_t *base;
+		aircraft_t *aircraft;
+		installation_t *installation;
+		alienBase_t *alienBase;
+	} data;							/**< may be related to mission type (like pointer to base attacked, or to alien base) */
 	char location[MAX_VAR];			/**< The name of the ground mission that will appear on geoscape */
 	interestCategory_t category;	/**< The category of the event */
 	missionStage_t stage;			/**< in which stage is this event? */

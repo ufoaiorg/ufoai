@@ -71,17 +71,18 @@ void CP_InterceptMissionIsFailure (mission_t *mission)
 void CP_InterceptMissionLeave (mission_t *mission, qboolean destroyed)
 {
 	installation_t *installation;
+	vec3_t missionPos;
 
 	assert(mission->ufo);
 
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
 	/* if the mission was an attack of an installation, destroy it */
-	installation = (installation_t *)mission->data;
-	/** @todo this will never be the same, as mission->pos is a vec2_t and installation->pos is a vec3_t */
-	if (destroyed && installation && installation->founded && VectorCompareEps(mission->pos, installation->pos, UFO_EPSILON)) {
+	installation = mission->data.installation;
+	Vector2Copy(mission->pos, missionPos);
+	missionPos[2] = installation->pos[2];
+	if (destroyed && installation && installation->founded && VectorCompareEps(missionPos, installation->pos, UFO_EPSILON))
 		INS_DestroyInstallation(installation);
-	}
 
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);
@@ -99,19 +100,21 @@ static void CP_InterceptAttackInstallation (mission_t *mission)
 	const date_t minAttackDelay = {0, 3600};
 	const date_t attackDelay = {0, 21600};		/* How long the UFO should stay on earth */
 	installation_t *installation;
+	vec3_t missionPos;
 
 	mission->stage = STAGE_INTERCEPT;
 
 	/* Check that installation is not already destroyed */
-	installation = (installation_t *)mission->data;
+	installation = mission->data.installation;
 	if (!installation->founded) {
 		mission->finalDate = ccs.date;
 		return;
 	}
 
 	/* Maybe installation has been destroyed, but rebuild somewhere else? */
-	/** @todo this will never be the same, as mission->pos is a vec2_t and installation->pos is a vec3_t */
-	if (!VectorCompareEps(mission->pos, installation->pos, UFO_EPSILON)) {
+	installation = mission->data.installation;
+	Vector2Copy(mission->pos, missionPos);
+	if (!VectorCompareEps(missionPos, installation->pos, UFO_EPSILON)) {
 		mission->finalDate = ccs.date;
 		return;
 	}
@@ -187,7 +190,7 @@ void CP_InterceptGoToInstallation (mission_t *mission)
 		CP_MissionRemove(mission);
 		return;
 	}
-	mission->data = (void *)installation;
+	mission->data.installation = installation;
 
 	Vector2Copy(installation->pos, mission->pos);
 	mission->posAssigned = qtrue;
@@ -260,7 +263,7 @@ void CP_InterceptNextStage (mission_t *mission)
 		assert(mission->ufo);
 		/* Leave earth */
 		if (AIRFIGHT_ChooseWeapon(mission->ufo->weapons, mission->ufo->maxWeapons, mission->ufo->pos, mission->ufo->pos) !=
-			AIRFIGHT_WEAPON_CAN_NEVER_SHOOT && mission->ufo->status == AIR_UFO && !mission->data) {
+			AIRFIGHT_WEAPON_CAN_NEVER_SHOOT && mission->ufo->status == AIR_UFO && !mission->data.installation) {
 			/* UFO is fighting and has still ammo, wait a little bit before leaving (UFO is not attacking an installation) */
 			const date_t AdditionalDelay = {0, 3600};	/* check every hour if there is still ammos */
 			mission->finalDate = Date_Add(ccs.date, AdditionalDelay);

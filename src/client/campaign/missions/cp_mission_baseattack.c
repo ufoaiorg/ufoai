@@ -60,9 +60,7 @@ void CP_BaseAttackMissionIsSuccess (mission_t *mission)
  */
 void CP_BaseAttackMissionIsFailure (mission_t *mission)
 {
-	base_t *base;
-
-	base = (base_t *)mission->data;
+	base_t *base = mission->data.base;
 
 	if (base)
 		base->baseStatus = BASE_WORKING;
@@ -117,9 +115,7 @@ void CP_BaseAttackMissionLeave (mission_t *mission)
  */
 void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 {
-	base_t *base;
-
-	base = (base_t *)mission->data;
+	base_t *base = mission->data.base;
 	assert(base);
 	/* Base attack is over, alien won */
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Your base: %s has been destroyed! All employees killed and all equipment destroyed."), base->name);
@@ -143,7 +139,7 @@ void CP_BaseAttackMissionDestroyBase (mission_t *mission)
  */
 void CP_BaseAttackStartMission (mission_t *mission)
 {
-	base_t *base = (base_t *)mission->data;
+	base_t *base = mission->data.base;
 	linkedList_t *hiredSoldiersInBase = NULL, *pos;
 
 	assert(base);
@@ -258,7 +254,7 @@ void CP_CheckBaseAttacks_f (void)
 		mission_t *mission = (mission_t*) missionlist->data;
 
 		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->stage == STAGE_BASE_ATTACK) {
-			if (base && ((base_t*) mission->data != base))
+			if (base && (mission->data.base != base))
 				continue;
 			CP_BaseAttackStartMission(mission);
 		}
@@ -324,7 +320,7 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 		CP_MissionRemove(mission);
 		return;
 	}
-	mission->data = (void *)base;
+	mission->data.base = base;
 
 	mission->mapDef = Com_GetMapDefinitionByID("baseattack");
 	if (!mission->mapDef) {

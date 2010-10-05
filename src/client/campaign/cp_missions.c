@@ -110,7 +110,7 @@ void CP_StartMissionMap (mission_t* mission)
 
 	/* base attack maps starts with a dot */
 	if (mission->mapDef->map[0] == '.') {
-		base_t *base = (base_t*)mission->data;
+		const base_t *base = mission->data.base;
 
 		if (mission->category != INTERESTCATEGORY_BASE_ATTACK)
 			Com_Printf("Baseattack map on non-baseattack mission! (id=%s, category=%d)\n", mission->id, mission->category);
@@ -1001,9 +1001,8 @@ void CP_MissionNotifyBaseDestroyed (const base_t *base)
 	for (; list; list = list->next) {
 		mission_t *mission = (mission_t *)list->data;
 		/* Check if this is a base attack mission attacking this base */
-		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->data) {
-			base_t *missionBase = (base_t *) mission->data;
-			if (base == missionBase) {
+		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->data.base) {
+			if (base == mission->data.base) {
 				/* Aimed base has been destroyed, abort mission */
 				CP_BaseAttackMissionLeave(mission);
 			}
@@ -1022,8 +1021,8 @@ void CP_MissionNotifyInstallationDestroyed (const installation_t const *installa
 	while (missionlist) {
 		mission_t *mission = (mission_t*) missionlist->data;
 
-		if (mission->category == INTERESTCATEGORY_INTERCEPT && mission->data) {
-			if ((installation_t*) mission->data == installation)
+		if (mission->category == INTERESTCATEGORY_INTERCEPT && mission->data.installation) {
+			if (mission->data.installation == installation)
 				CP_InterceptMissionLeave(mission, qfalse);
 		}
 		missionlist = missionlist->next;
@@ -1195,8 +1194,8 @@ void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, qboolean wo
 	if (mission->category == INTERESTCATEGORY_RESCUE) {
 		if (won)
 			/* return to collect goods and aliens from the crashed aircraft */
-			B_DumpAircraftToHomeBase((aircraft_t *)mission->data);
-		AIR_DestroyAircraft((aircraft_t *)mission->data);
+			B_DumpAircraftToHomeBase(mission->data.aircraft);
+		AIR_DestroyAircraft(mission->data.aircraft);
 	}
 
 	AIR_AircraftReturnToBase(aircraft);
@@ -1217,7 +1216,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	int numberOfSoldiers = 0; /* DEBUG */
 
 	if (mission->stage == STAGE_BASE_ATTACK) {
-		base = (base_t *)mission->data;
+		base = mission->data.base;
 		assert(base);
 		/* HACK */
 		aircraft = base->aircraftCurrent;
@@ -1312,10 +1311,10 @@ qboolean CP_CheckNextStageDestination (aircraft_t *ufocraft)
  */
 void CP_UFOProceedMission (aircraft_t *ufo)
 {
-	/* Every UFO on geoscape should have a mission assigned */
+	/* Every UFO on geoscape must have a mission assigned */
 	assert(ufo->mission);
 
-	if (ufo->mission->category == INTERESTCATEGORY_INTERCEPT && !ufo->mission->data) {
+	if (ufo->mission->category == INTERESTCATEGORY_INTERCEPT && !ufo->mission->data.aircraft) {
 		const int slotIndex = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, ufo->pos);
 		/* This is an Intercept mission where UFO attacks aircraft (not installations) */
 		/* Keep on looking targets until mission is over, unless no more ammo */
@@ -1416,7 +1415,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
 	}
 
-	mission->data = aircraft;
+	mission->data.aircraft = aircraft;
 	mission->ufo = ufo;
 	mission->stage = STAGE_TERROR_MISSION;
 
@@ -1961,23 +1960,21 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 		switch (mission->category) {
 		case INTERESTCATEGORY_BASE_ATTACK:
 			if (mission->stage == STAGE_MISSION_GOTO || mission->stage == STAGE_BASE_ATTACK) {
-				const base_t *base;
+				const base_t *base = mission->data.base;
 				/* save IDX of base under attack if required */
-				base = (base_t*)mission->data;
-				assert(base);
 				mxml_AddShort(missionNode, SAVE_MISSIONS_BASEINDEX, base->idx);
 			}
 			break;
 		case INTERESTCATEGORY_INTERCEPT:
 			if (mission->stage == STAGE_MISSION_GOTO || mission->stage == STAGE_INTERCEPT) {
-				const installation_t *installation = (installation_t*)mission->data;
+				const installation_t *installation = mission->data.installation;
 				if (installation)
 					mxml_AddShort(missionNode, SAVE_MISSIONS_INSTALLATIONINDEX, installation->idx);
 			}
 			break;
 		case INTERESTCATEGORY_RESCUE:
 			{
-				const aircraft_t *aircraft = (const aircraft_t *)mission->data;
+				const aircraft_t *aircraft = mission->data.aircraft;
 				mxml_AddShort(missionNode, SAVE_MISSIONS_CRASHED_AIRCRAFT, aircraft->idx);
 			}
 			break;
@@ -1985,7 +1982,7 @@ qboolean CP_SaveMissionsXML (mxml_node_t *parent)
 		case INTERESTCATEGORY_SUPPLY:
 			{
 				/* save IDX of alien base if required */
-				const alienBase_t *base = (alienBase_t*)mission->data;
+				const alienBase_t *base = mission->data.alienBase;
 				/* there may be no base is the mission is a subverting government */
 				if (base)
 					mxml_AddShort(missionNode, SAVE_MISSIONS_ALIENBASEINDEX, base->idx);
@@ -2081,7 +2078,7 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 					assert(base);
 					if (mission.stage == STAGE_BASE_ATTACK && !B_IsUnderAttack(base))
 						Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", baseidx, base->name);
-					mission.data = (void *) base;
+					mission.data.base = base;
 				} else
 					Com_Printf("......warning: Missing BaseIndex\n");
 			}
@@ -2092,7 +2089,7 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 				if (installationIdx != BYTES_NONE) {
 					installation_t *installation = INS_GetInstallationByIDX(installationIdx);
 					if (installation)
-						mission.data = (void *) installation;
+						mission.data.installation = installation;
 					else {
 						Com_Printf("Mission on non-existent installation\n");
 						success = qfalse;
@@ -2103,8 +2100,8 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 		case INTERESTCATEGORY_RESCUE:
 			{
 				const int aircraftIdx = mxml_GetInt(node, SAVE_MISSIONS_CRASHED_AIRCRAFT, -1);
-				mission.data = (void *) AIR_AircraftGetFromIDX(aircraftIdx);
-				if (mission.data == NULL) {
+				mission.data.aircraft = AIR_AircraftGetFromIDX(aircraftIdx);
+				if (mission.data.aircraft == NULL) {
 					Com_Printf("Error while loading rescue mission (missionidx %i, aircraftidx: %i, category: %i, stage: %i)\n",
 							mission.idx, aircraftIdx, mission.category, mission.stage);
 					success = qfalse;
@@ -2117,9 +2114,9 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 				int baseIDX = mxml_GetInt(node, SAVE_MISSIONS_ALIENBASEINDEX, BYTES_NONE);
 				if (baseIDX != BYTES_NONE) {
 					alienBase_t *alienBase = AB_GetByIDX(baseIDX);
-					mission.data = (void *) alienBase;
+					mission.data.alienBase = alienBase;
 				}
-				if (!mission.data && !CP_BasemissionIsSubvertingGovernmentMission(&mission) && (mission.stage >= STAGE_BUILD_BASE)) {
+				if (!mission.data.alienBase && !CP_BasemissionIsSubvertingGovernmentMission(&mission) && mission.stage >= STAGE_BUILD_BASE) {
 					Com_Printf("Error while loading Alien Base mission (missionidx %i, baseidx: %i, category: %i, stage: %i)\n",
 							mission.idx, baseIDX, mission.category, mission.stage);
 					success = qfalse;

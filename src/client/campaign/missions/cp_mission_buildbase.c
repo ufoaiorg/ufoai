@@ -57,7 +57,7 @@ void CP_BuildBaseMissionIsSuccess (mission_t *mission)
 		CL_ChangeIndividualInterest(0.1f, INTERESTCATEGORY_TERROR_ATTACK);
 	} else {
 		/* An alien base has been built */
-		const alienBase_t *base = (alienBase_t *) mission->data;
+		const alienBase_t *base = mission->data.alienBase;
 		assert(base);
 		CP_SpreadXVIAtPos(base->pos);
 
@@ -97,14 +97,14 @@ void CP_BuildBaseMissionOnSpawn (void)
 void CP_BuildBaseMissionBaseDestroyed (mission_t *mission)
 {
 	/* An alien base has been built */
-	alienBase_t *base = (alienBase_t *) mission->data;
+	alienBase_t *base = mission->data.alienBase;
 	assert(base);
 
 	CL_ChangeIndividualInterest(+0.1f, INTERESTCATEGORY_BUILDING);
 	CL_ChangeIndividualInterest(+0.3f, INTERESTCATEGORY_INTERCEPT);
 
 	AB_DestroyBase(base);
-	mission->data = NULL;
+	mission->data.alienBase = NULL;
 	CP_MissionRemove(mission);
 }
 
@@ -116,7 +116,7 @@ static void CP_BuildBaseMissionLeave (mission_t *mission)
 {
 	assert(mission->ufo);
 	/* there must be an alien base set */
-	assert(mission->data);
+	assert(mission->data.alienBase);
 
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
@@ -149,7 +149,7 @@ static void CP_BuildBaseSetUpBase (mission_t *mission)
 		CP_MissionRemove(mission);
 		return;
 	}
-	mission->data = (void *) base;
+	mission->data.alienBase = base;
 
 	/* ufo becomes invisible on geoscape */
 	CP_UFORemoveFromGeoscape(mission, qfalse);

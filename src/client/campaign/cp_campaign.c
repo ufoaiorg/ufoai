@@ -970,7 +970,7 @@ void CP_StartSelectedMission (void)
  */
 static float CP_GetWinProbabiltyForBaseAttackMission (const mission_t *mis, const battleParam_t* battleParameters, signed int difficulty)
 {
-	const base_t *base = (base_t *) mis->data;
+	const base_t *base = mis->data.base;
 	linkedList_t *hiredSoldiers = NULL;
 	linkedList_t *ugvs = NULL;
 	const int numSoldiers = E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiers);
@@ -1144,7 +1144,6 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const battleParam_
 
 	CP_CheckLostCondition();
 
-	/* if a UFO has been recovered, send it to a base */
 	CL_AutoMissionAlienCollect(aircraft, battleParameters);
 
 	/* onwin and onlose triggers */

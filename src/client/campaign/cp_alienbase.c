@@ -157,7 +157,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 	}
 
 	mission->stage = STAGE_BASE_DISCOVERED;
-	mission->data = (void *) alienBase;
+	mission->data.alienBase = alienBase;
 
 	mission->mapDef = Com_GetMapDefinitionByID(MAPDEF_ALIENBASE);
 	if (!mission->mapDef)

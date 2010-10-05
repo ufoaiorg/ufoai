@@ -42,7 +42,7 @@ void CP_SupplyMissionIsSuccess (mission_t *mission)
 	CL_ChangeIndividualInterest(-0.2f, INTERESTCATEGORY_SUPPLY);
 
 	/* Spread XVI */
-	base = (alienBase_t *) mission->data;
+	base = mission->data.alienBase;
 	assert(base);
 	CP_SpreadXVIAtPos(base->pos);
 
@@ -70,7 +70,7 @@ static void CP_SupplyMissionLeave (mission_t *mission)
 {
 	assert(mission->ufo);
 	/* there must be an alien base set */
-	assert(mission->data);
+	assert(mission->data.alienBase);
 
 	mission->stage = STAGE_RETURN_TO_ORBIT;
 
@@ -92,7 +92,7 @@ static void CP_SupplySetStayAtBase (mission_t *mission)
 
 	assert(mission->ufo);
 	/* there must be an alien base set */
-	assert(mission->data);
+	assert(mission->data.alienBase);
 
 	mission->stage = STAGE_SUPPLY;
 
@@ -105,7 +105,7 @@ static void CP_SupplySetStayAtBase (mission_t *mission)
 
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minSupplyTime, supplyTime));
 
-	AB_SupplyBase((alienBase_t *) mission->data, mission->ufo->detected);
+	AB_SupplyBase(mission->data.alienBase, mission->ufo->detected);
 
 	/* ufo becomes invisible on geoscape */
 	CP_UFORemoveFromGeoscape(mission, qfalse);
@@ -133,7 +133,7 @@ static void CP_SupplyGoToBase (mission_t *mission)
 
 	alienBase = AB_ChooseBaseToSupply();
 	assert(alienBase);
-	mission->data = (void *) alienBase;
+	mission->data.alienBase = alienBase;
 	Vector2Copy(alienBase->pos, mission->pos);
 
 	UFO_SendToDestination(mission->ufo, mission->pos);
