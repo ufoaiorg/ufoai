@@ -388,9 +388,10 @@ static void AL_AddAliens2 (base_t *base, const teamDef_t *alienType, const qbool
 
 	if (dead) {
 		for (j = 0; j < ccs.numAliensTD; j++) {
-			assert(containment[j].teamDef);
-			if (containment[j].teamDef == alienType) {
-				containment[j].amountDead++;
+			aliensCont_t *ac = &containment[j];
+			assert(ac->teamDef);
+			if (ac->teamDef == alienType) {
+				ac->amountDead++;
 				break;
 			}
 		}
@@ -400,9 +401,10 @@ static void AL_AddAliens2 (base_t *base, const teamDef_t *alienType, const qbool
 			return; /* stop because we will else exceed the max of aliens */
 		}
 		for (j = 0; j < ccs.numAliensTD; j++) {
-			assert(containment[j].teamDef);
-			if (containment[j].teamDef == alienType) {
-				AL_ChangeAliveAlienNumber(base, &containment[j], 1);
+			aliensCont_t *ac = &containment[j];
+			assert(ac->teamDef);
+			if (ac->teamDef == alienType) {
+				AL_ChangeAliveAlienNumber(base, ac, 1);
 				break;
 			}
 		}
@@ -425,9 +427,10 @@ static int AL_GetAlienIDX (const teamDef_t *alienType)
 
 	index = 0;
 	for (i = 0; i < csi.numTeamDefs; i++) {
-		if (alienType == &csi.teamDef[i])
+		const teamDef_t *td = &csi.teamDef[i];
+		if (alienType == td)
 			return index;
-		if (CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
+		if (CHRSH_IsTeamDefAlien(td))
 			index++;
 	}
 
@@ -446,7 +449,8 @@ int AL_GetAlienGlobalIDX (int idx)
 	int i, counter = 0;
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
-		if (CHRSH_IsTeamDefAlien(&csi.teamDef[i])) {
+		const teamDef_t *td = &csi.teamDef[i];
+		if (CHRSH_IsTeamDefAlien(td)) {
 			if (counter == idx)
 				return i;
 			counter++;
@@ -659,8 +663,9 @@ static void AC_AddOne_f (void)
 	/* Check that alientType exists */
 	containment = base->alienscont;
 	for (j = 0; j < ccs.numAliensTD; j++) {
-		assert(containment[j].teamDef);
-		if (containment[j].teamDef == alienType)
+		aliensCont_t *ac = &containment[j];
+		assert(ac->teamDef);
+		if (ac->teamDef == alienType)
 			break;
 	}
 	if (j == ccs.numAliensTD) {
