@@ -344,23 +344,25 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 	case AL_KILL:
 		/* We ignore 2nd and 3rd parameter of AL_RemoveAliens() here. */
 		for (j = 0; j < ccs.numAliensTD; j++) {
-			if (containment[j].amountAlive > 0) {
-				containment[j].amountDead += containment[j].amountAlive;
-				AL_ChangeAliveAlienNumber(base, &containment[j], -containment[j].amountAlive);
+			aliensCont_t *ac = &containment[j];
+			if (ac->amountAlive > 0) {
+				ac->amountDead += ac->amountAlive;
+				AL_ChangeAliveAlienNumber(base, ac, -ac->amountAlive);
 			}
 		}
 		break;
 	case AL_KILLONE:
 		/* We ignore 3rd parameter of AL_RemoveAliens() here. */
 		for (j = 0; j < ccs.numAliensTD; j++) {
-			assert(containment[j].teamDef);
-			if (containment[j].teamDef == alienType) {
-				if (containment[j].amountAlive == 0)
+			aliensCont_t *ac = &containment[j];
+			assert(ac->teamDef);
+			if (ac->teamDef == alienType) {
+				if (ac->amountAlive == 0)
 					return;
 				/* We are killing only one here, so we
 				 * don't care about amount param. */
-				AL_ChangeAliveAlienNumber(base, &containment[j], -1);
-				containment[j].amountDead++;
+				AL_ChangeAliveAlienNumber(base, ac, -1);
+				ac->amountDead++;
 				break;
 			}
 		}
