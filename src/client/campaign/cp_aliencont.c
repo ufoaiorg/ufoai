@@ -262,20 +262,21 @@ void AL_AddAliens (aircraft_t *aircraft)
 	}
 
 	for (i = 0; i < ccs.numAliensTD; i++) {
-		technology_t *tech = toBase->alienscont[i].tech;
+		aliensCont_t *ac = &toBase->alienscont[i];
+		technology_t *tech = ac->tech;
 #ifdef DEBUG
 		if (!tech)
-			Sys_Error("AL_AddAliens: Failed to initialize the tech for '%s'\n", toBase->alienscont[i].teamDef->name);
+			Sys_Error("AL_AddAliens: Failed to initialize the tech for '%s'\n", ac->teamDef->name);
 #endif
 		/* we need this to let RS_Collected_ return true */
-		if (toBase->alienscont[i].amountAlive + toBase->alienscont[i].amountDead > 0)
+		if (ac->amountAlive + ac->amountDead > 0)
 			RS_MarkCollected(tech);
 #ifdef DEBUG
 		/* print all of them */
-		if (toBase->alienscont[i].amountAlive > 0)
-			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens alive: %s amount: %i\n", toBase->alienscont[i].teamDef->name, toBase->alienscont[i].amountAlive);
-		if (toBase->alienscont[i].amountDead > 0)
-			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens bodies: %s amount: %i\n", toBase->alienscont[i].teamDef->name, toBase->alienscont[i].amountDead);
+		if (ac->amountAlive > 0)
+			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens alive: %s amount: %i\n", ac->teamDef->name, ac->amountAlive);
+		if (ac->amountDead > 0)
+			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens bodies: %s amount: %i\n", ac->teamDef->name, ac->amountDead);
 #endif
 	}
 
