@@ -64,7 +64,7 @@ typedef struct employee_s {
 
 	char speed;					/**< Speed of this Worker/Scientist at research/construction. */
 
-	building_t *building;		/**< Assigned to this building in ccs.buildings[baseIDXHired][buildingID] */
+	const building_t *building;		/**< Assigned to this building in ccs.buildings[baseIDXHired][buildingID] */
 
 	qboolean transfer;			/**< Is this employee currently transferred?
 								 * @sa Set in TR_TransferStart_f

@@ -106,7 +106,7 @@ employee_t* E_GetNextHired (employeeType_t type, employee_t *lastEmployee)
  */
 qboolean E_IsAwayFromBase (const employee_t *employee)
 {
-	base_t *base;
+	const base_t *base;
 	aircraft_t *aircraft;
 
 	assert(employee);
@@ -208,8 +208,22 @@ qboolean E_MoveIntoNewBase (employee_t *employee, base_t *newBase)
 		base_t *oldBase = employee->baseHired;
 		assert(oldBase);
 		employee->baseHired = newBase;
-		newBase->capacities[CAP_EMPLOYEES].cur++;
-		oldBase->capacities[CAP_EMPLOYEES].cur--;
+		/* Remove employee from corresponding capacity */
+		switch (employee->type) {
+		case EMPL_PILOT:
+		case EMPL_WORKER:
+		case EMPL_SCIENTIST:
+		case EMPL_SOLDIER:
+			oldBase->capacities[CAP_EMPLOYEES].cur--;
+			newBase->capacities[CAP_EMPLOYEES].cur++;
+			break;
+		case EMPL_ROBOT:
+			oldBase->capacities[CAP_ITEMS].cur -= UGV_SIZE;
+			newBase->capacities[CAP_ITEMS].cur += UGV_SIZE;
+			break;
+		case MAX_EMPL:
+			break;
+		}
 		return qtrue;
 	}
 

@@ -2295,7 +2295,7 @@ int AIR_GetTeamSize (const aircraft_t *aircraft)
  * @param[in] base Which base has aircraft to add the pilot to.
  * @param[in] pilot Which pilot to add.
  */
-void AIR_AutoAddPilotToAircraft (base_t* base, employee_t* pilot)
+void AIR_AutoAddPilotToAircraft (const base_t* base, employee_t* pilot)
 {
 	aircraft_t *aircraft;
 
@@ -2314,7 +2314,7 @@ void AIR_AutoAddPilotToAircraft (base_t* base, employee_t* pilot)
  * @param[in] base Which base has the aircraft to search for the employee in.
  * @param[in] pilot Which pilot to search for.
  */
-void AIR_RemovePilotFromAssignedAircraft (base_t* base, const employee_t* pilot)
+void AIR_RemovePilotFromAssignedAircraft (const base_t* base, const employee_t* pilot)
 {
 	aircraft_t *aircraft;
 
