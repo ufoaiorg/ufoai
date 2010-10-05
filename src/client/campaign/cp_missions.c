@@ -334,6 +334,7 @@ void CP_CreateBattleParameters (mission_t *mission, battleParam_t *param)
 		param->param = NULL;
 	}
 
+	param->probability = frand();
 	param->mission = mission;
 	color = MAP_GetColor(mission->pos, MAPTYPE_TERRAIN);
 	zoneType = MAP_GetTerrainType(color);
@@ -1427,7 +1428,7 @@ void CP_SpawnRescueMission (aircraft_t *aircraft, aircraft_t *ufo)
 		AIR_RemoveEmployee(employee, aircraft);
 	}
 
-	pilot = aircraft->pilot;
+	pilot = AIR_GetPilot(aircraft);
 	AIR_RemovePilotFromAssignedAircraft(aircraft->homebase, pilot);
 	E_DeleteEmployee(pilot, EMPL_PILOT);
 

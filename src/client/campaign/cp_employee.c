@@ -811,7 +811,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 					if ((employee_t *)l->data >= employee)
 						l->data -= sizeof(employee_t);
 				}
-				if (employee->type == EMPL_PILOT && aircraft->pilot >= employee)
+				if (employee->type == EMPL_PILOT && AIR_GetPilot(aircraft) >= employee)
 					aircraft->pilot--;
 			}
 		}

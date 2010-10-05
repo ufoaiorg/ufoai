@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "campaign/cp_missions.h"
 #include "campaign/cp_mission_triggers.h"
 #include "campaign/cp_team.h"
+#include "campaign/cp_map.h"
 #include "ui/ui_main.h"
 #include "ui/ui_nodes.h"
 #include "ui/node/ui_node_model.h"
@@ -41,7 +42,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void GAME_CP_MissionAutoGo_f (void)
 {
-	if (!ccs.selectedMission) {
+	mission_t *mission = ccs.selectedMission;
+	missionResults_t *results = &ccs.missionResults;
+
+	if (!mission) {
 		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoGo_f: No update after automission\n");
 		return;
 	}
@@ -58,9 +62,34 @@ static void GAME_CP_MissionAutoGo_f (void)
 
 	UI_PopWindow(qfalse);
 
+	if (mission->stage != STAGE_BASE_ATTACK) {
+		if (!mission->active) {
+			MS_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
+			return;
+		} else if (mission->mapDef->storyRelated) {
+			Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
+			/* ensure, that the automatic button is no longer visible */
+			Cvar_Set("cp_mission_autogo_available", "0");
+			return;
+		}
+	}
+
 	/* start the map */
-	CP_CreateBattleParameters(ccs.selectedMission, &ccs.battleParameters);
-	CL_GameAutoGo(ccs.selectedMission, ccs.interceptAircraft, &ccs.battleParameters, &ccs.missionResults);
+	CP_CreateBattleParameters(mission, &ccs.battleParameters);
+
+	results->won = qfalse;
+	CL_GameAutoGo(mission, ccs.interceptAircraft, &ccs.battleParameters, results);
+
+	if (results->won) {
+		Cvar_SetValue("mn_autogo", 1);
+		UI_PushWindow("won", NULL);
+		MS_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
+	} else {
+		UI_PushWindow("lost", NULL);
+		MS_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
+	}
+
+	MAP_ResetAction();
 }
 
 /**

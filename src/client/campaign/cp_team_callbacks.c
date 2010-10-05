@@ -276,11 +276,8 @@ static void CL_AssignPilot_f (void)
 	if (!aircraft)
 		return;
 
-	if (aircraft->pilot == NULL) {
-		aircraft->pilot = employee;
-	} else if (aircraft->pilot == employee) {
-		aircraft->pilot = NULL;
-	}
+	if (!AIR_SetPilot(aircraft, employee) && AIR_GetPilot(aircraft) == employee)
+		AIR_SetPilot(aircraft, NULL);
 
 	CL_UpdateActorAircraftVar(aircraft, employeeType);
 

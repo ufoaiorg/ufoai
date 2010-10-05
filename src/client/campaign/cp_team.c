@@ -234,6 +234,7 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 	size_t size;
 	linkedList_t* l;
 	int numOnAircraft;
+	const employee_t *pilot = AIR_GetPilot(aircraft);
 
 	assert(aircraft);
 
@@ -241,14 +242,15 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 	Cvar_Set("mn_hired", va(_("%i of %i"), numOnAircraft, aircraft->maxTeamSize));
 	Cvar_Set("mn_hirable_count", va("%i", aircraft->maxTeamSize - numOnAircraft));
 	Cvar_Set("mn_hired_count", va("%i", numOnAircraft));
-	Cvar_Set("mn_pilotassigned", va("%i", aircraft->pilot != NULL));
 
-	if (aircraft->pilot) {
-		Cvar_Set("mn_pilot_name", aircraft->pilot->chr.name);
-		Cvar_Set("mn_pilot_body", CHRSH_CharGetBody(&aircraft->pilot->chr));
-		Cvar_Set("mn_pilot_head", CHRSH_CharGetHead(&aircraft->pilot->chr));
-		Cvar_Set("mn_pilot_skin", va("%i", aircraft->pilot->chr.skin));
+	if (pilot) {
+		Cvar_Set("mn_pilotassigned", "1");
+		Cvar_Set("mn_pilot_name", pilot->chr.name);
+		Cvar_Set("mn_pilot_body", CHRSH_CharGetBody(&pilot->chr));
+		Cvar_Set("mn_pilot_head", CHRSH_CharGetHead(&pilot->chr));
+		Cvar_Set("mn_pilot_skin", va("%i", pilot->chr.skin));
 	} else {
+		Cvar_Set("mn_pilotassigned", "0");
 		Cvar_Set("mn_pilot_name", "");
 		Cvar_Set("mn_pilot_body", "");
 		Cvar_Set("mn_pilot_head", "");

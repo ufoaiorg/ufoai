@@ -920,7 +920,7 @@ const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base
 	if (base->capacities[capacity].cur >= base->capacities[capacity].max)
 		return _("No free hangars at that base.");
 
-	if (aircraft->maxTeamSize + ((aircraft->pilot) ? 1 : 0) + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max)
+	if (aircraft->maxTeamSize + (AIR_GetPilot(aircraft) ? 1 : 0) + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max)
 		return _("Insufficient free crew quarter space at that base.");
 
 	if (aircraft->maxTeamSize && base->capacities[CAP_ITEMS].cur + AIR_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max)
@@ -997,7 +997,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	assert(oldBase);
 
 	/* Transfer employees */
-	E_MoveIntoNewBase(aircraft->pilot, base);
+	E_MoveIntoNewBase(AIR_GetPilot(aircraft), base);
 
 	for (l = aircraft->acTeam; l != NULL; l = l->next) {
 		employee_t *employee = (employee_t *)l->data;
@@ -1102,6 +1102,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 void AIR_DestroyAircraft (aircraft_t *aircraft)
 {
 	linkedList_t* l;
+	employee_t *pilot;
 
 	assert(aircraft);
 
@@ -1113,8 +1114,9 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 	}
 	/* the craft may no longer have any employees assigned */
 	/* remove the pilot */
-	if (aircraft->pilot && E_DeleteEmployee(aircraft->pilot, aircraft->pilot->type)) {
-		aircraft->pilot = NULL;
+	pilot = AIR_GetPilot(aircraft);
+	if (pilot && E_DeleteEmployee(pilot, pilot->type)) {
+		AIR_SetPilot(aircraft, NULL);
 	} else {
 		/* This shouldn't ever happen. */
 		Com_Error(ERR_DROP, "AIR_DestroyAircraft: aircraft id %s had no pilot\n", aircraft->id);
@@ -2288,6 +2290,22 @@ int AIR_GetTeamSize (const aircraft_t *aircraft)
 	return LIST_Count(aircraft->acTeam);
 }
 
+qboolean AIR_SetPilot (aircraft_t *aircraft, employee_t *pilot)
+{
+	if (aircraft->pilot == NULL) {
+		aircraft->pilot = pilot;
+		return qtrue;
+	}
+
+	return qfalse;
+}
+
+employee_t* AIR_GetPilot (const aircraft_t *aircraft)
+{
+	const employee_t *e = aircraft->pilot;
+	return &ccs.employees[e->type][e->idx];
+}
+
 /**
  * @brief Adds the pilot to the first available aircraft at the specified base.
  * @param[in] base Which base has aircraft to add the pilot to.
@@ -2299,10 +2317,8 @@ void AIR_AutoAddPilotToAircraft (const base_t* base, employee_t* pilot)
 
 	aircraft = NULL;
 	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-		if (!aircraft->pilot) {
-			aircraft->pilot = pilot;
+		if (AIR_SetPilot(aircraft, pilot))
 			break;
-		}
 	}
 }
 
@@ -2318,8 +2334,8 @@ void AIR_RemovePilotFromAssignedAircraft (const base_t* base, const employee_t* 
 
 	aircraft = NULL;
 	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-		if (aircraft->pilot == pilot) {
-			aircraft->pilot = NULL;
+		if (AIR_GetPilot(aircraft) == pilot) {
+			AIR_SetPilot(aircraft, NULL);
 			break;
 		}
 	}
@@ -2419,6 +2435,7 @@ static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const air
 	mxml_node_t *subnode;
 	int l;
 	linkedList_t *k;
+	const employee_t *pilot;
 
 	Com_RegisterConstList(saveAircraftConstants);
 
@@ -2508,8 +2525,9 @@ static qboolean AIR_SaveAircraftXML (mxml_node_t *p, const aircraft_t* const air
 		mxml_AddInt(ssnode, SAVE_AIRCRAFT_TEAM_UCN, employee->chr.ucn);
 	}
 
-	if (aircraft->pilot)
-		mxml_AddInt(node, SAVE_AIRCRAFT_PILOTUCN, aircraft->pilot->chr.ucn);
+	pilot = AIR_GetPilot(aircraft);
+	if (pilot)
+		mxml_AddInt(node, SAVE_AIRCRAFT_PILOTUCN, pilot->chr.ucn);
 
 	/* itemcargo */
 	subnode = mxml_AddNode(node, SAVE_AIRCRAFT_CARGO);
@@ -2755,9 +2773,9 @@ static qboolean AIR_LoadAircraftXML (mxml_node_t *p, aircraft_t *craft)
 	 * this means, that the pilot pointer is not (really) valid until
 	 * E_Load was called, too */
 	if (tmpInt != -1)
-		craft->pilot = E_GetEmployeeFromChrUCN(tmpInt);
+		AIR_SetPilot(craft, E_GetEmployeeFromChrUCN(tmpInt));
 	else
-		craft->pilot = NULL;
+		AIR_SetPilot(craft, NULL);
 
 	RADAR_InitialiseUFOs(&craft->radar);
 	craft->radar.range = mxml_GetInt(p, SAVE_AIRCRAFT_RADAR_RANGE, 0);
@@ -2950,7 +2968,7 @@ qboolean AIR_CanIntercept (const aircraft_t *aircraft)
 		return qfalse;
 
 	/* we need a pilot to intercept */
-	if (!aircraft->pilot)
+	if (AIR_GetPilot(aircraft) == NULL)
 		return qfalse;
 
 	return qtrue;
@@ -3109,7 +3127,7 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const ai
 	}
 
 	if (employee->type == EMPL_PILOT) {
-		if (aircraft->pilot == employee)
+		if (AIR_GetPilot(aircraft) == employee)
 			return aircraft;
 		return NULL;
 	}
@@ -3140,7 +3158,7 @@ void AIR_RemoveEmployees (aircraft_t *aircraft)
 	}
 
 	/* Remove pilot */
-	aircraft->pilot = NULL;
+	AIR_SetPilot(aircraft, NULL);
 
 	if (AIR_GetTeamSize(aircraft) > 0)
 		Com_Error(ERR_DROP, "AIR_RemoveEmployees: Error, there went something wrong with soldier-removing from aircraft.");

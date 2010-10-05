@@ -170,7 +170,7 @@ qboolean AIM_PilotAssignedAircraft (const base_t* base, const employee_t* pilot)
 
 	aircraft = NULL;
 	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-		if (aircraft->pilot == pilot) {
+		if (AIR_GetPilot(aircraft) == pilot) {
 			found = qtrue;
 			break;
 		}

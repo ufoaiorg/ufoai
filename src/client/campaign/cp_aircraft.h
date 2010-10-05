@@ -294,6 +294,8 @@ const char *AIR_CheckMoveIntoNewHomebase(const aircraft_t *aircraft, const struc
 void AII_CollectItem(aircraft_t *aircraft, const objDef_t *item, int amount);
 void AII_CollectingItems(aircraft_t *aircraft, int won);
 
+qboolean AIR_SetPilot(aircraft_t *aircraft, struct employee_s* pilot);
+struct employee_s* AIR_GetPilot(const aircraft_t *aircraft);
 void AIR_AutoAddPilotToAircraft(const struct base_s* base, struct employee_s* pilot);
 void AIR_RemovePilotFromAssignedAircraft(const struct base_s* base, const struct employee_s* pilot);
 void AIR_RemoveEmployees(aircraft_t* aircraft);

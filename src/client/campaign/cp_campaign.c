@@ -1095,32 +1095,16 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft, const battleParam_
  */
 void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const battleParam_t *battleParameters, missionResults_t *results)
 {
-	qboolean won;
-	float winProbability;
-
 	assert(mission);
 	assert(aircraft);
 
-	if (mission->stage != STAGE_BASE_ATTACK) {
-		if (!mission->active) {
-			MS_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
-			return;
-		} else if (mission->mapDef->storyRelated) {
-			Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
-			/* ensure, that the automatic button is no longer visible */
-			Cvar_Set("cp_mission_autogo_available", "0");
-			return;
-		}
-
-		winProbability = CP_GetWinProbabilty(mission, aircraft, battleParameters, ccs.curCampaign->difficulty);
-	} else {
-		winProbability = CP_GetWinProbabiltyForBaseAttackMission(mission, battleParameters, ccs.curCampaign->difficulty);
-	}
-
-	won = frand() < winProbability;
+	if (mission->stage != STAGE_BASE_ATTACK)
+		results->winProbability = CP_GetWinProbabilty(mission, aircraft, battleParameters, ccs.curCampaign->difficulty);
+	else
+		results->winProbability = CP_GetWinProbabiltyForBaseAttackMission(mission, battleParameters, ccs.curCampaign->difficulty);
 
 	/** @todo set other counts */
-	results->won = won;
+	results->won = battleParameters->probability < results->winProbability;
 	results->aliensKilled = battleParameters->aliens;
 	results->aliensStunned = 0;
 	results->aliensSurvived = 0;
@@ -1131,32 +1115,19 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const battleParam_
 	results->ownKilledFriendlyFire = 0;
 	results->ownStunned = 0;
 	results->ownSurvived = AIR_GetTeamSize(aircraft);
-	CP_InitMissionResults(won, results);
-	if (won) {
-		Cvar_SetValue("mn_autogo", 1);
-		UI_PushWindow("won", NULL);
-	} else {
-		UI_PushWindow("lost", NULL);
-	}
+	CP_InitMissionResults(results->won, results);
 
 	/* update nation opinions */
-	CL_HandleNationData(won, mission, battleParameters->nation, results);
+	CL_HandleNationData(results->won, mission, battleParameters->nation, results);
 
 	CP_CheckLostCondition();
 
 	CL_AutoMissionAlienCollect(aircraft, battleParameters);
 
 	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(mission, won);
+	CP_ExecuteMissionTrigger(mission, results->won);
 
-	CP_MissionEndActions(mission, aircraft, won);
-
-	if (won)
-		MS_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
-	else
-		MS_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
-
-	MAP_ResetAction();
+	CP_MissionEndActions(mission, aircraft, results->won);
 }
 
 /**

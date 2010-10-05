@@ -26,6 +26,34 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "CUnit/Basic.h"
 #include "test_shared.h"
 #include "test_campaign.h"
+#include "../client/client.h"
+#include "../client/ui/ui_main.h"
+#include "../client/campaign/cp_campaign.h"
+
+static const int TAG_INVENTORY = 1538;
+
+static void FreeInventory (void *data)
+{
+	Mem_Free(data);
+}
+
+static void *AllocInventoryMemory (size_t size)
+{
+	return Mem_PoolAlloc(size, com_genericPool, TAG_INVENTORY);
+}
+
+static void FreeAllInventory (void)
+{
+	Mem_FreeTag(com_genericPool, TAG_INVENTORY);
+}
+
+static const inventoryImport_t inventoryImport = { FreeInventory, FreeAllInventory, AllocInventoryMemory };
+
+static inline void ResetInventoryList (void)
+{
+	INV_DestroyInventory(&cls.i);
+	INV_InitInventory("testCampaign", &cls.i, &csi, &inventoryImport);
+}
 
 /**
  * The suite initialization function.
@@ -34,6 +62,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int UFO_InitSuiteCampaign (void)
 {
 	TEST_Init();
+
+	memset(&csi, 0, sizeof(csi));
+	memset(&cls, 0, sizeof(cls));
+
+	Com_ParseScripts(qtrue);
+
+	cp_campaignPool = Mem_CreatePool("Client: Local (per game)");
+	cl_genericPool = Mem_CreatePool("Client: Generic");
+	cp_campaign = Cvar_Get("cp_campaign", "main", 0, NULL);
+	cp_missiontest = Cvar_Get("cp_missiontest", "0", 0, NULL);
+
+	Cmd_AddCommand("msgoptions_set", Cmd_Dummy_f, NULL);
+
+	CL_SetClientState(ca_disconnected);
+	cls.realtime = Sys_Milliseconds();
+
+	UI_Init();
+
+	CL_ResetSinglePlayerData();
+	CL_ReadSinglePlayerData();
 	return 0;
 }
 
@@ -49,6 +97,42 @@ static int UFO_CleanSuiteCampaign (void)
 
 static void testCampaign (void)
 {
+	missionResults_t result;
+	battleParam_t battleParameters;
+	const char *firebird = Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
+	aircraft_t* aircraft = AIR_GetAircraft(firebird);
+	mission_t *mission = CP_CreateNewMission(INTERESTCATEGORY_RECON, qfalse);
+	campaign_t *campaign;
+	employee_t *e;
+
+	ResetInventoryList();
+
+	campaign = CL_GetCampaign(cp_campaign->string);
+	CU_ASSERT_TRUE_FATAL(campaign != NULL);
+	ccs.curCampaign = campaign;
+
+	CU_ASSERT_PTR_NOT_NULL(aircraft);
+	CU_ASSERT_PTR_NOT_NULL(mission);
+
+	e = E_CreateEmployee(EMPL_PILOT, NULL, NULL);
+	CU_ASSERT_PTR_NOT_NULL(e);
+	AIR_SetPilot(aircraft, e);
+
+	e = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+	AIR_AddToAircraftTeam(aircraft, e);
+	e = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+	AIR_AddToAircraftTeam(aircraft, e);
+
+	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 2);
+
+	memset(&battleParameters, 0, sizeof(battleParameters));
+	battleParameters.probability = -1.0;
+
+	CL_GameAutoGo(mission, aircraft, &battleParameters, &result);
+
+	TEST_Printf("%f\n", result.winProbability);
+	CU_ASSERT_EQUAL(result.won, battleParameters.probability < result.winProbability);
+	CU_ASSERT_EQUAL(result.won, qtrue);
 }
 
 int UFO_AddCampaignTests (void)
