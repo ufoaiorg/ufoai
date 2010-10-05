@@ -1166,10 +1166,10 @@ void FS_SkipBlock (const char **text)
 
 char *FS_NextScriptHeader (const char *files, const char **name, const char **text)
 {
-	static char lastList[MAX_QPATH] = "";
+	static char lastList[MAX_QPATH];
 	static listBlock_t *lBlock;
-	static linkedList_t *lFile = NULL;
-	static byte *lBuffer = NULL;
+	static linkedList_t *lFile;
+	static byte *lBuffer;
 
 	static char headerType[MAX_VAR];
 	static char headerName[MAX_VAR];
