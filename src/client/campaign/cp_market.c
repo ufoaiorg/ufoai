@@ -420,10 +420,5 @@ qboolean BS_IsOnMarket (const objDef_t const* item)
  */
 qboolean BS_BuySellAllowed (const base_t* base)
 {
-	if (base->baseStatus != BASE_UNDER_ATTACK
-	 && B_GetBuildingStatus(base, B_STORAGE)) {
-		return qtrue;
-	} else {
-		return qfalse;
-	}
+	return !B_IsUnderAttack(base) && B_GetBuildingStatus(base, B_STORAGE);
 }

@@ -2079,7 +2079,7 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 				if (baseidx != BYTES_NONE) {
 					base_t *base = B_GetBaseByIDX(baseidx);
 					assert(base);
-					if (mission.stage == STAGE_BASE_ATTACK && base->baseStatus != BASE_UNDER_ATTACK)
+					if (mission.stage == STAGE_BASE_ATTACK && !B_IsUnderAttack(base))
 						Com_Printf("......warning: base %i (%s) is supposedly under attack but base status doesn't match!\n", baseidx, base->name);
 					mission.data = (void *) base;
 				} else

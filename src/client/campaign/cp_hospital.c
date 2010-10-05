@@ -202,10 +202,5 @@ qboolean HOS_LoadXML (mxml_node_t *p)
  */
 qboolean HOS_HospitalAllowed (const base_t* base)
 {
-	if (base->baseStatus != BASE_UNDER_ATTACK
-	 && B_GetBuildingStatus(base, B_HOSPITAL)) {
-		return qtrue;
-	} else {
-		return qfalse;
-	}
+	return !B_IsUnderAttack(base) && B_GetBuildingStatus(base, B_HOSPITAL);
 }

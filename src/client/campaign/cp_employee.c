@@ -1348,7 +1348,7 @@ qboolean E_LoadXML (mxml_node_t *p)
  */
 qboolean E_HireAllowed (const base_t* base)
 {
-	if (base->baseStatus != BASE_UNDER_ATTACK && B_GetBuildingStatus(base, B_QUARTERS))
+	if (!B_IsUnderAttack(base) && B_GetBuildingStatus(base, B_QUARTERS))
 		return qtrue;
 	else
 		return qfalse;

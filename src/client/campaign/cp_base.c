@@ -904,7 +904,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 	assert(base);
 
 	/* you can't destroy buildings if base is under attack */
-	if (base->baseStatus == BASE_UNDER_ATTACK) {
+	if (B_IsUnderAttack(base)) {
 		UI_Popup(_("Notice"), _("Base is under attack, you can't destroy buildings!"));
 		return;
 	}

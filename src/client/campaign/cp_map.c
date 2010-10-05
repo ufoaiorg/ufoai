@@ -1515,14 +1515,14 @@ static void MAP_DrawMapOneBase (const uiNode_t* node, const base_t *base,
 
 	/* Draw base */
 	if (cl_3dmap->integer) {
-		if (base->baseStatus == BASE_UNDER_ATTACK)
+		if (B_IsUnderAttack(base))
 			/* two skins - second skin is for baseattack */
 			MAP_Draw3DMarkerIfVisible(node, base->pos, defaultBaseAngle, "geoscape/base", 1);
 		else
 			MAP_Draw3DMarkerIfVisible(node, base->pos, defaultBaseAngle, "geoscape/base", 0);
 	} else if (MAP_MapToScreen(node, base->pos, &x, &y)) {
 		const image_t *image;
-		if (base->baseStatus == BASE_UNDER_ATTACK)
+		if (B_IsUnderAttack(base))
 			image = geoscapeImages[GEOSCAPE_IMAGE_BASE_ATTACK];
 		else
 			image = geoscapeImages[GEOSCAPE_IMAGE_BASE];

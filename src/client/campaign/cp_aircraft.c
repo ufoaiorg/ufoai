@@ -455,8 +455,7 @@ const char *AIR_AircraftStatusToName (const aircraft_t * aircraft)
 	assert(aircraft->homebase);
 
 	/* display special status if base-attack affects aircraft */
-	if (aircraft->homebase->baseStatus == BASE_UNDER_ATTACK &&
-		AIR_IsAircraftInBase(aircraft))
+	if (B_IsUnderAttack(aircraft->homebase) && AIR_IsAircraftInBase(aircraft))
 		return _("ON RED ALERT");
 
 	switch (aircraft->status) {
@@ -1390,8 +1389,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 
 	/* if mission is a base-attack and aircraft already in base, launch
 	 * mission immediately */
-	if (aircraft->homebase->baseStatus == BASE_UNDER_ATTACK &&
-		AIR_IsAircraftInBase(aircraft)) {
+	if (B_IsUnderAttack(aircraft->homebase) && AIR_IsAircraftInBase(aircraft)) {
 		aircraft->mission = mission;
 		mission->active = qtrue;
 		UI_PushWindow("popup_baseattack", NULL);

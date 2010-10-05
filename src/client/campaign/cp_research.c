@@ -1881,12 +1881,7 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 qboolean RS_ResearchAllowed (const base_t* base)
 {
 	assert(base);
-	if (base->baseStatus != BASE_UNDER_ATTACK && B_GetBuildingStatus(base, B_LAB)
-	 && E_CountHired(base, EMPL_SCIENTIST) > 0) {
-		return qtrue;
-	} else {
-		return qfalse;
-	}
+	return !B_IsUnderAttack(base) && B_GetBuildingStatus(base, B_LAB) && E_CountHired(base, EMPL_SCIENTIST) > 0;
 }
 
 /**

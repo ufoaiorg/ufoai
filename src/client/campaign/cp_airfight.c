@@ -759,7 +759,7 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
 		if (!base)
 			continue;
 
-		if (base->baseStatus == BASE_UNDER_ATTACK)
+		if (B_IsUnderAttack(base))
 			continue;
 
 		for (idx = 0; idx < base->numBatteries; idx++) {

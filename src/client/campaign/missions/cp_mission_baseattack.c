@@ -299,7 +299,7 @@ static base_t *CP_BaseAttackChooseBase (void)
 	assert(base && (randomNumber < 0));
 
 	/* base is already under attack */
-	if (base->baseStatus == BASE_UNDER_ATTACK)
+	if (B_IsUnderAttack(base))
 		return NULL;
 	/* base not (yet) working */
 	if (!B_GetBuildingStatus(base, B_COMMAND))

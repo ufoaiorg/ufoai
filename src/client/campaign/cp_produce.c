@@ -726,13 +726,7 @@ void PR_ProductionRun (void)
 qboolean PR_ProductionAllowed (const base_t* base)
 {
 	assert(base);
-	if (base->baseStatus != BASE_UNDER_ATTACK
-	 && B_GetBuildingStatus(base, B_WORKSHOP)
-	 && E_CountHired(base, EMPL_WORKER) > 0) {
-		return qtrue;
-	} else {
-		return qfalse;
-	}
+	return !B_IsUnderAttack(base) && B_GetBuildingStatus(base, B_WORKSHOP) && E_CountHired(base, EMPL_WORKER) > 0;
 }
 
 void PR_ProductionInit (void)

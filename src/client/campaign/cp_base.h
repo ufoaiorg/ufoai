@@ -61,6 +61,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define B_GetBaseIDX(base) ((ptrdiff_t)((base) - ccs.bases))
 #define B_GetBuildingIDX(base, building) ((ptrdiff_t)((building) - ccs.buildings[base->idx]))
 
+#define B_IsUnderAttack(base) ((base)->baseStatus == BASE_UNDER_ATTACK)
+
 /**
  * @brief Macro sets a building used
  * @param[in] usedArray must be a qboolean array of the size MAX_BUILDINGS

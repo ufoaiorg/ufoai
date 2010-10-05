@@ -565,7 +565,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		return;
 
 	/* Maybe base is under attack ? */
-	if (base->baseStatus == BASE_UNDER_ATTACK) {
+	if (B_IsUnderAttack(base)) {
 		UI_Popup(_("Notice"), _("Base is under attack, you can't access this building !"));
 		return;
 	}
