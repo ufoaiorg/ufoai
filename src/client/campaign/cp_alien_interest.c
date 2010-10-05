@@ -146,7 +146,7 @@ qboolean CP_LoadInterestsXML (mxml_node_t *parent)
 		int cat;
 
 		if (!Com_GetConstInt(categoryId, (int*) &cat)) {
-			Com_Printf("Invaild interest category '%s'\n", categoryId);
+			Com_Printf("Invalid interest category '%s'\n", categoryId);
 			success = qfalse;
 			break;
 		}

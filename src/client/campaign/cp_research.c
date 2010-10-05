@@ -1829,7 +1829,7 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 		}
 
 		if (!Com_GetConstIntFromNamespace(SAVE_RESEARCHSTATUS_NAMESPACE, type, (int*) &t->statusResearch)) {
-			Com_Printf("Invaild research status '%s'\n", type);
+			Com_Printf("Invalid research status '%s'\n", type);
 			success = qfalse;
 			break;
 		}

@@ -2931,7 +2931,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		b->idx = B_GetBaseIDX(b);
 		b->founded = qtrue;
 		if (!Com_GetConstIntFromNamespace(SAVE_BASESTATUS_NAMESPACE, str, (int*) &b->baseStatus)) {
-			Com_Printf("Invaild base status '%s'\n", str);
+			Com_Printf("Invalid base status '%s'\n", str);
 			Com_UnregisterConstList(saveBaseConstants);
 			return qfalse;
 		}
@@ -3000,7 +3000,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 
 			str = mxml_GetString(snode, SAVE_BASES_BUILDINGSTATUS);
 			if (!Com_GetConstIntFromNamespace(SAVE_BUILDINGSTATUS_NAMESPACE, str, (int*) &building->buildingStatus)) {
-				Com_Printf("Invaild building status '%s'\n", str);
+				Com_Printf("Invalid building status '%s'\n", str);
 				Com_UnregisterConstList(saveBaseConstants);
 				return qfalse;
 			}

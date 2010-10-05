@@ -598,7 +598,7 @@ qboolean INS_LoadXML (mxml_node_t *p)
 		}
 
 		if (!Com_GetConstIntFromNamespace(SAVE_INSTALLATIONSTATUS_NAMESPACE, instStat, (int*) &inst->installationStatus)) {
-			Com_Printf("Invaild installation status '%s'\n", instStat);
+			Com_Printf("Invalid installation status '%s'\n", instStat);
 			success = qfalse;
 			break;
 		}
