@@ -42,9 +42,8 @@ static aircraftItemType_t BDEF_GetItemTypeFromID (const char *type)
 		return AC_ITEM_BASE_MISSILE;
 	else if (!strcmp(type, "laser"))
 		return AC_ITEM_BASE_LASER;
-	else {
-		return MAX_ACITEMS;
-	}
+
+	return MAX_ACITEMS;
 }
 /**
  * @brief returns the string identifier from an itemtype index
@@ -211,14 +210,14 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 
 	/* base and installation should not both be set. This function requires one or the other set. */
 	if (base && installation) {
-		Com_Printf("BDEF_BaseDefenceMenuUpdate_f: both the base and installation are set.  This shouldn't happen: you shouldn't be in this function.\n");
+		Sys_Error("BDEF_BaseDefenceMenuUpdate_f: Both the base and installation are set");
 		return;
 	}
 
 	Cvar_Set("mn_target", _("None"));
 	Cmd_ExecuteString("setautofire disable");
 	if (installation) {
-		/** Every slot aims the same target */
+		/* Every slot aims the same target */
 		if (installation->numBatteries) {
 			Cmd_ExecuteString(va("setautofire %i", installation->batteries[0].autofire));
 
@@ -227,7 +226,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 		}
 	} else if (base) {
 		qboolean autofire = qfalse;
-		/** Every slot aims the same target */
+		/* Every slot aims the same target */
 		if (base->numBatteries) {
 			autofire |= base->batteries[0].autofire;
 			if (base->batteries[0].target)
@@ -257,7 +256,7 @@ static void BDEF_BaseDefenceMenuUpdate_f (void)
 		bdefType = AC_ITEM_BASE_MISSILE;
 	else if (!strcmp(type, "laser"))
 		bdefType = AC_ITEM_BASE_LASER;
-	else	/** info page */
+	else	/* info page */
 		return;
 
 	/* Check that the base or installation has at least 1 battery */
@@ -478,7 +477,8 @@ static void BDEF_RemoveBattery_f (void)
 
 	/* Check that the baseIdx exists */
 	if (baseIdx < 0 || baseIdx >= ccs.numBases) {
-		Com_Printf("BDEF_RemoveBattery_f: baseIdx %i doesn't exist: there is only %i bases in game.\n", baseIdx, ccs.numBases);
+		Com_Printf("BDEF_RemoveBattery_f: baseIdx %i doesn't exist: there is only %i bases in game.\n",
+				baseIdx, ccs.numBases);
 		return;
 	}
 
@@ -572,7 +572,8 @@ static void BDEF_AddBattery_f (void)
 
 	/* Check that the baseIdx exists */
 	if (baseIdx < 0 || baseIdx >= ccs.numBases) {
-		Com_Printf("BDEF_AddBattery_f: baseIdx %i doesn't exist: there is only %i bases in game.\n", baseIdx, ccs.numBases);
+		Com_Printf("BDEF_AddBattery_f: baseIdx %i doesn't exist: there is only %i bases in game.\n",
+				baseIdx, ccs.numBases);
 		return;
 	}
 

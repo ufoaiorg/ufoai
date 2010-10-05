@@ -101,7 +101,6 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 			chr->STUN = c->STUN;
 			chr->morale = c->morale;
 
-			/** Scores @sa inv_shared.h:chrScoreGlobal_t */
 			memcpy(chr->score.experience, c->chrscore.experience, sizeof(chr->score.experience));
 			memcpy(chr->score.skills, c->chrscore.skills, sizeof(chr->score.skills));
 			memcpy(chr->score.kills, c->chrscore.kills, sizeof(chr->score.kills));
@@ -402,16 +401,20 @@ void CL_HandleNationData (qboolean won, mission_t * mis)
 	float deltaHappiness = 0.0f;
 	float happiness_divisor = 5.0f;
 
-	/** @todo HACK: This should be handled properly, i.e. civilians should only factor into the scoring if the mission objective is actually to save civilians. */
+	/** @todo HACK: This should be handled properly, i.e. civilians should only factor into the scoring
+	 * if the mission objective is actually to save civilians. */
 	if (civilianSum == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, civilianSum == 0, score for this mission will default to 0.\n");
 		performance = 0.0f;
 	}
 	else {
 		/* Calculate how well the mission went. */
-		performanceCivilian = (2 * civilianSum - ccs.missionResults.civiliansKilled - 2 * ccs.missionResults.civiliansKilledFriendlyFire) * 3 / (2 * civilianSum) - 2;
-		/** @todo The score for aliens is always negative or zero currently, but this should be dependent on the mission objective.
-		* In a mission that has a special objective, the amount of killed aliens should only serve to increase the score, not reduce the penalty. */
+		performanceCivilian = (2 * civilianSum - ccs.missionResults.civiliansKilled - 2
+				* ccs.missionResults.civiliansKilledFriendlyFire) * 3 / (2 * civilianSum) - 2;
+		/** @todo The score for aliens is always negative or zero currently, but this
+		 * should be dependent on the mission objective.
+		 * In a mission that has a special objective, the amount of killed aliens should
+		 * only serve to increase the score, not reduce the penalty. */
 		performanceAlien = ccs.missionResults.aliensKilled + ccs.missionResults.aliensStunned - alienSum;
 		performance = performanceCivilian + performanceAlien;
 	}
@@ -440,9 +443,11 @@ void CL_HandleNationData (qboolean won, mission_t * mis)
 	}
 
 	if (!isOnEarth)
-		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->id, ccs.battleParameters.nation ? ccs.battleParameters.nation->id : "no nation");
+		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n",
+				mis->id, ccs.battleParameters.nation ? ccs.battleParameters.nation->id : "no nation");
 	else if (isOnEarth > 1)
-		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Error, mission '%s' located in many countries '%s'.\n", mis->id, ccs.battleParameters.nation->id);
+		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Error, mission '%s' located in many countries '%s'.\n",
+				mis->id, ccs.battleParameters.nation->id);
 }
 
 /**
@@ -511,7 +516,7 @@ void CL_DateConvert (const date_t * date, byte *day, byte *month, short *year)
 
 	/* Prepare return values. */
 	*day = d + 1;
-	*month = i + 1;	/**< Return month in range [1-12] */
+	*month = i + 1;
 	assert(*month >= 1 && *month <= MONTHS_PER_YEAR);
 	assert(*day >= 1 && *day <= monthLength[i]);
 }
@@ -736,7 +741,7 @@ void CL_CampaignRun (void)
 #define MAX_CREDITS 10000000
 /**
  * @brief Sets credits and update mn_credits cvar
- *
+ * @param[in] credits The new credits value
  * Checks whether credits are bigger than MAX_CREDITS
  */
 void CL_UpdateCredits (int credits)
