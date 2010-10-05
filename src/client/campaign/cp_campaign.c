@@ -988,6 +988,8 @@ static float CP_GetWinProbabiltyForBaseAttackMission (const mission_t *mis, cons
 	/* a base defence mission can only be won if there are soldiers that
 	 * defend the attacked base */
 	if (numSoldiers || numUGVs) {
+		/** @todo fix this value */
+		const int minCloseExperience = 70;
 		float winProbability;
 		float increaseWinProbability = 1.0f;
 		linkedList_t *listPos;
@@ -998,14 +1000,9 @@ static float CP_GetWinProbabiltyForBaseAttackMission (const mission_t *mis, cons
 			if (!E_IsAwayFromBase(employee)) {
 				const character_t *chr = &employee->chr;
 				const chrScoreGlobal_t *score = &chr->score;
-				/* if the soldier was ever on a mission */
-				if (score->assignedMissions) {
-					const rank_t *rank = CL_GetRankByIdx(score->rank);
-					/** @todo fix this value */
-					if (score->experience[SKILL_CLOSE] > 70) {
-						increaseWinProbability *= rank->factor;
-					}
-				}
+				const rank_t *rank = CL_GetRankByIdx(score->rank);
+				if (score->experience[SKILL_CLOSE] > minCloseExperience)
+					increaseWinProbability *= rank->factor;
 			}
 			listPos = listPos->next;
 		}
@@ -1018,10 +1015,7 @@ static float CP_GetWinProbabiltyForBaseAttackMission (const mission_t *mis, cons
 				const character_t *chr = &employee->chr;
 				const chrScoreGlobal_t *score = &chr->score;
 				const rank_t *rank = CL_GetRankByIdx(score->rank);
-				/** @todo fix this value */
-				if (score->experience[SKILL_CLOSE] > 70) {
-					increaseWinProbability *= rank->factor;
-				}
+				increaseWinProbability *= rank->factor;
 			}
 			listPos = listPos->next;
 		}
