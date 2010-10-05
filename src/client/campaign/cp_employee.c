@@ -683,10 +683,8 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, const nation_t 
 
 	if (ccs.curCampaign->team != TEAM_ALIEN)
 		teamID = Com_ValueToStr(&ccs.curCampaign->team, V_TEAM, 0);
-	else {
-		/** @todo use Cvar_GetString("cl_teamdef"); for campaign games */
+	else
 		teamID = GAME_GetTeamDef();
-	}
 
 	/* Generate character stats, models & names. */
 	switch (type) {
