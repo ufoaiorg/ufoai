@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "CUnit/Basic.h"
 #include "test_shared.h"
 #include "test_parser.h"
+#include "../shared/ufotypes.h"
 #include "../shared/parse.h"
 
 /**
@@ -232,6 +233,134 @@ static void testParserWithFunctionScriptToken (void)
 	CU_ASSERT_STRING_EQUAL(token, "\0");
 }
 
+/**
+ * @brief unittest around common type
+ */
+static void testParserCommonType (void)
+{
+	int ivalue;
+	qboolean bvalue;
+	float fvalue;
+	align_t align;
+	blend_t blend;
+	style_t style;
+	fade_t fade;
+	size_t bytes;
+	int result;
+
+	/* boolean */
+
+	bytes = 0;
+	result = Com_ParseValue (&bvalue, "true", V_BOOL, 0, sizeof(qboolean), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_OK);
+	CU_ASSERT_EQUAL(bvalue, 1);
+	CU_ASSERT_EQUAL(bytes, sizeof(qboolean));
+
+	bytes = 0;
+	result = Com_ParseValue (&bvalue, "false", V_BOOL, 0, sizeof(qboolean), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_OK);
+	CU_ASSERT_EQUAL(bvalue, 0);
+	CU_ASSERT_EQUAL(bytes, sizeof(qboolean));
+
+	bytes = 0;
+	result = Com_ParseValue (&bvalue, "foo", V_INT, 0, sizeof(int), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_ERROR);
+	CU_ASSERT_EQUAL(bytes, 0);
+
+	/* int */
+
+	bytes = 0;
+	result = Com_ParseValue (&ivalue, "10", V_INT, 0, sizeof(int), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_OK);
+	CU_ASSERT_EQUAL(ivalue, 10);
+	CU_ASSERT_EQUAL(bytes, sizeof(int));
+
+	bytes = 0;
+	result = Com_ParseValue (&ivalue, "abc", V_INT, 0, sizeof(int), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_ERROR);
+	CU_ASSERT_EQUAL(bytes, 0);
+
+	/* float */
+
+	bytes = 0;
+	result = Com_ParseValue (&fvalue, "1.1", V_FLOAT, 0, sizeof(float), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_OK);
+	CU_ASSERT_EQUAL(fvalue, 1.1f);
+	CU_ASSERT_EQUAL(bytes, sizeof(float));
+
+	bytes = 0;
+	result = Com_ParseValue (&fvalue, "9.8", V_FLOAT, 0, sizeof(float), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_OK);
+	CU_ASSERT_EQUAL(fvalue, 9.8f);
+	CU_ASSERT_EQUAL(bytes, sizeof(float));
+
+	bytes = 0;
+	result = Com_ParseValue (&fvalue, "abc", V_FLOAT, 0, sizeof(float), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_ERROR);
+	CU_ASSERT_EQUAL(bytes, 0);
+
+	/** @todo V_POS */
+	/** @todo V_VECTOR */
+	/** @todo V_COLOR */
+	/** @todo V_RGBA */
+	/** @todo V_STRING */
+	/** @todo V_TRANSLATION_STRING */
+	/** @todo V_LONGSTRING */
+
+	/* align */
+
+	bytes = 0;
+	result = Com_ParseValue (&align, "cc", V_ALIGN, 0, sizeof(align_t), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_OK);
+	CU_ASSERT_EQUAL(align, ALIGN_CC);
+	CU_ASSERT_EQUAL(bytes, sizeof(align_t));
+
+	bytes = 0;
+	result = Com_ParseValue (&align, "abc", V_ALIGN, 0, sizeof(align_t), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_ERROR);
+	CU_ASSERT_EQUAL(bytes, 0);
+
+	/* blend */
+
+	bytes = 0;
+	result = Com_ParseValue (&blend, "blend", V_BLEND, 0, sizeof(blend_t), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_OK);
+	CU_ASSERT_EQUAL(blend, BLEND_BLEND);
+	CU_ASSERT_EQUAL(bytes, sizeof(blend_t));
+
+	bytes = 0;
+	result = Com_ParseValue (&blend, "abc", V_BLEND, 0, sizeof(blend_t), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_ERROR);
+	CU_ASSERT_EQUAL(bytes, 0);
+
+	/* style */
+
+	bytes = 0;
+	result = Com_ParseValue (&style, "rotated", V_STYLE, 0, sizeof(style_t), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_OK);
+	CU_ASSERT_EQUAL(style, STYLE_ROTATED);
+	CU_ASSERT_EQUAL(bytes, sizeof(style_t));
+
+	bytes = 0;
+	result = Com_ParseValue (&style, "abc", V_STYLE, 0, sizeof(style_t), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_ERROR);
+	CU_ASSERT_EQUAL(bytes, 0);
+
+	/* fade */
+
+	bytes = 0;
+	result = Com_ParseValue (&fade, "sin", V_FADE, 0, sizeof(fade_t), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_OK);
+	CU_ASSERT_EQUAL(fade, FADE_SIN);
+	CU_ASSERT_EQUAL(bytes, sizeof(fade_t));
+
+	bytes = 0;
+	result = Com_ParseValue (&fade, "abc", V_FADE, 0, sizeof(fade_t), &bytes);
+	CU_ASSERT_EQUAL(result, RESULT_ERROR);
+	CU_ASSERT_EQUAL(bytes, 0);
+
+}
+
 int UFO_AddParserTests (void)
 {
 	/* add a suite to the registry */
@@ -248,6 +377,8 @@ int UFO_AddParserTests (void)
 	if (CU_ADD_TEST(ParserSuite, testParserWithUnParse) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(ParserSuite, testParserWithEntity) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(ParserSuite, testParserCommonType) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
