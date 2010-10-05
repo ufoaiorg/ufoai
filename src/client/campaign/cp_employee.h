@@ -60,7 +60,7 @@ typedef struct employee_s {
 	int idx;						/**< self link in global employee-list - this should be references only with the variable name emplIdx
 									 * to let us find references all over the code easier @sa E_DeleteEmployee */
 	base_t *baseHired;				/**< Base where the soldier is hired it atm. */
-	const building_t *building;		/**< Assigned to a building */
+	qboolean assigned;				/**< Assigned to a building */
 	qboolean transfer;				/**< Is this employee currently transferred? */
 	character_t chr;				/**< employee stats */
 	employeeType_t type;			/**< employee type */

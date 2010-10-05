@@ -454,7 +454,7 @@ static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
 	if (!employee)
 		Com_Error(ERR_DROP, "E_EmployeeIsUnassigned: Employee is NULL.\n");
 
-	return (!employee->building);
+	return !employee->assigned;
 }
 
 /**
@@ -676,7 +676,7 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, const nation_t 
 
 	employee->idx = curEmployeeIdx;
 	employee->baseHired = NULL;
-	employee->building = NULL;
+	employee->assigned = qfalse;
 	employee->type = type;
 	employee->nation = nation;
 	employee->ugv = ugvType;
@@ -1248,8 +1248,8 @@ qboolean E_SaveXML (mxml_node_t *p)
 			mxml_AddInt(ssnode, SAVE_EMPLOYEE_IDX, e->idx);
 			if (e->baseHired)
 				mxml_AddInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, e->baseHired->idx);
-			if (e->building)
-				mxml_AddInt(ssnode, SAVE_EMPLOYEE_BUILDING, e->building->idx);
+			if (e->assigned)
+				mxml_AddBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, e->assigned);
 			/* Store the nations identifier string. */
 			assert(e->nation);
 			mxml_AddString(ssnode, SAVE_EMPLOYEE_NATION, e->nation->id);
@@ -1292,7 +1292,6 @@ qboolean E_LoadXML (mxml_node_t *p)
 		for (ssnode = mxml_GetNode(snode, SAVE_EMPLOYEE_EMPLOYEE), i = 0; i < MAX_EMPLOYEES && ssnode;
 				ssnode = mxml_GetNextNode(ssnode, snode, SAVE_EMPLOYEE_EMPLOYEE), i++) {
 			int baseIDX;
-			int buildingIDX;
 			mxml_node_t * chrNode;
 			employee_t *e = &ccs.employees[emplType][i];
 
@@ -1308,10 +1307,12 @@ qboolean E_LoadXML (mxml_node_t *p)
 			assert(ccs.numBases);	/* Just in case the order is ever changed. */
 			baseIDX = mxml_GetInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, -1);
 			e->baseHired = (baseIDX >= 0) ? B_GetBaseByIDX(baseIDX) : NULL;
-			/* building */
-			/** @todo: if research was removed we should free the scientists */
-			buildingIDX = mxml_GetInt(ssnode, SAVE_EMPLOYEE_BUILDING, -1);
-			e->building = (e->baseHired && buildingIDX >= 0) ? &ccs.buildings[e->baseHired->idx][buildingIDX] : NULL;
+			/* assigned to a building? */
+			/** @todo compatibility code - remove me */
+			if (mxml_GetInt(ssnode, SAVE_EMPLOYEE_BUILDING, -1) != -1)
+				e->assigned = qtrue;
+			else
+				e->assigned = mxml_GetBool(ssnode, SAVE_EMPLOYEE_ASSIGNED, qfalse);
 			/* nation */
 			e->nation = NAT_GetNationByID(mxml_GetString(ssnode, SAVE_EMPLOYEE_NATION));
 			if (!e->nation) {

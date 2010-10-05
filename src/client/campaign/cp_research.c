@@ -682,9 +682,7 @@ void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
 				tech->scientists++;			/* Assign a scientist to this tech. */
 				tech->base = base;			/* Make sure this tech has proper base pointer. */
 				base->capacities[CAP_LABSPACE].cur++;	/* Set the amount of currently assigned in capacities. */
-
-				/* Assign the sci to the lab and set number of used lab-space. */
-				employee->building = building;
+				employee->assigned = qtrue;
 			} else {
 				UI_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
 				return;
@@ -724,8 +722,7 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 		tech->scientists--;
 		/* Update capacity. */
 		tech->base->capacities[CAP_LABSPACE].cur--;
-		/* Remove the scientist from the lab and set number of used lab-space. */
-		employee->building = NULL; /* See also E_RemoveEmployeeFromBuildingOrAircraft */
+		employee->assigned = qfalse;
 	} else {
 		Com_Error(ERR_DROP, "No assigned scientists found - serious inconsistency.");
 	}
