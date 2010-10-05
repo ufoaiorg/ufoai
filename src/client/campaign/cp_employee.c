@@ -679,6 +679,7 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, const nation_t 
 	employee->building = NULL;
 	employee->type = type;
 	employee->nation = nation;
+	employee->ugv = ugvType;
 
 	if (ccs.curCampaign->team != TEAM_ALIEN)
 		teamID = Com_ValueToStr(&ccs.curCampaign->team, V_TEAM, 0);
@@ -718,22 +719,6 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, const nation_t 
 	}
 
 	CL_GenerateCharacter(&employee->chr, teamDefName);
-	switch (type) {
-	case EMPL_SOLDIER:
-		break;
-	case EMPL_SCIENTIST:
-	case EMPL_PILOT:
-	case EMPL_WORKER:
-		employee->speed = 100;
-		break;
-	case EMPL_ROBOT:
-		if (!ugvType)
-			Com_Error(ERR_DROP, "E_CreateEmployee: No ugvType given!\n");
-		employee->ugv = ugvType;
-		break;
-	default:
-		break;
-	}
 
 	employee->chr.score.rank = CL_GetRankIdx(rank);
 
