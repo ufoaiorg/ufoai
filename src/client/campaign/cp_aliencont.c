@@ -313,8 +313,9 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 			while (amount > 0) {
 				/* Find the type with maxamount. */
 				for (j = 0; j < ccs.numAliensTD; j++) {
-					if (maxamount < containment[j].amountAlive) {
-						maxamount = containment[j].amountAlive;
+					const aliensCont_t *ac = &containment[j];
+					if (maxamount < ac->amountAlive) {
+						maxamount = ac->amountAlive;
 						maxidx = j;
 					}
 				}
