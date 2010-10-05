@@ -722,10 +722,11 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		for (num = 0; num < ALIGN_LAST; num++)
 			if (!strcmp(token, align_names[num]))
 				break;
-		if (num == ALIGN_LAST)
-			*(align_t *)b = 0;
-		else
-			*(align_t *)b = num;
+		if (num == ALIGN_LAST) {
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal align token '%s'", token);
+			return RESULT_ERROR;
+		}
+		*(align_t *)b = num;
 		*writtenBytes = sizeof(align_t);
 		break;
 
@@ -733,10 +734,11 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		for (num = 0; num < BLEND_LAST; num++)
 			if (!strcmp(token, blend_names[num]))
 				break;
-		if (num == BLEND_LAST)
-			*(blend_t *)b = 0;
-		else
-			*(blend_t *)b = num;
+		if (num == BLEND_LAST) {
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal blend token '%s'", token);
+			return RESULT_ERROR;
+		}
+		*(blend_t *)b = num;
 		*writtenBytes = sizeof(blend_t);
 		break;
 
@@ -744,10 +746,11 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		for (num = 0; num < STYLE_LAST; num++)
 			if (!strcmp(token, style_names[num]))
 				break;
-		if (num == STYLE_LAST)
-			*(style_t *)b = 0;
-		else
-			*(style_t *)b = num;
+		if (num == STYLE_LAST) {
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal style token '%s'", token);
+			return RESULT_ERROR;
+		}
+		*(style_t *)b = num;
 		*writtenBytes = sizeof(style_t);
 		break;
 
@@ -755,10 +758,11 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		for (num = 0; num < FADE_LAST; num++)
 			if (!strcmp(token, fade_names[num]))
 				break;
-		if (num == FADE_LAST)
-			*(fade_t *)b = 0;
-		else
-			*(fade_t *)b = num;
+		if (num == FADE_LAST) {
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal fade token '%s'", token);
+			return RESULT_ERROR;
+		}
+		*(fade_t *)b = num;
 		*writtenBytes = sizeof(fade_t);
 		break;
 
