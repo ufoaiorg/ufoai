@@ -232,9 +232,9 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 qboolean BS_LoadXML (mxml_node_t *parent)
 {
 	mxml_node_t *node, *snode;
-	node = mxml_GetNode(parent, SAVE_MARKET_MARKET);
 	market_t *market = BS_GetMarket();
 
+	node = mxml_GetNode(parent, SAVE_MARKET_MARKET);
 	if (!node)
 		return qfalse;
 
