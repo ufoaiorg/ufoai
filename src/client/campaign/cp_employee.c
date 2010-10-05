@@ -991,7 +991,7 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 	assert(employee);
 
 	/* not assigned to any building... */
-	if (!employee->building) {
+	if (E_EmployeeIsUnassigned(employee)) {
 		/* ... and no aircraft handling needed? */
 		if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT
 		 && employee->type != EMPL_PILOT)
@@ -1140,7 +1140,7 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 	count = 0;
 	employee = NULL;
 	while ((employee = E_GetNextFromBase(type, employee, base))) {
-		if (!employee->building)
+		if (E_EmployeeIsUnassigned(employee))
 			count++;
 	}
 	return count;

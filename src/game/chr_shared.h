@@ -269,8 +269,7 @@ typedef struct character_s {
 	chrScoreGlobal_t score;		/**< Array of scores/stats the soldier/unit collected over time. */
 	chrScoreMission_t *scoreMission;		/**< Array of scores/stats the soldier/unit collected in a mission - only used in battlescape (server side). Otherwise it's NULL. */
 
-	/** @sa memcpy in Grid_CheckForbidden */
-	actorSizeEnum_t fieldSize;				/**< @sa ACTOR_SIZE_**** */
+	actorSizeEnum_t fieldSize;
 
 	inventory_t i;			/**< Inventory definition. */
 
