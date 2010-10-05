@@ -1590,6 +1590,7 @@ void FS_Shutdown (void)
 	fs_links = NULL;
 	fs_mapsInstalledInit = qfalse;
 	fs_numInstalledMaps = -1;
+	fs_blocklist = NULL;
 
 #ifdef COMPILE_UFO
 	FS_RemoveCommands();
