@@ -672,18 +672,10 @@ void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
 		Com_DPrintf(DEBUG_CLIENT, "No free scientists in this base (%s) to assign to tech '%s'\n", base->name, tech->id);
 		return;
 	}
-	if (employee->type != EMPL_SCIENTIST) {
-		Com_Error(ERR_DROP, "Trying to assign a non-scientist to research tech: %s, at base %s\n", tech->id, base->name);
-	}
-	if (employee->building) {
-		/** @todo make reassign possible with this. */
-		Com_Printf("RS_AssignScientist: Scientist %i is already assigned\n", employee->idx);
-		return;
-	}
 
 	if (tech->statusResearchable) {
 		/* Get a free lab from the base. */
-		building_t *building = B_GetBuildingInBaseByType(base, B_LAB, qtrue);
+		const building_t *building = B_GetBuildingInBaseByType(base, B_LAB, qtrue);
 		if (building) {
 			/* Check the capacity. */
 			if (base->capacities[CAP_LABSPACE].max > base->capacities[CAP_LABSPACE].cur) {
