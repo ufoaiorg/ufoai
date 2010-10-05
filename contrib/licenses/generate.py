@@ -31,6 +31,8 @@ ABS_URL = None
 EOL = "\n"
 THUMBNAIL = True
 PLOT = True
+PARSE_MAPS = True
+PARSE_SCRIPTS = True
 RESOURCES = resources.Resources()
 
 NON_FREE_LICENSES = set([
@@ -502,6 +504,10 @@ def main():
                       help="disable thumbnails computation and display")
     parser.add_option("", "--disable-plots", action="store_false", dest="plot",
                       help="disable plots computation and display")
+    parser.add_option("", "--disable-parse-maps", action="store_false", dest="parse_maps",
+                      help="disable parsing maps to extract resource usages")
+    parser.add_option("", "--disable-parse-scripts", action="store_false", dest="parse_scripts",
+                      help="disable parsing scripts to extract resource usages")
 
     (options, args) = parser.parse_args()
 
@@ -515,6 +521,10 @@ def main():
         THUMBNAIL = options.thumbnail
     if options.plot != None:
         PLOT = options.plot
+    if not options.parse_maps:
+        PARSE_MAPS = options.parse_maps
+    if not options.parse_scripts:
+        PARSE_SCRIPTS = options.parse_scripts
 
     # @note we use it nowhere, cause everything is relative
     #ABS_URL = options.abs_url
@@ -531,6 +541,8 @@ def main():
     print "Absolute output:\t", output_path
     print "Generate thumbnails:\t", THUMBNAIL
     print "Generate plots:\t\t", PLOT
+    print "Parse maps:\t", PARSE_MAPS
+    print "Parse scripts:\t\t", PARSE_SCRIPTS
     print "-------------------------"
 
     setup(output_path)
@@ -542,8 +554,10 @@ def main():
         shutil.copy (sys.path[0] + "/resources/" + f, output_path + "/licenses/public_html/" + f)
 
     # map-texture relations
-    RESOURCES.computeTextureUsageInMaps()
-    RESOURCES.computeResourceUsageInUFOScripts()
+    if PARSE_MAPS:
+        RESOURCES.computeTextureUsageInMaps()
+    if PARSE_SCRIPTS:
+        RESOURCES.computeResourceUsageInUFOScripts()
 
     analyse = Analysis('base')
     analyse.write(output_path)

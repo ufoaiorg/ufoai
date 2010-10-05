@@ -17,11 +17,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import subprocess
-import hashlib, os
+import hashlib, os, re
 import datetime
 from xml.dom.minidom import parseString
 
 CACHING = False
+
+TIMESTAMP = re.compile("Date:\s+([0-9]+)\s")
 
 # TODO i dont think a cache here is need cause the Resources is itself a cache
 def get(cmd, cacheable=True):
@@ -86,6 +88,7 @@ class Resources(object):
         self.resources = {}
         self.computedBaseDir = set()
         self.mode = "svn"
+        self.timestamp = None
         if os.path.exists("LICENSES"):
             self.mode = "git"
 
@@ -96,10 +99,15 @@ class Resources(object):
             self.computeResourcesFromSVN(dir)
 
     def getRevisionFromDate(self):
-        # TODO extract date from remote repository
-        # Number of day since we switch from SVN to Git + last SVN revision
-        delta = datetime.datetime.now() - datetime.datetime(2010, 8, 28)
-        return 32055 + delta.days
+        """
+            We use a timestamp
+        """
+        if self.timestamp == None:
+            content = get("git log -1 --date=raw")
+            timestamps = TIMESTAMP.findall(content)
+            assert(len(timestamps) == 1)
+            self.timestamp = int(timestamps[0])
+        return self.timestamp
 
     def computeResourcesFromGit(self, dir):
         """
