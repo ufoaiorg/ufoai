@@ -2290,6 +2290,11 @@ int AIR_GetTeamSize (const aircraft_t *aircraft)
 	return LIST_Count(aircraft->acTeam);
 }
 
+/**
+ * @brief Assign a pilot to an aircraft
+ * @param[out] aircraft Pointer to the aircraft to add pilot to
+ * @param[in] pilot Pointer to the pilot to add
+ */
 qboolean AIR_SetPilot (aircraft_t *aircraft, employee_t *pilot)
 {
 	if (aircraft->pilot == NULL) {
@@ -2300,6 +2305,10 @@ qboolean AIR_SetPilot (aircraft_t *aircraft, employee_t *pilot)
 	return qfalse;
 }
 
+/**
+ * @brief Get pilot of an aircraft
+ * @param[in] aircraft Pointer to the aircraft
+ */
 employee_t* AIR_GetPilot (const aircraft_t *aircraft)
 {
 	const employee_t *e = aircraft->pilot;
