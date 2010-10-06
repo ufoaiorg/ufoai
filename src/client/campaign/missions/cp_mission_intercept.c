@@ -71,7 +71,6 @@ void CP_InterceptMissionIsFailure (mission_t *mission)
 void CP_InterceptMissionLeave (mission_t *mission, qboolean destroyed)
 {
 	installation_t *installation;
-	vec3_t missionPos;
 
 	assert(mission->ufo);
 
@@ -79,10 +78,14 @@ void CP_InterceptMissionLeave (mission_t *mission, qboolean destroyed)
 
 	/* if the mission was an attack of an installation, destroy it */
 	installation = mission->data.installation;
-	Vector2Copy(mission->pos, missionPos);
-	missionPos[2] = installation->pos[2];
-	if (destroyed && installation && installation->founded && VectorCompareEps(missionPos, installation->pos, UFO_EPSILON))
-		INS_DestroyInstallation(installation);
+	if (installation) {
+		vec3_t missionPos;
+
+		Vector2Copy(mission->pos, missionPos);
+		missionPos[2] = installation->pos[2];
+		if (destroyed && installation->founded && VectorCompareEps(missionPos, installation->pos, UFO_EPSILON))
+			INS_DestroyInstallation(installation);
+	}
 
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);
