@@ -2303,6 +2303,10 @@ qboolean AIR_SetPilot (aircraft_t *aircraft, employee_t *pilot)
 employee_t* AIR_GetPilot (const aircraft_t *aircraft)
 {
 	const employee_t *e = aircraft->pilot;
+
+	if (!e)
+		return NULL;
+
 	return &ccs.employees[e->type][e->idx];
 }
 
