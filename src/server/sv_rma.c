@@ -1044,7 +1044,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	mapInfo_t *maps[ASSEMBLE_THREADS];
 	int i;
 	static int timeout = 5000;  /* wait for 5 sec initially, double it every time it times out */
-	const int threadno = sv_threads->integer < ASSEMBLE_THREADS ? sv_threads->integer : ASSEMBLE_THREADS;
+	const int threadno = min(sv_threads->integer, ASSEMBLE_THREADS);
 
 	threadID = 0;
 	assert(mapSem == NULL);
@@ -1098,6 +1098,7 @@ static int SV_ParallelSearch (mapInfo_t *map)
 		Mem_Free(maps[i]);
 	}
 
+	SDL_DestroyCond(mapCond);
 	/* cleanup, for possible next time */
 	SDL_DestroySemaphore(mapSem);
 	mapSem = NULL;
