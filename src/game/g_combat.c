@@ -1087,7 +1087,8 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 	}
 
 	ammo = weapon->a;
-	reactionLeftover = IS_SHOT_REACTION(shootType) ? player->reactionLeftover : 0;
+	/* if this is reaction fire, don't keep trying to reserve TUs for reaction fire */
+	reactionLeftover = IS_SHOT_REACTION(shootType) ? player->reactionLeftover - ent->chr.reservedTus.reaction : 0;
 
 	/* check if action is possible
 	 * if allowReaction is false, it is a shot from reaction fire, so don't check the active team */
