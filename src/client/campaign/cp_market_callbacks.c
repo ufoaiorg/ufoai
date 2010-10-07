@@ -621,7 +621,7 @@ static void BS_BuyAircraft_f (void)
 				/* Hangar capacities are being updated in AIR_NewAircraft().*/
 				BS_RemoveAircraftFromMarket(aircraftTemplate, 1);
 				CL_UpdateCredits(ccs.credits - price);
-				AIR_NewAircraft(base, aircraftTemplate->id);
+				AIR_NewAircraft(base, aircraftTemplate);
 				Cmd_ExecuteString(va("buy_type %s", INV_GetFilterType(FILTER_AIRCRAFT)));
 			}
 		}

@@ -812,10 +812,8 @@ qboolean AIR_Delete (base_t *base, const aircraft_t *aircraft)
  * @param[in] name Id of aircraft to add (aircraft->id).
  * @sa B_Load
  */
-aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
+aircraft_t* AIR_NewAircraft (base_t *base, const aircraft_t *aircraftTemplate)
 {
-	const aircraft_t *aircraftTemplate = AIR_GetAircraft(name);
-
 	/* copy generic aircraft description to individual aircraft in base
 	 * we do this because every aircraft can have its own parameters
 	 * now lets use the aircraft array for the base to set some parameters */

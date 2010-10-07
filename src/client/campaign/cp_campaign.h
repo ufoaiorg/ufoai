@@ -589,7 +589,7 @@ int CL_DateCreateSeconds(byte hours, byte minutes, byte seconds);
 void CL_CampaignRun(void);
 void CP_EndCampaign(qboolean won);
 void CL_UpdateCredits(int credits);
-aircraft_t* AIR_NewAircraft(base_t * base, const char *name);
+aircraft_t* AIR_NewAircraft(base_t * base, const aircraft_t *aircraftTemplate);
 const char* CL_SecondConvert(int second);
 void CL_ReadSinglePlayerData(void);
 

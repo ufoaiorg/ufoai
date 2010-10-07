@@ -545,7 +545,7 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 		} else if (aircraft) {
 			CL_UpdateCredits(ccs.credits - (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
 			/* Now add new aircraft. */
-			AIR_NewAircraft(base, aircraft->id);
+			AIR_NewAircraft(base, aircraft);
 			name = _(aircraft->tpl->name);
 			tech = aircraft->tech;
 		}
