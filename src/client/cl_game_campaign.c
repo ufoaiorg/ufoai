@@ -441,6 +441,11 @@ void GAME_CP_Frame (void)
 	CL_CampaignRun();
 }
 
+const char* GAME_CP_GetTeamDef (void)
+{
+	return Com_ValueToStr(&ccs.curCampaign->team, V_TEAM, 0);
+}
+
 /**
  * @brief Sets the item model for an object assigned technology. If no
  * technology is set or the technology has no model assigned, this function

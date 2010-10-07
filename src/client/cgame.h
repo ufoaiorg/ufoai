@@ -62,6 +62,7 @@ typedef struct {
 	const char* (EXPORT *GetModelForItem) (const objDef_t*od);
 	void (EXPORT *EndRoundAnnounce) (int playerNum, int team);
 	void (EXPORT *StartBattlescape) (qboolean isTeamPlay);
+	const char* (EXPORT *GetTeamDef) (void);
 } cgame_export_t;
 
 /** @todo define the import interface */
