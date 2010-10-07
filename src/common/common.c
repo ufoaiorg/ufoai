@@ -1388,4 +1388,5 @@ void Qcommon_Shutdown (void)
 	Cmd_Shutdown();
 	NET_Shutdown();
 	Mem_Shutdown();
+	Com_Shutdown();
 }

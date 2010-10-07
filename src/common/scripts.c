@@ -3233,8 +3233,6 @@ void Com_ParseScripts (qboolean onlyServer)
 	csi.idRight = csi.idLeft = csi.idExtension = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmour = csi.idFloor = csi.idEquip = csi.idHeadgear = NONE;
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStunElectro = csi.damStunGas = NONE;
 
-	memset(terrainTypesHash, 0, sizeof(terrainTypesHash));
-
 	/* pre-stage parsing */
 	Com_Printf("%i script files\n", FS_BuildFileList("ufos/*.ufo"));
 	text = NULL;
@@ -3311,4 +3309,14 @@ int Com_GetScriptChecksum (void)
 	FS_GetFileData(NULL);
 
 	return checksum;
+}
+
+void Com_Shutdown (void)
+{
+	memset(terrainTypesHash, 0, sizeof(terrainTypesHash));
+	memset(com_constNameInt_hash, 0, sizeof(com_constNameInt_hash));
+	memset(gts, 0, sizeof(gts));
+	com_constNameInt = NULL;
+	versionParsed = qfalse;
+	numGTs = 0;
 }

@@ -33,8 +33,7 @@ void TEST_Shutdown (void)
 	Cmd_Shutdown();
 	Cvar_Shutdown();
 	Mem_Shutdown();
-
-	memset(&csi, 0, sizeof(csi));
+	Com_Shutdown();
 }
 
 void TEST_vPrintf (const char *fmt, va_list argptr)

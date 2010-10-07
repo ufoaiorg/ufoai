@@ -245,6 +245,7 @@ ufoType_t Com_UFOShortNameToID(const char *token);
 const char* Com_UFOTypeToShortName(ufoType_t type);
 const char* Com_UFOCrashedTypeToShortName(ufoType_t type);
 int Com_GetScriptChecksum(void);
+void Com_Shutdown(void);
 
 #include "../game/q_shared.h"
 
