@@ -118,7 +118,7 @@ static int Test_RemoveSuite (const char *name)
 	return 1;
 }
 
-static int Test_RemoveAllSuitesElse (const char *name)
+static int Test_RemoveAllSuitesExcept (const char *name)
 {
 	int found = 0;
 	CU_pTestRegistry registry;
@@ -159,7 +159,7 @@ static void Test_Parameters (const int argc, const char **argv)
 			}
 		} else if (!strncmp(argv[i], "--only-", 7)) {
 			const char *name = argv[i] + 7;
-			if (Test_RemoveAllSuitesElse(name) != 0) {
+			if (Test_RemoveAllSuitesExcept(name) != 0) {
 				printf("Suite \"%s\" unknown\n", name);
 				printf("Use \"%s -l\" to show the list of suites\n", argv[0]);
 				exit(2);
