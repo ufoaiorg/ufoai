@@ -49,6 +49,7 @@ void Sys_Mkdir (const char *path)
 	_mkdir(path);
 }
 
+#ifdef COMPILE_UFO
 /**
  * @brief Switch to one processor usage for windows system with more than
  * one processor
@@ -129,6 +130,7 @@ void Sys_SetAffinityAndPriority (void)
 
 	CloseHandle(proc);
 }
+#endif
 
 const char *Sys_SetLocale (const char *localeID)
 {
