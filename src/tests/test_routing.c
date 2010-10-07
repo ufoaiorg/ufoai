@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../common/common.h"
 #include "../common/cmodel.h"
+#include "../common/grid.h"
 
 /**
  * The suite initialization function.
@@ -51,18 +52,145 @@ static int UFO_CleanSuiteRouting (void)
 
 static mapData_t mapData;
 static mapTiles_t mapTiles;
-
-static void testConnection (void)
+static const char *mapName = "test_routing";
+static void testMapLoading (void)
 {
-	/**
-	 * @todo use a special testmap
-	 * @todo implement the test
-	 */
-	if (FS_CheckFile("maps/fueldump.bsp")) {
-		CM_LoadMap("fueldump", qtrue, "", &mapData, &mapTiles);
-		CM_LoadMap("fueldump", qtrue, "", &mapData, &mapTiles);
+	if (FS_CheckFile("maps/%s.bsp", mapName)) {
+		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
+		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
 	} else {
-		CU_FAIL("Resource \"maps/fueldump.bsp\" for test is missing.");
+		CU_FAIL("Map resource for test is missing.");
+	}
+}
+
+/**
+ * @todo func_door, func_breakable, ...
+ */
+static void testMove (void)
+{
+	routing_t *routing;
+	vec3_t vec;
+	pos3_t pos;
+	pos_t gridPos;
+
+	if (FS_CheckFile("maps/%s.bsp", mapName)) {
+		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
+		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
+	} else {
+		CU_FAIL("Map resource for test is missing.");
+	}
+
+	VectorSet(vec, 16, 16, 48);
+	VecToPos(vec, pos);
+	CU_ASSERT_EQUAL(pos[0], 128);
+	CU_ASSERT_EQUAL(pos[1], 128);
+	CU_ASSERT_EQUAL(pos[2], 0);
+
+	VectorSet(vec, 80, 16, 80);
+	VecToPos(vec, pos);
+	CU_ASSERT_EQUAL(pos[0], 130);
+	CU_ASSERT_EQUAL(pos[1], 128);
+	CU_ASSERT_EQUAL(pos[2], 1);
+
+	routing = &mapData.map[ACTOR_SIZE_NORMAL - 1];
+	gridPos = Grid_Fall(routing, ACTOR_SIZE_NORMAL, pos);
+	CU_ASSERT_EQUAL(gridPos, 1);
+
+	{
+		const byte crouchingState = 0;
+		const int distance = MAX_ROUTE;
+		int lengthStored, lengthUnstored;
+		pos3_t to;
+		pathing_t *path = Mem_AllocType(pathing_t);
+
+		VectorSet(vec, 80, 80, 32);
+		VecToPos(vec, pos);
+
+		Grid_MoveCalc(routing, ACTOR_SIZE_NORMAL, path, pos, crouchingState, distance, NULL, 0);
+		Grid_MoveStore(path);
+
+		/* move downwards */
+		{
+			VectorSet(vec, 80, 48, 32);
+			VecToPos(vec, to);
+
+			lengthUnstored = Grid_MoveLength(path, to, crouchingState, qfalse);
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthUnstored, lengthStored);
+			CU_ASSERT_EQUAL(lengthStored, TU_MOVE_STRAIGHT);
+		}
+		/* try to move three steps upwards - there is a brush*/
+		{
+			VectorSet(vec, 80, 176, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, ROUTING_NOT_REACHABLE);
+		}
+		/* try move into the nodraw */
+		{
+			VectorSet(vec, 48, 16, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, ROUTING_NOT_REACHABLE);
+		}
+		/* move into the lightclip */
+		{
+			VectorSet(vec, 48, 48, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, TU_MOVE_DIAGONAL);
+		}
+		/* move into the passable */
+		{
+			VectorSet(vec, 144, 48, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, TU_MOVE_DIAGONAL + TU_MOVE_STRAIGHT);
+		}
+		/* go to the other side - diagonal, followed by six straight moves */
+		{
+			VectorSet(vec, -16, 48, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, 6 * TU_MOVE_STRAIGHT + TU_MOVE_DIAGONAL);
+		}
+		/* try to walk out of the map */
+		{
+			VectorSet(vec, 48, 272, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, ROUTING_NOT_REACHABLE);
+		}
+		/* walk to the map border */
+		{
+			VectorSet(vec, 48, 240, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, 4 * TU_MOVE_STRAIGHT + TU_MOVE_DIAGONAL);
+		}
+		/* walk a level upwards */
+		{
+			VectorSet(vec, 240, 80, 96);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, 5 * TU_MOVE_STRAIGHT);
+		}
+		/* move to the door (not a func_door) */
+		{
+			VectorSet(vec, 176, -80, 32);
+			VecToPos(vec, to);
+
+			lengthStored = Grid_MoveLength(path, to, crouchingState, qtrue);
+			CU_ASSERT_EQUAL(lengthStored, 4 * TU_MOVE_STRAIGHT + 2 * TU_MOVE_DIAGONAL);
+		}
 	}
 }
 
@@ -74,7 +202,10 @@ int UFO_AddRoutingTests (void)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(routingSuite, testConnection) == NULL)
+	if (CU_ADD_TEST(routingSuite, testMapLoading) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(routingSuite, testMove) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
