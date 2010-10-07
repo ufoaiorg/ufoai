@@ -39,7 +39,7 @@ static void SV_dprintf (const char *fmt, ...)
 	va_list ap;
 
 	va_start(ap, fmt);
-	Com_vPrintf(fmt, ap);
+	Qcommon_GetPrintFunction()(fmt, ap);
 	va_end(ap);
 }
 

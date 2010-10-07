@@ -283,6 +283,10 @@ typedef struct gametype_s {
 extern gametype_t gts[MAX_GAMETYPES];
 extern int numGTs;
 
+typedef void (*vPrintfPtr_t)(const char *fmt, va_list ap);
+vPrintfPtr_t Qcommon_GetPrintFunction(void);
+void Qcommon_SetPrintFunction(vPrintfPtr_t func);
+
 void Qcommon_Init(int argc, const char **argv);
 void Qcommon_Frame(void);
 void Qcommon_Shutdown(void);

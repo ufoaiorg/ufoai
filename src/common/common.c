@@ -40,6 +40,8 @@ static const char *com_argv[MAX_NUM_ARGVS + 1];
 
 static jmp_buf abortframe; /* an ERR_DROP occured, exit the entire frame */
 
+static vPrintfPtr_t vPrintfPtr = Com_vPrintf;
+
 cvar_t *developer;
 cvar_t *http_proxy;
 cvar_t *http_timeout;
@@ -399,7 +401,7 @@ void Com_Printf (const char* const fmt, ...)
 	va_list ap;
 
 	va_start(ap, fmt);
-	Com_vPrintf(fmt, ap);
+	vPrintfPtr(fmt, ap);
 	va_end(ap);
 }
 
@@ -416,7 +418,7 @@ void Com_DPrintf (int level, const char *fmt, ...)
 		va_list ap;
 
 		va_start(ap, fmt);
-		Com_vPrintf(fmt, ap);
+		vPrintfPtr(fmt, ap);
 		va_end(ap);
 	}
 }
@@ -973,6 +975,16 @@ static void Com_WriteConfig_f (void)
 static void Cbuf_Execute_timer (int now, void *data)
 {
 	Cbuf_Execute();
+}
+
+void Qcommon_SetPrintFunction (vPrintfPtr_t func)
+{
+	vPrintfPtr = func;
+}
+
+vPrintfPtr_t Qcommon_GetPrintFunction (void)
+{
+	return vPrintfPtr;
 }
 
 /**
