@@ -114,7 +114,7 @@ int UI_GetActionTokenType (const char* token, int group)
 
 	while (min != max) {
 		const int mid = (min + max) >> 1;
-		const char diff = strcmp(actionTokens[mid].token, token);
+		const int diff = strcmp(actionTokens[mid].token, token);
 		assert(mid < max);
 		assert(mid >= min);
 

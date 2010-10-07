@@ -496,7 +496,7 @@ uiBehaviour_t* UI_GetNodeBehaviour (const char* name)
 
 	while (min != max) {
 		const int mid = (min + max) >> 1;
-		const char diff = strcmp(nodeBehaviourList[mid].name, name);
+		const int diff = strcmp(nodeBehaviourList[mid].name, name);
 		assert(mid < max);
 		assert(mid >= min);
 
