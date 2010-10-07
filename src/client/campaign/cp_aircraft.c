@@ -2294,10 +2294,13 @@ int AIR_GetTeamSize (const aircraft_t *aircraft)
  * @brief Assign a pilot to an aircraft
  * @param[out] aircraft Pointer to the aircraft to add pilot to
  * @param[in] pilot Pointer to the pilot to add
+ * @return @c true if the assignment was successful (there wasn't a pilot
+ * assigned), @c false if there was already a pilot assigned and we tried
+ * to assign a new one (@c pilot isn't @c NULL).
  */
 qboolean AIR_SetPilot (aircraft_t *aircraft, employee_t *pilot)
 {
-	if (aircraft->pilot == NULL) {
+	if (aircraft->pilot == NULL || pilot == NULL) {
 		aircraft->pilot = pilot;
 		return qtrue;
 	}
@@ -2308,6 +2311,7 @@ qboolean AIR_SetPilot (aircraft_t *aircraft, employee_t *pilot)
 /**
  * @brief Get pilot of an aircraft
  * @param[in] aircraft Pointer to the aircraft
+ * @return @c NULL if there is no pilot assigned to this craft, the employee pointer otherwise
  */
 employee_t* AIR_GetPilot (const aircraft_t *aircraft)
 {
