@@ -76,6 +76,7 @@ static void testMassAssemblyTimeout (void)
 
 	sv_threads->integer = 1;
 	for (i = 0; i < 10; i++) {
+		/** @todo the assemble thread sets a different seed */
 		srand(i);
 		time = Sys_Milliseconds();
 		randomMap = SV_AssembleMap("forest", "large", map, pos);
@@ -95,6 +96,7 @@ static void testMassAssemblyParallel (void)
 
 	sv_threads->integer = 2;
 	for (i = 0; i < 10; i++) {
+		/** @todo the assemble thread sets a different seed */
 		srand(i);
 		time = Sys_Milliseconds();
 		randomMap = SV_AssembleMap("forest", "large", map, pos);

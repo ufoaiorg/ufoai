@@ -989,7 +989,7 @@ static void SV_PrepareTilesToPlace (mapInfo_t *map)
  *  It is the responsibility of the caller to free the map, if needed, after the thread has died
  *  and been collected.
  * @return 0 on success, -1 if it was interrupted via the @c mapSem semaphore, signaling that
- *  someone else has finished first, or timeout occured.
+ *  someone else has finished first, or timeout occurred.
  */
 static int SV_AssemblyThread (void* data)
 {
@@ -1046,15 +1046,15 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	static int timeout = 5000;  /* wait for 5 sec initially, double it every time it times out */
 	const int threadno = min(sv_threads->integer, ASSEMBLE_THREADS);
 
+	assert(mapLock == NULL);
+	mapLock = TH_MutexCreate("rma");
+
+	assert(mapCond == NULL);
+	mapCond = SDL_CreateCond();
+
 	threadID = 0;
 	assert(mapSem == NULL);
 	mapSem = SDL_CreateSemaphore(1);
-
-	if (mapLock == NULL)
-		mapLock = TH_MutexCreate("rma");
-
-	if (mapCond == NULL)
-		mapCond = SDL_CreateCond();
 
 	TH_MutexLock(mapLock);
 	for (i = 0; i < threadno; i++) {
@@ -1098,12 +1098,13 @@ static int SV_ParallelSearch (mapInfo_t *map)
 		Mem_Free(maps[i]);
 	}
 
-	SDL_DestroyCond(mapCond);
 	/* cleanup, for possible next time */
 	SDL_DestroySemaphore(mapSem);
+	SDL_DestroyCond(mapCond);
 	TH_MutexDestroy(mapLock);
 	mapLock = NULL;
 	mapSem = NULL;
+	mapCond = NULL;
 	threadID = 0;
 	timeout = 5000;
 
