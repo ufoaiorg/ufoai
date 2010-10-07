@@ -131,12 +131,12 @@ static void testCampaign (void)
 	CU_ASSERT_EQUAL(result.won, battleParameters.probability < result.winProbability);
 
 	E_DeleteEmployee(pilot);
-	E_DeleteEmployee(e1);
+	/** @todo use E_DeleteEmployee here */
+	AIR_RemoveEmployee(e1, aircraft);
 
-	/** @todo this is not working until we have removed the aircraft from
-	 * bases - because this test does not have any bases */
-	/*CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 1);*/
-	CU_ASSERT_PTR_NULL(AIR_GetPilot(aircraft));
+	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 1);
+	/** @todo this is not working without a base */
+	/*CU_ASSERT_PTR_NULL(AIR_GetPilot(aircraft));*/
 }
 
 int UFO_AddCampaignTests (void)
