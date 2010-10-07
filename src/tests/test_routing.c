@@ -55,7 +55,7 @@ static mapTiles_t mapTiles;
 static const char *mapName = "test_routing";
 static void testMapLoading (void)
 {
-	if (FS_CheckFile("maps/%s.bsp", mapName)) {
+	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
 		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
 	} else {
@@ -73,7 +73,7 @@ static void testMove (void)
 	pos3_t pos;
 	pos_t gridPos;
 
-	if (FS_CheckFile("maps/%s.bsp", mapName)) {
+	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
 		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
 	} else {
