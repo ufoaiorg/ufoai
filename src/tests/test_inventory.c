@@ -63,8 +63,6 @@ static int UFO_InitSuiteInventory (void)
 {
 	TEST_Init();
 
-	Com_ParseScripts(qtrue);
-
 	return 0;
 }
 
