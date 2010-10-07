@@ -1234,8 +1234,8 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	Com_DPrintf(DEBUG_CLIENT, "Won: %d   Civilians: %d/%d   Aliens: %d/%d\n",
 		won, ccs.battleParameters.civilians - civiliansKilled, civiliansKilled,
 		ccs.battleParameters.aliens - aliensKilled, aliensKilled);
-	CL_HandleNationData(won, mission, ccs.battleParameters.nation, &ccs.missionResults);
-	CP_CheckLostCondition();
+	CL_HandleNationData(ccs.curCampaign, won, mission, ccs.battleParameters.nation, &ccs.missionResults);
+	CP_CheckLostCondition(ccs.curCampaign);
 
 	/* update the character stats */
 	CP_ParseCharacterData(NULL);

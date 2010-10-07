@@ -189,7 +189,7 @@ static void CP_BuildBaseGovernmentLeave (mission_t *mission)
 	/** @todo when the mission is created, we should select a position where nation exists,
 	 * otherwise subverting a government is meaningless */
 	if (nation)
-		NAT_SetHappiness(nation, nation->stats[0].happiness + HAPPINESS_SUBVERSION_LOSS);
+		NAT_SetHappiness(ccs.curCampaign->minhappiness, nation, nation->stats[0].happiness + HAPPINESS_SUBVERSION_LOSS);
 
 	CP_MissionDisableTimeLimit(mission);
 	UFO_SetRandomDest(mission->ufo);

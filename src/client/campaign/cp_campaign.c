@@ -320,7 +320,7 @@ void CP_EndCampaign (qboolean won)
 /**
  * @brief Checks whether the player has lost the campaign
  */
-void CP_CheckLostCondition (void)
+void CP_CheckLostCondition (const campaign_t *campaign)
 {
 	qboolean endCampaign = qfalse;
 	/* fraction of nation that can be below min happiness before the game is lost */
@@ -329,7 +329,7 @@ void CP_CheckLostCondition (void)
 	if (cp_missiontest->integer)
 		return;
 
-	if (!endCampaign && ccs.credits < -ccs.curCampaign->negativeCreditsUntilLost) {
+	if (!endCampaign && ccs.credits < -campaign->negativeCreditsUntilLost) {
 		UI_RegisterText(TEXT_STANDARD, _("You've gone too far into debt."));
 		endCampaign = qtrue;
 	}
@@ -337,13 +337,13 @@ void CP_CheckLostCondition (void)
 	/** @todo Should we make the campaign lost when a player loses all his bases?
 	 * until he has set up a base again, the aliens might have invaded the whole
 	 * world ;) - i mean, removing the credits check here. */
-	if (!ccs.numBases && ccs.credits < ccs.curCampaign->basecost - ccs.curCampaign->negativeCreditsUntilLost) {
+	if (!ccs.numBases && ccs.credits < campaign->basecost - campaign->negativeCreditsUntilLost) {
 		UI_RegisterText(TEXT_STANDARD, _("You've lost your bases and don't have enough money to build new ones."));
 		endCampaign = qtrue;
 	}
 
 	if (!endCampaign) {
-		if (CP_GetAverageXVIRate() > ccs.curCampaign->maxAllowedXVIRateUntilLost) {
+		if (CP_GetAverageXVIRate() > campaign->maxAllowedXVIRateUntilLost) {
 			UI_RegisterText(TEXT_STANDARD, _("You have failed in your charter to protect Earth."
 				" Our home and our people have fallen to the alien infection. Only a handful"
 				" of people on Earth remain human, and the remaining few no longer have a"
@@ -356,7 +356,7 @@ void CP_CheckLostCondition (void)
 			int j, nationBelowLimit = 0;
 			for (j = 0; j < ccs.numNations; j++) {
 				const nation_t *nation = &ccs.nations[j];
-				if (nation->stats[0].happiness < ccs.curCampaign->minhappiness) {
+				if (nation->stats[0].happiness < campaign->minhappiness) {
 					nationBelowLimit++;
 				}
 			}
@@ -392,7 +392,7 @@ void CP_CheckLostCondition (void)
  * @todo Scoring should eventually be expanded to include such elements as
  * infected humans and mission objectives other than xenocide.
  */
-void CL_HandleNationData (qboolean won, mission_t * mis, const nation_t *affectedNation, const missionResults_t *results)
+void CL_HandleNationData (const campaign_t *campaign, qboolean won, mission_t * mis, const nation_t *affectedNation, const missionResults_t *results)
 {
 	int i;
 	const float civilianSum = (float) (results->civiliansSurvived + results->civiliansKilled + results->civiliansKilledFriendlyFire);
@@ -439,7 +439,7 @@ void CL_HandleNationData (qboolean won, mission_t * mis, const nation_t *affecte
 		else
 			happinessFactor = deltaHappiness / happinessDivisor;
 
-		NAT_SetHappiness(nation, nation->stats[0].happiness + performance * happinessFactor);
+		NAT_SetHappiness(campaign->minhappiness, nation, nation->stats[0].happiness + performance * happinessFactor);
 	}
 }
 
@@ -694,7 +694,7 @@ void CL_CampaignRun (void)
 			HOS_HospitalRun();
 			CP_SpawnNewMissions();
 			CP_SpreadXVI();
-			NAT_UpdateHappinessForAllNations();
+			NAT_UpdateHappinessForAllNations(ccs.curCampaign->minhappiness);
 			AB_BaseSearchedByNations();
 			CL_CampaignRunMarket();
 			CP_CheckCampaignEvents();
@@ -711,7 +711,7 @@ void CL_CampaignRun (void)
 
 		UP_GetUnreadMails();
 		CP_CheckMissionEnd();
-		CP_CheckLostCondition();
+		CP_CheckLostCondition(ccs.curCampaign);
 		/* Check if there is a base attack mission */
 		Cmd_ExecuteString("check_baseattacks");
 		BDEF_AutoSelectTarget();
@@ -1093,15 +1093,15 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft, const battleParam_
  * @sa CP_MissionEnd
  * @sa AL_CollectingAliens
  */
-void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const battleParam_t *battleParameters, missionResults_t *results)
+void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results)
 {
 	assert(mission);
 	assert(aircraft);
 
 	if (mission->stage != STAGE_BASE_ATTACK)
-		results->winProbability = CP_GetWinProbabilty(mission, aircraft, battleParameters, ccs.curCampaign->difficulty);
+		results->winProbability = CP_GetWinProbabilty(mission, aircraft, battleParameters, campaign->difficulty);
 	else
-		results->winProbability = CP_GetWinProbabiltyForBaseAttackMission(mission, battleParameters, ccs.curCampaign->difficulty);
+		results->winProbability = CP_GetWinProbabiltyForBaseAttackMission(mission, battleParameters, campaign->difficulty);
 
 	/** @todo set other counts */
 	results->won = battleParameters->probability < results->winProbability;
@@ -1118,9 +1118,9 @@ void CL_GameAutoGo (mission_t *mission, aircraft_t *aircraft, const battleParam_
 	CP_InitMissionResults(results->won, results);
 
 	/* update nation opinions */
-	CL_HandleNationData(results->won, mission, battleParameters->nation, results);
+	CL_HandleNationData(campaign, results->won, mission, battleParameters->nation, results);
 
-	CP_CheckLostCondition();
+	CP_CheckLostCondition(campaign);
 
 	CL_AutoMissionAlienCollect(aircraft, battleParameters);
 

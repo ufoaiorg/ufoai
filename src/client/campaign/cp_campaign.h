@@ -597,7 +597,7 @@ void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);
 qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
 
 campaign_t* CL_GetCampaign(const char *name);
-void CL_GameAutoGo(mission_t *mission, aircraft_t *aircraft, const battleParam_t *battleParameters, missionResults_t *results);
+void CL_GameAutoGo(mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results);
 
 void CP_InitMissionResults(qboolean won, const missionResults_t *results);
 void CP_CampaignInit(campaign_t *campaign, qboolean load);
@@ -619,8 +619,8 @@ qboolean CP_IsRunning(void);
 mission_t *CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
 qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos);
 void CP_StartSelectedMission(void);
-void CL_HandleNationData(qboolean won, mission_t * mis, const nation_t *nation, const missionResults_t *results);
-void CP_CheckLostCondition(void);
+void CL_HandleNationData(const campaign_t *campaign, qboolean won, mission_t * mis, const nation_t *nation, const missionResults_t *results);
+void CP_CheckLostCondition(const campaign_t *campaign);
 void CL_UpdateCharacterStats(const base_t *base, const aircraft_t *aircraft);
 
 #endif /* CLIENT_CL_CAMPAIGN_H */

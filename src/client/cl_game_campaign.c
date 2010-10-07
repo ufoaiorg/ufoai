@@ -78,7 +78,7 @@ static void GAME_CP_MissionAutoGo_f (void)
 	CP_CreateBattleParameters(mission, &ccs.battleParameters);
 
 	results->won = qfalse;
-	CL_GameAutoGo(mission, ccs.interceptAircraft, &ccs.battleParameters, results);
+	CL_GameAutoGo(mission, ccs.interceptAircraft, ccs.curCampaign, &ccs.battleParameters, results);
 
 	if (results->won) {
 		Cvar_SetValue("mn_autogo", 1);

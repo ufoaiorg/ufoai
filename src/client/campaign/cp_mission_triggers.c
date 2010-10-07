@@ -109,7 +109,7 @@ static void CP_ChangeNationHappiness_f (void)
 	nation = MAP_GetNation(ccs.selectedMission->pos);
 	assert(nation);
 
-	NAT_SetHappiness(nation, nation->stats[0].happiness + change);
+	NAT_SetHappiness(ccs.curCampaign->minhappiness, nation, nation->stats[0].happiness + change);
 }
 
 /**

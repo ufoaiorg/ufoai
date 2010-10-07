@@ -73,7 +73,7 @@ nation_t *NAT_GetNationByID (const char *nationID)
  * @note Daily called
  * @sa CP_BuildBaseGovernmentLeave
  */
-void NAT_UpdateHappinessForAllNations (void)
+void NAT_UpdateHappinessForAllNations (const float minhappiness)
 {
 	const linkedList_t *list = ccs.missions;
 
@@ -99,7 +99,7 @@ void NAT_UpdateHappinessForAllNations (void)
 				continue;
 			}
 
-			NAT_SetHappiness(nation, nation->stats[0].happiness + happinessFactor);
+			NAT_SetHappiness(minhappiness, nation, nation->stats[0].happiness + happinessFactor);
 			Com_DPrintf(DEBUG_CLIENT, "Happiness of nation %s decreased: %.02f\n", nation->name, nation->stats[0].happiness);
 		}
 	}
@@ -154,12 +154,12 @@ const char* NAT_GetHappinessString (const nation_t* nation)
  * @param[in] nation The nation to update the happiness for
  * @param[in] happiness The new happiness value to set for the given nation
  */
-void NAT_SetHappiness (nation_t *nation, const float happiness)
+void NAT_SetHappiness (const float minhappiness, nation_t *nation, const float happiness)
 {
 	const char *oldString = NAT_GetHappinessString(nation);
 	const char *newString;
 	const float oldHappiness = nation->stats[0].happiness;
-	const float middleHappiness = (ccs.curCampaign->minhappiness + 1.0) / 2;
+	const float middleHappiness = (minhappiness + 1.0) / 2;
 	notify_t notifyType = NT_NUM_NOTIFYTYPE;
 
 	nation->stats[0].happiness = happiness;
@@ -178,7 +178,7 @@ void NAT_SetHappiness (nation_t *nation, const float happiness)
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer),
 			_("Nation %s changed happiness to %s"), _(nation->name), newString);
 		notifyType = NT_HAPPINESS_PLEASED;
-	} else if (happiness < ccs.curCampaign->minhappiness && oldHappiness > ccs.curCampaign->minhappiness) {
+	} else if (happiness < minhappiness && oldHappiness > minhappiness) {
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), /** @todo need to more specific message */
 			_("Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"), _(nation->name), newString);
 		notifyType = NT_HAPPINESS_MIN;

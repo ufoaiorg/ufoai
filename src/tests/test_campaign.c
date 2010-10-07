@@ -182,11 +182,13 @@ static void testAutoMissions (void)
 	memset(&result, 0, sizeof(result));
 	memset(&battleParameters, 0, sizeof(battleParameters));
 
+	/* the global pointer should not be used anywhere inside the called functions */
+	ccs.curCampaign = NULL;
+
 	ResetInventoryList();
 
 	campaign = CL_GetCampaign(cp_campaign->string);
 	CU_ASSERT_TRUE_FATAL(campaign != NULL);
-	ccs.curCampaign = campaign;
 
 	CU_ASSERT_PTR_NOT_NULL(aircraft);
 	CU_ASSERT_PTR_NOT_NULL(mission);
@@ -204,7 +206,7 @@ static void testAutoMissions (void)
 
 	battleParameters.probability = -1.0;
 
-	CL_GameAutoGo(mission, aircraft, &battleParameters, &result);
+	CL_GameAutoGo(mission, aircraft, campaign, &battleParameters, &result);
 
 	CU_ASSERT_EQUAL(result.won, battleParameters.probability < result.winProbability);
 

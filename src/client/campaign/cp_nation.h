@@ -74,8 +74,8 @@ typedef struct city_s {
 
 nation_t *NAT_GetNationByIDX(const int index);
 nation_t *NAT_GetNationByID(const char *nationID);
-void NAT_UpdateHappinessForAllNations(void);
-void NAT_SetHappiness(nation_t *nation, const float happiness);
+void NAT_UpdateHappinessForAllNations(const float minhappiness);
+void NAT_SetHappiness(const float minhappiness, nation_t *nation, const float happiness);
 int NAT_GetFunding(const nation_t* const nation, int month);
 const char* NAT_GetHappinessString(const nation_t* nation);
 

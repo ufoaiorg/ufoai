@@ -509,14 +509,17 @@ static void UR_DialogStartSell_f (void)
 	/* update nation happiness */
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nat = NAT_GetNationByIDX(i);
+		float ufoHappiness;
 
 		assert(nat);
 		if (nat == nation)
 			/* nation is happy because it got the UFO */
-			NAT_SetHappiness(nation, nation->stats[0].happiness + HAPPINESS_UFO_SALE_GAIN);
+			ufoHappiness = HAPPINESS_UFO_SALE_GAIN;
 		else
 			/* nation is unhappy because it wanted the UFO */
-			NAT_SetHappiness(nat, nat->stats[0].happiness + HAPPINESS_UFO_SALE_LOSS);
+			ufoHappiness = HAPPINESS_UFO_SALE_LOSS;
+
+		NAT_SetHappiness(ccs.curCampaign->minhappiness, nat, nat->stats[0].happiness + ufoHappiness);
 	}
 
 	/* UFO recovery process is done, disable buttons. */
