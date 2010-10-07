@@ -1,0 +1,19 @@
+_testall()
+{
+	local cur prev opts
+	COMPREPLY=()
+	cur="${COMP_WORDS[COMP_CWORD]}"
+	prev="${COMP_WORDS[COMP_CWORD-1]}"
+	opts="--list -l --help -h --console -c --list -l --output-prefix= -a --automated"
+
+	suites_opts=
+	# allow ./testall
+	PATH=$PATH:`pwd`
+	for x in `testall -l | sed '1d' | sed 's/\* //'`; do
+		suite=${x/\* /}
+		opts="${opts} --only-${suite} --disable-${suite}"
+	done
+
+	COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+}
+complete -F _testall testall
