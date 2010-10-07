@@ -92,7 +92,61 @@ static int UFO_CleanSuiteCampaign (void)
 	return 0;
 }
 
-static void testCampaign (void)
+static void testEmployeeHandling (void)
+{
+	employeeType_t type;
+
+	ResetInventoryList();
+
+	for (type = 0; type < MAX_EMPL; type++) {
+		if (type != EMPL_ROBOT) {
+			int cnt;
+			employee_t *e = E_CreateEmployee(type, NULL, NULL);
+			CU_ASSERT_PTR_NOT_NULL(e);
+
+			cnt = E_CountUnhired(type);
+			CU_ASSERT_EQUAL(cnt, 1);
+
+			E_DeleteEmployee(e);
+
+			cnt = E_CountUnhired(type);
+			CU_ASSERT_EQUAL(cnt, 0);
+		}
+	}
+
+	{
+		const ugv_t *ugvType = Com_GetUGVByID("ugv_ares_w");
+		employee_t *e = E_CreateEmployee(EMPL_ROBOT, NULL, ugvType);
+		CU_ASSERT_PTR_NOT_NULL(e);
+		CU_ASSERT_TRUE(E_DeleteEmployee(e));
+	}
+
+	/** @todo activate this once the employees are a linked list */
+#if 0
+	{
+		int i, cnt;
+		employee_t *e;
+
+		for (i = 0; i < MAX_EMPLOYEES; i++) {
+			e = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+			CU_ASSERT_PTR_NOT_NULL(e);
+
+			cnt = E_CountUnhired(EMPL_SOLDIER);
+			CU_ASSERT_EQUAL(cnt, i + 1);
+		}
+		e = NULL;
+		while ((e = E_GetNext(EMPL_SOLDIER, e)) != NULL) {
+			CU_ASSERT_TRUE(E_DeleteEmployee(e));
+		}
+
+		cnt = E_CountUnhired(EMPL_SOLDIER);
+		Com_Printf("unhired: %i\n", cnt);
+		CU_ASSERT_EQUAL(cnt, 0);
+	}
+#endif
+}
+
+static void testAutoMissions (void)
 {
 	missionResults_t result;
 	battleParam_t battleParameters;
@@ -118,9 +172,9 @@ static void testCampaign (void)
 	AIR_SetPilot(aircraft, pilot);
 
 	e1 = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
-	AIR_AddToAircraftTeam(aircraft, e1);
+	CU_ASSERT_TRUE(AIR_AddToAircraftTeam(aircraft, e1));
 	e2 = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
-	AIR_AddToAircraftTeam(aircraft, e2);
+	CU_ASSERT_TRUE(AIR_AddToAircraftTeam(aircraft, e2));
 
 	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 2);
 
@@ -130,13 +184,20 @@ static void testCampaign (void)
 
 	CU_ASSERT_EQUAL(result.won, battleParameters.probability < result.winProbability);
 
-	E_DeleteEmployee(pilot);
-	/** @todo use E_DeleteEmployee here */
-	AIR_RemoveEmployee(e1, aircraft);
+	CU_ASSERT_TRUE(AIR_SetPilot(aircraft, NULL));
+	CU_ASSERT_PTR_NULL(AIR_GetPilot(aircraft));
 
+	CU_ASSERT_TRUE(AIR_RemoveEmployee(e1, aircraft));
 	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 1);
-	/** @todo this is not working without a base */
-	/*CU_ASSERT_PTR_NULL(AIR_GetPilot(aircraft));*/
+
+	CU_ASSERT_TRUE(AIR_RemoveEmployee(e2, aircraft));
+	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 0);
+
+	/** @todo this is crap - we have to delete in this order, otherwise the pointers are
+	 * garbage (remove this once the employees are stored in a linked list) */
+	CU_ASSERT_TRUE(E_DeleteEmployee(e2));
+	CU_ASSERT_TRUE(E_DeleteEmployee(e1));
+	CU_ASSERT_TRUE(E_DeleteEmployee(pilot));
 }
 
 int UFO_AddCampaignTests (void)
@@ -148,7 +209,10 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(campaignSuite, testCampaign) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testAutoMissions) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testEmployeeHandling) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
