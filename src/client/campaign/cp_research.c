@@ -482,7 +482,7 @@ technology_t* RS_GetTechForItem (const objDef_t *item)
  * @todo Enhance ammo model display (see comment in code).
  * @sa CP_CampaignInit
  */
-void RS_InitTree (qboolean load)
+void RS_InitTree (const campaign_t *campaign, qboolean load)
 {
 	int i, j;
 	technology_t *tech;
@@ -498,7 +498,7 @@ void RS_InitTree (qboolean load)
 
 	for (i = 0, tech = ccs.technologies; i < ccs.numTechnologies; i++, tech++) {
 		for (j = 0; j < tech->markResearched.numDefinitions; j++) {
-			if (tech->markResearched.markOnly[j] && !strcmp(tech->markResearched.campaign[j], ccs.curCampaign->researched)) {
+			if (tech->markResearched.markOnly[j] && !strcmp(tech->markResearched.campaign[j], campaign->researched)) {
 				Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 				RS_ResearchFinish(tech);
 				break;
