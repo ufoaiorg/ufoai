@@ -140,10 +140,34 @@ static void testEmployeeHandling (void)
 		}
 
 		cnt = E_CountUnhired(EMPL_SOLDIER);
-		Com_Printf("unhired: %i\n", cnt);
 		CU_ASSERT_EQUAL(cnt, 0);
 	}
 #endif
+}
+
+static void testBaseBuilding (void)
+{
+	vec2_t pos = {0, 0};
+	base_t *base = B_GetFirstUnfoundedBase();
+	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
+	employeeType_t type;
+
+	ResetInventoryList();
+
+	/* the global pointer should not be used anywhere inside the called functions */
+	ccs.curCampaign = NULL;
+	ccs.credits = 10000000;
+
+	RS_InitTree(campaign, qfalse);
+
+	B_SetUpBase(campaign, base, pos);
+
+	B_Destroy(base);
+
+	for (type = 0; type < MAX_EMPL; type++)
+		CU_ASSERT_EQUAL(E_CountHired(base, type), 0);
+
+	E_DeleteAllEmployees(NULL);
 }
 
 static void testAutoMissions (void)
@@ -198,6 +222,9 @@ static void testAutoMissions (void)
 	CU_ASSERT_TRUE(E_DeleteEmployee(e2));
 	CU_ASSERT_TRUE(E_DeleteEmployee(e1));
 	CU_ASSERT_TRUE(E_DeleteEmployee(pilot));
+
+	CU_ASSERT_EQUAL(E_CountUnhired(EMPL_SOLDIER), 0);
+	CU_ASSERT_EQUAL(E_CountUnhired(EMPL_PILOT), 0);
 }
 
 int UFO_AddCampaignTests (void)
@@ -210,6 +237,9 @@ int UFO_AddCampaignTests (void)
 
 	/* add the tests to the suite */
 	if (CU_ADD_TEST(campaignSuite, testAutoMissions) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testBaseBuilding) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testEmployeeHandling) == NULL)
