@@ -395,6 +395,7 @@ static const value_t campaign_vals[] = {
 	{"scientists", V_INT, offsetof(campaign_t, scientists), MEMBER_SIZEOF(campaign_t, scientists)},
 	{"ugvs", V_INT, offsetof(campaign_t, ugvs), MEMBER_SIZEOF(campaign_t, ugvs)},
 	{"equipment", V_STRING, offsetof(campaign_t, equipment), 0},
+	{"soldierequipment", V_STRING, offsetof(campaign_t, soldierEquipment), 0},
 	{"market", V_STRING, offsetof(campaign_t, market), 0},
 	{"asymptotic_market", V_STRING, offsetof(campaign_t, asymptoticMarket), 0},
 	{"researched", V_STRING, offsetof(campaign_t, researched), 0},

@@ -305,6 +305,7 @@ typedef struct campaign_s {
 	char name[MAX_VAR];			/**< name of the campaign */
 	int team;					/**< what team can play this campaign */
 	char researched[MAX_VAR];	/**< name of the researched tech list to use on campaign start */
+	char soldierEquipment[MAX_VAR];	/**< name of the equipment list that is used to equip soldiers on crafts that are added to the first base */
 	char equipment[MAX_VAR];	/**< name of the equipment list to use on campaign start */
 	char market[MAX_VAR];		/**< name of the market list containing initial items on market */
 	char asymptoticMarket[MAX_VAR];		/**< name of the market list containing items on market at the end of the game */

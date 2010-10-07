@@ -13,6 +13,7 @@ campaign veryhard
 	firstbase			balanced
 	researched			rslist_phalanx
 	equipment			campaign_player
+	soldierequipment	phalanx_initial
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
 	credits				1300000
@@ -42,6 +43,7 @@ campaign hard
 	firstbase			balanced
 	researched			rslist_phalanx
 	equipment			campaign_player
+	soldierequipment	phalanx_initial
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
 	credits				1300000
@@ -91,6 +93,7 @@ campaign main
 	researched			rslist_phalanx
 	ugvs				2
 	equipment			campaign_player
+	soldierequipment	phalanx_initial
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
 	credits				1300000
@@ -120,6 +123,7 @@ campaign easy
 	firstbase			balanced
 	researched			rslist_phalanx
 	equipment			campaign_player
+	soldierequipment	phalanx_initial
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
 	credits				1300000
@@ -168,6 +172,7 @@ campaign veryeasy
 	firstbase			balanced
 	researched			rslist_phalanx
 	equipment			campaign_player
+	soldierequipment	phalanx_initial
 	market				campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
 	credits				1300000
@@ -191,6 +196,7 @@ campaign aliencampaign
 	difficulty			-4
 	researched			rslist_alien
 	equipment			campaign_player_aliens
+	soldierequipment	phalanx_initial
 	market				campaign_market_aliens
 	asymptotic_market	campaign_market_aliens
 	credits				1300000

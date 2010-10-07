@@ -45,7 +45,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define B_GetBaseIDX(base) ((ptrdiff_t)((base) - ccs.bases))
 
 vec2_t newBasePos;
-static cvar_t *cp_initial_equipment;
 
 static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 
@@ -1101,16 +1100,14 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildi
  * @sa B_BuildBase_f
  * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
  */
-static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft, const char *eqname, equipDef_t *edTarget)
+static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft, const equipDef_t *ed, equipDef_t *edTarget)
 {
 	int i, price = 0;
-	const equipDef_t *ed;
 
 	assert(base);
 	assert(edTarget);
 
 	/* Initial soldiers and their equipment. */
-	ed = INV_GetEquipmentDefinitionByID(eqname);
 	if (assignInitialAircraft) {
 		B_PackInitialEquipment(assignInitialAircraft, ed);
 	} else {
@@ -1199,7 +1196,6 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 			freeSpace--;
 		}
 	}
-
 }
 
 /**
@@ -1210,7 +1206,6 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
  */
 static void B_SetUpFirstBase (campaign_t *campaign, base_t* base)
 {
-	aircraft_t *aircraft;
 	const equipDef_t *ed;
 
 	if (campaign->firstBaseTemplate[0] == '\0')
@@ -1220,48 +1215,35 @@ static void B_SetUpFirstBase (campaign_t *campaign, base_t* base)
 	BS_InitMarket(campaign);
 	E_InitialEmployees(campaign);
 
-	B_BuildFromTemplate(base, campaign->firstBaseTemplate, qtrue);
-	/* Add aircraft to the first base */
-	/** @todo move aircraft to .ufo */
-	/* buy two first aircraft and hire pilots for them. */
-	if (B_GetBuildingStatus(base, B_HANGAR)) {
-		const char *firebird = Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
-		const aircraft_t *firebirdAircraft = AIR_GetAircraft(firebird);
-		AIR_NewAircraft(base, firebird);
-		CL_UpdateCredits(ccs.credits - firebirdAircraft->price);
-	}
-	if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
-		const char *stiletto = Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
-		const aircraft_t *stilettoAircraft = AIR_GetAircraft(stiletto);
-		AIR_NewAircraft(base, stiletto);
-		CL_UpdateCredits(ccs.credits - stilettoAircraft->price);
-	}
-
 	/* Find the initial equipment definition for current campaign. */
 	ed = INV_GetEquipmentDefinitionByID(campaign->equipment);
 	/* Copy it to base storage. */
 	base->storage = *ed;
 
-	aircraft = NULL;
-	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-		if (!E_HireEmployeeByType(base, EMPL_PILOT)) {
-			Com_DPrintf(DEBUG_CLIENT, "B_SetUpFirstBase: Hiring pilot failed.\n");
-		}
-
-		switch (aircraft->type) {
-		case AIRCRAFT_INTERCEPTOR:
-			/* Auto equip interceptors with weapons and ammos */
-			AIM_AutoEquipAircraft(aircraft);
-			break;
-		case AIRCRAFT_TRANSPORTER:
-			/* Assign and equip soldiers on Dropships */
-			AIR_AssignInitial(aircraft);
-			/** @todo cleanup this mess: */
-			B_InitialEquipment(base, aircraft, cp_initial_equipment->string, &base->storage);
-			break;
-		default:
-			Com_Error(ERR_DROP, "B_SetUpFirstBase: Invalid aircraft type.");
-		}
+	B_BuildFromTemplate(base, campaign->firstBaseTemplate, qtrue);
+	/* Add aircraft to the first base */
+	/** @todo move aircraft to .ufo */
+	/* buy two first aircraft and hire pilots for them. */
+	if (B_GetBuildingStatus(base, B_HANGAR)) {
+		const equipDef_t *equipDef = INV_GetEquipmentDefinitionByID(campaign->soldierEquipment);
+		const char *firebird = Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
+		const aircraft_t *firebirdAircraft = AIR_GetAircraft(firebird);
+		aircraft_t *aircraft = AIR_NewAircraft(base, firebirdAircraft);
+		CL_UpdateCredits(ccs.credits - firebirdAircraft->price);
+		if (!E_HireEmployeeByType(base, EMPL_PILOT))
+			Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
+		/* Assign and equip soldiers on Dropships */
+		AIR_AssignInitial(aircraft);
+		B_InitialEquipment(base, aircraft, equipDef, &base->storage);
+	}
+	if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
+		const char *stiletto = Com_DropShipTypeToShortName(INTERCEPTOR_STILETTO);
+		const aircraft_t *stilettoAircraft = AIR_GetAircraft(stiletto);
+		aircraft_t *aircraft = AIR_NewAircraft(base, stilettoAircraft);
+		CL_UpdateCredits(ccs.credits - stilettoAircraft->price);
+		if (!E_HireEmployeeByType(base, EMPL_PILOT))
+			Com_Error(ERR_DROP, "B_SetUpFirstBase: Hiring pilot failed.");
+		AIM_AutoEquipAircraft(aircraft);
 	}
 }
 
@@ -2434,8 +2416,6 @@ void B_InitStartup (void)
 	Cmd_AddCommand("debug_destroybase", CL_BaseDestroy_f, "Destroy a base");
 	Cmd_AddCommand("debug_buildingfinished", B_BuildingConstructionFinished_f, "Finish construction for every building in the current base");
 #endif
-
-	cp_initial_equipment = Cvar_Get("cp_initial_equipment", "phalanx_initial", 0, "Start with assigned equipment - see cp_start_employees");
 }
 
 /**
