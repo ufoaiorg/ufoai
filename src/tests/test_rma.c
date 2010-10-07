@@ -82,7 +82,7 @@ static void testMassAssemblyTimeout (void)
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
-		TEST_Printf("%i: %i %li\n", i, randomMap->numPlaced, time);
+		Com_Printf("%i: %i %li\n", i, randomMap->numPlaced, time);
 		Mem_Free(randomMap);
 	}
 }
@@ -101,7 +101,7 @@ static void testMassAssemblyParallel (void)
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
-		TEST_Printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
+		Com_Printf("%i: %i %li\n", i, randomMap->numPlaced, time); fflush(stdout);
 		Mem_Free(randomMap);
 	}
 
@@ -122,7 +122,7 @@ static void testMassAssemblySequential (void)
 		CU_ASSERT(randomMap != NULL);
 		time = (Sys_Milliseconds() - time);
 		CU_ASSERT(time < 30000);
-		TEST_Printf("%i: %i %li\n", i, randomMap->numPlaced, time);
+		Com_Printf("%i: %i %li\n", i, randomMap->numPlaced, time);
 		Mem_Free(randomMap);
 	}
 }

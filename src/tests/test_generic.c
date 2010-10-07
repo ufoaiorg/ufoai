@@ -238,27 +238,27 @@ static void testStringCopiers (void)
 	char dest[8192];
 	int i;
 
-	TEST_Printf("\n");
+	Com_Printf("\n");
 	time = Sys_Milliseconds();
 	for (i = 0; i < copies; ++i) {
 		Q_strncpyz(dest, src, sizeof(dest));
 	}
 	time = Sys_Milliseconds() - time;
-	TEST_Printf("%d copies with Q_strncpyz: %ld ms\n", copies, time);
+	Com_Printf("%d copies with Q_strncpyz: %ld ms\n", copies, time);
 
 	time = Sys_Milliseconds();
 	for (i = 0; i < copies; ++i) {
 		UTF8_strncpyz(dest, src, sizeof(dest));
 	}
 	time = Sys_Milliseconds() - time;
-	TEST_Printf("%d copies with UTF8_strncpyz: %ld ms\n", copies, time);
+	Com_Printf("%d copies with UTF8_strncpyz: %ld ms\n", copies, time);
 
 	time = Sys_Milliseconds();
 	for (i = 0; i < copies; ++i) {
 		Com_sprintf(dest, sizeof(dest), "%s", src);
 	}
 	time = Sys_Milliseconds() - time;
-	TEST_Printf("%d copies with Com_sprintf: %ld ms\n", copies, time);
+	Com_Printf("%d copies with Com_sprintf: %ld ms\n", copies, time);
 
 	/* Com_sprintf */
 

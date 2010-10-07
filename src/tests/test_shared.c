@@ -65,13 +65,3 @@ void TEST_Init (void)
 
 	Com_ParseScripts(qtrue);
 }
-
-
-void TEST_Printf (const char *fmt, ...)
-{
-	va_list argptr;
-
-	va_start(argptr, fmt);
-	TEST_vPrintf(fmt, argptr);
-	va_end(argptr);
-}
