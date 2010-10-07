@@ -177,12 +177,12 @@ static void Test_Parameters (const int argc, const char **argv)
 			printf("-c  --console              | run tests in console mode\n");
 			printf("-a  --automated            | run tests in automated mode (create xml file)\n");
 			printf("-l  --list                 | list suite name available\n");
-			printf("    --log                  | log ufo output to file\n");
+			printf("    --log                  | log ufo output to file (testall.log in working dir)\n");
 			printf("    --output-prefix=PREFIX | set a prefix for the xml result\n");
 			printf("                           | default value is \"ufoai\"\n");
 			printf("    --disable-SUITE        | Disable a suite by name\n");
 			printf("                           | SUITE=suite name\n");
-			printf("    --only-SUITE           | Enable an only one suite by name\n");
+			printf("    --only-SUITE           | Enable only the suite given by name\n");
 			printf("                           | SUITE=suite name\n");
 			exit(0);
 		} else {
