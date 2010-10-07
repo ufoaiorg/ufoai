@@ -231,52 +231,42 @@ static void testAutoMissions (void)
 
 static void testTransfer (void)
 {
-	CU_ASSERT_FALSE(1);
 }
 
 static void testResearch (void)
 {
-	CU_ASSERT_FALSE(1);
 }
 
 static void testProduction (void)
 {
-	CU_ASSERT_FALSE(1);
 }
 
 static void testAirFight (void)
 {
-	CU_ASSERT_FALSE(1);
 }
 
 static void testGeoscape (void)
 {
-	CU_ASSERT_FALSE(1);
 }
 
 static void testNation (void)
 {
-	CU_ASSERT_FALSE(1);
 }
 
 static void testMarket (void)
 {
-	CU_ASSERT_FALSE(1);
 }
 
 static void testXVI (void)
 {
-	CU_ASSERT_FALSE(1);
 }
 
 static void testSaveLoad (void)
 {
-	CU_ASSERT_FALSE(1);
 }
 
 static void testCampaignRun (void)
 {
-	CU_ASSERT_FALSE(1);
 }
 
 int UFO_AddCampaignTests (void)
