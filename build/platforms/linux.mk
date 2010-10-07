@@ -41,6 +41,8 @@ XML2_CFLAGS              ?= $(call PKG_CFLAGS,libxml-2.0)
 XML2_LIBS                ?= $(call PKG_LIBS,libxml-2.0)
 VORBIS_CFLAGS            ?= $(call PKG_CFLAGS,vorbis)
 VORBIS_LIBS              ?= $(call PKG_LIBS,vorbis)
+OGG_CFLAGS               ?= $(call PKG_CFLAGS,ogg)
+OGG_LIBS                 ?= $(call PKG_LIBS,ogg)
 INTL_LIBS                ?=
 ifdef HAVE_XVID_H
 XVID_CFLAGS              ?=
