@@ -2200,23 +2200,17 @@ void AIR_ResetAircraftTeam (aircraft_t *aircraft)
  */
 qboolean AIR_AddToAircraftTeam (aircraft_t *aircraft, employee_t* employee)
 {
-	if (!employee) {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: No employee given!\n");
+	if (!employee)
 		return qfalse;
-	}
 
-	if (!aircraft) {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: No aircraft given!\n");
+	if (!aircraft)
 		return qfalse;
-	}
+
 	if (AIR_GetTeamSize(aircraft) < aircraft->maxTeamSize) {
 		LIST_AddPointer(&aircraft->acTeam, employee);
-		Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: added idx '%d'\n",
-			employee->idx);
 		return qtrue;
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: No space in aircraft\n");
 	return qfalse;
 }
 
@@ -2241,17 +2235,10 @@ qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *emp
 		/* Search for this exact employee in the aircraft and remove him from the team. */
 		if (employeeInCraft == employee) {
 			LIST_RemoveEntry(&aircraft->acTeam, l);
-			Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveFromAircraftTeam: removed idx '%d' \n",
-				employee->idx);
 			return qtrue;
 		}
 	}
-	/* there must be a homebase when there are employees - otherwise this
-	 * functions should not be called */
-	assert(aircraft->homebase);
-	Com_Printf("AIR_RemoveFromAircraftTeam: error: idx '%d' (type: %i) not on aircraft %i (size: %i) (base: %i) in base %i\n",
-		employee->idx, employee->type, aircraft->idx, aircraft->maxTeamSize,
-		AIR_GetAircraftIDXInBase(aircraft), aircraft->homebase->idx);
+
 	return qfalse;
 }
 
@@ -2263,17 +2250,10 @@ qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *emp
  */
 qboolean AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *employee)
 {
-	if (!aircraft) {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: No aircraft given\n");
+	if (!aircraft)
 		return qfalse;
-	}
 
-	if (!employee) {
-		Com_Printf("AIR_IsInAircraftTeam: No employee given.\n");
-		return qfalse;
-	}
-
-	if (AIR_GetTeamSize(aircraft) == 0)
+	if (!employee)
 		return qfalse;
 
 	return LIST_GetPointer(aircraft->acTeam, employee) != NULL;
