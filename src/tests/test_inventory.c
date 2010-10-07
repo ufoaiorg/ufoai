@@ -148,6 +148,7 @@ static void testItemMove (void)
 	ResetInventoryList();
 
 	memset(&inv, 0, sizeof(inv));
+	memset(&item, 0, sizeof(item));
 
 	od = INVSH_GetItemByIDSilent("assault");
 	CU_ASSERT_PTR_NOT_NULL(od);
