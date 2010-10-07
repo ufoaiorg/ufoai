@@ -307,7 +307,7 @@ static void TR_TransferEnd (transfer_t *transfer)
  * @param[in] srcBase start transfer from this base
  * @param[in] transData Container holds transfer details
  */
-void TR_TransferStart (base_t *srcBase, struct transferData_s *transData)
+void TR_TransferStart (base_t *srcBase, transferData_t *transData)
 {
 	transfer_t *transfer;
 	float time;
@@ -375,12 +375,7 @@ void TR_TransferStart (base_t *srcBase, struct transferData_s *transData)
 			}
 		}
 	}
-	/** @todo This doesn't work - it would require to store the aliens as the
-	 * first entries in the teamDef array - and this is not guaranteed. The
-	 * alienAmount array may not contain more than numAliensTD entries though */
 	for (i = 0; i < ccs.numAliensTD; i++) {		/* Aliens. */
-		if (!CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
-			continue;
 		if (transData->trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 			transfer->hasAliens = qtrue;
 			transfer->alienAmount[i][TRANS_ALIEN_ALIVE] = transData->trAliensTmp[i][TRANS_ALIEN_ALIVE];
