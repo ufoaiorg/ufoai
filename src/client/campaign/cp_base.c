@@ -1148,11 +1148,12 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
 		/* find each building in the template */
 		for (i = 0; i < baseTemplate->numBuildings; i++) {
 			vec2_t pos;
+			const baseBuildingTile_t *buildingTile = &baseTemplate->buildings[i];
 
-			Vector2Set(pos, baseTemplate->buildings[i].posX, baseTemplate->buildings[i].posY);
+			Vector2Set(pos, buildingTile->posX, buildingTile->posY);
 
 			if (!base->map[(int)pos[0]][(int)pos[1]].building) {
-				B_AddBuildingToBasePos(base, baseTemplate->buildings[i].building, hire, pos);
+				B_AddBuildingToBasePos(base, buildingTile->building, hire, pos);
 				freeSpace--;
 			}
 		}
