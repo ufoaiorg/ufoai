@@ -88,7 +88,7 @@ int AIR_BaseCountAircraft (const base_t *base)
 	int count = 0;
 
 	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
-		count ++;
+		count++;
 
 	return count;
 }
@@ -105,8 +105,6 @@ int AIR_BaseCountAircraft (const base_t *base)
  */
 static int AIR_UpdateHangarCapForOne (const aircraft_t const *aircraftTemplate, base_t *base)
 {
-	int freeSpace = 0;
-
 	assert(aircraftTemplate);
 	assert(aircraftTemplate == aircraftTemplate->tpl);	/* Make sure it's an aircraft template. */
 
@@ -119,6 +117,7 @@ static int AIR_UpdateHangarCapForOne (const aircraft_t const *aircraftTemplate, 
 	}
 
 	if (aircraftTemplate->size >= AIRCRAFT_LARGE) {
+		int freeSpace;
 		if (!B_GetBuildingStatus(base, B_HANGAR)) {
 			Com_Printf("AIR_UpdateHangarCapForOne: base does not have big hangar - error!\n");
 			return AIRCRAFT_HANGAR_ERROR;
@@ -127,12 +126,9 @@ static int AIR_UpdateHangarCapForOne (const aircraft_t const *aircraftTemplate, 
 		if (freeSpace > 0) {
 			base->capacities[CAP_AIRCRAFT_BIG].cur++;
 			return AIRCRAFT_HANGAR_BIG;
-		} else {
-			/* No free space for this aircraft. This should never happen here. */
-			Com_Printf("AIR_UpdateHangarCapForOne: no free space!\n");
-			return AIRCRAFT_HANGAR_ERROR;
 		}
 	} else {
+		int freeSpace;
 		if (!B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 			Com_Printf("AIR_UpdateHangarCapForOne: base does not have small hangar - error!\n");
 			return AIRCRAFT_HANGAR_ERROR;
@@ -141,12 +137,11 @@ static int AIR_UpdateHangarCapForOne (const aircraft_t const *aircraftTemplate, 
 		if (freeSpace > 0) {
 			base->capacities[CAP_AIRCRAFT_SMALL].cur++;
 			return AIRCRAFT_HANGAR_SMALL;
-		} else {
-			/* No free space for this aircraft. This should never happen here. */
-			Com_Printf("AIR_UpdateHangarCapForOne: no free space!\n");
-			return AIRCRAFT_HANGAR_ERROR;
 		}
 	}
+
+	/* No free space for this aircraft. This should never happen here. */
+	Sys_Error("AIR_UpdateHangarCapForOne: no free space!\n");
 }
 
 /**
@@ -167,11 +162,8 @@ void AIR_UpdateHangarCapForAll (base_t *base)
 	base->capacities[CAP_AIRCRAFT_SMALL].cur = 0;
 
 	aircraft = NULL;
-	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll: base: %s, aircraft: %s\n", base->name, aircraft->id);
+	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 		AIR_UpdateHangarCapForOne(aircraft->tpl, base);
-	}
-	Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll: base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFT_SMALL].cur, base->capacities[CAP_AIRCRAFT_BIG].cur);
 }
 
 #ifdef DEBUG
