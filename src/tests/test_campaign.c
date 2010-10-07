@@ -99,8 +99,7 @@ static void testCampaign (void)
 {
 	missionResults_t result;
 	battleParam_t battleParameters;
-	const char *firebird = Com_DropShipTypeToShortName(DROPSHIP_FIREBIRD);
-	aircraft_t* aircraft = AIR_GetAircraft(firebird);
+	aircraft_t* aircraft = ccs.aircraftTemplates;
 	mission_t *mission = CP_CreateNewMission(INTERESTCATEGORY_RECON, qfalse);
 	campaign_t *campaign;
 	employee_t *pilot, *e1, *e2;

@@ -53,7 +53,7 @@ typedef struct production_s
 	 * @todo Make this a union
 	 */
 	objDef_t *item;			/**< Item to be produced. */
-	struct aircraft_s *aircraft;	/**< Aircraft (sample) to be produced. @todo Is there any way to make this const without cp_produce.c to break?*/
+	const struct aircraft_s *aircraft;	/**< Aircraft (sample) to be produced. */
 	struct storedUFO_s *ufo;
 
 	signed int amount;	/**< How much are we producing. */

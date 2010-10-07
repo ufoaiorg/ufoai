@@ -178,21 +178,21 @@ qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requiremen
 			const requirement_t *req = &requiredAND->links[i];
 			switch (req->type) {
 			case RS_LINK_TECH:
-				if (!RS_IsResearched_ptr((const technology_t *)req->link))
+				if (!RS_IsResearched_ptr(req->link.tech))
 					metAND = qfalse;
 				break;
 			case RS_LINK_TECH_NOT:
-				if (RS_IsResearched_ptr((const technology_t *)req->link))
+				if (RS_IsResearched_ptr(req->link.tech))
 					metAND = qfalse;
 				break;
 			case RS_LINK_ITEM:
 				/* The same code is used in "PR_RequirementsMet" */
-				if (B_ItemInBase((const objDef_t *)req->link, base) < req->amount)
+				if (B_ItemInBase(req->link.od, base) < req->amount)
 					metAND = qfalse;
 				break;
 			case RS_LINK_ALIEN_DEAD:
 			case RS_LINK_ALIEN:
-				if (AL_GetAlienAmount((const teamDef_t *)req->link, req->type, base) < req->amount)
+				if (AL_GetAlienAmount(req->link.td, req->type, base) < req->amount)
 					metAND = qfalse;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
@@ -200,7 +200,7 @@ qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requiremen
 					metAND = qfalse;
 				break;
 			case RS_LINK_UFO:
-				if (US_UFOsInStorage((const aircraft_t *)req->link, NULL) < req->amount)
+				if (US_UFOsInStorage(req->link.aircraft, NULL) < req->amount)
 					metAND = qfalse;
 				break;
 			case RS_LINK_ANTIMATTER:
@@ -221,21 +221,21 @@ qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requiremen
 			const requirement_t *req = &requiredOR->links[i];
 			switch (req->type) {
 			case RS_LINK_TECH:
-				if (RS_IsResearched_ptr((const technology_t *)req->link))
+				if (RS_IsResearched_ptr(req->link.tech))
 					metOR = qtrue;
 				break;
 			case RS_LINK_TECH_NOT:
-				if (!RS_IsResearched_ptr((const technology_t *)req->link))
+				if (!RS_IsResearched_ptr(req->link.tech))
 					metOR = qtrue;
 				break;
 			case RS_LINK_ITEM:
 				/* The same code is used in "PR_RequirementsMet" */
-				if (B_ItemInBase((const objDef_t *)req->link, base) >= req->amount)
+				if (B_ItemInBase(req->link.od, base) >= req->amount)
 					metOR = qtrue;
 				break;
 			case RS_LINK_ALIEN:
 			case RS_LINK_ALIEN_DEAD:
-				if (AL_GetAlienAmount((const teamDef_t *)req->link, req->type, base) >= req->amount)
+				if (AL_GetAlienAmount(req->link.td, req->type, base) >= req->amount)
 					metOR = qtrue;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
@@ -243,7 +243,7 @@ qboolean RS_RequirementsMet (const requirements_t *requiredAND, const requiremen
 					metOR = qtrue;
 				break;
 			case RS_LINK_UFO:
-				if (US_UFOsInStorage((const aircraft_t *)req->link, NULL) >= req->amount)
+				if (US_UFOsInStorage(req->link.aircraft, NULL) >= req->amount)
 					metOR = qtrue;
 				break;
 			case RS_LINK_ANTIMATTER:
@@ -397,24 +397,24 @@ static void RS_AssignTechLinks (requirements_t *reqs)
 		case RS_LINK_TECH:
 		case RS_LINK_TECH_NOT:
 			/* Get the index in the techtree. */
-			req->link = RS_GetTechByID(req->id);
-			if (!req->link)
+			req->link.tech = RS_GetTechByID(req->id);
+			if (!req->link.tech)
 				Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get tech definition for '%s'", req->id);
 			break;
 		case RS_LINK_ITEM:
 			/* Get index in item-list. */
-			req->link = INVSH_GetItemByID(req->id);
-			if (!req->link)
+			req->link.od = INVSH_GetItemByID(req->id);
+			if (!req->link.od)
 				Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get item definition for '%s'", req->id);
 			break;
 		case RS_LINK_ALIEN:
 		case RS_LINK_ALIEN_DEAD:
-			req->link = Com_GetTeamDefinitionByID(req->id);
-			if (!req->link)
+			req->link.td = Com_GetTeamDefinitionByID(req->id);
+			if (!req->link.td)
 				Com_Error(ERR_DROP, "RS_AssignTechLinks: Could not get alien type (alien or alien_dead) definition for '%s'", req->id);
 			break;
 		case RS_LINK_UFO:
-			req->link = AIR_GetAircraft(req->id);
+			req->link.aircraft = AIR_GetAircraft(req->id);
 			break;
 		default:
 			break;
@@ -891,22 +891,21 @@ static const char *RS_TechTypeToName (researchType_t type)
 
 static const char *RS_TechReqToName (requirement_t *req)
 {
-	assert(req->link);
 	switch(req->type) {
 	case RS_LINK_TECH:
-		return ((technology_t*)req->link)->id;
+		return req->link.tech->id;
 	case RS_LINK_TECH_NOT:
-		return va("not %s", ((technology_t*)req->link)->id);
+		return va("not %s", req->link.tech->id);
 	case RS_LINK_ITEM:
-		return ((objDef_t*)req->link)->id;
+		return req->link.od->id;
 	case RS_LINK_ALIEN:
-		return ((teamDef_t*)req->link)->id;
+		return req->link.td->id;
 	case RS_LINK_ALIEN_DEAD:
-		return ((teamDef_t*)req->link)->id;
+		return req->link.td->id;
 	case RS_LINK_ALIEN_GLOBAL:
 		return "global alien count";
 	case RS_LINK_UFO:
-		return ((aircraft_t*)req->link)->id;
+		return req->link.aircraft->id;
 	case RS_LINK_ANTIMATTER:
 		return "antimatter";
 	default:

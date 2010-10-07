@@ -196,7 +196,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 		for (i = 0; i < required->numLinks; i++) {
 			const requirement_t *req = &required->links[i];
 			if (req->type == RS_LINK_TECH) {
-				const technology_t *techRequired = (const technology_t *)req->link;
+				const technology_t *techRequired = req->link.tech;
 				if (!techRequired)
 					Com_Error(ERR_DROP, "Could not find the tech for '%s'", req->id);
 
@@ -876,8 +876,8 @@ static void UP_TechTreeClick_f (void)
 {
 	int num;
 	int i;
-	requirements_t *required_AND;
-	technology_t *techRequired;
+	const requirements_t *required_AND;
+	const technology_t *techRequired;
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -897,7 +897,7 @@ static void UP_TechTreeClick_f (void)
 			num++;
 	}
 
-	techRequired = (technology_t *)required_AND->links[num].link;
+	techRequired = required_AND->links[num].link.tech;
 	if (!techRequired)
 		Com_Error(ERR_DROP, "Could not find the tech for '%s'", required_AND->links[num].id);
 

@@ -670,8 +670,6 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 {
 	if (aircraft && AIR_IsAircraftOnGeoscape(aircraft)) {
 		const base_t *base = aircraft->homebase;
-		assert(base);
-		Com_DPrintf(DEBUG_CLIENT, "return '%s' (%i) to base ('%s').\n", aircraft->id, aircraft->idx, base->name);
 		MAP_MapCalcLine(aircraft->pos, base->pos, &aircraft->route);
 		aircraft->status = AIR_RETURNING;
 		aircraft->time = 0;
@@ -735,7 +733,7 @@ aircraft_t *AIR_GetAircraftFromBaseByIDXSafe (base_t* base, int index)
  * @return aircraft_t pointer or NULL if not found.
  * @note This function gives no warning on null name or if no aircraft found
  */
-aircraft_t *AIR_GetAircraftSilent (const char *name)
+const aircraft_t *AIR_GetAircraftSilent (const char *name)
 {
 	int i;
 
@@ -754,9 +752,9 @@ aircraft_t *AIR_GetAircraftSilent (const char *name)
  * @param[in] name Aircraft id.
  * @return aircraft_t pointer or errors out (ERR_DROP)
  */
-aircraft_t *AIR_GetAircraft (const char *name)
+const aircraft_t *AIR_GetAircraft (const char *name)
 {
-	aircraft_t *aircraft = AIR_GetAircraftSilent(name);
+	const aircraft_t *aircraft = AIR_GetAircraftSilent(name);
 	if (name == NULL || name[0] == '\0')
 		Com_Error(ERR_DROP, "AIR_GetAircraft called with NULL name!");
 	else if (aircraft == NULL)
@@ -1477,7 +1475,7 @@ static const value_t aircraft_vals[] = {
  * @note parses the aircraft into our aircraft_sample array to use as reference
  * @note This parsing function writes into two different memory pools
  * one is the cp_campaignPool which is cleared on every new game, the other is
- * cl_genericPool which is existant until you close the game
+ * cl_genericPool which is existent until you close the game
  */
 void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAircraftItems)
 {
@@ -1495,11 +1493,18 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 	}
 
 	if (!assignAircraftItems) {
+		aircraftTemplate = NULL;
 		for (i = 0; i < ccs.numAircraftTemplates; i++) {
-			if (!strcmp(ccs.aircraftTemplates[i].id, name)) {
-				Com_Printf("AIR_ParseAircraft: Second aircraft with same name found (%s) - second ignored\n", name);
-				return;
+			aircraft_t *aircraft = &ccs.aircraftTemplates[i];
+			if (!strcmp(aircraft->id, name)) {
+				aircraftTemplate = aircraft;
+				break;
 			}
+		}
+
+		if (aircraftTemplate) {
+			Com_Printf("AIR_ParseAircraft: Second aircraft with same name found (%s) - second ignored\n", name);
+			return;
 		}
 
 		/* initialize the menu */
@@ -1512,19 +1517,24 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		aircraftTemplate->status = AIR_HOME;
 		/* default is no ufo */
 		aircraftTemplate->ufotype = UFO_MAX;
+		aircraftTemplate->maxWeapons = 0;
+		aircraftTemplate->maxElectronics = 0;
 		AII_InitialiseAircraftSlots(aircraftTemplate);
 		/* Initialise UFO sensored */
 		RADAR_InitialiseUFOs(&aircraftTemplate->radar);
 
 		ccs.numAircraftTemplates++;
 	} else {
-		aircraftTemplate = AIR_GetAircraft(name);
-		/* initialize slot numbers (useful when restarting a single campaign) */
-		aircraftTemplate->maxWeapons = 0;
-		aircraftTemplate->maxElectronics = 0;
-
-		if (aircraftTemplate->type == AIRCRAFT_UFO)
-			aircraftTemplate->ufotype = Com_UFOShortNameToID(aircraftTemplate->id);
+		aircraftTemplate = NULL;
+		for (i = 0; i < ccs.numAircraftTemplates; i++) {
+			aircraft_t *aircraft = &ccs.aircraftTemplates[i];
+			if (!strcmp(aircraft->id, name)) {
+				aircraftTemplate = aircraft;
+				break;
+			}
+		}
+		if (!aircraftTemplate)
+			Sys_Error("Could not find aircraft '%s'", name);
 	}
 
 	/* get it's body */
@@ -1703,8 +1713,10 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 					aircraftTemplate->type = AIRCRAFT_TRANSPORTER;
 				else if (!strcmp(token, "interceptor"))
 					aircraftTemplate->type = AIRCRAFT_INTERCEPTOR;
-				else if (!strcmp(token, "ufo"))
+				else if (!strcmp(token, "ufo")) {
 					aircraftTemplate->type = AIRCRAFT_UFO;
+					aircraftTemplate->ufotype = Com_UFOShortNameToID(aircraftTemplate->id);
+				}
 			} else if (!strcmp(token, "slot")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text || *token != '{') {

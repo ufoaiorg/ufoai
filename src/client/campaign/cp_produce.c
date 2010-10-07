@@ -119,7 +119,7 @@ void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, const requir
 		const requirement_t const *req = &reqs->links[i];
 		switch (req->type) {
 		case RS_LINK_ITEM: {
-			const objDef_t *item = (const objDef_t *)req->link;
+			const objDef_t *item = req->link.od;
 			assert(item);
 			B_AddToStorage(base, item, req->amount * amount);
 			break;
@@ -156,7 +156,7 @@ int PR_RequirementsMet (int amount, const requirements_t const *reqs, base_t *ba
 
 		switch (req->type) {
 		case RS_LINK_ITEM: {
-				const int items = min(amount, B_ItemInBase((const objDef_t *)req->link, base) / ((req->amount) ? req->amount : 1));
+				const int items = min(amount, B_ItemInBase(req->link.od, base) / ((req->amount) ? req->amount : 1));
 				producibleAmount = min(producibleAmount, items);
 				break;
 			}
@@ -166,10 +166,10 @@ int PR_RequirementsMet (int amount, const requirements_t const *reqs, base_t *ba
 				break;
 			}
 		case RS_LINK_TECH:
-			producibleAmount = (RS_IsResearched_ptr((const technology_t *)req->link)) ? producibleAmount : 0;
+			producibleAmount = (RS_IsResearched_ptr(req->link.tech)) ? producibleAmount : 0;
 			break;
 		case RS_LINK_TECH_NOT:
-			producibleAmount = (RS_IsResearched_ptr((const technology_t *)req->link)) ? 0 : producibleAmount;
+			producibleAmount = (RS_IsResearched_ptr(req->link.tech)) ? 0 : producibleAmount;
 			break;
 		default:
 			break;

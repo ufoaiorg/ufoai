@@ -265,8 +265,8 @@ qboolean AIR_IsInAircraftTeam(const aircraft_t *aircraft, const struct employee_
 int AIR_GetTeamSize(const aircraft_t *aircraft);
 
 void CL_CampaignRunAircraft(int dt, qboolean updateRadarOverlay);
-aircraft_t *AIR_GetAircraftSilent(const char *name);
-aircraft_t *AIR_GetAircraft(const char *name);
+const aircraft_t *AIR_GetAircraftSilent(const char *name);
+const aircraft_t *AIR_GetAircraft(const char *name);
 aircraft_t* AIR_AircraftGetFromIDX(int idx);
 qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void AIR_ParseAircraft(const char *name, const char **text, qboolean assignAircraftItems);

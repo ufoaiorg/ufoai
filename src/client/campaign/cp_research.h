@@ -73,15 +73,12 @@ typedef enum requirementType_s {
 typedef struct requirement_s {
 	requirementType_t type;	/**< What type the requ. is: item (in store/quarantine), event, etc... */
 	char *id;	/**< Dependency id (text-id) */
-	void *link;	/**< Dependency pointer (depends on the type)
-				 * RS_LINK_TECH -> technology_t*
-				 * RS_LINK_TECH_NOT -> (planned to be technology_t*)
-				 * RS_LINK_ITEM -> objDef_t*
-				 * RS_LINK_ALIEN		-> teamDef_t*
-				 * RS_LINK_ALIEN_DEAD	-> teamDef_t*
-				 * RS_LINK_ALIEN_GLOBAL -> NULL
-				 * RS_LINK_UFO -> aircraft_t*
-				 */
+	union typelink_t {
+		const struct technology_s *tech;
+		const struct objDef_s *od;
+		const struct teamDef_s *td;
+		const struct aircraft_s *aircraft;
+	} link;
 	int amount;	/**< How many items are needed for research ... if any. (fix) */
 	int collected;	/**< How many items have been collected. (varies) */
 } requirement_t;

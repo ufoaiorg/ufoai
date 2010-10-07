@@ -201,8 +201,8 @@ static void PR_RequirementsInfo (const base_t const *base, const requirements_t 
 
 		switch (req->type) {
 		case RS_LINK_ITEM: {
-				uiNode_t *node = UI_AddOption(&req_items, ((objDef_t*)req->link)->id, va("%i %s", req->amount, _(((objDef_t*)req->link)->name)), va("%i", i));
-				if (node && B_ItemInBase((objDef_t*)req->link, base) >= req->amount)
+				uiNode_t *node = UI_AddOption(&req_items, req->link.od->id, va("%i %s", req->amount, _(req->link.od->name)), va("%i", i));
+				if (node && B_ItemInBase(req->link.od, base) >= req->amount)
 					Vector4Copy(green, node->color);
 				else
 					Vector4Copy(yellow, node->color);
