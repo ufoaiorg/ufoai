@@ -215,6 +215,8 @@ int main (int argc, const char **argv)
 	int i;
 	int failures;
 
+	Sys_InitSignals();
+
 	/* initialize the CUnit test registry */
 	if (CU_initialize_registry() != CUE_SUCCESS)
 		return CU_get_error();
