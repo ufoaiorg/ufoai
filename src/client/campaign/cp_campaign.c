@@ -1457,7 +1457,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	if (load) {
 		/** @todo this should be called in this function for new campaigns too but as researched items
 		 * not yet set, it can't. It's called in B_SetUpFirstBase for new campaigns */
-		BS_InitMarket();
+		BS_InitMarket(campaign);
 		return;
 	}
 

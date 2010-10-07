@@ -208,7 +208,7 @@ static void B_BuildBase_f (void)
 
 		Q_strncpyz(base->name, baseName, sizeof(base->name));
 		/* set up the base with buildings from template */
-		B_SetUpBase(base, newBasePos);
+		B_SetUpBase(ccs.curCampaign, base, newBasePos);
 
 		ccs.numBases++;
 		ccs.campaignStats.basesBuilt++;

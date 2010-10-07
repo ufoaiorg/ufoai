@@ -32,6 +32,7 @@ struct aircraft_s;
 struct installation_s;
 struct employee_s;
 struct ugv_s;
+struct campaign_s;
 struct uiNode_s; /**< @todo remove this once the uiNode_t usage is cleaned up */
 
 #define MAX_CAMPAIGNS	16

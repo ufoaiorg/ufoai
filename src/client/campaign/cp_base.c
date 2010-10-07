@@ -1204,9 +1204,8 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
  * @param[in,out] base The base to set up
  * @sa B_SetUpBase
  */
-static void B_SetUpFirstBase (base_t* base)
+static void B_SetUpFirstBase (campaign_t *campaign, base_t* base)
 {
-	campaign_t *campaign = ccs.curCampaign;
 	aircraft_t *aircraft;
 	const equipDef_t *ed;
 
@@ -1214,8 +1213,8 @@ static void B_SetUpFirstBase (base_t* base)
 		Com_Error(ERR_DROP, "No base template for setting up the first base given");
 
 	RS_MarkResearchable(qtrue, base);
-	BS_InitMarket();
-	E_InitialEmployees();
+	BS_InitMarket(campaign);
+	E_InitialEmployees(campaign);
 
 	B_BuildFromTemplate(base, campaign->firstBaseTemplate, qtrue);
 	/* Add aircraft to the first base */
@@ -1298,7 +1297,7 @@ void B_UpdateBaseCount (void)
  * @sa B_NewBase
  * @sa B_SetUpFirstBase
  */
-void B_SetUpBase (base_t* base, vec2_t pos)
+void B_SetUpBase (campaign_t *campaign, base_t* base, vec2_t pos)
 {
 	const int newBaseAlienInterest = 1.0f;
 
@@ -1310,7 +1309,7 @@ void B_SetUpBase (base_t* base, vec2_t pos)
 
 	/* setup for first base */
 	if (ccs.campaignStats.basesBuilt == 0)
-		B_SetUpFirstBase(base);
+		B_SetUpFirstBase(campaign, base);
 	else
 		B_BuildFromTemplate(base, NULL, qtrue);
 

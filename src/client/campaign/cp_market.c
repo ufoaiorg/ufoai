@@ -273,10 +273,9 @@ qboolean BS_LoadXML (mxml_node_t *parent)
  * @sa BS_Load (Market load function)
  * @param[in] load Is this an attempt to init the market for a savegame?
  */
-void BS_InitMarket (void)
+void BS_InitMarket (campaign_t *campaign)
 {
 	int i;
-	campaign_t *campaign = ccs.curCampaign;
 	market_t *market = BS_GetMarket();
 
 	/* find the relevant markets */

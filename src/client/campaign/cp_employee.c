@@ -1147,9 +1147,8 @@ static inline const nation_t *E_RandomNation (void)
 	return &ccs.nations[nationIndex];
 }
 
-void E_InitialEmployees (void)
+void E_InitialEmployees (const campaign_t *campaign)
 {
-	campaign_t *campaign = ccs.curCampaign;
 	int i;
 	int j = 0;
 

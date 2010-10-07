@@ -109,7 +109,7 @@ void E_DeleteAllEmployees(base_t* base);
 void E_DeleteEmployeesExceedingCapacity(base_t *base);
 qboolean E_IsInBase(const employee_t* empl, const base_t* const base);
 void E_HireForBuilding(base_t* base, building_t * building, int num);
-void E_InitialEmployees(void);
+void E_InitialEmployees(const struct campaign_s *campaign);
 void E_Init(void);
 
 void E_RemoveInventoryFromStorage(employee_t *employee);
