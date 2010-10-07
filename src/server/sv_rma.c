@@ -1101,6 +1101,8 @@ static int SV_ParallelSearch (mapInfo_t *map)
 	SDL_DestroyCond(mapCond);
 	/* cleanup, for possible next time */
 	SDL_DestroySemaphore(mapSem);
+	TH_MutexDestroy(mapLock);
+	mapLock = NULL;
 	mapSem = NULL;
 	threadID = 0;
 	timeout = 5000;
