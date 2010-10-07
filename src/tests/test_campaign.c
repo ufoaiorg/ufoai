@@ -63,13 +63,10 @@ static int UFO_InitSuiteCampaign (void)
 {
 	TEST_Init();
 
-	memset(&csi, 0, sizeof(csi));
 	memset(&cls, 0, sizeof(cls));
 
-	Com_ParseScripts(qtrue);
-
-	cp_campaignPool = Mem_CreatePool("Client: Local (per game)");
 	cl_genericPool = Mem_CreatePool("Client: Generic");
+	cp_campaignPool = Mem_CreatePool("Client: Local (per game)");
 	cp_campaign = Cvar_Get("cp_campaign", "main", 0, NULL);
 	cp_missiontest = Cvar_Get("cp_missiontest", "0", 0, NULL);
 
