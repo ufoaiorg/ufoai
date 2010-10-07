@@ -3237,6 +3237,8 @@ void Com_ParseScripts (qboolean onlyServer)
 	Com_Printf("%i script files\n", FS_BuildFileList("ufos/*.ufo"));
 	text = NULL;
 
+	FS_NextScriptHeader(NULL, NULL, NULL);
+
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		if (!strcmp(type, "damagetypes"))
 			Com_ParseDamageTypes(name, &text);

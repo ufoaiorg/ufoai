@@ -48,6 +48,7 @@ static int UFO_InitSuiteParser (void)
 static int UFO_CleanSuiteParser (void)
 {
 	TEST_Shutdown();
+	Com_EnableFunctionScriptToken(qfalse);
 	return 0;
 }
 
