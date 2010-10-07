@@ -229,6 +229,56 @@ static void testAutoMissions (void)
 	CU_ASSERT_EQUAL(E_CountUnhired(EMPL_PILOT), 0);
 }
 
+static void testTransfer (void)
+{
+	CU_ASSERT_FALSE(1);
+}
+
+static void testResearch (void)
+{
+	CU_ASSERT_FALSE(1);
+}
+
+static void testProduction (void)
+{
+	CU_ASSERT_FALSE(1);
+}
+
+static void testAirFight (void)
+{
+	CU_ASSERT_FALSE(1);
+}
+
+static void testGeoscape (void)
+{
+	CU_ASSERT_FALSE(1);
+}
+
+static void testNation (void)
+{
+	CU_ASSERT_FALSE(1);
+}
+
+static void testMarket (void)
+{
+	CU_ASSERT_FALSE(1);
+}
+
+static void testXVI (void)
+{
+	CU_ASSERT_FALSE(1);
+}
+
+static void testSaveLoad (void)
+{
+	CU_ASSERT_FALSE(1);
+}
+
+static void testCampaignRun (void)
+{
+	CU_ASSERT_FALSE(1);
+}
+
 int UFO_AddCampaignTests (void)
 {
 	/* add a suite to the registry */
@@ -245,6 +295,36 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testEmployeeHandling) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testTransfer) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testResearch) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testProduction) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testAirFight) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testGeoscape) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testNation) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testMarket) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testXVI) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testSaveLoad) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testCampaignRun) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
