@@ -1075,6 +1075,8 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildi
 
 	/* fake a click to basemap */
 	buildingNew = B_SetBuildingByClick(base, buildingTemplate, (int)pos[0], (int)pos[1]);
+	if (!buildingNew)
+		return;
 	B_UpdateAllBaseBuildingStatus(buildingNew, base, B_STATUS_WORKING);
 	Com_DPrintf(DEBUG_CLIENT, "Base %i new building: %s at (%.0f:%.0f)\n",
 			base->idx, buildingNew->id, buildingNew->pos[0], buildingNew->pos[1]);
