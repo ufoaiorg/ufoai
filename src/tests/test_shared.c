@@ -33,6 +33,18 @@ void TEST_Shutdown (void)
 	Cmd_Shutdown();
 	Cvar_Shutdown();
 	Mem_Shutdown();
+
+	memset(&csi, 0, sizeof(csi));
+}
+
+void TEST_vPrintf (const char *fmt, va_list argptr)
+{
+	char text[1024];
+	Q_vsnprintf(text, sizeof(text), fmt, argptr);
+
+	fprintf(stderr, "%s", text);
+
+	fflush(stderr);
 }
 
 void TEST_Init (void)
@@ -49,18 +61,18 @@ void TEST_Init (void)
 	Cvar_Init();
 	FS_InitFilesystem(qtrue);
 	Swap_Init();
+
+	memset(&csi, 0, sizeof(csi));
+
+	Com_ParseScripts(qtrue);
 }
+
 
 void TEST_Printf (const char *fmt, ...)
 {
 	va_list argptr;
-	char text[1024];
 
 	va_start(argptr, fmt);
-	Q_vsnprintf(text, sizeof(text), fmt, argptr);
+	TEST_vPrintf(fmt, argptr);
 	va_end(argptr);
-
-	printf("%s", text);
-
-	fflush(stdout);
 }

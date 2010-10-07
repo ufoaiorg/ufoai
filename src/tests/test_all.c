@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "CUnit/Console.h"
 #include "CUnit/TestDB.h"
 
+#include "test_shared.h"
+
 typedef int (*testSuite_t) (void);
 
 /* include the tests here */
@@ -64,13 +66,16 @@ void Sys_Init (void)
 }
 
 typedef struct config_s {
-	int console;
-	int automated;
+	qboolean console;
+	qboolean automated;
+	qboolean log;
 } config_t;
 
 static const char* resultPrefix = "ufoai";
 
 static config_t config;
+
+static FILE *logFile;
 
 static void Test_List (void)
 {
@@ -142,9 +147,9 @@ static void Test_Parameters (const int argc, const char **argv)
 
 	for (i = 1; i < argc; i++) {
 		if (!strcmp(argv[i], "-c") || !strcmp(argv[i], "--console")) {
-			config.console = 1;
+			config.console = qtrue;
 		} else if (!strcmp(argv[i], "-a") || !strcmp(argv[i], "--automated")) {
-			config.automated = 1;
+			config.automated = qtrue;
 		} else if (!strncmp(argv[i], "--disable-", 10)) {
 			const char *name = argv[i] + 10;
 			if (Test_RemoveSuite(name) != 0) {
@@ -164,12 +169,15 @@ static void Test_Parameters (const int argc, const char **argv)
 		} else if (!strcmp(argv[i], "-l") || !strcmp(argv[i], "--list")) {
 			Test_List();
 			exit(0);
+		} else if (!strcmp(argv[i], "--log")) {
+			config.log = qtrue;
 		} else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
 			printf("Usage:\n");
 			printf("-h  --help                 | show this help screen\n");
 			printf("-c  --console              | run tests in console mode\n");
 			printf("-a  --automated            | run tests in automated mode (create xml file)\n");
 			printf("-l  --list                 | list suite name available\n");
+			printf("    --log                  | log ufo output to file\n");
 			printf("    --output-prefix=PREFIX | set a prefix for the xml result\n");
 			printf("                           | default value is \"ufoai\"\n");
 			printf("    --disable-SUITE        | Disable a suite by name\n");
@@ -182,6 +190,18 @@ static void Test_Parameters (const int argc, const char **argv)
 			printf("Use \"%s -h\" to show the help screen\n", argv[0]);
 			exit(2);
 		}
+	}
+}
+
+static void TEST_vPrintfLog (const char *fmt, va_list ap)
+{
+	if (logFile) {
+		char msg[2048];
+
+		Q_vsnprintf(msg, sizeof(msg), fmt, ap);
+
+		fprintf(logFile, "%s", msg);
+		fflush(logFile);
 	}
 }
 
@@ -206,6 +226,13 @@ int main (int argc, const char **argv)
 
 	Test_Parameters(argc, argv);
 
+	if (config.log) {
+		const char *path = "testall.log";
+		logFile = fopen(path, "wb");
+		Qcommon_SetPrintFunction(TEST_vPrintfLog);
+	} else
+		Qcommon_SetPrintFunction(TEST_vPrintf);
+
 	if (config.console)
 		/* Run all tests using the console interface */
 		CU_console_run_tests();
@@ -221,6 +248,9 @@ int main (int argc, const char **argv)
 
 	failures = CU_get_number_of_failures();
 	CU_cleanup_registry();
+
+	if (logFile)
+		fclose(logFile);
 
 	/* there is a problem on the framework (use git bisect value for IDK) */
 	if (CU_get_error() != 0)
