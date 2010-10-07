@@ -860,6 +860,8 @@ void B_Destroy (base_t *base)
 		B_BuildingDestroy(base, building);
 	}
 
+	E_DeleteAllEmployees(base);
+
 	/** @todo Destroy the base if we solved aircraft transfer issue
 	 *	it should be done via moving other bases (and adjusting pointers
 	 *  where needed. We don't allow holes in baselist
