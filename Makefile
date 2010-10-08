@@ -33,6 +33,7 @@ all: $(TARGETS)
 include build/flags.mk
 include build/platforms/$(TARGET_OS).mk
 include build/modes/$(MODE).mk
+include build/default.mk
 
 ASSEMBLE_OBJECTS = \
 	$(addprefix $(BUILDDIR)/$(1)/,$(addsuffix .o,$(filter %.c,$($(1)_SRCS)))) \
