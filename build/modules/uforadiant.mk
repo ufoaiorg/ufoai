@@ -2,8 +2,8 @@ TARGET             := uforadiant
 
 RADIANT_BASE       := tools/radiant
 $(TARGET)_FILE     := radiant/$(TARGET)$(EXE_EXT)
-$(TARGET)_CFLAGS   += -Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include $(GTK_CFLAGS) $(GLIB_CFLAGS) $(GTK_SOURCEVIEW_CFLAGS) $(GTK_GLEXT_CFLAGS) $(OPENAL_CFLAGS) $(OPENGL_CFLAGS) $(XML2_CFLAGS)
-$(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GLIB_LIBS) $(GTK_SOURCEVIEW_LIBS) $(GTK_GLEXT_LIBS) $(OPENAL_LIBS) $(OPENGL_LIBS) $(XML2_LIBS) $(SO_LIBS) -lstdc++ -lm -lz
+$(TARGET)_CFLAGS   += -Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include $(GTK_CFLAGS) $(GLIB_CFLAGS) $(GTK_SOURCEVIEW_CFLAGS) $(GTK_GLEXT_CFLAGS) $(OPENAL_CFLAGS) $(OPENGL_CFLAGS) $(XML2_CFLAGS) $(GDK_PIXBUF_CFLAGS)
+$(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GLIB_LIBS) $(GTK_SOURCEVIEW_LIBS) $(GTK_GLEXT_LIBS) $(OPENAL_LIBS) $(OPENGL_LIBS) $(XML2_LIBS) $(GDK_PIXBUF_LIBS) $(SO_LIBS) -lstdc++ -lm -lz
 $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/archivezip.cpp \
 	$(RADIANT_BASE)/radiant/colorscheme.cpp \
