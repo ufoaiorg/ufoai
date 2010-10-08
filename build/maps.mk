@@ -1,5 +1,5 @@
 MAPSDIR           ?= base/maps
-UFO2MAP            = ./ufo2map
+UFO2MAP            = ./ufo2map$(EXE_EXT)
 MAPSRCS           := $(shell find $(MAPSDIR) -name '*.map' \! -name 'tutorial*' \! -name '*autosave*' \! -name 'test*' )
 BSPS              := $(MAPSRCS:.map=.bsp)
 NICE              ?= 19
