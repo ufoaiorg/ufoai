@@ -6,8 +6,30 @@
 		<Option makefile_is_custom="1" />
 		<Option compiler="gcc" />
 		<Build>
+			<Target title="game">
+				<Option output="base/game" prefix_auto="1" extension_auto="1" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command="$make -r Q= $target" />
+					<CompileFile command="$make -r Q= $file" />
+					<Clean command="$make -r Q= clean-$target" />
+					<DistClean command="$make -r Q= distclean" />
+				</MakeCommands>
+			</Target>
 			<Target title="ufo">
 				<Option output="ufo" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command="$make -r Q= $target" />
+					<CompileFile command="$make -r Q= $file" />
+					<Clean command="$make -r Q= clean-$target" />
+					<DistClean command="$make -r Q= distclean" />
+				</MakeCommands>
+			</Target>
+			<Target title="testall">
+				<Option output="testall" prefix_auto="1" extension_auto="1" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<MakeCommands>
