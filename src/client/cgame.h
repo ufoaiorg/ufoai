@@ -63,6 +63,7 @@ typedef struct {
 	void (EXPORT *EndRoundAnnounce) (int playerNum, int team);
 	void (EXPORT *StartBattlescape) (qboolean isTeamPlay);
 	const char* (EXPORT *GetTeamDef) (void);
+	void (EXPORT *NotifyEvent) (event_t eventType);
 } cgame_export_t;
 
 /** @todo define the import interface */

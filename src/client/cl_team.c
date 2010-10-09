@@ -75,7 +75,7 @@ unsigned int Com_GetActorSkinCount (void)
  * @brief Get a actorskin from idx
  * @return A actorskin, else NULL
  */
-static actorSkin_t* Com_GetActorSkinByIDS (unsigned int idx)
+static const actorSkin_t* Com_GetActorSkinByIDS (unsigned int idx)
 {
 	if (idx >= cls.numActorSkins)
 		return NULL;
@@ -89,7 +89,7 @@ static actorSkin_t* Com_GetActorSkinByIDS (unsigned int idx)
  */
 static const char* CL_GetTeamSkinName (unsigned int id)
 {
-	actorSkin_t *skin = Com_GetActorSkinByIDS(id);
+	const actorSkin_t *skin = Com_GetActorSkinByIDS(id);
 	if (skin == NULL)
 		Com_Error(ERR_DROP, "CL_GetTeamSkinName: Unknown skin id %i", id);
 	return skin->name;
@@ -509,7 +509,7 @@ static void CL_InitSkin_f (void)
 	if (UI_GetOption(OPTION_SINGLEPLAYER_SKINS) == NULL) {
 		uiNode_t *skins = NULL;
 		int idx = 0;
-		actorSkin_t *skin;
+		const actorSkin_t *skin;
 		while ((skin = Com_GetActorSkinByIDS(idx++))) {
 			if (!skin->singleplayer)
 				continue;
@@ -522,7 +522,7 @@ static void CL_InitSkin_f (void)
 	if (UI_GetOption(OPTION_MULTIPLAYER_SKINS) == NULL) {
 		uiNode_t *skins = NULL;
 		int idx = 0;
-		actorSkin_t *skin;
+		const actorSkin_t *skin;
 		while ((skin = Com_GetActorSkinByIDS(idx++))) {
 			if (!skin->multiplayer)
 				continue;
@@ -533,13 +533,13 @@ static void CL_InitSkin_f (void)
 }
 
 /**
- * @brief Fix actorskin idx accoding to game mode
+ * @brief Fix actorskin idx according to game mode
  */
 static int CL_FixActorSkinIDX (int idx)
 {
-	actorSkin_t *skin = Com_GetActorSkinByIDS(idx);
+	const actorSkin_t *skin = Com_GetActorSkinByIDS(idx);
 
-	/** TODO we should check somewhere there is at least 1 skin */
+	/** @todo we should check somewhere there is at least 1 skin */
 	if (skin == NULL) {
 		idx = 0;
 	} else {

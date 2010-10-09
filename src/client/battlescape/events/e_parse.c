@@ -44,6 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../cl_localentity.h"
 #include "../../cl_team.h"
+#include "../../cl_game.h"
 
 cvar_t *cl_log_battlescape_events;
 
@@ -194,6 +195,7 @@ void CL_ParseEvent (struct dbuffer *msg)
 		/* log and call function */
 		CL_LogEvent(eventData);
 		Com_DPrintf(DEBUG_EVENTSYS, "event(now): %s\n", eventData->name);
+		GAME_NofityEvent(eType);
 		eventData->eventCallback(eventData, msg);
 	} else {
 		evTimes_t *cur = (evTimes_t *)Mem_PoolAlloc(sizeof(*cur), cl_genericPool, 0);

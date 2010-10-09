@@ -60,6 +60,7 @@ void GAME_StartBattlescape(qboolean isTeamPlay);
 void GAME_EndBattlescape(void);
 void GAME_EndRoundAnnounce(int playerNum, int team);
 qboolean GAME_TeamIsKnown(const teamDef_t *teamDef);
+void GAME_NofityEvent(event_t eventType);
 const char* GAME_GetTeamDef(void);
 void GAME_Drop(void);
 void GAME_Frame(void);

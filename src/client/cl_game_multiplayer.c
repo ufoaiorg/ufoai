@@ -49,6 +49,12 @@ void GAME_MP_StartBattlescape (qboolean isTeamPlay)
 	UI_InitStack("multiplayer_wait", NULL, qtrue, qtrue);
 }
 
+void GAME_MP_NotifyEvent (event_t eventType)
+{
+	if (eventType == EV_RESET)
+		UI_InitStack(mn_hud->string, "multiplayerInGame", qtrue, qtrue);
+}
+
 void GAME_MP_EndRoundAnnounce (int playerNum, int team)
 {
 	char buf[128];
