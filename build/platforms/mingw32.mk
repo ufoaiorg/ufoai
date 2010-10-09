@@ -12,6 +12,7 @@ CFLAGS                   += -DGETTEXT_STATIC
 CFLAGS                   += -DWINVER=0x501
 
 OPENGL_LIBS              ?= -lopengl32
+OPENAL_LIBS              ?= -lopenal32
 PKG_CONFIG               ?= $(CROSS)pkg-config
 SDL_TTF_LIBS             ?= $(call PKG_LIBS,SDL_ttf) $(call PKG_LIBS,freetype2)
 SDL_TTF_CFLAGS           ?= $(call PKG_CFLAGS,SDL_ttf) $(call PKG_CFLAGS,freetype2)
