@@ -34,6 +34,13 @@ void TEST_Shutdown (void)
 	Cvar_Shutdown();
 	Mem_Shutdown();
 	Com_Shutdown();
+
+	com_aliasSysPool = NULL;
+	com_cmdSysPool = NULL;
+	com_cmodelSysPool = NULL;
+	com_cvarSysPool = NULL;
+	com_fileSysPool = NULL;
+	com_genericPool = NULL;
 }
 
 void TEST_vPrintf (const char *fmt, va_list argptr)
