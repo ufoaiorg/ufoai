@@ -1,6 +1,6 @@
 /**
  * @file test_ui.c
- * @brief Test cases for code below client/menu/
+ * @brief Test cases for code below client/ui/
  */
 
 /*

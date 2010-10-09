@@ -11,6 +11,7 @@ $(TARGET)_SRCS      = \
 	tests/test_rma.c \
 	tests/test_shared.c \
 	tests/test_ui.c \
+	tests/test_ui_level2.c \
 	tests/test_campaign.c \
 	tests/test_parser.c \
 	\

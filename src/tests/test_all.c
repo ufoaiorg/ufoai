@@ -36,6 +36,7 @@ typedef int (*testSuite_t) (void);
 /* include the tests here */
 #include "test_generic.h"
 #include "test_ui.h"
+#include "test_ui_level2.h"
 #include "test_routing.h"
 #include "test_inventory.h"
 #include "test_campaign.h"
@@ -46,6 +47,7 @@ static const testSuite_t testSuites[] = {
 	UFO_AddGenericTests,
 	UFO_AddParserTests,
 	UFO_AddUITests,
+	UFO_AddUILevel2Tests,
 	UFO_AddCampaignTests,
 	UFO_AddRoutingTests,
 	UFO_AddInventoryTests,

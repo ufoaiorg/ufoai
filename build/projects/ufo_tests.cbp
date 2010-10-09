@@ -342,6 +342,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_ui.h" />
+		<Unit filename="..\..\src\tests\test_ui_level2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_ui_level2.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
