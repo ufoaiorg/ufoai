@@ -108,25 +108,34 @@ class UFOAICUnitTest(CUnitTest):
 	def __init__(self, suite, **kwargs):
 		name = suite
 		result = name + "-Results.xml"
-		CUnitTest.__init__(self,
-			name = "test",
-			description = suite,
-			command = ["./testall", "--automated", "--only-" + suite, "--output-prefix=" + name],
-			flunkOnFailure = True,
-			cunit_result_file=result,
-			**kwargs)
+
+		self.name = [ "test_" + suite ]
+		self.description = [ "testing " + suite ]
+		self.descriptionDone = [ "test " + suite ]
+
+		kwargs["name"] = "test " + suite
+		kwargs["description"] = [ "testing " + suite ]
+		kwargs["descriptionDone"] = [ "test " + suite ]
+		kwargs["command"] = ["./testall", "--automated", "--only-" + suite, "--output-prefix=" + name]
+		kwargs["cunit_result_file"] = result
+		CUnitTest.__init__(self, **kwargs)
+		self.addFactoryArguments(suite = suite)
 
 class UFOAICUnitOtherTests(CUnitTest):
+	name = "test other tests"
+	description = [ "testing other tests" ]
+	descriptionDone = [ "test other tests" ]
+
 	def __init__(self, suites, **kwargs):
 		name = "other"
 		result = name + "-Results.xml"
 		command = ["./testall", "--automated", "--output-prefix=" + name]
+
 		for suite in suites:
 			command.append("--disable-" + suite)
-		CUnitTest.__init__(self,
-			name = "test",
-			description = "OtherTests",
-			command = command,
-			flunkOnFailure = True,
-			cunit_result_file = result,
-			**kwargs)
+
+		kwargs["command"] = command
+		kwargs["description"] = "OtherTests"
+		kwargs["cunit_result_file"] = result
+		CUnitTest.__init__(self, **kwargs)
+		self.addFactoryArguments(suites = suites)

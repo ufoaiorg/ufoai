@@ -17,47 +17,48 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import xslutil
-
-#if __name__ == '__main__':
-#    # Dummy class, easy to test
-#    class ShellCommand:
-#        def __init__(self, **kwargs):
-#            pass
-#        pass
-#else:
+import os.path
 from buildbot.steps.shell import ShellCommand
 
-
-
 class CUnitTest(ShellCommand):
-    def __init__(self, cunit_result_file="-Results.xml", cunit_xsl_file="/usr/share/CUnit/CUnit-Run.xsl", flunkOnFailure=False, **kwargs):
-        print "bbbb"
-        ShellCommand.__init__(self, flunkOnFailure = flunkOnFailure, **kwargs)
-        print "cccc"
-        self.cunit_result_file = cunit_result_file
+	name = "test"
+	flunkOnFailure = 1
+	description = [ "testing" ]
+	descriptionDone = [ "test" ]
+
+    def __init__(self, cunit_result_file = "-Results.xml", cunit_xsl_file = "/usr/share/CUnit/CUnit-Run.xsl", **kwargs):
         self.cunit_xsl_file = cunit_xsl_file
+        self.cunit_result_file = cunit_result_file
 
-#    def getXML(self):
-#        print "aa"
-#        file = open(self.cunit_result_file, "rt")
-#        content = file.read()
-#        file.close()
-#        return content
+        self.workdir = None
+        if "workdir" in kwargs:
+            self.workdir = kwargs["workdir"]
 
-#    def getHTML(self):
-#        print "bb"
-#        content = xslutil.apply_xsl(self.cunit_result_file, self.cunit_xsl_file)
-#        return content
+        ShellCommand.__init__(self, **kwargs)
+		self.addFactoryArguments(
+            cunit_xsl_file = cunit_xsl_file,
+            cunit_result_file = cunit_result_file)
 
-#    def createSummary(self, log):
-#        print "cc"
-#        self.addCompleteLog("log", log)
-#        xml = self.getXML()
-#        self.addCompleteLog("xml-result", xml)
-#        html = self.getHTML()
-#        self.addHTMLLog("html-result", html)
+    def getResultFileName(self):
+        result = self.cunit_result_file
+        if self.workdir != None and not result.startswith("/"):
+            result = self.workdir + '/' + self.cunit_result_file
+        return result
 
+    def getXML(self):
+        file = open(self.getResultFileName(), "rt")
+        content = file.read()
+        file.close()
+        return content
 
+    def getHTML(self):
+        content = xslutil.apply_xsl(self.getResultFileName(), self.cunit_xsl_file)
+        return content
 
-#if __name__ == '__main__':
-#    CUnitTest()
+    def createSummary(self, log):
+        #self.addCompleteLog("log", log.getText())
+        if os.path.exists(self.getResultFileName()):
+            xml = self.getXML()
+            self.addCompleteLog("xml-result", xml)
+            html = self.getHTML()
+            self.addHTMLLog("html-result", html)
