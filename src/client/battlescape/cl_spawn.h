@@ -25,6 +25,38 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_SPAWN_H_
 #define CL_SPAWN_H_
 
+typedef struct {
+	char classname[MAX_VAR];
+	char target[MAX_VAR];
+	char targetname[MAX_VAR];
+	char tagname[MAX_VAR];
+	char anim[MAX_VAR];
+	char model[MAX_QPATH];
+	char particle[MAX_VAR];
+	char noise[MAX_QPATH];
+	vec3_t origin;
+	vec3_t angles;
+	vec3_t scale;
+	vec3_t color;
+	vec3_t ambientNightColor;
+	vec3_t ambientDayColor;
+	vec2_t wait;
+	int maxLevel;
+	int maxMultiplayerTeams;
+	int skin;
+	int frame;
+	int light;
+	int spawnflags;
+	float volume;
+	float attenuation;
+	float angle;
+	int maxteams;
+
+	/* not filled from entity string */
+	const char *entStringPos;
+	int entnum;
+} localEntityParse_t;
+
 void CL_SpawnParseEntitystring(void);
 
 #endif /* CL_SPAWN_H_ */

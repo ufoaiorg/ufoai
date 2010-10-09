@@ -34,38 +34,6 @@ static r_light_t sun;
 #define MISC_MODEL_GLOW 9
 #define SPAWNFLAG_NO_DAY 8
 
-typedef struct {
-	char classname[MAX_VAR];
-	char target[MAX_VAR];
-	char targetname[MAX_VAR];
-	char tagname[MAX_VAR];
-	char anim[MAX_VAR];
-	char model[MAX_QPATH];
-	char particle[MAX_VAR];
-	char noise[MAX_QPATH];
-	vec3_t origin;
-	vec3_t angles;
-	vec3_t scale;
-	vec3_t color;
-	vec3_t ambientNightColor;
-	vec3_t ambientDayColor;
-	vec2_t wait;
-	int maxLevel;
-	int maxMultiplayerTeams;
-	int skin;
-	int frame;
-	int light;
-	int spawnflags;
-	float volume;
-	float attenuation;
-	float angle;
-	int maxteams;
-
-	/* not filled from entity string */
-	const char *entStringPos;
-	int entnum;
-} localEntityParse_t;
-
 static const value_t localEntityValues[] = {
 	{"skin", V_INT, offsetof(localEntityParse_t, skin), MEMBER_SIZEOF(localEntityParse_t, skin)},
 	{"maxteams", V_INT, offsetof(localEntityParse_t, maxteams), MEMBER_SIZEOF(localEntityParse_t, maxteams)},
