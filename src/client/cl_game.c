@@ -34,9 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "ui/node/ui_node_model.h"
 
 static const cgame_export_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL, NULL, GAME_MP_EndRoundAnnounce, GAME_MP_StartBattlescape, NULL, GAME_MP_NotifyEvent},
-	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_DisplayItemInfo, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape, GAME_CP_Frame, GAME_CP_GetModelForItem, NULL, NULL, GAME_CP_GetTeamDef, NULL},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
+	{"Multiplayer mode", "multiplayer", 1, GAME_MP_InitStartup, GAME_MP_Shutdown, NULL, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL, NULL, NULL, NULL, GAME_MP_EndRoundAnnounce, GAME_MP_StartBattlescape, NULL, GAME_MP_NotifyEvent},
+	{"Campaign mode", "campaigns", 0, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_DisplayItemInfo, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop, GAME_CP_InitializeBattlescape, GAME_CP_Frame, GAME_CP_GetModelForItem, NULL, NULL, GAME_CP_GetTeamDef, NULL},
+	{"Skirmish mode", "skirmish", 0, GAME_SK_InitStartup, GAME_SK_Shutdown, NULL, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL},
 
 	{NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
 };
@@ -119,28 +119,27 @@ void GAME_GenerateTeam (const char *teamDefID, const equipDef_t *ed, int teamMem
 
 static const cgame_export_t *GAME_GetCurrentType (void)
 {
-	const cgame_export_t *list = gameTypeList;
-
-	if (cls.gametype == GAME_NONE)
-		return NULL;
-
-	while (list->name) {
-		if (list->gametype == cls.gametype)
-			return list;
-		list++;
-	}
-
-	return NULL;
+	return cls.gametype;
 }
 
 void GAME_ReloadMode (void)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list != NULL) {
-		const int gametype = list->gametype;
-		GAME_SetMode(GAME_NONE);
-		GAME_SetMode(gametype);
+		GAME_SetMode(NULL);
+		GAME_SetMode(list);
 	}
+}
+
+qboolean GAME_IsMultiplayer (void)
+{
+	const cgame_export_t *list = GAME_GetCurrentType();
+	if (list != NULL) {
+		const qboolean isMultiplayer = list->isMultiplayer == 0;
+		return isMultiplayer;
+	}
+
+	return qfalse;
 }
 
 /**
@@ -290,14 +289,9 @@ static void GAME_FreeAllInventory (void)
 
 static const inventoryImport_t inventoryImport = { GAME_FreeInventory, GAME_FreeAllInventory, GAME_AllocInventoryMemory };
 
-void GAME_SetMode (int gametype)
+void GAME_SetMode (const cgame_export_t *gametype)
 {
 	const cgame_export_t *list;
-
-	if (gametype < 0 || gametype > GAME_MAX) {
-		Com_Printf("Invalid gametype %i given\n", gametype);
-		return;
-	}
 
 	if (cls.gametype == gametype)
 		return;
@@ -458,7 +452,7 @@ static void GAME_SetMode_f (void)
 
 	while (list->name) {
 		if (!strcmp(list->menu, modeName)) {
-			GAME_SetMode(list->gametype);
+			GAME_SetMode(list);
 			return;
 		}
 		list++;
@@ -775,7 +769,7 @@ void GAME_Drop (void)
 		list->Drop();
 	} else {
 		SV_Shutdown("Drop", qfalse);
-		GAME_SetMode(GAME_NONE);
+		GAME_SetMode(NULL);
 		UI_InitStack("main", NULL, qfalse, qtrue);
 	}
 }
@@ -785,7 +779,7 @@ void GAME_Drop (void)
  */
 static void GAME_Exit_f (void)
 {
-	GAME_SetMode(GAME_NONE);
+	GAME_SetMode(NULL);
 }
 
 /**

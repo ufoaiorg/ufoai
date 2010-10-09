@@ -43,6 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "renderer/r_model.h"
 #include "../common/http.h"
 
+struct cgame_export_s;
+
 typedef enum {
 	ca_uninitialized,
 	ca_disconnected,			/**< not talking to a server */
@@ -69,7 +71,7 @@ typedef struct client_static_s {
 	/** showing loading plaque between levels if time gets > 30 seconds ahead, break it */
 	int disableScreen;
 
-	int gametype;		/**< singleplayer or multiplayer */
+	const struct cgame_export_s *gametype;		/**< singleplayer or multiplayer */
 
 	/* connection information */
 	char servername[MAX_VAR];		/**< name of server from original connect */

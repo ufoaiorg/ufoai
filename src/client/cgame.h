@@ -28,10 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "mxml/mxml.h"
 
-typedef struct {
+typedef struct cgame_export_s {
 	const char *name;
 	const char *menu;
-	int gametype;
+	int isMultiplayer;
 	void (EXPORT *Init) (void);
 	void (EXPORT *Shutdown) (void);
 	/** soldier spawn functions may differ between the different gametypes */

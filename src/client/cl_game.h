@@ -29,19 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "ui/ui_nodes.h"
 
-#define GAME_NONE			0
-#define GAME_SINGLEPLAYER	(1 << 0)
-#define GAME_MULTIPLAYER	(1 << 1)
-#define GAME_CAMPAIGN		(GAME_SINGLEPLAYER | (1 << 2))
-#define GAME_SKIRMISH		(GAME_SINGLEPLAYER | (1 << 3))
+struct cgame_export_s;
 
-#define GAME_MAX			GAME_SKIRMISH
-
-#define GAME_IsSingleplayer()	(cls.gametype & GAME_SINGLEPLAYER)
-#define GAME_IsMultiplayer()	(cls.gametype == GAME_MULTIPLAYER)
-
+#define GAME_IsSingleplayer()	(!GAME_IsMultiplayer())
+qboolean GAME_IsMultiplayer(void);
 void GAME_InitStartup(void);
-void GAME_SetMode(int gametype);
+void GAME_SetMode(const struct cgame_export_s *gametype);
 void GAME_ReloadMode(void);
 void GAME_Init(qboolean load);
 void GAME_DisplayItemInfo(uiNode_t *node, const char *string);
