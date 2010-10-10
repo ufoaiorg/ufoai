@@ -20,14 +20,14 @@ window multiplayer
 {
 	confunc mn_push_multiplayer
 	{
-		cmd "game_setmode multiplayer; mn_push mp_serverbrowser;"
+		cmd "game_setmode multiplayer; ui_push mp_serverbrowser;"
 		*cvar:mn_multiplayer_tab = 1
 	}
 
 	/** @brief prevent pushing this menu */
 	func onInit
 	{
-		cmd "mn_pop;"
+		cmd "ui_pop;"
 		call *node:root.mn_push_multiplayer
 	}
 }
@@ -54,28 +54,28 @@ window abstract_multiplayer
 	{
 		string		"_Team"
 		pos			"80 160"
-		onClick		{ cmd "mn_pop; mn_push mp_team;" }
+		onClick		{ cmd "ui_pop; ui_push mp_team;" }
 	}
 
 	cmpMenuButton button_join
 	{
 		string		"_Join"
 		pos			"80 230"
-		onClick		{ cmd "mn_pop; mn_push mp_serverbrowser;" }
+		onClick		{ cmd "ui_pop; ui_push mp_serverbrowser;" }
 	}
 
 	cmpMenuButton button_create
 	{
 		string		"_Create"
 		pos			"80 300"
-		onClick		{ cmd "mn_pop; mn_push mp_create_server;" }
+		onClick		{ cmd "ui_pop; ui_push mp_create_server;" }
 	}
 
 	cmpMenuButton button_lobby
 	{
 		string		"_Lobby"
 		pos			"80 385"
-		onClick		{ cmd "irc_connect; mn_push irc;" }
+		onClick		{ cmd "irc_connect; ui_push irc;" }
 	}
 
 
@@ -83,7 +83,7 @@ window abstract_multiplayer
 	{
 		string		"_Back"
 		pos			"80 470"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 
 }
@@ -100,13 +100,13 @@ window abstract_multiplayer_join extends abstract_multiplayer {
 			cvar	*cvar:mn_multiplayer_tab
 			onChange {
 				if ( *cvar:mn_multiplayer_tab == 1 ) {
-					cmd "mn_pop;mn_push mp_serverbrowser;"
+					cmd "ui_pop;ui_push mp_serverbrowser;"
 				} elif ( *cvar:mn_multiplayer_tab == 2 ) {
 
 				} elif ( *cvar:mn_multiplayer_tab == 3 ) {
-					cmd "mn_pop;mn_push mp_bookmarks;"
+					cmd "ui_pop;ui_push mp_bookmarks;"
 				} elif ( *cvar:mn_multiplayer_tab == 4 ) {
-					cmd "irc_connect; mn_push irc;"
+					cmd "irc_connect; ui_push irc;"
 				}
 			}
 		}
@@ -230,7 +230,7 @@ window serverinfo
 		pos			"26 720"
 		size		"64 37"
 		icon		return
-		onClick		{ cmd "mn_pop; pingservers;" }
+		onClick		{ cmd "ui_pop; pingservers;" }
 	}
 
 	button button_favorite
@@ -959,7 +959,7 @@ window mp_create_server extends abstract_multiplayer
 		cmd "mp_updategametype;mn_getmaps;"
 		*cvar:mn_server_config_tab = 1
 		call *node:root.mp_update_config_navigation
-		cmd "mn_datareset TEXT_STANDARD;"
+		cmd "ui_resetdata TEXT_STANDARD;"
 	}
 }
 
@@ -1726,7 +1726,7 @@ window serverpassword
 		font		"f_menu"
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		onClick		{ cmd "mn_server_need_password 0;mn_pop;connect;" }
+		onClick		{ cmd "mn_server_need_password 0;ui_pop;connect;" }
 	}
 }
 
@@ -1765,7 +1765,7 @@ window chat_popup
 		font		"f_menu"
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		onClick		{ cmd "mn_pop;mn_push irc;" }
+		onClick		{ cmd "ui_pop;ui_push irc;" }
 	}
 }
 
@@ -1803,7 +1803,7 @@ window multiplayer_invite
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
 		onClick		{
-			cmd "mn_pop;"
+			cmd "ui_pop;"
 			cmd "server_info <node:root.ip@string> <node:root.port@string>;"
 		}
 	}
@@ -1818,7 +1818,7 @@ window multiplayer_invite
 		font		"f_menu"
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		onClick		{ cmd "mn_pop;mn_push irc;" }
+		onClick		{ cmd "ui_pop;ui_push irc;" }
 	}
 
 	string invite_msg

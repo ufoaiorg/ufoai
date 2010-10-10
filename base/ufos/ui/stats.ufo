@@ -23,7 +23,7 @@ window stats
 		texl		"192 0"
 		size		"64 37"
 		icon		return
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 
 	string title
@@ -180,7 +180,7 @@ window stats
 }
 
 // TODO: add extra button for this:
-// onClick { cmd "mn_push nations;" }
+// onClick { cmd "ui_push nations;" }
 
 window nations
 {
@@ -203,7 +203,7 @@ window nations
 		pos			"950 720"
 		size		"64 37"
 		icon		return
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 
 	string title

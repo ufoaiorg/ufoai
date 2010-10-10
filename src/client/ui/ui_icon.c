@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 #define TILE_HEIGHT 64
 
-const value_t mn_iconProperties[] = {
+const value_t ui_iconProperties[] = {
 	{"size", V_POS, offsetof(uiIcon_t, size), MEMBER_SIZEOF(uiIcon_t, size)},
 	{"single", V_BOOL, offsetof(uiIcon_t, single), 0},
 	{"blend", V_BOOL, offsetof(uiIcon_t, blend), 0},

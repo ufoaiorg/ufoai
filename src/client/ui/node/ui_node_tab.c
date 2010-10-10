@@ -48,7 +48,7 @@ typedef enum {
 	UI_TAB_SELECTED = 2,
 	UI_TAB_HIGHLIGHTED = 3,
 	UI_TAB_DISABLED = 4
-} mn_tab_type_t;
+} ui_tabStatus_t;
 
 static const int TILE_WIDTH = 33;
 static const int TILE_HEIGHT = 36;
@@ -151,7 +151,7 @@ static void UI_TabNodeClick (uiNode_t * node, int x, int y)
  * @param[in] width The width size of the screen to use (stretch)
  * @param[in] type The status of the tab we display
  */
-static inline void UI_TabNodeDrawPlain (const char *image, int x, int y, int width, mn_tab_type_t type)
+static inline void UI_TabNodeDrawPlain (const char *image, int x, int y, int width, ui_tabStatus_t type)
 {
 	/* Hack sl=1 to not use the pixel on the left border on the texture (create graphic bug) */
 	UI_DrawNormImageByName(x, y, width, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * 0, TILE_HEIGHT + TILE_SIZE * type,
@@ -166,7 +166,7 @@ static inline void UI_TabNodeDrawPlain (const char *image, int x, int y, int wid
  * @param[in] leftType The status of the left tab of the junction we display
  * @param[in] rightType The status of the right tab of the junction we display
  */
-static inline void UI_TabNodeDrawJunction (const char *image, int x, int y, mn_tab_type_t leftType, mn_tab_type_t rightType)
+static inline void UI_TabNodeDrawJunction (const char *image, int x, int y, ui_tabStatus_t leftType, ui_tabStatus_t rightType)
 {
 	UI_DrawNormImageByName(x, y, TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH + TILE_SIZE * (1 + rightType), TILE_HEIGHT + TILE_SIZE * leftType,
 		0 + TILE_SIZE * (1 + rightType), 0 + TILE_SIZE * leftType, image);
@@ -174,7 +174,7 @@ static inline void UI_TabNodeDrawJunction (const char *image, int x, int y, mn_t
 
 static void UI_TabNodeDraw (uiNode_t *node)
 {
-	mn_tab_type_t lastStatus = UI_TAB_NOTHING;
+	ui_tabStatus_t lastStatus = UI_TAB_NOTHING;
 	uiNode_t* option;
 	uiNode_t* overMouseOption = NULL;
 	const char *ref;
@@ -211,7 +211,7 @@ static void UI_TabNodeDraw (uiNode_t *node)
 		int textPos;
 		const char *label;
 		qboolean drawIcon = qfalse;
-		mn_tab_type_t status = UI_TAB_NORMAL;
+		ui_tabStatus_t status = UI_TAB_NORMAL;
 		assert(option->behaviour == ui_optionBehaviour);
 
 		/* skip hidden options */

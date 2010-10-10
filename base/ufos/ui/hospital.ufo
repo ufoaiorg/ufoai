@@ -97,7 +97,7 @@ window hospital
 		pos		"950 20"
 		size	"59 55"
 		icon	"return"
-		onClick	{ cmd "mn_pop;" }
+		onClick	{ cmd "ui_pop;" }
 	}
 
 	// ==================

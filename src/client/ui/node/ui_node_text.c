@@ -499,7 +499,7 @@ static const value_t properties[] = {
 	 * TEXT_BUILDING_INFO, TEXT_RESEARCH, TEXT_RESEARCH_INFO, TEXT_POPUP,
 	 * TEXT_POPUP_INFO, TEXT_AIRCRAFT_LIST, TEXT_AIRCRAFT, TEXT_AIRCRAFT_INFO,
 	 * TEXT_MESSAGESYSTEM, TEXT_CAMPAIGN_LIST, TEXT_MULTISELECTION.
-	 * There are more IDs in use - see mn_data.h for and up-to-date list.
+	 * There are more IDs in use - see ui_data.h for and up-to-date list.
 	 * Display a shared content registered by the client code.
 	 */
 	{"dataid", V_UI_DATAID, UI_EXTRADATA_OFFSETOF(textExtraData_t, dataID), MEMBER_SIZEOF(textExtraData_t, dataID)},

@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 
-/** @todo client code should manage itself this vars */
+/** @todo client code should manage itself this vars (do not use ui_ prefix) */
 cvar_t *mn_hud;
 
 uiGlobal_t ui_global;
@@ -338,11 +338,14 @@ void UI_Init (void)
 	ui_sounds = Cvar_Get("ui_sounds", "1", CVAR_ARCHIVE, "Activates UI sounds");
 
 	/* add global UI commands */
+	/** @todo delete me */
 	Cmd_AddCommand("mn_modify", UI_Modify_f, NULL);
+	/** @todo delete me */
 	Cmd_AddCommand("mn_modifywrap", UI_ModifyWrap_f, NULL);
+	/** @todo delete me */
 	Cmd_AddCommand("mn_translate", UI_Translate_f, NULL);
 #ifdef DEBUG
-	Cmd_AddCommand("debug_mnmemory", UI_Memory_f, "Display info about UI memory allocation");
+	Cmd_AddCommand("debug_uimemory", UI_Memory_f, "Display info about UI memory allocation");
 #endif
 
 	ui_sysPool = Mem_CreatePool("Client: UI");

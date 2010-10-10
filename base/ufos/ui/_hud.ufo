@@ -120,7 +120,7 @@ window ahud extends levelbuttons {
 	confunc startround { }
 	confunc endround { }
 
-	confunc openradar { cmd "mn_push radarwindow;" }
+	confunc openradar { cmd "ui_push radarwindow;" }
 
 	confunc unhide_chatscreen { *node:root.chatscreen@invis = false }
 
@@ -206,7 +206,7 @@ window radarwindow {
 	}
 
 	confunc closeradar {
-		cmd "mn_close radarwindow"
+		cmd "ui_close radarwindow"
 	}
 
 	radar hudradar
@@ -256,7 +256,7 @@ window firemode_left {
 			texh			"214  63"
 			size			"214  63"
 			invis			true
-			onClick			{ cmd "hud_fireweapon l 0;mn_pop;" }
+			onClick			{ cmd "hud_fireweapon l 0;ui_pop;" }
 			onMouseEnter	{ *node:this@image = "hud/firemode_hover" }
 			onMouseLeave	{ *node:this@image = "hud/firemode" }
 			tooltip			*cvar:mn_l_fm_name0 // @todo create a better tooltip with name, tu, shots...
@@ -285,7 +285,7 @@ window firemode_left {
 			texh			"214  63"
 			size			"214  63"
 			invis			true
-			onClick			{ cmd "hud_fireweapon l 1;mn_pop;" }
+			onClick			{ cmd "hud_fireweapon l 1;ui_pop;" }
 			onMouseEnter	{ *node:this@image = "hud/firemode_hover" }
 			onMouseLeave	{ *node:this@image = "hud/firemode" }
 			tooltip			*cvar:mn_l_fm_name1 // @todo create a better tooltip with name, tu, shots...
@@ -314,7 +314,7 @@ window firemode_left {
 			texh			"214  63"
 			size			"214  63"
 			invis			true
-			onClick			{ cmd "hud_fireweapon l 2;mn_pop;" }
+			onClick			{ cmd "hud_fireweapon l 2;ui_pop;" }
 			onMouseEnter	{ *node:this@image = "hud/firemode_hover" }
 			onMouseLeave	{ *node:this@image = "hud/firemode" }
 			tooltip			*cvar:mn_l_fm_name2 // @todo create a better tooltip with name, tu, shots...
@@ -343,7 +343,7 @@ window firemode_left {
 			texh			"214  63"
 			size			"214  63"
 			invis			true
-			onClick			{ cmd "hud_fireweapon l 3;mn_pop;" }
+			onClick			{ cmd "hud_fireweapon l 3;ui_pop;" }
 			onMouseEnter	{ *node:this@image = "hud/firemode_hover" }
 			onMouseLeave	{ *node:this@image = "hud/firemode" }
 			tooltip			*cvar:mn_l_fm_name3 // @todo create a better tooltip with name, tu, shots...
@@ -372,7 +372,7 @@ window firemode_left {
 			texh	"214  63"
 			size	"214  63"
 			invis true
-			onClick	{ cmd "hud_fireweapon l 4;mn_pop;" }
+			onClick	{ cmd "hud_fireweapon l 4;ui_pop;" }
 			onMouseEnter { *node:this@image = "hud/firemode_hover" }
 			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_l_fm_name4 // @todo create a better tooltip with name, tu, shots...
@@ -401,7 +401,7 @@ window firemode_left {
 			texh	"214  63"
 			size	"214  63"
 			invis true
-			onClick	{ cmd "hud_fireweapon l 5;mn_pop;" }
+			onClick	{ cmd "hud_fireweapon l 5;ui_pop;" }
 			onMouseEnter { *node:this@image = "hud/firemode_hover" }
 			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_l_fm_name5 // @todo create a better tooltip with name, tu, shots...
@@ -430,7 +430,7 @@ window firemode_left {
 			texh	"214  63"
 			size	"214  63"
 			invis true
-			onClick	{ cmd "hud_fireweapon l 6;mn_pop;" }
+			onClick	{ cmd "hud_fireweapon l 6;ui_pop;" }
 			onMouseEnter { *node:this@image = "hud/firemode_hover" }
 			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_l_fm_name6 // @todo create a better tooltip with name, tu, shots...
@@ -459,7 +459,7 @@ window firemode_left {
 			texh	"214  63"
 			size	"214  63"
 			invis true
-			onClick	{ cmd "hud_fireweapon l 7;mn_pop;" }
+			onClick	{ cmd "hud_fireweapon l 7;ui_pop;" }
 			onMouseEnter { *node:this@image = "hud/firemode_hover" }
 			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_l_fm_name7 // @todo create a better tooltip with name, tu, shots...
@@ -545,7 +545,7 @@ window firemode_right {
 			texh	"214  63"
 			size	"214  63"
 			invis true
-			onClick	{ cmd "hud_fireweapon r 0;mn_pop;" }
+			onClick	{ cmd "hud_fireweapon r 0;ui_pop;" }
 			onMouseEnter { *node:this@image = "hud/firemode_hover" }
 			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name0 // @todo create a better tooltip with name, tu, shots...
@@ -574,7 +574,7 @@ window firemode_right {
 			texh	"214  63"
 			size	"214  63"
 			invis true
-			onClick	{ cmd "hud_fireweapon r 1;mn_pop;" }
+			onClick	{ cmd "hud_fireweapon r 1;ui_pop;" }
 			onMouseEnter { *node:this@image = "hud/firemode_hover" }
 			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name1 // @todo create a better tooltip with name, tu, shots...
@@ -603,7 +603,7 @@ window firemode_right {
 			texh	"214  63"
 			size	"214  63"
 			invis true
-			onClick	{ cmd "hud_fireweapon r 2;mn_pop;" }
+			onClick	{ cmd "hud_fireweapon r 2;ui_pop;" }
 			onMouseEnter { *node:this@image = "hud/firemode_hover" }
 			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name2 // @todo create a better tooltip with name, tu, shots...
@@ -632,7 +632,7 @@ window firemode_right {
 			texh	"214  63"
 			size	"214  63"
 			invis true
-			onClick	{ cmd "hud_fireweapon r 3;mn_pop;" }
+			onClick	{ cmd "hud_fireweapon r 3;ui_pop;" }
 			onMouseEnter { *node:this@image = "hud/firemode_hover" }
 			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name3 // @todo create a better tooltip with name, tu, shots...
@@ -661,7 +661,7 @@ window firemode_right {
 			texh	"214  63"
 			size	"214  63"
 			invis true
-			onClick	{ cmd "hud_fireweapon r 4;mn_pop;" }
+			onClick	{ cmd "hud_fireweapon r 4;ui_pop;" }
 			onMouseEnter { *node:this@image = "hud/firemode_hover" }
 			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name4 // @todo create a better tooltip with name, tu, shots...
@@ -690,7 +690,7 @@ window firemode_right {
 			texh	"214  63"
 			size	"214  63"
 			invis true
-			onClick	{ cmd "hud_fireweapon r 5;mn_pop;" }
+			onClick	{ cmd "hud_fireweapon r 5;ui_pop;" }
 			onMouseEnter { *node:this@image = "hud/firemode_hover" }
 			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name5 // @todo create a better tooltip with name, tu, shots...
@@ -719,7 +719,7 @@ window firemode_right {
 			texh	"214  63"
 			size	"214  63"
 			invis true
-			onClick	{ cmd "hud_fireweapon r 6;mn_pop;" }
+			onClick	{ cmd "hud_fireweapon r 6;ui_pop;" }
 			onMouseEnter { *node:this@image = "hud/firemode_hover" }
 			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name6 // @todo create a better tooltip with name, tu, shots...
@@ -748,7 +748,7 @@ window firemode_right {
 			texh	"214  63"
 			size	"214  63"
 			invis true
-			onClick	{ cmd "hud_fireweapon r 7;mn_pop;" }
+			onClick	{ cmd "hud_fireweapon r 7;ui_pop;" }
 			onMouseEnter { *node:this@image = "hud/firemode_hover" }
 			onMouseLeave { *node:this@image = "hud/firemode" }
 			tooltip *cvar:mn_r_fm_name7 // @todo create a better tooltip with name, tu, shots...

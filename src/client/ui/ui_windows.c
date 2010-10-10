@@ -36,12 +36,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Window name use as alternative for option
  */
-static cvar_t *mn_sys_main;
+static cvar_t *ui_sys_main;
 
 /**
  * @brief Main window of a stack
  */
-static cvar_t *mn_sys_active;
+static cvar_t *ui_sys_active;
 
 /**
  * @brief Returns the ID of the last fullscreen ID. Before this, window should be hidden.
@@ -206,7 +206,7 @@ static uiNode_t* UI_PushWindowDelete (const char *name, const char *parent, qboo
 }
 
 /**
- * @brief Complete function for mn_push
+ * @brief Complete function for ui_push
  * @sa Cmd_AddParamCompleteFunction
  * @sa UI_PushWindow
  * @note Does not really complete the input - but shows at least all parsed windows
@@ -276,7 +276,7 @@ static void UI_PushWindow_f (void)
 /**
  * @brief Console function to push a dropdown window at a position. It work like UI_PushWindow but move the window at the right position
  * @sa UI_PushWindow
- * @note The usage is "mn_push_dropdown sourcenode pointposition destinationnode pointposition"
+ * @note The usage is "ui_push_dropdown sourcenode pointposition destinationnode pointposition"
  * sourcenode must be a node into the window we want to push,
  * we will move the window to have sourcenode over destinationnode
  * pointposition select for each node a position (like a corner).
@@ -402,7 +402,7 @@ void UI_InitStack (const char* activeWindow, const char* mainWindow, qboolean po
 	if (popAll)
 		UI_PopWindow(qtrue);
 	if (activeWindow) {
-		Cvar_Set("mn_sys_active", activeWindow);
+		Cvar_Set("ui_sys_active", activeWindow);
 		/* prevent calls before UI script initialization */
 		if (ui_global.numWindows != 0) {
 			if (pushActive)
@@ -411,7 +411,7 @@ void UI_InitStack (const char* activeWindow, const char* mainWindow, qboolean po
 	}
 
 	if (mainWindow)
-		Cvar_Set("mn_sys_main", mainWindow);
+		Cvar_Set("ui_sys_main", mainWindow);
 }
 
 /**
@@ -492,19 +492,19 @@ void UI_PopWindow (qboolean all)
 		UI_CloseWindowByRef(mainWindow);
 
 		if (ui_global.windowStackPos == 0) {
-			/* mn_main contains the window that is the very first window and should be
+			/* ui_sys_main contains the window that is the very first window and should be
 			 * pushed back onto the stack (otherwise there would be no window at all
 			 * right now) */
-			if (!strcmp(oldfirst->name, mn_sys_main->string)) {
-				if (mn_sys_active->string[0] != '\0')
-					UI_PushWindow(mn_sys_active->string, NULL);
+			if (!strcmp(oldfirst->name, ui_sys_main->string)) {
+				if (ui_sys_active->string[0] != '\0')
+					UI_PushWindow(ui_sys_active->string, NULL);
 				if (!ui_global.windowStackPos)
-					UI_PushWindow(mn_sys_main->string, NULL);
+					UI_PushWindow(ui_sys_main->string, NULL);
 			} else {
-				if (mn_sys_main->string[0] != '\0')
-					UI_PushWindow(mn_sys_main->string, NULL);
+				if (ui_sys_main->string[0] != '\0')
+					UI_PushWindow(ui_sys_main->string, NULL);
 				if (!ui_global.windowStackPos)
-					UI_PushWindow(mn_sys_active->string, NULL);
+					UI_PushWindow(ui_sys_active->string, NULL);
 			}
 		}
 	}
@@ -677,8 +677,8 @@ void UI_InvalidateStack (void)
 	for (pos = 0; pos < ui_global.windowStackPos; pos++) {
 		UI_Invalidate(ui_global.windowStack[pos]);
 	}
-	Cvar_SetValue("mn_sys_screenwidth", viddef.virtualWidth);
-	Cvar_SetValue("mn_sys_screenheight", viddef.virtualHeight);
+	Cvar_SetValue("ui_sys_screenwidth", viddef.virtualWidth);
+	Cvar_SetValue("ui_sys_screenheight", viddef.virtualHeight);
 }
 
 /**
@@ -734,7 +734,7 @@ static void UI_SetNewWindowPos_f (void)
 
 /**
  * @brief This will reinitialize the current visible window
- * @note also available as script command mn_reinit
+ * @note also available as script command ui_reinit
  * @todo replace that by a common action "call *ufopedia.init"
  */
 static void UI_FireInit_f (void)
@@ -818,22 +818,24 @@ static void UI_DebugTree_f (void)
 
 void UI_InitWindows (void)
 {
-	mn_sys_main = Cvar_Get("mn_sys_main", "", 0, "This is the main window id that is at the very first window stack - also see mn_sys_active");
-	mn_sys_active = Cvar_Get("mn_sys_active", "", 0, "The active window we will return to when hitting esc once - also see mn_sys_main");
+	ui_sys_main = Cvar_Get("ui_sys_main", "", 0, "This is the main window id that is at the very first window stack - also see ui_sys_active");
+	ui_sys_active = Cvar_Get("ui_sys_active", "", 0, "The active window we will return to when hitting esc once - also see ui_sys_main");
 
 	/* add command */
-	Cmd_AddCommand("mn_fireinit", UI_FireInit_f, "Call the init function of a window");
-	Cmd_AddCommand("mn_push", UI_PushWindow_f, "Push a window to the window stack");
-	Cmd_AddParamCompleteFunction("mn_push", UI_CompleteWithWindow);
-	Cmd_AddCommand("mn_push_dropdown", UI_PushDropDownWindow_f, "Push a dropdown window at a position");
-	Cmd_AddCommand("mn_push_child", UI_PushChildWindow_f, "Push a window to the windowstack with a big dependency to a parent window");
-	Cmd_AddCommand("mn_pop", UI_PopWindow_f, "Pops the current window from the stack");
-	Cmd_AddCommand("mn_close", UI_CloseWindow_f, "Close a window");
-	Cmd_AddCommand("mn_move", UI_SetNewWindowPos_f, "Moves the window to a new position.");
-	Cmd_AddCommand("mn_initstack", UI_InitStack_f, "Initialize the window stack with a main and an option window.");
+	/** @todo delete me */
+	Cmd_AddCommand("ui_fireinit", UI_FireInit_f, "Call the init function of a window");
+	Cmd_AddCommand("ui_push", UI_PushWindow_f, "Push a window to the window stack");
+	Cmd_AddParamCompleteFunction("ui_push", UI_CompleteWithWindow);
+	Cmd_AddCommand("ui_push_dropdown", UI_PushDropDownWindow_f, "Push a dropdown window at a position");
+	Cmd_AddCommand("ui_push_child", UI_PushChildWindow_f, "Push a window to the windowstack with a big dependency to a parent window");
+	Cmd_AddCommand("ui_pop", UI_PopWindow_f, "Pops the current window from the stack");
+	Cmd_AddCommand("ui_close", UI_CloseWindow_f, "Close a window");
+	/** @todo remove it, it should be useless */
+	Cmd_AddCommand("ui_move", UI_SetNewWindowPos_f, "Moves the window to a new position.");
+	Cmd_AddCommand("ui_initstack", UI_InitStack_f, "Initialize the window stack with a main and an option window.");
 
-	Cmd_AddCommand("mn_tree", UI_DebugTree_f, "Display a tree of nodes fropm a window into the console.");
-	Cmd_AddParamCompleteFunction("mn_tree", UI_CompleteWithWindow);
+	Cmd_AddCommand("ui_tree", UI_DebugTree_f, "Display a tree of nodes from a window into the console.");
+	Cmd_AddParamCompleteFunction("ui_tree", UI_CompleteWithWindow);
 
 	/** @todo move it outside */
 	Cmd_AddCommand("hidehud", UI_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));

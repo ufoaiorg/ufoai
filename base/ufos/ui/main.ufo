@@ -36,7 +36,7 @@ window main
 
 		cmpMenuButton button_singleplayer
 		{
-			onClick	{ cmd "mn_push singleplayer;" }
+			onClick	{ cmd "ui_push singleplayer;" }
 			string	"_Single-player"
 		}
 
@@ -48,13 +48,13 @@ window main
 
 		cmpMenuButton button_options
 		{
-			onClick	{ cmd "mn_push options;" }
+			onClick	{ cmd "ui_push options;" }
 			string	"_Options"
 		}
 
 		cmpMenuButton button_tut
 		{
-			onClick	{ cmd "mn_push tutorials;" }
+			onClick	{ cmd "ui_push tutorials;" }
 			string	"_Tutorials"
 		}
 
@@ -75,9 +75,9 @@ window main
 	func onInit
 	{
 		cmd "music_change main;"
-		cmd "mn_push_child popup_tipoftheday main;check_cvars;"
+		cmd "ui_push_child popup_tipoftheday main;check_cvars;"
 		if ( *cvar:cl_introshown != 1 ) {
-			cmd "mn_push intro;"
+			cmd "ui_push intro;"
 			*cvar:cl_introshown = 1
 		}
 	}
@@ -239,7 +239,7 @@ window checkcvars
 		string		"_OK"
 		tooltip		"_Save settings"
 		pos			"566 338"
-		onClick		{ cmd "mn_pop; saveconfig config.cfg;" }
+		onClick		{ cmd "ui_pop; saveconfig config.cfg;" }
 	}
 
 	// check again - maybe the user has forgotton something
@@ -304,7 +304,7 @@ window popup_tipoftheday
 			if ( *cvar:cl_showTipOfTheDay == 1 ) {
 				cmd "tipoftheday;"
 			} else {
-				cmd "mn_close popup_tipoftheday;"
+				cmd "ui_close popup_tipoftheday;"
 			}
 		}
 	}
@@ -325,7 +325,7 @@ window popup_tipoftheday
 		if ( *cvar:cl_showTipOfTheDay == 1 ) {
 			cmd "tipoftheday random; check_nexttip;"
 		} else {
-			cmd "mn_close popup_tipoftheday;"
+			cmd "ui_close popup_tipoftheday;"
 		}
 	}
 }

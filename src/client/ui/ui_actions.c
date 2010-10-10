@@ -695,9 +695,9 @@ qboolean UI_IsInjectedString (const char *string)
 }
 
 /**
- * @brief Free a string property if it is allocated into mn_dynStringPool
+ * @brief Free a string property if it is allocated into ui_dynStringPool
  * @param[in,out] pointer The pointer to the data that should be freed
- * @sa mn_dynStringPool
+ * @sa ui_dynStringPool
  */
 void UI_FreeStringProperty (void* pointer)
 {
@@ -705,7 +705,7 @@ void UI_FreeStringProperty (void* pointer)
 	if ((uintptr_t)ui_global.adata <= (uintptr_t)pointer && (uintptr_t)pointer < (uintptr_t)ui_global.adata + (uintptr_t)ui_global.adataize)
 		return;
 
-	/* skip pointer out of mn_dynStringPool */
+	/* skip pointer out of ui_dynStringPool */
 	if (!_Mem_AllocatedInPool(ui_dynStringPool, pointer))
 		return;
 
@@ -904,6 +904,7 @@ static void UI_RemoveListener_f (void)
 void UI_InitActions (void)
 {
 	UI_CheckActionTokenTypeSanity();
-	Cmd_AddCommand("mn_addlistener", UI_AddListener_f, "Add a function into a node event");
-	Cmd_AddCommand("mn_removelistener", UI_RemoveListener_f, "Remove a function from a node event");
+	/** @todo rework this commands to use a script language way */
+	Cmd_AddCommand("ui_addlistener", UI_AddListener_f, "Add a function into a node event");
+	Cmd_AddCommand("ui_removelistener", UI_RemoveListener_f, "Remove a function from a node event");
 }

@@ -1,6 +1,6 @@
 /**
  * @brief Unittest for actions
- * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "mn_push unittest_action2"
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push unittest_action2"
  * Every thing must be green and it must not print any text or warning into the console.
  */
 

@@ -86,7 +86,7 @@ window material_editor {
 			size		"100 5"
 			color		"0 .8 0 1"
 			max			3.0
-			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> -1 hardness <current>;" }
+			onChange	{ cmd "ui_materialeditor_changevalue <cvar:me_image_id> -1 hardness <current>;" }
 		}
 
 		string bump_str
@@ -109,7 +109,7 @@ window material_editor {
 			size		"100 5"
 			color		"0 .8 0 1"
 			max			3.0
-			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> -1 bump <current>;" }
+			onChange	{ cmd "ui_materialeditor_changevalue <cvar:me_image_id> -1 bump <current>;" }
 		}
 
 		string specular_str
@@ -132,7 +132,7 @@ window material_editor {
 			size		"100 5"
 			color		"0 .8 0 1"
 			max			3.0
-			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> -1 specular <current>;" }
+			onChange	{ cmd "ui_materialeditor_changevalue <cvar:me_image_id> -1 specular <current>;" }
 		}
 
 		string parallax_str
@@ -155,7 +155,7 @@ window material_editor {
 			size		"100 5"
 			color		"0 .8 0 1"
 			max			3.0
-			onChange	{ cmd "mn_materialeditor_changevalue <cvar:me_image_id> -1 parallax <current>;" }
+			onChange	{ cmd "ui_materialeditor_changevalue <cvar:me_image_id> -1 parallax <current>;" }
 		}
 	}
 
@@ -217,7 +217,7 @@ window material_editor {
 			rows		6
 			onClick		{
 				*cvar:me_stage_id = <lineselected>
-				cmd "mn_materialeditor_selectstage <cvar:me_image_id> <lineselected>;"
+				cmd "ui_materialeditor_selectstage <cvar:me_image_id> <lineselected>;"
 			}
 			onViewChange {
 				*node:root.stages.stage_scroll@current = <viewpos>
@@ -245,7 +245,7 @@ window material_editor {
 			font		"f_verysmall"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
-			onClick	{ cmd "mn_materialeditor_newstage <cvar:me_image_id>;" }
+			onClick	{ cmd "ui_materialeditor_newstage <cvar:me_image_id>;" }
 		}
 
 		button stage_remove {
@@ -256,7 +256,7 @@ window material_editor {
 			font		"f_verysmall"
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
-			onClick	{ cmd "mn_materialeditor_removestage <cvar:me_image_id> <cvar:me_stage_id>;" }
+			onClick	{ cmd "ui_materialeditor_removestage <cvar:me_image_id> <cvar:me_stage_id>;" }
 		}
 	}
 
@@ -292,7 +292,7 @@ window material_editor {
 				pos			"105 5"
 				size		"60 30"
 				onChange	{
-					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scale.s <cvar:me_scale_s>;"
+					cmd "ui_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scale.s <cvar:me_scale_s>;"
 				}
 			}
 
@@ -316,7 +316,7 @@ window material_editor {
 				pos			"105 35"
 				size		"60 30"
 				onChange	{
-					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scale.t <cvar:me_scale_t>;"
+					cmd "ui_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scale.t <cvar:me_scale_t>;"
 				}
 			}
 		}
@@ -347,7 +347,7 @@ window material_editor {
 				pos			"105 5"
 				size		"60 30"
 				onChange	{
-					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scroll.ds <cvar:me_scroll_ds>;"
+					cmd "ui_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scroll.ds <cvar:me_scroll_ds>;"
 				}
 			}
 
@@ -371,7 +371,7 @@ window material_editor {
 				pos			"105 35"
 				size		"60 30"
 				onChange	{
-					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scroll.dt <cvar:me_scroll_dt>;"
+					cmd "ui_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scroll.dt <cvar:me_scroll_dt>;"
 				}
 			}
 
@@ -395,7 +395,7 @@ window material_editor {
 				pos			"105 65"
 				size		"60 30"
 				onChange	{
-					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scroll.s <cvar:me_scroll_s>;"
+					cmd "ui_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scroll.s <cvar:me_scroll_s>;"
 				}
 			}
 
@@ -419,7 +419,7 @@ window material_editor {
 				pos			"105 95"
 				size		"60 30"
 				onChange	{
-					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scroll.t <cvar:me_scroll_t>;"
+					cmd "ui_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> scroll.t <cvar:me_scroll_t>;"
 				}
 			}
 		}
@@ -450,7 +450,7 @@ window material_editor {
 				pos			"105 5"
 				size		"60 30"
 				onChange	{
-					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> pulse.hz <cvar:me_pulse_hz>;"
+					cmd "ui_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> pulse.hz <cvar:me_pulse_hz>;"
 				}
 			}
 
@@ -474,7 +474,7 @@ window material_editor {
 				pos			"105 35"
 				size		"60 30"
 				onChange	{
-					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> pulse.dhz <cvar:me_pulse_dhz>;"
+					cmd "ui_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> pulse.dhz <cvar:me_pulse_dhz>;"
 				}
 			}
 		}
@@ -505,7 +505,7 @@ window material_editor {
 				pos			"105 5"
 				size		"60 30"
 				onChange	{
-					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> stretch.hz <cvar:me_stretch_hz>;"
+					cmd "ui_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> stretch.hz <cvar:me_stretch_hz>;"
 				}
 			}
 
@@ -529,7 +529,7 @@ window material_editor {
 				pos			"105 35"
 				size		"60 30"
 				onChange	{
-					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> stretch.dhz <cvar:me_stretch_dhz>;"
+					cmd "ui_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> stretch.dhz <cvar:me_stretch_dhz>;"
 				}
 			}
 
@@ -553,7 +553,7 @@ window material_editor {
 				pos			"105 65"
 				size		"60 30"
 				onChange	{
-					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> stretch.amp <cvar:me_stretch_amp>;"
+					cmd "ui_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> stretch.amp <cvar:me_stretch_amp>;"
 				}
 			}
 
@@ -577,7 +577,7 @@ window material_editor {
 				pos			"105 95"
 				size		"60 30"
 				onChange	{
-					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> stretch.damp <cvar:me_stretch_damp>;"
+					cmd "ui_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> stretch.damp <cvar:me_stretch_damp>;"
 				}
 			}
 		}
@@ -608,7 +608,7 @@ window material_editor {
 				pos			"105 5"
 				size		"60 30"
 				onChange	{
-					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.hz <cvar:me_rotate_hz>;"
+					cmd "ui_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.hz <cvar:me_rotate_hz>;"
 				}
 			}
 
@@ -632,7 +632,7 @@ window material_editor {
 				pos			"105 35"
 				size		"60 30"
 				onChange	{
-					cmd "mn_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.deg <cvar:me_rotate_deg>;"
+					cmd "ui_materialeditor_changevalue <cvar:me_image_id> <cvar:me_stage_id> rotate.deg <cvar:me_rotate_deg>;"
 				}
 			}
 		}
@@ -704,7 +704,7 @@ window material_editor {
 		cmd "hideshaders true 0 0 0 0;"
 		cmd "hidestages true stretch;"
 		call *node:root.hidestageattributestabs
-		cmd "mn_materialeditor;"
+		cmd "ui_materialeditor;"
 	}
 
 	func onClose {

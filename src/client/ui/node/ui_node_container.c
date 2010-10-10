@@ -98,8 +98,6 @@ static invList_t *UI_ContainerNodeGetExistingItem (const uiNode_t *node, objDef_
 
 /**
  * @brief Update display of scroll buttons.
- * @note The cvars "mn_cont_scroll_prev_hover" and "mn_cont_scroll_next_hover" are
- * set by the "in" and "out" functions of the scroll buttons.
  * @param[in] node Context node
  */
 static void UI_ContainerNodeUpdateScroll (uiNode_t* node)

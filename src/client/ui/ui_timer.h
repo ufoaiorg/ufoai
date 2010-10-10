@@ -55,7 +55,7 @@ void UI_TimerRelease(uiTimer_t *timer);
 void UI_HandleTimers(void);
 
 #ifdef COMPILE_UNITTESTS
-uiTimer_t *UI_GetFirstTimer(void);
+const uiTimer_t *UI_PrivateGetFirstTimer(void);
 void UI_PrivateInsertTimerInActiveList(uiTimer_t* first, uiTimer_t* newTimer);
 #endif
 

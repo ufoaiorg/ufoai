@@ -13,7 +13,7 @@ window althud extends ahud
 
 	func showinventory
 	{
-		cmd "mn_push ahudinv;"
+		cmd "ui_push ahudinv;"
 	}
 
 	// ==================
@@ -515,7 +515,7 @@ window althud extends ahud
 				scale		"4 4 4"
 
 				onClick		{ call *node:root.showinventory }
-				onRClick		{ cmd "mn_push ahudphysdat;" }
+				onRClick		{ cmd "ui_push ahudphysdat;" }
 			}
 
 			model right_head
@@ -546,7 +546,7 @@ window althud extends ahud
 			texl		"0 74"
 			texh		"25 107"
 			mousefx		true
-			onClick		{ cmd "hud_listfiremodes r;mn_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMRIGHT althud.right.bt_primaryright LAYOUTALIGN_BOTTOMLEFT;" }
+			onClick		{ cmd "hud_listfiremodes r;ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMRIGHT althud.right.bt_primaryright LAYOUTALIGN_BOTTOMLEFT;" }
 		}
 		image bt_primaryleft
 		{
@@ -556,7 +556,7 @@ window althud extends ahud
 			texl		"0 74"
 			texh		"25 107"
 			mousefx		true
-			onClick		{ cmd "hud_listfiremodes l;mn_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMRIGHT althud.right.bt_primaryright LAYOUTALIGN_BOTTOMLEFT;" }
+			onClick		{ cmd "hud_listfiremodes l;ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMRIGHT althud.right.bt_primaryright LAYOUTALIGN_BOTTOMLEFT;" }
 		}
 
 		// ==================
@@ -1039,7 +1039,7 @@ window althud extends ahud
 			texl		"86 0"
 			texh		"126 34"
 			mousefx		true
-			onClick		{ cmd "mn_pop;" }
+			onClick		{ cmd "ui_pop;" }
 		}
 	}
 

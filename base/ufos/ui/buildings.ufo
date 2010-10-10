@@ -80,9 +80,9 @@ window buildings
 		current		1
 		onChange	{
 			if ( *node:root.building_preview@current == 0 ) {
-				cmd "mn_close popup_buildingpreview;"
+				cmd "ui_close popup_buildingpreview;"
 			} else {
-				cmd "mn_push_child popup_buildingpreview buildings;"
+				cmd "ui_push_child popup_buildingpreview buildings;"
 			}
 		}
 	}
@@ -102,7 +102,7 @@ window buildings
 		*cvar:mn_building_image	= ""
 		*cvar:mn_building_info	= ""
 		*cvar:mn_building_status = ""
-		cmd "mn_datareset TEXT_BUILDING_INFO;"
+		cmd "ui_resetdata TEXT_BUILDING_INFO;"
 	}
 
 	func onInit
@@ -110,7 +110,7 @@ window buildings
 		cmd "building_init;"
 		call *node:root.mn_buildings_reset
 		if ( *node:root.building_preview@current == 1 ) {
-			cmd "mn_push_child popup_buildingpreview buildings;"
+			cmd "ui_push_child popup_buildingpreview buildings;"
 		}
 
 	}

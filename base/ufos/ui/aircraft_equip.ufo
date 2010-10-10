@@ -143,7 +143,7 @@ window aircraft_equip extends iaircraft
 			textalign	ALIGN_UC
 			font		"f_small"
 			color		"1 0 0 1"
-			onClick		{ cmd "mn_close popup;" }
+			onClick		{ cmd "ui_close popup;" }
 			longlines	LONGLINES_WRAP
 		}
 
@@ -601,7 +601,7 @@ window aircraft_equip extends iaircraft
 		cmd "airequip_select zone1;"
 		// absent from base, go back to the main GUI
 		if ( *cvar:mn_equipsoldierstate == 1 ) {
-			cmd "mn_pop; mn_push aircraft;"
+			cmd "ui_pop; ui_push aircraft;"
 		}
 	}
 

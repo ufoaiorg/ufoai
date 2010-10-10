@@ -200,7 +200,7 @@ window physdata
 		pos			"428 458"
 		size		"64 37"
 		icon		return
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 }
 
@@ -214,14 +214,14 @@ window hudphysdat extends physdata
 	{
 		pos			"983 266"
 		size		"36 75"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 
 	zone bt_inventory
 	{
 		pos			"983 376"
 		size		"36 75"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 }
 
@@ -236,7 +236,7 @@ window ahudphysdat extends physdata
 		tooltip		"_Inventory and physical stats"
 		pos			"878 84"
 		size		"130 265"
-		onClick		{ cmd "mn_pop;" }
-		onRClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
+		onRClick		{ cmd "ui_pop;" }
 	}
 }

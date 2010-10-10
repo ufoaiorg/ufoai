@@ -11,7 +11,7 @@
  * }
  * string team_hired
  * {
- * 	string	"*cvar mn_hired"
+ * 	string	"*cvar:foobar"
  * 	pos	"480 508"
  * 	size "200 30"
  * }

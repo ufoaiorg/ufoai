@@ -23,7 +23,7 @@ window skirmish
 		pos			"90 200"
 		onClick
 		{
-			cmd "mn_pop;"
+			cmd "ui_pop;"
 		}
 	}
 	// ==================

@@ -274,7 +274,7 @@ window aircraft_pilots extends iaircraft
 		*node:root.aircraft_list@lineselected = <1>
 		// absent from base, go back to the main GUI
 		if ( *cvar:mn_equipsoldierstate == 1 ) {
-			cmd "mn_pop;mn_push aircraft;"
+			cmd "ui_pop;ui_push aircraft;"
 		}
 	}
 

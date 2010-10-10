@@ -35,7 +35,7 @@ window irc
 		size		"160 37"
 		selectcolor "1 1 1 1"
 		font		"f_normal"
-		onClick		{ cmd "irc_disconnect; mn_pop;" }
+		onClick		{ cmd "irc_disconnect; ui_pop;" }
 	}
 
 	custombutton button_exit
@@ -46,7 +46,7 @@ window irc
 		pos			"950 720"
 		size		"64 37"
 		icon		return
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 
 	string users_string
@@ -223,13 +223,13 @@ window irc_changename
 		string		"_Retry"
 		tooltip		"_Retry with your changed name"
 		pos			"110 192"
-		onClick		{ cmd "mn_pop;irc_disconnect;irc_connect;" }
+		onClick		{ cmd "ui_pop;irc_disconnect;irc_connect;" }
 	}
 
 	cmpCancelButton bt_cancel
 	{
 		pos			"296 192"
-		onClick		{ cmd "mn_pop;irc_disconnect;mn_pop;" }
+		onClick		{ cmd "ui_pop;irc_disconnect;ui_pop;" }
 	}
 }
 
@@ -259,12 +259,12 @@ window irc_popup
 		string		"_Connect"
 		tooltip		"_Connect to the lobby"
 		pos			"110 192"
-		onClick		{ cmd "irc_connect; mn_pop; mn_push irc;" }
+		onClick		{ cmd "irc_connect; ui_pop; ui_push irc;" }
 	}
 
 	cmpCancelButton bt_cancel
 	{
 		pos			"296 192"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 }

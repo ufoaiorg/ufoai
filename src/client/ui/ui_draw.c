@@ -38,8 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_draw.h"
 #include "../renderer/r_misc.h"
 
-static cvar_t *mn_show_tooltips;
 static const int TOOLTIP_DELAY = 500; /* delay that msecs before showing tooltip */
+
+static cvar_t *ui_show_tooltips;
 static qboolean tooltipVisible = qfalse;
 static uiTimer_t *tooltipTimer;
 
@@ -145,11 +146,11 @@ static void UI_DrawDebugNodeNames (void)
 	/* global */
 	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "main active window:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX + 20, 200, 0, Cvar_GetString("mn_sys_active"), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX + 20, 200, 0, Cvar_GetString("ui_sys_active"), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "main option window:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
-	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX + 20, 200, 0, Cvar_GetString("mn_sys_main"), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX+20, debugTextPositionY, debugPositionX + 20, 200, 0, Cvar_GetString("ui_sys_main"), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
 	UI_DrawString("f_small_bold", ALIGN_UL, debugPositionX, debugTextPositionY, debugPositionX, 200, 0, "-----------------------", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	debugTextPositionY += 15;
@@ -347,7 +348,7 @@ void UI_Draw (void)
 	if (mouseMoved && tooltipVisible) {
 		UI_TimerStop(tooltipTimer);
 		tooltipVisible = qfalse;
-	} else if (!tooltipVisible && !mouseMoved && !tooltipTimer->isRunning && mn_show_tooltips->integer && hoveredNode) {
+	} else if (!tooltipVisible && !mouseMoved && !tooltipTimer->isRunning && ui_show_tooltips->integer && hoveredNode) {
 		UI_TimerStart(tooltipTimer);
 	}
 
@@ -426,6 +427,6 @@ void UI_DisplayNotice (const char *text, int time, const char* windowName)
 
 void UI_InitDraw (void)
 {
-	mn_show_tooltips = Cvar_Get("mn_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in the UI");
+	ui_show_tooltips = Cvar_Get("ui_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in the UI");
 	tooltipTimer = UI_AllocTimer(NULL, TOOLTIP_DELAY, UI_CheckTooltipDelay);
 }

@@ -1,6 +1,6 @@
 /**
  * @brief Unittest for radiobutton
- * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "mn_push unittest_radiobutton"
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push unittest_radiobutton"
  */
 
 window unittest_radiobutton

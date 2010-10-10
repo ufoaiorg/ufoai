@@ -16,7 +16,7 @@ window popup
 		dragbutton	true
 		closebutton	true
 		image		"ui/popup_alpha_tile"
-		string		*cvar:mn_sys_popup_title
+		string		*cvar:ui_sys_popup_title
 	}
 
 	text popup_text
@@ -53,7 +53,7 @@ window popup
 		width		"200"
 		font		"f_menu"
 		color		"0 0.5 0 1"
-		onClick		{ cmd "mn_close popup;" }
+		onClick		{ cmd "ui_close popup;" }
 	}
 }
 
@@ -69,7 +69,7 @@ window popup_list
 		dragbutton	true
 		closebutton	true
 		image		"ui/popup_alpha_tile"
-		string		*cvar:mn_sys_popup_title
+		string		*cvar:ui_sys_popup_title
 	}
 
 	text popup_text
@@ -111,7 +111,7 @@ window popup_list
 		string		"_OK"
 		tooltip		"_Close this dialogue"
 		pos			"296 192"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 }
 
@@ -127,7 +127,7 @@ window popup_button
 		dragbutton	true
 		closebutton	true
 		image		"ui/popup_alpha_tile"
-		string		*cvar:mn_sys_popup_title
+		string		*cvar:ui_sys_popup_title
 	}
 
 	text popup_text
@@ -158,24 +158,24 @@ window popup_button
 
 	cmpPopupButton popup_button_1
 	{
-		string		*cvar:mn_sys_popup_button_text1
-		tooltip		*cvar:mn_sys_popup_button_tooltip1
+		string		*cvar:ui_sys_popup_button_text1
+		tooltip		*cvar:ui_sys_popup_button_tooltip1
 		pos			"26 192"
 		invis		true
 	}
 
 	cmpPopupButton popup_button_2
 	{
-		string		*cvar:mn_sys_popup_button_text2
-		tooltip		*cvar:mn_sys_popup_button_tooltip2
+		string		*cvar:ui_sys_popup_button_text2
+		tooltip		*cvar:ui_sys_popup_button_tooltip2
 		pos			"296 192"
 		invis		true
 	}
 
 	cmpPopupButton popup_button_3
 	{
-		string		*cvar:mn_sys_popup_button_text3
-		tooltip		*cvar:mn_sys_popup_button_tooltip3
+		string		*cvar:ui_sys_popup_button_text3
+		tooltip		*cvar:ui_sys_popup_button_tooltip3
 		pos			"296 156"
 		invis		true
 	}

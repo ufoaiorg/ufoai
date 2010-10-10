@@ -87,26 +87,26 @@ window geoscape
 	{
 		/* one line */
 		if ( *cvar:mn_messagesystem == 0 ) {
-			*node:root.messages.messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
+			*node:root.messages.messagesystem@width = ( *cvar:ui_sys_screenwidth - 256 )
 			*node:root.messages.messagesystem@height	= 20
 			*node:root.messages.messagesystem.scroll@invis = true
 		}
 		/* 6 lines */
 		if ( *cvar:mn_messagesystem == 1 ) {
-			*node:root.messages.messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
+			*node:root.messages.messagesystem@width = ( *cvar:ui_sys_screenwidth - 256 )
 			*node:root.messages.messagesystem@height	= 120
 			*node:root.messages.messagesystem.scroll@invis = true
 		}
 		/* 12 lines */
 		if ( *cvar:mn_messagesystem == 2 ) {
-			*node:root.messages.messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
+			*node:root.messages.messagesystem@width = ( *cvar:ui_sys_screenwidth - 256 )
 			*node:root.messages.messagesystem@height	= 240
 			*node:root.messages.messagesystem.scroll@invis = true
 		}
 		/* full screen */
 		if ( *cvar:mn_messagesystem == 3 ) {
-			*node:root.messages.messagesystem@width = ( *cvar:mn_sys_screenwidth - 256 )
-			*cvar:foo = ( *cvar:mn_sys_screenwidth - 256 )
+			*node:root.messages.messagesystem@width = ( *cvar:ui_sys_screenwidth - 256 )
+			*cvar:foo = ( *cvar:ui_sys_screenwidth - 256 )
 			*node:root.messages.messagesystem@height = 768
 			*node:root.messages.messagesystem.scroll@invis = false
 			cmd "game_timestop;"
@@ -429,7 +429,7 @@ window geoscape
 			selectcolor	"1 1 1 1"
 			image		"ui/button_geoscape"
 
-			onClick		{ cmd "mn_push messageoptions;" }
+			onClick		{ cmd "ui_push messageoptions;" }
 		}
 
 		button bt_mailclient
@@ -445,7 +445,7 @@ window geoscape
 			selectcolor	"1 1 1 1"
 			image		"ui/button_geoscape"
 
-			onClick		{ cmd "mn_push mailclient;" }
+			onClick		{ cmd "ui_push mailclient;" }
 		}
 
 		button bt_mailclient_nomail
@@ -461,7 +461,7 @@ window geoscape
 			selectcolor	"1 1 1 1"
 			image		"ui/button_geoscape"
 
-			onClick		{ cmd "mn_push mailclient;" }
+			onClick		{ cmd "ui_push mailclient;" }
 		}
 
 		button bt_stats
@@ -475,7 +475,7 @@ window geoscape
 			selectcolor	"1 1 1 1"
 			image		"ui/button_geoscape"
 
-			onClick		{ cmd "mn_push stats;" }
+			onClick		{ cmd "ui_push stats;" }
 		}
 
 		button bt_ufopedia
@@ -489,7 +489,7 @@ window geoscape
 			selectcolor	"1 1 1 1"
 			image		"ui/button_geoscape"
 
-			onClick		{ cmd "mn_push ufopedia;" }
+			onClick		{ cmd "ui_push ufopedia;" }
 		}
 
 		button bt_installation
@@ -503,7 +503,7 @@ window geoscape
 			selectcolor	"1 1 1 1"
 			image		"ui/button_geoscape"
 
-			onClick		{ cmd "mn_push popup_newinstallation_type;" }
+			onClick		{ cmd "ui_push popup_newinstallation_type;" }
 		}
 
 		// ==================
@@ -566,7 +566,7 @@ window geoscape
 			pos			"190 520"
 			size		"28 25"
 			texl		"193 38"
-			onClick		{ cmd mn_pop; }
+			onClick		{ cmd "ui_pop;" }
 		}
 
 	}
@@ -695,7 +695,7 @@ window popup_intercept_ready
 	cmpCancelButton bt_cancel
 	{
 		pos			"259 188"
-		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
+		onClick		{ cmd "ui_pop;mn_mapaction_reset;" }
 	}
 
 	/**
@@ -825,7 +825,7 @@ window popup_baseattack
 	func listen_automission
 	{
 		cmd "cp_mission_autogo;"
-		cmd "mn_removelistener equipment@onClose <path:this>"
+		cmd "ui_removelistener equipment@onClose <path:this>"
 	}
 
 	cmpPopupButton bt_auto_go
@@ -844,8 +844,8 @@ window popup_baseattack
 				cmd "pwr_down;"
 			}
 			if ( *node:root.equip@current > 0 ) {
-				cmd "mn_addlistener equipment@onClose <path:root>.listen_automission;"
-				cmd "mn_push equipment;"
+				cmd "ui_addlistener equipment@onClose <path:root>.listen_automission;"
+				cmd "ui_push equipment;"
 			} else {
 				cmd "cp_mission_autogo;"
 			}
@@ -855,7 +855,7 @@ window popup_baseattack
 	func listen_mission
 	{
 		cmd "game_go;"
-		cmd "mn_removelistener equipment@onClose <path:this>;"
+		cmd "ui_removelistener equipment@onClose <path:this>;"
 	}
 	cmpPopupButton bt_go
 	{
@@ -873,8 +873,8 @@ window popup_baseattack
 				cmd "pwr_down;"
 			}
 			if ( *node:root.equip@current > 0 ) {
-				cmd "mn_addlistener equipment@onClose <path:root>.listen_mission;"
-				cmd "mn_push equipment;"
+				cmd "ui_addlistener equipment@onClose <path:root>.listen_mission;"
+				cmd "ui_push equipment;"
 			} else {
 				cmd "game_go;"
 			}
@@ -943,7 +943,7 @@ window popup_newbase
 	{
 		pos			"298 188"
 		onClick	{
-			cmd "mn_pop;mn_mapaction_reset;"
+			cmd "ui_pop;mn_mapaction_reset;"
 		}
 	}
 	cmpPopupButton bt_build
@@ -952,7 +952,7 @@ window popup_newbase
 		tooltip		"_Build the base"
 		pos			"111 188"
 		onClick	{
-			cmd "mn_pop;mn_base_build;"
+			cmd "ui_pop;mn_base_build;"
 		}
 	}
 }
@@ -1038,7 +1038,7 @@ window popup_newinstallation_type
 		onClick		{
 			*cvar:mn_installation_type = "radartower"
 			*cvar:mn_installation_timetobuild = *cvar:mn_installation_radartower_buildtime
-			cmd "mn_pop;"
+			cmd "ui_pop;"
 			cmd "mn_installation_select -1;"
 		}
 	}
@@ -1080,7 +1080,7 @@ window popup_newinstallation_type
 		onClick		{
 			*cvar:mn_installation_type = "samsite"
 			*cvar:mn_installation_timetobuild = *cvar:mn_installation_samsite_buildtime
-			cmd "mn_pop;"
+			cmd "ui_pop;"
 			cmd "mn_installation_select -1;"
 		}
 	}
@@ -1122,7 +1122,7 @@ window popup_newinstallation_type
 		onClick		{
 			*cvar:mn_installation_type = "ufoyard"
 			*cvar:mn_installation_timetobuild = *cvar:mn_installation_ufoyard_buildtime
-			cmd "mn_pop;"
+			cmd "ui_pop;"
 			cmd "mn_installation_select -1;"
 		}
 	}
@@ -1167,7 +1167,7 @@ window popup_newinstallation_type
 		size		"440 20"
 		onMouseEnter			{ *node:root.bt_highlight@invis = false *node:root.bt_highlight@pos = "26 136" }
 		onMouseLeave			{ *node:root.bt_highlight@invis = true }
-		onClick		{ cmd "mn_pop; mn_base_select -1;" }
+		onClick		{ cmd "ui_pop; mn_base_select -1;" }
 	}
 
 	/* disabled zones - for tooltip */
@@ -1196,7 +1196,7 @@ window popup_newinstallation_type
 		string		"_Close"
 		tooltip		"_Close this dialogue"
 		pos			"297 188"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 
 	func onInit {
@@ -1333,14 +1333,14 @@ window popup_newinstallation
 	cmpCancelButton bt_cancel
 	{
 		pos			"294 240"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 	cmpPopupButton bt_build
 	{
 		string		"_Build"
 		tooltip		"_Build the radar tower"
 		pos			"109 240"
-		onClick		{ cmd "mn_pop; mn_installation_build *cvar:mn_installation_type;" }
+		onClick		{ cmd "ui_pop; mn_installation_build *cvar:mn_installation_type;" }
 	}
 
 	func onClose
@@ -1409,7 +1409,7 @@ window popup_installationstatus
 		string		"_Close"
 		tooltip		"_Close this dialogue"
 		pos			"295 150"
-		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
+		onClick		{ cmd "ui_pop;mn_mapaction_reset;" }
 	}
 	cmpPopupButton bt_enter
 	{
@@ -1417,7 +1417,7 @@ window popup_installationstatus
 		tooltip		"_Manage installation"
 		pos			"295 110"
 		invis		true
-		onClick		{ cmd "mn_pop; mn_push *cvar:mn_installation_type;" }
+		onClick		{ cmd "ui_pop; ui_push *cvar:mn_installation_type;" }
 	}
 
 	cmpPopupButton bt_destroy
@@ -1425,7 +1425,7 @@ window popup_installationstatus
 		string		"_Destroy"
 		tooltip		"_Destroy installation"
 		pos			"25 150"
-		onClick		{ cmd "mn_pop; mn_installation_destroy;" }
+		onClick		{ cmd "ui_pop; mn_installation_destroy;" }
 	}
 
 	func onInit
@@ -1434,7 +1434,7 @@ window popup_installationstatus
 
 		/* samsite has own menu */
 		if ( *cvar:mn_installation_type eq "samsite" ) {
-			cmd "mn_pop; mn_push basedefence;"
+			cmd "ui_pop; ui_push basedefence;"
 		}
 		/* Show/Hide time-to-build notification and manage button  */
 		if ( *cvar:mn_installation_timetobuild eq "-" ) {
@@ -1595,7 +1595,7 @@ window popup_intercept
 	cmpCancelButton bt_cancel
 	{
 		pos			"346 402"
-		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
+		onClick		{ cmd "ui_pop;mn_mapaction_reset;" }
 	}
 
 	confunc popup_intercept_update {
@@ -1679,7 +1679,7 @@ window popup_mission
 	cmpCancelButton bt_cancel
 	{
 		pos			"566 338"
-		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
+		onClick		{ cmd "ui_pop;mn_mapaction_reset;" }
 	}
 }
 
@@ -1746,7 +1746,7 @@ window popup_multi_selection
 	cmpCancelButton bt_cancel
 	{
 		pos			"266 188"
-		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
+		onClick		{ cmd "ui_pop;mn_mapaction_reset;" }
 	}
 }
 
@@ -1813,7 +1813,7 @@ window popup_aircraft
 	cmpCancelButton	bt_cancel
 	{
 		pos			"297 191"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 }
 

@@ -31,21 +31,21 @@ window singleplayer
 	{
 		string		"_Campaign"
 		pos			"640 170"
-		onClick		{ cmd "mn_push campaigns;" }
+		onClick		{ cmd "ui_push campaigns;" }
 	}
 
 	cmpMenuButton button_skirmish
 	{
 		string	"_Skirmish"
 		pos	"640 240"
-		onClick	{ cmd "mn_push skirmish;" }
+		onClick	{ cmd "ui_push skirmish;" }
 	}
 
 	cmpMenuButton button_back
 	{
 		string		"_Back"
 		pos			"640 520"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 }
 
@@ -82,7 +82,7 @@ window singleplayermission
 	{
 		string		"_Continue"
 		pos			"640 170"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 
 	cmpMenuButton button_abort
@@ -103,13 +103,13 @@ window singleplayermission
 	{
 		string		"_Options"
 		pos			"640 380"
-		onClick		{ cmd "mn_push options;" }
+		onClick		{ cmd "ui_push options;" }
 	}
 
 	cmpMenuButton button_exit
 	{
 		string		"_Exit"
 		pos			"640 520"
-		onClick		{ cmd "game_exit;mn_pop;" }
+		onClick		{ cmd "game_exit;ui_pop;" }
 	}
 }

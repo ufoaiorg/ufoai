@@ -13,7 +13,7 @@ window hud extends ahud
 
 	func showinventory
 	{
-		cmd "mn_push hudinv;"
+		cmd "ui_push hudinv;"
 	}
 
 	// ==================
@@ -566,7 +566,7 @@ window hud extends ahud
 			texl	"0 76"
 			texh	"75 128"
 			mousefx	true
-			onClick	{ cmd "hud_listfiremodes r;mn_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud.right.bt_pfire LAYOUTALIGN_TOPLEFT;" }
+			onClick	{ cmd "hud_listfiremodes r;ui_push_dropdown firemode_right.anchor LAYOUTALIGN_BOTTOMLEFT hud.right.bt_pfire LAYOUTALIGN_TOPLEFT;" }
 		}
 
 		image bt_reload
@@ -632,7 +632,7 @@ window hud extends ahud
 			texl	"0 76"
 			texh	"75 128"
 			mousefx	true
-			onClick	{ cmd "hud_listfiremodes l;mn_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMRIGHT hud.left.bt_pfire LAYOUTALIGN_TOPRIGHT;" }
+			onClick	{ cmd "hud_listfiremodes l;ui_push_dropdown firemode_left.anchor LAYOUTALIGN_BOTTOMRIGHT hud.left.bt_pfire LAYOUTALIGN_TOPRIGHT;" }
 		}
 
 		image bt_reload
@@ -861,7 +861,7 @@ window hud extends ahud
 			pos		"6 10"
 			texl	"165 0"
 			texh	"201 75"
-			onClick	{ cmd "mn_pop;" }
+			onClick	{ cmd "ui_pop;" }
 		}
 
 		image bt_physdata
@@ -872,7 +872,7 @@ window hud extends ahud
 			pos		"6 137"
 			texl	"202 0"
 			texh	"238 75"
-			onClick	{ cmd "mn_push hudphysdat;" }
+			onClick	{ cmd "ui_push hudphysdat;" }
 		}
 
 		image bt_inventory

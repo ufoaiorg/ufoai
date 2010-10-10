@@ -1,6 +1,6 @@
 /**
  * @file ui_node_editor.c
- * @note type "mn_push editor" to use it, Escape button to close it, and "mn_extract" to extract a window to a script
+ * @note type "ui_push editor" to use it, Escape button to close it, and "ui_extract" to extract a window to a script
  * @brief Editor is an invisible node used to create an edition mode. The edition mode
  * allow user to move and resize all visible nodes.
  */
@@ -207,8 +207,8 @@ static void UI_EditorNodeSelectNode (uiNode_t *node, uiNode_t *selected)
 	if (selected->root == node->root)
 		return;
 	anchoredNode = selected;
-	Cvar_Set("mn_sys_editor_node", anchoredNode->name);
-	Cvar_Set("mn_sys_editor_window", anchoredNode->root->name);
+	Cvar_Set("ui_sys_editor_node", anchoredNode->name);
+	Cvar_Set("ui_sys_editor_window", anchoredNode->root->name);
 }
 
 static void UI_EditorNodeMouseDown (uiNode_t *node, int x, int y, int button)
@@ -374,6 +374,6 @@ void UI_RegisterEditorNode (uiBehaviour_t *behaviour)
 	behaviour->capturedMouseLost = UI_EditorNodeCapturedMouseLost;
 	behaviour->properties = properties;
 
-	Cmd_AddCommand("mn_extract", UI_EditorNodeExtract_f, "Extract position and size of nodes into a file");
-	Cmd_AddParamCompleteFunction("mn_extract", UI_CompleteWithWindow);
+	Cmd_AddCommand("ui_extract", UI_EditorNodeExtract_f, "Extract position and size of nodes into a file");
+	Cmd_AddParamCompleteFunction("ui_extract", UI_CompleteWithWindow);
 }

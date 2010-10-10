@@ -931,9 +931,9 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 		case B_SMALL_HANGAR:
 			if (base->capacities[cap].cur >= base->capacities[cap].max) {
 				UI_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
-					"mn_pop;mn_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
-					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
-					(ccs.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
+					"ui_pop;ui_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
+					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
+					(ccs.numBases > 1) ? "ui_pop;ui_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -941,9 +941,9 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 		case B_QUARTERS:
 			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
 				UI_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
-					"mn_pop;mn_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
-					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
-					(ccs.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
+					"ui_pop;ui_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
+					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
+					(ccs.numBases > 1) ? "ui_pop;ui_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -951,9 +951,9 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 		case B_STORAGE:
 			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
 				UI_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
-					"mn_pop;mn_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
-					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
-					(ccs.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
+					"ui_pop;ui_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
+					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
+					(ccs.numBases > 1) ? "ui_pop;ui_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -965,7 +965,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 
 	UI_PopupButton(_("Destroy building"), _("Are you sure you want to destroy this building?"),
 		NULL, NULL, NULL,
-		"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
+		"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
 		NULL, NULL, NULL);
 }
 

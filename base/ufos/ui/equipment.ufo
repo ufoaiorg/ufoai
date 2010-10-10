@@ -699,7 +699,7 @@ window equipment extends objectinfo
 		texl	"192 0"	size "64 37"
 		pos		"940 720"
 		icon return
-		onClick	{ cmd "mn_pop;" }
+		onClick	{ cmd "ui_pop;" }
 	}
 
 	func onClose

@@ -140,7 +140,7 @@ component panel cmpDefBaseHeader {
 		size		"59 55"
 		texl		"1 1"
 		icon		"return"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 }
 

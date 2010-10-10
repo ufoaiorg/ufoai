@@ -77,7 +77,7 @@ window options
 		tooltip		"_Leave the options menu."
 		string		"_Back"
 		pos			"80 470"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 
 	// ===============================
@@ -531,7 +531,7 @@ window options
 				pos			"446 39"
 				size		"16 16"
 				padding		0
-				onClick		{ cmd "mn_push popup_maintain_resolution;" }
+				onClick		{ cmd "ui_push popup_maintain_resolution;" }
 			}
 			// ===========
 			// FULLSCREEN
@@ -2295,13 +2295,13 @@ window popup_maintain_resolution
 		tooltip		"_Accept the new resolution."
 		string		"_Accept"
 		pos			"112 188"
-		onClick		{ cmd "mn_pop; copy new_vidmode mn_vidmode; saveconfig config.cfg;" }
+		onClick		{ cmd "ui_pop; copy new_vidmode mn_vidmode; saveconfig config.cfg;" }
 	}
 	cmpCancelButton bt_cancel
 	{
 		tooltip		"_Use the previous resolution."
 		pos			"297 188"
-		onClick		{ cmd "mn_pop; copy new_vidmode old_vidmode;" }
+		onClick		{ cmd "ui_pop; copy new_vidmode old_vidmode;" }
 	}
 	func onInit
 	{

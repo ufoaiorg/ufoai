@@ -29,14 +29,14 @@ window multiplayerInGame
 	cmpMenuButton button_continue
 	{
 		pos	"640 170"
-		onClick	{ cmd "mn_pop;" }
+		onClick	{ cmd "ui_pop;" }
 		string	"_Continue"
 	}
 
 	cmpMenuButton button_options
 	{
 		pos	"640 240"
-		onClick	{ cmd "mn_push options;" }
+		onClick	{ cmd "ui_push options;" }
 		string	"_Options"
 	}
 
@@ -44,14 +44,14 @@ window multiplayerInGame
 	{
 		visiblewhen "exists *cvar:irc_defaultChannel"
 		pos	"640 310"
-		onClick	{ cmd "mn_push irc;" }
+		onClick	{ cmd "ui_push irc;" }
 		string	"_Lobby"
 	}
 
 	cmpMenuButton button_abort
 	{
 		pos	"640 520"
-		onClick	{ cmd "game_exit;mn_pop;" }
+		onClick	{ cmd "game_exit;ui_pop;" }
 		string	"_Abort Game"
 	}
 }

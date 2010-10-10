@@ -26,7 +26,7 @@ window tutorials
 	cmpMenuButton button_back
 	{
 		pos	"640 520"
-		onClick	{ cmd "mn_pop;" }
+		onClick	{ cmd "ui_pop;" }
 		string	"_Back"
 	}
 

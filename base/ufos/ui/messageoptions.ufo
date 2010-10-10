@@ -53,14 +53,14 @@ window messageoptions
 		string		"_Apply"
 		tooltip		"_Apply changes"
 		pos			"109 436"
-		onClick		{ cmd "mn_pop;msgoptions_backup;" }
+		onClick		{ cmd "ui_pop;msgoptions_backup;" }
 	}
 
 	cmpCancelButton button_revert
 	{
 		tooltip		"_Revert changes"
 		pos			"296 436"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 
 	string header_messagetype

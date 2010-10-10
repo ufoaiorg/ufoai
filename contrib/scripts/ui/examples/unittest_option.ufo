@@ -1,6 +1,6 @@
 /**
  * @brief Unittest for event function from window node
- * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "mn_push unittest_option"
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push unittest_option"
  */
 
 window unittest_option

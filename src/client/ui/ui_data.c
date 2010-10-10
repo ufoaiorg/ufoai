@@ -540,5 +540,5 @@ static void UI_ResetData_f (void)
  */
 void UI_InitData (void)
 {
-	Cmd_AddCommand("mn_datareset", UI_ResetData_f, "Resets memory and data used by a UI data id");
+	Cmd_AddCommand("ui_resetdata", UI_ResetData_f, "Resets memory and data used by a UI data id");
 }

@@ -15,8 +15,8 @@ component panel cmpActorSelect {
 		image "ui/checkbox_green"
 		size "20 20"
 		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4;" } // 4: click on bottom
+		onWheelUp 	{ cmd "ui_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
+		onWheelDown { cmd "ui_active_vscrollbar <path:root>.scroll_employees 4;" } // 4: click on bottom
 	}
 
 	string txt_actor
@@ -26,8 +26,8 @@ component panel cmpActorSelect {
 		size	"190 35"
 		textalign ALIGN_CL
 		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4;" } // 4: click on bottom
+		onWheelUp 	{ cmd "ui_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
+		onWheelDown { cmd "ui_active_vscrollbar <path:root>.scroll_employees 4;" } // 4: click on bottom
 	}
 }
 
@@ -84,7 +84,7 @@ window iaircraft
 			size	"938 39"
 			cvar	*cvar:mn_aircrafttab
 			onChange {
-				cmd "mn_pop; mn_push <cvar:mn_aircrafttab>;"
+				cmd "ui_pop; ui_push <cvar:mn_aircrafttab>;"
 			}
 		}
 
@@ -162,7 +162,7 @@ window iaircraft
 		pos			"46 114"
 		size		"317 21"
 		font		"f_normal_bold"
-		onChange	{ cmd "aircraft_namechange; mn_pop; mn_push aircraft;" }
+		onChange	{ cmd "aircraft_namechange; ui_pop; ui_push aircraft;" }
 	}
 
 	button air_nameedit

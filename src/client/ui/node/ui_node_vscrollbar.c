@@ -435,5 +435,6 @@ void UI_RegisterVScrollbarNode (uiBehaviour_t *behaviour)
 	behaviour->loaded = UI_VScrollbarNodeLoaded;
 	behaviour->loading = UI_VScrollbarNodeLoading;
 
-	Cmd_AddCommand("mn_active_vscrollbar", UI_ActiveVScrollbarNode_f, "Active an element of a scrollbar node, (dummy mouse/user)");
+	/** @todo convert it to a node function */
+	Cmd_AddCommand("ui_active_vscrollbar", UI_ActiveVScrollbarNode_f, "Active an element of a scrollbar node, (dummy mouse/user)");
 }

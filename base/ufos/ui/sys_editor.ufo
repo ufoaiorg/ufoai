@@ -84,7 +84,7 @@ window editor {
 		font		"f_verysmall"
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		onClick	{ cmd "mn_extract <cvar:mn_sys_editor_window>;" }
+		onClick	{ cmd "ui_extract <cvar:ui_sys_editor_window>;" }
 	}
 
 	string current_window_title {
@@ -97,7 +97,7 @@ window editor {
 	string current_window {
 		pos	"30 160"
 		size "150 20"
-		string *cvar:mn_sys_editor_window
+		string *cvar:ui_sys_editor_window
 		font		"f_verysmall"
 	}
 
@@ -111,20 +111,20 @@ window editor {
 	string current_node {
 		pos	"30 200"
 		size "150 20"
-		string *cvar:mn_sys_editor_node
+		string *cvar:ui_sys_editor_node
 		font		"f_verysmall"
 	}
 
 	func onInit {
 		*cvar:scr_showcursor = 1
-		*cvar:mn_sys_editor_node = ""
-		*cvar:mn_sys_editor_window = ""
-		cmd "echo \"Use mn_extract to write your changes to a file\";"
+		*cvar:ui_sys_editor_node = ""
+		*cvar:ui_sys_editor_window = ""
+		cmd "echo \"Use ui_extract to write your changes to a file\";"
 	}
 
 	func onClose {
-		cmd "del mn_sys_editor_node;"
-		cmd "del mn_sys_editor_window;"
+		delete *cvar:ui_sys_editor_node
+		delete *cvar:ui_sys_editor_window
 		call *node:root.editor@stop
 	}
 }

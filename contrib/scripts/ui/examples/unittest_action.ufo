@@ -1,6 +1,6 @@
 /**
  * @brief Unittest for actions
- * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "mn_push unittest_action"
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push unittest_action"
  * Every thing must be green and it must not print any text or warning into the console.
  */
 
@@ -11,7 +11,7 @@ window unittest_action_eventtest {
 
 	func onInit {
 		*cvar:test = 4
-		cmd "mn_pop"
+		cmd "ui_pop"
 	}
 }
 
@@ -216,7 +216,7 @@ window unittest_action
 		// node event
 
 		*node:root.testCommon5@color = "1 0 0 1"
-		cmd "mn_push unittest_action_eventtest"
+		cmd "ui_push unittest_action_eventtest"
 		cmd "testActionEvent"
 
 		*node:root.testCommon6@color = "1 0 0 1"
@@ -265,20 +265,20 @@ window unittest_action
 
 	func testListenerSetUp {
 		// one listener
-		cmd "mn_addlistener <path:root>.sender1@onClick <path:root>.listener1"
+		cmd "ui_addlistener <path:root>.sender1@onClick <path:root>.listener1"
 
 		// no listener
-		cmd "mn_addlistener <path:root>.sender2@onClick <path:root>.listener2"
-		cmd "mn_removelistener <path:root>.sender2@onClick <path:root>.listener2"
+		cmd "ui_addlistener <path:root>.sender2@onClick <path:root>.listener2"
+		cmd "ui_removelistener <path:root>.sender2@onClick <path:root>.listener2"
 
 		// two listener
-		cmd "mn_addlistener <path:root>.sender3@onClick <path:root>.listener3_1"
-		cmd "mn_addlistener <path:root>.sender3@onClick <path:root>.listener3_2"
+		cmd "ui_addlistener <path:root>.sender3@onClick <path:root>.listener3_1"
+		cmd "ui_addlistener <path:root>.sender3@onClick <path:root>.listener3_2"
 
 		// one listener
-		cmd "mn_addlistener <path:root>.sender4@onClick <path:root>.listener4_1"
-		cmd "mn_addlistener <path:root>.sender4@onClick <path:root>.listener4_2"
-		cmd "mn_removelistener <path:root>.sender4@onClick <path:root>.listener4_1"
+		cmd "ui_addlistener <path:root>.sender4@onClick <path:root>.listener4_1"
+		cmd "ui_addlistener <path:root>.sender4@onClick <path:root>.listener4_2"
+		cmd "ui_removelistener <path:root>.sender4@onClick <path:root>.listener4_1"
 	}
 
 	confunc testListenerTest {
@@ -302,16 +302,16 @@ window unittest_action
 
 	confunc testListenerTearDown {
 		// one listener
-		cmd "mn_removelistener <path:root>.sender1@onClick <path:root>.listener1"
+		cmd "ui_removelistener <path:root>.sender1@onClick <path:root>.listener1"
 
 		// no listener
 
 		// two listener
-		cmd "mn_removelistener <path:root>.sender3@onClick <path:root>.listener3_1"
-		cmd "mn_removelistener <path:root>.sender3@onClick <path:root>.listener3_2"
+		cmd "ui_removelistener <path:root>.sender3@onClick <path:root>.listener3_1"
+		cmd "ui_removelistener <path:root>.sender3@onClick <path:root>.listener3_2"
 
 		// one listener
-		cmd "mn_removelistener <path:root>.sender4@onClick <path:root>.listener4_2"
+		cmd "ui_removelistener <path:root>.sender4@onClick <path:root>.listener4_2"
 	}
 
 	func testListener {

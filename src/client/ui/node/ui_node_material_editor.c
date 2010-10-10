@@ -595,9 +595,10 @@ void UI_RegisterMaterialEditorNode (uiBehaviour_t *behaviour)
 	behaviour->mouseDown = UI_MaterialEditorMouseDown;
 	behaviour->mouseWheel = UI_MaterialEditorNodeWheel;
 
-	Cmd_AddCommand("mn_materialeditor_removestage", UI_MaterialEditorRemoveStage_f, "Removes the selected material stage");
-	Cmd_AddCommand("mn_materialeditor_newstage", UI_MaterialEditorNewStage_f, "Creates a new material stage for the current selected material");
-	Cmd_AddCommand("mn_materialeditor_selectstage", UI_MaterialEditorSelectStage_f, "Select a given material stage");
-	Cmd_AddCommand("mn_materialeditor_changevalue", UI_MaterialEditorChangeValue_f, "Initializes the material editor window");
-	Cmd_AddCommand("mn_materialeditor", UI_MaterialEditorStart_f, "Initializes the material editor window");
+	/** @todo convert it to ui functions */
+	Cmd_AddCommand("ui_materialeditor_removestage", UI_MaterialEditorRemoveStage_f, "Removes the selected material stage");
+	Cmd_AddCommand("ui_materialeditor_newstage", UI_MaterialEditorNewStage_f, "Creates a new material stage for the current selected material");
+	Cmd_AddCommand("ui_materialeditor_selectstage", UI_MaterialEditorSelectStage_f, "Select a given material stage");
+	Cmd_AddCommand("ui_materialeditor_changevalue", UI_MaterialEditorChangeValue_f, "Initializes the material editor window");
+	Cmd_AddCommand("ui_materialeditor", UI_MaterialEditorStart_f, "Initializes the material editor window");
 }

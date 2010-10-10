@@ -14,7 +14,7 @@ window genradarhud extends ahud
 
 	func showinventory
 	{
-		cmd "mn_push hudinv;"
+		cmd "ui_push hudinv;"
 	}
 
 	// ==================
@@ -32,7 +32,7 @@ window genradarhud extends ahud
 	// ==================
 
 	confunc gen_radarmap {
-		cmd "mn_push genradarhud;"
+		cmd "ui_push genradarhud;"
 	}
 
 	panel mapborder {
@@ -74,7 +74,7 @@ window genradarhud extends ahud
 			onClick {
 				*node:root.control@invis = true
 				*node:root.mapborder@invis = true
-				cmd "mn_genpreviewradarmap;"
+				cmd "ui_genpreviewradarmap;"
 			}
 		}
 
@@ -89,7 +89,7 @@ window genradarhud extends ahud
 			string		"_Gen this level"
 			onClick {
 				*node:root.mapborder@invis = true
-				cmd "mn_genradarmap;"
+				cmd "ui_genradarmap;"
 			}
 		}
 
@@ -106,7 +106,7 @@ window genradarhud extends ahud
 				*cvar:scr_showcursor = 0
 				*node:root.control@invis = true
 				*node:root.mapborder@invis = true
-				cmd "mn_genallradarmap;"
+				cmd "ui_genallradarmap;"
 			}
 		}
 	}

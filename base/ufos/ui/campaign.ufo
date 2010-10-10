@@ -43,7 +43,7 @@ window campaigns
 	{
 		string		"_Load"
 		pos			"80 240"
-		onClick		{ cmd "mn_push load;" }
+		onClick		{ cmd "ui_push load;" }
 	}
 
 	cmpMenuButton button_continue
@@ -59,7 +59,7 @@ window campaigns
 	cmpMenuButton c_button_exit
 	{
 		pos	"80 470"
-		onClick	{ cmd "mn_pop;" }
+		onClick	{ cmd "ui_pop;" }
 		string	"_Back"
 	}
 
@@ -160,21 +160,21 @@ window campaign_main
 	{
 		string		"_Load"
 		pos			"640 240"
-		onClick		{ cmd "mn_push load;" }
+		onClick		{ cmd "ui_push load;" }
 	}
 
 	cmpMenuButton button_save
 	{
 		string		"_Save"
 		pos			"640 310"
-		onClick		{ cmd "mn_push save;" }
+		onClick		{ cmd "ui_push save;" }
 	}
 
 	cmpMenuButton button_options
 	{
 		string		"_Options"
 		pos			"640 380"
-		onClick		{ cmd "mn_push options;" }
+		onClick		{ cmd "ui_push options;" }
 	}
 
 	cmpMenuButton button_back
@@ -213,7 +213,7 @@ window quickload
 		string		"_Load"
 		tooltip		"_Reload the last automatically saved campaign state"
 		pos			"266 188"
-		onClick		{ cmd "mn_pop;game_quickload;" }
+		onClick		{ cmd "ui_pop;game_quickload;" }
 	}
 }
 
@@ -381,7 +381,7 @@ window load
 	{
 		string		"_Back"
 		pos			"640 520"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 
 	func onInit
@@ -565,7 +565,7 @@ window save
 	{
 		string		"_Back"
 		pos			"640 520"
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 
 	func onInit

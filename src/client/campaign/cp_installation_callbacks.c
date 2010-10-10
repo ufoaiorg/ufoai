@@ -215,10 +215,10 @@ static void INS_DestroyInstallation_f (void)
 	if (Cmd_Argc() < 3) {
 		char command[MAX_VAR];
 
-		Com_sprintf(command, sizeof(command), "mn_installation_destroy %d 1; mn_pop;", installation->idx);
+		Com_sprintf(command, sizeof(command), "mn_installation_destroy %d 1; ui_pop;", installation->idx);
 		UI_PopupButton(_("Destroy Installation"), _("Do you really want to destroy this installation?"),
 			command, _("Destroy"), _("Destroy installation"),
-			"mn_pop;", _("Cancel"), _("Forget it"),
+			"ui_pop;", _("Cancel"), _("Forget it"),
 			NULL, NULL, NULL);
 		return;
 	}

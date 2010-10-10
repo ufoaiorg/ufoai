@@ -44,13 +44,13 @@ window won
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		onClick		{ cmd "set cp_mission_tryagain 0;mn_pop;uforecover_check;" }
+		onClick		{ cmd "set cp_mission_tryagain 0;ui_pop;uforecover_check;" }
 	}
 
 	confunc uforecover_check
 	{
 		if ( *cvar:mission_uforecovered == 1 ) {
-			cmd "mn_push uforecovery;"
+			cmd "ui_push uforecovery;"
 		}
 	}
 
@@ -111,7 +111,7 @@ window lost
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		onClick		{ cmd "set cp_mission_tryagain 1;mn_pop;" }
+		onClick		{ cmd "set cp_mission_tryagain 1;ui_pop;" }
 	}
 
 	button bt_continue
@@ -124,7 +124,7 @@ window lost
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		onClick		{ cmd "set cp_mission_tryagain 0;mn_pop;" }
+		onClick		{ cmd "set cp_mission_tryagain 0;ui_pop;" }
 	}
 
 	func onInit
@@ -272,7 +272,7 @@ window uforecovery
 			string		"_Recover"
 			tooltip		"_Begin UFO recovery process"
 			pos			"242 210"
-			onClick		{ cmd "cp_uforecovery_store_start <node:root.store_panel.ur_ufoyards@lineselected>; mn_pop;" }
+			onClick		{ cmd "cp_uforecovery_store_start <node:root.store_panel.ur_ufoyards@lineselected>; ui_pop;" }
 		}
 	}
 
@@ -377,7 +377,7 @@ window uforecovery
 			string		"_Sell"
 			tooltip		"_Begin UFO sell process"
 			pos			"242 210"
-			onClick		{ cmd "cp_uforecovery_sell_start; mn_pop;" }
+			onClick		{ cmd "cp_uforecovery_sell_start; ui_pop;" }
 		}
 	}
 
@@ -433,7 +433,7 @@ window uforecovery
 		*cvar:mission_recoverynation = ""
 
 		if ( *cvar:mission_uforecovered == 0 ) {
-			cmd "mn_pop;"
+			cmd "ui_pop;"
 		} else {
 			cmd "cp_uforecovery_sell_init; cp_uforecovery_store_init;"
 		}

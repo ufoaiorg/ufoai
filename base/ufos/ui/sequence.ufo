@@ -17,17 +17,17 @@ window sequence
 		align		LAYOUTALIGN_FILL
 		onClick		{ call *node:root.next }
 		onEnd {
-			cmd "mn_close sequence"
+			cmd "ui_close sequence"
 		}
 	}
 
 	confunc seq_start {
 		*node:root.seq@src = <1>
-		cmd "mn_push sequence"
+		cmd "ui_push sequence"
 	}
 
 	confunc seq_end {
-		cmd "mn_close sequence"
+		cmd "ui_close sequence"
 	}
 
 	func onInit {

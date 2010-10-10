@@ -293,7 +293,7 @@ void UI_WindowNodeSetRenderNode (uiNode_t *node, uiNode_t *renderNode)
  */
 static void UI_WindowNodeLoaded (uiNode_t *node)
 {
-	static const char* closeCommand = "mn_close <path:root>;";
+	static const char* closeCommand = "ui_close <path:root>;";
 
 	/* create a drag zone, if it is requested */
 	if (EXTRADATA(node).dragButton) {

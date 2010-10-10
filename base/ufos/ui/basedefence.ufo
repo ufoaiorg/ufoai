@@ -374,7 +374,7 @@ window basedefence extends objectinfo
 			image		"ui/button_green_small"
 			pos			"50 250"
 			size		"200 32"
-			onClick		{ cmd "mn_pop; mn_installation_destroy;" }
+			onClick		{ cmd "ui_pop; mn_installation_destroy;" }
 		}
 		button close
 		{
@@ -384,7 +384,7 @@ window basedefence extends objectinfo
 			image		"ui/button_green_small"
 			pos			"549 250"
 			size		"200 32"
-			onClick		{ cmd "mn_pop;" }
+			onClick		{ cmd "ui_pop;" }
 		}
 
 	}

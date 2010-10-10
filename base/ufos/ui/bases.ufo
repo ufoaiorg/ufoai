@@ -134,70 +134,70 @@ window bases
 	{
 		string		"_Buildings"
 		tooltip		"_Build base facilities"
-		onClick		{ cmd "mn_push buildings;" }
+		onClick		{ cmd "ui_push buildings;" }
 	}
 
 	cmpBaseButton aircraft
 	{
 		string		"_Aircraft"
 		tooltip		"_Aircraft management and crew equipment"
-		onClick		{ cmd "mn_push aircraft;" }
+		onClick		{ cmd "ui_push aircraft;" }
 	}
 
 	cmpBaseButton buysell
 	{
 		string		"_Buy/Sell"
 		tooltip		"_Buy/Sell equipment, aircraft and UGV"
-		onClick		{ cmd "mn_push market;" }
+		onClick		{ cmd "ui_push market;" }
 	}
 
 	cmpBaseButton transfer
 	{
 		string		"_Transfer"
 		tooltip		"_Transfer equipment, aircraft, UGV, aliens and employees to other bases"
-		onClick		{ cmd "mn_push transfer;" }
+		onClick		{ cmd "ui_push transfer;" }
 	}
 
 	cmpBaseButton research
 	{
 		string		"_Research"
 		tooltip		"_Research new technology"
-		onClick		{ cmd "mn_push research;" }
+		onClick		{ cmd "ui_push research;" }
 	}
 
 	cmpBaseButton production
 	{
 		string		"_Production"
 		tooltip		"_Produce equipment, aircraft and UGV"
-		onClick		{ cmd "mn_push production;" }
+		onClick		{ cmd "ui_push production;" }
 	}
 
 	cmpBaseButton hire
 	{
 		string		"_Employees"
 		tooltip		"_Hire or dismiss employees"
-		onClick		{ cmd "mn_push employees;" }
+		onClick		{ cmd "ui_push employees;" }
 	}
 
 	cmpBaseButton containment
 	{
 		string		"_Containment"
 		tooltip		"_Manage captured aliens"
-		onClick		{ cmd "mn_push aliencont;" }
+		onClick		{ cmd "ui_push aliencont;" }
 	}
 
 	cmpBaseButton hospital
 	{
 		string		"_Hospital"
 		tooltip		"_Treat wounded soldiers and perform implant surgery"
-		onClick		{ cmd "mn_push hospital;" }
+		onClick		{ cmd "ui_push hospital;" }
 	}
 
 	cmpBaseButton summary
 	{
 		string		"_Base Summary"
 		tooltip		"_Information about this base (available storage space, production, research, etc.)"
-		onClick		{ cmd "mn_push basesummary;" }
+		onClick		{ cmd "ui_push basesummary;" }
 	}
 }
 	confunc update_basebutton

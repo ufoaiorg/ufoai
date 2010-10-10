@@ -9,7 +9,7 @@ window intro
 		size		"1024 768"
 		src			"intro"
 		onClick		{
-			cmd "mn_pop;"
+			cmd "ui_pop;"
 		}
 	}
 

@@ -290,6 +290,6 @@ void UI_RegisterMessageListNode (uiBehaviour_t *behaviour)
 	behaviour->loading = UI_MessageListNodeLoading;
 	behaviour->mouseWheel = UI_MessageListNodeMouseWheel;
 #ifdef DEBUG
-	Cmd_AddCommand("debug_mn_message_useallicons", UI_MessageDebugUseAllIcons_f, "Update message to use all icons");
+	Cmd_AddCommand("debug_ui_message_useallicons", UI_MessageDebugUseAllIcons_f, "Update message to use all icons");
 #endif
 }

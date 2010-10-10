@@ -7,7 +7,7 @@
  * a button value, this button is selected.
  * @code
  * radiobutton foo {
- *   cvar "*cvar:mn_serverday"
+ *   cvar "*cvar:foobar"
  *   value 4
  *   icon boo
  * }

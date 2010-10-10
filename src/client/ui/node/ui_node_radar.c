@@ -780,14 +780,14 @@ static void UI_GenAllRadarMap (uiNode_t *node, uiTimer_t *timer)
 	int mode = (timer->calledTime - 1) % 2;
 
 	if (level >= cl.mapMaxLevel) {
-		Cbuf_AddText("mn_genallradarmaprelease");
+		Cbuf_AddText("ui_genallradarmaprelease");
 		return;
 	}
 
 	if (mode == 0)
 		Cvar_SetValue("cl_worldlevel", level);
 	else
-		Cmd_ExecuteString("mn_genradarmap");
+		Cmd_ExecuteString("ui_genradarmap");
 }
 
 uiTimer_t* timer;
@@ -819,8 +819,8 @@ void UI_RegisterRadarNode (uiBehaviour_t *behaviour)
 	behaviour->mouseUp = UI_RadarNodeMouseUp;
 	behaviour->capturedMouseMove = UI_RadarNodeCapturedMouseMove;
 
-	Cmd_AddCommand("mn_genpreviewradarmap", UI_GenPreviewRadarMap_f, NULL);
-	Cmd_AddCommand("mn_genradarmap", UI_GenRadarMap_f, NULL);
-	Cmd_AddCommand("mn_genallradarmap", UI_GenAllRadarMap_f, NULL);
-	Cmd_AddCommand("mn_genallradarmaprelease", UI_GenAllRadarMapRelease_f, NULL);
+	Cmd_AddCommand("ui_genpreviewradarmap", UI_GenPreviewRadarMap_f, NULL);
+	Cmd_AddCommand("ui_genradarmap", UI_GenRadarMap_f, NULL);
+	Cmd_AddCommand("ui_genallradarmap", UI_GenAllRadarMap_f, NULL);
+	Cmd_AddCommand("ui_genallradarmaprelease", UI_GenAllRadarMapRelease_f, NULL);
 }

@@ -12,7 +12,7 @@ window nohud extends ahud
 
 	func showinventory
 	{
-		cmd "mn_push hudinv;"
+		cmd "ui_push hudinv;"
 	}
 
 	// ==================

@@ -648,13 +648,13 @@ window popup_transferbaselist
 		pos			"26 74"
 		size		"450 112"
 		onChange	{ cmd "trans_baselist_click <cvar:tr_base>;" }
-		onRClick	{ cmd "mn_pop; aircraft_return;" }
+		onRClick	{ cmd "ui_pop; aircraft_return;" }
 	}
 
 	cmpCancelButton bt_cancel
 	{
 		pos			"266 188"
-		onClick		{ cmd "mn_pop; aircraft_return;" }
+		onClick		{ cmd "ui_pop; aircraft_return;" }
 	}
 
 	func onInit {

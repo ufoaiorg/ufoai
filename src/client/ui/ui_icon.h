@@ -48,7 +48,7 @@ typedef struct uiIcon_s {
 	vec2_t pos[ICON_STATUS_MAX];
 } uiIcon_t;
 
-extern const value_t mn_iconProperties[];
+extern const value_t ui_iconProperties[];
 
 uiIcon_t* UI_GetIconByName(const char* name);
 uiIcon_t* UI_AllocStaticIcon(const char* name) __attribute__ ((warn_unused_result));

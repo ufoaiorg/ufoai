@@ -93,7 +93,7 @@ window mail
 	func onClose
 	{
 		/** @todo we should remove that call. */
-		cmd "mn_fireinit mailclient;"
+		cmd "ui_fireinit mailclient;"
 	}
 	func onInit
 	{
@@ -566,7 +566,7 @@ window mailclient
 		pos			"920 720"
 		size		"64 37"
 		icon		return
-		onClick		{ cmd "mn_pop;" }
+		onClick		{ cmd "ui_pop;" }
 	}
 
 	func onInit

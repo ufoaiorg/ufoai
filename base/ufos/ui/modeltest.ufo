@@ -5,9 +5,9 @@
 // The model to be checked MUST NOT use "menutransform" for menu "model_test" in models.ufo
 //
 // Invoke this menu with:
-//	mn_push model_test
+//	ui_push model_test
 // Or start from command-line:
-//	./ufo +mn_push model_test
+//	./ufo +ui_push model_test
 // ==================
 
 window model_test

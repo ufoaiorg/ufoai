@@ -62,8 +62,8 @@ component cmpActorSelect cmpSoldierSelect {
 		size		"16 16"
 		padding		0
 		invis		true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4;" } // 4: click on bottom
+		onWheelUp 	{ cmd "ui_active_vscrollbar <path:root>.scroll_employees 0;" } // 0: click on top
+		onWheelDown { cmd "ui_active_vscrollbar <path:root>.scroll_employees 4;" } // 4: click on bottom
 	}
 	checkbox check_actor
 	{
@@ -132,7 +132,7 @@ window team extends iaircraft
 	{
 		cmd "team_select <cvar:cl_selected2>;"
 		cmd "del cl_selected2;"
-		cmd "mn_removelistener equipment@onClose <path:this>;"
+		cmd "ui_removelistener equipment@onClose <path:this>;"
 	}
 
 	button bt_equipsoldiers
@@ -143,8 +143,8 @@ window team extends iaircraft
 		image	"ui/button_blue"
 		onClick	{
 			*cvar:cl_selected2 = <cvar:cl_selected>
-			cmd "mn_addlistener equipment@onClose <path:root>.listen_close_equipment;"
-			cmd "mn_push equipment;"
+			cmd "ui_addlistener equipment@onClose <path:root>.listen_close_equipment;"
+			cmd "ui_push equipment;"
 		}
 		color	"1 1 1 0.8"
 		selectcolor "1 1 1 1"
@@ -566,7 +566,7 @@ window team extends iaircraft
 		*node:root.aircraft_list@lineselected = <1>
 		// absent from base, go back to the main GUI
 		if ( *cvar:mn_equipsoldierstate == 1 ) {
-			cmd "mn_pop;mn_push aircraft;"
+			cmd "ui_pop;ui_push aircraft;"
 		}
 		cmd "aircraft_status_change"
 	}

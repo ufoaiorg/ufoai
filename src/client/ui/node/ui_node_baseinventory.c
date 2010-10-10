@@ -202,8 +202,6 @@ static void UI_ContainerItemIteratorInit (containerItemIterator_t *iterator, con
 
 /**
  * @brief Update display of scroll buttons.
- * @note The cvars "mn_cont_scroll_prev_hover" and "mn_cont_scroll_next_hover" are
- * set by the "in" and "out" functions of the scroll buttons.
  * @param[in] node Context node
  */
 static void UI_BaseInventoryNodeUpdateScroll (uiNode_t* node)

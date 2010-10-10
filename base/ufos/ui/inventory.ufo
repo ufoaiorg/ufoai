@@ -11,7 +11,7 @@ window inventory
 
 	func hideinventory
 	{
-		cmd "mn_pop;"
+		cmd "ui_pop;"
 	}
 
 	// ==================

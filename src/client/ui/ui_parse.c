@@ -1228,7 +1228,7 @@ void UI_ParseIcon (const char *name, const char **text)
 		if (token[0] == '}')
 			break;
 
-		property = UI_FindPropertyByName(mn_iconProperties, token);
+		property = UI_FindPropertyByName(ui_iconProperties, token);
 		if (!property) {
 			Com_Printf("UI_ParseIcon: unknown options property: '%s' - ignore it\n", token);
 			return;

@@ -5,7 +5,7 @@
  * but if the value is under 0, the checkbox display an "invalidate" status.
  * @code
  * checkbox check_item {
- *   cvar "*cvar mn_serverday"
+ *   cvar "*cvar foobar"
  *   pos  "410 100"
  * }
  * @endcode

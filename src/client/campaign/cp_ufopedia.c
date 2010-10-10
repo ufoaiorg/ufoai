@@ -725,7 +725,7 @@ void UP_OpenWith (const char *techID)
  */
 void UP_OpenCopyWith (const char *techID)
 {
-	Cmd_ExecuteString("mn_push ufopedia");
+	Cmd_ExecuteString("ui_push ufopedia");
 	Cbuf_AddText(va("ufopedia %s\n", techID));
 }
 
