@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief allocates an initial text buffer that will grow as needed
  */
 void Cbuf_Init(void);
+void Cbuf_Shutdown(void);
 
 /**
  * @brief as new commands are generated from the console or keyBindings, */

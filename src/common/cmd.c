@@ -108,6 +108,14 @@ void Cbuf_Init (void)
 }
 
 /**
+ * @note Reset the Cbuf memory.
+ */
+void Cbuf_Shutdown (void)
+{
+	SZ_Init(&cmd_text, NULL, 0);
+}
+
+/**
  * @brief Adds command text at the end of the buffer
  * @note Normally when a command is generate from the console or keyBindings, it will be added to the end of the command buffer.
  */
@@ -1137,5 +1145,7 @@ void Cmd_Shutdown (void)
 {
 	memset(cmd_functions_hash, 0, sizeof(cmd_functions_hash));
 	memset(cmd_functions, 0, sizeof(cmd_functions));
+	memset(cmd_argv, 0, sizeof(cmd_argv));
 	cmd_argc = 0;
+
 }

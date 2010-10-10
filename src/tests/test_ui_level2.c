@@ -62,6 +62,7 @@ static void TEST_ParseScript (const char* scriptName)
 static int UFO_CleanSuiteUILevel2 (void)
 {
 	UI_Shutdown();
+	Cbuf_Shutdown();
 	TEST_Shutdown();
 	return 0;
 }
