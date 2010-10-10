@@ -1128,7 +1128,7 @@ static uiNode_t *UI_ParseNode (uiNode_t * parent, const char **text, const char 
  * @brief parses the models.ufo and all files where UI models (menu_model) are defined
  * @sa CL_ParseClientData
  */
-void UI_ParseUIModel (const char *name, const char **text)
+qboolean UI_ParseUIModel (const char *name, const char **text)
 {
 	uiModel_t *model;
 	const char *token;
@@ -1140,12 +1140,12 @@ void UI_ParseUIModel (const char *name, const char **text)
 	for (i = 0; i < ui_global.numModels; i++)
 		if (!strcmp(ui_global.models[i].id, name)) {
 			Com_Printf("UI_ParseUIModel: menu_model \"%s\" with same name found, second ignored\n", name);
-			return;
+			return qfalse;
 		}
 
 	if (ui_global.numModels >= UI_MAX_MODELS) {
 		Com_Printf("UI_ParseUIModel: Max UI models reached\n");
-		return;
+		return qfalse;
 	}
 
 	/* initialize the model */
@@ -1162,7 +1162,7 @@ void UI_ParseUIModel (const char *name, const char **text)
 
 	if (!*text || token[0] != '{') {
 		Com_Printf("UI_ParseUIModel: Model \"%s\" without body ignored\n", model->id);
-		return;
+		return qfalse;
 	}
 
 	ui_global.numModels++;
@@ -1171,7 +1171,7 @@ void UI_ParseUIModel (const char *name, const char **text)
 		/* get the name type */
 		token = Com_EParse(text, errhead, name);
 		if (!*text)
-			break;
+			return qfalse;
 		if (token[0] == '}')
 			break;
 
@@ -1183,7 +1183,7 @@ void UI_ParseUIModel (const char *name, const char **text)
 			if (!strcmp(v->string, "need")) {
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
-					return;
+					return qfalse;
 				model->next = UI_GetUIModel(token);
 				if (!model->next)
 					Com_Printf("Could not find UI model %s", token);
@@ -1192,7 +1192,7 @@ void UI_ParseUIModel (const char *name, const char **text)
 		} else {
 			token = Com_EParse(text, errhead, name);
 			if (!*text)
-				return;
+				return qfalse;
 			switch (v->type) {
 			case V_CLIENT_HUNK_STRING:
 				Mem_PoolStrDupTo(token, (char**) ((char*)model + (int)v->ofs), ui_sysPool, 0);
@@ -1202,9 +1202,11 @@ void UI_ParseUIModel (const char *name, const char **text)
 			}
 		}
 	} while (*text);
+
+	return qtrue;
 }
 
-void UI_ParseIcon (const char *name, const char **text)
+qboolean UI_ParseIcon (const char *name, const char **text)
 {
 	uiIcon_t *icon;
 	const char *token;
@@ -1223,7 +1225,7 @@ void UI_ParseIcon (const char *name, const char **text)
 
 		token = Com_Parse(text);
 		if (*text == NULL)
-			return;
+			return qfalse;
 
 		if (token[0] == '}')
 			break;
@@ -1231,18 +1233,18 @@ void UI_ParseIcon (const char *name, const char **text)
 		property = UI_FindPropertyByName(ui_iconProperties, token);
 		if (!property) {
 			Com_Printf("UI_ParseIcon: unknown options property: '%s' - ignore it\n", token);
-			return;
+			return qfalse;
 		}
 
 		/* get parameter values */
 		result = UI_ParseProperty(icon, property, icon->name, text, &token);
 		if (!result) {
 			Com_Printf("UI_ParseIcon: Parsing for icon '%s'. See upper\n", icon->name);
-			return;
+			return qfalse;
 		}
 	}
 
-	return;
+	return qtrue;
 }
 
 /**
@@ -1253,7 +1255,7 @@ void UI_ParseIcon (const char *name, const char **text)
  * }
  * @endcode
  */
-void UI_ParseComponent (const char *type, const char **text)
+qboolean UI_ParseComponent (const char *type, const char **text)
 {
 	const char *errhead = "UI_ParseComponent: unexpected end of file (component";
 	uiNode_t *component;
@@ -1261,7 +1263,7 @@ void UI_ParseComponent (const char *type, const char **text)
 
 	if (strcmp(type, "component") != 0) {
 		Com_Error(ERR_FATAL, "UI_ParseComponent: \"component\" expected but \"%s\" found.\n", type);
-		return;	/* never reached */
+		return qfalse;	/* never reached */
 	}
 
 	/* CL_ParseClientData read the real type as name */
@@ -1269,8 +1271,11 @@ void UI_ParseComponent (const char *type, const char **text)
 	token = Com_Parse(text);
 
 	component = UI_ParseNode(NULL, text, &token, errhead);
-	if (component)
-		UI_InsertComponent(component);
+	if (!component)
+		return qfalse;
+
+	UI_InsertComponent(component);
+	return qtrue;
 }
 
 
@@ -1282,7 +1287,7 @@ void UI_ParseComponent (const char *type, const char **text)
  * }
  * @endcode
  */
-void UI_ParseWindow (const char *type, const char *name, const char **text)
+qboolean UI_ParseWindow (const char *type, const char *name, const char **text)
 {
 	const char *errhead = "UI_ParseWindow: unexpected end of file (window";
 	uiNode_t *window;
@@ -1292,16 +1297,16 @@ void UI_ParseWindow (const char *type, const char *name, const char **text)
 
 	if (strcmp(type, "window") != 0) {
 		Com_Error(ERR_FATAL, "UI_ParseWindow: '%s %s' is not a window node\n", type, name);
-		return;	/* never reached */
+		return qfalse;	/* never reached */
 	}
 
 	if (!UI_TokenIsName(name, Com_ParsedTokenIsQuoted())) {
 		Com_Printf("UI_ParseWindow: \"%s\" is not a well formed node name ([a-zA-Z_][a-zA-Z0-9_]*)\n", name);
-		return;
+		return qfalse;
 	}
 	if (UI_TokenIsReserved(name)) {
 		Com_Printf("UI_ParseWindow: \"%s\" is a reserved token, we can't call a node with it (node \"%s\")\n", name, name);
-		return;
+		return qfalse;
 	}
 
 	/* search for windows with same name */
@@ -1315,7 +1320,7 @@ void UI_ParseWindow (const char *type, const char *name, const char **text)
 
 	if (ui_global.numWindows >= UI_MAX_WINDOWS) {
 		Com_Error(ERR_FATAL, "UI_ParseWindow: max windows exceeded (%i) - ignore '%s'\n", UI_MAX_WINDOWS, name);
-		return;	/* never reached */
+		return qfalse;	/* never reached */
 	}
 
 	/* get window body */
@@ -1341,10 +1346,11 @@ void UI_ParseWindow (const char *type, const char *name, const char **text)
 	result = UI_ParseNodeBody(window, text, &token, errhead);
 	if (!result) {
 		Com_Error(ERR_FATAL, "UI_ParseWindow: window \"%s\" has a bad body\n", window->name);
-		return;	/* never reached */
+		return qfalse;	/* never reached */
 	}
 
 	window->behaviour->loaded(window);
+	return qtrue;
 }
 
 /**

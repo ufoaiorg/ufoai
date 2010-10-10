@@ -901,17 +901,18 @@ void CL_InitAfter (void)
  * but e.g. techs would need those parsed items - thus we have to parse e.g. techs
  * at a later stage)
  * @note This data is persistent until you shutdown the game
+ * @return True if the parsing function succeeded.
  */
-void CL_ParseClientData (const char *type, const char *name, const char **text)
+qboolean CL_ParseClientData (const char *type, const char *name, const char **text)
 {
 	if (!strcmp(type, "font"))
-		UI_ParseFont(name, text);
+		return UI_ParseFont(name, text);
 	else if (!strcmp(type, "tutorial"))
 		TUT_ParseTutorials(name, text);
 	else if (!strcmp(type, "menu_model"))
-		UI_ParseUIModel(name, text);
+		return UI_ParseUIModel(name, text);
 	else if (!strcmp(type, "icon"))
-		UI_ParseIcon(name, text);
+		return UI_ParseIcon(name, text);
 	else if (!strcmp(type, "particle"))
 		CL_ParseParticle(name, text);
 	else if (!strcmp(type, "sequence"))
@@ -923,13 +924,14 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 	else if (!strcmp(type, "language"))
 		CL_ParseLanguages(name, text);
 	else if (!strcmp(type, "window"))
-		UI_ParseWindow(type, name, text);
+		return UI_ParseWindow(type, name, text);
 	else if (!strcmp(type, "component"))
-		UI_ParseComponent(type, text);
+		return UI_ParseComponent(type, text);
 	else if (!strcmp(type, "mapdef"))
 		CL_ParseMapDefinition(name, text);
 	else if (!strcmp(type, "actorskin"))
 		CL_ParseActorSkin(name, text);
+	return qtrue;
 }
 
 /** @brief Cvars for initial check (popup at first start) */

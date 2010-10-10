@@ -43,16 +43,19 @@ static int UFO_InitSuiteUILevel2 (void)
 }
 
 /** @todo move it somewhere */
-static void TEST_ParseScript (const char* scriptName)
+static qboolean TEST_ParseScript (const char* scriptName)
 {
 	const char *type, *name, *text;
+	qboolean result = qtrue;
 
 	/* parse ui node script */
 	Com_Printf("Load \"%s\": %i script file(s)\n", scriptName, FS_BuildFileList(scriptName));
 	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 	while ((type = FS_NextScriptHeader(scriptName, &name, &text)) != NULL)
-		CL_ParseClientData(type, name, &text);
+		result = CL_ParseClientData(type, name, &text) && result;
+
+	return result;
 }
 
 /**
@@ -70,7 +73,7 @@ static int UFO_CleanSuiteUILevel2 (void)
 /**
  * @brief after execution of a unittest window, it analyse color of
  * normalized indicator, and create asserts. Both Fail/Pass asserts is
- * usefull to count number.
+ * useful to count number.
  */
 static void UFO_AnalyseTestWindow (const char* windowName)
 {
@@ -118,12 +121,14 @@ static void UFO_AnalyseTestWindow (const char* windowName)
 static void UFO_ExecuteTestWindow (const char* windowName)
 {
 	int i;
+	qboolean result;
 
 	/* look and feed */
 	Com_Printf("\n");
 
-	TEST_ParseScript(va("ufos/uitest/%s.ufo", windowName));
-	/* @todo catch parse error */
+	result = TEST_ParseScript(va("ufos/uitest/%s.ufo", windowName));
+	if (!result)
+		CU_FAIL_FATAL("Fail to parse needed scripts");
 
 	Cmd_ExecuteString(va("ui_push %s", windowName));
 

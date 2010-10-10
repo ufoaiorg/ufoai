@@ -31,10 +31,10 @@ struct uiNode_s;
 struct uiAction_s;
 struct value_s;
 
-void UI_ParseWindow(const char *type, const char *name, const char **text);
-void UI_ParseComponent(const char *type, const char **text);
-void UI_ParseIcon(const char *name, const char **text);
-void UI_ParseUIModel(const char *name, const char **text);
+qboolean UI_ParseWindow(const char *type, const char *name, const char **text);
+qboolean UI_ParseComponent(const char *type, const char **text);
+qboolean UI_ParseIcon(const char *name, const char **text);
+qboolean UI_ParseUIModel(const char *name, const char **text);
 float UI_GetReferenceFloat(const struct uiNode_s* const node, const void *ref);
 const char *UI_GetReferenceString(const struct uiNode_s* const node, const char *ref) __attribute__ ((warn_unused_result));
 const value_t* UI_FindPropertyByName(const value_t* propertyList, const char* name) __attribute__ ((warn_unused_result));

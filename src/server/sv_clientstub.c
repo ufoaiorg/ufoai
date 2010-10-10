@@ -56,8 +56,9 @@ void CL_SlowFrame (int now, void *data)
 {
 }
 
-void CL_ParseClientData (const char *type, const char *name, const char **text)
+qboolean CL_ParseClientData (const char *type, const char *name, const char **text)
 {
+	return qtrue;
 }
 
 void Cmd_ForwardToServer (void)

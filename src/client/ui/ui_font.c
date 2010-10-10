@@ -65,7 +65,7 @@ static void UI_RegisterFont (const uiFont_t *font)
 /**
  * @sa CL_ParseClientData
  */
-void UI_ParseFont (const char *name, const char **text)
+qboolean UI_ParseFont (const char *name, const char **text)
 {
 	uiFont_t *font;
 	const char *errhead = "UI_ParseFont: unexpected end of file (font";
@@ -75,12 +75,12 @@ void UI_ParseFont (const char *name, const char **text)
 	/* search for font with same name */
 	if (UI_GetFontByID(name)) {
 		Com_Printf("UI_ParseFont: font \"%s\" with same name found, second ignored\n", name);
-		return;
+		return qfalse;
 	}
 
 	if (numFonts >= MAX_FONTS) {
 		Com_Printf("UI_ParseFont: Max fonts reached\n");
-		return;
+		return qfalse;
 	}
 
 	/* initialize the UI */
@@ -96,7 +96,7 @@ void UI_ParseFont (const char *name, const char **text)
 
 	if (!*text || *token != '{') {
 		Com_Printf("UI_ParseFont: font \"%s\" without body ignored\n", name);
-		return;
+		return qfalse;
 	}
 
 	numFonts++;
@@ -105,7 +105,7 @@ void UI_ParseFont (const char *name, const char **text)
 		/* get the name type */
 		token = Com_EParse(text, errhead, name);
 		if (!*text)
-			break;
+			return qfalse;
 		if (*token == '}')
 			break;
 
@@ -114,7 +114,7 @@ void UI_ParseFont (const char *name, const char **text)
 				/* found a definition */
 				token = Com_EParse(text, errhead, name);
 				if (!*text)
-					return;
+					return qfalse;
 
 				switch (v->type) {
 				case V_TRANSLATION_STRING:
@@ -134,6 +134,7 @@ void UI_ParseFont (const char *name, const char **text)
 	} while (*text);
 
 	UI_RegisterFont(font);
+	return qtrue;
 }
 
 /**
