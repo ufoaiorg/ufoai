@@ -1,0 +1,240 @@
+/**
+ * @brief Unittest for actions
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push test_action2"
+ * Every thing must be green and it must not print any text or warning into the console.
+ */
+
+window test_action2
+{
+	{
+		pos "100 100"
+		size "340 400"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest action2"
+		bgcolor		"0 0 0 1"
+	}
+
+	string paramTitle {
+		pos		"20 40"
+		string	"param"
+	}
+
+	string testParam1 {
+		pos		"20 60"
+		string	"t1"
+	}
+
+	string testParam2 {
+		pos		"20 80"
+		string	"t2"
+	}
+
+	string testParam3 {
+		pos		"20 100"
+		string	"t3"
+	}
+
+	string testParam4 {
+		pos		"20 120"
+		string	"t4"
+	}
+
+	string testParam5 {
+		pos		"20 140"
+		string	"t5"
+	}
+
+	string testParam6 {
+		pos		"20 160"
+		string	"t6"
+	}
+
+	string testParam7 {
+		pos		"20 180"
+		string	"t7"
+	}
+
+	string testParam8 {
+		pos		"20 200"
+		string	"t8"
+	}
+
+	string testParam9 {
+		pos		"20 220"
+		string	"t9"
+	}
+
+	string testParam10 {
+		pos		"20 240"
+		string	"t10"
+	}
+
+	string testParam11 {
+		pos		"20 260"
+		string	"t11"
+	}
+
+	string testParam12 {
+		pos		"20 280"
+		string	"t12"
+	}
+
+	string listenerTitle {
+		pos		"80 40"
+		string	"/"
+	}
+
+/*
+	string testListener1 {
+		pos		"80 60"
+		string	"t1"
+	}
+
+	string testListener2 {
+		pos		"80 80"
+		string	"t2"
+	}
+
+	string testListener3 {
+		pos		"80 100"
+		string	"t3"
+	}
+
+	string testListener4 {
+		pos		"80 120"
+		string	"t4"
+	}
+
+	string testListener5 {
+		pos		"80 140"
+		string	"t5"
+	}
+
+	string testListener6 {
+		pos		"80 160"
+		string	"t6"
+	}
+
+	string testListener7 {
+		pos		"80 180"
+		string	"t7"
+	}
+
+	string testListener8 {
+		pos		"80 200"
+		string	"t8"
+	}
+
+	string testListener9 {
+		pos		"80 220"
+		string	"t9"
+	}
+
+	string testListener10 {
+		pos		"80 240"
+		string	"t10"
+	}
+*/
+
+	//
+	// Common tests
+	//
+
+	func testParamNum0 {
+		if (paramcount == 0) {
+			*node:root.testParam1@color = "0 1 0 1"
+		} else {
+			*node:root.testParam1@color = "1 0 0 1"
+		}
+	}
+
+	func testParamNum2 {
+		if (paramcount == 2) {
+			*node:root.testParam2@color = "0 1 0 1"
+		} else {
+			*node:root.testParam2@color = "1 0 0 1"
+		}
+	}
+
+	func testParamString {
+		if (param1 eq "a") {
+			*node:root.testParam3@color = "0 1 0 1"
+		} else {
+			*node:root.testParam3@color = "1 0 0 1"
+		}
+		if (param2 eq param4) {
+			*node:root.testParam4@color = "0 1 0 1"
+		} else {
+			*node:root.testParam4@color = "1 0 0 1"
+		}
+	}
+
+	func testParamNumber {
+		if (param1 == 1) {
+			*node:root.testParam5@color = "0 1 0 1"
+		} else {
+			*node:root.testParam5@color = "1 0 0 1"
+		}
+		if (param2 == 1.5) {
+			*node:root.testParam6@color = "0 1 0 1"
+		} else {
+			*node:root.testParam6@color = "1 0 0 1"
+		}
+		if ((param1 + param3) == param4) {
+			*node:root.testParam7@color = "0 1 0 1"
+		} else {
+			*node:root.testParam7@color = "1 0 0 1"
+		}
+	}
+
+	confunc testParamConfunc {
+		if (paramcount == 3) {
+			*node:root.testParam8@color = "0 1 0 1"
+		} else {
+			*node:root.testParam8@color = "1 0 0 1"
+		}
+		if (param1 eq "aaaa") {
+			*node:root.testParam9@color = "0 1 0 1"
+		} else {
+			*node:root.testParam9@color = "1 0 0 1"
+		}
+		if (param2 == 1) {
+			*node:root.testParam10@color = "0 1 0 1"
+		} else {
+			*node:root.testParam10@color = "1 0 0 1"
+		}
+		if (param3 == 1.5) {
+			*node:root.testParam11@color = "0 1 0 1"
+		} else {
+			*node:root.testParam11@color = "1 0 0 1"
+		}
+	}
+
+	func testNotAParam {
+		// a string "param1" is only a string, not a parameter
+		if ("param1" ne "param2") {
+			*node:root.testParam12@color = "0 1 0 1"
+		} else {
+			*node:root.testParam12@color = "1 0 0 1"
+		}
+	}
+
+	func testParam {
+		call *node:root.testParamNum0
+		call *node:root.testParamNum2("a", "b")
+		call *node:root.testParamString("a", "b", "c", "b")
+		call *node:root.testParamNumber(1, 1.5, 2, 3)
+		cmd "testParamConfunc aaaa 1 1.5"
+		call *node:root.testNotAParam("param2")
+	}
+
+	//
+	// Main
+	//
+
+	func onInit {
+		call *node:root.testParam
+	}
+
+}

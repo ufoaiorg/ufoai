@@ -1,0 +1,268 @@
+/**
+ * @brief Unittest for functions
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push test_function"
+ * Every thing must be green and it must not print any text or warning into the console.
+ */
+
+window test_function_interface
+{
+	confunc test7 {
+
+	}
+}
+
+window test_function extends test_function_interface
+{
+	{
+		pos "100 100"
+		size "340 400"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest setter"
+		bgcolor		"0 0 0 1"
+	}
+
+	string commonTitle {
+		pos		"20 40"
+		string	"common"
+	}
+
+	string testCommon1 {
+		pos		"20 60"
+		size	"20 20"
+		string	"t1"
+	}
+
+	string testCommon2 {
+		pos		"20 80"
+		size	"20 20"
+		string	"t2"
+	}
+
+	string testCommon3 {
+		pos		"20 100"
+		size	"20 20"
+		string	"t3"
+	}
+
+	string testCommon4 {
+		pos		"20 120"
+		size	"20 20"
+		string	"t4"
+	}
+
+	string testCommon5 {
+		pos		"20 140"
+		size	"20 20"
+		string	"t5"
+	}
+
+	string testCommon6 {
+		pos		"20 160"
+		size	"20 20"
+		string	"t6"
+	}
+
+	string testCommon7 {
+		pos		"20 180"
+		size	"20 20"
+		string	"t7"
+	}
+
+	//
+	// Common tests
+	//
+
+	func test1 {
+		// we can't test there is no params
+		*cvar:error = 0
+		*cvar:errorMessage = ""
+	}
+
+	func test2 {
+		*cvar:error = 0
+		*cvar:errorMessage = ""
+
+		if ( <1> != 1 ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 1 is wrong" )
+		}
+	}
+
+	func test3 {
+		*cvar:error = 0
+		*cvar:errorMessage = ""
+
+		if ( <1> != 2 ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 1 is wrong" )
+		}
+	}
+
+	func test4 {
+		*cvar:error = 0
+		*cvar:errorMessage = ""
+
+		if ( <1> != 10 ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 1 is wrong" )
+		}
+		if ( <2> != 2 ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 2 is wrong" )
+		}
+		if ( <3> != "foo" ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 3 is wrong" )
+		}
+	}
+
+	func test5 {
+		*cvar:error = 0
+		*cvar:errorMessage = ""
+		call *node:root.test5_1 ( "level2" )
+
+		if ( <1> != "level1" ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 1 (5) is wrong" )
+		}
+	}
+
+	func test5_1 {
+		call *node:root.test5_1_1 ( "level3" )
+
+		if ( <1> != "level2" ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 1 (5_1) is wrong" )
+		}
+	}
+
+	func test5_1_1 {
+		call *node:root.test5_1_1_1 ( "level4" )
+
+		if ( <1> != "level3" ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 1 (5_1_1) is wrong" )
+		}
+	}
+
+	func test5_1_1_1 {
+		if ( <1> != "level4" ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 1 (5_1_1_1) is wrong" )
+		}
+	}
+
+	func test6 {
+		*cvar:error = 0
+		*cvar:errorMessage = ""
+		call *node:root.test6_1 ( <1> )
+	}
+
+	func test6_1 {
+		if ( <1> != "foo3" ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 1 is wrong" )
+		}
+	}
+
+	// not a function, but it test listener which use function calls
+	confunc test7 {
+		*cvar:error = 0
+		*cvar:errorMessage = ""
+
+		if ( <1> != "foo" ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 1 is wrong" )
+		}
+		if ( <2> != 1 ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 1 is wrong" )
+		}
+		if ( <3> != 2 ) {
+			*cvar:error = ( *cvar:error + 1 )
+			*cvar:errorMessage = ( *cvar:errorMessage + "; param 1 is wrong" )
+		}
+
+		if ( *cvar:error == 0 ) {
+			*node:root.testCommon7@color = "0 1 0 1"
+			*node:root.testCommon7@tooltip = ""
+		} else {
+			*node:root.testCommon7@color = "1 0 0 1"
+			*node:root.testCommon7@tooltip = *cvar:errorMessage
+		}
+	}
+
+	//
+	// Common tests
+	//
+
+	func testCommon {
+
+		call *node:root.test1
+		if ( *cvar:error == 0 ) {
+			*node:root.testCommon1@color = "0 1 0 1"
+			*node:root.testCommon1@tooltip = ""
+		} else {
+			*node:root.testCommon1@color = "1 0 0 1"
+			*node:root.testCommon1@tooltip = *cvar:errorMessage
+		}
+
+		call *node:root.test2 ( 1 )
+		if ( *cvar:error == 0 ) {
+			*node:root.testCommon2@color = "0 1 0 1"
+			*node:root.testCommon2@tooltip = ""
+		} else {
+			*node:root.testCommon2@color = "1 0 0 1"
+			*node:root.testCommon2@tooltip = *cvar:errorMessage
+		}
+
+		call *node:root.test3 ( ( 1 + 1 ) )
+		if ( *cvar:error == 0 ) {
+			*node:root.testCommon3@color = "0 1 0 1"
+			*node:root.testCommon3@tooltip = ""
+		} else {
+			*node:root.testCommon3@color = "1 0 0 1"
+			*node:root.testCommon3@tooltip = *cvar:errorMessage
+		}
+
+		call *node:root.test4 ( 10 , ( 1 + 1 ) , "foo" )
+		if ( *cvar:error == 0 ) {
+			*node:root.testCommon4@color = "0 1 0 1"
+			*node:root.testCommon4@tooltip = ""
+		} else {
+			*node:root.testCommon4@color = "1 0 0 1"
+			*node:root.testCommon4@tooltip = *cvar:errorMessage
+		}
+
+		call *node:root.test5 ( "level1" )
+		if ( *cvar:error == 0 ) {
+			*node:root.testCommon5@color = "0 1 0 1"
+			*node:root.testCommon5@tooltip = ""
+		} else {
+			*node:root.testCommon5@color = "1 0 0 1"
+			*node:root.testCommon5@tooltip = *cvar:errorMessage
+		}
+
+		call *node:root.test6 ( "foo3" )
+		if ( *cvar:error == 0 ) {
+			*node:root.testCommon6@color = "0 1 0 1"
+			*node:root.testCommon6@tooltip = ""
+		} else {
+			*node:root.testCommon6@color = "1 0 0 1"
+			*node:root.testCommon6@tooltip = *cvar:errorMessage
+		}
+
+		cmd "test7 foo 1 2"
+	}
+
+	func onInit {
+		call *node:root.testCommon
+	}
+
+	func onClose {
+		delete *cvar:error
+		delete *cvar:errorMessage
+	}
+
+}

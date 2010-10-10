@@ -1,0 +1,412 @@
+/**
+ * @brief Unittest for setters
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push test_setter"
+ * Every thing must be green and it must not print any text or warning into the console.
+ */
+
+window test_setter
+{
+	{
+		pos "100 100"
+		size "340 400"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest setter"
+		bgcolor		"0 0 0 1"
+	}
+
+	string cvarTitle {
+		pos		"20 40"
+		string	"cvar"
+	}
+
+	string testCvar1 {
+		pos		"20 60"
+		string	"t1"
+	}
+
+	string testCvar2 {
+		pos		"20 80"
+		string	"t2"
+	}
+
+	string testCvar3 {
+		pos		"20 100"
+		string	"t3"
+	}
+
+	string testCvar4 {
+		pos		"20 120"
+		string	"t4"
+	}
+
+	string testCvar5 {
+		pos		"20 140"
+		string	"t5"
+	}
+
+	string testCvar6 {
+		pos		"20 160"
+		string	"t6"
+	}
+
+	string testCvar7 {
+		pos		"20 180"
+		string	"t7"
+	}
+
+	string testCvar8 {
+		pos		"20 200"
+		string	"t8"
+	}
+
+	string testCvar9 {
+		pos		"20 220"
+		string	"t9"
+	}
+
+	string testCvar10 {
+		pos		"20 240"
+		string	"t10"
+	}
+
+	string testCvar11 {
+		pos		"20 260"
+		string	"t11"
+	}
+
+	string testCvar12 {
+		pos		"20 280"
+		string	"t12"
+	}
+
+	string testCvar13 {
+		pos		"20 300"
+		string	"t13"
+	}
+
+	string testCvar14 {
+		pos		"20 320"
+		string	"t14"
+	}
+
+	string testCvar15 {
+		pos		"20 340"
+		string	"t15"
+	}
+
+	string testCvar16 {
+		pos		"20 360"
+		string	"t16"
+	}
+
+	string propertyTitle {
+		pos		"80 40"
+		string	"prop"
+	}
+
+	string testProperty1 {
+		pos		"80 60"
+		string	"t1"
+	}
+
+	string testProperty2 {
+		pos		"80 80"
+		string	"t2"
+	}
+
+	string testProperty3 {
+		pos		"80 100"
+		string	"t3"
+	}
+
+	string testProperty4 {
+		pos		"80 120"
+		string	"t4"
+	}
+
+	string testProperty5 {
+		pos		"80 140"
+		string	"t5"
+	}
+
+
+	string testProperty6 {
+		pos		"80 160"
+		string	"t6"
+	}
+
+	string testProperty7 {
+		pos		"80 180"
+		string	"t7"
+	}
+
+	string testProperty8 {
+		pos		"80 200"
+		string	"t8"
+	}
+
+	string testProperty9 {
+		pos		"80 220"
+		string	"t9"
+	}
+
+	string testProperty10 {
+		pos		"80 240"
+		string	"t10"
+	}
+
+	string testProperty11 {
+		pos		"80 260"
+		string	"t11"
+	}
+
+	string testProperty12 {
+		pos		"80 280"
+		string	"t12"
+	}
+
+	string testProperty13 {
+		pos		"80 300"
+		string	"t13"
+	}
+
+	string testProperty14 {
+		pos		"80 320"
+		string	"t14"
+	}
+
+	string testProperty15 {
+		pos		"80 340"
+		string	"t15"
+	}
+
+	string testProperty16 {
+		pos		"80 360"
+		string	"t16"
+	}
+
+	string deleteTitle {
+		pos		"140 40"
+		string	"del"
+	}
+
+	string testDelete1 {
+		pos		"140 60"
+		string	"t1"
+	}
+
+	string testDelete2 {
+		pos		"140 80"
+		string	"t2"
+	}
+
+	//
+	// Cvar tests
+	//
+
+	spinner testNodeFoo {
+		current		*cvar:test_nodefoo
+		min			0
+		max			16
+		invis		true
+		disabled	false
+	}
+
+	confunc testCvarInjection {
+		*cvar:test = <1>
+		if ( *cvar:test == 1 ) { *node:root.testCvar11@color = "0 1 0 1" }
+		else { *node:root.testCvar11@color = "1 0 0 1" }
+
+		*cvar:test<1> = 1
+		if ( *cvar:test1 == 1 ) { *node:root.testCvar12@color = "0 1 0 1" }
+		else { *node:root.testCvar12@color = "1 0 0 1" }
+
+		*cvar:test = <3>
+		if ( *cvar:test eq "abab" ) { *node:root.testCvar13@color = "0 1 0 1" }
+		else { *node:root.testCvar13@color = "1 0 0 1" }
+
+		*cvar:test = "mm<3>mm"
+		if ( *cvar:test eq "mmababmm" ) { *node:root.testCvar14@color = "0 1 0 1" }
+		else { *node:root.testCvar14@color = "1 0 0 1" }
+
+		*cvar:test = ( <1> + 1 )
+		if ( *cvar:test == 2 ) { *node:root.testCvar15@color = "0 1 0 1" }
+		else { *node:root.testCvar15@color = "1 0 0 1" }
+
+		*cvar:test = ( ( <1> + *cvar:test<1> ) + <2> )
+		if ( *cvar:test == 4 ) { *node:root.testCvar16@color = "0 1 0 1" }
+		else { *node:root.testCvar16@color = "1 0 0 1" }
+	}
+
+	func testCvar {
+		*cvar:test = "0"
+		if ( *cvar:test == 0 ) { *node:root.testCvar1@color = "0 1 0 1" }
+		else { *node:root.testCvar1@color = "1 0 0 1" }
+		if ( *cvar:test != 1 ) { *node:root.testCvar2@color = "0 1 0 1" }
+		else { *node:root.testCvar2@color = "1 0 0 1" }
+
+		*cvar:test = "abab"
+		if ( *cvar:test eq "abab" ) { *node:root.testCvar3@color = "0 1 0 1" }
+		else { *node:root.testCvar3@color = "1 0 0 1" }
+		if ( *cvar:test ne "ababa" ) { *node:root.testCvar4@color = "0 1 0 1" }
+		else { *node:root.testCvar4@color = "1 0 0 1" }
+
+		*cvar:test = ( 1 + 1 )
+		if ( *cvar:test == 2 ) { *node:root.testCvar5@color = "0 1 0 1" }
+		else { *node:root.testCvar5@color = "1 0 0 1" }
+
+		*cvar:test = ( 1 + *cvar:test )
+		if ( *cvar:test == 3 ) { *node:root.testCvar6@color = "0 1 0 1" }
+		else { *node:root.testCvar6@color = "1 0 0 1" }
+
+		*cvar:test = ( 1 + *node:root.testNodeFoo@max )
+		if ( *cvar:test == 17 ) { *node:root.testCvar7@color = "0 1 0 1" }
+		else { *node:root.testCvar7@color = "1 0 0 1" }
+
+		*cvar:test = ( 1 + *node:root.testNodeFoo@min )
+		if ( *cvar:test == 1 ) { *node:root.testCvar8@color = "0 1 0 1" }
+		else { *node:root.testCvar8@color = "1 0 0 1" }
+
+		*cvar:test = ( *node:root.testNodeFoo@max + *cvar:test )
+		if ( *cvar:test == 17 ) { *node:root.testCvar9@color = "0 1 0 1" }
+		else { *node:root.testCvar9@color = "1 0 0 1" }
+
+		*cvar:test = ( ( *cvar:test - 17 ) + ( *node:root.testNodeFoo@max * 2 ) )
+		if ( *cvar:test == 32 ) { *node:root.testCvar10@color = "0 1 0 1" }
+		else { *node:root.testCvar10@color = "1 0 0 1" }
+
+		cmd "testCvarInjection 1 2 abab"
+		cmd "del test"
+		cmd "del test1"
+	}
+
+	//
+	// Property tests
+	//
+
+	spinner testPropFoo1 {
+		current		*cvar:test_nodefoo
+		min			0
+		max			16
+		invis		true
+		disabled	false
+	}
+
+	string testPropFoo2 {
+		invis		true
+		string		"abab"
+	}
+
+	vscrollbar testPropFoo3 {
+		current		0
+		viewsize	19
+		fullsize	19
+		invis		true
+	}
+
+	confunc testPropertyInjection {
+		*node:root.testPropFoo3@current = <1>
+		if ( *node:root.testPropFoo3@current == 1 ) { *node:root.testProperty13@color = "0 1 0 1" }
+		else { *node:root.testProperty13@color = "1 0 0 1" }
+
+		*node:root.testPropFoo<3>@current = 1
+		if ( *node:root.testPropFoo3@current == 1 ) { *node:root.testProperty14@color = "0 1 0 1" }
+		else { *node:root.testProperty14@color = "1 0 0 1" }
+
+		*node:root.testPropFoo3@current = ( <1> + 1 )
+		if ( *node:root.testPropFoo3@current == 2 ) { *node:root.testProperty15@color = "0 1 0 1" }
+		else { *node:root.testProperty15@color = "1 0 0 1" }
+
+		*node:root.testPropFoo3@current = 1
+		*node:root.testPropFoo3@current = ( ( <1> + *node:root.testPropFoo<3>@current ) + <2> )
+		if ( *node:root.testPropFoo3@current == 4 ) { *node:root.testProperty16@color = "0 1 0 1" }
+		else { *node:root.testProperty16@color = "1 0 0 1" }
+	}
+
+	func testProperty {
+
+		// bool
+
+		*node:root.testPropFoo1@disabled = 0
+		if ( *node:root.testPropFoo1@disabled == 0 ) { *node:root.testProperty1@color = "0 1 0 1" }
+		else { *node:root.testProperty1@color = "1 0 0 1" }
+
+		*node:root.testPropFoo1@disabled = 1
+		if ( *node:root.testPropFoo1@disabled == 1 ) { *node:root.testProperty2@color = "0 1 0 1" }
+		else { *node:root.testProperty2@color = "1 0 0 1" }
+
+		// int
+
+		*node:root.testPropFoo3@current = 0
+		if ( *node:root.testPropFoo3@current == 0 ) { *node:root.testProperty3@color = "0 1 0 1" }
+		else { *node:root.testProperty3@color = "1 0 0 1" }
+
+		*node:root.testPropFoo3@current = 10
+		if ( *node:root.testPropFoo3@current == 10 ) { *node:root.testProperty4@color = "0 1 0 1" }
+		else { *node:root.testProperty4@color = "1 0 0 1" }
+
+		// float
+
+		*node:root.testPropFoo1@min = 0
+		if ( *node:root.testPropFoo1@min == 0 ) { *node:root.testProperty5@color = "0 1 0 1" }
+		else { *node:root.testProperty5@color = "1 0 0 1" }
+
+		*node:root.testPropFoo1@min = 10
+		if ( *node:root.testPropFoo1@min == 10 ) { *node:root.testProperty6@color = "0 1 0 1" }
+		else { *node:root.testProperty6@color = "1 0 0 1" }
+
+		// string
+
+		*node:root.testPropFoo2@string = "abab"
+		if ( *node:root.testPropFoo2@string eq "abab" ) { *node:root.testProperty7@color = "0 1 0 1" }
+		else { *node:root.testProperty7@color = "1 0 0 1" }
+
+		*node:root.testPropFoo2@string = "baba"
+		if ( *node:root.testPropFoo2@string eq "baba" ) { *node:root.testProperty8@color = "0 1 0 1" }
+		else { *node:root.testProperty8@color = "1 0 0 1" }
+
+		// cvar linked to int
+
+		*node:root.testPropFoo1@current = 0
+		if ( *node:root.testPropFoo1@current == 0 ) { *node:root.testProperty9@color = "0 1 0 1" }
+		else { *node:root.testProperty9@color = "1 0 0 1" }
+
+		*node:root.testPropFoo1@current = 10
+		if ( *node:root.testPropFoo1@current == 10 ) { *node:root.testProperty10@color = "0 1 0 1" }
+		else { *node:root.testProperty10@color = "1 0 0 1" }
+
+		// some expressions
+
+		*node:root.testPropFoo1@min = 10
+		*node:root.testPropFoo1@min = ( 1 + *node:root.testPropFoo1@min )
+		if ( *node:root.testPropFoo1@min == 11 ) { *node:root.testProperty11@color = "0 1 0 1" }
+		else { *node:root.testProperty11@color = "1 0 0 1" }
+
+		*node:root.testPropFoo1@min = ( ( *node:root.testPropFoo1@min - 11 ) + ( *node:root.testPropFoo1@max * 2 ) )
+		if ( *node:root.testPropFoo1@min == 32 ) { *node:root.testProperty12@color = "0 1 0 1" }
+		else { *node:root.testProperty12@color = "1 0 0 1" }
+
+		cmd "testPropertyInjection 1 2 3"
+	}
+
+	func testDelete {
+		*cvar:foo = "aaaa"
+		if ( exists *cvar:foo ) { *node:root.testDelete1@color = "0 1 0 1" }
+		else { *node:root.testDelete1@color = "1 0 0 1" }
+		delete *cvar:foo
+		if ( exists *cvar:foo ) { *node:root.testDelete2@color = "1 0 0 1" }
+		else { *node:root.testDelete2@color = "0 1 0 1" }
+
+	}
+
+	func onInit {
+		call *node:root.testCvar
+		call *node:root.testProperty
+		call *node:root.testDelete
+	}
+
+	func onClose {
+	}
+
+}

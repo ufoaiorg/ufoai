@@ -215,7 +215,12 @@ font_t *R_GetFont (const char *name)
 		if (!strcmp(name, fonts[i].name))
 			return &fonts[i];
 
+#ifndef COMPILE_UNITTESTS
 	Com_Error(ERR_FATAL, "Could not find font: %s", name);
+#else
+	Com_Printf("R_GetFont: Could not find font: %s. Return NULL\n", name);
+	return NULL;
+#endif
 }
 
 

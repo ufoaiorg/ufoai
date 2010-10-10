@@ -1,0 +1,406 @@
+/**
+ * @brief Unittest for conditions
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push test_condition"
+ * Every thing must be green and it must not print any text or warning into the console.
+ */
+
+window test_condition
+{
+	{
+		pos "100 100"
+		size "340 340"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest condition"
+		bgcolor		"0 0 0 1"
+	}
+
+	string floatTitle {
+		pos		"20 40"
+		string	"float"
+	}
+
+	string testFloat1 {
+		pos		"20 60"
+		string	"t1"
+	}
+
+	string testFloat2 {
+		pos		"20 80"
+		string	"t2"
+	}
+
+	string testFloat3 {
+		pos		"20 100"
+		string	"t3"
+	}
+
+	string testFloat4 {
+		pos		"20 120"
+		string	"t4"
+	}
+
+	string testFloat5 {
+		pos		"20 140"
+		string	"t5"
+	}
+
+	string testFloat6 {
+		pos		"20 160"
+		string	"t6"
+	}
+
+	string testFloat7 {
+		pos		"20 180"
+		string	"t7"
+	}
+
+	string testFloat8 {
+		pos		"20 200"
+		string	"t8"
+	}
+
+	string testFloat9 {
+		pos		"20 220"
+		string	"t9"
+	}
+
+	string testFloat10 {
+		pos		"20 240"
+		string	"t10"
+	}
+
+	string stringTitle {
+		pos		"80 40"
+		string	"string"
+	}
+
+	string testString1 {
+		pos		"80 60"
+		string	"t1"
+	}
+
+	string testString2 {
+		pos		"80 80"
+		string	"t2"
+	}
+
+	string testString3 {
+		pos		"80 100"
+		string	"t3"
+	}
+
+	string testString4 {
+		pos		"80 120"
+		string	"t4"
+	}
+
+	string testString5 {
+		pos		"80 140"
+		string	"t5"
+	}
+
+	string existsTitle {
+		pos		"140 40"
+		string	"exists"
+	}
+
+	string testExists1 {
+		pos		"140 60"
+		string	"t1"
+	}
+
+	string testExists2 {
+		pos		"140 80"
+		string	"t2"
+	}
+
+	string testExists3 {
+		pos		"140 100"
+		string	"t3"
+	}
+
+	string testExists4 {
+		pos		"140 120"
+		string	"t4"
+	}
+
+	string nodeTitle {
+		pos		"200 40"
+		string	"node"
+	}
+
+	string testNode1 {
+		pos		"200 60"
+		string	"t1"
+	}
+
+	string testNode2 {
+		pos		"200 80"
+		string	"t2"
+	}
+
+	string testNode3 {
+		pos		"200 100"
+		string	"t3"
+	}
+
+	string testNode4 {
+		pos		"200 120"
+		string	"t4"
+	}
+
+	string testNode5 {
+		pos		"200 140"
+		string	"t5"
+	}
+
+	string testNode6 {
+		pos		"200 160"
+		string	"t6"
+	}
+
+	string testNode7 {
+		pos		"200 180"
+		string	"t7"
+	}
+
+	string testNode8 {
+		pos		"200 200"
+		string	"t8"
+	}
+
+	string testNode9 {
+		pos		"200 220"
+		string	"t9"
+	}
+
+	string testNode10 {
+		pos		"200 240"
+		string	"t10"
+	}
+
+	string testNode11 {
+		pos		"200 260"
+		string	"t11"
+	}
+
+	string testNode12 {
+		pos		"200 280"
+		string	"t12"
+	}
+
+	string testNode13 {
+		pos		"200 300"
+		string	"t13"
+	}
+
+	string controlTitle {
+		pos		"260 40"
+		string	"control"
+	}
+
+	string testControl1 {
+		pos		"260 60"
+		string	"t1"
+	}
+
+	string testControl2 {
+		pos		"260 80"
+		string	"t2"
+	}
+
+	string testControl3 {
+		pos		"260 100"
+		string	"t3"
+	}
+
+	string testControl4 {
+		pos		"260 120"
+		string	"t4"
+	}
+
+	string testControl5 {
+		pos		"260 140"
+		string	"t5"
+	}
+
+	spinner testNodeFoo {
+		current		*cvar:test_nodefoo
+		min			0
+		max			16
+		invis		true
+		disabled	false
+	}
+
+	string testNodeFooString {
+		invis		true
+		string		"aaabbb"
+	}
+
+	string testNodeFooString2 {
+		invis		true
+		string		"aaabbbccc"
+	}
+
+	spinner testNodeFoo2 {
+		{
+			current		*cvar:test_nodefoo
+			min			0
+			max			16
+			invis		true
+			disabled	false
+		}
+
+		confunc test_testRelativeConditions {
+			if ( *node:this.parent@current == 1 ) { *node:root.testNode6@color = "0 1 0 1" }
+			else { *node:root.testNode6@color = "1 0 0 1" }
+			if ( 1 == *node:parent@current ) { *node:root.testNode7@color = "0 1 0 1" }
+			else { *node:root.testNode7@color = "1 0 0 1" }
+			if ( *node:this.root.testNodeFoo2@max == 16 ) { *node:root.testNode8@color = "0 1 0 1" }
+			else { *node:root.testNode8@color = "1 0 0 1" }
+			if ( *node:root.testNodeFoo2@invis == 1 ) { *node:root.testNode9@color = "0 1 0 1" }
+			else { *node:root.testNode9@color = "1 0 0 1" }
+			if ( *node:this.parent.parent.testNodeFoo2.root.testNodeFoo2@disabled == 0 ) { *node:root.testNode10@color = "0 1 0 1" }
+			else { *node:root.testNode10@color = "1 0 0 1" }
+		}
+	}
+
+	confunc test_testNodeProperty {
+		if ( *node:test_condition.testNodeFoo@current == 1 ) { *node:root.testNode1@color = "0 1 0 1" }
+		else { *node:root.testNode1@color = "1 0 0 1" }
+		if ( 1 == *node:test_condition.testNodeFoo@current ) { *node:root.testNode2@color = "0 1 0 1" }
+		else { *node:root.testNode2@color = "1 0 0 1" }
+		if ( *node:test_condition.testNodeFoo@max == 16 ) { *node:root.testNode3@color = "0 1 0 1" }
+		else { *node:root.testNode3@color = "1 0 0 1" }
+		if ( *node:test_condition.testNodeFoo@invis == 1 ) { *node:root.testNode4@color = "0 1 0 1" }
+		else { *node:root.testNode4@color = "1 0 0 1" }
+		if ( *node:test_condition.testNodeFoo@disabled == 0 ) { *node:root.testNode5@color = "0 1 0 1" }
+		else { *node:root.testNode5@color = "1 0 0 1" }
+
+		cmd "test_testRelativeConditions"
+		cmd "echo node:root.testNodeFooString@string <node:root.testNodeFooString@string>"
+		cmd "echo node:root.testNodeFooString2@string <node:root.testNodeFooString2@string>"
+
+		if ( *node:root.testNodeFooString@string eq "aaabbb" ) { *node:root.testNode11@color = "0 1 0 1" }
+		else { *node:root.testNode11@color = "1 0 0 1" }
+		if ( *node:root.testNodeFooString2@string ne "aaabbbcc" ) { *node:root.testNode12@color = "0 1 0 1" }
+		else { *node:root.testNode12@color = "1 0 0 1" }
+		if ( "aaabbb" eq *node:root.testNodeFooString@string ) { *node:root.testNode13@color = "0 1 0 1" }
+		else { *node:root.testNode13@color = "1 0 0 1" }
+		/* @todo test string with space */
+	}
+
+	confunc test_testIfControl {
+		/* if condition */
+		if ( 0 == 0 ) { *node:root.testControl1@color = "0 1 0 1" }
+		elif ( 0 == 1 ) { *node:root.testControl1@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *node:root.testControl1@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *node:root.testControl1@color = "1 0 0 1" }
+		else { *node:root.testControl1@color = "1 0 0 1" }
+
+		/* first elif condition */
+		if ( 0 == 1 ) { *node:root.testControl2@color = "1 0 0 1" }
+		elif ( 0 == 0 ) { *node:root.testControl2@color = "0 1 0 1" }
+		elif ( 0 == 1 ) { *node:root.testControl2@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *node:root.testControl2@color = "1 0 0 1" }
+		else { *node:root.testControl2@color = "1 0 0 1" }
+
+		/* mid elif condition */
+		if ( 0 == 1 ) { *node:root.testControl3@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *node:root.testControl3@color = "1 0 0 1" }
+		elif ( 0 == 0 ) { *node:root.testControl3@color = "0 1 0 1" }
+		elif ( 0 == 1 ) { *node:root.testControl3@color = "1 0 0 1" }
+		else { *node:root.testControl3@color = "1 0 0 1" }
+
+		/* last elif condition */
+		if ( 0 == 1 ) { *node:root.testControl4@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *node:root.testControl4@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *node:root.testControl4@color = "1 0 0 1" }
+		elif ( 0 == 0 ) { *node:root.testControl4@color = "0 1 0 1" }
+		else { *node:root.testControl4@color = "1 0 0 1" }
+
+		/* else condition */
+		if ( 0 == 1 ) { *node:root.testControl5@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *node:root.testControl5@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *node:root.testControl5@color = "1 0 0 1" }
+		elif ( 0 == 1 ) { *node:root.testControl5@color = "1 0 0 1" }
+		else { *node:root.testControl5@color = "0 1 0 1" }
+	}
+
+	func onInit {
+		*cvar:test_float0 = "0"
+		*cvar:test_float1 = "1"
+		*cvar:test_float0-2 = "0"
+		*cvar:test_float314 = "3.14"
+
+		/* const const */
+		if ( 0 == 0 ) { *node:root.testFloat1@color = "0 1 0 1" }
+		else { *node:root.testFloat1@color = "1 0 0 1" }
+		if ( 0 == 1 ) { *node:root.testFloat2@color = "1 0 0 1" }
+		else { *node:root.testFloat2@color = "0 1 0 1" }
+		if ( 0 < 1 ) { *node:root.testFloat3@color = "0 1 0 1" }
+		else { *node:root.testFloat3@color = "1 0 0 1" }
+		if ( -1 < 0 ) { *node:root.testFloat4@color = "0 1 0 1" }
+		else { *node:root.testFloat4@color = "1 0 0 1" }
+
+		/* cvar const */
+		if ( *cvar:test_float0 == 0 ) { *node:root.testFloat5@color = "0 1 0 1" }
+		else { *node:root.testFloat5@color = "1 0 0 1" }
+		if ( *cvar:test_float314 > 0 ) { *node:root.testFloat6@color = "0 1 0 1" }
+		else { *node:root.testFloat6@color = "1 0 0 1" }
+		if ( 0 <= *cvar:test_float314 ) { *node:root.testFloat7@color = "0 1 0 1" }
+		else { *node:root.testFloat7@color = "1 0 0 1" }
+		if ( 3.14 == *cvar:test_float314 ) { *node:root.testFloat8@color = "0 1 0 1" }
+		else { *node:root.testFloat8@color = "1 0 0 1" }
+
+		/* cvar cvar */
+		if ( *cvar:test_float0 != *cvar:test_float1 ) { *node:root.testFloat9@color = "0 1 0 1" }
+		else { *node:root.testFloat9@color = "1 0 0 1" }
+		if ( *cvar:test_float0 == *cvar:test_float0-2 ) { *node:root.testFloat10@color = "0 1 0 1" }
+		else { *node:root.testFloat10@color = "1 0 0 1" }
+
+		*cvar:test_string1 = "aaaa"
+		*cvar:test_string2 = "aaaa"
+		*cvar:test_string3 = "bbbbbbbb"
+
+		if ( "0" eq "0" ) { *node:root.testString1@color = "0 1 0 1" }
+		else { *node:root.testString1@color = "1 0 0 1" }
+		if ( "0" eq "1" ) { *node:root.testString2@color = "1 0 0 1" }
+		else { *node:root.testString2@color = "0 1 0 1" }
+		if ( *cvar:test_string1 ne "aaa" ) { *node:root.testString3@color = "0 1 0 1" }
+		else { *node:root.testString3@color = "1 0 0 1" }
+		if ( *cvar:test_string1 eq *cvar:test_string2 ) { *node:root.testString4@color = "0 1 0 1" }
+		else { *node:root.testString4@color = "1 0 0 1" }
+		if ( *cvar:test_string1 ne *cvar:test_string3 ) { *node:root.testString5@color = "0 1 0 1" }
+		else { *node:root.testString5@color = "1 0 0 1" }
+
+		*cvar:test_exists = "aaaa"
+
+		if ( exists *cvar:test_exists ) { *node:root.testExists1@color = "0 1 0 1" }
+		else { *node:root.testExists1@color = "1 0 0 1" }
+		if ( exists *cvar:test_not_exists ) { *node:root.testExists2@color = "1 0 0 1" }
+		else { *node:root.testExists2@color = "0 1 0 1" }
+		if ( not exists *cvar:test_exists ) { *node:root.testExists3@color = "1 0 0 1" }
+		else { *node:root.testExists3@color = "0 1 0 1" }
+		if ( not exists *cvar:test_not_exists ) { *node:root.testExists4@color = "0 1 0 1" }
+		else { *node:root.testExists4@color = "1 0 0 1" }
+
+		*cvar:test_nodefoo = 1
+
+		cmd "test_testNodeProperty"
+		cmd "test_testIfControl"
+	}
+
+	func onClose {
+		cmd "del test_float0"
+		cmd "del test_float0-2"
+		cmd "del test_float314"
+		cmd "del test_string1"
+		cmd "del test_string2"
+		cmd "del test_string3"
+		cmd "del test_exists"
+		cmd "del test_nodefoo"
+	}
+
+}

@@ -69,6 +69,4 @@ void TEST_Init (void)
 	Swap_Init();
 
 	memset(&csi, 0, sizeof(csi));
-
-	Com_ParseScripts(qtrue);
 }

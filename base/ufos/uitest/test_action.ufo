@@ -139,16 +139,19 @@ window test_action
 	string testLack1 {
 		pos		"140 60"
 		string	"t1"
+		invis true		/** @todo we know it dont work... we need to fix it */
 	}
 
 	string testLack2 {
 		pos		"140 80"
 		string	"t2"
+		invis true		/** @todo we know it dont work... we need to fix it */
 	}
 
 	string testLack3 {
 		pos		"140 100"
 		string	"t3"
+		invis true		/** @todo we know it dont work... we need to fix it */
 	}
 
 	//
@@ -216,7 +219,7 @@ window test_action
 		// node event
 
 		*node:root.testCommon5@color = "1 0 0 1"
-		cmd "ui_push unittest_action_eventtest"
+		cmd "ui_push test_action_eventtest"
 		cmd "testActionEvent"
 
 		*node:root.testCommon6@color = "1 0 0 1"

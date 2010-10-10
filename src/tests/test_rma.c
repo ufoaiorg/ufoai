@@ -38,6 +38,7 @@ cvar_t *sv_threads;
 static int UFO_InitSuiteRandomMapAssembly (void)
 {
 	TEST_Init();
+	Com_ParseScripts(qtrue);
 
 	sv_dumpmapassembly = Cvar_Get("sv_dumpassembly", "0", 0, NULL);
 

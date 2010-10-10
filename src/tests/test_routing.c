@@ -37,6 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int UFO_InitSuiteRouting (void)
 {
 	TEST_Init();
+	Com_ParseScripts(qtrue);
+
 	return 0;
 }
 
