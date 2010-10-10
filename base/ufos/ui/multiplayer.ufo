@@ -290,7 +290,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			size		"16 16"
 			icon		prev
 			onClick		{
-				cmd "mn_modifywrap cl_serverlist -1 0 2;"
+				*cvar:cl_serverlist = ((*cvar:cl_serverlist - 1) % 2)
 				cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
 				cmd "pingservers refresh;"
 			}
@@ -301,7 +301,7 @@ window mp_serverbrowser extends abstract_multiplayer_join
 			size		"16 16"
 			icon		next
 			onClick		{
-				cmd "mn_modifywrap cl_serverlist +1 0 2;"
+				*cvar:cl_serverlist = ((*cvar:cl_serverlist + 1) % 2)
 				cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
 				cmd "pingservers refresh;"
 			}

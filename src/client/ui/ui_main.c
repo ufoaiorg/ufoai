@@ -94,54 +94,6 @@ void UI_SetCvar (const char *name, const char *str, float value)
 }
 
 /**
- * @brief Adds a given value to the numeric representation of a cvar. Also
- * performs min and max check for that value.
- * @sa UI_ModifyWrap_f
- */
-static void UI_Modify_f (void)
-{
-	float value;
-
-	if (Cmd_Argc() < 5)
-		Com_Printf("Usage: %s <name> <amount> <min> <max>\n", Cmd_Argv(0));
-
-	value = Cvar_GetValue(Cmd_Argv(1));
-	value += atof(Cmd_Argv(2));
-	if (value < atof(Cmd_Argv(3)))
-		value = atof(Cmd_Argv(3));
-	else if (value > atof(Cmd_Argv(4)))
-		value = atof(Cmd_Argv(4));
-
-	Cvar_SetValue(Cmd_Argv(1), value);
-}
-
-/**
- * @brief Adds a given value to the numeric representation of a cvar. Also
- * performs min and max check for that value. If there would be an overflow
- * we use the min value - and if there would be an underrun, we use the max
- * value.
- * @sa UI_Modify_f
- */
-static void UI_ModifyWrap_f (void)
-{
-	float value;
-
-	if (Cmd_Argc() < 5) {
-		Com_Printf("Usage: %s <name> <amount> <min> <max>\n", Cmd_Argv(0));
-		return;
-	}
-
-	value = Cvar_GetValue(Cmd_Argv(1));
-	value += atof(Cmd_Argv(2));
-	if (value < atof(Cmd_Argv(3)))
-		value = atof(Cmd_Argv(4));
-	else if (value > atof(Cmd_Argv(4)))
-		value = atof(Cmd_Argv(3));
-
-	Cvar_SetValue(Cmd_Argv(1), value);
-}
-
-/**
  * @brief Shows the corresponding strings in the UI
  * Example: Options window - fullscreen: yes
  */
@@ -338,10 +290,6 @@ void UI_Init (void)
 	ui_sounds = Cvar_Get("ui_sounds", "1", CVAR_ARCHIVE, "Activates UI sounds");
 
 	/* add global UI commands */
-	/** @todo delete me */
-	Cmd_AddCommand("mn_modify", UI_Modify_f, NULL);
-	/** @todo delete me */
-	Cmd_AddCommand("mn_modifywrap", UI_ModifyWrap_f, NULL);
 	/** @todo delete me */
 	Cmd_AddCommand("mn_translate", UI_Translate_f, NULL);
 #ifdef DEBUG

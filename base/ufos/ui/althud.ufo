@@ -950,7 +950,12 @@ window althud extends ahud
 			pos			"7 7"
 			texl		"54 74"
 			texh		"79 107"
-			onClick		{ cmd "mn_modify cl_worldlevel +1 0 7;" }
+			onClick		{
+				*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
+				if (*cvar:cl_worldlevel > 7) {
+					*cvar:cl_worldlevel = 7
+				}
+			}
 		}
 		image bt_floordown
 		{
@@ -960,7 +965,12 @@ window althud extends ahud
 			pos			"7 82"
 			texl		"81 74"
 			texh		"106 107"
-			onClick		{ cmd "mn_modify cl_worldlevel -1 0 7;" }
+			onClick		{
+				*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
+				if (*cvar:cl_worldlevel < 0) {
+					*cvar:cl_worldlevel = 0
+				}
+			}
 		}
 
 		string str_floor
