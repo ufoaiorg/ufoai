@@ -5,6 +5,7 @@ html {
 }
 
 body.interface {
+	display:table-cell;
 	font-family: verdana, helvetica, arial, sans-serif;
 	font: x-small sans-serif;
 	background-color: #262626;
