@@ -62,6 +62,7 @@ static inline void ResetInventoryList (void)
 static int UFO_InitSuiteCampaign (void)
 {
 	TEST_Init();
+	Com_ParseScripts(qtrue);
 
 	memset(&cls, 0, sizeof(cls));
 
