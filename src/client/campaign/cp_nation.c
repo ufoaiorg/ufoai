@@ -78,13 +78,14 @@ void NAT_UpdateHappinessForAllNations (const float minhappiness)
 	const linkedList_t *list = ccs.missions;
 
 	for (;list; list = list->next) {
-		const mission_t *mission = (mission_t *)list->data;
+		const mission_t *mission = (const mission_t *)list->data;
 		nation_t *nation = MAP_GetNation(mission->pos);
 		/* Difficulty modifier range is [0, 0.02f] */
 
 		/* Some non-water location have no nation */
 		if (nation) {
 			float happinessFactor;
+			const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
 			switch (mission->stage) {
 			case STAGE_TERROR_MISSION:
 			case STAGE_SUBVERT_GOV:
@@ -99,8 +100,8 @@ void NAT_UpdateHappinessForAllNations (const float minhappiness)
 				continue;
 			}
 
-			NAT_SetHappiness(minhappiness, nation, nation->stats[0].happiness + happinessFactor);
-			Com_DPrintf(DEBUG_CLIENT, "Happiness of nation %s decreased: %.02f\n", nation->name, nation->stats[0].happiness);
+			NAT_SetHappiness(minhappiness, nation, stats->happiness + happinessFactor);
+			Com_DPrintf(DEBUG_CLIENT, "Happiness of nation %s decreased: %.02f\n", nation->name, stats->happiness);
 		}
 	}
 }
@@ -120,6 +121,16 @@ int NAT_GetFunding (const nation_t* const nation, int month)
 }
 
 /**
+ * @brief Get the current month nation stats
+ * @param[in] nation Pointer to the nation
+ * @return The current month nation stats
+ */
+const nationInfo_t* NAT_GetCurrentMonthInfo (const nation_t* const nation)
+{
+	return &nation->stats[0];
+}
+
+/**
  * @brief Translates the nation happiness float value to a string
  * @param[in] nation
  * @return Translated happiness string
@@ -127,25 +138,26 @@ int NAT_GetFunding (const nation_t* const nation, int month)
  */
 const char* NAT_GetHappinessString (const nation_t* nation)
 {
-	if (nation->stats[0].happiness < 0.015)
+	const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+	if (stats->happiness < 0.015)
 		return _("Giving up");
-	else if (nation->stats[0].happiness < 0.025)
+	else if (stats->happiness < 0.025)
 		return _("Furious");
-	else if (nation->stats[0].happiness < 0.04)
+	else if (stats->happiness < 0.04)
 		return _("Angry");
-	else if (nation->stats[0].happiness < 0.06)
+	else if (stats->happiness < 0.06)
 		return _("Mad");
-	else if (nation->stats[0].happiness < 0.10)
+	else if (stats->happiness < 0.10)
 		return _("Upset");
-	else if (nation->stats[0].happiness < 0.20)
+	else if (stats->happiness < 0.20)
 		return _("Tolerant");
-	else if (nation->stats[0].happiness < 0.30)
+	else if (stats->happiness < 0.30)
 		return _("Neutral");
-	else if (nation->stats[0].happiness < 0.50)
+	else if (stats->happiness < 0.50)
 		return _("Content");
-	else if (nation->stats[0].happiness < 0.70)
+	else if (stats->happiness < 0.70)
 		return _("Pleased");
-	else if (nation->stats[0].happiness < 0.95)
+	else if (stats->happiness < 0.95)
 		return _("Happy");
 	else
 		return _("Exuberant");
@@ -160,15 +172,16 @@ void NAT_SetHappiness (const float minhappiness, nation_t *nation, const float h
 {
 	const char *oldString = NAT_GetHappinessString(nation);
 	const char *newString;
-	const float oldHappiness = nation->stats[0].happiness;
+	nationInfo_t *stats = &nation->stats[0];
+	const float oldHappiness = stats->happiness;
 	const float middleHappiness = (minhappiness + 1.0) / 2;
 	notify_t notifyType = NT_NUM_NOTIFYTYPE;
 
-	nation->stats[0].happiness = happiness;
-	if (nation->stats[0].happiness < 0.0f)
-		nation->stats[0].happiness = 0.0f;
-	else if (nation->stats[0].happiness > 1.0f)
-		nation->stats[0].happiness = 1.0f;
+	stats->happiness = happiness;
+	if (stats->happiness < 0.0f)
+		stats->happiness = 0.0f;
+	else if (stats->happiness > 1.0f)
+		stats->happiness = 1.0f;
 
 	newString = NAT_GetHappinessString(nation);
 
@@ -211,15 +224,16 @@ qboolean NAT_SaveXML (mxml_node_t *p)
 		s = mxml_AddNode(n, SAVE_NATION_NATION);
 		mxml_AddString(s, SAVE_NATION_ID, nation->id);
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
+			const nationInfo_t *stats = &nation->stats[j];
 			mxml_node_t *ss;
 
-			if (!nation->stats[j].inuse)
+			if (!stats->inuse)
 				continue;
 
 			ss = mxml_AddNode(s, SAVE_NATION_MONTH);
 			mxml_AddInt(ss, SAVE_NATION_MONTH_IDX, j);
-			mxml_AddFloat(ss, SAVE_NATION_HAPPINESS, nation->stats[j].happiness);
-			mxml_AddInt(ss, SAVE_NATION_XVI, nation->stats[j].xviInfection);
+			mxml_AddFloat(ss, SAVE_NATION_HAPPINESS, stats->happiness);
+			mxml_AddInt(ss, SAVE_NATION_XVI, stats->xviInfection);
 		}
 	}
 	return qtrue;
@@ -249,13 +263,14 @@ qboolean NAT_LoadXML (mxml_node_t * p)
 		/* month loop */
 		for (ss = mxml_GetNode(s, SAVE_NATION_MONTH); ss; ss = mxml_GetNextNode(ss, s, SAVE_NATION_MONTH)) {
 			int monthIDX = mxml_GetInt(ss, SAVE_NATION_MONTH_IDX, MONTHS_PER_YEAR);
+			nationInfo_t *stats = &nation->stats[monthIDX];
 
 			if (monthIDX < 0 || monthIDX >= MONTHS_PER_YEAR)
 				return qfalse;
 
-			nation->stats[monthIDX].inuse = qtrue;
-			nation->stats[monthIDX].happiness = mxml_GetFloat(ss, SAVE_NATION_HAPPINESS, 0.0);
-			nation->stats[monthIDX].xviInfection = mxml_GetInt(ss, SAVE_NATION_XVI, 0);
+			stats->inuse = qtrue;
+			stats->happiness = mxml_GetFloat(ss, SAVE_NATION_HAPPINESS, 0.0);
+			stats->xviInfection = mxml_GetInt(ss, SAVE_NATION_XVI, 0);
 		}
 	}
 	return qtrue;

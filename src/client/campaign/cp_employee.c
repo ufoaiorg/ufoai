@@ -929,7 +929,8 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 	 * unhappy nations (unhappy nation: happiness <= 0) from the list */
 	for (idx = 0; idx < ccs.numNations; idx++) {
 		const nation_t *nation = NAT_GetNationByIDX(idx);
-		if (nation->stats[0].happiness > 0 || !excludeUnhappyNations) {
+		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+		if (stats->happiness > 0 || !excludeUnhappyNations) {
 			happyNations[numHappyNations] = nation;
 			numHappyNations++;
 		}

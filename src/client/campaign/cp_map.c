@@ -1918,8 +1918,10 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 		const nation_t *nation = NAT_GetNationByIDX(i);
 		if (MAP_AllMapToScreen(node, nation->pos, &x, &y, NULL))
 			UI_DrawString("f_verysmall", ALIGN_UC, x , y, 0, 0, 0, _(nation->name), 0, 0, NULL, qfalse, 0);
-		if (showXVI)
-			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(nation->name), nation->stats[0].xviInfection), sizeof(buffer));
+		if (showXVI) {
+			const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(nation->name), stats->xviInfection), sizeof(buffer));
+		}
 	}
 	if (showXVI)
 		UI_RegisterText(TEXT_XVI, buffer);

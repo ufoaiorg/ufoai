@@ -105,7 +105,8 @@ static qboolean CP_ChooseNation (const mission_t *mission, linkedList_t **nation
 	/* favour mission with higher XVI level */
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = NAT_GetNationByIDX(i);
-		max += OFFSET + nation->stats[0].xviInfection;
+		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+		max += OFFSET + stats->xviInfection;
 	}
 
 	randomNumber = (int) (frand() * (float) max);
@@ -113,7 +114,8 @@ static qboolean CP_ChooseNation (const mission_t *mission, linkedList_t **nation
 	/* Select the corresponding nation */
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = NAT_GetNationByIDX(i);
-		randomNumber -= OFFSET + nation->stats[0].xviInfection;
+		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+		randomNumber -= OFFSET + stats->xviInfection;
 		if (randomNumber < 0) {
 			LIST_AddString(nationList, nation->id);
 			return qtrue;

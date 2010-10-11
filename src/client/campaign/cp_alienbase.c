@@ -271,8 +271,11 @@ void AB_BaseSearchedByNations (void)
 		const nation_t *nation = MAP_GetNation(base->pos);
 
 		/* If nation is a lot infected, it won't help in finding base (government infected) */
-		if (nation && nation->stats[0].xviInfection)
-			probability /= 1.0f + nation->stats[0].xviInfection / xviLevel;
+		if (nation) {
+			const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+			if (stats->xviInfection)
+				probability /= 1.0f + stats->xviInfection / xviLevel;
+		}
 
 		/* the bigger the base, the higher the probability to find it */
 		probability *= base->supply;

@@ -281,8 +281,8 @@ static int UR_CompareByPrice (ufoRecoveryNation_t *a, ufoRecoveryNation_t *b)
  */
 static int UR_CompareByHappiness (ufoRecoveryNation_t *a, ufoRecoveryNation_t *b)
 {
-	const nationInfo_t *statsA = &a->nation->stats[0];
-	const nationInfo_t *statsB = &b->nation->stats[0];
+	const nationInfo_t *statsA = NAT_GetCurrentMonthInfo(a->nation);
+	const nationInfo_t *statsB = NAT_GetCurrentMonthInfo(b->nation);
 
 	if (statsA->happiness > statsB->happiness)
 		return 1;
@@ -362,12 +362,13 @@ static void UR_DialogInitSell_f (void)
 		return;
 
 	for (i = 0; i < ccs.numNations; i++) {
-		nation_t *nation = NAT_GetNationByIDX(i);
+		const nation_t *nation = NAT_GetNationByIDX(i);
+		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
 		int price;
 
 		price = (int) (ufoRecovery.ufoTemplate->price * (.85f + frand() * .3f));
 		/* Nation will pay less if corrupted */
-		price = (int) (price * exp(-nation->stats[0].xviInfection / 20.0f));
+		price = (int) (price * exp(-stats->xviInfection / 20.0f));
 
 		ufoRecovery.UFONations[i].nation = nation;
 		ufoRecovery.UFONations[i].price = price;

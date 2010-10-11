@@ -175,7 +175,8 @@ int CP_GetAverageXVIRate (void)
 	/* check for XVI infection rate */
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = NAT_GetNationByIDX(i);
-		XVIRate += nation->stats[0].xviInfection;
+		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+		XVIRate += stats->xviInfection;
 	}
 	XVIRate /= ccs.numNations;
 	return XVIRate;

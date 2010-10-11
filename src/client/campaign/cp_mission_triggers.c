@@ -91,6 +91,7 @@ static void CP_ChangeNationHappiness_f (void)
 {
 	float change;
 	nation_t *nation;
+	const nationInfo_t *stats;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <absolute change value>\n", Cmd_Argv(0));
@@ -109,7 +110,8 @@ static void CP_ChangeNationHappiness_f (void)
 	nation = MAP_GetNation(ccs.selectedMission->pos);
 	assert(nation);
 
-	NAT_SetHappiness(ccs.curCampaign->minhappiness, nation, nation->stats[0].happiness + change);
+	stats = NAT_GetCurrentMonthInfo(nation);
+	NAT_SetHappiness(ccs.curCampaign->minhappiness, nation, stats->happiness + change);
 }
 
 /**

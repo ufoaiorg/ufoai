@@ -54,26 +54,27 @@ void CP_NationHandleBudget (void)
 
 	for (i = 0; i < ccs.numNations; i++) {
 		const nation_t *nation = NAT_GetNationByIDX(i);
+		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
 		const int funding = NAT_GetFunding(nation, 0);
 		int newScientists = 0, newSoldiers = 0, newWorkers = 0;
 
 		totalIncome += funding;
 
-		for (j = 0; 0.25 + j < (float) nation->maxScientists * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
+		for (j = 0; 0.25 + j < (float) nation->maxScientists * stats->happiness * stats->happiness; j++) {
 			/* Create a scientist, but don't auto-hire her. */
 			E_CreateEmployee(EMPL_SCIENTIST, nation, NULL);
 			newScientists++;
 		}
 
-		if (nation->stats[0].happiness > 0) {
-			for (j = 0; 0.25 + j < (float) nation->maxSoldiers * nation->stats[0].happiness * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
+		if (stats->happiness > 0) {
+			for (j = 0; 0.25 + j < (float) nation->maxSoldiers * stats->happiness * stats->happiness * stats->happiness; j++) {
 				/* Create a soldier. */
 				E_CreateEmployee(EMPL_SOLDIER, nation, NULL);
 				newSoldiers++;
 			}
 		}
 
-		for (j = 0; 0.25 + j * 2 < (float) nation->maxSoldiers * nation->stats[0].happiness; j++) {
+		for (j = 0; 0.25 + j * 2 < (float) nation->maxSoldiers * stats->happiness; j++) {
 			/* Create a worker. */
 			E_CreateEmployee(EMPL_WORKER, nation, NULL);
 			newWorkers++;

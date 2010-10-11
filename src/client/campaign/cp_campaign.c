@@ -356,7 +356,8 @@ void CP_CheckLostCondition (const campaign_t *campaign)
 			int j, nationBelowLimit = 0;
 			for (j = 0; j < ccs.numNations; j++) {
 				const nation_t *nation = NAT_GetNationByIDX(j);
-				if (nation->stats[0].happiness < campaign->minhappiness) {
+				const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
+				if (stats->happiness < campaign->minhappiness) {
 					nationBelowLimit++;
 				}
 			}
@@ -431,6 +432,7 @@ void CL_HandleNationData (const campaign_t *campaign, qboolean won, mission_t * 
 
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nation = NAT_GetNationByIDX(i);
+		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
 		float happinessFactor;
 
 		/* update happiness. */
@@ -439,7 +441,7 @@ void CL_HandleNationData (const campaign_t *campaign, qboolean won, mission_t * 
 		else
 			happinessFactor = deltaHappiness / happinessDivisor;
 
-		NAT_SetHappiness(campaign->minhappiness, nation, nation->stats[0].happiness + performance * happinessFactor);
+		NAT_SetHappiness(campaign->minhappiness, nation, stats->happiness + performance * happinessFactor);
 	}
 }
 
