@@ -195,7 +195,7 @@ void CP_SpreadXVI (void)
 		return;
 
 	for (;list; list = list->next) {
-		const mission_t *mission = (mission_t *)list->data;
+		const mission_t *mission = (const mission_t *)list->data;
 		if (mission->stage == STAGE_SPREAD_XVI)
 			CP_SpreadXVIAtPos(mission->pos);
 	}

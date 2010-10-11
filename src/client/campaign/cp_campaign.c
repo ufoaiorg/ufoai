@@ -517,53 +517,6 @@ void CL_DateConvert (const date_t * date, byte *day, byte *month, short *year)
 }
 
 /**
- * @brief Converts a number of years+months+days into an "day" integer as used in date_t.
- * @param[in] years The number of years to sum up.
- * @param[in] months The number of months to sum up [1-12]
- * @param[in] days The number of days to sum up.
- * @return The total number of days.
- */
-int CL_DateCreateDay (const short years, const byte months, const byte days)
-{
-	int i;
-	int day;
-
-	/* Add days of years */
-	day = DAYS_PER_YEAR * years;
-
-	/* Add days until no full month is left. */
-	for (i = 0; i < months; i++)
-		day += monthLength[i];
-
-	day += days - 1;
-
-	return day;
-}
-
-/**
- * @brief Converts a number of hours+minutes+seconds into an "sec" integer as used in date_t.
- * @param[in] hours The number of hours to sum up.
- * @param[in] minutes The number of minutes to sum up.
- * @param[in] seconds The number of seconds to sum up.
- * @return The total number of seconds.
- */
-int CL_DateCreateSeconds (byte hours, byte minutes, byte seconds)
-{
-	int sec;
-
-	/* Add seconds of the hours */
-	sec = SECONDS_PER_HOUR * hours;
-
-	/* Add seconds of the minutes. */
-	sec += 60 * minutes;
-
-	/* Add the rest of the seconds */
-	sec += seconds;
-
-	return sec;
-}
-
-/**
  * @brief Converts a date from the engine in a (longer) human-readable format.
  * @param[in] date Contains the date to be converted.
  * @param[out] dateLong The converted date.
