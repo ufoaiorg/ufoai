@@ -27,8 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "test_shared.h"
 #include "test_campaign.h"
 #include "../client/client.h"
+#include "../client/renderer/r_state.h"
 #include "../client/ui/ui_main.h"
 #include "../client/campaign/cp_campaign.h"
+#include "../client/campaign/cp_map.h"
 
 static const int TAG_INVENTORY = 1538;
 
@@ -62,21 +64,24 @@ static inline void ResetInventoryList (void)
 static int UFO_InitSuiteCampaign (void)
 {
 	TEST_Init();
-	Com_ParseScripts(qtrue);
-
-	memset(&cls, 0, sizeof(cls));
 
 	cl_genericPool = Mem_CreatePool("Client: Generic");
 	cp_campaignPool = Mem_CreatePool("Client: Local (per game)");
 	cp_campaign = Cvar_Get("cp_campaign", "main", 0, NULL);
 	cp_missiontest = Cvar_Get("cp_missiontest", "0", 0, NULL);
+	vid_imagePool = Mem_CreatePool("Vid: Image system");
+
+	r_state.active_texunit = &r_state.texunits[0];
+	R_FontInit();
+	UI_Init();
+
+	Com_ParseScripts(qfalse);
+	memset(&cls, 0, sizeof(cls));
 
 	Cmd_AddCommand("msgoptions_set", Cmd_Dummy_f, NULL);
 
 	CL_SetClientState(ca_disconnected);
 	cls.realtime = Sys_Milliseconds();
-
-	UI_Init();
 
 	CL_ResetSinglePlayerData();
 	CL_ReadSinglePlayerData();
@@ -89,6 +94,7 @@ static int UFO_InitSuiteCampaign (void)
  */
 static int UFO_CleanSuiteCampaign (void)
 {
+	UI_Shutdown();
 	TEST_Shutdown();
 	return 0;
 }
@@ -264,6 +270,47 @@ static void testXVI (void)
 
 static void testSaveLoad (void)
 {
+	vec2_t pos = {0, 0};
+	base_t *base = B_GetFirstUnfoundedBase();
+	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
+
+	memset(&ccs.campaignStats, 0, sizeof(ccs.campaignStats));
+
+	SAV_Init();
+
+	ResetInventoryList();
+
+	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, NULL);
+	ccs.credits = 10000000;
+
+	RS_InitTree(campaign, qfalse);
+
+	{
+		B_SetUpBase(campaign, base, pos);
+
+		CU_ASSERT(base->founded);
+
+		Cmd_ExecuteString("game_quicksave");
+	}
+	{
+		B_Destroy(base);
+
+		CU_ASSERT_EQUAL(base->baseStatus, BASE_DESTROYED);
+
+		E_DeleteAllEmployees(NULL);
+	}
+	{
+		Cmd_ExecuteString("game_quickload");
+
+		/** @todo check that the savegame was successfully loaded */
+
+		CU_ASSERT_EQUAL(base->baseStatus, BASE_WORKING);
+
+		/** @todo fails */
+		/*B_Destroy(base);*/
+
+		E_DeleteAllEmployees(NULL);
+	}
 }
 
 static void testCampaignRun (void)
@@ -272,7 +319,7 @@ static void testCampaignRun (void)
 	cls.frametime = 1;
 	ccs.gameTimeScale = 1;
 
-	CL_CampaignRun();
+	/*CL_CampaignRun();*/
 }
 
 int UFO_AddCampaignTests (void)
