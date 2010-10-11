@@ -437,6 +437,12 @@ void GAME_CP_Frame (void)
 	if (cls.keyDest == key_console)
 		return;
 
+	if (!CP_IsRunning())
+		return;
+
+	if (!CP_OnGeoscape())
+		return;
+
 	/* advance time */
 	CL_CampaignRun();
 }

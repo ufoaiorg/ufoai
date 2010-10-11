@@ -621,12 +621,6 @@ const int DETECTION_INTERVAL = (SECONDS_PER_HOUR / 2);
  */
 void CL_CampaignRun (void)
 {
-	if (!CP_IsRunning())
-		return;
-
-	if (!CP_OnGeoscape())
-		return;
-
 	/* advance time */
 	ccs.timer += cls.frametime * ccs.gameTimeScale;
 
