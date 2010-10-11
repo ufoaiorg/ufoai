@@ -180,14 +180,6 @@ GtkWidget* glwidget_new (gboolean zbuffer)
 	return widget;
 }
 
-void glwidget_destroy_context (GtkWidget *widget)
-{
-}
-
-void glwidget_create_context (GtkWidget *widget)
-{
-}
-
 void glwidget_swap_buffers (GtkWidget *widget)
 {
 	GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (widget);
