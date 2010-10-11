@@ -447,25 +447,6 @@ const char* GAME_CP_GetTeamDef (void)
 }
 
 /**
- * @brief Sets the item model for an object assigned technology. If no
- * technology is set or the technology has no model assigned, this function
- * is returning @c NULL to tell the caller to use the default object model.
- * @param[in] od The object definition to get the model from.
- * @param[out] menuModel The menu model pointer.
- * @return The model path for the item. Never @c NULL.
- */
-const char* GAME_CP_GetModelForItem (const objDef_t *od)
-{
-	const technology_t *tech = RS_GetTechForItem(od);
-	if (tech->mdl) {
-		/* the model from the tech structure has higher priority, because the item model itself
-		 * is mainly for the battlescape or the geoscape - only use that as a fallback */
-		return tech->mdl;
-	}
-	return NULL;
-}
-
-/**
  * @brief Changes some actor states for a campaign game
  * @param team The team to change the states for
  */
@@ -511,18 +492,17 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
 }
 
-void GAME_CP_DisplayItemInfo (uiNode_t *node, const char *string)
+const char* GAME_CP_GetItemModel (const char *string)
 {
 	const aircraft_t *aircraft = AIR_GetAircraftSilent(string);
 	if (aircraft) {
 		assert(aircraft->tech);
-		UI_DrawModelNode(node, aircraft->tech->mdl);
+		return aircraft->tech->mdl;
 	} else {
 		const technology_t *tech = RS_GetTechByProvided(string);
 		if (tech)
-			UI_DrawModelNode(node, tech->mdl);
-		else
-			Com_Printf("UI_ItemNodeDraw: Unknown item: '%s'\n", string);
+			return tech->mdl;
+		return NULL;
 	}
 }
 

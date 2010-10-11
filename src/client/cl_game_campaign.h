@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ui/ui_nodes.h"
 
-void GAME_CP_DisplayItemInfo(uiNode_t *node, const char *string);
+const char* GAME_CP_GetItemModel(const char *string);
 const mapDef_t* GAME_CP_MapInfo(int step);
 void GAME_CP_InitStartup(void);
 void GAME_CP_Shutdown(void);
@@ -43,6 +43,5 @@ void GAME_CP_Drop(void);
 void GAME_CP_InitializeBattlescape(const chrList_t *team);
 void GAME_CP_Frame(void);
 const char* GAME_CP_GetTeamDef(void);
-const char* GAME_CP_GetModelForItem(const objDef_t *od);
 
 #endif

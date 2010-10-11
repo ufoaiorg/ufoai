@@ -44,8 +44,8 @@ typedef struct cgame_export_s {
 	void (EXPORT *Results) (struct dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
 	/** check whether the given item is usable in the current game mode */
 	qboolean (EXPORT *IsItemUseable) (const objDef_t *od);
-	/** shows item info if not resolvable via objDef_t */
-	void (EXPORT *DisplayItemInfo) (uiNode_t *node, const char *string);
+	/** if you want to display a different model for the given object in your game mode, implement this function */
+	const char* (EXPORT *GetModelForItem) (const char *string);
 	/** returns the equipment definition the game mode is using */
 	equipDef_t* (EXPORT *GetEquipmentDefinition) (void);
 	/** update character display values for game type dependent stuff */
@@ -58,8 +58,6 @@ typedef struct cgame_export_s {
 	void (EXPORT *InitializeBattlescape) (const chrList_t *team);
 	/** callback that is executed every frame */
 	void (EXPORT *RunFrame) (void);
-	/** if you want to display a different model for the given object in your game mode, implement this function */
-	const char* (EXPORT *GetModelForItem) (const objDef_t*od);
 	void (EXPORT *EndRoundAnnounce) (int playerNum, int team);
 	void (EXPORT *StartBattlescape) (qboolean isTeamPlay);
 	const char* (EXPORT *GetTeamDef) (void);
