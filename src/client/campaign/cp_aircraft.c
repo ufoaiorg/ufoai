@@ -740,7 +740,7 @@ const aircraft_t *AIR_GetAircraftSilent (const char *name)
 	if (!name)
 		return NULL;
 	for (i = 0; i < ccs.numAircraftTemplates; i++) {
-		aircraft_t *aircraftTemplate = &ccs.aircraftTemplates[i];
+		const aircraft_t *aircraftTemplate = &ccs.aircraftTemplates[i];
 		if (!strcmp(aircraftTemplate->id, name))
 			return aircraftTemplate;
 	}
