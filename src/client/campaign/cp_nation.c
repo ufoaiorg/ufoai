@@ -108,12 +108,14 @@ void NAT_UpdateHappinessForAllNations (const float minhappiness)
 /**
  * @brief Get the actual funding of a nation
  * @param[in] nation Pointer to the nation
- * @param[in] month idx of the month -- 0 for current month (sa nation_t)
+ * @param[in] month idx of the month -- 0 for current month
  * @return actual funding of a nation
  * @sa CL_NationsMaxFunding
  */
 int NAT_GetFunding (const nation_t* const nation, int month)
 {
+	assert(month >= 0);
+	assert(month < MONTHS_PER_YEAR);
 	return nation->maxFunding * nation->stats[month].happiness;
 }
 
