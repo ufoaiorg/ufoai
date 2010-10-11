@@ -11,9 +11,9 @@ CFLAGS                   += -DGETTEXT_STATIC
 # Windows XP is the minimum we need
 CFLAGS                   += -DWINVER=0x501
 
-OPENGL_LIBS              ?= -lopengl32
-OPENAL_LIBS              ?= -lOpenAL32
 PKG_CONFIG               ?= $(CROSS)pkg-config
+OPENGL_LIBS              ?= -lopengl32
+OPENAL_LIBS              ?= $(call PKG_LIBS,openal,OpenAL32)
 SDL_TTF_LIBS             ?= $(call PKG_LIBS,SDL_ttf) $(call PKG_LIBS,freetype2)
 SDL_TTF_CFLAGS           ?= $(call PKG_CFLAGS,SDL_ttf) $(call PKG_CFLAGS,freetype2)
 INTL_LIBS                ?= -lintl
