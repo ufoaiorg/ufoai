@@ -483,51 +483,39 @@ const char* CL_SecondConvert (int second)
 static const int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 /**
- * @brief Converts a number of days into the number of the current month and the current day in this month.
+ * @brief Converts a date from the engine in a (longer) human-readable format.
  * @note The seconds from "date" are ignored here.
  * @note The function always starts calculation from Jan. and also catches new years.
- * @param[in] date Contains the number of days to be converted.
- * @param[out] day The day in the month above.
- * @param[out] month The month. [1-12]
- * @param[out] year The year.
- */
-void CL_DateConvert (const date_t * date, byte *day, byte *month, short *year)
-{
-	byte i;
-	int d;
-
-	/* Get the year */
-	*year = date->day / DAYS_PER_YEAR;
-
-	/* Get the days in the year. */
-	d = date->day % DAYS_PER_YEAR;
-
-	/* Subtract days until no full month is left. */
-	for (i = 0; i < MONTHS_PER_YEAR; i++) {
-		if (d < monthLength[i])
-			break;
-		d -= monthLength[i];
-	}
-
-	/* Prepare return values. */
-	*day = d + 1;
-	*month = i + 1;
-	assert(*month >= 1 && *month <= MONTHS_PER_YEAR);
-	assert(*day >= 1 && *day <= monthLength[i]);
-}
-
-/**
- * @brief Converts a date from the engine in a (longer) human-readable format.
  * @param[in] date Contains the date to be converted.
  * @param[out] dateLong The converted date.
   */
 void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
 {
-	CL_DateConvert(date, &dateLong->day, &dateLong->month, &dateLong->year);
-	/** @todo Make this conversion a function as well (DateConvertSeconds?) See also CL_SecondConvert */
+	byte i;
+	int d;
+	size_t length = lengthof(monthLength);
+
+	/* Get the year */
+	dateLong->year = date->day / DAYS_PER_YEAR;
+
+	/* Get the days in the year. */
+	d = date->day % DAYS_PER_YEAR;
+
+	/* Subtract days until no full month is left. */
+	for (i = 0; i < length; i++) {
+		if (d < monthLength[i])
+			break;
+		d -= monthLength[i];
+	}
+
+	dateLong->day = d + 1;
+	dateLong->month = i + 1;
 	dateLong->hour = date->sec / SECONDS_PER_HOUR;
 	dateLong->min = (date->sec - dateLong->hour * SECONDS_PER_HOUR) / 60;
 	dateLong->sec = date->sec - dateLong->hour * SECONDS_PER_HOUR - dateLong->min * 60;
+
+	assert(dateLong->month >= 1 && dateLong->month <= MONTHS_PER_YEAR);
+	assert(dateLong->day >= 1 && dateLong->day <= monthLength[i]);
 }
 
 /**
