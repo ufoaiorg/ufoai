@@ -443,7 +443,8 @@ void GAME_CP_Frame (void)
 
 const char* GAME_CP_GetTeamDef (void)
 {
-	return Com_ValueToStr(&ccs.curCampaign->team, V_TEAM, 0);
+	const int team = GAME_CP_GetTeam();
+	return Com_ValueToStr(&team, V_TEAM, 0);
 }
 
 /**
