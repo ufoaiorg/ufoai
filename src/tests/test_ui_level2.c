@@ -36,8 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int UFO_InitSuiteUILevel2 (void)
 {
 	TEST_Init();
-	/** @todo why must we call Cmd_Init + Cbuf_Init?, the last one should be useless */
-	Cbuf_Init();
 	UI_Init();
 	return 0;
 }
@@ -65,7 +63,6 @@ static void TEST_ParseScript (const char* scriptName)
 static int UFO_CleanSuiteUILevel2 (void)
 {
 	UI_Shutdown();
-	Cbuf_Shutdown();
 	TEST_Shutdown();
 	return 0;
 }

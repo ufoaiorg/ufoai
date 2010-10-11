@@ -34,6 +34,7 @@ void TEST_Shutdown (void)
 	Cvar_Shutdown();
 	Mem_Shutdown();
 	Com_Shutdown();
+	Cbuf_Shutdown();
 
 	com_aliasSysPool = NULL;
 	com_cmdSysPool = NULL;
@@ -63,6 +64,7 @@ void TEST_Init (void)
 	com_genericPool = Mem_CreatePool("Generic");
 
 	Mem_Init();
+	Cbuf_Init();
 	Cmd_Init();
 	Cvar_Init();
 	FS_InitFilesystem(qtrue);
