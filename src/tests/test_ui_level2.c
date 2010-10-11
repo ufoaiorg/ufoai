@@ -43,19 +43,19 @@ static int UFO_InitSuiteUILevel2 (void)
 }
 
 /** @todo move it somewhere */
-static qboolean TEST_ParseScript (const char* scriptName)
+static void TEST_ParseScript (const char* scriptName)
 {
 	const char *type, *name, *text;
-	qboolean result = qtrue;
 
 	/* parse ui node script */
 	Com_Printf("Load \"%s\": %i script file(s)\n", scriptName, FS_BuildFileList(scriptName));
 	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
-	while ((type = FS_NextScriptHeader(scriptName, &name, &text)) != NULL)
-		result = CL_ParseClientData(type, name, &text) && result;
-
-	return result;
+	while ((type = FS_NextScriptHeader(scriptName, &name, &text)) != NULL) {
+		const qboolean result = CL_ParseClientData(type, name, &text);
+		if (!result)
+			CU_assertImplementation(CU_FALSE, __LINE__, va("Failed to parse needed scripts for type: %s and id %s", type, name), __FILE__, "", CU_TRUE);
+	}
 }
 
 /**
@@ -126,9 +126,7 @@ static void UFO_ExecuteTestWindow (const char* windowName)
 	/* look and feed */
 	Com_Printf("\n");
 
-	result = TEST_ParseScript(va("ufos/uitest/%s.ufo", windowName));
-	if (!result)
-		CU_FAIL_FATAL("Fail to parse needed scripts");
+	TEST_ParseScript(va("ufos/uitest/%s.ufo", windowName));
 
 	Cmd_ExecuteString(va("ui_push %s", windowName));
 
