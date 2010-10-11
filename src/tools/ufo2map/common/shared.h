@@ -109,6 +109,8 @@ typedef struct mapConfig_s {
 	vec3_t sun_angles[LIGHTMAP_MAX];
 	vec3_t sun_normal[LIGHTMAP_MAX];
 
+	char gamedir[MAX_VAR];
+
 	float saturation;
 	float contrast;
 	float brightness;		/**< global light scale factor */

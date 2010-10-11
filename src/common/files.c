@@ -500,7 +500,7 @@ static const char *pakFileExt[] = {
  * @param[in] dir The directory name relative to the game dir
  * @param[in] write Add this directory as writable (config files, save games)
  */
-static void FS_AddGameDirectory (const char *dir, qboolean write)
+void FS_AddGameDirectory (const char *dir, qboolean write)
 {
 	searchpath_t *search;
 	char **dirnames = NULL;
@@ -514,9 +514,10 @@ static void FS_AddGameDirectory (const char *dir, qboolean write)
 	while (search) {
 		if (!strcmp(search->filename, dir))
 			return;
-		if (write && search->write)
-			Sys_Error("There is already a directory registered for writing: %s - skipping %s",
-					search->filename, dir);
+		if (write && search->write) {
+			Com_Printf("change writing directory to %s\n", dir);
+			search->write = qfalse;
+		}
 		search = search->next;
 	}
 

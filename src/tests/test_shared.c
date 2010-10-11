@@ -66,6 +66,7 @@ void TEST_Init (void)
 	Cmd_Init();
 	Cvar_Init();
 	FS_InitFilesystem(qtrue);
+	FS_AddGameDirectory("./unittest", qfalse);
 	Swap_Init();
 
 	memset(&csi, 0, sizeof(csi));

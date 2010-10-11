@@ -309,6 +309,10 @@ static void U2M_Parameter (int argc, const char **argv)
 		} else if (!strcmp(argv[i], "-nocsg")) {
 			Verb_Printf(VERB_LESS, "nocsg = true\n");
 			config.nocsg = qtrue;
+		} else if (!strcmp(argv[i], "-gamedir")) {
+			Q_strncpyz(config.gamedir, argv[i + 1], sizeof(config.gamedir));
+			Verb_Printf(VERB_LESS, "additional gamedir = %s\n", config.gamedir);
+			i++;
 		} else if (!strcmp(argv[i], "-noshare")) {
 			Verb_Printf(VERB_LESS, "noshare = true\n");
 			config.noshare = qtrue;
@@ -565,6 +569,8 @@ int main (int argc, const char **argv)
 	Verb_Printf(VERB_NORMAL, "path: '%s'\n", argv[argc - 1]);
 
 	FS_InitFilesystem(qfalse);
+	if (config.gamedir[0] != '\0')
+		FS_AddGameDirectory(config.gamedir, qtrue);
 
 	Com_StripExtension(argv[argc - 1], mapFilename, sizeof(mapFilename));
 	strncpy(baseFilename, mapFilename, sizeof(baseFilename) - 1);
