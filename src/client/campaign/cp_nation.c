@@ -216,8 +216,8 @@ qboolean NAT_SaveXML (mxml_node_t *p)
 
 			ss = mxml_AddNode(s, SAVE_NATION_MONTH);
 			mxml_AddInt(ss, SAVE_NATION_MONTH_IDX, j);
-			mxml_AddFloat(ss, SAVE_NATION_HAPPINESS, ccs.nations[i].stats[j].happiness);
-			mxml_AddInt(ss, SAVE_NATION_XVI, ccs.nations[i].stats[j].xviInfection);
+			mxml_AddFloat(ss, SAVE_NATION_HAPPINESS, nation->stats[j].happiness);
+			mxml_AddInt(ss, SAVE_NATION_XVI, nation->stats[j].xviInfection);
 		}
 	}
 	return qtrue;
@@ -297,9 +297,11 @@ void CL_ParseNations (const char *name, const char **text)
 	}
 
 	/* search for nations with same name */
-	for (i = 0; i < ccs.numNations; i++)
-		if (!strncmp(name, ccs.nations[i].id, sizeof(ccs.nations[i].id)))
+	for (i = 0; i < ccs.numNations; i++) {
+		const nation_t *n = NAT_GetNationByIDX(i);
+		if (!strncmp(name, n->id, sizeof(n->id)))
 			break;
+	}
 	if (i < ccs.numNations) {
 		Com_Printf("CL_ParseNations: nation def \"%s\" with same name found, second ignored\n", name);
 		return;
@@ -580,7 +582,7 @@ static int CL_NationsMaxFunding (void)
 	int max = 0;
 
 	for (n = 0; n < ccs.numNations; n++) {
-		const nation_t *nation = &ccs.nations[n];
+		const nation_t *nation = NAT_GetNationByIDX(n);
 		for (m = 0; m < MONTHS_PER_YEAR; m++) {
 			if (nation->stats[m].inuse) {
 				const int funding = NAT_GetFunding(nation, m);
@@ -654,7 +656,8 @@ static void CL_NationDrawStats (const nation_t *nation, uiNode_t *node, lineStri
 	funding->pointList = (int*)fundingPts[usedFundPtslist];
 	funding->numPoints = ptsNumber;
 	if (color < 0) {
-		Cvar_Set("mn_nat_symbol", va("nations/%s", ccs.nations[selectedNation].id));
+		const nation_t *nation = NAT_GetNationByIDX(selectedNation);
+		Cvar_Set("mn_nat_symbol", va("nations/%s", nation->id));
 		Vector4Copy(graphColorSelected, funding->color);
 	} else {
 		Vector4Copy(graphColors[color], funding->color);
@@ -684,7 +687,7 @@ static void CL_NationStatsUpdate_f (void)
 	}
 
 	for (i = 0; i < ccs.numNations; i++) {
-		nation_t *nation = &ccs.nations[i];
+		const nation_t *nation = NAT_GetNationByIDX(i);
 		lineStrip_t *color = &colorLineStrip[i];
 		const int funding = NAT_GetFunding(nation, 0);
 
@@ -735,7 +738,7 @@ static void CL_NationStatsUpdate_f (void)
 		const int maxFunding = CL_NationsMaxFunding();
 		usedFundPtslist = 0;
 		for (i = 0; i < ccs.numNations; i++) {
-			nation_t *nation = &ccs.nations[i];
+			const nation_t *nation = NAT_GetNationByIDX(i);
 			lineStrip_t *funding = &fundingLineStrip[i];
 
 			/* init the structure */

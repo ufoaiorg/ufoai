@@ -93,23 +93,26 @@ static void CP_HarvestMissionStart (mission_t *mission)
  */
 static qboolean CP_ChooseNation (const mission_t *mission, linkedList_t **nationList)
 {
-	nation_t *nation;
 	int randomNumber, max = 0;
 	/* Increase this factor to make probability to select non-infected nation higher
 	 * Used to make sure that non-infected nation can still be attacked */
 	const int OFFSET = 1;
+	int i;
 
 	if (mission->ufo)
 		return qfalse;
 
 	/* favour mission with higher XVI level */
-	for (nation = ccs.nations; nation < ccs.nations + ccs.numNations; nation++)
+	for (i = 0; i < ccs.numNations; i++) {
+		const nation_t *nation = NAT_GetNationByIDX(i);
 		max += OFFSET + nation->stats[0].xviInfection;
+	}
 
 	randomNumber = (int) (frand() * (float) max);
 
 	/* Select the corresponding nation */
-	for (nation = ccs.nations; nation < ccs.nations + ccs.numNations; nation++) {
+	for (i = 0; i < ccs.numNations; i++) {
+		const nation_t *nation = NAT_GetNationByIDX(i);
 		randomNumber -= OFFSET + nation->stats[0].xviInfection;
 		if (randomNumber < 0) {
 			LIST_AddString(nationList, nation->id);

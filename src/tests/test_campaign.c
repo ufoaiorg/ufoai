@@ -268,6 +268,7 @@ static void testSaveLoad (void)
 
 static void testCampaignRun (void)
 {
+	CL_CampaignRun();
 }
 
 int UFO_AddCampaignTests (void)

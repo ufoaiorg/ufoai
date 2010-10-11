@@ -69,7 +69,7 @@ void CL_StatsUpdate_f (void)
 	pos += (strlen(pos) + 1);
 	UI_RegisterText(TEXT_STATS_NATIONS, pos);
 	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = &ccs.nations[i];
+		const nation_t *nation = NAT_GetNationByIDX(i);
 		Q_strcat(pos, va(_("%s\t%s\n"), _(nation->name), NAT_GetHappinessString(nation)), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 		totalfunds += NAT_GetFunding(nation, 0);
 	}

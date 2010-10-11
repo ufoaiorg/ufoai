@@ -53,7 +53,7 @@ void CP_NationHandleBudget (void)
 	E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, qtrue);
 
 	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = &ccs.nations[i];
+		const nation_t *nation = NAT_GetNationByIDX(i);
 		const int funding = NAT_GetFunding(nation, 0);
 		int newScientists = 0, newSoldiers = 0, newWorkers = 0;
 

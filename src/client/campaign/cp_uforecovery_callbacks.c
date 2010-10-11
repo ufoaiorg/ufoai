@@ -65,7 +65,7 @@ typedef enum {
 /** @sa ufoRecoveries_t */
 typedef struct ufoRecovery_s {
 	const aircraft_t *ufoTemplate;					/**< the ufo type of the current ufo recovery */
-	nation_t *nation;								/**< selected nation to sell to for current ufo recovery */
+	const nation_t *nation;							/**< selected nation to sell to for current ufo recovery */
 	qboolean recoveryDone;							/**< recoveryDone? Then the buttons are disabled */
 	float condition;								/**< How much the UFO is damaged - used for disassembies */
 	ufoRecoveryNation_t UFONations[MAX_NATIONS];	/**< Sorted array of nations. */
@@ -480,14 +480,13 @@ static void UR_DialogSelectSellNation_f (void)
 static void UR_DialogStartSell_f (void)
 {
 	int price = -1;
-	nation_t *nation;
+	const nation_t *nation;
 	int i;
 
 	if (!ufoRecovery.nation)
 		return;
 
 	nation = ufoRecovery.nation;
-	assert(nation->name);
 
 	i = UR_DialogGetCurrentNationIndex();
 	price = ufoRecovery.UFONations[i].price;
