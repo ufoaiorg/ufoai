@@ -269,6 +269,8 @@ static void testSaveLoad (void)
 static void testCampaignRun (void)
 {
 	ccs.curCampaign = CL_GetCampaign(cp_campaign->string);
+	cls.frametime = 1;
+	ccs.gameTimeScale = 1;
 
 	CL_CampaignRun();
 }

@@ -681,7 +681,7 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, const nation_t 
 	employee->nation = nation;
 	employee->ugv = ugvType;
 
-	teamID = GAME_CP_GetTeamDef();
+	teamID = GAME_GetTeamDef();
 
 	/* Generate character stats, models & names. */
 	switch (type) {

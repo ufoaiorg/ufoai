@@ -65,7 +65,6 @@ void CP_NationHandleBudget (void)
 			newScientists++;
 		}
 
-
 		if (nation->stats[0].happiness > 0) {
 			for (j = 0; 0.25 + j < (float) nation->maxSoldiers * nation->stats[0].happiness * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 				/* Create a soldier. */
