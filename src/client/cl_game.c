@@ -481,12 +481,15 @@ static qboolean GAME_IsArmourUseableForTeam (const objDef_t *od, const teamDef_t
 qboolean GAME_ItemIsUseable (const objDef_t *od)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
-	const char *teamDefID = GAME_GetTeamDef();
-	const teamDef_t *teamDef = Com_GetTeamDefinitionByID((teamDefID));
 
-	/* Don't allow armour for other teams */
-	if (!GAME_IsArmourUseableForTeam(od, teamDef))
-		return qfalse;
+	if (INV_IsArmour(od)) {
+		const char *teamDefID = GAME_GetTeamDef();
+		const teamDef_t *teamDef = Com_GetTeamDefinitionByID((teamDefID));
+
+		/* Don't allow armour for other teams */
+		if (!GAME_IsArmourUseableForTeam(od, teamDef))
+			return qfalse;
+	}
 
 	if (list && list->IsItemUseable)
 		return list->IsItemUseable(od);
