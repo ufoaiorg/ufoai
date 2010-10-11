@@ -51,7 +51,7 @@ const char *FS_Gamedir (void)
 	searchpath_t *search;
 
 	for (search = fs_searchpaths; search; search = search->next) {
-		if (search->pack == NULL)
+		if (search->write)
 			return search->filename;
 	}
 
@@ -497,8 +497,10 @@ static const char *pakFileExt[] = {
 /**
  * @brief Adds the directory to the head of the search path
  * @note No ending slash here
+ * @param[in] dir The directory name relative to the game dir
+ * @param[in] write Add this directory as writable (config files, save games)
  */
-static void FS_AddGameDirectory (const char *dir)
+static void FS_AddGameDirectory (const char *dir, qboolean write)
 {
 	searchpath_t *search;
 	char **dirnames = NULL;
@@ -512,6 +514,9 @@ static void FS_AddGameDirectory (const char *dir)
 	while (search) {
 		if (!strcmp(search->filename, dir))
 			return;
+		if (write && search->write)
+			Sys_Error("There is already a directory registered for writing: %s - skipping %s",
+					search->filename, dir);
 		search = search->next;
 	}
 
@@ -549,6 +554,7 @@ static void FS_AddGameDirectory (const char *dir)
 		search = (searchpath_t *)Mem_PoolAlloc(sizeof(*search), com_fileSysPool, 0);
 		search->pack = pak;
 		search->next = fs_searchpaths;
+		search->write = qfalse;
 		fs_searchpaths = search;
 	}
 
@@ -556,6 +562,7 @@ static void FS_AddGameDirectory (const char *dir)
 	search = (searchpath_t *)Mem_PoolAlloc(sizeof(*search), com_fileSysPool, 0);
 	Q_strncpyz(search->filename, dir, sizeof(search->filename));
 	search->next = fs_searchpaths;
+	search->write = write;
 	fs_searchpaths = search;
 }
 
@@ -644,7 +651,7 @@ const char *FS_NextPath (const char *prevpath)
  * @note e.g. *nix: Use ~/.ufoai/dir as gamedir
  * @sa Sys_GetHomeDirectory
  */
-static void FS_AddHomeAsGameDirectory (const char *dir)
+static void FS_AddHomeAsGameDirectory (const char *dir, qboolean write)
 {
 	char gdir[MAX_OSPATH];
 	char *homedir = Sys_GetHomeDirectory();
@@ -659,7 +666,7 @@ static void FS_AddHomeAsGameDirectory (const char *dir)
 #endif
 		FS_CreatePath(va("%s/", gdir));
 
-		FS_AddGameDirectory(gdir);
+		FS_AddGameDirectory(gdir, write);
 	} else {
 		Com_Printf("could not find the home directory\n");
 	}
@@ -848,16 +855,11 @@ void FS_InitFilesystem (qboolean writeToHomeDir)
 
 #ifdef PKGDATADIR
 	/* add the system search path */
-	FS_AddGameDirectory(PKGDATADIR"/"BASEDIRNAME);
+	FS_AddGameDirectory(PKGDATADIR"/"BASEDIRNAME, qfalse);
 #endif
 
-	if (writeToHomeDir) {
-		FS_AddGameDirectory("./" BASEDIRNAME);
-		FS_AddHomeAsGameDirectory(BASEDIRNAME);
-	} else {
-		FS_AddHomeAsGameDirectory(BASEDIRNAME);
-		FS_AddGameDirectory("./" BASEDIRNAME);
-	}
+	FS_AddGameDirectory("./" BASEDIRNAME, !writeToHomeDir);
+	FS_AddHomeAsGameDirectory(BASEDIRNAME, writeToHomeDir);
 
 #ifdef COMPILE_UFO
 	FS_InitCommandsAndCvars();

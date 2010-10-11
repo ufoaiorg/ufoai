@@ -95,7 +95,9 @@ typedef struct pack_s {
 
 typedef struct searchpath_s {
 	char filename[MAX_OSPATH];
-	pack_t *pack;				/* only one of filename / pack will be used */
+	pack_t *pack;				/**< only one of filename / pack will be used */
+	qboolean write;				/**< this is the path for writing configs and savegames - may
+								 * only be once set to true in the whole list */
 	struct searchpath_s *next;
 } searchpath_t;
 
