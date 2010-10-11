@@ -135,7 +135,7 @@ qboolean GAME_IsMultiplayer (void)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
 	if (list != NULL) {
-		const qboolean isMultiplayer = list->isMultiplayer == 0;
+		const qboolean isMultiplayer = list->isMultiplayer == 1;
 		return isMultiplayer;
 	}
 
