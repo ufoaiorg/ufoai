@@ -38,8 +38,6 @@ typedef struct cgame_export_s {
 	void (EXPORT *Shutdown) (void);
 	/** soldier spawn functions may differ between the different gametypes */
 	qboolean (EXPORT *Spawn) (void);
-	/** each gametype can handle the current team in a different way */
-	int (EXPORT *GetTeam) (void);
 	/** some gametypes only support special maps */
 	const mapDef_t* (EXPORT *MapInfo) (int step);
 	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */

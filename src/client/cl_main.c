@@ -81,7 +81,6 @@ static cvar_t *cl_name;
 static cvar_t *cl_msg;
 static cvar_t *cl_ready;
 cvar_t *cl_teamnum;
-cvar_t *cl_team;
 
 client_static_t cls;
 
@@ -994,7 +993,6 @@ static void CL_InitLocal (void)
 	cl_lastsave = Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
 	/* userinfo */
 	cl_name = Cvar_Get("cl_name", Sys_GetCurrentUser(), CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
-	cl_team = Cvar_Get("cl_team", "1", CVAR_USERINFO, "Humans (0) or aliens (7)");
 	cl_teamnum = Cvar_Get("cl_teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Teamnum for multiplayer teamplay games");
 	cl_ready = Cvar_Get("cl_ready", "0", CVAR_USERINFO, "Ready indicator in the userinfo for tactical missions");
 	cl_msg = Cvar_Get("cl_msg", "2", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");

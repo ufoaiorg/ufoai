@@ -400,12 +400,6 @@ qboolean GAME_CP_ItemIsUseable (const objDef_t *od)
 	return RS_IsResearched_ptr(tech);
 }
 
-int GAME_CP_GetTeam (void)
-{
-	assert(ccs.curCampaign);
-	return ccs.curCampaign->team;
-}
-
 /**
  * @brief Checks whether the team is known at this stage already
  * @param[in] teamDef The team definition of the alien team
@@ -449,7 +443,7 @@ void GAME_CP_Frame (void)
 
 const char* GAME_CP_GetTeamDef (void)
 {
-	const int team = GAME_CP_GetTeam();
+	const int team = ccs.curCampaign->team;
 	return Com_ValueToStr(&team, V_TEAM, 0);
 }
 

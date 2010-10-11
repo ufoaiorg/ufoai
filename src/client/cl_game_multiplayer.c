@@ -282,11 +282,6 @@ const mapDef_t* GAME_MP_MapInfo (int step)
 	return md;
 }
 
-int GAME_MP_GetTeam (void)
-{
-	return cl_team->integer;
-}
-
 static equipDef_t equipDefMultiplayer;
 
 equipDef_t *GAME_MP_GetEquipmentDefinition (void)

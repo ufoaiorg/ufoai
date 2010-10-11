@@ -134,7 +134,6 @@ extern memPool_t *cl_soundSysPool;
 /* cvars */
 extern cvar_t *cl_fps;
 extern cvar_t *cl_selected;
-extern cvar_t *cl_team;
 extern cvar_t *cl_teamnum;
 
 extern cvar_t *s_language;

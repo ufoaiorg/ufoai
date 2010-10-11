@@ -402,7 +402,7 @@ void MP_LoadTeamMultiplayer_f (void)
 static void MP_GetEquipment (void)
 {
 	const equipDef_t *edFromScript;
-	const char *teamID = Com_ValueToStr(&cl_team->integer, V_TEAM, 0);
+	const char *teamID = Com_ValueToStr(&cl_teamnum->integer, V_TEAM, 0);
 	char equipmentName[MAX_VAR];
 	equipDef_t unused;
 	equipDef_t *ed;

@@ -41,7 +41,6 @@ void GAME_DisplayItemInfo(uiNode_t *node, const char *string);
 qboolean GAME_ItemIsUseable(const objDef_t *od);
 void GAME_HandleResults(struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
 void GAME_SpawnSoldiers(void);
-int GAME_GetCurrentTeam(void);
 equipDef_t *GAME_GetEquipmentDefinition(void);
 void GAME_CharacterCvars(const character_t *chr);
 character_t* GAME_GetCharacter(int index);

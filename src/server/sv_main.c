@@ -200,7 +200,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 			int teamId = svs.ge->ClientGetTeamNum(cl->player);
 			if (!teamId)
 				teamId = TEAM_NO_ACTIVE;
-			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_team", teamId);
+			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_teamnum", teamId);
 			Info_SetValueForKeyAsInteger(infoPlayer, sizeof(infoPlayer), "cl_ready", svs.ge->ClientIsReady(cl->player));
 			Info_SetValueForKey(infoPlayer, sizeof(infoPlayer), "cl_name", cl->name);
 			NET_WriteString(msg, infoPlayer);

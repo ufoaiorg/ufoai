@@ -251,11 +251,6 @@ const mapDef_t* GAME_SK_MapInfo (int step)
 	return md;
 }
 
-int GAME_SK_GetTeam (void)
-{
-	return cl_team->integer;
-}
-
 static void GAME_InitMenuOptions (void)
 {
 	int i;

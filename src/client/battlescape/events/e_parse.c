@@ -43,7 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "e_main.h"
 
 #include "../cl_localentity.h"
-#include "../../cl_team.h"
 #include "../../cl_game.h"
 
 cvar_t *cl_log_battlescape_events;

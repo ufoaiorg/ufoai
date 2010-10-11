@@ -921,7 +921,7 @@ void G_SetTeamForPlayer (player_t* player, const int team)
 	}
 
 	if (!G_IsAIPlayer(player))
-		Info_SetValueForKeyAsInteger(player->pers.userinfo, sizeof(player->pers.userinfo), "cl_team", team);
+		Info_SetValueForKeyAsInteger(player->pers.userinfo, sizeof(player->pers.userinfo), "cl_teamnum", team);
 }
 
 /**

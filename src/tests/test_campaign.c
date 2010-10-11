@@ -268,6 +268,8 @@ static void testSaveLoad (void)
 
 static void testCampaignRun (void)
 {
+	ccs.curCampaign = CL_GetCampaign(cp_campaign->string);
+
 	CL_CampaignRun();
 }
 

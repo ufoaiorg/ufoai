@@ -35,7 +35,6 @@ void GAME_CP_Shutdown(void);
 qboolean GAME_CP_ItemIsUseable(const objDef_t *od);
 void GAME_CP_Results(struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
 qboolean GAME_CP_Spawn(void);
-int GAME_CP_GetTeam(void);
 equipDef_t *GAME_CP_GetEquipmentDefinition(void);
 void GAME_CP_CharacterCvars(const character_t *chr);
 qboolean GAME_CP_TeamIsKnown(const teamDef_t *teamDef);

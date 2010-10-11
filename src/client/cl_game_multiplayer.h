@@ -31,7 +31,6 @@ void GAME_MP_InitStartup(const cgame_import_t *import);
 void GAME_MP_AutoTeam(void);
 void GAME_MP_Shutdown(void);
 void GAME_MP_Results(struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
-int GAME_MP_GetTeam(void);
 void GAME_MP_EndRoundAnnounce(int playerNum, int team);
 void GAME_MP_StartBattlescape(qboolean isTeamPlay);
 void GAME_MP_NotifyEvent(event_t eventType);
