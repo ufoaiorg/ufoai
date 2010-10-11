@@ -163,7 +163,7 @@ void CP_NationBackupMonthlyData (void)
 	 * "inuse" is copied as well so we do not need to set it anywhere.
 	 */
 	for (nat = 0; nat < ccs.numNations; nat++) {
-		nation_t *nation = &ccs.nations[nat];
+		nation_t *nation = NAT_GetNationByIDX(nat);
 
 		for (i = MONTHS_PER_YEAR - 1; i > 0; i--) {	/* Reverse copy to not overwrite with wrong data */
 			nation->stats[i] = nation->stats[i - 1];

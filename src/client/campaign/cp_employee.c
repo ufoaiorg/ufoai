@@ -928,7 +928,7 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 	/* get a list of nations,  if excludeHappyNations is qtrue then also exclude
 	 * unhappy nations (unhappy nation: happiness <= 0) from the list */
 	for (idx = 0; idx < ccs.numNations; idx++) {
-		const nation_t *nation = &ccs.nations[idx];
+		const nation_t *nation = NAT_GetNationByIDX(idx);
 		if (nation->stats[0].happiness > 0 || !excludeUnhappyNations) {
 			happyNations[numHappyNations] = nation;
 			numHappyNations++;
@@ -1129,7 +1129,7 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 static inline const nation_t *E_RandomNation (void)
 {
 	const int nationIndex = rand() % ccs.numNations;
-	return &ccs.nations[nationIndex];
+	return NAT_GetNationByIDX(nationIndex);
 }
 
 void E_InitialEmployees (const campaign_t *campaign)
@@ -1153,7 +1153,8 @@ void E_InitialEmployees (const campaign_t *campaign)
 
 	/* Fill the global data employee list with pilots, evenly distributed between nations */
 	for (i = 0; i < MAX_EMPLOYEES; i++) {
-		const nation_t *nation = &ccs.nations[++j % ccs.numNations];
+		const int index = ++j % ccs.numNations;
+		const nation_t *nation = NAT_GetNationByIDX(index);
 		if (!E_CreateEmployee(EMPL_PILOT, nation, NULL))
 			break;
 	}

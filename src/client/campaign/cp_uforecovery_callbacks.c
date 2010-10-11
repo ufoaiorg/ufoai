@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Entries on Sell UFO dialog
  */
 typedef struct ufoRecoveryNation_s {
-	nation_t *nation;
+	const nation_t *nation;
 	int price;										/**< price proposed by nation. */
 } ufoRecoveryNation_t;
 
@@ -451,7 +451,7 @@ static void UR_DialogSortByColumn_f (void)
 static void UR_DialogSelectSellNation_f (void)
 {
 	int num;
-	nation_t *nation;
+	const nation_t *nation;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <nationid>\n", Cmd_Argv(0));

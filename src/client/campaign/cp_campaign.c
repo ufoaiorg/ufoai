@@ -355,7 +355,7 @@ void CP_CheckLostCondition (const campaign_t *campaign)
 			/* check for nation happiness */
 			int j, nationBelowLimit = 0;
 			for (j = 0; j < ccs.numNations; j++) {
-				const nation_t *nation = &ccs.nations[j];
+				const nation_t *nation = NAT_GetNationByIDX(j);
 				if (nation->stats[0].happiness < campaign->minhappiness) {
 					nationBelowLimit++;
 				}

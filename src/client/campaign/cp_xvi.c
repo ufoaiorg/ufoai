@@ -153,7 +153,7 @@ void CP_UpdateNationXVIInfection (void)
 
 	/* copy the new values of XVI infection level into nation array */
 	for (nationIdx = 0; nationIdx < ccs.numNations; nationIdx++) {
-		nation_t* nation = &ccs.nations[nationIdx];
+		nation_t* nation = NAT_GetNationByIDX(nationIdx);
 		nation->stats[0].xviInfection = ceil(xviInfection[nation->idx]);
 	}
 

@@ -56,7 +56,7 @@ nation_t *NAT_GetNationByID (const char *nationID)
 		return NULL;
 	}
 	for (i = 0; i < ccs.numNations; i++) {
-		nation_t *nation = &ccs.nations[i];
+		nation_t *nation = NAT_GetNationByIDX(i);
 		if (!strcmp(nation->id, nationID))
 			return nation;
 	}

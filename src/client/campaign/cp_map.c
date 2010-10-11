@@ -1915,10 +1915,11 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 
 	/* Draw nation names */
 	for (i = 0; i < ccs.numNations; i++) {
-		if (MAP_AllMapToScreen(node, ccs.nations[i].pos, &x, &y, NULL))
-			UI_DrawString("f_verysmall", ALIGN_UC, x , y, 0, 0, 0, _(ccs.nations[i].name), 0, 0, NULL, qfalse, 0);
+		const nation_t *nation = NAT_GetNationByIDX(i);
+		if (MAP_AllMapToScreen(node, nation->pos, &x, &y, NULL))
+			UI_DrawString("f_verysmall", ALIGN_UC, x , y, 0, 0, 0, _(nation->name), 0, 0, NULL, qfalse, 0);
 		if (showXVI)
-			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(ccs.nations[i].name), ccs.nations[i].stats[0].xviInfection), sizeof(buffer));
+			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(nation->name), nation->stats[0].xviInfection), sizeof(buffer));
 	}
 	if (showXVI)
 		UI_RegisterText(TEXT_XVI, buffer);
@@ -2149,7 +2150,7 @@ nation_t* MAP_GetNation (const vec2_t pos)
 	Com_DPrintf(DEBUG_CLIENT, "MAP_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
 #endif
 	for (i = 0; i < ccs.numNations; i++) {
-		nation_t *nation = &ccs.nations[i];
+		nation_t *nation = NAT_GetNationByIDX(i);
 		/* compare the first three color values with color value at pos */
 		if (VectorCompare(nation->color, color))
 			return nation;
