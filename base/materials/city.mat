@@ -144,7 +144,7 @@
 	{
 		texture tex_misc/vehentpan0
 		blend GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		anim 9 2
+		anim 9 6.0
 	}
 }
 
