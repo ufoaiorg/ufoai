@@ -189,7 +189,7 @@ static font_t *R_FontAnalyze (const char *name, const char *path, int renderStyl
 
 	f->font = TTF_OpenFontRW(f->rw, 0, size);
 	if (!f->font)
-		Com_Error(ERR_FATAL, "...could not load ttf font data %s", path);
+		Com_Error(ERR_FATAL, "...could not load ttf font data %s (%s)", path, TTF_GetError());
 
 	/* font style */
 	f->style = renderStyle;
