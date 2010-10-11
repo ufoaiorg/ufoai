@@ -132,7 +132,6 @@ static inline qboolean UI_BaseMapIsCellFree (const base_t *base, int col, int ro
 static void UI_BaseMapNodeDraw (uiNode_t * node)
 {
 	int width, height, row, col;
-	char image[MAX_QPATH];		/**< this buffer should not be need */
 	const building_t *building;
 	const building_t *secondBuilding = NULL;
 	const base_t *base = B_GetCurrentSelectedBase();
@@ -150,6 +149,7 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
 	height = node->size[1] / BASE_SIZE + BASE_IMAGE_OVERLAY;
 
 	for (row = 0; row < BASE_SIZE; row++) {
+		const char *image = NULL;
 		for (col = 0; col < BASE_SIZE; col++) {
 			vec2_t pos;
 			UI_GetNodeAbsPos(node, pos);
@@ -157,13 +157,12 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
 			pos[1] += row * (height - BASE_IMAGE_OVERLAY);
 
 			/* base tile */
-			image[0] = '\0';
 			if (base->map[row][col].blocked) {
 				building = NULL;
-				Q_strncpyz(image, "base/invalid", sizeof(image));
+				image = "base/invalid";
 			} else if (!base->map[row][col].building) {
 				building = NULL;
-				Q_strncpyz(image, "base/grid", sizeof(image));
+				image = "base/grid";
 			} else {
 				building = base->map[row][col].building;
 				secondBuilding = NULL;
@@ -176,17 +175,17 @@ static void UI_BaseMapNodeDraw (uiNode_t * node)
 					if (building->needs)
 						B_BuildingSetUsed(used, building->idx);
 					if (building->image)
-						Q_strncpyz(image, building->image, sizeof(image));
+						image = building->image;
 				} else {
 					secondBuilding = B_GetBuildingTemplate(building->needs);
 					if (!secondBuilding)
 						Com_Error(ERR_DROP, "Error in ufo-scriptfile - could not find the needed building");
-					Q_strncpyz(image, secondBuilding->image, sizeof(image));
+					image = secondBuilding->image;
 				}
 			}
 
 			/* draw tile */
-			if (image[0] != '\0')
+			if (image != NULL)
 				UI_DrawNormImageByName(pos[0], pos[1], width, height, 0, 0, 0, 0, image);
 
 			/* only draw for first part of building */
