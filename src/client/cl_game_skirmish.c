@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define DROPSHIP_MAX INTERCEPTOR_STILETTO
 
+static const cgame_import_t *cgi;
 static cvar_t *cl_equip;
 
 /**
@@ -278,8 +279,9 @@ static void GAME_InitMenuOptions (void)
 	UI_RegisterOption(OPTION_DROPSHIPS, aircraftOptions);
 }
 
-void GAME_SK_InitStartup (void)
+void GAME_SK_InitStartup (const cgame_import_t *import)
 {
+	cgi = import;
 	Cvar_ForceSet("sv_maxclients", "1");
 	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_ARCHIVE, "Equipment that is used for skirmish mode games");
 

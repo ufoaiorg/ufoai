@@ -59,6 +59,8 @@ void GAME_Drop(void);
 void GAME_Frame(void);
 const char* GAME_GetModelForItem(const objDef_t *od, struct uiModel_s** menuModel);
 
+#include "cgame.h"
+
 #include "cl_game_campaign.h"
 #include "cl_game_skirmish.h"
 #include "cl_game_multiplayer.h"

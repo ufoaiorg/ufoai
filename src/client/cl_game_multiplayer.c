@@ -35,6 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "battlescape/cl_hud.h"
 #include "battlescape/cl_parse.h"
 
+static const cgame_import_t *cgi;
+
 void GAME_MP_AutoTeam (void)
 {
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
@@ -292,10 +294,12 @@ equipDef_t *GAME_MP_GetEquipmentDefinition (void)
 	return &equipDefMultiplayer;
 }
 
-void GAME_MP_InitStartup (void)
+void GAME_MP_InitStartup (const cgame_import_t *import)
 {
 	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
 	const char *max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
+
+	cgi = import;
 
 	chrDisplayList.num = 0;
 

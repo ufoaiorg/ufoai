@@ -28,11 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "mxml/mxml.h"
 
+struct cgame_import_s;
+
 typedef struct cgame_export_s {
 	const char *name;
 	const char *menu;
 	int isMultiplayer;
-	void (EXPORT *Init) (void);
+	void (EXPORT *Init) (const struct cgame_import_s *import);
 	void (EXPORT *Shutdown) (void);
 	/** soldier spawn functions may differ between the different gametypes */
 	qboolean (EXPORT *Spawn) (void);
@@ -65,7 +67,7 @@ typedef struct cgame_export_s {
 } cgame_export_t;
 
 /** @todo define the import interface */
-typedef struct {
+typedef struct cgame_import_s {
 	csi_t *csi;
 	client_static_t *cls;
 	client_state_t *cl;

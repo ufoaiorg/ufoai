@@ -507,7 +507,7 @@ const char* GAME_CP_GetItemModel (const char *string)
 	}
 }
 
-void GAME_CP_InitStartup (void)
+void GAME_CP_InitStartup (const cgame_import_t *import)
 {
 	Cmd_AddCommand("cp_results", GAME_CP_Results_f, "Parses and shows the game results");
 	Cmd_AddCommand("cp_missionauto_check", GAME_CP_MissionAutoCheck_f, "Checks whether this mission can be done automatically");

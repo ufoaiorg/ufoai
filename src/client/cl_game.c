@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "cl_game.h"
-#include "cgame.h"
 #include "battlescape/cl_localentity.h"
 #include "ui/ui_main.h"
 #include "ui/ui_nodes.h"
@@ -196,17 +195,12 @@ void GAME_DisplayItemInfo (uiNode_t *node, const char *string)
 	}
 }
 
-#if 0
-/**
- * @todo Implement the usage of this function and update the game modes to use the callbacks
- */
-static cgame_import_t* GAME_GetImportData (void)
+static const cgame_import_t* GAME_GetImportData (void)
 {
 	static cgame_import_t gameImport;
 	static cgame_import_t *cgi = NULL;
 
 	if (cgi == NULL) {
-		memset(&gameImport, 0, sizeof(gameImport));
 		cgi = &gameImport;
 
 		cgi->csi = &csi;
@@ -230,15 +224,15 @@ static cgame_import_t* GAME_GetImportData (void)
 		cgi->UI_AddOption = UI_AddOption;
 		cgi->UI_ExecuteConfunc = UI_ExecuteConfunc;
 		cgi->UI_InitStack = UI_InitStack;
-		cgi->UI_Popup = UI_Popup;
-		cgi->UI_PopupList = UI_PopupList;
+		/*cgi->UI_Popup = UI_Popup;*/
+		/*cgi->UI_PopupList = UI_PopupList;*/
 		cgi->UI_PopWindow = UI_PopWindow;
 		cgi->UI_PushWindow = UI_PushWindow;
 		cgi->UI_RegisterLinkedListText = UI_RegisterLinkedListText;
 		cgi->UI_RegisterOption = UI_RegisterOption;
 		cgi->UI_RegisterText = UI_RegisterText;
 		cgi->UI_ResetData = UI_ResetData;
-		cgi->UI_TextNodeSelectLine = UI_TextNodeSelectLine;
+		/*gi->UI_TextNodeSelectLine = UI_TextNodeSelectLine;*/
 		cgi->mxml_AddBool = mxml_AddBool;
 		cgi->mxml_AddBoolValue = mxml_AddBoolValue;
 		cgi->mxml_AddByte = mxml_AddByte;
@@ -263,13 +257,12 @@ static cgame_import_t* GAME_GetImportData (void)
 		cgi->R_LoadImageData = R_LoadImageData;
 		cgi->R_SoftenTexture = R_SoftenTexture;
 		cgi->R_UploadAlpha = R_UploadAlpha;
-		cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;
+		/*cgi->S_SetSampleRepeatRate = S_SetSampleRepeatRate;*/
 		cgi->S_StartLocalSample = S_StartLocalSample;
 	}
 
 	return cgi;
 }
-#endif
 
 static const int TAG_INVENTORY = 17462;
 
@@ -314,11 +307,12 @@ void GAME_SetMode (const cgame_export_t *gametype)
 
 	list = GAME_GetCurrentType();
 	if (list) {
+		const cgame_import_t *import = GAME_GetImportData();
 		Com_Printf("Change gametype to '%s'\n", list->name);
 		/* inventory structure switched/initialized */
 		INV_DestroyInventory(&cls.i);
 		INV_InitInventory(list->name, &cls.i, &csi, &inventoryImport);
-		list->Init();
+		list->Init(import);
 	}
 }
 
