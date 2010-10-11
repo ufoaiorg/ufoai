@@ -914,6 +914,8 @@ void R_LoadMaterials (const char *map)
 		return;
 	} else {
 		Com_Printf("load material file: '%s'\n", path);
+		if (!r_materials->integer)
+			Com_Printf("...ignore materials (r_materials is deactivated)\n");
 	}
 
 	buffer = (const char *)fileBuffer;
