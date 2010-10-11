@@ -61,13 +61,12 @@ void GAME_MP_EndRoundAnnounce (int playerNum, int team)
 
 	/* it was our own round */
 	if (cl.pnum == playerNum) {
-		/* add translated message to chat buffer */
 		Com_sprintf(buf, sizeof(buf), _("You've ended your round\n"));
 	} else {
 		const char *playerName = CL_PlayerGetName(playerNum);
-		/* add translated message to chat buffer */
 		Com_sprintf(buf, sizeof(buf), _("%s ended his round (team %i)\n"), playerName, team);
 	}
+	/* add translated message to chat buffer */
 	HUD_DisplayMessage(buf);
 }
 
