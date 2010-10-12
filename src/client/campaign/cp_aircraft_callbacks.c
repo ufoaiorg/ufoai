@@ -66,7 +66,6 @@ static void AIM_SelectAircraft_f (void)
 	if (Cmd_Argc() < 2) {
 		if (base->aircraftCurrent)
 			AIR_AircraftSelect(base->aircraftCurrent);
-		return;
 	} else {
 		const int i = atoi(Cmd_Argv(1));
 		aircraft_t *aircraft = AIR_GetAircraftFromBaseByIDXSafe(base, i);
