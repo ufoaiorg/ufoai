@@ -206,13 +206,9 @@ static void B_BuildBase_f (void)
 		if (baseName[0] == '\0')
 			baseName = "Base";
 
-		Q_strncpyz(base->name, baseName, sizeof(base->name));
 		/* set up the base with buildings from template */
-		B_SetUpBase(ccs.curCampaign, base, newBasePos);
+		B_SetUpBase(ccs.curCampaign, base, newBasePos, baseName);
 
-		ccs.numBases++;
-		ccs.campaignStats.basesBuilt++;
-		ccs.mapAction = MA_NONE;
 		CL_UpdateCredits(ccs.credits - ccs.curCampaign->basecost);
 		nation = MAP_GetNation(base->pos);
 		if (nation)
@@ -220,9 +216,6 @@ static void B_BuildBase_f (void)
 		else
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
 		MS_AddNewMessage(_("Base built"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
-		B_ResetAllStatusAndCapacities(base, qtrue);
-		AL_FillInContainment(base);
-		PR_UpdateProductionCap(base);
 
 		B_UpdateBaseCount();
 		B_SelectBase(base);

@@ -1277,16 +1277,27 @@ void B_UpdateBaseCount (void)
 }
 
 /**
+ * @brief Set the base name
+ * @param[out] base The base to set the name for
+ * @param[in] name The name for the base
+ */
+void B_SetName (base_t *base, const char *name)
+{
+	Q_strncpyz(base->name, name, sizeof(base->name));
+}
+
+/**
  * @brief Setup new base, uses template for the first base
  * @param[in,out] base The base to set up
  * @param[in] pos Position (on Geoscape) the base built at
  * @sa B_NewBase
  * @sa B_SetUpFirstBase
  */
-void B_SetUpBase (campaign_t *campaign, base_t* base, vec2_t pos)
+void B_SetUpBase (campaign_t *campaign, base_t* base, vec2_t pos, const char *name)
 {
 	const int newBaseAlienInterest = 1.0f;
 
+	B_SetName(base, name);
 	Vector2Copy(pos, base->pos);
 
 	base->idx = B_GetBaseIDX(base);
@@ -1307,6 +1318,14 @@ void B_SetUpBase (campaign_t *campaign, base_t* base, vec2_t pos)
 	/* Reset Radar range */
 	RADAR_Initialise(&(base->radar), 0.0f, 0.0f, 1.0f, qtrue);
 	RADAR_InitialiseUFOs(&base->radar);
+
+	B_ResetAllStatusAndCapacities(base, qtrue);
+	AL_FillInContainment(base);
+	PR_UpdateProductionCap(base);
+
+	ccs.numBases++;
+	ccs.campaignStats.basesBuilt++;
+	ccs.mapAction = MA_NONE;
 }
 
 /**

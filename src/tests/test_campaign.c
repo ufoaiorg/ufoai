@@ -167,7 +167,7 @@ static void testBaseBuilding (void)
 
 	RS_InitTree(campaign, qfalse);
 
-	B_SetUpBase(campaign, base, pos);
+	B_SetUpBase(campaign, base, pos, "testbase");
 
 	B_Destroy(base);
 
@@ -282,13 +282,17 @@ static void testSaveLoad (void)
 
 	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, NULL);
 	ccs.credits = 10000000;
+	ccs.curCampaign = campaign;
+
+	Cvar_Set("save_compressed", "0");
 
 	RS_InitTree(campaign, qfalse);
 
 	{
-		B_SetUpBase(campaign, base, pos);
+		B_SetUpBase(campaign, base, pos, "unittestbase");
 
 		CU_ASSERT(base->founded);
+		CU_ASSERT_EQUAL(base->baseStatus, BASE_WORKING);
 
 		Cmd_ExecuteString("game_quicksave");
 	}
@@ -298,16 +302,18 @@ static void testSaveLoad (void)
 		CU_ASSERT_EQUAL(base->baseStatus, BASE_DESTROYED);
 
 		E_DeleteAllEmployees(NULL);
+
+		B_SetName(base, "unittestbase2");
 	}
 	{
-		/*Cmd_ExecuteString("game_quickload");*/
+		Cmd_ExecuteString("game_quickload");
 
 		/** @todo check that the savegame was successfully loaded */
 
-		/*CU_ASSERT_EQUAL(base->baseStatus, BASE_WORKING);*/
+		CU_ASSERT_EQUAL(base->baseStatus, BASE_WORKING);
+		CU_ASSERT_STRING_EQUAL(base->name, "unittestbase");
 
-		/** @todo fails */
-		/*B_Destroy(base);*/
+		B_Destroy(base);
 
 		E_DeleteAllEmployees(NULL);
 	}
