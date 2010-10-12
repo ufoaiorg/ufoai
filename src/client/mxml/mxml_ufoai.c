@@ -297,9 +297,9 @@ qboolean mxml_GetBool (mxml_node_t *parent, const char *name, const qboolean def
 	if (!txt)
 		return defaultval;
 
-	if (!strcmp(txt, "true"))
+	if (!strcmp(txt, "true") || !strcmp(txt, "1"))
 		return qtrue;
-	if (!strcmp(txt, "false"))
+	if (!strcmp(txt, "false") || !strcmp(txt, "0"))
 		return qfalse;
 
 	return defaultval;
