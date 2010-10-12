@@ -333,6 +333,7 @@ $(TARGET)_SRCS      = \
 
 ifeq ($(TARGET_OS),mingw32)
 	$(TARGET)_SRCS += \
+		ports/windows/win_backtrace.c \
 		ports/windows/win_console.c \
 		ports/windows/win_shared.c \
 		ports/windows/ufo.rc

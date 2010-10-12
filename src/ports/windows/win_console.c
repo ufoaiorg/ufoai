@@ -370,6 +370,8 @@ void Sys_ConsoleShutdown (void)
 	ShowWindow(sys_console.hWnd, SW_HIDE);
 	DestroyWindow(sys_console.hWnd);
 	UnregisterClass(CONSOLE_WINDOW_CLASS_NAME, global_hInstance);
+
+	Sys_BacktraceShutdown();
 }
 
 void Sys_ConsoleInit (void)
@@ -378,6 +380,8 @@ void Sys_ConsoleInit (void)
 	HDC hDC;
 	RECT r;
 	int x, y, w, h;
+
+	Sys_BacktraceInit();
 
 	/* Center the window in the desktop */
 	hDC = GetDC(0);
