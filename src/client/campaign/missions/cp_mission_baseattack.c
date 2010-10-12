@@ -244,9 +244,8 @@ void CP_CheckBaseAttacks_f (void)
 
 	if (Cmd_Argc() == 2) {
 		const int baseIDX = atoi(Cmd_Argv(1));
-		if (baseIDX >= 0 && baseIDX < MAX_BASES)
-			base = B_GetFoundedBaseByIDX(baseIDX);
-		else
+		base = B_GetFoundedBaseByIDX(baseIDX);
+		if (base == NULL)
 			Com_Printf("CP_CheckBaseAttacks_f: Invalid base index: %i\n", baseIDX);
 	}
 
