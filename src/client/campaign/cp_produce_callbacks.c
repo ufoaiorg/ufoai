@@ -710,9 +710,10 @@ static void PR_ProductionIncrease_f (void)
 			tech = selectedAircraft->tech;
 			name = selectedAircraft->name;
 		} else if (selectedDisassembly) {
-			assert(selectedDisassembly->ufoTemplate);
-			tech = selectedDisassembly->ufoTemplate->tech;
-			name = selectedDisassembly->ufoTemplate->name;
+			const aircraft_t *ufoTemplate = selectedDisassembly->ufoTemplate;
+			assert(ufoTemplate);
+			tech = ufoTemplate->tech;
+			name = ufoTemplate->name;
 			amount = 1;
 		}
 		assert(tech);
@@ -792,7 +793,7 @@ static void PR_ProductionStop_f (void)
 static void PR_ProductionDecrease_f (void)
 {
 	int amount = 1;
-	base_t *base = B_GetCurrentSelectedBase();
+	const base_t *base = B_GetCurrentSelectedBase();
 	production_t *prod = selectedProduction;
 
 	if (Cmd_Argc() == 2)
