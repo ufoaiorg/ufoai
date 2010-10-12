@@ -183,8 +183,10 @@ int PR_RequirementsMet (int amount, const requirements_t const *reqs, base_t *ba
  * @brief returns the number of free production slots of a queue
  * @param[in] queue Pointer to the queue to check
  */
-int PR_QueueFreeSpace (const base_t* base, const production_queue_t const *queue)
+int PR_QueueFreeSpace (const base_t* base)
 {
+	const production_queue_t const *queue = PR_GetProductionForBase(base);
+
 	int numWorkshops;
 
 	assert(queue);
@@ -204,15 +206,15 @@ int PR_QueueFreeSpace (const base_t* base, const production_queue_t const *queue
  * @param[in] ufo The UFO in case of a disassemly.
  * @param[in] amount Desired amount to produce.
  */
-production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, storedUFO_t *ufo, signed int amount)
+production_t *PR_QueueNew (base_t *base, const objDef_t *item, aircraft_t *aircraftTemplate, storedUFO_t *ufo, signed int amount)
 {
 	production_t *prod;
 	const technology_t *tech;
+	production_queue_t *queue = PR_GetProductionForBase(base);
 
 	assert((item && !aircraftTemplate && !ufo) || (!item && aircraftTemplate && !ufo) || (!item && !aircraftTemplate && ufo));
-	assert(base);
 
-	if (PR_QueueFreeSpace(base, queue) <= 0)
+	if (PR_QueueFreeSpace(base) <= 0)
 		return NULL;
 	if (E_CountHired(base, EMPL_WORKER) <= 0)
 		return NULL;

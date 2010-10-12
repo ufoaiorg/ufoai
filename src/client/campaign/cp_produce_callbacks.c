@@ -631,7 +631,6 @@ static void PR_ProductionList_f (void)
  */
 static void PR_ProductionIncrease_f (void)
 {
-	production_queue_t *queue;
 	production_t *prod;
 	base_t *base = B_GetCurrentSelectedBase();
 	technology_t *tech = NULL;
@@ -647,8 +646,6 @@ static void PR_ProductionIncrease_f (void)
 
 	if (Cmd_Argc() == 2)
 		amount = atoi(Cmd_Argv(1));
-
-	queue = PR_GetProductionForBase(base);
 
 	if (selectedProduction) {
 		prod = selectedProduction;
@@ -696,9 +693,10 @@ static void PR_ProductionIncrease_f (void)
 		Cvar_SetValue("mn_production_amount", prod->amount);
 	} else {
 		const char *name = NULL;
+		production_queue_t *queue = PR_GetProductionForBase(base);
 
 		/* no free production slot */
-		if (PR_QueueFreeSpace(base, queue) <= 0) {
+		if (PR_QueueFreeSpace(base) <= 0) {
 			UI_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
 			return;
 		}
@@ -738,7 +736,7 @@ static void PR_ProductionIncrease_f (void)
 		}
 
 		/* add production */
-		prod = PR_QueueNew(base, queue, selectedItem, selectedAircraft, selectedDisassembly, producibleAmount);
+		prod = PR_QueueNew(base, selectedItem, selectedAircraft, selectedDisassembly, producibleAmount);
 
 		/** @todo this popup hides any previous popup, like popup created in PR_QueueNew */
 		if (!prod)

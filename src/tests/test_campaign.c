@@ -246,6 +246,41 @@ static void testResearch (void)
 
 static void testProduction (void)
 {
+	vec2_t pos = {0, 0};
+	base_t *base = B_GetFirstUnfoundedBase();
+	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
+	const objDef_t *od;
+	const technology_t *tech;
+	int old;
+	int i, n;
+
+	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(campaign);
+
+	memset(&ccs.campaignStats, 0, sizeof(ccs.campaignStats));
+	ccs.credits = 10000000;
+
+	ResetInventoryList();
+	RS_InitTree(campaign, qfalse);
+
+	B_SetUpBase(campaign, base, pos, "unittestproduction");
+	CU_ASSERT_TRUE(B_GetBuildingStatus(base, B_WORKSHOP));
+	CU_ASSERT_TRUE(E_CountHired(base, EMPL_WORKER) > 0);
+	CU_ASSERT_TRUE(PR_ProductionAllowed(base));
+
+	od = INVSH_GetItemByID("assault");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
+	old = base->storage.numItems[od->idx];
+	PR_QueueNew(base, od, NULL, NULL, 1);
+	tech = RS_GetTechForItem(od);
+	n = tech->produceTime * MINUTES_PER_HOUR - 1;
+	for (i = 0; i < n; i++)
+		PR_ProductionRun();
+	CU_ASSERT_EQUAL(old, base->storage.numItems[od->idx]);
+	PR_ProductionRun();
+	CU_ASSERT_EQUAL(old + 1, base->storage.numItems[od->idx]);
+
+	E_DeleteAllEmployees(NULL);
 }
 
 static void testAirFight (void)

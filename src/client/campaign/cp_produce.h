@@ -54,7 +54,7 @@ typedef struct production_s
 	 * @note Only one pointer is supposed to be set at any time.
 	 * @todo Make this a union
 	 */
-	objDef_t *item;			/**< Item to be produced. */
+	const objDef_t *item;			/**< Item to be produced. */
 	const struct aircraft_s *aircraft;	/**< Aircraft (sample) to be produced. */
 	struct storedUFO_s *ufo;
 
@@ -96,10 +96,10 @@ int PR_RequirementsMet(int amount, const requirements_t const *reqs, struct base
 
 float PR_CalculateProductionPercentDone(const struct base_s *base, const technology_t *tech, const struct storedUFO_s *const storedUFO);
 
-production_t *PR_QueueNew(struct base_s *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, struct storedUFO_s *ufo, signed int amount);
+production_t *PR_QueueNew(struct base_s *base, const objDef_t *item, aircraft_t *aircraftTemplate, struct storedUFO_s *ufo, signed int amount);
 void PR_QueueMove(production_queue_t *queue, int index, int dir);
 void PR_QueueDelete(struct base_s *base, production_queue_t *queue, int index);
 void PR_QueueNext(struct base_s *base);
-int PR_QueueFreeSpace(const struct base_s* base, const production_queue_t const *queue);
+int PR_QueueFreeSpace(const struct base_s* base);
 
 #endif /* CLIENT_CP_PRODUCE */
