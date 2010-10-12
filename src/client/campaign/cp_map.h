@@ -45,7 +45,7 @@ void MAP_Draw3DMarkerIfVisible(const struct uiNode_s* node, const vec2_t pos, fl
 void MAP_MapDrawEquidistantPoints(const struct uiNode_s* node, const vec2_t center, const float angle, const vec4_t color);
 float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector);
 void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
-void MAP_DrawMap(const struct uiNode_s* node);
+void MAP_DrawMap(const struct uiNode_s* node, campaign_t *campaign);
 void MAP_CenterOnPoint_f(void);
 void MAP_StopSmoothMovement(void);
 base_t* MAP_PositionCloseToBase(const vec2_t pos);
@@ -68,7 +68,7 @@ void MAP_PrintParameterStringByPos(const vec2_t pos);
 void MAP_CheckPositionBoundaries(float *pos);
 qboolean MAP_IsNight(const vec2_t pos);
 byte *MAP_GetColor(const vec2_t pos, mapType_t type);
-void MAP_Init(void);
+void MAP_Init(campaign_t *campaign);
 qboolean MAP_PositionFitsTCPNTypes(const vec2_t posT, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
 void MAP_SetOverlay(const char *overlayID);
 void MAP_DeactivateOverlay(const char *overlayID);

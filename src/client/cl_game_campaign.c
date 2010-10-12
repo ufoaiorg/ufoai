@@ -138,7 +138,7 @@ static void GAME_CP_Results_f (void)
 		return;
 	}
 
-	CP_MissionEnd(ccs.selectedMission, Com_ParseBoolean(Cmd_Argv(1)));
+	CP_MissionEnd(ccs.selectedMission, &ccs.battleParameters, Com_ParseBoolean(Cmd_Argv(1)));
 }
 
 /**
@@ -438,7 +438,7 @@ void GAME_CP_Frame (void)
 		return;
 
 	/* advance time */
-	CL_CampaignRun();
+	CL_CampaignRun(ccs.curCampaign);
 }
 
 const char* GAME_CP_GetTeamDef (void)

@@ -576,13 +576,15 @@ extern cvar_t *cp_campaign;
 extern cvar_t *cp_missiontest;
 extern cvar_t *cp_start_employees;
 
+#define MAX_CREDITS 10000000
+
 void CP_ParseCharacterData(struct dbuffer *msg);
 qboolean CP_CheckNextStageDestination(aircraft_t *ufo);
 
 void CP_InitStartup(void);
 void CL_ResetSinglePlayerData(void);
 void CL_DateConvertLong(const date_t * date, dateLong_t * dateLong);
-void CL_CampaignRun(void);
+void CL_CampaignRun(campaign_t *campaign);
 void CP_EndCampaign(qboolean won);
 void CL_UpdateCredits(int credits);
 aircraft_t* AIR_NewAircraft(base_t * base, const aircraft_t *aircraftTemplate);

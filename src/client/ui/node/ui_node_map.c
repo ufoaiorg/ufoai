@@ -48,7 +48,7 @@ static void UI_MapNodeDraw (uiNode_t *node)
 
 		/* Draw geoscape */
 		R_PushClipRect(pos[0], pos[1], node->size[0], node->size[1]);
-		MAP_DrawMap(node);
+		MAP_DrawMap(node, ccs.curCampaign);
 		R_PopClipRect();
 	}
 }

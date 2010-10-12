@@ -213,22 +213,19 @@ void CL_ParseEventMails (const char *name, const char **text)
 	} while (*text);
 }
 
-void CP_CheckCampaignEvents (void)
+void CP_CheckCampaignEvents (campaign_t *campaign)
 {
-	const campaignEvents_t *events;
+	const campaignEvents_t *events = campaign->events;
 	int i;
 
-	assert(ccs.curCampaign);
-
 	/* no events for the current campaign */
-	if (!ccs.curCampaign->events)
+	if (!events)
 		return;
 
 	/* no events in that definition */
-	if (!ccs.curCampaign->events->numCampaignEvents)
+	if (!events->numCampaignEvents)
 		return;
 
-	events = ccs.curCampaign->events;
 	for (i = 0; i < events->numCampaignEvents; i++) {
 		const campaignEvent_t *event = &events->campaignEvents[i];
 		if (event->interest <= ccs.overallInterest) {

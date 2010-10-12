@@ -562,7 +562,7 @@ const int DETECTION_INTERVAL = (SECONDS_PER_HOUR / 2);
  * @sa B_UpdateBaseData
  * @sa CL_CampaignRunAircraft
  */
-void CL_CampaignRun (void)
+void CL_CampaignRun (campaign_t *campaign)
 {
 	/* advance time */
 	ccs.timer += cls.frametime * ccs.gameTimeScale;
@@ -631,10 +631,10 @@ void CL_CampaignRun (void)
 			HOS_HospitalRun();
 			CP_SpawnNewMissions();
 			CP_SpreadXVI();
-			NAT_UpdateHappinessForAllNations(ccs.curCampaign->minhappiness);
+			NAT_UpdateHappinessForAllNations(campaign->minhappiness);
 			AB_BaseSearchedByNations();
-			CL_CampaignRunMarket(ccs.curCampaign);
-			CP_CheckCampaignEvents();
+			CL_CampaignRunMarket(campaign);
+			CP_CheckCampaignEvents(campaign);
 			CP_ReduceXVIEverywhere();
 			/* should be executed after all daily event that could
 			 * change XVI overlay */
@@ -648,7 +648,7 @@ void CL_CampaignRun (void)
 
 		UP_GetUnreadMails();
 		CP_CheckMissionEnd();
-		CP_CheckLostCondition(ccs.curCampaign);
+		CP_CheckLostCondition(campaign);
 		/* Check if there is a base attack mission */
 		CP_CheckBaseAttacks();
 		BDEF_AutoSelectTarget();
@@ -668,7 +668,6 @@ void CL_CampaignRun (void)
 	}
 }
 
-#define MAX_CREDITS 10000000
 /**
  * @brief Sets credits and update mn_credits cvar
  * @param[in] credits The new credits value
@@ -740,7 +739,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 
 	CP_CampaignInit(campaign, qtrue);
 	/* init the map images and reset the map actions */
-	MAP_Init();
+	MAP_Init(campaign);
 
 	/* read credits */
 	CL_UpdateCredits(mxml_GetLong(campaignNode, SAVE_CAMPAIGN_CREDITS, 0));
@@ -1403,7 +1402,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	/* initialise date */
 	ccs.date = campaign->date;
 
-	MAP_Init();
+	MAP_Init(campaign);
 	PR_ProductionInit();
 
 	/* get day */

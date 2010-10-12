@@ -70,6 +70,8 @@ static void ResetCampaignData (void)
 	CL_ReadSinglePlayerData();
 
 	ResetInventoryList();
+
+	CL_UpdateCredits(MAX_CREDITS);
 }
 
 /**
@@ -265,8 +267,6 @@ static void testResearch (void)
 	ResetCampaignData();
 	base = B_GetFirstUnfoundedBase();
 
-	ccs.credits = 10000000;
-
 	RS_InitTree(campaign, qfalse);
 
 	B_SetUpBase(campaign, base, pos, "testbase");
@@ -312,8 +312,6 @@ static void testProductionItem (void)
 	base = B_GetFirstUnfoundedBase();
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(campaign);
-
-	ccs.credits = 10000000;
 
 	RS_InitTree(campaign, qfalse);
 
@@ -401,7 +399,6 @@ static void testSaveLoad (void)
 	SAV_Init();
 
 	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, NULL);
-	ccs.credits = 10000000;
 	ccs.curCampaign = campaign;
 
 	Cvar_Set("save_compressed", "0");
@@ -445,11 +442,10 @@ static void testCampaignRun (void)
 {
 	ResetCampaignData();
 
-	ccs.curCampaign = GetCampaign();
 	cls.frametime = 1;
 	ccs.gameTimeScale = 1;
 
-	CL_CampaignRun();
+	CL_CampaignRun(GetCampaign());
 	/** @todo implement a check here */
 }
 

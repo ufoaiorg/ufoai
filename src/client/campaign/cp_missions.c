@@ -1207,7 +1207,7 @@ void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, qboolean wo
 /**
  * @sa CL_GameAutoGo
  */
-void CP_MissionEnd (mission_t* mission, qboolean won)
+void CP_MissionEnd (mission_t* mission, const battleParam_t* battleParameters, qboolean won)
 {
 	int civiliansKilled;
 	int aliensKilled;
@@ -1231,10 +1231,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 
 	civiliansKilled = ccs.civiliansKilled;
 	aliensKilled = ccs.aliensKilled;
-	Com_DPrintf(DEBUG_CLIENT, "Won: %d   Civilians: %d/%d   Aliens: %d/%d\n",
-		won, ccs.battleParameters.civilians - civiliansKilled, civiliansKilled,
-		ccs.battleParameters.aliens - aliensKilled, aliensKilled);
-	CL_HandleNationData(ccs.curCampaign, won, mission, ccs.battleParameters.nation, &ccs.missionResults);
+	CL_HandleNationData(ccs.curCampaign, won, mission, battleParameters->nation, &ccs.missionResults);
 	CP_CheckLostCondition(ccs.curCampaign);
 
 	/* update the character stats */
@@ -1254,11 +1251,9 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 
 		if (E_IsInBase(employee, base)) {
 			const character_t *chr = &(employee->chr);
-			Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - ucn %d hp %d\n", chr->ucn, chr->HP);
 			/* if employee is marked as dead */
 			if (chr->HP <= 0) { /** @todo <= -50, etc. (implants) */
 				/* sideeffect: ccs.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
-				Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd: Delete this dead employee: %i (%s)\n", i, chr->name);
 				E_DeleteEmployee(employee);
 			}
 		}
@@ -1267,7 +1262,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 
 	/* Check for alien containment in aircraft homebase. */
 	/** @todo this shouldn't be here. Ideally we should check for alien/store space when aircraft arrived
-		home and start a player controlled transfer */
+	 * home and start a player controlled transfer */
 	if (CP_TransferOfAliensToOtherBaseNeeded(base, &ccs.missionResults)) {
 		/* We have captured/killed aliens, but the homebase of this aircraft does not have free alien containment space.
 		 * Popup aircraft transfer dialog to choose a better base. */

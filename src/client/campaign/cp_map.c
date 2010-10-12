@@ -1737,7 +1737,7 @@ void MAP_UpdateGeoscapeDock (void)
 
 	/* draw mission pics */
 	for (list = ccs.missions; list; list = list->next) {
-		const mission_t *ms = (mission_t *)list->data;
+		const mission_t *ms = (const mission_t *)list->data;
 		if (!ms->onGeoscape)
 			continue;
 		UI_ExecuteConfunc("add_geoscape_object mission %i \"%s\" %s \"%s\"",
@@ -1929,7 +1929,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
  * @param[in] node The map menu node
  * @sa MAP_DrawMapMarkers
  */
-void MAP_DrawMap (const uiNode_t* node)
+void MAP_DrawMap (const uiNode_t* node, campaign_t *campaign)
 {
 	vec2_t pos;
 
@@ -1959,7 +1959,7 @@ void MAP_DrawMap (const uiNode_t* node)
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
 		R_Draw3DGlobe(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1],
-				ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, ccs.curCampaign->map, disableSolarRender,
+				ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, campaign->map, disableSolarRender,
 				cl_3dmapAmbient->value, MAP_IsNationOverlayActivated(), MAP_IsXVIOverlayActivated(),
 				MAP_IsRadarOverlayActivated(), r_xviTexture, r_radarTexture);
 
@@ -1980,7 +1980,7 @@ void MAP_DrawMap (const uiNode_t* node)
 			lastQ = q;
 		}
 		R_DrawFlatGeoscape(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], (float) ccs.date.sec / SECONDS_PER_DAY,
-			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, ccs.curCampaign->map, MAP_IsNationOverlayActivated(),
+			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, campaign->map, MAP_IsNationOverlayActivated(),
 			MAP_IsXVIOverlayActivated(), MAP_IsRadarOverlayActivated(), r_dayandnightTexture, r_xviTexture, r_radarTexture);
 		MAP_DrawMapMarkers(node);
 	}
@@ -2465,43 +2465,43 @@ qboolean MAP_PositionFitsTCPNTypes (const vec2_t pos, const linkedList_t* terrai
 	return qfalse;
 }
 
-void MAP_Init (void)
+void MAP_Init (campaign_t *campaign)
 {
 	/* load terrain mask */
 	if (terrainPic) {
 		Mem_Free(terrainPic);
 		terrainPic = NULL;
 	}
-	R_LoadImage(va("pics/geoscape/%s_terrain", ccs.curCampaign->map), &terrainPic, &terrainWidth, &terrainHeight);
+	R_LoadImage(va("pics/geoscape/%s_terrain", campaign->map), &terrainPic, &terrainWidth, &terrainHeight);
 	if (!terrainPic || !terrainWidth || !terrainHeight)
-		Com_Error(ERR_DROP, "Couldn't load map mask %s_terrain in pics/geoscape", ccs.curCampaign->map);
+		Com_Error(ERR_DROP, "Couldn't load map mask %s_terrain in pics/geoscape", campaign->map);
 
 	/* load culture mask */
 	if (culturePic) {
 		Mem_Free(culturePic);
 		culturePic = NULL;
 	}
-	R_LoadImage(va("pics/geoscape/%s_culture", ccs.curCampaign->map), &culturePic, &cultureWidth, &cultureHeight);
+	R_LoadImage(va("pics/geoscape/%s_culture", campaign->map), &culturePic, &cultureWidth, &cultureHeight);
 	if (!culturePic || !cultureWidth || !cultureHeight)
-		Com_Error(ERR_DROP, "Couldn't load map mask %s_culture in pics/geoscape", ccs.curCampaign->map);
+		Com_Error(ERR_DROP, "Couldn't load map mask %s_culture in pics/geoscape", campaign->map);
 
 	/* load population mask */
 	if (populationPic) {
 		Mem_Free(populationPic);
 		populationPic = NULL;
 	}
-	R_LoadImage(va("pics/geoscape/%s_population", ccs.curCampaign->map), &populationPic, &populationWidth, &populationHeight);
+	R_LoadImage(va("pics/geoscape/%s_population", campaign->map), &populationPic, &populationWidth, &populationHeight);
 	if (!populationPic || !populationWidth || !populationHeight)
-		Com_Error(ERR_DROP, "Couldn't load map mask %s_population in pics/geoscape", ccs.curCampaign->map);
+		Com_Error(ERR_DROP, "Couldn't load map mask %s_population in pics/geoscape", campaign->map);
 
 	/* load nations mask */
 	if (nationsPic) {
 		Mem_Free(nationsPic);
 		nationsPic = NULL;
 	}
-	R_LoadImage(va("pics/geoscape/%s_nations", ccs.curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
+	R_LoadImage(va("pics/geoscape/%s_nations", campaign->map), &nationsPic, &nationsWidth, &nationsHeight);
 	if (!nationsPic || !nationsWidth || !nationsHeight)
-		Com_Error(ERR_DROP, "Couldn't load map mask %s_nations in pics/geoscape", ccs.curCampaign->map);
+		Com_Error(ERR_DROP, "Couldn't load map mask %s_nations in pics/geoscape", campaign->map);
 
 	MAP_ResetAction();
 	MAP_UpdateGeoscapeDock();

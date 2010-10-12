@@ -71,7 +71,7 @@ typedef struct campaignEvents_s {
 	char *id;				/**< script id */
 } campaignEvents_t;
 
-void CP_CheckCampaignEvents(void);
+void CP_CheckCampaignEvents(struct campaign_s *campaign);
 void CL_ParseCampaignEvents(const char *name, const char **text);
 const campaignEvents_t *CP_GetEventsByID(const char *name);
 
