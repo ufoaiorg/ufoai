@@ -345,18 +345,22 @@ void PR_QueueMove (production_queue_t *queue, int index, int dir)
 
 	/* copy up */
 	for (i = index; i < newIndex; i++) {
+		production_t *prod;
 		queue->items[i] = queue->items[i + 1];
-		queue->items[i].idx = i;
-		if (queue->items[i].ufo)
-			queue->items[i].ufo->disassembly = &(queue->items[i]);
+		prod = &queue->items[i];
+		prod->idx = i;
+		if (prod->ufo)
+			prod->ufo->disassembly = prod;
 	}
 
 	/* copy down */
 	for (i = index; i > newIndex; i--) {
+		production_t *prod;
 		queue->items[i] = queue->items[i - 1];
-		queue->items[i].idx = i;
-		if (queue->items[i].ufo)
-			queue->items[i].ufo->disassembly = &(queue->items[i]);
+		prod = &queue->items[i];
+		prod->idx = i;
+		if (prod->ufo)
+			prod->ufo->disassembly = prod;
 	}
 
 	/* insert item */
@@ -372,7 +376,7 @@ void PR_QueueMove (production_queue_t *queue, int index, int dir)
  */
 void PR_QueueNext (base_t *base)
 {
-	production_queue_t *queue = &ccs.productions[base->idx];
+	production_queue_t *queue = PR_GetProductionForBase(base);
 
 	PR_QueueDelete(base, queue, 0);
 
@@ -392,10 +396,7 @@ static void PR_EmptyQueue (base_t *base)
 	if (!base)
 		return;
 
-	queue = &ccs.productions[base->idx];
-	if (!queue)
-		return;
-
+	queue = PR_GetProductionForBase(base);
 	while (queue->numItems)
 		PR_QueueDelete(base, queue, 0);
 }
@@ -411,8 +412,7 @@ static void PR_ProductionRollBottom_f (void)
 	if (!base)
 		return;
 
-	queue = &ccs.productions[base->idx];
-
+	queue = PR_GetProductionForBase(base);
 	if (queue->numItems < 2)
 		return;
 
@@ -651,18 +651,16 @@ int PR_DecreaseProduction (production_t *prod, int amount)
 {
 	base_t *base;
 	technology_t *tech = NULL;
-	production_queue_t *queue;
 
 	assert(prod);
 	base = PR_ProductionBase(prod);
 	assert(base);
 
-	queue = &ccs.productions[base->idx];
-
 	if (prod->ufo)
 		return 0;
 
 	if (prod->amount <= amount) {
+		production_queue_t *queue = PR_GetProductionForBase(base);
 		amount = prod->amount;
 		PR_QueueDelete(base, queue, prod->idx);
 		return amount;
@@ -701,7 +699,7 @@ void PR_ProductionRun (void)
 	base = NULL;
 	while ((base = B_GetNextFounded(base)) != NULL) {
 		production_t *prod;
-		production_queue_t *q = &ccs.productions[base->idx];
+		production_queue_t *q = PR_GetProductionForBase(base);
 
 		/* not actually any active productions */
 		if (q->numItems <= 0)
@@ -775,7 +773,7 @@ base_t *PR_ProductionBase (const production_t *production)
 {
 	base_t *base = NULL;
 	while ((base = B_GetNext(base)) != NULL) {
-		const ptrdiff_t diff = ((ptrdiff_t)((production) - ccs.productions[base->idx].items));
+		const ptrdiff_t diff = ((ptrdiff_t)((production) - PR_GetProductionForBase(base)->items));
 
 		if (diff >= 0 && diff < MAX_PRODUCTIONS)
 			return base;
@@ -809,12 +807,12 @@ qboolean PR_SaveXML (mxml_node_t *p)
 
 	base = NULL;
 	while ((base = B_GetNextFounded(base)) != NULL) {
-		const int i = base->idx;
-		const production_queue_t *pq = &ccs.productions[i];
+		const production_queue_t *pq = PR_GetProductionForBase(base);
 		int j;
 
 		mxml_node_t *snode = mxml_AddNode(node, SAVE_PRODUCE_QUEUE);
-		mxml_AddInt(snode, SAVE_PRODUCE_QUEUEIDX, i);
+		/** @todo this should not be the base index */
+		mxml_AddInt(snode, SAVE_PRODUCE_QUEUEIDX, base->idx);
 
 		for (j = 0; j < pq->numItems; j++) {
 			const production_t *prod = &pq->items[j];
@@ -852,15 +850,16 @@ qboolean PR_LoadXML (mxml_node_t *p)
 	for (snode = mxml_GetNode(node, SAVE_PRODUCE_QUEUE); snode;
 			snode = mxml_GetNextNode(snode, node, SAVE_PRODUCE_QUEUE)) {
 		mxml_node_t *ssnode;
-		int baseIDX = mxml_GetInt(snode, SAVE_PRODUCE_QUEUEIDX, MAX_BASES);
+		const int baseIDX = mxml_GetInt(snode, SAVE_PRODUCE_QUEUEIDX, MAX_BASES);
+		const base_t *base = B_GetBaseByIDX(baseIDX);
 		production_queue_t *pq;
 
-		if (baseIDX < 0 || baseIDX >= ccs.numBases) {
+		if (base == NULL) {
 			Com_Printf("Invalid production queue index %i\n", baseIDX);
 			continue;
 		}
 
-		pq = &ccs.productions[baseIDX];
+		pq = PR_GetProductionForBase(base);
 
 		for (ssnode = mxml_GetNode(snode, SAVE_PRODUCE_ITEM); pq->numItems < MAX_PRODUCTIONS && ssnode;
 				ssnode = mxml_GetNextNode(ssnode, snode, SAVE_PRODUCE_ITEM)) {
@@ -875,7 +874,8 @@ qboolean PR_LoadXML (mxml_node_t *p)
 
 			/* amount */
 			if (prod->amount <= 0) {
-				Com_Printf("PR_Load: Production with amount <= 0 dropped (baseidx=%i, production idx=%i).\n", baseIDX, pq->numItems);
+				Com_Printf("PR_Load: Production with amount <= 0 dropped (baseidx=%i, production idx=%i).\n",
+						baseIDX, pq->numItems);
 				continue;
 			}
 			/* item */

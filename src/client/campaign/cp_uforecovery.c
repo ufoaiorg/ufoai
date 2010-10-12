@@ -165,7 +165,7 @@ void US_RemoveStoredUFO (storedUFO_t *ufo)
 		if (ufo->disassembly->idx == 0)
 			PR_QueueNext(prodBase);
 		else
-			PR_QueueDelete(prodBase, &ccs.productions[prodBase->idx], ufo->disassembly->idx);
+			PR_QueueDelete(prodBase, PR_GetProductionForBase(prodBase), ufo->disassembly->idx);
 	}
 
 	/* Stop running research if this is the only UFO from this type

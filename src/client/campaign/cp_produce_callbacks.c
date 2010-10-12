@@ -78,7 +78,7 @@ static void PR_UpdateProductionList (const base_t* base)
 
 	assert(base);
 
-	queue = &ccs.productions[base->idx];
+	queue = PR_GetProductionForBase(base);
 
 	/* First add all the queue items ... */
 	for (i = 0; i < queue->numItems; i++) {
@@ -407,7 +407,7 @@ static void PR_ProductionListRightClick_f (void)
 	if (!base)
 		return;
 
-	queue = &ccs.productions[base->idx];
+	queue = PR_GetProductionForBase(base);
 
 	/* not enough parameters */
 	if (Cmd_Argc() < 2) {
@@ -483,7 +483,7 @@ static void PR_ProductionListClick_f (void)
 	if (!base)
 		return;
 
-	queue = &ccs.productions[base->idx];
+	queue = PR_GetProductionForBase(base);
 
 	/* Break if there are not enough parameters. */
 	if (Cmd_Argc() < 2) {
@@ -582,8 +582,10 @@ static void PR_ProductionType_f (void)
 			selectedItem = (objDef_t*)LIST_GetByIdx(productionItemList, 0);
 	}
 	/* update selection index if first entry of actual list was chosen */
-	if (!selectedProduction)
-		UI_ExecuteConfunc("prod_selectline %i", ccs.productions[base->idx].numItems + QUEUE_SPACERS);
+	if (!selectedProduction) {
+		const production_queue_t *prod = PR_GetProductionForBase(base);
+		UI_ExecuteConfunc("prod_selectline %i", prod->numItems + QUEUE_SPACERS);
+	}
 
 	/* Update displayed info about selected entry (if any). */
 	PR_ProductionInfo(base);
@@ -646,7 +648,7 @@ static void PR_ProductionIncrease_f (void)
 	if (Cmd_Argc() == 2)
 		amount = atoi(Cmd_Argv(1));
 
-	queue = &ccs.productions[base->idx];
+	queue = PR_GetProductionForBase(base);
 
 	if (selectedProduction) {
 		prod = selectedProduction;
@@ -768,7 +770,7 @@ static void PR_ProductionStop_f (void)
 		return;
 
 	prodIDX = selectedProduction->idx;
-	queue = &ccs.productions[base->idx];
+	queue = PR_GetProductionForBase(base);
 
 	PR_QueueDelete(base, queue, prodIDX);
 
@@ -851,7 +853,7 @@ static void PR_ProductionUp_f (void)
 	if (selectedProduction->idx == 0)
 		return;
 
-	queue = &ccs.productions[base->idx];
+	queue = PR_GetProductionForBase(base);
 	PR_QueueMove(queue, selectedProduction->idx, -1);
 
 	selectedProduction = &queue->items[selectedProduction->idx - 1];
@@ -870,7 +872,7 @@ static void PR_ProductionDown_f (void)
 	if (!base || !selectedProduction)
 		return;
 
-	queue = &ccs.productions[base->idx];
+	queue = PR_GetProductionForBase(base);
 
 	if (selectedProduction->idx >= queue->numItems - 1)
 		return;

@@ -722,7 +722,7 @@ static void BaseSummary_Init (const base_t *base)
 	Q_strcat(textStatsBuffer, "\n", sizeof(textStatsBuffer));
 
 	Q_strcat(textStatsBuffer, _("^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"), sizeof(textStatsBuffer));
-	queue = &ccs.productions[base->idx];
+	queue = PR_GetProductionForBase(base);
 	if (queue->numItems > 0) {
 		for (i = 0; i < queue->numItems; i++) {
 			const production_t *production = &queue->items[i];

@@ -75,6 +75,8 @@ typedef struct production_queue_s
 	production_t	items[MAX_PRODUCTIONS];	/**< Actual production items (in order). */
 } production_queue_t;
 
+#define PR_GetProductionForBase(base) (&ccs.productions[(base->idx)])
+
 void PR_ProductionInit(void);
 void PR_ProductionRun(void);
 
