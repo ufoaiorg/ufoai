@@ -1096,7 +1096,7 @@ qboolean G_ClientShoot (const player_t * player, edict_t* ent, const pos3_t at, 
 		if (!G_ActionCheckForCurrentTeam(player, ent, fd->time + reactionLeftover))
 			return qfalse;
 	} else {
-		if (!G_ActionCheckWithoutTeam(player, ent, fd->time + reactionLeftover))
+		if (!G_ActionCheckForReaction(player, ent, fd->time + reactionLeftover))
 			return qfalse;
 	}
 

@@ -390,7 +390,7 @@ int G_GetActiveTeam (void)
  * @param[in] TU The time units to check against the ones ent has.
  * the action with
  */
-static qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU)
+static qboolean G_ActionCheck (const player_t *player, edict_t *ent)
 {
 	/* don't check for a player - but maybe a server action */
 	if (!player)
@@ -426,10 +426,6 @@ static qboolean G_ActionCheck (const player_t *player, edict_t *ent, int TU)
 		return qfalse;
 	}
 
-	if (TU > G_ActorUsableTUs(ent)) {
-		return qfalse;
-	}
-
 	/* could be possible */
 	return qtrue;
 }
@@ -453,7 +449,11 @@ qboolean G_ActionCheckForCurrentTeam (const player_t *player, edict_t *ent, int 
 		return qfalse;
 	}
 
-	return G_ActionCheck(player, ent, TU);
+	if (TU > G_ActorUsableTUs(ent)) {
+		return qfalse;
+	}
+
+	return G_ActionCheck(player, ent);
 }
 
 /**
@@ -464,9 +464,13 @@ qboolean G_ActionCheckForCurrentTeam (const player_t *player, edict_t *ent, int 
  * the action with
  * @sa G_ActionCheck
  */
-qboolean G_ActionCheckWithoutTeam (const player_t *player, edict_t *ent, int TU)
+qboolean G_ActionCheckForReaction (const player_t *player, edict_t *ent, int TU)
 {
-	return G_ActionCheck(player, ent, TU);
+	if (TU > ent->TU) {
+		return qfalse;
+	}
+
+	return G_ActionCheck(player, ent);
 }
 
 /**
