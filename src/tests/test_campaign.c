@@ -247,6 +247,7 @@ static void testResearch (void)
 	int i;
 	const vec2_t pos = {0, 0};
 	technology_t *laserTech = RS_GetTechByID("rs_laser");
+	technology_t *heavyLaserTech = RS_GetTechByID("rs_weapon_heavylaser");
 	base_t *base = B_GetFirstUnfoundedBase();
 	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
 	employee_t *employee;
@@ -269,14 +270,18 @@ static void testResearch (void)
 	CU_ASSERT_EQUAL(laserTech->scientists, 1);
 	CU_ASSERT_EQUAL(laserTech->statusResearch, RS_RUNNING);
 
-	/** @todo fix calculation and activate the RS_RUNNING check below */
-	n = laserTech->time * 2 - 1;
-	for (i = 0; i < n; i++)
-		RS_ResearchRun();
+	CU_ASSERT_EQUAL(heavyLaserTech->statusResearchable, qfalse);
 
-	/*CU_ASSERT_EQUAL(laserTech->statusResearch, RS_RUNNING);*/
-	RS_ResearchRun();
+	n = laserTech->time * 1.25;
+	for (i = 0; i < n; i++) {
+		RS_ResearchRun();
+	}
+
+	CU_ASSERT_EQUAL(laserTech->statusResearch, RS_RUNNING);
+	CU_ASSERT_EQUAL(RS_ResearchRun(), 1);
 	CU_ASSERT_EQUAL(laserTech->statusResearch, RS_FINISH);
+
+	CU_ASSERT_EQUAL(heavyLaserTech->statusResearchable, qtrue);
 
 	E_DeleteAllEmployees(NULL);
 }
