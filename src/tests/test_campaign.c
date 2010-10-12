@@ -419,6 +419,14 @@ static void testCampaignRun (void)
 	ccs.gameTimeScale = 1;
 
 	CL_CampaignRun();
+	/** @todo implement a check here */
+}
+
+static void testLoad (void)
+{
+	CP_InitOverlay();
+	Cvar_Set("mn_unittest1", "foobar");
+	Cmd_ExecuteString("game_load unittest1");
 }
 
 int UFO_AddCampaignTests (void)
@@ -470,6 +478,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testCampaignRun) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testLoad) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
