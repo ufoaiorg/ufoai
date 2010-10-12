@@ -85,7 +85,7 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
 	}
 	if (maxWorkers == PRODUCE_WORKERS) {
 		/* No need to calculate: timeDefault is for PRODUCE_WORKERS workers. */
-		const float fraction =  1.0f / ((NULL != storedUFO) ? (distanceFactor * timeDefault) : timeDefault);
+		const float fraction = 1.0f / ((NULL != storedUFO) ? (distanceFactor * timeDefault) : timeDefault);
 		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: workers: %i, tech: %s, percent: %f\n",
 			maxWorkers, tech->id, fraction);
 		return fraction;
@@ -241,7 +241,6 @@ production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *it
 		return NULL;
 
 	PR_UpdateRequiredItemsInBasestorage(base, -amount, &tech->requireForProduction);
-	if (tech->requireForProduction.numLinks)
 
 	/* We cannot queue new aircraft if no free hangar space. */
 	/** @todo move this check out into a new function */
