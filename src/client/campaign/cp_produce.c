@@ -185,7 +185,7 @@ int PR_RequirementsMet (int amount, const requirements_t const *reqs, base_t *ba
  */
 int PR_QueueFreeSpace (const production_queue_t const *queue)
 {
-	base_t *base = PR_ProductionQueueBase(queue);
+	const base_t *base = PR_ProductionQueueBase(queue);
 	int numWorkshops;
 
 	assert(queue);
