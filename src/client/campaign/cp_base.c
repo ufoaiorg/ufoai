@@ -304,9 +304,8 @@ void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType,
  * @param[in] building Pointer to the building to check
  * @return true if base contains needed dependence for entering building
  */
-qboolean B_CheckBuildingDependencesStatus (const base_t* const base, const building_t* building)
+qboolean B_CheckBuildingDependencesStatus (const building_t* building)
 {
-	assert(base);
 	assert(building);
 
 	if (!building->dependsBuilding)
@@ -315,7 +314,7 @@ qboolean B_CheckBuildingDependencesStatus (const base_t* const base, const build
 	/* Make sure the dependsBuilding pointer is really a template .. just in case. */
 	assert(building->dependsBuilding == building->dependsBuilding->tpl);
 
-	return B_GetBuildingStatus(base, building->dependsBuilding->buildingType);
+	return B_GetBuildingStatus(building->base, building->dependsBuilding->buildingType);
 }
 
 /**
@@ -450,27 +449,26 @@ qboolean B_AssembleMap (const base_t *base)
  * @note This function checks  base status for particular buildings and base capacities.
  * @return qtrue if a base status has been modified (but do not check capacities)
  */
-static qboolean B_CheckUpdateBuilding (building_t* building, base_t* base)
+static qboolean B_CheckUpdateBuilding (building_t* building)
 {
 	qboolean oldValue;
 
-	assert(base);
 	assert(building);
 
 	/* Status of Miscellenious buildings cannot change. */
 	if (building->buildingType == B_MISC)
 		return qfalse;
 
-	oldValue = B_GetBuildingStatus(base, building->buildingType);
+	oldValue = B_GetBuildingStatus(building->base, building->buildingType);
 	if (building->buildingStatus == B_STATUS_WORKING
-	 && B_CheckBuildingDependencesStatus(base, building))
-		B_SetBuildingStatus(base, building->buildingType, qtrue);
+	 && B_CheckBuildingDependencesStatus(building))
+		B_SetBuildingStatus(building->base, building->buildingType, qtrue);
 	else
-		B_SetBuildingStatus(base, building->buildingType, qfalse);
+		B_SetBuildingStatus(building->base, building->buildingType, qfalse);
 
-	if (B_GetBuildingStatus(base, building->buildingType) != oldValue) {
+	if (B_GetBuildingStatus(building->base, building->buildingType) != oldValue) {
 		Com_DPrintf(DEBUG_CLIENT, "Status of building %s is changed to %i.\n",
-			building->name, B_GetBuildingStatus(base, building->buildingType));
+			building->name, B_GetBuildingStatus(building->base, building->buildingType));
 		return qtrue;
 	}
 
@@ -545,19 +543,19 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 	/* Construction / destruction may have changed the status of other building
 	 * We check that, but only for buildings which needed building */
 	while ((building = B_GetNextBuilding(base, building))) {
-		building_t *dependsBuilding = building->dependsBuilding;
+		const building_t *dependsBuilding = building->dependsBuilding;
 		if (dependsBuilding && buildingType == dependsBuilding->buildingType) {
 			/* ccs.buildings[base->idx][i] needs built/removed building */
 			if (onBuilt && !B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only activate a non operationnal building */
-				if (B_CheckUpdateBuilding(building, base)) {
+				if (B_CheckUpdateBuilding(building)) {
 					B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
 					test = qtrue;
 					returnValue = qtrue;
 				}
 			} else if (!onBuilt && B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only deactivate an operationnal building */
-				if (B_CheckUpdateBuilding(building, base)) {
+				if (B_CheckUpdateBuilding(building)) {
 					B_UpdateOneBaseBuildingStatusOnDisable(building->buildingType, base);
 					test = qtrue;
 					returnValue = qtrue;
@@ -573,13 +571,13 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 		while ((building = B_GetNextBuilding(base, building))) {
 			if (onBuilt && !B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only activate a non operationnal building */
-				if (B_CheckUpdateBuilding(building, base)) {
+				if (B_CheckUpdateBuilding(building)) {
 					B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
 					test = qtrue;
 				}
 			} else if (!onBuilt && B_GetBuildingStatus(base, building->buildingType)) {
 				/* we can only deactivate an operationnal building */
-				if (B_CheckUpdateBuilding(building, base)) {
+				if (B_CheckUpdateBuilding(building)) {
 					B_UpdateOneBaseBuildingStatusOnDisable(building->buildingType, base);
 					test = qtrue;
 				}
@@ -640,7 +638,7 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 		test = qfalse;
 		while ((building = B_GetNextBuilding(base, building))) {
 			if (!B_GetBuildingStatus(base, building->buildingType)
-			 && B_CheckUpdateBuilding(building, base)) {
+			 && B_CheckUpdateBuilding(building)) {
 				if (firstEnable)
 					B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
 				test = qtrue;
@@ -759,11 +757,12 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
  * @note Also updates capacities and sets the hasBuilding[] values in base_t
  * @sa B_BuildingDestroy_f
  */
-qboolean B_BuildingDestroy (base_t* base, building_t* building)
+qboolean B_BuildingDestroy (building_t* building)
 {
 	const buildingType_t buildingType = building->buildingType;
 	const building_t const *buildingTemplate = building->tpl;	/**< Template of the removed building */
 	const qboolean onDestroyCommand = (building->onDestroy[0] != '\0') && (building->buildingStatus == B_STATUS_WORKING);
+	base_t *base = building->base;
 
 	/* Don't allow to destroy an entrance. */
 	if (buildingType == B_ENTRANCE)
@@ -771,7 +770,8 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 	if (!base->map[(int)building->pos[0]][(int)building->pos[1]].building
 	 || base->map[(int)building->pos[0]][(int)building->pos[1]].building != building) {
-		Com_Error(ERR_DROP, "B_BuildingDestroy: building mismatch at base %i pos %i,%i.", base->idx, (int)building->pos[0], (int)building->pos[1]);
+		Com_Error(ERR_DROP, "B_BuildingDestroy: building mismatch at base %i pos %i,%i.",
+				base->idx, (int)building->pos[0], (int)building->pos[1]);
 	}
 
 	/* Remove the building from the base map */
@@ -899,7 +899,7 @@ void B_Destroy (base_t *base)
 	/* do a reverse loop as buildings are going to be destroyed */
 	for (buildingIdx = ccs.numBuildings[base->idx] - 1; buildingIdx >= 0; buildingIdx--) {
 		building_t *building = B_GetBuildingByIDX(base->idx, buildingIdx);
-		B_BuildingDestroy(base, building);
+		B_BuildingDestroy(building);
 	}
 
 	E_DeleteAllEmployees(base);
@@ -946,10 +946,10 @@ static void CL_BaseDestroy_f (void)
  * @brief Mark a building for destruction - you only have to confirm it now
  * @note Also calls the ondestroy trigger
  */
-void B_MarkBuildingDestroy (base_t* base, building_t* building)
+void B_MarkBuildingDestroy (building_t* building)
 {
 	int cap;
-	assert(base);
+	base_t *base = building->base;
 
 	/* you can't destroy buildings if base is under attack */
 	if (B_IsUnderAttack(base)) {
@@ -957,7 +957,6 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 		return;
 	}
 
-	assert(building);
 	cap = B_GetCapacityFromBuildingType(building->buildingType);
 	/* store the pointer to the building you wanna destroy */
 	base->buildingCurrent = building;
@@ -1019,18 +1018,17 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
  * construction menu to display the status of the given building
  * @note also script command function binding for 'building_status'
  */
-void B_BuildingStatus (const base_t* base, const building_t* building)
+void B_BuildingStatus (const building_t* building)
 {
 	int numberOfBuildings = 0;
 
 	assert(building);
-	assert(base);
 
 	Cvar_Set("mn_building_status", _("Not set"));
 
 	switch (building->buildingStatus) {
 	case B_STATUS_NOT_SET:
-		numberOfBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, building->tpl);
+		numberOfBuildings = B_GetNumberOfBuildingsInBaseByTemplate(building->base, building->tpl);
 		if (numberOfBuildings >= 0)
 			Cvar_Set("mn_building_status", va(_("Already %i in base"), numberOfBuildings));
 		break;
@@ -1041,7 +1039,7 @@ void B_BuildingStatus (const base_t* base, const building_t* building)
 		Cvar_Set("mn_building_status", _("Construction finished"));
 		break;
 	case B_STATUS_WORKING:
-		if (B_CheckBuildingDependencesStatus(base, building)) {
+		if (B_CheckBuildingDependencesStatus(building)) {
 			Cvar_Set("mn_building_status", _("Working 100%"));
 		} else {
 			assert (building->dependsBuilding);
@@ -1065,19 +1063,19 @@ void B_BuildingStatus (const base_t* base, const building_t* building)
  * @note This function checks whether a building has B_STATUS_WORKING status, and
  * then updates base status for particular buildings and base capacities.
  */
-static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, buildingStatus_t status)
+static void B_UpdateAllBaseBuildingStatus (building_t* building, buildingStatus_t status)
 {
 	qboolean test;
 	buildingStatus_t oldStatus;
+	base_t* base = building->base;
 
 	assert(base);
-	assert(building);
 
 	oldStatus = building->buildingStatus;
 	building->buildingStatus = status;
 
 	/* we update the status of the building (we'll call this building building 1) */
-	test = B_CheckUpdateBuilding(building, base);
+	test = B_CheckUpdateBuilding(building);
 	if (test)
 		B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
 
@@ -1097,7 +1095,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 
 	/** @todo this should be an user option defined in Game Options. */
 	if (oldStatus == B_STATUS_UNDER_CONSTRUCTION && (status == B_STATUS_CONSTRUCTION_FINISHED || status == B_STATUS_WORKING)) {
-		if (B_CheckBuildingDependencesStatus(base, building))
+		if (B_CheckBuildingDependencesStatus(building))
 			CL_GameTimeStop();
 	} else {
 		CL_GameTimeStop();
@@ -1120,7 +1118,7 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *buildi
 	buildingNew = B_SetBuildingByClick(base, buildingTemplate, (int)pos[0], (int)pos[1]);
 	if (!buildingNew)
 		return;
-	B_UpdateAllBaseBuildingStatus(buildingNew, base, B_STATUS_WORKING);
+	B_UpdateAllBaseBuildingStatus(buildingNew, B_STATUS_WORKING);
 	Com_DPrintf(DEBUG_CLIENT, "Base %i new building: %s at (%.0f:%.0f)\n",
 			base->idx, buildingNew->id, buildingNew->pos[0], buildingNew->pos[1]);
 
@@ -1477,7 +1475,7 @@ static void B_NewBuilding (base_t* base, building_t *building)
 	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
 		/* credits are updated in the construct function */
 		if (B_ConstructBuilding(base, building)) {
-			B_BuildingStatus(base, building);
+			B_BuildingStatus(building);
 			Com_DPrintf(DEBUG_CLIENT, "B_NewBuilding: building->buildingStatus = %i\n", building->buildingStatus);
 		}
 }
@@ -1565,18 +1563,19 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *building
 
 /**
  * @brief Draws a building.
+ * @param[in] building The building to draw
  */
-void B_DrawBuilding (const base_t* base, const building_t* building)
+void B_DrawBuilding (const building_t* building)
 {
 	static char buildingText[MAX_BUILDING_INFO_TEXT_LENGTH];
 
 	/* maybe someone call this command before the buildings are parsed?? */
-	if (!base || !building)
+	if (!building)
 		return;
 
 	buildingText[0] = '\0';
 
-	B_BuildingStatus(base, building);
+	B_BuildingStatus(building);
 
 	Com_sprintf(buildingText, sizeof(buildingText), "%s\n", _(building->name));
 
@@ -1606,11 +1605,9 @@ void B_DrawBuilding (const base_t* base, const building_t* building)
 
 /**
  * @brief Counts the number of buildings of a particular type in a base.
- *
  * @param[in] base Which base to count in.
  * @param[in] tpl The template type in the ccs.buildingTemplates list.
- * @return The number of buildings.
- * @return -1 on error (e.g. base index out of range)
+ * @return The number of buildings or -1 on error (e.g. base index out of range)
  */
 int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t *tpl)
 {
@@ -1641,12 +1638,10 @@ int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t
 }
 
 /**
- * @brief Counts the number of buildings of a particular buuilding type in a base.
- *
+ * @brief Counts the number of buildings of a particular building type in a base.
  * @param[in] base Which base to count in.
  * @param[in] buildingType Building type value.
- * @return The number of buildings.
- * @return -1 on error (e.g. base index out of range)
+ * @return The number of buildings or -1 on error (e.g. base index out of range)
  */
 int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildingType_t buildingType)
 {
@@ -1675,6 +1670,7 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
  * from the ufo script files
  * @sa B_ParseBuildings
  * @sa B_GetBuildingType
+ * @param[in] buildingID The script building id that should get converted into the enum value
  * @note Do not use B_GetBuildingType here, this is also used for parsing the types!
  */
 buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
@@ -1720,7 +1716,7 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
  * @note Parses one "building" entry in the basemanagement.ufo file and writes
  * it into the next free entry in bmBuildings[0], which is the list of buildings
  * in the first base (building_t).
- * @param[in] name Unique test-id of a building_t. This is parsed from "building xxx" -> id=xxx.
+ * @param[in] name Unique script id of a building. This is parsed from "building xxx" -> id=xxx.
  * @param[in] text the whole following text that is part of the "building" item definition in .ufo.
  * @param[in] link Bool value that decides whether to link the tech pointer in or not
  * @sa CL_ParseScriptFirst (link is false here)
@@ -1877,6 +1873,8 @@ building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildi
 
 /**
  * @brief Reads a base layout template
+ * @param[in] name The script id of the base template
+ * @param[in] text The script block to parse
  * @sa CL_ParseScriptFirst
  */
 void B_ParseBaseTemplate (const char *name, const char **text)
@@ -1968,8 +1966,8 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 }
 
 /**
- * @brief Get the lower IDX of unfounded base.
- * @return baseIdx of first Base Unfounded, or MAX_BASES is maximum base number is reached.
+ * @brief Get the first unfounded base
+ * @return first unfounded base or NULL if every available base slot is already filled
  */
 base_t *B_GetFirstUnfoundedBase (void)
 {
@@ -1986,7 +1984,7 @@ base_t *B_GetFirstUnfoundedBase (void)
 
 /**
  * @sa B_SelectBase
- * @param base
+ * @param[in] base The base that is going to be selected
  */
 void B_SetCurrentSelectedBase (const base_t *base)
 {
@@ -2012,13 +2010,10 @@ void B_SetCurrentSelectedBase (const base_t *base)
 
 base_t *B_GetCurrentSelectedBase (void)
 {
-	int i;
-
-	for (i = 0; i < MAX_BASES; i++) {
-		base_t *base = B_GetBaseByIDX(i);
+	base_t *base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL)
 		if (base->selected)
 			return base;
-	}
 
 	return NULL;
 }
@@ -2305,10 +2300,9 @@ static void B_BaseList_f (void)
  * @param[in] base The current active base we are viewing right now
  * @param[in] building The building we have clicked
  */
-void B_BuildingOpenAfterClick (const base_t *base, const building_t *building)
+void B_BuildingOpenAfterClick (const building_t *building)
 {
-	assert(base);
-	assert(building);
+	const base_t *base = building->base;
 	if (!B_GetBuildingStatus(base, building->buildingType)) {
 		UP_OpenWith(building->pedia);
 	} else {
@@ -2430,7 +2424,7 @@ static void B_BuildingConstructionFinished_f (void)
 		building_t *building = B_GetBuildingByIDX(base->idx, i);
 
 		if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
-			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
+			B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
 
 			if (building->onConstruct[0] != '\0') {
 				base->buildingCurrent = building;
@@ -2522,7 +2516,7 @@ int B_CheckBuildingConstruction (building_t *building, base_t *base)
 
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 		if (building->timeStart && building->timeStart + building->buildTime <= ccs.date.day) {
-			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
+			B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
 
 			if (building->onConstruct[0] != '\0') {
 				base->buildingCurrent = building;

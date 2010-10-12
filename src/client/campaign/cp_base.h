@@ -297,21 +297,21 @@ buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
 
 building_t* B_GetNextBuilding(const base_t *base, building_t *lastBuilding);
 building_t* B_GetNextBuildingByType(const base_t *base, building_t *lastBuilding, buildingType_t buildingType);
-void B_BuildingStatus(const base_t* base, const building_t* building);
+void B_BuildingStatus(const building_t* building);
 qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);
 qboolean B_GetBuildingStatus(const base_t* const base, const buildingType_t type);
 void B_SetBuildingStatus(base_t* const base, const buildingType_t type, qboolean newStatus);
-qboolean B_CheckBuildingDependencesStatus(const base_t* const base, const building_t* building);
+qboolean B_CheckBuildingDependencesStatus(const building_t* building);
 
 building_t* B_SetBuildingByClick(base_t *base, const building_t const *buildingTemplate, int row, int col);
-void B_MarkBuildingDestroy(base_t* base, building_t* building);
-qboolean B_BuildingDestroy(base_t* base, building_t* building);
+void B_MarkBuildingDestroy(building_t* building);
+qboolean B_BuildingDestroy(building_t* building);
 
 building_t *B_GetFreeBuildingType(buildingType_t type);
 int B_GetNumberOfBuildingsInBaseByTemplate(const base_t *base, const building_t *type);
 int B_GetNumberOfBuildingsInBaseByBuildingType(const base_t *base, const buildingType_t type);
 
-void B_BuildingOpenAfterClick(const base_t *base, const building_t *building);
+void B_BuildingOpenAfterClick(const building_t *building);
 void B_ResetBuildingCurrent(base_t* base);
 
 /* storage functions */
@@ -340,7 +340,7 @@ int B_FreeCapacity(const base_t *base, baseCapacities_t cap);
 
 /* menu functions */
 void B_BaseMenuInit(const base_t *base);
-void B_DrawBuilding(const base_t* base, const building_t* building);
+void B_DrawBuilding(const building_t* building);
 
 /* antimatter */
 int B_AntimatterInBase(const base_t *base);

@@ -268,7 +268,7 @@ static void UI_BaseMapNodeDrawTooltip (uiNode_t *node, int x, int y)
 		return;
 
 	tooltipText = _(building->name);
-	if (!B_CheckBuildingDependencesStatus(base, building))
+	if (!B_CheckBuildingDependencesStatus(building))
 		tooltipText = va("%s\n%s %s", tooltipText, _("not operational, depends on"), _(building->dependsBuilding->name));
 	UI_DrawTooltip(tooltipText, x, y, itemToolTipWidth);
 }
@@ -312,7 +312,7 @@ static void UI_BaseMapNodeClick (uiNode_t *node, int x, int y)
 
 		assert(!base->map[row][col].blocked);
 
-		B_BuildingOpenAfterClick(base, entry);
+		B_BuildingOpenAfterClick(entry);
 		ccs.baseAction = BA_NONE;
 		return;
 	}
@@ -344,8 +344,7 @@ static void UI_BaseMapNodeRightClick (uiNode_t *node, int x, int y)
 			Sys_Error("UI_BaseMapNodeRightClick: no entry at %i:%i\n", x, y);
 
 		assert(!base->map[row][col].blocked);
-		B_MarkBuildingDestroy(base, entry);
-		return;
+		B_MarkBuildingDestroy(entry);
 	}
 }
 
@@ -360,9 +359,11 @@ static void UI_BaseMapNodeRightClick (uiNode_t *node, int x, int y)
 static void UI_BaseMapNodeMiddleClick (uiNode_t *node, int x, int y)
 {
 	int row, col;
-	base_t *base = B_GetCurrentSelectedBase();
+	const base_t *base = B_GetCurrentSelectedBase();
+	const building_t *entry;
+	if (base == NULL)
+		return;
 
-	assert(base);
 	assert(node);
 	assert(node->root);
 
@@ -370,14 +371,10 @@ static void UI_BaseMapNodeMiddleClick (uiNode_t *node, int x, int y)
 	if (col == -1)
 		return;
 
-	if (base->map[row][col].building) {
-		building_t *entry = base->map[row][col].building;
-		if (!entry)
-			Com_Error(ERR_DROP, "UI_BaseMapNodeMiddleClick: no entry at %i:%i", x, y);
-
+	entry = base->map[row][col].building;
+	if (entry) {
 		assert(!base->map[row][col].blocked);
-		B_DrawBuilding(base, entry);
-		return;
+		B_DrawBuilding(entry);
 	}
 }
 

@@ -415,7 +415,7 @@ static void B_BuildingInit (base_t* base)
 		}
 	}
 	if (base->buildingCurrent)
-		B_DrawBuilding(base, base->buildingCurrent);
+		B_DrawBuilding(base->buildingCurrent);
 	else
 		UI_ExecuteConfunc("mn_buildings_reset");
 
@@ -478,7 +478,7 @@ static void B_BuildingClick_f (void)
 	building = buildingConstructionList[num];
 
 	base->buildingCurrent = building;
-	B_DrawBuilding(base, building);
+	B_DrawBuilding(building);
 
 	ccs.baseAction = BA_NEWBUILDING;
 }
@@ -495,7 +495,7 @@ static void B_BuildingDestroy_f (void)
 	if (!base || !base->buildingCurrent)
 		return;
 
-	B_BuildingDestroy(base, base->buildingCurrent);
+	B_BuildingDestroy(base->buildingCurrent);
 
 	B_ResetBuildingCurrent(base);
 	B_BuildingInit(base);
@@ -513,7 +513,7 @@ static void B_BuildingStatus_f (void)
 	if (!base || !base->buildingCurrent)
 		return;
 
-	B_BuildingStatus(base, base->buildingCurrent);
+	B_BuildingStatus(base->buildingCurrent);
 }
 
 /**
@@ -591,7 +591,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			return;
 		}
 
-		if (!B_CheckBuildingDependencesStatus(base, building)) {
+		if (!B_CheckBuildingDependencesStatus(building)) {
 			building_t *dependenceBuilding = building->dependsBuilding;
 			assert(building->dependsBuilding);
 			if (B_GetNumberOfBuildingsInBaseByBuildingType(base, dependenceBuilding->buildingType) <= 0) {
