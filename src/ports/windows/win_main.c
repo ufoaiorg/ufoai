@@ -43,7 +43,7 @@ void Sys_Init (void)
 	MEMORYSTATUS mem;
 #endif
 
-	sys_affinity = Cvar_Get("sys_affinity", "3", CVAR_ARCHIVE, "Which core to use - 1 = only first, 2 = only second, 3 = both");
+	sys_affinity = Cvar_Get("sys_affinity", "0", CVAR_ARCHIVE, "Which core to use - 0 = all cores, 1 = two cores, 2 = one core");
 	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process priority - 0 = normal, 1 = high, 2 = realtime");
 
 	timeBeginPeriod(1);

@@ -91,39 +91,23 @@ void Sys_SetAffinityAndPriority (void)
 		GetSystemInfo(&sysInfo);
 		Com_Printf("Found %i processors\n", (int)sysInfo.dwNumberOfProcessors);
 		sys_affinity->modified = qfalse;
-		if (sysInfo.dwNumberOfProcessors == 2) {
+		if (sysInfo.dwNumberOfProcessors >= 2) {
 			switch (sys_affinity->integer) {
-			case 1:
-				Com_Printf("Only use the first core\n");
-				procAffinity = 1;
-				break;
-			case 2:
-				Com_Printf("Only use the second core\n");
-				procAffinity = 2;
-				break;
-			case 3:
-				Com_Printf("Use both cores\n");
-				Cvar_SetValue("r_threads", 1);
-				procAffinity = 3;
-				break;
-			}
-		} else if (sysInfo.dwNumberOfProcessors > 2) {
-			switch (sys_affinity->integer) {
-			case 1:
+			case 0:
 				Com_Printf("Use all cores\n");
 				procAffinity = (1 << sysInfo.dwNumberOfProcessors) - 1;
 				break;
-			case 2:
-				Com_Printf("Only use two cores\n");
+			case 1:
+				Com_Printf("Use two cores\n");
 				procAffinity = 3;
 				break;
-			case 3:
+			case 2:
 				Com_Printf("Only use one core\n");
 				procAffinity = 1;
 				break;
 			}
 		} else {
-			Com_Printf("...only use one processor\n");
+			Com_Printf("...only found one processor\n");
 		}
 		SetProcessAffinityMask(proc, procAffinity);
 	}
