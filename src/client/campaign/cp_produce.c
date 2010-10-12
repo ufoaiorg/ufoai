@@ -742,16 +742,17 @@ void PR_ProductionInit (void)
  */
 void PR_UpdateProductionCap (base_t *base)
 {
+	capacities_t *workspaceCapacity = &base->capacities[CAP_WORKSPACE];
 	assert(base);
 
-	if (base->capacities[CAP_WORKSPACE].max <= 0) {
+	if (workspaceCapacity->max <= 0) {
 		PR_EmptyQueue(base);
 	}
 
-	if (base->capacities[CAP_WORKSPACE].max >= E_CountHired(base, EMPL_WORKER)) {
-		base->capacities[CAP_WORKSPACE].cur = E_CountHired(base, EMPL_WORKER);
+	if (workspaceCapacity->max >= E_CountHired(base, EMPL_WORKER)) {
+		workspaceCapacity->cur = E_CountHired(base, EMPL_WORKER);
 	} else {
-		base->capacities[CAP_WORKSPACE].cur = base->capacities[CAP_WORKSPACE].max;
+		workspaceCapacity->cur = workspaceCapacity->max;
 	}
 }
 
@@ -815,9 +816,10 @@ qboolean PR_SaveXML (mxml_node_t *p)
 		mxml_AddInt(snode, SAVE_PRODUCE_QUEUEIDX, i);
 
 		for (j = 0; j < pq->numItems; j++) {
-			const objDef_t *item = pq->items[j].item;
-			const aircraft_t *aircraft = pq->items[j].aircraft;
-			const storedUFO_t *ufo = pq->items[j].ufo;
+			const production_t *prod = &pq->items[j];
+			const objDef_t *item = prod->item;
+			const aircraft_t *aircraft = prod->aircraft;
+			const storedUFO_t *ufo = prod->ufo;
 
 			mxml_node_t * ssnode = mxml_AddNode(snode, SAVE_PRODUCE_ITEM);
 			assert(item || aircraft || ufo);
@@ -827,8 +829,8 @@ qboolean PR_SaveXML (mxml_node_t *p)
 				mxml_AddString(ssnode, SAVE_PRODUCE_AIRCRAFTID, aircraft->id);
 			else if (ufo)
 				mxml_AddInt(ssnode, SAVE_PRODUCE_UFOIDX, ufo->idx);
-			mxml_AddInt(ssnode, SAVE_PRODUCE_AMOUNT, pq->items[j].amount);
-			mxml_AddFloatValue(ssnode, SAVE_PRODUCE_PERCENTDONE, pq->items[j].percentDone);
+			mxml_AddInt(ssnode, SAVE_PRODUCE_AMOUNT, prod->amount);
+			mxml_AddFloatValue(ssnode, SAVE_PRODUCE_PERCENTDONE, prod->percentDone);
 		}
 	}
 	return qtrue;
@@ -864,19 +866,20 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			const char *s1 = mxml_GetString(ssnode, SAVE_PRODUCE_ITEMID);
 			const char *s2;
 			int ufoIDX;
+			production_t *prod = &pq->items[pq->numItems];
 
-			pq->items[pq->numItems].idx = pq->numItems;
-			pq->items[pq->numItems].amount = mxml_GetInt(ssnode, SAVE_PRODUCE_AMOUNT, 0);
-			pq->items[pq->numItems].percentDone = mxml_GetFloat(ssnode, SAVE_PRODUCE_PERCENTDONE, 0.0);
+			prod->idx = pq->numItems;
+			prod->amount = mxml_GetInt(ssnode, SAVE_PRODUCE_AMOUNT, 0);
+			prod->percentDone = mxml_GetFloat(ssnode, SAVE_PRODUCE_PERCENTDONE, 0.0);
 
 			/* amount */
-			if (pq->items[pq->numItems].amount <= 0) {
+			if (prod->amount <= 0) {
 				Com_Printf("PR_Load: Production with amount <= 0 dropped (baseidx=%i, production idx=%i).\n", baseIDX, pq->numItems);
 				continue;
 			}
 			/* item */
 			if (s1[0] != '\0')
-				pq->items[pq->numItems].item = INVSH_GetItemByID(s1);
+				prod->item = INVSH_GetItemByID(s1);
 			/* UFO */
 			ufoIDX = mxml_GetInt(ssnode, SAVE_PRODUCE_UFOIDX, -1);
 			if (ufoIDX != -1) {
@@ -887,18 +890,18 @@ qboolean PR_LoadXML (mxml_node_t *p)
 					continue;
 				}
 
-				pq->items[pq->numItems].ufo = ufo;
-				pq->items[pq->numItems].production = qfalse;
-				pq->items[pq->numItems].ufo->disassembly = &(pq->items[pq->numItems]);
+				prod->ufo = ufo;
+				prod->production = qfalse;
+				prod->ufo->disassembly = prod;
 			} else {
-				pq->items[pq->numItems].production = qtrue;
+				prod->production = qtrue;
 			}
 			/* aircraft */
 			s2 = mxml_GetString(ssnode, SAVE_PRODUCE_AIRCRAFTID);
 			if (s2[0] != '\0')
-				pq->items[pq->numItems].aircraft = AIR_GetAircraft(s2);
+				prod->aircraft = AIR_GetAircraft(s2);
 
-			if (!pq->items[pq->numItems].item && !pq->items[pq->numItems].ufo && !pq->items[pq->numItems].aircraft) {
+			if (!prod->item && !prod->ufo && !prod->aircraft) {
 				Com_Printf("PR_Load: Production is not an item an aircraft nor a disassembly\n");
 				continue;
 			}
