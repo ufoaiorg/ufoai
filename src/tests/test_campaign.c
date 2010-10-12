@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/campaign/cp_campaign.h"
 #include "../client/campaign/cp_map.h"
 #include "../client/campaign/cp_nations.h"
+#include "../client/campaign/cp_overlay.h"
 
 static const int TAG_INVENTORY = 1538;
 
@@ -56,6 +57,19 @@ static inline void ResetInventoryList (void)
 {
 	INV_DestroyInventory(&cls.i);
 	INV_InitInventory("testCampaign", &cls.i, &csi, &inventoryImport);
+}
+
+static campaign_t *GetCampaign (void)
+{
+	return CL_GetCampaign(cp_campaign->string);
+}
+
+static void ResetCampaignData (void)
+{
+	CL_ResetSinglePlayerData();
+	CL_ReadSinglePlayerData();
+
+	ResetInventoryList();
 }
 
 /**
@@ -84,8 +98,6 @@ static int UFO_InitSuiteCampaign (void)
 	CL_SetClientState(ca_disconnected);
 	cls.realtime = Sys_Milliseconds();
 
-	CL_ResetSinglePlayerData();
-	CL_ReadSinglePlayerData();
 	return 0;
 }
 
@@ -96,6 +108,7 @@ static int UFO_InitSuiteCampaign (void)
 static int UFO_CleanSuiteCampaign (void)
 {
 	UI_Shutdown();
+	CL_ResetSinglePlayerData();
 	TEST_Shutdown();
 	return 0;
 }
@@ -104,7 +117,7 @@ static void testEmployeeHandling (void)
 {
 	employeeType_t type;
 
-	ResetInventoryList();
+	ResetCampaignData();
 
 	for (type = 0; type < MAX_EMPL; type++) {
 		if (type != EMPL_ROBOT) {
@@ -156,14 +169,13 @@ static void testEmployeeHandling (void)
 static void testBaseBuilding (void)
 {
 	vec2_t pos = {0, 0};
-	base_t *base = B_GetFirstUnfoundedBase();
-	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
+	base_t *base;
+	campaign_t *campaign = GetCampaign();
 	employeeType_t type;
 
-	ResetInventoryList();
+	ResetCampaignData();
 
-	/* the global pointer should not be used anywhere inside the called functions */
-	ccs.curCampaign = NULL;
+	base = B_GetFirstUnfoundedBase();
 	ccs.credits = 10000000;
 
 	RS_InitTree(campaign, qfalse);
@@ -187,15 +199,12 @@ static void testAutoMissions (void)
 	campaign_t *campaign;
 	employee_t *pilot, *e1, *e2;
 
+	ResetCampaignData();
+
 	memset(&result, 0, sizeof(result));
 	memset(&battleParameters, 0, sizeof(battleParameters));
 
-	/* the global pointer should not be used anywhere inside the called functions */
-	ccs.curCampaign = NULL;
-
-	ResetInventoryList();
-
-	campaign = CL_GetCampaign(cp_campaign->string);
+	campaign = GetCampaign();
 	CU_ASSERT_TRUE_FATAL(campaign != NULL);
 
 	CU_ASSERT_PTR_NOT_NULL(aircraft);
@@ -239,6 +248,7 @@ static void testAutoMissions (void)
 
 static void testTransfer (void)
 {
+	ResetCampaignData();
 }
 
 static void testResearch (void)
@@ -248,14 +258,15 @@ static void testResearch (void)
 	const vec2_t pos = {0, 0};
 	technology_t *laserTech = RS_GetTechByID("rs_laser");
 	technology_t *heavyLaserTech = RS_GetTechByID("rs_weapon_heavylaser");
-	base_t *base = B_GetFirstUnfoundedBase();
-	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
+	base_t *base;
+	campaign_t *campaign = GetCampaign();
 	employee_t *employee;
 
-	memset(&ccs.campaignStats, 0, sizeof(ccs.campaignStats));
+	ResetCampaignData();
+	base = B_GetFirstUnfoundedBase();
+
 	ccs.credits = 10000000;
 
-	ResetInventoryList();
 	RS_InitTree(campaign, qfalse);
 
 	B_SetUpBase(campaign, base, pos, "testbase");
@@ -289,23 +300,25 @@ static void testResearch (void)
 static void testProductionItem (void)
 {
 	const vec2_t pos = {0, 0};
-	base_t *base = B_GetFirstUnfoundedBase();
-	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
+	base_t *base;
+	campaign_t *campaign = GetCampaign();
 	const objDef_t *od;
 	const technology_t *tech;
 	int old;
 	int i, n;
 
+	ResetCampaignData();
+
+	base = B_GetFirstUnfoundedBase();
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(campaign);
 
-	memset(&ccs.campaignStats, 0, sizeof(ccs.campaignStats));
 	ccs.credits = 10000000;
 
-	ResetInventoryList();
 	RS_InitTree(campaign, qfalse);
 
 	B_SetUpBase(campaign, base, pos, "unittestproduction");
+	CU_ASSERT_TRUE(B_AtLeastOneExists());
 	CU_ASSERT_TRUE(B_GetBuildingStatus(base, B_WORKSHOP));
 	CU_ASSERT_TRUE(E_CountHired(base, EMPL_WORKER) > 0);
 	CU_ASSERT_TRUE(PR_ProductionAllowed(base));
@@ -313,7 +326,7 @@ static void testProductionItem (void)
 	od = INVSH_GetItemByID("assault");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
 	old = base->storage.numItems[od->idx];
-	PR_QueueNew(base, od, NULL, NULL, 1);
+	CU_ASSERT_PTR_NOT_NULL(PR_QueueNew(base, od, NULL, NULL, 1));
 	tech = RS_GetTechForItem(od);
 	n = tech->produceTime * MINUTES_PER_HOUR - 1;
 	for (i = 0; i < n; i++)
@@ -327,20 +340,26 @@ static void testProductionItem (void)
 
 static void testProductionAircraft (void)
 {
+	ResetCampaignData();
 }
 
 static void testAirFight (void)
 {
+	ResetCampaignData();
 }
 
 static void testGeoscape (void)
 {
+	ResetCampaignData();
 }
 
 static void testNation (void)
 {
 	const nation_t *nation = NAT_GetNationByID("europe");
-	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
+	campaign_t *campaign = GetCampaign();
+
+	ResetCampaignData();
+
 	CU_ASSERT_PTR_NOT_NULL(nation);
 
 	/** @todo salary stuff needs this - get rid of it */
@@ -352,26 +371,34 @@ static void testNation (void)
 
 static void testMarket (void)
 {
-	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
+	campaign_t *campaign = GetCampaign();
+
+	ResetCampaignData();
+
+	RS_InitTree(campaign, qfalse);
+
+	BS_InitMarket(campaign);
+
 	CL_CampaignRunMarket(campaign);
 	/** @todo implement a check here */
 }
 
 static void testXVI (void)
 {
+	ResetCampaignData();
 }
 
 static void testSaveLoad (void)
 {
 	const vec2_t pos = {0, 0};
-	base_t *base = B_GetFirstUnfoundedBase();
-	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
+	base_t *base;
+	campaign_t *campaign = GetCampaign();
 
-	memset(&ccs.campaignStats, 0, sizeof(ccs.campaignStats));
+	ResetCampaignData();
+
+	base = B_GetFirstUnfoundedBase();
 
 	SAV_Init();
-
-	ResetInventoryList();
 
 	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, NULL);
 	ccs.credits = 10000000;
@@ -399,6 +426,8 @@ static void testSaveLoad (void)
 		B_SetName(base, "unittestbase2");
 	}
 	{
+		ResetCampaignData();
+
 		Cmd_ExecuteString("game_quickload");
 
 		/** @todo check that the savegame was successfully loaded */
@@ -414,7 +443,9 @@ static void testSaveLoad (void)
 
 static void testCampaignRun (void)
 {
-	ccs.curCampaign = CL_GetCampaign(cp_campaign->string);
+	ResetCampaignData();
+
+	ccs.curCampaign = GetCampaign();
 	cls.frametime = 1;
 	ccs.gameTimeScale = 1;
 
@@ -424,16 +455,13 @@ static void testCampaignRun (void)
 
 static void testLoad (void)
 {
-	CL_ResetSinglePlayerData();
-	CL_ReadSinglePlayerData();
+	ResetCampaignData();
 
 	CP_InitOverlay();
 
 	Cvar_Set("mn_unittest1", "foobar");
 
 	Cmd_ExecuteString("game_load unittest1");
-
-	CL_ResetSinglePlayerData();
 }
 
 int UFO_AddCampaignTests (void)
