@@ -797,12 +797,9 @@ qboolean RS_MarkStoryLineEventResearched (const char *techID)
  * @todo Needs to check on the exact time that elapsed since the last check of the status.
  * @sa RS_MarkResearched
  */
-void RS_ResearchRun (void)
+int RS_ResearchRun (void)
 {
 	int i, newResearch = 0;
-	const base_t* checkBases[MAX_BASES];
-
-	memset(checkBases, 0, sizeof(checkBases));
 
 	for (i = 0; i < ccs.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
@@ -824,7 +821,7 @@ void RS_ResearchRun (void)
 		/* the test hasBuilding[B_LAB] is needed to make sure that labs are active (their dependences are OK) */
 		if (tech->time > 0 && tech->scientists > 0) {
 			const base_t *base = tech->base;
-			assert(tech->base);	/**< If there are scientitsts there _has_ to be a base. */
+			assert(tech->base);	/**< If there are scientists there _has_ to be a base. */
 			if (RS_ResearchAllowed(base)) {
 				/** @todo Just for testing, better formular may be needed. Include employee-skill in calculation. */
 				tech->time -= tech->scientists * 0.8;
@@ -833,22 +830,13 @@ void RS_ResearchRun (void)
 					RS_MarkResearched(tech, base);
 
 					newResearch++;
-					/* Add this base to the list that needs an update call.
-					 * tech->base was set to NULL with the last call of RS_RemoveScientist. */
-					checkBases[base->idx] = base;
 					tech->time = 0;
 				}
 			}
 		}
 	}
 
-	/* now update the data in all affected bases -- we only need to update tech list and not research menu */
-	/** @todo CHECK THAT: very very strange */
-	/** rudolfo: please verify; I changed from RS_InitGuiData to RS_MarkResearchable */
-	for (i = 0; i < MAX_BASES; i++) {
-		if (checkBases[i])
-			RS_MarkResearchable(qfalse, checkBases[i]);
-	}
+	return newResearch;
 }
 
 #ifdef DEBUG
@@ -1585,19 +1573,6 @@ qboolean RS_IsResearched_ptr (const technology_t * tech)
 	if (tech && tech->statusResearch == RS_FINISH)
 		return qtrue;
 	return qfalse;
-}
-
-/**
- * @sa RS_ItemCollected
- * Call this function if you already hold a tech pointer.
- */
-int RS_Collected_ (const technology_t * tech)
-{
-	if (tech)
-		return tech->statusCollected;
-
-	Com_DPrintf(DEBUG_CLIENT, "RS_Collected_: NULL technology given.\n");
-	return -1;
 }
 
 /**

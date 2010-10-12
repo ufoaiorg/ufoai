@@ -198,13 +198,14 @@ typedef struct technology_s {
 	struct technology_s *hashProvidedNext;
 } technology_t;
 
+#define RS_Collected_(tech) ((tech)->statusCollected)
+
 void RS_InitStartup(void);
 void RS_ResetTechs(void);
-void RS_ResearchRun(void);
+int RS_ResearchRun(void);
 void RS_ParseTechnologies(const char *name, const char **text);
 qboolean RS_IsResearched_idx(int techIdx);
 qboolean RS_IsResearched_ptr(const technology_t *tech);
-int RS_Collected_(const technology_t * tech);
 
 technology_t* RS_GetTechForItem(const objDef_t *item);
 void RS_AddObjectTechs(void);
