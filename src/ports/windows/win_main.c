@@ -44,7 +44,7 @@ void Sys_Init (void)
 	MEMORYSTATUS mem;
 #endif
 
-	sys_affinity = Cvar_Get("sys_affinity", "3", CVAR_ARCHIVE, "Which core to use - 1 = only first, 2 = only second, 3 = both");
+	sys_affinity = Cvar_Get("sys_affinity", "0", CVAR_ARCHIVE, "Which core to use - 0 = all cores, 1 = two cores, 2 = one core");
 	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process priority - 0 = normal, 1 = high, 2 = realtime");
 
 	timeBeginPeriod(1);
@@ -96,7 +96,6 @@ void Sys_SetAffinityAndPriority (void)
 	/* 1 - use core #0
 	 * 2 - use core #1
 	 * 3 - use cores #0 and #1 */
-	DWORD_PTR procAffinity = 0;
 	HANDLE proc = GetCurrentProcess();
 
 	if (sys_priority->modified) {
@@ -124,49 +123,33 @@ void Sys_SetAffinityAndPriority (void)
 	}
 
 	if (sys_affinity->modified) {
+		DWORD_PTR procAffinity = 0;
 		GetSystemInfo(&sysInfo);
 		Com_Printf("Found %i processors\n", (int)sysInfo.dwNumberOfProcessors);
 		sys_affinity->modified = qfalse;
-		if (sysInfo.dwNumberOfProcessors == 2) {
+		if (sysInfo.dwNumberOfProcessors >= 2) {
 			switch (sys_affinity->integer) {
-			case 1:
-				Com_Printf("Only use the first core\n");
-				procAffinity = 1;
-				break;
-			case 2:
-				Com_Printf("Only use the second core\n");
-				procAffinity = 2;
-				break;
-			case 3:
-				Com_Printf("Use both cores\n");
-				Cvar_SetValue("r_threads", 1);
-				procAffinity = 3;
-				break;
-			}
-		} else if (sysInfo.dwNumberOfProcessors > 2) {
-			switch (sys_affinity->integer) {
-			case 1:
+			case 0:
 				Com_Printf("Use all cores\n");
 				procAffinity = (1 << sysInfo.dwNumberOfProcessors) - 1;
 				break;
-			case 2:
-				Com_Printf("Only use two cores\n");
+			case 1:
+				Com_Printf("Use two cores\n");
 				procAffinity = 3;
 				break;
-			case 3:
+			case 2:
 				Com_Printf("Only use one core\n");
 				procAffinity = 1;
 				break;
 			}
 		} else {
-			Com_Printf("...only use one processor\n");
+			Com_Printf("...only found one processor\n");
 		}
 		SetProcessAffinityMask(proc, procAffinity);
 	}
 
 	CloseHandle(proc);
 }
-
 
 const char *Sys_SetLocale (const char *localeID)
 {
