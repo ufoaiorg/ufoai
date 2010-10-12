@@ -818,10 +818,10 @@ int RS_ResearchRun (void)
 			continue;
 		}
 
-		/* the test hasBuilding[B_LAB] is needed to make sure that labs are active (their dependences are OK) */
 		if (tech->time > 0 && tech->scientists > 0) {
+			/* If there are scientists there _has_ to be a base. */
 			const base_t *base = tech->base;
-			assert(tech->base);	/**< If there are scientists there _has_ to be a base. */
+			assert(tech->base);
 			if (RS_ResearchAllowed(base)) {
 				/** @todo Just for testing, better formular may be needed. Include employee-skill in calculation. */
 				tech->time -= tech->scientists * 0.8;
