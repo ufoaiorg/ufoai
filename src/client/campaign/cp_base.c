@@ -2942,9 +2942,11 @@ qboolean B_LoadXML (mxml_node_t *parent)
 
 	bases = mxml_GetNode(parent, "bases");
 	if (!bases) {
-		Com_Printf("Error: Base Node wasn't found in savegame\n");
+		Com_Printf("Error: Node 'bases' wasn't found in savegame\n");
 		return qfalse;
 	}
+
+	ccs.numBases = 0;
 
 	Com_RegisterConstList(saveBaseConstants);
 	for (base = mxml_GetNode(bases, SAVE_BASES_BASE), i = 0; i < MAX_BASES && base; i++, base = mxml_GetNextNode(base, bases, SAVE_BASES_BASE)) {
@@ -2953,6 +2955,8 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		base_t *const b = B_GetBaseByIDX(i);
 		const char *str = mxml_GetString(base, SAVE_BASES_BASESTATUS);
 		int j;
+
+		ccs.numBases++;
 
 		b->idx = B_GetBaseIDX(b);
 		b->founded = qtrue;
@@ -3061,7 +3065,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		/* reset capacities */
 	}
 	Com_UnregisterConstList(saveBaseConstants);
-	ccs.numBases = B_GetFoundedBaseCount();
+
 	B_UpdateBaseCount();
 
 	return qtrue;
