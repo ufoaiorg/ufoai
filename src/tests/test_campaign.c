@@ -243,11 +243,47 @@ static void testTransfer (void)
 
 static void testResearch (void)
 {
+	int n;
+	int i;
+	const vec2_t pos = {0, 0};
+	technology_t *laserTech = RS_GetTechByID("rs_laser");
+	base_t *base = B_GetFirstUnfoundedBase();
+	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
+	employee_t *employee;
+
+	memset(&ccs.campaignStats, 0, sizeof(ccs.campaignStats));
+	ccs.credits = 10000000;
+
+	ResetInventoryList();
+	RS_InitTree(campaign, qfalse);
+
+	B_SetUpBase(campaign, base, pos, "testbase");
+
+	CU_ASSERT_TRUE(laserTech->statusResearchable);
+
+	employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
+	CU_ASSERT_PTR_NOT_NULL(employee);
+	RS_AssignScientist(laserTech, base, employee);
+
+	CU_ASSERT_EQUAL(laserTech->base, base);
+	CU_ASSERT_EQUAL(laserTech->scientists, 1);
+	CU_ASSERT_EQUAL(laserTech->statusResearch, RS_RUNNING);
+
+	/** @todo fix calculation and activate the RS_RUNNING check below */
+	n = laserTech->time * 2 - 1;
+	for (i = 0; i < n; i++)
+		RS_ResearchRun();
+
+	/*CU_ASSERT_EQUAL(laserTech->statusResearch, RS_RUNNING);*/
+	RS_ResearchRun();
+	CU_ASSERT_EQUAL(laserTech->statusResearch, RS_FINISH);
+
+	E_DeleteAllEmployees(NULL);
 }
 
 static void testProductionItem (void)
 {
-	vec2_t pos = {0, 0};
+	const vec2_t pos = {0, 0};
 	base_t *base = B_GetFirstUnfoundedBase();
 	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
 	const objDef_t *od;
@@ -322,7 +358,7 @@ static void testXVI (void)
 
 static void testSaveLoad (void)
 {
-	vec2_t pos = {0, 0};
+	const vec2_t pos = {0, 0};
 	base_t *base = B_GetFirstUnfoundedBase();
 	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
 

@@ -651,7 +651,6 @@ void RS_InitTree (const campaign_t *campaign, qboolean load)
  */
 void RS_AssignScientist (technology_t* tech, base_t *base, employee_t *employee)
 {
-
 	assert(tech);
 	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
 
