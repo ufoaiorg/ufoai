@@ -60,5 +60,8 @@ class CUnitTest(ShellCommand):
         if os.path.exists(self.getResultFileName()):
             xml = self.getXML()
             self.addCompleteLog("xml-result", xml)
-            html = self.getHTML()
-            self.addHTMLLog("html-result", html)
+            try:
+                html = self.getHTML()
+                self.addHTMLLog("html-result", html)
+            except:
+                pass
