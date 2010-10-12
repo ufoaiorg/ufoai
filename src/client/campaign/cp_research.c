@@ -801,7 +801,7 @@ qboolean RS_MarkStoryLineEventResearched (const char *techID)
 void RS_ResearchRun (void)
 {
 	int i, newResearch = 0;
-	base_t* checkBases[MAX_BASES];
+	const base_t* checkBases[MAX_BASES];
 
 	memset(checkBases, 0, sizeof(checkBases));
 
@@ -824,7 +824,7 @@ void RS_ResearchRun (void)
 
 		/* the test hasBuilding[B_LAB] is needed to make sure that labs are active (their dependences are OK) */
 		if (tech->time > 0 && tech->scientists > 0) {
-			base_t *base = tech->base;
+			const base_t *base = tech->base;
 			assert(tech->base);	/**< If there are scientitsts there _has_ to be a base. */
 			if (RS_ResearchAllowed(base)) {
 				/** @todo Just for testing, better formular may be needed. Include employee-skill in calculation. */
