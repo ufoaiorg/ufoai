@@ -424,9 +424,16 @@ static void testCampaignRun (void)
 
 static void testLoad (void)
 {
+	CL_ResetSinglePlayerData();
+	CL_ReadSinglePlayerData();
+
 	CP_InitOverlay();
+
 	Cvar_Set("mn_unittest1", "foobar");
+
 	Cmd_ExecuteString("game_load unittest1");
+
+	CL_ResetSinglePlayerData();
 }
 
 int UFO_AddCampaignTests (void)
