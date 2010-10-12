@@ -1182,7 +1182,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 				continue;
 
 			if (counter == centerOnEventIdx) {
-				MAP_ConvertObjectPositionToGeoscapePosition(vector, ccs.bases[baseIdx].pos);
+				MAP_ConvertObjectPositionToGeoscapePosition(vector, base->pos);
 				return;
 			}
 			counter++;
@@ -1199,7 +1199,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 				continue;
 
 			if (counter == centerOnEventIdx) {
-				MAP_ConvertObjectPositionToGeoscapePosition(vector, ccs.installations[instIdx].pos);
+				MAP_ConvertObjectPositionToGeoscapePosition(vector, inst->pos);
 				return;
 			}
 			counter++;
