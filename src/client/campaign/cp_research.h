@@ -172,7 +172,7 @@ typedef struct technology_s {
 							 * @sa cl_research.c: RS_InitTree */
 	char *mdl;				/**< Same as "image" but it's a 3d model.. */
 
-	int statusResearchable;		/**< Is this item researchable? */
+	qboolean statusResearchable;		/**< Is this item researchable? */
 
 	int produceTime;			/**< How many days the production of this items runs. */
 	mailSentType_t mailSent;		/**< Store if a Mail has been sent to the commander (player). */

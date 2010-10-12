@@ -1747,7 +1747,7 @@ qboolean RS_SaveXML (mxml_node_t *parent)
 		if (t->base)
 			mxml_AddInt(snode, SAVE_RESEARCH_BASE, t->base->idx);
 		mxml_AddIntValue(snode, SAVE_RESEARCH_SCIENTISTS, t->scientists);
-		mxml_AddInt(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, t->statusResearchable);
+		mxml_AddBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, t->statusResearchable);
 		mxml_AddDate(snode, SAVE_RESEARCH_PREDATE, t->preResearchedDate.day, t->preResearchedDate.sec);
 		mxml_AddDate(snode, SAVE_RESEARCH_DATE, t->researchedDate.day, t->researchedDate.sec);
 		mxml_AddInt(snode, SAVE_RESEARCH_MAILSENT, t->mailSent);
@@ -1808,7 +1808,7 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 			/* even if the base is not yet loaded we can set the pointer already */
 			t->base = B_GetBaseByIDX(baseIdx);
 		t->scientists = mxml_GetInt(snode, SAVE_RESEARCH_SCIENTISTS, 0);
-		t->statusResearchable = mxml_GetInt(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, 0);
+		t->statusResearchable = mxml_GetBool(snode, SAVE_RESEARCH_STATUSRESEARCHABLE, qfalse);
 		mxml_GetDate(snode, SAVE_RESEARCH_PREDATE, &t->preResearchedDate.day, &t->preResearchedDate.sec);
 		mxml_GetDate(snode, SAVE_RESEARCH_DATE, &t->researchedDate.day, &t->researchedDate.sec);
 		t->mailSent = mxml_GetInt(snode, SAVE_RESEARCH_MAILSENT, 0);
