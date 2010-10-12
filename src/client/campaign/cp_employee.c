@@ -1300,7 +1300,7 @@ qboolean E_LoadXML (mxml_node_t *p)
 			/* base */
 			assert(B_AtLeastOneExists());	/* Just in case the order is ever changed. */
 			baseIDX = mxml_GetInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, -1);
-			e->baseHired = (baseIDX >= 0) ? B_GetBaseByIDX(baseIDX) : NULL;
+			e->baseHired = B_GetBaseByIDX(baseIDX);
 			/* assigned to a building? */
 			/** @todo compatibility code - remove me */
 			if (mxml_GetInt(ssnode, SAVE_EMPLOYEE_BUILDING, -1) != -1)
