@@ -128,7 +128,7 @@ static void INS_BuildInstallation_f (void)
 
 	if (ccs.credits - installationTemplate->cost > 0) {
 		/* set up the installation */
-		INS_SetUpInstallation(installation, installationTemplate, newBasePos);
+		INS_SetUpInstallation(installation, installationTemplate, ccs.newBasePos);
 
 		ccs.numInstallations++;
 		ccs.campaignStats.installationsBuild++;

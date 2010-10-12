@@ -44,8 +44,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define B_GetBuildingIDX(base, building) ((ptrdiff_t)((building) - ccs.buildings[base->idx]))
 #define B_GetBaseIDX(base) ((ptrdiff_t)((base) - ccs.bases))
 
-vec2_t newBasePos;
-
 static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 
 /**

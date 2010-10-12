@@ -420,6 +420,9 @@ typedef struct ccs_s {
 	/* already paid in this month? */
 	qboolean paid;
 
+	/** Coordinates to place the new base at (long, lat) */
+	vec2_t newBasePos;
+
 	/* == employees == */
 	/* A list of all phalanx employees (soldiers, scientists, workers, etc...) */
 	employee_t employees[MAX_EMPL][MAX_EMPLOYEES];

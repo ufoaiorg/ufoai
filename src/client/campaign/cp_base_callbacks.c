@@ -207,7 +207,7 @@ static void B_BuildBase_f (void)
 			baseName = "Base";
 
 		/* set up the base with buildings from template */
-		B_SetUpBase(ccs.curCampaign, base, newBasePos, baseName);
+		B_SetUpBase(ccs.curCampaign, base, ccs.newBasePos, baseName);
 
 		CL_UpdateCredits(ccs.credits - ccs.curCampaign->basecost);
 		nation = MAP_GetNation(base->pos);

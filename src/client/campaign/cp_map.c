@@ -297,7 +297,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 	case MA_NEWBASE:
 		/** @todo make this a function in cp_base.c - B_BuildBaseAtPos and make newBasePos static */
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
-			Vector2Copy(pos, newBasePos);
+			Vector2Copy(pos, ccs.newBasePos);
 
 			CL_GameTimeStop();
 
@@ -310,7 +310,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 		break;
 	case MA_NEWINSTALLATION:
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
-			Vector2Copy(pos, newBasePos);
+			Vector2Copy(pos, ccs.newBasePos);
 
 			if (ccs.numInstallations < MAX_INSTALLATIONS) {
 				CL_GameTimeStop();

@@ -267,9 +267,6 @@ building_t *B_GetBuildingTemplate(const char *buildingName);
 const baseTemplate_t *B_GetBaseTemplate(const char *baseTemplateName);
 buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
 
-/** Coordinates to place the new base at (long, lat) */
-extern vec2_t newBasePos;
-
 void B_InitStartup(void);
 
 /* base functions */
