@@ -101,7 +101,7 @@ static void testMove (void)
 	{
 		const byte crouchingState = 0;
 		const int distance = MAX_ROUTE;
-		int lengthStored, lengthUnstored;
+		int lengthStored;
 		pos3_t to;
 		pathing_t *path = Mem_AllocType(pathing_t);
 
@@ -113,6 +113,7 @@ static void testMove (void)
 
 		/* move downwards */
 		{
+			int lengthUnstored;
 			VectorSet(vec, 80, 48, 32);
 			VecToPos(vec, to);
 
