@@ -1725,8 +1725,7 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 void B_ParseBuildings (const char *name, const char **text, qboolean link)
 {
 	building_t *building;
-	building_t *dependsBuilding;
-	technology_t *tech_link;
+	technology_t *techLink;
 	const value_t *vp;
 	const char *errhead = "B_ParseBuildings: unexpected end of file (names ";
 	const char *token;
@@ -1822,9 +1821,9 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		if (!building)
 			Com_Error(ERR_DROP, "B_ParseBuildings: Could not find building with id %s\n", name);
 
-		tech_link = RS_GetTechByProvided(name);
-		if (tech_link)
-			building->tech = tech_link;
+		techLink = RS_GetTechByProvided(name);
+		if (techLink)
+			building->tech = techLink;
 		else if (building->visible)
 			Com_Error(ERR_DROP, "B_ParseBuildings: Could not find tech that provides %s\n", name);
 
@@ -1837,7 +1836,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 				break;
 			/* get values */
 			if (!strcmp(token, "depends")) {
-				dependsBuilding = B_GetBuildingTemplate(Com_EParse(text, errhead, name));
+				const building_t *dependsBuilding = B_GetBuildingTemplate(Com_EParse(text, errhead, name));
 				if (!dependsBuilding)
 					Com_Error(ERR_DROP, "Could not find building depend of %s\n", building->id);
 				building->dependsBuilding = dependsBuilding;
@@ -1855,7 +1854,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
  * @param[in] onlyWorking If we're looking only for working buildings
  * @return The building or NULL if base has no building of that type
  */
-building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildingType, qboolean onlyWorking)
+const building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildingType, qboolean onlyWorking)
 {
 	building_t *building = NULL;
 
@@ -2487,30 +2486,10 @@ int B_GetFoundedBaseCount (void)
 }
 
 /**
- * @brief Updates base data
- * @sa CL_CampaignRun
- * @note called every "day"
- * @sa AIRFIGHT_ProjectileHitsBase
- */
-void B_UpdateBaseData (void)
-{
-	base_t *base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
-		building_t *b = NULL;
-		while ((b = B_GetNextBuilding(base, b))) {
-			if (B_CheckBuildingConstruction(b, base)) {
-				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Construction of %s building finished in %s."), _(b->name), base->name);
-				MS_AddNewMessage(_("Building finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
-			}
-		}
-	}
-}
-
-/**
  * @brief Checks whether the construction of a building is finished.
  * Calls the onConstruct functions and assign workers, too.
  */
-int B_CheckBuildingConstruction (building_t *building, base_t *base)
+static int B_CheckBuildingConstruction (building_t *building)
 {
 	int newBuilding = 0;
 
@@ -2519,6 +2498,7 @@ int B_CheckBuildingConstruction (building_t *building, base_t *base)
 			B_UpdateAllBaseBuildingStatus(building, B_STATUS_WORKING);
 
 			if (building->onConstruct[0] != '\0') {
+				base_t *base = building->base;
 				base->buildingCurrent = building;
 				Com_DPrintf(DEBUG_CLIENT, "B_CheckBuildingConstruction: %s %i;\n", building->onConstruct, base->idx);
 				Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
@@ -2532,6 +2512,27 @@ int B_CheckBuildingConstruction (building_t *building, base_t *base)
 		Cmd_ExecuteString("building_init");
 
 	return newBuilding;
+}
+
+/**
+ * @brief Updates base data
+ * @sa CL_CampaignRun
+ * @note called every "day"
+ * @sa AIRFIGHT_ProjectileHitsBase
+ */
+void B_UpdateBaseData (void)
+{
+	base_t *base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		building_t *building = NULL;
+		while ((building = B_GetNextBuilding(base, building))) {
+			if (B_CheckBuildingConstruction(building)) {
+				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
+						_("Construction of %s building finished in %s."), _(building->name), base->name);
+				MS_AddNewMessage(_("Building finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+			}
+		}
+	}
 }
 
 /**

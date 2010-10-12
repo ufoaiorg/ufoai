@@ -187,7 +187,7 @@ typedef struct building_s {
 
 	buildingType_t buildingType;	/**< This way we can rename the buildings without loosing the control. @note Not to be confused with "tpl".*/
 	technology_t *tech;				/**< Link to the building-technology. */
-	struct building_s *dependsBuilding;	/**< If the building needs another one to work (= to be buildable). @sa "buildingTemplates" list*/
+	const struct building_s *dependsBuilding;	/**< If the building needs another one to work (= to be buildable). @sa "buildingTemplates" list*/
 
 	int capacity;		/**< Capacity of this building (used in calculate base capacities). */
 } building_t;
@@ -258,12 +258,11 @@ typedef struct baseTemplate_s {
 } baseTemplate_t;
 
 void B_UpdateBaseData(void);
-int B_CheckBuildingConstruction(building_t *b, base_t* base);
 float B_GetMaxBuildingLevel(const base_t* base, const buildingType_t type);
 void B_ParseBuildings(const char *name, const char **text, qboolean link);
 void B_ParseBaseTemplate(const char *name, const char **text);
 void B_BaseResetStatus(base_t* const base);
-building_t *B_GetBuildingInBaseByType(const base_t* base, buildingType_t type, qboolean onlyWorking);
+const building_t *B_GetBuildingInBaseByType(const base_t* base, buildingType_t type, qboolean onlyWorking);
 building_t *B_GetBuildingTemplate(const char *buildingName);
 const baseTemplate_t *B_GetBaseTemplate(const char *baseTemplateName);
 buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
