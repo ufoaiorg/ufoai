@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_save.h"
 #include "cp_time.h"
 #include "save/save.h"
+#include "missions/cp_mission_baseattack.h"
 
 #define SAVEGAME_EXTENSION "savx"
 
@@ -624,7 +625,7 @@ static void SAV_GameQuickLoad_f (void)
 		UI_Popup(_("Error"), popupText);
 	} else {
 		MS_AddNewMessage(_("Campaign loaded"), _("Quicksave campaign was successfully loaded."), qfalse, MSG_INFO, NULL);
-		Cmd_ExecuteString("check_baseattacks");
+		CP_CheckBaseAttacks();
 	}
 }
 

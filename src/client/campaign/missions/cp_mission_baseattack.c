@@ -237,26 +237,13 @@ void CP_BaseAttackStartMission (mission_t *mission)
  * @brief Check and start baseattack missions
  * @sa CP_BaseAttackStartMission
  */
-void CP_CheckBaseAttacks_f (void)
+void CP_CheckBaseAttacks (void)
 {
 	linkedList_t *missionlist = ccs.missions;
-	base_t *base = NULL;
-
-	if (Cmd_Argc() == 2) {
-		const int baseIDX = atoi(Cmd_Argv(1));
-		base = B_GetFoundedBaseByIDX(baseIDX);
-		if (base == NULL)
-			Com_Printf("CP_CheckBaseAttacks_f: Invalid base index: %i\n", baseIDX);
-	}
-
 	while (missionlist) {
 		mission_t *mission = (mission_t*) missionlist->data;
-
-		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->stage == STAGE_BASE_ATTACK) {
-			if (base && (mission->data.base != base))
-				continue;
+		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->stage == STAGE_BASE_ATTACK)
 			CP_BaseAttackStartMission(mission);
-		}
 		missionlist = missionlist->next;
 	}
 }

@@ -650,7 +650,7 @@ void CL_CampaignRun (void)
 		CP_CheckMissionEnd();
 		CP_CheckLostCondition(ccs.curCampaign);
 		/* Check if there is a base attack mission */
-		Cmd_ExecuteString("check_baseattacks");
+		CP_CheckBaseAttacks();
 		BDEF_AutoSelectTarget();
 
 		/* set time cvars */
@@ -1714,7 +1714,6 @@ void CP_InitStartup (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
 #endif
-	Cmd_AddCommand("check_baseattacks", CP_CheckBaseAttacks_f, "Check if baseattack mission available and start it.");
 
 	cp_missiontest = Cvar_Get("cp_missiontest", "0", 0, "This will never stop the time on geoscape and print information about spawned missions");
 
