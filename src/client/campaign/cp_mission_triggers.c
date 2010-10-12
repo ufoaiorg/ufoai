@@ -61,6 +61,8 @@ static void CP_AddItemAsCollected_f (void)
 {
 	int i, baseID;
 	const char* id;
+	base_t *base;
+	const objDef_t *item;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <item>\n", Cmd_Argv(0));
@@ -69,17 +71,17 @@ static void CP_AddItemAsCollected_f (void)
 
 	id = Cmd_Argv(1);
 	baseID = atoi(Cmd_Argv(2));
+	base = B_GetBaseByIDX(baseID);
+	if (base == NULL)
+		return;
 
 	/* i = item index */
-	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *item = INVSH_GetItemByIDX(i);
-		if (!strcmp(id, item->id)) {
-			technology_t *tech = RS_GetTechForItem(item);
-			base_t *base = B_GetBaseByIDX(baseID);
-			base->storage.numItems[i]++;
-			Com_DPrintf(DEBUG_CLIENT, "add item: '%s'\n", item->id);
-			RS_MarkCollected(tech);
-		}
+	item = INVSH_GetItemByIDSilent(id);
+	if (item) {
+		technology_t *tech = RS_GetTechForItem(item);
+		base->storage.numItems[item->idx]++;
+		Com_DPrintf(DEBUG_CLIENT, "add item: '%s'\n", item->id);
+		RS_MarkCollected(tech);
 	}
 }
 
