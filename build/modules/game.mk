@@ -1,5 +1,6 @@
 TARGET             := game
 
+$(TARGET)_LINKER   := $(CC)
 $(TARGET)_CFLAGS   += -DCOMPILE_UFO $(SO_CFLAGS)
 $(TARGET)_LDFLAGS  += $(SO_LDFLAGS) -lm
 $(TARGET)_FILE     := base/$(TARGET).$(SO_EXT)

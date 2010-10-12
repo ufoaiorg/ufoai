@@ -1,5 +1,6 @@
 TARGET             := ufomodel
 
+$(TARGET)_LINKER   := $(CC)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
 $(TARGET)_LDFLAGS  += -lpng -ljpeg -lz -lm $(SDL_LIBS) $(SDL_IMAGE_LIBS)
 $(TARGET)_CFLAGS   += -DCOMPILE_MAP $(SDL_CFLAGS) $(SDL_IMAGE_CFLAGS)

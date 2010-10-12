@@ -1,5 +1,6 @@
 TARGET             := ufo2map
 
+$(TARGET)_LINKER   := $(CC)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
 $(TARGET)_CFLAGS   += -DCOMPILE_MAP -ffloat-store $(SDL_CFLAGS) $(SDL_IMAGE_CFLAGS)
 $(TARGET)_LDFLAGS  += -lm -lpng -ljpeg -lz $(SDL_LIBS) $(SDL_IMAGE_LIBS)
