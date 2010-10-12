@@ -105,6 +105,7 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 	int baseIdx, homebase, numAvailableBases = 0;
 	baseCapacities_t capacity;
 	linkedList_t* popupListText = NULL;
+	base_t *base;
 
 	assert(aircraft);
 
@@ -115,12 +116,10 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 	popupNum = 0;
 	homebase = -1;
 
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		char text[MAX_VAR];
 		char const* msg;
-		const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
 
 		if (base == aircraft->homebase) {
 			msg = _("current homebase of aircraft");
@@ -312,7 +311,7 @@ POPUP_INTERCEPT
 void CL_DisplayPopupInterceptMission (mission_t* mission)
 {
 	linkedList_t *aircraftList = NULL;
-	int baseIdx;
+	base_t *base;
 
 	if (!mission)
 		return;
@@ -322,15 +321,11 @@ void CL_DisplayPopupInterceptMission (mission_t* mission)
 
 	/* Create the list of aircraft, and write the text to display in popup */
 	popupIntercept.numAircraft = 0;
-	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		aircraft_t *aircraft;
 
-		if (!base)
-			continue;
-
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		/* Check aircraft in base */
-		aircraft = NULL;
+		aircraft_t *aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			const int teamSize = AIR_GetTeamSize(aircraft);
 			/* if aircraft is empty we can't send it on a ground mission */
@@ -374,7 +369,7 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 {
 	linkedList_t *aircraftList = NULL;
 	linkedList_t *baseList = NULL;
-	int baseIdx;
+	base_t *base;
 	int installationIdx;
 
 	if (!ufo)
@@ -385,12 +380,10 @@ void CL_DisplayPopupInterceptUFO (aircraft_t* ufo)
 
 	/* Create the list of aircraft, and write the text to display in popup */
 	popupIntercept.numAircraft = 0;
-	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		aircraft_t *aircraft;
 
-		if (!base)
-			continue;
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		aircraft_t *aircraft;
 
 		/* Check if the base should be displayed in base list
 		 * don't check range because maybe UFO will get closer */
@@ -537,8 +530,8 @@ static void CL_PopupInterceptRClick_f (void)
 static void CL_PopupInterceptBaseClick_f (void)
 {
 	int num, baseIdx, installationIdx, i;
-	base_t* base = NULL;
-	installation_t *installation = NULL;
+	base_t* base;
+	installation_t *installation;
 	qboolean atLeastOneBase = qfalse;
 
 	if (Cmd_Argc() < 2) {
@@ -552,11 +545,8 @@ static void CL_PopupInterceptBaseClick_f (void)
 
 	num = atoi(Cmd_Argv(1));
 
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
-
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		/* Check if the base should be displayed in base list */
 		if (AII_BaseCanShoot(base)) {
 			num--;
@@ -566,7 +556,8 @@ static void CL_PopupInterceptBaseClick_f (void)
 		}
 	}
 
-	if (num >= 0) { /*don't try to find an installation if we already found the right base */
+	installation = NULL;
+	if (num >= 0) { /* don't try to find an installation if we already found the right base */
 		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
 			installation = INS_GetFoundedInstallationByIDX(installationIdx);
 			if (!installation)

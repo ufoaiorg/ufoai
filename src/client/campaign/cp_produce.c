@@ -693,25 +693,25 @@ int PR_DecreaseProduction (production_t *prod, int amount)
 void PR_ProductionRun (void)
 {
 	int i;
-	production_t *prod;
+	base_t *base;
 
 	/* Loop through all founded bases. Then check productions
 	 * in global data array. Then increase prod->percentDone and check
 	 * whether an item is produced. Then add to base storage. */
-	for (i = 0; i < MAX_BASES; i++) {
-		base_t *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		production_t *prod;
+		production_queue_t *q = &ccs.productions[base->idx];
 
 		/* not actually any active productions */
-		if (ccs.productions[i].numItems <= 0)
+		if (q->numItems <= 0)
 			continue;
 
 		/* Workshop is disabled because their dependences are disabled */
 		if (!PR_ProductionAllowed(base))
 			continue;
 
-		prod = &ccs.productions[i].items[0];
+		prod = &q->items[0];
 
 		PR_ProductionFrame(base, prod);
 		PR_DisassemblingFrame(base, prod);
@@ -771,12 +771,11 @@ qboolean PR_ItemIsProduceable (const objDef_t const *item)
  * @param[in] production pointer to the production entry
  * @return base_t pointer to the base
  */
-base_t *PR_ProductionBase (production_t *production)
+base_t *PR_ProductionBase (const production_t *production)
 {
-	int i;
-	for (i = 0; i < ccs.numBases; i++) {
-		base_t *base = B_GetBaseByIDX(i);
-		const ptrdiff_t diff = ((ptrdiff_t)((production) - ccs.productions[i].items));
+	base_t *base = NULL;
+	while ((base = B_GetNext(base)) != NULL) {
+		const ptrdiff_t diff = ((ptrdiff_t)((production) - ccs.productions[base->idx].items));
 
 		if (diff >= 0 && diff < MAX_PRODUCTIONS)
 			return base;
@@ -805,10 +804,12 @@ base_t *PR_ProductionQueueBase (const production_queue_t const *queue)
  */
 qboolean PR_SaveXML (mxml_node_t *p)
 {
-	int i;
+	base_t *base;
 	mxml_node_t *node = mxml_AddNode(p, SAVE_PRODUCE_PRODUCTION);
 
-	for (i = 0; i < ccs.numBases; i++) {
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		const int i = base->idx;
 		const production_queue_t *pq = &ccs.productions[i];
 		int j;
 

@@ -550,40 +550,34 @@ static void BDEF_RemoveBattery_f (void)
  */
 static void BDEF_AddBattery_f (void)
 {
-	int basedefType, baseIdx;
+	basedefenceType_t basedefType;
+	base_t *base;
+	const char* type;
 
 	if (Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <basedefType> <baseIdx>", Cmd_Argv(0));
 		return;
-	} else {
-		char type[MAX_VAR];
-
-		Q_strncpyz(type, Cmd_Argv(1), sizeof(type));
-		if (!strcmp(type, "missile"))
-			basedefType = BASEDEF_MISSILE;
-		else if (!strcmp(type, "laser"))
-			basedefType = BASEDEF_LASER;
-		else if (!strcmp(type, "random"))
-			basedefType = BASEDEF_RANDOM;
-		else
-			return;
-		baseIdx = atoi(Cmd_Argv(2));
 	}
 
-	/* Check that the baseIdx exists */
-	if (baseIdx < 0 || baseIdx >= ccs.numBases) {
-		Com_Printf("BDEF_AddBattery_f: baseIdx %i doesn't exist: there is only %i bases in game.\n",
-				baseIdx, ccs.numBases);
+	type = Cmd_Argv(1);
+	if (!strcmp(type, "missile"))
+		basedefType = BASEDEF_MISSILE;
+	else if (!strcmp(type, "laser"))
+		basedefType = BASEDEF_LASER;
+	else if (!strcmp(type, "random"))
+		basedefType = BASEDEF_RANDOM;
+	else {
+		Com_Printf("BDEF_AddBattery_f: base defence type %s doesn't exist.\n", type);
 		return;
 	}
 
-	/* Check that the basedefType exists */
-	if (basedefType != BASEDEF_MISSILE && basedefType != BASEDEF_LASER) {
-		Com_Printf("BDEF_AddBattery_f: base defence type %i doesn't exist.\n", basedefType);
+	base = B_GetBaseByIDX(atoi(Cmd_Argv(2)));
+	if (base == NULL) {
+		Com_Printf("BDEF_AddBattery_f: Invalid base index given\n");
 		return;
 	}
 
-	BDEF_AddBattery(basedefType, B_GetBaseByIDX(baseIdx));
+	BDEF_AddBattery(basedefType, base);
 }
 
 /**

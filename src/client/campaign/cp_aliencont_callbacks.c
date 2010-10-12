@@ -47,23 +47,22 @@ static int numAliensOnList = 0;			/**< Number of aliens on AC menu list. */
  */
 static int AL_CountForMenu (int alienidx, qboolean alive)
 {
-	int i;
 	int amount = 0;
+	base_t *base;
 
 	assert(alienidx >= 0);
 	assert(alienidx < MAX_ALIENCONT_CAP);
 
-	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		aliensCont_t *ac = &base->alienscont[alienidx];
 		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
 			continue;
-		if (base->alienscont[alienidx].teamDef) {
+		if (ac->teamDef) {
 			if (!alive)
-				amount += base->alienscont[alienidx].amountDead;
+				amount += ac->amountDead;
 			else
-				amount += base->alienscont[alienidx].amountAlive;
+				amount += ac->amountAlive;
 		}
 	}
 	return amount;

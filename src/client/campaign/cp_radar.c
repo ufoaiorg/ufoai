@@ -54,15 +54,16 @@ static const float RADAR_UPGRADE_MULTIPLIER = 0.4f;
  */
 void RADAR_UpdateStaticRadarCoverage (void)
 {
-	int baseIdx, installationIdx;
+	int installationIdx;
+	base_t *base;
 
 	/* Initialise radar range (will be filled below) */
 	CP_InitializeRadarOverlay(qtrue);
 
 	/* Add base radar coverage */
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (base && base->radar.range) {
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		if (base->radar.range) {
 			CP_AddRadarCoverage(base->pos, base->radar.range, base->radar.trackingRange, qtrue);
 		}
 	}
@@ -96,17 +97,15 @@ static inline void RADAR_DrawCoverage (const radar_t* radar, const vec2_t pos)
  */
 void RADAR_UpdateWholeRadarOverlay (void)
 {
-	int baseIdx;
+	base_t *base;
 
 	/* Copy Base and installation radar overlay*/
 	CP_InitializeRadarOverlay(qfalse);
 
 	/* Add aircraft radar coverage */
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		aircraft_t *aircraft;
-
-		aircraft = NULL;
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		aircraft_t *aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (AIR_IsAircraftOnGeoscape(aircraft))
 				RADAR_DrawCoverage(&aircraft->radar, aircraft->pos);
@@ -180,16 +179,15 @@ void RADAR_DrawInMap (const uiNode_t *node, const radar_t *radar, const vec2_t p
 void RADAR_DeactivateRadarOverlay (void)
 {
 	int idx;
+	base_t *base;
 
 	/* never deactivate radar if player wants it to be always turned on */
 	if (radarOverlayWasSet)
 		return;
 
-	for (idx = 0; idx < MAX_BASES; idx++) {
-		base_t *base = B_GetFoundedBaseByIDX(idx);
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		aircraft_t *aircraft;
-		if (!base)
-			continue;
 
 		if (base->radar.numUFOs)
 			return;
@@ -297,14 +295,12 @@ static void RADAR_NotifyUFORemovedFromOneRadar (radar_t* radar, const aircraft_t
  **/
 void RADAR_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
-	int baseIdx;
+	base_t *base;
 	int installationIdx;
 
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		aircraft_t *aircraft;
-		if (!base)
-			continue;
 
 		RADAR_NotifyUFORemovedFromOneRadar(&base->radar, ufo, destroyed);
 
@@ -427,13 +423,10 @@ void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const 
 void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 {
 	int idx;
+	base_t *base = NULL;
 
-	for (idx = 0; idx < MAX_BASES; idx++) {
-		base_t *base = B_GetFoundedBaseByIDX(idx);
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		aircraft_t *aircraft;
-
-		if (!base)
-			continue;
 
 		if (!RADAR_IsUFOSensored(&base->radar, ufo)) {
 			const float dist = GetDistanceOnGlobe(ufo->pos, base->pos);	/* Distance from radar to UFO */
@@ -480,14 +473,10 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 qboolean RADAR_CheckRadarSensored (const vec2_t pos)
 {
 	int idx;
+	base_t *base = NULL;
 
-	for (idx = 0; idx < MAX_BASES; idx++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(idx);
-		float dist;
-		if (!base)
-			continue;
-
-		dist = GetDistanceOnGlobe(pos, base->pos);		/* Distance from base to position */
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		const float dist = GetDistanceOnGlobe(pos, base->pos);		/* Distance from base to position */
 		if (dist <= base->radar.range)
 			return qtrue;
 	}

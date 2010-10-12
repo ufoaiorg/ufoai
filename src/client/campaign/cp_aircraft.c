@@ -1268,9 +1268,9 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 	assert(dt >= 0);
 
 	if (dt > 0) {
-		int j;
-		for (j = 0; j < MAX_BASES; j++) {
-			base_t *base = B_GetBaseByIDX(j);
+		base_t *base = NULL;
+
+		while ((base = B_GetNextFounded(base)) != NULL) {
 			aircraft_t *aircraft;
 
 			/* Run each aircraft */
@@ -1323,25 +1323,16 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 
 /**
  * @brief Returns aircraft for a given global index.
- * @param[in] idx Global aircraft index.
+ * @param[in] aircraftIdx Global aircraft index.
  * @return An aircraft pointer (to a struct in a base) that has the given index or NULL if no aircraft found.
  */
-aircraft_t* AIR_AircraftGetFromIDX (int idx)
+aircraft_t* AIR_AircraftGetFromIDX (int aircraftIdx)
 {
-	int baseIdx;
-
-#ifdef PARANOID
-	if (ccs.numBases < 1) {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: no base(s) found!\n");
-	}
-#endif
-
-	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+	base_t *base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		aircraft_t* aircraft = NULL;
-
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-			if (aircraft->idx == idx) {
+			if (aircraft->idx == aircraftIdx) {
 				Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: aircraft idx: %i - base idx: %i (%s)\n",
 						aircraft->idx, base->idx, base->name);
 				return aircraft;
@@ -1829,18 +1820,14 @@ Aircraft functions related to UFOs or missions.
 
 /**
  * @brief Notify that a mission has been removed.
+ * @note Aircraft currently moving to the mission will be redirect to base
  * @param[in] mission Pointer to the mission that has been removed.
  */
 void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
 {
-	int baseIdx;
-	aircraft_t* aircraft;
-
-	/* Aircraft currently moving to the mission will be redirect to base */
-	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-
-		aircraft = NULL;
+	base_t *base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		aircraft_t* aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (aircraft->status == AIR_MISSION && aircraft->mission == mission)
 				AIR_AircraftReturnToBase(aircraft);
@@ -1855,15 +1842,12 @@ void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
  */
 void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, qboolean destroyed)
 {
-	int baseIdx;
+	base_t *base;
 
 	assert(ufo);
 
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
-
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		aircraft_t* aircraft;
 		int i;
 		/* Base currently targeting the specified ufo loose their target */
@@ -1896,18 +1880,14 @@ void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, qboolean destro
 
 /**
  * @brief Notify that a UFO disappear from radars.
+ * @note Aircraft currently pursuing the specified UFO will be redirected to base
  * @param[in] ufo Pointer to a UFO that has disappeared.
  */
 void AIR_AircraftsUFODisappear (const aircraft_t *const ufo)
 {
-	int baseIdx;
-
-	/* Aircraft currently pursuing the specified UFO will be redirected to base */
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		const base_t *base = B_GetBaseByIDX(baseIdx);
-		aircraft_t *aircraft;
-
-		aircraft = NULL;
+	base_t *base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		aircraft_t *aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (aircraft->status == AIR_UFO)
 				if (ufo == aircraft->aircraftTarget)
@@ -2566,17 +2546,13 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 {
 	int i;
 	mxml_node_t * node, *snode;
+	base_t *base;
 
 	/* save phalanx aircraft */
 	snode = mxml_AddNode(parent, SAVE_AIRCRAFT_PHALANX);
-	for (i = 0; i < MAX_BASES; i++) {
-		base_t *base = B_GetFoundedBaseByIDX(i);
-		aircraft_t *aircraft;
-
-		if (!base)
-			continue;
-
-		aircraft = NULL;
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		aircraft_t *aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 			AIR_SaveAircraftXML(snode, aircraft, qfalse);
 	}
@@ -2900,12 +2876,11 @@ static qboolean AIR_PostLoadInitMissions (void)
 	int i;
 	qboolean success = qtrue;
 	aircraft_t *ufo;
+	base_t *base = NULL;
 
 	/* PHALANX aircraft */
-	for (i = 0; i < ccs.numBases; i++) {
-		const base_t *base = B_GetFoundedBaseByIDX(i);
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		aircraft_t *aircraft = NULL;
-
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft))) {
 			if (!aircraft->missionID || aircraft->missionID[0] == '\0')
 				continue;
@@ -3065,15 +3040,9 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 	/* If no aircraft is given we search if he is in _any_ aircraft and set
 	 * the aircraft pointer to it. */
 	if (!aircraft) {
-		int i;
-
-		for (i = 0; i < ccs.numBases; i++) {
-			base_t *base = B_GetFoundedBaseByIDX(i);
+		base_t *base = NULL;
+		while ((base = B_GetNext(base)) != NULL) {
 			aircraft_t *acTemp = NULL;
-
-			if (!base)
-				continue;
-
 			while ((acTemp = AIR_GetNextFromBase(base, acTemp))) {
 				if (AIR_IsEmployeeInAircraft(employee, acTemp)) {
 					aircraft = acTemp;
@@ -3111,14 +3080,9 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const ai
 
 	/* If no aircraft is given we search if he is in _any_ aircraft and return true if that's the case. */
 	if (!aircraft) {
-		int i;
-		for (i = 0; i < ccs.numBases; i++) {
-			base_t *base = B_GetFoundedBaseByIDX(i);
+		base_t *base = NULL;
+		while ((base = B_GetNext(base)) != NULL) {
 			aircraft_t *aircraftByIDX = NULL;
-
-			if (!base)
-				continue;
-
 			while ((aircraftByIDX = AIR_GetNextFromBase(base, aircraftByIDX))) {
 				if (AIR_IsEmployeeInAircraft(employee, aircraftByIDX))
 					return aircraftByIDX;

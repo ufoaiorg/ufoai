@@ -80,7 +80,7 @@ void PR_ProductionRun(void);
 
 qboolean PR_ItemIsProduceable(const objDef_t const *item);
 
-base_t *PR_ProductionBase(production_t *production);
+base_t *PR_ProductionBase(const production_t *production);
 base_t *PR_ProductionQueueBase (const production_queue_t const *queue);
 
 int PR_IncreaseProduction(production_t *prod, int amount);

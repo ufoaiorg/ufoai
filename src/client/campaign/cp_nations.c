@@ -47,6 +47,7 @@ void CP_NationHandleBudget (void)
 	int totalExpenditure = 0;
 	int initialCredits = ccs.credits;
 	employee_t *employee;
+	base_t *base;
 
 	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
 	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
@@ -102,14 +103,9 @@ void CP_NationHandleBudget (void)
 	}
 
 	cost = 0;
-	for (i = 0; i < MAX_BASES; i++) {
-		base_t *base = B_GetFoundedBaseByIDX(i);
-		aircraft_t *aircraft;
-
-		if (!base)
-			continue;
-
-		aircraft = NULL;
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		aircraft_t *aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 			cost += aircraft->price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
 	}
@@ -120,10 +116,8 @@ void CP_NationHandleBudget (void)
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 
-	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		cost = CP_GetSalaryUpKeepBase(base);
 		totalExpenditure += cost;
 

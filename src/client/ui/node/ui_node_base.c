@@ -42,9 +42,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void UI_AbstractBaseNodeLoaded (uiNode_t * node)
 {
 	const int id = EXTRADATA(node).baseid;
-	if (id < 0 || id >= MAX_BASES) {
+	if (B_GetBaseByIDX(id) == NULL)
 		Com_Printf("UI_AbstractBaseNodeLoaded: Invalid baseid given %i", id);
-	}
 }
 
 /**

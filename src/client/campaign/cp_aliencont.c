@@ -585,18 +585,17 @@ qboolean AL_CheckAliveFreeSpace (const base_t *base, const aliensCont_t *contain
  */
 int AL_CountAll (void)
 {
-	int i, j;
 	int amount = 0;
+	base_t *base = NULL;
 
-	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		int j;
 		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
 			continue;
 		for (j = 0; j < ccs.numAliensTD; j++) {
-			if (base->alienscont[j].teamDef)
-				amount += base->alienscont[j].amountAlive;
+			const aliensCont_t *ac = &base->alienscont[j];
+			if (ac->teamDef)
+				amount += ac->amountAlive;
 		}
 	}
 	return amount;
@@ -712,23 +711,21 @@ void AC_InitStartup (void)
 qboolean AC_SaveXML (mxml_node_t * parent)
 {
 	mxml_node_t *aliencont;
-	int i;
+	base_t *base;
 
 	aliencont = mxml_AddNode(parent, SAVE_ALIENCONT_ALIENCONT);
 	mxml_AddBoolValue(aliencont, SAVE_ALIENCONT_BREATHINGMAILSENT, ccs.breathingMailSent);
 
-	for (i = 0; i < MAX_BASES; i++) {
-		base_t *base = B_GetFoundedBaseByIDX(i);
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		mxml_node_t *node;
 		int k;
 
-		if (!base)
-			continue;
 		if (!AC_ContainmentAllowed(base))
 			continue;
 
 		node = mxml_AddNode(aliencont, SAVE_ALIENCONT_CONT);
-		mxml_AddInt(node, SAVE_ALIENCONT_BASEIDX, i);
+		mxml_AddInt(node, SAVE_ALIENCONT_BASEIDX, base->idx);
 		for (k = 0; k < MAX_ALIENCONT_CAP && k < ccs.numAliensTD; k++) {
 			mxml_node_t * snode = mxml_AddNode(node, SAVE_ALIENCONT_ALIEN);
 

@@ -290,7 +290,7 @@ static void B_BaseInit_f (void)
 	else
 		UI_ExecuteConfunc("update_basebutton buysell true \"%s\"", va(_("No %s functional in base."), _("Storage")));
 
-	if (ccs.numBases > 1)
+	if (B_GetFoundedBaseCount() > 1)
 		UI_ExecuteConfunc("update_basebutton transfer false \"%s\"", _("Transfer equipment, aircraft, UGV, aliens and employees to other bases"));
 	else
 		UI_ExecuteConfunc("update_basebutton transfer true \"%s\"", _("Build at least a second base to transfer equipment or personnel"));
@@ -775,13 +775,12 @@ static void BaseSummary_SelectBase_f (void)
 	const base_t *base;
 
 	if (Cmd_Argc() >= 2) {
-		int i = atoi(Cmd_Argv(1));
-
-		if (i < 0 || i >= ccs.numBases) {
-			Com_Printf("Usage: %s [baseIdx]\nWithout baseIdx the current base is selected.\n", Cmd_Argv(0));
+		const int i = atoi(Cmd_Argv(1));
+		base = B_GetFoundedBaseByIDX(i);
+		if (base == NULL) {
+			Com_Printf("Invalid base index given (%i).\n", i);
 			return;
 		}
-		base = B_GetFoundedBaseByIDX(i);
 	} else {
 		base = B_GetCurrentSelectedBase();
 	}

@@ -60,6 +60,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define B_IsUnderAttack(base) ((base)->baseStatus == BASE_UNDER_ATTACK)
 
+#define B_AtLeastOneExists() (B_GetNextFounded(NULL) != NULL)
+
 /**
  * @brief Macro sets a building used
  * @param[in] usedArray must be a qboolean array of the size MAX_BUILDINGS
@@ -274,6 +276,8 @@ void B_InitStartup(void);
 /* base functions */
 void B_NewBases(void);
 void B_SetUpBase(struct campaign_s *campaign, base_t* base, vec2_t pos, const char *name);
+base_t *B_GetNext(base_t *lastBase);
+base_t* B_GetNextFounded(base_t *lastBase);
 base_t* B_GetBaseByIDX(int baseIdx);
 base_t* B_GetFoundedBaseByIDX(int baseIdx);
 void B_SelectBase(const base_t *base);

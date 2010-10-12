@@ -337,7 +337,7 @@ void CP_CheckLostCondition (const campaign_t *campaign)
 	/** @todo Should we make the campaign lost when a player loses all his bases?
 	 * until he has set up a base again, the aliens might have invaded the whole
 	 * world ;) - i mean, removing the credits check here. */
-	if (!ccs.numBases && ccs.credits < campaign->basecost - campaign->negativeCreditsUntilLost) {
+	if (ccs.credits < campaign->basecost - campaign->negativeCreditsUntilLost && !B_AtLeastOneExists()) {
 		UI_RegisterText(TEXT_STANDARD, _("You've lost your bases and don't have enough money to build new ones."));
 		endCampaign = qtrue;
 	}
@@ -656,7 +656,7 @@ void CL_CampaignRun (void)
 		/* set time cvars */
 		CL_DateConvertLong(&ccs.date, &date);
 		/* every first day of a month */
-		if (date.day == 1 && ccs.paid && ccs.numBases) {
+		if (date.day == 1 && ccs.paid && B_AtLeastOneExists()) {
 			CP_NationBackupMonthlyData();
 			CP_NationHandleBudget();
 			ccs.paid = qfalse;

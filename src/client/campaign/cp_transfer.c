@@ -635,7 +635,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 	if (!n)
 		return qfalse;
 
-	assert(ccs.numBases);
+	assert(B_AtLeastOneExists());
 
 	for (s = mxml_GetNode(n, SAVE_TRANSFER_TRANSFER); s && ccs.numTransfers < MAX_TRANSFERS; s = mxml_GetNextNode(s, n, SAVE_TRANSFER_TRANSFER)) {
 		mxml_node_t *ss;

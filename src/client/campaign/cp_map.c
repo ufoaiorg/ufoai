@@ -1128,14 +1128,13 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	int maxEventIdx;
 	const int numMissions = CP_CountMissionOnGeoscape();
 	aircraft_t *ufo;
+	base_t *base;
 
 	/* If the value of maxEventIdx is too big or to low, restart from begining */
 	maxEventIdx = numMissions + ccs.numBases + ccs.numInstallations - 1;
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		aircraft_t *aircraft;
-
-		aircraft = NULL;
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		aircraft_t *aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (AIR_IsAircraftOnGeoscape(aircraft))
 				maxEventIdx++;
@@ -1176,11 +1175,8 @@ static void MAP_GetGeoscapeAngle (float *vector)
 
 	/* Cycle through bases */
 	if (centerOnEventIdx < ccs.numBases + counter) {
-		for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-			const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-			if (!base)
-				continue;
-
+		base = NULL;
+		while ((base = B_GetNextFounded(base)) != NULL) {
 			if (counter == centerOnEventIdx) {
 				MAP_ConvertObjectPositionToGeoscapePosition(vector, base->pos);
 				return;
@@ -1208,11 +1204,9 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	counter += ccs.numInstallations;
 
 	/* Cycle through aircraft (only those present on geoscape) */
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		aircraft_t *aircraft;
-
-		aircraft = NULL;
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		aircraft_t *aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				if (centerOnEventIdx == counter) {
@@ -1774,6 +1768,7 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	int x, y, i, baseIdx, installationIdx, idx;
 	const char* font;
 	aircraft_t *ufo;
+	base_t *base;
 
 	const vec4_t white = {1.f, 1.f, 1.f, 0.7f};
 	qboolean showXVI = qfalse;
@@ -1809,11 +1804,9 @@ static void MAP_DrawMapMarkers (const uiNode_t* node)
 	}
 
 	/* draw bases */
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		aircraft_t *aircraft;
-		if (!base)
-			continue;
 
 		MAP_DrawMapOneBase(node, base, oneUFOVisible, font);
 
@@ -2051,7 +2044,7 @@ void MAP_DrawMap (const uiNode_t* node)
 void MAP_ResetAction (void)
 {
 	/* don't allow a reset when no base is set up */
-	if (ccs.numBases)
+	if (B_AtLeastOneExists())
 		ccs.mapAction = MA_NONE;
 
 	ccs.interceptAircraft = NULL;
@@ -2429,17 +2422,10 @@ static const float MIN_DIST_BASE = 4.0f;
  */
 base_t* MAP_PositionCloseToBase (const vec2_t pos)
 {
-	int baseIdx;
-
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
-
-		if (GetDistanceOnGlobe(pos, base->pos) < MIN_DIST_BASE) {
+	base_t *base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL)
+		if (GetDistanceOnGlobe(pos, base->pos) < MIN_DIST_BASE)
 			return base;
-		}
-	}
 
 	return NULL;
 }
@@ -2673,7 +2659,9 @@ void MAP_SetOverlay (const char *overlayID)
 	}
 
 	/* do nothing while the first base/installation is not build */
-	if (ccs.numBases + ccs.numInstallations == 0)
+	if (!B_AtLeastOneExists())
+		return;
+	if (ccs.numInstallations == 0)
 		return;
 
 	if (!strcmp(overlayID, "xvi")) {

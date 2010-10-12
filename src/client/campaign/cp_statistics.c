@@ -39,7 +39,7 @@ void CL_StatsUpdate_f (void)
 	static char statsBuffer[MAX_STATS_BUFFER];
 	int hired[MAX_EMPL];
 	int i, costs = 0, sum = 0, totalfunds = 0;
-	employee_t *employee;
+	base_t *base;
 
 	/* delete buffer */
 	memset(statsBuffer, 0, sizeof(statsBuffer));
@@ -77,7 +77,7 @@ void CL_StatsUpdate_f (void)
 
 	/* costs */
 	for (i = 0; i < MAX_EMPL; i++) {
-		employee = NULL;
+		employee_t *employee = NULL;
 		while ((employee = E_GetNextHired(i, employee))) {
 			costs += CP_GetSalaryBaseEmployee(i) + employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(i);
 			hired[employee->type]++;
@@ -98,21 +98,18 @@ void CL_StatsUpdate_f (void)
 	sum += costs;
 
 	costs = 0;
-	for (i = 0; i < MAX_BASES; i++) {
-		base_t *base = B_GetFoundedBaseByIDX(i);
-		aircraft_t *aircraft;
 
-		aircraft = NULL;
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		aircraft_t *aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 			costs += aircraft->price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
 	}
 	Q_strcat(pos, va(_("Aircraft:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
-	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		costs = CP_GetSalaryUpKeepBase(base);
 		Q_strcat(pos, va(_("Base (%s):\t%i c\n"), base->name, costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 		sum += costs;

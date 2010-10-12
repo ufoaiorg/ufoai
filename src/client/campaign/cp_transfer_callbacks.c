@@ -106,6 +106,7 @@ static void TR_TransferAliensFromMission_f (void)
 	aircraft_t *aircraft;
 	int stunnedAliens;
 	uiNode_t *baseList = NULL;
+	base_t *base;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <aircraft index>\n", Cmd_Argv(0));
@@ -124,16 +125,15 @@ static void TR_TransferAliensFromMission_f (void)
 	/* store the aircraft to be able to remove alien bodies */
 	td.transferStartAircraft = aircraft;
 
-	for (i = 0; i < ccs.numBases; i++) {
-		base_t *base = B_GetFoundedBaseByIDX(i);
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		const char* string;
 		uiNode_t *option;
 		int freeSpace;
 
-		if (!base)
-			continue;
 		if (!AC_ContainmentAllowed(base))
 			continue;
+
 		freeSpace = B_FreeCapacity(base, CAP_ALIENS);
 
 		string = va(ngettext("(can host %i live alien)", "(can host %i live aliens)", freeSpace), freeSpace);
@@ -1098,18 +1098,15 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
  */
 static void TR_InitBaseList (void)
 {
-	int baseIdx;
 	const base_t const *currentBase = B_GetCurrentSelectedBase();
 	uiNode_t *baseList = NULL;
+	base_t *base = NULL;
 
-	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		if (base == currentBase)
 			continue;
 
-		UI_AddOption(&baseList, va("base%i", baseIdx), base->name, va("%i", baseIdx));
+		UI_AddOption(&baseList, va("base%i", base->idx), base->name, va("%i", base->idx));
 	}
 
 	UI_RegisterOption(OPTION_BASELIST, baseList);

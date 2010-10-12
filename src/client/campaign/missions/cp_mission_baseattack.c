@@ -270,21 +270,13 @@ static base_t *CP_BaseAttackChooseBase (void)
 {
 	float randomNumber;
 	float sum = 0.0f;
-	int baseIdx;
 	base_t *base = NULL;
 
 	/* Choose randomly a base depending on alienInterest values for those bases */
-	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
-		base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
+	while ((base = B_GetNextFounded(base)) != NULL)
 		sum += base->alienInterest;
-	}
 	randomNumber = frand() * sum;
-	for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
-		base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		randomNumber -= base->alienInterest;
 		if (randomNumber < 0)
 			break;

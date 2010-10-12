@@ -403,6 +403,7 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 void AII_UpdateInstallationDelay (void)
 {
 	int j, k;
+	base_t *base;
 
 	for (j = 0; j < MAX_INSTALLATIONS; j++) {
 		installation_t *installation = INS_GetFoundedInstallationByIDX(j);
@@ -414,11 +415,9 @@ void AII_UpdateInstallationDelay (void)
 			AII_UpdateOneInstallationDelay(NULL, installation, NULL, &installation->batteries[k].slot);
 	}
 
-	for (j = 0; j < MAX_BASES; j++) {
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		aircraft_t *aircraft;
-		base_t *base = B_GetFoundedBaseByIDX(j);
-		if (!base)
-			continue;
 
 		/* Update base */
 		for (k = 0; k < base->numBatteries; k++)
@@ -1078,11 +1077,10 @@ float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t *slot, int maxSlot)
  */
 void AII_RepairAircraft (void)
 {
-	int baseIDX;
 	const int REPAIR_PER_HOUR = 1;	/**< Number of damage points repaired per hour */
+	base_t *base = NULL;
 
-	for (baseIDX = 0; baseIDX < MAX_BASES; baseIDX++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIDX);
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		aircraft_t *aircraft;
 
 		aircraft = NULL;
@@ -1316,13 +1314,11 @@ static void BDEF_AutoTarget (baseWeapon_t *weapons, int maxWeapons)
  */
 void BDEF_AutoSelectTarget (void)
 {
+	base_t *base;
 	int i;
 
-	for (i = 0; i < ccs.numBases; i++) {
-		base_t *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
-
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		BDEF_AutoTarget(base->batteries, base->numBatteries);
 		BDEF_AutoTarget(base->lasers, base->numLasers);
 	}

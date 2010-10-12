@@ -790,10 +790,11 @@ qboolean E_DeleteEmployee (employee_t *employee)
 
 	if (found) {
 		transfer_t *transfer;
+		base_t *base;
 		int j;
 
-		for (j = 0; j < MAX_BASES; j++) {
-			base_t *base = B_GetFoundedBaseByIDX(j);
+		base = NULL;
+		while ((base = B_GetNextFounded(base)) != NULL) {
 			aircraft_t *aircraft;
 
 			aircraft = NULL;
@@ -1297,7 +1298,7 @@ qboolean E_LoadXML (mxml_node_t *p)
 			}
 			e->type = emplType;
 			/* base */
-			assert(ccs.numBases);	/* Just in case the order is ever changed. */
+			assert(B_AtLeastOneExists());	/* Just in case the order is ever changed. */
 			baseIDX = mxml_GetInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, -1);
 			e->baseHired = (baseIDX >= 0) ? B_GetBaseByIDX(baseIDX) : NULL;
 			/* assigned to a building? */

@@ -325,7 +325,7 @@ static void testCampaignRun (void)
 	cls.frametime = 1;
 	ccs.gameTimeScale = 1;
 
-	/*CL_CampaignRun();*/
+	CL_CampaignRun();
 }
 
 int UFO_AddCampaignTests (void)

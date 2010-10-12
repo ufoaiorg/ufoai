@@ -752,12 +752,11 @@ void AIRFIGHT_CampaignRunBaseDefence (int dt)
 {
 	int baseIdx;
 	int installationIdx;
+	base_t *base;
 
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		int idx;
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
 
 		if (B_IsUnderAttack(base))
 			continue;

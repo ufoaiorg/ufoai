@@ -49,6 +49,47 @@ vec2_t newBasePos;
 static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 
 /**
+ * @brief Iterates through founded base
+ * @param[in] lastBase Pointer of the base to iterate from. call with NULL to get the first one.
+ */
+base_t *B_GetNext (base_t *lastBase)
+{
+	base_t* endOfBases = &ccs.bases[ccs.numBases];
+	base_t* base;
+
+	if (!ccs.numBases)
+		return NULL;
+
+	if (!lastBase)
+		return ccs.bases;
+	assert(lastBase >= ccs.bases);
+	assert(lastBase < endOfBases);
+
+	base = lastBase;
+
+	base++;
+	if (base >= endOfBases)
+		return NULL;
+	else
+		return base;
+}
+
+/**
+ * @brief Iterates through founded base
+ * @param[in] lastBase Pointer of the base to iterate from. call with NULL to get the first one.
+ */
+base_t* B_GetNextFounded (base_t *lastBase)
+{
+	base_t* base = lastBase;
+
+	while ((base = B_GetNext(base))) {
+		if (base->founded)
+			break;
+	}
+	return base;
+}
+
+/**
  * @brief Array bound check for the base index. Will also return unfounded bases as
  * long as the index is in the valid ranges,
  * @param[in] baseIdx Index to check
@@ -803,7 +844,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 /**
  * @brief Will ensure that aircraft on geoscape are not stored
  * in a base that no longer has any hangar left
- * @param base The base that is going to be destroyed
+ * @param[in] base The base that is going to be destroyed
  * @todo this should be merged into B_RemoveAircraftExceedingCapacity
  */
 static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
@@ -813,14 +854,16 @@ static void B_MoveAircraftOnGeoscapeToOtherBases (const base_t *base)
 
 	while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 		if (AIR_IsAircraftOnGeoscape(aircraft)) {
-			int j;
-			for (j = 0; j < ccs.numBases; j++) {
-				base_t *newbase = B_GetBaseByIDX(j);
+			base_t *newbase = NULL;
+			qboolean moved = qfalse;
+			while ((newbase = B_GetNextFounded(newbase)) != NULL) {
 				/* found a new homebase? */
-				if (base != newbase && AIR_MoveAircraftIntoNewHomebase(aircraft, newbase))
+				if (base != newbase && AIR_MoveAircraftIntoNewHomebase(aircraft, newbase)) {
+					moved = qtrue;
 					break;
+				}
 			}
-			if (j == ccs.numBases) {
+			if (!moved) {
 				/* No base can hold this aircraft */
 				UFO_NotifyPhalanxAircraftRemoved(aircraft);
 				if (!MapIsWater(MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN))) {
@@ -926,6 +969,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 	}
 
 	if (building->buildingStatus == B_STATUS_WORKING) {
+		const qboolean hasBases = B_AtLeastOneExists();
 		switch (building->buildingType) {
 		case B_HANGAR:
 		case B_SMALL_HANGAR:
@@ -933,7 +977,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 				UI_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
 					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					(ccs.numBases > 1) ? "ui_pop;ui_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
+					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -943,7 +987,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 				UI_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
 					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					(ccs.numBases > 1) ? "ui_pop;ui_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
+					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -953,7 +997,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 				UI_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
 					"ui_pop;ui_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
 					"building_destroy;ui_pop;", _("Destroy"), _("Destroy the building"),
-					(ccs.numBases > 1) ? "ui_pop;ui_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
+					hasBases ? "ui_pop;ui_push transfer;" : NULL, hasBases ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -1255,12 +1299,12 @@ int B_GetInstallationLimit (void)
 {
 	int i;
 	int limit = 0;
+	base_t *base = NULL;
 
 	/* count working Command Centers */
-	for(i = 0; i < ccs.numBases; i++) {
-		const base_t *base = B_GetFoundedBaseByIDX(i);
-
-		limit += (base && B_GetBuildingStatus(base, B_COMMAND)) ? 1 : 0;
+	while ((base = B_GetNext(base)) != NULL) {
+		if (B_GetBuildingStatus(base, B_COMMAND))
+			limit++;
 	}
 
 	return min(MAX_INSTALLATIONS, limit * MAX_INSTALLTAIONS_PER_BASE);
@@ -1946,14 +1990,10 @@ base_t *B_GetFirstUnfoundedBase (void)
  */
 void B_SetCurrentSelectedBase (const base_t *base)
 {
-	int i;
-
-	for (i = 0; i < MAX_BASES; i++) {
-		base_t *b = B_GetBaseByIDX(i);
+	base_t *b = NULL;
+	while ((b = B_GetNextFounded(b)) != NULL) {
 		if (b == base) {
 			b->selected = qtrue;
-			if (!b->founded)
-				Com_Error(ERR_DROP, "The base you are trying to select is not founded yet");
 			if (b->aircraftCurrent == NULL)
 				b->aircraftCurrent = AIR_GetNextFromBase(b, NULL);
 		} else
@@ -2443,13 +2483,11 @@ void B_InitStartup (void)
  */
 int B_GetFoundedBaseCount (void)
 {
-	int i, cnt = 0;
+	int cnt = 0;
+	base_t *base = NULL;
 
-	for (i = 0; i < MAX_BASES; i++) {
-		if (!ccs.bases[i].founded)
-			continue;
+	while ((base = B_GetNextFounded(base)) != NULL)
 		cnt++;
-	}
 
 	return cnt;
 }
@@ -2462,18 +2500,12 @@ int B_GetFoundedBaseCount (void)
  */
 void B_UpdateBaseData (void)
 {
-	int baseIdx;
-
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		building_t *b;
-		if (!base)
-			continue;
-
-		b = NULL;
+	base_t *base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
+		building_t *b = NULL;
 		while ((b = B_GetNextBuilding(base, b))) {
 			if (B_CheckBuildingConstruction(b, base)) {
-				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Construction of %s building finished in %s."), _(b->name), ccs.bases[baseIdx].name);
+				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("Construction of %s building finished in %s."), _(b->name), base->name);
 				MS_AddNewMessage(_("Building finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			}
 		}
@@ -2867,15 +2899,10 @@ int B_LoadBaseSlotsXML (baseWeapon_t* weapons, int max, mxml_node_t *p)
  */
 static qboolean B_PostLoadInitCapacity (void)
 {
-	int baseIdx;
-
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
-
+	base_t *base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL)
 		B_ResetAllStatusAndCapacities(base, qtrue);
-	}
+
 	return qtrue;
 }
 

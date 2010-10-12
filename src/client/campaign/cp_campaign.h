@@ -514,6 +514,7 @@ typedef struct ccs_s {
 
 	/* == production == */
 	/* we will allow only one active production at the same time for each base */
+	/** @todo move this into base_t */
 	production_queue_t productions[MAX_BASES];
 
 	/* UFOs on geoscape */

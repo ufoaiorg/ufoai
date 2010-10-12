@@ -625,14 +625,10 @@ void RS_InitTree (const campaign_t *campaign, qboolean load)
 	if (load) {
 		/* when you load a savegame right after starting UFO, the aircraft in bases
 		 * and installations don't have any tech assigned */
-		for (j = 0; j < ccs.numBases; j++) {
-			base_t *b = B_GetFoundedBaseByIDX(j);
-			aircraft_t *aircraft;
-			if (!b)
-				continue;
-
-			aircraft = NULL;
-			while ((aircraft = AIR_GetNextFromBase(b, aircraft)) != NULL) {
+		base_t *base = NULL;
+		while ((base = B_GetNextFounded(base)) != NULL) {
+			aircraft_t *aircraft = NULL;
+			while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
 				/* if you already played before loading the game, tech are already defined for templates */
 				if (!aircraft->tech)
 					aircraft->tech = RS_GetTechByProvided(aircraft->id);
@@ -787,13 +783,10 @@ qboolean RS_MarkStoryLineEventResearched (const char *techID)
 {
 	technology_t* tech = RS_GetTechByID(techID);
 	if (!RS_IsResearched_ptr(tech)) {
-		int j;
-		for (j = 0; j < ccs.numBases; j++) {
-			const base_t *base = B_GetFoundedBaseByIDX(j);
-			if (base) {
-				RS_MarkResearched(tech, base);
-				return qtrue;
-			}
+		const base_t *base = B_GetNextFounded(NULL);
+		if (base != NULL) {
+			RS_MarkResearched(tech, base);
+			return qtrue;
 		}
 	}
 	return qfalse;

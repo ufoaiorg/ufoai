@@ -366,17 +366,15 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 	ufo = NULL;
 	while ((ufo = UFO_GetNext(ufo)) != NULL) {
 		int idx;
+		base_t *base;
 
 		/* landed UFO can't detect any phalanx base or installation */
 		if (ufo->landed)
 			continue;
 
-		for (idx = 0; idx < MAX_BASES; idx++) {
-			base_t *base = B_GetFoundedBaseByIDX(idx);
-			if (!base)
-				continue;
+		base = NULL;
+		while ((base = B_GetNextFounded(base)) != NULL)
 			UFO_UpdateAlienInterestForOneBase(ufo, base);
-		}
 
 		for (idx = 0; idx < MAX_INSTALLATIONS; idx++) {
 			installation_t *installation = INS_GetFoundedInstallationByIDX(idx);
@@ -392,7 +390,7 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
  */
 static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 {
-	int baseIdx;
+	base_t *base;
 	aircraft_t* phalanxAircraft;
 	float distance = 999999.;
 
@@ -415,12 +413,8 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 	}
 
 	ufo->status = AIR_TRANSIT;
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-
-		if (!base)
-			continue;
-
+	base = NULL;
+	while ((base = B_GetNextFounded(base)) != NULL) {
 		/* check if the ufo can attack an aircraft */
 		phalanxAircraft = NULL;
 		while ((phalanxAircraft = AIR_GetNextFromBase(base, phalanxAircraft)) != NULL) {
@@ -754,6 +748,7 @@ qboolean UFO_CampaignCheckEvents (void)
 		/* detected tells us whether or not a UFO is detected NOW, whereas ufo->detected tells
 		 * us whether or not the UFO was detected PREVIOUSLY. */
 		qboolean detected = qfalse;
+		base_t *base;
 
 		/* don't update UFO status id UFO is landed or crashed */
 		if (ufo->landed)
@@ -762,11 +757,10 @@ qboolean UFO_CampaignCheckEvents (void)
 		/* note: We can't exit these loops as soon as we found the UFO detected
 		 * RADAR_CheckUFOSensored registers the UFO in every radars' detection list
 		 * which detect it */
-		for (baseIdx = 0; baseIdx < ccs.numBases; baseIdx++) {
+		base = NULL;
+		while ((base = B_GetNextFounded(base)) != NULL) {
 			aircraft_t *aircraft;
-			base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-			if (!base)
-				continue;
+
 			if (!B_GetBuildingStatus(base, B_POWER))
 				continue;
 
