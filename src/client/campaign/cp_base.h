@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_BASEMANGEMENT_H
 
 #include "cp_aliencont.h"
+#include "cp_produce.h"
 
 #define MAX_BASES 8
 
@@ -245,6 +246,9 @@ typedef struct base_s {
 	int numBatteries;
 	baseWeapon_t lasers[MAX_BASE_SLOT];		/**< Laser batteries assigned to base. */
 	int numLasers;
+
+	/* we will allow only one active production at the same time for each base */
+	production_queue_t productions;
 
 	qboolean selected;		/**< the current selected base */
 	building_t *buildingCurrent; /**< needn't be saved */

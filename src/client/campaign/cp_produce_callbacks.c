@@ -698,7 +698,7 @@ static void PR_ProductionIncrease_f (void)
 		const char *name = NULL;
 
 		/* no free production slot */
-		if (PR_QueueFreeSpace(queue) <= 0) {
+		if (PR_QueueFreeSpace(base, queue) <= 0) {
 			UI_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
 			return;
 		}

@@ -515,11 +515,6 @@ typedef struct ccs_s {
 	/* Total number of built installations (how many are enabled). */
 	int numInstallations;
 
-	/* == production == */
-	/* we will allow only one active production at the same time for each base */
-	/** @todo move this into base_t */
-	production_queue_t productions[MAX_BASES];
-
 	/* UFOs on geoscape */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
 	int numUFOs;	/**< The current amount of UFOS on the geoscape. */

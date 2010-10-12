@@ -183,9 +183,8 @@ int PR_RequirementsMet (int amount, const requirements_t const *reqs, base_t *ba
  * @brief returns the number of free production slots of a queue
  * @param[in] queue Pointer to the queue to check
  */
-int PR_QueueFreeSpace (const production_queue_t const *queue)
+int PR_QueueFreeSpace (const base_t* base, const production_queue_t const *queue)
 {
-	const base_t *base = PR_ProductionQueueBase(queue);
 	int numWorkshops;
 
 	assert(queue);
@@ -213,7 +212,7 @@ production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDef_t *it
 	assert((item && !aircraftTemplate && !ufo) || (!item && aircraftTemplate && !ufo) || (!item && !aircraftTemplate && ufo));
 	assert(base);
 
-	if (PR_QueueFreeSpace(queue) <= 0)
+	if (PR_QueueFreeSpace(base, queue) <= 0)
 		return NULL;
 	if (E_CountHired(base, EMPL_WORKER) <= 0)
 		return NULL;
@@ -298,8 +297,6 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 	production_t *prod = &queue->items[index];
 	technology_t *tech = NULL;
 
-	if (!base)
-		base = PR_ProductionQueueBase(queue);
 	assert(base);
 
 	if (prod->item) {
@@ -609,14 +606,15 @@ static void PR_DisassemblingFrame (base_t* base, production_t* prod)
 int PR_IncreaseProduction (production_t *prod, int amount)
 {
 	base_t *base;
-	technology_t *tech = NULL;
+	const technology_t *tech;
 
 	assert(prod);
-	base = PR_ProductionBase(prod);
-	assert(base);
 
 	if (prod->ufo)
 		return 0;
+
+	base = PR_ProductionBase(prod);
+	assert(base);
 
 	/* amount limit per one production */
 	if (prod->amount + amount > MAX_PRODUCTION_AMOUNT) {
@@ -627,6 +625,8 @@ int PR_IncreaseProduction (production_t *prod, int amount)
 		tech = RS_GetTechForItem(prod->item);
 	} else if (prod->aircraft) {
 		tech = prod->aircraft->tech;
+	} else {
+		tech = NULL;
 	}
 	assert(tech);
 
@@ -782,19 +782,6 @@ base_t *PR_ProductionBase (const production_t *production)
 }
 
 /**
- * @brief Returns the base pointer the production queue belongs to
- * @param[in] queue pointer to the production queue
- * @return base_t pointer to the base
- */
-base_t *PR_ProductionQueueBase (const production_queue_t const *queue)
-{
-	const ptrdiff_t baseIDX = (ptrdiff_t)(queue - ccs.productions);
-	base_t *base = B_GetFoundedBaseByIDX(baseIDX);
-
-	return base;
-}
-
-/**
  * @brief Save callback for savegames in XML Format
  * @param[out] p XML Node structure, where we write the information to
  * @sa PR_LoadXML
@@ -851,7 +838,7 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			snode = mxml_GetNextNode(snode, node, SAVE_PRODUCE_QUEUE)) {
 		mxml_node_t *ssnode;
 		const int baseIDX = mxml_GetInt(snode, SAVE_PRODUCE_QUEUEIDX, MAX_BASES);
-		const base_t *base = B_GetBaseByIDX(baseIDX);
+		base_t *base = B_GetBaseByIDX(baseIDX);
 		production_queue_t *pq;
 
 		if (base == NULL) {

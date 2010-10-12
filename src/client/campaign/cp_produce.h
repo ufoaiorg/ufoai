@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CP_PRODUCE
 #define CLIENT_CP_PRODUCE
 
+struct base_t;
+
 /** @brief Maximum number of productions queued in any one base. */
 #define MAX_PRODUCTIONS		256
 #define MAX_PRODUCTIONS_PER_WORKSHOP 5
@@ -72,33 +74,32 @@ typedef struct production_s
 typedef struct production_queue_s
 {
 	int				numItems;		/**< The number of items in the queue. */
-	production_t	items[MAX_PRODUCTIONS];	/**< Actual production items (in order). */
+	struct production_s	items[MAX_PRODUCTIONS];	/**< Actual production items (in order). */
 } production_queue_t;
 
-#define PR_GetProductionForBase(base) (&ccs.productions[(base->idx)])
+#define PR_GetProductionForBase(base) (&((base)->productions))
 
 void PR_ProductionInit(void);
 void PR_ProductionRun(void);
 
 qboolean PR_ItemIsProduceable(const objDef_t const *item);
 
-base_t *PR_ProductionBase(const production_t *production);
-base_t *PR_ProductionQueueBase (const production_queue_t const *queue);
+struct base_s *PR_ProductionBase(const production_t *production);
 
 int PR_IncreaseProduction(production_t *prod, int amount);
 int PR_DecreaseProduction(production_t *prod, int amount);
 
 void PR_UpdateProductionCap(struct base_s *base);
 
-void PR_UpdateRequiredItemsInBasestorage(base_t *base, int amount, const requirements_t const *reqs);
-int PR_RequirementsMet(int amount, const requirements_t const *reqs, base_t *base);
+void PR_UpdateRequiredItemsInBasestorage(struct base_s *base, int amount, const requirements_t const *reqs);
+int PR_RequirementsMet(int amount, const requirements_t const *reqs, struct base_s *base);
 
-float PR_CalculateProductionPercentDone(const base_t *base, const technology_t *tech, const struct storedUFO_s *const storedUFO);
+float PR_CalculateProductionPercentDone(const struct base_s *base, const technology_t *tech, const struct storedUFO_s *const storedUFO);
 
-production_t *PR_QueueNew(base_t *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, struct storedUFO_s *ufo, signed int amount);
+production_t *PR_QueueNew(struct base_s *base, production_queue_t *queue, objDef_t *item, aircraft_t *aircraftTemplate, struct storedUFO_s *ufo, signed int amount);
 void PR_QueueMove(production_queue_t *queue, int index, int dir);
-void PR_QueueDelete(base_t *base, production_queue_t *queue, int index);
-void PR_QueueNext(base_t *base);
-int PR_QueueFreeSpace(const production_queue_t const *queue);
+void PR_QueueDelete(struct base_s *base, production_queue_t *queue, int index);
+void PR_QueueNext(struct base_s *base);
+int PR_QueueFreeSpace(const struct base_s* base, const production_queue_t const *queue);
 
 #endif /* CLIENT_CP_PRODUCE */
