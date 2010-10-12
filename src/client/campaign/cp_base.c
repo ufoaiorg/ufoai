@@ -1333,7 +1333,7 @@ void B_SetName (base_t *base, const char *name)
  * @sa B_NewBase
  * @sa B_SetUpFirstBase
  */
-void B_SetUpBase (campaign_t *campaign, base_t* base, vec2_t pos, const char *name)
+void B_SetUpBase (campaign_t *campaign, base_t* base, const vec2_t pos, const char *name)
 {
 	const int newBaseAlienInterest = 1.0f;
 

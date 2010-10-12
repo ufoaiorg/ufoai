@@ -329,10 +329,9 @@ void BS_InitMarket (campaign_t *campaign)
  * @note This function makes items number on market slowly reach the asymptotic number of items defined in equipment.ufo
  * If an item has just been researched, it's not available on market until RESEARCH_LIMIT_DELAY days is reached.
  */
-void CL_CampaignRunMarket (void)
+void CL_CampaignRunMarket (campaign_t *campaign)
 {
 	int i;
-	campaign_t *campaign = ccs.curCampaign;
 	const float TYPICAL_TIME = 10.f;			/**< Number of days to reach the asymptotic number of items */
 	const int RESEARCH_LIMIT_DELAY = 30;		/**< Numbers of days after end of research to wait in order to have
 												 * items added on market */

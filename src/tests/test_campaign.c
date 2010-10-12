@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/ui/ui_main.h"
 #include "../client/campaign/cp_campaign.h"
 #include "../client/campaign/cp_map.h"
+#include "../client/campaign/cp_nations.h"
 
 static const int TAG_INVENTORY = 1538;
 
@@ -297,10 +298,22 @@ static void testGeoscape (void)
 
 static void testNation (void)
 {
+	const nation_t *nation = NAT_GetNationByID("europe");
+	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
+	CU_ASSERT_PTR_NOT_NULL(nation);
+
+	/** @todo salary stuff needs this - get rid of it */
+	ccs.curCampaign = campaign;
+
+	CP_NationHandleBudget();
+	/** @todo implement a check here */
 }
 
 static void testMarket (void)
 {
+	campaign_t *campaign = CL_GetCampaign(cp_campaign->string);
+	CL_CampaignRunMarket(campaign);
+	/** @todo implement a check here */
 }
 
 static void testXVI (void)

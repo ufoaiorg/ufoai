@@ -275,7 +275,7 @@ void B_InitStartup(void);
 
 /* base functions */
 void B_NewBases(void);
-void B_SetUpBase(struct campaign_s *campaign, base_t* base, vec2_t pos, const char *name);
+void B_SetUpBase(struct campaign_s *campaign, base_t* base, const vec2_t pos, const char *name);
 base_t *B_GetNext(base_t *lastBase);
 base_t* B_GetNextFounded(base_t *lastBase);
 base_t* B_GetBaseByIDX(int baseIdx);

@@ -54,6 +54,6 @@ void BS_ProcessCraftItemSale(const objDef_t *craftitem, const int numItems);
 
 qboolean BS_IsOnMarket(const objDef_t const* item);
 void BS_InitMarket(struct campaign_s *campaign);
-void CL_CampaignRunMarket(void);
+void CL_CampaignRunMarket(struct campaign_s *campaign);
 
 #endif /* CLIENT_CL_MARKET_H */

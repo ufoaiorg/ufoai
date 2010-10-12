@@ -633,7 +633,7 @@ void CL_CampaignRun (void)
 			CP_SpreadXVI();
 			NAT_UpdateHappinessForAllNations(ccs.curCampaign->minhappiness);
 			AB_BaseSearchedByNations();
-			CL_CampaignRunMarket();
+			CL_CampaignRunMarket(ccs.curCampaign);
 			CP_CheckCampaignEvents();
 			CP_ReduceXVIEverywhere();
 			/* should be executed after all daily event that could
