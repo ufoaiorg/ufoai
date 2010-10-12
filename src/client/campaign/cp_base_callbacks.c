@@ -507,7 +507,7 @@ static void B_BuildingDestroy_f (void)
  */
 static void B_BuildingStatus_f (void)
 {
-	base_t *base = B_GetCurrentSelectedBase();
+	const base_t *base = B_GetCurrentSelectedBase();
 
 	/* maybe someone called this command before the buildings are parsed?? */
 	if (!base || !base->buildingCurrent)
@@ -543,8 +543,8 @@ static void B_CheckBuildingStatusForMenu_f (void)
 {
 	int num;
 	const char *buildingID;
-	building_t *building;
-	base_t *base = B_GetCurrentSelectedBase();
+	const building_t *building;
+	const base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <buildingID>\n", Cmd_Argv(0));
@@ -592,7 +592,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		}
 
 		if (!B_CheckBuildingDependencesStatus(building)) {
-			building_t *dependenceBuilding = building->dependsBuilding;
+			const building_t *dependenceBuilding = building->dependsBuilding;
 			assert(building->dependsBuilding);
 			if (B_GetNumberOfBuildingsInBaseByBuildingType(base, dependenceBuilding->buildingType) <= 0) {
 				/* the dependence of the building is not built */
@@ -653,8 +653,8 @@ static void BaseSummary_Init (const base_t *base)
 	int i;
 
 	baseCapacities_t cap;
-	production_queue_t *queue;
-	technology_t *tech;
+	const production_queue_t *queue;
+	const technology_t *tech;
 	int tmp;
 
 	/* wipe away old buffers */
