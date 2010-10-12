@@ -1856,8 +1856,6 @@ void AIR_AircraftsNotifyMissionRemoved (const mission_t *const mission)
 void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, qboolean destroyed)
 {
 	int baseIdx;
-	aircraft_t* aircraft;
-	int i;
 
 	assert(ufo);
 
@@ -1866,18 +1864,22 @@ void AIR_AircraftsNotifyUFORemoved (const aircraft_t *const ufo, qboolean destro
 		if (!base)
 			continue;
 
+		aircraft_t* aircraft;
+		int i;
 		/* Base currently targeting the specified ufo loose their target */
 		for (i = 0; i < base->numBatteries; i++) {
-			if (base->batteries[i].target == ufo)
-				base->batteries[i].target = NULL;
-			else if (destroyed && (base->batteries[i].target > ufo))
-				base->batteries[i].target--;
+			baseWeapon_t *baseWeapon = &base->batteries[i];
+			if (baseWeapon->target == ufo)
+				baseWeapon->target = NULL;
+			else if (destroyed && (baseWeapon->target > ufo))
+				baseWeapon->target--;
 		}
 		for (i = 0; i < base->numLasers; i++) {
-			if (base->lasers[i].target == ufo)
-				base->lasers[i].target = NULL;
-			else if (destroyed && (base->lasers[i].target > ufo))
-				base->lasers[i].target--;
+			baseWeapon_t *baseWeapon = &base->lasers[i];
+			if (baseWeapon->target == ufo)
+				baseWeapon->target = NULL;
+			else if (destroyed && (baseWeapon->target > ufo))
+				baseWeapon->target--;
 		}
 		/* Aircraft currently purchasing the specified ufo will be redirect to base */
 		aircraft = NULL;
@@ -2582,7 +2584,7 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 	/* save the ufos on geoscape */
 	snode = mxml_AddNode(parent, SAVE_AIRCRAFT_UFOS);
 	for (i = 0; i < MAX_UFOONGEOSCAPE; i++) {
-		aircraft_t *ufo = UFO_GetByIDX(i);
+		const aircraft_t *ufo = UFO_GetByIDX(i);
 		if (!ufo || (ufo->id == NULL))
 			continue;
 		AIR_SaveAircraftXML(snode, ufo, qtrue);
