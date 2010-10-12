@@ -80,11 +80,11 @@ base_t* B_GetNextFounded (base_t *lastBase)
 {
 	base_t* base = lastBase;
 
-	while ((base = B_GetNext(base))) {
+	while ((base = B_GetNext(base)) != NULL) {
 		if (base->founded)
-			break;
+			return base;
 	}
-	return base;
+	return NULL;
 }
 
 /**
