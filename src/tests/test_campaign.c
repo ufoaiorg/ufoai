@@ -244,7 +244,7 @@ static void testResearch (void)
 {
 }
 
-static void testProduction (void)
+static void testProductionItem (void)
 {
 	vec2_t pos = {0, 0};
 	base_t *base = B_GetFirstUnfoundedBase();
@@ -281,6 +281,10 @@ static void testProduction (void)
 	CU_ASSERT_EQUAL(old + 1, base->storage.numItems[od->idx]);
 
 	E_DeleteAllEmployees(NULL);
+}
+
+static void testProductionAircraft (void)
+{
 }
 
 static void testAirFight (void)
@@ -387,7 +391,10 @@ int UFO_AddCampaignTests (void)
 	if (CU_ADD_TEST(campaignSuite, testResearch) == NULL)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testProduction) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testProductionItem) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testProductionAircraft) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testAirFight) == NULL)
