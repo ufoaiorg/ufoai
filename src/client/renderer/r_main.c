@@ -656,6 +656,7 @@ static qboolean R_InitExtensions (void)
 	qglDetachShader = NULL;
 	qglLinkProgram = NULL;
 	qglUseProgram = NULL;
+	qglGetActiveUniform = NULL;
 	qglGetProgramiv = NULL;
 	qglGetProgramInfoLog = NULL;
 	qglGetUniformLocation = NULL;
@@ -765,6 +766,7 @@ static qboolean R_InitExtensions (void)
 		qglDetachShader = (DetachShader_t)R_GetProcAddress("glDetachShader");
 		qglLinkProgram = (LinkProgram_t)R_GetProcAddress("glLinkProgram");
 		qglUseProgram = (UseProgram_t)R_GetProcAddress("glUseProgram");
+		qglGetActiveUniform = (GetActiveUniforms_t)R_GetProcAddress("glGetActiveUniform");
 		qglGetProgramiv = (GetProgramiv_t)R_GetProcAddress("glGetProgramiv");
 		qglGetProgramInfoLog = (GetProgramInfoLog_t)R_GetProcAddress("glGetProgramInfoLog");
 		qglGetUniformLocation = (GetUniformLocation_t)R_GetProcAddress("glGetUniformLocation");
