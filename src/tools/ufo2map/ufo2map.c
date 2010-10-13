@@ -104,6 +104,7 @@ static const usagePair_t usageArray[] = {
 	{" -nobackclip","draw downward pointing faces. (so actors cannot see up through floors"},
 	{NULL,"in first person view). default is to set SURF_NODRAW to downard faces."},
 	{" -nocsg",""},
+	{" -gamedir", "Add another game dir to the search directories"},
 	{" -nodetail","skip detail brushes"},
 	{" -nomerge","skip node face merging"},
 	{" -noprune","don't prune (or cut) nodes"},
