@@ -1402,6 +1402,9 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	/* initialise date */
 	ccs.date = campaign->date;
 
+	Vector2Set(ccs.smoothFinal2DGeoscapeCenter, 0.5, 0.5);
+	VectorSet(ccs.smoothFinalGlobeAngle, 0, GLOBE_ROTATE, 0);
+
 	MAP_Init(campaign);
 	PR_ProductionInit();
 
