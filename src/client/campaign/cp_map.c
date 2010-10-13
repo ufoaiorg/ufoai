@@ -284,7 +284,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 	/* new base construction */
 	switch (ccs.mapAction) {
 	case MA_NEWBASE:
-		/** @todo make this a function in cp_base.c - B_BuildBaseAtPos and make newBasePos static */
+		/** @todo make this a function in cp_base.c - B_BuildBaseAtPos */
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
 			Vector2Copy(pos, ccs.newBasePos);
 
