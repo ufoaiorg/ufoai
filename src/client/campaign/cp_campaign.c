@@ -1402,9 +1402,6 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	/* initialise date */
 	ccs.date = campaign->date;
 
-	Vector2Set(ccs.smoothFinal2DGeoscapeCenter, 0.5, 0.5);
-	VectorSet(ccs.smoothFinalGlobeAngle, 0, GLOBE_ROTATE, 0);
-
 	MAP_Init(campaign);
 	PR_ProductionInit();
 
@@ -1418,6 +1415,8 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	/* set map view */
 	ccs.center[0] = ccs.center[1] = 0.5;
 	ccs.zoom = 1.0;
+	Vector2Set(ccs.smoothFinal2DGeoscapeCenter, 0.5, 0.5);
+	VectorSet(ccs.smoothFinalGlobeAngle, 0, GLOBE_ROTATE, 0);
 
 	CL_UpdateCredits(campaign->credits);
 
