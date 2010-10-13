@@ -452,6 +452,9 @@ static void testCampaignRun (void)
 
 static void testLoad (void)
 {
+	int i;
+	aircraft_t *ufo;
+
 	ResetCampaignData();
 
 	CP_InitOverlay();
@@ -461,6 +464,14 @@ static void testLoad (void)
 	ccs.curCampaign = NULL;
 	Cmd_ExecuteString("game_load unittest1");
 	CU_ASSERT_PTR_NOT_NULL(ccs.curCampaign);
+
+	i = 0;
+	ufo = NULL;
+	while ((ufo = UFO_GetNextOnGeoscape(ufo)) != NULL)
+		i++;
+
+	/* there should be one ufo on the geoscape */
+	CU_ASSERT_EQUAL(i, 1);
 }
 
 int UFO_AddCampaignTests (void)
