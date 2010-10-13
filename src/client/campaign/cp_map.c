@@ -2708,20 +2708,12 @@ void MAP_DeactivateOverlay (const char *overlayID)
 	if (!strcmp(overlayID, "nations")) {
 		if (MAP_IsNationOverlayActivated())
 			MAP_SetOverlay("nations");
-		else
-			return;
-	}
-
-	if (!strcmp(overlayID, "xvi")) {
+	} else if (!strcmp(overlayID, "xvi")) {
 		if (MAP_IsXVIOverlayActivated())
 			MAP_SetOverlay("xvi");
-		else
-			return;
 	} else if (!strcmp(overlayID, "radar")) {
 		if (MAP_IsRadarOverlayActivated())
 			MAP_SetOverlay("radar");
-		else
-			return;
 	}
 }
 
