@@ -321,7 +321,7 @@ void MAP_MapClick (uiNode_t* node, int x, int y)
 
 	/* Get selected missions */
 	for (list = ccs.missions; list; list = list->next) {
-		const mission_t *tempMission = (mission_t *)list->data;
+		const mission_t *tempMission = (const mission_t *)list->data;
 		if (multiSelect.nbSelect >= MULTISELECT_MAXSELECT)
 			break;
 		if (tempMission->stage == STAGE_NOT_ACTIVE || !tempMission->onGeoscape)
@@ -637,7 +637,7 @@ void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 	vec2_t trafo, sa, ea;
 	float cosTrafo, sinTrafo;
 	float phiStart, phiEnd, dPhi, phi;
-	float *p, *last;
+	float *p;
 	int i, n;
 
 	/* get plane normal */
@@ -689,7 +689,7 @@ void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 	dPhi = (phiEnd - phiStart) / n;
 	p = NULL;
 	for (phi = phiStart, i = 0; i <= n; phi += dPhi, i++) {
-		last = p;
+		const float *last = p;
 		p = line->point[i];
 		VectorSet(v, -sinTrafo * cos(phi), sin(phi), cosTrafo * cos(phi));
 		VecToPolar(v, p);
