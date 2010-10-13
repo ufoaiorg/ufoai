@@ -197,7 +197,7 @@ static void testAutoMissions (void)
 	missionResults_t result;
 	battleParam_t battleParameters;
 	aircraft_t* aircraft = ccs.aircraftTemplates;
-	mission_t *mission = CP_CreateNewMission(INTERESTCATEGORY_RECON, qfalse);
+	mission_t *mission;
 	campaign_t *campaign;
 	employee_t *pilot, *e1, *e2;
 
@@ -206,6 +206,7 @@ static void testAutoMissions (void)
 	memset(&result, 0, sizeof(result));
 	memset(&battleParameters, 0, sizeof(battleParameters));
 
+	mission = CP_CreateNewMission(INTERESTCATEGORY_RECON, qfalse);
 	campaign = GetCampaign();
 	CU_ASSERT_TRUE_FATAL(campaign != NULL);
 
