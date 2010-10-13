@@ -283,7 +283,7 @@ typedef struct {
 
 	int firstedge;				/**< we must support > 64k edges */
 	short numedges;
-	short texinfo;
+	short texinfo;				/**< index in the global texinfo array */
 
 	/** lighting info */
 	int lightofs[LIGHTMAP_MAX];				/**< start of [surfsize] samples */

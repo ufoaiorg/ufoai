@@ -35,6 +35,9 @@ TEXTURE LIGHT VALUES
 ===================================================================
 */
 
+/**
+ * @brief Calculates the texture color that is used for light emitting surfaces
+ */
 void CalcTextureReflectivity (void)
 {
 	int i, j, texels = 0;
@@ -123,20 +126,25 @@ static inline qboolean HasLight (const dBspSurface_t *f)
 }
 
 /**
- * @brief Check for light emited by texture
+ * @brief Check for light emitted by texture
  * @note Surface lights
  * @sa TexinfoForBrushTexture
  */
 static inline void EmissiveLight (patch_t *patch)
 {
-	if (HasLight(patch->face)) {
-		const dBspTexinfo_t *tex = &curTile->texinfo[patch->face->texinfo];
-		const vec_t *ref = texture_reflectivity[patch->face->texinfo];
+	const dBspTexinfo_t *tex = &curTile->texinfo[patch->face->texinfo];
+	const vec_t *ref = texture_reflectivity[patch->face->texinfo];
 
-		VectorScale(ref, tex->value, patch->light);
-	}
+	VectorScale(ref, tex->value, patch->light);
 }
 
+/**
+ * @brief Build a patch for a surface that emits light
+ * @note This is called in the lighting stage
+ * @param fn The face number of the surface that emits the light
+ * @param w The winding
+ * @sa BuildLights
+ */
 static void BuildPatch (int fn, winding_t *w)
 {
 	patch_t *patch;
@@ -189,19 +197,19 @@ static entity_t *EntityForModel (int modnum)
 
 /**
  * @brief Create surface fragments for light-emitting surfaces so that light sources
- * may be computed along them. This function is responsible for one
+ * may be computed along them.
  */
 void BuildPatches (void)
 {
-	int i, j, k;
-	winding_t *w;
-	vec3_t origin;
+	int i;
 
 	memset(face_patches, 0, sizeof(face_patches));
 
 	for (i = 0; i < curTile->nummodels; i++) {
 		const dBspModel_t *mod = &curTile->models[i];
 		const entity_t *ent = EntityForModel(i);
+		vec3_t origin;
+		int j;
 		/* bmodels with origin brushes (like func_door) need to be offset into their
 		 * in-use position */
 		GetVectorForKey(ent, "origin", origin);
@@ -209,6 +217,8 @@ void BuildPatches (void)
 		for (j = 0; j < mod->numfaces; j++) {
 			const int facenum = mod->firstface + j;
 			dBspSurface_t *f = &curTile->faces[facenum];
+			winding_t *w;
+			int k;
 
 			/* store the origin in case of moving bmodels (e.g. func_door) */
 			VectorCopy(origin, face_offset[facenum]);

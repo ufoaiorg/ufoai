@@ -27,6 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "map.h"
 #include "bsp.h"
 
+/**
+ * @brief Build the lightmap out of light entities and surface lights (patches)
+ * @note Call @c CalcTextureReflectivity before entering this function
+ */
 void LightWorld (void)
 {
 	if (curTile->numnodes == 0 || curTile->numfaces == 0)

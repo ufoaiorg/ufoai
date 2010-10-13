@@ -47,7 +47,8 @@ typedef struct {
 	vec3_t	worldtotex[2];	/**< s = (world - texorg) . worldtotex[0] */
 	vec3_t	textoworld[2];	/**< world = texorg + s * textoworld[0] */
 
-	int		texmins[2], texsize[2];
+	int		texmins[2];
+	int		texsize[2];		/**< the size of the lightmap in pixel */
 	dBspSurface_t	*face;
 } lightinfo_t;
 
@@ -128,6 +129,7 @@ static void CalcLightinfoExtents (lightinfo_t *l)
 	float *stmins, *stmaxs;
 	vec2_t lm_mins, lm_maxs;
 	int i;
+	const int luxelScale = (1 << config.lightquant);
 
 	s = l->face;
 
@@ -135,8 +137,8 @@ static void CalcLightinfoExtents (lightinfo_t *l)
 	stmaxs = face_extents[s - curTile->faces].stmaxs;
 
 	for (i = 0; i < 2; i++) {
-		lm_mins[i] = floor(stmins[i] / (1 << config.lightquant));
-		lm_maxs[i] = ceil(stmaxs[i] / (1 << config.lightquant));
+		lm_mins[i] = floor(stmins[i] / luxelScale);
+		lm_maxs[i] = ceil(stmaxs[i] / luxelScale);
 
 		l->texmins[i] = lm_mins[i];
 		l->texsize[i] = lm_maxs[i] - lm_mins[i];
@@ -283,8 +285,9 @@ static light_t *lights[LIGHTMAP_MAX];
 static int numlights[LIGHTMAP_MAX];
 
 /**
- * @brief Create lights out of patches and lights
+ * @brief Create lights out of patches and entity lights
  * @sa LightWorld
+ * @sa BuildPatch
  */
 void BuildLights (void)
 {
@@ -636,8 +639,10 @@ static void FacesWithVert (int vert, int *faces, int *nfaces)
 	k = 0;
 	for (i = 0; i < curTile->numfaces; i++) {
 		const dBspSurface_t *face = &curTile->faces[i];
+		const dBspTexinfo_t *tex = &curTile->texinfo[face->texinfo];
 
-		if (!(curTile->texinfo[face->texinfo].surfaceFlags & SURF_PHONG))
+		/* only build vertex normals for phong shaded surfaces */
+		if (!(tex->surfaceFlags & SURF_PHONG))
 			continue;
 
 		for (j = 0; j < face->numedges; j++) {
