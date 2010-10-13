@@ -862,7 +862,7 @@ void BuildFacelights (unsigned int facenum)
 	/* Free the hints. */
 	Mem_Free(headhints);
 
-	for (i = 0; i < l[0].numsurfpt; i++) {  /* pad them */
+	for (i = 0; i < fl->numsamples; i++) {  /* pad them */
 		float *direction = fl->directions + i * 3;
 		if (VectorEmpty(direction))
 			VectorSet(direction, 0.0, 0.0, 1.0);
