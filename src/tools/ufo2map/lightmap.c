@@ -74,13 +74,13 @@ static void BuildFaceExtents (void)
 		const dBspSurface_t *s = &curTile->faces[k];
 		const dBspTexinfo_t *tex = &curTile->texinfo[s->texinfo];
 
-		float *mins = face_extents[s - curTile->faces].mins;
-		float *maxs = face_extents[s - curTile->faces].maxs;
+		float *mins = face_extents[k].mins;
+		float *maxs = face_extents[k].maxs;
 
-		float *center = face_extents[s - curTile->faces].center;
+		float *center = face_extents[k].center;
 
-		float *stmins = face_extents[s - curTile->faces].stmins;
-		float *stmaxs = face_extents[s - curTile->faces].stmaxs;
+		float *stmins = face_extents[k].stmins;
+		float *stmaxs = face_extents[k].stmaxs;
 		int i;
 
 		VectorSet(mins, 999999, 999999, 999999);
