@@ -221,6 +221,9 @@ static void CalcLightinfoVectors (lightinfo_t *l)
 /**
  * @brief For each texture aligned grid point, back project onto the plane
  * to get the world xyz value of the sample point
+ * @param[in,out] l The resulting lightinfo data
+ * @param[in] sofs The sample offset for the s coordinates
+ * @param[in] tofs The sample offset for the t coordinates
  */
 static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 {
