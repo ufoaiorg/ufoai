@@ -107,7 +107,8 @@ static void BuildFaceExtents (void)
 			}
 
 			for (j = 0; j < 2; j++) {  /* calculate stmins, stmaxs */
-				const float val = DotProduct(v->point, tex->vecs[j]) + tex->vecs[j][3];
+				const float offset = tex->vecs[j][3];
+				const float val = DotProduct(v->point, tex->vecs[j]) + offset;
 				if (val < stmins[j])
 					stmins[j] = val;
 				if (val > stmaxs[j])
