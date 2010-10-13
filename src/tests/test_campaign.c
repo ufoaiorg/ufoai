@@ -458,7 +458,9 @@ static void testLoad (void)
 
 	Cvar_Set("mn_unittest1", "foobar");
 
+	ccs.curCampaign = NULL;
 	Cmd_ExecuteString("game_load unittest1");
+	CU_ASSERT_PTR_NOT_NULL(ccs.curCampaign);
 }
 
 int UFO_AddCampaignTests (void)
