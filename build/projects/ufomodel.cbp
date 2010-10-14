@@ -104,6 +104,9 @@
 			<Add library="jpeg" />
 			<Add library="png" />
 		</Linker>
+		<Unit filename="..\..\src\client\renderer\r_model.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_model_alias.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -133,10 +136,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\common\mem.h" />
-		<Unit filename="..\..\src\shared\threads.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\shared\threads.h" />
 		<Unit filename="..\..\src\common\unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -172,11 +171,15 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\shared.h" />
+		<Unit filename="..\..\src\shared\threads.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\threads.h" />
+		<Unit filename="..\..\src\shared\typedefs.h" />
 		<Unit filename="..\..\src\shared\utf8.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\utf8.h" />
-		<Unit filename="..\..\src\shared\typedefs.h" />
 		<Unit filename="..\..\src\tools\ufomodel\ufomodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
