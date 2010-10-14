@@ -583,7 +583,7 @@ aircraft craft_ufo_corrupter
 	image		"geoscape/air_ufo"
 	slot {
 		type		weapon
-		size		light
+		size		heavy
 		contains	rs_craft_weapon_sparrowhawk
 		ammo		rs_craft_ammo_sparrowhawk
 	}
@@ -634,7 +634,7 @@ aircraft craft_ufo_ripper
 	image		"geoscape/air_ufo"
 	slot {
 		type		weapon
-		size		light
+		size		heavy
 		contains	rs_craft_weapon_sparrowhawk
 		ammo		rs_craft_ammo_sparrowhawk
 	}
@@ -662,7 +662,7 @@ aircraft craft_ufo_bomber
 	image		"geoscape/air_ufo"
 	slot {
 		type		weapon
-		size		light
+		size		heavy
 		contains	rs_craft_weapon_sparrowhawk
 		ammo		rs_craft_ammo_sparrowhawk
 	}
