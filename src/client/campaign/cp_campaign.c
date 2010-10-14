@@ -1675,7 +1675,7 @@ int CP_GetSalaryAdministrative (const salary_t *salary)
 
 	costs = salary->adminInitial;
 	for (i = 0; i < MAX_EMPL; i++)
-		costs += ccs.numEmployees[i] * CP_GetSalaryAdminEmployee(salary, i);
+		costs += E_CountByType(i) * CP_GetSalaryAdminEmployee(salary, i);
 	return costs;
 }
 

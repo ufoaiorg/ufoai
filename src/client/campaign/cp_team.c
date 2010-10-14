@@ -210,9 +210,15 @@ void CL_CleanTempInventory (base_t* base)
 	for (i = 0; i < MAX_EMPLOYEES; i++)
 		for (k = 0; k < csi.numIDs; k++)
 			if (INVDEF(k)->temp) {
+				employee_t *employee;
 				/* idFloor and idEquip are temp */
-				ccs.employees[EMPL_SOLDIER][i].chr.i.c[k] = NULL;
-				ccs.employees[EMPL_ROBOT][i].chr.i.c[k] = NULL;
+
+				employee = E_GetEmployeeByIDX(EMPL_SOLDIER, i);
+				if (employee)
+					employee->chr.i.c[k] = NULL;
+				employee = E_GetEmployeeByIDX(EMPL_ROBOT, i);
+				if (employee)
+					employee->chr.i.c[k] = NULL;
 			}
 
 	if (!base)

@@ -108,6 +108,9 @@ static void E_EmployeeListScroll_f (void)
 		/* don't show employees of other bases */
 		if (E_IsHired(employee) && !E_IsInBase(employee, base))
 			continue;
+		/* don't show employees being transfered to other bases */
+		if (employee->transfer)
+			continue;
 
 		/* drop the first j entries */
 		if (j) {
@@ -175,6 +178,9 @@ static void E_EmployeeList_f (void)
 	while ((employee = E_GetNext(employeeCategory, employee))) {
 		/* don't show employees of other bases */
 		if (E_IsHired(employee) && !E_IsInBase(employee, base))
+			continue;
+		/* don't show employees being transfered to other bases */
+		if (employee->transfer)
 			continue;
 		LIST_AddPointer(&employeeListName, employee->chr.name);
 		LIST_AddPointer(&employeeList, employee);

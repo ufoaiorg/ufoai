@@ -71,6 +71,7 @@ typedef struct employee_s {
 void E_ResetEmployees(void);
 employee_t* E_GetNext(employeeType_t type, employee_t *lastEmployee);
 employee_t* E_GetNextFromBase(employeeType_t type, employee_t *lastEmployee, const base_t *base);
+int E_CountByType(employeeType_t type);
 employee_t* E_GetNextHired(employeeType_t type, employee_t *lastEmployee);
 employee_t* E_CreateEmployee(employeeType_t type, const struct nation_s *nation, const struct ugv_s *ugvType);
 qboolean E_DeleteEmployee(employee_t *employee);
@@ -88,6 +89,7 @@ employeeType_t E_GetEmployeeType(const char* type);
 extern const char* E_GetEmployeeString(employeeType_t type);
 
 employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int num);
+employee_t* E_GetEmployeeByIDX(employeeType_t type, int idx);
 employee_t* E_GetUnhiredRobot(const struct ugv_s *ugvType);
 int E_GetHiredEmployees(const base_t* const base, employeeType_t type, linkedList_t **hiredEmployees);
 employee_t* E_GetHiredRobot(const base_t* const base, const struct ugv_s *ugvType);

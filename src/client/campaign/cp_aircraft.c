@@ -2283,7 +2283,7 @@ employee_t* AIR_GetPilot (const aircraft_t *aircraft)
 	if (!e)
 		return NULL;
 
-	return &ccs.employees[e->type][e->idx];
+	return E_GetEmployee(e->baseHired, e->type, e->idx);
 }
 
 /**

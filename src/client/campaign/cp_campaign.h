@@ -430,9 +430,7 @@ typedef struct ccs_s {
 
 	/* == employees == */
 	/* A list of all phalanx employees (soldiers, scientists, workers, etc...) */
-	employee_t employees[MAX_EMPL][MAX_EMPLOYEES];
-	/* Total number of employees. */
-	int numEmployees[MAX_EMPL];
+	linkedList_t *employees[MAX_EMPL];
 
 	/* == technologies == */
 	/* A list of all research-topics resp. the research-tree. */

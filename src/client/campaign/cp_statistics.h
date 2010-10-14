@@ -47,6 +47,7 @@ typedef struct stats_s {
 	int alienBasesBuilt;		/**< number of all alien bases ever built (used for unique idx generation) */
 	int ufosStored;				/**< number of UFOS ever stored in UFO Yards (used for unique idx generation) */
 	int aircraftHad;			/**< number of PHALANX aircraft ever bought/produced (used for unique idx generation) */
+	int employeeHad[MAX_EMPL];	/**< number of employee was ever available by type (used for unique idx generation) */
 } stats_t;
 
 void CL_StatsUpdate_f(void);

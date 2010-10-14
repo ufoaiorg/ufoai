@@ -58,6 +58,37 @@ transfer_t* TR_GetNext (transfer_t *lastTransfer)
 }
 
 /**
+ * @brief Returns the next transfered employee of a transfer session
+ * @param[in] transfer Pointer to the transfersession to check
+ * @param[in] type The employee type to query
+ * @param[in] lastEmployee Pointer to the last employee to iterate from. call with NULL for the first
+ * @returns NULL, if transfer parameter is NULL or there is no more employee in the transfer, or the pointer of the next employee otherwise
+ */
+employee_t* TR_GetNextEmployee (transfer_t *transfer, employeeType_t type, employee_t *lastEmployee)
+{
+	if (!transfer)
+		return NULL;
+	if (type == MAX_EMPL)
+		return NULL;
+
+	return (employee_t*) LIST_GetNext(transfer->employees[type], (void*) lastEmployee);
+}
+
+/**
+ * @brief Returns the next transfered aircraft of a transfer session
+ * @param[in] transfer Pointer to the transfersession to check
+ * @param[in] lastAircraft Pointer to the last aircraft to iterate from. call with NULL for the first
+ * @returns NULL, if transfer parameter is NULL or there is no more aircraft in the transfer, or the pointer of the next aircraft otherwise
+ */
+aircraft_t* TR_GetNextAircraft (transfer_t *transfer, aircraft_t *lastAircraft)
+{
+	if (!transfer)
+		return NULL;
+
+	return (aircraft_t*) LIST_GetNext(transfer->aircraft, (void*) lastAircraft);
+}
+
+/**
  * @brief Unloads transfer cargo when finishing the transfer or destroys it when no buildings/base.
  * @param[in,out] destination The destination base - might be NULL in case the base
  * is already destroyed
@@ -101,40 +132,28 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 
 	if (transfer->hasEmployees && transfer->srcBase) {	/* Employees. (cannot come from a mission) */
 		if (!success || !B_GetBuildingStatus(destination, B_QUARTERS)) {	/* Employees will be unhired. */
-			int i;
+			employeeType_t i;
 			if (success) {
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have Living Quarters, employees got unhired!"), destination->name);
 				MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			}
-			for (i = 0; i < MAX_EMPL; i++) {
-				int j;
-				for (j = 0; j < ccs.numEmployees[i]; j++) {
-					employee_t *employee = transfer->employeeArray[i][j];
-					if (employee) {
-						employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
-						/* every employee that we have transfered should have a
-						 * base he is hire in - otherwise we couldn't have transfered him */
-						assert(employee->baseHired);
-						employee->transfer = qfalse;
-						E_UnhireEmployee(employee);
-					}
+			for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+				employee_t *employee = NULL;
+				while ((employee = TR_GetNextEmployee(transfer, i, employee)) != NULL) {
+					employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
+					employee->transfer = qfalse;
+					E_UnhireEmployee(employee);
 				}
 			}
 		} else {
-			int i;
-			for (i = 0; i < MAX_EMPL; i++) {
-				int j;
-				for (j = 0; j < ccs.numEmployees[i]; j++) {
-					employee_t *employee = transfer->employeeArray[i][j];
-					if (employee) {
-						employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
-						/* every employee that we have transfered should have a
-						 * base he is hire in - otherwise we couldn't have transfered him */
-						assert(employee->baseHired);
-						employee->transfer = qfalse;
-						E_UnhireEmployee(employee);
-						E_HireEmployee(destination, employee);
-					}
+			employeeType_t i;
+			for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
+				employee_t *employee = NULL;
+				while ((employee = TR_GetNextEmployee(transfer, i, employee)) != NULL) {
+					employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
+					employee->transfer = qfalse;
+					E_UnhireEmployee(employee);
+					E_HireEmployee(destination, employee);
 				}
 			}
 		}
@@ -164,7 +183,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 	if (transfer->hasAircraft && success && transfer->srcBase) {	/* Aircraft. Cannot come from mission */
 		aircraft_t *aircraft = NULL;
 
-		while ((aircraft = (aircraft_t*)LIST_GetNext(transfer->aircraft, (void*)aircraft))) {
+		while ((aircraft = TR_GetNextAircraft(transfer, aircraft)) != NULL) {
 			if (AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) > 0) {
 				/* Move aircraft */
 				AIR_MoveAircraftIntoNewHomebase(aircraft, destination);
@@ -371,18 +390,17 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 	/* Note that the employee remains hired in source base during the transfer, that is
 	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
-		for (j = 0; j < ccs.numEmployees[i]; j++) {
-			if (transData->trEmployeesTmp[i][j]) {
-				employee_t *employee = transData->trEmployeesTmp[i][j];
-				transfer->hasEmployees = qtrue;
+		employee_t *employee = NULL;
 
-				assert(E_IsInBase(employee, srcBase));
+		LIST_Delete(&transfer->employees[i]);
+		while ((employee = (employee_t*) LIST_GetNext(transData->trEmployeesTmp[i], (void*) employee)) != NULL) {
+			assert(E_IsInBase(employee, srcBase));
 
-				E_ResetEmployee(employee);
-				transfer->employeeArray[i][j] = employee;
-				employee->baseHired = NULL;
-				employee->transfer = qtrue;
-			}
+			transfer->hasEmployees = qtrue;
+			E_ResetEmployee(employee);
+			LIST_AddPointer(&transfer->employees[i], (void*) employee);
+			employee->baseHired = NULL;
+			employee->transfer = qtrue;
 		}
 	}
 	for (i = 0; i < ccs.numAliensTD; i++) {		/* Aliens. */
@@ -396,7 +414,7 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 		}
 	}
 	LIST_Delete(&transfer->aircraft);
-	while ((aircraft = (aircraft_t*)LIST_GetNext(transData->aircraft, (void *)aircraft))) {
+	while ((aircraft = (aircraft_t*)LIST_GetNext(transData->aircraft, (void *)aircraft)) != NULL) {
 		aircraft->status = AIR_TRANSFER;
 		AIR_RemoveEmployees(aircraft);
 		transfer->hasAircraft = qtrue;
@@ -421,7 +439,7 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 
 	if (!aircraft)
 		return;
-	while ((transfer = TR_GetNext(transfer))) {
+	while ((transfer = TR_GetNext(transfer)) != NULL) {
 		if (!transfer->active)
 			continue;
 		if (!transfer->hasAircraft)
@@ -438,7 +456,7 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 void TR_TransferRun (void)
 {
 	transfer_t *transfer = NULL;
-	while ((transfer = TR_GetNext(transfer))) {
+	while ((transfer = TR_GetNext(transfer)) != NULL) {
 		if (!transfer->active)
 			continue;
 		if (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec) {
@@ -473,7 +491,7 @@ static void TR_ListTransfers_f (void)
 	if (!ccs.numTransfers)
 		Com_Printf("No active transfers.\n");
 
-	for (; (transfer = TR_GetNext(transfer)); i++) {
+	for (; (transfer = TR_GetNext(transfer)) != NULL; i++) {
 		dateLong_t date;
 
 		if (transIdx >= 0 && i != transIdx)
@@ -504,14 +522,13 @@ static void TR_ListTransfers_f (void)
 		}
 		/* Carried Employees */
 		if (transfer->hasEmployees) {
-			int j;
+			employeeType_t emplType;
+
 			Com_Printf("...Carried Employee:\n");
-			for (j = 0; j < MAX_EMPL; j++) {
-				int k;
-				for (k = 0; k < MAX_EMPLOYEES; k++) {
-					const struct employee_s *employee = transfer->employeeArray[j][k];
-					if (!employee)
-						continue;
+			for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
+				employee_t *employee = NULL;
+
+				while ((employee = TR_GetNextEmployee(transfer, emplType, employee)) != NULL) {
 					if (employee->ugv) {
 						/** @todo: improve ugv listing when they're implemented */
 						Com_Printf("......ugv: %s [idx: %i]\n", employee->ugv->id, employee->idx);
@@ -542,7 +559,7 @@ static void TR_ListTransfers_f (void)
 			aircraft_t *aircraft = NULL;
 
 			Com_Printf("...Transfered Aircraft:\n");
-			while ((aircraft = (aircraft_t*)LIST_GetNext(transfer->aircraft, (void*)aircraft))) {
+			while ((aircraft = TR_GetNextAircraft(transfer, aircraft)) != NULL) {
 				Com_Printf("......%s [idx: %i]\n", (aircraft) ? aircraft->id : "(null)", aircraft->idx);
 			}
 		}
@@ -561,7 +578,7 @@ qboolean TR_SaveXML (mxml_node_t *p)
 	transfer_t *transfer = NULL;
 	mxml_node_t *n = mxml_AddNode(p, SAVE_TRANSFER_TRANSFERS);
 
-	while ((transfer = TR_GetNext(transfer))) {
+	while ((transfer = TR_GetNext(transfer)) != NULL) {
 		int j;
 		mxml_node_t *s;
 
@@ -609,14 +626,11 @@ qboolean TR_SaveXML (mxml_node_t *p)
 		/* save employee */
 		if (transfer->hasEmployees) {
 			for (j = 0; j < MAX_EMPL; j++) {
-				int k;
-				for (k = 0; k < MAX_EMPLOYEES; k++) {
-					const employee_t *empl = transfer->employeeArray[j][k];
-					if (empl) {
-						mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_EMPLOYEE);
+				employee_t *employee = NULL;
 
-						mxml_AddInt(ss, SAVE_TRANSFER_UCN, empl->chr.ucn);
-					}
+				while ((employee = TR_GetNextEmployee(transfer, j, employee)) != NULL) {
+					mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_EMPLOYEE);
+					mxml_AddInt(ss, SAVE_TRANSFER_UCN, employee->chr.ucn);
 				}
 			}
 		}
@@ -624,7 +638,7 @@ qboolean TR_SaveXML (mxml_node_t *p)
 		if (transfer->hasAircraft) {
 			aircraft_t *aircraft = NULL;
 
-			while ((aircraft = (aircraft_t*)LIST_GetNext(transfer->aircraft, (void*)aircraft))) {
+			while ((aircraft = TR_GetNextAircraft(transfer, aircraft)) != NULL) {
 				mxml_node_t *ss = mxml_AddNode(s, SAVE_TRANSFER_AIRCRAFT);
 				mxml_AddInt(ss, SAVE_TRANSFER_ID, aircraft->idx);
 			}
@@ -652,6 +666,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 	for (s = mxml_GetNode(n, SAVE_TRANSFER_TRANSFER); s && ccs.numTransfers < MAX_TRANSFERS; s = mxml_GetNextNode(s, n, SAVE_TRANSFER_TRANSFER)) {
 		mxml_node_t *ss;
 		transfer_t *transfer = &ccs.transfers[ccs.numTransfers];
+		employeeType_t emplType;
 
 		transfer->destBase = B_GetBaseByIDX(mxml_GetInt(s, SAVE_TRANSFER_DESTBASE, BYTES_NONE));
 		if (!transfer->destBase) {
@@ -671,7 +686,8 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		transfer->hasAircraft = qfalse;
 		memset(transfer->itemAmount, 0, sizeof(transfer->itemAmount));
 		memset(transfer->alienAmount, 0, sizeof(transfer->alienAmount));
-		memset(transfer->employeeArray, 0, sizeof(transfer->employeeArray));
+		for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++)
+			LIST_Delete(&transfer->employees[emplType]);
 		LIST_Delete(&transfer->aircraft);
 
 		/* load items */
@@ -724,8 +740,8 @@ qboolean TR_LoadXML (mxml_node_t *p)
 					return qfalse;
 				}
 
-				transfer->employeeArray[empl->type][empl->idx] = empl;
-				transfer->employeeArray[empl->type][empl->idx]->transfer = qtrue;
+				LIST_AddPointer(&transfer->employees[empl->type], (void*) empl);
+				empl->transfer = qtrue;
 			}
 		}
 		/* load aircraft */

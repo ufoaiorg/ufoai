@@ -193,8 +193,6 @@ static void testEmployeeHandling (void)
 		CU_ASSERT_TRUE(E_DeleteEmployee(e));
 	}
 
-	/** @todo activate this once the employees are a linked list */
-#if 0
 	{
 		int i, cnt;
 		employee_t *e;
@@ -206,15 +204,11 @@ static void testEmployeeHandling (void)
 			cnt = E_CountUnhired(EMPL_SOLDIER);
 			CU_ASSERT_EQUAL(cnt, i + 1);
 		}
-		e = NULL;
-		while ((e = E_GetNext(EMPL_SOLDIER, e)) != NULL) {
-			CU_ASSERT_TRUE(E_DeleteEmployee(e));
-		}
+		E_DeleteAllEmployees(NULL);
 
 		cnt = E_CountUnhired(EMPL_SOLDIER);
 		CU_ASSERT_EQUAL(cnt, 0);
 	}
-#endif
 }
 
 static void testBaseBuilding (void)
@@ -292,11 +286,9 @@ static void testAutoMissions (void)
 	CU_ASSERT_TRUE(AIR_RemoveEmployee(e2, aircraft));
 	CU_ASSERT_EQUAL(AIR_GetTeamSize(aircraft), 0);
 
-	/** @todo this is crap - we have to delete in this order, otherwise the pointers are
-	 * garbage (remove this once the employees are stored in a linked list) */
 	CU_ASSERT_TRUE(E_DeleteEmployee(e2));
-	CU_ASSERT_TRUE(E_DeleteEmployee(e1));
 	CU_ASSERT_TRUE(E_DeleteEmployee(pilot));
+	CU_ASSERT_TRUE(E_DeleteEmployee(e1));
 
 	CU_ASSERT_EQUAL(E_CountUnhired(EMPL_SOLDIER), 0);
 	CU_ASSERT_EQUAL(E_CountUnhired(EMPL_PILOT), 0);

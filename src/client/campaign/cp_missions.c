@@ -1215,6 +1215,8 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 	base_t *base;
 	aircraft_t *aircraft;
 	int numberOfSoldiers = 0; /* DEBUG */
+	employee_t *employee;
+	employee_t *lastEmployee;
 
 	if (mission->stage == STAGE_BASE_ATTACK) {
 		base = mission->data.base;
@@ -1240,23 +1242,17 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 	/* update stats */
 	CL_UpdateCharacterStats(base, aircraft);
 
-	/* Backward loop because ccs.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
-	for (i = ccs.numEmployees[EMPL_SOLDIER] - 1; i >= 0; i--) {
-		employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
-
+	employee = NULL;
+	lastEmployee = NULL;
+	while ((employee = E_GetNext(EMPL_SOLDIER, employee))) {
 		if (AIR_IsEmployeeInAircraft(employee, aircraft))
 			numberOfSoldiers++;
 
-		Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - try to get player %i \n", i);
-
-		if (E_IsInBase(employee, base)) {
-			const character_t *chr = &(employee->chr);
-			/* if employee is marked as dead */
-			if (chr->HP <= 0) { /** @todo <= -50, etc. (implants) */
-				/* sideeffect: ccs.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
-				E_DeleteEmployee(employee);
-			}
-		}
+		/** @todo replace HP check with some CHRSH->IsDead() function */
+		if (E_IsInBase(employee, base) && (employee->chr.HP <= 0) && E_DeleteEmployee(employee))
+			employee = lastEmployee;
+		else
+			lastEmployee = employee;
 	}
 	Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - num %i\n", numberOfSoldiers);
 

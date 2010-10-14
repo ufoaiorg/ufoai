@@ -57,7 +57,7 @@ typedef struct transfer_s {
 
 	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item. */
 	int alienAmount[MAX_TEAMDEFS][TRANS_ALIEN_MAX];		/**< Alien cargo, [0] alive, [1] dead. */
-	struct employee_s *employeeArray[MAX_EMPL][MAX_EMPLOYEES];	/**< List of personal transferring. */
+	linkedList_t *employees[MAX_EMPL];
 	linkedList_t *aircraft;
 
 	qboolean hasItems;				/**< Transfer of items. */
@@ -111,7 +111,7 @@ typedef struct transferData_s {
 	int trAliensTmp[MAX_TEAMDEFS][TRANS_ALIEN_MAX];
 
 	/** @brief Current personnel cargo. */
-	employee_t *trEmployeesTmp[MAX_EMPL][MAX_EMPLOYEES];
+	linkedList_t *trEmployeesTmp[MAX_EMPL];
 
 	/** @brief Current aircraft for transfer. */
 	linkedList_t *aircraft;
@@ -132,5 +132,7 @@ transfer_t* TR_TransferStart(base_t *srcBase, transferData_t *transData);
 void TR_TransferAlienAfterMissionStart(const base_t *base, aircraft_t *transferAircraft);
 
 transfer_t* TR_GetNext(transfer_t *lastTransfer);
+employee_t* TR_GetNextEmployee(transfer_t *transfer, employeeType_t type, employee_t *lastEmployee);
+aircraft_t* TR_GetNextAircraft(transfer_t *transfer, aircraft_t *lastAircraft);
 
 #endif /* CLIENT_CL_TRANSFER_H */

@@ -70,5 +70,4 @@ DTD:
 >
 
 ** for <character> check save_character.h
-
 */
