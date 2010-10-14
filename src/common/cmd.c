@@ -682,18 +682,14 @@ int Cmd_GenericCompleteFunction (size_t len, const char **match, int matches, co
 	/* more than one match */
 	default:
 		/* get the shortest matching string of the results */
-		lenResult = len;
-		while (qtrue) {
+		for (lenResult = len;; lenResult++) {
 			const char matchChar = list[0][lenResult];
 			for (i = 1; i < matches; i++) {
 				if (matchChar != list[i][lenResult])
-					break;
+					goto out;
 			}
-			if (i != matches)
-				break;
-			else
-				lenResult++;
 		}
+out:
 		break;
 	}
 	/* len is >= 1 here */
