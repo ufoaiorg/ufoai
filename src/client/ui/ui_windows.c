@@ -222,15 +222,17 @@ int UI_CompleteWithWindow (const char *partial, const char **match)
 	}
 
 	/* check for partial matches */
-	for (i = 0; i < ui_global.numWindows; i++)
-		if (!strncmp(partial, ui_global.windows[i]->name, len)) {
-			Com_Printf("%s\n", ui_global.windows[i]->name);
-			localMatch[matches++] = ui_global.windows[i]->name;
+	for (i = 0; i < ui_global.numWindows; i++) {
+		char const* const name = ui_global.windows[i]->name;
+		if (!strncmp(partial, name, len)) {
+			Com_Printf("%s\n", name);
+			localMatch[matches++] = name;
 			if (matches >= MAX_COMPLETE) {
 				Com_Printf("UI_CompleteWithWindow: hit MAX_COMPLETE\n");
 				break;
 			}
 		}
+	}
 
 	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 }
