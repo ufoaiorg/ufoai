@@ -140,16 +140,25 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-DCOMPILE_UFO" />
-			<Add option="-DCOMPILE_UNITTESTS" />
 			<Add option="-ggdb" />
 			<Add option="-O0" />
+			<Add option="-DCOMPILE_UFO" />
+			<Add option="-DCOMPILE_UNITTESTS" />
 		</Compiler>
 		<Linker>
 			<Add library="curl" />
 			<Add library="cunit" />
 			<Add library="z" />
 			<Add library="SDL" />
+			<Add library="ogg" />
+			<Add library="theora" />
+			<Add library="png" />
+			<Add library="jpeg" />
+			<Add library="SDL_image" />
+			<Add library="SDL_ttf" />
+			<Add library="SDL_mixer" />
+			<Add library="xvidcore" />
+			<Add library="vorbis" />
 		</Linker>
 		<Unit filename="..\..\src\client\battlescape\cl_actor.c">
 			<Option compilerVar="CC" />
