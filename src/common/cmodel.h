@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 CMODEL
 ==============================================================*/
 #include "../common/qfiles.h"
-#include "pqueue.h"
 
 void CM_LoadMap(const char *tiles, qboolean day, const char *pos, mapData_t *mapData, mapTiles_t *mapTiles);
 cBspModel_t *CM_InlineModel(mapTiles_t *mapTiles, const char *name);
