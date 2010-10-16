@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_LOCAL_H
 
 #include "../../common/common.h"
+#include "../../common/qfiles.h"
 #include "../cl_renderer.h"
 #include "../cl_video.h"
 

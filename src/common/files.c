@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "common.h"
+#include "../common/qfiles.h"
 #include "../ports/system.h"
 #include "../shared/defines.h"
 #include "../shared/typedefs.h"
