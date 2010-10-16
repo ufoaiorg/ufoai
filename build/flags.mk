@@ -1,6 +1,10 @@
+ifeq ($(STATIC),1)
+PKG_CONFIG_LIBS_FLAGS := --static
+endif
+
 #TODO the manually added linker flag is more a hack than a solution
 define PKG_LIBS
-`$(PKG_CONFIG) --libs $(1) 2> /dev/null || ( if [ -z "$(2)" ]; then echo "-l$(1)"; else echo "-l$(2)"; fi )`
+`$(PKG_CONFIG) $(PKG_CONFIG_LIBS_FLAGS) --libs $(1) 2> /dev/null || ( if [ -z "$(2)" ]; then echo "-l$(1)"; else echo "-l$(2)"; fi )`
 endef
 
 define PKG_CFLAGS

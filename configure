@@ -20,6 +20,7 @@ MODE=
 CROSS=
 CC=
 CXX=
+STATIC=
 
 HOST_OS=$(uname | sed -e s/_.*// | tr '[:upper:]' '[:lower:]')
 TARGET_OS=${HOST_OS}
@@ -100,11 +101,12 @@ config_h() {
 
 makefile_local() {
 	add_to_makefile_local DEBUG
+	add_to_makefile_local STATIC "Enable static linking"
 	add_to_makefile_local HARD_LINKED_GAME
 	add_to_makefile_local UNIVERSAL "Build a universal binary"
 	add_to_makefile_local TARGET_OS "Compile for ${TARGET_OS}"
 	add_to_makefile_local TARGET_ARCH "Compile for ${TARGET_ARCH}"
-	add_to_makefile_local MODE
+	add_to_makefile_local MODE "Compile in ${MODE} mode"
 	add_to_makefile_local CC "Found cc ${CC}"
 	add_to_makefile_local CXX "Found cxx ${CXX}"
 	add_to_makefile_local CROSS "Using tools prefix ${CROSS}"
@@ -158,21 +160,25 @@ check_compiler() {
 usage() {
 	echo "Usage: $0"
 	echo " --help                   show this help message"
-	echo " --enable-release         build with optimizations"
-	echo " --enable-universal       enable universal build"
 	echo " --enable-hardlinkedgame  hard link the server game code"
 	echo " --enable-paranoid        compile in paranoid mode with extra checks"
-	echo " --disable-signals        disable the use of a signal handler"
+	echo " --enable-release         build with optimizations"
+	echo " --enable-static          enable static linking"
+	echo " --enable-universal       enable universal build"
 	echo " --disable-execinfo       disable backtraces for crashes"
-	echo " --prefix=                prefix for directories"
-	echo " --bindir=                path for the ufoai binaries"
-	echo " --datadir=               path for the ufoai game data"
-	echo " --libdir=                path for the ufoai shared objects"
-	echo " --localedir=             path for the ufoai translations"
+	echo " --disable-signals        disable the use of a signal handler"
+	echo
 	echo " --target-os=             specify the target os"
 	for i in $(ls build/platforms/*.mk); do
 		echo "  * $(basename $i .mk)"
 	done
+	echo
+	echo " --bindir=                path for the ufoai binaries"
+	echo " --datadir=               path for the ufoai game data"
+	echo " --libdir=                path for the ufoai shared objects"
+	echo " --localedir=             path for the ufoai translations"
+	echo " --prefix=                prefix for directories"
+	echo
 	echo " --disable-*              specify which target should not get build"
 	for i in $(ls build/modules/*.mk); do
 		echo "  * $(basename $i .mk)"
@@ -212,6 +218,9 @@ while [ $# -gt 0 ]; do
 	--enable-release)
 		MODE=release
 		DEBUG=
+		;;
+	--enable-static)
+		STATIC=1
 		;;
 	--enable-universal)
 		UNIVERSAL=1
