@@ -7,6 +7,8 @@
 #include "irender.h"
 #include "scenelib.h"
 
+#include "gtkutil/glwidget.h"
+
 typedef struct _GdkEventExpose GdkEventExpose;
 
 namespace ui
@@ -26,7 +28,7 @@ namespace ui
 			GtkWidget* _widget;
 
 			// GL widget
-			GtkWidget* _glWidget;
+			gtkutil::GLWidget _glWidget;
 
 			// Current distance between camera and preview
 			GLfloat _camDist;
