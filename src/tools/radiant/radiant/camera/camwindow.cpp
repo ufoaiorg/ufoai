@@ -1043,7 +1043,7 @@ static void CamWnd_Remove_Handlers_FreeMove (CamWnd& camwnd)
 
 CamWnd::CamWnd () :
 	m_view(true), m_Camera(&m_view, CamWndQueueDraw(*this)), m_cameraview(m_Camera, &m_view, ReferenceCaller<CamWnd,
-			CamWnd_Update> (*this)), m_gl_widget(glwidget_new(TRUE)), m_window_observer(NewWindowObserver()),
+			CamWnd_Update> (*this)), _glWidget(true), m_gl_widget(static_cast<GtkWidget*>(_glWidget)), m_window_observer(NewWindowObserver()),
 			m_XORRectangle(m_gl_widget), m_deferredDraw(WidgetQueueDrawCaller(*m_gl_widget)), m_deferred_motion(
 					selection_motion, m_window_observer), m_selection_button_press_handler(0),
 			m_selection_button_release_handler(0), m_selection_motion_handler(0), m_freelook_button_press_handler(0),

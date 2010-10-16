@@ -1,6 +1,8 @@
 #ifndef CAMWND_H_
 #define CAMWND_H_
 
+#include "gtkutil/glwidget.h"
+
 class CamWnd
 {
 	private:
@@ -16,6 +18,7 @@ class CamWnd
 		FreezePointer m_freezePointer;
 
 	public:
+		gtkutil::GLWidget _glWidget;
 		GtkWidget* m_gl_widget;
 		GtkWindow* m_parent;
 
