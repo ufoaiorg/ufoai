@@ -1307,10 +1307,10 @@ void ScreenUpdates_Disable (const std::string& message, const std::string& title
 		const bool isActiveApp = MainFrame_isActiveApp();
 
 		g_wait = create_wait_dialog(title, message);
-		gtk_grab_add(GTK_WIDGET(g_wait.m_window));
 
 		if (isActiveApp) {
 			gtk_widget_show(GTK_WIDGET(g_wait.m_window));
+			gtk_grab_add(GTK_WIDGET(g_wait.m_window));
 			ScreenUpdates_process();
 		}
 	} else if (GTK_WIDGET_VISIBLE(g_wait.m_window)) {
