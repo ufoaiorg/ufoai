@@ -498,8 +498,10 @@ void G_ActorInvMove (edict_t *ent, const invDef_t * from, invList_t *fItem, cons
 	/* Store the location of 'to' BEFORE actually moving items with I_MoveInInventory
 	 * so in case we swap ammo the client can be updated correctly */
 	tc = INVSH_SearchInInventory(&ent->chr.i, to, tx, ty);
-	if(tc)
-		tItemBackup = *INVSH_SearchInInventory(&ent->chr.i, to, tx, ty);
+	if (tc)
+		tItemBackup = *tc;
+	else
+		tItemBackup = *fItem;
 
 	/* Get first used bit in item. */
 	INVSH_GetFirstShapePosition(fItem, &fx, &fy);
