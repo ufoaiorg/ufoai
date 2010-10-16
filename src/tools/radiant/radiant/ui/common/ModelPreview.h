@@ -8,6 +8,8 @@
 #include <igl.h>
 #include <string>
 
+#include "gtkutil/glwidget.h"
+
 namespace ui
 {
 	/** Preview widget for models and skins. This class encapsulates the GTK widgets to
@@ -21,7 +23,7 @@ namespace ui
 			GtkWidget* _widget;
 
 			// GL widget
-			GtkWidget* _glWidget;
+			gtkutil::GLWidget _glWidget;
 
 			// Toolbar buttons
 			GtkToolItem* _drawBBox;

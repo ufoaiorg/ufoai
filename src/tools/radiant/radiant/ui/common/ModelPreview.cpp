@@ -20,21 +20,21 @@ namespace ui
 
 	// Construct the widgets
 	ModelPreview::ModelPreview () :
-		_widget(gtk_frame_new(NULL)), _model(model::IModelPtr())
+		_widget(gtk_frame_new(NULL)), _glWidget(true), _model(model::IModelPtr())
 	{
 		// Main vbox - above is the GL widget, below is the toolbar
 		GtkWidget* vbx = gtk_vbox_new(FALSE, 0);
 
-		// Create the GL widget
-		_glWidget = glwidget_new(TRUE);
-		gtk_box_pack_start(GTK_BOX(vbx), _glWidget, TRUE, TRUE, 0);
+		// Cast the GLWidget object to GtkWidget for further use
+		GtkWidget* glWidget = _glWidget;
+		gtk_box_pack_start(GTK_BOX(vbx), glWidget, TRUE, TRUE, 0);
 
 		// Connect up the signals
-		gtk_widget_set_events(_glWidget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
+		gtk_widget_set_events(glWidget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
 				| GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_SCROLL_MASK);
-		g_signal_connect(G_OBJECT(_glWidget), "expose-event", G_CALLBACK(callbackGLDraw), this);
-		g_signal_connect(G_OBJECT(_glWidget), "motion-notify-event", G_CALLBACK(callbackGLMotion), this);
-		g_signal_connect(G_OBJECT(_glWidget), "scroll-event", G_CALLBACK(callbackGLScroll), this);
+		g_signal_connect(G_OBJECT(glWidget), "expose-event", G_CALLBACK(callbackGLDraw), this);
+		g_signal_connect(G_OBJECT(glWidget), "motion-notify-event", G_CALLBACK(callbackGLMotion), this);
+		g_signal_connect(G_OBJECT(glWidget), "scroll-event", G_CALLBACK(callbackGLScroll), this);
 
 		// Create the toolbar
 		GtkWidget* toolbar = gtk_toolbar_new();
