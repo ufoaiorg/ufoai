@@ -194,7 +194,7 @@ namespace ui
 
 			// Grab the GL widget, and update the modelview matrix with the
 			// additional rotation
-			if (glwidget_make_current(widget)) {
+			if (gtkutil::GLWidget::makeCurrent(widget)) {
 				// Premultiply the current modelview matrix with the rotation,
 				// in order to achieve rotations in eye space rather than object
 				// space. At this stage we are only calculating and storing the

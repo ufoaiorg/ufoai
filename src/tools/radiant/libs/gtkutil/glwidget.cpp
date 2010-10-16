@@ -21,6 +21,7 @@
 
 // OpenGL widget based on GtkGLExt
 
+#include "glwidget.h"
 #include "debugging/debugging.h"
 
 #include "igl.h"
@@ -112,20 +113,13 @@ namespace
 	GtkWidget* g_shared = 0;
 }
 
-gboolean glwidget_make_current (GtkWidget *widget)
-{
-	GdkGLContext *glcontext = gtk_widget_get_gl_context(widget);
-	GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (widget);
-	return gdk_gl_drawable_gl_begin(gldrawable, glcontext);
-}
-
 static gint glwidget_context_created (GtkWidget* widget, gpointer data)
 {
 	if (++g_context_count == 1) {
 		g_shared = widget;
 		gtk_widget_ref(g_shared);
 
-		glwidget_make_current(g_shared);
+		gtkutil::GLWidget::makeCurrent(g_shared);
 		GlobalOpenGL().contextValid = true;
 
 		GLWidget_sharedContextCreated();
@@ -180,12 +174,6 @@ GtkWidget* glwidget_new (gboolean zbuffer)
 	return widget;
 }
 
-void glwidget_swap_buffers (GtkWidget *widget)
-{
-	GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (widget);
-	gdk_gl_drawable_swap_buffers(gldrawable);
-}
-
 #include "glwidget.h"
 
 namespace gtkutil {
@@ -238,6 +226,17 @@ GdkGLConfig* GLWidget::createGLConfig() {
 			| GDK_GL_MODE_DOUBLE));
 }
 
+bool GLWidget::makeCurrent(GtkWidget* widget) {
+	 GdkGLContext* glcontext = gtk_widget_get_gl_context(widget);
+	 GdkGLDrawable* gldrawable = gtk_widget_get_gl_drawable(widget);
+	 return static_cast<bool>(gdk_gl_drawable_gl_begin(gldrawable, glcontext));
+}
+
+void GLWidget::swapBuffers(GtkWidget* widget) {
+	GdkGLDrawable* gldrawable = gtk_widget_get_gl_drawable(widget);
+	gdk_gl_drawable_swap_buffers(gldrawable);
+}
+
 gboolean GLWidget::onHierarchyChanged(GtkWidget* widget,
 		GtkWidget* previous_toplevel, GLWidget* self) {
 	if (previous_toplevel == NULL && !gtk_widget_is_gl_capable(widget)) {
@@ -266,7 +265,7 @@ gint GLWidget::onRealise(GtkWidget* widget, GLWidget* self) {
 		g_shared = widget;
 		gtk_widget_ref(g_shared);
 
-		glwidget_make_current(g_shared);
+		makeCurrent(g_shared);
 		GlobalOpenGL().contextValid = true;
 
 		GLWidget_sharedContextCreated();

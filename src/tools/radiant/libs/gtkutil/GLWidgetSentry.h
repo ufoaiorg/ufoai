@@ -5,8 +5,8 @@
 
 namespace gtkutil
 {
-	/** Sentry class that calls glwidget_make_current() on construction and
-	 * glwidget_swap_buffers() on destruction at the end of a scope. This avoids
+	/** Sentry class that calls makeCurrent() on construction and
+	 * swapBuffers() on destruction at the end of a scope. This avoids
 	 * the need to manually call these functions and use branches to make sure
 	 * they are executed.
 	 */
@@ -17,19 +17,19 @@ namespace gtkutil
 
 		public:
 
-			/** Constructor calls glwidget_make_current().
+			/** Constructor calls makeCurrent().
 			 */
 			GLWidgetSentry (GtkWidget* w) :
 				_widget(w)
 			{
-				glwidget_make_current(_widget);
+				GLWidget::makeCurrent(_widget);
 			}
 
-			/* Destructor swaps the buffers with glwidget_swap_buffers().
+			/* Destructor swaps the buffers with swapBuffers().
 			 */
 			~GLWidgetSentry ()
 			{
-				glwidget_swap_buffers(_widget);
+				GLWidget::swapBuffers(_widget);
 			}
 	};
 }

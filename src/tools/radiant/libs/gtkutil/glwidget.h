@@ -27,8 +27,6 @@ typedef int gint;
 typedef gint gboolean;
 
 GtkWidget* glwidget_new (gboolean zbuffer);
-void glwidget_swap_buffers (GtkWidget* widget);
-gboolean glwidget_make_current (GtkWidget* widget);
 
 extern void (*GLWidget_sharedContextCreated) ();
 extern void (*GLWidget_sharedContextDestroyed) ();
@@ -59,6 +57,11 @@ public:
 	// Operator cast to GtkWidget*, for packing into parent containers
 	operator GtkWidget*() const;
 
+	// Switches the GL context to the given widget
+	static bool makeCurrent(GtkWidget* widget);
+	static void swapBuffers(GtkWidget* widget);
+
+private:
 	// As soon as the widget is packed into a parent, this callback is invoked
 	// and enables the GL drawing for this widget
 	static gboolean onHierarchyChanged(GtkWidget* widget,
