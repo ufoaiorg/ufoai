@@ -105,7 +105,7 @@ namespace sidebar
 					}
 					GdkPixbuf *img = pixbuf_new_from_file_with_mask(imagePath);
 					if (!img)
-						g_warning("Could not find image (%s) for prefab %s\n", fileName.c_str(), name.c_str());
+						g_message("Could not find image (%s) for prefab %s\n", fileName.c_str(), name.c_str());
 					gtk_tree_store_append(_store, &iter, _parentIter);
 					gtk_tree_store_set(_store, &iter, PREFAB_NAME, name.c_str(), PREFAB_DESCRIPTION,
 							nameContent.c_str(), PREFAB_IMAGE, img, PREFAB_SHORTNAME, shortName.c_str(), -1);
