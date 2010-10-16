@@ -11,12 +11,12 @@
 		<Project filename="ufoded.cbp">
 			<Depends filename="game.cbp" />
 		</Project>
-		<Project filename="radiant.cbp">
-			<Depends filename="radiant_brushexport.cbp" />
+		<Project filename="uforadiant.cbp">
+			<Depends filename="uforadiant-brushexport.cbp" />
 			<Depends filename="ufo2map.cbp" />
 		</Project>
-		<Project filename="radiant_brushexport.cbp" />
-		<Project filename="ufo_tests.cbp" />
+		<Project filename="uforadiant-brushexport.cbp" />
+		<Project filename="testall.cbp" />
 		<Project filename="ufomodel.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
