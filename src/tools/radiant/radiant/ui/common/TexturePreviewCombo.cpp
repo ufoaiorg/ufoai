@@ -21,14 +21,17 @@ namespace ui
 {
 	// Constructor. Create GTK widgets.
 	TexturePreviewCombo::TexturePreviewCombo () :
-		_widget(gtk_hbox_new(FALSE, 0)), _glWidget(glwidget_new(false)), _texName(""), _infoStore(gtk_list_store_new(2,
+		_widget(gtk_hbox_new(FALSE, 0)), _glWidget(false), _texName(""), _infoStore(gtk_list_store_new(2,
 				G_TYPE_STRING, G_TYPE_STRING))
 	{
+		// Cast the GLWidget object to GtkWidget for further use
+		GtkWidget* glWidget = _glWidget;
+
 		// Set up the GL preview widget
-		gtk_widget_set_size_request(_glWidget, 128, 128);
-		g_signal_connect(G_OBJECT(_glWidget), "expose-event", G_CALLBACK(_onExpose), this);
+		gtk_widget_set_size_request(glWidget, 128, 128);
+		g_signal_connect(G_OBJECT(glWidget), "expose-event", G_CALLBACK(_onExpose), this);
 		GtkWidget* glFrame = gtk_frame_new(NULL);
-		gtk_container_add(GTK_CONTAINER(glFrame), _glWidget);
+		gtk_container_add(GTK_CONTAINER(glFrame), glWidget);
 		gtk_box_pack_start(GTK_BOX(_widget), glFrame, FALSE, FALSE, 0);
 
 		// Set up the info table
@@ -63,7 +66,8 @@ namespace ui
 	{
 		_texName = tex;
 		refreshInfoTable();
-		gtk_widget_queue_draw(_glWidget);
+		GtkWidget* glWidget = _glWidget;
+		gtk_widget_queue_draw(glWidget);
 	}
 
 	// Refresh the info table

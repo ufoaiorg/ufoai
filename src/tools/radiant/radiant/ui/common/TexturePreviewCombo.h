@@ -6,6 +6,8 @@
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkliststore.h>
 
+#include "gtkutil/glwidget.h"
+
 namespace ui
 {
 
@@ -19,7 +21,7 @@ namespace ui
 			GtkWidget* _widget;
 
 			// The OpenGL preview widget
-			GtkWidget* _glWidget;
+			gtkutil::GLWidget _glWidget;
 
 			// The texture to preview
 			std::string _texName;

@@ -19,21 +19,21 @@ namespace ui
 
 	// Construct the widgets
 	ParticlePreview::ParticlePreview () :
-		_widget(gtk_frame_new(NULL))
+		_widget(gtk_frame_new(NULL)), _glWidget(true)
 	{
 		// Main vbox - above is the GL widget, below is the toolbar
 		GtkWidget* vbx = gtk_vbox_new(FALSE, 0);
 
-		// Create the GL widget
-		_glWidget = glwidget_new(TRUE);
-		gtk_box_pack_start(GTK_BOX(vbx), _glWidget, TRUE, TRUE, 0);
+		// Cast the GLWidget object to GtkWidget for further use
+		GtkWidget* glWidget = _glWidget;
+		gtk_box_pack_start(GTK_BOX(vbx), glWidget, TRUE, TRUE, 0);
 
 		// Connect up the signals
-		gtk_widget_set_events(_glWidget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
+		gtk_widget_set_events(glWidget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
 				| GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_SCROLL_MASK);
-		g_signal_connect(G_OBJECT(_glWidget), "expose-event", G_CALLBACK(callbackGLDraw), this);
-		g_signal_connect(G_OBJECT(_glWidget), "motion-notify-event", G_CALLBACK(callbackGLMotion), this);
-		g_signal_connect(G_OBJECT(_glWidget), "scroll-event", G_CALLBACK(callbackGLScroll), this);
+		g_signal_connect(G_OBJECT(glWidget), "expose-event", G_CALLBACK(callbackGLDraw), this);
+		g_signal_connect(G_OBJECT(glWidget), "motion-notify-event", G_CALLBACK(callbackGLMotion), this);
+		g_signal_connect(G_OBJECT(glWidget), "scroll-event", G_CALLBACK(callbackGLScroll), this);
 
 		// Pack into a frame and return
 		gtk_container_add(GTK_CONTAINER(_widget), vbx);
@@ -49,14 +49,16 @@ namespace ui
 	// Set the size request for the widget
 	void ParticlePreview::setSize (int size)
 	{
-		gtk_widget_set_size_request(_glWidget, size, size);
+		GtkWidget* glWidget = _glWidget;
+		gtk_widget_set_size_request(glWidget, size, size);
 	}
 
 	// Initialise the preview GL stuff
 	void ParticlePreview::initialisePreview ()
 	{
+		GtkWidget* glWidget = _glWidget;
 		// Grab the GL widget with sentry object
-		gtkutil::GLWidgetSentry sentry(_glWidget);
+		gtkutil::GLWidgetSentry sentry(glWidget);
 
 		// Clear the window
 		glClearColor(0.0, 0.0, 0.0, 0);
@@ -87,7 +89,7 @@ namespace ui
 		GLfloat l1Pos[] = { 0.0, 0.0, 1.0, 0.0 };
 		glLightfv(GL_LIGHT1, GL_DIFFUSE, l1Dif);
 		glLightfv(GL_LIGHT1, GL_POSITION, l1Pos);
-		gtk_widget_queue_draw(_glWidget);
+		gtk_widget_queue_draw(glWidget);
 	}
 
 	// Set the particle, this also resets the camera
@@ -96,7 +98,8 @@ namespace ui
 	{
 		_particle = particle;
 		// Redraw
-		gtk_widget_queue_draw(_glWidget);
+		GtkWidget* glWidget = _glWidget;
+		gtk_widget_queue_draw(glWidget);
 	}
 
 	scripts::IParticlePtr ParticlePreview::getParticle ()
@@ -108,8 +111,9 @@ namespace ui
 
 	void ParticlePreview::callbackGLDraw (GtkWidget* widget, GdkEventExpose* ev, ParticlePreview* self)
 	{
+		GtkWidget* glWidget = self->_glWidget;
 		// Create scoped sentry object to swap the GLWidget's buffers
-		gtkutil::GLWidgetSentry sentry(self->_glWidget);
+		gtkutil::GLWidgetSentry sentry(glWidget);
 
 		// Set up the render
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

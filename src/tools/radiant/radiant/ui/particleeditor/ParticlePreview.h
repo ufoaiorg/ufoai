@@ -8,6 +8,8 @@
 #include <string>
 #include "../../ufoscript/particles/Particle.h"
 
+#include "gtkutil/glwidget.h"
+
 namespace ui
 {
 	/** Preview widget for a particle. This class encapsulates the GTK widgets to
@@ -20,7 +22,7 @@ namespace ui
 			GtkWidget* _widget;
 
 			// GL widget
-			GtkWidget* _glWidget;
+			gtkutil::GLWidget _glWidget;
 
 			// Current distance between camera and preview
 			GLfloat _camDist;
