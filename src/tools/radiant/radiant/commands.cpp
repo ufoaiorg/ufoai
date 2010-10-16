@@ -66,7 +66,7 @@ void GlobalShortcuts_reportUnregistered (void)
 {
 	for (Shortcuts::iterator i = g_shortcuts.begin(); i != g_shortcuts.end(); ++i) {
 		if ((*i).second.first.key != 0 && !(*i).second.second) {
-			g_warning("Shortcut not registered: '%s'\n", (*i).first.c_str());
+			g_message("Shortcut not registered: '%s'\n", (*i).first.c_str());
 		}
 	}
 }
