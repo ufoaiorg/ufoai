@@ -103,7 +103,7 @@ language es {
 }
 
 language es_ES {
-	"_Spanish"
+	"_Spanish (Spain)"
 	{
 		es_ES.UTF-8
 		es_ES.utf8
