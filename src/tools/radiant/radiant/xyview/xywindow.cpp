@@ -54,6 +54,7 @@
 #include "gtkutil/container.h"
 #include "gtkutil/widget.h"
 #include "gtkutil/glwidget.h"
+#include "gtkutil/GLWidgetSentry.h"
 #include "gtkutil/filechooser.h"
 #include "../gtkmisc.h"
 #include "../select.h"
@@ -749,12 +750,10 @@ static gboolean xywnd_size_allocate (GtkWidget* widget, GtkAllocation* allocatio
 
 static gboolean xywnd_expose (GtkWidget* widget, GdkEventExpose* event, XYWnd* xywnd)
 {
-	if (glwidget_make_current(xywnd->getWidget()) != FALSE) {
-		if (Map_Valid(g_map) && ScreenUpdates_Enabled()) {
-			xywnd->draw();
-			xywnd->m_XORRectangle.set(Rectangle());
-		}
-		glwidget_swap_buffers(xywnd->getWidget());
+	gtkutil::GLWidgetSentry sentry(xywnd->getWidget());
+	if (Map_Valid(g_map) && ScreenUpdates_Enabled()) {
+		xywnd->draw();
+		xywnd->m_XORRectangle.set(Rectangle());
 	}
 	return FALSE;
 }

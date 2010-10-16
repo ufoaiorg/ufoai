@@ -61,6 +61,7 @@
 #include "gtkutil/cursor.h"
 #include "gtkutil/widget.h"
 #include "gtkutil/glwidget.h"
+#include "gtkutil/GLWidgetSentry.h"
 #include "gtkutil/messagebox.h"
 
 #include "../map/map.h"
@@ -1047,11 +1048,9 @@ static gboolean TextureBrowser_size_allocate (GtkWidget* widget, GtkAllocation* 
 
 static gboolean TextureBrowser_expose (GtkWidget* widget, GdkEventExpose* event, TextureBrowser* textureBrowser)
 {
-	if (glwidget_make_current(textureBrowser->m_gl_widget) != FALSE) {
-		TextureBrowser_evaluateHeight(*textureBrowser);
-		Texture_Draw(*textureBrowser);
-		glwidget_swap_buffers(textureBrowser->m_gl_widget);
-	}
+	gtkutil::GLWidgetSentry sentry(textureBrowser->m_gl_widget);
+	TextureBrowser_evaluateHeight(*textureBrowser);
+	Texture_Draw(*textureBrowser);
 	return FALSE;
 }
 

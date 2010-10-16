@@ -48,6 +48,7 @@
 #include "gtkutil/button.h"
 #include "gtkutil/toolbar.h"
 #include "gtkutil/glwidget.h"
+#include "gtkutil/GLWidgetSentry.h"
 #include "gtkutil/xorrectangle.h"
 #include "../gtkmisc.h"
 #include "../selection.h"
@@ -1316,14 +1317,11 @@ void CamWnd::draw ()
 {
 	m_drawing = true;
 
-	if (glwidget_make_current(m_gl_widget) != FALSE) {
-		if (Map_Valid(g_map) && ScreenUpdates_Enabled()) {
-			Cam_Draw();
+	gtkutil::GLWidgetSentry sentry(m_gl_widget);
+	if (Map_Valid(g_map) && ScreenUpdates_Enabled()) {
+		Cam_Draw();
 
-			m_XORRectangle.set(Rectangle());
-		}
-
-		glwidget_swap_buffers(m_gl_widget);
+		m_XORRectangle.set(Rectangle());
 	}
 
 	m_drawing = false;
