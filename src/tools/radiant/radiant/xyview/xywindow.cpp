@@ -766,7 +766,7 @@ void XYWnd_CameraMoved (XYWnd& xywnd)
 }
 
 XYWnd::XYWnd () :
-	m_gl_widget(glwidget_new(FALSE)), m_deferredDraw(WidgetQueueDrawCaller(*m_gl_widget)), m_deferred_motion(
+		_glWidget(false), m_gl_widget(static_cast<GtkWidget*>(_glWidget)), m_deferredDraw(WidgetQueueDrawCaller(*m_gl_widget)), m_deferred_motion(
 			xywnd_motion, this), m_parent(0), m_window_observer(NewWindowObserver()), m_XORRectangle(m_gl_widget),
 			m_chasemouse_handler(0)
 {

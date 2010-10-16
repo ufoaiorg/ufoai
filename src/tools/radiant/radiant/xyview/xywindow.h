@@ -28,6 +28,7 @@
 #include "gtkutil/cursor.h"
 #include "gtkutil/window.h"
 #include "gtkutil/xorrectangle.h"
+#include "gtkutil/glwidget.h"
 #include "../camera/view.h"
 #include "../map/map.h"
 #include "texturelib.h"
@@ -70,6 +71,7 @@ inline const char* ViewType_getTitle (EViewType viewtype)
 
 class XYWnd
 {
+		gtkutil::GLWidget _glWidget;
 		GtkWidget* m_gl_widget;
 		guint m_sizeHandler;
 		guint m_exposeHandler;
