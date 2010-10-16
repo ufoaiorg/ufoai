@@ -50,9 +50,9 @@ namespace scene
 {
 	class Graph;
 }
-void Scene_BrushConstructPrefab (scene::Graph& graph, EBrushPrefab type, std::size_t sides, const char* shader);
+void Scene_BrushConstructPrefab (scene::Graph& graph, EBrushPrefab type, std::size_t sides, const std::string& shader);
 class AABB;
-void Scene_BrushResize_Selected (scene::Graph& graph, const AABB& bounds, const char* shader);
+void Scene_BrushResize_Selected (scene::Graph& graph, const AABB& bounds, const std::string& shader);
 void Scene_BrushSetTexdef_Selected (scene::Graph& graph, const TextureProjection& projection);
 void Scene_BrushSetTexdef_Component_Selected (scene::Graph& graph, const TextureProjection& projection);
 void Scene_BrushGetTexdef_Selected (scene::Graph& graph, TextureProjection& projection);
@@ -75,9 +75,9 @@ void Scene_BrushGetShader_Component_Selected (scene::Graph& graph, std::string& 
 void Scene_BrushFindReplaceShader (scene::Graph& graph, const std::string& find, const std::string& replace);
 void Scene_BrushFindReplaceShader_Selected (scene::Graph& graph, const std::string& find, const std::string& replace);
 void Scene_BrushFindReplaceShader_Component_Selected (scene::Graph& graph, const std::string& find, const std::string& replace);
-void Scene_BrushSelectByShader (scene::Graph& graph, const char* name);
+void Scene_BrushSelectByShader (scene::Graph& graph, const std::string& shader);
 void Scene_BrushSelectByShader_Component (scene::Graph& graph, const std::string& name);
-void Scene_BrushFacesSelectByShader_Component (scene::Graph& graph, const char* name);
+void Scene_BrushFacesSelectByShader_Component (scene::Graph& graph, const std::string& shader);
 void Scene_BrushFitTexture_Selected (scene::Graph& graph, float s_repeat, float t_repeat);
 void Scene_BrushFitTexture_Component_Selected (scene::Graph& graph, float s_repeat, float t_repeat);
 

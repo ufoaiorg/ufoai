@@ -123,7 +123,7 @@ Vector3 XYWindow_windowToWorld (const WindowVector& position)
 
 const char* TextureBrowser_getSelectedShader ()
 {
-	return TextureBrowser_GetSelectedShader(GlobalTextureBrowser());
+	return GlobalTextureBrowser().getSelectedShader().c_str();
 }
 
 class RadiantCoreAPI

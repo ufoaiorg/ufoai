@@ -259,7 +259,6 @@ void qtexture_realise (qtexture_t& texture, const TextureKey& key)
 			texture.surfaceFlags = image->getSurfaceFlags();
 			texture.contentFlags = image->getContentFlags();
 			texture.value = image->getValue();
-			g_message("Loaded Texture: \"%s\"\n", key.second.c_str());
 		} else {
 			g_warning("Texture load failed: \"%s\"\n", key.second.c_str());
 		}

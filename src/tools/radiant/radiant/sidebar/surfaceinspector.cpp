@@ -1119,12 +1119,12 @@ static bool Scene_getClosestTexture (scene::Graph& graph, SelectionTest& test, s
 	return false;
 }
 
-static void Scene_setClosestTexture (scene::Graph& graph, SelectionTest& test, const char* shader,
+static void Scene_setClosestTexture (scene::Graph& graph, SelectionTest& test, const std::string& shader,
 		const TextureProjection& projection, const ContentsFlagsValue& flags)
 {
 	Texturable texturable = Scene_getClosestTexturable(graph, test);
 	if (texturable.setTexture != SetTextureCallback()) {
-		texturable.setTexture(shader, projection, flags);
+		texturable.setTexture(shader.c_str(), projection, flags);
 	}
 }
 
@@ -1137,15 +1137,10 @@ class FaceTexture
 
 FaceTexture g_faceTextureClipboard;
 
-static void FaceTextureClipboard_setDefault (void)
+void TextureClipboard_textureSelected ()
 {
 	g_faceTextureClipboard.m_flags = ContentsFlagsValue(0, 0, 0, false);
 	TexDef_Construct_Default(g_faceTextureClipboard.m_projection);
-}
-
-void TextureClipboard_textureSelected (const char* shader)
-{
-	FaceTextureClipboard_setDefault();
 }
 
 class TextureBrowser;
@@ -1157,7 +1152,7 @@ void Scene_copyClosestTexture (SelectionTest& test)
 	std::string shader;
 	if (Scene_getClosestTexture(GlobalSceneGraph(), test, shader, g_faceTextureClipboard.m_projection,
 			g_faceTextureClipboard.m_flags)) {
-		TextureBrowser_SetSelectedShader(GlobalTextureBrowser(), shader.c_str());
+		GlobalTextureBrowser().setSelectedShader(shader);
 	}
 }
 
@@ -1165,7 +1160,7 @@ void Scene_applyClosestTexture (SelectionTest& test)
 {
 	UndoableCommand command("facePaintTexture");
 
-	Scene_setClosestTexture(GlobalSceneGraph(), test, TextureBrowser_GetSelectedShader(GlobalTextureBrowser()),
+	Scene_setClosestTexture(GlobalSceneGraph(), test, GlobalTextureBrowser().getSelectedShader(),
 			g_faceTextureClipboard.m_projection, g_faceTextureClipboard.m_flags);
 
 	SceneChangeNotify();
@@ -1181,14 +1176,14 @@ void SelectedFaces_copyTexture (void)
 		face.GetTexdef(g_faceTextureClipboard.m_projection);
 		g_faceTextureClipboard.m_flags = face.getShader().m_flags;
 
-		TextureBrowser_SetSelectedShader(GlobalTextureBrowser(), face.getShader().getShader());
+		GlobalTextureBrowser().setSelectedShader(face.getShader().getShader());
 	}
 }
 
 static void FaceInstance_pasteTexture (FaceInstance& faceInstance)
 {
 	faceInstance.getFace().SetTexdef(g_faceTextureClipboard.m_projection);
-	faceInstance.getFace().SetShader(TextureBrowser_GetSelectedShader(GlobalTextureBrowser()));
+	faceInstance.getFace().SetShader(GlobalTextureBrowser().getSelectedShader());
 	faceInstance.getFace().SetFlags(g_faceTextureClipboard.m_flags);
 	SceneChangeNotify();
 }
@@ -1232,7 +1227,7 @@ void SurfaceInspector_Construct (void)
 
 	SurfaceInspector_registerCommands();
 
-	FaceTextureClipboard_setDefault();
+	TextureClipboard_textureSelected();
 
 	GlobalPreferenceSystem().registerPreference("SI_SurfaceTexdef_Scale1", FloatImportStringCaller(
 			g_si_globals.scale[0]), FloatExportStringCaller(g_si_globals.scale[0]));

@@ -68,6 +68,15 @@ class ShaderSystem
 
 		virtual void foreachShaderName (const ShaderNameCallback& callback) = 0;
 
+		/** Visitor interface.
+		 */
+		struct Visitor
+		{
+				virtual void visit (const std::string& shaderName) const = 0;
+		};
+
+		virtual void foreachShaderName (const Visitor& visitor) = 0;
+
 		/**
 		 * iterate over the list of active shaders
 		 */

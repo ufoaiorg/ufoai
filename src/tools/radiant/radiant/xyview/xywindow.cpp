@@ -253,7 +253,7 @@ static void Clip_Update (void)
 
 static inline const char* Clip_getShader (void)
 {
-	return g_clip_useNodraw ? "textures/tex_common/nodraw" : TextureBrowser_GetSelectedShader(GlobalTextureBrowser());
+	return g_clip_useNodraw ? "textures/tex_common/nodraw" : GlobalTextureBrowser().getSelectedShader().c_str();
 }
 
 void Clip (void)
@@ -1002,7 +1002,7 @@ void XYWnd::NewBrushDrag_End (int x, int y)
 
 static inline const char* NewBrushDragGetTexture (void)
 {
-	const char *selectedTexture = TextureBrowser_GetSelectedShader(GlobalTextureBrowser());
+	const char *selectedTexture = GlobalTextureBrowser().getSelectedShader().c_str();
 	if (g_brush_always_nodraw)
 		return "textures/tex_common/nodraw";
 	return selectedTexture;

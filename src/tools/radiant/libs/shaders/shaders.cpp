@@ -733,6 +733,14 @@ class UFOShaderSystem: public ShaderSystem, public ModuleObserver
 			}
 		}
 
+		void foreachShaderName (const ShaderSystem::Visitor& visitor)
+		{
+			for (ShaderDefinitionMap::const_iterator i = g_shaderDefinitions.begin(); i != g_shaderDefinitions.end(); ++i) {
+				const std::string& str = (*i).first;
+				visitor.visit(str);
+			}
+		}
+
 		void beginActiveShadersIterator ()
 		{
 			ActiveShaders_IteratorBegin();

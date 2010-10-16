@@ -356,7 +356,7 @@ const TextureProjection& TextureTransform_getDefault ()
 	return g_defaultTextureProjection;
 }
 
-void Scene_BrushConstructPrefab (scene::Graph& graph, EBrushPrefab type, std::size_t sides, const char* shader)
+void Scene_BrushConstructPrefab (scene::Graph& graph, EBrushPrefab type, std::size_t sides, const std::string& shader)
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		const scene::Path& path = GlobalSelectionSystem().ultimateSelected().path();
@@ -370,7 +370,7 @@ void Scene_BrushConstructPrefab (scene::Graph& graph, EBrushPrefab type, std::si
 	}
 }
 
-void Scene_BrushResize_Selected (scene::Graph& graph, const AABB& bounds, const char* shader)
+void Scene_BrushResize_Selected (scene::Graph& graph, const AABB& bounds, const std::string& shader)
 {
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		const scene::Path& path = GlobalSelectionSystem().ultimateSelected().path();
@@ -383,7 +383,7 @@ void Scene_BrushResize_Selected (scene::Graph& graph, const AABB& bounds, const 
 	}
 }
 
-static inline bool Brush_hasShader (const Brush& brush, const char* name)
+static inline bool Brush_hasShader (const Brush& brush, const std::string& name)
 {
 	for (Brush::const_iterator i = brush.begin(); i != brush.end(); ++i) {
 		if (shader_equal((*i)->GetShader(), name)) {
@@ -395,9 +395,9 @@ static inline bool Brush_hasShader (const Brush& brush, const char* name)
 
 class BrushSelectByShaderWalker: public scene::Graph::Walker
 {
-		const char* m_name;
+		const std::string m_name;
 	public:
-		BrushSelectByShaderWalker (const char* name) :
+		BrushSelectByShaderWalker (const std::string& name) :
 			m_name(name)
 		{
 		}
@@ -413,7 +413,7 @@ class BrushSelectByShaderWalker: public scene::Graph::Walker
 		}
 };
 
-void Scene_BrushSelectByShader (scene::Graph& graph, const char* name)
+void Scene_BrushSelectByShader (scene::Graph& graph, const std::string& name)
 {
 	graph.traverse(BrushSelectByShaderWalker(name));
 }
@@ -444,7 +444,7 @@ void Scene_BrushSelectByShader_Component (scene::Graph& graph, const std::string
  * @param graph scene graph to select faces from
  * @param name texture name
  */
-void Scene_BrushFacesSelectByShader_Component (scene::Graph& graph, const char* name)
+void Scene_BrushFacesSelectByShader_Component (scene::Graph& graph, const std::string& name)
 {
 	Scene_ForEachBrush_ForEachFaceInstance(graph, FaceSelectByShader(name));
 }
@@ -824,8 +824,8 @@ class BrushMakeSided
 		}
 		void set ()
 		{
-			Scene_BrushConstructPrefab(GlobalSceneGraph(), eBrushPrism, m_count, TextureBrowser_GetSelectedShader(
-					GlobalTextureBrowser()));
+			Scene_BrushConstructPrefab(GlobalSceneGraph(), eBrushPrism, m_count, GlobalTextureBrowser().getSelectedShader(
+					));
 		}
 		typedef MemberCaller<BrushMakeSided, &BrushMakeSided::set> SetCaller;
 };
@@ -898,8 +898,8 @@ class BrushPrefab
 			if (modal_dialog_show(window, dialog) == eIDOK) {
 				const char *str = gtk_entry_get_text(sides_entry);
 
-				Scene_BrushConstructPrefab(GlobalSceneGraph(), type, atoi(str), TextureBrowser_GetSelectedShader(
-						GlobalTextureBrowser()));
+				Scene_BrushConstructPrefab(GlobalSceneGraph(), type, atoi(str), GlobalTextureBrowser().getSelectedShader(
+						));
 			}
 
 			gtk_widget_destroy(GTK_WIDGET(window));
@@ -913,8 +913,8 @@ class BrushPrefab
 		void set ()
 		{
 			if (m_type == eBrushTerrain)
-				Scene_BrushConstructPrefab(GlobalSceneGraph(), m_type, 0, TextureBrowser_GetSelectedShader(
-						GlobalTextureBrowser()));
+				Scene_BrushConstructPrefab(GlobalSceneGraph(), m_type, 0, GlobalTextureBrowser().getSelectedShader(
+						));
 			else
 				DoSides(m_type);
 		}

@@ -103,13 +103,13 @@ typedef FreeCaller1<const Vector3&, ClipperColour_set> ClipperColourSetCaller;
 
 void TextureBrowserColour_get (Vector3& other)
 {
-	other = TextureBrowser_getBackgroundColour(GlobalTextureBrowser());
+	other = GlobalTextureBrowser().getBackgroundColour();
 }
 typedef FreeCaller1<Vector3&, TextureBrowserColour_get> TextureBrowserColourGetCaller;
 
 void TextureBrowserColour_set (const Vector3& other)
 {
-	TextureBrowser_setBackgroundColour(GlobalTextureBrowser(), other);
+	GlobalTextureBrowser().setBackgroundColour(other);
 }
 typedef FreeCaller1<const Vector3&, TextureBrowserColour_set> TextureBrowserColourSetCaller;
 
@@ -197,7 +197,7 @@ static ColoursMenu g_ColoursMenu;
 
 void ColorScheme_Original (void)
 {
-	TextureBrowser_setBackgroundColour(GlobalTextureBrowser(), Vector3(0.25f, 0.25f, 0.25f));
+	GlobalTextureBrowser().setBackgroundColour(Vector3(0.25f, 0.25f, 0.25f));
 
 	g_camwindow_globals.color_selbrushes3d = Vector3(1.0f, 0.0f, 0.0f);
 	g_camwindow_globals.color_cameraback = Vector3(0.25f, 0.25f, 0.25f);
@@ -220,7 +220,7 @@ void ColorScheme_Original (void)
 
 void ColorScheme_QER (void)
 {
-	TextureBrowser_setBackgroundColour(GlobalTextureBrowser(), Vector3(0.25f, 0.25f, 0.25f));
+	GlobalTextureBrowser().setBackgroundColour(Vector3(0.25f, 0.25f, 0.25f));
 
 	g_camwindow_globals.color_cameraback = Vector3(0.25f, 0.25f, 0.25f);
 	g_camwindow_globals.color_selbrushes3d = Vector3(1.0f, 0.0f, 0.0f);
@@ -241,7 +241,7 @@ void ColorScheme_QER (void)
 
 void ColorScheme_Black (void)
 {
-	TextureBrowser_setBackgroundColour(GlobalTextureBrowser(), Vector3(0.25f, 0.25f, 0.25f));
+	GlobalTextureBrowser().setBackgroundColour(Vector3(0.25f, 0.25f, 0.25f));
 
 	g_camwindow_globals.color_cameraback = Vector3(0.25f, 0.25f, 0.25f);
 	g_camwindow_globals.color_selbrushes3d = Vector3(1.0f, 0.0f, 0.0f);
@@ -265,7 +265,7 @@ void ColorScheme_Black (void)
  */
 void ColorScheme_Ydnar (void)
 {
-	TextureBrowser_setBackgroundColour(GlobalTextureBrowser(), Vector3(0.25f, 0.25f, 0.25f));
+	GlobalTextureBrowser().setBackgroundColour(Vector3(0.25f, 0.25f, 0.25f));
 
 	g_camwindow_globals.color_cameraback = Vector3(0.25f, 0.25f, 0.25f);
 	g_camwindow_globals.color_selbrushes3d = Vector3(1.0f, 0.0f, 0.0f);

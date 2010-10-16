@@ -101,7 +101,7 @@ class TextureNameList
 		}
 		void connect (const SignalHandler& update) const
 		{
-			TextureBrowser_addActiveShadersChangedCallback(update);
+			GlobalTextureBrowser().addActiveShadersChangedCallback(update);
 		}
 };
 

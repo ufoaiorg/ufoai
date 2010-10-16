@@ -645,8 +645,7 @@ void Select_AllOfType (void)
 	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {
 		if (GlobalSelectionSystem().ComponentMode() == SelectionSystem::eFace) {
 			GlobalSelectionSystem().setSelectedAllComponents(false);
-			Scene_BrushSelectByShader_Component(GlobalSceneGraph(), TextureBrowser_GetSelectedShader(
-					GlobalTextureBrowser()));
+			Scene_BrushSelectByShader_Component(GlobalSceneGraph(), GlobalTextureBrowser().getSelectedShader());
 		}
 	} else {
 		Classnames classnames;
@@ -655,7 +654,7 @@ void Select_AllOfType (void)
 		if (!classnames.empty()) {
 			Scene_EntitySelectByClassnames(GlobalSceneGraph(), classnames);
 		} else {
-			Scene_BrushSelectByShader(GlobalSceneGraph(), TextureBrowser_GetSelectedShader(GlobalTextureBrowser()));
+			Scene_BrushSelectByShader(GlobalSceneGraph(), GlobalTextureBrowser().getSelectedShader());
 		}
 	}
 }
