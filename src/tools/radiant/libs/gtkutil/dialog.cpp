@@ -104,16 +104,16 @@ gboolean modal_dialog_delete (GtkWidget *widget, GdkEvent* event, ModalDialog* d
 
 EMessageBoxReturn modal_dialog_show (GtkWindow* window, ModalDialog& dialog)
 {
-	gtk_grab_add(GTK_WIDGET(window));
 	gtk_widget_show(GTK_WIDGET(window));
+	gtk_grab_add(GTK_WIDGET(window));
 
 	dialog.loop = true;
 	while (dialog.loop) {
 		gtk_main_iteration();
 	}
 
-	gtk_widget_hide(GTK_WIDGET(window));
 	gtk_grab_remove(GTK_WIDGET(window));
+	gtk_widget_hide(GTK_WIDGET(window));
 
 	return dialog.ret;
 }
