@@ -22,17 +22,14 @@
 #if !defined(INCLUDED_GTKUTIL_GLWIDGET_H)
 #define INCLUDED_GTKUTIL_GLWIDGET_H
 
-typedef struct _GtkWidget GtkWidget;
-typedef int gint;
-typedef gint gboolean;
-
-GtkWidget* glwidget_new (gboolean zbuffer);
-
 extern void (*GLWidget_sharedContextCreated) ();
 extern void (*GLWidget_sharedContextDestroyed) ();
 
 // Forward declaration
 typedef struct _GdkGLConfig GdkGLConfig;
+typedef struct _GtkWidget GtkWidget;
+typedef int gint;
+typedef gint gboolean;
 
 namespace gtkutil {
 

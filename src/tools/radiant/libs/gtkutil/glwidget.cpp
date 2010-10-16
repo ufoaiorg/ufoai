@@ -49,22 +49,6 @@ static int config_rgba[] = { GDK_GL_RGBA, GDK_GL_DOUBLEBUFFER, GDK_GL_BUFFER_SIZ
 static const config_t configs[] = { { "colour-buffer = 32bpp, depth-buffer = none", config_rgba32, }, {
 		"colour-buffer = 16bpp, depth-buffer = none", config_rgba, } };
 
-static GdkGLConfig* glconfig_new ()
-{
-	GdkGLConfig* glconfig = 0;
-
-	for (configs_iterator i = configs, end = configs + 2; i != end; ++i) {
-		glconfig = gdk_gl_config_new((*i).attribs);
-		if (glconfig != 0) {
-			g_message("OpenGL window configuration: %s\n", (*i).name);
-			return glconfig;
-		}
-	}
-
-	g_message("OpenGL window configuration: colour-buffer = auto, depth-buffer = none\n");
-	return gdk_gl_config_new_by_mode((GdkGLConfigMode) (GDK_GL_MODE_RGBA | GDK_GL_MODE_DOUBLE));
-}
-
 static int config_rgba32_depth32[] = { GDK_GL_RGBA, GDK_GL_DOUBLEBUFFER, GDK_GL_BUFFER_SIZE, 24, GDK_GL_DEPTH_SIZE, 32,
 		GDK_GL_ATTRIB_LIST_NONE, };
 
@@ -90,88 +74,11 @@ const config_t configs_with_depth[] = { { "colour-buffer = 32bpp, depth-buffer =
 		"colour-buffer = 16bpp, depth-buffer = 16bpp", config_rgba_depth16, }, {
 		"colour-buffer = auto, depth-buffer = auto", config_rgba_depth, }, };
 
-static GdkGLConfig* glconfig_new_with_depth ()
-{
-	GdkGLConfig* glconfig = 0;
-
-	for (configs_iterator i = configs_with_depth, end = configs_with_depth + 6; i != end; ++i) {
-		glconfig = gdk_gl_config_new((*i).attribs);
-		if (glconfig != 0) {
-			globalOutputStream() << "OpenGL window configuration: " << (*i).name << "\n";
-			return glconfig;
-		}
-	}
-
-	g_message("OpenGL window configuration: colour-buffer = auto, depth-buffer = auto (fallback)\n");
-	return gdk_gl_config_new_by_mode((GdkGLConfigMode) (GDK_GL_MODE_RGBA | GDK_GL_MODE_DOUBLE | GDK_GL_MODE_DEPTH));
-}
-
 static unsigned int g_context_count = 0;
 
 namespace
 {
 	GtkWidget* g_shared = 0;
-}
-
-static gint glwidget_context_created (GtkWidget* widget, gpointer data)
-{
-	if (++g_context_count == 1) {
-		g_shared = widget;
-		gtk_widget_ref(g_shared);
-
-		gtkutil::GLWidget::makeCurrent(g_shared);
-		GlobalOpenGL().contextValid = true;
-
-		GLWidget_sharedContextCreated();
-	}
-	return FALSE;
-}
-
-static gint glwidget_context_destroyed (GtkWidget* widget, gpointer data)
-{
-	if (--g_context_count == 0) {
-		GlobalOpenGL().contextValid = false;
-
-		GLWidget_sharedContextDestroyed();
-
-		gtk_widget_unref(g_shared);
-		g_shared = 0;
-	}
-	return FALSE;
-}
-
-static gboolean glwidget_enable_gl (GtkWidget* widget, GtkWidget* widget2, gpointer data)
-{
-	if (widget2 == 0 && !gtk_widget_is_gl_capable(widget)) {
-		GdkGLConfig* glconfig = (g_object_get_data(G_OBJECT(widget), "zbuffer")) ? glconfig_new_with_depth()
-				: glconfig_new();
-		ASSERT_MESSAGE(glconfig != 0, "failed to create OpenGL config");
-
-		gtk_widget_set_gl_capability(widget, glconfig, g_shared != 0 ? gtk_widget_get_gl_context(g_shared) : 0, TRUE,
-				GDK_GL_RGBA_TYPE);
-
-		gtk_widget_realize(widget);
-		if (g_shared == 0) {
-			g_shared = widget;
-		}
-
-		// free glconfig?
-	}
-	return FALSE;
-}
-
-GtkWidget* glwidget_new (gboolean zbuffer)
-{
-	GtkWidget* widget = gtk_drawing_area_new();
-
-	g_object_set_data(G_OBJECT(widget), "zbuffer", gint_to_pointer(zbuffer));
-
-	g_signal_connect(G_OBJECT(widget), "hierarchy-changed", G_CALLBACK(glwidget_enable_gl), 0);
-
-	g_signal_connect(G_OBJECT(widget), "realize", G_CALLBACK(glwidget_context_created), 0);
-	g_signal_connect(G_OBJECT(widget), "unrealize", G_CALLBACK(glwidget_context_destroyed), 0);
-
-	return widget;
 }
 
 #include "glwidget.h"
