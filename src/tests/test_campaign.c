@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/campaign/cp_map.h"
 #include "../client/campaign/cp_nations.h"
 #include "../client/campaign/cp_overlay.h"
+#include "../client/campaign/cp_ufo.h"
 
 static const int TAG_INVENTORY = 1538;
 
