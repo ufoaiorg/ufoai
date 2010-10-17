@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CP_PRODUCE
 #define CLIENT_CP_PRODUCE
 
-struct base_t;
-
 /** @brief Maximum number of productions queued in any one base. */
 #define MAX_PRODUCTIONS		256
 #define MAX_PRODUCTIONS_PER_WORKSHOP 5
