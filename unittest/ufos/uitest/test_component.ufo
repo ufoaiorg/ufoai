@@ -1,0 +1,84 @@
+
+component button test_component_myButton {
+	bgcolor		"0 1 0 0.5"
+	size		"100 50"
+}
+
+component panel test_component_myFunkyPanel {
+	{
+		size		"100 100"
+		bgcolor		"0 0 1 0.5"
+	}
+
+	test_component_myButton foo1 { pos "0 0" string "Hoooo" }
+
+	test_component_myButton foo2 { pos "0 50" string "Haaaa" bgcolor "0 0 1 0.5" }
+}
+
+window test_component {
+	{
+		size		"220 220"
+		bgcolor		"0 0 0 1"
+	}
+
+	string test1 {
+		pos		"200 60"
+		string	"t1"
+		invis	true
+	}
+
+	string test2 {
+		pos		"200 70"
+		string	"t2"
+		invis	true
+	}
+
+	string test3 {
+		pos		"200 80"
+		string	"t3"
+		invis	true
+	}
+
+	string test4 {
+		pos		"200 90"
+		string	"t4"
+		invis	true
+	}
+
+	string test5 {
+		pos		"200 100"
+		string	"t5"
+	}
+
+	string test6 {
+		pos		"200 110"
+		string	"t6"
+	}
+
+	test_component_myFunkyPanel foo1 { pos "10 10"}
+	test_component_myFunkyPanel foo2 { pos "10 110"}
+
+	func onInit {
+		// check existence of some nodes
+/** @todo add "exists" for nodes
+		if ( exists *node:root.foo1 ) { *node:root.test1@color = "0 1 0 1" }
+		else { *node:root.test1@color = "1 0 0 1" }
+
+		if ( exists *node:root.foo2 ) { *node:root.test2@color = "0 1 0 1" }
+		else { *node:root.test2@color = "1 0 0 1" }
+
+		if ( exists *node:root.foo1.foo2 ) { *node:root.test3@color = "0 1 0 1" }
+		else { *node:root.test3@color = "1 0 0 1" }
+
+		if ( exists *node:root.foo2.foo1 ) { *node:root.test4@color = "0 1 0 1" }
+		else { *node:root.test4@color = "1 0 0 1" }
+*/
+		// check property value
+
+		if ( *node:root.foo1.foo1@string eq "Hoooo" ) { *node:root.test5@color = "0 1 0 1" }
+		else { *node:root.test5@color = "1 0 0 1" }
+
+		if ( *node:root.foo1.foo2@string eq "Haaaa" ) { *node:root.test6@color = "0 1 0 1" }
+		else { *node:root.test6@color = "1 0 0 1" }
+	}
+}

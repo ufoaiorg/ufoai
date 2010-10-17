@@ -196,11 +196,19 @@ static void testFunctions (void)
 }
 
 /**
- * @brief test action
+ * @brief test setters
  */
 static void testSetters (void)
 {
 	UFO_ExecuteTestWindow("test_setter");
+}
+
+/**
+ * @brief test components
+ */
+static void testComponents (void)
+{
+	UFO_ExecuteTestWindow("test_component");
 }
 
 int UFO_AddUILevel2Tests (void)
@@ -223,6 +231,8 @@ int UFO_AddUILevel2Tests (void)
 	if (CU_ADD_TEST(UISuite, testFunctions) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testSetters) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(UISuite, testComponents) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
