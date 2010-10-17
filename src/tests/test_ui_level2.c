@@ -211,6 +211,15 @@ static void testComponents (void)
 	UFO_ExecuteTestWindow("test_component");
 }
 
+/**
+ * @brief test inherited confunc
+ * @todo extend the text with inherited confunc from window (and not only from component)
+ */
+static void testInheritedConfunc (void)
+{
+	UFO_ExecuteTestWindow("test_inheritedconfunc");
+}
+
 int UFO_AddUILevel2Tests (void)
 {
 	/* add a suite to the registry */
@@ -233,6 +242,8 @@ int UFO_AddUILevel2Tests (void)
 	if (CU_ADD_TEST(UISuite, testSetters) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testComponents) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(UISuite, testInheritedConfunc) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
