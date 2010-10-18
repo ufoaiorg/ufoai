@@ -340,15 +340,11 @@ static const value_t salary_vals[] = {
  *  soldier_base 3000
  * }</code>
  */
-static void CL_ParseSalary (const char *name, const char **text, int campaignID)
+static void CL_ParseSalary (const char *name, const char **text, salary_t *s, const char* campaignID)
 {
 	const char *errhead = "CL_ParseSalary: unexpected end of file ";
-	salary_t *s;
 	const value_t *vp;
 	const char *token;
-
-	/* initialize the campaign */
-	s = &ccs.salaries[campaignID];
 
 	/* get it's body */
 	token = Com_Parse(text);
@@ -459,7 +455,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 	}
 
 	/* some default values */
-	s = &ccs.salaries[cp->idx];
+	s = &cp->salaries;
 	s->base[EMPL_SOLDIER] = 3000;
 	s->rankBonus[EMPL_SOLDIER] = 500;
 	s->base[EMPL_WORKER] = 3000;
@@ -500,7 +496,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 				break;
 			}
 		if (!strcmp(token, "salary")) {
-			CL_ParseSalary(token, text, cp->idx);
+			CL_ParseSalary(token, text, s, cp->id);
 		} else if (!strcmp(token, "events")) {
 			token = Com_EParse(text, errhead, name);
 			if (!*text)

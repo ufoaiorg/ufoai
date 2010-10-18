@@ -298,6 +298,18 @@ typedef struct missionResults_s {
 	int civiliansSurvived;
 } missionResults_t;
 
+/** salary values for a campaign */
+typedef struct salary_s {
+	int base[MAX_EMPL];
+	int rankBonus[MAX_EMPL];
+	int admin[MAX_EMPL];
+	int aircraftFactor;
+	int aircraftDivisor;
+	int baseUpkeep;
+	int adminInitial;
+	float debtInterest;
+} salary_t;
+
 /** campaign definition */
 typedef struct campaign_s {
 	int idx;					/**< own index in global campaign array */
@@ -329,21 +341,10 @@ typedef struct campaign_s {
 	char firstBaseTemplate[MAX_VAR];	/**< template to use for setting up the first base */
 	qboolean finished;
 	const campaignEvents_t *events;
+	salary_t salaries;
 } campaign_t;
 
-/** salary values for a campaign */
-typedef struct salary_s {
-	int base[MAX_EMPL];
-	int rankBonus[MAX_EMPL];
-	int admin[MAX_EMPL];
-	int aircraftFactor;
-	int aircraftDivisor;
-	int baseUpkeep;
-	int adminInitial;
-	float debtInterest;
-} salary_t;
-
-#define SALARY_GET() (&ccs.salaries[ccs.curCampaign->idx])
+#define SALARY_GET() (&ccs.curCampaign->salaries)
 #define SALARY_AIRCRAFT_FACTOR SALARY_GET()->aircraftFactor
 #define SALARY_AIRCRAFT_DIVISOR SALARY_GET()->aircraftDivisor
 #define SALARY_BASE_UPKEEP SALARY_GET()->baseUpkeep
@@ -556,7 +557,6 @@ typedef struct ccs_s {
 
 	campaign_t campaigns[MAX_CAMPAIGNS];
 	int numCampaigns;
-	salary_t salaries[MAX_CAMPAIGNS];
 
 	aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
 	int numAircraftTemplates;		/**< Number of aircraft templates. */
