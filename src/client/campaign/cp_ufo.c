@@ -478,7 +478,7 @@ qboolean UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
  * @param[in] dest Destination.
  * @sa UFO_SendAttackBase
  */
-void UFO_SendToDestination (aircraft_t* ufo, vec2_t dest)
+void UFO_SendToDestination (aircraft_t* ufo, const vec2_t dest)
 {
 	assert(ufo);
 
@@ -621,7 +621,7 @@ static void UFO_ListOnGeoscape_f (void)
  * @sa UFO_RemoveFromGeoscape
  * @sa UFO_RemoveFromGeoscape_f
  */
-aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t *mission)
+aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, const vec2_t destination, mission_t *mission)
 {
 	int newUFONum;
 	aircraft_t *ufo;
