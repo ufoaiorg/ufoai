@@ -739,7 +739,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 
 	CP_CampaignInit(campaign, qtrue);
 	/* init the map images and reset the map actions */
-	MAP_Init(campaign);
+	MAP_Reset(campaign);
 
 	/* read credits */
 	CL_UpdateCredits(mxml_GetLong(campaignNode, SAVE_CAMPAIGN_CREDITS, 0));
@@ -1402,7 +1402,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	/* initialise date */
 	ccs.date = campaign->date;
 
-	MAP_Init(campaign);
+	MAP_Reset(campaign);
 	PR_ProductionInit();
 
 	/* get day */
@@ -1449,6 +1449,7 @@ void CP_CampaignExit (void)
 		CP_RemoveCampaignCommands();
 	}
 
+	MAP_Shutdown();
 	CP_ShutdownOverlay();
 }
 

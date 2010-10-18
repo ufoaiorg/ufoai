@@ -820,7 +820,6 @@ void CL_ReadSinglePlayerData (void)
 			Com_Error(ERR_DROP, "Could not find a tech for teamdef %s", teamDef->id);
 	}
 
-
 	Com_Printf("Campaign data loaded - size "UFO_SIZE_T" bytes\n", sizeof(ccs));
 	Com_Printf("...techs: %i\n", ccs.numTechnologies);
 	Com_Printf("...buildings: %i\n", ccs.numBuildingTemplates);

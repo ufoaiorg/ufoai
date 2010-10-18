@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/ui/ui_main.h"
 #include "../client/campaign/cp_campaign.h"
 #include "../client/campaign/cp_map.h"
+#include "../client/campaign/cp_missions.h"
 #include "../client/campaign/cp_nations.h"
 #include "../client/campaign/cp_overlay.h"
 #include "../client/campaign/cp_ufo.h"
@@ -116,6 +117,20 @@ static int UFO_CleanSuiteCampaign (void)
 	return 0;
 }
 
+static base_t* CreateBase (const char *name, const vec2_t pos)
+{
+	campaign_t *campaign = GetCampaign();
+	base_t *base = B_GetFirstUnfoundedBase();
+
+	CU_ASSERT_PTR_NOT_NULL_FATAL(campaign);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
+
+	RS_InitTree(campaign, qfalse);
+	B_SetUpBase(campaign, base, pos, name);
+
+	return base;
+}
+
 static void testEmployeeHandling (void)
 {
 	employeeType_t type;
@@ -178,12 +193,9 @@ static void testBaseBuilding (void)
 
 	ResetCampaignData();
 
-	base = B_GetFirstUnfoundedBase();
 	ccs.credits = 10000000;
 
-	RS_InitTree(campaign, qfalse);
-
-	B_SetUpBase(campaign, base, pos, "testbase");
+	base = CreateBase("unittestcreatebase", pos);
 
 	B_Destroy(base);
 
@@ -191,6 +203,8 @@ static void testBaseBuilding (void)
 		CU_ASSERT_EQUAL(E_CountHired(base, type), 0);
 
 	E_DeleteAllEmployees(NULL);
+
+	base->founded = qfalse;
 }
 
 static void testAutoMissions (void)
@@ -267,11 +281,8 @@ static void testResearch (void)
 	employee_t *employee;
 
 	ResetCampaignData();
-	base = B_GetFirstUnfoundedBase();
 
-	RS_InitTree(campaign, qfalse);
-
-	B_SetUpBase(campaign, base, pos, "testbase");
+	base = CreateBase("unittestbase", pos);
 
 	CU_ASSERT_TRUE(laserTech->statusResearchable);
 
@@ -297,13 +308,14 @@ static void testResearch (void)
 	CU_ASSERT_EQUAL(heavyLaserTech->statusResearchable, qtrue);
 
 	E_DeleteAllEmployees(NULL);
+
+	base->founded = qfalse;
 }
 
 static void testProductionItem (void)
 {
 	const vec2_t pos = {0, 0};
 	base_t *base;
-	campaign_t *campaign = GetCampaign();
 	const objDef_t *od;
 	const technology_t *tech;
 	int old;
@@ -311,13 +323,8 @@ static void testProductionItem (void)
 
 	ResetCampaignData();
 
-	base = B_GetFirstUnfoundedBase();
-	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
-	CU_ASSERT_PTR_NOT_NULL_FATAL(campaign);
+	base = CreateBase("unittestproduction", pos);
 
-	RS_InitTree(campaign, qfalse);
-
-	B_SetUpBase(campaign, base, pos, "unittestproduction");
 	CU_ASSERT_TRUE(B_AtLeastOneExists());
 	CU_ASSERT_TRUE(B_GetBuildingStatus(base, B_WORKSHOP));
 	CU_ASSERT_TRUE(E_CountHired(base, EMPL_WORKER) > 0);
@@ -336,6 +343,8 @@ static void testProductionItem (void)
 	CU_ASSERT_EQUAL(old + 1, base->storage.numItems[od->idx]);
 
 	E_DeleteAllEmployees(NULL);
+
+	base->founded = qfalse;
 }
 
 static void testProductionAircraft (void)
@@ -343,9 +352,35 @@ static void testProductionAircraft (void)
 	ResetCampaignData();
 }
 
+static void testMap (void)
+{
+	vec2_t pos;
+	campaign_t *campaign = GetCampaign();
+
+	ResetCampaignData();
+
+	MAP_Init(campaign);
+
+	Vector2Set(pos, -51, 0);
+	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)));
+
+	Vector2Set(pos, 20, 20);
+	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)));
+}
+
 static void testAirFight (void)
 {
+#if 0
+	const vec2_t destination = { 10, 10 };
+	mission_t *mission;
+
 	ResetCampaignData();
+
+	mission = CP_CreateNewMission(INTERESTCATEGORY_INTERCEPT, qtrue);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(mission);
+	CU_ASSERT_TRUE(CP_MissionBegin(mission));
+	mission->ufo->ufotype = UFO_FIGHTER;
+#endif
 }
 
 static void testGeoscape (void)
@@ -396,8 +431,6 @@ static void testSaveLoad (void)
 
 	ResetCampaignData();
 
-	base = B_GetFirstUnfoundedBase();
-
 	SAV_Init();
 
 	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, NULL);
@@ -405,11 +438,9 @@ static void testSaveLoad (void)
 
 	Cvar_Set("save_compressed", "0");
 
-	RS_InitTree(campaign, qfalse);
+	base = CreateBase("unittestbase", pos);
 
 	{
-		B_SetUpBase(campaign, base, pos, "unittestbase");
-
 		CU_ASSERT(base->founded);
 		CU_ASSERT_EQUAL(base->baseStatus, BASE_WORKING);
 
@@ -438,6 +469,8 @@ static void testSaveLoad (void)
 
 		E_DeleteAllEmployees(NULL);
 	}
+
+	base->founded = qfalse;
 }
 
 static void testCampaignRun (void)
@@ -503,6 +536,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testProductionAircraft) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testMap) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testAirFight) == NULL)
