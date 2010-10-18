@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern qboolean radarOverlayWasSet;
 
 extern const float RADAR_BASERANGE;
-extern const float RADAR_BASERTRACKINGANGE;
+extern const float RADAR_BASETRACKINGRANGE;
 extern const float RADAR_AIRCRAFTRANGE;
 extern const float RADAR_AIRCRAFTTRACKINGRANGE;
 
