@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_missions.h"
 #include "cp_map.h"
 #include "cp_popup.h"
+#include "cp_radar.h"
 #include "cp_time.h"
 #include "cp_base_callbacks.h"
 #include "cp_ufo.h"
@@ -1336,6 +1337,7 @@ void B_SetName (base_t *base, const char *name)
 void B_SetUpBase (campaign_t *campaign, base_t* base, const vec2_t pos, const char *name)
 {
 	const int newBaseAlienInterest = 1.0f;
+	float level;
 
 	B_SetName(base, name);
 	Vector2Copy(pos, base->pos);
@@ -1356,7 +1358,8 @@ void B_SetUpBase (campaign_t *campaign, base_t* base, const vec2_t pos, const ch
 	BDEF_InitialiseBaseSlots(base);
 
 	/* Reset Radar range */
-	RADAR_Initialise(&(base->radar), 0.0f, 0.0f, 1.0f, qtrue);
+	level = B_GetMaxBuildingLevel(base, B_RADAR);
+	RADAR_Initialise(&base->radar, RADAR_BASERANGE, RADAR_BASETRACKINGRANGE, level, qfalse);
 	RADAR_InitialiseUFOs(&base->radar);
 
 	B_ResetAllStatusAndCapacities(base, qtrue);
