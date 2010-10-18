@@ -181,7 +181,7 @@ typedef struct aircraft_s {
 	int fuel;			/**< Current fuel amount. */
 	int damage;			/**< Current Hit Point of the aircraft */
 	int size;			/**< Size of the aircraft used in capacity calculations. */
-	vec3_t pos;			/**< Current position on the geoscape. */
+	vec3_t pos;			/**< Current position on the geoscape. @todo change to vec2_t - this is long/lat */
 	vec3_t direction;	/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */
 	vec3_t projectedPos;	/**< Projected position of the aircraft (latitude and longitude). */
 	mapline_t route;

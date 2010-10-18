@@ -99,7 +99,6 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 
 	mess->date = ccs.date;
 
-	/** @todo (menu) Handle translated text - don't use single byte string copy here */
 	Q_strncpyz(mess->title, title, sizeof(mess->title));
 	mess->text = Mem_PoolStrDup(text, cp_campaignPool, 0);
 
