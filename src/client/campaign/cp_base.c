@@ -1245,7 +1245,7 @@ static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolea
  * @param[in,out] base The base to set up
  * @sa B_SetUpBase
  */
-static void B_SetUpFirstBase (campaign_t *campaign, base_t* base)
+static void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
 {
 	const equipDef_t *ed;
 
@@ -1334,7 +1334,7 @@ void B_SetName (base_t *base, const char *name)
  * @sa B_NewBase
  * @sa B_SetUpFirstBase
  */
-void B_SetUpBase (campaign_t *campaign, base_t* base, const vec2_t pos, const char *name)
+void B_SetUpBase (const campaign_t *campaign, base_t* base, const vec2_t pos, const char *name)
 {
 	const int newBaseAlienInterest = 1.0f;
 	float level;

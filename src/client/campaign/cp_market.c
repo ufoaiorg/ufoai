@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../cl_shared.h"
 #include "../ui/ui_popup.h"
-#include "../cl_inventory.h" /* INV_GetEquipmentDefinitionByID */
 #include "cp_campaign.h"
 #include "cp_market.h"
 #include "save/save_market.h"
@@ -273,14 +272,10 @@ qboolean BS_LoadXML (mxml_node_t *parent)
  * @sa BS_Load (Market load function)
  * @param[in] load Is this an attempt to init the market for a savegame?
  */
-void BS_InitMarket (campaign_t *campaign)
+void BS_InitMarket (const campaign_t *campaign)
 {
 	int i;
 	market_t *market = BS_GetMarket();
-
-	/* find the relevant markets */
-	campaign->marketDef = INV_GetEquipmentDefinitionByID(campaign->market);
-	campaign->asymptoticMarketDef = INV_GetEquipmentDefinitionByID(campaign->asymptoticMarket);
 
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *od = INVSH_GetItemByIDX(i);

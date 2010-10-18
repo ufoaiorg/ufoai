@@ -127,7 +127,7 @@ static int UFO_CleanSuiteCampaign (void)
 
 static base_t* CreateBase (const char *name, const vec2_t pos)
 {
-	campaign_t *campaign = GetCampaign();
+	const campaign_t *campaign = GetCampaign();
 	base_t *base = B_GetFirstUnfoundedBase();
 
 	CU_ASSERT_FALSE(base->founded);

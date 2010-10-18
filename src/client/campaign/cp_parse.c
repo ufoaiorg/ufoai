@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_rank.h"
 #include "cp_parse.h"
+#include "../cl_inventory.h" /* INV_GetEquipmentDefinitionByID */
 
 /**
  * @return Alien mission category
@@ -786,6 +787,7 @@ void CL_ReadSinglePlayerData (void)
 {
 	const char *type, *name, *text;
 	int i;
+	campaign_t *campaign;
 
 	/* pre-stage parsing */
 	FS_BuildFileList("ufos/*.ufo");
@@ -814,6 +816,12 @@ void CL_ReadSinglePlayerData (void)
 		ccs.teamDefTechs[teamDef->idx] = RS_GetTechByID(teamDef->tech);
 		if (ccs.teamDefTechs[teamDef->idx] == NULL)
 			Com_Error(ERR_DROP, "Could not find a tech for teamdef %s", teamDef->id);
+	}
+
+	for (i = 0, campaign = ccs.campaigns; i < ccs.numCampaigns; i++, campaign++) {
+		/* find the relevant markets */
+		campaign->marketDef = INV_GetEquipmentDefinitionByID(campaign->market);
+		campaign->asymptoticMarketDef = INV_GetEquipmentDefinitionByID(campaign->asymptoticMarket);
 	}
 
 	Com_Printf("Campaign data loaded - size "UFO_SIZE_T" bytes\n", sizeof(ccs));

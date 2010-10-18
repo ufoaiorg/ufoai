@@ -196,7 +196,7 @@ static void B_BuildBase_f (void)
 {
 	const nation_t *nation;
 	base_t *base = B_GetFirstUnfoundedBase();
-	campaign_t *campaign = ccs.curCampaign;
+	const campaign_t *campaign = ccs.curCampaign;
 
 	if (!base)
 		return;
