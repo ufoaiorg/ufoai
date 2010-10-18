@@ -106,7 +106,7 @@ void CP_NationHandleBudget (const campaign_t *campaign)
 	cost = 0;
 	base = NULL;
 	while ((base = B_GetNextFounded(base)) != NULL) {
-		const salary_t *salary = SALARY_GET(campaign);
+		const salary_t *salary = &campaign->salaries;
 		aircraft_t *aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 			cost += aircraft->price * salary->aircraftFactor / salary->aircraftDivisor;
@@ -133,7 +133,7 @@ void CP_NationHandleBudget (const campaign_t *campaign)
 	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 
 	if (initialCredits < 0) {
-		const float interest = initialCredits * SALARY_GET(campaign)->debtInterest;
+		const float interest = initialCredits * campaign->salaries.debtInterest;
 
 		cost = (int)ceil(interest);
 		Com_sprintf(message, sizeof(message), _("Paid %i credits in interest on your debt."), cost);

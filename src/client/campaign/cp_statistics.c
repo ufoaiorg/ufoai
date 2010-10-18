@@ -103,7 +103,7 @@ void CL_StatsUpdate_f (void)
 
 	base = NULL;
 	while ((base = B_GetNextFounded(base)) != NULL) {
-		const salary_t *salary = SALARY_GET(campaign);
+		const salary_t *salary = &campaign->salaries;
 		aircraft_t *aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
 			costs += aircraft->price * salary->aircraftFactor / salary->aircraftDivisor;
@@ -123,7 +123,7 @@ void CL_StatsUpdate_f (void)
 	sum += costs;
 
 	if (ccs.credits < 0) {
-		const float interest = ccs.credits * SALARY_GET(campaign)->debtInterest;
+		const float interest = ccs.credits * campaign->salaries.debtInterest;
 
 		costs = (int)ceil(interest);
 		Q_strcat(pos, va(_("Debt:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
@@ -240,7 +240,7 @@ static void CP_CampaignStats_f (void)
 		return;
 	}
 
-	salary = SALARY_GET(campaign);
+	salary = &campaign->salaries;
 
 	Com_Printf("Campaign id: %s\n", campaign->id);
 	Com_Printf("..research list: %s\n", campaign->researched);

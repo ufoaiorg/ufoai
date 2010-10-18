@@ -344,8 +344,6 @@ typedef struct campaign_s {
 	salary_t salaries;
 } campaign_t;
 
-#define SALARY_GET(campaign) (&campaign->salaries)
-
 int CP_GetSalaryBaseEmployee(const salary_t *salary, employeeType_t type);
 int CP_GetSalaryAdminEmployee(const salary_t *salary, employeeType_t type);
 int CP_GetSalaryRankBonusEmployee(const salary_t *salary, employeeType_t type);
