@@ -1,10 +1,10 @@
 /**
  * @brief Unittest for event function from window node
- * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push unittest_runtimeerror"
+ * Move it into the ui ufo script directory (/base/ufos/ui/), run the game, and run the command "ui_push test_runtimeerror"
  * @todo Create it as real executable unittest
  */
 
-window unittest_runtimeerror
+window test_runtimeerror
 {
 	{
 		pos "100 100"

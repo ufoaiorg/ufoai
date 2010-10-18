@@ -220,6 +220,17 @@ static void testInheritedConfunc (void)
 	UFO_ExecuteTestWindow("test_inheritedconfunc");
 }
 
+/**
+ * @brief test some runtime errors
+ * @todo when it is possible, we should check error message
+ * but ATM we only check it dont crash
+ */
+static void testRuntimeError (void)
+{
+	UFO_ExecuteTestWindow("test_runtimeerror");
+}
+
+
 int UFO_AddUILevel2Tests (void)
 {
 	/* add a suite to the registry */
@@ -244,6 +255,8 @@ int UFO_AddUILevel2Tests (void)
 	if (CU_ADD_TEST(UISuite, testComponents) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testInheritedConfunc) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(UISuite, testRuntimeError) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
