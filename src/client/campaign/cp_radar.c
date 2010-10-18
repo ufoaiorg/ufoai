@@ -329,7 +329,7 @@ void RADAR_Initialise (radar_t *radar, float range, float trackingRange, float l
 {
 	const int oldrange = radar->range;
 
-	if (!level) {
+	if (equal(level, 0.0)) {
 		radar->range = 0.0f;
 		radar->trackingRange = 0.0f;
 	} else {
