@@ -10,7 +10,7 @@
 				<Option platforms="Windows;" />
 				<Option output="..\..\testall" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\..\" />
-				<Option object_output=".objs\client" />
+				<Option object_output=".objs\ufo_tests" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
