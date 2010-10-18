@@ -1677,19 +1677,19 @@ int CP_GetSalaryAdministrative (void)
 
 int CP_GetSalaryBaseEmployee (employeeType_t type)
 {
-	const salary_t *salary = &ccs.salaries[ccs.curCampaign->idx];
+	const salary_t *salary = SALARY_GET();
 	return salary->base[type];
 }
 
 int CP_GetSalaryAdminEmployee (employeeType_t type)
 {
-	const salary_t *salary = &ccs.salaries[ccs.curCampaign->idx];
+	const salary_t *salary = SALARY_GET();
 	return salary->admin[type];
 }
 
 int CP_GetSalaryRankBonusEmployee (employeeType_t type)
 {
-	const salary_t *salary = &ccs.salaries[ccs.curCampaign->idx];
+	const salary_t *salary = SALARY_GET();
 	return salary->rankBonus[type];
 }
 

@@ -343,11 +343,12 @@ typedef struct salary_s {
 	float debtInterest;
 } salary_t;
 
-#define SALARY_AIRCRAFT_FACTOR ccs.salaries[ccs.curCampaign->idx].aircraftFactor
-#define SALARY_AIRCRAFT_DIVISOR ccs.salaries[ccs.curCampaign->idx].aircraftDivisor
-#define SALARY_BASE_UPKEEP ccs.salaries[ccs.curCampaign->idx].baseUpkeep
-#define SALARY_ADMIN_INITIAL ccs.salaries[ccs.curCampaign->idx].adminInitial
-#define SALARY_DEBT_INTEREST ccs.salaries[ccs.curCampaign->idx].debtInterest
+#define SALARY_GET() (&ccs.salaries[ccs.curCampaign->idx])
+#define SALARY_AIRCRAFT_FACTOR SALARY_GET()->aircraftFactor
+#define SALARY_AIRCRAFT_DIVISOR SALARY_GET()->aircraftDivisor
+#define SALARY_BASE_UPKEEP SALARY_GET()->baseUpkeep
+#define SALARY_ADMIN_INITIAL SALARY_GET()->adminInitial
+#define SALARY_DEBT_INTEREST SALARY_GET()->debtInterest
 
 int CP_GetSalaryBaseEmployee(employeeType_t type);
 int CP_GetSalaryAdminEmployee(employeeType_t type);
