@@ -196,10 +196,12 @@ static void testBaseBuilding (void)
 {
 	vec2_t pos = {0, 0};
 	base_t *base;
-	campaign_t *campaign = GetCampaign();
+	campaign_t *campaign;
 	employeeType_t type;
 
 	ResetCampaignData();
+
+	campaign = GetCampaign();
 
 	ccs.credits = 10000000;
 
@@ -282,13 +284,19 @@ static void testResearch (void)
 	int n;
 	int i;
 	const vec2_t pos = {0, 0};
-	technology_t *laserTech = RS_GetTechByID("rs_laser");
-	technology_t *heavyLaserTech = RS_GetTechByID("rs_weapon_heavylaser");
+	technology_t *laserTech;
+	technology_t *heavyLaserTech;
 	base_t *base;
-	campaign_t *campaign = GetCampaign();
+	campaign_t *campaign;
 	employee_t *employee;
 
 	ResetCampaignData();
+
+	laserTech = RS_GetTechByID("rs_laser");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(laserTech);
+	heavyLaserTech = RS_GetTechByID("rs_weapon_heavylaser");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(heavyLaserTech);
+	campaign = GetCampaign();
 
 	base = CreateBase("unittestbase", pos);
 
@@ -447,12 +455,15 @@ static void testGeoscape (void)
 
 static void testNation (void)
 {
-	const nation_t *nation = NAT_GetNationByID("europe");
-	campaign_t *campaign = GetCampaign();
+	const nation_t *nation;
+	campaign_t *campaign;
 
 	ResetCampaignData();
 
+	nation = NAT_GetNationByID("europe");
 	CU_ASSERT_PTR_NOT_NULL(nation);
+
+	campaign = GetCampaign();
 
 	CP_NationHandleBudget(campaign);
 	/** @todo implement a check here */
@@ -460,9 +471,11 @@ static void testNation (void)
 
 static void testMarket (void)
 {
-	campaign_t *campaign = GetCampaign();
+	campaign_t *campaign;
 
 	ResetCampaignData();
+
+	campaign = GetCampaign();
 
 	RS_InitTree(campaign, qfalse);
 
@@ -481,9 +494,11 @@ static void testSaveLoad (void)
 {
 	const vec2_t pos = {0, 0};
 	base_t *base;
-	campaign_t *campaign = GetCampaign();
+	campaign_t *campaign;
 
 	ResetCampaignData();
+
+	campaign = GetCampaign();
 
 	SAV_Init();
 
