@@ -1180,9 +1180,8 @@ static void AIR_Move (aircraft_t* aircraft, int deltaTime)
 			aircraft->mission->active = qtrue;
 			aircraft->status = AIR_DROP;
 			ccs.missionAircraft = aircraft;
-			MAP_SelectMission(ccs.missionAircraft->mission);
-			ccs.interceptAircraft = ccs.missionAircraft;
-			Com_DPrintf(DEBUG_CLIENT, "ccs.interceptAircraft: %i\n", ccs.interceptAircraft->idx);
+			MAP_SelectMission(aircraft->mission);
+			ccs.interceptAircraft = aircraft;
 			CL_GameTimeStop();
 			UI_PushWindow("popup_intercept_ready", NULL);
 			break;
@@ -1258,7 +1257,7 @@ static void AIR_Refuel (aircraft_t *aircraft, int deltaTime)
  * @param[in] dt time delta (may be 0 if radar overlay should be updated but no aircraft moves)
  * @param[in] updateRadarOverlay True if radar overlay should be updated (not needed if geoscape isn't updated)
  */
-void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
+void CL_CampaignRunAircraft (campaign_t* campaign, int dt, qboolean updateRadarOverlay)
 {
 	/* true if at least one aircraft moved: radar overlay must be updated
 	 * This is static because aircraft can move without radar being
@@ -1300,7 +1299,7 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 				/* Aircraft purchasing ufo */
 				if (aircraft->status == AIR_UFO) {
 					/* Solve the fight */
-					AIRFIGHT_ExecuteActions(aircraft, aircraft->aircraftTarget);
+					AIRFIGHT_ExecuteActions(campaign, aircraft, aircraft->aircraftTarget);
 				}
 
 				for (k = 0; k < aircraft->maxWeapons; k++) {

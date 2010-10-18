@@ -294,6 +294,7 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 void CP_StartXVISpreading_f (void)
 {
 	int i, numAlienBases;
+	const campaign_t *campaign = ccs.curCampaign;
 
 	/** @todo ccs.XVIShowMap should not be enabled at the same time than
 	 * CP_IsXVIResearched(): ccs.XVIShowMap means that PHALANX has a map of
@@ -302,9 +303,9 @@ void CP_StartXVISpreading_f (void)
 	ccs.XVIShowMap = qtrue;
 
 	/* Spawn a few alien bases depending on difficulty level */
-	if (ccs.curCampaign->difficulty > 0)
+	if (campaign->difficulty > 0)
 		numAlienBases = 3;
-	else if (ccs.curCampaign->difficulty < 0)
+	else if (campaign->difficulty < 0)
 		numAlienBases = 1;
 	else
 		numAlienBases = 2;

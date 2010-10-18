@@ -391,8 +391,11 @@ static void testAirFight (void)
 	/* just some random delta time value that is high enough
 	 * to ensure that all the weapons are reloaded */
 	const int deltaTime = 1000;
+	campaign_t *campaign;
 
 	ResetCampaignData();
+
+	campaign = GetCampaign();
 
 	base = CreateBase("unittestairfight", destination);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
@@ -425,16 +428,16 @@ static void testAirFight (void)
 		CU_ASSERT_TRUE(aircraft->weapons[i].delayNextShot == 0);
 
 	/* search a target */
-	UFO_CampaignRunUFOs(deltaTime);
+	UFO_CampaignRunUFOs(campaign, deltaTime);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(mission->ufo->aircraftTarget);
 
 	/* ensure that one hit will destroy the craft */
 	mission->ufo->aircraftTarget->damage = 1;
-	UFO_CheckShootBack(mission->ufo, mission->ufo->aircraftTarget);
+	UFO_CheckShootBack(campaign, mission->ufo, mission->ufo->aircraftTarget);
 
 	/* one projectile should be spawned */
 	CU_ASSERT_EQUAL(ccs.numProjectiles, 1);
-	AIRFIGHT_CampaignRunProjectiles(deltaTime);
+	AIRFIGHT_CampaignRunProjectiles(campaign, deltaTime);
 
 	/* target is destroyed */
 	CU_ASSERT_PTR_NULL(mission->ufo->aircraftTarget);

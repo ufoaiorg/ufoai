@@ -296,7 +296,7 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 {
 	int i;
 	production_t *prod = &queue->items[index];
-	technology_t *tech = NULL;
+	const technology_t *tech;
 
 	assert(base);
 
@@ -308,7 +308,10 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 		assert(prod->ufo->ufoTemplate);
 		tech = prod->ufo->ufoTemplate->tech;
 		prod->ufo->disassembly = NULL;
+	} else {
+		Com_Error(ERR_DROP, "No tech pointer for production");
 	}
+
 	assert(tech);
 
 	PR_UpdateRequiredItemsInBasestorage(base, prod->amount, &tech->requireForProduction);
@@ -651,7 +654,7 @@ int PR_IncreaseProduction (production_t *prod, int amount)
 int PR_DecreaseProduction (production_t *prod, int amount)
 {
 	base_t *base;
-	technology_t *tech = NULL;
+	const technology_t *tech;
 
 	assert(prod);
 	base = PR_ProductionBase(prod);
@@ -674,6 +677,8 @@ int PR_DecreaseProduction (production_t *prod, int amount)
 	} else if (prod->ufo) {
 		assert(prod->ufo->ufoTemplate);
 		tech = prod->ufo->ufoTemplate->tech;
+	} else {
+		Com_Error(ERR_DROP, "No tech pointer for production");
 	}
 	assert(tech);
 

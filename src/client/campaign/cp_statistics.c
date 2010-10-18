@@ -40,7 +40,7 @@ void CL_StatsUpdate_f (void)
 	int hired[MAX_EMPL];
 	int i, costs = 0, sum = 0, totalfunds = 0;
 	base_t *base;
-	campaign_t *campaign = ccs.curCampaign;
+	const campaign_t *campaign = ccs.curCampaign;
 	const salary_t *salary = &campaign->salaries;
 
 	/* delete buffer */
@@ -134,14 +134,14 @@ void CL_StatsUpdate_f (void)
 	/* campaign */
 	pos += (strlen(pos) + 1);
 	UI_RegisterText(TEXT_GENERIC, pos);
-	Q_strcat(pos, va(_("Max. allowed debts: %ic\n"), ccs.curCampaign->negativeCreditsUntilLost),
+	Q_strcat(pos, va(_("Max. allowed debts: %ic\n"), campaign->negativeCreditsUntilLost),
 		(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 
 	/* only show the xvi spread data when it's available */
 	if (CP_IsXVIResearched()) {
 		Q_strcat(pos, va(_("Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 			"Current eXtraterrestial Viral Infection: %i%%"),
-			ccs.curCampaign->maxAllowedXVIRateUntilLost,
+			campaign->maxAllowedXVIRateUntilLost,
 			CP_GetAverageXVIRate()),
 			(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}

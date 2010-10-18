@@ -196,20 +196,22 @@ static void B_BuildBase_f (void)
 {
 	const nation_t *nation;
 	base_t *base = B_GetFirstUnfoundedBase();
+	campaign_t *campaign = ccs.curCampaign;
+
 	if (!base)
 		return;
 
 	assert(!base->founded);
 
-	if (ccs.credits - ccs.curCampaign->basecost > 0) {
+	if (ccs.credits - campaign->basecost > 0) {
 		const char *baseName = mn_base_title->string;
 		if (baseName[0] == '\0')
 			baseName = "Base";
 
 		/* set up the base with buildings from template */
-		B_SetUpBase(ccs.curCampaign, base, ccs.newBasePos, baseName);
+		B_SetUpBase(campaign, base, ccs.newBasePos, baseName);
 
-		CL_UpdateCredits(ccs.credits - ccs.curCampaign->basecost);
+		CL_UpdateCredits(ccs.credits - campaign->basecost);
 		nation = MAP_GetNation(base->pos);
 		if (nation)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new base has been built: %s (nation: %s)"), mn_base_title->string, _(nation->name));

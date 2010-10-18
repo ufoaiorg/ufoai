@@ -63,9 +63,9 @@ typedef struct aircraftProjectile_s {
 	qboolean beam;			/**< projectile has an active (laser) beam on geoscape */
 } aircraftProjectile_t;
 
-void AIRFIGHT_ExecuteActions(aircraft_t* air, aircraft_t* ufo);
-void AIRFIGHT_ActionsAfterAirfight(aircraft_t* shooter, aircraft_t* aircraft, qboolean phalanxWon);
-void AIRFIGHT_CampaignRunProjectiles(int dt);
+void AIRFIGHT_ExecuteActions(const struct campaign_s* campaign, aircraft_t* air, aircraft_t* ufo);
+void AIRFIGHT_ActionsAfterAirfight(const struct campaign_s* campaign, aircraft_t* shooter, aircraft_t* aircraft, qboolean phalanxWon);
+void AIRFIGHT_CampaignRunProjectiles(const struct campaign_s* campaign, int dt);
 void AIRFIGHT_CampaignRunBaseDefence(int dt);
 int AIRFIGHT_CheckWeapon(const aircraftSlot_t *slot, float distance);
 int AIRFIGHT_ChooseWeapon(const aircraftSlot_t const *slot, int maxSlot, const vec2_t pos, const vec2_t targetPos);

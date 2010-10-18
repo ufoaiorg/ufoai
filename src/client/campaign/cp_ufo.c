@@ -194,7 +194,7 @@ void UFO_SetRandomDest (aircraft_t* ufocraft)
  * @param[in] pos The position the UFO should around.
  * @sa UFO_SetRandomPos
  */
-void UFO_SetRandomDestAround (aircraft_t* ufocraft, vec2_t pos)
+void UFO_SetRandomDestAround (aircraft_t* ufocraft, const vec2_t pos)
 {
 	vec2_t dest;
 	const float spread = 2.0f;
@@ -388,7 +388,7 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 /**
  * @brief Check if the ufo can shoot at a PHALANX aircraft
  */
-static void UFO_SearchAircraftTarget (aircraft_t *ufo)
+static void UFO_SearchAircraftTarget (const campaign_t* campaign, aircraft_t *ufo)
 {
 	base_t *base;
 	aircraft_t* phalanxAircraft;
@@ -398,7 +398,7 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 	if (ufo->mission->stage != STAGE_INTERCEPT) {
 		/* Check if UFO is defending itself */
 		if (ufo->aircraftTarget)
-			UFO_CheckShootBack(ufo, ufo->aircraftTarget);
+			UFO_CheckShootBack(campaign, ufo, ufo->aircraftTarget);
 		return;
 	}
 
@@ -406,7 +406,7 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 	if (ufo->aircraftTarget) {
 		/* check if the target disappeared from geoscape (fled in a base) */
 		if (AIR_IsAircraftOnGeoscape(ufo->aircraftTarget))
-			AIRFIGHT_ExecuteActions(ufo, ufo->aircraftTarget);
+			AIRFIGHT_ExecuteActions(campaign, ufo, ufo->aircraftTarget);
 		else
 			ufo->aircraftTarget = NULL;
 		return;
@@ -491,16 +491,16 @@ void UFO_SendToDestination (aircraft_t* ufo, const vec2_t dest)
 /**
  * @brief Check if the ufo can shoot back at phalanx aircraft
  */
-void UFO_CheckShootBack (aircraft_t *ufo, aircraft_t* phalanxAircraft)
+void UFO_CheckShootBack (const campaign_t* campaign, aircraft_t *ufo, aircraft_t* phalanxAircraft)
 {
 	/* check if the ufo is already attacking an aircraft */
 	if (ufo->aircraftTarget) {
 		/* check if the target flee in a base */
 		if (AIR_IsAircraftOnGeoscape(ufo->aircraftTarget))
-			AIRFIGHT_ExecuteActions(ufo, ufo->aircraftTarget);
+			AIRFIGHT_ExecuteActions(campaign, ufo, ufo->aircraftTarget);
 		else {
 			ufo->aircraftTarget = NULL;
-			CP_UFOProceedMission(ufo);
+			CP_UFOProceedMission(campaign, ufo);
 		}
 	} else {
 		/* check that aircraft is flying */
@@ -513,7 +513,7 @@ void UFO_CheckShootBack (aircraft_t *ufo, aircraft_t* phalanxAircraft)
  * @brief Make the UFOs run
  * @param[in] deltaTime The time passed since last call
  */
-void UFO_CampaignRunUFOs (int deltaTime)
+void UFO_CampaignRunUFOs (const campaign_t* campaign, int deltaTime)
 {
 	int ufoIdx, k;
 
@@ -544,7 +544,7 @@ void UFO_CampaignRunUFOs (int deltaTime)
 				UFO_SetRandomDestAround(ufo, ufo->mission->pos);
 			} else
 				UFO_SetRandomDest(ufo);
-			if (CP_CheckNextStageDestination(ufo))
+			if (CP_CheckNextStageDestination(campaign, ufo))
 				/* UFO has been removed from game */
 				continue;
 			/* UFO was destroyed (maybe because the mission was removed) */
@@ -553,7 +553,7 @@ void UFO_CampaignRunUFOs (int deltaTime)
 		}
 
 		/* is there a PHALANX aircraft to shoot at ? */
-		UFO_SearchAircraftTarget(ufo);
+		UFO_SearchAircraftTarget(campaign, ufo);
 
 		/* antimatter tanks */
 		if (ufo->fuel <= 0)
@@ -575,9 +575,10 @@ void UFO_CampaignRunUFOs (int deltaTime)
 static void UFO_DestroyUFOs_f (void)
 {
 	aircraft_t* ufo;
+	campaign_t* campaign = ccs.curCampaign;
 
 	for (ufo = ccs.ufos; ufo < ccs.ufos + ccs.numUFOs; ufo++) {
-		AIRFIGHT_ActionsAfterAirfight(NULL, ufo, qtrue);
+		AIRFIGHT_ActionsAfterAirfight(campaign, NULL, ufo, qtrue);
 	}
 }
 

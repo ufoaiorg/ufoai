@@ -205,7 +205,7 @@ typedef struct aircraft_s {
 	itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
 	int itemTypes;						/**< How many types of items we collected. */
 
-	char *building;		/**< id of the building needed as hangar */
+	const char *building;		/**< id of the building needed as hangar */
 
 	struct mission_s* mission;	/**< The mission the aircraft is moving to if this is a PHALANX aircraft
 								 * The mission the UFO is involved if this is a UFO */
@@ -264,7 +264,7 @@ qboolean AIR_RemoveFromAircraftTeam(aircraft_t *aircraft, const struct employee_
 qboolean AIR_IsInAircraftTeam(const aircraft_t *aircraft, const struct employee_s* employee);
 int AIR_GetTeamSize(const aircraft_t *aircraft);
 
-void CL_CampaignRunAircraft(int dt, qboolean updateRadarOverlay);
+void CL_CampaignRunAircraft(struct campaign_s* campaign, int dt, qboolean updateRadarOverlay);
 const aircraft_t *AIR_GetAircraftSilent(const char *name);
 const aircraft_t *AIR_GetAircraft(const char *name);
 aircraft_t* AIR_AircraftGetFromIDX(int idx);

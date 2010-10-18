@@ -190,10 +190,11 @@ static void MSO_SetAll_f(void)
 message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *title, const char *text, qboolean popup, messageType_t type, technology_t *pedia)
 {
 	message_t *result = NULL;
+	const messageSettings_t *settings = &messageSettings[messagecategory];
 
-	if (messageSettings[messagecategory].doNotify)
-		result = MS_AddNewMessageSound(title, text, popup, type, pedia, messageSettings[messagecategory].doSound);
-	if (messageSettings[messagecategory].doPause)
+	if (settings->doNotify)
+		result = MS_AddNewMessageSound(title, text, popup, type, pedia, settings->doSound);
+	if (settings->doPause)
 		CL_GameTimeStop();
 	return result;
 }

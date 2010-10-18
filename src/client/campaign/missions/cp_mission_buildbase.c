@@ -175,7 +175,7 @@ static void CP_BuildBaseGoToBase (mission_t *mission)
  * @brief Subverting Mission ends: UFO leave earth.
  * @note Build Base mission -- Stage 3
  */
-static void CP_BuildBaseGovernmentLeave (mission_t *mission)
+static void CP_BuildBaseGovernmentLeave (const campaign_t *campaign, mission_t *mission)
 {
 	nation_t *nation;
 
@@ -190,7 +190,7 @@ static void CP_BuildBaseGovernmentLeave (mission_t *mission)
 	 * otherwise subverting a government is meaningless */
 	if (nation) {
 		const nationInfo_t *stats = NAT_GetCurrentMonthInfo(nation);
-		NAT_SetHappiness(ccs.curCampaign->minhappiness, nation, stats->happiness + HAPPINESS_SUBVERSION_LOSS);
+		NAT_SetHappiness(campaign->minhappiness, nation, stats->happiness + HAPPINESS_SUBVERSION_LOSS);
 	}
 
 	CP_MissionDisableTimeLimit(mission);
@@ -258,7 +258,7 @@ int CP_BuildBaseMissionAvailableUFOs (const mission_t const *mission, ufoType_t 
  * @brief Determine what action should be performed when a Build Base mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
-void CP_BuildBaseMissionNextStage (mission_t *mission)
+void CP_BuildBaseMissionNextStage (const campaign_t *campaign, mission_t *mission)
 {
 	switch (mission->stage) {
 	case STAGE_NOT_ACTIVE:
@@ -283,7 +283,7 @@ void CP_BuildBaseMissionNextStage (mission_t *mission)
 		break;
 	case STAGE_SUBVERT_GOV:
 		/* Leave earth */
-		CP_BuildBaseGovernmentLeave(mission);
+		CP_BuildBaseGovernmentLeave(campaign, mission);
 		break;
 	case STAGE_RETURN_TO_ORBIT:
 		/* mission is over, remove mission */

@@ -448,7 +448,7 @@ void CL_HandleNationData (const campaign_t *campaign, qboolean won, mission_t * 
 /**
  * @brief Check for missions that have a timeout defined
  */
-static void CP_CheckMissionEnd (void)
+static void CP_CheckMissionEnd (const campaign_t* campaign)
 {
 	const linkedList_t *list = ccs.missions;
 
@@ -458,7 +458,7 @@ static void CP_CheckMissionEnd (void)
 		linkedList_t *next = list->next;
 		mission_t *mission = (mission_t *)list->data;
 		if (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(ccs.date, mission->finalDate)) {
-			CP_MissionStageEnd(mission);
+			CP_MissionStageEnd(campaign, mission);
 		}
 		list = next;
 	}
@@ -524,13 +524,13 @@ void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
  * @param[in] updateRadarOverlay true if radar overlay should be updated (only for drawing purpose)
  * @sa CL_CampaignRun
  */
-static void CL_CampaignFunctionPeriodicCall (int dt, qboolean updateRadarOverlay)
+static void CL_CampaignFunctionPeriodicCall (campaign_t* campaign, int dt, qboolean updateRadarOverlay)
 {
-	UFO_CampaignRunUFOs(dt);
-	CL_CampaignRunAircraft(dt, updateRadarOverlay);
+	UFO_CampaignRunUFOs(campaign, dt);
+	CL_CampaignRunAircraft(campaign, dt, updateRadarOverlay);
 
 	AIRFIGHT_CampaignRunBaseDefence(dt);
-	AIRFIGHT_CampaignRunProjectiles(dt);
+	AIRFIGHT_CampaignRunProjectiles(campaign, dt);
 	CP_CheckNewMissionDetectedOnGeoscape();
 
 	/* Update alien interest for bases */
@@ -587,7 +587,7 @@ void CL_CampaignRun (campaign_t *campaign)
 		for (i = 0; i < checks; i++) {
 			ccs.date.sec += dt;
 			ccs.timer -= dt;
-			CL_CampaignFunctionPeriodicCall(dt, qfalse);
+			CL_CampaignFunctionPeriodicCall(campaign, dt, qfalse);
 
 			/* if something stopped time, we must stop here the loop */
 			if (CL_IsTimeStopped()) {
@@ -618,7 +618,7 @@ void CL_CampaignRun (campaign_t *campaign)
 			AII_UpdateInstallationDelay();
 			AII_RepairAircraft();
 			TR_TransferCheck();
-			CP_IncreaseAlienInterest();
+			CP_IncreaseAlienInterest(campaign);
 		}
 
 		/* daily events */
@@ -644,10 +644,10 @@ void CL_CampaignRun (campaign_t *campaign)
 		/* check for campaign events
 		 * aircraft and UFO already moved during radar detection (see above),
 		 * just make them move the missing part -- if any */
-		CL_CampaignFunctionPeriodicCall(dt, qtrue);
+		CL_CampaignFunctionPeriodicCall(campaign, dt, qtrue);
 
 		UP_GetUnreadMails();
-		CP_CheckMissionEnd();
+		CP_CheckMissionEnd(campaign);
 		CP_CheckLostCondition(campaign);
 		/* Check if there is a base attack mission */
 		CP_CheckBaseAttacks();

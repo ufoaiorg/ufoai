@@ -585,7 +585,7 @@ extern cvar_t *cp_start_employees;
 #define MAX_CREDITS 10000000
 
 void CP_ParseCharacterData(struct dbuffer *msg);
-qboolean CP_CheckNextStageDestination(aircraft_t *ufo);
+qboolean CP_CheckNextStageDestination(const campaign_t* campaign, aircraft_t *ufo);
 
 void CP_InitStartup(void);
 void CL_ResetSinglePlayerData(void);
@@ -617,7 +617,7 @@ int CP_TerrorMissionAvailableUFOs(const mission_t const *mission, ufoType_t *ufo
 qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 
-void CP_UFOProceedMission(aircraft_t *ufocraft);
+void CP_UFOProceedMission(const campaign_t* campaign, aircraft_t *ufocraft);
 qboolean CP_IsRunning(void);
 
 mission_t *CP_CreateNewMission(interestCategory_t category, qboolean beginNow);

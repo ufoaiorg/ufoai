@@ -138,7 +138,7 @@ static void GAME_CP_Results_f (void)
 		return;
 	}
 
-	CP_MissionEnd(ccs.selectedMission, &ccs.battleParameters, Com_ParseBoolean(Cmd_Argv(1)));
+	CP_MissionEnd(ccs.curCampaign, ccs.selectedMission, &ccs.battleParameters, Com_ParseBoolean(Cmd_Argv(1)));
 }
 
 /**

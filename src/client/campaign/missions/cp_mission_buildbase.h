@@ -30,7 +30,7 @@ extern const int STARTING_BASEBUILD_INTEREST;
 
 qboolean CP_BasemissionIsSubvertingGovernmentMission(const mission_t *mission);
 int CP_BuildBaseMissionAvailableUFOs(const mission_t const *mission, ufoType_t *ufoTypes);
-void CP_BuildBaseMissionNextStage(mission_t *mission);
+void CP_BuildBaseMissionNextStage(const campaign_t *campaign, mission_t *mission);
 void CP_BuildBaseMissionIsFailure(mission_t *mission);
 void CP_BuildBaseMissionBaseDestroyed(mission_t *mission);
 void CP_BuildBaseMissionIsSuccess(mission_t *mission);

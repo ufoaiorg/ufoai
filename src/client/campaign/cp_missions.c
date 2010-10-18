@@ -1040,7 +1040,7 @@ void CP_MissionNotifyInstallationDestroyed (const installation_t const *installa
  * @brief Determine what action should be performed when a mission stage ends.
  * @param[in] mission Pointer to the mission which stage ended.
  */
-void CP_MissionStageEnd (mission_t *mission)
+void CP_MissionStageEnd (const campaign_t* campaign, mission_t *mission)
 {
 	Com_DPrintf(DEBUG_CLIENT, "Ending mission category %i, stage %i (time: %i day, %i sec)\n",
 		mission->category, mission->stage, ccs.date.day, ccs.date.sec);
@@ -1063,7 +1063,7 @@ void CP_MissionStageEnd (mission_t *mission)
 		CP_BaseAttackMissionNextStage(mission);
 		break;
 	case INTERESTCATEGORY_BUILDING:
-		CP_BuildBaseMissionNextStage(mission);
+		CP_BuildBaseMissionNextStage(campaign, mission);
 		break;
 	case INTERESTCATEGORY_SUPPLY:
 		CP_SupplyMissionNextStage(mission);
@@ -1207,7 +1207,7 @@ void CP_MissionEndActions (mission_t *mission, aircraft_t *aircraft, qboolean wo
 /**
  * @sa CL_GameAutoGo
  */
-void CP_MissionEnd (mission_t* mission, const battleParam_t* battleParameters, qboolean won)
+void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battleParam_t* battleParameters, qboolean won)
 {
 	int civiliansKilled;
 	int aliensKilled;
@@ -1231,8 +1231,8 @@ void CP_MissionEnd (mission_t* mission, const battleParam_t* battleParameters, q
 
 	civiliansKilled = ccs.civiliansKilled;
 	aliensKilled = ccs.aliensKilled;
-	CL_HandleNationData(ccs.curCampaign, won, mission, battleParameters->nation, &ccs.missionResults);
-	CP_CheckLostCondition(ccs.curCampaign);
+	CL_HandleNationData(campaign, won, mission, battleParameters->nation, &ccs.missionResults);
+	CP_CheckLostCondition(campaign);
 
 	/* update the character stats */
 	CP_ParseCharacterData(NULL);
@@ -1280,7 +1280,7 @@ void CP_MissionEnd (mission_t* mission, const battleParam_t* battleParameters, q
  * @sa UFO_CampaignRunUFOs
  * @return True if UFO is removed from global array (and therefore pointer ufocraft can't be used anymore).
  */
-qboolean CP_CheckNextStageDestination (aircraft_t *ufocraft)
+qboolean CP_CheckNextStageDestination (const campaign_t* campaign, aircraft_t *ufocraft)
 {
 	mission_t *mission;
 
@@ -1290,10 +1290,10 @@ qboolean CP_CheckNextStageDestination (aircraft_t *ufocraft)
 	switch (mission->stage) {
 	case STAGE_COME_FROM_ORBIT:
 	case STAGE_MISSION_GOTO:
-		CP_MissionStageEnd(mission);
+		CP_MissionStageEnd(campaign, mission);
 		return qfalse;
 	case STAGE_RETURN_TO_ORBIT:
-		CP_MissionStageEnd(mission);
+		CP_MissionStageEnd(campaign, mission);
 		return qtrue;
 	default:
 		/* Do nothing */
@@ -1305,7 +1305,7 @@ qboolean CP_CheckNextStageDestination (aircraft_t *ufocraft)
  * @brief Make UFO proceed with its mission when the fight with another aircraft is over (and UFO survived).
  * @param[in] ufo Pointer to the ufo that should proceed a mission.
  */
-void CP_UFOProceedMission (aircraft_t *ufo)
+void CP_UFOProceedMission (const campaign_t* campaign, aircraft_t *ufo)
 {
 	/* Every UFO on geoscape must have a mission assigned */
 	assert(ufo->mission);
@@ -1318,7 +1318,7 @@ void CP_UFOProceedMission (aircraft_t *ufo)
 		if (slotIndex != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT)
 			UFO_SetRandomDest(ufo);
 		else
-			CP_MissionStageEnd(ufo->mission);
+			CP_MissionStageEnd(campaign, ufo->mission);
 	} else if (ufo->mission->stage < STAGE_MISSION_GOTO ||
 		ufo->mission->stage >= STAGE_RETURN_TO_ORBIT) {
 		UFO_SetRandomDest(ufo);

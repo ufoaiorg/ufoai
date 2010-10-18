@@ -91,10 +91,10 @@ void CL_ChangeIndividualInterest (float interestFactor, interestCategory_t categ
  * @sa CL_CampaignRun
  * @note hourly called
  */
-void CP_IncreaseAlienInterest (void)
+void CP_IncreaseAlienInterest (const campaign_t *campaign)
 {
 	/* Adjust interest increase rate by difficulty. */
-	const int delayBetweenIncrease = HOURS_PER_ONE_INTEREST - ccs.curCampaign->difficulty;
+	const int delayBetweenIncrease = HOURS_PER_ONE_INTEREST - campaign->difficulty;
 
 	ccs.lastInterestIncreaseDelay++;
 

@@ -300,7 +300,7 @@ static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraf
  * @param[in] target The ufo we are going to attack.
  * @todo Implement me and display an attack popup.
  */
-void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
+void AIRFIGHT_ExecuteActions (const campaign_t* campaign, aircraft_t* shooter, aircraft_t* target)
 {
 	int slotIdx;
 
@@ -325,7 +325,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 
 			if (shooter->type != AIRCRAFT_UFO) {
 				/* Maybe UFO is going to shoot back ? */
-				UFO_CheckShootBack(target, shooter);
+				UFO_CheckShootBack(campaign, target, shooter);
 			} else {
 				/* an undetected UFO within radar range and firing should become detected */
 				if (!shooter->detected && RADAR_CheckRadarSensored(shooter->pos)) {
@@ -348,7 +348,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 		/* no ammo left, or no weapon, proceed with mission */
 		if (shooter->type == AIRCRAFT_UFO) {
 			shooter->aircraftTarget = NULL;		/* reset target */
-			CP_UFOProceedMission(shooter);
+			CP_UFOProceedMission(campaign, shooter);
 		} else {
 			MS_AddNewMessage(_("Notice"), _("Our aircraft has no more ammo left - returning to home base now."), qfalse, MSG_STANDARD, NULL);
 			AIR_AircraftReturnToBase(shooter);
@@ -405,7 +405,7 @@ static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t * ai
  * @sa CP_Load
  * @sa CP_SpawnCrashSiteMission
  */
-void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, qboolean phalanxWon)
+void AIRFIGHT_ActionsAfterAirfight (const campaign_t* campaign, aircraft_t *shooter, aircraft_t* aircraft, qboolean phalanxWon)
 {
 	if (phalanxWon) {
 		byte *color;
@@ -454,7 +454,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 
 		/* Make UFO proceed with its mission, if it has not been already destroyed */
 		if (shooter)
-			CP_UFOProceedMission(shooter);
+			CP_UFOProceedMission(campaign, shooter);
 
 		MS_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_DEATH, NULL);
 	}
@@ -525,7 +525,7 @@ static int AIRFIGHT_GetDamage (const objDef_t *od, const aircraft_t* target)
  * @param[in] projectile Pointer to the projectile.
  * @note the target loose (base damage - shield of target) hit points
  */
-static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
+static void AIRFIGHT_ProjectileHits (const campaign_t* campaign, aircraftProjectile_t *projectile)
 {
 	aircraft_t *target;
 	int damage = 0;
@@ -548,7 +548,7 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 		target->damage -= damage;
 		if (target->damage <= 0)
 			/* Target is destroyed */
-			AIRFIGHT_ActionsAfterAirfight(projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
+			AIRFIGHT_ActionsAfterAirfight(campaign, projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
 	}
 }
 
@@ -588,7 +588,7 @@ static void AIRFIGHT_GetNextPointInPath (const float *movement, const vec2_t ori
  * @brief Update values of projectiles.
  * @param[in] dt Time elapsed since last call of this function.
  */
-void AIRFIGHT_CampaignRunProjectiles (int dt)
+void AIRFIGHT_CampaignRunProjectiles (const campaign_t* campaign, int dt)
 {
 	int idx;
 
@@ -604,7 +604,7 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 		if (AIRFIGHT_ProjectileReachedTarget(projectile, movement)) {
 			/* check if it got the ennemy */
 			if (projectile->aimedAircraft)
-				AIRFIGHT_ProjectileHits(projectile);
+				AIRFIGHT_ProjectileHits(campaign, projectile);
 
 			/* remove the missile from ccs.projectiles[] */
 			AIRFIGHT_RemoveProjectile(projectile);
