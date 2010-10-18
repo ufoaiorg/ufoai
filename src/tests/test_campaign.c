@@ -99,6 +99,8 @@ static int UFO_InitSuiteCampaign (void)
 
 	Cmd_AddCommand("msgoptions_set", Cmd_Dummy_f, NULL);
 
+	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, NULL);
+
 	CL_SetClientState(ca_disconnected);
 	cls.realtime = Sys_Milliseconds();
 
@@ -370,17 +372,63 @@ static void testMap (void)
 
 static void testAirFight (void)
 {
-#if 0
 	const vec2_t destination = { 10, 10 };
 	mission_t *mission;
+	aircraft_t *aircraft;
+	base_t *base;
+	int i, cnt;
+	/* just some random delta time value */
+	const int deltaTime = 10;
 
 	ResetCampaignData();
 
+	base = CreateBase("unittestairfight", destination);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
+
+	aircraft = AIR_GetNextFromBase(base, NULL);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
+	aircraft->status = AIR_IDLE;
+
+	cnt = AIR_BaseCountAircraft(base);
+
+	/* prepare the mission */
 	mission = CP_CreateNewMission(INTERESTCATEGORY_INTERCEPT, qtrue);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(mission);
-	CU_ASSERT_TRUE(CP_MissionBegin(mission));
+	CU_ASSERT_EQUAL(mission->stage, STAGE_NOT_ACTIVE);
+	CP_InterceptNextStage(mission);
+	CU_ASSERT_EQUAL(mission->stage, STAGE_COME_FROM_ORBIT);
+	CP_InterceptNextStage(mission);
+	CU_ASSERT_EQUAL(mission->stage, STAGE_INTERCEPT);
 	mission->ufo->ufotype = UFO_FIGHTER;
-#endif
+	/* we have to update the routing data here to be sure that the ufo is
+	 * not spawned on the other side of the globe */
+	Vector2Copy(destination, mission->ufo->pos);
+	UFO_SendToDestination(mission->ufo, destination);
+	CU_ASSERT_TRUE(VectorEqual(mission->ufo->pos, base->pos));
+	CU_ASSERT_TRUE(VectorEqual(mission->ufo->pos, aircraft->pos));
+
+	/* search a target */
+	UFO_CampaignRunUFOs(deltaTime);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(mission->ufo->aircraftTarget);
+
+	/* ensure that one hit will destroy the craft */
+	mission->ufo->aircraftTarget->damage = 1;
+	UFO_CheckShootBack(mission->ufo, mission->ufo->aircraftTarget);
+
+	/* one projectile should be spawned */
+	CU_ASSERT_EQUAL(ccs.numProjectiles, 1);
+	AIRFIGHT_CampaignRunProjectiles(deltaTime);
+
+	/* target is destroyed */
+	CU_ASSERT_PTR_NULL(mission->ufo->aircraftTarget);
+
+	/* one aircraft less */
+	CU_ASSERT_EQUAL(cnt - 1, AIR_BaseCountAircraft(base));
+
+	/* cleanup for the following tests */
+	E_DeleteAllEmployees(NULL);
+
+	base->founded = qfalse;
 }
 
 static void testGeoscape (void)
@@ -433,7 +481,6 @@ static void testSaveLoad (void)
 
 	SAV_Init();
 
-	cl_geoscape_overlay = Cvar_Get("cl_geoscape_overlay", "0", 0, NULL);
 	ccs.curCampaign = campaign;
 
 	Cvar_Set("save_compressed", "0");
