@@ -453,6 +453,33 @@ static void testGeoscape (void)
 	ResetCampaignData();
 }
 
+static void testRadar (void)
+{
+	base_t *base;
+	const vec2_t destination = { 10, 10 };
+	aircraft_t *ufo;
+	mission_t *mission;
+	ufoType_t ufoType = UFO_FIGHTER;
+
+	ResetCampaignData();
+
+	base = CreateBase("unittestradar", destination);
+
+	mission = CP_CreateNewMission(INTERESTCATEGORY_INTERCEPT, qtrue);
+	ufo = UFO_AddToGeoscape(ufoType, destination, mission);
+	Vector2Copy(destination, ufo->pos);
+	UFO_SendToDestination(ufo, destination);
+	CU_ASSERT_TRUE(VectorEqual(ufo->pos, base->pos));
+	CU_ASSERT_TRUE(VectorEqual(ufo->pos, ufo->pos));
+	CU_ASSERT_TRUE(RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, qfalse));
+	CU_ASSERT_TRUE(ufo->detected);
+
+	/* cleanup for the following tests */
+	E_DeleteAllEmployees(NULL);
+
+	base->founded = qfalse;
+}
+
 static void testNation (void)
 {
 	const nation_t *nation;
@@ -613,6 +640,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testGeoscape) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testRadar) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testNation) == NULL)
