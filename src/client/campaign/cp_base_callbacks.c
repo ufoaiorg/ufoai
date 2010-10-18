@@ -201,8 +201,6 @@ static void B_BuildBase_f (void)
 	if (!base)
 		return;
 
-	assert(!base->founded);
-
 	if (ccs.credits - campaign->basecost > 0) {
 		const char *baseName = mn_base_title->string;
 		if (baseName[0] == '\0')
