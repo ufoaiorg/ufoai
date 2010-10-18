@@ -196,18 +196,12 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 /**
  * @brief This function parses a list of items that should be set to researched = true after campaign start
  */
-static void CL_ParseResearchedCampaignItems (const char *name, const char **text)
+static void CL_ParseResearchedCampaignItems (const campaign_t *campaign, const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseResearchedCampaignItems: unexpected end of file (equipment ";
 	const char *token;
 	int i;
-	const campaign_t* campaign;
 
-	campaign = CL_GetCampaign(cp_campaign->string);
-	if (!campaign) {
-		Com_Printf("CL_ParseResearchedCampaignItems: failed\n");
-		return;
-	}
 	/* Don't parse if it is not definition for current type of campaign. */
 	if (strcmp(campaign->researched, name))
 		return;
@@ -252,20 +246,12 @@ static void CL_ParseResearchedCampaignItems (const char *name, const char **text
  * @param[in,out] text Script to parse
  * @param[in] researchable Mark them researchable or not researchable
  * @sa CL_ParseScriptFirst
- * @todo Mark unresearchable
  */
-static void CL_ParseResearchableCampaignStates (const char *name, const char **text, qboolean researchable)
+static void CL_ParseResearchableCampaignStates (const campaign_t *campaign, const char *name, const char **text, qboolean researchable)
 {
 	const char *errhead = "CL_ParseResearchableCampaignStates: unexpected end of file (equipment ";
 	const char *token;
 	int i;
-	const campaign_t* campaign;
-
-	campaign = CL_GetCampaign(cp_campaign->string);
-	if (!campaign) {
-		Com_Printf("CL_ParseResearchableCampaignStates: failed\n");
-		return;
-	}
 
 	/* get it's body */
 	token = Com_Parse(text);
@@ -292,8 +278,9 @@ static void CL_ParseResearchableCampaignStates (const char *name, const char **t
 				if (researchable) {
 					tech->mailSent = MAILSENT_PROPOSAL;
 					RS_MarkOneResearchable(tech);
-				} else
-					Com_Printf("@todo Mark unresearchable");
+				} else {
+					/** @todo Mark unresearchable */
+				}
 				Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", tech->id);
 				break;
 			}
@@ -694,14 +681,21 @@ static void CL_ParseScriptSecond (const char *type, const char *name, const char
 		AIR_ParseAircraft(name, text, qtrue);
 	else if (!strcmp(type, "basetemplate"))
 		B_ParseBaseTemplate(name, text);
-	else if (!strcmp(type, "researched"))
-		CL_ParseResearchedCampaignItems(name, text);
-	else if (!strcmp(type, "researchable"))
-		CL_ParseResearchableCampaignStates(name, text, qtrue);
-	else if (!strcmp(type, "notresearchable"))
-		CL_ParseResearchableCampaignStates(name, text, qfalse);
 	else if (!strcmp(type, "campaign"))
 		CL_ParseCampaign(name, text);
+}
+
+/**
+ * @brief Parses the campaign specific data - this data can only be parsed once the campaign started
+ */
+static void CL_ParseScriptCampaignRelated (const campaign_t *campaign, const char *type, const char *name, const char **text)
+{
+	if (!strcmp(type, "researched"))
+		CL_ParseResearchedCampaignItems(campaign, name, text);
+	else if (!strcmp(type, "researchable"))
+		CL_ParseResearchableCampaignStates(campaign, name, text, qtrue);
+	else if (!strcmp(type, "notresearchable"))
+		CL_ParseResearchableCampaignStates(campaign, name, text, qfalse);
 }
 
 /**
@@ -831,4 +825,17 @@ void CL_ReadSinglePlayerData (void)
 	Com_Printf("...nations: %i\n", ccs.numNations);
 	Com_Printf("...cities: %i\n", ccs.numCities);
 	Com_Printf("\n");
+}
+
+void CL_ReadCampaignData (const campaign_t *campaign)
+{
+	const char *type, *name, *text;
+
+	/* stage two parsing */
+	FS_NextScriptHeader(NULL, NULL, NULL);
+	text = NULL;
+
+	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
+		CL_ParseScriptCampaignRelated(campaign, type, name, &text);
 }

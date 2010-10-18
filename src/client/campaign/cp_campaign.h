@@ -594,6 +594,7 @@ void CL_UpdateCredits(int credits);
 aircraft_t* AIR_NewAircraft(base_t * base, const aircraft_t *aircraftTemplate);
 const char* CL_SecondConvert(int second);
 void CL_ReadSinglePlayerData(void);
+void CL_ReadCampaignData(const campaign_t *campaign);
 
 void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);
 qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);

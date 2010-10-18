@@ -1375,6 +1375,8 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 {
 	ccs.curCampaign = campaign;
 
+	CL_ReadCampaignData(campaign);
+
 	RS_InitTree(campaign, load);		/**< Initialise all data in the research tree. */
 
 	CP_AddCampaignCommands();

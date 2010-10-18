@@ -68,17 +68,18 @@ static campaign_t *GetCampaign (void)
 
 static void ResetCampaignData (void)
 {
-	campaign_t *campaign;
+	const campaign_t *campaign;
 
 	CL_ResetSinglePlayerData();
 	CL_ReadSinglePlayerData();
+	campaign = GetCampaign();
+	CL_ReadCampaignData(campaign);
 
 	ResetInventoryList();
 
 	CL_UpdateCredits(MAX_CREDITS);
 
 	MAP_Shutdown();
-	campaign = GetCampaign();
 	MAP_Init(campaign->map);
 }
 
