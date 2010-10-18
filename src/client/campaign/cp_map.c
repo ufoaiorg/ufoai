@@ -2479,33 +2479,33 @@ void MAP_Shutdown (void)
 	}
 }
 
-void MAP_Init (const campaign_t *campaign)
+void MAP_Init (const char *map)
 {
 	/* load terrain mask */
-	R_LoadImage(va("pics/geoscape/%s_terrain", campaign->map), &terrainPic, &terrainWidth, &terrainHeight);
+	R_LoadImage(va("pics/geoscape/%s_terrain", map), &terrainPic, &terrainWidth, &terrainHeight);
 	if (!terrainPic || !terrainWidth || !terrainHeight)
-		Com_Error(ERR_DROP, "Couldn't load map mask %s_terrain in pics/geoscape", campaign->map);
+		Com_Error(ERR_DROP, "Couldn't load map mask %s_terrain in pics/geoscape", map);
 
 	/* load culture mask */
-	R_LoadImage(va("pics/geoscape/%s_culture", campaign->map), &culturePic, &cultureWidth, &cultureHeight);
+	R_LoadImage(va("pics/geoscape/%s_culture", map), &culturePic, &cultureWidth, &cultureHeight);
 	if (!culturePic || !cultureWidth || !cultureHeight)
-		Com_Error(ERR_DROP, "Couldn't load map mask %s_culture in pics/geoscape", campaign->map);
+		Com_Error(ERR_DROP, "Couldn't load map mask %s_culture in pics/geoscape", map);
 
 	/* load population mask */
-	R_LoadImage(va("pics/geoscape/%s_population", campaign->map), &populationPic, &populationWidth, &populationHeight);
+	R_LoadImage(va("pics/geoscape/%s_population", map), &populationPic, &populationWidth, &populationHeight);
 	if (!populationPic || !populationWidth || !populationHeight)
-		Com_Error(ERR_DROP, "Couldn't load map mask %s_population in pics/geoscape", campaign->map);
+		Com_Error(ERR_DROP, "Couldn't load map mask %s_population in pics/geoscape", map);
 
 	/* load nations mask */
-	R_LoadImage(va("pics/geoscape/%s_nations", campaign->map), &nationsPic, &nationsWidth, &nationsHeight);
+	R_LoadImage(va("pics/geoscape/%s_nations", map), &nationsPic, &nationsWidth, &nationsHeight);
 	if (!nationsPic || !nationsWidth || !nationsHeight)
-		Com_Error(ERR_DROP, "Couldn't load map mask %s_nations in pics/geoscape", campaign->map);
+		Com_Error(ERR_DROP, "Couldn't load map mask %s_nations in pics/geoscape", map);
 }
 
-void MAP_Reset (const campaign_t *campaign)
+void MAP_Reset (const char *map)
 {
 	MAP_Shutdown();
-	MAP_Init(campaign);
+	MAP_Init(map);
 	MAP_ResetAction();
 	MAP_UpdateGeoscapeDock();
 }

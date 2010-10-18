@@ -68,12 +68,18 @@ static campaign_t *GetCampaign (void)
 
 static void ResetCampaignData (void)
 {
+	campaign_t *campaign;
+
 	CL_ResetSinglePlayerData();
 	CL_ReadSinglePlayerData();
 
 	ResetInventoryList();
 
 	CL_UpdateCredits(MAX_CREDITS);
+
+	MAP_Shutdown();
+	campaign = GetCampaign();
+	MAP_Init(campaign->map);
 }
 
 /**
@@ -357,11 +363,8 @@ static void testProductionAircraft (void)
 static void testMap (void)
 {
 	vec2_t pos;
-	campaign_t *campaign = GetCampaign();
 
 	ResetCampaignData();
-
-	MAP_Init(campaign);
 
 	Vector2Set(pos, -51, 0);
 	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)));
@@ -377,8 +380,9 @@ static void testAirFight (void)
 	aircraft_t *aircraft;
 	base_t *base;
 	int i, cnt;
-	/* just some random delta time value */
-	const int deltaTime = 10;
+	/* just some random delta time value that is high enough
+	 * to ensure that all the weapons are reloaded */
+	const int deltaTime = 1000;
 
 	ResetCampaignData();
 
@@ -388,6 +392,7 @@ static void testAirFight (void)
 	aircraft = AIR_GetNextFromBase(base, NULL);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
 	aircraft->status = AIR_IDLE;
+	CU_ASSERT_TRUE(AIR_IsAircraftOnGeoscape(aircraft));
 
 	cnt = AIR_BaseCountAircraft(base);
 
@@ -406,6 +411,10 @@ static void testAirFight (void)
 	UFO_SendToDestination(mission->ufo, destination);
 	CU_ASSERT_TRUE(VectorEqual(mission->ufo->pos, base->pos));
 	CU_ASSERT_TRUE(VectorEqual(mission->ufo->pos, aircraft->pos));
+
+	CU_ASSERT_TRUE(aircraft->maxWeapons > 0);
+	for (i = 0; i < aircraft->maxWeapons; i++)
+		CU_ASSERT_TRUE(aircraft->weapons[i].delayNextShot == 0);
 
 	/* search a target */
 	UFO_CampaignRunUFOs(deltaTime);
