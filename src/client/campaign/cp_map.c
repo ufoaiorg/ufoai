@@ -2377,6 +2377,8 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 		Com_Error(ERR_DROP, "Unknown maptype %i\n", type);
 	}
 
+	assert(mask);
+
 	/** @todo add EQUAL_EPSILON here? */
 	assert(pos[0] >= -180);
 	assert(pos[0] <= 180);
