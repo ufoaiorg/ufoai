@@ -658,7 +658,7 @@ void CL_CampaignRun (campaign_t *campaign)
 		/* every first day of a month */
 		if (date.day == 1 && ccs.paid && B_AtLeastOneExists()) {
 			CP_NationBackupMonthlyData();
-			CP_NationHandleBudget();
+			CP_NationHandleBudget(campaign);
 			ccs.paid = qfalse;
 		} else if (date.day > 1)
 			ccs.paid = qtrue;
@@ -1667,35 +1667,34 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 	return qtrue;
 }
 
-int CP_GetSalaryAdministrative (void)
+int CP_GetSalaryAdministrative (const salary_t *salary)
 {
-	int i, costs = SALARY_ADMIN_INITIAL;
+	int i, costs;
+
+	costs = salary->adminInitial;
 	for (i = 0; i < MAX_EMPL; i++)
-		costs += ccs.numEmployees[i] * CP_GetSalaryAdminEmployee(i);
+		costs += ccs.numEmployees[i] * CP_GetSalaryAdminEmployee(salary, i);
 	return costs;
 }
 
-int CP_GetSalaryBaseEmployee (employeeType_t type)
+int CP_GetSalaryBaseEmployee (const salary_t *salary, employeeType_t type)
 {
-	const salary_t *salary = SALARY_GET();
 	return salary->base[type];
 }
 
-int CP_GetSalaryAdminEmployee (employeeType_t type)
+int CP_GetSalaryAdminEmployee (const salary_t *salary, employeeType_t type)
 {
-	const salary_t *salary = SALARY_GET();
 	return salary->admin[type];
 }
 
-int CP_GetSalaryRankBonusEmployee (employeeType_t type)
+int CP_GetSalaryRankBonusEmployee (const salary_t *salary, employeeType_t type)
 {
-	const salary_t *salary = SALARY_GET();
 	return salary->rankBonus[type];
 }
 
-int CP_GetSalaryUpKeepBase (const base_t *base)
+int CP_GetSalaryUpKeepBase (const salary_t *salary, const base_t *base)
 {
-	int cost = SALARY_BASE_UPKEEP;	/* base cost */
+	int cost = salary->baseUpkeep;	/* base cost */
 	building_t *building = NULL;
 	while ((building = B_GetNextBuilding(base, building))) {
 		if (building->buildingStatus == B_STATUS_WORKING

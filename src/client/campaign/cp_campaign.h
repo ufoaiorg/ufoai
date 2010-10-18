@@ -344,18 +344,13 @@ typedef struct campaign_s {
 	salary_t salaries;
 } campaign_t;
 
-#define SALARY_GET() (&ccs.curCampaign->salaries)
-#define SALARY_AIRCRAFT_FACTOR SALARY_GET()->aircraftFactor
-#define SALARY_AIRCRAFT_DIVISOR SALARY_GET()->aircraftDivisor
-#define SALARY_BASE_UPKEEP SALARY_GET()->baseUpkeep
-#define SALARY_ADMIN_INITIAL SALARY_GET()->adminInitial
-#define SALARY_DEBT_INTEREST SALARY_GET()->debtInterest
+#define SALARY_GET(campaign) (&campaign->salaries)
 
-int CP_GetSalaryBaseEmployee(employeeType_t type);
-int CP_GetSalaryAdminEmployee(employeeType_t type);
-int CP_GetSalaryRankBonusEmployee(employeeType_t type);
-int CP_GetSalaryAdministrative(void);
-int CP_GetSalaryUpKeepBase(const base_t *base);
+int CP_GetSalaryBaseEmployee(const salary_t *salary, employeeType_t type);
+int CP_GetSalaryAdminEmployee(const salary_t *salary, employeeType_t type);
+int CP_GetSalaryRankBonusEmployee(const salary_t *salary, employeeType_t type);
+int CP_GetSalaryAdministrative(const salary_t *salary);
+int CP_GetSalaryUpKeepBase(const salary_t *salary, const base_t *base);
 
 /** possible geoscape actions */
 typedef enum mapAction_s {

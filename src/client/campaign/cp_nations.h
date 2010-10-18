@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_NATIONS_H
 #define CP_NATIONS_H
 
-void CP_NationHandleBudget(void);
+void CP_NationHandleBudget(const campaign_t *campaign);
 void CP_NationBackupMonthlyData(void);
 
 #endif

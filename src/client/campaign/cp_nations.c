@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa CL_CampaignRun
  * @sa B_CreateEmployee
  */
-void CP_NationHandleBudget (void)
+void CP_NationHandleBudget (const campaign_t *campaign)
 {
 	int i, j;
 	char message[1024];
@@ -48,6 +48,7 @@ void CP_NationHandleBudget (void)
 	int initialCredits = ccs.credits;
 	employee_t *employee;
 	base_t *base;
+	const salary_t *salary = &campaign->salaries;
 
 	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
 	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
@@ -94,8 +95,8 @@ void CP_NationHandleBudget (void)
 		employee = NULL;
 		cost = 0;
 		while ((employee = E_GetNextHired(i, employee))) {
-			cost += CP_GetSalaryBaseEmployee(employee->type)
-					+ employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(employee->type);
+			cost += CP_GetSalaryBaseEmployee(salary, employee->type)
+					+ employee->chr.score.rank * CP_GetSalaryRankBonusEmployee(salary, employee->type);
 		}
 		totalExpenditure += cost;
 		Com_sprintf(message, sizeof(message), _("Paid %i credits to: %s"), cost, E_GetEmployeeString(i));
@@ -105,9 +106,10 @@ void CP_NationHandleBudget (void)
 	cost = 0;
 	base = NULL;
 	while ((base = B_GetNextFounded(base)) != NULL) {
+		const salary_t *salary = SALARY_GET(campaign);
 		aircraft_t *aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
-			cost += aircraft->price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
+			cost += aircraft->price * salary->aircraftFactor / salary->aircraftDivisor;
 	}
 	totalExpenditure += cost;
 
@@ -118,20 +120,20 @@ void CP_NationHandleBudget (void)
 
 	base = NULL;
 	while ((base = B_GetNextFounded(base)) != NULL) {
-		cost = CP_GetSalaryUpKeepBase(base);
+		cost = CP_GetSalaryUpKeepBase(salary, base);
 		totalExpenditure += cost;
 
 		Com_sprintf(message, sizeof(message), _("Paid %i credits for upkeep of %s"), cost, base->name);
 		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 
-	cost = CP_GetSalaryAdministrative();
+	cost = CP_GetSalaryAdministrative(salary);
 	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
 	totalExpenditure += cost;
 	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 
 	if (initialCredits < 0) {
-		float interest = initialCredits * SALARY_DEBT_INTEREST;
+		const float interest = initialCredits * SALARY_GET(campaign)->debtInterest;
 
 		cost = (int)ceil(interest);
 		Com_sprintf(message, sizeof(message), _("Paid %i credits in interest on your debt."), cost);

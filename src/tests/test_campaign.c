@@ -454,10 +454,7 @@ static void testNation (void)
 
 	CU_ASSERT_PTR_NOT_NULL(nation);
 
-	/** @todo salary stuff needs this - get rid of it */
-	ccs.curCampaign = campaign;
-
-	CP_NationHandleBudget();
+	CP_NationHandleBudget(campaign);
 	/** @todo implement a check here */
 }
 
