@@ -491,10 +491,10 @@ static void U2M_SetDefaultConfigValues (void)
 	config.mapMicrovol = 1.0f; /* this value is up for debate blondandy */
 
 	/* lightmap night values */
-	VectorSet(config.sun_ambient_color[LIGHTMAP_NIGHT], 0.07, 0.07, 0.08);
-	config.sun_intensity[LIGHTMAP_NIGHT] = 70;
+	VectorSet(config.sun_ambient_color[LIGHTMAP_NIGHT], 0.16, 0.16, 0.17);
+	config.sun_intensity[LIGHTMAP_NIGHT] = 15;
 	Vector2Set(config.sun_angles[LIGHTMAP_NIGHT], -80, 220);
-	VectorSet(config.sun_color[LIGHTMAP_NIGHT], 0.65, 0.75, 0.95);
+	VectorSet(config.sun_color[LIGHTMAP_NIGHT], 0.25, 0.25, 0.35);
 	ColorNormalize(config.sun_color[LIGHTMAP_NIGHT], config.sun_color[LIGHTMAP_NIGHT]);
 	AngleVectors(config.sun_angles[LIGHTMAP_NIGHT], config.sun_normal[LIGHTMAP_NIGHT], NULL, NULL);
 
