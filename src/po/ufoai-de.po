@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2010-10-10 20:14+0200\n"
-"PO-Revision-Date: 2010-10-10 21:31+0100\n"
+"PO-Revision-Date: 2010-10-18 14:08+0100\n"
 "Last-Translator: Maik Greubel <greubel@nkey.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -646,9 +646,8 @@ msgid "Play the aliens"
 msgstr "Spiele die Außerirdischen"
 
 #: ../base/ufos/campaign.ufo:191
-#, fuzzy
 msgid "alien_campaign_txt"
-msgstr "<TODO>"
+msgstr "Diese Kampagne macht es möglich, das Spiel von der anderen Seite kennenzulernen - spiele die Außerirdischen bei der Invasion der Erde."
 
 #: ../base/ufos/cities.ufo:15
 msgid "Amsterdam"
@@ -2789,9 +2788,19 @@ msgid "Alien died"
 msgstr "Alien ist gestorben"
 
 #: ../base/ufos/events.ufo:46
-#, fuzzy
 msgid "mail_stunned_alien_died"
-msgstr "<TODO>"
+msgstr ""
+"Kommandant,\n"
+"\n"
+"ich fürchte, ich habe schlechte Nachrichten. Trotz unser besten Bemühungen sind die außerirdischen Muster, welche wir bei unserem letzten taktischen Einsatz geborgen haben, in unseren Quarantänestationen unbrauchbar geworden. Wir sind nicht mehr in der Lage, ihre medizinischen Bedingungen aurfrecht zu erhalten, um nützliche Informationen zu gewinnen.\n"
+"\n"
+"Erste Anzeichen sprechen dafür das der Tod durch Erstickung eingetreten ist. Es macht den Anschein, das die Außerirdischen nur eine begrenzte Zeit in unserer Atmosphäre überleben können. Wir haben keine vollständige Untersuchung am Körper durchgeführt (nicht ohne Ihre Autorisierung), aber ich empfehle eine Autopsie zum derzeitigen Zeitpunkt. Wir müssen einen Weg finden, sie über einen längeren Zeitraum am Leben zu halten, sonst können wir keine aussagekräftige Forschung an ihnen durchführen.\n"
+"\n"
+"Mein Autopsieantrag wurde bereits zur Genehmung an Sie übersendet. Vielen Dank Kommander.\n"
+"\n"
+"Mit freundlichen Grüßen,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/events.ufo:57
 #: ../base/ufos/events.ufo:68
@@ -2845,9 +2854,11 @@ msgid "Production Finished -- %s"
 msgstr "Produktion abgeschlossen -- %s"
 
 #: ../base/ufos/events.ufo:102
-#, fuzzy
 msgid "mail_production_finished"
-msgstr "<TODO>"
+msgstr ""
+"Das Ingenieur-Team hat seine Arbeit an {item} in {location} abgeschlossen. Die Ausrüstung wurde getestet und ist bereit für den Einsatz.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/events.ufo:110
 #: ../base/ufos/events.ufo:132
@@ -2939,9 +2950,8 @@ msgid "Alien Base Discovered -- %s"
 msgstr "Außerirdische Basis entdeckt -- %s"
 
 #: ../base/ufos/events.ufo:201
-#, fuzzy
 msgid "mail_alien_base_discovered"
-msgstr "<TODO>"
+msgstr "Kommandant, unsere Agenten haben eine große Alien-Basis auf der Erde lokalisiert. Diese Basis stellt eine ernste Bedrohung gegen PHALANX und die Menschheit dar, wir müssen uns so schnell wie möglich darum kümmern."
 
 #: ../base/ufos/events.ufo:211
 msgid "Lost Radar Tracking -- %s"
@@ -3026,36 +3036,44 @@ msgid "Aircraft Lost Target -- %s"
 msgstr "Flugzeug hat Ziel verloren -- %s"
 
 #: ../base/ufos/events.ufo:278
-#, fuzzy
 msgid "mail_aircraft_lost_target"
-msgstr "<TODO>"
+msgstr ""
+"Kommandant, %s hat das Radar-Signal von %s verloren und kann es nicht wieder aufnehmen. Bitte um neue Instruktionen.\n"
+"\n"
+"-- COMAIR"
 
 #: ../base/ufos/events.ufo:288
 msgid "Aircraft Ready -- %s"
 msgstr "Flugzeug einsatzbereit -- %s"
 
 #: ../base/ufos/events.ufo:289
-#, fuzzy
 msgid "mail_aircraft_ready"
-msgstr "<TODO>"
+msgstr ""
+"Kommandant, %s wurde %s und ist bereit für den Einsatz\n"
+"\n"
+"-- COMAIR"
 
 #: ../base/ufos/events.ufo:299
 msgid "Aircraft Bingo Fuel -- %s"
 msgstr "Flugzeug Bingo Treibstoff -- %s"
 
 #: ../base/ufos/events.ufo:300
-#, fuzzy
 msgid "mail_aircraft_bingo_fuel"
-msgstr "<TODO>"
+msgstr ""
+"Kommandant, %s hat den Punkt der sicheren Rückkehr erreicht. Es ist nur noch Treibstoff für den Rückflug zu %s vorhanden. Einsatz wurde abgebrochen.\n"
+"\n"
+"-- COMAIR"
 
 #: ../base/ufos/events.ufo:310
 msgid "Aircraft Landed -- %s"
 msgstr "Flugzeug gelandet -- %s"
 
 #: ../base/ufos/events.ufo:311
-#, fuzzy
 msgid "mail_aircraft_landed"
-msgstr "<TODO>"
+msgstr ""
+"Kommandant, %s ist bei %s gelandet. Aktueller Vorgang ist %s. Geschätzte Dauer bevor es erneut starten kann ist %s Stunden.\n"
+"\n"
+"-- COMAIR"
 
 #: ../base/ufos/fonts.ufo:11
 #: ../base/ufos/fonts.ufo:18
@@ -3199,9 +3217,8 @@ msgid "Dutch"
 msgstr "Holländisch"
 
 #: ../base/ufos/language.ufo:224
-#, fuzzy
 msgid "Brazilian Portuguese"
-msgstr "Portugiesisch"
+msgstr "Brazilianisch-Portugiesisch"
 
 #: ../base/ufos/language.ufo:232
 msgid "Portuguese"
@@ -3244,9 +3261,8 @@ msgid "Norwegian"
 msgstr "Norwegisch"
 
 #: ../base/ufos/language.ufo:328
-#, fuzzy
 msgid "Turkish"
-msgstr "Tunis"
+msgstr "Türkisch"
 
 #: ../base/ufos/language.ufo:336
 msgid "No language"
@@ -3413,9 +3429,8 @@ msgid "An urban district in an oriental region."
 msgstr "Ein Stadtbezirk einer orientalischen Region."
 
 #: ../base/ufos/maps.ufo:2492
-#, fuzzy
 msgid "Underground pipe construction site."
-msgstr "Unterirdische Rohr-Konstruktions-Stätte."
+msgstr "Unterirdische Rohrleitungsanlage"
 
 #: ../base/ufos/maps.ufo:2539
 msgid "A subway station in a suburban part of town."
@@ -4795,7 +4810,46 @@ msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 #: ../base/ufos/research.ufo:906
 #, fuzzy
 msgid "bombkit1_txt"
-msgstr "<TODO>"
+msgstr ""
+"Technical Specifications: Medikit\n"
+"\n"
+"CLASSIFIED LEVEL YELLOW\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Technical Document, Delta Clearance\n"
+"\n"
+"Filed: 19 March 2084\n"
+"\n"
+"By: Surgeon-Captain Helen Floydd, Medical Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"In the past, the application of first aid and field surgery in hostile situations required specially-trained combat medics and surgeons who could handle the stresses of saving lives under fire. Troops who saw their friends being hit usually had no choice but to keep fighting and hope the medics would arrive in time -- that is, if they didn't freeze or panic or make some futile attempt at a field dressing without ability or materials. If the wounded survived at all, they'd still be out of action for weeks or months at a time.\n"
+"\n"
+"This may have been a workable strategy in the trenches of World War 2, but it isn't any longer. Waiting for a medic to arrive on the scene can contribute to the death of a soldier who might have been saved by immediate aid. The prompt application of trauma medicine needs to be made as quick and easy as possible so that any soldier can provide life-saving effort with minimal training. This is where the modern medikit comes in.\n"
+"\n"
+"Every medikit contains an onboard computer that can diagnose injuries via directed X-ray and ultrasound. It can run ECGs and EEGs at the same time, measure blood pressure and heart rate, and even calculate the soldier's combat effectiveness based on his or her individual record (stored in a small subdermal chip for medical, locational and identification purposes). All this information can be shown in a small hologram or displayed directly to a soldier's helmet information system. At the same time the medikit can deploy a number of drugs and sterile surgical tools for emergency operations, cauterise wounds via a special heating iron, and -- most importantly -- apply its store of nanorobots to a wound.\n"
+"\n"
+"The old idea of medical nanobots was first put into practice by Vietnamese researchers thirty years ago. Today, medicine without them is almost unthinkable. Nanobots are tiny robots several micrometres in diameter which can be programmed to perform specific tasks on the fly. They will quickly sterilise a wound and seal ruptured arteries, alert the medikit operator about any internal bleeding, request suction at appropriate places, patch up bowel or stomach punctures, revive or remove necrotic tissue, and repair nerve damage. They dissolve harmlessly in the victim's bloodstream once their battery runs out, which lasts no longer than 10 to 15 seconds, often not long enough to stabilise heavily-wounded troops. Two or more doses of nanobots may be required. Any number of doses can be applied and metabolised with no ill effects.\n"
+"\n"
+"This technology is the most important breakthrough in trauma surgery ever made. It can do everything except regenerate tissue. If more attention is required -- for example when a vital organ is hit, or a bullet is lodged in a critical place -- the medikit provides equipment and detailed instructions for the soldier to follow. It can never replace the operating room, but it's as close to a portable hospital as we'll ever get.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"All our soldiers have been trained in the use of the medikit. In fact, in an ideal situation, every soldier would carry one for immediate use -- but I recognise that our troops have a limited carrying capacity. All major wounds should be treated without delay to prevent complications and further risk to the injured soldier. If the victim can still walk, she should retreat from the firefight and seek cover in order to safely receive treatment by a comrade.\n"
+"\n"
+"The medikit's onboard pharmacy can also be used to revive unconscious soldiers. If this is done, please take care to remove the revived troop from the line of fire as soon as possible and proceed with further treatment from a safe position. The medic herself may be forced to engage approaching targets to enable the patient's escape; this is acceptable practice, but please supply the medic with adequate covering fire. Trading one soldier's life for another does not make for good battlefield mathematics.\n"
+"\n"
+"Once a wounded soldier makes it back to base alive, our medical team will take over treatment. The risk of anyone succumbing to battlefield trauma while in a PHALANX ward is less than one percent, and as near to zero as we can make it.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:909
 msgid "bombkit1_pre_txt"
@@ -4804,7 +4858,46 @@ msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 #: ../base/ufos/research.ufo:924
 #, fuzzy
 msgid "bombkit2_txt"
-msgstr "<TODO>"
+msgstr ""
+"Technical Specifications: Medikit\n"
+"\n"
+"CLASSIFIED LEVEL YELLOW\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Technical Document, Delta Clearance\n"
+"\n"
+"Filed: 19 March 2084\n"
+"\n"
+"By: Surgeon-Captain Helen Floydd, Medical Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"In the past, the application of first aid and field surgery in hostile situations required specially-trained combat medics and surgeons who could handle the stresses of saving lives under fire. Troops who saw their friends being hit usually had no choice but to keep fighting and hope the medics would arrive in time -- that is, if they didn't freeze or panic or make some futile attempt at a field dressing without ability or materials. If the wounded survived at all, they'd still be out of action for weeks or months at a time.\n"
+"\n"
+"This may have been a workable strategy in the trenches of World War 2, but it isn't any longer. Waiting for a medic to arrive on the scene can contribute to the death of a soldier who might have been saved by immediate aid. The prompt application of trauma medicine needs to be made as quick and easy as possible so that any soldier can provide life-saving effort with minimal training. This is where the modern medikit comes in.\n"
+"\n"
+"Every medikit contains an onboard computer that can diagnose injuries via directed X-ray and ultrasound. It can run ECGs and EEGs at the same time, measure blood pressure and heart rate, and even calculate the soldier's combat effectiveness based on his or her individual record (stored in a small subdermal chip for medical, locational and identification purposes). All this information can be shown in a small hologram or displayed directly to a soldier's helmet information system. At the same time the medikit can deploy a number of drugs and sterile surgical tools for emergency operations, cauterise wounds via a special heating iron, and -- most importantly -- apply its store of nanorobots to a wound.\n"
+"\n"
+"The old idea of medical nanobots was first put into practice by Vietnamese researchers thirty years ago. Today, medicine without them is almost unthinkable. Nanobots are tiny robots several micrometres in diameter which can be programmed to perform specific tasks on the fly. They will quickly sterilise a wound and seal ruptured arteries, alert the medikit operator about any internal bleeding, request suction at appropriate places, patch up bowel or stomach punctures, revive or remove necrotic tissue, and repair nerve damage. They dissolve harmlessly in the victim's bloodstream once their battery runs out, which lasts no longer than 10 to 15 seconds, often not long enough to stabilise heavily-wounded troops. Two or more doses of nanobots may be required. Any number of doses can be applied and metabolised with no ill effects.\n"
+"\n"
+"This technology is the most important breakthrough in trauma surgery ever made. It can do everything except regenerate tissue. If more attention is required -- for example when a vital organ is hit, or a bullet is lodged in a critical place -- the medikit provides equipment and detailed instructions for the soldier to follow. It can never replace the operating room, but it's as close to a portable hospital as we'll ever get.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"All our soldiers have been trained in the use of the medikit. In fact, in an ideal situation, every soldier would carry one for immediate use -- but I recognise that our troops have a limited carrying capacity. All major wounds should be treated without delay to prevent complications and further risk to the injured soldier. If the victim can still walk, she should retreat from the firefight and seek cover in order to safely receive treatment by a comrade.\n"
+"\n"
+"The medikit's onboard pharmacy can also be used to revive unconscious soldiers. If this is done, please take care to remove the revived troop from the line of fire as soon as possible and proceed with further treatment from a safe position. The medic herself may be forced to engage approaching targets to enable the patient's escape; this is acceptable practice, but please supply the medic with adequate covering fire. Trading one soldier's life for another does not make for good battlefield mathematics.\n"
+"\n"
+"Once a wounded soldier makes it back to base alive, our medical team will take over treatment. The risk of anyone succumbing to battlefield trauma while in a PHALANX ward is less than one percent, and as near to zero as we can make it.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:927
 msgid "bombkit2_pre_txt"
@@ -5838,20 +5931,20 @@ msgid "Heavy Needler Gun"
 msgstr "Schwerer Nadler"
 
 #: ../base/ufos/research.ufo:1980
-#, fuzzy
 msgid "needlerheavy_txt"
 msgstr ""
-"Commander, we've finished analysing the alien needler gun, and I've prepared a threat assessment and technical overview for you.\n"
+"Herr Kommandant,\n"
+"wir haben die Analyse der außerirdischen Nadelkanone abgeschlossen und ich habe eine technische Übersicht sowie Bedrohungsbeurteilung vorbereitet.\n"
 "\n"
-"As I mentioned in my research proposal, the needler is indeed a type of sniper rifle, but an unusual one. It ignores the normal concept of firing powerful slugs to make single, long-range kills. Instead it vomits out hundreds and hundreds of ultra-fast silicon steel needles which can easily tear apart a target at any range.\n"
+"Wie bereits in meinem Forschungsantrag erwähnt, handelt es sich beim Nadler tatsächlich um ein Scharfschützengewehr, wenn auch ein ungewöhnliches. Das normale Konzept für einzelne, gezielte Weit-Schüsse wird hier über den Haufen geworfen. Stattdessen werden hunderte und aberhunderte ultra-schnelle Silikon-Stahl-Nadeln abgefeuert, welche ein Ziel in jeglicher Entfernung den Gar ausmachen.\n"
 "\n"
-"The needles are fired by a fast-changing magnetic field inside the barrel, hooked up to a feed mechanism that injects thousands of needles a minute into the barrel. This creates a near-constant stream of fire which lasts for as long as you hold down the trigger and the magazine holds out. Unlike bullets, these needles have a practically flat trajectory from muzzle to target. They punch through most armour like it doesn't exist. They're so low in mass that there's little appreciable recoil when firing, giving them excellent accuracy, but at the same time thin enough to avoid being overly affected by weather. Wind, rain and physical obstructions can knock some of the needles off course but not enough to make the weapon much less effective.\n"
+"Die Nadeln werden durch ein schnell wechselndes Magnetfeld innerhalb des Gewehrlaufs abgefeuert, verbunden mit einem Lademechanismus, der tausende von Nadeln in der Minute in der Gewehrlauf einspeist. Das erzeugt einen nahezu konstanten Strom an Feuerkraft solange der Abzug gehalten wird oder das Magazin leer ist. Anders als Kugeln haben diese Nadeln eine flache Flugbahn vom Lauf zum Ziel. Sie durchbrechen praktisch jede Rüstung als wäre sie nicht vorhanden. Sie haben eine so geringe Masse, so dass der Rückstoß zu vernachlässigen ist und eine exzellente Genauigkeit erreicht wird, jedoch sind sie so dünn, dass das Wetter keinen Einfluss auf sie nimmt. Wind, Regen und physische Behinderungen können einige der Nadeln außer Kraft setzen, natürlich jedoch nicht genug, um die Waffe weniger effektiv werden zu lassen.\n"
 "\n"
-"One of the main components that caught my attention is the powerful electromagnet array. It's laid out as a 'coilgun', many electromagnetic coils wrapped around the barrel, a method we'd previously thought to be too energy-inefficient to use on the battlefield. The aliens seem to have made it viable through clever use of superconductors and alien engineering. We may be able to adapt this technology to our own EM weapons research, I'll take a closer look and get back to you when I have anything concrete.\n"
+"Eine der Hauptkomponenten die meine Aufmerksamkeit auf sich zogen, ist das kraftvolle elektro-magnetische Feld. Es ist als Gaussgewehr ausgelegt, viele elektro-magnetische Spulen sind um den Lauf gewickelt - eine Methode, bei der wir von enormer Energie-Ineffizienz ausgegangen sind, um sie im Schlachtfeld nutzen zu können. Die Außerirdischen haben es praktikabel gemacht durch den raffinierten Einsatz von Supraleitern und außerirdischer Ingenieursarbeit. Wir sind vielleicht in der Lage, diese Technologie zu unserer eigenen EM-Forschung anzupassen, ich werde mir das näher ansehen und mich zurückmelden, wenn ich etwas Konkretes zu berichten habe.\n"
 "\n"
-"Instead of an ordinary top-mounted sniper scope, the aliens have incorporated a highly effective holographic aiming mechanism and rangefinder which projects directly in front of the user's leading eye. Targets are shown with absolute clarity at any range, the sight automatically compensates for natural body motions, and it will even tell the user the exact chances of scoring a hit at any time. We've run this thing by our own troops and -- once they got used to it -- the alien holo-sight was the preferred choice by an amazing 100% compared to our own scopes. If we can adapt and duplicate this sight in a self-contained package, we could create the ultimate aiming unit to use on any of our rifles, possibly even some handguns.\n"
+"Anstatt eines einfachen aufgesteckten Scharfschützen-Zielfernrohr haben die Außerirdischen eine hocheffiziente holographische Zielvorrichtung und einen Entfernungsmesser angebracht, welcher direkt vor dem Auge des Benutzers eingesetzt wird. Ziele werden mit absoluter Klarheit in jeder Entfernung angezeigt, die Ansicht kompensiert automatisch natürliche Körperbewegungen und wird dem Benutzer die genaue Wahrscheinlichkeit einen Treffer zu laden anzeigen. Wir haben dies bei unseren eigenen Truppen eingesetzt und -- sobald sie verwendet wurde -- das außerirdische Holo-Visier wurde gegenüber unseren eigenen Zielfernrohren zu einhundert Prozent vorgezogen. Wenn wir das Visier anpassen und in eine unabhängige Einheit umwandeln können, wäre dies die ultimative Zielvorrichtung für alle Geschütze, möglicherweiße sogar einige Pistolen.\n"
 "\n"
-"Equipped with a bipod for prone firing and a very large magazine, the needler is a serious threat to our troops. Snipers can inflict serious casualties on exposed troops and we cannot afford the losses. If a needler is spotted, our soldiers will have to make optimal use of cover and try to flank whilst staying out of sight. A direct assault on an entrenched needler gun will likely prove suicidal and I don't recommend anyone to try it, Commander.\n"
+"Ausgestattet mit einem Doppellauf für schnelles Dauerfeuer und einem großen Magazin ist der Nadler eine ernste Bedrohung für unsere Truppen. Scharfschützen können damit ernsthafte Verluste bei ungeschützten Truppen anrichten, und wir können uns derartige Verluste nicht leisten. Wenn ein Nadler gesehen werden sollte, müssen unsere Soldaten sich optimal schützen und in Deckung gehen, sowie flankieren und dabei versuchen, unsichtbar zu bleiben. Eine direkte Begegnung mit einer geladenen Nadelkanone kommt einem Selbstmord gleich und ich empfehle niemandem, dies zu versuchen, Kommandant.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -7453,7 +7546,48 @@ msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 #: ../base/ufos/research.ufo:3463
 #, fuzzy
 msgid "drop_raptor_txt"
-msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
+msgstr ""
+"Aircraft Evaluation -- Firebird-class Dropship\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 17 March 2084\n"
+"\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"Commander, I've been over these old files before you, and I have decided to replace them with my own assessment and conclusions about our choice of dropship. Apologies if I'm overstepping my bounds, but the old PHALANX dropships in storage are simply not up to modern spec. None of them even got out of the prototype stage when they were new. There are only two surviving examples, and both of those ships have been left mothballed in government warehouses for the past 60 years, not worth the trouble to dig out of storage. We've inherited a real mess with regards to equipment, I can't even find half the stuff that's supposed to be waiting for us. I'm doing my best to find superior alternatives for gear that just isn't up to the task.\n"
+"\n"
+"The one bit of good luck in this dropship mess is that I managed to persuade our UN rep to earmark some budget for a new ship, and I think you'll like it.\n"
+"\n"
+"The Galeoth Firebird VTOL (Vertical Take-Off and Landing) is the best aircraft we can hope to employ in our dropship role. It was designed as a cargo hauler, but has quickly been picked up and adapted into a troop transport by military contractors. It has since become a popular alternative to helicopters in both the military and civilian worlds due to its four HM-5600 pulse detonation engines, which provide the Firebird with VTOL capability and achieve good fuel-efficiency with far fewer moving parts than any helicopter engine. This increases reliability across the board and makes for a vastly faster aircraft partly due to the lack of rotor blades. The HM-5600s are still very thirsty engines, however, and the high-powered aviation fuel can be too expensive for civilian applications.\n"
+"\n"
+"The Firebird's cruising speed is Mach 0.74. At a maximum velocity of Mach 1.03 it can just barely squeak through the sound barrier, but this causes a lot of stress on the airframe and should be avoided outside of emergencies. It has one variable weapons hardpoint located on its nose, which will mount anti-air weapons such as aircraft cannons or missile racks. It can also carry additional equipment to improve its flight characteristics and combat performance. There are acceleration harnesses for up to 8 soldiers and a cargo bay which can contain and deploy small battlefield vehicles.\n"
+"\n"
+"There is nothing else in the sky as well-suited to our dropship role as the Firebird. It is faster than any helicopter, more manoeuvrable than any fixed-wing aeroplane, and it can respond quickly and efficiently to threats all over the world.\n"
+"\n"
+"The Firebird requires 1 Large Hangar for storage, maintenance and deployment. It has 1 medium weapon hardpoint located in the nose.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"The dropship is what will carry our troops around the world, in order to respond to alien attacks on the ground or to clear UFO crash sites for recovery. It should be deployed immediately to sites of alien activity and to recover downed alien craft.\n"
+"\n"
+"Once a site has been cleared of live aliens, heavily-wounded soldiers will immediately be dispatched for medical treatment. The remaining troops will secure the area until a PHALANX recovery team can take over and ensure delivery of any and all alien artifacts to our facilities. This is important because attempted looting of items left on the battlefield may become a problem in densely-populated regions. We can't afford to lose valuable alien technology because some idiot feels the need to take a souvenir.\n"
+"\n"
+"While armed, a Firebird-class dropship is not able to stand up to dedicated fighters, and it should never be sent as the sole interceptor to any UFO sighting.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:3466
 msgid "drop_raptor_pre_txt"
@@ -8390,7 +8524,7 @@ msgstr "Phoenix UBF"
 #: ../base/ufos/research.ufo:4384
 #, fuzzy
 msgid "ugv_phoenix_txt"
-msgstr "TEXT"
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4387
 msgid "ugv_phoenix_pre_txt"
@@ -9684,9 +9818,8 @@ msgid "Kracken"
 msgstr "Kracken"
 
 #: ../base/ufos/seq_credits.ufo:383
-#, fuzzy
 msgid "Tamas Fehervari (geever)"
-msgstr "Fehervari Tamas (geever)"
+msgstr "Tamas Fehervari (geever)"
 
 #: ../base/ufos/seq_credits.ufo:394
 msgid "Edgar Simo (bobbens)"
@@ -9809,9 +9942,8 @@ msgid "http://ufoai.sf.net"
 msgstr "http://ufoai.sf.net"
 
 #: ../base/ufos/seq_credits.ufo:740
-#, fuzzy
 msgid "Copyright 2004-2010 by UFO: AI Team"
-msgstr "Copyright 2004-2009 by UFO: AI Team"
+msgstr "Copyright 2004-2010 by UFO: AI Team"
 
 #: ../base/ufos/seq_intro.ufo:46
 msgid "intro_sentence1"
@@ -10395,15 +10527,13 @@ msgid "Preview:"
 msgstr "Vorschau:"
 
 #: ../base/ufos/ui/_menu.ufo:222
-#, fuzzy
 msgid "Map Name:"
-msgstr "Map Name:"
+msgstr "Kartenname:"
 
 #: ../base/ufos/ui/_menu.ufo:238
 #: ../base/ufos/ui/skirmish.ufo:126
-#, fuzzy
 msgid "Daytime Version:"
-msgstr "Tagesversion:"
+msgstr "Tageszeit-Version:"
 
 #: ../base/ufos/ui/_menu.ufo:245
 msgid "Select whether you want to play at day- or nighttime."
@@ -10674,12 +10804,10 @@ msgid "Health:"
 msgstr "Vitalität:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:499
-#, fuzzy
 msgid "Missions performed:"
 msgstr "Einsätze absolviert:"
 
 #: ../base/ufos/ui/aircraft_soldiers.ufo:502
-#, fuzzy
 msgid "Enemies killed:"
 msgstr "Gegner getötet:"
 
@@ -10978,9 +11106,8 @@ msgstr "Kaufen/Verkaufen"
 
 #: ../base/ufos/ui/bases.ufo:150
 #: client/campaign/cp_base_callbacks.c:296
-#, fuzzy
 msgid "Buy/Sell equipment, aircraft and UGV"
-msgstr "Ausrüstung kaufen/verkaufen"
+msgstr "Ausrüstung, Flugzeuge und UBF's kaufen/verkaufen"
 
 #: ../base/ufos/ui/bases.ufo:156
 #: ../base/ufos/ui/transfer.ufo:584
@@ -11010,9 +11137,8 @@ msgstr "Produktion"
 
 #: ../base/ufos/ui/bases.ufo:171
 #: client/campaign/cp_base_callbacks.c:311
-#, fuzzy
 msgid "Produce equipment, aircraft and UGV"
-msgstr "Ausrüstungsgegenstände produzieren"
+msgstr "Ausrüstungsgegenstände, Flugzeuge und UBF's herstellen"
 
 #: ../base/ufos/ui/bases.ufo:177
 #: ../base/ufos/ui/stats.ufo:97
@@ -11023,9 +11149,8 @@ msgstr "Angestellte"
 
 #: ../base/ufos/ui/bases.ufo:178
 #: client/campaign/cp_base_callbacks.c:316
-#, fuzzy
 msgid "Hire or dismiss employees"
-msgstr "Rekrutierung"
+msgstr "Anheuern und entlassen von Mitarbeitern"
 
 #: ../base/ufos/ui/bases.ufo:184
 #: client/campaign/cp_base_callbacks.c:323
@@ -12377,9 +12502,8 @@ msgstr "Globale Lobby (IRC)"
 
 #: ../base/ufos/ui/multiplayer.ufo:1505
 #: ../base/ufos/ui/multiplayer.ufo:1578
-#, fuzzy
 msgid "Say:"
-msgstr "S:"
+msgstr "Sage:"
 
 #: ../base/ufos/ui/multiplayer.ufo:1688
 msgid "Enter server password"
@@ -12472,9 +12596,8 @@ msgid "Leave the options menu."
 msgstr "Optionsmenü verlassen."
 
 #: ../base/ufos/ui/options.ufo:95
-#, fuzzy
 msgid "Overall Game Settings"
-msgstr "Spieleinstellungen"
+msgstr "Allgemeine Spieleinstellungen"
 
 #: ../base/ufos/ui/options.ufo:107
 msgid "Your name."
@@ -12586,9 +12709,8 @@ msgid "Several Tips"
 msgstr "Verschiedene Hinweise"
 
 #: ../base/ufos/ui/options.ufo:302
-#, fuzzy
 msgid "Enable mouseover tooltips."
-msgstr "Cursor-Tooltips einschalten"
+msgstr "Schnellhilfe einschalten"
 
 #: ../base/ufos/ui/options.ufo:303
 msgid "Tooltips:"
@@ -12628,19 +12750,16 @@ msgid "Menu Option(s)"
 msgstr "Optionen"
 
 #: ../base/ufos/ui/options.ufo:368
-#, fuzzy
 msgid "Precaching of models means having faster menus."
-msgstr "Modelle vorhalten (schnellere Menüs)"
+msgstr "Menü-Modelle im Speicher vorhalten (schnellere Menüs)"
 
 #: ../base/ufos/ui/options.ufo:369
-#, fuzzy
 msgid "Precache Models:"
-msgstr "Modelle vorhalten:"
+msgstr "Modelle im Speicher vorhalten:"
 
 #: ../base/ufos/ui/options.ufo:375
-#, fuzzy
 msgid "Enable precaching of models to have faster menus."
-msgstr "Modelle vorhalten (schnellere Menüs)"
+msgstr "Modelle im Speicher vorhalten um schneller Menüs zu bekommen"
 
 #: ../base/ufos/ui/options.ufo:394
 msgid "Video Settings"
@@ -12679,9 +12798,8 @@ msgid "All ratios"
 msgstr "Alle Auflösungsraten"
 
 #: ../base/ufos/ui/options.ufo:509
-#, fuzzy
 msgid "Others"
-msgstr "Andere"
+msgstr "Eigene"
 
 #: ../base/ufos/ui/options.ufo:518
 msgid "Select your desired screen resolution. ATTENTION: You might have to restart to make this work correctly."
@@ -12894,7 +13012,6 @@ msgid "Enable texture compression for better memory performance, disable for bet
 msgstr "Aktiviere Texturkomprimierung für bessere Speicherperformance, deaktiviere für bessere Render-Qualität."
 
 #: ../base/ufos/ui/options.ufo:896
-#, fuzzy
 msgid "Compression:"
 msgstr "Texturkompression:"
 
@@ -13012,9 +13129,8 @@ msgid "Realtime lighting of the 3D world in UFO:AI. / Maximum number of dynamic 
 msgstr "Echtzeit-Lichtquellen in der 3-dimensionalen Welt von UFO:AI. / Maximale Anzahl von dynamischen hardware-beschleunigten Lichtquellen."
 
 #: ../base/ufos/ui/options.ufo:1081
-#, fuzzy
 msgid "Realtime Lighting / Max Dynamic Lights:"
-msgstr "Echtzeitbeleuchtung:"
+msgstr "Echtzeitbeleuchtung / Maximale dynamische Lichtquellen:"
 
 #: ../base/ufos/ui/options.ufo:1087
 msgid "Enable real-time lighting."
@@ -13054,9 +13170,8 @@ msgid "The lightmap block size defines the resolution of the lightmap. Higher bl
 msgstr "Die Beleuchtungsblockgröße definiert die Auflösung der Beleuchtung. Eine höhere Größe bedeutet detailierte Beleuchtung."
 
 #: ../base/ufos/ui/options.ufo:1152
-#, fuzzy
 msgid "Lightmap Block Size:"
-msgstr "Lightmap Blockgröße"
+msgstr "Licht-Map Blockgröße"
 
 #: ../base/ufos/ui/options.ufo:1159
 msgid "Low means a maximum lightmap resolution of 512x512 pixel. High means up to 2048x2048 pixel."
@@ -13068,16 +13183,14 @@ msgid "Changing this would scale the lightmap brightness."
 msgstr "Änderungen verändern die Helligkeit der Beleuchtung."
 
 #: ../base/ufos/ui/options.ufo:1187
-#, fuzzy
 msgid "Lightmap Scale:"
-msgstr "Lightmap Größe:"
+msgstr "Licht-Map-Anzeige:"
 
 #: ../base/ufos/ui/options.ufo:1211
 msgid "Amount of light emitting from the sun and shining on the earth."
 msgstr "Wert des Lichtes, was von der Sonne auf die Erde strahlt."
 
 #: ../base/ufos/ui/options.ufo:1212
-#, fuzzy
 msgid "Geo Ambient Lighting:"
 msgstr "Hintergrundleuchten:"
 
@@ -13094,7 +13207,6 @@ msgid "Flares are used to display light reflection effects. Flare visibility is 
 msgstr "Flares werden verwendet um Lichtspiegel-Effekte zu erzeugen. Sie werden aus dem Blickwinkel zur Lichtquelle berechnet."
 
 #: ../base/ufos/ui/options.ufo:1258
-#, fuzzy
 msgid "Flares:"
 msgstr "Lichtreflexionen:"
 
@@ -13154,19 +13266,16 @@ msgid "Enable the material system."
 msgstr "Aktiviere das Materialsystem."
 
 #: ../base/ufos/ui/options.ufo:1345
-#, fuzzy
 msgid "Switch to low video settings"
-msgstr "Zur vorherigen Basis"
+msgstr "Setze niedrige Grafikeinstellungen"
 
 #: ../base/ufos/ui/options.ufo:1359
-#, fuzzy
 msgid "Switch to medium video settings"
-msgstr "Zur vorherigen Basis"
+msgstr "Setze mittlere Grafikeinstellungen"
 
 #: ../base/ufos/ui/options.ufo:1373
-#, fuzzy
 msgid "Switch to very high video settings"
-msgstr "Zur rechtshändigen Waffe wechseln"
+msgstr "Setze sehr hohe Grafikeinstellungen"
 
 #: ../base/ufos/ui/options.ufo:1402
 msgid "Audio Settings"
@@ -13193,9 +13302,8 @@ msgid "Current volume of the music."
 msgstr "Derzeitige Musiklautstärke."
 
 #: ../base/ufos/ui/options.ufo:1468
-#, fuzzy
 msgid "Do you want to hear the screams?"
-msgstr "Sicher, dass die externe Einrichtung abgerissen werden soll?"
+msgstr "Möchtest du die Schreie höhren?"
 
 #: ../base/ufos/ui/options.ufo:1469
 msgid "Sound Effects:"
@@ -13210,9 +13318,8 @@ msgid "You do not like click sounds?"
 msgstr "Du magst keine Klick-Sounds?"
 
 #: ../base/ufos/ui/options.ufo:1496
-#, fuzzy
 msgid "Menu Sounds:"
-msgstr "Verwundet"
+msgstr "Menü-Sound:"
 
 #: ../base/ufos/ui/options.ufo:1527
 msgid "Advanced Audio Options"
@@ -13223,9 +13330,8 @@ msgid "The sample rate frequency in kHz. Use higher values for better sound qual
 msgstr "Die Abtastratenfrequenz in kHz. Höhere Werte bedeuten eine besser Sound-Qualität."
 
 #: ../base/ufos/ui/options.ufo:1538
-#, fuzzy
 msgid "Audio Sample Rate:"
-msgstr "Soundfrequenz:"
+msgstr "Audio-Abtastrate:"
 
 #: ../base/ufos/ui/options.ufo:1545
 msgid "Current sample rate frequency in kHz."
@@ -13670,9 +13776,8 @@ msgid "Abort"
 msgstr "Abbrechen"
 
 #: ../base/ufos/ui/skirmish.ufo:34
-#, fuzzy
 msgid "Start Game"
-msgstr "Starte Spiel"
+msgstr "Spiel beginnen"
 
 #: ../base/ufos/ui/skirmish.ufo:46
 #, fuzzy
@@ -16512,9 +16617,8 @@ msgstr "Kein Flugzeug ausgewählt."
 
 #: client/campaign/cp_produce_callbacks.c:685
 #: client/campaign/cp_produce_callbacks.c:721
-#, fuzzy
 msgid "Not enough materials"
-msgstr "Nicht genug Material!"
+msgstr "Nicht ausreichend Material!"
 
 #: client/campaign/cp_produce_callbacks.c:685
 msgid "You don't have the materials needed for producing more of this item.\n"
@@ -16972,9 +17076,9 @@ msgid "Dec"
 msgstr "Dez"
 
 #: client/campaign/cp_transfer.c:81
-#, fuzzy, c-format
+#, c-format
 msgid "%s does not have Antimatter Storage, antimatter are removed!"
-msgstr "%s hat keine Lagerräume, die Gegenstände wurden entfernt."
+msgstr "%s hat keinen Anti-Materie-Speicher, Anti-Materie wurde enfernt."
 
 #: client/campaign/cp_transfer.c:82
 #: client/campaign/cp_transfer.c:95
@@ -17807,9 +17911,9 @@ msgid "..."
 msgstr "..."
 
 #: client/cl_main.c:518
-#, fuzzy, c-format
+#, c-format
 msgid "Local game version (%s) differs from the server version (%s)"
-msgstr "Ihre Spielversion (%s) unterscheidet sich von der auf dem Server (%s)"
+msgstr "Lokale Client-Version (%s) unterscheidet sich von der auf dem Server (%s)"
 
 #: client/cl_main.c:523
 msgid "Script files are not the same"
