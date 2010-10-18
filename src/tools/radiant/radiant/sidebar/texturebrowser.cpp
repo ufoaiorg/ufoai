@@ -907,7 +907,7 @@ GtkMenuItem* TextureBrowser::constructToolsMenu(GtkMenu* menu) {
 
 void TextureBrowser::onActivateDirectoryChange(GtkMenuItem* item, TextureBrowser* textureBrowser) {
 	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Loading Textures"));
-	const std::string& dirname = std::string(gtk_menu_item_get_label(item)) + "/";
+	const std::string& dirname = std::string((const gchar*)g_object_get_data(G_OBJECT(item), "directory")) + "/";
 	textureBrowser->showDirectory(dirname);
 	textureBrowser->queueDraw();
 }
@@ -918,12 +918,13 @@ GtkMenuItem* TextureBrowser::constructDirectoriesMenu(GtkMenu* menu) {
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	TextureGroups groups;
 	constructTreeView(groups);
 
 	TextureGroups::const_iterator i = groups.begin();
 	while (i != groups.end()) {
-		GtkWidget* item = gtk_menu_item_new_with_label((*i).c_str());
+		const gchar* directory = (*i).c_str();
+		GtkWidget* item = gtk_menu_item_new_with_label(directory);
+		g_object_set_data(G_OBJECT(item), "directory", (gpointer)directory);
 		g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(onActivateDirectoryChange), this);
 		gtk_container_add(GTK_CONTAINER(menu), item);
 		++i;

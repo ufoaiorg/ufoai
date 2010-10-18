@@ -99,6 +99,9 @@ class DeferredAdjustment {
 #include "../settings/preferences.h"
 
 class TextureBrowser {
+	private:
+		TextureGroups groups;
+
 	public:
 		int width, height;
 		int originy;
