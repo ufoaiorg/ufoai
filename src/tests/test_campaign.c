@@ -471,8 +471,9 @@ static void testRadar (void)
 	UFO_SendToDestination(ufo, destination);
 	CU_ASSERT_TRUE(VectorEqual(ufo->pos, base->pos));
 	CU_ASSERT_TRUE(VectorEqual(ufo->pos, ufo->pos));
+	/* to ensure that the UFOs are really detected when they are in range */
+	base->radar.ufoDetectionProbability = 1.0;
 	CU_ASSERT_TRUE(RADAR_CheckUFOSensored(&base->radar, base->pos, ufo, qfalse));
-	CU_ASSERT_TRUE(ufo->detected);
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);

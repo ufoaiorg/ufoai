@@ -39,6 +39,13 @@ typedef struct radar_s {
 	int trackingRange;				/**< Tracking range of radar */
 	const struct aircraft_s* ufos[MAX_UFOONGEOSCAPE];	/**< UFOs id sensored by radar. */
 	int numUFOs;					/**< Num UFOs sensored by radar */
+	float ufoDetectionProbability;	/** @brief Probability to detect UFO each @c DETECTION_INTERVAL
+									 * @note This correspond to 40 percents each 30 minutes (coded this way to be able to
+									 * change @c DETECTION_INTERVAL without changing the way radar works)
+									 * @todo There is a hardcoded detection probability here
+									 * - this should be scripted. Probability should be a
+									 * function of UFO type and maybe radar type too. */
+
 } radar_t;
 
 void RADAR_UpdateStaticRadarCoverage(void);

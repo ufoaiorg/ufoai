@@ -337,6 +337,8 @@ void RADAR_Initialise (radar_t *radar, float range, float trackingRange, float l
 		radar->trackingRange = trackingRange * (1 + (level - 1) * RADAR_UPGRADE_MULTIPLIER);
 	}
 
+	radar->ufoDetectionProbability = 0.000125f * DETECTION_INTERVAL;
+
 	assert(radar->numUFOs >= 0);
 
 	if (updateSourceRadarMap && !equal(radar->range, oldrange)) {
@@ -508,14 +510,6 @@ qboolean RADAR_CheckRadarSensored (const vec2_t pos)
 qboolean RADAR_CheckUFOSensored (radar_t *radar, const vec2_t posRadar,
 	const aircraft_t *ufo, qboolean detected)
 {
-	/** @brief Probability to detect UFO each @c DETECTION_INTERVAL
-	 * @note This correspond to 40 percents each 30 minutes (coded this way to be able to
-	 * change @c DETECTION_INTERVAL without changing the way radar works)
-	 * @todo There is a hardcoded detection probability here
-	 * - this should be scripted. Probability should be a
-	 * function of UFO type and maybe radar type too. */
-	const float ufoDetectionProbability = 0.000125f * DETECTION_INTERVAL;
-
 	int dist;
 	qboolean ufoIsSensored;
 
@@ -537,7 +531,7 @@ qboolean RADAR_CheckUFOSensored (radar_t *radar, const vec2_t posRadar,
 			 * by this radar */
 			assert(ufoIsSensored == qfalse);
 			/* Check if UFO is detected */
-			if (frand() <= ufoDetectionProbability) {
+			if (frand() <= radar->ufoDetectionProbability) {
 				RADAR_AddDetectedUFOToEveryRadar(ufo);
 				return qtrue;
 			}
