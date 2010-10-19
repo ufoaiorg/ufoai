@@ -1,0 +1,99 @@
+#! /bin/sh
+set -e
+
+if ! AGAINST=$(git rev-parse --verify HEAD 2> /dev/null); then
+	AGAINST="$(git mktree < /dev/null)"
+fi
+
+TREE="$(git write-tree)"
+
+awk -v "id=$TREE" -v "against=$AGAINST" '
+BEGIN {
+	status = 0
+
+	# Check whether LICENSES is sorted
+	licenses_present = "git ls-tree " id " -- LICENSES"
+	is_present = (licenses_present | getline) != 0
+	close(licenses_present)
+
+	if (is_present) {
+		old_FS   = FS
+		FS       = " \\| "
+		licenses = "git cat-file -p " id ":LICENSES"
+		if ((licenses | getline) <= 0) {
+			print "LICENSES is damaged"
+			status = 1
+		} else if ($0 != "filename | license | author | source") {
+			print "LICENSES:1: header is damaged"
+			status = 1
+		} else {
+			tree   = "git ls-tree --full-tree --name-only -r " id
+			line   = 1
+			last   = ""
+			t      = ""
+			while (licenses | getline) {
+				++line
+
+				if ($1 <= last) {
+					print "LICENSES:" line ": not sorted"
+					status = 1
+					break
+				}
+
+				while ($1 > t && (tree | getline t)) {}
+				if ($1 != t) {
+					print "LICENSES:" line ": " $1 " does not exist"
+					status = 1
+				}
+
+				last = $1
+			}
+			close(tree)
+		}
+		close(licenses)
+		FS = old_FS
+	}
+
+	# Check for whitespace errors
+	if (system("git diff-tree --check --no-renames " against " " id)) {
+		status = 1
+	}
+
+	# Check executable bit, for BOM and missing newline at end of file
+	diff = "git diff-tree --no-renames -p -r --raw " against " " id
+	last = ""
+	file = ""
+	while (diff | getline i) {
+		if (i ~ /^:000000 /) {
+			mode = substr(i, 9, 6)
+			if (mode == "100644") {
+				is_executable = 0
+			} else if (mode == "100755") {
+				is_executable = 1
+			} else {
+				print "ERROR: unknown mode " mode
+				status = 1
+				continue
+			}
+
+			if ((i ~ /\.(pl|py|sh)$/) != is_executable) {
+				print substr(i, 100) ": must " (is_executable ? "not " : "") "be executable"
+				status = 1
+			}
+		} else if (i ~ /^diff /) {
+			file = ""
+		} else if (i ~ /^\+\+\+ / && file == "") {
+			file = substr(i, 7)
+		} else if (i ~ /^\+.*\357\273\277/) { # 0xEF 0xBB 0xBF
+			print file ": BOM in file"
+			status = 1
+		} else if (i ~ /^\\/ && last ~ /^\+/) {
+			print file ": no newline at end of file"
+			status = 1
+		}
+		last = i
+	}
+	close(diff)
+
+	exit status
+}'
