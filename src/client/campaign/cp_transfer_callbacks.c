@@ -854,6 +854,7 @@ static void TR_TransferListSelect_f (void)
 		return;
 	}
 
+	/* the index in the list that was clicked */
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= csi.numODs)
 		return;
@@ -1437,7 +1438,7 @@ static void TR_TransferList_Scroll_f (void)
 void TR_InitCallbacks (void)
 {
 	memset(&td, 0, sizeof(td));
-	LIST_Delete(&td.aircraft);
+
 	Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");
 	Cmd_AddCommand("trans_list_scroll", TR_TransferList_Scroll_f, "Scrolls the transferlist");
 	Cmd_AddCommand("trans_close", TR_TransferClose_f, "Callback for closing Transfer Menu");
@@ -1448,7 +1449,6 @@ void TR_InitCallbacks (void)
 	Cmd_AddCommand("trans_cargolist_click", TR_CargoListSelect_f, "Callback for cargo list node click");
 	Cmd_AddCommand("trans_selectbase", TR_SelectBase_f, "Callback for selecting a base");
 	Cmd_AddCommand("trans_baselist_click", TR_TransferBaseListClick_f, "Callback for choosing base while recovering alien after mission");
-
 	Cmd_AddCommand("trans_aliens", TR_TransferAliensFromMission_f, "Transfer aliens collected at missions");
 }
 

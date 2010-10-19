@@ -239,6 +239,7 @@ static void testBaseBuilding (void)
 	for (type = 0; type < MAX_EMPL; type++)
 		CU_ASSERT_EQUAL(E_CountHired(base, type), 0);
 
+	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
 	base->founded = qfalse;

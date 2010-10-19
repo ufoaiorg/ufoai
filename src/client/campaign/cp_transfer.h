@@ -72,12 +72,55 @@ typedef struct transferCargo_s {
 	int itemidx;			/**< Index of item in cargo. */
 } transferCargo_t;
 
+
+/**
+ * @brief transfer types
+ */
+typedef enum {
+	TRANS_TYPE_INVALID = -1,
+	TRANS_TYPE_ITEM,
+	TRANS_TYPE_EMPLOYEE,
+	TRANS_TYPE_ALIEN,
+	TRANS_TYPE_AIRCRAFT,
+
+	TRANS_TYPE_MAX
+} transferType_t;
+
+typedef struct transferData_s {
+	/** @brief Current selected aircraft for transfer (if transfer started from mission). */
+	aircraft_t *transferStartAircraft;
+
+	/** @brief Current selected base for transfer. */
+	base_t *transferBase;
+
+	/** @brief Current transfer type (item, employee, alien, aircraft). */
+	transferType_t currentTransferType;
+
+	/** @brief Current cargo onboard. */
+	transferCargo_t cargo[MAX_CARGO];
+
+	/** @brief Current item cargo. Amount of items for each object definition index. */
+	int trItemsTmp[MAX_OBJDEFS];
+
+	/** @brief Current alien cargo. [0] alive [1] dead */
+	int trAliensTmp[MAX_TEAMDEFS][TRANS_ALIEN_MAX];
+
+	/** @brief Current personnel cargo. */
+	employee_t *trEmployeesTmp[MAX_EMPL][MAX_EMPLOYEES];
+
+	/** @brief Current aircraft for transfer. */
+	linkedList_t *aircraft;
+
+	/** @brief Current cargo type count (updated in TR_CargoList) */
+	int trCargoCountTmp;
+} transferData_t;
+
 void TR_TransferCheck(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 
 void TR_InitStartup(void);
 
-void TR_TransferStart(base_t *srcBase, struct transferData_s *transData);
+qboolean TR_TransferStart(base_t *srcBase, transferData_t *transData);
 void TR_TransferAlienAfterMissionStart(const base_t *base, aircraft_t *transferAircraft);
 
 transfer_t* TR_GetNext(transfer_t *lastTransfer);
