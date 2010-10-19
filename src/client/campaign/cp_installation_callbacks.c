@@ -224,7 +224,7 @@ static void INS_DestroyInstallation_f (void)
 /**
  * @brief updates the installation limit cvar for menus
  */
-static void INS_UpdateInsatallationLimit_f (void)
+static void INS_UpdateInstallationLimit_f (void)
 {
 	Cvar_SetValue("mn_installation_max", B_GetInstallationLimit());
 }
@@ -235,7 +235,7 @@ void INS_InitCallbacks (void)
 	Cmd_AddCommand("mn_installation_build", INS_BuildInstallation_f, NULL);
 	Cmd_AddCommand("mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name");
 	Cmd_AddCommand("mn_installation_destroy", INS_DestroyInstallation_f, "Destroys an installation");
-	Cmd_AddCommand("mn_installation_update_max_count", INS_UpdateInsatallationLimit_f, "Updates the installation count limit");
+	Cmd_AddCommand("mn_installation_update_max_count", INS_UpdateInstallationLimit_f, "Updates the installation count limit");
 
 	Cvar_SetValue("mn_installation_count", ccs.numInstallations);
 	Cvar_Set("mn_installation_title", "");
