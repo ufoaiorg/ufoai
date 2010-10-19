@@ -123,7 +123,7 @@ static void PR_UpdateProductionList (const base_t* base)
 			/* UFO not researched */
 			if (!RS_IsResearched_ptr(ufo->ufoTemplate->tech))
 				continue;
-			/* The UFO is being disassembled aready */
+			/* The UFO is being disassembled already */
 			if (ufo->disassembly)
 				continue;
 

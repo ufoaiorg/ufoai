@@ -94,7 +94,7 @@ int PR_RequirementsMet(int amount, const requirements_t const *reqs, struct base
 
 float PR_CalculateProductionPercentDone(const struct base_s *base, const technology_t *tech, const struct storedUFO_s *const storedUFO);
 
-production_t *PR_QueueNew(struct base_s *base, const objDef_t *item, aircraft_t *aircraftTemplate, struct storedUFO_s *ufo, signed int amount);
+production_t *PR_QueueNew(struct base_s *base, const productionData_t *data, signed int amount);
 void PR_QueueMove(production_queue_t *queue, int index, int dir);
 void PR_QueueDelete(struct base_s *base, production_queue_t *queue, int index);
 void PR_QueueNext(struct base_s *base);

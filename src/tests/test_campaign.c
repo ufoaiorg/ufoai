@@ -326,6 +326,7 @@ static void testResearch (void)
 
 	CU_ASSERT_EQUAL(heavyLaserTech->statusResearchable, qtrue);
 
+	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
 	base->founded = qfalse;
@@ -361,6 +362,7 @@ static void testProductionItem (void)
 	PR_ProductionRun();
 	CU_ASSERT_EQUAL(old + 1, base->storage.numItems[od->idx]);
 
+	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
 
 	base->founded = qfalse;
