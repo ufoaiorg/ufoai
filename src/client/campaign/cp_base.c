@@ -1027,7 +1027,7 @@ void B_BuildingStatus (const building_t* building)
 
 	switch (building->buildingStatus) {
 	case B_STATUS_NOT_SET:
-		numberOfBuildings = B_GetNumberOfBuildingsInBaseByTemplate(building->base, building->tpl);
+		numberOfBuildings = B_GetNumberOfBuildingsInBaseByTemplate(B_GetCurrentSelectedBase(), building->tpl);
 		if (numberOfBuildings >= 0)
 			Cvar_Set("mn_building_status", va(_("Already %i in base"), numberOfBuildings));
 		break;
