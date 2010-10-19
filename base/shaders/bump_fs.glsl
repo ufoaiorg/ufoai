@@ -31,7 +31,7 @@ vec3 BumpFragment(in vec3 lightVec, in vec3 normalVec){
 	vec3 N = vec3(normalize(normalVec).rgb);
 	N.xy *= BUMP;
 
-	float diffuse = dot(N, L);
+	float diffuse = max(dot(N, L), 0.5);
 
 	float specular = HARDNESS * pow(max(-dot(V, reflect(L, N)), 0.0),
 									8.0 * SPECULAR);
