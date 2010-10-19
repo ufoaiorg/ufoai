@@ -5022,6 +5022,25 @@ base/textures/pt/x/xbctex001_2a6.png | GNU General Public License 2.0 | MCR
 base/textures/pt/x/xbctex001_2a7.png | GNU General Public License 2.0 | MCR
 base/textures/pt/x/xbctex001_2a8.png | GNU General Public License 2.0 | MCR
 base/textures/pt/x/xbctex001_2a9.png | GNU General Public License 2.0 | MCR
+base/textures/tex_alienb/ab_grill01.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_grill02.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_light01.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_light01_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_light01_sm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_metal01.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_metal01_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_metal01_sm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_power_sml2.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_power_sml3.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_power_sml4.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_powercore.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_wall03.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_wall03_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_wall03_sm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_wall04.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_wall04_nm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_wall04_sm.png | GNU General Public License 2.0 or later | Nate Wright
+base/textures/tex_alienb/ab_wall_sml00.png | GNU General Public License 2.0 or later | Nate Wright
 base/textures/tex_base/bollard.jpg | GNU General Public License 2.0 | XaverXN
 base/textures/tex_base/d_drkmtl_dpanelb.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/d_drkmtl_dpanelb_nm.png | GNU General Public License 2.0 | Nexuiz GPLed Data
