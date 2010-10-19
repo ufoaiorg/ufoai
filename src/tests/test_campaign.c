@@ -301,7 +301,17 @@ static void testAutoMissions (void)
 	CU_ASSERT_EQUAL(E_CountUnhired(EMPL_PILOT), 0);
 }
 
-static void testTransfer (void)
+static void testTransferItem (void)
+{
+	ResetCampaignData();
+}
+
+static void testTransferAircraft (void)
+{
+	ResetCampaignData();
+}
+
+static void testTransferEmployee (void)
 {
 	ResetCampaignData();
 }
@@ -778,7 +788,13 @@ int UFO_AddCampaignTests (void)
 	if (CU_ADD_TEST(campaignSuite, testEmployeeHandling) == NULL)
 		return CU_get_error();
 
-	if (CU_ADD_TEST(campaignSuite, testTransfer) == NULL)
+	if (CU_ADD_TEST(campaignSuite, testTransferItem) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testTransferAircraft) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testTransferEmployee) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testResearch) == NULL)
