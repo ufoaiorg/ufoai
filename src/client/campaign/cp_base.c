@@ -1346,6 +1346,10 @@ void B_SetUpBase (const campaign_t *campaign, base_t* base, const vec2_t pos, co
 	base->founded = qtrue;
 	base->baseStatus = BASE_WORKING;
 
+	/* increase this early because a lot of functions rely on this
+	 * value to get the base we are setting up here */
+	ccs.numBases++;
+
 	/* setup for first base */
 	if (ccs.campaignStats.basesBuilt == 0)
 		B_SetUpFirstBase(campaign, base);
@@ -1366,7 +1370,6 @@ void B_SetUpBase (const campaign_t *campaign, base_t* base, const vec2_t pos, co
 	AL_FillInContainment(base);
 	PR_UpdateProductionCap(base);
 
-	ccs.numBases++;
 	ccs.campaignStats.basesBuilt++;
 	ccs.mapAction = MA_NONE;
 }

@@ -232,6 +232,8 @@ static void testBaseBuilding (void)
 
 	base = CreateBase("unittestcreatebase", pos);
 
+	CU_ASSERT_EQUAL(B_GetInstallationLimit(), MAX_INSTALLATIONS_PER_BASE);
+
 	B_Destroy(base);
 
 	for (type = 0; type < MAX_EMPL; type++)

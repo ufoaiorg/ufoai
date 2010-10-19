@@ -237,10 +237,10 @@ void INS_InitCallbacks (void)
 	Cmd_AddCommand("mn_installation_destroy", INS_DestroyInstallation_f, "Destroys an installation");
 	Cmd_AddCommand("mn_installation_update_max_count", INS_UpdateInsatallationLimit_f, "Updates the installation count limit");
 
-	INS_UpdateInsatallationLimit_f();
 	Cvar_SetValue("mn_installation_count", ccs.numInstallations);
 	Cvar_Set("mn_installation_title", "");
 	Cvar_Set("mn_installation_type", "");
+	Cvar_Set("mn_installation_max", "");
 }
 
 void INS_ShutdownCallbacks (void)
