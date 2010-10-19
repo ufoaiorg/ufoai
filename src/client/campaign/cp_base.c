@@ -1304,7 +1304,7 @@ int B_GetInstallationLimit (void)
 			limit++;
 	}
 
-	return min(MAX_INSTALLATIONS, limit * MAX_INSTALLTAIONS_PER_BASE);
+	return min(MAX_INSTALLATIONS, limit * MAX_INSTALLATIONS_PER_BASE);
 }
 
 /**
