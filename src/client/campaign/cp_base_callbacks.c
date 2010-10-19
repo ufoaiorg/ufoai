@@ -726,23 +726,10 @@ static void BaseSummary_Init (const base_t *base)
 	if (queue->numItems > 0) {
 		for (i = 0; i < queue->numItems; i++) {
 			const production_t *production = &queue->items[i];
-			const objDef_t *objDef = production->item;
-			const aircraft_t *aircraft = production->aircraft;
-			const storedUFO_t *ufo = production->ufo;
-			const char *name;
-
-			if (objDef)
-				name = _(objDef->name);
-			else if (aircraft)
-				name = _(aircraft->tpl->name);
-			else if (ufo)
-				name = UFO_TypeToName(ufo->ufoTemplate->ufotype);
-			else
-				Com_Error(ERR_DROP, "BaseSummary_Init: Invalid production type (not item, not aircraft, not disassembly)\n");
-
+			const char *name = PR_GetName(&production->data);
 			/** @todo use the same method as we do in PR_ProductionInfo */
 			Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"), name,
-				production->amount, production->percentDone * 100), sizeof(textStatsBuffer));
+				production->amount, PR_GetProgress(production) * 100), sizeof(textStatsBuffer));
 		}
 	} else {
 		Q_strcat(textStatsBuffer, _("Nothing\n"), sizeof(textStatsBuffer));

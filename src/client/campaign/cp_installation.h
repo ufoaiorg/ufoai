@@ -75,7 +75,7 @@ typedef struct installation_s {
 	int idx;					/**< Self link. Index in the global installation-list. */
 	char name[MAX_VAR];			/**< Name of the installation */
 
-	installationTemplate_t *installationTemplate; /** The template used for the installation. **/
+	const installationTemplate_t *installationTemplate; /** The template used for the installation. **/
 
 	qboolean founded;	/**< already founded? */
 	vec3_t pos;		/**< pos on geoscape */
@@ -107,13 +107,13 @@ installation_t *INS_GetInstallationByIDX(int instIdx);
 installation_t *INS_GetFoundedInstallationByIDX(int installationIdx);
 installation_t *INS_GetFirstUnfoundedInstallation(void);
 
-installationTemplate_t *INS_GetInstallationTemplateFromInstallationID(const char *id);
+const installationTemplate_t *INS_GetInstallationTemplateFromInstallationID(const char *id);
 
 installationType_t INS_GetType(const installation_t *installation);
 
 installation_t *INS_GetFirstUFOYard(qboolean free);
 
-void INS_SetUpInstallation(installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos);
+void INS_SetUpInstallation(installation_t* installation, const installationTemplate_t *installationTemplate, const vec2_t pos, const char *name);
 
 installation_t *INS_GetCurrentSelectedInstallation(void);
 void INS_SetCurrentSelectedInstallation(const installation_t *installation);

@@ -54,49 +54,51 @@ static cvar_t* mn_production_amount;	/**< Amount of the current production; if n
  * @sa PR_DisassemblyInfo
  * @return 0 if the production does not make any progress, 1 if the whole item is built in 1 hour
  */
-float PR_CalculateProductionPercentDone (const base_t *base, const technology_t *tech, const storedUFO_t *const storedUFO)
+static float PR_CalculateProductionPercentDone (const base_t *base, const technology_t *tech, const storedUFO_t *const storedUFO)
 {
-	signed int allWorkers = 0;
-	signed int maxWorkers = 0;
-	signed int timeDefault = 0;
-	float distanceFactor = 0.0f;
-
-	assert(base);
-	assert(tech);
-
 	/* Check how many workers hired in this base. */
-	allWorkers = E_CountHired(base, EMPL_WORKER);
-	/* We will not use more workers than base capacity. */
-	maxWorkers = min(allWorkers, base->capacities[CAP_WORKSPACE].max);
+	const signed int allWorkers = E_CountHired(base, EMPL_WORKER);
+	/* We will not use more workers than workspace capacity in this base. */
+	const signed int maxWorkers = min(allWorkers, base->capacities[CAP_WORKSPACE].max);
+	signed int timeDefault;
+	float distanceFactor;
 
 	if (!storedUFO) {
-		/* This is the default production time for 10 workers. */
+		/* This is the default production time for PRODUCE_WORKERS workers. */
 		timeDefault = tech->produceTime;
+		distanceFactor = 1.0;
 	} else {
 		assert(storedUFO->comp);
-		/* This is the default disassembly time for 10 workers. */
+		/* This is the default disassemble time for PRODUCE_WORKERS workers. */
 		timeDefault = storedUFO->comp->time;
-		/* Production is 4 times longer when installation is on Antipodes */
-		distanceFactor = GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0f;
-		assert(distanceFactor >= 0.0f);
-		/* Penalty starts when distance is greater than 45 degrees */
-		distanceFactor = max(1.0f, distanceFactor);
-		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: distanceFactor is %f\n", distanceFactor);
+		/* Production is 4 times longer when installation is on Antipodes
+		 * Penalty starts when distance is greater than 45 degrees */
+		distanceFactor = max(1.0f, GetDistanceOnGlobe(storedUFO->installation->pos, base->pos) / 45.0f);
 	}
 	if (maxWorkers == PRODUCE_WORKERS) {
 		/* No need to calculate: timeDefault is for PRODUCE_WORKERS workers. */
-		const float fraction = 1.0f / ((NULL != storedUFO) ? (distanceFactor * timeDefault) : timeDefault);
-		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: workers: %i, tech: %s, percent: %f\n",
-			maxWorkers, tech->id, fraction);
-		return fraction;
+		const float divisor = distanceFactor * timeDefault;
+		const float fraction = 1.0f / divisor;
+		return min(fraction, 1.0f);
 	} else {
+		const float divisor = PRODUCE_WORKERS * distanceFactor * timeDefault;
 		/* Calculate the fraction of item produced for our amount of workers. */
-		const float fraction = ((float)maxWorkers / (PRODUCE_WORKERS * ((NULL != storedUFO) ? (distanceFactor * timeDefault) : timeDefault)));
-		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone: workers: %i, tech: %s, percent: %f\n",
-			maxWorkers, tech->id, fraction);
+		const float fraction = maxWorkers / divisor;
 		/* Don't allow to return fraction greater than 1 (you still need at least 1 hour to produce an item). */
 		return min(fraction, 1.0f);
 	}
+}
+
+/**
+ * @brief Calculates the remaining hours for a technology
+ * @param[in] percentDone 0.0 - 1.0
+ */
+int PR_GetRemainingHours (const base_t *base, const technology_t *tech, const storedUFO_t *const storedUFO, float percentDone)
+{
+	const float prodPerHour = PR_CalculateProductionPercentDone(base, tech, storedUFO);
+	const float hours = (1.0f - percentDone) / prodPerHour;
+	const int hoursRounded = ceil(hours);
+	return hoursRounded;
 }
 
 /**
@@ -198,21 +200,51 @@ int PR_QueueFreeSpace (const base_t* base)
 }
 
 /**
+ * @return The translated name of the item in production
+ */
+const char* PR_GetName (const productionData_t *data)
+{
+	switch (data->type) {
+	case PRODUCTION_TYPE_ITEM:
+		return _(data->data.item->name);
+	case PRODUCTION_TYPE_AIRCRAFT:
+		return _(data->data.aircraft->tpl->name);
+	case PRODUCTION_TYPE_DISASSEMBLY:
+		return UFO_TypeToName(data->data.ufo->ufoTemplate->ufotype);
+	}
+
+	Com_Error(ERR_DROP, "Invalid production type given: %i", data->type);
+}
+
+/**
+ * @return The technology for the item that is assigned to the given production
+ */
+technology_t* PR_GetTech (const productionData_t *data)
+{
+	switch (data->type) {
+	case PRODUCTION_TYPE_ITEM:
+		return RS_GetTechForItem(data->data.item);
+	case PRODUCTION_TYPE_AIRCRAFT:
+		return data->data.aircraft->tech;
+	case PRODUCTION_TYPE_DISASSEMBLY:
+		return data->data.ufo->ufoTemplate->tech;
+	default:
+		return NULL;
+	}
+}
+
+/**
  * @brief Add a new item to the bottom of the production queue.
  * @param[in] base Pointer to base, where the queue is.
  * @param[in] queue Pointer to the queue.
- * @param[in] item Item to add.
- * @param[in] aircraftTemplate aircraft to add.
- * @param[in] ufo The UFO in case of a disassemly.
+ * @param[in] data The production data
  * @param[in] amount Desired amount to produce.
  */
-production_t *PR_QueueNew (base_t *base, const objDef_t *item, aircraft_t *aircraftTemplate, storedUFO_t *ufo, signed int amount)
+production_t *PR_QueueNew (base_t *base, const productionData_t *data, signed int amount)
 {
 	production_t *prod;
 	const technology_t *tech;
 	production_queue_t *queue = PR_GetProductionForBase(base);
-
-	assert((item && !aircraftTemplate && !ufo) || (!item && aircraftTemplate && !ufo) || (!item && !aircraftTemplate && ufo));
 
 	if (PR_QueueFreeSpace(base) <= 0)
 		return NULL;
@@ -222,21 +254,23 @@ production_t *PR_QueueNew (base_t *base, const objDef_t *item, aircraft_t *aircr
 	/* Initialize */
 	prod = &queue->items[queue->numItems];
 	memset(prod, 0, sizeof(*prod));
-
 	/* self-reference. */
 	prod->idx = queue->numItems;
+	prod->data = *data;
+	prod->amount = amount;
+	prod->percentDone = 0.0f;
 
-	if (item) {
-		tech = RS_GetTechForItem(item);
-	} else if (aircraftTemplate) {
-		tech = aircraftTemplate->tech;
-	} else {
-		tech = ufo->ufoTemplate->tech;
-		amount = 1;
-	}
-
+	tech = PR_GetTech(&prod->data);
 	if (!tech)
 		return NULL;
+
+	if (PR_IsDisassemblyData(data)) {
+		/* only one item for disassemblies */
+		amount = 1;
+	} else if (tech->produceTime < 0) {
+		/* Don't try to add an item to the queue which is not producible. */
+		return NULL;
+	}
 
 	amount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
 	if (amount == 0)
@@ -246,7 +280,7 @@ production_t *PR_QueueNew (base_t *base, const objDef_t *item, aircraft_t *aircr
 
 	/* We cannot queue new aircraft if no free hangar space. */
 	/** @todo move this check out into a new function */
-	if (aircraftTemplate) {
+	if (data->type == PRODUCTION_TYPE_AIRCRAFT) {
 		if (!B_GetBuildingStatus(base, B_COMMAND)) {
 			/** @todo move popup into menucode */
 			UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
@@ -257,30 +291,15 @@ production_t *PR_QueueNew (base_t *base, const objDef_t *item, aircraft_t *aircr
 			return NULL;
 		}
 		/** @todo we should also count aircraft that are already in the queue list */
-		if (AIR_CalculateHangarStorage(aircraftTemplate, base, 0) <= 0) {
+		if (AIR_CalculateHangarStorage(data->data.aircraft, base, 0) <= 0) {
 			UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 			return NULL;
 		}
 	}
 
-	prod->item = item;
-	prod->aircraft = aircraftTemplate;
-	prod->ufo = ufo;
-	prod->amount = amount;
-	prod->percentDone = 0.0f;
-
-	if (ufo) {
-		/* Disassembling. */
-		prod->production = qfalse;
-		ufo->disassembly = prod;
-	} else {
-		/* Production. */
-		prod->production = qtrue;
-
-		/* Don't try to add to queue an item which is not producible. */
-		if (tech->produceTime < 0)
-			return NULL;
-	}
+	/** @todo remove this and make the ufo const */
+	if (PR_IsDisassembly(prod))
+		prod->data.data.ufo->disassembly = prod;
 
 	queue->numItems++;
 	return prod;
@@ -300,19 +319,12 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 
 	assert(base);
 
-	if (prod->item) {
-		tech = RS_GetTechForItem(prod->item);
-	} else if (prod->aircraft) {
-		tech = prod->aircraft->tech;
-	} else if (prod->ufo) {
-		assert(prod->ufo->ufoTemplate);
-		tech = prod->ufo->ufoTemplate->tech;
-		prod->ufo->disassembly = NULL;
-	} else {
+	tech = PR_GetTech(&prod->data);
+	if (tech == NULL)
 		Com_Error(ERR_DROP, "No tech pointer for production");
-	}
 
-	assert(tech);
+	if (PR_IsDisassembly(prod))
+		prod->data.data.ufo->disassembly = NULL;
 
 	PR_UpdateRequiredItemsInBasestorage(base, prod->amount, &tech->requireForProduction);
 
@@ -322,8 +334,8 @@ void PR_QueueDelete (base_t *base, production_queue_t *queue, int index)
 	for (i = index; i < queue->numItems; i++) {
 		production_t *disassembly = &queue->items[i];
 
-		if (disassembly->ufo)
-			disassembly->ufo->disassembly = disassembly;
+		if (PR_IsDisassembly(disassembly))
+			disassembly->data.data.ufo->disassembly = disassembly;
 	}
 }
 
@@ -350,8 +362,8 @@ void PR_QueueMove (production_queue_t *queue, int index, int dir)
 		queue->items[i] = queue->items[i + 1];
 		prod = &queue->items[i];
 		prod->idx = i;
-		if (prod->ufo)
-			prod->ufo->disassembly = prod;
+		if (PR_IsDisassembly(prod))
+			prod->data.data.ufo->disassembly = prod;
 	}
 
 	/* copy down */
@@ -360,15 +372,15 @@ void PR_QueueMove (production_queue_t *queue, int index, int dir)
 		queue->items[i] = queue->items[i - 1];
 		prod = &queue->items[i];
 		prod->idx = i;
-		if (prod->ufo)
-			prod->ufo->disassembly = prod;
+		if (PR_IsDisassembly(prod))
+			prod->data.data.ufo->disassembly = prod;
 	}
 
 	/* insert item */
 	queue->items[newIndex] = saved;
 	queue->items[newIndex].idx = newIndex;
-	if (queue->items[newIndex].ufo)
-		queue->items[newIndex].ufo->disassembly = &(queue->items[newIndex]);
+	if (PR_IsDisassembly(&queue->items[newIndex]))
+		queue->items[newIndex].data.data.ufo->disassembly = &(queue->items[newIndex]);
 }
 
 /**
@@ -428,15 +440,11 @@ static void PR_ProductionRollBottom_f (void)
  * @param[in] calculate True if this is only calculation of item size, false if this is real disassembling.
  * @return Size of all components in this disassembling.
  */
-static int PR_DisassembleItem (base_t *base, components_t *comp, float condition, qboolean calculate)
+static int PR_DisassembleItem (base_t *base, const components_t *comp, float condition, qboolean calculate)
 {
 	int i;
 	int size = 0;
 
-	if (!calculate && !base)	/* We need base only if this is real disassembling. */
-		Com_Error(ERR_DROP, "PR_DisassembleItem: No base given");
-
-	assert(comp);
 	for (i = 0; i < comp->numItemtypes; i++) {
 		const objDef_t *compOd = comp->items[i];
 		const int amount = (condition < 1 && comp->itemAmount2[i] != COMP_ITEMCOUNT_SCALED) ? comp->itemAmount2[i] : round(comp->itemAmount[i] * condition);
@@ -459,6 +467,75 @@ static int PR_DisassembleItem (base_t *base, components_t *comp, float condition
 }
 
 /**
+ * @brief Checks whether production can continue
+ * @param base The base the production is running in
+ * @param prod The production
+ * @return @c qfalse if production is stopped, @c qtrue if production can be continued.
+ */
+static qboolean PR_CheckFrame (base_t *base, production_t *prod)
+{
+	qboolean state = qtrue;
+
+	if (PR_IsItem(prod)) {
+		const objDef_t *od = prod->data.data.item;
+		/* Not enough money to produce more items in this base. */
+		if (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
+			if (!prod->creditMessage) {
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				prod->creditMessage = qtrue;
+			}
+			state = qfalse;
+		}
+		/* Not enough free space in base storage for this item. */
+		else if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < od->size) {
+			if (!prod->spaceMessage) {
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Production postponed."), base->name);
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				prod->spaceMessage = qtrue;
+			}
+			state = qfalse;
+		}
+	} else if (PR_IsAircraft(prod)) {
+		const aircraft_t *aircraft = prod->data.data.aircraft;
+		/* Not enough money to produce more items in this base. */
+		if (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
+			if (!prod->creditMessage) {
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				prod->creditMessage = qtrue;
+			}
+			state = qfalse;
+		}
+		/* Not enough free space in hangars for this aircraft. */
+		else if (AIR_CalculateHangarStorage(aircraft, base, 0) <= 0) {
+			if (!prod->spaceMessage) {
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free hangar space in %s. Production postponed."), base->name);
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				prod->spaceMessage = qtrue;
+			}
+			state = qfalse;
+		}
+	} else if (PR_IsDisassembly(prod)) {
+		const storedUFO_t *ufo = prod->data.data.ufo;
+
+		if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < PR_DisassembleItem(base, ufo->comp, ufo->condition, qtrue)) {
+			if (!prod->spaceMessage) {
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Disassembling postponed."), base->name);
+				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
+				prod->spaceMessage = qtrue;
+			}
+			state = qfalse;
+		}
+	}
+
+	if (!state)
+		PR_ProductionRollBottom_f();
+
+	return state;
+}
+
+/**
  * @brief Runs the production of an item or an aircraft
  * @sa PR_DisassemblingFrame
  * @sa PR_ProductionRun
@@ -467,88 +544,35 @@ static int PR_DisassembleItem (base_t *base, components_t *comp, float condition
  */
 static void PR_ProductionFrame (base_t* base, production_t *prod)
 {
-	const objDef_t *od;
-	const aircraft_t *aircraft;
+	technology_t *tech;
+	float fraction;
 
-	if (!prod->production)
+	if (!PR_IsProduction(prod))
 		return;
 
-	if (!prod->item && !prod->aircraft)
+	tech = PR_GetTech(&prod->data);
+
+	if (!PR_CheckFrame(base, prod))
 		return;
 
-	if (prod->item) {
-		od = prod->item;
-		aircraft = NULL;
-	} else if (prod->aircraft) {
-		od = NULL;
-		aircraft = prod->aircraft;
-	}
-
-	if (od) {
-		/* Not enough money to produce more items in this base. */
-		if (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
-			if (!prod->creditMessage) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-				prod->creditMessage = qtrue;
-			}
-			PR_ProductionRollBottom_f();
-			return;
-		}
-		/* Not enough free space in base storage for this item. */
-		if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < od->size) {
-			if (!prod->spaceMessage) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Production postponed."), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-				prod->spaceMessage = qtrue;
-			}
-			PR_ProductionRollBottom_f();
-			return;
-		}
-		prod->percentDone += (PR_CalculateProductionPercentDone(base, RS_GetTechForItem(od), NULL) / MINUTES_PER_HOUR);
-	} else if (aircraft) {
-		/* Not enough money to produce more items in this base. */
-		if (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
-			if (!prod->creditMessage) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in %s."), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-				prod->creditMessage = qtrue;
-			}
-			PR_ProductionRollBottom_f();
-			return;
-		}
-		/* Not enough free space in hangars for this aircraft. */
-		if (AIR_CalculateHangarStorage(prod->aircraft, base, 0) <= 0) {
-			if (!prod->spaceMessage) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free hangar space in %s. Production postponed."), base->name);
-				MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-				prod->spaceMessage = qtrue;
-			}
-			PR_ProductionRollBottom_f();
-			return;
-		}
-		prod->percentDone += (PR_CalculateProductionPercentDone(base, aircraft->tech, NULL) / MINUTES_PER_HOUR);
-	}
+	fraction = PR_CalculateProductionPercentDone(base, tech, NULL) / MINUTES_PER_HOUR;
+	prod->percentDone += fraction;
 
 	if (prod->percentDone >= 1.0f) {
-		const char *name = NULL;
-		technology_t *tech = NULL;
+		const char *name = PR_GetName(&prod->data);
+		technology_t *tech = PR_GetTech(&prod->data);
 
 		prod->percentDone = 0.0f;
 		prod->amount--;
 
-		if (od) {
-			CL_UpdateCredits(ccs.credits - (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
+		if (PR_IsItem(prod)) {
+			CL_UpdateCredits(ccs.credits - (prod->data.data.item->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
 			/* Now add it to equipment and update capacity. */
-			B_UpdateStorageAndCapacity(base, prod->item, 1, qfalse, qfalse);
-			name = _(od->name);
-			tech = RS_GetTechForItem(od);
-		} else if (aircraft) {
-			CL_UpdateCredits(ccs.credits - (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
+			B_UpdateStorageAndCapacity(base, prod->data.data.item, 1, qfalse, qfalse);
+		} else if (PR_IsAircraft(prod)) {
+			CL_UpdateCredits(ccs.credits - (prod->data.data.aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
 			/* Now add new aircraft. */
-			AIR_NewAircraft(base, aircraft);
-			name = _(aircraft->tpl->name);
-			tech = aircraft->tech;
+			AIR_NewAircraft(base, prod->data.data.aircraft);
 		}
 
 		/* queue the next production */
@@ -570,25 +594,18 @@ static void PR_ProductionFrame (base_t* base, production_t *prod)
 static void PR_DisassemblingFrame (base_t* base, production_t* prod)
 {
 	storedUFO_t *ufo;
+	float fraction;
 
-	if (prod->production)
+	if (!PR_IsDisassembly(prod))
 		return;
 
-	if (!prod->ufo)
+	ufo = prod->data.data.ufo;
+
+	if (!PR_CheckFrame(base, prod))
 		return;
 
-	ufo = prod->ufo;
-
-	if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < PR_DisassembleItem(NULL, ufo->comp, ufo->condition, qtrue)) {
-		if (!prod->spaceMessage) {
-			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in %s. Disassembling postponed."), base->name);
-			MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-			prod->spaceMessage = qtrue;
-		}
-		PR_ProductionRollBottom_f();
-		return;
-	}
-	prod->percentDone += (PR_CalculateProductionPercentDone(base, ufo->ufoTemplate->tech, ufo) / MINUTES_PER_HOUR);
+	fraction = PR_CalculateProductionPercentDone(base, NULL, ufo) / MINUTES_PER_HOUR;
+	prod->percentDone += fraction;
 
 	if (prod->percentDone >= 1.0f) {
 		base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, ufo->comp, ufo->condition, qfalse);
@@ -612,9 +629,7 @@ int PR_IncreaseProduction (production_t *prod, int amount)
 	base_t *base;
 	const technology_t *tech;
 
-	assert(prod);
-
-	if (prod->ufo)
+	if (PR_IsDisassembly(prod))
 		return 0;
 
 	base = PR_ProductionBase(prod);
@@ -625,13 +640,7 @@ int PR_IncreaseProduction (production_t *prod, int amount)
 		amount = max(0, MAX_PRODUCTION_AMOUNT - prod->amount);
 	}
 
-	if (prod->item) {
-		tech = RS_GetTechForItem(prod->item);
-	} else if (prod->aircraft) {
-		tech = prod->aircraft->tech;
-	} else {
-		tech = NULL;
-	}
+	tech = PR_GetTech(&prod->data);
 	assert(tech);
 
 	amount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
@@ -660,7 +669,7 @@ int PR_DecreaseProduction (production_t *prod, int amount)
 	base = PR_ProductionBase(prod);
 	assert(base);
 
-	if (prod->ufo)
+	if (PR_IsDisassembly(prod))
 		return 0;
 
 	if (prod->amount <= amount) {
@@ -670,17 +679,9 @@ int PR_DecreaseProduction (production_t *prod, int amount)
 		return amount;
 	}
 
-	if (prod->item) {
-		tech = RS_GetTechForItem(prod->item);
-	} else if (prod->aircraft) {
-		tech = prod->aircraft->tech;
-	} else if (prod->ufo) {
-		assert(prod->ufo->ufoTemplate);
-		tech = prod->ufo->ufoTemplate->tech;
-	} else {
+	tech = PR_GetTech(&prod->data);
+	if (tech == NULL)
 		Com_Error(ERR_DROP, "No tech pointer for production");
-	}
-	assert(tech);
 
 	prod->amount += -amount;
 	PR_UpdateRequiredItemsInBasestorage(base, amount, &tech->requireForProduction);
@@ -690,6 +691,7 @@ int PR_DecreaseProduction (production_t *prod, int amount)
 
 /**
  * @brief Checks whether an item is finished.
+ * @note One call each game time minute
  * @sa CL_CampaignRun
  * @sa PR_DisassemblingFrame
  * @sa PR_ProductionFrame
@@ -809,20 +811,15 @@ qboolean PR_SaveXML (mxml_node_t *p)
 
 		for (j = 0; j < pq->numItems; j++) {
 			const production_t *prod = &pq->items[j];
-			const objDef_t *item = prod->item;
-			const aircraft_t *aircraft = prod->aircraft;
-			const storedUFO_t *ufo = prod->ufo;
-
 			mxml_node_t * ssnode = mxml_AddNode(snode, SAVE_PRODUCE_ITEM);
-			assert(item || aircraft || ufo);
-			if (item)
-				mxml_AddString(ssnode, SAVE_PRODUCE_ITEMID, item->id);
-			else if (aircraft)
-				mxml_AddString(ssnode, SAVE_PRODUCE_AIRCRAFTID, aircraft->id);
-			else if (ufo)
-				mxml_AddInt(ssnode, SAVE_PRODUCE_UFOIDX, ufo->idx);
+			if (PR_IsItem(prod))
+				mxml_AddString(ssnode, SAVE_PRODUCE_ITEMID, prod->data.data.item->id);
+			else if (PR_IsAircraft(prod))
+				mxml_AddString(ssnode, SAVE_PRODUCE_AIRCRAFTID, prod->data.data.aircraft->id);
+			else if (PR_IsDisassembly(prod))
+				mxml_AddInt(ssnode, SAVE_PRODUCE_UFOIDX, prod->data.data.ufo->idx);
 			mxml_AddInt(ssnode, SAVE_PRODUCE_AMOUNT, prod->amount);
-			mxml_AddFloatValue(ssnode, SAVE_PRODUCE_PERCENTDONE, prod->percentDone);
+			mxml_AddFloatValue(ssnode, SAVE_PRODUCE_PERCENTDONE, PR_GetProgress(prod));
 		}
 	}
 	return qtrue;
@@ -873,7 +870,7 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			}
 			/* item */
 			if (s1[0] != '\0')
-				prod->item = INVSH_GetItemByID(s1);
+				PR_SetData(&prod->data, PRODUCTION_TYPE_ITEM, INVSH_GetItemByID(s1));
 			/* UFO */
 			ufoIDX = mxml_GetInt(ssnode, SAVE_PRODUCE_UFOIDX, -1);
 			if (ufoIDX != -1) {
@@ -884,18 +881,15 @@ qboolean PR_LoadXML (mxml_node_t *p)
 					continue;
 				}
 
-				prod->ufo = ufo;
-				prod->production = qfalse;
-				prod->ufo->disassembly = prod;
-			} else {
-				prod->production = qtrue;
+				PR_SetData(&prod->data, PRODUCTION_TYPE_DISASSEMBLY, ufo);
+				prod->data.data.ufo->disassembly = prod;
 			}
 			/* aircraft */
 			s2 = mxml_GetString(ssnode, SAVE_PRODUCE_AIRCRAFTID);
 			if (s2[0] != '\0')
-				prod->aircraft = AIR_GetAircraft(s2);
+				PR_SetData(&prod->data, PRODUCTION_TYPE_AIRCRAFT, AIR_GetAircraft(s2));
 
-			if (!prod->item && !prod->ufo && !prod->aircraft) {
+			if (PR_IsDataValid(&prod->data)) {
 				Com_Printf("PR_Load: Production is not an item an aircraft nor a disassembly\n");
 				continue;
 			}

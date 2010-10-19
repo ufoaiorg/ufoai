@@ -126,6 +126,28 @@ static int UFO_CleanSuiteCampaign (void)
 	return 0;
 }
 
+static installation_t* CreateInstallation (const char *name, const vec2_t pos)
+{
+	const installationTemplate_t *installationTemplate = INS_GetInstallationTemplateFromInstallationID("ufoyard");
+	installation_t *installation = INS_GetFirstUnfoundedInstallation();
+
+	CU_ASSERT_PTR_NOT_NULL_FATAL(installationTemplate);
+
+	CU_ASSERT_FALSE(installation->founded);
+
+	CU_ASSERT_PTR_NOT_NULL_FATAL(installation);
+
+	INS_SetUpInstallation(installation, installationTemplate, pos, name);
+	CU_ASSERT_EQUAL(installation->installationStatus, INSTALLATION_UNDER_CONSTRUCTION);
+
+	/* fake the build time */
+	installation->buildStart = ccs.date.day - installation->installationTemplate->buildTime;
+	INS_UpdateInstallationData();
+	CU_ASSERT_EQUAL(installation->installationStatus, INSTALLATION_WORKING);
+
+	return installation;
+}
+
 static base_t* CreateBase (const char *name, const vec2_t pos)
 {
 	const campaign_t *campaign = GetCampaign();
@@ -340,6 +362,7 @@ static void testProductionItem (void)
 	const technology_t *tech;
 	int old;
 	int i, n;
+	productionData_t data;
 
 	ResetCampaignData();
 
@@ -352,12 +375,18 @@ static void testProductionItem (void)
 
 	od = INVSH_GetItemByID("assault");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
+
+	PR_SetData(&data, PRODUCTION_TYPE_ITEM, od);
 	old = base->storage.numItems[od->idx];
-	CU_ASSERT_PTR_NOT_NULL(PR_QueueNew(base, od, NULL, NULL, 1));
+	CU_ASSERT_PTR_NOT_NULL(PR_QueueNew(base, &data, 1));
 	tech = RS_GetTechForItem(od);
-	n = tech->produceTime * MINUTES_PER_HOUR - 1;
+	n = PR_GetRemainingHours(base, tech, NULL, 0.0);
+	i = tech->produceTime;
+	CU_ASSERT_EQUAL(i, n);
+	n = n * MINUTES_PER_HOUR - 1;
 	for (i = 0; i < n; i++)
 		PR_ProductionRun();
+
 	CU_ASSERT_EQUAL(old, base->storage.numItems[od->idx]);
 	PR_ProductionRun();
 	CU_ASSERT_EQUAL(old + 1, base->storage.numItems[od->idx]);
@@ -370,7 +399,123 @@ static void testProductionItem (void)
 
 static void testProductionAircraft (void)
 {
+	const vec2_t pos = {0, 0};
+	base_t *base;
+	const aircraft_t *aircraft;
+	int old;
+	int i, n;
+	const building_t *buildingTemplate;
+	building_t *building;
+	productionData_t data;
+	production_t *prod;
+
 	ResetCampaignData();
+
+	base = CreateBase("unittestproduction", pos);
+
+	CU_ASSERT_TRUE(B_AtLeastOneExists());
+	CU_ASSERT_TRUE(B_GetBuildingStatus(base, B_WORKSHOP));
+	CU_ASSERT_TRUE(E_CountHired(base, EMPL_WORKER) > 0);
+	CU_ASSERT_TRUE(PR_ProductionAllowed(base));
+
+	aircraft = AIR_GetAircraft("craft_drop_firebird");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
+
+	PR_SetData(&data, PRODUCTION_TYPE_AIRCRAFT, aircraft);
+	old = base->capacities[CAP_AIRCRAFT_SMALL].cur;
+	/* not enough space in hangars */
+	CU_ASSERT_PTR_NULL(PR_QueueNew(base, &data, 1));
+
+	buildingTemplate = B_GetBuildingTemplate("building_intercept");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(buildingTemplate);
+	building = B_SetBuildingByClick(base, buildingTemplate, 1, 1);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(building);
+	/* hangar is not yet done */
+	CU_ASSERT_PTR_NULL(PR_QueueNew(base, &data, 1));
+
+	/** @todo make this a function once base stuff is refactored */
+	building->buildingStatus = B_STATUS_WORKING;
+	B_UpdateBaseCapacities(B_GetCapacityFromBuildingType(building->buildingType), base);
+
+	aircraft = AIR_GetAircraft("craft_inter_stingray");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
+	PR_SetData(&data, PRODUCTION_TYPE_AIRCRAFT, aircraft);
+	/* no antimatter */
+	CU_ASSERT_PTR_NULL(PR_QueueNew(base, &data, 1));
+
+	aircraft = AIR_GetAircraft("craft_inter_stiletto");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(aircraft);
+	PR_SetData(&data, PRODUCTION_TYPE_AIRCRAFT, aircraft);
+	prod = PR_QueueNew(base, &data, 1);
+	CU_ASSERT_PTR_NOT_NULL(prod);
+
+	n = PR_GetRemainingHours(base, aircraft->tech, NULL, 0.0);
+	i = aircraft->tech->produceTime;
+	CU_ASSERT_EQUAL(i, n);
+	n = n * MINUTES_PER_HOUR - 1;
+	for (i = 0; i < n; i++)
+		PR_ProductionRun();
+
+	CU_ASSERT_EQUAL(old, base->capacities[CAP_AIRCRAFT_SMALL].cur);
+	PR_ProductionRun();
+	CU_ASSERT_EQUAL(old + 1, base->capacities[CAP_AIRCRAFT_SMALL].cur);
+
+	/* cleanup for the following tests */
+	E_DeleteAllEmployees(NULL);
+
+	base->founded = qfalse;
+}
+
+static void testDisassembly (void)
+{
+	const vec2_t pos = {0, 0};
+	base_t *base;
+	const aircraft_t *ufo;
+	int old;
+	int i, n;
+	const building_t *buildingTemplate;
+	building_t *building;
+	storedUFO_t *storedUFO;
+	productionData_t data;
+	installation_t *installation;
+	production_t *prod;
+
+	ResetCampaignData();
+
+	base = CreateBase("unittestproduction", pos);
+
+	CU_ASSERT_TRUE(B_AtLeastOneExists());
+	CU_ASSERT_TRUE(B_GetBuildingStatus(base, B_WORKSHOP));
+	CU_ASSERT_TRUE(E_CountHired(base, EMPL_WORKER) > 0);
+	CU_ASSERT_TRUE(PR_ProductionAllowed(base));
+
+	ufo = AIR_GetAircraft("craft_ufo_fighter");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(ufo);
+
+	installation = CreateInstallation("unittestproduction", pos);
+
+	storedUFO = US_StoreUFO(ufo, installation, ccs.date, 1.0);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(storedUFO);
+	PR_SetData(&data, PRODUCTION_TYPE_DISASSEMBLY, storedUFO);
+	prod = PR_QueueNew(base, &data, 1);
+	CU_ASSERT_PTR_NOT_NULL(prod);
+
+	old = base->capacities[CAP_ITEMS].cur;
+	n = PR_GetRemainingHours(base, NULL, storedUFO, 0.0);
+	i = storedUFO->comp->time;
+	CU_ASSERT_EQUAL(i, n);
+	n = n * MINUTES_PER_HOUR - 1;
+	for (i = 0; i < n; i++)
+		PR_ProductionRun();
+
+	CU_ASSERT_EQUAL(old, base->capacities[CAP_ITEMS].cur);
+	PR_ProductionRun();
+	CU_ASSERT_NOT_EQUAL(old, base->capacities[CAP_ITEMS].cur);
+
+	/* cleanup for the following tests */
+	E_DeleteAllEmployees(NULL);
+
+	base->founded = qfalse;
 }
 
 static void testMap (void)
@@ -438,6 +583,7 @@ static void testAirFight (void)
 
 	/* ensure that one hit will destroy the craft */
 	mission->ufo->aircraftTarget->damage = 1;
+	srand(1);
 	UFO_CheckShootBack(campaign, mission->ufo, mission->ufo->aircraftTarget);
 
 	/* one projectile should be spawned */
@@ -640,6 +786,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testProductionAircraft) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testDisassembly) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testMap) == NULL)

@@ -46,22 +46,29 @@ static production_t *selectedProduction = NULL;
 static linkedList_t *productionItemList;
 
 /** Currently selected entry in the productionItemList (depends on content) */
-static objDef_t *selectedItem = NULL;
-static storedUFO_t *selectedDisassembly = NULL;
-static aircraft_t *selectedAircraft = NULL;
+static productionData_t selectedData;
 
 /** @brief Number of blank lines between queued items and tech list. */
 static const int QUEUE_SPACERS = 2;
 
 /**
+ * @brief Resets the selected item data structure. Does not reset the selected production
+ * @sa PR_ClearSelected
+ */
+static void PR_ClearSelectedItems (void)
+{
+	memset(&selectedData, 0, sizeof(selectedData));
+	selectedData.type = PRODUCTION_TYPE_MAX;
+}
+
+/**
  * @brief Resets all "selected" pointers to NULL.
+ * @sa PR_ClearSelectedItems
  */
 static void PR_ClearSelected (void)
 {
+	PR_ClearSelectedItems();
 	selectedProduction = NULL;
-	selectedAircraft = NULL;
-	selectedItem = NULL;
-	selectedDisassembly = NULL;
 }
 
 /**
@@ -83,19 +90,19 @@ static void PR_UpdateProductionList (const base_t* base)
 	/* First add all the queue items ... */
 	for (i = 0; i < queue->numItems; i++) {
 		const production_t *prod = &queue->items[i];
-		if (prod->item) {
-			const objDef_t *od = prod->item;
+		if (PR_IsItem(prod)) {
+			const objDef_t *od = prod->data.data.item;
 			LIST_AddString(&productionList, va("%s", _(od->name)));
-			LIST_AddString(&productionAmount, va("%i", B_ItemInBase(prod->item, base)));
+			LIST_AddString(&productionAmount, va("%i", B_ItemInBase(prod->data.data.item, base)));
 			LIST_AddString(&productionQueued, va("%i", prod->amount));
-		} else if (prod->aircraft) {
-			const aircraft_t *aircraftTemplate = prod->aircraft;
+		} else if (PR_IsAircraft(prod)) {
+			const aircraft_t *aircraftTemplate = prod->data.data.aircraft;
 
 			LIST_AddString(&productionList, va("%s", _(aircraftTemplate->name)));
 			LIST_AddString(&productionAmount, va("%i", AIR_CountInBaseByTemplate(base, aircraftTemplate)));
 			LIST_AddString(&productionQueued, va("%i", prod->amount));
-		} else if (prod->ufo) {
-			const storedUFO_t *ufo = prod->ufo;
+		} else if (PR_IsDisassembly(prod)) {
+			const storedUFO_t *ufo = prod->data.data.ufo;
 
 			LIST_AddString(&productionList, va("%s (%.0f%%)", UFO_TypeToName(ufo->ufoTemplate->ufotype), ufo->condition * 100));
 			LIST_AddString(&productionAmount, va("%i", US_UFOsInStorage(ufo->ufoTemplate, ufo->installation)));
@@ -243,7 +250,7 @@ static void PR_RequirementsInfo (const base_t const *base, const requirements_t 
  * @brief Prints information about the selected item (no aircraft) in production.
  * @param[in] base Pointer to the base where informations should be printed.
  * @param[in] od The attributes of the item being produced.
- * @param[in] percentDone How far this process has gotten yet.
+ * @param[in] percentDone How far this process has gotten yet. 0.0 - 1.0
  * @sa PR_ProductionInfo
  */
 static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, const float percentDone)
@@ -259,9 +266,8 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, const
 		Cvar_Set("mn_item", "");
 	} else {
 		const technology_t *tech = RS_GetTechForItem(od);
-		const float prodPerHour = PR_CalculateProductionPercentDone(base, tech, NULL);
 		/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
-		const int time = ceil((1.0f - percentDone) / prodPerHour);
+		const int time = PR_GetRemainingHours(base, tech, NULL, percentDone);
 
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(od->name));
 		Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
@@ -280,24 +286,20 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, const
  * @brief Prints information about the selected disassembly task
  * @param[in] base Pointer to the base where informations should be printed.
  * @param[in] ufo The UFO being disassembled.
- * @param[in] percentDone How far this process has gotten yet.
+ * @param[in] percentDone How far this process has gotten yet. 0.0 - 1.0
  * @sa PR_ProductionInfo
  */
 static void PR_DisassemblyInfo (const base_t *base, const storedUFO_t *ufo, float percentDone)
 {
 	static char productionInfo[512];
 	int time, i;
-	float prodPerHour;
 
 	assert(base);
 	assert(ufo);
 	assert(ufo->ufoTemplate);
 	assert(ufo->ufoTemplate->tech);
 
-	prodPerHour = PR_CalculateProductionPercentDone(base, ufo->ufoTemplate->tech, ufo);
-	/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
-	assert(prodPerHour > 0);
-	time = ceil((1.0f - percentDone) / prodPerHour);
+	time = PR_GetRemainingHours(base, ufo->ufoTemplate->tech, ufo, percentDone);
 
 	Com_sprintf(productionInfo, sizeof(productionInfo), "%s (%.0f%%) - %s\n", _(UFO_TypeToName(ufo->ufoTemplate->ufotype)), ufo->condition * 100, _("Disassembly"));
 	Q_strcat(productionInfo, va(_("Stored at: %s\n"), ufo->installation->name), sizeof(productionInfo));
@@ -321,7 +323,9 @@ static void PR_DisassemblyInfo (const base_t *base, const storedUFO_t *ufo, floa
 
 /**
  * @brief Prints information about the selected aircraft in production.
+ * @param[in] base Pointer to the base where informations should be printed.
  * @param[in] aircraftTemplate The aircraft to print the information for
+ * @param[in] percentDone How far this process has gotten yet. 0.0 - 1.0
  * @sa PR_ProductionInfo
  */
 static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTemplate, float percentDone)
@@ -331,15 +335,11 @@ static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTempl
 	float prodPerHour;
 	assert(aircraftTemplate);
 
-	prodPerHour = PR_CalculateProductionPercentDone(base, aircraftTemplate->tech, NULL);
-	/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
-	assert(prodPerHour > 0);
-	time = ceil((1.0f - percentDone) / prodPerHour);
+	time = PR_GetRemainingHours(base, aircraftTemplate->tech, NULL, percentDone);
 
 	Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraftTemplate->name));
 	Q_strcat(productionInfo, va(_("Production costs\t%i c\n"), (aircraftTemplate->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
 		sizeof(productionInfo));
-	assert(aircraftTemplate->tech);
 	Q_strcat(productionInfo, va(_("Production time\t%ih\n"), time), sizeof(productionInfo));
 	UI_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	Cvar_Set("mn_item", aircraftTemplate->id);
@@ -357,23 +357,23 @@ static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTempl
 static void PR_ProductionInfo (const base_t *base)
 {
 	if (selectedProduction) {
-		production_t *prod = selectedProduction;
+		const production_t *prod = selectedProduction;
 		UI_ExecuteConfunc("prod_taskselected");
-		if (prod->aircraft) {
-			PR_AircraftInfo(base, prod->aircraft, prod->percentDone);
+		if (PR_IsAircraft(prod)) {
+			PR_AircraftInfo(base, prod->data.data.aircraft, PR_GetProgress(prod));
 			UI_ExecuteConfunc("amountsetter enable");
-		} else if (prod->item) {
-			PR_ItemProductionInfo(base, prod->item, prod->percentDone);
+		} else if (PR_IsItem(prod)) {
+			PR_ItemProductionInfo(base, prod->data.data.item, PR_GetProgress(prod));
 			UI_ExecuteConfunc("amountsetter enable");
-		} else if (prod->ufo) {
-			PR_DisassemblyInfo(base, prod->ufo, prod->percentDone);
+		} else if (PR_IsDisassembly(prod)) {
+			PR_DisassemblyInfo(base, prod->data.data.ufo, PR_GetProgress(prod));
 			UI_ExecuteConfunc("amountsetter disable");
 		} else {
 			Com_Error(ERR_DROP, "PR_ProductionInfo: Selected production is not item nor aircraft nor ufo.\n");
 		}
 		Cvar_SetValue("mn_production_amount", selectedProduction->amount);
 	} else {
-		if (!(selectedAircraft || selectedItem || selectedDisassembly)) {
+		if (!PR_IsDataValid(&selectedData)) {
 			UI_ExecuteConfunc("prod_nothingselected");
 			if (produceCategory == FILTER_AIRCRAFT)
 				UI_RegisterText(TEXT_PRODUCTION_INFO, _("No aircraft selected."));
@@ -382,12 +382,12 @@ static void PR_ProductionInfo (const base_t *base)
 			Cvar_Set("mn_item", "");
 		} else {
 			UI_ExecuteConfunc("prod_availableselected");
-			if (selectedAircraft) {
-				PR_AircraftInfo(base, selectedAircraft, 0.0);
-			} else if (selectedItem) {
-				PR_ItemProductionInfo(base, selectedItem, 0.0);
-			} else if (selectedDisassembly) {
-				PR_DisassemblyInfo(base, selectedDisassembly, 0.0);
+			if (PR_IsAircraftData(&selectedData)) {
+				PR_AircraftInfo(base, selectedData.data.aircraft, 0.0);
+			} else if (PR_IsItemData(&selectedData)) {
+				PR_ItemProductionInfo(base, selectedData.data.item, 0.0);
+			} else if (PR_IsDisassemblyData(&selectedData)) {
+				PR_DisassemblyInfo(base, selectedData.data.ufo, 0.0);
 			}
 		}
 	}
@@ -420,32 +420,23 @@ static void PR_ProductionListRightClick_f (void)
 
 	/* Clicked the production queue or the item list? */
 	if (num < queue->numItems && num >= 0) {
-		selectedProduction = &queue->items[num];
-		if (selectedProduction->aircraft) {
-			assert(selectedProduction->aircraft->tech);
-			UP_OpenWith(selectedProduction->aircraft->tech->id);
-		} else if (selectedProduction->item) {
-			const objDef_t *od = selectedProduction->item;
-			const technology_t *tech = RS_GetTechForItem(od);
-			UP_OpenWith(tech->id);
-		} else if (selectedProduction->ufo) {
-			const aircraft_t *ufoTemplate = selectedProduction->ufo->ufoTemplate;
-			const technology_t *tech = ufoTemplate->tech;
-			UP_OpenWith(tech->id);
-		}
+		production_t *prod = &queue->items[num];
+		const technology_t* tech = PR_GetTech(&prod->data);
+		selectedProduction = prod;
+		UP_OpenWith(tech->id);
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
 		const int idx = num - queue->numItems - QUEUE_SPACERS;
 
 		if (produceCategory == FILTER_AIRCRAFT) {
-			const aircraft_t *aircraftTemplate = (aircraft_t*)LIST_GetByIdx(productionItemList, idx);
+			const aircraft_t *aircraftTemplate = (const aircraft_t*)LIST_GetByIdx(productionItemList, idx);
 			/* aircraftTemplate may be empty if rclicked below real entry.
 			 * UFO research definition must not have a tech assigned,
 			 * only RS_CRAFT types have */
 			if (aircraftTemplate && aircraftTemplate->tech)
 				UP_OpenWith(aircraftTemplate->tech->id);
 		} else if (produceCategory == FILTER_DISASSEMBLY) {
-			storedUFO_t *ufo = (storedUFO_t*)LIST_GetByIdx(productionItemList, idx);
+			const storedUFO_t *ufo = (const storedUFO_t*)LIST_GetByIdx(productionItemList, idx);
 			if (ufo && ufo->ufoTemplate && ufo->ufoTemplate->tech) {
 				UP_OpenWith(ufo->ufoTemplate->tech->id);
 			}
@@ -456,7 +447,7 @@ static void PR_ProductionListRightClick_f (void)
 			/* Open up UFOpaedia for this entry. */
 			if (RS_IsResearched_ptr(tech) && INV_ItemMatchesFilter(od, produceCategory)) {
 				PR_ClearSelected();
-				selectedItem = od;
+				PR_SetData(&selectedData, PRODUCTION_TYPE_ITEM, od);
 				UP_OpenWith(tech->id);
 				return;
 			}
@@ -506,7 +497,7 @@ static void PR_ProductionListClick_f (void)
 			storedUFO_t *ufo = (storedUFO_t*)LIST_GetByIdx(productionItemList, idx);
 
 			PR_ClearSelected();
-			selectedDisassembly = ufo;
+			PR_SetData(&selectedData, PRODUCTION_TYPE_DISASSEMBLY, ufo);
 
 			PR_ProductionInfo(base);
 		} else if (produceCategory == FILTER_AIRCRAFT) {
@@ -521,7 +512,7 @@ static void PR_ProductionListClick_f (void)
 			if (aircraftTemplate->tech && aircraftTemplate->tech->produceTime >= 0
 			 && RS_IsResearched_ptr(aircraftTemplate->tech)) {
 				PR_ClearSelected();
-				selectedAircraft = aircraftTemplate;
+				PR_SetData(&selectedData, PRODUCTION_TYPE_AIRCRAFT, aircraftTemplate);
 				PR_ProductionInfo(base);
 			}
 		} else {
@@ -531,7 +522,7 @@ static void PR_ProductionListClick_f (void)
 			/* We can only produce items that fulfill the following conditions... */
 			if (RS_IsResearched_ptr(tech) && PR_ItemIsProduceable(od) && INV_ItemMatchesFilter(od, produceCategory)) {
 				PR_ClearSelected();
-				selectedItem = od;
+				PR_SetData(&selectedData, PRODUCTION_TYPE_ITEM, od);
 				PR_ProductionInfo(base);
 			}
 		}
@@ -568,18 +559,20 @@ static void PR_ProductionType_f (void)
 	PR_UpdateProductionList(base);
 
 	/* Reset selected entry, if it was not from the queue */
-	selectedItem = NULL;
-	selectedDisassembly = NULL;
-	selectedAircraft = NULL;
+	PR_ClearSelectedItems();
 
 	/* Select first entry in the list (if any). */
 	if (LIST_Count(productionItemList) > 0) {
-		if (produceCategory == FILTER_AIRCRAFT)
-			selectedAircraft = (aircraft_t*)LIST_GetByIdx(productionItemList, 0);
-		else if (produceCategory == FILTER_DISASSEMBLY)
-			selectedDisassembly = (storedUFO_t*)LIST_GetByIdx(productionItemList, 0);
-		else
-			selectedItem = (objDef_t*)LIST_GetByIdx(productionItemList, 0);
+		if (produceCategory == FILTER_AIRCRAFT) {
+			const aircraft_t *aircraft = (const aircraft_t*)LIST_GetByIdx(productionItemList, 0);
+			PR_SetData(&selectedData, PRODUCTION_TYPE_AIRCRAFT, aircraft);
+		} else if (produceCategory == FILTER_DISASSEMBLY) {
+			const storedUFO_t *storedUFO = (const storedUFO_t*)LIST_GetByIdx(productionItemList, 0);
+			PR_SetData(&selectedData, PRODUCTION_TYPE_DISASSEMBLY, storedUFO);
+		} else {
+			const objDef_t *item = (const objDef_t*)LIST_GetByIdx(productionItemList, 0);
+			PR_SetData(&selectedData, PRODUCTION_TYPE_ITEM, item);
+		}
 	}
 	/* update selection index if first entry of actual list was chosen */
 	if (!selectedProduction) {
@@ -641,7 +634,7 @@ static void PR_ProductionIncrease_f (void)
 	if (!base)
 		return;
 
-	if (!(selectedProduction || selectedAircraft || selectedItem || selectedDisassembly))
+	if (!PR_IsDataValid(&selectedData))
 		return;
 
 	if (Cmd_Argc() == 2)
@@ -651,12 +644,12 @@ static void PR_ProductionIncrease_f (void)
 		prod = selectedProduction;
 
 		/* We can disassembly UFOs only one-by-one. */
-		if (prod->ufo)
+		if (PR_IsDisassembly(prod))
 			return;
 
-		if (prod->aircraft) {
+		if (PR_IsAircraft(prod)) {
 			/* Don't allow to queue more aircraft if there is no free space. */
-			if (AIR_CalculateHangarStorage(prod->aircraft, base, 0) <= 0) {
+			if (AIR_CalculateHangarStorage(prod->data.data.aircraft, base, 0) <= 0) {
 				UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 				Cvar_SetValue("mn_production_amount", prod->amount);
 				return;
@@ -672,11 +665,7 @@ static void PR_ProductionIncrease_f (void)
 			return;
 		}
 
-		if (prod->item) {
-			tech = RS_GetTechForItem(prod->item);
-		} else if (prod->aircraft) {
-			tech = prod->aircraft->tech;
-		}
+		tech = PR_GetTech(&prod->data);
 		assert(tech);
 
 		producibleAmount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
@@ -701,21 +690,8 @@ static void PR_ProductionIncrease_f (void)
 			return;
 		}
 
-		if (selectedItem) {
-			tech = RS_GetTechForItem(selectedItem);
-			name = selectedItem->name;
-		} else if (selectedAircraft) {
-			tech = selectedAircraft->tech;
-			name = selectedAircraft->name;
-		} else if (selectedDisassembly) {
-			const aircraft_t *ufoTemplate = selectedDisassembly->ufoTemplate;
-			assert(ufoTemplate);
-			tech = ufoTemplate->tech;
-			name = ufoTemplate->name;
-			amount = 1;
-		}
-		assert(tech);
-		assert(name);
+		tech = PR_GetTech(&selectedData);
+		name = PR_GetName(&selectedData);
 
 		producibleAmount = PR_RequirementsMet(amount, &tech->requireForProduction, base);
 		if (producibleAmount == 0) {
@@ -730,13 +706,13 @@ static void PR_ProductionIncrease_f (void)
 		 *     This info should also be displayed in the item-info.
 		 *  -) can can (if possible) change the 'amount' to a vlalue that _can_ be produced (i.e. the maximum amount possible).*/
 
-		if (selectedAircraft && AIR_CalculateHangarStorage(selectedAircraft, base, 0) <= 0) {
+		if (PR_IsAircraftData(&selectedData) && AIR_CalculateHangarStorage(selectedData.data.aircraft, base, 0) <= 0) {
 			UI_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 			return;
 		}
 
 		/* add production */
-		prod = PR_QueueNew(base, selectedItem, selectedAircraft, selectedDisassembly, producibleAmount);
+		prod = PR_QueueNew(base, &selectedData, producibleAmount);
 
 		/** @todo this popup hides any previous popup, like popup created in PR_QueueNew */
 		if (!prod)
@@ -821,7 +797,10 @@ static void PR_ProductionChange_f (void)
 {
 	int amount;
 
-	if (!(selectedProduction || selectedAircraft || selectedItem || selectedDisassembly))
+	if (!selectedProduction)
+		return;
+
+	if (!PR_IsDataValid(&selectedData))
 		return;
 
 	if (Cmd_Argc() != 2) {

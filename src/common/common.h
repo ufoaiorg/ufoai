@@ -261,6 +261,7 @@ typedef struct date_s {
 #define SECONDS_PER_HOUR	3600	/**< (60 * 60) */
 #define SECONDS_PER_MINUTE	60		/**< (60) */
 #define MINUTES_PER_HOUR	60		/**< (60) */
+#define HOURS_PER_DAY		24
 
 #define MAXCMDLINE 256
 

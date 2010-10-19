@@ -174,7 +174,7 @@ typedef struct technology_s {
 
 	qboolean statusResearchable;		/**< Is this item researchable? */
 
-	int produceTime;			/**< How many days the production of this items runs. */
+	int produceTime;			/**< How many hours the production of this items runs. */
 	mailSentType_t mailSent;		/**< Store if a Mail has been sent to the commander (player). */
 	requirements_t requireForProduction;	/**< A list of items that are needed (and used up) on production of _this_ item.
 						 * Only "item"-type is allowed.

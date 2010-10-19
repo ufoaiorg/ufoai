@@ -50,7 +50,7 @@ int BS_GetItemSellingPrice(const objDef_t *od);
 int BS_GetItemBuyingPrice(const objDef_t *od);
 
 qboolean BS_CheckAndDoBuyItem(base_t* base, const objDef_t *item, int number);
-void BS_ProcessCraftItemSale(const objDef_t *craftitem, const int numItems);
+qboolean BS_SellAircraft(aircraft_t *aircraft);
 
 qboolean BS_IsOnMarket(const objDef_t const* item);
 void BS_InitMarket(const struct campaign_s *campaign);

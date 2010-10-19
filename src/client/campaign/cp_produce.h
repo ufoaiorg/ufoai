@@ -38,32 +38,54 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern const int PRODUCE_FACTOR;
 extern const int PRODUCE_DIVISOR;
 
+typedef enum {
+	PRODUCTION_TYPE_ITEM,
+	PRODUCTION_TYPE_AIRCRAFT,
+	PRODUCTION_TYPE_DISASSEMBLY,
+
+	PRODUCTION_TYPE_MAX
+} productionType_t;
+
+/**
+ * @note Use @c PR_SetData to set this.
+ */
+typedef struct {
+	union productionItem_t {
+		const objDef_t *item;				/**< Item to be produced. */
+		const struct aircraft_s *aircraft;	/**< Aircraft (sample) to be produced. */
+		struct storedUFO_s *ufo;
+		const void *pointer;				/**< if you just wanna check whether a valid pointer was set */
+	} data;
+	productionType_t type;
+} productionData_t;
+
 /**
  * @brief Holds all information for the production of one item-type.
- * @note
- * We can get the tech pointer from csi.ods.
- * The tech struct holds the time that is needed to produce
- * the selected equipment.
  */
 typedef struct production_s
 {
 	int idx; /**< Self reference in the production list. Mainly used for moving/deleting them. */
-	/**
-	 * @note Only one pointer is supposed to be set at any time.
-	 * @todo Make this a union
-	 */
-	const objDef_t *item;			/**< Item to be produced. */
-	const struct aircraft_s *aircraft;	/**< Aircraft (sample) to be produced. */
-	struct storedUFO_s *ufo;
+	productionData_t data; /**< The data behind this production (type and item pointer) */
 
 	signed int amount;	/**< How much are we producing. */
 	float percentDone;		/**< Fraction of the item which is already produced.
 							 * 0 if production is not started, 1 if production is over */
 	qboolean spaceMessage;	/**< Used in No Free Space message adding. */
 	qboolean creditMessage;	/**< Used in No Credits message adding. */
-	/** @todo remove production flag */
-	qboolean production;	/**< True if this is real production, false when disassembling. */
 } production_t;
+
+#define PR_IsDisassemblyData(data)	((data)->type == PRODUCTION_TYPE_DISASSEMBLY)
+#define PR_IsAircraftData(data)		((data)->type == PRODUCTION_TYPE_AIRCRAFT)
+#define PR_IsItemData(data)			((data)->type == PRODUCTION_TYPE_ITEM)
+#define PR_IsDisassembly(prod)		(PR_IsDisassemblyData(&(prod)->data))
+#define PR_IsAircraft(prod)			(PR_IsAircraftData(&(prod)->data))
+#define PR_IsItem(prod)				(PR_IsItemData(&(prod)->data))
+#define PR_IsProduction(prod)		(!PR_IsDisassembly(prod))
+
+#define PR_SetData(dataPtr, typeVal, ptr)  do { assert(ptr); (dataPtr)->data.pointer = (ptr); (dataPtr)->type = (typeVal); } while (0);
+#define PR_IsDataValid(dataPtr)	((dataPtr)->data.pointer != NULL)
+
+#define PR_GetProgress(prod)	((prod)->percentDone)
 
 /**
  * @brief A production queue. Lists all items to be produced.
@@ -87,12 +109,15 @@ struct base_s *PR_ProductionBase(const production_t *production);
 int PR_IncreaseProduction(production_t *prod, int amount);
 int PR_DecreaseProduction(production_t *prod, int amount);
 
+const char* PR_GetName(const productionData_t *data);
+technology_t* PR_GetTech(const productionData_t *data);
+
 void PR_UpdateProductionCap(struct base_s *base);
 
 void PR_UpdateRequiredItemsInBasestorage(struct base_s *base, int amount, const requirements_t const *reqs);
 int PR_RequirementsMet(int amount, const requirements_t const *reqs, struct base_s *base);
 
-float PR_CalculateProductionPercentDone(const struct base_s *base, const technology_t *tech, const struct storedUFO_s *const storedUFO);
+int PR_GetRemainingHours(const struct base_s *base, const technology_t *tech, const struct storedUFO_s *const storedUFO, float percentDone);
 
 production_t *PR_QueueNew(struct base_s *base, const productionData_t *data, signed int amount);
 void PR_QueueMove(production_queue_t *queue, int index, int dir);

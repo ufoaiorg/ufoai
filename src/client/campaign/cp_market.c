@@ -175,12 +175,54 @@ qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number)
  * @brief Update storage, the market, and the player's credits
  * @note Don't update capacity here because we can sell items directly from aircraft (already removed from storage).
  */
-void BS_ProcessCraftItemSale (const objDef_t *craftitem, const int numItems)
+static void BS_ProcessCraftItemSale (const objDef_t *craftitem, const int numItems)
 {
 	if (craftitem) {
 		BS_AddItemToMarket(craftitem, numItems);
 		CL_UpdateCredits(ccs.credits + BS_GetItemSellingPrice(craftitem) * numItems);
 	}
+}
+
+/**
+ * @brief Sells the given aircraft with all the equipment.
+ * @param aircraft The aircraft to sell
+ * @return @c true if the aircraft could get sold, @c false otherwise
+ */
+qboolean BS_SellAircraft (aircraft_t *aircraft)
+{
+	int j;
+
+	if (AIR_GetTeamSize(aircraft) > 0)
+		return qfalse;
+
+	if (!AIR_IsAircraftInBase(aircraft))
+		return qfalse;
+
+	/* sell off any items which are mounted on it */
+	for (j = 0; j < aircraft->maxWeapons; j++) {
+		const aircraftSlot_t *slot = &aircraft->weapons[j];
+		BS_ProcessCraftItemSale(slot->item, 1);
+		BS_ProcessCraftItemSale(slot->ammo, 1);
+	}
+
+	BS_ProcessCraftItemSale(aircraft->shield.item, 1);
+	/* there should be no ammo here, but checking can't hurt */
+	BS_ProcessCraftItemSale(aircraft->shield.ammo, 1);
+
+	for (j = 0; j < aircraft->maxElectronics; j++) {
+		const aircraftSlot_t *slot = &aircraft->electronics[j];
+		BS_ProcessCraftItemSale(slot->item, 1);
+		/* there should be no ammo here, but checking can't hurt */
+		BS_ProcessCraftItemSale(slot->ammo, 1);
+	}
+
+	/* the capacities are also updated here */
+	BS_AddAircraftToMarket(aircraft, 1);
+	CL_UpdateCredits(ccs.credits + BS_GetAircraftSellingPrice(aircraft));
+
+	AIR_DeleteAircraft(aircraft);
+
+	return qtrue;
 }
 
 /**

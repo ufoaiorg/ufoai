@@ -650,13 +650,14 @@ static void BS_SellAircraft_f (void)
 		return;
 
 	if (buyCat == FILTER_AIRCRAFT) {
+		const aircraft_t *aircraftTemplate = buyList.l[num].aircraft;
+		if (!aircraftTemplate)
+			return;
+
 		qboolean aircraftOutNote = qfalse;
 		qboolean teamNote = qfalse;
 		qboolean found = qfalse;
 		aircraft_t *aircraft;
-		const aircraft_t *aircraftTemplate = buyList.l[num].aircraft;
-		if (!aircraftTemplate)
-			return;
 
 		aircraft = NULL;
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
@@ -674,32 +675,9 @@ static void BS_SellAircraft_f (void)
 				break;
 			}
 		}
-		/* ok, we've found an empty aircraft (no team) in a base
-		 * so now we can sell it */
+
 		if (found) {
-			int j;
-			/* sell off any items which are mounted on it */
-			for (j = 0; j < aircraft->maxWeapons; j++) {
-				BS_ProcessCraftItemSale(aircraft->weapons[j].item, 1);
-				BS_ProcessCraftItemSale(aircraft->weapons[j].ammo, 1);
-			}
-
-			BS_ProcessCraftItemSale(aircraft->shield.item, 1);
-			/* there should be no ammo here, but checking can't hurt */
-			BS_ProcessCraftItemSale(aircraft->shield.ammo, 1);
-
-			for (j = 0; j < aircraft->maxElectronics; j++) {
-				BS_ProcessCraftItemSale(aircraft->electronics[j].item, 1);
-				/* there should be no ammo here, but checking can't hurt */
-				BS_ProcessCraftItemSale(aircraft->electronics[j].ammo, 1);
-			}
-
-			Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
-			/* the capacities are also updated here */
-			BS_AddAircraftToMarket(aircraft, 1);
-			CL_UpdateCredits(ccs.credits + BS_GetAircraftSellingPrice(aircraft));
-
-			AIR_DeleteAircraft(aircraft);
+			BS_SellAircraft(aircraft);
 
 			/* reinit the menu */
 			BS_BuyType(base);

@@ -83,13 +83,15 @@ installation_t* INS_GetFoundedInstallationByIDX (int instIdx)
  * @param[in] id ID of the installation template to find.
  * @return corresponding installation Template, @c NULL if not found.
  */
-installationTemplate_t* INS_GetInstallationTemplateFromInstallationID (const char *id)
+const installationTemplate_t* INS_GetInstallationTemplateFromInstallationID (const char *id)
 {
 	int idx;
 
-	for (idx = 0; idx < ccs.numInstallationTemplates; idx++)
-		if (!strcmp(ccs.installationTemplates[idx].id, id))
-			return &ccs.installationTemplates[idx];
+	for (idx = 0; idx < ccs.numInstallationTemplates; idx++) {
+		const installationTemplate_t *t = &ccs.installationTemplates[idx];
+		if (!strcmp(t->id, id))
+			return t;
+	}
 
 	return NULL;
 }
@@ -101,7 +103,7 @@ installationTemplate_t* INS_GetInstallationTemplateFromInstallationID (const cha
  * @param[in] pos Position on Globe to build at
  * @sa INS_NewInstallation
  */
-void INS_SetUpInstallation (installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos)
+void INS_SetUpInstallation (installation_t* installation, const installationTemplate_t *installationTemplate, const vec2_t pos, const char *name)
 {
 	const int newInstallationAlienInterest = 1.0f;
 
@@ -112,6 +114,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	installation->installationStatus = INSTALLATION_UNDER_CONSTRUCTION;
 	installation->installationTemplate = installationTemplate;
 	installation->buildStart = ccs.date.day;
+	Q_strncpyz(installation->name, name, sizeof(installation->name));
 
 	/* a new installation is not discovered (yet) */
 	installation->alienInterest = newInstallationAlienInterest;
@@ -127,7 +130,9 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	/* Reset Radar */
 	RADAR_Initialise(&(installation->radar), 0.0f, 0.0f, 0.0f, qfalse);
 
-	Com_DPrintf(DEBUG_CLIENT, "INS_SetUpInstallation: Installation %s (idx: %i), type: %s has been set up. Will be finished in %i day(s).\n", installation->name, installation->idx, installation->installationTemplate->id, installation->installationTemplate->buildTime);
+	ccs.numInstallations++;
+	ccs.campaignStats.installationsBuild++;
+	ccs.mapAction = MA_NONE;
 }
 
 /**
@@ -391,7 +396,7 @@ void INS_UpdateInstallationData (void)
 		if (!installation)
 			continue;
 
-		if ((installation->installationStatus == INSTALLATION_UNDER_CONSTRUCTION)
+		if (installation->installationStatus == INSTALLATION_UNDER_CONSTRUCTION
 		 && installation->buildStart
 		 && installation->buildStart + installation->installationTemplate->buildTime <= ccs.date.day) {
 

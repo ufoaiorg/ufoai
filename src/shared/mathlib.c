@@ -163,6 +163,7 @@ float GetDistanceOnGlobe (const vec2_t pos1, const vec2_t pos2)
 	distance = min(max(-1, distance), 1);
 	distance = acos(distance) * todeg;
 
+	assert(distance >= 0.0f);
 	return distance;
 }
 

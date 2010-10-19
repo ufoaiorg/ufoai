@@ -101,7 +101,7 @@ void INS_SelectInstallation (installation_t *installation)
 static void INS_BuildInstallation_f (void)
 {
 	const nation_t *nation;
-	installationTemplate_t *installationTemplate;
+	const installationTemplate_t *installationTemplate;
 	installation_t *installation;
 
 	if (Cmd_Argc() < 1) {
@@ -128,16 +128,12 @@ static void INS_BuildInstallation_f (void)
 
 	if (ccs.credits - installationTemplate->cost > 0) {
 		/* set up the installation */
-		INS_SetUpInstallation(installation, installationTemplate, ccs.newBasePos);
-
-		ccs.numInstallations++;
-		ccs.campaignStats.installationsBuild++;
-		ccs.mapAction = MA_NONE;
+		INS_SetUpInstallation(installation, installationTemplate, ccs.newBasePos, Cvar_GetString("mn_installation_title"));
 
 		CL_UpdateCredits(ccs.credits - installationTemplate->cost);
 		/* this cvar is used for disabling the installation build button on geoscape if MAX_INSTALLATIONS was reached */
 		Cvar_SetValue("mn_installation_count", ccs.numInstallations);
-		Q_strncpyz(installation->name, Cvar_GetString("mn_installation_title"), sizeof(installation->name));
+
 		nation = MAP_GetNation(installation->pos);
 		if (nation)
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s (nation: %s)"), installation->name, _(nation->name));
