@@ -361,7 +361,7 @@ static void CL_ParseSalary (const char *name, const char **text, salary_t *s, co
 				break;
 			}
 		if (!vp->string) {
-			Com_Printf("CL_ParseSalary: unknown token \"%s\" ignored (campaignID %i)\n", token, campaignID);
+			Com_Printf("CL_ParseSalary: unknown token \"%s\" ignored (campaignID %s)\n", token, campaignID);
 			Com_EParse(text, errhead, name);
 		}
 	} while (*text);
