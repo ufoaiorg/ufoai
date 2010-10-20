@@ -304,7 +304,46 @@ static void testAutoMissions (void)
 
 static void testTransferItem (void)
 {
+	const vec2_t pos = {0, 0};
+	const vec2_t posTarget = {51, 0};
+	base_t *base, *targetBase;
+	transferData_t td;
+	const objDef_t *od;
+	transfer_t *transfer;
+
 	ResetCampaignData();
+
+	base = CreateBase("unittesttransferitem", pos);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(base);
+	/* make sure that we get all buildings in our second base, too.
+	 * This is needed for starting a transfer */
+	ccs.campaignStats.basesBuilt = 0;
+	targetBase = CreateBase("unittesttransferitemtargetbase", posTarget);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(targetBase);
+
+	od = INVSH_GetItemByID("assault");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(od);
+
+	memset(&td, 0, sizeof(td));
+	td.trItemsTmp[od->idx] += 1;
+	td.transferBase = targetBase;
+	TR_AddData(&td, CARGO_TYPE_ITEM, od);
+
+	transfer = TR_TransferStart(base, &td);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(transfer);
+
+	CU_ASSERT_EQUAL(ccs.numTransfers, 1);
+
+	/* to ensure that the transfer is finished with the first think call */
+	transfer->event = ccs.date;
+
+	TR_TransferCheck();
+	CU_ASSERT_EQUAL(ccs.numTransfers, 0);
+
+	/* cleanup for the following tests */
+	E_DeleteAllEmployees(NULL);
+
+	base->founded = qfalse;
 }
 
 static void testTransferAircraft (void)
@@ -315,6 +354,9 @@ static void testTransferAircraft (void)
 static void testTransferEmployee (void)
 {
 	ResetCampaignData();
+
+	/** @todo test the transfer of employees and make sure that they can't be used for
+	 * anything in the base while they are transfered */
 }
 
 static void testResearch (void)
@@ -539,6 +581,9 @@ static void testMap (void)
 
 	Vector2Set(pos, -51, 0);
 	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)));
+
+	Vector2Set(pos, 51, 0);
+	CU_ASSERT_TRUE(!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)));
 
 	Vector2Set(pos, 20, 20);
 	CU_ASSERT_TRUE(MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN)));

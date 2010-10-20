@@ -304,10 +304,10 @@ static void TR_TransferEnd (transfer_t *transfer)
 
 qboolean TR_AddData (transferData_t *transferData, transferType_t type, const void* data)
 {
-	TR_SetData(&transferData->cargo[transferData->trCargoCountTmp], type, data);
-	transferData->trCargoCountTmp++;
 	if (transferData->trCargoCountTmp >= MAX_CARGO)
 		return qfalse;
+	TR_SetData(&transferData->cargo[transferData->trCargoCountTmp], type, data);
+	transferData->trCargoCountTmp++;
 
 	return qtrue;
 }
@@ -317,7 +317,7 @@ qboolean TR_AddData (transferData_t *transferData, transferType_t type, const vo
  * @param[in] srcBase start transfer from this base
  * @param[in] transData Container holds transfer details
  */
-qboolean TR_TransferStart (base_t *srcBase, transferData_t *transData)
+transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 {
 	transfer_t *transfer;
 	float time;
@@ -325,24 +325,19 @@ qboolean TR_TransferStart (base_t *srcBase, transferData_t *transData)
 	int j;
 	aircraft_t *aircraft = NULL;
 
-	if (transData->currentTransferType == TRANS_TYPE_INVALID) {
-		Com_Printf("TR_TransferStart: currentTransferType is wrong!\n");
-		return qfalse;
-	}
-
 	if (!transData->transferBase || !srcBase) {
 		Com_Printf("TR_TransferStart: No base selected!\n");
-		return qfalse;
+		return NULL;
 	}
 
 	/* don't start any empty transport */
 	if (!transData->trCargoCountTmp) {
-		return qfalse;
+		return NULL;
 	}
 
 	if (ccs.numTransfers >= MAX_TRANSFERS) {
 		Com_DPrintf(DEBUG_CLIENT, "TR_TransferStart: Max transfers reached.");
-		return qfalse;
+		return NULL;
 	}
 
 	transfer = &ccs.transfers[ccs.numTransfers];
@@ -412,7 +407,7 @@ qboolean TR_TransferStart (base_t *srcBase, transferData_t *transData)
 	PR_ProductionAllowed(srcBase);
 	RS_ResearchAllowed(srcBase);
 
-	return qtrue;
+	return transfer;
 }
 
 /**
