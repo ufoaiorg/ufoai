@@ -864,7 +864,7 @@ qboolean PR_LoadXML (mxml_node_t *p)
 
 			/* amount */
 			if (prod->amount <= 0) {
-				Com_Printf("PR_Load: Production with amount <= 0 dropped (baseidx=%i, production idx=%i).\n",
+				Com_Printf("PR_LoadXML: Production with amount <= 0 dropped (baseidx=%i, production idx=%i).\n",
 						baseIDX, pq->numItems);
 				continue;
 			}
@@ -877,7 +877,7 @@ qboolean PR_LoadXML (mxml_node_t *p)
 				storedUFO_t *ufo = US_GetStoredUFOByIDX(ufoIDX);
 
 				if (!ufo) {
-					Com_Printf("PR_Load: Could not find ufo idx: %i\n", ufoIDX);
+					Com_Printf("PR_LoadXML: Could not find ufo idx: %i\n", ufoIDX);
 					continue;
 				}
 
@@ -889,8 +889,8 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			if (s2[0] != '\0')
 				PR_SetData(&prod->data, PRODUCTION_TYPE_AIRCRAFT, AIR_GetAircraft(s2));
 
-			if (PR_IsDataValid(&prod->data)) {
-				Com_Printf("PR_Load: Production is not an item an aircraft nor a disassembly\n");
+			if (!PR_IsDataValid(&prod->data)) {
+				Com_Printf("PR_LoadXML: Production is not an item an aircraft nor a disassembly\n");
 				continue;
 			}
 
