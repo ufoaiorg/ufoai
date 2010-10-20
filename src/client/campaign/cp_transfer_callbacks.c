@@ -800,19 +800,18 @@ static qboolean TR_GetTransferEmployee (employeeType_t emplType, int *cnt, const
 static void TR_AddItemToTransferList (base_t *base, transferData_t *td, int num)
 {
 	int cnt = 0, i;
+	int amount;
+
+	if (Cmd_Argc() == 3)
+		amount = atoi(Cmd_Argv(2));
+	else
+		amount = TR_GetTransferFactor();
 
 	if (B_GetBuildingStatus(td->transferBase, B_ANTIMATTER)) {
 		const objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
 		const int itemCargoAmount = td->trItemsTmp[od->idx];
 		if (itemCargoAmount || B_AntimatterInBase(base)) {
 			if (cnt == num) {
-				int amount;
-
-				if (Cmd_Argc() == 3)
-					amount = atoi(Cmd_Argv(2));
-				else
-					amount = TR_GetTransferFactor();
-
 				/* you can't transfer more item than you have */
 				if (amount > 0) {
 					amount = min(amount, B_AntimatterInBase(base));
@@ -838,17 +837,8 @@ static void TR_AddItemToTransferList (base_t *base, transferData_t *td, int num)
 		const int itemCargoAmount = td->trItemsTmp[i];
 		if (!B_ItemIsStoredInBaseStorage(od))
 			continue;
-		if (od->isVirtual)
-			continue;
 		if (itemCargoAmount || B_ItemInBase(od, base) > 0) {
 			if (cnt == num) {
-				int amount;
-
-				if (Cmd_Argc() == 3)
-					amount = atoi(Cmd_Argv(2));
-				else
-					amount = TR_GetTransferFactor();
-
 				/* you can't transfer more item than you have */
 				if (amount > 0) {
 					amount = min(amount, B_ItemInBase(od, base));
