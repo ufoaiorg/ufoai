@@ -133,9 +133,9 @@ static installation_t* CreateInstallation (const char *name, const vec2_t pos)
 
 	CU_ASSERT_PTR_NOT_NULL_FATAL(installationTemplate);
 
-	CU_ASSERT_FALSE(installation->founded);
-
 	CU_ASSERT_PTR_NOT_NULL_FATAL(installation);
+
+	CU_ASSERT_FALSE(installation->founded);
 
 	INS_SetUpInstallation(installation, installationTemplate, pos, name);
 	CU_ASSERT_EQUAL(installation->installationStatus, INSTALLATION_UNDER_CONSTRUCTION);
