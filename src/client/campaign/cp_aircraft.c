@@ -111,7 +111,7 @@ static int AIR_UpdateHangarCapForOne (const aircraft_t const *aircraftTemplate, 
 	if (!base)
 		return AIRCRAFT_HANGAR_ERROR;
 
-	if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
+	if (!AIR_AircraftAllowed(base)) {
 		Com_Printf("AIR_UpdateHangarCapForOne: base does not have any hangar - error!\n");
 		return AIRCRAFT_HANGAR_ERROR;
 	}

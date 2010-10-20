@@ -363,7 +363,7 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 	} else if (!B_GetBuildingStatus(destbase, B_COMMAND)) {
 		UI_Popup(_("Hangars not ready"), _("Destination base does not have command centre.\nHangars not functional.\n"));
 		return qfalse;
-	} else if (!B_GetBuildingStatus(destbase, B_HANGAR) && !B_GetBuildingStatus(destbase, B_SMALL_HANGAR)) {
+	} else if (!AIR_AircraftAllowed(destbase)) {
 		UI_Popup(_("Hangars not ready"), _("Destination base does not have any hangar."));
 		return qfalse;
 	}
@@ -657,7 +657,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 		UI_ExecuteConfunc("trans_display_spinners 0");
 		break;
 	case TRANS_TYPE_AIRCRAFT:
-		if (B_GetBuildingStatus(destbase, B_HANGAR) || B_GetBuildingStatus(destbase, B_SMALL_HANGAR)) {
+		if (AIR_AircraftAllowed(destbase)) {
 			aircraft_t *aircraft = NULL;
 
 			while ((aircraft = AIR_GetNextFromBase(srcbase, aircraft))) {
@@ -953,7 +953,7 @@ static void TR_AddAircraftToTransferList (base_t *base, transferData_t *transfer
 	const base_t *transferBase = transferData->transferBase;
 	int cnt = 0;
 
-	if (B_GetBuildingStatus(transferBase, B_HANGAR) || B_GetBuildingStatus(transferBase, B_SMALL_HANGAR)) {
+	if (AIR_AircraftAllowed(transferBase)) {
 		aircraft_t *aircraft = NULL;
 
 		while ((aircraft = AIR_GetNextFromBase(base, aircraft))) {
@@ -1062,7 +1062,7 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 		Q_strcat(baseInfo, _("No Antimatter Storage in this base.\n"), sizeof(baseInfo));
 	}
 
-	if (B_GetBuildingStatus(destbase, B_HANGAR) || B_GetBuildingStatus(destbase, B_SMALL_HANGAR)) {
+	if (AIR_AircraftAllowed(destbase)) {
 		Q_strcat(baseInfo, _("You can transfer aircraft - this base has a Hangar.\n"), sizeof(baseInfo));
 	} else if (!B_GetBuildingStatus(destbase, B_COMMAND)) {
 		Q_strcat(baseInfo, _("Aircraft transfer not possible - this base does not have a Command Centre.\n"), sizeof(baseInfo));
