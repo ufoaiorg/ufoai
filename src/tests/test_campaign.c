@@ -365,18 +365,31 @@ static void testUFORecovery (void)
 	const aircraft_t *ufo;
 	storedUFO_t *storedUFO;
 	installation_t *installation;
+	date_t date = ccs.date;
 
 	ResetCampaignData();
 
 	ufo = AIR_GetAircraft("craft_ufo_fighter");
 	CU_ASSERT_PTR_NOT_NULL_FATAL(ufo);
 
-	installation = CreateInstallation("unittestproduction", pos);
+	CreateBase("unittestproduction", pos);
 
-	storedUFO = US_StoreUFO(ufo, installation, ccs.date, 1.0);
-	CU_ASSERT_PTR_NOT_NULL(storedUFO);
+	installation = CreateInstallation("unittestuforecovery", pos);
+
+	date.day++;
+	storedUFO = US_StoreUFO(ufo, installation, date, 1.0);
+	CU_ASSERT_PTR_NOT_NULL_FATAL(storedUFO);
+	CU_ASSERT_EQUAL(storedUFO->status, SUFO_RECOVERED);
 
 	UR_ProcessActive();
+
+	CU_ASSERT_EQUAL(storedUFO->status, SUFO_RECOVERED);
+
+	ccs.date.day++;
+
+	UR_ProcessActive();
+
+	CU_ASSERT_EQUAL(storedUFO->status, SUFO_STORED);
 
 	/* cleanup for the following tests */
 	E_DeleteAllEmployees(NULL);
@@ -574,6 +587,7 @@ static void testDisassembly (void)
 
 	storedUFO = US_StoreUFO(ufo, installation, ccs.date, 1.0);
 	CU_ASSERT_PTR_NOT_NULL_FATAL(storedUFO);
+	CU_ASSERT_EQUAL(storedUFO->status, SUFO_RECOVERED);
 	PR_SetData(&data, PRODUCTION_TYPE_DISASSEMBLY, storedUFO);
 	prod = PR_QueueNew(base, &data, 1);
 	CU_ASSERT_PTR_NOT_NULL(prod);
