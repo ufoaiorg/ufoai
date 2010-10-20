@@ -307,7 +307,7 @@ static void TR_TransferEnd (transfer_t *transfer)
  * @param[in] srcBase start transfer from this base
  * @param[in] transData Container holds transfer details
  */
-void TR_TransferStart (base_t *srcBase, transferData_t *transData)
+qboolean TR_TransferStart (base_t *srcBase, transferData_t *transData)
 {
 	transfer_t *transfer;
 	float time;
@@ -315,19 +315,24 @@ void TR_TransferStart (base_t *srcBase, transferData_t *transData)
 	int j;
 	aircraft_t *aircraft = NULL;
 
+	if (transData->currentTransferType == TRANS_TYPE_INVALID) {
+		Com_Printf("TR_TransferStart: currentTransferType is wrong!\n");
+		return qfalse;
+	}
+
 	if (!transData->transferBase || !srcBase) {
-		Com_Printf("TR_TransferStart_f: No base selected!\n");
-		return;
+		Com_Printf("TR_TransferStart: No base selected!\n");
+		return qfalse;
 	}
 
 	/* don't start any empty transport */
 	if (!transData->trCargoCountTmp) {
-		return;
+		return qfalse;
 	}
 
 	if (ccs.numTransfers >= MAX_TRANSFERS) {
-		Com_DPrintf(DEBUG_CLIENT, "TR_TransferStart_f: Max transfers reached.");
-		return;
+		Com_DPrintf(DEBUG_CLIENT, "TR_TransferStart: Max transfers reached.");
+		return qfalse;
 	}
 
 	transfer = &ccs.transfers[ccs.numTransfers];
@@ -396,6 +401,8 @@ void TR_TransferStart (base_t *srcBase, transferData_t *transData)
 	/* Recheck if production/research can be done on srcbase (if there are workers/scientists) */
 	PR_ProductionAllowed(srcBase);
 	RS_ResearchAllowed(srcBase);
+
+	return qtrue;
 }
 
 /**

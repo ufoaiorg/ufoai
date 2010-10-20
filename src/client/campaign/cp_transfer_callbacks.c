@@ -172,11 +172,8 @@ static void TR_TransferStart_f (void)
 	char message[1024];
 	base_t *base = B_GetCurrentSelectedBase();
 
-	if (td.currentTransferType == TRANS_TYPE_INVALID) {
-		Com_Printf("TR_TransferStart_f: currentTransferType is wrong!\n");
+	if (!TR_TransferStart(base, &td))
 		return;
-	}
-	TR_TransferStart(base, &td);
 
 	/* Clear temporary cargo arrays. */
 	memset(td.trItemsTmp, 0, sizeof(td.trItemsTmp));
