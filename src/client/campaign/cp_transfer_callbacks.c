@@ -507,7 +507,7 @@ static void TR_AddListEntry (linkedList_t **names, const char *name, linkedList_
 	LIST_AddString(names, name);
 }
 
-static int TR_FillItems (base_t *srcbase, base_t *destbase, linkedList_t **names, linkedList_t **amounts, linkedList_t **transfers)
+static int TR_FillItems (const base_t *srcbase, const base_t *destbase, linkedList_t **names, linkedList_t **amounts, linkedList_t **transfers)
 {
 	int cnt = 0;
 
@@ -546,7 +546,7 @@ static int TR_FillItems (base_t *srcbase, base_t *destbase, linkedList_t **names
 	return cnt;
 }
 
-static int TR_FillEmployees (base_t *srcbase, base_t *destbase, linkedList_t **names, linkedList_t **amounts, linkedList_t **transfers)
+static int TR_FillEmployees (const base_t *srcbase, const base_t *destbase, linkedList_t **names, linkedList_t **amounts, linkedList_t **transfers)
 {
 	int cnt = 0;
 
@@ -608,7 +608,7 @@ static int TR_FillEmployees (base_t *srcbase, base_t *destbase, linkedList_t **n
 	return cnt;
 }
 
-static int TR_FillAliens (base_t *srcbase, base_t *destbase, linkedList_t **names, linkedList_t **amounts, linkedList_t **transfers)
+static int TR_FillAliens (const base_t *srcbase, const base_t *destbase, linkedList_t **names, linkedList_t **amounts, linkedList_t **transfers)
 {
 	int cnt = 0;
 
@@ -649,7 +649,7 @@ static int TR_FillAliens (base_t *srcbase, base_t *destbase, linkedList_t **name
 	return cnt;
 }
 
-static int TR_FillAircraft (base_t *srcbase, base_t *destbase, linkedList_t **names, linkedList_t **amounts, linkedList_t **transfers)
+static int TR_FillAircraft (const base_t *srcbase, const base_t *destbase, linkedList_t **names, linkedList_t **amounts, linkedList_t **transfers)
 {
 	int cnt = 0;
 	if (AIR_AircraftAllowed(destbase)) {
@@ -683,7 +683,7 @@ static int TR_FillAircraft (base_t *srcbase, base_t *destbase, linkedList_t **na
  * @param[in] transferType Transfer category
  * @sa transferType_t
  */
-static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t transferType)
+static void TR_TransferSelect (const base_t *srcbase, const base_t *destbase, transferType_t transferType)
 {
 	linkedList_t *names = NULL;
 	linkedList_t *amounts = NULL;
@@ -733,7 +733,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 static void TR_TransferSelect_f (void)
 {
 	int type;
-	base_t *base = B_GetCurrentSelectedBase();
+	const base_t *base = B_GetCurrentSelectedBase();
 
 	if (!td.transferBase || !base)
 		return;
