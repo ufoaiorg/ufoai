@@ -797,15 +797,9 @@ static qboolean TR_GetTransferEmployee (employeeType_t emplType, int *cnt, const
 	return qfalse;
 }
 
-static void TR_AddItemToTransferList (base_t *base, transferData_t *td, int num)
+static void TR_AddItemToTransferList (base_t *base, transferData_t *td, int num, int amount)
 {
 	int cnt = 0, i;
-	int amount;
-
-	if (Cmd_Argc() == 3)
-		amount = atoi(Cmd_Argv(2));
-	else
-		amount = TR_GetTransferFactor();
 
 	if (B_GetBuildingStatus(td->transferBase, B_ANTIMATTER)) {
 		const objDef_t *od = INVSH_GetItemByID(ANTIMATTER_TECH_ID);
@@ -966,11 +960,11 @@ static void TR_AddAircraftToTransferList (base_t *base, transferData_t *transfer
 	}
 }
 
-static void TR_AddToTransferList (base_t *base, transferData_t *transfer, int num)
+static void TR_AddToTransferList (base_t *base, transferData_t *transfer, int num, int amount)
 {
 	switch (transfer->currentTransferType) {
 	case TRANS_TYPE_ITEM:
-		TR_AddItemToTransferList(base, transfer, num);
+		TR_AddItemToTransferList(base, transfer, num, amount);
 		break;
 	case TRANS_TYPE_EMPLOYEE:
 		TR_AddEmployeeToTransferList(base, transfer, num);
@@ -992,6 +986,7 @@ static void TR_AddToTransferList (base_t *base, transferData_t *transfer, int nu
 static void TR_TransferListSelect_f (void)
 {
 	int num;
+	int amount;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2)
@@ -1010,7 +1005,12 @@ static void TR_TransferListSelect_f (void)
 	if (num < 0 || num >= csi.numODs)
 		return;
 
-	TR_AddToTransferList(base, &td, num);
+	if (Cmd_Argc() == 3)
+		amount = atoi(Cmd_Argv(2));
+	else
+		amount = TR_GetTransferFactor();
+
+	TR_AddToTransferList(base, &td, num, amount);
 
 	TR_TransferSelect(base, td.transferBase, td.currentTransferType);
 }
