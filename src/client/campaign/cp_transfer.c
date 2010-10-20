@@ -435,7 +435,7 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
  * @brief Checks whether given transfer should be processed.
  * @sa CL_CampaignRun
  */
-void TR_TransferCheck (void)
+void TR_TransferRun (void)
 {
 	transfer_t *transfer = NULL;
 	while ((transfer = TR_GetNext(transfer))) {

@@ -457,7 +457,7 @@ static void CP_CheckMissionEnd (const campaign_t* campaign)
 		 * that we have the correct next pointer */
 		linkedList_t *next = list->next;
 		mission_t *mission = (mission_t *)list->data;
-		if (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(ccs.date, mission->finalDate)) {
+		if (CP_CheckMissionLimitedInTime(mission) && Date_LaterThan(&ccs.date, &mission->finalDate)) {
 			CP_MissionStageEnd(campaign, mission);
 		}
 		list = next;
@@ -617,7 +617,7 @@ void CL_CampaignRun (campaign_t *campaign)
 			UR_ProcessActive();
 			AII_UpdateInstallationDelay();
 			AII_RepairAircraft();
-			TR_TransferCheck();
+			TR_TransferRun();
 			CP_IncreaseAlienInterest(campaign);
 		}
 

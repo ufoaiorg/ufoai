@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_ufo.h"
 #include "cp_map.h"
+#include "cp_time.h"
 #include "cp_uforecovery.h"
 #include "cp_uforecovery_callbacks.h"
 #include "cp_aircraft.h"
@@ -135,7 +136,7 @@ storedUFO_t *US_StoreUFO (const aircraft_t *ufoTemplate, installation_t *install
 	ufo.disassembly = NULL;
 
 	ufo.arrive = date;
-	if (date.day < ccs.date.day || (date.day == ccs.date.day && date.sec <= ccs.date.sec)) {
+	if (Date_LaterThan(&ccs.date, &ufo.arrive)) {
 		ufo.status = SUFO_STORED;
 		RS_MarkCollected(ufo.ufoTemplate->tech);
 	} else {

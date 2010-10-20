@@ -180,13 +180,13 @@ void CL_SetGameTime_f (void)
  * @param[in] compare Date to compare.
  * @return True if current date is later than given one.
  */
-qboolean Date_LaterThan (date_t now, date_t compare)
+qboolean Date_LaterThan (const date_t *now, const date_t *compare)
 {
-	if (now.day > compare.day)
+	if (now->day > compare->day)
 		return qtrue;
-	if (now.day < compare.day)
+	if (now->day < compare->day)
 		return qfalse;
-	if (now.sec > compare.sec)
+	if (now->sec > compare->sec)
 		return qtrue;
 	return qfalse;
 }

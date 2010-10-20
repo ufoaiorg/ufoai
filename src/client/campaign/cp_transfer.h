@@ -123,7 +123,7 @@ typedef struct transferData_s {
 #define TR_SetData(dataPtr, typeVal, ptr)  do { (dataPtr)->data.pointer = (ptr); (dataPtr)->type = (typeVal); } while (0);
 
 qboolean TR_AddData(transferData_t *transferData, transferType_t type, const void* data);
-void TR_TransferCheck(void);
+void TR_TransferRun(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 
 void TR_InitStartup(void);

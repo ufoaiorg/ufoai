@@ -337,7 +337,7 @@ static void testTransferItem (void)
 	/* to ensure that the transfer is finished with the first think call */
 	transfer->event = ccs.date;
 
-	TR_TransferCheck();
+	TR_TransferRun();
 	CU_ASSERT_EQUAL(ccs.numTransfers, 0);
 
 	/* cleanup for the following tests */
@@ -357,6 +357,29 @@ static void testTransferEmployee (void)
 
 	/** @todo test the transfer of employees and make sure that they can't be used for
 	 * anything in the base while they are transfered */
+}
+
+static void testUFORecovery (void)
+{
+	const vec2_t pos = {0, 0};
+	const aircraft_t *ufo;
+	storedUFO_t *storedUFO;
+	installation_t *installation;
+
+	ResetCampaignData();
+
+	ufo = AIR_GetAircraft("craft_ufo_fighter");
+	CU_ASSERT_PTR_NOT_NULL_FATAL(ufo);
+
+	installation = CreateInstallation("unittestproduction", pos);
+
+	storedUFO = US_StoreUFO(ufo, installation, ccs.date, 1.0);
+	CU_ASSERT_PTR_NOT_NULL(storedUFO);
+
+	UR_ProcessActive();
+
+	/* cleanup for the following tests */
+	E_DeleteAllEmployees(NULL);
 }
 
 static void testResearch (void)
@@ -841,6 +864,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testTransferEmployee) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, testUFORecovery) == NULL)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testResearch) == NULL)
