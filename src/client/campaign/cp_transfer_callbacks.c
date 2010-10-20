@@ -1094,15 +1094,230 @@ static void TR_SelectBase_f (void)
 	TR_TransferBaseSelect(base, destbase);
 }
 
+static void TR_RemoveItemFromCargoList (base_t *base, transferData_t *td, int num)
+{
+	int i, cnt;
+
+	for (i = 0; i < csi.numODs; i++) {
+		const objDef_t *od = INVSH_GetItemByIDX(i);
+		const int itemCargoAmount = td->trItemsTmp[od->idx];
+		if (itemCargoAmount > 0) {
+			if (cnt == num) {
+				const int amount = min(TR_GetTransferFactor(), itemCargoAmount);
+				/* you can't transfer more item than there are in current transfer */
+				td->trItemsTmp[i] -= amount;
+				if (!strcmp(od->id, ANTIMATTER_TECH_ID))
+					B_ManageAntimatter(base, amount, qfalse);
+				else
+					B_UpdateStorageAndCapacity(base, od, amount, qfalse, qfalse);
+				break;
+			}
+			cnt++;
+		}
+	}
+}
+
+static void TR_RemoveEmployeeFromCargoList (base_t *base, transferData_t *td, int num)
+{
+	int cnt = 0, entries = 0, i, j;
+	qboolean removed = qfalse;
+	int numempl[MAX_EMPL];
+	employeeType_t emplType;
+
+	for (i = 0; i < MAX_CARGO; i++) {
+		/* Count previous types on the list. */
+		switch (td->cargo[i].type) {
+		case CARGO_TYPE_ITEM:
+			entries++;
+		default:
+			break;
+		}
+	}
+	/* Start increasing cnt from the amount of previous entries. */
+	cnt = entries;
+	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
+		if (td->trEmployeesTmp[EMPL_SOLDIER][i]) {
+			if (cnt == num) {
+				td->trEmployeesTmp[EMPL_SOLDIER][i] = NULL;
+				removed = qtrue;
+				break;
+			}
+			cnt++;
+		}
+	}
+	if (removed)	/* We already removed soldier, break here. */
+		return;
+	for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
+		if (td->trEmployeesTmp[EMPL_PILOT][i]) {
+			if (cnt == num) {
+				td->trEmployeesTmp[EMPL_PILOT][i] = NULL;
+				removed = qtrue;
+				break;
+			}
+			cnt++;
+		}
+	}
+	if (removed)	/* We already removed pilot, break here. */
+		return;
+
+	Com_DPrintf(DEBUG_CLIENT, "TR_CargoListSelect_f: cnt: %i, num: %i\n", cnt, num);
+
+	/* Reset and fill temp employees arrays. */
+	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
+		numempl[emplType] = 0;
+		/** @todo not ccs.numEmployees? isn't this (the td.trEmployeesTmp array)
+		 * updated when an employee gets deleted? */
+		for (i = 0; i < MAX_EMPLOYEES; i++) {
+			if (td->trEmployeesTmp[emplType][i])
+				numempl[emplType]++;
+		}
+	}
+
+	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
+		if (numempl[emplType] < 1 || emplType == EMPL_SOLDIER || emplType == EMPL_PILOT)
+			continue;
+		if (cnt == num) {
+			int amount = min(TR_GetTransferFactor(), E_CountHired(base, emplType));
+			for (j = 0; j < ccs.numEmployees[emplType]; j++) {
+				if (td->trEmployeesTmp[emplType][j]) {
+					td->trEmployeesTmp[emplType][j] = NULL;
+					amount--;
+					removed = qtrue;
+					if (amount == 0)
+						break;
+				} else
+					continue;
+			}
+		}
+		if (removed)	/* We already removed employee, break here. */
+			break;
+		cnt++;
+	}
+}
+
+static void TR_RemoveDeadAliensFromCargoList (base_t *base, transferData_t *td, int num)
+{
+	int i, cnt;
+	int entries = 0;
+
+	for (i = 0; i < MAX_CARGO; i++) {
+		/* Count previous types on the list. */
+		switch (td->cargo[i].type) {
+		case CARGO_TYPE_ITEM:
+		case CARGO_TYPE_EMPLOYEE:
+			entries++;
+		default:
+			break;
+		}
+	}
+	/* Start increasing cnt from the amount of previous entries. */
+	cnt = entries;
+	for (i = 0; i < ccs.numAliensTD; i++) {
+		if (td->trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
+			if (cnt == num) {
+				td->trAliensTmp[i][TRANS_ALIEN_DEAD]--;
+				base->alienscont[i].amountDead++;
+				break;
+			}
+			cnt++;
+		}
+	}
+}
+
+static void TR_RemoveAliveAliensFromCargoList (base_t *base, transferData_t *td, int num)
+{
+	int i, cnt;
+	int entries = 0;
+
+	for (i = 0; i < MAX_CARGO; i++) {
+		/* Count previous types on the list. */
+		switch (td->cargo[i].type) {
+		case CARGO_TYPE_ITEM:
+		case CARGO_TYPE_EMPLOYEE:
+		case CARGO_TYPE_ALIEN_DEAD:
+			entries++;
+		default:
+			break;
+		}
+	}
+	/* Start increasing cnt from the amount of previous entries. */
+	cnt = entries;
+	for (i = 0; i < ccs.numAliensTD; i++) {
+		if (td->trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
+			if (cnt == num) {
+				td->trAliensTmp[i][TRANS_ALIEN_ALIVE]--;
+				AL_ChangeAliveAlienNumber(base, &(base->alienscont[i]), 1);
+				break;
+			}
+			cnt++;
+		}
+	}
+}
+
+static void TR_RemoveAircraftFromCargoList (base_t *base, transferData_t *td, int num)
+{
+	int i, cnt;
+	int entries = 0;
+	aircraft_t *aircraft = NULL;
+
+	for (i = 0; i < MAX_CARGO; i++) {
+		/* Count previous types on the list. */
+		switch (td->cargo[i].type) {
+		case CARGO_TYPE_ITEM:
+		case CARGO_TYPE_EMPLOYEE:
+		case CARGO_TYPE_ALIEN_DEAD:
+		case CARGO_TYPE_ALIEN_ALIVE:
+			entries++;
+		default:
+			break;
+		}
+	}
+	/* Start increasing cnt from the amount of previous entries. */
+	cnt = entries;
+	while ((aircraft = (aircraft_t*)LIST_GetNext(td->aircraft, (void*)aircraft))) {
+		if (cnt == num) {
+			LIST_Remove(&td->aircraft, aircraft);
+			break;
+		}
+		cnt++;
+	}
+}
+
+static void TR_RemoveFromCargoList (base_t *base, transferData_t *td, int num)
+{
+	int cnt = 0, entries = 0, i, j;
+	qboolean removed = qfalse;
+	int numempl[MAX_EMPL];
+	employeeType_t emplType;
+	transferCargo_t *cargo = &td->cargo[num];
+
+	switch (cargo->type) {
+	case CARGO_TYPE_ITEM:
+		TR_RemoveItemFromCargoList(base, td, num);
+		break;
+	case CARGO_TYPE_EMPLOYEE:
+		TR_RemoveEmployeeFromCargoList(base, td, num);
+		break;
+	case CARGO_TYPE_ALIEN_DEAD:
+		TR_RemoveDeadAliensFromCargoList(base, td, num);
+		break;
+	case CARGO_TYPE_ALIEN_ALIVE:
+		TR_RemoveAliveAliensFromCargoList(base, td, num);
+		break;
+	case CARGO_TYPE_AIRCRAFT:
+		TR_RemoveAircraftFromCargoList(base, td, num);
+		break;
+	default:
+		return;
+	}
+}
+
 /**
  * @brief Removes items from cargolist by click.
  */
 static void TR_CargoListSelect_f (void)
 {
-	int num, cnt = 0, entries = 0, i, j;
-	qboolean removed = qfalse;
-	int numempl[MAX_EMPL];
-	employeeType_t emplType;
+	int num;
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2)
@@ -1115,176 +1330,7 @@ static void TR_CargoListSelect_f (void)
 	if (num < 0 || num >= MAX_CARGO)
 		return;
 
-	switch (td.cargo[num].type) {
-	case CARGO_TYPE_ITEM:
-		for (i = 0; i < csi.numODs; i++) {
-			const objDef_t *od = INVSH_GetItemByIDX(i);
-			const int itemCargoAmount = td.trItemsTmp[od->idx];
-			if (itemCargoAmount > 0) {
-				if (cnt == num) {
-					const int amount = min(TR_GetTransferFactor(), itemCargoAmount);
-					/* you can't transfer more item than there are in current transfer */
-					td.trItemsTmp[i] -= amount;
-					if (!strcmp(od->id, ANTIMATTER_TECH_ID))
-						B_ManageAntimatter(base, amount, qfalse);
-					else
-						B_UpdateStorageAndCapacity(base, od, amount, qfalse, qfalse);
-					break;
-				}
-				cnt++;
-			}
-		}
-		break;
-	case CARGO_TYPE_EMPLOYEE:
-		for (i = 0; i < MAX_CARGO; i++) {
-			/* Count previous types on the list. */
-			switch (td.cargo[i].type) {
-			case CARGO_TYPE_ITEM:
-				entries++;
-			default:
-				break;
-			}
-		}
-		/* Start increasing cnt from the amount of previous entries. */
-		cnt = entries;
-		for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
-			if (td.trEmployeesTmp[EMPL_SOLDIER][i]) {
-				if (cnt == num) {
-					td.trEmployeesTmp[EMPL_SOLDIER][i] = NULL;
-					removed = qtrue;
-					break;
-				}
-				cnt++;
-			}
-		}
-		if (removed)	/* We already removed soldier, break here. */
-			break;
-		for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
-			if (td.trEmployeesTmp[EMPL_PILOT][i]) {
-				if (cnt == num) {
-					td.trEmployeesTmp[EMPL_PILOT][i] = NULL;
-					removed = qtrue;
-					break;
-				}
-				cnt++;
-			}
-		}
-		if (removed)	/* We already removed pilot, break here. */
-			break;
-
-		Com_DPrintf(DEBUG_CLIENT, "TR_CargoListSelect_f: cnt: %i, num: %i\n", cnt, num);
-
-		/* Reset and fill temp employees arrays. */
-		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-			numempl[emplType] = 0;
-			/** @todo not ccs.numEmployees? isn't this (the td.trEmployeesTmp array)
-			 * updated when an employee gets deleted? */
-			for (i = 0; i < MAX_EMPLOYEES; i++) {
-				if (td.trEmployeesTmp[emplType][i])
-					numempl[emplType]++;
-			}
-		}
-
-		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-			if (numempl[emplType] < 1 || emplType == EMPL_SOLDIER || emplType == EMPL_PILOT)
-				continue;
-			if (cnt == num) {
-				int amount = min(TR_GetTransferFactor(), E_CountHired(base, emplType));
-				for (j = 0; j < ccs.numEmployees[emplType]; j++) {
-					if (td.trEmployeesTmp[emplType][j]) {
-						td.trEmployeesTmp[emplType][j] = NULL;
-						amount--;
-						removed = qtrue;
-						if (amount == 0)
-							break;
-					} else
-						continue;
-				}
-			}
-			if (removed)	/* We already removed employee, break here. */
-				break;
-			cnt++;
-		}
-		break;
-	case CARGO_TYPE_ALIEN_DEAD:
-		for (i = 0; i < MAX_CARGO; i++) {
-			/* Count previous types on the list. */
-			switch (td.cargo[i].type) {
-			case CARGO_TYPE_ITEM:
-			case CARGO_TYPE_EMPLOYEE:
-				entries++;
-			default:
-				break;
-			}
-		}
-		/* Start increasing cnt from the amount of previous entries. */
-		cnt = entries;
-		for (i = 0; i < ccs.numAliensTD; i++) {
-			if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
-				if (cnt == num) {
-					td.trAliensTmp[i][TRANS_ALIEN_DEAD]--;
-					base->alienscont[i].amountDead++;
-					break;
-				}
-				cnt++;
-			}
-		}
-		break;
-	case CARGO_TYPE_ALIEN_ALIVE:
-		for (i = 0; i < MAX_CARGO; i++) {
-			/* Count previous types on the list. */
-			switch (td.cargo[i].type) {
-			case CARGO_TYPE_ITEM:
-			case CARGO_TYPE_EMPLOYEE:
-			case CARGO_TYPE_ALIEN_DEAD:
-				entries++;
-			default:
-				break;
-			}
-		}
-		/* Start increasing cnt from the amount of previous entries. */
-		cnt = entries;
-		for (i = 0; i < ccs.numAliensTD; i++) {
-			if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
-				if (cnt == num) {
-					td.trAliensTmp[i][TRANS_ALIEN_ALIVE]--;
-					AL_ChangeAliveAlienNumber(base, &(base->alienscont[i]), 1);
-					break;
-				}
-				cnt++;
-			}
-		}
-		break;
-	case CARGO_TYPE_AIRCRAFT:
-		{
-			aircraft_t *aircraft = NULL;
-
-			for (i = 0; i < MAX_CARGO; i++) {
-				/* Count previous types on the list. */
-				switch (td.cargo[i].type) {
-				case CARGO_TYPE_ITEM:
-				case CARGO_TYPE_EMPLOYEE:
-				case CARGO_TYPE_ALIEN_DEAD:
-				case CARGO_TYPE_ALIEN_ALIVE:
-					entries++;
-				default:
-					break;
-				}
-			}
-			/* Start increasing cnt from the amount of previous entries. */
-			cnt = entries;
-			while ((aircraft = (aircraft_t*)LIST_GetNext(td.aircraft, (void*)aircraft))) {
-				if (cnt == num) {
-					LIST_Remove(&td.aircraft, aircraft);
-					break;
-				}
-				cnt++;
-			}
-		}
-		break;
-	default:
-		return;
-	}
+	TR_RemoveFromCargoList(base, &td, num);
 
 	TR_TransferSelect(base, td.transferBase, td.currentTransferType);
 }
