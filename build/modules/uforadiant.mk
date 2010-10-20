@@ -1,10 +1,17 @@
 TARGET             := uforadiant
-
 RADIANT_BASE       := tools/radiant
+
+# if the linking should be static
+$(TARGET)_STATIC   ?= $(STATIC)
+ifeq ($($(TARGET)_STATIC),1)
+$(TARGET)_LDFLAGS  += -static
+endif
+
 $(TARGET)_LINKER   := $(CXX)
 $(TARGET)_FILE     := radiant/$(TARGET)$(EXE_EXT)
 $(TARGET)_CFLAGS   += -Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include $(GTK_CFLAGS) $(GLIB_CFLAGS) $(GTK_SOURCEVIEW_CFLAGS) $(GTK_GLEXT_CFLAGS) $(OPENAL_CFLAGS) $(OPENGL_CFLAGS) $(XML2_CFLAGS) $(GDK_PIXBUF_CFLAGS)
 $(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GLIB_LIBS) $(GTK_SOURCEVIEW_LIBS) $(GTK_GLEXT_LIBS) $(OPENAL_LIBS) $(OPENGL_LIBS) $(XML2_LIBS) $(GDK_PIXBUF_LIBS) $(SO_LIBS) -lm -lz
+
 $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/archivezip.cpp \
 	$(RADIANT_BASE)/radiant/colorscheme.cpp \

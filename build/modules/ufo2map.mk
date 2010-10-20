@@ -1,9 +1,16 @@
 TARGET             := ufo2map
 
+# if the linking should be static
+$(TARGET)_STATIC   ?= $(STATIC)
+ifeq ($($(TARGET)_STATIC),1)
+$(TARGET)_LDFLAGS  += -static
+endif
+
 $(TARGET)_LINKER   := $(CC)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
 $(TARGET)_CFLAGS   += -DCOMPILE_MAP -ffloat-store $(SDL_CFLAGS) $(SDL_IMAGE_CFLAGS)
 $(TARGET)_LDFLAGS  += -lm -lpng -ljpeg -lz $(SDL_LIBS) $(SDL_IMAGE_LIBS)
+
 $(TARGET)_SRCS      = \
 	tools/ufo2map/ufo2map.c \
 	tools/ufo2map/lighting.c \

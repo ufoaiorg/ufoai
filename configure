@@ -21,6 +21,7 @@ CROSS=
 CC=
 CXX=
 STATIC=
+W2K=
 
 HOST_OS=$(uname | sed -e s/_.*// | tr '[:upper:]' '[:lower:]')
 TARGET_OS=${HOST_OS}
@@ -102,6 +103,7 @@ config_h() {
 makefile_local() {
 	add_to_makefile_local DEBUG
 	add_to_makefile_local STATIC "Enable static linking"
+	add_to_makefile_local W2K "Enable Windows 2000 compatibility"
 	add_to_makefile_local HARD_LINKED_GAME
 	add_to_makefile_local UNIVERSAL "Build a universal binary"
 	add_to_makefile_local TARGET_OS "Compile for ${TARGET_OS}"
@@ -165,6 +167,7 @@ usage() {
 	echo " --enable-release         build with optimizations"
 	echo " --enable-static          enable static linking"
 	echo " --enable-universal       enable universal build"
+	echo " --enable-w2k             enable Windows 2000 compatibility"
 	echo " --disable-execinfo       disable backtraces for crashes"
 	echo " --disable-signals        disable the use of a signal handler"
 	echo
@@ -230,6 +233,9 @@ while [ $# -gt 0 ]; do
 		;;
 	--enable-paranoid)
 		PARANOID=1
+		;;
+	--enable-w2k)
+		W2K=1
 		;;
 	--disable-signals)
 		USE_SIGNALS=

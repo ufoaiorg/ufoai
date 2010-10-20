@@ -1,9 +1,16 @@
 TARGET             := ufoded
 
+# if the linking should be static
+$(TARGET)_STATIC   ?= $(STATIC)
+ifeq ($($(TARGET)_STATIC),1)
+$(TARGET)_LDFLAGS  += -static
+endif
+
 $(TARGET)_LINKER   := $(CC)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
 $(TARGET)_LDFLAGS  += $(SDL_LIBS) $(CURL_LIBS) $(SO_LIBS) -lz -lm
 $(TARGET)_CFLAGS   += -DCOMPILE_UFO -DDEDICATED_ONLY $(SDL_CFLAGS) $(CURL_CFLAGS)
+
 $(TARGET)_SRCS      = \
 	common/cmd.c \
 	common/http.c \

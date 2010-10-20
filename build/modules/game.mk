@@ -1,5 +1,11 @@
 TARGET             := game
 
+# if the linking should be static
+$(TARGET)_STATIC   ?= $(STATIC)
+ifeq ($($(TARGET)_STATIC),1)
+$(TARGET)_LDFLAGS  += -static
+endif
+
 $(TARGET)_LINKER   := $(CC)
 $(TARGET)_CFLAGS   += -DCOMPILE_UFO $(SO_CFLAGS)
 $(TARGET)_LDFLAGS  += $(SO_LDFLAGS) -lm

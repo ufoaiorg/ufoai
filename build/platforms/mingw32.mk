@@ -8,8 +8,11 @@ EXE_EXT                   = .exe
 # TODO: config.h
 CFLAGS                   += -DSHARED_EXT=\"$(SO_EXT)\"
 CFLAGS                   += -DGETTEXT_STATIC
-# Windows XP is the minimum we need
-CFLAGS                   += -DWINVER=0x501
+ifeq ($(W2K),1)
+  CFLAGS                 += -DWINVER=0x500
+else
+  CFLAGS                 += -DWINVER=0x501
+endif
 
 PKG_CONFIG               ?= $(CROSS)pkg-config
 OPENGL_LIBS              ?= -lopengl32

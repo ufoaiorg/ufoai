@@ -34,7 +34,13 @@ ifeq ($(PROFILING),1)
 endif
 
 CCFLAGS += $(CFLAGS)
-CCFLAGS += -std=c99
+
+ifeq ($(W2K),1)
+  CCFLAGS += -std=gnu89
+else
+  CCFLAGS += -std=c99
+endif
+
 #CCFLAGS += -Werror-implicit-function-declaration
 #CCFLAGS += -Wimplicit-int
 #CCFLAGS += -Wmissing-prototypes

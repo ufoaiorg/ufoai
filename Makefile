@@ -78,7 +78,7 @@ endif
 
 $($(1)_FILE): $(BUILDDIR)/$(1)/.dirs $(foreach DEP,$($(1)_DEPS),$($(DEP)_FILE)) $($(1)_OBJS)
 	@echo '===> LD [$$@]'
-	$(Q)$(CROSS)$($(1)_LINKER) $(CFLAGS) $($(1)_OBJS) $(LDFLAGS) $($(1)_LDFLAGS) -o $($(1)_FILE)
+	$(Q)$(CROSS)$($(1)_LINKER) $($(1)_LDFLAGS) $(LDFLAGS) $($(1)_OBJS) -o $($(1)_FILE)
 
 $(BUILDDIR)/$(1)/%.c.o: $(SRCDIR)/%.c $(BUILDDIR)/$(1)/.dirs
 	@echo '===> CC [$(1)] $$<'

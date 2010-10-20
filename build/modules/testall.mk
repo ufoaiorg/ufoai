@@ -1,9 +1,16 @@
 TARGET             := testall
 
+# if the linking should be static
+$(TARGET)_STATIC   ?= $(STATIC)
+ifeq ($($(TARGET)_STATIC),1)
+$(TARGET)_LDFLAGS  += -static
+endif
+
 $(TARGET)_LINKER   := $(CC)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
 $(TARGET)_CFLAGS   += -DCOMPILE_UFO -DCOMPILE_UNITTESTS $(SDL_CFLAGS) $(CURL_CFLAGS) $(OGG_CFLAGS)
 $(TARGET)_LDFLAGS  += -lcunit -lpng -ljpeg $(INTL_LIBS) $(SDL_TTF_LIBS) $(SDL_IMAGE_LIBS) $(SDL_MIXER_LIBS) $(OPENGL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(THEORA_LIBS) $(XVID_LIBS) $(VORBIS_LIBS) $(OGG_LIBS) $(SO_LIBS) -lz
+
 $(TARGET)_SRCS      = \
 	tests/test_all.c \
 	tests/test_routing.c \
