@@ -127,20 +127,6 @@ void AL_FillInContainment (base_t *base)
 }
 
 /**
- * @brief Index of alien race to its name.
- * @param[in] teamDefIdx Index of alien race in teamDef array.
- * @return name (untranslated) or NULL if no definition found.
- */
-const char *AL_AlienTypeToName (int teamDefIdx)
-{
-	if (teamDefIdx < 0 || teamDefIdx >= csi.numTeamDefs) {
-		Com_Printf("AL_AlienTypeToName: invalid team index %i\n", teamDefIdx);
-		return NULL;
-	}
-	return csi.teamDef[teamDefIdx].name;
-}
-
-/**
  * @brief Collecting stunned aliens and alien bodies after the mission.
  * @param[in] aircraft Pointer to the aircraft with cargo.
  * @sa CL_ParseResults
@@ -439,25 +425,24 @@ static int AL_GetAlienIDX (const teamDef_t *alienType)
 }
 
 /**
- * @brief Returns global alien index.
- * @param[in] idx Alien index in Alien Containment.
- * @return Global alien index in csi.teamDef array.
+ * @brief Returns teamdef for global alien idx.
+ * @param[in] idx Alien index
  * @sa AL_GetAlienIDX
  */
-int AL_GetAlienGlobalIDX (int idx)
+const teamDef_t* AL_GetAlienTeamDef (int alienTeamDefIdx)
 {
 	int i, counter = 0;
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		const teamDef_t *td = &csi.teamDef[i];
 		if (CHRSH_IsTeamDefAlien(td)) {
-			if (counter == idx)
-				return i;
+			if (counter == alienTeamDefIdx)
+				return td;
 			counter++;
 		}
 	}
-	Com_Printf("AL_GetAlienGlobalIDX: Alien with AC index %i not found!\n", idx);
-	return -1;
+	Com_Printf("AL_GetAlienGlobalIDX: Alien with AC index %i not found!\n", alienTeamDefIdx);
+	return NULL;
 }
 
 /**

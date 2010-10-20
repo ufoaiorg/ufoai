@@ -81,8 +81,14 @@ typedef enum {
 
 /** @brief Array of current cargo onboard. */
 typedef struct transferCargo_s {
+	union transferItem_t {
+		const objDef_t *item;
+		const aircraft_t *aircraft;
+		const employee_t *employee;
+		const teamDef_t *alienTeam;
+		const void *pointer;		/**< if you just wanna check whether a valid pointer was set */
+	} data;
 	transferType_t type;			/**< Type of cargo (1 - items, 2 - employees, 3 - alien bodies, 4 - live aliens). */
-	int itemidx;			/**< Index of item in cargo. */
 } transferCargo_t;
 
 typedef struct transferData_s {
@@ -114,6 +120,9 @@ typedef struct transferData_s {
 	int trCargoCountTmp;
 } transferData_t;
 
+#define TR_SetData(dataPtr, typeVal, ptr)  do { (dataPtr)->data.pointer = (ptr); (dataPtr)->type = (typeVal); } while (0);
+
+qboolean TR_AddData(transferData_t *transferData, transferType_t type, const void* data);
 void TR_TransferCheck(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 

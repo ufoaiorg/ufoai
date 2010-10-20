@@ -408,13 +408,7 @@ static void TR_CargoList (void)
 		if (itemCargoAmount > 0) {
 			LIST_AddString(&cargoList, _(od->name));
 			LIST_AddString(&cargoListAmount, va("%i", itemCargoAmount));
-			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_ITEM;
-			td.cargo[td.trCargoCountTmp].itemidx = i;
-			td.trCargoCountTmp++;
-			if (td.trCargoCountTmp >= MAX_CARGO) {
-				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
-				break;
-			}
+			TR_AddData(&td, CARGO_TYPE_ITEM, od);
 		}
 	}
 
@@ -431,13 +425,7 @@ static void TR_CargoList (void)
 						Com_sprintf(str, lengthof(str), _("Pilot %s"), employee->chr.name);
 					LIST_AddString(&cargoList, str);
 					LIST_AddString(&cargoListAmount, "1");
-					td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_EMPLOYEE;
-					td.cargo[td.trCargoCountTmp].itemidx = employee->idx;
-					td.trCargoCountTmp++;
-					if (td.trCargoCountTmp >= MAX_CARGO) {
-						Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
-						break;
-					}
+					TR_AddData(&td, CARGO_TYPE_EMPLOYEE, employee);
 				}
 				trempl[emplType]++;
 			}
@@ -449,42 +437,26 @@ static void TR_CargoList (void)
 		if (trempl[emplType] > 0) {
 			LIST_AddString(&cargoList, E_GetEmployeeString(emplType));
 			LIST_AddString(&cargoListAmount, va("%i", trempl[emplType]));
-			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_EMPLOYEE;
-			td.trCargoCountTmp++;
-			if (td.trCargoCountTmp >= MAX_CARGO) {
-				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
-				break;
-			}
+			TR_AddData(&td, CARGO_TYPE_EMPLOYEE, NULL);
 		}
 	}
 
 	/* Show aliens. */
 	for (i = 0; i < ccs.numAliensTD; i++) {
 		if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
-			Com_sprintf(str, sizeof(str), _("Corpse of %s"),
-				_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))));
+			const teamDef_t* teamDef = AL_GetAlienTeamDef(i);
+			Com_sprintf(str, sizeof(str), _("Corpse of %s"), _(teamDef->name));
 			LIST_AddString(&cargoList, str);
 			LIST_AddString(&cargoListAmount, va("%i", td.trAliensTmp[i][TRANS_ALIEN_DEAD]));
-			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_ALIEN_DEAD;
-			td.cargo[td.trCargoCountTmp].itemidx = i;
-			td.trCargoCountTmp++;
-			if (td.trCargoCountTmp >= MAX_CARGO) {
-				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
-				break;
-			}
+			TR_AddData(&td, CARGO_TYPE_ALIEN_DEAD, teamDef);
 		}
 	}
 	for (i = 0; i < ccs.numAliensTD; i++) {
 		if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
-			LIST_AddString(&cargoList, _(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))));
+			const teamDef_t* teamDef = AL_GetAlienTeamDef(i);
+			LIST_AddString(&cargoList, _(teamDef->name));
 			LIST_AddString(&cargoListAmount, va("%i", td.trAliensTmp[i][TRANS_ALIEN_ALIVE]));
-			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_ALIEN_ALIVE;
-			td.cargo[td.trCargoCountTmp].itemidx = i;
-			td.trCargoCountTmp++;
-			if (td.trCargoCountTmp >= MAX_CARGO) {
-				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
-				break;
-			}
+			TR_AddData(&td, CARGO_TYPE_ALIEN_ALIVE, teamDef);
 		}
 	}
 
@@ -493,13 +465,7 @@ static void TR_CargoList (void)
 		Com_sprintf(str, lengthof(str), _("Aircraft %s"), aircraft->name);
 		LIST_AddString(&cargoList, str);
 		LIST_AddString(&cargoListAmount, "1");
-		td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_AIRCRAFT;
-		td.cargo[td.trCargoCountTmp].itemidx = i;
-		td.trCargoCountTmp++;
-		if (td.trCargoCountTmp >= MAX_CARGO) {
-			Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
-			break;
-		}
+		TR_AddData(&td, CARGO_TYPE_AIRCRAFT, aircraft);
 	}
 
 	UI_RegisterLinkedListText(TEXT_CARGO_LIST, cargoList);
@@ -654,8 +620,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			for (i = 0; i < ccs.numAliensTD; i++) {
 				const aliensCont_t *alienCont = &srcbase->alienscont[i];
 				if (alienCont->teamDef && alienCont->amountDead > 0) {
-					Com_sprintf(str, sizeof(str), _("Corpse of %s"),
-							_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))));
+					Com_sprintf(str, sizeof(str), _("Corpse of %s"), _(alienCont->teamDef->name));
 					LIST_AddString(&transferList, str);
 					LIST_AddString(&transferListAmount, va("%i", alienCont->amountDead));
 					if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
@@ -665,8 +630,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 					cnt++;
 				}
 				if (alienCont->teamDef && alienCont->amountAlive > 0) {
-					Com_sprintf(str, sizeof(str), _("Alive %s"),
-							_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))));
+					Com_sprintf(str, sizeof(str), _("Alive %s"), _(alienCont->teamDef->name));
 					LIST_AddString(&transferList, str);
 					LIST_AddString(&transferListAmount, va("%i", alienCont->amountAlive));
 					if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)

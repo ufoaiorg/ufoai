@@ -302,6 +302,16 @@ static void TR_TransferEnd (transfer_t *transfer)
 	transfer->active = qfalse;
 }
 
+qboolean TR_AddData (transferData_t *transferData, transferType_t type, const void* data)
+{
+	TR_SetData(&transferData->cargo[transferData->trCargoCountTmp], type, data);
+	transferData->trCargoCountTmp++;
+	if (transferData->trCargoCountTmp >= MAX_CARGO)
+		return qfalse;
+
+	return qtrue;
+}
+
 /**
  * @brief Starts a transfer
  * @param[in] srcBase start transfer from this base
