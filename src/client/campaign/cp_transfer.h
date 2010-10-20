@@ -66,13 +66,6 @@ typedef struct transfer_s {
 	qboolean hasAircraft;			/**< Transfer of aircraft. */
 } transfer_t;
 
-/** @brief Array of current cargo onboard. */
-typedef struct transferCargo_s {
-	int type;			/**< Type of cargo (1 - items, 2 - employees, 3 - alien bodies, 4 - live aliens). */
-	int itemidx;			/**< Index of item in cargo. */
-} transferCargo_t;
-
-
 /**
  * @brief transfer types
  */
@@ -85,6 +78,12 @@ typedef enum {
 
 	TRANS_TYPE_MAX
 } transferType_t;
+
+/** @brief Array of current cargo onboard. */
+typedef struct transferCargo_s {
+	transferType_t type;			/**< Type of cargo (1 - items, 2 - employees, 3 - alien bodies, 4 - live aliens). */
+	int itemidx;			/**< Index of item in cargo. */
+} transferCargo_t;
 
 typedef struct transferData_s {
 	/** @brief Current selected aircraft for transfer (if transfer started from mission). */
