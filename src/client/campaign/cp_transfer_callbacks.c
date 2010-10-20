@@ -976,6 +976,24 @@ static void TR_AddAircraftToTransferList (base_t *base, transferData_t *transfer
 	}
 }
 
+static void TR_AddToTransferList (base_t *base, transferData_t *transfer, int num)
+{
+	switch (transfer->currentTransferType) {
+	case TRANS_TYPE_ITEM:
+		TR_AddItemToTransferList(base, transfer, num);
+		break;
+	case TRANS_TYPE_EMPLOYEE:
+		TR_AddEmployeeToTransferList(base, transfer, num);
+		break;
+	case TRANS_TYPE_ALIEN:
+		TR_AddAlienToTransferList(base, transfer, num);
+		break;
+	case TRANS_TYPE_AIRCRAFT:
+		TR_AddAircraftToTransferList(base, transfer, num);
+		break;
+	}
+}
+
 /**
  * @brief Adds a thing to transfercargo by left mouseclick.
  * @sa TR_TransferSelect_f
@@ -1002,24 +1020,7 @@ static void TR_TransferListSelect_f (void)
 	if (num < 0 || num >= csi.numODs)
 		return;
 
-	switch (td.currentTransferType) {
-	case TRANS_TYPE_INVALID:	/**< No list was initialized before you call this. */
-		return;
-	case TRANS_TYPE_ITEM:
-		TR_AddItemToTransferList(base, &td, num);
-		break;
-	case TRANS_TYPE_EMPLOYEE:
-		TR_AddEmployeeToTransferList(base, &td, num);
-		break;
-	case TRANS_TYPE_ALIEN:
-		TR_AddAlienToTransferList(base, &td, num);
-		break;
-	case TRANS_TYPE_AIRCRAFT:
-		TR_AddAircraftToTransferList(base, &td, num);
-		break;
-	default:
-		return;
-	}
+	TR_AddToTransferList(base, &td, num);
 
 	TR_TransferSelect(base, td.transferBase, td.currentTransferType);
 }
@@ -1319,11 +1320,7 @@ static void TR_RemoveAircraftFromCargoList (base_t *base, transferData_t *transf
 
 static void TR_RemoveFromCargoList (base_t *base, transferData_t *transferData, int num)
 {
-	int cnt = 0, entries = 0, i, j;
-	qboolean removed = qfalse;
-	int numempl[MAX_EMPL];
-	employeeType_t emplType;
-	transferCargo_t *cargo = &transferData->cargo[num];
+	const transferCargo_t *cargo = &transferData->cargo[num];
 
 	switch (cargo->type) {
 	case CARGO_TYPE_ITEM:
@@ -1341,8 +1338,6 @@ static void TR_RemoveFromCargoList (base_t *base, transferData_t *transferData, 
 	case CARGO_TYPE_AIRCRAFT:
 		TR_RemoveAircraftFromCargoList(base, transferData, num);
 		break;
-	default:
-		return;
 	}
 }
 
