@@ -507,7 +507,6 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	linkedList_t *transferListTransfered = NULL;
 	int numempl[MAX_EMPL], trempl[MAX_EMPL];
 	int i, j, cnt = 0;
-	char str[128];
 
 	/* reset for every new call */
 	UI_ResetData(TEXT_TRANSFER_LIST);
@@ -534,8 +533,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 					LIST_AddString(&transferListTransfered, va("%i", itemCargoAmount));
 				else
 					LIST_AddString(&transferListTransfered, "");
-				Com_sprintf(str, sizeof(str), "%s", _(od->name));
-				LIST_AddString(&transferList, str);
+				LIST_AddString(&transferList, _(od->name));
 				LIST_AddString(&transferListAmount, va("%i", antiMatterInBase));
 				cnt++;
 			}
@@ -551,8 +549,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 						LIST_AddString(&transferListTransfered, va("%i", itemCargoAmount));
 					else
 						LIST_AddString(&transferListTransfered, "");
-					Com_sprintf(str, sizeof(str), "%s", _(od->name));
-					LIST_AddString(&transferList, str);
+					LIST_AddString(&transferList, _(od->name));
 					LIST_AddString(&transferListAmount, va("%i", B_ItemInBase(od, srcbase)));
 					cnt++;
 				}
@@ -582,6 +579,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 					if (td.trEmployeesTmp[emplType][employee->idx])	/* Already on transfer list. */
 						continue;
 					if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
+						char str[128];
 						if (emplType == EMPL_SOLDIER) {
 							const rank_t *rank = CL_GetRankByIdx(employee->chr.score.rank);
 							Com_sprintf(str, sizeof(str), _("Soldier %s %s"), rank->shortname, employee->chr.name);
@@ -624,7 +622,10 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 		if (B_GetBuildingStatus(destbase, B_ALIEN_CONTAINMENT)) {
 			for (i = 0; i < ccs.numAliensTD; i++) {
 				const aliensCont_t *alienCont = &srcbase->alienscont[i];
-				if (alienCont->teamDef && alienCont->amountDead > 0) {
+				if (!alienCont->teamDef)
+					continue;
+				if (alienCont->amountDead > 0) {
+					char str[128];
 					Com_sprintf(str, sizeof(str), _("Corpse of %s"), _(alienCont->teamDef->name));
 					LIST_AddString(&transferList, str);
 					LIST_AddString(&transferListAmount, va("%i", alienCont->amountDead));
@@ -634,7 +635,8 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 						LIST_AddString(&transferListTransfered, "");
 					cnt++;
 				}
-				if (alienCont->teamDef && alienCont->amountAlive > 0) {
+				if (alienCont->amountAlive > 0) {
+					char str[128];
 					Com_sprintf(str, sizeof(str), _("Alive %s"), _(alienCont->teamDef->name));
 					LIST_AddString(&transferList, str);
 					LIST_AddString(&transferListAmount, va("%i", alienCont->amountAlive));
@@ -667,6 +669,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 
 			while ((aircraft = AIR_GetNextFromBase(srcbase, aircraft))) {
 				if (TR_AircraftListSelect(aircraft)) {
+					char str[128];
 					Com_sprintf(str, sizeof(str), _("Aircraft %s"), aircraft->name);
 					LIST_AddString(&transferList, str);
 					LIST_AddString(&transferListAmount, "1");
