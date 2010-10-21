@@ -2311,7 +2311,7 @@ void GlobalGL_sharedContextCreated (void)
 	GtkSettings *settings = gtk_settings_get_default();
 	gchar *fontname;
 	g_object_get(settings, "gtk-font-name", &fontname, (char*) 0);
-	g_font = glfont_create("Sans 8");
+	g_font = glfont_create(fontname);
 
 	GlobalOpenGL().m_font = g_font.getDisplayList();
 	GlobalOpenGL().m_fontHeight = g_font.getPixelHeight();
