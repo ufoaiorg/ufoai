@@ -37,6 +37,13 @@
 /** General utility functions for OS-related tasks
  */
 
+#if defined(WIN32)
+# define OS_CASE_INSENSITIVE
+# ifndef PATH_MAX
+#  define PATH_MAX 260
+# endif
+#endif
+
 namespace os
 {
 	/** Convert the slashes in a path to forward-slashes
@@ -90,19 +97,32 @@ namespace os
 		std::string::size_type pos = filename.rfind(".");
 		return filename.substr(0, pos);
 	}
+
+	/**
+	 * If @c path is a child of @c base, returns the subpath relative to @c base, else returns @c path.
+	 * O(n)
+	 */
+	inline std::string makeRelative (const std::string& path, const std::string& base)
+	{
+		const std::size_t length = base.length();
+#if defined(OS_CASE_INSENSITIVE)
+		if (strncasecmp(path.c_str(), base.c_str(), length) == 0)
+#else
+		if (strncmp(path.c_str(), base.c_str(), length) == 0)
+#endif
+			return path.substr(length);
+		if (path[0] == '/') {
+			std::string cut = path;
+			return cut.erase(0, 1);
+		}
+		return path;
+	}
 }
 
 #include "string/string.h"
 
 #include <glib.h>
 #include <glib/gstdio.h>
-
-#if defined(WIN32)
-# define OS_CASE_INSENSITIVE
-# ifndef PATH_MAX
-#  define PATH_MAX 260
-# endif
-#endif
 
 /// \brief Returns true if \p path is a directory.
 /// O(n)
