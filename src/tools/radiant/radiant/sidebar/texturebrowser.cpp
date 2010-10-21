@@ -104,6 +104,8 @@ TextureBrowser::TextureBrowser() :
 
 	GlobalShaderSystem().setActiveShadersChangedNotify(MemberCaller<TextureBrowser,
 			&TextureBrowser::activeShadersChanged> (*this));
+
+	setSelectedShader("");
 }
 
 int TextureBrowser::getFontHeight() {
@@ -118,6 +120,8 @@ const std::string& TextureBrowser::getSelectedShader() const {
  * @brief Updates statusbar with texture information
  */
 void TextureBrowser::setStatusText(const std::string& name) {
+	if (g_pParentWnd == 0)
+		return;
 	IShader* shaderPtr = GlobalMaterialSystem()->getMaterialForName(name);
 	if (shaderPtr == (IShader*) 0)
 		shaderPtr = GlobalShaderSystem().getShaderForName(name);

@@ -205,6 +205,8 @@ void FindTextureDialog::updateTextures (const std::string& name)
 
 bool FindTextureDialog::isOpen ()
 {
+	if (g_FindTextureDialog.GetWidget() == 0)
+		return false;
 	return GTK_WIDGET_VISIBLE(g_FindTextureDialog.GetWidget()) == TRUE;
 }
 
