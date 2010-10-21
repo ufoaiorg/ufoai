@@ -1033,7 +1033,8 @@ void OpenGLShader::appendBlendLayer(const ShaderLayer& layer)
 
 void OpenGLShader::visitShaderLayers (const ShaderLayer& layer)
 {
-	appendBlendLayer(layer);
+	if (layer.getType() == ShaderLayer::BLEND)
+		appendBlendLayer(layer);
 }
 
 typedef MemberCaller1<OpenGLShader, const ShaderLayer&, &OpenGLShader::visitShaderLayers> ShaderLayerVisitor;
