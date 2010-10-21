@@ -33,6 +33,7 @@
 #define INCLUDED_OS_PATH_H
 
 #include <string>
+#include <cstring>
 
 /** General utility functions for OS-related tasks
  */
@@ -106,9 +107,9 @@ namespace os
 	{
 		const std::size_t length = base.length();
 #if defined(OS_CASE_INSENSITIVE)
-		if (strncasecmp(path.c_str(), base.c_str(), length) == 0)
+		if (g_ascii_strncasecmp(path.c_str(), base.c_str(), length) == 0)
 #else
-		if (strncmp(path.c_str(), base.c_str(), length) == 0)
+		if (std::strncmp(path.c_str(), base.c_str(), length) == 0)
 #endif
 			return path.substr(length);
 		if (path[0] == '/') {
