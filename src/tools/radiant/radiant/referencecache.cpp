@@ -348,7 +348,7 @@ struct ModelResource: public Resource
 			m_model(g_nullModel), m_originalName(name), m_type(os::getExtension(name.c_str())), m_loader(0),
 					m_modified(0), m_unrealised(1)
 		{
-			m_loader = ModelLoader_forType(m_type.c_str());
+			m_loader = ModelLoader_forType(m_type);
 
 			if (g_realised) {
 				realise();
@@ -465,7 +465,7 @@ struct ModelResource: public Resource
 			ASSERT_MESSAGE(m_unrealised != 0, "ModelResource::realise: already realised");
 			if (--m_unrealised == 0) {
 				m_path = rootPath(m_originalName);
-				m_name = path_make_relative(m_originalName.c_str(), m_path.c_str());
+				m_name = path_make_relative(m_originalName, m_path);
 
 				m_observers.realise();
 			}

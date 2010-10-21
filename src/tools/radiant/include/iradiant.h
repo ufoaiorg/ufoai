@@ -145,7 +145,7 @@ struct IRadiant
 		void (*XYWindowMouseDown_disconnect) (MouseEventHandlerId id);
 		EViewType (*XYWindow_getViewType) ();
 		Vector3 (*XYWindow_windowToWorld) (const WindowVector& position);
-		const char* (*TextureBrowser_getSelectedShader) ();
+		const std::string& (*TextureBrowser_getSelectedShader) ();
 
 		// GTK+ functions
 		PFN_QERAPP_MESSAGEBOX m_pfnMessageBox;

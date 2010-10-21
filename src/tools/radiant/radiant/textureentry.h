@@ -94,7 +94,7 @@ class TextureNameList
 			for (GlobalShaderSystem().beginActiveShadersIterator(); !GlobalShaderSystem().endActiveShadersIterator(); GlobalShaderSystem().incrementActiveShadersIterator()) {
 				IShader *shader = GlobalShaderSystem().dereferenceActiveShadersIterator();
 
-				if (shader_equal_prefix(shader->getName(), "textures/")) {
+				if (shader_equal_prefix(shader->getName(), GlobalTexturePrefix_get())) {
 					callback(shader->getName() + 9);
 				}
 			}

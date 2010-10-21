@@ -50,7 +50,7 @@ const Accelerator& GlobalShortcuts_insert (const std::string& name, const Accele
 void GlobalShortcuts_foreach (CommandVisitor& visitor)
 {
 	for (Shortcuts::iterator i = g_shortcuts.begin(); i != g_shortcuts.end(); ++i) {
-		visitor.visit((*i).first.c_str(), (*i).second.first);
+		visitor.visit((*i).first, (*i).second.first);
 	}
 }
 
@@ -386,7 +386,7 @@ gboolean accelerator_window_key_press (GtkWidget *widget, GdkEventKey *event, gp
 					StringOutputStream msg;
 					msg << "The command " << name << " is already assigned to the key " << accelerator << ".\n\n"
 							<< "Do you want to unassign " << name << " first?";
-					EMessageBoxReturn r = gtk_MessageBox(widget, msg.c_str(), _("Key already used"), eMB_YESNOCANCEL);
+					EMessageBoxReturn r = gtk_MessageBox(widget, msg.toString(), _("Key already used"), eMB_YESNOCANCEL);
 					if (r == eIDYES) {
 						// clear the ACTUAL accelerator too!
 						disconnect_accelerator(name);
@@ -649,7 +649,7 @@ class ReadCommandMap: public CommandVisitor
 		void visit (const std::string& name, Accelerator& accelerator)
 		{
 			char value[1024];
-			if (read_var(m_filename.c_str(), "Commands", name.c_str(), value)) {
+			if (read_var(m_filename, "Commands", name.c_str(), value)) {
 				if (string_empty(value)) {
 					accelerator.key = 0;
 					accelerator.modifiers = (GdkModifierType) 0;

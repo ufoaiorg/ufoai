@@ -63,7 +63,7 @@ void Sys_LogFile (bool enable)
 		std::string name = SettingsPath_get() + "radiant.log";
 		g_hLogFile = fopen(name.c_str(), "w");
 		if (g_hLogFile != 0) {
-			globalOutputStream() << "Started logging to " << name.c_str() << "\n";
+			globalOutputStream() << "Started logging to " << name << "\n";
 			time_t localtime;
 			time(&localtime);
 			g_Console_createLogFailed = false;

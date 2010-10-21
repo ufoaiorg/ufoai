@@ -121,9 +121,9 @@ Vector3 XYWindow_windowToWorld (const WindowVector& position)
 	return result;
 }
 
-const char* TextureBrowser_getSelectedShader ()
+const std::string& TextureBrowser_getSelectedShader ()
 {
-	return GlobalTextureBrowser().getSelectedShader().c_str();
+	return GlobalTextureBrowser().getSelectedShader();
 }
 
 class RadiantCoreAPI

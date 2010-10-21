@@ -76,8 +76,8 @@ namespace
 {
 	void FindTextureDialog_apply ()
 	{
-		std::string find = "textures/" + g_FindTextureDialog.m_strFind;
-		std::string replace = "textures/" + g_FindTextureDialog.m_strReplace;
+		std::string find = GlobalTexturePrefix_get() + g_FindTextureDialog.m_strFind;
+		std::string replace = GlobalTexturePrefix_get() + g_FindTextureDialog.m_strReplace;
 		FindReplaceTextures(find, replace, g_FindTextureDialog.m_bSelectedOnly);
 	}
 
@@ -194,7 +194,7 @@ GtkWindow* FindTextureDialog::BuildDialog ()
 void FindTextureDialog::updateTextures (const std::string& name)
 {
 	if (isOpen()) {
-		const std::size_t length = strlen("textures/");
+		const std::size_t length = GlobalTexturePrefix_get().length();
 		if (g_bFindActive) {
 			setFindStr(name.substr(length));
 		} else {

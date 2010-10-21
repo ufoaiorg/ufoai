@@ -176,10 +176,10 @@ static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, c
 		buf << "aborting...\n";
 
 	// spam it...
-	globalErrorStream() << buf.c_str();
+	globalErrorStream() << buf.toString();
 
 	if (is_fatal)
-		ERROR_MESSAGE("GTK+ error: " << buf.c_str());
+		ERROR_MESSAGE("GTK+ error: " << buf.toString());
 }
 
 class Lock
@@ -268,17 +268,17 @@ class PopupDebugMessageHandler: public DebugMessageHandler
 			LineLimitedTextOutputStream outputStream(getOutputStream(), 24);
 			write_stack_trace(outputStream);
 			getOutputStream() << "----------------\n";
-			globalErrorStream() << m_buffer.c_str();
+			globalErrorStream() << m_buffer.toString();
 			if (!m_lock.locked()) {
 				ScopedLock lock(m_lock);
 #ifdef DEBUG
 				m_buffer << "Break into the debugger?\n";
-				bool handled = gtk_MessageBox(0, m_buffer.c_str(), _("Radiant - Runtime Error"), eMB_YESNO, eMB_ICONERROR) == eIDNO;
+				bool handled = gtk_MessageBox(0, m_buffer.toString(), _("Radiant - Runtime Error"), eMB_YESNO, eMB_ICONERROR) == eIDNO;
 				m_buffer.clear();
 				return handled;
 #else
 				m_buffer << "Please report this error to the developers\n";
-				gtk_MessageBox(0, m_buffer.c_str(), _("Radiant - Runtime Error"), eMB_OK, eMB_ICONERROR);
+				gtk_MessageBox(0, m_buffer.toString(), _("Radiant - Runtime Error"), eMB_OK, eMB_ICONERROR);
 				m_buffer.clear();
 #endif
 			}

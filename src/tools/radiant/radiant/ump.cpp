@@ -107,7 +107,7 @@ const std::string UMPSystem::getUMPFilename (const std::string& map)
 			if (tile)
 				return *i;
 		} catch (map::ump::UMPException& e) {
-			globalErrorStream() << e.getMessage().c_str() << "\n";
+			globalErrorStream() << e.getMessage() << "\n";
 			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), e.getMessage());
 		}
 	}

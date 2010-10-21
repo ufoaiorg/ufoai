@@ -265,12 +265,12 @@ void setEnginePath (const std::string& path)
 {
 	StringOutputStream buffer(256);
 	buffer << DirectoryCleaned(path.c_str());
-	if (g_strEnginePath != buffer.c_str()) {
+	if (g_strEnginePath != buffer.toString()) {
 		ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Changing Engine Path"));
 
 		EnginePath_Unrealise();
 
-		g_strEnginePath = std::string(buffer.c_str());
+		g_strEnginePath = buffer.toString();
 
 		EnginePath_Realise();
 	}
@@ -1045,7 +1045,7 @@ void Texdef_Rotate (float angle)
 {
 	StringOutputStream command;
 	command << "brushRotateTexture -angle " << angle;
-	UndoableCommand undo(command.c_str());
+	UndoableCommand undo(command.toString());
 	Select_RotateTexture(angle);
 }
 
@@ -1063,7 +1063,7 @@ void Texdef_Scale (float x, float y)
 {
 	StringOutputStream command;
 	command << "brushScaleTexture -x " << x << " -y " << y;
-	UndoableCommand undo(command.c_str());
+	UndoableCommand undo(command.toString());
 	Select_ScaleTexture(x, y);
 }
 
@@ -1091,7 +1091,7 @@ void Texdef_Shift (float x, float y)
 {
 	StringOutputStream command;
 	command << "brushShiftTexture -x " << x << " -y " << y;
-	UndoableCommand undo(command.c_str());
+	UndoableCommand undo(command.toString());
 	Select_ShiftTexture(x, y);
 }
 
@@ -1175,7 +1175,7 @@ void Selection_SnapToGrid (void)
 {
 	StringOutputStream command;
 	command << "snapSelected -grid " << GetGridSize();
-	UndoableCommand undo(command.c_str());
+	UndoableCommand undo(command.toString());
 
 	if (GlobalSelectionSystem().Mode() == SelectionSystem::eComponent) {
 		Scene_SnapToGrid_Component_Selected(GlobalSceneGraph(), GetGridSize());
@@ -2514,13 +2514,13 @@ void MainFrame_Construct (void)
 #ifdef PKGDATADIR
 	StringOutputStream path(256);
 	path << DirectoryCleaned(PKGDATADIR);
-	g_strEnginePath = path.c_str();
+	g_strEnginePath = path.toString();
 #endif
 
 #ifdef BINDIR
 	StringOutputStream ufo2mapPath(256);
 	ufo2mapPath << DirectoryCleaned(BINDIR) << "ufo2map";
-	g_strCompilerBinaryWithPath = ufo2mapPath.c_str();
+	g_strCompilerBinaryWithPath = ufo2mapPath.toString();
 #endif
 
 	GlobalPreferenceSystem().registerPreference("EnginePath", StringImportStringCaller(g_strEnginePath),

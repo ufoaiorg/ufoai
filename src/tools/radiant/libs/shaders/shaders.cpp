@@ -444,7 +444,7 @@ void debug_check_shaders (shaders_t& shaders)
 bool ShaderTemplate::parseUFO (Tokeniser& tokeniser)
 {
 	// name of the qtexture_t we'll use to represent this shader (this one has the "textures/" before)
-	m_textureName = m_Name.c_str();
+	m_textureName = m_Name;
 
 	// we need to read until we hit a balanced }
 	int depth = 0;

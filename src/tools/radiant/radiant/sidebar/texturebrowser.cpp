@@ -125,8 +125,7 @@ void TextureBrowser::setStatusText(const std::string& name) {
 	StringOutputStream strTex(256);
 	strTex << name << " W: " << Unsigned(q->width) << " H: " << Unsigned(q->height);
 	shaderPtr->DecRef();
-	g_pParentWnd->SetStatusText(g_pParentWnd->m_texture_status, strTex.c_str()
-			+ strlen("textures/"));
+	g_pParentWnd->SetStatusText(g_pParentWnd->m_texture_status, strTex.toString().substr(GlobalTexturePrefix_get().length()));
 }
 
 void TextureBrowser::setSelectedShader(const std::string& _shader) {
@@ -168,7 +167,7 @@ void TextureBrowser::getNextTexturePosition(TextureLayout& layout, const qtextur
 
 // if texture_showinuse jump over non in-use textures
 bool TextureBrowser::isTextureShown(const IShader* shader) const {
-	if (!shader_equal_prefix(shader->getName(), "textures/"))
+	if (!shader_equal_prefix(shader->getName(), GlobalTexturePrefix_get()))
 		return false;
 
 	if (!m_showShaders && !shader->IsDefault())
@@ -343,7 +342,7 @@ void TextureBrowser::showDirectory(const std::string& directory) {
 	heightChanged();
 
 	// load remaining texture files
-	Radiant_getImageModules().foreachModule(LoadTexturesByTypeVisitor("textures/" + directory));
+	Radiant_getImageModules().foreachModule(LoadTexturesByTypeVisitor(GlobalTexturePrefix_get() + directory));
 
 	// we'll display the newly loaded textures + all the ones already in use
 	setHideUnused(false);
@@ -805,7 +804,7 @@ struct TextureFunctor {
 
 		// Functor operator
 		void operator()(const std::string& file) {
-			const std::string texture = os::makeRelative(file, "textures/");
+			const std::string texture = os::makeRelative(file, GlobalTexturePrefix_get());
 			if (texture != file) {
 				std::string filename = os::getFilenameFromPath(file);
 				if (!filename.empty()) {
@@ -840,7 +839,7 @@ struct TextureDirectoryFunctor {
 
 void TextureBrowser::constructTreeView() {
 	TextureDirectoryFunctor functorDirs(groups);
-	GlobalFileSystem().forEachDirectory("textures/", makeCallback1(functorDirs));
+	GlobalFileSystem().forEachDirectory(GlobalTexturePrefix_get(), makeCallback1(functorDirs));
 	TextureFunctor functorTextures(groups);
 	GlobalShaderSystem().foreachShaderName(makeCallback1(functorTextures));
 }

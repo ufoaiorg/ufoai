@@ -23,8 +23,8 @@ namespace scripts
 
 	namespace
 	{
-		static const char* TEXTURES = "textures/";
-		static const std::size_t TEXTURES_LENGTH = strlen(TEXTURES);
+		static const std::string& TEXTURES = "textures/";
+		static const std::size_t TEXTURES_LENGTH = TEXTURES.length();
 
 		// Functor to add terrain definition to a string stream that is later
 		// saved to the terrain.ufo script file

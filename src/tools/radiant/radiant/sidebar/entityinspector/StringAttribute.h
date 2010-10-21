@@ -38,7 +38,7 @@ class StringAttribute: public EntityAttribute
 		{
 			StringOutputStream value(64);
 			value << ConvertUTF8ToLocale(gtk_entry_get_text(m_entry));
-			entitySetValue(m_classname, m_key, value.c_str());
+			entitySetValue(m_classname, m_key, value.toString());
 		}
 		typedef MemberCaller<StringAttribute, &StringAttribute::apply> ApplyCaller;
 

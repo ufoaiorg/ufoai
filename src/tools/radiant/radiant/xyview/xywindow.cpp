@@ -1000,9 +1000,9 @@ void XYWnd::NewBrushDrag_End (int x, int y)
 	}
 }
 
-static inline const char* NewBrushDragGetTexture (void)
+static inline const std::string& NewBrushDragGetTexture (void)
 {
-	const char *selectedTexture = GlobalTextureBrowser().getSelectedShader().c_str();
+	const std::string& selectedTexture = GlobalTextureBrowser().getSelectedShader();
 	if (g_brush_always_nodraw)
 		return "textures/tex_common/nodraw";
 	return selectedTexture;
@@ -1273,7 +1273,7 @@ void XYWnd::XY_MouseMoved (int x, int y, unsigned int buttons)
 		StringOutputStream status(64);
 		status << "x: " << FloatFormat(m_mousePosition[0], 6, 1) << "  y: " << FloatFormat(m_mousePosition[1], 6, 1)
 				<< "  z: " << FloatFormat(m_mousePosition[2], 6, 1);
-		g_pParentWnd->SetStatusText(g_pParentWnd->m_position_status, status.c_str());
+		g_pParentWnd->SetStatusText(g_pParentWnd->m_position_status, status.toString());
 
 		if (g_bCrossHairs) {
 			XYWnd_Update(*this);
@@ -1837,18 +1837,18 @@ void XYWnd::PaintSizeInfo (int nDim1, int nDim2, Vector3& vMinBounds, Vector3& v
 
 		glRasterPos3f(Betwixt(vMinBounds[nDim1], vMaxBounds[nDim1]), vMinBounds[nDim2] - 20.0f / m_fScale, 0.0f);
 		dimensions << g_pDimStrings[nDim1] << vSize[nDim1];
-		GlobalOpenGL().drawString(dimensions.c_str());
+		GlobalOpenGL().drawString(dimensions.toString());
 		dimensions.clear();
 
 		glRasterPos3f(vMaxBounds[nDim1] + 16.0f / m_fScale, Betwixt(vMinBounds[nDim2], vMaxBounds[nDim2]), 0.0f);
 		dimensions << g_pDimStrings[nDim2] << vSize[nDim2];
-		GlobalOpenGL().drawString(dimensions.c_str());
+		GlobalOpenGL().drawString(dimensions.toString());
 		dimensions.clear();
 
 		glRasterPos3f(vMinBounds[nDim1] + 4, vMaxBounds[nDim2] + 8 / m_fScale, 0.0f);
 		dimensions << "(" << g_pOrgStrings[0][0] << vMinBounds[nDim1] << "  " << g_pOrgStrings[0][1]
 				<< vMaxBounds[nDim2] << ")";
-		GlobalOpenGL().drawString(dimensions.c_str());
+		GlobalOpenGL().drawString(dimensions.toString());
 	} else if (m_viewType == XZ) {
 		glBegin(GL_LINES);
 
@@ -1874,18 +1874,18 @@ void XYWnd::PaintSizeInfo (int nDim1, int nDim2, Vector3& vMinBounds, Vector3& v
 
 		glRasterPos3f(Betwixt(vMinBounds[nDim1], vMaxBounds[nDim1]), 0, vMinBounds[nDim2] - 20.0f / m_fScale);
 		dimensions << g_pDimStrings[nDim1] << vSize[nDim1];
-		GlobalOpenGL().drawString(dimensions.c_str());
+		GlobalOpenGL().drawString(dimensions.toString());
 		dimensions.clear();
 
 		glRasterPos3f(vMaxBounds[nDim1] + 16.0f / m_fScale, 0, Betwixt(vMinBounds[nDim2], vMaxBounds[nDim2]));
 		dimensions << g_pDimStrings[nDim2] << vSize[nDim2];
-		GlobalOpenGL().drawString(dimensions.c_str());
+		GlobalOpenGL().drawString(dimensions.toString());
 		dimensions.clear();
 
 		glRasterPos3f(vMinBounds[nDim1] + 4, 0, vMaxBounds[nDim2] + 8 / m_fScale);
 		dimensions << "(" << g_pOrgStrings[1][0] << vMinBounds[nDim1] << "  " << g_pOrgStrings[1][1]
 				<< vMaxBounds[nDim2] << ")";
-		GlobalOpenGL().drawString(dimensions.c_str());
+		GlobalOpenGL().drawString(dimensions.toString());
 	} else {
 		glBegin(GL_LINES);
 
@@ -1911,18 +1911,18 @@ void XYWnd::PaintSizeInfo (int nDim1, int nDim2, Vector3& vMinBounds, Vector3& v
 
 		glRasterPos3f(0, Betwixt(vMinBounds[nDim1], vMaxBounds[nDim1]), vMinBounds[nDim2] - 20.0f / m_fScale);
 		dimensions << g_pDimStrings[nDim1] << vSize[nDim1];
-		GlobalOpenGL().drawString(dimensions.c_str());
+		GlobalOpenGL().drawString(dimensions.toString());
 		dimensions.clear();
 
 		glRasterPos3f(0, vMaxBounds[nDim1] + 16.0f / m_fScale, Betwixt(vMinBounds[nDim2], vMaxBounds[nDim2]));
 		dimensions << g_pDimStrings[nDim2] << vSize[nDim2];
-		GlobalOpenGL().drawString(dimensions.c_str());
+		GlobalOpenGL().drawString(dimensions.toString());
 		dimensions.clear();
 
 		glRasterPos3f(0, vMinBounds[nDim1] + 4.0f, vMaxBounds[nDim2] + 8 / m_fScale);
 		dimensions << "(" << g_pOrgStrings[2][0] << vMinBounds[nDim1] << "  " << g_pOrgStrings[2][1]
 				<< vMaxBounds[nDim2] << ")";
-		GlobalOpenGL().drawString(dimensions.c_str());
+		GlobalOpenGL().drawString(dimensions.toString());
 	}
 }
 

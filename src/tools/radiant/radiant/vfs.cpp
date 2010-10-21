@@ -211,38 +211,6 @@ static GSList* GetListInternal (const std::string& refdir, const std::string& ex
 	return files;
 }
 
-inline int ascii_to_upper (int c)
-{
-	if (c >= 'a' && c <= 'z') {
-		return c - ('a' - 'A');
-	}
-	return c;
-}
-
-/*!
- This behaves identically to stricmp(a,b), except that ASCII chars
- [\]^`_ come AFTER alphabet chars instead of before. This is because
- it converts all alphabet chars to uppercase before comparison,
- while stricmp converts them to lowercase.
- */
-static int string_compare_nocase_upper (const char* a, const char* b)
-{
-	for (;;) {
-		int c1 = ascii_to_upper(*a++);
-		int c2 = ascii_to_upper(*b++);
-
-		if (c1 < c2) {
-			return -1; // a < b
-		}
-		if (c1 > c2) {
-			return 1; // a > b
-		}
-		if (c1 == 0) {
-			return 0; // a == b
-		}
-	}
-}
-
 /**
  * @note sort pakfiles in reverse order. This ensures that
  * later pakfiles override earlier ones. This because the vfs module
@@ -253,9 +221,17 @@ static int string_compare_nocase_upper (const char* a, const char* b)
 class PakLess
 {
 	public:
+		/**
+		 * This behaves identically to stricmp(a,b), except that ASCII chars
+		 * [\]^`_ come AFTER alphabet chars instead of before. This is because
+		 * it converts all alphabet chars to uppercase before comparison,
+		 * while stricmp converts them to lowercase.
+		 */
 		bool operator() (const std::string& self, const std::string& other) const
 		{
-			return string_compare_nocase_upper(self.c_str(), other.c_str()) > 0;
+			const std::string aU = string::toUpper(self);
+			const std::string bU = string::toUpper(other);
+			return aU.compare(bU);
 		}
 };
 
@@ -413,7 +389,7 @@ const std::string FindFile (const std::string& relative)
 const std::string FindPath (const std::string& absolute)
 {
 	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-		if (path_equal_n(absolute.c_str(), (*i).name.c_str(), (*i).name.length())) {
+		if (path_equal_n(absolute, (*i).name, (*i).name.length())) {
 			return (*i).name;
 		}
 	}
@@ -494,7 +470,7 @@ class UFOFileSystem: public VirtualFileSystem
 		std::string getRelative (const std::string& name)
 		{
 			const std::string abolsoluteBasePath = FindPath(name);
-			return path_make_relative(name.c_str(), abolsoluteBasePath.c_str());
+			return path_make_relative(name, abolsoluteBasePath);
 		}
 
 		void attach (ModuleObserver& observer)
@@ -521,7 +497,7 @@ class UFOFileSystem: public VirtualFileSystem
 		{
 			for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
 				if ((*i).is_pakfile) {
-					callback((*i).name.c_str());
+					callback((*i).name);
 				}
 			}
 		}

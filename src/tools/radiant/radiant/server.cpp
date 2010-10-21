@@ -128,7 +128,7 @@ class DynamicLibrary
 	{
 		m_library = LoadLibrary(filename.c_str());
 		if (m_library == 0) {
-			globalErrorStream() << "LoadLibrary failed: '" << filename.c_str() << "'\n";
+			globalErrorStream() << "LoadLibrary failed: '" << filename << "'\n";
 			globalErrorStream() << "GetLastError: " << FormatGetLastError();
 		}
 	}

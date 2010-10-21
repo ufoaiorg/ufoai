@@ -318,12 +318,12 @@ class RadiantUndoSystem: public UndoSystem
 				globalOutputStream() << "Undo: no undo available\n";
 			} else {
 				Operation* operation = m_undo_stack.back();
-				globalOutputStream() << "Undo: " << operation->m_command.c_str() << "\n";
+				globalOutputStream() << "Undo: " << operation->m_command << "\n";
 
 				startRedo();
 				trackersUndo();
 				operation->m_snapshot.restore();
-				finishRedo(operation->m_command.c_str());
+				finishRedo(operation->m_command);
 				m_undo_stack.pop_back();
 			}
 		}
@@ -333,12 +333,12 @@ class RadiantUndoSystem: public UndoSystem
 				globalOutputStream() << "Redo: no redo available\n";
 			} else {
 				Operation* operation = m_redo_stack.back();
-				globalOutputStream() << "Redo: " << operation->m_command.c_str() << "\n";
+				globalOutputStream() << "Redo: " << operation->m_command << "\n";
 
 				startUndo();
 				trackersRedo();
 				operation->m_snapshot.restore();
-				finishUndo(operation->m_command.c_str());
+				finishUndo(operation->m_command);
 				m_redo_stack.pop_back();
 			}
 		}

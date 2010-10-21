@@ -293,7 +293,7 @@ class FaceFindShader
 
 bool DoingSearch (const std::string& repl)
 {
-	return repl.empty() || repl == "textures/";
+	return repl.empty() || repl == GlobalTexturePrefix_get();
 }
 
 void Scene_BrushFindReplaceShader (scene::Graph& graph, const std::string& find, const std::string& replace)

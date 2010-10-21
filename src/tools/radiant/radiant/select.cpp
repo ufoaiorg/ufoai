@@ -636,7 +636,7 @@ void Select_AllFacesWithTexture (void)
 	if (!name.empty()) {
 		g_message("Searching all faces with texture '%s'\n", name.c_str());
 		GlobalSelectionSystem().setSelectedAllComponents(false);
-		Scene_BrushFacesSelectByShader_Component(GlobalSceneGraph(), name.c_str());
+		Scene_BrushFacesSelectByShader_Component(GlobalSceneGraph(), name);
 	}
 }
 
