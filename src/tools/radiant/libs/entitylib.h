@@ -382,10 +382,6 @@ class EntityKeyValues: public Entity
 	public:
 		typedef KeyValue Value;
 
-		static StringPool& getPool ()
-		{
-			return Static<StringPool, KeyContext>::instance();
-		}
 	private:
 		static EntityCreator::KeyValueChangedFunc m_entityKeyValueChanged;
 		static Counter* m_counter;

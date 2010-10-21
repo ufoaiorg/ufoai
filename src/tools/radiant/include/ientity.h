@@ -60,7 +60,6 @@ class Entity
 				virtual void clear ()
 				{
 				}
-				;
 		};
 
 		class Visitor
@@ -148,8 +147,6 @@ class EntityCreator
 		virtual bool getLightRadii () = 0;
 		virtual void setForceLightRadii (bool forceLightRadii) = 0;
 		virtual bool getForceLightRadii () = 0;
-
-		virtual void printStatistics () const = 0;
 };
 
 #include "modulesystem.h"

@@ -12,24 +12,6 @@
 class StringPool : public HashTable<char*, std::size_t, RawStringHash, RawStringEqual> {
 };
 
-inline void StringPool_analyse(StringPool& pool) {
-	typedef std::multimap<std::size_t, const char*> Ordered;
-	Ordered ordered;
-	std::size_t total = 0;
-	std::size_t pooled = 0;
-	for (StringPool::iterator i = pool.begin(); i != pool.end(); ++i) {
-		std::size_t size =  string_length((*i).key) + 1;
-		total += size * (*i).value;
-		pooled += size + 20;
-		ordered.insert(Ordered::value_type((*i).value, (*i).key));
-	}
-	globalOutputStream() << "total: " << Unsigned(total) << " pooled:" << Unsigned(pooled) << "\n";
-	for (Ordered::iterator i = ordered.begin(); i != ordered.end(); ++i) {
-		globalOutputStream() << (*i).second << " " << Unsigned((*i).first) << "\n";
-	}
-}
-
-
 /// \brief A string which can be copied with zero memory cost and minimal runtime cost.
 ///
 /// \param PoolContext The string pool context to use.

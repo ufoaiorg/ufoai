@@ -206,11 +206,6 @@ class UFOEntityCreator: public EntityCreator
 		{
 			return g_forceLightRadii;
 		}
-
-		void printStatistics () const
-		{
-			StringPool_analyse(EntityKeyValues::getPool());
-		}
 };
 
 UFOEntityCreator g_UFOEntityCreator;
