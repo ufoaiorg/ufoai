@@ -163,25 +163,24 @@ void LoadUFOFile (const std::string& filename)
 	}
 }
 
-void addUFOFile (const char* dirstring)
+void addUFOFile (const std::string& filename)
 {
 	bool found = false;
 
 	for (GSList* tmp = l_ufofiles; tmp != 0; tmp = tmp->next) {
-		if (string_equal_nocase(dirstring, (char*) tmp->data)) {
+		if (string_equal_nocase(filename, (const char*) tmp->data)) {
 			found = true;
 			break;
 		}
 	}
 
 	if (!found) {
-		l_ufofiles = g_slist_append(l_ufofiles, strdup(dirstring));
-		const std::string ufoname = "ufos/" + std::string(dirstring);
-		LoadUFOFile(ufoname);
+		l_ufofiles = g_slist_append(l_ufofiles, strdup(filename.c_str()));
+		LoadUFOFile("ufos/" + filename);
 	}
 }
 
-typedef FreeCaller1<const char*, addUFOFile> AddUFOFileCaller;
+typedef FreeCaller1<const std::string&, addUFOFile> AddUFOFileCaller;
 
 void Particles_Construct (void)
 {

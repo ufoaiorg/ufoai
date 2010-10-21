@@ -66,7 +66,7 @@ namespace ui
 		class SoundPopulator: public gtkutil::VFSTreePopulator, public gtkutil::VFSTreePopulator::Visitor
 		{
 			public:
-				typedef const char* first_argument_type;
+				typedef const std::string& first_argument_type;
 
 				// Constructor
 				SoundPopulator (GtkTreeStore* treeStore) :
@@ -75,10 +75,9 @@ namespace ui
 				}
 
 				// Functor operator needed for the forEachFile() call
-				void operator() (const char* file)
+				void operator() (const std::string& file)
 				{
-					std::string rawPath(file);
-					std::string extension = os::getExtension(rawPath);
+					std::string extension = os::getExtension(file);
 
 					if (extension == "wav" || extension == "ogg")
 						addPath(file);
@@ -116,7 +115,7 @@ namespace ui
 
 		// Visit all sound sound files and collect them for later insertion
 		SoundPopulator functor(_treeStore);
-		GlobalFileSystem().forEachFile(SOUNDS_FOLDER.c_str(), "*", makeCallback1(functor), 0);
+		GlobalFileSystem().forEachFile(SOUNDS_FOLDER, "*", makeCallback1(functor), 0);
 
 		// Let the populator iterate over all collected elements
 		// and insert them in the treestore

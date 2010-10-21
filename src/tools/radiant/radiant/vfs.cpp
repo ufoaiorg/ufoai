@@ -149,16 +149,16 @@ inline void pathlist_prepend_unique (GSList*& pathlist, char* path)
 class DirectoryListVisitor: public Archive::Visitor
 {
 		GSList*& m_matches;
-		const char* m_directory;
+		const std::string& m_directory;
 	public:
-		DirectoryListVisitor (GSList*& matches, const char* directory) :
+		DirectoryListVisitor (GSList*& matches, const std::string& directory) :
 			m_matches(matches), m_directory(directory)
 		{
 		}
-		void visit (const char* name)
+		void visit (const std::string& name)
 		{
 			const char* subname = path_make_relative(name, m_directory);
-			if (subname != name) {
+			if (subname != name.c_str()) {
 				if (subname[0] == '/')
 					++subname;
 				char* dir = g_strdup(subname);
@@ -173,30 +173,26 @@ class DirectoryListVisitor: public Archive::Visitor
 class FileListVisitor: public Archive::Visitor
 {
 		GSList*& m_matches;
-		const char* m_directory;
-		const char* m_extension;
+		const std::string& m_directory;
+		const std::string& m_extension;
 	public:
-		FileListVisitor (GSList*& matches, const char* directory, const char* extension) :
+		FileListVisitor (GSList*& matches, const std::string& directory, const std::string& extension) :
 			m_matches(matches), m_directory(directory), m_extension(extension)
 		{
 		}
-		void visit (const char* name)
+		void visit (const std::string& name)
 		{
-			const char* subname = path_make_relative(name, m_directory);
+			const std::string subname = os::makeRelative(name, m_directory);
 			if (subname != name) {
-				if (subname[0] == '/')
-					++subname;
-				if (m_extension[0] == '*' || extension_equal(os::getExtension(subname).c_str(), m_extension))
-					pathlist_prepend_unique(m_matches, g_strdup(subname));
+				if (extension_equal(os::getExtension(subname), m_extension))
+					pathlist_prepend_unique(m_matches, g_strdup(subname.c_str()));
 			}
 		}
 };
 
-static GSList* GetListInternal (const char *refdir, const char *ext, bool directories, std::size_t depth)
+static GSList* GetListInternal (const std::string& refdir, const std::string& ext, bool directories, std::size_t depth)
 {
 	GSList* files = 0;
-
-	ASSERT_MESSAGE(refdir[strlen(refdir) - 1] == '/', "search path does not end in '/'");
 
 	if (directories) {
 		for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
@@ -383,7 +379,7 @@ ArchiveFile* OpenFile (const std::string& filename)
 ArchiveTextFile* OpenTextFile (const std::string& filename)
 {
 	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-		ArchiveTextFile* file = (*i).archive->openTextFile(filename.c_str());
+		ArchiveTextFile* file = (*i).archive->openTextFile(filename);
 		if (file != 0) {
 			return file;
 		}
@@ -490,9 +486,9 @@ class UFOFileSystem: public VirtualFileSystem
 			FreeFile(p);
 		}
 
-		void forEachDirectory (const char* basedir, const FileNameCallback& callback, std::size_t depth)
+		void forEachDirectory (const std::string& basedir, const FileNameCallback& callback, std::size_t depth)
 		{
-			GSList* list = GetListInternal(basedir, 0, true, depth);
+			GSList* list = GetListInternal(basedir, "", true, depth);
 
 			for (GSList* i = list; i != 0; i = g_slist_next(i)) {
 				callback(reinterpret_cast<const char*> ((*i).data));
@@ -501,14 +497,14 @@ class UFOFileSystem: public VirtualFileSystem
 			ClearFileDirList(&list);
 		}
 
-		void forEachFile (const char* basedir, const char* extension, const FileNameCallback& callback,
+		void forEachFile (const std::string& basedir, const std::string& extension, const FileNameCallback& callback,
 				std::size_t depth)
 		{
 			GSList* list = GetListInternal(basedir, extension, false, depth);
 
 			for (GSList* i = list; i != 0; i = g_slist_next(i)) {
 				const char* name = reinterpret_cast<const char*> ((*i).data);
-				if (extension_equal(os::getExtension(name).c_str(), extension) || extension_equal(extension, "*")) {
+				if (extension_equal(os::getExtension(name), extension)) {
 					callback(name);
 				}
 			}
@@ -539,11 +535,11 @@ class UFOFileSystem: public VirtualFileSystem
 			g_observers.detach(observer);
 		}
 
-		Archive* getArchive (const char* archiveName)
+		Archive* getArchive (const std::string& archiveName)
 		{
 			for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
 				if ((*i).is_pakfile) {
-					if (path_equal((*i).name.c_str(), archiveName)) {
+					if (path_equal((*i).name, archiveName)) {
 						return (*i).archive;
 					}
 				}

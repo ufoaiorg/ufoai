@@ -106,7 +106,7 @@ namespace ui
 	{
 		struct ModelFileFunctor
 		{
-				typedef const char* first_argument_type;
+				typedef const std::string& first_argument_type;
 
 				// Tree store to populate
 
@@ -237,14 +237,12 @@ namespace ui
 				}
 
 				// Functor operator
-				void operator() (const char* file)
+				void operator() (const std::string& file)
 				{
-					std::string rawPath(file);
-
 					// Test the extension for supported model formats.
 					std::string ext = os::getExtension(file);
 					if (ext == MD2_EXTENSION || ext == MD3_EXTENSION || ext == OBJ_EXTENSION) {
-						addRecursive(rawPath);
+						addRecursive(file);
 					}
 				}
 		};

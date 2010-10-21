@@ -36,7 +36,7 @@ template<typename Element> class BasicVector3;
 typedef BasicVector3<float> Vector3;
 typedef Vector3 Colour3;
 
-typedef Callback1<const char*> ShaderNameCallback;
+typedef Callback1<const std::string&> ShaderNameCallback;
 
 class ModuleObserver;
 

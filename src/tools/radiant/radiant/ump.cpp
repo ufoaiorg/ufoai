@@ -49,7 +49,7 @@ namespace
 			std::set<std::string>& _list;
 
 		public:
-			typedef const char* first_argument_type;
+			typedef const std::string& first_argument_type;
 
 			UMPCollector (std::set<std::string> &list) :
 				_list(list)
@@ -60,13 +60,12 @@ namespace
 			}
 
 			// Functor operator needed for the forEachFile() call
-			void operator() (const char* file)
+			void operator() (const std::string& file)
 			{
-				std::string rawPath(file);
-				std::string extension = os::getExtension(rawPath);
+				std::string extension = os::getExtension(file);
 
 				if (extension == "ump")
-					_list.insert(rawPath);
+					_list.insert(file);
 			}
 	};
 }

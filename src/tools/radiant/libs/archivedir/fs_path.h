@@ -29,17 +29,17 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 /// - Maintains a path ending in a path-separator.
 /// - Provides a limited STL-style interface to push and pop file or directory names at the end of the path.
 class UnixPath {
-	StringBuffer m_string;
+	std::string m_string;
 
 	void check_separator() {
-		if (!empty() && m_string.back() != '/') {
+		if (!empty() && m_string[m_string.length() - 1] != '/') {
 			m_string.push_back('/');
 		}
 	}
 
 public:
 	/// \brief Constructs with the directory \p root.
-	UnixPath(const char* root)
+	UnixPath(const std::string& root)
 			: m_string(root) {
 		check_separator();
 	}
@@ -48,40 +48,26 @@ public:
 		return m_string.empty();
 	}
 
-	const char* c_str() const {
-		return m_string.c_str();
+	operator const std::string&() const {
+		return m_string;
 	}
 
 	/// \brief Appends the directory \p name.
-	void push(const char* name) {
-		m_string.push_string(name);
-		check_separator();
-	}
-	/// \brief Appends the directory \p name.
 	void push(const std::string& name) {
-		m_string.push_string(name.c_str());
+		m_string += name;
 		check_separator();
-	}
-	/// \brief Appends the directory [\p first, \p last).
-	void push(const char* first, const char* last) {
-		m_string.push_range(first, last);
-		check_separator();
-	}
-	/// \brief Appends the filename \p name.
-	void push_filename(const char* name) {
-		m_string.push_string(name);
 	}
 	/// \brief Appends the filename \p name.
 	void push_filename(const std::string& name) {
-		m_string.push_string(name.c_str());
+		m_string += name;
 	}
 	/// \brief Removes the last directory or filename appended.
 	void pop() {
-		if (m_string.back() == '/') {
-			m_string.pop_back();
+		if (m_string[m_string.length() - 1] == '/') {
+			m_string.erase(m_string.length() - 1, 1);
 		}
-		while (!empty() && m_string.back() != '/') {
-			m_string.pop_back();
+		while (!empty() && m_string[m_string.length() - 1] != '/') {
+			m_string.erase(m_string.length() - 1, 1);
 		}
 	}
 };

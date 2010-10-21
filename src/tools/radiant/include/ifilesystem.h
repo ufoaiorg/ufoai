@@ -27,8 +27,8 @@
 #include "generic/callbackfwd.h"
 #include <string>
 
-typedef Callback1<const char*> ArchiveNameCallback;
-typedef Callback1<const char*> FileNameCallback;
+typedef Callback1<const std::string&> ArchiveNameCallback;
+typedef Callback1<const std::string&> FileNameCallback;
 
 class ArchiveFile;
 class ArchiveTextFile;
@@ -75,10 +75,10 @@ class VirtualFileSystem
 		virtual void freeFile (void *p) = 0;
 
 		/// \brief Calls \p callback for each directory under \p basedir.
-		virtual void forEachDirectory (const char* basedir, const FileNameCallback& callback, std::size_t depth = 1) = 0;
+		virtual void forEachDirectory (const std::string& basedir, const FileNameCallback& callback, std::size_t depth = 1) = 0;
 		/// \brief Calls \p callback for each file under \p basedir matching \p extension.
 		/// Use "*" as \p extension to match all file extensions.
-		virtual void forEachFile (const char* basedir, const char* extension, const FileNameCallback& callback,
+		virtual void forEachFile (const std::string& basedir, const std::string& extension, const FileNameCallback& callback,
 				std::size_t depth = 1) = 0;
 
 		/// \brief Returns the absolute filename for a relative \p name, or "" if not found.
@@ -94,7 +94,7 @@ class VirtualFileSystem
 		/// \brief Detach an \p observer previously-attached by calling \c attach.
 		virtual void detach (ModuleObserver& observer) = 0;
 
-		virtual Archive* getArchive (const char* archiveName) = 0;
+		virtual Archive* getArchive (const std::string& archiveName) = 0;
 		virtual void forEachArchive (const ArchiveNameCallback& callback) = 0;
 };
 

@@ -230,7 +230,7 @@ struct PathEqual
 {
 		bool operator() (const std::string& path, const std::string& other) const
 		{
-			return path_equal(path.c_str(), other.c_str());
+			return path_equal(path, other);
 		}
 };
 
@@ -249,8 +249,7 @@ struct ModelKeyEqual
 {
 		bool operator() (const ModelKey& key, const ModelKey& other) const
 		{
-			return path_equal(key.first.c_str(), other.first.c_str()) && path_equal(key.second.c_str(),
-					other.second.c_str());
+			return path_equal(key.first, other.first) && path_equal(key.second, other.second);
 		}
 };
 
@@ -515,7 +514,7 @@ struct ModelResource: public Resource
 		{
 			return ((!m_path.empty() // had or has an absolute path
 					&& m_modified != modified()) // AND disk timestamp changed
-					|| !path_equal(rootPath(m_originalName).c_str(), m_path.c_str())); // OR absolute vfs-root changed
+					|| !path_equal(rootPath(m_originalName), m_path)); // OR absolute vfs-root changed
 		}
 		void refresh ()
 		{

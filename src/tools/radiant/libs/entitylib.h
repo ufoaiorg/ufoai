@@ -388,10 +388,7 @@ class EntityKeyValues: public Entity
 
 		EntityClass* m_eclass;
 
-		class KeyContext
-		{
-		};
-		typedef Static<StringPool, KeyContext> KeyPool;
+		typedef Static<StringPool> KeyPool;
 		typedef PooledString<KeyPool> Key;
 		typedef SmartPointer<KeyValue> KeyValuePtr;
 		typedef UnsortedMap<Key, KeyValuePtr> KeyValues;

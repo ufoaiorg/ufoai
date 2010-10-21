@@ -59,13 +59,13 @@ class EntryCompletion
 			gtk_entry_completion_set_text_column(completion, 0);
 		}
 
-		void append (const char* string)
+		void append (const std::string& string)
 		{
 			GtkTreeIter iter;
 			gtk_list_store_append(m_store, &iter);
-			gtk_list_store_set(m_store, &iter, 0, string, -1);
+			gtk_list_store_set(m_store, &iter, 0, string.c_str(), -1);
 		}
-		typedef MemberCaller1<EntryCompletion, const char*, &EntryCompletion::append> AppendCaller;
+		typedef MemberCaller1<EntryCompletion, const std::string&, &EntryCompletion::append> AppendCaller;
 
 		void fill ()
 		{

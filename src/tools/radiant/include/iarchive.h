@@ -98,7 +98,7 @@ class Archive
 				virtual ~Visitor ()
 				{
 				}
-				virtual void visit (const char* name) = 0;
+				virtual void visit (const std::string& name) = 0;
 		};
 
 		typedef CustomArchiveVisitor VisitorFunc;
@@ -142,12 +142,12 @@ class CustomArchiveVisitor
 			m_visitor(&visitor), m_mode(mode), m_depth(depth)
 		{
 		}
-		void file (const char* name)
+		void file (const std::string& name)
 		{
 			if ((m_mode & Archive::eFiles) != 0)
 				m_visitor->visit(name);
 		}
-		bool directory (const char* name, std::size_t depth)
+		bool directory (const std::string& name, std::size_t depth)
 		{
 			if ((m_mode & Archive::eDirectories) != 0)
 				m_visitor->visit(name);

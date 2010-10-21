@@ -181,9 +181,9 @@ class DynamicLibrary
 			return dlHandle == 0;
 		}
 		// Find a symbol in the library
-		FunctionPointer findSymbol (const char* symbol)
+		FunctionPointer findSymbol (const std::string& symbol)
 		{
-			FunctionPointer p = reinterpret_cast<FunctionPointer> (dlsym(dlHandle, symbol));
+			FunctionPointer p = reinterpret_cast<FunctionPointer> (dlsym(dlHandle, symbol.c_str()));
 			if (p == 0) {
 				const char* error = reinterpret_cast<const char*> (dlerror());
 				if (error != 0) {

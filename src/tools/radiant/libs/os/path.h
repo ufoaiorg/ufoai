@@ -152,18 +152,6 @@ inline const char* path_get_filename_start (const char* path)
 	return path;
 }
 
-/// \brief Returns true if \p path is lexicographically sorted before \p other.
-/// If both \p path and \p other refer to the same file, neither will be sorted before the other.
-/// O(n)
-inline bool path_less (const char* path, const char* other)
-{
-#if defined(OS_CASE_INSENSITIVE)
-	return string_less_nocase(path, other);
-#else
-	return string_less(path, other);
-#endif
-}
-
 /// \brief Returns <0 if \p path is lexicographically less than \p other.
 /// Returns >0 if \p path is lexicographically greater than \p other.
 /// Returns 0 if both \p path and \p other refer to the same file.
@@ -171,9 +159,9 @@ inline bool path_less (const char* path, const char* other)
 inline int path_compare (const char* path, const char* other)
 {
 #if defined(OS_CASE_INSENSITIVE)
-	return string_compare_nocase(path, other);
+       return string_compare_nocase(path, other);
 #else
-	return string_compare(path, other);
+       return string_compare(path, other);
 #endif
 }
 
@@ -191,7 +179,7 @@ inline bool path_equal (const std::string& path, const std::string& other)
 /// \brief Returns true if the first \p n bytes of \p path and \p other form paths that refer to the same file or directory.
 /// If the paths are UTF-8 encoded, [\p path, \p path + \p n) must be a complete path.
 /// O(n)
-inline bool path_equal_n (const char* path, const char* other, std::size_t n)
+inline bool path_equal_n (const std::string& path, const std::string& other, std::size_t n)
 {
 #if defined(OS_CASE_INSENSITIVE)
 	return string_equal_nocase_n(path, other, n);
@@ -217,36 +205,36 @@ inline std::size_t path_get_filename_base_length (const char* path)
 
 /// \brief If \p path is a child of \p base, returns the subpath relative to \p base, else returns \p path.
 /// O(n)
-inline const char* path_make_relative (const char* path, const char* base)
+inline const char* path_make_relative (const std::string& path, const std::string& base)
 {
-	const std::size_t length = string_length(base);
+	const std::size_t length = base.length();
 	if (path_equal_n(path, base, length)) {
-		return path + length;
+		return path.c_str() + length;
 	}
-	return path;
+	return path.c_str();
 }
 
 /// \brief Returns true if \p extension is of the same type as \p other.
 /// O(n)
 inline bool extension_equal (const std::string& extension, const std::string& other)
 {
-	return path_equal(extension, other);
+	return other == "*" || path_equal(extension, other);
 }
 
 template<typename Functor>
 class MatchFileExtension
 {
-		const char* m_extension;
+		const std::string& m_extension;
 		const Functor& m_functor;
 	public:
-		MatchFileExtension (const char* extension, const Functor& functor) :
+		MatchFileExtension (const std::string& extension, const Functor& functor) :
 			m_extension(extension), m_functor(functor)
 		{
 		}
-		void operator() (const char* name) const
+		void operator() (const std::string& name) const
 		{
 			const std::string extension = os::getExtension(name);
-			if (extension_equal(extension.c_str(), m_extension)) {
+			if (extension_equal(extension, m_extension)) {
 				m_functor(name);
 			}
 		}

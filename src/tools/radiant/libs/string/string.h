@@ -61,16 +61,9 @@ inline bool string_equal (const std::string& string, const std::string& other)
 
 /// \brief Returns true if [\p string, \p string + \p n) is lexicographically equal to [\p other, \p other + \p n).
 /// O(n)
-inline bool string_equal_n (const char* string, const char* other, std::size_t n)
+inline bool string_equal_n (const std::string& string, const std::string& other, std::size_t n)
 {
-	return std::strncmp(string, other, n) == 0;
-}
-
-/// \brief Returns true if \p string is lexicographically less than \p other.
-/// O(n)
-inline bool string_less (const char* string, const char* other)
-{
-	return string_compare(string, other) < 0;
+	return std::strncmp(string.c_str(), other.c_str(), n) == 0;
 }
 
 /// \brief Returns <0 if \p string is lexicographically less than \p other after converting both to lower-case.
@@ -87,9 +80,9 @@ inline int string_compare_nocase (const std::string& string, const std::string& 
 /// Returns 0 if [\p string, \p string + \p n) is lexicographically equal to [\p other, \p other + \p n).
 /// Treats all ascii characters as lower-case during comparisons.
 /// O(n)
-inline int string_compare_nocase_n (const char* string, const char* other, std::size_t n)
+inline int string_compare_nocase_n (const std::string& string, const std::string& other, std::size_t n)
 {
-	return g_ascii_strncasecmp(string, other, n);
+	return g_ascii_strncasecmp(string.c_str(), other.c_str(), n);
 }
 
 /// \brief Returns true if \p string is lexicographically equal to \p other.
@@ -103,7 +96,7 @@ inline bool string_equal_nocase (const std::string& string, const std::string& o
 /// \brief Returns true if [\p string, \p string + \p n) is lexicographically equal to [\p other, \p other + \p n).
 /// Treats all ascii characters as lower-case during comparisons.
 /// O(n)
-inline bool string_equal_nocase_n (const char* string, const char* other, std::size_t n)
+inline bool string_equal_nocase_n (const std::string& string, const std::string& other, std::size_t n)
 {
 	return string_compare_nocase_n(string, other, n) == 0;
 }
@@ -111,7 +104,7 @@ inline bool string_equal_nocase_n (const char* string, const char* other, std::s
 /// \brief Returns true if \p string is lexicographically less than \p other.
 /// Treats all ascii characters as lower-case during comparisons.
 /// O(n)
-inline bool string_less_nocase (const char* string, const char* other)
+inline bool string_less_nocase (const std::string& string, const std::string& other)
 {
 	return string_compare_nocase(string, other) < 0;
 }

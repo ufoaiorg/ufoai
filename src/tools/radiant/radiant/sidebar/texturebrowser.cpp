@@ -280,17 +280,17 @@ void TextureBrowser::activeShadersChanged() {
 }
 
 class TextureCategoryLoadShader {
-		const char* m_directory;
+		const std::string& m_directory;
 		std::size_t& m_count;
 	public:
-		typedef const char* first_argument_type;
+		typedef const std::string& first_argument_type;
 
-		TextureCategoryLoadShader(const char* directory, std::size_t& count) :
+		TextureCategoryLoadShader(const std::string& directory, std::size_t& count) :
 			m_directory(directory), m_count(count) {
 			m_count = 0;
 		}
-		void operator()(const char* name) const {
-			if (shader_equal_prefix(name, "textures/") && shader_equal_prefix(name + string_length(
+		void operator()(const std::string& name) const {
+			if (shader_equal_prefix(name, "textures/") && shader_equal_prefix(name.c_str() + string_length(
 					"textures/"), m_directory)) {
 				++m_count;
 				// request the shader, this will load the texture if needed
@@ -326,7 +326,7 @@ static bool texture_name_ignore(const std::string& name) {
 class LoadTexturesByTypeVisitor: public ImageModules::Visitor {
 		const std::string m_dirstring;
 		struct TextureDirectoryLoadTextureCaller {
-				typedef const char* first_argument_type;
+				typedef const std::string& first_argument_type;
 
 				const std::string& _directory;
 
@@ -336,7 +336,7 @@ class LoadTexturesByTypeVisitor: public ImageModules::Visitor {
 				}
 
 				// Functor operator
-				void operator()(const char* texture) {
+				void operator()(const std::string& texture) {
 					std::string name = _directory + os::stripExtension(texture);
 
 					if (texture_name_ignore(name))
@@ -358,7 +358,7 @@ class LoadTexturesByTypeVisitor: public ImageModules::Visitor {
 		}
 		void visit(const std::string& minor, const _QERPlugImageTable& table) const {
 			TextureDirectoryLoadTextureCaller functor(m_dirstring);
-			GlobalFileSystem().forEachFile(m_dirstring.c_str(), minor.c_str(), makeCallback1(
+			GlobalFileSystem().forEachFile(m_dirstring, minor, makeCallback1(
 					functor));
 		}
 };
@@ -369,7 +369,7 @@ void TextureBrowser::showDirectory(const std::string& directory) {
 
 	std::size_t shaders_count;
 	GlobalShaderSystem().foreachShaderName(makeCallback1(TextureCategoryLoadShader(
-			directory.c_str(), shaders_count)));
+			directory, shaders_count)));
 	g_message("Showing %u shaders.\n", Unsigned(shaders_count));
 
 	// load remaining texture files
@@ -826,7 +826,7 @@ void TextureBrowser::toggleHideInvalid(void) {
 
 namespace {
 struct TextureFunctor {
-		typedef const char* first_argument_type;
+		typedef const std::string& first_argument_type;
 
 		// TextureGroups to populate
 		TextureGroups& _groups;
@@ -837,10 +837,10 @@ struct TextureFunctor {
 		}
 
 		// Functor operator
-		void operator()(const char* file) {
-			const char* texture = path_make_relative(file, "textures/");
-			if (std::strcmp(texture, file)) {
-				std::string filename = os::getFilenameFromPath(texture);
+		void operator()(const std::string& file) {
+			const std::string texture = os::makeRelative(file, "textures/");
+			if (texture != file) {
+				std::string filename = os::getFilenameFromPath(file);
 				if (!filename.empty()) {
 					std::string path = os::stripFilename(texture);
 					_groups.insert(path);
@@ -850,7 +850,7 @@ struct TextureFunctor {
 };
 
 struct TextureDirectoryFunctor {
-		typedef const char* first_argument_type;
+		typedef const std::string& first_argument_type;
 
 		// TextureGroups to populate
 		TextureGroups& _groups;
@@ -861,9 +861,9 @@ struct TextureDirectoryFunctor {
 		}
 
 		// Functor operator
-		void operator()(const char* directory) {
+		void operator()(const std::string& directory) {
 			// skip none texture subdirs
-			if (strstr(directory, "tex_") == 0)
+			if (!string::startsWith(directory, "tex_"))
 				return;
 
 			_groups.insert(directory);
@@ -871,7 +871,7 @@ struct TextureDirectoryFunctor {
 };
 }
 
-void TextureBrowser::constructTreeView(TextureGroups& groups) {
+void TextureBrowser::constructTreeView() {
 	TextureDirectoryFunctor functorDirs(groups);
 	GlobalFileSystem().forEachDirectory("textures/", makeCallback1(functorDirs));
 	TextureFunctor functorTextures(groups);
@@ -918,7 +918,7 @@ GtkMenuItem* TextureBrowser::constructDirectoriesMenu(GtkMenu* menu) {
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	constructTreeView(groups);
+	constructTreeView();
 
 	TextureGroups::const_iterator i = groups.begin();
 	while (i != groups.end()) {

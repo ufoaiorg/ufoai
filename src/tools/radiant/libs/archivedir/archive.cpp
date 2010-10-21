@@ -46,40 +46,38 @@ public:
 	}
 
 	virtual ArchiveFile* openFile(const std::string& name) {
-		UnixPath path(m_root.c_str());
+		UnixPath path(m_root);
 		path.push_filename(name);
-		AutoPtr<DirectoryArchiveFile> file(new DirectoryArchiveFile(name, path.c_str()));
+		AutoPtr<DirectoryArchiveFile> file(new DirectoryArchiveFile(name, path));
 		if (!file->failed()) {
 			return file.release();
 		}
 		return 0;
 	}
 	virtual ArchiveTextFile* openTextFile(const std::string& name) {
-		UnixPath path(m_root.c_str());
+		UnixPath path(m_root);
 		path.push_filename(name);
-		AutoPtr<DirectoryArchiveTextFile> file(new DirectoryArchiveTextFile(name, path.c_str()));
+		AutoPtr<DirectoryArchiveTextFile> file(new DirectoryArchiveTextFile(name, path));
 		if (!file->failed()) {
 			return file.release();
 		}
 
-		UnixPath abspath("");
-		abspath.push_filename(name);
-		AutoPtr<DirectoryArchiveTextFile> absfile(new DirectoryArchiveTextFile(name, abspath.c_str()));
+		AutoPtr<DirectoryArchiveTextFile> absfile(new DirectoryArchiveTextFile(name, name));
 		if (!absfile->failed()) {
 			return absfile.release();
 		}
 		return 0;
 	}
 	virtual bool containsFile(const std::string& name) {
-		UnixPath path(m_root.c_str());
+		UnixPath path(m_root);
 		path.push_filename(name);
-		return file_readable(path.c_str());
+		return file_readable(path);
 	}
 	virtual void forEachFile(VisitorFunc visitor, const std::string& root) {
 		std::vector<Directory*> dirs;
-		UnixPath path(m_root.c_str());
+		UnixPath path(m_root);
 		path.push(root);
-		dirs.push_back(directory_open(path.c_str()));
+		dirs.push_back(directory_open(path));
 
 		while (!dirs.empty() && directory_good(dirs.back())) {
 			const char* name = directory_read_and_increment(dirs.back());
@@ -91,18 +89,18 @@ public:
 			} else if (!string_equal(name, ".") && !string_equal(name, "..")) {
 				path.push_filename(name);
 
-				bool is_directory = file_is_directory(path.c_str());
+				bool is_directory = file_is_directory(path);
 
 				if (!is_directory)
-					visitor.file(path_make_relative(path.c_str(), m_root.c_str()));
+					visitor.file(os::makeRelative(path, m_root));
 
 				path.pop();
 
 				if (is_directory) {
 					path.push(name);
 
-					if (!visitor.directory(path_make_relative(path.c_str(), m_root.c_str()), dirs.size()))
-						dirs.push_back(directory_open(path.c_str()));
+					if (!visitor.directory(os::makeRelative(path, m_root), dirs.size()))
+						dirs.push_back(directory_open(path));
 					else
 						path.pop();
 				}

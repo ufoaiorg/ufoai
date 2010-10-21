@@ -242,6 +242,7 @@ class OpenGLStateBucketAdd
 
 class OpenGLShader: public Shader
 {
+	private:
 		typedef std::list<OpenGLStateBucket*> Passes;
 		Passes m_passes;
 		IShader* m_shader;

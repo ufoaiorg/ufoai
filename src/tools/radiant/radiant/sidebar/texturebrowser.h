@@ -239,7 +239,7 @@ class TextureBrowser {
 		GtkMenuItem* constructViewMenu(GtkMenu* menu);
 		GtkMenuItem* constructToolsMenu(GtkMenu* menu);
 		GtkMenuItem* constructDirectoriesMenu(GtkMenu* menu);
-		void constructTreeView(TextureGroups &groups);
+		void constructTreeView();
 };
 TextureBrowser& GlobalTextureBrowser();
 

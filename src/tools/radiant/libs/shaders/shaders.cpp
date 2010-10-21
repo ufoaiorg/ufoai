@@ -81,56 +81,22 @@ static Callback g_ActiveShadersChangedNotify;
 typedef std::map<std::string, bool> LicensesMap;
 static LicensesMap licensesMap;
 
-class ShaderPoolContext
-{
-};
-typedef Static<StringPool, ShaderPoolContext> ShaderPool;
-typedef PooledString<ShaderPool> ShaderString;
-typedef ShaderString ShaderVariable;
-typedef ShaderString ShaderValue;
+typedef std::string ShaderVariable;
+typedef std::string ShaderValue;
 
 // clean a texture name to the qtexture_t name format we use internally
 // NOTE: case sensitivity: the engine is case sensitive. we store the shader name with case information and save with case
 // information as well. but we assume there won't be any case conflict and so when doing lookups based on shader name,
 // we compare as case insensitive. That is Radiant is case insensitive, but knows that the engine is case sensitive.
 //++timo FIXME: we need to put code somewhere to detect when two shaders that are case insensitive equal are present
-void parseTextureName (std::string& name, const std::string& token)
+std::string Tokeniser_parseShaderName (Tokeniser& tokeniser)
 {
+	std::string token = tokeniser.getToken();
+	if (token.empty())
+		return "";
+
 	std::string cleaned = os::standardPath(token);
-	name = os::stripExtension(cleaned);
-}
-
-bool Tokeniser_parseTextureName (Tokeniser& tokeniser, std::string& name)
-{
-	const std::string token = tokeniser.getToken();
-	if (token.empty()) {
-		Tokeniser_unexpectedError(tokeniser, token, "#texture-name");
-		return false;
-	}
-	parseTextureName(name, token);
-	return true;
-}
-
-bool Tokeniser_parseShaderName (Tokeniser& tokeniser, std::string& name)
-{
-	std::string token = tokeniser.getToken();
-	if (token.empty()) {
-		Tokeniser_unexpectedError(tokeniser, token, "#shader-name");
-		return false;
-	}
-	parseTextureName(name, token);
-	return true;
-}
-
-bool Tokeniser_parseString (Tokeniser& tokeniser, ShaderString& string)
-{
-	std::string token = tokeniser.getToken();
-	if (token.empty()) {
-		Tokeniser_unexpectedError(tokeniser, token, "#string");
-		return false;
-	}
-	string = token.c_str();
-	return true;
+	return os::stripExtension(cleaned);
 }
 
 typedef std::list<ShaderVariable> ShaderParameters;
@@ -389,8 +355,7 @@ class CShader: public IShader
 
 		void realise ()
 		{
-			const LoadImageCallback& loader = GlobalTexturesCache().defaultLoader();
-			m_pTexture = GlobalTexturesCache().capture(loader, m_template.m_textureName.c_str());
+			m_pTexture = GlobalTexturesCache().capture(m_template.m_textureName);
 
 			if (m_pTexture->texture_number == 0) {
 				m_notfound = m_pTexture;
@@ -538,8 +503,7 @@ void ParseShaderFile (Tokeniser& tokeniser, const std::string& filename)
 			tokeniser.ungetToken();
 
 		// first token should be the path + name.. (from base)
-		std::string name;
-		Tokeniser_parseShaderName(tokeniser, name);
+		std::string name = Tokeniser_parseShaderName(tokeniser);
 		ShaderTemplatePointer shaderTemplate(new ShaderTemplate());
 		shaderTemplate->setName(name);
 
