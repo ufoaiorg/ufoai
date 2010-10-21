@@ -132,6 +132,7 @@ class SurfaceInspector
 		Increment m_hscaleIncrement;
 		Increment m_vscaleIncrement;
 		Increment m_rotateIncrement;
+		// TODO: Use gtkutil::TextPanel
 		GtkEntry* m_texture;
 
 		SurfaceInspector () :
@@ -1010,18 +1011,18 @@ void Face_getTexture (Face& face, std::string& shader, TextureProjection& projec
 }
 typedef Function4<Face&, std::string&, TextureProjection&, ContentsFlagsValue&, void, Face_getTexture> FaceGetTexture;
 
-void Face_setTexture (Face& face, const char* shader, const TextureProjection& projection,
+void Face_setTexture (Face& face, const std::string& shader, const TextureProjection& projection,
 		const ContentsFlagsValue& flags)
 {
 	face.SetShader(shader);
 	face.SetTexdef(projection);
 	face.SetFlags(flags);
 }
-typedef Function4<Face&, const char*, const TextureProjection&, const ContentsFlagsValue&, void, Face_setTexture>
+typedef Function4<Face&, const std::string&, const TextureProjection&, const ContentsFlagsValue&, void, Face_setTexture>
 		FaceSetTexture;
 
 typedef Callback3<std::string&, TextureProjection&, ContentsFlagsValue&> GetTextureCallback;
-typedef Callback3<const char*, const TextureProjection&, const ContentsFlagsValue&> SetTextureCallback;
+typedef Callback3<const std::string&, const TextureProjection&, const ContentsFlagsValue&> SetTextureCallback;
 
 struct Texturable
 {
@@ -1124,7 +1125,7 @@ static void Scene_setClosestTexture (scene::Graph& graph, SelectionTest& test, c
 {
 	Texturable texturable = Scene_getClosestTexturable(graph, test);
 	if (texturable.setTexture != SetTextureCallback()) {
-		texturable.setTexture(shader.c_str(), projection, flags);
+		texturable.setTexture(shader, projection, flags);
 	}
 }
 
