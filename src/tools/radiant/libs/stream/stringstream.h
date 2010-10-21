@@ -75,6 +75,12 @@ class StringBuffer
 		{
 			m_string.erase(end() - 1);
 		}
+
+		operator const std::string() const
+		{
+			return std::string(c_str());
+		}
+
 		void push_range (const char* first, const char* last)
 		{
 			m_string.insert(end(), first, last);
@@ -152,6 +158,11 @@ class StringOutputStream: public TextOutputStream
 		const_iterator end () const
 		{
 			return m_string.end();
+		}
+
+		const std::string toString() const
+		{
+			return std::string(c_str());
 		}
 
 		bool empty () const
