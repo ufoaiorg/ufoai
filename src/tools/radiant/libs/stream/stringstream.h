@@ -189,4 +189,20 @@ inline StringOutputStream& operator<< (StringOutputStream& ostream, const T& t)
 	return ostream_write(ostream, t);
 }
 
+class StringInputStream : public TextInputStream
+{
+	private:
+		std::string _string;
+	public:
+		StringInputStream(const std::string& string) : _string(string) {
+		}
+
+		std::size_t read (char* buffer, std::size_t length) {
+			const std::size_t written = std::min(length, _string.length());
+			memcpy(buffer, _string.c_str(), written);
+			_string.erase(0, written);
+			return written;
+		}
+};
+
 #endif
