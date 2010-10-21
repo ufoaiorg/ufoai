@@ -30,11 +30,46 @@
 #include "modulesystem.h"
 #include "modulesystem/moduleregistry.h"
 #include "moduleobserver.h"
+#include "generic/referencecounted.h"
 #include "generic/constant.h"
 #include <string>
 #include <map>
+#include <vector>
 #include "ifilesystem.h"
 #include "ishader.h"
+#include "iscriplib.h"
+#include "shaderlib.h"
+
+class MapLayer: public ShaderLayer {
+	private:
+		qtexture_t* m_texture;
+		BlendFunc m_blendFunc;
+		bool m_clampToBorder;
+		double m_alphaTest;
+		ShaderLayer::Type m_type;
+		Vector3 m_color;
+	public:
+		MapLayer(qtexture_t* texture, BlendFunc blendFunc, ShaderLayer::Type type, Vector3& color,
+				double alphaTest) :
+			m_texture(texture), m_blendFunc(blendFunc), m_type(type), m_color(color),
+					m_alphaTest(alphaTest) {
+		}
+		Type getType() const {
+			return m_type;
+		}
+		Vector3 getColour () const {
+			return m_color;
+		}
+		qtexture_t* getTexture() const {
+			return m_texture;
+		}
+		BlendFunc getBlendFunc() const {
+			return m_blendFunc;
+		}
+		double getAlphaTest() const {
+			return m_alphaTest;
+		}
+};
 
 class MaterialShader: public IShader
 {
@@ -44,9 +79,9 @@ class MaterialShader: public IShader
 
 		std::string _fileName;
 
-		BlendFunc _blendFunc;
-
 		bool _inUse;
+
+		bool _isValid;
 
 		qtexture_t* _texture;
 
@@ -54,7 +89,7 @@ class MaterialShader: public IShader
 
 	public:
 
-		MaterialShader (const std::string& fileName);
+		MaterialShader (const std::string& fileName, const std::string& content);
 
 		virtual ~MaterialShader ();
 
@@ -63,6 +98,9 @@ class MaterialShader: public IShader
 		void DecRef ();
 
 		std::size_t refcount ();
+
+		BlendFactor parseBlendMode (const std::string token);
+		void parseMaterial (Tokeniser& tokenizer);
 
 		// get/set the qtexture_t* Radiant uses to represent this shader object
 		qtexture_t* getTexture () const;
@@ -74,9 +112,9 @@ class MaterialShader: public IShader
 
 		void SetInUse (bool inUse);
 
-		bool IsValid () const = 0;
+		bool IsValid () const;
 
-		void SetIsValid (bool bIsValid) = 0;
+		void SetIsValid (bool bIsValid);
 
 		// get the shader flags
 		int getFlags () const;
@@ -98,6 +136,13 @@ class MaterialShader: public IShader
 		void realise ();
 
 		void unrealise ();
+
+		typedef std::vector<MapLayer> MapLayers;
+		MapLayers m_layers;
+
+		void addLayer(MapLayer &layer);
+
+		void forEachLayer(const ShaderLayerCallback& callback) const;
 };
 
 
@@ -108,7 +153,9 @@ class MaterialSystem
 		void generateMaterialForFace (int contentFlags, int surfaceFlags, std::string& textureName,
 				std::stringstream& stream);
 
-		typedef std::map<std::string, MaterialShader*> MaterialShaders;
+		typedef SmartPointer<MaterialShader> MaterialPointer;
+		typedef std::map<std::string, MaterialPointer, shader_less_t> MaterialShaders;
+
 		MaterialShaders _activeMaterialShaders;
 
 	public:
@@ -145,6 +192,15 @@ class MaterialSystem
 		 * Generates material for the current selected textures
 		 */
 		void generateMaterialFromTexture ();
+
+		/**
+		 * Checks whether the material for the texture is already defined
+		 * @param texture The texture name including textures/
+		 * @return @c true if found, @c false if not
+		 */
+		bool isDefined(const std::string& texture, const std::string& content);
+
+		std::string getBlock (const std::string& texture, const std::string& content);
 
 		/**
 		 * activate the material for a given name and return it

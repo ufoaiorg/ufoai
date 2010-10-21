@@ -339,31 +339,6 @@ void Shutdown ()
 	g_numDirs = 0;
 }
 
-#define VFS_SEARCH_PAK 0x1
-#define VFS_SEARCH_DIR 0x2
-
-int GetFileCount (const char *filename, int flag)
-{
-	int count = 0;
-	char fixed[PATH_MAX + 1];
-
-	strncpy(fixed, filename, PATH_MAX);
-	fixed[PATH_MAX] = '\0';
-	FixDOSName(fixed);
-
-	if (!flag)
-		flag = (VFS_SEARCH_PAK | VFS_SEARCH_DIR);
-
-	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-		if (((*i).is_pakfile && (flag & VFS_SEARCH_PAK) != 0) || (!(*i).is_pakfile && (flag & VFS_SEARCH_DIR) != 0)) {
-			if ((*i).archive->containsFile(fixed))
-				++count;
-		}
-	}
-
-	return count;
-}
-
 ArchiveFile* OpenFile (const std::string& filename)
 {
 	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
@@ -465,10 +440,6 @@ class UFOFileSystem: public VirtualFileSystem
 			Shutdown();
 		}
 
-		int getFileCount (const char *filename, int flags)
-		{
-			return GetFileCount(filename, flags);
-		}
 		ArchiveFile* openFile (const std::string& filename)
 		{
 			return OpenFile(filename);

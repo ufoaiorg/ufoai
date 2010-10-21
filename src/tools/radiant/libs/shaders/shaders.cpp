@@ -169,9 +169,41 @@ class ShaderTemplate
 			m_textureName = name;
 			setName(name);
 		}
+
+
+		class MapLayerTemplate {
+			std::string m_texture;
+			BlendFuncExpression m_blendFunc;
+			bool m_clampToBorder;
+			ShaderValue m_alphaTest;
+		public:
+			MapLayerTemplate(const std::string& texture,
+					const BlendFuncExpression& blendFunc, bool clampToBorder,
+					const ShaderValue& alphaTest) :
+				m_texture(texture), m_blendFunc(blendFunc), m_clampToBorder(false),
+						m_alphaTest(alphaTest) {
+			}
+			const std::string& texture() const {
+				return m_texture;
+			}
+			const BlendFuncExpression& blendFunc() const {
+				return m_blendFunc;
+			}
+			bool clampToBorder() const {
+				return m_clampToBorder;
+			}
+			const ShaderValue& alphaTest() const {
+				return m_alphaTest;
+			}
+		};
+		typedef std::vector<MapLayerTemplate> MapLayers;
+		MapLayers m_layers;
+
+	private:
+		bool parseShaderParameters (Tokeniser& tokeniser, ShaderParameters& params);
 };
 
-bool parseShaderParameters (Tokeniser& tokeniser, ShaderParameters& params)
+bool ShaderTemplate::parseShaderParameters (Tokeniser& tokeniser, ShaderParameters& params)
 {
 	Tokeniser_parseToken(tokeniser, "(");
 	for (;;) {
@@ -206,15 +238,6 @@ typedef std::map<std::string, ShaderTemplatePointer> ShaderTemplateMap;
 
 ShaderTemplateMap g_shaders;
 ShaderTemplateMap g_shaderTemplates;
-
-ShaderTemplate* findTemplate (const char* name)
-{
-	ShaderTemplateMap::iterator i = g_shaderTemplates.find(name);
-	if (i != g_shaderTemplates.end()) {
-		return (*i).second.get();
-	}
-	return 0;
-}
 
 class ShaderDefinition
 {
@@ -378,6 +401,9 @@ class CShader: public IShader
 		void setName (const char* name)
 		{
 			m_Name = name;
+		}
+
+		void forEachLayer(const ShaderLayerCallback& layer) const {
 		}
 };
 

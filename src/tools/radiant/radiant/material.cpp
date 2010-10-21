@@ -48,11 +48,15 @@
 #include "ui/materialeditor/MaterialEditor.h"
 #include "itextures.h"
 
-MaterialShader::MaterialShader (const std::string& fileName) :
-	_refcount(0), _fileName(fileName), _blendFunc(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA), _inUse(false)
+MaterialShader::MaterialShader (const std::string& fileName, const std::string& content) :
+	_refcount(0), _fileName(fileName)
 {
 	_texture = 0;
 	_notfound = 0;
+
+	StringInputStream inputStream(content);
+	AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewSimpleTokeniser(inputStream));
+	parseMaterial(*tokeniser);
 
 	realise();
 }
@@ -60,6 +64,83 @@ MaterialShader::MaterialShader (const std::string& fileName) :
 MaterialShader::~MaterialShader ()
 {
 	unrealise();
+}
+
+BlendFactor MaterialShader::parseBlendMode (const std::string token)
+{
+	if (token == "GL_ONE")
+		return BLEND_ONE;
+	if (token == "GL_ZERO")
+		return BLEND_ZERO;
+	if (token == "GL_SRC_ALPHA")
+		return BLEND_SRC_ALPHA;
+	if (token == "GL_ONE_MINUS_SRC_ALPHA")
+		return BLEND_ONE_MINUS_SRC_ALPHA;
+	if (token == "GL_SRC_COLOR")
+		return BLEND_SRC_COLOUR;
+	if (token == "GL_DST_COLOR")
+		return BLEND_DST_COLOUR;
+	if (token == "GL_ONE_MINUS_SRC_COLOR")
+		return BLEND_ONE_MINUS_SRC_COLOUR;
+	if (token == "GL_ONE_MINUS_DST_COLOR")
+		return BLEND_ONE_MINUS_DST_COLOUR;
+
+	return BLEND_ZERO;
+}
+
+void MaterialShader::parseMaterial (Tokeniser& tokeniser)
+{
+	int depth = 0;
+	Vector3 color(0, 0, 0);
+	double alphaTest = 1.0f;
+	qtexture_t *layerTexture = 0;
+	BlendFactor src = BLEND_SRC_ALPHA;
+	BlendFactor dest = BLEND_ONE_MINUS_SRC_ALPHA;
+
+	std::string token = tokeniser.getToken();
+	while (token.length()) {
+		if (token == "{") {
+			depth++;
+		}
+		else if (token == "}") {
+			--depth;
+			if (depth == 0) {
+				MapLayer layer(layerTexture, BlendFunc(src, dest), ShaderLayer::BLEND, color, alphaTest);
+				addLayer(layer);
+				break;
+			}
+		}
+		else if (depth == 2) {
+			if (token == "texture") {
+				layerTexture = GlobalTexturesCache().capture(GlobalTexturePrefix_get() + tokeniser.getToken());
+			} else if (token == "blend") {
+				src = parseBlendMode(tokeniser.getToken());
+				dest = parseBlendMode(tokeniser.getToken());
+			} else if (token == "lightmap") {
+			} else if (token == "envmap") {
+				token = tokeniser.getToken();
+			} else if (token == "pulse") {
+				token = tokeniser.getToken();
+			} else if (token == "anim" || token == "anima") {
+				token = tokeniser.getToken();
+				token = tokeniser.getToken();
+			}
+		} else if (depth == 1) {
+			if (token == "bump") {
+				token = tokeniser.getToken();
+			} else if (token == "parallax") {
+				token = tokeniser.getToken();
+			} else if (token == "hardness") {
+				token = tokeniser.getToken();
+			} else if (token == "specular") {
+				token = tokeniser.getToken();
+			} else if (token == "material") {
+				token = tokeniser.getToken();
+				// must be the same as _fileName
+			}
+		}
+		token = tokeniser.getToken();
+	}
 }
 
 // IShaders implementation -----------------
@@ -101,16 +182,24 @@ void MaterialShader::SetInUse (bool inUse)
 	_inUse = inUse;
 }
 
+bool MaterialShader::IsValid () const {
+	return _isValid;
+}
+
+void MaterialShader::SetIsValid (bool bIsValid) {
+	_isValid = bIsValid;
+}
+
 // get the shader flags
 int MaterialShader::getFlags () const
 {
-	return QER_TRANS | QER_ALPHATEST;
+	return 0;
 }
 
 // get the transparency value
 float MaterialShader::getTrans () const
 {
-	return 0.5f;
+	return 1.0f;
 }
 
 // test if it's a true shader, or a default shader created to wrap around a texture
@@ -123,12 +212,12 @@ bool MaterialShader::IsDefault () const
 void MaterialShader::getAlphaFunc (MaterialShader::EAlphaFunc *func, float *ref)
 {
 	*func = eAlways;
-	*ref = 0.5f;
+	*ref = 1.0f;
 }
 
 BlendFunc MaterialShader::getBlendFunc () const
 {
-	return _blendFunc;
+	return BlendFunc(BLEND_ONE, BLEND_ONE_MINUS_SRC_ALPHA);
 }
 
 // get the cull type
@@ -137,20 +226,33 @@ MaterialShader::ECull MaterialShader::getCull ()
 	return eCullNone;
 }
 
+void MaterialShader::forEachLayer(const ShaderLayerCallback& callback) const
+{
+	for (MapLayers::const_iterator i = m_layers.begin(); i
+			!= m_layers.end(); ++i) {
+		callback(*i);
+	}
+}
+
 void MaterialShader::realise ()
 {
-	const LoadImageCallback& loader = GlobalTexturesCache().defaultLoader();
-	_texture = GlobalTexturesCache().capture(loader, _fileName.c_str());
+	_texture = GlobalTexturesCache().capture(_fileName);
 
 	if (_texture->texture_number == 0) {
 		_notfound = _texture;
-		_texture = GlobalTexturesCache().capture("textures/tex_common/nodraw");
+		_texture = GlobalTexturesCache().capture(GlobalTexturePrefix_get() + "tex_common/nodraw");
 	}
+}
+
+void MaterialShader::addLayer(MapLayer &layer) {
+	m_layers.push_back(layer);
 }
 
 void MaterialShader::unrealise ()
 {
 	GlobalTexturesCache().release(_texture);
+
+	// TODO: Release the layers
 
 	if (_notfound != 0) {
 		GlobalTexturesCache().release(_notfound);
@@ -209,9 +311,25 @@ void MaterialSystem::generateMaterialForFace (int contentFlags, int surfaceFlags
 	}
 }
 
+bool MaterialSystem::isDefined(const std::string& texture, const std::string& content)
+{
+	const std::string textureDir = GlobalTexturePrefix_get();
+	const std::string& mapname = GlobalRadiant().getMapName();
+	if (texture == textureDir || mapname.empty() || Map_Unnamed(g_map))
+		return false;
+
+	std::string skippedTextureDirectory = texture.substr(textureDir.length());
+	std::string materialDefinition = "material " + skippedTextureDirectory;
+	/* check whether there is already an entry for the selected texture */
+	if (content.find(materialDefinition) != std::string::npos)
+		return true;
+
+	return false;
+}
+
 void MaterialSystem::generateMaterialFromTexture ()
 {
-	const std::string textureDir = "textures/";
+	const std::string textureDir = GlobalTexturePrefix_get();
 	const std::string& mapname = GlobalRadiant().getMapName();
 	if (mapname.empty() || Map_Unnamed(g_map)) {
 		// save the map first
@@ -282,21 +400,66 @@ const std::string MaterialSystem::getMaterialFilename () const
 	return relativePath;
 }
 
+std::string MaterialSystem::getBlock (const std::string& texture, const std::string& content)
+{
+	const std::string textureDir = GlobalTexturePrefix_get();
+	std::string skippedTextureDirectory = texture.substr(textureDir.length());
+
+	StringOutputStream outputStream;
+
+	StringInputStream inputStream(content);
+	AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewSimpleTokeniser(inputStream));
+	int depth = 0;
+	bool found = false;
+	std::string token = tokeniser->getToken();
+	while (token.length()) {
+		if (token == "{") {
+			depth++;
+		} else if (token == "}") {
+			depth--;
+		}
+		if (depth >= 1) {
+			if (depth == 1 && token == "material") {
+				token = tokeniser->getToken();
+				if (token == skippedTextureDirectory) {
+					found = true;
+					outputStream << "{ material ";
+				}
+			}
+			if (found)
+				outputStream << token << " ";
+		} else if (found) {
+			outputStream << "}";
+			break;
+		}
+		token = tokeniser->getToken();
+	}
+	return outputStream.toString();
+}
+
 IShader* MaterialSystem::getMaterialForName (const std::string& name)
 {
-#if 0
 	MaterialShaders::iterator i = _activeMaterialShaders.find(name);
-	if (i != _activeMaterialShaders.end())
-	return (*i).second;
+	if (i != _activeMaterialShaders.end()) {
+		(*i).second->IncRef();
+		return (*i).second;
+	}
 
-	MaterialShader *shader = new MaterialShader(name);
-	_activeMaterialShaders.insert(MaterialShaders::value_type(name, shader));
-	return shader;
-#else
-/*	g_warning("get shader for material of texture: %s from material file: %s\n", name.c_str(),
-			getMaterialFilename().c_str());*/
-	return (IShader*) 0;
-#endif
+	// TODO register as map observer and only load the material file on map change .. once!!
+	std::string content;
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(getMaterialFilename()));
+	if (file)
+		content = file->getString();
+
+	if (!isDefined(name, content))
+		return (IShader*)0;
+
+	std::string block = getBlock(name, content);
+
+	MaterialPointer pShader(new MaterialShader(name, block));
+	pShader->IncRef();
+	_activeMaterialShaders.insert(MaterialShaders::value_type(name, pShader));
+	return pShader;
 }
 
 class MaterialSystemAPI

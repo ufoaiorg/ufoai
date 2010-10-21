@@ -139,11 +139,6 @@ void TextureBrowser::setSelectedShader(const std::string& _shader) {
 	if (FindTextureDialog_isOpen()) {
 		FindTextureDialog_selectTexture(shader);
 	}
-
-	// disable the menu item "shader info" if no shader was selected
-	IShader* ishader = GlobalShaderSystem().getShaderForName(shader);
-
-	ishader->DecRef();
 }
 
 void TextureBrowser::getNextTexturePosition(TextureLayout& layout, const qtexture_t* q, int *x,
@@ -279,28 +274,6 @@ void TextureBrowser::activeShadersChanged() {
 	g_activeShadersChangedCallbacks();
 }
 
-class TextureCategoryLoadShader {
-		const std::string& m_directory;
-		std::size_t& m_count;
-	public:
-		typedef const std::string& first_argument_type;
-
-		TextureCategoryLoadShader(const std::string& directory, std::size_t& count) :
-			m_directory(directory), m_count(count) {
-			m_count = 0;
-		}
-		void operator()(const std::string& name) const {
-			if (shader_equal_prefix(name, "textures/") && shader_equal_prefix(name.c_str() + string_length(
-					"textures/"), m_directory)) {
-				++m_count;
-				// request the shader, this will load the texture if needed
-				// this Shader_ForName call is a kind of hack
-				IShader *pFoo = GlobalShaderSystem().getShaderForName(name);
-				pFoo->DecRef();
-			}
-		}
-};
-
 /**
  * @note relies on texture_directory global for the directory to use
  * 1) Load the shaders for the given directory
@@ -348,8 +321,10 @@ class LoadTexturesByTypeVisitor: public ImageModules::Visitor {
 					}
 
 					// if a texture is already in use to represent a shader, ignore it
-					IShader* shader = GlobalShaderSystem().getShaderForName(name);
-					shader->DecRef();
+					//IShader* shaderPtr = GlobalMaterialSystem()->getMaterialForName(name);
+					//if (shaderPtr == (IShader*) 0)
+					IShader* shaderPtr = GlobalShaderSystem().getShaderForName(name);
+					shaderPtr->DecRef();
 				}
 		};
 	public:
@@ -367,16 +342,8 @@ void TextureBrowser::showDirectory(const std::string& directory) {
 	currentDirectory = directory;
 	heightChanged();
 
-	std::size_t shaders_count;
-	GlobalShaderSystem().foreachShaderName(makeCallback1(TextureCategoryLoadShader(
-			directory, shaders_count)));
-	g_message("Showing %u shaders.\n", Unsigned(shaders_count));
-
 	// load remaining texture files
-	StringOutputStream dirstring(64);
-	dirstring << "textures/" << directory;
-
-	Radiant_getImageModules().foreachModule(LoadTexturesByTypeVisitor(dirstring.c_str()));
+	Radiant_getImageModules().foreachModule(LoadTexturesByTypeVisitor("textures/" + directory));
 
 	// we'll display the newly loaded textures + all the ones already in use
 	setHideUnused(false);

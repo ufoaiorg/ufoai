@@ -2,30 +2,7 @@
 #define ISHADER_H_
 
 #include "texturelib.h"
-
-typedef unsigned char BlendFactor;
-const BlendFactor BLEND_ZERO = 0;
-const BlendFactor BLEND_ONE = 1;
-const BlendFactor BLEND_SRC_COLOUR = 2;
-const BlendFactor BLEND_ONE_MINUS_SRC_COLOUR = 3;
-const BlendFactor BLEND_SRC_ALPHA = 4;
-const BlendFactor BLEND_ONE_MINUS_SRC_ALPHA = 5;
-const BlendFactor BLEND_DST_COLOUR = 6;
-const BlendFactor BLEND_ONE_MINUS_DST_COLOUR = 7;
-const BlendFactor BLEND_DST_ALPHA = 8;
-const BlendFactor BLEND_ONE_MINUS_DST_ALPHA = 9;
-const BlendFactor BLEND_SRC_ALPHA_SATURATE = 10;
-
-class BlendFunc
-{
-	public:
-		BlendFunc (BlendFactor src, BlendFactor dst) :
-			m_src(src), m_dst(dst)
-		{
-		}
-		BlendFactor m_src;
-		BlendFactor m_dst;
-};
+#include "ishaderlayer.h"
 
 class IShader
 {
@@ -94,6 +71,8 @@ class IShader
 		virtual void getAlphaFunc (EAlphaFunc *func, float *ref) = 0;
 
 		virtual BlendFunc getBlendFunc () const = 0;
+
+		virtual void forEachLayer(const ShaderLayerCallback& layer) const = 0;
 
 		/**
 		 * get the cull type

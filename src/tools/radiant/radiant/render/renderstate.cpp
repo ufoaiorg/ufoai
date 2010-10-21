@@ -256,6 +256,10 @@ class OpenGLShader: public Shader
 		~OpenGLShader ()
 		{
 		}
+
+		void appendBlendLayer(const ShaderLayer& layer);
+		void visitShaderLayers (const ShaderLayer& layer);
+
 		void construct (const std::string& name);
 		void destroy ()
 		{
@@ -815,37 +819,17 @@ void OpenGLState_apply (const OpenGLState& self, OpenGLState& current, unsigned 
 	}
 
 	{
-		GLint texture0 = 0;
-		GLint texture1 = 0;
-		GLint texture2 = 0;
-		GLint texture3 = 0;
-		GLint texture4 = 0;
-		GLint texture5 = 0;
-		GLint texture6 = 0;
-		GLint texture7 = 0;
-		//if(state & RENDER_TEXTURE) != 0)
-		{
-			texture0 = self.m_texture;
-			texture1 = self.m_texture1;
-			texture2 = self.m_texture2;
-			texture3 = self.m_texture3;
-			texture4 = self.m_texture4;
-			texture5 = self.m_texture5;
-			texture6 = self.m_texture6;
-			texture7 = self.m_texture7;
-		}
-
 		if (GlobalOpenGL().GL_1_3()) {
-			setTextureState(current.m_texture, texture0, GL_TEXTURE0);
-			setTextureState(current.m_texture1, texture1, GL_TEXTURE1);
-			setTextureState(current.m_texture2, texture2, GL_TEXTURE2);
-			setTextureState(current.m_texture3, texture3, GL_TEXTURE3);
-			setTextureState(current.m_texture4, texture4, GL_TEXTURE4);
-			setTextureState(current.m_texture5, texture5, GL_TEXTURE5);
-			setTextureState(current.m_texture6, texture6, GL_TEXTURE6);
-			setTextureState(current.m_texture7, texture7, GL_TEXTURE7);
+			setTextureState(current.m_texture, self.m_texture, GL_TEXTURE0);
+			setTextureState(current.m_texture1, self.m_texture1, GL_TEXTURE1);
+			setTextureState(current.m_texture2, self.m_texture2, GL_TEXTURE2);
+			setTextureState(current.m_texture3, self.m_texture3, GL_TEXTURE3);
+			setTextureState(current.m_texture4, self.m_texture4, GL_TEXTURE4);
+			setTextureState(current.m_texture5, self.m_texture5, GL_TEXTURE5);
+			setTextureState(current.m_texture6, self.m_texture6, GL_TEXTURE6);
+			setTextureState(current.m_texture7, self.m_texture7, GL_TEXTURE7);
 		} else {
-			setTextureState(current.m_texture, texture0);
+			setTextureState(current.m_texture, self.m_texture);
 		}
 	}
 
@@ -1006,6 +990,53 @@ inline GLenum convertBlendFactor (BlendFactor factor)
 	}
 	return GL_ZERO;
 }
+
+// Append a blend (non-interaction) layer
+void OpenGLShader::appendBlendLayer(const ShaderLayer& layer)
+{
+	qtexture_t* layerTex = layer.getTexture();
+
+	OpenGLState& state = appendDefaultPass();
+	state.m_state = RENDER_FILL
+					| RENDER_BLEND
+					| RENDER_DEPTHTEST
+					| RENDER_COLOURWRITE;
+
+	// Set the texture
+	state.m_texture = layerTex->texture_number;
+
+	// Get the blend function
+	BlendFunc blendFunc = layer.getBlendFunc();
+	state.m_blend_src = convertBlendFactor(blendFunc.m_src);
+	state.m_blend_dst = convertBlendFactor(blendFunc.m_dst);
+
+	// Alpha-tested stages or one-over-zero blends should use the depth buffer
+	if (state.m_blend_src == GL_SRC_ALPHA || state.m_blend_dst == GL_SRC_ALPHA ||
+		(state.m_blend_src == GL_ONE && state.m_blend_dst == GL_ZERO))
+	{
+		state.m_state |= RENDER_DEPTHWRITE;
+	}
+
+	state.m_state |= RENDER_TEXTURE;
+
+	reinterpret_cast<Vector3&> (state.m_colour) = layer.getColour();
+	state.m_colour[3] = 1.0f;
+
+	// Colour modulation
+	//state.m_colour = Vector4(layer->getColour(), 1.0);
+
+	state.m_sort = OpenGLState::eSortFullbright;
+
+	state.m_sort = OpenGLState::eSortFullbright;
+}
+
+
+void OpenGLShader::visitShaderLayers (const ShaderLayer& layer)
+{
+	appendBlendLayer(layer);
+}
+
+typedef MemberCaller1<OpenGLShader, const ShaderLayer&, &OpenGLShader::visitShaderLayers> ShaderLayerVisitor;
 
 /// \todo Define special-case shaders in a data file.
 void OpenGLShader::construct (const std::string& shaderName)
@@ -1192,6 +1223,9 @@ void OpenGLShader::construct (const std::string& shaderName)
 				state.m_alphafunc = GL_GEQUAL;
 			}
 		}
+
+		m_shader->forEachLayer(ShaderLayerVisitor(*this));
+
 		reinterpret_cast<Vector3&> (state.m_colour) = m_shader->getTexture()->color;
 		state.m_colour[3] = 1.0f;
 
