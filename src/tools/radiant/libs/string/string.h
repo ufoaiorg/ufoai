@@ -309,6 +309,11 @@ namespace string
 		return ss.str();
 	}
 
+	inline bool startsWith (const std::string& source, const std::string& contains)
+	{
+		return !source.compare(0, contains.size(), contains);
+	}
+
 	inline bool contains (const std::string& source, const std::string& contains)
 	{
 		return source.rfind(contains) != std::string::npos;
