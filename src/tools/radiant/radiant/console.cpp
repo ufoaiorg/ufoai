@@ -35,7 +35,6 @@
 #include "os/file.h"
 
 #include "version.h"
-#include "aboutmsg.h"
 #include "gtkmisc.h"
 #include "mainframe.h"
 
@@ -70,7 +69,7 @@ void Sys_LogFile (bool enable)
 			g_Console_createLogFailed = false;
 			globalOutputStream() << "Today is: " << ctime(&localtime) << "\n";
 			globalOutputStream()
-					<< "This is UFORadiant '" RADIANT_VERSION "' compiled " __DATE__ "\n" RADIANT_ABOUTMSG "\n";
+					<< "This is UFORadiant '" RADIANT_VERSION "' compiled " __DATE__ "\n";
 		} else {
 			if (g_Console_createLogFailed)
 				return;
