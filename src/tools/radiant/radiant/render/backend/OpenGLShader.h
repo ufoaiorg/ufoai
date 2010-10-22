@@ -1,0 +1,405 @@
+#ifndef OPENGLSHADER_H_
+#define OPENGLSHADER_H_
+
+#include "irender.h"
+#include "iglrender.h"
+#include "moduleobservers.h"
+#include "string/string.h"
+#include "OpenGLShaderPass.h"
+#include "OpenGLStateLess.h"
+#include "OpenGLStateManager.h"
+
+#include "../../xyview/xywindow.h"
+
+#include <list>
+#include <map>
+
+class OpenGLShader: public Shader {
+	private:
+		typedef std::list<OpenGLShaderPass*> Passes;
+		Passes m_passes;
+		IShader* m_shader;
+		std::size_t m_used;
+		ModuleObservers m_observers;
+
+		// The state manager we will be inserting/removing OpenGL states from (this
+		// will be the OpenGLRenderSystem).
+		render::OpenGLStateManager& _glStateManager;
+
+	public:
+		OpenGLShader(render::OpenGLStateManager& glStateManager) :
+			m_shader(0), m_used(0), _glStateManager(glStateManager) {
+		}
+
+		~OpenGLShader() {
+		}
+
+		void destroy() {
+			if (m_shader) {
+				m_shader->DecRef();
+			}
+			m_shader = 0;
+
+			for (Passes::iterator i = m_passes.begin(); i != m_passes.end(); ++i) {
+				delete *i;
+			}
+			m_passes.clear();
+		}
+		void addRenderable(const OpenGLRenderable& renderable, const Matrix4& modelview,
+				const LightList* lights) {
+			for (Passes::iterator i = m_passes.begin(); i != m_passes.end(); ++i) {
+				(*i)->addRenderable(renderable, modelview);
+			}
+		}
+		void incrementUsed() {
+			if (++m_used == 1 && m_shader != 0) {
+				m_shader->SetInUse(true);
+			}
+		}
+		void decrementUsed() {
+			if (--m_used == 0 && m_shader != 0) {
+				m_shader->SetInUse(false);
+			}
+		}
+		bool realised() const {
+			return m_shader != 0;
+		}
+		void attach(ModuleObserver& observer) {
+			if (realised()) {
+				observer.realise();
+			}
+			m_observers.attach(observer);
+		}
+		void detach(ModuleObserver& observer) {
+			if (realised()) {
+				observer.unrealise();
+			}
+			m_observers.detach(observer);
+		}
+		void realise(const std::string& name) {
+			if (!name.empty())
+				construct(name);
+
+			if (m_used != 0 && m_shader != 0) {
+				m_shader->SetInUse(true);
+			}
+
+			for (Passes::iterator i = m_passes.begin(); i != m_passes.end(); ++i) {
+				_glStateManager.insertSortedState(render::OpenGLStates::value_type(&(*i)->state(),
+						*i));
+			}
+
+			m_observers.realise();
+		}
+		void unrealise() {
+			m_observers.unrealise();
+
+			for (Passes::iterator i = m_passes.begin(); i != m_passes.end(); ++i) {
+				_glStateManager.eraseSortedState(&(*i)->state());
+			}
+
+			destroy();
+		}
+		qtexture_t& getTexture() const {
+			ASSERT_NOTNULL(m_shader);
+			return *m_shader->getTexture();
+		}
+		unsigned int getFlags() const {
+			ASSERT_NOTNULL(m_shader);
+			return m_shader->getFlags();
+		}
+		IShader& getShader() const {
+			ASSERT_NOTNULL(m_shader);
+			return *m_shader;
+		}
+		OpenGLState& appendDefaultPass() {
+			m_passes.push_back(new OpenGLShaderPass);
+			OpenGLState& state = m_passes.back()->state();
+			state.constructDefault();
+			return state;
+		}
+
+		GLenum convertBlendFactor(BlendFactor factor) {
+			switch (factor) {
+			case BLEND_ZERO:
+				return GL_ZERO;
+			case BLEND_ONE:
+				return GL_ONE;
+			case BLEND_SRC_COLOUR:
+				return GL_SRC_COLOR;
+			case BLEND_ONE_MINUS_SRC_COLOUR:
+				return GL_ONE_MINUS_SRC_COLOR;
+			case BLEND_SRC_ALPHA:
+				return GL_SRC_ALPHA;
+			case BLEND_ONE_MINUS_SRC_ALPHA:
+				return GL_ONE_MINUS_SRC_ALPHA;
+			case BLEND_DST_COLOUR:
+				return GL_DST_COLOR;
+			case BLEND_ONE_MINUS_DST_COLOUR:
+				return GL_ONE_MINUS_DST_COLOR;
+			case BLEND_DST_ALPHA:
+				return GL_DST_ALPHA;
+			case BLEND_ONE_MINUS_DST_ALPHA:
+				return GL_ONE_MINUS_DST_ALPHA;
+			case BLEND_SRC_ALPHA_SATURATE:
+				return GL_SRC_ALPHA_SATURATE;
+			}
+			return GL_ZERO;
+		}
+
+		// Append a blend (non-interaction) layer
+		void appendBlendLayer(const ShaderLayer& layer) {
+			qtexture_t* layerTex = layer.getTexture();
+
+			OpenGLState& state = appendDefaultPass();
+			state.m_state = RENDER_FILL | RENDER_BLEND | RENDER_DEPTHTEST | RENDER_COLOURWRITE;
+
+			// Set the texture
+			state.m_texture = layerTex->texture_number;
+
+			// Get the blend function
+			BlendFunc blendFunc = layer.getBlendFunc();
+			state.m_blend_src = convertBlendFactor(blendFunc.m_src);
+			state.m_blend_dst = convertBlendFactor(blendFunc.m_dst);
+
+			// Alpha-tested stages or one-over-zero blends should use the depth buffer
+			if (state.m_blend_src == GL_SRC_ALPHA || state.m_blend_dst == GL_SRC_ALPHA
+					|| (state.m_blend_src == GL_ONE && state.m_blend_dst == GL_ZERO)) {
+				state.m_state |= RENDER_DEPTHWRITE;
+			}
+
+			state.m_state |= RENDER_TEXTURE;
+
+			// Colour modulation
+			reinterpret_cast<Vector3&> (state.m_colour) = layer.getColour();
+			state.m_colour[3] = 1.0f;
+
+			state.m_sort = OpenGLState::eSortFullbright;
+		}
+
+		void visitShaderLayers(const ShaderLayer& layer) {
+			if (layer.getType() == ShaderLayer::BLEND)
+				appendBlendLayer(layer);
+		}
+
+		typedef MemberCaller1<OpenGLShader, const ShaderLayer&, &OpenGLShader::visitShaderLayers>
+				ShaderLayerVisitor;
+
+		/// \todo Define special-case shaders in a data file.
+		void construct(const std::string& shaderName) {
+			const char *name = shaderName.c_str();
+			OpenGLState& state = appendDefaultPass();
+			switch (shaderName[0]) {
+			case '(':
+				sscanf(name, "(%g %g %g)", &state.m_colour[0], &state.m_colour[1],
+						&state.m_colour[2]);
+				state.m_colour[3] = 1.0f;
+				state.m_state = RENDER_FILL | RENDER_LIGHTING | RENDER_DEPTHTEST | RENDER_CULLFACE
+						| RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
+				state.m_sort = OpenGLState::eSortFullbright;
+				break;
+
+			case '[':
+				sscanf(name, "[%g %g %g]", &state.m_colour[0], &state.m_colour[1],
+						&state.m_colour[2]);
+				state.m_colour[3] = 0.5f;
+				state.m_state = RENDER_FILL | RENDER_LIGHTING | RENDER_DEPTHTEST | RENDER_CULLFACE
+						| RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_BLEND;
+				state.m_sort = OpenGLState::eSortTranslucent;
+				break;
+
+			case '<':
+				sscanf(name, "<%g %g %g>", &state.m_colour[0], &state.m_colour[1],
+						&state.m_colour[2]);
+				state.m_colour[3] = 1;
+				state.m_state = RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
+				state.m_sort = OpenGLState::eSortFullbright;
+				state.m_depthfunc = GL_LESS;
+				state.m_linewidth = 1;
+				state.m_pointsize = 1;
+				break;
+
+			case '$': /*{ // TODO:
+			 OpenGLStateMap::iterator i = g_openglStates->find(name);
+			 if (i != g_openglStates->end()) {
+			 state = (*i).second;
+			 break;
+			 }
+			 }*/
+				if (string_equal(name + 1, "POINT")) {
+					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
+					state.m_sort = OpenGLState::eSortControlFirst;
+					state.m_pointsize = 4;
+				} else if (string_equal(name + 1, "SELPOINT")) {
+					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
+					state.m_sort = OpenGLState::eSortControlFirst + 1;
+					state.m_pointsize = 4;
+				} else if (string_equal(name + 1, "PIVOT")) {
+					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHTEST
+							| RENDER_DEPTHWRITE;
+					state.m_sort = OpenGLState::eSortGUI1;
+					state.m_linewidth = 2;
+					state.m_depthfunc = GL_LEQUAL;
+
+					OpenGLState& hiddenLine = appendDefaultPass();
+					hiddenLine.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHTEST
+							| RENDER_LINESTIPPLE;
+					hiddenLine.m_sort = OpenGLState::eSortGUI0;
+					hiddenLine.m_linewidth = 2;
+					hiddenLine.m_depthfunc = GL_GREATER;
+				} else if (string_equal(name + 1, "WIREFRAME")) {
+					state.m_state = RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
+					state.m_sort = OpenGLState::eSortFullbright;
+				} else if (string_equal(name + 1, "CAM_HIGHLIGHT")) {
+					state.m_colour[0] = 1;
+					state.m_colour[1] = 0;
+					state.m_colour[2] = 0;
+					state.m_colour[3] = 0.3f;
+					state.m_state = RENDER_FILL | RENDER_DEPTHTEST | RENDER_CULLFACE | RENDER_BLEND
+							| RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
+					state.m_sort = OpenGLState::eSortHighlight;
+					state.m_depthfunc = GL_LEQUAL;
+				} else if (string_equal(name + 1, "CAM_OVERLAY")) {
+					state.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_COLOURWRITE
+							| RENDER_DEPTHWRITE;
+					state.m_sort = OpenGLState::eSortOverlayFirst + 1;
+					state.m_depthfunc = GL_LEQUAL;
+
+					OpenGLState& hiddenLine = appendDefaultPass();
+					hiddenLine.m_colour[0] = 0.75;
+					hiddenLine.m_colour[1] = 0.75;
+					hiddenLine.m_colour[2] = 0.75;
+					hiddenLine.m_colour[3] = 1;
+					hiddenLine.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_COLOURWRITE
+							| RENDER_LINESTIPPLE;
+					hiddenLine.m_sort = OpenGLState::eSortOverlayFirst;
+					hiddenLine.m_depthfunc = GL_GREATER;
+					hiddenLine.m_linestipple_factor = 2;
+				} else if (string_equal(name + 1, "XY_OVERLAY")) {
+					state.m_colour[0] = g_xywindow_globals.color_selbrushes[0];
+					state.m_colour[1] = g_xywindow_globals.color_selbrushes[1];
+					state.m_colour[2] = g_xywindow_globals.color_selbrushes[2];
+					state.m_colour[3] = 1;
+					state.m_state = RENDER_COLOURWRITE | RENDER_LINESTIPPLE;
+					state.m_sort = OpenGLState::eSortOverlayFirst;
+					state.m_linewidth = 2;
+					state.m_linestipple_factor = 3;
+				} else if (string_equal(name + 1, "DEBUG_CLIPPED")) {
+					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
+					state.m_sort = OpenGLState::eSortLast;
+				} else if (string_equal(name + 1, "Q3MAP2_LIGHT_SPHERE")) {
+					state.m_colour[0] = .05f;
+					state.m_colour[1] = .05f;
+					state.m_colour[2] = .05f;
+					state.m_colour[3] = 1;
+					state.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_BLEND | RENDER_FILL;
+					state.m_blend_src = GL_ONE;
+					state.m_blend_dst = GL_ONE;
+					state.m_sort = OpenGLState::eSortTranslucent;
+				} else if (string_equal(name + 1, "WIRE_OVERLAY")) {
+					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE
+							| RENDER_DEPTHTEST | RENDER_OVERRIDE;
+					state.m_sort = OpenGLState::eSortGUI1;
+					state.m_depthfunc = GL_LEQUAL;
+
+					OpenGLState& hiddenLine = appendDefaultPass();
+					hiddenLine.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE
+							| RENDER_DEPTHWRITE | RENDER_DEPTHTEST | RENDER_OVERRIDE
+							| RENDER_LINESTIPPLE;
+					hiddenLine.m_sort = OpenGLState::eSortGUI0;
+					hiddenLine.m_depthfunc = GL_GREATER;
+				} else if (string_equal(name + 1, "FLATSHADE_OVERLAY")) {
+					state.m_state = RENDER_CULLFACE | RENDER_LIGHTING | RENDER_SMOOTH
+							| RENDER_SCALED | RENDER_COLOURARRAY | RENDER_FILL | RENDER_COLOURWRITE
+							| RENDER_DEPTHWRITE | RENDER_DEPTHTEST | RENDER_OVERRIDE;
+					state.m_sort = OpenGLState::eSortGUI1;
+					state.m_depthfunc = GL_LEQUAL;
+
+					OpenGLState& hiddenLine = appendDefaultPass();
+					hiddenLine.m_state = RENDER_CULLFACE | RENDER_LIGHTING | RENDER_SMOOTH
+							| RENDER_SCALED | RENDER_COLOURARRAY | RENDER_FILL | RENDER_COLOURWRITE
+							| RENDER_DEPTHWRITE | RENDER_DEPTHTEST | RENDER_OVERRIDE;
+					hiddenLine.m_sort = OpenGLState::eSortGUI0;
+					hiddenLine.m_depthfunc = GL_GREATER;
+				} else if (string_equal(name + 1, "CLIPPER_OVERLAY")) {
+					state.m_colour[0] = g_xywindow_globals.color_clipper[0];
+					state.m_colour[1] = g_xywindow_globals.color_clipper[1];
+					state.m_colour[2] = g_xywindow_globals.color_clipper[2];
+					state.m_colour[3] = 1;
+					state.m_state = RENDER_CULLFACE | RENDER_COLOURWRITE | RENDER_DEPTHWRITE
+							| RENDER_FILL;
+					state.m_sort = OpenGLState::eSortOverlayFirst;
+				} else if (string_equal(name + 1, "OVERBRIGHT")) {
+					const float lightScale = 2;
+					state.m_colour[0] = lightScale * 0.5f;
+					state.m_colour[1] = lightScale * 0.5f;
+					state.m_colour[2] = lightScale * 0.5f;
+					state.m_colour[3] = 0.5;
+					state.m_state = RENDER_FILL | RENDER_BLEND | RENDER_COLOURWRITE | RENDER_SCREEN;
+					state.m_sort = OpenGLState::eSortOverbrighten;
+					state.m_blend_src = GL_DST_COLOR;
+					state.m_blend_dst = GL_SRC_COLOR;
+				} else {
+					// default to something recognisable.. =)
+					ERROR_MESSAGE("hardcoded renderstate not found");
+					state.m_colour[0] = 1;
+					state.m_colour[1] = 0;
+					state.m_colour[2] = 1;
+					state.m_colour[3] = 1;
+					state.m_state = RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
+					state.m_sort = OpenGLState::eSortFirst;
+				}
+				break;
+			default:
+				// construction from IShader
+				m_shader = GlobalShaderSystem().getShaderForName(name);
+
+				state.m_texture = m_shader->getTexture()->texture_number;
+
+				state.m_state = RENDER_FILL | RENDER_TEXTURE | RENDER_DEPTHTEST
+						| RENDER_COLOURWRITE | RENDER_LIGHTING | RENDER_SMOOTH;
+				state.m_state |= RENDER_CULLFACE;
+				if ((m_shader->getFlags() & QER_ALPHATEST) != 0) {
+					state.m_state |= RENDER_ALPHATEST;
+					IShader::EAlphaFunc alphafunc;
+					m_shader->getAlphaFunc(&alphafunc, &state.m_alpharef);
+					switch (alphafunc) {
+					case IShader::eAlways:
+						state.m_alphafunc = GL_ALWAYS;
+					case IShader::eEqual:
+						state.m_alphafunc = GL_EQUAL;
+					case IShader::eLess:
+						state.m_alphafunc = GL_LESS;
+					case IShader::eGreater:
+						state.m_alphafunc = GL_GREATER;
+					case IShader::eLEqual:
+						state.m_alphafunc = GL_LEQUAL;
+					case IShader::eGEqual:
+						state.m_alphafunc = GL_GEQUAL;
+					}
+				}
+
+				reinterpret_cast<Vector3&> (state.m_colour) = m_shader->getTexture()->color;
+				state.m_colour[3] = 1.0f;
+
+				if ((m_shader->getFlags() & QER_TRANS) != 0) {
+					state.m_state |= RENDER_BLEND;
+					state.m_colour[3] = m_shader->getTrans();
+					state.m_sort = OpenGLState::eSortTranslucent;
+					BlendFunc blendFunc = m_shader->getBlendFunc();
+					state.m_blend_src = convertBlendFactor(blendFunc.m_src);
+					state.m_blend_dst = convertBlendFactor(blendFunc.m_dst);
+					if (state.m_blend_src == GL_SRC_ALPHA || state.m_blend_dst == GL_SRC_ALPHA) {
+						state.m_state |= RENDER_DEPTHWRITE;
+					}
+				} else {
+					state.m_state |= RENDER_DEPTHWRITE;
+					state.m_sort = OpenGLState::eSortFullbright;
+				}
+
+				m_shader->forEachLayer(ShaderLayerVisitor(*this));
+			}
+		}
+};
+
+#endif /* OPENGLSHADER_H_ */
