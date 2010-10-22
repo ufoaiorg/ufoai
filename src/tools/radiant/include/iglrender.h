@@ -47,6 +47,7 @@ class OpenGLState {
 			eSortLast = 4096
 		};
 
+		int m_polygonOffset;
 		unsigned int m_state;
 		std::size_t m_sort;
 		GLint m_texture;
@@ -125,6 +126,7 @@ class OpenGLState {
 
 			m_linestipple_factor = 1;
 			m_linestipple_pattern = 0xaaaa;
+			m_polygonOffset = 0;
 		}
 
 		void apply(OpenGLState& current, unsigned int globalstate) {
@@ -278,6 +280,18 @@ class OpenGLState {
 			if (!(state & RENDER_FILL) && m_pointsize != current.m_pointsize) {
 				glPointSize(m_pointsize);
 				current.m_pointsize = m_pointsize;
+			}
+
+			// Apply polygon offset
+			if (m_polygonOffset != current.m_polygonOffset) {
+				current.m_polygonOffset = m_polygonOffset;
+
+				if (current.m_polygonOffset > 0.0f) {
+					glEnable(GL_POLYGON_OFFSET_FILL);
+					glPolygonOffset(-1, -1 * m_polygonOffset);
+				} else {
+					glDisable(GL_POLYGON_OFFSET_FILL);
+				}
 			}
 
 			current.m_state = state;

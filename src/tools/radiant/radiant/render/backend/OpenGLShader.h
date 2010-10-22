@@ -186,12 +186,11 @@ class OpenGLShader: public Shader {
 				ShaderLayerVisitor;
 
 		/// \todo Define special-case shaders in a data file.
-		void construct(const std::string& shaderName) {
-			const char *name = shaderName.c_str();
+		void construct(const std::string& name) {
 			OpenGLState& state = appendDefaultPass();
-			switch (shaderName[0]) {
+			switch (name[0]) {
 			case '(':
-				sscanf(name, "(%g %g %g)", &state.m_colour[0], &state.m_colour[1],
+				sscanf(name.c_str(), "(%g %g %g)", &state.m_colour[0], &state.m_colour[1],
 						&state.m_colour[2]);
 				state.m_colour[3] = 1.0f;
 				state.m_state = RENDER_FILL | RENDER_LIGHTING | RENDER_DEPTHTEST | RENDER_CULLFACE
@@ -200,7 +199,7 @@ class OpenGLShader: public Shader {
 				break;
 
 			case '[':
-				sscanf(name, "[%g %g %g]", &state.m_colour[0], &state.m_colour[1],
+				sscanf(name.c_str(), "[%g %g %g]", &state.m_colour[0], &state.m_colour[1],
 						&state.m_colour[2]);
 				state.m_colour[3] = 0.5f;
 				state.m_state = RENDER_FILL | RENDER_LIGHTING | RENDER_DEPTHTEST | RENDER_CULLFACE
@@ -209,7 +208,7 @@ class OpenGLShader: public Shader {
 				break;
 
 			case '<':
-				sscanf(name, "<%g %g %g>", &state.m_colour[0], &state.m_colour[1],
+				sscanf(name.c_str(), "<%g %g %g>", &state.m_colour[0], &state.m_colour[1],
 						&state.m_colour[2]);
 				state.m_colour[3] = 1;
 				state.m_state = RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
@@ -219,22 +218,16 @@ class OpenGLShader: public Shader {
 				state.m_pointsize = 1;
 				break;
 
-			case '$': /*{ // TODO:
-			 OpenGLStateMap::iterator i = g_openglStates->find(name);
-			 if (i != g_openglStates->end()) {
-			 state = (*i).second;
-			 break;
-			 }
-			 }*/
-				if (string_equal(name + 1, "POINT")) {
+			case '$':
+				if (name == "$POINT") {
 					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 					state.m_sort = OpenGLState::eSortControlFirst;
 					state.m_pointsize = 4;
-				} else if (string_equal(name + 1, "SELPOINT")) {
+				} else if (name == "$SELPOINT") {
 					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 					state.m_sort = OpenGLState::eSortControlFirst + 1;
 					state.m_pointsize = 4;
-				} else if (string_equal(name + 1, "PIVOT")) {
+				} else if (name == "$PIVOT") {
 					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHTEST
 							| RENDER_DEPTHWRITE;
 					state.m_sort = OpenGLState::eSortGUI1;
@@ -247,10 +240,10 @@ class OpenGLShader: public Shader {
 					hiddenLine.m_sort = OpenGLState::eSortGUI0;
 					hiddenLine.m_linewidth = 2;
 					hiddenLine.m_depthfunc = GL_GREATER;
-				} else if (string_equal(name + 1, "WIREFRAME")) {
+				} else if (name == "$WIREFRAME") {
 					state.m_state = RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 					state.m_sort = OpenGLState::eSortFullbright;
-				} else if (string_equal(name + 1, "CAM_HIGHLIGHT")) {
+				} else if (name == "$CAM_HIGHLIGHT") {
 					state.m_colour[0] = 1;
 					state.m_colour[1] = 0;
 					state.m_colour[2] = 0;
@@ -259,7 +252,7 @@ class OpenGLShader: public Shader {
 							| RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 					state.m_sort = OpenGLState::eSortHighlight;
 					state.m_depthfunc = GL_LEQUAL;
-				} else if (string_equal(name + 1, "CAM_OVERLAY")) {
+				} else if (name == "$CAM_OVERLAY") {
 					state.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_COLOURWRITE
 							| RENDER_DEPTHWRITE;
 					state.m_sort = OpenGLState::eSortOverlayFirst + 1;
@@ -275,7 +268,7 @@ class OpenGLShader: public Shader {
 					hiddenLine.m_sort = OpenGLState::eSortOverlayFirst;
 					hiddenLine.m_depthfunc = GL_GREATER;
 					hiddenLine.m_linestipple_factor = 2;
-				} else if (string_equal(name + 1, "XY_OVERLAY")) {
+				} else if (name == "$XY_OVERLAY") {
 					state.m_colour[0] = g_xywindow_globals.color_selbrushes[0];
 					state.m_colour[1] = g_xywindow_globals.color_selbrushes[1];
 					state.m_colour[2] = g_xywindow_globals.color_selbrushes[2];
@@ -284,10 +277,10 @@ class OpenGLShader: public Shader {
 					state.m_sort = OpenGLState::eSortOverlayFirst;
 					state.m_linewidth = 2;
 					state.m_linestipple_factor = 3;
-				} else if (string_equal(name + 1, "DEBUG_CLIPPED")) {
+				} else if (name == "$DEBUG_CLIPPED") {
 					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 					state.m_sort = OpenGLState::eSortLast;
-				} else if (string_equal(name + 1, "Q3MAP2_LIGHT_SPHERE")) {
+				} else if (name == "$Q3MAP2_LIGHT_SPHERE") {
 					state.m_colour[0] = .05f;
 					state.m_colour[1] = .05f;
 					state.m_colour[2] = .05f;
@@ -296,7 +289,7 @@ class OpenGLShader: public Shader {
 					state.m_blend_src = GL_ONE;
 					state.m_blend_dst = GL_ONE;
 					state.m_sort = OpenGLState::eSortTranslucent;
-				} else if (string_equal(name + 1, "WIRE_OVERLAY")) {
+				} else if (name == "$WIRE_OVERLAY") {
 					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE
 							| RENDER_DEPTHTEST | RENDER_OVERRIDE;
 					state.m_sort = OpenGLState::eSortGUI1;
@@ -308,7 +301,7 @@ class OpenGLShader: public Shader {
 							| RENDER_LINESTIPPLE;
 					hiddenLine.m_sort = OpenGLState::eSortGUI0;
 					hiddenLine.m_depthfunc = GL_GREATER;
-				} else if (string_equal(name + 1, "FLATSHADE_OVERLAY")) {
+				} else if (name == "$FLATSHADE_OVERLAY") {
 					state.m_state = RENDER_CULLFACE | RENDER_LIGHTING | RENDER_SMOOTH
 							| RENDER_SCALED | RENDER_COLOURARRAY | RENDER_FILL | RENDER_COLOURWRITE
 							| RENDER_DEPTHWRITE | RENDER_DEPTHTEST | RENDER_OVERRIDE;
@@ -321,7 +314,7 @@ class OpenGLShader: public Shader {
 							| RENDER_DEPTHWRITE | RENDER_DEPTHTEST | RENDER_OVERRIDE;
 					hiddenLine.m_sort = OpenGLState::eSortGUI0;
 					hiddenLine.m_depthfunc = GL_GREATER;
-				} else if (string_equal(name + 1, "CLIPPER_OVERLAY")) {
+				} else if (name == "$CLIPPER_OVERLAY") {
 					state.m_colour[0] = g_xywindow_globals.color_clipper[0];
 					state.m_colour[1] = g_xywindow_globals.color_clipper[1];
 					state.m_colour[2] = g_xywindow_globals.color_clipper[2];
@@ -329,7 +322,7 @@ class OpenGLShader: public Shader {
 					state.m_state = RENDER_CULLFACE | RENDER_COLOURWRITE | RENDER_DEPTHWRITE
 							| RENDER_FILL;
 					state.m_sort = OpenGLState::eSortOverlayFirst;
-				} else if (string_equal(name + 1, "OVERBRIGHT")) {
+				} else if (name == "$OVERBRIGHT") {
 					const float lightScale = 2;
 					state.m_colour[0] = lightScale * 0.5f;
 					state.m_colour[1] = lightScale * 0.5f;
@@ -341,7 +334,7 @@ class OpenGLShader: public Shader {
 					state.m_blend_dst = GL_SRC_COLOR;
 				} else {
 					// default to something recognisable.. =)
-					ERROR_MESSAGE("hardcoded renderstate not found");
+					ERROR_MESSAGE("hardcoded renderstate not found: " << name);
 					state.m_colour[0] = 1;
 					state.m_colour[1] = 0;
 					state.m_colour[2] = 1;

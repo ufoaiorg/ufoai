@@ -74,6 +74,8 @@ class IShader
 
 		virtual void forEachLayer(const ShaderLayerCallback& layer) const = 0;
 
+	    float getPolygonOffset() const;
+
 		/**
 		 * get the cull type
 		 */

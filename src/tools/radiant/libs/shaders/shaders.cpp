@@ -90,8 +90,7 @@ typedef std::string ShaderValue;
 // information as well. but we assume there won't be any case conflict and so when doing lookups based on shader name,
 // we compare as case insensitive. That is Radiant is case insensitive, but knows that the engine is case sensitive.
 //++timo FIXME: we need to put code somewhere to detect when two shaders that are case insensitive equal are present
-std::string Tokeniser_parseShaderName (Tokeniser& tokeniser)
-{
+std::string Tokeniser_parseShaderName(Tokeniser& tokeniser) {
 	std::string token = tokeniser.getToken();
 	if (token.empty())
 		return "";
@@ -105,8 +104,7 @@ typedef std::list<ShaderVariable> ShaderArguments;
 
 typedef std::pair<ShaderVariable, ShaderVariable> BlendFuncExpression;
 
-class ShaderTemplate
-{
+class ShaderTemplate {
 		std::size_t m_refcount;
 		std::string m_Name;
 	public:
@@ -127,85 +125,75 @@ class ShaderTemplate
 		// cull stuff
 		IShader::ECull m_Cull;
 
-		ShaderTemplate () :
-			m_refcount(0)
-		{
+		ShaderTemplate() :
+			m_refcount(0) {
 			m_nFlags = 0;
 			m_fTrans = 1.0f;
 		}
 
-		void IncRef ()
-		{
+		void IncRef() {
 			++m_refcount;
 		}
-		void DecRef ()
-		{
+		void DecRef() {
 			ASSERT_MESSAGE(m_refcount != 0, "shader reference-count going below zero");
 			if (--m_refcount == 0) {
 				delete this;
 			}
 		}
 
-		std::size_t refcount ()
-		{
+		std::size_t refcount() {
 			return m_refcount;
 		}
 
-		const char* getName () const
-		{
+		const char* getName() const {
 			return m_Name.c_str();
 		}
-		void setName (const std::string& name)
-		{
+		void setName(const std::string& name) {
 			m_Name = name;
 		}
 
 		// -----------------------------------------
 
-		bool parseUFO (Tokeniser& tokeniser);
-		bool parseTemplate (Tokeniser& tokeniser);
+		bool parseUFO(Tokeniser& tokeniser);
+		bool parseTemplate(Tokeniser& tokeniser);
 
-		void CreateDefault (const std::string& name)
-		{
+		void CreateDefault(const std::string& name) {
 			m_textureName = name;
 			setName(name);
 		}
 
-
 		class MapLayerTemplate {
-			std::string m_texture;
-			BlendFuncExpression m_blendFunc;
-			bool m_clampToBorder;
-			ShaderValue m_alphaTest;
-		public:
-			MapLayerTemplate(const std::string& texture,
-					const BlendFuncExpression& blendFunc, bool clampToBorder,
-					const ShaderValue& alphaTest) :
-				m_texture(texture), m_blendFunc(blendFunc), m_clampToBorder(false),
-						m_alphaTest(alphaTest) {
-			}
-			const std::string& texture() const {
-				return m_texture;
-			}
-			const BlendFuncExpression& blendFunc() const {
-				return m_blendFunc;
-			}
-			bool clampToBorder() const {
-				return m_clampToBorder;
-			}
-			const ShaderValue& alphaTest() const {
-				return m_alphaTest;
-			}
+				std::string m_texture;
+				BlendFuncExpression m_blendFunc;
+				bool m_clampToBorder;
+				ShaderValue m_alphaTest;
+			public:
+				MapLayerTemplate(const std::string& texture, const BlendFuncExpression& blendFunc,
+						bool clampToBorder, const ShaderValue& alphaTest) :
+					m_texture(texture), m_blendFunc(blendFunc), m_clampToBorder(false),
+							m_alphaTest(alphaTest) {
+				}
+				const std::string& texture() const {
+					return m_texture;
+				}
+				const BlendFuncExpression& blendFunc() const {
+					return m_blendFunc;
+				}
+				bool clampToBorder() const {
+					return m_clampToBorder;
+				}
+				const ShaderValue& alphaTest() const {
+					return m_alphaTest;
+				}
 		};
 		typedef std::vector<MapLayerTemplate> MapLayers;
 		MapLayers m_layers;
 
 	private:
-		bool parseShaderParameters (Tokeniser& tokeniser, ShaderParameters& params);
+		bool parseShaderParameters(Tokeniser& tokeniser, ShaderParameters& params);
 };
 
-bool ShaderTemplate::parseShaderParameters (Tokeniser& tokeniser, ShaderParameters& params)
-{
+bool ShaderTemplate::parseShaderParameters(Tokeniser& tokeniser, ShaderParameters& params) {
 	Tokeniser_parseToken(tokeniser, "(");
 	for (;;) {
 		const std::string param = tokeniser.getToken();
@@ -225,8 +213,7 @@ bool ShaderTemplate::parseShaderParameters (Tokeniser& tokeniser, ShaderParamete
 	return true;
 }
 
-bool ShaderTemplate::parseTemplate (Tokeniser& tokeniser)
-{
+bool ShaderTemplate::parseTemplate(Tokeniser& tokeniser) {
 	m_Name = tokeniser.getToken();
 	if (!parseShaderParameters(tokeniser, m_params))
 		g_warning("shader template: '%s': parameter parse failed\n", m_Name.c_str());
@@ -240,12 +227,11 @@ typedef std::map<std::string, ShaderTemplatePointer> ShaderTemplateMap;
 ShaderTemplateMap g_shaders;
 ShaderTemplateMap g_shaderTemplates;
 
-class ShaderDefinition
-{
+class ShaderDefinition {
 	public:
-		ShaderDefinition (ShaderTemplate* shaderTemplate, const ShaderArguments& args, const std::string& filename) :
-			shaderTemplate(shaderTemplate), args(args), filename(filename)
-		{
+		ShaderDefinition(ShaderTemplate* shaderTemplate, const ShaderArguments& args,
+				const std::string& filename) :
+			shaderTemplate(shaderTemplate), args(args), filename(filename) {
 		}
 		ShaderTemplate* shaderTemplate;
 		ShaderArguments args;
@@ -256,8 +242,7 @@ typedef std::map<std::string, ShaderDefinition> ShaderDefinitionMap;
 
 ShaderDefinitionMap g_shaderDefinitions;
 
-class CShader: public IShader
-{
+class CShader: public IShader {
 		std::size_t m_refcount;
 
 		const ShaderTemplate& m_template;
@@ -273,8 +258,7 @@ class CShader: public IShader
 		bool m_bInUse;
 		bool m_bIsValid;
 
-		bool searchLicense()
-		{
+		bool searchLicense() {
 			// Look up candidate in the map and return true if found
 			LicensesMap::iterator it = licensesMap.find(m_template.m_textureName);
 			if (it != licensesMap.end())
@@ -284,101 +268,84 @@ class CShader: public IShader
 		}
 
 	public:
-		CShader (const ShaderDefinition& definition) :
-			m_refcount(0), m_template(*definition.shaderTemplate), m_args(definition.args), m_filename(
-					definition.filename), m_blendFunc(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA), m_bInUse(false)
-		{
+		CShader(const ShaderDefinition& definition) :
+			m_refcount(0), m_template(*definition.shaderTemplate), m_args(definition.args),
+					m_filename(definition.filename), m_blendFunc(BLEND_SRC_ALPHA,
+							BLEND_ONE_MINUS_SRC_ALPHA), m_bInUse(false) {
 			m_pTexture = 0;
 			m_notfound = 0;
 
 			realise();
 		}
-		virtual ~CShader ()
-		{
+		virtual ~CShader() {
 			unrealise();
 
 			ASSERT_MESSAGE(m_refcount == 0, "deleting active shader");
 		}
 
 		// IShaders implementation -----------------
-		void IncRef ()
-		{
+		void IncRef() {
 			++m_refcount;
 		}
-		void DecRef ()
-		{
+		void DecRef() {
 			ASSERT_MESSAGE(m_refcount != 0, "shader reference-count going below zero");
 			if (--m_refcount == 0) {
 				delete this;
 			}
 		}
 
-		std::size_t refcount ()
-		{
+		std::size_t refcount() {
 			return m_refcount;
 		}
 
 		// get/set the qtexture_t* Radiant uses to represent this shader object
-		qtexture_t* getTexture () const
-		{
+		qtexture_t* getTexture() const {
 			return m_pTexture;
 		}
 		// get shader name
-		const char* getName () const
-		{
+		const char* getName() const {
 			return m_Name.c_str();
 		}
-		bool IsValid () const
-		{
+		bool IsValid() const {
 			return m_bIsValid;
 		}
-		void SetIsValid (bool bIsValid)
-		{
+		void SetIsValid(bool bIsValid) {
 			m_bIsValid = bIsValid;
 			g_ActiveShadersChangedNotify();
 		}
-		bool IsInUse () const
-		{
+		bool IsInUse() const {
 			return m_bInUse;
 		}
-		void SetInUse (bool bInUse)
-		{
+		void SetInUse(bool bInUse) {
 			m_bInUse = bInUse;
 			g_ActiveShadersChangedNotify();
 		}
 		// get the shader flags
-		int getFlags () const
-		{
+		int getFlags() const {
 			return m_template.m_nFlags;
 		}
 		// get the transparency value
-		float getTrans () const
-		{
+		float getTrans() const {
 			return m_template.m_fTrans;
 		}
 		// test if it's a true shader, or a default shader created to wrap around a texture
-		bool IsDefault () const
-		{
+		bool IsDefault() const {
 			return m_filename.empty();
 		}
 		// get the alphaFunc
-		void getAlphaFunc (EAlphaFunc *func, float *ref)
-		{
+		void getAlphaFunc(EAlphaFunc *func, float *ref) {
 			*func = m_template.m_AlphaFunc;
 			*ref = m_template.m_AlphaRef;
 		}
-		BlendFunc getBlendFunc () const
-		{
+		BlendFunc getBlendFunc() const {
 			return m_blendFunc;
 		}
 		// get the cull type
-		ECull getCull ()
-		{
+		ECull getCull() {
 			return m_template.m_Cull;
 		}
 
-		void realise ()
-		{
+		void realise() {
 			m_pTexture = GlobalTexturesCache().capture(m_template.m_textureName);
 
 			if (m_pTexture->texture_number == 0) {
@@ -389,8 +356,7 @@ class CShader: public IShader
 			SetIsValid(searchLicense());
 		}
 
-		void unrealise ()
-		{
+		void unrealise() {
 			GlobalTexturesCache().release(m_pTexture);
 
 			if (m_notfound != 0) {
@@ -399,12 +365,15 @@ class CShader: public IShader
 		}
 
 		// set shader name
-		void setName (const std::string& name)
-		{
+		void setName(const std::string& name) {
 			m_Name = name;
 		}
 
 		void forEachLayer(const ShaderLayerCallback& layer) const {
+		}
+
+		float getPolygonOffset() const {
+			return 0.0f;
 		}
 };
 
@@ -413,8 +382,7 @@ typedef std::map<std::string, ShaderPointer, shader_less_t> shaders_t;
 
 shaders_t g_ActiveShaders;
 
-bool ShaderTemplate::parseUFO (Tokeniser& tokeniser)
-{
+bool ShaderTemplate::parseUFO(Tokeniser& tokeniser) {
 	// name of the qtexture_t we'll use to represent this shader (this one has the "textures/" before)
 	m_textureName = m_Name;
 
@@ -490,8 +458,7 @@ bool ShaderTemplate::parseUFO (Tokeniser& tokeniser)
 	return true;
 }
 
-void ParseShaderFile (Tokeniser& tokeniser, const std::string& filename)
-{
+void ParseShaderFile(Tokeniser& tokeniser, const std::string& filename) {
 	for (;;) {
 		std::string token = tokeniser.getToken();
 		if (token.empty())
@@ -510,10 +477,11 @@ void ParseShaderFile (Tokeniser& tokeniser, const std::string& filename)
 		const bool result = shaderTemplate->parseUFO(tokeniser);
 		if (result) {
 			// do we already have this shader?
-			if (!g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(shaderTemplate->getName(),
-					ShaderDefinition(shaderTemplate.get(), ShaderArguments(), filename))).second) {
-				g_debug("Shader '%s' is already in memory, definition in '%s' ignored.\n", shaderTemplate->getName(),
-						filename.c_str());
+			if (!g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(
+					shaderTemplate->getName(), ShaderDefinition(shaderTemplate.get(),
+							ShaderArguments(), filename))).second) {
+				g_debug("Shader '%s' is already in memory, definition in '%s' ignored.\n",
+						shaderTemplate->getName(), filename.c_str());
 			}
 		} else {
 			g_warning("Error parsing shader '%s'\n", shaderTemplate->getName());
@@ -522,8 +490,7 @@ void ParseShaderFile (Tokeniser& tokeniser, const std::string& filename)
 	}
 }
 
-static void LoadShaderFile (const std::string& filename)
-{
+static void LoadShaderFile(const std::string& filename) {
 	const std::string& appPath = GlobalRadiant().getAppPath();
 	std::string shadername = appPath + filename;
 
@@ -531,16 +498,16 @@ static void LoadShaderFile (const std::string& filename)
 	if (file) {
 		g_message("Parsing shaderfile '%s'\n", shadername.c_str());
 
-		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
+		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(
+				file->getInputStream()));
 		ParseShaderFile(*tokeniser, shadername);
 	} else {
 		g_warning("Unable to read shaderfile '%s'\n", shadername.c_str());
 	}
 }
 
-void ParseLicensesFile (Tokeniser& tokeniser, const std::string& filename)
-{
-	for(;;) {
+void ParseLicensesFile(Tokeniser& tokeniser, const std::string& filename) {
+	for (;;) {
 		std::string token = tokeniser.getToken();
 		if (token.empty())
 			break;
@@ -562,8 +529,7 @@ void ParseLicensesFile (Tokeniser& tokeniser, const std::string& filename)
 	}
 }
 
-static void LoadLicenses (const std::string& filename)
-{
+static void LoadLicenses(const std::string& filename) {
 	const std::string& appPath = GlobalRadiant().getAppPath();
 	std::string fullpath = appPath + filename;
 
@@ -571,7 +537,8 @@ static void LoadLicenses (const std::string& filename)
 	if (file) {
 		g_message("Parsing licenses file '%s'\n", fullpath.c_str());
 
-		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
+		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(
+				file->getInputStream()));
 		ParseLicensesFile(*tokeniser, fullpath);
 	} else {
 		g_warning("Unable to read licenses '%s'\n", fullpath.c_str());
@@ -580,8 +547,7 @@ static void LoadLicenses (const std::string& filename)
 
 #include "stream/filestream.h"
 
-void Shaders_Load ()
-{
+void Shaders_Load() {
 	LoadShaderFile("shaders/common.shader");
 	LoadShaderFile("shaders/textures.shader");
 	/** @todo add config option */
@@ -590,8 +556,7 @@ void Shaders_Load ()
 
 // will free all GL binded qtextures and shaders
 // NOTE: doesn't make much sense out of Radiant exit or called during a reload
-void Shaders_Free ()
-{
+void Shaders_Free() {
 	for (shaders_t::const_iterator i = g_ActiveShaders.begin(); i != g_ActiveShaders.end(); ++i) {
 		ASSERT_MESSAGE(i->second->refcount() == 1, "orphan shader still referenced");
 	}
@@ -608,43 +573,37 @@ static ModuleObservers g_observers;
 /** @brief wait until filesystem is realised before loading anything */
 static std::size_t g_shaders_unrealised = 1;
 
-bool Shaders_realised ()
-{
+bool Shaders_realised() {
 	return g_shaders_unrealised == 0;
 }
 
-class UFOShaderSystem: public ShaderSystem, public ModuleObserver
-{
+class UFOShaderSystem: public ShaderSystem, public ModuleObserver {
 	private:
 
 		shaders_t::iterator g_ActiveShadersIterator;
 
 	public:
 
-		void realise ()
-		{
+		void realise() {
 			if (--g_shaders_unrealised == 0) {
 				Shaders_Load();
 				GlobalMaterialSystem()->loadMaterials();
 				g_observers.realise();
 			}
 		}
-		void unrealise ()
-		{
+		void unrealise() {
 			if (++g_shaders_unrealised == 1) {
 				g_observers.unrealise();
 				GlobalMaterialSystem()->freeMaterials();
 				Shaders_Free();
 			}
 		}
-		void refresh ()
-		{
+		void refresh() {
 			unrealise();
 			realise();
 		}
 
-		CShader* _getShaderForName (const std::string& name)
-		{
+		CShader* _getShaderForName(const std::string& name) {
 			{
 				// check if it's already loaded
 				shaders_t::iterator i = g_ActiveShaders.find(name);
@@ -660,10 +619,11 @@ class UFOShaderSystem: public ShaderSystem, public ModuleObserver
 				// create new shader definition from default shader template
 				ShaderTemplatePointer shaderTemplate(new ShaderTemplate());
 				shaderTemplate->CreateDefault(name);
-				g_shaderTemplates.insert(ShaderTemplateMap::value_type(shaderTemplate->getName(), shaderTemplate));
+				g_shaderTemplates.insert(ShaderTemplateMap::value_type(shaderTemplate->getName(),
+						shaderTemplate));
 
-				i = g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(name, ShaderDefinition(shaderTemplate.get(),
-						ShaderArguments(), ""))).first;
+				i = g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(name,
+						ShaderDefinition(shaderTemplate.get(), ShaderArguments(), ""))).first;
 			}
 
 			// create shader from existing definition
@@ -674,39 +634,36 @@ class UFOShaderSystem: public ShaderSystem, public ModuleObserver
 			return pShader;
 		}
 
-		IShader* getShaderForName (const std::string& name)
-		{
+		IShader* getShaderForName(const std::string& name) {
 			IShader *pShader = GlobalMaterialSystem()->getMaterialForName(name);
-			if (pShader == (IShader*)0)
+			if (pShader == (IShader*) 0)
 				pShader = _getShaderForName(name);
 			pShader->IncRef();
 			return pShader;
 		}
 
-		void foreachShaderName (const ShaderNameCallback& callback)
-		{
-			for (ShaderDefinitionMap::const_iterator i = g_shaderDefinitions.begin(); i != g_shaderDefinitions.end(); ++i) {
+		void foreachShaderName(const ShaderNameCallback& callback) {
+			for (ShaderDefinitionMap::const_iterator i = g_shaderDefinitions.begin(); i
+					!= g_shaderDefinitions.end(); ++i) {
 				callback((*i).first);
 			}
 			GlobalMaterialSystem()->foreachMaterialName(callback);
 		}
 
-		void foreachShaderName (const ShaderSystem::Visitor& visitor)
-		{
-			for (ShaderDefinitionMap::const_iterator i = g_shaderDefinitions.begin(); i != g_shaderDefinitions.end(); ++i) {
+		void foreachShaderName(const ShaderSystem::Visitor& visitor) {
+			for (ShaderDefinitionMap::const_iterator i = g_shaderDefinitions.begin(); i
+					!= g_shaderDefinitions.end(); ++i) {
 				const std::string& str = (*i).first;
 				visitor.visit(str);
 			}
 			GlobalMaterialSystem()->foreachMaterialName(visitor);
 		}
 
-		void beginActiveShadersIterator ()
-		{
+		void beginActiveShadersIterator() {
 			g_ActiveShadersIterator = g_ActiveShaders.begin();
 			GlobalMaterialSystem()->beginActiveMaterialsIterator();
 		}
-		bool endActiveShadersIterator ()
-		{
+		bool endActiveShadersIterator() {
 			bool shadersIteratorEnd = g_ActiveShadersIterator == g_ActiveShaders.end();
 			if (shadersIteratorEnd) {
 				bool materialIteratorEnd = GlobalMaterialSystem()->endActiveMaterialsIterator();
@@ -714,53 +671,44 @@ class UFOShaderSystem: public ShaderSystem, public ModuleObserver
 			}
 			return shadersIteratorEnd;
 		}
-		IShader* dereferenceActiveShadersIterator ()
-		{
+		IShader* dereferenceActiveShadersIterator() {
 			if (g_ActiveShadersIterator != g_ActiveShaders.end())
 				return static_cast<CShader*> (g_ActiveShadersIterator->second);
 			else
 				return GlobalMaterialSystem()->dereferenceActiveMaterialsIterator();
 		}
-		void incrementActiveShadersIterator ()
-		{
+		void incrementActiveShadersIterator() {
 			if (g_ActiveShadersIterator != g_ActiveShaders.end())
 				++g_ActiveShadersIterator;
 			else
 				GlobalMaterialSystem()->incrementActiveMaterialsIterator();
 		}
-		void setActiveShadersChangedNotify (const Callback& notify)
-		{
+		void setActiveShadersChangedNotify(const Callback& notify) {
 			g_ActiveShadersChangedNotify = notify;
 		}
 
-		void attach (ModuleObserver& observer)
-		{
+		void attach(ModuleObserver& observer) {
 			g_observers.attach(observer);
 		}
-		void detach (ModuleObserver& observer)
-		{
+		void detach(ModuleObserver& observer) {
 			g_observers.detach(observer);
 		}
 
-		const std::string& getTexturePrefix () const
-		{
+		const std::string& getTexturePrefix() const {
 			return g_texturePrefix;
 		}
 };
 
 UFOShaderSystem g_UFOShaderSystem;
 
-ShaderSystem& GetShaderSystem ()
-{
+ShaderSystem& GetShaderSystem() {
 	return g_UFOShaderSystem;
 }
 
-void Shaders_Construct ()
-{
+void Shaders_Construct() {
 	GlobalFileSystem().attach(g_UFOShaderSystem);
 }
-void Shaders_Destroy ()
-{
+void Shaders_Destroy() {
 	GlobalFileSystem().detach(g_UFOShaderSystem);
 
 	if (Shaders_realised()) {

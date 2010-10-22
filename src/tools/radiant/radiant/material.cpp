@@ -251,6 +251,11 @@ MaterialShader::ECull MaterialShader::getCull ()
 	return eCullNone;
 }
 
+float MaterialShader::getPolygonOffset() const
+{
+	return 1.0f;
+}
+
 void MaterialShader::forEachLayer(const ShaderLayerCallback& callback) const
 {
 	for (MapLayers::const_iterator i = m_layers.begin(); i
