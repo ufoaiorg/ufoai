@@ -27,7 +27,7 @@ namespace
 				// don't parse the menus
 				GlobalFileSystem().forEachFile("ufos/", "*", makeCallback1(*this), 0);
 				std::size_t size = _list.size();
-				globalOutputStream() << "Found " << size << " ufo files\n";
+				globalOutputStream() << "Found " << string::toString(size) << " ufo files\n";
 			}
 
 			// Functor operator needed for the forEachFile() call

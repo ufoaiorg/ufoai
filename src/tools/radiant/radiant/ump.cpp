@@ -56,7 +56,7 @@ namespace
 			{
 				GlobalFileSystem().forEachFile("maps/", "*", makeCallback1(*this), 0);
 				std::size_t size = _list.size();
-				globalOutputStream() << "Found " << size << " ump files\n";
+				globalOutputStream() << "Found " << string::toString(size) << " ump files\n";
 			}
 
 			// Functor operator needed for the forEachFile() call
