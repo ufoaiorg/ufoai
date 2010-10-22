@@ -62,8 +62,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/vfs.cpp \
 	$(RADIANT_BASE)/radiant/model.cpp \
 	\
-	$(RADIANT_BASE)/radiant/render/qgl.cpp \
-	$(RADIANT_BASE)/radiant/render/renderstate.cpp \
+	$(RADIANT_BASE)/radiant/render/OpenGLRenderSystem.cpp \
+	$(RADIANT_BASE)/radiant/render/OpenGLModule.cpp \
 	\
 	$(RADIANT_BASE)/radiant/referencecache/nullmodel.cpp \
 	\

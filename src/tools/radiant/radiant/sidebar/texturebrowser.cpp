@@ -65,7 +65,7 @@
 #include "gtkutil/TreeModel.h"
 
 #include "../map/map.h"
-#include "../render/qgl.h"
+#include "../render/OpenGLRenderSystem.h"
 #include "../select.h"
 #include "../brush/brush_primit.h"
 #include "../brush/brushmanip.h"

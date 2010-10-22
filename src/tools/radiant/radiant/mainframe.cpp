@@ -98,7 +98,7 @@
 #include "plugintoolbar.h"
 #include "settings/preferences.h"
 #include "qe3.h"
-#include "render/qgl.h"
+#include "render/OpenGLRenderSystem.h"
 #include "select.h"
 #include "textures.h"
 #include "url.h"
