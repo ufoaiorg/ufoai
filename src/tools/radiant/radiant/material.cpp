@@ -91,11 +91,13 @@ BlendFactor MaterialShader::parseBlendMode (const std::string token)
 void MaterialShader::parseMaterial (Tokeniser& tokeniser)
 {
 	int depth = 0;
-	Vector3 color(0, 0, 0);
+	Vector3 color(1, 1, 1);
 	double alphaTest = 1.0f;
+	bool terrain = false;
 	qtexture_t *layerTexture = 0;
 	BlendFactor src = BLEND_SRC_ALPHA;
 	BlendFactor dest = BLEND_ONE_MINUS_SRC_ALPHA;
+	float ceilVal, floorVal;
 
 	std::string token = tokeniser.getToken();
 	while (token.length()) {
@@ -106,6 +108,11 @@ void MaterialShader::parseMaterial (Tokeniser& tokeniser)
 			--depth;
 			if (depth == 0) {
 				MapLayer layer(layerTexture, BlendFunc(src, dest), ShaderLayer::BLEND, color, alphaTest);
+				if (terrain) {
+					layer.setTerrain(floorVal, ceilVal);
+					terrain = false;
+				}
+				color.set(1, 1, 1);
 				addLayer(layer);
 				break;
 			}
@@ -125,9 +132,24 @@ void MaterialShader::parseMaterial (Tokeniser& tokeniser)
 				token = tokeniser.getToken();
 			} else if (token == "pulse") {
 				token = tokeniser.getToken();
+			} else if (token == "rotate") {
+				token = tokeniser.getToken();
+			} else if (token == "color") {
+				const float red = string::toFloat(tokeniser.getToken());
+				const float green = string::toFloat(tokeniser.getToken());
+				const float blue = string::toFloat(tokeniser.getToken());
+				color.set(red, green, blue);
+			} else if (token == "flare") {
+				token = tokeniser.getToken();
+			} else if (token == "glowscale") {
+				token = tokeniser.getToken();
 			} else if (token == "anim" || token == "anima") {
 				token = tokeniser.getToken();
 				token = tokeniser.getToken();
+			} else if (token == "terrain") {
+				floorVal = string::toFloat(tokeniser.getToken());
+				ceilVal = string::toFloat(tokeniser.getToken());
+				terrain = true;
 			}
 		} else if (depth == 1) {
 			if (token == "bump") {
@@ -282,7 +304,13 @@ MaterialSystem::MaterialSystem ()
 {
 }
 
-void MaterialSystem::showMaterialDefinition (const std::string& append)
+void MaterialSystem::showMaterialDefinition ()
+{
+	ui::MaterialEditor editor("");
+	editor.show();
+}
+
+void MaterialSystem::showMaterialDefinitionAndAppend (const std::string& append)
 {
 	ui::MaterialEditor editor(append);
 	editor.show();
@@ -357,10 +385,9 @@ void MaterialSystem::generateMaterialFromTexture ()
 		return;
 	}
 
-	std::string content;
-	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(getMaterialFilename()));
-	if (file)
-		content = file->getString();
+	loadMaterials();
+	if (!_materialLoaded)
+		return;
 
 	std::string append = "";
 	if (GlobalSelectionSystem().areFacesSelected()) {
@@ -375,7 +402,7 @@ void MaterialSystem::generateMaterialFromTexture ()
 			std::string skippedTextureDirectory = texture.substr(textureDir.length());
 			std::string materialDefinition = "material " + skippedTextureDirectory;
 			/* check whether there is already an entry for the selected texture */
-			if (content.find(materialDefinition) == std::string::npos) {
+			if (_material.find(materialDefinition) == std::string::npos) {
 				std::stringstream os;
 				ContentsFlagsValue flags;
 
@@ -393,7 +420,7 @@ void MaterialSystem::generateMaterialFromTexture ()
 		}
 	}
 
-	showMaterialDefinition(append);
+	showMaterialDefinitionAndAppend(append);
 }
 
 void MaterialSystem::importMaterialFile (const std::string& name)
@@ -403,7 +430,7 @@ void MaterialSystem::importMaterialFile (const std::string& name)
 	if (!file)
 		return;
 
-	showMaterialDefinition(file->getString());
+	showMaterialDefinitionAndAppend(file->getString());
 }
 
 const std::string MaterialSystem::getMaterialFilename () const
@@ -537,6 +564,15 @@ void MaterialSystem::incrementActiveMaterialsIterator ()
 	++_activeMaterialsIterator;
 }
 
+void MaterialSystem::construct () {
+	GlobalRadiant().commandInsert("GenerateMaterialFromTexture", MemberCaller<MaterialSystem,
+			&MaterialSystem::generateMaterialFromTexture> (*this), Accelerator('M'));
+	command_connect_accelerator("GenerateMaterialFromTexture");
+
+	GlobalRadiant().commandInsert("ShowMaterialDefinition", MemberCaller<MaterialSystem,
+			&MaterialSystem::showMaterialDefinition> (*this), accelerator_null());
+}
+
 
 class MaterialSystemAPI
 {
@@ -565,23 +601,9 @@ typedef SingletonModule<MaterialSystemAPI> MaterialSystemModule;
 typedef Static<MaterialSystemModule> StaticMaterialSystemModule;
 StaticRegisterModule staticRegisterMaterial(StaticMaterialSystemModule::instance());
 
-void GenerateMaterialFromTexture ()
-{
-	GlobalMaterialSystem()->generateMaterialFromTexture();
-}
-
-void ShowMaterialDefinition ()
-{
-	GlobalMaterialSystem()->showMaterialDefinition();
-}
-
 void Material_Construct ()
 {
-	GlobalRadiant().commandInsert("GenerateMaterialFromTexture", FreeCaller<GenerateMaterialFromTexture> (),
-			Accelerator('M'));
-	command_connect_accelerator("GenerateMaterialFromTexture");
-
-	GlobalRadiant().commandInsert("ShowMaterialDefinition", FreeCaller<ShowMaterialDefinition> (), accelerator_null());
+	GlobalMaterialSystem()->construct();
 }
 
 void Material_Destroy ()

@@ -1005,13 +1005,9 @@ void OpenGLShader::appendBlendLayer(const ShaderLayer& layer)
 
 	state.m_state |= RENDER_TEXTURE;
 
+	// Colour modulation
 	reinterpret_cast<Vector3&> (state.m_colour) = layer.getColour();
 	state.m_colour[3] = 1.0f;
-
-	// Colour modulation
-	//state.m_colour = Vector4(layer->getColour(), 1.0);
-
-	state.m_sort = OpenGLState::eSortFullbright;
 
 	state.m_sort = OpenGLState::eSortFullbright;
 }
@@ -1209,8 +1205,6 @@ void OpenGLShader::construct (const std::string& shaderName)
 			}
 		}
 
-		m_shader->forEachLayer(ShaderLayerVisitor(*this));
-
 		reinterpret_cast<Vector3&> (state.m_colour) = m_shader->getTexture()->color;
 		state.m_colour[3] = 1.0f;
 
@@ -1228,6 +1222,8 @@ void OpenGLShader::construct (const std::string& shaderName)
 			state.m_state |= RENDER_DEPTHWRITE;
 			state.m_sort = OpenGLState::eSortFullbright;
 		}
+
+		m_shader->forEachLayer(ShaderLayerVisitor(*this));
 	}
 }
 

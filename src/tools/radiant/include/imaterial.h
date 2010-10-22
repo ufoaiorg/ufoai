@@ -48,26 +48,55 @@ class MapLayer: public ShaderLayer {
 		double m_alphaTest;
 		ShaderLayer::Type m_type;
 		Vector3 m_color;
+		float _height;
+		float _ceilVal;
+		float _floorVal;
+		bool _terrain;
 	public:
 		MapLayer(qtexture_t* texture, BlendFunc blendFunc, ShaderLayer::Type type, Vector3& color,
 				double alphaTest) :
 			m_texture(texture), m_blendFunc(blendFunc), m_type(type), m_color(color),
-					m_alphaTest(alphaTest) {
+					m_alphaTest(alphaTest), _terrain(false) {
 		}
+
 		Type getType() const {
 			return m_type;
 		}
+
 		Vector3 getColour () const {
 			return m_color;
 		}
-		qtexture_t* getTexture() const {
+
+		qtexture_t* getTexture () const {
 			return m_texture;
 		}
-		BlendFunc getBlendFunc() const {
+
+		BlendFunc getBlendFunc () const {
 			return m_blendFunc;
 		}
-		double getAlphaTest() const {
+
+		double getAlphaTest () const {
 			return m_alphaTest;
+		}
+
+		void setTerrain (float floorVal, float ceilVal){
+			_floorVal = floorVal;
+			_ceilVal = ceilVal;
+			_height = _ceilVal - _floorVal;
+			_terrain = true;
+		}
+
+		bool isTerrain () {
+			return _terrain;
+		}
+
+		float getTerrainAlpha (float z) const {
+			if (z < _floorVal)
+				return 0.0;
+			else if (z > _ceilVal)
+				return 1.0;
+			else
+				return (z - _floorVal) / _height;
 		}
 };
 
@@ -185,7 +214,8 @@ class MaterialSystem
 		 * Shows the existing material definition and append new content to it.
 		 * @param append The material definition string to append to the existing one
 		 */
-		void showMaterialDefinition (const std::string& append = "");
+		void showMaterialDefinitionAndAppend (const std::string& append = "");
+		void showMaterialDefinition ();
 
 		/**
 		 * @return The current material filename for the current loaded map
@@ -233,6 +263,8 @@ class MaterialSystem
 		IShader* dereferenceActiveMaterialsIterator ();
 
 		void incrementActiveMaterialsIterator ();
+
+		void construct ();
 };
 
 class MaterialSystemDependencies: public GlobalFileSystemModuleRef
