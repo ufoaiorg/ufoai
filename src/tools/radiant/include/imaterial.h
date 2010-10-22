@@ -158,7 +158,15 @@ class MaterialSystem
 		typedef SmartPointer<MaterialShader> MaterialPointer;
 		typedef std::map<std::string, MaterialPointer, shader_less_t> MaterialShaders;
 
+		typedef std::map<std::string, std::string> MaterialBlockMap;
+		MaterialBlockMap _blocks;
+
+		std::string _material;
+		bool _materialLoaded;
+
 		MaterialShaders _activeMaterialShaders;
+
+		MaterialShaders::iterator _activeMaterialsIterator;
 
 	public:
 		INTEGER_CONSTANT(Version, 1);
@@ -202,13 +210,29 @@ class MaterialSystem
 		 */
 		bool isDefined(const std::string& texture, const std::string& content);
 
-		std::string getBlock (const std::string& texture, const std::string& content);
+		std::string getBlock (const std::string& texture);
 
 		/**
 		 * activate the material for a given name and return it
 		 * will return the default shader if name is not found
 		 */
 		IShader* getMaterialForName (const std::string& name);
+
+		void foreachMaterialName (const ShaderNameCallback& callback);
+
+		void foreachMaterialName (const ShaderSystem::Visitor& visitor);
+
+		void loadMaterials ();
+
+		void freeMaterials ();
+
+		void beginActiveMaterialsIterator ();
+
+		bool endActiveMaterialsIterator ();
+
+		IShader* dereferenceActiveMaterialsIterator ();
+
+		void incrementActiveMaterialsIterator ();
 };
 
 class MaterialSystemDependencies: public GlobalFileSystemModuleRef

@@ -162,7 +162,7 @@ class StringOutputStream: public TextOutputStream
 
 		const std::string toString() const
 		{
-			return std::string(c_str());
+			return m_string;
 		}
 
 		bool empty () const

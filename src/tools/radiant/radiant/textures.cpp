@@ -356,12 +356,12 @@ class TexturesMap: public TexturesCache
 		}
 		qtexture_t* capture (const LoadImageCallback& loader, const std::string& name)
 		{
-			g_debug("textures capture: '%s'\n", name.c_str());
+			g_message("textures capture: '%s'\n", name.c_str());
 			return m_qtextures.capture(TextureKey(loader, name)).get();
 		}
 		void release (qtexture_t* texture)
 		{
-			g_debug("textures release: '%s'\n", texture->name.c_str());
+			g_message("textures release: '%s'\n", texture->name.c_str());
 			m_qtextures.release(TextureKey(texture->load, texture->name));
 		}
 		void attach (TexturesCacheObserver& observer)

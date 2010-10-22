@@ -419,14 +419,24 @@ const std::string MaterialSystem::getMaterialFilename () const
 	return relativePath;
 }
 
-std::string MaterialSystem::getBlock (const std::string& texture, const std::string& content)
+std::string MaterialSystem::getBlock (const std::string& texture)
 {
 	const std::string textureDir = GlobalTexturePrefix_get();
 	std::string skippedTextureDirectory = texture.substr(textureDir.length());
 
+	MaterialBlockMap::iterator i = _blocks.find(skippedTextureDirectory);
+	if (i != _blocks.end())
+		return i->second;
+
+	if (!_materialLoaded)
+		loadMaterials();
+
+	if (!_materialLoaded)
+		return "";
+
 	StringOutputStream outputStream;
 
-	StringInputStream inputStream(content);
+	StringInputStream inputStream(_material);
 	AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewSimpleTokeniser(inputStream));
 	int depth = 0;
 	bool found = false;
@@ -456,30 +466,77 @@ std::string MaterialSystem::getBlock (const std::string& texture, const std::str
 	return outputStream.toString();
 }
 
+void MaterialSystem::freeMaterials ()
+{
+	for (MaterialShaders::iterator i = _activeMaterialShaders.begin(); i != _activeMaterialShaders.end(); ++i) {
+		ASSERT_MESSAGE(i->second->refcount() == 1, "orphan material still referenced");
+	}
+	_activeMaterialShaders.clear();
+	_blocks.clear();
+	_materialLoaded = false;
+}
+
+void MaterialSystem::loadMaterials ()
+{
+	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(getMaterialFilename()));
+	if (file) {
+		_material = file->getString();
+		_materialLoaded = true;
+	}
+}
+
 IShader* MaterialSystem::getMaterialForName (const std::string& name)
 {
 	MaterialShaders::iterator i = _activeMaterialShaders.find(name);
 	if (i != _activeMaterialShaders.end()) {
-		(*i).second->IncRef();
 		return (*i).second;
 	}
 
-	// TODO register as map observer and only load the material file on map change .. once!!
-	std::string content;
-	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(getMaterialFilename()));
-	if (file)
-		content = file->getString();
-
-	if (!isDefined(name, content))
+	std::string block = getBlock(name);
+	if (block.empty())
 		return (IShader*)0;
 
-	std::string block = getBlock(name, content);
-
 	MaterialPointer pShader(new MaterialShader(name, block));
-	pShader->IncRef();
 	_activeMaterialShaders.insert(MaterialShaders::value_type(name, pShader));
 	return pShader;
 }
+
+void MaterialSystem::foreachMaterialName (const ShaderNameCallback& callback)
+{
+	for (MaterialShaders::const_iterator i = _activeMaterialShaders.begin(); i != _activeMaterialShaders.end(); ++i) {
+		const std::string& str = (*i).first;
+		callback(str);
+	}
+}
+
+void MaterialSystem::foreachMaterialName (const ShaderSystem::Visitor& visitor)
+{
+	for (MaterialShaders::const_iterator i = _activeMaterialShaders.begin(); i != _activeMaterialShaders.end(); ++i) {
+		const std::string& str = (*i).first;
+		visitor.visit(str);
+	}
+}
+
+void MaterialSystem::beginActiveMaterialsIterator ()
+{
+	_activeMaterialsIterator = _activeMaterialShaders.begin();
+}
+
+bool MaterialSystem::endActiveMaterialsIterator ()
+{
+	return _activeMaterialsIterator == _activeMaterialShaders.end();
+}
+
+IShader* MaterialSystem::dereferenceActiveMaterialsIterator ()
+{
+	return _activeMaterialsIterator->second;
+}
+
+void MaterialSystem::incrementActiveMaterialsIterator ()
+{
+	++_activeMaterialsIterator;
+}
+
 
 class MaterialSystemAPI
 {

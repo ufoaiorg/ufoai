@@ -261,6 +261,7 @@ class Radiant: public TypeSystemRef
 			SurfaceInspector_Construct();
 			CamWnd_Construct();
 			XYWindow_Construct();
+			Material_Construct();
 			TextureBrowser_Construct();
 			Entity_Construct();
 			Autosave_Construct();
@@ -268,7 +269,6 @@ class Radiant: public TypeSystemRef
 			FindTextureDialog_Construct();
 			NullModel_Construct();
 			MapRoot_Construct();
-			Material_Construct();
 
 			EnginePath_verify();
 			EnginePath_Realise();
@@ -284,11 +284,11 @@ class Radiant: public TypeSystemRef
 			UMP_Destroy();
 			Pathfinding_Destroy();
 			Particles_Destroy();
+			Material_Destroy();
 			TextureBrowser_Destroy();
 
 			EnginePath_Unrealise();
 
-			Material_Destroy();
 			MapRoot_Destroy();
 			NullModel_Destroy();
 			FindTextureDialog_Destroy();

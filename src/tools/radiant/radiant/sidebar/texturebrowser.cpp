@@ -122,9 +122,7 @@ const std::string& TextureBrowser::getSelectedShader() const {
 void TextureBrowser::setStatusText(const std::string& name) {
 	if (g_pParentWnd == 0)
 		return;
-	IShader* shaderPtr = GlobalMaterialSystem()->getMaterialForName(name);
-	if (shaderPtr == (IShader*) 0)
-		shaderPtr = GlobalShaderSystem().getShaderForName(name);
+	IShader* shaderPtr = GlobalShaderSystem().getShaderForName(name);
 	qtexture_t* q = shaderPtr->getTexture();
 	StringOutputStream strTex(256);
 	strTex << name << " W: " << Unsigned(q->width) << " H: " << Unsigned(q->height);
@@ -324,8 +322,6 @@ class LoadTexturesByTypeVisitor: public ImageModules::Visitor {
 					}
 
 					// if a texture is already in use to represent a shader, ignore it
-					//IShader* shaderPtr = GlobalMaterialSystem()->getMaterialForName(name);
-					//if (shaderPtr == (IShader*) 0)
 					IShader* shaderPtr = GlobalShaderSystem().getShaderForName(name);
 					shaderPtr->DecRef();
 				}

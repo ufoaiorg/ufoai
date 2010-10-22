@@ -47,6 +47,7 @@
 #include "ifilesystem.h"
 #include "ishadersystem.h"
 #include "iscriplib.h"
+#include "imaterial.h"
 #include "itextures.h"
 #include "iradiant.h"
 #include "irender.h"
@@ -164,7 +165,7 @@ class ShaderTemplate
 		bool parseUFO (Tokeniser& tokeniser);
 		bool parseTemplate (Tokeniser& tokeniser);
 
-		void CreateDefault (const char *name)
+		void CreateDefault (const std::string& name)
 		{
 			m_textureName = name;
 			setName(name);
@@ -398,7 +399,7 @@ class CShader: public IShader
 		}
 
 		// set shader name
-		void setName (const char* name)
+		void setName (const std::string& name)
 		{
 			m_Name = name;
 		}
@@ -411,35 +412,6 @@ typedef SmartPointer<CShader> ShaderPointer;
 typedef std::map<std::string, ShaderPointer, shader_less_t> shaders_t;
 
 shaders_t g_ActiveShaders;
-
-static shaders_t::iterator g_ActiveShadersIterator;
-
-static void ActiveShaders_IteratorBegin ()
-{
-	g_ActiveShadersIterator = g_ActiveShaders.begin();
-}
-
-static bool ActiveShaders_IteratorAtEnd ()
-{
-	return g_ActiveShadersIterator == g_ActiveShaders.end();
-}
-
-static IShader *ActiveShaders_IteratorCurrent ()
-{
-	return static_cast<CShader*> (g_ActiveShadersIterator->second);
-}
-
-static void ActiveShaders_IteratorIncrement ()
-{
-	++g_ActiveShadersIterator;
-}
-
-void debug_check_shaders (shaders_t& shaders)
-{
-	for (shaders_t::iterator i = shaders.begin(); i != shaders.end(); ++i) {
-		ASSERT_MESSAGE(i->second->refcount() == 1, "orphan shader still referenced");
-	}
-}
 
 bool ShaderTemplate::parseUFO (Tokeniser& tokeniser)
 {
@@ -566,39 +538,6 @@ static void LoadShaderFile (const std::string& filename)
 	}
 }
 
-CShader* Try_Shader_ForName (const char* name)
-{
-	{
-		shaders_t::iterator i = g_ActiveShaders.find(name);
-		if (i != g_ActiveShaders.end()) {
-			return (*i).second;
-		}
-	}
-	// active shader was not found
-
-	// find matching shader definition
-	ShaderDefinitionMap::iterator i = g_shaderDefinitions.find(name);
-	if (i == g_shaderDefinitions.end()) {
-		// shader definition was not found
-
-		// create new shader definition from default shader template
-		ShaderTemplatePointer shaderTemplate(new ShaderTemplate());
-		shaderTemplate->CreateDefault(name);
-		g_shaderTemplates.insert(ShaderTemplateMap::value_type(shaderTemplate->getName(), shaderTemplate));
-
-		i = g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(name, ShaderDefinition(shaderTemplate.get(),
-				ShaderArguments(), ""))).first;
-	}
-
-	// create shader from existing definition
-	ShaderPointer pShader(new CShader((*i).second));
-	pShader->setName(name);
-	g_ActiveShaders.insert(shaders_t::value_type(name, pShader));
-	g_ActiveShadersChangedNotify();
-	return pShader;
-}
-
-
 void ParseLicensesFile (Tokeniser& tokeniser, const std::string& filename)
 {
 	for(;;) {
@@ -653,9 +592,10 @@ void Shaders_Load ()
 // NOTE: doesn't make much sense out of Radiant exit or called during a reload
 void Shaders_Free ()
 {
-	// reload shaders
+	for (shaders_t::const_iterator i = g_ActiveShaders.begin(); i != g_ActiveShaders.end(); ++i) {
+		ASSERT_MESSAGE(i->second->refcount() == 1, "orphan shader still referenced");
+	}
 	// empty the actives shaders list
-	debug_check_shaders(g_ActiveShaders);
 	g_ActiveShaders.clear();
 	g_shaders.clear();
 	g_shaderTemplates.clear();
@@ -672,46 +612,73 @@ bool Shaders_realised ()
 {
 	return g_shaders_unrealised == 0;
 }
-void Shaders_Realise ()
-{
-	if (--g_shaders_unrealised == 0) {
-		Shaders_Load();
-		g_observers.realise();
-	}
-}
-void Shaders_Unrealise ()
-{
-	if (++g_shaders_unrealised == 1) {
-		g_observers.unrealise();
-		Shaders_Free();
-	}
-}
-
-void Shaders_Refresh ()
-{
-	Shaders_Unrealise();
-	Shaders_Realise();
-}
 
 class UFOShaderSystem: public ShaderSystem, public ModuleObserver
 {
+	private:
+
+		shaders_t::iterator g_ActiveShadersIterator;
+
 	public:
+
 		void realise ()
 		{
-			Shaders_Realise();
+			if (--g_shaders_unrealised == 0) {
+				Shaders_Load();
+				GlobalMaterialSystem()->loadMaterials();
+				g_observers.realise();
+			}
 		}
 		void unrealise ()
 		{
-			Shaders_Unrealise();
+			if (++g_shaders_unrealised == 1) {
+				g_observers.unrealise();
+				GlobalMaterialSystem()->freeMaterials();
+				Shaders_Free();
+			}
 		}
 		void refresh ()
 		{
-			Shaders_Refresh();
+			unrealise();
+			realise();
+		}
+
+		CShader* _getShaderForName (const std::string& name)
+		{
+			{
+				// check if it's already loaded
+				shaders_t::iterator i = g_ActiveShaders.find(name);
+				if (i != g_ActiveShaders.end())
+					return (*i).second;
+			}
+
+			// find matching shader definition
+			ShaderDefinitionMap::iterator i = g_shaderDefinitions.find(name);
+			if (i == g_shaderDefinitions.end()) {
+				// shader definition was not found
+
+				// create new shader definition from default shader template
+				ShaderTemplatePointer shaderTemplate(new ShaderTemplate());
+				shaderTemplate->CreateDefault(name);
+				g_shaderTemplates.insert(ShaderTemplateMap::value_type(shaderTemplate->getName(), shaderTemplate));
+
+				i = g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(name, ShaderDefinition(shaderTemplate.get(),
+						ShaderArguments(), ""))).first;
+			}
+
+			// create shader from existing definition
+			ShaderPointer pShader(new CShader((*i).second));
+			pShader->setName(name);
+			g_ActiveShaders.insert(shaders_t::value_type(name, pShader));
+			g_ActiveShadersChangedNotify();
+			return pShader;
 		}
 
 		IShader* getShaderForName (const std::string& name)
 		{
-			IShader *pShader = Try_Shader_ForName(name.c_str());
+			IShader *pShader = GlobalMaterialSystem()->getMaterialForName(name);
+			if (pShader == (IShader*)0)
+				pShader = _getShaderForName(name);
 			pShader->IncRef();
 			return pShader;
 		}
@@ -719,8 +686,9 @@ class UFOShaderSystem: public ShaderSystem, public ModuleObserver
 		void foreachShaderName (const ShaderNameCallback& callback)
 		{
 			for (ShaderDefinitionMap::const_iterator i = g_shaderDefinitions.begin(); i != g_shaderDefinitions.end(); ++i) {
-				callback((*i).first.c_str());
+				callback((*i).first);
 			}
+			GlobalMaterialSystem()->foreachMaterialName(callback);
 		}
 
 		void foreachShaderName (const ShaderSystem::Visitor& visitor)
@@ -729,23 +697,36 @@ class UFOShaderSystem: public ShaderSystem, public ModuleObserver
 				const std::string& str = (*i).first;
 				visitor.visit(str);
 			}
+			GlobalMaterialSystem()->foreachMaterialName(visitor);
 		}
 
 		void beginActiveShadersIterator ()
 		{
-			ActiveShaders_IteratorBegin();
+			g_ActiveShadersIterator = g_ActiveShaders.begin();
+			GlobalMaterialSystem()->beginActiveMaterialsIterator();
 		}
 		bool endActiveShadersIterator ()
 		{
-			return ActiveShaders_IteratorAtEnd();
+			bool shadersIteratorEnd = g_ActiveShadersIterator == g_ActiveShaders.end();
+			if (shadersIteratorEnd) {
+				bool materialIteratorEnd = GlobalMaterialSystem()->endActiveMaterialsIterator();
+				return materialIteratorEnd;
+			}
+			return shadersIteratorEnd;
 		}
 		IShader* dereferenceActiveShadersIterator ()
 		{
-			return ActiveShaders_IteratorCurrent();
+			if (g_ActiveShadersIterator != g_ActiveShaders.end())
+				return static_cast<CShader*> (g_ActiveShadersIterator->second);
+			else
+				return GlobalMaterialSystem()->dereferenceActiveMaterialsIterator();
 		}
 		void incrementActiveShadersIterator ()
 		{
-			ActiveShaders_IteratorIncrement();
+			if (g_ActiveShadersIterator != g_ActiveShaders.end())
+				++g_ActiveShadersIterator;
+			else
+				GlobalMaterialSystem()->incrementActiveMaterialsIterator();
 		}
 		void setActiveShadersChangedNotify (const Callback& notify)
 		{
