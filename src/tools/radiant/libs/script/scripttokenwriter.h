@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define INCLUDED_SCRIPT_SCRIPTTOKENWRITER_H
 
 #include "iscriplib.h"
+#include "string/string.h"
 
 class SimpleTokenWriter : public TokenWriter {
 public:
@@ -41,6 +42,10 @@ public:
 		writeSeparator();
 		m_ostream << token;
 	}
+	void writeString(const std::string& string) {
+		writeSeparator();
+		m_ostream << '"' << string << '"';
+	}
 	void writeString(const char* string) {
 		writeSeparator();
 		m_ostream << '"' << string << '"';
@@ -51,7 +56,7 @@ public:
 	}
 	void writeUnsigned(std::size_t i) {
 		writeSeparator();
-		m_ostream << Unsigned(i);
+		m_ostream << string::toString(i);
 	}
 	void writeFloat(double f) {
 		writeSeparator();

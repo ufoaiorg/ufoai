@@ -356,7 +356,7 @@ void CSG_Subtract ()
 	if (selected_brushes.empty()) {
 		globalOutputStream() << "CSG Subtract: No brushes selected.\n";
 	} else {
-		globalOutputStream() << "CSG Subtract: Subtracting " << Unsigned(selected_brushes.size()) << " brushes.\n";
+		globalOutputStream() << "CSG Subtract: Subtracting " << string::toString(selected_brushes.size()) << " brushes.\n";
 
 		UndoableCommand undo("brushSubtract");
 
@@ -364,8 +364,8 @@ void CSG_Subtract ()
 		std::size_t before = 0;
 		std::size_t after = 0;
 		GlobalSceneGraph().traverse(SubtractBrushesFromUnselected(selected_brushes, before, after));
-		globalOutputStream() << "CSG Subtract: Result: " << Unsigned(after) << " fragment" << (after == 1 ? "" : "s")
-				<< " from " << Unsigned(before) << " brush" << (before == 1 ? "" : "es") << ".\n";
+		globalOutputStream() << "CSG Subtract: Result: " << string::toString(after) << " fragment" << (after == 1 ? "" : "s")
+				<< " from " << string::toString(before) << " brush" << (before == 1 ? "" : "es") << ".\n";
 
 		SceneChangeNotify();
 	}

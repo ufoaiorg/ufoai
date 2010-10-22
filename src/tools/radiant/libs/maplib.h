@@ -71,7 +71,7 @@ class UndoFileChangeTracker: public UndoTracker, public MapFile
 		}
 		void print ()
 		{
-			globalOutputStream() << "saved: " << Unsigned(m_saved) << " size: " << Unsigned(m_size) << "\n";
+			globalOutputStream() << "saved: " << string::toString(m_saved) << " size: " << string::toString(m_size) << "\n";
 		}
 
 		void push ()

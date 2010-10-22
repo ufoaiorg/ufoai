@@ -30,6 +30,7 @@
 #include "math/Vector2.h"
 #include "math/Vector3.h"
 #include "container/array.h"
+#include "string/string.h"
 
 enum ProjectionAxis
 {
@@ -304,7 +305,7 @@ inline void Winding_printConnectivity (Winding& winding)
 {
 	for (Winding::iterator i = winding.begin(); i != winding.end(); ++i) {
 		std::size_t vertexIndex = std::distance(winding.begin(), i);
-		globalOutputStream() << "vertex: " << Unsigned(vertexIndex) << " adjacent: " << Unsigned((*i).adjacent) << "\n";
+		globalOutputStream() << "vertex: " << string::toString(vertexIndex) << " adjacent: " << string::toString((*i).adjacent) << "\n";
 	}
 }
 

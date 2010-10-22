@@ -255,7 +255,7 @@ void Brush::buildBRep ()
 					std::size_t faceIndex = std::distance(m_faces.begin(), i);
 
 					if (!(*i)->contributes()) {
-						globalOutputStream() << "face: " << Unsigned(faceIndex) << " does not contribute\n";
+						globalOutputStream() << "face: " << string::toString(faceIndex) << " does not contribute\n";
 					}
 
 					Winding_printConnectivity((*i)->getWinding());

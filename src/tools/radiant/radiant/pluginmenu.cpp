@@ -110,7 +110,7 @@ static void PlugInMenu_Add (GtkMenu* plugin_menu, IPlugin* pPlugIn)
 		if (!menuStack.empty()) {
 			std::size_t size = menuStack.size();
 			if (size != 0) {
-				globalErrorStream() << pPlugIn->getMenuName() << " mismatched > <. " << Unsigned(size)
+				globalErrorStream() << pPlugIn->getMenuName() << " mismatched > <. " << string::toString(size)
 						<< " submenu(s) not closed.\n";
 			}
 			for (std::size_t i = 0; i < (size - 1); i++) {

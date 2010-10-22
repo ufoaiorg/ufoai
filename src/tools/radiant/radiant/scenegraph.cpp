@@ -66,7 +66,7 @@ class TypeIdMap
 		{
 			TypeName* i = std::find_if(m_typeNames, m_typeNamesEnd, StringEqualPredicate(name));
 			if (i == m_typeNamesEnd) {
-				ASSERT_MESSAGE(m_typeNamesEnd != m_typeNames + SIZE, "reached maximum number of type names supported (" << Unsigned(SIZE) << ")");
+				ASSERT_MESSAGE(m_typeNamesEnd != m_typeNames + SIZE, "reached maximum number of type names supported (" << string::toString(SIZE) << ")");
 				*m_typeNamesEnd++ = name;
 			}
 			return i - m_typeNames;

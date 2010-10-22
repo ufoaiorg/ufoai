@@ -171,7 +171,7 @@ class SelectionPolicy_Touching
 		bool Evaluate (const AABB& box, scene::Instance& instance) const
 		{
 			const AABB& other(instance.worldAABB());
-			for (Unsigned i = 0; i < 3; ++i) {
+			for (int i = 0; i < 3; ++i) {
 				if (fabsf(box.origin[i] - other.origin[i]) > (box.extents[i] + other.extents[i]))
 					return false;
 			}
@@ -189,7 +189,7 @@ class SelectionPolicy_Inside
 		bool Evaluate (const AABB& box, scene::Instance& instance) const
 		{
 			const AABB& other(instance.worldAABB());
-			for (Unsigned i = 0; i < 3; ++i) {
+			for (int i = 0; i < 3; ++i) {
 				if (fabsf(box.origin[i] - other.origin[i]) > (box.extents[i] - other.extents[i]))
 					return false;
 			}
