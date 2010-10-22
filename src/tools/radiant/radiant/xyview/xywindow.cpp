@@ -160,9 +160,9 @@ static void Clip_Update (void)
 	ClipperChangeNotify();
 }
 
-static inline const char* Clip_getShader (void)
+static inline const std::string Clip_getShader (void)
 {
-	return g_clip_useNodraw ? "textures/tex_common/nodraw" : GlobalTextureBrowser().getSelectedShader().c_str();
+	return g_clip_useNodraw ? "textures/tex_common/nodraw" : GlobalTextureBrowser().getSelectedShader();
 }
 
 void Clip (void)
