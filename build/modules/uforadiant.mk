@@ -192,6 +192,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/libs/gtkutil/TextPanel.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/VFSTreePopulator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/menu/PopupMenu.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/window/PersistentTransientWindow.cpp \
 	\
 	$(RADIANT_BASE)/libs/profile/profile.cpp \
 	$(RADIANT_BASE)/libs/profile/file.cpp \
