@@ -69,6 +69,8 @@ public:
 
 	OpenGLState() {
 	}
+
+	void apply (OpenGLState& current, unsigned int globalstate);
 };
 
 class OpenGLStateLibrary {

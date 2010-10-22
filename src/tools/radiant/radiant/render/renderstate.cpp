@@ -86,12 +86,12 @@ void Renderer_ResetStats ()
 	g_timer.start();
 }
 
-const char* Renderer_GetStats ()
+const std::string& Renderer_GetStats ()
 {
 	g_renderer_stats.clear();
 	g_renderer_stats << "prims: " << Unsigned(g_count_prims) << " | states: " << Unsigned(g_count_states)
 			<< " | transforms: " << Unsigned(g_count_transforms) << " | msec: " << g_timer.elapsed_msec();
-	return g_renderer_stats.c_str();
+	return g_renderer_stats.toString();
 }
 
 inline bool OpenGLState_less (const OpenGLState& self, const OpenGLState& other)
@@ -207,6 +207,7 @@ class OpenGLStateBucket
 		}
 
 		void render (OpenGLState& current, unsigned int globalstate, const Vector3& viewer);
+		void flush (OpenGLState& current, unsigned int globalstate,	const Vector3& viewer);
 };
 
 class OpenGLStateLess
@@ -643,27 +644,6 @@ class OpenGLShaderCache: public ShaderCache, public TexturesCacheObserver, publi
 		}
 };
 
-static OpenGLShaderCache* g_ShaderCache;
-
-void ShaderCache_Construct ()
-{
-	g_ShaderCache = new OpenGLShaderCache;
-	GlobalTexturesCache().attach(*g_ShaderCache);
-	GlobalShaderSystem().attach(*g_ShaderCache);
-}
-
-void ShaderCache_Destroy ()
-{
-	GlobalShaderSystem().detach(*g_ShaderCache);
-	GlobalTexturesCache().detach(*g_ShaderCache);
-	delete g_ShaderCache;
-}
-
-ShaderCache* GetShaderCache ()
-{
-	return g_ShaderCache;
-}
-
 inline void setTextureState (GLint& current, const GLint& texture, GLenum textureUnit)
 {
 	if (texture != current) {
@@ -692,15 +672,15 @@ inline void setState (unsigned int state, unsigned int delta, unsigned int flag,
 	}
 }
 
-void OpenGLState_apply (const OpenGLState& self, OpenGLState& current, unsigned int globalstate)
+void OpenGLState::apply (OpenGLState& current, unsigned int globalstate)
 {
 	count_state();
 
-	if (self.m_state & RENDER_OVERRIDE) {
+	if (m_state & RENDER_OVERRIDE) {
 		globalstate |= RENDER_FILL | RENDER_DEPTHWRITE;
 	}
 
-	const unsigned int state = self.m_state & globalstate;
+	const unsigned int state = m_state & globalstate;
 	const unsigned int delta = state ^ current.m_state;
 
 	if (delta & state & RENDER_FILL) {
@@ -726,7 +706,7 @@ void OpenGLState_apply (const OpenGLState& self, OpenGLState& current, unsigned 
 		}
 
 		glEnable(GL_TEXTURE_2D);
-		glColor4f(1, 1, 1, self.m_colour[3]);
+		glColor4f(1, 1, 1, m_colour[3]);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	} else if (delta & ~state & RENDER_TEXTURE) {
 		if (GlobalOpenGL().GL_1_3()) {
@@ -774,87 +754,86 @@ void OpenGLState_apply (const OpenGLState& self, OpenGLState& current, unsigned 
 		glEnableClientState(GL_COLOR_ARRAY);
 	} else if (delta & ~state & RENDER_COLOURARRAY) {
 		glDisableClientState(GL_COLOR_ARRAY);
-		glColor4fv(self.m_colour);
+		glColor4fv(m_colour);
 	}
 
 	if (delta & ~state & RENDER_COLOURCHANGE) {
-		glColor4fv(self.m_colour);
+		glColor4fv(m_colour);
 	}
 
 	setState(state, delta, RENDER_LINESTIPPLE, GL_LINE_STIPPLE);
 
-	if (state & RENDER_DEPTHTEST && self.m_depthfunc != current.m_depthfunc) {
-		glDepthFunc(self.m_depthfunc);
+	if (state & RENDER_DEPTHTEST && m_depthfunc != current.m_depthfunc) {
+		glDepthFunc(m_depthfunc);
 
-		current.m_depthfunc = self.m_depthfunc;
+		current.m_depthfunc = m_depthfunc;
 	}
 
-	if (state & RENDER_LINESTIPPLE && (self.m_linestipple_factor != current.m_linestipple_factor
-			|| self.m_linestipple_pattern != current.m_linestipple_pattern)) {
-		glLineStipple(self.m_linestipple_factor, self.m_linestipple_pattern);
+	if (state & RENDER_LINESTIPPLE && (m_linestipple_factor != current.m_linestipple_factor
+			|| m_linestipple_pattern != current.m_linestipple_pattern)) {
+		glLineStipple(m_linestipple_factor, m_linestipple_pattern);
 
-		current.m_linestipple_factor = self.m_linestipple_factor;
-		current.m_linestipple_pattern = self.m_linestipple_pattern;
+		current.m_linestipple_factor = m_linestipple_factor;
+		current.m_linestipple_pattern = m_linestipple_pattern;
 	}
 
-	if (state & RENDER_ALPHATEST && (self.m_alphafunc != current.m_alphafunc || self.m_alpharef != current.m_alpharef)) {
-		glAlphaFunc(self.m_alphafunc, self.m_alpharef);
+	if (state & RENDER_ALPHATEST && (m_alphafunc != current.m_alphafunc || m_alpharef != current.m_alpharef)) {
+		glAlphaFunc(m_alphafunc, m_alpharef);
 
-		current.m_alphafunc = self.m_alphafunc;
-		current.m_alpharef = self.m_alpharef;
+		current.m_alphafunc = m_alphafunc;
+		current.m_alpharef = m_alpharef;
 	}
 
 	{
 		if (GlobalOpenGL().GL_1_3()) {
-			setTextureState(current.m_texture, self.m_texture, GL_TEXTURE0);
-			setTextureState(current.m_texture1, self.m_texture1, GL_TEXTURE1);
-			setTextureState(current.m_texture2, self.m_texture2, GL_TEXTURE2);
-			setTextureState(current.m_texture3, self.m_texture3, GL_TEXTURE3);
-			setTextureState(current.m_texture4, self.m_texture4, GL_TEXTURE4);
-			setTextureState(current.m_texture5, self.m_texture5, GL_TEXTURE5);
-			setTextureState(current.m_texture6, self.m_texture6, GL_TEXTURE6);
-			setTextureState(current.m_texture7, self.m_texture7, GL_TEXTURE7);
+			setTextureState(current.m_texture, m_texture, GL_TEXTURE0);
+			setTextureState(current.m_texture1, m_texture1, GL_TEXTURE1);
+			setTextureState(current.m_texture2, m_texture2, GL_TEXTURE2);
+			setTextureState(current.m_texture3, m_texture3, GL_TEXTURE3);
+			setTextureState(current.m_texture4, m_texture4, GL_TEXTURE4);
+			setTextureState(current.m_texture5, m_texture5, GL_TEXTURE5);
+			setTextureState(current.m_texture6, m_texture6, GL_TEXTURE6);
+			setTextureState(current.m_texture7, m_texture7, GL_TEXTURE7);
 		} else {
-			setTextureState(current.m_texture, self.m_texture);
+			setTextureState(current.m_texture, m_texture);
 		}
 	}
 
-	if (state & RENDER_TEXTURE && self.m_colour[3] != current.m_colour[3]) {
-		glColor4f(1, 1, 1, self.m_colour[3]);
+	if (state & RENDER_TEXTURE && m_colour[3] != current.m_colour[3]) {
+		glColor4f(1, 1, 1, m_colour[3]);
 	}
 
-	if (!(state & RENDER_TEXTURE) && (self.m_colour[0] != current.m_colour[0] || self.m_colour[1]
-			!= current.m_colour[1] || self.m_colour[2] != current.m_colour[2] || self.m_colour[3]
+	if (!(state & RENDER_TEXTURE) && (m_colour[0] != current.m_colour[0] || m_colour[1]
+			!= current.m_colour[1] || m_colour[2] != current.m_colour[2] || m_colour[3]
 			!= current.m_colour[3])) {
-		glColor4fv(self.m_colour);
+		glColor4fv(m_colour);
 	}
-	current.m_colour = self.m_colour;
+	current.m_colour = m_colour;
 
-	if (state & RENDER_BLEND && (self.m_blend_src != current.m_blend_src || self.m_blend_dst != current.m_blend_dst)) {
-		glBlendFunc(self.m_blend_src, self.m_blend_dst);
-		current.m_blend_src = self.m_blend_src;
-		current.m_blend_dst = self.m_blend_dst;
-	}
-
-	if (!(state & RENDER_FILL) && self.m_linewidth != current.m_linewidth) {
-		glLineWidth(self.m_linewidth);
-		current.m_linewidth = self.m_linewidth;
+	if (state & RENDER_BLEND && (m_blend_src != current.m_blend_src || m_blend_dst != current.m_blend_dst)) {
+		glBlendFunc(m_blend_src, m_blend_dst);
+		current.m_blend_src = m_blend_src;
+		current.m_blend_dst = m_blend_dst;
 	}
 
-	if (!(state & RENDER_FILL) && self.m_pointsize != current.m_pointsize) {
-		glPointSize(self.m_pointsize);
-		current.m_pointsize = self.m_pointsize;
+	if (!(state & RENDER_FILL) && m_linewidth != current.m_linewidth) {
+		glLineWidth(m_linewidth);
+		current.m_linewidth = m_linewidth;
+	}
+
+	if (!(state & RENDER_FILL) && m_pointsize != current.m_pointsize) {
+		glPointSize(m_pointsize);
+		current.m_pointsize = m_pointsize;
 	}
 
 	current.m_state = state;
 }
 
-void Renderables_flush (OpenGLStateBucket::Renderables& renderables, OpenGLState& current, unsigned int globalstate,
-		const Vector3& viewer)
+void OpenGLStateBucket::flush (OpenGLState& current, unsigned int globalstate, const Vector3& viewer)
 {
 	const Matrix4* transform = 0;
 	glPushMatrix();
-	for (OpenGLStateBucket::Renderables::const_iterator i = renderables.begin(); i != renderables.end(); ++i) {
+	for (OpenGLStateBucket::Renderables::const_iterator i = m_renderables.begin(); i != m_renderables.end(); ++i) {
 		if (!transform || (transform != (*i).m_transform && !matrix4_affine_equal(*transform, *(*i).m_transform))) {
 			count_transform();
 			transform = (*i).m_transform;
@@ -870,13 +849,13 @@ void Renderables_flush (OpenGLStateBucket::Renderables& renderables, OpenGLState
 		(*i).m_renderable->render(current.m_state);
 	}
 	glPopMatrix();
-	renderables.clear();
+	m_renderables.clear();
 }
 
 void OpenGLStateBucket::render (OpenGLState& current, unsigned int globalstate, const Vector3& viewer)
 {
 	if ((globalstate & m_state.m_state & RENDER_SCREEN) != 0) {
-		OpenGLState_apply(m_state, current, globalstate);
+		m_state.apply(current, globalstate);
 
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
@@ -899,8 +878,8 @@ void OpenGLStateBucket::render (OpenGLState& current, unsigned int globalstate, 
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
 	} else if (!m_renderables.empty()) {
-		OpenGLState_apply(m_state, current, globalstate);
-		Renderables_flush(m_renderables, current, globalstate, viewer);
+		m_state.apply(current, globalstate);
+		flush(current, globalstate, viewer);
 	}
 }
 
@@ -1268,20 +1247,22 @@ class ShaderCacheDependencies: public GlobalShadersModuleRef,
 
 class ShaderCacheAPI
 {
-		ShaderCache* m_shaderCache;
+		OpenGLShaderCache* m_shaderCache;
 	public:
 		typedef ShaderCache Type;
 		STRING_CONSTANT(Name, "*");
 
 		ShaderCacheAPI ()
 		{
-			ShaderCache_Construct();
-
-			m_shaderCache = GetShaderCache();
+			m_shaderCache = new OpenGLShaderCache;
+			GlobalTexturesCache().attach(*m_shaderCache);
+			GlobalShaderSystem().attach(*m_shaderCache);
 		}
 		~ShaderCacheAPI ()
 		{
-			ShaderCache_Destroy();
+			GlobalShaderSystem().detach(*m_shaderCache);
+			GlobalTexturesCache().detach(*m_shaderCache);
+			delete m_shaderCache;
 		}
 		ShaderCache* getTable ()
 		{

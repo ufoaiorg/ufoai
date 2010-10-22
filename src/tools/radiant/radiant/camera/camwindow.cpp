@@ -1300,7 +1300,7 @@ void CamWnd::Cam_Draw ()
 
 	if (g_camwindow_globals_private.m_showStats) {
 		glRasterPos3f(1.0f, static_cast<float> (m_Camera.height) - 1.0f, 0.0f);
-		extern const char* Renderer_GetStats ();
+		extern const std::string& Renderer_GetStats ();
 		GlobalOpenGL().drawString(Renderer_GetStats());
 
 		glRasterPos3f(1.0f, static_cast<float> (m_Camera.height) - 11.0f, 0.0f);
