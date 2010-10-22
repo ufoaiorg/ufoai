@@ -67,10 +67,12 @@ public:
 	GLint m_linestipple_factor;
 	GLushort m_linestipple_pattern;
 
-	OpenGLState() {
+	OpenGLState()
+	{
 	}
 
 	void apply (OpenGLState& current, unsigned int globalstate);
+	void constructDefault ();
 };
 
 class OpenGLStateLibrary {

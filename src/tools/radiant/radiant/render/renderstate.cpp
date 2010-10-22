@@ -52,47 +52,9 @@
 #include "stream/stringstream.h"
 #include "os/file.h"
 #include "../settings/preferences.h"
+#include "RenderStatistics.h"
 
 #include "../xyview/xywindow.h"
-
-#include "../timer.h"
-
-StringOutputStream g_renderer_stats;
-std::size_t g_count_prims;
-std::size_t g_count_states;
-std::size_t g_count_transforms;
-Timer g_timer;
-
-inline void count_prim ()
-{
-	++g_count_prims;
-}
-
-inline void count_state ()
-{
-	++g_count_states;
-}
-
-inline void count_transform ()
-{
-	++g_count_transforms;
-}
-
-void Renderer_ResetStats ()
-{
-	g_count_prims = 0;
-	g_count_states = 0;
-	g_count_transforms = 0;
-	g_timer.start();
-}
-
-const std::string& Renderer_GetStats ()
-{
-	g_renderer_stats.clear();
-	g_renderer_stats << "prims: " << Unsigned(g_count_prims) << " | states: " << Unsigned(g_count_states)
-			<< " | transforms: " << Unsigned(g_count_transforms) << " | msec: " << g_timer.elapsed_msec();
-	return g_renderer_stats.toString();
-}
 
 inline bool OpenGLState_less (const OpenGLState& self, const OpenGLState& other)
 {
@@ -133,37 +95,37 @@ inline bool OpenGLState_less (const OpenGLState& self, const OpenGLState& other)
 	return &self < &other;
 }
 
-void OpenGLState_constructDefault (OpenGLState& state)
+void OpenGLState::constructDefault ()
 {
-	state.m_state = RENDER_DEFAULT;
+	m_state = RENDER_DEFAULT;
 
-	state.m_texture = 0;
-	state.m_texture1 = 0;
-	state.m_texture2 = 0;
-	state.m_texture3 = 0;
-	state.m_texture4 = 0;
-	state.m_texture5 = 0;
-	state.m_texture6 = 0;
-	state.m_texture7 = 0;
+	m_texture = 0;
+	m_texture1 = 0;
+	m_texture2 = 0;
+	m_texture3 = 0;
+	m_texture4 = 0;
+	m_texture5 = 0;
+	m_texture6 = 0;
+	m_texture7 = 0;
 
-	state.m_colour[0] = 1;
-	state.m_colour[1] = 1;
-	state.m_colour[2] = 1;
-	state.m_colour[3] = 1;
+	m_colour[0] = 1;
+	m_colour[1] = 1;
+	m_colour[2] = 1;
+	m_colour[3] = 1;
 
-	state.m_depthfunc = GL_LESS;
+	m_depthfunc = GL_LESS;
 
-	state.m_blend_src = GL_SRC_ALPHA;
-	state.m_blend_dst = GL_ONE_MINUS_SRC_ALPHA;
+	m_blend_src = GL_SRC_ALPHA;
+	m_blend_dst = GL_ONE_MINUS_SRC_ALPHA;
 
-	state.m_alphafunc = GL_ALWAYS;
-	state.m_alpharef = 0;
+	m_alphafunc = GL_ALWAYS;
+	m_alpharef = 0;
 
-	state.m_linewidth = 1;
-	state.m_pointsize = 1;
+	m_linewidth = 1;
+	m_pointsize = 1;
 
-	state.m_linestipple_factor = 1;
-	state.m_linestipple_pattern = 0xaaaa;
+	m_linestipple_factor = 1;
+	m_linestipple_pattern = 0xaaaa;
 }
 
 /// \brief A container of Renderable references.
@@ -190,9 +152,11 @@ class OpenGLStateBucket
 
 		OpenGLState m_state;
 		Renderables m_renderables;
+		render::RenderStatistics& _stats;
 
 	public:
-		OpenGLStateBucket ()
+		OpenGLStateBucket () :
+			_stats(render::RenderStatistics::Instance())
 		{
 		}
 		void addRenderable (const OpenGLRenderable& renderable, const Matrix4& modelview, const RendererLight* light =
@@ -354,7 +318,7 @@ class OpenGLShader: public Shader
 		{
 			m_passes.push_back(new OpenGLStateBucket);
 			OpenGLState& state = m_passes.back()->state();
-			OpenGLState_constructDefault(state);
+			state.constructDefault();
 			return state;
 		}
 };
@@ -507,7 +471,7 @@ class OpenGLShaderCache: public ShaderCache, public TexturesCacheObserver, publi
 			}
 
 			OpenGLState current;
-			OpenGLState_constructDefault(current);
+			current.constructDefault();
 			current.m_sort = OpenGLState::eSortFirst;
 
 			// default renderstate settings
@@ -674,7 +638,7 @@ inline void setState (unsigned int state, unsigned int delta, unsigned int flag,
 
 void OpenGLState::apply (OpenGLState& current, unsigned int globalstate)
 {
-	count_state();
+	render::RenderStatistics::Instance().increaseStates();
 
 	if (m_state & RENDER_OVERRIDE) {
 		globalstate |= RENDER_FILL | RENDER_DEPTHWRITE;
@@ -835,7 +799,7 @@ void OpenGLStateBucket::flush (OpenGLState& current, unsigned int globalstate, c
 	glPushMatrix();
 	for (OpenGLStateBucket::Renderables::const_iterator i = m_renderables.begin(); i != m_renderables.end(); ++i) {
 		if (!transform || (transform != (*i).m_transform && !matrix4_affine_equal(*transform, *(*i).m_transform))) {
-			count_transform();
+			_stats.increaseTransforms();
 			transform = (*i).m_transform;
 			glPopMatrix();
 			glPushMatrix();
@@ -844,7 +808,7 @@ void OpenGLStateBucket::flush (OpenGLState& current, unsigned int globalstate, c
 					== MATRIX4_RIGHTHANDED) ? GL_CW : GL_CCW);
 		}
 
-		count_prim();
+		_stats.increasePrimitive();
 
 		(*i).m_renderable->render(current.m_state);
 	}
@@ -905,7 +869,7 @@ class OpenGLStateMap: public OpenGLStateLibrary
 
 		void getDefaultState (OpenGLState& state) const
 		{
-			OpenGLState_constructDefault(state);
+			state.constructDefault();
 		}
 
 		void insert (const std::string& name, const OpenGLState& state)

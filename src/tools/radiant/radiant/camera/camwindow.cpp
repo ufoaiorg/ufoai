@@ -58,6 +58,8 @@
 #include "../xyview/xywindow.h"
 #include "../windowobservers.h"
 #include "../ui/Icons.h"
+#include "../render/RenderStatistics.h"
+
 
 #include "../timer.h"
 
@@ -1193,8 +1195,8 @@ void CamWnd::Cam_Draw ()
 	glClearColor(clearColour[0], clearColour[1], clearColour[2], 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	extern void Renderer_ResetStats ();
-	Renderer_ResetStats();
+	render::RenderStatistics::Instance().resetStats();
+
 	extern void Cull_ResetStats ();
 	Cull_ResetStats();
 
@@ -1300,8 +1302,7 @@ void CamWnd::Cam_Draw ()
 
 	if (g_camwindow_globals_private.m_showStats) {
 		glRasterPos3f(1.0f, static_cast<float> (m_Camera.height) - 1.0f, 0.0f);
-		extern const std::string& Renderer_GetStats ();
-		GlobalOpenGL().drawString(Renderer_GetStats());
+		GlobalOpenGL().drawString(render::RenderStatistics::Instance().getStatString());
 
 		glRasterPos3f(1.0f, static_cast<float> (m_Camera.height) - 11.0f, 0.0f);
 		extern const char* Cull_GetStats ();

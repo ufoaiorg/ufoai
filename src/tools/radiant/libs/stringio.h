@@ -123,9 +123,8 @@ inline bool string_parse_size (const char* string, std::size_t& i)
 
 inline void Tokeniser_unexpectedError (Tokeniser& tokeniser, const std::string& token, const std::string& expected)
 {
-	globalErrorStream() << Unsigned(tokeniser.getLine()) << ":" << Unsigned(tokeniser.getColumn())
-			<< ": parse error at '" << (token.length() ? token : "#EOF") << "': expected '" << expected.c_str()
-			<< "'\n";
+	globalErrorStream() << string::toString(tokeniser.getLine()) << ":" << string::toString(tokeniser.getColumn())
+			<< ": parse error at '" << (token.length() ? token : "#EOF") << "': expected '" << expected << "'\n";
 }
 
 inline bool Tokeniser_getFloat (Tokeniser& tokeniser, float& f)
