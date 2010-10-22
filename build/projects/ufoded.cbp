@@ -8,9 +8,9 @@
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="../../ufoded" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/ufoded" />
+				<Option output="..\..\ufoded" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\ufoded" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -25,14 +25,14 @@
 					<Add library="ws2_32" />
 				</Linker>
 				<ExtraCommands>
-					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
 				</ExtraCommands>
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
-				<Option output="../../ufoded" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/ufoded" />
+				<Option output="..\..\ufoded" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\ufoded" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -49,14 +49,14 @@
 					<Add library="ws2_32" />
 				</Linker>
 				<ExtraCommands>
-					<Add before="..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;" />
+					<Add before='..\..\contrib\scripts\codeblocks_check.bat &quot;$(TARGET_COMPILER_DIR)&quot;' />
 				</ExtraCommands>
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
-				<Option output="../../ufoded" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/ufoded" />
+				<Option output="..\..\ufoded" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\ufoded" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -69,13 +69,13 @@
 			</Target>
 			<Target title="macosx">
 				<Option platforms="Mac;" />
-				<Option output="../../ufoded" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../" />
-				<Option object_output=".objs/ufoded" />
+				<Option output="..\..\ufoded" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\" />
+				<Option object_output=".objs\ufoded" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add directory="/sw/include" />
+					<Add directory="\sw\include" />
 				</Compiler>
 				<Linker>
 					<Add option="-framework IOKit" />
@@ -84,7 +84,7 @@
 					<Add option="-framework foundation" />
 					<Add library="z" />
 					<Add library="dl" />
-					<Add directory="/sw/lib" />
+					<Add directory="\sw\lib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -98,187 +98,190 @@
 			<Add library="z" />
 			<Add library="SDL" />
 		</Linker>
-		<Unit filename="../../src/common/cmd.c">
+		<Unit filename="..\..\src\common\bsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/cmd.h" />
-		<Unit filename="../../src/common/bsp.c">
+		<Unit filename="..\..\src\common\cmd.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/grid.c">
+		<Unit filename="..\..\src\common\cmd.h" />
+		<Unit filename="..\..\src\common\cmodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/cmodel.c">
+		<Unit filename="..\..\src\common\cmodel.h" />
+		<Unit filename="..\..\src\common\common.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/cmodel.h" />
-		<Unit filename="../../src/common/common.c">
+		<Unit filename="..\..\src\common\common.h" />
+		<Unit filename="..\..\src\common\cvar.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/common.h" />
-		<Unit filename="../../src/common/cvar.c">
+		<Unit filename="..\..\src\common\cvar.h" />
+		<Unit filename="..\..\src\common\dbuffer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/cvar.h" />
-		<Unit filename="../../src/common/dbuffer.c">
+		<Unit filename="..\..\src\common\dbuffer.h" />
+		<Unit filename="..\..\src\common\files.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/dbuffer.h" />
-		<Unit filename="../../src/common/files.c">
+		<Unit filename="..\..\src\common\grid.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/http.c">
+		<Unit filename="..\..\src\common\http.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/http.h" />
-		<Unit filename="../../src/shared/threads.c">
+		<Unit filename="..\..\src\common\http.h" />
+		<Unit filename="..\..\src\common\ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/threads.h" />
-		<Unit filename="../../src/common/ioapi.c">
+		<Unit filename="..\..\src\common\ioapi.h" />
+		<Unit filename="..\..\src\common\list.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/ioapi.h" />
-		<Unit filename="../../src/common/md4.c">
+		<Unit filename="..\..\src\common\md4.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/mem.c">
+		<Unit filename="..\..\src\common\mem.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/msg.c">
+		<Unit filename="..\..\src\common\msg.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/net.c">
+		<Unit filename="..\..\src\common\net.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/net.h" />
-		<Unit filename="../../src/common/netpack.c">
+		<Unit filename="..\..\src\common\net.h" />
+		<Unit filename="..\..\src\common\netpack.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/netpack.h" />
-		<Unit filename="../../src/common/pqueue.c">
+		<Unit filename="..\..\src\common\netpack.h" />
+		<Unit filename="..\..\src\common\pqueue.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/routing.c">
+		<Unit filename="..\..\src\common\routing.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/routing.h" />
-		<Unit filename="../../src/common/scripts.c">
+		<Unit filename="..\..\src\common\routing.h" />
+		<Unit filename="..\..\src\common\scripts.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/tracing.c">
+		<Unit filename="..\..\src\common\tracing.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/tracing.h" />
-		<Unit filename="../../src/common/unzip.c">
+		<Unit filename="..\..\src\common\tracing.h" />
+		<Unit filename="..\..\src\common\unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/common/unzip.h" />
-		<Unit filename="../../src/game/q_shared.c">
+		<Unit filename="..\..\src\common\unzip.h" />
+		<Unit filename="..\..\src\game\chr_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/inv_shared.c">
+		<Unit filename="..\..\src\game\inv_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/chr_shared.c">
+		<Unit filename="..\..\src\game\q_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ports/linux/linux_main.c">
+		<Unit filename="..\..\src\ports\linux\linux_main.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>
-		<Unit filename="../../src/ports/macosx/osx_main.m">
+		<Unit filename="..\..\src\ports\macosx\osx_main.m">
 			<Option compile="1" />
 			<Option link="1" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/unix/unix_console.c">
+		<Unit filename="..\..\src\ports\unix\unix_console.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/unix/unix_main.c">
+		<Unit filename="..\..\src\ports\unix\unix_main.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/windows/ufo.rc">
+		<Unit filename="..\..\src\ports\windows\ufo.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/ports/windows/win_console.c">
+		<Unit filename="..\..\src\ports\windows\win_backtrace.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\ports\windows\win_console.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/ports/windows/win_main.c">
+		<Unit filename="..\..\src\ports\windows\win_main.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/ports/windows/win_shared.c">
+		<Unit filename="..\..\src\ports\windows\win_shared.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/server/sv_ccmds.c">
+		<Unit filename="..\..\src\server\sv_ccmds.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/server/sv_clientstub.c">
+		<Unit filename="..\..\src\server\sv_clientstub.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/server/sv_game.c">
+		<Unit filename="..\..\src\server\sv_game.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/server/sv_init.c">
+		<Unit filename="..\..\src\server\sv_init.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/server/sv_main.c">
+		<Unit filename="..\..\src\server\sv_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/server/sv_mapcycle.c">
+		<Unit filename="..\..\src\server\sv_mapcycle.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/server/sv_rma.c">
+		<Unit filename="..\..\src\server\sv_rma.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/server/sv_send.c">
+		<Unit filename="..\..\src\server\sv_send.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/server/sv_user.c">
+		<Unit filename="..\..\src\server\sv_user.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/server/sv_world.c">
+		<Unit filename="..\..\src\server\sv_world.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/byte.c">
+		<Unit filename="..\..\src\shared\byte.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/byte.h" />
-		<Unit filename="../../src/shared/infostring.c">
+		<Unit filename="..\..\src\shared\byte.h" />
+		<Unit filename="..\..\src\shared\infostring.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/infostring.h" />
-		<Unit filename="../../src/common/list.c">
+		<Unit filename="..\..\src\shared\infostring.h" />
+		<Unit filename="..\..\src\shared\mathlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/mathlib.c">
+		<Unit filename="..\..\src\shared\mathlib.h" />
+		<Unit filename="..\..\src\shared\parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/mathlib.h" />
-		<Unit filename="../../src/shared/parse.c">
+		<Unit filename="..\..\src\shared\shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/shared.c">
+		<Unit filename="..\..\src\shared\shared.h" />
+		<Unit filename="..\..\src\shared\threads.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/shared.h" />
-		<Unit filename="../../src/shared/utf8.c">
+		<Unit filename="..\..\src\shared\threads.h" />
+		<Unit filename="..\..\src\shared\ufotypes.h" />
+		<Unit filename="..\..\src\shared\utf8.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/shared/utf8.h" />
-		<Unit filename="../../src/shared/ufotypes.h" />
+		<Unit filename="..\..\src\shared\utf8.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

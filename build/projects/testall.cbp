@@ -994,6 +994,9 @@
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
+		<Unit filename="..\..\src\ports\windows\win_backtrace.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\ports\windows\win_console.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
