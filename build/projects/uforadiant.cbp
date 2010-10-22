@@ -677,10 +677,10 @@
 		<Unit filename="../../src/tools/radiant/radiant/referencecache/nullmodel.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/render/qgl.cpp">
+		<Unit filename="../../src/tools/radiant/radiant/render/OpenGLRenderSystem.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/render/renderstate.cpp">
+		<Unit filename="../../src/tools/radiant/radiant/render/OpenGLRenderModule.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/scenegraph.cpp">
