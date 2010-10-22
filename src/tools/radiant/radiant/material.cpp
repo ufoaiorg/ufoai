@@ -92,7 +92,7 @@ void MaterialShader::parseMaterial (Tokeniser& tokeniser)
 {
 	int depth = 0;
 	Vector3 color(1, 1, 1);
-	double alphaTest = 1.0f;
+	double alphaTest = 0.0f;
 	bool terrain = false;
 	qtexture_t *layerTexture = 0;
 	BlendFactor src = BLEND_SRC_ALPHA;
@@ -238,7 +238,6 @@ bool MaterialShader::IsDefault () const
 void MaterialShader::getAlphaFunc (MaterialShader::EAlphaFunc *func, float *ref)
 {
 	*func = eAlways;
-	*ref = 1.0f;
 }
 
 BlendFunc MaterialShader::getBlendFunc () const

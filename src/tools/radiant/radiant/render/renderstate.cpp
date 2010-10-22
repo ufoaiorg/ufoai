@@ -108,10 +108,7 @@ void OpenGLState::constructDefault ()
 	m_texture6 = 0;
 	m_texture7 = 0;
 
-	m_colour[0] = 1;
-	m_colour[1] = 1;
-	m_colour[2] = 1;
-	m_colour[3] = 1;
+	m_colour.set(1, 1, 1, 1);
 
 	m_depthfunc = GL_LESS;
 

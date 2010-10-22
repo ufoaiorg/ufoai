@@ -50,6 +50,16 @@ class BasicVector4
 			w() = w_;
 		}
 
+		/** Set all 4 components to the provided values.
+		 */
+		void set (const Element& x, const Element& y, const Element& z, const Element& a)
+		{
+			m_elements[0] = x;
+			m_elements[1] = y;
+			m_elements[2] = z;
+			m_elements[3] = a;
+		}
+
 		// Return non-constant references to the components
 		Element& x ()
 		{
