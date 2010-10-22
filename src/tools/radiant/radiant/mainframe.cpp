@@ -2312,6 +2312,9 @@ void GlobalGL_sharedContextCreated (void)
 	gchar *fontname;
 	g_object_get(settings, "gtk-font-name", &fontname, (char*) 0);
 	g_font = glfont_create(fontname);
+	// Fallback
+	if (g_font.getPixelHeight() == -1)
+		g_font = glfont_create("Sans 10");
 
 	GlobalOpenGL().m_font = g_font.getDisplayList();
 	GlobalOpenGL().m_fontHeight = g_font.getPixelHeight();

@@ -40,6 +40,8 @@ GLFont glfont_create (const std::string& font_string)
 		font_height = PANGO_PIXELS(font_height);
 
 		pango_font_metrics_unref(font_metrics);
+	} else {
+		return GLFont(-1, -1);
 	}
 
 	pango_font_description_free(font_desc);
