@@ -76,41 +76,7 @@ void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHe
 // d1223m
 extern bool g_brush_always_nodraw;
 
-//!\todo Rewrite.
-class ClipPoint
-{
-	public:
-		Vector3 m_ptClip; // the 3d point
-		bool m_bSet;
-
-		ClipPoint (void)
-		{
-			Reset();
-		}
-
-		void Reset (void)
-		{
-			m_ptClip[0] = m_ptClip[1] = m_ptClip[2] = 0.0;
-			m_bSet = false;
-		}
-		bool Set (void)
-		{
-			return m_bSet;
-		}
-		void Set (bool b)
-		{
-			m_bSet = b;
-		}
-		operator Vector3& (void)
-		{
-			return m_ptClip;
-		}
-
-		/*! Draw clip/path point with rasterized number label */
-		void Draw (int num, float scale);
-		/*! Draw clip/path point with rasterized string label */
-		void Draw (const char *label, float scale);
-};
+#include "../clipper/ClipPoint.h"
 
 EViewType g_clip_viewtype;
 bool g_bSwitch = true;
@@ -120,98 +86,41 @@ ClipPoint g_Clip2;
 ClipPoint g_Clip3;
 ClipPoint* g_pMovingClip = 0;
 
-/* Drawing clip points */
-void ClipPoint::Draw (int num, float scale)
-{
-	StringOutputStream label(4);
-	label << num;
-	Draw(label.c_str(), scale);
-}
-
-void ClipPoint::Draw (const char *label, float scale)
-{
-	// draw point
-	glPointSize(4);
-	glColor3fv(g_xywindow_globals.color_clipper);
-	glBegin(GL_POINTS);
-	glVertex3fv(m_ptClip);
-	glEnd();
-	glPointSize(1);
-
-	const float offset = 2.0f / scale;
-
-	// draw label
-	glRasterPos3f(m_ptClip[0] + offset, m_ptClip[1] + offset, m_ptClip[2] + offset);
-	glCallLists(GLsizei(strlen(label)), GL_UNSIGNED_BYTE, label);
-}
-
-static inline float fDiff (float f1, float f2)
-{
-	if (f1 > f2)
-		return f1 - f2;
-	else
-		return f2 - f1;
-}
-
-static inline double ClipPoint_Intersect (const ClipPoint& clip, const Vector3& point, EViewType viewtype, float scale)
-{
-	const int nDim1 = (viewtype == YZ) ? 1 : 0;
-	const int nDim2 = (viewtype == XY) ? 1 : 2;
-	double screenDistanceSquared(Vector2(fDiff(clip.m_ptClip[nDim1], point[nDim1]) * scale, fDiff(clip.m_ptClip[nDim2],
-			point[nDim2]) * scale).getLengthSquared());
-	if (screenDistanceSquared < 8 * 8) {
-		return screenDistanceSquared;
-	}
-	return FLT_MAX;
-}
-
-static inline void ClipPoint_testSelect (ClipPoint& clip, const Vector3& point, EViewType viewtype, float scale,
-		double& bestDistance, ClipPoint*& bestClip)
-{
-	if (clip.Set()) {
-		double distance = ClipPoint_Intersect(clip, point, viewtype, scale);
-		if (distance < bestDistance) {
-			bestDistance = distance;
-			bestClip = &clip;
-		}
-	}
-}
-
 static inline ClipPoint* GlobalClipPoints_Find (const Vector3& point, EViewType viewtype, float scale)
 {
 	double bestDistance = FLT_MAX;
 	ClipPoint* bestClip = 0;
-	ClipPoint_testSelect(g_Clip1, point, viewtype, scale, bestDistance, bestClip);
-	ClipPoint_testSelect(g_Clip2, point, viewtype, scale, bestDistance, bestClip);
-	ClipPoint_testSelect(g_Clip3, point, viewtype, scale, bestDistance, bestClip);
+	g_Clip1.testSelect(point, viewtype, scale, bestDistance, bestClip);
+	g_Clip2.testSelect(point, viewtype, scale, bestDistance, bestClip);
+	g_Clip3.testSelect(point, viewtype, scale, bestDistance, bestClip);
 	return bestClip;
 }
 
 static inline void GlobalClipPoints_Draw (float scale)
 {
 	// Draw clip points
-	if (g_Clip1.Set())
+	if (g_Clip1.isSet())
 		g_Clip1.Draw(1, scale);
-	if (g_Clip2.Set())
+	if (g_Clip2.isSet())
 		g_Clip2.Draw(2, scale);
-	if (g_Clip3.Set())
+	if (g_Clip3.isSet())
 		g_Clip3.Draw(3, scale);
 }
 
 static inline bool GlobalClipPoints_valid (void)
 {
-	return g_Clip1.Set() && g_Clip2.Set();
+	return g_Clip1.isSet() && g_Clip2.isSet();
 }
 
 static void PlanePointsFromClipPoints (Vector3 planepts[3], const AABB& bounds, int viewtype)
 {
 	ASSERT_MESSAGE(GlobalClipPoints_valid(), "clipper points not initialised");
-	planepts[0] = g_Clip1.m_ptClip;
-	planepts[1] = g_Clip2.m_ptClip;
-	planepts[2] = g_Clip3.m_ptClip;
+	planepts[0] = g_Clip1._coords;
+	planepts[1] = g_Clip2._coords;
+	planepts[2] = g_Clip3._coords;
 	Vector3 maxs(bounds.origin + bounds.extents);
 	Vector3 mins(bounds.origin - bounds.extents);
-	if (!g_Clip3.Set()) {
+	if (!g_Clip3.isSet()) {
 		int n = (viewtype == XY) ? 2 : (viewtype == YZ) ? 0 : 1;
 		int x = (n == 0) ? 1 : 0;
 		int y = (n == 2) ? 1 : 2;
@@ -219,14 +128,14 @@ static void PlanePointsFromClipPoints (Vector3 planepts[3], const AABB& bounds, 
 		if (n == 1) { // on viewtype XZ, flip clip points
 			planepts[0][n] = maxs[n];
 			planepts[1][n] = maxs[n];
-			planepts[2][x] = g_Clip1.m_ptClip[x];
-			planepts[2][y] = g_Clip1.m_ptClip[y];
+			planepts[2][x] = g_Clip1._coords[x];
+			planepts[2][y] = g_Clip1._coords[y];
 			planepts[2][n] = mins[n];
 		} else {
 			planepts[0][n] = mins[n];
 			planepts[1][n] = mins[n];
-			planepts[2][x] = g_Clip1.m_ptClip[x];
-			planepts[2][y] = g_Clip1.m_ptClip[y];
+			planepts[2][x] = g_Clip1._coords[x];
+			planepts[2][y] = g_Clip1._coords[y];
 			planepts[2][n] = maxs[n];
 		}
 	}
@@ -264,9 +173,9 @@ void Clip (void)
 		PlanePointsFromClipPoints(planepts, bounds, g_clip_viewtype);
 		Scene_BrushSplitByPlane(GlobalSceneGraph(), planepts[0], planepts[1], planepts[2], Clip_getShader(),
 				(!g_bSwitch) ? eFront : eBack);
-		g_Clip1.Reset();
-		g_Clip2.Reset();
-		g_Clip3.Reset();
+		g_Clip1.reset();
+		g_Clip2.reset();
+		g_Clip3.reset();
 		Clip_Update();
 		ClipperChangeNotify();
 	}
@@ -280,9 +189,9 @@ void SplitClip (void)
 		PlanePointsFromClipPoints(planepts, bounds, g_clip_viewtype);
 		Scene_BrushSplitByPlane(GlobalSceneGraph(), planepts[0], planepts[1], planepts[2], Clip_getShader(),
 				eFrontAndBack);
-		g_Clip1.Reset();
-		g_Clip2.Reset();
-		g_Clip3.Reset();
+		g_Clip1.reset();
+		g_Clip2.reset();
+		g_Clip3.reset();
 		Clip_Update();
 		ClipperChangeNotify();
 	}
@@ -297,9 +206,9 @@ void FlipClip (void)
 
 void OnClipMode (bool enabled)
 {
-	g_Clip1.Reset();
-	g_Clip2.Reset();
-	g_Clip3.Reset();
+	g_Clip1.reset();
+	g_Clip2.reset();
+	g_Clip3.reset();
 
 	if (!enabled && g_pMovingClip) {
 		g_pMovingClip = 0;
@@ -316,20 +225,20 @@ bool ClipMode (void)
 
 static void NewClipPoint (const Vector3& point)
 {
-	if (g_Clip1.Set() == false) {
-		g_Clip1.m_ptClip = point;
+	if (g_Clip1.isSet() == false) {
+		g_Clip1._coords = point;
 		g_Clip1.Set(true);
-	} else if (g_Clip2.Set() == false) {
-		g_Clip2.m_ptClip = point;
+	} else if (g_Clip2.isSet() == false) {
+		g_Clip2._coords = point;
 		g_Clip2.Set(true);
-	} else if (g_Clip3.Set() == false) {
-		g_Clip3.m_ptClip = point;
+	} else if (g_Clip3.isSet() == false) {
+		g_Clip3._coords = point;
 		g_Clip3.Set(true);
 	} else {
-		g_Clip1.Reset();
-		g_Clip2.Reset();
-		g_Clip3.Reset();
-		g_Clip1.m_ptClip = point;
+		g_Clip1.reset();
+		g_Clip2.reset();
+		g_Clip3.reset();
+		g_Clip1._coords = point;
 		g_Clip1.Set(true);
 	}
 
@@ -921,8 +830,8 @@ void XYWnd::Clipper_OnLButtonUp (int x, int y)
 void XYWnd::Clipper_OnMouseMoved (int x, int y)
 {
 	if (g_pMovingClip) {
-		XY_ToPoint(x, y, g_pMovingClip->m_ptClip);
-		snapToGrid(g_pMovingClip->m_ptClip);
+		XY_ToPoint(x, y, g_pMovingClip->_coords);
+		snapToGrid(g_pMovingClip->_coords);
 		Clip_Update();
 		ClipperChangeNotify();
 	}
