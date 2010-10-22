@@ -253,7 +253,7 @@ void qtexture_realise (qtexture_t& texture, const TextureKey& key)
 	texture.texture_number = 0;
 	/* skip empty names and normalmaps */
 	if (!key.second.empty() && !strstr(key.second.c_str(), "_nm")) {
-		AutoPtr<Image> image(key.first.loadImage(key.second.c_str()));
+		AutoPtr<Image> image(key.first.loadImage(key.second));
 		if (image) {
 			LoadTextureRGBA(&texture, image->getRGBAPixels(), image->getWidth(), image->getHeight());
 			texture.surfaceFlags = image->getSurfaceFlags();
@@ -277,7 +277,7 @@ class TextureKeyEqualNoCase
 	public:
 		bool operator() (const TextureKey& key, const TextureKey& other) const
 		{
-			return key.first == other.first && string_equal_nocase(key.second.c_str(), other.second.c_str());
+			return key.first == other.first && string_equal_nocase(key.second, other.second);
 		}
 };
 

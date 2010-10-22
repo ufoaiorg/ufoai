@@ -113,6 +113,10 @@ void MaterialShader::parseMaterial (Tokeniser& tokeniser)
 		else if (depth == 2) {
 			if (token == "texture") {
 				layerTexture = GlobalTexturesCache().capture(GlobalTexturePrefix_get() + tokeniser.getToken());
+				if (layerTexture->texture_number == 0) {
+					GlobalTexturesCache().release(layerTexture);
+					layerTexture = GlobalTexturesCache().capture(GlobalTexturePrefix_get() + "tex_common/nodraw");
+				}
 			} else if (token == "blend") {
 				src = parseBlendMode(tokeniser.getToken());
 				dest = parseBlendMode(tokeniser.getToken());
@@ -244,15 +248,30 @@ void MaterialShader::realise ()
 	}
 }
 
+bool MaterialShader::isLayerValid (const MapLayer& layer) const {
+	if (layer.getType() == ShaderLayer::BLEND) {
+		if (layer.getTexture() == 0)
+			return false;
+	}
+	return true;
+}
+
 void MaterialShader::addLayer(MapLayer &layer) {
-	m_layers.push_back(layer);
+	if (isLayerValid(layer))
+		m_layers.push_back(layer);
 }
 
 void MaterialShader::unrealise ()
 {
 	GlobalTexturesCache().release(_texture);
 
-	// TODO: Release the layers
+	for (MapLayers::iterator i = m_layers.begin(); i != m_layers.end(); ++i) {
+		MapLayer& layer = *i;
+		if (layer.getTexture() != 0) {
+			GlobalTexturesCache().release(layer.getTexture());
+		}
+	}
+	m_layers.clear();
 
 	if (_notfound != 0) {
 		GlobalTexturesCache().release(_notfound);

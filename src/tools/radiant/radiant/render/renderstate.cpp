@@ -740,23 +740,9 @@ void OpenGLState_apply (const OpenGLState& self, OpenGLState& current, unsigned 
 	}
 
 	if (delta & state & RENDER_BLEND) {
-		// FIXME: some .TGA are buggy, have a completely empty alpha channel
-		// if such brushes are rendered in this loop they would be totally transparent with GL_MODULATE
-		// so I decided using GL_DECAL instead
-		// if an empty-alpha-channel or nearly-empty texture is used. It will be blank-transparent.
-		// this could get better if you can get glTexEnviv (GL_TEXTURE_ENV, to work .. patches are welcome
-
 		glEnable(GL_BLEND);
-		if (GlobalOpenGL().GL_1_3()) {
-			glActiveTexture(GL_TEXTURE0);
-		}
-		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 	} else if (delta & ~state & RENDER_BLEND) {
 		glDisable(GL_BLEND);
-		if (GlobalOpenGL().GL_1_3()) {
-			glActiveTexture(GL_TEXTURE0);
-		}
-		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	}
 
 	setState(state, delta, RENDER_CULLFACE, GL_CULL_FACE);

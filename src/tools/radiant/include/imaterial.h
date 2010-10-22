@@ -142,6 +142,8 @@ class MaterialShader: public IShader
 
 		void addLayer(MapLayer &layer);
 
+		bool isLayerValid (const MapLayer& layer) const;
+
 		void forEachLayer(const ShaderLayerCallback& callback) const;
 };
 
