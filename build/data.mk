@@ -13,32 +13,64 @@ $(shell find $(BASE_DIR)/$(1) -type f -print)
 endef
 
 define ZIP
-$(shell ([ -x "$$(which 7z 2> /dev/null)" ] && echo "7z a -tzip -mx=9") || ([ -x "$$(which zip 2> /dev/null)" ] && echo "zip -u9"))
+$(shell ([ -x "$$(which 7z 2> /dev/null)" ] && echo "7z u -tzip -mx=9") || ([ -x "$$(which 7za 2> /dev/null)" ] && echo "7za u -tzip -mx=9") || ([ -x "$$(which zip 2> /dev/null)" ] && echo "zip -u9"))
 endef
 
-%.pk3 :
-	$(Q)cd $(BASE_DIR); $(call ZIP) $(patsubst $(BASE_DIR)/%,%,$@) $(patsubst $(BASE_DIR)/%,%,$?)
+%.pk3:
+ifeq (7z,$(findstring 7z,$(call ZIP)))
+	$(Q)cd $(BASE_DIR); $(call ZIP) $(filter -r,$(call $@)) $(notdir $@) $(filter-out -r,$(call $@))
+else
+	$(Q)cd $(BASE_DIR); $(call ZIP) $(filter -r,$(call $@)) $(notdir $@) . -i $(subst *,\*,$(filter-out -r,$(call $@)))
+endif
 
-$(BASE_DIR)/0pics.pk3 : $(filter %.jpg %.tga %.png, $(call FIND,pics))
+define $(BASE_DIR)/0pics.pk3
+	-r pics/*.jpg pics/*.tga pics/*.png
+endef
 
-$(BASE_DIR)/0textures.pk3 : $(filter %.jpg %.tga %.png, $(call FIND,textures))
+define $(BASE_DIR)/0textures.pk3
+	-r textures/*.jpg textures/*.tga textures/*.png
+endef
 
-$(BASE_DIR)/0models.pk3 : $(filter %.mdx %.md2 %.md3 %.dpm %.obj %.jpg %.png %.tga %.anm %.tag, $(call FIND,models))
+define $(BASE_DIR)/0models.pk3
+	-r models/*.mdx models/*.md2 models/*.md3 models/*.dpm models/*.obj models/*.jpg models/*.png models/*.tga models/*.anm models/*.tag
+endef
 
-$(BASE_DIR)/0snd.pk3 : $(filter %.ogg %.wav, $(call FIND,sound))
+define $(BASE_DIR)/0models.pk3
+	-r models/*.mdx models/*.md2 models/*.md3 models/*.dpm models/*.obj models/*.jpg models/*.png models/*.tga models/*.anm models/*.tag
+endef
 
-$(BASE_DIR)/0music.pk3 : $(wildcard $(BASE_DIR)/music/*.ogg)
+define $(BASE_DIR)/0snd.pk3
+	-r sound/*.ogg sound/*.wav
+endef
 
-$(BASE_DIR)/0maps.pk3 : $(filter %.bsp %.ump, $(call FIND,maps))
+define $(BASE_DIR)/0music.pk3
+	-r music/*.ogg
+endef
 
-$(BASE_DIR)/0videos.pk3 : $(filter %.roq %.ogm, $(call FIND,videos))
+define $(BASE_DIR)/0maps.pk3
+	-r maps/*.bsp maps/*.ump
+endef
 
-$(BASE_DIR)/0media.pk3 : $(wildcard $(BASE_DIR)/media/*.ttf)
+define $(BASE_DIR)/0videos.pk3
+	-r videos/*.roq videos/*.ogm
+endef
 
-$(BASE_DIR)/0shaders.pk3 : $(wildcard $(BASE_DIR)/shaders/*.glsl)
+define $(BASE_DIR)/0media.pk3
+	-r media/*.ttf
+endef
 
-$(BASE_DIR)/0ufos.pk3 : $(filter %.ufo, $(call FIND,ufos))
+define $(BASE_DIR)/0shaders.pk3
+	-r shaders/*.glsl
+endef
 
-$(BASE_DIR)/0materials.pk3 : $(wildcard $(BASE_DIR)/materials/*.mat)
+define $(BASE_DIR)/0ufos.pk3
+	-r ufos/*.ufo
+endef
 
-$(BASE_DIR)/0base.pk3 : $(wildcard $(BASE_DIR)/*.cfg) $(BASE_DIR)/mapcycle.txt $(BASE_DIR)/irc_motd.txt $(wildcard $(BASE_DIR)/ai/*.lua)
+define $(BASE_DIR)/0materials.pk3
+	-r materials/*.mat
+endef
+
+define $(BASE_DIR)/0base.pk3
+	-r *.cfg mapcycle.txt irc_motd.txt ai/*.lua
+endef
