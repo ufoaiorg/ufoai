@@ -128,7 +128,7 @@ static qboolean SAV_VerifyHeader (saveFileHeader_t const * const header)
  * @param[in] file The Filename to load from (without extension)
  * @param[out] error On failure an errormessage may be set.
  */
-static qboolean SAV_GameLoad (const char *file, char **error)
+qboolean SAV_GameLoad (const char *file, const char **error)
 {
 	uLongf len;
 	char filename[MAX_OSPATH];
@@ -144,6 +144,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	FS_OpenFile(va("save/%s.%s", filename, SAVEGAME_EXTENSION), &f, FILE_READ);
 	if (!f.f) {
 		Com_Printf("Couldn't open file '%s'\n", filename);
+		*error = "File not found";
 		return qfalse;
 	}
 
@@ -164,6 +165,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 		/* our header is not valid, we MUST abort loading the game! */
 		Com_Printf("The Header of the savegame '%s.%s' is corrupted. Loading aborted\n", filename, SAVEGAME_EXTENSION);
 		Mem_Free(cbuf);
+		*error = "Corrupted header";
 		return qfalse;
 	}
 
@@ -190,6 +192,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 		if (!topNode) {
 			Mem_Free(buf);
 			Com_Printf("Error: Failure in loading the xml data!\n");
+			*error = "Corrupted xml data";
 			return qfalse;
 		}
 	} else {
@@ -198,6 +201,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 		Mem_Free(cbuf);
 		if (!topNode) {
 			Com_Printf("Error: Failure in loading the xml data!\n");
+			*error = "Corrupted xml data";
 			return qfalse;
 		}
 	}
@@ -209,6 +213,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 		Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");
 		Mem_Free(buf);
 		mxmlDelete(topNode);
+		*error = "Invalid xml data";
 		return qfalse;
 	}
 
@@ -218,6 +223,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 		if (!saveSubsystems[i].load(node)) {
 			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n",
 					saveSubsystems[i].name);
+			*error = va("Could not load subsystem %s", saveSubsystems[i].name);
 			return qfalse;
 		} else
 			Com_Printf("...subsystem '%s' - loaded.\n", saveSubsystems[i].name);
@@ -226,6 +232,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 	if (!SAV_GameActionsAfterLoad()) {
 		Com_Printf("Savegame postprocessing returned false - savegame could not be loaded\n");
+		*error = "Postprocessing failed";
 		return qfalse;
 	}
 
@@ -448,7 +455,7 @@ static void SAV_GameReadGameComments_f (void)
  */
 static void SAV_GameLoad_f (void)
 {
-	char *error = NULL;
+	const char *error = NULL;
 	const cvar_t *gamedesc;
 
 	/* get argument */
@@ -482,7 +489,7 @@ static void SAV_GameLoad_f (void)
  */
 static void SAV_GameContinue_f (void)
 {
-	char *error = NULL;
+	const char *error = NULL;
 
 	if (CL_OnBattlescape()) {
 		UI_PopWindow(qfalse);
@@ -612,7 +619,7 @@ static void SAV_GameQuickSave_f (void)
  */
 static void SAV_GameQuickLoad_f (void)
 {
-	char *error = NULL;
+	const char *error = NULL;
 
 	if (CL_OnBattlescape()) {
 		Com_Printf("Could not load the campaign while you are on the battlefield\n");

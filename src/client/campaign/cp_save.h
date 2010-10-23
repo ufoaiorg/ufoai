@@ -84,4 +84,6 @@ qboolean CP_LoadInterestsXML(mxml_node_t *parent);
 qboolean B_PostLoadInit(void);
 qboolean AIR_PostLoadInit(void);
 
+qboolean SAV_GameLoad(const char *file, const char **error);
+
 #endif /* CLIENT_CL_SAVE_H */

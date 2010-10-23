@@ -825,15 +825,14 @@ static void testLoad (void)
 {
 	int i;
 	aircraft_t *ufo;
+	const char *error;
 
 	ResetCampaignData();
 
 	CP_InitOverlay();
 
-	Cvar_Set("mn_unittest1", "foobar");
-
 	ccs.curCampaign = NULL;
-	Cmd_ExecuteString("game_load unittest1");
+	CU_ASSERT_TRUE(SAV_GameLoad("unittest1", &error));
 	CU_ASSERT_PTR_NOT_NULL(ccs.curCampaign);
 
 	i = 0;
@@ -843,6 +842,20 @@ static void testLoad (void)
 
 	/* there should be one ufo on the geoscape */
 	CU_ASSERT_EQUAL(i, 1);
+}
+
+/* https://sourceforge.net/tracker/index.php?func=detail&aid=3090011&group_id=157793&atid=805242 */
+static void test3090011 (void)
+{
+	const char *error = NULL;
+	qboolean success;
+
+	ResetCampaignData();
+
+	CP_InitOverlay();
+
+	success = SAV_GameLoad("unittest2", &error);
+	UFO_CU_ASSERT_TRUE_MSG(success, error);
 }
 
 int UFO_AddCampaignTests (void)
@@ -915,6 +928,9 @@ int UFO_AddCampaignTests (void)
 		return CU_get_error();
 
 	if (CU_ADD_TEST(campaignSuite, testLoad) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(campaignSuite, test3090011) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

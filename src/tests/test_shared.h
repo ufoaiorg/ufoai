@@ -28,6 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/common.h"
 #include "../shared/shared.h"
 
+#define UFO_CU_ASSERT_TRUE_MSG(value, msg) \
+  { CU_assertImplementation((value), __LINE__, msg ? msg : ("UFO_CU_ASSERT(" #value ")"), __FILE__, "", CU_FALSE); }
+
 void TEST_vPrintf(const char *fmt, va_list argptr);
 void TEST_Init(void);
 void TEST_Shutdown(void);
