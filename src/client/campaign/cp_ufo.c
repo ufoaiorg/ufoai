@@ -744,7 +744,7 @@ qboolean UFO_CampaignCheckEvents (void)
 	ufo = NULL;
 	while ((ufo = UFO_GetNext(ufo)) != NULL) {
 		char detectedBy[MAX_VAR] = "";
-		int baseIdx, installationIdx;
+		int installationIdx;
 		float minDistance = -1;
 		/* detected tells us whether or not a UFO is detected NOW, whereas ufo->detected tells
 		 * us whether or not the UFO was detected PREVIOUSLY. */

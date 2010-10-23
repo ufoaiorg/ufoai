@@ -1112,7 +1112,6 @@ static void MAP_SelectObject_f (void)
  */
 static void MAP_GetGeoscapeAngle (float *vector)
 {
-	int baseIdx;
 	int counter = 0;
 	int maxEventIdx;
 	const int numMissions = CP_CountMissionOnGeoscape();
@@ -1754,7 +1753,7 @@ void MAP_UpdateGeoscapeDock (void)
 static void MAP_DrawMapMarkers (const uiNode_t* node)
 {
 	const linkedList_t *list;
-	int x, y, i, baseIdx, installationIdx, idx;
+	int x, y, i, installationIdx, idx;
 	const char* font;
 	aircraft_t *ufo;
 	base_t *base;

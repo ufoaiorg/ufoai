@@ -168,7 +168,6 @@ int CP_GetAverageXVIRate (void)
 {
 	int XVIRate = 0;
 	int i;
-	nation_t* nation;
 
 	assert(ccs.numNations);
 

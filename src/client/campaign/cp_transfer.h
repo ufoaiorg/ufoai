@@ -30,16 +30,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct transferData_s;
 
-enum {
+typedef enum {
 	CARGO_TYPE_INVALID = 0,
 	CARGO_TYPE_ITEM,
 	CARGO_TYPE_EMPLOYEE,
 	CARGO_TYPE_ALIEN_DEAD,
 	CARGO_TYPE_ALIEN_ALIVE,
-	CARGO_TYPE_AIRCRAFT,
-
-	CARGO_TYPE_MAX
-};
+	CARGO_TYPE_AIRCRAFT
+} transferCargoType_t;
 
 enum {
 	TRANS_ALIEN_ALIVE,
@@ -74,10 +72,10 @@ typedef enum {
 	TRANS_TYPE_ITEM,
 	TRANS_TYPE_EMPLOYEE,
 	TRANS_TYPE_ALIEN,
-	TRANS_TYPE_AIRCRAFT,
-
-	TRANS_TYPE_MAX
+	TRANS_TYPE_AIRCRAFT
 } transferType_t;
+
+#define TRANS_TYPE_MAX (TRANS_TYPE_AIRCRAFT + 1)
 
 /** @brief Array of current cargo onboard. */
 typedef struct transferCargo_s {
@@ -88,7 +86,7 @@ typedef struct transferCargo_s {
 		const teamDef_t *alienTeam;
 		const void *pointer;		/**< if you just wanna check whether a valid pointer was set */
 	} data;
-	transferType_t type;			/**< Type of cargo (1 - items, 2 - employees, 3 - alien bodies, 4 - live aliens). */
+	transferCargoType_t type;			/**< Type of cargo (1 - items, 2 - employees, 3 - alien bodies, 4 - live aliens). */
 } transferCargo_t;
 
 typedef struct transferData_s {
@@ -122,7 +120,7 @@ typedef struct transferData_s {
 
 #define TR_SetData(dataPtr, typeVal, ptr)  do { (dataPtr)->data.pointer = (ptr); (dataPtr)->type = (typeVal); } while (0);
 
-qboolean TR_AddData(transferData_t *transferData, transferType_t type, const void* data);
+qboolean TR_AddData(transferData_t *transferData, transferCargoType_t type, const void* data);
 void TR_TransferRun(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 

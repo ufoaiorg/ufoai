@@ -1294,7 +1294,6 @@ static void B_SetUpFirstBase (const campaign_t *campaign, base_t* base)
  */
 int B_GetInstallationLimit (void)
 {
-	int i;
 	int limit = 0;
 	base_t *base = NULL;
 

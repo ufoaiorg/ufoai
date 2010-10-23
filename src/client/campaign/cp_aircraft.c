@@ -2869,7 +2869,6 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
  */
 static qboolean AIR_PostLoadInitMissions (void)
 {
-	int i;
 	qboolean success = qtrue;
 	aircraft_t *ufo;
 	base_t *base = NULL;

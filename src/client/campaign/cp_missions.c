@@ -1211,7 +1211,6 @@ void CP_MissionEnd (const campaign_t *campaign, mission_t* mission, const battle
 {
 	int civiliansKilled;
 	int aliensKilled;
-	int i;
 	base_t *base;
 	aircraft_t *aircraft;
 	int numberOfSoldiers = 0; /* DEBUG */

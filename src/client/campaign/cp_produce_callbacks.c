@@ -332,7 +332,6 @@ static void PR_AircraftInfo (const base_t *base, const aircraft_t *aircraftTempl
 {
 	static char productionInfo[512];
 	int time;
-	float prodPerHour;
 	assert(aircraftTemplate);
 
 	time = PR_GetRemainingHours(base, aircraftTemplate->tech, NULL, percentDone);

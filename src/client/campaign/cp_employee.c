@@ -737,7 +737,6 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
  */
 qboolean E_DeleteEmployee (employee_t *employee)
 {
-	int i;
 	qboolean found = qfalse;
 	employeeType_t type;
 
@@ -799,7 +798,7 @@ void E_DeleteAllEmployees (base_t* base)
  */
 void E_DeleteEmployeesExceedingCapacity (base_t *base)
 {
-	int type, i;
+	int type;
 
 	/* Check if there are too many employees */
 	if (base->capacities[CAP_EMPLOYEES].cur <= base->capacities[CAP_EMPLOYEES].max)

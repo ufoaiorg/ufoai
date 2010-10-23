@@ -274,7 +274,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
  */
 static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *destbase)
 {
-	int i, intransfer = 0;
+	int intransfer = 0;
 	employeeType_t emplType;
 
 	assert(employee && destbase);
@@ -620,7 +620,6 @@ static int TR_FillEmployees (const base_t *srcbase, const base_t *destbase, link
 			case EMPL_WORKER: {
 				const int hired = E_CountHired(srcbase, emplType);
 				const int trCount = LIST_Count(td.trEmployeesTmp[emplType]);
-				char str[128];
 
 				if (hired <= 0)
 					break;
@@ -921,9 +920,8 @@ static void TR_AddItemToTransferList (base_t *base, transferData_t *td, int num,
 
 static void TR_AddEmployeeToTransferList (base_t *base, transferData_t *transferData, int num)
 {
-	int cnt = 0, i;
+	int cnt = 0;
 	employeeType_t emplType;
-	int numEmployees[MAX_EMPL];
 
 	if (TR_GetTransferEmployee(EMPL_SOLDIER, &cnt, base, num))
 		return;
@@ -1040,6 +1038,8 @@ static void TR_AddToTransferList (base_t *base, transferData_t *transfer, int nu
 		break;
 	case TRANS_TYPE_AIRCRAFT:
 		TR_AddAircraftToTransferList(base, transfer, num);
+		break;
+	case TRANS_TYPE_INVALID:
 		break;
 	}
 }
@@ -1210,7 +1210,7 @@ static void TR_RemoveItemFromCargoList (base_t *base, transferData_t *transferDa
 
 static void TR_RemoveEmployeeFromCargoList (base_t *base, transferData_t *transferData, int num)
 {
-	int cnt = 0, entries = 0, i, j;
+	int cnt = 0, entries = 0, i;
 	qboolean removed = qfalse;
 	employeeType_t emplType;
 
@@ -1369,6 +1369,8 @@ static void TR_RemoveFromCargoList (base_t *base, transferData_t *transferData, 
 		break;
 	case CARGO_TYPE_AIRCRAFT:
 		TR_RemoveAircraftFromCargoList(base, transferData, num);
+		break;
+	case CARGO_TYPE_INVALID:
 		break;
 	}
 }

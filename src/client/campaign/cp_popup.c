@@ -529,7 +529,7 @@ static void CL_PopupInterceptRClick_f (void)
  */
 static void CL_PopupInterceptBaseClick_f (void)
 {
-	int num, baseIdx, installationIdx, i;
+	int num, installationIdx, i;
 	base_t* base;
 	installation_t *installation;
 	qboolean atLeastOneBase = qfalse;

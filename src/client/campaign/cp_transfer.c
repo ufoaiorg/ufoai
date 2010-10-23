@@ -321,7 +321,7 @@ static void TR_TransferEnd (transfer_t *transfer)
 	transfer->active = qfalse;
 }
 
-qboolean TR_AddData (transferData_t *transferData, transferType_t type, const void* data)
+qboolean TR_AddData (transferData_t *transferData, transferCargoType_t type, const void* data)
 {
 	if (transferData->trCargoCountTmp >= MAX_CARGO)
 		return qfalse;
@@ -341,7 +341,6 @@ transfer_t* TR_TransferStart (base_t *srcBase, transferData_t *transData)
 	transfer_t *transfer;
 	float time;
 	int i;
-	int j;
 	aircraft_t *aircraft = NULL;
 
 	if (!transData->transferBase || !srcBase) {

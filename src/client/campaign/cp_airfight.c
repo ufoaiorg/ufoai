@@ -749,7 +749,6 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
  */
 void AIRFIGHT_CampaignRunBaseDefence (int dt)
 {
-	int baseIdx;
 	int installationIdx;
 	base_t *base;
 

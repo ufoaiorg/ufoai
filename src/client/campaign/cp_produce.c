@@ -211,9 +211,9 @@ const char* PR_GetName (const productionData_t *data)
 		return _(data->data.aircraft->tpl->name);
 	case PRODUCTION_TYPE_DISASSEMBLY:
 		return UFO_TypeToName(data->data.ufo->ufoTemplate->ufotype);
+	default:
+		Com_Error(ERR_DROP, "Invalid production type given: %i", data->type);
 	}
-
-	Com_Error(ERR_DROP, "Invalid production type given: %i", data->type);
 }
 
 /**
@@ -698,7 +698,6 @@ int PR_DecreaseProduction (production_t *prod, int amount)
  */
 void PR_ProductionRun (void)
 {
-	int i;
 	base_t *base;
 
 	/* Loop through all founded bases. Then check productions

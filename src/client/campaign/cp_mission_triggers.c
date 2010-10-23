@@ -59,7 +59,7 @@ static void CP_AddTechAsResearchable_f (void)
  */
 static void CP_AddItemAsCollected_f (void)
 {
-	int i, baseID;
+	int baseID;
 	const char* id;
 	base_t *base;
 	const objDef_t *item;
