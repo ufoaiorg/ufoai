@@ -1,8 +1,16 @@
 #include <winresrc.h>
 
-1 RT_MANIFEST DISCARDABLE "build/projects/ufo.exe.manifest"
-101 ICON DISCARDABLE "build/projects/ufo.ico"
-112 ICON DISCARDABLE "build/projects/ufoded.ico"
+#ifndef PATH_RC_FILE
+#define PATH_RC_FILE "build/projects/"
+#endif
+
+#define PATH_MANIFEST_FILE PATH_RC_FILE "ufo.exe.manifest"
+#define PATH_UFOICON_FILE PATH_RC_FILE "ufo.ico"
+#define PATH_UFODEDICON_FILE PATH_RC_FILE "ufoded.ico"
+
+1 RT_MANIFEST DISCARDABLE PATH_MANIFEST_FILE
+101 ICON DISCARDABLE PATH_UFOICON_FILE
+112 ICON DISCARDABLE PATH_UFODEDICON_FILE
 
 VS_VERSION_INFO VERSIONINFO
 FILEVERSION 2,4,0,0

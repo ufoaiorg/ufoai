@@ -18,6 +18,7 @@
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
 					<Add option="-DNODEBUG" />
+					<Add option="-DPATH_RC_FILE" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -42,6 +43,7 @@
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-DWINVER=0x501" />
 					<Add option="-DDEBUG" />
+					<Add option="-DPATH_RC_FILE" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
