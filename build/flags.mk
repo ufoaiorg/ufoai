@@ -22,6 +22,7 @@ CFLAGS += -Wmissing-declarations
 CFLAGS += -Wpointer-arith
 CFLAGS += -Wno-long-long
 CFLAGS += -pedantic
+CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -Wno-sign-compare
 CFLAGS += -Wno-unused-parameter
