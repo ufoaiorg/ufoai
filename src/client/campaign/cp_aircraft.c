@@ -2545,16 +2545,13 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 {
 	int i;
 	mxml_node_t * node, *snode;
-	base_t *base;
+	aircraft_t *aircraft;
 
 	/* save phalanx aircraft */
 	snode = mxml_AddNode(parent, SAVE_AIRCRAFT_PHALANX);
-	base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
-		aircraft_t *aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL)
-			AIR_SaveAircraftXML(snode, aircraft, qfalse);
-	}
+	aircraft = NULL;
+	while ((aircraft = AIR_GetNext(aircraft)) != NULL)
+		AIR_SaveAircraftXML(snode, aircraft, qfalse);
 
 	/* save the ufos on geoscape */
 	snode = mxml_AddNode(parent, SAVE_AIRCRAFT_UFOS);
