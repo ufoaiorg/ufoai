@@ -35,10 +35,6 @@ define $(BASE_DIR)/0models.pk3
 	-r models/*.mdx models/*.md2 models/*.md3 models/*.dpm models/*.obj models/*.jpg models/*.png models/*.tga models/*.anm models/*.tag
 endef
 
-define $(BASE_DIR)/0models.pk3
-	-r models/*.mdx models/*.md2 models/*.md3 models/*.dpm models/*.obj models/*.jpg models/*.png models/*.tga models/*.anm models/*.tag
-endef
-
 define $(BASE_DIR)/0snd.pk3
 	-r sound/*.ogg sound/*.wav
 endef
