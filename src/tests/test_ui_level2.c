@@ -118,7 +118,6 @@ static void UFO_AnalyseTestWindow (const char* windowName)
 static void UFO_ExecuteTestWindow (const char* windowName)
 {
 	int i;
-	qboolean result;
 
 	/* look and feed */
 	Com_Printf("\n");

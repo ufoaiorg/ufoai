@@ -556,8 +556,6 @@ static void testDisassembly (void)
 	const aircraft_t *ufo;
 	int old;
 	int i, n;
-	const building_t *buildingTemplate;
-	building_t *building;
 	storedUFO_t *storedUFO;
 	productionData_t data;
 	installation_t *installation;
