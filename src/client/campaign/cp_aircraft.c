@@ -1327,15 +1327,11 @@ void CL_CampaignRunAircraft (campaign_t* campaign, int dt, qboolean updateRadarO
  */
 aircraft_t* AIR_AircraftGetFromIDX (int aircraftIdx)
 {
-	base_t *base = NULL;
-	while ((base = B_GetNextFounded(base)) != NULL) {
-		aircraft_t* aircraft = NULL;
-		while ((aircraft = AIR_GetNextFromBase(base, aircraft)) != NULL) {
-			if (aircraft->idx == aircraftIdx) {
-				Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: aircraft idx: %i - base idx: %i (%s)\n",
-						aircraft->idx, base->idx, base->name);
-				return aircraft;
-			}
+	aircraft_t* aircraft = NULL;
+	while ((aircraft = AIR_GetNext(aircraft)) != NULL) {
+		if (aircraft->idx == aircraftIdx) {
+			Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: aircraft idx: %i\n",	aircraft->idx);
+			return aircraft;
 		}
 	}
 
