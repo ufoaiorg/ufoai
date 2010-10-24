@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "map.h"
 #include "bsp.h"
+#include "map.h"
 
 /**
  * @note used as a shortcut so the tile being processed does not need to be repeatedly passed between functions.
