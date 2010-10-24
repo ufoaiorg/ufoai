@@ -5,6 +5,7 @@
  * [mapname] [day|night] [gametype]
  */
 
+"fueldump" day 1on1
 "+africa small" day 1on1
 "+frozen small" day 1on1
 "+italy default" day 1on1

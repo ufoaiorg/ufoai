@@ -97,7 +97,8 @@ char* HTTP_GetURL (const char *url)
 	dlhandle_t dl;
 
 	if (downloading) {
-		Com_Printf("Warning: There is still another download running: '%s'\n", dl.URL);
+		Com_Printf("Warning: There is still another download running (can't fetch %s) '%s'\n",
+				url, dl.URL);
 		return NULL;
 	}
 

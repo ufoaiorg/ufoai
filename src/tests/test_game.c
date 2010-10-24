@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int UFO_InitSuiteGame (void)
 {
 	TEST_Init();
+	/* we need the teamdefs for spawning ai actors */
+	Com_ParseScripts(qtrue);
 	SV_InitGameProgs();
 	return 0;
 }
@@ -51,8 +53,25 @@ static int UFO_CleanSuiteGame (void)
 	return 0;
 }
 
-static void testGame (void)
+static void testSpawnAndConnect (void)
 {
+	char userinfo[MAX_INFO_STRING];
+	player_t *player = PLAYER_NUM(0);
+	const char *name = "name";
+	qboolean day = qtrue;
+	byte *buf;
+	/* this entity string may not contain any inline models, we don't have the bsp tree loaded here */
+	const int size = FS_LoadFile("game/entity.txt", &buf);
+
+	CU_ASSERT_NOT_EQUAL_FATAL(size, -1);
+	CU_ASSERT_FATAL(size > 0);
+
+	/* otherwise we can't link the entities */
+	SV_ClearWorld();
+
+	svs.ge->SpawnEntities(name, day, (const char *)buf);
+	svs.ge->ClientConnect(player, userinfo, sizeof(userinfo));
+	svs.ge->RunFrame();
 }
 
 int UFO_AddGameTests (void)
@@ -64,7 +83,7 @@ int UFO_AddGameTests (void)
 		return CU_get_error();
 
 	/* add the tests to the suite */
-	if (CU_ADD_TEST(GameSuite, testGame) == NULL)
+	if (CU_ADD_TEST(GameSuite, testSpawnAndConnect) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
