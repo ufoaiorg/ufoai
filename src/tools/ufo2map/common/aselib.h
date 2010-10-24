@@ -23,6 +23,8 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#ifndef UFO2MAP_ASELIB_H
+#define UFO2MAP_ASELIB_H
 
 typedef struct {
 	vec3_t verts[3];
@@ -42,3 +44,5 @@ polyset_t *ASE_GetSurfaceAnimation(int whichSurface);
 int ASE_GetNumSurfaces(void);
 const char *ASE_GetSurfaceName(int ndx);
 void ASE_Free(void);
+
+#endif
