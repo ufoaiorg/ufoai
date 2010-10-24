@@ -233,7 +233,7 @@ static inline unsigned int buttons_for_state (guint state)
 	return flags;
 }
 
-void XYWnd::SetScale (float f)
+void XYWnd::setScale (float f)
 {
 	m_fScale = f;
 	updateProjection();
@@ -244,13 +244,13 @@ void XYWnd::SetScale (float f)
 static void XYWnd_ZoomIn (XYWnd* xy)
 {
 	const float max_scale = 64.0f;
-	const float scale = xy->Scale() * 5.0f / 4.0f;
+	const float scale = xy->getScale() * 5.0f / 4.0f;
 	if (scale > max_scale) {
-		if (xy->Scale() != max_scale) {
-			xy->SetScale(max_scale);
+		if (xy->getScale() != max_scale) {
+			xy->setScale(max_scale);
 		}
 	} else {
-		xy->SetScale(scale);
+		xy->setScale(scale);
 	}
 }
 
@@ -261,14 +261,14 @@ static void XYWnd_ZoomIn (XYWnd* xy)
  */
 static void XYWnd_ZoomOut (XYWnd* xy)
 {
-	float min_scale = MIN(xy->Width(), xy->Height()) / (1.1f * (g_MaxWorldCoord - g_MinWorldCoord));
-	float scale = xy->Scale() * 4.0f / 5.0f;
+	float min_scale = MIN(xy->getWidth(), xy->getHeight()) / (1.1f * (g_MaxWorldCoord - g_MinWorldCoord));
+	float scale = xy->getScale() * 4.0f / 5.0f;
 	if (scale < min_scale) {
-		if (xy->Scale() != min_scale) {
-			xy->SetScale(min_scale);
+		if (xy->getScale() != min_scale) {
+			xy->setScale(min_scale);
 		}
 	} else {
-		xy->SetScale(scale);
+		xy->setScale(scale);
 	}
 }
 
@@ -283,85 +283,6 @@ EViewType GlobalXYWnd_getCurrentViewType (void)
 // variables
 
 static bool g_bCrossHairs = false;
-
-// this is maybe broken
-void WXY_Print (void)
-{
-	long width, height;
-	width = g_pParentWnd->ActiveXY()->Width();
-	height = g_pParentWnd->ActiveXY()->Height();
-	unsigned char* img;
-
-	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), _("Save Image"), false, false, "bmp",
-			".bmp");
-	std::string filename = fileChooser.display();
-	if (filename.empty())
-		return;
-
-	img = (unsigned char*) malloc((width + 1) * (height + 1) * 3);
-	glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, img);
-
-	/** use gtk to save the image */
-	FILE *fp;
-	fp = fopen(filename.c_str(), "wb");
-	if (fp) {
-		unsigned short bits;
-		unsigned long cmap, bfSize;
-
-		bits = 24;
-		cmap = 0;
-		bfSize = 54 + width * height * 3;
-
-		long byteswritten = 0;
-		long pixoff = 54 + cmap * 4;
-		short res = 0;
-		char m1 = 'B', m2 = 'M';
-		file_write(&m1, 1, fp);
-		byteswritten++; // B
-		file_write(&m2, 1, fp);
-		byteswritten++; // M
-		file_write(&bfSize, 4, fp);
-		byteswritten += 4;// bfSize
-		file_write(&res, 2, fp);
-		byteswritten += 2;// bfReserved1
-		file_write(&res, 2, fp);
-		byteswritten += 2;// bfReserved2
-		file_write(&pixoff, 4, fp);
-		byteswritten += 4;// bfOffBits
-
-		unsigned long biSize = 40, compress = 0, size = 0;
-		long pixels = 0;
-		unsigned short planes = 1;
-		file_write(&biSize, 4, fp);
-		byteswritten += 4;// biSize
-		file_write(&width, 4, fp);
-		byteswritten += 4;// biWidth
-		file_write(&height, 4, fp);
-		byteswritten += 4;// biHeight
-		file_write(&planes, 2, fp);
-		byteswritten += 2;// biPlanes
-		file_write(&bits, 2, fp);
-		byteswritten += 2;// biBitCount
-		file_write(&compress, 4, fp);
-		byteswritten += 4;// biCompression
-		file_write(&size, 4, fp);
-		byteswritten += 4;// biSizeImage
-		file_write(&pixels, 4, fp);
-		byteswritten += 4;// biXPelsPerMeter
-		file_write(&pixels, 4, fp);
-		byteswritten += 4;// biYPelsPerMeter
-		file_write(&cmap, 4, fp);
-		byteswritten += 4;// biClrUsed
-		file_write(&cmap, 4, fp);
-		byteswritten += 4;// biClrImportant
-
-		file_write(img, width * height * 3, fp);
-
-		fclose(fp);
-	}
-
-	free(img);
-}
 
 #include "../timer.h"
 
@@ -410,21 +331,21 @@ bool XYWnd::chaseMouseMotion (int pointx, int pointy)
 		if (m_chasemouse_delta_y != 0 || m_chasemouse_delta_x != 0) {
 			m_chasemouse_current_x = pointx;
 			m_chasemouse_current_y = pointy;
-			if (m_chasemouse_handler == 0) {
+			if (_chaseMouseHandler == 0) {
 				g_chasemouse_timer.start();
-				m_chasemouse_handler = g_idle_add(xywnd_chasemouse, this);
+				_chaseMouseHandler = g_idle_add(xywnd_chasemouse, this);
 			}
 			return true;
 		} else {
-			if (m_chasemouse_handler != 0) {
-				g_source_remove(m_chasemouse_handler);
-				m_chasemouse_handler = 0;
+			if (_chaseMouseHandler != 0) {
+				g_source_remove(_chaseMouseHandler);
+				_chaseMouseHandler = 0;
 			}
 		}
 	} else {
-		if (m_chasemouse_handler != 0) {
-			g_source_remove(m_chasemouse_handler);
-			m_chasemouse_handler = 0;
+		if (_chaseMouseHandler != 0) {
+			g_source_remove(_chaseMouseHandler);
+			_chaseMouseHandler = 0;
 		}
 	}
 	return false;
@@ -437,11 +358,11 @@ Shader* XYWnd::m_state_selected = 0;
 inline void xy_update_xor_rectangle (XYWnd& self, rect_t area)
 {
 	if (GTK_WIDGET_VISIBLE(self.getWidget())) {
-		self.m_XORRectangle.set(rectangle_from_area(area.min, area.max, self.Width(), self.Height()));
+		self.m_XORRectangle.set(rectangle_from_area(area.min, area.max, self.getWidth(), self.getHeight()));
 	}
 }
 
-static gboolean xywnd_button_press (GtkWidget* widget, GdkEventButton* event, XYWnd* xywnd)
+gboolean XYWnd::callbackButtonPress (GtkWidget* widget, GdkEventButton* event, XYWnd* xywnd)
 {
 	if (event->type == GDK_BUTTON_PRESS) {
 		g_pParentWnd->SetActiveXY(xywnd);
@@ -454,7 +375,7 @@ static gboolean xywnd_button_press (GtkWidget* widget, GdkEventButton* event, XY
 	return FALSE;
 }
 
-static gboolean xywnd_button_release (GtkWidget* widget, GdkEventButton* event, XYWnd* xywnd)
+gboolean XYWnd::callbackButtonRelease (GtkWidget* widget, GdkEventButton* event, XYWnd* xywnd)
 {
 	if (event->type == GDK_BUTTON_RELEASE) {
 		xywnd->XY_MouseUp(static_cast<int> (event->x), static_cast<int> (event->y), buttons_for_event_button(event));
@@ -464,7 +385,7 @@ static gboolean xywnd_button_release (GtkWidget* widget, GdkEventButton* event, 
 	return FALSE;
 }
 
-static void xywnd_motion (gdouble x, gdouble y, guint state, void* data)
+void XYWnd::callbackMouseMotion (gdouble x, gdouble y, guint state, void* data)
 {
 	if (reinterpret_cast<XYWnd*> (data)->chaseMouseMotion(static_cast<int> (x), static_cast<int> (y))) {
 		return;
@@ -472,7 +393,7 @@ static void xywnd_motion (gdouble x, gdouble y, guint state, void* data)
 	reinterpret_cast<XYWnd*> (data)->XY_MouseMoved(static_cast<int> (x), static_cast<int> (y), buttons_for_state(state));
 }
 
-static gboolean xywnd_wheel_scroll (GtkWidget* widget, GdkEventScroll* event, XYWnd* xywnd)
+gboolean XYWnd::callbackMouseWheelScroll (GtkWidget* widget, GdkEventScroll* event, XYWnd* xywnd)
 {
 	if (event->direction == GDK_SCROLL_UP) {
 		XYWnd_ZoomIn(xywnd);
@@ -482,16 +403,16 @@ static gboolean xywnd_wheel_scroll (GtkWidget* widget, GdkEventScroll* event, XY
 	return FALSE;
 }
 
-static gboolean xywnd_size_allocate (GtkWidget* widget, GtkAllocation* allocation, XYWnd* xywnd)
+gboolean XYWnd::callbackSizeAllocate (GtkWidget* widget, GtkAllocation* allocation, XYWnd* xywnd)
 {
 	xywnd->m_nWidth = allocation->width;
 	xywnd->m_nHeight = allocation->height;
 	xywnd->updateProjection();
-	xywnd->m_window_observer->onSizeChanged(xywnd->Width(), xywnd->Height());
+	xywnd->m_window_observer->onSizeChanged(xywnd->getWidth(), xywnd->getHeight());
 	return FALSE;
 }
 
-static gboolean xywnd_expose (GtkWidget* widget, GdkEventExpose* event, XYWnd* xywnd)
+gboolean XYWnd::callbackExpose (GtkWidget* widget, GdkEventExpose* event, XYWnd* xywnd)
 {
 	gtkutil::GLWidgetSentry sentry(xywnd->getWidget());
 	if (Map_Valid(g_map) && ScreenUpdates_Enabled()) {
@@ -510,15 +431,15 @@ void XYWnd_CameraMoved (XYWnd& xywnd)
 
 XYWnd::XYWnd () :
 	_glWidget(false), m_gl_widget(static_cast<GtkWidget*> (_glWidget)), m_deferredDraw(WidgetQueueDrawCaller(
-			*m_gl_widget)), m_deferred_motion(xywnd_motion, this), m_parent(0), m_window_observer(NewWindowObserver()),
-			m_XORRectangle(m_gl_widget), m_chasemouse_handler(0)
+			*m_gl_widget)), m_deferred_motion(callbackMouseMotion, this), m_parent(0), m_window_observer(NewWindowObserver()),
+			m_XORRectangle(m_gl_widget), _chaseMouseHandler(0)
 {
 	m_bActive = false;
 	m_buttonstate = 0;
 
 	m_bNewBrushDrag = false;
-	m_move_started = false;
-	m_zoom_started = false;
+	_moveStarted = false;
+	_zoomStarted = false;
 
 	m_nWidth = 0;
 	m_nHeight = 0;
@@ -559,14 +480,14 @@ XYWnd::XYWnd () :
 	GTK_WIDGET_SET_FLAGS(m_gl_widget, GTK_CAN_FOCUS);
 	gtk_widget_set_size_request(m_gl_widget, XYWND_MINSIZE_X, XYWND_MINSIZE_Y);
 
-	m_sizeHandler = g_signal_connect(G_OBJECT(m_gl_widget), "size_allocate", G_CALLBACK(xywnd_size_allocate), this);
-	m_exposeHandler = g_signal_connect(G_OBJECT(m_gl_widget), "expose_event", G_CALLBACK(xywnd_expose), this);
+	m_sizeHandler = g_signal_connect(G_OBJECT(m_gl_widget), "size_allocate", G_CALLBACK(callbackSizeAllocate), this);
+	m_exposeHandler = g_signal_connect(G_OBJECT(m_gl_widget), "expose_event", G_CALLBACK(callbackExpose), this);
 
-	g_signal_connect(G_OBJECT(m_gl_widget), "button_press_event", G_CALLBACK(xywnd_button_press), this);
-	g_signal_connect(G_OBJECT(m_gl_widget), "button_release_event", G_CALLBACK(xywnd_button_release), this);
+	g_signal_connect(G_OBJECT(m_gl_widget), "button_press_event", G_CALLBACK(callbackButtonPress), this);
+	g_signal_connect(G_OBJECT(m_gl_widget), "button_release_event", G_CALLBACK(callbackButtonRelease), this);
 	g_signal_connect(G_OBJECT(m_gl_widget), "motion_notify_event", G_CALLBACK(DeferredMotion::gtk_motion), &m_deferred_motion);
 
-	g_signal_connect(G_OBJECT(m_gl_widget), "scroll_event", G_CALLBACK(xywnd_wheel_scroll), this);
+	g_signal_connect(G_OBJECT(m_gl_widget), "scroll_event", G_CALLBACK(callbackMouseWheelScroll), this);
 
 	Map_addValidCallback(g_map, DeferredDrawOnMapValidChangedCaller(m_deferredDraw));
 
@@ -633,7 +554,7 @@ void XYWnd::DropClipPoint (int pointx, int pointy)
 {
 	Vector3 point = g_vector3_identity;
 
-	XY_ToPoint(pointx, pointy, point);
+	convertXYToWorld(pointx, pointy, point);
 
 	Vector3 mid;
 	Select_GetMid(mid);
@@ -647,7 +568,7 @@ void XYWnd::DropClipPoint (int pointx, int pointy)
 void XYWnd::Clipper_OnLButtonDown (int x, int y)
 {
 	Vector3 mousePosition = g_vector3_identity;
-	XY_ToPoint(x, y, mousePosition);
+	convertXYToWorld(x, y, mousePosition);
 	ClipPoint* foundClipPoint = GlobalClipPoints()->find(mousePosition, m_viewType, m_fScale);
 	GlobalClipPoints()->setMovingClip(foundClipPoint);
 	if (foundClipPoint == NULL) {
@@ -664,7 +585,7 @@ void XYWnd::Clipper_OnMouseMoved (int x, int y)
 {
 	ClipPoint* movingClip = GlobalClipPoints()->getMovingClip();
 	if (movingClip != NULL) {
-		XY_ToPoint(x, y, movingClip->_coords);
+		convertXYToWorld(x, y, movingClip->_coords);
 		snapToGrid(movingClip->_coords);
 		GlobalClipPoints()->update();
 		ClipperChangeNotify();
@@ -674,7 +595,7 @@ void XYWnd::Clipper_OnMouseMoved (int x, int y)
 void XYWnd::Clipper_Crosshair_OnMouseMoved (int x, int y)
 {
 	Vector3 mousePosition = g_vector3_identity;
-	XY_ToPoint(x, y, mousePosition);
+	convertXYToWorld(x, y, mousePosition);
 	if (GlobalClipPoints()->clipMode() && GlobalClipPoints()->find(mousePosition, m_viewType, m_fScale) != 0) {
 		GdkCursor *cursor = gdk_cursor_new(GDK_CROSSHAIR);
 		gdk_window_set_cursor(m_gl_widget->window, cursor);
@@ -692,7 +613,7 @@ static inline unsigned int MoveCamera_buttons (void)
 void XYWnd_PositionCamera (XYWnd* xywnd, int x, int y, CamWnd& camwnd)
 {
 	Vector3 origin(Camera_getOrigin(camwnd));
-	xywnd->XY_ToPoint(x, y, origin);
+	xywnd->convertXYToWorld(x, y, origin);
 	xywnd->snapToGrid(origin);
 	Camera_setOrigin(camwnd, origin);
 }
@@ -707,7 +628,7 @@ static inline unsigned int OrientCamera_buttons (void)
 static void XYWnd_OrientCamera (XYWnd* xywnd, int x, int y, CamWnd& camwnd)
 {
 	Vector3 point = g_vector3_identity;
-	xywnd->XY_ToPoint(x, y, point);
+	xywnd->convertXYToWorld(x, y, point);
 	xywnd->snapToGrid(point);
 	point -= Camera_getOrigin(camwnd);
 
@@ -756,9 +677,9 @@ void XYWnd::NewBrushDrag (int x, int y)
 {
 	Vector3 mins = g_vector3_identity;
 	Vector3 maxs = g_vector3_identity;
-	XY_ToPoint(m_nNewBrushPressx, m_nNewBrushPressy, mins);
+	convertXYToWorld(m_nNewBrushPressx, m_nNewBrushPressy, mins);
 	snapToGrid(mins);
-	XY_ToPoint(x, y, maxs);
+	convertXYToWorld(x, y, maxs);
 	snapToGrid(maxs);
 
 	const int nDim = (m_viewType == XY) ? 2 : (m_viewType == YZ) ? 0 : 1;
@@ -796,7 +717,7 @@ void XYWnd::NewBrushDrag (int x, int y)
 
 void XYWnd_MouseToPoint (XYWnd* xywnd, int x, int y, Vector3& point)
 {
-	xywnd->XY_ToPoint(x, y, point);
+	xywnd->convertXYToWorld(x, y, point);
 	xywnd->snapToGrid(point);
 
 	const int nDim = (xywnd->getViewType() == XY) ? 2 : (xywnd->getViewType() == YZ) ? 0 : 1;
@@ -807,7 +728,7 @@ void XYWnd_MouseToPoint (XYWnd* xywnd, int x, int y, Vector3& point)
 /**
  * @brief Context menu for the right click in the views
  */
-void XYWnd::OnContextMenu (void)
+void XYWnd::onContextMenu (void)
 {
 	if (g_xywindow_globals.m_bRightClick == false)
 		return;
@@ -826,13 +747,13 @@ static inline unsigned int Move_buttons (void)
 	return RAD_RBUTTON;
 }
 
-static void XYWnd_moveDelta (int x, int y, unsigned int state, void* data)
+void XYWnd::callbackMoveDelta (int x, int y, unsigned int state, void* data)
 {
 	reinterpret_cast<XYWnd*> (data)->EntityCreate_MouseMove(x, y);
 	reinterpret_cast<XYWnd*> (data)->scroll(-x, y);
 }
 
-static gboolean XYWnd_Move_focusOut (GtkWidget* widget, GdkEventFocus* event, XYWnd* xywnd)
+gboolean XYWnd::callbackMoveFocusOut (GtkWidget* widget, GdkEventFocus* event, XYWnd* xywnd)
 {
 	xywnd->endMove();
 	return FALSE;
@@ -840,18 +761,17 @@ static gboolean XYWnd_Move_focusOut (GtkWidget* widget, GdkEventFocus* event, XY
 
 void XYWnd::beginMove (void)
 {
-	if (m_move_started) {
+	if (_moveStarted) {
 		endMove();
 	}
-	m_move_started = true;
-	g_xywnd_freezePointer.freeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow(), XYWnd_moveDelta,
-			this);
-	m_move_focusOut = g_signal_connect(G_OBJECT(m_gl_widget), "focus_out_event", G_CALLBACK(XYWnd_Move_focusOut), this);
+	_moveStarted = true;
+	g_xywnd_freezePointer.freeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow(), callbackMoveDelta, this);
+	m_move_focusOut = g_signal_connect(G_OBJECT(m_gl_widget), "focus_out_event", G_CALLBACK(callbackMoveFocusOut), this);
 }
 
 void XYWnd::endMove (void)
 {
-	m_move_started = false;
+	_moveStarted = false;
 	g_xywnd_freezePointer.unfreeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow());
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_move_focusOut);
 }
@@ -888,10 +808,10 @@ static gboolean XYWnd_Zoom_focusOut (GtkWidget* widget, GdkEventFocus* event, XY
 
 void XYWnd::beginZoom (void)
 {
-	if (m_zoom_started) {
+	if (_zoomStarted) {
 		endZoom();
 	}
-	m_zoom_started = true;
+	_zoomStarted = true;
 	g_dragZoom = 0;
 	g_xywnd_freezePointer.freeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow(), XYWnd_zoomDelta,
 			this);
@@ -900,7 +820,7 @@ void XYWnd::beginZoom (void)
 
 void XYWnd::endZoom (void)
 {
-	m_zoom_started = false;
+	_zoomStarted = false;
 	g_xywnd_freezePointer.unfreeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow());
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_zoom_focusOut);
 }
@@ -987,10 +907,10 @@ void XYWnd::XY_MouseDown (int x, int y, unsigned int buttons)
 
 void XYWnd::XY_MouseUp (int x, int y, unsigned int buttons)
 {
-	if (m_move_started) {
+	if (_moveStarted) {
 		endMove();
 		EntityCreate_MouseUp(x, y);
-	} else if (m_zoom_started) {
+	} else if (_zoomStarted) {
 		endZoom();
 	} else if (GlobalClipPoints()->clipMode() && buttons == Clipper_buttons()) {
 		Clipper_OnLButtonUp(x, y);
@@ -1005,9 +925,9 @@ void XYWnd::XY_MouseUp (int x, int y, unsigned int buttons)
 
 void XYWnd::XY_MouseMoved (int x, int y, unsigned int buttons)
 {
-	if (m_move_started) {
+	if (_moveStarted) {
 		// rbutton = drag xy origin
-	} else if (m_zoom_started) {
+	} else if (_zoomStarted) {
 		// zoom in/out
 	} else if (GlobalClipPoints()->clipMode() && GlobalClipPoints()->getMovingClip() != 0) {
 		Clipper_OnMouseMoved(x, y);
@@ -1024,7 +944,7 @@ void XYWnd::XY_MouseMoved (int x, int y, unsigned int buttons)
 		m_window_observer->onMouseMotion(WindowVector_forInteger(x, y), modifiers_for_flags(buttons));
 
 		m_mousePosition = g_vector3_identity;
-		XY_ToPoint(x, y, m_mousePosition);
+		convertXYToWorld(x, y, m_mousePosition);
 		snapToGrid(m_mousePosition);
 
 		StringOutputStream status(64);
@@ -1058,7 +978,7 @@ void XYWnd::EntityCreate_MouseUp (int x, int y)
 {
 	if (m_entityCreate) {
 		m_entityCreate = false;
-		OnContextMenu();
+		onContextMenu();
 	}
 }
 
@@ -1073,7 +993,7 @@ static inline float normalised_to_world (float normalised, float world_origin, f
 }
 
 // TTimo: watch it, this doesn't init one of the 3 coords
-void XYWnd::XY_ToPoint (int x, int y, Vector3& point)
+void XYWnd::convertXYToWorld (int x, int y, Vector3& point)
 {
 	float normalised2world_scale_x = m_nWidth / 2 / m_fScale;
 	float normalised2world_scale_y = m_nHeight / 2 / m_fScale;
@@ -1413,11 +1333,6 @@ void XYWnd::drawGrid (void)
 	}
 }
 
-/*
- ==============
- XY_DrawBlockGrid
- ==============
- */
 void XYWnd::drawBlockGrid (void)
 {
 	if (Map_FindWorldspawn(g_map) == 0)
@@ -1553,7 +1468,7 @@ static inline float Betwixt (const float f1, const float f2)
 
 /// \todo can be greatly simplified but per usual i am in a hurry
 /// which is not an excuse, just a fact
-void XYWnd::PaintSizeInfo (int nDim1, int nDim2, Vector3& vMinBounds, Vector3& vMaxBounds)
+void XYWnd::drawSizeInfo (int nDim1, int nDim2, Vector3& vMinBounds, Vector3& vMaxBounds)
 {
 	if (vMinBounds == vMaxBounds)
 		return;
@@ -1776,12 +1691,6 @@ void XYWnd::updateModelview ()
 	m_view.Construct(m_projection, m_modelview, m_nWidth, m_nHeight);
 }
 
-/*
- ==============
- XY_Draw
- ==============
- */
-
 void XYWnd::draw ()
 {
 	// clear
@@ -1856,7 +1765,7 @@ void XYWnd::draw ()
 	if (g_xywindow_globals_private.m_bSizePaint && GlobalSelectionSystem().countSelected() != 0) {
 		Vector3 min, max;
 		Select_GetBounds(min, max);
-		PaintSizeInfo(nDim1, nDim2, min, max);
+		drawSizeInfo(nDim1, nDim2, min, max);
 	}
 
 	if (g_bCrossHairs) {
@@ -1927,13 +1836,6 @@ void XYWnd::draw ()
 	}
 
 	glFinish();
-}
-
-void XYWnd::onEntityCreate (const std::string& item)
-{
-	Vector3 point = g_vector3_identity;
-	XYWnd_MouseToPoint(this, m_entityCreate_x, m_entityCreate_y, point);
-	Entity_createFromSelection(item, point);
 }
 
 void GetFocusPosition (Vector3& position)
@@ -2034,11 +1936,11 @@ void XY_Next ()
 void XY_Zoom100 ()
 {
 	if (g_pParentWnd->GetXYWnd())
-		g_pParentWnd->GetXYWnd()->SetScale(1);
+		g_pParentWnd->GetXYWnd()->setScale(1);
 	if (g_pParentWnd->GetXZWnd())
-		g_pParentWnd->GetXZWnd()->SetScale(1);
+		g_pParentWnd->GetXZWnd()->setScale(1);
 	if (g_pParentWnd->GetYZWnd())
-		g_pParentWnd->GetYZWnd()->SetScale(1);
+		g_pParentWnd->GetYZWnd()->setScale(1);
 }
 
 /**

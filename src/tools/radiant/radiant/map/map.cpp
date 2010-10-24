@@ -1570,12 +1570,12 @@ void RegionOff (void)
 
 void RegionXY (void)
 {
-	Map_RegionXY(g_pParentWnd->GetXYWnd()->getOrigin()[0] - 0.5f * g_pParentWnd->GetXYWnd()->Width()
-			/ g_pParentWnd->GetXYWnd()->Scale(), g_pParentWnd->GetXYWnd()->getOrigin()[1] - 0.5f
-			* g_pParentWnd->GetXYWnd()->Height() / g_pParentWnd->GetXYWnd()->Scale(),
-			g_pParentWnd->GetXYWnd()->getOrigin()[0] + 0.5f * g_pParentWnd->GetXYWnd()->Width()
-					/ g_pParentWnd->GetXYWnd()->Scale(), g_pParentWnd->GetXYWnd()->getOrigin()[1] + 0.5f
-					* g_pParentWnd->GetXYWnd()->Height() / g_pParentWnd->GetXYWnd()->Scale());
+	Map_RegionXY(g_pParentWnd->GetXYWnd()->getOrigin()[0] - 0.5f * g_pParentWnd->GetXYWnd()->getWidth()
+			/ g_pParentWnd->GetXYWnd()->getScale(), g_pParentWnd->GetXYWnd()->getOrigin()[1] - 0.5f
+			* g_pParentWnd->GetXYWnd()->getHeight() / g_pParentWnd->GetXYWnd()->getScale(),
+			g_pParentWnd->GetXYWnd()->getOrigin()[0] + 0.5f * g_pParentWnd->GetXYWnd()->getWidth()
+					/ g_pParentWnd->GetXYWnd()->getScale(), g_pParentWnd->GetXYWnd()->getOrigin()[1] + 0.5f
+					* g_pParentWnd->GetXYWnd()->getHeight() / g_pParentWnd->GetXYWnd()->getScale());
 	SceneChangeNotify();
 }
 

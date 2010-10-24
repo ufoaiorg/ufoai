@@ -117,7 +117,7 @@ EViewType XYWindow_getViewType ()
 Vector3 XYWindow_windowToWorld (const WindowVector& position)
 {
 	Vector3 result = g_vector3_identity;
-	g_pParentWnd->GetXYWnd()->XY_ToPoint(static_cast<int> (position.x()), static_cast<int> (position.y()), result);
+	g_pParentWnd->GetXYWnd()->convertXYToWorld(static_cast<int> (position.x()), static_cast<int> (position.y()), result);
 	return result;
 }
 

@@ -1663,7 +1663,6 @@ static GtkMenuItem* create_misc_menu (void)
 	gtk_container_add(GTK_CONTAINER(menu), GTK_WIDGET(create_colours_menu()));
 
 	create_menu_item_with_mnemonic(menu, _("Find brush..."), "FindBrush");
-	create_menu_item_with_mnemonic(menu, _("_Print XY View"), FreeCaller<WXY_Print> ());
 	create_menu_item_with_mnemonic(menu, _("_Background select"), FreeCaller<WXY_BackgroundSelect> ());
 	//	create_menu_item_with_mnemonic(menu, _("_Benchmark"), FreeCaller<GlobalCamera_Benchmark>());
 

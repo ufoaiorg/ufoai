@@ -101,17 +101,17 @@ class XYWnd
 		void NewBrushDrag (int x, int y);
 		void NewBrushDrag_End (int x, int y);
 
-		void XY_ToPoint (int x, int y, Vector3& point);
+		void convertXYToWorld (int x, int y, Vector3& point);
 		void snapToGrid (Vector3& point);
 
 		void beginMove ();
 		void endMove ();
-		bool m_move_started;
+		bool _moveStarted;
 		guint m_move_focusOut;
 
 		void beginZoom ();
 		void endZoom ();
-		bool m_zoom_started;
+		bool _zoomStarted;
 		guint m_zoom_focusOut;
 
 		void SetActive (bool b)
@@ -136,7 +136,7 @@ class XYWnd
 		int m_chasemouse_current_x, m_chasemouse_current_y;
 		int m_chasemouse_delta_x, m_chasemouse_delta_y;
 
-		guint m_chasemouse_handler;
+		guint _chaseMouseHandler;
 		void chaseMouse ();
 		bool chaseMouseMotion (int pointx, int pointy);
 
@@ -176,14 +176,25 @@ class XYWnd
 		void OriginalButtonUp (guint32 nFlags, int point, int pointy);
 		void OriginalButtonDown (guint32 nFlags, int point, int pointy);
 
+		static void callbackMoveDelta (int x, int y, unsigned int state, void* data);
+		static gboolean callbackMoveFocusOut (GtkWidget* widget, GdkEventFocus* event, XYWnd* xywnd);
+
 		GtkMenuItem* m_mnitem_separator;
 		GtkMenuItem* m_mnitem_connect;
 		GtkMenuItem* m_mnitem_fitface;
-		void OnContextMenu ();
-		void PaintSizeInfo (int nDim1, int nDim2, Vector3& vMinBounds, Vector3& vMaxBounds);
+		void onContextMenu ();
+		void drawSizeInfo (int nDim1, int nDim2, Vector3& vMinBounds, Vector3& vMaxBounds);
 
 		int m_entityCreate_x, m_entityCreate_y;
 		bool m_entityCreate;
+
+		// GTK callbacks
+		static gboolean callbackButtonPress (GtkWidget* widget, GdkEventButton* event, XYWnd* xywnd);
+		static gboolean callbackButtonRelease (GtkWidget* widget, GdkEventButton* event, XYWnd* xywnd);
+		static void callbackMouseMotion (gdouble x, gdouble y, guint state, void* data);
+		static gboolean callbackMouseWheelScroll (GtkWidget* widget, GdkEventScroll* event, XYWnd* xywnd);
+		static gboolean callbackSizeAllocate (GtkWidget* widget, GtkAllocation* allocation, XYWnd* xywnd);
+		static gboolean callbackExpose (GtkWidget* widget, GdkEventExpose* event, XYWnd* xywnd);
 
 	public:
 		void ButtonState_onMouseDown (unsigned int buttons)
@@ -202,21 +213,20 @@ class XYWnd
 		void EntityCreate_MouseMove (int x, int y);
 		void EntityCreate_MouseUp (int x, int y);
 
-		void onEntityCreate (const std::string& item);
 		EViewType getViewType ()
 		{
 			return m_viewType;
 		}
-		void SetScale (float f);
-		float Scale ()
+		void setScale (float f);
+		float getScale () const
 		{
 			return m_fScale;
 		}
-		int Width ()
+		int getWidth () const
 		{
 			return m_nWidth;
 		}
-		int Height ()
+		int getHeight () const
 		{
 			return m_nHeight;
 		}
@@ -277,7 +287,6 @@ void XZ_Front_Shown_Construct (GtkWindow* parent);
 
 void XYWindow_Construct ();
 void XYWindow_Destroy ();
-void WXY_Print ();
 void WXY_BackgroundSelect ();
 void XYShow_registerCommands ();
 void XYWnd_registerShortcuts ();
