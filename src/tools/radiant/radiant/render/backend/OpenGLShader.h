@@ -168,7 +168,7 @@ class OpenGLShader: public Shader {
 				state.m_state |= RENDER_DEPTHWRITE;
 			}
 
-			state.m_state |= RENDER_TEXTURE;
+			state.m_state |= RENDER_TEXTURE_2D;
 
 			// Colour modulation
 			reinterpret_cast<Vector3&> (state.m_colour) = layer.getColour();
@@ -187,9 +187,13 @@ class OpenGLShader: public Shader {
 
 		/// \todo Define special-case shaders in a data file.
 		void construct(const std::string& name) {
-			OpenGLState& state = appendDefaultPass();
+			static Vector3 highLightColour(1, 0, 0);
+
+			// Check the first character of the name to see if this is a special built-in shader
 			switch (name[0]) {
-			case '(':
+			case '(': {
+				// fill shader
+				OpenGLState& state = appendDefaultPass();
 				sscanf(name.c_str(), "(%g %g %g)", &state.m_colour[0], &state.m_colour[1],
 						&state.m_colour[2]);
 				state.m_colour[3] = 1.0f;
@@ -197,8 +201,10 @@ class OpenGLShader: public Shader {
 						| RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 				state.m_sort = OpenGLState::eSortFullbright;
 				break;
+			}
 
-			case '[':
+			case '[': {
+				OpenGLState& state = appendDefaultPass();
 				sscanf(name.c_str(), "[%g %g %g]", &state.m_colour[0], &state.m_colour[1],
 						&state.m_colour[2]);
 				state.m_colour[3] = 0.5f;
@@ -206,8 +212,11 @@ class OpenGLShader: public Shader {
 						| RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_BLEND;
 				state.m_sort = OpenGLState::eSortTranslucent;
 				break;
+			}
 
-			case '<':
+			case '<': {
+				// wireframe shader
+				OpenGLState& state = appendDefaultPass();
 				sscanf(name.c_str(), "<%g %g %g>", &state.m_colour[0], &state.m_colour[1],
 						&state.m_colour[2]);
 				state.m_colour[3] = 1;
@@ -217,8 +226,11 @@ class OpenGLShader: public Shader {
 				state.m_linewidth = 1;
 				state.m_pointsize = 1;
 				break;
+			}
 
-			case '$':
+			case '$': {
+				OpenGLState& state = appendDefaultPass();
+
 				if (name == "$POINT") {
 					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 					state.m_sort = OpenGLState::eSortControlFirst;
@@ -227,6 +239,10 @@ class OpenGLShader: public Shader {
 					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 					state.m_sort = OpenGLState::eSortControlFirst + 1;
 					state.m_pointsize = 4;
+				} else if (name == "$BIGPOINT") {
+					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
+					state.m_sort = OpenGLState::eSortControlFirst;
+					state.m_pointsize = 6;
 				} else if (name == "$PIVOT") {
 					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHTEST
 							| RENDER_DEPTHWRITE;
@@ -240,21 +256,32 @@ class OpenGLShader: public Shader {
 					hiddenLine.m_sort = OpenGLState::eSortGUI0;
 					hiddenLine.m_linewidth = 2;
 					hiddenLine.m_depthfunc = GL_GREATER;
+				} else if (name == "$LATTICE") {
+					state.m_colour[0] = 1;
+					state.m_colour[1] = 0.5;
+					state.m_colour[2] = 0;
+					state.m_colour[3] = 1;
+					state.m_state = RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
+					state.m_sort = OpenGLState::eSortControlFirst;
 				} else if (name == "$WIREFRAME") {
 					state.m_state = RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 					state.m_sort = OpenGLState::eSortFullbright;
 				} else if (name == "$CAM_HIGHLIGHT") {
-					state.m_colour[0] = 1;
-					state.m_colour[1] = 0;
-					state.m_colour[2] = 0;
+					state.m_colour[0] = highLightColour[0];
+					state.m_colour[1] = highLightColour[1];
+					state.m_colour[2] = highLightColour[2];
 					state.m_colour[3] = 0.3f;
 					state.m_state = RENDER_FILL | RENDER_DEPTHTEST | RENDER_CULLFACE | RENDER_BLEND
 							| RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 					state.m_sort = OpenGLState::eSortHighlight;
 					state.m_depthfunc = GL_LEQUAL;
 				} else if (name == "$CAM_OVERLAY") {
+#if 0
+					state.m_state = RENDER_CULLFACE|RENDER_COLOURWRITE|RENDER_DEPTHWRITE;
+					state.m_sort = OpenGLState::eSortOverlayFirst;
+#else
 					state.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_COLOURWRITE
-							| RENDER_DEPTHWRITE;
+							| RENDER_DEPTHWRITE | RENDER_OFFSETLINE;
 					state.m_sort = OpenGLState::eSortOverlayFirst + 1;
 					state.m_depthfunc = GL_LEQUAL;
 
@@ -264,14 +291,16 @@ class OpenGLShader: public Shader {
 					hiddenLine.m_colour[2] = 0.75;
 					hiddenLine.m_colour[3] = 1;
 					hiddenLine.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_COLOURWRITE
-							| RENDER_LINESTIPPLE;
+							| RENDER_OFFSETLINE | RENDER_LINESTIPPLE;
 					hiddenLine.m_sort = OpenGLState::eSortOverlayFirst;
 					hiddenLine.m_depthfunc = GL_GREATER;
 					hiddenLine.m_linestipple_factor = 2;
+#endif
 				} else if (name == "$XY_OVERLAY") {
-					state.m_colour[0] = g_xywindow_globals.color_selbrushes[0];
-					state.m_colour[1] = g_xywindow_globals.color_selbrushes[1];
-					state.m_colour[2] = g_xywindow_globals.color_selbrushes[2];
+					Vector3& colorSelBrushes = g_xywindow_globals.color_selbrushes;
+					state.m_colour[0] = colorSelBrushes[0];
+					state.m_colour[1] = colorSelBrushes[1];
+					state.m_colour[2] = colorSelBrushes[2];
 					state.m_colour[3] = 1;
 					state.m_state = RENDER_COLOURWRITE | RENDER_LINESTIPPLE;
 					state.m_sort = OpenGLState::eSortOverlayFirst;
@@ -280,6 +309,24 @@ class OpenGLShader: public Shader {
 				} else if (name == "$DEBUG_CLIPPED") {
 					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
 					state.m_sort = OpenGLState::eSortLast;
+				} else if (name == "$POINTFILE") {
+					state.m_colour[0] = 1;
+					state.m_colour[1] = 0;
+					state.m_colour[2] = 0;
+					state.m_colour[3] = 1;
+					state.m_state = RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
+					state.m_sort = OpenGLState::eSortFullbright;
+					state.m_linewidth = 4;
+				} else if (name == "$LIGHT_SPHERE") {
+					state.m_colour[0] = .15f * .95f;
+					state.m_colour[1] = .15f * .95f;
+					state.m_colour[2] = .15f * .95f;
+					state.m_colour[3] = 1;
+					state.m_state = RENDER_CULLFACE | RENDER_DEPTHTEST | RENDER_BLEND | RENDER_FILL
+							| RENDER_COLOURWRITE | RENDER_DEPTHWRITE;
+					state.m_blend_src = GL_ONE;
+					state.m_blend_dst = GL_ONE;
+					state.m_sort = OpenGLState::eSortTranslucent;
 				} else if (name == "$Q3MAP2_LIGHT_SPHERE") {
 					state.m_colour[0] = .05f;
 					state.m_colour[1] = .05f;
@@ -290,6 +337,10 @@ class OpenGLShader: public Shader {
 					state.m_blend_dst = GL_ONE;
 					state.m_sort = OpenGLState::eSortTranslucent;
 				} else if (name == "$WIRE_OVERLAY") {
+#if 0
+					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_DEPTHTEST | RENDER_OVERRIDE;
+					state.m_sort = OpenGLState::eSortOverlayFirst;
+#else
 					state.m_state = RENDER_COLOURARRAY | RENDER_COLOURWRITE | RENDER_DEPTHWRITE
 							| RENDER_DEPTHTEST | RENDER_OVERRIDE;
 					state.m_sort = OpenGLState::eSortGUI1;
@@ -301,6 +352,7 @@ class OpenGLShader: public Shader {
 							| RENDER_LINESTIPPLE;
 					hiddenLine.m_sort = OpenGLState::eSortGUI0;
 					hiddenLine.m_depthfunc = GL_GREATER;
+#endif
 				} else if (name == "$FLATSHADE_OVERLAY") {
 					state.m_state = RENDER_CULLFACE | RENDER_LIGHTING | RENDER_SMOOTH
 							| RENDER_SCALED | RENDER_COLOURARRAY | RENDER_FILL | RENDER_COLOURWRITE
@@ -311,16 +363,18 @@ class OpenGLShader: public Shader {
 					OpenGLState& hiddenLine = appendDefaultPass();
 					hiddenLine.m_state = RENDER_CULLFACE | RENDER_LIGHTING | RENDER_SMOOTH
 							| RENDER_SCALED | RENDER_COLOURARRAY | RENDER_FILL | RENDER_COLOURWRITE
-							| RENDER_DEPTHWRITE | RENDER_DEPTHTEST | RENDER_OVERRIDE;
+							| RENDER_DEPTHWRITE | RENDER_DEPTHTEST | RENDER_OVERRIDE
+							| RENDER_POLYGONSTIPPLE;
 					hiddenLine.m_sort = OpenGLState::eSortGUI0;
 					hiddenLine.m_depthfunc = GL_GREATER;
 				} else if (name == "$CLIPPER_OVERLAY") {
-					state.m_colour[0] = g_xywindow_globals.color_clipper[0];
-					state.m_colour[1] = g_xywindow_globals.color_clipper[1];
-					state.m_colour[2] = g_xywindow_globals.color_clipper[2];
+					Vector3& colorClipper = g_xywindow_globals.color_clipper;
+					state.m_colour[0] = colorClipper[0];
+					state.m_colour[1] = colorClipper[1];
+					state.m_colour[2] = colorClipper[2];
 					state.m_colour[3] = 1;
 					state.m_state = RENDER_CULLFACE | RENDER_COLOURWRITE | RENDER_DEPTHWRITE
-							| RENDER_FILL;
+							| RENDER_FILL | RENDER_POLYGONSTIPPLE;
 					state.m_sort = OpenGLState::eSortOverlayFirst;
 				} else if (name == "$OVERBRIGHT") {
 					const float lightScale = 2;
@@ -334,7 +388,7 @@ class OpenGLShader: public Shader {
 					state.m_blend_dst = GL_SRC_COLOR;
 				} else {
 					// default to something recognisable.. =)
-					ERROR_MESSAGE("hardcoded renderstate not found: " << name);
+					ERROR_MESSAGE("hardcoded renderstate not found");
 					state.m_colour[0] = 1;
 					state.m_colour[1] = 0;
 					state.m_colour[2] = 1;
@@ -343,55 +397,66 @@ class OpenGLShader: public Shader {
 					state.m_sort = OpenGLState::eSortFirst;
 				}
 				break;
-			default:
-				// construction from IShader
-				m_shader = GlobalShaderSystem().getShaderForName(name);
+			} // case '$'
 
-				state.m_texture = m_shader->getTexture()->texture_number;
-
-				state.m_state = RENDER_FILL | RENDER_TEXTURE | RENDER_DEPTHTEST
-						| RENDER_COLOURWRITE | RENDER_LIGHTING | RENDER_SMOOTH;
-				state.m_state |= RENDER_CULLFACE;
-				if ((m_shader->getFlags() & QER_ALPHATEST) != 0) {
-					state.m_state |= RENDER_ALPHATEST;
-					IShader::EAlphaFunc alphafunc;
-					m_shader->getAlphaFunc(&alphafunc, &state.m_alpharef);
-					switch (alphafunc) {
-					case IShader::eAlways:
-						state.m_alphafunc = GL_ALWAYS;
-					case IShader::eEqual:
-						state.m_alphafunc = GL_EQUAL;
-					case IShader::eLess:
-						state.m_alphafunc = GL_LESS;
-					case IShader::eGreater:
-						state.m_alphafunc = GL_GREATER;
-					case IShader::eLEqual:
-						state.m_alphafunc = GL_LEQUAL;
-					case IShader::eGEqual:
-						state.m_alphafunc = GL_GEQUAL;
-					}
-				}
-
-				reinterpret_cast<Vector3&> (state.m_colour) = m_shader->getTexture()->color;
-				state.m_colour[3] = 1.0f;
-
-				if ((m_shader->getFlags() & QER_TRANS) != 0) {
-					state.m_state |= RENDER_BLEND;
-					state.m_colour[3] = m_shader->getTrans();
-					state.m_sort = OpenGLState::eSortTranslucent;
-					BlendFunc blendFunc = m_shader->getBlendFunc();
-					state.m_blend_src = convertBlendFactor(blendFunc.m_src);
-					state.m_blend_dst = convertBlendFactor(blendFunc.m_dst);
-					if (state.m_blend_src == GL_SRC_ALPHA || state.m_blend_dst == GL_SRC_ALPHA) {
-						state.m_state |= RENDER_DEPTHWRITE;
-					}
-				} else {
-					state.m_state |= RENDER_DEPTHWRITE;
-					state.m_sort = OpenGLState::eSortFullbright;
-				}
-
-				m_shader->forEachLayer(ShaderLayerVisitor(*this));
+			default: {
+				// This is not a hard-coded shader, construct from the shader system
+				constructNormalShader(name);
 			}
+
+			} // switch
+		}
+
+		void constructNormalShader(const std::string& name) {
+			// construction from IShader
+			m_shader = GlobalShaderSystem().getShaderForName(name);
+
+			OpenGLState& state = appendDefaultPass();
+
+			state.m_texture = m_shader->getTexture()->texture_number;
+
+			state.m_state = RENDER_FILL | RENDER_TEXTURE_2D | RENDER_DEPTHTEST | RENDER_COLOURWRITE
+					| RENDER_LIGHTING | RENDER_SMOOTH;
+			state.m_state |= RENDER_CULLFACE;
+			if ((m_shader->getFlags() & QER_ALPHATEST) != 0) {
+				state.m_state |= RENDER_ALPHATEST;
+				IShader::EAlphaFunc alphafunc;
+				m_shader->getAlphaFunc(&alphafunc, &state.m_alpharef);
+				switch (alphafunc) {
+				case IShader::eAlways:
+					state.m_alphafunc = GL_ALWAYS;
+				case IShader::eEqual:
+					state.m_alphafunc = GL_EQUAL;
+				case IShader::eLess:
+					state.m_alphafunc = GL_LESS;
+				case IShader::eGreater:
+					state.m_alphafunc = GL_GREATER;
+				case IShader::eLEqual:
+					state.m_alphafunc = GL_LEQUAL;
+				case IShader::eGEqual:
+					state.m_alphafunc = GL_GEQUAL;
+				}
+			}
+
+			reinterpret_cast<Vector3&> (state.m_colour) = m_shader->getTexture()->color;
+			state.m_colour[3] = 1.0f;
+
+			if ((m_shader->getFlags() & QER_TRANS) != 0) {
+				state.m_state |= RENDER_BLEND;
+				state.m_colour[3] = m_shader->getTrans();
+				state.m_sort = OpenGLState::eSortTranslucent;
+				BlendFunc blendFunc = m_shader->getBlendFunc();
+				state.m_blend_src = convertBlendFactor(blendFunc.m_src);
+				state.m_blend_dst = convertBlendFactor(blendFunc.m_dst);
+				if (state.m_blend_src == GL_SRC_ALPHA || state.m_blend_dst == GL_SRC_ALPHA) {
+					state.m_state |= RENDER_DEPTHWRITE;
+				}
+			} else {
+				state.m_state |= RENDER_DEPTHWRITE;
+				state.m_sort = OpenGLState::eSortFullbright;
+			}
+
+			//	m_shader->forEachLayer(ShaderLayerVisitor(*this));
 		}
 };
 

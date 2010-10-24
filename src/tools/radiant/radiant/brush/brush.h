@@ -102,7 +102,7 @@ inline void Winding_Draw (const Winding& winding, const Vector3& normal, RenderS
 		}
 		glNormalPointer(GL_FLOAT, sizeof(Vector3), normals);
 	}
-	if (state & RENDER_TEXTURE) {
+	if (state & RENDER_TEXTURE_2D) {
 		glTexCoordPointer(2, GL_FLOAT, sizeof(WindingVertex), &winding.points.data()->texcoord);
 	}
 	glDrawArrays(GL_POLYGON, 0, GLsizei(winding.numpoints));

@@ -63,7 +63,7 @@ namespace model
 		glEnable(GL_NORMAL_ARRAY);
 		glEnable(GL_TEXTURE_COORD_ARRAY);
 		// Render options
-		if (flags & RENDER_TEXTURE)
+		if (flags & RENDER_TEXTURE_2D)
 			glEnable(GL_TEXTURE_2D);
 		if (flags & RENDER_SMOOTH)
 			glShadeModel(GL_SMOOTH);

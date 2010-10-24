@@ -153,7 +153,7 @@ class OpenGLState {
 				glDisableClientState(GL_NORMAL_ARRAY);
 			}
 
-			if (delta & state & RENDER_TEXTURE) {
+			if (delta & state & RENDER_TEXTURE_2D) {
 				if (GlobalOpenGL().GL_1_3()) {
 					glActiveTexture(GL_TEXTURE0);
 					glClientActiveTexture(GL_TEXTURE0);
@@ -162,7 +162,7 @@ class OpenGLState {
 				glEnable(GL_TEXTURE_2D);
 				glColor4f(1, 1, 1, m_colour[3]);
 				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			} else if (delta & ~state & RENDER_TEXTURE) {
+			} else if (delta & ~state & RENDER_TEXTURE_2D) {
 				if (GlobalOpenGL().GL_1_3()) {
 					glActiveTexture(GL_TEXTURE0);
 					glClientActiveTexture(GL_TEXTURE0);
@@ -254,11 +254,11 @@ class OpenGLState {
 				}
 			}
 
-			if (state & RENDER_TEXTURE && m_colour[3] != current.m_colour[3]) {
+			if (state & RENDER_TEXTURE_2D && m_colour[3] != current.m_colour[3]) {
 				glColor4f(1, 1, 1, m_colour[3]);
 			}
 
-			if (!(state & RENDER_TEXTURE) && (m_colour[0] != current.m_colour[0] || m_colour[1]
+			if (!(state & RENDER_TEXTURE_2D) && (m_colour[0] != current.m_colour[0] || m_colour[1]
 					!= current.m_colour[1] || m_colour[2] != current.m_colour[2] || m_colour[3]
 					!= current.m_colour[3])) {
 				glColor4fv(m_colour);
