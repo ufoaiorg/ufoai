@@ -72,6 +72,8 @@ static void testSpawnAndConnect (void)
 	svs.ge->SpawnEntities(name, day, (const char *)buf);
 	CU_ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
 	CU_ASSERT_FALSE(svs.ge->RunFrame());
+
+	FS_FreeFile(buf);
 }
 
 int UFO_AddGameTests (void)
