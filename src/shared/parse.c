@@ -25,9 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "parse.h"
 #include "defines.h"
 #include "ufotypes.h"
-#include "parse.h"
 
 static char com_token[4096];
 static qboolean isUnparsedToken;
