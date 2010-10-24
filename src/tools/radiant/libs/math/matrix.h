@@ -90,6 +90,20 @@ class Matrix4
 			tw() = tw_;
 		}
 
+		// Construct a matrix with given column elements
+		static Matrix4 byColumns(double xx, double xy, double xz, double xw, double yx, double yy,
+				double yz, double yw, double zx, double zy, double zz, double zw, double tx,
+				double ty, double tz, double tw) {
+			return Matrix4(xx, xy, xz, xw, yx, yy, yz, yw, zx, zy, zz, zw, tx, ty, tz, tw);
+		}
+
+		// Construct a matrix with given row elements
+		static Matrix4 byRows(double xx, double yx, double zx, double tx, double xy, double yy,
+				double zy, double ty, double xz, double yz, double zz, double tz, double xw,
+				double yw, double zw, double tw) {
+			return Matrix4(xx, xy, xz, xw, yx, yy, yz, yw, zx, zy, zz, zw, tx, ty, tz, tw);
+		}
+
 		float& xx ()
 		{
 			return m_elements[0];
@@ -315,6 +329,41 @@ class Matrix4
 			return transform(Vector4(vector3, 1));
 		}
 
+		/// \brief Concatenates \p self with \p translation.
+		/// The concatenated \p translation occurs before \p self.
+		void translateBy (const Vector3& translation)
+		{
+			multiplyBy(getTranslation(translation));
+		}
+
+		// Return matrix product
+		Matrix4 getMultipliedBy(const Matrix4& rhs)
+		{
+		    return Matrix4::byColumns(
+		        rhs[0] * m_elements[0] + rhs[1] * m_elements[4] + rhs[2] * m_elements[8] + rhs[3] * m_elements[12],
+		        rhs[0] * m_elements[1] + rhs[1] * m_elements[5] + rhs[2] * m_elements[9] + rhs[3] * m_elements[13],
+		        rhs[0] * m_elements[2] + rhs[1] * m_elements[6] + rhs[2] * m_elements[10]+ rhs[3] * m_elements[14],
+		        rhs[0] * m_elements[3] + rhs[1] * m_elements[7] + rhs[2] * m_elements[11]+ rhs[3] * m_elements[15],
+		        rhs[4] * m_elements[0] + rhs[5] * m_elements[4] + rhs[6] * m_elements[8] + rhs[7] * m_elements[12],
+		        rhs[4] * m_elements[1] + rhs[5] * m_elements[5] + rhs[6] * m_elements[9] + rhs[7] * m_elements[13],
+		        rhs[4] * m_elements[2] + rhs[5] * m_elements[6] + rhs[6] * m_elements[10]+ rhs[7] * m_elements[14],
+		        rhs[4] * m_elements[3] + rhs[5] * m_elements[7] + rhs[6] * m_elements[11]+ rhs[7] * m_elements[15],
+		        rhs[8] * m_elements[0] + rhs[9] * m_elements[4] + rhs[10]* m_elements[8] + rhs[11]* m_elements[12],
+		        rhs[8] * m_elements[1] + rhs[9] * m_elements[5] + rhs[10]* m_elements[9] + rhs[11]* m_elements[13],
+		        rhs[8] * m_elements[2] + rhs[9] * m_elements[6] + rhs[10]* m_elements[10]+ rhs[11]* m_elements[14],
+		        rhs[8] * m_elements[3] + rhs[9] * m_elements[7] + rhs[10]* m_elements[11]+ rhs[11]* m_elements[15],
+		        rhs[12]* m_elements[0] + rhs[13]* m_elements[4] + rhs[14]* m_elements[8] + rhs[15]* m_elements[12],
+		        rhs[12]* m_elements[1] + rhs[13]* m_elements[5] + rhs[14]* m_elements[9] + rhs[15]* m_elements[13],
+		        rhs[12]* m_elements[2] + rhs[13]* m_elements[6] + rhs[14]* m_elements[10]+ rhs[15]* m_elements[14],
+		        rhs[12]* m_elements[3] + rhs[13]* m_elements[7] + rhs[14]* m_elements[11]+ rhs[15]* m_elements[15]
+		    );
+		}
+
+		// Multiply by another matrix, in-place
+		void multiplyBy(const Matrix4& other)
+		{
+		    *this = getMultipliedBy(other);
+		}
 };
 
 /// \brief Returns true if \p self and \p other are exactly element-wise equal.
@@ -695,13 +744,6 @@ inline void matrix4_full_invert (Matrix4& self)
 inline Vector3 matrix4_get_translation_vec3 (const Matrix4& self)
 {
 	return self.t().getVector3();
-}
-
-/// \brief Concatenates \p self with \p translation.
-/// The concatenated \p translation occurs before \p self.
-inline void matrix4_translate_by_vec3 (Matrix4& self, const Vector3& translation)
-{
-	matrix4_multiply_by_matrix4(self, Matrix4::getTranslation(translation));
 }
 
 /// \brief Returns \p self Concatenated with \p translation.
@@ -1120,9 +1162,9 @@ inline Vector3 matrix4_get_rotation_euler_zyx_degrees (const Matrix4& self)
 /// \brief Rotate \p self by \p euler angles (degrees) applied in the order (x, y, z), using \p pivotpoint.
 inline void matrix4_pivoted_rotate_by_euler_xyz_degrees (Matrix4& self, const Vector3& euler, const Vector3& pivotpoint)
 {
-	matrix4_translate_by_vec3(self, pivotpoint);
+	self.translateBy(pivotpoint);
 	matrix4_rotate_by_euler_xyz_degrees(self, euler);
-	matrix4_translate_by_vec3(self, -pivotpoint);
+	self.translateBy(-pivotpoint);
 }
 
 /// \brief Constructs a pure-scale matrix from \p scale.
@@ -1149,9 +1191,9 @@ inline void matrix4_scale_by_vec3 (Matrix4& self, const Vector3& scale)
 /// \brief Scales \p self by \p scale, using \p pivotpoint.
 inline void matrix4_pivoted_scale_by_vec3 (Matrix4& self, const Vector3& scale, const Vector3& pivotpoint)
 {
-	matrix4_translate_by_vec3(self, pivotpoint);
+	self.translateBy(pivotpoint);
 	matrix4_scale_by_vec3(self, scale);
-	matrix4_translate_by_vec3(self, -pivotpoint);
+	self.translateBy(-pivotpoint);
 }
 
 /// \brief Transforms \p self by \p translation, \p euler and \p scale.
@@ -1159,7 +1201,7 @@ inline void matrix4_pivoted_scale_by_vec3 (Matrix4& self, const Vector3& scale, 
 inline void matrix4_transform_by_euler_xyz_degrees (Matrix4& self, const Vector3& translation, const Vector3& euler,
 		const Vector3& scale)
 {
-	matrix4_translate_by_vec3(self, translation);
+	self.translateBy(translation);
 	matrix4_rotate_by_euler_xyz_degrees(self, euler);
 	matrix4_scale_by_vec3(self, scale);
 }
@@ -1168,10 +1210,10 @@ inline void matrix4_transform_by_euler_xyz_degrees (Matrix4& self, const Vector3
 inline void matrix4_pivoted_transform_by_euler_xyz_degrees (Matrix4& self, const Vector3& translation,
 		const Vector3& euler, const Vector3& scale, const Vector3& pivotpoint)
 {
-	matrix4_translate_by_vec3(self, pivotpoint + translation);
+	self.translateBy(pivotpoint + translation);
 	matrix4_rotate_by_euler_xyz_degrees(self, euler);
 	matrix4_scale_by_vec3(self, scale);
-	matrix4_translate_by_vec3(self, -pivotpoint);
+	self.translateBy(-pivotpoint);
 }
 
 #endif

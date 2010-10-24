@@ -237,9 +237,9 @@ inline void matrix4_rotate_by_quaternion (Matrix4& self, const Quaternion& rotat
 /// \brief Rotates \p self by \p rotation, using \p pivotpoint.
 inline void matrix4_pivoted_rotate_by_quaternion (Matrix4& self, const Quaternion& rotation, const Vector3& pivotpoint)
 {
-	matrix4_translate_by_vec3(self, pivotpoint);
+	self.translateBy(pivotpoint);
 	matrix4_rotate_by_quaternion(self, rotation);
-	matrix4_translate_by_vec3(self, -pivotpoint);
+	self.translateBy(-pivotpoint);
 }
 
 inline Vector3 quaternion_transformed_point (const Quaternion& quaternion, const Vector3& point)
@@ -279,9 +279,9 @@ inline void matrix4_rotate_by_axisangle (Matrix4& self, const Vector3& axis, dou
 inline void matrix4_pivoted_rotate_by_axisangle (Matrix4& self, const Vector3& axis, double angle,
 		const Vector3& pivotpoint)
 {
-	matrix4_translate_by_vec3(self, pivotpoint);
+	self.translateBy(pivotpoint);
 	matrix4_rotate_by_axisangle(self, axis, angle);
-	matrix4_translate_by_vec3(self, -pivotpoint);
+	self.translateBy(-pivotpoint);
 }
 
 #endif

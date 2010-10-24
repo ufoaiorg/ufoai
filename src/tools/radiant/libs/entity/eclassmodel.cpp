@@ -85,7 +85,7 @@ class EclassModel: public Snappable
 		void updateTransform ()
 		{
 			m_transform.localToParent() = Matrix4::getIdentity();
-			matrix4_translate_by_vec3(m_transform.localToParent(), m_origin);
+			m_transform.localToParent().translateBy(m_origin);
 
 			matrix4_multiply_by_matrix4(m_transform.localToParent(), matrix4_rotation_for_z_degrees(m_angle));
 

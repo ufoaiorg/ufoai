@@ -149,7 +149,7 @@ void Camera_updateModelview (camera_t& camera)
 	// roll, pitch, yaw
 	Vector3 radiant_eulerXYZ(0, -camera.angles[CAMERA_PITCH], camera.angles[CAMERA_YAW]);
 
-	matrix4_translate_by_vec3(camera.modelview, camera.origin);
+	camera.modelview.translateBy(camera.origin);
 	matrix4_rotate_by_euler_xyz_degrees(camera.modelview, radiant_eulerXYZ);
 	matrix4_multiply_by_matrix4(camera.modelview, g_radiant2opengl);
 	matrix4_affine_invert(camera.modelview);

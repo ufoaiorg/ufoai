@@ -1401,7 +1401,7 @@ class RadiantSelectionSystem: public SelectionSystem,
 				m_translation = translation;
 
 				m_pivot2world = m_pivot2world_start;
-				matrix4_translate_by_vec3(m_pivot2world, translation);
+				m_pivot2world.translateBy(translation);
 
 				if (Mode() == eComponent) {
 					Scene_Translate_Component_Selected(GlobalSceneGraph(), m_translation);

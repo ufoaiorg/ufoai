@@ -462,9 +462,9 @@ inline void matrix4_rotate_by_axis90 (Matrix4& matrix, axis_t axis, sign_t sign)
 
 inline void matrix4_pivoted_rotate_by_axis90 (Matrix4& matrix, axis_t axis, sign_t sign, const Vector3& pivotpoint)
 {
-	matrix4_translate_by_vec3(matrix, pivotpoint);
+	matrix.translateBy(pivotpoint);
 	matrix4_rotate_by_axis90(matrix, axis, sign);
-	matrix4_translate_by_vec3(matrix, -pivotpoint);
+	matrix.translateBy(-pivotpoint);
 }
 
 inline Quaternion quaternion_for_axis90 (axis_t axis, sign_t sign)
