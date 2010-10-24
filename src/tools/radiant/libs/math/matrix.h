@@ -45,9 +45,15 @@ class Matrix4
 
 		/* Get a new identity matrix */
 
-		static Matrix4 getIdentity ()
+		static const Matrix4& getIdentity ()
 		{
-			return Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+		    static const Matrix4 _identity(
+		        1, 0, 0, 0,
+		        0, 1, 0, 0,
+		        0, 0, 1, 0,
+		        0, 0, 0, 1
+		    );
+		    return _identity;
 		}
 
 		/** Get a matrix representing the given 3D translation.
@@ -310,9 +316,6 @@ class Matrix4
 		}
 
 };
-
-/// \brief The 4x4 identity matrix.
-const Matrix4 g_matrix4_identity(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 
 /// \brief Returns true if \p self and \p other are exactly element-wise equal.
 inline bool operator== (const Matrix4& self, const Matrix4& other)

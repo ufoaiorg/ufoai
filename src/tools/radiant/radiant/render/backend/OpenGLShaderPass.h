@@ -53,7 +53,7 @@ class OpenGLShaderPass {
 					transform = (*i).m_transform;
 					glPopMatrix();
 					glPushMatrix();
-					glMultMatrixf(reinterpret_cast<const float*> (transform));
+					glMultMatrixf(*transform);
 					glFrontFace(((current.m_state & RENDER_CULLFACE) != 0 && matrix4_handedness(
 							*transform) == MATRIX4_RIGHTHANDED) ? GL_CW : GL_CCW);
 				}
@@ -72,11 +72,11 @@ class OpenGLShaderPass {
 
 				glMatrixMode( GL_PROJECTION);
 				glPushMatrix();
-				glLoadMatrixf(reinterpret_cast<const float*> (&g_matrix4_identity));
+				glLoadMatrixf(Matrix4::getIdentity());
 
 				glMatrixMode( GL_MODELVIEW);
 				glPushMatrix();
-				glLoadMatrixf(reinterpret_cast<const float*> (&g_matrix4_identity));
+				glLoadMatrixf(Matrix4::getIdentity());
 
 				glBegin( GL_QUADS);
 				glVertex3f(-1, -1, 0);

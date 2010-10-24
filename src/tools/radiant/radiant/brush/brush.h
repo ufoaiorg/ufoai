@@ -1133,7 +1133,7 @@ class Face: public OpenGLRenderable, public Filterable, public Undoable, public 
 		void EmitTextureCoordinates ()
 		{
 			Texdef_EmitTextureCoordinates(m_texdefTransformed, m_shader.width(), m_shader.height(), m_winding,
-					plane3().normal(), g_matrix4_identity);
+					plane3().normal(), Matrix4::getIdentity());
 		}
 
 		const Vector3& centroid () const
@@ -1641,7 +1641,7 @@ class Brush: public TransformNode,
 		}
 		const Matrix4& localToParent () const
 		{
-			return g_matrix4_identity;
+			return Matrix4::getIdentity();
 		}
 		void aabbChanged ()
 		{

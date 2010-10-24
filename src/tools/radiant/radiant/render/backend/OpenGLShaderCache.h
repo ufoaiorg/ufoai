@@ -70,10 +70,10 @@ class OpenGLShaderCache: public ShaderCache, public TexturesCacheObserver, publi
 		void render(RenderStateFlags globalstate, const Matrix4& modelview,
 				const Matrix4& projection, const Vector3& viewer) {
 			glMatrixMode( GL_PROJECTION);
-			glLoadMatrixf(reinterpret_cast<const float*> (&projection));
+			glLoadMatrixf(projection);
 
 			glMatrixMode( GL_MODELVIEW);
-			glLoadMatrixf(reinterpret_cast<const float*> (&modelview));
+			glLoadMatrixf(modelview);
 
 			ASSERT_MESSAGE(realised(), "render states are not realised");
 

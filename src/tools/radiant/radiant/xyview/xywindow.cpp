@@ -690,8 +690,8 @@ XYWnd::XYWnd () :
 	m_nHeight = 0;
 
 	/* we need this initialized */
-	m_modelview = g_matrix4_identity;
-	m_projection = g_matrix4_identity;
+	m_modelview = Matrix4::getIdentity();
+	m_projection = Matrix4::getIdentity();
 
 	m_vOrigin[0] = 0;
 	m_vOrigin[1] = 20;
@@ -2006,7 +2006,7 @@ void XYWnd::draw ()
 
 	// set up viewpoint
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(reinterpret_cast<const float*> (&m_projection));
+	glLoadMatrixf(m_projection);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -2032,7 +2032,7 @@ void XYWnd::draw ()
 	if (g_xywindow_globals_private.show_blocks)
 		drawBlockGrid();
 
-	glLoadMatrixf(reinterpret_cast<const float*> (&m_modelview));
+	glLoadMatrixf(m_modelview);
 
 	unsigned int globalstate = RENDER_COLOURARRAY | RENDER_COLOURWRITE;
 	if (!g_xywindow_globals.m_bNoStipple) {
@@ -2047,7 +2047,7 @@ void XYWnd::draw ()
 
 	glDepthMask(GL_FALSE);
 
-	glLoadMatrixf(reinterpret_cast<const float*> (&m_modelview));
+	glLoadMatrixf(m_modelview);
 
 	glDisable(GL_LINE_STIPPLE);
 

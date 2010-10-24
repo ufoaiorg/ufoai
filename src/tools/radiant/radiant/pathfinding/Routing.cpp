@@ -33,7 +33,7 @@ namespace routing
 				m_routingShader = colour_capture_state_fill(color2);
 			// renderer must have shader set for adding renderable
 			renderer.SetState(m_routingShader, Renderer::eFullMaterials);
-			renderer.addRenderable(_renderable, g_matrix4_identity);
+			renderer.addRenderable(_renderable, Matrix4::getIdentity());
 		}
 	}
 
@@ -47,7 +47,7 @@ namespace routing
 				m_routingShader = colour_capture_state_fill(color2);
 			// renderer must have shader set for adding renderable
 			renderer.SetState(m_routingShader, Renderer::eWireframeOnly);
-			renderer.addRenderable(_renderable, g_matrix4_identity);
+			renderer.addRenderable(_renderable, Matrix4::getIdentity());
 		}
 	}
 

@@ -599,7 +599,7 @@ namespace scene
 					ASSERT_MESSAGE(!m_transformMutex, "re-entering transform evaluation");
 					m_transformMutex = true;
 
-					m_local2world = (m_parent != 0) ? m_parent->localToWorld() : g_matrix4_identity;
+					m_local2world = (m_parent != 0) ? m_parent->localToWorld() : Matrix4::getIdentity();
 					TransformNode* transformNode = Node_getTransformNode(m_path.top());
 					if (transformNode != 0) {
 						matrix4_multiply_by_matrix4(m_local2world, transformNode->localToParent());
@@ -647,7 +647,7 @@ namespace scene
 
 			Instance (const scene::Path& path, Instance* parent, void* instance, InstanceTypeCastTable& casts) :
 				m_path(path), m_parent(parent), m_instance(instance), m_casts(casts),
-						m_local2world(g_matrix4_identity), m_transformChanged(true), m_transformMutex(false),
+						m_local2world(Matrix4::getIdentity()), m_transformChanged(true), m_transformMutex(false),
 						m_boundsChanged(true), m_boundsMutex(false), m_childBoundsChanged(true), m_childBoundsMutex(
 								false), m_isSelectedChanged(true), m_childSelectedChanged(true),
 						m_parentSelectedChanged(true)

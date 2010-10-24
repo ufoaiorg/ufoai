@@ -26,7 +26,7 @@
 
 inline void billboard_viewplaneOriented (Matrix4& rotation, const Matrix4& world2screen)
 {
-	rotation = g_matrix4_identity;
+	rotation = Matrix4::getIdentity();
 	Vector3 x(world2screen.x().getVector3().getNormalised());
 	Vector3 y(world2screen.y().getVector3().getNormalised());
 	Vector3 z(world2screen.z().getVector3().getNormalised());
@@ -41,7 +41,7 @@ inline void billboard_viewpointOriented (Matrix4& rotation, const Matrix4& world
 {
 	Matrix4 screen2world(matrix4_full_inverse(world2screen));
 
-	rotation = g_matrix4_identity;
+	rotation = Matrix4::getIdentity();
 	rotation.y().getVector3() = screen2world.y().getVector3().getNormalised();
 	rotation.z().getVector3() = -screen2world.z().getVector3().getNormalised();
 	rotation.x().getVector3() = rotation.y().getVector3().crossProduct(rotation.z().getVector3()).getNormalised();
@@ -75,7 +75,7 @@ inline void ConstructDevice2Object (Matrix4& device2object, const Matrix4& objec
 //! S =  ( Inverse(Object2Screen *post ScaleOf(Object2Screen) ) *post Object2Screen
 inline void pivot_scale (Matrix4& scale, const Matrix4& pivot2screen)
 {
-	Matrix4 pre_scale(g_matrix4_identity);
+	Matrix4 pre_scale(Matrix4::getIdentity());
 	pre_scale[0] = static_cast<float> (pivot2screen.x().getVector3().getLength());
 	pre_scale[5] = static_cast<float> (pivot2screen.y().getVector3().getLength());
 	pre_scale[10] = static_cast<float> (pivot2screen.z().getVector3().getLength());
@@ -89,7 +89,7 @@ inline void pivot_scale (Matrix4& scale, const Matrix4& pivot2screen)
 // scale by (inverse) W
 inline void pivot_perspective (Matrix4& scale, const Matrix4& pivot2screen)
 {
-	scale = g_matrix4_identity;
+	scale = Matrix4::getIdentity();
 	scale[0] = scale[5] = scale[10] = pivot2screen[15];
 }
 

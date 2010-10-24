@@ -144,7 +144,7 @@ void Camera_updateVectors (camera_t& camera)
 
 void Camera_updateModelview (camera_t& camera)
 {
-	camera.modelview = g_matrix4_identity;
+	camera.modelview = Matrix4::getIdentity();
 
 	// roll, pitch, yaw
 	Vector3 radiant_eulerXYZ(0, -camera.angles[CAMERA_PITCH], camera.angles[CAMERA_YAW]);
@@ -1201,10 +1201,10 @@ void CamWnd::Cam_Draw ()
 	Cull_ResetStats();
 
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(reinterpret_cast<const float*> (&m_Camera.projection));
+	glLoadMatrixf(m_Camera.projection);
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(reinterpret_cast<const float*> (&m_Camera.modelview));
+	glLoadMatrixf(m_Camera.modelview);
 
 	// one directional light source directly behind the viewer
 	{

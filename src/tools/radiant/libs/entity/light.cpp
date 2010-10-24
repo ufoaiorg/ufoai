@@ -732,7 +732,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		mutable Matrix4 m_localPivot;
 		const Matrix4& getLocalPivot () const
 		{
-			m_localPivot = g_matrix4_identity;
+			m_localPivot = Matrix4::getIdentity();
 			m_localPivot.t().getVector3() = m_aabb_light.origin;
 			return m_localPivot;
 		}

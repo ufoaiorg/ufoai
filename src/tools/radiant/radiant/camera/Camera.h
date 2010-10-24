@@ -46,7 +46,7 @@ struct camera_t
 
 		camera_t (View* view, const Callback& update) :
 			width(0), height(0), timing(false), origin(0, 0, 0), angles(0, 0, 0), color(0, 0, 0), projection(
-					g_matrix4_identity), modelview(g_matrix4_identity), movementflags(0), m_keymove_handler(0),
+					Matrix4::getIdentity()), modelview(Matrix4::getIdentity()), movementflags(0), m_keymove_handler(0),
 					fieldOfView(90.0f), m_mouseMove(motionDelta, this), m_view(view), m_update(update)
 		{
 		}

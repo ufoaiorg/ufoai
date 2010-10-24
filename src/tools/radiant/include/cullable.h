@@ -27,6 +27,7 @@
 #define INCLUDED_CULLABLE_H
 
 #include "generic/constant.h"
+#include "VolumeIntersectionValue.h"
 
 template<typename Element> class BasicVector3;
 typedef BasicVector3<float> Vector3;
@@ -34,10 +35,6 @@ class Plane3;
 class Matrix4;
 class AABB;
 class Segment;
-
-template<typename Enumeration> class EnumeratedValue;
-struct VolumeIntersection;
-typedef EnumeratedValue<VolumeIntersection> VolumeIntersectionValue;
 
 class VolumeTest {
 	public:

@@ -89,7 +89,7 @@ class MiscModel: public Snappable
 
 		void updateTransform ()
 		{
-			m_transform.localToParent() = g_matrix4_identity;
+			m_transform.localToParent() = Matrix4::getIdentity();
 			matrix4_transform_by_euler_xyz_degrees(m_transform.localToParent(), m_origin, m_angles, m_scale);
 			m_transformChanged();
 		}

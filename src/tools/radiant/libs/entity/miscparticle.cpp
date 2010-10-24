@@ -141,7 +141,7 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 
 		void updateTransform ()
 		{
-			m_transform.localToParent() = g_matrix4_identity;
+			m_transform.localToParent() = Matrix4::getIdentity();
 			matrix4_translate_by_vec3(m_transform.localToParent(), m_origin);
 			m_transformChanged();
 		}

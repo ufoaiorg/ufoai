@@ -334,7 +334,7 @@ class PicoModel: public Cullable, public Bounded
 				std::vector<Shader*> states) const
 		{
 			for (surfaces_t::const_iterator i = m_surfaces.begin(); i != m_surfaces.end(); ++i) {
-				if ((*i)->intersectVolume(volume, localToWorld) != c_volumeOutside) {
+				if ((*i)->intersectVolume(volume, localToWorld) != VOLUME_OUTSIDE) {
 					(*i)->render(renderer, localToWorld, states[i - m_surfaces.begin()]);
 				}
 			}
@@ -343,7 +343,7 @@ class PicoModel: public Cullable, public Bounded
 		void testSelect (Selector& selector, SelectionTest& test, const Matrix4& localToWorld)
 		{
 			for (surfaces_t::iterator i = m_surfaces.begin(); i != m_surfaces.end(); ++i) {
-				if ((*i)->intersectVolume(test.getVolume(), localToWorld) != c_volumeOutside) {
+				if ((*i)->intersectVolume(test.getVolume(), localToWorld) != VOLUME_OUTSIDE) {
 					(*i)->testSelect(selector, test, localToWorld);
 				}
 			}
@@ -472,7 +472,7 @@ class PicoModelInstance: public scene::Instance, public Renderable, public Selec
 			SurfaceLightLists::const_iterator j = m_surfaceLightLists.begin();
 			SurfaceRemaps::const_iterator k = m_skins.begin();
 			for (PicoModel::const_iterator i = m_picomodel.begin(); i != m_picomodel.end(); ++i, ++j, ++k) {
-				if ((*i)->intersectVolume(volume, localToWorld) != c_volumeOutside) {
+				if ((*i)->intersectVolume(volume, localToWorld) != VOLUME_OUTSIDE) {
 					renderer.setLights(*j);
 					(*i)->render(renderer, localToWorld, (*k).second != 0 ? (*k).second : (*i)->getState());
 				}

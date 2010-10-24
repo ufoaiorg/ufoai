@@ -276,7 +276,7 @@ class RenderableTargetingEntity
 			if (!m_targets.empty()) {
 				compile(volume, world_position);
 				if (!m_target_lines.empty()) {
-					renderer.addRenderable(m_target_lines, g_matrix4_identity);
+					renderer.addRenderable(m_target_lines, Matrix4::getIdentity());
 				}
 			}
 		}
@@ -303,7 +303,7 @@ class RenderableTargetingEntities
 			if (!m_targets.empty()) {
 				compile(volume, world_position);
 				if (!m_target_lines.empty()) {
-					renderer.addRenderable(m_target_lines, g_matrix4_identity);
+					renderer.addRenderable(m_target_lines, Matrix4::getIdentity());
 				}
 			}
 		}

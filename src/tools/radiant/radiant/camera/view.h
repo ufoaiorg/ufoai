@@ -84,9 +84,9 @@ class View : public VolumeTest {
 	}
 	public:
 	View(bool fill = false) :
-	m_modelview(g_matrix4_identity),
-	m_projection(g_matrix4_identity),
-	m_scissor(g_matrix4_identity),
+	m_modelview(Matrix4::getIdentity()),
+	m_projection(Matrix4::getIdentity()),
+	m_scissor(Matrix4::getIdentity()),
 	m_fill(fill) {
 	}
 	void Construct(const Matrix4& projection, const Matrix4& modelview, std::size_t width, std::size_t height) {
@@ -97,7 +97,7 @@ class View : public VolumeTest {
 		m_projection = projection;
 
 		// viewport
-		m_viewport = g_matrix4_identity;
+		m_viewport = Matrix4::getIdentity();
 		m_viewport[0] = float(width / 2);
 		m_viewport[5] = float(height / 2);
 		if (fabs(m_projection[11])> 0.0000001)
@@ -108,7 +108,7 @@ class View : public VolumeTest {
 		construct();
 	}
 	void EnableScissor(float min_x, float max_x, float min_y, float max_y) {
-		m_scissor = g_matrix4_identity;
+		m_scissor = Matrix4::getIdentity();
 		m_scissor[0] = static_cast<float>((max_x - min_x) * 0.5);
 		m_scissor[5] = static_cast<float>((max_y - min_y) * 0.5);
 		m_scissor[12] = static_cast<float>((min_x + max_x) * 0.5);
@@ -118,7 +118,7 @@ class View : public VolumeTest {
 		construct();
 	}
 	void DisableScissor() {
-		m_scissor = g_matrix4_identity;
+		m_scissor = Matrix4::getIdentity();
 
 		construct();
 	}

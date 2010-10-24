@@ -110,7 +110,7 @@ class RenderableClippedPrimitive: public OpenGLRenderable
 		void construct (const Matrix4& world2device)
 		{
 			m_inverse = matrix4_full_inverse(world2device);
-			m_world = g_matrix4_identity;
+			m_world = Matrix4::getIdentity();
 		}
 
 		void insert (const Vector4 clipped[9], std::size_t count)
@@ -653,7 +653,7 @@ class rotate_selected: public SelectionSystem::Visitor
 
 					{
 						Editable* editable = Node_getEditable(instance.path().top());
-						const Matrix4& localPivot = editable != 0 ? editable->getLocalPivot() : g_matrix4_identity;
+						const Matrix4& localPivot = editable != 0 ? editable->getLocalPivot() : Matrix4::getIdentity();
 
 						Vector3 parent_translation;
 						translation_for_pivoted_rotation(parent_translation, m_rotate, m_world_pivot,
@@ -697,7 +697,7 @@ class scale_selected: public SelectionSystem::Visitor
 					transform->setScale(m_scale);
 					{
 						Editable* editable = Node_getEditable(instance.path().top());
-						const Matrix4& localPivot = editable != 0 ? editable->getLocalPivot() : g_matrix4_identity;
+						const Matrix4& localPivot = editable != 0 ? editable->getLocalPivot() : Matrix4::getIdentity();
 
 						Vector3 parent_translation;
 						translation_for_pivoted_scale(parent_translation, m_scale, m_world_pivot,
@@ -1823,30 +1823,6 @@ void Scene_BoundsSelectedComponent (scene::Graph& graph, AABB& bounds)
 {
 	graph.traverse(bounds_selected_component(bounds));
 }
-
-#if 0
-inline void pivot_for_node(Matrix4& pivot, scene::Node& node, scene::Instance& instance)
-{
-	ComponentEditable* componentEditable = Instance_getComponentEditable(instance);
-	if(GlobalSelectionSystem().Mode() == SelectionSystem::eComponent
-			&& componentEditable != 0)
-	{
-		pivot = matrix4_translation_for_vec3(componentEditable->getSelectedComponentsBounds().origin);
-	}
-	else
-	{
-		Bounded* bounded = Instance_getBounded(instance);
-		if(bounded != 0)
-		{
-			pivot = matrix4_translation_for_vec3(bounded->localAABB().origin);
-		}
-		else
-		{
-			pivot = g_matrix4_identity;
-		}
-	}
-}
-#endif
 
 void RadiantSelectionSystem::ConstructPivot () const
 {

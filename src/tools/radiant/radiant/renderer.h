@@ -43,7 +43,7 @@ inline Renderable* Instance_getRenderable (scene::Instance& instance)
 inline VolumeIntersectionValue Cullable_testVisible (scene::Instance& instance, const VolumeTest& volume,
 		VolumeIntersectionValue parentVisible)
 {
-	if (parentVisible == c_volumePartial) {
+	if (parentVisible == VOLUME_PARTIAL) {
 		Cullable* cullable = Instance_getCullable(instance);
 		if (cullable != 0) {
 			return cullable->intersectVolume(volume, instance.localToWorld());
@@ -65,7 +65,7 @@ class CullingWalker
 		bool pre (const scene::Path& path, scene::Instance& instance, VolumeIntersectionValue parentVisible) const
 		{
 			VolumeIntersectionValue visible = Cullable_testVisible(instance, m_volume, parentVisible);
-			if (visible != c_volumeOutside) {
+			if (visible != VOLUME_OUTSIDE) {
 				return m_walker.pre(path, instance);
 			}
 			return true;
@@ -86,19 +86,19 @@ class ForEachVisible: public scene::Graph::Walker
 		ForEachVisible (const VolumeTest& volume, const Walker_& walker) :
 			m_volume(volume), m_walker(walker)
 		{
-			m_state.push_back(c_volumePartial);
+			m_state.push_back(VOLUME_PARTIAL);
 		}
 		bool pre (const scene::Path& path, scene::Instance& instance) const
 		{
-			VolumeIntersectionValue visible = (path.top().get().visible()) ? m_state.back() : c_volumeOutside;
+			VolumeIntersectionValue visible = (path.top().get().visible()) ? m_state.back() : VOLUME_OUTSIDE;
 
-			if (visible == c_volumePartial) {
+			if (visible == VOLUME_PARTIAL) {
 				visible = m_volume.TestAABB(instance.worldAABB());
 			}
 
 			m_state.push_back(visible);
 
-			if (visible == c_volumeOutside) {
+			if (visible == VOLUME_OUTSIDE) {
 				return false;
 			} else {
 				return m_walker.pre(path, instance, m_state.back());
@@ -106,7 +106,7 @@ class ForEachVisible: public scene::Graph::Walker
 		}
 		void post (const scene::Path& path, scene::Instance& instance) const
 		{
-			if (m_state.back() != c_volumeOutside) {
+			if (m_state.back() != VOLUME_OUTSIDE) {
 				m_walker.post(path, instance, m_state.back());
 			}
 
@@ -146,7 +146,7 @@ class RenderHighlighted
 		{
 			m_renderer.PushState();
 
-			if (Cullable_testVisible(instance, m_volume, parentVisible) != c_volumeOutside) {
+			if (Cullable_testVisible(instance, m_volume, parentVisible) != VOLUME_OUTSIDE) {
 				Renderable* renderable = Instance_getRenderable(instance);
 				if (renderable) {
 					renderable->viewChanged();
