@@ -444,7 +444,7 @@ inline VolumeIntersectionValue frustum_test_aabb (const Frustum& frustum, const 
 
 inline double plane_distance_to_point (const Plane3& plane, const Vector3& point)
 {
-	return plane.normal().dot(point) + plane.d;
+	return plane.normal().dot(point) + plane.dist();
 }
 
 inline double plane_distance_to_oriented_extents (const Plane3& plane, const Vector3& extents,
@@ -502,7 +502,7 @@ inline bool frustum_test_line (const Frustum& frustum, const Segment& segment)
 
 inline bool viewer_test_plane (const Vector4& viewer, const Plane3& plane)
 {
-	return ((plane.a * viewer[0]) + (plane.b * viewer[1]) + (plane.c * viewer[2]) + (plane.d * viewer[3])) > 0;
+	return ((plane.normal().x() * viewer[0]) + (plane.normal().y() * viewer[1]) + (plane.normal().z() * viewer[2]) + (plane.dist() * viewer[3])) > 0;
 }
 
 inline Vector3 triangle_cross (const Vector3& p0, const Vector3& p1, const Vector3& p2)

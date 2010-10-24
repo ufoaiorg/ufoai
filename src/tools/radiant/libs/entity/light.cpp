@@ -464,10 +464,10 @@ inline BasicVector4<double>& plane3_to_vector4 (Plane3& self)
 inline Matrix4 matrix4_from_planes (const Plane3& left, const Plane3& right, const Plane3& bottom, const Plane3& top,
 		const Plane3& front, const Plane3& back)
 {
-	return Matrix4((right.a - left.a) / 2, (top.a - bottom.a) / 2, (back.a - front.a) / 2, right.a - (right.a - left.a)
-			/ 2, (right.b - left.b) / 2, (top.b - bottom.b) / 2, (back.b - front.b) / 2, right.b - (right.b - left.b)
-			/ 2, (right.c - left.c) / 2, (top.c - bottom.c) / 2, (back.c - front.c) / 2, right.c - (right.c - left.c)
-			/ 2, (right.d - left.d) / 2, (top.d - bottom.d) / 2, (back.d - front.d) / 2, right.d - (right.d - left.d)
+	return Matrix4::byColumns((right.normal().x() - left.normal().x()) / 2, (top.normal().x() - bottom.normal().x()) / 2, (back.normal().x() - front.normal().x()) / 2, right.normal().x() - (right.normal().x() - left.normal().x())
+			/ 2, (right.normal().y() - left.normal().y()) / 2, (top.normal().y() - bottom.normal().y()) / 2, (back.normal().y() - front.normal().y()) / 2, right.normal().y() - (right.normal().y() - left.normal().y())
+			/ 2, (right.normal().z() - left.normal().z()) / 2, (top.normal().z() - bottom.normal().z()) / 2, (back.normal().z() - front.normal().z()) / 2, right.normal().z() - (right.normal().z() - left.normal().z())
+			/ 2, (right.dist() - left.dist()) / 2, (top.dist() - bottom.dist()) / 2, (back.dist() - front.dist()) / 2, right.dist() - (right.dist() - left.dist())
 			/ 2);
 }
 
