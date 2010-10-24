@@ -745,6 +745,12 @@
 		<Unit filename="../../src/tools/radiant/radiant/texmanip.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/clipper/ClipPoint.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/clipper/GlobalClipPoints.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/textures.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

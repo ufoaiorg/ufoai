@@ -36,6 +36,8 @@
 #include "../settings/preferences.h"
 #include "../mainframe.h"
 
+#include "../clipper/GlobalClipPoints.h"
+
 #include "construct/Prism.h"
 #include "construct/Cone.h"
 #include "construct/Cuboid.h"
@@ -929,23 +931,23 @@ static BrushPrefab g_brushterrain(eBrushTerrain);
 
 void ClipSelected ()
 {
-	if (ClipMode()) {
+	if (GlobalClipPoints()->clipMode()) {
 		UndoableCommand undo("clipperClip");
-		Clip();
+		GlobalClipPoints()->clip();
 	}
 }
 
 void SplitSelected ()
 {
-	if (ClipMode()) {
+	if (GlobalClipPoints()->clipMode()) {
 		UndoableCommand undo("clipperSplit");
-		SplitClip();
+		GlobalClipPoints()->splitClip();
 	}
 }
 
 void FlipClipper ()
 {
-	FlipClip();
+	GlobalClipPoints()->flipClip();
 }
 
 Callback g_texture_lock_status_changed;

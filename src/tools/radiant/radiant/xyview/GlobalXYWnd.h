@@ -49,12 +49,6 @@ namespace scene
 typedef struct _GtkWindow GtkWindow;
 typedef struct _GtkMenu GtkMenu;
 
-void FlipClip ();
-void SplitClip ();
-void Clip ();
-void OnClipMode (bool enabled);
-bool ClipMode ();
-
 inline const char* ViewType_getTitle (EViewType viewtype)
 {
 	if (viewtype == XY) {

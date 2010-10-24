@@ -78,174 +78,7 @@ void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHe
 extern bool g_brush_always_nodraw;
 
 #include "../clipper/ClipPoint.h"
-
-EViewType g_clip_viewtype;
-bool g_bSwitch = true;
-bool g_clip_useNodraw = false;
-ClipPoint g_Clip1;
-ClipPoint g_Clip2;
-ClipPoint g_Clip3;
-ClipPoint* g_pMovingClip = 0;
-
-static inline ClipPoint* GlobalClipPoints_Find (const Vector3& point, EViewType viewtype, float scale)
-{
-	double bestDistance = FLT_MAX;
-	ClipPoint* bestClip = 0;
-	g_Clip1.testSelect(point, viewtype, scale, bestDistance, bestClip);
-	g_Clip2.testSelect(point, viewtype, scale, bestDistance, bestClip);
-	g_Clip3.testSelect(point, viewtype, scale, bestDistance, bestClip);
-	return bestClip;
-}
-
-static inline void GlobalClipPoints_Draw (float scale)
-{
-	// Draw clip points
-	if (g_Clip1.isSet())
-		g_Clip1.Draw(1, scale);
-	if (g_Clip2.isSet())
-		g_Clip2.Draw(2, scale);
-	if (g_Clip3.isSet())
-		g_Clip3.Draw(3, scale);
-}
-
-static inline bool GlobalClipPoints_valid (void)
-{
-	return g_Clip1.isSet() && g_Clip2.isSet();
-}
-
-static void PlanePointsFromClipPoints (Vector3 planepts[3], const AABB& bounds, int viewtype)
-{
-	ASSERT_MESSAGE(GlobalClipPoints_valid(), "clipper points not initialised");
-	planepts[0] = g_Clip1._coords;
-	planepts[1] = g_Clip2._coords;
-	planepts[2] = g_Clip3._coords;
-	Vector3 maxs(bounds.origin + bounds.extents);
-	Vector3 mins(bounds.origin - bounds.extents);
-	if (!g_Clip3.isSet()) {
-		int n = (viewtype == XY) ? 2 : (viewtype == YZ) ? 0 : 1;
-		int x = (n == 0) ? 1 : 0;
-		int y = (n == 2) ? 1 : 2;
-
-		if (n == 1) { // on viewtype XZ, flip clip points
-			planepts[0][n] = maxs[n];
-			planepts[1][n] = maxs[n];
-			planepts[2][x] = g_Clip1._coords[x];
-			planepts[2][y] = g_Clip1._coords[y];
-			planepts[2][n] = mins[n];
-		} else {
-			planepts[0][n] = mins[n];
-			planepts[1][n] = mins[n];
-			planepts[2][x] = g_Clip1._coords[x];
-			planepts[2][y] = g_Clip1._coords[y];
-			planepts[2][n] = maxs[n];
-		}
-	}
-}
-
-static void Clip_Update (void)
-{
-	Vector3 planepts[3];
-	if (!GlobalClipPoints_valid()) {
-		planepts[0] = Vector3(0, 0, 0);
-		planepts[1] = Vector3(0, 0, 0);
-		planepts[2] = Vector3(0, 0, 0);
-		Scene_BrushSetClipPlane(GlobalSceneGraph(), Plane3(0, 0, 0, 0));
-	} else {
-		AABB bounds(Vector3(0, 0, 0), Vector3(64, 64, 64));
-		PlanePointsFromClipPoints(planepts, bounds, g_clip_viewtype);
-		if (g_bSwitch) {
-			std::swap(planepts[0], planepts[1]);
-		}
-		Scene_BrushSetClipPlane(GlobalSceneGraph(), Plane3(planepts[0], planepts[1], planepts[2]));
-	}
-	ClipperChangeNotify();
-}
-
-static inline const std::string Clip_getShader (void)
-{
-	return g_clip_useNodraw ? "textures/tex_common/nodraw" : GlobalTextureBrowser().getSelectedShader();
-}
-
-void Clip (void)
-{
-	if (ClipMode() && GlobalClipPoints_valid()) {
-		Vector3 planepts[3];
-		AABB bounds(Vector3(0, 0, 0), Vector3(64, 64, 64));
-		PlanePointsFromClipPoints(planepts, bounds, g_clip_viewtype);
-		Scene_BrushSplitByPlane(GlobalSceneGraph(), planepts[0], planepts[1], planepts[2], Clip_getShader(),
-				(!g_bSwitch) ? eFront : eBack);
-		g_Clip1.reset();
-		g_Clip2.reset();
-		g_Clip3.reset();
-		Clip_Update();
-		ClipperChangeNotify();
-	}
-}
-
-void SplitClip (void)
-{
-	if (ClipMode() && GlobalClipPoints_valid()) {
-		Vector3 planepts[3];
-		AABB bounds(Vector3(0, 0, 0), Vector3(64, 64, 64));
-		PlanePointsFromClipPoints(planepts, bounds, g_clip_viewtype);
-		Scene_BrushSplitByPlane(GlobalSceneGraph(), planepts[0], planepts[1], planepts[2], Clip_getShader(),
-				eFrontAndBack);
-		g_Clip1.reset();
-		g_Clip2.reset();
-		g_Clip3.reset();
-		Clip_Update();
-		ClipperChangeNotify();
-	}
-}
-
-void FlipClip (void)
-{
-	g_bSwitch = !g_bSwitch;
-	Clip_Update();
-	ClipperChangeNotify();
-}
-
-void OnClipMode (bool enabled)
-{
-	g_Clip1.reset();
-	g_Clip2.reset();
-	g_Clip3.reset();
-
-	if (!enabled && g_pMovingClip) {
-		g_pMovingClip = 0;
-	}
-
-	Clip_Update();
-	ClipperChangeNotify();
-}
-
-bool ClipMode (void)
-{
-	return GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eClip;
-}
-
-static void NewClipPoint (const Vector3& point)
-{
-	if (g_Clip1.isSet() == false) {
-		g_Clip1._coords = point;
-		g_Clip1.Set(true);
-	} else if (g_Clip2.isSet() == false) {
-		g_Clip2._coords = point;
-		g_Clip2.Set(true);
-	} else if (g_Clip3.isSet() == false) {
-		g_Clip3._coords = point;
-		g_Clip3.Set(true);
-	} else {
-		g_Clip1.reset();
-		g_Clip2.reset();
-		g_Clip3.reset();
-		g_Clip1._coords = point;
-		g_Clip1.Set(true);
-	}
-
-	Clip_Update();
-	ClipperChangeNotify();
-}
+#include "../clipper/GlobalClipPoints.h"
 
 struct xywindow_globals_private_t
 {
@@ -459,8 +292,8 @@ void WXY_Print (void)
 	height = g_pParentWnd->ActiveXY()->Height();
 	unsigned char* img;
 
-	gtkutil::FileChooser
-			fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), _("Save Image"), false, false, "bmp", ".bmp");
+	gtkutil::FileChooser fileChooser(GTK_WIDGET(GlobalRadiant().getMainWindow()), _("Save Image"), false, false, "bmp",
+			".bmp");
 	std::string filename = fileChooser.display();
 	if (filename.empty())
 		return;
@@ -676,9 +509,9 @@ void XYWnd_CameraMoved (XYWnd& xywnd)
 }
 
 XYWnd::XYWnd () :
-		_glWidget(false), m_gl_widget(static_cast<GtkWidget*>(_glWidget)), m_deferredDraw(WidgetQueueDrawCaller(*m_gl_widget)), m_deferred_motion(
-			xywnd_motion, this), m_parent(0), m_window_observer(NewWindowObserver()), m_XORRectangle(m_gl_widget),
-			m_chasemouse_handler(0)
+	_glWidget(false), m_gl_widget(static_cast<GtkWidget*> (_glWidget)), m_deferredDraw(WidgetQueueDrawCaller(
+			*m_gl_widget)), m_deferred_motion(xywnd_motion, this), m_parent(0), m_window_observer(NewWindowObserver()),
+			m_XORRectangle(m_gl_widget), m_chasemouse_handler(0)
 {
 	m_bActive = false;
 	m_buttonstate = 0;
@@ -804,36 +637,36 @@ void XYWnd::DropClipPoint (int pointx, int pointy)
 
 	Vector3 mid;
 	Select_GetMid(mid);
-	g_clip_viewtype = static_cast<EViewType> (GetViewType());
-	int nDim = (g_clip_viewtype == YZ) ? 0 : (g_clip_viewtype == XZ ? 1 : 2);
+	GlobalClipPoints()->setViewType(GetViewType());
+	int nDim = (GlobalClipPoints()->getViewType() == YZ) ? 0 : ((GlobalClipPoints()->getViewType() == XZ) ? 1 : 2);
 	point[nDim] = mid[nDim];
 	vector3_snap(point, GetGridSize());
-	NewClipPoint(point);
+	GlobalClipPoints()->newClipPoint(point);
 }
 
 void XYWnd::Clipper_OnLButtonDown (int x, int y)
 {
 	Vector3 mousePosition = g_vector3_identity;
 	XY_ToPoint(x, y, mousePosition);
-	g_pMovingClip = GlobalClipPoints_Find(mousePosition, (EViewType) m_viewType, m_fScale);
-	if (!g_pMovingClip) {
+	ClipPoint* foundClipPoint = GlobalClipPoints()->find(mousePosition, m_viewType, m_fScale);
+	GlobalClipPoints()->setMovingClip(foundClipPoint);
+	if (foundClipPoint == NULL) {
 		DropClipPoint(x, y);
 	}
 }
 
 void XYWnd::Clipper_OnLButtonUp (int x, int y)
 {
-	if (g_pMovingClip) {
-		g_pMovingClip = 0;
-	}
+	GlobalClipPoints()->setMovingClip(NULL);
 }
 
 void XYWnd::Clipper_OnMouseMoved (int x, int y)
 {
-	if (g_pMovingClip) {
-		XY_ToPoint(x, y, g_pMovingClip->_coords);
-		snapToGrid(g_pMovingClip->_coords);
-		Clip_Update();
+	ClipPoint* movingClip = GlobalClipPoints()->getMovingClip();
+	if (movingClip != NULL) {
+		XY_ToPoint(x, y, movingClip->_coords);
+		snapToGrid(movingClip->_coords);
+		GlobalClipPoints()->update();
 		ClipperChangeNotify();
 	}
 }
@@ -842,7 +675,7 @@ void XYWnd::Clipper_Crosshair_OnMouseMoved (int x, int y)
 {
 	Vector3 mousePosition = g_vector3_identity;
 	XY_ToPoint(x, y, mousePosition);
-	if (ClipMode() && GlobalClipPoints_Find(mousePosition, (EViewType) m_viewType, m_fScale) != 0) {
+	if (GlobalClipPoints()->clipMode() && GlobalClipPoints()->find(mousePosition, m_viewType, m_fScale) != 0) {
 		GdkCursor *cursor = gdk_cursor_new(GDK_CROSSHAIR);
 		gdk_window_set_cursor(m_gl_widget->window, cursor);
 		gdk_cursor_unref(cursor);
@@ -1122,7 +955,7 @@ void XYWnd::XY_MouseDown (int x, int y, unsigned int buttons)
 		EntityCreate_MouseDown(x, y);
 	} else if (buttons == Zoom_buttons()) {
 		beginZoom();
-	} else if (ClipMode() && buttons == Clipper_buttons()) {
+	} else if (GlobalClipPoints()->clipMode() && buttons == Clipper_buttons()) {
 		Clipper_OnLButtonDown(x, y);
 	} else if (buttons == NewBrushDrag_buttons() && GlobalSelectionSystem().countSelected() == 0) {
 		NewBrushDrag_Begin(x, y);
@@ -1145,7 +978,7 @@ void XYWnd::XY_MouseUp (int x, int y, unsigned int buttons)
 		EntityCreate_MouseUp(x, y);
 	} else if (m_zoom_started) {
 		endZoom();
-	} else if (ClipMode() && buttons == Clipper_buttons()) {
+	} else if (GlobalClipPoints()->clipMode() && buttons == Clipper_buttons()) {
 		Clipper_OnLButtonUp(x, y);
 	} else if (m_bNewBrushDrag) {
 		m_bNewBrushDrag = false;
@@ -1162,7 +995,7 @@ void XYWnd::XY_MouseMoved (int x, int y, unsigned int buttons)
 		// rbutton = drag xy origin
 	} else if (m_zoom_started) {
 		// zoom in/out
-	} else if (ClipMode() && g_pMovingClip != 0) {
+	} else if (GlobalClipPoints()->clipMode() && GlobalClipPoints()->getMovingClip() != 0) {
 		Clipper_OnMouseMoved(x, y);
 	} else if (m_bNewBrushDrag) {
 		// lbutton without selection = drag new brush
@@ -2034,8 +1867,8 @@ void XYWnd::draw ()
 		glEnd();
 	}
 
-	if (ClipMode()) {
-		GlobalClipPoints_Draw(m_fScale);
+	if (GlobalClipPoints()->clipMode()) {
+		GlobalClipPoints()->draw(m_fScale);
 	}
 
 	// reset modelview
@@ -2378,20 +2211,6 @@ void Orthographic_registerPreferencesPage ()
 	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Orthographic_constructPage> ());
 }
 
-void Clipper_constructPreferences (PreferencesPage& page)
-{
-	page.appendCheckBox("", _("Clipper tool uses nodraw"), g_clip_useNodraw);
-}
-void Clipper_constructPage (PreferenceGroup& group)
-{
-	PreferencesPage page(group.createPage(_("Clipper"), _("Clipper Tool Settings")));
-	Clipper_constructPreferences(page);
-}
-void Clipper_registerPreferencesPage ()
-{
-	PreferencesDialog_addSettingsPage(FreeCaller1<PreferenceGroup&, Clipper_constructPage> ());
-}
-
 #include "preferencesystem.h"
 #include "stringio.h"
 
@@ -2429,8 +2248,6 @@ void XYWindow_Construct ()
 			(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 
 	// register preference settings
-	GlobalPreferenceSystem().registerPreference("ClipNoDraw", BoolImportStringCaller(g_clip_useNodraw),
-			BoolExportStringCaller(g_clip_useNodraw));
 	GlobalPreferenceSystem().registerPreference("NewRightClick", BoolImportStringCaller(
 			g_xywindow_globals.m_bRightClick), BoolExportStringCaller(g_xywindow_globals.m_bRightClick));
 	GlobalPreferenceSystem().registerPreference("ChaseMouse", BoolImportStringCaller(
@@ -2483,7 +2300,7 @@ void XYWindow_Construct ()
 			g_xywindow_globals.color_gridmajor_alt), Vector3ExportStringCaller(g_xywindow_globals.color_gridmajor_alt));
 
 	Orthographic_registerPreferencesPage();
-	Clipper_registerPreferencesPage();
+	GlobalClipPoints()->registerPreferencesPage();
 
 	XYWnd::captureStates();
 
