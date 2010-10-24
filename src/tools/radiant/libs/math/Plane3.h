@@ -41,7 +41,6 @@
 
 #include "FloatTools.h"
 #include "Vector3.h"
-#include "matrix.h"
 
 namespace {
 // Some constants for "equality" check.
@@ -200,16 +199,5 @@ class Plane3 {
 		}
 
 }; // class Plane3
-
-inline Plane3 plane3_transformed(const Plane3& plane, const Matrix4& transform) {
-	Plane3 transformed;
-	transformed.normal().x() = transform[0] * plane.normal().x() + transform[4] * plane.normal().y() + transform[8] * plane.normal().z();
-	transformed.normal().y() = transform[1] * plane.normal().x() + transform[5] * plane.normal().y() + transform[9] * plane.normal().z();
-	transformed.normal().z() = transform[2] * plane.normal().x() + transform[6] * plane.normal().y() + transform[10] * plane.normal().z();
-	transformed.dist() = -((-plane.dist() * transformed.normal().x() + transform[12]) * transformed.normal().x() + (-plane.dist()
-			* transformed.normal().y() + transform[13]) * transformed.normal().y() + (-plane.dist() * transformed.normal().z()
-			+ transform[14]) * transformed.normal().z());
-	return transformed;
-}
 
 #endif

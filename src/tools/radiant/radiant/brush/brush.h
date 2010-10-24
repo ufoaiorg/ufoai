@@ -583,7 +583,7 @@ inline Plane3 Plane3_applyTranslation (const Plane3& plane, const Vector3& trans
 
 inline Plane3 Plane3_applyTransform (const Plane3& plane, const Matrix4& matrix)
 {
-	Plane3 tmp(plane3_transformed(Plane3(plane.normal(), -plane.dist()), matrix));
+	Plane3 tmp = matrix.transform(Plane3(plane.normal(), -plane.dist()));
 	return Plane3(tmp.normal(), -tmp.dist());
 }
 

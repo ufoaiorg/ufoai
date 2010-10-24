@@ -518,7 +518,7 @@ inline bool viewer_test_transformed_plane (const Vector4& viewer, const Plane3& 
 #if 0
 	return viewer_test_plane(viewer_from_transformed_viewer(viewer, matrix4_affine_inverse(localToWorld)), plane);
 #else
-	return viewer_test_plane(viewer, plane3_transformed(plane, localToWorld));
+	return viewer_test_plane(viewer, localToWorld.transform(plane));
 #endif
 }
 

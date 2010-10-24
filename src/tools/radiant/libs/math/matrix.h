@@ -29,6 +29,7 @@
 
 #include "math/Vector3.h"
 #include "math/Vector4.h"
+#include "math/Plane3.h"
 
 /// \brief A 4x4 matrix stored in single-precision floating-point.
 class Matrix4
@@ -333,6 +334,27 @@ class Matrix4
 		Vector4 transform (const Vector3& vector3) const
 		{
 			return transform(Vector4(vector3, 1));
+		}
+
+		/** Use this matrix to transform the provided plane
+		 *
+		 * @param plane: The Plane to transform.
+		 *
+		 * @returns: the transformed plane.
+		 */
+		Plane3 transform(const Plane3& plane) const {
+			Plane3 transformed;
+			transformed.normal().x() = m_elements[0] * plane.normal().x() + m_elements[4]
+					* plane.normal().y() + m_elements[8] * plane.normal().z();
+			transformed.normal().y() = m_elements[1] * plane.normal().x() + m_elements[5]
+					* plane.normal().y() + m_elements[9] * plane.normal().z();
+			transformed.normal().z() = m_elements[2] * plane.normal().x() + m_elements[6]
+					* plane.normal().y() + m_elements[10] * plane.normal().z();
+			transformed.dist() = -((-plane.dist() * transformed.normal().x() + m_elements[12])
+					* transformed.normal().x() + (-plane.dist() * transformed.normal().y()
+					+ m_elements[13]) * transformed.normal().y() + (-plane.dist()
+					* transformed.normal().z() + m_elements[14]) * transformed.normal().z());
+			return transformed;
 		}
 
 		/// \brief Concatenates \p self with \p translation.
