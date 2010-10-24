@@ -62,8 +62,7 @@ inline void write_scale (const Vector3& scale, Entity* entity)
 
 inline Vector3 scale_scaled (const Vector3& scale, const Vector3& scaling)
 {
-	return matrix4_get_scale_vec3(matrix4_multiplied_by_matrix4(matrix4_scale_for_vec3(scale), matrix4_scale_for_vec3(
-			scaling)));
+	return matrix4_get_scale_vec3(Matrix4::getScale(scale).getMultipliedBy(Matrix4::getScale(scaling)));
 }
 
 class ScaleKey

@@ -1179,12 +1179,6 @@ inline void matrix4_pivoted_rotate_by_euler_xyz_degrees (Matrix4& self, const Ve
 	self.translateBy(-pivotpoint);
 }
 
-/// \brief Constructs a pure-scale matrix from \p scale.
-inline Matrix4 matrix4_scale_for_vec3 (const Vector3& scale)
-{
-	return Matrix4(scale[0], 0, 0, 0, 0, scale[1], 0, 0, 0, 0, scale[2], 0, 0, 0, 0, 1);
-}
-
 /// \brief Calculates and returns the (x, y, z) scale values that produce the scale component of \p self.
 /// \p self must be affine and orthogonal to produce a meaningful result.
 inline Vector3 matrix4_get_scale_vec3 (const Matrix4& self)
@@ -1194,17 +1188,11 @@ inline Vector3 matrix4_get_scale_vec3 (const Matrix4& self)
 			static_cast<float> (self.z().getVector3().getLength()));
 }
 
-/// \brief Scales \p self by \p scale.
-inline void matrix4_scale_by_vec3 (Matrix4& self, const Vector3& scale)
-{
-	matrix4_multiply_by_matrix4(self, matrix4_scale_for_vec3(scale));
-}
-
 /// \brief Scales \p self by \p scale, using \p pivotpoint.
 inline void matrix4_pivoted_scale_by_vec3 (Matrix4& self, const Vector3& scale, const Vector3& pivotpoint)
 {
 	self.translateBy(pivotpoint);
-	matrix4_scale_by_vec3(self, scale);
+	self.scaleBy(scale);
 	self.translateBy(-pivotpoint);
 }
 
@@ -1215,7 +1203,7 @@ inline void matrix4_transform_by_euler_xyz_degrees (Matrix4& self, const Vector3
 {
 	self.translateBy(translation);
 	matrix4_rotate_by_euler_xyz_degrees(self, euler);
-	matrix4_scale_by_vec3(self, scale);
+	self.scaleBy(scale);
 }
 
 /// \brief Transforms \p self by \p translation, \p euler and \p scale, using \p pivotpoint.
@@ -1224,7 +1212,7 @@ inline void matrix4_pivoted_transform_by_euler_xyz_degrees (Matrix4& self, const
 {
 	self.translateBy(pivotpoint + translation);
 	matrix4_rotate_by_euler_xyz_degrees(self, euler);
-	matrix4_scale_by_vec3(self, scale);
+	self.scaleBy(scale);
 	self.translateBy(-pivotpoint);
 }
 
