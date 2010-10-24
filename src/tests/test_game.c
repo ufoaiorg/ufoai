@@ -70,8 +70,8 @@ static void testSpawnAndConnect (void)
 	SV_ClearWorld();
 
 	svs.ge->SpawnEntities(name, day, (const char *)buf);
-	svs.ge->ClientConnect(player, userinfo, sizeof(userinfo));
-	svs.ge->RunFrame();
+	CU_ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
+	CU_ASSERT_FALSE(svs.ge->RunFrame());
 }
 
 int UFO_AddGameTests (void)
