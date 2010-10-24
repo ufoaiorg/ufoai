@@ -93,7 +93,7 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/namespace/NamespaceAPI.cpp \
 	\
 	$(RADIANT_BASE)/radiant/xyview/grid.cpp \
-	$(RADIANT_BASE)/radiant/xyview/xywindow.cpp \
+	$(RADIANT_BASE)/radiant/xyview/GlobalXYWnd.cpp \
 	\
 	$(RADIANT_BASE)/radiant/camera/camwindow.cpp \
 	$(RADIANT_BASE)/radiant/camera/view.cpp \

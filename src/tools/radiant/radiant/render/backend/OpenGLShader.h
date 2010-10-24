@@ -9,7 +9,7 @@
 #include "OpenGLStateLess.h"
 #include "OpenGLStateManager.h"
 
-#include "../../xyview/xywindow.h"
+#include "../../xyview/GlobalXYWnd.h"
 
 #include <list>
 #include <map>

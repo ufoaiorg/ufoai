@@ -8,7 +8,7 @@
 #include "mainframe.h"
 #include "camera/camwindow.h"
 #include "sidebar/sidebar.h"
-#include "xyview/xywindow.h"
+#include "xyview/GlobalXYWnd.h"
 #include "eclasslib.h"
 #include "commands.h"
 #include "settings/preferences.h"

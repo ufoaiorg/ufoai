@@ -24,7 +24,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "xywindow.h"
+#include "GlobalXYWnd.h"
 #include "radiant_i18n.h"
 
 #include "debugging/debugging.h"

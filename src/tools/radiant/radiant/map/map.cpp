@@ -67,7 +67,7 @@
 #include "../sidebar/MapInfo.h"
 #include "../qe3.h"
 #include "../camera/camwindow.h"
-#include "../xyview/xywindow.h"
+#include "../xyview/GlobalXYWnd.h"
 #include "../mainframe.h"
 #include "../settings/preferences.h"
 #include "../referencecache.h"

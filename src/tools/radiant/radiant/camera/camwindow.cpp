@@ -55,7 +55,7 @@
 #include "../mainframe.h"
 #include "../settings/preferences.h"
 #include "../commands.h"
-#include "../xyview/xywindow.h"
+#include "../xyview/GlobalXYWnd.h"
 #include "../windowobservers.h"
 #include "../ui/Icons.h"
 #include "../render/RenderStatistics.h"

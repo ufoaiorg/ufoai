@@ -51,7 +51,7 @@
 #include "../brush/brushmanip.h"
 #include "../settings/preferences.h"
 #include "../brush/brush_primit.h"
-#include "../xyview/xywindow.h"
+#include "../xyview/GlobalXYWnd.h"
 #include "../mainframe.h"
 #include "../dialog.h"
 #include "../brush/brush.h"

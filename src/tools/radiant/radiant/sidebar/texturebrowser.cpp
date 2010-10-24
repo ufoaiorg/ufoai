@@ -76,7 +76,7 @@
 #include "../dialogs/findtextures.h"
 #include "sidebar.h"
 #include "../commands.h"
-#include "../xyview/xywindow.h"
+#include "../xyview/GlobalXYWnd.h"
 
 static void TextureBrowser_scrollChanged(void* data, gdouble value);
 

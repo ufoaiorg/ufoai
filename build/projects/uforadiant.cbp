@@ -862,7 +862,7 @@
 		<Unit filename="../../src/tools/radiant/radiant/xyview/grid.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/xyview/xywindow.cpp">
+		<Unit filename="../../src/tools/radiant/radiant/xyview/GlobalXYWnd.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

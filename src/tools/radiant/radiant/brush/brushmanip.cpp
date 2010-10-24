@@ -32,7 +32,7 @@
 #include "../sidebar/sidebar.h"
 #include "../commands.h"
 #include "../dialog.h"
-#include "../xyview/xywindow.h"
+#include "../xyview/GlobalXYWnd.h"
 #include "../settings/preferences.h"
 #include "../mainframe.h"
 
