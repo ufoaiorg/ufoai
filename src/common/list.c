@@ -5,8 +5,8 @@ LINKED LIST
 ============================================================
 */
 
-#include "common.h"
 #include "list.h"
+#include "common.h"
 #include "mem.h"
 #include <assert.h>
 #include <string.h>
