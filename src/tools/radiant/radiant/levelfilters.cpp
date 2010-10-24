@@ -59,15 +59,12 @@ class EntityFindByName: public scene::Graph::Walker
 		}
 		bool pre (const scene::Path& path, scene::Instance& instance) const
 		{
-			int spawnflagsInt;
 			Entity* entity = Node_getEntity(path.top());
 			if (entity != 0) {
 				if (string_equal(m_name, entity->getKeyValue("classname"))) {
-					const char *spawnflags = entity->getKeyValue("spawnflags");
-					globalOutputStream() << "spawnflags for " << m_name << ": " << spawnflags << ".\n";
-
-					if (!string_empty(spawnflags)) {
-						spawnflagsInt = atoi(spawnflags);
+					const std::string spawnflags = entity->getKeyValue("spawnflags");
+					if (!spawnflags.empty()) {
+						const int spawnflagsInt = string::toInt(spawnflags);
 						if (!(spawnflagsInt & m_flag)) {
 							hide_node(path.top(), m_hide); // hide/unhide
 							m_entitylist.push_back(entity);
