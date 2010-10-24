@@ -245,8 +245,4 @@ inline bool plane3_opposing(const Plane3& self, const Plane3& other) {
 	return plane3_equal(self, plane3_flipped(other));
 }
 
-inline bool plane3_valid(const Plane3& self) {
-	return float_equal_epsilon(self.normal().dot(self.normal()), 1.0, 0.01);
-}
-
 #endif

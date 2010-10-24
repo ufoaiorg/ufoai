@@ -991,11 +991,6 @@ class Face: public OpenGLRenderable, public Filterable, public Undoable, public 
 		void snapto (float snap)
 		{
 			if (contributes()) {
-#if 0
-				ASSERT_MESSAGE(plane3_valid(m_plane.plane3()), "invalid plane before snap to grid");
-				planepts_snap(m_plane.planePoints(), snap);
-				ASSERT_MESSAGE(plane3_valid(m_plane.plane3()), "invalid plane after snap to grid");
-#else
 				PlanePoints planePoints;
 				update_move_planepts_vertex(0, planePoints);
 				vector3_snap(planePoints[0], snap);
@@ -1003,9 +998,9 @@ class Face: public OpenGLRenderable, public Filterable, public Undoable, public 
 				vector3_snap(planePoints[2], snap);
 				assign_planepts(planePoints);
 				freezeTransform();
-#endif
+
 				SceneChangeNotify();
-				if (!plane3_valid(m_plane.plane3())) {
+				if (!m_plane.plane3().isValid()) {
 					g_warning("Invalid plane after snap to grid\n");
 				}
 			}
@@ -1943,7 +1938,7 @@ class Brush: public TransformNode,
 				for (std::size_t i = 0; i < m_faces.size(); ++i) {
 					const Face& clip = *m_faces[i];
 
-					if (plane3_equal(clip.plane3(), plane) || !plane3_valid(clip.plane3()) || !plane_unique(i)
+					if (plane3_equal(clip.plane3(), plane) || !clip.plane3().isValid() || !plane_unique(i)
 							|| plane3_opposing(plane, clip.plane3())) {
 						continue;
 					}
@@ -2149,7 +2144,7 @@ class Brush: public TransformNode,
 			for (std::size_t i = 0; i < m_faces.size(); ++i) {
 				Face& f = *m_faces[i];
 
-				if (!plane3_valid(f.plane3()) || !plane_unique(i)) {
+				if (!f.plane3().isValid() || !plane_unique(i)) {
 					f.getWinding().resize(0);
 				} else {
 					windingForClipPlane(f.getWinding(), f.plane3());
@@ -2748,7 +2743,7 @@ class BrushClipPlane: public OpenGLRenderable
 		void setPlane (const Brush& brush, const Plane3& plane)
 		{
 			m_plane = plane;
-			if (plane3_valid(m_plane)) {
+			if (m_plane.isValid()) {
 				brush.windingForClipPlane(m_winding, m_plane);
 			} else {
 				m_winding.resize(0);
