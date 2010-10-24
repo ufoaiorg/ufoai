@@ -45,7 +45,7 @@
  \link math/Vector2.h math/Vector3.h math/Vector4.h \endlink - Vectors \n
  \link math/matrix.h math/matrix.h \endlink - Matrices \n
  \link math/quaternion.h math/quaternion.h \endlink - Quaternions \n
- \link math/plane.h math/plane.h \endlink - Planes \n
+ \link math/Plane3.h math/Plane3.h \endlink - Planes \n
  \link math/aabb.h math/aabb.h \endlink - AABBs \n
 
  Callback MemberCaller FunctionCaller - callbacks similar to using boost::function with boost::bind \n

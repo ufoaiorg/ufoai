@@ -31,7 +31,7 @@
 #include "stringio.h"
 #include "texturelib.h"
 #include "math/matrix.h"
-#include "math/plane.h"
+#include "math/Plane3.h"
 #include "math/aabb.h"
 
 #include "winding.h"

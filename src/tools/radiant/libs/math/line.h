@@ -27,7 +27,7 @@
 #if !defined(INCLUDED_MATH_LINE_H)
 #define INCLUDED_MATH_LINE_H
 
-#include "math/plane.h"
+#include "math/Plane3.h"
 
 /// \brief A line segment defined by a start point and and end point.
 class Line

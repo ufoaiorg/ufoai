@@ -28,7 +28,7 @@
 #define INCLUDED_MATH_AABB_H
 
 #include "math/matrix.h"
-#include "math/plane.h"
+#include "math/Plane3.h"
 #include <algorithm>
 
 /** An Axis Aligned Bounding Box is a simple cuboid which encloses a given set of points,
