@@ -42,6 +42,7 @@ typedef int (*testSuite_t) (void);
 #include "test_campaign.h"
 #include "test_rma.h"
 #include "test_parser.h"
+#include "test_game.h"
 
 static const testSuite_t testSuites[] = {
 	UFO_AddGenericTests,
@@ -52,6 +53,7 @@ static const testSuite_t testSuites[] = {
 	UFO_AddRoutingTests,
 	UFO_AddInventoryTests,
 	UFO_AddRandomMapAssemblyTests,
+	UFO_AddGameTests,
 	NULL
 };
 #define NUMBER_OF_TESTS (sizeof(testSuites) / sizeof(*(testSuites)))

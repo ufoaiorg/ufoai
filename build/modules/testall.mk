@@ -8,7 +8,7 @@ endif
 
 $(TARGET)_LINKER   := $(CC)
 $(TARGET)_FILE     := $(TARGET)$(EXE_EXT)
-$(TARGET)_CFLAGS   += -DCOMPILE_UFO -DCOMPILE_UNITTESTS $(SDL_CFLAGS) $(CURL_CFLAGS) $(OGG_CFLAGS)
+$(TARGET)_CFLAGS   += -DCOMPILE_UFO -DHARD_LINKED_GAME -DCOMPILE_UNITTESTS $(SDL_CFLAGS) $(CURL_CFLAGS) $(OGG_CFLAGS)
 $(TARGET)_LDFLAGS  += -lcunit -lpng -ljpeg $(INTL_LIBS) $(SDL_TTF_LIBS) $(SDL_IMAGE_LIBS) $(SDL_MIXER_LIBS) $(OPENGL_LIBS) $(SDL_LIBS) $(CURL_LIBS) $(THEORA_LIBS) $(XVID_LIBS) $(VORBIS_LIBS) $(OGG_LIBS) $(SO_LIBS) -lz
 
 $(TARGET)_SRCS      = \
@@ -16,6 +16,7 @@ $(TARGET)_SRCS      = \
 	tests/test_routing.c \
 	tests/test_generic.c \
 	tests/test_inventory.c \
+	tests/test_game.c \
 	tests/test_rma.c \
 	tests/test_shared.c \
 	tests/test_ui.c \
@@ -317,19 +318,10 @@ $(TARGET)_SRCS      = \
 	client/renderer/r_thread.c \
 	\
 	shared/byte.c \
-	shared/mathlib.c \
 	shared/threads.c \
-	shared/utf8.c \
 	shared/images.c \
-	shared/infostring.c \
-	shared/parse.c \
-	shared/shared.c \
 	\
-	game/q_shared.c \
-	game/chr_shared.c \
-	game/inv_shared.c \
-	game/inventory.c
-
+	$(game_SRCS)
 
 ifeq ($(TARGET_OS),mingw32)
 	$(TARGET)_SRCS += \
@@ -344,7 +336,16 @@ else
 endif
 
 ifeq ($(HARD_LINKED_GAME),1)
-	$(TARGET)_SRCS     += $(game_SRCS)
+	$(TARGET)_SRCS     += shared/mathlib.c \
+		shared/shared.c \
+		shared/utf8.c \
+		shared/parse.c \
+		shared/infostring.c \
+		\
+		game/q_shared.c \
+		game/chr_shared.c \
+		game/inv_shared.c \
+		game/inventory.c
 endif
 
 ifneq ($(HAVE_CUNIT_BASIC_H), 1)

@@ -1088,6 +1088,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tests\test_shared.h" />
+		<Unit filename="..\..\src\tests\test_game.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tests\test_game.h" />
 		<Unit filename="..\..\src\tests\test_ui.c">
 			<Option compilerVar="CC" />
 		</Unit>
