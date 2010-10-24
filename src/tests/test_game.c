@@ -38,7 +38,6 @@ static int UFO_InitSuiteGame (void)
 	TEST_Init();
 	/* we need the teamdefs for spawning ai actors */
 	Com_ParseScripts(qtrue);
-	SV_InitGameProgs();
 	return 0;
 }
 
@@ -49,14 +48,13 @@ static int UFO_InitSuiteGame (void)
 static int UFO_CleanSuiteGame (void)
 {
 	TEST_Shutdown();
-	SV_ShutdownGameProgs();
 	return 0;
 }
 
 static void testSpawnAndConnect (void)
 {
 	char userinfo[MAX_INFO_STRING];
-	player_t *player = PLAYER_NUM(0);
+	player_t *player;
 	const char *name = "name";
 	qboolean day = qtrue;
 	byte *buf;
@@ -66,14 +64,28 @@ static void testSpawnAndConnect (void)
 	CU_ASSERT_NOT_EQUAL_FATAL(size, -1);
 	CU_ASSERT_FATAL(size > 0);
 
+	SV_InitGameProgs();
 	/* otherwise we can't link the entities */
 	SV_ClearWorld();
 
+	player = PLAYER_NUM(0);
 	svs.ge->SpawnEntities(name, day, (const char *)buf);
 	CU_ASSERT_TRUE(svs.ge->ClientConnect(player, userinfo, sizeof(userinfo)));
 	CU_ASSERT_FALSE(svs.ge->RunFrame());
 
+	SV_ShutdownGameProgs();
 	FS_FreeFile(buf);
+}
+
+static const char *mapName = "test_game";
+
+static void testShooting (void)
+{
+	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
+		SV_Map(qtrue, mapName, NULL);
+	} else {
+		CU_FAIL("Map resource for test is missing.");
+	}
 }
 
 int UFO_AddGameTests (void)
@@ -86,6 +98,9 @@ int UFO_AddGameTests (void)
 
 	/* add the tests to the suite */
 	if (CU_ADD_TEST(GameSuite, testSpawnAndConnect) == NULL)
+		return CU_get_error();
+
+	if (CU_ADD_TEST(GameSuite, testShooting) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;
