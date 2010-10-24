@@ -505,7 +505,7 @@ static bool Brush_merge (Brush& brush, const brush_vector_t& in, bool onlyshape)
 							const Face& face2 = *(*l);
 
 							// face opposes another face
-							if (plane3_opposing(face1.plane3(), face2.plane3())) {
+							if (face1.plane3() == -face2.plane3()) {
 								// skip opposing planes
 								skip = true;
 								break;

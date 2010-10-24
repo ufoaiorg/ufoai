@@ -1940,7 +1940,7 @@ class Brush: public TransformNode,
 					const Face& clip = *m_faces[i];
 
 					if (clip.plane3() == plane || !clip.plane3().isValid() || !plane_unique(i)
-							|| plane3_opposing(plane, clip.plane3())) {
+							|| plane == -clip.plane3()) {
 						continue;
 					}
 

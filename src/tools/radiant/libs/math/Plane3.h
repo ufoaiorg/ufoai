@@ -212,8 +212,4 @@ inline Plane3 plane3_transformed(const Plane3& plane, const Matrix4& transform) 
 	return transformed;
 }
 
-inline bool plane3_opposing(const Plane3& self, const Plane3& other) {
-	return self == -other;
-}
-
 #endif
