@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _CHECKLIB_H
 #define _CHECKLIB_H
 
+#include "../common/shared.h"
+
 /** constants that may be passed to Check_Printf in lieu of entity/brush numbers */
 #define NUM_NONE -1
 #define NUM_DIFF -2

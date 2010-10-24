@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef UFO2MAP_CHECK_CHECK_H
 #define UFO2MAP_CHECK_CHECK_H
 
+#include "../map.h"
+
 /** @sa Check_FindCompositeSides */
 typedef struct compositeSide_s {
 	struct side_s **memberSides;

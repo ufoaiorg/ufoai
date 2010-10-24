@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define _CHECKENTITIES_H
 
 #include "../../../shared/typedefs.h"
+#include "../map.h"
 
 void Check_Stats(void);
 void CheckEntities(void);

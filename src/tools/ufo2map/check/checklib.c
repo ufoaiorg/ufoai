@@ -26,9 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-#include "../common/shared.h"
-#include "../ufo2map.h"
 #include "checklib.h"
+#include "../ufo2map.h"
 #include "../../../shared/entitiesdef.h"
 #include "../bsp.h"
 #include "check.h"
