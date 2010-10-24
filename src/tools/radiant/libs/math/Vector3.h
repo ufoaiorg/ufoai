@@ -328,6 +328,12 @@ class BasicVector3
 			return ss.str();
 		}
 
+		/** Cast to std::string
+		 */
+		operator std::string() const {
+			return toString();
+		}
+
 		/** Implicit cast to C-style array. This allows a Vector3 to be
 		 * passed directly to GL functions that expect an array (e.g.
 		 * glFloat3fv()). These functions implicitly provide operator[]

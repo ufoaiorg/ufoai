@@ -1,9 +1,9 @@
 #ifndef VECTOR2_H_
 #define VECTOR2_H_
 
-/* greebo: This file contains the templated class definition of the three-component vector
+/* greebo: This file contains the templated class definition of the two-component vector
  *
- * BasicVector2: A vector with three components of type <Element>
+ * BasicVector2: A vector with two components of type <Element>
  *
  * The BasicVector2 is equipped with the most important operators like *, *= and so on.
  *
@@ -262,6 +262,12 @@ class BasicVector2
 			std::stringstream ss;
 			ss << m_elements[0] << " " << m_elements[1];
 			return ss.str();
+		}
+
+		/** Cast to std::string
+		 */
+		operator std::string() const {
+			return toString();
 		}
 };
 
