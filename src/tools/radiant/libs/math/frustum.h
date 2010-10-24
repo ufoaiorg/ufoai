@@ -359,14 +359,6 @@ inline Frustum frustum_transformed (const Frustum& frustum, const Matrix4& trans
 			plane3_transformed(frustum.back, transform), plane3_transformed(frustum.front, transform));
 }
 
-inline Frustum frustum_inverse_transformed (const Frustum& frustum, const Matrix4& transform)
-{
-	return Frustum(plane3_inverse_transformed(frustum.right, transform), plane3_inverse_transformed(frustum.left,
-			transform), plane3_inverse_transformed(frustum.bottom, transform), plane3_inverse_transformed(frustum.top,
-			transform), plane3_inverse_transformed(frustum.back, transform), plane3_inverse_transformed(frustum.front,
-			transform));
-}
-
 inline bool viewproj_test_point (const Matrix4& viewproj, const Vector3& point)
 {
 	Vector4 hpoint(matrix4_transformed_vector4(viewproj, Vector4(point, 1.0f)));

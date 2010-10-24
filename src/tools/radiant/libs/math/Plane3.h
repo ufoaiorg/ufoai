@@ -212,15 +212,6 @@ inline Plane3 plane3_transformed(const Plane3& plane, const Matrix4& transform) 
 	return transformed;
 }
 
-inline Plane3 plane3_inverse_transformed(const Plane3& plane, const Matrix4& transform) {
-	return Plane3(transform[0] * plane.normal().x() + transform[1] * plane.normal().y() + transform[2] * plane.normal().z()
-			+ transform[3] * plane.dist(), transform[4] * plane.normal().x() + transform[5] * plane.normal().y()
-			+ transform[6] * plane.normal().z() + transform[7] * plane.dist(), transform[8] * plane.normal().x()
-			+ transform[9] * plane.normal().y() + transform[10] * plane.normal().z() + transform[11] * plane.dist(),
-			transform[12] * plane.normal().x() + transform[13] * plane.normal().y() + transform[14] * plane.normal().z()
-					+ transform[15] * plane.dist());
-}
-
 inline bool plane3_opposing(const Plane3& self, const Plane3& other) {
 	return self == -other;
 }
