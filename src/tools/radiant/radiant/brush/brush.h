@@ -576,7 +576,8 @@ inline void planepts_print (const PlanePoints& planePoints, TextOutputStream& os
 
 inline Plane3 Plane3_applyTranslation (const Plane3& plane, const Vector3& translation)
 {
-	Plane3 tmp(plane3_translated(Plane3(plane.normal(), -plane.dist()), translation));
+	Plane3 tmp(plane.normal(), -plane.dist());
+	tmp.translate(translation);
 	return Plane3(tmp.normal(), -tmp.dist());
 }
 

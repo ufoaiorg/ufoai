@@ -137,11 +137,17 @@ class Plane3 {
 			_dist = -_dist;
 		}
 
-		Plane3 getTranslated(const Vector3& translation) const {
+		void translate(const Vector3& translation) {
 			double distTransformed = -((-_dist * _normal.x() + translation.x()) * _normal.x()
 					+ (-_dist * _normal.y() + translation.y()) * _normal.y() + (-_dist
 					* _normal.z() + translation.z()) * _normal.z());
-			return Plane3(_normal, distTransformed);
+			_dist = distTransformed;
+		}
+
+		Plane3 getTranslated(const Vector3& translation) const {
+			Plane3 tmp(_normal, _dist);
+			tmp.translate(translation);
+			return tmp;
 		}
 
 		// Checks if the floats of this plane are valid, returns true if this is the case
@@ -194,17 +200,6 @@ class Plane3 {
 		}
 
 }; // class Plane3
-
-inline Plane3 plane3_translated(const Plane3& plane, const Vector3& translation) {
-	Plane3 transformed;
-	transformed.normal().x() = plane.normal().x();
-	transformed.normal().y() = plane.normal().y();
-	transformed.normal().z() = plane.normal().z();
-	transformed.dist() = -((-plane.dist() * transformed.normal().x() + translation.x()) * transformed.normal().x() + (-plane.dist()
-			* transformed.normal().y() + translation.y()) * transformed.normal().y() + (-plane.dist() * transformed.normal().z()
-			+ translation.z()) * transformed.normal().z());
-	return transformed;
-}
 
 inline Plane3 plane3_transformed(const Plane3& plane, const Matrix4& transform) {
 	Plane3 transformed;
