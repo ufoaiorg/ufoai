@@ -1346,21 +1346,21 @@ static void GlobalCamera_UpdateWindow (void)
 void XY_UpdateWindow (MainFrame& mainframe)
 {
 	if (mainframe.GetXYWnd() != 0) {
-		XYWnd_Update(*mainframe.GetXYWnd());
+		mainframe.GetXYWnd()->queueDraw();
 	}
 }
 
 void XZ_UpdateWindow (MainFrame& mainframe)
 {
 	if (mainframe.GetXZWnd() != 0) {
-		XYWnd_Update(*mainframe.GetXZWnd());
+		mainframe.GetXZWnd()->queueDraw();
 	}
 }
 
 void YZ_UpdateWindow (MainFrame& mainframe)
 {
 	if (mainframe.GetYZWnd() != 0) {
-		XYWnd_Update(*mainframe.GetYZWnd());
+		mainframe.GetYZWnd()->queueDraw();
 	}
 }
 

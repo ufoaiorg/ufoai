@@ -238,7 +238,7 @@ void XYWnd::setScale (float f)
 	m_fScale = f;
 	updateProjection();
 	updateModelview();
-	XYWnd_Update(*this);
+	queueDraw();
 }
 
 static void XYWnd_ZoomIn (XYWnd* xy)
@@ -422,10 +422,10 @@ gboolean XYWnd::callbackExpose (GtkWidget* widget, GdkEventExpose* event, XYWnd*
 	return FALSE;
 }
 
-void XYWnd_CameraMoved (XYWnd& xywnd)
+void XYWnd::CameraMoved ()
 {
 	if (g_xywindow_globals_private.m_bCamXYUpdate) {
-		XYWnd_Update(xywnd);
+		queueDraw();
 	}
 }
 
@@ -494,8 +494,8 @@ XYWnd::XYWnd () :
 	updateProjection();
 	updateModelview();
 
-	AddSceneChangeCallback(ReferenceCaller<XYWnd, &XYWnd_Update> (*this));
-	AddCameraMovedCallback(ReferenceCaller<XYWnd, &XYWnd_CameraMoved> (*this));
+	AddSceneChangeCallback(MemberCaller<XYWnd, &XYWnd::queueDraw> (*this));
+	AddCameraMovedCallback(MemberCaller<XYWnd, &XYWnd::CameraMoved> (*this));
 
 	PressedButtons_connect(g_pressedButtons, m_gl_widget);
 
@@ -838,7 +838,7 @@ void XYWnd::positionView (const Vector3& position)
 
 	updateModelview();
 
-	XYWnd_Update(*this);
+	queueDraw();
 }
 
 inline const char* ViewType_getTitle (EViewType viewtype)
@@ -953,7 +953,7 @@ void XYWnd::XY_MouseMoved (int x, int y, unsigned int buttons)
 		g_pParentWnd->SetStatusText(g_pParentWnd->m_position_status, status.toString());
 
 		if (g_bCrossHairs) {
-			XYWnd_Update(*this);
+			queueDraw();
 		}
 
 		Clipper_Crosshair_OnMouseMoved(x, y);

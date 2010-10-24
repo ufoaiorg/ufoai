@@ -188,6 +188,8 @@ class XYWnd
 		int m_entityCreate_x, m_entityCreate_y;
 		bool m_entityCreate;
 
+		void CameraMoved ();
+
 		// GTK callbacks
 		static gboolean callbackButtonPress (GtkWidget* widget, GdkEventButton* event, XYWnd* xywnd);
 		static gboolean callbackButtonRelease (GtkWidget* widget, GdkEventButton* event, XYWnd* xywnd);
@@ -237,11 +239,6 @@ class XYWnd
 		typedef Member3<XYWnd, const WindowVector&, ButtonIdentifier, ModifierFlags, void, &XYWnd::mouseDown>
 				MouseDownCaller;
 };
-
-inline void XYWnd_Update (XYWnd& xywnd)
-{
-	xywnd.queueDraw();
-}
 
 struct xywindow_globals_t
 {
