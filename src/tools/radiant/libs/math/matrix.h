@@ -67,6 +67,12 @@ class Matrix4
 			return Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, translation.x(), translation.y(), translation.z(), 1);
 		}
 
+		// Get a scale matrix
+		static Matrix4 getScale(const Vector3& scale) {
+			return Matrix4::byColumns(scale[0], 0, 0, 0, 0, scale[1], 0, 0, 0, 0, scale[2], 0, 0,
+					0, 0, 1);
+		}
+
 		// Custom constructor
 
 		Matrix4 (float xx_, float xy_, float xz_, float xw_, float yx_, float yy_, float yz_, float yw_, float zx_,
@@ -363,6 +369,12 @@ class Matrix4
 		void multiplyBy(const Matrix4& other)
 		{
 		    *this = getMultipliedBy(other);
+		}
+
+		// Add a scale component
+		void scaleBy(const Vector3& scale)
+		{
+		    multiplyBy(getScale(scale));
 		}
 };
 
