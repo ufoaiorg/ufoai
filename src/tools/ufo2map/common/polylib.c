@@ -24,8 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "shared.h"
 #include "polylib.h"
+#include "shared.h"
 
 static int c_active_windings;
 static int c_peak_windings;
