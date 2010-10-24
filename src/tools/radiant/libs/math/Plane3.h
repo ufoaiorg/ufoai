@@ -221,17 +221,13 @@ inline Plane3 plane3_inverse_transformed(const Plane3& plane, const Matrix4& tra
 					+ transform[15] * plane.dist());
 }
 
-inline Plane3 plane3_flipped(const Plane3& plane) {
-	return Plane3(-plane.normal(), -plane.dist());
-}
-
 inline bool plane3_equal(const Plane3& self, const Plane3& other) {
 	return vector3_equal_epsilon(self.normal(), other.normal(), EPSILON_NORMAL)
 			&& float_equal_epsilon(self.dist(), other.dist(), EPSILON_DIST);
 }
 
 inline bool plane3_opposing(const Plane3& self, const Plane3& other) {
-	return plane3_equal(self, plane3_flipped(other));
+	return plane3_equal(self, -other);
 }
 
 #endif

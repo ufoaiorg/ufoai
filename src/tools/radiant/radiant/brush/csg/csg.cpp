@@ -396,7 +396,7 @@ class BrushSplitByPlaneSelected: public scene::Graph::Walker
 				if (brush != 0 && Instance_getSelectable(instance)->isSelected()) {
 					Plane3 plane(m_p0, m_p1, m_p2);
 					if (plane.isValid()) {
-						BrushSplitType split = Brush_classifyPlane(*brush, m_split == eFront ? plane3_flipped(plane)
+						BrushSplitType split = Brush_classifyPlane(*brush, m_split == eFront ? -plane
 								: plane);
 						if (split.counts[ePlaneBack] && split.counts[ePlaneFront]) {
 							ContentsFlagsValue flags(0, 0, 0, false);

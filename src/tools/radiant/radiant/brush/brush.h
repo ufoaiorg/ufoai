@@ -2525,7 +2525,7 @@ class FaceInstance
 		}
 		void selectReversedPlane (Selector& selector, const SelectedPlanes& selectedPlanes)
 		{
-			if (selectedPlanes.contains(plane3_flipped(getFace().plane3()))) {
+			if (selectedPlanes.contains(-getFace().plane3())) {
 				Selector_add(selector, m_selectable);
 			}
 		}
