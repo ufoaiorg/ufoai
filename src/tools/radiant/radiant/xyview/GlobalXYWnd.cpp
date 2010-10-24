@@ -276,7 +276,7 @@ EViewType GlobalXYWnd_getCurrentViewType (void)
 {
 	ASSERT_NOTNULL(g_pParentWnd);
 	ASSERT_NOTNULL(g_pParentWnd->ActiveXY());
-	return g_pParentWnd->ActiveXY()->GetViewType();
+	return g_pParentWnd->ActiveXY()->getViewType();
 }
 
 // =============================================================================
@@ -603,7 +603,7 @@ void XYWnd::releaseStates (void)
 	GlobalShaderCache().release("$XY_OVERLAY");
 }
 
-const Vector3& XYWnd::getOrigin (void)
+const Vector3& XYWnd::getOrigin (void) const
 {
 	return m_vOrigin;
 }
@@ -637,7 +637,7 @@ void XYWnd::DropClipPoint (int pointx, int pointy)
 
 	Vector3 mid;
 	Select_GetMid(mid);
-	GlobalClipPoints()->setViewType(GetViewType());
+	GlobalClipPoints()->setViewType(getViewType());
 	int nDim = (GlobalClipPoints()->getViewType() == YZ) ? 0 : ((GlobalClipPoints()->getViewType() == XZ) ? 1 : 2);
 	point[nDim] = mid[nDim];
 	vector3_snap(point, GetGridSize());
@@ -711,9 +711,9 @@ static void XYWnd_OrientCamera (XYWnd* xywnd, int x, int y, CamWnd& camwnd)
 	xywnd->snapToGrid(point);
 	point -= Camera_getOrigin(camwnd);
 
-	const int n1 = (xywnd->GetViewType() == XY) ? 1 : 2;
-	const int n2 = (xywnd->GetViewType() == YZ) ? 1 : 0;
-	const int nAngle = (xywnd->GetViewType() == XY) ? CAMERA_YAW : CAMERA_PITCH;
+	const int n1 = (xywnd->getViewType() == XY) ? 1 : 2;
+	const int n2 = (xywnd->getViewType() == YZ) ? 1 : 0;
+	const int nAngle = (xywnd->getViewType() == XY) ? CAMERA_YAW : CAMERA_PITCH;
 	if (point[n1] || point[n2]) {
 		Vector3 angles(Camera_getAngles(camwnd));
 		angles[nAngle] = static_cast<float> (radians_to_degrees(atan2(point[n1], point[n2])));
@@ -799,7 +799,7 @@ void XYWnd_MouseToPoint (XYWnd* xywnd, int x, int y, Vector3& point)
 	xywnd->XY_ToPoint(x, y, point);
 	xywnd->snapToGrid(point);
 
-	const int nDim = (xywnd->GetViewType() == XY) ? 2 : (xywnd->GetViewType() == YZ) ? 0 : 1;
+	const int nDim = (xywnd->getViewType() == XY) ? 2 : (xywnd->getViewType() == YZ) ? 0 : 1;
 	const float fWorkMid = float_mid(Select_getWorkZone().min[nDim], Select_getWorkZone().max[nDim]);
 	point[nDim] = float_snapped(fWorkMid, GetGridSize());
 }
@@ -2019,9 +2019,9 @@ void XY_Next ()
 	}
 
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
-	if (xywnd->GetViewType() == XY)
+	if (xywnd->getViewType() == XY)
 		xywnd->setViewType(XZ);
-	else if (xywnd->GetViewType() == XZ)
+	else if (xywnd->getViewType() == XZ)
 		xywnd->setViewType(YZ);
 	else
 		xywnd->setViewType(XY);

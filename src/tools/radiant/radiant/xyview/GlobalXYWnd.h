@@ -80,7 +80,7 @@ class XYWnd
 		static void releaseStates ();
 
 		void positionView (const Vector3& position);
-		const Vector3& getOrigin ();
+		const Vector3& getOrigin () const;
 		void setOrigin (const Vector3& origin);
 		void scroll (int x, int y);
 
@@ -203,7 +203,7 @@ class XYWnd
 		void EntityCreate_MouseUp (int x, int y);
 
 		void onEntityCreate (const std::string& item);
-		EViewType GetViewType ()
+		EViewType getViewType ()
 		{
 			return m_viewType;
 		}
