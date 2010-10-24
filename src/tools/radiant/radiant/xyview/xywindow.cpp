@@ -155,7 +155,7 @@ static void Clip_Update (void)
 		if (g_bSwitch) {
 			std::swap(planepts[0], planepts[1]);
 		}
-		Scene_BrushSetClipPlane(GlobalSceneGraph(), plane3_for_points(planepts[0], planepts[1], planepts[2]));
+		Scene_BrushSetClipPlane(GlobalSceneGraph(), Plane3(planepts[0], planepts[1], planepts[2]));
 	}
 	ClipperChangeNotify();
 }

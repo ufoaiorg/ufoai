@@ -632,7 +632,7 @@ class FacePlane
 				globalErrorStream() << "\n";
 			}
 #endif
-			m_planeCached = plane3_for_points(m_planepts);
+			m_planeCached = Plane3(m_planepts);
 		}
 
 		void reverse ()

@@ -80,8 +80,8 @@ class Plane3 {
 		// Construct a plane from three points (same as above, just with an array as argument
 		template<typename Element>
 		Plane3(const BasicVector3<Element> points[3]) :
-			_normal((points[1] - points[0]).crossProduct(points[2] - points[0]).getNormalised()),
-					_dist(points[0].dot(_normal)) {
+			_normal((points[1] - points[2]).crossProduct(points[0] - points[2]).getNormalised()),
+					_dist(points[2].dot(_normal)) {
 		}
 
 		//	The negation operator for this plane - the normal vector components and the distance are negated
@@ -247,20 +247,6 @@ inline bool plane3_opposing(const Plane3& self, const Plane3& other) {
 
 inline bool plane3_valid(const Plane3& self) {
 	return float_equal_epsilon(self.normal().dot(self.normal()), 1.0, 0.01);
-}
-
-template<typename Element>
-inline Plane3 plane3_for_points(const BasicVector3<Element>& p0, const BasicVector3<Element>& p1,
-		const BasicVector3<Element>& p2) {
-	Plane3 self;
-	self.normal() = (p1 - p0).crossProduct(p2 - p0).getNormalised();
-	self.dist() = p0.dot(self.normal());
-	return self;
-}
-
-template<typename Element>
-inline Plane3 plane3_for_points(const BasicVector3<Element> planepts[3]) {
-	return plane3_for_points(planepts[2], planepts[1], planepts[0]);
 }
 
 #endif

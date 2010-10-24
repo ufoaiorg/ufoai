@@ -76,7 +76,7 @@ void BestPoint (std::size_t count, Vector4 clipped[9], SelectionIntersection& be
 		}
 	} else if (count > 2) {
 		assign_if_closer(best, SelectionIntersection(static_cast<float> (ray_distance_to_plane(Ray(Vector3(0, 0, 0),
-				Vector3(0, 0, 1)), plane3_for_points(normalised[0], normalised[1], normalised[2]))), 0));
+				Vector3(0, 0, 1)), Plane3(normalised[0], normalised[1], normalised[2]))), 0));
 	}
 }
 
