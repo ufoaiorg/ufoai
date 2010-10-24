@@ -1939,7 +1939,7 @@ class Brush: public TransformNode,
 				for (std::size_t i = 0; i < m_faces.size(); ++i) {
 					const Face& clip = *m_faces[i];
 
-					if (plane3_equal(clip.plane3(), plane) || !clip.plane3().isValid() || !plane_unique(i)
+					if (clip.plane3() == plane || !clip.plane3().isValid() || !plane_unique(i)
 							|| plane3_opposing(plane, clip.plane3())) {
 						continue;
 					}

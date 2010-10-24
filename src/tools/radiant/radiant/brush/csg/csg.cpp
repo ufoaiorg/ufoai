@@ -519,7 +519,7 @@ static bool Brush_merge (Brush& brush, const brush_vector_t& in, bool onlyshape)
 					const Face& face2 = *(*m);
 
 					// face equals another face
-					if (plane3_equal(face1.plane3(), face2.plane3())) {
+					if (face1.plane3() == face2.plane3()) {
 						// if the texture/shader references should be the same but are not
 						if (!onlyshape && !shader_equal(face1.getShader().getShader(), face2.getShader().getShader())) {
 							return false;
