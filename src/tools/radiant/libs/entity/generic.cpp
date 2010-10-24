@@ -52,7 +52,7 @@
 
 inline void read_aabb (AABB& aabb, const EntityClass& eclass)
 {
-	aabb = aabb_for_minmax(eclass.mins, eclass.maxs);
+	aabb = AABB::createFromMinMax(eclass.mins, eclass.maxs);
 }
 
 class GenericEntity: public Cullable, public Bounded, public Snappable

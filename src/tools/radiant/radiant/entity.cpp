@@ -314,7 +314,7 @@ static bool Entity_create (const std::string& name, const Vector3& origin)
 	}
 	UndoableCommand undo("entityCreate -class " + name);
 
-	AABB workzone(aabb_for_minmax(Select_getWorkZone().min, Select_getWorkZone().max));
+	AABB workzone(AABB::createFromMinMax(Select_getWorkZone().min, Select_getWorkZone().max));
 
 	NodeSmartReference node(GlobalEntityCreator().createEntity(entityClass));
 

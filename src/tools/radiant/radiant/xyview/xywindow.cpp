@@ -957,7 +957,7 @@ void XYWnd::NewBrushDrag (int x, int y)
 		m_NewBrushDrag = node.get_pointer();
 	}
 
-	Scene_BrushResize_Selected(GlobalSceneGraph(), aabb_for_minmax(mins, maxs), NewBrushDragGetTexture());
+	Scene_BrushResize_Selected(GlobalSceneGraph(), AABB::createFromMinMax(mins, maxs), NewBrushDragGetTexture());
 }
 
 void XYWnd_MouseToPoint (XYWnd* xywnd, int x, int y, Vector3& point)

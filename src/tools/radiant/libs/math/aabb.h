@@ -97,6 +97,14 @@ class AABB
 			}
 		}
 
+		static AABB createFromMinMax (const Vector3& min, const Vector3& max)
+		{
+			AABB aabb;
+			aabb.origin = vector3_mid(min, max);
+			aabb.extents = max - aabb.origin;
+			return aabb;
+		}
+
 		// Expand this AABB to include another AABB
 		void includeAABB (const AABB& other)
 		{
@@ -163,14 +171,6 @@ inline bool aabb_valid (const AABB& aabb)
 {
 	return origin_valid(aabb.origin[0]) && origin_valid(aabb.origin[1]) && origin_valid(aabb.origin[2])
 			&& extents_valid(aabb.extents[0]) && extents_valid(aabb.extents[1]) && extents_valid(aabb.extents[2]);
-}
-
-inline AABB aabb_for_minmax (const Vector3& min, const Vector3& max)
-{
-	AABB aabb;
-	aabb.origin = vector3_mid(min, max);
-	aabb.extents = max - aabb.origin;
-	return aabb;
 }
 
 template<typename Index>
