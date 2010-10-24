@@ -15,6 +15,7 @@
  */
 
 #include "lrint.h"
+#include "pi.h"
 #include <sstream>
 #include <string>
 #include <cmath>
@@ -316,6 +317,58 @@ class BasicVector3
 		{
 			return BasicVector3<Element> (m_elements[1] * other.z() - m_elements[2] * other.y(), m_elements[2]
 					* other.x() - m_elements[0] * other.z(), m_elements[0] * other.y() - m_elements[1] * other.x());
+		}
+
+		// Returns a vector with the reciprocal values of each component
+		BasicVector3<Element> getInversed() {
+			return BasicVector3<Element> (1.0 / m_elements[0], 1.0 / m_elements[1], 1.0 / m_elements[2]);
+		}
+
+		/**
+		 * Normalise this vector in-place by scaling by the inverse of its size.
+		 */
+		void normalise() {
+			double inverseLength = 1 / getLength();
+			m_elements[0] *= inverseLength;
+			m_elements[1] *= inverseLength;
+			m_elements[2] *= inverseLength;
+		}
+
+		/* Returns the angle between <self> and <other>
+		 *
+		 * @returns
+		 * The angle as defined by the arccos( (a*b) / (|a|*|b|) )
+		 */
+		template<typename OtherT>
+		Element angle(const BasicVector3<OtherT>& other) const {
+			BasicVector3<Element> aNormalised = getNormalised();
+			BasicVector3<OtherT> otherNormalised = other.getNormalised();
+
+			Element dot = aNormalised.dot(otherNormalised);
+
+			// greebo: Sanity correction: Make sure the dot product
+			// of two normalised vectors is not greater than 1
+			if (dot > 1.0) {
+				dot = 1;
+			}
+
+			return acos(dot);
+		}
+
+		// Returns the maximum absolute value of the components
+		Element max() const {
+			return std::max(fabs(m_elements[0]), std::max(fabs(m_elements[1]), fabs(m_elements[2])));
+		}
+
+		// Returns the minimum absolute value of the components
+		Element min() const {
+			return std::min(fabs(m_elements[0]), std::min(fabs(m_elements[1]), fabs(m_elements[2])));
+		}
+
+		template<typename OtherT>
+		bool isParallel(const BasicVector3<OtherT>& other) const {
+			return (float_equal_epsilon(angle(other), float(0.0f), float(0.001f))
+					|| float_equal_epsilon(angle(other), c_pi, float(0.001f)));
 		}
 
 		/**
