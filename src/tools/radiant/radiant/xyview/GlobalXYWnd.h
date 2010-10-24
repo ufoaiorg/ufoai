@@ -49,20 +49,6 @@ namespace scene
 typedef struct _GtkWindow GtkWindow;
 typedef struct _GtkMenu GtkMenu;
 
-inline const char* ViewType_getTitle (EViewType viewtype)
-{
-	if (viewtype == XY) {
-		return "XY Top";
-	}
-	if (viewtype == XZ) {
-		return "XZ Front";
-	}
-	if (viewtype == YZ) {
-		return "YZ Side";
-	}
-	return "";
-}
-
 class XYWnd
 {
 		gtkutil::GLWidget _glWidget;

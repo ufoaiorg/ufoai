@@ -921,6 +921,20 @@ void XYWnd::positionView (const Vector3& position)
 	XYWnd_Update(*this);
 }
 
+inline const char* ViewType_getTitle (EViewType viewtype)
+{
+	if (viewtype == XY) {
+		return _("XY Top");
+	}
+	if (viewtype == XZ) {
+		return _("XZ Front");
+	}
+	if (viewtype == YZ) {
+		return _("YZ Side");
+	}
+	return "";
+}
+
 void XYWnd::setViewType (EViewType viewType)
 {
 	m_viewType = viewType;
