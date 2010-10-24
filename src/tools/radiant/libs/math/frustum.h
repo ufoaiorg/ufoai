@@ -382,15 +382,18 @@ inline bool viewproj_test_transformed_point (const Matrix4& viewproj, const Vect
 
 inline Frustum frustum_from_viewproj (const Matrix4& viewproj)
 {
-	return Frustum(plane3_normalised(Plane3(viewproj[3] - viewproj[0], viewproj[7] - viewproj[4], viewproj[11]
-			- viewproj[8], viewproj[15] - viewproj[12])), plane3_normalised(Plane3(viewproj[3] + viewproj[0],
-			viewproj[7] + viewproj[4], viewproj[11] + viewproj[8], viewproj[15] + viewproj[12])), plane3_normalised(
-			Plane3(viewproj[3] + viewproj[1], viewproj[7] + viewproj[5], viewproj[11] + viewproj[9], viewproj[15]
-					+ viewproj[13])), plane3_normalised(Plane3(viewproj[3] - viewproj[1], viewproj[7] - viewproj[5],
-			viewproj[11] - viewproj[9], viewproj[15] - viewproj[13])), plane3_normalised(Plane3(viewproj[3]
-			- viewproj[2], viewproj[7] - viewproj[6], viewproj[11] - viewproj[10], viewproj[15] - viewproj[14])),
-			plane3_normalised(Plane3(viewproj[3] + viewproj[2], viewproj[7] + viewproj[6], viewproj[11] + viewproj[10],
-					viewproj[15] + viewproj[14])));
+	  return Frustum(Plane3(viewproj[3] - viewproj[0], viewproj[7] - viewproj[4], viewproj[11]
+			- viewproj[8], viewproj[15] - viewproj[12]).getNormalised(), Plane3(viewproj[3]
+			+ viewproj[0], viewproj[7] + viewproj[4], viewproj[11] + viewproj[8], viewproj[15]
+			+ viewproj[12]).getNormalised(),
+			Plane3(viewproj[3] + viewproj[1], viewproj[7] + viewproj[5],
+					viewproj[11] + viewproj[9], viewproj[15] + viewproj[13]).getNormalised(),
+			Plane3(viewproj[3] - viewproj[1], viewproj[7] - viewproj[5],
+					viewproj[11] - viewproj[9], viewproj[15] - viewproj[13]).getNormalised(),
+			Plane3(viewproj[3] - viewproj[2], viewproj[7] - viewproj[6], viewproj[11]
+					- viewproj[10], viewproj[15] - viewproj[14]).getNormalised(), Plane3(
+					viewproj[3] + viewproj[2], viewproj[7] + viewproj[6], viewproj[11]
+							+ viewproj[10], viewproj[15] + viewproj[14]).getNormalised());
 }
 
 inline VolumeIntersectionValue frustum_test_aabb (const Frustum& frustum, const AABB& aabb)

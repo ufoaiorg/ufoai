@@ -195,12 +195,6 @@ class Plane3 {
 
 }; // class Plane3
 
-inline Plane3 plane3_normalised(const Plane3& plane) {
-	double rmagnitude = 1.0 / sqrt(plane.normal().x() * plane.normal().x() + plane.normal().y() * plane.normal().y() + plane.normal().z() * plane.normal().z());
-	return Plane3(plane.normal().x() * rmagnitude, plane.normal().y() * rmagnitude, plane.normal().z() * rmagnitude, plane.dist()
-			* rmagnitude);
-}
-
 inline Plane3 plane3_translated(const Plane3& plane, const Vector3& translation) {
 	Plane3 transformed;
 	transformed.normal().x() = plane.normal().x();
