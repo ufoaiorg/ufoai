@@ -909,7 +909,7 @@ void XYWnd::NewBrushDrag_End (int x, int y)
 	}
 }
 
-static inline const std::string& NewBrushDragGetTexture (void)
+static inline const std::string NewBrushDragGetTexture (void)
 {
 	const std::string& selectedTexture = GlobalTextureBrowser().getSelectedShader();
 	if (g_brush_always_nodraw)
