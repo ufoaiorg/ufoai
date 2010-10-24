@@ -42,7 +42,7 @@ struct OpenGLStateLess {
 				return self->m_state < other->m_state;
 			}
 			// Comparing address makes sure states are never equal.
-			return &self < &other;
+			return self < other;
 		}
 };
 
