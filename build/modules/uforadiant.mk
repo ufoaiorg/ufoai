@@ -154,6 +154,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ui/common/SoundPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/TexturePreviewCombo.cpp \
 	\
+	$(RADIANT_BASE)/radiant/ui/eventmapper/EventMapper.cpp \
+	\
 	$(RADIANT_BASE)/radiant/ui/modelselector/ModelSelector.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/materialeditor/MaterialEditor.cpp \

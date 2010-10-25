@@ -91,7 +91,8 @@ class ModuleObserver;
 #include "windowobserver.h"
 #include "math/Vector3.h"
 
-typedef SignalHandler3<const WindowVector&, ButtonIdentifier, ModifierFlags> MouseEventHandler;
+typedef struct _GdkEventButton GdkEventButton;
+typedef SignalHandler3<int, int, GdkEventButton*> MouseEventHandler;
 typedef SignalFwd<MouseEventHandler>::handler_id_type MouseEventHandlerId;
 
 // Possible types of the orthogonal view window

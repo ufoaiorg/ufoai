@@ -313,13 +313,17 @@ namespace string
 		return source.rfind(contains) != std::string::npos;
 	}
 
-	inline int toInt (const std::string& str)
+	inline int toInt (const std::string& str, int defaultValue = 0)
 	{
+		if (str.empty())
+			return defaultValue;
 		return atoi(str.c_str());
 	}
 
-	inline float toFloat (const std::string& str)
+	inline float toFloat (const std::string& str, float defaultValue = 0.0f)
 	{
+		if (str.empty())
+			return defaultValue;
 		return atof(str.c_str());
 	}
 

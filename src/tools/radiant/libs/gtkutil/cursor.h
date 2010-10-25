@@ -37,6 +37,10 @@ GdkCursor* create_blank_cursor ();
 void Sys_GetCursorPos (GtkWindow* window, int *x, int *y);
 void Sys_SetCursorPos (GtkWindow* window, int x, int y);
 
+/* greebo: this class is used by the XYViews as some sort of "onMouseMotion" callback wrapper
+ * I don't know why this exactly has to be used in such a way instead of
+ * calling the XYWindow methods directly, but as always: If it ain't broken, don't fix it.
+ */
 class DeferredMotion
 {
 		guint m_handler;

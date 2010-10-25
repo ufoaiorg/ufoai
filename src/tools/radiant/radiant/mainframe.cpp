@@ -497,6 +497,8 @@ void Radiant_Initialise (void)
 
 	 // Load default values for darkradiant, located in the game directory
 	GlobalRegistry().importFromFile(AppPath_get() + "user.xml", "");
+	GlobalRegistry().importFromFile(AppPath_get() + "input.xml", "user/ui");
+
 	// Load user preferences, these overwrite any values that have defined before
 	// This is stored in the user's folder
 	const std::string userSettingsFile = SettingsPath_get() + "user.xml";

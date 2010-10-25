@@ -34,6 +34,7 @@
 #include "texturelib.h"
 #include <gtk/gtkmenuitem.h>
 #include "../selection/RadiantWindowObserver.h"
+#include "EventLib.h"
 
 // Constants
 const int XYWND_MINSIZE_X = 200;
@@ -93,10 +94,6 @@ class XYWnd
 		void loadBackgroundImage (const std::string& name);
 		void disableBackground ();
 
-		void XY_MouseUp (int x, int y, unsigned int buttons);
-		void XY_MouseDown (int x, int y, unsigned int buttons);
-		void XY_MouseMoved (int x, int y, unsigned int buttons);
-
 		void NewBrushDrag_Begin (int x, int y);
 		void NewBrushDrag (int x, int y);
 		void NewBrushDrag_End (int x, int y);
@@ -138,7 +135,7 @@ class XYWnd
 
 		guint _chaseMouseHandler;
 		void chaseMouse ();
-		bool chaseMouseMotion (int pointx, int pointy);
+		bool chaseMouseMotion (int pointx, int pointy, const unsigned int& state);
 
 		void updateModelview ();
 		void updateProjection ();
@@ -188,6 +185,9 @@ class XYWnd
 		int m_entityCreate_x, m_entityCreate_y;
 		bool m_entityCreate;
 
+		// Save the current event state
+		GdkEventButton* _event;
+
 		void CameraMoved ();
 
 		// GTK callbacks
@@ -199,18 +199,6 @@ class XYWnd
 		static gboolean callbackExpose (GtkWidget* widget, GdkEventExpose* event, XYWnd* xywnd);
 
 	public:
-		void ButtonState_onMouseDown (unsigned int buttons)
-		{
-			m_buttonstate |= buttons;
-		}
-		void ButtonState_onMouseUp (unsigned int buttons)
-		{
-			m_buttonstate &= ~buttons;
-		}
-		unsigned int getButtonState () const
-		{
-			return m_buttonstate;
-		}
 		void EntityCreate_MouseDown (int x, int y);
 		void EntityCreate_MouseMove (int x, int y);
 		void EntityCreate_MouseUp (int x, int y);
@@ -233,12 +221,22 @@ class XYWnd
 			return m_nHeight;
 		}
 
+		// Save the current GDK event state
+		void setEvent(GdkEventButton* event);
+
+		// The method handling the different mouseUp situations according to <event>
+		void mouseUp(int x, int y, GdkEventButton* event);
+
+		// The method responsible for mouseMove situations according to <event>
+		void mouseMoved(int x, int y, const unsigned int& state);
+
 		Signal0 onDestroyed;
-		Signal3<const WindowVector&, ButtonIdentifier, ModifierFlags> onMouseDown;
-		void mouseDown (const WindowVector& position, ButtonIdentifier button, ModifierFlags modifiers);
-		typedef Member3<XYWnd, const WindowVector&, ButtonIdentifier, ModifierFlags, void, &XYWnd::mouseDown>
-				MouseDownCaller;
-};
+		Signal3<int, int, GdkEventButton*> onMouseDown;
+
+		// The method handling the different mouseDown situations
+		void mouseDown(int x, int y, GdkEventButton* event);
+		typedef Member3<XYWnd, int, int, GdkEventButton*, void, &XYWnd::mouseDown> MouseDownCaller;
+}; // class XYWnd
 
 struct xywindow_globals_t
 {
