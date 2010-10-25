@@ -264,7 +264,6 @@ window messageoptions
 
 	func onClose
 	{
-		cmd "del tmp;"
 		cmd "msgoptions_restore;"
 		cmd "del mn_messagetype;"
 	}
