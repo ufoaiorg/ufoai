@@ -41,6 +41,7 @@
 #include "ifilter.h"
 #include "iradiant.h"
 #include "itoolbar.h"
+#include "iregistry.h"
 #include "editable.h"
 #include "ientity.h"
 #include "ishadersystem.h"
@@ -493,10 +494,22 @@ void Radiant_Initialise (void)
 	g_gameToolsPathObservers.realise();
 	g_gameModeObservers.realise();
 	g_gameNameObservers.realise();
+
+	 // Load default values for darkradiant, located in the game directory
+	GlobalRegistry().importFromFile(AppPath_get() + "user.xml", "");
+	// Load user preferences, these overwrite any values that have defined before
+	// This is stored in the user's folder
+	const std::string userSettingsFile = SettingsPath_get() + "user.xml";
+	if (file_exists(userSettingsFile)) {
+		GlobalRegistry().importFromFile(userSettingsFile, "user");
+	}
 }
 
 void Radiant_Shutdown (void)
 {
+	// Save the whole /uforadiant/user tree to user.xml so that the current settings are preserved
+	GlobalRegistry().exportToFile("user", SettingsPath_get() + "user.xml");
+
 	g_gameNameObservers.unrealise();
 	g_gameModeObservers.unrealise();
 	g_gameToolsPathObservers.unrealise();
@@ -514,7 +527,7 @@ void Radiant_Shutdown (void)
 
 void Exit (void)
 {
-	if (ConfirmModified("Exit Radiant")) {
+	if (ConfirmModified(_("Exit Radiant"))) {
 		gtk_main_quit();
 	}
 }

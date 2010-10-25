@@ -170,6 +170,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/pathfinding/RoutingLump.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding/RoutingRenderable.cpp \
 	\
+	$(RADIANT_BASE)/radiant/xmlregistry/XMLRegistry.cpp \
+	\
 	$(RADIANT_BASE)/libs/gtkutil/accelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/button.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/clipboard.cpp \
@@ -212,9 +214,13 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/libs/entity/filters.cpp \
 	$(RADIANT_BASE)/libs/entity/light.cpp \
 	$(RADIANT_BASE)/libs/entity/targetable.cpp \
+	\
 	$(RADIANT_BASE)/libs/picomodel/model.cpp \
 	$(RADIANT_BASE)/libs/picomodel/RenderablePicoSurface.cpp \
 	$(RADIANT_BASE)/libs/picomodel/RenderablePicoModel.cpp \
+	\
+	$(RADIANT_BASE)/libs/xmlutil/Document.cpp \
+	$(RADIANT_BASE)/libs/xmlutil/Node.cpp \
 	\
 	shared/parse.c \
 	shared/entitiesdef.c \

@@ -47,6 +47,7 @@
 #include "ibrush.h"
 #include "iimage.h"
 #include "itoolbar.h"
+#include "iregistry.h"
 #include "iplugin.h"
 #include "imaterial.h"
 #include "iump.h"
@@ -193,6 +194,7 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 		public GlobalEntityModuleRef,
 		public GlobalShadersModuleRef,
 		public GlobalBrushModuleRef,
+		public GlobalRegistryModuleRef,
 		public GlobalSceneGraphModuleRef,
 		public GlobalShaderCacheModuleRef,
 		public GlobalFiletypesModuleRef,
