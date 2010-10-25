@@ -3,7 +3,7 @@
 
 #include "../camera/view.h"
 #include "../sidebar/surfaceinspector.h" // For apply/copy texture
-#include "ButtonsModifiers.h"
+#include "windowobserver.h"
 
 #include "Device.h"
 #include "SelectObserver.h"

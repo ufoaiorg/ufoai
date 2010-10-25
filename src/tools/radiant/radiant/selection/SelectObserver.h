@@ -2,7 +2,6 @@
 #define SELECTOBSERVER_H_
 
 #include "iselection.h"
-#include "ButtonsModifiers.h"
 #include "Device.h"
 #include "windowobserver.h"
 #include "SelectionBox.h"
