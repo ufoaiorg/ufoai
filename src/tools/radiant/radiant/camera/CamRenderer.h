@@ -38,7 +38,7 @@ class CamRenderer: public Renderer
 				m_state_stack.back().m_state = state;
 			}
 		}
-		EStyle getStyle () const
+		const EStyle getStyle () const
 		{
 			return eFullMaterials;
 		}
@@ -75,6 +75,7 @@ class CamRenderer: public Renderer
 		{
 			GlobalShaderCache().render(m_globalstate, modelview, projection, m_viewer);
 		}
-};
+}; // class CamRenderer
 
-#endif /* CAMRENDERER_H_ */
+
+#endif /*CAMRENDERER_H_*/

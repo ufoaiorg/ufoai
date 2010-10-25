@@ -25,7 +25,7 @@ class XYRenderer: public Renderer {
 				m_state_stack.back().m_state = state;
 		}
 
-		EStyle getStyle() const {
+		const EStyle getStyle() const {
 			return eWireframeOnly;
 		}
 
