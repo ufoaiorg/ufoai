@@ -861,7 +861,7 @@ const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base
 	if (base->capacities[capacity].cur >= base->capacities[capacity].max)
 		return _("No free hangars at that base.");
 
-	if (aircraft->maxTeamSize + ((aircraft->pilot) ? 1 : 0) + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max)
+	if (aircraft->teamSize + ((aircraft->pilot) ? 1 : 0) + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max)
 		return _("Insufficient free crew quarter space at that base.");
 
 	if (aircraft->maxTeamSize && base->capacities[CAP_ITEMS].cur + AIR_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max)
