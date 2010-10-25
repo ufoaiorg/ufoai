@@ -790,12 +790,9 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 				aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
 				assert(aircraft);
 
-				if (AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) > 0) {
-					/* Move aircraft */
-					AIR_MoveAircraftIntoNewHomebase(aircraft, destination);
-				} else {
+				if ((AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) <= 0) || !AIR_MoveAircraftIntoNewHomebase(aircraft, destination)) {
 					/* No space, aircraft will be lost. */
-					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have enough free space in hangars. Aircraft is lost!"), destination->name);
+					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s does not have enough free space. Aircraft is lost!"), destination->name);
 					MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 					AIR_DeleteAircraft(aircraft);
 				}
