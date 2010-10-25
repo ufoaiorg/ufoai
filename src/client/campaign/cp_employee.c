@@ -860,7 +860,7 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 	if (!numHappyNations)
 		return;
 
-	nationIdx = 0;
+	idx = 0;
 	/* Fill the global data employee list with employees, evenly distributed
 	 * between nations in the happyNations list */
 	employee = NULL;
@@ -869,16 +869,19 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 		/* we don't want to overwrite employees that have already been hired */
 		if (!E_IsHired(employee)) {
 			E_DeleteEmployee(employee);
-			E_CreateEmployee(type, happyNations[nationIdx], NULL);
-			nationIdx = (nationIdx + 1) % numHappyNations;
-			/* continue iteration from the last employee, this one is deleted */
 			employee = lastEmployee;
+			idx++;
 		} else {
 			lastEmployee = employee;
 		}
 	}
-}
 
+	nationIdx = 0;
+	while (idx-- > 0) {
+		E_CreateEmployee(type, happyNations[nationIdx], NULL);
+		nationIdx = (nationIdx + 1) % numHappyNations;
+	}
+}
 
 /**
  * @brief Remove one employee from building.
