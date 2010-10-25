@@ -161,18 +161,18 @@ size_t UTF8_strlen (const char *str)
  */
 char *UTF8_strncpyz (char *dest, const char *src, size_t limit)
 {
-	size_t i;
 	size_t length;
 
 	length = strlen(src);
 	if (length > limit - 1)
 		length = limit - 1;
-	i = length;
-	if ((unsigned char) src[i] > 0x80)
-		while ((i > 0) && (unsigned char) src[i] <= 0xc0)
+	if ((unsigned char) src[length - 1] >= 0x80) {
+		size_t i = length - 1;
+		while ((i > 0) && ((unsigned char) src[i] & 0xC0) == 0x80)
 			i--;
-	if (UTF8_char_len(src[i]) + i - 1 > length)
-		length = i;
+		if (UTF8_char_len(src[i]) + i > length)
+			length = i;
+	}
 
 	memcpy(dest, src, length);
 	dest[length] = '\0';
