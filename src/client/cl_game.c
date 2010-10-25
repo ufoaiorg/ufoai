@@ -150,6 +150,8 @@ qboolean GAME_IsMultiplayer (void)
 void GAME_StartBattlescape (qboolean isTeamPlay)
 {
 	const cgame_export_t *list = GAME_GetCurrentType();
+
+	Cvar_Set("cl_maxworldlevel", va("%i", cl.mapMaxLevel - 1));
 	if (list != NULL && list->StartBattlescape) {
 		list->StartBattlescape(isTeamPlay);
 	} else {

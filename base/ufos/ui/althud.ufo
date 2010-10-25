@@ -951,9 +951,8 @@ window althud extends ahud
 			texl		"54 74"
 			texh		"79 107"
 			onClick		{
-				*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
-				if (*cvar:cl_worldlevel > 7) {
-					*cvar:cl_worldlevel = 7
+				if (*cvar:cl_worldlevel < *cvar:cl_maxworldlevel) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel + 1)
 				}
 			}
 		}
@@ -966,9 +965,8 @@ window althud extends ahud
 			texl		"81 74"
 			texh		"106 107"
 			onClick		{
-				*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
-				if (*cvar:cl_worldlevel < 0) {
-					*cvar:cl_worldlevel = 0
+				if (*cvar:cl_worldlevel > 0) {
+					*cvar:cl_worldlevel = (*cvar:cl_worldlevel - 1)
 				}
 			}
 		}
