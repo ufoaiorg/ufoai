@@ -837,11 +837,11 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
  * send any pilots, false if happiness of nations in not considered.
  * @sa CP_NationHandleBudget
  */
-void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboolean excludeUnhappyNations)
+int E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboolean excludeUnhappyNations)
 {
 	const nation_t *happyNations[MAX_NATIONS];
 	int numHappyNations = 0;
-	int idx, nationIdx;
+	int idx, nationIdx, cnt;
 	employee_t *lastEmployee;
 	employee_t *employee;
 
@@ -858,7 +858,7 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 	}
 
 	if (!numHappyNations)
-		return;
+		return 0;
 
 	idx = 0;
 	/* Fill the global data employee list with employees, evenly distributed
@@ -877,10 +877,14 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 	}
 
 	nationIdx = 0;
+	cnt = 0;
 	while (idx-- > 0) {
-		E_CreateEmployee(type, happyNations[nationIdx], NULL);
+		if (E_CreateEmployee(type, happyNations[nationIdx], NULL) != NULL)
+			cnt++;
 		nationIdx = (nationIdx + 1) % numHappyNations;
 	}
+
+	return cnt;
 }
 
 /**

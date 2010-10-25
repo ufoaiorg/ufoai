@@ -187,6 +187,15 @@ static void testEmployeeHandling (void)
 	}
 
 	{
+		employee_t *e = E_CreateEmployee(EMPL_PILOT, NULL, NULL);
+		int cnt;
+		CU_ASSERT_PTR_NOT_NULL(e);
+		cnt = E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, qfalse);
+		CU_ASSERT_EQUAL(cnt, 1);
+		CU_ASSERT_TRUE(E_DeleteEmployee(e));
+	}
+
+	{
 		const ugv_t *ugvType = Com_GetUGVByID("ugv_ares_w");
 		employee_t *e = E_CreateEmployee(EMPL_ROBOT, NULL, ugvType);
 		CU_ASSERT_PTR_NOT_NULL(e);
