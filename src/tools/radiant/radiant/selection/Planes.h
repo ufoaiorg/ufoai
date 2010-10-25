@@ -45,9 +45,26 @@ class PlaneLess
 				return true;
 			}
 
+			if (other.normal().y() < plane.normal().y()) {
+				return false;
+			}
+
+			if (plane.normal().z() < other.normal().z()) {
+				return true;
+			}
+
+			if (other.normal().z() < plane.normal().z()) {
+				return false;
+			}
+
+			if (plane.dist() < other.dist()) {
+				return true;
+			}
+
 			if (other.dist() < plane.dist()) {
 				return false;
 			}
+
 			return false;
 		}
 };
