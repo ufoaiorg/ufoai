@@ -188,9 +188,10 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/libs/gtkutil/timer.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/toolbar.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/window.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/ModelProgressDialog.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/SourceView.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/MenuItemAccelerator.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/ModelProgressDialog.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/RegistryConnector.cpp \
+	$(RADIANT_BASE)/libs/gtkutil/SourceView.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/TreeModel.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/TextPanel.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/VFSTreePopulator.cpp \

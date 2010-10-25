@@ -25,6 +25,7 @@
 #include <list>
 
 #include "gtkutil/dialog.h"
+#include "gtkutil/RegistryConnector.h"
 #include "generic/callback.h"
 #include "string/string.h"
 
@@ -116,6 +117,8 @@ class Dialog
 {
 		GtkWindow* m_window;
 		DialogDataList m_data;
+	protected:
+		gtkutil::RegistryConnector _registryConnector;
 	public:
 		ModalDialog m_modal;
 		GtkWindow* m_parent;
@@ -154,6 +157,9 @@ class Dialog
 		GtkWidget* addCheckBox (GtkWidget* vbox, const char* name, const char* flag,
 				const BoolImportCallback& importCallback, const BoolExportCallback& exportCallback);
 		GtkWidget* addCheckBox (GtkWidget* vbox, const char* name, const char* flag, bool& data);
+		// Adds a checkbox and connects it to the given registry key
+		GtkWidget* addCheckBox(GtkWidget* vbox, const std::string& name, const std::string& flag,
+				const std::string& registryKey, RegistryKeyObserver* keyObserver);
 		void addCombo (GtkWidget* vbox, const char* name, StringArrayRange values,
 				const IntImportCallback& importCallback, const IntExportCallback& exportCallback);
 		void addCombo (GtkWidget* vbox, const char* name, int& data, StringArrayRange values);

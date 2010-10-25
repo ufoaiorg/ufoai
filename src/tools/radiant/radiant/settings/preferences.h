@@ -26,6 +26,7 @@
 #include "../dialog.h"
 #include <list>
 #include <map>
+#include "iregistry.h"
 
 void Widget_connectToggleDependency (GtkWidget* self, GtkWidget* toggleButton);
 
@@ -47,6 +48,15 @@ class PreferencesPage
 		{
 			return m_dialog.addCheckBox(m_vbox, name, flag, importCallback, exportCallback);
 		}
+
+		/* greebo: This adds a checkbox and connects it to an XMLRegistry key.
+		 * @returns: the pointer to the created GtkWidget */
+		GtkWidget* appendCheckBox(const std::string& name, const std::string& flag,
+				const std::string& registryKey, RegistryKeyObserver* keyObserver) {
+			return m_dialog.addCheckBox(m_vbox, name, flag, registryKey,
+					keyObserver);
+		}
+
 		void appendCombo (const char* name, StringArrayRange values, const IntImportCallback& importCallback,
 				const IntExportCallback& exportCallback)
 		{

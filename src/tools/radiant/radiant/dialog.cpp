@@ -494,6 +494,9 @@ EMessageBoxReturn Dialog::DoModal ()
 {
 	importData();
 
+	// Import the values from the registry before showing the dialog
+	_registryConnector.importValues();
+
 	PreModal();
 
 	EMessageBoxReturn ret = modal_dialog_show(m_window, m_modal);
@@ -523,6 +526,28 @@ GtkWidget* Dialog::addCheckBox (GtkWidget* vbox, const char* name, const char* f
 GtkWidget* Dialog::addCheckBox (GtkWidget* vbox, const char* name, const char* flag, bool& data)
 {
 	return addCheckBox(vbox, name, flag, BoolImportCaller(data), BoolExportCaller(data));
+}
+
+/* greebo: This adds a checkbox to the given VBox and connects an XMLRegistry value to it.
+ * The actual data is "imported" and "exported" via those templates.
+ */
+GtkWidget* Dialog::addCheckBox(GtkWidget* vbox, const std::string& name, const std::string& flag,
+								const std::string& registryKey, RegistryKeyObserver* keyObserver)
+{
+	// Create a new checkbox with the given caption and display it
+	GtkWidget* check = gtk_check_button_new_with_label(flag.c_str());
+	gtk_widget_show(check);
+
+	// Connect the registry key to this toggle button
+	_registryConnector.connectToggleButton(GTK_TOGGLE_BUTTON(check), registryKey);
+
+	// Connect the keyObserver to the key, if there is an observer specified
+	if (keyObserver != NULL) {
+		GlobalRegistry().addKeyObserver(keyObserver, registryKey);
+	}
+
+	DialogVBox_packRow(GTK_VBOX(vbox), GTK_WIDGET(DialogRow_new(name, check)));
+	return check;
 }
 
 void Dialog::addCombo (GtkWidget* vbox, const char* name, StringArrayRange values,
