@@ -458,7 +458,7 @@ qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 	len = size - 1;
 
 	/* check for UTF8 multibyte sequences */
-	if ((unsigned char) dest[len - 1] >= 0x80) {
+	if (len > 0 && (unsigned char) dest[len - 1] >= 0x80) {
 		int i = len - 1;
 		while ((i > 0) && ((unsigned char) dest[i] & 0xc0) == 0x80)
 			i--;
