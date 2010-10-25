@@ -1007,7 +1007,6 @@ void Scene_SelectAll_Component (bool select, SelectionSystem::EComponentMode com
 	GlobalSceneGraph().traverse(select_all_component(select, componentMode));
 }
 
-// RadiantSelectionSystem
 class RadiantSelectionSystem: public SelectionSystem,
 		public Translatable,
 		public Rotatable,
@@ -1060,11 +1059,6 @@ class RadiantSelectionSystem: public SelectionSystem,
 		}
 
 	public:
-		enum EModifier
-		{
-			eManipulator, eToggle, eReplace, eCycle
-		};
-
 		RadiantSelectionSystem () :
 			m_undo_begun(false), m_mode(ePrimitive), m_componentmode(eDefault), m_count_primitive(
 					SelectionChangedCaller(*this)), m_count_component(SelectionChangedCaller(*this)),
@@ -1288,7 +1282,7 @@ class RadiantSelectionSystem: public SelectionSystem,
 		}
 
 		void SelectPoint (const View& view, const float device_point[2], const float device_epsilon[2],
-				RadiantSelectionSystem::EModifier modifier, bool face)
+				SelectionSystem::EModifier modifier, bool face)
 		{
 			ASSERT_MESSAGE(fabs(device_point[0]) <= 1.0f && fabs(device_point[1]) <= 1.0f, "point-selection error");
 			if (modifier == eReplace) {
@@ -1358,7 +1352,7 @@ class RadiantSelectionSystem: public SelectionSystem,
 		}
 
 		void SelectArea (const View& view, const float device_point[2], const float device_delta[2],
-				RadiantSelectionSystem::EModifier modifier, bool face)
+				SelectionSystem::EModifier modifier, bool face)
 		{
 			if (modifier == eReplace) {
 				if (face) {
@@ -1977,7 +1971,7 @@ const ModifierFlags c_modifier_copy_texture = c_modifierNone;
 
 class Selector_
 {
-		RadiantSelectionSystem::EModifier modifier_for_state (ModifierFlags state)
+		SelectionSystem::EModifier modifier_for_state (ModifierFlags state)
 		{
 			if (state == c_modifier_toggle || state == c_modifier_toggle_face) {
 				return RadiantSelectionSystem::eToggle;
