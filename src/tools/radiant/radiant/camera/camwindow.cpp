@@ -51,7 +51,7 @@
 #include "gtkutil/GLWidgetSentry.h"
 #include "gtkutil/xorrectangle.h"
 #include "../gtkmisc.h"
-#include "../selection.h"
+#include "../selection/RadiantWindowObserver.h"
 #include "../mainframe.h"
 #include "../settings/preferences.h"
 #include "../commands.h"
@@ -59,10 +59,7 @@
 #include "../windowobservers.h"
 #include "../ui/Icons.h"
 #include "../render/RenderStatistics.h"
-
-
 #include "../timer.h"
-
 #include "CamRenderer.h"
 
 Signal0 g_cameraMoved_callbacks;
@@ -692,7 +689,7 @@ gboolean disable_freelook_button_press (GtkWidget* widget, GdkEventButton* event
 	return FALSE;
 }
 
-void camwnd_update_xor_rectangle (CamWnd& self, rect_t area)
+void camwnd_update_xor_rectangle (CamWnd& self, Rectangle area)
 {
 	if (GTK_WIDGET_VISIBLE(self.m_gl_widget)) {
 		self.m_XORRectangle.set(
@@ -1056,7 +1053,7 @@ CamWnd::CamWnd () :
 	GlobalWindowObservers_add(m_window_observer);
 	GlobalWindowObservers_connectWidget(m_gl_widget);
 
-	m_window_observer->setRectangleDrawCallback(ReferenceCaller1<CamWnd, rect_t, camwnd_update_xor_rectangle> (*this));
+	m_window_observer->setRectangleDrawCallback(ReferenceCaller1<CamWnd, Rectangle, camwnd_update_xor_rectangle> (*this));
 	m_window_observer->setView(m_view);
 
 	gtk_widget_ref(m_gl_widget);
@@ -1322,7 +1319,7 @@ void CamWnd::draw ()
 	if (Map_Valid(g_map) && ScreenUpdates_Enabled()) {
 		Cam_Draw();
 
-		m_XORRectangle.set(Rectangle());
+		m_XORRectangle.set(rectangle_t());
 	}
 
 	m_drawing = false;

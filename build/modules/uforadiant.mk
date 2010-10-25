@@ -119,6 +119,11 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/selection/Intersection.cpp \
 	$(RADIANT_BASE)/radiant/selection/Manipulatables.cpp \
 	$(RADIANT_BASE)/radiant/selection/Manipulators.cpp \
+	$(RADIANT_BASE)/radiant/selection/Planes.cpp \
+	$(RADIANT_BASE)/radiant/selection/RadiantSelectionSystem.cpp \
+	$(RADIANT_BASE)/radiant/selection/RadiantWindowObserver.cpp \
+	$(RADIANT_BASE)/radiant/selection/SelectionTest.cpp \
+	$(RADIANT_BASE)/radiant/selection/TransformationVisitors.cpp \
 	\
 	$(RADIANT_BASE)/radiant/plugin/PluginManager.cpp \
 	$(RADIANT_BASE)/radiant/plugin/PluginSlots.cpp \

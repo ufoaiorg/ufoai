@@ -33,6 +33,7 @@
 #include "../map/map.h"
 #include "texturelib.h"
 #include <gtk/gtkmenuitem.h>
+#include "../selection/RadiantWindowObserver.h"
 
 // Constants
 const int XYWND_MINSIZE_X = 200;
@@ -41,7 +42,6 @@ const int XYWND_MINSIZE_Y = 200;
 #include "iradiant.h"
 
 class Shader;
-class SelectionSystemWindowObserver;
 namespace scene
 {
 	class Node;

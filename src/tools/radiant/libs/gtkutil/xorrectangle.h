@@ -25,14 +25,14 @@
 #include <gtk/gtkwidget.h>
 #include "math/FloatTools.h"
 
-class Rectangle
+class rectangle_t
 {
 	public:
-		Rectangle () :
+		rectangle_t  () :
 			x(0), y(0), w(0), h(0)
 		{
 		}
-		Rectangle (float _x, float _y, float _w, float _h) :
+		rectangle_t  (float _x, float _y, float _w, float _h) :
 			x(_x), y(_y), w(_w), h(_h)
 		{
 		}
@@ -56,16 +56,16 @@ inline Coord2D coord2d_device2screen (const Coord2D& coord, unsigned int width, 
 	return Coord2D(((coord.x + 1.0f) * 0.5f) * width, ((coord.y + 1.0f) * 0.5f) * height);
 }
 
-inline Rectangle rectangle_from_area (const float min[2], const float max[2], unsigned int width, unsigned int height)
+inline rectangle_t  rectangle_from_area (const float min[2], const float max[2], unsigned int width, unsigned int height)
 {
 	Coord2D botleft(coord2d_device2screen(Coord2D(min[0], min[1]), width, height));
 	Coord2D topright(coord2d_device2screen(Coord2D(max[0], max[1]), width, height));
-	return Rectangle(botleft.x, botleft.y, topright.x - botleft.x, topright.y - botleft.y);
+	return rectangle_t (botleft.x, botleft.y, topright.x - botleft.x, topright.y - botleft.y);
 }
 
 class XORRectangle
 {
-		Rectangle m_rectangle;
+		rectangle_t  m_rectangle;
 
 		GtkWidget* m_widget;
 		GdkGC* m_gc;
@@ -109,7 +109,7 @@ class XORRectangle
 				gdk_gc_unref(m_gc);
 			}
 		}
-		void set (Rectangle rectangle)
+		void set (rectangle_t  rectangle)
 		{
 			if (GTK_WIDGET_REALIZED(m_widget)) {
 				lazy_init();

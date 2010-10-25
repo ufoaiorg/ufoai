@@ -6,16 +6,21 @@
  * - Translate Maniplator
  * - Rotate Manipulator
  * - Scale Manipulator
+ * - Drag Manipulator
+ * - Clip Manipulator
  *
  * that derive from the abstract base class Manipulator
+ *
+ * A Manipulator consists of several Manipulatables (e.g. a circle for the rotation manipulators) that
+ * themselves derive from the Abstract Base Class <Manipulatable>
  */
 
-#include "renderable.h"
 #include "pivot.h"
 #include "../camera/view.h"
 #include "math/matrix.h"
 #include "selectionlib.h"
 #include "Manipulatables.h"
+#include "Renderables.h"
 
 struct Pivot2World
 {
@@ -321,5 +326,41 @@ class ScaleManipulator: public Manipulator
 		bool isSelected () const;
 
 }; // class ScaleManipulator
+
+// =======================================================================================
+
+class DragManipulator : public Manipulator
+{
+  TranslateFree _freeResize;
+  TranslateFree _freeDrag;
+  ResizeTranslatable _resizeTranslatable;
+  DragTranslatable _dragTranslatable;
+  SelectableBool _dragSelectable;
+public:
+  bool _selected;
+
+  DragManipulator() : _freeResize(_resizeTranslatable), _freeDrag(_dragTranslatable), _selected(false) {}
+
+  Manipulatable* GetManipulatable();
+  void testSelect(const View& view, const Matrix4& pivot2world);
+
+  void setSelected(bool select);
+  bool isSelected() const;
+}; // class DragManipulator
+
+// =======================================================================================
+
+class ClipManipulator : public Manipulator {
+public:
+  Manipulatable* GetManipulatable() {
+    ERROR_MESSAGE("clipper is not manipulatable");
+    return 0;
+  }
+
+  void setSelected(bool select) {}
+  bool isSelected() const {
+    return false;
+  }
+}; // class ClipManipulator
 
 #endif /*MANIPULATORS_H_*/

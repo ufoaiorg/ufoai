@@ -1,7 +1,10 @@
 #include "Manipulators.h"
 #include "Remap.h"
-#include "Selector.h"
+#include "Selectors.h"
 #include "BestPoint.h"
+#include "TransformationVisitors.h"
+#include "SelectionTest.h"
+#include "Planes.h"
 
 // ------------ Helper functions ---------------------------
 
@@ -513,4 +516,62 @@ bool ScaleManipulator::isSelected () const
 {
 	return m_selectable_x.isSelected() | m_selectable_y.isSelected() | m_selectable_z.isSelected()
 			| m_selectable_screen.isSelected();
+}
+
+// ------------ DragManipulator methods ------------------
+
+Manipulatable* DragManipulator::GetManipulatable() {
+    return _dragSelectable.isSelected() ? &_freeDrag : &_freeResize;
+}
+
+void DragManipulator::testSelect(const View& view, const Matrix4& pivot2world) {
+    SelectionPool selector;
+
+    SelectionVolume test(view);
+
+    if(GlobalSelectionSystem().Mode() == SelectionSystem::ePrimitive)
+    {
+      BooleanSelector booleanSelector;
+
+      Scene_TestSelect_Primitive(booleanSelector, test, view);
+
+      if(booleanSelector.isSelected())
+      {
+        selector.addSelectable(SelectionIntersection(0, 0), &_dragSelectable);
+        _selected = false;
+      }
+      else
+      {
+        _selected = Scene_forEachPlaneSelectable_selectPlanes(GlobalSceneGraph(), selector, test);
+      }
+    }
+    else
+    {
+      BestSelector bestSelector;
+      Scene_TestSelect_Component_Selected(bestSelector, test, view, GlobalSelectionSystem().ComponentMode());
+      for(std::list<Selectable*>::iterator i = bestSelector.best().begin(); i != bestSelector.best().end(); ++i)
+      {
+        if(!(*i)->isSelected())
+        {
+          GlobalSelectionSystem().setSelectedAllComponents(false);
+        }
+        _selected = false;
+        selector.addSelectable(SelectionIntersection(0, 0), (*i));
+        _dragSelectable.setSelected(true);
+      }
+    }
+
+    for(SelectionPool::iterator i = selector.begin(); i != selector.end(); ++i)
+    {
+      (*i).second->setSelected(true);
+    }
+}
+
+void DragManipulator::setSelected(bool select) {
+    _selected = select;
+    _dragSelectable.setSelected(select);
+}
+
+bool DragManipulator::isSelected() const  {
+	return _selected || _dragSelectable.isSelected();
 }

@@ -23,6 +23,7 @@
 #define INCLUDED_SURFACEDIALOG_H
 
 #include <gtk/gtk.h>
+#include "selectable.h"
 
 void SurfaceInspector_Construct ();
 void SurfaceInspector_Destroy ();
@@ -30,6 +31,9 @@ void SurfaceInspector_FitTexture (void);
 
 void SelectedFaces_copyTexture ();
 void SelectedFaces_pasteTexture ();
+
+void Scene_applyClosestTexture (SelectionTest& test);
+void Scene_copyClosestTexture (SelectionTest& test);
 
 // the increment we are using for the surface inspector (this is saved in the prefs)
 struct si_globals_t

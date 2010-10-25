@@ -5,6 +5,9 @@
 #include "selectable.h"
 #include "Manipulatables.h"
 
+/* greebo: These are functions that are needed for selection test (which points are nearest to what and something)
+ */
+
 enum clipcull_t
 {
 	eClipCullNone, eClipCullCW, eClipCullCCW

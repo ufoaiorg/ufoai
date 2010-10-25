@@ -60,7 +60,6 @@
 #include "../select.h"
 #include "../brush/csg/csg.h"
 #include "../brush/brushmanip.h"
-#include "../selection.h"
 #include "../entity.h"
 #include "../camera/camwindow.h"
 #include "../mainframe.h"
@@ -71,6 +70,7 @@
 #include "../windowobservers.h"
 #include "../ui/ortho/OrthoContextMenu.h"
 #include "XYRenderer.h"
+#include "../selection/SelectionBox.h"
 
 void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHeight);
 
@@ -355,7 +355,7 @@ bool XYWnd::chaseMouseMotion (int pointx, int pointy)
 // XYWnd class
 Shader* XYWnd::m_state_selected = 0;
 
-inline void xy_update_xor_rectangle (XYWnd& self, rect_t area)
+inline void xy_update_xor_rectangle (XYWnd& self, Rectangle area)
 {
 	if (GTK_WIDGET_VISIBLE(self.getWidget())) {
 		self.m_XORRectangle.set(rectangle_from_area(area.min, area.max, self.getWidth(), self.getHeight()));
@@ -417,7 +417,7 @@ gboolean XYWnd::callbackExpose (GtkWidget* widget, GdkEventExpose* event, XYWnd*
 	gtkutil::GLWidgetSentry sentry(xywnd->getWidget());
 	if (Map_Valid(g_map) && ScreenUpdates_Enabled()) {
 		xywnd->draw();
-		xywnd->m_XORRectangle.set(Rectangle());
+		xywnd->m_XORRectangle.set(rectangle_t());
 	}
 	return FALSE;
 }
@@ -470,7 +470,7 @@ XYWnd::XYWnd () :
 	GlobalWindowObservers_add(m_window_observer);
 	GlobalWindowObservers_connectWidget(m_gl_widget);
 
-	m_window_observer->setRectangleDrawCallback(ReferenceCaller1<XYWnd, rect_t, xy_update_xor_rectangle> (*this));
+	m_window_observer->setRectangleDrawCallback(ReferenceCaller1<XYWnd, Rectangle, xy_update_xor_rectangle> (*this));
 	m_window_observer->setView(m_view);
 
 	gtk_widget_ref(m_gl_widget);

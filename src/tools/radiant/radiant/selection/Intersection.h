@@ -4,6 +4,11 @@
 #include "math/Vector3.h"
 #include "math/line.h"
 
+/* greebo: Intersection methods. Needed to perform selectionTests
+ *
+ * I know, this is not a terribly helpful comment, but I haven't looked into this yet.
+ */
+
 void point_for_device_point (Vector3& point, const Matrix4& device2object, const float x, const float y, const float z);
 void ray_for_device_point (Ray& ray, const Matrix4& device2object, const float x, const float y);
 
@@ -27,6 +32,8 @@ inline void constrain_to_axis (Vector3& vec, const Vector3& axis)
 }
 
 //! a and b are unit vectors .. a and b must be orthogonal to axis .. returns angle in radians
+// greebo: I don't know if this is the fastest way of doing this, a simple
+// arccos( a.dotproduct(b) ) should be enough, but: "if it isn't broken, don't fix it"
 float angle_for_axis (const Vector3& a, const Vector3& b, const Vector3& axis);
 
 float distance_for_axis (const Vector3& a, const Vector3& b, const Vector3& axis);

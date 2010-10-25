@@ -46,6 +46,7 @@
 #include "mainframe.h"
 #include "xyview/grid.h"
 #include "map/map.h"
+#include "selection/SceneWalkers.h"
 
 static WorkZone g_select_workzone;
 
@@ -397,7 +398,7 @@ void Select_SetFlags (const ContentsFlagsValue& flags)
 void Select_GetBounds (Vector3& mins, Vector3& maxs)
 {
 	AABB bounds;
-	Scene_BoundsSelected(GlobalSceneGraph(), bounds);
+	GlobalSceneGraph().traverse(BoundsSelected(bounds));
 	maxs = bounds.origin + bounds.extents;
 	mins = bounds.origin - bounds.extents;
 }
@@ -405,7 +406,7 @@ void Select_GetBounds (Vector3& mins, Vector3& maxs)
 void Select_GetMid (Vector3& mid)
 {
 	AABB bounds;
-	Scene_BoundsSelected(GlobalSceneGraph(), bounds);
+	GlobalSceneGraph().traverse(BoundsSelected(bounds));
 	mid = vector3_snapped(bounds.origin);
 }
 
