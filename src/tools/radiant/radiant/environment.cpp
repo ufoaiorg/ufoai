@@ -73,7 +73,7 @@ void environment_init (void)
 		gchar *currentDir = g_get_current_dir();
 		path.clear();
 		path << DirectoryCleaned(currentDir);
-		app_path = path.c_str();
+		app_path = path.toString();
 		g_free(currentDir);
 	}
 }
