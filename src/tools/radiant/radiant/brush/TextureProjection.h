@@ -2,68 +2,50 @@
 #define TEXTUREPROJECTION_H_
 
 #include "itextstream.h"
+#include "TexDef.h"
+
+class Winding;
 
 /* greebo: A texture projection contains the texture definition
- * as well as the brush primitive texture definition.
  */
 class TextureProjection
 {
+	private:
+		void basisForNormal (const Vector3& normal, Matrix4& basis);
+
 	public:
 		TexDef m_texdef;
-		Vector3 m_basis_s;
-		Vector3 m_basis_t;
 
 		// Constructor
-		TextureProjection ()
-		{
-		}
+		TextureProjection ();
 
 		// Copy Constructor
-		TextureProjection (const TexDef& texdef, const Vector3& basis_s, const Vector3& basis_t) :
-			m_texdef(texdef), m_basis_s(basis_s), m_basis_t(basis_t)
-		{
-		}
+		TextureProjection (const TexDef& texdef);
 
-		void constructDefault ()
-		{
-			float scale = Texdef_getDefaultTextureScale();
-
-			m_texdef._scale[0] = scale;
-			m_texdef._scale[1] = scale;
-			m_texdef._rotate = 0;
-			m_texdef._shift[0] = 0;
-			m_texdef._shift[1] = 0;
-		}
+		void constructDefault ();
 
 		/* greebo: Uses the transformation matrix <transform> to set the internal texture
 		 * definitions. Checks the matrix for validity and passes it on to
 		 * the according internal texture definitions (TexDef or BPTexDef)
 		 */
-		void setTransform (float width, float height, const Matrix4& transform)
-		{
-			// Check the matrix for validity
-			if ((transform[0] != 0 || transform[4] != 0) && (transform[1] != 0 || transform[5] != 0)) {
-				// Decide which TexDef to use
-				m_texdef = TexDef(width, height, transform);
-			} else {
-				globalErrorStream() << "invalid texture matrix\n";
-			}
-		}
+		void setTransform (float width, float height, const Matrix4& transform);
 
 		/* greebo: Returns the transformation matrix from the
 		 * texture definitions members.
 		 */
-		Matrix4 getTransform (float width, float height) const
-		{
-			return m_texdef.getTransform(width, height);
-		}
+		Matrix4 getTransform (float width, float height) const;
 
 		// Normalise projection for a given texture width and height.
-		void normalise (float width, float height)
-		{
-			m_texdef.normalise(width, height);
-		}
+		void normalise (float width, float height);
 
+		void fitTexture (std::size_t width, std::size_t height, const Vector3& normal, const Winding& w,
+				float s_repeat, float t_repeat);
+
+		void transformLocked (std::size_t width, std::size_t height, const Plane3& plane,
+				const Matrix4& identity2transformed);
+
+		void emitTextureCoordinates (std::size_t width, std::size_t height, Winding& w, const Vector3& normal,
+				const Matrix4& localToWorld);
 };
 
 #endif /*TEXTUREPROJECTION_H_*/

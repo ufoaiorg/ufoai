@@ -36,6 +36,13 @@
 #include "../mainframe.h"
 #include "../settings/preferences.h"
 
+float g_texdef_default_scale;
+
+float Texdef_getDefaultTextureScale ()
+{
+	return g_texdef_default_scale;
+}
+
 LatchedBool g_useAlternativeTextureProjection(false, "Use alternative texture-projection");
 bool g_showAlternativeTextureProjectionOption = false;
 bool g_brush_always_nodraw = false;
@@ -147,7 +154,7 @@ class UFOBrushCreator: public BrushCreator
 		{
 			Node_getBrush(brush)->undoSave();
 			return Node_getBrush(brush)->addPlane(faceData.m_p0, faceData.m_p1, faceData.m_p2, faceData.m_shader,
-					TextureProjection(faceData.m_texdef, Vector3(0, 0, 0), Vector3(0, 0, 0)))
+					TextureProjection(faceData.m_texdef))
 					!= 0;
 		}
 };

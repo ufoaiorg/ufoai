@@ -63,7 +63,8 @@
 #include "signal/signalfwd.h"
 
 #include "winding.h"
-#include "brush_primit.h"
+#include "TexDef.h"
+#include "TextureProjection.h"
 
 const unsigned int BRUSH_DETAIL_FLAG = 27;
 const unsigned int BRUSH_DETAIL_MASK = 0x08000000; // CONTENTS_DETAIL
@@ -499,30 +500,23 @@ class FaceTexdef: public FaceShaderObserver
 
 		void fit (const Vector3& normal, const Winding& winding, float s_repeat, float t_repeat)
 		{
-			Texdef_FitTexture(m_projection, m_shader.width(), m_shader.height(), normal, winding, s_repeat, t_repeat);
+			m_projection.fitTexture(m_shader.width(), m_shader.height(), normal, winding, s_repeat, t_repeat);
 		}
 
 		void emitTextureCoordinates (Winding& winding, const Vector3& normal, const Matrix4& localToWorld)
 		{
-			Texdef_EmitTextureCoordinates(m_projection, m_shader.width(), m_shader.height(), winding, normal,
+			m_projection.emitTextureCoordinates(m_shader.width(), m_shader.height(), winding, normal,
 					localToWorld);
 		}
 
 		void transform (const Plane3& plane, const Matrix4& matrix)
 		{
-			Texdef_transformLocked(m_projection, m_shader.width(), m_shader.height(), plane, matrix);
+			m_projection.transformLocked(m_shader.width(), m_shader.height(), plane, matrix);
 		}
 
 		TextureProjection normalised () const
 		{
-			return TextureProjection(m_projection.m_texdef, m_projection.m_basis_s, m_projection.m_basis_t);
-		}
-		void setBasis (const Vector3& normal)
-		{
-			Matrix4 basis;
-			Normal_GetTransform(normal, basis);
-			m_projection.m_basis_s = Vector3(basis.xx(), basis.yx(), basis.zx());
-			m_projection.m_basis_t = Vector3(-basis.xy(), -basis.yy(), -basis.zy());
+			return TextureProjection(m_projection.m_texdef);
 		}
 };
 
@@ -769,7 +763,6 @@ class Face: public OpenGLRenderable, public Filterable, public Undoable, public 
 		{
 			m_shader.attach(*this);
 			m_plane.copy(Vector3(0, 0, 0), Vector3(64, 0, 0), Vector3(0, 64, 0));
-			m_texdef.setBasis(m_plane.plane3().normal());
 			planeChanged();
 		}
 		Face (const Vector3& p0, const Vector3& p1, const Vector3& p2, const std::string& shader,
@@ -779,7 +772,6 @@ class Face: public OpenGLRenderable, public Filterable, public Undoable, public 
 		{
 			m_shader.attach(*this);
 			m_plane.copy(p0, p1, p2);
-			m_texdef.setBasis(m_plane.plane3().normal());
 			planeChanged();
 			updateFiltered();
 		}
@@ -790,7 +782,6 @@ class Face: public OpenGLRenderable, public Filterable, public Undoable, public 
 			m_shader.attach(*this);
 			m_plane.copy(other.m_plane);
 			planepts_assign(m_move_planepts, other.m_move_planepts);
-			m_texdef.setBasis(m_plane.plane3().normal());
 			planeChanged();
 			updateFiltered();
 		}
@@ -901,15 +892,11 @@ class Face: public OpenGLRenderable, public Filterable, public Undoable, public 
 		void transform (const Matrix4& matrix, bool mirror)
 		{
 			if (g_brush_texturelock_enabled) {
-				Texdef_transformLocked(m_texdefTransformed, m_shader.width(), m_shader.height(), m_plane.plane3(),
+				m_texdefTransformed.transformLocked(m_shader.width(), m_shader.height(), m_plane.plane3(),
 						matrix);
 			}
 
 			m_planeTransformed.transform(matrix, mirror);
-
-#if 0
-			ASSERT_MESSAGE(projectionaxis_for_normal(normal) == projectionaxis_for_normal(plane3().normal()), "bleh");
-#endif
 			m_observer->planeChanged();
 		}
 
@@ -1087,7 +1074,7 @@ class Face: public OpenGLRenderable, public Filterable, public Undoable, public 
 
 		void EmitTextureCoordinates ()
 		{
-			Texdef_EmitTextureCoordinates(m_texdefTransformed, m_shader.width(), m_shader.height(), m_winding,
+			m_texdefTransformed.emitTextureCoordinates(m_shader.width(), m_shader.height(), m_winding,
 					plane3().normal(), Matrix4::getIdentity());
 		}
 

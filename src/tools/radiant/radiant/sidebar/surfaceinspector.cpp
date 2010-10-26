@@ -49,8 +49,10 @@
 #include "../map/map.h"
 #include "../select.h"
 #include "../brush/brushmanip.h"
+#include "../brush/brushmodule.h"
 #include "../settings/preferences.h"
-#include "../brush/brush_primit.h"
+#include "../brush/TexDef.h"
+#include "../brush/TextureProjection.h"
 #include "../xyview/GlobalXYWnd.h"
 #include "../mainframe.h"
 #include "../dialog.h"
@@ -339,8 +341,10 @@ static void DoSnapTToGrid (float hscale, float vscale)
 
 void SurfaceInspector_GridChange (void)
 {
-	if (g_si_globals.m_bSnapTToGrid)
-		DoSnapTToGrid(Texdef_getDefaultTextureScale(), Texdef_getDefaultTextureScale());
+	if (g_si_globals.m_bSnapTToGrid) {
+		const float scale = Texdef_getDefaultTextureScale();
+		DoSnapTToGrid(scale, scale);
+	}
 }
 
 /**
@@ -805,7 +809,7 @@ void SurfaceInspector::Update (void)
 
 	TexDef shiftScaleRotate;
 
-	ShiftScaleRotate_fromFace(shiftScaleRotate, SurfaceInspector_GetSelectedTexdef());
+	shiftScaleRotate = SurfaceInspector_GetSelectedTexdef().m_texdef;
 
 	// normalize again to hide the ridiculously high scale values that get created when using texlock
 	shiftScaleRotate._shift[0] = float_mod(shiftScaleRotate._shift[0], (float) g_selectedShaderSize[0]);
@@ -921,8 +925,7 @@ void SurfaceInspector::ApplyTexdef (void)
 	shiftScaleRotate._scale[1] = static_cast<float> (gtk_spin_button_get_value_as_float(m_vscaleIncrement.m_spin));
 	shiftScaleRotate._rotate = static_cast<float> (gtk_spin_button_get_value_as_float(m_rotateIncrement.m_spin));
 
-	TextureProjection projection;
-	ShiftScaleRotate_toFace(shiftScaleRotate, projection);
+	TextureProjection projection(shiftScaleRotate);
 
 	UndoableCommand undo("textureProjectionSetSelected");
 	Select_SetTexdef(projection);

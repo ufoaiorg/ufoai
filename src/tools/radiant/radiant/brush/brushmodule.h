@@ -23,5 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define INCLUDED_BRUSHMODULE_H
 
 void Brush_clipperColourChanged();
+// Retrieves the default texture scale (from a global variable!)
+float Texdef_getDefaultTextureScale();
 
 #endif
