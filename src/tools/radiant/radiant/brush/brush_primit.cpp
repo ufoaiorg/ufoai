@@ -233,8 +233,8 @@ void Texdef_EmitTextureCoordinates (const TextureProjection& projection, std::si
 		matrix4_multiply_by_matrix4(local2tex, xyz2st);
 	}
 
-	Vector3 tangent(matrix4_transposed(local2tex).x().getVector3().getNormalised());
-	Vector3 bitangent(matrix4_transposed(local2tex).y().getVector3().getNormalised());
+	Vector3 tangent(local2tex.getTransposed().x().getVector3().getNormalised());
+	Vector3 bitangent(local2tex.getTransposed().y().getVector3().getNormalised());
 
 	matrix4_multiply_by_matrix4(local2tex, localToWorld);
 

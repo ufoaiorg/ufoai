@@ -83,7 +83,7 @@ void RotateManipulator::UpdateColours ()
 
 void RotateManipulator::updateCircleTransforms ()
 {
-	Vector3 localViewpoint(matrix4_transformed_direction(matrix4_transposed(m_pivot.m_worldSpace),
+	Vector3 localViewpoint(matrix4_transformed_direction(m_pivot.m_worldSpace.getTransposed(),
 			m_pivot.m_viewpointSpace.z().getVector3()));
 
 	m_circle_x_visible = !vector3_equal_epsilon(g_vector3_axis_x, localViewpoint, 1e-6f);
