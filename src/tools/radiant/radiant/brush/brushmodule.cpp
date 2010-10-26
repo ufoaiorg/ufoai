@@ -147,7 +147,7 @@ class UFOBrushCreator: public BrushCreator
 		{
 			Node_getBrush(brush)->undoSave();
 			return Node_getBrush(brush)->addPlane(faceData.m_p0, faceData.m_p1, faceData.m_p2, faceData.m_shader,
-					TextureProjection(faceData.m_texdef, BrushPrimitTexDef(), Vector3(0, 0, 0), Vector3(0, 0, 0)))
+					TextureProjection(faceData.m_texdef, Vector3(0, 0, 0), Vector3(0, 0, 0)))
 					!= 0;
 		}
 };

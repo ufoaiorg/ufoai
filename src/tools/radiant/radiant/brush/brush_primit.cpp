@@ -173,24 +173,6 @@ void Texdef_EmitTextureCoordinates (const TextureProjection& projection, std::si
 	}
 }
 
-void Texdef_Shift (TexDef& td, float s, float t)
-{
-	td._shift[0] += s;
-	td._shift[1] += t;
-}
-
-void Texdef_Scale (TexDef& td, float s, float t)
-{
-	td._scale[0] += s;
-	td._scale[1] += t;
-}
-
-void Texdef_Rotate (TexDef& td, float angle)
-{
-	td._rotate += angle;
-	td._rotate = static_cast<float> (float_to_integer(td._rotate) % 360);
-}
-
 template<typename Element>
 inline BasicVector3<Element> vector3_inverse (const BasicVector3<Element>& self)
 {

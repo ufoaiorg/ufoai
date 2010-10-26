@@ -256,10 +256,6 @@ static void SurfaceInspector_SetCurrent_FromSelected (void)
 
 			Scene_BrushGetShaderSize_Component_Selected(GlobalSceneGraph(), g_selectedShaderSize[0],
 					g_selectedShaderSize[1]);
-			g_selectedTexdef.m_brushprimit_texdef.coords[0][2] = float_mod(
-					g_selectedTexdef.m_brushprimit_texdef.coords[0][2], (float) g_selectedShaderSize[0]);
-			g_selectedTexdef.m_brushprimit_texdef.coords[1][2] = float_mod(
-					g_selectedTexdef.m_brushprimit_texdef.coords[1][2], (float) g_selectedShaderSize[1]);
 
 			std::string name;
 			Scene_BrushGetShader_Component_Selected(GlobalSceneGraph(), name);

@@ -469,59 +469,32 @@ class FaceTexdef: public FaceShaderObserver
 			m_shader.detach(*this);
 		}
 
-		void addScale ()
-		{
-			ASSERT_MESSAGE(!m_scaleApplied, "texture scale aready added");
-			m_scaleApplied = true;
-			m_projection.m_brushprimit_texdef.addScale(m_shader.width(), m_shader.height());
-		}
-		void removeScale ()
-		{
-			ASSERT_MESSAGE(m_scaleApplied, "texture scale aready removed");
-			m_scaleApplied = false;
-			m_projection.m_brushprimit_texdef.removeScale(m_shader.width(), m_shader.height());
-		}
-
 		void realiseShader ()
 		{
-			if (m_projectionInitialised && !m_scaleApplied) {
-				addScale();
-			}
 		}
 		void unrealiseShader ()
 		{
-			if (m_projectionInitialised && m_scaleApplied) {
-				removeScale();
-			}
 		}
 
 		void setTexdef (const TextureProjection& projection)
 		{
-			removeScale();
 			m_projection.m_texdef = projection.m_texdef;
-			addScale();
 		}
 
 		void shift (float s, float t)
 		{
 			ASSERT_MESSAGE(m_projection.m_texdef.isSane(), "FaceTexdef::shift: bad texdef");
-			removeScale();
 			m_projection.m_texdef.shift(s, t);
-			addScale();
 		}
 
 		void scale (float s, float t)
 		{
-			removeScale();
 			m_projection.m_texdef.scale(s, t);
-			addScale();
 		}
 
 		void rotate (float angle)
 		{
-			removeScale();
 			m_projection.m_texdef.rotate(angle);
-			addScale();
 		}
 
 		void fit (const Vector3& normal, const Winding& winding, float s_repeat, float t_repeat)
@@ -537,16 +510,12 @@ class FaceTexdef: public FaceShaderObserver
 
 		void transform (const Plane3& plane, const Matrix4& matrix)
 		{
-			removeScale();
 			Texdef_transformLocked(m_projection, m_shader.width(), m_shader.height(), plane, matrix);
-			addScale();
 		}
 
 		TextureProjection normalised () const
 		{
-			BrushPrimitTexDef tmp(m_projection.m_brushprimit_texdef);
-			tmp.removeScale(m_shader.width(), m_shader.height());
-			return TextureProjection(m_projection.m_texdef, tmp, m_projection.m_basis_s, m_projection.m_basis_t);
+			return TextureProjection(m_projection.m_texdef, m_projection.m_basis_s, m_projection.m_basis_t);
 		}
 		void setBasis (const Vector3& normal)
 		{
