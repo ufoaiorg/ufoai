@@ -49,7 +49,6 @@ void ShiftScaleRotate_fromFace(TexDef& shiftScaleRotate, const TextureProjection
 void ShiftScaleRotate_toFace(const TexDef& shiftScaleRotate, TextureProjection& projection);
 
 void Texdef_transformLocked(TextureProjection& projection, std::size_t width, std::size_t height, const Plane3& plane, const Matrix4& transform);
-void Texdef_normalise(TextureProjection& projection, float width, float height);
 
 extern float g_texdef_default_scale;
 

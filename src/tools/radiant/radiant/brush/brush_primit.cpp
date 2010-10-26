@@ -121,22 +121,6 @@ void Normal_GetTransform (const Vector3& normal, Matrix4& transform)
 	transform[15] = 1;
 }
 
-inline void Texdef_normalise (TexDef& texdef, float width, float height)
-{
-	// it may be useful to also normalise the rotation here, if this function is used elsewhere.
-	texdef._shift[0] = float_mod(texdef._shift[0], width);
-	texdef._shift[1] = float_mod(texdef._shift[1], height);
-}
-
-/// \brief Normalise \p projection for a given texture \p width and \p height.
-///
-/// All texture-projection translation (shift) values are congruent modulo the dimensions of the texture.
-/// This function normalises shift values to the smallest positive congruent values.
-void Texdef_normalise (TextureProjection& projection, float width, float height)
-{
-	Texdef_normalise(projection.m_texdef, width, height);
-}
-
 void Texdef_basisForNormal (const TextureProjection& projection, const Vector3& normal, Matrix4& basis)
 {
 	Normal_GetTransform(normal, basis);
@@ -218,8 +202,8 @@ void Texdef_FitTexture (TextureProjection& projection, std::size_t width, std::s
 	// apply the difference to the current texture transform
 	matrix4_premultiply_by_matrix4(st2tex, matrix);
 
-	projection.m_texdef = TexDef((float) width, (float) height, st2tex);
-	Texdef_normalise(projection, (float) width, (float) height);
+	projection.setTransform((float) width, (float) height, st2tex);
+	projection.m_texdef.normalise((float) width, (float) height);
 }
 
 float Texdef_getDefaultTextureScale ()
@@ -361,6 +345,6 @@ void Texdef_transformLocked (TextureProjection& projection, std::size_t width, s
 
 	Matrix4 stTransformed2stOriginal = matrix4_multiplied_by_matrix4(identity2stOriginal, stTransformed2identity);
 
-	projection.m_texdef = TexDef((float) width, (float) height, stTransformed2stOriginal);
-	Texdef_normalise(projection, (float) width, (float) height);
+	projection.setTransform((float) width, (float) height, stTransformed2stOriginal);
+	projection.m_texdef.normalise((float) width, (float) height);
 }
