@@ -24,6 +24,7 @@
  */
 #include "levelfilters.h"
 
+#include "brush/TexDef.h"
 #include "ibrush.h"
 #include "ientity.h"
 #include "iscenegraph.h"

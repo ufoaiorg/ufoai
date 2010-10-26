@@ -23,6 +23,7 @@
 
 #include <list>
 
+#include "../brush/TexDef.h"
 #include "ientity.h"
 #include "ibrush.h"
 #include "ieclass.h"

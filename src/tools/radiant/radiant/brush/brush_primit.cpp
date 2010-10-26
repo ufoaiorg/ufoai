@@ -23,7 +23,7 @@
 
 #include "debugging/debugging.h"
 
-#include "itexdef.h"
+#include "TexDef.h"
 #include "itextures.h"
 
 #include <algorithm>
@@ -126,7 +126,7 @@ void Normal_GetTransform (const Vector3& normal, Matrix4& transform)
  Transforms constructed from quake's texdef format are (-shift)*(1/scale)*(-rotate) with x translation sign flipped.
  This would really make more sense if it was inverseof(shift*rotate*scale).. oh well.
  */
-inline void Texdef_toTransform (const texdef_t& texdef, float width, float height, Matrix4& transform)
+inline void Texdef_toTransform (const TexDef& texdef, float width, float height, Matrix4& transform)
 {
 	double inverse_scale[2];
 
@@ -151,19 +151,7 @@ inline void Texdef_toTransform (const TextureProjection& projection, float width
 	Texdef_toTransform(projection.m_texdef, width, height, transform);
 }
 
-// handles degenerate cases, just in case library atan2 doesn't
-inline double arctangent_yx (double y, double x)
-{
-	if (fabs(x) > 1.0E-6) {
-		return atan2(y, x);
-	} else if (y > 0) {
-		return c_half_pi;
-	} else {
-		return -c_half_pi;
-	}
-}
-
-inline void Texdef_fromTransform (texdef_t& texdef, float width, float height, const Matrix4& transform)
+inline void Texdef_fromTransform (TexDef& texdef, float width, float height, const Matrix4& transform)
 {
 	texdef.scale[0] = static_cast<float> ((1.0 / Vector2(transform[0], transform[4]).getLength()) / width);
 	texdef.scale[1] = static_cast<float> ((1.0 / Vector2(transform[1], transform[5]).getLength()) / height);
@@ -195,7 +183,7 @@ inline void Texdef_fromTransform (TextureProjection& projection, float width, fl
 	Texdef_fromTransform(projection.m_texdef, width, height, transform);
 }
 
-inline void Texdef_normalise (texdef_t& texdef, float width, float height)
+inline void Texdef_normalise (TexDef& texdef, float width, float height)
 {
 	// it may be useful to also normalise the rotation here, if this function is used elsewhere.
 	texdef.shift[0] = float_mod(texdef.shift[0], width);
@@ -248,24 +236,24 @@ void Texdef_EmitTextureCoordinates (const TextureProjection& projection, std::si
 	}
 }
 
-void Texdef_Assign (texdef_t& td, const texdef_t& other)
+void Texdef_Assign (TexDef& td, const TexDef& other)
 {
 	td = other;
 }
 
-void Texdef_Shift (texdef_t& td, float s, float t)
+void Texdef_Shift (TexDef& td, float s, float t)
 {
 	td.shift[0] += s;
 	td.shift[1] += t;
 }
 
-void Texdef_Scale (texdef_t& td, float s, float t)
+void Texdef_Scale (TexDef& td, float s, float t)
 {
 	td.scale[0] += s;
 	td.scale[1] += t;
 }
 
-void Texdef_Rotate (texdef_t& td, float angle)
+void Texdef_Rotate (TexDef& td, float angle)
 {
 	td.rotate += angle;
 	td.rotate = static_cast<float> (float_to_integer(td.rotate) % 360);
@@ -355,12 +343,12 @@ void TexDef_Construct_Default (TextureProjection& projection)
 	projection.m_texdef.rotate = 0;
 }
 
-void ShiftScaleRotate_fromFace (texdef_t& shiftScaleRotate, const TextureProjection& projection)
+void ShiftScaleRotate_fromFace (TexDef& shiftScaleRotate, const TextureProjection& projection)
 {
 	shiftScaleRotate = projection.m_texdef;
 }
 
-void ShiftScaleRotate_toFace (const texdef_t& shiftScaleRotate, TextureProjection& projection)
+void ShiftScaleRotate_toFace (const TexDef& shiftScaleRotate, TextureProjection& projection)
 {
 	projection.m_texdef = shiftScaleRotate;
 }

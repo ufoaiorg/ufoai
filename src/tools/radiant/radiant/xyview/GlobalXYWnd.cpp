@@ -29,6 +29,7 @@
 
 #include "debugging/debugging.h"
 
+#include "../brush/TexDef.h"
 #include "ientity.h"
 #include "igl.h"
 #include "ibrush.h"

@@ -25,7 +25,8 @@
 #include "generic/constant.h"
 #include "generic/callback.h"
 #include "math/Vector3.h"
-#include "itexdef.h"
+
+class TexDef;
 
 namespace scene
 {
@@ -42,7 +43,7 @@ class _QERFaceData
 		Vector3 m_p0;
 		Vector3 m_p1;
 		Vector3 m_p2;
-		texdef_t m_texdef;
+		TexDef m_texdef;
 		std::string m_shader;
 		int contents;
 		int flags;

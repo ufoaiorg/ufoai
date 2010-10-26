@@ -31,6 +31,7 @@
 #include "imap.h"
 #include "iselection.h"
 #include "iundo.h"
+#include "../brush/TexDef.h"
 #include "ibrush.h"
 #include "ifilter.h"
 #include "ireference.h"

@@ -31,7 +31,7 @@
 #include "debugging/debugging.h"
 
 #include "iscenegraph.h"
-#include "itexdef.h"
+#include "../brush/TexDef.h"
 #include "iundo.h"
 #include "iselection.h"
 
@@ -807,7 +807,7 @@ void SurfaceInspector::Update (void)
 		gtk_entry_set_text(m_texture, "");
 	}
 
-	texdef_t shiftScaleRotate;
+	TexDef shiftScaleRotate;
 
 	ShiftScaleRotate_fromFace(shiftScaleRotate, SurfaceInspector_GetSelectedTexdef());
 
@@ -917,7 +917,7 @@ void SurfaceInspector::ApplyShader (void)
 
 void SurfaceInspector::ApplyTexdef (void)
 {
-	texdef_t shiftScaleRotate;
+	TexDef shiftScaleRotate;
 
 	shiftScaleRotate.shift[0] = static_cast<float> (gtk_spin_button_get_value_as_float(m_hshiftIncrement.m_spin));
 	shiftScaleRotate.shift[1] = static_cast<float> (gtk_spin_button_get_value_as_float(m_vshiftIncrement.m_spin));
