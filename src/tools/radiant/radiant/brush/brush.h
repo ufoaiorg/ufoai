@@ -449,7 +449,7 @@ class FaceTexdef: public FaceShaderObserver
 
 				void exportState (FaceTexdef& faceTexdef) const
 				{
-					Texdef_Assign(faceTexdef.m_projection, m_projection);
+					faceTexdef.m_projection.m_texdef = m_projection.m_texdef;
 				}
 		};
 
@@ -498,7 +498,7 @@ class FaceTexdef: public FaceShaderObserver
 		void setTexdef (const TextureProjection& projection)
 		{
 			removeScale();
-			Texdef_Assign(m_projection, projection);
+			m_projection.m_texdef = projection.m_texdef;
 			addScale();
 		}
 

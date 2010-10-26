@@ -173,11 +173,6 @@ void Texdef_EmitTextureCoordinates (const TextureProjection& projection, std::si
 	}
 }
 
-void Texdef_Assign (TexDef& td, const TexDef& other)
-{
-	td = other;
-}
-
 void Texdef_Shift (TexDef& td, float s, float t)
 {
 	td._shift[0] += s;
@@ -203,11 +198,6 @@ inline BasicVector3<Element> vector3_inverse (const BasicVector3<Element>& self)
 }
 
 float g_texdef_default_scale;
-
-void Texdef_Assign (TextureProjection& projection, const TextureProjection& other)
-{
-	Texdef_Assign(projection.m_texdef, other.m_texdef);
-}
 
 void Texdef_FitTexture (TextureProjection& projection, std::size_t width, std::size_t height, const Vector3& normal,
 		const Winding& w, float s_repeat, float t_repeat)
