@@ -22,13 +22,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_BRUSH_PRIMIT_H)
 #define INCLUDED_BRUSH_PRIMIT_H
 
+// Retrieves the default texture scale (from a global variable!)
+float Texdef_getDefaultTextureScale();
+
 #include "math/Vector3.h"
 #include "TexDef.h"
 #include "TextureProjection.h"
 #include "debugging/debugging.h"
-
-// Retrieves the default texture scale (from a global variable!)
-float Texdef_getDefaultTextureScale();
 
 class TexDef;
 struct Winding;
@@ -39,8 +39,6 @@ class Matrix4;
 class Plane3;
 
 void Normal_GetTransform(const Vector3& normal, Matrix4& transform);
-
-void TexDef_Construct_Default(TextureProjection& projection);
 
 void Texdef_FitTexture(TextureProjection& projection, std::size_t width, std::size_t height, const Vector3& normal, const Winding& w, float s_repeat, float t_repeat);
 void Texdef_EmitTextureCoordinates(const TextureProjection& projection, std::size_t width, std::size_t height, Winding& w, const Vector3& normal, const Matrix4& localToWorld);

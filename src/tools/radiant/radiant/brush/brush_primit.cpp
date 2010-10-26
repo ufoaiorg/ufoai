@@ -211,15 +211,6 @@ float Texdef_getDefaultTextureScale ()
 	return g_texdef_default_scale;
 }
 
-void TexDef_Construct_Default (TextureProjection& projection)
-{
-	projection.m_texdef._scale[0] = Texdef_getDefaultTextureScale();
-	projection.m_texdef._scale[1] = Texdef_getDefaultTextureScale();
-	projection.m_texdef._shift[0] = 0;
-	projection.m_texdef._shift[1] = 0;
-	projection.m_texdef._rotate = 0;
-}
-
 void ShiftScaleRotate_fromFace (TexDef& shiftScaleRotate, const TextureProjection& projection)
 {
 	shiftScaleRotate = projection.m_texdef;

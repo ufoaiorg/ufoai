@@ -354,7 +354,7 @@ void Scene_BrushFitTexture_Component_Selected (scene::Graph& graph, float s_repe
 TextureProjection g_defaultTextureProjection;
 const TextureProjection& TextureTransform_getDefault ()
 {
-	TexDef_Construct_Default(g_defaultTextureProjection);
+	g_defaultTextureProjection.constructDefault();
 	return g_defaultTextureProjection;
 }
 

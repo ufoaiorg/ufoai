@@ -446,7 +446,7 @@ void Scene_BrushSplitByPlane (scene::Graph& graph, const Vector3& p0, const Vect
 		const std::string& shader, EBrushSplit split)
 {
 	TextureProjection projection;
-	TexDef_Construct_Default(projection);
+	projection.constructDefault();
 	graph.traverse(BrushSplitByPlaneSelected(p0, p1, p2, shader, projection, split));
 	SceneChangeNotify();
 }

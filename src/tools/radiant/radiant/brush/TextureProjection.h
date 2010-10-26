@@ -24,6 +24,17 @@ class TextureProjection
 		{
 		}
 
+		void constructDefault ()
+		{
+			float scale = Texdef_getDefaultTextureScale();
+
+			m_texdef._scale[0] = scale;
+			m_texdef._scale[1] = scale;
+			m_texdef._rotate = 0;
+			m_texdef._shift[0] = 0;
+			m_texdef._shift[1] = 0;
+		}
+
 		/* greebo: Uses the transformation matrix <transform> to set the internal texture
 		 * definitions. Checks the matrix for validity and passes it on to
 		 * the according internal texture definitions (TexDef or BPTexDef)

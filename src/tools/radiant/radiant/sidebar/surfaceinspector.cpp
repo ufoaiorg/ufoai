@@ -375,7 +375,7 @@ static void OnBtnAxial (GtkWidget *widget, gpointer data)
 {
 	UndoableCommand undo("textureDefault");
 	TextureProjection projection;
-	TexDef_Construct_Default(projection);
+	projection.constructDefault();
 
 	Select_SetTexdef(projection);
 }
@@ -1137,7 +1137,7 @@ FaceTexture g_faceTextureClipboard;
 void TextureClipboard_textureSelected ()
 {
 	g_faceTextureClipboard.m_flags = ContentsFlagsValue(0, 0, 0, false);
-	TexDef_Construct_Default(g_faceTextureClipboard.m_projection);
+	g_faceTextureClipboard.m_projection.constructDefault();
 }
 
 class TextureBrowser;
