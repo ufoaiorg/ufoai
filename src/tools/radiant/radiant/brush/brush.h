@@ -506,21 +506,21 @@ class FaceTexdef: public FaceShaderObserver
 		{
 			ASSERT_MESSAGE(m_projection.m_texdef.isSane(), "FaceTexdef::shift: bad texdef");
 			removeScale();
-			Texdef_Shift(m_projection, s, t);
+			m_projection.m_texdef.shift(s, t);
 			addScale();
 		}
 
 		void scale (float s, float t)
 		{
 			removeScale();
-			Texdef_Scale(m_projection, s, t);
+			m_projection.m_texdef.scale(s, t);
 			addScale();
 		}
 
 		void rotate (float angle)
 		{
 			removeScale();
-			Texdef_Rotate(m_projection, angle);
+			m_projection.m_texdef.rotate(angle);
 			addScale();
 		}
 

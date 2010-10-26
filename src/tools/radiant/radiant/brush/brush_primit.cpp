@@ -209,21 +209,6 @@ void Texdef_Assign (TextureProjection& projection, const TextureProjection& othe
 	Texdef_Assign(projection.m_texdef, other.m_texdef);
 }
 
-void Texdef_Shift (TextureProjection& projection, float s, float t)
-{
-	Texdef_Shift(projection.m_texdef, s, t);
-}
-
-void Texdef_Scale (TextureProjection& projection, float s, float t)
-{
-	Texdef_Scale(projection.m_texdef, s, t);
-}
-
-void Texdef_Rotate (TextureProjection& projection, float angle)
-{
-	Texdef_Rotate(projection.m_texdef, angle);
-}
-
 void Texdef_FitTexture (TextureProjection& projection, std::size_t width, std::size_t height, const Vector3& normal,
 		const Winding& w, float s_repeat, float t_repeat)
 {
