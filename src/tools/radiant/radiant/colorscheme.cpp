@@ -16,6 +16,7 @@
 #include "gtkutil/menu.h"
 #include "brush/brushmodule.h"
 #include "moduleobservers.h"
+#include "camera/CamWnd.h"
 
 /**
  * @brief Make COLOR_BRUSHES override worldspawn eclass colour.
@@ -201,7 +202,7 @@ void ColorScheme_Original (void)
 
 	g_camwindow_globals.color_selbrushes3d = Vector3(1.0f, 0.0f, 0.0f);
 	g_camwindow_globals.color_cameraback = Vector3(0.25f, 0.25f, 0.25f);
-	CamWnd_Update(*g_pParentWnd->GetCamWnd());
+	g_pParentWnd->GetCamWnd()->update();
 
 	g_xywindow_globals.color_gridback = Vector3(1.0f, 1.0f, 1.0f);
 	g_xywindow_globals.color_gridminor = Vector3(0.75f, 0.75f, 0.75f);
@@ -224,7 +225,7 @@ void ColorScheme_QER (void)
 
 	g_camwindow_globals.color_cameraback = Vector3(0.25f, 0.25f, 0.25f);
 	g_camwindow_globals.color_selbrushes3d = Vector3(1.0f, 0.0f, 0.0f);
-	CamWnd_Update(*g_pParentWnd->GetCamWnd());
+	g_pParentWnd->GetCamWnd()->update();
 
 	g_xywindow_globals.color_gridback = Vector3(1.0f, 1.0f, 1.0f);
 	g_xywindow_globals.color_gridminor = Vector3(1.0f, 1.0f, 1.0f);
@@ -245,7 +246,7 @@ void ColorScheme_Black (void)
 
 	g_camwindow_globals.color_cameraback = Vector3(0.25f, 0.25f, 0.25f);
 	g_camwindow_globals.color_selbrushes3d = Vector3(1.0f, 0.0f, 0.0f);
-	CamWnd_Update(*g_pParentWnd->GetCamWnd());
+	g_pParentWnd->GetCamWnd()->update();
 
 	g_xywindow_globals.color_gridback = Vector3(0.0f, 0.0f, 0.0f);
 	g_xywindow_globals.color_gridminor = Vector3(0.2f, 0.2f, 0.2f);
@@ -269,7 +270,7 @@ void ColorScheme_Ydnar (void)
 
 	g_camwindow_globals.color_cameraback = Vector3(0.25f, 0.25f, 0.25f);
 	g_camwindow_globals.color_selbrushes3d = Vector3(1.0f, 0.0f, 0.0f);
-	CamWnd_Update(*g_pParentWnd->GetCamWnd());
+	g_pParentWnd->GetCamWnd()->update();
 
 	g_xywindow_globals.color_gridback = Vector3(0.77f, 0.77f, 0.77f);
 	g_xywindow_globals.color_gridminor = Vector3(0.83f, 0.83f, 0.83f);

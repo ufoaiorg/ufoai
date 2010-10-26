@@ -161,6 +161,20 @@ void connect_accelerator (const std::string& name)
 	}
 }
 
+void KeyEvent_connect(const std::string& name)
+{
+  const KeyEvent& keyEvent = GlobalKeyEvents_find(name);
+  keydown_accelerators_add(keyEvent.m_accelerator, keyEvent.m_keyDown);
+  keyup_accelerators_add(keyEvent.m_accelerator, keyEvent.m_keyUp);
+}
+
+void KeyEvent_disconnect(const std::string& name)
+{
+  const KeyEvent& keyEvent = GlobalKeyEvents_find(name);
+  keydown_accelerators_remove(keyEvent.m_accelerator);
+  keyup_accelerators_remove(keyEvent.m_accelerator);
+}
+
 #include <cctype>
 
 #include <gtk/gtk.h>

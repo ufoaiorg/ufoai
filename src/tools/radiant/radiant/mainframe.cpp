@@ -113,6 +113,7 @@
 #include "pathfinding.h"
 #include "model.h"
 #include "clipper/GlobalClipPoints.h"
+#include "camera/CamWnd.h"
 
 struct LayoutGlobals
 {
@@ -605,7 +606,7 @@ void PasteToCamera (void)
 	// Work out the delta
 	Vector3 mid;
 	Select_GetMid(mid);
-	Vector3 delta = vector3_snapped(Camera_getOrigin(camwnd), GetGridSize()) - mid;
+	Vector3 delta = vector3_snapped(camwnd.getOrigin(), GetGridSize()) - mid;
 
 	// Move to camera
 	GlobalSelectionSystem().translateSelected(delta);
@@ -1354,7 +1355,7 @@ void ScreenUpdates_Enable (void)
 static void GlobalCamera_UpdateWindow (void)
 {
 	if (g_pParentWnd != 0) {
-		CamWnd_Update(*g_pParentWnd->GetCamWnd());
+		g_pParentWnd->GetCamWnd()->update();
 	}
 }
 

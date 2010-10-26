@@ -25,6 +25,9 @@
 #include "gtkutil/accelerator.h"
 #include <string>
 
+void KeyEvent_connect(const std::string& name);
+void KeyEvent_disconnect(const std::string& name);
+
 const Accelerator& GlobalShortcuts_insert (const std::string& name, const Accelerator& accelerator);
 void GlobalShortcuts_register (const std::string& name, int type); // 1 = command, 2 = toggle
 void GlobalShortcuts_reportUnregistered ();

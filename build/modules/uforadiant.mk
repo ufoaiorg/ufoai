@@ -96,6 +96,9 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/xyview/grid.cpp \
 	$(RADIANT_BASE)/radiant/xyview/GlobalXYWnd.cpp \
 	\
+	$(RADIANT_BASE)/radiant/camera/Camera.cpp \
+	$(RADIANT_BASE)/radiant/camera/CameraSettings.cpp \
+	$(RADIANT_BASE)/radiant/camera/CamWnd.cpp \
 	$(RADIANT_BASE)/radiant/camera/camwindow.cpp \
 	$(RADIANT_BASE)/radiant/camera/view.cpp \
 	\

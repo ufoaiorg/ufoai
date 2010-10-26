@@ -6,6 +6,7 @@
 #include <gtk/gtk.h>
 #include "MapPreviewView.h"
 #include "../../camera/CamRenderer.h"
+#include "../../renderer.h"
 
 namespace ui
 {

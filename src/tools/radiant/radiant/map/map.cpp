@@ -67,7 +67,7 @@
 #include "../filetypes.h"
 #include "../sidebar/MapInfo.h"
 #include "../qe3.h"
-#include "../camera/camwindow.h"
+#include "../camera/CamWnd.h"
 #include "../xyview/GlobalXYWnd.h"
 #include "../mainframe.h"
 #include "../settings/preferences.h"
@@ -359,11 +359,11 @@ void FocusViews (const Vector3& point, float angle)
 {
 	ASSERT_NOTNULL(g_pParentWnd);
 	CamWnd& camwnd = *g_pParentWnd->GetCamWnd();
-	Camera_setOrigin(camwnd, point);
-	Vector3 angles(Camera_getAngles(camwnd));
-	angles[CAMERA_PITCH] = 0;
+	camwnd.setOrigin(point);
+	Vector3 angles(camwnd.getAngles());
+
 	angles[CAMERA_YAW] = angle;
-	Camera_setAngles(camwnd, angles);
+	camwnd.setAngles(angles);
 
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
 	xywnd->setOrigin(point);

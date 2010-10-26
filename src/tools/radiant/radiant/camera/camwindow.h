@@ -25,6 +25,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "math/Vector3.h"
 #include "signal/signalfwd.h"
 
+#include "Camera.h"
+
 typedef struct _GtkWidget GtkWidget;
 typedef struct _GtkWindow GtkWindow;
 
@@ -33,8 +35,6 @@ CamWnd* NewCamWnd();
 void DeleteCamWnd(CamWnd* camwnd);
 
 void AddCameraMovedCallback(const SignalHandler& handler);
-
-void CamWnd_Update(CamWnd& camwnd);
 
 GtkWidget* CamWnd_getWidget(CamWnd& camwnd);
 void CamWnd_setParent(CamWnd& camwnd, GtkWindow* parent);
@@ -48,18 +48,8 @@ void CamWnd_registerShortcuts();
 
 void GlobalCamera_Benchmark();
 
-const Vector3& Camera_getOrigin(CamWnd& camwnd);
-void Camera_setOrigin(CamWnd& camwnd, const Vector3& origin);
-
-enum {
-	CAMERA_PITCH = 0, // up / down
-	CAMERA_YAW = 1, // left / right
-	CAMERA_ROLL = 2 // fall over
-};
-
-const Vector3& Camera_getAngles(CamWnd& camwnd);
-void Camera_setAngles(CamWnd& camwnd, const Vector3& angles);
-
+bool Camera_GetFarClip ();
+void Camera_SetFarClip (bool value);
 
 struct camwindow_globals_t {
 	Vector3 color_cameraback;
@@ -80,8 +70,5 @@ extern camwindow_globals_t g_camwindow_globals;
 void CamWnd_Construct();
 void CamWnd_Destroy();
 
-// Constants
-const int CAMWND_MINSIZE_X = 240;
-const int CAMWND_MINSIZE_Y = 200;
 
 #endif
