@@ -121,31 +121,6 @@ void Normal_GetTransform (const Vector3& normal, Matrix4& transform)
 	transform[15] = 1;
 }
 
-inline void Texdef_fromTransform (TexDef& texdef, float width, float height, const Matrix4& transform)
-{
-	texdef.scale[0] = static_cast<float> ((1.0 / Vector2(transform[0], transform[4]).getLength()) / width);
-	texdef.scale[1] = static_cast<float> ((1.0 / Vector2(transform[1], transform[5]).getLength()) / height);
-
-	texdef.rotate = static_cast<float> (-radians_to_degrees(arctangent_yx(-transform[4], transform[0])));
-
-	if (texdef.rotate == -180.0f) {
-		texdef.rotate = 180.0f;
-	}
-
-	texdef.shift[0] = transform[12] * width;
-	texdef.shift[1] = transform[13] * height;
-
-	// If the 2d cross-product of the x and y axes is positive, one of the axes has a negative scale.
-	if (Vector2(transform[0], transform[4]).crossProduct(Vector2(transform[1], transform[5])) > 0) {
-		if (texdef.rotate >= 180.0f) {
-			texdef.rotate -= 180.0f;
-			texdef.scale[0] = -texdef.scale[0];
-		} else {
-			texdef.scale[1] = -texdef.scale[1];
-		}
-	}
-}
-
 inline void Texdef_normalise (TexDef& texdef, float width, float height)
 {
 	// it may be useful to also normalise the rotation here, if this function is used elsewhere.
@@ -286,7 +261,7 @@ void Texdef_FitTexture (TextureProjection& projection, std::size_t width, std::s
 	// apply the difference to the current texture transform
 	matrix4_premultiply_by_matrix4(st2tex, matrix);
 
-	Texdef_fromTransform(projection.m_texdef, (float) width, (float) height, st2tex);
+	projection.m_texdef = TexDef((float) width, (float) height, st2tex);
 	Texdef_normalise(projection, (float) width, (float) height);
 }
 
@@ -429,6 +404,6 @@ void Texdef_transformLocked (TextureProjection& projection, std::size_t width, s
 
 	Matrix4 stTransformed2stOriginal = matrix4_multiplied_by_matrix4(identity2stOriginal, stTransformed2identity);
 
-	Texdef_fromTransform(projection.m_texdef, (float) width, (float) height, stTransformed2stOriginal);
+	projection.m_texdef = TexDef((float) width, (float) height, stTransformed2stOriginal);
 	Texdef_normalise(projection, (float) width, (float) height);
 }
