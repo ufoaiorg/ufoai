@@ -295,10 +295,6 @@ static picoModel_t *_md2_load (PM_PARAMS_LOAD)
 		texCoord->t = _pico_little_short(texCoord->t);
 	}
 
-	/* Print out md2 values */
-	_pico_printf(PICO_VERBOSE, "Skins: %d  Verts: %d  STs: %d  Triangles: %d  Frames: %d\n\n",
-			md2->numSkins, md2->numXYZ, md2->numST, md2->numTris, md2->numFrames);
-
 	/* create new pico model */
 	picoModel = PicoNewModel();
 	if (picoModel == NULL) {

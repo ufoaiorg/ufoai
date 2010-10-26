@@ -205,7 +205,6 @@ static NodeSmartReference ModelResource_load (ModelLoader* loader, const char* n
 	{
 		AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(name));
 		if (file) {
-			g_message("Loaded Model: '%s'\n", name);
 			model = loader->loadModel(*file);
 		} else {
 			g_warning("Model load failed: '%s'\n", name);

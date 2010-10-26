@@ -210,7 +210,6 @@ class PicoSurface: public OpenGLRenderable
 					m_shader = PicoGetShaderName(shader);
 				}
 			}
-			g_message("  PicoSurface: using shader %s\n", m_shader.c_str());
 
 			m_vertices.resize(PicoGetSurfaceNumVertexes(surface));
 			m_indices.resize(PicoGetSurfaceNumIndexes(surface));

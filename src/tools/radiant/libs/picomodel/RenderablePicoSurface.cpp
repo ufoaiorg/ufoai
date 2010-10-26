@@ -11,7 +11,6 @@ namespace model
 		if (shader != 0) {
 			_originalShaderName = PicoGetShaderName(shader);
 		}
-		globalOutputStream() << "  RenderablePicoSurface: using shader " << _originalShaderName.c_str() << "\n";
 
 		// Capture the shader
 		_shader = GlobalShaderCache().capture(_originalShaderName);
