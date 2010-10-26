@@ -44,11 +44,11 @@ public:
 	}
 	void writeString(const std::string& string) {
 		writeSeparator();
-		m_ostream << '"' << string << '"';
+		m_ostream << "\"" << string << "\"";
 	}
 	void writeString(const char* string) {
 		writeSeparator();
-		m_ostream << '"' << string << '"';
+		m_ostream << "\"" << string << "\"";
 	}
 	void writeInteger(int i) {
 		writeSeparator();

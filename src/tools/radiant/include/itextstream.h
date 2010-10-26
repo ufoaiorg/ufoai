@@ -65,7 +65,7 @@ class TextOutputStream
  template<typename TextOutputStreamType>
  TextOutputStreamType& ostream_write(TextOutputStreamType& ostream, const MyClass& myClass)
  {
- return ostream << myClass.getName() << ' ' << myClass.getText();
+ return ostream << myClass.getName() << " " << myClass.getText();
  }
  \endcode
  Expressing this as a template allows it to be used directly with any concrete text-output-stream type, not just the abstract TextOutputStream\n

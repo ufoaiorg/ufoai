@@ -309,7 +309,7 @@ class RadiantUndoSystem: public UndoSystem
 		void finish (const std::string& command)
 		{
 			if (finishUndo(command)) {
-				globalOutputStream() << command << '\n';
+				globalOutputStream() << command << "\n";
 			}
 		}
 		void undo ()

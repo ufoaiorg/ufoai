@@ -191,7 +191,7 @@ inline bool Tokeniser_nextTokenIsDigit (Tokeniser& tokeniser)
 template<typename TextOutputStreamType>
 inline TextOutputStreamType& ostream_write (TextOutputStreamType& outputStream, const Vector3& v)
 {
-	return outputStream << '(' << v.x() << ' ' << v.y() << ' ' << v.z() << ')';
+	return outputStream << "(" << v.x() << " " << v.y() << " " << v.z() << ")";
 }
 
 inline void StdString_importString (std::string& self, const char* string)

@@ -243,30 +243,16 @@ class MatchFileExtension
 class DirectoryCleaned
 {
 	public:
-		const char* m_path;
-		DirectoryCleaned (const char* path) :
-			m_path(path)
+		const std::string m_path;
+		DirectoryCleaned (const std::string& path) :
+			m_path(string::replaceAll(path, "\\", "/") + "/")
 		{
 		}
-};
 
-/// \brief Writes \p path to \p ostream with dos-style separators replaced by unix-style separators, and appends a separator if necessary.
-template<typename TextOutputStreamType>
-TextOutputStreamType& ostream_write (TextOutputStreamType& ostream, const DirectoryCleaned& path)
-{
-	const char* i = path.m_path;
-	for (; *i != '\0'; ++i) {
-		if (*i == '\\') {
-			ostream << '/';
-		} else {
-			ostream << *i;
+		operator const std::string&() const
+		{
+			return m_path;
 		}
-	}
-	const char c = *(i - 1);
-	if (c != '/' && c != '\\') {
-		ostream << '/';
-	}
-	return ostream;
-}
+};
 
 #endif

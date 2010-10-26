@@ -14,7 +14,7 @@ ZipArchive::ZipArchive (const std::string& name) :
 {
 	if (!m_istream.failed()) {
 		if (!read_pkzip()) {
-			globalErrorStream() << "ERROR: invalid zip-file " << name.c_str() << '\n';
+			globalErrorStream() << "ERROR: invalid zip-file " << name << "\n";
 		}
 	}
 }
