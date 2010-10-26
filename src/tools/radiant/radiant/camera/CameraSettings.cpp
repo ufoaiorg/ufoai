@@ -2,6 +2,7 @@
 
 #include "camwindow.h"
 #include "CamWnd.h"
+#include "GlobalCamera.h"
 #include <iostream>
 
 CameraSettings::CameraSettings() :
@@ -37,15 +38,13 @@ void CameraSettings::keyChanged() {
 		}
 
 		// Check if a global camwindow is set
-		if (GlobalCamWnd() != 0) {
+		if (GlobalCamera().getCamWnd() != 0) {
 			// Disable discrete movement if it was active before
 			if (_discreteMovement == true) {
-				GlobalCamWnd()->moveDiscreteDisable();
-				//CamWnd_Move_Discrete_Disable(*GlobalCamWnd());
+				GlobalCamera().getCamWnd()->moveDiscreteDisable();
 			}
 			else {
-				GlobalCamWnd()->moveDisable();
-				//CamWnd_Move_Disable(*GlobalCamWnd());
+				GlobalCamera().getCamWnd()->moveDisable();
 			}
 
 			// Check the value and take the according actions
@@ -61,12 +60,10 @@ void CameraSettings::initDiscreteMovement() {
 
 	// If it is activated now, take the appropriate action
 	if (_discreteMovement) {
-		GlobalCamWnd()->moveDiscreteEnable();
-		//CamWnd_Move_Discrete_Enable(*GlobalCamWnd());
+		GlobalCamera().getCamWnd()->moveDiscreteEnable();
 	}
 	else {
-		GlobalCamWnd()->moveEnable();
-		//CamWnd_Move_Enable(*GlobalCamWnd());
+		GlobalCamera().getCamWnd()->moveEnable();
 	}
 }
 

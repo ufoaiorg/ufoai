@@ -359,11 +359,11 @@ void FocusViews (const Vector3& point, float angle)
 {
 	ASSERT_NOTNULL(g_pParentWnd);
 	CamWnd& camwnd = *g_pParentWnd->GetCamWnd();
-	camwnd.setOrigin(point);
-	Vector3 angles(camwnd.getAngles());
+	camwnd.setCameraOrigin(point);
+	Vector3 angles(camwnd.getCameraAngles());
 
 	angles[CAMERA_YAW] = angle;
-	camwnd.setAngles(angles);
+	camwnd.setCameraAngles(angles);
 
 	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
 	xywnd->setOrigin(point);

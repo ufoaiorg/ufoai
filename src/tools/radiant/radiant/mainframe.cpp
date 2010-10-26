@@ -114,6 +114,7 @@
 #include "model.h"
 #include "clipper/GlobalClipPoints.h"
 #include "camera/CamWnd.h"
+#include "camera/GlobalCamera.h"
 
 struct LayoutGlobals
 {
@@ -606,7 +607,7 @@ void PasteToCamera (void)
 	// Work out the delta
 	Vector3 mid;
 	Select_GetMid(mid);
-	Vector3 delta = vector3_snapped(camwnd.getOrigin(), GetGridSize()) - mid;
+	Vector3 delta = vector3_snapped(camwnd.getCameraOrigin(), GetGridSize()) - mid;
 
 	// Move to camera
 	GlobalSelectionSystem().translateSelected(delta);
@@ -2148,10 +2149,10 @@ void MainFrame::Create (void)
 				}
 
 				// camera
-				m_pCamWnd = NewCamWnd();
-				GlobalCamera_setCamWnd(*m_pCamWnd);
-				CamWnd_setParent(*m_pCamWnd, window);
-				GtkFrame* camera_window = create_framed_widget(CamWnd_getWidget(*m_pCamWnd));
+				m_pCamWnd = GlobalCamera().newCamWnd();
+				GlobalCamera().setCamWnd(m_pCamWnd);
+				GlobalCamera().setParent(m_pCamWnd, window);
+				GtkFrame* camera_window = create_framed_widget(m_pCamWnd->getWidget());
 				gtk_paned_add1(GTK_PANED(vsplit2), GTK_WIDGET(camera_window));
 
 				// textures
@@ -2172,10 +2173,10 @@ void MainFrame::Create (void)
 		gtk_widget_show(vsplit);
 
 		// camera
-		m_pCamWnd = NewCamWnd();
-		GlobalCamera_setCamWnd(*m_pCamWnd);
-		CamWnd_setParent(*m_pCamWnd, window);
-		GtkWidget* camera = CamWnd_getWidget(*m_pCamWnd);
+		m_pCamWnd = GlobalCamera().newCamWnd();
+		GlobalCamera().setCamWnd(m_pCamWnd);
+		GlobalCamera().setParent(m_pCamWnd, window);
+		GtkWidget* camera = m_pCamWnd->getWidget();
 
 		// yz window
 		m_pYZWnd = new XYWnd();
@@ -2262,7 +2263,7 @@ void MainFrame::Shutdown (void)
 	delete m_pXZWnd;
 	m_pXZWnd = 0;
 
-	DeleteCamWnd(m_pCamWnd);
+	GlobalCamera().deleteCamWnd(m_pCamWnd);
 	m_pCamWnd = 0;
 
 	PreferencesDialog_destroyWindow();

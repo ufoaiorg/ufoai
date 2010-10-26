@@ -30,16 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 typedef struct _GtkWidget GtkWidget;
 typedef struct _GtkWindow GtkWindow;
 
-class CamWnd;
-CamWnd* NewCamWnd();
-void DeleteCamWnd(CamWnd* camwnd);
-
 void AddCameraMovedCallback(const SignalHandler& handler);
-
-GtkWidget* CamWnd_getWidget(CamWnd& camwnd);
-void CamWnd_setParent(CamWnd& camwnd, GtkWindow* parent);
-
-void GlobalCamera_setCamWnd(CamWnd& camwnd);
 
 typedef struct _GtkMenu GtkMenu;
 typedef struct _GtkToolbar GtkToolbar;

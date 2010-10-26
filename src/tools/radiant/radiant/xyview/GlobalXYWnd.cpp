@@ -535,10 +535,10 @@ void XYWnd::Clipper_Crosshair_OnMouseMoved (int x, int y)
 
 void XYWnd_PositionCamera (XYWnd* xywnd, int x, int y, CamWnd& camwnd)
 {
-	Vector3 origin(camwnd.getOrigin());
+	Vector3 origin(camwnd.getCameraOrigin());
 	xywnd->convertXYToWorld(x, y, origin);
 	xywnd->snapToGrid(origin);
-	camwnd.setOrigin(origin);
+	camwnd.setCameraOrigin(origin);
 }
 
 static void XYWnd_OrientCamera (XYWnd* xywnd, int x, int y, CamWnd& camwnd)
@@ -546,15 +546,15 @@ static void XYWnd_OrientCamera (XYWnd* xywnd, int x, int y, CamWnd& camwnd)
 	Vector3 point = g_vector3_identity;
 	xywnd->convertXYToWorld(x, y, point);
 	xywnd->snapToGrid(point);
-	point -= camwnd.getOrigin();
+	point -= camwnd.getCameraOrigin();
 
 	const int n1 = (xywnd->getViewType() == XY) ? 1 : 2;
 	const int n2 = (xywnd->getViewType() == YZ) ? 1 : 0;
 	const int nAngle = (xywnd->getViewType() == XY) ? CAMERA_YAW : CAMERA_PITCH;
 	if (point[n1] || point[n2]) {
-		Vector3 angles(camwnd.getAngles());
+		Vector3 angles(camwnd.getCameraAngles());
 		angles[nAngle] = static_cast<float> (radians_to_degrees(atan2(point[n1], point[n2])));
-		camwnd.setAngles(angles);
+		camwnd.setCameraAngles(angles);
 	}
 }
 
@@ -1722,7 +1722,7 @@ void XYWnd::draw ()
 	glScalef(m_fScale, m_fScale, 1);
 	glTranslatef(-m_vOrigin[nDim1], -m_vOrigin[nDim2], 0);
 
-	drawCameraIcon(g_pParentWnd->GetCamWnd()->getOrigin(), g_pParentWnd->GetCamWnd()->getAngles());
+	drawCameraIcon(g_pParentWnd->GetCamWnd()->getCameraOrigin(), g_pParentWnd->GetCamWnd()->getCameraAngles());
 
 	if (g_xywindow_globals_private.show_outline) {
 		if (Active()) {
@@ -1766,7 +1766,7 @@ void GetFocusPosition (Vector3& position)
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		Select_GetMid(position);
 	} else {
-		position = g_pParentWnd->GetCamWnd()->getOrigin();
+		position = g_pParentWnd->GetCamWnd()->getCameraOrigin();
 	}
 }
 

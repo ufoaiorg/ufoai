@@ -63,6 +63,7 @@
 #include "CamRenderer.h"
 #include "../ui/eventmapper/EventMapper.h"
 
+#include "GlobalCamera.h"
 #include "Camera.h"
 
 gboolean camera_keymove (gpointer data)
@@ -75,27 +76,9 @@ gboolean camera_keymove (gpointer data)
 
 static CamWnd* g_camwnd = 0;
 
-void GlobalCamera_setCamWnd (CamWnd& camwnd)
-{
-	g_camwnd = &camwnd;
-}
-
-GtkWidget* CamWnd_getWidget (CamWnd& camwnd)
-{
-	return camwnd.m_gl_widget;
-}
-
 GtkWindow* CamWnd_getParent (CamWnd& camwnd)
 {
 	return camwnd.m_parent;
-}
-
-ToggleShown g_camera_shown(true);
-
-void CamWnd_setParent (CamWnd& camwnd, GtkWindow* parent)
-{
-	camwnd.m_parent = parent;
-	g_camera_shown.connect(GTK_WIDGET(camwnd.m_parent));
 }
 
 camwindow_globals_t g_camwindow_globals;
@@ -128,20 +111,20 @@ void GlobalCamera_ResetAngles ()
 	CamWnd& camwnd = *g_camwnd;
 	Vector3 angles;
 	angles[CAMERA_ROLL] = angles[CAMERA_PITCH] = 0;
-	angles[CAMERA_YAW] = static_cast<float> (22.5 * floor((camwnd.getAngles()[CAMERA_YAW] + 11) / 22.5));
-	camwnd.setAngles(angles);
+	angles[CAMERA_YAW] = static_cast<float> (22.5 * floor((camwnd.getCameraAngles()[CAMERA_YAW] + 11) / 22.5));
+	camwnd.setCameraAngles(angles);
 }
 
 void Camera_ChangeFloorUp ()
 {
 	CamWnd& camwnd = *g_camwnd;
-	camwnd.Cam_ChangeFloor(true);
+	camwnd.changeFloor(true);
 }
 
 void Camera_ChangeFloorDown ()
 {
 	CamWnd& camwnd = *g_camwnd;
-	camwnd.Cam_ChangeFloor(false);
+	camwnd.changeFloor(false);
 }
 
 void Camera_CubeIn ()
@@ -222,16 +205,6 @@ void CamWnd_SetMode (camera_draw_mode mode)
 	}
 }
 
-class CameraModel
-{
-	public:
-		STRING_CONSTANT(Name, "CameraModel");
-		virtual ~CameraModel ()
-		{
-		}
-		virtual void setCameraView (CameraView* view, const Callback& disconnect) = 0;
-};
-
 static CameraModel* g_camera_model = 0;
 
 void CamWnd_LookThroughCamera (CamWnd& camwnd)
@@ -246,11 +219,6 @@ void CamWnd_LookThroughCamera (CamWnd& camwnd)
 	}
 }
 
-inline CameraModel* Instance_getCameraModel (scene::Instance& instance)
-{
-	return dynamic_cast<CameraModel*> (&instance);
-}
-
 void CamWnd_LookThroughSelected (CamWnd& camwnd)
 {
 	if (g_camera_model != 0) {
@@ -263,7 +231,7 @@ void CamWnd_LookThroughSelected (CamWnd& camwnd)
 		if (cameraModel != 0) {
 			camwnd.removeHandlersMove();
 			g_camera_model = cameraModel;
-			g_camera_model->setCameraView(&camwnd.getCameraView(), ReferenceCaller<CamWnd, CamWnd_LookThroughCamera> (
+			g_camera_model->setCameraView(camwnd.getCameraView(), ReferenceCaller<CamWnd, CamWnd_LookThroughCamera> (
 					camwnd));
 		}
 	}
@@ -421,8 +389,9 @@ void CamWnd_Construct ()
 	GlobalRadiant().commandInsert("UpFloor", FreeCaller<Camera_ChangeFloorUp> (), Accelerator(GDK_Prior));
 	GlobalRadiant().commandInsert("DownFloor", FreeCaller<Camera_ChangeFloorDown> (), Accelerator(GDK_Next));
 
-	GlobalToggles_insert("ToggleCamera", ToggleShown::ToggleCaller(g_camera_shown), ToggleItem::AddCallbackCaller(
-			g_camera_shown.m_item), Accelerator('C', (GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
+	GlobalToggles_insert("ToggleCamera", ToggleShown::ToggleCaller(GlobalCamera().getToggleShown()),
+			ToggleItem::AddCallbackCaller(GlobalCamera().getToggleShown().m_item), Accelerator('C',
+					(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 	GlobalCommands_insert("LookThroughSelected", FreeCaller<GlobalCamera_LookThroughSelected> ());
 	GlobalCommands_insert("LookThroughCamera", FreeCaller<GlobalCamera_LookThroughCamera> ());
 
@@ -480,11 +449,11 @@ void CamWnd_Construct ()
 			g_camwindow_globals_private.m_nStrafeMode),
 			IntExportStringCaller(g_camwindow_globals_private.m_nStrafeMode));
 
-	CamWnd_constructStatic();
+	CamWnd::captureStates();
 
 	Camera_registerPreferencesPage();
 }
 void CamWnd_Destroy ()
 {
-	CamWnd_destroyStatic();
+	CamWnd::releaseStates();
 }

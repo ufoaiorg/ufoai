@@ -38,7 +38,7 @@
 #include "ifilesystem.h"
 #include "archivelib.h"
 #include "script/scripttokeniser.h"
-#include "../camera/camwindow.h"
+#include "../camera/CamWnd.h"
 #include "../material.h"
 
 namespace sidebar
@@ -428,7 +428,7 @@ namespace sidebar
 				Map_ImportFile(fileName);
 				GlobalMaterialSystem()->importMaterialFile(os::stripExtension(fileName) + ".mat");
 				g_free(text);
-				gtk_widget_grab_focus(CamWnd_getWidget(*g_pParentWnd->GetCamWnd()));
+				gtk_widget_grab_focus(g_pParentWnd->GetCamWnd()->getWidget());
 				return TRUE;
 			}
 		}
