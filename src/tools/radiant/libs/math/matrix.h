@@ -638,17 +638,6 @@ inline void matrix4_transform_vector4 (const Matrix4& self, Vector4& vector4)
 	vector4 = matrix4_transformed_vector4(self, vector4);
 }
 
-/// \brief Transposes \p self in-place.
-inline void matrix4_transpose (Matrix4& self)
-{
-	std::swap(self.xy(), self.yx());
-	std::swap(self.xz(), self.zx());
-	std::swap(self.xw(), self.tx());
-	std::swap(self.yz(), self.zy());
-	std::swap(self.yw(), self.ty());
-	std::swap(self.zw(), self.tz());
-}
-
 /// \brief Inverts an affine transform in-place.
 /// Adapted from Graphics Gems 2.
 inline Matrix4 matrix4_affine_inverse (const Matrix4& self)

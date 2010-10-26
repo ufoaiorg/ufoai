@@ -121,36 +121,6 @@ void Normal_GetTransform (const Vector3& normal, Matrix4& transform)
 	transform[15] = 1;
 }
 
-/*!
- \brief Construct a transform in ST space from the texdef.
- Transforms constructed from quake's texdef format are (-shift)*(1/scale)*(-rotate) with x translation sign flipped.
- This would really make more sense if it was inverseof(shift*rotate*scale).. oh well.
- */
-inline void Texdef_toTransform (const TexDef& texdef, float width, float height, Matrix4& transform)
-{
-	double inverse_scale[2];
-
-	// transform to texdef shift/scale/rotate
-	inverse_scale[0] = 1 / (texdef.scale[0] * width);
-	inverse_scale[1] = 1 / (texdef.scale[1] * -height);
-	transform[12] = texdef.shift[0] / width;
-	transform[13] = -texdef.shift[1] / -height;
-	double c = cos(degrees_to_radians(-texdef.rotate));
-	double s = sin(degrees_to_radians(-texdef.rotate));
-	transform[0] = static_cast<float> (c * inverse_scale[0]);
-	transform[1] = static_cast<float> (s * inverse_scale[1]);
-	transform[4] = static_cast<float> (-s * inverse_scale[0]);
-	transform[5] = static_cast<float> (c * inverse_scale[1]);
-	transform[2] = transform[3] = transform[6] = transform[7] = transform[8] = transform[9] = transform[11]
-			= transform[14] = 0;
-	transform[10] = transform[15] = 1;
-}
-
-inline void Texdef_toTransform (const TextureProjection& projection, float width, float height, Matrix4& transform)
-{
-	Texdef_toTransform(projection.m_texdef, width, height, transform);
-}
-
 inline void Texdef_fromTransform (TexDef& texdef, float width, float height, const Matrix4& transform)
 {
 	texdef.scale[0] = static_cast<float> ((1.0 / Vector2(transform[0], transform[4]).getLength()) / width);
@@ -211,8 +181,7 @@ void Texdef_EmitTextureCoordinates (const TextureProjection& projection, std::si
 		return;
 	}
 
-	Matrix4 local2tex;
-	Texdef_toTransform(projection, (float) width, (float) height, local2tex);
+	Matrix4 local2tex = projection.m_texdef.getTransform((float) width, (float) height);
 
 	{
 		Matrix4 xyz2st;
@@ -294,8 +263,7 @@ void Texdef_FitTexture (TextureProjection& projection, std::size_t width, std::s
 		return;
 	}
 
-	Matrix4 st2tex;
-	Texdef_toTransform(projection, (float) width, (float) height, st2tex);
+	Matrix4 st2tex = projection.m_texdef.getTransform((float) width, (float) height);
 
 	// the current texture transform
 	Matrix4 local2tex = st2tex;
@@ -450,8 +418,7 @@ void Texdef_transformLocked (TextureProjection& projection, std::size_t width, s
 
 	Vector3 transformedProjectionAxis(stTransformed2identity.z().getVector3());
 
-	Matrix4 stIdentity2stOriginal;
-	Texdef_toTransform(projection, (float) width, (float) height, stIdentity2stOriginal);
+	Matrix4 stIdentity2stOriginal = projection.m_texdef.getTransform((float) width, (float) height);
 	Matrix4 identity2stOriginal(matrix4_multiplied_by_matrix4(stIdentity2stOriginal, identity2stIdentity));
 
 	double dot = originalProjectionAxis.dot(transformedProjectionAxis);
