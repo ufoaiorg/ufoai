@@ -33,6 +33,8 @@
 #include "gtkutil/messagebox.h"
 #include "gtkutil/filechooser.h"
 
+// this is very evil, but right now there is no better way
+#include "../../radiant/brush/TexDef.h"
 #include "ibrush.h"
 #include "iscenegraph.h"
 #include "iselection.h"

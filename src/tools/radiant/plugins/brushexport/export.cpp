@@ -1,6 +1,5 @@
 #include "export.h"
 #include "debugging/debugging.h"
-#include "ibrush.h"
 #include "iscenegraph.h"
 #include "iselection.h"
 #include "stream/stringstream.h"
@@ -10,6 +9,7 @@
 #include <map>
 
 // this is very evil, but right now there is no better way
+#include "../../radiant/brush/TexDef.h"
 #include "../../radiant/brush/brush.h"
 
 /*
