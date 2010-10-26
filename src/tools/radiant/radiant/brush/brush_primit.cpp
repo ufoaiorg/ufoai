@@ -124,8 +124,8 @@ void Normal_GetTransform (const Vector3& normal, Matrix4& transform)
 inline void Texdef_normalise (TexDef& texdef, float width, float height)
 {
 	// it may be useful to also normalise the rotation here, if this function is used elsewhere.
-	texdef.shift[0] = float_mod(texdef.shift[0], width);
-	texdef.shift[1] = float_mod(texdef.shift[1], height);
+	texdef._shift[0] = float_mod(texdef._shift[0], width);
+	texdef._shift[1] = float_mod(texdef._shift[1], height);
 }
 
 /// \brief Normalise \p projection for a given texture \p width and \p height.
@@ -180,20 +180,20 @@ void Texdef_Assign (TexDef& td, const TexDef& other)
 
 void Texdef_Shift (TexDef& td, float s, float t)
 {
-	td.shift[0] += s;
-	td.shift[1] += t;
+	td._shift[0] += s;
+	td._shift[1] += t;
 }
 
 void Texdef_Scale (TexDef& td, float s, float t)
 {
-	td.scale[0] += s;
-	td.scale[1] += t;
+	td._scale[0] += s;
+	td._scale[1] += t;
 }
 
 void Texdef_Rotate (TexDef& td, float angle)
 {
-	td.rotate += angle;
-	td.rotate = static_cast<float> (float_to_integer(td.rotate) % 360);
+	td._rotate += angle;
+	td._rotate = static_cast<float> (float_to_integer(td._rotate) % 360);
 }
 
 template<typename Element>
@@ -272,11 +272,11 @@ float Texdef_getDefaultTextureScale ()
 
 void TexDef_Construct_Default (TextureProjection& projection)
 {
-	projection.m_texdef.scale[0] = Texdef_getDefaultTextureScale();
-	projection.m_texdef.scale[1] = Texdef_getDefaultTextureScale();
-	projection.m_texdef.shift[0] = 0;
-	projection.m_texdef.shift[1] = 0;
-	projection.m_texdef.rotate = 0;
+	projection.m_texdef._scale[0] = Texdef_getDefaultTextureScale();
+	projection.m_texdef._scale[1] = Texdef_getDefaultTextureScale();
+	projection.m_texdef._shift[0] = 0;
+	projection.m_texdef._shift[1] = 0;
+	projection.m_texdef._rotate = 0;
 }
 
 void ShiftScaleRotate_fromFace (TexDef& shiftScaleRotate, const TextureProjection& projection)

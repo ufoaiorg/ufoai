@@ -53,11 +53,11 @@ class UFOFaceTokenImporter
 		bool importTextureDefinition (FaceTexdef& texdef, Tokeniser& tokeniser)
 		{
 			ASSERT_MESSAGE(texdef.m_projection.m_texdef.isSane(), "FaceTexdef_importTokens: bad texdef");
-			return Tokeniser_getFloat(tokeniser, texdef.m_projection.m_texdef.shift[0]) && Tokeniser_getFloat(
-					tokeniser, texdef.m_projection.m_texdef.shift[1]) && Tokeniser_getFloat(tokeniser,
-					texdef.m_projection.m_texdef.rotate) && Tokeniser_getFloat(tokeniser,
-					texdef.m_projection.m_texdef.scale[0]) && Tokeniser_getFloat(tokeniser,
-					texdef.m_projection.m_texdef.scale[1]);
+			return Tokeniser_getFloat(tokeniser, texdef.m_projection.m_texdef._shift[0]) && Tokeniser_getFloat(
+					tokeniser, texdef.m_projection.m_texdef._shift[1]) && Tokeniser_getFloat(tokeniser,
+					texdef.m_projection.m_texdef._rotate) && Tokeniser_getFloat(tokeniser,
+					texdef.m_projection.m_texdef._scale[0]) && Tokeniser_getFloat(tokeniser,
+					texdef.m_projection.m_texdef._scale[1]);
 
 		}
 
@@ -154,11 +154,11 @@ class UFOFaceTokenExporter
 		{
 			ASSERT_MESSAGE(faceTexdef.m_projection.m_texdef.isSane(), "FaceTexdef_exportTokens: bad texdef");
 			// write texdef
-			writer.writeFloat(faceTexdef.m_projection.m_texdef.shift[0]);
-			writer.writeFloat(faceTexdef.m_projection.m_texdef.shift[1]);
-			writer.writeFloat(faceTexdef.m_projection.m_texdef.rotate);
-			writer.writeFloat(faceTexdef.m_projection.m_texdef.scale[0]);
-			writer.writeFloat(faceTexdef.m_projection.m_texdef.scale[1]);
+			writer.writeFloat(faceTexdef.m_projection.m_texdef._shift[0]);
+			writer.writeFloat(faceTexdef.m_projection.m_texdef._shift[1]);
+			writer.writeFloat(faceTexdef.m_projection.m_texdef._rotate);
+			writer.writeFloat(faceTexdef.m_projection.m_texdef._scale[0]);
+			writer.writeFloat(faceTexdef.m_projection.m_texdef._scale[1]);
 		}
 
 		/**
