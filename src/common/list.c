@@ -328,12 +328,11 @@ void *LIST_GetLast (linkedList_t *list)
 void *LIST_GetByIdx (linkedList_t *list, int index)
 {
 	int i;
-	const int count = LIST_Count(list);
 
-	if (!count || !list)
+	if (LIST_IsEmpty(list))
 		return NULL;
 
-	if (index >= count || index < 0)
+	if (index < 0)
 		return NULL;
 
 	i = 0;
