@@ -26,7 +26,7 @@ const unsigned int MOVE_PITCHUP = 1 << 8;
 const unsigned int MOVE_PITCHDOWN = 1 << 9;
 const unsigned int MOVE_ALL = MOVE_FORWARD|MOVE_BACK|MOVE_ROTRIGHT|MOVE_ROTLEFT|MOVE_STRAFERIGHT|MOVE_STRAFELEFT|MOVE_UP|MOVE_DOWN|MOVE_PITCHUP|MOVE_PITCHDOWN;
 
-enum camera_draw_mode {
+enum CameraDrawMode {
   cd_wire,
   cd_solid,
   cd_texture,
@@ -68,11 +68,11 @@ public:
   View* m_view;
   Callback m_update;
 
-  static camera_draw_mode draw_mode;
+  static CameraDrawMode draw_mode;
 
   Camera(View* view, const Callback& update);
 
-  static void setDrawMode(camera_draw_mode mode);
+  static void setDrawMode(CameraDrawMode mode);
 
   void keyControl(float dtime);
   void setMovementFlags(unsigned int mask);

@@ -23,14 +23,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define INCLUDED_CAMWINDOW_H
 
 #include "math/Vector3.h"
-#include "signal/signalfwd.h"
 
 #include "Camera.h"
-
-typedef struct _GtkWidget GtkWidget;
-typedef struct _GtkWindow GtkWindow;
-
-void AddCameraMovedCallback(const SignalHandler& handler);
 
 typedef struct _GtkMenu GtkMenu;
 typedef struct _GtkToolbar GtkToolbar;
@@ -39,7 +33,6 @@ void CamWnd_registerShortcuts();
 
 void GlobalCamera_Benchmark();
 
-bool Camera_GetFarClip ();
 void Camera_SetFarClip (bool value);
 
 struct camwindow_globals_t {

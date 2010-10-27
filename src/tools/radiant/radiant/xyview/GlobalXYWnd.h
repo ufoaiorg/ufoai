@@ -35,6 +35,7 @@
 #include <gtk/gtkmenuitem.h>
 #include "../selection/RadiantWindowObserver.h"
 #include "EventLib.h"
+#include "../camera/CameraObserver.h"
 
 // Constants
 const int XYWND_MINSIZE_X = 200;
@@ -50,7 +51,7 @@ namespace scene
 typedef struct _GtkWindow GtkWindow;
 typedef struct _GtkMenu GtkMenu;
 
-class XYWnd
+class XYWnd: public CameraObserver
 {
 		gtkutil::GLWidget _glWidget;
 		GtkWidget* m_gl_widget;
@@ -236,6 +237,9 @@ class XYWnd
 		// The method handling the different mouseDown situations
 		void mouseDown(int x, int y, GdkEventButton* event);
 		typedef Member3<XYWnd, int, int, GdkEventButton*, void, &XYWnd::mouseDown> MouseDownCaller;
+
+		// greebo: CameraObserver implementation; gets called when the camera is moved
+		void cameraMoved();
 }; // class XYWnd
 
 struct xywindow_globals_t

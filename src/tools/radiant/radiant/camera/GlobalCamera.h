@@ -1,10 +1,12 @@
 #ifndef GLOBALCAMERA_H_
 #define GLOBALCAMERA_H_
 
+#include <list>
 #include "icamera.h"
 #include "gtkutil/widget.h"
 
 #include "CamWnd.h"
+#include "CameraObserver.h"
 
 /* greebo: This is the gateway class to access the currently active CamWindow
  *
@@ -23,6 +25,9 @@ class GlobalCameraManager
 		CameraModel* _cameraModel;
 
 		ToggleShown _cameraShown;
+
+		// The connected callbacks (get invoked when movedNotify() is called)
+		CameraObserverList _cameraObservers;
 
 	public:
 
@@ -65,13 +70,14 @@ class GlobalCameraManager
 		void benchmark ();
 		void update ();
 
+		// Add a "CameraMoved" callback to the signal member
+		void addCameraObserver(CameraObserver* observer);
+
+		// Notify the attached "CameraMoved" callbacks
+		void movedNotify();
 }; // class GlobalCameraManager
 
-// The accessor function to the GlobalCameraManager instance
-inline GlobalCameraManager& GlobalCamera ()
-{
-	static GlobalCameraManager _cameraManager;
-	return _cameraManager;
-}
+// The accessor function that contains the static instance of the GlobalCameraManager class
+GlobalCameraManager& GlobalCamera();
 
 #endif /*GLOBALCAMERA_H_*/

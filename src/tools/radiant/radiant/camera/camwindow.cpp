@@ -38,7 +38,6 @@
 #include "renderable.h"
 #include "preferencesystem.h"
 
-#include "signal/signal.h"
 #include "container/array.h"
 #include "scenelib.h"
 #include "render.h"
@@ -59,7 +58,6 @@
 #include "../windowobservers.h"
 #include "../ui/Icons.h"
 #include "../render/RenderStatistics.h"
-#include "../timer.h"
 #include "CamRenderer.h"
 #include "../ui/eventmapper/EventMapper.h"
 

@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 #include "iregistry.h"
-#include "CamWnd.h"
+#include "GlobalCamera.h"
 #include "CameraSettings.h"
 
 Camera::Camera(View* view, const Callback& update)
@@ -93,7 +93,7 @@ void Camera::keyMove() {
   keyControl(time_seconds * 5.0f);
 
   m_update();
-  CameraMovedNotify();
+  GlobalCamera().movedNotify();
 }
 
 void Camera::updateModelview() {
@@ -129,7 +129,7 @@ void Camera::mouseMove(int x, int y) {
   //globalOutputStream() << "mousemove... ";
   freeMove(-x, -y);
   m_update();
-  CameraMovedNotify();
+  GlobalCamera().movedNotify();
 }
 
 void Camera::freeMove(int dx, int dy) {
@@ -208,7 +208,7 @@ void Camera::setAngles(const Vector3& newAngles) {
   angles = newAngles;
   updateModelview();
   m_update();
-  CameraMovedNotify();
+  GlobalCamera().movedNotify();
 }
 
 const Vector3& Camera::getAngles() {
@@ -219,7 +219,7 @@ void Camera::setOrigin(const Vector3& newOrigin) {
   origin = newOrigin;
   updateModelview();
   m_update();
-  CameraMovedNotify();
+  GlobalCamera().movedNotify();
 }
 
 const Vector3& Camera::getOrigin() {
@@ -323,8 +323,8 @@ void Camera::rotateRightDiscrete() {
   setAngles(angles);
 }
 
-void Camera::setDrawMode(camera_draw_mode mode) {
+void Camera::setDrawMode(CameraDrawMode mode) {
 	draw_mode = mode;
 }
 
-camera_draw_mode Camera::draw_mode = cd_texture;
+CameraDrawMode Camera::draw_mode = cd_texture;

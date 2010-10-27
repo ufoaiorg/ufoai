@@ -72,7 +72,7 @@
 #include "../ui/ortho/OrthoContextMenu.h"
 #include "XYRenderer.h"
 #include "../selection/SelectionBox.h"
-#include "../camera/CamWnd.h"
+#include "../camera/GlobalCamera.h"
 
 void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHeight);
 
@@ -423,7 +423,7 @@ XYWnd::XYWnd () :
 	updateModelview();
 
 	AddSceneChangeCallback(MemberCaller<XYWnd, &XYWnd::queueDraw> (*this));
-	AddCameraMovedCallback(MemberCaller<XYWnd, &XYWnd::CameraMoved> (*this));
+	GlobalCamera().addCameraObserver(this);
 
 	PressedButtons_connect(g_pressedButtons, m_gl_widget);
 
@@ -555,6 +555,14 @@ static void XYWnd_OrientCamera (XYWnd* xywnd, int x, int y, CamWnd& camwnd)
 		Vector3 angles(camwnd.getCameraAngles());
 		angles[nAngle] = static_cast<float> (radians_to_degrees(atan2(point[n1], point[n2])));
 		camwnd.setCameraAngles(angles);
+	}
+}
+
+// Callback that gets invoked on camera move
+void XYWnd::cameraMoved ()
+{
+	if (g_xywindow_globals_private.m_bCamXYUpdate) {
+		queueDraw();
 	}
 }
 
