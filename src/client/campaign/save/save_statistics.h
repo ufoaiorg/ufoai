@@ -46,16 +46,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SAVE_STATS_UFOSSTORED "UFOsStored"
 #define SAVE_STATS_AIRCRAFTHAD "aircraftHad"
 
-#define SAVE_STATS_EMPLOYEEHAD "employeeHad"
-#define SAVE_STATS_EMPLOYEETYPE "employeeType"
-#define SAVE_STATS_EMPLOYEECOUNT "employeeCount"
-
 #endif
 
 /*
 DTD:
 
-<!ELEMENT stats employeeHad*>
+<!ELEMENT stats EMPTY>
 <!ATTLIST stats
 	missions					CDATA	'0'
 	missionsWon					CDATA	'0'
@@ -75,12 +71,5 @@ DTD:
 	alienBasesBuilt				CDATA	'0'
 	UFOsStored					CDATA	'0'
 	aircraftHad					CDATA	'0'
->
-
-<!ELEMENT employeeHad EMPTY>
-<!ATTLIST employeeHad
-	employeeType	(soldier|scientist|
-					worker|robot|pilot)	#REQUIRED
-	employeeCount				CDATA	'0'
 >
 */

@@ -237,7 +237,7 @@ void AIR_ListAircraft_f (void)
 					Com_Printf("...electronics slot %i is empty\n", k);
 			}
 			if (aircraft->pilot) {
-				Com_Printf("...pilot: idx: %i name: %s\n", aircraft->pilot->idx, aircraft->pilot->chr.name);
+				Com_Printf("...pilot: ucn: %i name: %s\n", aircraft->pilot->chr.ucn, aircraft->pilot->chr.name);
 			} else {
 				Com_Printf("...no pilot assigned\n");
 			}
@@ -259,12 +259,7 @@ void AIR_ListAircraft_f (void)
 			Com_Printf("...team: (%i/%i)\n", LIST_Count(aircraft->acTeam), aircraft->maxTeamSize);
 			for (l = aircraft->acTeam; l != NULL; l = l->next) {
 				const employee_t const *employee = (const employee_t *)l->data;
-				const character_t *chr = &employee->chr;
-				Com_Printf("......idx (in global array): %i\n", employee->idx);
-				if (chr)
-					Com_Printf(".........name: %s\n", chr->name);
-				else
-					Com_Printf(".........ERROR: Could not get character for employee %i\n", employee->idx);
+				Com_Printf(".........name: %s (ucn: %i)\n", employee->chr.name, employee->chr.ucn);
 			}
 		}
 	}
@@ -2279,7 +2274,7 @@ employee_t* AIR_GetPilot (const aircraft_t *aircraft)
 	if (!e)
 		return NULL;
 
-	return E_GetEmployee(e->baseHired, e->type, e->idx);
+	return E_GetEmployeeByTypeFromChrUCN(e->type, e->chr.ucn);
 }
 
 /**
@@ -3219,7 +3214,7 @@ void AIM_AddEmployeeFromMenu (aircraft_t *aircraft, const int num)
 	if (!employee)
 		Com_Error(ERR_DROP, "AIM_AddEmployeeFromMenu: Could not get employee %i", num);
 
-	Com_DPrintf(DEBUG_CLIENT, "AIM_AddEmployeeFromMenu: employee with idx %i selected\n", employee->idx);
+	Com_DPrintf(DEBUG_CLIENT, "AIM_AddEmployeeFromMenu: employee with ucn %i selected\n", employee->chr.ucn);
 
 	assert(aircraft);
 

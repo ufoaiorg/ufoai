@@ -527,12 +527,12 @@ static void TR_ListTransfers_f (void)
 				while ((employee = TR_GetNextEmployee(transfer, emplType, employee)) != NULL) {
 					if (employee->ugv) {
 						/** @todo: improve ugv listing when they're implemented */
-						Com_Printf("......ugv: %s [idx: %i]\n", employee->ugv->id, employee->idx);
+						Com_Printf("......ugv: %s [ucn: %i]\n", employee->ugv->id, employee->chr.ucn);
 					} else {
-						Com_Printf("......%s (%s) / %s [idx: %i ucn: %i]\n", employee->chr.name,
+						Com_Printf("......%s (%s) / %s [ucn: %i]\n", employee->chr.name,
 							E_GetEmployeeString(employee->type),
 							(employee->nation) ? employee->nation->id : "(nonation)",
-							employee->idx, employee->chr.ucn);
+							employee->chr.ucn);
 						if (!E_IsHired(employee))
 							Com_Printf("Warning: employee^ not hired!\n");
 						if (!employee->transfer)

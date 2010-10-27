@@ -429,8 +429,7 @@ static void CL_TeamListDebug_f (void)
 	Com_Printf("%i members in the current team", AIR_GetTeamSize(aircraft));
 	for (l = aircraft->acTeam; l != NULL; l = l->next) {
 		const employee_t *employee = (const employee_t *)l->data;
-		const character_t *chr = &employee->chr;
-		Com_Printf("ucn %i - employee->idx: %i\n", chr->ucn, employee->idx);
+		Com_Printf("ucn %i - name: %s\n", employee->chr.ucn, employee->chr.name);
 	}
 }
 #endif

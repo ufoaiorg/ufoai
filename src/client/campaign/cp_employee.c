@@ -90,6 +90,23 @@ employee_t* E_GetNextHired (employeeType_t type, employee_t *lastEmployee)
 }
 
 /**
+ * @brief Iterates through unhired employees
+ * @param[in] type Employee type to look for
+ * @param[in] lastEmployee Pointer of the employee to iterate from. call with NULL to get the first one.
+ * @sa employeeType_t
+ */
+employee_t* E_GetNextUnhired (employeeType_t type, employee_t *lastEmployee)
+{
+	employee_t* employee = lastEmployee;
+
+	while ((employee = E_GetNext(type, employee)) != NULL) {
+		if (!E_IsHired(employee))
+			break;
+	}
+	return employee;
+}
+
+/**
  * @brief Tells you if a employee is away from his home base (gone in mission).
  * @param[in] employee Pointer to the employee.
  * @return qboolean qtrue if the employee is away in mission, qfalse if he is not or he is unhired.
@@ -279,89 +296,6 @@ void E_ResetEmployees (void)
 	Com_DPrintf(DEBUG_CLIENT, "E_ResetEmployees: Delete all employees\n");
 	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++)
 		LIST_Delete(&ccs.employees[i]);
-}
-
-/**
- * @brief Return a given employee pointer of a given type. Also
- * returns those employees, that are not yet hired.
- * @param[in] type Which employee type do we search.
- * @param[in] idx Which employee id (in global employee list)
- * @return employee_t pointer or NULL
- */
-employee_t* E_GetEmployeeByIDX (employeeType_t type, int idx)
-{
-	employee_t *employee;
-
-	if (type >= MAX_EMPL || idx < 0)
-		return NULL;
-
-	employee = NULL;
-	while ((employee = E_GetNext(type, employee)) != NULL) {
-		if (employee->idx == idx)
-			return employee;
-	}
-
-	return NULL;
-}
-
-/**
- * @brief Return a given employee pointer in the given base of a given type.
- * @param[in] base Which base the employee should be hired in.
- * @param[in] type Which employee type do we search.
- * @param[in] idx Which employee id (in global employee list)
- * @return employee_t pointer or NULL
- */
-employee_t* E_GetEmployee (const base_t* const base, employeeType_t type, int idx)
-{
-	employee_t *employee;
-
-	if (!base || type >= MAX_EMPL || idx < 0)
-		return NULL;
-
-	employee = NULL;
-	while ((employee = E_GetNext(type, employee)) != NULL) {
-		if (employee->idx == idx && (!E_IsHired(employee) || E_IsInBase(employee, base)))
-			return employee;
-	}
-
-	return NULL;
-}
-
-/**
- * @brief Return a given "not hired" employee pointer in the given base of a given type.
- * @param[in] type Which employee type to search for.
- * @param[in] idx Which employee id (in global employee array). Use -1, -2, etc.. to return the first/ second, etc... "unhired" employee.
- * @return employee_t pointer or NULL
- * @sa E_GetHiredEmployee
- * @sa E_UnhireEmployee
- * @sa E_HireEmployee
- */
-static employee_t* E_GetUnhiredEmployee (employeeType_t type, int idx)
-{
-	int j = -1;	/* The number of found unhired employees. Ignore the minus. */
-	employee_t *employee;
-
-	if (type >= MAX_EMPL) {
-		Com_Printf("E_GetUnhiredEmployee: Unknown EmployeeType: %i\n", type);
-		return NULL;
-	}
-
-	employee = NULL;
-	while ((employee = E_GetNext(type, employee)) != NULL) {
-		if (employee->idx == idx) {
-			if (E_IsHired(employee)) {
-				Com_Printf("E_GetUnhiredEmployee: Warning: employee is already hired!\n");
-				return NULL;
-			}
-			return employee;
-		} else if (idx < 0 && !E_IsHired(employee)) {
-			if (idx == j)
-				return employee;
-			j--;
-		}
-	}
-	Com_Printf("Could not get unhired employee with index: %i of type %i (available: %i)\n", idx, type, E_CountByType(type));
-	return NULL;
 }
 
 /**
@@ -555,7 +489,7 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
  */
 qboolean E_HireEmployeeByType (base_t* base, employeeType_t type)
 {
-	employee_t* employee = E_GetUnhiredEmployee(type, -1);
+	employee_t* employee = E_GetNextUnhired(type, NULL);
 	return employee ? E_HireEmployee(base, employee) : qfalse;
 }
 
@@ -672,7 +606,6 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
 
 	memset(&employee, 0, sizeof(employee));
 
-	employee.idx = ccs.campaignStats.employeeHad[type];
 	employee.baseHired = NULL;
 	employee.assigned = qfalse;
 	employee.type = type;
@@ -715,8 +648,6 @@ employee_t* E_CreateEmployee (employeeType_t type, const nation_t *nation, const
 	employee.chr.score.rank = CL_GetRankIdx(rank);
 
 	Com_DPrintf(DEBUG_CLIENT, "Generate character for type: %i\n", type);
-
-	ccs.campaignStats.employeeHad[type]++;
 
 	return (employee_t*) LIST_Add(&ccs.employees[type], (void*) &employee, sizeof(employee))->data;
 }
@@ -1106,7 +1037,7 @@ static void E_ListHired_f (void)
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 		employee_t *employee = NULL;
 		while ((employee = E_GetNextHired(emplType, employee)) != NULL) {
-			Com_Printf("Employee: %s (idx: %i) %s at %s\n", E_GetEmployeeString(employee->type), employee->idx,
+			Com_Printf("Employee: %s (ucn: %i) %s at %s\n", E_GetEmployeeString(employee->type), employee->chr.ucn,
 					employee->chr.name, employee->baseHired->name);
 			if (employee->type != emplType)
 				Com_Printf("Warning: EmployeeType mismatch: %i != %i\n", emplType, employee->type);
@@ -1128,20 +1059,33 @@ void E_InitStartup (void)
 }
 
 /**
+ * @brief Searches employee from a type for the ucn (character id)
+ * @param[in] type employee type
+ * @param[in] uniqueCharacterNumber unique character number (UCN)
+ */
+employee_t* E_GetEmployeeByTypeFromChrUCN (employeeType_t type, int uniqueCharacterNumber)
+{
+	employee_t *employee = NULL;
+	while ((employee = E_GetNext(type, employee)) != NULL) {
+		if (employee->chr.ucn == uniqueCharacterNumber)
+			return employee;
+	}
+
+	return NULL;
+}
+
+/**
  * @brief Searches all employee for the ucn (character id)
  * @param[in] uniqueCharacterNumber unique character number (UCN)
  */
 employee_t* E_GetEmployeeFromChrUCN (int uniqueCharacterNumber)
 {
-	int j;
+	employeeType_t emplType;
 
-	/* MAX_EMPLOYEES and not numWholeTeam - maybe some other soldier died */
-	for (j = 0; j < MAX_EMPL; j++) {
-		employee_t *employee = NULL;
-		while ((employee = E_GetNext(j, employee)) != NULL) {
-			if (employee->chr.ucn == uniqueCharacterNumber)
-				return employee;
-		}
+	for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++) {
+		employee_t *employee = E_GetEmployeeByTypeFromChrUCN(emplType, uniqueCharacterNumber);
+		if (employee)
+			return employee;
 	}
 
 	return NULL;
@@ -1172,7 +1116,6 @@ qboolean E_SaveXML (mxml_node_t *p)
 			mxml_node_t *ssnode = mxml_AddNode(snode, SAVE_EMPLOYEE_EMPLOYEE);
 
 			/** @note e->transfer is not saved here because it'll be restored via TR_Load. */
-			mxml_AddInt(ssnode, SAVE_EMPLOYEE_IDX, employee->idx);
 			if (employee->baseHired)
 				mxml_AddInt(ssnode, SAVE_EMPLOYEE_BASEHIRED, employee->baseHired->idx);
 			if (employee->assigned)
@@ -1223,12 +1166,6 @@ qboolean E_LoadXML (mxml_node_t *p)
 
 			memset(&e, 0, sizeof(e));
 			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
-			e.idx = mxml_GetInt(ssnode, SAVE_EMPLOYEE_IDX, MAX_EMPLOYEES);
-			if (e.idx >= MAX_EMPLOYEES) {
-				Com_Printf("Invalid employeeIDX\n");
-				success = qfalse;
-				break;
-			}
 			e.type = emplType;
 			/* base */
 			assert(B_AtLeastOneExists());	/* Just in case the order is ever changed. */

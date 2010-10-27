@@ -205,21 +205,27 @@ void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
  */
 void CL_CleanTempInventory (base_t* base)
 {
-	int i, k;
+	employee_t *employee;
 
-	for (i = 0; i < MAX_EMPLOYEES; i++)
-		for (k = 0; k < csi.numIDs; k++)
-			if (INVDEF(k)->temp) {
-				employee_t *employee;
-				/* idFloor and idEquip are temp */
+	employee = NULL;
+	while ((employee = E_GetNext(EMPL_SOLDIER, employee)) != NULL) {
+		int k;
+		for (k = 0; k < csi.numIDs; k++) {
+			/* idFloor and idEquip are temp */
+			if (INVDEF(k)->temp)
+				employee->chr.i.c[k] = NULL;
+		}
+	}
 
-				employee = E_GetEmployeeByIDX(EMPL_SOLDIER, i);
-				if (employee)
-					employee->chr.i.c[k] = NULL;
-				employee = E_GetEmployeeByIDX(EMPL_ROBOT, i);
-				if (employee)
-					employee->chr.i.c[k] = NULL;
-			}
+	employee = NULL;
+	while ((employee = E_GetNext(EMPL_ROBOT, employee)) != NULL) {
+		int k;
+		for (k = 0; k < csi.numIDs; k++) {
+			/* idFloor and idEquip are temp */
+			if (INVDEF(k)->temp)
+				employee->chr.i.c[k] = NULL;
+		}
+	}
 
 	if (!base)
 		return;

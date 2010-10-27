@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_campaign.h"
 #include "cp_xvi.h"
 #include "save/save_statistics.h"
-#include "save/save_employee.h"
 
 #define MAX_STATS_BUFFER 2048
 /**
@@ -155,7 +154,6 @@ void CL_StatsUpdate_f (void)
 qboolean STATS_SaveXML (mxml_node_t *parent)
 {
 	mxml_node_t * stats;
-	employeeType_t i;
 
 	stats = mxml_AddNode(parent, SAVE_STATS_STATS);
 
@@ -179,15 +177,6 @@ qboolean STATS_SaveXML (mxml_node_t *parent)
 	mxml_AddIntValue(stats, SAVE_STATS_UFOSSTORED, ccs.campaignStats.ufosStored);
 	mxml_AddIntValue(stats, SAVE_STATS_AIRCRAFTHAD, ccs.campaignStats.aircraftHad);
 
-	Com_RegisterConstList(saveEmployeeConstants);
-	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++) {
-		mxml_node_t *employee = mxml_AddNode(stats, SAVE_STATS_EMPLOYEEHAD);
-
-		mxml_AddString(employee, SAVE_STATS_EMPLOYEETYPE, Com_GetConstVariable(SAVE_EMPLOYEETYPE_NAMESPACE, i));
-		mxml_AddIntValue(employee, SAVE_STATS_EMPLOYEECOUNT, ccs.campaignStats.employeeHad[i]);
-	}
-	Com_UnregisterConstList(saveEmployeeConstants);
-
 	return qtrue;
 }
 
@@ -198,9 +187,7 @@ qboolean STATS_SaveXML (mxml_node_t *parent)
 qboolean STATS_LoadXML (mxml_node_t *parent)
 {
 	mxml_node_t * stats;
-	mxml_node_t *employee;
 	qboolean success = qtrue;
-	employeeType_t emplType;
 
 	stats = mxml_GetNode(parent, SAVE_STATS_STATS);
 	if (!stats) {
@@ -235,28 +222,6 @@ qboolean STATS_LoadXML (mxml_node_t *parent)
 	/* fallback for savegame compatibility */
 	if (ccs.campaignStats.aircraftHad == 0)
 		ccs.campaignStats.aircraftHad = LIST_Count(ccs.aircraft);
-
-	Com_RegisterConstList(saveEmployeeConstants);
-
-	for (employee = mxml_GetNode(stats, SAVE_STATS_EMPLOYEEHAD); employee;
-			employee = mxml_GetNextNode(employee, stats , SAVE_STATS_EMPLOYEEHAD)) {
-		const char *type = mxml_GetString(employee, SAVE_STATS_EMPLOYEETYPE);
-
-		if (!Com_GetConstIntFromNamespace(SAVE_EMPLOYEETYPE_NAMESPACE, type, (int*) &emplType)) {
-			/* disabled for savegame compatibility */
-#if 0
-			Com_Printf("Invalid employee type '%s'\n", type);
-			success = qfalse;
-#endif
-			break;
-		}
-		ccs.campaignStats.employeeHad[emplType] = mxml_GetInt(employee, SAVE_STATS_EMPLOYEECOUNT, 0);
-	}
-	/* fallback for savegame compatibility */
-	for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++)
-		if (ccs.campaignStats.employeeHad[emplType] == 0)
-			ccs.campaignStats.employeeHad[emplType] = E_CountByType(emplType);
-	Com_UnregisterConstList(saveEmployeeConstants);
 
 	/* freeing the memory below this node */
 	mxmlDelete(stats);

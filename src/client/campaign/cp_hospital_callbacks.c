@@ -80,7 +80,7 @@ static void HOS_UpdateMenu (void)
 					Q_strncpyz(rank, _(rankPtr->name), sizeof(rank));
 				} else
 					Q_strncpyz(rank, E_GetEmployeeString(employee->type), sizeof(rank));
-				Com_DPrintf(DEBUG_CLIENT, "%s idx: %i entry: %i\n", name, employee->idx, entry);
+				Com_DPrintf(DEBUG_CLIENT, "%s ucn: %i entry: %i\n", name, employee->chr.ucn, entry);
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))
 					UI_ExecuteConfunc("hospitalserious %i", entry);
