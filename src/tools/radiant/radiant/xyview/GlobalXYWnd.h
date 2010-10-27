@@ -259,7 +259,6 @@ struct xywindow_globals_t
 		Vector3 AxisColorY;
 		Vector3 AxisColorZ;
 
-		bool m_bRightClick; //! activates the context menu
 		bool m_bNoStipple;
 
 		xywindow_globals_t () :
@@ -268,7 +267,7 @@ struct xywindow_globals_t
 					0.0f, 0.0f), color_selbrushes(1.0f, 0.0f, 0.0f), color_clipper(0.0f, 0.0f, 1.0f), color_viewname(
 					0.5f, 0.0f, 0.75f), color_gridminor_alt(0.f, 0.f, 0.f), color_gridmajor_alt(0.f, 0.f, 0.f),
 
-			AxisColorX(1.f, 0.f, 0.f), AxisColorY(0.f, 1.f, 0.f), AxisColorZ(0.f, 0.f, 1.f), m_bRightClick(true),
+			AxisColorX(1.f, 0.f, 0.f), AxisColorY(0.f, 1.f, 0.f), AxisColorZ(0.f, 0.f, 1.f),
 					m_bNoStipple(false)
 		{
 		}

@@ -54,7 +54,6 @@ static void Mouse_constructPreferences (PreferencesPage& page)
 {
 	const char* buttons[] = { _("2 button"), _("3 button") };
 	page.appendRadio(_("Mouse Type"), g_glwindow_globals.m_nMouseType, STRING_ARRAY_RANGE(buttons));
-	page.appendCheckBox(_("Right Button"), _("Activates Context Menu"), g_xywindow_globals.m_bRightClick);
 }
 
 void Mouse_constructPage (PreferenceGroup& group)

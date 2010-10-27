@@ -649,9 +649,6 @@ void XYWnd_MouseToPoint (XYWnd* xywnd, int x, int y, Vector3& point)
  */
 void XYWnd::onContextMenu (void)
 {
-	if (g_xywindow_globals.m_bRightClick == false)
-		return;
-
 	// Get the click point in 3D space
 	Vector3 point = g_vector3_identity;
 	XYWnd_MouseToPoint(this, m_entityCreate_x, m_entityCreate_y, point);
@@ -2095,8 +2092,6 @@ void XYWindow_Construct ()
 			(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
 
 	// register preference settings
-	GlobalPreferenceSystem().registerPreference("NewRightClick", BoolImportStringCaller(
-			g_xywindow_globals.m_bRightClick), BoolExportStringCaller(g_xywindow_globals.m_bRightClick));
 	GlobalPreferenceSystem().registerPreference("ChaseMouse", BoolImportStringCaller(
 			g_xywindow_globals_private.m_bChaseMouse), BoolExportStringCaller(g_xywindow_globals_private.m_bChaseMouse));
 	GlobalPreferenceSystem().registerPreference("SizePainting", BoolImportStringCaller(
