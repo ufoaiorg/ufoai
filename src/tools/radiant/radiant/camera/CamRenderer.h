@@ -42,7 +42,7 @@ public:
       m_state_stack.back().m_state = state;
     }
   }
-  const EStyle getStyle() const
+  EStyle getStyle() const
   {
     return eFullMaterials;
   }
