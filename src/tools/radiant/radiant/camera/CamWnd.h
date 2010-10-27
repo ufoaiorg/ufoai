@@ -57,6 +57,9 @@ class CamWnd
 		const Vector3& getCameraAngles () const;
 		void setCameraAngles (const Vector3& origin);
 
+		void cubicScaleIn ();
+		void cubicScaleOut ();
+
 		void queueDraw ();
 		void draw ();
 		void update ();
@@ -110,16 +113,13 @@ struct camwindow_globals_private_t
 		int m_nMoveSpeed;
 		bool m_bCamLinkSpeed;
 		int m_nAngleSpeed;
-		bool m_bCamInverseMouse;
 		bool m_bLightRadius;
-		bool m_bCamDiscrete;
-		bool m_bCubicClipping;
 		bool m_showStats;
 		int m_nStrafeMode;
 
 		camwindow_globals_private_t () :
-			m_nMoveSpeed(100), m_bCamLinkSpeed(true), m_nAngleSpeed(3), m_bCamInverseMouse(false),
-					m_bLightRadius(false), m_bCamDiscrete(true), m_bCubicClipping(true), m_showStats(true),
+			m_nMoveSpeed(100), m_bCamLinkSpeed(true), m_nAngleSpeed(3),
+					m_bLightRadius(false), m_showStats(true),
 					m_nStrafeMode(0)
 		{
 		}

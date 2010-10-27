@@ -65,6 +65,7 @@
 
 #include "GlobalCamera.h"
 #include "Camera.h"
+#include "CameraSettings.h"
 
 gboolean camera_keymove (gpointer data)
 {
@@ -73,13 +74,6 @@ gboolean camera_keymove (gpointer data)
 	return TRUE;
 }
 #include "CamWnd.h"
-
-static CamWnd* g_camwnd = 0;
-
-GtkWindow* CamWnd_getParent (CamWnd& camwnd)
-{
-	return camwnd.m_parent;
-}
 
 camwindow_globals_t g_camwindow_globals;
 
@@ -106,59 +100,18 @@ ShowStatsExportCaller g_show_stats_caller;
 BoolExportCallback g_show_stats_callback(g_show_stats_caller);
 ToggleItem g_show_stats(g_show_stats_callback);
 
-void GlobalCamera_ResetAngles ()
-{
-	CamWnd& camwnd = *g_camwnd;
-	Vector3 angles;
-	angles[CAMERA_ROLL] = angles[CAMERA_PITCH] = 0;
-	angles[CAMERA_YAW] = static_cast<float> (22.5 * floor((camwnd.getCameraAngles()[CAMERA_YAW] + 11) / 22.5));
-	camwnd.setCameraAngles(angles);
+void CubicClippingExport(const BoolImportCallback& importCallback) {
+	importCallback(GlobalCamera().getCamWnd()->getCamera().farClipEnabled());
 }
 
-void Camera_ChangeFloorUp ()
-{
-	CamWnd& camwnd = *g_camwnd;
-	camwnd.changeFloor(true);
-}
-
-void Camera_ChangeFloorDown ()
-{
-	CamWnd& camwnd = *g_camwnd;
-	camwnd.changeFloor(false);
-}
-
-void Camera_CubeIn ()
-{
-	CamWnd& camwnd = *g_camwnd;
-	g_camwindow_globals.m_nCubicScale--;
-	if (g_camwindow_globals.m_nCubicScale < 1)
-		g_camwindow_globals.m_nCubicScale = 1;
-	camwnd.getCamera().updateProjection();
-	camwnd.update();
-}
-
-void Camera_CubeOut ()
-{
-	CamWnd& camwnd = *g_camwnd;
-	g_camwindow_globals.m_nCubicScale++;
-	if (g_camwindow_globals.m_nCubicScale > 23)
-		g_camwindow_globals.m_nCubicScale = 23;
-	camwnd.getCamera().updateProjection();
-	camwnd.update();
-}
-
-bool Camera_GetFarClip ()
-{
-	return g_camwindow_globals_private.m_bCubicClipping;
-}
-
-BoolExportCaller g_getfarclip_caller(g_camwindow_globals_private.m_bCubicClipping);
-ToggleItem g_getfarclip_item(g_getfarclip_caller);
+FreeCaller1<const BoolImportCallback&, CubicClippingExport> cubicClippingCaller;
+BoolExportCallback cubicClippingButtonCallBack(cubicClippingCaller);
+ToggleItem g_getfarclip_item(cubicClippingButtonCallBack);
 
 void Camera_SetFarClip (bool value)
 {
-	CamWnd& camwnd = *g_camwnd;
-	g_camwindow_globals_private.m_bCubicClipping = value;
+	CamWnd& camwnd = *GlobalCamera().getCamWnd();
+	GlobalRegistry().set("user/ui/camera/enableCubicClipping", value ? "1" : "0");
 	g_getfarclip_item.update();
 	camwnd.getCamera().updateProjection();
 	camwnd.update();
@@ -166,7 +119,7 @@ void Camera_SetFarClip (bool value)
 
 void Camera_ToggleFarClip ()
 {
-	Camera_SetFarClip(!Camera_GetFarClip());
+	Camera_SetFarClip(!GlobalCamera().getCamWnd()->getCamera().farClipEnabled());
 }
 
 void CamWnd_constructToolbar (GtkToolbar* toolbar)
@@ -185,92 +138,33 @@ void CamWnd_registerShortcuts ()
 
 void GlobalCamera_Benchmark ()
 {
-	g_camwnd->BenchMark();
-}
-
-void GlobalCamera_Update ()
-{
-	g_camwnd->update();
-}
-
-camera_draw_mode CamWnd_GetMode ()
-{
-	return Camera::draw_mode;
-}
-void CamWnd_SetMode (camera_draw_mode mode)
-{
-	Camera::draw_mode = mode;
-	if (g_camwnd != 0) {
-		g_camwnd->update();
-	}
-}
-
-static CameraModel* g_camera_model = 0;
-
-void CamWnd_LookThroughCamera (CamWnd& camwnd)
-{
-	if (g_camera_model != 0) {
-		camwnd.addHandlersMove();
-		g_camera_model->setCameraView(0, Callback());
-		g_camera_model = 0;
-		camwnd.getCamera().updateModelview();
-		camwnd.getCamera().updateProjection();
-		camwnd.update();
-	}
-}
-
-void CamWnd_LookThroughSelected (CamWnd& camwnd)
-{
-	if (g_camera_model != 0) {
-		CamWnd_LookThroughCamera(camwnd);
-	}
-
-	if (GlobalSelectionSystem().countSelected() != 0) {
-		scene::Instance& instance = GlobalSelectionSystem().ultimateSelected();
-		CameraModel* cameraModel = Instance_getCameraModel(instance);
-		if (cameraModel != 0) {
-			camwnd.removeHandlersMove();
-			g_camera_model = cameraModel;
-			g_camera_model->setCameraView(camwnd.getCameraView(), ReferenceCaller<CamWnd, CamWnd_LookThroughCamera> (
-					camwnd));
-		}
-	}
-}
-
-void GlobalCamera_LookThroughSelected ()
-{
-	CamWnd_LookThroughSelected(*g_camwnd);
-}
-
-void GlobalCamera_LookThroughCamera ()
-{
-	CamWnd_LookThroughCamera(*g_camwnd);
+	GlobalCamera().benchmark();
 }
 
 void RenderModeImport (int value)
 {
 	switch (value) {
 	case 0:
-		CamWnd_SetMode(cd_wire);
+		CamWnd::setMode(cd_wire);
 		break;
 	case 1:
-		CamWnd_SetMode(cd_solid);
+		CamWnd::setMode(cd_solid);
 		break;
 	case 2:
-		CamWnd_SetMode(cd_texture);
+		CamWnd::setMode(cd_texture);
 		break;
 	case 3:
-		CamWnd_SetMode(cd_lighting);
+		CamWnd::setMode(cd_lighting);
 		break;
 	default:
-		CamWnd_SetMode(cd_texture);
+		CamWnd::setMode(cd_texture);
 	}
 }
 typedef FreeCaller1<int, RenderModeImport> RenderModeImportCaller;
 
 void RenderModeExport (const IntImportCallback& importer)
 {
-	switch (CamWnd_GetMode()) {
+	switch (CamWnd::getMode()) {
 	case cd_wire:
 		importer(0);
 		break;
@@ -291,43 +185,16 @@ typedef FreeCaller1<const IntImportCallback&, RenderModeExport> RenderModeExport
 #define MAX_CAM_SPEED 610
 #define CAM_SPEED_STEP 50
 
-void CamWnd_Move_Discrete_Import (CamWnd& camwnd, bool value)
-{
-	if (g_camwindow_globals_private.m_bCamDiscrete) {
-		camwnd.moveDiscreteDisable();
-	} else {
-		camwnd.moveDisable();
-	}
-
-	g_camwindow_globals_private.m_bCamDiscrete = value;
-
-	if (g_camwindow_globals_private.m_bCamDiscrete) {
-		camwnd.moveDiscreteEnable();
-	} else {
-		camwnd.moveEnable();
-	}
-}
-
-void CamWnd_Move_Discrete_Import (bool value)
-{
-	if (g_camwnd != 0) {
-		CamWnd_Move_Discrete_Import(*g_camwnd, value);
-	} else {
-		g_camwindow_globals_private.m_bCamDiscrete = value;
-	}
-}
-
 void Camera_constructPreferences (PreferencesPage& page)
 {
 	page.appendSlider(_("Movement Speed"), g_camwindow_globals_private.m_nMoveSpeed, TRUE, 0, 0, 100, MIN_CAM_SPEED,
 			MAX_CAM_SPEED, 1, 10, 10);
-	page.appendCheckBox("", _("Link strafe speed to movement speed"), g_camwindow_globals_private.m_bCamLinkSpeed);
 	page.appendSlider(_("Rotation Speed"), g_camwindow_globals_private.m_nAngleSpeed, TRUE, 0, 0, 3, 1, 180, 1, 10, 10);
-	page.appendCheckBox("", _("Invert mouse vertical axis"), g_camwindow_globals_private.m_bCamInverseMouse);
-	page.appendCheckBox("", _("Discrete movement"), FreeCaller1<bool, CamWnd_Move_Discrete_Import> (),
-			BoolExportCaller(g_camwindow_globals_private.m_bCamDiscrete));
-	page.appendCheckBox("", _("Enable far-clip plane"), FreeCaller1<bool, Camera_SetFarClip> (), BoolExportCaller(
-			g_camwindow_globals_private.m_bCubicClipping));
+
+	page.appendCheckBox("", _("Link strafe speed to movement speed"), g_camwindow_globals_private.m_bCamLinkSpeed);
+	page.appendCheckBox("", _("Invert mouse vertical axis (freelook mode)"), "user/ui/camera/invertMouseVerticalAxis", getCameraSettings());
+	page.appendCheckBox("", _("Discrete movement (non-freelook mode)"), "user/ui/camera/discreteMovement", getCameraSettings());
+	page.appendCheckBox("", _("Enable far-clip plane (hides distant objects)"), "user/ui/camera/enableCubicClipping", getCameraSettings());
 	page.appendCheckBox("", _("Enable statistics"), FreeCaller1<bool, Camera_SetStats> (), BoolExportCaller(
 			g_camwindow_globals_private.m_showStats));
 
@@ -354,51 +221,33 @@ void Camera_registerPreferencesPage ()
 #include "stringio.h"
 #include "../dialog.h"
 
-typedef FreeCaller1<bool, CamWnd_Move_Discrete_Import> CamWndMoveDiscreteImportCaller;
-
-void CameraSpeed_increase ()
-{
-	if (g_camwindow_globals_private.m_nMoveSpeed <= (MAX_CAM_SPEED - CAM_SPEED_STEP - 10)) {
-		g_camwindow_globals_private.m_nMoveSpeed += CAM_SPEED_STEP;
-	} else {
-		g_camwindow_globals_private.m_nMoveSpeed = MAX_CAM_SPEED - 10;
-	}
-}
-
-void CameraSpeed_decrease ()
-{
-	if (g_camwindow_globals_private.m_nMoveSpeed >= (MIN_CAM_SPEED + CAM_SPEED_STEP)) {
-		g_camwindow_globals_private.m_nMoveSpeed -= CAM_SPEED_STEP;
-	} else {
-		g_camwindow_globals_private.m_nMoveSpeed = MIN_CAM_SPEED;
-	}
-}
-
+// greebo: this gets called when the main Radiant class is instantiated. This is _before_ a GlobalCamWnd actually exists.
 /// \brief Initialisation for things that have the same lifespan as this module.
 void CamWnd_Construct ()
 {
-	GlobalRadiant().commandInsert("CenterView", FreeCaller<GlobalCamera_ResetAngles> (), Accelerator(GDK_End));
+	GlobalCommands_insert("CenterView", MemberCaller<GlobalCameraManager, &GlobalCameraManager::resetCameraAngles> (
+			GlobalCamera()), Accelerator(GDK_End));
 
 	GlobalToggles_insert("ToggleCubicClip", FreeCaller<Camera_ToggleFarClip> (), ToggleItem::AddCallbackCaller(
 			g_getfarclip_item), Accelerator('\\', (GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("CubicClipZoomIn", FreeCaller<Camera_CubeIn> (), Accelerator('[',
-			(GdkModifierType) GDK_CONTROL_MASK));
-	GlobalRadiant().commandInsert("CubicClipZoomOut", FreeCaller<Camera_CubeOut> (), Accelerator(']',
-			(GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("CubicClipZoomIn", MemberCaller<CamWnd, &CamWnd::cubicScaleIn> (*GlobalCamera().getCamWnd()),
+			Accelerator('[', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("CubicClipZoomOut",
+			MemberCaller<CamWnd, &CamWnd::cubicScaleOut> (*GlobalCamera().getCamWnd()), Accelerator(']',
+					(GdkModifierType) GDK_CONTROL_MASK));
 
-	GlobalRadiant().commandInsert("UpFloor", FreeCaller<Camera_ChangeFloorUp> (), Accelerator(GDK_Prior));
-	GlobalRadiant().commandInsert("DownFloor", FreeCaller<Camera_ChangeFloorDown> (), Accelerator(GDK_Next));
+	GlobalCommands_insert("UpFloor", MemberCaller<GlobalCameraManager, &GlobalCameraManager::changeFloorUp> (
+			GlobalCamera()), Accelerator(GDK_Prior));
+	GlobalCommands_insert("DownFloor", MemberCaller<GlobalCameraManager, &GlobalCameraManager::changeFloorDown> (
+			GlobalCamera()), Accelerator(GDK_Prior));
 
 	GlobalToggles_insert("ToggleCamera", ToggleShown::ToggleCaller(GlobalCamera().getToggleShown()),
 			ToggleItem::AddCallbackCaller(GlobalCamera().getToggleShown().m_item), Accelerator('C',
 					(GdkModifierType) (GDK_SHIFT_MASK | GDK_CONTROL_MASK)));
-	GlobalCommands_insert("LookThroughSelected", FreeCaller<GlobalCamera_LookThroughSelected> ());
-	GlobalCommands_insert("LookThroughCamera", FreeCaller<GlobalCamera_LookThroughCamera> ());
-
-	GlobalRadiant().commandInsert("CameraSpeedInc", FreeCaller<CameraSpeed_increase> (), Accelerator(GDK_KP_Add,
-			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("CameraSpeedDec", FreeCaller<CameraSpeed_decrease> (), Accelerator(GDK_KP_Subtract,
-			(GdkModifierType) GDK_SHIFT_MASK));
+	GlobalCommands_insert("LookThroughSelected", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::lookThroughSelected> (GlobalCamera()));
+	GlobalCommands_insert("LookThroughCamera", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::lookThroughCamera> (GlobalCamera()));
 
 	GlobalShortcuts_insert("CameraForward", Accelerator(GDK_Up));
 	GlobalShortcuts_insert("CameraBack", Accelerator(GDK_Down));
@@ -429,14 +278,6 @@ void CamWnd_Construct ()
 	GlobalPreferenceSystem().registerPreference("AngleSpeed", IntImportStringCaller(
 			g_camwindow_globals_private.m_nAngleSpeed),
 			IntExportStringCaller(g_camwindow_globals_private.m_nAngleSpeed));
-	GlobalPreferenceSystem().registerPreference("CamInverseMouse", BoolImportStringCaller(
-			g_camwindow_globals_private.m_bCamInverseMouse), BoolExportStringCaller(
-			g_camwindow_globals_private.m_bCamInverseMouse));
-	GlobalPreferenceSystem().registerPreference("CamDiscrete", makeBoolStringImportCallback(
-			CamWndMoveDiscreteImportCaller()), BoolExportStringCaller(g_camwindow_globals_private.m_bCamDiscrete));
-	GlobalPreferenceSystem().registerPreference("CubicClipping", BoolImportStringCaller(
-			g_camwindow_globals_private.m_bCubicClipping), BoolExportStringCaller(
-			g_camwindow_globals_private.m_bCubicClipping));
 	GlobalPreferenceSystem().registerPreference("CubicScale", IntImportStringCaller(g_camwindow_globals.m_nCubicScale),
 			IntExportStringCaller(g_camwindow_globals.m_nCubicScale));
 	GlobalPreferenceSystem().registerPreference("SI_Colors4", Vector3ImportStringCaller(

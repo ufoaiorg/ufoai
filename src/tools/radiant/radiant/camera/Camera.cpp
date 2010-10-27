@@ -237,8 +237,12 @@ void Camera::moveUpdateAxes() {
   right[1] = -forward[0];
 }
 
+bool Camera::farClipEnabled() {
+  return (GlobalRegistry().get("user/ui/camera/enableCubicClipping")=="1");
+}
+
 float Camera::getFarClipPlane() {
-	return (GlobalRegistry().get("user/ui/camera/enableCubicClipping")=="1") ? pow(2.0, (g_camwindow_globals.m_nCubicScale + 7) / 2.0) : 32768.0f;
+	return (farClipEnabled()) ? pow(2.0, (g_camwindow_globals.m_nCubicScale + 7) / 2.0) : 32768.0f;
 }
 
 void Camera::updateProjection() {
@@ -301,6 +305,7 @@ void Camera::moveLeftDiscrete() {
   moveUpdateAxes();
   setOrigin(getOrigin() + right * (-SPEED_MOVE));
 }
+
 void Camera::moveRightDiscrete() {
   moveUpdateAxes();
   setOrigin(getOrigin() + right * (SPEED_MOVE));
@@ -311,6 +316,7 @@ void Camera::rotateLeftDiscrete() {
   angles[CAMERA_YAW] += SPEED_TURN;
   setAngles(angles);
 }
+
 void Camera::rotateRightDiscrete() {
   Vector3 angles = getAngles();
   angles[CAMERA_YAW] -= SPEED_TURN;

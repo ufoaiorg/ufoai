@@ -1681,7 +1681,7 @@ static GtkMenuItem* create_misc_menu (void)
 
 	create_menu_item_with_mnemonic(menu, _("Find brush..."), "FindBrush");
 	create_menu_item_with_mnemonic(menu, _("_Background select"), FreeCaller<WXY_BackgroundSelect> ());
-	//	create_menu_item_with_mnemonic(menu, _("_Benchmark"), FreeCaller<GlobalCamera_Benchmark>());
+	create_menu_item_with_mnemonic(menu, _("_Benchmark"), FreeCaller<GlobalCamera_Benchmark>());
 
 	return misc_menu_item;
 }

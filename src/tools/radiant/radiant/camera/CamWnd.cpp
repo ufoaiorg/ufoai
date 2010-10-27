@@ -855,6 +855,24 @@ void CamWnd::setCameraAngles (const Vector3& angles) {
 	m_Camera.angles = angles;
 }
 
+void CamWnd::cubicScaleIn ()
+{
+	g_camwindow_globals.m_nCubicScale--;
+	if (g_camwindow_globals.m_nCubicScale < 1)
+		g_camwindow_globals.m_nCubicScale = 1;
+	getCamera().updateProjection();
+	update();
+}
+
+void CamWnd::cubicScaleOut ()
+{
+	g_camwindow_globals.m_nCubicScale++;
+	if (g_camwindow_globals.m_nCubicScale > 23)
+		g_camwindow_globals.m_nCubicScale = 23;
+	getCamera().updateProjection();
+	update();
+}
+
 
 camera_draw_mode CamWnd::getMode() {
 	return Camera::draw_mode;
