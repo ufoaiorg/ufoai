@@ -131,9 +131,6 @@ void CamWnd_constructToolbar (GtkToolbar* toolbar)
 void CamWnd_registerShortcuts ()
 {
 	toggle_add_accelerator("ToggleCubicClip");
-
-	command_connect_accelerator("CameraSpeedInc");
-	command_connect_accelerator("CameraSpeedDec");
 }
 
 void GlobalCamera_Benchmark ()

@@ -423,6 +423,10 @@ void user_shortcuts_save ()
 	SaveCommandMap(path);
 }
 
+
+void show_splash();
+void hide_splash();
+
 int main (int argc, char* argv[])
 {
 	streams_init();
@@ -477,6 +481,8 @@ int main (int argc, char* argv[])
 
 	paths_init();
 
+	show_splash();
+
 	create_global_pid();
 
 	g_GamesDialog.Init();
@@ -500,8 +506,11 @@ int main (int argc, char* argv[])
 
 	Radiant_Initialise();
 
-	g_pParentWnd = 0;
+	user_shortcuts_init();
+
 	g_pParentWnd = new MainFrame();
+
+	hide_splash();
 
 	if (g_bLoadLastMap && !g_strLastMap.empty()) {
 		Map_LoadFile(g_strLastMap);
@@ -514,12 +523,10 @@ int main (int argc, char* argv[])
 		Map_New();
 	}
 
-	// load up shaders now that we have the map loaded
-	GlobalTextureBrowser().showStartupShaders();
-
 	remove_local_pid();
 
-	user_shortcuts_init();
+	// load up shaders now that we have the map loaded
+	GlobalTextureBrowser().showStartupShaders();
 
 	gtk_main();
 
