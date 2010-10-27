@@ -57,6 +57,7 @@ class CamWnd
 		const Vector3& getCameraAngles () const;
 		void setCameraAngles (const Vector3& origin);
 
+		// Increases/decreases the far clip plane distance
 		void cubicScaleIn ();
 		void cubicScaleOut ();
 
@@ -105,24 +106,5 @@ class CamWnd
 
 typedef MemberCaller<CamWnd, &CamWnd::queueDraw> CamWndQueueDraw;
 typedef MemberCaller<CamWnd, &CamWnd::update> CamWndUpdate;
-
-struct camwindow_globals_private_t
-{
-		int m_nMoveSpeed;
-		bool m_bCamLinkSpeed;
-		int m_nAngleSpeed;
-		bool m_bLightRadius;
-		bool m_showStats;
-		int m_nStrafeMode;
-
-		camwindow_globals_private_t () :
-			m_nMoveSpeed(100), m_bCamLinkSpeed(true), m_nAngleSpeed(3),
-					m_bLightRadius(false), m_showStats(true),
-					m_nStrafeMode(0)
-		{
-		}
-};
-
-extern camwindow_globals_private_t g_camwindow_globals_private;
 
 #endif /*CAMWND_H_*/

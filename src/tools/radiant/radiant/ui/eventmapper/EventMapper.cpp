@@ -94,7 +94,7 @@ ConditionStruc EventMapper::getCondition(xml::Node node) {
 
 void EventMapper::loadCameraStrafeDefinitions() {
 	// Find all the camera strafe definitions
-	xml::NodeList strafeList = GlobalRegistry().findXPath("user/ui/interface/cameraview/strafemode");
+	xml::NodeList strafeList = GlobalRegistry().findXPath("user/ui/input/cameraview/strafemode");
 
 	if (strafeList.size() > 0) {
 		// Get the strafe condition flags
@@ -112,7 +112,7 @@ void EventMapper::loadCameraStrafeDefinitions() {
 
 void EventMapper::loadCameraEventDefinitions() {
 	// Find all the camera definitions
-	xml::NodeList eventList = GlobalRegistry().findXPath("user/ui/interface/cameraview//event");
+	xml::NodeList eventList = GlobalRegistry().findXPath("user/ui/input/cameraview//event");
 
 	if (eventList.size() > 0) {
 		globalOutputStream() << "EventMapper: Camera Definitions found: " << eventList.size() << "\n";
@@ -140,7 +140,7 @@ void EventMapper::loadCameraEventDefinitions() {
 
 void EventMapper::loadObserverEventDefinitions() {
 	// Find all the xy view definitions
-	xml::NodeList eventList = GlobalRegistry().findXPath("user/ui/interface/observer//event");
+	xml::NodeList eventList = GlobalRegistry().findXPath("user/ui/input/observer//event");
 
 	if (eventList.size() > 0) {
 		globalOutputStream() << "EventMapper: Observer Definitions found: " << eventList.size() << "\n";
@@ -186,7 +186,7 @@ void EventMapper::loadObserverEventDefinitions() {
 
 void EventMapper::loadXYViewEventDefinitions() {
 	// Find all the xy view definitions
-	xml::NodeList eventList = GlobalRegistry().findXPath("user/ui/interface/xyview//event");
+	xml::NodeList eventList = GlobalRegistry().findXPath("user/ui/input/xyview//event");
 
 	if (eventList.size() > 0) {
 		globalOutputStream() << "EventMapper: XYView Definitions found: " << eventList.size() << "\n";
@@ -226,7 +226,7 @@ void EventMapper::loadXYViewEventDefinitions() {
 
 void EventMapper::loadButtonDefinitions() {
 	// Find all button definitions
-	xml::NodeList buttonList = GlobalRegistry().findXPath("user/ui/interface/buttons//button");
+	xml::NodeList buttonList = GlobalRegistry().findXPath("user/ui/input/buttons//button");
 
 	if (buttonList.size() > 0) {
 		globalOutputStream() << "EventMapper: Buttons found: " << buttonList.size() << "\n";
@@ -253,7 +253,7 @@ void EventMapper::loadButtonDefinitions() {
 
 void EventMapper::loadModifierDefinitions() {
 	// Find all button definitions
-	xml::NodeList modifierList = GlobalRegistry().findXPath("user/ui/interface/modifiers//modifier");
+	xml::NodeList modifierList = GlobalRegistry().findXPath("user/ui/input/modifiers//modifier");
 
 	if (modifierList.size() > 0) {
 		globalOutputStream() << "EventMapper: Modifiers found: " << modifierList.size() << "\n";

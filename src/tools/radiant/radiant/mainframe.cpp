@@ -1562,7 +1562,6 @@ static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Window Outline"), "ShowWindowOutline");
 		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Axes"), "ShowAxes");
 		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Workzone"), "ShowWorkzone");
-		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Stats"), "ShowStats");
 	}
 
 	menu_separator(menu);

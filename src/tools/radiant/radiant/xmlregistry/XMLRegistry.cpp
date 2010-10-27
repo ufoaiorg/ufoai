@@ -257,6 +257,15 @@ class XMLRegistry: public Registry
 			return string::toFloat(valueStr);
 		}
 
+		/* Sets a registry key value to the given float. */
+		void setFloat(const std::string& key, const double& value) {
+			// Try to convert the float into a string
+			std::string valueStr = string::toString(value);
+
+			// Pass the call to get() to do the rest
+			set(key, valueStr);
+		}
+
 		/* Gets a key containing an integer from the registry, basically loads the string and
 		 * converts it into an int */
 		int getInt(const std::string& key) {

@@ -78,48 +78,6 @@ camwindow_globals_t g_camwindow_globals;
 // =============================================================================
 // CamWnd class
 
-void Camera_SetStats (bool value)
-{
-	g_camwindow_globals_private.m_showStats = value;
-}
-void ShowStatsToggle ()
-{
-	g_camwindow_globals_private.m_showStats ^= 1;
-}
-typedef FreeCaller<ShowStatsToggle> ShowStatsToggleCaller;
-
-void ShowStatsExport (const BoolImportCallback& importer)
-{
-	importer(g_camwindow_globals_private.m_showStats);
-}
-typedef FreeCaller1<const BoolImportCallback&, ShowStatsExport> ShowStatsExportCaller;
-
-ShowStatsExportCaller g_show_stats_caller;
-BoolExportCallback g_show_stats_callback(g_show_stats_caller);
-ToggleItem g_show_stats(g_show_stats_callback);
-
-void CubicClippingExport(const BoolImportCallback& importCallback) {
-	importCallback(GlobalCamera().getCamWnd()->getCamera().farClipEnabled());
-}
-
-FreeCaller1<const BoolImportCallback&, CubicClippingExport> cubicClippingCaller;
-BoolExportCallback cubicClippingButtonCallBack(cubicClippingCaller);
-ToggleItem g_getfarclip_item(cubicClippingButtonCallBack);
-
-void Camera_SetFarClip (bool value)
-{
-	CamWnd& camwnd = *GlobalCamera().getCamWnd();
-	GlobalRegistry().set("user/ui/camera/enableCubicClipping", value ? "1" : "0");
-	g_getfarclip_item.update();
-	camwnd.getCamera().updateProjection();
-	camwnd.update();
-}
-
-void Camera_ToggleFarClip ()
-{
-	Camera_SetFarClip(!GlobalCamera().getCamWnd()->getCamera().farClipEnabled());
-}
-
 void CamWnd_constructToolbar (GtkToolbar* toolbar)
 {
 	toolbar_append_toggle_button(toolbar, _("Cubic clip the camera view (\\)"), ui::icons::ICON_VIEW_CLIPPING,
@@ -140,16 +98,16 @@ void RenderModeImport (int value)
 {
 	switch (value) {
 	case 0:
-		CamWnd::setMode(cd_wire);
+		CamWnd::setMode( cd_wire);
 		break;
 	case 1:
-		CamWnd::setMode(cd_solid);
+		CamWnd::setMode( cd_solid);
 		break;
 	case 2:
-		CamWnd::setMode(cd_texture);
+		CamWnd::setMode( cd_texture);
 		break;
 	case 3:
-		CamWnd::setMode(cd_lighting);
+		CamWnd::setMode( cd_lighting);
 		break;
 	default:
 		CamWnd::setMode(cd_texture);
@@ -176,30 +134,22 @@ void RenderModeExport (const IntImportCallback& importer)
 }
 typedef FreeCaller1<const IntImportCallback&, RenderModeExport> RenderModeExportCaller;
 
-#define MIN_CAM_SPEED 10
-#define MAX_CAM_SPEED 610
-#define CAM_SPEED_STEP 50
-
 void Camera_constructPreferences (PreferencesPage& page)
 {
-	page.appendSlider(_("Movement Speed"), g_camwindow_globals_private.m_nMoveSpeed, TRUE, 0, 0, 100, MIN_CAM_SPEED,
-			MAX_CAM_SPEED, 1, 10, 10);
-	page.appendSlider(_("Rotation Speed"), g_camwindow_globals_private.m_nAngleSpeed, TRUE, 0, 0, 3, 1, 180, 1, 10, 10);
+	page.appendSlider(_("Movement Speed (game units)"), RKEY_MOVEMENT_SPEED, getCameraSettings(), TRUE, 100, 50, 300,
+			1, 10, 10);
+	page.appendSlider(_("Rotation Speed"), RKEY_ROTATION_SPEED, getCameraSettings(), TRUE, 3, 1, 180, 1, 10, 10);
 
-	page.appendCheckBox("", _("Link strafe speed to movement speed"), g_camwindow_globals_private.m_bCamLinkSpeed);
-	page.appendCheckBox("", _("Invert mouse vertical axis (freelook mode)"), "user/ui/camera/invertMouseVerticalAxis", getCameraSettings());
-	page.appendCheckBox("", _("Discrete movement (non-freelook mode)"), "user/ui/camera/discreteMovement", getCameraSettings());
-	page.appendCheckBox("", _("Enable far-clip plane (hides distant objects)"), "user/ui/camera/enableCubicClipping", getCameraSettings());
-	page.appendCheckBox("", _("Enable statistics"), FreeCaller1<bool, Camera_SetStats> (), BoolExportCaller(
-			g_camwindow_globals_private.m_showStats));
+	page.appendCheckBox("", _("Invert mouse vertical axis (freelook mode)"), RKEY_INVERT_MOUSE_VERTICAL_AXIS,
+			getCameraSettings());
+	page.appendCheckBox("", _("Discrete movement (non-freelook mode)"), RKEY_DISCRETE_MOVEMENT, getCameraSettings());
+	page.appendCheckBox("", _("Enable far-clip plane (hides distant objects)"), RKEY_ENABLE_FARCLIP,
+			getCameraSettings());
 
 	const char* render_mode[] = { C_("Render Mode", "Wireframe"), C_("Render Mode", "Flatshade"),
 			C_("Render Mode", "Textured") };
 	page.appendCombo(_("Render Mode"), STRING_ARRAY_RANGE(render_mode), IntImportCallback(RenderModeImportCaller()),
 			IntExportCallback(RenderModeExportCaller()));
-
-	const char* strafe_mode[] = { C_("Strafe Mode", "Both"), C_("Strafe Mode", "Forward"), C_("Strafe Mode", "Up") };
-	page.appendCombo(_("Strafe Mode"), g_camwindow_globals_private.m_nStrafeMode, STRING_ARRAY_RANGE(strafe_mode));
 }
 
 void Camera_constructPage (PreferenceGroup& group)
@@ -223,13 +173,14 @@ void CamWnd_Construct ()
 	GlobalCommands_insert("CenterView", MemberCaller<GlobalCameraManager, &GlobalCameraManager::resetCameraAngles> (
 			GlobalCamera()), Accelerator(GDK_End));
 
-	GlobalToggles_insert("ToggleCubicClip", FreeCaller<Camera_ToggleFarClip> (), ToggleItem::AddCallbackCaller(
-			g_getfarclip_item), Accelerator('\\', (GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("CubicClipZoomIn", MemberCaller<CamWnd, &CamWnd::cubicScaleIn> (*GlobalCamera().getCamWnd()),
-			Accelerator('[', (GdkModifierType) GDK_CONTROL_MASK));
-	GlobalCommands_insert("CubicClipZoomOut",
-			MemberCaller<CamWnd, &CamWnd::cubicScaleOut> (*GlobalCamera().getCamWnd()), Accelerator(']',
-					(GdkModifierType) GDK_CONTROL_MASK));
+	GlobalToggles_insert("ToggleCubicClip", MemberCaller<CameraSettings, &CameraSettings::toggleFarClip> (
+			*getCameraSettings()), ToggleItem::AddCallbackCaller(getCameraSettings()->farClipItem()), Accelerator('\\',
+			(GdkModifierType) GDK_CONTROL_MASK));
+
+	GlobalCommands_insert("CubicClipZoomIn", MemberCaller<GlobalCameraManager, &GlobalCameraManager::cubicScaleIn> (
+			GlobalCamera()), Accelerator('[', (GdkModifierType) GDK_CONTROL_MASK));
+	GlobalCommands_insert("CubicClipZoomOut", MemberCaller<GlobalCameraManager, &GlobalCameraManager::cubicScaleOut> (
+			GlobalCamera()), Accelerator(']', (GdkModifierType) GDK_CONTROL_MASK));
 
 	GlobalCommands_insert("UpFloor", MemberCaller<GlobalCameraManager, &GlobalCameraManager::changeFloorUp> (
 			GlobalCamera()), Accelerator(GDK_Prior));
@@ -244,46 +195,37 @@ void CamWnd_Construct ()
 	GlobalCommands_insert("LookThroughCamera", MemberCaller<GlobalCameraManager,
 			&GlobalCameraManager::lookThroughCamera> (GlobalCamera()));
 
-	GlobalShortcuts_insert("CameraForward", Accelerator(GDK_Up));
-	GlobalShortcuts_insert("CameraBack", Accelerator(GDK_Down));
-	GlobalShortcuts_insert("CameraLeft", Accelerator(GDK_Left));
-	GlobalShortcuts_insert("CameraRight", Accelerator(GDK_Right));
-	GlobalShortcuts_insert("CameraStrafeRight", Accelerator(GDK_period));
-	GlobalShortcuts_insert("CameraStrafeLeft", Accelerator(GDK_comma));
+	// Insert movement commands
+	GlobalCommands_insert("CameraForward",
+			MemberCaller<GlobalCameraManager, &GlobalCameraManager::moveForwardDiscrete> (GlobalCamera()), Accelerator(
+					GDK_Up));
+	GlobalCommands_insert("CameraBack", MemberCaller<GlobalCameraManager, &GlobalCameraManager::moveBackDiscrete> (
+			GlobalCamera()), Accelerator(GDK_Down));
+	GlobalCommands_insert("CameraLeft", MemberCaller<GlobalCameraManager, &GlobalCameraManager::rotateLeftDiscrete> (
+			GlobalCamera()), Accelerator(GDK_Left));
+	GlobalCommands_insert("CameraRight", MemberCaller<GlobalCameraManager, &GlobalCameraManager::rotateRightDiscrete> (
+			GlobalCamera()), Accelerator(GDK_Right));
+	GlobalCommands_insert("CameraStrafeRight", MemberCaller<GlobalCameraManager,
+			&GlobalCameraManager::moveRightDiscrete> (GlobalCamera()), Accelerator(GDK_period));
+	GlobalCommands_insert("CameraStrafeLeft",
+			MemberCaller<GlobalCameraManager, &GlobalCameraManager::moveLeftDiscrete> (GlobalCamera()), Accelerator(
+					GDK_comma));
 
-	GlobalShortcuts_insert("CameraUp", Accelerator('D'));
-	GlobalShortcuts_insert("CameraDown", Accelerator('C'));
-	GlobalShortcuts_insert("CameraAngleUp", Accelerator('A'));
-	GlobalShortcuts_insert("CameraAngleDown", Accelerator('Z'));
-
-	GlobalShortcuts_insert("CameraFreeMoveForward", Accelerator(GDK_Up));
-	GlobalShortcuts_insert("CameraFreeMoveBack", Accelerator(GDK_Down));
-	GlobalShortcuts_insert("CameraFreeMoveLeft", Accelerator(GDK_Left));
-	GlobalShortcuts_insert("CameraFreeMoveRight", Accelerator(GDK_Right));
-
-	GlobalToggles_insert("ShowStats", ShowStatsToggleCaller(), ToggleItem::AddCallbackCaller(g_show_stats));
-
-	GlobalPreferenceSystem().registerPreference("ShowStats", BoolImportStringCaller(
-			g_camwindow_globals_private.m_showStats), BoolExportStringCaller(g_camwindow_globals_private.m_showStats));
-	GlobalPreferenceSystem().registerPreference("MoveSpeed", IntImportStringCaller(
-			g_camwindow_globals_private.m_nMoveSpeed), IntExportStringCaller(g_camwindow_globals_private.m_nMoveSpeed));
-	GlobalPreferenceSystem().registerPreference("CamLinkSpeed", BoolImportStringCaller(
-			g_camwindow_globals_private.m_bCamLinkSpeed), BoolExportStringCaller(
-			g_camwindow_globals_private.m_bCamLinkSpeed));
-	GlobalPreferenceSystem().registerPreference("AngleSpeed", IntImportStringCaller(
-			g_camwindow_globals_private.m_nAngleSpeed),
-			IntExportStringCaller(g_camwindow_globals_private.m_nAngleSpeed));
-	GlobalPreferenceSystem().registerPreference("CubicScale", IntImportStringCaller(g_camwindow_globals.m_nCubicScale),
-			IntExportStringCaller(g_camwindow_globals.m_nCubicScale));
+	GlobalCommands_insert("CameraUp", MemberCaller<GlobalCameraManager, &GlobalCameraManager::moveUpDiscrete> (
+			GlobalCamera()), Accelerator('D'));
+	GlobalCommands_insert("CameraDown", MemberCaller<GlobalCameraManager, &GlobalCameraManager::moveDownDiscrete> (
+			GlobalCamera()), Accelerator('C'));
+	GlobalCommands_insert("CameraAngleUp", MemberCaller<GlobalCameraManager, &GlobalCameraManager::pitchUpDiscrete> (
+			GlobalCamera()), Accelerator('A'));
+	GlobalCommands_insert("CameraAngleDown",
+			MemberCaller<GlobalCameraManager, &GlobalCameraManager::pitchDownDiscrete> (GlobalCamera()), Accelerator(
+					'Z'));
 	GlobalPreferenceSystem().registerPreference("SI_Colors4", Vector3ImportStringCaller(
 			g_camwindow_globals.color_cameraback), Vector3ExportStringCaller(g_camwindow_globals.color_cameraback));
 	GlobalPreferenceSystem().registerPreference("SI_Colors12", Vector3ImportStringCaller(
 			g_camwindow_globals.color_selbrushes3d), Vector3ExportStringCaller(g_camwindow_globals.color_selbrushes3d));
 	GlobalPreferenceSystem().registerPreference("CameraRenderMode", makeIntStringImportCallback(
 			RenderModeImportCaller()), makeIntStringExportCallback(RenderModeExportCaller()));
-	GlobalPreferenceSystem().registerPreference("StrafeMode", IntImportStringCaller(
-			g_camwindow_globals_private.m_nStrafeMode),
-			IntExportStringCaller(g_camwindow_globals_private.m_nStrafeMode));
 
 	CamWnd::captureStates();
 
