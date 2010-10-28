@@ -36,6 +36,8 @@
 #include "version.h"
 #include "environment.h"
 
+#include "ui/common/ToolbarCreator.h"
+
 #include "ifilesystem.h"
 #include "iundo.h"
 #include "ifilter.h"
@@ -2116,8 +2118,17 @@ void MainFrame::Create (void)
 	GtkMenuBar* main_menu = create_main_menu(this);
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(main_menu), FALSE, FALSE, 0);
 
-	GtkToolbar* main_toolbar_h = create_main_toolbar_horizontal(this);
-	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(main_toolbar_h), FALSE, FALSE, 0);
+	// Create and add main toolbar (OLD CODE)
+	//GtkToolbar* generalToolbar = create_main_toolbar_horizontal(this);
+	//gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(generalToolbar), FALSE, FALSE, 0);
+
+	// Instantiate the ToolbarCreator and retrieve the standard toolbar widget
+	toolbar::ToolbarCreator* toolbarCreator = new toolbar::ToolbarCreator(AppPath_get());
+	GtkToolbar* generalToolbar = toolbarCreator->GetToolbar("standard");
+	gtk_widget_show(GTK_WIDGET(generalToolbar));
+
+	// Pack it into the main window
+	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(generalToolbar), FALSE, FALSE, 0);
 
 	GtkToolbar* plugin_toolbar = create_plugin_toolbar();
 	if (!g_Layout_enablePluginToolbar.m_value) {
@@ -2306,13 +2317,13 @@ void MainFrame::Create (void)
 	/* enable button state tracker, set default states for begin */
 	GlobalUndoSystem().trackerAttach(m_saveStateTracker);
 	gtk_widget_set_sensitive(GTK_WIDGET(this->GetSaveMenuItem()), false);
-	gtk_widget_set_sensitive(GTK_WIDGET(this->GetSaveButton()), false);
+	//gtk_widget_set_sensitive(GTK_WIDGET(this->GetSaveButton()), false);
 
 	gtk_widget_set_sensitive(GTK_WIDGET(this->GetUndoMenuItem()), false);
-	gtk_widget_set_sensitive(GTK_WIDGET(this->GetUndoButton()), false);
+	//gtk_widget_set_sensitive(GTK_WIDGET(this->GetUndoButton()), false);
 
 	gtk_widget_set_sensitive(GTK_WIDGET(this->GetRedoMenuItem()), false);
-	gtk_widget_set_sensitive(GTK_WIDGET(this->GetRedoButton()), false);
+	//gtk_widget_set_sensitive(GTK_WIDGET(this->GetRedoButton()), false);
 
 	EverySecondTimer_enable();
 
@@ -2684,13 +2695,13 @@ void UndoSaveStateTracker::UpdateSensitiveStates (void)
 	const bool redoEnabled = m_redoSteps > 0;
 
 	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetSaveMenuItem()), saveEnabled);
-	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetSaveButton()), saveEnabled);
+	//gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetSaveButton()), saveEnabled);
 
 	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetUndoMenuItem()), undoEnabled);
-	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetUndoButton()), undoEnabled);
+	//gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetUndoButton()), undoEnabled);
 
 	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetRedoMenuItem()), redoEnabled);
-	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetRedoButton()), redoEnabled);
+	//gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetRedoButton()), redoEnabled);
 }
 
 /**
