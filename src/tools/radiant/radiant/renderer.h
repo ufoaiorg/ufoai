@@ -23,10 +23,13 @@
 #define INCLUDED_RENDERER_H
 
 #include "irender.h"
+#include "ientity.h"
+#include "ifilter.h"
 #include "renderable.h"
 #include "iselection.h"
 #include "cullable.h"
 #include "scenelib.h"
+#include "eclasslib.h"
 #include "math/frustum.h"
 #include <vector>
 
@@ -65,6 +68,17 @@ class CullingWalker
 		bool pre (const scene::Path& path, scene::Instance& instance, VolumeIntersectionValue parentVisible) const
 		{
 			VolumeIntersectionValue visible = Cullable_testVisible(instance, m_volume, parentVisible);
+
+			// Examine the entity class for its filter status. If it is filtered, use the c_volumeOutside
+			// state to ensure it is not rendered.
+			Entity* entity = Node_getEntity(path.top().get());
+			if (entity) {
+				const EntityClass& eclass = entity->getEntityClass();
+				if (!GlobalFilterSystem().isVisible("entityclass", eclass.name())) {
+					visible = VOLUME_OUTSIDE;
+				}
+			}
+
 			if (visible != VOLUME_OUTSIDE) {
 				return m_walker.pre(path, instance);
 			}

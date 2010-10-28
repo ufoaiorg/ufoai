@@ -42,4 +42,10 @@
   cont26="weaponclip"
   cont28="detail"
   surfaceinspector_enable_value="light"
-/>
+>
+	<filtersystem>
+		<filter name="World geometry">
+			<filterCriterion type="entityclass" match="worldspawn" action="hide" />
+		</filter>
+	</filtersystem>
+</game>

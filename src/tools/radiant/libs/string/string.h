@@ -32,6 +32,7 @@
 #include <cctype>
 #include <algorithm>
 #include <glib.h>
+#include "WildcardMatcher.h"
 
 #include "memory/allocator.h"
 #include "generic/arrayrange.h"
@@ -379,6 +380,11 @@ namespace string
 			lastPosition = loc + replaceLength;
 		}
 		return sNew;
+	}
+
+	inline bool matchesWildcard (const std::string& str, const std::string& wildcard)
+	{
+		return WildcardMatcher::matches(str, wildcard);
 	}
 }
 

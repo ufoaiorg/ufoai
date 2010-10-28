@@ -37,6 +37,7 @@
 #include "environment.h"
 
 #include "ui/common/ToolbarCreator.h"
+#include "ui/menu/FiltersMenu.h"
 
 #include "ifilesystem.h"
 #include "iundo.h"
@@ -72,6 +73,7 @@
 #include "gtkutil/paned.h"
 #include "gtkutil/widget.h"
 #include "gtkutil/dialog.h"
+#include "gtkutil/IconTextMenuToggle.h"
 
 #include "map/autosave.h"
 #include "brush/brushmanip.h"
@@ -1531,19 +1533,6 @@ static GtkMenuItem* create_edit_menu (MainFrame *mainFrame)
 	return edit_menu_item;
 }
 
-static GtkMenuItem* create_filter_menu (void)
-{
-	// Edit menu
-	GtkMenuItem* filter_menu_item = new_sub_menu_item_with_mnemonic(_("Filter"));
-	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(filter_menu_item));
-	if (g_Layout_enableDetachableMenus.m_value)
-		menu_tearoff(menu);
-
-	Filters_constructMenu(menu);
-
-	return filter_menu_item;
-}
-
 static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 {
 	// View menu
@@ -1826,7 +1815,11 @@ static GtkMenuBar* create_main_menu (MainFrame *mainframe)
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_file_menu(mainframe)));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_edit_menu(mainframe)));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_view_menu(mainframe->CurrentStyle())));
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_filter_menu()));
+
+	// Filters menu
+	ui::FiltersMenu filtersMenu;
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu_bar), filtersMenu);
+
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_selection_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_grid_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_misc_menu()));

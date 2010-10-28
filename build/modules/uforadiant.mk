@@ -162,6 +162,8 @@ $(TARGET)_SRCS      = \
 	\
 	$(RADIANT_BASE)/radiant/ui/eventmapper/EventMapper.cpp \
 	\
+	$(RADIANT_BASE)/radiant/ui/menu/FiltersMenu.cpp \
+	\
 	$(RADIANT_BASE)/radiant/ui/modelselector/ModelSelector.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/materialeditor/MaterialEditor.cpp \
@@ -177,6 +179,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/ui/ortho/OrthoContextMenu.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/lightdialog/LightDialog.cpp \
+	\
+	$(RADIANT_BASE)/radiant/filters/XMLFilter.cpp \
 	\
 	$(RADIANT_BASE)/radiant/pathfinding/Routing.cpp \
 	$(RADIANT_BASE)/radiant/pathfinding/RoutingLumpLoader.cpp \

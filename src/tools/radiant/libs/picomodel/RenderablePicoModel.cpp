@@ -1,6 +1,7 @@
 #include "RenderablePicoModel.h"
 
 #include "texturelib.h"
+#include "ifilter.h"
 
 #include <sstream>
 
@@ -70,9 +71,13 @@ namespace model
 
 		// Iterate over the surfaces, calling the render function on each one
 		for (SurfaceList::const_iterator i = _surfVec.begin(); i != _surfVec.end(); ++i) {
+			// Get the IShader to test the shader name against the filter system
 			qtexture_t& tex = i->getShader()->getTexture();
-			glBindTexture(GL_TEXTURE_2D, tex.texture_number);
-			i->render(flags);
+			if (GlobalFilterSystem().isVisible("texture", tex.name)) {
+				// Bind the OpenGL texture and render the surface geometry
+				glBindTexture(GL_TEXTURE_2D, tex.texture_number);
+				i->render(flags);
+			}
 		}
 	}
 

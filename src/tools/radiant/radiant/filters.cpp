@@ -35,6 +35,9 @@
 #include "mainframe.h"
 #include "commands.h"
 #include "settings/preferences.h"
+#include "iregistry.h"
+#include "iscenegraph.h"
+
 
 struct filters_globals_t
 {
@@ -85,8 +88,145 @@ void UpdateFilters ()
 	}
 }
 
-class BasicFilterSystem: public FilterSystem
+#include "filters/XMLFilter.h"
+
+/** FilterSystem implementation class.
+ */
+class BasicFilterSystem
+: public FilterSystem
 {
+private:
+
+	// Flag to indicate initialisation status
+	bool _initialised;
+
+	// Hashtable of available filters, indexed by name
+	typedef std::map<std::string, filters::XMLFilter> FilterTable;
+	FilterTable _availableFilters;
+
+	// Second table containing just the active filters
+	FilterTable _activeFilters;
+
+	// Cache of visibility flags for item names, to avoid having to
+	// traverse the active filter list for each lookup
+	typedef std::map<std::string, bool> StringFlagCache;
+	StringFlagCache _visibilityCache;
+
+private:
+
+	// Initialise the filter system. This must be done after the main
+	// Radiant module, hence cannot be done in the constructor.
+	void initialise() {
+
+		// Ask the XML Registry for the filter nodes
+		xml::NodeList filters = GlobalRegistry().findXPath("game/filtersystem//filter");
+
+		// Iterate over the list of nodes, adding filter objects onto the list
+		for (xml::NodeList::iterator iter = filters.begin();
+			 iter != filters.end();
+			 ++iter)
+		{
+			// Initialise the XMLFilter object
+			std::string filterName = iter->getAttributeValue("name");
+			filters::XMLFilter filter(filterName);
+
+			// Get all of the filterCriterion children of this node
+			xml::NodeList critNodes = iter->getNamedChildren("filterCriterion");
+
+			// Create XMLFilterRule objects for each criterion
+			for (xml::NodeList::iterator critIter = critNodes.begin();
+				 critIter != critNodes.end();
+				 ++critIter)
+			{
+				filters::XMLFilterRule rule(critIter->getAttributeValue("type"),
+								   critIter->getAttributeValue("match"),
+								   critIter->getAttributeValue("action") == "show");
+				filter.addRule(critIter->getAttributeValue("type"),
+						critIter->getAttributeValue("match"),
+						critIter->getAttributeValue("action") == "show");
+			}
+
+			// Add this XMLFilter to the list of available filters
+			_availableFilters.insert(FilterTable::value_type(filterName, filter));
+		}
+	}
+
+public:
+
+	// Constructor
+	BasicFilterSystem()
+	: _initialised(false)
+	{}
+
+	// Filter system visit function
+	void forEachFilter(IFilterVisitor& visitor) {
+		// Initialise the filter system if not already
+		if (!_initialised)
+			initialise();
+
+		// Visit each filter on the list, passing the name to the visitor
+		for (FilterTable::iterator iter = _availableFilters.begin();
+			iter != _availableFilters.end();
+			++iter)
+		{
+			visitor.visit(iter->first);
+		}
+	}
+
+	// Set the state of a filter
+	void setFilterState(const std::string& filter, bool state) {
+		if (state) {
+			// Copy the filter to the active filters list
+			_activeFilters.insert(
+					FilterTable::value_type(
+					filter, _availableFilters.find(filter)->second));
+		}
+		else {
+			// Remove filter from active filters list
+			_activeFilters.erase(filter);
+		}
+
+		// Invalidate the visibility cache to force new values to be
+		// loaded from the filters themselves
+		_visibilityCache.clear();
+
+		// Trigger an immediate scene redraw
+		GlobalSceneGraph().sceneChanged();
+	}
+
+	// Query whether a item is visible or filtered out
+	bool isVisible(const std::string& item, const std::string& name) {
+
+		// Check if this texture is in the texture flag cache, returning
+		// its cached value if found
+		StringFlagCache::iterator cacheIter = _visibilityCache.find(name);
+		if (cacheIter != _visibilityCache.end())
+			return cacheIter->second;
+
+		// Otherwise, walk the list of active filters to find a value for
+		// this item.
+		bool visFlag = true; // default if no filters modify it
+
+		for (FilterTable::iterator activeIter = _activeFilters.begin();
+			 activeIter != _activeFilters.end();
+			 ++activeIter)
+		{
+			// Delegate the check to the filter object. If a filter returns
+			// false for the visibility check, then the item is filtered
+			// and we don't need any more checks.
+			if (!activeIter->second.isVisible(item, name)) {
+				visFlag = false;
+				break;
+			}
+		}
+
+		// Cache the result and return to caller
+		_visibilityCache.insert(StringFlagCache::value_type(name, visFlag));
+		return visFlag;
+	}
+
+	/* Legacy stuff */
+
 	public:
 		void addFilter (Filter& filter, int mask)
 		{
@@ -179,40 +319,6 @@ void ResetFilters ()
 	for (iter = g_filter_items.begin(); iter != g_filter_items.end(); ++iter) {
 		iter->reset();
 	}
-}
-
-void Filters_constructMenu (GtkMenu* menu_in_menu)
-{
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "World"), "FilterWorldBrushes");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Entities"), "FilterEntities");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Translucent"), "FilterTranslucent");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Liquids"), "FilterLiquids");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Caulk"), "FilterCaulk");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Clips"), "FilterClips");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "ActorClips"), "FilterActorClips");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "WeaponClips"), "FilterWeaponClips");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Lights"), "FilterLights");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "NoSurfLights"), "FilterNoSurfLights");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "NoFootsteps"), "FilterNoFootsteps");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Structural"), "FilterStructural");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Nodraw"), "FilterNodraw");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Phong"), "FilterPhong");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Details"), "FilterDetails");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Hints"), "FilterHintsSkips");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Models"), "FilterModels");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Triggers"), "FilterTriggers");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Particles"), "FilterParticles");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Info"), "FilterInfo");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Info player start"), "FilterInfoPlayerStart");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Info human start"), "FilterInfoHumanStart");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Info 2x2 start"), "FilterInfo2x2Start");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Info alien start"), "FilterInfoAlienStart");
-	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Info civilian start"), "FilterInfoCivilianStart");
-
-	// filter manipulation
-	menu_separator(menu_in_menu);
-	create_menu_item_with_mnemonic(menu_in_menu, _("Invert filters"), "InvertFilters");
-	create_menu_item_with_mnemonic(menu_in_menu, _("Reset filters"), "ResetFilters");
 }
 
 #include "preferencesystem.h"

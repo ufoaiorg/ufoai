@@ -57,6 +57,7 @@
 #include "namespace.h"
 #include "commands.h"
 #include "isound.h"
+#include "ifilter.h"
 
 #include "gtkutil/image.h"
 #include "gtkutil/messagebox.h"
@@ -204,7 +205,8 @@ class RadiantDependencies: public GlobalRadiantModuleRef,
 		public GlobalEntityClassManagerModuleRef,
 		public GlobalUndoModuleRef,
 		public GlobalScripLibModuleRef,
-		public GlobalNamespaceModuleRef
+		public GlobalNamespaceModuleRef,
+		public GlobalFilterModuleRef
 {
 		ImageModulesRef m_image_modules;
 		MapModulesRef m_map_modules;
