@@ -74,9 +74,7 @@ static void Map_Snapshot ()
 				Map_SaveFile(snapshotFilename);
 
 				if (lSize > 50 * 1024 * 1024) { // total size of saves > 50 mb
-					gtkutil::infoDialog(
-							GlobalRadiant().getMainWindow(),
-							std::string(
+					gtkutil::infoDialog(std::string(
 									_("The snapshot files in %s total more than 50 megabytes. You might consider cleaning up.\n"))
 									+ snapshotsDir);
 				}
@@ -84,8 +82,7 @@ static void Map_Snapshot ()
 			}
 		}
 	} else {
-		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), std::string(
-				_("Snapshot save failed.. unable to create directory\n")) + snapshotsDir);
+		gtkutil::errorDialog(std::string(_("Snapshot save failed.. unable to create directory\n")) + snapshotsDir);
 	}
 }
 

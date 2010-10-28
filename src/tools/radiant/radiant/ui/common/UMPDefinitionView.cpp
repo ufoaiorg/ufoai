@@ -79,7 +79,7 @@ namespace ui
 		TextFileOutputStream out(GlobalRadiant().getGamePath() + _umpFile);
 		if (out.failed()) {
 			g_message("Error saving file to '%s'.", _umpFile.c_str());
-			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("Error saving ump file"));
+			gtkutil::errorDialog(_("Error saving ump file"));
 			return;
 		}
 		out << content.c_str();

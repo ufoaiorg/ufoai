@@ -83,7 +83,7 @@ namespace scripts
 	void Terrain::generateTerrainDefinitionsForTextures ()
 	{
 		if (!GlobalSelectionSystem().areFacesSelected()) {
-			gtkutil::infoDialog(GlobalRadiant().getMainWindow(), _("No faces selected"));
+			gtkutil::infoDialog(_("No faces selected"));
 			return;
 		}
 
@@ -112,7 +112,7 @@ namespace scripts
 	void Terrain::showTerrainDefinitionForTexture ()
 	{
 		if (!GlobalSelectionSystem().areFacesSelected()) {
-			gtkutil::infoDialog(GlobalRadiant().getMainWindow(), _("No faces selected"));
+			gtkutil::infoDialog(_("No faces selected"));
 			return;
 		}
 
@@ -128,6 +128,6 @@ namespace scripts
 			return;
 		}
 
-		gtkutil::infoDialog(GlobalRadiant().getMainWindow(), _("Could not find any associated terrain definition"));
+		gtkutil::infoDialog(_("Could not find any associated terrain definition"));
 	}
 }

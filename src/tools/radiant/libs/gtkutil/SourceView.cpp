@@ -35,7 +35,7 @@ namespace gtkutil
 		GtkSourceLanguage* lang = gtk_source_language_manager_get_language(_langManager, language.c_str());
 
 		if (lang == NULL) {
-			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("Cannot find language for source viewer"));
+			gtkutil::errorDialog(_("Cannot find language for source viewer"));
 			g_error("SourceView: Cannot find language %s\n", language.c_str());
 			throw std::runtime_error("SourceView: Cannot find language");
 		}

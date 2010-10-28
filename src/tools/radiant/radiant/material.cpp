@@ -384,8 +384,7 @@ void MaterialSystem::generateMaterialFromTexture ()
 	const std::string& mapname = GlobalRadiant().getMapName();
 	if (mapname.empty() || Map_Unnamed(g_map)) {
 		// save the map first
-		gtkutil::errorDialog(GlobalRadiant().getMainWindow(),
-				_("You have to save your map before material generation can work"));
+		gtkutil::errorDialog(_("You have to save your map before material generation can work"));
 		return;
 	}
 

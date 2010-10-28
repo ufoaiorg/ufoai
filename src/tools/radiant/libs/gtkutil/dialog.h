@@ -143,11 +143,11 @@ void DialogVBox_packRow (GtkVBox* vbox, GtkWidget* row);
 namespace gtkutil
 {
 	// Display a modal error dialog
-	void errorDialog (GtkWindow*, const std::string&);
+	void errorDialog (const std::string&);
 	// Display a modal info dialog
-	void infoDialog (GtkWindow*, const std::string&);
+	void infoDialog (const std::string&);
 	// Display a modal error dialog and quit immediately
-	void fatalErrorDialog (GtkWindow* window, const std::string& errorText);
+	void fatalErrorDialog (const std::string& errorText);
 }
 
 #endif

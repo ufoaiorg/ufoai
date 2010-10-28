@@ -481,6 +481,42 @@ void Radiant_detachGameToolsPathObserver (ModuleObserver& observer)
 	g_gameToolsPathObservers.detach(observer);
 }
 
+void populateRegistry ()
+{
+	// Load default values for darkradiant, located in the game directory
+	const std::string base = std::string(AppPath_get()) + "user.xml";
+	const std::string input = std::string(AppPath_get()) + "input.xml";
+
+	if (file_exists(base)) {
+		GlobalRegistry().importFromFile(base, "");
+
+		// Try to load the default input definitions
+		if (file_exists(input.c_str())) {
+			GlobalRegistry().importFromFile(input, "user/ui");
+		} else {
+			gtkutil::errorDialog(std::string("Could not find default input definitions:\n") + input);
+		}
+	} else {
+		gtkutil::fatalErrorDialog(std::string("Could not find base registry:\n") + base);
+	}
+
+	// Construct the filename and load it into the registry
+	const std::string filename = AppPath_get() + "games/ufoai.game";
+	GlobalRegistry().importFromFile(filename, "");
+
+	// Load user preferences, these overwrite any values that have defined before
+	// The called method also checks for any upgrades that have to be performed
+	const std::string userSettingsFile = SettingsPath_get() + "user.xml";
+	if (file_exists(userSettingsFile)) {
+		GlobalRegistry().importFromFile(userSettingsFile, "");
+	}
+
+	const std::string userInputFile = SettingsPath_get() + "input.xml";
+	if (file_exists(userInputFile)) {
+		GlobalRegistry().importFromFile(userInputFile, "user/ui");
+	}
+}
+
 // This is called from main() to start up the Radiant stuff.
 void Radiant_Initialise (void)
 {
@@ -488,6 +524,8 @@ void Radiant_Initialise (void)
 
 	// Load the Radiant plugins
 	Radiant_loadModulesFromRoot(AppPath_get());
+
+	populateRegistry();
 
 	Preferences_Load();
 
@@ -497,20 +535,14 @@ void Radiant_Initialise (void)
 	g_gameModeObservers.realise();
 	g_gameNameObservers.realise();
 
-	 // Load default values for darkradiant, located in the game directory
-	GlobalRegistry().importFromFile(AppPath_get() + "user.xml", "");
-	GlobalRegistry().importFromFile(AppPath_get() + "input.xml", "user/ui");
-
-	// Load user preferences, these overwrite any values that have defined before
-	// This is stored in the user's folder
-	const std::string userSettingsFile = SettingsPath_get() + "user.xml";
-	if (file_exists(userSettingsFile)) {
-		GlobalRegistry().importFromFile(userSettingsFile, "user");
-	}
 }
 
 void Radiant_Shutdown (void)
 {
+	// Export the input definitions into the user's settings folder and remove them as well
+	GlobalRegistry().exportToFile("user/ui/input", SettingsPath_get() + "input.xml");
+	GlobalRegistry().deleteXPath("user/ui/input");
+
 	// Save the whole /uforadiant/user tree to user.xml so that the current settings are preserved
 	GlobalRegistry().exportToFile("user", SettingsPath_get() + "user.xml");
 
@@ -1684,7 +1716,7 @@ void CallBrushExportOBJ ()
 	if (GlobalSelectionSystem().countSelected() != 0) {
 		export_selected(GlobalRadiant().getMainWindow());
 	} else {
-		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("No Brushes Selected!"));
+		gtkutil::errorDialog(_("No Brushes Selected!"));
 	}
 }
 
@@ -2261,8 +2293,7 @@ void MainFrame::Create (void)
 		break;
 	}
 	default:
-		gtkutil::errorDialog(GlobalRadiant().getMainWindow(),
-				_("Invalid layout type set - remove your radiant config files and retry"));
+		gtkutil::errorDialog(_("Invalid layout type set - remove your radiant config files and retry"));
 	}
 
 	gtk_box_pack_start(GTK_BOX(mainHBox), GTK_WIDGET(notebook), FALSE, FALSE, 0);

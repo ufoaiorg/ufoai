@@ -20,6 +20,7 @@
  */
 
 #include "dialog.h"
+#include "../radiant/mainframe.h"
 
 #include <gtk/gtk.h>
 #include <string>
@@ -295,8 +296,9 @@ void DialogVBox_packRow (GtkVBox* vbox, GtkWidget* row)
 namespace gtkutil
 {
 	// Display a Gtk Error dialog
-	void errorDialog (GtkWindow* window, const std::string& errorText)
+	void errorDialog (const std::string& errorText)
 	{
+		GtkWindow* window = MainFrame_getWindow();
 		GtkWidget* dialog = gtk_message_dialog_new_with_markup(window, GTK_DIALOG_DESTROY_WITH_PARENT,
 				GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, "%s", errorText.c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
@@ -304,8 +306,9 @@ namespace gtkutil
 	}
 
 	// Display a Gtk Info dialog
-	void infoDialog (GtkWindow* window, const std::string& infoText)
+	void infoDialog (const std::string& infoText)
 	{
+		GtkWindow* window = MainFrame_getWindow();
 		GtkWidget* dialog = gtk_message_dialog_new_with_markup(window, GTK_DIALOG_DESTROY_WITH_PARENT,
 				GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, "%s", infoText.c_str());
 		gtk_dialog_run(GTK_DIALOG(dialog));
@@ -313,9 +316,9 @@ namespace gtkutil
 	}
 
 	// Display a fatal Gtk Error dialog
-	void fatalErrorDialog (GtkWindow* window, const std::string& errorText)
+	void fatalErrorDialog (const std::string& errorText)
 	{
-		errorDialog(window, errorText);
+		errorDialog(errorText);
 		abort();
 	}
 } // namespace gtkutil

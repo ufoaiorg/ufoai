@@ -594,7 +594,7 @@ static void EntityClassList_createEntity (void)
 	GtkTreeModel* model;
 	GtkTreeIter iter;
 	if (gtk_tree_selection_get_selected(gtk_tree_view_get_selection(view), &model, &iter) == FALSE) {
-		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("You must have a selected class to create an entity"));
+		gtkutil::errorDialog(_("You must have a selected class to create an entity"));
 		return;
 	}
 
@@ -787,13 +787,13 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 	// if you change the classname to worldspawn you won't merge back in the structural
 	// brushes but create a parasite entity
 	if (isClassname && !strcmp(valueConverted.c_str(), "worldspawn")) {
-		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("Cannot change \"classname\" key back to worldspawn."));
+		gtkutil::errorDialog(_("Cannot change \"classname\" key back to worldspawn."));
 		return;
 	}
 
 	// we don't want spaces in entity keys
 	if (strstr(keyConverted.c_str(), " ")) {
-		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("No spaces are allowed in entity keys."));
+		gtkutil::errorDialog(_("No spaces are allowed in entity keys."));
 		return;
 	}
 

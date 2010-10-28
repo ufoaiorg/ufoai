@@ -52,6 +52,6 @@ void OpenURL (const char *url)
 	// let's put a little comment
 	globalOutputStream() << "OpenURL: " << url << "\n";
 	if (!open_url(url)) {
-		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("Failed to launch browser!"));
+		gtkutil::errorDialog(_("Failed to launch browser!"));
 	}
 }

@@ -84,7 +84,7 @@ void UMPSystem::editUMPDefinition ()
 {
 	const std::string umpFileName = getUMPFilename(GlobalRadiant().getMapName());
 	if (umpFileName.empty()) {
-		gtkutil::infoDialog(GlobalRadiant().getMainWindow(), _("Could not find the map in any ump file"));
+		gtkutil::infoDialog(_("Could not find the map in any ump file"));
 		return;
 	}
 	ui::UMPEditor editor(GlobalRadiant().getMapsPath() + umpFileName);
@@ -108,7 +108,7 @@ const std::string UMPSystem::getUMPFilename (const std::string& map)
 				return *i;
 		} catch (map::ump::UMPException& e) {
 			globalErrorStream() << e.getMessage() << "\n";
-			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), e.getMessage());
+			gtkutil::errorDialog(e.getMessage());
 		}
 	}
 	// not found in any ump file

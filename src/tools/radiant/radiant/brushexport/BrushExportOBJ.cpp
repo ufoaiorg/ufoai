@@ -22,6 +22,6 @@ void export_selected (GtkWindow* mainWindow)
 		// Traverse through the selection and export it to the file
 		GlobalSelectionSystem().foreachSelected(exporter);
 	} else {
-		gtkutil::errorDialog(mainWindow, _("Unable to write to file"));
+		gtkutil::errorDialog(_("Unable to write to file"));
 	}
 }

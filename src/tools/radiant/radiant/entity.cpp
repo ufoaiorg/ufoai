@@ -412,7 +412,7 @@ void Entity_createFromSelection (const std::string& name, const Vector3& origin)
 			GlobalSceneGraph().sceneChanged();
 		}
 	} catch (EntityCreationException e) {
-		gtkutil::errorDialog(GlobalRadiant().getMainWindow(), e.what());
+		gtkutil::errorDialog(e.what());
 	}
 
 }

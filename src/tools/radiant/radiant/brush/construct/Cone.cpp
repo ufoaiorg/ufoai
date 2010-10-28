@@ -11,13 +11,11 @@ namespace brushconstruct
 			const std::string& shader)
 	{
 		if (sides < _minSides) {
-			gtkutil::errorDialog(GlobalRadiant().getMainWindow(),
-					_("Too few sides for constructing the prism, minimum is 3"));
+			gtkutil::errorDialog(_("Too few sides for constructing the prism, minimum is 3"));
 			return;
 		}
 		if (sides > _maxSides) {
-			gtkutil::errorDialog(GlobalRadiant().getMainWindow(),
-					_("Too many sides for constructing the prism, maximum is 32"));
+			gtkutil::errorDialog(_("Too many sides for constructing the prism, maximum is 32"));
 			return;
 		}
 

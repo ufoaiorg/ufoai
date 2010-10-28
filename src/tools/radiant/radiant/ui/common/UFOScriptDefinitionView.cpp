@@ -84,7 +84,7 @@ namespace ui
 		TextFileOutputStream out(GlobalRadiant().getGamePath() + _ufoFile);
 		if (out.failed()) {
 			g_message("Error saving file to '%s'.", _ufoFile.c_str());
-			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("Error saving ufo script file"));
+			gtkutil::errorDialog(_("Error saving ufo script file"));
 			return;
 		}
 		out << content.c_str();

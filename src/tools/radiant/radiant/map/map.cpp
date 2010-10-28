@@ -674,7 +674,7 @@ bool Map_LoadFile (const std::string& filename)
 		if (traversible)
 			traversible->traverse(entity_updateworldspawn());
 		else {
-			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), _("Error during load of map."));
+			gtkutil::errorDialog(_("Error during load of map."));
 			Map_Free();
 			Map_New();
 			return false;
@@ -1813,8 +1813,7 @@ class MoveLevelWalker: public scene::Graph::Walker
 void ObjectsDown (void)
 {
 	if (GlobalSelectionSystem().countSelected() == 0) {
-		gtkutil::errorDialog(GlobalRadiant().getMainWindow(),
-				_("You have to select the objects that you want to change"));
+		gtkutil::errorDialog(_("You have to select the objects that you want to change"));
 		return;
 	}
 	UndoableCommand undo("objectsDown");
@@ -1825,8 +1824,7 @@ void ObjectsDown (void)
 void ObjectsUp (void)
 {
 	if (GlobalSelectionSystem().countSelected() == 0) {
-		gtkutil::errorDialog(GlobalRadiant().getMainWindow(),
-				_("You have to select the objects that you want to change"));
+		gtkutil::errorDialog(_("You have to select the objects that you want to change"));
 		return;
 	}
 	UndoableCommand undo("objectsUp");

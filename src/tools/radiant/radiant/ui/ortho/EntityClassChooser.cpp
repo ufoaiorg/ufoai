@@ -189,7 +189,7 @@ namespace ui
 			Entity_createFromSelection(g_value_get_string(&val), self->_lastPoint);
 			gtk_widget_hide(self->_widget);
 		} catch (EntityCreationException e) {
-			gtkutil::errorDialog(GlobalRadiant().getMainWindow(), e.what());
+			gtkutil::errorDialog(e.what());
 		}
 	}
 

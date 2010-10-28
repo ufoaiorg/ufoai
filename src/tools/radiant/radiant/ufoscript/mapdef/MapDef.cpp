@@ -69,7 +69,7 @@ namespace scripts
 	{
 		const std::string mapname = os::getFilenameFromPath(GlobalRadiant().getMapName());
 		if (mapname.empty() || Map_Unnamed(g_map)) {
-			gtkutil::infoDialog(GlobalRadiant().getMainWindow(), _("Save your map before using this function"));
+			gtkutil::infoDialog(_("Save your map before using this function"));
 			return;
 		}
 
@@ -82,6 +82,6 @@ namespace scripts
 			return;
 		}
 
-		gtkutil::infoDialog(GlobalRadiant().getMainWindow(), _("Could not find any associated map definition"));
+		gtkutil::infoDialog(_("Could not find any associated map definition"));
 	}
 }
