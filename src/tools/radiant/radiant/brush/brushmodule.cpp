@@ -84,8 +84,6 @@ void Brush_Construct ()
 	Brush_registerCommands();
 	Brush_registerPreferencesPage();
 
-	BrushFilters_construct();
-
 	BrushClipPlane::constructStatic();
 	BrushInstance::constructStatic();
 	Brush::constructStatic();

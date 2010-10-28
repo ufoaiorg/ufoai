@@ -46,19 +46,6 @@ FiltersMenu::FiltersMenu()
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(_menu));
 	MenuPopulatingVisitor visitor(menu);
 	GlobalFilterSystem().forEachFilter(visitor);
-
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Translucent"), "FilterTranslucent");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "NoSurfLights"), "FilterNoSurfLights");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "NoFootsteps"), "FilterNoFootsteps");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Structural"), "FilterStructural");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Phong"), "FilterPhong");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Details"), "FilterDetails");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Hints"), "FilterHintsSkips");
-
-	// filter manipulation
-	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, _("Invert filters"), "InvertFilters");
-	create_menu_item_with_mnemonic(menu, _("Reset filters"), "ResetFilters");
 }
 
 /* GTK CALLBACKS */

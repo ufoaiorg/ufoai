@@ -2,7 +2,6 @@
 <game
   name="UFO:Alien Invasion"
   basegame="base"
-  basegamename="UFO:Alien Invasion"
   archivetypes="pk3"
   texturetypes="tga jpg png"
   modeltypes="md2 md3 ase obj"

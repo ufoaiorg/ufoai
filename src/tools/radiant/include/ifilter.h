@@ -25,50 +25,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "generic/constant.h"
 #include <string>
 
-enum {
-	EXCLUDE_WORLD               = 0x00000001,
-	EXCLUDE_ENT                 = 0x00000002,
-	EXCLUDE_TRANSLUCENT         = 0x00000004,
-	EXCLUDE_LIQUIDS             = 0x00000008,
-	EXCLUDE_CAULK               = 0x00000010,
-	EXCLUDE_CLIP                = 0x00000020,
-	EXCLUDE_ACTORCLIP           = 0x00000040,
-	EXCLUDE_WEAPONCLIP          = 0x00000080,
-	EXCLUDE_LIGHTS              = 0x00000100,
-	EXCLUDE_DETAILS             = 0x00000200,
-	EXCLUDE_HINTSSKIPS          = 0x00000400,
-	EXCLUDE_MODELS              = 0x00000800,
-	EXCLUDE_TRIGGERS            = 0x00001000,
-	EXCLUDE_TERRAIN             = 0x00002000,
-	EXCLUDE_NODRAW              = 0x00004000,
-	EXCLUDE_STRUCTURAL          = 0x00008000,
-	EXCLUDE_NO_SURFLIGHTS       = 0x00010000,
-	EXCLUDE_PHONG               = 0x00020000,
-	EXCLUDE_NO_FOOTSTEPS        = 0x00040000,
-	EXCLUDE_PARTICLE            = 0x00080000,
-	EXCLUDE_INFO_PLAYER_START   = 0x00100000,
-	EXCLUDE_INFO_HUMAN_START    = 0x00200000,
-	EXCLUDE_INFO_ALIEN_START    = 0x00400000,
-	EXCLUDE_INFO_2x2_START      = 0x00800000,
-	EXCLUDE_INFO_CIVILIAN_START = 0x01000000,
-	EXCLUDE_INFO                = 0x02000000
-};
-
-class Filter {
-public:
-	virtual ~Filter(){}
-	virtual void setActive(bool active) = 0;
-};
-
-/**
-* Interface for objects which can be filtered by the FilterSystem.
-*/
-class Filterable {
-public:
-	virtual ~Filterable(){}
-	virtual void updateFiltered() = 0;
-};
-
 /** Visitor interface for evaluating the available filters in the
  * FilterSystem.
  */
@@ -119,9 +75,6 @@ public:
 	virtual bool isVisible(const std::string& item, int flags) = 0;
 
 	virtual ~FilterSystem(){}
-	virtual void addFilter(Filter& filter, int mask) = 0;
-	virtual void registerFilterable(Filterable& filterable) = 0;
-	virtual void unregisterFilterable(Filterable& filterable) = 0;
 };
 
 #include "modulesystem.h"
