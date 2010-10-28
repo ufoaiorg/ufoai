@@ -47,5 +47,12 @@
 		<filter name="World geometry">
 			<filterCriterion type="entityclass" match="worldspawn" action="hide" />
 		</filter>
+		<filter name="Light">
+			<filterCriterion type="entityclass" match="light" action="hide" />
+			<filterCriterion type="entityclass" match="light_*" action="hide" />
+		</filter>
+		<filter name="Common Textures">
+			<filterCriterion type="texture" match="textures/tex_common/*" action="hide" />
+		</filter>
 	</filtersystem>
 </game>

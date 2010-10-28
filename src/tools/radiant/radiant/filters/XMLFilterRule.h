@@ -13,11 +13,11 @@ namespace filters
 struct XMLFilterRule {
 
 	std::string type; 	// "texture", "entityclass" or "object"
-	std::string match; 	// the match expression regex
+	std::string match; 	// the match expression wildcard
 	bool show;			// true for action="show", false for action="hide"
 
 	// Constructor
-	XMLFilterRule(const std::string t, const std::string m, bool s)
+	XMLFilterRule(const std::string& t, const std::string& m, bool s)
 	: type(t), match(m), show(s)
 	{
 	}

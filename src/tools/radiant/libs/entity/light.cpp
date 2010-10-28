@@ -481,7 +481,6 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		OriginKey m_originKey;
 		Colour m_colour;
 
-		ClassnameFilter m_filter;
 		NamedEntity m_named;
 		NameKeys m_nameKeys;
 		TraversableObserverPairRelay m_traverseObservers;
@@ -511,7 +510,6 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 			m_aabb_light.origin = Vector3(0, 0, 0);
 			default_extents(m_aabb_light.extents);
 
-			m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 			m_keyObservers.insert("_color", Colour::ColourChangedCaller(m_colour));
 			m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
@@ -556,7 +554,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 
 		Light (EntityClass* eclass, scene::Node& node, const Callback& transformChanged, const Callback& boundsChanged,
 				const Callback& evaluateTransform) :
-			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_colour(Callback()), m_filter(m_entity, node),
+			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_colour(Callback()),
 					m_named(m_entity), m_nameKeys(m_entity), m_radii_wire(m_radii, m_aabb_light.origin), m_radii_fill(
 							m_radii, m_aabb_light.origin), m_radii_box(m_aabb_light.origin), m_renderName(m_named,
 							m_aabb_light.origin), m_transformChanged(transformChanged), m_boundsChanged(boundsChanged),
@@ -566,8 +564,8 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		}
 		Light (const Light& other, scene::Node& node, const Callback& transformChanged, const Callback& boundsChanged,
 				const Callback& evaluateTransform) :
-			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_colour(Callback()), m_filter(m_entity,
-					node), m_named(m_entity), m_nameKeys(m_entity), m_radii_wire(m_radii, m_aabb_light.origin),
+			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_colour(Callback()),
+					m_named(m_entity), m_nameKeys(m_entity), m_radii_wire(m_radii, m_aabb_light.origin),
 					m_radii_fill(m_radii, m_aabb_light.origin), m_radii_box(m_aabb_light.origin), m_renderName(m_named,
 							m_aabb_light.origin), m_transformChanged(transformChanged), m_boundsChanged(boundsChanged),
 					m_evaluateTransform(evaluateTransform)
@@ -583,7 +581,6 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 		void instanceAttach (const scene::Path& path)
 		{
 			if (++m_instanceCounter.m_count == 1) {
-				m_filter.instanceAttach();
 				m_entity.instanceAttach(path_find_mapfile(path.begin(), path.end()));
 				m_entity.attach(m_keyObservers);
 			}
@@ -593,7 +590,6 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 			if (--m_instanceCounter.m_count == 0) {
 				m_entity.detach(m_keyObservers);
 				m_entity.instanceDetach(path_find_mapfile(path.begin(), path.end()));
-				m_filter.instanceDetach();
 			}
 		}
 

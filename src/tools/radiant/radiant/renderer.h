@@ -69,16 +69,6 @@ class CullingWalker
 		{
 			VolumeIntersectionValue visible = Cullable_testVisible(instance, m_volume, parentVisible);
 
-			// Examine the entity class for its filter status. If it is filtered, use the c_volumeOutside
-			// state to ensure it is not rendered.
-			Entity* entity = Node_getEntity(path.top().get());
-			if (entity) {
-				const EntityClass& eclass = entity->getEntityClass();
-				if (!GlobalFilterSystem().isVisible("entityclass", eclass.name())) {
-					visible = VOLUME_OUTSIDE;
-				}
-			}
-
 			if (visible != VOLUME_OUTSIDE) {
 				return m_walker.pre(path, instance);
 			}
@@ -105,6 +95,16 @@ class ForEachVisible: public scene::Graph::Walker
 		bool pre (const scene::Path& path, scene::Instance& instance) const
 		{
 			VolumeIntersectionValue visible = (path.top().get().visible()) ? m_state.back() : VOLUME_OUTSIDE;
+
+			// Examine the entity class for its filter status. If it is filtered, use the c_volumeOutside
+			// state to ensure it is not rendered.
+			Entity* entity = Node_getEntity(path.top().get());
+			if (entity) {
+				const EntityClass& eclass = entity->getEntityClass();
+				if (!GlobalFilterSystem().isVisible("entityclass", eclass.name())) {
+					visible = VOLUME_OUTSIDE;
+				}
+			}
 
 			if (visible == VOLUME_PARTIAL) {
 				visible = m_volume.TestAABB(instance.worldAABB());
