@@ -2118,9 +2118,9 @@ void MainFrame::Create (void)
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(main_menu), FALSE, FALSE, 0);
 
 	// Instantiate the ToolbarCreator and retrieve the standard toolbar widget
-	toolbar::ToolbarCreator* toolbarCreator = new toolbar::ToolbarCreator(AppPath_get());
+	ui::ToolbarCreator toolbarCreator(AppPath_get());
 
-	GtkToolbar* generalToolbar = toolbarCreator->GetToolbar("view");
+	GtkToolbar* generalToolbar = toolbarCreator.getToolbar("view");
 	gtk_widget_show(GTK_WIDGET(generalToolbar));
 
 	// Pack it into the main window
@@ -2139,7 +2139,7 @@ void MainFrame::Create (void)
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(hbox), TRUE, TRUE, 0);
 	gtk_widget_show(hbox);
 
-	GtkToolbar* main_toolbar_v = toolbarCreator->GetToolbar("edit");
+	GtkToolbar* main_toolbar_v = toolbarCreator.getToolbar("edit");
 	gtk_widget_show(GTK_WIDGET(main_toolbar_v));
 
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(main_toolbar_v), FALSE, FALSE, 0);

@@ -11,10 +11,10 @@
  *
  * All existing radiant callbacks are automatically connected to the widgets.
  *
- * Obtain a loaded toolbar by calling GetToolbar(<toolbarName>);
+ * Obtain a loaded toolbar by calling getToolbar(<toolbarName>);
  */
 
-namespace toolbar {
+namespace ui {
 
 	// This is where the generated GtkToolbars are stored after parsing the XML file
 	typedef std::map<const std::string, GtkToolbar*> ToolbarMap;
@@ -22,21 +22,21 @@ namespace toolbar {
 	class ToolbarCreator {
 		private:
 			// The path and the name of the XML file
-			const std::string _gameToolsPath;
+			const std::string _uiXmlPath;
 			const std::string _uiXmlFile;
 
-			void ParseXml(xml::Document doc);
-			GtkToolbar* CreateToolbar(xml::Node& node);
-			GtkWidget* CreateToolItem(xml::Node& node, GtkToolbar*);
+			void parseXml(xml::Document& doc);
+			GtkToolbar* createToolbar(xml::Node& node);
+			GtkWidget* createToolItem(xml::Node& node, GtkToolbar*);
 
 			ToolbarMap _toolbars;
 			GtkTooltips* _tooltips;
 		public:
 			// Constructor
-			ToolbarCreator(const std::string& gameToolsPath, const std::string& uiXmlFile = "ui.xml");
+			ToolbarCreator(const std::string& uiXmlPath, const std::string& uiXmlFile = "ui.xml");
 
 			// Public methods
-			GtkToolbar* GetToolbar(const std::string&);
+			GtkToolbar* getToolbar(const std::string&);
 
 			// Destructor
 			~ToolbarCreator() {}

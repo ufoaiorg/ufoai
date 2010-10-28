@@ -17,7 +17,7 @@
 
 // This is needed to correctly connect the ToggleButton to Radiant's callbacks
 // The "handler" object data was set in CreateToolItem
-void ToggleButtonSetActiveNoSignal(GtkToggleToolButton* button, gboolean active)
+void toggleButtonSetActiveNoSignal(GtkToggleToolButton* button, gboolean active)
 {
   guint handler_id = gpointer_to_int(g_object_get_data(G_OBJECT(button), "handler"));
   g_signal_handler_block(G_OBJECT(button), handler_id);
@@ -25,24 +25,24 @@ void ToggleButtonSetActiveNoSignal(GtkToggleToolButton* button, gboolean active)
   g_signal_handler_unblock(G_OBJECT(button), handler_id);
 }
 
-void ToggleButtonSetActiveCallback(GtkToggleToolButton& button, bool active)
+inline void toggleButtonSetActiveCallback(GtkToggleToolButton& button, bool active)
 {
-  ToggleButtonSetActiveNoSignal(&button, active);
+  toggleButtonSetActiveNoSignal(&button, active);
 }
-typedef ReferenceCaller1<GtkToggleToolButton, bool, ToggleButtonSetActiveCallback> ToggleButtonSetActiveCaller;
+typedef ReferenceCaller1<GtkToggleToolButton, bool, toggleButtonSetActiveCallback> ToggleButtonSetActiveCaller;
 
-namespace toolbar {
+namespace ui {
 
 	/*	Returns the toolbar that is named toolbarName
 	 */
-	GtkToolbar* ToolbarCreator::GetToolbar(const std::string& toolbarName) {
+	GtkToolbar* ToolbarCreator::getToolbar(const std::string& toolbarName) {
 		return _toolbars[toolbarName];
 	}
 
 	/* Checks the passed xmlNode for a recognized item (ToolButton, ToggleToolButton, Separator)
 	 * Returns the widget or NULL if nothing useful is found
 	 */
-	GtkWidget* ToolbarCreator::CreateToolItem(xml::Node& node, GtkToolbar* toolbar) {
+	GtkWidget* ToolbarCreator::createToolItem(xml::Node& node, GtkToolbar* toolbar) {
 		const std::string nodeName = node.getName();
 		GtkWidget* toolItem;
 
@@ -102,7 +102,7 @@ namespace toolbar {
 	/*	Creates a toolbar based on the data found in the passed xmlNode
 	 * 	Returns the fully populated GtkToolbar
 	 */
-	GtkToolbar* ToolbarCreator::CreateToolbar(xml::Node& node) {
+	GtkToolbar* ToolbarCreator::createToolbar(xml::Node& node) {
 		// Get all action children elements
 		xml::NodeList toolItemList = node.getChildren();
 		GtkWidget* toolbar;
@@ -120,7 +120,7 @@ namespace toolbar {
 
 			for (unsigned int i = 0; i < toolItemList.size(); i++) {
 				// Create and get the toolItem with the parsing
-				GtkWidget* toolItem = CreateToolItem(toolItemList[i], GTK_TOOLBAR(toolbar));
+				GtkWidget* toolItem = createToolItem(toolItemList[i], GTK_TOOLBAR(toolbar));
 
 				// It is possible that no toolItem is returned, only add it if it's safe to do so
 				if (toolItem != NULL) {
@@ -138,7 +138,7 @@ namespace toolbar {
 	/* Parses the XML Document for toolbars and instantiates them
 	 * Returns nothing, toolbars can be obtained via GetToolbar()
 	 */
-	void ToolbarCreator::ParseXml(xml::Document xmlDoc) {
+	void ToolbarCreator::parseXml(xml::Document& xmlDoc) {
 		xml::NodeList toolbarList = xmlDoc.findXPath("/ui//toolbar");
 
 		if (toolbarList.size() > 0) {
@@ -151,7 +151,7 @@ namespace toolbar {
 				globalOutputStream() << "Found toolbar: " << toolbarName.c_str();
 				globalOutputStream() << "\n";
 
-				_toolbars[toolbarName] = CreateToolbar(toolbarList[i]);
+				_toolbars[toolbarName] = createToolbar(toolbarList[i]);
 			}
 		}
 		else {
@@ -168,14 +168,15 @@ namespace toolbar {
 	 {
 		const std::string xmlFile = _gameToolsPath + _uiXmlFile;
 
-		xmlDocPtr xmlDoc = xmlParseFile(xmlFile.c_str());
+		xmlDocPtr pXmlDoc = xmlParseFile(xmlFile.c_str());
 
-		if (xmlDoc) {
+		if (pXmlDoc) {
 			globalOutputStream() << "Loading toolbar information from " << xmlFile.c_str() << "\n";
 
 			try {
 				// Try to parse the XML file
-				ParseXml(xmlDoc);
+				xml::Document xmlDoc(pXmlDoc);
+				parseXml(xmlDoc);
 			}
 			catch (std::runtime_error e) {
 				globalOutputStream() << "Warning in " << xmlFile.c_str() << ": " << e.what() << "\n";
