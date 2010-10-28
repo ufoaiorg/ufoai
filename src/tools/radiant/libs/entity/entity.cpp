@@ -34,7 +34,6 @@
 #include "uniquenames.h"
 #include "namekeys.h"
 #include "stream/stringstream.h"
-#include "filters.h"
 
 #include "miscmodel.h"
 #include "light.h"

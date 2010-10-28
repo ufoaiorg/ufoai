@@ -34,7 +34,6 @@
 #include "targetable.h"
 #include "origin.h"
 #include "angle.h"
-#include "filters.h"
 #include "namedentity.h"
 #include "keyobservers.h"
 #include "namekeys.h"
@@ -58,7 +57,6 @@ class MiscSound: public Cullable, public Bounded, public Snappable
 		AngleKey m_angleKey;
 		float m_angle;
 
-		ClassnameFilter m_filter;
 		NamedEntity m_named;
 		NameKeys m_nameKeys;
 
@@ -81,7 +79,6 @@ class MiscSound: public Cullable, public Bounded, public Snappable
 			m_ray.direction[1] = 0;
 			m_ray.direction[2] = 0;
 
-			m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 			m_keyObservers.insert("angle", AngleKey::AngleChangedCaller(m_angleKey));
 			m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
@@ -113,7 +110,7 @@ class MiscSound: public Cullable, public Bounded, public Snappable
 		MiscSound (EntityClass* eclass, scene::Node& node, const Callback& transformChanged,
 				const Callback& evaluateTransform) :
 			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY), m_angleKey(
-					AngleChangedCaller(*this)), m_angle(ANGLEKEY_IDENTITY), m_filter(m_entity, node),
+					AngleChangedCaller(*this)), m_angle(ANGLEKEY_IDENTITY),
 					m_named(m_entity), m_nameKeys(m_entity), m_arrow(m_ray), m_renderAABBSolid(m_aabb_local),
 					m_renderAABBWire(m_aabb_local), m_renderName(m_named, g_vector3_identity), m_transformChanged(
 							transformChanged), m_evaluateTransform(evaluateTransform)
@@ -123,7 +120,7 @@ class MiscSound: public Cullable, public Bounded, public Snappable
 		MiscSound (const MiscSound& other, scene::Node& node, const Callback& transformChanged,
 				const Callback& evaluateTransform) :
 			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY),
-					m_angleKey(AngleChangedCaller(*this)), m_angle(ANGLEKEY_IDENTITY), m_filter(m_entity, node),
+					m_angleKey(AngleChangedCaller(*this)), m_angle(ANGLEKEY_IDENTITY),
 					m_named(m_entity), m_nameKeys(m_entity), m_arrow(m_ray), m_renderAABBSolid(m_aabb_local),
 					m_renderAABBWire(m_aabb_local), m_renderName(m_named, g_vector3_identity), m_transformChanged(
 							transformChanged), m_evaluateTransform(evaluateTransform)
@@ -135,7 +132,6 @@ class MiscSound: public Cullable, public Bounded, public Snappable
 		void instanceAttach (const scene::Path& path)
 		{
 			if (++m_instanceCounter.m_count == 1) {
-				m_filter.instanceAttach();
 				m_entity.instanceAttach(path_find_mapfile(path.begin(), path.end()));
 				m_entity.attach(m_keyObservers);
 			}
@@ -145,7 +141,6 @@ class MiscSound: public Cullable, public Bounded, public Snappable
 			if (--m_instanceCounter.m_count == 0) {
 				m_entity.detach(m_keyObservers);
 				m_entity.instanceDetach(path_find_mapfile(path.begin(), path.end()));
-				m_filter.instanceDetach();
 			}
 		}
 

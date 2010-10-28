@@ -50,7 +50,6 @@
 #include "targetable.h"
 #include "origin.h"
 #include "colour.h"
-#include "filters.h"
 #include "namedentity.h"
 #include "keyobservers.h"
 #include "namekeys.h"

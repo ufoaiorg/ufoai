@@ -228,7 +228,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/libs/entity/miscmodel.cpp \
 	$(RADIANT_BASE)/libs/entity/miscparticle.cpp \
 	$(RADIANT_BASE)/libs/entity/miscsound.cpp \
-	$(RADIANT_BASE)/libs/entity/filters.cpp \
 	$(RADIANT_BASE)/libs/entity/light.cpp \
 	$(RADIANT_BASE)/libs/entity/targetable.cpp \
 	\

@@ -43,7 +43,6 @@
 
 #include "targetable.h"
 #include "origin.h"
-#include "filters.h"
 #include "namedentity.h"
 #include "keyobservers.h"
 #include "namekeys.h"
@@ -111,7 +110,6 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 		OriginKey m_originKey;
 		Vector3 m_origin;
 
-		ClassnameFilter m_filter;
 		NamedEntity m_named;
 		NameKeys m_nameKeys;
 		ParticleDefinition m_particle;
@@ -133,7 +131,6 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 		{
 			read_aabb(m_aabb_local, m_entity.getEntityClass());
 
-			m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 			m_keyObservers.insert("origin", OriginKey::OriginChangedCaller(m_originKey));
 			m_keyObservers.insert("particle", ParticleDefinition::ParticleChangedCaller(m_particle));
@@ -157,8 +154,8 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 
 		MiscParticle (EntityClass* eclass, scene::Node& node, const Callback& transformChanged,
 				const Callback& evaluateTransform) :
-			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY), m_filter(m_entity,
-					node), m_named(m_entity), m_nameKeys(m_entity), m_particle("unset"),
+			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY),
+					m_named(m_entity), m_nameKeys(m_entity), m_particle("unset"),
 					m_id_origin(g_vector3_identity), m_renderAABBSolid(m_aabb_local), m_renderParticle(m_particle),
 					m_renderParticleID(m_particle, m_id_origin), m_renderAABBWire(m_aabb_local), m_renderName(m_named,
 							g_vector3_identity), m_transformChanged(transformChanged), m_evaluateTransform(
@@ -168,8 +165,8 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 		}
 		MiscParticle (const MiscParticle& other, scene::Node& node, const Callback& transformChanged,
 				const Callback& evaluateTransform) :
-			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY), m_filter(
-					m_entity, node), m_named(m_entity), m_nameKeys(m_entity), m_particle("unset"), m_id_origin(
+			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY),
+					m_named(m_entity), m_nameKeys(m_entity), m_particle("unset"), m_id_origin(
 					g_vector3_identity), m_renderAABBSolid(m_aabb_local), m_renderParticle(m_particle),
 					m_renderParticleID(m_particle, m_id_origin), m_renderAABBWire(m_aabb_local), m_renderName(m_named,
 							g_vector3_identity), m_transformChanged(transformChanged), m_evaluateTransform(
@@ -182,7 +179,6 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 		void instanceAttach (const scene::Path& path)
 		{
 			if (++m_instanceCounter.m_count == 1) {
-				m_filter.instanceAttach();
 				m_entity.instanceAttach(path_find_mapfile(path.begin(), path.end()));
 				m_entity.attach(m_keyObservers);
 			}
@@ -192,7 +188,6 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 			if (--m_instanceCounter.m_count == 0) {
 				m_entity.detach(m_keyObservers);
 				m_entity.instanceDetach(path_find_mapfile(path.begin(), path.end()));
-				m_filter.instanceDetach();
 			}
 		}
 

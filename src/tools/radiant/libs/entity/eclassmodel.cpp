@@ -45,7 +45,6 @@
 #include "origin.h"
 #include "angle.h"
 #include "model.h"
-#include "filters.h"
 #include "namedentity.h"
 #include "keyobservers.h"
 #include "namekeys.h"
@@ -64,7 +63,6 @@ class EclassModel: public Snappable
 		float m_angle;
 		SingletonModel m_model;
 
-		ClassnameFilter m_filter;
 		NamedEntity m_named;
 		NameKeys m_nameKeys;
 		RenderablePivot m_renderOrigin;
@@ -75,7 +73,6 @@ class EclassModel: public Snappable
 
 		void construct ()
 		{
-			m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 			//m_keyObservers.insert("skin", ModelSkinKey::SkinChangedCaller(m_skin));
 			m_keyObservers.insert("angle", AngleKey::AngleChangedCaller(m_angleKey));
@@ -112,7 +109,7 @@ class EclassModel: public Snappable
 		EclassModel (EntityClass* eclass, scene::Node& node, const Callback& transformChanged,
 				const Callback& evaluateTransform) :
 			m_entity(eclass), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY), m_angleKey(
-					AngleChangedCaller(*this)), m_angle(ANGLEKEY_IDENTITY), m_filter(m_entity, node),
+					AngleChangedCaller(*this)), m_angle(ANGLEKEY_IDENTITY),
 					m_named(m_entity), m_nameKeys(m_entity), m_renderName(m_named, g_vector3_identity),
 					m_transformChanged(transformChanged), m_evaluateTransform(evaluateTransform)
 		{
@@ -121,7 +118,7 @@ class EclassModel: public Snappable
 		EclassModel (const EclassModel& other, scene::Node& node, const Callback& transformChanged,
 				const Callback& evaluateTransform) :
 			m_entity(other.m_entity), m_originKey(OriginChangedCaller(*this)), m_origin(ORIGINKEY_IDENTITY),
-					m_angleKey(AngleChangedCaller(*this)), m_angle(ANGLEKEY_IDENTITY), m_filter(m_entity, node),
+					m_angleKey(AngleChangedCaller(*this)), m_angle(ANGLEKEY_IDENTITY),
 					m_named(m_entity), m_nameKeys(m_entity), m_renderName(m_named, g_vector3_identity),
 					m_transformChanged(transformChanged), m_evaluateTransform(evaluateTransform)
 		{
@@ -132,7 +129,6 @@ class EclassModel: public Snappable
 		void instanceAttach (const scene::Path& path)
 		{
 			if (++m_instanceCounter.m_count == 1) {
-				m_filter.instanceAttach();
 				m_entity.instanceAttach(path_find_mapfile(path.begin(), path.end()));
 				m_entity.attach(m_keyObservers);
 				m_model.modelChanged(m_entity.getEntityClass().modelpath());
@@ -146,7 +142,6 @@ class EclassModel: public Snappable
 				m_model.modelChanged("");
 				m_entity.detach(m_keyObservers);
 				m_entity.instanceDetach(path_find_mapfile(path.begin(), path.end()));
-				m_filter.instanceDetach();
 			}
 		}
 

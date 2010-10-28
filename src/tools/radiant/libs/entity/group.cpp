@@ -41,7 +41,6 @@
 #include "origin.h"
 #include "angles.h"
 #include "scale.h"
-#include "filters.h"
 #include "namedentity.h"
 #include "keyobservers.h"
 #include "namekeys.h"
@@ -56,7 +55,6 @@ class Group
 		MatrixTransform m_transform;
 		TraversableNodeSet m_traverse;
 
-		ClassnameFilter m_filter;
 		NamedEntity m_named;
 		NameKeys m_nameKeys;
 
@@ -67,20 +65,19 @@ class Group
 
 		void construct ()
 		{
-			m_keyObservers.insert("classname", ClassnameFilter::ClassnameChangedCaller(m_filter));
 			m_keyObservers.insert("targetname", NamedEntity::IdentifierChangedCaller(m_named));
 		}
 
 	public:
 		Group (EntityClass* eclass, scene::Node& node, const Callback& transformChanged) :
-			m_entity(eclass), m_filter(m_entity, node), m_named(m_entity), m_nameKeys(m_entity), m_renderName(m_named,
+			m_entity(eclass), m_named(m_entity), m_nameKeys(m_entity), m_renderName(m_named,
 					m_name_origin), m_name_origin(g_vector3_identity), m_transformChanged(transformChanged)
 		{
 			construct();
 		}
 
 		Group (const Group& other, scene::Node& node, const Callback& transformChanged) :
-			m_entity(other.m_entity), m_filter(m_entity, node), m_named(m_entity), m_nameKeys(m_entity), m_renderName(
+			m_entity(other.m_entity), m_named(m_entity), m_nameKeys(m_entity), m_renderName(
 					m_named, g_vector3_identity), m_transformChanged(transformChanged)
 		{
 			construct();
@@ -90,7 +87,6 @@ class Group
 		void instanceAttach (const scene::Path& path)
 		{
 			if (++m_instanceCounter.m_count == 1) {
-				m_filter.instanceAttach();
 				m_entity.instanceAttach(path_find_mapfile(path.begin(), path.end()));
 				m_traverse.instanceAttach(path_find_mapfile(path.begin(), path.end()));
 				m_entity.attach(m_keyObservers);
@@ -103,7 +99,6 @@ class Group
 				m_entity.detach(m_keyObservers);
 				m_traverse.instanceDetach(path_find_mapfile(path.begin(), path.end()));
 				m_entity.instanceDetach(path_find_mapfile(path.begin(), path.end()));
-				m_filter.instanceDetach();
 			}
 		}
 
