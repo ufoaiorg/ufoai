@@ -253,7 +253,7 @@ void CL_LanguageInit (void)
 
 		/* Test the locale first, add to list if setting given locale possible. */
 		if (CL_LanguageTest(language->localeID) || !strcmp(language->localeID, "none")) {
-			UI_AddOption(&languageOption, "", _(language->localeString), language->localeID);
+			UI_AddOption(&languageOption, "", va("_%s", language->localeString), language->localeID);
 		}
 	}
 
