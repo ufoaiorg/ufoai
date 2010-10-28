@@ -62,13 +62,6 @@ typedef struct _GtkButton GtkButton;
 typedef struct _GtkToggleButton GtkToggleButton;
 typedef struct _GtkToolbar GtkToolbar;
 
-// this DOES NOT set up the shortcut using command_connect_accelerator
-GtkButton* toolbar_append_button (GtkToolbar* toolbar, const std::string& description, const std::string& icon,
-		const std::string& commandName);
-// this DOES NOT set up the shortcut using command_connect_accelerator
-GtkToggleButton* toolbar_append_toggle_button (GtkToolbar* toolbar, const std::string& description,
-		const std::string& icon, const std::string& commandName);
-
 template<typename Element> class BasicVector3;
 typedef BasicVector3<float> Vector3;
 bool color_dialog (GtkWidget *parent, Vector3& color, const std::string& title = _("Choose Color"));

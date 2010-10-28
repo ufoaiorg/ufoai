@@ -276,8 +276,3 @@ void Pathfinding_ConstructMenu (GtkMenu* menu)
 	gtk_widget_set_sensitive(GTK_WIDGET(menuItemShowIn2D), false);
 	gtk_widget_set_sensitive(GTK_WIDGET(menuItemShowLowerLevels), false);
 }
-
-void Pathfinding_constructToolbar (GtkToolbar* toolbar)
-{
-	toolbar_append_toggle_button(toolbar, _("Show pathfinding info"), ui::icons::ICON_PATHFINDING, "ShowPathfinding");
-}

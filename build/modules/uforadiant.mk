@@ -53,7 +53,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/texmanip.cpp \
 	$(RADIANT_BASE)/radiant/textures.cpp \
 	$(RADIANT_BASE)/radiant/timer.cpp \
-	$(RADIANT_BASE)/radiant/toolbars.cpp \
 	$(RADIANT_BASE)/radiant/treemodel.cpp \
 	$(RADIANT_BASE)/radiant/undo.cpp \
 	$(RADIANT_BASE)/radiant/url.cpp \
@@ -200,7 +199,6 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/libs/gtkutil/messagebox.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/paned.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/timer.cpp \
-	$(RADIANT_BASE)/libs/gtkutil/toolbar.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/window.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/MenuItemAccelerator.cpp \
 	$(RADIANT_BASE)/libs/gtkutil/ModelProgressDialog.cpp \

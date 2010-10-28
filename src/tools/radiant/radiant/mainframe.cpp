@@ -108,7 +108,6 @@
 #include "xyview/GlobalXYWnd.h"
 #include "windowobservers.h"
 #include "referencecache.h"
-#include "toolbars.h"
 #include "levelfilters.h"
 #include "sound/SoundManager.h"
 #include "ui/Icons.h"
@@ -2118,13 +2117,10 @@ void MainFrame::Create (void)
 	GtkMenuBar* main_menu = create_main_menu(this);
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(main_menu), FALSE, FALSE, 0);
 
-	// Create and add main toolbar (OLD CODE)
-	//GtkToolbar* generalToolbar = create_main_toolbar_horizontal(this);
-	//gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(generalToolbar), FALSE, FALSE, 0);
-
 	// Instantiate the ToolbarCreator and retrieve the standard toolbar widget
 	toolbar::ToolbarCreator* toolbarCreator = new toolbar::ToolbarCreator(AppPath_get());
-	GtkToolbar* generalToolbar = toolbarCreator->GetToolbar("standard");
+
+	GtkToolbar* generalToolbar = toolbarCreator->GetToolbar("view");
 	gtk_widget_show(GTK_WIDGET(generalToolbar));
 
 	// Pack it into the main window
@@ -2143,7 +2139,9 @@ void MainFrame::Create (void)
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(hbox), TRUE, TRUE, 0);
 	gtk_widget_show(hbox);
 
-	GtkToolbar* main_toolbar_v = create_main_toolbar_vertical(CurrentStyle());
+	GtkToolbar* main_toolbar_v = toolbarCreator->GetToolbar("edit");
+	gtk_widget_show(GTK_WIDGET(main_toolbar_v));
+
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(main_toolbar_v), FALSE, FALSE, 0);
 #ifdef DEBUG
 	gint width, height,posx,posy;

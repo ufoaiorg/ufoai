@@ -4,6 +4,7 @@
 #include <string>
 #include <stdexcept>
 
+#include "radiant_i18n.h"
 #include "stringio.h"
 #include "stream/stringstream.h"
 #include "stream/textfilestream.h"
@@ -52,21 +53,21 @@ namespace toolbar {
 			// Found a button, load the values that are shared by both types
 			const std::string name 		= node.getAttributeValue("name");
 			const std::string icon 		= node.getAttributeValue("icon");
-			const std::string tooltip 	= node.getAttributeValue("tooltip");
+			const std::string tooltip 	= _(node.getAttributeValue("tooltip").c_str());
 			const std::string action 	= node.getAttributeValue("action");
 
 			if (nodeName == "toolbutton") {
 				// Create a new GtkToolButton and assign the right callback
 				toolItem = GTK_WIDGET(gtk_tool_button_new(NULL, name.c_str()));
 
-				const Callback cb = GlobalCommands_find(action.c_str()).m_callback;
+				const Callback cb = GlobalCommands_find(action).m_callback;
 				g_signal_connect_swapped(G_OBJECT(toolItem), "clicked", G_CALLBACK(cb.getThunk()), cb.getEnvironment());
 			}
 			else {
 				// Create a new GtkToggleToolButton and assign the right callback
 				toolItem = GTK_WIDGET(gtk_toggle_tool_button_new());
 
-				const Toggle toggle = GlobalToggles_find(action.c_str());
+				const Toggle toggle = GlobalToggles_find(action);
 				const Callback cb = toggle.m_command.m_callback;
 				guint handler = g_signal_connect_swapped(G_OBJECT(toolItem), "toggled",
 														 G_CALLBACK(cb.getThunk()), cb.getEnvironment());
@@ -75,6 +76,12 @@ namespace toolbar {
 				GtkToggleToolButton* toggleToolButton = GTK_TOGGLE_TOOL_BUTTON(toolItem);
 
 				toggle.m_exportCallback(ToggleButtonSetActiveCaller(*toggleToolButton));
+			}
+
+			// Set the tooltip, if not empty
+			if (!tooltip.empty()) {
+				gtk_tooltips_set_tip(_tooltips, GTK_WIDGET(toolItem), tooltip.c_str(), "");
+				//gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(toolItem), _tooltips, tooltip.c_str(), "");
 			}
 
 			// Load and assign the icon, if specified
@@ -104,6 +111,12 @@ namespace toolbar {
 			// Create a new toolbar
 			toolbar = gtk_toolbar_new();
 			gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
+			gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolbar), TRUE);
+
+			// Try to set the alignment, if the attribute is properly set
+			std::string align = node.getAttributeValue("align");
+
+			gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar), align == "vertical" ? GTK_ORIENTATION_VERTICAL : GTK_ORIENTATION_HORIZONTAL);
 
 			for (unsigned int i = 0; i < toolItemList.size(); i++) {
 				// Create and get the toolItem with the parsing
@@ -129,6 +142,9 @@ namespace toolbar {
 		xml::NodeList toolbarList = xmlDoc.findXPath("/ui//toolbar");
 
 		if (toolbarList.size() > 0) {
+			_tooltips = gtk_tooltips_new();
+			gtk_tooltips_enable(_tooltips);
+
 			for (unsigned int i = 0; i < toolbarList.size(); i++) {
 				std::string toolbarName = toolbarList[i].getAttributeValue("name");
 

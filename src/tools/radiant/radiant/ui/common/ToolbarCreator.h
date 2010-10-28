@@ -30,7 +30,7 @@ namespace toolbar {
 			GtkWidget* CreateToolItem(xml::Node& node, GtkToolbar*);
 
 			ToolbarMap _toolbars;
-
+			GtkTooltips* _tooltips;
 		public:
 			// Constructor
 			ToolbarCreator(const std::string& gameToolsPath, const std::string& uiXmlFile = "ui.xml");

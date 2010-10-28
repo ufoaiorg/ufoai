@@ -41,7 +41,6 @@
 #include "gtkutil/dialog.h"
 #include "gtkutil/filechooser.h"
 #include "gtkutil/menu.h"
-#include "gtkutil/toolbar.h"
 #include "commands.h"
 #include "gtkutil/IConv.h"
 
@@ -90,18 +89,6 @@ GtkMenuItem* create_menu_item_with_mnemonic (GtkMenu* menu, const std::string& m
 	const Command& command = GlobalCommands_find(commandName);
 	global_accel_group_connect(command.m_accelerator, command.m_callback);
 	return create_menu_item_with_mnemonic(menu, mnemonic, command, icon);
-}
-
-GtkButton* toolbar_append_button (GtkToolbar* toolbar, const std::string& description, const std::string& icon,
-		const std::string& commandName)
-{
-	return toolbar_append_button(toolbar, description, icon, GlobalCommands_find(commandName));
-}
-
-GtkToggleButton* toolbar_append_toggle_button (GtkToolbar* toolbar, const std::string& description,
-		const std::string& icon, const std::string& commandName)
-{
-	return toolbar_append_toggle_button(toolbar, description, icon, GlobalToggles_find(commandName));
 }
 
 // =============================================================================

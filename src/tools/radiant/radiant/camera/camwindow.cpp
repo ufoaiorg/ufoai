@@ -45,7 +45,6 @@
 
 #include "gtkutil/widget.h"
 #include "gtkutil/button.h"
-#include "gtkutil/toolbar.h"
 #include "gtkutil/glwidget.h"
 #include "gtkutil/GLWidgetSentry.h"
 #include "gtkutil/xorrectangle.h"
@@ -77,12 +76,6 @@ camwindow_globals_t g_camwindow_globals;
 
 // =============================================================================
 // CamWnd class
-
-void CamWnd_constructToolbar (GtkToolbar* toolbar)
-{
-	toolbar_append_toggle_button(toolbar, _("Cubic clip the camera view (\\)"), ui::icons::ICON_VIEW_CLIPPING,
-			"ToggleCubicClip");
-}
 
 void CamWnd_registerShortcuts ()
 {
