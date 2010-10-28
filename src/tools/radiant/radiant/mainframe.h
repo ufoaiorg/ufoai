@@ -320,6 +320,9 @@ void Radiant_detachHomePathsObserver (ModuleObserver& observer);
 void MainFrame_Construct ();
 void MainFrame_Destroy ();
 
+void hide_splash ();
+void show_splash ();
+
 SignalHandlerId XYWindowDestroyed_connect (const SignalHandler& handler);
 void XYWindowDestroyed_disconnect (SignalHandlerId id);
 MouseEventHandlerId XYWindowMouseDown_connect (const MouseEventHandler& handler);
