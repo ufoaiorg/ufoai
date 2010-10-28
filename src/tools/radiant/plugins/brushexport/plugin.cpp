@@ -59,7 +59,7 @@ namespace BrushExport
 		ASSERT_NOTNULL(g_mainwnd);
 		return "";
 	}
-	const char* getName ()
+	const std::string getName ()
 	{
 		return "Brush export Plugin";
 	}

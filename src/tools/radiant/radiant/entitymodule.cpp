@@ -29,6 +29,7 @@
 #include "igl.h"
 #include "ireference.h"
 #include "ifilter.h"
+#include "iregistry.h"
 #include "preferencesystem.h"
 #include "iradiant.h"
 #include "namespace.h"
@@ -47,7 +48,8 @@ class EntityDependencies: public GlobalRadiantModuleRef,
 		public GlobalReferenceModuleRef,
 		public GlobalFilterModuleRef,
 		public GlobalPreferenceSystemModuleRef,
-		public GlobalNamespaceModuleRef
+		public GlobalNamespaceModuleRef,
+		public GlobalRegistryModuleRef
 {
 };
 

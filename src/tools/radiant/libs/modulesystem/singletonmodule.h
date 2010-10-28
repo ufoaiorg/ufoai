@@ -32,7 +32,7 @@ template<typename API, typename Dependencies>
 class DefaultAPIConstructor
 {
 	public:
-		const char* getName ()
+		const std::string& getName () const
 		{
 			return typename API::Name();
 		}
@@ -51,7 +51,7 @@ template<typename API, typename Dependencies>
 class DependenciesAPIConstructor
 {
 	public:
-		const char* getName ()
+		const std::string& getName () const
 		{
 			return typename API::Name();
 		}

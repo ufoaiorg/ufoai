@@ -145,7 +145,6 @@ class RadiantCoreAPI
 			m_radiantcore.commandInsert = &GlobalCommands_insert;
 
 			m_radiantcore.getGamePath = &gamepath_get;
-			m_radiantcore.getGameName = &gamename_get;
 
 			m_radiantcore.getMapName = &getMapName;
 			m_radiantcore.getMapWorldEntity = getMapWorldEntity;

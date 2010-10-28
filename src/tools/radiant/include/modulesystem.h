@@ -92,9 +92,9 @@ class ModuleServer
 		virtual TextOutputStream& getWarningStream () = 0;
 		virtual DebugMessageHandler& getDebugMessageHandler () = 0;
 
-		virtual void registerModule (const char* type, int version, const char* name, Module& module) = 0;
-		virtual Module* findModule (const char* type, int version, const char* name) const = 0;  /*! Seeks for a Module and returns it */
-		virtual void foreachModule (const char* type, int version, const Visitor& visitor) = 0;
+		virtual void registerModule (const std::string& type, int version, const std::string& name, Module& module) = 0;
+		virtual Module* findModule (const std::string& type, int version, const std::string& name) const = 0;  /*! Seeks for a Module and returns it */
+		virtual void foreachModule (const std::string& type, int version, const Visitor& visitor) = 0;
 };
 
 /*!
@@ -239,7 +239,7 @@ class SingletonModuleRef
 		/*!
 		 * Point of entry of Singleton Module. Gets the module from GlobalModuleServer
 		 */
-		void initialise (const char* name)
+		void initialise (const std::string& name)
 		{
 			m_module = globalModuleServer().findModule(typename Type::Name(), typename Type::Version(), name);
 			if (m_module == 0) {
@@ -298,7 +298,7 @@ template<typename Type>
 class GlobalModuleRef
 {
 	public:
-		GlobalModuleRef (const char* name = "*")
+		GlobalModuleRef (const std::string& name = "*")
 		{
 			if (!globalModuleServer().getError()) {
 				GlobalModule<Type>::instance().initialise(name);

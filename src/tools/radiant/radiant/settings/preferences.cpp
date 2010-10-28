@@ -610,22 +610,10 @@ void PreferencesDialog_showDialog ()
 	}
 }
 
-void GameName_importString (const char* value)
-{
-	gamename_set(value);
-}
-typedef FreeCaller1<const char *, GameName_importString> GameNameImportStringCaller;
-void GameName_exportString (const StringImportCallback& importer)
-{
-	importer(gamename_get().c_str());
-}
-typedef FreeCaller1<const StringImportCallback&, GameName_exportString> GameNameExportStringCaller;
-
 static void RegisterPreferences (PreferenceSystem& preferences)
 {
 	preferences.registerPreference("LogConsoleToFile", LogConsoleImportStringCaller(), BoolExportStringCaller(
 			g_Console_enableLogfile));
-	preferences.registerPreference("GameName", GameNameImportStringCaller(), GameNameExportStringCaller());
 }
 
 void Preferences_Init ()

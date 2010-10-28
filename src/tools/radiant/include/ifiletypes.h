@@ -73,7 +73,7 @@ class IFileTypeRegistry
 		 * @param type
 		 * The FileTypePattern to associate with this module name.
 		 */
-		virtual void addType (const char* moduleType, const char* moduleName, filetype_t type) = 0;
+		virtual void addType (const std::string& moduleType, const std::string& moduleName, filetype_t type) = 0;
 		virtual void getTypeList (const std::string& moduleType, IFileTypeList* typelist) = 0;
 };
 

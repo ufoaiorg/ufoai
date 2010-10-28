@@ -59,7 +59,7 @@ class RadiantFileTypeRegistry: public IFileTypeRegistry
 		{
 			addType("*", "*", filetype_t(_("All Files"), "*"));
 		}
-		void addType (const char* moduleType, const char* moduleName, filetype_t type)
+		void addType (const std::string& moduleType, const std::string& moduleName, filetype_t type)
 		{
 			m_typelists[moduleType].push_back(filetype_copy_t(moduleName, type));
 		}

@@ -52,30 +52,16 @@ QEGlobals_t g_qeglobals;
  */
 void QE_InitVFS (void)
 {
-	const std::string& gamename = gamename_get();
-	const std::string& basegame = gamename_get();
-#if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
-	const std::string& userRoot = g_qeglobals.m_userEnginePath;
-#endif
-	const std::string& globalRoot = EnginePath_get();
-
-	// if we have a mod dir
-	if (gamename != basegame) {
-#if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
-		// ~/.<gameprefix>/<fs_game>
-		GlobalFileSystem().initDirectory(userRoot + gamename + "/");
-#endif
-
-		// <fs_basepath>/<fs_game>
-		GlobalFileSystem().initDirectory(globalRoot + gamename + "/");
-	}
+	const std::string& basegame = "base";
 
 #if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
 	// ~/.<gameprefix>/<fs_main>
+	const std::string& userRoot = g_qeglobals.m_userEnginePath;
 	GlobalFileSystem().initDirectory(userRoot + basegame + "/");
 #endif
 
 	// <fs_basepath>/<fs_main>
+	const std::string& globalRoot = EnginePath_get();
 	GlobalFileSystem().initDirectory(globalRoot + basegame + "/");
 }
 

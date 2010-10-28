@@ -28,6 +28,7 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <string>
 
 #include "string/string.h"
 #include "signal/signal.h"
@@ -37,39 +38,40 @@
 
 class StringEqualPredicate
 {
-		const char* m_string;
+		const std::string& m_string;
 	public:
-		StringEqualPredicate (const char* string) :
+		StringEqualPredicate (const std::string& string) :
 			m_string(string)
 		{
 		}
-		bool operator() (const char* other) const
+		bool operator() (const std::string& other) const
 		{
-			return string_equal(m_string, other);
+			return m_string == other;
 		}
 };
 
 template<std::size_t SIZE>
 class TypeIdMap
 {
-		typedef const char* TypeName;
-		typedef TypeName TypeNames[SIZE];
-		TypeNames m_typeNames;
-		TypeName* m_typeNamesEnd;
+		typedef std::vector<std::string> TypeMap;
+		TypeMap m_typeNames;
 
 	public:
-		TypeIdMap () :
-			m_typeNamesEnd(m_typeNames)
+		TypeIdMap ()
 		{
 		}
-		TypeId getTypeId (const char* name)
+		TypeId getTypeId (const std::string& name)
 		{
-			TypeName* i = std::find_if(m_typeNames, m_typeNamesEnd, StringEqualPredicate(name));
-			if (i == m_typeNamesEnd) {
-				ASSERT_MESSAGE(m_typeNamesEnd != m_typeNames + SIZE, "reached maximum number of type names supported (" << string::toString(SIZE) << ")");
-				*m_typeNamesEnd++ = name;
+			int pos = 0;
+			for	(TypeMap::const_iterator i = m_typeNames.begin(); i != m_typeNames.end();
+				++i) {
+				if (*i == name)
+					return pos;
+				++pos;
 			}
-			return i - m_typeNames;
+
+			m_typeNames.push_back(name);
+			return pos;
 		}
 };
 
@@ -184,12 +186,12 @@ class CompiledGraph: public scene::Graph, public scene::Instantiable::Observer
 			m_boundsChanged.disconnect(id);
 		}
 
-		TypeId getNodeTypeId (const char* name)
+		TypeId getNodeTypeId (const std::string& name)
 		{
 			return m_nodeTypeIds.getTypeId(name);
 		}
 
-		TypeId getInstanceTypeId (const char* name)
+		TypeId getInstanceTypeId (const std::string& name)
 		{
 			return m_instanceTypeIds.getTypeId(name);
 		}

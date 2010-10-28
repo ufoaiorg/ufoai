@@ -23,9 +23,10 @@
 #define INCLUDED_IPLUGIN_H
 
 #include "generic/constant.h"
+#include <string>
 
 typedef const char* (* PFN_QERPLUG_INIT) (void* hApp, void* pMainWidget);
-typedef const char* (* PFN_QERPLUG_GETNAME) ();
+typedef const std::string (* PFN_QERPLUG_GETNAME) ();
 typedef const char* (* PFN_QERPLUG_GETCOMMANDLIST) ();
 typedef const char* (* PFN_QERPLUG_GETCOMMANDTITLELIST) ();
 typedef void (* PFN_QERPLUG_DISPATCH) (const char* p, float* vMin, float* vMax, bool bSingleBrush);

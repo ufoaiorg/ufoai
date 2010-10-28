@@ -22,6 +22,8 @@
 #if !defined(INCLUDED_GENERIC_CONSTANT_H)
 #define INCLUDED_GENERIC_CONSTANT_H
 
+#include <string>
+
 /// \file
 /// \brief Language extensions for constants that are guaranteed to be evaluated at compile-time.
 
@@ -30,7 +32,7 @@ template<typename Type>
 struct ConstantWrapper
 {
 		typedef typename Type::Value Value;
-		operator Value () const
+		operator const Value& () const
 		{
 			return Type::evaluate();
 		}
@@ -41,8 +43,8 @@ inline TextOutputStreamType& ostream_write (TextOutputStreamType& ostream, const
 	return ostream_write(ostream, typename Type::Value(c));
 }
 
-#define TYPE_CONSTANT(name, value, type) struct name##_CONSTANT_ { typedef type Value; static Value evaluate() { return value; } }; typedef ConstantWrapper<name##_CONSTANT_> name
-#define STRING_CONSTANT(name, value) TYPE_CONSTANT(name, value, const char *)
+#define TYPE_CONSTANT(name, value, type) struct name##_CONSTANT_ { typedef type Value; static const Value& evaluate() { static Value val = value; return val; } }; typedef ConstantWrapper<name##_CONSTANT_> name
+#define STRING_CONSTANT(name, value) TYPE_CONSTANT(name, value, std::string)
 #define INTEGER_CONSTANT(name, value) TYPE_CONSTANT(name, value, int)
 
 STRING_CONSTANT(EmptyString, "");

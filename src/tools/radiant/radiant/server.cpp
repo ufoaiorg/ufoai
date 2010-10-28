@@ -74,17 +74,17 @@ class RadiantModuleServer: public ModuleServer
 			return globalDebugMessageHandler();
 		}
 
-		void registerModule (const char* type, int version, const char* name, Module& module)
+		void registerModule (const std::string& type, int version, const std::string& name, Module& module)
 		{
 			ASSERT_NOTNULL(&module);
 			if (!m_modules.insert(Modules_::value_type(ModuleKey(ModuleType(type, version), name), &module)).second) {
-				g_warning("module already registered: type='%s' name='%s'\n", type, name);
+				g_warning("module already registered: type='%s' name='%s'\n", type.c_str(), name.c_str());
 			} else {
-				g_message("Module Registered: type='%s' version='%i' name='%s'\n", type, version, name);
+				g_message("Module Registered: type='%s' version='%i' name='%s'\n", type.c_str(), version, name.c_str());
 			}
 		}
 
-		Module* findModule (const char* type, int version, const char* name) const
+		Module* findModule (const std::string& type, int version, const std::string& name) const
 		{
 			Modules_::const_iterator i = m_modules.find(ModuleKey(ModuleType(type, version), name));
 			if (i != m_modules.end()) {
@@ -93,11 +93,11 @@ class RadiantModuleServer: public ModuleServer
 			return 0;
 		}
 
-		void foreachModule (const char* type, int version, const Visitor& visitor)
+		void foreachModule (const std::string& type, int version, const Visitor& visitor)
 		{
 			for (Modules_::const_iterator i = m_modules.begin(); i != m_modules.end(); ++i) {
-				if (string_equal((*i).first.first.first.c_str(), type)) {
-					visitor.visit((*i).first.second.c_str(), *(*i).second);
+				if ((*i).first.first.first == type) {
+					visitor.visit((*i).first.second, *(*i).second);
 				}
 			}
 		}

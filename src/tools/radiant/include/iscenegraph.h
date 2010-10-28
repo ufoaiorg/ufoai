@@ -134,8 +134,8 @@ namespace scene
 			/** @brief Remove a \p callback to be invoked when the bounds of any instance in the scene change. */
 			virtual void removeBoundsChangedCallback (SignalHandlerId id) = 0;
 
-			virtual TypeId getNodeTypeId (const char* name) = 0;
-			virtual TypeId getInstanceTypeId (const char* name) = 0;
+			virtual TypeId getNodeTypeId (const std::string& name) = 0;
+			virtual TypeId getInstanceTypeId (const std::string& name) = 0;
 	};
 
 	class Traversable
