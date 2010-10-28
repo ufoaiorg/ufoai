@@ -828,6 +828,43 @@ static void Cvar_Set_f (void)
 		Cvar_Set(Cmd_Argv(1), Cmd_Argv(2));
 }
 
+/**
+ * @brief Allows switching boolean cvars between zero and not-zero from console
+ */
+static void Cvar_Switch_f (void)
+{
+	const int c = Cmd_Argc();
+	if (c != 2 && c != 3) {
+		Com_Printf("Usage: %s <variable> [u / s / a]\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (c == 3) {
+		const char *arg = Cmd_Argv(2);
+		int flags = 0;
+
+		while (arg[0] != '\0') {
+			switch (arg[0]) {
+			case 'u':
+				flags |= CVAR_USERINFO;
+				break;
+			case 's':
+				flags |= CVAR_SERVERINFO;
+				break;
+			case 'a':
+				flags |= CVAR_ARCHIVE;
+				break;
+			default:
+				Com_Printf("invalid flags %c given\n", arg[0]);
+			}
+			arg++;
+		}
+		Cvar_FullSet(Cmd_Argv(1), va("%i", !Cvar_GetInteger(Cmd_Argv(1))), flags);
+	} else {
+		Com_Printf("val: %i\n", Cvar_GetInteger(Cmd_Argv(1)));
+		Cvar_Set(Cmd_Argv(1), va("%i", !Cvar_GetInteger(Cmd_Argv(1))));
+	}
+}
 
 /**
  * @brief Allows copying variables
@@ -1115,6 +1152,7 @@ void Cvar_Init (void)
 	Cmd_AddCommand("setold", Cvar_SetOld_f, "Restore the cvar old value");
 	Cmd_AddCommand("del", Cvar_Del_f, "Delete a cvar");
 	Cmd_AddCommand("set", Cvar_Set_f, "Set a cvar value");
+	Cmd_AddCommand("switch", Cvar_Switch_f, "Switch a boolean cvar value");
 	Cmd_AddCommand("add", Cvar_Add_f, "Add a value to a cvar");
 	Cmd_AddCommand("define", Cvar_Define_f, "Defines a cvar if it does not exist");
 	Cmd_AddCommand("mod", Cvar_Mod_f, "Apply a modulo on a cvar");
