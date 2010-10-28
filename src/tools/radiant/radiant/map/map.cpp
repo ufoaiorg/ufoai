@@ -1004,12 +1004,6 @@ void Scene_Exclude_All (bool exclude)
 	GlobalSceneGraph().traverse(ExcludeAllWalker(exclude));
 }
 
-bool Instance_isSelected (const scene::Instance& instance)
-{
-	const Selectable* selectable = Instance_getSelectable(instance);
-	return selectable != 0 && selectable->isSelected();
-}
-
 class ExcludeSelectedWalker: public scene::Graph::Walker
 {
 		bool m_exclude;
@@ -1422,7 +1416,7 @@ void Scene_parentSelected (void)
  */
 void NewMap (void)
 {
-	if (ConfirmModified("New Map")) {
+	if (ConfirmModified(_("New Map"))) {
 		Map_RegionOff();
 		Map_Free();
 		Map_New();

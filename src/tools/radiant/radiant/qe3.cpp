@@ -72,7 +72,7 @@ void QE_InitVFS (void)
  * @todo Let his also count the filtered brushes and entities - to be able to
  * use this counter for level optimizations
  */
-void QE_UpdateStatusBar (void)
+inline void QE_UpdateStatusBar (void)
 {
 	char buffer[128];
 	sprintf(buffer, _("Brushes: %d Entities: %d"), int(g_brushCount.get()), int(g_entityCount.get()));
