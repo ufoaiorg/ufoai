@@ -31,6 +31,7 @@
 
 #include "../brush/TexDef.h"
 #include "ientity.h"
+#include "iregistry.h"
 #include "igl.h"
 #include "ibrush.h"
 #include "iundo.h"
@@ -100,7 +101,6 @@ struct xywindow_globals_private_t
 
 		bool m_bCamXYUpdate;
 		bool m_bChaseMouse;
-		bool m_bSizePaint;
 
 		xywindow_globals_private_t () :
 			d_showgrid(true),
@@ -111,7 +111,7 @@ struct xywindow_globals_private_t
 
 			show_blocks(false),
 
-			m_bCamXYUpdate(true), m_bChaseMouse(true), m_bSizePaint(true)
+			m_bCamXYUpdate(true), m_bChaseMouse(true)
 		{
 		}
 
@@ -1689,8 +1689,8 @@ void XYWnd::draw ()
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 
-	// size info
-	if (g_xywindow_globals_private.m_bSizePaint && GlobalSelectionSystem().countSelected() != 0) {
+	// greebo: Check, if the brush/patch size info should be displayed (if there are any items selected)
+	if (GlobalRegistry().get("user/ui/showSizeInfo") == "1" && GlobalSelectionSystem().countSelected() != 0) {
 		Vector3 min, max;
 		Select_GetBounds(min, max);
 		drawSizeInfo(nDim1, nDim2, min, max);
@@ -1896,12 +1896,6 @@ void ToggleShowCrosshair ()
 	XY_UpdateAllWindows();
 }
 
-void ToggleShowSizeInfo ()
-{
-	g_xywindow_globals_private.m_bSizePaint = !g_xywindow_globals_private.m_bSizePaint;
-	XY_UpdateAllWindows();
-}
-
 void ToggleShowGrid ()
 {
 	g_xywindow_globals_private.d_showgrid = !g_xywindow_globals_private.d_showgrid;
@@ -2035,13 +2029,11 @@ void XYShow_registerCommands ()
 void XYWnd_registerShortcuts ()
 {
 	command_connect_accelerator("ToggleCrosshairs");
-	command_connect_accelerator("ToggleSizePaint");
 }
 
 void Orthographic_constructPreferences (PreferencesPage& page)
 {
 	page.appendCheckBox("", _("Solid selection boxes"), g_xywindow_globals.m_bNoStipple);
-	page.appendCheckBox("", _("Display size info"), g_xywindow_globals_private.m_bSizePaint);
 	page.appendCheckBox("", _("Chase mouse during drags"), g_xywindow_globals_private.m_bChaseMouse);
 	page.appendCheckBox("", _("Update views on camera move"), g_xywindow_globals_private.m_bCamXYUpdate);
 }
@@ -2082,7 +2074,6 @@ void XYWindow_Construct ()
 	// general commands
 	GlobalRadiant().commandInsert("ToggleCrosshairs", FreeCaller<ToggleShowCrosshair> (), Accelerator('X',
 			(GdkModifierType) GDK_SHIFT_MASK));
-	GlobalRadiant().commandInsert("ToggleSizePaint", FreeCaller<ToggleShowSizeInfo> (), Accelerator('J'));
 	GlobalRadiant().commandInsert("ToggleGrid", FreeCaller<ToggleShowGrid> (), Accelerator('0'));
 
 	GlobalRadiant().commandInsert("ZoomIn", FreeCaller<XY_ZoomIn> (), Accelerator(GDK_Delete));
@@ -2094,8 +2085,6 @@ void XYWindow_Construct ()
 	// register preference settings
 	GlobalPreferenceSystem().registerPreference("ChaseMouse", BoolImportStringCaller(
 			g_xywindow_globals_private.m_bChaseMouse), BoolExportStringCaller(g_xywindow_globals_private.m_bChaseMouse));
-	GlobalPreferenceSystem().registerPreference("SizePainting", BoolImportStringCaller(
-			g_xywindow_globals_private.m_bSizePaint), BoolExportStringCaller(g_xywindow_globals_private.m_bSizePaint));
 	GlobalPreferenceSystem().registerPreference("NoStipple", BoolImportStringCaller(g_xywindow_globals.m_bNoStipple),
 			BoolExportStringCaller(g_xywindow_globals.m_bNoStipple));
 	GlobalPreferenceSystem().registerPreference("CamXYUpdate", BoolImportStringCaller(

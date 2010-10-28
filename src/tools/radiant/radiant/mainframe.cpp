@@ -933,6 +933,11 @@ void ClipperToolExport (const BoolImportCallback& importCallback)
 	importCallback(GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eClip);
 }
 
+void ShowSizeInfoExport (const BoolImportCallback& importCallback)
+{
+	importCallback(GlobalRegistry().get("user/ui/showSizeInfo") == "1");
+}
+
 FreeCaller1<const BoolImportCallback&, TranslateToolExport> g_translatemode_button_caller;
 BoolExportCallback g_translatemode_button_callback(g_translatemode_button_caller);
 ToggleItem g_translatemode_button(g_translatemode_button_callback);
@@ -952,6 +957,10 @@ ToggleItem g_dragmode_button(g_dragmode_button_callback);
 FreeCaller1<const BoolImportCallback&, ClipperToolExport> g_clipper_button_caller;
 BoolExportCallback g_clipper_button_callback(g_clipper_button_caller);
 ToggleItem g_clipper_button(g_clipper_button_callback);
+
+FreeCaller1<const BoolImportCallback&, ShowSizeInfoExport> g_showSizeInfoCaller;
+BoolExportCallback g_showSizeInfoCallback(g_showSizeInfoCaller);
+ToggleItem g_showSizeInfoButton(g_showSizeInfoCallback);
 
 void ToolChanged (void)
 {
@@ -1057,6 +1066,17 @@ void ClipperMode (void)
 		ToolChanged();
 		ModeChangeNotify();
 	}
+}
+
+// greebo: This toggles the brush/patch size info display in the ortho views
+void ToggleShowSizeInfo ()
+{
+	if (GlobalRegistry().get("user/ui/showSizeInfo") == "1") {
+		GlobalRegistry().set("user/ui/showSizeInfo", "0");
+	} else {
+		GlobalRegistry().set("user/ui/showSizeInfo", "1");
+	}
+	SceneChangeNotify();
 }
 
 void Texdef_Rotate (float angle)
@@ -1554,7 +1574,6 @@ static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 			menu_tearoff(menu_in_menu);
 		create_menu_item_with_mnemonic(menu_in_menu, _("Toggle Grid"), "ToggleGrid");
 		create_menu_item_with_mnemonic(menu_in_menu, _("Toggle Crosshairs"), "ToggleCrosshairs");
-		create_menu_item_with_mnemonic(menu_in_menu, _("Toggle Sizeinfo"), "ToggleSizePaint");
 		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show _Angles"), "ShowAngles");
 		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show _Names"), "ShowNames");
 		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Blocks"), "ShowBlocks");
@@ -1562,6 +1581,7 @@ static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Window Outline"), "ShowWindowOutline");
 		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Axes"), "ShowAxes");
 		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Workzone"), "ShowWorkzone");
+		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Size Info"), "ToggleShowSizeInfo");
 	}
 
 	menu_separator(menu);
@@ -2470,6 +2490,9 @@ void MainFrame_Construct (void)
 	GlobalCommands_insert("ToolsGenerateMaterials", FreeCaller<ToolsGenerateMaterials> ());
 	GlobalToggles_insert("PlaySounds", FreeCaller<GlobalSoundManager_switchPlaybackEnabledFlag> (),
 			ToggleItem::AddCallbackCaller(g_soundPlaybackEnabled_button), accelerator_null());
+
+	GlobalToggles_insert("ToggleShowSizeInfo", FreeCaller<ToggleShowSizeInfo> (), ToggleItem::AddCallbackCaller(
+			g_showSizeInfoButton));
 
 	GlobalToggles_insert("ToggleClipper", FreeCaller<ClipperMode> (), ToggleItem::AddCallbackCaller(g_clipper_button),
 			Accelerator('X'));

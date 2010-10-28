@@ -249,6 +249,7 @@ class XMLRegistry: public Registry
 				return std::string("");
 			}
 		}
+
 		/* Gets a key containing a float from the registry, basically loads the string and
 		 * converts it into a float */
 		float getFloat(const std::string& key) {
