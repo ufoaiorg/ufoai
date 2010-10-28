@@ -161,7 +161,7 @@ class PreferenceGroup
 		virtual ~PreferenceGroup ()
 		{
 		}
-		virtual PreferencesPage createPage (const char* treeName, const char* frameName) = 0;
+		virtual PreferencesPage createPage (const std::string& treeName, const std::string& frameName) = 0;
 };
 
 typedef Callback1<PreferenceGroup&> PreferenceGroupCallback;

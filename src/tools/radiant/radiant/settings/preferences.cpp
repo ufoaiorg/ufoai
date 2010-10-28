@@ -327,7 +327,7 @@ inline GtkWidget* getVBox (GtkWidget* page)
 	return gtk_bin_get_child(GTK_BIN(page));
 }
 
-GtkTreeIter PreferenceTree_appendPage (GtkTreeStore* store, GtkTreeIter* parent, const char* name, GtkWidget* page)
+GtkTreeIter PreferenceTree_appendPage (GtkTreeStore* store, GtkTreeIter* parent, const std::string& name, GtkWidget* page)
 {
 	GtkTreeIter group;
 	gtk_tree_store_append(store, &group, parent);
@@ -335,12 +335,12 @@ GtkTreeIter PreferenceTree_appendPage (GtkTreeStore* store, GtkTreeIter* parent,
 	return group;
 }
 
-GtkWidget* PreferencePages_addPage (GtkWidget* notebook, const char* name)
+GtkWidget* PreferencePages_addPage (GtkWidget* notebook, const std::string& name)
 {
-	GtkWidget* preflabel = gtk_label_new(name);
+	GtkWidget* preflabel = gtk_label_new(name.c_str());
 	gtk_widget_show(preflabel);
 
-	GtkWidget* pageframe = gtk_frame_new(name);
+	GtkWidget* pageframe = gtk_frame_new(name.c_str());
 	gtk_container_set_border_width(GTK_CONTAINER(pageframe), 4);
 	gtk_widget_show(pageframe);
 
@@ -366,7 +366,7 @@ class PreferenceTreeGroup: public PreferenceGroup
 			m_dialog(dialog), m_notebook(notebook), m_store(store), m_group(group)
 		{
 		}
-		PreferencesPage createPage (const char* treeName, const char* frameName)
+		PreferencesPage createPage (const std::string& treeName, const std::string& frameName)
 		{
 			GtkWidget* page = PreferencePages_addPage(m_notebook, frameName);
 			PreferenceTree_appendPage(m_store, &m_group, treeName, page);
