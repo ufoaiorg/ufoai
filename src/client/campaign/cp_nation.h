@@ -24,8 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_NATION_H
-#define CLIENT_CL_NATION_H
+#ifndef CP_NATION_H
+#define CP_NATION_H
 
 /**
  * @brief Detailed information about the nation relationship (currently per month, but could be used elsewhere).
@@ -84,7 +84,11 @@ void CL_ParseNations(const char *name, const char **text);
 void CL_ParseCities(const char *name, const char **text);
 qboolean NAT_ScriptSanityCheck(void);
 
+void NAT_HandleBudget(const struct campaign_s *campaign);
+void NAT_BackupMonthlyData(void);
+
 void NAT_InitStartup(void);
+void NAT_Shutdown(void);
 
 #define MAX_NATIONS 8
 

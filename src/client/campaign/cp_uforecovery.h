@@ -77,5 +77,7 @@ void US_RemoveUFOsExceedingCapacity(installation_t *installation);
  */
 #define US_UFOStored() (US_GetNext(NULL) != NULL)
 
+void UR_InitStartup(void);
+void UR_Shutdown(void);
 
 #endif

@@ -120,7 +120,6 @@ $(TARGET)_SRCS      = \
 	client/campaign/cp_messages.c \
 	client/campaign/cp_missions.c \
 	client/campaign/cp_mission_triggers.c \
-	client/campaign/cp_nations.c \
 	client/campaign/cp_parse.c \
 	client/campaign/cp_rank.c \
 	client/campaign/cp_team.c \

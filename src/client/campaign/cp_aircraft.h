@@ -311,4 +311,7 @@ qboolean AIR_CanIntercept(const aircraft_t *aircraft);
 int AIR_GetOperationRange(const aircraft_t *aircraft);
 int AIR_GetRemainingRange(const aircraft_t *aircraft);
 
+void AIR_InitStartup(void);
+void AIR_Shutdown(void);
+
 #endif

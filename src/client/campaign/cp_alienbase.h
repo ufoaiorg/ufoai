@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_ALIENBASE_H
-#define CLIENT_CL_ALIENBASE_H
+#ifndef CP_ALIENBASE_H
+#define CP_ALIENBASE_H
 
 /** @brief Alien Base */
 typedef struct alienBase_s {
@@ -51,5 +51,6 @@ int AB_GetAlienBaseNumber(void);
 void CP_SpawnAlienBaseMission(alienBase_t *alienBase);
 
 void AB_InitStartup(void);
+void AB_Shutdown(void);
 
-#endif	/* CLIENT_CL_ALIENBASE_H */
+#endif	/* CP_ALIENBASE_H */

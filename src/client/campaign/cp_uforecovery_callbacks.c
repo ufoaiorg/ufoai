@@ -526,102 +526,6 @@ static void UR_DialogStartSell_f (void)
 	UR_DialogRecoveryDone();
 }
 
-
-/* === UFO Storing === */
-
-#ifdef DEBUG
-/**
- * @brief Debug callback to list ufostores
- */
-static void US_ListStoredUFOs_f (void)
-{
-	storedUFO_t *ufo = NULL;
-
-	while ((ufo = US_GetNext(ufo)) != NULL) {
-		const base_t *prodBase = PR_ProductionBase(ufo->disassembly);
-		dateLong_t date;
-
-		Com_Printf("IDX: %i\n", ufo->idx);
-		Com_Printf("id: %s\n", ufo->id);
-		Com_Printf("stored at %s\n", (ufo->installation) ? ufo->installation->name : "NOWHERE");
-
-		CL_DateConvertLong(&(ufo->arrive), &date);
-		Com_Printf("arrived at: %i %s %02i, %02i:%02i\n", date.year,
-		Date_GetMonthName(date.month - 1), date.day, date.hour, date.min);
-
-		if (ufo->ufoTemplate->tech->base)
-			Com_Printf("tech being researched at %s\n", ufo->ufoTemplate->tech->base->name);
-		if (prodBase)
-			Com_Printf("being disassembled at %s\n", prodBase->name);
-	}
-}
-
-/**
- * @brief Adds an UFO to the stores
- */
-static void US_StoreUFO_f (void)
-{
-	char ufoId[MAX_VAR];
-	int installationIDX;
-	installation_t *installation;
-	aircraft_t *ufoType = NULL;
-	int i;
-
-	if (Cmd_Argc() <= 2) {
-		Com_Printf("Usage: %s <ufoType> <installationIdx>\n", Cmd_Argv(0));
-		return;
-	}
-
-	Q_strncpyz(ufoId, Cmd_Argv(1), sizeof(ufoId));
-	installationIDX = atoi(Cmd_Argv(2));
-
-	/* Get The UFO Yard */
-	if (installationIDX < 0 || installationIDX >= MAX_INSTALLATIONS) {
-		Com_Printf("US_StoreUFO_f: Invalid Installation index.\n");
-		return;
-	}
-	installation = INS_GetFoundedInstallationByIDX(installationIDX);
-	if (!installation) {
-		Com_Printf("US_StoreUFO_f: There is no Installation: idx=%i.\n", installationIDX);
-		return;
-	}
-
-	/* Get UFO Type */
-	for (i = 0; i < ccs.numAircraftTemplates; i++) {
-		if (strstr(ccs.aircraftTemplates[i].id, ufoId)) {
-			ufoType = &ccs.aircraftTemplates[i];
-			break;
-		}
-	}
-	if (ufoType == NULL) {
-		Com_Printf("US_StoreUFO_f: In valid UFO Id.\n");
-		return;
-	}
-
-	US_StoreUFO(ufoType, installation, ccs.date, 1.0f);
-}
-
-/**
- * @brief Removes an UFO from the stores
- */
-static void US_RemoveStoredUFO_f (void)
-{
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <idx>\n", Cmd_Argv(0));
-		return;
-	} else {
-		const int idx = atoi(Cmd_Argv(1));
-		storedUFO_t *storedUFO = US_GetStoredUFOByIDX(idx);
-		if (!storedUFO) {
-			Com_Printf("US_RemoveStoredUFO_f: No such ufo index.\n");
-			return;
-		}
-		US_RemoveStoredUFO(storedUFO);
-	}
-}
-
-#endif
-
 void UR_InitCallbacks (void)
 {
 	Cmd_AddCommand("cp_uforecovery_init", UR_DialogInit_f, "Function to trigger UFO Recovered event");
@@ -631,11 +535,6 @@ void UR_InitCallbacks (void)
 	Cmd_AddCommand("cp_uforecovery_store_start", UR_DialogStartStore_f, "Function to start UFO recovery processing.");
 	Cmd_AddCommand("cp_uforecovery_sell_start", UR_DialogStartSell_f, "Function to start UFO selling processing.");
 	Cmd_AddCommand("cp_uforecovery_sort", UR_DialogSortByColumn_f, "Sorts nations and update ui state.");
-#ifdef DEBUG
-	Cmd_AddCommand("debug_liststoredufos", US_ListStoredUFOs_f, "Debug function to list UFOs in Hangars.");
-	Cmd_AddCommand("debug_storeufo", US_StoreUFO_f, "Debug function to Add UFO to Hangars.");
-	Cmd_AddCommand("debug_removestoredufo", US_RemoveStoredUFO_f, "Debug function to Remove UFO from Hangars.");
-#endif
 }
 
 void UR_ShutdownCallbacks (void)
@@ -647,9 +546,4 @@ void UR_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("cp_uforecovery_store_start");
 	Cmd_RemoveCommand("cp_uforecovery_sell_start");
 	Cmd_RemoveCommand("cp_uforecovery_sort");
-#ifdef DEBUG
-	Cmd_RemoveCommand("debug_liststoredufos");
-	Cmd_RemoveCommand("debug_storeufo");
-	Cmd_RemoveCommand("debug_removestoredufo");
-#endif
 }

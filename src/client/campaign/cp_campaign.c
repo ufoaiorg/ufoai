@@ -41,18 +41,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_alien_interest.h"
 #include "cp_missions.h"
 #include "cp_mission_triggers.h"
-#include "cp_nations.h"
+#include "cp_nation.h"
 #include "cp_statistics.h"
 #include "cp_time.h"
 #include "cp_xvi.h"
-#include "cp_aircraft_callbacks.h"
 #include "cp_fightequip_callbacks.h"
 #include "cp_produce_callbacks.h"
-#include "cp_transfer_callbacks.h"
-#include "cp_employee_callbacks.h"
+#include "cp_transfer.h"
 #include "cp_market_callbacks.h"
 #include "cp_research_callbacks.h"
-#include "cp_uforecovery_callbacks.h"
+#include "cp_uforecovery.h"
 #include "save/save_campaign.h"
 
 struct memPool_s *cp_campaignPool;		/**< reset on every game restart */
@@ -558,7 +556,7 @@ const int DETECTION_INTERVAL = (SECONDS_PER_HOUR / 2);
 /**
  * @brief Called every frame when we are in geoscape view
  * @note Called for node types UI_MAP and UI_3DMAP
- * @sa CP_NationHandleBudget
+ * @sa NAT_HandleBudget
  * @sa B_UpdateBaseData
  * @sa CL_CampaignRunAircraft
  */
@@ -657,8 +655,8 @@ void CL_CampaignRun (campaign_t *campaign)
 		CL_DateConvertLong(&ccs.date, &date);
 		/* every first day of a month */
 		if (date.day == 1 && ccs.paid && B_AtLeastOneExists()) {
-			CP_NationBackupMonthlyData();
-			CP_NationHandleBudget(campaign);
+			NAT_BackupMonthlyData();
+			NAT_HandleBudget(campaign);
 			ccs.paid = qfalse;
 		} else if (date.day > 1)
 			ccs.paid = qtrue;
@@ -1240,32 +1238,6 @@ static void CL_DebugFullCredits_f (void)
 {
 	CL_UpdateCredits(MAX_CREDITS);
 }
-
-/**
- * @brief Debug function to add 5 new unhired employees of each type
- * @note called with debug_addemployees
- */
-static void CL_DebugNewEmployees_f (void)
-{
-	int j;
-	nation_t *nation = &ccs.nations[0];	/**< This is just a debugging function, nation does not matter */
-
-	for (j = 0; j < 5; j++)
-		/* Create a scientist */
-		E_CreateEmployee(EMPL_SCIENTIST, nation, NULL);
-
-	for (j = 0; j < 5; j++)
-		/* Create a pilot. */
-		E_CreateEmployee(EMPL_PILOT, nation, NULL);
-
-	for (j = 0; j < 5; j++)
-		/* Create a soldier. */
-		E_CreateEmployee(EMPL_SOLDIER, nation, NULL);
-
-	for (j = 0; j < 5; j++)
-		/* Create a worker. */
-		E_CreateEmployee(EMPL_WORKER, nation, NULL);
-}
 #endif
 
 /* ===================================================================== */
@@ -1285,11 +1257,7 @@ static const cmdList_t game_commands[] = {
 	{"map_scroll", MAP_Scroll_f, NULL},
 	{"cp_start_xvi_spreading", CP_StartXVISpreading_f, "Start XVI spreading"},
 #ifdef DEBUG
-	{"debug_listaircraftsample", AIR_ListAircraftSamples_f, "Show aircraft parameter on game console"},
-	{"debug_listaircraft", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},
-	{"debug_listaircraftidx", AIR_ListCraftIndexes_f, "Debug function to list local/global aircraft indexes"},
 	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"},
-	{"debug_addemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type"},
 	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
 	{"debug_listitem", CL_DebugShowItems_f, "Debug function to show all items in base storage"},
 #endif
@@ -1306,18 +1274,14 @@ static const cmdList_t game_commands[] = {
 static void CP_AddCampaignCallbackCommands (void)
 {
 	AIM_InitCallbacks();
-	AIR_InitCallbacks();
 	B_InitCallbacks();
 	BDEF_InitCallbacks();
 	BS_InitCallbacks();
 	CP_TEAM_InitCallbacks();
-	E_InitCallbacks();
 	HOS_InitCallbacks();
 	INS_InitCallbacks();
-	TR_InitCallbacks();
 	PR_InitCallbacks();
 	RS_InitCallbacks();
-	UR_InitCallbacks();
 }
 
 static void CP_AddCampaignCommands (void)
@@ -1340,18 +1304,14 @@ static void CP_AddCampaignCommands (void)
 static void CP_RemoveCampaignCallbackCommands (void)
 {
 	AIM_ShutdownCallbacks();
-	AIR_ShutdownCallbacks();
 	B_ShutdownCallbacks();
 	BDEF_ShutdownCallbacks();
 	BS_ShutdownCallbacks();
 	CP_TEAM_ShutdownCallbacks();
-	E_ShutdownCallbacks();
 	HOS_ShutdownCallbacks();
 	INS_ShutdownCallbacks();
-	TR_ShutdownCallbacks();
 	PR_ShutdownCallbacks();
 	RS_ShutdownCallbacks();
-	UR_ShutdownCallbacks();
 	MSO_Shutdown();
 	UP_Shutdown();
 }
@@ -1442,9 +1402,27 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 		CL_ScriptSanityCheck();
 }
 
-void CP_CampaignExit (void)
+/**
+ * @brief Campaign closing actions
+ */
+void CP_Shutdown (void)
 {
 	if (CP_IsRunning()) {
+		int i;
+
+		AB_Shutdown();
+		AIR_Shutdown();
+		NAT_Shutdown();
+		MIS_Shutdown();
+		TR_Shutdown();
+		UR_Shutdown();
+
+		/* @todo Where this is belongs? */
+		for (i = 0; i < ccs.numAlienCategories; i++) {
+			alienTeamCategory_t *alienCat = &ccs.alienCategories[i];
+			LIST_Delete(&alienCat->equipment);
+		}
+
 		cl_geoscape_overlay->integer = 0;
 		/* singleplayer commands are no longer available */
 		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
@@ -1484,23 +1462,7 @@ campaign_t* CL_GetCampaign (const char* name)
 void CL_ResetSinglePlayerData (void)
 {
 	int i;
-	aircraft_t *craft = NULL;
 
-	/** @todo subsystems should have Init/Shutdown functions like callbacks have and do these cleanups for themselves */
-	/** @note Most of them has InitStartup but not working like the callback init/shutdown ones in pair */
-	LIST_Delete(&ccs.missions);
-	LIST_Delete(&ccs.alienBases);
-
-	while ((craft = AIR_GetNext(craft)))
-		LIST_Delete(&craft->acTeam);
-	LIST_Delete(&ccs.aircraft);
-
-	for (i = 0; i < ccs.numAlienCategories; i++) {
-		alienTeamCategory_t *alienCat = &ccs.alienCategories[i];
-		LIST_Delete(&alienCat->equipment);
-	}
-	LIST_Delete(&ccs.storedUFOs);
-	LIST_Delete(&ccs.cities);
 	cp_messageStack = NULL;
 
 	/* cleanup dynamic mails */
@@ -1720,10 +1682,10 @@ void CP_InitStartup (void)
 
 	cp_missiontest = Cvar_Get("cp_missiontest", "0", 0, "This will never stop the time on geoscape and print information about spawned missions");
 
-	CP_MissionsInit();
+	/* init subsystems */
 	MS_MessageInit();
 
-	/* init UFOpaedia, basemanagement and other subsystems */
+	MIS_InitStartup();
 	UP_InitStartup();
 	B_InitStartup();
 	INS_InitStartup();
@@ -1735,7 +1697,10 @@ void CP_InitStartup (void)
 	UFO_InitStartup();
 	TR_InitStartup();
 	AB_InitStartup();
+	AIR_InitStartup();
 	AIRFIGHT_InitStartup();
 	NAT_InitStartup();
+	TR_InitStartup();
 	STATS_InitStartup();
+	UR_InitStartup();
 }

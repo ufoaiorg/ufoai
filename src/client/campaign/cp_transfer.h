@@ -124,8 +124,6 @@ qboolean TR_AddData(transferData_t *transferData, transferCargoType_t type, cons
 void TR_TransferRun(void);
 void TR_NotifyAircraftRemoved(const aircraft_t *aircraft);
 
-void TR_InitStartup(void);
-
 transfer_t* TR_TransferStart(base_t *srcBase, transferData_t *transData);
 void TR_TransferAlienAfterMissionStart(const base_t *base, aircraft_t *transferAircraft);
 
@@ -133,4 +131,7 @@ transfer_t* TR_GetNext(transfer_t *lastTransfer);
 employee_t* TR_GetNextEmployee(transfer_t *transfer, employeeType_t type, employee_t *lastEmployee);
 aircraft_t* TR_GetNextAircraft(transfer_t *transfer, aircraft_t *lastAircraft);
 
-#endif /* CLIENT_CL_TRANSFER_H */
+void TR_InitStartup(void);
+void TR_Shutdown(void);
+
+#endif /* CP_TRANSFER_H */

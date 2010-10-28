@@ -370,8 +370,6 @@ static void E_EmployeeSelect_f (void)
 void E_InitCallbacks (void)
 {
 	Cmd_AddCommand("employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI");
-
-	/* add commands */
 	Cmd_AddCommand("employee_init", E_EmployeeList_f, "Init function for employee hire menu");
 	Cmd_AddCommand("employee_delete", E_EmployeeDelete_f, "Removed an employee from the global employee list");
 	Cmd_AddCommand("employee_hire", E_EmployeeHire_f, NULL);

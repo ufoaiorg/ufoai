@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_alienbase.h"
 #include "cp_time.h"
 #include "cp_missions.h"
+#include "cp_aircraft_callbacks.h"
 #include "save/save_aircraft.h"
 
 /**
@@ -3247,4 +3248,38 @@ void AIR_AssignInitial (aircraft_t *aircraft)
 	num = min(E_GenerateHiredEmployeesList(base), aircraft->maxTeamSize);
 	for (i = 0; i < num; i++)
 		AIM_AddEmployeeFromMenu(aircraft, i);
+}
+
+/**
+ * @brief Init actions for aircraft-subsystem
+ * @sa UI_InitStartup
+ */
+void AIR_InitStartup (void)
+{
+	AIR_InitCallbacks();
+#ifdef DEBUG
+	Cmd_AddCommand("debug_listaircraftsample", AIR_ListAircraftSamples_f, "Show aircraft parameter on game console");
+	Cmd_AddCommand("debug_listaircraft", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases");
+	Cmd_AddCommand("debug_listaircraftidx", AIR_ListCraftIndexes_f, "Debug function to list local/global aircraft indexes");
+#endif
+}
+
+/**
+ * @brief Closing actions for aircraft-subsystem
+ */
+void AIR_Shutdown (void)
+{
+	aircraft_t *craft;
+
+	craft = NULL;
+	while ((craft = AIR_GetNext(craft)))
+		LIST_Delete(&craft->acTeam);
+	LIST_Delete(&ccs.aircraft);
+
+	AIR_ShutdownCallbacks();
+#ifdef DEBUG
+	Cmd_RemoveCommand("debug_listaircraftsample");
+	Cmd_RemoveCommand("debug_listaircraft");
+	Cmd_RemoveCommand("debug_listaircraftidx");
+#endif
 }

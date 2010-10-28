@@ -2147,7 +2147,11 @@ qboolean CP_LoadMissionsXML (mxml_node_t *parent)
 	return success;
 }
 
-void CP_MissionsInit (void)
+/**
+ * @brief Init actions for missions-subsystem
+ * @sa UI_InitStartup
+ */
+void MIS_InitStartup (void)
 {
 #ifdef DEBUG
 	Cmd_AddCommand("debug_missionsetmap", CP_MissionSetMap_f, "Changes the map for a spawned mission");
@@ -2156,5 +2160,23 @@ void CP_MissionsInit (void)
 	Cmd_AddCommand("debug_missionlist", CP_MissionList_f, "Debug function to show all missions");
 	Cmd_AddCommand("debug_interestlist", CP_AlienInterestList_f, "Debug function to show alien interest values");
 	Cmd_AddCommand("debug_interestset", CP_SetAlienInterest_f, "Set overall interest level.");
+#endif
+}
+
+
+/**
+ * @brief Closing actions for missions-subsystem
+ */
+void MIS_Shutdown (void)
+{
+	LIST_Delete(&ccs.missions);
+
+#ifdef DEBUG
+	Cmd_RemoveCommand("debug_missionsetmap");
+	Cmd_RemoveCommand("debug_missionadd");
+	Cmd_RemoveCommand("debug_missiondeleteall");
+	Cmd_RemoveCommand("debug_missionlist");
+	Cmd_RemoveCommand("debug_interestlist");
+	Cmd_RemoveCommand("debug_interestset");
 #endif
 }

@@ -61,11 +61,13 @@ void CP_SpawnRescueMission(aircraft_t *aircraft, aircraft_t *ufo);
 ufoType_t CP_MissionChooseUFO(const mission_t *mission);
 void CP_MissionStageEnd(const campaign_t* campaign, mission_t *mission);
 void CP_InitializeSpawningDelay(void);
-void CP_MissionsInit(void);
 void CP_SpawnNewMissions(void);
 void CP_MissionIsOver(mission_t *mission);
 void CP_MissionIsOverByUFO(aircraft_t *ufocraft);
 void CP_MissionEnd(const campaign_t *campaign, mission_t* mission, const battleParam_t* battleParameters, qboolean won);
 void CP_MissionEndActions(mission_t *mission, aircraft_t *aircraft, qboolean won);
+
+void MIS_InitStartup(void);
+void MIS_Shutdown(void);
 
 #endif

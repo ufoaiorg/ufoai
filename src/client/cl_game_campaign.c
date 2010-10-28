@@ -538,7 +538,7 @@ void GAME_CP_Shutdown (void)
 	Cmd_RemoveCommand("cp_getcampaigns");
 	Cmd_RemoveCommand("cp_start");
 
-	CP_CampaignExit();
+	CP_Shutdown();
 
 	CL_ResetSinglePlayerData();
 

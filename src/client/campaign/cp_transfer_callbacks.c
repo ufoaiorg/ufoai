@@ -1528,6 +1528,13 @@ void TR_InitCallbacks (void)
 
 void TR_ShutdownCallbacks (void)
 {
+	employeeType_t emplType;
+
+	LIST_Delete(&td.aircraft);
+
+	for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++)
+		LIST_Delete(&td.trEmployeesTmp[emplType]);
+
 	Cmd_RemoveCommand("trans_init");
 	Cmd_RemoveCommand("trans_list_scroll");
 	Cmd_RemoveCommand("trans_close");

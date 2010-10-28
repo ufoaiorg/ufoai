@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/campaign/cp_campaign.h"
 #include "../client/campaign/cp_map.h"
 #include "../client/campaign/cp_missions.h"
-#include "../client/campaign/cp_nations.h"
+#include "../client/campaign/cp_nation.h"
 #include "../client/campaign/cp_overlay.h"
 #include "../client/campaign/cp_ufo.h"
 
@@ -741,7 +741,7 @@ static void testNation (void)
 
 	campaign = GetCampaign();
 
-	CP_NationHandleBudget(campaign);
+	NAT_HandleBudget(campaign);
 	/** @todo implement a check here */
 }
 

@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_CAMPAIGN_H
-#define CLIENT_CL_CAMPAIGN_H
+#ifndef CP_CAMPAIGN_H
+#define CP_CAMPAIGN_H
 
 extern memPool_t *cp_campaignPool;
 
@@ -580,30 +580,25 @@ extern cvar_t *cp_start_employees;
 
 #define MAX_CREDITS 10000000
 
-void CP_ParseCharacterData(struct dbuffer *msg);
-qboolean CP_CheckNextStageDestination(const campaign_t* campaign, aircraft_t *ufo);
-
+/* Campaign functions */
 void CP_InitStartup(void);
-void CL_ResetSinglePlayerData(void);
-void CL_DateConvertLong(const date_t * date, dateLong_t * dateLong);
-void CL_CampaignRun(campaign_t *campaign);
-void CP_EndCampaign(qboolean won);
-void CL_UpdateCredits(int credits);
-aircraft_t* AIR_NewAircraft(base_t * base, const aircraft_t *aircraftTemplate);
-const char* CL_SecondConvert(int second);
+campaign_t* CL_GetCampaign(const char *name);
+void CP_CampaignInit(campaign_t *campaign, qboolean load);
 void CL_ReadSinglePlayerData(void);
 void CL_ReadCampaignData(const campaign_t *campaign);
+qboolean CP_IsRunning(void);
 
-void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);
-qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
+void CL_CampaignRun(campaign_t *campaign);
+void CP_CheckLostCondition(const campaign_t *campaign);
+void CP_EndCampaign(qboolean won);
 
-campaign_t* CL_GetCampaign(const char *name);
-void CL_GameAutoGo(mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results);
+void CP_Shutdown(void);
+void CL_ResetSinglePlayerData(void);
 
-void CP_InitMissionResults(qboolean won, const missionResults_t *results);
-void CP_CampaignInit(campaign_t *campaign, qboolean load);
-void CP_CampaignExit(void);
-qboolean CP_OnGeoscape(void);
+
+/* Date functions */
+void CL_DateConvertLong(const date_t * date, dateLong_t * dateLong);
+const char* CL_SecondConvert(int second);
 
 /* Mission related functions */
 int CP_CountMission(void);
@@ -615,13 +610,26 @@ qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 
 void CP_UFOProceedMission(const campaign_t* campaign, aircraft_t *ufocraft);
-qboolean CP_IsRunning(void);
-
+void CP_InitMissionResults(qboolean won, const missionResults_t *results);
 mission_t *CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
 qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos);
 void CP_StartSelectedMission(void);
+
 void CL_HandleNationData(const campaign_t *campaign, qboolean won, mission_t * mis, const nation_t *nation, const missionResults_t *results);
-void CP_CheckLostCondition(const campaign_t *campaign);
 void CL_UpdateCharacterStats(const base_t *base, const aircraft_t *aircraft);
 
-#endif /* CLIENT_CL_CAMPAIGN_H */
+/* Other functions */
+void CP_ParseCharacterData(struct dbuffer *msg);
+qboolean CP_CheckNextStageDestination(const campaign_t* campaign, aircraft_t *ufo);
+
+void CL_UpdateCredits(int credits);
+aircraft_t* AIR_NewAircraft(base_t * base, const aircraft_t *aircraftTemplate);
+
+void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);
+qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
+
+void CL_GameAutoGo(mission_t *mission, aircraft_t *aircraft, const campaign_t *campaign, const battleParam_t *battleParameters, missionResults_t *results);
+
+qboolean CP_OnGeoscape(void);
+
+#endif /* CP_CAMPAIGN_H */

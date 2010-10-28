@@ -1044,19 +1044,33 @@ static void E_ListHired_f (void)
 		}
 	}
 }
-#endif
 
 /**
- * @brief This is more or less the initial
- * Bind some of the functions in this file to console-commands that you can call ingame.
- * Called from UI_InitStartup resp. CL_InitLocal
+ * @brief Debug function to add 5 new unhired employees of each type
+ * @note called with debug_addemployees
  */
-void E_InitStartup (void)
+static void CL_DebugNewEmployees_f (void)
 {
-#ifdef DEBUG
-	Cmd_AddCommand("debug_listhired", E_ListHired_f, "Debug command to list all hired employee");
-#endif
+	int j;
+	nation_t *nation = &ccs.nations[0];	/**< This is just a debugging function, nation does not matter */
+
+	for (j = 0; j < 5; j++)
+		/* Create a scientist */
+		E_CreateEmployee(EMPL_SCIENTIST, nation, NULL);
+
+	for (j = 0; j < 5; j++)
+		/* Create a pilot. */
+		E_CreateEmployee(EMPL_PILOT, nation, NULL);
+
+	for (j = 0; j < 5; j++)
+		/* Create a soldier. */
+		E_CreateEmployee(EMPL_SOLDIER, nation, NULL);
+
+	for (j = 0; j < 5; j++)
+		/* Create a worker. */
+		E_CreateEmployee(EMPL_WORKER, nation, NULL);
 }
+#endif
 
 /**
  * @brief Searches employee from a type for the ucn (character id)
@@ -1248,4 +1262,34 @@ void E_RemoveInventoryFromStorage (employee_t *employee)
 			invList = invList->next;
 		}
 	}
+}
+
+/**
+ * @brief This is more or less the initial
+ * Bind some of the functions in this file to console-commands that you can call ingame.
+ */
+void E_InitStartup (void)
+{
+	E_InitCallbacks();
+#ifdef DEBUG
+	Cmd_AddCommand("debug_listhired", E_ListHired_f, "Debug command to list all hired employee");
+	Cmd_AddCommand("debug_addemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type");
+#endif
+}
+
+/**
+ * @brief Closing actions for employee-subsystem
+ */
+void E_Shutdown (void)
+{
+	employeeType_t employeeType;
+
+	for (employeeType = EMPL_SOLDIER; employeeType < MAX_EMPL; employeeType++)
+		LIST_Delete(&ccs.employees[employeeType]);
+
+	E_ShutdownCallbacks();
+#ifdef DEBUG
+	Cmd_RemoveCommand("debug_listhired");
+	Cmd_RemoveCommand("debug_addemployees");
+#endif
 }

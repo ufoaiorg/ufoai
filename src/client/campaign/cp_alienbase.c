@@ -360,17 +360,6 @@ static void AB_AlienBaseList_f (void)
 #endif
 
 /**
- * @sa UI_InitStartup
- */
-void AB_InitStartup (void)
-{
-#ifdef DEBUG
-	Cmd_AddCommand("debug_listalienbase", AB_AlienBaseList_f, "Print Alien Bases information to game console");
-	Cmd_AddCommand("debug_alienbasevisible", AB_AlienBaseDiscovered_f, "Set all alien bases to discovered");
-#endif
-}
-
-/**
  * @brief Load callback for alien base data
  * @param[in] p XML Node structure, where we get the information from
  * @sa AB_SaveXML
@@ -424,4 +413,29 @@ qboolean AB_SaveXML (mxml_node_t *p)
 	}
 
 	return qtrue;
+}
+
+/**
+ * @brief Init actions for alienbase-subsystem
+ * @sa UI_InitStartup
+ */
+void AB_InitStartup (void)
+{
+#ifdef DEBUG
+	Cmd_AddCommand("debug_listalienbase", AB_AlienBaseList_f, "Print Alien Bases information to game console");
+	Cmd_AddCommand("debug_alienbasevisible", AB_AlienBaseDiscovered_f, "Set all alien bases to discovered");
+#endif
+}
+
+/**
+ * @brief Closing actions for alienbase-subsystem
+ */
+void AB_Shutdown (void)
+{
+	LIST_Delete(&ccs.alienBases);
+
+#ifdef DEBUG
+	Cmd_RemoveCommand("debug_listalienbase");
+	Cmd_RemoveCommand("debug_alienbasevisible");
+#endif
 }

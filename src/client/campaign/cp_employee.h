@@ -23,16 +23,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_EMPLOYEE
-#define CLIENT_CL_EMPLOYEE
+#ifndef CP_EMPLOYEE
+#define CP_EMPLOYEE
 
+/** @todo make this scriptable */
 #define MAX_EMPLOYEES 512
-
-/******* GUI STUFF ********/
-
-void E_InitStartup(void);
-
-/******* BACKEND STUFF ********/
 
 /** @todo MAX_EMPLOYEES_IN_BUILDING should be redefined by a config variable that is
  * lab/workshop/quarters-specific, e.g.:
@@ -120,4 +115,7 @@ void E_RemoveInventoryFromStorage(employee_t *employee);
 
 #define E_IsHired(employee)	((employee)->baseHired != NULL)
 
-#endif /* CLIENT_CL_EMPLOYEE */
+void E_InitStartup(void);
+void E_Shutdown(void);
+
+#endif /* CP_EMPLOYEE */

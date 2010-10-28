@@ -400,9 +400,6 @@
 		<Unit filename="..\..\src\client\campaign\cp_nation.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_nations.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_overlay.c">
 			<Option compilerVar="CC" />
 		</Unit>

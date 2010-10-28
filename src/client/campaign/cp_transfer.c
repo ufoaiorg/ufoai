@@ -764,8 +764,30 @@ qboolean TR_LoadXML (mxml_node_t *p)
  */
 void TR_InitStartup (void)
 {
-	/* add commands */
+	TR_InitCallbacks();
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listtransfers", TR_ListTransfers_f, "Lists an/all active transfer(s)");
+#endif
+}
+
+/**
+ * @brief Closing actions for transfer-subsystem
+ */
+void TR_Shutdown (void)
+{
+	int i;
+
+	for (i = 0; i < ccs.numTransfers; i++) {
+		employeeType_t emplType;
+
+		LIST_Delete(&ccs.transfers[i].aircraft);
+
+		for (emplType = EMPL_SOLDIER; emplType < MAX_EMPL; emplType++)
+			LIST_Delete(&ccs.transfers[i].employees[emplType]);
+	}
+
+	TR_ShutdownCallbacks();
+#ifdef DEBUG
+	Cmd_RemoveCommand("debug_listtransfers");
 #endif
 }
