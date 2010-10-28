@@ -65,6 +65,7 @@
 #include "gtkutil/TreeModel.h"
 #include "gtkutil/ModalProgressDialog.h"
 
+#include "../ui/common/ToolbarCreator.h"
 #include "../map/map.h"
 #include "../render/OpenGLRenderSystem.h"
 #include "../select.h"
@@ -938,31 +939,36 @@ GtkWidget* TextureBrowser::createMenuBar() {
 }
 
 GtkWidget* TextureBrowser::createToolBar() {
-	GtkWidget* toolbar = gtk_toolbar_new();
-	gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
-	GtkTooltips* barTips = gtk_tooltips_new();
+	// Load the texture toolbar from the registry
+	ui::ToolbarCreator toolbarCreator;
+	GtkToolbar* textureToolbar = toolbarCreator.getToolbar("texture");
+	if (textureToolbar != NULL) {
+		gtk_widget_show(GTK_WIDGET(textureToolbar));
 
-	// Button for toggling the resizing of textures
-	GtkToolItem* sizeToggle = gtk_toggle_tool_button_new();
-	GdkPixbuf* pixBuf = gtkutil::getLocalPixbuf("texwindow_uniformsize.png");
-	GtkWidget* toggle_image = GTK_WIDGET(gtk_image_new_from_pixbuf(pixBuf));
-	gtk_tool_item_set_tooltip(sizeToggle, barTips, _("Clamp texture thumbnails to constant size"),
-			"");
+		// Button for toggling the resizing of textures
+		GtkToolItem* sizeToggle = gtk_toggle_tool_button_new();
+		GdkPixbuf* pixBuf = gtkutil::getLocalPixbuf("texwindow_uniformsize.png");
+		GtkWidget* toggle_image = GTK_WIDGET(gtk_image_new_from_pixbuf(pixBuf));
 
-	gtk_tool_button_set_label(GTK_TOOL_BUTTON(sizeToggle), _("Constant size"));
-	gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(sizeToggle), toggle_image);
-	gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(sizeToggle), TRUE);
+		GtkTooltips* barTips = gtk_tooltips_new();
+		gtk_tool_item_set_tooltip(sizeToggle, barTips, _("Clamp texture thumbnails to constant size"),
+				"");
 
-	// Insert button and connect callback
-	gtk_toolbar_insert(GTK_TOOLBAR(toolbar), sizeToggle, 0);
-	g_signal_connect(G_OBJECT(sizeToggle),
-			"toggled",
-			G_CALLBACK(onToggleResizeTextures),
-			this);
+		gtk_tool_button_set_label(GTK_TOOL_BUTTON(sizeToggle), _("Constant size"));
+		gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(sizeToggle), toggle_image);
+		gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(sizeToggle), TRUE);
 
-	gdk_pixbuf_unref(pixBuf);
+		// Insert button and connect callback
+		gtk_toolbar_insert(GTK_TOOLBAR(textureToolbar), sizeToggle, 0);
+		g_signal_connect(G_OBJECT(sizeToggle),
+				"toggled",
+				G_CALLBACK(onToggleResizeTextures),
+				this);
 
-	return toolbar;
+		gdk_pixbuf_unref(pixBuf);
+	}
+
+	return GTK_WIDGET(textureToolbar);
 }
 
 GtkWidget* TextureBrowser::getWidget() {

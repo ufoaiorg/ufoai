@@ -75,6 +75,13 @@
 				<toggletoolbutton name="cubicclip" action="ToggleCubicClip" tooltip="Cubic clip the camera view" icon="view_cubicclipping.png" />
 		</toolbar>
 
+		<toolbar name="texture">
+				<toolbutton name="flush" action="RefreshShaders" tooltip="Flush &amp; Reload Shaders" icon="texwindow_flushandreload.png"/>
+				<toggletoolbutton name="showinuse" action="ShowInUse" tooltip="Hide Unused" icon="texwindow_hideunused.png"/>
+			<separator/>
+				<toolbutton name="findandreplace" action="FindReplaceTextures" tooltip="Find &amp; Replace" icon="texwindow_findandreplace.png"/>
+		</toolbar>
+
 		<toolbar name="edit" align="vertical">
 				<toggletoolbutton name="togglecubicclip" action="ToggleCubicClip" tooltip="Toggle Cubic Clipping" icon="view_cubicclipping.png" />
 			<separator/>
