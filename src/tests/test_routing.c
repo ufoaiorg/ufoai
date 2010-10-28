@@ -61,7 +61,7 @@ static void testMapLoading (void)
 		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
 		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
 	} else {
-		CU_FAIL("Map resource for test is missing.");
+		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
 	}
 }
 
@@ -79,7 +79,7 @@ static void testMove (void)
 		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
 		CM_LoadMap(mapName, qtrue, "", &mapData, &mapTiles);
 	} else {
-		CU_FAIL("Map resource for test is missing.");
+		UFO_CU_FAIL_MSG_FATAL(va("Map resource '%s.bsp' for test is missing.", mapName));
 	}
 
 	VectorSet(vec, 16, 16, 48);

@@ -77,14 +77,13 @@ static void testSpawnAndConnect (void)
 	FS_FreeFile(buf);
 }
 
-static const char *mapName = "test_game";
-
 static void testShooting (void)
 {
+	const char *mapName = "test_game";
 	if (FS_CheckFile("maps/%s.bsp", mapName) != -1) {
 		SV_Map(qtrue, mapName, NULL);
 	} else {
-		CU_FAIL("Map resource for test is missing.");
+		UFO_CU_FAIL_MSG(va("Map resource '%s.bsp' for test is missing.", mapName));
 	}
 }
 
