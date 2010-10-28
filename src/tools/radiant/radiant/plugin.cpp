@@ -331,12 +331,16 @@ bool Radiant_Construct (ModuleServer& server)
 
 	g_RadiantInitialised = !server.getError();
 
+	// Try to load all the XML files into the registry
+	populateRegistry();
+
 	if (g_RadiantInitialised) {
 		g_Radiant = new Radiant;
 	}
 
 	return g_RadiantInitialised;
 }
+
 void Radiant_Destroy ()
 {
 	if (g_RadiantInitialised) {

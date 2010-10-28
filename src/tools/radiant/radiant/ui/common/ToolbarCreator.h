@@ -21,22 +21,20 @@ namespace ui {
 
 	class ToolbarCreator {
 		private:
-			// The path and the name of the XML file
-			const std::string _uiXmlPath;
-			const std::string _uiXmlFile;
-
+			void loadToolbars();
 			void parseXml(xml::Document& doc);
 			GtkToolbar* createToolbar(xml::Node& node);
 			GtkWidget* createToolItem(xml::Node& node, GtkToolbar*);
+			bool toolbarExists(const std::string& toolbarName);
 
 			ToolbarMap _toolbars;
 			GtkTooltips* _tooltips;
 		public:
 			// Constructor
-			ToolbarCreator(const std::string& uiXmlPath, const std::string& uiXmlFile = "ui.xml");
+			ToolbarCreator();
 
 			// Public methods
-			GtkToolbar* getToolbar(const std::string&);
+			GtkToolbar* getToolbar(const std::string& toolbarName);
 
 			// Destructor
 			~ToolbarCreator() {}

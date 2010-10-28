@@ -180,6 +180,8 @@ void CGameDialog::Init ()
 	xmlDocPtr pDoc = xmlParseFile(strGameFilename.c_str());
 	if (pDoc) {
 		g_pGameDescription = new CGameDescription(pDoc, strGameFilename);
+		// Import this information into the registry
+		//GlobalRegistry().importFromFile(strGameFilename, "");
 		xmlFreeDoc(pDoc);
 	} else {
 		gtkutil::errorDialog(_("XML parser failed ufoai.game"));

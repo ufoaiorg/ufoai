@@ -322,6 +322,7 @@ void MainFrame_Destroy ();
 
 void hide_splash ();
 void show_splash ();
+void populateRegistry ();
 
 SignalHandlerId XYWindowDestroyed_connect (const SignalHandler& handler);
 void XYWindowDestroyed_disconnect (SignalHandlerId id);

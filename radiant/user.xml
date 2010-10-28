@@ -1,4 +1,18 @@
 <?xml version="1.0"?>
+<!--
+	There are three types of children that can be placed in the toolbar container:
+
+	<toolbutton />	A basic tool button
+		Required attributes: name, action, tooltip and icon
+		The "action" attribute refers to the action labels listed under "Help>Shortcuts List..."
+		in DarkRadiant, so it is possible to add button commands that are not necessarily listed here.
+
+	<toggletoolbutton />	A toggle tool button, basically the same as <toolbutton />
+		Required attributes: name, action, tooltip and icon
+		This is rather unflexible as there is a limited amount of "toggle commands" available in Radiant.
+
+	<separator />	A toolbar separator, to keep your icons organised
+-->
 <user>
 	<ui>
 		<camera>
@@ -9,5 +23,72 @@
 			<rotationSpeed value="3" />
 			<cubicScale value="13" />
 		</camera>
+		<toolbar name="view" align="horizontal">
+				<toolbutton name="open" action="OpenMap" tooltip="Open a map file" icon="file_open.png" />
+				<toolbutton name="save" action="SaveMap" tooltip="Save the current map" icon="file_save.png" />
+			<separator/>
+				<toolbutton name="undo" action="Undo" tooltip="Undo" icon="undo.png" />
+				<toolbutton name="redo" action="Redo" tooltip="Redo" icon="redo.png" />
+			<separator/>
+				<toolbutton name="xflip" action="MirrorSelectionX" tooltip="x-axis Flip" icon="brush_flipx.png"  />
+				<toolbutton name="xrotate" action="RotateSelectionX" tooltip="x-axis Rotate" icon="brush_rotatex.png" />
+				<toolbutton name="yflip" action="MirrorSelectionY" tooltip="y-axis Flip" icon="brush_flipy.png" />
+				<toolbutton name="yrotate" action="RotateSelectionY" tooltip="y-axis Rotate" icon="brush_rotatey.png" />
+				<toolbutton name="zflip" action="MirrorSelectionZ" tooltip="z-axis Flip" icon="brush_flipz.png" />
+				<toolbutton name="zrotate" action="RotateSelectionZ" tooltip="z-axis Rotate" icon="brush_rotatez.png" />
+			<separator/>
+				<toolbutton name="selecttouching" action="SelectTouching" tooltip="Select touching" icon="selection_selecttouching.png" />
+				<toolbutton name="selectinside" action="SelectInside" tooltip="Select inside" icon="selection_selectinside.png" />
+				<toolbutton name="selectentity" action="ExpandSelectionToEntities" tooltip="Select whole entity" icon="selection_selectentities.png" />
+				<toolbutton name="selectalloftype" action="SelectAllOfType" tooltip="Select all of type" icon="selection_selectcompletetall.png" />
+				<toolbutton name="selectallfacetexture" action="SelectAllFacesOfTex" tooltip="Select all Faces of same texture" icon="selection_selectallsametex.png" />
+			<separator/>
+				<toggletoolbutton name="dragvertices" action="DragVertices" tooltip="Select Vertices" icon="modify_vertices.png" />
+				<toggletoolbutton name="dragedges" action="DragEdges" tooltip="Select Edges" icon="modify_edges.png" />
+				<toggletoolbutton name="dragfaces" action="DragFaces" tooltip="Select Faces" icon="modify_faces.png" />
+			<separator/>
+				<toggletoolbutton name="filternodraw" action="FilterNodraw" tooltip="Filter nodraw" icon="filter_nodraw.png" />
+				<toggletoolbutton name="filteractorclips" action="FilterActorClips" tooltip="Filter actorclip" icon="filter_actorclip.png" />
+				<toggletoolbutton name="filterweaponclips" action="FilterWeaponClips" tooltip="Filter weaponclip" icon="filter_weaponclip.png" />
+			<separator/>
+				<toolbutton name="refreshmodels" action="RefreshReferences" tooltip="Refresh Models" icon="refresh_models.png" />
+				<toolbutton name="background" action="ToggleBackground" tooltip="Background image" icon="background.png" />
+			<separator/>
+				<toolbutton name="generatematerial" action="GenerateMaterialFromTexture" tooltip="Create material entries for selected faces" icon="material_generate.png" />
+			<separator/>
+				<toggletoolbutton name="showpathfinding" action="ShowPathfinding" tooltip="Show pathfinding info" icon="pathfinding.png" />
+			<separator/>
+				<toolbutton name="filterlevel1" action="FilterLevel1" tooltip="Level 1" icon="ufoai_level1.png" />
+				<toolbutton name="filterlevel2" action="FilterLevel2" tooltip="Level 2" icon="ufoai_level2.png" />
+				<toolbutton name="filterlevel3" action="FilterLevel3" tooltip="Level 3" icon="ufoai_level3.png" />
+				<toolbutton name="filterlevel4" action="FilterLevel4" tooltip="Level 4" icon="ufoai_level4.png" />
+				<toolbutton name="filterlevel5" action="FilterLevel5" tooltip="Level 5" icon="ufoai_level5.png" />
+				<toolbutton name="filterlevel6" action="FilterLevel6" tooltip="Level 6" icon="ufoai_level6.png" />
+				<toolbutton name="filterlevel7" action="FilterLevel7" tooltip="Level 7" icon="ufoai_level7.png" />
+				<toolbutton name="filterlevel8" action="FilterLevel8" tooltip="Level 8" icon="ufoai_level8.png" />
+			<separator/>
+				<toggletoolbutton name="showbbox" action="ToggleShowModelBoundingBox" tooltip="Show model bounding box" icon="iconDrawBBox.png" />
+				<toggletoolbutton name="shownormals" action="ToggleShowModelNormals" tooltip="Show model normals" icon="model_normals.png" />
+			<separator/>
+				<toolbutton name="changeviews" action="NextView" tooltip="Change views" icon="view_change.png" />
+			<separator/>
+				<toggletoolbutton name="cubicclip" action="ToggleCubicClip" tooltip="Cubic clip the camera view" icon="view_cubicclipping.png" />
+		</toolbar>
+
+		<toolbar name="edit" align="vertical">
+				<toggletoolbutton name="togglecubicclip" action="ToggleCubicClip" tooltip="Toggle Cubic Clipping" icon="view_cubicclipping.png" />
+			<separator/>
+				<toggletoolbutton name="translate" action="MouseTranslate" tooltip="Translate" icon="select_mousetranslate.png" />
+				<toggletoolbutton name="rotate" action="MouseRotate" tooltip="Rotate" icon="select_mouserotate.png" />
+				<toggletoolbutton name="scale" action="MouseScale" tooltip="Scale" icon="select_mousescale.png" />
+				<toggletoolbutton name="resize" action="MouseDrag" tooltip="Resize" icon="select_mouseresize.png" />
+				<toggletoolbutton name="clipper" action="ToggleClipper" tooltip="Clipper" icon="view_clipper.png" />
+			<separator/>
+				<toolbutton name="csgsubstract" action="CSGSubtract" tooltip="CSG Subtract" icon="selection_csgsubtract.png" />
+				<toolbutton name="csgmerge" action="CSGMerge" tooltip="CSG Merge" icon="selection_csgmerge.png" />
+				<toolbutton name="csghollow" action="CSGHollow" tooltip="Hollow" icon="selection_makehollow.png" />
+			<separator/>
+				<toggletoolbutton name="texturelock" action="TogTexLock" tooltip="Texture Lock" icon="texture_lock.png" />
+		</toolbar>
 	</ui>
 </user>

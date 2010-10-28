@@ -523,9 +523,6 @@ void Radiant_Initialise (void)
 	// Load the other modules
 	Radiant_Construct(GlobalModuleServer_get());
 
-	// Try to load all the XML files into the registry
-	populateRegistry();
-
 	g_gameToolsPathObservers.realise();
 	g_gameModeObservers.realise();
 	g_gameNameObservers.realise();
@@ -2118,7 +2115,7 @@ void MainFrame::Create (void)
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(main_menu), FALSE, FALSE, 0);
 
 	// Instantiate the ToolbarCreator and retrieve the standard toolbar widget
-	ui::ToolbarCreator toolbarCreator(AppPath_get());
+	ui::ToolbarCreator toolbarCreator;
 
 	GtkToolbar* generalToolbar = toolbarCreator.getToolbar("view");
 	gtk_widget_show(GTK_WIDGET(generalToolbar));
