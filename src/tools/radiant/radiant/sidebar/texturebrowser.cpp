@@ -866,23 +866,11 @@ GtkMenuItem* TextureBrowser::constructViewMenu(GtkMenu* menu) {
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	create_check_menu_item_with_mnemonic(menu, _("Hide _Unused"), "ShowInUse");
 	create_check_menu_item_with_mnemonic(menu, _("Hide Invalid"), "ShowInvalid");
 
 	menu_separator(menu);
 	create_menu_item_with_mnemonic(menu, _("Show All"), "ShowAllTextures");
 	create_check_menu_item_with_mnemonic(menu, _("Show shaders"), "ToggleShowShaders");
-
-	return textures_menu_item;
-}
-
-GtkMenuItem* TextureBrowser::constructToolsMenu(GtkMenu* menu) {
-	GtkMenuItem* textures_menu_item = new_sub_menu_item_with_mnemonic(_("_Tools"));
-
-	if (g_Layout_enableDetachableMenus.m_value)
-		menu_tearoff(menu);
-
-	create_menu_item_with_mnemonic(menu, _("Flush & Reload Shaders"), "RefreshShaders");
 
 	return textures_menu_item;
 }
@@ -924,11 +912,6 @@ GtkWidget* TextureBrowser::createMenuBar() {
 	GtkWidget* view_item = (GtkWidget*) constructViewMenu(GTK_MENU(menu_view));
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(view_item), menu_view);
 	gtk_menu_bar_append(GTK_MENU_BAR(menu_bar), view_item);
-
-	GtkWidget* menu_tools = gtk_menu_new();
-	GtkWidget* tools_item = (GtkWidget*) constructToolsMenu(GTK_MENU(menu_tools));
-	gtk_menu_item_set_submenu(GTK_MENU_ITEM(tools_item), menu_tools);
-	gtk_menu_bar_append(GTK_MENU_BAR(menu_bar), tools_item);
 
 	GtkWidget* menu_directories = gtk_menu_new();
 	GtkWidget* directories_item = (GtkWidget*) constructDirectoriesMenu(GTK_MENU(menu_directories));
