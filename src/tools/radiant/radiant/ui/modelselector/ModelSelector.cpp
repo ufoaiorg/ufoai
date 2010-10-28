@@ -9,12 +9,13 @@
 #include "../../referencecache.h"
 #include "os/path.h"
 #include "../Icons.h"
-#include "../../mainframe.h" // ScopeDisableScreenUpdates
 #include <cmath>
 #include <iostream>
 #include <vector>
 #include <sstream>
 #include <map>
+#include "gtkutil/ModalProgressDialog.h"
+#include "../../mainframe.h"
 
 namespace ui
 {
@@ -112,6 +113,8 @@ namespace ui
 
 				GtkTreeStore* _store;
 
+				const gtkutil::ModalProgressDialog& _dialog;
+
 				// Map between model directory names (e.g. "models/objects") and
 				// a GtkTreeIter pointing to the equivalent row in the TreeModel. Subsequent
 				// modelpaths with this directory will be added as children of this iter.
@@ -121,8 +124,8 @@ namespace ui
 
 				// Constructor
 
-				ModelFileFunctor (GtkTreeStore* store) :
-					_store(store)
+				ModelFileFunctor (GtkTreeStore* store, const gtkutil::ModalProgressDialog& dialog) :
+					_store(store), _dialog(dialog)
 				{
 				}
 
@@ -144,6 +147,10 @@ namespace ui
 
 				GtkTreeIter* addRecursive (const std::string& dirPath)
 				{
+					// Process GTK events to let the dialog update
+					while (gtk_events_pending())
+						gtk_main_iteration();
+
 					// We first try to lookup the directory name in the map. Return it
 					// if it exists, otherwise recursively obtain the parent of this directory name,
 					// and add this directory as a child in the tree model. We also add this
@@ -205,6 +212,9 @@ namespace ui
 							if (loader != NULL) {
 								model::IModelPtr model = loader->loadModelFromPath(MODELS_FOLDER + dirPath);
 
+								// Update the text in the dialog
+								_dialog.setText(MODELS_FOLDER + dirPath);
+
 								// Get the list of skins for this model. The number of skins is appended
 								// to the model node name in brackets.
 								ModelSkinList skins = model->getSkinsForModel();
@@ -251,10 +261,11 @@ namespace ui
 	// Helper function to create the TreeView
 	GtkWidget* ModelSelector::createTreeView ()
 	{
-		ScopeDisableScreenUpdates load(_("Loading..."), _("Please wait"));
+		// Modal dialog window to display progress
+		gtkutil::ModalProgressDialog dialog(MainFrame_getWindow(), _("Loading models"));
 
 		// Populate the treestore using the VFS callback functor
-		ModelFileFunctor functor(_treeStore);
+		ModelFileFunctor functor(_treeStore, dialog);
 		GlobalFileSystem().forEachFile(MODELS_FOLDER, "*", makeCallback1(functor), 0);
 
 		GtkTreeModel *model = gtk_tree_model_filter_new(GTK_TREE_MODEL(_treeStore), NULL);
