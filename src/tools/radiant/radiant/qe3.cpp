@@ -52,7 +52,7 @@ QEGlobals_t g_qeglobals;
  */
 void QE_InitVFS (void)
 {
-	const std::string& basegame = "base";
+	const std::string& basegame = basegame_get();
 
 #if defined(__linux__) || defined (__FreeBSD__) || defined(__APPLE__)
 	// ~/.<gameprefix>/<fs_main>

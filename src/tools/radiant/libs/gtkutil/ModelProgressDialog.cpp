@@ -38,9 +38,8 @@ namespace gtkutil
 	}
 
 	// Set the label text
-	void ModalProgressDialog::setText (const std::string& text)
+	void ModalProgressDialog::setText (const std::string& text) const
 	{
-
 		// Set the text
 		gtk_label_set_markup(GTK_LABEL(_label), text.c_str());
 
@@ -52,7 +51,7 @@ namespace gtkutil
 	}
 
 	// Handle GTK events
-	void ModalProgressDialog::handleEvents ()
+	void ModalProgressDialog::handleEvents () const
 	{
 		while (gtk_events_pending())
 			gtk_main_iteration();

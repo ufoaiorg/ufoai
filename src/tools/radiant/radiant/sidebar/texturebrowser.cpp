@@ -63,6 +63,7 @@
 #include "gtkutil/GLWidgetSentry.h"
 #include "gtkutil/messagebox.h"
 #include "gtkutil/TreeModel.h"
+#include "gtkutil/ModalProgressDialog.h"
 
 #include "../map/map.h"
 #include "../render/OpenGLRenderSystem.h"
@@ -299,20 +300,29 @@ static bool texture_name_ignore(const std::string& name) {
 }
 
 class LoadTexturesByTypeVisitor: public ImageModules::Visitor {
+	private:
 		const std::string m_dirstring;
+		// Modal dialog window to display progress
+		gtkutil::ModalProgressDialog _dialog;
+
 		struct TextureDirectoryLoadTextureCaller {
 				typedef const std::string& first_argument_type;
 
 				const std::string& _directory;
+				const gtkutil::ModalProgressDialog& _dialog;
 
 				// Constructor
-				TextureDirectoryLoadTextureCaller(const std::string& directory) :
-					_directory(directory) {
+				TextureDirectoryLoadTextureCaller(const std::string& directory, const gtkutil::ModalProgressDialog& dialog) :
+					_directory(directory), _dialog(dialog) {
 				}
 
 				// Functor operator
 				void operator()(const std::string& texture) {
 					std::string name = _directory + os::stripExtension(texture);
+
+					// Process GTK events to let the dialog update
+					while (gtk_events_pending())
+						gtk_main_iteration();
 
 					if (texture_name_ignore(name))
 						return;
@@ -322,17 +332,21 @@ class LoadTexturesByTypeVisitor: public ImageModules::Visitor {
 						return;
 					}
 
+					// Update the text in the dialog
+					_dialog.setText(name);
+
 					// if a texture is already in use to represent a shader, ignore it
 					IShader* shaderPtr = GlobalShaderSystem().getShaderForName(name);
 					shaderPtr->DecRef();
 				}
 		};
+
 	public:
 		LoadTexturesByTypeVisitor(const std::string& dirstring) :
-			m_dirstring(dirstring) {
+			m_dirstring(dirstring), _dialog(MainFrame_getWindow(), _("Loading textures")) {
 		}
 		void visit(const std::string& minor, const _QERPlugImageTable& table) const {
-			TextureDirectoryLoadTextureCaller functor(m_dirstring);
+			TextureDirectoryLoadTextureCaller functor(m_dirstring, _dialog);
 			GlobalFileSystem().forEachFile(m_dirstring, minor, makeCallback1(
 					functor));
 		}
@@ -873,7 +887,6 @@ GtkMenuItem* TextureBrowser::constructToolsMenu(GtkMenu* menu) {
 }
 
 void TextureBrowser::onActivateDirectoryChange(GtkMenuItem* item, TextureBrowser* textureBrowser) {
-	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Loading Textures"));
 	const std::string& dirname = std::string((const gchar*)g_object_get_data(G_OBJECT(item), "directory")) + "/";
 	textureBrowser->showDirectory(dirname);
 	textureBrowser->queueDraw();

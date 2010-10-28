@@ -34,7 +34,7 @@ namespace gtkutil
 
 			// Process the GTK events to ensure the progress bar/text is updated
 			// on screen
-			void handleEvents ();
+			void handleEvents () const;
 
 		public:
 
@@ -52,7 +52,7 @@ namespace gtkutil
 
 			/** Set the text to display in the label.
 			 */
-			void setText (const std::string& text);
+			void setText (const std::string& text) const;
 	};
 }
 

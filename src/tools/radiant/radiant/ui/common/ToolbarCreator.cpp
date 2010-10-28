@@ -162,11 +162,10 @@ namespace ui {
 
 	/* Constructor: Load the definitions from the specified XML file
 	 */
-	ToolbarCreator::ToolbarCreator(const std::string& gameToolsPath, const std::string& uiXmlFile):
-		_gameToolsPath(std::string(gameToolsPath)),
-		_uiXmlFile(std::string(uiXmlFile))
+	ToolbarCreator::ToolbarCreator(const std::string& uiXmlPath, const std::string& uiXmlFile):
+		_uiXmlPath(uiXmlPath), _uiXmlFile(uiXmlFile)
 	 {
-		const std::string xmlFile = _gameToolsPath + _uiXmlFile;
+		const std::string xmlFile = _uiXmlPath + _uiXmlFile;
 
 		xmlDocPtr pXmlDoc = xmlParseFile(xmlFile.c_str());
 

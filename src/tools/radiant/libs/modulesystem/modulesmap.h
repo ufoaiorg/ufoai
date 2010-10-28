@@ -79,7 +79,7 @@ class ModulesMap: public Modules<Type>
 		void foreachModule (const typename Modules<Type>::Visitor& visitor)
 		{
 			for (modules_t::iterator i = m_modules.begin(); i != m_modules.end(); ++i) {
-				visitor.visit((*i).first.c_str(), *static_cast<const Type*> (Module_getTable(*(*i).second)));
+				visitor.visit((*i).first, *static_cast<const Type*> (Module_getTable(*(*i).second)));
 			}
 		}
 };

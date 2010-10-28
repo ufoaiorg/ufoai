@@ -178,7 +178,7 @@ void VFS_Destroy (void)
 void HomePaths_Realise (void)
 {
 	g_qeglobals.m_userEnginePath = EnginePath_get();
-	g_qeglobals.m_userGamePath = g_qeglobals.m_userEnginePath + "base/";
+	g_qeglobals.m_userGamePath = g_qeglobals.m_userEnginePath + basegame_get() + "/";
 
 	ASSERT_MESSAGE(!g_qeglobals.m_userGamePath.empty(), "HomePaths_Realise: user-game-path is empty");
 	g_mkdir_with_parents(g_qeglobals.m_userGamePath.c_str(), 0775);
@@ -518,13 +518,13 @@ void Radiant_Initialise (void)
 	// Load the Radiant plugins
 	Radiant_loadModulesFromRoot(AppPath_get());
 
+	Preferences_Load();
+
 	// Load the other modules
 	Radiant_Construct(GlobalModuleServer_get());
 
 	// Try to load all the XML files into the registry
 	populateRegistry();
-
-	Preferences_Load();
 
 	g_gameToolsPathObservers.realise();
 	g_gameModeObservers.realise();
