@@ -887,8 +887,11 @@ class Face: public OpenGLRenderable, public Filterable, public Undoable, public 
 		{
 			// Submit this face to the Renderer only if its shader is not filtered
 			if (GlobalFilterSystem().isVisible("texture", m_shader.getShader())) {
-				renderer.SetState(m_shader.state(), Renderer::eFullMaterials);
-				renderer.addRenderable(*this, localToWorld);
+				if (GlobalFilterSystem().isVisible("surfaceflags", m_shader.getFlags().m_surfaceFlags) &&
+					GlobalFilterSystem().isVisible("contentflags", m_shader.getFlags().m_contentFlags)) {
+					renderer.SetState(m_shader.state(), Renderer::eFullMaterials);
+					renderer.addRenderable(*this, localToWorld);
+				}
 			}
 		}
 
@@ -1038,6 +1041,11 @@ class Face: public OpenGLRenderable, public Filterable, public Undoable, public 
 			}
 			flags.m_firstValue = false;
 		}
+
+		ContentsFlagsValue GetFlags() const {
+			return m_shader.getFlags();
+		}
+
 		/** @sa ContentsFlagsValue_assignMasked */
 		void SetFlags (const ContentsFlagsValue& flags)
 		{
@@ -1734,6 +1742,15 @@ class Brush: public TransformNode,
 			m_faces.back()->setDetail(isDetail());
 			planeChanged();
 			return m_faces.back();
+		}
+
+		/**
+		 * The assumption is that surfaceflags are the same for all faces
+		 */
+		ContentsFlagsValue getFlags() {
+			if (m_faces.empty())
+				return ContentsFlagsValue();
+			return m_faces.back()->GetFlags();
 		}
 
 		static void constructStatic ()
@@ -3086,12 +3103,18 @@ class BrushInstance: public BrushObserver,
 				bool faces_visible[c_brush_maxFaces];
 				{
 					bool* j = faces_visible;
-					for (FaceInstances::const_iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i, ++j) {
-						// Check if face is filtered before adding to visibility matrix
-						if (GlobalFilterSystem().isVisible("texture", i->getFace().GetShader()))
-							*j = i->intersectVolume(volume, localToWorld);
-						else
-							*j = false;
+					ContentsFlagsValue val = m_brush.getFlags();
+					if (GlobalFilterSystem().isVisible("contentflags", val.m_contentFlags)) {
+						for (FaceInstances::const_iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i, ++j) {
+							// Check if face is filtered before adding to visibility matrix
+							if (GlobalFilterSystem().isVisible("texture", i->getFace().GetShader()) &&
+								GlobalFilterSystem().isVisible("surfaceflags", i->getFace().GetFlags().m_surfaceFlags))
+								*j = i->intersectVolume(volume, localToWorld);
+							else
+								*j = false;
+						}
+					} else {
+						*j = false;
 					}
 				}
 

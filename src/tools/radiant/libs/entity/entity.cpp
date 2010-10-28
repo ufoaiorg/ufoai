@@ -62,12 +62,6 @@ inline scene::Node& entity_for_eclass (EntityClass* eclass)
 	}
 }
 
-void Entity_setName (Entity& entity, const char* name)
-{
-	entity.setKeyValue("name", name);
-}
-typedef ReferenceCaller1<Entity, const char*, Entity_setName> EntitySetNameCaller;
-
 inline Namespaced* Node_getNamespaced (scene::Node& node)
 {
 	return NodeTypeCast<Namespaced>::cast(node);
@@ -214,67 +208,6 @@ EntityCreator& GetEntityCreator ()
 	return g_UFOEntityCreator;
 }
 
-class FilterEntityClassname: public EntityFilter
-{
-		const char* m_classname;
-	public:
-		FilterEntityClassname (const char* classname) :
-			m_classname(classname)
-		{
-		}
-		bool filter (const Entity& entity) const
-		{
-			return string_equal(entity.getKeyValue("classname"), m_classname);
-		}
-};
-
-class FilterEntityClassgroup: public EntityFilter
-{
-		const char* m_classgroup;
-		std::size_t m_length;
-	public:
-		FilterEntityClassgroup (const char* classgroup) :
-			m_classgroup(classgroup), m_length(string_length(m_classgroup))
-		{
-		}
-		bool filter (const Entity& entity) const
-		{
-			return string_equal_n(entity.getKeyValue("classname"), m_classgroup, m_length);
-		}
-};
-
-FilterEntityClassname g_filter_entity_world("worldspawn");
-FilterEntityClassname g_filter_entity_func_group("func_group");
-FilterEntityClassname g_filter_entity_light("light");
-FilterEntityClassname g_filter_entity_misc_model("misc_model");
-FilterEntityClassname g_filter_entity_misc_particle("misc_particle");
-FilterEntityClassgroup g_filter_entity_trigger("trigger_");
-FilterEntityClassname g_filter_info_player_start("info_player_start");
-FilterEntityClassname g_filter_info_human_start("info_human_start");
-FilterEntityClassname g_filter_info_alien_start("info_alien_start");
-FilterEntityClassname g_filter_info_2x2_start("info_2x2_start");
-FilterEntityClassname g_filter_info_civilian_start("info_civilian_start");
-FilterEntityClassgroup g_filter_info("info_");
-
-void Entity_InitFilters ()
-{
-	add_entity_filter(g_filter_entity_world, EXCLUDE_WORLD);
-	add_entity_filter(g_filter_entity_func_group, EXCLUDE_WORLD);
-	add_entity_filter(g_filter_entity_world, EXCLUDE_ENT, true);
-	add_entity_filter(g_filter_entity_trigger, EXCLUDE_TRIGGERS);
-	add_entity_filter(g_filter_entity_misc_model, EXCLUDE_MODELS);
-	add_entity_filter(g_filter_entity_light, EXCLUDE_LIGHTS);
-	add_entity_filter(g_filter_entity_world, EXCLUDE_NO_FOOTSTEPS, true);
-	add_entity_filter(g_filter_entity_world, EXCLUDE_NO_SURFLIGHTS, true);
-	add_entity_filter(g_filter_entity_misc_particle, EXCLUDE_PARTICLE);
-	add_entity_filter(g_filter_info_player_start, EXCLUDE_INFO_PLAYER_START);
-	add_entity_filter(g_filter_info_2x2_start, EXCLUDE_INFO_2x2_START);
-	add_entity_filter(g_filter_info_alien_start, EXCLUDE_INFO_ALIEN_START);
-	add_entity_filter(g_filter_info_civilian_start, EXCLUDE_INFO_CIVILIAN_START);
-	add_entity_filter(g_filter_info_human_start, EXCLUDE_INFO_HUMAN_START);
-	add_entity_filter(g_filter_info, EXCLUDE_INFO);
-}
-
 #include "preferencesystem.h"
 
 void P_Entity_Construct ()
@@ -288,7 +221,6 @@ void P_Entity_Construct ()
 	GlobalPreferenceSystem().registerPreference("ForceLightRadiuses", BoolImportStringCaller(g_forceLightRadii),
 			BoolExportStringCaller(g_forceLightRadii));
 
-	Entity_InitFilters();
 	MiscModel_construct();
 	MiscSound_construct();
 	MiscParticle_construct();

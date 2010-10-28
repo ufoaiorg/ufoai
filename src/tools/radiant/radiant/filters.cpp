@@ -138,9 +138,6 @@ private:
 				 critIter != critNodes.end();
 				 ++critIter)
 			{
-				filters::XMLFilterRule rule(critIter->getAttributeValue("type"),
-								   critIter->getAttributeValue("match"),
-								   critIter->getAttributeValue("action") == "show");
 				filter.addRule(critIter->getAttributeValue("type"),
 						critIter->getAttributeValue("match"),
 						critIter->getAttributeValue("action") == "show");
@@ -223,6 +220,10 @@ public:
 		// Cache the result and return to caller
 		_visibilityCache.insert(StringFlagCache::value_type(name, visFlag));
 		return visFlag;
+	}
+
+	bool isVisible(const std::string& item, int flags) {
+		return isVisible(item, string::toString(flags));
 	}
 
 	/* Legacy stuff */
@@ -332,37 +333,17 @@ void ConstructFilters ()
 	GlobalCommands_insert("InvertFilters", FreeCaller<InvertFilters> ());
 	GlobalCommands_insert("ResetFilters", FreeCaller<ResetFilters> ());
 
-	add_filter_command(EXCLUDE_WORLD, "FilterWorldBrushes", Accelerator('1', (GdkModifierType) GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_ENT, "FilterEntities", Accelerator('2', (GdkModifierType) GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_TRANSLUCENT, "FilterTranslucent", Accelerator('3', (GdkModifierType) GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_LIQUIDS, "FilterLiquids", Accelerator('4', (GdkModifierType) GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_CAULK, "FilterCaulk", Accelerator('5', (GdkModifierType) GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_CLIP, "FilterClips", Accelerator('6', (GdkModifierType) GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_ACTORCLIP, "FilterActorClips", Accelerator('7', (GdkModifierType) GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_WEAPONCLIP, "FilterWeaponClips", Accelerator('8', (GdkModifierType) GDK_MOD1_MASK));
-	add_filter_command(EXCLUDE_LIGHTS, "FilterLights", Accelerator('9', (GdkModifierType) GDK_MOD1_MASK));
 	add_filter_command(EXCLUDE_NO_SURFLIGHTS, "FilterNoSurfLights", Accelerator('9', (GdkModifierType) (GDK_MOD1_MASK
 			| GDK_CONTROL_MASK)));
 	add_filter_command(EXCLUDE_STRUCTURAL, "FilterStructural", Accelerator('0', (GdkModifierType) (GDK_SHIFT_MASK
 			| GDK_CONTROL_MASK)));
-	add_filter_command(EXCLUDE_NODRAW, "FilterNodraw", Accelerator('N', (GdkModifierType) GDK_CONTROL_MASK));
 	add_filter_command(EXCLUDE_DETAILS, "FilterDetails", Accelerator('D', (GdkModifierType) GDK_CONTROL_MASK));
 	add_filter_command(EXCLUDE_HINTSSKIPS, "FilterHintsSkips", Accelerator('H', (GdkModifierType) GDK_CONTROL_MASK));
-	add_filter_command(EXCLUDE_MODELS, "FilterModels", Accelerator('M', (GdkModifierType) GDK_SHIFT_MASK));
-	add_filter_command(EXCLUDE_TRIGGERS, "FilterTriggers", Accelerator('T', (GdkModifierType) (GDK_SHIFT_MASK
-			| GDK_CONTROL_MASK)));
 	add_filter_command(EXCLUDE_PHONG, "FilterPhong", Accelerator('P', (GdkModifierType) (GDK_SHIFT_MASK
 			| GDK_CONTROL_MASK)));
 	add_filter_command(EXCLUDE_NO_FOOTSTEPS, "FilterNoFootsteps", Accelerator('F', (GdkModifierType) (GDK_SHIFT_MASK
 			| GDK_CONTROL_MASK)));
-
-	add_filter_command(EXCLUDE_PARTICLE, "FilterParticles", accelerator_null());
-	add_filter_command(EXCLUDE_INFO_2x2_START, "FilterInfo2x2Start", accelerator_null());
-	add_filter_command(EXCLUDE_INFO_ALIEN_START, "FilterInfoAlienStart", accelerator_null());
-	add_filter_command(EXCLUDE_INFO_CIVILIAN_START, "FilterInfoCivilianStart", accelerator_null());
-	add_filter_command(EXCLUDE_INFO_HUMAN_START, "FilterInfoHumanStart", accelerator_null());
-	add_filter_command(EXCLUDE_INFO_PLAYER_START, "FilterInfoPlayerStart", accelerator_null());
-	add_filter_command(EXCLUDE_INFO, "FilterInfo", accelerator_null());
 
 	PerformFiltering();
 }

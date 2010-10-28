@@ -47,31 +47,13 @@ FiltersMenu::FiltersMenu()
 	MenuPopulatingVisitor visitor(menu);
 	GlobalFilterSystem().forEachFilter(visitor);
 
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "World"), "FilterWorldBrushes");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Entities"), "FilterEntities");
 	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Translucent"), "FilterTranslucent");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Liquids"), "FilterLiquids");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Caulk"), "FilterCaulk");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Clips"), "FilterClips");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "ActorClips"), "FilterActorClips");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "WeaponClips"), "FilterWeaponClips");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Lights"), "FilterLights");
 	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "NoSurfLights"), "FilterNoSurfLights");
 	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "NoFootsteps"), "FilterNoFootsteps");
 	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Structural"), "FilterStructural");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Nodraw"), "FilterNodraw");
 	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Phong"), "FilterPhong");
 	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Details"), "FilterDetails");
 	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Hints"), "FilterHintsSkips");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Models"), "FilterModels");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Triggers"), "FilterTriggers");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Particles"), "FilterParticles");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Info"), "FilterInfo");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Info player start"), "FilterInfoPlayerStart");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Info human start"), "FilterInfoHumanStart");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Info 2x2 start"), "FilterInfo2x2Start");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Info alien start"), "FilterInfoAlienStart");
-	create_check_menu_item_with_mnemonic(menu, C_("Filter Menu", "Info civilian start"), "FilterInfoCivilianStart");
 
 	// filter manipulation
 	menu_separator(menu);

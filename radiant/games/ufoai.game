@@ -47,12 +47,52 @@
 		<filter name="World geometry">
 			<filterCriterion type="entityclass" match="worldspawn" action="hide" />
 		</filter>
+		<filter name="Entities">
+			<filterCriterion type="entityclass" match="*" action="hide" />
+			<filterCriterion type="entityclass" match="worldspawn" action="show" />
+		</filter>
 		<filter name="Light">
 			<filterCriterion type="entityclass" match="light" action="hide" />
 			<filterCriterion type="entityclass" match="light_*" action="hide" />
 		</filter>
+		<filter name="Models">
+			<filterCriterion type="entityclass" match="misc_models" action="hide" />
+		</filter>
+		<filter name="Particles">
+			<filterCriterion type="entityclass" match="misc_particle" action="hide" />
+		</filter>
+		<filter name="Start positions">
+			<filterCriterion type="entityclass" match="info_*_start" action="hide" />
+		</filter>
+		<filter name="Multiplayer start">
+			<filterCriterion type="entityclass" match="info_player_start" action="hide" />
+		</filter>
+		<filter name="Singleplayer start">
+			<filterCriterion type="entityclass" match="info_human_start" action="hide" />
+		</filter>
+		<filter name="Alien start">
+			<filterCriterion type="entityclass" match="info_alien_start" action="hide" />
+		</filter>
+		<filter name="Civilian start">
+			<filterCriterion type="entityclass" match="info_civilian_start" action="hide" />
+		</filter>
 		<filter name="Common Textures">
 			<filterCriterion type="texture" match="textures/tex_common/*" action="hide" />
+		</filter>
+		<filter name="Actorclip">
+			<filterCriterion type="texture" match="textures/tex_common/actorclip" action="hide" />
+		</filter>
+		<filter name="Lightclip">
+			<filterCriterion type="texture" match="textures/tex_common/lightclip" action="hide" />
+		</filter>
+		<filter name="Weaponclip">
+			<filterCriterion type="texture" match="textures/tex_common/weaponclip" action="hide" />
+		</filter>
+		<filter name="NoDraw">
+			<filterCriterion type="texture" match="textures/tex_common/nodraw" action="hide" />
+		</filter>
+		<filter name="Details">
+			<filterCriterion type="contentflags" match="134217728" action="hide" />
 		</filter>
 	</filtersystem>
 </game>

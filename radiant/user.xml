@@ -47,10 +47,6 @@
 				<toggletoolbutton name="dragedges" action="DragEdges" tooltip="Select Edges" icon="modify_edges.png" />
 				<toggletoolbutton name="dragfaces" action="DragFaces" tooltip="Select Faces" icon="modify_faces.png" />
 			<separator/>
-				<toggletoolbutton name="filternodraw" action="FilterNodraw" tooltip="Filter nodraw" icon="filter_nodraw.png" />
-				<toggletoolbutton name="filteractorclips" action="FilterActorClips" tooltip="Filter actorclip" icon="filter_actorclip.png" />
-				<toggletoolbutton name="filterweaponclips" action="FilterWeaponClips" tooltip="Filter weaponclip" icon="filter_weaponclip.png" />
-			<separator/>
 				<toolbutton name="refreshmodels" action="RefreshReferences" tooltip="Refresh Models" icon="refresh_models.png" />
 				<toolbutton name="background" action="ToggleBackground" tooltip="Background image" icon="background.png" />
 			<separator/>

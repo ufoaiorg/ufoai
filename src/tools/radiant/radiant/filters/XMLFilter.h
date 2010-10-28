@@ -39,6 +39,9 @@ public:
 	 * @param match
 	 * The regex match expression to use for this rule.
 	 *
+	 * @param flags
+	 * The surface or content flags to filter
+	 *
 	 * @param show
 	 * true if this filter should show its matches, false if it should
 	 * hide them.
@@ -51,12 +54,12 @@ public:
 	 * in this XMLFilter.
 	 *
 	 * @param itemClass
-	 * Class of the item to test - "texture", "entityclass" etc
+	 * Class of the item to test - "texture", "entityclass", "surfaceflags", "contentflags" etc
 	 *
 	 * @param name
 	 * String name of the item to test.
 	 */
-	bool isVisible(const std::string& itemClass, const std::string& texture) const;
+	bool isVisible(const std::string& itemClass, const std::string& name) const;
 };
 
 

@@ -107,7 +107,7 @@ public:
 	 * active filters.
 	 *
 	 * @param item
-	 * The item to query - "texture", "entityclass" or "object"
+	 * The item to query - "texture", "entityclass", "surfaceflags" or "contentflags"
 	 *
 	 * @param text
 	 * String name of the item to query.
@@ -116,6 +116,7 @@ public:
 	 * true if the item is visible, false otherwise.
 	 */
 	virtual bool isVisible(const std::string& item, const std::string& text) = 0;
+	virtual bool isVisible(const std::string& item, int flags) = 0;
 
 	virtual ~FilterSystem(){}
 	virtual void addFilter(Filter& filter, int mask) = 0;
