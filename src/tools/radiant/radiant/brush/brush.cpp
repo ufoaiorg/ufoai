@@ -21,7 +21,7 @@
 
 #include "brush.h"
 #include "signal/signal.h"
-#include "plugin.h"
+#include "../plugin.h"
 
 static Signal0 g_brushTextureChangedCallbacks;
 

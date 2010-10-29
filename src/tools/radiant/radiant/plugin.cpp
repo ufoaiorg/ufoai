@@ -124,11 +124,6 @@ Vector3 XYWindow_windowToWorld (const WindowVector& position)
 	return result;
 }
 
-const std::string& TextureBrowser_getSelectedShader ()
-{
-	return GlobalTextureBrowser().getSelectedShader();
-}
-
 class RadiantCoreAPI
 {
 		IRadiant m_radiantcore;
@@ -163,18 +158,8 @@ class RadiantCoreAPI
 			m_radiantcore.attachGameModeObserver = Radiant_attachGameModeObserver;
 			m_radiantcore.detachGameModeObserver = Radiant_detachGameModeObserver;
 
-			m_radiantcore.XYWindowDestroyed_connect = XYWindowDestroyed_connect;
-			m_radiantcore.XYWindowDestroyed_disconnect = XYWindowDestroyed_disconnect;
-			m_radiantcore.XYWindowMouseDown_connect = XYWindowMouseDown_connect;
-			m_radiantcore.XYWindowMouseDown_disconnect = XYWindowMouseDown_disconnect;
-			m_radiantcore.XYWindow_getViewType = XYWindow_getViewType;
-			m_radiantcore.XYWindow_windowToWorld = XYWindow_windowToWorld;
-			m_radiantcore.TextureBrowser_getSelectedShader = TextureBrowser_getSelectedShader;
-
 			m_radiantcore.m_pfnMessageBox = &gtk_MessageBox;
 			m_radiantcore.m_pfnFileDialog = &file_dialog;
-			m_radiantcore.m_pfnColorDialog = &color_dialog;
-			m_radiantcore.m_pfnNewImage = &gtkutil::getImage;
 		}
 		IRadiant* getTable ()
 		{

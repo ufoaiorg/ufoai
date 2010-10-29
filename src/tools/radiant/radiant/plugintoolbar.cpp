@@ -96,11 +96,6 @@ static void PluginToolbar_populate ()
 	Radiant_getToolbarModules().foreachModule(visitor);
 }
 
-void PluginToolbar_clear ()
-{
-	container_remove_all(GTK_CONTAINER(g_plugin_toolbar));
-}
-
 GtkToolbar* create_plugin_toolbar ()
 {
 	GtkToolbar *toolbar;

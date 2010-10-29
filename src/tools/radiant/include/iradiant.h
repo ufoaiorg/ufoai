@@ -66,17 +66,6 @@ typedef EMessageBoxReturn (* PFN_QERAPP_MESSAGEBOX) (GtkWidget *parent, const st
 typedef const char* (* PFN_QERAPP_FILEDIALOG) (GtkWidget *parent, bool open, const std::string& title,
 		const std::string& path, const std::string& pattern);
 
-// return true if the user closed the dialog with 'Ok'
-// 'color' is used to set the initial value and store the selected value
-template<typename Element> class BasicVector3;
-typedef BasicVector3<float> Vector3;
-typedef bool (* PFN_QERAPP_COLORDIALOG) (GtkWidget *parent, Vector3& color, const std::string& title);
-
-// load an image file and create a GtkWidget from it
-// NOTE: 'filename' is relative to <radiant_path>/bitmaps/
-typedef struct _GtkWidget GtkWidget;
-typedef GtkWidget* (* PFN_QERAPP_NEWIMAGE) (const std::string& filename);
-
 // ========================================
 
 // Forward declarations
@@ -139,19 +128,9 @@ struct IRadiant
 		void (*attachGameModeObserver) (ModuleObserver& observer);
 		void (*detachGameModeObserver) (ModuleObserver& observer);
 
-		SignalHandlerId (*XYWindowDestroyed_connect) (const SignalHandler& handler);
-		void (*XYWindowDestroyed_disconnect) (SignalHandlerId id);
-		MouseEventHandlerId (*XYWindowMouseDown_connect) (const MouseEventHandler& handler);
-		void (*XYWindowMouseDown_disconnect) (MouseEventHandlerId id);
-		EViewType (*XYWindow_getViewType) ();
-		Vector3 (*XYWindow_windowToWorld) (const WindowVector& position);
-		const std::string& (*TextureBrowser_getSelectedShader) ();
-
 		// GTK+ functions
 		PFN_QERAPP_MESSAGEBOX m_pfnMessageBox;
 		PFN_QERAPP_FILEDIALOG m_pfnFileDialog;
-		PFN_QERAPP_COLORDIALOG m_pfnColorDialog;
-		PFN_QERAPP_NEWIMAGE m_pfnNewImage;
 };
 
 // _QERFuncTable_1 Module Definitions

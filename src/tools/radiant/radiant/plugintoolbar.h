@@ -26,6 +26,5 @@
 
 typedef struct _GtkToolbar GtkToolbar;
 GtkToolbar* create_plugin_toolbar ();
-void PluginToolbar_clear ();
 
 #endif
