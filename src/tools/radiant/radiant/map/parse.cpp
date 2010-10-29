@@ -35,7 +35,6 @@
 #include "stringio.h"
 #include "eclasslib.h"
 #include "gtkutil/ModalProgressDialog.h"
-#include <gtk/gtkmain.h>
 #include "string/string.h"
 
 inline MapImporter* Node_getMapImporter (scene::Node& node)
@@ -121,10 +120,6 @@ void Map_Read (scene::Node& root, Tokeniser& tokeniser, EntityCreator& entityTab
 	gtkutil::ModalProgressDialog dialog(GlobalRadiant().getMainWindow(), _("Loading map"));
 
 	for (int entCount = 0; ; entCount++) {
-		// Process GTK events to let the dialog update
-		while (gtk_events_pending())
-			gtk_main_iteration();
-
 		// Update the dialog text
 		dialog.setText("Loading entity " + string::toString(entCount));
 

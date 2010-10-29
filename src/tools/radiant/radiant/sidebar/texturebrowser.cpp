@@ -321,10 +321,6 @@ class LoadTexturesByTypeVisitor: public ImageModules::Visitor {
 				void operator()(const std::string& texture) {
 					std::string name = _directory + os::stripExtension(texture);
 
-					// Process GTK events to let the dialog update
-					while (gtk_events_pending())
-						gtk_main_iteration();
-
 					if (texture_name_ignore(name))
 						return;
 

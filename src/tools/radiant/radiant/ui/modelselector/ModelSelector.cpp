@@ -147,10 +147,6 @@ namespace ui
 
 				GtkTreeIter* addRecursive (const std::string& dirPath)
 				{
-					// Process GTK events to let the dialog update
-					while (gtk_events_pending())
-						gtk_main_iteration();
-
 					// We first try to lookup the directory name in the map. Return it
 					// if it exists, otherwise recursively obtain the parent of this directory name,
 					// and add this directory as a child in the tree model. We also add this
