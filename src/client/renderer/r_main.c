@@ -619,6 +619,11 @@ qboolean R_SetMode (void)
 	return result;
 }
 
+/** @note SDL_GL_GetProcAddress returns a void*, which is not on all
+ * supported platforms the same size as a function pointer.
+ * This wrapper is a workaround until SDL is fixed.
+ * It is known to produce the "warning: assignment from incompatible pointer type"
+ */
 static inline uintptr_t R_GetProcAddress (const char *functionName)
 {
 	return (uintptr_t)SDL_GL_GetProcAddress(functionName);
