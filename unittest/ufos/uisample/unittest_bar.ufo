@@ -40,7 +40,7 @@ window unittest_bar
 		color	"1 1 0 1"
 		pos "100 220"
 		size "50 50"
-		orientation cl
+		direction "cl"
 	}
 
 	bar right {
@@ -50,7 +50,7 @@ window unittest_bar
 		color	"0 1 0 1"
 		pos "160 160"
 		size "50 50"
-		orientation cr
+		direction "cr"
 	}
 
 	bar top {
@@ -60,7 +60,7 @@ window unittest_bar
 		color	"0 0 1 1"
 		pos "100 160"
 		size "50 50"
-		orientation uc
+		direction "uc"
 	}
 
 	bar down {
@@ -70,7 +70,7 @@ window unittest_bar
 		color	"1 0 0 1"
 		pos "160 220"
 		size "50 50"
-		orientation lc
+		direction "lc"
 	}
 
 	func onInit {

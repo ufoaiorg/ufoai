@@ -71,7 +71,7 @@ window unittest_extended extends unittest_super {
 
 	panel c { }
 
-	string	{
+	string d {
 		pos	"10 170"
 		string "Everything must be green"
 	}

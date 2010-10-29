@@ -44,6 +44,7 @@ static int UFO_InitSuiteUILevel2 (void)
 static void TEST_ParseScript (const char* scriptName)
 {
 	const char *type, *name, *text;
+	int nbWrongScripts = 0;
 
 	/* parse ui node script */
 	Com_Printf("Load \"%s\": %i script file(s)\n", scriptName, FS_BuildFileList(scriptName));
@@ -51,9 +52,12 @@ static void TEST_ParseScript (const char* scriptName)
 	text = NULL;
 	while ((type = FS_NextScriptHeader(scriptName, &name, &text)) != NULL) {
 		const qboolean result = CL_ParseClientData(type, name, &text);
-		if (!result)
-			CU_assertImplementation(CU_FALSE, __LINE__, va("Failed to parse needed scripts for type: %s and id %s", type, name), __FILE__, "", CU_TRUE);
+		if (!result) {
+			CU_assertImplementation(CU_FALSE, __LINE__, va("Failed to parse needed scripts for type: %s and id %s", type, name), __FILE__, "", CU_FALSE);
+			nbWrongScripts++;
+		}
 	}
+	CU_ASSERT_FATAL(nbWrongScripts == 0);
 }
 
 /**
@@ -229,6 +233,13 @@ static void testRuntimeError (void)
 	UFO_ExecuteTestWindow("test_runtimeerror");
 }
 
+/**
+ * @brief test if we can parse all samples
+ */
+static void testSamples (void)
+{
+	TEST_ParseScript("ufos/uisample/*.ufo");
+}
 
 int UFO_AddUILevel2Tests (void)
 {
@@ -256,6 +267,8 @@ int UFO_AddUILevel2Tests (void)
 	if (CU_ADD_TEST(UISuite, testInheritedConfunc) == NULL)
 		return CU_get_error();
 	if (CU_ADD_TEST(UISuite, testRuntimeError) == NULL)
+		return CU_get_error();
+	if (CU_ADD_TEST(UISuite, testSamples) == NULL)
 		return CU_get_error();
 
 	return CUE_SUCCESS;

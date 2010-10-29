@@ -1345,8 +1345,12 @@ qboolean UI_ParseWindow (const char *type, const char *name, const char **text)
 	/* parse it's body */
 	result = UI_ParseNodeBody(window, text, &token, errhead);
 	if (!result) {
+#ifdef COMPILE_UNITTESTS
+		Com_Printf("UI_ParseWindow: window \"%s\" has a bad body\n", window->name);
+		return qfalse;
+#else
 		Com_Error(ERR_FATAL, "UI_ParseWindow: window \"%s\" has a bad body\n", window->name);
-		return qfalse;	/* never reached */
+#endif
 	}
 
 	window->behaviour->loaded(window);

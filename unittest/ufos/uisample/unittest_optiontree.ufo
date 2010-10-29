@@ -19,9 +19,9 @@ window unittest_optiontree
 		selectcolor	"1 1 1 1"
 
 		onViewchange	{
-			*root.scroll@current = <viewpos>
-			*root.scroll@fullsize = <fullsize>
-			*root.scroll@viewsize = <viewsize>
+			*node:root.scroll@current = <viewpos>
+			*node:root.scroll@fullsize = <fullsize>
+			*node:root.scroll@viewsize = <viewsize>
 		}
 	}
 
@@ -33,7 +33,7 @@ window unittest_optiontree
 		viewsize	21
 		fullsize	22
 		onChange		{
-			*root.tree@viewpos = <current>
+			*node:root.tree@viewpos = <current>
 		}
 	}
 }

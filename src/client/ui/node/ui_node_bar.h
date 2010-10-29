@@ -35,7 +35,7 @@ struct uiBehaviour_s;
  */
 typedef struct {
 	abstractValueExtraData_t super;
-	byte orientation;	/**< Orientation of the bar (left, right, top, down) */
+	align_t orientation;	/**< Orientation of the bar (left, right, top, down) */
 	qboolean readOnly;	/**< True if the user can't edit the content */
 } barExtraData_t;
 
