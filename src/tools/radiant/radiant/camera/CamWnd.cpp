@@ -488,7 +488,7 @@ void CamWnd::Cam_Draw() {
 
 	Vector3 clearColour(0, 0, 0);
 	if (m_Camera.draw_mode != cd_lighting) {
-		clearColour = g_camwindow_globals.color_cameraback;
+		clearColour = ColourSchemes().getColourVector3("camera_background");
 	}
 
 	glClearColor(clearColour[0], clearColour[1], clearColour[2], 0);

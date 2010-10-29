@@ -23,6 +23,7 @@
 			<rotationSpeed value="3" />
 			<cubicScale value="13" />
 		</camera>
+
 		<toolbar name="view" align="horizontal">
 				<toolbutton name="open" action="OpenMap" tooltip="Open a map file" icon="file_open.png" />
 				<toolbutton name="save" action="SaveMap" tooltip="Save the current map" icon="file_save.png" />

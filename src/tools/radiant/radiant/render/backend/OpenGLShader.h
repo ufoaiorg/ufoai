@@ -10,6 +10,7 @@
 #include "OpenGLStateManager.h"
 
 #include "../../xyview/GlobalXYWnd.h"
+#include "../../plugin.h"
 
 #include <list>
 #include <map>
@@ -297,7 +298,7 @@ class OpenGLShader: public Shader {
 					hiddenLine.m_linestipple_factor = 2;
 #endif
 				} else if (name == "$XY_OVERLAY") {
-					Vector3& colorSelBrushes = g_xywindow_globals.color_selbrushes;
+					Vector3 colorSelBrushes = ColourSchemes().getColourVector3("selected_brush");
 					state.m_colour[0] = colorSelBrushes[0];
 					state.m_colour[1] = colorSelBrushes[1];
 					state.m_colour[2] = colorSelBrushes[2];
@@ -368,7 +369,7 @@ class OpenGLShader: public Shader {
 					hiddenLine.m_sort = OpenGLState::eSortGUI0;
 					hiddenLine.m_depthfunc = GL_GREATER;
 				} else if (name == "$CLIPPER_OVERLAY") {
-					Vector3& colorClipper = g_xywindow_globals.color_clipper;
+					Vector3 colorClipper = ColourSchemes().getColourVector3("clipper");
 					state.m_colour[0] = colorClipper[0];
 					state.m_colour[1] = colorClipper[1];
 					state.m_colour[2] = colorClipper[2];

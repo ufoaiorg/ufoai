@@ -78,7 +78,6 @@
 #include "map/autosave.h"
 #include "brush/brushmanip.h"
 #include "brush/brushmodule.h"
-#include "colorscheme.h"
 #include "camera/camwindow.h"
 #include "brush/csg/csg.h"
 #include "commands.h"
@@ -118,6 +117,8 @@
 #include "clipper/GlobalClipPoints.h"
 #include "camera/CamWnd.h"
 #include "camera/GlobalCamera.h"
+#include "ui/colourscheme/ColourSchemeEditor.h"
+#include "ui/colourscheme/ColourSchemeManager.h"
 
 struct LayoutGlobals
 {
@@ -479,20 +480,29 @@ void Radiant_detachGameToolsPathObserver (ModuleObserver& observer)
 void populateRegistry ()
 {
 	// Load default values for darkradiant, located in the game directory
-	const std::string base = std::string(AppPath_get()) + "user.xml";
-	const std::string input = std::string(AppPath_get()) + "input.xml";
+	const std::string base = AppPath_get() + "user.xml";
+	const std::string input = AppPath_get() + "input.xml";
+	const std::string colours = AppPath_get() + "colours.xml";
 
 	if (file_exists(base)) {
 		GlobalRegistry().importFromFile(base, "");
+
+		// Try to load the default colour schemes
+		if (file_exists(colours.c_str())) {
+			GlobalRegistry().importFromFile(colours, "user/ui");
+		}
+		else {
+			gtkutil::errorDialog(_("Could not find default colour schemes:\n") + colours);
+		}
 
 		// Try to load the default input definitions
 		if (file_exists(input.c_str())) {
 			GlobalRegistry().importFromFile(input, "user/ui");
 		} else {
-			gtkutil::errorDialog(std::string("Could not find default input definitions:\n") + input);
+			gtkutil::errorDialog(_("Could not find default input definitions:\n") + input);
 		}
 	} else {
-		gtkutil::fatalErrorDialog(std::string("Could not find base registry:\n") + base);
+		gtkutil::fatalErrorDialog(_("Could not find base registry:\n") + base);
 	}
 
 	// Construct the filename and load it into the registry
@@ -504,6 +514,11 @@ void populateRegistry ()
 	const std::string userSettingsFile = SettingsPath_get() + "user.xml";
 	if (file_exists(userSettingsFile)) {
 		GlobalRegistry().importFromFile(userSettingsFile, "");
+	}
+
+	const std::string userColoursFile = SettingsPath_get() + "colours.xml";
+	if (file_exists(userColoursFile.c_str())) {
+		GlobalRegistry().importFromFile(userColoursFile, "user/ui");
 	}
 
 	const std::string userInputFile = SettingsPath_get() + "input.xml";
@@ -533,6 +548,10 @@ void Radiant_Initialise (void)
 
 void Radiant_Shutdown (void)
 {
+	// Export the colour schemes and remove them from the registry
+	GlobalRegistry().exportToFile("user/ui/colourschemes", SettingsPath_get() + "colours.xml");
+	GlobalRegistry().deleteXPath("user/ui/colourschemes");
+
 	// Export the input definitions into the user's settings folder and remove them as well
 	GlobalRegistry().exportToFile("user/ui/input", SettingsPath_get() + "input.xml");
 	GlobalRegistry().deleteXPath("user/ui/input");
@@ -1399,7 +1418,7 @@ void ScreenUpdates_Enable (void)
 	}
 }
 
-static void GlobalCamera_UpdateWindow (void)
+void GlobalCamera_UpdateWindow (void)
 {
 	if (g_pParentWnd != 0) {
 		g_pParentWnd->GetCamWnd()->update();
@@ -1709,11 +1728,10 @@ static GtkMenuItem* create_misc_menu (void)
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	gtk_container_add(GTK_CONTAINER(menu), GTK_WIDGET(create_colours_menu()));
-
 	create_menu_item_with_mnemonic(menu, _("Find brush..."), "FindBrush");
 	create_menu_item_with_mnemonic(menu, _("_Background select"), FreeCaller<WXY_BackgroundSelect> ());
 	create_menu_item_with_mnemonic(menu, _("_Benchmark"), FreeCaller<GlobalCamera_Benchmark>());
+	create_menu_item_with_mnemonic(menu, _("Colour Scheme Editor"), "EditColourScheme");
 
 	return misc_menu_item;
 }
@@ -2450,6 +2468,10 @@ void Layout_registerPreferencesPage (void)
 	PreferencesDialog_addInterfacePage(FreeCaller1<PreferenceGroup&, Layout_constructPage> ());
 }
 
+void EditColourScheme() {
+	new ui::ColourSchemeEditor(); // self-destructs in GTK callback
+}
+
 #include "preferencesystem.h"
 #include "stringio.h"
 
@@ -2529,8 +2551,6 @@ void MainFrame_Construct (void)
 	GlobalToggles_insert("MouseDrag", FreeCaller<DragMode> (), ToggleItem::AddCallbackCaller(g_dragmode_button),
 			Accelerator('Q'));
 
-	ColorScheme_registerCommands();
-
 	GlobalRadiant().commandInsert("CSGSubtract", FreeCaller<CSG_Subtract> (), Accelerator('U',
 			(GdkModifierType) GDK_SHIFT_MASK));
 	GlobalRadiant().commandInsert("CSGMerge", FreeCaller<CSG_Merge> (), Accelerator('U',
@@ -2579,6 +2599,7 @@ void MainFrame_Construct (void)
 			(GdkModifierType) GDK_MOD1_MASK));
 	GlobalRadiant().commandInsert("SelectNudgeDown", FreeCaller<Selection_NudgeDown> (), Accelerator(GDK_Down,
 			(GdkModifierType) GDK_MOD1_MASK));
+	GlobalCommands_insert("EditColourScheme", FreeCaller<EditColourScheme>());
 
 	GlobalCommands_insert("BrushExportOBJ", FreeCaller<CallBrushExportOBJ> ());
 
@@ -2646,14 +2667,10 @@ void MainFrame_Construct (void)
 
 	GLWidget_sharedContextCreated = GlobalGL_sharedContextCreated;
 	GLWidget_sharedContextDestroyed = GlobalGL_sharedContextDestroyed;
-
-	ColorScheme_Init();
 }
 
 void MainFrame_Destroy (void)
 {
-	ColorScheme_Destroy();
-
 	GlobalEntityCreator().setCounter(0);
 	g_entityCount.setCountChangedCallback(Callback());
 	g_brushCount.setCountChangedCallback(Callback());

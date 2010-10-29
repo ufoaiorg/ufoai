@@ -100,7 +100,7 @@ TextureBrowser::TextureBrowser() :
 			m_hideinvalid_item(TextureBrowserHideInvalidExport()), m_showshaders_item(
 					TextureBrowserShowShadersExport()), m_heightChanged(true),
 			m_originInvalid(true), m_scrollAdjustment(TextureBrowser_scrollChanged, this),
-			color_textureback(0.25f, 0.25f, 0.25f), m_mouseWheelScrollIncrement(64),
+			m_mouseWheelScrollIncrement(64),
 			m_textureScale(50), m_showShaders(true), m_hideUnused(false), m_hideInvalid(false),
 			m_rmbSelected(false), m_resizeTextures(true), m_uniformTextureSize(128) {
 	Textures_setModeChangedNotify(MemberCaller<TextureBrowser, &TextureBrowser::queueDraw> (*this));
@@ -513,7 +513,8 @@ void TextureBrowser::selectTextureAt(int mx, int my) {
 void TextureBrowser::draw() {
 	const int originy = getOriginY();
 
-	glClearColor(color_textureback[0], color_textureback[1], color_textureback[2], 0);
+	Vector3 colorBackground = ColourSchemes().getColourVector3("texture_background");
+	glClearColor(colorBackground[0], colorBackground[1], colorBackground[2], 0);
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -1002,15 +1003,6 @@ GtkWidget* TextureBrowser::getWidget() {
 	return vbox;
 }
 
-const Vector3& TextureBrowser::getBackgroundColour() const {
-	return color_textureback;
-}
-
-void TextureBrowser::setBackgroundColour(const Vector3& colour) {
-	color_textureback = colour;
-	queueDraw();
-}
-
 void TextureBrowser::toggleShowShaders() {
 	m_showShaders ^= 1;
 	m_showshaders_item.update();
@@ -1134,9 +1126,6 @@ void TextureBrowser_Construct(void) {
 	GlobalPreferenceSystem().registerPreference("WheelMouseInc", SizeImportStringCaller(
 			GlobalTextureBrowser().m_mouseWheelScrollIncrement), SizeExportStringCaller(
 			GlobalTextureBrowser().m_mouseWheelScrollIncrement));
-	GlobalPreferenceSystem().registerPreference("SI_Colors0", Vector3ImportStringCaller(
-			GlobalTextureBrowser().color_textureback), Vector3ExportStringCaller(
-			GlobalTextureBrowser().color_textureback));
 
 	PreferencesDialog_addSettingsPage(MemberCaller1<TextureBrowser, PreferenceGroup&,
 			&TextureBrowser::constructPage> (GlobalTextureBrowser()));

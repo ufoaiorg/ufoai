@@ -126,7 +126,6 @@ class TextureBrowser {
 		DeferredAdjustment m_scrollAdjustment;
 		FreezePointer m_freezePointer;
 
-		Vector3 color_textureback;
 		// the increment step we use against the wheel mouse
 		std::size_t m_mouseWheelScrollIncrement;
 		std::size_t m_textureScale;
@@ -181,8 +180,6 @@ class TextureBrowser {
 		const std::string& getSelectedShader() const;
 		void setSelectedShader(const std::string& shader);
 		void showStartupShaders();
-		const Vector3& getBackgroundColour() const;
-		void setBackgroundColour(const Vector3& colour);
 		void toggleShowShaders();
 		void updateScroll();
 		int getFontHeight();

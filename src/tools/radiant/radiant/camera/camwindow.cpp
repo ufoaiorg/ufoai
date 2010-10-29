@@ -213,10 +213,6 @@ void CamWnd_Construct ()
 	GlobalCommands_insert("CameraAngleDown",
 			MemberCaller<GlobalCameraManager, &GlobalCameraManager::pitchDownDiscrete> (GlobalCamera()), Accelerator(
 					'Z'));
-	GlobalPreferenceSystem().registerPreference("SI_Colors4", Vector3ImportStringCaller(
-			g_camwindow_globals.color_cameraback), Vector3ExportStringCaller(g_camwindow_globals.color_cameraback));
-	GlobalPreferenceSystem().registerPreference("SI_Colors12", Vector3ImportStringCaller(
-			g_camwindow_globals.color_selbrushes3d), Vector3ExportStringCaller(g_camwindow_globals.color_selbrushes3d));
 	GlobalPreferenceSystem().registerPreference("CameraRenderMode", makeIntStringImportCallback(
 			RenderModeImportCaller()), makeIntStringExportCallback(RenderModeExportCaller()));
 

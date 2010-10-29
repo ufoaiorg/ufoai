@@ -22,6 +22,9 @@
 #if !defined(INCLUDED_PLUGIN_H)
 #define INCLUDED_PLUGIN_H
 
+#include "ui/colourscheme/ColourSchemeManager.h"
+ui::ColourSchemeManager& ColourSchemes();
+
 class ModuleServer;
 bool Radiant_Construct (ModuleServer& server);
 void Radiant_Destroy ();

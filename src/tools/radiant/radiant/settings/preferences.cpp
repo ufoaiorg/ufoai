@@ -331,7 +331,7 @@ GtkTreeIter PreferenceTree_appendPage (GtkTreeStore* store, GtkTreeIter* parent,
 {
 	GtkTreeIter group;
 	gtk_tree_store_append(store, &group, parent);
-	gtk_tree_store_set(store, &group, 0, name, 1, page, -1);
+	gtk_tree_store_set(store, &group, 0, name.c_str(), 1, page, -1);
 	return group;
 }
 

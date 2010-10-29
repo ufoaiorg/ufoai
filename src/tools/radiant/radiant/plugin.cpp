@@ -336,6 +336,9 @@ bool Radiant_Construct (ModuleServer& server)
 	// Try to load all the XML files into the registry
 	populateRegistry();
 
+	// Load the ColourSchemes from the registry
+	ColourSchemes().loadColourSchemes();
+
 	if (g_RadiantInitialised) {
 		g_Radiant = new Radiant;
 	}
@@ -350,6 +353,11 @@ void Radiant_Destroy ()
 	}
 
 	delete g_RadiantDependencies;
+}
+
+ui::ColourSchemeManager& ColourSchemes() {
+	static ui::ColourSchemeManager _manager;
+	return _manager;
 }
 
 ImageModules& Radiant_getImageModules ()

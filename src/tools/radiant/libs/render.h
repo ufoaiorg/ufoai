@@ -320,9 +320,6 @@ struct Colour4b
 		}
 };
 
-const Colour4b colour_vertex(0, 255, 0, 255);
-const Colour4b colour_selected(0, 0, 255, 255);
-
 inline bool operator< (const Colour4b& self, const Colour4b& other)
 {
 	if (self.r != other.r) {

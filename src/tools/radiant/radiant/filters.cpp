@@ -191,10 +191,6 @@ class FilterAPI
 
 		FilterAPI ()
 		{
-			//GlobalPreferenceSystem().registerPreference("SI_Exclude", SizeImportStringCaller(g_filters_globals.exclude),
-			//		SizeExportStringCaller(g_filters_globals.exclude));
-
-			SceneChangeNotify();
 		}
 		~FilterAPI ()
 		{

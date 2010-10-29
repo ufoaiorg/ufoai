@@ -74,6 +74,7 @@
 #include "XYRenderer.h"
 #include "../selection/SelectionBox.h"
 #include "../camera/GlobalCamera.h"
+#include "../plugin.h"
 
 void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHeight);
 
@@ -1041,8 +1042,8 @@ void XYWnd::drawAxis (void)
 		const int w = (int) (m_nWidth / 2 / m_fScale);
 		const int h = (int) (m_nHeight / 2 / m_fScale);
 
-		const Vector3& colourX = (m_viewType == YZ) ? g_xywindow_globals.AxisColorY : g_xywindow_globals.AxisColorX;
-		const Vector3& colourY = (m_viewType == XY) ? g_xywindow_globals.AxisColorY : g_xywindow_globals.AxisColorZ;
+		const Vector3 colourX = (m_viewType == YZ) ? ColourSchemes().getColourVector3("axis_y") : ColourSchemes().getColourVector3("axis_x");
+		const Vector3 colourY = (m_viewType == XY) ? ColourSchemes().getColourVector3("axis_y") : ColourSchemes().getColourVector3("axis_z");
 
 		// draw two lines with corresponding axis colors to highlight current view
 		// horizontal line: nDim1 color
@@ -1169,16 +1170,14 @@ void XYWnd::drawGrid (void)
 		ye = region_maxs[nDim2];
 	ye = step * ceil(ye / step);
 
-#define COLORS_DIFFER(a,b) \
-  ((a)[0] != (b)[0] || \
-   (a)[1] != (b)[1] || \
-   (a)[2] != (b)[2])
-
 	// djbob
 	// draw minor blocks
 	if (g_xywindow_globals_private.d_showgrid) {
-		if (COLORS_DIFFER(g_xywindow_globals.color_gridminor, g_xywindow_globals.color_gridback)) {
-			glColor3fv(g_xywindow_globals.color_gridminor);
+		ui::ColourItem colourGridBack = ColourSchemes().getColour("grid_background");
+		ui::ColourItem colourGridMinor = ColourSchemes().getColour("grid_minor");
+		ui::ColourItem colourGridMajor = ColourSchemes().getColour("grid_major");
+		if (colourGridMinor != colourGridBack) {
+			glColor3fv(colourGridMinor);
 
 			glBegin(GL_LINES);
 			int i = 0;
@@ -1199,8 +1198,8 @@ void XYWnd::drawGrid (void)
 		}
 
 		// draw major blocks
-		if (COLORS_DIFFER(g_xywindow_globals.color_gridmajor, g_xywindow_globals.color_gridback)) {
-			glColor3fv(g_xywindow_globals.color_gridmajor);
+		if (colourGridMajor != colourGridBack) {
+			glColor3fv(colourGridMajor);
 
 			glBegin(GL_LINES);
 			for (x = xb; x <= xe; x += step) {
@@ -1217,7 +1216,8 @@ void XYWnd::drawGrid (void)
 
 	// draw coordinate text if needed
 	if (g_xywindow_globals_private.show_coordinates) {
-		glColor3fv(g_xywindow_globals.color_gridtext);
+		ui::ColourItem colourGridText = ColourSchemes().getColour("grid_text");
+		glColor3fv(colourGridText);
 		const float offx = m_vOrigin[nDim2] + h - GlobalOpenGL().m_fontHeight / m_fScale;
 		const float offy = m_vOrigin[nDim1] - w + 1 / m_fScale;
 		for (x = xb - fmod(xb, stepx); x <= xe; x += stepx) {
@@ -1231,8 +1231,10 @@ void XYWnd::drawGrid (void)
 			GlobalOpenGL().drawString(text);
 		}
 
-		if (Active())
-			glColor3fv(g_xywindow_globals.color_viewname);
+		if (Active()) {
+			ui::ColourItem colourActiveViewName = ColourSchemes().getColour("active_view_name");
+			glColor3fv(colourActiveViewName);
+		}
 
 		// we do this part (the old way) only if show_axis is disabled
 		if (!g_xywindow_globals_private.show_axis) {
@@ -1312,7 +1314,7 @@ void XYWnd::drawBlockGrid (void)
 
 	// draw major blocks
 
-	glColor3fv(g_xywindow_globals.color_gridblock);
+	glColor3fv(ColourSchemes().getColourVector3("grid_block"));
 	glLineWidth(2);
 
 	glBegin(GL_LINES);
@@ -1407,8 +1409,8 @@ void XYWnd::drawSizeInfo (int nDim1, int nDim2, Vector3& vMinBounds, Vector3& vM
 
 	Vector3 vSize(vMaxBounds - vMinBounds);
 
-	glColor3f(g_xywindow_globals.color_selbrushes[0] * .65f, g_xywindow_globals.color_selbrushes[1] * .65f,
-			g_xywindow_globals.color_selbrushes[2] * .65f);
+	Vector3 colourSelectedBrush = ColourSchemes().getColourVector3("selected_brush");
+	glColor3f(colourSelectedBrush[0] * .65f, colourSelectedBrush[1] * .65f, colourSelectedBrush[2] * .65f);
 
 	StringOutputStream dimensions(16);
 
@@ -1623,8 +1625,8 @@ void XYWnd::draw ()
 {
 	// clear
 	glViewport(0, 0, m_nWidth, m_nHeight);
-	glClearColor(g_xywindow_globals.color_gridback[0], g_xywindow_globals.color_gridback[1],
-			g_xywindow_globals.color_gridback[2], 0);
+	Vector3 colourGridBack = ColourSchemes().getColourVector3("grid_background");
+	glClearColor(colourGridBack[0], colourGridBack[1], colourGridBack[2], 0);
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -1739,18 +1741,19 @@ void XYWnd::draw ()
 			glLoadIdentity();
 
 			// four view mode doesn't colorize
-			if (g_pParentWnd->CurrentStyle() == MainFrame::eSplit)
-				glColor3fv(g_xywindow_globals.color_viewname);
-			else {
+			if (g_pParentWnd->CurrentStyle() == MainFrame::eSplit) {
+				ui::ColourItem colourActiveViewName = ColourSchemes().getColour("active_view_name");
+				glColor3fv(colourActiveViewName);
+			} else {
 				switch (m_viewType) {
 				case YZ:
-					glColor3fv(g_xywindow_globals.AxisColorX);
+					glColor3fv(ColourSchemes().getColourVector3("axis_x"));
 					break;
 				case XZ:
-					glColor3fv(g_xywindow_globals.AxisColorY);
+					glColor3fv(ColourSchemes().getColourVector3("axis_y"));
 					break;
 				case XY:
-					glColor3fv(g_xywindow_globals.AxisColorZ);
+					glColor3fv(ColourSchemes().getColourVector3("axis_z"));
 					break;
 				}
 			}
@@ -2100,35 +2103,6 @@ void XYWindow_Construct ()
 			g_xywindow_globals_private.show_outline), BoolExportStringCaller(g_xywindow_globals_private.show_outline));
 	GlobalPreferenceSystem().registerPreference("SI_ShowAxis", BoolImportStringCaller(
 			g_xywindow_globals_private.show_axis), BoolExportStringCaller(g_xywindow_globals_private.show_axis));
-
-	GlobalPreferenceSystem().registerPreference("SI_AxisColors0", Vector3ImportStringCaller(
-			g_xywindow_globals.AxisColorX), Vector3ExportStringCaller(g_xywindow_globals.AxisColorX));
-	GlobalPreferenceSystem().registerPreference("SI_AxisColors1", Vector3ImportStringCaller(
-			g_xywindow_globals.AxisColorY), Vector3ExportStringCaller(g_xywindow_globals.AxisColorY));
-	GlobalPreferenceSystem().registerPreference("SI_AxisColors2", Vector3ImportStringCaller(
-			g_xywindow_globals.AxisColorZ), Vector3ExportStringCaller(g_xywindow_globals.AxisColorZ));
-	GlobalPreferenceSystem().registerPreference("SI_Colors1", Vector3ImportStringCaller(
-			g_xywindow_globals.color_gridback), Vector3ExportStringCaller(g_xywindow_globals.color_gridback));
-	GlobalPreferenceSystem().registerPreference("SI_Colors2", Vector3ImportStringCaller(
-			g_xywindow_globals.color_gridminor), Vector3ExportStringCaller(g_xywindow_globals.color_gridminor));
-	GlobalPreferenceSystem().registerPreference("SI_Colors3", Vector3ImportStringCaller(
-			g_xywindow_globals.color_gridmajor), Vector3ExportStringCaller(g_xywindow_globals.color_gridmajor));
-	GlobalPreferenceSystem().registerPreference("SI_Colors6", Vector3ImportStringCaller(
-			g_xywindow_globals.color_gridblock), Vector3ExportStringCaller(g_xywindow_globals.color_gridblock));
-	GlobalPreferenceSystem().registerPreference("SI_Colors7", Vector3ImportStringCaller(
-			g_xywindow_globals.color_gridtext), Vector3ExportStringCaller(g_xywindow_globals.color_gridtext));
-	GlobalPreferenceSystem().registerPreference("SI_Colors8", Vector3ImportStringCaller(
-			g_xywindow_globals.color_brushes), Vector3ExportStringCaller(g_xywindow_globals.color_brushes));
-	GlobalPreferenceSystem().registerPreference("SI_Colors9", Vector3ImportStringCaller(
-			g_xywindow_globals.color_selbrushes), Vector3ExportStringCaller(g_xywindow_globals.color_selbrushes));
-	GlobalPreferenceSystem().registerPreference("SI_Colors10", Vector3ImportStringCaller(
-			g_xywindow_globals.color_clipper), Vector3ExportStringCaller(g_xywindow_globals.color_clipper));
-	GlobalPreferenceSystem().registerPreference("SI_Colors11", Vector3ImportStringCaller(
-			g_xywindow_globals.color_viewname), Vector3ExportStringCaller(g_xywindow_globals.color_viewname));
-	GlobalPreferenceSystem().registerPreference("SI_Colors13", Vector3ImportStringCaller(
-			g_xywindow_globals.color_gridminor_alt), Vector3ExportStringCaller(g_xywindow_globals.color_gridminor_alt));
-	GlobalPreferenceSystem().registerPreference("SI_Colors14", Vector3ImportStringCaller(
-			g_xywindow_globals.color_gridmajor_alt), Vector3ExportStringCaller(g_xywindow_globals.color_gridmajor_alt));
 
 	Orthographic_registerPreferencesPage();
 	GlobalClipPoints()->registerPreferencesPage();

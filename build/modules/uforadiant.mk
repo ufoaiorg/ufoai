@@ -14,7 +14,6 @@ $(TARGET)_LDFLAGS  += -lgthread-2.0 -lvorbisfile -lvorbis -logg $(GTK_LIBS) $(GL
 
 $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/archivezip.cpp \
-	$(RADIANT_BASE)/radiant/colorscheme.cpp \
 	$(RADIANT_BASE)/radiant/commands.cpp \
 	$(RADIANT_BASE)/radiant/console.cpp \
 	$(RADIANT_BASE)/radiant/dialog.cpp \
@@ -148,6 +147,10 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/dialogs/maptools.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/particle.cpp \
 	$(RADIANT_BASE)/radiant/dialogs/findtextures.cpp \
+	\
+	$(RADIANT_BASE)/radiant/ui/colourscheme/ColourScheme.cpp \
+	$(RADIANT_BASE)/radiant/ui/colourscheme/ColourSchemeManager.cpp \
+	$(RADIANT_BASE)/radiant/ui/colourscheme/ColourSchemeEditor.cpp \
 	\
 	$(RADIANT_BASE)/radiant/ui/common/MapPreview.cpp \
 	$(RADIANT_BASE)/radiant/ui/common/ModelPreview.cpp \
