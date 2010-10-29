@@ -82,8 +82,8 @@ class EntityClassAttribute
 		EntityClassAttribute ()
 		{
 		}
-		EntityClassAttribute (const char* type, const char* name, bool mandatory = false, const char* value = "",
-				const char* description = "") :
+		EntityClassAttribute (const std::string& type, const std::string& name, bool mandatory = false, const std::string& value = "",
+				const std::string& description = "") :
 			m_type(type), m_name(name), m_value(value), m_description(description), m_mandatory(mandatory)
 		{
 		}
@@ -192,7 +192,7 @@ inline const char* EntityClass_valueForKey (const EntityClass& entityClass, cons
 	return "";
 }
 
-inline EntityClassAttributePair& EntityClass_insertAttribute (EntityClass& entityClass, const char* key,
+inline EntityClassAttributePair& EntityClass_insertAttribute (EntityClass& entityClass, const std::string& key,
 		const EntityClassAttribute& attribute = EntityClassAttribute())
 {
 	entityClass.m_attributes.push_back(EntityClassAttributePair(key, attribute));

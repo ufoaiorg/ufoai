@@ -31,7 +31,7 @@
 #include "eclasslib.h"
 #include "stream/stringstream.h"
 #include "stream/textfilestream.h"
-#include "gtkutil/messagebox.h"
+#include "gtkutil/dialog.h"
 #include "modulesystem/moduleregistry.h"
 #include "os/path.h"
 #include "AutoPtr.h"
@@ -102,14 +102,14 @@ static void Eclass_ParseAttribute (EntityClass *e, entityKeyDef_t *keydef)
 {
 	const bool mandatory = (keydef->flags & ED_MANDATORY);
 	/* we use attribute key as its type, only for some types this is really used */
-	const char *attributeName = keydef->name;
-	const char* value = "";
-	const char* desc = "";
+	std::string attributeName = keydef->name;
+	std::string value = "";
+	std::string desc = "";
 	if (keydef->defaultVal)
 		value = keydef->defaultVal;
 	if (keydef->desc)
 		desc = keydef->desc;
-	EntityClassAttribute attribute = EntityClassAttribute(attributeName, _(attributeName), mandatory, value, desc);
+	EntityClassAttribute attribute = EntityClassAttribute(attributeName, _(attributeName.c_str()), mandatory, value, desc);
 	EntityClass_insertAttribute(*e, attributeName, attribute);
 }
 
@@ -192,15 +192,12 @@ static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
 
 static void Eclass_ScanFile (EntityClassCollector& collector, const std::string& filename)
 {
-	EntityClass *e;
-
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(filename));
 	if (!file) {
 		std::string buffer = "Could not load " + filename;
-		gtk_MessageBox(0, buffer, _("Radiant - Error"), eMB_OK, eMB_ICONERROR);
+		gtkutil::errorDialog(buffer);
 		return;
 	}
-	g_message("ScanFile: '%s'\n", filename.c_str());
 
 	const std::size_t size = file->size();
 	char *entities = (char *) malloc(size + 1);
@@ -210,13 +207,12 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const std::string&
 	if (ED_Parse(entities) == ED_ERROR) {
 		std::string buffer = "Parsing of entities definition file failed, returned error was " + std::string(
 				ED_GetLastError());
-		gtk_MessageBox(0, buffer, _("Radiant - Error"), eMB_OK, eMB_ICONERROR);
-		g_warning("%s\n", buffer.c_str());
+		gtkutil::errorDialog(buffer);
 		free(entities);
 		return;
 	}
 	for (int i = 0; i < numEntityDefs; i++) {
-		e = Eclass_InitFromDefinition(&entityDefs[i]);
+		EntityClass *e = Eclass_InitFromDefinition(&entityDefs[i]);
 		if (e)
 			collector.insert(e);
 	}

@@ -133,7 +133,7 @@ struct IRadiant
 		PFN_QERAPP_FILEDIALOG m_pfnFileDialog;
 };
 
-// _QERFuncTable_1 Module Definitions
+// IRadiant Module Definitions
 #include "modulesystem.h"
 
 template<typename Type>

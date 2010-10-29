@@ -23,6 +23,8 @@
 
 #include <list>
 
+#include "iradiant.h"
+#include "radiant_i18n.h"
 #include "../brush/TexDef.h"
 #include "ientity.h"
 #include "ibrush.h"
@@ -32,6 +34,9 @@
 #include "string/string.h"
 #include "stringio.h"
 #include "eclasslib.h"
+#include "gtkutil/ModalProgressDialog.h"
+#include <gtk/gtkmain.h>
+#include "string/string.h"
 
 inline MapImporter* Node_getMapImporter (scene::Node& node)
 {
@@ -112,20 +117,27 @@ NodeSmartReference Entity_parseTokens (Tokeniser& tokeniser, EntityCreator& enti
 
 void Map_Read (scene::Node& root, Tokeniser& tokeniser, EntityCreator& entityTable, const PrimitiveParser& parser)
 {
-	int count_entities = 0;
-	for (;;) {
+	// Create an info display panel to track load progress
+	gtkutil::ModalProgressDialog dialog(GlobalRadiant().getMainWindow(), _("Loading map"));
+
+	for (int entCount = 0; ; entCount++) {
+		// Process GTK events to let the dialog update
+		while (gtk_events_pending())
+			gtk_main_iteration();
+
+		// Update the dialog text
+		dialog.setText("Loading entity " + string::toString(entCount));
+
 		if (tokeniser.getToken().empty())
 			break;
 
-		NodeSmartReference entity(Entity_parseTokens(tokeniser, entityTable, parser, count_entities));
+		NodeSmartReference entity(Entity_parseTokens(tokeniser, entityTable, parser, entCount));
 
 		if (entity == g_nullNode) {
-			globalErrorStream() << "entity " << count_entities << ": parse error\n";
+			globalErrorStream() << "entity " << entCount << ": parse error\n";
 			return;
 		}
 
 		Node_getTraversable(root)->insert(entity);
-
-		++count_entities;
 	}
 }

@@ -31,9 +31,9 @@
 #include "../material.h"
 #include "../exec.h"
 #include "os/file.h"  // file_exists
-#include "os/path.h"  // path_get_filename_start
 #include "scenelib.h" // g_brushCount
 #include "gtkutil/messagebox.h"  // gtk_MessageBox
+#include "gtkutil/dialog.h"
 #include "stream/stringstream.h"
 #include "../qe3.h" // g_brushCount
 #include "../map/map.h"
@@ -63,14 +63,12 @@ static gint editorHideCallback (GtkWidget *widget, gpointer data)
 
 static gint fixCallback (GtkWidget *widget, gpointer data)
 {
-	const std::string& fullname = GlobalRadiant().getMapName();
-
 	if (!ConfirmModified(_("Check Map")))
 		return 0;
 
 	/* empty map? */
 	if (!g_brushCount.get()) {
-		gtk_MessageBox(0, _("Nothing to fix in this map\n"), _("Map fixing"), eMB_OK, eMB_ICONERROR);
+		gtkutil::errorDialog(_("Nothing to fix in this map\n"));
 		return 0;
 	}
 
@@ -79,6 +77,7 @@ static gint fixCallback (GtkWidget *widget, gpointer data)
 	if (file_exists(compilerBinaryWithPath)) {
 		const std::string& compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_fix");
 		char* output = NULL;
+		const std::string& fullname = GlobalRadiant().getMapName();
 		exec_run_cmd(compilerBinaryWithPath + " " + compiler_parameter + " " + strstr(fullname.c_str(), "maps"),
 				&output, GlobalRadiant().getEnginePath());
 		if (!output)
@@ -90,8 +89,7 @@ static gint fixCallback (GtkWidget *widget, gpointer data)
 		globalOutputStream() << "-------------------\n" << output << "-------------------\n";
 		free(output);
 	} else {
-		gtk_MessageBox(0, _("Could not find the mapcompiler check your path settings\n"), _("Map compiling"), eMB_OK,
-				eMB_ICONERROR);
+		gtkutil::errorDialog(_("Could not find the mapcompiler check your path settings\n"));
 	}
 	return 1;
 }

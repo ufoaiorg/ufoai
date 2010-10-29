@@ -661,7 +661,6 @@ static void Map_StartPosition (void)
 bool Map_LoadFile (const std::string& filename)
 {
 	g_message("Loading map from %s\n", filename.c_str());
-	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Loading Map"));
 
 	g_map.m_name = filename;
 	Map_UpdateTitle(g_map);
@@ -1121,8 +1120,6 @@ void Map_RegionBrush (void)
 
 bool Map_ImportFile (const std::string& filename)
 {
-	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Loading Map"));
-
 	bool success = false;
 	{
 		Resource* resource = GlobalReferenceCache().capture(filename.c_str());
@@ -1674,7 +1671,6 @@ class MapEntityClasses: public ModuleObserver
 		{
 			if (--m_unrealised == 0) {
 				if (g_map.m_resource != 0) {
-					ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Loading Map"));
 					g_map.m_resource->realise();
 				}
 			}

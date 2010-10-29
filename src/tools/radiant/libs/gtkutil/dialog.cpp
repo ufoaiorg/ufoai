@@ -22,6 +22,7 @@
 #include "dialog.h"
 #include "../radiant/mainframe.h"
 
+#include "gtkutil/dialog.h"
 #include <gtk/gtk.h>
 #include <string>
 

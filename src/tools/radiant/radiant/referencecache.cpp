@@ -74,7 +74,6 @@ static bool MapResource_loadFile (const MapFormat& format, scene::Node& root, co
 {
 	TextFileInputStream file(filename);
 	if (!file.failed()) {
-		ScopeDisableScreenUpdates disableScreenUpdates(os::getFilenameFromPath(filename), _("Loading Map"));
 		format.readGraph(root, file, *g_entityCreator);
 		return true;
 	} else {
@@ -198,8 +197,6 @@ ModelLoader* ModelLoader_forType (const std::string& type)
 
 static NodeSmartReference ModelResource_load (ModelLoader* loader, const char* name)
 {
-	ScopeDisableScreenUpdates disableScreenUpdates(path_get_filename_start(name), _("Loading Model"));
-
 	NodeSmartReference model(g_nullModel);
 
 	{
