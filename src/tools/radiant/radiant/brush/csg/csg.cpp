@@ -27,7 +27,7 @@
 
 #include "../../map/map.h"
 #include "../brushmanip.h"
-#include "../brushnode.h"
+#include "../BrushNode.h"
 #include "../../xyview/grid.h"
 
 static void Face_makeBrush (Face& face, const Brush& brush, brush_vector_t& out, float offset)

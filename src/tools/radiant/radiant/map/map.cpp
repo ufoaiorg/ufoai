@@ -76,7 +76,7 @@
 #include "../commands.h"
 #include "autosave.h"
 #include "../brush/brush.h"
-#include "../brush/brushnode.h"
+#include "../brush/BrushNode.h"
 #include "../ump.h"
 #include "string/string.h"
 

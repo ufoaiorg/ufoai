@@ -24,7 +24,7 @@
 
 #include "iradiant.h"
 
-#include "brushnode.h"
+#include "BrushNode.h"
 #include "brushmanip.h"
 
 #include "preferencesystem.h"

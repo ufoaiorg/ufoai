@@ -256,25 +256,26 @@ class ContentsFlagsValue
 		int m_markDirty;
 		bool m_valueDirty;
 		bool m_firstValue;// marker for value diff calculation. see GetFlags for use
+
+		inline void assignMasked (const ContentsFlagsValue& other)
+		{
+			unsigned int unchangedContentFlags = (m_contentFlags & other.m_contentFlagsDirty);
+			unsigned int changedContentFlags = (other.m_contentFlags & (~other.m_contentFlagsDirty));
+			unsigned int unchangedSurfaceFlags = (m_surfaceFlags & other.m_surfaceFlagsDirty);
+			unsigned int changedSurfaceFlags = (other.m_surfaceFlags & (~other.m_surfaceFlagsDirty));
+			int value = m_value;
+			*this = other;
+			m_contentFlags = unchangedContentFlags | changedContentFlags;
+			m_surfaceFlags = unchangedSurfaceFlags | changedSurfaceFlags;
+			if (m_valueDirty)
+				m_value = value;
+			m_valueDirty = false;
+			//m_contentFlagsDirty = 0;
+			//m_surfaceFlagsDirty = 0;
+			//m_markDirty = 0;
+		}
 };
 
-static inline void ContentsFlagsValue_assignMasked (ContentsFlagsValue& flags, const ContentsFlagsValue& other)
-{
-	unsigned int unchangedContentFlags = (flags.m_contentFlags & other.m_contentFlagsDirty);
-	unsigned int changedContentFlags = (other.m_contentFlags & (~other.m_contentFlagsDirty));
-	unsigned int unchangedSurfaceFlags = (flags.m_surfaceFlags & other.m_surfaceFlagsDirty);
-	unsigned int changedSurfaceFlags = (other.m_surfaceFlags & (~other.m_surfaceFlagsDirty));
-	int value = flags.m_value;
-	flags = other;
-	flags.m_contentFlags = unchangedContentFlags | changedContentFlags;
-	flags.m_surfaceFlags = unchangedSurfaceFlags | changedSurfaceFlags;
-	if (flags.m_valueDirty)
-		flags.m_value = value;
-	flags.m_valueDirty = false;
-	//	flags.m_contentFlagsDirty = 0;
-	//	flags.m_surfaceFlagsDirty = 0;
-	//	flags.m_markDirty = 0;
-}
 
 class FaceShader: public ModuleObserver
 {
@@ -400,7 +401,7 @@ class FaceShader: public ModuleObserver
 		void setFlags (const ContentsFlagsValue& flags)
 		{
 			ASSERT_MESSAGE(m_realised, "FaceShader::setFlags: flags not valid when unrealised");
-			ContentsFlagsValue_assignMasked(m_flags, flags);
+			m_flags.assignMasked(flags);
 		}
 
 		Shader* state () const

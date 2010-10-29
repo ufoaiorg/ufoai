@@ -31,7 +31,7 @@
 
 // believe me, i'm sorry
 #include "brush/brush.h"
-#include "brush/brushnode.h"
+#include "brush/BrushNode.h"
 
 #include "generic/callback.h"
 

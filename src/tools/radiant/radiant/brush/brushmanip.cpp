@@ -27,7 +27,7 @@
 #include "gtkutil/widget.h"
 #include "gtkutil/menu.h"
 #include "../gtkmisc.h"
-#include "brushnode.h"
+#include "BrushNode.h"
 #include "../map/map.h"
 #include "../sidebar/sidebar.h"
 #include "../commands.h"
