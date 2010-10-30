@@ -553,7 +553,7 @@ private:
 			return it->second;
 		}
 		else {
-			globalOutputStream() << "EventManager: Warning: Modifier " << modifierName.c_str() << " not found, returning -1\n";
+			globalOutputStream() << "EventManager: Warning: Modifier " << modifierName << " not found, returning -1\n";
 			return -1;
 		}
 	}
