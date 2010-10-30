@@ -18,10 +18,7 @@
 #include "Accelerator.h"
 #include "SaveEventVisitor.h"
 
-#include <boost/algorithm/string/classification.hpp>
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/algorithm/string/split.hpp>
-#include <boost/lexical_cast.hpp>
+#include "string/string.h"
 
 class EventManager :
 	public IEventManager
@@ -29,7 +26,7 @@ class EventManager :
 	// The handler ID of the connected keyboard handler
 	typedef std::list<gulong> HandlerList;
 
-	// Needed for boost::algorithm::split
+	// Needed for string::split
 	typedef std::vector<std::string> StringParts;
 
 	typedef std::map<const std::string, unsigned int> ModifierBitIndexMap;
@@ -485,18 +482,9 @@ private:
 			globalOutputStream() << "EventManager: Modifiers found: " << modifierList.size() << "\n";
 			for (unsigned int i = 0; i < modifierList.size(); i++) {
 				const std::string name = modifierList[i].getAttributeValue("name");
-
-				int bitIndex;
-				try {
-					bitIndex = boost::lexical_cast<int>(modifierList[i].getAttributeValue("bitIndex"));
-				}
-				catch (boost::bad_lexical_cast e) {
-					bitIndex = -1;
-				}
+				int bitIndex = string::toInt(modifierList[i].getAttributeValue("bitIndex"), -1);
 
 				if (name != "" && bitIndex >= 0) {
-					//std::cout << "EventMapper: Found modifier definition " << name.c_str() << " with BitIndex " << bitIndex << "\n";
-
 					// Save the modifier ID into the map
 					_modifierBitIndices[name] = static_cast<unsigned int>(bitIndex);
 				}
@@ -513,7 +501,7 @@ private:
 
 	unsigned int getModifierFlags(const std::string& modifierStr) {
 		StringParts parts;
-		boost::algorithm::split(parts, modifierStr, boost::algorithm::is_any_of("+"));
+		string::splitBy(modifierStr, parts, "+");
 
 		// Do we have any modifiers at all?
 		if (parts.size() > 0) {
@@ -521,7 +509,8 @@ private:
 
 			// Cycle through all the modifier names and construct the bitfield
 			for (unsigned int i = 0; i < parts.size(); i++) {
-				if (parts[i] == "") continue;
+				if (parts[i] == "")
+					continue;
 
 				// Try to find the modifierBitIndex
 				int bitIndex = getModifierBitIndex(parts[i]);
