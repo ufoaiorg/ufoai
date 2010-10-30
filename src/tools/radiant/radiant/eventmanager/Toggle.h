@@ -38,7 +38,7 @@ public:
 
 	// Set the toggled state to true/false, according to <toggled> and update
 	// any associated widgets or notify any callbacks.
-	virtual void setToggled(const bool toggled);
+	virtual bool setToggled(const bool toggled);
 
 	// Update the "active" state of the connected widgets
 	virtual void updateWidgets();

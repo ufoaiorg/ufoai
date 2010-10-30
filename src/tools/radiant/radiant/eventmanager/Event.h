@@ -24,6 +24,10 @@ public:
 		_enabled = enabled;
 	}
 
+	virtual bool setToggled(const bool toggled) {
+		return false;
+	}
+
 	virtual void keyUp() {}
 	virtual void keyDown() {}
 

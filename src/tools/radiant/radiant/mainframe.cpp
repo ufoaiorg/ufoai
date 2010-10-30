@@ -529,9 +529,6 @@ void Radiant_Initialise (void)
 
 	g_gameToolsPathObservers.realise();
 	g_gameModeObservers.realise();
-
-	// Save the current event set to the Registry and export it
-	GlobalEventManager().saveEventListToRegistry();
 }
 
 void Radiant_Shutdown (void)
@@ -539,6 +536,9 @@ void Radiant_Shutdown (void)
 	// Export the colour schemes and remove them from the registry
 	GlobalRegistry().exportToFile("user/ui/colourschemes", SettingsPath_get() + "colours.xml");
 	GlobalRegistry().deleteXPath("user/ui/colourschemes");
+
+	// Save the current event set to the Registry and export it
+	GlobalEventManager().saveEventListToRegistry();
 
 	// Export the input definitions into the user's settings folder and remove them as well
 	GlobalRegistry().exportToFile("user/ui/input", SettingsPath_get() + "input.xml");

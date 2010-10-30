@@ -222,7 +222,8 @@ public:
 		Toggle* foundToggle = dynamic_cast<Toggle*>(findEvent(name));
 
 		if (foundToggle != NULL) {
-			foundToggle->setToggled(toggled);
+			if (!foundToggle->setToggled(toggled))
+				globalErrorStream() << "EventManager: Warning: Event " << name << " is not a Toggle.\n";
 		}
 	}
 
