@@ -115,27 +115,17 @@ inline void brush_check_shader (const char* name)
 #include "FacePlane.h"
 #include "Face.h"
 
-typedef std::size_t faceIndex_t;
 
 #include "RenderableWireFrame.h"
 
-struct EdgeFaces
-{
-		faceIndex_t first;
-		faceIndex_t second;
-
-		EdgeFaces () :
-			first(c_brush_maxFaces), second(c_brush_maxFaces)
-		{
-		}
-		EdgeFaces (const faceIndex_t _first, const faceIndex_t _second) :
-			first(_first), second(_second)
-		{
-		}
-};
-
 class Brush;
 typedef std::vector<Brush*> brush_vector_t;
+
+typedef SmartPointer<Face> FaceSmartPointer;
+typedef std::vector<FaceSmartPointer> Faces;
+
+#include "SelectableComponents.h"
+
 
 /// \brief Returns true if 'self' takes priority when building brush b-rep.
 inline bool plane3_inside (const Plane3& self, const Plane3& other)
@@ -145,11 +135,6 @@ inline bool plane3_inside (const Plane3& self, const Plane3& other)
 	}
 	return true;
 }
-
-typedef SmartPointer<Face> FaceSmartPointer;
-typedef std::vector<FaceSmartPointer> Faces;
-
-#include "SelectableComponents.h"
 
 /// \brief Returns the unique-id of the edge adjacent to \p faceVertex in the edge-pair for the set of \p faces.
 inline FaceVertexId next_edge (const Faces& faces, FaceVertexId faceVertex)
@@ -171,6 +156,23 @@ inline FaceVertexId next_vertex (const Faces& faces, FaceVertexId faceVertex)
 	FaceVertexId nextEdge = next_edge(faces, faceVertex);
 	return FaceVertexId(nextEdge.getFace(), Winding_next(faces[nextEdge.getFace()]->getWinding(), nextEdge.getVertex()));
 }
+
+typedef std::size_t faceIndex_t;
+
+struct EdgeFaces
+{
+		faceIndex_t first;
+		faceIndex_t second;
+
+		EdgeFaces () :
+			first(c_brush_maxFaces), second(c_brush_maxFaces)
+		{
+		}
+		EdgeFaces (const faceIndex_t _first, const faceIndex_t _second) :
+			first(_first), second(_second)
+		{
+		}
+};
 
 class BrushObserver
 {
