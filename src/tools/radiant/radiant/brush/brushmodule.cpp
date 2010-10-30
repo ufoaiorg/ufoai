@@ -43,8 +43,6 @@ float Texdef_getDefaultTextureScale ()
 	return g_texdef_default_scale;
 }
 
-LatchedBool g_useAlternativeTextureProjection(false, "Use alternative texture-projection");
-bool g_showAlternativeTextureProjectionOption = false;
 bool g_brush_always_nodraw = false;
 
 void Face_importSnapPlanes (bool value)
@@ -63,10 +61,6 @@ void Brush_constructPreferences (PreferencesPage& page)
 {
 	page.appendCheckBox("", _("Snap planes to integer grid"), FaceImportSnapPlanesCaller(), FaceExportSnapPlanesCaller());
 	page.appendEntry(_("Default texture scale"), g_texdef_default_scale);
-	if (g_showAlternativeTextureProjectionOption) {
-		page.appendCheckBox("", _("Use alternative texture-projection"), LatchedBoolImportCaller(
-				g_useAlternativeTextureProjection), BoolExportCaller(g_useAlternativeTextureProjection.m_latched));
-	}
 	page.appendCheckBox("", _("Always use nodraw for new brushes"), g_brush_always_nodraw);
 }
 void Brush_constructPage (PreferenceGroup& group)
@@ -139,10 +133,6 @@ class UFOBrushCreator: public BrushCreator
 		scene::Node& createBrush ()
 		{
 			return (new BrushNode)->node();
-		}
-		bool useAlternativeTextureProjection () const
-		{
-			return g_useAlternativeTextureProjection.m_value;
 		}
 		void Brush_forEachFace (scene::Node& brush, const BrushFaceDataCallback& callback)
 		{
