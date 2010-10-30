@@ -173,6 +173,8 @@ void GlobalCameraManager::setParent (CamWnd* camwnd, GtkWindow* parent)
 	if (event != NULL) {
 		event->connectWidget(GTK_WIDGET(camwnd->getParent()));
 		event->updateWidgets();
+	} else {
+		globalErrorStream() << "Could not connect ToggleCamera event\n";
 	}
 }
 
