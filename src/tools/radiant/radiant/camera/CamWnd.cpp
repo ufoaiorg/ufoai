@@ -12,7 +12,6 @@
 #include "../commands.h"
 #include "../windowobservers.h"
 #include "../plugin.h"
-#include "../xyview/xywindow.h"
 #include "../mainframe.h"
 #include "../renderer.h"
 #include "../render/RenderStatistics.h"

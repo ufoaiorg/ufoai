@@ -22,30 +22,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #if !defined(INCLUDED_CAMWINDOW_H)
 #define INCLUDED_CAMWINDOW_H
 
-#include "math/Vector3.h"
-
 #include "Camera.h"
 
-typedef struct _GtkMenu GtkMenu;
 typedef struct _GtkToolbar GtkToolbar;
 void CamWnd_constructToolbar(GtkToolbar* toolbar);
 
 void GlobalCamera_Benchmark();
 
-void Camera_SetFarClip (bool value);
-
-struct camwindow_globals_t {
-	int m_nCubicScale;	/**< far clip distance */
-
-	camwindow_globals_t() :
-			m_nCubicScale(13) {
-	}
-
-};
-
-extern camwindow_globals_t g_camwindow_globals;
-
-void CamWnd_Construct();
 void CamWnd_Destroy();
 
 

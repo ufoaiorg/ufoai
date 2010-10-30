@@ -97,8 +97,9 @@ class DeferredAdjustment {
 #include "texturelib.h"
 #include "math/Vector3.h"
 #include "../settings/preferences.h"
+#include "iregistry.h"
 
-class TextureBrowser {
+class TextureBrowser: public RegistryKeyObserver {
 	private:
 		TextureGroups groups;
 
@@ -116,8 +117,6 @@ class TextureBrowser {
 		GtkWidget* m_scr_win_tree;
 		GtkWidget* m_scr_win_tags;
 
-		ToggleItem m_hideunused_item;
-		ToggleItem m_hideinvalid_item;
 		ToggleItem m_showshaders_item;
 
 		bool m_heightChanged;
@@ -184,13 +183,9 @@ class TextureBrowser {
 		void updateScroll();
 		int getFontHeight();
 		void setStatusText(const std::string& name);
-		void setHideUnused(bool hideUnused);
-		void setHideInvalid(bool hideInvalid);
 		void showDirectory(const std::string& directory);
 		void registerPreferencesPage(void);
 		void focus(const std::string& name);
-		void toggleHideInvalid(void);
-		void toggleHideUnused(void);
 		void selectTextureAt(int mx, int my);
 		void setScale(std::size_t scale);
 		void queueDraw();
@@ -211,6 +206,8 @@ class TextureBrowser {
 		void activeShadersChanged();
 		void addActiveShadersChangedCallback(const SignalHandler& handler);
 		void constructPage(PreferenceGroup& group);
+
+		void keyChanged();
 	private:
 		static gboolean onMouseMotion(GtkWidget *widget, GdkEventMotion *event,
 				TextureBrowser* textureBrowser);

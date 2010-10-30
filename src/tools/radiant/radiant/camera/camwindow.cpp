@@ -53,7 +53,6 @@
 #include "../mainframe.h"
 #include "../settings/preferences.h"
 #include "../commands.h"
-#include "../xyview/xywindow.h"
 #include "../windowobservers.h"
 #include "../ui/Icons.h"
 #include "../render/RenderStatistics.h"
@@ -72,8 +71,6 @@ gboolean camera_keymove (gpointer data)
 }
 #include "CamWnd.h"
 
-camwindow_globals_t g_camwindow_globals;
-
 // =============================================================================
 // CamWnd class
 
@@ -86,12 +83,6 @@ void GlobalCamera_Benchmark ()
 #include "stringio.h"
 #include "../dialog.h"
 
-// greebo: this gets called when the main Radiant class is instantiated. This is _before_ a GlobalCamWnd actually exists.
-/// \brief Initialisation for things that have the same lifespan as this module.
-void CamWnd_Construct ()
-{
-	GlobalCamera().construct();
-}
 void CamWnd_Destroy ()
 {
 	CamWnd::releaseStates();

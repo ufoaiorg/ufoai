@@ -72,8 +72,6 @@
 #include "gtkmisc.h"
 #include "mainframe.h"
 #include "lastused.h"
-#include "camera/camwindow.h"
-#include "xyview/xywindow.h"
 #include "entity.h"
 #include "select.h"
 #include "settings/preferences.h"
@@ -83,6 +81,7 @@
 #include "referencecache/nullmodel.h"
 #include "xyview/grid.h"
 #include "xyview/GlobalXYWnd.h"
+#include "camera/GlobalCamera.h"
 #include "material.h"
 #include "ump.h"
 #include "ufoscript/UFOScript.h"
@@ -250,8 +249,8 @@ class Radiant: public TypeSystemRef
 			sidebar::MapInfo_Construct();
 			MainFrame_Construct();
 			SurfaceInspector_Construct();
-			CamWnd_Construct();
-			XYWindow_Construct();
+			GlobalCamera().construct();
+			GlobalXYWnd().construct();
 			Material_Construct();
 			TextureBrowser_Construct();
 			Entity_Construct();
@@ -289,7 +288,6 @@ class Radiant: public TypeSystemRef
 			EntityInspector_Destroy();
 			Autosave_Destroy();
 			Entity_Destroy();
-			XYWindow_Destroy();
 			CamWnd_Destroy();
 			SurfaceInspector_Destroy();
 			MainFrame_Destroy();

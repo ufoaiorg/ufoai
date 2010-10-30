@@ -107,7 +107,6 @@
 #include "select.h"
 #include "textures.h"
 #include "url.h"
-#include "xyview/xywindow.h"
 #include "windowobservers.h"
 #include "referencecache.h"
 #include "levelfilters.h"

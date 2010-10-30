@@ -39,9 +39,9 @@
 #include "gtkutil/messagebox.h"
 
 #include "../console.h"
-#include "../xyview/xywindow.h"
 #include "../mainframe.h"
 #include "../qe3.h"
+#include "../map/map.h" // g_bLoadLastMap
 #include <string>
 
 void Interface_constructPreferences (PrefPage* page)

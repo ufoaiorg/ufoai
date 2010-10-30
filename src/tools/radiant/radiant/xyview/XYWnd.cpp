@@ -33,7 +33,6 @@
 #include "XYRenderer.h"
 #include "../camera/CameraSettings.h"
 #include "../image.h"
-#include "xywindow.h"
 
 void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHeight);
 

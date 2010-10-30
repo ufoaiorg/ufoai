@@ -80,7 +80,11 @@
 #include "../dialogs/findtextures.h"
 #include "sidebar.h"
 #include "../commands.h"
-#include "../xyview/xywindow.h"
+
+namespace {
+	const std::string RKEY_TEXTURES_HIDE_UNUSED = "user/ui/textures/browser/hideUnused";
+	const std::string RKEY_TEXTURES_HIDE_INVALID = "user/ui/textures/browser/hideInvalid";
+}
 
 static void TextureBrowser_scrollChanged(void* data, gdouble value);
 
@@ -97,19 +101,30 @@ typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_showShadersExport>
 		TextureBrowserShowShadersExport;
 
 TextureBrowser::TextureBrowser() :
-	_glWidget(false), m_texture_scroll(0), m_hideunused_item(TextureBrowserHideUnusedExport()),
-			m_hideinvalid_item(TextureBrowserHideInvalidExport()), m_showshaders_item(
-					TextureBrowserShowShadersExport()), m_heightChanged(true),
-			m_originInvalid(true), m_scrollAdjustment(TextureBrowser_scrollChanged, this),
-			m_mouseWheelScrollIncrement(64),
-			m_textureScale(50), m_showShaders(true), m_hideUnused(false), m_hideInvalid(false),
-			m_rmbSelected(false), m_resizeTextures(true), m_uniformTextureSize(128) {
+	_glWidget(false), m_texture_scroll(0), m_showshaders_item(
+			TextureBrowserShowShadersExport()), m_heightChanged(true), m_originInvalid(true), m_scrollAdjustment(
+			TextureBrowser_scrollChanged, this), m_mouseWheelScrollIncrement(64), m_textureScale(50), m_showShaders(
+			true), m_hideUnused(GlobalRegistry().get(RKEY_TEXTURES_HIDE_UNUSED) == "1"), m_hideInvalid(GlobalRegistry().get(RKEY_TEXTURES_HIDE_INVALID) == "1"),
+			m_rmbSelected(false), m_resizeTextures(true), m_uniformTextureSize(128)
+{
+	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_HIDE_UNUSED);
+	GlobalRegistry().addKeyObserver(this, RKEY_TEXTURES_HIDE_INVALID);
+
 	Textures_setModeChangedNotify(MemberCaller<TextureBrowser, &TextureBrowser::queueDraw> (*this));
 
 	GlobalShaderSystem().setActiveShadersChangedNotify(MemberCaller<TextureBrowser,
 			&TextureBrowser::activeShadersChanged> (*this));
 
 	setSelectedShader("");
+}
+
+void TextureBrowser::keyChanged()
+{
+	m_hideUnused = (GlobalRegistry().get(RKEY_TEXTURES_HIDE_UNUSED) == "1");
+	m_hideInvalid = (GlobalRegistry().get(RKEY_TEXTURES_HIDE_INVALID) == "1");
+
+	heightChanged();
+	m_originInvalid = true;
 }
 
 int TextureBrowser::getFontHeight() {
@@ -358,8 +373,8 @@ void TextureBrowser::showDirectory(const std::string& directory) {
 	Radiant_getImageModules().foreachModule(LoadTexturesByTypeVisitor(GlobalTexturePrefix_get() + directory));
 
 	// we'll display the newly loaded textures + all the ones already in use
-	setHideUnused(false);
-	setHideInvalid(false);
+	GlobalRegistry().set(RKEY_TEXTURES_HIDE_UNUSED, "0");
+	GlobalRegistry().set(RKEY_TEXTURES_HIDE_INVALID, "0");
 }
 
 static bool TextureBrowser_hideUnused(void);
@@ -383,32 +398,6 @@ void TextureBrowser_showShadersExport(const BoolImportCallback& importer) {
 }
 typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_showShadersExport>
 		TextureBrowserShowShadersExport;
-
-void TextureBrowser::setHideUnused(bool hideUnused) {
-	if (hideUnused) {
-		m_hideUnused = true;
-	} else {
-		m_hideUnused = false;
-	}
-
-	m_hideunused_item.update();
-
-	heightChanged();
-	m_originInvalid = true;
-}
-
-void TextureBrowser::setHideInvalid(bool hideInvalid) {
-	if (hideInvalid) {
-		m_hideInvalid = true;
-	} else {
-		m_hideInvalid = false;
-	}
-
-	m_hideinvalid_item.update();
-
-	heightChanged();
-	m_originInvalid = true;
-}
 
 void TextureBrowser::showStartupShaders() {
 	showDirectory("tex_common/");
@@ -788,22 +777,6 @@ static bool TextureBrowser_hideInvalid(void) {
 	return GlobalTextureBrowser().m_hideInvalid;
 }
 
-void TextureBrowser::toggleHideUnused(void) {
-	if (m_hideUnused) {
-		setHideUnused(false);
-	} else {
-		setHideUnused(true);
-	}
-}
-
-void TextureBrowser::toggleHideInvalid(void) {
-	if (m_hideInvalid) {
-		setHideInvalid(false);
-	} else {
-		setHideInvalid(true);
-	}
-}
-
 namespace {
 struct TextureFunctor {
 		typedef const std::string& first_argument_type;
@@ -1096,13 +1069,9 @@ void TextureBrowser::constructPage(PreferenceGroup& group) {
 
 void TextureBrowser_Construct(void) {
 	GlobalEventManager().addCommand("RefreshShaders", FreeCaller<RefreshShaders> ());
-	GlobalToggles_insert("ShowInUse", MemberCaller<TextureBrowser,
-			&TextureBrowser::toggleHideUnused> (GlobalTextureBrowser()),
-			ToggleItem::AddCallbackCaller(GlobalTextureBrowser().m_hideunused_item), Accelerator(
-					'U'));
-	GlobalToggles_insert("ShowInvalid", MemberCaller<TextureBrowser,
-			&TextureBrowser::toggleHideInvalid> (GlobalTextureBrowser()),
-			ToggleItem::AddCallbackCaller(GlobalTextureBrowser().m_hideinvalid_item));
+	GlobalEventManager().addRegistryToggle("ShowInUse", RKEY_TEXTURES_HIDE_UNUSED);
+	GlobalEventManager().addRegistryToggle("ShowInvalid", RKEY_TEXTURES_HIDE_INVALID);
+
 	GlobalEventManager().addCommand("ShowAllTextures", MemberCaller<TextureBrowser, &TextureBrowser::showAll> (
 			GlobalTextureBrowser()));
 
