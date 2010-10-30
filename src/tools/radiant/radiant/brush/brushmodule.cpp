@@ -24,6 +24,10 @@
 
 #include "iradiant.h"
 
+#include "TexDef.h"
+#include "ibrush.h"
+#include "ifilter.h"
+
 #include "BrushNode.h"
 #include "brushmanip.h"
 

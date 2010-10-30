@@ -89,429 +89,92 @@ class BrushInstance: public BrushObserver,
 
 		typedef LazyStatic<TypeCasts> StaticTypeCasts;
 
-		void lightsChanged ()
-		{
-			m_lightList->lightsChanged();
-		}
+		void lightsChanged ();
 		typedef MemberCaller<BrushInstance, &BrushInstance::lightsChanged> LightsChangedCaller;
 
 		STRING_CONSTANT(Name, "BrushInstance");
 
-		BrushInstance (const scene::Path& path, scene::Instance* parent, Brush& brush) :
-			Instance(path, parent, this, StaticTypeCasts::instance().get()), m_brush(brush), m_selectable(
-					SelectedChangedCaller(*this)), m_render_selected(GL_POINTS), m_render_faces_wireframe(
-					m_faceCentroidPointsCulled, GL_POINTS), m_viewChanged(false), m_transform(
-					Brush::TransformChangedCaller(m_brush), ApplyTransformCaller(*this))
-		{
-			m_brush.instanceAttach(Instance::path());
-			m_brush.attach(*this);
-			m_counter->increment();
+		BrushInstance (const scene::Path& path, scene::Instance* parent, Brush& brush);
+		~BrushInstance ();
 
-			m_lightList = &GlobalShaderCache().attach(*this);
-			m_brush.m_lightsChanged = LightsChangedCaller(*this); ///\todo Make this work with instancing.
+		Brush& getBrush ();
+		const Brush& getBrush () const;
 
-			Instance::setTransformChangedCallback(LightsChangedCaller(*this));
-		}
-		~BrushInstance ()
-		{
-			Instance::setTransformChangedCallback(Callback());
+		Bounded& get (NullType<Bounded> );
+		Cullable& get (NullType<Cullable> );
+		Transformable& get (NullType<Transformable> );
 
-			m_brush.m_lightsChanged = Callback();
-			GlobalShaderCache().detach(*this);
-
-			m_counter->decrement();
-			m_brush.detach(*this);
-			m_brush.instanceDetach(Instance::path());
-		}
-
-		Brush& getBrush ()
-		{
-			return m_brush;
-		}
-		const Brush& getBrush () const
-		{
-			return m_brush;
-		}
-
-		Bounded& get (NullType<Bounded> )
-		{
-			return m_brush;
-		}
-		Cullable& get (NullType<Cullable> )
-		{
-			return m_brush;
-		}
-		Transformable& get (NullType<Transformable> )
-		{
-			return m_transform;
-		}
-
-		void selectedChanged (const Selectable& selectable)
-		{
-			GlobalSelectionSystem().getObserver(SelectionSystem::ePrimitive)(selectable);
-			GlobalSelectionSystem().onSelectedChanged(*this, selectable);
-
-			Instance::selectedChanged();
-		}
+		void selectedChanged (const Selectable& selectable);
 		typedef MemberCaller1<BrushInstance, const Selectable&, &BrushInstance::selectedChanged> SelectedChangedCaller;
 
-		void selectedChangedComponent (const Selectable& selectable)
-		{
-			GlobalSelectionSystem().getObserver(SelectionSystem::eComponent)(selectable);
-			GlobalSelectionSystem().onComponentSelection(*this, selectable);
-		}
+		void selectedChangedComponent (const Selectable& selectable);
 		typedef MemberCaller1<BrushInstance, const Selectable&, &BrushInstance::selectedChangedComponent>
 				SelectedChangedComponentCaller;
 
-		const BrushInstanceVisitor& forEachFaceInstance (const BrushInstanceVisitor& visitor)
-		{
-			for (FaceInstances::iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-				visitor.visit(*i);
-			}
-			return visitor;
-		}
+		const BrushInstanceVisitor& forEachFaceInstance (const BrushInstanceVisitor& visitor);
 
-		static void constructStatic ()
-		{
-			m_state_selpoint = GlobalShaderCache().capture("$SELPOINT");
-		}
-		static void destroyStatic ()
-		{
-			GlobalShaderCache().release("$SELPOINT");
-		}
+		static void constructStatic ();
+		static void destroyStatic ();
 
-		void clear ()
-		{
-			m_faceInstances.clear();
-		}
-		void reserve (std::size_t size)
-		{
-			m_faceInstances.reserve(size);
-		}
+		void clear ();
+		void reserve (std::size_t size);
 
-		void push_back (Face& face)
-		{
-			m_faceInstances.push_back(FaceInstance(face, SelectedChangedComponentCaller(*this)));
-		}
-		void pop_back ()
-		{
-			ASSERT_MESSAGE(!m_faceInstances.empty(), "erasing invalid element");
-			m_faceInstances.pop_back();
-		}
-		void erase (std::size_t index)
-		{
-			ASSERT_MESSAGE(index < m_faceInstances.size(), "erasing invalid element");
-			m_faceInstances.erase(m_faceInstances.begin() + index);
-		}
-		void connectivityChanged ()
-		{
-			for (FaceInstances::iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-				(*i).connectivityChanged();
-			}
-		}
+		void push_back (Face& face);
+		void pop_back ();
+		void erase (std::size_t index);
+		void connectivityChanged ();
 
-		void edge_clear ()
-		{
-			m_edgeInstances.clear();
-		}
-		void edge_push_back (SelectableEdge& edge)
-		{
-			m_edgeInstances.push_back(EdgeInstance(m_faceInstances, edge));
-		}
+		void edge_clear ();
+		void edge_push_back (SelectableEdge& edge);
 
-		void vertex_clear ()
-		{
-			m_vertexInstances.clear();
-		}
-		void vertex_push_back (SelectableVertex& vertex)
-		{
-			m_vertexInstances.push_back(VertexInstance(m_faceInstances, vertex));
-		}
+		void vertex_clear ();
+		void vertex_push_back (SelectableVertex& vertex);
 
-		void DEBUG_verify () const
-		{
-			ASSERT_MESSAGE(m_faceInstances.size() == m_brush.DEBUG_size(), "FATAL: mismatch");
-		}
+		void DEBUG_verify () const;
 
-		bool isSelected () const
-		{
-			return m_selectable.isSelected();
-		}
-		void setSelected (bool select)
-		{
-			m_selectable.setSelected(select);
-		}
+		bool isSelected () const;
+		void setSelected (bool select);
 
-		void update_selected () const
-		{
-			m_render_selected.clear();
-			for (FaceInstances::const_iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-				if ((*i).getFace().contributes()) {
-					(*i).iterate_selected(m_render_selected);
-				}
-			}
-		}
+		void update_selected () const;
 
-		void evaluateViewDependent (const VolumeTest& volume, const Matrix4& localToWorld) const
-		{
-			if (m_viewChanged) {
-				m_viewChanged = false;
+		void evaluateViewDependent (const VolumeTest& volume, const Matrix4& localToWorld) const;
 
-				bool faces_visible[c_brush_maxFaces];
-				{
-					bool* j = faces_visible;
-					ContentsFlagsValue val = m_brush.getFlags();
-					if (GlobalFilterSystem().isVisible("contentflags", val.m_contentFlags)) {
-						for (FaceInstances::const_iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i, ++j) {
-							// Check if face is filtered before adding to visibility matrix
-							if (GlobalFilterSystem().isVisible("texture", i->getFace().GetShader()) &&
-								GlobalFilterSystem().isVisible("surfaceflags", i->getFace().GetFlags().m_surfaceFlags))
-								*j = i->intersectVolume(volume, localToWorld);
-							else
-								*j = false;
-						}
-					} else {
-						*j = false;
-					}
-				}
+		void renderComponentsSelected (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const;
 
-				m_brush.update_wireframe(m_render_wireframe, faces_visible);
-				m_brush.update_faces_wireframe(m_faceCentroidPointsCulled, faces_visible);
-			}
-		}
+		void renderComponents (Renderer& renderer, const VolumeTest& volume) const;
 
-		void renderComponentsSelected (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
-		{
-			m_brush.evaluateBRep();
+		void renderClipPlane (Renderer& renderer, const VolumeTest& volume) const;
 
-			update_selected();
-			if (!m_render_selected.empty()) {
-				renderer.Highlight(Renderer::ePrimitive, false);
-				renderer.SetState(m_state_selpoint, Renderer::eWireframeOnly);
-				renderer.SetState(m_state_selpoint, Renderer::eFullMaterials);
-				renderer.addRenderable(m_render_selected, localToWorld);
-			}
-		}
+		void renderCommon (Renderer& renderer, const VolumeTest& volume) const;
 
-		void renderComponents (Renderer& renderer, const VolumeTest& volume) const
-		{
-			m_brush.evaluateBRep();
+		void renderSolid (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const;
 
-			const Matrix4& localToWorld = Instance::localToWorld();
+		void renderWireframe (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const;
 
-			renderer.SetState(m_brush.m_state_point, Renderer::eWireframeOnly);
-			renderer.SetState(m_brush.m_state_point, Renderer::eFullMaterials);
+		void renderSolid (Renderer& renderer, const VolumeTest& volume) const;
 
-			if (volume.fill() && GlobalSelectionSystem().ComponentMode() == SelectionSystem::eFace) {
-				evaluateViewDependent(volume, localToWorld);
-				renderer.addRenderable(m_render_faces_wireframe, localToWorld);
-			} else {
-				m_brush.renderComponents(GlobalSelectionSystem().ComponentMode(), renderer, volume, localToWorld);
-			}
-		}
+		void renderWireframe (Renderer& renderer, const VolumeTest& volume) const;
 
-		void renderClipPlane (Renderer& renderer, const VolumeTest& volume) const
-		{
-			if (GlobalSelectionSystem().ManipulatorMode() == SelectionSystem::eClip && isSelected()) {
-				m_clipPlane.render(renderer, volume, localToWorld());
-			}
-		}
+		void viewChanged () const;
 
-		void renderCommon (Renderer& renderer, const VolumeTest& volume) const
-		{
-			bool componentMode = GlobalSelectionSystem().Mode() == SelectionSystem::eComponent;
+		void testSelect (Selector& selector, SelectionTest& test);
 
-			if (componentMode && isSelected()) {
-				renderComponents(renderer, volume);
-			}
+		bool isSelectedComponents () const;
+		void setSelectedComponents (bool select, SelectionSystem::EComponentMode mode);
+		void testSelectComponents (Selector& selector, SelectionTest& test, SelectionSystem::EComponentMode mode);
 
-			if (parentSelected()) {
-				if (!componentMode) {
-					renderer.Highlight(Renderer::eFace);
-				}
-				renderer.Highlight(Renderer::ePrimitive);
-			}
-		}
+		void selectPlanes (Selector& selector, SelectionTest& test, const PlaneCallback& selectedPlaneCallback);
+		void selectReversedPlanes (Selector& selector, const SelectedPlanes& selectedPlanes);
 
-		void renderSolid (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
-		{
-			//renderCommon(renderer, volume);
+		void transformComponents (const Matrix4& matrix);
+		const AABB& getSelectedComponentsBounds () const;
 
-			m_lightList->evaluateLights();
-
-			for (FaceInstances::const_iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-				renderer.setLights((*i).m_lights);
-				(*i).render(renderer, volume, localToWorld);
-			}
-
-			renderComponentsSelected(renderer, volume, localToWorld);
-		}
-
-		void renderWireframe (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
-		{
-			//renderCommon(renderer, volume);
-
-			evaluateViewDependent(volume, localToWorld);
-
-			if (m_render_wireframe.m_size != 0) {
-				renderer.addRenderable(m_render_wireframe, localToWorld);
-			}
-
-			renderComponentsSelected(renderer, volume, localToWorld);
-		}
-
-		void renderSolid (Renderer& renderer, const VolumeTest& volume) const
-		{
-			m_brush.evaluateBRep();
-
-			renderClipPlane(renderer, volume);
-
-			renderSolid(renderer, volume, localToWorld());
-		}
-
-		void renderWireframe (Renderer& renderer, const VolumeTest& volume) const
-		{
-			m_brush.evaluateBRep();
-
-			renderClipPlane(renderer, volume);
-
-			renderWireframe(renderer, volume, localToWorld());
-		}
-
-		void viewChanged () const
-		{
-			m_viewChanged = true;
-		}
-
-		void testSelect (Selector& selector, SelectionTest& test)
-		{
-			test.BeginMesh(localToWorld());
-
-			SelectionIntersection best;
-			for (FaceInstances::iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-				(*i).testSelect(test, best);
-			}
-			if (best.valid()) {
-				selector.addIntersection(best);
-			}
-		}
-
-		bool isSelectedComponents () const
-		{
-			for (FaceInstances::const_iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-				if ((*i).selectedComponents()) {
-					return true;
-				}
-			}
-			return false;
-		}
-		void setSelectedComponents (bool select, SelectionSystem::EComponentMode mode)
-		{
-			for (FaceInstances::iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-				(*i).setSelected(mode, select);
-			}
-		}
-		void testSelectComponents (Selector& selector, SelectionTest& test, SelectionSystem::EComponentMode mode)
-		{
-			test.BeginMesh(localToWorld());
-
-			switch (mode) {
-			case SelectionSystem::eVertex: {
-				for (VertexInstances::iterator i = m_vertexInstances.begin(); i != m_vertexInstances.end(); ++i) {
-					(*i).testSelect(selector, test);
-				}
-			}
-				break;
-			case SelectionSystem::eEdge: {
-				for (EdgeInstances::iterator i = m_edgeInstances.begin(); i != m_edgeInstances.end(); ++i) {
-					(*i).testSelect(selector, test);
-				}
-			}
-				break;
-			case SelectionSystem::eFace: {
-				if (test.getVolume().fill()) {
-					for (FaceInstances::iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-						(*i).testSelect(selector, test);
-					}
-				} else {
-					for (FaceInstances::iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-						(*i).testSelect_centroid(selector, test);
-					}
-				}
-			}
-				break;
-			default:
-				break;
-			}
-		}
-
-		void selectPlanes (Selector& selector, SelectionTest& test, const PlaneCallback& selectedPlaneCallback)
-		{
-			test.BeginMesh(localToWorld());
-
-			PlanePointer brushPlanes[c_brush_maxFaces];
-			PlanesIterator j = brushPlanes;
-
-			for (Brush::const_iterator i = m_brush.begin(); i != m_brush.end(); ++i) {
-				*j++ = &(*i)->plane3();
-			}
-
-			for (FaceInstances::iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-				(*i).selectPlane(selector, Line(test.getNear(), test.getFar()), brushPlanes, j, selectedPlaneCallback);
-			}
-		}
-		void selectReversedPlanes (Selector& selector, const SelectedPlanes& selectedPlanes)
-		{
-			for (FaceInstances::iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-				(*i).selectReversedPlane(selector, selectedPlanes);
-			}
-		}
-
-		void transformComponents (const Matrix4& matrix)
-		{
-			for (FaceInstances::iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-				(*i).transformComponents(matrix);
-			}
-		}
-		const AABB& getSelectedComponentsBounds () const
-		{
-			m_aabb_component = AABB();
-
-			for (FaceInstances::const_iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-				(*i).iterate_selected(m_aabb_component);
-			}
-
-			return m_aabb_component;
-		}
-
-		void snapComponents (float snap)
-		{
-			for (FaceInstances::iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
-				(*i).snapComponents(snap);
-			}
-		}
-		void evaluateTransform ()
-		{
-			Matrix4 matrix(m_transform.calculateTransform());
-
-			if (m_transform.getType() == TRANSFORM_PRIMITIVE) {
-				m_brush.transform(matrix);
-			} else {
-				transformComponents(matrix);
-			}
-		}
-		void applyTransform ()
-		{
-			m_brush.revertTransform();
-			evaluateTransform();
-			m_brush.freezeTransform();
-		}
+		void snapComponents (float snap);
+		void evaluateTransform ();
+		void applyTransform ();
 		typedef MemberCaller<BrushInstance, &BrushInstance::applyTransform> ApplyTransformCaller;
 
-		void setClipPlane (const Plane3& plane)
-		{
-			m_clipPlane.setPlane(m_brush, plane);
-		}
+		void setClipPlane (const Plane3& plane);
 };
 
 inline BrushInstance* Instance_getBrush (scene::Instance& instance)

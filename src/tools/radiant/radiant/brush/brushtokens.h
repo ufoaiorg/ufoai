@@ -25,6 +25,8 @@
 #include "stringio.h"
 #include "stream/stringstream.h"
 #include "brush.h"
+#include "imap.h"
+#include "shaderlib.h"
 
 class UFOFaceTokenImporter
 {

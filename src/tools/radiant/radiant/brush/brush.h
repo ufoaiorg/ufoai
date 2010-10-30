@@ -32,38 +32,8 @@
 /// formed by itself and the next vertex in the winding. This information can
 /// be used to find edge-pairs and vertex-rings.
 
-
-#include "debugging/debugging.h"
-
-#include "TexDef.h"
-#include "iundo.h"
-#include "iselection.h"
-#include "irender.h"
-#include "imap.h"
-#include "ibrush.h"
-#include "igl.h"
-#include "ifilter.h"
-#include "nameable.h"
-#include "moduleobserver.h"
-
-#include <set>
-
-#include "cullable.h"
-#include "renderable.h"
-#include "selectable.h"
-#include "editable.h"
-#include "mapfile.h"
-
-#include "math/frustum.h"
-#include "selectionlib.h"
-#include "render.h"
-#include "texturelib.h"
-#include "container/container.h"
-#include "generic/bitfield.h"
-#include "signal/signalfwd.h"
-
-#include "winding.h"
-#include "TextureProjection.h"
+#include "signal/isignal.h"
+#include <vector>
 
 #include "FaceShader.h"
 #include "ContentsFlagsValue.h"
@@ -73,6 +43,13 @@
 #include "Face.h"
 #include "SelectableComponents.h"
 #include "BrushClass.h"
+#include "VectorLightList.h"
+#include "FaceInstance.h"
+#include "BrushClipPlane.h"
+#include "EdgeInstance.h"
+#include "VertexInstance.h"
+#include "BrushInstance.h"
+#include "BrushVisit.h"
 
 template<typename TextOuputStreamType>
 inline TextOuputStreamType& ostream_write (TextOuputStreamType& ostream, const Matrix4& m)
@@ -81,13 +58,5 @@ inline TextOuputStreamType& ostream_write (TextOuputStreamType& ostream, const M
 			<< m[6] << " " << m[7] << ", " << m[8] << " " << m[9] << " " << m[10] << " " << m[11] << ", " << m[12]
 			<< " " << m[13] << " " << m[14] << " " << m[15] << ")";
 }
-
-#include "shaderlib.h"
-#include "FaceInstance.h"
-#include "BrushClipPlane.h"
-#include "EdgeInstance.h"
-#include "VertexInstance.h"
-#include "BrushInstance.h"
-#include "BrushVisit.h"
 
 #endif
