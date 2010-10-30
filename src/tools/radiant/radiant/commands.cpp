@@ -75,13 +75,6 @@ typedef std::map<std::string, Command> Commands;
 
 static Commands g_commands;
 
-void GlobalCommands_insert (const std::string& name, const Callback& callback, const Accelerator& accelerator)
-{
-	bool added = g_commands.insert(Commands::value_type(name, Command(callback, GlobalShortcuts_insert(name,
-			accelerator)))).second;
-	ASSERT_MESSAGE(added, "command already registered: " << makeQuoted(name));
-}
-
 const Command& GlobalCommands_find (const std::string& command)
 {
 	Commands::iterator i = g_commands.find(command);

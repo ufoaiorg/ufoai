@@ -41,8 +41,6 @@ class CommandVisitor
 		virtual void visit (const std::string& name, Accelerator& accelerator) = 0;
 };
 
-void GlobalCommands_insert (const std::string& name, const Callback& callback, const Accelerator& accelerator =
-		accelerator_null());
 const Command& GlobalCommands_find (const std::string& name);
 
 void GlobalToggles_insert (const std::string& name, const Callback& callback, const BoolExportCallback& exportCallback,
