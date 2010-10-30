@@ -271,6 +271,13 @@ public:
 
 	// Loads the default shortcuts from the registry
 	void loadAccelerators() {
+		xml::NodeList shortcutSets = GlobalRegistry().findXPath("user/ui/input//shortcuts");
+
+		// If we have two sets of shortcuts, delete the default ones
+		if (shortcutSets.size() > 1) {
+			GlobalRegistry().deleteXPath("user/ui/input//shortcuts[@name='default']");
+		}
+
 		// Find all accelerators
 		xml::NodeList shortcutList = GlobalRegistry().findXPath("user/ui/input/shortcuts//shortcut");
 

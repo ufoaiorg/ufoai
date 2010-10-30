@@ -39,7 +39,7 @@
 		<event name="DisableFreeLookMode" button="MOUSE_RIGHT" modifiers="" />
 		<strafemode toggle="CONTROL" forward="SHIFT" speed="0.65" forwardFactor="-1" />
 	</cameraview>
-	<shortcuts>
+	<shortcuts name="default">
 		<shortcut command="OpenMap" key="O" modifiers="CONTROL" />
 		<shortcut command="SaveMap" key="S" modifiers="CONTROL" />
 		<shortcut command="Undo" key="Z" modifiers="CONTROL" />
