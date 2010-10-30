@@ -105,6 +105,8 @@ $(TARGET)_SRCS      = \
 	$(RADIANT_BASE)/radiant/brush/brushmanip.cpp \
 	$(RADIANT_BASE)/radiant/brush/brushmodule.cpp \
 	$(RADIANT_BASE)/radiant/brush/winding.cpp \
+	$(RADIANT_BASE)/radiant/brush/Face.cpp \
+	$(RADIANT_BASE)/radiant/brush/FaceInstance.cpp \
 	$(RADIANT_BASE)/radiant/brush/TextureProjection.cpp \
 	$(RADIANT_BASE)/radiant/brush/TexDef.cpp \
 	\

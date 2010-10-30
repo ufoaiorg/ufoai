@@ -850,4 +850,7 @@ class Brush: public TransformNode,
 		void buildBRep ();
 }; // class Brush
 
+void Brush_addTextureChangedCallback (const SignalHandler& callback);
+void Brush_textureChanged ();
+
 #endif /*BRUSH_BRUSH_H_*/
