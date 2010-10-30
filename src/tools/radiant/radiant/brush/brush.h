@@ -997,27 +997,6 @@ class Face: public OpenGLRenderable, public Undoable, public FaceShaderObserver
 		}
 };
 
-class FaceVertexId
-{
-		std::size_t m_face;
-		std::size_t m_vertex;
-
-	public:
-		FaceVertexId (std::size_t face, std::size_t vertex) :
-			m_face(face), m_vertex(vertex)
-		{
-		}
-
-		std::size_t getFace () const
-		{
-			return m_face;
-		}
-		std::size_t getVertex () const
-		{
-			return m_vertex;
-		}
-};
-
 typedef std::size_t faceIndex_t;
 
 struct EdgeRenderIndices
@@ -1080,6 +1059,8 @@ inline bool plane3_inside (const Plane3& self, const Plane3& other)
 typedef SmartPointer<Face> FaceSmartPointer;
 typedef std::vector<FaceSmartPointer> Faces;
 
+#include "SelectableComponents.h"
+
 /// \brief Returns the unique-id of the edge adjacent to \p faceVertex in the edge-pair for the set of \p faces.
 inline FaceVertexId next_edge (const Faces& faces, FaceVertexId faceVertex)
 {
@@ -1100,72 +1081,6 @@ inline FaceVertexId next_vertex (const Faces& faces, FaceVertexId faceVertex)
 	FaceVertexId nextEdge = next_edge(faces, faceVertex);
 	return FaceVertexId(nextEdge.getFace(), Winding_next(faces[nextEdge.getFace()]->getWinding(), nextEdge.getVertex()));
 }
-
-class SelectableEdge
-{
-		Vector3 getEdge () const
-		{
-			const Winding& winding = getFace().getWinding();
-			return vector3_mid(winding[m_faceVertex.getVertex()].vertex, winding[Winding_next(winding,
-					m_faceVertex.getVertex())].vertex);
-		}
-
-	public:
-		Faces& m_faces;
-		FaceVertexId m_faceVertex;
-
-		SelectableEdge (Faces& faces, FaceVertexId faceVertex) :
-			m_faces(faces), m_faceVertex(faceVertex)
-		{
-		}
-		SelectableEdge& operator= (const SelectableEdge& other)
-		{
-			m_faceVertex = other.m_faceVertex;
-			return *this;
-		}
-
-		Face& getFace () const
-		{
-			return *m_faces[m_faceVertex.getFace()];
-		}
-
-		void testSelect (SelectionTest& test, SelectionIntersection& best)
-		{
-			test.TestPoint(getEdge(), best);
-		}
-};
-
-class SelectableVertex
-{
-		Vector3 getVertex () const
-		{
-			return getFace().getWinding()[m_faceVertex.getVertex()].vertex;
-		}
-
-	public:
-		Faces& m_faces;
-		FaceVertexId m_faceVertex;
-
-		SelectableVertex (Faces& faces, FaceVertexId faceVertex) :
-			m_faces(faces), m_faceVertex(faceVertex)
-		{
-		}
-		SelectableVertex& operator= (const SelectableVertex& other)
-		{
-			m_faceVertex = other.m_faceVertex;
-			return *this;
-		}
-
-		Face& getFace () const
-		{
-			return *m_faces[m_faceVertex.getFace()];
-		}
-
-		void testSelect (SelectionTest& test, SelectionIntersection& best)
-		{
-			test.TestPoint(getVertex(), best);
-		}
-};
 
 class BrushObserver
 {
