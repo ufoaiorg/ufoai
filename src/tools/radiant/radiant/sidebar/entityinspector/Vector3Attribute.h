@@ -1,8 +1,6 @@
 #ifndef VECTOR3ATTRIBUTE_H_
 #define VECTOR3ATTRIBUTE_H_
 
-typedef BasicVector3<double> DoubleVector3;
-
 class Vector3Entry
 {
 	public:

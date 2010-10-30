@@ -13,8 +13,6 @@ class AnglesEntry
 		}
 };
 
-typedef BasicVector3<double> DoubleVector3;
-
 class AnglesAttribute: public EntityAttribute
 {
 		std::string m_classname;

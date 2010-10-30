@@ -138,8 +138,6 @@ struct Winding
 		}
 };
 
-typedef BasicVector3<double> DoubleVector3;
-
 class DoubleLine
 {
 	public:

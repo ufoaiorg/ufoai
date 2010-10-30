@@ -420,6 +420,9 @@ std::ostream& operator<< (std::ostream& st, BasicVector3<T> vec)
 // A 3-element vector stored in single-precision floating-point.
 typedef BasicVector3<float> Vector3;
 
+// Same as above, but with its components stored in double precision
+typedef BasicVector3<double> DoubleVector3;
+
 // =============== Common Vector3 Methods ==================================================
 
 const Vector3 g_vector3_identity(0, 0, 0);
