@@ -14,6 +14,7 @@ protected:
 	bool _enabled;
 
 public:
+	// Constructor
 	Event() :
 		_enabled(true)
 	{}

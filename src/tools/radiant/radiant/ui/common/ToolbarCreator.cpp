@@ -73,26 +73,21 @@ namespace ui {
 				// Create a new GtkToolButton and assign the right callback
 				toolItem = GTK_WIDGET(gtk_tool_button_new(NULL, name.c_str()));
 
-				IEvent* event = GlobalEventManager().findEvent(action);
-				if (event != NULL) {
-					event->connectWidget(GTK_WIDGET(toolItem));
-				} else {
-					globalErrorStream() << "ToolbarCreator: Failed to lookup command " << action << "\n";
-				}
 			}
 			else {
 				// Create a new GtkToggleToolButton and assign the right callback
 				toolItem = GTK_WIDGET(gtk_toggle_tool_button_new());
 
-				IEvent* event = GlobalEventManager().findEvent(action);
-				if (event != NULL) {
-					event->connectWidget(GTK_WIDGET(toolItem));
+			}
 
-					// Tell the event to update the state of this button
-					event->updateWidgets();
-				} else {
-					globalErrorStream() << "ToolbarCreator: Failed to lookup command " << action << "\n";
-				}
+			IEvent* event = GlobalEventManager().findEvent(action);
+			if (event != NULL) {
+				event->connectWidget(GTK_WIDGET(toolItem));
+
+				// Tell the event to update the state of this button
+				event->updateWidgets();
+			} else {
+				globalErrorStream() << "ToolbarCreator: Failed to lookup command " << action << "\n";
 			}
 
 			// Set the tooltip, if not empty
@@ -103,7 +98,7 @@ namespace ui {
 
 			// Load and assign the icon, if specified
 			if (icon != "") {
-				GtkWidget* image = gtk_image_new_from_pixbuf(gtkutil::getLocalPixbufWithMask(icon.c_str()));
+				GtkWidget* image = gtk_image_new_from_pixbuf(gtkutil::getLocalPixbufWithMask(icon));
 				gtk_widget_show(image);
 				gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(toolItem), image);
 			}
