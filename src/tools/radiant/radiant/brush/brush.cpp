@@ -20,20 +20,6 @@
  */
 
 #include "brush.h"
-#include "signal/signal.h"
-#include "../plugin.h"
-
-static Signal0 g_brushTextureChangedCallbacks;
-
-void Brush_addTextureChangedCallback (const SignalHandler& handler)
-{
-	g_brushTextureChangedCallbacks.connectLast(handler);
-}
-
-void Brush_textureChanged ()
-{
-	g_brushTextureChangedCallbacks();
-}
 
 QuantiseFunc Face::m_quantise;
 bool g_brush_texturelock_enabled = false;
@@ -45,13 +31,3 @@ Shader* BrushInstance::m_state_selpoint;
 Counter* BrushInstance::m_counter = 0;
 
 FaceInstanceSet g_SelectedFaceInstances;
-
-inline bool Brush_isBounded (const Brush& brush)
-{
-	for (Brush::const_iterator i = brush.begin(); i != brush.end(); ++i) {
-		if (!(*i)->is_bounded()) {
-			return false;
-		}
-	}
-	return true;
-}
