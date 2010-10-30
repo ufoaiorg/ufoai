@@ -53,10 +53,7 @@
 		<shortcut command="InvertSelection" key="I" />
 		<shortcut command="ExpandSelectionToEntities" key="E" modifiers="CONTROL+ALT" />
 		<shortcut command="Preferences" key="P" />
-		<shortcut command="ToggleConsole" key="O" />
-		<shortcut command="EntityList" key="L" />
 		<shortcut command="ToggleEntityInspector" key="N" />
-		<shortcut command="ToggleLightInspector" key="J" />
 		<shortcut command="ShowHidden" key="H" modifiers="SHIFT" />
 		<shortcut command="HideSelected" key="H" />
 		<shortcut command="MapInfo" key="M" />
@@ -83,8 +80,8 @@
 		<shortcut command="SelectNudgeUp" key="Up" modifiers="ALT" />
 		<shortcut command="SelectNudgeDown" key="Down" modifiers="ALT" />
 		<shortcut command="CenterView" key="End" />
-		<shortcut command="CubicClipZoomIn" key="[" modifiers="CONTROL" />
-		<shortcut command="CubicClipZoomOut" key="]" modifiers="CONTROL" />
+		<shortcut command="CubicClipZoomIn" key="plus" modifiers="CONTROL" />
+		<shortcut command="CubicClipZoomOut" key="minus" modifiers="CONTROL" />
 		<shortcut command="UpFloor" key="Prior" />
 		<shortcut command="DownFloor" key="Next" />
 		<shortcut command="CameraForward" key="Up" />
@@ -114,16 +111,10 @@
 		<shortcut command="MakeDetail" key="M" modifiers="CONTROL" />
 		<shortcut command="MakeStructural" key="S" modifiers="SHIFT+CONTROL" />
 		<shortcut command="ConnectSelection" key="K" modifiers="CONTROL" />
-		<shortcut command="GridUp" key="]" />
-		<shortcut command="GridDown" key="[" />
+		<shortcut command="GridUp" key="plus" />
+		<shortcut command="GridDown" key="minus" />
 		<shortcut command="ViewEntityInfo" key="N" />
 		<shortcut command="RegionSetSelection" key="R" modifiers="SHIFT+CONTROL" />
-		<shortcut command="RedisperseRows" key="E" modifiers="CONTROL" />
-		<shortcut command="RedisperseCols" key="E" modifiers="SHIFT+CONTROL" />
-		<shortcut command="MatrixTranspose" key="M" modifiers="SHIFT+CONTROL" />
-		<shortcut command="CycleCapTexturePatch" key="N" modifiers="SHIFT+CONTROL" />
-		<shortcut command="NextLeakSpot" key="K" modifiers="SHIFT+CONTROL" />
-		<shortcut command="PrevLeakSpot" key="L" modifiers="SHIFT+CONTROL" />
 		<shortcut command="FitTexture" key="B" modifiers="SHIFT" />
 		<shortcut command="SurfaceInspector" key="S" />
 		<shortcut command="ShowAllTextures" key="A" modifiers="CONTROL" />
