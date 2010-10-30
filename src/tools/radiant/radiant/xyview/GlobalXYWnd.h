@@ -51,6 +51,8 @@ class XYWndManager: public RegistryKeyObserver, public PreferenceConstructor
 
 		unsigned int _defaultBlockSize;
 
+		GtkWindow* _globalParentWindow;
+
 	public:
 
 		// Constructor
@@ -74,9 +76,6 @@ class XYWndManager: public RegistryKeyObserver, public PreferenceConstructor
 		bool showWorkzone() const;
 
 		unsigned int defaultBlockSize() const;
-
-		void toggleCrossHairs();
-		void toggleGrid();
 
 		// Passes a queueDraw() call to each allocated view
 		void updateAllViews ();
@@ -115,8 +114,29 @@ class XYWndManager: public RegistryKeyObserver, public PreferenceConstructor
 		// Allocates a new XY view on the heap and returns its pointer
 		XYWnd* createXY ();
 
+		// Creates a new orthoview
+		void createNewOrthoView();
+
+		// Deletes the specified view
+		void destroyOrthoView(XYWnd* xyWnd);
+
+		// Determines the global parent the xyviews are children of
+		void setGlobalParentWindow(GtkWindow* globalParentWindow);
+
+		/* greebo: This function determines the point currently being "looked" at, it is used for toggling the ortho views
+		 * If something is selected the center of the selection is taken as new origin, otherwise the camera
+		 * position is considered to be the new origin of the toggled orthoview. */
+		Vector3 getFocusPosition();
+
 		// Construct the orthoview preference page and add it to the given group
 		void constructPreferencePage (PreferenceGroup& group);
+
+		// Registers all the XY commands in the EventManager
+		void registerCommands();
+
+	private:
+		// The GTK callback to catch the delete-event of orthoviews
+		static gboolean onDeleteOrthoView(GtkWidget *widget, GdkEvent *event, gpointer data);
 }; // class XYWndManager
 
 // Use this method to access the global XYWnd manager class

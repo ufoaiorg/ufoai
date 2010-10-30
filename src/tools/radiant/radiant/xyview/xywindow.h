@@ -22,26 +22,10 @@
 #if !defined(INCLUDED_XYWINDOW_H)
 #define INCLUDED_XYWINDOW_H
 
-#include "math/matrix.h"
-#include "signal/signal.h"
-
-#include "gtkutil/cursor.h"
-#include "gtkutil/window.h"
-#include "gtkutil/xorrectangle.h"
-#include "gtkutil/glwidget.h"
-#include "../camera/view.h"
-#include "../map/map.h"
-#include "texturelib.h"
-#include <gtk/gtkmenuitem.h>
-#include "../selection/RadiantWindowObserver.h"
-#include "EventLib.h"
-#include "../camera/CameraObserver.h"
-#include "../camera/CamWnd.h"
+#include "iclipper.h"
 #include "XYWnd.h"
-#include "iradiant.h"
 
 void XYWindow_Construct ();
 void XYWindow_Destroy ();
-void XYShow_registerCommands ();
 
 #endif

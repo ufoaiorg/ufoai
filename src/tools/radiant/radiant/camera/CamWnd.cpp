@@ -185,6 +185,7 @@ CamWnd::CamWnd() :
 		m_view(true),
 		m_Camera(&m_view, CamWndQueueDraw(*this)),
 		m_cameraview(m_Camera, &m_view, CamWndUpdate(*this)),
+		m_drawing(false),
 		_glWidget(true), m_gl_widget(static_cast<GtkWidget*>(_glWidget)),
 		m_window_observer(NewWindowObserver()),
 		m_XORRectangle(m_gl_widget),
@@ -193,8 +194,7 @@ CamWnd::CamWnd() :
 		m_selection_button_press_handler(0),
 		m_selection_button_release_handler(0),
 		m_selection_motion_handler(0),
-		m_freelook_button_press_handler(0),
-		m_drawing(false) {
+		m_freelook_button_press_handler(0) {
 	m_bFreeMove = false;
 
 	GlobalWindowObservers_add(m_window_observer);

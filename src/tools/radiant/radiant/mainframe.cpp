@@ -1867,6 +1867,9 @@ void MainFrame::Create (void)
 {
 	GtkWindow* window = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
 
+	// Tell the XYManager which window the xyviews should be transient for
+	GlobalXYWnd().setGlobalParentWindow(window);
+
 	GlobalWindowObservers_connectTopLevel(window);
 
 	gtk_window_set_transient_for(splash_screen, window);
@@ -2319,7 +2322,6 @@ void MainFrame_Construct (void)
 	GlobalEventManager().addCommand("About", FreeCaller<DoAbout>());
 	GlobalEventManager().addCommand("BugReport", FreeCaller<OpenBugReportURL> ());
 
-	XYShow_registerCommands();
 	LevelFilters_registerCommands();
 	Model_RegisterToggles();
 

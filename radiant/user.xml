@@ -97,6 +97,7 @@
 				<toggletoolbutton name="shownormals" action="ToggleShowModelNormals" tooltip="Show model normals" icon="model_normals.png" />
 			<separator/>
 				<toolbutton name="changeviews" action="NextView" tooltip="Change views" icon="view_change.png" />
+				<toolbutton name="neworthoview" action="NewOrthoView" tooltip="New XY View" icon="new_ortho_view.png" />
 			<separator/>
 				<toggletoolbutton name="cubicclip" action="ToggleCubicClip" tooltip="Cubic clip the camera view" icon="view_cubicclipping.png" />
 		</toolbar>

@@ -1,10 +1,15 @@
 #include "GlobalXYWnd.h"
 
+#include "ieventmanager.h"
+
+#include "gtkutil/FramedTransientWidget.h"
+#include "../select.h"
+#include "../mainframe.h"
 #include "radiant_i18n.h"
 
 // Constructor
 XYWndManager::XYWndManager() :
-	_activeXY(NULL)
+	_activeXY(NULL), _globalParentWindow(NULL)
 {
 	// Connect self to the according registry keys
 	GlobalRegistry().addKeyObserver(this, RKEY_CHASE_MOUSE);
@@ -26,11 +31,29 @@ XYWndManager::XYWndManager() :
 
 	// greebo: Register this class in the preference system so that the constructPreferencePage() gets called.
 	GlobalPreferenceSystem().addConstructor(this);
+
+	// Add the commands to the EventManager
+	registerCommands();
 }
 
 // Destructor
 XYWndManager::~XYWndManager() {
 	destroy();
+}
+
+void XYWndManager::registerCommands() {
+	GlobalEventManager().addCommand("NewOrthoView", MemberCaller<XYWndManager, &XYWndManager::createNewOrthoView> (
+			*this));
+
+	GlobalEventManager().addRegistryToggle("ToggleCrosshairs", RKEY_SHOW_CROSSHAIRS);
+	GlobalEventManager().addRegistryToggle("ToggleGrid", RKEY_SHOW_GRID);
+	GlobalEventManager().addRegistryToggle("ShowAngles", RKEY_SHOW_ENTITY_ANGLES);
+	GlobalEventManager().addRegistryToggle("ShowNames", RKEY_SHOW_ENTITY_NAMES);
+	GlobalEventManager().addRegistryToggle("ShowBlocks", RKEY_SHOW_BLOCKS);
+	GlobalEventManager().addRegistryToggle("ShowCoordinates", RKEY_SHOW_COORDINATES);
+	GlobalEventManager().addRegistryToggle("ShowWindowOutline", RKEY_SHOW_OUTLINE);
+	GlobalEventManager().addRegistryToggle("ShowAxes", RKEY_SHOW_AXES);
+	GlobalEventManager().addRegistryToggle("ShowWorkzone", RKEY_SHOW_WORKZONE);
 }
 
 void XYWndManager::constructPreferencePage(PreferenceGroup& group) {
@@ -79,12 +102,6 @@ bool XYWndManager::showCrossHairs() const {
 	return _showCrossHairs;
 }
 
-void XYWndManager::toggleCrossHairs() {
-	// Invert the registry value, the _showCrossHairs bool is updated automatically as this class observes the key
-	GlobalRegistry().set(RKEY_SHOW_CROSSHAIRS, _showCrossHairs ? "0" : "1");
-	updateAllViews();
-}
-
 bool XYWndManager::showBlocks() const {
 	return _showBlocks;
 }
@@ -111,12 +128,6 @@ bool XYWndManager::showWorkzone() const {
 
 bool XYWndManager::showGrid() const {
 	return _showGrid;
-}
-
-void XYWndManager::toggleGrid() {
-	// Invert the registry value, the _showCrossHairs bool is updated automatically as this class observes the key
-	GlobalRegistry().set(RKEY_SHOW_GRID, _showGrid ? "0" : "1");
-	updateAllViews();
 }
 
 void XYWndManager::updateAllViews() {
@@ -228,6 +239,8 @@ void XYWndManager::toggleActiveView() {
 			_activeXY->setViewType(XY);
 		}
 	}
+
+	positionView(getFocusPosition());
 }
 
 XYWnd* XYWndManager::getView(EViewType viewType) {
@@ -269,6 +282,88 @@ XYWnd* XYWndManager::createXY() {
 	_XYViews.push_back(newWnd);
 
 	return newWnd;
+}
+
+void XYWndManager::setGlobalParentWindow(GtkWindow* globalParentWindow) {
+	_globalParentWindow = globalParentWindow;
+}
+
+void XYWndManager::destroyOrthoView(XYWnd* xyWnd) {
+	if (xyWnd != NULL) {
+
+		// Remove the pointer from the list
+		for (XYWndList::iterator i = _XYViews.begin(); i != _XYViews.end(); i++) {
+			XYWnd* listItem = (*i);
+
+			// If the view is found, remove it from the list
+			if (listItem == xyWnd) {
+				// Retrieve the parent from the view (for later destruction)
+				GtkWindow* parent = xyWnd->getParent();
+				GtkWidget* glWidget = xyWnd->getWidget();
+
+				// Destroy the window
+				delete xyWnd;
+
+				// Remove it from the list
+				_XYViews.erase(i);
+
+				// Destroy the parent window (and the contained frame) as well
+				if (parent != NULL) {
+					gtk_widget_destroy(GTK_WIDGET(glWidget));
+					gtk_widget_destroy(GTK_WIDGET(parent));
+				}
+
+				break;
+			}
+		}
+	}
+}
+
+gboolean XYWndManager::onDeleteOrthoView(GtkWidget *widget, GdkEvent *event, gpointer data) {
+	// Get the pointer to the deleted XY view from data
+	XYWnd* deletedView = reinterpret_cast<XYWnd*>(data);
+
+	GlobalXYWnd().destroyOrthoView(deletedView);
+
+	return false;
+}
+
+void XYWndManager::createNewOrthoView() {
+
+	// Allocate a new XYWindow (TODO: Migrate this to boost::shared_ptr)
+	XYWnd* newWnd = new XYWnd();
+
+	// Add the pointer to the internal list
+	_XYViews.push_back(newWnd);
+
+	// Add the new XYView GL widget to a framed window
+	GtkWidget* window = gtkutil::FramedTransientWidget(XYWnd::getViewTypeTitle(XY), _globalParentWindow,
+			newWnd->getWidget());
+
+	// Connect the destroyed signal to the callback of this class
+	g_signal_connect(G_OBJECT(window), "delete_event", G_CALLBACK(onDeleteOrthoView), newWnd);
+
+	newWnd->setParent(GTK_WINDOW(window));
+
+	// Set the viewtype (and with it the window title)
+	newWnd->setViewType(XY);
+}
+
+/* greebo: This function determines the point currently being "looked" at, it is used for toggling the ortho views
+ * If something is selected the center of the selection is taken as new origin, otherwise the camera
+ * position is considered to be the new origin of the toggled orthoview.
+*/
+Vector3 XYWndManager::getFocusPosition() {
+	Vector3 position(0,0,0);
+
+	if (GlobalSelectionSystem().countSelected() != 0) {
+		Select_GetMid(position);
+	}
+	else {
+		position = g_pParentWnd->GetCamWnd()->getCameraOrigin();
+	}
+
+	return position;
 }
 
 // Accessor function returning a reference to the static instance

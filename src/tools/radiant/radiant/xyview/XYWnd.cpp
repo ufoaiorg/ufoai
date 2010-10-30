@@ -138,10 +138,12 @@ XYWnd::XYWnd () :
 
 XYWnd::~XYWnd (void)
 {
+	GlobalEventManager().disconnect(GTK_OBJECT(m_gl_widget));
+
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_sizeHandler);
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_exposeHandler);
 
-	gtk_widget_unref(m_gl_widget);
+	gtk_widget_hide(m_gl_widget);
 
 	delete m_window_observer;
 }
@@ -174,6 +176,19 @@ GtkWindow* XYWnd::getParent () const
 EViewType XYWnd::getViewType ()
 {
 	return m_viewType;
+}
+
+const std::string XYWnd::getViewTypeTitle(EViewType viewtype) {
+	if (viewtype == XY) {
+		return _("XY Top");
+	}
+	if (viewtype == XZ) {
+		return _("XZ Front");
+	}
+	if (viewtype == YZ) {
+		return _("YZ Side");
+	}
+	return "";
 }
 
 float XYWnd::getScale () const

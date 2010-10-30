@@ -197,6 +197,7 @@ class XYWnd: public CameraObserver
 		void EntityCreate_MouseUp (int x, int y);
 
 		EViewType getViewType ();
+		static const std::string getViewTypeTitle(EViewType viewtype);
 		void setScale (float f);
 		float getScale () const;
 		int getWidth () const;
