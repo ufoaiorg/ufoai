@@ -27,6 +27,10 @@
 
 #include <vector>
 
+#include "irender.h"
+#include "igl.h"
+#include "selectable.h"
+
 #include "texturelib.h"
 #include "math/Vector2.h"
 #include "math/Vector3.h"
@@ -285,6 +289,32 @@ inline void Winding_printConnectivity (Winding& winding)
 		std::size_t vertexIndex = std::distance(winding.begin(), i);
 		globalOutputStream() << "vertex: " << string::toString(vertexIndex) << " adjacent: " << string::toString((*i).adjacent) << "\n";
 	}
+}
+
+/**
+ * @brief Brush rendering
+ */
+inline void Winding_Draw (const Winding& winding, const Vector3& normal, RenderStateFlags state)
+{
+	glVertexPointer(3, GL_FLOAT, sizeof(WindingVertex), &winding.points.data()->vertex);
+	if (state & RENDER_LIGHTING) {
+		Vector3 normals[c_brush_maxFaces];
+		typedef Vector3* Vector3Iter;
+		for (Vector3Iter i = normals, last = normals + winding.numpoints; i != last; ++i) {
+			*i = normal;
+		}
+		glNormalPointer(GL_FLOAT, sizeof(Vector3), normals);
+	}
+	if (state & RENDER_TEXTURE_2D) {
+		glTexCoordPointer(2, GL_FLOAT, sizeof(WindingVertex), &winding.points.data()->texcoord);
+	}
+	glDrawArrays(GL_POLYGON, 0, GLsizei(winding.numpoints));
+}
+
+inline void Winding_testSelect (Winding& winding, SelectionTest& test, SelectionIntersection& best)
+{
+	test.TestPolygon(VertexPointer(reinterpret_cast<VertexPointer::pointer> (&winding.points.data()->vertex),
+			sizeof(WindingVertex)), winding.numpoints, best);
 }
 
 #endif

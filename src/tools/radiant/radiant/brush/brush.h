@@ -84,26 +84,6 @@ inline void Winding_DrawWireframe (const Winding& winding)
 	glDrawArrays(GL_LINE_LOOP, 0, GLsizei(winding.numpoints));
 }
 
-/**
- * @brief Brush rendering
- */
-inline void Winding_Draw (const Winding& winding, const Vector3& normal, RenderStateFlags state)
-{
-	glVertexPointer(3, GL_FLOAT, sizeof(WindingVertex), &winding.points.data()->vertex);
-	if (state & RENDER_LIGHTING) {
-		Vector3 normals[c_brush_maxFaces];
-		typedef Vector3* Vector3Iter;
-		for (Vector3Iter i = normals, last = normals + winding.numpoints; i != last; ++i) {
-			*i = normal;
-		}
-		glNormalPointer(GL_FLOAT, sizeof(Vector3), normals);
-	}
-	if (state & RENDER_TEXTURE_2D) {
-		glTexCoordPointer(2, GL_FLOAT, sizeof(WindingVertex), &winding.points.data()->texcoord);
-	}
-	glDrawArrays(GL_POLYGON, 0, GLsizei(winding.numpoints));
-}
-
 #include "shaderlib.h"
 
 typedef DoubleVector3 PlanePoints[3];
@@ -655,12 +635,6 @@ class FacePlane
 			MakePlane();
 		}
 };
-
-inline void Winding_testSelect (Winding& winding, SelectionTest& test, SelectionIntersection& best)
-{
-	test.TestPolygon(VertexPointer(reinterpret_cast<VertexPointer::pointer> (&winding.points.data()->vertex),
-			sizeof(WindingVertex)), winding.numpoints, best);
-}
 
 const double GRID_MIN = 0.125;
 
