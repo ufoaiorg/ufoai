@@ -2,7 +2,7 @@
 #define PRISM_H_
 
 #include "BrushConstructor.h"
-#include "../../xyview/GlobalXYWnd.h" // GlobalXYWnd_getCurrentViewType
+#include "../../xyview/xywindow.h" // GlobalXYWnd_getCurrentViewType
 
 namespace brushconstruct
 {

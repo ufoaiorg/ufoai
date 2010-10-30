@@ -30,7 +30,7 @@
 
 #include "XYRenderer.h"
 #include "../image.h"
-#include "GlobalXYWnd.h"
+#include "xywindow.h"
 
 void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHeight);
 

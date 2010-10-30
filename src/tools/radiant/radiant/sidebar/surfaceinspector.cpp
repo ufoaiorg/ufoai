@@ -53,7 +53,7 @@
 #include "../settings/preferences.h"
 #include "../brush/TexDef.h"
 #include "../brush/TextureProjection.h"
-#include "../xyview/GlobalXYWnd.h"
+#include "../xyview/xywindow.h"
 #include "../mainframe.h"
 #include "../dialog.h"
 #include "../brush/brush.h"

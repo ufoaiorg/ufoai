@@ -71,7 +71,7 @@
 #include "mainframe.h"
 #include "lastused.h"
 #include "camera/camwindow.h"
-#include "xyview/GlobalXYWnd.h"
+#include "xyview/xywindow.h"
 #include "entity.h"
 #include "select.h"
 #include "settings/preferences.h"

@@ -39,7 +39,7 @@
 #include "gtkutil/messagebox.h"
 
 #include "../console.h"
-#include "../xyview/GlobalXYWnd.h"
+#include "../xyview/xywindow.h"
 #include "../mainframe.h"
 #include "../qe3.h"
 #include <string>
