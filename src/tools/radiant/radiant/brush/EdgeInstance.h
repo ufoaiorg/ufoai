@@ -3,7 +3,6 @@
 
 #include "FaceInstance.h"
 
-
 class EdgeInstance: public Selectable
 {
 		FaceInstances& m_faceInstances;
@@ -48,6 +47,11 @@ class EdgeInstance: public Selectable
 		bool isSelected () const
 		{
 			return selected_edge();
+		}
+
+		void invertSelected ()
+		{
+			setSelected(!isSelected());
 		}
 
 		void testSelect (Selector& selector, SelectionTest& test)

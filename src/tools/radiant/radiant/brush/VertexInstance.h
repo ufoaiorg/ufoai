@@ -47,6 +47,10 @@ class VertexInstance: public Selectable
 		{
 			return selected_vertex();
 		}
+		void invertSelected ()
+		{
+			setSelected(!isSelected());
+		}
 
 		void testSelect (Selector& selector, SelectionTest& test)
 		{

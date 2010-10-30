@@ -279,6 +279,13 @@ class InvertSelectionWalker: public scene::Graph::Walker
 					m_selectable = path.top().get().visible() ? selectable : 0;
 					break;
 				case SelectionSystem::eComponent:
+					// Check if we have a componentselectiontestable instance
+					ComponentSelectionTestable* compSelTestable = Instance_getComponentSelectionTestable(instance);
+
+					// Only add it to the list if the instance has components and is already selected
+					if (compSelTestable && selectable->isSelected()) {
+						m_selectable = path.top().get().visible() ? selectable : 0;
+					}
 					break;
 				}
 			}
@@ -287,7 +294,7 @@ class InvertSelectionWalker: public scene::Graph::Walker
 		void post (const scene::Path& path, scene::Instance& instance) const
 		{
 			if (m_selectable != 0) {
-				m_selectable->setSelected(!m_selectable->isSelected());
+				m_selectable->invertSelected();
 				m_selectable = 0;
 			}
 		}
@@ -336,17 +343,16 @@ void Scene_ExpandSelectionToEntities (void)
 	GlobalSceneGraph().traverse(ExpandSelectionToEntitiesWalker());
 }
 
-namespace
+namespace {
+void Selection_UpdateWorkzone (void)
 {
-	void Selection_UpdateWorkzone (void)
-	{
-		if (GlobalSelectionSystem().countSelected() != 0) {
-			Select_GetBounds(g_select_workzone.min, g_select_workzone.max);
-		}
+	if (GlobalSelectionSystem().countSelected() != 0) {
+		Select_GetBounds(g_select_workzone.min, g_select_workzone.max);
 	}
-	typedef FreeCaller<Selection_UpdateWorkzone> SelectionUpdateWorkzoneCaller;
+}
+typedef FreeCaller<Selection_UpdateWorkzone> SelectionUpdateWorkzoneCaller;
 
-	IdleDraw g_idleWorkzone = IdleDraw(SelectionUpdateWorkzoneCaller());
+IdleDraw g_idleWorkzone = IdleDraw(SelectionUpdateWorkzoneCaller());
 }
 
 const WorkZone& Select_getWorkZone (void)

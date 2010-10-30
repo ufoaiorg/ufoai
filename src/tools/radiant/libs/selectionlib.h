@@ -44,6 +44,10 @@ class SelectableBool: public Selectable
 		{
 			return m_selected;
 		}
+
+		void invertSelected() {
+			m_selected = !m_selected;
+		}
 };
 
 // greebo: A selectable with an attached callback function that is called upon selection (change)
@@ -83,6 +87,10 @@ class ObservedSelectable: public Selectable
 		bool isSelected () const
 		{
 			return m_selected;
+		}
+
+		void invertSelected() {
+			setSelected(!isSelected());
 		}
 };
 

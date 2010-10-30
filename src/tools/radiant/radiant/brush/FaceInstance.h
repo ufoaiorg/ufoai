@@ -40,6 +40,7 @@ class FaceInstance
 		bool selectedVertices () const;
 		bool selectedEdges () const;
 		bool isSelected () const;
+		void invertSelected();
 
 		bool selectedComponents () const;
 		bool selectedComponents (SelectionSystem::EComponentMode mode) const;

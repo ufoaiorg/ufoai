@@ -1238,7 +1238,7 @@ class ComponentSnappableSnapToGridSelected: public scene::Graph::Walker
 		bool pre (const scene::Path& path, scene::Instance& instance) const
 		{
 			if (path.top().get().visible()) {
-				// Check if the visited instance is ComponentSelectable
+				// Check if the visited instance is ComponentSnappable
 				ComponentSnappable* componentSnappable = Instance_getComponentSnappable(instance);
 				// Call the snapComponents() method if the instance is also a _selected_ Selectable
 				if (componentSnappable != 0 && Instance_getSelectable(instance)->isSelected()) {

@@ -52,8 +52,7 @@ class Selectable
 		// Check the selection status of this object (TRUE == selected)
 		virtual bool isSelected () const = 0;
 		// Toggle the selection status
-		// TODO:
-		// virtual void invertSelected() = 0;
+		virtual void invertSelected() = 0;
 };
 
 namespace scene

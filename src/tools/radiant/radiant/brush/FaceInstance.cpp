@@ -88,6 +88,7 @@ bool FaceInstance::selectedComponents (SelectionSystem::EComponentMode mode) con
 		return false;
 	}
 }
+
 void FaceInstance::setSelected (SelectionSystem::EComponentMode mode, bool select)
 {
 	switch (mode) {
@@ -105,6 +106,21 @@ void FaceInstance::setSelected (SelectionSystem::EComponentMode mode, bool selec
 
 		m_edgeSelection.clear();
 		m_selectableEdges.setSelected(false);
+		break;
+	default:
+		break;
+	}
+}
+
+void FaceInstance::invertSelected ()
+{
+	switch (GlobalSelectionSystem().ComponentMode()) {
+	case SelectionSystem::eFace:
+		m_selectable.invertSelected();
+		break;
+	case SelectionSystem::eVertex:
+		break;
+	case SelectionSystem::eEdge:
 		break;
 	default:
 		break;
