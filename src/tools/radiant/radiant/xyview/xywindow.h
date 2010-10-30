@@ -48,8 +48,7 @@ namespace scene
 typedef struct _GtkWindow GtkWindow;
 typedef struct _GtkMenu GtkMenu;
 
-EViewType GlobalXYWnd_getCurrentViewType ();
-void GetFocusPosition (Vector3& position);
+void getFocusPosition (Vector3& position);
 
 typedef struct _GtkWindow GtkWindow;
 void XY_Top_Shown_Construct (GtkWindow* parent);

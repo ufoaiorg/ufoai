@@ -84,8 +84,10 @@ class XYWnd: public CameraObserver
 		Timer _chaseMouseTimer;
 		FreezePointer _freezePointer;
 
+		GtkWindow* _parent;
+
 	public:
-		GtkWindow* m_parent;
+		// Constructor, this allocates the GL widget
 		XYWnd ();
 		~XYWnd ();
 
@@ -98,7 +100,9 @@ class XYWnd: public CameraObserver
 			return m_gl_widget;
 		}
 
-	public:
+		void setParent(GtkWindow* parent);
+		GtkWindow* getParent() const;
+
 		SelectionSystemWindowObserver* m_window_observer;
 		XORRectangle m_XORRectangle;
 
@@ -144,7 +148,7 @@ class XYWnd: public CameraObserver
 		guint m_zoom_focusOut;
 		int _dragZoom;
 
-		void SetActive (bool b)
+		void setActive (bool b)
 		{
 			m_bActive = b;
 		}
@@ -242,23 +246,11 @@ class XYWnd: public CameraObserver
 
 		void focus ();
 
-		EViewType getViewType ()
-		{
-			return m_viewType;
-		}
+		EViewType getViewType ();
 		void setScale (float f);
-		float getScale () const
-		{
-			return m_fScale;
-		}
-		int getWidth () const
-		{
-			return m_nWidth;
-		}
-		int getHeight () const
-		{
-			return m_nHeight;
-		}
+		float getScale () const;
+		int getWidth () const;
+		int getHeight () const;
 
 		void zoomIn ();
 		void zoomOut ();
@@ -271,9 +263,6 @@ class XYWnd: public CameraObserver
 
 		// The method responsible for mouseMove situations according to <event>
 		void mouseMoved(int x, int y, const unsigned int& state);
-
-		Signal0 onDestroyed;
-		Signal3<int, int, GdkEventButton*> onMouseDown;
 
 		// The method handling the different mouseDown situations
 		void mouseDown(int x, int y, GdkEventButton* event);

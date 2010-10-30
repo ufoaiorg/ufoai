@@ -80,6 +80,7 @@
 #include "dialogs/findtextures.h"
 #include "referencecache/nullmodel.h"
 #include "xyview/grid.h"
+#include "xyview/GlobalXYWnd.h"
 #include "material.h"
 #include "ump.h"
 #include "ufoscript/UFOScript.h"
@@ -114,13 +115,15 @@ scene::Node& getMapWorldEntity ()
 
 EViewType XYWindow_getViewType ()
 {
-	return g_pParentWnd->GetXYWnd()->getViewType();
+	return GlobalXYWnd().getActiveViewType();
 }
 
 Vector3 XYWindow_windowToWorld (const WindowVector& position)
 {
 	Vector3 result = g_vector3_identity;
-	g_pParentWnd->GetXYWnd()->convertXYToWorld(static_cast<int> (position.x()), static_cast<int> (position.y()), result);
+	XYWnd* xyWnd = GlobalXYWnd().getActiveXY();
+	if (xyWnd != NULL)
+		xyWnd->convertXYToWorld(static_cast<int>(position.x()), static_cast<int>(position.y()), result);
 	return result;
 }
 

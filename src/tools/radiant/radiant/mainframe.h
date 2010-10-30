@@ -100,11 +100,7 @@ class MainFrame
 		GtkWidget* m_hSplit;
 		GtkWidget* m_vSplit2;
 
-		XYWnd* m_pXYWnd;
-		XYWnd* m_pYZWnd;
-		XYWnd* m_pXZWnd;
 		CamWnd* m_pCamWnd;
-		XYWnd* m_pActiveXY;
 
 		GtkWidget *m_pStatusLabel[c_count_status];
 
@@ -129,24 +125,6 @@ class MainFrame
 		void RedrawStatusText ();
 		typedef MemberCaller<MainFrame, &MainFrame::RedrawStatusText> RedrawStatusTextCaller;
 
-		void SetActiveXY (XYWnd* p);
-		XYWnd* ActiveXY ()
-		{
-			return m_pActiveXY;
-		}
-		;
-		XYWnd* GetXYWnd ()
-		{
-			return m_pXYWnd;
-		}
-		XYWnd* GetXZWnd ()
-		{
-			return m_pXZWnd;
-		}
-		XYWnd* GetYZWnd ()
-		{
-			return m_pYZWnd;
-		}
 		CamWnd* GetCamWnd ()
 		{
 			ASSERT_NOTNULL(m_pCamWnd);
@@ -324,10 +302,5 @@ void MainFrame_Destroy ();
 void hide_splash ();
 void show_splash ();
 void populateRegistry ();
-
-SignalHandlerId XYWindowDestroyed_connect (const SignalHandler& handler);
-void XYWindowDestroyed_disconnect (SignalHandlerId id);
-MouseEventHandlerId XYWindowMouseDown_connect (const MouseEventHandler& handler);
-void XYWindowMouseDown_disconnect (MouseEventHandlerId id);
 
 #endif

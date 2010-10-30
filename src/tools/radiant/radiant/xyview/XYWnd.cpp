@@ -28,6 +28,7 @@
 #include "../camera/GlobalCamera.h"
 #include "../ui/ortho/OrthoContextMenu.h"
 
+#include "GlobalXYWnd.h"
 #include "XYRenderer.h"
 #include "../image.h"
 #include "xywindow.h"
@@ -62,7 +63,7 @@ inline float normalised_to_world (float normalised, float world_origin, float no
 
 XYWnd::XYWnd () :
 	_glWidget(false), m_gl_widget(static_cast<GtkWidget*> (_glWidget)), m_deferredDraw(WidgetQueueDrawCaller(
-			*m_gl_widget)), m_deferred_motion(callbackMouseMotion, this), m_parent(0), m_window_observer(
+			*m_gl_widget)), m_deferred_motion(callbackMouseMotion, this), _parent(0), m_window_observer(
 			NewWindowObserver()), m_XORRectangle(m_gl_widget), _chaseMouseHandler(0)
 {
 	m_bActive = false;
@@ -129,14 +130,10 @@ XYWnd::XYWnd () :
 	GlobalCamera().addCameraObserver(this);
 
 	PressedButtons_connect(g_pressedButtons, m_gl_widget);
-
-	onMouseDown.connectLast(makeSignalHandler3(MouseDownCaller(), *this));
 }
 
 XYWnd::~XYWnd (void)
 {
-	onDestroyed();
-
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_sizeHandler);
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_exposeHandler);
 
@@ -158,6 +155,32 @@ void XYWnd::setEvent (GdkEventButton* event)
 void XYWnd::releaseStates (void)
 {
 	GlobalShaderCache().release("$XY_OVERLAY");
+}
+
+void XYWnd::setParent(GtkWindow* parent) {
+	_parent = parent;
+}
+
+GtkWindow* XYWnd::getParent() const {
+	return _parent;
+}
+
+EViewType XYWnd::getViewType ()
+{
+	return m_viewType;
+}
+
+float XYWnd::getScale () const
+{
+	return m_fScale;
+}
+int XYWnd::getWidth () const
+{
+	return m_nWidth;
+}
+int XYWnd::getHeight () const
+{
+	return m_nHeight;
 }
 
 const Vector3& XYWnd::getOrigin (void) const
@@ -280,7 +303,7 @@ gboolean XYWnd::xywnd_chasemouse (gpointer data)
 void XYWnd::focus ()
 {
 	Vector3 position;
-	GetFocusPosition(position);
+	getFocusPosition(position);
 	positionView(position);
 }
 
@@ -451,12 +474,12 @@ Shader* XYWnd::m_state_selected = 0;
 gboolean XYWnd::callbackButtonPress (GtkWidget* widget, GdkEventButton* event, XYWnd* xywnd)
 {
 	if (event->type == GDK_BUTTON_PRESS) {
-		g_pParentWnd->SetActiveXY(xywnd);
+		GlobalXYWnd().setActiveXY(xywnd);
 
 		xywnd->setEvent(event);
 
 		// Pass the GdkEventButton* to the XYWnd class, the boolean <true> is passed but never used
-		xywnd->onMouseDown(static_cast<int> (event->x), static_cast<int> (event->y), event);
+		xywnd->mouseDown(static_cast<int> (event->x), static_cast<int> (event->y), event);
 	}
 	return FALSE;
 }
@@ -618,7 +641,7 @@ void XYWnd::beginMove (void)
 		endMove();
 	}
 	_moveStarted = true;
-	_freezePointer.freeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow(), callbackMoveDelta,
+	_freezePointer.freeze_pointer(_parent != 0 ? _parent : GlobalRadiant().getMainWindow(), callbackMoveDelta,
 			this);
 	m_move_focusOut
 			= g_signal_connect(G_OBJECT(m_gl_widget), "focus_out_event", G_CALLBACK(callbackMoveFocusOut), this);
@@ -627,7 +650,7 @@ void XYWnd::beginMove (void)
 void XYWnd::endMove (void)
 {
 	_moveStarted = false;
-	_freezePointer.unfreeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow());
+	_freezePointer.unfreeze_pointer(_parent != 0 ? _parent : GlobalRadiant().getMainWindow());
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_move_focusOut);
 }
 
@@ -644,7 +667,7 @@ void XYWnd::beginZoom (void)
 	}
 	_zoomStarted = true;
 	_dragZoom = 0;
-	_freezePointer.freeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow(), zoomDelta,
+	_freezePointer.freeze_pointer(_parent != 0 ? _parent : GlobalRadiant().getMainWindow(), zoomDelta,
 			this);
 	m_zoom_focusOut = g_signal_connect(G_OBJECT(m_gl_widget), "focus_out_event", G_CALLBACK(onFocusOut), this);
 }
@@ -652,7 +675,7 @@ void XYWnd::beginZoom (void)
 void XYWnd::endZoom (void)
 {
 	_zoomStarted = false;
-	_freezePointer.unfreeze_pointer(m_parent != 0 ? m_parent : GlobalRadiant().getMainWindow());
+	_freezePointer.unfreeze_pointer(_parent != 0 ? _parent : GlobalRadiant().getMainWindow());
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_zoom_focusOut);
 }
 
@@ -677,8 +700,8 @@ void XYWnd::setViewType (EViewType viewType)
 	m_viewType = viewType;
 	updateModelview();
 
-	if (m_parent != 0) {
-		gtk_window_set_title(m_parent, ViewType_getTitle(m_viewType));
+	if (_parent != 0) {
+		gtk_window_set_title(_parent, ViewType_getTitle(m_viewType));
 	}
 }
 
@@ -866,14 +889,16 @@ void XYWnd::loadBackgroundImage (const std::string& name)
 		g_warning("Could not load texture %s\n", fileNameWithoutExt.c_str());
 		return;
 	}
-	g_pParentWnd->ActiveXY()->m_tex = (qtexture_t*) malloc(sizeof(qtexture_t));
-	LoadTextureRGBA(g_pParentWnd->ActiveXY()->XYWnd::m_tex, image->getRGBAPixels(), image->getWidth(),
+
+	XYWnd *xy = GlobalXYWnd().getActiveXY();
+	xy->m_tex = (qtexture_t*) malloc(sizeof(qtexture_t));
+	LoadTextureRGBA(xy->m_tex, image->getRGBAPixels(), image->getWidth(),
 			image->getHeight());
 	g_message("Loaded background texture %s\n", relative.c_str());
-	g_pParentWnd->ActiveXY()->m_backgroundActivated = true;
+	xy->m_backgroundActivated = true;
 
 	int m_ix, m_iy;
-	switch (g_pParentWnd->ActiveXY()->m_viewType) {
+	switch (xy->getViewType()) {
 	default:
 	case XY:
 		m_ix = 0;
@@ -891,18 +916,19 @@ void XYWnd::loadBackgroundImage (const std::string& name)
 
 	Vector3 min, max;
 	Select_GetBounds(min, max);
-	g_pParentWnd->ActiveXY()->m_xmin = min[m_ix];
-	g_pParentWnd->ActiveXY()->m_ymin = min[m_iy];
-	g_pParentWnd->ActiveXY()->m_xmax = max[m_ix];
-	g_pParentWnd->ActiveXY()->m_ymax = max[m_iy];
+	xy->m_xmin = min[m_ix];
+	xy->m_ymin = min[m_iy];
+	xy->m_xmax = max[m_ix];
+	xy->m_ymax = max[m_iy];
 }
 
 void XYWnd::disableBackground (void)
 {
-	g_pParentWnd->ActiveXY()->m_backgroundActivated = false;
-	if (g_pParentWnd->ActiveXY()->m_tex)
-		free(g_pParentWnd->ActiveXY()->m_tex);
-	g_pParentWnd->ActiveXY()->m_tex = NULL;
+	XYWnd *xy = GlobalXYWnd().getActiveXY();
+	xy->m_backgroundActivated = false;
+	if (xy->m_tex)
+		free(xy->m_tex);
+	xy->m_tex = NULL;
 }
 
 void XYWnd::drawAxis (void)

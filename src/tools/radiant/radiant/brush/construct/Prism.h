@@ -2,7 +2,7 @@
 #define PRISM_H_
 
 #include "BrushConstructor.h"
-#include "../../xyview/xywindow.h" // GlobalXYWnd_getCurrentViewType
+#include "../../xyview/GlobalXYWnd.h"
 
 namespace brushconstruct
 {
@@ -11,7 +11,7 @@ namespace brushconstruct
 		private:
 			int getViewAxis () const
 			{
-				switch (GlobalXYWnd_getCurrentViewType()) {
+				switch (GlobalXYWnd().getActiveViewType()) {
 				case XY:
 					return 2;
 				case XZ:

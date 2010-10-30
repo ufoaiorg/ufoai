@@ -117,6 +117,7 @@
 #include "clipper/GlobalClipPoints.h"
 #include "camera/CamWnd.h"
 #include "camera/GlobalCamera.h"
+#include "xyview/GlobalXYWnd.h"
 #include "ui/colourscheme/ColourSchemeEditor.h"
 #include "ui/colourscheme/ColourSchemeManager.h"
 
@@ -905,8 +906,8 @@ void Selection_Clone (void)
 
 		Scene_Clone_Selected(GlobalSceneGraph());
 
-		//NudgeSelection(eNudgeRight, GetGridSize(), GlobalXYWnd_getCurrentViewType());
-		//NudgeSelection(eNudgeDown, GetGridSize(), GlobalXYWnd_getCurrentViewType());
+		//NudgeSelection(eNudgeRight, GetGridSize(), GlobalXYWnd().getCurrentViewType());
+		//NudgeSelection(eNudgeDown, GetGridSize(), GlobalXYWnd().getCurrentViewType());
 	}
 }
 
@@ -932,25 +933,25 @@ void Selection_Deselect (void)
 void Selection_NudgeUp (void)
 {
 	UndoableCommand undo("nudgeSelectedUp");
-	NudgeSelection(eNudgeUp, GetGridSize(), GlobalXYWnd_getCurrentViewType());
+	NudgeSelection(eNudgeUp, GetGridSize(), GlobalXYWnd().getActiveViewType());
 }
 
 void Selection_NudgeDown (void)
 {
 	UndoableCommand undo("nudgeSelectedDown");
-	NudgeSelection(eNudgeDown, GetGridSize(), GlobalXYWnd_getCurrentViewType());
+	NudgeSelection(eNudgeDown, GetGridSize(), GlobalXYWnd().getActiveViewType());
 }
 
 void Selection_NudgeLeft (void)
 {
 	UndoableCommand undo("nudgeSelectedLeft");
-	NudgeSelection(eNudgeLeft, GetGridSize(), GlobalXYWnd_getCurrentViewType());
+	NudgeSelection(eNudgeLeft, GetGridSize(), GlobalXYWnd().getActiveViewType());
 }
 
 void Selection_NudgeRight (void)
 {
 	UndoableCommand undo("nudgeSelectedRight");
-	NudgeSelection(eNudgeRight, GetGridSize(), GlobalXYWnd_getCurrentViewType());
+	NudgeSelection(eNudgeRight, GetGridSize(), GlobalXYWnd().getActiveViewType());
 }
 
 void TranslateToolExport (const BoolImportCallback& importCallback)
@@ -1425,32 +1426,9 @@ void GlobalCamera_UpdateWindow (void)
 	}
 }
 
-void XY_UpdateWindow (MainFrame& mainframe)
-{
-	if (mainframe.GetXYWnd() != 0) {
-		mainframe.GetXYWnd()->queueDraw();
-	}
-}
-
-void XZ_UpdateWindow (MainFrame& mainframe)
-{
-	if (mainframe.GetXZWnd() != 0) {
-		mainframe.GetXZWnd()->queueDraw();
-	}
-}
-
-void YZ_UpdateWindow (MainFrame& mainframe)
-{
-	if (mainframe.GetYZWnd() != 0) {
-		mainframe.GetYZWnd()->queueDraw();
-	}
-}
-
 void XY_UpdateAllWindows (MainFrame& mainframe)
 {
-	XY_UpdateWindow(mainframe);
-	XZ_UpdateWindow(mainframe);
-	YZ_UpdateWindow(mainframe);
+	GlobalXYWnd().updateAllViews();
 }
 
 void XY_UpdateAllWindows (void)
@@ -1963,26 +1941,6 @@ class MainWindowActive
 
 MainWindowActive g_MainWindowActive;
 
-SignalHandlerId XYWindowDestroyed_connect (const SignalHandler& handler)
-{
-	return g_pParentWnd->GetXYWnd()->onDestroyed.connectFirst(handler);
-}
-
-void XYWindowDestroyed_disconnect (SignalHandlerId id)
-{
-	g_pParentWnd->GetXYWnd()->onDestroyed.disconnect(id);
-}
-
-MouseEventHandlerId XYWindowMouseDown_connect (const MouseEventHandler& handler)
-{
-	return g_pParentWnd->GetXYWnd()->onMouseDown.connectFirst(handler);
-}
-
-void XYWindowMouseDown_disconnect (MouseEventHandlerId id)
-{
-	g_pParentWnd->GetXYWnd()->onMouseDown.disconnect(id);
-}
-
 // =============================================================================
 // MainFrame class
 
@@ -1999,11 +1957,7 @@ GtkWindow* MainFrame_getWindow (void)
 MainFrame::MainFrame () :
 	m_window(0), m_idleRedrawStatusText(RedrawStatusTextCaller(*this))
 {
-	m_pXYWnd = 0;
 	m_pCamWnd = 0;
-	m_pYZWnd = 0;
-	m_pXZWnd = 0;
-	m_pActiveXY = 0;
 
 	for (int n = 0; n < c_count_status; n++) {
 		m_pStatusLabel[n] = 0;
@@ -2021,18 +1975,6 @@ MainFrame::~MainFrame (void)
 	Shutdown();
 
 	gtk_widget_destroy(GTK_WIDGET(m_window));
-}
-
-void MainFrame::SetActiveXY (XYWnd* p)
-{
-	if (m_pActiveXY)
-		m_pActiveXY->SetActive(false);
-
-	m_pActiveXY = p;
-
-	if (m_pActiveXY)
-		m_pActiveXY->SetActive(true);
-
 }
 
 // Create and show the splash screen.
@@ -2188,6 +2130,10 @@ void MainFrame::Create (void)
 	m_window = window;
 
 	gtk_widget_show(GTK_WIDGET(window));
+
+	// The default XYView pointer
+	XYWnd* xyWnd;
+
 #ifdef DEBUG
 	gtk_window_get_size(window, &width,&height);
 	gtk_window_get_position(window,&posx,&posy);
@@ -2227,10 +2173,12 @@ void MainFrame::Create (void)
 			m_hSplit = hsplit;
 			gtk_paned_add1(GTK_PANED(vsplit), hsplit);
 
-			// xy
-			m_pXYWnd = new XYWnd();
-			m_pXYWnd->setViewType(XY);
-			GtkWidget* xy_window = GTK_WIDGET(create_framed_widget(m_pXYWnd->getWidget()));
+			// Allocate a new OrthoView and set its ViewType to XY
+			xyWnd = GlobalXYWnd().createXY();
+			xyWnd->setViewType(XY);
+
+			// Create a framed window out of the view's internal widget
+			GtkWidget* xy_window = GTK_WIDGET(create_framed_widget(xyWnd->getWidget()));
 
 			{
 				GtkWidget* vsplit2 = gtk_vpaned_new();
@@ -2275,20 +2223,18 @@ void MainFrame::Create (void)
 		GlobalCamera().setParent(m_pCamWnd, window);
 		GtkWidget* camera = m_pCamWnd->getWidget();
 
-		// yz window
-		m_pYZWnd = new XYWnd();
-		m_pYZWnd->setViewType(YZ);
-		GtkWidget* yz = m_pYZWnd->getWidget();
+		// Allocate the three ortho views
+		xyWnd = GlobalXYWnd().createXY();
+		xyWnd->setViewType(XY);
+		GtkWidget* xy = xyWnd->getWidget();
 
-		// xy window
-		m_pXYWnd = new XYWnd();
-		m_pXYWnd->setViewType(XY);
-		GtkWidget* xy = m_pXYWnd->getWidget();
+		XYWnd* yzWnd = GlobalXYWnd().createXY();
+		yzWnd->setViewType(YZ);
+		GtkWidget* yz = yzWnd->getWidget();
 
-		// xz window
-		m_pXZWnd = new XYWnd();
-		m_pXZWnd->setViewType(XZ);
-		GtkWidget* xz = m_pXZWnd->getWidget();
+		XYWnd* xzWnd = GlobalXYWnd().createXY();
+		xzWnd->setViewType(XZ);
+		GtkWidget* xz = xzWnd->getWidget();
 
 		// split view (4 views)
 		GtkHPaned* split = create_split_views(camera, yz, xy, xz);
@@ -2309,7 +2255,8 @@ void MainFrame::Create (void)
 
 	gtk_box_pack_start(GTK_BOX(mainHBox), GTK_WIDGET(notebook), FALSE, FALSE, 0);
 
-	SetActiveXY(m_pXYWnd);
+	// greebo: In any layout, there is at least the XY view present, make it active
+	GlobalXYWnd().setActiveXY(xyWnd);
 
 	PreferencesDialog_constructWindow(window);
 	FindTextureDialog_constructWindow(window);
@@ -2355,12 +2302,8 @@ void MainFrame::Shutdown (void)
 	EverySecondTimer_disable();
 
 	GlobalUndoSystem().trackerDetach(m_saveStateTracker);
-	delete m_pXYWnd;
-	m_pXYWnd = 0;
-	delete m_pYZWnd;
-	m_pYZWnd = 0;
-	delete m_pXZWnd;
-	m_pXZWnd = 0;
+
+	GlobalXYWnd().destroy();
 
 	GlobalCamera().deleteCamWnd(m_pCamWnd);
 	m_pCamWnd = 0;

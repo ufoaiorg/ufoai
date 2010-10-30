@@ -68,7 +68,7 @@
 #include "../sidebar/MapInfo.h"
 #include "../qe3.h"
 #include "../camera/CamWnd.h"
-#include "../xyview/xywindow.h"
+#include "../xyview/GlobalXYWnd.h"
 #include "../mainframe.h"
 #include "../settings/preferences.h"
 #include "../referencecache.h"
@@ -365,8 +365,8 @@ void FocusViews (const Vector3& point, float angle)
 	angles[CAMERA_YAW] = angle;
 	camwnd.setCameraAngles(angles);
 
-	XYWnd* xywnd = g_pParentWnd->GetXYWnd();
-	xywnd->setOrigin(point);
+	// Try to retrieve the XY view, if there exists one
+	GlobalXYWnd().setOrigin(point);
 }
 
 #include "stringio.h"
@@ -1562,12 +1562,14 @@ void RegionOff (void)
 
 void RegionXY (void)
 {
-	Map_RegionXY(g_pParentWnd->GetXYWnd()->getOrigin()[0] - 0.5f * g_pParentWnd->GetXYWnd()->getWidth()
-			/ g_pParentWnd->GetXYWnd()->getScale(), g_pParentWnd->GetXYWnd()->getOrigin()[1] - 0.5f
-			* g_pParentWnd->GetXYWnd()->getHeight() / g_pParentWnd->GetXYWnd()->getScale(),
-			g_pParentWnd->GetXYWnd()->getOrigin()[0] + 0.5f * g_pParentWnd->GetXYWnd()->getWidth()
-					/ g_pParentWnd->GetXYWnd()->getScale(), g_pParentWnd->GetXYWnd()->getOrigin()[1] + 0.5f
-					* g_pParentWnd->GetXYWnd()->getHeight() / g_pParentWnd->GetXYWnd()->getScale());
+	XYWnd* xyWnd = GlobalXYWnd().getView(XY);
+	if (xyWnd != NULL) {
+		Map_RegionXY(xyWnd->getOrigin()[0] - 0.5f * xyWnd->getWidth() / xyWnd->getScale(), xyWnd->getOrigin()[1] - 0.5f
+				* xyWnd->getHeight() / xyWnd->getScale(), xyWnd->getOrigin()[0] + 0.5f * xyWnd->getWidth()
+				/ xyWnd->getScale(), xyWnd->getOrigin()[1] + 0.5f * xyWnd->getHeight() / xyWnd->getScale());
+	} else {
+		Map_RegionXY(0, 0, 0, 0);
+	}
 	SceneChangeNotify();
 }
 
@@ -1655,7 +1657,10 @@ void SelectBrush (int entitynum, int brushnum, int select)
 		Selectable* selectable = Instance_getSelectable(*instance);
 		ASSERT_MESSAGE(selectable != 0, "SelectBrush: path not selectable");
 		selectable->setSelected(select);
-		g_pParentWnd->GetXYWnd()->positionView(instance->worldAABB().origin);
+		XYWnd* xyView = GlobalXYWnd().getActiveXY();
+		if (xyView != NULL) {
+			xyView->positionView(instance->worldAABB().origin);
+		}
 	}
 }
 
