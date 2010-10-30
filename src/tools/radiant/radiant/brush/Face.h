@@ -5,6 +5,7 @@
 #include "iundo.h"
 #include "mapfile.h"
 #include "selectable.h"
+#include "shaderlib.h"
 
 #include "math/Vector3.h"
 #include "math/matrix.h"
@@ -16,16 +17,6 @@
 #include "FacePlane.h"
 
 const double GRID_MIN = 0.125;
-
-inline double quantiseInteger (double f)
-{
-	return float_to_integer(f);
-}
-
-inline double quantiseFloating (double f)
-{
-	return float_snapped(f, 1.f / (1 << 16));
-}
 
 typedef double (*QuantiseFunc) (double f);
 
@@ -492,5 +483,8 @@ class Face: public OpenGLRenderable, public Undoable, public FaceShaderObserver
 			return true;
 		}
 }; // class Face
+
+typedef SmartPointer<Face> FaceSmartPointer;
+typedef std::vector<FaceSmartPointer> Faces;
 
 #endif /*FACE_H_*/

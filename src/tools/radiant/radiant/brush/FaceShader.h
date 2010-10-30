@@ -6,6 +6,7 @@
 #include "container/container.h"
 #include "moduleobserver.h"
 #include "irender.h"
+#include "shaderlib.h"
 
 #include "ContentsFlagsValue.h"
 
@@ -44,6 +45,13 @@ class FaceShaderObserverUnrealise
 // ----------------------------------------------------------------------------
 
 typedef ReferencePair<FaceShaderObserver> FaceShaderObserverPair;
+
+inline void brush_check_shader (const std::string& name)
+{
+	if (!shader_valid(name.c_str())) {
+		globalErrorStream() << "brush face has invalid texture name: '" << name << "'\n";
+	}
+}
 
 class FaceShader: public ModuleObserver
 {
@@ -100,7 +108,7 @@ class FaceShader: public ModuleObserver
 		void captureShader ()
 		{
 			ASSERT_MESSAGE(m_state == 0, "shader cannot be captured");
-			brush_check_shader(m_shader.c_str());
+			brush_check_shader(m_shader);
 			m_state = GlobalShaderCache().capture(m_shader);
 			m_state->attach(*this);
 		}

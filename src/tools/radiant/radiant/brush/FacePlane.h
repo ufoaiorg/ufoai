@@ -6,6 +6,14 @@
 #include "math/matrix.h"
 #include "PlanePoints.h"
 
+inline bool check_plane_is_integer (const PlanePoints& planePoints)
+{
+	return !float_is_integer(planePoints[0][0]) || !float_is_integer(planePoints[0][1]) || !float_is_integer(
+			planePoints[0][2]) || !float_is_integer(planePoints[1][0]) || !float_is_integer(planePoints[1][1])
+			|| !float_is_integer(planePoints[1][2]) || !float_is_integer(planePoints[2][0]) || !float_is_integer(
+			planePoints[2][1]) || !float_is_integer(planePoints[2][2]);
+}
+
 class FacePlane
 {
 		PlanePoints m_planepts;

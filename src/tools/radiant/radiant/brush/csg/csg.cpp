@@ -30,6 +30,8 @@
 #include "../BrushNode.h"
 #include "../../xyview/grid.h"
 
+typedef std::vector<Brush*> brush_vector_t;
+
 static void Face_makeBrush (Face& face, const Brush& brush, brush_vector_t& out, float offset)
 {
 	if (face.contributes()) {
