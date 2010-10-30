@@ -44,6 +44,14 @@
 			<camXYUpdate value="1" />
 			<solidSelectionBoxes value="1" />
 			<showCrossHairs value="0" />
+			<showEntityAngles value="1" />
+			<showEntityNames value="1" />
+			<showBlocks value="0" />
+			<defaultBlockSize value="1024" />
+			<showCoordinates value="1" />
+			<showOutline value="0" />
+			<showAxes value="1" />
+			<showWorkzone value="0" />
 		</xyview>
 
 		<toolbar name="view" align="horizontal">

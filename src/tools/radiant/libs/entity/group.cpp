@@ -29,6 +29,8 @@
 #include "renderable.h"
 #include "editable.h"
 
+#include "iregistry.h"
+
 #include "selectionlib.h"
 #include "instancelib.h"
 #include "transformlib.h"
@@ -157,7 +159,7 @@ class Group
 		{
 			renderSolid(renderer, volume, localToWorld);
 
-			if (g_showNames) {
+			if (GlobalRegistry().get("user/ui/xyview/showEntityNames") == "1") {
 				// don't draw the name for worldspawn
 				if (!strcmp(m_entity.getEntityClass().name(), "worldspawn"))
 					return;

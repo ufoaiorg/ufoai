@@ -29,6 +29,8 @@
 #include "renderable.h"
 #include "editable.h"
 
+#include "iregistry.h"
+
 #include "math/frustum.h"
 #include "selectionlib.h"
 #include "instancelib.h"
@@ -239,7 +241,7 @@ class MiscParticle: public Cullable, public Bounded, public Snappable
 		{
 			renderer.SetState(m_entity.getEntityClass().m_state_wire, Renderer::eWireframeOnly);
 			renderer.addRenderable(m_renderAABBWire, localToWorld);
-			if (g_showNames) {
+			if (GlobalRegistry().get("user/ui/xyview/showEntityNames") == "1") {
 				renderer.addRenderable(m_renderName, localToWorld);
 				m_id_origin = Vector3(-10, -10, -10);
 				renderer.addRenderable(m_renderParticleID, localToWorld);

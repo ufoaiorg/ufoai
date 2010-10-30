@@ -24,6 +24,8 @@
 #include "renderable.h"
 #include "editable.h"
 
+#include "iregistry.h"
+
 #include "math/frustum.h"
 #include "selectionlib.h"
 #include "instancelib.h"
@@ -182,7 +184,7 @@ class MiscSound: public Cullable, public Bounded, public Snappable
 
 		void renderArrow (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld) const
 		{
-			if (g_showAngles) {
+			if (GlobalRegistry().get("user/ui/xyview/showEntityAngles") == "1") {
 				renderer.addRenderable(m_arrow, localToWorld);
 			}
 		}
@@ -197,7 +199,7 @@ class MiscSound: public Cullable, public Bounded, public Snappable
 			renderer.SetState(m_entity.getEntityClass().m_state_wire, Renderer::eWireframeOnly);
 			renderer.addRenderable(m_renderAABBWire, localToWorld);
 			renderArrow(renderer, volume, localToWorld);
-			if (g_showNames) {
+			if (GlobalRegistry().get("user/ui/xyview/showEntityNames") == "1") {
 				renderer.addRenderable(m_renderName, localToWorld);
 			}
 		}

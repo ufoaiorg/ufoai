@@ -84,8 +84,6 @@ EntityCreator::KeyValueChangedFunc EntityKeyValues::m_entityKeyValueChanged = 0;
 EntityCreator::KeyValueChangedFunc KeyValue::m_entityKeyValueChanged = 0;
 Counter* EntityKeyValues::m_counter = 0;
 
-bool g_showNames = true;
-bool g_showAngles = true;
 bool g_lightRadii = false;
 bool g_forceLightRadii = false;
 
@@ -167,22 +165,6 @@ class UFOEntityCreator: public EntityCreator
 
 			SceneChangeNotify();
 		}
-		void setShowNames (bool showNames)
-		{
-			g_showNames = showNames;
-		}
-		bool getShowNames ()
-		{
-			return g_showNames;
-		}
-		void setShowAngles (bool showAngles)
-		{
-			g_showAngles = showAngles;
-		}
-		bool getShowAngles ()
-		{
-			return g_showAngles;
-		}
 		void setLightRadii (bool lightRadii)
 		{
 			g_lightRadii = lightRadii;
@@ -212,10 +194,6 @@ EntityCreator& GetEntityCreator ()
 
 void P_Entity_Construct ()
 {
-	GlobalPreferenceSystem().registerPreference("SI_ShowNames", BoolImportStringCaller(g_showNames),
-			BoolExportStringCaller(g_showNames));
-	GlobalPreferenceSystem().registerPreference("SI_ShowAngles", BoolImportStringCaller(g_showAngles),
-			BoolExportStringCaller(g_showAngles));
 	GlobalPreferenceSystem().registerPreference("LightRadiuses", BoolImportStringCaller(g_lightRadii),
 			BoolExportStringCaller(g_lightRadii));
 	GlobalPreferenceSystem().registerPreference("ForceLightRadiuses", BoolImportStringCaller(g_forceLightRadii),

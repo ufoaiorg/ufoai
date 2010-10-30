@@ -30,6 +30,8 @@
 #include "renderable.h"
 #include "editable.h"
 
+#include "iregistry.h"
+
 #include "selectionlib.h"
 #include "instancelib.h"
 #include "transformlib.h"
@@ -202,7 +204,7 @@ class MiscModel: public Snappable
 		void renderWireframe (Renderer& renderer, const VolumeTest& volume, const Matrix4& localToWorld, bool selected) const
 		{
 			renderSolid(renderer, volume, localToWorld, selected);
-			if (g_showNames) {
+			if (GlobalRegistry().get("user/ui/xyview/showEntityNames") == "1") {
 				renderer.addRenderable(m_renderName, localToWorld);
 			}
 		}
