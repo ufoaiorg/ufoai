@@ -25,6 +25,7 @@
 #include "iimage.h"
 #include "ifilesystem.h"
 #include "iarchive.h"
+#include "AutoPtr.h"
 
 #include "generic/reference.h"
 #include "os/path.h"
@@ -50,7 +51,7 @@ class LoadImageVisitor: public ImageModules::Visitor
 
 		// Visit function called for each image module. Provides the file extension and
 		// a table with the loadImage function.
-		void visit (const std::string& extension, const _QERPlugImageTable& table)
+		void visit (const std::string& extension, const _QERPlugImageTable& table) const
 		{
 			// Only do anything, if the image pointer is still NULL (i.e. the image load has not succeeded yet)
 			if (_image == NULL) {
@@ -59,7 +60,7 @@ class LoadImageVisitor: public ImageModules::Visitor
 				std::string fullName = _name + "." + extension;
 
 				// Try to open the file (will fail if the extension does not fit)
-				AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(fullname));
+				AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(fullName));
 				// Has the file been loaded?
 				if (file) {
 					// Try to invoke the imageloader with a reference to the ArchiveFile
