@@ -58,12 +58,17 @@ window test_cvar
 	string testCommon8 {
 		pos		"20 200"
 		string	"t8"
+		invis	true	// @todo while we dont have a final syntax... :/
 	}
 
 	string testCommon9 {
 		pos		"20 220"
 		string	"t9"
-		invis	true
+	}
+
+	string testCommon10 {
+		pos		"20 240"
+		string	"t10"
 	}
 
 	bar barTest
@@ -98,7 +103,7 @@ window test_cvar
 
 		// set property with a value (from a cvar)...
 		*cvar:test_current2 = 110
-		*node:root.barTest@current = ( *cvar:test_current2 )
+		*node:root.barTest@current = ( *cvar:test_current2 )	// with parenthesis
 		if ( *node:root.barTest@current == 110 ) { *node:root.testCommon5@color = "0 1 0 1" }
 		else { *node:root.testCommon5@color = "1 0 0 1" }
 		// then, if the cvar change, the property do not change
@@ -106,14 +111,24 @@ window test_cvar
 		if ( *node:root.barTest@current == 110 ) { *node:root.testCommon6@color = "0 1 0 1" }
 		else { *node:root.testCommon6@color = "1 0 0 1" }
 
+		// set property with a value (from a cvar)...
+		*cvar:test_current2 = 110
+		*node:root.barTest@current = *cvar:test_current2	// without parenthesis
+		if ( *node:root.barTest@current == 110 ) { *node:root.testCommon7@color = "0 1 0 1" }
+		else { *node:root.testCommon7@color = "1 0 0 1" }
+		// then, if the cvar change, the property do not change
+		*cvar:test_current2 = 111
+		if ( *node:root.barTest@current == 110 ) { *node:root.testCommon8@color = "0 1 0 1" }
+		else { *node:root.testCommon8@color = "1 0 0 1" }
+
 		// link property to a cvar
 		*node:root.barTest@current = "*cvar:test_current2"
-		if ( *node:root.barTest@current == 111 ) { *node:root.testCommon7@color = "0 1 0 1" }
-		else { *node:root.testCommon7@color = "1 0 0 1" }
+		if ( *node:root.barTest@current == 111 ) { *node:root.testCommon9@color = "0 1 0 1" }
+		else { *node:root.testCommon9@color = "1 0 0 1" }
 		// then, if the cvar change, the property also change
 		*cvar:test_current2 = 112
-		if ( *node:root.barTest@current == 112 ) { *node:root.testCommon8@color = "0 1 0 1" }
-		else { *node:root.testCommon8@color = "1 0 0 1" }
+		if ( *node:root.barTest@current == 112 ) { *node:root.testCommon10@color = "0 1 0 1" }
+		else { *node:root.testCommon10@color = "1 0 0 1" }
 
 		// clean up
 		delete *cvar:test_current
