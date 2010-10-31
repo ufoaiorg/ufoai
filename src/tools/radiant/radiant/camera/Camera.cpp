@@ -341,10 +341,3 @@ void Camera::rotateRightDiscrete ()
 	angles[CAMERA_YAW] -= SPEED_TURN;
 	setAngles(angles);
 }
-
-void Camera::setDrawMode (CameraDrawMode mode)
-{
-	draw_mode = mode;
-}
-
-CameraDrawMode Camera::draw_mode = cd_texture;

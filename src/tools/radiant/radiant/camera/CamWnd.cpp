@@ -487,9 +487,7 @@ void CamWnd::Cam_Draw() {
 	glDepthMask(GL_TRUE);
 
 	Vector3 clearColour(0, 0, 0);
-	if (m_Camera.draw_mode != cd_lighting) {
-		clearColour = ColourSchemes().getColourVector3("camera_background");
-	}
+	clearColour = ColourSchemes().getColourVector3("camera_background");
 
 	glClearColor(clearColour[0], clearColour[1], clearColour[2], 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -529,24 +527,21 @@ void CamWnd::Cam_Draw() {
 
 	unsigned int globalstate = RENDER_DEPTHTEST | RENDER_COLOURWRITE | RENDER_DEPTHWRITE | RENDER_ALPHATEST
 			| RENDER_BLEND | RENDER_CULLFACE | RENDER_COLOURARRAY | RENDER_COLOURCHANGE;
-	switch (m_Camera.draw_mode) {
-	case cd_wire:
+	switch (getCameraSettings()->getMode()) {
+	case drawWire:
 		break;
-	case cd_solid:
+	case drawSolid:
 		globalstate |= (RENDER_FILL | RENDER_LIGHTING | RENDER_SMOOTH | RENDER_SCALED);
 		break;
-	case cd_texture:
+	case drawTexture:
 		globalstate |= (RENDER_FILL | RENDER_LIGHTING | RENDER_TEXTURE_2D | RENDER_SMOOTH | RENDER_SCALED);
-		break;
-	case cd_lighting:
-		globalstate |= (RENDER_FILL | RENDER_LIGHTING | RENDER_TEXTURE_2D | RENDER_SMOOTH | RENDER_SCALED | RENDER_SCREEN);
 		break;
 	default:
 		globalstate = 0;
 		break;
 	}
 
-	if (!g_xywindow_globals.m_bNoStipple) {
+	if (!getCameraSettings()->solidSelectionBoxes()) {
 		globalstate |= RENDER_LINESTIPPLE;
 	}
 
@@ -781,14 +776,6 @@ void CamWnd::queueDraw() {
 	m_deferredDraw.draw();
 }
 
-void CamWnd::setMode(CameraDrawMode mode) {
-	Camera::setDrawMode(mode);
-
-	if (GlobalCamera().getCamWnd() != 0) {
-		GlobalCamera().getCamWnd()->update();
-	}
-}
-
 const Vector3& CamWnd::getCameraOrigin () const {
 	return m_Camera.origin;
 }
@@ -817,11 +804,6 @@ void CamWnd::cubicScaleOut ()
 	getCameraSettings()->setCubicScale( getCameraSettings()->cubicScale() + 1 );
 	getCamera().updateProjection();
 	update();
-}
-
-
-CameraDrawMode CamWnd::getMode() {
-	return Camera::draw_mode;
 }
 
 CameraView* CamWnd::getCameraView() {

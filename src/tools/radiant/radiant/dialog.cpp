@@ -531,20 +531,14 @@ GtkWidget* Dialog::addCheckBox (GtkWidget* vbox, const char* name, const char* f
 /* greebo: This adds a checkbox to the given VBox and connects an XMLRegistry value to it.
  * The actual data is "imported" and "exported" via those templates.
  */
-GtkWidget* Dialog::addCheckBox(GtkWidget* vbox, const std::string& name, const std::string& flag,
-								const std::string& registryKey, RegistryKeyObserver* keyObserver)
+GtkWidget* Dialog::addCheckBox(GtkWidget* vbox, const std::string& name, const std::string& flag, const std::string& registryKey)
 {
 	// Create a new checkbox with the given caption and display it
 	GtkWidget* check = gtk_check_button_new_with_label(flag.c_str());
 	gtk_widget_show(check);
 
 	// Connect the registry key to this toggle button
-	_registryConnector.connectToggleButton(GTK_TOGGLE_BUTTON(check), registryKey);
-
-	// Connect the keyObserver to the key, if there is an observer specified
-	if (keyObserver != NULL) {
-		GlobalRegistry().addKeyObserver(keyObserver, registryKey);
-	}
+	_registryConnector.connectGtkObject(GTK_OBJECT(check), registryKey);
 
 	DialogVBox_packRow(GTK_VBOX(vbox), GTK_WIDGET(DialogRow_new(name, check)));
 	return check;
@@ -553,19 +547,14 @@ GtkWidget* Dialog::addCheckBox(GtkWidget* vbox, const std::string& name, const s
 /* greebo: This adds a horizontal slider and connects it to the value of the given registryKey
  */
 void Dialog::addSlider (GtkWidget* vbox, const std::string& name, const std::string& registryKey,
-		RegistryKeyObserver* keyObserver, gboolean draw_value, double value, double lower, double upper,
+		gboolean draw_value, double value, double lower, double upper,
 		double step_increment, double page_increment, double page_size)
 {
 	// Create a new adjustment with the boundaries <lower> and <upper> and all the increments
 	GtkObject* adj = gtk_adjustment_new(value, lower, upper, step_increment, page_increment, page_size);
 
 	// Connect the registry key to this adjustment
-	_registryConnector.connectAdjustment(GTK_ADJUSTMENT(adj), registryKey);
-
-	// Connect the keyObserver to the key, if there is an observer specified
-	if (keyObserver != NULL) {
-		GlobalRegistry().addKeyObserver(keyObserver, registryKey);
-	}
+	_registryConnector.connectGtkObject(adj, registryKey);
 
 	// scale
 	GtkWidget* alignment = gtk_alignment_new(0.0, 0.5, 1.0, 0.0);
@@ -579,7 +568,7 @@ void Dialog::addSlider (GtkWidget* vbox, const std::string& name, const std::str
 	gtk_scale_set_draw_value(GTK_SCALE (scale), draw_value);
 	gtk_scale_set_digits(GTK_SCALE (scale), 0);
 
-	GtkTable* row = DialogRow_new(name.c_str(), alignment);
+	GtkTable* row = DialogRow_new(name, alignment);
 	DialogVBox_packRow(GTK_VBOX(vbox), GTK_WIDGET(row));
 }
 
@@ -608,6 +597,35 @@ void Dialog::addCombo (GtkWidget* vbox, const char* name, StringArrayRange value
 void Dialog::addCombo (GtkWidget* vbox, const char* name, int& data, StringArrayRange values)
 {
 	addCombo(vbox, name, values, IntImportCaller(data), IntExportCaller(data));
+}
+
+void Dialog::addCombo (GtkWidget* vbox, const std::string& name, const std::string& registryKey,
+		const ComboBoxValueList& valueList)
+{
+	GtkWidget* alignment = gtk_alignment_new(0.0, 0.5, 0.0, 0.0);
+	gtk_widget_show(alignment);
+
+	{
+		// Create a new combo box
+		GtkWidget* combo = gtk_combo_box_new_text();
+
+		// Add all the string values to the combo box
+		for (ComboBoxValueList::const_iterator i = valueList.begin(); i != valueList.end(); i++) {
+			// Add the current string value to the combo box
+			gtk_combo_box_append_text(GTK_COMBO_BOX(combo), i->c_str());
+		}
+
+		// Connect the registry key to the newly created combo box
+		_registryConnector.connectGtkObject(GTK_OBJECT(combo), registryKey);
+
+		// Add it to the container and make it visible
+		gtk_widget_show(combo);
+		gtk_container_add(GTK_CONTAINER(alignment), combo);
+	}
+
+	// Add the widget to the dialog row
+	GtkTable* row = DialogRow_new(name.c_str(), alignment);
+	DialogVBox_packRow(GTK_VBOX(vbox), GTK_WIDGET(row));
 }
 
 void Dialog::addSlider (GtkWidget* vbox, const char* name, int& data, gboolean draw_value, const char* low,

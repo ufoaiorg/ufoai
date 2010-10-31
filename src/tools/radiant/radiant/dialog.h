@@ -112,6 +112,7 @@ template<typename FirstArgument>
 class CallbackDialogData;
 
 typedef std::list<DLG_DATA*> DialogDataList;
+typedef std::list<std::string> ComboBoxValueList;
 
 class Dialog
 {
@@ -158,13 +159,13 @@ class Dialog
 				const BoolImportCallback& importCallback, const BoolExportCallback& exportCallback);
 		GtkWidget* addCheckBox (GtkWidget* vbox, const char* name, const char* flag, bool& data);
 		// greebo: Adds a checkbox and connects it to the given registry key
-		GtkWidget* addCheckBox(GtkWidget* vbox, const std::string& name, const std::string& flag,
-				const std::string& registryKey, RegistryKeyObserver* keyObserver);
+		GtkWidget* addCheckBox(GtkWidget* vbox, const std::string& name, const std::string& flag, const std::string& registryKey);
 		// greebo: Adds a slider and connects it to the registryKey
 		void addSlider (GtkWidget* vbox, const std::string& name, const std::string& registryKey,
-				RegistryKeyObserver* keyObserver, gboolean draw_value, double value, double lower, double upper,
+				gboolean draw_value, double value, double lower, double upper,
 				double step_increment, double page_increment, double page_size);
-
+		// greebo: Adds a combo box with the given string list and connects it to the registryKey
+		void addCombo(GtkWidget* vbox, const std::string& name, const std::string& registryKey, const ComboBoxValueList& valueList);
 		void addCombo (GtkWidget* vbox, const char* name, StringArrayRange values,
 				const IntImportCallback& importCallback, const IntExportCallback& exportCallback);
 		void addCombo (GtkWidget* vbox, const char* name, int& data, StringArrayRange values);

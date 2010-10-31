@@ -68,9 +68,6 @@ class CamWnd
 		static void captureStates ();
 		static void releaseStates ();
 
-		static void setMode (CameraDrawMode mode);
-		static CameraDrawMode getMode ();
-
 		Camera& getCamera ();
 
 		void BenchMark ();

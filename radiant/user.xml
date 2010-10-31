@@ -28,6 +28,17 @@
 			<previewSizeFactor value="0.4"/>
 		</ModelSelector>
 
+		<clipper>
+			<useCaulk value="1" />
+			<caulkTexture value="textures/common/nodraw" />
+		</clipper>
+
+		<xyview>
+			<chaseMouse value="1" />
+			<camXYUpdate value="1" />
+			<solidSelectionBoxes value="1" />
+		</xyview>
+
 		<toolbar name="view" align="horizontal">
 				<toolbutton name="open" action="OpenMap" tooltip="Open a map file" icon="file_open.png" />
 				<toolbutton name="save" action="SaveMap" tooltip="Save the current map" icon="file_save.png" />

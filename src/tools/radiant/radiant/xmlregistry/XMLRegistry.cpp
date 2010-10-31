@@ -263,7 +263,7 @@ class XMLRegistry: public Registry
 			// Try to convert the float into a string
 			std::string valueStr = string::toString(value);
 
-			// Pass the call to get() to do the rest
+			// Pass the call to set() to do the rest
 			set(key, valueStr);
 		}
 
@@ -274,6 +274,16 @@ class XMLRegistry: public Registry
 			const std::string valueStr = get(key);
 			return string::toInt(valueStr);
 		}
+
+		// Sets a registry key value to the given integer. The value is converted via boost libraries first.
+		void setInt (const std::string& key, const int& value) {
+			// Try to convert the int into a string
+			std::string valueStr = string::toString(value);
+
+			// Pass the call to set() to do the rest
+			set(key, valueStr);
+		}
+
 
 		// Sets the value of a key from the registry,
 		// "/darkradiant" is automatically added if relative paths are used

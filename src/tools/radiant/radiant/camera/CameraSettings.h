@@ -14,6 +14,14 @@ const std::string RKEY_INVERT_MOUSE_VERTICAL_AXIS = "user/ui/camera/invertMouseV
 const std::string RKEY_DISCRETE_MOVEMENT = "user/ui/camera/discreteMovement";
 const std::string RKEY_CUBIC_SCALE = "user/ui/camera/cubicScale";
 const std::string RKEY_ENABLE_FARCLIP = "user/ui/camera/enableCubicClipping";
+const std::string RKEY_DRAWMODE = "user/ui/camera/drawMode";
+const std::string RKEY_SOLID_SELECTION_BOXES = "user/ui/xyview/solidSelectionBoxes";
+
+enum CameraDrawMode
+{
+	drawWire, drawSolid, drawTexture
+};
+
 }
 /* greebo: This is the home of all the camera settings. As this class derives
  * from a RegistryKeyObserver, it can be connected to the according registry keys
@@ -29,9 +37,11 @@ class CameraSettings: public RegistryKeyObserver
 		bool _invertMouseVerticalAxis;
 		bool _discreteMovement;
 
-		int _cubicScale;
+		CameraDrawMode _cameraDrawMode;
 
+		int _cubicScale;
 		bool _farClipEnabled;
+		bool _solidSelectionBoxes;
 
 		void farClipExport (const BoolImportCallback& importCallback);
 
@@ -53,6 +63,11 @@ class CameraSettings: public RegistryKeyObserver
 		bool farClipEnabled () const;
 		bool invertMouseVerticalAxis () const;
 		bool discreteMovement () const;
+		bool solidSelectionBoxes () const;
+
+		// Sets/returns the draw mode (wireframe, solid, textured, lighting)
+		CameraDrawMode getMode () const;
+		void setMode (const CameraDrawMode& mode);
 
 		// Gets/Sets the cubic scale member variable (is automatically constrained [1..MAX_CUBIC_SCALE])
 		int cubicScale () const;
@@ -62,6 +77,9 @@ class CameraSettings: public RegistryKeyObserver
 		void toggleFarClip ();
 		void setFarClip (bool farClipEnabled);
 		ToggleItem& farClipItem ();
+
+	private:
+		void importDrawMode (const int mode);
 }; // class CameraSettings
 
 CameraSettings* getCameraSettings ();
