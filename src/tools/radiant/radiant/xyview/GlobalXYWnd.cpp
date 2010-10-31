@@ -28,9 +28,9 @@ void XYWndManager::destroy() {
 		XYWnd* xyView = *i;
 		delete xyView;
 
-		// Delete the xyview from the list
-		_XYViews.erase(i);
 	}
+	// Discard the whole list
+	_XYViews.clear();
 }
 
 XYWnd* XYWndManager::getActiveXY() const {
