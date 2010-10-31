@@ -128,7 +128,10 @@ def genDoc(package):
 	result += "\n[[Category:GUIs]]"
 	return result
 
-if __name__ == "__main__":
+def getDoc():
 	extract = ExtractNodeBehaviour()
 	package = extract.getPackage()
-	print genDoc(package)
+	return genDoc(package)
+
+if __name__ == "__main__":
+	print getDoc()
